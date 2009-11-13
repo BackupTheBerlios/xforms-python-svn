@@ -1,0 +1,27 @@
+
+
+SVN
+    * Porting of arrowbuttons example
+    * Verified type conversion from py function to c-compatible.
+    * Raw conversion's product needed to be reworked, as
+    there were some problems:
+    - parts related to c standard library and X development
+    library are present (I've yet to understand if they are 
+    necessary to be included and if they have to be loaded
+    explicitly by ctypes);
+    - some types are uncorrectly recognized as "unknown *"
+    (they have to be replaced with another coherent type);
+    - constants definitions are not ordered according to
+    the same order fo original c header (I'm willing to 
+    maintain same order, so future adaptation is easier);
+    - some blocks of code are not converted and are simply
+    missing (lack of functionality to comply with, seriously)
+    - there are unuseful comments, so .py file is too much
+    crowded (aesthetic reorganization).
+
+0.0.1 (20091027)
+    Internal release.
+    This is the byproduct of c to py raw conversion,
+    using gccxml and h2xml.py/xml2py.py from CtypesLib
+    (little gems, to avoid much of raw work).
+

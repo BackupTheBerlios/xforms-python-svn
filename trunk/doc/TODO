@@ -1,0 +1,27 @@
+Ideas for further development:
+
+- reduce chance to incur in SegmentationFault (need a more
+deep testing) (the highest priority)
+
+- for each acquired c function I need to create a python
+wrapping function, in order to check if a parameter of
+correct type has been passed. (high priority)
+
+- convert XForms c examples to be used as python scripts
+(they can be used as working tests as well) (high priority)
+
+- polish wrapper to remove unnecessary comments
+
+- verify external functions/data from Xlib and c stdlib
+to be resolved and correct related shared library loaded
+by ctypes, remove external functions not directy referenced
+by XForms library
+
+- verify all c macro conversion's correctness
+
+- do a simple and meaningful docstring for every public
+function
+
+- have a minimal but complete function reference guide
+(I do not intend to do a real developer/user manual
+as xforms.pdf present in XForms is absolutely great)
