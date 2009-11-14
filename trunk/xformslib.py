@@ -2265,8 +2265,8 @@ def fl_set_object_callback(obj, py_callback, argument):
     """
 
     c_callback = FL_CALLBACKPTR(py_callback)
-    retval = _fl_set_object_callback(obj, c_callback, argument)
     _cfunc_refs[tmpval1] = c_callback
+    retval = _fl_set_object_callback(obj, c_callback, argument)
     return retval
 
 
