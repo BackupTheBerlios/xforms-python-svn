@@ -21,8 +21,8 @@ distutils.core.setup(name = 'xforms-python',
                      data_files=[('share/doc/xforms-python-'+version, \
                                   ['doc/ChangeLog', \
                                   'doc/lgpl-2.1.txt', 'doc/INSTALL', \
-                                  'doc/README', 'doc/TODO'], \
-                                  'share/xforms-python-'+version+'/examples', \
-                                  ['examples/*'])]
+                                  'doc/README', 'doc/TODO']), \
+                                  ('share/xforms-python-'+version+'/examples', \
+                                  ['examples/arrowbutton.py'])]
                      )
 
