@@ -1,12 +1,14 @@
 import sys
 import distutils.core
 
+
+version = "0.1.0_1.0.92sp2"
 long_description = """
 xforms-python - Python wrapper for XForms X11 Windows System GUI C toolkit.
 """
 
 distutils.core.setup(name = 'xforms-python',
-                     version = "0.1.0_1.0.92sp2",
+                     version = version,
                      description = 'XForms python wrapper',
                      long_description = long_description,
                      author = 'Luca Lazzaroni (LukenShiro)',
@@ -19,5 +21,8 @@ distutils.core.setup(name = 'xforms-python',
                      data_files=[('share/doc/xforms-python-'+version, \
                                   ['doc/ChangeLog', \
                                   'doc/lgpl-2.1.txt', 'doc/INSTALL', \
-                                  'doc/README', 'doc/TODO'])],
+                                  'doc/README', 'doc/TODO'], \
+                                  'share/xforms-python-'+version+'/examples', \
+                                  ['examples/*'])]
                      )
+
