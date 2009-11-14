@@ -1,7 +1,7 @@
 
 
 SVN
-    * Porting of arrowbuttons example
+    * Porting of arrowbutton example
     * Verified type conversion from py function to c-compatible.
     * Raw conversion's product needed to be reworked, as
     there were some problems:

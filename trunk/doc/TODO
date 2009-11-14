@@ -1,9 +1,29 @@
-Ideas for further development:
+*** Limitations ***
+
+- public functions are not guaranteed to remain stable and
+consistent, until version 1.0.0 will be released. Library
+name and directory layout might change in order to have a
+better reorganization.
+- this software is mainly focused on GNU/Linux operating
+systems. Apple MacOS and MS Windows are not supported, yet.
+Other unix-like operating systems may or may not be working.
+- not all public functions are working, for now. I am quite
+sure public functions used by examples in related directory
+are working well. Other ones are being tested on case-by-case
+basis (as type conversion from python to c are somehow
+problematic, in some critical cases).
+- testing is much appreciated, but be warned this software
+is in a halfway phase between proof-of-concept and alpha
+development state, presently.
+
+
+
+*** Ideas for further development ***
 
 - reduce chance to incur in SegmentationFault (need a more
 deep testing) (the highest priority)
 
-- for each acquired c function I need to create a python
+- for each acquired c function I need to improve a python
 wrapping function, in order to check if a parameter of
 correct type has been passed. (high priority)
 

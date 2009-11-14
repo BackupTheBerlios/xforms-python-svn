@@ -1,0 +1,15 @@
+xforms-python requires at least Python 2.5.x (python 2.6.x
+is highly recommended). It doesn't support Python 3.x yet.
+
+It depends only on python standard library modules.
+
+To install this package, simply run the following with
+root's privileges:
+        python ./setup.py build
+        python ./setup.py install
+
+This software is meant to be used on GNU/Linux. For other
+operating systems your mileage may vary.
+
+Read TODO file for usage limitations.
+
