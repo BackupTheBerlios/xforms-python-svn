@@ -33,6 +33,7 @@ import ctypes as cty
 import ctypes.util as ctyutil
 import sys
 import warnings
+import random
 
 
 # xforms-python version
@@ -115,11 +116,15 @@ def func_do_nothing_placeholder(cfunction):
 
 # placeholders to keep reference to c functions
 # keep global to avoid garbage collector's' unpredictable behaviour
-tmpval1 = tmpval2 = tmpval3 = tmpval4 = tmpval5 = "unused"
 _cfunc_refs = {}
-_cfunc_refs[tmpval1] = _cfunc_refs[tmpval2] = None
-_cfunc_refs[tmpval3] = _cfunc_refs[tmpval4] = None
-_cfunc_refs[tmpval5] = None
+
+def get_rand_dictkey():
+    """ Get a randomic string between '1' and '1000' for _cfunc_refs dict keys
+    """
+    akey = "1"
+    while akey in _cfunc_refs:
+        akey = str(random.randrange(1, 1000))
+    return akey
 
 
 libfbase = ctyutil.find_library("forms")
@@ -166,7 +171,7 @@ def cfuncproto(library, cfuncname, retval, arglist=None, doc=""):
 
 
 def convert_py_to_c_type(objparam, typedestconv):
-    """ Convert py->c type conversion in order to prevent segmentation fault
+    """ Convert py to c type conversion in order to prevent segmentation fault
         or other unpredictable behaviour
     """
 
@@ -1066,17 +1071,18 @@ _fl_add_io_callback = cfuncproto(so_libforms, "fl_add_io_callback", \
                 """void _fl_add_io_callback(int fd, unsigned int mask,
                    FL_IO_CALLBACK callback, void * data)
                 """)
-def fl_add_io_callback(fd, mask, pycallback, data):
-    """ fl_add_io_callback(fd, mask, pycallback, data)
+def fl_add_io_callback(fd, mask, py_callback, data):
+    """ fl_add_io_callback(fd, mask, py_callback, data)
         Registers an input callback function when input is available from fd.
         <fd>            a valid file descriptor in a unix system
         <mask>          under what circumstance the input callback should be
                          invoked (FL_READ or FL_WRITE or FL_EXCEPT)
-        <pycallback>    python function to be invoked under condition mask
+        <py_callback>    python function to be invoked under condition mask
         <data>          argument to be passed to function 
     """
 
-    c_callback = FL_IO_CALLBACK(pycallback)
+    c_callback = FL_IO_CALLBACK(py_callback)
+    _cfunc_refs[get_rand_dictkey()] = c_callback
     _fl_add_io_callback(fd, mask, c_callback, data)
 
 
@@ -1085,16 +1091,18 @@ _fl_remove_io_callback = cfuncproto(so_libforms, "fl_remove_io_callback", \
             """void _fl_remove_io_callback(int fd, unsigned int mask,
                FL_IO_CALLBACK cb)
             """)
-def fl_remove_io_callback(fd, mask, cb):
-    """ fl_remove_io_callback(fd, mask, cb)
+def fl_remove_io_callback(fd, mask, py_cb):
+    """ fl_remove_io_callback(fd, mask, py_cb)
         Removes the registered callback function when input is available from fd.
         <fd>    a valid file descriptor in a unix system
         <mask>  under what circumstance the input callback should be
                  removed (FL_READ or FL_WRITE or FL_EXCEPT)
-        <cb>    function to be invoked under condition mask
+        <py_cb>    function to be invoked under condition mask
     """
     
-    _fl_remove_io_callback(fd, mask, cb)
+    c_cb = FL_IO_CALLBACK(py_cb)
+    _cfunc_refs[get_rand_dictkey()] = c_cb
+    _fl_remove_io_callback(fd, mask, c_cb)
     
 
 # signals
@@ -1106,16 +1114,17 @@ _fl_add_signal_callback = cfuncproto(so_libforms, "fl_add_signal_callback", \
             None, [cty.c_int, FL_SIGNAL_HANDLER, cty.c_void_p], \
             """void _fl_add_signal_callback(int s, FL_SIGNAL_HANDLER cb, void * data)
             """)
-def fl_add_signal_callback(s, pycb, data):
-    """ fl_add_signal_callback(s, pycb, data)
+def fl_add_signal_callback(s, py_cb, data):
+    """ fl_add_signal_callback(s, py_cb, data)
         Handles the receipt of a signal by registering a callback function that
          gets called when a signal is caught (only 1 function per signal).
         <s>     signal (e.g. SIGALRM, SIGINT, etc.)
-        <cb>    python function to be invoked after catching the signal
+        <py_cb>    python function to be invoked after catching the signal
         <data>  argument to be passed to function 
     """
 
-    c_cb = FL_SIGNAL_HANDLER(pycb)
+    c_cb = FL_SIGNAL_HANDLER(py_cb)
+    _cfunc_refs[get_rand_dictkey()] = c_cb
     _fl_add_signal_callback(s, c_cb, data)
 
 
@@ -1181,7 +1190,7 @@ def fl_add_timeout(msec, pycallback, data):
 
     c_callback = FL_TIMEOUT_CALLBACK(pycallback)
     retval = _fl_add_timeout(msec, c_callback, data)
-    _cfunc_refs[tmpval1] = c_callback
+    _cfunc_refs[get_rand_dictkey()] = c_callback
     return retval
     
 
@@ -1380,8 +1389,8 @@ def fl_set_form_atclose(form, py_fmclose, data):
     """
 
     c_fmclose = FL_FORM_ATCLOSE(py_fmclose)
+    _cfunc_refs[get_rand_dictkey()] = c_fmclose
     retval = _fl_set_form_atclose(form, c_fmclose, data)
-    _cfunc_refs[tmpval1] = c_fmclose
     return retval
 
 
@@ -1398,8 +1407,8 @@ def fl_set_atclose(py_fmclose, data):
     """
 
     c_fmclose = FL_FORM_ATCLOSE(py_fmclose)
+    _cfunc_refs[get_rand_dictkey()] = c_fmclose
     retval = _fl_set_atclose(c_fmclose, data)
-    _cfunc_refs[tmpval1] = c_fmclose
     return retval
     
 
@@ -1414,8 +1423,8 @@ def fl_set_form_atactivate(form, py_cb, data):
     """
     
     c_cb = FL_FORM_ATACTIVATE(pycb)
+    _cfunc_refs[get_rand_dictkey()] = c_cb
     retval = _fl_set_form_atactivate(form, c_cb, data)
-    _cfunc_refs[tmpval1] = c_cb
     return retval
 
 
@@ -1429,9 +1438,9 @@ def fl_set_form_atdeactivate(form, py_cb, data):
     """ fl_set_form_atdeactivate(form, py_cb, data) -> form atdeactivate reference
     """
 
-    c_cb = FL_FORM_ATACTIVATE(pycb)
+    c_cb = FL_FORM_ATACTIVATE(py_cb)
+    _cfunc_refs[get_rand_dictkey()] = c_cb
     retval = _fl_set_form_atdeactivate(form, c_cb, data)
-    _cfunc_refs[tmpval1] = c_cb
     return retval
     
 
@@ -1820,8 +1829,8 @@ def fl_register_raw_callback(form, mask, py_rcb):
     """
 
     c_rcb = FL_RAW_CALLBACK(py_rcb)
+    _cfunc_refs[get_rand_dictkey()] = c_rcb
     retval = _fl_register_raw_callback(form, mask, c_rcb)
-    _cfunc_refs[tmpval1] = c_rcb
     return retval
 
 
@@ -1833,7 +1842,7 @@ _fl_bgn_group = cfuncproto(so_libforms, "fl_bgn_group", \
         """FL_OBJECT * fl_bgn_group()
         """)
 def fl_bgn_group():
-    """ fl_bgn_group() -> form ref.
+    """ fl_bgn_group() -> form
     """
     
     retval = _fl_bgn_group()
@@ -1856,7 +1865,7 @@ _fl_addto_group = cfuncproto(so_libforms, "fl_addto_group", \
         """FL_OBJECT * fl_addto_group(FL_OBJECT * group)
         """)
 def fl_addto_group(group):
-    """ fl_addto_group(group) -> form ref.
+    """ fl_addto_group(group) -> form
     """
 
     retval = _fl_addto_group(group)
@@ -2155,7 +2164,7 @@ _fl_get_object_component = cfuncproto(so_libforms, "fl_get_object_component",
            int objclass, int type, int numb)
         """)
 def fl_get_object_component(composite, objclass, type, numb):
-    """ fl_get_object_component(composite, objclass, type, numb) -> form ref.
+    """ fl_get_object_component(composite, objclass, type, numb) -> form
     """
 
     retval = _fl_get_object_component(composite, objclass, type, numb)
@@ -2291,8 +2300,8 @@ def fl_set_object_prehandler(ob, py_phandler):
     """
 
     c_phandler = FL_HANDLEPTR(py_phandler)
+    _cfunc_refs[get_rand_dictkey()] = c_phandler
     retval = _fl_set_object_prehandler(ob, c_phandler)
-    _cfunc_refs[tmpval1] = c_phandler
     return retval
 
 
@@ -2306,8 +2315,8 @@ def fl_set_object_posthandler(ob, py_post):
     """
 
     c_post = FL_HANDLEPTR(py_post)
+    _cfunc_refs[get_rand_dictkey()] = c_post
     retval = _fl_set_object_posthandler(ob, c_post)
-    _cfunc_refs[tmpval1] = c_post
     return retval
     
 
@@ -2320,12 +2329,12 @@ def fl_set_object_callback(obj, py_callback, argument):
     """ fl_set_object_callback(obj, py_callback, argument) -> c_callback func.
         Calls a callback function bound to an object, if a condition is met.
         <obj>           an object reference (form, button, etc..)
-        <pycallback>    a python function to use as callback
+        <py_callback>    a python function to use as callback
         <argument>      argument being passed to function (NOT ACTIVE)        
     """
 
     c_callback = FL_CALLBACKPTR(py_callback)
-    _cfunc_refs[tmpval1] = c_callback
+    _cfunc_refs[get_rand_dictkey()] = c_callback
     retval = _fl_set_object_callback(obj, c_callback, argument)
     return retval
 
@@ -2456,10 +2465,9 @@ def fl_enumerate_fonts(py_output, shortform):
     """ fl_enumerate_fonts(py_output, shortform) -> ID num
     """
 
-    cfunc_none_string = cty.CFUNCTYPE(None, STRING)
     c_output = cfunc_none_string(py_output)
+    _cfunc_refs[get_rand_dictkey()] = c_output
     retval = _fl_enumerate_fonts(c_output, shortform)
-    _cfunc_refs[tmpval1] = c_output
     return retval
 
 
@@ -2644,13 +2652,13 @@ _fl_add_symbol = cfuncproto(so_libforms, "fl_add_symbol", \
         cty.c_int,  [STRING, FL_DRAWPTR, cty.c_int], \
         """int fl_add_symbol(const char * name, FL_DRAWPTR drawit, int scalable)
         """)
-def fl_add_symbol(name, pydrawit, scalable):
-    """ fl_add_symbol(name, pydrawit, scalable) -> num.
+def fl_add_symbol(name, py_drawit, scalable):
+    """ fl_add_symbol(name, py_drawit, scalable) -> num.
     """
 
-    c_drawit = FL_DRAWPTR(pydrawit)
+    c_drawit = FL_DRAWPTR(py_drawit)
+    _cfunc_refs[get_rand_dictkey()] = c_drawit
     retval = _fl_add_symbol(name, c_drawit, scalable)
-    _cfunc_refs[tmpval1] = c_drawit
     return retval
 
 
@@ -2905,7 +2913,7 @@ _fl_addto_form = cfuncproto(so_libforms, "fl_addto_form",
         """FL_FORM * fl_addto_form(FL_FORM * form)
         """)
 def fl_addto_form(form):
-    """ fl_addto_form(form) -> form ref.
+    """ fl_addto_form(form) -> form
     """
 
     retval = _fl_addto_form(form)
@@ -2919,12 +2927,12 @@ _fl_make_object = cfuncproto(so_libforms, "fl_make_object", \
            FL_Coord y, FL_Coord w, FL_Coord h, const char * label, FL_HANDLEPTR handle)
         """)
 def fl_make_object(objclass, type, x, y, w, h, label, py_handle):
-    """ fl_make_object(objclass, type, x, y, w, h, label, py_handle) -> object ref.
+    """ fl_make_object(objclass, type, x, y, w, h, label, py_handle) -> object
     """
 
     c_handle = FL_HANDLEPTR(py_handle)
+    _cfunc_refs[get_rand_dictkey()] = c_handle
     retval = _fl_make_object(objclass, type, x, y, w, h, label, c_handle)
-    _cfunc_refs[tmpval1] = c_handle
     return retval
 
 
@@ -3112,8 +3120,8 @@ def fl_set_error_handler(py_user_func):
     """
 
     c_user_func = FL_ERROR_FUNC(py_user_func)
+    _cfunc_refs[get_rand_dictkey()] = c_user_func
     retval = _fl_set_error_handler(c_user_func)
-    _cfunc_refs[tmpval1] = c_user_func
     return retval
 
 
@@ -3122,7 +3130,7 @@ _fl_get_cmdline_args = cfuncproto(so_libforms, "fl_get_cmdline_args", \
         """)char * * fl_get_cmdline_args(int * p1)
         """)
 def fl_get_cmdline_args(p1):
-    """ fl_get_cmdline_args(p1) -> string ref.
+    """ fl_get_cmdline_args(p1) -> string
     """
 
     retval = _fl_get_cmdline_args(p1)
@@ -3799,7 +3807,7 @@ _fl_get_mouse = cfuncproto(so_libforms, "fl_get_mouse", \
           unsigned int * keymask)
         """)
 def fl_get_mouse(x, y, keymask):
-    """ fl_get_mouse(x, y, keymask) -> window ref.
+    """ fl_get_mouse(x, y, keymask) -> window
     """
 
     retval = _fl_get_mouse(x, y, keymask)
@@ -3824,7 +3832,7 @@ _fl_get_win_mouse = cfuncproto(so_libforms, "fl_get_win_mouse", \
         unsigned int * keymask)
         """)
 def fl_get_win_mouse(win, x, y, keymask):
-    """ fl_get_win_mouse(win, x, y, keymask) -> window ref.
+    """ fl_get_win_mouse(win, x, y, keymask) -> window
     """
 
     retval = _fl_get_win_mouse(win, x, y, keymask)
@@ -3849,7 +3857,7 @@ _fl_win_to_form = cfuncproto(so_libforms, "fl_win_to_form",
         """FL_FORM * fl_win_to_form(Window win)
         """)
 def fl_win_to_form(win):
-    """ fl_win_to_form(win) -> form ref.
+    """ fl_win_to_form(win) -> form
     """
 
     retval = _fl_win_to_form(win)
@@ -3959,7 +3967,7 @@ _fl_wincreate = cfuncproto(so_libforms, "fl_wincreate", \
         """Window fl_wincreate(const char * label)
         """)
 def fl_wincreate(label):
-    """ fl_wincreate(label) -> window ref.
+    """ fl_wincreate(label) -> window
     """
 
     retval = _fl_wincreate(label)
@@ -3971,7 +3979,7 @@ _fl_winshow = cfuncproto(so_libforms, "fl_winshow", \
         """Window fl_winshow(Window win)
         """)
 def fl_winshow(win):
-    """ fl_winshow(win) -> window ref.
+    """ fl_winshow(win) -> window
     """
 
     retval = _fl_winshow(win)
@@ -3983,7 +3991,7 @@ _fl_winopen = cfuncproto(so_libforms, "fl_winopen", \
         """Window fl_winopen(const char * label)
         """)
 def fl_winopen(label):
-    """ fl_winopen(label) -> window ref.
+    """ fl_winopen(label) -> window
     """
 
     retval = _fl_winopen(label)
@@ -4051,7 +4059,7 @@ _fl_winget = cfuncproto(so_libforms, "fl_winget", \
         """Window fl_winget()
         """)
 def fl_winget():
-    """ fl_winget() -> window ref.
+    """ fl_winget() -> window
     """
 
     retval = _fl_winget()
@@ -4272,7 +4280,7 @@ _fl_create_colormap = cfuncproto(so_libforms, "fl_create_colormap",
         """)Colormap fl_create_colormap(XVisualInfo * xv, int nfill)
         """)
 def fl_create_colormap(xv, nfill):
-    """ fl_create_colormap(xv, nfill) -> colormap ref.
+    """ fl_create_colormap(xv, nfill) -> colormap
     """
 
     retval = _fl_create_colormap(xv, nfill)
@@ -4398,7 +4406,7 @@ _fl_get_real_object_window = cfuncproto(so_libforms, "fl_get_real_object_window"
         """Window fl_get_real_object_window(FL_OBJECT * ob)
         """)
 def fl_get_real_object_window(ob):
-    """ fl_get_real_object_window(ob) -> window ref.
+    """ fl_get_real_object_window(ob) -> window
     """
 
     retval = _fl_get_real_object_window(ob)
@@ -4521,7 +4529,7 @@ _fl_last_event = cfuncproto(so_libforms, "fl_last_event",
         """const char * fl_last_event()
         """)
 def fl_last_event():
-    """ fl_last_event() -> event ref.
+    """ fl_last_event() -> event
     """
 
     retval = _fl_last_event()
@@ -4537,12 +4545,12 @@ _fl_set_event_callback = cfuncproto(so_libforms, "fl_set_event_callback",
            void * user_data)
         """)
 def fl_set_event_callback(py_callback, user_data):
-    """ fl_set_event_callback(py_callback, user_data) -> event callback ref.
+    """ fl_set_event_callback(py_callback, user_data) -> event callback
     """
 
     c_callback = FL_APPEVENT_CB(py_callback)
+    _cfunc_refs[get_rand_dictkey()] = c_callback
     retval = _fl_set_event_callback(c_callback, user_data)
-    _cfunc_refs[tmpval1] = c_callback
     return retval
 
 
@@ -4551,12 +4559,12 @@ _fl_set_idle_callback = cfuncproto(so_libforms, "fl_set_idle_callback",
         """FL_APPEVENT_CB fl_set_idle_callback(FL_APPEVENT_CB callback, void * user_data)
         """)
 def fl_set_idle_callback(py_callback, user_data):
-    """ fl_set_idle_callback(py_callback, user_data) -> event callback ref.
+    """ fl_set_idle_callback(py_callback, user_data) -> event callback
     """
 
     c_callback = FL_APPEVENT_CB(py_callback)
+    _cfunc_refs[get_rand_dictkey()] = c_callback
     retval = _fl_set_idle_callback(c_callback, user_data)
-    _cfunc_refs[tmpval1] = c_callback
     return retval
 
 
@@ -4604,12 +4612,12 @@ _fl_add_event_callback = cfuncproto(so_libforms, "fl_add_event_callback",
            FL_APPEVENT_CB wincb, void * user_data)
         """)
 def fl_add_event_callback(win, ev, py_wincb, user_data):
-    """ fl_add_event_callback(win, ev, py_wincb, user_data) -> event callback ref.
+    """ fl_add_event_callback(win, ev, py_wincb, user_data) -> event callback
     """
 
     c_wincb = FL_APPEVENT_CB(py_wincb)
+    _cfunc_refs[get_rand_dictkey()] = c_wincb
     retval = _fl_add_event_callback(win, ev, c_wincb, user_data)
-    _cfunc_refs[tmpval1] = c_wincb
     return retval
 
 
@@ -4640,7 +4648,7 @@ _fl_print_xevent_name = cfuncproto(so_libforms, "fl_print_xevent_name",
         """)XEvent * fl_print_xevent_name(const char * where, const char * xev)
         """)
 def fl_print_xevent_name(where, xev):
-    """ fl_print_xevent_name(where, xev) -> event ref.
+    """ fl_print_xevent_name(where, xev) -> event
     """
 
     retval = _fl_print_xevent_name(where, xev)
@@ -4724,7 +4732,7 @@ _fl_initialize = cfuncproto(so_libforms, "fl_initialize",
            const char * appclass, FL_CMD_OPT * appopt, int nappopt)
         """)
 def fl_initialize(lsysargv, sysargv, appclass, appopt, nappopt):
-    """ fl_initialize(num_args, args, appl_class, appl_options, num_appl_opts) -> display ref.
+    """ fl_initialize(num_args, args, appl_class, appl_options, num_appl_opts) -> display
     """
 
     # to verify if installed XForms is compatible
@@ -4784,6 +4792,7 @@ def fl_get_app_resources(appresource, n):
     """
 
     _fl_get_app_resources(appresource, n)
+
 
 _fl_set_graphics_mode = cfuncproto(so_libforms, "fl_set_graphics_mode", 
         None, [cty.c_int, cty.c_int], 
@@ -5291,7 +5300,7 @@ _fl_popup_add = cfuncproto(so_libforms, "fl_popup_add",
         """FL_POPUP * fl_popup_add(Window p1, const char * p2)
         """)
 def fl_popup_add(p1, p2):
-    """ fl_popup_add(p1, p2) -> popup ref.
+    """ fl_popup_add(p1, p2) -> popup
     """
 
     retval = _fl_popup_add(p1, p2)
@@ -5304,7 +5313,7 @@ _fl_popup_add_entries = cfuncproto(so_libforms, "fl_popup_add_entries",
            const char * p2)
         """)
 def fl_popup_add_entries(p1, p2):
-    """ fl_popup_add_entries(p1, p2) -> popup_entry ref.
+    """ fl_popup_add_entries(p1, p2) -> popup_entry
     """
 
     retval = _fl_popup_add_entries(p1, p2)
@@ -5318,7 +5327,7 @@ _fl_popup_insert_entries = cfuncproto(so_libforms, "fl_popup_insert_entries",
            FL_POPUP_ENTRY * p2, const char * p3)
         """)
 def fl_popup_insert_entries(p1, p2, p3):
-    """ fl_popup_insert_entries(p1, p2, p3) -> popup_entry ref.
+    """ fl_popup_insert_entries(p1, p2, p3) -> popup_entry
     """
 
     retval = _fl_popup_insert_entries(p1, p2, p3)
@@ -5331,7 +5340,7 @@ _fl_popup_create = cfuncproto(so_libforms, "fl_popup_create",
            FL_POPUP_ITEM * p3)
         """)
 def fl_popup_create(p1, p2, p3):
-    """ fl_popup_create(p1, p2, p3) -> popup ref.
+    """ fl_popup_create(p1, p2, p3) -> popup
     """
 
     retval = _fl_popup_create(p1, p2, p3)
@@ -5367,7 +5376,7 @@ _fl_popup_do = cfuncproto(so_libforms, "fl_popup_do",
         """FL_POPUP_RETURN * fl_popup_do(FL_POPUP * p1)
         """)
 def fl_popup_do(p1):
-    """ fl_popup_do(p1) -> popup_return ref.
+    """ fl_popup_do(p1) -> popup_return
     """
 
     retval = _fl_popup_do(p1)
@@ -5414,12 +5423,12 @@ _fl_popup_set_callback = cfuncproto(so_libforms, "fl_popup_set_callback",
         """FL_POPUP_CB fl_popup_set_callback(FL_POPUP * p1, FL_POPUP_CB p2)
         """)
 def fl_popup_set_callback(p1, py_cb):
-    """ fl_popup_set_callback(p1, py_cb) -> popup callback ref.
+    """ fl_popup_set_callback(p1, py_cb) -> popup callback
     """
 
     c_cb = FL_POPUP_CB(py_cb)
+    _cfunc_refs[get_rand_dictkey()] = c_cb
     retval = _fl_popup_set_callback(p1, c_cb)
-    _cfunc_refs[tmpval1] = c_cb
     return retval
 
 
@@ -5497,7 +5506,7 @@ _fl_popup_get_color = cfuncproto(so_libforms, "fl_popup_get_color",
         """FL_COLOR fl_popup_get_color(FL_POPUP * p1, int p2)
         """)
 def fl_popup_get_color(p1, p2):
-    """ fl_popup_get_color(p1, p2) -> color ref.
+    """ fl_popup_get_color(p1, p2) -> color
     """
 
     retval = _fl_popup_get_color(p1, p2)
@@ -5509,7 +5518,7 @@ _fl_popup_set_color = cfuncproto(so_libforms, "fl_popup_set_color",
         """FL_COLOR fl_popup_set_color(FL_POPUP * p1, int p2, FL_COLOR p3)
         """)
 def fl_popup_set_color(p1, p2, p3):
-    """ fl_popup_set_color(p1, p2, p3) -> color ref.
+    """ fl_popup_set_color(p1, p2, p3) -> color
     """
 
     retval = _fl_popup_set_color(p1, p2, p3)
@@ -5544,7 +5553,7 @@ _fl_popup_set_title = cfuncproto(so_libforms, "fl_popup_set_title",
         """FL_POPUP * fl_popup_set_title(FL_POPUP * p1, const char * p2)
         """)
 def fl_popup_set_title(p1, p2):
-    """ fl_popup_set_title(p1, p2) -> popup ref.
+    """ fl_popup_set_title(p1, p2) -> popup
     """
 
     retval = _fl_popup_set_title(p1, p2)
@@ -5556,12 +5565,12 @@ _fl_popup_entry_set_callback = cfuncproto(so_libforms, "fl_popup_entry_set_callb
         """FL_POPUP_CB fl_popup_entry_set_callback(FL_POPUP_ENTRY * p1, FL_POPUP_CB p2)
         """)
 def fl_popup_entry_set_callback(p1, py_pucb):
-    """ fl_popup_entry_set_callback(p1, py_pucb) -> popup_callback ref.
+    """ fl_popup_entry_set_callback(p1, py_pucb) -> popup_callback
     """
 
     c_pucb = FL_POPUP_CB(py_pucb)
+    _cfunc_refs[get_rand_dictkey()] = c_pucb
     retval = _fl_popup_entry_set_callback(p1, c_pucb)
-    _cfunc_refs[tmpval1] = c_pucb
     return retval
 
 
@@ -5570,12 +5579,12 @@ _fl_popup_entry_set_enter_callback = cfuncproto(so_libforms, "fl_popup_entry_set
         """FL_POPUP_CB fl_popup_entry_set_enter_callback(FL_POPUP_ENTRY * p1, FL_POPUP_CB p2)
         """)
 def fl_popup_entry_set_enter_callback(p1, py_pucb):
-    """ fl_popup_entry_set_enter_callback(p1, py_pucb) -> popup_callback ref.
+    """ fl_popup_entry_set_enter_callback(p1, py_pucb) -> popup_callback
     """
 
     c_pucb = FL_POPUP_CB(py_pucb)
+    _cfunc_refs[get_rand_dictkey()] = c_pucb
     retval = _fl_popup_entry_set_enter_callback(p1, c_pucb)
-    _cfunc_refs[tmpval1] = c_pucb
     return retval
 
 
@@ -5584,12 +5593,12 @@ _fl_popup_entry_set_leave_callback = cfuncproto(so_libforms, "fl_popup_entry_set
         """FL_POPUP_CB fl_popup_entry_set_leave_callback(FL_POPUP_ENTRY * p1, FL_POPUP_CB p2)
         """)
 def fl_popup_entry_set_leave_callback(p1, py_pucb):
-    """ fl_popup_entry_set_leave_callback(p1, py_pucb) -> popup_callback ref.
+    """ fl_popup_entry_set_leave_callback(p1, py_pucb) -> popup_callback
     """
 
     c_pucb = FL_POPUP_CB(py_pucb)
+    _cfunc_refs[get_rand_dictkey()] = c_pucb
     retval = _fl_popup_entry_set_leave_callback(p1, c_pucb)
-    _cfunc_refs[tmpval1] = c_pucb
     return retval
 
 
@@ -5705,7 +5714,7 @@ _fl_popup_entry_get_by_position = cfuncproto(so_libforms, "fl_popup_entry_get_by
         """FL_POPUP_ENTRY * fl_popup_entry_get_by_position(FL_POPUP * p1, int p2)
         """)
 def fl_popup_entry_get_by_position(p1, p2):
-    """ fl_popup_entry_get_by_position(p1, p2) -> popup_entry ref.
+    """ fl_popup_entry_get_by_position(p1, p2) -> popup_entry
     """ 
 
     retval = _fl_popup_entry_get_by_position(p1, p2)
@@ -5717,7 +5726,7 @@ _fl_popup_entry_get_by_value = cfuncproto(so_libforms, "fl_popup_entry_get_by_va
         """FL_POPUP_ENTRY * fl_popup_entry_get_by_value(FL_POPUP * p1, long int p2)
         """)
 def fl_popup_entry_get_by_value(p1, p2):
-    """ fl_popup_entry_get_by_value(p1, p2) -> popup_entry ref.
+    """ fl_popup_entry_get_by_value(p1, p2) -> popup_entry
     """ 
 
     retval = _fl_popup_entry_get_by_value(p1, p2)
@@ -5729,7 +5738,7 @@ _fl_popup_entry_get_by_user_data = cfuncproto(so_libforms, "fl_popup_entry_get_b
         """FL_POPUP_ENTRY * fl_popup_entry_get_by_user_data(FL_POPUP * p1, void * p2)
         """)
 def fl_popup_entry_get_by_user_data(p1, p2):
-    """ fl_popup_entry_get_by_user_data(p1, p2) -> popup_entry ref.
+    """ fl_popup_entry_get_by_user_data(p1, p2) -> popup_entry
     """ 
 
     retval = _fl_popup_entry_get_by_user_data(p1, p2)
@@ -5741,7 +5750,7 @@ _fl_popup_entry_get_by_text = cfuncproto(so_libforms, "fl_popup_entry_get_by_tex
         """FL_POPUP_ENTRY * fl_popup_entry_get_by_text(FL_POPUP * p1, const char * p2)
         """)
 def fl_popup_entry_get_by_text(p1, p2):
-    """ fl_popup_entry_get_by_text(p1, p2) -> popup_entry ref.
+    """ fl_popup_entry_get_by_text(p1, p2) -> popup_entry
     """ 
 
     retval = _fl_popup_entry_get_by_text(p1, p2)
@@ -5753,7 +5762,7 @@ _fl_popup_entry_get_by_label = cfuncproto(so_libforms, "fl_popup_entry_get_by_la
         """FL_POPUP_ENTRY * fl_popup_entry_get_by_label(FL_POPUP * p1, const char * p2)
         """)
 def fl_popup_entry_get_by_label(p1, p2):
-    """ fl_popup_entry_get_by_label(p1, p2) -> popup_entry ref.
+    """ fl_popup_entry_get_by_label(p1, p2) -> popup_entry
     """ 
 
     retval = _fl_popup_entry_get_by_label(p1, p2)
@@ -5789,7 +5798,7 @@ _fl_popup_entry_get_subpopup = cfuncproto(so_libforms, "fl_popup_entry_get_subpo
         """FL_POPUP * fl_popup_entry_get_subpopup(FL_POPUP_ENTRY * p1)
         """)
 def fl_popup_entry_get_subpopup(p1):
-    """ fl_popup_entry_get_subpopup(p1) -> popup ref.
+    """ fl_popup_entry_get_subpopup(p1) -> popup
     """ 
 
     retval = _fl_popup_entry_get_subpopup(p1)
@@ -5801,7 +5810,7 @@ _fl_popup_entry_set_subpopup = cfuncproto(so_libforms, "fl_popup_entry_set_subpo
         """FL_POPUP * fl_popup_entry_set_subpopup(FL_POPUP_ENTRY * p1, FL_POPUP * p2)
         """)
 def fl_popup_entry_set_subpopup(p1, p2):
-    """ fl_popup_entry_set_subpopup(p1, p2) -> popup ref.
+    """ fl_popup_entry_set_subpopup(p1, p2) -> popup
     """ 
 
     retval = _fl_popup_entry_set_subpopup(p1, p2)
@@ -5869,7 +5878,7 @@ _fl_create_bitmap = cfuncproto(so_libforms, "fl_create_bitmap",
            FL_Coord w, FL_Coord h, const char * label)
         """)
 def fl_create_bitmap(type, x, y, w, h, label):
-    """ fl_create_bitmap(type, x, y, w, h, label) -> object ref.
+    """ fl_create_bitmap(type, x, y, w, h, label) -> object
     """ 
 
     retval = _fl_create_bitmap(type, x, y, w, h, label)
@@ -5883,7 +5892,7 @@ _fl_add_bitmap = cfuncproto(so_libforms, "fl_add_bitmap",
            FL_Coord w, FL_Coord h, const char * label)
         """)
 def fl_add_bitmap(type, x, y, w, h, label):
-    """ fl_add_bitmap(type, x, y, w, h, label) -> object ref.
+    """ fl_add_bitmap(type, x, y, w, h, label) -> object
     """ 
 
     retval = _fl_add_bitmap(type, x, y, w, h, label)
@@ -5922,7 +5931,7 @@ _fl_read_bitmapfile = cfuncproto(so_libforms, "fl_read_bitmapfile",
            unsigned int * w, unsigned int * h, int * hotx, int * hoty)
         """)
 def fl_read_bitmapfile(win, file, w, h, hotx, hoty):
-    """ fl_read_bitmapfile(win, file, w, h, hotx, hoty) -> pixmap ref.
+    """ fl_read_bitmapfile(win, file, w, h, hotx, hoty) -> pixmap
     """
     
     retval = _fl_read_bitmapfile(win, file, w, h, hotx, hoty)
@@ -5938,7 +5947,7 @@ _XCreateBitmapFromData = cfuncproto(so_libX11, "XCreateBitmapFromData",
            const char * p3, unsigned int p4, unsigned int p5)
         """)
 def XCreateBitmapFromData(p1, p2, p3, p4, p5):
-    """ XCreateBitmapFromData(p1, p2, p3, p4, p5) -> pixmap ref.
+    """ XCreateBitmapFromData(p1, p2, p3, p4, p5) -> pixmap
     """
     
     retval = _XCreateBitmapFromData(p1, p2, p3, p4, p5)
@@ -5963,7 +5972,7 @@ _fl_create_pixmap = cfuncproto(so_libforms, "fl_create_pixmap",
            FL_Coord w, FL_Coord h, const char * label)
         """)
 def fl_create_pixmap(type, x, y, w, h, label):
-    """ fl_create_pixmap(type, x, y, w, h, label) -> object ref.
+    """ fl_create_pixmap(type, x, y, w, h, label) -> object
     """
 
     retval = _fl_create_pixmap(type, x, y, w, h, label)
@@ -5977,7 +5986,7 @@ _fl_add_pixmap = cfuncproto(so_libforms, "fl_add_pixmap",
            FL_Coord w, FL_Coord h, const char * label)
         """)
 def fl_add_pixmap(type, x, y, w, h, label):
-    """ fl_add_pixmap(type, x, y, w, h, label) -> object ref.
+    """ fl_add_pixmap(type, x, y, w, h, label) -> object
     """ 
 
     retval = _fl_add_pixmap(type, x, y, w, h, label)
@@ -6058,7 +6067,7 @@ _fl_get_pixmap_pixmap = cfuncproto(so_libforms, "fl_get_pixmap_pixmap",
         """Pixmap fl_get_pixmap_pixmap(FL_OBJECT * ob, Pixmap * p, Pixmap * m)
         """)
 def fl_get_pixmap_pixmap(ob, p, m):
-    """ fl_get_pixmap_pixmap(ob, p, m) -> pixmap ref.
+    """ fl_get_pixmap_pixmap(ob, p, m) -> pixmap
     """ 
 
     retval = _fl_get_pixmap_pixmap(ob, p, m)
@@ -6074,7 +6083,7 @@ _fl_read_pixmapfile = cfuncproto(so_libforms, "fl_read_pixmapfile",
            int * hotx, int * hoty, FL_COLOR tran)
         """)
 def fl_read_pixmapfile(win, file, w, h, shape_mask, hotx, hoty, tran):
-    """ fl_read_pixmapfile(win, file, w, h, shape_mask, hotx, hoty, tran) -> pixmap ref.
+    """ fl_read_pixmapfile(win, file, w, h, shape_mask, hotx, hoty, tran) -> pixmap
     """ 
 
     retval = _fl_read_pixmapfile(win, file, w, h, shape_mask, hotx, hoty, tran)
@@ -6090,7 +6099,7 @@ _fl_create_from_pixmapdata = cfuncproto(so_libforms, "fl_create_from_pixmapdata"
         int * hoty, FL_COLOR tran)
         """)
 def fl_create_from_pixmapdata(win, data, w, h, sm, hotx, hoty, tran):
-    """ fl_create_from_pixmapdata(win, data, w, h, sm, hotx, hoty, tran) -> pixmap ref.
+    """ fl_create_from_pixmapdata(win, data, w, h, sm, hotx, hoty, tran) -> pixmap
     """ 
 
     retval = _fl_create_from_pixmapdata(win, data, w, h, sm, hotx, hoty, tran)
@@ -6128,7 +6137,7 @@ _fl_create_box = cfuncproto(so_libforms, "fl_create_box",
            FL_Coord w, FL_Coord h, const char * label)
         """)
 def fl_create_box(type, x, y, w, h, label):
-    """ fl_create_box(type, x, y, w, h, label) -> object ref.
+    """ fl_create_box(type, x, y, w, h, label) -> object
     """ 
 
     retval = _fl_create_box(type, x, y, w, h, label)
@@ -6142,7 +6151,7 @@ _fl_add_box = cfuncproto(so_libforms, "fl_add_box",
            FL_Coord w, FL_Coord h, const char * label)
         """)
 def fl_add_box(type, x, y, w, h, label):
-    """ fl_add_box(type, x, y, w, h, label) -> object ref.
+    """ fl_add_box(type, x, y, w, h, label) -> object
     """ 
 
     retval = _fl_add_box(type, x, y, w, h, label)
@@ -6185,7 +6194,7 @@ _fl_create_browser = cfuncproto(so_libforms, "fl_create_browser",
            FL_Coord w, FL_Coord h, const char * label)
         """)
 def fl_create_browser(type, x, y, w, h, label):
-    """ fl_create_browser(type, x, y, w, h, label) -> object ref.
+    """ fl_create_browser(type, x, y, w, h, label) -> object
     """ 
 
     retval = _fl_create_browser(type, x, y, w, h, label)
@@ -6199,7 +6208,7 @@ _fl_add_browser = cfuncproto(so_libforms, "fl_add_browser",
            FL_Coord w, FL_Coord h, const char * label)
         """)
 def fl_add_browser(type, x, y, w, h, label):
-    """ fl_add_browser(type, x, y, w, h, label) -> object ref.
+    """ fl_add_browser(type, x, y, w, h, label) -> object
     """ 
 
     retval = _fl_add_browser(type, x, y, w, h, label)
@@ -6503,8 +6512,8 @@ def fl_set_browser_dblclick_callback(ob, pycb, a):
     """ 
 
     c_cb = FL_CALLBACKPTR(pycb)
+    _cfunc_refs[get_rand_dictkey()] = c_cb
     _fl_set_browser_dblclick_callback(ob, c_cb, a)
-    _cfunc_refs[tmpval1] = c_cb
 
 
 _fl_get_browser_xoffset = cfuncproto(so_libforms, "fl_get_browser_xoffset", 
@@ -6647,8 +6656,8 @@ def fl_set_browser_hscroll_callback(ob, py_cb, data):
     """ 
 
     c_cb = FL_BROWSER_SCROLL_CALLBACK(py_cb)
+    _cfunc_refs[get_rand_dictkey()] = c_cb
     _fl_set_browser_hscroll_callback(ob, c_cb, data)
-    _cfunc_refs[tmpval1] = c_cb
 
 
 _fl_set_browser_vscroll_callback = cfuncproto(so_libforms, "fl_set_browser_vscroll_callback", 
@@ -6660,8 +6669,8 @@ def fl_set_browser_vscroll_callback(ob, py_cb, data):
     """ 
 
     c_cb = FL_BROWSER_SCROLL_CALLBACK(py_cb)
+    _cfunc_refs[get_rand_dictkey()] = c_cb
     _fl_set_browser_vscroll_callback(ob, c_cb, data)
-    _cfunc_refs[tmpval1] = c_cb
 
 
 _fl_get_browser_line_yoffset = cfuncproto(so_libforms, "fl_get_browser_line_yoffset", 
@@ -6681,7 +6690,7 @@ _fl_get_browser_hscroll_callback = cfuncproto(so_libforms, "fl_get_browser_hscro
         """FL_BROWSER_SCROLL_CALLBACK fl_get_browser_hscroll_callback(FL_OBJECT * ob)
         """)
 def fl_get_browser_hscroll_callback(ob):
-    """ fl_get_browser_hscroll_callback(ob) -> callback ref.
+    """ fl_get_browser_hscroll_callback(ob) -> callback
     """ 
 
     retval = _fl_get_browser_hscroll_callback(ob)
@@ -6693,7 +6702,7 @@ _fl_get_browser_vscroll_callback = cfuncproto(so_libforms, "fl_get_browser_vscro
         """FL_BROWSER_SCROLL_CALLBACK fl_get_browser_vscroll_callback(FL_OBJECT * ob)
         """)
 def fl_get_browser_vscroll_callback(ob):
-    """ fl_get_browser_vscroll_callback(ob) -> callback ref.
+    """ fl_get_browser_vscroll_callback(ob) -> callback
     """ 
 
     retval = _fl_get_browser_vscroll_callback(ob)
@@ -6820,7 +6829,7 @@ _fl_create_button = cfuncproto(so_libforms, "fl_create_button",
         """FL_OBJECT * fl_create_button(int type, FL_Coord x, FL_Coord y, FL_Coord w, FL_Coord h, const char * label)
         """)
 def fl_create_button(type, x, y, w, h, label):
-    """ fl_create_button(type, x, y, w, h, label) -> object ref.
+    """ fl_create_button(type, x, y, w, h, label) -> object
     """ 
 
     retval = _fl_create_button(type, x, y, w, h, label)
@@ -6834,7 +6843,7 @@ _fl_create_roundbutton = cfuncproto(so_libforms, "fl_create_roundbutton",
            FL_Coord y, FL_Coord w, FL_Coord h, const char * label)
         """)
 def fl_create_roundbutton(type, x, y, w, h, label):
-    """ fl_create_roundbutton(type, x, y, w, h, label) -> object ref.
+    """ fl_create_roundbutton(type, x, y, w, h, label) -> object
     """ 
 
     retval = _fl_create_roundbutton(type, x, y, w, h, label)
@@ -6848,7 +6857,7 @@ _fl_create_round3dbutton = cfuncproto(so_libforms, "fl_create_round3dbutton",
            FL_Coord y, FL_Coord w, FL_Coord h, const char * label)
         """)
 def fl_create_round3dbutton(type, x, y, w, h, label):
-    """ fl_create_round3dbutton(type, x, y, w, h, label) -> object ref.
+    """ fl_create_round3dbutton(type, x, y, w, h, label) -> object
     """ 
 
     retval = _fl_create_round3dbutton(type, x, y, w, h, label)
@@ -6862,7 +6871,7 @@ _fl_create_lightbutton = cfuncproto(so_libforms, "fl_create_lightbutton",
            FL_Coord y, FL_Coord w, FL_Coord h, const char * label)
         """)
 def fl_create_lightbutton(type, x, y, w, h, label):
-    """ fl_create_lightbutton(type, x, y, w, h, label) -> object ref.
+    """ fl_create_lightbutton(type, x, y, w, h, label) -> object
     """ 
 
     retval = _fl_create_lightbutton(type, x, y, w, h, label)
@@ -6876,7 +6885,7 @@ _fl_create_checkbutton = cfuncproto(so_libforms, "fl_create_checkbutton",
            FL_Coord y, FL_Coord w, FL_Coord h, const char * label)
         """)
 def fl_create_checkbutton(type, x, y, w, h, label):
-    """ fl_create_checkbutton(type, x, y, w, h, label) -> object ref.
+    """ fl_create_checkbutton(type, x, y, w, h, label) -> object
     """ 
 
     retval = _fl_create_checkbutton(type, x, y, w, h, label)
@@ -6890,7 +6899,7 @@ _fl_create_bitmapbutton = cfuncproto(so_libforms, "fl_create_bitmapbutton",
            FL_Coord y, FL_Coord w, FL_Coord h, const char * label)
         """)
 def fl_create_bitmapbutton(type, x, y, w, h, label):
-    """ fl_create_bitmapbutton(type, x, y, w, h, label) -> object ref.
+    """ fl_create_bitmapbutton(type, x, y, w, h, label) -> object
     """ 
 
     retval = _fl_create_bitmapbutton(type, x, y, w, h, label)
@@ -6904,7 +6913,7 @@ _fl_create_pixmapbutton = cfuncproto(so_libforms, "fl_create_pixmapbutton",
            FL_Coord y, FL_Coord w, FL_Coord h, const char * label)
         """)
 def fl_create_pixmapbutton(type, x, y, w, h, label):
-    """ fl_create_pixmapbutton(type, x, y, w, h, label) -> object ref.
+    """ fl_create_pixmapbutton(type, x, y, w, h, label) -> object
     """ 
 
     retval = _fl_create_pixmapbutton(type, x, y, w, h, label)
@@ -6918,7 +6927,7 @@ _fl_create_scrollbutton = cfuncproto(so_libforms, "fl_create_scrollbutton",
            FL_Coord y, FL_Coord w, FL_Coord h, const char * label)
         """)
 def fl_create_scrollbutton(type, x, y, w, h, label):
-    """ fl_create_scrollbutton(type, x, y, w, h, label) -> object ref.
+    """ fl_create_scrollbutton(type, x, y, w, h, label) -> object
     """ 
 
     retval = _fl_create_scrollbutton(type, x, y, w, h, label)
@@ -6932,7 +6941,7 @@ _fl_create_labelbutton = cfuncproto(so_libforms, "fl_create_labelbutton",
            FL_Coord y, FL_Coord w, FL_Coord h, const char * label)
         """)
 def fl_create_labelbutton(type, x, y, w, h, label):
-    """ fl_create_labelbutton(type, x, y, w, h, label) -> object ref.
+    """ fl_create_labelbutton(type, x, y, w, h, label) -> object
     """ 
 
     retval = _fl_create_labelbutton(type, x, y, w, h, label)
@@ -6959,7 +6968,7 @@ _fl_add_round3dbutton = cfuncproto(so_libforms, "fl_add_round3dbutton",
            FL_Coord y, FL_Coord w, FL_Coord h, const char * label)
         """)
 def fl_add_round3dbutton(type, x, y, w, h, label):
-    """ fl_add_round3dbutton(type, x, y, w, h, label) -> object ref.
+    """ fl_add_round3dbutton(type, x, y, w, h, label) -> object
     """ 
 
     retval = _fl_add_round3dbutton(type, x, y, w, h, label)
@@ -6973,7 +6982,7 @@ _fl_add_lightbutton = cfuncproto(so_libforms, "fl_add_lightbutton",
            FL_Coord w, FL_Coord h, const char * label)
         """)
 def fl_add_lightbutton(type, x, y, w, h, label):
-    """ fl_add_lightbutton(type, x, y, w, h, label) -> object ref.
+    """ fl_add_lightbutton(type, x, y, w, h, label) -> object
     """ 
 
     retval = _fl_add_lightbutton(type, x, y, w, h, label)
@@ -6987,7 +6996,7 @@ _fl_add_checkbutton = cfuncproto(so_libforms, "fl_add_checkbutton",
            FL_Coord w, FL_Coord h, const char * label)
         """)
 def fl_add_checkbutton(type, x, y, w, h, label):
-    """ fl_add_checkbutton(type, x, y, w, h, label) -> object ref.
+    """ fl_add_checkbutton(type, x, y, w, h, label) -> object
     """ 
 
     retval = _fl_add_checkbutton(type, x, y, w, h, label)
@@ -7001,7 +7010,7 @@ _fl_add_button = cfuncproto(so_libforms, "fl_add_button",
            FL_Coord w, FL_Coord h, const char * label)
         """)
 def fl_add_button(type, x, y, w, h, label):
-    """ fl_add_button(type, x, y, w, h, label) -> object ref.
+    """ fl_add_button(type, x, y, w, h, label) -> object
     """ 
 
     retval = _fl_add_button(type, x, y, w, h, label)
@@ -7015,7 +7024,7 @@ _fl_add_bitmapbutton = cfuncproto(so_libforms, "fl_add_bitmapbutton",
            FL_Coord w, FL_Coord h, const char * label)
         """)
 def fl_add_bitmapbutton(type, x, y, w, h, label):
-    """ fl_add_bitmapbutton(type, x, y, w, h, label) -> object ref.
+    """ fl_add_bitmapbutton(type, x, y, w, h, label) -> object
     """ 
 
     retval = _fl_add_bitmapbutton(type, x, y, w, h, label)
@@ -7029,7 +7038,7 @@ _fl_add_scrollbutton = cfuncproto(so_libforms, "fl_add_scrollbutton",
            FL_Coord w, FL_Coord h, const char * label)
         """)
 def fl_add_scrollbutton(type, x, y, w, h, label):
-    """ fl_add_scrollbutton(type, x, y, w, h, label) -> object ref.
+    """ fl_add_scrollbutton(type, x, y, w, h, label) -> object
     """ 
 
     retval = _fl_add_scrollbutton(type, x, y, w, h, label)
@@ -7043,7 +7052,7 @@ _fl_add_labelbutton = cfuncproto(so_libforms, "fl_add_labelbutton",
            FL_Coord w, FL_Coord h, const char * label)
         """)
 def fl_add_labelbutton(type, x, y, w, h, label):
-    """ fl_add_labelbutton(type, x, y, w, h, label) -> object ref.
+    """ fl_add_labelbutton(type, x, y, w, h, label) -> object
     """ 
 
     retval = _fl_add_labelbutton(type, x, y, w, h, label)
@@ -7076,7 +7085,7 @@ _fl_add_pixmapbutton = cfuncproto(so_libforms, "fl_add_pixmapbutton",
         FL_Coord w, FL_Coord h, const char * label)
         """)
 def fl_add_pixmapbutton(type, x, y, w, h, label):
-    """ fl_add_pixmapbutton(type, x, y, w, h, label) -> object ref.
+    """ fl_add_pixmapbutton(type, x, y, w, h, label) -> object
     """ 
 
     retval = _fl_add_pixmapbutton(type, x, y, w, h, label)
@@ -7181,7 +7190,7 @@ _fl_create_generic_button = cfuncproto(so_libforms, "fl_create_generic_button",
            FL_Coord x, FL_Coord y, FL_Coord w, FL_Coord h, const char * label)
         """)
 def fl_create_generic_button(objclass, type, x, y, w, h, label):
-    """ fl_create_generic_button(objclass, type, x, y, w, h, label) -> object ref.
+    """ fl_create_generic_button(objclass, type, x, y, w, h, label) -> object
     """ 
 
     retval = _fl_create_generic_button(objclass, type, x, y, w, h, label)
@@ -7199,9 +7208,9 @@ def fl_add_button_class(bclass, py_drawit, py_cleanup):
 
     c_drawit = FL_DrawButton(py_drawit)
     c_cleanup = FL_CleanupButton(py_cleanup)
+    _cfunc_refs[get_rand_dictkey()] = c_drawit
+    _cfunc_refs[get_rand_dictkey()] = c_cleanup
     _fl_add_button_class(bclass, c_drawit, c_cleanup)
-    _cfunc_refs[tmpval1] = c_drawit
-    _cfunc_refs[tmpval2] = c_cleanup
 
 
 _fl_set_button_mouse_buttons = cfuncproto(so_libforms, "fl_set_button_mouse_buttons", 
@@ -7252,7 +7261,7 @@ _fl_create_generic_canvas = cfuncproto(so_libforms, "fl_create_generic_canvas",
            FL_Coord x, FL_Coord y, FL_Coord w, FL_Coord h, const char * label)
         """)
 def fl_create_generic_canvas(canvas_class, type, x, y, w, h, label):
-    """ fl_create_generic_canvas(canvas_class, type, x, y, w, h, label) -> object ref.
+    """ fl_create_generic_canvas(canvas_class, type, x, y, w, h, label) -> object
     """ 
 
     retval = _fl_create_generic_canvas(canvas_class, type, x, y, w, h, label)
@@ -7266,7 +7275,7 @@ _fl_add_canvas = cfuncproto(so_libforms, "fl_add_canvas",
            FL_Coord w, FL_Coord h, const char * label)
         """)
 def fl_add_canvas(type, x, y, w, h, label):
-    """ fl_add_canvas(type, x, y, w, h, label) -> object ref.
+    """ fl_add_canvas(type, x, y, w, h, label) -> object
     """ 
 
     retval = _fl_add_canvas(type, x, y, w, h, label)
@@ -7280,7 +7289,7 @@ _fl_create_canvas = cfuncproto(so_libforms, "fl_create_canvas",
            FL_Coord w, FL_Coord h, const char * label)
         """)
 def fl_create_canvas(type, x, y, w, h, label):
-    """ fl_create_canvas(type, x, y, w, h, label) -> object ref.
+    """ fl_create_canvas(type, x, y, w, h, label) -> object
     """ 
 
     retval = _fl_create_canvas(type, x, y, w, h, label)
@@ -7369,12 +7378,12 @@ _fl_add_canvas_handler = cfuncproto(so_libforms, "fl_add_canvas_handler",
            FL_HANDLE_CANVAS h, void * udata)
         """)
 def fl_add_canvas_handler(ob, ev, py_h, udata):
-    """ fl_add_canvas_handler(ob, ev, py_h, udata) -> canvas handler ref.
+    """ fl_add_canvas_handler(ob, ev, py_h, udata) -> canvas handler
     """ 
 
     c_h = FL_HANDLE_CANVAS(py_h)
+    _cfunc_refs[get_rand_dictkey()] = c_h
     retval = _fl_add_canvas_handler(ob, ev, c_h, udata)
-    _cfunc_refs[tmpval1] = c_h
     return retval
 
 
@@ -7383,7 +7392,7 @@ _fl_get_canvas_id = cfuncproto(so_libforms, "fl_get_canvas_id",
         """Window fl_get_canvas_id(FL_OBJECT * ob)
         """)
 def fl_get_canvas_id(ob):
-    """ fl_get_canvas_id(ob) -> window ref.
+    """ fl_get_canvas_id(ob) -> window
     """ 
 
     retval = _fl_get_canvas_id(ob)
@@ -7395,7 +7404,7 @@ _fl_get_canvas_colormap = cfuncproto(so_libforms, "fl_get_canvas_colormap",
         """)Colormap fl_get_canvas_colormap(FL_OBJECT * ob)
         """)
 def fl_get_canvas_colormap(ob):
-    """ fl_get_canvas_colormap(ob) -> colormap ref.
+    """ fl_get_canvas_colormap(ob) -> colormap
     """ 
 
     retval = _fl_get_canvas_colormap(ob)
@@ -7423,8 +7432,8 @@ def fl_remove_canvas_handler(ob, ev, py_h):
     """ 
 
     c_h = FL_HANDLE_CANVAS(py_h)
+    _cfunc_refs[get_rand_dictkey()] = c_h
     _fl_remove_canvas_handler(ob, ev, c_h)
-    _cfunc_refs[tmpval1] = c_h
 
 
 _fl_hide_canvas = cfuncproto(so_libforms, "fl_hide_canvas", 
@@ -7476,10 +7485,10 @@ def fl_modify_canvas_prop(obj, py_init, py_activate, py_cleanup):
     c_init = FL_MODIFY_CANVAS_PROP(py_init)
     c_activate = FL_MODIFY_CANVAS_PROP(py_activate)
     c_cleanup = FL_MODIFY_CANVAS_PROP(py_cleanup)
+    _cfunc_refs[get_rand_dictkey()] = c_init
+    _cfunc_refs[get_rand_dictkey()] = c_activate
+    _cfunc_refs[get_rand_dictkey()] = c_cleanup
     _fl_modify_canvas_prop(obj, c_init, c_activate, c_cleanup)
-    _cfunc_refs[tmpval1] = c_init
-    _cfunc_refs[tmpval2] = c_activate
-    _cfunc_refs[tmpval3] = c_cleanup
 
 
 _fl_canvas_yield_to_shortcut = cfuncproto(so_libforms, "fl_canvas_yield_to_shortcut", 
@@ -7511,7 +7520,7 @@ _fl_create_glcanvas = cfuncproto(so_libformsgl, "fl_create_glcanvas",
            FL_Coord w, FL_Coord h, const char * label)
         """)
 def fl_create_glcanvas(type, x, y, w, h, label):
-    """ fl_create_glcanvas(type, x, y, w, h, label) -> object ref.
+    """ fl_create_glcanvas(type, x, y, w, h, label) -> object
     """ 
 
     retval = _fl_create_glcanvas(type, x, y, w, h, label)
@@ -7525,7 +7534,7 @@ _fl_add_glcanvas = cfuncproto(so_libformsgl, "fl_add_glcanvas",
            FL_Coord w, FL_Coord h, const char * label)
         """)
 def fl_add_glcanvas(type, x, y, w, h, label):
-    """ fl_add_glcanvas(type, x, y, w, h, label) -> object ref.
+    """ fl_add_glcanvas(type, x, y, w, h, label) -> object
     """ 
 
     retval = _fl_add_glcanvas(type, x, y, w, h, label)
@@ -7635,7 +7644,7 @@ _fl_glwincreate = cfuncproto(so_libformsgl, "fl_glwincreate",
            int wint h)
         """)
 def fl_glwincreate(config, context, w, h):
-    """ fl_glwincreate(config, context, w, h) -> window ref.
+    """ fl_glwincreate(config, context, w, h) -> window
     """ 
 
     retval = _fl_glwincreate(config, context, w, h)
@@ -7649,7 +7658,7 @@ _fl_glwinopen = cfuncproto(so_libformsgl, "fl_glwinopen",
            int w, int h
         """)
 def fl_glwinopen(config, context, w, h):
-    """ fl_glwinopen(config, context, w, h) -> window ref.
+    """ fl_glwinopen(config, context, w, h) -> window
     """ 
 
     retval = _fl_glwinopen(config, context, w, h)
@@ -7692,7 +7701,7 @@ _fl_create_chart = cfuncproto(so_libforms, "fl_create_chart",
            FL_Coord w, FL_Coord h, const char * label)
         """)
 def fl_create_chart(type, x, y, w, h, label):
-    """ fl_create_chart(type, x, y, w, h, label) -> object ref.
+    """ fl_create_chart(type, x, y, w, h, label) -> object
     """ 
 
     retval = _fl_create_chart(type, x, y, w, h, label)
@@ -7706,7 +7715,7 @@ _fl_add_chart = cfuncproto(so_libforms, "fl_add_chart",
            FL_Coord w, FL_Coord h, const char * label)
         """)
 def fl_add_chart(type, x, y, w, h, label):
-    """ fl_add_chart(type, x, y, w, h, label) -> object ref.
+    """ fl_add_chart(type, x, y, w, h, label) -> object
     """ 
 
     retval = _fl_add_chart(type, x, y, w, h, label)
@@ -7888,7 +7897,7 @@ _fl_create_choice = cfuncproto(so_libforms, "fl_create_choice",
            FL_Coord w, FL_Coord h, const char * label)
         """)
 def fl_create_choice(type, x, y, w, h, label):
-    """ fl_create_choice(type, x, y, w, h, label) -> object ref.
+    """ fl_create_choice(type, x, y, w, h, label) -> object
     """ 
 
     retval = _fl_create_choice(type, x, y, w, h, label)
@@ -7902,7 +7911,7 @@ _fl_add_choice = cfuncproto(so_libforms, "fl_add_choice",
            FL_Coord w, FL_Coord h, const char * label)  DEPRECATED
         """)
 def fl_add_choice(type, x, y, w, h, label):
-    """ fl_add_choice(type, x, y, w, h, label) -> object ref.
+    """ fl_add_choice(type, x, y, w, h, label) -> object
     """ 
 
     retval = _fl_add_choice(type, x, y, w, h, label)
@@ -8143,8 +8152,8 @@ def fl_stuff_clipboard(ob, type, data, size, py_lose_callback):
     """ 
 
     c_lose_callback = FL_LOSE_SELECTION_CB(py_lose_callback)
+    _cfunc_refs[get_rand_dictkey()] = c_lose_callback
     retval = _fl_stuff_clipboard(ob, type, data, size, c_lose_callback)
-    _cfunc_refs[tmpval1] = c_lose_callback
     return retval
 
 
@@ -8158,8 +8167,8 @@ def fl_request_clipboard(ob, type, py_got_it_callback):
     """ 
 
     c_got_it_callback = FL_SELECTION_CB(py_got_it_callback)
+    _cfunc_refs[get_rand_dictkey()] = c_got_it_callback
     retval = _fl_request_clipboard(ob, type, c_got_it_callback)
-    _cfunc_refs[tmpval1] = c_got_it_callback
     return retval
 
 
@@ -8187,7 +8196,7 @@ _fl_create_clock = cfuncproto(so_libforms, "fl_create_clock",
            FL_Coord w, FL_Coord h, const char * s)
         """)
 def fl_create_clock(type, x, y, w, h, s):
-    """ fl_create_clock(type, x, y, w, h, s) -> object ref.
+    """ fl_create_clock(type, x, y, w, h, s) -> object
     """ 
 
     retval = _fl_create_clock(type, x, y, w, h, s)
@@ -8201,7 +8210,7 @@ _fl_add_clock = cfuncproto(so_libforms, "fl_add_clock",
            FL_Coord w, FL_Coord h, const char * s)
         """)
 def fl_add_clock(type, x, y, w, h, s):
-    """ fl_add_clock(type, x, y, w, h, s) -> object ref.
+    """ fl_add_clock(type, x, y, w, h, s) -> object
     """ 
 
     retval = _fl_add_clock(type, x, y, w, h, s)
@@ -8272,7 +8281,7 @@ _fl_create_counter = cfuncproto(so_libforms, "fl_create_counter",
            FL_Coord w, FL_Coord h, const char * label)
         """)
 def fl_create_counter(type, x, y, w, h, label):
-    """ fl_create_counter(type, x, y, w, h, label) -> object ref.
+    """ fl_create_counter(type, x, y, w, h, label) -> object
     """ 
 
     retval = _fl_create_counter(type, x, y, w, h, label)
@@ -8286,7 +8295,7 @@ _fl_add_counter = cfuncproto(so_libforms, "fl_add_counter",
            FL_Coord w, FL_Coord h, const char * label)
         """)
 def fl_add_counter(type, x, y, w, h, label):
-    """ fl_add_counter(type, x, y, w, h, label) -> object ref.
+    """ fl_add_counter(type, x, y, w, h, label) -> object
     """ 
 
     retval = _fl_add_counter(type, x, y, w, h, label)
@@ -8405,8 +8414,8 @@ def fl_set_counter_filter(ob, py_filter):
     """
 
     c_filter = FL_VAL_FILTER(py_filter)
+    _cfunc_refs[get_rand_dictkey()] = c_filter
     _fl_set_counter_filter(ob, c_filter)
-    _cfunc_refs[tmpval1] = c_filter
 
 
 # Functions to set and get the timeout value used by the
@@ -8631,7 +8640,7 @@ _fl_get_cursor_byname = cfuncproto(so_libforms, "fl_get_cursor_byname",
         """)Cursor fl_get_cursor_byname(int name)
         """)
 def fl_get_cursor_byname(name):
-    """ fl_get_cursor_byname(name) -> cursor ref.
+    """ fl_get_cursor_byname(name) -> cursor
     """ 
 
     retval = _fl_get_cursor_byname(name)
@@ -8671,7 +8680,7 @@ _fl_create_dial = cfuncproto(so_libforms, "fl_create_dial",
            FL_Coord w, FL_Coord h, const char * label)
         """)
 def fl_create_dial(type, x, y, w, h, label):
-    """ fl_create_dial(type, x, y, w, h, label) -> object ref.
+    """ fl_create_dial(type, x, y, w, h, label) -> object
     """ 
 
     retval = _fl_create_dial(type, x, y, w, h, label)
@@ -8685,7 +8694,7 @@ _fl_add_dial = cfuncproto(so_libforms, "fl_add_dial",
            FL_Coord w, FL_Coord h, const char * label)
         """)
 def fl_add_dial(type, x, y, w, h, label):
-    """ fl_add_dial(type, x, y, w, h, label) -> object ref.
+    """ fl_add_dial(type, x, y, w, h, label) -> object
     """ 
 
     retval = _fl_add_dial(type, x, y, w, h, label)
@@ -8859,8 +8868,8 @@ def fl_set_dirlist_filter(py_filter):
     """ 
 
     c_filter = FL_DIRLIST_FILTER(py_filter)
+    _cfunc_refs[get_rand_dictkey()] = c_filter
     retval = _fl_set_dirlist_filter(c_filter)
-    _cfunc_refs[tmpval1] = c_filter
     return retval
 
 
@@ -9045,7 +9054,7 @@ _fl_delete_formbrowser_bynumber = cfuncproto(so_libforms, "fl_delete_formbrowser
         """FL_FORM * fl_delete_formbrowser_bynumber(FL_OBJECT * ob, int num)
         """)
 def fl_delete_formbrowser_bynumber(ob, num):
-    """ fl_delete_formbrowser_bynumber(ob, num) -> form ref.
+    """ fl_delete_formbrowser_bynumber(ob, num) -> form
     """ 
 
     retval = _fl_delete_formbrowser_bynumber(ob, num)
@@ -9143,7 +9152,7 @@ _fl_get_formbrowser_topform = cfuncproto(so_libforms, "fl_get_formbrowser_topfor
         """FL_FORM * fl_get_formbrowser_topform(FL_OBJECT * ob)
         """)
 def fl_get_formbrowser_topform(ob):
-    """ fl_get_formbrowser_topform(ob) -> form ref.
+    """ fl_get_formbrowser_topform(ob) -> form
     """ 
 
     retval = _fl_get_formbrowser_topform(ob)
@@ -9167,7 +9176,7 @@ _fl_set_formbrowser_topform_bynumber = cfuncproto(so_libforms, "fl_set_formbrows
         """FL_FORM * fl_set_formbrowser_topform_bynumber(FL_OBJECT * ob, int n)
         """)
 def fl_set_formbrowser_topform_bynumber(ob, n):
-    """ fl_set_formbrowser_topform_bynumber(ob, n) -> form ref.
+    """ fl_set_formbrowser_topform_bynumber(ob, n) -> form
     """ 
 
     retval = _fl_set_formbrowser_topform_bynumber(ob, n)
@@ -9241,7 +9250,7 @@ _fl_add_formbrowser = cfuncproto(so_libforms, "fl_add_formbrowser",
            FL_Coord w, FL_Coord h, const char * label)
         """)
 def fl_add_formbrowser(type, x, y, w, h, label):
-    """ fl_add_formbrowser(type, x, y, w, h, label) -> object ref.
+    """ fl_add_formbrowser(type, x, y, w, h, label) -> object
     """ 
 
     retval = _fl_add_formbrowser(type, x, y, w, h, label)
@@ -9255,7 +9264,7 @@ _fl_create_formbrowser = cfuncproto(so_libforms, "fl_create_formbrowser",
            FL_Coord y, FL_Coord w, FL_Coord h, const char * label)
         """)
 def fl_create_formbrowser(type, x, y, w, h, label):
-    """ fl_create_formbrowser(type, x, y, w, h, label) -> object ref.
+    """ fl_create_formbrowser(type, x, y, w, h, label) -> object
     """ 
 
     retval = _fl_create_formbrowser(type, x, y, w, h, label)
@@ -9279,7 +9288,7 @@ _fl_get_formbrowser_form = cfuncproto(so_libforms, "fl_get_formbrowser_form",
         """FL_FORM * fl_get_formbrowser_form(FL_OBJECT * ob, int n)
         """)
 def fl_get_formbrowser_form(ob, n):
-    """ fl_get_formbrowser_form(ob, n) -> form ref.
+    """ fl_get_formbrowser_form(ob, n) -> form
     """ 
 
     retval = _fl_get_formbrowser_form(ob, n)
@@ -9327,7 +9336,7 @@ _fl_add_frame = cfuncproto(so_libforms, "fl_add_frame",
            FL_Coord w, FL_Coord h, const char * label)
         """)
 def fl_add_frame(type, x, y, w, h, label):
-    """ fl_add_frame(type, x, y, w, h, label) -> object ref.
+    """ fl_add_frame(type, x, y, w, h, label) -> object
     """ 
 
     retval = _fl_add_frame(type, x, y, w, h, label)
@@ -9343,7 +9352,7 @@ _fl_create_labelframe = cfuncproto(so_libforms, "fl_create_labelframe",
            FL_Coord w, FL_Coord h, const char * label)
         """)
 def fl_create_labelframe(type, x, y, w, h, label):
-    """ fl_create_labelframe(type, x, y, w, h, label) -> object ref.
+    """ fl_create_labelframe(type, x, y, w, h, label) -> object
     """ 
 
     retval = _fl_create_labelframe(type, x, y, w, h, label)
@@ -9357,7 +9366,7 @@ _fl_add_labelframe = cfuncproto(so_libforms, "fl_add_labelframe",
            FL_Coord w, FL_Coord h, const char * label)
         """)
 def fl_add_labelframe(type, x, y, w, h, label):
-    """ fl_add_labelframe(type, x, y, w, h, label) -> object ref.
+    """ fl_add_labelframe(type, x, y, w, h, label) -> object
     """ 
 
     retval = _fl_add_labelframe(type, x, y, w, h, label)
@@ -9387,12 +9396,12 @@ _fl_create_free = cfuncproto(so_libforms, "fl_create_free",
            FL_Coord w, FL_Coord h, const char * label, FL_HANDLEPTR handle)
         """)
 def fl_create_free(type, x, y, w, h, label, py_handle):
-    """ fl_create_free(type, x, y, w, h, label, py_handle) -> object ref.
+    """ fl_create_free(type, x, y, w, h, label, py_handle) -> object
     """ 
 
     c_handle = FL_HANDLEPTR(py_handle)
+    _cfunc_refs[get_rand_dictkey()] = c_handle
     retval = _fl_create_free(type, x, y, w, h, label, c_handle)
-    _cfunc_refs[tmpval1] = c_handle
     return retval
 
 
@@ -9403,12 +9412,12 @@ _fl_add_free = cfuncproto(so_libforms, "fl_add_free",
            FL_Coord w, FL_Coord h, const char * label, FL_HANDLEPTR handle)
         """)
 def fl_add_free(type, x, y, w, h, label, py_handle):
-    """ fl_add_free(type, x, y, w, h, label, py_handle) -> object ref.
+    """ fl_add_free(type, x, y, w, h, label, py_handle) -> object
     """ 
 
     c_handle = FL_HANDLEPTR(py_handle)
+    _cfunc_refs[get_rand_dictkey()] = c_handle
     retval = _fl_add_free(type, x, y, w, h, label, c_handle)
-    _cfunc_refs[tmpval1] = c_handle
     return retval
 
 
@@ -10008,8 +10017,8 @@ def fl_set_fselector_callback(py_cb, p2):
     """ 
 
     c_cb = FL_FSCB(py_cb)
+    _cfunc_refs[get_rand_dictkey()] = c_cb
     _fl_set_fselector_callback(c_cb, p2)
-    _cfunc_refs[tmpval1] = c_cb
 
 
 _fl_get_filename = cfuncproto(so_libforms, "fl_get_filename",
@@ -10093,8 +10102,8 @@ def fl_add_fselector_appbutton(p1, py_fn, p3):
     """ 
 
     c_fn = cfunc_none_voidp(py_fn)
+    _cfunc_refs[get_rand_dictkey()] = c_fn
     _fl_add_fselector_appbutton(p1, c_fn, p3)
-    _cfunc_refs[tmpval1] = c_fn
 
 
 _fl_remove_fselector_appbutton = cfuncproto(so_libforms, "fl_remove_fselector_appbutton",
@@ -10136,7 +10145,7 @@ _fl_get_fselector_form = cfuncproto(so_libforms, "fl_get_fselector_form",
         """FL_FORM * fl_get_fselector_form()
         """)
 def fl_get_fselector_form():
-    """ fl_get_fselector_form() -> form ref.
+    """ fl_get_fselector_form() -> form
     """ 
 
     retval = _fl_get_fselector_form()
@@ -10240,7 +10249,7 @@ _fl_create_input = cfuncproto(so_libforms, "fl_create_input",
            FL_Coord w, FL_Coord h, const char * label)
         """)
 def fl_create_input(type, x, y, w, h, label):
-    """ fl_create_input(type, x, y, w, h, label) -> object ref.
+    """ fl_create_input(type, x, y, w, h, label) -> object
     """ 
 
     retval = _fl_create_input(type, x, y, w, h, label)
@@ -10254,7 +10263,7 @@ _fl_add_input = cfuncproto(so_libforms, "fl_add_input",
            FL_Coord w, FL_Coord h, const char * label)
         """)
 def fl_add_input(type, x, y, w, h, label):
-    """ fl_add_input(type, x, y, w, h, label) -> object ref.
+    """ fl_add_input(type, x, y, w, h, label) -> object
     """ 
 
     retval = _fl_add_input(type, x, y, w, h, label)
@@ -10577,8 +10586,8 @@ def fl_set_input_filter(ob, py_validate):
     """ 
 
     c_validate = FL_INPUTVALIDATOR(py_validate)
+    _cfunc_refs[get_rand_dictkey()] = c_validate
     retval = _fl_set_input_filter(ob, c_validate)
-    _cfunc_refs[tmpval1] = c_validate
     return retval
 
 
@@ -10672,7 +10681,7 @@ _fl_create_menu = cfuncproto(so_libforms, "fl_create_menu",
            FL_Coord w, FL_Coord h, const char * label)
         """)
 def fl_create_menu(type, x, y, w, h, label):
-    """ fl_create_menu(type, x, y, w, h, label) -> object ref.
+    """ fl_create_menu(type, x, y, w, h, label) -> object
     """ 
 
     retval = _fl_create_menu(type, x, y, w, h, label)
@@ -10686,7 +10695,7 @@ _fl_add_menu = cfuncproto(so_libforms, "fl_add_menu",
            FL_Coord w, FL_Coord h, const char * label)    DEPRECATED
         """)
 def fl_add_menu(type, x, y, w, h, label):
-    """ fl_add_menu(type, x, y, w, h, label) -> object ref.
+    """ fl_add_menu(type, x, y, w, h, label) -> object
     """ 
 
     retval = _fl_add_menu(type, x, y, w, h, label)
@@ -10756,12 +10765,12 @@ _fl_set_menu_item_callback = cfuncproto(so_libforms, "fl_set_menu_item_callback"
            FL_PUP_CB cb)
         """)
 def fl_set_menu_item_callback(ob, numb, py_cb):
-    """ fl_set_menu_item_callback(ob, numb, py_cb) -> callback ref.
+    """ fl_set_menu_item_callback(ob, numb, py_cb) -> callback
     """ 
 
     c_cb = FL_PUP_CB(py_cb)
+    _cfunc_refs[get_rand_dictkey()] = c_cb
     retval = _fl_set_menu_item_callback(ob, numb, c_cb)
-    _cfunc_refs[tmpval1] = c_cb
     return retval
 
 
@@ -10943,7 +10952,7 @@ FL_MENUBAR_LCOL = FL_LCOL
 #          FL_Coord w, FL_Coord h, char * label)    REMOVED
 #       """)
 #def fl_create_menubar(type, x, y, w, h, label):
-#   """ fl_create_menubar(type, x, y, w, h, label) -> object ref.
+#   """ fl_create_menubar(type, x, y, w, h, label) -> object
 #   """
 #
 #   retval fl_create_menubar(type, x, y, w, h, label)
@@ -10957,7 +10966,7 @@ FL_MENUBAR_LCOL = FL_LCOL
 #          FL_Coord w, FL_Coord h, char * label)    REMOVED
 #       """)
 #def fl_add_menubar(type, x, y, w, h, label):
-#   """ fl_add_menubar(type, x, y, w, h, label) -> object ref.
+#   """ fl_add_menubar(type, x, y, w, h, label) -> object
 #   """
 #
 #   retval fl_add_menubar(type, x, y, w, h, label)
@@ -11013,7 +11022,7 @@ _fl_create_nmenu = cfuncproto(so_libforms, "fl_create_nmenu",
            FL_Coord p4, FL_Coord p5, const char * p6)
         """)
 def fl_create_nmenu(p1, p2, p3, p4, p5, p6):
-    """ fl_create_nmenu(p1, p2, p3, p4, p5, p6) -> object ref.
+    """ fl_create_nmenu(p1, p2, p3, p4, p5, p6) -> object
     """ 
 
     retval = _fl_create_nmenu(p1, p2, p3, p4, p5, p6)
@@ -11027,7 +11036,7 @@ _fl_add_nmenu = cfuncproto(so_libforms, "fl_add_nmenu",
            FL_Coord p4, FL_Coord p5, const char * p6)
         """)
 def fl_add_nmenu(p1, p2, p3, p4, p5, p6):
-    """ fl_add_nmenu(p1, p2, p3, p4, p5, p6) -> object ref. 
+    """ fl_add_nmenu(p1, p2, p3, p4, p5, p6) -> object 
     """ 
 
     retval = _fl_add_nmenu(p1, p2, p3, p4, p5, p6)
@@ -11051,7 +11060,7 @@ _fl_add_nmenu_items = cfuncproto(so_libforms, "fl_add_nmenu_items",
         """FL_POPUP_ENTRY * fl_add_nmenu_items(FL_OBJECT * p1, const char * p2)
         """)
 def fl_add_nmenu_items(p1, p2):
-    """ fl_add_nmenu_items(p1, p2) -> popup_entry ref.
+    """ fl_add_nmenu_items(p1, p2) -> popup_entry
     """ 
 
     retval = _fl_add_nmenu_items(p1, p2)
@@ -11065,7 +11074,7 @@ _fl_insert_nmenu_items = cfuncproto(so_libforms, "fl_insert_nmenu_items",
            FL_POPUP_ENTRY * p2, const char * p3)
         """)
 def fl_insert_nmenu_items(p1, p2, p3):
-    """ fl_insert_nmenu_items(p1, p2, p3) -> popup_entry ref.
+    """ fl_insert_nmenu_items(p1, p2, p3) -> popup_entry
     """ 
 
     retval = _fl_insert_nmenu_items(p1, p2, p3)
@@ -11079,7 +11088,7 @@ _fl_replace_nmenu_item = cfuncproto(so_libforms, "fl_replace_nmenu_item",
            FL_POPUP_ENTRY * p2, const char * p3)
         """)
 def fl_replace_nmenu_item(p1, p2, p3):
-    """ fl_replace_nmenu_item(p1, p2, p3) -> popup_entry ref.
+    """ fl_replace_nmenu_item(p1, p2, p3) -> popup_entry
     """ 
 
     retval = _fl_replace_nmenu_item(p1, p2, p3)
@@ -11105,7 +11114,7 @@ _fl_set_nmenu_items = cfuncproto(so_libforms, "fl_set_nmenu_items",
            FL_POPUP_ITEM * p2)
         """)
 def fl_set_nmenu_items(p1, p2):
-    """ fl_set_nmenu_items(p1, p2) -> popup_entry ref.
+    """ fl_set_nmenu_items(p1, p2) -> popup_entry
     """ 
 
     retval = _fl_set_nmenu_items(p1, p2)
@@ -11117,7 +11126,7 @@ _fl_get_nmenu_popup = cfuncproto(so_libforms, "fl_get_nmenu_popup",
         """FL_POPUP * fl_get_nmenu_popup(FL_OBJECT * p1)
         """)
 def fl_get_nmenu_popup(p1):
-    """ fl_get_nmenu_popup(p1) -> popup ref.
+    """ fl_get_nmenu_popup(p1) -> popup
     """ 
 
     retval = _fl_get_nmenu_popup(p1)
@@ -11141,7 +11150,7 @@ _fl_get_nmenu_item = cfuncproto(so_libforms, "fl_get_nmenu_item",
         """FL_POPUP_RETURN * fl_get_nmenu_item(FL_OBJECT * p1)
         """)
 def fl_get_nmenu_item(p1):
-    """ fl_get_nmenu_item(p1) -> popup_return ref.
+    """ fl_get_nmenu_item(p1) -> popup_return
     """ 
 
     retval = _fl_get_nmenu_item(p1)
@@ -11154,7 +11163,7 @@ _fl_get_nmenu_item_by_value = cfuncproto(so_libforms, "fl_get_nmenu_item_by_valu
            long int p2)
         """)
 def fl_get_nmenu_item_by_value(p1, p2):
-    """ fl_get_nmenu_item_by_value(p1, p2) -> popup_entry ref.
+    """ fl_get_nmenu_item_by_value(p1, p2) -> popup_entry
     """ 
 
     retval = _fl_get_nmenu_item_by_value(p1, p2)
@@ -11167,7 +11176,7 @@ _fl_get_nmenu_item_by_label = cfuncproto(so_libforms, "fl_get_nmenu_item_by_labe
            const char * p2)
         """)
 def fl_get_nmenu_item_by_label(p1, p2):
-    """ fl_get_nmenu_item_by_label(p1, p2) -> popup_entry ref.
+    """ fl_get_nmenu_item_by_label(p1, p2) -> popup_entry
     """ 
 
     retval = _fl_get_nmenu_item_by_label(p1, p2)
@@ -11180,7 +11189,7 @@ _fl_get_nmenu_item_by_text = cfuncproto(so_libforms, "fl_get_nmenu_item_by_text"
            const char * p2)
         """)
 def fl_get_nmenu_item_by_text(p1, p2):
-    """ fl_get_nmenu_item_by_text(p1, p2) -> popup_entry ref.
+    """ fl_get_nmenu_item_by_text(p1, p2) -> popup_entry
     """ 
 
     retval = _fl_get_nmenu_item_by_text(p1, p2)
@@ -11204,7 +11213,7 @@ _fl_set_nmenu_hl_text_color = cfuncproto(so_libforms, "fl_set_nmenu_hl_text_colo
         """FL_COLOR fl_set_nmenu_hl_text_color(FL_OBJECT * p1, FL_COLOR p2)
         """)
 def fl_set_nmenu_hl_text_color(p1, p2):
-    """ fl_set_nmenu_hl_text_color(p1, p2) -> color ref.
+    """ fl_set_nmenu_hl_text_color(p1, p2) -> color
     """ 
 
     retval = _fl_set_nmenu_hl_text_color(p1, p2)
@@ -11235,7 +11244,7 @@ _fl_create_positioner = cfuncproto(so_libforms, "fl_create_positioner",
            FL_Coord w, FL_Coord h, const char * label)
         """)
 def fl_create_positioner(type, x, y, w, h, label):
-    """ fl_create_positioner(type, x, y, w, h, label) -> object ref.
+    """ fl_create_positioner(type, x, y, w, h, label) -> object
     """ 
 
     retval = _fl_create_positioner(type, x, y, w, h, label)
@@ -11249,7 +11258,7 @@ _fl_add_positioner = cfuncproto(so_libforms, "fl_add_positioner",
            FL_Coord w, FL_Coord h, const char * label)
         """)
 def fl_add_positioner(type, x, y, w, h, label):
-    """ fl_add_positioner(type, x, y, w, h, label) -> object ref.
+    """ fl_add_positioner(type, x, y, w, h, label) -> object
     """ 
 
     retval = _fl_add_positioner(type, x, y, w, h, label)
@@ -11411,7 +11420,7 @@ _fl_create_scrollbar = cfuncproto(so_libforms, "fl_create_scrollbar",
            FL_Coord w, FL_Coord h, const char * label)
         """)
 def fl_create_scrollbar(type, x, y, w, h, label):
-    """ fl_create_scrollbar(type, x, y, w, h, label) -> object ref.
+    """ fl_create_scrollbar(type, x, y, w, h, label) -> object
     """ 
 
     retval = _fl_create_scrollbar(type, x, y, w, h, label)
@@ -11425,7 +11434,7 @@ _fl_add_scrollbar = cfuncproto(so_libforms, "fl_add_scrollbar",
            FL_Coord w, FL_Coord h, const char * label)
         """)
 def fl_add_scrollbar(type, x, y, w, h, label):
-    """ fl_add_scrollbar(type, x, y, w, h, label) -> object ref.
+    """ fl_add_scrollbar(type, x, y, w, h, label) -> object
     """ 
 
     retval = _fl_add_scrollbar(type, x, y, w, h, label)
@@ -11556,7 +11565,7 @@ _fl_create_select = cfuncproto(so_libforms, "fl_create_select",
            FL_Coord p4, FL_Coord p5, const char * p6)
         """)
 def fl_create_select(p1, p2, p3, p4, p5, p6):
-    """ fl_create_select(p1, p2, p3, p4, p5, p6) -> object ref.
+    """ fl_create_select(p1, p2, p3, p4, p5, p6) -> object
     """ 
 
     retval = _fl_create_select(p1, p2, p3, p4, p5, p6)
@@ -11570,7 +11579,7 @@ _fl_add_select = cfuncproto(so_libforms, "fl_add_select",
            FL_Coord p4, FL_Coord p5, const char * p6)
         """)
 def fl_add_select(p1, p2, p3, p4, p5, p6):
-    """ fl_add_select(p1, p2, p3, p4, p5, p6) -> object ref.
+    """ fl_add_select(p1, p2, p3, p4, p5, p6) -> object
     """ 
 
     retval = _fl_add_select(p1, p2, p3, p4, p5, p6)
@@ -11581,22 +11590,22 @@ _fl_clear_select = cfuncproto(so_libforms, "fl_clear_select",
         cty.c_int, [cty.POINTER(FL_OBJECT)], 
         """int fl_clear_select(FL_OBJECT * p1)
         """)
-def fl_clear_select(p1):
-    """ fl_clear_select(p1)
+def fl_clear_select(obj):
+    """ fl_clear_select(obj)
     """ 
 
-    _fl_clear_select(p1)
+    _fl_clear_select(obj)
 
 
 _fl_add_select_items = cfuncproto(so_libforms, "fl_add_select_items",
         cty.POINTER(FL_POPUP_ENTRY), [cty.POINTER(FL_OBJECT), STRING], 
         """FL_POPUP_ENTRY * fl_add_select_items(FL_OBJECT * p1, const char * p2)
         """)
-def fl_add_select_items(p1, p2):
-    """ fl_add_select_items(p1, p2) -> popup_entry ref.
+def fl_add_select_items(obj, p2):
+    """ fl_add_select_items(obj, p2) -> popup_entry
     """ 
 
-    retval = _fl_add_select_items(p1, p2)
+    retval = _fl_add_select_items(obj, p2)
     return retval
 
 
@@ -11606,11 +11615,11 @@ _fl_insert_select_items = cfuncproto(so_libforms, "fl_insert_select_items",
         """FL_POPUP_ENTRY * fl_insert_select_items(FL_OBJECT * p1,
            FL_POPUP_ENTRY * p2, const char * p3)
         """)
-def fl_insert_select_items(p1, p2, p3):
-    """ fl_insert_select_items(p1, p2, p3) -> popup_entry ref.
+def fl_insert_select_items(obj, p2, p3):
+    """ fl_insert_select_items(obj, p2, p3) -> popup_entry
     """ 
 
-    retval = _fl_insert_select_items(p1, p2, p3)
+    retval = _fl_insert_select_items(obj, p2, p3)
     return retval
 
 
@@ -11621,7 +11630,7 @@ _fl_replace_select_item = cfuncproto(so_libforms, "fl_replace_select_item",
            FL_POPUP_ENTRY * p2, const char * p3)
         """)
 def fl_replace_select_item(p1, p2, p3):
-    """ fl_replace_select_item(p1, p2, p3) -> popup_entry ref.
+    """ fl_replace_select_item(p1, p2, p3) -> popup_entry
     """ 
 
     retval = _fl_replace_select_item(p1, p2, p3)
@@ -11657,7 +11666,7 @@ _fl_get_select_popup = cfuncproto(so_libforms, "fl_get_select_popup",
         """FL_POPUP * fl_get_select_popup(FL_OBJECT * p1)
         """)
 def fl_get_select_popup(p1):
-    """ fl_get_select_popup(p1) -> popup ref.
+    """ fl_get_select_popup(p1) -> popup
     """ 
 
     retval = _fl_get_select_popup(p1)
@@ -11680,11 +11689,11 @@ _fl_get_select_item = cfuncproto(so_libforms, "fl_get_select_item",
         cty.POINTER(FL_POPUP_RETURN), [cty.POINTER(FL_OBJECT)], 
         """FL_POPUP_RETURN * fl_get_select_item(FL_OBJECT * p1)
         """)
-def fl_get_select_item(p1):
-    """ fl_get_select_item(p1) -> popup_return ref.
+def fl_get_select_item(obj):
+    """ fl_get_select_item(obj) -> popup_return
     """ 
 
-    retval = _fl_get_select_item(p1)
+    retval = _fl_get_select_item(obj)
     return retval
 
 
@@ -11694,11 +11703,11 @@ _fl_set_select_item = cfuncproto(so_libforms, "fl_set_select_item",
         """FL_POPUP_RETURN * fl_set_select_item(FL_OBJECT * p1,
            FL_POPUP_ENTRY * p2)
         """)
-def fl_set_select_item(p1, p2):
-    """ fl_set_select_item(p1, p2) -> popup_return ref.
+def fl_set_select_item(obj, p2):
+    """ fl_set_select_item(obj, p2) -> popup_return
     """ 
 
-    retval = _fl_set_select_item(p1, p2)
+    retval = _fl_set_select_item(obj, p2)
     return retval
 
 
@@ -11707,11 +11716,11 @@ _fl_get_select_item_by_value = cfuncproto(so_libforms, "fl_get_select_item_by_va
         """FL_POPUP_ENTRY * fl_get_select_item_by_value(FL_OBJECT * p1,
            long int p2)
         """)
-def fl_get_select_item_by_value(p1, p2):
-    """ fl_get_select_item_by_value(p1, p2) -> popup_entry ref.
+def fl_get_select_item_by_value(obj, p2):
+    """ fl_get_select_item_by_value(obj, p2) -> popup_entry
     """ 
 
-    retval = _fl_get_select_item_by_value(p1, p2)
+    retval = _fl_get_select_item_by_value(obj, p2)
     return retval
 
 
@@ -11720,11 +11729,11 @@ _fl_get_select_item_by_label = cfuncproto(so_libforms, "fl_get_select_item_by_la
         """FL_POPUP_ENTRY * fl_get_select_item_by_label(FL_OBJECT * p1,
            const char * p2)
         """)
-def fl_get_select_item_by_label(p1, p2):
-    """ fl_get_select_item_by_label(p1, p2) -> popup_entry ref.
+def fl_get_select_item_by_label(obj, p2):
+    """ fl_get_select_item_by_label(obj, p2) -> popup_entry
     """ 
 
-    retval = _fl_get_select_item_by_label(p1, p2)
+    retval = _fl_get_select_item_by_label(obj, p2)
     return retval
 
 
@@ -11733,11 +11742,11 @@ _fl_get_select_item_by_text = cfuncproto(so_libforms, "fl_get_select_item_by_tex
         """FL_POPUP_ENTRY * fl_get_select_item_by_text(FL_OBJECT * p1,
            const char * p2)
         """)
-def fl_get_select_item_by_text(p1, p2):
-    """ fl_get_select_item_by_text(p1, p2) -> popup_entry ref.
+def fl_get_select_item_by_text(obj, p2):
+    """ fl_get_select_item_by_text(obj, p2) -> popup_entry
     """ 
 
-    retval = _fl_get_select_item_by_text(p1, p2)
+    retval = _fl_get_select_item_by_text(obj, p2)
     return retval
 
 
@@ -11745,11 +11754,11 @@ _fl_get_select_text_color = cfuncproto(so_libforms, "fl_get_select_text_color",
         FL_COLOR, [cty.POINTER(FL_OBJECT)], 
         """FL_COLOR fl_get_select_text_color(FL_OBJECT * p1)
         """)
-def fl_get_select_text_color(p1):
-    """ fl_get_select_text_color(p1) -> color ref.
+def fl_get_select_text_color(obj):
+    """ fl_get_select_text_color(obj) -> color
     """ 
 
-    retval = _fl_get_select_text_color(p1)
+    retval = _fl_get_select_text_color(obj)
     return retval
 
 
@@ -11758,7 +11767,7 @@ _fl_set_select_text_color = cfuncproto(so_libforms, "fl_set_select_text_color",
         """FL_COLOR fl_set_select_text_color(FL_OBJECT * p1, FL_COLOR p2)
         """)
 def fl_set_select_text_color(p1, p2):
-    """ fl_set_select_text_color(p1, p2) -> color ref.
+    """ fl_set_select_text_color(p1, p2) -> color
     """ 
 
     retval = _fl_set_select_text_color(p1, p2)
@@ -11884,7 +11893,7 @@ _fl_create_slider = cfuncproto(so_libforms, "fl_create_slider",
            FL_Coord w, FL_Coord h, const char * label)
         """)
 def fl_create_slider(type, x, y, w, h, label):
-    """ fl_create_slider(type, x, y, w, h, label) -> object ref.
+    """ fl_create_slider(type, x, y, w, h, label) -> object
     """ 
 
     retval = _fl_create_slider(type, x, y, w, h, label)
@@ -11898,7 +11907,7 @@ _fl_add_slider = cfuncproto(so_libforms, "fl_add_slider",
            FL_Coord w, FL_Coord h, const char * label)
         """)
 def fl_add_slider(type, x, y, w, h, label):
-    """ fl_add_slider(type, x, y, w, h, label) -> object ref.
+    """ fl_add_slider(type, x, y, w, h, label) -> object
     """ 
 
     retval = _fl_add_slider(type, x, y, w, h, label)
@@ -11912,7 +11921,7 @@ _fl_create_valslider = cfuncproto(so_libforms, "fl_create_valslider",
            FL_Coord w, FL_Coord h, const char * label)
         """)
 def fl_create_valslider(type, x, y, w, h, label):
-    """ fl_create_valslider(type, x, y, w, h, label) -> object ref.
+    """ fl_create_valslider(type, x, y, w, h, label) -> object
     """ 
 
     retval = _fl_create_valslider(type, x, y, w, h, label)
@@ -11926,7 +11935,7 @@ _fl_add_valslider = cfuncproto(so_libforms, "fl_add_valslider",
            FL_Coord w, FL_Coord h, const char * label)
         """)
 def fl_add_valslider(type, x, y, w, h, label):
-    """ fl_add_valslider(type, x, y, w, h, label) -> object ref.
+    """ fl_add_valslider(type, x, y, w, h, label) -> object
     """ 
 
     retval = _fl_add_valslider(type, x, y, w, h, label)
@@ -12056,8 +12065,8 @@ def fl_set_slider_filter(ob, py_filter):
     """ 
 
     c_filter = FL_VAL_FILTER(py_filter)
+    _cfunc_refs[get_rand_dictkey()] = c_filter
     _fl_set_slider_filter(ob, c_filter)
-    _cfunc_refs[tmpval1] = c_filter
 
 
 # values for enumeration 'FL_SPINNER_TYPE'
@@ -12073,7 +12082,7 @@ _fl_create_spinner = cfuncproto(so_libforms, "fl_create_spinner",
            FL_Coord w, FL_Coord h, const char * label)
         """)
 def fl_create_spinner(type, x, y, w, h, label):
-    """ fl_create_spinner(type, x, y, w, h, label) -> object ref.
+    """ fl_create_spinner(type, x, y, w, h, label) -> object
     """ 
 
     retval = _fl_create_spinner(type, x, y, w, h, label)
@@ -12087,7 +12096,7 @@ _fl_add_spinner = cfuncproto(so_libforms, "fl_add_spinner",
         FL_Coord w, FL_Coord h, const char * label)
         """)
 def fl_add_spinner(type, x, y, w, h, label):
-    """ fl_add_spinner(type, x, y, w, h, label) -> object ref.
+    """ fl_add_spinner(type, x, y, w, h, label) -> object
     """ 
 
     retval = _fl_add_spinner(type, x, y, w, h, label)
@@ -12194,7 +12203,7 @@ _fl_get_spinner_input = cfuncproto(so_libforms, "fl_get_spinner_input",
         """)
 
 def fl_get_spinner_input(obj):
-    """ fl_get_spinner_input(obj) -> object ref.
+    """ fl_get_spinner_input(obj) -> object
     """ 
 
     retval = _fl_get_spinner_input(obj)
@@ -12207,7 +12216,7 @@ _fl_get_spinner_up_button = cfuncproto(so_libforms, "fl_get_spinner_up_button",
         """)
 
 def fl_get_spinner_up_button(obj):
-    """ fl_get_spinner_up_button(obj) -> object ref.
+    """ fl_get_spinner_up_button(obj) -> object
     """ 
 
     retval = _fl_get_spinner_up_button(obj)
@@ -12220,7 +12229,7 @@ _fl_get_spinner_down_button = cfuncproto(so_libforms, "fl_get_spinner_down_butto
         """)
 
 def fl_get_spinner_down_button(obj):
-    """ fl_get_spinner_down_button(obj) -> object ref.
+    """ fl_get_spinner_down_button(obj) -> object
     """ 
 
     retval = _fl_get_spinner_down_button(obj)
@@ -12251,7 +12260,7 @@ _fl_create_tabfolder = cfuncproto(so_libforms, "fl_create_tabfolder",
            FL_Coord w, FL_Coord h, const char * label)
         """)
 def fl_create_tabfolder(type, x, y, w, h, label):
-    """ fl_create_tabfolder(type, x, y, w, h, label) -> object ref.
+    """ fl_create_tabfolder(type, x, y, w, h, label) -> object
     """ 
 
     retval = _fl_create_tabfolder(type, x, y, w, h, label)
@@ -12265,7 +12274,7 @@ _fl_add_tabfolder = cfuncproto(so_libforms, "fl_add_tabfolder",
            FL_Coord w, FL_Coord h, const char * label)
         """)
 def fl_add_tabfolder(type, x, y, w, h, label):
-    """ fl_add_tabfolder(type, x, y, w, h, label) -> object ref.
+    """ fl_add_tabfolder(type, x, y, w, h, label) -> object
     """ 
 
     retval = _fl_add_tabfolder(type, x, y, w, h, label)
@@ -12279,7 +12288,7 @@ _fl_addto_tabfolder = cfuncproto(so_libforms, "fl_addto_tabfolder",
            FL_FORM * form)
         """)
 def fl_addto_tabfolder(ob, title, form):
-    """ fl_addto_tabfolder(ob, title, form) -> object ref.
+    """ fl_addto_tabfolder(ob, title, form) -> object
     """ 
 
     retval = _fl_addto_tabfolder(ob, title, form)
@@ -12291,7 +12300,7 @@ _fl_get_tabfolder_folder_bynumber = cfuncproto(so_libforms, "fl_get_tabfolder_fo
         """FL_FORM * fl_get_tabfolder_folder_bynumber(FL_OBJECT * ob, int num)
         """)
 def fl_get_tabfolder_folder_bynumber(ob, num):
-    """ fl_get_tabfolder_folder_bynumber(ob, num) -> form ref.
+    """ fl_get_tabfolder_folder_bynumber(ob, num) -> form
     """ 
 
     retval = _fl_get_tabfolder_folder_bynumber(ob, num)
@@ -12303,7 +12312,7 @@ _fl_get_tabfolder_folder_byname = cfuncproto(so_libforms, "fl_get_tabfolder_fold
         """FL_FORM * fl_get_tabfolder_folder_byname(FL_OBJECT * ob, const char * name)
         """)
 def fl_get_tabfolder_folder_byname(ob, name):
-    """ fl_get_tabfolder_folder_byname(ob, name) -> form ref.
+    """ fl_get_tabfolder_folder_byname(ob, name) -> form
     """ 
 
     retval = _fl_get_tabfolder_folder_byname(ob, name)
@@ -12381,7 +12390,7 @@ _fl_get_folder = cfuncproto(so_libforms, "fl_get_folder",
         """FL_FORM * fl_get_folder(FL_OBJECT * ob)
         """)
 def fl_get_folder(ob):
-    """ fl_get_folder(ob) -> form ref.
+    """ fl_get_folder(ob) -> form
     """ 
 
     retval = _fl_get_folder(ob)
@@ -12429,7 +12438,7 @@ _fl_get_active_folder = cfuncproto(so_libforms, "fl_get_active_folder",
         """FL_FORM * fl_get_active_folder(FL_OBJECT * ob)
         """)
 def fl_get_active_folder(ob):
-    """ fl_get_active_folder(ob) -> form ref.
+    """ fl_get_active_folder(ob) -> form
     """ 
 
     retval = _fl_get_active_folder(ob)
@@ -12543,7 +12552,7 @@ _fl_create_text = cfuncproto(so_libforms, "fl_create_text",
            FL_Coord w, FL_Coord h, const char * label)
         """)
 def fl_create_text(type, x, y, w, h, label):
-    """ fl_create_text(type, x, y, w, h, label) -> object ref.
+    """ fl_create_text(type, x, y, w, h, label) -> object
     """ 
 
     retval = _fl_create_text(type, x, y, w, h, label)
@@ -12557,7 +12566,7 @@ _fl_add_text = cfuncproto(so_libforms, "fl_add_text",
            FL_Coord w, FL_Coord h, const char * label)
         """)
 def fl_add_text(type, x, y, w, h, label):
-    """ fl_add_text(type, x, y, w, h, label) -> object ref.
+    """ fl_add_text(type, x, y, w, h, label) -> object
     """ 
 
     retval = _fl_add_text(type, x, y, w, h, label)
@@ -12683,7 +12692,7 @@ _fl_create_thumbwheel = cfuncproto(so_libforms, "fl_create_thumbwheel",
            FL_Coord w, FL_Coord h, const char * label)
         """)
 def fl_create_thumbwheel(type, x, y, w, h, label):
-    """ fl_create_thumbwheel(type, x, y, w, h, label) -> object ref.
+    """ fl_create_thumbwheel(type, x, y, w, h, label) -> object
     """ 
 
     retval = _fl_create_thumbwheel(type, x, y, w, h, label)
@@ -12697,7 +12706,7 @@ _fl_add_thumbwheel = cfuncproto(so_libforms, "fl_add_thumbwheel",
            FL_Coord w, FL_Coord h, const char * label)
         """)
 def fl_add_thumbwheel(type, x, y, w, h, label):
-    """ fl_add_thumbwheel(type, x, y, w, h, label) -> object ref.
+    """ fl_add_thumbwheel(type, x, y, w, h, label) -> object
     """ 
 
     retval = _fl_add_thumbwheel(type, x, y, w, h, label)
@@ -12738,7 +12747,7 @@ _fl_create_timer = cfuncproto(so_libforms, "fl_create_timer",
         FL_Coord w, FL_Coord h, const char * label)
         """)
 def fl_create_timer(type, x, y, w, h, label):
-    """ fl_create_timer(type, x, y, w, h, label) -> object ref.
+    """ fl_create_timer(type, x, y, w, h, label) -> object
     """ 
 
     retval = _fl_create_timer(type, x, y, w, h, label)
@@ -12752,7 +12761,7 @@ _fl_add_timer = cfuncproto(so_libforms, "fl_add_timer",
         FL_Coord w, FL_Coord h, const char * label)
         """)
 def fl_add_timer(type, x, y, w, h, label):
-    """ fl_add_timer(type, x, y, w, h, label) -> object ref.
+    """ fl_add_timer(type, x, y, w, h, label) -> object
     """ 
 
     retval = _fl_add_timer(type, x, y, w, h, label)
@@ -12803,8 +12812,8 @@ def fl_set_timer_filter(ob, py_filter):
     """ 
 
     c_filter = FL_TIMER_FILTER(py_filter)
+    _cfunc_refs[get_rand_dictkey()] = c_filter
     retval = _fl_set_timer_filter(ob, c_filter)
-    _cfunc_refs[tmpval1] = c_filter
     return retval
 
 
@@ -12930,7 +12939,7 @@ _fl_setpup_default_cursor = cfuncproto(so_libforms, "fl_setpup_default_cursor",
         """Cursor fl_setpup_default_cursor(int cursor):
         """)
 def fl_setpup_default_cursor(cursor):
-    """ fl_setpup_default_cursor(cursor) -> cursor ref.
+    """ fl_setpup_default_cursor(cursor) -> cursor
     """ 
 
     retval = _fl_setpup_default_cursor(cursor)
@@ -13085,12 +13094,12 @@ _fl_setpup_entercb = cfuncproto(so_libforms, "fl_setpup_entercb",
            void * data)
         """)
 def fl_setpup_entercb(nm, py_cb, data):
-    """ fl_setpup_entercb(nm, py_cb, data) -> pup_entercb ref.
+    """ fl_setpup_entercb(nm, py_cb, data) -> pup_entercb
     """ 
 
     c_cb = FL_PUP_ENTERCB(py_cb)
+    _cfunc_refs[get_rand_dictkey()] = c_cb
     retval = _fl_setpup_entercb(nm, c_cb, data)
-    _cfunc_refs[tmpval1] = c_cb
     return retval
 
 
@@ -13100,12 +13109,12 @@ _fl_setpup_leavecb = cfuncproto(so_libforms, "fl_setpup_leavecb",
            void * data)
         """)
 def fl_setpup_leavecb(nm, py_cb, data):
-    """ fl_setpup_leavecb(nm, py_cb, data) -> pup_leavecb ref.
+    """ fl_setpup_leavecb(nm, py_cb, data) -> pup_leavecb
     """ 
 
     c_cb = FL_PUP_LEAVECB(py_cb)
+    _cfunc_refs[get_rand_dictkey()] = c_cb
     retval = _fl_setpup_leavecb(nm, c_cb, data)
-    _cfunc_refs[tmpval1] = c_cb
     return retval
 
 
@@ -13125,7 +13134,7 @@ _fl_setpup_cursor = cfuncproto(so_libforms, "fl_setpup_cursor",
         """Cursor fl_setpup_cursor(int nm, int cursor)
         """)
 def fl_setpup_cursor(nm, cursor):
-    """ fl_setpup_cursor(nm, cursor) -> cursor ref.
+    """ fl_setpup_cursor(nm, cursor) -> cursor
     """ 
 
     retval = _fl_setpup_cursor(nm, cursor)
@@ -13219,12 +13228,12 @@ _fl_setpup_itemcb = cfuncproto(so_libforms, "fl_setpup_itemcb",
         """FL_PUP_CB fl_setpup_itemcb(int nm, int ni, FL_PUP_CB cb)
         """)
 def fl_setpup_itemcb(nm, ni, py_cb):
-    """ fl_setpup_itemcb(nm, ni, py_cb) -> pup_cb ref.
+    """ fl_setpup_itemcb(nm, ni, py_cb) -> pup_cb
     """ 
 
     c_cb = FL_PUP_CB(py_cb)
+    _cfunc_refs[get_rand_dictkey()] = c_cb
     retval = _fl_setpup_itemcb(nm, ni, c_cb)
-    _cfunc_refs[tmpval1] = c_cb
     return retval
 
 
@@ -13237,8 +13246,8 @@ def fl_setpup_menucb(nm, py_cb):
     """ 
 
     c_cb = FL_PUP_CB(py_cb)
+    _cfunc_refs[get_rand_dictkey()] = c_cb
     retval = _fl_setpup_menucb(nm, c_cb)
-    _cfunc_refs[tmpval1] = c_cb
     return retval
 
 
@@ -13299,7 +13308,7 @@ _fl_create_xyplot = cfuncproto(so_libforms, "fl_create_xyplot",
            FL_Coord w, FL_Coord h, const char * label)
         """)
 def fl_create_xyplot(t, x, y, w, h, label):
-    """ fl_create_xyplot(t, x, y, w, h, label) -> object ref.
+    """ fl_create_xyplot(t, x, y, w, h, label) -> object
     """ 
 
     retval = _fl_create_xyplot(t, x, y, w, h, label)
@@ -13313,7 +13322,7 @@ _fl_add_xyplot = cfuncproto(so_libforms, "fl_add_xyplot",
            FL_Coord w, FL_Coord h, const char * label)
         """)
 def fl_add_xyplot(t, x, y, w, h, label):
-    """ fl_add_xyplot(t, x, y, w, h, label) -> object ref.
+    """ fl_add_xyplot(t, x, y, w, h, label) -> object
     """ 
 
     retval = _fl_add_xyplot(t, x, y, w, h, label)
@@ -13392,22 +13401,22 @@ _fl_delete_xyplot_text = cfuncproto(so_libforms, "fl_delete_xyplot_text",
         None, [cty.POINTER(FL_OBJECT), STRING], 
         """void fl_delete_xyplot_text(FL_OBJECT * ob, const char * text)
         """)
-def fl_delete_xyplot_text(ob, text):
-    """ fl_delete_xyplot_text(ob, text)
+def fl_delete_xyplot_text(obj, text):
+    """ fl_delete_xyplot_text(obj, text)
     """ 
 
-    _fl_delete_xyplot_text(ob, text)
+    _fl_delete_xyplot_text(obj, text)
 
 
 _fl_set_xyplot_maxoverlays = cfuncproto(so_libforms, "fl_set_xyplot_maxoverlays",
         cty.c_int, [cty.POINTER(FL_OBJECT), cty.c_int], 
         """int fl_set_xyplot_maxoverlays(FL_OBJECT * ob, int maxover)
         """)
-def fl_set_xyplot_maxoverlays(ob, maxover):
-    """ fl_set_xyplot_maxoverlays(ob, maxover) -> num.
+def fl_set_xyplot_maxoverlays(obj, maxover):
+    """ fl_set_xyplot_maxoverlays(obj, maxover) -> num.
     """ 
 
-    retval = _fl_set_xyplot_maxoverlays(ob, maxover)
+    retval = _fl_set_xyplot_maxoverlays(obj, maxover)
     return retval
 
 
@@ -13417,22 +13426,22 @@ _fl_add_xyplot_overlay = cfuncproto(so_libforms, "fl_add_xyplot_overlay",
         """void fl_add_xyplot_overlay(FL_OBJECT * ob, int id, float * x,
            float * y, int n, FL_COLOR col)
         """)
-def fl_add_xyplot_overlay(ob, id, x, y, n, col):
-    """ fl_add_xyplot_overlay(ob, id, x, y, n, col)
+def fl_add_xyplot_overlay(obj, id, x, y, n, col):
+    """ fl_add_xyplot_overlay(obj, id, x, y, n, col)
     """ 
 
-    _fl_add_xyplot_overlay(ob, id, x, y, n, col)
+    _fl_add_xyplot_overlay(obj, id, x, y, n, col)
 
 
 _fl_add_xyplot_overlay_file = cfuncproto(so_libforms, "fl_add_xyplot_overlay_file",
         cty.c_int, [cty.POINTER(FL_OBJECT), cty.c_int, STRING, FL_COLOR], 
         """int fl_add_xyplot_overlay_file(FL_OBJECT * ob, int id, const char * f, FL_COLOR c)
         """)
-def fl_add_xyplot_overlay_file(ob, id, f, c):
-    """ fl_add_xyplot_overlay_file(ob, id, f, c) -> num.
+def fl_add_xyplot_overlay_file(obj, id, f, c):
+    """ fl_add_xyplot_overlay_file(obj, id, f, c) -> num.
     """ 
 
-    retval = _fl_add_xyplot_overlay_file(ob, id, f, c)
+    retval = _fl_add_xyplot_overlay_file(obj, id, f, c)
     return retval
 
 
@@ -13440,55 +13449,55 @@ _fl_set_xyplot_return = cfuncproto(so_libforms, "fl_set_xyplot_return",
         None, [cty.POINTER(FL_OBJECT), cty.c_int], 
         """void fl_set_xyplot_return(FL_OBJECT * ob, int when)
         """)
-def fl_set_xyplot_return(ob, when):
-    """ fl_set_xyplot_return(ob, when)
+def fl_set_xyplot_return(obj, when):
+    """ fl_set_xyplot_return(obj, when)
     """ 
 
-    _fl_set_xyplot_return(ob, when)
+    _fl_set_xyplot_return(obj, when)
 
 
 _fl_set_xyplot_xtics = cfuncproto(so_libforms, "fl_set_xyplot_xtics",
         None, [cty.POINTER(FL_OBJECT), cty.c_int, cty.c_int], 
         """void fl_set_xyplot_xtics(FL_OBJECT * ob, int major, int minor)
         """)
-def fl_set_xyplot_xtics(ob, major, minor):
-    """ fl_set_xyplot_xtics(ob, major, minor)
+def fl_set_xyplot_xtics(obj, major, minor):
+    """ fl_set_xyplot_xtics(obj, major, minor)
     """ 
 
-    _fl_set_xyplot_xtics(ob, major, minor)
+    _fl_set_xyplot_xtics(obj, major, minor)
 
 
 _fl_set_xyplot_ytics = cfuncproto(so_libforms, "fl_set_xyplot_ytics",
         None, [cty.POINTER(FL_OBJECT), cty.c_int, cty.c_int], 
         """void fl_set_xyplot_ytics(FL_OBJECT * ob, int major, int minor)
         """)
-def fl_set_xyplot_ytics(ob, major, minor):
-    """ fl_set_xyplot_ytics(ob, major, minor)
+def fl_set_xyplot_ytics(obj, major, minor):
+    """ fl_set_xyplot_ytics(obj, major, minor)
     """ 
 
-    _fl_set_xyplot_ytics(ob, major, minor)
+    _fl_set_xyplot_ytics(obj, major, minor)
 
 
 _fl_set_xyplot_xbounds = cfuncproto(so_libforms, "fl_set_xyplot_xbounds",
         None, [cty.POINTER(FL_OBJECT), cty.c_double, cty.c_double], 
         """void fl_set_xyplot_xbounds(FL_OBJECT * ob, double xmin, double xmax)
         """)
-def fl_set_xyplot_xbounds(ob, xmin, xmax):
-    """ fl_set_xyplot_xbounds(ob, xmin, xmax)
+def fl_set_xyplot_xbounds(obj, xmin, xmax):
+    """ fl_set_xyplot_xbounds(obj, xmin, xmax)
     """ 
 
-    _fl_set_xyplot_xbounds(ob, xmin, xmax)
+    _fl_set_xyplot_xbounds(obj, xmin, xmax)
 
 
 _fl_set_xyplot_ybounds = cfuncproto(so_libforms, "fl_set_xyplot_ybounds",
         None, [cty.POINTER(FL_OBJECT), cty.c_double, cty.c_double], 
         """void fl_set_xyplot_ybounds(FL_OBJECT * ob, double ymin, double ymax)
         """)
-def fl_set_xyplot_ybounds(ob, ymin, ymax):
-    """ fl_set_xyplot_ybounds(ob, ymin, ymax)
+def fl_set_xyplot_ybounds(obj, ymin, ymax):
+    """ fl_set_xyplot_ybounds(obj, ymin, ymax)
     """ 
 
-    _fl_set_xyplot_ybounds(ob, ymin, ymax)
+    _fl_set_xyplot_ybounds(obj, ymin, ymax)
 
 
 _fl_get_xyplot_xbounds = cfuncproto(so_libforms, "fl_get_xyplot_xbounds",
@@ -13497,11 +13506,11 @@ _fl_get_xyplot_xbounds = cfuncproto(so_libforms, "fl_get_xyplot_xbounds",
         """void fl_get_xyplot_xbounds(FL_OBJECT * ob, float * xmin,
            float * xmax)
         """)
-def fl_get_xyplot_xbounds(ob, xmin, xmax):
-    """ fl_get_xyplot_xbounds(ob, xmin, xmax)
+def fl_get_xyplot_xbounds(obj, xmin, xmax):
+    """ fl_get_xyplot_xbounds(obj, xmin, xmax)
     """ 
 
-    _fl_get_xyplot_xbounds(ob, xmin, xmax)
+    _fl_get_xyplot_xbounds(obj, xmin, xmax)
 
 
 _fl_get_xyplot_ybounds = cfuncproto(so_libforms, "fl_get_xyplot_ybounds",
@@ -13510,11 +13519,11 @@ _fl_get_xyplot_ybounds = cfuncproto(so_libforms, "fl_get_xyplot_ybounds",
         """void fl_get_xyplot_ybounds(FL_OBJECT * ob, float * ymin,
            float * ymax)
         """)
-def fl_get_xyplot_ybounds(ob, ymin, ymax):
-    """ fl_get_xyplot_ybounds(ob, ymin, ymax)
+def fl_get_xyplot_ybounds(obj, ymin, ymax):
+    """ fl_get_xyplot_ybounds(obj, ymin, ymax)
     """ 
 
-    _fl_get_xyplot_ybounds(ob, ymin, ymax)
+    _fl_get_xyplot_ybounds(obj, ymin, ymax)
 
 
 _fl_get_xyplot = cfuncproto(so_libforms, "fl_get_xyplot",
@@ -13522,11 +13531,11 @@ _fl_get_xyplot = cfuncproto(so_libforms, "fl_get_xyplot",
         cty.POINTER(cty.c_float), cty.POINTER(cty.c_int)], 
         """void fl_get_xyplot(FL_OBJECT * ob, float * x, float * y, int * i)
         """)
-def fl_get_xyplot(ob, x, y, i):
-    """ fl_get_xyplot(ob, x, y, i)
+def fl_get_xyplot(obj, x, y, i):
+    """ fl_get_xyplot(obj, x, y, i)
     """ 
 
-    _fl_get_xyplot(ob, x, y, i)
+    _fl_get_xyplot(obj, x, y, i)
 
 
 _fl_get_xyplot_data = cfuncproto(so_libforms, "fl_get_xyplot_data",
@@ -13535,11 +13544,11 @@ _fl_get_xyplot_data = cfuncproto(so_libforms, "fl_get_xyplot_data",
         """void fl_get_xyplot_data(FL_OBJECT * ob, float * x, float * y,
            int * n)
         """)
-def fl_get_xyplot_data(ob, x, y, n):
-    """ fl_get_xyplot_data(ob, x, y, n)
+def fl_get_xyplot_data(obj, x, y, n):
+    """ fl_get_xyplot_data(obj, x, y, n)
     """ 
 
-    _fl_get_xyplot_data(ob, x, y, n)
+    _fl_get_xyplot_data(obj, x, y, n)
 
 
 _fl_get_xyplot_data_pointer = cfuncproto(so_libforms, "fl_get_xyplot_data_pointer",
@@ -13549,11 +13558,11 @@ _fl_get_xyplot_data_pointer = cfuncproto(so_libforms, "fl_get_xyplot_data_pointe
         """void fl_get_xyplot_data_cty.POINTER(FL_OBJECT * ob, int id,
            float * * x, float * * y, int * n)
         """)
-def fl_get_xyplot_data_pointer(ob, id, x, y, n):
-    """ fl_get_xyplot_data_pointer(ob, id, x, y, n)
+def fl_get_xyplot_data_pointer(obj, id, x, y, n):
+    """ fl_get_xyplot_data_pointer(obj, id, x, y, n)
     """ 
 
-    _fl_get_xyplot_data_pointer(ob, id, x, y, n)
+    _fl_get_xyplot_data_pointer(obj, id, x, y, n)
 
 
 _fl_get_xyplot_overlay_data = cfuncproto(so_libforms, "fl_get_xyplot_overlay_data",
@@ -13562,33 +13571,33 @@ _fl_get_xyplot_overlay_data = cfuncproto(so_libforms, "fl_get_xyplot_overlay_dat
         """void fl_get_xyplot_overlay_data(FL_OBJECT * ob, int id, float * x,
            float * y, int * n)
         """)
-def fl_get_xyplot_overlay_data(ob, id, x, y, n):
-    """ fl_get_xyplot_overlay_data(ob, id, x, y, n)
+def fl_get_xyplot_overlay_data(obj, id, x, y, n):
+    """ fl_get_xyplot_overlay_data(obj, id, x, y, n)
     """ 
 
-    _fl_get_xyplot_overlay_data(ob, id, x, y, n)
+    _fl_get_xyplot_overlay_data(obj, id, x, y, n)
 
 
 _fl_set_xyplot_overlay_type = cfuncproto(so_libforms, "fl_set_xyplot_overlay_type",
         None, [cty.POINTER(FL_OBJECT), cty.c_int, cty.c_int], 
         """void fl_set_xyplot_overlay_type(FL_OBJECT * ob, int id, int type)
         """)
-def fl_set_xyplot_overlay_type(ob, id, type):
-    """ fl_set_xyplot_overlay_type(ob, id, type)
+def fl_set_xyplot_overlay_type(obj, id, type):
+    """ fl_set_xyplot_overlay_type(obj, id, type)
     """ 
 
-    _fl_set_xyplot_overlay_type(ob, id, type)
+    _fl_set_xyplot_overlay_type(obj, id, type)
 
 
 _fl_delete_xyplot_overlay = cfuncproto(so_libforms, "fl_delete_xyplot_overlay",
         None, [cty.POINTER(FL_OBJECT), cty.c_int], 
         """void fl_delete_xyplot_overlay(FL_OBJECT * ob, int id)
         """)
-def fl_delete_xyplot_overlay(ob, id):
-    """ fl_delete_xyplot_overlay(ob, id)
+def fl_delete_xyplot_overlay(obj, id):
+    """ fl_delete_xyplot_overlay(obj, id)
     """ 
 
-    _fl_delete_xyplot_overlay(ob, id)
+    _fl_delete_xyplot_overlay(obj, id)
 
 
 _fl_set_xyplot_interpolate = cfuncproto(so_libforms, "fl_set_xyplot_interpolate",
@@ -13596,11 +13605,11 @@ _fl_set_xyplot_interpolate = cfuncproto(so_libforms, "fl_set_xyplot_interpolate"
         """void fl_set_xyplot_interpolate(FL_OBJECT * ob, int id, int deg,
            double grid)
         """)
-def fl_set_xyplot_interpolate(ob, id, deg, grid):
-    """ fl_set_xyplot_interpolate(ob, id, deg, grid)
+def fl_set_xyplot_interpolate(obj, id, deg, grid):
+    """ fl_set_xyplot_interpolate(obj, id, deg, grid)
     """ 
 
-    _fl_set_xyplot_interpolate(ob, id, deg, grid)
+    _fl_set_xyplot_interpolate(obj, id, deg, grid)
 
 
 _fl_set_xyplot_inspect = cfuncproto(so_libforms, "fl_set_xyplot_inspect",
@@ -13608,22 +13617,22 @@ _fl_set_xyplot_inspect = cfuncproto(so_libforms, "fl_set_xyplot_inspect",
         """void fl_set_xyplot_inspect(FL_OBJECT * ob, int yes)
         """)
 
-def fl_set_xyplot_inspect(ob, yes):
-    """ fl_set_xyplot_inspect(ob, yes)
+def fl_set_xyplot_inspect(obj, yes):
+    """ fl_set_xyplot_inspect(obj, yes)
     """ 
 
-    _fl_set_xyplot_inspect(ob, yes)
+    _fl_set_xyplot_inspect(obj, yes)
 
 
 _fl_set_xyplot_symbolsize = cfuncproto(so_libforms, "fl_set_xyplot_symbolsize",
         None, [cty.POINTER(FL_OBJECT), cty.c_int], 
         """void fl_set_xyplot_symbolsize(FL_OBJECT * ob, int n)
         """)
-def fl_set_xyplot_symbolsize(ob, n):
-    """ fl_set_xyplot_symbolsize(ob, n)
+def fl_set_xyplot_symbolsize(obj, n):
+    """ fl_set_xyplot_symbolsize(obj, n)
     """ 
 
-    _fl_set_xyplot_symbolsize(ob, n)
+    _fl_set_xyplot_symbolsize(obj, n)
 
 
 _fl_replace_xyplot_point = cfuncproto(so_libforms, "fl_replace_xyplot_point",
@@ -13631,11 +13640,11 @@ _fl_replace_xyplot_point = cfuncproto(so_libforms, "fl_replace_xyplot_point",
         """void fl_replace_xyplot_point(FL_OBJECT * ob, int i, double x,
            double y)
         """)
-def fl_replace_xyplot_point(ob, i, x, y):
-    """ fl_replace_xyplot_point(ob, i, x, y)
+def fl_replace_xyplot_point(obj, i, x, y):
+    """ fl_replace_xyplot_point(obj, i, x, y)
     """ 
 
-    _fl_replace_xyplot_point(ob, i, x, y)
+    _fl_replace_xyplot_point(obj, i, x, y)
 
 
 # Replace the value of a particular point in dataset setID,
@@ -13649,11 +13658,11 @@ _fl_replace_xyplot_point_in_overlay = cfuncproto(so_libforms, "fl_replace_xyplot
         """void fl_replace_xyplot_point_in_overlay(FL_OBJECT * ob, int i,
            int setID, double x, double y)
         """)
-def fl_replace_xyplot_point_in_overlay(ob, i, setID, x, y):
-    """ fl_replace_xyplot_point_in_overlay(ob, i, setID, x, y)
+def fl_replace_xyplot_point_in_overlay(obj, i, setID, x, y):
+    """ fl_replace_xyplot_point_in_overlay(obj, i, setID, x, y)
     """ 
 
-    _fl_replace_xyplot_point_in_overlay(ob, i, setID, x, y)
+    _fl_replace_xyplot_point_in_overlay(obj, i, setID, x, y)
 
 
 _fl_get_xyplot_xmapping = cfuncproto(so_libforms, "fl_get_xyplot_xmapping",
@@ -13662,11 +13671,11 @@ _fl_get_xyplot_xmapping = cfuncproto(so_libforms, "fl_get_xyplot_xmapping",
         """void fl_get_xyplot_xmapping(FL_OBJECT * ob, float * a, float * b)
         """)
 
-def fl_get_xyplot_xmapping(ob, a, b):
-    """ fl_get_xyplot_xmapping(ob, a, b)
+def fl_get_xyplot_xmapping(obj, a, b):
+    """ fl_get_xyplot_xmapping(obj, a, b)
     """ 
 
-    _fl_get_xyplot_xmapping(ob, a, b)
+    _fl_get_xyplot_xmapping(obj, a, b)
 
 
 _fl_get_xyplot_ymapping = cfuncproto(so_libforms, "fl_get_xyplot_ymapping",
@@ -13674,11 +13683,11 @@ _fl_get_xyplot_ymapping = cfuncproto(so_libforms, "fl_get_xyplot_ymapping",
         cty.POINTER(cty.c_float)], 
         """void fl_get_xyplot_ymapping(FL_OBJECT * ob, float * a, float * b)
         """)
-def fl_get_xyplot_ymapping(ob, a, b):
-    """ fl_get_xyplot_ymapping(ob, a, b)
+def fl_get_xyplot_ymapping(obj, a, b):
+    """ fl_get_xyplot_ymapping(obj, a, b)
     """ 
 
-    _fl_get_xyplot_ymapping(ob, a, b)
+    _fl_get_xyplot_ymapping(obj, a, b)
 
 
 _fl_set_xyplot_keys = cfuncproto(so_libforms, "fl_set_xyplot_keys",
@@ -13687,22 +13696,22 @@ _fl_set_xyplot_keys = cfuncproto(so_libforms, "fl_set_xyplot_keys",
         """void fl_set_xyplot_keys(FL_OBJECT * ob, char * * keys, float x,
            float y, int align)
         """)
-def fl_set_xyplot_keys(ob, keys, x, y, align):
-    """ fl_set_xyplot_keys(ob, keys, x, y, align)
+def fl_set_xyplot_keys(obj, keys, x, y, align):
+    """ fl_set_xyplot_keys(obj, keys, x, y, align)
     """ 
 
-    _fl_set_xyplot_keys(ob, keys, x, y, align)
+    _fl_set_xyplot_keys(obj, keys, x, y, align)
 
 
 _fl_set_xyplot_key = cfuncproto(so_libforms, "fl_set_xyplot_key",
         None, [cty.POINTER(FL_OBJECT), cty.c_int, STRING], 
         """void fl_set_xyplot_key(FL_OBJECT * ob, int id, const char * key)
         """)
-def fl_set_xyplot_key(ob, id, key):
-    """ fl_set_xyplot_key(ob, id, key)
+def fl_set_xyplot_key(obj, id, key):
+    """ fl_set_xyplot_key(obj, id, key)
     """ 
 
-    _fl_set_xyplot_key(ob, id, key)
+    _fl_set_xyplot_key(obj, id, key)
 
 
 _fl_set_xyplot_key_position = cfuncproto(so_libforms, "fl_set_xyplot_key_position",
@@ -13710,33 +13719,33 @@ _fl_set_xyplot_key_position = cfuncproto(so_libforms, "fl_set_xyplot_key_positio
         """void fl_set_xyplot_key_position(FL_OBJECT * ob, float x, float y,
            int align)
         """)
-def fl_set_xyplot_key_position(ob, x, y, align):
-    """ fl_set_xyplot_key_position(ob, x, y, align)
+def fl_set_xyplot_key_position(obj, x, y, align):
+    """ fl_set_xyplot_key_position(obj, x, y, align)
     """ 
 
-    _fl_set_xyplot_key_position(ob, x, y, align)
+    _fl_set_xyplot_key_position(obj, x, y, align)
 
 
 _fl_set_xyplot_key_font = cfuncproto(so_libforms, "fl_set_xyplot_key_font",
         None, [cty.POINTER(FL_OBJECT), cty.c_int, cty.c_int], 
         """void fl_set_xyplot_key_font(FL_OBJECT * ob, int style, int size)
         """)
-def fl_set_xyplot_key_font(ob, style, size):
-    """ fl_set_xyplot_key_font(ob, style, size)
+def fl_set_xyplot_key_font(obj, style, size):
+    """ fl_set_xyplot_key_font(obj, style, size)
     """ 
 
-    _fl_set_xyplot_key_font(ob, style, size)
+    _fl_set_xyplot_key_font(obj, style, size)
 
 
 _fl_get_xyplot_numdata = cfuncproto(so_libforms, "fl_get_xyplot_numdata",
         cty.c_int, [cty.POINTER(FL_OBJECT), cty.c_int], 
         """int fl_get_xyplot_numdata(FL_OBJECT * ob, int id)
         """)
-def fl_get_xyplot_numdata(ob, id):
-    """ fl_get_xyplot_numdata(ob, id) -> num.
+def fl_get_xyplot_numdata(obj, id):
+    """ fl_get_xyplot_numdata(obj, id) -> num.
     """ 
 
-    retval = _fl_get_xyplot_numdata(ob, id)
+    retval = _fl_get_xyplot_numdata(obj, id)
     return retval
 
 
@@ -13747,22 +13756,22 @@ _fl_set_xyplot_fontsize = cfuncproto(so_libforms, "fl_set_xyplot_fontsize",
         None, [cty.POINTER(FL_OBJECT), cty.c_int], 
         """void fl_set_xyplot_fontsize(FL_OBJECT * ob, int size) DEPRECATED
         """)
-def fl_set_xyplot_fontsize(ob, size):
-    """ fl_set_xyplot_fontsize(ob, size)
+def fl_set_xyplot_fontsize(obj, size):
+    """ fl_set_xyplot_fontsize(obj, size)
     """ 
 
-    _fl_set_xyplot_fontsize(ob, size)
+    _fl_set_xyplot_fontsize(obj, size)
 
 
 _fl_set_xyplot_fontstyle = cfuncproto(so_libforms, "fl_set_xyplot_fontstyle",
         None, [cty.POINTER(FL_OBJECT), cty.c_int], 
         """void fl_set_xyplot_fontstyle(FL_OBJECT * ob, int style) DEPRECATED
         """)
-def fl_set_xyplot_fontstyle(ob, style):
-    """ fl_set_xyplot_fontstyle(ob, style)
+def fl_set_xyplot_fontstyle(obj, style):
+    """ fl_set_xyplot_fontstyle(obj, style)
     """ 
 
-    _fl_set_xyplot_fontstyle(ob, style)
+    _fl_set_xyplot_fontstyle(obj, style)
 
 
 _fl_xyplot_s2w = cfuncproto(so_libforms, "fl_xyplot_s2w",
@@ -13771,11 +13780,11 @@ _fl_xyplot_s2w = cfuncproto(so_libforms, "fl_xyplot_s2w",
         """void fl_xyplot_s2w(FL_OBJECT * ob, double sx, double sy,
            float * wx, float * wy)
         """)
-def fl_xyplot_s2w(ob, sx, sy, wx, wy):
-    """ fl_xyplot_s2w(ob, sx, sy, wx, wy)
+def fl_xyplot_s2w(obj, sx, sy, wx, wy):
+    """ fl_xyplot_s2w(obj, sx, sy, wx, wy)
     """ 
 
-    _fl_xyplot_s2w(ob, sx, sy, wx, wy)
+    _fl_xyplot_s2w(obj, sx, sy, wx, wy)
 
 
 _fl_xyplot_w2s = cfuncproto(so_libforms, "fl_xyplot_w2s",
@@ -13784,55 +13793,55 @@ _fl_xyplot_w2s = cfuncproto(so_libforms, "fl_xyplot_w2s",
         """void fl_xyplot_w2s(FL_OBJECT * ob, double wx, double wy,
            float * sx, float * sy)
         """)
-def fl_xyplot_w2s(ob, wx, wy, sx, sy):
-    """ fl_xyplot_w2s(ob, wx, wy, sx, sy)
+def fl_xyplot_w2s(obj, wx, wy, sx, sy):
+    """ fl_xyplot_w2s(obj, wx, wy, sx, sy)
     """ 
 
-    _fl_xyplot_w2s(ob, wx, wy, sx, sy)
+    _fl_xyplot_w2s(obj, wx, wy, sx, sy)
 
 
 _fl_set_xyplot_xscale = cfuncproto(so_libforms, "fl_set_xyplot_xscale",
         None, [cty.POINTER(FL_OBJECT), cty.c_int, cty.c_double], 
         """void fl_set_xyplot_xscale(FL_OBJECT * ob, int scale, double base)
         """)
-def fl_set_xyplot_xscale(ob, scale, base):
-    """ fl_set_xyplot_xscale(ob, scale, base)
+def fl_set_xyplot_xscale(obj, scale, base):
+    """ fl_set_xyplot_xscale(obj, scale, base)
     """ 
 
-    _fl_set_xyplot_xscale(ob, scale, base)
+    _fl_set_xyplot_xscale(obj, scale, base)
 
 
 _fl_set_xyplot_yscale = cfuncproto(so_libforms, "fl_set_xyplot_yscale",
         None, [cty.POINTER(FL_OBJECT), cty.c_int, cty.c_double], 
         """void fl_set_xyplot_yscale(FL_OBJECT * ob, int scale, double base)
         """)
-def fl_set_xyplot_yscale(ob, scale, base):
-    """ fl_set_xyplot_yscale(ob, scale, base)
+def fl_set_xyplot_yscale(obj, scale, base):
+    """ fl_set_xyplot_yscale(obj, scale, base)
     """ 
 
-    _fl_set_xyplot_yscale(ob, scale, base)
+    _fl_set_xyplot_yscale(obj, scale, base)
 
 
 _fl_clear_xyplot = cfuncproto(so_libforms, "fl_clear_xyplot",
         None, [cty.POINTER(FL_OBJECT)], 
         """void fl_clear_xyplot(FL_OBJECT * ob)
         """)
-def fl_clear_xyplot(ob):
-    """ fl_clear_xyplot(ob)
+def fl_clear_xyplot(obj):
+    """ fl_clear_xyplot(obj)
     """ 
 
-    _fl_clear_xyplot(ob)
+    _fl_clear_xyplot(obj)
 
 
 _fl_set_xyplot_linewidth = cfuncproto(so_libforms, "fl_set_xyplot_linewidth",
         None, [cty.POINTER(FL_OBJECT), cty.c_int, cty.c_int], 
         """void fl_set_xyplot_linewidth(FL_OBJECT * ob, int id, int lw)
         """)
-def fl_set_xyplot_linewidth(ob, id, lw):
-    """ fl_set_xyplot_linewidth(ob, id, lw)
+def fl_set_xyplot_linewidth(obj, id, lw):
+    """ fl_set_xyplot_linewidth(obj, id, lw)
     """ 
 
-    _fl_set_xyplot_linewidth(ob, id, lw)
+    _fl_set_xyplot_linewidth(obj, id, lw)
 
 
 _fl_set_xyplot_xgrid = cfuncproto(so_libforms, "fl_set_xyplot_xgrid",
@@ -13850,22 +13859,22 @@ _fl_set_xyplot_ygrid = cfuncproto(so_libforms, "fl_set_xyplot_ygrid",
         None, [cty.POINTER(FL_OBJECT), cty.c_int], 
         """void fl_set_xyplot_ygrid(FL_OBJECT * ob, int ygrid)
         """)
-def fl_set_xyplot_ygrid(ob, ygrid):
-    """ fl_set_xyplot_ygrid(ob, ygrid)
+def fl_set_xyplot_ygrid(obj, ygrid):
+    """ fl_set_xyplot_ygrid(obj, ygrid)
     """ 
 
-    _fl_set_xyplot_ygrid(ob, ygrid)
+    _fl_set_xyplot_ygrid(obj, ygrid)
 
 
 _fl_set_xyplot_grid_linestyle = cfuncproto(so_libforms, "fl_set_xyplot_grid_linestyle",
         cty.c_int, [cty.POINTER(FL_OBJECT), cty.c_int], 
         """int fl_set_xyplot_grid_linestyle(FL_OBJECT * ob, int style)
         """)
-def fl_set_xyplot_grid_linestyle(ob, style):
-    """ fl_set_xyplot_grid_linestyle(ob, style) -> num.
+def fl_set_xyplot_grid_linestyle(obj, style):
+    """ fl_set_xyplot_grid_linestyle(obj, style) -> num.
     """ 
 
-    retval = _fl_set_xyplot_grid_linestyle(ob, style)
+    retval = _fl_set_xyplot_grid_linestyle(obj, style)
     return retval
 
 
@@ -13874,11 +13883,11 @@ _fl_set_xyplot_alphaxtics = cfuncproto(so_libforms, "fl_set_xyplot_alphaxtics",
         """void fl_set_xyplot_alphaxtics(FL_OBJECT * ob, const char * m,
            const char * s)
         """)
-def fl_set_xyplot_alphaxtics(ob, m, s):
-    """ fl_set_xyplot_alphaxtics(ob, m, s)
+def fl_set_xyplot_alphaxtics(obj, m, s):
+    """ fl_set_xyplot_alphaxtics(obj, m, s)
     """ 
 
-    _fl_set_xyplot_alphaxtics(ob, m, s)
+    _fl_set_xyplot_alphaxtics(obj, m, s)
 
 
 _fl_set_xyplot_alphaytics = cfuncproto(so_libforms, "fl_set_xyplot_alphaytics",
@@ -13886,11 +13895,11 @@ _fl_set_xyplot_alphaytics = cfuncproto(so_libforms, "fl_set_xyplot_alphaytics",
         """void fl_set_xyplot_alphaytics(FL_OBJECT * ob, const char * m,
            const char * s)
         """)
-def fl_set_xyplot_alphaytics(ob, m, s):
-    """ fl_set_xyplot_alphaytics(ob, m, s)
+def fl_set_xyplot_alphaytics(obj, m, s):
+    """ fl_set_xyplot_alphaytics(obj, m, s)
     """ 
 
-    _fl_set_xyplot_alphaytics(ob, m, s)
+    _fl_set_xyplot_alphaytics(obj, m, s)
 
 
 _fl_set_xyplot_fixed_xaxis = cfuncproto(so_libforms, "fl_set_xyplot_fixed_xaxis",
@@ -13898,11 +13907,11 @@ _fl_set_xyplot_fixed_xaxis = cfuncproto(so_libforms, "fl_set_xyplot_fixed_xaxis"
         """void fl_set_xyplot_fixed_xaxis(FL_OBJECT * ob, const char * lm,
            const char * rm)
         """)
-def fl_set_xyplot_fixed_xaxis(ob, lm, rm):
-    """ fl_set_xyplot_fixed_xaxis(ob, lm, rm)
+def fl_set_xyplot_fixed_xaxis(obj, lm, rm):
+    """ fl_set_xyplot_fixed_xaxis(obj, lm, rm)
     """ 
 
-    _fl_set_xyplot_fixed_xaxis(ob, lm, rm)
+    _fl_set_xyplot_fixed_xaxis(obj, lm, rm)
 
 
 _fl_set_xyplot_fixed_yaxis = cfuncproto(so_libforms, "fl_set_xyplot_fixed_yaxis",
@@ -13910,11 +13919,11 @@ _fl_set_xyplot_fixed_yaxis = cfuncproto(so_libforms, "fl_set_xyplot_fixed_yaxis"
         """void fl_set_xyplot_fixed_yaxis(FL_OBJECT * ob, const char * bm,
            const char * tm)
         """)
-def fl_set_xyplot_fixed_yaxis(ob, bm, tm):
-    """ fl_set_xyplot_fixed_yaxis(ob, bm, tm)
+def fl_set_xyplot_fixed_yaxis(obj, bm, tm):
+    """ fl_set_xyplot_fixed_yaxis(obj, bm, tm)
     """ 
 
-    _fl_set_xyplot_fixed_yaxis(ob, bm, tm)
+    _fl_set_xyplot_fixed_yaxis(obj, bm, tm)
 
 
 _fl_interpolate = cfuncproto(so_libforms, "fl_interpolate",
@@ -13957,11 +13966,11 @@ _fl_set_xyplot_symbol = cfuncproto(so_libforms, "fl_set_xyplot_symbol",
         """FL_XYPLOT_SYMBOL fl_set_xyplot_symbol(FL_OBJECT * ob, int id,
            FL_XYPLOT_SYMBOL symbol)
         """)
-def fl_set_xyplot_symbol(ob, id, symbol):
-    """ fl_set_xyplot_symbol(ob, id, symbol) -> xyplot_symbol func.
+def fl_set_xyplot_symbol(obj, id, symbol):
+    """ fl_set_xyplot_symbol(obj, id, symbol) -> xyplot_symbol func.
     """ 
 
-    retval = _fl_set_xyplot_symbol(ob, id, symbol)
+    retval = _fl_set_xyplot_symbol(obj, id, symbol)
     return retval
 
 
@@ -13969,11 +13978,11 @@ _fl_set_xyplot_mark_active = cfuncproto(so_libforms, "fl_set_xyplot_mark_active"
         cty.c_int, [cty.POINTER(FL_OBJECT), cty.c_int], 
         """int fl_set_xyplot_mark_active(FL_OBJECT * ob, int y)
         """)
-def fl_set_xyplot_mark_active(ob, y):
-    """ fl_set_xyplot_mark_active(ob, y) -> num.
+def fl_set_xyplot_mark_active(obj, y):
+    """ fl_set_xyplot_mark_active(obj, y) -> num.
     """ 
 
-    retval = _fl_set_xyplot_mark_active(ob, y)
+    retval = _fl_set_xyplot_mark_active(obj, y)
     return retval
 
 
@@ -13986,7 +13995,7 @@ _fl_gc_ = cfuncproto(so_libforms, "fl_gc_",
         """GC fl_gc_()
         """)
 def fl_gc_():
-    """ fl_gc_() -> gc ref.
+    """ fl_gc_() -> gc
     """ 
 
     retval = _fl_gc_()
@@ -13998,7 +14007,7 @@ _fl_textgc_ = cfuncproto(so_libforms, "fl_textgc_",
         """)GC fl_textgc_()
         """)
 def fl_textgc_():
-    """ fl_textgc_() -> gc ref.
+    """ fl_textgc_() -> gc
     """ 
 
     retval = _fl_textgc_()
@@ -14034,7 +14043,7 @@ _fl_cur_win_ = cfuncproto(so_libforms, "fl_cur_win_",
         """Window fl_cur_win_()
         """)
 def fl_cur_win_():
-    """ fl_cur_win_() -> window ref.
+    """ fl_cur_win_() -> window
     """ 
 
     retval = _fl_cur_win_()
@@ -14073,7 +14082,7 @@ _fl_display_ = cfuncproto(so_libforms, "fl_display_",
         """Display * fl_display_()
         """)
 def fl_display_():
-    """ fl_display_() -> display ref.
+    """ fl_display_() -> display
     """ 
 
     retval = _fl_display_()
@@ -14419,7 +14428,7 @@ _flimage_load = cfuncproto(so_libflimage, "flimage_load",
         """FL_IMAGE * flimage_load(const char * file)
         """)
 def flimage_load(file):
-    """ flimage_load(file) -> image ref.
+    """ flimage_load(file) -> image
     """ 
 
     retval = _flimage_load(file)
@@ -14430,11 +14439,11 @@ _flimage_read = cfuncproto(so_libflimage, "flimage_read",
         cty.POINTER(FL_IMAGE), [cty.POINTER(FL_IMAGE)], 
         """FL_IMAGE * flimage_read(FL_IMAGE * im)
         """)
-def flimage_read(im):
-    """ flimage_read(im) -> image ref.
+def flimage_read(pImage):
+    """ flimage_read(pImage) -> pImage
     """ 
 
-    retval = _flimage_read(im)
+    retval = _flimage_read(pImage)
     return retval
 
 
@@ -14442,11 +14451,11 @@ _flimage_dump = cfuncproto(so_libflimage, "flimage_dump",
         cty.c_int, [cty.POINTER(FL_IMAGE), STRING, STRING], 
         """int flimage_dump(FL_IMAGE * p1, const char * p2, const char * p3)
         """)
-def flimage_dump(p1, p2, p3):
-    """ flimage_dump(p1, p2, p3) -> num.
+def flimage_dump(pImage, p2, p3):
+    """ flimage_dump(pImage, p2, p3) -> num.
     """ 
 
-    retval = _flimage_dump(p1, p2, p3)
+    retval = _flimage_dump(pImage, p2, p3)
     return retval
 
 
@@ -14454,11 +14463,11 @@ _flimage_close = cfuncproto(so_libflimage, "flimage_close",
         cty.c_int, [cty.POINTER(FL_IMAGE)], 
         """int flimage_close(FL_IMAGE * p1)
         """)
-def flimage_close(p1):
-    """ flimage_close(p1) -> num.
+def flimage_close(pImage):
+    """ flimage_close(pImage) -> num.
     """ 
 
-    retval = _flimage_close(p1)
+    retval = _flimage_close(pImage)
     return retval
 
 
@@ -14467,7 +14476,7 @@ _flimage_alloc = cfuncproto(so_libflimage, "flimage_alloc",
         """FL_IMAGE * flimage_alloc()
         """)
 def flimage_alloc():
-    """ flimage_alloc() -> image ref.
+    """ flimage_alloc() -> image
     """ 
 
     retval = _flimage_alloc()
@@ -14478,11 +14487,11 @@ _flimage_getmem = cfuncproto(so_libflimage, "flimage_getmem",
         cty.c_int, [cty.POINTER(FL_IMAGE)], 
         """int flimage_getmem(FL_IMAGE * p1)
         """)
-def flimage_getmem(p1):
-    """ flimage_getmem(p1) -> num.
+def flimage_getmem(pImage):
+    """ flimage_getmem(pImage) -> num.
     """ 
 
-    retval = _flimage_getmem(p1)
+    retval = _flimage_getmem(pImage)
     return retval
 
 
@@ -14504,11 +14513,11 @@ _flimage_description_via_filter = cfuncproto(so_libflimage, "flimage_description
         """int flimage_description_via_filter(FL_IMAGE * p1, const char * p2,
            const char * p3, int p4)
         """)
-def flimage_description_via_filter(p1, p2, p3, p4):
-    """ flimage_description_via_filter(p1, p2, p3, p4) -> num.
+def flimage_description_via_filter(pImage, p2, p3, p4):
+    """ flimage_description_via_filter(pImage, p2, p3, p4) -> num.
     """ 
 
-    retval = _flimage_description_via_filter(p1, p2, p3, p4)
+    retval = _flimage_description_via_filter(pImage, p2, p3, p4)
     return retval
 
 
@@ -14518,11 +14527,11 @@ _flimage_write_via_filter = cfuncproto(so_libflimage, "flimage_write_via_filter"
         """int flimage_write_via_filter(FL_IMAGE * p1, const char * p2,
            const char * p3, int p4)
         """)
-def flimage_write_via_filter(p1, p2, p3, p4):
-    """ flimage_write_via_filter(p1, p2, p3, p4) -> num.
+def flimage_write_via_filter(pImage, p2, p3, p4):
+    """ flimage_write_via_filter(pImage, p2, p3, p4) -> num.
     """ 
 
-    retval = _flimage_write_via_filter(p1, p2, p3, p4)
+    retval = _flimage_write_via_filter(pImage, p2, p3, p4)
     return retval
 
 
@@ -14530,11 +14539,11 @@ _flimage_free = cfuncproto(so_libflimage, "flimage_free",
         cty.c_int, [cty.POINTER(FL_IMAGE)], 
         """int flimage_free(FL_IMAGE * p1)
         """)
-def flimage_free(p1):
-    """ flimage_free(p1) -> num.
+def flimage_free(pImage):
+    """ flimage_free(pImage) -> num.
     """ 
 
-    retval = _flimage_free(p1)
+    retval = _flimage_free(pImage)
     return retval
 
 
@@ -14542,11 +14551,11 @@ _flimage_display = cfuncproto(so_libflimage, "flimage_display",
         cty.c_int, [cty.POINTER(FL_IMAGE), Window], 
         """int flimage_display(FL_IMAGE * p1, Window p2)
         """)
-def flimage_display(p1, p2):
-    """ flimage_display(p1, p2) -> num.
+def flimage_display(pImage, window):
+    """ flimage_display(pImage, window) -> num.
     """ 
 
-    retval = _flimage_display(p1, p2)
+    retval = _flimage_display(pImage, window)
     return retval
 
 
@@ -14554,11 +14563,11 @@ _flimage_sdisplay = cfuncproto(so_libflimage, "flimage_sdisplay",
         cty.c_int, [cty.POINTER(FL_IMAGE), Window], 
         """int flimage_sdisplay(FL_IMAGE * p1, Window p2)
         """)
-def flimage_sdisplay(p1, p2):
-    """ flimage_sdisplay(p1, p2) -> num.
+def flimage_sdisplay(pImage, p2):
+    """ flimage_sdisplay(pImage, p2) -> num.
     """ 
 
-    retval = _flimage_sdisplay(p1, p2)
+    retval = _flimage_sdisplay(pImage, p2)
     return retval
 
 
@@ -14566,11 +14575,11 @@ _flimage_convert = cfuncproto(so_libflimage, "flimage_convert",
         cty.c_int, [cty.POINTER(FL_IMAGE), cty.c_int, cty.c_int], 
         """int flimage_convert(FL_IMAGE * p1, int p2, int p3)
         """)
-def flimage_convert(p1, p2, p3):
-    """ flimage_convert(p1, p2, p3) -> num.
+def flimage_convert(pImage, p2, p3):
+    """ flimage_convert(pImage, p2, p3) -> num.
     """ 
 
-    retval = _flimage_convert(p1, p2, p3)
+    retval = _flimage_convert(pImage, p2, p3)
     return retval
 
 
@@ -14594,11 +14603,11 @@ _flimage_add_text = cfuncproto(so_libflimage, "flimage_add_text",
            int p4, int p5, unsigned int p6, unsigned int p7, int p8,
            double p9, double p10, int p11)
         """)
-def flimage_add_text(p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11):
-    """ flimage_add_text(p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11) -> num.
+def flimage_add_text(pImage, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11):
+    """ flimage_add_text(pImage, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11) -> num.
     """ 
 
-    retval = _flimage_add_text(p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11)
+    retval = _flimage_add_text(pImage, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11)
     return retval
 
 
@@ -14606,11 +14615,11 @@ _flimage_add_text_struct = cfuncproto(so_libflimage, "flimage_add_text_struct",
         cty.c_int, [cty.POINTER(FL_IMAGE), cty.POINTER(FLIMAGE_TEXT)], 
         """int flimage_add_text_struct(FL_IMAGE * p1, const char * p2)
         """)
-def flimage_add_text_struct(p1, p2):
-    """ flimage_add_text_struct(p1, p2) -> num.
+def flimage_add_text_struct(pImage, p2):
+    """ flimage_add_text_struct(pImage, p2) -> num.
     """ 
 
-    retval = _flimage_add_text_struct(p1, p2)
+    retval = _flimage_add_text_struct(pImage, p2)
     return retval
 
 
@@ -14618,11 +14627,11 @@ _flimage_delete_all_text = cfuncproto(so_libflimage, "flimage_delete_all_text",
         None, [cty.POINTER(FL_IMAGE)], 
         """void flimage_delete_all_text(FL_IMAGE * p1)
         """)
-def flimage_delete_all_text(p1):
-    """ flimage_delete_all_text(p1)
+def flimage_delete_all_text(pImage):
+    """ flimage_delete_all_text(pImage)
     """ 
 
-    _flimage_delete_all_text(p1)
+    _flimage_delete_all_text(pImage)
 
 
 _flimage_add_marker = cfuncproto(so_libflimage, "flimage_add_marker",
@@ -14633,11 +14642,11 @@ _flimage_add_marker = cfuncproto(so_libflimage, "flimage_add_marker",
            double p4, double p5, double p6, int p7, int p8, int p9,
            unsigned int p10, unsigned int p11)
         """)
-def flimage_add_marker(p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11):
-    """ flimage_add_marker(p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11) -> num.
+def flimage_add_marker(pImage, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11):
+    """ flimage_add_marker(pImage, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11) -> num.
     """ 
 
-    retval = _flimage_add_marker(p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11)
+    retval = _flimage_add_marker(pImage, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11)
     return retval
 
 
@@ -14671,22 +14680,22 @@ _flimage_delete_all_markers = cfuncproto(so_libflimage, "flimage_delete_all_mark
         """void flimage_delete_all_markers(FL_IMAGE * p1)
         """)
 
-def flimage_delete_all_markers(p1):
-    """ flimage_delete_all_markers(p1)
+def flimage_delete_all_markers(pImage):
+    """ flimage_delete_all_markers(pImage)
     """ 
 
-    _flimage_delete_all_markers(p1)
+    _flimage_delete_all_markers(pImage)
 
 
 _flimage_render_annotation = cfuncproto(so_libflimage, "flimage_render_annotation",
         cty.c_int, [cty.POINTER(FL_IMAGE), FL_WINDOW], 
         """int flimage_render_annotation(FL_IMAGE * p1, FL_WINDOW p2)
         """)
-def flimage_render_annotation(p1, p2):
-    """ flimage_render_annotation(p1, p2) -> num.
+def flimage_render_annotation(pImage, window):
+    """ flimage_render_annotation(pImage, window) -> num.
     """ 
 
-    retval = _flimage_render_annotation(p1, p2)
+    retval = _flimage_render_annotation(pImage, window)
     return retval
 
 
@@ -14694,11 +14703,11 @@ _flimage_error = cfuncproto(so_libflimage, "flimage_error",
         None, [cty.POINTER(FL_IMAGE), STRING], 
         """void flimage_error(FL_IMAGE * p1, const char * p2)
         """)
-def flimage_error(p1, p2):
-    """ flimage_error(p1, p2)
+def flimage_error(pImage, p2):
+    """ flimage_error(pImage, p2)
     """ 
 
-    _flimage_error(p1, p2)
+    _flimage_error(pImage, p2)
 
 
 # built-in format supports
@@ -14740,11 +14749,11 @@ _flimage_jpeg_options = cfuncproto(so_libflimage, "flimage_jpeg_options",
         None, [cty.POINTER(FLIMAGE_JPEG_OPTION)], 
         """void flimage_jpeg_options(FLIMAGE_JPEG_OPTION * p1)
         """)
-def flimage_jpeg_options(p1):
-    """ flimage_jpeg_options(p1)
+def flimage_jpeg_options(pImageJpegOption):
+    """ flimage_jpeg_options(pImageJpegOption)
     """ 
 
-    _flimage_jpeg_options(p1)
+    _flimage_jpeg_options(pImageJpegOption)
 
 
 _flimage_pnm_options = cfuncproto(so_libflimage, "flimage_pnm_options",
@@ -14819,7 +14828,7 @@ _flimage_get_format_info = cfuncproto(so_libflimage, "flimage_get_format_info",
         """const char * flimage_get_format_info(int p1)
         """)
 def flimage_get_format_info(p1):
-    """ flimage_get_format_info(p1) -> format_info class
+    """ flimage_get_format_info(p1) -> format_info class instance
     """ 
 
     retval = _flimage_get_format_info(p1)
@@ -14917,11 +14926,11 @@ def flimage_add_format(p1, p2, p3, p4, py_fn5, py_fn6, py_fn7, py_fn8):
     c_fn6 = FLIMAGE_Description(py_fn6)
     c_fn7 = FLIMAGE_Read_Pixels(py_fn7)
     c_fn8 = FLIMAGE_Write_Image(py_fn8)
+    _cfunc_refs[get_rand_dictkey()] = c_fn5
+    _cfunc_refs[get_rand_dictkey()] = c_fn6
+    _cfunc_refs[get_rand_dictkey()] = c_fn7
+    _cfunc_refs[get_rand_dictkey()] = c_fn8
     retval = _flimage_add_format(p1, p2, p3, p4, c_fn5, c_fn6, c_fn7, c_fn8)
-    _cfunc_refs[tmpval1] = c_fn5
-    _cfunc_refs[tmpval2] = c_fn6
-    _cfunc_refs[tmpval3] = c_fn7
-    _cfunc_refs[tmpval4] = c_fn8
     return retval
 
 
@@ -14940,11 +14949,11 @@ _flimage_getcolormap = cfuncproto(so_libflimage, "flimage_getcolormap",
         cty.c_int, [cty.POINTER(FL_IMAGE)], 
         """int flimage_getcolormap(FL_IMAGE * p1)
         """)
-def flimage_getcolormap(p1):
-    """ flimage_getcolormap(p1) -> num.
+def flimage_getcolormap(pImage):
+    """ flimage_getcolormap(pImage) -> num.
     """ 
 
-    retval = _flimage_getcolormap(p1)
+    retval = _flimage_getcolormap(pImage)
     return retval
 
 
@@ -14994,11 +15003,11 @@ _flimage_convolve = cfuncproto(so_libflimage, "flimage_convolve",
         cty.POINTER(cty.POINTER(cty.c_int)), cty.c_int, cty.c_int], 
         """int flimage_convolve(FL_IMAGE * p1, int * * p2, int p3, int p4)
         """)
-def flimage_convolve(p1, p2, p3, p4):
-    """ flimage_convolve(p1, p2, p3, p4) -> num.
+def flimage_convolve(pImage, p2, p3, p4):
+    """ flimage_convolve(pImage, p2, p3, p4) -> num.
     """ 
 
-    retval = _flimage_convolve(p1, p2, p3, p4)
+    retval = _flimage_convolve(pImage, p2, p3, p4)
     return retval
 
 
@@ -15007,11 +15016,11 @@ _flimage_convolvea = cfuncproto(so_libflimage, "flimage_convolvea",
         cty.c_int, cty.c_int], 
         """int flimage_convolvea(FL_IMAGE * p1, int * p2, int p3, int p4)
         """)
-def flimage_convolvea(p1, p2, p3, p4):
-    """ flimage_convolvea(p1, p2, p3, p4) -> num.
+def flimage_convolvea(pImage, p2, p3, p4):
+    """ flimage_convolvea(pImage, p2, p3, p4) -> num.
     """ 
 
-    retval = _flimage_convolvea(p1, p2, p3, p4)
+    retval = _flimage_convolvea(pImage, p2, p3, p4)
     return retval
 
 
@@ -15019,11 +15028,11 @@ _flimage_tint = cfuncproto(so_libflimage, "flimage_tint",
         cty.c_int, [cty.POINTER(FL_IMAGE), cty.c_uint, cty.c_double], 
         """int flimage_tint(FL_IMAGE * p1, unsigned int p2, double p3)
         """)
-def flimage_tint(p1, p2, p3):
-    """ flimage_tint(p1, p2, p3) -> num.
+def flimage_tint(pImage, p2, p3):
+    """ flimage_tint(pImage, p2, p3) -> num.
     """ 
 
-    retval = _flimage_tint(p1, p2, p3)
+    retval = _flimage_tint(pImage, p2, p3)
     return retval
 
 
@@ -15043,11 +15052,11 @@ _flimage_flip = cfuncproto(so_libflimage, "flimage_flip",
         cty.c_int, [cty.POINTER(FL_IMAGE), cty.c_int], 
         """int flimage_flip(FL_IMAGE * p1, int p2)
         """)
-def flimage_flip(p1, p2):
-    """ flimage_flip(p1, p2) -> num.
+def flimage_flip(pImage, p2):
+    """ flimage_flip(pImage, p2) -> num.
     """ 
 
-    retval = _flimage_flip(p1, p2)
+    retval = _flimage_flip(pImage, p2)
     return retval
 
 
@@ -15055,11 +15064,11 @@ _flimage_scale = cfuncproto(so_libflimage, "flimage_scale",
         cty.c_int, [cty.POINTER(FL_IMAGE), cty.c_int, cty.c_int, cty.c_int], 
         """int flimage_scale(FL_IMAGE * p1, int p2, int p3, int p4)
         """)
-def flimage_scale(p1, p2, p3, p4):
-    """ flimage_scale(p1, p2, p3, p4) -> num.
+def flimage_scale(pImage, p2, p3, p4):
+    """ flimage_scale(pImage, p2, p3, p4) -> num.
     """ 
 
-    retval = _flimage_scale(p1, p2, p3, p4)
+    retval = _flimage_scale(pImage, p2, p3, p4)
     return retval
 
 
@@ -15069,11 +15078,11 @@ _flimage_warp = cfuncproto(so_libflimage, "flimage_warp",
         """int flimage_warp(FL_IMAGE * p1, const char * p2, int p3, int p4,
            int p5)
         """)
-def flimage_warp(p1, p2, p3, p4, p5):
-    """ flimage_warp(p1, p2, p3, p4, p5) -> num.
+def flimage_warp(pImage, p2, p3, p4, p5):
+    """ flimage_warp(pImage, p2, p3, p4, p5) -> num.
     """ 
 
-    retval = _flimage_warp(p1, p2, p3, p4, p5)
+    retval = _flimage_warp(pImage, p2, p3, p4, p5)
     return retval
 
 
@@ -15081,11 +15090,11 @@ _flimage_autocrop = cfuncproto(so_libflimage, "flimage_autocrop",
         cty.c_int, [cty.POINTER(FL_IMAGE), cty.c_uint], 
         """int flimage_autocrop(FL_IMAGE * p1, unsigned int p2)
         """)
-def flimage_autocrop(p1, p2):
-    """ flimage_autocrop(p1, p2) -> num.
+def flimage_autocrop(pImage, p2):
+    """ flimage_autocrop(pImage, p2) -> num.
     """ 
 
-    retval = _flimage_autocrop(p1, p2)
+    retval = _flimage_autocrop(pImage, p2)
     return retval
 
 
@@ -15096,11 +15105,11 @@ _flimage_get_autocrop = cfuncproto(so_libflimage, "flimage_get_autocrop",
         """int flimage_get_autocrop(FL_IMAGE * p1, unsigned int p2,
            int * p3, int * p4, int * p5, int * p6)
         """)
-def flimage_get_autocrop(p1, p2, p3, p4, p5, p6):
-    """ flimage_get_autocrop(p1, p2, p3, p4, p5, p6) -> num.
+def flimage_get_autocrop(pImage, p2, p3, p4, p5, p6):
+    """ flimage_get_autocrop(pImage, p2, p3, p4, p5, p6) -> num.
     """ 
 
-    retval = _flimage_get_autocrop(p1, p2, p3, p4, p5, p6)
+    retval = _flimage_get_autocrop(pImage, p2, p3, p4, p5, p6)
     return retval
 
 
@@ -15109,11 +15118,11 @@ _flimage_crop = cfuncproto(so_libflimage, "flimage_crop",
         cty.c_int, cty.c_int], 
         """int flimage_crop(FL_IMAGE * p1, int p2, int p3, int p4, int p5)
         """)
-def flimage_crop(p1, p2, p3, p4, p5):
-    """ flimage_crop(p1, p2, p3, p4, p5) -> num.
+def flimage_crop(pImage, p2, p3, p4, p5):
+    """ flimage_crop(pImage, p2, p3, p4, p5) -> num.
     """ 
 
-    retval = _flimage_crop(p1, p2, p3, p4, p5)
+    retval = _flimage_crop(pImage, p2, p3, p4, p5)
     return retval
 
 
@@ -15122,11 +15131,11 @@ _flimage_replace_pixel = cfuncproto(so_libflimage, "flimage_replace_pixel",
         """int flimage_replace_pixel(FL_IMAGE * p1, unsigned int p2,
            unsigned int p3)
         """)
-def flimage_replace_pixel(p1, p2, p3):
-    """ flimage_replace_pixel(p1, p2, p3) -> num.
+def flimage_replace_pixel(pImage, p2, p3):
+    """ flimage_replace_pixel(pImage, p2, p3) -> num.
     """ 
 
-    retval = _flimage_replace_pixel(p1, p2, p3)
+    retval = _flimage_replace_pixel(pImage, p2, p3)
     return retval
 
 
@@ -15136,11 +15145,11 @@ _flimage_transform_pixels = cfuncproto(so_libflimage, "flimage_transform_pixels"
         """int flimage_transform_pixels(FL_IMAGE * p1, int * p2, int * p3,
            int * p4)
         """)
-def flimage_transform_pixels(p1, p2, p3, p4):
-    """ flimage_transform_pixels(p1, p2, p3, p4) -> num.
+def flimage_transform_pixels(pImage, p2, p3, p4):
+    """ flimage_transform_pixels(pImage, p2, p3, p4) -> num.
     """ 
 
-    retval = _flimage_transform_pixels(p1, p2, p3, p4)
+    retval = _flimage_transform_pixels(pImage, p2, p3, p4)
     return retval
 
 
@@ -15148,11 +15157,11 @@ _flimage_windowlevel = cfuncproto(so_libflimage, "flimage_windowlevel",
         cty.c_int, [cty.POINTER(FL_IMAGE), cty.c_int, cty.c_int], 
         """int flimage_windowlevel(FL_IMAGE * p1, int p2, int p3)
         """)
-def flimage_windowlevel(p1, p2, p3):
-    """ flimage_windowlevel(p1, p2, p3) -> num.
+def flimage_windowlevel(pImage, p2, p3):
+    """ flimage_windowlevel(pImage, p2, p3) -> num.
     """ 
 
-    retval = _flimage_windowlevel(p1, p2, p3)
+    retval = _flimage_windowlevel(pImage, p2, p3)
     return retval
 
 
@@ -15160,11 +15169,11 @@ _flimage_enhance = cfuncproto(so_libflimage, "flimage_enhance",
         cty.c_int, [cty.POINTER(FL_IMAGE), cty.c_int], 
         """int flimage_enhance(FL_IMAGE * p1, int p2)
         """)
-def flimage_enhance(p1, p2):
-    """ flimage_enhance(p1, p2) -> num.
+def flimage_enhance(pImage, p2):
+    """ flimage_enhance(pImage, p2) -> num.
     """ 
 
-    retval = _flimage_enhance(p1, p2)
+    retval = _flimage_enhance(pImage, p2)
     return retval
 
 
@@ -15175,11 +15184,11 @@ _flimage_from_pixmap = cfuncproto(so_libflimage, "flimage_from_pixmap",
         cty.c_int, [cty.POINTER(FL_IMAGE), Pixmap], 
         """int flimage_from_pixmap(FL_IMAGE * p1, Pixmap p2)
         """)
-def flimage_from_pixmap(p1, p2):
-    """ flimage_from_pixmap(p1, p2) -> num.
+def flimage_from_pixmap(pImage, pixmap):
+    """ flimage_from_pixmap(pImage, pixmap) -> num.
     """ 
 
-    retval = _flimage_from_pixmap(p1, p2)
+    retval = _flimage_from_pixmap(pImage, pixmap)
     return retval
 
 
@@ -15187,11 +15196,11 @@ _flimage_to_pixmap = cfuncproto(so_libflimage, "flimage_to_pixmap",
         Pixmap, [cty.POINTER(FL_IMAGE), FL_WINDOW], 
         """Pixmap flimage_to_pixmap(FL_IMAGE * p1, FL_WINDOW p2)
         """)
-def flimage_to_pixmap(p1, p2):
-    """ flimage_to_pixmap(p1, p2) -> pixmap ref.
+def flimage_to_pixmap(pImage, window):
+    """ flimage_to_pixmap(pImage, window) -> pixmap
     """ 
 
-    retval = _flimage_to_pixmap(p1, p2)
+    retval = _flimage_to_pixmap(pImage, window)
     return retval
 
 
@@ -15199,11 +15208,11 @@ _flimage_dup = cfuncproto(so_libflimage, "flimage_dup",
         cty.POINTER(FL_IMAGE), [cty.POINTER(FL_IMAGE)], 
         """FL_IMAGE * flimage_dup(FL_IMAGE * p1)
         """)
-def flimage_dup(p1):
-    """ flimage_dup(p1) -> num.
+def flimage_dup(pImage):
+    """ flimage_dup(pImage) -> pImage
     """ 
 
-    retval = _flimage_dup(p1)
+    retval = _flimage_dup(pImage)
     return retval
 
 
@@ -15232,11 +15241,11 @@ _fl_j2pass_quantize_packed = cfuncproto(so_libflimage, "fl_j2pass_quantize_packe
            int p4, short unsigned int * * p5, int * p6, int * p7, int * p8,
            int * p9, FL_IMAGE * p10)
         """)
-def fl_j2pass_quantize_packed(p1, p2, p3, p4, p5, p6, p7, p8, p9, p10):
-    """ fl_j2pass_quantize_packed(p1, p2, p3, p4, p5, p6, p7, p8, p9, p10) -> num.
+def fl_j2pass_quantize_packed(p1, p2, p3, p4, p5, p6, p7, p8, p9, pImage):
+    """ fl_j2pass_quantize_packed(p1, p2, p3, p4, p5, p6, p7, p8, p9, pImage) -> num.
     """ 
 
-    retval = _fl_j2pass_quantize_packed(p1, p2, p3, p4, p5, p6, p7, p8, p9, p10)
+    retval = _fl_j2pass_quantize_packed(p1, p2, p3, p4, p5, p6, p7, p8, p9, pImage)
     return retval
 
 
@@ -15252,11 +15261,11 @@ _fl_j2pass_quantize_rgb = cfuncproto(so_libflimage, "fl_j2pass_quantize_rgb",
            short unsigned int * * p7, int * p8, int * p9, int * p10,
            int * p11, FL_IMAGE * p12)
         """)
-def fl_j2pass_quantize_rgb(p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, p12):
-    """ fl_j2pass_quantize_rgb(p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, p12) -> num.
+def fl_j2pass_quantize_rgb(p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, pImage):
+    """ fl_j2pass_quantize_rgb(p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, pImage) -> num.
     """ 
 
-    retval = _fl_j2pass_quantize_rgb(p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, p12)
+    retval = _fl_j2pass_quantize_rgb(p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, pImage)
     return retval
 
 
@@ -15314,11 +15323,11 @@ _flimage_add_comments = cfuncproto(so_libflimage, "flimage_add_comments",
         None, [cty.POINTER(FL_IMAGE), STRING, cty.c_int], 
         """void flimage_add_comments(FL_IMAGE * p1, const char * p2, int p3)
         """)
-def flimage_add_comments(p1, p2, p3):
-    """ flimage_add_comments(p1, p2, p3)
+def flimage_add_comments(pImage, p2, p3):
+    """ flimage_add_comments(pImage, p2, p3)
     """ 
 
-    _flimage_add_comments(p1, p2, p3)
+    _flimage_add_comments(pImage, p2, p3)
 
 
 _flimage_color_to_pixel = cfuncproto(so_libflimage, "flimage_color_to_pixel",
@@ -15327,11 +15336,11 @@ _flimage_color_to_pixel = cfuncproto(so_libflimage, "flimage_color_to_pixel",
         """)long unsigned int flimage_color_to_pixel(FL_IMAGE * p1, int p2,
            int p3, int p4, int * p5)
         """)
-def flimage_color_to_pixel(p1, p2, p3, p4, p5):
-    """ flimage_color_to_pixel(p1, p2, p3, p4, p5) -> num.
+def flimage_color_to_pixel(pImage, p2, p3, p4, p5):
+    """ flimage_color_to_pixel(pImage, p2, p3, p4, p5) -> num.
     """ 
 
-    retval = _flimage_color_to_pixel(p1, p2, p3, p4, p5)
+    retval = _flimage_color_to_pixel(pImage, p2, p3, p4, p5)
     return retval
 
 
@@ -15340,11 +15349,11 @@ _flimage_combine = cfuncproto(so_libflimage, "flimage_combine",
         cty.c_double], 
         """FL_IMAGE * flimage_combine(FL_IMAGE * p1, FL_IMAGE * p2, double p3)
         """)
-def flimage_combine(p1, p2, p3):
-    """ flimage_combine(p1, p2, p3) -> image ref.
+def flimage_combine(pImage1, pImage2, p3):
+    """ flimage_combine(pImage1, pImage2, p3) -> image
     """ 
 
-    retval = _flimage_combine(p1, p2, p3)
+    retval = _flimage_combine(pImage1, pImage2, p3)
     return retval
 
 
@@ -15352,8 +15361,8 @@ _flimage_display_markers = cfuncproto(so_libflimage, "flimage_display_markers",
         None, [cty.POINTER(FL_IMAGE)], 
         """void flimage_display_markers(FL_IMAGE * p1)
         """)
-def flimage_display_markers(p1):
-    """ flimage_display_markers(p1)
+def flimage_display_markers(pImage):
+    """ flimage_display_markers(pImage)
     """ 
 
     _flimage_display_markers(p1)
@@ -15363,11 +15372,11 @@ _flimage_dup_ = cfuncproto(so_libflimage, "flimage_dup_",
         cty.POINTER(FL_IMAGE), [cty.POINTER(FL_IMAGE), cty.c_int], 
         """FL_IMAGE * flimage_dup_(FL_IMAGE * p1, int p2)
         """)
-def flimage_dup_(p1, p2):
-    """ flimage_dup_(p1, p2) -> image ref.
+def flimage_dup_(pImage, p2):
+    """ flimage_dup_(pImage, p2) -> image
     """ 
 
-    retval = _flimage_dup_(p1, p2)
+    retval = _flimage_dup_(pImage, p2)
     return retval
 
 
@@ -15518,55 +15527,55 @@ _flimage_free_ci = cfuncproto(so_libflimage, "flimage_free_ci",
         None, [cty.POINTER(FL_IMAGE)], 
         """void flimage_free_ci(FL_IMAGE * p1)
         """)
-def flimage_free_ci(p1):
-    """ flimage_free_ci(p1)
+def flimage_free_ci(pImage):
+    """ flimage_free_ci(pImage)
     """ 
 
-    _flimage_free_ci(p1)
+    _flimage_free_ci(pImage)
 
 
 _flimage_free_gray = cfuncproto(so_libflimage, "flimage_free_gray",
         None, [cty.POINTER(FL_IMAGE)], 
         """void flimage_free_gray(FL_IMAGE * p1)
         """)
-def flimage_free_gray(p1):
-    """ flimage_free_gray(p1)
+def flimage_free_gray(pImage):
+    """ flimage_free_gray(pImage)
     """ 
 
-    _flimage_free_gray(p1)
+    _flimage_free_gray(pImage)
 
 
 _flimage_free_linearlut = cfuncproto(so_libflimage, "flimage_free_linearlut",
         None, [cty.POINTER(FL_IMAGE)], 
         """void flimage_free_linearlut(FL_IMAGE * p1)
         """)
-def flimage_free_linearlut(p1):
-    """ flimage_free_linearlut(p1)
+def flimage_free_linearlut(pImage):
+    """ flimage_free_linearlut(pImage)
     """ 
 
-    _flimage_free_linearlut(p1)
+    _flimage_free_linearlut(pImage)
 
 
 _flimage_free_rgb = cfuncproto(so_libflimage, "flimage_free_rgb",
         None, [cty.POINTER(FL_IMAGE)], 
         """void flimage_free_rgb(FL_IMAGE * p1)
         """)
-def flimage_free_rgb(p1):
-    """ flimage_free_rgb(p1)
+def flimage_free_rgb(pImage):
+    """ flimage_free_rgb(pImage)
     """ 
 
-    _flimage_free_rgb(p1)
+    _flimage_free_rgb(pImage)
 
 
 _flimage_freemem = cfuncproto(so_libflimage, "flimage_freemem",
         None, [cty.POINTER(FL_IMAGE)], 
         """void flimage_freemem(FL_IMAGE * p1)
         """)
-def flimage_freemem(p1):
-    """ flimage_freemem(p1)
+def flimage_freemem(pImage):
+    """ flimage_freemem(pImage)
     """ 
 
-    _flimage_freemem(p1)
+    _flimage_freemem(pImage)
 
 
 _flimage_get_closest_color_from_map = cfuncproto(so_libflimage, "flimage_get_closest_color_from_map",
@@ -15574,11 +15583,11 @@ _flimage_get_closest_color_from_map = cfuncproto(so_libflimage, "flimage_get_clo
         """int flimage_get_closest_color_from_map(FL_IMAGE * p1,
            unsigned int p2)
         """)
-def flimage_get_closest_color_from_map(p1, p2):
-    """ flimage_get_closest_color_from_map(p1, p2) -> num.
+def flimage_get_closest_color_from_map(pImage, p2):
+    """ flimage_get_closest_color_from_map(pImage, p2) -> num.
     """ 
 
-    retval = _flimage_get_closest_color_from_map(p1, p2)
+    retval = _flimage_get_closest_color_from_map(pImage, p2)
     return retval
 
 
@@ -15586,11 +15595,11 @@ _flimage_get_linearlut = cfuncproto(so_libflimage, "flimage_get_linearlut",
         cty.c_int, [cty.POINTER(FL_IMAGE)], 
         """int flimage_get_linearlut(FL_IMAGE * p1)
         """)
-def flimage_get_linearlut(p1):
-    """ flimage_get_linearlut(p1) -> num.
+def flimage_get_linearlut(pImage):
+    """ flimage_get_linearlut(pImage) -> num.
     """ 
 
-    retval = _flimage_get_linearlut(p1)
+    retval = _flimage_get_linearlut(pImage)
     return retval
 
 
@@ -15598,11 +15607,11 @@ _flimage_invalidate_pixels = cfuncproto(so_libflimage, "flimage_invalidate_pixel
         None, [cty.POINTER(FL_IMAGE)], 
         """void flimage_invalidate_pixels(FL_IMAGE * p1)
         """)
-def flimage_invalidate_pixels(p1):
-    """ flimage_invalidate_pixels(p1)
+def flimage_invalidate_pixels(pImage):
+    """ flimage_invalidate_pixels(pImage)
     """ 
 
-    _flimage_invalidate_pixels(p1)
+    _flimage_invalidate_pixels(pImage)
 
 
 _flimage_open = cfuncproto(so_libflimage, "flimage_open",
@@ -15610,7 +15619,7 @@ _flimage_open = cfuncproto(so_libflimage, "flimage_open",
         """FL_IMAGE * flimage_open(const char * p1)
         """)
 def flimage_open(p1):
-    """ flimage_open(p1) -> image ref.
+    """ flimage_open(p1) -> image
     """ 
 
     retval = _flimage_open(p1)
@@ -15621,11 +15630,11 @@ _flimage_read_annotation = cfuncproto(so_libflimage, "flimage_read_annotation",
         cty.c_int, [cty.POINTER(FL_IMAGE)], 
         """int flimage_read_annotation(FL_IMAGE * p1)
         """)
-def flimage_read_annotation(p1):
-    """ flimage_read_annotation(p1) -> num.
+def flimage_read_annotation(pImage):
+    """ flimage_read_annotation(pImage) -> num.
     """ 
 
-    retval = _flimage_read_annotation(p1)
+    retval = _flimage_read_annotation(pImage)
     return retval
 
 
@@ -15635,22 +15644,22 @@ _flimage_replace_image = cfuncproto(so_libflimage, "flimage_replace_image",
         """void flimage_replace_image(FL_IMAGE * p1, int p2, int p3,
            void * p4, void * p5, void * p6)
         """)
-def flimage_replace_image(p1, p2, p3, p4, p5, p6):
-    """ flimage_replace_image(p1, p2, p3, p4, p5, p6)
+def flimage_replace_image(pImage, p2, p3, p4, p5, p6):
+    """ flimage_replace_image(pImage, p2, p3, p4, p5, p6)
     """ 
 
-    _flimage_replace_image(p1, p2, p3, p4, p5, p6)
+    _flimage_replace_image(pImage, p2, p3, p4, p5, p6)
 
 
 _flimage_swapbuffer = cfuncproto(so_libflimage, "flimage_swapbuffer",
         cty.c_int, [cty.POINTER(FL_IMAGE)], 
         """int flimage_swapbuffer(FL_IMAGE * p1)
         """)
-def flimage_swapbuffer(p1):
-    """ flimage_swapbuffer(p1) -> num.
+def flimage_swapbuffer(pImage):
+    """ flimage_swapbuffer(pImage) -> num.
     """ 
 
-    retval = _flimage_swapbuffer(p1)
+    retval = _flimage_swapbuffer(pImage)
     return retval
 
 
@@ -15665,11 +15674,11 @@ _flimage_to_ximage = cfuncproto(so_libflimage, "flimage_to_ximage",
         """int flimage_to_ximage(FL_IMAGE * p1, FL_WINDOW p2,
            XWindowAttributes * p3)
         """)
-def flimage_to_ximage(p1, p2, p3):
-    """ flimage_to_ximage(p1, p2, p3) -> num.
+def flimage_to_ximage(pImage, window, p3):
+    """ flimage_to_ximage(pImage, window, p3) -> num.
     """ 
 
-    retval = _flimage_to_ximage(p1, p2, p3)
+    retval = _flimage_to_ximage(pImage, window, p3)
     return retval
 
 
@@ -15677,11 +15686,11 @@ _flimage_write_annotation = cfuncproto(so_libflimage, "flimage_write_annotation"
         cty.c_int, [cty.POINTER(FL_IMAGE)], 
         """int flimage_write_annotation(FL_IMAGE * p1)
         """)
-def flimage_write_annotation(p1):
-    """ flimage_write_annotation(p1) -> num.
+def flimage_write_annotation(pImage):
+    """ flimage_write_annotation(pImage) -> num.
     """ 
 
-    retval = _flimage_write_annotation(p1)
+    retval = _flimage_write_annotation(pImage)
     return retval
 
 
@@ -15953,11 +15962,11 @@ _flps_lines = cfuncproto(so_libflimage, "flps_lines",
         None, [cty.POINTER(FL_POINT), cty.c_int, cty.c_long], 
         """void flps_lines(FL_POINT * p1, int p2, long int p3)
         """)
-def flps_lines(p1, p2, p3):
-    """ flps_lines(p1, p2, p3)
+def flps_lines(pPoint, p2, p3):
+    """ flps_lines(pPoint, p2, p3)
     """ 
 
-    _flps_lines(p1, p2, p3)
+    _flps_lines(pPoint, p2, p3)
 
 
 _flps_linestyle = cfuncproto(so_libflimage, "flps_linestyle",
@@ -16033,11 +16042,11 @@ _flps_poly = cfuncproto(so_libflimage, "flps_poly",
         None, [cty.c_int, cty.POINTER(FL_POINT), cty.c_int, cty.c_long], 
         """void flps_poly(int p1, FL_POINT * p2, int p3, long int p4)
         """)
-def flps_poly(p1, p2, p3, p4):
-    """ flps_poly(p1, p2, p3, p4)
+def flps_poly(p1, pPoint, p3, p4):
+    """ flps_poly(p1, pPoint, p3, p4)
     """ 
 
-    _flps_poly(p1, p2, p3, p4)
+    _flps_poly(p1, pPoint, p3, p4)
 
 
 _flps_rectangle = cfuncproto(so_libflimage, "flps_rectangle",

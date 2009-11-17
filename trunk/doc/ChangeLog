@@ -1,6 +1,10 @@
 
 
 SVN
+    * Some bugfix to avoid "Illegal Instruction" because of
+    inappropriate reference to prevent garbage collector.
+    * verify version compatibility (between XForms library and
+    xforms-python) and print a warninf if there is a mismatch.
     * Porting of arrowbutton example
     * Verified type conversion from py function to c-compatible.
     * Raw conversion's product needed to be reworked, as
