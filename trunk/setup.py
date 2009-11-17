@@ -23,6 +23,8 @@ distutils.core.setup(name = 'xforms-python',
                                   'doc/lgpl-2.1.txt', 'doc/INSTALL', \
                                   'doc/README', 'doc/TODO']), \
                                   ('share/xforms-python-'+version+'/examples', \
-                                  ['examples/arrowbutton.py'])]
+                                  ['examples/arrowbutton.py', \
+                                  'examples/borderwidth.py', \
+                                  'examples/crab.xpm'])]
                      )
 

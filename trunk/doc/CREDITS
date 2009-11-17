@@ -1,23 +1,33 @@
-This work could not be possible without these great people
- I owe a huge thanks and a respectful acknowlegement:
+This work could not be possible without these really great people
+I owe huge thanks and a respectful acknowledgement to:
 
 
 ###################################
+#                                 #
 # XForms toolkit developers       #
-# (http://www.xforms-toolkit.org) #
+#                                 #
+#  http://www.xforms-toolkit.org  #
+#                                 #
 ###################################
+
 Copyright owners and original authors:
  (C) 1996-2000 by T.C. Zhao and Mark Overmars
  Parts (C) 1999-2002 T.C. Zhao and Steve Lamont
+
 Past and current maintainers:
 Jean-Marc Lasgouttes, Angus Leeming, Jens Thoms Toerring
 
+
 ###########################################
-# ctypes developers                       #
-# (http://python.net/crew/theller/ctypes) #
+#                                         #
+# ctypes developer                        #
+#                                         #
+#  http://python.net/crew/theller/ctypes  #
+#                                         #
 ###########################################
+
 Copyright owner and author:
- (C) Thomas Heller
+ (C) 2000, 2001, 2002, 2003, 2004 by Thomas Heller
 
 
 I wish thank also:
