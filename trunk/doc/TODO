@@ -1,9 +1,12 @@
 *** Limitations ***
 
 - public functions are not guaranteed to remain stable and
-consistent, until version 1.0.0 will be released. Library
-name and directory layout might change in order to have a
-better reorganization.
+consistent, until version 1.0.0 will be released. So library
+name and directory layout might change in order to achieve
+a better reorganization.
+- some ported-to-python XForms c function are for internal
+use or low level work in XForms: as maybe they are not useful
+will be commented/disabled.
 - this software is mainly focused on GNU/Linux operating
 systems. Apple MacOS and MS Windows are not supported, yet.
 Other unix-like operating systems may or may not be working.
@@ -20,28 +23,34 @@ development state, presently.
 
 *** Ideas for further development ***
 
-- reduce chance to incur in SegmentationFault (need a more
-deep testing) (the highest priority)
+- reduce chance to incur in Segmentation Fault/Illegal Instruction
+(need a more deep testing) (the highest priority).
 
 - for each acquired c function I need to improve a python
 wrapping function, in order to check if a parameter of
-correct type has been passed. (high priority)
+correct type has been passed and convert it. (high priority).
 
 - convert XForms c examples to be used as python scripts
-(they can be used as working tests as well) (high priority)
+(they can be used as working tests as well) (high priority).
 
-- polish wrapper to remove unnecessary comments
+- polish wrapper to remove unnecessary comments.
 
 - verify external functions/data from Xlib and c stdlib
 to be resolved and correct related shared library loaded
 by ctypes, remove external functions not directy referenced
-by XForms library
+by XForms library.
 
-- verify all c macro conversion's correctness
+- verify all c macro conversion's correctness (if needed).
 
 - do a simple and meaningful docstring for every public
-function
+function; this is absolutely annoying as I have to manually
+copy functions' description and parameters' lists from XForms
+documentation, so it may take several months. But, meantime,
+I plan to rename functions' parameters, where possible, in
+order to improve usability.
 
-- have a minimal but complete function reference guide
-(I do not intend to do a real developer/user manual
-as xforms.pdf present in XForms is absolutely great)
+- have a minimal but complete function reference guide; I
+do not intend to do a real developer/user manual as
+xforms.pdf present in XForms is absolutely great and
+functions call in xforms-python are only slightly modified.
+
