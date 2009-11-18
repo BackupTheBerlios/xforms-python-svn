@@ -1,9 +1,12 @@
 
 
 SVN
-    * Porting of borderwidth example
+    * Start replacing some  function parameters who are python
+    keywords or other reserved words.
+    * Porting of borderwidth example.
     * Some bugfix to avoid "Illegal Instruction" because of
-    inappropriate reference to prevent garbage collector.
+    inappropriate position of reference to prevent garbage
+    collector.
     * verify version compatibility (between XForms library and
     xforms-python) and print a warninf if there is a mismatch.
     * Porting of arrowbutton example
