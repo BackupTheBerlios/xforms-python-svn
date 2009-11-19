@@ -1,14 +1,18 @@
 
 
 SVN
-    * Start replacing some  function parameters who are python
+    * start improving docstrings, to include function purpose
+    and parameters' meaning
+    * continue replacing names, bugfixes.
+    * reduce some lines length to prevent warnings.
+    * Start replacing some function parameters who are python
     keywords or other reserved words.
     * Porting of borderwidth example.
     * Some bugfix to avoid "Illegal Instruction" because of
     inappropriate position of reference to prevent garbage
     collector.
     * verify version compatibility (between XForms library and
-    xforms-python) and print a warninf if there is a mismatch.
+    xforms-python) and print a warning if there is a mismatch.
     * Porting of arrowbutton example
     * Verified type conversion from py function to c-compatible.
     * Raw conversion's product needed to be reworked, as
