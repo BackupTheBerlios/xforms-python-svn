@@ -1,7 +1,8 @@
 
 
 SVN
-    * start improving docstrings, to include function purpose
+    * Porting of colsel example.
+    * start improving docstrings to include function purpose
     and parameters' meaning
     * continue replacing names, bugfixes.
     * reduce some lines length to prevent warnings.
