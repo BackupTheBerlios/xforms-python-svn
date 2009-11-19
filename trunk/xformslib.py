@@ -5678,7 +5678,7 @@ def fl_popup_create(win, p2, p3):
     """ fl_popup_create(win, p2, p3) -> popup
     """
 
-    retval = _fl_popup_create(p1, p2, p3)
+    retval = _fl_popup_create(win, p2, p3)
     return retval
 
 
@@ -15882,7 +15882,7 @@ def fl_free_matrix(p1):
 
 # it seems not to be defined --LK
 #fl_basename = cfuncproto(
-        so_libflimage, "fl_basename",
+#       so_libflimage, "fl_basename",
 #       STRING, [STRING],
 #       """char * void fl_basename(char * p1)
 #       """)
@@ -15975,7 +15975,7 @@ def flimage_getcolormap(pImage):
 
 # it seems not to be defined --LK
 #_fl_select_octree_quantizer = cfuncproto(
-        so_libflimage, "fl_select_octree_quantizer",
+#       so_libflimage, "fl_select_octree_quantizer",
 #       None, [],
 #       """void fl_select_octree_quantizer()
 #       """)
