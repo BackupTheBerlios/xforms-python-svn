@@ -1596,6 +1596,12 @@ _fl_scale_form = cfuncproto(
         """)
 def fl_scale_form(pForm, xsc, ysc):
     """ fl_scale_form(pForm, xsc, ysc)
+        Scales a form and the objects on it in size and position, indicating
+         a scaling factor in x- and y-direction with respect to the current
+         size
+        <pForm> : form to be scaled
+        <xsc> : scaling factor in horizonthal direction
+        <ysc> : scaling factor in vertical direction
     """
 
     _fl_scale_form(pForm, xsc, ysc)
@@ -1609,6 +1615,11 @@ _fl_set_form_position = cfuncproto(
         """)
 def fl_set_form_position(pForm, x, y):
     """ fl_set_form_position(pForm, x, y)
+        Sets position of form, when placing a form on the screen with
+         FL_PLACE_GEOMETRY as place argument
+        <pForm> : form whose position is to be set
+        <x> : horizonthal position
+        <y> : vertical position
     """
 
     _fl_set_form_position(pForm, x, y)
@@ -1621,6 +1632,9 @@ _fl_set_form_title = cfuncproto(
         """)
 def fl_set_form_title(pForm, name):
     """ fl_set_form_title(pForm, name)
+        Changes the form title (and the icon name) after it is shown.
+        <pForm> : form whose title has to be changed
+        <name> : new name for the form
     """
 
     _fl_set_form_title(pForm, name)
@@ -11673,7 +11687,7 @@ FL_MENUBAR_LCOL = FL_LCOL
 # Routines not active anymore:
 
 #fl_create_menubar = cfuncproto(
-        so_libforms, "fl_create_menubar",
+#        so_libforms, "fl_create_menubar",
 #       cty.POINTER(FL_OBJECT), [cty.c_int, FL_Coord, FL_Coord, FL_Coord,
 #       FL_Coord, STRING],
 #       """FL_OBJECT * fl_create_menubar(int type, FL_Coord x, FL_Coord y,
@@ -11688,7 +11702,7 @@ FL_MENUBAR_LCOL = FL_LCOL
 
 
 #fl_add_menubar = cfuncproto(
-        so_libforms, "fl_add_menubar",
+#        so_libforms, "fl_add_menubar",
 #       cty.POINTER(FL_OBJECT), [cty.c_int, FL_Coord, FL_Coord, FL_Coord,
 #       FL_Coord, STRING],
 #       """FL_OBJECT * fl_add_menubar(int type, FL_Coord x, FL_Coord y,
@@ -11703,7 +11717,7 @@ FL_MENUBAR_LCOL = FL_LCOL
 
 
 #fl_clear_menubar = cfuncproto(
-        so_libforms, "fl_clear_menubar",
+#        so_libforms, "fl_clear_menubar",
 #       None, [cty.POINTER(FL_OBJECT)],
 #       """void fl_clear_menubar(FL_OBJECT * ob)    REMOVED
 #       """)
@@ -11715,7 +11729,7 @@ FL_MENUBAR_LCOL = FL_LCOL
 
 
 #fl_set_menubar = cfuncproto(
-        so_libforms, "fl_set_menubar",
+#        so_libforms, "fl_set_menubar",
 #       None, [cty.POINTER(FL_OBJECT), STRING],
 #       """void fl_set_menubar(FL_OBJECT * ob, char * label)    REMOVED
 #       """)
@@ -11727,7 +11741,7 @@ FL_MENUBAR_LCOL = FL_LCOL
 
 
 #fl_set_menubar_entries = cfuncproto(
-        so_libforms, "fl_set_menubar_entries",
+#        so_libforms, "fl_set_menubar_entries",
 #       None, [cty.POINTER(FL_OBJECT), STRING, cty.POINTER(FL_PUP_ENTRY)],
 #       """void fl_set_menubar_entries(FL_OBJECT * ob, char * label,
 #          FL_PUP_ENTRY * label)    REMOVED
