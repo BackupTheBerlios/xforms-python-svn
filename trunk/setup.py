@@ -25,7 +25,9 @@ distutils.core.setup(name = 'xforms-python',
                                   ('share/xforms-python-'+version+'/examples', \
                                   ['examples/arrowbutton.py', \
                                   'examples/borderwidth.py', \
-                                  'examples/crab.xpm',
-                                  'examples/colsel.py'])]
+                                  'examples/crab.xpm', \
+                                  'examples/colsel.py', \
+                                  'examples/pushme.py']
+                                  )]
                      )
 
