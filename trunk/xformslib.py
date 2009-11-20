@@ -126,6 +126,8 @@ def func_do_nothing_placeholder(cfunction):
 # placeholders to keep reference to c functions
 # keep global to avoid garbage collector's' unpredictable behaviour
 _cfunc_refs = {}
+# just in case, maintain elements used as parameters, too
+_elem_refs = {}
 
 def get_rand_dictkey():
     """ Get a randomic string between '1' and '1000' for _cfunc_refs dict keys
@@ -133,6 +135,15 @@ def get_rand_dictkey():
 
     akey = str(random.randrange(1, 1000))
     while akey in _cfunc_refs:
+        akey = str(random.randrange(1, 1000))
+    return akey
+
+def get_rand_elemkey():
+    """ Get a randomic string between '1' and '1000' for _elem_refs dict keys
+    """
+
+    akey = str(random.randrange(1, 1000))
+    while akey in _elem_refs:
         akey = str(random.randrange(1, 1000))
     return akey
 
@@ -1080,7 +1091,7 @@ FL_IO_CALLBACK = cty.CFUNCTYPE(None, cty.c_int, cty.c_void_p)
 _fl_add_io_callback = cfuncproto(
         so_libforms, "fl_add_io_callback", \
         None, [cty.c_int, cty.c_uint, FL_IO_CALLBACK, cty.c_void_p], \
-        """void _fl_add_io_callback(int fd, unsigned int mask,
+        """void fl_add_io_callback(int fd, unsigned int mask,
            FL_IO_CALLBACK callback, void * data)
         """)
 def fl_add_io_callback(fd, mask, py_callback, data):
@@ -1095,13 +1106,16 @@ def fl_add_io_callback(fd, mask, py_callback, data):
 
     c_callback = FL_IO_CALLBACK(py_callback)
     _cfunc_refs[get_rand_dictkey()] = c_callback
+    _elem_refs[get_rand_elemkey()] = fd
+    _elem_refs[get_rand_elemkey()] = mask
+    _elem_refs[get_rand_elemkey()] = data
     _fl_add_io_callback(fd, mask, c_callback, data)
 
 
 _fl_remove_io_callback = cfuncproto(
         so_libforms, "fl_remove_io_callback", \
         None, [cty.c_int, cty.c_uint, FL_IO_CALLBACK], \
-        """void _fl_remove_io_callback(int fd, unsigned int mask,
+        """void fl_remove_io_callback(int fd, unsigned int mask,
            FL_IO_CALLBACK cb)
         """)
 def fl_remove_io_callback(fd, mask, py_cb):
@@ -1115,6 +1129,8 @@ def fl_remove_io_callback(fd, mask, py_cb):
 
     c_cb = FL_IO_CALLBACK(py_cb)
     _cfunc_refs[get_rand_dictkey()] = c_cb
+    _elem_refs[get_rand_elemkey()] = fd
+    _elem_refs[get_rand_elemkey()] = mask
     _fl_remove_io_callback(fd, mask, c_cb)
 
 
@@ -1126,7 +1142,7 @@ FL_SIGNAL_HANDLER = cty.CFUNCTYPE(None, cty.c_int, cty.c_void_p)
 _fl_add_signal_callback = cfuncproto(
         so_libforms, "fl_add_signal_callback", \
         None, [cty.c_int, FL_SIGNAL_HANDLER, cty.c_void_p], \
-        """void _fl_add_signal_callback(int s, FL_SIGNAL_HANDLER cb,
+        """void fl_add_signal_callback(int s, FL_SIGNAL_HANDLER cb,
            void * data)
         """)
 def fl_add_signal_callback(sglnum, py_cb, data):
@@ -1140,13 +1156,15 @@ def fl_add_signal_callback(sglnum, py_cb, data):
 
     c_cb = FL_SIGNAL_HANDLER(py_cb)
     _cfunc_refs[get_rand_dictkey()] = c_cb
+    _elem_refs[get_rand_elemkey()] = sglnum
+    _elem_refs[get_rand_elemkey()] = data
     _fl_add_signal_callback(sglnum, c_cb, data)
 
 
 _fl_remove_signal_callback = cfuncproto(
         so_libforms, "fl_remove_signal_callback", \
         None, [cty.c_int], \
-        """void _fl_remove_signal_callback(int s)
+        """void fl_remove_signal_callback(int s)
         """)
 def fl_remove_signal_callback(sglnum):
     """ fl_remove_signal_callback(sglnum)
@@ -1154,13 +1172,14 @@ def fl_remove_signal_callback(sglnum):
         <sglnum> : signal number (e.g. signal.SIGALRM, signal.SIGINT, etc.)
     """
 
+    _elem_refs[get_rand_elemkey()] = sglnum
     _fl_remove_signal_callback(sglnum)
 
 
 _fl_signal_caught = cfuncproto(
         so_libforms, "fl_signal_caught", \
         None, [cty.c_int], \
-        """void _fl_signal_caught(int s)
+        """void fl_signal_caught(int s)
         """)
 def fl_signal_caught(sglnum):
     """ fl_signal_caught(sglnum)
@@ -1169,13 +1188,14 @@ def fl_signal_caught(sglnum):
         <sglnum> : signal number (e.g. signal.SIGALRM, signal.SIGINT, etc.)
     """
 
+    _elem_refs[get_rand_elemkey()] = sglnum
     _fl_signal_caught(sglnum)
 
 
 _fl_app_signal_direct = cfuncproto(
         so_libforms, "fl_app_signal_direct", \
         None, [cty.c_int], \
-        """void _fl_app_signal_direct(int y)
+        """void fl_app_signal_direct(int y)
         """)
 def fl_app_signal_direct(y):
     """ fl_app_signal_direct(y)
@@ -1185,6 +1205,7 @@ def fl_app_signal_direct(y):
         <y> : flag (e.g. True, False)
     """
 
+    _elem_refs[get_rand_elemkey()] = y
     _fl_app_signal_direct(y)
 
 
@@ -1196,7 +1217,7 @@ FL_TIMEOUT_CALLBACK = cty.CFUNCTYPE(None, cty.c_int, cty.c_void_p)
 _fl_add_timeout = cfuncproto(
         so_libforms, "fl_add_timeout", \
         cty.c_int, [cty.c_long, FL_TIMEOUT_CALLBACK, cty.c_void_p], \
-        """int _fl_add_timeout(long int msec,
+        """int fl_add_timeout(long int msec,
            FL_TIMEOUT_CALLBACK callback, void * data)
         """)
 def fl_add_timeout(msec, py_callback, data):
@@ -1208,8 +1229,10 @@ def fl_add_timeout(msec, py_callback, data):
     """
 
     c_callback = FL_TIMEOUT_CALLBACK(py_callback)
-    retval = _fl_add_timeout(msec, c_callback, data)
     _cfunc_refs[get_rand_dictkey()] = c_callback
+    _elem_refs[get_rand_elemkey()] = msec
+    _elem_refs[get_rand_elemkey()] = data
+    retval = _fl_add_timeout(msec, c_callback, data)
     return retval
 
 
@@ -1224,6 +1247,7 @@ def fl_remove_timeout(idnum):
         <idnum> : ID timeout number
     """
 
+    _elem_refs[get_rand_elemkey()] = idnum
     _fl_remove_timeout(idnum)
 
 
@@ -1232,7 +1256,7 @@ def fl_remove_timeout(idnum):
 _fl_library_version = cfuncproto(
         so_libforms, "fl_library_version", \
         cty.c_int, [cty.POINTER(cty.c_int), cty.POINTER(cty.c_int)], \
-        """int _fl_library_version(int * ver, int * rev)
+        """int fl_library_version(int * ver, int * rev)
         """)
 def fl_library_version(ver, rev):
     """ fl_library_version(ver, rev) -> version_rev ID
@@ -1242,6 +1266,8 @@ def fl_library_version(ver, rev):
         <rev> : revision (e.g. 0 in x.0.yy)
     """
 
+    _elem_refs[get_rand_elemkey()] = ver
+    _elem_refs[get_rand_elemkey()] = rev
     retval = _fl_library_version(ver, rev)
     return retval
 
@@ -1251,7 +1277,7 @@ def fl_library_version(ver, rev):
 _fl_bgn_form = cfuncproto(
         so_libforms, "fl_bgn_form", \
         cty.POINTER(FL_FORM), [cty.c_int, FL_Coord, FL_Coord], \
-        """FL_FORM * _fl_bgn_form(int type, FL_Coord w, FL_Coord h)
+        """FL_FORM * fl_bgn_form(int type, FL_Coord w, FL_Coord h)
         """)
 def fl_bgn_form(formtype, w, h):
     """ fl_bgn_form(formtype, w, h) -> pForm
@@ -1262,6 +1288,9 @@ def fl_bgn_form(formtype, w, h):
         <h> : height of the new form
     """
 
+    _elem_refs[get_rand_elemkey()] = formtype
+    _elem_refs[get_rand_elemkey()] = w
+    _elem_refs[get_rand_elemkey()] = h
     retval = _fl_bgn_form(formtype, w, h)
     return retval
 
@@ -1269,7 +1298,7 @@ def fl_bgn_form(formtype, w, h):
 _fl_end_form = cfuncproto(
         so_libforms, "fl_end_form", \
         None, [], \
-        """void _fl_end_form()
+        """void fl_end_form()
         """)
 def fl_end_form():
     """ fl_end_form()
@@ -1283,7 +1312,7 @@ def fl_end_form():
 _fl_do_forms = cfuncproto(
         so_libforms, "fl_do_forms", \
         cty.POINTER(FL_OBJECT), [], \
-        """FL_OBJECT * _fl_do_forms()
+        """FL_OBJECT * fl_do_forms()
         """)
 def fl_do_forms():
     """ fl_do_forms() -> pObject
@@ -1298,7 +1327,7 @@ def fl_do_forms():
 _fl_check_forms = cfuncproto(
         so_libforms, "fl_check_forms", \
         cty.POINTER(FL_OBJECT), [], \
-        """FL_OBJECT * _fl_check_forms()
+        """FL_OBJECT * fl_check_forms()
         """)
 def fl_check_forms():
     """ fl_check_forms() -> pObject
@@ -1313,7 +1342,7 @@ def fl_check_forms():
 _fl_do_only_forms = cfuncproto(
         so_libforms, "fl_do_only_forms", \
         cty.POINTER(FL_OBJECT), [], \
-        """FL_OBJECT * _fl_do_only_forms()
+        """FL_OBJECT * fl_do_only_forms()
         """)
 def fl_do_only_forms():
     """ fl_do_only_forms() -> pObject
@@ -1330,7 +1359,7 @@ def fl_do_only_forms():
 _fl_check_only_forms = cfuncproto(
         so_libforms, "fl_check_only_forms", \
         cty.POINTER(FL_OBJECT), [], \
-        """FL_OBJECT * _fl_check_only_forms()
+        """FL_OBJECT * fl_check_only_forms()
         """)
 def fl_check_only_forms():
     """ fl_check_only_forms() -> pObject
@@ -1356,6 +1385,7 @@ def fl_freeze_form(pForm):
         <pForm> : form not to be re-drawn temporarly
     """
 
+    _elem_refs[get_rand_elemkey()] = pForm
     _fl_freeze_form(pForm)
 
 
@@ -1371,6 +1401,8 @@ def fl_set_focus_object(pForm, pObject):
         <pObject> : object to be focused
     """
 
+    _elem_refs[get_rand_elemkey()] = pForm
+    _elem_refs[get_rand_elemkey()] = pObject
     _fl_set_focus_object(pForm, pObject)
 
 
@@ -1385,6 +1417,7 @@ def fl_get_focus_object(pForm):
         <pForm> : form that has a focused object
     """
 
+    _elem_refs[get_rand_elemkey()] = pForm
     retval = _fl_get_focus_object(pForm)
     return retval
 
@@ -1400,6 +1433,7 @@ def fl_reset_focus_object(pObject):
         <pObject> : object towards applying event
     """
 
+    _elem_refs[get_rand_elemkey()] = pObject
     _fl_reset_focus_object(pObject)
 
 
@@ -1423,6 +1457,8 @@ def fl_set_form_atclose(pForm, py_fmclose, data):
 
     c_fmclose = FL_FORM_ATCLOSE(py_fmclose)
     _cfunc_refs[get_rand_dictkey()] = c_fmclose
+    _elem_refs[get_rand_elemkey()] = pForm
+    _elem_refs[get_rand_elemkey()] = data
     retval = _fl_set_form_atclose(pForm, c_fmclose, data)
     return retval
 
@@ -1442,6 +1478,7 @@ def fl_set_atclose(py_fmclose, data):
 
     c_fmclose = FL_FORM_ATCLOSE(py_fmclose)
     _cfunc_refs[get_rand_dictkey()] = c_fmclose
+    _elem_refs[get_rand_elemkey()] = data
     retval = _fl_set_atclose(c_fmclose, data)
     return retval
 
@@ -1464,6 +1501,8 @@ def fl_set_form_atactivate(pForm, py_cb, data):
 
     c_cb = FL_FORM_ATACTIVATE(py_cb)
     _cfunc_refs[get_rand_dictkey()] = c_cb
+    _elem_refs[get_rand_elemkey()] = pForm
+    _elem_refs[get_rand_elemkey()] = data
     retval = _fl_set_form_atactivate(pForm, c_cb, data)
     return retval
 
@@ -1486,6 +1525,8 @@ def fl_set_form_atdeactivate(pForm, py_cb, data):
 
     c_cb = FL_FORM_ATACTIVATE(py_cb)
     _cfunc_refs[get_rand_dictkey()] = c_cb
+    _elem_refs[get_rand_elemkey()] = pForm
+    _elem_refs[get_rand_elemkey()] = data
     retval = _fl_set_form_atdeactivate(pForm, c_cb, data)
     return retval
 
@@ -1502,6 +1543,7 @@ def fl_unfreeze_form(pForm):
         <pForm> : form to be re-drawn after freezing
     """
 
+    _elem_refs[get_rand_elemkey()] = pForm
     _fl_unfreeze_form(pForm)
 
 
@@ -1517,6 +1559,7 @@ def fl_deactivate_form(pForm):
         <pForm> : form to be de-activated
     """
 
+    _elem_refs[get_rand_elemkey()] = pForm
     _fl_deactivate_form(pForm)
 
 
@@ -1532,6 +1575,7 @@ def fl_activate_form(pForm):
         <pForm> : form to be re-activated
     """
 
+    _elem_refs[get_rand_elemkey()] = pForm
     _fl_activate_form(pForm)
 
 
@@ -1604,6 +1648,9 @@ def fl_scale_form(pForm, xsc, ysc):
         <ysc> : scaling factor in vertical direction
     """
 
+    _elem_refs[get_rand_elemkey()] = pForm
+    _elem_refs[get_rand_elemkey()] = xsc
+    _elem_refs[get_rand_elemkey()] = ysc
     _fl_scale_form(pForm, xsc, ysc)
 
 
@@ -1622,6 +1669,9 @@ def fl_set_form_position(pForm, x, y):
         <y> : vertical position
     """
 
+    _elem_refs[get_rand_elemkey()] = pForm
+    _elem_refs[get_rand_elemkey()] = x
+    _elem_refs[get_rand_elemkey()] = y
     _fl_set_form_position(pForm, x, y)
 
 
@@ -1637,6 +1687,7 @@ def fl_set_form_title(pForm, name):
         <name> : new name for the form
     """
 
+    _elem_refs[get_rand_elemkey()] = name
     _fl_set_form_title(pForm, name)
 
 
@@ -1649,6 +1700,7 @@ def fl_set_app_mainform(pForm):
     """ fl_set_app_mainform(pForm)
     """
 
+    _elem_refs[get_rand_elemkey()] = pForm
     _fl_set_app_mainform(pForm)
 
 
@@ -1688,6 +1740,9 @@ def fl_set_form_callback(pForm, pycallback, d):
     """
 
     c_callback = FL_FORMCALLBACKPTR(pycallback)
+    _cfunc_refs[get_rand_dictkey] = c_callback
+    _elem_refs[get_rand_elemkey()] = pForm
+    _elem_refs[get_rand_elemkey()] = d
     _fl_set_form_callback(pForm, c_callback, d)
 
 
@@ -1703,6 +1758,9 @@ def fl_set_form_size(pForm, w, h):
     """ fl_set_form_size(pForm, w, h)
     """
 
+    _elem_refs[get_rand_elemkey()] = pForm
+    _elem_refs[get_rand_elemkey()] = w
+    _elem_refs[get_rand_elemkey()] = h
     _fl_set_form_size(pForm, w, h)
 
 
@@ -1715,6 +1773,9 @@ def fl_set_form_hotspot(pForm, x, y):
     """ fl_set_form_hotspot(pForm, x, y)
     """
 
+    _elem_refs[get_rand_elemkey()] = pForm
+    _elem_refs[get_rand_elemkey()] = x
+    _elem_refs[get_rand_elemkey()] = y
     _fl_set_form_hotspot(pForm, x, y)
 
 
@@ -1727,6 +1788,8 @@ def fl_set_form_hotobject(pForm, pObject):
     """ fl_set_form_hotobject(pForm, pObject)
     """
 
+    _elem_refs[get_rand_elemkey()] = pForm
+    _elem_refs[get_rand_elemkey()] = pObject
     _fl_set_form_hotobject(pForm, pObject)
 
 
@@ -1739,6 +1802,9 @@ def fl_set_form_minsize(pForm, w, h):
     """ fl_set_form_minsize(pForm, w, h)
     """
 
+    _elem_refs[get_rand_elemkey()] = pForm
+    _elem_refs[get_rand_elemkey()] = w
+    _elem_refs[get_rand_elemkey()] = h
     _fl_set_form_minsize(pForm, w, h)
 
 
@@ -1751,6 +1817,9 @@ def fl_set_form_maxsize(pForm, w, h):
     """ fl_set_form_maxsize(pForm, w, h)
     """
 
+    _elem_refs[get_rand_elemkey()] = pForm
+    _elem_refs[get_rand_elemkey()] = w
+    _elem_refs[get_rand_elemkey()] = h
     _fl_set_form_maxsize(pForm, w, h)
 
 
@@ -1764,6 +1833,8 @@ def fl_set_form_event_cmask(pForm, cmask):
     """ fl_set_form_event_cmask(pForm, cmask)
     """
 
+    _elem_refs[get_rand_elemkey()] = pForm
+    _elem_refs[get_rand_elemkey()] = cmask
     _fl_set_form_event_cmask(pForm, cmask)
 
 
@@ -1776,6 +1847,7 @@ def fl_get_form_event_cmask(pForm):
     """ fl_get_form_event_cmask(pForm) -> cmask ID
     """
 
+    _elem_refs[get_rand_elemkey()] = pForm
     retval = _fl_get_form_event_cmask(pForm)
     return retval
 
@@ -1791,6 +1863,11 @@ def fl_set_form_geometry(pForm, x, y, w, h):
     """ fl_set_form_geometry(pForm, x, y, w, h)
     """
 
+    _elem_refs[get_rand_elemkey()] = pForm
+    _elem_refs[get_rand_elemkey()] = x
+    _elem_refs[get_rand_elemkey()] = y
+    _elem_refs[get_rand_elemkey()] = w
+    _elem_refs[get_rand_elemkey()] = h
     _fl_set_form_geometry(pForm, x, y, w, h)
 
 
@@ -1807,6 +1884,10 @@ def fl_show_form(pForm, place, border, name):
     """ fl_show_form(pForm, place, border, name) -> window reference
     """
 
+    _elem_refs[get_rand_elemkey()] = pForm
+    _elem_refs[get_rand_elemkey()] = place
+    _elem_refs[get_rand_elemkey()] = border
+    _elem_refs[get_rand_elemkey()] = name
     retval = _fl_show_form(pForm, place, border, name)
     return retval
 
@@ -1820,6 +1901,7 @@ def fl_hide_form(pForm):
     """ fl_hide_form(pForm)
     """
 
+    _elem_refs[get_rand_elemkey()] = pForm
     _fl_hide_form(pForm)
 
 
@@ -1832,6 +1914,7 @@ def fl_free_form(pForm):
     """ fl_free_form(pForm)
     """
 
+    _elem_refs[get_rand_elemkey()] = pForm
     _fl_free_form(pForm)
 
 
@@ -1844,6 +1927,7 @@ def fl_redraw_form(pForm):
     """ fl_redraw_form(pForm)
     """
 
+    _elem_refs[get_rand_elemkey()] = pForm
     _fl_redraw_form(pForm)
 
 
@@ -1856,6 +1940,8 @@ def fl_set_form_dblbuffer(pForm, y):
     """ fl_set_form_dblbuffer(pForm, y)
     """
 
+    _elem_refs[get_rand_elemkey()] = pForm
+    _elem_refs[get_rand_elemkey()] = y
     _fl_set_form_dblbuffer(pForm, y)
 
 
@@ -1869,6 +1955,10 @@ def fl_prepare_form_window(pForm, place, border, name):
     """ fl_prepare_form_window(pForm, place, border, name) -> window reference
     """
 
+    _elem_refs[get_rand_elemkey()] = pForm
+    _elem_refs[get_rand_elemkey()] = place
+    _elem_refs[get_rand_elemkey()] = border
+    _elem_refs[get_rand_elemkey()] = name
     retval = _fl_prepare_form_window(pForm, place, border, name)
     return retval
 
@@ -1882,6 +1972,7 @@ def fl_show_form_window(pForm):
     """ fl_show_form_window(pForm) -> window reference
     """
 
+    _elem_refs[get_rand_elemkey()] = pForm
     retval = _fl_show_form_window(pForm)
     return retval
 
@@ -1895,6 +1986,7 @@ def fl_adjust_form_size(pForm):
     """ fl_adjust_form_size(pForm) -> ID
     """
 
+    _elem_refs[get_rand_elemkey()] = pForm
     retval = _fl_adjust_form_size(pForm)
     return retval
 
@@ -1908,6 +2000,7 @@ def fl_form_is_visible(pForm):
     """ fl_form_is_visible(pForm) -> ID
     """
 
+    _elem_refs[get_rand_elemkey()] = pForm
     retval = _fl_form_is_visible(pForm)
     return retval
 
@@ -1921,6 +2014,7 @@ def fl_form_is_iconified(pForm):
     """ fl_form_is_iconified(pForm) -> ID
     """
 
+    _elem_refs[get_rand_elemkey()] = pForm
     retval = _fl_form_is_iconified(pForm)
     return retval
 
@@ -1937,6 +2031,8 @@ def fl_register_raw_callback(pForm, mask, py_rcb):
 
     c_rcb = FL_RAW_CALLBACK(py_rcb)
     _cfunc_refs[get_rand_dictkey()] = c_rcb
+    _elem_refs[get_rand_elemkey()] = pForm
+    _elem_refs[get_rand_elemkey()] = mask
     retval = _fl_register_raw_callback(pForm, mask, c_rcb)
     return retval
 
@@ -1978,6 +2074,7 @@ def fl_addto_group(group):
     """ fl_addto_group(group) -> pForm
     """
 
+    _elem_refs[get_rand_elemkey()] = group
     retval = _fl_addto_group(group)
     return retval
 
@@ -1993,6 +2090,8 @@ def fl_set_object_boxtype(pObject, boxtype):
     """ fl_set_object_boxtype(pObject, boxtype)
     """
 
+    _elem_refs[get_rand_elemkey()] = pObject
+    _elem_refs[get_rand_elemkey()] = boxtype
     _fl_set_object_boxtype(pObject, boxtype)
 
 
@@ -2005,6 +2104,8 @@ def fl_set_object_bw(pObject, bw):
     """ fl_set_object_bw(pObject, bw)
     """
 
+    _elem_refs[get_rand_elemkey()] = pObject
+    _elem_refs[get_rand_elemkey()] = bw
     _fl_set_object_bw(pObject, bw)
 
 
@@ -2017,6 +2118,8 @@ def fl_get_object_bw(pObject, bw):
     """ fl_get_object_bw(pObject, bw)
     """
 
+    _elem_refs[get_rand_elemkey()] = pObject
+    _elem_refs[get_rand_elemkey()] = bw
     _fl_get_object_bw(pObject, bw)
 
 
@@ -2029,6 +2132,8 @@ def fl_set_object_resize(pObject, what):
     """ fl_set_object_resize(pObject, what)
     """
 
+    _elem_refs[get_rand_elemkey()] = pObject
+    _elem_refs[get_rand_elemkey()] = what
     _fl_set_object_resize(pObject, what)
 
 
@@ -2041,6 +2146,8 @@ def fl_get_object_resize(pObject, what):
     """ fl_get_object_resize(pObject, what)
     """
 
+    _elem_refs[get_rand_elemkey()] = pObject
+    _elem_refs[get_rand_elemkey()] = what
     _fl_get_object_resize(pObject, what)
 
 
@@ -2054,6 +2161,9 @@ def fl_set_object_gravity(pObject, nw, se):
     """ fl_set_object_gravity(pObject, nw, se)
     """
 
+    _elem_refs[get_rand_elemkey()] = pObject
+    _elem_refs[get_rand_elemkey()] = nw
+    _elem_refs[get_rand_elemkey()] = se
     _fl_set_object_gravity(pObject, nw, se)
 
 
@@ -2068,6 +2178,9 @@ def fl_get_object_gravity(pObject, nw, se):
     """ fl_get_object_gravity(pObject, nw, se)
     """
 
+    _elem_refs[get_rand_elemkey()] = pObject
+    _elem_refs[get_rand_elemkey()] = nw
+    _elem_refs[get_rand_elemkey()] = se
     _fl_get_object_gravity(pObject, nw, se)
 
 
@@ -2080,6 +2193,8 @@ def fl_set_object_lsize(pObject, lsize):
     """ fl_set_object_lsize(pObject, lsize)
     """
 
+    _elem_refs[get_rand_elemkey()] = pObject
+    _elem_refs[get_rand_elemkey()] = lsize
     _fl_set_object_lsize(pObject, lsize)
 
 
@@ -2092,6 +2207,8 @@ def fl_set_object_lstyle(pObject, lstyle):
     """ fl_set_object_lstyle(pObject, lstyle)
     """
 
+    _elem_refs[get_rand_elemkey()] = pObject
+    _elem_refs[get_rand_elemkey()] = lstyle
     _fl_set_object_lstyle(pObject, lstyle)
 
 
@@ -2104,6 +2221,8 @@ def fl_set_object_lcol(pObject, lcol):
     """ fl_set_object_lcol(pObject, lcol)
     """
 
+    _elem_refs[get_rand_elemkey()] = pObject
+    _elem_refs[get_rand_elemkey()] = lcol
     _fl_set_object_lcol(pObject, lcol)
 
 
@@ -2116,6 +2235,8 @@ def fl_set_object_return(pObject, when):
     """ fl_set_object_return(pObject, when) -> ID num
     """
 
+    _elem_refs[get_rand_elemkey()] = pObject
+    _elem_refs[get_rand_elemkey()] = when
     retval = _fl_set_object_return(pObject, when)
     return retval
 
@@ -2129,6 +2250,8 @@ def fl_notify_object(pObject, cause):
     """ fl_notify_object(pObject, cause)
     """
 
+    _elem_refs[get_rand_elemkey()] = pObject
+    _elem_refs[get_rand_elemkey()] = cause
     _fl_notify_object(pObject, cause)
 
 
@@ -2141,6 +2264,8 @@ def fl_set_object_lalign(pObject, align):
     """ fl_set_object_lalign(pObject, align)
     """
 
+    _elem_refs[get_rand_elemkey()] = pObject
+    _elem_refs[get_rand_elemkey()] = align
     _fl_set_object_lalign(pObject, align)
 
 
@@ -2154,6 +2279,9 @@ def fl_set_object_shortcut(pObject, sstr, showit):
     """ fl_set_object_shortcut(pObject, sstr, showit)
     """
 
+    _elem_refs[get_rand_elemkey()] = pObject
+    _elem_refs[get_rand_elemkey()] = sstr
+    _elem_refs[get_rand_elemkey()] = showit
     _fl_set_object_shortcut(pObject, sstr, showit)
 
 
@@ -2166,6 +2294,8 @@ def fl_set_object_shortcutkey(pObject, keysym):
     """ fl_set_object_shortcutkey(pObject, keysym)
     """
 
+    _elem_refs[get_rand_elemkey()] = pObject
+    _elem_refs[get_rand_elemkey()] = keysym
     _fl_set_object_shortcutkey(pObject, keysym)
 
 
@@ -2179,6 +2309,8 @@ def fl_set_object_dblbuffer(pObject, y):
     """ fl_set_object_dblbuffer(pObject, y)
     """
 
+    _elem_refs[get_rand_elemkey()] = pObject
+    _elem_refs[get_rand_elemkey()] = y
     _fl_set_object_dblbuffer(pObject, y)
 
 
@@ -2192,6 +2324,9 @@ def fl_set_object_color(pObject, col1, col2):
     """ fl_set_object_color(pObject, col1, col2)
     """
 
+    _elem_refs[get_rand_elemkey()] = pObject
+    _elem_refs[get_rand_elemkey()] = col1
+    _elem_refs[get_rand_elemkey()] = col2
     _fl_set_object_color(pObject, col1, col2)
 
 
@@ -2204,6 +2339,8 @@ def fl_set_object_label(pObject, label):
     """ fl_set_object_label(pObject, label)
     """
 
+    _elem_refs[get_rand_elemkey()] = pObject
+    _elem_refs[get_rand_elemkey()] = label
     _fl_set_object_label(pObject, label)
 
 
@@ -2216,6 +2353,8 @@ def fl_set_object_helper(pObject, tip):
     """ fl_set_object_helper(pObject, tip)
     """
 
+    _elem_refs[get_rand_elemkey()] = pObject
+    _elem_refs[get_rand_elemkey()] = tip
     _fl_set_object_helper(pObject, tip)
 
 
@@ -2228,6 +2367,9 @@ def fl_set_object_position(pObject, x, y):
     """ fl_set_object_position(pObject, x, y)
     """
 
+    _elem_refs[get_rand_elemkey()] = pObject
+    _elem_refs[get_rand_elemkey()] = x
+    _elem_refs[get_rand_elemkey()] = y
     _fl_set_object_position(pObject, x, y)
 
 
@@ -2241,6 +2383,9 @@ def fl_get_object_size(pObject, w, h):
     """ fl_get_object_size(pObject, w, h)
     """
 
+    _elem_refs[get_rand_elemkey()] = pObject
+    _elem_refs[get_rand_elemkey()] = w
+    _elem_refs[get_rand_elemkey()] = h
     _fl_get_object_size(pObject, w, h)
 
 
@@ -2253,6 +2398,9 @@ def fl_set_object_size(pObject, w, h):
     """ fl_set_object_size(pObject, w, h)
     """
 
+    _elem_refs[get_rand_elemkey()] = pObject
+    _elem_refs[get_rand_elemkey()] = w
+    _elem_refs[get_rand_elemkey()] = h
     _fl_set_object_size(pObject, w, h)
 
 
@@ -2265,6 +2413,8 @@ def fl_set_object_automatic(pObject, flag):
     """ fl_set_object_automatic(pObject, flag)
     """
 
+    _elem_refs[get_rand_elemkey()] = pObject
+    _elem_refs[get_rand_elemkey()] = flag
     _fl_set_object_automatic(pObject, flag)
 
 
@@ -2277,6 +2427,7 @@ def fl_draw_object_label(pObject):
     """ fl_draw_object_label(pObject)
     """
 
+    _elem_refs[get_rand_elemkey()] = pObject
     _fl_draw_object_label(pObject)
 
 
@@ -2289,6 +2440,7 @@ def fl_draw_object_label_outside(pObject):
     """ fl_draw_object_label_outside(pObject)
     """
 
+    _elem_refs[get_rand_elemkey()] = pObject
     _fl_draw_object_label_outside(pObject)
 
 
@@ -2303,7 +2455,12 @@ def fl_get_object_component(pObject_composite, objclass, componenttype, numb):
     """ fl_get_object_component(pObject_composite, objclass, componenttype, numb) -> pObject
     """
 
-    retval = _fl_get_object_component(pObject_composite, objclass, componenttype, numb)
+    _elem_refs[get_rand_elemkey()] = pObject_composite
+    _elem_refs[get_rand_elemkey()] = objclass
+    _elem_refs[get_rand_elemkey()] = componenttype
+    _elem_refs[get_rand_elemkey()] = numb
+    retval = _fl_get_object_component(pObject_composite, objclass, \
+                                      componenttype, numb)
     return retval
 
 
@@ -2323,6 +2480,8 @@ def fl_for_all_objects(pForm, py_cb, v):
 
     c_cb = cfunc_int_pobject_pvoid(py_cb)
     _cfunc_refs[get_rand_dictkey()] = c_cb
+    _elem_refs[get_rand_elemkey()] = pForm
+    _elem_refs[get_rand_elemkey()] = v
     _fl_for_all_objects(pForm, c_cb, v)
 
 
@@ -2342,6 +2501,11 @@ def fl_set_object_geometry(pObject, x, y, w, h):
     """ fl_set_object_geometry(pObject, x, y, w, h)
     """
 
+    _elem_refs[get_rand_elemkey()] = pObject
+    _elem_refs[get_rand_elemkey()] = x
+    _elem_refs[get_rand_elemkey()] = y
+    _elem_refs[get_rand_elemkey()] = w
+    _elem_refs[get_rand_elemkey()] = h
     _fl_set_object_geometry(pObject, x, y, w, h)
 
 
@@ -2354,6 +2518,9 @@ def fl_move_object(pObject, dx, dy):
     """ fl_move_object(pObject, dx, dy)
     """
 
+    _elem_refs[get_rand_elemkey()] = pObject
+    _elem_refs[get_rand_elemkey()] = dx
+    _elem_refs[get_rand_elemkey()] = dy
     _fl_move_object(pObject, dx, dy)
 
 
@@ -2362,12 +2529,16 @@ fl_set_object_lcolor = fl_set_object_lcol
 _fl_fit_object_label = cfuncproto(
         so_libforms, "fl_fit_object_label", \
         None, [cty.POINTER(FL_OBJECT), FL_Coord, FL_Coord], \
-        """void fl_fit_object_label(FL_OBJECT * obj, FL_Coord xmargin, FL_Coord ymargin)
+        """void fl_fit_object_label(FL_OBJECT * obj, FL_Coord xmargin,
+           FL_Coord ymargin)
         """)
 def fl_fit_object_label(pObject, xmargin, ymargin):
     """ fl_fit_object_label(pObject, xmargin, ymargin)
     """
 
+    _elem_refs[get_rand_elemkey()] = pObject
+    _elem_refs[get_rand_elemkey()] = xmargin
+    _elem_refs[get_rand_elemkey()] = ymargin
     _fl_fit_object_label(pObject, xmargin, ymargin)
 
 
@@ -2382,6 +2553,11 @@ def fl_get_object_geometry(pObject, x, y, w, h):
     """ fl_get_object_geometry(pObject, x, y, w, h)
     """
 
+    _elem_refs[get_rand_elemkey()] = pObject
+    _elem_refs[get_rand_elemkey()] = x
+    _elem_refs[get_rand_elemkey()] = y
+    _elem_refs[get_rand_elemkey()] = w
+    _elem_refs[get_rand_elemkey()] = h
     _fl_get_object_geometry(pObject, x, y, w, h)
 
 
@@ -2394,6 +2570,9 @@ def fl_get_object_position(pObject, x, y):
     """ fl_get_object_position(pObject, x, y)
     """
 
+    _elem_refs[get_rand_elemkey()] = pObject
+    _elem_refs[get_rand_elemkey()] = x
+    _elem_refs[get_rand_elemkey()] = y
     _fl_get_object_position(pObject, x, y)
 
 
@@ -2406,6 +2585,7 @@ def fl_get_object_label(pObject):
     """ fl_get_object_label(pObject) -> labelname_string
     """
 
+    _elem_refs[get_rand_elemkey()] = pObject
     retval = _fl_get_object_label(pObject)
     return retval
 
@@ -2423,6 +2603,11 @@ def fl_get_object_bbox(pObject, x, y, w, h):
     """ fl_get_object_bbox(pObject, x, y, w, h)
     """
 
+    _elem_refs[get_rand_elemkey()] = pObject
+    _elem_refs[get_rand_elemkey()] = x
+    _elem_refs[get_rand_elemkey()] = y
+    _elem_refs[get_rand_elemkey()] = w
+    _elem_refs[get_rand_elemkey()] = h
     _fl_get_object_bbox(pObject, x, y, w, h)
 
 
@@ -2438,6 +2623,7 @@ def fl_call_object_callback(pObject):
     """ fl_call_object_callback(pObject)
     """
 
+    _elem_refs[get_rand_elemkey()] = pObject
     _fl_call_object_callback(pObject)
 
 
@@ -2453,6 +2639,7 @@ def fl_set_object_prehandler(pObject, py_phandler):
 
     c_phandler = FL_HANDLEPTR(py_phandler)
     _cfunc_refs[get_rand_dictkey()] = c_phandler
+    _elem_refs[get_rand_elemkey()] = pObject
     retval = _fl_set_object_prehandler(pObject, c_phandler)
     return retval
 
@@ -2469,6 +2656,7 @@ def fl_set_object_posthandler(pObject, py_post):
 
     c_post = FL_HANDLEPTR(py_post)
     _cfunc_refs[get_rand_dictkey()] = c_post
+    _elem_refs[get_rand_elemkey()] = pObject
     retval = _fl_set_object_posthandler(pObject, c_post)
     return retval
 
@@ -2484,11 +2672,13 @@ def fl_set_object_callback(pObject, py_callback, argument):
         Calls a callback function bound to an object, if a condition is met.
         <pObject>           an object reference (form, button, etc..)
         <py_callback>    a python function to use as callback
-        <argument>      argument being passed to function (NOT ACTIVE)
+        <argument>      argument being passed to function
     """
 
     c_callback = FL_CALLBACKPTR(py_callback)
     _cfunc_refs[get_rand_dictkey()] = c_callback
+    _elem_refs[get_rand_elemkey()] = pObject
+    _elem_refs[get_rand_elemkey()] = argument
     retval = _fl_set_object_callback(pObject, c_callback, argument)
     return retval
 
@@ -2506,6 +2696,7 @@ def fl_redraw_object(pObject):
     """ fl_redraw_object(pObject)
     """
 
+    _elem_refs[get_rand_elemkey()] = pObject
     _fl_redraw_object(pObject)
 
 
@@ -2518,6 +2709,9 @@ def fl_scale_object(pObject, xs, ys):
     """ fl_scale_object(pObject, xs, ys)
     """
 
+    _elem_refs[get_rand_elemkey()] = pObject
+    _elem_refs[get_rand_elemkey()] = xs
+    _elem_refs[get_rand_elemkey()] = ys
     _fl_scale_object(pObject, xs, ys)
 
 
@@ -2530,6 +2724,7 @@ def fl_show_object(pObject):
     """ fl_show_object(pObject)
     """
 
+    _elem_refs[get_rand_elemkey()] = pObject
     _fl_show_object(pObject)
 
 
@@ -2542,6 +2737,7 @@ def fl_hide_object(pObject):
     """ fl_hide_object(pObject)
     """
 
+    _elem_refs[get_rand_elemkey()] = pObject
     _fl_hide_object(pObject)
 
 
@@ -2554,6 +2750,7 @@ def fl_free_object(pObject):
     """ fl_free_object(pObject)
     """
 
+    _elem_refs[get_rand_elemkey()] = pObject
     _fl_free_object(pObject)
 
 
@@ -2566,6 +2763,7 @@ def fl_delete_object(pObject):
     """ fl_delete_object(pObject)
     """
 
+    _elem_refs[get_rand_elemkey()] = pObject
     _fl_delete_object(pObject)
 
 
@@ -2578,6 +2776,7 @@ def fl_get_object_return_state(pObject):
     """ fl_get_object_return_state(pObject) -> ID num
     """
 
+    _elem_refs[get_rand_elemkey()] = pObject
     retval = _fl_get_object_return_state(pObject)
     return retval
 
@@ -2591,6 +2790,7 @@ def fl_trigger_object(pObject):
     """ fl_trigger_object(pObject)
     """
 
+    _elem_refs[get_rand_elemkey()] = pObject
     _fl_trigger_object(pObject)
 
 
@@ -2603,6 +2803,7 @@ def fl_activate_object(pObject):
     """ fl_activate_object(pObject)
     """
 
+    _elem_refs[get_rand_elemkey()] = pObject
     _fl_activate_object(pObject)
 
 
@@ -2615,6 +2816,7 @@ def fl_deactivate_object(pObject):
     """ fl_deactivate_object(pObject)
     """
 
+    _elem_refs[get_rand_elemkey()] = pObject
     _fl_deactivate_object(pObject)
 
 
@@ -2632,6 +2834,7 @@ def fl_enumerate_fonts(py_output, shortform):
 
     c_output = cfunc_none_string(py_output)
     _cfunc_refs[get_rand_dictkey()] = c_output
+    _elem_refs[get_rand_elemkey()] = shortform
     retval = _fl_enumerate_fonts(c_output, shortform)
     return retval
 
@@ -2645,6 +2848,8 @@ def fl_set_font_name(n, name):
     """ fl_set_font_name(n, name) -> ID num
     """
 
+    _elem_refs[get_rand_elemkey()] = n
+    _elem_refs[get_rand_elemkey()] = name
     retval = _fl_set_font_name(n, name)
 
 
@@ -2657,6 +2862,8 @@ def fl_set_font(numb, size):
     """ fl_set_font(numb, size)
     """
 
+    _elem_refs[get_rand_elemkey()] = numb
+    _elem_refs[get_rand_elemkey()] = size
     _fl_set_font(numb, size)
 
 
@@ -2671,6 +2878,10 @@ def fl_get_char_height(style, size, asc, desc):
     """ fl_get_char_height(style, size, asc, desc) -> height num.
     """
 
+    _elem_refs[get_rand_elemkey()] = style
+    _elem_refs[get_rand_elemkey()] = size
+    _elem_refs[get_rand_elemkey()] = asc
+    _elem_refs[get_rand_elemkey()] = desc
     retval = _fl_get_char_height(style, size, asc, desc)
     return retval
 
@@ -2684,6 +2895,8 @@ def fl_get_char_width(style, size):
     """ fl_get_char_width(style, size) -> width num.
     """
 
+    _elem_refs[get_rand_elemkey()] = style
+    _elem_refs[get_rand_elemkey()] = size
     retval = _fl_get_char_width(style, size)
     return retval
 
@@ -2695,11 +2908,17 @@ _fl_get_string_height = cfuncproto(
         """int fl_get_string_height(int style, int size, const char * s,
            int len, int * asc, int * desc)
         """)
-def fl_get_string_height(style, size, s, len, asc, desc):
-    """ fl_get_string_height(style, size, s, len, asc, desc) -> height num.
+def fl_get_string_height(style, size, s, strglen, asc, desc):
+    """ fl_get_string_height(style, size, s, strglen, asc, desc) -> height num.
     """
 
-    retval = _fl_get_string_height(style, size, s, len, asc, desc)
+    _elem_refs[get_rand_elemkey()] = style
+    _elem_refs[get_rand_elemkey()] = size
+    _elem_refs[get_rand_elemkey()] = s
+    _elem_refs[get_rand_elemkey()] = strglen
+    _elem_refs[get_rand_elemkey()] = asc
+    _elem_refs[get_rand_elemkey()] = desc
+    retval = _fl_get_string_height(style, size, s, strglen, asc, desc)
     return retval
 
 
@@ -2709,11 +2928,15 @@ _fl_get_string_width = cfuncproto(
         """int fl_get_string_width(int style, int size, const char * s,
            int len)
         """)
-def fl_get_string_width(style, size, s, len):
-    """ fl_get_string_width(style, size, s, len) -> width num.
+def fl_get_string_width(style, size, s, strglen):
+    """ fl_get_string_width(style, size, s, strglen) -> width num.
     """
 
-    retval = _fl_get_string_width(style, size, s, len)
+    _elem_refs[get_rand_elemkey()] = style
+    _elem_refs[get_rand_elemkey()] = size
+    _elem_refs[get_rand_elemkey()] = s
+    _elem_refs[get_rand_elemkey()] = strglen
+    retval = _fl_get_string_width(style, size, s, strglen)
     return retval
 
 
@@ -2723,11 +2946,15 @@ _fl_get_string_widthTAB = cfuncproto(
         """int fl_get_string_widthTAB(int style, int size, const char * s,
            int len)
         """)
-def fl_get_string_widthTAB(style, size, s, len):
-    """ fl_get_string_widthTAB(style, size, s, len) -> width num.
+def fl_get_string_widthTAB(style, size, s, strglen):
+    """ fl_get_string_widthTAB(style, size, s, strglen) -> width num.
     """
 
-    retval = _fl_get_string_widthTAB(style, size, s, len)
+    _elem_refs[get_rand_elemkey()] = style
+    _elem_refs[get_rand_elemkey()] = size
+    _elem_refs[get_rand_elemkey()] = s
+    _elem_refs[get_rand_elemkey()] = strglen
+    retval = _fl_get_string_widthTAB(style, size, s, strglen)
     return retval
 
 
@@ -2738,11 +2965,18 @@ _fl_get_string_dimension = cfuncproto(
         """void fl_get_string_dimension(int fntstyle, int fntsize,
            const char * s, int len, int * width, int * height)
         """)
-def fl_get_string_dimension(fntstyle, fntsize, s, len, width, height):
-    """ fl_get_string_dimension(fntstyle, fntsize, s, len, width, height) -> dimension num.
+def fl_get_string_dimension(fntstyle, fntsize, s, strglen, width, height):
+    """ fl_get_string_dimension(fntstyle, fntsize, s, strglen, width, height) -> dimension num.
     """
 
-    retval = _fl_get_string_dimension(fntstyle, fntsize, s, len, width, height)
+    _elem_refs[get_rand_elemkey()] = fntstyle
+    _elem_refs[get_rand_elemkey()] = fntsize
+    _elem_refs[get_rand_elemkey()] = s
+    _elem_refs[get_rand_elemkey()] = strglen
+    _elem_refs[get_rand_elemkey()] = width
+    _elem_refs[get_rand_elemkey()] = height
+    retval = _fl_get_string_dimension(fntstyle, fntsize, s, strglen, width,
+                                      height)
     return retval
 
 
@@ -2761,6 +2995,17 @@ def fl_get_align_xy(align, x, y, w, h, xsize, ysize, xoff, yoff, xx, yy):
     """ fl_get_align_xy(align, x, y, w, h, xsize, ysize, xoff, yoff, xx, yy)
     """
 
+    _elem_refs[get_rand_elemkey()] = align
+    _elem_refs[get_rand_elemkey()] = x
+    _elem_refs[get_rand_elemkey()] = y
+    _elem_refs[get_rand_elemkey()] = w
+    _elem_refs[get_rand_elemkey()] = h
+    _elem_refs[get_rand_elemkey()] = xsize
+    _elem_refs[get_rand_elemkey()] = ysize
+    _elem_refs[get_rand_elemkey()] = xoff
+    _elem_refs[get_rand_elemkey()] = yoff
+    _elem_refs[get_rand_elemkey()] = xx
+    _elem_refs[get_rand_elemkey()] = yy
     _fl_get_align_xy(align, x, y, w, h, xsize, ysize, xoff, yoff, xx, yy)
 
 
@@ -2775,6 +3020,15 @@ def fl_drw_text(align, x, y, w, h, c, style, size, textstring):
     """ fl_drw_text(align, x, y, w, h, c, style, size, textstring)
     """
 
+    _elem_refs[get_rand_elemkey()] = align
+    _elem_refs[get_rand_elemkey()] = x
+    _elem_refs[get_rand_elemkey()] = y
+    _elem_refs[get_rand_elemkey()] = w
+    _elem_refs[get_rand_elemkey()] = h
+    _elem_refs[get_rand_elemkey()] = c
+    _elem_refs[get_rand_elemkey()] = style
+    _elem_refs[get_rand_elemkey()] = size
+    _elem_refs[get_rand_elemkey()] = textstring
     _fl_drw_text(align, x, y, w, h, c, style, size, textstring)
 
 
@@ -2790,6 +3044,15 @@ def fl_drw_text_beside(align, x, y, w, h, c, style, size, textstring):
     """ fl_drw_text_beside(align, x, y, w, h, c, style, size, textstring)
     """
 
+    _elem_refs[get_rand_elemkey()] = align
+    _elem_refs[get_rand_elemkey()] = x
+    _elem_refs[get_rand_elemkey()] = y
+    _elem_refs[get_rand_elemkey()] = w
+    _elem_refs[get_rand_elemkey()] = h
+    _elem_refs[get_rand_elemkey()] = c
+    _elem_refs[get_rand_elemkey()] = style
+    _elem_refs[get_rand_elemkey()] = size
+    _elem_refs[get_rand_elemkey()] = textstring
     _fl_drw_text_beside(align, x, y, w, h, c, style, size, textstring)
 
 
@@ -2805,6 +3068,17 @@ def fl_drw_text_cursor(align, x, y, w, h, c, style, size, textstring, cc, pos):
     """ fl_drw_text_cursor(align, x, y, w, h, c, style, size, textstring, cc, pos)
     """
 
+    _elem_refs[get_rand_elemkey()] = align
+    _elem_refs[get_rand_elemkey()] = x
+    _elem_refs[get_rand_elemkey()] = y
+    _elem_refs[get_rand_elemkey()] = w
+    _elem_refs[get_rand_elemkey()] = h
+    _elem_refs[get_rand_elemkey()] = c
+    _elem_refs[get_rand_elemkey()] = style
+    _elem_refs[get_rand_elemkey()] = size
+    _elem_refs[get_rand_elemkey()] = textstring
+    _elem_refs[get_rand_elemkey()] = cc
+    _elem_refs[get_rand_elemkey()] = pos
     _fl_drw_text_cursor(align, x, y, w, h, c, style, size, textstring, cc, pos)
 
 
@@ -2819,6 +3093,13 @@ def fl_drw_box(style, x, y, w, h, c, bw_in):
     """ fl_drw_box(style, x, y, w, h, c, bw_in)
     """
 
+    _elem_refs[get_rand_elemkey()] = style
+    _elem_refs[get_rand_elemkey()] = x
+    _elem_refs[get_rand_elemkey()] = y
+    _elem_refs[get_rand_elemkey()] = w
+    _elem_refs[get_rand_elemkey()] = h
+    _elem_refs[get_rand_elemkey()] = c
+    _elem_refs[get_rand_elemkey()] = bw_in
     _fl_drw_box(style, x, y, w, h, c, bw_in)
 
 
@@ -2837,6 +3118,8 @@ def fl_add_symbol(name, py_drawit, scalable):
 
     c_drawit = FL_DRAWPTR(py_drawit)
     _cfunc_refs[get_rand_dictkey()] = c_drawit
+    _elem_refs[get_rand_elemkey] = name
+    _elem_refs[get_rand_elemkey] = scalable
     retval = _fl_add_symbol(name, c_drawit, scalable)
     return retval
 
@@ -2851,6 +3134,12 @@ def fl_draw_symbol(label, x, y, w, h, col):
     """ fl_draw_symbol(label, x, y, w, h, col) -> num.
     """
 
+    _elem_refs[get_rand_elemkey] = label
+    _elem_refs[get_rand_elemkey] = x
+    _elem_refs[get_rand_elemkey] = y
+    _elem_refs[get_rand_elemkey] = w
+    _elem_refs[get_rand_elemkey] = h
+    _elem_refs[get_rand_elemkey] = col
     retval = _fl_draw_symbol(label, x, y, w, h, col)
     return retval
 
@@ -2864,6 +3153,10 @@ def fl_mapcolor(col, r, g, b):
     """ fl_mapcolor(col, r, g, b) -> num.
     """
 
+    _elem_refs[get_rand_elemkey] = col
+    _elem_refs[get_rand_elemkey] = r
+    _elem_refs[get_rand_elemkey] = g
+    _elem_refs[get_rand_elemkey] = b
     retval = _fl_mapcolor(col, r, g, b)
     return retval
 
@@ -2877,6 +3170,8 @@ def fl_mapcolorname(col, name):
     """ fl_mapcolorname(col, name) -> num.
     """
 
+    _elem_refs[get_rand_elemkey] = col
+    _elem_refs[get_rand_elemkey] = name
     retval = _fl_mapcolorname(col, name)
     return retval
 
@@ -2893,6 +3188,8 @@ def fl_free_colors(c, n):
     """ fl_free_colors(c, n)
     """
 
+    _elem_refs[get_rand_elemkey] = c
+    _elem_refs[get_rand_elemkey] = n
     _fl_free_colors(c, n)
 
 
@@ -2905,6 +3202,8 @@ def fl_free_pixels(pix, n):
     """ fl_free_pixels(pix, n)
     """
 
+    _elem_refs[get_rand_elemkey] = pix
+    _elem_refs[get_rand_elemkey] = n
     _fl_free_pixels(pix, n)
 
 
@@ -2917,6 +3216,7 @@ def fl_set_color_leak(y):
     """ fl_set_color_leak(y)
     """
 
+    _elem_refs[get_rand_elemkey] = y
     _fl_set_color_leak(y)
 
 
@@ -2930,6 +3230,10 @@ def fl_getmcolor(i, r, g, b):
     """ fl_getmcolor(i, r, g, b) -> num
     """
 
+    _elem_refs[get_rand_elemkey] = i
+    _elem_refs[get_rand_elemkey] = r
+    _elem_refs[get_rand_elemkey] = g
+    _elem_refs[get_rand_elemkey] = b
     retval = _fl_getmcolor(i, r, g, b)
     return retval
 
@@ -2943,6 +3247,7 @@ def fl_get_pixel(col):
     """ fl_get_pixel(col) -> pixel num.
     """
 
+    _elem_refs[get_rand_elemkey] = col
     retval = _fl_get_pixel(col)
     return retval
 
@@ -2957,6 +3262,10 @@ def fl_get_icm_color(col, r, g, b):
     """ fl_get_icm_color(col, r, g, b)
     """
 
+    _elem_refs[get_rand_elemkey] = col
+    _elem_refs[get_rand_elemkey] = r
+    _elem_refs[get_rand_elemkey] = g
+    _elem_refs[get_rand_elemkey] = b
     _fl_get_icm_color(col, r, g, b)
 
 
@@ -2969,6 +3278,10 @@ def fl_set_icm_color(col, r, g, b):
     """ fl_set_icm_color(col, r, g, b)
     """
 
+    _elem_refs[get_rand_elemkey] = col
+    _elem_refs[get_rand_elemkey] = r
+    _elem_refs[get_rand_elemkey] = g
+    _elem_refs[get_rand_elemkey] = b
     _fl_set_icm_color(col, r, g, b)
 
 
@@ -2981,6 +3294,7 @@ def fl_color(col):
     """ fl_color(col)
     """
 
+    _elem_refs[get_rand_elemkey] = col
     _fl_color(col)
 
 
@@ -2993,6 +3307,7 @@ def fl_bk_color(col):
     """ fl_bk_color(col)
     """
 
+    _elem_refs[get_rand_elemkey] = col
     _fl_bk_color(col)
 
 
@@ -3005,6 +3320,7 @@ def fl_textcolor(col):
     """ fl_textcolor(col)
     """
 
+    _elem_refs[get_rand_elemkey] = col
     _fl_textcolor(col)
 
 
@@ -3017,6 +3333,7 @@ def fl_bk_textcolor(col):
     """ fl_bk_textcolor(col)
     """
 
+    _elem_refs[get_rand_elemkey] = col
     _fl_bk_textcolor(col)
 
 
@@ -3029,6 +3346,9 @@ def fl_set_gamma(r, g, b):
     """ fl_set_gamma(r, g, b)
     """
 
+    _elem_refs[get_rand_elemkey] = r
+    _elem_refs[get_rand_elemkey] = r
+    _elem_refs[get_rand_elemkey] = b
     _fl_set_gamma(r, g, b)
 
 
@@ -3041,6 +3361,7 @@ def fl_show_errors(y):
     """ fl_show_errors(y)
     """
 
+    _elem_refs[get_rand_elemkey] = y
     _fl_show_errors(y)
 
 
@@ -3101,6 +3422,8 @@ def fl_add_object(pForm, pObject):
     """ fl_add_object(pForm, pObject)
     """
 
+    _elem_refs[get_rand_elemkey] = pForm
+    _elem_refs[get_rand_elemkey] = pObject
     _fl_add_object(pForm, pObject)
 
 
@@ -3113,6 +3436,7 @@ def fl_addto_form(pForm):
     """ fl_addto_form(pForm) -> pForm
     """
 
+    _elem_refs[get_rand_elemkey] = pForm
     retval = _fl_addto_form(pForm)
     return retval
 
@@ -3130,6 +3454,13 @@ def fl_make_object(objclass, objecttype, x, y, w, h, label, py_handle):
 
     c_handle = FL_HANDLEPTR(py_handle)
     _cfunc_refs[get_rand_dictkey()] = c_handle
+    _elem_refs[get_rand_elemkey] = objclass
+    _elem_refs[get_rand_elemkey] = objecttype
+    _elem_refs[get_rand_elemkey] = x
+    _elem_refs[get_rand_elemkey] = y
+    _elem_refs[get_rand_elemkey] = w
+    _elem_refs[get_rand_elemkey] = h
+    _elem_refs[get_rand_elemkey] = label
     retval = _fl_make_object(objclass, objecttype, x, y, w, h, label, c_handle)
     return retval
 
@@ -3139,11 +3470,13 @@ _fl_add_child = cfuncproto(
         None, [cty.POINTER(FL_OBJECT), cty.POINTER(FL_OBJECT)], \
         """void fl_add_child(FL_OBJECT * p1, FL_OBJECT * p2)
         """)
-def fl_add_child(p1, p2):
-    """ fl_add_child(p1, p2)
+def fl_add_child(pObject1, pObject2):
+    """ fl_add_child(pObject1, pObject2)
     """
 
-    _fl_add_child(p1, p2)
+    _elem_refs[get_rand_elemkey] = pObject1
+    _elem_refs[get_rand_elemkey] = pObject2
+    _fl_add_child(pObject1, pObject2)
 
 
 _fl_set_coordunit = cfuncproto(
@@ -3155,6 +3488,7 @@ def fl_set_coordunit(u):
     """ fl_set_coordunit(u)
     """
 
+    _elem_refs[get_rand_elemkey] = u
     _fl_set_coordunit(u)
 
 
@@ -3167,6 +3501,7 @@ def fl_set_border_width(bw):
     """ fl_set_border_width(bw)
     """
 
+    _elem_refs[get_rand_elemkey] = bw
     _fl_set_border_width(bw)
 
 
@@ -3179,6 +3514,7 @@ def fl_set_scrollbar_type(t):
     """ fl_set_scrollbar_type(t)
     """
 
+    _elem_refs[get_rand_elemkey] = t
     _fl_set_scrollbar_type(t)
 
 
@@ -3228,7 +3564,7 @@ def fl_get_border_width():
     return retval
 
 
-# miscty. routines
+# misc. routines
 
 _fl_ringbell = cfuncproto(
         so_libforms, "fl_ringbell", \
@@ -3239,6 +3575,7 @@ def fl_ringbell(percent):
     """ fl_ringbell(percent)
     """
 
+    _elem_refs[get_rand_elemkey] = percent
     _fl_ringbell(percent)
 
 
@@ -3251,6 +3588,8 @@ def fl_gettime(sec, usec):
     """ fl_gettime(sec, usec)
     """
 
+    _elem_refs[get_rand_elemkey] = sec
+    _elem_refs[get_rand_elemkey] = usec
     _fl_gettime(sec, usec)
 
 
@@ -3283,7 +3622,7 @@ def fl_whoami():
 _fl_mouse_button = cfuncproto(
         so_libforms, "fl_mouse_button", \
         cty.c_long, [], \
-        """)long int fl_mouse_button()
+        """long int fl_mouse_button()
         """)
 def fl_mouse_button():
     """ fl_mouse_button() -> num.
@@ -3296,12 +3635,13 @@ def fl_mouse_button():
 _fl_strdup = cfuncproto(
         so_libforms, "fl_strdup", \
         STRING, [STRING], \
-        """)char * fl_strdup(const char * s)
+        """char * fl_strdup(const char * s)
         """)
 def fl_strdup(s):
     """ fl_strdup(s) -> string
     """
 
+    _elem_refs[get_rand_elemkey] = s
     retval = _fl_strdup(s)
     return retval
 
@@ -3320,6 +3660,7 @@ def fl_set_err_logfp(fp):
     """ fl_set_err_logfp(fp)
     """
 
+    _elem_refs[get_rand_elemkey] = fp
     _fl_set_err_logfp(fp)
 
 
@@ -3347,6 +3688,7 @@ def fl_get_cmdline_args(p1):
     """ fl_get_cmdline_args(p1) -> string
     """
 
+    _elem_refs[get_rand_elemkey] = p1
     retval = _fl_get_cmdline_args(p1)
     return retval
 
@@ -3371,23 +3713,30 @@ def fl_free(p1):
     """ fl_free(p1)
     """
 
+    _elem_refs[get_rand_elemkey] = p1
     _fl_free(p1)
 
 
 size_t = cty.c_uint
+cfunc_none_sizet = cty.CFUNCTYPE(cty.c_void_p, size_t)
+
 #fl_malloc = (cty.CFUNCTYPE(cty.c_void_p, size_t)).in_dll(so_libforms, 'fl_malloc')
 _fl_malloc = cfuncproto(
         so_libforms, "fl_malloc", \
         cty.c_void_p, [size_t],
         """void * ( * fl_malloc )( size_t )
         """)
-def fl_malloc():
-    """ fl_malloc() -> pointer
+def fl_malloc(py_p1):
+    """ fl_malloc(py_p1) -> pointer
     """
 
-    retval = _fl_malloc()
+    c_p1 = cfunc_none_sizet(py_p1)
+    _cfunc_refs[get_rand_dictkey] = c_p1
+    retval = _fl_malloc(c_p1)
     return retval
 
+
+cfunc_none_sizet_sizet = cty.CFUNCTYPE(cty.c_void_p, size_t, size_t)
 
 #fl_calloc = (cty.CFUNCTYPE(cty.c_void_p, size_t, size_t)).in_dll(so_libforms, 'fl_calloc')
 _fl_calloc = cfuncproto(
@@ -3395,13 +3744,17 @@ _fl_calloc = cfuncproto(
         cty.c_void_p, [size_t, size_t],
         """void * ( * fl_calloc )( size_t)
         """)
-def fl_calloc():
-    """ fl_calloc() -> pointer
+def fl_calloc(py_p1):
+    """ fl_calloc(py_p1) -> pointer
     """
 
-    retval = _fl_calloc()
+    c_p1 = cfunc_none_sizet_sizet(py_p1)
+    _cfunc_refs[get_rand_dictkey] = c_p1
+    retval = _fl_calloc(c_p1)
     return retval
 
+
+cfunc_voidp_voidp_sizet = cty.CFUNCTYPE(cty.c_void_p, cty.c_void_p, size_t)
 
 #fl_realloc = (cty.CFUNCTYPE(cty.c_void_p, cty.c_void_p, size_t)).in_dll(so_libforms, 'fl_realloc')
 _fl_realloc = cfuncproto(
@@ -3409,11 +3762,13 @@ _fl_realloc = cfuncproto(
         cty.c_void_p, [cty.c_void_p, size_t],
         """void * ( * fl_realloc )( void *
         """)
-def fl_realloc():
-    """ fl_realloc() -> pointer
+def fl_realloc(py_p1):
+    """ fl_realloc(py_p1) -> pointer
     """
 
-    retval = _fl_realloc()
+    c_p1 = cfunc_voidp_voidp_sizet(py_p1)
+    _cfunc_refs[get_rand_dictkey] = c_p1
+    retval = _fl_realloc(c_p1)
     return retval
 
 
@@ -3426,6 +3781,7 @@ def fl_msleep(msec):
     """ fl_msleep(msec) -> num.
     """
 
+    _elem_refs[get_rand_elemkey] = msec
     retval = _fl_msleep(msec)
     return retval
 
@@ -3504,10 +3860,10 @@ XFontProp._fields_ = [
     ('card32', cty.c_ulong),
 ]
 
+# /usr/include/X11/Xlib.h 1035
 class XCharStruct(cty.Structure):
     pass
 XCharStruct._fields_ = [
-    # /usr/include/X11/Xlib.h 1035
     ('lbearing', cty.c_short),
     ('rbearing', cty.c_short),
     ('width', cty.c_short),
@@ -3619,6 +3975,8 @@ def fl_mode_capable(mode, warn):
     """ fl_mode_capable(mode, warn) -> mode num.
     """
 
+    _elem_refs[get_rand_elemkey] = mode
+    _elem_refs[get_rand_elemkey] = warn
     retval = _fl_mode_capable(mode, warn)
     return retval
 
@@ -3668,6 +4026,11 @@ def fl_rectangle(fill, x, y, w, h, col):
     """ fl_rectangle(fill, x, y, w, h, col)
     """
 
+    _elem_refs[get_rand_elemkey] = x
+    _elem_refs[get_rand_elemkey] = y
+    _elem_refs[get_rand_elemkey] = w
+    _elem_refs[get_rand_elemkey] = h
+    _elem_refs[get_rand_elemkey] = col
     _fl_rectangle(fill, x, y, w, h, col)
 
 
@@ -3681,6 +4044,11 @@ def fl_rectbound(x, y, w, h, col):
     """ fl_rectbound(x, y, w, h, col)
     """
 
+    _elem_refs[get_rand_elemkey] = x
+    _elem_refs[get_rand_elemkey] = y
+    _elem_refs[get_rand_elemkey] = w
+    _elem_refs[get_rand_elemkey] = h
+    _elem_refs[get_rand_elemkey] = col
     _fl_rectbound(x, y, w, h, col)
 
 
@@ -3703,6 +4071,12 @@ def fl_roundrectangle(fill, x, y, w, h, col):
     """ fl_roundrectangle(fill, x, y, w, h, col)
     """
 
+    _elem_refs[get_rand_elemkey] = fill
+    _elem_refs[get_rand_elemkey] = x
+    _elem_refs[get_rand_elemkey] = y
+    _elem_refs[get_rand_elemkey] = w
+    _elem_refs[get_rand_elemkey] = h
+    _elem_refs[get_rand_elemkey] = col
     _fl_roundrectangle(fill, x, y, w, h, col)
 
 
@@ -3724,6 +4098,10 @@ def fl_polygon(fill, xp, n, col):
     """ fl_polygon(fill, xp, n, col)
     """
 
+    _elem_refs[get_rand_elemkey] = fill
+    _elem_refs[get_rand_elemkey] = xp
+    _elem_refs[get_rand_elemkey] = n
+    _elem_refs[get_rand_elemkey] = col
     _fl_polygon(fill, xp, n, col)
 
 
@@ -3747,6 +4125,9 @@ def fl_lines(xp, n, col):
     """ fl_lines(xp, n, col)
     """
 
+    _elem_refs[get_rand_elemkey] = xp
+    _elem_refs[get_rand_elemkey] = n
+    _elem_refs[get_rand_elemkey] = col
     _fl_lines(xp, n, col)
 
 
@@ -3760,6 +4141,11 @@ def fl_line(xi, yi, xf, yf, c):
     """ fl_line(xi, yi, xf, yf, c)
     """
 
+    _elem_refs[get_rand_elemkey] = xi
+    _elem_refs[get_rand_elemkey] = yi
+    _elem_refs[get_rand_elemkey] = xf
+    _elem_refs[get_rand_elemkey] = yf
+    _elem_refs[get_rand_elemkey] = c
     _fl_line(xi, yi, xf, yf, c)
 
 
@@ -3772,6 +4158,9 @@ def fl_point(x, y, c):
     """ fl_point(x, y, c)
     """
 
+    _elem_refs[get_rand_elemkey] = x
+    _elem_refs[get_rand_elemkey] = y
+    _elem_refs[get_rand_elemkey] = c
     _fl_point(x, y, c)
 
 
@@ -3784,6 +4173,9 @@ def fl_points(p, np, c):
     """ fl_points(p, np, c)
     """
 
+    _elem_refs[get_rand_elemkey] = p
+    _elem_refs[get_rand_elemkey] = np
+    _elem_refs[get_rand_elemkey] = c
     _fl_points(p, np, c)
 
 
@@ -3799,6 +4191,8 @@ def fl_dashedlinestyle(dash, ndash):
     """ fl_dashedlinestyle(dash, ndash)
     """
 
+    _elem_refs[get_rand_elemkey] = dash
+    _elem_refs[get_rand_elemkey] = ndash
     _fl_dashedlinestyle(dash, ndash)
 
 
@@ -3811,6 +4205,7 @@ def fl_update_display(block):
     """ fl_update_display(block)
     """
 
+    _elem_refs[get_rand_elemkey] = block
     _fl_update_display(block)
 
 
@@ -3839,6 +4234,7 @@ def fl_linewidth(n):
     """ fl_linewidth(n)
     """
 
+    _elem_refs[get_rand_elemkey] = n
     _fl_linewidth(n)
 
 
@@ -3851,6 +4247,7 @@ def fl_linestyle(n):
     """ fl_linestyle(n)
     """
 
+    _elem_refs[get_rand_elemkey] = n
     _fl_linestyle(n)
 
 
@@ -3863,6 +4260,7 @@ def fl_drawmode(request):
     """ fl_drawmode(request)
     """
 
+    _elem_refs[get_rand_elemkey] = request
     _fl_drawmode(request)
 
 
@@ -3922,6 +4320,12 @@ def fl_oval(fill, x, y, w, h, col):
     """ fl_oval(fill, x, y, w, h, col)
     """
 
+    _elem_refs[get_rand_elemkey] = fill
+    _elem_refs[get_rand_elemkey] = x
+    _elem_refs[get_rand_elemkey] = y
+    _elem_refs[get_rand_elemkey] = w
+    _elem_refs[get_rand_elemkey] = h
+    _elem_refs[get_rand_elemkey] = col
     _fl_oval(fill, x, y, w, h, col)
 
 
@@ -3935,6 +4339,11 @@ def fl_ovalbound(x, y, w, h, col):
     """ fl_ovalbound(x, y, w, h, col)
     """
 
+    _elem_refs[get_rand_elemkey] = x
+    _elem_refs[get_rand_elemkey] = y
+    _elem_refs[get_rand_elemkey] = w
+    _elem_refs[get_rand_elemkey] = h
+    _elem_refs[get_rand_elemkey] = col
     _fl_ovalbound(x, y, w, h, col)
 
 
@@ -3949,6 +4358,14 @@ def fl_ovalarc(fill, x, y, w, h, t0, dt, col):
     """ fl_ovalarc(fill, x, y, w, h, t0, dt, col)
     """
 
+    _elem_refs[get_rand_elemkey] = fill
+    _elem_refs[get_rand_elemkey] = x
+    _elem_refs[get_rand_elemkey] = y
+    _elem_refs[get_rand_elemkey] = w
+    _elem_refs[get_rand_elemkey] = h
+    _elem_refs[get_rand_elemkey] = t0
+    _elem_refs[get_rand_elemkey] = dt
+    _elem_refs[get_rand_elemkey] = col
     _fl_ovalarc(fill, x, y, w, h, t0, dt, col)
 
 
@@ -3982,6 +4399,14 @@ def fl_pieslice(fill, x, y, w, h, a1, a2, col):
     """ fl_pieslice(fill, x, y, w, h, a1, a2, col)
     """
 
+    _elem_refs[get_rand_elemkey] = fill
+    _elem_refs[get_rand_elemkey] = x
+    _elem_refs[get_rand_elemkey] = y
+    _elem_refs[get_rand_elemkey] = w
+    _elem_refs[get_rand_elemkey] = h
+    _elem_refs[get_rand_elemkey] = a1
+    _elem_refs[get_rand_elemkey] = a2
+    _elem_refs[get_rand_elemkey] = col
     _fl_pieslice(fill, x, y, w, h, a1, a2, col)
 
 
@@ -4003,11 +4428,18 @@ _fl_drw_frame = cfuncproto(
         """void fl_drw_frame(int style, FL_Coord x, FL_Coord y,
            FL_Coord w, FL_Coord h, FL_COLOR c, int bw)
         """)
-def fl_drw_frame(style, x, y, w, h, c, bw):
-    """ fl_drw_frame(style, x, y, w, h, c, bw)
+def fl_drw_frame(style, x, y, w, h, color, bw):
+    """ fl_drw_frame(style, x, y, w, h, color, bw)
     """
 
-    _fl_drw_frame(style, x, y, w, h, c, bw)
+    _elem_refs[get_rand_elemkey] = style
+    _elem_refs[get_rand_elemkey] = x
+    _elem_refs[get_rand_elemkey] = y
+    _elem_refs[get_rand_elemkey] = w
+    _elem_refs[get_rand_elemkey] = h
+    _elem_refs[get_rand_elemkey] = color
+    _elem_refs[get_rand_elemkey] = bw
+    _fl_drw_frame(style, x, y, w, h, color, bw)
 
 
 _fl_drw_checkbox = cfuncproto(
@@ -4021,6 +4453,13 @@ def fl_drw_checkbox(boxtype, x, y, w, h, col, bw):
     """ fl_drw_checkbox(boxtype, x, y, w, h, col, bw)
     """
 
+    _elem_refs[get_rand_elemkey] = boxtype
+    _elem_refs[get_rand_elemkey] = x
+    _elem_refs[get_rand_elemkey] = y
+    _elem_refs[get_rand_elemkey] = w
+    _elem_refs[get_rand_elemkey] = h
+    _elem_refs[get_rand_elemkey] = col
+    _elem_refs[get_rand_elemkey] = bw
     _fl_drw_checkbox(boxtype, x, y, w, h, col, bw)
 
 
@@ -4035,6 +4474,8 @@ def fl_get_fontstruct(style, size):
     """ fl_get_fontstruct(style, size) -> XfontStruct class
     """
 
+    _elem_refs[get_rand_elemkey] = style
+    _elem_refs[get_rand_elemkey] = size
     retval = _fl_get_fontstruct(style, size)
     return retval
 
@@ -4054,6 +4495,9 @@ def fl_get_mouse(x, y, keymask):
     """ fl_get_mouse(x, y, keymask) -> window
     """
 
+    _elem_refs[get_rand_elemkey] = x
+    _elem_refs[get_rand_elemkey] = y
+    _elem_refs[get_rand_elemkey] = keymask
     retval = _fl_get_mouse(x, y, keymask)
     return retval
 
@@ -4067,6 +4511,8 @@ def fl_set_mouse(mx, my):
     """ fl_set_mouse(mx, my)
     """
 
+    _elem_refs[get_rand_elemkey] = mx
+    _elem_refs[get_rand_elemkey] = my
     _fl_set_mouse(mx, my)
 
 
@@ -4081,6 +4527,10 @@ def fl_get_win_mouse(win, x, y, keymask):
     """ fl_get_win_mouse(win, x, y, keymask) -> window
     """
 
+    _elem_refs[get_rand_elemkey] = win
+    _elem_refs[get_rand_elemkey] = x
+    _elem_refs[get_rand_elemkey] = y
+    _elem_refs[get_rand_elemkey] = keymask
     retval = _fl_get_win_mouse(win, x, y, keymask)
     return retval
 
@@ -4096,6 +4546,10 @@ def fl_get_form_mouse(fm, x, y, keymask):
     """ fl_get_form_mouse(fm, x, y, keymask)
     """
 
+    _elem_refs[get_rand_elemkey] = fm
+    _elem_refs[get_rand_elemkey] = x
+    _elem_refs[get_rand_elemkey] = y
+    _elem_refs[get_rand_elemkey] = keymask
     _fl_get_form_mouse(fm, x, y, keymask)
 
 
@@ -4108,6 +4562,7 @@ def fl_win_to_form(win):
     """ fl_win_to_form(win) -> pForm
     """
 
+    _elem_refs[get_rand_elemkey] = win
     retval = _fl_win_to_form(win)
     return retval
 
@@ -4121,6 +4576,9 @@ def fl_set_form_icon(pForm, p, m):
     """ fl_set_form_icon(pForm, p, m)
     """
 
+    _elem_refs[get_rand_elemkey] = pForm
+    _elem_refs[get_rand_elemkey] = p
+    _elem_refs[get_rand_elemkey] = m
     _fl_set_form_icon(pForm, p, m)
 
 
@@ -4136,6 +4594,11 @@ def fl_get_decoration_sizes(pForm, top, right, bottom, left):
     """ fl_get_decoration_sizes(pForm, top, right, bottom, left) -> size num.
     """
 
+    _elem_refs[get_rand_elemkey] = pForm
+    _elem_refs[get_rand_elemkey] = top
+    _elem_refs[get_rand_elemkey] = right
+    _elem_refs[get_rand_elemkey] = bottom
+    _elem_refs[get_rand_elemkey] = left
     retval = _fl_get_decoration_sizes(pForm, top, right, bottom, left)
     return retval
 
@@ -4146,11 +4609,13 @@ _XRaiseWindow = cfuncproto(
         cty.c_int, [cty.POINTER(Display), Window], \
         """int XRaiseWindow(Display * p1, Window p2)
         """)
-def XRaiseWindow(p1, p2):
-    """ XRaiseWindow(p1, p2) -> num.
+def XRaiseWindow(pDisplay, win):
+    """ XRaiseWindow(pDisplay, win) -> num.
     """
 
-    retval = _XRaiseWindow(p1, p2)
+    _elem_refs[get_rand_elemkey] = pDisplay
+    _elem_refs[get_rand_elemkey] = win
+    retval = _XRaiseWindow(pDisplay, win)
     return retval
 
 
@@ -4165,11 +4630,13 @@ _XLowerWindow = cfuncproto(
         cty.c_int, [cty.POINTER(Display), Window], \
         """int XLowerWindow(Display * p1, Window p2)
         """)
-def XLowerWindow(p1, p2):
-    """ XLowerWindow(p1, p2) -> num.
+def XLowerWindow(pDisplay, win):
+    """ XLowerWindow(pDisplay, win) -> num.
     """
 
-    retval = _XLowerWindow(p1, p2)
+    _elem_refs[get_rand_elemkey] = pDisplay
+    _elem_refs[get_rand_elemkey] = win
+    retval = _XLowerWindow(pDisplay, win)
     return retval
 
 
@@ -4184,11 +4651,14 @@ _XSetForeground = cfuncproto(
         cty.c_int, [cty.POINTER(Display), GC, cty.c_ulong], \
         """int XSetForeground(Display * p1, GC p2, long unsigned int p3)
         """)
-def XSetForeground(p1, p2, p3):
-    """ XSetForeground(p1, p2, p3) -> num.
+def XSetForeground(pDisplay, p2, p3):
+    """ XSetForeground(pDisplay, p2, p3) -> num.
     """
 
-    retval = _XSetForeground(p1, p2, p3)
+    _elem_refs[get_rand_elemkey] = pDisplay
+    _elem_refs[get_rand_elemkey] = p2
+    _elem_refs[get_rand_elemkey] = p3
+    retval = _XSetForeground(pDisplay, p2, p3)
     return retval
 
 
@@ -4202,11 +4672,14 @@ _XSetBackground = cfuncproto(
         cty.c_int, [cty.POINTER(Display), GC, cty.c_ulong], \
         """int XSetBackground(Display * p1, GC p2, long unsigned int p3)
         """)
-def XSetBackground(p1, p2, p3):
-    """ XSetBackground(p1, p2, p3) -> num.
+def XSetBackground(pDisplay, p2, p3):
+    """ XSetBackground(pDisplay, p2, p3) -> num.
     """
 
-    retval = _XSetBackground(p1, p2, p3)
+    _elem_refs[get_rand_elemkey] = pDisplay
+    _elem_refs[get_rand_elemkey] = p2
+    _elem_refs[get_rand_elemkey] = p3
+    retval = _XSetBackground(pDisplay, p2, p3)
     return retval
 
 
@@ -4225,6 +4698,7 @@ def fl_wincreate(label):
     """ fl_wincreate(label) -> window
     """
 
+    _elem_refs[get_rand_elemkey] = label
     retval = _fl_wincreate(label)
     return retval
 
@@ -4238,6 +4712,7 @@ def fl_winshow(win):
     """ fl_winshow(win) -> window
     """
 
+    _elem_refs[get_rand_elemkey] = win
     retval = _fl_winshow(win)
     return retval
 
@@ -4251,6 +4726,7 @@ def fl_winopen(label):
     """ fl_winopen(label) -> window
     """
 
+    _elem_refs[get_rand_elemkey] = label
     retval = _fl_winopen(label)
     return retval
 
@@ -4264,6 +4740,7 @@ def fl_winhide(win):
     """ fl_winhide(win)
     """
 
+    _elem_refs[get_rand_elemkey] = win
     _fl_winhide(win)
 
 
@@ -4276,6 +4753,7 @@ def fl_winclose(win):
     """ fl_winclose(win)
     """
 
+    _elem_refs[get_rand_elemkey] = win
     _fl_winclose(win)
 
 
@@ -4288,6 +4766,7 @@ def fl_winset(win):
     """ fl_winset(win)
     """
 
+    _elem_refs[get_rand_elemkey] = win
     _fl_winset(win)
 
 
@@ -4300,6 +4779,8 @@ def fl_winreparent(win, new_parent):
     """ fl_winreparent(win, new_parent) -> num.
     """
 
+    _elem_refs[get_rand_elemkey] = win
+    _elem_refs[get_rand_elemkey] = new_parent
     retval = _fl_winreparent(win, new_parent)
     return retval
 
@@ -4313,6 +4794,7 @@ def fl_winfocus(win):
     """ fl_winfocus(win)
     """
 
+    _elem_refs[get_rand_elemkey] = win
     _fl_winfocus(win)
 
 
@@ -4338,6 +4820,7 @@ def fl_iconify(win):
     """ fl_iconify(win) -> num.
     """
 
+    _elem_refs[get_rand_elemkey] = win
     retval = _fl_iconify(win)
     return retval
 
@@ -4351,6 +4834,9 @@ def fl_winresize(win, neww, newh):
     """ fl_winresize(win, neww, newh)
     """
 
+    _elem_refs[get_rand_elemkey] = win
+    _elem_refs[get_rand_elemkey] = neww
+    _elem_refs[get_rand_elemkey] = newh
     _fl_winresize(win, neww, newh)
 
 
@@ -4363,6 +4849,9 @@ def fl_winmove(win, dx, dy):
     """ fl_winmove(win, dx, dy)
     """
 
+    _elem_refs[get_rand_elemkey] = win
+    _elem_refs[get_rand_elemkey] = dx
+    _elem_refs[get_rand_elemkey] = dy
     _fl_winmove(win, dx, dy)
 
 
@@ -4376,6 +4865,11 @@ def fl_winreshape(win, dx, dy, w, h):
     """ fl_winreshape(win, dx, dy, w, h)
     """
 
+    _elem_refs[get_rand_elemkey] = win
+    _elem_refs[get_rand_elemkey] = dx
+    _elem_refs[get_rand_elemkey] = dy
+    _elem_refs[get_rand_elemkey] = w
+    _elem_refs[get_rand_elemkey] = h
     _fl_winreshape(win, dx, dy, w, h)
 
 
@@ -4388,6 +4882,9 @@ def fl_winicon(win, p, m):
     """ fl_winicon(win, p, m)
     """
 
+    _elem_refs[get_rand_elemkey] = win
+    _elem_refs[get_rand_elemkey] = p
+    _elem_refs[get_rand_elemkey] = m
     _fl_winicon(win, p, m)
 
 
@@ -4400,6 +4897,8 @@ def fl_winbackground(win, bk):
     """ fl_winbackground(win, bk)
     """
 
+    _elem_refs[get_rand_elemkey] = win
+    _elem_refs[get_rand_elemkey] = bk
     _fl_winbackground(win, bk)
 
 
@@ -4412,6 +4911,9 @@ def fl_winstepunit(win, dx, dy):
     """ fl_winstepunit(win, dx, dy)
     """
 
+    _elem_refs[get_rand_elemkey] = win
+    _elem_refs[get_rand_elemkey] = dx
+    _elem_refs[get_rand_elemkey] = dy
     _fl_winstepunit(win, dx, dy)
 
 
@@ -4424,6 +4926,7 @@ def fl_winisvalid(win):
     """ fl_winisvalid(win) -> num.
     """
 
+    _elem_refs[get_rand_elemkey] = win
     retval = _fl_winisvalid(win)
     return retval
 
@@ -4437,6 +4940,8 @@ def fl_wintitle(win, title):
     """ fl_wintitle(win, title)
     """
 
+    _elem_refs[get_rand_elemkey] = win
+    _elem_refs[get_rand_elemkey] = title
     _fl_wintitle(win, title)
 
 
@@ -4449,6 +4954,8 @@ def fl_winicontitle(win, title):
     """ fl_winicontitle(win, title)
     """
 
+    _elem_refs[get_rand_elemkey] = win
+    _elem_refs[get_rand_elemkey] = title
     _fl_winicontitle(win, title)
 
 
@@ -4461,6 +4968,8 @@ def fl_winposition(x, y):
     """ fl_winposition(x, y)
     """
 
+    _elem_refs[get_rand_elemkey] = x
+    _elem_refs[get_rand_elemkey] = y
     _fl_winposition(x, y)
 
 
@@ -4478,6 +4987,9 @@ def fl_winminsize(win, w, h):
     """ fl_winminsize(win, w, h)
     """
 
+    _elem_refs[get_rand_elemkey] = win
+    _elem_refs[get_rand_elemkey] = w
+    _elem_refs[get_rand_elemkey] = h
     _fl_winminsize(win, w, h)
 
 
@@ -4490,6 +5002,9 @@ def fl_winmaxsize(win, w, h):
     """ fl_winmaxsize(win, w, h)
     """
 
+    _elem_refs[get_rand_elemkey] = win
+    _elem_refs[get_rand_elemkey] = w
+    _elem_refs[get_rand_elemkey] = h
     _fl_winmaxsize(win, w, h)
 
 
@@ -4502,6 +5017,9 @@ def fl_winaspect(win, x, y):
     """ fl_winaspect(win, x, y)
     """
 
+    _elem_refs[get_rand_elemkey] = win
+    _elem_refs[get_rand_elemkey] = x
+    _elem_refs[get_rand_elemkey] = y
     _fl_winaspect(win, x, y)
 
 
@@ -4514,6 +5032,7 @@ def fl_reset_winconstraints(win):
     """ fl_reset_winconstraints(win)
     """
 
+    _elem_refs[get_rand_elemkey] = win
     _fl_reset_winconstraints(win)
 
 
@@ -4526,6 +5045,8 @@ def fl_winsize(w, h):
     """ fl_winsize(w, h)
     """
 
+    _elem_refs[get_rand_elemkey] = w
+    _elem_refs[get_rand_elemkey] = h
     _fl_winsize(w, h)
 
 
@@ -4538,6 +5059,8 @@ def fl_initial_winsize(w, h):
     """ fl_initial_winsize(w, h)
     """
 
+    _elem_refs[get_rand_elemkey] = w
+    _elem_refs[get_rand_elemkey] = h
     _fl_initial_winsize(w, h)
 
 
@@ -4553,6 +5076,7 @@ def fl_initial_winstate(state):
     """ fl_initial_winstate(state)
     """
 
+    _elem_refs[get_rand_elemkey] = state
     _fl_initial_winstate(state)
 
 
@@ -4565,6 +5089,8 @@ def fl_create_colormap(xv, nfill):
     """ fl_create_colormap(xv, nfill) -> colormap
     """
 
+    _elem_refs[get_rand_elemkey] = xv
+    _elem_refs[get_rand_elemkey] = nfill
     retval = _fl_create_colormap(xv, nfill)
     return retval
 
@@ -4578,6 +5104,10 @@ def fl_wingeometry(x, y, w, h):
     """ fl_wingeometry(x, y, w, h)
     """
 
+    _elem_refs[get_rand_elemkey] = x
+    _elem_refs[get_rand_elemkey] = y
+    _elem_refs[get_rand_elemkey] = w
+    _elem_refs[get_rand_elemkey] = h
     _fl_wingeometry(x, y, w, h)
 
 
@@ -4594,6 +5124,10 @@ def fl_initial_wingeometry(x, y, w, h):
     """ fl_initial_wingeometry(x, y, w, h)
     """
 
+    _elem_refs[get_rand_elemkey] = x
+    _elem_refs[get_rand_elemkey] = y
+    _elem_refs[get_rand_elemkey] = w
+    _elem_refs[get_rand_elemkey] = h
     _fl_initial_wingeometry(x, y, w, h)
 
 
@@ -4630,6 +5164,9 @@ def fl_get_winsize(win, w, h):
     """ fl_get_winsize(win, w, h)
     """
 
+    _elem_refs[get_rand_elemkey] = win
+    _elem_refs[get_rand_elemkey] = w
+    _elem_refs[get_rand_elemkey] = h
     _fl_get_winsize(win, w, h)
 
 
@@ -4642,6 +5179,9 @@ def fl_get_winorigin(win, x, y):
     """ fl_get_winorigin(win, x, y)
     """
 
+    _elem_refs[get_rand_elemkey] = win
+    _elem_refs[get_rand_elemkey] = x
+    _elem_refs[get_rand_elemkey] = y
     _fl_get_winorigin(win, x, y)
 
 
@@ -4656,6 +5196,11 @@ def fl_get_wingeometry(win, x, y, w, h):
     """ fl_get_wingeometry(win, x, y, w, h)
     """
 
+    _elem_refs[get_rand_elemkey] = win
+    _elem_refs[get_rand_elemkey] = x
+    _elem_refs[get_rand_elemkey] = y
+    _elem_refs[get_rand_elemkey] = w
+    _elem_refs[get_rand_elemkey] = h
     _fl_get_wingeometry(win, x, y, w, h)
 
 
@@ -4699,6 +5244,7 @@ def fl_get_real_object_window(pObject):
     """ fl_get_real_object_window(pObject) -> window
     """
 
+    _elem_refs[get_rand_elemkey] = pObject
     retval = _fl_get_real_object_window(pObject)
     return retval
 
@@ -4776,6 +5322,7 @@ def fl_XNextEvent(xev):
     """ fl_XNextEvent(xev) -> event num.
     """
 
+    _elem_refs[get_rand_elemkey] = xev
     retval = _fl_XNextEvent(xev)
     return retval
 
@@ -4789,6 +5336,7 @@ def fl_XPeekEvent(xev):
     """ fl_XPeekEvent(xev) -> event num.
     """
 
+    _elem_refs[get_rand_elemkey] = xev
     retval = _fl_XPeekEvent(xev)
     return retval
 
@@ -4802,6 +5350,7 @@ def fl_XEventsQueued(mode):
     """ fl_XEventsQueued(mode) -> event num.
     """
 
+    _elem_refs[get_rand_elemkey] = mode
     retval = _fl_XEventsQueued(mode)
     return retval
 
@@ -4815,6 +5364,7 @@ def fl_XPutBackEvent(xev):
     """ fl_XPutBackEvent(xev)
     """
 
+    _elem_refs[get_rand_elemkey] = xev
     _fl_XPutBackEvent(xev)
 
 
@@ -4846,6 +5396,7 @@ def fl_set_event_callback(py_callback, user_data):
 
     c_callback = FL_APPEVENT_CB(py_callback)
     _cfunc_refs[get_rand_dictkey()] = c_callback
+    _elem_refs[get_rand_elemkey] = user_data
     retval = _fl_set_event_callback(c_callback, user_data)
     return retval
 
@@ -4862,6 +5413,7 @@ def fl_set_idle_callback(py_callback, user_data):
 
     c_callback = FL_APPEVENT_CB(py_callback)
     _cfunc_refs[get_rand_dictkey()] = c_callback
+    _elem_refs[get_rand_elemkey] = user_data
     retval = _fl_set_idle_callback(c_callback, user_data)
     return retval
 
@@ -4875,6 +5427,8 @@ def fl_addto_selected_xevent(win, mask):
     """ fl_addto_selected_xevent(win, mask) -> num.
     """
 
+    _elem_refs[get_rand_elemkey] = win
+    _elem_refs[get_rand_elemkey] = mask
     retval = _fl_addto_selected_xevent(win, mask)
     return retval
 
@@ -4888,6 +5442,8 @@ def fl_remove_selected_xevent(win, mask):
     """ fl_remove_selected_xevent(win, mask) -> num.
     """
 
+    _elem_refs[get_rand_elemkey] = win
+    _elem_refs[get_rand_elemkey] = mask
     retval = _fl_remove_selected_xevent(win, mask)
     return retval
 
@@ -4904,6 +5460,7 @@ def fl_set_idle_delta(delta):
     """ fl_set_idle_delta(delta)
     """
 
+    _elem_refs[get_rand_elemkey] = delta
     _fl_set_idle_delta(delta)
 
 
@@ -4919,6 +5476,9 @@ def fl_add_event_callback(win, ev, py_wincb, user_data):
 
     c_wincb = FL_APPEVENT_CB(py_wincb)
     _cfunc_refs[get_rand_dictkey()] = c_wincb
+    _elem_refs[get_rand_elemkey] = win
+    _elem_refs[get_rand_elemkey] = ev
+    _elem_refs[get_rand_elemkey] = user_data
     retval = _fl_add_event_callback(win, ev, c_wincb, user_data)
     return retval
 
@@ -4932,6 +5492,8 @@ def fl_remove_event_callback(win, ev):
     """ fl_remove_event_callback(win, ev)
     """
 
+    _elem_refs[get_rand_elemkey] = win
+    _elem_refs[get_rand_elemkey] = ev
     _fl_remove_event_callback(win, ev)
 
 
@@ -4944,6 +5506,7 @@ def fl_activate_event_callbacks(win):
     """ fl_activate_event_callbacks(win)
     """
 
+    _elem_refs[get_rand_elemkey] = win
     _fl_activate_event_callbacks(win)
 
 
@@ -4956,6 +5519,8 @@ def fl_print_xevent_name(where, xev):
     """ fl_print_xevent_name(where, xev) -> event
     """
 
+    _elem_refs[get_rand_elemkey] = where
+    _elem_refs[get_rand_elemkey] = xev
     retval = _fl_print_xevent_name(where, xev)
     return retval
 
@@ -5041,15 +5606,21 @@ def fl_initialize(lsysargv, sysargv, appclass, appopt, nappopt):
     """ fl_initialize(num_args, args, appl_class, appl_options, num_appl_opts) -> pDisplay
     """
 
-    # to verify if installed XForms is compatible
-    verify_version_compatibility()
+    verify_version_compatibility()      # verify if installed XForms
+                                        # is compatible with this one
     lsysargv = 1
     argum = "".join(sysargv)
     cli_args_nr = cty.c_int(lsysargv)                   #1
     cli_args_nr_p = cty.byref(cli_args_nr)
     cli_args = cty.c_char_p(argum)                      # " "
     structopts = cty.POINTER(FL_CMD_OPT)()
-    retval = _fl_initialize(cli_args_nr_p, cli_args, appclass, structopts, nappopt)
+    _elem_refs[get_rand_elemkey] = cli_args_nr_p
+    _elem_refs[get_rand_elemkey] = cli_args
+    _elem_refs[get_rand_elemkey] = appclass
+    _elem_refs[get_rand_elemkey] = structopts
+    _elem_refs[get_rand_elemkey] = nappopt
+    retval = _fl_initialize(cli_args_nr_p, cli_args, appclass, structopts,
+                            nappopt)
     return retval
 
 
@@ -5076,6 +5647,12 @@ def fl_get_resource(rname, cname, dtype, defval, val, size):
     """ fl_get_resource(rname, cname, dtype, defval, val, size) -> string
     """
 
+    _elem_refs[get_rand_elemkey] = rname
+    _elem_refs[get_rand_elemkey] = cname
+    _elem_refs[get_rand_elemkey] = dtype
+    _elem_refs[get_rand_elemkey] = defval
+    _elem_refs[get_rand_elemkey] = val
+    _elem_refs[get_rand_elemkey] = size
     retval = _fl_get_resource(rname, cname, dtype, defval, val, size)
     return retval
 
@@ -5089,6 +5666,8 @@ def fl_set_resource(resstring, val):
     """ fl_set_resource(resstring, val)
     """
 
+    _elem_refs[get_rand_elemkey] = resstring
+    _elem_refs[get_rand_elemkey] = val
     _fl_set_resource(resstring, val)
 
 
@@ -5101,6 +5680,8 @@ def fl_get_app_resources(appresource, n):
     """ fl_get_app_resources(appresource, n)
     """
 
+    _elem_refs[get_rand_elemkey] = appresource
+    _elem_refs[get_rand_elemkey] = n
     _fl_get_app_resources(appresource, n)
 
 
@@ -5113,6 +5694,8 @@ def fl_set_graphics_mode(mode, doublebuf):
     """ fl_set_graphics_mode(mode, doublebuf)
     """
 
+    _elem_refs[get_rand_elemkey] = mode
+    _elem_refs[get_rand_elemkey] = doublebuf
     _fl_set_graphics_mode(mode, doublebuf)
 
 
@@ -5125,6 +5708,7 @@ def fl_set_visualID(idnum):
     """ fl_set_visualID(idnum)
     """
 
+    _elem_refs[get_rand_elemkey] = idnum
     _fl_set_visualID(idnum)
 
 
@@ -5140,6 +5724,7 @@ def fl_keysym_pressed(k):
     """ fl_keysym_pressed(k) -> num.
     """
 
+    _elem_refs[get_rand_elemkey] = k
     retval = _fl_keysym_pressed(k)
     return retval
 
@@ -5234,6 +5819,8 @@ def fl_set_defaults(mask, cntl):
     """ fl_set_defaults(mask, cntl)
     """
 
+    _elem_refs[get_rand_elemkey] = mask
+    _elem_refs[get_rand_elemkey] = cntl
     _fl_set_defaults(mask, cntl)
 
 
@@ -5246,6 +5833,7 @@ def fl_set_tabstop(s):
     """ fl_set_tabstop(s)
     """
 
+    _elem_refs[get_rand_elemkey] = s
     _fl_set_tabstop(s)
 
 
@@ -5258,6 +5846,7 @@ def fl_get_defaults(cntl):
     """ fl_get_defaults(cntl)
     """
 
+    _elem_refs[get_rand_elemkey] = cntl
     _fl_get_defaults(cntl)
 
 
@@ -5283,6 +5872,7 @@ def fl_vclass_name(n):
     """ fl_vclass_name(n) -> name string
     """
 
+    _elem_refs[get_rand_elemkey] = n
     _fl_vclass_name(n)
 
 
@@ -5295,6 +5885,7 @@ def fl_vclass_val(v):
     """ fl_vclass_val(v) -> num.
     """
 
+    _elem_refs[get_rand_elemkey] = v
     retval = _fl_vclass_val(v)
     return retval
 
@@ -5308,6 +5899,8 @@ def fl_set_ul_property(prop, thickness):
     """ fl_set_ul_property(prop, thickness)
     """
 
+    _elem_refs[get_rand_elemkey] = prop
+    _elem_refs[get_rand_elemkey] = thickness
     _fl_set_ul_property(prop, thickness)
 
 
@@ -5320,6 +5913,10 @@ def fl_set_clipping(x, y, w, h):
     """ fl_set_clipping(x, y, w, h)
     """
 
+    _elem_refs[get_rand_elemkey] = x
+    _elem_refs[get_rand_elemkey] = y
+    _elem_refs[get_rand_elemkey] = w
+    _elem_refs[get_rand_elemkey] = h
     _fl_set_clipping(x, y, w, h)
 
 
@@ -5333,6 +5930,11 @@ def fl_set_gc_clipping(gc, x, y, w, h):
     """ fl_set_gc_clipping(gc, x, y, w, h)
     """
 
+    _elem_refs[get_rand_elemkey] = gc
+    _elem_refs[get_rand_elemkey] = x
+    _elem_refs[get_rand_elemkey] = y
+    _elem_refs[get_rand_elemkey] = w
+    _elem_refs[get_rand_elemkey] = h
     _fl_set_gc_clipping(gc, x, y, w, h)
 
 
@@ -5345,6 +5947,7 @@ def fl_unset_gc_clipping(gc):
     """ fl_unset_gc_clipping(gc)
     """
 
+    _elem_refs[get_rand_elemkey] = gc
     _fl_unset_gc_clipping(gc)
 
 
@@ -5357,6 +5960,8 @@ def fl_set_clippings(xrect, n):
     """ fl_set_clippings(xrect, n)
     """
 
+    _elem_refs[get_rand_elemkey] = xrect
+    _elem_refs[get_rand_elemkey] = n
     _fl_set_clippings(xrect, n)
 
 
@@ -5382,6 +5987,10 @@ def fl_set_text_clipping(x, y, w, h):
     """ fl_set_text_clipping(x, y, w, h)
     """
 
+    _elem_refs[get_rand_elemkey] = x
+    _elem_refs[get_rand_elemkey] = y
+    _elem_refs[get_rand_elemkey] = w
+    _elem_refs[get_rand_elemkey] = h
     _fl_set_text_clipping(x, y, w, h)
 
 
@@ -5635,6 +6244,8 @@ def fl_popup_add(win, p2):
     """ fl_popup_add(win, p2) -> popup
     """
 
+    _elem_refs[get_rand_elemkey] = win
+    _elem_refs[get_rand_elemkey] = p2
     retval = _fl_popup_add(win, p2)
     return retval
 
@@ -5649,6 +6260,8 @@ def fl_popup_add_entries(p1, p2):
     """ fl_popup_add_entries(p1, p2) -> popup_entry
     """
 
+    _elem_refs[get_rand_elemkey] = p1
+    _elem_refs[get_rand_elemkey] = p2
     retval = _fl_popup_add_entries(p1, p2)
     return retval
 
@@ -5664,6 +6277,9 @@ def fl_popup_insert_entries(p1, p2, p3):
     """ fl_popup_insert_entries(p1, p2, p3) -> popup_entry
     """
 
+    _elem_refs[get_rand_elemkey] = p1
+    _elem_refs[get_rand_elemkey] = p2
+    _elem_refs[get_rand_elemkey] = p3
     retval = _fl_popup_insert_entries(p1, p2, p3)
     return retval
 
@@ -5678,6 +6294,9 @@ def fl_popup_create(win, p2, p3):
     """ fl_popup_create(win, p2, p3) -> popup
     """
 
+    _elem_refs[get_rand_elemkey] = win
+    _elem_refs[get_rand_elemkey] = p2
+    _elem_refs[get_rand_elemkey] = p3
     retval = _fl_popup_create(win, p2, p3)
     return retval
 
@@ -5691,6 +6310,7 @@ def fl_popup_delete(p1):
     """ fl_popup_delete(p1) -> num.
     """
 
+    _elem_refs[get_rand_elemkey] = p1
     retval = _fl_popup_delete(p1)
     return retval
 
@@ -5704,6 +6324,7 @@ def fl_popup_entry_delete(p1):
     """ fl_popup_entry_delete(p1) -> num.
     """
 
+    _elem_refs[get_rand_elemkey] = p1
     retval = _fl_popup_entry_delete(p1)
     return retval
 
@@ -5717,6 +6338,7 @@ def fl_popup_do(p1):
     """ fl_popup_do(p1) -> popup_return
     """
 
+    _elem_refs[get_rand_elemkey] = p1
     retval = _fl_popup_do(p1)
     return retval
 
@@ -5730,6 +6352,9 @@ def fl_popup_set_position(p1, p2, p3):
     """ fl_popup_set_position(p1, p2, p3)
     """
 
+    _elem_refs[get_rand_elemkey] = p1
+    _elem_refs[get_rand_elemkey] = p2
+    _elem_refs[get_rand_elemkey] = p3
     _fl_popup_set_position(p1, p2, p3)
 
 
@@ -5742,6 +6367,7 @@ def fl_popup_get_policy(p1):
     """ fl_popup_get_policy(p1) -> num.
     """
 
+    _elem_refs[get_rand_elemkey] = p1
     retval = _fl_popup_get_policy(p1)
     return retval
 
@@ -5755,6 +6381,8 @@ def fl_popup_set_policy(p1, p2):
     """ fl_popup_set_policy(p1, p2) -> num.
     """
 
+    _elem_refs[get_rand_elemkey] = p1
+    _elem_refs[get_rand_elemkey] = p2
     retval = _fl_popup_set_policy(p1, p2)
     return retval
 
@@ -5770,6 +6398,7 @@ def fl_popup_set_callback(p1, py_cb):
 
     c_cb = FL_POPUP_CB(py_cb)
     _cfunc_refs[get_rand_dictkey()] = c_cb
+    _elem_refs[get_rand_elemkey] = p1
     retval = _fl_popup_set_callback(p1, c_cb)
     return retval
 
@@ -5784,6 +6413,9 @@ def fl_popup_get_title_font(p1, p2, p3):
     """ fl_popup_get_title_font(p1, p2, p3)
     """
 
+    _elem_refs[get_rand_elemkey] = p1
+    _elem_refs[get_rand_elemkey] = p2
+    _elem_refs[get_rand_elemkey] = p3
     _fl_popup_get_title_font(p1, p2, p3)
 
 
@@ -5796,6 +6428,9 @@ def fl_popup_set_title_font(p1, p2, p3):
     """ fl_popup_set_title_font(p1, p2, p3)
     """
 
+    _elem_refs[get_rand_elemkey] = p1
+    _elem_refs[get_rand_elemkey] = p2
+    _elem_refs[get_rand_elemkey] = p3
     _fl_popup_set_title_font(p1, p2, p3)
 
 
@@ -5809,6 +6444,9 @@ def fl_popup_entry_get_font(p1, p2, p3):
     """ fl_popup_entry_get_font(p1, p2, p3)
     """
 
+    _elem_refs[get_rand_elemkey] = p1
+    _elem_refs[get_rand_elemkey] = p2
+    _elem_refs[get_rand_elemkey] = p3
     _fl_popup_entry_get_font(p1, p2, p3)
 
 _fl_popup_entry_set_font = cfuncproto(
@@ -5820,6 +6458,9 @@ def fl_popup_entry_set_font(p1, p2, p3):
     """ fl_popup_entry_set_font(p1, p2, p3)
     """
 
+    _elem_refs[get_rand_elemkey] = p1
+    _elem_refs[get_rand_elemkey] = p2
+    _elem_refs[get_rand_elemkey] = p3
     _fl_popup_entry_set_font(p1, p2, p3)
 
 
@@ -5832,6 +6473,7 @@ def fl_popup_get_bw(p1):
     """ fl_popup_get_bw(p1) -> num.
     """
 
+    _elem_refs[get_rand_elemkey] = p1
     retval = _fl_popup_get_bw(p1)
     return retval
 
@@ -5845,6 +6487,8 @@ def fl_popup_set_bw(p1, p2):
     """ fl_popup_set_bw(p1, p2) -> num.
     """
 
+    _elem_refs[get_rand_elemkey] = p1
+    _elem_refs[get_rand_elemkey] = p2
     retval = _fl_popup_set_bw(p1, p2)
     return retval
 
@@ -5858,6 +6502,8 @@ def fl_popup_get_color(p1, p2):
     """ fl_popup_get_color(p1, p2) -> color
     """
 
+    _elem_refs[get_rand_elemkey] = p1
+    _elem_refs[get_rand_elemkey] = p2
     retval = _fl_popup_get_color(p1, p2)
     return retval
 
@@ -5871,6 +6517,9 @@ def fl_popup_set_color(p1, p2, p3):
     """ fl_popup_set_color(p1, p2, p3) -> color
     """
 
+    _elem_refs[get_rand_elemkey] = p1
+    _elem_refs[get_rand_elemkey] = p2
+    _elem_refs[get_rand_elemkey] = p3
     retval = _fl_popup_set_color(p1, p2, p3)
     return retval
 
@@ -5884,6 +6533,8 @@ def fl_popup_set_cursor(p1, p2):
     """ fl_popup_set_cursor(p1, p2)
     """
 
+    _elem_refs[get_rand_elemkey] = p1
+    _elem_refs[get_rand_elemkey] = p2
     _fl_popup_set_cursor(p1, p2)
 
 
@@ -5896,6 +6547,7 @@ def fl_popup_get_title(p1):
     """ fl_popup_get_title(p1) -> title string
     """
 
+    _elem_refs[get_rand_elemkey] = p1
     retval = _fl_popup_get_title(p1)
     return retval
 
@@ -5909,6 +6561,8 @@ def fl_popup_set_title(p1, p2):
     """ fl_popup_set_title(p1, p2) -> popup
     """
 
+    _elem_refs[get_rand_elemkey] = p1
+    _elem_refs[get_rand_elemkey] = p2
     retval = _fl_popup_set_title(p1, p2)
     return retval
 
@@ -5924,6 +6578,7 @@ def fl_popup_entry_set_callback(p1, py_pucb):
 
     c_pucb = FL_POPUP_CB(py_pucb)
     _cfunc_refs[get_rand_dictkey()] = c_pucb
+    _elem_refs[get_rand_elemkey] = p1
     retval = _fl_popup_entry_set_callback(p1, c_pucb)
     return retval
 
@@ -5939,6 +6594,7 @@ def fl_popup_entry_set_enter_callback(p1, py_pucb):
 
     c_pucb = FL_POPUP_CB(py_pucb)
     _cfunc_refs[get_rand_dictkey()] = c_pucb
+    _elem_refs[get_rand_elemkey] = p1
     retval = _fl_popup_entry_set_enter_callback(p1, c_pucb)
     return retval
 
@@ -5954,6 +6610,7 @@ def fl_popup_entry_set_leave_callback(p1, py_pucb):
 
     c_pucb = FL_POPUP_CB(py_pucb)
     _cfunc_refs[get_rand_dictkey()] = c_pucb
+    _elem_refs[get_rand_elemkey] = p1
     retval = _fl_popup_entry_set_leave_callback(p1, c_pucb)
     return retval
 
@@ -5967,6 +6624,7 @@ def fl_popup_entry_get_state(p1):
     """ fl_popup_entry_get_state(p1) -> state num.
     """
 
+    _elem_refs[get_rand_elemkey] = p1
     retval = _fl_popup_entry_get_state(p1)
     return retval
 
@@ -5980,6 +6638,8 @@ def fl_popup_entry_set_state(p1, p2):
     """ fl_popup_entry_set_state(p1, p2) -> state num.
     """
 
+    _elem_refs[get_rand_elemkey] = p1
+    _elem_refs[get_rand_elemkey] = p2
     retval = _fl_popup_entry_set_state(p1, p2)
     return retval
 
@@ -5993,6 +6653,8 @@ def fl_popup_entry_clear_state(p1, p2):
     """ fl_popup_entry_clear_state(p1, p2) -> state num.
     """
 
+    _elem_refs[get_rand_elemkey] = p1
+    _elem_refs[get_rand_elemkey] = p2
     retval = _fl_popup_entry_clear_state(p1, p2)
     return retval
 
@@ -6006,6 +6668,8 @@ def fl_popup_entry_raise_state(p1, p2):
     """ fl_popup_entry_raise_state(p1, p2) -> state num.
     """
 
+    _elem_refs[get_rand_elemkey] = p1
+    _elem_refs[get_rand_elemkey] = p2
     retval = _fl_popup_entry_raise_state(p1, p2)
     return retval
 
@@ -6019,6 +6683,8 @@ def fl_popup_entry_toggle_state(p1, p2):
     """ fl_popup_entry_toggle_state(p1, p2) -> num.
     """
 
+    _elem_refs[get_rand_elemkey] = p1
+    _elem_refs[get_rand_elemkey] = p2
     retval = _fl_popup_entry_toggle_state(p1, p2)
     return retval
 
@@ -6032,6 +6698,8 @@ def fl_popup_entry_set_text(p1, p2):
     """ fl_popup_entry_set_text(p1, p2) -> num.
     """
 
+    _elem_refs[get_rand_elemkey] = p1
+    _elem_refs[get_rand_elemkey] = p2
     retval = _fl_popup_entry_set_text(p1, p2)
     return retval
 
@@ -6057,6 +6725,8 @@ def fl_popup_entry_set_value(p1, p2):
     """ fl_popup_entry_set_value(p1, p2) -> num.
     """
 
+    _elem_refs[get_rand_elemkey] = p1
+    _elem_refs[get_rand_elemkey] = p2
     retval = _fl_popup_entry_set_value(p1, p2)
     return retval
 
@@ -6070,6 +6740,8 @@ def fl_popup_entry_set_user_data(p1, p2):
     """ fl_popup_entry_set_user_data(p1, p2) -> ?
     """
 
+    _elem_refs[get_rand_elemkey] = p1
+    _elem_refs[get_rand_elemkey] = p2
     retval = _fl_popup_entry_set_user_data(p1, p2)
     return retval
 
@@ -6083,6 +6755,8 @@ def fl_popup_entry_get_by_position(p1, p2):
     """ fl_popup_entry_get_by_position(p1, p2) -> popup_entry
     """
 
+    _elem_refs[get_rand_elemkey] = p1
+    _elem_refs[get_rand_elemkey] = p2
     retval = _fl_popup_entry_get_by_position(p1, p2)
     return retval
 
@@ -6090,12 +6764,15 @@ def fl_popup_entry_get_by_position(p1, p2):
 _fl_popup_entry_get_by_value = cfuncproto(
         so_libforms, "fl_popup_entry_get_by_value",
         cty.POINTER(FL_POPUP_ENTRY), [cty.POINTER(FL_POPUP), cty.c_long],
-        """FL_POPUP_ENTRY * fl_popup_entry_get_by_value(FL_POPUP * p1, long int p2)
+        """FL_POPUP_ENTRY * fl_popup_entry_get_by_value(FL_POPUP * p1,
+           long int p2)
         """)
 def fl_popup_entry_get_by_value(p1, p2):
     """ fl_popup_entry_get_by_value(p1, p2) -> popup_entry
     """
 
+    _elem_refs[get_rand_elemkey] = p1
+    _elem_refs[get_rand_elemkey] = p2
     retval = _fl_popup_entry_get_by_value(p1, p2)
     return retval
 
@@ -6103,12 +6780,15 @@ def fl_popup_entry_get_by_value(p1, p2):
 _fl_popup_entry_get_by_user_data = cfuncproto(
         so_libforms, "fl_popup_entry_get_by_user_data",
         cty.POINTER(FL_POPUP_ENTRY), [cty.POINTER(FL_POPUP), cty.c_void_p],
-        """FL_POPUP_ENTRY * fl_popup_entry_get_by_user_data(FL_POPUP * p1, void * p2)
+        """FL_POPUP_ENTRY * fl_popup_entry_get_by_user_data(FL_POPUP * p1,
+           void * p2)
         """)
 def fl_popup_entry_get_by_user_data(p1, p2):
     """ fl_popup_entry_get_by_user_data(p1, p2) -> popup_entry
     """
 
+    _elem_refs[get_rand_elemkey] = p1
+    _elem_refs[get_rand_elemkey] = p2
     retval = _fl_popup_entry_get_by_user_data(p1, p2)
     return retval
 
@@ -6116,12 +6796,15 @@ def fl_popup_entry_get_by_user_data(p1, p2):
 _fl_popup_entry_get_by_text = cfuncproto(
         so_libforms, "fl_popup_entry_get_by_text",
         cty.POINTER(FL_POPUP_ENTRY), [cty.POINTER(FL_POPUP), STRING],
-        """FL_POPUP_ENTRY * fl_popup_entry_get_by_text(FL_POPUP * p1, const char * p2)
+        """FL_POPUP_ENTRY * fl_popup_entry_get_by_text(FL_POPUP * p1,
+           const char * p2)
         """)
 def fl_popup_entry_get_by_text(p1, p2):
     """ fl_popup_entry_get_by_text(p1, p2) -> popup_entry
     """
 
+    _elem_refs[get_rand_elemkey] = p1
+    _elem_refs[get_rand_elemkey] = p2
     retval = _fl_popup_entry_get_by_text(p1, p2)
     return retval
 
@@ -6135,6 +6818,8 @@ def fl_popup_entry_get_by_label(p1, p2):
     """ fl_popup_entry_get_by_label(p1, p2) -> popup_entry
     """
 
+    _elem_refs[get_rand_elemkey] = p1
+    _elem_refs[get_rand_elemkey] = p2
     retval = _fl_popup_entry_get_by_label(p1, p2)
     return retval
 
@@ -6148,6 +6833,7 @@ def fl_popup_entry_get_group(p1):
     """ fl_popup_entry_get_group(p1) -> num.
     """
 
+    _elem_refs[get_rand_elemkey] = p1
     retval = _fl_popup_entry_get_group(p1)
     return retval
 
@@ -6161,6 +6847,8 @@ def fl_popup_entry_set_group(p1, p2):
     """ fl_popup_entry_set_group(p1, p2) -> num.
     """
 
+    _elem_refs[get_rand_elemkey] = p1
+    _elem_refs[get_rand_elemkey] = p2
     retval = _fl_popup_entry_set_group(p1, p2)
     return retval
 
@@ -6174,6 +6862,7 @@ def fl_popup_entry_get_subpopup(p1):
     """ fl_popup_entry_get_subpopup(p1) -> popup
     """
 
+    _elem_refs[get_rand_elemkey] = p1
     retval = _fl_popup_entry_get_subpopup(p1)
     return retval
 
@@ -6187,6 +6876,8 @@ def fl_popup_entry_set_subpopup(p1, p2):
     """ fl_popup_entry_set_subpopup(p1, p2) -> popup
     """
 
+    _elem_refs[get_rand_elemkey] = p1
+    _elem_refs[get_rand_elemkey] = p2
     retval = _fl_popup_entry_set_subpopup(p1, p2)
     return retval
 
@@ -6201,6 +6892,9 @@ def fl_popup_get_size(p1, p2, p3):
     """ fl_popup_get_size(p1, p2, p3) -> size num.
     """
 
+    _elem_refs[get_rand_elemkey] = p1
+    _elem_refs[get_rand_elemkey] = p2
+    _elem_refs[get_rand_elemkey] = p3
     retval = _fl_popup_get_size(p1, p2, p3)
     return retval
 
@@ -6214,6 +6908,7 @@ def fl_popup_get_min_width(p1):
     """ fl_popup_get_min_width(p1) -> width num.
     """
 
+    _elem_refs[get_rand_elemkey] = p1
     retval = _fl_popup_get_min_width(p1)
     return retval
 
@@ -6227,6 +6922,8 @@ def fl_popup_set_min_width(p1, p2):
     """ fl_popup_set_min_width(p1, p2) -> width num.
     """
 
+    _elem_refs[get_rand_elemkey] = p1
+    _elem_refs[get_rand_elemkey] = p2
     retval = _fl_popup_set_min_width(p1, p2)
     return retval
 
@@ -6259,6 +6956,12 @@ def fl_create_bitmap(bitmaptype, x, y, w, h, label):
     """ fl_create_bitmap(bitmaptype, x, y, w, h, label) -> pObject
     """
 
+    _elem_refs[get_rand_elemkey] = bitmaptype
+    _elem_refs[get_rand_elemkey] = x
+    _elem_refs[get_rand_elemkey] = y
+    _elem_refs[get_rand_elemkey] = w
+    _elem_refs[get_rand_elemkey] = h
+    _elem_refs[get_rand_elemkey] = label
     retval = _fl_create_bitmap(bitmaptype, x, y, w, h, label)
     return retval
 
@@ -6274,6 +6977,12 @@ def fl_add_bitmap(bitmaptype, x, y, w, h, label):
     """ fl_add_bitmap(bitmaptype, x, y, w, h, label) -> pObject
     """
 
+    _elem_refs[get_rand_elemkey] = bitmaptype
+    _elem_refs[get_rand_elemkey] = x
+    _elem_refs[get_rand_elemkey] = y
+    _elem_refs[get_rand_elemkey] = w
+    _elem_refs[get_rand_elemkey] = h
+    _elem_refs[get_rand_elemkey] = label
     retval = _fl_add_bitmap(bitmaptype, x, y, w, h, label)
     return retval
 
@@ -6289,6 +6998,10 @@ def fl_set_bitmap_data(pObject, w, h, data):
     """ fl_set_bitmap_data(pObject, w, h, data)
     """
 
+    _elem_refs[get_rand_elemkey] = pObject
+    _elem_refs[get_rand_elemkey] = w
+    _elem_refs[get_rand_elemkey] = h
+    _elem_refs[get_rand_elemkey] = data
     _fl_set_bitmap_data(pObject, w, h, data)
 
 
@@ -6301,6 +7014,8 @@ def fl_set_bitmap_file(pObject, fname):
     """ fl_set_bitmap_file(pObject, fname)
     """
 
+    _elem_refs[get_rand_elemkey] = pObject
+    _elem_refs[get_rand_elemkey] = fname
     _fl_set_bitmap_file(pObject, fname)
 
 
@@ -6312,11 +7027,17 @@ _fl_read_bitmapfile = cfuncproto(
         """Pixmap fl_read_bitmapfile(Window win, const char * file,
            unsigned int * w, unsigned int * h, int * hotx, int * hoty)
         """)
-def fl_read_bitmapfile(win, file, w, h, hotx, hoty):
-    """ fl_read_bitmapfile(win, file, w, h, hotx, hoty) -> pixmap
+def fl_read_bitmapfile(win, filename, w, h, hotx, hoty):
+    """ fl_read_bitmapfile(win, filename, w, h, hotx, hoty) -> pixmap
     """
 
-    retval = _fl_read_bitmapfile(win, file, w, h, hotx, hoty)
+    _elem_refs[get_rand_elemkey] = win
+    _elem_refs[get_rand_elemkey] = filename
+    _elem_refs[get_rand_elemkey] = w
+    _elem_refs[get_rand_elemkey] = h
+    _elem_refs[get_rand_elemkey] = hotx
+    _elem_refs[get_rand_elemkey] = hoty
+    retval = _fl_read_bitmapfile(win, filename, w, h, hotx, hoty)
 
 
 Drawable = XID    # cty.c_ulong
@@ -6333,6 +7054,11 @@ def XCreateBitmapFromData(pDisplay, p2, p3, p4, p5):
     """ XCreateBitmapFromData(pDisplay, p2, p3, p4, p5) -> pixmap
     """
 
+    _elem_refs[get_rand_elemkey] = pDisplay
+    _elem_refs[get_rand_elemkey] = p2
+    _elem_refs[get_rand_elemkey] = p3
+    _elem_refs[get_rand_elemkey] = p4
+    _elem_refs[get_rand_elemkey] = p5
     retval = _XCreateBitmapFromData(pDisplay, p2, p3, p4, p5)
     return retval
 
@@ -6359,6 +7085,12 @@ def fl_create_pixmap(pixmaptype, x, y, w, h, label):
     """ fl_create_pixmap(pixmaptype, x, y, w, h, label) -> pObject
     """
 
+    _elem_refs[get_rand_elemkey] = pixmaptype
+    _elem_refs[get_rand_elemkey] = x
+    _elem_refs[get_rand_elemkey] = y
+    _elem_refs[get_rand_elemkey] = w
+    _elem_refs[get_rand_elemkey] = h
+    _elem_refs[get_rand_elemkey] = label
     retval = _fl_create_pixmap(pixmaptype, x, y, w, h, label)
     return retval
 
@@ -6374,6 +7106,12 @@ def fl_add_pixmap(pixmaptype, x, y, w, h, label):
     """ fl_add_pixmap(pixmaptype, x, y, w, h, label) -> pObject
     """
 
+    _elem_refs[get_rand_elemkey] = pixmaptype
+    _elem_refs[get_rand_elemkey] = x
+    _elem_refs[get_rand_elemkey] = y
+    _elem_refs[get_rand_elemkey] = w
+    _elem_refs[get_rand_elemkey] = h
+    _elem_refs[get_rand_elemkey] = label
     retval = _fl_add_pixmap(pixmaptype, x, y, w, h, label)
     return retval
 
@@ -6388,6 +7126,8 @@ def fl_set_pixmap_data(pObject, bits):
     """ fl_set_pixmap_data(pObject, bits)
     """
 
+    _elem_refs[get_rand_elemkey] = pObject
+    _elem_refs[get_rand_elemkey] = bits
     _fl_set_pixmap_data(pObject, bits)
 
 
@@ -6400,6 +7140,8 @@ def fl_set_pixmap_file(pObject, fname):
     """ fl_set_pixmap_file(pObject, fname)
     """
 
+    _elem_refs[get_rand_elemkey] = pObject
+    _elem_refs[get_rand_elemkey] = fname
     _fl_set_pixmap_file(pObject, fname)
 
 
@@ -6413,6 +7155,10 @@ def fl_set_pixmap_align(pObject, align, xmargin, ymargin):
     """ fl_set_pixmap_align(pObject, align, xmargin, ymargin)
     """
 
+    _elem_refs[get_rand_elemkey] = pObject
+    _elem_refs[get_rand_elemkey] = align
+    _elem_refs[get_rand_elemkey] = xmargin
+    _elem_refs[get_rand_elemkey] = ymargin
     _fl_set_pixmap_align(pObject, align, xmargin, ymargin)
 
 
@@ -6425,6 +7171,9 @@ def fl_set_pixmap_pixmap(pObject, idnum, mask):
     """ fl_set_pixmap_pixmap(pObject, idnum, mask)
     """
 
+    _elem_refs[get_rand_elemkey] = pObject
+    _elem_refs[get_rand_elemkey] = idnum
+    _elem_refs[get_rand_elemkey] = mask
     _fl_set_pixmap_pixmap(pObject, idnum, mask)
 
 
@@ -6437,6 +7186,9 @@ def fl_set_pixmap_colorcloseness(red, green, blue):
     """ fl_set_pixmap_colorcloseness(red, green, blue)
     """
 
+    _elem_refs[get_rand_elemkey] = red
+    _elem_refs[get_rand_elemkey] = green
+    _elem_refs[get_rand_elemkey] = blue
     _fl_set_pixmap_colorcloseness(red, green, blue)
 
 
@@ -6449,6 +7201,7 @@ def fl_free_pixmap_pixmap(pObject):
     """ fl_free_pixmap_pixmap(pObject)
     """
 
+    _elem_refs[get_rand_elemkey] = pObject
     _fl_free_pixmap_pixmap(pObject)
 
 
@@ -6462,6 +7215,9 @@ def fl_get_pixmap_pixmap(pObject, p, m):
     """ fl_get_pixmap_pixmap(pObject, p, m) -> pixmap
     """
 
+    _elem_refs[get_rand_elemkey] = pObject
+    _elem_refs[get_rand_elemkey] = p
+    _elem_refs[get_rand_elemkey] = m
     retval = _fl_get_pixmap_pixmap(pObject, p, m)
     return retval
 
@@ -6479,6 +7235,14 @@ def fl_read_pixmapfile(win, filename, w, h, shape_mask, hotx, hoty, tran):
     """ fl_read_pixmapfile(win, filename, w, h, shape_mask, hotx, hoty, tran) -> pixmap
     """
 
+    _elem_refs[get_rand_elemkey] = win
+    _elem_refs[get_rand_elemkey] = filename
+    _elem_refs[get_rand_elemkey] = w
+    _elem_refs[get_rand_elemkey] = h
+    _elem_refs[get_rand_elemkey] = shape_mask
+    _elem_refs[get_rand_elemkey] = hotx
+    _elem_refs[get_rand_elemkey] = hoty
+    _elem_refs[get_rand_elemkey] = tran
     retval = _fl_read_pixmapfile(win, filename, w, h, shape_mask, hotx, hoty, tran)
     return retval
 
@@ -6496,6 +7260,14 @@ def fl_create_from_pixmapdata(win, data, w, h, sm, hotx, hoty, tran):
     """ fl_create_from_pixmapdata(win, data, w, h, sm, hotx, hoty, tran) -> pixmap
     """
 
+    _elem_refs[get_rand_elemkey] = win
+    _elem_refs[get_rand_elemkey] = data
+    _elem_refs[get_rand_elemkey] = w
+    _elem_refs[get_rand_elemkey] = h
+    _elem_refs[get_rand_elemkey] = sm
+    _elem_refs[get_rand_elemkey] = hotx
+    _elem_refs[get_rand_elemkey] = hoty
+    _elem_refs[get_rand_elemkey] = tran
     retval = _fl_create_from_pixmapdata(win, data, w, h, sm, hotx, hoty, tran)
     return retval
 
@@ -6510,6 +7282,8 @@ def XFreePixmap(pDisplay, pixmap):
     """ XFreePixmap(pDisplay, pixmap) -> num.
     """
 
+    _elem_refs[get_rand_elemkey] = pDisplay
+    _elem_refs[get_rand_elemkey] = pixmap
     retval = _XFreePixmap(pDisplay, pixmap)
     return retval
 
@@ -6536,6 +7310,12 @@ def fl_create_box(boxtype, x, y, w, h, label):
     """ fl_create_box(boxtype, x, y, w, h, label) -> pObject
     """
 
+    _elem_refs[get_rand_elemkey] = boxtype
+    _elem_refs[get_rand_elemkey] = x
+    _elem_refs[get_rand_elemkey] = y
+    _elem_refs[get_rand_elemkey] = w
+    _elem_refs[get_rand_elemkey] = h
+    _elem_refs[get_rand_elemkey] = label
     retval = _fl_create_box(boxtype, x, y, w, h, label)
     return retval
 
@@ -6551,6 +7331,12 @@ def fl_add_box(boxtype, x, y, w, h, label):
     """ fl_add_box(boxtype, x, y, w, h, label) -> pObject
     """
 
+    _elem_refs[get_rand_elemkey] = boxtype
+    _elem_refs[get_rand_elemkey] = x
+    _elem_refs[get_rand_elemkey] = y
+    _elem_refs[get_rand_elemkey] = w
+    _elem_refs[get_rand_elemkey] = h
+    _elem_refs[get_rand_elemkey] = label
     retval = _fl_add_box(boxtype, x, y, w, h, label)
     return retval
 
@@ -6595,6 +7381,12 @@ def fl_create_browser(browsertype, x, y, w, h, label):
     """ fl_create_browser(browsertype, x, y, w, h, label) -> pObject
     """
 
+    _elem_refs[get_rand_elemkey] = browsertype
+    _elem_refs[get_rand_elemkey] = x
+    _elem_refs[get_rand_elemkey] = y
+    _elem_refs[get_rand_elemkey] = w
+    _elem_refs[get_rand_elemkey] = h
+    _elem_refs[get_rand_elemkey] = label
     retval = _fl_create_browser(browsertype, x, y, w, h, label)
     return retval
 
@@ -6610,6 +7402,12 @@ def fl_add_browser(browsertype, x, y, w, h, label):
     """ fl_add_browser(browsertype, x, y, w, h, label) -> pObject
     """
 
+    _elem_refs[get_rand_elemkey] = browsertype
+    _elem_refs[get_rand_elemkey] = x
+    _elem_refs[get_rand_elemkey] = y
+    _elem_refs[get_rand_elemkey] = w
+    _elem_refs[get_rand_elemkey] = h
+    _elem_refs[get_rand_elemkey] = label
     retval = _fl_add_browser(browsertype, x, y, w, h, label)
     return retval
 
@@ -6623,6 +7421,7 @@ def fl_clear_browser(pObject):
     """ fl_clear_browser(pObject)
     """
 
+    _elem_refs[get_rand_elemkey] = pObject
     _fl_clear_browser(pObject)
 
 
@@ -6635,6 +7434,8 @@ def fl_add_browser_line(pObject, newtext):
     """ fl_add_browser_line(pObject, newtext)
     """
 
+    _elem_refs[get_rand_elemkey] = pObject
+    _elem_refs[get_rand_elemkey] = newtext
     _fl_add_browser_line(pObject, newtext)
 
 
@@ -6647,6 +7448,8 @@ def fl_addto_browser(pObject, newtext):
     """ fl_addto_browser(pObject, newtext)
     """
 
+    _elem_refs[get_rand_elemkey] = pObject
+    _elem_refs[get_rand_elemkey] = newtext
     _fl_addto_browser(pObject, newtext)
 
 
@@ -6659,6 +7462,8 @@ def fl_addto_browser_chars(pObject, browsertext):
     """ fl_addto_browser_chars(pObject, browsertext)
     """
 
+    _elem_refs[get_rand_elemkey] = pObject
+    _elem_refs[get_rand_elemkey] = browsertext
     _fl_addto_browser_chars(pObject, browsertext)
 
 
@@ -6675,6 +7480,9 @@ def fl_insert_browser_line(pObject, linenumb, newtext):
     """ fl_insert_browser_line(pObject, linenumb, newtext)
     """
 
+    _elem_refs[get_rand_elemkey] = pObject
+    _elem_refs[get_rand_elemkey] = linenumb
+    _elem_refs[get_rand_elemkey] = newtext
     _fl_insert_browser_line(pObject, linenumb, newtext)
 
 
@@ -6687,6 +7495,8 @@ def fl_delete_browser_line(pObject, linenumb):
     """ fl_delete_browser_line(pObject, linenumb)
     """
 
+    _elem_refs[get_rand_elemkey] = pObject
+    _elem_refs[get_rand_elemkey] = linenumb
     _fl_delete_browser_line(pObject, linenumb)
 
 
@@ -6700,6 +7510,9 @@ def fl_replace_browser_line(pObject, linenumb, newtext):
     """ fl_replace_browser_line(pObject, linenumb, newtext)
     """
 
+    _elem_refs[get_rand_elemkey] = pObject
+    _elem_refs[get_rand_elemkey] = linenumb
+    _elem_refs[get_rand_elemkey] = newtext
     _fl_replace_browser_line(pObject, linenumb, newtext)
 
 
@@ -6712,6 +7525,8 @@ def fl_get_browser_line(pObject, linenumb):
     """ fl_get_browser_line(pObject, linenumb) -> line string
     """
 
+    _elem_refs[get_rand_elemkey] = pObject
+    _elem_refs[get_rand_elemkey] = linenumb
     retval = _fl_get_browser_line(pObject, linenumb)
     return retval
 
@@ -6725,6 +7540,8 @@ def fl_load_browser(pObject, filename):
     """ fl_load_browser(pObject, filename) -> num.
     """
 
+    _elem_refs[get_rand_elemkey] = pObject
+    _elem_refs[get_rand_elemkey] = filename
     retval = _fl_load_browser(pObject, filename)
     return retval
 
@@ -6738,6 +7555,8 @@ def fl_select_browser_line(pObject, line):
     """ fl_select_browser_line(pObject, line)
     """
 
+    _elem_refs[get_rand_elemkey] = pObject
+    _elem_refs[get_rand_elemkey] = line
     _fl_select_browser_line(pObject, line)
 
 
@@ -6750,6 +7569,8 @@ def fl_deselect_browser_line(pObject, line):
     """ fl_deselect_browser_line(pObject, line)
     """
 
+    _elem_refs[get_rand_elemkey] = pObject
+    _elem_refs[get_rand_elemkey] = line
     _fl_deselect_browser_line(pObject, line)
 
 
@@ -6762,6 +7583,7 @@ def fl_deselect_browser(pObject):
     """ fl_deselect_browser(pObject)
     """
 
+    _elem_refs[get_rand_elemkey] = pObject
     _fl_deselect_browser(pObject)
 
 
@@ -6774,6 +7596,8 @@ def fl_isselected_browser_line(pObject, line):
     """ fl_isselected_browser_line(pObject, line) -> num.
     """
 
+    _elem_refs[get_rand_elemkey] = pObject
+    _elem_refs[get_rand_elemkey] = line
     retval = _fl_isselected_browser_line(pObject, line)
     return retval
 
@@ -6787,6 +7611,7 @@ def fl_get_browser_topline(pObject):
     """ fl_get_browser_topline(pObject) -> num.
     """
 
+    _elem_refs[get_rand_elemkey] = pObject
     retval = _fl_get_browser_topline(pObject)
     return retval
 
@@ -6800,6 +7625,7 @@ def fl_get_browser(pObject):
     """ fl_get_browser(pObject) -> num.
     """
 
+    _elem_refs[get_rand_elemkey] = pObject
     retval = _fl_get_browser(pObject)
     return retval
 
@@ -6813,6 +7639,7 @@ def fl_get_browser_maxline(pObject):
     """ fl_get_browser_maxline(pObject) -> line num.
     """
 
+    _elem_refs[get_rand_elemkey] = pObject
     retval = _fl_get_browser_maxline(pObject)
     return retval
 
@@ -6826,6 +7653,7 @@ def fl_get_browser_screenlines(pObject):
     """ fl_get_browser_screenlines(pObject) -> lines num.
     """
 
+    _elem_refs[get_rand_elemkey] = pObject
     retval = _fl_get_browser_screenlines(pObject)
     return retval
 
@@ -6839,6 +7667,8 @@ def fl_set_browser_topline(pObject, topline):
     """ fl_set_browser_topline(pObject, topline)
     """
 
+    _elem_refs[get_rand_elemkey] = pObject
+    _elem_refs[get_rand_elemkey] = topline
     _fl_set_browser_topline(pObject, topline)
 
 
@@ -6851,6 +7681,8 @@ def fl_set_browser_fontsize(pObject, size):
     """ fl_set_browser_fontsize(pObject, size)
     """
 
+    _elem_refs[get_rand_elemkey] = pObject
+    _elem_refs[get_rand_elemkey] = size
     _fl_set_browser_fontsize(pObject, size)
 
 
@@ -6863,6 +7695,8 @@ def fl_set_browser_fontstyle(pObject, style):
     """ fl_set_browser_fontstyle(pObject, style)
     """
 
+    _elem_refs[get_rand_elemkey] = pObject
+    _elem_refs[get_rand_elemkey] = style
     _fl_set_browser_fontstyle(pObject, style)
 
 
@@ -6875,6 +7709,8 @@ def fl_set_browser_specialkey(pObject, specialkey):
     """ fl_set_browser_specialkey(pObject, specialkey)
     """
 
+    _elem_refs[get_rand_elemkey] = pObject
+    _elem_refs[get_rand_elemkey] = special_style
     _fl_set_browser_specialkey(pObject, specialkey)
 
 
@@ -6887,6 +7723,8 @@ def fl_set_browser_vscrollbar(pObject, on):
     """ fl_set_browser_vscrollbar(pObject, on)
     """
 
+    _elem_refs[get_rand_elemkey] = pObject
+    _elem_refs[get_rand_elemkey] = on
     _fl_set_browser_vscrollbar(pObject, on)
 
 
@@ -6899,6 +7737,8 @@ def fl_set_browser_hscrollbar(pObject, on):
     """ fl_set_browser_hscrollbar(pObject, on)
     """
 
+    _elem_refs[get_rand_elemkey] = pObject
+    _elem_refs[get_rand_elemkey] = on
     _fl_set_browser_hscrollbar(pObject, on)
 
 
@@ -6912,6 +7752,9 @@ def fl_set_browser_line_selectable(pObject, line, flag):
     """ fl_set_browser_line_selectable(pObject, line, flag)
     """
 
+    _elem_refs[get_rand_elemkey] = pObject
+    _elem_refs[get_rand_elemkey] = line
+    _elem_refs[get_rand_elemkey] = flag
     _fl_set_browser_line_selectable(pObject, line, flag)
 
 
@@ -6926,6 +7769,11 @@ def fl_get_browser_dimension(pObject, x, y, w, h):
     """ fl_get_browser_dimension(pObject, x, y, w, h)
     """
 
+    _elem_refs[get_rand_elemkey] = pObject
+    _elem_refs[get_rand_elemkey] = x
+    _elem_refs[get_rand_elemkey] = y
+    _elem_refs[get_rand_elemkey] = w
+    _elem_refs[get_rand_elemkey] = h
     _fl_get_browser_dimension(pObject, x, y, w, h)
 
 
@@ -6941,6 +7789,8 @@ def fl_set_browser_dblclick_callback(pObject, py_cb, data):
 
     c_cb = FL_CALLBACKPTR(py_cb)
     _cfunc_refs[get_rand_dictkey()] = c_cb
+    _elem_refs[get_rand_elemkey] = pObject
+    _elem_refs[get_rand_elemkey] = data
     _fl_set_browser_dblclick_callback(pObject, c_cb, data)
 
 
@@ -6953,6 +7803,7 @@ def fl_get_browser_xoffset(pObject):
     """ fl_get_browser_xoffset(pObject) -> coord num.
     """
 
+    _elem_refs[get_rand_elemkey] = pObject
     retval = _fl_get_browser_xoffset(pObject)
     return retval
 
@@ -6966,6 +7817,7 @@ def fl_get_browser_rel_xoffset(pObject):
     """ fl_get_browser_rel_xoffset(pObject) -> num.
     """
 
+    _elem_refs[get_rand_elemkey] = pObject
     retval = _fl_get_browser_rel_xoffset(pObject)
     return retval
 
@@ -6979,6 +7831,8 @@ def fl_set_browser_xoffset(pObject, npixels):
     """ fl_set_browser_xoffset(pObject, npixels)
     """
 
+    _elem_refs[get_rand_elemkey] = pObject
+    _elem_refs[get_rand_elemkey] = npixels
     _fl_set_browser_xoffset(pObject, npixels)
 
 
@@ -6991,6 +7845,8 @@ def fl_set_browser_rel_xoffset(pObject, val):
     """ fl_set_browser_rel_xoffset(pObject, val)
     """
 
+    _elem_refs[get_rand_elemkey] = pObject
+    _elem_refs[get_rand_elemkey] = val
     _fl_set_browser_rel_xoffset(pObject, val)
 
 
@@ -7003,6 +7859,7 @@ def fl_get_browser_yoffset(pObject):
     """ fl_get_browser_yoffset(pObject) -> coord num.
     """
 
+    _elem_refs[get_rand_elemkey] = pObject
     retval = _fl_get_browser_yoffset(pObject)
     return retval
 
@@ -7016,6 +7873,7 @@ def fl_get_browser_rel_yoffset(pObject):
     """ fl_get_browser_rel_yoffset(pObject) -> num.
     """
 
+    _elem_refs[get_rand_elemkey] = pObject
     retval = _fl_get_browser_rel_yoffset(pObject)
     return retval
 
@@ -7029,6 +7887,8 @@ def fl_set_browser_yoffset(pObject, npixels):
     """ fl_set_browser_yoffset(pObject, npixels)
     """
 
+    _elem_refs[get_rand_elemkey] = pObject
+    _elem_refs[get_rand_elemkey] = npixels
     _fl_set_browser_yoffset(pObject, npixels)
 
 
@@ -7041,6 +7901,8 @@ def fl_set_browser_rel_yoffset(pObject, val):
     """ fl_set_browser_rel_yoffset(pObject, val)
     """
 
+    _elem_refs[get_rand_elemkey] = pObject
+    _elem_refs[get_rand_elemkey] = val
     _fl_set_browser_rel_yoffset(pObject, val)
 
 
