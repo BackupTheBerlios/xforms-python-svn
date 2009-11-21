@@ -133,21 +133,21 @@ _cfunc_refs = {}
 _elem_refs = {}
 
 def get_rand_dictkey():
-    """ Get a randomic string between '1' and '1000' for _cfunc_refs dict keys
+    """ Get a randomic string between '1' and '2000' for _cfunc_refs dict keys
     """
 
-    akey = str(random.randrange(1, 1000))
+    akey = str(random.randrange(1, 2000))
     while akey in _cfunc_refs:
-        akey = str(random.randrange(1, 1000))
+        akey = str(random.randrange(1, 2000))
     return akey
 
 def get_rand_elemkey():
-    """ Get a randomic string between '1' and '1000' for _elem_refs dict keys
+    """ Get a randomic string between '1' and '3000' for _elem_refs dict keys
     """
 
-    akey = str(random.randrange(1, 1000))
+    akey = str(random.randrange(1, 3000))
     while akey in _elem_refs:
-        akey = str(random.randrange(1, 1000))
+        akey = str(random.randrange(1, 3000))
     return akey
 
 
