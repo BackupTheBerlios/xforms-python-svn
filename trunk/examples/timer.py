@@ -1,0 +1,130 @@
+#!/usr/bin/env python
+
+#  This file is part of xforms-python, and it has been ported from
+#  related XForms demo, with some adaptations.
+#
+#  See CREDITS file for XForms copyright attribution, and LICENSE
+#  file for xforms-python license and copyright attribution.
+#
+# timer routine tester
+#
+
+
+import sys
+from xformslib import library as xf
+from xformslib import xfconst as xfc
+
+
+
+# Forms and Objects
+
+class FD_timerform(object):
+    timerform = None
+    vdata = None
+    ldata = None
+    timer = None
+    down = None
+
+T = 20
+
+
+# callbacks for form timer form
+
+def suspend_resume(ob, data):
+
+    if data:
+	xf.fl_resume_timer(fd_timerform.timer)
+    else:
+	xf.fl_suspend_timer(fd_timerform.timer)
+
+
+def reset(ob, data):
+    xf.fl_set_timer(fd_timerform.timer, T)
+
+
+def timer_direction(ob, data):
+    xf.fl_set_timer_countup(fd_timerform.timer, data)
+
+
+def expired(ob, data):
+
+    if (xf.fl_show_question( "Expired!\n\nQuit?", 0) == 1):
+    	xf.fl_finish()
+	sys.exit(0)
+    else:
+        xf.fl_set_timer(fd_timerform.timer, T)
+
+
+def create_form_timerform():
+
+    fdui = FD_timerform()
+
+    fdui.timerform = xf.fl_bgn_form(xfc.FL_NO_BOX, 290, 210)
+    xf.fl_add_box(xfc.FL_UP_BOX, 0, 0, 290, 210, "")
+    xf.fl_add_frame(xfc.FL_UP_FRAME, 0, 0, 290, 94, "")
+    xf.fl_add_frame(xfc.FL_UP_FRAME, 0, 100, 330, 190, "")
+    xf.fl_add_button(xfc.FL_NORMAL_BUTTON, 100, 170, 80, 30, "Done")
+
+    fdui.timer = obj = xf.fl_add_timer(xfc.FL_VALUE_TIMER, 20, 30, 
+				       180, 40, "Timer")
+    xf.fl_set_object_boxtype(obj, xfc.FL_UP_BOX)
+    xf.fl_set_object_lsize(obj, xfc.FL_MEDIUM_SIZE)
+    xf.fl_set_object_lalign(obj, xfc.FL_ALIGN_TOP)
+    xf.fl_set_object_lstyle(obj, xfc.FL_TIMES_STYLE)
+    xf.fl_set_object_callback(obj, expired, 0)
+
+    obj = xf.fl_add_button(xfc.FL_NORMAL_BUTTON, 20, 120, 80, 30, "Suspend")
+    xf.fl_set_object_callback(obj, suspend_resume, 0)
+
+    obj = xf.fl_add_button(xfc.FL_NORMAL_BUTTON, 100, 120, 80, 30, "Resume")
+    xf.fl_set_object_callback(obj, suspend_resume, 1)
+
+    obj = xf.fl_add_button(xfc.FL_NORMAL_BUTTON, 180, 120, 80, 30, "Reset")
+    xf.fl_set_object_callback(obj, reset, 0)
+
+    obj = fdui.down = xf.fl_add_checkbutton(xfc.FL_RADIO_BUTTON, 210, 20, 
+					    70, 30, "Down")
+    xf.fl_set_object_shortcut(obj, "D#D", 1)
+    xf.fl_set_object_callback(obj, timer_direction, 0)
+
+    obj = xf.fl_add_checkbutton(xfc.FL_RADIO_BUTTON, 210, 50, 70, 30, "Up")
+    xf.fl_set_object_shortcut(obj, "U#U", 1 )
+    xf.fl_set_object_callback(obj, timer_direction, 1)
+
+    xf.fl_end_form()
+
+    return fdui
+
+
+
+
+def main(lsysargv, sysargv):
+    global fd_timerform
+
+    xf.fl_set_border_width(-2)
+
+    xf.fl_initialize(lsysargv, sysargv, "", 0, 0)
+    fd_timerform = create_form_timerform()
+
+    # fill-in form initialization code
+
+    xf.fl_set_timer(fd_timerform.timer, T)
+    xf.fl_set_button(fd_timerform.down, 1)
+
+    # show the first form
+
+    xf.fl_show_form(fd_timerform.timerform, xfc.FL_PLACE_CENTER,
+		    xfc.FL_FULLBORDER, "timerform")
+
+    xf.fl_do_forms()
+
+    return 0
+
+
+
+
+
+
+if __name__ == '__main__':
+    main(len(sys.argv), sys.argv)
+
