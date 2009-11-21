@@ -5,10 +5,21 @@ It depends only on python standard library modules.
 
 To install this package, simply run the following with
 root's privileges:
-        python ./setup.py build
-        python ./setup.py install
+        python ./setup.py build install
 
-This software is meant to be used on GNU/Linux. For other
+To install documentation files, please copy doc files in
+a directory where your system usually stores documentation files:
+e.g.:
+  /usr/share/doc/xforms-python-$VERSION/
+-or-
+  /usr/doc/xforms-python-$VERSION/
+
+To install examples files, please copy examples directory there,
+too or in another of your choice.
+
+
+This software is mainly meant to be used on GNU/Linux. For other
 operating systems your mileage may vary.
 
 Read TODO file for usage limitations.
+

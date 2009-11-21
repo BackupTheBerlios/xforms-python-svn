@@ -9,17 +9,18 @@
 
 
 import sys
-import xformslib as xf
+from xformslib import library as xf
+from xformslib import xfconst as xfc
 
 
 def main(lsysargv, sysargv):
 
     xf.fl_initialize(lsysargv, sysargv, "FormDemo", 0, 0)
-    simpleform = xf.fl_bgn_form(xf.FL_UP_BOX, 230, 160)
-    xf.fl_add_button(xf.FL_NORMAL_BUTTON, 40, 50, 150, 60, "Push Me")
+    simpleform = xf.fl_bgn_form(xfc.FL_UP_BOX, 230, 160)
+    xf.fl_add_button(xfc.FL_NORMAL_BUTTON, 40, 50, 150, 60, "Push Me")
     xf.fl_end_form()
 
-    xf.fl_show_form(simpleform, xf.FL_PLACE_MOUSE, xf.FL_NOBORDER, "PushMe")
+    xf.fl_show_form(simpleform, xfc.FL_PLACE_MOUSE, xfc.FL_NOBORDER, "PushMe")
 
     xf.fl_do_forms()
     xf.fl_hide_form(simpleform)

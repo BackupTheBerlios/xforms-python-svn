@@ -12,8 +12,9 @@
 # Forms and Objects
 
 import sys
-import xformslib as xf
 
+from xformslib import library as xf
+from xformslib import xfconst as xfc
 
 
 # callbacks for form bwform
@@ -48,51 +49,51 @@ def main(lsysargv, sysargv):
 
     xf.fl_initialize(lsysargv, sysargv, "FormDemo", 0, 0)
 
-    bwform = xf.fl_bgn_form(xf.FL_NO_BOX, 380, 340)
+    bwform = xf.fl_bgn_form(xfc.FL_NO_BOX, 380, 340)
 
     bwgroup = xf.fl_bgn_group()
 
-    xf.fl_add_box(xf.FL_UP_BOX, 0, 0, 380, 340, "")
+    xf.fl_add_box(xfc.FL_UP_BOX, 0, 0, 380, 340, "")
 
-    xf.fl_add_frame(xf.FL_EMBOSSED_FRAME, 220, 60, 135, 145, "")
+    xf.fl_add_frame(xfc.FL_EMBOSSED_FRAME, 220, 60, 135, 145, "")
 
-    xf.fl_add_frame(xf.FL_ENGRAVED_FRAME, 15, 60, 185, 145, "")
+    xf.fl_add_frame(xfc.FL_ENGRAVED_FRAME, 15, 60, 185, 145, "")
 
-    xf.fl_add_slider(xf.FL_HOR_SLIDER, 25, 70, 160, 20, "")
+    xf.fl_add_slider(xfc.FL_HOR_SLIDER, 25, 70, 160, 20, "")
 
-    xf.fl_add_valslider(xf.FL_HOR_BROWSER_SLIDER, 25, 105, 160, 20, "")
+    xf.fl_add_valslider(xfc.FL_HOR_BROWSER_SLIDER, 25, 105, 160, 20, "")
 
-    obj = xf.fl_add_scrollbar(xf.FL_HOR_THIN_SCROLLBAR, 25, 140, 160, 20, "")
+    obj = xf.fl_add_scrollbar(xfc.FL_HOR_THIN_SCROLLBAR, 25, 140, 160, 20, "")
     xf.fl_set_scrollbar_size(obj, 0.2)
 
-    xf.fl_add_counter(xf.FL_NORMAL_COUNTER, 25, 175, 160, 20, "")
+    xf.fl_add_counter(xfc.FL_NORMAL_COUNTER, 25, 175, 160, 20, "")
 
-    pmobj = xf.fl_add_pixmapbutton(xf.FL_NORMAL_BUTTON, 305, 145, \
+    pmobj = xf.fl_add_pixmapbutton(xfc.FL_NORMAL_BUTTON, 305, 145, \
                                              40, 35, "")
 
-    xf.fl_add_positioner(xf.FL_NORMAL_POSITIONER, 30, 225, 100, 80, "")
+    xf.fl_add_positioner(xfc.FL_NORMAL_POSITIONER, 30, 225, 100, 80, "")
 
-    xf.fl_add_button(xf.FL_NORMAL_BUTTON, 230, 65, 100, 28, "Button")
+    xf.fl_add_button(xfc.FL_NORMAL_BUTTON, 230, 65, 100, 28, "Button")
 
-    xf.fl_add_lightbutton(xf.FL_PUSH_BUTTON, 230, 98, 100, 28, "LightButton")
+    xf.fl_add_lightbutton(xfc.FL_PUSH_BUTTON, 230, 98, 100, 28, "LightButton")
 
-    xf.fl_add_roundbutton(xf.FL_PUSH_BUTTON, 230, 128, 80, 32, "Button")
+    xf.fl_add_roundbutton(xfc.FL_PUSH_BUTTON, 230, 128, 80, 32, "Button")
 
-    obj = xf.fl_add_round3dbutton(xf.FL_PUSH_BUTTON, 230, 152, 80, 32, \
+    obj = xf.fl_add_round3dbutton(xfc.FL_PUSH_BUTTON, 230, 152, 80, 32, \
                                   "Button")
-    xf.fl_set_object_color(obj, xf.FL_COL1, xf.FL_BLUE)
+    xf.fl_set_object_color(obj, xfc.FL_COL1, xfc.FL_BLUE)
 
-    xf.fl_add_checkbutton(xf.FL_PUSH_BUTTON, 230, 175, 80, 32, "Button")
+    xf.fl_add_checkbutton(xfc.FL_PUSH_BUTTON, 230, 175, 80, 32, "Button")
 
-    xf.fl_add_input(xf.FL_NORMAL_INPUT, 195, 240, 160, 28, "Input")
+    xf.fl_add_input(xfc.FL_NORMAL_INPUT, 195, 240, 160, 28, "Input")
 
-    bw_select = xf.fl_add_select(xf.FL_MENU_SELECT, 105, \
+    bw_select = xf.fl_add_select(xfc.FL_MENU_SELECT, 105, \
                                  20, 100, 28, "Border Width")
     xf.fl_set_object_callback(bw_select, bw_callback, 0)
 
     xf.fl_end_group()
 
-    doneobj = xf.fl_add_button(xf.FL_NORMAL_BUTTON, 270, 290, \
+    doneobj = xf.fl_add_button(xfc.FL_NORMAL_BUTTON, 270, 290, \
                                             75, 30, "Done" )
     xf.fl_set_object_callback(doneobj, done_callback, 0)
 
@@ -118,7 +119,7 @@ def main(lsysargv, sysargv):
 
     # show the form
 
-    xf.fl_show_form(bwform, xf.FL_PLACE_CENTER, xf.FL_TRANSIENT, \
+    xf.fl_show_form(bwform, xfc.FL_PLACE_CENTER, xfc.FL_TRANSIENT, \
                     "bwform")
 
     while xf.fl_do_forms():

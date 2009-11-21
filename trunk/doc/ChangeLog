@@ -1,6 +1,9 @@
 
 
 SVN
+    * Porting of timer example.
+    * Switch to python package format instead of a single module
+    * Porting of yesno_cb example.
     * keep reference of elements (param names), too.
     * Porting of demo33 example.
     * Porting of pushme example.
@@ -28,7 +31,7 @@ SVN
     - some types are uncorrectly recognized as "unknown *"
     (they have to be replaced with another coherent type);
     - constants definitions are not ordered according to
-    the same order fo original c header (I'm willing to 
+    the same order of original c header (I'm willing to 
     maintain same order, so future adaptation is easier);
     - some blocks of code are not converted and are simply
     missing (lack of functionality to comply with, seriously)
