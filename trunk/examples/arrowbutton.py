@@ -1,8 +1,9 @@
 #!/usr/bin/env python
 
 #  This file is part of xforms-python, and it has been ported from
-#  related XForms demo, with some adaptation.
+#  arrowbutton.c XForms demo, with some adaptation.
 #
+#  arrowbutton.c was written by M. Overmars and T.C. Zhao (1997),
 #  See CREDITS file for XForms copyright attribution, and LICENSE
 #  file for xforms-python license and copyright attribution.
 #
@@ -14,7 +15,6 @@ import sys
 from xformslib import library as xf
 from xformslib import xfconst as xfc
 
-#form = obj1 = obj2 = obj3 = obj4 = obj5 = obj6 = obj7 = obj8 = objexit = None
 
 def exit_cb(obj, data):
     xf.fl_finish()
@@ -61,7 +61,7 @@ def main(lsysargv, sysargv):
     xf.fl_show_form(form, xfc.FL_PLACE_ASPECT, xfc.FL_TRANSIENT, "Buttons")
 
     while xf.fl_do_forms():
-        pass                        # empty
+        pass                    # empty
 
 
 if __name__ == '__main__':

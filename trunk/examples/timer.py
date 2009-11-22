@@ -1,8 +1,9 @@
 #!/usr/bin/env python
 
 #  This file is part of xforms-python, and it has been ported from
-#  related XForms demo, with some adaptations.
+#  timer.c XForms demo, with some adaptations.
 #
+#  timer.c was written by T.C. Zhao and M. Overmars (1997)
 #  See CREDITS file for XForms copyright attribution, and LICENSE
 #  file for xforms-python license and copyright attribution.
 #

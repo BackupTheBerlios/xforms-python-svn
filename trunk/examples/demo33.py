@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 #  This file is part of xforms-python, and it has been ported from
-#  related XForms demo, with some adaptations.
+#  demo33.c XForms demo, with some adaptations.
 #
 #  See CREDITS file for XForms copyright attribution, and LICENSE
 #  file for xforms-python license and copyright attribution.
@@ -11,7 +11,6 @@
 
 
 import sys
-import struct
 from xformslib import library as xf
 from xformslib import xfconst as xfc
 

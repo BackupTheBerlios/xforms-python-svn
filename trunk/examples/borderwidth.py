@@ -1,18 +1,16 @@
 #!/usr/bin/env python
 
 #  This file is part of xforms-python, and it has been ported from
-#  related XForms demo, with some adaptations.
+#  borderwidth.c XForms demo, with some adaptations.
 #
+#  borderwidth.c was written by T.C. Zhao and M. Overmars  (1997)
 #  See CREDITS file for XForms copyright attribution, and LICENSE
 #  file for xforms-python license and copyright attribution.
 #
 #  demo showing the effect of different border widths
 #
 
-# Forms and Objects
-
 import sys
-
 from xformslib import library as xf
 from xformslib import xfconst as xfc
 
