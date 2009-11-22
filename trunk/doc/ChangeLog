@@ -1,6 +1,7 @@
 
 
 SVN
+    * Porting of free1 and fonts examples.
     * Porting of timer example.
     * Switch to python package format instead of a single module
     * Porting of yesno_cb example.
