@@ -1825,7 +1825,7 @@ FL_COUNTER_LCOL = FL_LCOL           # ct reporting
 FL_COUNTER_ALIGN = FL_ALIGN_BOTTOM
 
 # Others
-FL_COUNTER_BW = (FL_BOUND_WIDTH - 1)
+FL_COUNTER_BW = 0        #(FL_BOUND_WIDTH - 1)
 
 
 #############################
@@ -2363,7 +2363,7 @@ FL_HOR_BASIC_SLIDER = FL_HOR_BROWSER_SLIDER | FL_SCROLL_FLAG
 
 # Defaults
 FL_SLIDER_BW1 = FL_BOUND_WIDTH
-FL_SLIDER_BW2 = FL_BOUND_WIDTH - 1          #FL_abs(FL_BOUND_WIDTH) - 1
+FL_SLIDER_BW2 = 0             #FL_abs(FL_BOUND_WIDTH) - 1
 FL_SLIDER_BOXTYPE = FL_DOWN_BOX
 FL_SLIDER_COL1 = FL_COL1
 FL_SLIDER_COL2 = FL_COL1
@@ -2622,16 +2622,10 @@ FLIMAGE_ERR_FILE = -47          # io error
 FLIMAGE_ERR_INTERNAL = -46      # bugs
 FLIMAGE_ERR_UNKNOWN = -45
 
-FLIMAGE_Identify = cty.CFUNCTYPE(cty.c_int, cty.POINTER(FILE))
-FLIMAGE_Description = cty.CFUNCTYPE(cty.c_int, cty.POINTER(FL_IMAGE))
-FLIMAGE_Read_Pixels = cty.CFUNCTYPE(cty.c_int, cty.POINTER(FL_IMAGE))
-FLIMAGE_Write_Image = cty.CFUNCTYPE(cty.c_int, cty.POINTER(FL_IMAGE))
-
 
 class _IO_FILE(cty.Structure):
     pass
 FILE = _IO_FILE
-
 
 class flimage_(cty.Structure):
     pass
@@ -2790,6 +2784,13 @@ flimage_._fields_ = [
     ('internal_reserved', cty.c_int * 14),
 ]
 FL_IMAGE = flimage_
+
+
+FLIMAGE_Identify = cty.CFUNCTYPE(cty.c_int, cty.POINTER(FILE))
+FLIMAGE_Description = cty.CFUNCTYPE(cty.c_int, cty.POINTER(FL_IMAGE))
+FLIMAGE_Read_Pixels = cty.CFUNCTYPE(cty.c_int, cty.POINTER(FL_IMAGE))
+FLIMAGE_Write_Image = cty.CFUNCTYPE(cty.c_int, cty.POINTER(FL_IMAGE))
+
 
 # some configuration stuff
 

@@ -36,8 +36,7 @@ import sys
 import warnings
 import random
 import signal
-from xfconst import *       # xformslib.xfconst
-from xfstruct import *       # xformslib.xfstruct
+from xfdata import *       # data types and constants from XForms
 
 
 
@@ -445,7 +444,7 @@ def fl_bgn_form(formtype, w, h):
     """ fl_bgn_form(formtype, w, h) -> pForm
         Starts the definition of a form call
         <formtype> : the type of the box that is used as a background
-                     (e.g. FL_DOWN_BOX, FL_BORDER_BOX, FL_SHADOW_BOX, etc.)      
+                     (e.g. FL_DOWN_BOX, FL_BORDER_BOX, FL_SHADOW_BOX, etc.)
         <w> : width of the new form
         <h> : height of the new form
     """
@@ -657,7 +656,7 @@ def fl_set_form_atactivate(pForm, py_cb, data):
          is enabled
         <pForm> : form activated
         <py_cb> : python callback function called
-        <data> : argument to be passed to function 
+        <data> : argument to be passed to function
     """
 
     c_cb = FL_FORM_ATACTIVATE(py_cb)
@@ -681,7 +680,7 @@ def fl_set_form_atdeactivate(pForm, py_cb, data):
          is disabled
         <pForm> : form de-activated
         <py_cb> : python callback function called
-        <data> : argument to be passed to function 
+        <data> : argument to be passed to function
     """
 
     c_cb = FL_FORM_ATACTIVATE(py_cb)
@@ -1971,7 +1970,7 @@ def fl_set_font_name(n, name):
     """
 
     for q in (n, name):
-        _elem_refs[get_rand_elemkey()] = q       
+        _elem_refs[get_rand_elemkey()] = q
     retval = _fl_set_font_name(n, name)
 
 
