@@ -1,6 +1,7 @@
 
 
 SVN
+    * Porting of touchbutton example.
     * some bugfixes to avoid undefined names
     * There's no point keeping types and constats separated
     merge both into xfdata.py

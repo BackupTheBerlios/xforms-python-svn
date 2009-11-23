@@ -4271,6 +4271,7 @@ def fl_initialize(lsysargv, sysargv, appclass, appopt, nappopt):
     cli_args_nr = cty.c_int(lsysargv)                   #1
     cli_args_nr_p = cty.byref(cli_args_nr)
     cli_args = cty.c_char_p(argum)                      # " "
+    appclass = str(appclass)
     structopts = cty.POINTER(FL_CMD_OPT)()
     for q in (cli_args_nr_p, cli_args, appclass, structopts, nappopt):
         _elem_refs[get_rand_elemkey()] = q
