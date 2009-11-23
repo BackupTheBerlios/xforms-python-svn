@@ -13,7 +13,7 @@
 
 import sys
 from xformslib import library as xf
-from xformslib import xfconst as xfc
+from xformslib import xfdata as xfc
 
 
 

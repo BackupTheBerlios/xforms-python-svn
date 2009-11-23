@@ -1,6 +1,8 @@
 
 
 SVN
+    * There's no point keeping types and constats separated
+    merge both into xfdata.py
     * Porting of free1 and fonts examples.
     * Porting of timer example.
     * Switch to python package format instead of a single module
