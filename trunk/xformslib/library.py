@@ -2778,52 +2778,55 @@ def fl_free(p1):
     _fl_free(p1)
 
 
-#fl_malloc = (cty.CFUNCTYPE(cty.c_void_p, size_t)).in_dll(so_libforms, 'fl_malloc')
-_fl_malloc = cfuncproto(
-        so_libforms, "fl_malloc", \
-        cty.c_void_p, [size_t],
-        """void * ( * fl_malloc )( size_t )
-        """)
-def fl_malloc(py_p1):
-    """ fl_malloc(py_p1) -> pointer
-    """
-
-    c_p1 = cfunc_none_sizet(py_p1)
-    _cfunc_refs[get_rand_dictkey] = c_p1
-    retval = _fl_malloc(c_p1)
-    return retval
-
-
-#fl_calloc = (cty.CFUNCTYPE(cty.c_void_p, size_t, size_t)).in_dll(so_libforms, 'fl_calloc')
-_fl_calloc = cfuncproto(
-        so_libforms, "fl_malloc", \
-        cty.c_void_p, [size_t, size_t],
-        """void * ( * fl_calloc )( size_t)
-        """)
-def fl_calloc(py_p1):
-    """ fl_calloc(py_p1) -> pointer
-    """
-
-    c_p1 = cfunc_none_sizet_sizet(py_p1)
-    _cfunc_refs[get_rand_dictkey] = c_p1
-    retval = _fl_calloc(c_p1)
-    return retval
+# low-level function maybe unused in python
+##fl_malloc = (cty.CFUNCTYPE(cty.c_void_p, size_t)).in_dll(so_libforms, 'fl_malloc')
+#_fl_malloc = cfuncproto(
+#        so_libforms, "fl_malloc", \
+#        cty.c_void_p, [size_t],
+#        """void * ( * fl_malloc )( size_t )
+#        """)
+#def fl_malloc(py_p1):
+#    """ fl_malloc(py_p1) -> pointer
+#    """
+#
+#    c_p1 = cfunc_none_sizet(py_p1)
+#    _cfunc_refs[get_rand_dictkey] = c_p1
+#    retval = _fl_malloc(c_p1)
+#    return retval
 
 
-#fl_realloc = (cty.CFUNCTYPE(cty.c_void_p, cty.c_void_p, size_t)).in_dll(so_libforms, 'fl_realloc')
-_fl_realloc = cfuncproto(
-        so_libforms, "fl_realloc", \
-        cty.c_void_p, [cty.c_void_p, size_t],
-        """void * ( * fl_realloc )( void *
-        """)
-def fl_realloc(py_p1):
-    """ fl_realloc(py_p1) -> pointer
-    """
+# low-level function maybe unused in python
+##fl_calloc = (cty.CFUNCTYPE(cty.c_void_p, size_t, size_t)).in_dll(so_libforms, 'fl_calloc')
+#_fl_calloc = cfuncproto(
+#        so_libforms, "fl_malloc", \
+#        cty.c_void_p, [size_t, size_t],
+#        """void * ( * fl_calloc )( size_t)
+#        """)
+#def fl_calloc(py_p1):
+#    """ fl_calloc(py_p1) -> pointer
+#    """
+#
+#    c_p1 = cfunc_none_sizet_sizet(py_p1)
+#    _cfunc_refs[get_rand_dictkey] = c_p1
+#    retval = _fl_calloc(c_p1)
+#    return retval
 
-    c_p1 = cfunc_voidp_voidp_sizet(py_p1)
-    _cfunc_refs[get_rand_dictkey] = c_p1
-    retval = _fl_realloc(c_p1)
-    return retval
+
+# low-level function maybe unused in python
+##fl_realloc = (cty.CFUNCTYPE(cty.c_void_p, cty.c_void_p, size_t)).in_dll(so_libforms, 'fl_realloc')
+#_fl_realloc = cfuncproto(
+#        so_libforms, "fl_realloc", \
+#        cty.c_void_p, [cty.c_void_p, size_t],
+#        """void * ( * fl_realloc )( void *
+#        """)
+#def fl_realloc(py_p1):
+#    """ fl_realloc(py_p1) -> pointer
+#    """
+#
+#    c_p1 = cfunc_voidp_voidp_sizet(py_p1)
+#    _cfunc_refs[get_rand_dictkey] = c_p1
+#    retval = _fl_realloc(c_p1)
+#    return retval
 
 
 _fl_msleep = cfuncproto(

@@ -7,6 +7,8 @@ using "fl_set_object_callback" only, instead of using a
 value (e.g. in c: &a) that is modified by the function
 itself, there has been a change in API so these arguments
 represent a return value.
+- First two parameters of fl_initialize (len(sys.argv) and
+sys.argv) are ignored, to prevent an unexplicable segfault
 - public functions are not guaranteed to remain stable and
 consistent, until version 1.0.0 will be released. So library
 name and directory layout might change in order to achieve

@@ -781,21 +781,21 @@ FL_FORM_._fields_ = [
 
 FL_OBJECT_._pack_ = 4
 FL_OBJECT_._fields_ = [
-    ('form', cty.POINTER(FL_FORM)),       # the form this object belongs to
-    ('u_vdata', cty.c_void_p),            # anything the user likes
-    ('u_cdata', STRING),                # anything the user likes
-    ('u_ldata', cty.c_long),              # anything the user likes
-    ('objclass', cty.c_int),              # class of object, button, slider etc
-    ('type', cty.c_int),                  # type within the class
-    ('boxtype', cty.c_int),               # what kind of box type
-    ('x', FL_Coord),                    # current obj. location and size
+    ('form', cty.POINTER(FL_FORM)),   # the form this object belongs to
+    ('u_vdata', cty.c_void_p),        # anything the user likes
+    ('u_cdata', STRING),              # anything the user likes
+    ('u_ldata', cty.c_long),          # anything the user likes
+    ('objclass', cty.c_int),          # class of object, button, slider etc
+    ('type', cty.c_int),              # type within the class
+    ('boxtype', cty.c_int),           # what kind of box type
+    ('x', FL_Coord),                  # current obj. location and size
     ('y', FL_Coord),
     ('w', FL_Coord),
     ('h', FL_Coord),
-    ('fl1', cty.c_double),                # distances of upper left hand (1) and
-    ('fr1', cty.c_double),                # lower right hand corner (2) to left,
-    ('ft1', cty.c_double),                # right, top and bottom of enclosing
-    ('fb1', cty.c_double),                # form
+    ('fl1', cty.c_double),            # distances of upper left hand (1) and
+    ('fr1', cty.c_double),            # lower right hand corner (2) to left,
+    ('ft1', cty.c_double),            # right, top and bottom of enclosing
+    ('fb1', cty.c_double),            # form
     ('fl2', cty.c_double),
     ('fr2', cty.c_double),
     ('ft2', cty.c_double),
