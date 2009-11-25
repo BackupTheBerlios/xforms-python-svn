@@ -1,6 +1,10 @@
 
 
 SVN
+    # API change: fl_get_object_geometry and fl_get_object_position
+    * Starting API change to avoid parameters as variable
+    address modified in place by the c function, use return
+    values instead
     * Porting of buttonall example.
     * Porting of touchbutton example.
     * some bugfixes to avoid undefined names

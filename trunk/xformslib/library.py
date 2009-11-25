@@ -1681,13 +1681,25 @@ _fl_get_object_geometry = cfuncproto(
     """void fl_get_object_geometry(FL_OBJECT * ob, FL_Coord * x,
        FL_Coord * y, FL_Coord * w, FL_Coord * h)
     """)
-def fl_get_object_geometry(pObject, x, y, w, h):
-    """ fl_get_object_geometry(pObject, x, y, w, h)
+#def fl_get_object_geometry(pObject, x, y, w, h):
+#""" fl_get_object_geometry(pObject, x, y, w, h)
+#"""
+def fl_get_object_geometry(pObject):
+    """ fl_get_object_geometry(pObject) -> x, y, w, h
     """
 
-    for q in (pObject, x, y, w, h):
+    x = FL_Coord()
+    px = cty.byref(x)
+    y = FL_Coord()
+    py = cty.byref(y)
+    w = FL_Coord()
+    pw = cty.byref(w)
+    h = FL_Coord()
+    ph = cty.byref(h)
+    for q in (pObject, x, px, y, py, w, pw, h, ph):
         _elem_refs[get_rand_elemkey()] = q
-    _fl_get_object_geometry(pObject, x, y, w, h)
+    _fl_get_object_geometry(pObject, px, py, pw, ph)
+    return x, y, w, h
 
 
 _fl_get_object_position = cfuncproto(
@@ -1695,13 +1707,21 @@ _fl_get_object_position = cfuncproto(
         None, [cty.POINTER(FL_OBJECT), cty.POINTER(FL_Coord), cty.POINTER(FL_Coord)], \
         """void fl_get_object_position(FL_OBJECT * ob, FL_Coord * x, FL_Coord * y)
         """)
-def fl_get_object_position(pObject, x, y):
-    """ fl_get_object_position(pObject, x, y)
+#def fl_get_object_position(pObject, x, y):
+#    """ fl_get_object_position(pObject, x, y)
+#     """
+def fl_get_object_position(pObject):
+    """ fl_get_object_position(pObject) -> x, y
     """
 
-    for q in (pObject, x, y):
+    x = FL_Coord()
+    px = cty.byref(x)
+    y = FL_Coord()
+    py = cty.byref(y)
+    for q in (pObject, x, px, y, py):
         _elem_refs[get_rand_elemkey()] = q
-    _fl_get_object_position(pObject, x, y)
+    _fl_get_object_position(pObject, px, py)
+    return x, y
 
 
 _fl_get_object_label = cfuncproto(
@@ -4267,9 +4287,9 @@ def fl_initialize(lsysargv, sysargv, appclass, appopt, nappopt):
     verify_version_compatibility()      # verify if installed XForms
                                         # is compatible with this one
     lsysargv = 1
-    argum = "".join(sysargv)
     cli_args_nr = cty.c_int(lsysargv)                   #1
     cli_args_nr_p = cty.byref(cli_args_nr)
+    argum = "".join(sysargv)
     cli_args = cty.c_char_p(argum)                      # " "
     appclass = str(appclass)
     structopts = cty.POINTER(FL_CMD_OPT)()
