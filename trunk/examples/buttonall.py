@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 #  This file is part of xforms-python, and it has been ported from
-#  buttonall.c XForms demo, with some adaptation.
+#  buttonall.c XForms demo, with some adaptations.
 #
 #  buttonall.c was written by M. Overmars and T.C. Zhao (1997),
 #  See CREDITS file for XForms copyright attribution, and LICENSE

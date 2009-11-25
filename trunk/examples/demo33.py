@@ -29,7 +29,7 @@ def main(lsysargv, sysargv):
 
     xf.fl_end_form()
 
-    # xf.fl_set_bitmap_data replaced
+    # xf.fl_set_bitmap_data not used
     xf.fl_set_bitmap_file(obj, bmpfilename)
 
     xf.fl_show_form(form, xfc.FL_PLACE_MOUSE, xfc.FL_NOBORDER, "X Bitmap")

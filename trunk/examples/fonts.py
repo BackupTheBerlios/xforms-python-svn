@@ -83,7 +83,7 @@ def main(lsysargv, sysargv):
 def create_form_fontsform():
 
     fdui = FD_fontsform()
-    #FD_fontsform *fdui = fl_calloc( 1, sizeof *fdui)
+
     fdui.fontsform = xf.fl_bgn_form(xfc.FL_NO_BOX, 371, 296)
 
     obj = xf.fl_add_box(xfc.FL_FLAT_BOX, 0, 0, 371, 296, "")
@@ -110,7 +110,6 @@ def create_form_fontsform():
     xf.fl_end_form()
 
     return fdui
-
 
 
 

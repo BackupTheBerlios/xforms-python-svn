@@ -49,7 +49,7 @@ def timer_direction(ob, data):
 
 def expired(ob, data):
 
-    if (xf.fl_show_question( "Expired!\n\nQuit?", 0) == 1):
+    if xf.fl_show_question( "Expired!\n\nQuit?", 0) == 1:
     	xf.fl_finish()
 	sys.exit(0)
     else:
@@ -120,8 +120,6 @@ def main(lsysargv, sysargv):
     xf.fl_do_forms()
 
     return 0
-
-
 
 
 
