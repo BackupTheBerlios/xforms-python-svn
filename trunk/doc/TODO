@@ -1,12 +1,19 @@
 *** Limitations ***
 
+- Encouraged way to see if an object event has happened is
+using "fl_set_object_callback" only, instead of using a
+'while fl_do_forms' and 'if obj == someobj'
+- For some functions who use some parameters as an address
+value (e.g. in c: &a) that is modified by the function
+itself, there has been a change in API so these arguments
+represent a return value.
 - public functions are not guaranteed to remain stable and
 consistent, until version 1.0.0 will be released. So library
 name and directory layout might change in order to achieve
 a better reorganization.
 - some ported-to-python XForms c function are for internal
 use or low level work in XForms: as maybe they are not useful
-will be commented/disabled.
+will be commented/disabled, when I find all of them.
 - this software is mainly focused on GNU/Linux operating
 systems. Apple MacOS and MS Windows are not supported, yet.
 Other unix-like operating systems may or may not be working.
@@ -24,7 +31,7 @@ development state, presently.
 *** Ideas for further development ***
 
 - reduce chance to incur in Segmentation Fault/Illegal Instruction
-(need a more deep testing) (the highest priority).
+(need a deeper testing) (the highest priority).
 
 - for each acquired c function I need to improve a python
 wrapping function, in order to check if a parameter of
@@ -33,7 +40,7 @@ correct type has been passed and convert it. (high priority).
 - convert XForms c examples to be used as python scripts
 (they can be used as working tests as well) (high priority).
 
-- polish wrapper to remove unnecessary comments.
+- polish wrapper to remove unnecessary comments (DONE)
 
 - verify external functions/data from Xlib and c stdlib
 to be resolved and correct related shared library loaded
@@ -53,4 +60,7 @@ order to improve usability.
 do not intend to do a real developer/user manual as
 xforms.pdf present in XForms is absolutely great and
 functions call in xforms-python are only slightly modified.
+
+- find some way to get rid of all direct X11/Xlib functions,
+depending only on XForms library functions.
 
