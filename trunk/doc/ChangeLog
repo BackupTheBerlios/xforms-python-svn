@@ -1,6 +1,7 @@
 
 
 SVN
+    * Porting of fdial example.
     * Reworked function to keep references, to reduce overhead
     * Porting of yesno example.
     * Porting of sld_alt example.
