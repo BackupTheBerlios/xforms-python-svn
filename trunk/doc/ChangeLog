@@ -1,6 +1,8 @@
 
 
 SVN
+    * Reworked function to keep references, to reduce overhead
+    * Porting of yesno example.
     * Porting of sld_alt example.
     * Porting of objpos example.
     # API change: fl_get_object_geometry and fl_get_object_position

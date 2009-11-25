@@ -72,20 +72,16 @@ def main(lsysargv, sysarg):
     but1 = xf.fl_add_lightbutton(xfc.FL_PUSH_BUTTON, 140, 220, \
                                  120, 40, "0.0")
     xf.fl_set_object_callback(but1, but1_callback, 0)
-    print but1, but1[0]
     but2 = xf.fl_add_lightbutton(xfc.FL_PUSH_BUTTON, 140, 160, \
                                  120, 40, "0.5")
     xf.fl_set_button(but2, 1)
     xf.fl_set_object_callback(but2, but2_callback, 0)
-    print but2, but2[0]
     but3 = xf.fl_add_lightbutton(xfc.FL_PUSH_BUTTON, 140, 100, \
                                  120, 40, "1.0")
     xf.fl_set_object_callback(but3, but3_callback, 0)
-    print but3, but3[0]
     but = xf.fl_add_button(xfc.FL_NORMAL_BUTTON, 140, 40, \
                            120, 40, "Exit")
     xf.fl_set_object_callback(but, but_callback, 0)
-    print but, but[0]
     xf.fl_end_form()
 
     xf.fl_show_form(form, xfc.FL_PLACE_CENTER, xfc.FL_NOBORDER, \
