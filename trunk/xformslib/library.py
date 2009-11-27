@@ -32,10 +32,8 @@
 
 import ctypes as cty
 import ctypes.util as ctyutil
-#import sys
+import sys
 import warnings
-import random
-#import signal
 from xfdata import *       # data types and constants from XForms
 
 
@@ -818,7 +816,7 @@ def fl_set_form_atdeactivate(pForm, py_cb, data):
         <data> : argument to be passed to function
     """
 
-    c_cb = FL_FORM_DEATACTIVATE(py_cb)
+    c_cb = FL_FORM_ATDEACTIVATE(py_cb)
     keep_cfunc_refs(c_cb)
     keep_elem_refs(pForm, data)
     retval = _fl_set_form_atdeactivate(pForm, c_cb, data)
@@ -1128,9 +1126,9 @@ def fl_set_form_event_cmask(pForm, cmask):
     """ fl_set_form_event_cmask(pForm, cmask)
     """
 
-    i_cmask = convert_to_ulong(cmask)
-    keep_elem_refs(pForm, cmask, i_cmask)
-    _fl_set_form_event_cmask(pForm, i_cmask)
+    ulcmask = convert_to_ulong(cmask)
+    keep_elem_refs(pForm, cmask, ulcmask)
+    _fl_set_form_event_cmask(pForm, ulcmask)
 
 
 _fl_get_form_event_cmask = cfuncproto(
@@ -1325,11 +1323,11 @@ def fl_register_raw_callback(pForm, mask, py_rcb):
     """ fl_register_raw_callback(pForm, mask, py_rcb) -> callback reference
     """
 
-    l_mask = convert_to_ulong(mask)
+    ulmask = convert_to_ulong(mask)
     c_rcb = FL_RAW_CALLBACK(py_rcb)
     keep_cfunc_refs(c_rcb)
-    keep_elem_refs(pForm, mask, l_mask)
-    retval = _fl_register_raw_callback(pForm, l_mask, c_rcb)
+    keep_elem_refs(pForm, mask, ulmask)
+    retval = _fl_register_raw_callback(pForm, ulmask, c_rcb)
     return retval
 
 
@@ -1748,7 +1746,7 @@ def fl_get_object_component(pObjectComposite, objclass, compontype, numb):
     i_objclass = convert_to_int(objclass)
     i_compontype = convert_to_int(compontype)
     i_numb = convert_to_int(numb)
-    keep_elem_refs(pObject_composite, objclass, i_objclass, compontype, \
+    keep_elem_refs(pObjectComposite, objclass, i_objclass, compontype, \
                    i_compontype, numb, i_numb)
     retval = _fl_get_object_component(pObjectComposite, i_objclass, \
                                       i_compontype, i_numb)
@@ -1781,8 +1779,10 @@ def fl_set_object_dblclick(pObject, timeout):
 
 _fl_set_object_geometry = cfuncproto(
         load_so_libforms(), "fl_set_object_geometry", \
-        None, [cty.POINTER(FL_OBJECT), FL_Coord, FL_Coord, FL_Coord, FL_Coord], \
-        """void fl_set_object_geometry(FL_OBJECT * obj, FL_Coord x, FL_Coord y, FL_Coord w, FL_Coord h)
+        None, [cty.POINTER(FL_OBJECT), FL_Coord, FL_Coord, FL_Coord, 
+        FL_Coord], \
+        """void fl_set_object_geometry(FL_OBJECT * obj, FL_Coord x, 
+        FL_Coord y, FL_Coord w, FL_Coord h)
         """)
 def fl_set_object_geometry(pObject, x, y, w, h):
     """ fl_set_object_geometry(pObject, x, y, w, h)
@@ -1843,17 +1843,17 @@ def fl_get_object_geometry(pObject):
     """
 
     x = y = w = h = 1   # placeholder
-    i_x = convert_to_int(x)
-    px = cty.byref(i_x)
-    i_y = convert_to_int(y)
-    py = cty.byref(i_y)
-    i_w = convert_to_int(w)
-    pw = cty.byref(i_w)
-    i_h = convert_to_int(h)
-    ph = cty.byref(i_h)
-    keep_elem_refs(pObject, x, i_x, px, y, i_y, py, w, i_w, pw, h, i_h, ph)
+    ix = convert_to_int(x)
+    px = cty.byref(ix)
+    iy = convert_to_int(y)
+    py = cty.byref(iy)
+    iw = convert_to_int(w)
+    pw = cty.byref(iw)
+    ih = convert_to_int(h)
+    ph = cty.byref(ih)
+    keep_elem_refs(pObject, x, ix, px, y, iy, py, w, iw, pw, h, ih, ph)
     _fl_get_object_geometry(pObject, px, py, pw, ph)
-    return i_x, i_y, i_w, i_h
+    return ix, iy, iw, ih
 
 
 _fl_get_object_position = cfuncproto(
@@ -1867,13 +1867,13 @@ def fl_get_object_position(pObject):
     """
 
     x = y = 1       # placeholder
-    i_x = convert_to_int(x)
-    px = cty.byref(i_x)
-    i_y = convert_to_int(y)
-    py = cty.byref(i_y)
-    keep_elem_refs(pObject, x, i_x, px, y, i_y, py)
+    ix = convert_to_int(x)
+    px = cty.byref(ix)
+    iy = convert_to_int(y)
+    py = cty.byref(iy)
+    keep_elem_refs(pObject, x, ix, px, y, iy, py)
     _fl_get_object_position(pObject, px, py)
-    return i_x, i_y
+    return ix, iy
 
 
 _fl_get_object_label = cfuncproto(
@@ -2593,8 +2593,11 @@ def fl_set_icm_color(colr, r, g, b):
     """
 
     ul_colr = convert_to_ulong(colr)
-    keep_elem_refs(colr, ul_colr, r, g, b)
-    _fl_set_icm_color(ul_colr, r, g, b)
+    ir = convert_to_int(r)
+    ig = convert_to_int(g)
+    ib = convert_to_int(b)
+    keep_elem_refs(colr, ul_colr, r, g, b, ir, ig, ib)
+    _fl_set_icm_color(ul_colr, ir, ig, ib)
 
 
 _fl_color = cfuncproto(
@@ -3624,7 +3627,7 @@ _fl_get_fontstruct = cfuncproto(
         """)XFontStruct * fl_get_fontstruct(int style, int size)
         """)
 def fl_get_fontstruct(style, size):
-    """ fl_get_fontstruct(style, size) -> XfontStruct class
+    """ fl_get_fontstruct(style, size) -> XFontStruct class
     """
 
     i_style = convert_to_int(style)
@@ -3971,8 +3974,9 @@ def fl_iconify(win):
     """ fl_iconify(win) -> num.
     """
 
-    keep_elem_refs(win)
-    retval = _fl_iconify(win)
+    ulwin = convert_to_double(win)
+    keep_elem_refs(win, ulwin)
+    retval = _fl_iconify(ulwin)
     return retval
 
 
@@ -3985,8 +3989,11 @@ def fl_winresize(win, neww, newh):
     """ fl_winresize(win, neww, newh)
     """
 
-    keep_elem_refs(win, neww, newh)
-    _fl_winresize(win, neww, newh)
+    ulwin = convert_to_double(win)
+    ineww = convert_to_int(neww)
+    inewh = convert_to_int(newh)
+    keep_elem_refs(win, neww, newh, ulwin, ineww, inewh)
+    _fl_winresize(ulwin, ineww, inewh)
 
 
 _fl_winmove = cfuncproto(
@@ -3998,8 +4005,11 @@ def fl_winmove(win, dx, dy):
     """ fl_winmove(win, dx, dy)
     """
 
-    keep_elem_refs(win, dx, dy)
-    _fl_winmove(win, dx, dy)
+    ulwin = convert_to_double(win)
+    idx = convert_to_int(dx)
+    idy = convert_to_int(dy)
+    keep_elem_refs(win, dx, dy, ulwin, idx, idy)
+    _fl_winmove(ulwin, idx, idy)
 
 
 _fl_winreshape = cfuncproto(
@@ -4012,8 +4022,13 @@ def fl_winreshape(win, dx, dy, w, h):
     """ fl_winreshape(win, dx, dy, w, h)
     """
 
-    keep_elem_refs(win, dx, dy, w, h)
-    _fl_winreshape(win, dx, dy, w, h)
+    ulwin = convert_to_double(win)
+    idx = convert_to_int(dx)
+    idy = convert_to_int(dy)
+    iw = convert_to_int(w)
+    ih = convert_to_int(h)
+    keep_elem_refs(win, dx, dy, w, h, ulwin, idx, idy, iw, ih)
+    _fl_winreshape(ulwin, idx, idy, iw, ih)
 
 
 _fl_winicon = cfuncproto(
@@ -4021,12 +4036,15 @@ _fl_winicon = cfuncproto(
         None, [Window, Pixmap, Pixmap], \
         """void fl_winicon(Window win, Pixmap p, Pixmap m)
         """)
-def fl_winicon(win, p, m):
-    """ fl_winicon(win, p, m)
+def fl_winicon(win, icon, mask):
+    """ fl_winicon(win, icon, mask)
     """
 
-    keep_elem_refs(win, p, m)
-    _fl_winicon(win, p, m)
+    ulwin = convert_to_double(win)
+    ulicon = convert_to_double(icon)
+    ulmask = convert_to_double(mask)
+    keep_elem_refs(win, icon, mask, ulwin, ulicon, ulmask)
+    _fl_winicon(ulwin, ulicon, ulmask)
 
 
 _fl_winbackground = cfuncproto(
@@ -4034,12 +4052,14 @@ _fl_winbackground = cfuncproto(
         None, [Window, FL_COLOR], \
         """void fl_winbackground(Window win, FL_COLOR bk)
         """)
-def fl_winbackground(win, bk):
-    """ fl_winbackground(win, bk)
+def fl_winbackground(win, bkcolr):
+    """ fl_winbackground(win, bkcolr)
     """
 
-    keep_elem_refs(win, bk)
-    _fl_winbackground(win, bk)
+    ulwin = convert_to_double(win)
+    ulbkcolr = convert_to_double(bkcolr)
+    keep_elem_refs(win, bkcolr, ulwin, ulbkcolr)
+    _fl_winbackground(ulwin, ulbkcolr)
 
 
 _fl_winstepunit = cfuncproto(
@@ -4051,8 +4071,11 @@ def fl_winstepunit(win, dx, dy):
     """ fl_winstepunit(win, dx, dy)
     """
 
-    keep_elem_refs(win, dx, dy)
-    _fl_winstepunit(win, dx, dy)
+    ulwin = convert_to_double(win)
+    idx = convert_to_int(dx)
+    idy = convert_to_int(dy)
+    keep_elem_refs(win, dx, dy, ulwin, idx, idy)
+    _fl_winstepunit(ulwin, idx, idy)
 
 
 _fl_winisvalid = cfuncproto(
@@ -4064,8 +4087,9 @@ def fl_winisvalid(win):
     """ fl_winisvalid(win) -> num.
     """
 
-    keep_elem_refs(win)
-    retval = _fl_winisvalid(win)
+    ulwin = convert_to_double(win)
+    keep_elem_refs(win, ulwin)
+    retval = _fl_winisvalid(ulwin)
     return retval
 
 
@@ -4078,8 +4102,10 @@ def fl_wintitle(win, title):
     """ fl_wintitle(win, title)
     """
 
-    keep_elem_refs(win, title)
-    _fl_wintitle(win, title)
+    ulwin = convert_to_double(win)
+    stitle = convert_to_string(title)
+    keep_elem_refs(win, title, ulwin, stitle)
+    _fl_wintitle(ulwin, stitle)
 
 
 _fl_winicontitle = cfuncproto(
@@ -4091,8 +4117,10 @@ def fl_winicontitle(win, title):
     """ fl_winicontitle(win, title)
     """
 
-    keep_elem_refs(win, title)
-    _fl_winicontitle(win, title)
+    ulwin = convert_to_double(win)
+    stitle = convert_to_string(title)
+    keep_elem_refs(win, title, ulwin, stitle)
+    _fl_winicontitle(ulwin, stitle)
 
 
 _fl_winposition = cfuncproto(
