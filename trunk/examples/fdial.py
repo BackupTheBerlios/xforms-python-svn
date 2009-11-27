@@ -79,6 +79,7 @@ def main(lsysargv, sysargv):
     g = xf.fl_get_dial_value(green)     # + 0.001
     b = xf.fl_get_dial_value(blue)      # + 0.001
 
+    print r, g, b
     xf.fl_mapcolor(xfc.FL_FREE_COL1, r, g, b)
     xf.fl_redraw_object(result)
 

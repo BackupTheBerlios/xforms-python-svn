@@ -171,6 +171,15 @@ FL_FIX_SIZE = 32768           #(1<<15)
 FL_PLACE_FREE_CENTER = (FL_PLACE_CENTER|FL_FREE_SIZE)
 FL_PLACE_CENTERFREE = (FL_PLACE_CENTER|FL_FREE_SIZE)
 
+
+# my add, list of possible values --LK
+PLACE_list = [FL_PLACE_FREE, FL_PLACE_MOUSE, FL_PLACE_CENTER, 
+              FL_PLACE_POSITION, FL_PLACE_SIZE, FL_PLACE_GEOMETRY,
+              FL_PLACE_ASPECT, FL_PLACE_FULLSCREEN, FL_PLACE_HOTSPOT,
+              FL_PLACE_ICONIC, FL_FREE_SIZE, FL_FIX_SIZE,
+              FL_PLACE_FREE_CENTER, FL_PLACE_CENTERFREE]
+
+
 # Window manager decoration request and forms attributes
 # values for unnamed enumeration
 FL_FULLBORDER = 1       # normal
@@ -178,6 +187,8 @@ FL_TRANSIENT = 2        # set TRANSIENT_FOR property
 FL_NOBORDER = 3         # use override_redirect to supress decor.
 FL_MODAL = 256          #1<<8  not implemented yet
 
+# my add, list of possible values --LK
+DECORATION_list = [FL_FULLBORDER, FL_TRANSIENT, FL_NOBORDER, FL_MODAL]
 
 # All box types
 # values for enumeration 'FL_BOX_TYPE'
@@ -208,6 +219,14 @@ FL_SELECTED_BOTTOMTAB_UPBOX = 21
 FL_OSHADOW_BOX = 22                   # not used
 FL_MAX_BOX_STYLES = 23                # sentinel
 
+# my add, list of possible values --LK
+BOXTYPE_list = [FL_NO_BOX, FL_UP_BOX, FL_DOWN_BOX, FL_BORDER_BOX, \
+                FL_SHADOW_BOX, FL_FRAME_BOX, FL_ROUNDED_BOX, \
+                FL_EMBOSSED_BOX, FL_FLAT_BOX, FL_RFLAT_BOX, FL_RSHADOW_BOX, \
+                FL_OVAL_BOX, FL_ROUNDED3D_UPBOX, FL_ROUNDED3D_DOWNBOX, \
+                FL_OVAL3D_UPBOX, FL_OVAL3D_DOWNBOX, FL_OVAL3D_FRAMEBOX, \
+                FL_OVAL3D_EMBOSSEDBOX]
+
 
 # How to place text relative to a box
 # values for enumeration 'FL_ALIGN'
@@ -229,6 +248,13 @@ FL_ALIGN_TOP_RIGHT    = FL_ALIGN_RIGHT_TOP
 FL_ALIGN_BOTTOM_LEFT  = FL_ALIGN_LEFT_BOTTOM
 FL_ALIGN_BOTTOM_RIGHT = FL_ALIGN_RIGHT_BOTTOM
 
+# my add, list of possible values --LK
+ALIGN_list = [FL_ALIGN_CENTER, FL_ALIGN_TOP, FL_ALIGN_BOTTOM, FL_ALIGN_LEFT,
+              FL_ALIGN_RIGHT, FL_ALIGN_LEFT_TOP, FL_ALIGN_RIGHT_TOP,
+              FL_ALIGN_LEFT_BOTTOM, FL_ALIGN_RIGHT_BOTTOM, FL_ALIGN_INSIDE,
+              FL_ALIGN_VERT]
+
+
 # Mouse buttons. Don't have to be consecutive
 # values for unnamed enumeration
 FL_MBUTTON1 = 1
@@ -249,6 +275,15 @@ FL_RIGHTMOUSE = FL_RIGHT_MOUSE
 FL_SCROLLUPMOUSE = FL_SCROLLUP_MOUSE
 FL_SCROLLDOWNMOUSE = FL_SCROLLDOWN_MOUSE
 
+
+# my add, list of possible values --LK
+MOUSEBTN_list = [FL_MBUTTON1, FL_MBUTTON2, FL_MBUTTON3, FL_MBUTTON4, 
+                 FL_MBUTTON5, FL_LEFT_MOUSE, FL_MIDDLE_MOUSE, FL_RIGHT_MOUSE,
+                 FL_SCROLLUP_MOUSE, FL_SCROLLDOWN_MOUSE, FL_LEFTMOUSE,
+                 FL_MIDDLEMOUSE, FL_RIGHTMOUSE, FL_SCROLLUPMOUSE,
+                 FL_SCROLLDOWNMOUSE]
+                
+
 # control when to return input, slider and dial etc. object.
 # values for unnamed enumeration
 FL_RETURN_NONE = 0
@@ -261,15 +296,17 @@ FL_RETURN_TRIGGERED = 1024
 FL_RETURN_ALWAYS = ~ FL_RETURN_END_CHANGED
 
 
+# my add, list of possible values --LK
+RETURN_list = [FL_RETURN_NONE, FL_RETURN_CHANGED, FL_RETURN_END, 
+               FL_RETURN_END_CHANGED, FL_RETURN_SELECTION,
+               FL_RETURN_DESELECTION, FL_RETURN_TRIGGERED, FL_RETURN_ALWAYS]
+
+
 # Some special color indices for FL private colormap.
 # It does not matter  what the value of each enum is,
 # but it must start from 0 and be consecutive.
 # values for enumeration 'FL_PD_COL'
 FL_PD_COL = cty.c_int  # enum
-# Some special color indices for FL private colormap.
-# It does not matter  what the value of each enum is,
-# but it must start from 0 and be consecutive.
-# values for enumeration 'FL_PD_COL'
 FL_BLACK = 0
 FL_RED = 1
 FL_GREEN = 2
@@ -462,6 +499,52 @@ FL_NoColor = FL_NOCOLOR
 # An alias probably for an earlier typo
 FL_DOGERBLUE = FL_DODGERBLUE
 
+
+# my add, list of possible values --LK
+COLOR_list = [FL_BLACK, FL_RED, FL_GREEN, FL_YELLOW, FL_BLUE, FL_MAGENTA,
+              FL_CYAN, FL_WHITE, FL_TOMATO, FL_INDIANRED, FL_SLATEBLUE,
+              FL_COL1, FL_RIGHT_BCOL, FL_BOTTOM_BCOL, FL_TOP_BCOL,
+              FL_LEFT_BCOL, FL_MCOL, FL_INACTIVE, FL_PALEGREEN, FL_DARKGOLD,
+              FL_ORCHID, FL_DARKCYAN, FL_DARKTOMATO, FL_WHEAT, FL_DARKORANGE,
+              FL_DEEPPINK, FL_CHARTREUSE, FL_DARKVIOLET, FL_SPRINGGREEN,
+              FL_DODGERBLUE, FL_LIGHTER_COL1, FL_DARKER_COL1, FL_ALICEBLUE,
+              FL_ANTIQUEWHITE, FL_AQUA, FL_AQUAMARINE, FL_AZURE, FL_BEIGE,
+              FL_BISQUE, FL_BLANCHEDALMOND, FL_BLUEVIOLET, FL_BROWN,
+              FL_BURLYWOOD, FL_CADETBLUE, FL_CHOCOLATE, FL_CORAL,
+              FL_CORNFLOWERBLUE, FL_CORNSILK, FL_CRIMSON, FL_DARKBLUE,
+              FL_DARKGOLDENROD, FL_DARKGRAY, FL_DARKGREEN, FL_DARKGREY,
+              FL_DARKKHAKI, FL_DARKMAGENTA, FL_DARKOLIVEGREEN, FL_DARKORCHID,
+              FL_DARKRED, FL_DARKSALMON, FL_DARKSEAGREEN, FL_DARKSLATEBLUE,
+              FL_DARKSLATEGRAY, FL_DARKSLATEGREY, FL_DARKTURQUOISE,
+              FL_DEEPSKYBLUE, FL_DIMGRAY, FL_DIMGREY, FL_FIREBRICK, 
+              FL_FLORALWHITE, FL_FORESTGREEN, FL_FUCHSIA, FL_GAINSBORO,
+              FL_GHOSTWHITE, FL_GOLD, FL_GOLDENROD, FL_GRAY, FL_GREENYELLOW,
+              FL_GREY, FL_HONEYDEW, FL_HOTPINK, FL_INDIGO, FL_IVORY,
+              FL_KHAKI, FL_LAVENDER, FL_LAVENDERBLUSH, FL_LAWNGREEN,
+              FL_LEMONCHIFFON, FL_LIGHTBLUE, FL_LIGHTCORAL, FL_LIGHTCYAN,
+              FL_LIGHTGOLDENRODYELLOW, FL_LIGHTGRAY, FL_LIGHTGREEN,
+              FL_LIGHTGREY, FL_LIGHTPINK, FL_LIGHTSALMON, FL_LIGHTSEAGREEN,
+              FL_LIGHTSKYBLUE, FL_LIGHTSLATEGRAY, FL_LIGHTSLATEGREY,
+              FL_LIGHTSTEELBLUE, FL_LIGHTYELLOW, FL_LIME, FL_LIMEGREEN,
+              FL_LINEN, FL_MAROON, FL_MEDIUMAQUAMARINE, FL_MEDIUMBLUE,
+              FL_MEDIUMORCHID, FL_MEDIUMPURPLE, FL_MEDIUMSEAGREEN, 
+              FL_MEDIUMSLATEBLUE, FL_MEDIUMSPRINGGREEN, FL_MEDIUMTURQUOISE,
+              FL_MEDIUMVIOLETRED, FL_MIDNIGHTBLUE, FL_MINTCREAM, FL_MISTYROSE,
+              FL_MOCCASIN, FL_NAVAJOWHITE, FL_NAVY, FL_OLDLACE, FL_OLIVE,
+              FL_OLIVEDRAB, FL_ORANGE, FL_ORANGERED, FL_PALEGOLDENROD, 
+              FL_PALETURQUOISE, FL_PALEVIOLETRED, FL_PAPAYAWHIP, FL_PEACHPUFF,
+              FL_PERU, FL_PINK, FL_PLUM, FL_POWDERBLUE, FL_PURPLE,
+              FL_ROSYBROWN, FL_ROYALBLUE, FL_SADDLEBROWN, FL_SALMON,
+              FL_SANDYBROWN, FL_SEAGREEN, FL_SEASHELL, FL_SIENNA, FL_SILVER,
+              FL_SKYBLUE, FL_SLATEGRAY, FL_SLATEGREY, FL_SNOW, FL_STEELBLUE,
+              FL_TAN, FL_TEAL, FL_THISTLE, FL_TURQUOISE, FL_VIOLET,
+              FL_WHITESMOKE, FL_YELLOWGREEN, FL_FREE_COL1, FL_FREE_COL2,
+              FL_FREE_COL3, FL_FREE_COL4, FL_FREE_COL5, FL_FREE_COL6,
+              FL_FREE_COL7, FL_FREE_COL8, FL_FREE_COL9, FL_FREE_COL10,
+              FL_FREE_COL11, FL_FREE_COL12, FL_FREE_COL13, FL_FREE_COL14,
+              FL_FREE_COL15, FL_FREE_COL16, FL_NOCOLOR, FL_INACTIVE_COL]
+
+
 # Events that a form reacts to.
 # values for enumeration 'FL_EVENTS'
 FL_EVENTS = cty.c_int # enum
@@ -508,11 +591,14 @@ FL_RESIZE_X = 1
 FL_RESIZE_Y = 2
 FL_RESIZE_ALL = (FL_RESIZE_X|FL_RESIZE_Y)
 
+
+# my add, list of possible values --LK
+RESIZE_list = [FL_RESIZE_NONE, FL_RESIZE_X, FL_RESIZE_Y, FL_RESIZE_ALL]
+
+
 # Keyboard focus control
 # values for enumeration 'FL_KEY'
 FL_KEY = cty.c_int  # enum
-# Keyboard focus control
-# values for enumeration 'FL_KEY'
 FL_KEY_NORMAL  = 1     # normal keys(0-255) - tab +left/right
 FL_KEY_TAB     = 2     # normal keys + 4 direction cursor
 FL_KEY_SPECIAL = 4     # only needs special keys(>255)
@@ -524,6 +610,12 @@ FL_SHIFT_MASK = (1L<<27)
 FL_ALT_VAL = FL_ALT_MASK    # Don't use!
 
 MAX_SHORTCUTS = 8
+
+
+# my add, list of possible values --LK
+KEY_list = [FL_KEY_NORMAL, FL_KEY_TAB, FL_KEY_SPECIAL, FL_KEY_ALL, 
+            FL_ALT_MASK, FL_CONTROL_MASK, FL_SHIFT_MASK]
+
 
 # Pop-up menu item attributes. NOTE if more than 8, need to change
 # choice and menu class where mode is kept by a single byte
@@ -537,6 +629,11 @@ FL_PUP_RADIO = 8
 FL_PUP_GRAY = FL_PUP_GREY
 FL_PUP_TOGGLE = FL_PUP_BOX          # not used anymore
 FL_PUP_INACTIVE = FL_PUP_GREY
+
+
+# my add, list of possible values --LK
+PUP_list = [FL_PUP_NONE, FL_PUP_GREY, FL_PUP_BOX, FL_PUP_CHECK, FL_PUP_RADIO,
+            FL_PUP_GRAY, FL_PUP_TOGGLE, FL_PUP_INACTIVE]
 
 
 # Popup and menu entries
@@ -589,6 +686,18 @@ FL_EMBOSSED_STYLE = 2048        #(1<<11)
 FL_FONT_STYLE = FL_TEXT_STYLE
 
 
+# my add, list of possible values --LK
+TEXTSTYLE_list = [FL_INVALID_STYLE, FL_NORMAL_STYLE, FL_BOLD_STYLE,
+                  FL_ITALIC_STYLE, FL_BOLDITALIC_STYLE, FL_FIXED_STYLE,
+                  FL_FIXEDBOLD_STYLE, FL_FIXEDITALIC_STYLE,
+                  FL_FIXEDBOLDITALIC_STYLE, FL_TIMES_STYLE,
+                  FL_TIMESBOLD_STYLE, FL_TIMESITALIC_STYLE,
+                  FL_TIMESBOLDITALIC_STYLE, FL_MISC_STYLE,
+                  FL_MISCBOLD_STYLE, FL_MISCITALIC_STYLE,
+                  FL_SYMBOL_STYLE, FL_SHADOW_STYLE, FL_ENGRAVED_STYLE,
+                  FL_EMBOSSED_STYLE]
+
+
 # Standard sizes in XForms
 FL_TINY_SIZE = 8
 FL_SMALL_SIZE = 10
@@ -597,6 +706,12 @@ FL_MEDIUM_SIZE = 14
 FL_LARGE_SIZE = 18
 FL_HUGE_SIZE = 24
 FL_DEFAULT_SIZE = FL_SMALL_SIZE
+
+
+# my add, list of possible values --LK
+SIZE_list = [FL_TINY_SIZE, FL_SMALL_SIZE, FL_NORMAL_SIZE, FL_MEDIUM_SIZE,
+             FL_LARGE_SIZE, FL_HUGE_SIZE, FL_DEFAULT_SIZE]
+
 
 # Defines for compatibility
 FL_TINY_FONT = FL_TINY_SIZE
@@ -663,9 +778,11 @@ XVisualInfo._fields_ = [
     ('bits_per_rgb', cty.c_int),
 ]
 
+
 XID = cty.c_ulong
 Window = XID    # cty.c_ulong
 Pixmap = XID    # cty.c_ulong
+
 
 class FL_FORM_(cty.Structure):
     pass
@@ -675,10 +792,6 @@ class FL_OBJECT_(cty.Structure):
     pass
 FL_OBJECT = FL_OBJECT_
 
-# my add --LK
-FL_OBJECT_ptr = cty.POINTER(FL_OBJECT)
-FL_FORM_ptr = cty.POINTER(FL_FORM)
-LONG = cty.c_long
 
 class FL_pixmap_(cty.Structure):
     pass
@@ -874,6 +987,10 @@ FL_INVISIBLE = FL_HIDDEN
 FL_VISIBLE = 1
 
 
+# my add, list of possible values --LK
+VISIBLE_list = [FL_BEING_HIDDEN, FL_HIDDEN, FL_INVISIBLE, FL_VISIBLE]
+
+
 # All FD_xxx structure emitted by fdesign contains at least the
 # following
 class FD_Any(cty.Structure):
@@ -889,6 +1006,10 @@ FD_Any._fields_ = [
 FL_READ   = 1
 FL_WRITE  = 2
 FL_EXCEPT = 4
+
+
+# my add, list of possible values --LK
+ASYNCIO_list = [FL_READ, FL_WRITE, FL_EXCEPT]
 
 
 # IO other than XEvent Q
@@ -938,6 +1059,11 @@ FL_XOR = 6              # GXxor
 FL_COPY = 3             # GXcopy
 FL_AND = 1              # GXand
 
+
+# my add, list of possible values --LK
+DRAWMODE_list = [FL_XOR, FL_COPY, FL_AND]
+
+
 FL_MINDEPTH = 1
 
 # FL_xxx does not do anything anymore, but kept for compatibility
@@ -955,6 +1081,10 @@ FL_DefaultVisual = 10       # special request
 TrueColor = FL_TrueColor
 DirectColor = FL_DirectColor
 
+GreyScale = GrayScale = 1           #GrayScale
+StaticGrey = StaticGray = 0         #StaticGray
+
+
 # values for unnamed enumeration
 FL_North = 2                            #NorthGravity
 FL_NorthEast = 3                        #NorthEastGravity
@@ -967,8 +1097,10 @@ FL_West = 4                             #WestGravity
 FL_NoGravity = 0                        #ForgetGravity
 FL_ForgetGravity = FL_NoGravity         #ForgetGravity
 
-GreyScale = GrayScale = 1           #GrayScale
-StaticGrey = StaticGray = 0         #StaticGray
+
+# my add, list of possible values --LK
+GRAVITY_list = [FL_North, FL_NorthEast, FL_NorthWest, FL_South, FL_SouthEast,
+                FL_SouthWest, FL_East, FL_West, FL_NoGravity, FL_ForgetGravity]
 
 
 # Internal colormap size. Not really very meaningful as fl_mapcolor
@@ -1121,6 +1253,12 @@ FL_DOT = 3
 FL_DOTDASH = 4
 FL_DASH = 5
 FL_LONGDASH = 6
+
+
+# my add, list of possible values --LK
+LINE_list = [FL_SOLID, FL_USERDASH, FL_USERDOUBLEDASH, FL_DOT, FL_DOTDASH,
+             FL_DASH, FL_LONGDASH]
+
 
 # *** start - from /usr/include/X11/X.h ***
 # Input Event Masks. Used as event-mask window attribute and as arguments

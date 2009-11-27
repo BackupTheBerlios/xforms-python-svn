@@ -1,6 +1,8 @@
 
 
 SVN
+    * Prepare/convert base types as function arguments before calling
+    c function call, to reduce chances of segfault (WIP, incomplete)
     * Porting of fdial example.
     * Reworked function to keep references, to reduce overhead
     * Porting of yesno example.
@@ -9,12 +11,12 @@ SVN
     # API change: fl_get_object_geometry and fl_get_object_position
     * Starting API change to avoid parameters as variable
     address modified in place by the c function, use return
-    values instead
+    values instead (WIP, incomplete)
     * Porting of buttonall example.
     * Porting of touchbutton example.
     * some bugfixes to avoid undefined names
-    * There's no point keeping types and constats separated:
-    merge both into xfdata.py
+    * There's no point keeping types (xfstruct.py) and constants
+    (xfconst.py) separated: merge both into xfdata.py
     * Porting of free1 and fonts examples.
     * Porting of timer example.
     * Switch to python package format instead of a single module
