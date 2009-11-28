@@ -1,6 +1,9 @@
 
 
 SVN
+    * Continuing explicit conversion for base types
+    * Initial warning function if a deprecated XForms function is
+    used
     * Prepare/convert base types as function arguments before calling
     c function call, to reduce chances of segfault (WIP, incomplete)
     * Porting of fdial example.

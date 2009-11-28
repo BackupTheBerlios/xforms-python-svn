@@ -1335,6 +1335,8 @@ FL_LONG = 13
 FL_FLOAT = 14
 FL_STRING = 15
 
+RTYPE_list = [FL_NONE, FL_SHORT, FL_BOOL, FL_INT, FL_LONG, FL_FLOAT, FL_STRING]
+
 
 class FL_RESOURCE(cty.Structure):
     pass
