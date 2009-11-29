@@ -1986,12 +1986,6 @@ def fl_set_object_posthandler(pObject, py_post):
     return retval
 
 
-_fl_set_object_callback = cfuncproto(
-        load_so_libforms(), "fl_set_object_callback", \
-        FL_CALLBACKPTR, [cty.POINTER(FL_OBJECT), FL_CALLBACKPTR, cty.c_long], \
-        """FL_CALLBACKPTR fl_set_object_callback(FL_OBJECT * obj, \
-           FL_CALLBACKPTR callback, long int argument)
-        """)
 def fl_set_object_callback(pObject, py_callback, argum):
     """ fl_set_object_callback(pObject, py_callback, argum) -> c_callback func.
         Calls a callback function bound to an object, if a condition is met.
@@ -2001,6 +1995,12 @@ def fl_set_object_callback(pObject, py_callback, argum):
         <argum> : argument being passed to function
     """
 
+    _fl_set_object_callback = cfuncproto(
+        load_so_libforms(), "fl_set_object_callback", \
+        FL_CALLBACKPTR, [cty.POINTER(FL_OBJECT), FL_CALLBACKPTR, cty.c_long], \
+        """FL_CALLBACKPTR fl_set_object_callback(FL_OBJECT * obj, \
+           FL_CALLBACKPTR callback, long int argument)
+        """)
     l_argum = convert_to_long(argum)
     print "argum", argum, l_argum
     c_callback = FL_CALLBACKPTR(py_callback)
@@ -2173,10 +2173,11 @@ def fl_set_font_name(n, name):
     """ fl_set_font_name(n, name) -> ID num
     """
 
-    i_n = convert_to_int(n)
-    s_name = convert_to_string(name)
-    keep_elem_refs(n, i_n, name, s_name)
-    retval = _fl_set_font_name(i_n, s_name)
+    in_ = convert_to_int(n)
+    sname = convert_to_string(name)
+    keep_elem_refs(n, in_, name, sname)
+    retval = _fl_set_font_name(in_, sname)
+    return retval
 
 
 _fl_set_font = cfuncproto(
@@ -5876,6 +5877,7 @@ def fl_read_bitmapfile(win, filename, w, h, hotx, hoty):
     sfilename = convert_to_string(filename)
     keep_elem_refs(win, filename, w, h, hotx, hoty, ulwin, sfilename)
     retval = _fl_read_bitmapfile(ulwin, sfilename, w, h, hotx, hoty)
+    return retval
 
 
 # /usr/include/X11/Xlib.h 1621
@@ -7595,8 +7597,8 @@ def fl_set_canvas_depth(pObject, depth):
     """
 
     idepth = convert_to_int(depth)
-    keep_elem_refs(pObject, depth)
-    _fl_set_canvas_depth(pObject, depth)
+    keep_elem_refs(pObject, depth, idepth)
+    _fl_set_canvas_depth(pObject, idepth)
 
 
 _fl_set_canvas_attributes = cfuncproto(
@@ -7763,8 +7765,9 @@ def fl_canvas_yield_to_shortcut(pObject, yes):
     """
 
     iyes = convert_to_int(yes)
-    keep_elem_refs(pObject, yes)
-    _fl_canvas_yield_to_shortcut(pObject, yes)
+    keep_elem_refs(pObject, yes, iyes)
+    _fl_canvas_yield_to_shortcut(pObject, iyes)
+
 
 
 #############
@@ -8133,6 +8136,7 @@ def fl_set_chart_maxnumb(pObject, maxnumb):
     imaxnumb = convert_to_int(maxnumb)
     keep_elem_refs(pObject, maxnumb, imaxnumb)
     retval = _fl_set_chart_maxnumb(pObject, imaxnumb)
+    return retval
 
 
 _fl_set_chart_autosize = cfuncproto(
@@ -8663,8 +8667,8 @@ def fl_set_clock_ampm(pObject, y):
     """
 
     iy = convert_to_int(y)
-    keep_elem_refs(pObject, y)
-    _fl_set_clock_ampm(pObject, y)
+    keep_elem_refs(pObject, y, iy)
+    _fl_set_clock_ampm(pObject, iy)
 
 
 
@@ -8968,8 +8972,8 @@ def fl_set_cursor(win, numb):
 
     ulwin = convert_to_ulong(win)
     inumb = convert_to_int(numb)
-    keep_elem_refs(win, numb, inumb)
-    _fl_set_cursor(win, inumb)
+    keep_elem_refs(win, numb, ulwin, inumb)
+    _fl_set_cursor(ulwin, inumb)
 
 
 _fl_set_cursor_color = cfuncproto(
@@ -10327,6 +10331,7 @@ def fl_check_command(p1):
 
     keep_elem_refs(p1)
     retval = _fl_check_command(p1)
+    return retval
 
 
 _fl_popen = cfuncproto(
@@ -10340,6 +10345,7 @@ def fl_popen(p1, p2):
 
     keep_elem_refs(p1, p2)
     retval = _fl_popen(p1, p2)
+    return retval
 
 
 _fl_pclose = cfuncproto(
@@ -10353,6 +10359,7 @@ def fl_pclose(p1):
 
     keep_elem_refs(p1)
     retval = _fl_pclose(p1)
+    return retval
 
 
 _fl_end_all_command = cfuncproto(
@@ -10365,6 +10372,7 @@ def fl_end_all_command():
     """
 
     retval = _fl_end_all_command()
+    return retval
 
 
 _fl_show_command_log = cfuncproto(
@@ -10439,6 +10447,7 @@ def fl_get_command_log_fdstruct():
     """
 
     retval = _fl_get_command_log_fdstruct()
+    return retval
 
 
 # aliases

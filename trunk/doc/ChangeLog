@@ -1,6 +1,7 @@
 
 
 SVN
+    * Insert c function prototype into python function body (WIP)
     * Continuing explicit conversion for base types
     * Initial warning function if a deprecated XForms function is
     used
@@ -11,7 +12,7 @@ SVN
     * Porting of yesno example.
     * Porting of sld_alt example.
     * Porting of objpos example.
-    # API change: fl_get_object_geometry and fl_get_object_position
+    * API change: fl_get_object_geometry and fl_get_object_position
     * Starting API change to avoid parameters as variable
     address modified in place by the c function, use return
     values instead (WIP, incomplete)
