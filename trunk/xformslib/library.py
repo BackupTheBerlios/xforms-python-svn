@@ -10197,8 +10197,11 @@ def fl_show_oneliner(p1, p2, p3):
     """ fl_show_oneliner(p1, p2, p3)
     """
 
-    keep_elem_refs(p1, p2, p3)
-    _fl_show_oneliner(p1, p2, p3)
+    sp1 = convert_to_string(p1)
+    ip2 = convert_to_FL_Coord(p2)
+    ip3 = convert_to_FL_Coord(p3)
+    keep_elem_refs(p1, p2, p3, sp1, ip2, ip3)
+    _fl_show_oneliner(sp1, ip2, ip3)
 
 
 _fl_hide_oneliner = cfuncproto(
@@ -10223,8 +10226,10 @@ def fl_set_oneliner_font(p1, p2):
     """ fl_set_oneliner_font(p1, p2)
     """
 
-    keep_elem_refs(p1, p2)
-    _fl_set_oneliner_font(p1, p2)
+    ip1 = convert_to_int(p1)
+    ip2 = convert_to_int(p2)
+    keep_elem_refs(p1, p2, ip1, ip2)
+    _fl_set_oneliner_font(ip1, ip2)
 
 
 _fl_set_oneliner_color = cfuncproto(
@@ -10236,8 +10241,10 @@ def fl_set_oneliner_color(p1, p2):
     """ fl_set_oneliner_color(p1, p2)
     """
 
-    keep_elem_refs(p1, p2)
-    _fl_set_oneliner_color(p1, p2)
+    ulp1 = convert_to_FL_COLOR(p1)
+    ulp2 = convert_to_FL_COLOR(p2)
+    keep_elem_refs(p1, p2, ulp1, ulp2)
+    _fl_set_oneliner_color(ulp1, ulp2)
 
 
 _fl_set_tooltip_font = cfuncproto(
@@ -10249,8 +10256,10 @@ def fl_set_tooltip_font(p1, p2):
     """ fl_set_tooltip_font(p1, p2)
     """
 
-    keep_elem_refs(p1, p2)
-    _fl_set_tooltip_font(p1, p2)
+    ip1 = convert_to_int(p1)
+    ip2 = convert_to_int(p2)
+    keep_elem_refs(p1, p2, ip1, ip2)
+    _fl_set_tooltip_font(ip1, ip2)
 
 
 _fl_set_tooltip_color = cfuncproto(
@@ -10262,8 +10271,10 @@ def fl_set_tooltip_color(p1, p2):
     """ fl_set_tooltip_color(p1, p2)
     """
 
-    keep_elem_refs(p1, p2)
-    _fl_set_tooltip_color(p1, p2)
+    ulp1 = convert_to_FL_COLOR(p1)
+    ulp2 = convert_to_FL_COLOR(p2)
+    keep_elem_refs(p1, p2, ulp1, ulp2)
+    _fl_set_tooltip_color(ulp1, ulp2)
 
 
 _fl_set_tooltip_boxtype = cfuncproto(
@@ -10275,8 +10286,9 @@ def fl_set_tooltip_boxtype(p1):
     """ fl_set_tooltip_boxtype(p1)
     """
 
-    keep_elem_refs(p1)
-    _fl_set_tooltip_boxtype(p1)
+    ip1 = convert_to_int(p1)
+    keep_elem_refs(p1, ip1)
+    _fl_set_tooltip_boxtype(ip1)
 
 
 _fl_set_tooltip_lalign = cfuncproto(
@@ -10288,8 +10300,9 @@ def fl_set_tooltip_lalign(p1):
     """ fl_set_tooltip_lalign(p1)
     """
 
-    keep_elem_refs(p1)
-    _fl_set_tooltip_lalign(p1)
+    ip1 = convert_to_int(p1)
+    keep_elem_refs(p1, ip1)
+    _fl_set_tooltip_lalign(ip1)
 
 
 _fl_exe_command = cfuncproto(
@@ -10301,8 +10314,10 @@ def fl_exe_command(p1, p2):
     """ fl_exe_command(p1, p2) -> num.
     """
 
-    keep_elem_refs(p1, p2)
-    retval = _fl_exe_command(p1, p2)
+    sp1 = convert_to_int(p1)
+    ip2 = convert_to_int(p2)
+    keep_elem_refs(p1, sp1, p2, ip2)
+    retval = _fl_exe_command(sp1, ip2)
     return retval
 
 
@@ -10315,8 +10330,9 @@ def fl_end_command(p1):
     """ fl_end_command(p1) -> num.
     """
 
-    keep_elem_refs(p1)
-    retval = _fl_end_command(p1)
+    lp1 = convert_to_long(p1)
+    keep_elem_refs(p1, lp1)
+    retval = _fl_end_command(lp1)
     return retval
 
 
@@ -10329,8 +10345,9 @@ def fl_check_command(p1):
     """ fl_check_command(p1) -> num.
     """
 
-    keep_elem_refs(p1)
-    retval = _fl_check_command(p1)
+    lp1 = convert_to_long(p1)
+    keep_elem_refs(p1, lp1)
+    retval = _fl_check_command(lp1)
     return retval
 
 
@@ -10343,8 +10360,10 @@ def fl_popen(p1, p2):
     """ fl_popen(p1, p2) -> FILE ptr.
     """
 
-    keep_elem_refs(p1, p2)
-    retval = _fl_popen(p1, p2)
+    sp1 = convert_to_string(p1)
+    sp2 = convert_to_string(p2)
+    keep_elem_refs(p1, p2, sp1, sp2)
+    retval = _fl_popen(sp1, sp2)
     return retval
 
 
@@ -10384,8 +10403,9 @@ def fl_show_command_log(p1):
     """ fl_show_command_log(p1)
     """
 
-    keep_elem_refs(p1)
-    _fl_show_command_log(p1)
+    ip1 = convert_to_int(p1)
+    keep_elem_refs(p1, ip1)
+    _fl_show_command_log(ip1)
 
 
 _fl_hide_command_log = cfuncproto(
@@ -10421,7 +10441,9 @@ def fl_addto_command_log(p1):
     """ fl_addto_command_log(p1)
     """
 
-    _fl_addto_command_log(p1)
+    sp1 = convert_to_string(p1)
+    keep_elem_refs(p1, sp1)
+    _fl_addto_command_log(sp1)
 
 
 _fl_set_command_log_position = cfuncproto(
@@ -10433,8 +10455,10 @@ def fl_set_command_log_position(p1, p2):
     """ fl_set_command_log_position(p1, p2)
     """
 
-    keep_elem_refs(p1, p2)
-    _fl_set_command_log_position(p1, p2)
+    ip1 = convert_to_int(p1)
+    ip2 = convert_to_int(p2)
+    keep_elem_refs(p1, p2, ip1, ip2)
+    _fl_set_command_log_position(ip1, ip2)
 
 
 _fl_get_command_log_fdstruct = cfuncproto(
@@ -10466,8 +10490,9 @@ def fl_use_fselector(p1):
     """ fl_use_fselector(p1) -> num.
     """
 
-    keep_elem_refs(p1)
-    retval = _fl_use_fselector(p1)
+    ip1 = convert_to_int(p1)
+    keep_elem_refs(p1, ip1)
+    retval = _fl_use_fselector(ip1)
     return retval
 
 
@@ -10481,8 +10506,12 @@ def fl_show_fselector(p1, p2, p3, p4):
     """ fl_show_fselector(p1, p2, p3, p4) -> fselector string
     """
 
-    keep_elem_refs(p1, p2, p3, p4)
-    retval = _fl_show_fselector(p1, p2, p3, p4)
+    sp1 = convert_to_string(p1)
+    sp2 = convert_to_string(p2)
+    sp3 = convert_to_string(p3)
+    sp4 = convert_to_string(p4)
+    keep_elem_refs(p1, p2, p3, p4, sp1, sp2, sp3, sp4)
+    retval = _fl_show_fselector(sp1, sp2, sp3, sp4)
     return retval
 
 
@@ -10495,8 +10524,9 @@ def fl_set_fselector_fontsize(p1):
     """ fl_set_fselector_fontsize(p1)
     """
 
-    keep_elem_refs(p1)
-    _fl_set_fselector_fontsize(p1)
+    ip1 = convert_to_int(p1)
+    keep_elem_refs(p1, ip1)
+    _fl_set_fselector_fontsize(ip1)
 
 
 _fl_set_fselector_fontstyle = cfuncproto(
@@ -10508,8 +10538,9 @@ def fl_set_fselector_fontstyle(p1):
     """ fl_set_fselector_fontstyle(p1)
     """
 
-    keep_elem_refs(p1)
-    _fl_set_fselector_fontstyle(p1)
+    ip1 = convert_to_int(p1)
+    keep_elem_refs(p1, ip1)
+    _fl_set_fselector_fontstyle(ip1)
 
 
 _fl_set_fselector_placement = cfuncproto(
@@ -10521,8 +10552,9 @@ def fl_set_fselector_placement(p1):
     """ fl_set_fselector_placement(p1)
     """
 
-    keep_elem_refs(p1)
-    _fl_set_fselector_placement(p1)
+    ip1 = convert_to_int(p1)
+    keep_elem_refs(p1, ip1)
+    _fl_set_fselector_placement(ip1)
 
 
 _fl_set_fselector_border = cfuncproto(
@@ -10534,8 +10566,9 @@ def fl_set_fselector_border(p1):
     """ fl_set_fselector_border(p1)
     """
 
-    keep_elem_refs(p1)
-    _fl_set_fselector_border(p1)
+    ip1 = convert_to_int(p1)
+    keep_elem_refs(p1, ip1)
+    _fl_set_fselector_border(ip1)
 
 
 def fl_set_fselector_transient(b):
@@ -10609,8 +10642,9 @@ def fl_set_directory(p1):
     """ fl_set_directory(p1) -> num.
     """
 
-    keep_elem_refs(p1)
-    retval = _fl_set_directory(p1)
+    sp1 = convert_to_string(p1)
+    keep_elem_refs(p1, sp1)
+    retval = _fl_set_directory(sp1)
     return retval
 
 
@@ -10623,8 +10657,9 @@ def fl_set_pattern(p1):
     """ fl_set_pattern(p1)
     """
 
-    keep_elem_refs(p1)
-    _fl_set_pattern(p1)
+    sp1 = convert_to_string(p1)
+    keep_elem_refs(p1, sp1)
+    _fl_set_pattern(sp1)
 
 
 _fl_refresh_fselector = cfuncproto(
@@ -10650,10 +10685,11 @@ def fl_add_fselector_appbutton(p1, py_fn, p3):
     """ fl_add_fselector_appbutton(p1, py_fn, p3)
     """
 
+    sp1 = convert_to_string(p1)
     c_fn = cfunc_none_voidp(py_fn)
     keep_cfunc_refs(c_fn)
-    keep_elem_refs(p1, p3)
-    _fl_add_fselector_appbutton(p1, c_fn, p3)
+    keep_elem_refs(p1, p3, sp1)
+    _fl_add_fselector_appbutton(sp1, c_fn, p3)
 
 
 _fl_remove_fselector_appbutton = cfuncproto(
@@ -10665,8 +10701,9 @@ def fl_remove_fselector_appbutton(p1):
     """ fl_remove_fselector_appbutton(p1)
     """
 
-    keep_elem_refs(p1)
-    _fl_remove_fselector_appbutton(p1)
+    sp1 = convert_to_string(p1)
+    keep_elem_refs(p1, sp1)
+    _fl_remove_fselector_appbutton(sp1)
 
 
 _fl_disable_fselector_cache = cfuncproto(
@@ -10678,8 +10715,9 @@ def fl_disable_fselector_cache(p1):
     """ fl_disable_fselector_cache(p1)
     """
 
-    keep_elem_refs(p1)
-    _fl_disable_fselector_cache(p1)
+    ip1 = convert_to_int(p1)
+    keep_elem_refs(p1, ip1)
+    _fl_disable_fselector_cache(ip1)
 
 
 _fl_invalidate_fselector_cache = cfuncproto(
@@ -10743,8 +10781,13 @@ def fl_set_fselector_filetype_marker(p1, p2, p3, p4, p5):
     """ fl_set_fselector_filetype_marker(p1, p2, p3, p4, p5)
     """
 
-    keep_elem_refs(p1, p2, p3, p4, p5)
-    _fl_set_fselector_filetype_marker(p1, p2, p3, p4, p5)
+    ip1 = convert_to_int(p1)
+    ip2 = convert_to_int(p2)
+    ip3 = convert_to_int(p3)
+    ip4 = convert_to_int(p4)
+    ip5 = convert_to_int(p5)
+    keep_elem_refs(p1, p2, p3, p4, p5, ip1, ip2, ip3, ip4, ip5)
+    _fl_set_fselector_filetype_marker(ip1, ip2, ip3, ip4, ip5)
 
 
 fl_show_file_selector = fl_show_fselector
@@ -10787,8 +10830,15 @@ def fl_create_input(inputtype, x, y, w, h, label):
     """ fl_create_input(inputtype, x, y, w, h, label) -> pObject
     """
 
-    keep_elem_refs(inputtype, x, y, w, h, label)
-    retval = _fl_create_input(inputtype, x, y, w, h, label)
+    iinputtype = convert_to_int(inputtype)
+    ix = convert_to_int(x)
+    iy = convert_to_int(y)
+    iw = convert_to_int(w)
+    ih = convert_to_int(h)
+    slabel = convert_to_string(label)
+    keep_elem_refs(inputtype, x, y, w, h, label, iinputtype, ix, iy,
+                   iw, ih, slabel)
+    retval = _fl_create_input(iinputtype, ix, iy, iw, ih, slabel)
     return retval
 
 
@@ -10803,8 +10853,15 @@ def fl_add_input(inputtype, x, y, w, h, label):
     """ fl_add_input(inputtype, x, y, w, h, label) -> pObject
     """
 
-    keep_elem_refs(inputtype, x, y, w, h, label)
-    retval = _fl_add_input(inputtype, x, y, w, h, label)
+    iinputtype = convert_to_int(inputtype)
+    ix = convert_to_int(x)
+    iy = convert_to_int(y)
+    iw = convert_to_int(w)
+    ih = convert_to_int(h)
+    slabel = convert_to_string(label)
+    keep_elem_refs(inputtype, x, y, w, h, label, iinputtype, ix, iy,
+                   iw, ih, slabel)
+    retval = _fl_add_input(iinputtype, ix, iy, iw, ih, slabel)
     return retval
 
 
@@ -10817,8 +10874,9 @@ def fl_set_input(pObject, inputstr):
     """ fl_set_input(pObject, inputstr)
     """
 
-    keep_elem_refs(pObject, inputstr)
-    _fl_set_input(pObject, inputstr)
+    sinputstr = convert_to_string(inputstr)
+    keep_elem_refs(pObject, inputstr, sinputstr)
+    _fl_set_input(pObject, sinputstr)
 
 
 _fl_set_input_return = cfuncproto(
@@ -10830,8 +10888,9 @@ def fl_set_input_return(pObject, value):
     """ fl_set_input_return(pObject, value)
     """
 
-    keep_elem_refs(pObject, value)
-    _fl_set_input_return(pObject, value)
+    ivalue = convert_to_int(value)
+    keep_elem_refs(pObject, value, ivalue)
+    _fl_set_input_return(pObject, ivalue)
 
 
 _fl_set_input_color = cfuncproto(
@@ -10844,8 +10903,10 @@ def fl_set_input_color(pObject, textcolr, curscolr):
     """ fl_set_input_color(pObject, textcolr, curscolr)
     """
 
-    keep_elem_refs(pObject, textcolr, curscolr)
-    _fl_set_input_color(pObject, textcolr, curscolr)
+    ultextcolr = convert_to_int(textcolr)
+    ulcurscolr = convert_to_int(curscolr)
+    keep_elem_refs(pObject, textcolr, curscolr, ultextcolr, ulcurscolr)
+    _fl_set_input_color(pObject, ultextcolr, ulcurscolr)
 
 
 _fl_get_input_color = cfuncproto(
@@ -10872,8 +10933,9 @@ def fl_set_input_scroll(pObject, yes):
     """ fl_set_input_scroll(pObject, yes)
     """
 
-    keep_elem_refs(pObject, yes)
-    _fl_set_input_scroll(pObject, yes)
+    iyes = convert_to_int(yes)
+    keep_elem_refs(pObject, yes, iyes)
+    _fl_set_input_scroll(pObject, iyes)
 
 
 _fl_set_input_cursorpos = cfuncproto(
@@ -10885,8 +10947,10 @@ def fl_set_input_cursorpos(pObject, xpos, ypos):
     """ fl_set_input_cursorpos(pObject, xpos, ypos)
     """
 
-    keep_elem_refs(pObject, xpos, ypos)
-    _fl_set_input_cursorpos(pObject, xpos, ypos)
+    ixpos = convert_to_int(xpos)
+    iypos = convert_to_int(ypos)
+    keep_elem_refs(pObject, xpos, ypos, ixpos, iypos)
+    _fl_set_input_cursorpos(pObject, ixpos, iypos)
 
 
 _fl_set_input_selected = cfuncproto(
@@ -10898,8 +10962,9 @@ def fl_set_input_selected(pObject, yes):
     """ fl_set_input_selected(pObject, yes)
     """
 
-    keep_elem_refs(pObject, yes)
-    _fl_set_input_selected(pObject, yes)
+    iyes = convert_to_int(yes)
+    keep_elem_refs(pObject, yes, iyes)
+    _fl_set_input_selected(pObject, iyes)
 
 
 _fl_set_input_selected_range = cfuncproto(
@@ -10911,8 +10976,10 @@ def fl_set_input_selected_range(pObject, begin, end):
     """ fl_set_input_selected_range(pObject, begin, end)
     """
 
-    keep_elem_refs(pObject, begin, end)
-    _fl_set_input_selected_range(pObject, begin, end)
+    ibegin = convert_to_int(begin)
+    iend = convert_to_int(end)
+    keep_elem_refs(pObject, begin, end, ibegin, iend)
+    _fl_set_input_selected_range(pObject, ibegin, iend)
 
 
 _fl_get_input_selected_range = cfuncproto(
@@ -10940,8 +11007,9 @@ def fl_set_input_maxchars(pObject, maxchars):
     """ fl_set_input_maxchars(pObject, maxchars)
     """
 
-    keep_elem_refs(pObject, maxchars)
-    _fl_set_input_maxchars(pObject, maxchars)
+    imaxchars = convert_to_int(maxchars)
+    keep_elem_refs(pObject, maxchars, imaxchars)
+    _fl_set_input_maxchars(pObject, imaxchars)
 
 
 _fl_set_input_format = cfuncproto(
@@ -10953,8 +11021,10 @@ def fl_set_input_format(pObject, fmt, sep):
     """ fl_set_input_format(pObject, fmt, sep)
     """
 
-    keep_elem_refs(pObject, fmt, sep)
-    _fl_set_input_format(pObject, fmt, sep)
+    ifmt = convert_to_int(fmt)
+    isep = convert_to_int(sep)
+    keep_elem_refs(pObject, fmt, sep, ifmt, isep)
+    _fl_set_input_format(pObject, ifmt, isep)
 
 
 _fl_set_input_hscrollbar = cfuncproto(
@@ -10966,8 +11036,9 @@ def fl_set_input_hscrollbar(pObject, pref):
     """ fl_set_input_hscrollbar(pObject, pref)
     """
 
-    keep_elem_refs(pObject, pref)
-    _fl_set_input_hscrollbar(pObject, pref)
+    ipref = convert_to_int(pref)
+    keep_elem_refs(pObject, pref, ipref)
+    _fl_set_input_hscrollbar(pObject, ipref)
 
 
 _fl_set_input_vscrollbar = cfuncproto(
@@ -10979,8 +11050,9 @@ def fl_set_input_vscrollbar(pObject, pref):
     """ fl_set_input_vscrollbar(pObject, pref)
     """
 
-    keep_elem_refs(pObject, pref)
-    _fl_set_input_vscrollbar(pObject, pref)
+    ipref = convert_to_int(pref)
+    keep_elem_refs(pObject, pref, ipref)
+    _fl_set_input_vscrollbar(pObject, ipref)
 
 
 _fl_set_input_topline = cfuncproto(
@@ -10992,8 +11064,9 @@ def fl_set_input_topline(pObject, top):
     """ fl_set_input_topline(pObject, top)
     """
 
-    keep_elem_refs(pObject, top)
-    _fl_set_input_topline(pObject, top)
+    itop = convert_to_int(top)
+    keep_elem_refs(pObject, top, itop)
+    _fl_set_input_topline(pObject, itop)
 
 
 _fl_set_input_scrollbarsize = cfuncproto(
@@ -11005,8 +11078,10 @@ def fl_set_input_scrollbarsize(pObject, hh, vw):
     """ fl_set_input_scrollbarsize(pObject, hh, vw)
     """
 
-    keep_elem_refs(pObject, hh, vw)
-    _fl_set_input_scrollbarsize(pObject, hh, vw)
+    ihh = convert_to_int(hh)
+    ivw = convert_to_int(vw)
+    keep_elem_refs(pObject, hh, vw, ihh, ivw)
+    _fl_set_input_scrollbarsize(pObject, ihh, ivw)
 
 
 _fl_get_input_scrollbarsize = cfuncproto(
@@ -11032,8 +11107,9 @@ def fl_set_input_xoffset(pObject, xoff):
     """ fl_set_input_xoffset(pObject, xoff)
     """
 
-    keep_elem_refs(pObject, xoff)
-    _fl_set_input_xoffset(pObject, xoff)
+    ixoff = convert_to_int(xoff)
+    keep_elem_refs(pObject, xoff, ixoff)
+    _fl_set_input_xoffset(pObject, ixoff)
 
 
 _fl_get_input_xoffset = cfuncproto(
@@ -11059,8 +11135,9 @@ def fl_set_input_fieldchar(pObject, fchar):
     """ fl_set_input_fieldchar(pObject, fchar) -> num.
     """
 
-    keep_elem_refs(pObject, fchar)
-    retval = _fl_set_input_fieldchar(pObject, fchar)
+    ifchar = convert_to_int(fchar)
+    keep_elem_refs(pObject, fchar, ifchar)
+    retval = _fl_set_input_fieldchar(pObject, ifchar)
     return retval
 
 
@@ -11116,8 +11193,9 @@ def fl_set_input_cursor_visible(pObject, visible):
     """ fl_set_input_cursor_visible(pObject, visible)
     """
 
-    keep_elem_refs(pObject, visible)
-    _fl_set_input_cursor_visible(pObject, visible)
+    ivisible = convert_to_int(visible)
+    keep_elem_refs(pObject, visible, ivisible)
+    _fl_set_input_cursor_visible(pObject, ivisible)
 
 
 _fl_get_input_numberoflines = cfuncproto(
@@ -11229,8 +11307,15 @@ def fl_create_menu(menutype, x, y, w, h, label):
     """ fl_create_menu(menutype, x, y, w, h, label) -> pObject
     """
 
-    keep_elem_refs(menutype, x, y, w, h, label)
-    retval = _fl_create_menu(menutype, x, y, w, h, label)
+    imenutype = convert_to_int(menutype)
+    ix = convert_to_int(x)
+    iy = convert_to_int(y)
+    iw = convert_to_int(w)
+    ih = convert_to_int(h)
+    slabel = convert_to_string(label)
+    keep_elem_refs(menutype, x, y, w, h, label, imenutype, ix, iy,
+                   iw, ih, slabel)
+    retval = _fl_create_menu(imenutype, ix, iy, iw, ih, slabel)
     return retval
 
 
@@ -11245,8 +11330,15 @@ def fl_add_menu(menutype, x, y, w, h, label):
     """ fl_add_menu(menutype, x, y, w, h, label) -> pObject
     """
 
-    keep_elem_refs(menutype, x, y, w, h, label)
-    retval = _fl_add_menu(menutype, x, y, w, h, label)
+    imenutype = convert_to_int(menutype)
+    ix = convert_to_int(x)
+    iy = convert_to_int(y)
+    iw = convert_to_int(w)
+    ih = convert_to_int(h)
+    slabel = convert_to_string(label)
+    keep_elem_refs(menutype, x, y, w, h, label, imenutype, ix, iy,
+                   iw, ih, slabel)
+    retval = _fl_add_menu(imenutype, ix, iy, iw, ih, slabel)
     return retval
 
 
@@ -11272,8 +11364,9 @@ def fl_set_menu(pObject, menustr):
     """ fl_set_menu(pObject, menustr)
     """
 
-    keep_elem_refs(pObject, menustr)
-    _fl_set_menu(pObject, menustr)
+    smenustr = convert_to_string(menustr)
+    keep_elem_refs(pObject, menustr, smenustr)
+    _fl_set_menu(pObject, smenustr)
 
 
 _fl_addto_menu = cfuncproto(
@@ -11285,8 +11378,9 @@ def fl_addto_menu(pObject, menustr):
     """ fl_addto_menu(pObject, menustr) -> num.
     """
 
-    keep_elem_refs(pObject, menustr)
-    retval = _fl_addto_menu(pObject, menustr)
+    smenustr = convert_to_string(menustr)
+    keep_elem_refs(pObject, menustr, smenustr)
+    retval = _fl_addto_menu(pObject, smenustr)
     return retval
 
 
@@ -11296,12 +11390,14 @@ _fl_replace_menu_item = cfuncproto(
         """void fl_replace_menu_item(FL_OBJECT * ob, int numb,
            const char * str)    DEPRECATED
         """)
-def fl_replace_menu_item(pObject, numb, item_string):
-    """ fl_replace_menu_item(pObject, numb, item_string)
+def fl_replace_menu_item(pObject, numb, itemstr):
+    """ fl_replace_menu_item(pObject, numb, itemstr)
     """
 
-    keep_elem_refs(pObject, numb, item_string)
-    _fl_replace_menu_item(pObject, numb, item_string)
+    inumb = convert_to_int(numb)
+    sitemstr = convert_to_string(itemstr)
+    keep_elem_refs(pObject, numb, itemstr, inumb, sitemstr)
+    _fl_replace_menu_item(pObject, inumb, sitemstr)
 
 
 _fl_delete_menu_item = cfuncproto(
@@ -11313,8 +11409,9 @@ def fl_delete_menu_item(pObject, numb):
     """ fl_delete_menu_item(pObject, numb)
     """
 
-    keep_elem_refs(pObject, numb)
-    _fl_delete_menu_item(pObject, numb)
+    inumb = convert_to_int(numb)
+    keep_elem_refs(pObject, numb, inumb)
+    _fl_delete_menu_item(pObject, inumb)
 
 
 _fl_set_menu_item_callback = cfuncproto(
@@ -11327,10 +11424,11 @@ def fl_set_menu_item_callback(pObject, numb, py_cb):
     """ fl_set_menu_item_callback(pObject, numb, py_cb) -> callback
     """
 
+    inumb = convert_to_int(numb)
     c_cb = FL_PUP_CB(py_cb)
     keep_cfunc_refs(c_cb)
-    keep_elem_refs(pObject, numb)
-    retval = _fl_set_menu_item_callback(pObject, numb, c_cb)
+    keep_elem_refs(pObject, numb, inumb)
+    retval = _fl_set_menu_item_callback(pObject, inumb, c_cb)
     return retval
 
 
@@ -11344,8 +11442,10 @@ def fl_set_menu_item_shortcut(pObject, numb, itemstr):
     """ fl_set_menu_item_shortcut(pObject, numb, itemstr)
     """
 
-    keep_elem_refs(pObject, numb, itemstr)
-    _fl_set_menu_item_shortcut(pObject, numb, itemstr)
+    inumb = convert_to_int(numb)
+    sitemstr = convert_to_string(itemstr)
+    keep_elem_refs(pObject, numb, itemstr, inumb, sitemstr)
+    _fl_set_menu_item_shortcut(pObject, inumb, sitemstr)
 
 
 _fl_set_menu_item_mode = cfuncproto(
@@ -11358,8 +11458,10 @@ def fl_set_menu_item_mode(pObject, numb, mode):
     """ fl_set_menu_item_mode(pObject, numb, mode)
     """
 
-    keep_elem_refs(pObject, numb, mode)
-    _fl_set_menu_item_mode(pObject, numb, mode)
+    inumb = convert_to_int(numb)
+    uimode = convert_to_string(mode)
+    keep_elem_refs(pObject, numb, mode, inumb, uimode)
+    _fl_set_menu_item_mode(pObject, inumb, uimode)
 
 
 _fl_show_menu_symbol = cfuncproto(
@@ -11371,8 +11473,9 @@ def fl_show_menu_symbol(pObject, show):
     """ fl_show_menu_symbol(pObject, show)
     """
 
-    keep_elem_refs(pObject, show)
-    _fl_show_menu_symbol(pObject, show)
+    ishow = convert_to_int(show)
+    keep_elem_refs(pObject, show, ishow)
+    _fl_show_menu_symbol(pObject, ishow)
 
 
 _fl_set_menu_popup = cfuncproto(
@@ -11384,8 +11487,9 @@ def fl_set_menu_popup(pObject, pup):
     """ fl_set_menu_popup(pObject, pup)
     """
 
-    keep_elem_refs(pObject, pup)
-    _fl_set_menu_popup(pObject, pup)
+    ipup = convert_to_int(pup)
+    keep_elem_refs(pObject, pup, ipup)
+    _fl_set_menu_popup(pObject, ipup)
 
 
 _fl_get_menu_popup = cfuncproto(
@@ -11425,8 +11529,9 @@ def fl_get_menu_item_text(pObject, numb):
     """ fl_get_menu_item_text(pObject, numb) -> text string
     """
 
-    keep_elem_refs(pObject, numb)
-    retval = _fl_get_menu_item_text(pObject, numb)
+    inumb = convert_to_int(numb)
+    keep_elem_refs(pObject, numb, inumb)
+    retval = _fl_get_menu_item_text(pObject, inumb)
     return retval
 
 
@@ -11453,8 +11558,9 @@ def fl_get_menu_item_mode(pObject, numb):
     """ fl_get_menu_item_mode(pObject, numb) -> mode num.
     """
 
-    keep_elem_refs(pObject, numb)
-    retval = _fl_get_menu_item_mode(pObject, numb)
+    inumb = convert_to_int(numb)
+    keep_elem_refs(pObject, numb, inumb)
+    retval = _fl_get_menu_item_mode(pObject, inumb)
     return retval
 
 
@@ -11495,8 +11601,9 @@ def fl_set_menu_notitle(pObject, off):
     """ fl_set_menu_notitle(pObject, off) -> num.
     """
 
-    keep_elem_refs(pObject, off)
-    retval = _fl_set_menu_notitle(pObject, off)
+    ioff = convert_to_int(off)
+    keep_elem_refs(pObject, off, ioff)
+    retval = _fl_set_menu_notitle(pObject, ioff)
     return retval
 
 
@@ -11509,8 +11616,10 @@ def fl_set_menu_item_id(pObject, item, idnum):
     """ fl_set_menu_item_id(pObject, item, idnum) -> num.
     """
 
-    keep_elem_refs(pObject, item, idnum)
-    retval = _fl_set_menu_item_id(pObject, item, idnum)
+    iitem = convert_to_int(item)
+    iidnum = convert_to_int(idnum)
+    keep_elem_refs(pObject, item, idnum, iitem, iidnum)
+    retval = _fl_set_menu_item_id(pObject, iitem, iidnum)
     return retval
 
 
@@ -11534,8 +11643,15 @@ def fl_set_menu_item_id(pObject, item, idnum):
 #   """ fl_create_menubar(bartype, x, y, w, h, label) -> pObject
 #   """
 #
-#    keep_elem_refs(bartype, x, y, w, h, label)
-#    retval fl_create_menubar(bartype, x, y, w, h, label)
+#    ibartype = convert_to_int(bartype)
+#    ix = convert_to_int(x)
+#    iy = convert_to_int(y)
+#    iw = convert_to_int(w)
+#    ih = convert_to_int(h)
+#    slabel = convert_to_string(label)
+#    keep_elem_refs(bartype, x, y, w, h, label, ibartype, ix, iy,
+#                   iw, ih, slabel)
+#    retval = _fl_create_menubar(ibartype, ix, iy, iw, ih, slabel)
 #    return retval
 
 
@@ -11550,8 +11666,15 @@ def fl_set_menu_item_id(pObject, item, idnum):
 #   """ fl_add_menubar(bartype, x, y, w, h, label) -> pObject
 #   """
 #
-#    keep_elem_refs(bartype, x, y, w, h, label)
-#    retval fl_add_menubar(bartype, x, y, w, h, label)
+#    ibartype = convert_to_int(bartype)
+#    ix = convert_to_int(x)
+#    iy = convert_to_int(y)
+#    iw = convert_to_int(w)
+#    ih = convert_to_int(h)
+#    slabel = convert_to_string(label)
+#    keep_elem_refs(bartype, x, y, w, h, label, ibartype, ix, iy,
+#                   iw, ih, slabel)
+#    retval = _fl_add_menubar(ibartype, ix, iy, iw, ih, slabel)
 #    return retval
 
 
@@ -11577,8 +11700,9 @@ def fl_set_menu_item_id(pObject, item, idnum):
 #   """ fl_set_menubar(pObject, label)
 #   """
 #
-#    keep_elem_refs(pObject, label)
-#    fl_set_menubar(pObject, label)
+#    slabel = convert_to_string(label)
+#    keep_elem_refs(pObject, label, slabel)
+#    fl_set_menubar(pObject, slabel)
 
 
 #fl_set_menubar_entries = cfuncproto(
@@ -11591,8 +11715,9 @@ def fl_set_menu_item_id(pObject, item, idnum):
 #   """ fl_set_menubar_entries(pObject, label, pup)
 #   """
 #
-#    keep_elem_refs(pObject, label, pup)
-#    fl_set_menubar_entries(pObject, label, pup)
+#    slabel = convert_to_string(label)
+#    keep_elem_refs(pObject, label, pup, slabel)
+#    fl_set_menubar_entries(pObject, slabel, pup)
 
 
 # Nmenu object types
@@ -11605,12 +11730,19 @@ _fl_create_nmenu = cfuncproto(
         """FL_OBJECT * fl_create_nmenu(int p1, FL_Coord p2, FL_Coord p3,
            FL_Coord p4, FL_Coord p5, const char * p6)
         """)
-def fl_create_nmenu(p1, p2, p3, p4, p5, p6):
-    """ fl_create_nmenu(p1, p2, p3, p4, p5, p6) -> pObject
+def fl_create_nmenu(nmenutype, x, y, w, h, label):
+    """ fl_create_nmenu(nmenutype, x, y, w, h, label) -> pObject
     """
 
-    keep_elem_refs(p1, p2, p3, p4, p5, p6)
-    retval = _fl_create_nmenu(p1, p2, p3, p4, p5, p6)
+    inmenutype = convert_to_int(nmenutype)
+    ix = convert_to_int(x)
+    iy = convert_to_int(y)
+    iw = convert_to_int(w)
+    ih = convert_to_int(h)
+    slabel = convert_to_string(label)
+    keep_elem_refs(nmenutype, x, y, w, h, label, inmenutype, ix, iy,
+                   iw, ih, slabel)
+    retval = _fl_create_nmenu(inmenutype, ix, iy, iw, ih, slabel)
     return retval
 
 
@@ -11621,12 +11753,19 @@ _fl_add_nmenu = cfuncproto(
         """FL_OBJECT * fl_add_nmenu(int p1, FL_Coord p2, FL_Coord p3,
            FL_Coord p4, FL_Coord p5, const char * p6)
         """)
-def fl_add_nmenu(p1, p2, p3, p4, p5, p6):
-    """ fl_add_nmenu(p1, p2, p3, p4, p5, p6) -> pObject
+def fl_add_nmenu(nmenutype, x, y, w, h, label):
+    """ fl_add_nmenu(nmenutype, x, y, w, h, label) -> pObject
     """
 
-    keep_elem_refs(p1, p2, p3, p4, p5, p6)
-    retval = _fl_add_nmenu(p1, p2, p3, p4, p5, p6)
+    inmenutype = convert_to_int(nmenutype)
+    ix = convert_to_int(x)
+    iy = convert_to_int(y)
+    iw = convert_to_int(w)
+    ih = convert_to_int(h)
+    slabel = convert_to_string(label)
+    keep_elem_refs(nmenutype, x, y, w, h, label, inmenutype, ix, iy,
+                   iw, ih, slabel)
+    retval = _fl_add_nmenu(inmenutype, ix, iy, iw, ih, slabel)
     return retval
 
 
@@ -11649,12 +11788,13 @@ _fl_add_nmenu_items = cfuncproto(
         cty.POINTER(FL_POPUP_ENTRY), [cty.POINTER(FL_OBJECT), STRING],
         """FL_POPUP_ENTRY * fl_add_nmenu_items(FL_OBJECT * p1, const char * p2)
         """)
-def fl_add_nmenu_items(pObject, p2):
-    """ fl_add_nmenu_items(pObject, p2) -> popup_entry
+def fl_add_nmenu_items(pObject, itemstr):
+    """ fl_add_nmenu_items(pObject, itemstr) -> popup_entry
     """
 
-    keep_elem_refs(pObject, p2)
-    retval = _fl_add_nmenu_items(pObject, p2)
+    sitemstr = convert_to_string(itemstr)
+    keep_elem_refs(pObject, itemstr, sitemstr)
+    retval = _fl_add_nmenu_items(pObject, sitemstr)
     return retval
 
 
@@ -11665,12 +11805,13 @@ _fl_insert_nmenu_items = cfuncproto(
         """FL_POPUP_ENTRY * fl_insert_nmenu_items(FL_OBJECT * p1,
            FL_POPUP_ENTRY * p2, const char * p3)
         """)
-def fl_insert_nmenu_items(pObject, pPopupEntry, p3):
-    """ fl_insert_nmenu_items(pObject, p2, p3) -> popup_entry
+def fl_insert_nmenu_items(pObject, pPopupEntry, itemstr):
+    """ fl_insert_nmenu_items(pObject, pPopupEntry, itemstr) -> popup_entry
     """
 
-    keep_elem_refs(pObject, pPopupEntry, p3)
-    retval = _fl_insert_nmenu_items(pObject, pPopupEntry, p3)
+    sitemstr = convert_to_string(itemstr)
+    keep_elem_refs(pObject, pPopupEntry, itemstr, sitemstr)
+    retval = _fl_insert_nmenu_items(pObject, pPopupEntry, sitemstr)
     return retval
 
 
@@ -11681,12 +11822,13 @@ _fl_replace_nmenu_item = cfuncproto(
         """FL_POPUP_ENTRY * fl_replace_nmenu_item(FL_OBJECT * p1,
            FL_POPUP_ENTRY * p2, const char * p3)
         """)
-def fl_replace_nmenu_item(pObject, pPopupEntry, p3):
-    """ fl_replace_nmenu_item(pObject, pPopupEntry, p3) -> popup_entry
+def fl_replace_nmenu_item(pObject, pPopupEntry, itemstr):
+    """ fl_replace_nmenu_item(pObject, pPopupEntry, itemstr) -> popup_entry
     """
 
-    keep_elem_refs(pObject, pPopupEntry, p3)
-    retval = _fl_replace_nmenu_item(pObject, pPopupEntry, p3)
+    sitemstr = convert_to_string(itemstr)
+    keep_elem_refs(pObject, pPopupEntry, itemstr, sitemstr)
+    retval = _fl_replace_nmenu_item(pObject, pPopupEntry, sitemstr)
     return retval
 
 
@@ -11768,12 +11910,13 @@ _fl_get_nmenu_item_by_value = cfuncproto(
         """FL_POPUP_ENTRY * fl_get_nmenu_item_by_value(FL_OBJECT * p1,
            long int p2)
         """)
-def fl_get_nmenu_item_by_value(pObject, p2):
-    """ fl_get_nmenu_item_by_value(pObject, p2) -> popup_entry
+def fl_get_nmenu_item_by_value(pObject, value):
+    """ fl_get_nmenu_item_by_value(pObject, value) -> popup_entry
     """
 
-    keep_elem_refs(pObject, p2)
-    retval = _fl_get_nmenu_item_by_value(pObject, p2)
+    ulvalue = convert_to_long(value)
+    keep_elem_refs(pObject, value, ulvalue)
+    retval = _fl_get_nmenu_item_by_value(pObject, ulvalue)
     return retval
 
 
@@ -11783,12 +11926,13 @@ _fl_get_nmenu_item_by_label = cfuncproto(
         """FL_POPUP_ENTRY * fl_get_nmenu_item_by_label(FL_OBJECT * p1,
            const char * p2)
         """)
-def fl_get_nmenu_item_by_label(pObject, p2):
-    """ fl_get_nmenu_item_by_label(pObject, p2) -> popup_entry
+def fl_get_nmenu_item_by_label(pObject, label):
+    """ fl_get_nmenu_item_by_label(pObject, label) -> popup_entry
     """
 
-    keep_elem_refs(pObject, p2)
-    retval = _fl_get_nmenu_item_by_label(pObject, p2)
+    slabel = convert_to_string(label)
+    keep_elem_refs(pObject, label, slabel)
+    retval = _fl_get_nmenu_item_by_label(pObject, slabel)
     return retval
 
 
@@ -11798,12 +11942,13 @@ _fl_get_nmenu_item_by_text = cfuncproto(
         """FL_POPUP_ENTRY * fl_get_nmenu_item_by_text(FL_OBJECT * p1,
            const char * p2)
         """)
-def fl_get_nmenu_item_by_text(pObject, p2):
-    """ fl_get_nmenu_item_by_text(pObject, p2) -> popup_entry
+def fl_get_nmenu_item_by_text(pObject, txtstr):
+    """ fl_get_nmenu_item_by_text(pObject, txtstr) -> popup_entry
     """
 
-    keep_elem_refs(pObject, p2)
-    retval = _fl_get_nmenu_item_by_text(pObject, p2)
+    stxtstr = convert_to_string(txtstr)
+    keep_elem_refs(pObject, txtstr, stxtstr)
+    retval = _fl_get_nmenu_item_by_text(pObject, stxtstr)
     return retval
 
 
@@ -11816,8 +11961,9 @@ def fl_set_nmenu_policy(pObject, p2):
     """ fl_set_nmenu_policy(pObject, p2) -> num.
     """
 
-    keep_elem_refs(pObject, p2)
-    retval = _fl_set_nmenu_policy(pObject, p2)
+    ip2 = convert_to_int(p2)
+    keep_elem_refs(pObject, p2, ip2)
+    retval = _fl_set_nmenu_policy(pObject, ip2)
     return retval
 
 
@@ -11830,11 +11976,12 @@ def fl_set_nmenu_hl_text_color(pObject, colr):
     """ fl_set_nmenu_hl_text_color(pObject, colr) -> color
     """
 
-    keep_elem_refs(pObject, colr)
-    retval = _fl_set_nmenu_hl_text_color(pObject, colr)
+    ulcolr = convert_to_FL_COLOR(colr)
+    keep_elem_refs(pObject, colr, ulcolr)
+    retval = _fl_set_nmenu_hl_text_color(pObject, ulcolr)
     return retval
 
-
+#§§§§§
 
 #########################
 # forms.h (positioner.h)
