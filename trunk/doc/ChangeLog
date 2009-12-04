@@ -1,6 +1,7 @@
 
 
 SVN
+    * Porting of longlabel example.
     * Insert c function prototype into python function body (WIP)
     * Continuing explicit conversion for base types
     * Initial warning function if a deprecated XForms function is
