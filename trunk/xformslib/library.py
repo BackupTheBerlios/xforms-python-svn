@@ -1920,11 +1920,8 @@ def fl_get_object_position(pObject):
             """void fl_get_object_position(FL_OBJECT * ob, FL_Coord * x,
                FL_Coord * y)
             """)
-    x = y = 1       # placeholder
-    ix = convert_to_int(x)
-    px = cty.byref(ix)
-    iy = convert_to_int(y)
-    py = cty.byref(iy)
+    ix, px = make_int_pointer()
+    iy, py = make_int_pointer()
     keep_elem_refs(pObject, x, ix, px, y, iy, py)
     _fl_get_object_position(pObject, px, py)
     return ix, iy
@@ -2788,10 +2785,6 @@ def FL_crnd(a):
 
 # utilities for new objects
 
-fl_current_form = (cty.POINTER(FL_FORM)).in_dll(load_so_libforms(), \
-                  'fl_current_form')
-
-
 def fl_add_object(pForm, pObject):
     """ fl_add_object(pForm, pObject)
     """
@@ -3163,9 +3156,9 @@ def fl_msleep(msec):
             cty.c_int, [cty.c_ulong], \
             """int fl_msleep(long unsigned int msec)
             """)
-    ul_msec = convert_to_ulong(msec)
-    keep_elem_refs(msec, ul_msec)
-    retval = _fl_msleep(ul_msec)
+    ulmsec = convert_to_ulong(msec)
+    keep_elem_refs(msec, ulmsec)
+    retval = _fl_msleep(ulmsec)
     return retval
 
 
@@ -3180,10 +3173,6 @@ def FL_is_rgb(v):
         return True
     else:
         return False
-
-
-fl_state = (cty.POINTER(FL_State)).in_dll(load_so_libforms(), 'fl_state')
-fl_display = (cty.POINTER(Display)).in_dll(load_so_libforms(), 'fl_display')
 
 
 # Current version only runs in single visual mode
@@ -3214,10 +3203,12 @@ def fl_mode_capable(mode, warn):
 
 
 def fl_default_win():
-    return fl_state[fl_vmode].trailblazer
+    return fl_state.trailblazer
+    #fl_state[fl_vmode].trailblazer
 
 def fl_default_window():
-    return fl_state[fl_vmode].trailblazer
+    return fl_state.trailblazer
+    #fl_state[fl_vmode].trailblazer
 
 
 # Some basic drawing routines
@@ -3750,9 +3741,9 @@ def fl_get_win_mouse(win, x, y, keymask):
             """Window fl_get_win_mouse(Window win, FL_Coord * x, FL_Coord * y,
             unsigned int * keymask)
             """)
-    ul_win = convert_to_ulong(win)
-    keep_elem_refs(win, x, y, keymask, ul_win)
-    retval = _fl_get_win_mouse(ul_win, x, y, keymask)
+    ulwin = convert_to_ulong(win)
+    keep_elem_refs(win, x, y, keymask, ulwin)
+    retval = _fl_get_win_mouse(ulwin, x, y, keymask)
     return retval
 
 
@@ -3780,9 +3771,9 @@ def fl_win_to_form(win):
             cty.POINTER(FL_FORM), [Window], \
             """FL_FORM * fl_win_to_form(Window win)
             """)
-    ul_win = convert_to_ulong(win)
-    keep_elem_refs(win, ul_win)
-    retval = _fl_win_to_form(ul_win)
+    ulwin = convert_to_ulong(win)
+    keep_elem_refs(win, ulwin)
+    retval = _fl_win_to_form(ulwin)
     return retval
 
 
@@ -3795,10 +3786,10 @@ def fl_set_form_icon(pForm, icon, mask):
             None, [cty.POINTER(FL_FORM), Pixmap, Pixmap], \
             """void fl_set_form_icon(FL_FORM * form, Pixmap p, Pixmap m)
             """)
-    ul_icon = convert_to_int(icon)
-    ul_mask = convert_to_int(mask)
-    keep_elem_refs(pForm, icon, mask, ul_icon, ul_mask)
-    _fl_set_form_icon(pForm, ul_icon, ul_mask)
+    ulicon = convert_to_int(icon)
+    ulmask = convert_to_int(mask)
+    keep_elem_refs(pForm, icon, mask, ulicon, ulmask)
+    _fl_set_form_icon(pForm, ulicon, ulmask)
 
 
 def fl_get_decoration_sizes(pForm, top, right, bottom, left):
@@ -3828,9 +3819,9 @@ def XRaiseWindow(pDisplay, win):
             cty.c_int, [cty.POINTER(Display), Window], \
             """int XRaiseWindow(Display * p1, Window p2)
             """)
-    ul_win = convert_to_ulong(win)
-    keep_elem_refs(pDisplay, win, ul_win)
-    retval = _XRaiseWindow(pDisplay, ul_win)
+    ulwin = convert_to_ulong(win)
+    keep_elem_refs(pDisplay, win, ulwin)
+    retval = _XRaiseWindow(pDisplay, ulwin)
     return retval
 
 
@@ -3849,9 +3840,9 @@ def XLowerWindow(pDisplay, win):
             cty.c_int, [cty.POINTER(Display), Window], \
             """int XLowerWindow(Display * p1, Window p2)
             """)
-    ul_win = convert_to_ulong(win)
-    keep_elem_refs(pDisplay, win, ul_win)
-    retval = _XLowerWindow(pDisplay, ul_win)
+    ulwin = convert_to_ulong(win)
+    keep_elem_refs(pDisplay, win, ulwin)
+    retval = _XLowerWindow(pDisplay, ulwin)
     return retval
 
 
@@ -3870,9 +3861,9 @@ def XSetForeground(pDisplay, p2, p3):
             cty.c_int, [cty.POINTER(Display), GC, cty.c_ulong], \
             """int XSetForeground(Display * p1, GC p2, long unsigned int p3)
             """)
-    ul_p3 = convert_to_ulong(p3)
-    keep_elem_refs(pDisplay, p2, p3, ul_p3)
-    retval = _XSetForeground(pDisplay, p2, ul_p3)
+    ulp3 = convert_to_ulong(p3)
+    keep_elem_refs(pDisplay, p2, p3, ulp3)
+    retval = _XSetForeground(pDisplay, p2, ulp3)
     return retval
 
 
@@ -3890,9 +3881,9 @@ def XSetBackground(pDisplay, p2, p3):
             cty.c_int, [cty.POINTER(Display), GC, cty.c_ulong], \
             """int XSetBackground(Display * p1, GC p2, long unsigned int p3)
             """)
-    ul_p3 = convert_to_ulong(p3)
-    keep_elem_refs(pDisplay, p2, p3, ul_p3)
-    retval = _XSetBackground(pDisplay, p2, ul_p3)
+    ulp3 = convert_to_ulong(p3)
+    keep_elem_refs(pDisplay, p2, p3, ulp3)
+    retval = _XSetBackground(pDisplay, p2, ulp3)
     return retval
 
 
@@ -3926,9 +3917,9 @@ def fl_winshow(win):
             Window, [Window], \
             """Window fl_winshow(Window win)
             """)
-    ul_win = convert_to_ulong(win)
-    keep_elem_refs(win, ul_win)
-    retval = _fl_winshow(ul_win)
+    ulwin = convert_to_ulong(win)
+    keep_elem_refs(win, ulwin)
+    retval = _fl_winshow(ulwin)
     return retval
 
 
@@ -3970,9 +3961,9 @@ def fl_winclose(win):
             None, [Window], \
             """void fl_winclose(Window win)
             """)
-    ul_win = convert_to_ulong(win)
-    keep_elem_refs(win, ul_win)
-    _fl_winclose(win, ul_win)
+    ulwin = convert_to_ulong(win)
+    keep_elem_refs(win, ulwin)
+    _fl_winclose(win, ulwin)
 
 
 def fl_winset(win):
@@ -3984,9 +3975,9 @@ def fl_winset(win):
             None, [Window], \
             """void fl_winset(Window win)
             """)
-    ul_win = convert_to_ulong(win)
-    keep_elem_refs(win, ul_win)
-    _fl_winset(ul_win)
+    ulwin = convert_to_ulong(win)
+    keep_elem_refs(win, ulwin)
+    _fl_winset(ulwin)
 
 
 def fl_winreparent(win, newparent):
@@ -3998,10 +3989,10 @@ def fl_winreparent(win, newparent):
             cty.c_int, [Window, Window], \
             """int fl_winreparent(Window win, Window new_parent)
             """)
-    ul_win = convert_to_ulong(win)
-    ul_newparent = convert_to_ulong(newparent)
-    keep_elem_refs(win, newparent, ul_win, ul_newparent)
-    retval = _fl_winreparent(ul_win, ul_newparent)
+    ulwin = convert_to_ulong(win)
+    ulnewparent = convert_to_ulong(newparent)
+    keep_elem_refs(win, newparent, ulwin, ulnewparent)
+    retval = _fl_winreparent(ulwin, ulnewparent)
     return retval
 
 
@@ -4014,9 +4005,9 @@ def fl_winfocus(win):
             None, [Window], \
             """void fl_winfocus(Window win)
             """)
-    ul_win = convert_to_ulong(win)
-    keep_elem_refs(win, ul_win)
-    _fl_winfocus(ul_win)
+    ulwin = convert_to_ulong(win)
+    keep_elem_refs(win, ulwin)
+    _fl_winfocus(ulwin)
 
 
 def fl_winget():
@@ -4465,19 +4456,20 @@ def FL_FormDisplay(pForm):   # NOT SURE
 def FL_ObjectDisplay(object):   # NOT SURE
     return fl_display
 
-def FL_IS_CANVAS(o):
-    if (o.objclass == FL_CANVAS) or (o.objclass == FL_GLCANVAS):
+def FL_IS_CANVAS(pObject):
+    if (pObject[0].objclass == FL_CANVAS) or \
+        (pObject[0].objclass == FL_GLCANVAS):
         return True
     else:
         return False
 
 
 # The window an object belongs to - for drawing
-def FL_ObjWin(o):
-    if FL_IS_CANVAS(o):
-        return fl_get_canvas_id(o)
+def FL_ObjWin(pObject):
+    if FL_IS_CANVAS(pObject):
+        return fl_get_canvas_id(pObject)
     else:
-        return o.form.window
+        return pObject[0].form[0].window
 
 
 def fl_get_real_object_window(pObject):
@@ -5146,8 +5138,8 @@ def fl_popup_add(win, p2):
     return retval
 
 
-def fl_popup_add_entries(p1, p2):
-    """ fl_popup_add_entries(p1, p2) -> pPopupEntry
+def fl_popup_add_entries(pPopup, extrytxt):
+    """ fl_popup_add_entries(pPopup, extrytxt) -> pPopupEntry
     """
 
     _fl_popup_add_entries = cfuncproto(
@@ -5156,14 +5148,14 @@ def fl_popup_add_entries(p1, p2):
             """FL_POPUP_ENTRY * fl_popup_add_entries(FL_POPUP * p1,
                const char * p2)
             """)
-    sp2 = convert_to_string(p2)
-    keep_elem_refs(p1, p2, sp2)
-    retval = _fl_popup_add_entries(p1, sp2)
+    sextrytxt = convert_to_string(extrytxt)
+    keep_elem_refs(pPopup, entrytxt, sextrytxt)
+    retval = _fl_popup_add_entries(pPopup, sextrytxt)
     return retval
 
 
-def fl_popup_insert_entries(pPopup, pPopupEntry, p3):
-    """ fl_popup_insert_entries(p1, p2, p3) -> pPopupEntry
+def fl_popup_insert_entries(pPopup, pPopupEntry, entrytxt):
+    """ fl_popup_insert_entries(pPopup, pPopupEntry, entrytxt) -> pPopupEntry
     """
 
     _fl_popup_insert_entries = cfuncproto(
@@ -5173,9 +5165,9 @@ def fl_popup_insert_entries(pPopup, pPopupEntry, p3):
             """FL_POPUP_ENTRY * fl_popup_insert_entries(FL_POPUP * p1,
                FL_POPUP_ENTRY * p2, const char * p3)
             """)
-    sp3 = convert_to_string(p3)
-    keep_elem_refs(pPopup, pPopupEntry, p3, sp3)
-    retval = _fl_popup_insert_entries(pPopup, pPopupEntry, sp3)
+    sentrytxt = convert_to_string(entrytxt)
+    keep_elem_refs(pPopup, pPopupEntry, entrytxt, sentrytxt)
+    retval = _fl_popup_insert_entries(pPopup, pPopupEntry, sentrytxt)
     return retval
 
 
@@ -5330,8 +5322,9 @@ def fl_popup_set_title_font(pPopup, p2, p3):
     _fl_popup_set_title_font(pPopup, ip2, ip3)
 
 
-def fl_popup_entry_get_font(p1, p2, p3):
-    """ fl_popup_entry_get_font(p1, p2, p3)
+#def fl_popup_entry_get_font(pPopup, val1, val2):
+def fl_popup_entry_get_font(pPopup):
+    """ fl_popup_entry_get_font(pPopup) -> val1, val2
     """
 
     _fl_popup_entry_get_font = cfuncproto(
@@ -5340,8 +5333,12 @@ def fl_popup_entry_get_font(p1, p2, p3):
             cty.POINTER(cty.c_int)],
             """void fl_popup_entry_get_font(FL_POPUP * p1, int * p2, int * p3)
             """)
-    keep_elem_refs(p1, p2, p3)
-    _fl_popup_entry_get_font(p1, p2, p3)
+
+    val1, pval1 = make_int_pointer()
+    val2, pval2 = make_int_pointer()
+    keep_elem_refs(pPopup, val1, val2, pval1, pval2)
+    _fl_popup_entry_get_font(pPopup, pval1, pval2)
+    return val1, val2
 
 
 _fl_popup_entry_set_font = cfuncproto(

@@ -173,7 +173,7 @@ FL_PLACE_CENTERFREE = (FL_PLACE_CENTER|FL_FREE_SIZE)
 
 
 # my add, list of possible values --LK
-PLACE_list = [FL_PLACE_FREE, FL_PLACE_MOUSE, FL_PLACE_CENTER, 
+PLACE_list = [FL_PLACE_FREE, FL_PLACE_MOUSE, FL_PLACE_CENTER,
               FL_PLACE_POSITION, FL_PLACE_SIZE, FL_PLACE_GEOMETRY,
               FL_PLACE_ASPECT, FL_PLACE_FULLSCREEN, FL_PLACE_HOTSPOT,
               FL_PLACE_ICONIC, FL_FREE_SIZE, FL_FIX_SIZE,
@@ -277,12 +277,12 @@ FL_SCROLLDOWNMOUSE = FL_SCROLLDOWN_MOUSE
 
 
 # my add, list of possible values --LK
-MOUSEBTN_list = [FL_MBUTTON1, FL_MBUTTON2, FL_MBUTTON3, FL_MBUTTON4, 
+MOUSEBTN_list = [FL_MBUTTON1, FL_MBUTTON2, FL_MBUTTON3, FL_MBUTTON4,
                  FL_MBUTTON5, FL_LEFT_MOUSE, FL_MIDDLE_MOUSE, FL_RIGHT_MOUSE,
                  FL_SCROLLUP_MOUSE, FL_SCROLLDOWN_MOUSE, FL_LEFTMOUSE,
                  FL_MIDDLEMOUSE, FL_RIGHTMOUSE, FL_SCROLLUPMOUSE,
                  FL_SCROLLDOWNMOUSE]
-                
+
 
 # control when to return input, slider and dial etc. object.
 # values for unnamed enumeration
@@ -297,7 +297,7 @@ FL_RETURN_ALWAYS = ~ FL_RETURN_END_CHANGED
 
 
 # my add, list of possible values --LK
-RETURN_list = [FL_RETURN_NONE, FL_RETURN_CHANGED, FL_RETURN_END, 
+RETURN_list = [FL_RETURN_NONE, FL_RETURN_CHANGED, FL_RETURN_END,
                FL_RETURN_END_CHANGED, FL_RETURN_SELECTION,
                FL_RETURN_DESELECTION, FL_RETURN_TRIGGERED, FL_RETURN_ALWAYS]
 
@@ -516,7 +516,7 @@ COLOR_list = [FL_BLACK, FL_RED, FL_GREEN, FL_YELLOW, FL_BLUE, FL_MAGENTA,
               FL_DARKKHAKI, FL_DARKMAGENTA, FL_DARKOLIVEGREEN, FL_DARKORCHID,
               FL_DARKRED, FL_DARKSALMON, FL_DARKSEAGREEN, FL_DARKSLATEBLUE,
               FL_DARKSLATEGRAY, FL_DARKSLATEGREY, FL_DARKTURQUOISE,
-              FL_DEEPSKYBLUE, FL_DIMGRAY, FL_DIMGREY, FL_FIREBRICK, 
+              FL_DEEPSKYBLUE, FL_DIMGRAY, FL_DIMGREY, FL_FIREBRICK,
               FL_FLORALWHITE, FL_FORESTGREEN, FL_FUCHSIA, FL_GAINSBORO,
               FL_GHOSTWHITE, FL_GOLD, FL_GOLDENROD, FL_GRAY, FL_GREENYELLOW,
               FL_GREY, FL_HONEYDEW, FL_HOTPINK, FL_INDIGO, FL_IVORY,
@@ -527,11 +527,11 @@ COLOR_list = [FL_BLACK, FL_RED, FL_GREEN, FL_YELLOW, FL_BLUE, FL_MAGENTA,
               FL_LIGHTSKYBLUE, FL_LIGHTSLATEGRAY, FL_LIGHTSLATEGREY,
               FL_LIGHTSTEELBLUE, FL_LIGHTYELLOW, FL_LIME, FL_LIMEGREEN,
               FL_LINEN, FL_MAROON, FL_MEDIUMAQUAMARINE, FL_MEDIUMBLUE,
-              FL_MEDIUMORCHID, FL_MEDIUMPURPLE, FL_MEDIUMSEAGREEN, 
+              FL_MEDIUMORCHID, FL_MEDIUMPURPLE, FL_MEDIUMSEAGREEN,
               FL_MEDIUMSLATEBLUE, FL_MEDIUMSPRINGGREEN, FL_MEDIUMTURQUOISE,
               FL_MEDIUMVIOLETRED, FL_MIDNIGHTBLUE, FL_MINTCREAM, FL_MISTYROSE,
               FL_MOCCASIN, FL_NAVAJOWHITE, FL_NAVY, FL_OLDLACE, FL_OLIVE,
-              FL_OLIVEDRAB, FL_ORANGE, FL_ORANGERED, FL_PALEGOLDENROD, 
+              FL_OLIVEDRAB, FL_ORANGE, FL_ORANGERED, FL_PALEGOLDENROD,
               FL_PALETURQUOISE, FL_PALEVIOLETRED, FL_PAPAYAWHIP, FL_PEACHPUFF,
               FL_PERU, FL_PINK, FL_PLUM, FL_POWDERBLUE, FL_PURPLE,
               FL_ROSYBROWN, FL_ROYALBLUE, FL_SADDLEBROWN, FL_SALMON,
@@ -613,7 +613,7 @@ MAX_SHORTCUTS = 8
 
 
 # my add, list of possible values --LK
-KEY_list = [FL_KEY_NORMAL, FL_KEY_TAB, FL_KEY_SPECIAL, FL_KEY_ALL, 
+KEY_list = [FL_KEY_NORMAL, FL_KEY_TAB, FL_KEY_SPECIAL, FL_KEY_ALL,
             FL_ALT_MASK, FL_CONTROL_MASK, FL_SHIFT_MASK]
 
 
@@ -787,6 +787,7 @@ Pixmap = XID    # cty.c_ulong
 class FL_FORM_(cty.Structure):
     pass
 FL_FORM = FL_FORM_
+
 
 class FL_OBJECT_(cty.Structure):
     pass
@@ -973,6 +974,12 @@ FL_OBJECT_._fields_ = [
     ('want_motion', cty.c_int),
     ('want_update', cty.c_int),
 ]
+
+#fl_current_form = (cty.POINTER(FL_FORM)).in_dll(load_so_libforms(), \
+#                  'fl_current_form')
+#fl_current_form = cty.POINTER(FL_FORM)
+fl_current_form = FL_FORM()
+
 
 # error callback
 FL_ERROR_FUNC = cty.CFUNCTYPE(None, STRING, STRING)
@@ -1203,20 +1210,22 @@ _XDisplay._fields_ = []
 Display = _XDisplay
 #Display = _XDisplay.in_dll(so_libforms, "_XDisplay") # NOTWORKING
 
-
-# fl_state and fl_display already defined in main library
+#fl_state = (cty.POINTER(FL_State)).in_dll(load_so_libforms(), 'fl_state')
+fl_state = FL_State()
+#fl_display = (cty.POINTER(Display)).in_dll(load_so_libforms(), 'fl_display')
+fl_display = cty.POINTER(Display)()
 #fl_screen = (cty.c_int).in_dll(so_libforms, 'fl_screen')
-fl_screen = cty.c_int
+fl_screen = cty.c_int()
 #fl_root = (Window).in_dll(so_libforms, 'fl_root')       # root window
-fl_root = Window    # cty.c_ulong
+fl_root = Window()    # cty.c_ulong
 #fl_vroot = (Window).in_dll(so_libforms, 'fl_vroot')     # virtual root window
-fl_vroot = Window    # cty.c_ulong
+fl_vroot = Window()    # cty.c_ulong
 #fl_scrh = (cty.c_int).in_dll(so_libforms, 'fl_scrh')      # screen dimension in pixels
-fl_scrh = cty.c_int
+fl_scrh = cty.c_int()
 #fl_scrw = (cty.c_int).in_dll(so_libforms, 'fl_scrw')
-fl_scrw = cty.c_int
+fl_scrw = cty.c_int()
 #fl_vmode = (cty.c_int).in_dll(so_libforms, 'fl_vmode')
-fl_vmode = cty.c_int
+fl_vmode = cty.c_int()
 
 
 # Fonts related
