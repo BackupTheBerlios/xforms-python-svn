@@ -1,6 +1,7 @@
 
 
 SVN
+    * Porting of timerprec example.
     * Porting of longlabel example.
     * Insert c function prototype into python function body (WIP)
     * Continuing explicit conversion for base types
