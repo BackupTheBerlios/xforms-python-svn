@@ -1,6 +1,8 @@
 
 
 SVN
+    * Porting of symbols example.
+    * Some bugfixes for wrong types
     * Porting of ldial example.
     * Porting of flclock example.
     * Porting of timerprec example.

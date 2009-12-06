@@ -79,7 +79,6 @@ def main(lsysargv, sysargv):
     g = xf.fl_get_dial_value(green)     # + 0.001
     b = xf.fl_get_dial_value(blue)      # + 0.001
 
-    print r, g, b
     xf.fl_mapcolor(xfc.FL_FREE_COL1, r, g, b)
     xf.fl_redraw_object(result)
 
@@ -92,18 +91,18 @@ def main(lsysargv, sysargv):
 
     while xf.fl_do_forms():
         r = xf.fl_get_dial_value(red) + 0.001
-	g = xf.fl_get_dial_value(green) + 0.001
-	b = xf.fl_get_dial_value(blue) + 0.001
+        g = xf.fl_get_dial_value(green) + 0.001
+        b = xf.fl_get_dial_value(blue) + 0.001
 
-	xf.fl_mapcolor(xfc.FL_FREE_COL1, r, g, b)
-	xf.fl_redraw_object(result)
+        xf.fl_mapcolor(xfc.FL_FREE_COL1, r, g, b)
+        xf.fl_redraw_object(result)
 
         strng = "%d" % r
-	xf.fl_set_object_label(redtext, strng)
+        xf.fl_set_object_label(redtext, strng)
         strng = "%d" % g
-	xf.fl_set_object_label(greentext, strng)
+        xf.fl_set_object_label(greentext, strng)
         strng = "%d" % b
-	xf.fl_set_object_label(bluetext, strng)
+        xf.fl_set_object_label(bluetext, strng)
 
 
     xf.fl_finish()

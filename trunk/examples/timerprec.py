@@ -33,12 +33,12 @@ def exit_cb(ob, data):
 
 
 # timer expired
+
 def timer_cb(ob, data):
     timerval = fdform0.ldata * 0.001
     end_sec, end_usec = xf.fl_gettime()
     df = end_sec.value - start_sec.value + \
         (end_usec.value - start_usec.value) * 1.0e-6
-    print "df", df
     buf = "Timeout: %.3f  Actual: %.3f  DeltaE: %.3f" % \
           (timerval, df, df - timerval)
     xf.fl_set_object_label(fdform0.report, buf)
@@ -66,13 +66,14 @@ def main(lsysargv, sysargv):
     start_timer(fdform0.timer, 0)
     # show the first form
     xf.fl_show_form(fdform0.form0, xfc.FL_PLACE_CENTER, xfc.FL_FULLBORDER,
-		    "Timer object precision")
+                    "Timer object precision")
     xf.fl_do_forms()
     return 0
 
 
 
 # Form definition file
+
 def create_form_form0():
     #global fdui
 

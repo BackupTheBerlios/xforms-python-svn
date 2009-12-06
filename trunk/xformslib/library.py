@@ -122,18 +122,20 @@ def warn_deprecated_function(altfunc=""):
     """
 
     funcname = sys._getframe(1).f_code.co_name
-    warnings.warn("Function %s is deprecated and might be removed in future" \
-                  " releases. It should not be used anymore. %s" % (funcname, \
-                  altfunc), DeprecationWarning)
+    warningmsg = "Function %s is deprecated and might be removed in future" \
+                  " releases. It should not be used anymore. %s" % \
+                  (funcname, altfunc)
+    warnings.warn(warningmsg, DeprecationWarning)
 
 
 def func_do_nothing_placeholder(cfunction):
     """ Print a warning if called function doesn't exist
     """
 
-    warnings.warn("C function %s does NOT exist, hence its call is ignored," \
+    warningmsg = "C function %s does NOT exist, hence its call is ignored," \
                  " hence it is not wrappable and callable in python, as " \
-                 "well. Maybe removed or disabled?" % cfunction)
+                 "well. Maybe removed or disabled?" % cfunction
+    warnings.warn(warningmsg, UserWarning)
     return None
 
 
@@ -2041,11 +2043,12 @@ def fl_set_object_callback(pObject, py_callback, argum):
     """
 
     _fl_set_object_callback = cfuncproto(
-        load_so_libforms(), "fl_set_object_callback", \
-        FL_CALLBACKPTR, [cty.POINTER(FL_OBJECT), FL_CALLBACKPTR, cty.c_long],
-        """FL_CALLBACKPTR fl_set_object_callback(FL_OBJECT * obj, \
-           FL_CALLBACKPTR callback, long int argument)
-        """)
+            load_so_libforms(), "fl_set_object_callback", \
+            FL_CALLBACKPTR, [cty.POINTER(FL_OBJECT), FL_CALLBACKPTR,
+            cty.c_long],
+            """FL_CALLBACKPTR fl_set_object_callback(FL_OBJECT * obj, \
+            FL_CALLBACKPTR callback, long int argument)
+            """)
     l_argum = convert_to_long(argum)
     #print "argum", argum, l_argum
     c_callback = FL_CALLBACKPTR(py_callback)
@@ -10927,17 +10930,17 @@ def fl_goodies_atclose(pForm, p2):
 
 # Routines
 
-_fl_create_input = cfuncproto(
-        load_so_libforms(), "fl_create_input",
-        cty.POINTER(FL_OBJECT), [cty.c_int, FL_Coord, FL_Coord, FL_Coord,
-        FL_Coord, STRING],
-        """FL_OBJECT * fl_create_input(int type, FL_Coord x, FL_Coord y,
-           FL_Coord w, FL_Coord h, const char * label)
-        """)
 def fl_create_input(inputtype, x, y, w, h, label):
     """ fl_create_input(inputtype, x, y, w, h, label) -> pObject
     """
 
+    _fl_create_input = cfuncproto(
+            load_so_libforms(), "fl_create_input",
+            cty.POINTER(FL_OBJECT), [cty.c_int, FL_Coord, FL_Coord, FL_Coord,
+            FL_Coord, STRING],
+            """FL_OBJECT * fl_create_input(int type, FL_Coord x, FL_Coord y,
+               FL_Coord w, FL_Coord h, const char * label)
+            """)
     iinputtype = convert_to_int(inputtype)
     ix = convert_to_int(x)
     iy = convert_to_int(y)
@@ -10950,17 +10953,17 @@ def fl_create_input(inputtype, x, y, w, h, label):
     return retval
 
 
-_fl_add_input = cfuncproto(
-        load_so_libforms(), "fl_add_input",
-        cty.POINTER(FL_OBJECT), [cty.c_int, FL_Coord, FL_Coord, FL_Coord,
-        FL_Coord, STRING],
-        """FL_OBJECT * fl_add_input(int type, FL_Coord x, FL_Coord y,
-           FL_Coord w, FL_Coord h, const char * label)
-        """)
 def fl_add_input(inputtype, x, y, w, h, label):
     """ fl_add_input(inputtype, x, y, w, h, label) -> pObject
     """
 
+    _fl_add_input = cfuncproto(
+            load_so_libforms(), "fl_add_input",
+            cty.POINTER(FL_OBJECT), [cty.c_int, FL_Coord, FL_Coord, FL_Coord,
+            FL_Coord, STRING],
+            """FL_OBJECT * fl_add_input(int type, FL_Coord x, FL_Coord y,
+               FL_Coord w, FL_Coord h, const char * label)
+            """)
     iinputtype = convert_to_int(inputtype)
     ix = convert_to_int(x)
     iy = convert_to_int(y)
@@ -10973,391 +10976,407 @@ def fl_add_input(inputtype, x, y, w, h, label):
     return retval
 
 
-_fl_set_input = cfuncproto(
-        load_so_libforms(), "fl_set_input",
-        None, [cty.POINTER(FL_OBJECT), STRING],
-        """void fl_set_input(FL_OBJECT * ob, const char * str)
-        """)
 def fl_set_input(pObject, inputstr):
     """ fl_set_input(pObject, inputstr)
     """
 
+    _fl_set_input = cfuncproto(
+            load_so_libforms(), "fl_set_input",
+            None, [cty.POINTER(FL_OBJECT), STRING],
+            """void fl_set_input(FL_OBJECT * ob, const char * str)
+            """)
     sinputstr = convert_to_string(inputstr)
     keep_elem_refs(pObject, inputstr, sinputstr)
     _fl_set_input(pObject, sinputstr)
 
 
-_fl_set_input_return = cfuncproto(
-        load_so_libforms(), "fl_set_input_return",
-        None, [cty.POINTER(FL_OBJECT), cty.c_int],
-        """void fl_set_input_return(FL_OBJECT * ob, int value)
-        """)
 def fl_set_input_return(pObject, value):
     """ fl_set_input_return(pObject, value)
     """
 
+    _fl_set_input_return = cfuncproto(
+            load_so_libforms(), "fl_set_input_return",
+            None, [cty.POINTER(FL_OBJECT), cty.c_int],
+            """void fl_set_input_return(FL_OBJECT * ob, int value)
+            """)
     ivalue = convert_to_int(value)
     keep_elem_refs(pObject, value, ivalue)
     _fl_set_input_return(pObject, ivalue)
 
 
-_fl_set_input_color = cfuncproto(
-        load_so_libforms(), "fl_set_input_color",
-        None, [cty.POINTER(FL_OBJECT), FL_COLOR, FL_COLOR],
-        """void fl_set_input_color(FL_OBJECT * ob, FL_COLOR textcol,
-           FL_COLOR curscol)
-        """)
 def fl_set_input_color(pObject, textcolr, curscolr):
     """ fl_set_input_color(pObject, textcolr, curscolr)
     """
 
-    ultextcolr = convert_to_int(textcolr)
-    ulcurscolr = convert_to_int(curscolr)
+    _fl_set_input_color = cfuncproto(
+            load_so_libforms(), "fl_set_input_color",
+            None, [cty.POINTER(FL_OBJECT), FL_COLOR, FL_COLOR],
+            """void fl_set_input_color(FL_OBJECT * ob, FL_COLOR textcol,
+               FL_COLOR curscol)
+            """)
+    ultextcolr = convert_to_FL_COLOR(textcolr)
+    ulcurscolr = convert_to_FL_COLOR(curscolr)
     keep_elem_refs(pObject, textcolr, curscolr, ultextcolr, ulcurscolr)
     _fl_set_input_color(pObject, ultextcolr, ulcurscolr)
 
 
-_fl_get_input_color = cfuncproto(
-        load_so_libforms(), "fl_get_input_color",
-        None, [cty.POINTER(FL_OBJECT), cty.POINTER(FL_COLOR),
-        cty.POINTER(FL_COLOR)],
-        """void fl_get_input_color(FL_OBJECT * ob, FL_COLOR * textcol,
-           FL_COLOR * curscol)
-        """)
-def fl_get_input_color(pObject, textcolr, curscolr):
-    """ fl_get_input_color(pObject, textcolr, curscolr)
+#def fl_get_input_color(pObject, textcolr, curscolr)
+def fl_get_input_color(pObject):
+    """ fl_get_input_color(pObject) -> textcolr, curscolr
     """
 
+    _fl_get_input_color = cfuncproto(
+            load_so_libforms(), "fl_get_input_color",
+            None, [cty.POINTER(FL_OBJECT), cty.POINTER(FL_COLOR),
+            cty.POINTER(FL_COLOR)],
+            """void fl_get_input_color(FL_OBJECT * ob, FL_COLOR * textcol,
+               FL_COLOR * curscol)
+            """)
+    textcolr, ptextcolr = make_ulong_pointer()
+    curscolr, pcurscolr = make_ulong_pointer()
     keep_elem_refs(pObject, textcolr, curscolr)
-    _fl_get_input_color(pObject, textcolr, curscolr)
+    _fl_get_input_color(pObject, ptextcolr, pcurscolr)
+    return textcolr, curscolr
 
 
-_fl_set_input_scroll = cfuncproto(
-        load_so_libforms(), "fl_set_input_scroll",
-        None, [cty.POINTER(FL_OBJECT), cty.c_int],
-        """void fl_set_input_scroll(FL_OBJECT * ob, int yes)
-        """)
 def fl_set_input_scroll(pObject, yes):
     """ fl_set_input_scroll(pObject, yes)
     """
 
+    _fl_set_input_scroll = cfuncproto(
+            load_so_libforms(), "fl_set_input_scroll",
+            None, [cty.POINTER(FL_OBJECT), cty.c_int],
+            """void fl_set_input_scroll(FL_OBJECT * ob, int yes)
+            """)
     iyes = convert_to_int(yes)
     keep_elem_refs(pObject, yes, iyes)
     _fl_set_input_scroll(pObject, iyes)
 
 
-_fl_set_input_cursorpos = cfuncproto(
-        load_so_libforms(), "fl_set_input_cursorpos",
-        None, [cty.POINTER(FL_OBJECT), cty.c_int, cty.c_int],
-        """void fl_set_input_cursorpos(FL_OBJECT * ob, int xpos, int ypos)
-        """)
 def fl_set_input_cursorpos(pObject, xpos, ypos):
     """ fl_set_input_cursorpos(pObject, xpos, ypos)
     """
 
+    _fl_set_input_cursorpos = cfuncproto(
+            load_so_libforms(), "fl_set_input_cursorpos",
+            None, [cty.POINTER(FL_OBJECT), cty.c_int, cty.c_int],
+            """void fl_set_input_cursorpos(FL_OBJECT * ob, int xpos, int ypos)
+            """)
     ixpos = convert_to_int(xpos)
     iypos = convert_to_int(ypos)
     keep_elem_refs(pObject, xpos, ypos, ixpos, iypos)
     _fl_set_input_cursorpos(pObject, ixpos, iypos)
 
 
-_fl_set_input_selected = cfuncproto(
-        load_so_libforms(), "fl_set_input_selected",
-        None, [cty.POINTER(FL_OBJECT), cty.c_int],
-        """void fl_set_input_selected(FL_OBJECT * ob, int yes)
-        """)
 def fl_set_input_selected(pObject, yes):
     """ fl_set_input_selected(pObject, yes)
     """
 
+    _fl_set_input_selected = cfuncproto(
+            load_so_libforms(), "fl_set_input_selected",
+            None, [cty.POINTER(FL_OBJECT), cty.c_int],
+            """void fl_set_input_selected(FL_OBJECT * ob, int yes)
+            """)
     iyes = convert_to_int(yes)
     keep_elem_refs(pObject, yes, iyes)
     _fl_set_input_selected(pObject, iyes)
 
 
-_fl_set_input_selected_range = cfuncproto(
-        load_so_libforms(), "fl_set_input_selected_range",
-        None, [cty.POINTER(FL_OBJECT), cty.c_int, cty.c_int],
-        """void fl_set_input_selected_range(FL_OBJECT * ob, int begin, int end)
-        """)
 def fl_set_input_selected_range(pObject, begin, end):
     """ fl_set_input_selected_range(pObject, begin, end)
     """
 
+    _fl_set_input_selected_range = cfuncproto(
+            load_so_libforms(), "fl_set_input_selected_range",
+            None, [cty.POINTER(FL_OBJECT), cty.c_int, cty.c_int],
+            """void fl_set_input_selected_range(FL_OBJECT * ob,
+               int begin, int end)
+            """)
     ibegin = convert_to_int(begin)
     iend = convert_to_int(end)
     keep_elem_refs(pObject, begin, end, ibegin, iend)
     _fl_set_input_selected_range(pObject, ibegin, iend)
 
 
-_fl_get_input_selected_range = cfuncproto(
-        load_so_libforms(), "fl_get_input_selected_range",
-        STRING, [cty.POINTER(FL_OBJECT), cty.POINTER(cty.c_int),
-        cty.POINTER(cty.c_int)],
-        """const char * fl_get_input_selected_range(FL_OBJECT * ob,
-           int * begin, int * end)
-        """)
 def fl_get_input_selected_range(pObject, begin, end):
     """ fl_get_input_selected_range(pObject, begin, end) -> string
     """
 
+    _fl_get_input_selected_range = cfuncproto(
+            load_so_libforms(), "fl_get_input_selected_range",
+            STRING, [cty.POINTER(FL_OBJECT), cty.POINTER(cty.c_int),
+            cty.POINTER(cty.c_int)],
+            """const char * fl_get_input_selected_range(FL_OBJECT * ob,
+               int * begin, int * end)
+            """)
     keep_elem_refs(pObject, begin, end)
     retval = _fl_get_input_selected_range(pObject, begin, end)
     return retval
 
 
-_fl_set_input_maxchars = cfuncproto(
-        load_so_libforms(), "fl_set_input_maxchars",
-        None, [cty.POINTER(FL_OBJECT), cty.c_int],
-        """void fl_set_input_maxchars(FL_OBJECT * ob, int maxchars)
-        """)
 def fl_set_input_maxchars(pObject, maxchars):
     """ fl_set_input_maxchars(pObject, maxchars)
     """
 
+    _fl_set_input_maxchars = cfuncproto(
+            load_so_libforms(), "fl_set_input_maxchars",
+            None, [cty.POINTER(FL_OBJECT), cty.c_int],
+            """void fl_set_input_maxchars(FL_OBJECT * ob, int maxchars)
+            """)
     imaxchars = convert_to_int(maxchars)
     keep_elem_refs(pObject, maxchars, imaxchars)
     _fl_set_input_maxchars(pObject, imaxchars)
 
 
-_fl_set_input_format = cfuncproto(
-        load_so_libforms(), "fl_set_input_format",
-        None, [cty.POINTER(FL_OBJECT), cty.c_int, cty.c_int],
-        """void fl_set_input_format(FL_OBJECT * ob, int fmt, int sep)
-        """)
 def fl_set_input_format(pObject, fmt, sep):
     """ fl_set_input_format(pObject, fmt, sep)
     """
 
+    _fl_set_input_format = cfuncproto(
+            load_so_libforms(), "fl_set_input_format",
+            None, [cty.POINTER(FL_OBJECT), cty.c_int, cty.c_int],
+            """void fl_set_input_format(FL_OBJECT * ob, int fmt, int sep)
+            """)
     ifmt = convert_to_int(fmt)
     isep = convert_to_int(sep)
     keep_elem_refs(pObject, fmt, sep, ifmt, isep)
     _fl_set_input_format(pObject, ifmt, isep)
 
 
-_fl_set_input_hscrollbar = cfuncproto(
-        load_so_libforms(), "fl_set_input_hscrollbar",
-        None, [cty.POINTER(FL_OBJECT), cty.c_int],
-        """void fl_set_input_hscrollbar(FL_OBJECT * ob, int pref)
-        """)
 def fl_set_input_hscrollbar(pObject, pref):
     """ fl_set_input_hscrollbar(pObject, pref)
     """
 
+    _fl_set_input_hscrollbar = cfuncproto(
+            load_so_libforms(), "fl_set_input_hscrollbar",
+            None, [cty.POINTER(FL_OBJECT), cty.c_int],
+            """void fl_set_input_hscrollbar(FL_OBJECT * ob, int pref)
+            """)
     ipref = convert_to_int(pref)
     keep_elem_refs(pObject, pref, ipref)
     _fl_set_input_hscrollbar(pObject, ipref)
 
 
-_fl_set_input_vscrollbar = cfuncproto(
-        load_so_libforms(), "fl_set_input_vscrollbar",
-        None, [cty.POINTER(FL_OBJECT), cty.c_int],
-        """void fl_set_input_vscrollbar(FL_OBJECT * ob, int pref)
-        """)
 def fl_set_input_vscrollbar(pObject, pref):
     """ fl_set_input_vscrollbar(pObject, pref)
     """
 
+    _fl_set_input_vscrollbar = cfuncproto(
+            load_so_libforms(), "fl_set_input_vscrollbar",
+            None, [cty.POINTER(FL_OBJECT), cty.c_int],
+            """void fl_set_input_vscrollbar(FL_OBJECT * ob, int pref)
+            """)
     ipref = convert_to_int(pref)
     keep_elem_refs(pObject, pref, ipref)
     _fl_set_input_vscrollbar(pObject, ipref)
 
 
-_fl_set_input_topline = cfuncproto(
-        load_so_libforms(), "fl_set_input_topline",
-        None, [cty.POINTER(FL_OBJECT), cty.c_int],
-        """void fl_set_input_topline(FL_OBJECT * ob, int top)
-        """)
 def fl_set_input_topline(pObject, top):
     """ fl_set_input_topline(pObject, top)
     """
 
+    _fl_set_input_topline = cfuncproto(
+            load_so_libforms(), "fl_set_input_topline",
+            None, [cty.POINTER(FL_OBJECT), cty.c_int],
+            """void fl_set_input_topline(FL_OBJECT * ob, int top)
+            """)
     itop = convert_to_int(top)
     keep_elem_refs(pObject, top, itop)
     _fl_set_input_topline(pObject, itop)
 
 
-_fl_set_input_scrollbarsize = cfuncproto(
-        load_so_libforms(), "fl_set_input_scrollbarsize",
-        None, [cty.POINTER(FL_OBJECT), cty.c_int, cty.c_int],
-        """void fl_set_input_scrollbarsize(FL_OBJECT * ob, int hh, int vw)
-        """)
 def fl_set_input_scrollbarsize(pObject, hh, vw):
     """ fl_set_input_scrollbarsize(pObject, hh, vw)
     """
 
+    _fl_set_input_scrollbarsize = cfuncproto(
+            load_so_libforms(), "fl_set_input_scrollbarsize",
+            None, [cty.POINTER(FL_OBJECT), cty.c_int, cty.c_int],
+            """void fl_set_input_scrollbarsize(FL_OBJECT * ob, int hh, int vw)
+            """)
     ihh = convert_to_int(hh)
     ivw = convert_to_int(vw)
     keep_elem_refs(pObject, hh, vw, ihh, ivw)
     _fl_set_input_scrollbarsize(pObject, ihh, ivw)
 
 
-_fl_get_input_scrollbarsize = cfuncproto(
-        load_so_libforms(), "fl_get_input_scrollbarsize",
-        None, [cty.POINTER(FL_OBJECT), cty.POINTER(cty.c_int),
-        cty.POINTER(cty.c_int)],
-        """void fl_get_input_scrollbarsize(FL_OBJECT * ob, int * hh, int * vw)
-        """)
-def fl_get_input_scrollbarsize(pObject, hh, vw):
-    """ fl_get_input_scrollbarsize(pObject, hh, vw)
+#def fl_get_input_scrollbarsize(pObject, hh, vw)
+def fl_get_input_scrollbarsize(pObject):
+    """ fl_get_input_scrollbarsize(pObject) -> hh, vw
     """
 
+    _fl_get_input_scrollbarsize = cfuncproto(
+            load_so_libforms(), "fl_get_input_scrollbarsize",
+            None, [cty.POINTER(FL_OBJECT), cty.POINTER(cty.c_int),
+            cty.POINTER(cty.c_int)],
+            """void fl_get_input_scrollbarsize(FL_OBJECT * ob,
+               int * hh, int * vw)
+            """)
+    hh, phh = make_int_pointer()
+    vw, pvw = make_int_pointer()
     keep_elem_refs(pObject, hh, vw)
-    _fl_get_input_scrollbarsize(pObject, hh, vw)
+    _fl_get_input_scrollbarsize(pObject, phh, pvw)
+    return hh, vw
 
 
-_fl_set_input_xoffset = cfuncproto(
-        load_so_libforms(), "fl_set_input_xoffset",
-        None, [cty.POINTER(FL_OBJECT), cty.c_int],
-        """void fl_set_input_xoffset(FL_OBJECT * ob, int xoff)
-        """)
 def fl_set_input_xoffset(pObject, xoff):
     """ fl_set_input_xoffset(pObject, xoff)
     """
 
+    _fl_set_input_xoffset = cfuncproto(
+            load_so_libforms(), "fl_set_input_xoffset",
+            None, [cty.POINTER(FL_OBJECT), cty.c_int],
+            """void fl_set_input_xoffset(FL_OBJECT * ob, int xoff)
+            """)
     ixoff = convert_to_int(xoff)
     keep_elem_refs(pObject, xoff, ixoff)
     _fl_set_input_xoffset(pObject, ixoff)
 
 
-_fl_get_input_xoffset = cfuncproto(
-        load_so_libforms(), "fl_get_input_xoffset",
-        cty.c_int, [cty.POINTER(FL_OBJECT)],
-        """int fl_get_input_xoffset(FL_OBJECT * ob)
-        """)
 def fl_get_input_xoffset(pObject):
     """ fl_get_input_xoffset(pObject) -> num.
     """
 
+    _fl_get_input_xoffset = cfuncproto(
+            load_so_libforms(), "fl_get_input_xoffset",
+            cty.c_int, [cty.POINTER(FL_OBJECT)],
+            """int fl_get_input_xoffset(FL_OBJECT * ob)
+            """)
     keep_elem_refs(pObject)
     retval = _fl_get_input_xoffset(pObject)
     return retval
 
 
-_fl_set_input_fieldchar = cfuncproto(
-        load_so_libforms(), "fl_set_input_fieldchar",
-        cty.c_int, [cty.POINTER(FL_OBJECT), cty.c_int],
-        """int fl_set_input_fieldchar(FL_OBJECT * ob, int fchar)
-        """)
-def fl_set_input_fieldchar(pObject, fchar):
-    """ fl_set_input_fieldchar(pObject, fchar) -> num.
+def fl_set_input_fieldchar(pObject, fldchar):
+    """ fl_set_input_fieldchar(pObject, fldchar) -> num.
     """
 
-    ifchar = convert_to_int(fchar)
-    keep_elem_refs(pObject, fchar, ifchar)
-    retval = _fl_set_input_fieldchar(pObject, ifchar)
+    _fl_set_input_fieldchar = cfuncproto(
+            load_so_libforms(), "fl_set_input_fieldchar",
+            cty.c_int, [cty.POINTER(FL_OBJECT), cty.c_int],
+            """int fl_set_input_fieldchar(FL_OBJECT * ob, int fchar)
+            """)
+    ifldchar = convert_to_int(fldchar)
+    keep_elem_refs(pObject, fldchar, ifldchar)
+    retval = _fl_set_input_fieldchar(pObject, ifldchar)
     return retval
 
 
-_fl_get_input_topline = cfuncproto(
-        load_so_libforms(), "fl_get_input_topline",
-        cty.c_int, [cty.POINTER(FL_OBJECT)],
-        """int fl_get_input_topline(FL_OBJECT * ob)
-        """)
 def fl_get_input_topline(pObject):
     """ fl_get_input_topline(pObject) -> num.
     """
 
+    _fl_get_input_topline = cfuncproto(
+            load_so_libforms(), "fl_get_input_topline",
+            cty.c_int, [cty.POINTER(FL_OBJECT)],
+            """int fl_get_input_topline(FL_OBJECT * ob)
+            """)
     keep_elem_refs(pObject)
     retval = _fl_get_input_topline(pObject)
     return retval
 
 
-_fl_get_input_screenlines = cfuncproto(
-        load_so_libforms(), "fl_get_input_screenlines",
-        cty.c_int, [cty.POINTER(FL_OBJECT)],
-        """int fl_get_input_screenlines(FL_OBJECT * ob)
-        """)
 def fl_get_input_screenlines(pObject):
     """ fl_get_input_screenlines(pObject) -> num.
     """
 
+    _fl_get_input_screenlines = cfuncproto(
+            load_so_libforms(), "fl_get_input_screenlines",
+            cty.c_int, [cty.POINTER(FL_OBJECT)],
+            """int fl_get_input_screenlines(FL_OBJECT * ob)
+            """)
     keep_elem_refs(pObject)
     retval = _fl_get_input_screenlines(pObject)
     return retval
 
 
-_fl_get_input_cursorpos = cfuncproto(
-        load_so_libforms(), "fl_get_input_cursorpos",
-        cty.c_int, [cty.POINTER(FL_OBJECT), cty.POINTER(cty.c_int),
-        cty.POINTER(cty.c_int)],
-        """int fl_get_input_cursorpos(FL_OBJECT * ob, int * x, int * y)
-        """)
-def fl_get_input_cursorpos(pObject, x, y):
-    """ fl_get_input_cursorpos(pObject, x, y) -> num.
+#def fl_get_input_cursorpos(pObject, x, y)
+def fl_get_input_cursorpos(pObject):
+    """ fl_get_input_cursorpos(pObject) -> num., x, y
     """
 
+    _fl_get_input_cursorpos = cfuncproto(
+            load_so_libforms(), "fl_get_input_cursorpos",
+            cty.c_int, [cty.POINTER(FL_OBJECT), cty.POINTER(cty.c_int),
+            cty.POINTER(cty.c_int)],
+            """int fl_get_input_cursorpos(FL_OBJECT * ob, int * x, int * y)
+            """)
+    x, px = make_int_pointer()
+    y, py = make_int_pointer()
     keep_elem_refs(pObject, x, y)
-    retval = _fl_get_input_cursorpos(pObject, x, y)
-    return retval
+    retval = _fl_get_input_cursorpos(pObject, px, py)
+    return retval, x, y
 
 
-_fl_set_input_cursor_visible = cfuncproto(
-        load_so_libforms(), "fl_set_input_cursor_visible",
-        None, [cty.POINTER(FL_OBJECT), cty.c_int],
-        """void fl_set_input_cursor_visible(FL_OBJECT * ob, int visible)
-        """)
 def fl_set_input_cursor_visible(pObject, visible):
     """ fl_set_input_cursor_visible(pObject, visible)
     """
 
+    _fl_set_input_cursor_visible = cfuncproto(
+            load_so_libforms(), "fl_set_input_cursor_visible",
+            None, [cty.POINTER(FL_OBJECT), cty.c_int],
+            """void fl_set_input_cursor_visible(FL_OBJECT * ob, int visible)
+            """)
     ivisible = convert_to_int(visible)
     keep_elem_refs(pObject, visible, ivisible)
     _fl_set_input_cursor_visible(pObject, ivisible)
 
 
-_fl_get_input_numberoflines = cfuncproto(
-        load_so_libforms(), "fl_get_input_numberoflines",
-        cty.c_int, [cty.POINTER(FL_OBJECT)],
-        """int fl_get_input_numberoflines(FL_OBJECT * ob)
-        """)
 def fl_get_input_numberoflines(pObject):
     """ fl_get_input_numberoflines(pObject) -> lines num.
     """
 
+    _fl_get_input_numberoflines = cfuncproto(
+            load_so_libforms(), "fl_get_input_numberoflines",
+            cty.c_int, [cty.POINTER(FL_OBJECT)],
+            """int fl_get_input_numberoflines(FL_OBJECT * ob)
+            """)
     keep_elem_refs(pObject)
     retval = _fl_get_input_numberoflines(pObject)
     return retval
 
 
-_fl_get_input_format = cfuncproto(
-        load_so_libforms(), "fl_get_input_format",
-        None, [cty.POINTER(FL_OBJECT), cty.POINTER(cty.c_int),
-        cty.POINTER(cty.c_int)],
-        """void fl_get_input_format(FL_OBJECT * ob, int * fmt, int * sep)
-        """)
-def fl_get_input_format(pObject, fmt, sep):
-    """ fl_get_input_format(pObject, fmt, sep)
+#def fl_get_input_format(pObject, fmt, sep)
+def fl_get_input_format(pObject):
+    """ fl_get_input_format(pObject) -> fmt, sep
     """
 
-    keep_elem_refs(pObject, fmt, sep)
-    _fl_get_input_format(pObject, fmt, sep)
+    _fl_get_input_format = cfuncproto(
+            load_so_libforms(), "fl_get_input_format",
+            None, [cty.POINTER(FL_OBJECT), cty.POINTER(cty.c_int),
+            cty.POINTER(cty.c_int)],
+            """void fl_get_input_format(FL_OBJECT * ob, int * fmt, int * sep)
+            """)
+    fmt, pfmt = make_int_pointer()
+    sep, psep = make_int_pointer()
+    keep_elem_refs(pObject, fmt, sep, pfmt, psep)
+    _fl_get_input_format(pObject, pfmt, psep)
+    return fmt, sep
 
-
-_fl_get_input = cfuncproto(
-        load_so_libforms(), "fl_get_input",
-        STRING, [cty.POINTER(FL_OBJECT)],
-        """const char * fl_get_input(FL_OBJECT * ob)
-        """)
 def fl_get_input(pObject):
     """ fl_get_input(pObject) -> input string
     """
 
+    _fl_get_input = cfuncproto(
+            load_so_libforms(), "fl_get_input",
+            STRING, [cty.POINTER(FL_OBJECT)],
+            """const char * fl_get_input(FL_OBJECT * ob)
+            """)
     keep_elem_refs(pObject)
     retval = _fl_get_input(pObject)
     return retval
 
 
-_fl_set_input_filter = cfuncproto(
-        load_so_libforms(), "fl_set_input_filter",
-        FL_INPUTVALIDATOR, [cty.POINTER(FL_OBJECT), FL_INPUTVALIDATOR],
-        """FL_INPUTVALIDATOR fl_set_input_filter(FL_OBJECT * ob,
-           FL_INPUTVALIDATOR validate)
-        """)
 def fl_set_input_filter(pObject, py_validate):
     """ fl_set_input_filter(pObject, py_validate) -> input_filter func.
     """
 
+    _fl_set_input_filter = cfuncproto(
+            load_so_libforms(), "fl_set_input_filter",
+            FL_INPUTVALIDATOR, [cty.POINTER(FL_OBJECT), FL_INPUTVALIDATOR],
+            """FL_INPUTVALIDATOR fl_set_input_filter(FL_OBJECT * ob,
+               FL_INPUTVALIDATOR validate)
+            """)
     c_validate = FL_INPUTVALIDATOR(py_validate)
     keep_cfunc_refs(c_validate)
     keep_elem_refs(pObject)
@@ -11365,17 +11384,18 @@ def fl_set_input_filter(pObject, py_validate):
     return retval
 
 
-_fl_validate_input = cfuncproto(
-        load_so_libforms(), "fl_validate_input",
-        cty.c_int, [cty.POINTER(FL_OBJECT)],
-        """int fl_validate_input(FL_OBJECT * obj)
-        """)
 def fl_validate_input(pObject):
-    """ fl_validate_input(pObject)
+    """ fl_validate_input(pObject) -> num.
     """
 
+    _fl_validate_input = cfuncproto(
+            load_so_libforms(), "fl_validate_input",
+            cty.c_int, [cty.POINTER(FL_OBJECT)],
+            """int fl_validate_input(FL_OBJECT * obj)
+            """)
     keep_elem_refs(pObject)
-    _fl_validate_input(pObject)
+    retval = _fl_validate_input(pObject)
+    return retval
 
 
 fl_set_input_shortcut = fl_set_object_shortcut
@@ -11383,17 +11403,17 @@ fl_set_input_shortcut = fl_set_object_shortcut
 
 # edit keys
 
-_fl_set_input_editkeymap = cfuncproto(
-        load_so_libforms(), "fl_set_input_editkeymap",
-        None, [cty.POINTER(FL_EditKeymap)],
-        """void fl_set_input_editkeymap(const char * keymap)
-        """)
-def fl_set_input_editkeymap(keymap):
-    """ fl_set_input_editkeymap(keymap)
+def fl_set_input_editkeymap(pEditKeymap):
+    """ fl_set_input_editkeymap(pEditKeymap)
     """
 
-    keep_elem_refs(keymap)
-    _fl_set_input_editkeymap(keymap)
+    _fl_set_input_editkeymap = cfuncproto(
+            load_so_libforms(), "fl_set_input_editkeymap",
+            None, [cty.POINTER(FL_EditKeymap)],
+            """void fl_set_input_editkeymap(const char * keymap)
+            """)
+    keep_elem_refs(pEditKeymap)
+    _fl_set_input_editkeymap(pEditKeymap)
 
 
 
