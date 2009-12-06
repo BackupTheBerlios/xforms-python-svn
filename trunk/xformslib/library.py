@@ -7448,43 +7448,43 @@ def fl_set_pixmapbutton_focus_pixmap(pObject, idnum, mask):
     _fl_set_pixmapbutton_focus_pixmap(pObject, ulidnum, ulmask)
 
 
-_fl_get_button = cfuncproto(
-        load_so_libforms(), "fl_get_button",
-        cty.c_int, [cty.POINTER(FL_OBJECT)],
-        """int fl_get_button(FL_OBJECT * ob)
-        """)
 def fl_get_button(pObject):
     """ fl_get_button(pObject) -> num.
     """
 
+    _fl_get_button = cfuncproto(
+            load_so_libforms(), "fl_get_button",
+            cty.c_int, [cty.POINTER(FL_OBJECT)],
+            """int fl_get_button(FL_OBJECT * ob)
+            """)
     keep_elem_refs(pObject)
     retval = _fl_get_button(pObject)
     return retval
 
 
-_fl_set_button = cfuncproto(
-        load_so_libforms(), "fl_set_button",
-        None, [cty.POINTER(FL_OBJECT), cty.c_int],
-        """void fl_set_button(FL_OBJECT * ob, int pushed)
-        """)
 def fl_set_button(pObject, pushed):
     """ fl_set_button(pObject, pushed)
     """
 
+    _fl_set_button = cfuncproto(
+            load_so_libforms(), "fl_set_button",
+            None, [cty.POINTER(FL_OBJECT), cty.c_int],
+            """void fl_set_button(FL_OBJECT * ob, int pushed)
+            """)
     ipushed = convert_to_int(pushed)
     keep_elem_refs(pObject, pushed, ipushed)
     _fl_set_button(pObject, ipushed)
 
 
-_fl_get_button_numb = cfuncproto(
-        load_so_libforms(), "fl_get_button_numb",
-        cty.c_int, [cty.POINTER(FL_OBJECT)],
-        """int fl_get_button_numb(FL_OBJECT * ob)
-        """)
 def fl_get_button_numb(pObject):
     """ fl_get_button_numb(pObject) -> num.
     """
 
+    _fl_get_button_numb = cfuncproto(
+            load_so_libforms(), "fl_get_button_numb",
+            cty.c_int, [cty.POINTER(FL_OBJECT)],
+            """int fl_get_button_numb(FL_OBJECT * ob)
+            """)
     keep_elem_refs(pObject)
     retval = _fl_get_button_numb(pObject)
     return retval
@@ -7493,17 +7493,18 @@ def fl_get_button_numb(pObject):
 fl_set_button_shortcut = fl_set_object_shortcut
 
 
-_fl_create_generic_button = cfuncproto(
-        load_so_libforms(), "fl_create_generic_button",
-        cty.POINTER(FL_OBJECT), [cty.c_int, cty.c_int, FL_Coord, FL_Coord,
-        FL_Coord, FL_Coord, STRING],
-        """FL_OBJECT * fl_create_generic_button(int objclass, int type,
-           FL_Coord x, FL_Coord y, FL_Coord w, FL_Coord h, const char * label)
-        """)
 def fl_create_generic_button(objclass, buttontype, x, y, w, h, label):
     """ fl_create_generic_button(objclass, buttontype, x, y, w, h, label) -> pObject
     """
 
+    _fl_create_generic_button = cfuncproto(
+            load_so_libforms(), "fl_create_generic_button",
+            cty.POINTER(FL_OBJECT), [cty.c_int, cty.c_int, FL_Coord, FL_Coord,
+            FL_Coord, FL_Coord, STRING],
+            """FL_OBJECT * fl_create_generic_button(int objclass, int type,
+               FL_Coord x, FL_Coord y, FL_Coord w, FL_Coord h,
+               const char * label)
+            """)
     iobjclass = convert_to_int(objclass)
     ibuttontype = convert_to_int(buttontype)
     ix = convert_to_int(x)
@@ -7513,21 +7514,21 @@ def fl_create_generic_button(objclass, buttontype, x, y, w, h, label):
     slabel = convert_to_string(label)
     keep_elem_refs(objclass, buttontype, x, y, w, h, label, iobjclass,
                    ibuttontype, ix, iy, iw, ih, slabel)
-    retval = _fl_add_pixmapbutton(iobjclass, ibuttontype, ix, iy, iw, ih,
-                                  slabel)
+    retval = _fl_create_generic_button(iobjclass, ibuttontype, ix, iy,
+                                       iw, ih, slabel)
     return retval
 
 
-_fl_add_button_class = cfuncproto(
-        load_so_libforms(), "fl_add_button_class",
-        None, [cty.c_int, FL_DrawButton, FL_CleanupButton],
-        """void fl_add_button_class(int bclass, FL_DrawButton drawit,
-           FL_CleanupButton cleanup)
-        """)
 def fl_add_button_class(bclass, py_drawit, py_cleanup):
     """ fl_add_button_class(bclass, py_drawit, py_cleanup)
     """
 
+    _fl_add_button_class = cfuncproto(
+            load_so_libforms(), "fl_add_button_class",
+            None, [cty.c_int, FL_DrawButton, FL_CleanupButton],
+            """void fl_add_button_class(int bclass, FL_DrawButton drawit,
+               FL_CleanupButton cleanup)
+            """)
     ibclass = convert_to_int(bclass)
     c_drawit = FL_DrawButton(py_drawit)
     c_cleanup = FL_CleanupButton(py_cleanup)
@@ -7536,31 +7537,31 @@ def fl_add_button_class(bclass, py_drawit, py_cleanup):
     _fl_add_button_class(ibclass, c_drawit, c_cleanup)
 
 
-_fl_set_button_mouse_buttons = cfuncproto(
-        load_so_libforms(), "fl_set_button_mouse_buttons",
-        None, [cty.POINTER(FL_OBJECT), cty.c_uint],
-        """void fl_set_button_mouse_buttons(FL_OBJECT * ob,
-           unsigned int buttons)
-        """)
 def fl_set_button_mouse_buttons(pObject, buttons):
     """ fl_set_button_mouse_buttons(pObject, buttons)
     """
 
+    _fl_set_button_mouse_buttons = cfuncproto(
+            load_so_libforms(), "fl_set_button_mouse_buttons",
+            None, [cty.POINTER(FL_OBJECT), cty.c_uint],
+            """void fl_set_button_mouse_buttons(FL_OBJECT * ob,
+               unsigned int buttons)
+            """)
     ibuttons = convert_to_int(buttons)
     keep_elem_refs(pObject, buttons, ibuttons)
     _fl_set_button_mouse_buttons(pObject, ibuttons)
 
 
-_fl_get_button_mouse_buttons = cfuncproto(
-        load_so_libforms(), "fl_get_button_mouse_buttons",
-        None, [cty.POINTER(FL_OBJECT), cty.POINTER(cty.c_uint)],
-        """void fl_get_button_mouse_buttons(FL_OBJECT * ob,
-           unsigned int * buttons)
-        """)
 def fl_get_button_mouse_buttons(pObject, buttons):
     """ fl_get_button_mouse_buttons(pObject, buttons)
     """
 
+    _fl_get_button_mouse_buttons = cfuncproto(
+            load_so_libforms(), "fl_get_button_mouse_buttons",
+            None, [cty.POINTER(FL_OBJECT), cty.POINTER(cty.c_uint)],
+            """void fl_get_button_mouse_buttons(FL_OBJECT * ob,
+               unsigned int * buttons)
+            """)
     keep_elem_refs(pObject, buttons)
     _fl_get_button_mouse_buttons(pObject, buttons)
 
@@ -7573,18 +7574,18 @@ def fl_get_button_mouse_buttons(pObject, buttons):
 
 # Interfaces
 
-_fl_create_generic_canvas = cfuncproto(
-        load_so_libforms(), "fl_create_generic_canvas",
-        cty.POINTER(FL_OBJECT), [cty.c_int, cty.c_int, FL_Coord, FL_Coord,
-        FL_Coord, FL_Coord, STRING],
-        """FL_OBJECT * fl_create_generic_canvas(int canvas_class, int type,
-           FL_Coord x, FL_Coord y, FL_Coord w, FL_Coord h, const char * label)
-        """)
 def fl_create_generic_canvas(canvasclass, canvastype, x, y, w, h, label):
     """ fl_create_generic_canvas(canvasclass, canvastype, x, y, w, h, label) -> pObject
     """
 
-
+    _fl_create_generic_canvas = cfuncproto(
+            load_so_libforms(), "fl_create_generic_canvas",
+            cty.POINTER(FL_OBJECT), [cty.c_int, cty.c_int, FL_Coord, FL_Coord,
+            FL_Coord, FL_Coord, STRING],
+            """FL_OBJECT * fl_create_generic_canvas(int canvas_class,
+               int type, FL_Coord x, FL_Coord y, FL_Coord w, FL_Coord h,
+               const char * label)
+            """)
     icanvasclass = convert_to_int(canvasclass)
     icanvastype = convert_to_int(canvastype)
     ix = convert_to_int(x)
@@ -7599,17 +7600,17 @@ def fl_create_generic_canvas(canvasclass, canvastype, x, y, w, h, label):
     return retval
 
 
-_fl_add_canvas = cfuncproto(
-        load_so_libforms(), "fl_add_canvas",
-        cty.POINTER(FL_OBJECT), [cty.c_int, FL_Coord, FL_Coord, FL_Coord,
-        FL_Coord, STRING],
-        """FL_OBJECT * fl_add_canvas(int type, FL_Coord x, FL_Coord y,
-           FL_Coord w, FL_Coord h, const char * label)
-        """)
 def fl_add_canvas(canvastype, x, y, w, h, label):
     """ fl_add_canvas(canvastype, x, y, w, h, label) -> pObject
     """
 
+    _fl_add_canvas = cfuncproto(
+            load_so_libforms(), "fl_add_canvas",
+            cty.POINTER(FL_OBJECT), [cty.c_int, FL_Coord, FL_Coord, FL_Coord,
+            FL_Coord, STRING],
+            """FL_OBJECT * fl_add_canvas(int type, FL_Coord x, FL_Coord y,
+               FL_Coord w, FL_Coord h, const char * label)
+            """)
     icanvastype = convert_to_int(canvastype)
     ix = convert_to_int(x)
     iy = convert_to_int(y)
@@ -7622,17 +7623,17 @@ def fl_add_canvas(canvastype, x, y, w, h, label):
     return retval
 
 
-_fl_create_canvas = cfuncproto(
-        load_so_libforms(), "fl_create_canvas",
-        cty.POINTER(FL_OBJECT), [cty.c_int, FL_Coord, FL_Coord, FL_Coord,
-        FL_Coord, STRING],
-        """FL_OBJECT * fl_create_canvas(int type, FL_Coord x, FL_Coord y,
-           FL_Coord w, FL_Coord h, const char * label)
-        """)
 def fl_create_canvas(canvastype, x, y, w, h, label):
     """ fl_create_canvas(canvastype, x, y, w, h, label) -> pObject
     """
 
+    _fl_create_canvas = cfuncproto(
+            load_so_libforms(), "fl_create_canvas",
+            cty.POINTER(FL_OBJECT), [cty.c_int, FL_Coord, FL_Coord, FL_Coord,
+            FL_Coord, STRING],
+            """FL_OBJECT * fl_create_canvas(int type, FL_Coord x, FL_Coord y,
+               FL_Coord w, FL_Coord h, const char * label)
+            """)
     icanvastype = convert_to_int(canvastype)
     ix = convert_to_int(x)
     iy = convert_to_int(y)
@@ -7641,7 +7642,7 @@ def fl_create_canvas(canvastype, x, y, w, h, label):
     slabel = convert_to_string(label)
     keep_elem_refs(canvastype, x, y, w, h, label, icanvastype, ix, iy,
                    iw, ih, slabel)
-    retval = _fl_add_canvas(icanvastype, ix, iy, iw, ih, slabel)
+    retval = _fl_create_canvas(icanvastype, ix, iy, iw, ih, slabel)
     return retval
 
 
@@ -7649,74 +7650,74 @@ def fl_create_canvas(canvastype, x, y, w, h, label):
 fl_set_canvas_decoration = fl_set_object_boxtype
 
 
-_fl_set_canvas_colormap = cfuncproto(
-        load_so_libforms(), "fl_set_canvas_colormap",
-        None, [cty.POINTER(FL_OBJECT), Colormap],
-        """void fl_set_canvas_colormap(FL_OBJECT * ob, Colormap colormap)
-        """)
 def fl_set_canvas_colormap(pObject, colormap):
     """ fl_set_canvas_colormap(pObject, colormap)
     """
 
+    _fl_set_canvas_colormap = cfuncproto(
+            load_so_libforms(), "fl_set_canvas_colormap",
+            None, [cty.POINTER(FL_OBJECT), Colormap],
+            """void fl_set_canvas_colormap(FL_OBJECT * ob, Colormap colormap)
+            """)
     ulcolormap = convert_to_ulong(colormap)
     keep_elem_refs(pObject, colormap, ulcolormap)
     _fl_set_canvas_colormap(pObject, ulcolormap)
 
 
-_fl_set_canvas_visual = cfuncproto(
-        load_so_libforms(), "fl_set_canvas_visual",
-        None, [cty.POINTER(FL_OBJECT), cty.POINTER(Visual)],
-        """void fl_set_canvas_visual(FL_OBJECT * obj, Visual * vi)
-        """)
 def fl_set_canvas_visual(pObject, vi):
     """ fl_set_canvas_visual(pObject, vi)
     """
 
+    _fl_set_canvas_visual = cfuncproto(
+            load_so_libforms(), "fl_set_canvas_visual",
+            None, [cty.POINTER(FL_OBJECT), cty.POINTER(Visual)],
+            """void fl_set_canvas_visual(FL_OBJECT * obj, Visual * vi)
+            """)
     keep_elem_refs(pObject, vi)
     _fl_set_canvas_visual(pObject, vi)
 
 
-_fl_set_canvas_depth = cfuncproto(
-        load_so_libforms(), "fl_set_canvas_depth",
-        None, [cty.POINTER(FL_OBJECT), cty.c_int],
-        """void fl_set_canvas_depth(FL_OBJECT * obj, int depth)
-        """)
 def fl_set_canvas_depth(pObject, depth):
     """ fl_set_canvas_depth(pObject, depth)
     """
 
+    _fl_set_canvas_depth = cfuncproto(
+            load_so_libforms(), "fl_set_canvas_depth",
+            None, [cty.POINTER(FL_OBJECT), cty.c_int],
+            """void fl_set_canvas_depth(FL_OBJECT * obj, int depth)
+            """)
     idepth = convert_to_int(depth)
     keep_elem_refs(pObject, depth, idepth)
     _fl_set_canvas_depth(pObject, idepth)
 
 
-_fl_set_canvas_attributes = cfuncproto(
-        load_so_libforms(), "fl_set_canvas_attributes",
-        None, [cty.POINTER(FL_OBJECT), cty.c_uint,
-        cty.POINTER(XSetWindowAttributes)],
-        """void fl_set_canvas_attributes(FL_OBJECT * ob, unsigned int mask,
-           XSetWindowAttributes * xswa)
-        """)
-def fl_set_canvas_attributes(pObject, mask, xswa):
-    """ fl_set_canvas_attributes(pObject, mask, xswa)
+def fl_set_canvas_attributes(pObject, mask, pXSetWindowAttributes):
+    """ fl_set_canvas_attributes(pObject, mask, pXSetWindowAttributes)
     """
 
-    uimask = convert_to_int(mask)
-    keep_elem_refs(pObject, mask, xswa, uimask)
-    _fl_set_canvas_attributes(pObject, uimask, xswa)
+    _fl_set_canvas_attributes = cfuncproto(
+            load_so_libforms(), "fl_set_canvas_attributes",
+            None, [cty.POINTER(FL_OBJECT), cty.c_uint,
+            cty.POINTER(XSetWindowAttributes)],
+            """void fl_set_canvas_attributes(FL_OBJECT * ob,
+               unsigned int mask, XSetWindowAttributes * xswa)
+            """)
+    uimask = convert_to_uint(mask)
+    keep_elem_refs(pObject, mask, pXSetWindowAttributes, uimask)
+    _fl_set_canvas_attributes(pObject, uimask, pXSetWindowAttributes)
 
 
-_fl_add_canvas_handler = cfuncproto(
-        load_so_libforms(), "fl_add_canvas_handler",
-        FL_HANDLE_CANVAS, [cty.POINTER(FL_OBJECT), cty.c_int,
-        FL_HANDLE_CANVAS, cty.c_void_p],
-        """FL_HANDLE_CANVAS fl_add_canvas_handler(FL_OBJECT * ob, int ev,
-           FL_HANDLE_CANVAS h, void * udata)
-        """)
 def fl_add_canvas_handler(pObject, ev, py_handler, udata):
     """ fl_add_canvas_handler(pObject, ev, py_handler, udata) -> canvas handler
     """
 
+    _fl_add_canvas_handler = cfuncproto(
+            load_so_libforms(), "fl_add_canvas_handler",
+            FL_HANDLE_CANVAS, [cty.POINTER(FL_OBJECT), cty.c_int,
+            FL_HANDLE_CANVAS, cty.c_void_p],
+            """FL_HANDLE_CANVAS fl_add_canvas_handler(FL_OBJECT * ob, int ev,
+               FL_HANDLE_CANVAS h, void * udata)
+            """)
     iev = convert_to_int(ev)
     c_handler = FL_HANDLE_CANVAS(py_handler)
     keep_cfunc_refs(c_handler)
@@ -7725,58 +7726,58 @@ def fl_add_canvas_handler(pObject, ev, py_handler, udata):
     return retval
 
 
-_fl_get_canvas_id = cfuncproto(
-        load_so_libforms(), "fl_get_canvas_id",
-        Window, [cty.POINTER(FL_OBJECT)],
-        """Window fl_get_canvas_id(FL_OBJECT * ob)
-        """)
 def fl_get_canvas_id(pObject):
     """ fl_get_canvas_id(pObject) -> window
     """
 
+    _fl_get_canvas_id = cfuncproto(
+            load_so_libforms(), "fl_get_canvas_id",
+            Window, [cty.POINTER(FL_OBJECT)],
+            """Window fl_get_canvas_id(FL_OBJECT * ob)
+            """)
     keep_elem_refs(pObject)
     retval = _fl_get_canvas_id(pObject)
     return retval
 
 
-_fl_get_canvas_colormap = cfuncproto(
-        load_so_libforms(), "fl_get_canvas_colormap",
-        Colormap, [cty.POINTER(FL_OBJECT)],
-        """Colormap fl_get_canvas_colormap(FL_OBJECT * ob)
-        """)
 def fl_get_canvas_colormap(pObject):
     """ fl_get_canvas_colormap(pObject) -> colormap
     """
 
+    _fl_get_canvas_colormap = cfuncproto(
+            load_so_libforms(), "fl_get_canvas_colormap",
+            Colormap, [cty.POINTER(FL_OBJECT)],
+            """Colormap fl_get_canvas_colormap(FL_OBJECT * ob)
+            """)
     keep_elem_refs(pObject)
     retval = _fl_get_canvas_colormap(pObject)
     return retval
 
 
-_fl_get_canvas_depth = cfuncproto(
-        load_so_libforms(), "fl_get_canvas_depth",
-        cty.c_int, [cty.POINTER(FL_OBJECT)],
-        """int fl_get_canvas_depth(FL_OBJECT * obj)
-        """)
 def fl_get_canvas_depth(pObject):
     """ fl_get_canvas_depth(pObject) -> depth num.
     """
 
+    _fl_get_canvas_depth = cfuncproto(
+            load_so_libforms(), "fl_get_canvas_depth",
+            cty.c_int, [cty.POINTER(FL_OBJECT)],
+            """int fl_get_canvas_depth(FL_OBJECT * obj)
+            """)
     keep_elem_refs(pObject)
     retval = _fl_get_canvas_depth(pObject)
     return retval
 
 
-_fl_remove_canvas_handler = cfuncproto(
-        load_so_libforms(), "fl_remove_canvas_handler",
-        None, [cty.POINTER(FL_OBJECT), cty.c_int, FL_HANDLE_CANVAS],
-        """void fl_remove_canvas_handler(FL_OBJECT * ob, int ev,
-           FL_HANDLE_CANVAS h)
-        """)
 def fl_remove_canvas_handler(pObject, ev, py_handler):
     """ fl_remove_canvas_handler(pObject, ev, py_handler)
     """
 
+    _fl_remove_canvas_handler = cfuncproto(
+            load_so_libforms(), "fl_remove_canvas_handler",
+            None, [cty.POINTER(FL_OBJECT), cty.c_int, FL_HANDLE_CANVAS],
+            """void fl_remove_canvas_handler(FL_OBJECT * ob, int ev,
+               FL_HANDLE_CANVAS h)
+            """)
     iev = convert_to_int(ev)
     c_handler = FL_HANDLE_CANVAS(py_handler)
     keep_cfunc_refs(c_handler)
@@ -7784,58 +7785,58 @@ def fl_remove_canvas_handler(pObject, ev, py_handler):
     _fl_remove_canvas_handler(pObject, iev, c_handler)
 
 
-_fl_hide_canvas = cfuncproto(
-        load_so_libforms(), "fl_hide_canvas",
-        None, [cty.POINTER(FL_OBJECT)],
-        """void fl_hide_canvas(FL_OBJECT * ob)
-        """)
 def fl_hide_canvas(pObject):
     """ fl_hide_canvas(pObject)
     """
 
+    _fl_hide_canvas = cfuncproto(
+            load_so_libforms(), "fl_hide_canvas",
+            None, [cty.POINTER(FL_OBJECT)],
+            """void fl_hide_canvas(FL_OBJECT * ob)
+            """)
     keep_elem_refs(pObject)
     _fl_hide_canvas(pObject)
 
 
-_fl_share_canvas_colormap = cfuncproto(
-        load_so_libforms(), "fl_share_canvas_colormap",
-        None, [cty.POINTER(FL_OBJECT), Colormap],
-        """void fl_share_canvas_colormap(FL_OBJECT * ob, Colormap colormap)
-        """)
 def fl_share_canvas_colormap(pObject, colormap):
     """ fl_share_canvas_colormap(pObject, colormap)
     """
 
+    _fl_share_canvas_colormap = cfuncproto(
+            load_so_libforms(), "fl_share_canvas_colormap",
+            None, [cty.POINTER(FL_OBJECT), Colormap],
+            """void fl_share_canvas_colormap(FL_OBJECT * ob, Colormap colormap)
+            """)
     ulcolormap = convert_to_ulong(colormap)
     keep_elem_refs(pObject, colormap, ulcolormap)
     _fl_share_canvas_colormap(pObject, ulcolormap)
 
 
-_fl_clear_canvas = cfuncproto(
-        load_so_libforms(), "fl_clear_canvas",
-        None, [cty.POINTER(FL_OBJECT)],
-        """void fl_clear_canvas(FL_OBJECT * ob)
-        """)
 def fl_clear_canvas(pObject):
     """ fl_clear_canvas(pObject)
     """
 
+    _fl_clear_canvas = cfuncproto(
+            load_so_libforms(), "fl_clear_canvas",
+            None, [cty.POINTER(FL_OBJECT)],
+            """void fl_clear_canvas(FL_OBJECT * ob)
+            """)
     keep_elem_refs(pObject)
     _fl_clear_canvas(pObject)
 
 
-_fl_modify_canvas_prop = cfuncproto(
-        load_so_libforms(), "fl_modify_canvas_prop",
-        None, [cty.POINTER(FL_OBJECT), FL_MODIFY_CANVAS_PROP,
-        FL_MODIFY_CANVAS_PROP, FL_MODIFY_CANVAS_PROP],
-        """void fl_modify_canvas_prop(FL_OBJECT * obj,
-           FL_MODIFY_CANVAS_PROP init, FL_MODIFY_CANVAS_PROP activate,
-           FL_MODIFY_CANVAS_PROP cleanup)
-        """)
 def fl_modify_canvas_prop(pObject, py_init, py_activate, py_cleanup):
     """ fl_modify_canvas_prop(pObject, py_init, py_activate, py_cleanup)
     """
 
+    _fl_modify_canvas_prop = cfuncproto(
+            load_so_libforms(), "fl_modify_canvas_prop",
+            None, [cty.POINTER(FL_OBJECT), FL_MODIFY_CANVAS_PROP,
+            FL_MODIFY_CANVAS_PROP, FL_MODIFY_CANVAS_PROP],
+            """void fl_modify_canvas_prop(FL_OBJECT * obj,
+               FL_MODIFY_CANVAS_PROP init, FL_MODIFY_CANVAS_PROP activate,
+               FL_MODIFY_CANVAS_PROP cleanup)
+            """)
     c_init = FL_MODIFY_CANVAS_PROP(py_init)
     c_activate = FL_MODIFY_CANVAS_PROP(py_activate)
     c_cleanup = FL_MODIFY_CANVAS_PROP(py_cleanup)
@@ -7844,15 +7845,15 @@ def fl_modify_canvas_prop(pObject, py_init, py_activate, py_cleanup):
     _fl_modify_canvas_prop(pObject, c_init, c_activate, c_cleanup)
 
 
-_fl_canvas_yield_to_shortcut = cfuncproto(
-        load_so_libforms(), "fl_canvas_yield_to_shortcut",
-        None, [cty.POINTER(FL_OBJECT), cty.c_int],
-        """void fl_canvas_yield_to_shortcut(FL_OBJECT * ob, int yes)
-        """)
 def fl_canvas_yield_to_shortcut(pObject, yes):
     """ fl_canvas_yield_to_shortcut(pObject, yes)
     """
 
+    _fl_canvas_yield_to_shortcut = cfuncproto(
+            load_so_libforms(), "fl_canvas_yield_to_shortcut",
+            None, [cty.POINTER(FL_OBJECT), cty.c_int],
+            """void fl_canvas_yield_to_shortcut(FL_OBJECT * ob, int yes)
+            """)
     iyes = convert_to_int(yes)
     keep_elem_refs(pObject, yes, iyes)
     _fl_canvas_yield_to_shortcut(pObject, iyes)
