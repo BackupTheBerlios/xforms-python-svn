@@ -1,6 +1,7 @@
 
 
 SVN
+    * Porting of ldial example.
     * Porting of flclock example.
     * Porting of timerprec example.
     * Porting of longlabel example.
