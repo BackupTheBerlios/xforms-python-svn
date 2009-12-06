@@ -6942,17 +6942,17 @@ def fl_get_browser_vscroll_callback(pObject):
 
 # Routines
 
-_fl_create_button = cfuncproto(
-        load_so_libforms(), "fl_create_button",
-        cty.POINTER(FL_OBJECT), [cty.c_int, FL_Coord, FL_Coord, FL_Coord,
-        FL_Coord, STRING],
-        """FL_OBJECT * fl_create_button(int type, FL_Coord x, FL_Coord y,
-           FL_Coord w, FL_Coord h, const char * label)
-        """)
 def fl_create_button(buttontype, x, y, w, h, label):
     """ fl_create_button(buttontype, x, y, w, h, label) -> pObject
     """
 
+    _fl_create_button = cfuncproto(
+            load_so_libforms(), "fl_create_button",
+            cty.POINTER(FL_OBJECT), [cty.c_int, FL_Coord, FL_Coord, FL_Coord,
+            FL_Coord, STRING],
+            """FL_OBJECT * fl_create_button(int type, FL_Coord x, FL_Coord y,
+               FL_Coord w, FL_Coord h, const char * label)
+            """)
     ibuttontype = convert_to_int(buttontype)
     ix = convert_to_int(x)
     iy = convert_to_int(y)
@@ -6965,17 +6965,17 @@ def fl_create_button(buttontype, x, y, w, h, label):
     return retval
 
 
-_fl_create_roundbutton = cfuncproto(
-        load_so_libforms(), "fl_create_roundbutton",
-        cty.POINTER(FL_OBJECT), [cty.c_int, FL_Coord, FL_Coord, FL_Coord,
-        FL_Coord, STRING],
-        """FL_OBJECT * fl_create_roundbutton(int type, FL_Coord x,
-           FL_Coord y, FL_Coord w, FL_Coord h, const char * label)
-        """)
 def fl_create_roundbutton(buttontype, x, y, w, h, label):
     """ fl_create_roundbutton(buttontype, x, y, w, h, label) -> pObject
     """
 
+    _fl_create_roundbutton = cfuncproto(
+            load_so_libforms(), "fl_create_roundbutton",
+            cty.POINTER(FL_OBJECT), [cty.c_int, FL_Coord, FL_Coord, FL_Coord,
+            FL_Coord, STRING],
+            """FL_OBJECT * fl_create_roundbutton(int type, FL_Coord x,
+               FL_Coord y, FL_Coord w, FL_Coord h, const char * label)
+            """)
     ibuttontype = convert_to_int(buttontype)
     ix = convert_to_int(x)
     iy = convert_to_int(y)
@@ -6988,17 +6988,17 @@ def fl_create_roundbutton(buttontype, x, y, w, h, label):
     return retval
 
 
-_fl_create_round3dbutton = cfuncproto(
-        load_so_libforms(), "fl_create_round3dbutton",
-        cty.POINTER(FL_OBJECT), [cty.c_int, FL_Coord, FL_Coord, FL_Coord,
-        FL_Coord, STRING],
-        """FL_OBJECT * fl_create_round3dbutton(int type, FL_Coord x,
-           FL_Coord y, FL_Coord w, FL_Coord h, const char * label)
-        """)
 def fl_create_round3dbutton(buttontype, x, y, w, h, label):
     """ fl_create_round3dbutton(buttontype, x, y, w, h, label) -> pObject
     """
 
+    _fl_create_round3dbutton = cfuncproto(
+            load_so_libforms(), "fl_create_round3dbutton",
+            cty.POINTER(FL_OBJECT), [cty.c_int, FL_Coord, FL_Coord, FL_Coord,
+            FL_Coord, STRING],
+            """FL_OBJECT * fl_create_round3dbutton(int type, FL_Coord x,
+               FL_Coord y, FL_Coord w, FL_Coord h, const char * label)
+            """)
     ibuttontype = convert_to_int(buttontype)
     ix = convert_to_int(x)
     iy = convert_to_int(y)
@@ -7034,17 +7034,17 @@ def fl_create_lightbutton(buttontype, x, y, w, h, label):
     return retval
 
 
-_fl_create_checkbutton = cfuncproto(
-        load_so_libforms(), "fl_create_checkbutton",
-        cty.POINTER(FL_OBJECT), [cty.c_int, FL_Coord, FL_Coord, FL_Coord,
-        FL_Coord, STRING],
-        """FL_OBJECT * fl_create_checkbutton(int type, FL_Coord x,
-           FL_Coord y, FL_Coord w, FL_Coord h, const char * label)
-        """)
 def fl_create_checkbutton(buttontype, x, y, w, h, label):
     """ fl_create_checkbutton(buttontype, x, y, w, h, label) -> pObject
     """
 
+    _fl_create_checkbutton = cfuncproto(
+            load_so_libforms(), "fl_create_checkbutton",
+            cty.POINTER(FL_OBJECT), [cty.c_int, FL_Coord, FL_Coord, FL_Coord,
+            FL_Coord, STRING],
+            """FL_OBJECT * fl_create_checkbutton(int type, FL_Coord x,
+               FL_Coord y, FL_Coord w, FL_Coord h, const char * label)
+            """)
     ibuttontype = convert_to_int(buttontype)
     ix = convert_to_int(x)
     iy = convert_to_int(y)
@@ -7057,17 +7057,17 @@ def fl_create_checkbutton(buttontype, x, y, w, h, label):
     return retval
 
 
-_fl_create_bitmapbutton = cfuncproto(
-        load_so_libforms(), "fl_create_bitmapbutton",
-        cty.POINTER(FL_OBJECT), [cty.c_int, FL_Coord, FL_Coord, FL_Coord,
-        FL_Coord, STRING],
-        """FL_OBJECT * fl_create_bitmapbutton(int type, FL_Coord x,
-           FL_Coord y, FL_Coord w, FL_Coord h, const char * label)
-        """)
 def fl_create_bitmapbutton(buttontype, x, y, w, h, label):
     """ fl_create_bitmapbutton(buttontype, x, y, w, h, label) -> pObject
     """
 
+    _fl_create_bitmapbutton = cfuncproto(
+            load_so_libforms(), "fl_create_bitmapbutton",
+            cty.POINTER(FL_OBJECT), [cty.c_int, FL_Coord, FL_Coord, FL_Coord,
+            FL_Coord, STRING],
+            """FL_OBJECT * fl_create_bitmapbutton(int type, FL_Coord x,
+               FL_Coord y, FL_Coord w, FL_Coord h, const char * label)
+            """)
     ibuttontype = convert_to_int(buttontype)
     ix = convert_to_int(x)
     iy = convert_to_int(y)
@@ -7080,17 +7080,17 @@ def fl_create_bitmapbutton(buttontype, x, y, w, h, label):
     return retval
 
 
-_fl_create_pixmapbutton = cfuncproto(
-        load_so_libforms(), "fl_create_pixmapbutton",
-        cty.POINTER(FL_OBJECT), [cty.c_int, FL_Coord, FL_Coord, FL_Coord,
-        FL_Coord, STRING],
-        """FL_OBJECT * fl_create_pixmapbutton(int type, FL_Coord x,
-           FL_Coord y, FL_Coord w, FL_Coord h, const char * label)
-        """)
 def fl_create_pixmapbutton(buttontype, x, y, w, h, label):
     """ fl_create_pixmapbutton(buttontype, x, y, w, h, label) -> pObject
     """
 
+    _fl_create_pixmapbutton = cfuncproto(
+            load_so_libforms(), "fl_create_pixmapbutton",
+            cty.POINTER(FL_OBJECT), [cty.c_int, FL_Coord, FL_Coord, FL_Coord,
+            FL_Coord, STRING],
+            """FL_OBJECT * fl_create_pixmapbutton(int type, FL_Coord x,
+               FL_Coord y, FL_Coord w, FL_Coord h, const char * label)
+            """)
     ibuttontype = convert_to_int(buttontype)
     ix = convert_to_int(x)
     iy = convert_to_int(y)
@@ -7103,17 +7103,17 @@ def fl_create_pixmapbutton(buttontype, x, y, w, h, label):
     return retval
 
 
-_fl_create_scrollbutton = cfuncproto(
-        load_so_libforms(), "fl_create_scrollbutton",
-        cty.POINTER(FL_OBJECT), [cty.c_int, FL_Coord, FL_Coord, FL_Coord,
-        FL_Coord, STRING],
-        """FL_OBJECT * fl_create_scrollbutton(int type, FL_Coord x,
-           FL_Coord y, FL_Coord w, FL_Coord h, const char * label)
-        """)
 def fl_create_scrollbutton(buttontype, x, y, w, h, label):
     """ fl_create_scrollbutton(buttontype, x, y, w, h, label) -> pObject
     """
 
+    _fl_create_scrollbutton = cfuncproto(
+            load_so_libforms(), "fl_create_scrollbutton",
+            cty.POINTER(FL_OBJECT), [cty.c_int, FL_Coord, FL_Coord, FL_Coord,
+            FL_Coord, STRING],
+            """FL_OBJECT * fl_create_scrollbutton(int type, FL_Coord x,
+               FL_Coord y, FL_Coord w, FL_Coord h, const char * label)
+            """)
     ibuttontype = convert_to_int(buttontype)
     ix = convert_to_int(x)
     iy = convert_to_int(y)
@@ -7126,17 +7126,17 @@ def fl_create_scrollbutton(buttontype, x, y, w, h, label):
     return retval
 
 
-_fl_create_labelbutton = cfuncproto(
-        load_so_libforms(), "fl_create_labelbutton",
-        cty.POINTER(FL_OBJECT), [cty.c_int, FL_Coord, FL_Coord, FL_Coord,
-        FL_Coord, STRING],
-        """FL_OBJECT * fl_create_labelbutton(int type, FL_Coord x,
-           FL_Coord y, FL_Coord w, FL_Coord h, const char * label)
-        """)
 def fl_create_labelbutton(buttontype, x, y, w, h, label):
     """ fl_create_labelbutton(buttontype, x, y, w, h, label) -> pObject
     """
 
+    _fl_create_labelbutton = cfuncproto(
+            load_so_libforms(), "fl_create_labelbutton",
+            cty.POINTER(FL_OBJECT), [cty.c_int, FL_Coord, FL_Coord, FL_Coord,
+            FL_Coord, STRING],
+            """FL_OBJECT * fl_create_labelbutton(int type, FL_Coord x,
+               FL_Coord y, FL_Coord w, FL_Coord h, const char * label)
+            """)
     ibuttontype = convert_to_int(buttontype)
     ix = convert_to_int(x)
     iy = convert_to_int(y)
@@ -7149,17 +7149,17 @@ def fl_create_labelbutton(buttontype, x, y, w, h, label):
     return retval
 
 
-_fl_add_roundbutton = cfuncproto(
-        load_so_libforms(), "fl_add_roundbutton",
-        cty.POINTER(FL_OBJECT), [cty.c_int, FL_Coord, FL_Coord, FL_Coord,
-        FL_Coord, STRING],
-        """FL_OBJECT * fl_add_roundbutton(int type, FL_Coord x, FL_Coord y,
-           FL_Coord w, FL_Coord h, const char * label)
-        """)
 def fl_add_roundbutton(buttontype, x, y, w, h, label):
     """ fl_add_roundbutton(buttontype, x, y, w, h, label) -> pObject
     """
 
+    _fl_add_roundbutton = cfuncproto(
+            load_so_libforms(), "fl_add_roundbutton",
+            cty.POINTER(FL_OBJECT), [cty.c_int, FL_Coord, FL_Coord, FL_Coord,
+            FL_Coord, STRING],
+            """FL_OBJECT * fl_add_roundbutton(int type, FL_Coord x,
+               FL_Coord y, FL_Coord w, FL_Coord h, const char * label)
+            """)
     ibuttontype = convert_to_int(buttontype)
     ix = convert_to_int(x)
     iy = convert_to_int(y)
@@ -7172,17 +7172,17 @@ def fl_add_roundbutton(buttontype, x, y, w, h, label):
     return retval
 
 
-_fl_add_round3dbutton = cfuncproto(
-        load_so_libforms(), "fl_add_round3dbutton",
-        cty.POINTER(FL_OBJECT), [cty.c_int, FL_Coord, FL_Coord, FL_Coord,
-        FL_Coord, STRING],
-        """FL_OBJECT * fl_add_round3dbutton(int type, FL_Coord x,
-           FL_Coord y, FL_Coord w, FL_Coord h, const char * label)
-        """)
 def fl_add_round3dbutton(buttontype, x, y, w, h, label):
     """ fl_add_round3dbutton(buttontype, x, y, w, h, label) -> pObject
     """
 
+    _fl_add_round3dbutton = cfuncproto(
+            load_so_libforms(), "fl_add_round3dbutton",
+            cty.POINTER(FL_OBJECT), [cty.c_int, FL_Coord, FL_Coord, FL_Coord,
+            FL_Coord, STRING],
+            """FL_OBJECT * fl_add_round3dbutton(int type, FL_Coord x,
+               FL_Coord y, FL_Coord w, FL_Coord h, const char * label)
+            """)
     ibuttontype = convert_to_int(buttontype)
     ix = convert_to_int(x)
     iy = convert_to_int(y)
@@ -7195,17 +7195,17 @@ def fl_add_round3dbutton(buttontype, x, y, w, h, label):
     return retval
 
 
-_fl_add_lightbutton = cfuncproto(
-        load_so_libforms(), "fl_add_lightbutton",
-        cty.POINTER(FL_OBJECT), [cty.c_int, FL_Coord, FL_Coord, FL_Coord,
-        FL_Coord, STRING],
-        """FL_OBJECT * fl_add_lightbutton(int type, FL_Coord x, FL_Coord y,
-           FL_Coord w, FL_Coord h, const char * label)
-        """)
 def fl_add_lightbutton(buttontype, x, y, w, h, label):
     """ fl_add_lightbutton(buttontype, x, y, w, h, label) -> pObject
     """
 
+    _fl_add_lightbutton = cfuncproto(
+            load_so_libforms(), "fl_add_lightbutton",
+            cty.POINTER(FL_OBJECT), [cty.c_int, FL_Coord, FL_Coord, FL_Coord,
+            FL_Coord, STRING],
+            """FL_OBJECT * fl_add_lightbutton(int type, FL_Coord x, FL_Coord y,
+               FL_Coord w, FL_Coord h, const char * label)
+            """)
     ibuttontype = convert_to_int(buttontype)
     ix = convert_to_int(x)
     iy = convert_to_int(y)
@@ -7218,17 +7218,17 @@ def fl_add_lightbutton(buttontype, x, y, w, h, label):
     return retval
 
 
-_fl_add_checkbutton = cfuncproto(
-        load_so_libforms(), "fl_add_checkbutton",
-        cty.POINTER(FL_OBJECT), [cty.c_int, FL_Coord, FL_Coord, FL_Coord,
-        FL_Coord, STRING],
-        """FL_OBJECT * fl_add_checkbutton(int type, FL_Coord x, FL_Coord y,
-           FL_Coord w, FL_Coord h, const char * label)
-        """)
 def fl_add_checkbutton(buttontype, x, y, w, h, label):
     """ fl_add_checkbutton(buttontype, x, y, w, h, label) -> pObject
     """
 
+    _fl_add_checkbutton = cfuncproto(
+            load_so_libforms(), "fl_add_checkbutton",
+            cty.POINTER(FL_OBJECT), [cty.c_int, FL_Coord, FL_Coord, FL_Coord,
+            FL_Coord, STRING],
+            """FL_OBJECT * fl_add_checkbutton(int type, FL_Coord x, FL_Coord y,
+               FL_Coord w, FL_Coord h, const char * label)
+            """)
     ibuttontype = convert_to_int(buttontype)
     ix = convert_to_int(x)
     iy = convert_to_int(y)
@@ -7241,17 +7241,17 @@ def fl_add_checkbutton(buttontype, x, y, w, h, label):
     return retval
 
 
-_fl_add_button = cfuncproto(
-        load_so_libforms(), "fl_add_button",
-        cty.POINTER(FL_OBJECT), [cty.c_int, FL_Coord, FL_Coord, FL_Coord,
-        FL_Coord, STRING],
-        """FL_OBJECT * fl_add_button(int type, FL_Coord x, FL_Coord y,
-           FL_Coord w, FL_Coord h, const char * label)
-        """)
 def fl_add_button(buttontype, x, y, w, h, label):
     """ fl_add_button(buttontype, x, y, w, h, label) -> pObject
     """
 
+    _fl_add_button = cfuncproto(
+            load_so_libforms(), "fl_add_button",
+            cty.POINTER(FL_OBJECT), [cty.c_int, FL_Coord, FL_Coord, FL_Coord,
+            FL_Coord, STRING],
+            """FL_OBJECT * fl_add_button(int type, FL_Coord x, FL_Coord y,
+               FL_Coord w, FL_Coord h, const char * label)
+            """)
     ibuttontype = convert_to_int(buttontype)
     ix = convert_to_int(x)
     iy = convert_to_int(y)
@@ -7264,17 +7264,17 @@ def fl_add_button(buttontype, x, y, w, h, label):
     return retval
 
 
-_fl_add_bitmapbutton = cfuncproto(
-        load_so_libforms(), "fl_add_bitmapbutton",
-        cty.POINTER(FL_OBJECT), [cty.c_int, FL_Coord, FL_Coord, FL_Coord,
-        FL_Coord, STRING],
-        """FL_OBJECT * fl_add_bitmapbutton(int type, FL_Coord x, FL_Coord y,
-           FL_Coord w, FL_Coord h, const char * label)
-        """)
 def fl_add_bitmapbutton(buttontype, x, y, w, h, label):
     """ fl_add_bitmapbutton(buttontype, x, y, w, h, label) -> pObject
     """
 
+    _fl_add_bitmapbutton = cfuncproto(
+            load_so_libforms(), "fl_add_bitmapbutton",
+            cty.POINTER(FL_OBJECT), [cty.c_int, FL_Coord, FL_Coord, FL_Coord,
+            FL_Coord, STRING],
+            """FL_OBJECT * fl_add_bitmapbutton(int type, FL_Coord x,
+               FL_Coord y, FL_Coord w, FL_Coord h, const char * label)
+            """)
     ibuttontype = convert_to_int(buttontype)
     ix = convert_to_int(x)
     iy = convert_to_int(y)
@@ -7287,17 +7287,17 @@ def fl_add_bitmapbutton(buttontype, x, y, w, h, label):
     return retval
 
 
-_fl_add_scrollbutton = cfuncproto(
-        load_so_libforms(), "fl_add_scrollbutton",
-        cty.POINTER(FL_OBJECT), [cty.c_int, FL_Coord, FL_Coord, FL_Coord,
-        FL_Coord, STRING],
-        """FL_OBJECT * fl_add_scrollbutton(int type, FL_Coord x, FL_Coord y,
-           FL_Coord w, FL_Coord h, const char * label)
-        """)
 def fl_add_scrollbutton(buttontype, x, y, w, h, label):
     """ fl_add_scrollbutton(buttontype, x, y, w, h, label) -> pObject
     """
 
+    _fl_add_scrollbutton = cfuncproto(
+            load_so_libforms(), "fl_add_scrollbutton",
+            cty.POINTER(FL_OBJECT), [cty.c_int, FL_Coord, FL_Coord, FL_Coord,
+            FL_Coord, STRING],
+            """FL_OBJECT * fl_add_scrollbutton(int type, FL_Coord x,
+               FL_Coord y, FL_Coord w, FL_Coord h, const char * label)
+            """)
     ibuttontype = convert_to_int(buttontype)
     ix = convert_to_int(x)
     iy = convert_to_int(y)
@@ -7310,17 +7310,17 @@ def fl_add_scrollbutton(buttontype, x, y, w, h, label):
     return retval
 
 
-_fl_add_labelbutton = cfuncproto(
-        load_so_libforms(), "fl_add_labelbutton",
-        cty.POINTER(FL_OBJECT), [cty.c_int, FL_Coord, FL_Coord, FL_Coord,
-        FL_Coord, STRING],
-        """FL_OBJECT * fl_add_labelbutton(int type, FL_Coord x, FL_Coord y,
-           FL_Coord w, FL_Coord h, const char * label)
-        """)
 def fl_add_labelbutton(buttontype, x, y, w, h, label):
     """ fl_add_labelbutton(buttontype, x, y, w, h, label) -> pObject
     """
 
+    _fl_add_labelbutton = cfuncproto(
+            load_so_libforms(), "fl_add_labelbutton",
+            cty.POINTER(FL_OBJECT), [cty.c_int, FL_Coord, FL_Coord, FL_Coord,
+            FL_Coord, STRING],
+            """FL_OBJECT * fl_add_labelbutton(int type, FL_Coord x,
+               FL_Coord y, FL_Coord w, FL_Coord h, const char * label)
+            """)
     ibuttontype = convert_to_int(buttontype)
     ix = convert_to_int(x)
     iy = convert_to_int(y)
@@ -7336,17 +7336,17 @@ def fl_add_labelbutton(buttontype, x, y, w, h, label):
 fl_set_bitmapbutton_file = fl_set_bitmap_file
 
 
-_fl_set_bitmapbutton_data = cfuncproto(
-        load_so_libforms(), "fl_set_bitmapbutton_data",
-        None, [cty.POINTER(FL_OBJECT), cty.c_int, cty.c_int,
-        cty.POINTER(cty.c_ubyte)],
-        """void fl_set_bitmapbutton_data(FL_OBJECT * ob, int w, int h,
-           unsigned char * bits)
-        """)
 def fl_set_bitmapbutton_data(pObject, w, h, bits):
     """ fl_set_bitmapbutton_data(pObject, w, h, bits)
     """
 
+    _fl_set_bitmapbutton_data = cfuncproto(
+            load_so_libforms(), "fl_set_bitmapbutton_data",
+            None, [cty.POINTER(FL_OBJECT), cty.c_int, cty.c_int,
+            cty.POINTER(cty.c_ubyte)],
+            """void fl_set_bitmapbutton_data(FL_OBJECT * ob, int w, int h,
+               unsigned char * bits)
+            """)
     iw = convert_to_int(w)
     ih = convert_to_int(h)
     keep_elem_refs(pObject, w, h, bits, iw, ih)
@@ -7356,17 +7356,17 @@ def fl_set_bitmapbutton_data(pObject, w, h, bits):
 fl_set_bitmapbutton_datafile = fl_set_bitmapbutton_file
 
 
-_fl_add_pixmapbutton = cfuncproto(
-        load_so_libforms(), "fl_add_pixmapbutton",
-        cty.POINTER(FL_OBJECT), [cty.c_int, FL_Coord, FL_Coord, FL_Coord,
-        FL_Coord, STRING],
-        """FL_OBJECT * fl_add_pixmapbutton(int type, FL_Coord x, FL_Coord y,
-        FL_Coord w, FL_Coord h, const char * label)
-        """)
 def fl_add_pixmapbutton(buttontype, x, y, w, h, label):
     """ fl_add_pixmapbutton(buttontype, x, y, w, h, label) -> pObject
     """
 
+    _fl_add_pixmapbutton = cfuncproto(
+            load_so_libforms(), "fl_add_pixmapbutton",
+            cty.POINTER(FL_OBJECT), [cty.c_int, FL_Coord, FL_Coord, FL_Coord,
+            FL_Coord, STRING],
+            """FL_OBJECT * fl_add_pixmapbutton(int type, FL_Coord x,
+               FL_Coord y, FL_Coord w, FL_Coord h, const char * label)
+            """)
     ibuttontype = convert_to_int(buttontype)
     ix = convert_to_int(x)
     iy = convert_to_int(y)
@@ -7379,15 +7379,15 @@ def fl_add_pixmapbutton(buttontype, x, y, w, h, label):
     return retval
 
 
-_fl_set_pixmapbutton_focus_outline = cfuncproto(
-        load_so_libforms(), "fl_set_pixmapbutton_focus_outline",
-        None, [cty.POINTER(FL_OBJECT), cty.c_int],
-        """void fl_set_pixmapbutton_focus_outline(FL_OBJECT * ob, int yes)
-        """)
 def fl_set_pixmapbutton_focus_outline(pObject, yes):
     """ fl_set_pixmapbutton_focus_outline(pObject, yes)
     """
 
+    _fl_set_pixmapbutton_focus_outline = cfuncproto(
+            load_so_libforms(), "fl_set_pixmapbutton_focus_outline",
+            None, [cty.POINTER(FL_OBJECT), cty.c_int],
+            """void fl_set_pixmapbutton_focus_outline(FL_OBJECT * ob, int yes)
+            """)
     iyes = convert_to_int(yes)
     keep_elem_refs(pObject, yes, iyes)
     _fl_set_pixmapbutton_focus_outline(pObject, iyes)
@@ -7403,44 +7403,45 @@ fl_set_pixmapbutton_datafile = fl_set_pixmapbutton_file
 fl_set_pixmapbutton_show_focus = fl_set_pixmapbutton_focus_outline
 
 
-_fl_set_pixmapbutton_focus_data = cfuncproto(
-        load_so_libforms(), "fl_set_pixmapbutton_focus_data",
-        None, [cty.POINTER(FL_OBJECT), cty.POINTER(STRING)],
-        """void fl_set_pixmapbutton_focus_data(FL_OBJECT * ob, char * * bits)
-        """)
 def fl_set_pixmapbutton_focus_data(pObject, bits):
     """ fl_set_pixmapbutton_focus_data(pObject, bits)
     """
 
+    _fl_set_pixmapbutton_focus_data = cfuncproto(
+            load_so_libforms(), "fl_set_pixmapbutton_focus_data",
+            None, [cty.POINTER(FL_OBJECT), cty.POINTER(STRING)],
+            """void fl_set_pixmapbutton_focus_data(FL_OBJECT * ob,
+               char * * bits)
+            """)
     keep_elem_refs(pObject, bits)
     _fl_set_pixmapbutton_focus_data(pObject, bits)
 
 
-_fl_set_pixmapbutton_focus_file = cfuncproto(
-        load_so_libforms(), "fl_set_pixmapbutton_focus_file",
-        None, [cty.POINTER(FL_OBJECT), STRING],
-        """void fl_set_pixmapbutton_focus_file(FL_OBJECT * ob,
-           const char * fname)
-        """)
 def fl_set_pixmapbutton_focus_file(pObject, fname):
     """ fl_set_pixmapbutton_focus_file(pObject, fname)
     """
 
+    _fl_set_pixmapbutton_focus_file = cfuncproto(
+            load_so_libforms(), "fl_set_pixmapbutton_focus_file",
+            None, [cty.POINTER(FL_OBJECT), STRING],
+            """void fl_set_pixmapbutton_focus_file(FL_OBJECT * ob,
+               const char * fname)
+            """)
     sfname = convert_to_string(fname)
     keep_elem_refs(pObject, fname, sfname)
     _fl_set_pixmapbutton_focus_file(pObject, sfname)
 
 
-_fl_set_pixmapbutton_focus_pixmap = cfuncproto(
-        load_so_libforms(), "fl_set_pixmapbutton_focus_pixmap",
-        None, [cty.POINTER(FL_OBJECT), Pixmap, Pixmap],
-        """void fl_set_pixmapbutton_focus_pixmap(FL_OBJECT * ob, Pixmap id,
-           Pixmap mask)
-        """)
 def fl_set_pixmapbutton_focus_pixmap(pObject, idnum, mask):
     """ fl_set_pixmapbutton_focus_pixmap(pObject, idnum, mask)
     """
 
+    _fl_set_pixmapbutton_focus_pixmap = cfuncproto(
+            load_so_libforms(), "fl_set_pixmapbutton_focus_pixmap",
+            None, [cty.POINTER(FL_OBJECT), Pixmap, Pixmap],
+            """void fl_set_pixmapbutton_focus_pixmap(FL_OBJECT * ob,
+               Pixmap id, Pixmap mask)
+            """)
     ulidnum = convert_to_ulong(idnum)
     ulmask = convert_to_ulong(mask)
     keep_elem_refs(pObject, idnum, mask, ulidnum, ulmask)
