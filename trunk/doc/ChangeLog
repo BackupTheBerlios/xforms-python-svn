@@ -1,6 +1,7 @@
 
 
 SVN
+    * Porting of pushbutton example.
     * Porting of symbols example.
     * Some bugfixes for wrong types
     * Porting of ldial example.
@@ -18,7 +19,7 @@ SVN
     * Porting of yesno example.
     * Porting of sld_alt example.
     * Porting of objpos example.
-    * API change: fl_get_object_geometry and fl_get_object_position
+    * API change: some getter functions (e.g. fl_get_.....)
     * Starting API change to avoid parameters as variable
     addresses modified in place by the c function, use return
     values instead (WIP, incomplete)

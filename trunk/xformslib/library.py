@@ -12911,17 +12911,17 @@ def fl_set_select_policy(pObject, p2):
 
 # Routines
 
-_fl_create_slider = cfuncproto(
-        load_so_libforms(), "fl_create_slider",
-        cty.POINTER(FL_OBJECT), [cty.c_int, FL_Coord, FL_Coord, FL_Coord,
-        FL_Coord, STRING],
-        """FL_OBJECT * fl_create_slider(int type, FL_Coord x, FL_Coord y,
-           FL_Coord w, FL_Coord h, const char * label)
-        """)
 def fl_create_slider(slidertype, x, y, w, h, label):
     """ fl_create_slider(slidertype, x, y, w, h, label) -> pObject
     """
 
+    _fl_create_slider = cfuncproto(
+            load_so_libforms(), "fl_create_slider",
+            cty.POINTER(FL_OBJECT), [cty.c_int, FL_Coord, FL_Coord, FL_Coord,
+            FL_Coord, STRING],
+            """FL_OBJECT * fl_create_slider(int type, FL_Coord x, FL_Coord y,
+               FL_Coord w, FL_Coord h, const char * label)
+            """)
     islidertype = convert_to_int(slidertype)
     ix = convert_to_int(x)
     iy = convert_to_int(y)
@@ -12934,17 +12934,17 @@ def fl_create_slider(slidertype, x, y, w, h, label):
     return retval
 
 
-_fl_add_slider = cfuncproto(
-        load_so_libforms(), "fl_add_slider",
-        cty.POINTER(FL_OBJECT), [cty.c_int, FL_Coord, FL_Coord, FL_Coord,
-        FL_Coord, STRING],
-        """FL_OBJECT * fl_add_slider(int type, FL_Coord x, FL_Coord y,
-           FL_Coord w, FL_Coord h, const char * label)
-        """)
 def fl_add_slider(slidertype, x, y, w, h, label):
     """ fl_add_slider(slidertype, x, y, w, h, label) -> pObject
     """
 
+    _fl_add_slider = cfuncproto(
+            load_so_libforms(), "fl_add_slider",
+            cty.POINTER(FL_OBJECT), [cty.c_int, FL_Coord, FL_Coord, FL_Coord,
+            FL_Coord, STRING],
+            """FL_OBJECT * fl_add_slider(int type, FL_Coord x, FL_Coord y,
+               FL_Coord w, FL_Coord h, const char * label)
+            """)
     islidertype = convert_to_int(slidertype)
     ix = convert_to_int(x)
     iy = convert_to_int(y)
@@ -12957,17 +12957,17 @@ def fl_add_slider(slidertype, x, y, w, h, label):
     return retval
 
 
-_fl_create_valslider = cfuncproto(
-        load_so_libforms(), "fl_create_valslider",
-        cty.POINTER(FL_OBJECT), [cty.c_int, FL_Coord, FL_Coord, FL_Coord,
-        FL_Coord, STRING],
-        """FL_OBJECT * fl_create_valslider(int type, FL_Coord x, FL_Coord y,
-           FL_Coord w, FL_Coord h, const char * label)
-        """)
 def fl_create_valslider(slidertype, x, y, w, h, label):
     """ fl_create_valslider(slidertype, x, y, w, h, label) -> pObject
     """
 
+    _fl_create_valslider = cfuncproto(
+            load_so_libforms(), "fl_create_valslider",
+            cty.POINTER(FL_OBJECT), [cty.c_int, FL_Coord, FL_Coord, FL_Coord,
+            FL_Coord, STRING],
+            """FL_OBJECT * fl_create_valslider(int type, FL_Coord x, FL_Coord y,
+               FL_Coord w, FL_Coord h, const char * label)
+            """)
     islidertype = convert_to_int(slidertype)
     ix = convert_to_int(x)
     iy = convert_to_int(y)
@@ -12980,17 +12980,17 @@ def fl_create_valslider(slidertype, x, y, w, h, label):
     return retval
 
 
-_fl_add_valslider = cfuncproto(
-        load_so_libforms(), "fl_add_valslider",
-        cty.POINTER(FL_OBJECT), [cty.c_int, FL_Coord, FL_Coord, FL_Coord,
-        FL_Coord, STRING],
-        """FL_OBJECT * fl_add_valslider(int type, FL_Coord x, FL_Coord y,
-           FL_Coord w, FL_Coord h, const char * label)
-        """)
 def fl_add_valslider(slidertype, x, y, w, h, label):
     """ fl_add_valslider(slidertype, x, y, w, h, label) -> pObject
     """
 
+    _fl_add_valslider = cfuncproto(
+            load_so_libforms(), "fl_add_valslider",
+            cty.POINTER(FL_OBJECT), [cty.c_int, FL_Coord, FL_Coord, FL_Coord,
+            FL_Coord, STRING],
+            """FL_OBJECT * fl_add_valslider(int type, FL_Coord x, FL_Coord y,
+               FL_Coord w, FL_Coord h, const char * label)
+            """)
     islidertype = convert_to_int(slidertype)
     ix = convert_to_int(x)
     iy = convert_to_int(y)
@@ -13003,175 +13003,186 @@ def fl_add_valslider(slidertype, x, y, w, h, label):
     return retval
 
 
-_fl_set_slider_value = cfuncproto(
-        load_so_libforms(), "fl_set_slider_value",
-        None, [cty.POINTER(FL_OBJECT), cty.c_double],
-        """void fl_set_slider_value(FL_OBJECT * ob, double val)
-        """)
 def fl_set_slider_value(pObject, val):
     """ fl_set_slider_value(pObject, val)
     """
 
+    _fl_set_slider_value = cfuncproto(
+            load_so_libforms(), "fl_set_slider_value",
+            None, [cty.POINTER(FL_OBJECT), cty.c_double],
+            """void fl_set_slider_value(FL_OBJECT * ob, double val)
+            """)
     fval = convert_to_double(val)
     keep_elem_refs(pObject, val, fval)
     _fl_set_slider_value(pObject, fval)
 
 
-_fl_get_slider_value = cfuncproto(
-        load_so_libforms(), "fl_get_slider_value",
-        cty.c_double, [cty.POINTER(FL_OBJECT)],
-        """double fl_get_slider_value(FL_OBJECT * ob)
-        """)
 def fl_get_slider_value(pObject):
     """ fl_get_slider_value(pObject) -> num.
     """
 
+    _fl_get_slider_value = cfuncproto(
+            load_so_libforms(), "fl_get_slider_value",
+            cty.c_double, [cty.POINTER(FL_OBJECT)],
+            """double fl_get_slider_value(FL_OBJECT * ob)
+            """)
     keep_elem_refs(pObject)
     retval = _fl_get_slider_value(pObject)
     return retval
 
 
-_fl_set_slider_bounds = cfuncproto(
-        load_so_libforms(), "fl_set_slider_bounds",
-        None, [cty.POINTER(FL_OBJECT), cty.c_double, cty.c_double],
-        """void fl_set_slider_bounds(FL_OBJECT * ob, double min, double max)
-        """)
 def fl_set_slider_bounds(pObject, minbound, maxbound):
     """ fl_set_slider_bounds(pObject, minbound, maxbound)
     """
 
+    _fl_set_slider_bounds = cfuncproto(
+            load_so_libforms(), "fl_set_slider_bounds",
+            None, [cty.POINTER(FL_OBJECT), cty.c_double, cty.c_double],
+            """void fl_set_slider_bounds(FL_OBJECT * ob, double min,
+               double max)
+            """)
     fminbound = convert_to_double(minbound)
     fmaxbound = convert_to_double(maxbound)
     keep_elem_refs(pObject, minbound, maxbound, fminbound, fmaxbound)
     _fl_set_slider_bounds(pObject, fminbound, fmaxbound)
 
 
-_fl_get_slider_bounds = cfuncproto(
-        load_so_libforms(), "fl_get_slider_bounds",
-        None, [cty.POINTER(FL_OBJECT), cty.POINTER(cty.c_double),
-        cty.POINTER(cty.c_double)],
-        """void fl_get_slider_bounds(FL_OBJECT * ob, double * min,
-           double * max)
-        """)
-def fl_get_slider_bounds(pObject, min_bound, max_bound):
-    """ fl_get_slider_bounds(pObject, min_bound, max_bound)
+#def fl_get_slider_bounds(pObject, minbound, maxbound)
+def fl_get_slider_bounds(pObject):
+    """ fl_get_slider_bounds(pObject) -> minbound, maxbound
     """
 
-    keep_elem_refs(pObject, min_bound, max_bound)
-    _fl_get_slider_bounds(pObject, min_bound, max_bound)
+    _fl_get_slider_bounds = cfuncproto(
+            load_so_libforms(), "fl_get_slider_bounds",
+            None, [cty.POINTER(FL_OBJECT), cty.POINTER(cty.c_double),
+            cty.POINTER(cty.c_double)],
+            """void fl_get_slider_bounds(FL_OBJECT * ob, double * min,
+               double * max)
+            """)
+    minbound, pminbound = make_double_pointer()
+    maxbound, pmaxbound = make_double_pointer()
+    keep_elem_refs(pObject, minbound, maxbound, pminbound, pmaxbound)
+    _fl_get_slider_bounds(pObject, pminbound, pmaxbound)
+    return minbound, maxbound
 
 
-_fl_set_slider_return = cfuncproto(
-        load_so_libforms(), "fl_set_slider_return",
-        None, [cty.POINTER(FL_OBJECT), cty.c_int],
-        """void fl_set_slider_return(FL_OBJECT * ob, int value)
-        """)
 def fl_set_slider_return(pObject, value):
     """ fl_set_slider_return(pObject, value)
     """
 
+    _fl_set_slider_return = cfuncproto(
+            load_so_libforms(), "fl_set_slider_return",
+            None, [cty.POINTER(FL_OBJECT), cty.c_int],
+            """void fl_set_slider_return(FL_OBJECT * ob, int value)
+            """)
     ivalue = convert_to_int(value)
     keep_elem_refs(pObject, value, ivalue)
     _fl_set_slider_return(pObject, ivalue)
 
 
-_fl_set_slider_step = cfuncproto(
-        load_so_libforms(), "fl_set_slider_step",
-        None, [cty.POINTER(FL_OBJECT), cty.c_double],
-        """void fl_set_slider_step(FL_OBJECT * ob, double value)
-        """)
 def fl_set_slider_step(pObject, value):
     """ fl_set_slider_step(pObject, value)
     """
 
+    _fl_set_slider_step = cfuncproto(
+            load_so_libforms(), "fl_set_slider_step",
+            None, [cty.POINTER(FL_OBJECT), cty.c_double],
+            """void fl_set_slider_step(FL_OBJECT * ob, double value)
+            """)
     fvalue = convert_to_double(value)
     keep_elem_refs(pObject, value, fvalue)
     _fl_set_slider_step(pObject, fvalue)
 
 
-_fl_set_slider_increment = cfuncproto(
-        load_so_libforms(), "fl_set_slider_increment",
-        None, [cty.POINTER(FL_OBJECT), cty.c_double, cty.c_double],
-        """void fl_set_slider_increment(FL_OBJECT * ob, double l, double r)
-        """)
 def fl_set_slider_increment(pObject, l, r):
     """ fl_set_slider_increment(pObject, l, r)
     """
 
+    _fl_set_slider_increment = cfuncproto(
+            load_so_libforms(), "fl_set_slider_increment",
+            None, [cty.POINTER(FL_OBJECT), cty.c_double, cty.c_double],
+            """void fl_set_slider_increment(FL_OBJECT * ob, double l,
+               double r)
+            """)
     fl = convert_to_double(l)
     fr = convert_to_double(r)
     keep_elem_refs(pObject, l, r, fl, fr)
     _fl_set_slider_increment(pObject, fl, fr)
 
 
-_fl_get_slider_increment = cfuncproto(
-        load_so_libforms(), "fl_get_slider_increment",
-        None, [cty.POINTER(FL_OBJECT), cty.POINTER(cty.c_double),
-        cty.POINTER(cty.c_double)], \
-        """void fl_get_slider_increment(FL_OBJECT * ob, double * l, double * r)
-        """)
-def fl_get_slider_increment(pObject, l, r):
-    """ fl_get_slider_increment(pObject, l, r)
+#def fl_get_slider_increment(pObject, l, r)
+def fl_get_slider_increment(pObject):
+    """ fl_get_slider_increment(pObject) -> l, r
     """
 
-    keep_elem_refs(pObject, l, r)
-    _fl_get_slider_increment(pObject, l, r)
+    _fl_get_slider_increment = cfuncproto(
+            load_so_libforms(), "fl_get_slider_increment",
+            None, [cty.POINTER(FL_OBJECT), cty.POINTER(cty.c_double),
+            cty.POINTER(cty.c_double)], \
+            """void fl_get_slider_increment(FL_OBJECT * ob, double * l,
+               double * r)
+            """)
+    l, pl = make_double_pointer()
+    r, pr = make_double_pointer()
+    keep_elem_refs(pObject, l, r, pl, pr)
+    _fl_get_slider_increment(pObject, pl, pr)
+    return l, r
 
 
-_fl_set_slider_size = cfuncproto(
-        load_so_libforms(), "fl_set_slider_size",
-        None, [cty.POINTER(FL_OBJECT), cty.c_double],
-        """void fl_set_slider_size(FL_OBJECT * ob, double size)
-        """)
 def fl_set_slider_size(pObject, size):
     """ fl_set_slider_size(pObject, size)
     """
 
+    _fl_set_slider_size = cfuncproto(
+            load_so_libforms(), "fl_set_slider_size",
+            None, [cty.POINTER(FL_OBJECT), cty.c_double],
+            """void fl_set_slider_size(FL_OBJECT * ob, double size)
+            """)
     fsize = convert_to_double(size)
     keep_elem_refs(pObject, size, fsize)
     _fl_set_slider_size(pObject, fsize)
 
 
-_fl_set_slider_precision = cfuncproto(
-        load_so_libforms(), "fl_set_slider_precision",
-        None, [cty.POINTER(FL_OBJECT), cty.c_int],
-        """void fl_set_slider_precision(FL_OBJECT * ob, int prec)
-        """)
 def fl_set_slider_precision(pObject, prec):
     """ fl_set_slider_precision(pObject, prec)
     """
 
+    _fl_set_slider_precision = cfuncproto(
+            load_so_libforms(), "fl_set_slider_precision",
+            None, [cty.POINTER(FL_OBJECT), cty.c_int],
+            """void fl_set_slider_precision(FL_OBJECT * ob, int prec)
+            """)
     iprec = convert_to_int(prec)
     keep_elem_refs(pObject, prec, iprec)
     _fl_set_slider_precision(pObject, iprec)
 
 
-_fl_set_slider_filter = cfuncproto(
-        load_so_libforms(), "fl_set_slider_filter",
-        None, [cty.POINTER(FL_OBJECT), FL_VAL_FILTER],
-        """void fl_set_slider_filter(FL_OBJECT * ob, FL_VAL_FILTER filter)
-        """)
 def fl_set_slider_filter(pObject, py_filter):
     """ fl_set_slider_filter(pObject, py_filter)
     """
 
+    _fl_set_slider_filter = cfuncproto(
+            load_so_libforms(), "fl_set_slider_filter",
+            None, [cty.POINTER(FL_OBJECT), FL_VAL_FILTER],
+            """void fl_set_slider_filter(FL_OBJECT * ob, FL_VAL_FILTER filter)
+            """)
     c_filter = FL_VAL_FILTER(py_filter)
     keep_cfunc_refs(c_filter)
     keep_elem_refs(pObject)
     _fl_set_slider_filter(pObject, c_filter)
 
 
-_fl_create_spinner = cfuncproto(
-        load_so_libforms(), "fl_create_spinner",
-        cty.POINTER(FL_OBJECT), [cty.c_int, FL_Coord, FL_Coord, FL_Coord,
-        FL_Coord, STRING],
-        """FL_OBJECT * fl_create_spinner(int type, FL_Coord x, FL_Coord y,
-           FL_Coord w, FL_Coord h, const char * label)
-        """)
 def fl_create_spinner(spinnertype, x, y, w, h, label):
     """ fl_create_spinner(spinnertype, x, y, w, h, label) -> pObject
     """
 
+    _fl_create_spinner = cfuncproto(
+            load_so_libforms(), "fl_create_spinner",
+            cty.POINTER(FL_OBJECT), [cty.c_int, FL_Coord, FL_Coord, FL_Coord,
+            FL_Coord, STRING],
+            """FL_OBJECT * fl_create_spinner(int type, FL_Coord x, FL_Coord y,
+               FL_Coord w, FL_Coord h, const char * label)
+            """)
     ispinnertype = convert_to_int(spinnertype)
     ix = convert_to_int(x)
     iy = convert_to_int(y)
@@ -13184,17 +13195,17 @@ def fl_create_spinner(spinnertype, x, y, w, h, label):
     return retval
 
 
-_fl_add_spinner = cfuncproto(
-        load_so_libforms(), "fl_add_spinner",
-        cty.POINTER(FL_OBJECT), [cty.c_int, FL_Coord, FL_Coord, FL_Coord,
-        FL_Coord, STRING],
-        """FL_OBJECT * fl_add_spinner(int type, FL_Coord x, FL_Coord y,
-        FL_Coord w, FL_Coord h, const char * label)
-        """)
 def fl_add_spinner(spinnertype, x, y, w, h, label):
     """ fl_add_spinner(spinnertype, x, y, w, h, label) -> pObject
     """
 
+    _fl_add_spinner = cfuncproto(
+            load_so_libforms(), "fl_add_spinner",
+            cty.POINTER(FL_OBJECT), [cty.c_int, FL_Coord, FL_Coord, FL_Coord,
+            FL_Coord, STRING],
+            """FL_OBJECT * fl_add_spinner(int type, FL_Coord x, FL_Coord y,
+            FL_Coord w, FL_Coord h, const char * label)
+            """)
     ispinnertype = convert_to_int(spinnertype)
     ix = convert_to_int(x)
     iy = convert_to_int(y)
@@ -13207,15 +13218,15 @@ def fl_add_spinner(spinnertype, x, y, w, h, label):
     return retval
 
 
-_fl_get_spinner_value = cfuncproto(
-        load_so_libforms(), "fl_get_spinner_value",
-        cty.c_double, [cty.POINTER(FL_OBJECT)],
-        """double fl_get_spinner_value(FL_OBJECT * obj)
-        """)
 def fl_get_spinner_value(pObject):
     """ fl_get_spinner_value(pObject)
     """
 
+    _fl_get_spinner_value = cfuncproto(
+            load_so_libforms(), "fl_get_spinner_value",
+            cty.c_double, [cty.POINTER(FL_OBJECT)],
+            """double fl_get_spinner_value(FL_OBJECT * obj)
+            """)
     keep_elem_refs(pObject)
     _fl_get_spinner_value(pObject)
 
@@ -13234,134 +13245,133 @@ def fl_set_spinner_value(pObject, val):
     _fl_set_spinner_value(pObject, fval)
 
 
-_fl_set_spinner_bounds = cfuncproto(
-        load_so_libforms(), "fl_set_spinner_bounds",
-        None, [cty.POINTER(FL_OBJECT), cty.c_double, cty.c_double],
-        """void fl_set_spinner_bounds(FL_OBJECT * obj, double min, double max)
-        """)
 def fl_set_spinner_bounds(pObject, minbound, maxbound):
     """ fl_set_spinner_bounds(pObject, minbound, maxbound)
     """
 
+    _fl_set_spinner_bounds = cfuncproto(
+            load_so_libforms(), "fl_set_spinner_bounds",
+            None, [cty.POINTER(FL_OBJECT), cty.c_double, cty.c_double],
+            """void fl_set_spinner_bounds(FL_OBJECT * obj, double min,
+               double max)
+            """)
     fminbound = convert_to_double(minbound)
     fmaxbound = convert_to_double(maxbound)
     keep_elem_refs(pObject, minbound, maxbound, fminbound, fmaxbound)
     _fl_set_spinner_bounds(pObject, fminbound, fmaxbound)
 
 
-_fl_get_spinner_bounds = cfuncproto(
-        load_so_libforms(), "fl_get_spinner_bounds",
-        None, [cty.POINTER(FL_OBJECT), cty.POINTER(cty.c_double),
-        cty.POINTER(cty.c_double)], \
-        """void fl_get_spinner_bounds(FL_OBJECT * obj, double * min,
-           double * max)
-        """)
-def fl_get_spinner_bounds(pObject, min_bound, max_bound):
-    """ fl_get_spinner_bounds(pObject, min_bound, max_bound)
+#def fl_get_spinner_bounds(pObject, minbound, maxbound):
+def fl_get_spinner_bounds(pObject):
+    """ fl_get_spinner_bounds(pObject) -> minbound, maxbound
     """
 
-    keep_elem_refs(pObject, min_bound, max_bound)
-    _fl_get_spinner_bounds(pObject, min_bound, max_bound)
+    _fl_get_spinner_bounds = cfuncproto(
+            load_so_libforms(), "fl_get_spinner_bounds",
+            None, [cty.POINTER(FL_OBJECT), cty.POINTER(cty.c_double),
+            cty.POINTER(cty.c_double)], \
+            """void fl_get_spinner_bounds(FL_OBJECT * obj, double * min,
+               double * max)
+            """)
+    minbound, pminbound = make_double_pointer()
+    maxbound, pmaxbound = make_double_pointer()
+    keep_elem_refs(pObject, minbound, maxbound, pminbound, pmaxbound)
+    _fl_get_spinner_bounds(pObject, pminbound, pmaxbound)
+    return minbound, maxbound
 
-
-_fl_set_spinner_step = cfuncproto(
-        load_so_libforms(), "fl_set_spinner_step",
-        None, [cty.POINTER(FL_OBJECT), cty.c_double],
-        """void fl_set_spinner_step(FL_OBJECT * obj, double step)
-        """)
 
 def fl_set_spinner_step(pObject, step):
     """ fl_set_spinner_step(pObject, step)
     """
 
+    _fl_set_spinner_step = cfuncproto(
+            load_so_libforms(), "fl_set_spinner_step",
+            None, [cty.POINTER(FL_OBJECT), cty.c_double],
+            """void fl_set_spinner_step(FL_OBJECT * obj, double step)
+            """)
     fstep = convert_to_double(step)
     keep_elem_refs(pObject, step, fstep)
     _fl_set_spinner_step(pObject, fstep)
 
 
-_fl_get_spinner_step = cfuncproto(
-        load_so_libforms(), "fl_get_spinner_step",
-        cty.c_double, [cty.POINTER(FL_OBJECT)],
-        """double fl_get_spinner_step(FL_OBJECT * obj)
-        """)
-
 def fl_get_spinner_step(pObject):
     """ fl_get_spinner_step(pObject) -> num.
     """
 
+    _fl_get_spinner_step = cfuncproto(
+            load_so_libforms(), "fl_get_spinner_step",
+            cty.c_double, [cty.POINTER(FL_OBJECT)],
+            """double fl_get_spinner_step(FL_OBJECT * obj)
+            """)
     keep_elem_refs(pObject)
     retval = _fl_get_spinner_step(pObject)
     return retval
 
 
-_fl_set_spinner_precision = cfuncproto(
-        load_so_libforms(), "fl_set_spinner_precision",
-        None, [cty.POINTER(FL_OBJECT), cty.c_int],
-        """void fl_set_spinner_precision(FL_OBJECT * obj, int prec)
-        """)
 def fl_set_spinner_precision(pObject, prec):
     """ fl_set_spinner_precision(pObject, prec)
     """
 
+    _fl_set_spinner_precision = cfuncproto(
+            load_so_libforms(), "fl_set_spinner_precision",
+            None, [cty.POINTER(FL_OBJECT), cty.c_int],
+            """void fl_set_spinner_precision(FL_OBJECT * obj, int prec)
+            """)
     iprec = convert_to_int(prec)
     keep_elem_refs(pObject, prec, iprec)
     _fl_set_spinner_precision(pObject, iprec)
 
 
-_fl_get_spinner_precision = cfuncproto(
-        load_so_libforms(), "fl_get_spinner_precision",
-        cty.c_int, [cty.POINTER(FL_OBJECT)],
-        """int fl_get_spinner_precision(FL_OBJECT * obj)
-        """)
-
 def fl_get_spinner_precision(pObject):
     """ fl_get_spinner_precision(pObject)
     """
 
+    _fl_get_spinner_precision = cfuncproto(
+            load_so_libforms(), "fl_get_spinner_precision",
+            cty.c_int, [cty.POINTER(FL_OBJECT)],
+            """int fl_get_spinner_precision(FL_OBJECT * obj)
+            """)
     keep_elem_refs(pObject)
     _fl_get_spinner_precision(pObject)
 
-
-_fl_get_spinner_input = cfuncproto(
-        load_so_libforms(), "fl_get_spinner_input",
-        cty.POINTER(FL_OBJECT), [cty.POINTER(FL_OBJECT)],
-        """FL_OBJECT * fl_get_spinner_input(FL_OBJECT * obj)
-        """)
 
 def fl_get_spinner_input(pObject):
     """ fl_get_spinner_input(pObject) -> pObject
     """
 
+    _fl_get_spinner_input = cfuncproto(
+            load_so_libforms(), "fl_get_spinner_input",
+            cty.POINTER(FL_OBJECT), [cty.POINTER(FL_OBJECT)],
+            """FL_OBJECT * fl_get_spinner_input(FL_OBJECT * obj)
+            """)
     keep_elem_refs(pObject)
     retval = _fl_get_spinner_input(pObject)
     return retval
 
 
-_fl_get_spinner_up_button = cfuncproto(
-        load_so_libforms(), "fl_get_spinner_up_button",
-        cty.POINTER(FL_OBJECT), [cty.POINTER(FL_OBJECT)],
-        """FL_OBJECT * fl_get_spinner_up_button(FL_OBJECT * obj)
-        """)
-
 def fl_get_spinner_up_button(pObject):
     """ fl_get_spinner_up_button(pObject) -> pObject
     """
 
+    _fl_get_spinner_up_button = cfuncproto(
+            load_so_libforms(), "fl_get_spinner_up_button",
+            cty.POINTER(FL_OBJECT), [cty.POINTER(FL_OBJECT)],
+            """FL_OBJECT * fl_get_spinner_up_button(FL_OBJECT * obj)
+            """)
     keep_elem_refs(pObject)
     retval = _fl_get_spinner_up_button(pObject)
     return retval
 
 
-_fl_get_spinner_down_button = cfuncproto(
-        load_so_libforms(), "fl_get_spinner_down_button",
-        cty.POINTER(FL_OBJECT), [cty.POINTER(FL_OBJECT)],
-        """FL_OBJECT * fl_get_spinner_down_button(FL_OBJECT * obj)
-        """)
-
 def fl_get_spinner_down_button(pObject):
     """ fl_get_spinner_down_button(pObject) -> pObject
     """
 
+    _fl_get_spinner_down_button = cfuncproto(
+            load_so_libforms(), "fl_get_spinner_down_button",
+            cty.POINTER(FL_OBJECT), [cty.POINTER(FL_OBJECT)],
+            """FL_OBJECT * fl_get_spinner_down_button(FL_OBJECT * obj)
+            """)
     keep_elem_refs(pObject)
     retval = _fl_get_spinner_down_button(pObject)
     return retval
@@ -13372,17 +13382,17 @@ def fl_get_spinner_down_button(pObject):
 # forms.h (tabfolder.h)
 ########################
 
-_fl_create_tabfolder = cfuncproto(
-        load_so_libforms(), "fl_create_tabfolder",
-        cty.POINTER(FL_OBJECT), [cty.c_int, FL_Coord, FL_Coord, FL_Coord,
-        FL_Coord, STRING],
-        """FL_OBJECT * fl_create_tabfolder(int type, FL_Coord x, FL_Coord y,
-           FL_Coord w, FL_Coord h, const char * label)
-        """)
 def fl_create_tabfolder(foldertype, x, y, w, h, label):
     """ fl_create_tabfolder(foldertype, x, y, w, h, label) -> pObject
     """
 
+    _fl_create_tabfolder = cfuncproto(
+            load_so_libforms(), "fl_create_tabfolder",
+            cty.POINTER(FL_OBJECT), [cty.c_int, FL_Coord, FL_Coord, FL_Coord,
+            FL_Coord, STRING],
+            """FL_OBJECT * fl_create_tabfolder(int type, FL_Coord x,
+               FL_Coord y, FL_Coord w, FL_Coord h, const char * label)
+            """)
     ifoldertype = convert_to_int(foldertype)
     ix = convert_to_int(x)
     iy = convert_to_int(y)
@@ -13395,17 +13405,17 @@ def fl_create_tabfolder(foldertype, x, y, w, h, label):
     return retval
 
 
-_fl_add_tabfolder = cfuncproto(
-        load_so_libforms(), "fl_add_tabfolder",
-        cty.POINTER(FL_OBJECT), [cty.c_int, FL_Coord, FL_Coord, FL_Coord,
-        FL_Coord, STRING],
-        """FL_OBJECT * fl_add_tabfolder(int type, FL_Coord x, FL_Coord y,
-           FL_Coord w, FL_Coord h, const char * label)
-        """)
 def fl_add_tabfolder(foldertype, x, y, w, h, label):
     """ fl_add_tabfolder(foldertype, x, y, w, h, label) -> pObject
     """
 
+    _fl_add_tabfolder = cfuncproto(
+            load_so_libforms(), "fl_add_tabfolder",
+            cty.POINTER(FL_OBJECT), [cty.c_int, FL_Coord, FL_Coord, FL_Coord,
+            FL_Coord, STRING],
+            """FL_OBJECT * fl_add_tabfolder(int type, FL_Coord x, FL_Coord y,
+               FL_Coord w, FL_Coord h, const char * label)
+            """)
     ifoldertype = convert_to_int(foldertype)
     ix = convert_to_int(x)
     iy = convert_to_int(y)
@@ -13418,303 +13428,311 @@ def fl_add_tabfolder(foldertype, x, y, w, h, label):
     return retval
 
 
-_fl_addto_tabfolder = cfuncproto(
-        load_so_libforms(), "fl_addto_tabfolder",
-        cty.POINTER(FL_OBJECT), [cty.POINTER(FL_OBJECT), STRING,
-        cty.POINTER(FL_FORM)],
-        """FL_OBJECT * fl_addto_tabfolder(FL_OBJECT * ob, const char * title,
-           FL_FORM * form)
-        """)
 def fl_addto_tabfolder(pObject, title, pForm):
     """ fl_addto_tabfolder(pObject, title, pForm) -> pObject
     """
 
+    _fl_addto_tabfolder = cfuncproto(
+            load_so_libforms(), "fl_addto_tabfolder",
+            cty.POINTER(FL_OBJECT), [cty.POINTER(FL_OBJECT), STRING,
+            cty.POINTER(FL_FORM)],
+            """FL_OBJECT * fl_addto_tabfolder(FL_OBJECT * ob,
+               const char * title, FL_FORM * form)
+            """)
     stitle = convert_to_string(title)
     keep_elem_refs(pObject, title, pForm, stitle)
     retval = _fl_addto_tabfolder(pObject, stitle, pForm)
     return retval
 
 
-_fl_get_tabfolder_folder_bynumber = cfuncproto(
-        load_so_libforms(), "fl_get_tabfolder_folder_bynumber",
-        cty.POINTER(FL_FORM), [cty.POINTER(FL_OBJECT), cty.c_int],
-        """FL_FORM * fl_get_tabfolder_folder_bynumber(FL_OBJECT * ob, int num)
-        """)
 def fl_get_tabfolder_folder_bynumber(pObject, num):
     """ fl_get_tabfolder_folder_bynumber(pObject, num) -> pForm
     """
 
+    _fl_get_tabfolder_folder_bynumber = cfuncproto(
+            load_so_libforms(), "fl_get_tabfolder_folder_bynumber",
+            cty.POINTER(FL_FORM), [cty.POINTER(FL_OBJECT), cty.c_int],
+            """FL_FORM * fl_get_tabfolder_folder_bynumber(FL_OBJECT * ob,
+               int num)
+            """)
     inum = convert_to_int(num)
     keep_elem_refs(pObject, num, inum)
     retval = _fl_get_tabfolder_folder_bynumber(pObject, inum)
     return retval
 
 
-_fl_get_tabfolder_folder_byname = cfuncproto(
-        load_so_libforms(), "fl_get_tabfolder_folder_byname",
-        cty.POINTER(FL_FORM), [cty.POINTER(FL_OBJECT), STRING],
-        """FL_FORM * fl_get_tabfolder_folder_byname(FL_OBJECT * ob, const char * name)
-        """)
 def fl_get_tabfolder_folder_byname(pObject, name):
     """ fl_get_tabfolder_folder_byname(pObject, name) -> pForm
     """
 
+    _fl_get_tabfolder_folder_byname = cfuncproto(
+            load_so_libforms(), "fl_get_tabfolder_folder_byname",
+            cty.POINTER(FL_FORM), [cty.POINTER(FL_OBJECT), STRING],
+            """FL_FORM * fl_get_tabfolder_folder_byname(FL_OBJECT * ob,
+               const char * name)
+            """)
     sname = convert_to_string(name)
     keep_elem_refs(pObject, name, sname)
     retval = _fl_get_tabfolder_folder_byname(pObject, sname)
     return retval
 
 
-_fl_delete_folder = cfuncproto(
-        load_so_libforms(), "fl_delete_folder",
-        None, [cty.POINTER(FL_OBJECT), cty.POINTER(FL_FORM)],
-        """void fl_delete_folder(FL_OBJECT * ob, FL_FORM * form)
-        """)
 def fl_delete_folder(pObject, pForm):
     """ fl_delete_folder(pObject, pForm)
     """
 
+    _fl_delete_folder = cfuncproto(
+            load_so_libforms(), "fl_delete_folder",
+            None, [cty.POINTER(FL_OBJECT), cty.POINTER(FL_FORM)],
+            """void fl_delete_folder(FL_OBJECT * ob, FL_FORM * form)
+            """)
     keep_elem_refs(pObject, pForm)
     _fl_delete_folder(pObject, pForm)
 
 
-_fl_delete_folder_bynumber = cfuncproto(
-        load_so_libforms(), "fl_delete_folder_bynumber",
-        None, [cty.POINTER(FL_OBJECT), cty.c_int],
-        """void fl_delete_folder_bynumber(FL_OBJECT * ob, int num)
-        """)
 def fl_delete_folder_bynumber(pObject, num):
     """ fl_delete_folder_bynumber(pObject, num)
     """
 
+    _fl_delete_folder_bynumber = cfuncproto(
+            load_so_libforms(), "fl_delete_folder_bynumber",
+            None, [cty.POINTER(FL_OBJECT), cty.c_int],
+            """void fl_delete_folder_bynumber(FL_OBJECT * ob, int num)
+            """)
     inum = convert_to_int(num)
     keep_elem_refs(pObject, num, inum)
     _fl_delete_folder_bynumber(pObject, inum)
 
 
-_fl_delete_folder_byname = cfuncproto(
-        load_so_libforms(), "fl_delete_folder_byname",
-        None, [cty.POINTER(FL_OBJECT), STRING],
-        """void fl_delete_folder_byname(FL_OBJECT * ob, const char * name)
-        """)
 def fl_delete_folder_byname(pObject, name):
     """ fl_delete_folder_byname(pObject, name)
     """
 
+    _fl_delete_folder_byname = cfuncproto(
+            load_so_libforms(), "fl_delete_folder_byname",
+            None, [cty.POINTER(FL_OBJECT), STRING],
+            """void fl_delete_folder_byname(FL_OBJECT * ob, const char * name)
+            """)
     sname = convert_to_string(name)
     keep_elem_refs(pObject, name, sname)
     _fl_delete_folder_byname(pObject, sname)
 
 
-_fl_set_folder = cfuncproto(
-        load_so_libforms(), "fl_set_folder",
-        None, [cty.POINTER(FL_OBJECT), cty.POINTER(FL_FORM)],
-        """void fl_set_folder(FL_OBJECT * ob, FL_FORM * form)
-        """)
 def fl_set_folder(pObject, pForm):
     """ fl_set_folder(pObject, pForm)
     """
 
+    _fl_set_folder = cfuncproto(
+            load_so_libforms(), "fl_set_folder",
+            None, [cty.POINTER(FL_OBJECT), cty.POINTER(FL_FORM)],
+            """void fl_set_folder(FL_OBJECT * ob, FL_FORM * form)
+            """)
     keep_elem_refs(pObject, pForm)
     _fl_set_folder(pObject, pForm)
 
 
-_fl_set_folder_byname = cfuncproto(
-        load_so_libforms(), "fl_set_folder_byname",
-        None, [cty.POINTER(FL_OBJECT), STRING],
-        """void fl_set_folder_byname(FL_OBJECT * ob, const char * name)
-        """)
 def fl_set_folder_byname(pObject, name):
     """ fl_set_folder_byname(pObject, name)
     """
 
+    _fl_set_folder_byname = cfuncproto(
+            load_so_libforms(), "fl_set_folder_byname",
+            None, [cty.POINTER(FL_OBJECT), STRING],
+            """void fl_set_folder_byname(FL_OBJECT * ob, const char * name)
+            """)
     sname = convert_to_string(name)
     keep_elem_refs(pObject, name, sname)
     _fl_set_folder_byname(pObject, name)
 
 
-_fl_set_folder_bynumber = cfuncproto(
-        load_so_libforms(), "fl_set_folder_bynumber",
-        None, [cty.POINTER(FL_OBJECT), cty.c_int],
-        """void fl_set_folder_bynumber(FL_OBJECT * ob, int num)
-        """)
 def fl_set_folder_bynumber(pObject, num):
     """ fl_set_folder_bynumber(pObject, num)
     """
 
+    _fl_set_folder_bynumber = cfuncproto(
+            load_so_libforms(), "fl_set_folder_bynumber",
+            None, [cty.POINTER(FL_OBJECT), cty.c_int],
+            """void fl_set_folder_bynumber(FL_OBJECT * ob, int num)
+            """)
     inum = convert_to_int(num)
     keep_elem_refs(pObject, num, inum)
     _fl_set_folder_bynumber(pObject, inum)
 
 
-_fl_get_folder = cfuncproto(
-        load_so_libforms(), "fl_get_folder",
-        cty.POINTER(FL_FORM), [cty.POINTER(FL_OBJECT)],
-        """FL_FORM * fl_get_folder(FL_OBJECT * ob)
-        """)
 def fl_get_folder(pObject):
     """ fl_get_folder(pObject) -> pForm
     """
 
+    _fl_get_folder = cfuncproto(
+            load_so_libforms(), "fl_get_folder",
+            cty.POINTER(FL_FORM), [cty.POINTER(FL_OBJECT)],
+            """FL_FORM * fl_get_folder(FL_OBJECT * ob)
+            """)
     keep_elem_refs(pObject)
     retval = _fl_get_folder(pObject)
     return retval
 
 
-_fl_get_folder_number = cfuncproto(
-        load_so_libforms(), "fl_get_folder_number",
-        cty.c_int, [cty.POINTER(FL_OBJECT)],
-        """int fl_get_folder_number(FL_OBJECT * ob)
-        """)
 def fl_get_folder_number(pObject):
     """ fl_get_folder_number(pObject) -> folder num.
     """
 
+    _fl_get_folder_number = cfuncproto(
+            load_so_libforms(), "fl_get_folder_number",
+            cty.c_int, [cty.POINTER(FL_OBJECT)],
+            """int fl_get_folder_number(FL_OBJECT * ob)
+            """)
     keep_elem_refs(pObject)
     retval = _fl_get_folder_number(pObject)
     return retval
 
 
-_fl_get_folder_name = cfuncproto(
-        load_so_libforms(), "fl_get_folder_name",
-        STRING, [cty.POINTER(FL_OBJECT)],
-        """const char * fl_get_folder_name(FL_OBJECT * ob)
-        """)
 def fl_get_folder_name(pObject):
     """ fl_get_folder_name(pObject) -> name string
     """
 
+    _fl_get_folder_name = cfuncproto(
+            load_so_libforms(), "fl_get_folder_name",
+            STRING, [cty.POINTER(FL_OBJECT)],
+            """const char * fl_get_folder_name(FL_OBJECT * ob)
+            """)
     keep_elem_refs(pObject)
     retval = _fl_get_folder_name(pObject)
     return retval
 
 
-_fl_get_tabfolder_numfolders = cfuncproto(
-        load_so_libforms(), "fl_get_tabfolder_numfolders",
-        cty.c_int, [cty.POINTER(FL_OBJECT)],
-        """int fl_get_tabfolder_numfolders(FL_OBJECT * ob)
-        """)
 def fl_get_tabfolder_numfolders(pObject):
     """ fl_get_tabfolder_numfolders(pObject) -> num.
     """
 
+    _fl_get_tabfolder_numfolders = cfuncproto(
+            load_so_libforms(), "fl_get_tabfolder_numfolders",
+            cty.c_int, [cty.POINTER(FL_OBJECT)],
+            """int fl_get_tabfolder_numfolders(FL_OBJECT * ob)
+            """)
     keep_elem_refs(pObject)
     retval = _fl_get_tabfolder_numfolders(pObject)
     return retval
 
 
-_fl_get_active_folder = cfuncproto(
-        load_so_libforms(), "fl_get_active_folder",
-        cty.POINTER(FL_FORM), [cty.POINTER(FL_OBJECT)],
-        """FL_FORM * fl_get_active_folder(FL_OBJECT * ob)
-        """)
 def fl_get_active_folder(pObject):
     """ fl_get_active_folder(pObject) -> pForm
     """
 
+    _fl_get_active_folder = cfuncproto(
+            load_so_libforms(), "fl_get_active_folder",
+            cty.POINTER(FL_FORM), [cty.POINTER(FL_OBJECT)],
+            """FL_FORM * fl_get_active_folder(FL_OBJECT * ob)
+            """)
     keep_elem_refs(pObject)
     retval = _fl_get_active_folder(pObject)
     return retval
 
 
-_fl_get_active_folder_number = cfuncproto(
-        load_so_libforms(), "fl_get_active_folder_number",
-        cty.c_int, [cty.POINTER(FL_OBJECT)],
-        """int fl_get_active_folder_number(FL_OBJECT * ob)
-        """)
 def fl_get_active_folder_number(pObject):
     """ fl_get_active_folder_number(pObject) -> num.
     """
 
+    _fl_get_active_folder_number = cfuncproto(
+            load_so_libforms(), "fl_get_active_folder_number",
+            cty.c_int, [cty.POINTER(FL_OBJECT)],
+            """int fl_get_active_folder_number(FL_OBJECT * ob)
+            """)
     keep_elem_refs(pObject)
     retval = _fl_get_active_folder_number(pObject)
     return retval
 
 
-_fl_get_active_folder_name = cfuncproto(
-        load_so_libforms(), "fl_get_active_folder_name",
-        STRING, [cty.POINTER(FL_OBJECT)],
-        """const char * fl_get_active_folder_name(FL_OBJECT * ob)
-        """)
 def fl_get_active_folder_name(pObject):
     """ fl_get_active_folder_name(pObject) -> name string
     """
 
+    _fl_get_active_folder_name = cfuncproto(
+            load_so_libforms(), "fl_get_active_folder_name",
+            STRING, [cty.POINTER(FL_OBJECT)],
+            """const char * fl_get_active_folder_name(FL_OBJECT * ob)
+            """)
     keep_elem_refs(pObject)
     retval = _fl_get_active_folder_name(pObject)
     return retval
 
 
-_fl_get_folder_area = cfuncproto(
-        load_so_libforms(), "fl_get_folder_area",
-        None, [cty.POINTER(FL_OBJECT), cty.POINTER(FL_Coord),
-        cty.POINTER(FL_Coord), cty.POINTER(FL_Coord), cty.POINTER(FL_Coord)],
-        """void fl_get_folder_area(FL_OBJECT * ob, FL_Coord * x,
-           FL_Coord * y, FL_Coord * w, FL_Coord * h)
-        """)
-def fl_get_folder_area(pObject, x, y, w, h):
-    """ fl_get_folder_area(pObject, x, y, w, h)
+#def fl_get_folder_area(pObject, x, y, w, h)
+def fl_get_folder_area(pObject):
+    """ fl_get_folder_area(pObject) -> x, y, w, h
     """
 
-    keep_elem_refs(pObject, x, y, w, h)
-    _fl_get_folder_area(pObject, x, y, w, h)
+    _fl_get_folder_area = cfuncproto(
+            load_so_libforms(), "fl_get_folder_area",
+            None, [cty.POINTER(FL_OBJECT), cty.POINTER(FL_Coord),
+            cty.POINTER(FL_Coord), cty.POINTER(FL_Coord),
+            cty.POINTER(FL_Coord)],
+            """void fl_get_folder_area(FL_OBJECT * ob, FL_Coord * x,
+               FL_Coord * y, FL_Coord * w, FL_Coord * h)
+            """)
+    x, px = make_int_pointer()
+    y, py = make_int_pointer()
+    w, pw = make_int_pointer()
+    h, ph = make_int_pointer()
+    keep_elem_refs(pObject, x, y, w, h, px, py, pw, ph)
+    _fl_get_folder_area(pObject, px, py, pw, ph)
+    return x, y, w, h
 
 
-_fl_replace_folder_bynumber = cfuncproto(
-        load_so_libforms(), "fl_replace_folder_bynumber",
-        None, [cty.POINTER(FL_OBJECT), cty.c_int, cty.POINTER(FL_FORM)],
-        """void fl_replace_folder_bynumber(FL_OBJECT * ob, int num,
-           FL_FORM * form)
-        """)
 def fl_replace_folder_bynumber(pObject, num, pForm):
     """ fl_replace_folder_bynumber(pObject, num, pForm)
     """
 
+    _fl_replace_folder_bynumber = cfuncproto(
+            load_so_libforms(), "fl_replace_folder_bynumber",
+            None, [cty.POINTER(FL_OBJECT), cty.c_int, cty.POINTER(FL_FORM)],
+            """void fl_replace_folder_bynumber(FL_OBJECT * ob, int num,
+               FL_FORM * form)
+            """)
     inum = convert_to_int(num)
     keep_elem_refs(pObject, num, pForm, inum)
     _fl_replace_folder_bynumber(pObject, inum, pForm)
 
 
-_fl_set_tabfolder_autofit = cfuncproto(
-        load_so_libforms(), "fl_set_tabfolder_autofit",
-        cty.c_int, [cty.POINTER(FL_OBJECT), cty.c_int],
-        """int fl_set_tabfolder_autofit(FL_OBJECT * ob, int y)
-        """)
 def fl_set_tabfolder_autofit(pObject, num):
     """ fl_set_tabfolder_autofit(pObject, num) -> num.
     """
 
+    _fl_set_tabfolder_autofit = cfuncproto(
+            load_so_libforms(), "fl_set_tabfolder_autofit",
+            cty.c_int, [cty.POINTER(FL_OBJECT), cty.c_int],
+            """int fl_set_tabfolder_autofit(FL_OBJECT * ob, int y)
+            """)
     inum = convert_to_int(num)
     keep_elem_refs(pObject, num, inum)
     retval = _fl_set_tabfolder_autofit(pObject, inum)
     return retval
 
 
-_fl_set_default_tabfolder_corner = cfuncproto(
-        load_so_libforms(), "fl_set_default_tabfolder_corner",
-        cty.c_int, [cty.c_int],
-        """int fl_set_default_tabfolder_corner(int n):
-        """)
 def fl_set_default_tabfolder_corner(n):
     """ fl_set_default_tabfolder_corner(n) -> num.
     """
 
+    _fl_set_default_tabfolder_corner = cfuncproto(
+            load_so_libforms(), "fl_set_default_tabfolder_corner",
+            cty.c_int, [cty.c_int],
+            """int fl_set_default_tabfolder_corner(int n):
+            """)
     in_ = convert_to_int(n)
     keep_elem_refs(n, in_)
     retval = _fl_set_default_tabfolder_corner(in_)
     return retval
 
 
-_fl_set_tabfolder_offset = cfuncproto(
-        load_so_libforms(), "fl_set_tabfolder_offset",
-        cty.c_int, [cty.POINTER(FL_OBJECT), cty.c_int],
-        """int fl_set_tabfolder_offset(FL_OBJECT * ob, int offset)
-        """)
-
 def fl_set_tabfolder_offset(pObject, offset):
     """ fl_set_tabfolder_offset(pObject, offset) -> num.
     """
 
+    _fl_set_tabfolder_offset = cfuncproto(
+            load_so_libforms(), "fl_set_tabfolder_offset",
+            cty.c_int, [cty.POINTER(FL_OBJECT), cty.c_int],
+            """int fl_set_tabfolder_offset(FL_OBJECT * ob, int offset)
+            """)
     ioffset = convert_to_int(offset)
     keep_elem_refs(pObject, offset, ioffset)
     retval = _fl_set_tabfolder_offset(pObject, ioffset)
@@ -13726,17 +13744,17 @@ def fl_set_tabfolder_offset(pObject, offset):
 # forms.h (text.h)
 ###################
 
-_fl_create_text = cfuncproto(
-        load_so_libforms(), "fl_create_text",
-        cty.POINTER(FL_OBJECT), [cty.c_int, FL_Coord, FL_Coord, FL_Coord,
-        FL_Coord, STRING],
-        """FL_OBJECT * fl_create_text(int type, FL_Coord x, FL_Coord y,
-           FL_Coord w, FL_Coord h, const char * label)
-        """)
 def fl_create_text(texttype, x, y, w, h, label):
     """ fl_create_text(texttype, x, y, w, h, label) -> pObject
     """
 
+    _fl_create_text = cfuncproto(
+            load_so_libforms(), "fl_create_text",
+            cty.POINTER(FL_OBJECT), [cty.c_int, FL_Coord, FL_Coord, FL_Coord,
+            FL_Coord, STRING],
+            """FL_OBJECT * fl_create_text(int type, FL_Coord x, FL_Coord y,
+               FL_Coord w, FL_Coord h, const char * label)
+            """)
     itexttype = convert_to_int(texttype)
     ix = convert_to_int(x)
     iy = convert_to_int(y)
@@ -13749,17 +13767,17 @@ def fl_create_text(texttype, x, y, w, h, label):
     return retval
 
 
-_fl_add_text = cfuncproto(
-        load_so_libforms(), "fl_add_text",
-        cty.POINTER(FL_OBJECT), [cty.c_int, FL_Coord, FL_Coord, FL_Coord,
-        FL_Coord, STRING],
-        """FL_OBJECT * fl_add_text(int type, FL_Coord x, FL_Coord y,
-           FL_Coord w, FL_Coord h, const char * label)
-        """)
 def fl_add_text(texttype, x, y, w, h, label):
     """ fl_add_text(texttype, x, y, w, h, label) -> pObject
     """
 
+    _fl_add_text = cfuncproto(
+            load_so_libforms(), "fl_add_text",
+            cty.POINTER(FL_OBJECT), [cty.c_int, FL_Coord, FL_Coord, FL_Coord,
+            FL_Coord, STRING],
+            """FL_OBJECT * fl_add_text(int type, FL_Coord x, FL_Coord y,
+               FL_Coord w, FL_Coord h, const char * label)
+            """)
     itexttype = convert_to_int(texttype)
     ix = convert_to_int(x)
     iy = convert_to_int(y)
@@ -13777,135 +13795,140 @@ def fl_add_text(texttype, x, y, w, h, label):
 # forms.h (thumbwheel.h)
 #########################
 
-_fl_get_thumbwheel_value = cfuncproto(
-        load_so_libforms(), "fl_get_thumbwheel_value",
-        cty.c_double, [cty.POINTER(FL_OBJECT)],
-        """double fl_get_thumbwheel_value(FL_OBJECT * ob)
-        """)
 def fl_get_thumbwheel_value(pObject):
     """ fl_get_thumbwheel_value(pObject) -> num.
     """
 
+    _fl_get_thumbwheel_value = cfuncproto(
+            load_so_libforms(), "fl_get_thumbwheel_value",
+            cty.c_double, [cty.POINTER(FL_OBJECT)],
+            """double fl_get_thumbwheel_value(FL_OBJECT * ob)
+            """)
     keep_elem_refs(pObject)
     retval = _fl_get_thumbwheel_value(pObject)
     return retval
 
 
-_fl_set_thumbwheel_value = cfuncproto(
-        load_so_libforms(), "fl_set_thumbwheel_value",
-        cty.c_double, [cty.POINTER(FL_OBJECT), cty.c_double],
-        """double fl_set_thumbwheel_value(FL_OBJECT * ob, double value)
-        """)
 def fl_set_thumbwheel_value(pObject, value):
     """ fl_set_thumbwheel_value(pObject, value)
     """
 
+    _fl_set_thumbwheel_value = cfuncproto(
+            load_so_libforms(), "fl_set_thumbwheel_value",
+            cty.c_double, [cty.POINTER(FL_OBJECT), cty.c_double],
+            """double fl_set_thumbwheel_value(FL_OBJECT * ob, double value)
+            """)
     fvalue = convert_to_double(value)
     keep_elem_refs(pObject, value, fvalue)
     retval = _fl_set_thumbwheel_value(pObject, fvalue)
     return retval
 
 
-_fl_get_thumbwheel_step = cfuncproto(
-        load_so_libforms(), "fl_get_thumbwheel_step",
-        cty.c_double, [cty.POINTER(FL_OBJECT)],
-        """double fl_get_thumbwheel_step(FL_OBJECT * ob)
-        """)
 def fl_get_thumbwheel_step(pObject):
     """ fl_get_thumbwheel_step(pObject) -> num.
     """
 
+    _fl_get_thumbwheel_step = cfuncproto(
+            load_so_libforms(), "fl_get_thumbwheel_step",
+            cty.c_double, [cty.POINTER(FL_OBJECT)],
+            """double fl_get_thumbwheel_step(FL_OBJECT * ob)
+            """)
     keep_elem_refs(pObject)
     retval = _fl_get_thumbwheel_step(pObject)
     return retval
 
 
-_fl_set_thumbwheel_step = cfuncproto(
-        load_so_libforms(), "fl_set_thumbwheel_step",
-        cty.c_double, [cty.POINTER(FL_OBJECT), cty.c_double],
-        """double fl_set_thumbwheel_step(FL_OBJECT * ob, double step)
-        """)
 def fl_set_thumbwheel_step(pObject, step):
     """ fl_set_thumbwheel_step(pObject, step) -> num.
     """
 
+    _fl_set_thumbwheel_step = cfuncproto(
+            load_so_libforms(), "fl_set_thumbwheel_step",
+            cty.c_double, [cty.POINTER(FL_OBJECT), cty.c_double],
+            """double fl_set_thumbwheel_step(FL_OBJECT * ob, double step)
+            """)
     fstep = convert_to_double(step)
     keep_elem_refs(pObject, step, fstep)
     retval = _fl_set_thumbwheel_step(pObject, fstep)
     return retval
 
 
-_fl_set_thumbwheel_return = cfuncproto(
-        load_so_libforms(), "fl_set_thumbwheel_return",
-        cty.c_int, [cty.POINTER(FL_OBJECT), cty.c_int],
-        """int fl_set_thumbwheel_return(FL_OBJECT * ob, int how)
-        """)
 def fl_set_thumbwheel_return(pObject, how):
     """ fl_set_thumbwheel_return(pObject, how) -> num.
     """
 
+    _fl_set_thumbwheel_return = cfuncproto(
+            load_so_libforms(), "fl_set_thumbwheel_return",
+            cty.c_int, [cty.POINTER(FL_OBJECT), cty.c_int],
+            """int fl_set_thumbwheel_return(FL_OBJECT * ob, int how)
+            """)
     ihow = convert_to_int(how)
     keep_elem_refs(pObject, how, ihow)
     retval = _fl_set_thumbwheel_return(pObject, ihow)
     return retval
 
 
-_fl_set_thumbwheel_crossover = cfuncproto(
-        load_so_libforms(), "fl_set_thumbwheel_crossover",
-        cty.c_int, [cty.POINTER(FL_OBJECT), cty.c_int],
-        """int fl_set_thumbwheel_crossover(FL_OBJECT * ob, int flag)
-        """)
 def fl_set_thumbwheel_crossover(pObject, flag):
     """ fl_set_thumbwheel_crossover(pObject, flag) -> num.
     """
 
+    _fl_set_thumbwheel_crossover = cfuncproto(
+            load_so_libforms(), "fl_set_thumbwheel_crossover",
+            cty.c_int, [cty.POINTER(FL_OBJECT), cty.c_int],
+            """int fl_set_thumbwheel_crossover(FL_OBJECT * ob, int flag)
+            """)
     iflag = convert_to_int(flag)
     keep_elem_refs(pObject, flag, iflag)
     retval = _fl_set_thumbwheel_crossover(pObject, iflag)
     return retval
 
 
-_fl_set_thumbwheel_bounds = cfuncproto(
-        load_so_libforms(), "fl_set_thumbwheel_bounds",
-        None, [cty.POINTER(FL_OBJECT), cty.c_double, cty.c_double],
-        """void fl_set_thumbwheel_bounds(FL_OBJECT * ob, double min, double max)
-        """)
 def fl_set_thumbwheel_bounds(pObject, minbound, maxbound):
     """ fl_set_thumbwheel_bounds(pObject, minbound, maxbound)
     """
 
+    _fl_set_thumbwheel_bounds = cfuncproto(
+            load_so_libforms(), "fl_set_thumbwheel_bounds",
+            None, [cty.POINTER(FL_OBJECT), cty.c_double, cty.c_double],
+            """void fl_set_thumbwheel_bounds(FL_OBJECT * ob, double min,
+               double max)
+            """)
     fminbound = convert_to_double(minbound)
     fmaxbound = convert_to_double(maxbound)
     keep_elem_refs(pObject, minbound, maxbound, fminbound, fmaxbound)
     _fl_set_thumbwheel_bounds(pObject, fminbound, fmaxbound)
 
 
-_fl_get_thumbwheel_bounds = cfuncproto(
-        load_so_libforms(), "fl_get_thumbwheel_bounds",
-        None, [cty.POINTER(FL_OBJECT), cty.POINTER(cty.c_double),
-        cty.POINTER(cty.c_double)],
-        """void fl_get_thumbwheel_bounds(FL_OBJECT * ob, double * min,
-           double * max)
-        """)
-def fl_get_thumbwheel_bounds(pObject, min_bound, max_bound):
-    """ fl_get_thumbwheel_bounds(pObject, min_bound, max_bound)
+#def fl_get_thumbwheel_bounds(pObject, minbound, maxbound)
+def fl_get_thumbwheel_bounds(pObject):
+    """ fl_get_thumbwheel_bounds(pObject) -> minbound, maxbound
     """
 
-    keep_elem_refs(pObject, min_bound, max_bound)
-    _fl_get_thumbwheel_bounds(pObject, min_bound, max_bound)
+    _fl_get_thumbwheel_bounds = cfuncproto(
+            load_so_libforms(), "fl_get_thumbwheel_bounds",
+            None, [cty.POINTER(FL_OBJECT), cty.POINTER(cty.c_double),
+            cty.POINTER(cty.c_double)],
+            """void fl_get_thumbwheel_bounds(FL_OBJECT * ob, double * min,
+               double * max)
+            """)
+    minbound, pminbound = make_double_pointer()
+    maxbound, pmaxbound = make_double_pointer()
+    keep_elem_refs(pObject, minbound, maxbound, pminbound, pmaxbound)
+    _fl_get_thumbwheel_bounds(pObject, pminbound, pmaxbound)
+    return minbound, maxbound
 
 
-_fl_create_thumbwheel = cfuncproto(
-        load_so_libforms(), "fl_create_thumbwheel",
-        cty.POINTER(FL_OBJECT), [cty.c_int, FL_Coord, FL_Coord, FL_Coord,
-        FL_Coord, STRING],
-        """FL_OBJECT * fl_create_thumbwheel(int type, FL_Coord x, FL_Coord y,
-           FL_Coord w, FL_Coord h, const char * label)
-        """)
 def fl_create_thumbwheel(wheeltype, x, y, w, h, label):
     """ fl_create_thumbwheel(wheeltype, x, y, w, h, label) -> pObject
     """
 
+    _fl_create_thumbwheel = cfuncproto(
+            load_so_libforms(), "fl_create_thumbwheel",
+            cty.POINTER(FL_OBJECT), [cty.c_int, FL_Coord, FL_Coord, FL_Coord,
+            FL_Coord, STRING],
+            """FL_OBJECT * fl_create_thumbwheel(int type, FL_Coord x,
+               FL_Coord y, FL_Coord w, FL_Coord h, const char * label)
+            """)
     iwheeltype = convert_to_int(wheeltype)
     ix = convert_to_int(x)
     iy = convert_to_int(y)
@@ -13918,17 +13941,17 @@ def fl_create_thumbwheel(wheeltype, x, y, w, h, label):
     return retval
 
 
-_fl_add_thumbwheel = cfuncproto(
-        load_so_libforms(), "fl_add_thumbwheel",
-        cty.POINTER(FL_OBJECT), [cty.c_int, FL_Coord, FL_Coord, FL_Coord,
-        FL_Coord, STRING],
-        """FL_OBJECT * fl_add_thumbwheel(int type, FL_Coord x, FL_Coord y,
-           FL_Coord w, FL_Coord h, const char * label)
-        """)
 def fl_add_thumbwheel(wheeltype, x, y, w, h, label):
     """ fl_add_thumbwheel(wheeltype, x, y, w, h, label) -> pObject
     """
 
+    _fl_add_thumbwheel = cfuncproto(
+            load_so_libforms(), "fl_add_thumbwheel",
+            cty.POINTER(FL_OBJECT), [cty.c_int, FL_Coord, FL_Coord, FL_Coord,
+            FL_Coord, STRING],
+            """FL_OBJECT * fl_add_thumbwheel(int type, FL_Coord x, FL_Coord y,
+               FL_Coord w, FL_Coord h, const char * label)
+            """)
     iwheeltype = convert_to_int(wheeltype)
     ix = convert_to_int(x)
     iy = convert_to_int(y)
@@ -13949,17 +13972,17 @@ def fl_add_thumbwheel(wheeltype, x, y, w, h, label):
 
 # Routines
 
-_fl_create_timer = cfuncproto(
-        load_so_libforms(), "fl_create_timer",
-        cty.POINTER(FL_OBJECT), [cty.c_int, FL_Coord, FL_Coord, FL_Coord,
-        FL_Coord, STRING],
-        """FL_OBJECT * fl_create_timer(int type, FL_Coord x, FL_Coord y,
-        FL_Coord w, FL_Coord h, const char * label)
-        """)
 def fl_create_timer(timertype, x, y, w, h, label):
     """ fl_create_timer(timertype, x, y, w, h, label) -> pObject
     """
 
+    _fl_create_timer = cfuncproto(
+            load_so_libforms(), "fl_create_timer",
+            cty.POINTER(FL_OBJECT), [cty.c_int, FL_Coord, FL_Coord, FL_Coord,
+            FL_Coord, STRING],
+            """FL_OBJECT * fl_create_timer(int type, FL_Coord x, FL_Coord y,
+            FL_Coord w, FL_Coord h, const char * label)
+            """)
     itimertype = convert_to_int(timertype)
     ix = convert_to_int(x)
     iy = convert_to_int(y)
@@ -13972,17 +13995,17 @@ def fl_create_timer(timertype, x, y, w, h, label):
     return retval
 
 
-_fl_add_timer = cfuncproto(
-        load_so_libforms(), "fl_add_timer",
-        cty.POINTER(FL_OBJECT), [cty.c_int, FL_Coord, FL_Coord, FL_Coord,
-        FL_Coord, STRING],
-        """FL_OBJECT * fl_add_timer(int type, FL_Coord x, FL_Coord y,
-        FL_Coord w, FL_Coord h, const char * label)
-        """)
 def fl_add_timer(timertype, x, y, w, h, label):
     """ fl_add_timer(timertype, x, y, w, h, label) -> pObject
     """
 
+    _fl_add_timer = cfuncproto(
+            load_so_libforms(), "fl_add_timer",
+            cty.POINTER(FL_OBJECT), [cty.c_int, FL_Coord, FL_Coord, FL_Coord,
+            FL_Coord, STRING],
+            """FL_OBJECT * fl_add_timer(int type, FL_Coord x, FL_Coord y,
+            FL_Coord w, FL_Coord h, const char * label)
+            """)
     itimertype = convert_to_int(timertype)
     ix = convert_to_int(x)
     iy = convert_to_int(y)
@@ -13995,58 +14018,58 @@ def fl_add_timer(timertype, x, y, w, h, label):
     return retval
 
 
-_fl_set_timer = cfuncproto(
-        load_so_libforms(), "fl_set_timer",
-        None, [cty.POINTER(FL_OBJECT), cty.c_double],
-        """void fl_set_timer(FL_OBJECT * ob, double total)
-        """)
 def fl_set_timer(pObject, total):
     """ fl_set_timer(pObject, total)
     """
 
+    _fl_set_timer = cfuncproto(
+            load_so_libforms(), "fl_set_timer",
+            None, [cty.POINTER(FL_OBJECT), cty.c_double],
+            """void fl_set_timer(FL_OBJECT * ob, double total)
+            """)
     ftotal = convert_to_double(total)
     keep_elem_refs(pObject, total, ftotal)
     _fl_set_timer(pObject, ftotal)
 
 
-_fl_get_timer = cfuncproto(
-        load_so_libforms(), "fl_get_timer",
-        cty.c_double, [cty.POINTER(FL_OBJECT)],
-        """double fl_get_timer(FL_OBJECT * ob)
-        """)
 def fl_get_timer(pObject):
     """ fl_get_timer(pObject) -> num.
     """
 
+    _fl_get_timer = cfuncproto(
+            load_so_libforms(), "fl_get_timer",
+            cty.c_double, [cty.POINTER(FL_OBJECT)],
+            """double fl_get_timer(FL_OBJECT * ob)
+            """)
     keep_elem_refs(pObject)
     retval = _fl_get_timer(pObject)
     return retval
 
 
-_fl_set_timer_countup = cfuncproto(
-        load_so_libforms(), "fl_set_timer_countup",
-        None, [cty.POINTER(FL_OBJECT), cty.c_int],
-        """void fl_set_timer_countup(FL_OBJECT * ob, int yes)
-        """)
 def fl_set_timer_countup(pObject, yes):
     """ fl_set_timer_countup(pObject, yes)
     """
 
+    _fl_set_timer_countup = cfuncproto(
+            load_so_libforms(), "fl_set_timer_countup",
+            None, [cty.POINTER(FL_OBJECT), cty.c_int],
+            """void fl_set_timer_countup(FL_OBJECT * ob, int yes)
+            """)
     iyes = convert_to_int(yes)
     keep_elem_refs(pObject, yes, iyes)
     _fl_set_timer_countup(pObject, iyes)
 
 
-_fl_set_timer_filter = cfuncproto(
-        load_so_libforms(), "fl_set_timer_filter",
-        FL_TIMER_FILTER, [cty.POINTER(FL_OBJECT), FL_TIMER_FILTER],
-        """FL_TIMER_FILTER fl_set_timer_filter(FL_OBJECT * ob,
-           FL_TIMER_FILTER filter)
-        """)
 def fl_set_timer_filter(pObject, py_filter):
     """ fl_set_timer_filter(pObject, py_filter) -> timer_filter func.
     """
 
+    _fl_set_timer_filter = cfuncproto(
+            load_so_libforms(), "fl_set_timer_filter",
+            FL_TIMER_FILTER, [cty.POINTER(FL_OBJECT), FL_TIMER_FILTER],
+            """FL_TIMER_FILTER fl_set_timer_filter(FL_OBJECT * ob,
+               FL_TIMER_FILTER filter)
+            """)
     c_filter = FL_TIMER_FILTER(py_filter)
     keep_cfunc_refs(c_filter)
     keep_elem_refs(pObject)
@@ -14054,28 +14077,28 @@ def fl_set_timer_filter(pObject, py_filter):
     return retval
 
 
-_fl_suspend_timer = cfuncproto(
-        load_so_libforms(), "fl_suspend_timer",
-        None, [cty.POINTER(FL_OBJECT)],
-        """void fl_suspend_timer(FL_OBJECT * ob)
-        """)
 def fl_suspend_timer(pObject):
     """ fl_suspend_timer(pObject)
     """
 
+    _fl_suspend_timer = cfuncproto(
+            load_so_libforms(), "fl_suspend_timer",
+            None, [cty.POINTER(FL_OBJECT)],
+            """void fl_suspend_timer(FL_OBJECT * ob)
+            """)
     keep_elem_refs(pObject)
     _fl_suspend_timer(pObject)
 
 
-_fl_resume_timer = cfuncproto(
-        load_so_libforms(), "fl_resume_timer",
-        None, [cty.POINTER(FL_OBJECT)],
-        """void fl_resume_timer(FL_OBJECT * ob)
-        """)
 def fl_resume_timer(pObject):
     """ fl_resume_timer(pObject)
     """
 
+    _fl_resume_timer = cfuncproto(
+            load_so_libforms(), "fl_resume_timer",
+            None, [cty.POINTER(FL_OBJECT)],
+            """void fl_resume_timer(FL_OBJECT * ob)
+            """)
     keep_elem_refs(pObject)
     _fl_resume_timer(pObject)
 
@@ -14086,45 +14109,45 @@ def fl_resume_timer(pObject):
 # Prototypes for xpop-up menus
 ###############################
 
-_fl_setpup_entries = cfuncproto(
-        load_so_libforms(), "fl_setpup_entries",
-        cty.c_int, [cty.c_int, cty.POINTER(FL_PUP_ENTRY)],
-        """int fl_setpup_entries(int nm, FL_PUP_ENTRY * entries)
-        """)
 def fl_setpup_entries(nm, pPopupEntry):
     """ fl_setpup_entries(nm, pPopupEntry) -> num.
     """
 
+    _fl_setpup_entries = cfuncproto(
+            load_so_libforms(), "fl_setpup_entries",
+            cty.c_int, [cty.c_int, cty.POINTER(FL_PUP_ENTRY)],
+            """int fl_setpup_entries(int nm, FL_PUP_ENTRY * entries)
+            """)
     inm = convert_to_int(nm)
     keep_elem_refs(nm, pPopupEntry, inm)
     retval = _fl_setpup_entries(inm, pPopupEntry)
     return retval
 
 
-_fl_newpup = cfuncproto(
-        load_so_libforms(), "fl_newpup",
-        cty.c_int, [Window],
-        """int fl_newpup(Window win)
-        """)
 def fl_newpup(win):
     """ fl_newpup(win) -> num.
     """
 
+    _fl_newpup = cfuncproto(
+            load_so_libforms(), "fl_newpup",
+            cty.c_int, [Window],
+            """int fl_newpup(Window win)
+            """)
     ulwin = convert_to_Window(win)
     keep_elem_refs(win, ulwin)
     retval = _fl_newpup(ulwin)
     return retval
 
 
-_fl_defpup = cfuncproto(
-        load_so_libforms(), "fl_defpup",
-        cty.c_int, [Window, STRING],
-        """int fl_defpup(Window win, const char * str):
-        """)
 def fl_defpup(win, pupstr):
     """ fl_defpup(win, pupstr) -> num.
     """
 
+    _fl_defpup = cfuncproto(
+            load_so_libforms(), "fl_defpup",
+            cty.c_int, [Window, STRING],
+            """int fl_defpup(Window win, const char * str):
+            """)
     ulwin = convert_to_Window(win)
     spupstr = convert_to_string(pupstr)
     keep_elem_refs(win, pupstr, ulwin, spupstr)
@@ -14132,15 +14155,15 @@ def fl_defpup(win, pupstr):
     return retval
 
 
-_fl_addtopup = cfuncproto(
-        load_so_libforms(), "fl_addtopup",
-        cty.c_int, [cty.c_int, STRING],
-        """int fl_addtopup(int n, const char * str)
-        """)
 def fl_addtopup(n, pupstr):
     """ fl_addtopup(n, pupstr) -> num.
     """
 
+    _fl_addtopup = cfuncproto(
+            load_so_libforms(), "fl_addtopup",
+            cty.c_int, [cty.c_int, STRING],
+            """int fl_addtopup(int n, const char * str)
+            """)
     in_ = convert_to_int(n)
     spupstr = convert_to_string(pupstr)
     keep_elem_refs(n, pupstr, in_, spupstr)
@@ -14148,15 +14171,15 @@ def fl_addtopup(n, pupstr):
     return retval
 
 
-_fl_setpup_mode = cfuncproto(
-        load_so_libforms(), "fl_setpup_mode",
-        cty.c_int, [cty.c_int, cty.c_int, cty.c_uint],
-        """int fl_setpup_mode(int nm, int ni, unsigned int mode)
-        """)
 def fl_setpup_mode(nm, ni, mode):
     """ fl_setpup_mode(nm, ni, mode) -> num.
     """
 
+    _fl_setpup_mode = cfuncproto(
+            load_so_libforms(), "fl_setpup_mode",
+            cty.c_int, [cty.c_int, cty.c_int, cty.c_uint],
+            """int fl_setpup_mode(int nm, int ni, unsigned int mode)
+            """)
     inm = convert_to_int(nm)
     ini = convert_to_int(ni)
     uimode = convert_to_uint(mode)
@@ -14165,103 +14188,103 @@ def fl_setpup_mode(nm, ni, mode):
     return retval
 
 
-_fl_freepup = cfuncproto(
-        load_so_libforms(), "fl_freepup",
-        None, [cty.c_int],
-        """void fl_freepup(int n)
-        """)
 def fl_freepup(n):
     """ fl_freepup(n)
     """
 
+    _fl_freepup = cfuncproto(
+            load_so_libforms(), "fl_freepup",
+            None, [cty.c_int],
+            """void fl_freepup(int n)
+            """)
     in_ = convert_to_int(n)
     keep_elem_refs(n, in_)
     _fl_freepup(in_)
 
 
-_fl_dopup = cfuncproto(
-        load_so_libforms(), "fl_dopup",
-        cty.c_int, [cty.c_int],
-        """int fl_dopup(int n)
-        """)
 def fl_dopup(n):
     """ fl_dopup(n) -> num.
     """
 
+    _fl_dopup = cfuncproto(
+            load_so_libforms(), "fl_dopup",
+            cty.c_int, [cty.c_int],
+            """int fl_dopup(int n)
+            """)
     in_ = convert_to_int(n)
     keep_elem_refs(n, in_)
     retval = _fl_dopup(in_)
     return retval
 
 
-_fl_setpup_default_cursor = cfuncproto(
-        load_so_libforms(), "fl_setpup_default_cursor",
-        Cursor, [cty.c_int],
-        """Cursor fl_setpup_default_cursor(int cursor):
-        """)
 def fl_setpup_default_cursor(cursor):
     """ fl_setpup_default_cursor(cursor) -> cursor
     """
 
+    _fl_setpup_default_cursor = cfuncproto(
+            load_so_libforms(), "fl_setpup_default_cursor",
+            Cursor, [cty.c_int],
+            """Cursor fl_setpup_default_cursor(int cursor):
+            """)
     icursor = convert_to_int(cursor)
     keep_elem_refs(cursor, icursor)
     retval = _fl_setpup_default_cursor(icursor)
     return retval
 
 
-_fl_setpup_color = cfuncproto(
-        load_so_libforms(), "fl_setpup_color",
-        None, [FL_COLOR, FL_COLOR],
-        """void fl_setpup_color(FL_COLOR fg, FL_COLOR bg)
-        """)
 def fl_setpup_color(fgcolr, bgcolr):
     """ fl_setpup_color(fgcolr, bgcolr)
     """
 
+    _fl_setpup_color = cfuncproto(
+            load_so_libforms(), "fl_setpup_color",
+            None, [FL_COLOR, FL_COLOR],
+            """void fl_setpup_color(FL_COLOR fg, FL_COLOR bg)
+            """)
     ulfgcolr = convert_to_FL_COLOR(fgcolr)
     ulbgcolr = convert_to_FL_COLOR(bgcolr)
     keep_elem_refs(fgcolr, bgcolr, ulfgcolr, ulbgcolr)
     _fl_setpup_color(ulfgcolr, ulbgcolr)
 
 
-_fl_setpup_default_pup_checked_color = cfuncproto(
-        load_so_libforms(), "fl_setpup_default_pup_checked_color",
-        None, [FL_COLOR],
-        """void fl_setpup_default_pup_checked_color(FL_COLOR col)
-        """)
 def fl_setpup_default_pup_checked_color(colr):
     """ fl_setpup_default_pup_checked_color(colr):
     """
 
+    _fl_setpup_default_pup_checked_color = cfuncproto(
+            load_so_libforms(), "fl_setpup_default_pup_checked_color",
+            None, [FL_COLOR],
+            """void fl_setpup_default_pup_checked_color(FL_COLOR col)
+            """)
     ulcolr = convert_to_FL_COLOR(colr)
     keep_elem_refs(colr, ulcolr)
     _fl_setpup_default_pup_checked_color(ulcolr)
 
 
-_fl_setpup_fontsize = cfuncproto(
-        load_so_libforms(), "fl_setpup_fontsize",
-        cty.c_int, [cty.c_int],
-        """int fl_setpup_fontsize(int size)    DEPRECATED?
-        """)
 def fl_setpup_fontsize(size):
     """ fl_setpup_fontsize(size) -> num.
     """
 
+    _fl_setpup_fontsize = cfuncproto(
+            load_so_libforms(), "fl_setpup_fontsize",
+            cty.c_int, [cty.c_int],
+            """int fl_setpup_fontsize(int size)    DEPRECATED?
+            """)
     isize = convert_to_int(size)
     keep_elem_refs(size, isize)
     retval = _fl_setpup_fontsize(isize)
     return retval
 
 
-_fl_setpup_fontstyle = cfuncproto(
-        load_so_libforms(), "fl_setpup_fontstyle",
-        cty.c_int, [cty.c_int],
-        """int fl_setpup_fontstyle(int style)
-        """)
 def fl_setpup_fontstyle(style):
     """ fl_setpup_fontstyle(style) -> num.
     """
 
+    _fl_setpup_fontstyle = cfuncproto(
+            load_so_libforms(), "fl_setpup_fontstyle",
+            cty.c_int, [cty.c_int],
+            """int fl_setpup_fontstyle(int style)
+            """)
     istyle = convert_to_int(style)
     keep_elem_refs(style, istyle)
     retval = _fl_setpup_fontstyle(istyle)
@@ -14275,30 +14298,30 @@ fl_setpup_default_checkcolor = fl_setpup_default_pup_checked_color
 fl_setpup_checkcolor = fl_setpup_default_pup_checked_color
 
 
-_fl_setpup_default_bw = cfuncproto(
-        load_so_libforms(), "fl_setpup_default_bw",
-        cty.c_int, [cty.c_int],
-        """int fl_setpup_default_bw(int bw):
-        """)
 def fl_setpup_default_bw(bw):
     """ fl_setpup_default_bw(bw) -> num.
     """
 
+    _fl_setpup_default_bw = cfuncproto(
+            load_so_libforms(), "fl_setpup_default_bw",
+            cty.c_int, [cty.c_int],
+            """int fl_setpup_default_bw(int bw):
+            """)
     ibw = convert_to_int(bw)
     keep_elem_refs(bw, ibw)
     retval = _fl_setpup_default_bw(ibw)
     return retval
 
 
-_fl_setpup_shortcut = cfuncproto(
-        load_so_libforms(), "fl_setpup_shortcut",
-        None, [cty.c_int, cty.c_int, STRING],
-        """void fl_setpup_shortcut(int nm, int ni, const char * sc)
-        """)
 def fl_setpup_shortcut(nm, ni, sctext):
     """ fl_setpup_shortcut(nm, ni, sctext)
     """
 
+    _fl_setpup_shortcut = cfuncproto(
+            load_so_libforms(), "fl_setpup_shortcut",
+            None, [cty.c_int, cty.c_int, STRING],
+            """void fl_setpup_shortcut(int nm, int ni, const char * sc)
+            """)
     inm = convert_to_int(nm)
     ini = convert_to_int(ni)
     ssctext = convert_to_string(sctext)
@@ -14306,106 +14329,106 @@ def fl_setpup_shortcut(nm, ni, sctext):
     _fl_setpup_shortcut(inm, ini, ssctext)
 
 
-_fl_setpup_position = cfuncproto(
-        load_so_libforms(), "fl_setpup_position",
-        None, [cty.c_int, cty.c_int],
-        """void fl_setpup_position(int x, int y)
-        """)
 def fl_setpup_position(x, y):
     """ fl_setpup_position(x, y)
     """
 
+    _fl_setpup_position = cfuncproto(
+            load_so_libforms(), "fl_setpup_position",
+            None, [cty.c_int, cty.c_int],
+            """void fl_setpup_position(int x, int y)
+            """)
     ix = convert_to_int(x)
     iy = convert_to_int(y)
     keep_elem_refs(x, y, ix, iy)
     _fl_setpup_position(ix, iy)
 
 
-_fl_setpup_selection = cfuncproto(
-        load_so_libforms(), "fl_setpup_selection",
-        None, [cty.c_int, cty.c_int],
-        """void fl_setpup_selection(int nm, int ni)
-        """)
 def fl_setpup_selection(nm, ni):
     """ fl_setpup_selection(nm, ni)
     """
 
+    _fl_setpup_selection = cfuncproto(
+            load_so_libforms(), "fl_setpup_selection",
+            None, [cty.c_int, cty.c_int],
+            """void fl_setpup_selection(int nm, int ni)
+            """)
     inm = convert_to_int(nm)
     ini = convert_to_int(ni)
     keep_elem_refs(nm, ni, inm, ini)
     _fl_setpup_selection(inm, ini)
 
 
-_fl_setpup_shadow = cfuncproto(
-        load_so_libforms(), "fl_setpup_shadow",
-        None, [cty.c_int, cty.c_int],
-        """void fl_setpup_shadow(int n, int y)
-        """)
 def fl_setpup_shadow(n, y):
     """ fl_setpup_shadow(n, y)
     """
 
+    _fl_setpup_shadow = cfuncproto(
+            load_so_libforms(), "fl_setpup_shadow",
+            None, [cty.c_int, cty.c_int],
+            """void fl_setpup_shadow(int n, int y)
+            """)
     in_ = convert_to_int(n)
     iy = convert_to_int(y)
     keep_elem_refs(n, y, in_, iy)
     _fl_setpup_shadow(in_, iy)
 
 
-_fl_setpup_softedge = cfuncproto(
-        load_so_libforms(), "fl_setpup_softedge",
-        None, [cty.c_int, cty.c_int],
-        """void fl_setpup_softedge(int n, int y)
-        """)
 def fl_setpup_softedge(n, y):
     """ fl_setpup_softedge(n, y)
     """
 
+    _fl_setpup_softedge = cfuncproto(
+            load_so_libforms(), "fl_setpup_softedge",
+            None, [cty.c_int, cty.c_int],
+            """void fl_setpup_softedge(int n, int y)
+            """)
     in_ = convert_to_int(n)
     iy = convert_to_int(y)
     keep_elem_refs(n, y, in_, iy)
     _fl_setpup_softedge(in_, iy)
 
 
-_fl_setpup_bw = cfuncproto(
-        load_so_libforms(), "fl_setpup_bw",
-        None, [cty.c_int, cty.c_int],
-        """void fl_setpup_bw(int n, int bw)
-        """)
 def fl_setpup_bw(n, bw):
     """ fl_setpup_bw(n, bw)
     """
 
+    _fl_setpup_bw = cfuncproto(
+            load_so_libforms(), "fl_setpup_bw",
+            None, [cty.c_int, cty.c_int],
+            """void fl_setpup_bw(int n, int bw)
+            """)
     in_ = convert_to_int(n)
     ibw = convert_to_int(bw)
     keep_elem_refs(n, bw, in_, ibw)
     _fl_setpup_bw(in_, ibw)
 
 
-_fl_setpup_title = cfuncproto(
-        load_so_libforms(), "fl_setpup_title",
-        None, [cty.c_int, STRING],
-        """void fl_setpup_title(int nm, const char * title)
-        """)
 def fl_setpup_title(nm, title):
     """ fl_setpup_title(nm, title)
     """
 
+    _fl_setpup_title = cfuncproto(
+            load_so_libforms(), "fl_setpup_title",
+            None, [cty.c_int, STRING],
+            """void fl_setpup_title(int nm, const char * title)
+            """)
     inm = convert_to_int(nm)
     stitle = convert_to_string(title)
     keep_elem_refs(nm, title, inm, stitle)
     _fl_setpup_title(inm, stitle)
 
 
-_fl_setpup_entercb = cfuncproto(
-        load_so_libforms(), "fl_setpup_entercb",
-        FL_PUP_ENTERCB, [cty.c_int, FL_PUP_ENTERCB, cty.c_void_p],
-        """FL_PUP_ENTERCB fl_setpup_entercb(int nm, FL_PUP_ENTERCB cb,
-           void * data)
-        """)
 def fl_setpup_entercb(nm, py_cb, data):
     """ fl_setpup_entercb(nm, py_cb, data) -> pup_entercb
     """
 
+    _fl_setpup_entercb = cfuncproto(
+            load_so_libforms(), "fl_setpup_entercb",
+            FL_PUP_ENTERCB, [cty.c_int, FL_PUP_ENTERCB, cty.c_void_p],
+            """FL_PUP_ENTERCB fl_setpup_entercb(int nm, FL_PUP_ENTERCB cb,
+               void * data)
+            """)
     inm = convert_to_int(nm)
     c_cb = FL_PUP_ENTERCB(py_cb)
     keep_cfunc_refs(c_cb)
@@ -14414,16 +14437,16 @@ def fl_setpup_entercb(nm, py_cb, data):
     return retval
 
 
-_fl_setpup_leavecb = cfuncproto(
-        load_so_libforms(), "fl_setpup_leavecb",
-        FL_PUP_LEAVECB, [cty.c_int, FL_PUP_LEAVECB, cty.c_void_p],
-        """FL_PUP_LEAVECB fl_setpup_leavecb(int nm, FL_PUP_LEAVECB cb,
-           void * data)
-        """)
 def fl_setpup_leavecb(nm, py_cb, data):
     """ fl_setpup_leavecb(nm, py_cb, data) -> pup_leavecb
     """
 
+    _fl_setpup_leavecb = cfuncproto(
+            load_so_libforms(), "fl_setpup_leavecb",
+            FL_PUP_LEAVECB, [cty.c_int, FL_PUP_LEAVECB, cty.c_void_p],
+            """FL_PUP_LEAVECB fl_setpup_leavecb(int nm, FL_PUP_LEAVECB cb,
+               void * data)
+            """)
     inm = convert_to_int(nm)
     c_cb = FL_PUP_LEAVECB(py_cb)
     keep_cfunc_refs(c_cb)
@@ -14432,15 +14455,15 @@ def fl_setpup_leavecb(nm, py_cb, data):
     return retval
 
 
-_fl_setpup_pad = cfuncproto(
-        load_so_libforms(), "fl_setpup_pad",
-        None, [cty.c_int, cty.c_int, cty.c_int],
-        """void fl_setpup_pad(int n, int padw, int padh)
-        """)
 def fl_setpup_pad(n, padw, padh):
     """ fl_setpup_pad(n, padw, padh)
     """
 
+    _fl_setpup_pad = cfuncproto(
+            load_so_libforms(), "fl_setpup_pad",
+            None, [cty.c_int, cty.c_int, cty.c_int],
+            """void fl_setpup_pad(int n, int padw, int padh)
+            """)
     in_ = convert_to_int(n)
     ipadw = convert_to_int(padw)
     ipadh = convert_to_int(padh)
@@ -14448,15 +14471,15 @@ def fl_setpup_pad(n, padw, padh):
     _fl_setpup_pad(in_, ipadw, ipadh)
 
 
-_fl_setpup_cursor = cfuncproto(
-        load_so_libforms(), "fl_setpup_cursor",
-        Cursor, [cty.c_int, cty.c_int],
-        """Cursor fl_setpup_cursor(int nm, int cursor)
-        """)
 def fl_setpup_cursor(nm, cursor):
     """ fl_setpup_cursor(nm, cursor) -> cursor
     """
 
+    _fl_setpup_cursor = cfuncproto(
+            load_so_libforms(), "fl_setpup_cursor",
+            Cursor, [cty.c_int, cty.c_int],
+            """Cursor fl_setpup_cursor(int nm, int cursor)
+            """)
     inm = convert_to_int(nm)
     icursor = convert_to_int(cursor)
     keep_elem_refs(nm, cursor, inm, icursor)
@@ -14464,30 +14487,30 @@ def fl_setpup_cursor(nm, cursor):
     return retval
 
 
-_fl_setpup_maxpup = cfuncproto(
-        load_so_libforms(), "fl_setpup_maxpup",
-        cty.c_int, [cty.c_int],
-        """int fl_setpup_maxpup(int n)
-        """)
 def fl_setpup_maxpup(n):
     """ fl_setpup_maxpup(n) -> num.
     """
 
+    _fl_setpup_maxpup = cfuncproto(
+            load_so_libforms(), "fl_setpup_maxpup",
+            cty.c_int, [cty.c_int],
+            """int fl_setpup_maxpup(int n)
+            """)
     in_ = convert_to_int(n)
     keep_elem_refs(n, in_)
     retval = _fl_setpup_maxpup(in_)
     return retval
 
 
-_fl_getpup_mode = cfuncproto(
-        load_so_libforms(), "fl_getpup_mode",
-        cty.c_uint, [cty.c_int, cty.c_int],
-        """)unsigned int fl_getpup_mode(int nm, int ni)
-        """)
 def fl_getpup_mode(nm, ni):
     """ fl_getpup_mode(nm, ni) -> num.
     """
 
+    _fl_getpup_mode = cfuncproto(
+            load_so_libforms(), "fl_getpup_mode",
+            cty.c_uint, [cty.c_int, cty.c_int],
+            """unsigned int fl_getpup_mode(int nm, int ni)
+            """)
     inm = convert_to_int(nm)
     ini = convert_to_int(ni)
     keep_elem_refs(nm, ni, inm, ini)
@@ -14495,15 +14518,15 @@ def fl_getpup_mode(nm, ni):
     return retval
 
 
-_fl_getpup_text = cfuncproto(
-        load_so_libforms(), "fl_getpup_text",
-        STRING, [cty.c_int, cty.c_int],
-        """const char * fl_getpup_text(int nm, int ni)
-        """)
 def fl_getpup_text(nm, ni):
     """ fl_getpup_text(nm, ni) -> text string
     """
 
+    _fl_getpup_text = cfuncproto(
+            load_so_libforms(), "fl_getpup_text",
+            STRING, [cty.c_int, cty.c_int],
+            """const char * fl_getpup_text(int nm, int ni)
+            """)
     inm = convert_to_int(nm)
     ini = convert_to_int(ni)
     keep_elem_refs(nm, ni, inm, ini)
@@ -14511,71 +14534,71 @@ def fl_getpup_text(nm, ni):
     return retval
 
 
-_fl_showpup = cfuncproto(
-        load_so_libforms(), "fl_showpup",
-        None, [cty.c_int],
-        """void fl_showpup(int n)
-        """)
 def fl_showpup(n):
     """ fl_showpup(n)
     """
 
+    _fl_showpup = cfuncproto(
+            load_so_libforms(), "fl_showpup",
+            None, [cty.c_int],
+            """void fl_showpup(int n)
+            """)
     in_ = convert_to_int(n)
     keep_elem_refs(n, in_)
     _fl_showpup(in_)
 
 
-_fl_hidepup = cfuncproto(
-        load_so_libforms(), "fl_hidepup",
-        None, [cty.c_int],
-        """void fl_hidepup(int n)
-        """)
 def fl_hidepup(n):
     """ fl_hidepup(n)
     """
 
+    _fl_hidepup = cfuncproto(
+            load_so_libforms(), "fl_hidepup",
+            None, [cty.c_int],
+            """void fl_hidepup(int n)
+            """)
     in_ = convert_to_int(n)
     keep_elem_refs(n, in_)
     _fl_hidepup(in_)
 
 
-_fl_getpup_items = cfuncproto(
-        load_so_libforms(), "fl_getpup_items",
-        cty.c_int, [cty.c_int],
-        """int fl_getpup_items(int n)
-        """)
 def fl_getpup_items(n):
     """ fl_getpup_items(n) -> num.
     """
 
+    _fl_getpup_items = cfuncproto(
+            load_so_libforms(), "fl_getpup_items",
+            cty.c_int, [cty.c_int],
+            """int fl_getpup_items(int n)
+            """)
     in_ = convert_to_int(n)
     keep_elem_refs(n, in_)
     retval = _fl_getpup_items(in_)
     return retval
 
 
-_fl_current_pup = cfuncproto(
-        load_so_libforms(), "fl_current_pup",
-        cty.c_int, [],
-        """int fl_current_pup()
-        """)
 def fl_current_pup():
     """ fl_current_pup() -> num.
     """
 
+    _fl_current_pup = cfuncproto(
+            load_so_libforms(), "fl_current_pup",
+            cty.c_int, [],
+            """int fl_current_pup()
+            """)
     retval = _fl_current_pup()
     return retval
 
 
-_fl_setpup_itemcb = cfuncproto(
-        load_so_libforms(), "fl_setpup_itemcb",
-        FL_PUP_CB, [cty.c_int, cty.c_int, FL_PUP_CB],
-        """FL_PUP_CB fl_setpup_itemcb(int nm, int ni, FL_PUP_CB cb)
-        """)
 def fl_setpup_itemcb(nm, ni, py_cb):
     """ fl_setpup_itemcb(nm, ni, py_cb) -> pup_cb
     """
 
+    _fl_setpup_itemcb = cfuncproto(
+            load_so_libforms(), "fl_setpup_itemcb",
+            FL_PUP_CB, [cty.c_int, cty.c_int, FL_PUP_CB],
+            """FL_PUP_CB fl_setpup_itemcb(int nm, int ni, FL_PUP_CB cb)
+            """)
     inm = convert_to_int(nm)
     ini = convert_to_int(ni)
     c_cb = FL_PUP_CB(py_cb)
@@ -14585,15 +14608,15 @@ def fl_setpup_itemcb(nm, ni, py_cb):
     return retval
 
 
-_fl_setpup_menucb = cfuncproto(
-        load_so_libforms(), "fl_setpup_menucb",
-        FL_PUP_CB, [cty.c_int, FL_PUP_CB],
-        """FL_PUP_CB fl_setpup_menucb(int nm, FL_PUP_CB cb)
-        """)
 def fl_setpup_menucb(nm, py_cb):
     """ fl_setpup_menucb(nm, py_cb) -> pup_cb func.
     """
 
+    _fl_setpup_menucb = cfuncproto(
+            load_so_libforms(), "fl_setpup_menucb",
+            FL_PUP_CB, [cty.c_int, FL_PUP_CB],
+            """FL_PUP_CB fl_setpup_menucb(int nm, FL_PUP_CB cb)
+            """)
     inm = convert_to_int(nm)
     c_cb = FL_PUP_CB(py_cb)
     keep_cfunc_refs(c_cb)
@@ -14602,15 +14625,15 @@ def fl_setpup_menucb(nm, py_cb):
     return retval
 
 
-_fl_setpup_submenu = cfuncproto(
-        load_so_libforms(), "fl_setpup_submenu",
-        None, [cty.c_int, cty.c_int, cty.c_int],
-        """void fl_setpup_submenu(int m, int i, int subm)
-        """)
 def fl_setpup_submenu(m, i, subm):
     """ fl_setpup_submenu(m, i, subm)
     """
 
+    _fl_setpup_submenu = cfuncproto(
+            load_so_libforms(), "fl_setpup_submenu",
+            None, [cty.c_int, cty.c_int, cty.c_int],
+            """void fl_setpup_submenu(int m, int i, int subm)
+            """)
     im = convert_to_int(m)
     ii = convert_to_int(i)
     isubm = convert_to_int(subm)
@@ -14623,17 +14646,17 @@ fl_setpup = fl_setpup_mode
 
 # Others
 
-_fl_create_xyplot = cfuncproto(
-        load_so_libforms(), "fl_create_xyplot",
-        cty.POINTER(FL_OBJECT), [cty.c_int, FL_Coord, FL_Coord, FL_Coord,
-        FL_Coord, STRING],
-        """FL_OBJECT * fl_create_xyplot(int t, FL_Coord x, FL_Coord y,
-           FL_Coord w, FL_Coord h, const char * label)
-        """)
 def fl_create_xyplot(plottype, x, y, w, h, label):
     """ fl_create_xyplot(plottype, x, y, w, h, label) -> pObject
     """
 
+    _fl_create_xyplot = cfuncproto(
+            load_so_libforms(), "fl_create_xyplot",
+            cty.POINTER(FL_OBJECT), [cty.c_int, FL_Coord, FL_Coord, FL_Coord,
+            FL_Coord, STRING],
+            """FL_OBJECT * fl_create_xyplot(int t, FL_Coord x, FL_Coord y,
+               FL_Coord w, FL_Coord h, const char * label)
+            """)
     iplottype = convert_to_int(plottype)
     ix = convert_to_int(x)
     iy = convert_to_int(y)
@@ -14646,17 +14669,17 @@ def fl_create_xyplot(plottype, x, y, w, h, label):
     return retval
 
 
-_fl_add_xyplot = cfuncproto(
-        load_so_libforms(), "fl_add_xyplot",
-        cty.POINTER(FL_OBJECT), [cty.c_int, FL_Coord, FL_Coord, FL_Coord,
-        FL_Coord, STRING],
-        """FL_OBJECT * fl_add_xyplot(int t, FL_Coord x, FL_Coord y,
-           FL_Coord w, FL_Coord h, const char * label)
-        """)
 def fl_add_xyplot(plottype, x, y, w, h, label):
     """ fl_add_xyplot(plottype, x, y, w, h, label) -> pObject
     """
 
+    _fl_add_xyplot = cfuncproto(
+            load_so_libforms(), "fl_add_xyplot",
+            cty.POINTER(FL_OBJECT), [cty.c_int, FL_Coord, FL_Coord, FL_Coord,
+            FL_Coord, STRING],
+            """FL_OBJECT * fl_add_xyplot(int t, FL_Coord x, FL_Coord y,
+               FL_Coord w, FL_Coord h, const char * label)
+            """)
     iplottype = convert_to_int(plottype)
     ix = convert_to_int(x)
     iy = convert_to_int(y)
@@ -14669,17 +14692,18 @@ def fl_add_xyplot(plottype, x, y, w, h, label):
     return retval
 
 
-_fl_set_xyplot_data = cfuncproto(
-        load_so_libforms(), "fl_set_xyplot_data",
-        cty.c_int, [cty.POINTER(FL_OBJECT), cty.POINTER(cty.c_float),
-        cty.POINTER(cty.c_float), cty.c_int, STRING, STRING, STRING],
-        """int fl_set_xyplot_data(FL_OBJECT * ob, float * x, float * y,
-           int n, const char * title, const char * xlabel, const char * ylabel)
-        """)
 def fl_set_xyplot_data(pObject, x, y, n, title, xlabel, ylabel):
     """ fl_set_xyplot_data(pObject, x, y, n, title, xlabel, ylabel) -> num.
     """
 
+    _fl_set_xyplot_data = cfuncproto(
+            load_so_libforms(), "fl_set_xyplot_data",
+            cty.c_int, [cty.POINTER(FL_OBJECT), cty.POINTER(cty.c_float),
+            cty.POINTER(cty.c_float), cty.c_int, STRING, STRING, STRING],
+            """int fl_set_xyplot_data(FL_OBJECT * ob, float * x, float * y,
+               int n, const char * title, const char * xlabel,
+               const char * ylabel)
+            """)
     in_ = convert_to_int(n)
     stitle = convert_to_string(title)
     sxlabel = convert_to_string(xlabel)
@@ -14690,18 +14714,18 @@ def fl_set_xyplot_data(pObject, x, y, n, title, xlabel, ylabel):
     return retval
 
 
-_fl_set_xyplot_data_double = cfuncproto(
-        load_so_libforms(), "fl_set_xyplot_data_double",
-        cty.c_int, [cty.POINTER(FL_OBJECT), cty.POINTER(cty.c_double),
-        cty.POINTER(cty.c_double), cty.c_int, STRING, STRING, STRING],
-        """int fl_set_xyplot_data_double(FL_OBJECT * ob, double * x,
-           double * y, int n, const char * title, const char * xlabel,
-           const char * ylabel)
-        """)
 def fl_set_xyplot_data_double(pObject, x, y, n, title, xlabel, ylabel):
     """ fl_set_xyplot_data_double(pObject, x, y, n, title, xlabel, ylabel) -> num.
     """
 
+    _fl_set_xyplot_data_double = cfuncproto(
+            load_so_libforms(), "fl_set_xyplot_data_double",
+            cty.c_int, [cty.POINTER(FL_OBJECT), cty.POINTER(cty.c_double),
+            cty.POINTER(cty.c_double), cty.c_int, STRING, STRING, STRING],
+            """int fl_set_xyplot_data_double(FL_OBJECT * ob, double * x,
+               double * y, int n, const char * title, const char * xlabel,
+               const char * ylabel)
+            """)
     in_ = convert_to_int(n)
     stitle = convert_to_string(title)
     sxlabel = convert_to_string(xlabel)
@@ -14714,16 +14738,17 @@ def fl_set_xyplot_data_double(pObject, x, y, n, title, xlabel, ylabel):
     return retval
 
 
-_fl_set_xyplot_file = cfuncproto(
-        load_so_libforms(), "fl_set_xyplot_file",
-        cty.c_int, [cty.POINTER(FL_OBJECT), STRING, STRING, STRING, STRING],
-        """int fl_set_xyplot_file(FL_OBJECT * ob, const char * f,
-           const char * title, const char * xl, const char * yl)
-        """)
 def fl_set_xyplot_file(pObject, f, title, xl, yl):
     """ fl_set_xyplot_file(pObject, f, title, xl, yl) -> num.
     """
 
+    _fl_set_xyplot_file = cfuncproto(
+            load_so_libforms(), "fl_set_xyplot_file",
+            cty.c_int, [cty.POINTER(FL_OBJECT), STRING, STRING, STRING,
+            STRING],
+            """int fl_set_xyplot_file(FL_OBJECT * ob, const char * f,
+               const char * title, const char * xl, const char * yl)
+            """)
     sf = convert_to_string(f)
     stitle = convert_to_string(title)
     sxl = convert_to_string(xl)
@@ -14733,17 +14758,17 @@ def fl_set_xyplot_file(pObject, f, title, xl, yl):
     return retval
 
 
-_fl_insert_xyplot_data = cfuncproto(
-        load_so_libforms(), "fl_insert_xyplot_data",
-        None, [cty.POINTER(FL_OBJECT), cty.c_int, cty.c_int, cty.c_double,
-        cty.c_double],
-        """void fl_insert_xyplot_data(FL_OBJECT * ob, int id, int n,
-           double x, double y)
-        """)
 def fl_insert_xyplot_data(pObject, idnum, n, valx, valy):
     """ fl_insert_xyplot_data(pObject, idnum, n, valx, valy)
     """
 
+    _fl_insert_xyplot_data = cfuncproto(
+            load_so_libforms(), "fl_insert_xyplot_data",
+            None, [cty.POINTER(FL_OBJECT), cty.c_int, cty.c_int, cty.c_double,
+            cty.c_double],
+            """void fl_insert_xyplot_data(FL_OBJECT * ob, int id, int n,
+               double x, double y)
+            """)
     iidnum = convert_to_int(idnum)
     in_ = convert_to_int(n)
     fvalx = convert_to_double(valx)
@@ -14752,66 +14777,67 @@ def fl_insert_xyplot_data(pObject, idnum, n, valx, valy):
     _fl_insert_xyplot_data(pObject, iidnum, in_, fvalx, fvaly)
 
 
-_fl_add_xyplot_text = cfuncproto(
-        load_so_libforms(), "fl_add_xyplot_text",
-        None, [cty.POINTER(FL_OBJECT), cty.c_double, cty.c_double, STRING,
-        cty.c_int, FL_COLOR],
-        """void fl_add_xyplot_text(FL_OBJECT * ob, double x, double y,
-           const char * text, int al, FL_COLOR col)
-        """)
 def fl_add_xyplot_text(pObject, valx, valy, text, al, colr):
     """ fl_add_xyplot_text(pObject, valx, valy, text, al, colr)
     """
 
+    _fl_add_xyplot_text = cfuncproto(
+            load_so_libforms(), "fl_add_xyplot_text",
+            None, [cty.POINTER(FL_OBJECT), cty.c_double, cty.c_double, STRING,
+            cty.c_int, FL_COLOR],
+            """void fl_add_xyplot_text(FL_OBJECT * ob, double x, double y,
+               const char * text, int al, FL_COLOR col)
+            """)
     fvalx = convert_to_double(valx)
     fvaly = convert_to_double(valy)
     stext = convert_to_string(text)
     ial = convert_to_int(al)
     ulcolr = convert_to_FL_COLOR(colr)
-    keep_elem_refs(pObject, valx, valy, text, al, colr, fvalx, fvaly, stext, ial, ulcolr)
+    keep_elem_refs(pObject, valx, valy, text, al, colr, fvalx, fvaly, \
+                   stext, ial, ulcolr)
     _fl_add_xyplot_text(pObject, fvalx, fvaly, stext, ial, ulcolr)
 
 
-_fl_delete_xyplot_text = cfuncproto(
-        load_so_libforms(), "fl_delete_xyplot_text",
-        None, [cty.POINTER(FL_OBJECT), STRING],
-        """void fl_delete_xyplot_text(FL_OBJECT * ob, const char * text)
-        """)
 def fl_delete_xyplot_text(pObject, text):
     """ fl_delete_xyplot_text(pObject, text)
     """
 
+    _fl_delete_xyplot_text = cfuncproto(
+            load_so_libforms(), "fl_delete_xyplot_text",
+            None, [cty.POINTER(FL_OBJECT), STRING],
+            """void fl_delete_xyplot_text(FL_OBJECT * ob, const char * text)
+            """)
     stext = convert_to_string(text)
     keep_elem_refs(pObject, text, stext)
     _fl_delete_xyplot_text(pObject, stext)
 
 
-_fl_set_xyplot_maxoverlays = cfuncproto(
-        load_so_libforms(), "fl_set_xyplot_maxoverlays",
-        cty.c_int, [cty.POINTER(FL_OBJECT), cty.c_int],
-        """int fl_set_xyplot_maxoverlays(FL_OBJECT * ob, int maxover)
-        """)
 def fl_set_xyplot_maxoverlays(pObject, maxover):
     """ fl_set_xyplot_maxoverlays(pObject, maxover) -> num.
     """
 
+    _fl_set_xyplot_maxoverlays = cfuncproto(
+            load_so_libforms(), "fl_set_xyplot_maxoverlays",
+            cty.c_int, [cty.POINTER(FL_OBJECT), cty.c_int],
+            """int fl_set_xyplot_maxoverlays(FL_OBJECT * ob, int maxover)
+            """)
     imaxover = convert_to_int(maxover)
     keep_elem_refs(pObject, maxover, imaxover)
     retval = _fl_set_xyplot_maxoverlays(pObject, imaxover)
     return retval
 
 
-_fl_add_xyplot_overlay = cfuncproto(
-        load_so_libforms(), "fl_add_xyplot_overlay",
-        None, [cty.POINTER(FL_OBJECT), cty.c_int, cty.POINTER(cty.c_float),
-        cty.POINTER(cty.c_float), cty.c_int, FL_COLOR],
-        """void fl_add_xyplot_overlay(FL_OBJECT * ob, int id, float * x,
-           float * y, int n, FL_COLOR col)
-        """)
 def fl_add_xyplot_overlay(pObject, idnum, x, y, n, colr):
     """ fl_add_xyplot_overlay(pObject, idnum, x, y, n, colr)
     """
 
+    _fl_add_xyplot_overlay = cfuncproto(
+            load_so_libforms(), "fl_add_xyplot_overlay",
+            None, [cty.POINTER(FL_OBJECT), cty.c_int, cty.POINTER(cty.c_float),
+            cty.POINTER(cty.c_float), cty.c_int, FL_COLOR],
+            """void fl_add_xyplot_overlay(FL_OBJECT * ob, int id, float * x,
+               float * y, int n, FL_COLOR col)
+            """)
     iidnum = convert_to_int(idnum)
     in_ = convert_to_int(n)
     ulcolr = convert_to_FL_COLOR(colr)
@@ -14819,15 +14845,16 @@ def fl_add_xyplot_overlay(pObject, idnum, x, y, n, colr):
     _fl_add_xyplot_overlay(pObject, iidnum, x, y, in_, ulcolr)
 
 
-_fl_add_xyplot_overlay_file = cfuncproto(
-        load_so_libforms(), "fl_add_xyplot_overlay_file",
-        cty.c_int, [cty.POINTER(FL_OBJECT), cty.c_int, STRING, FL_COLOR],
-        """int fl_add_xyplot_overlay_file(FL_OBJECT * ob, int id, const char * f, FL_COLOR c)
-        """)
 def fl_add_xyplot_overlay_file(pObject, idnum, f, colr):
     """ fl_add_xyplot_overlay_file(pObject, idnum, f, colr) -> num.
     """
 
+    _fl_add_xyplot_overlay_file = cfuncproto(
+            load_so_libforms(), "fl_add_xyplot_overlay_file",
+            cty.c_int, [cty.POINTER(FL_OBJECT), cty.c_int, STRING, FL_COLOR],
+            """int fl_add_xyplot_overlay_file(FL_OBJECT * ob, int id,
+            const char * f, FL_COLOR c)
+            """)
     iidnum = convert_to_int(idnum)
     sf = convert_to_string(f)
     ulcolr = convert_to_FL_COLOR(colr)
@@ -14836,210 +14863,244 @@ def fl_add_xyplot_overlay_file(pObject, idnum, f, colr):
     return retval
 
 
-_fl_set_xyplot_return = cfuncproto(
-        load_so_libforms(), "fl_set_xyplot_return",
-        None, [cty.POINTER(FL_OBJECT), cty.c_int],
-        """void fl_set_xyplot_return(FL_OBJECT * ob, int when)
-        """)
 def fl_set_xyplot_return(pObject, when):
     """ fl_set_xyplot_return(pObject, when)
     """
 
+    _fl_set_xyplot_return = cfuncproto(
+            load_so_libforms(), "fl_set_xyplot_return",
+            None, [cty.POINTER(FL_OBJECT), cty.c_int],
+            """void fl_set_xyplot_return(FL_OBJECT * ob, int when)
+            """)
     iwhen = convert_to_int(when)
     keep_elem_refs(pObject, when, iwhen)
     _fl_set_xyplot_return(pObject, iwhen)
 
 
-_fl_set_xyplot_xtics = cfuncproto(
-        load_so_libforms(), "fl_set_xyplot_xtics",
-        None, [cty.POINTER(FL_OBJECT), cty.c_int, cty.c_int],
-        """void fl_set_xyplot_xtics(FL_OBJECT * ob, int major, int minor)
-        """)
 def fl_set_xyplot_xtics(pObject, major, minor):
     """ fl_set_xyplot_xtics(pObject, major, minor)
     """
 
+    _fl_set_xyplot_xtics = cfuncproto(
+            load_so_libforms(), "fl_set_xyplot_xtics",
+            None, [cty.POINTER(FL_OBJECT), cty.c_int, cty.c_int],
+            """void fl_set_xyplot_xtics(FL_OBJECT * ob, int major, int minor)
+            """)
     imajor = convert_to_int(major)
     iminor = convert_to_int(minor)
     keep_elem_refs(pObject, major, minor, imajor, iminor)
     _fl_set_xyplot_xtics(pObject, imajor, iminor)
 
 
-_fl_set_xyplot_ytics = cfuncproto(
-        load_so_libforms(), "fl_set_xyplot_ytics",
-        None, [cty.POINTER(FL_OBJECT), cty.c_int, cty.c_int],
-        """void fl_set_xyplot_ytics(FL_OBJECT * ob, int major, int minor)
-        """)
 def fl_set_xyplot_ytics(pObject, major, minor):
     """ fl_set_xyplot_ytics(pObject, major, minor)
     """
 
+    _fl_set_xyplot_ytics = cfuncproto(
+            load_so_libforms(), "fl_set_xyplot_ytics",
+            None, [cty.POINTER(FL_OBJECT), cty.c_int, cty.c_int],
+            """void fl_set_xyplot_ytics(FL_OBJECT * ob, int major, int minor)
+            """)
     imajor = convert_to_int(major)
     iminor = convert_to_int(minor)
     keep_elem_refs(pObject, major, minor, imajor, iminor)
     _fl_set_xyplot_ytics(pObject, imajor, iminor)
 
 
-_fl_set_xyplot_xbounds = cfuncproto(
-        load_so_libforms(), "fl_set_xyplot_xbounds",
-        None, [cty.POINTER(FL_OBJECT), cty.c_double, cty.c_double],
-        """void fl_set_xyplot_xbounds(FL_OBJECT * ob, double xmin, double xmax)
-        """)
 def fl_set_xyplot_xbounds(pObject, minbound, maxbound):
     """ fl_set_xyplot_xbounds(pObject, minbound, maxbound)
     """
 
+    _fl_set_xyplot_xbounds = cfuncproto(
+            load_so_libforms(), "fl_set_xyplot_xbounds",
+            None, [cty.POINTER(FL_OBJECT), cty.c_double, cty.c_double],
+            """void fl_set_xyplot_xbounds(FL_OBJECT * ob, double xmin,
+               double xmax)
+            """)
     fminbound = convert_to_double(minbound)
     fmaxbound = convert_to_double(maxbound)
     keep_elem_refs(pObject, minbound, maxbound, fminbound, fmaxbound)
     _fl_set_xyplot_xbounds(pObject, fminbound, fmaxbound)
 
 
-_fl_set_xyplot_ybounds = cfuncproto(
-        load_so_libforms(), "fl_set_xyplot_ybounds",
-        None, [cty.POINTER(FL_OBJECT), cty.c_double, cty.c_double],
-        """void fl_set_xyplot_ybounds(FL_OBJECT * ob, double ymin, double ymax)
-        """)
 def fl_set_xyplot_ybounds(pObject, minbound, maxbound):
     """ fl_set_xyplot_ybounds(pObject, minbound, maxbound)
     """
 
+    _fl_set_xyplot_ybounds = cfuncproto(
+            load_so_libforms(), "fl_set_xyplot_ybounds",
+            None, [cty.POINTER(FL_OBJECT), cty.c_double, cty.c_double],
+            """void fl_set_xyplot_ybounds(FL_OBJECT * ob, double ymin,
+               double ymax)
+            """)
     fminbound = convert_to_double(minbound)
     fmaxbound = convert_to_double(maxbound)
     keep_elem_refs(pObject, minbound, maxbound, fminbound, fmaxbound)
     _fl_set_xyplot_ybounds(pObject, fminbound, fmaxbound)
 
 
-_fl_get_xyplot_xbounds = cfuncproto(
-        load_so_libforms(), "fl_get_xyplot_xbounds",
-        None, [cty.POINTER(FL_OBJECT), cty.POINTER(cty.c_float),
-        cty.POINTER(cty.c_float)],
-        """void fl_get_xyplot_xbounds(FL_OBJECT * ob, float * xmin,
-           float * xmax)
-        """)
-def fl_get_xyplot_xbounds(pObject, min_bound, max_bound):
-    """ fl_get_xyplot_xbounds(pObject, min_bound, max_bound)
+#def fl_get_xyplot_xbounds(pObject, minbound, maxbound)
+def fl_get_xyplot_xbounds(pObject):
+    """ fl_get_xyplot_xbounds(pObject) -> minbound, maxbound
     """
 
-    keep_elem_refs(pObject, min_bound, max_bound)
-    _fl_get_xyplot_xbounds(pObject, min_bound, max_bound)
+    _fl_get_xyplot_xbounds = cfuncproto(
+            load_so_libforms(), "fl_get_xyplot_xbounds",
+            None, [cty.POINTER(FL_OBJECT), cty.POINTER(cty.c_float),
+            cty.POINTER(cty.c_float)],
+            """void fl_get_xyplot_xbounds(FL_OBJECT * ob, float * xmin,
+               float * xmax)
+            """)
+    minbound, pminbound = make_float_pointer()
+    maxbound, pmaxbound = make_float_pointer()
+    keep_elem_refs(pObject, minbound, maxbound, pminbound, pmaxbound)
+    _fl_get_xyplot_xbounds(pObject, pminbound, pmaxbound)
+    return minbound, maxbound
 
 
-_fl_get_xyplot_ybounds = cfuncproto(
-        load_so_libforms(), "fl_get_xyplot_ybounds",
-        None, [cty.POINTER(FL_OBJECT), cty.POINTER(cty.c_float),
-        cty.POINTER(cty.c_float)],
-        """void fl_get_xyplot_ybounds(FL_OBJECT * ob, float * ymin,
-           float * ymax)
-        """)
-def fl_get_xyplot_ybounds(pObject, min_bound, max_bound):
-    """ fl_get_xyplot_ybounds(pObject, min_bound, max_bound)
+#def fl_get_xyplot_ybounds(pObject, minbound, maxbound)
+def fl_get_xyplot_ybounds(pObject):
+    """ fl_get_xyplot_ybounds(pObject) -> minbound, maxbound
     """
 
-    keep_elem_refs(pObject, min_bound, max_bound)
-    _fl_get_xyplot_ybounds(pObject, min_bound, max_bound)
+    _fl_get_xyplot_ybounds = cfuncproto(
+            load_so_libforms(), "fl_get_xyplot_ybounds",
+            None, [cty.POINTER(FL_OBJECT), cty.POINTER(cty.c_float),
+            cty.POINTER(cty.c_float)],
+            """void fl_get_xyplot_ybounds(FL_OBJECT * ob, float * ymin,
+               float * ymax)
+            """)
+    minbound, pminbound = make_float_pointer()
+    maxbound, pmaxbound = make_float_pointer()
+    keep_elem_refs(pObject, minbound, maxbound, pminbound, pmaxbound)
+    _fl_get_xyplot_ybounds(pObject, pminbound, pmaxbound)
+    return minbound, maxbound
 
 
-_fl_get_xyplot = cfuncproto(
-        load_so_libforms(), "fl_get_xyplot",
-        None, [cty.POINTER(FL_OBJECT), cty.POINTER(cty.c_float),
-        cty.POINTER(cty.c_float), cty.POINTER(cty.c_int)],
-        """void fl_get_xyplot(FL_OBJECT * ob, float * x, float * y, int * i)
-        """)
-def fl_get_xyplot(pObject, x, y, i):
-    """ fl_get_xyplot(pObject, x, y, i)
+#def fl_get_xyplot(pObject, x, y, i)
+def fl_get_xyplot(pObject):
+    """ fl_get_xyplot(pObject) -> x, y, i
     """
 
-    keep_elem_refs(pObject, x, y, i)
-    _fl_get_xyplot(pObject, x, y, i)
+    _fl_get_xyplot = cfuncproto(
+            load_so_libforms(), "fl_get_xyplot",
+            None, [cty.POINTER(FL_OBJECT), cty.POINTER(cty.c_float),
+            cty.POINTER(cty.c_float), cty.POINTER(cty.c_int)],
+            """void fl_get_xyplot(FL_OBJECT * ob, float * x, float * y,
+               int * i)
+            """)
+    x, px = make_float_pointer()
+    y, py = make_float_pointer()
+    i, pi = make_int_pointer()
+    keep_elem_refs(pObject, x, y, i, px, py, pi)
+    _fl_get_xyplot(pObject, px, py, pi)
+    return x, y, i
 
 
-_fl_get_xyplot_data = cfuncproto(
-        load_so_libforms(), "fl_get_xyplot_data",
-        None, [cty.POINTER(FL_OBJECT), cty.POINTER(cty.c_float),
-        cty.POINTER(cty.c_float), cty.POINTER(cty.c_int)],
-        """void fl_get_xyplot_data(FL_OBJECT * ob, float * x, float * y,
-           int * n)
-        """)
-def fl_get_xyplot_data(pObject, x, y, n):
-    """ fl_get_xyplot_data(pObject, x, y, n)
+#def fl_get_xyplot_data(pObject, x, y, n)
+def fl_get_xyplot_data(pObject):
+    """ fl_get_xyplot_data(pObject) -> x, y, n
     """
 
-    keep_elem_refs(pObject, x, y, n)
-    _fl_get_xyplot_data(pObject, x, y, n)
+    _fl_get_xyplot_data = cfuncproto(
+            load_so_libforms(), "fl_get_xyplot_data",
+            None, [cty.POINTER(FL_OBJECT), cty.POINTER(cty.c_float),
+            cty.POINTER(cty.c_float), cty.POINTER(cty.c_int)],
+            """void fl_get_xyplot_data(FL_OBJECT * ob, float * x, float * y,
+               int * n)
+            """)
+    x, px = make_float_pointer()
+    y, py = make_float_pointer()
+    n, pn = make_int_pointer()
+    keep_elem_refs(pObject, x, y, n, px, py, pn)
+    _fl_get_xyplot_data(pObject, px, py, pn)
+    return x, y, n
 
 
-_fl_get_xyplot_data_pointer = cfuncproto(
-        load_so_libforms(), "fl_get_xyplot_data_pointer",
-        None, [cty.POINTER(FL_OBJECT), cty.c_int,
-        cty.POINTER(cty.POINTER(cty.c_float)),
-        cty.POINTER(cty.POINTER(cty.c_float)), cty.POINTER(cty.c_int)],
-        """void fl_get_xyplot_data_cty.POINTER(FL_OBJECT * ob, int id,
-           float * * x, float * * y, int * n)
-        """)
-def fl_get_xyplot_data_pointer(pObject, idnum, x, y, n):
-    """ fl_get_xyplot_data_pointer(pObject, idnum, x, y, n)
+#def fl_get_xyplot_data_pointer(pObject, idnum, x, y, n)
+def fl_get_xyplot_data_pointer(pObject, idnum):
+    """ fl_get_xyplot_data_pointer(pObject, idnum) -> x, y, n
     """
 
-    keep_elem_refs(pObject, idnum, x, y, n)
-    _fl_get_xyplot_data_pointer(pObject, idnum, x, y, n)
-
-
-_fl_get_xyplot_overlay_data = cfuncproto(
-        load_so_libforms(), "fl_get_xyplot_overlay_data",
-        None, [cty.POINTER(FL_OBJECT), cty.c_int, cty.POINTER(cty.c_float),
-        cty.POINTER(cty.c_float), cty.POINTER(cty.c_int)],
-        """void fl_get_xyplot_overlay_data(FL_OBJECT * ob, int id, float * x,
-           float * y, int * n)
-        """)
-def fl_get_xyplot_overlay_data(pObject, idnum, x, y, n):
-    """ fl_get_xyplot_overlay_data(pObject, idnum, x, y, n)
-    """
-
+    _fl_get_xyplot_data_pointer = cfuncproto(
+            load_so_libforms(), "fl_get_xyplot_data_pointer",
+            None, [cty.POINTER(FL_OBJECT), cty.c_int,
+            cty.POINTER(cty.POINTER(cty.c_float)),
+            cty.POINTER(cty.POINTER(cty.c_float)), cty.POINTER(cty.c_int)],
+            """void fl_get_xyplot_data_cty.POINTER(FL_OBJECT * ob, int id,
+               float * * x, float * * y, int * n)
+            """)
     iidnum = convert_to_int(idnum)
-    keep_elem_refs(pObject, idnum, x, y, n, iidnum)
-    _fl_get_xyplot_overlay_data(pObject, iidnum, x, y, n)
+    x, px = make_float_pointer()
+    y, py = make_float_pointer()
+    n, pn = make_int_pointer()
+    keep_elem_refs(pObject, idnum, iidnum, x, y, n, px, py, pn)
+    _fl_get_xyplot_data_pointer(pObject, iidnum, px, py, pn)
+    return x, y, n
 
 
-_fl_set_xyplot_overlay_type = cfuncproto(
-        load_so_libforms(), "fl_set_xyplot_overlay_type",
-        None, [cty.POINTER(FL_OBJECT), cty.c_int, cty.c_int],
-        """void fl_set_xyplot_overlay_type(FL_OBJECT * ob, int id, int type)
-        """)
+#def fl_get_xyplot_overlay_data(pObject, idnum, x, y, n)
+def fl_get_xyplot_overlay_data(pObject, idnum):
+    """ fl_get_xyplot_overlay_data(pObject, idnum) -> x, y, n
+    """
+
+    _fl_get_xyplot_overlay_data = cfuncproto(
+            load_so_libforms(), "fl_get_xyplot_overlay_data",
+            None, [cty.POINTER(FL_OBJECT), cty.c_int, cty.POINTER(cty.c_float),
+            cty.POINTER(cty.c_float), cty.POINTER(cty.c_int)],
+            """void fl_get_xyplot_overlay_data(FL_OBJECT * ob, int id,
+               float * x, float * y, int * n)
+            """)
+    iidnum = convert_to_int(idnum)
+    x, px = make_float_pointer()
+    y, py = make_float_pointer()
+    n, pn = make_int_pointer()
+    keep_elem_refs(pObject, idnum, iidnum, x, y, n, px, py, pn)
+    _fl_get_xyplot_overlay_data(pObject, iidnum, px, py, pn)
+    return x, y, n
+
+
 def fl_set_xyplot_overlay_type(pObject, idnum, plottype):
     """ fl_set_xyplot_overlay_type(pObject, idnum, plottype)
     """
 
+    _fl_set_xyplot_overlay_type = cfuncproto(
+            load_so_libforms(), "fl_set_xyplot_overlay_type",
+            None, [cty.POINTER(FL_OBJECT), cty.c_int, cty.c_int],
+            """void fl_set_xyplot_overlay_type(FL_OBJECT * ob, int id,
+               int type)
+            """)
     iidnum = convert_to_int(idnum)
     iplottype = convert_to_int(plottype)
     keep_elem_refs(pObject, idnum, plottype, iidnum, iplottype)
     _fl_set_xyplot_overlay_type(pObject, iidnum, iplottype)
 
 
-_fl_delete_xyplot_overlay = cfuncproto(
-        load_so_libforms(), "fl_delete_xyplot_overlay",
-        None, [cty.POINTER(FL_OBJECT), cty.c_int],
-        """void fl_delete_xyplot_overlay(FL_OBJECT * ob, int id)
-        """)
 def fl_delete_xyplot_overlay(pObject, idnum):
     """ fl_delete_xyplot_overlay(pObject, idnum)
     """
 
+    _fl_delete_xyplot_overlay = cfuncproto(
+            load_so_libforms(), "fl_delete_xyplot_overlay",
+            None, [cty.POINTER(FL_OBJECT), cty.c_int],
+            """void fl_delete_xyplot_overlay(FL_OBJECT * ob, int id)
+            """)
     iidnum = convert_to_int(idnum)
     keep_elem_refs(pObject, idnum, iidnum)
     _fl_delete_xyplot_overlay(pObject, iidnum)
 
 
-_fl_set_xyplot_interpolate = cfuncproto(
-        load_so_libforms(), "fl_set_xyplot_interpolate",
-        None, [cty.POINTER(FL_OBJECT), cty.c_int, cty.c_int, cty.c_double],
-        """void fl_set_xyplot_interpolate(FL_OBJECT * ob, int id, int deg,
-           double grid)
-        """)
 def fl_set_xyplot_interpolate(pObject, idnum, deg, grid):
     """ fl_set_xyplot_interpolate(pObject, idnum, deg, grid)
     """
 
+    _fl_set_xyplot_interpolate = cfuncproto(
+            load_so_libforms(), "fl_set_xyplot_interpolate",
+            None, [cty.POINTER(FL_OBJECT), cty.c_int, cty.c_int,
+            cty.c_double],
+            """void fl_set_xyplot_interpolate(FL_OBJECT * ob, int id,
+               int deg, double grid)
+            """)
     iidnum = convert_to_int(idnum)
     ideg = convert_to_int(deg)
     fgrid = convert_to_double(grid)
@@ -15047,48 +15108,48 @@ def fl_set_xyplot_interpolate(pObject, idnum, deg, grid):
     _fl_set_xyplot_interpolate(pObject, iidnum, ideg, fgrid)
 
 
-_fl_set_xyplot_inspect = cfuncproto(
-        load_so_libforms(), "fl_set_xyplot_inspect",
-        None, [cty.POINTER(FL_OBJECT), cty.c_int],
-        """void fl_set_xyplot_inspect(FL_OBJECT * ob, int yes)
-        """)
-
 def fl_set_xyplot_inspect(pObject, yes):
     """ fl_set_xyplot_inspect(pObject, yes)
     """
 
+    _fl_set_xyplot_inspect = cfuncproto(
+            load_so_libforms(), "fl_set_xyplot_inspect",
+            None, [cty.POINTER(FL_OBJECT), cty.c_int],
+            """void fl_set_xyplot_inspect(FL_OBJECT * ob, int yes)
+            """)
     iyes = convert_to_int(yes)
     keep_elem_refs(pObject, yes, iyes)
     _fl_set_xyplot_inspect(pObject, iyes)
 
 
-_fl_set_xyplot_symbolsize = cfuncproto(
-        load_so_libforms(), "fl_set_xyplot_symbolsize",
-        None, [cty.POINTER(FL_OBJECT), cty.c_int],
-        """void fl_set_xyplot_symbolsize(FL_OBJECT * ob, int n)
-        """)
 def fl_set_xyplot_symbolsize(pObject, n):
     """ fl_set_xyplot_symbolsize(pObject, n)
     """
 
+    _fl_set_xyplot_symbolsize = cfuncproto(
+            load_so_libforms(), "fl_set_xyplot_symbolsize",
+            None, [cty.POINTER(FL_OBJECT), cty.c_int],
+            """void fl_set_xyplot_symbolsize(FL_OBJECT * ob, int n)
+            """)
     in_ = convert_to_int(n)
     keep_elem_refs(pObject, n, in_)
     _fl_set_xyplot_symbolsize(pObject, in_)
 
 
-_fl_replace_xyplot_point = cfuncproto(
-        load_so_libforms(), "fl_replace_xyplot_point",
-        None, [cty.POINTER(FL_OBJECT), cty.c_int, cty.c_double, cty.c_double],
-        """void fl_replace_xyplot_point(FL_OBJECT * ob, int i, double x,
-           double y)
-        """)
 def fl_replace_xyplot_point(pObject, i, valx, valy):
     """ fl_replace_xyplot_point(pObject, i, valx, valy)
     """
 
+    _fl_replace_xyplot_point = cfuncproto(
+            load_so_libforms(), "fl_replace_xyplot_point",
+            None, [cty.POINTER(FL_OBJECT), cty.c_int, cty.c_double,
+            cty.c_double],
+            """void fl_replace_xyplot_point(FL_OBJECT * ob, int i,
+               double x, double y)
+            """)
     ii = convert_to_int(i)
-    fvalx = convert_to_int(valx)
-    fvaly = convert_to_int(valy)
+    fvalx = convert_to_double(valx)
+    fvaly = convert_to_double(valy)
     keep_elem_refs(pObject, i, valx, valy, ii, fvalx, fvaly)
     _fl_replace_xyplot_point(pObject, ii, fvalx, fvaly)
 
@@ -15098,17 +15159,17 @@ def fl_replace_xyplot_point(pObject, i, valx, valy):
 # This routine is an extension of fl_replace_xyplot_point
 # which acts on the first dataset only.
 
-_fl_replace_xyplot_point_in_overlay = cfuncproto(
-        load_so_libforms(), "fl_replace_xyplot_point_in_overlay",
-        None, [cty.POINTER(FL_OBJECT), cty.c_int, cty.c_int, cty.c_double,
-        cty.c_double],
-        """void fl_replace_xyplot_point_in_overlay(FL_OBJECT * ob, int i,
-           int setID, double x, double y)
-        """)
 def fl_replace_xyplot_point_in_overlay(pObject, i, setID, valx, valy):
     """ fl_replace_xyplot_point_in_overlay(pObject, i, setID, valx, valy)
     """
 
+    _fl_replace_xyplot_point_in_overlay = cfuncproto(
+            load_so_libforms(), "fl_replace_xyplot_point_in_overlay",
+            None, [cty.POINTER(FL_OBJECT), cty.c_int, cty.c_int, cty.c_double,
+            cty.c_double],
+            """void fl_replace_xyplot_point_in_overlay(FL_OBJECT * ob, int i,
+               int setID, double x, double y)
+            """)
     ii = convert_to_int(i)
     isetID = convert_to_int(setID)
     fvalx = convert_to_double(valx)
@@ -15117,46 +15178,55 @@ def fl_replace_xyplot_point_in_overlay(pObject, i, setID, valx, valy):
     _fl_replace_xyplot_point_in_overlay(pObject, ii, isetID, fvalx, fvaly)
 
 
-_fl_get_xyplot_xmapping = cfuncproto(
-        load_so_libforms(), "fl_get_xyplot_xmapping",
-        None, [cty.POINTER(FL_OBJECT), cty.POINTER(cty.c_float),
-        cty.POINTER(cty.c_float)],
-        """void fl_get_xyplot_xmapping(FL_OBJECT * ob, float * a, float * b)
-        """)
-
-def fl_get_xyplot_xmapping(pObject, a, b):
-    """ fl_get_xyplot_xmapping(pObject, a, b)
+#def fl_get_xyplot_xmapping(pObject, a, b):
+def fl_get_xyplot_xmapping(pObject):
+    """ fl_get_xyplot_xmapping(pObject) -> a, b
     """
 
-    keep_elem_refs(pObject, a, b)
-    _fl_get_xyplot_xmapping(pObject, a, b)
+    _fl_get_xyplot_xmapping = cfuncproto(
+            load_so_libforms(), "fl_get_xyplot_xmapping",
+            None, [cty.POINTER(FL_OBJECT), cty.POINTER(cty.c_float),
+            cty.POINTER(cty.c_float)],
+            """void fl_get_xyplot_xmapping(FL_OBJECT * ob, float * a,
+               float * b)
+            """)
+    a, pa = make_float_pointer()
+    b, pb = make_float_pointer()
+    keep_elem_refs(pObject, a, b, pa, pb)
+    _fl_get_xyplot_xmapping(pObject, pa, pb)
+    return a, b
 
 
-_fl_get_xyplot_ymapping = cfuncproto(
-        load_so_libforms(), "fl_get_xyplot_ymapping",
-        None, [cty.POINTER(FL_OBJECT), cty.POINTER(cty.c_float),
-        cty.POINTER(cty.c_float)],
-        """void fl_get_xyplot_ymapping(FL_OBJECT * ob, float * a, float * b)
-        """)
-def fl_get_xyplot_ymapping(pObject, a, b):
-    """ fl_get_xyplot_ymapping(pObject, a, b)
+#def fl_get_xyplot_ymapping(pObject, a, b):
+def fl_get_xyplot_ymapping(pObject):
+    """ fl_get_xyplot_ymapping(pObject) -> a, b
     """
 
-    keep_elem_refs(pObject, a, b)
-    _fl_get_xyplot_ymapping(pObject, a, b)
+    _fl_get_xyplot_ymapping = cfuncproto(
+            load_so_libforms(), "fl_get_xyplot_ymapping",
+            None, [cty.POINTER(FL_OBJECT), cty.POINTER(cty.c_float),
+            cty.POINTER(cty.c_float)],
+            """void fl_get_xyplot_ymapping(FL_OBJECT * ob, float * a,
+               float * b)
+            """)
+    a, pa = make_float_pointer()
+    b, pb = make_float_pointer()
+    keep_elem_refs(pObject, a, b, pa, pb)
+    _fl_get_xyplot_ymapping(pObject, pa, pb)
+    return a, b
 
 
-_fl_set_xyplot_keys = cfuncproto(
-        load_so_libforms(), "fl_set_xyplot_keys",
-        None, [cty.POINTER(FL_OBJECT), cty.POINTER(STRING), cty.c_float,
-        cty.c_float, cty.c_int],
-        """void fl_set_xyplot_keys(FL_OBJECT * ob, char * * keys, float x,
-           float y, int align)
-        """)
 def fl_set_xyplot_keys(pObject, keys, valx, valy, align):
     """ fl_set_xyplot_keys(pObject, keys, valx, valy, align)
     """
 
+    _fl_set_xyplot_keys = cfuncproto(
+            load_so_libforms(), "fl_set_xyplot_keys",
+            None, [cty.POINTER(FL_OBJECT), cty.POINTER(STRING), cty.c_float,
+            cty.c_float, cty.c_int],
+            """void fl_set_xyplot_keys(FL_OBJECT * ob, char * * keys, float x,
+               float y, int align)
+            """)
     fvalx = convert_to_float(valx)
     fvaly = convert_to_float(valy)
     ialign = convert_to_int(align)
@@ -15164,31 +15234,33 @@ def fl_set_xyplot_keys(pObject, keys, valx, valy, align):
     _fl_set_xyplot_keys(pObject, keys, fvalx, fvaly, ialign)
 
 
-_fl_set_xyplot_key = cfuncproto(
-        load_so_libforms(), "fl_set_xyplot_key",
-        None, [cty.POINTER(FL_OBJECT), cty.c_int, STRING],
-        """void fl_set_xyplot_key(FL_OBJECT * ob, int id, const char * key)
-        """)
 def fl_set_xyplot_key(pObject, idnum, keytxt):
     """ fl_set_xyplot_key(pObject, idnum, keytxt)
     """
 
+    _fl_set_xyplot_key = cfuncproto(
+            load_so_libforms(), "fl_set_xyplot_key",
+            None, [cty.POINTER(FL_OBJECT), cty.c_int, STRING],
+            """void fl_set_xyplot_key(FL_OBJECT * ob, int id,
+               const char * key)
+            """)
     iidnum = convert_to_int(idnum)
-    skeytxt = convert_to_int(keytxt)
+    skeytxt = convert_to_string(keytxt)
     keep_elem_refs(pObject, idnum, keytxt, iidnum, skeytxt)
     _fl_set_xyplot_key(pObject, iidnum, skeytxt)
 
 
-_fl_set_xyplot_key_position = cfuncproto(
-        load_so_libforms(), "fl_set_xyplot_key_position",
-        None, [cty.POINTER(FL_OBJECT), cty.c_float, cty.c_float, cty.c_int],
-        """void fl_set_xyplot_key_position(FL_OBJECT * ob, float x, float y,
-           int align)
-        """)
 def fl_set_xyplot_key_position(pObject, valx, valy, align):
     """ fl_set_xyplot_key_position(pObject, valx, valy, align)
     """
 
+    _fl_set_xyplot_key_position = cfuncproto(
+            load_so_libforms(), "fl_set_xyplot_key_position",
+            None, [cty.POINTER(FL_OBJECT), cty.c_float, cty.c_float,
+            cty.c_int],
+            """void fl_set_xyplot_key_position(FL_OBJECT * ob, float x,
+               float y, int align)
+            """)
     fvalx = convert_to_float(valx)
     fvaly = convert_to_float(valy)
     ialign = convert_to_int(align)
@@ -15196,32 +15268,33 @@ def fl_set_xyplot_key_position(pObject, valx, valy, align):
     _fl_set_xyplot_key_position(pObject, fvalx, fvaly, ialign)
 
 
-_fl_set_xyplot_key_font = cfuncproto(
-        load_so_libforms(), "fl_set_xyplot_key_font",
-        None, [cty.POINTER(FL_OBJECT), cty.c_int, cty.c_int],
-        """void fl_set_xyplot_key_font(FL_OBJECT * ob, int style, int size)
-        """)
 def fl_set_xyplot_key_font(pObject, style, size):
     """ fl_set_xyplot_key_font(pObject, style, size)
     """
 
+    _fl_set_xyplot_key_font = cfuncproto(
+            load_so_libforms(), "fl_set_xyplot_key_font",
+            None, [cty.POINTER(FL_OBJECT), cty.c_int, cty.c_int],
+            """void fl_set_xyplot_key_font(FL_OBJECT * ob, int style,
+               int size)
+            """)
     istyle = convert_to_int(style)
     isize = convert_to_int(size)
     keep_elem_refs(pObject, style, size, istyle, isize)
     _fl_set_xyplot_key_font(pObject, istyle, isize)
 
 
-_fl_get_xyplot_numdata = cfuncproto(
-        load_so_libforms(), "fl_get_xyplot_numdata",
-        cty.c_int, [cty.POINTER(FL_OBJECT), cty.c_int],
-        """int fl_get_xyplot_numdata(FL_OBJECT * ob, int id)
-        """)
 def fl_get_xyplot_numdata(pObject, idnum):
     """ fl_get_xyplot_numdata(pObject, idnum) -> num.
     """
 
+    _fl_get_xyplot_numdata = cfuncproto(
+            load_so_libforms(), "fl_get_xyplot_numdata",
+            cty.c_int, [cty.POINTER(FL_OBJECT), cty.c_int],
+            """int fl_get_xyplot_numdata(FL_OBJECT * ob, int id)
+            """)
     iidnum = convert_to_int(idnum)
-    keep_elem_refs(pObject, idnum), iidnum
+    keep_elem_refs(pObject, idnum, iidnum)
     retval = _fl_get_xyplot_numdata(pObject, iidnum)
     return retval
 
@@ -15229,247 +15302,249 @@ def fl_get_xyplot_numdata(pObject, idnum):
 # The following two functions will be removed.
 # Use fl_set_object_l[size|style] for the functionalities
 
-_fl_set_xyplot_fontsize = cfuncproto(
-        load_so_libforms(), "fl_set_xyplot_fontsize",
-        None, [cty.POINTER(FL_OBJECT), cty.c_int],
-        """void fl_set_xyplot_fontsize(FL_OBJECT * ob, int size) DEPRECATED
-        """)
 def fl_set_xyplot_fontsize(pObject, size):
     """ fl_set_xyplot_fontsize(pObject, size)
     """
 
+    _fl_set_xyplot_fontsize = cfuncproto(
+            load_so_libforms(), "fl_set_xyplot_fontsize",
+            None, [cty.POINTER(FL_OBJECT), cty.c_int],
+            """void fl_set_xyplot_fontsize(FL_OBJECT * ob, int size) DEPRECATED
+            """)
     warn_deprecated_function()
     isize = convert_to_int(size)
     keep_elem_refs(pObject, size, isize)
     _fl_set_xyplot_fontsize(pObject, isize)
 
 
-_fl_set_xyplot_fontstyle = cfuncproto(
-        load_so_libforms(), "fl_set_xyplot_fontstyle",
-        None, [cty.POINTER(FL_OBJECT), cty.c_int],
-        """void fl_set_xyplot_fontstyle(FL_OBJECT * ob, int style) DEPRECATED
-        """)
 def fl_set_xyplot_fontstyle(pObject, style):
     """ fl_set_xyplot_fontstyle(pObject, style)
     """
 
+    _fl_set_xyplot_fontstyle = cfuncproto(
+            load_so_libforms(), "fl_set_xyplot_fontstyle",
+            None, [cty.POINTER(FL_OBJECT), cty.c_int],
+            """void fl_set_xyplot_fontstyle(FL_OBJECT * ob, int style) DEPRECATED
+            """)
     warn_deprecated_function()
     istyle = convert_to_int(style)
     keep_elem_refs(pObject, style, istyle)
     _fl_set_xyplot_fontstyle(pObject, istyle)
 
 
-_fl_xyplot_s2w = cfuncproto(
-        load_so_libforms(), "fl_xyplot_s2w",
-        None, [cty.POINTER(FL_OBJECT), cty.c_double, cty.c_double,
-        cty.POINTER(cty.c_float), cty.POINTER(cty.c_float)],
-        """void fl_xyplot_s2w(FL_OBJECT * ob, double sx, double sy,
-           float * wx, float * wy)
-        """)
 def fl_xyplot_s2w(pObject, sx, sy, wx, wy):
     """ fl_xyplot_s2w(pObject, sx, sy, wx, wy)
     """
 
+    _fl_xyplot_s2w = cfuncproto(
+            load_so_libforms(), "fl_xyplot_s2w",
+            None, [cty.POINTER(FL_OBJECT), cty.c_double, cty.c_double,
+            cty.POINTER(cty.c_float), cty.POINTER(cty.c_float)],
+            """void fl_xyplot_s2w(FL_OBJECT * ob, double sx, double sy,
+               float * wx, float * wy)
+            """)
     fsx = convert_to_double(sx)
     fsy = convert_to_double(sy)
     keep_elem_refs(pObject, sx, sy, wx, wy, fsx, fsy)
     _fl_xyplot_s2w(pObject, fsx, fsy, wx, wy)
 
 
-_fl_xyplot_w2s = cfuncproto(
-        load_so_libforms(), "fl_xyplot_w2s",
-        None, [cty.POINTER(FL_OBJECT), cty.c_double, cty.c_double,
-        cty.POINTER(cty.c_float), cty.POINTER(cty.c_float)],
-        """void fl_xyplot_w2s(FL_OBJECT * ob, double wx, double wy,
-           float * sx, float * sy)
-        """)
 def fl_xyplot_w2s(pObject, wx, wy, sx, sy):
     """ fl_xyplot_w2s(pObject, wx, wy, sx, sy)
     """
 
+    _fl_xyplot_w2s = cfuncproto(
+            load_so_libforms(), "fl_xyplot_w2s",
+            None, [cty.POINTER(FL_OBJECT), cty.c_double, cty.c_double,
+            cty.POINTER(cty.c_float), cty.POINTER(cty.c_float)],
+            """void fl_xyplot_w2s(FL_OBJECT * ob, double wx, double wy,
+               float * sx, float * sy)
+            """)
     fwx = convert_to_double(wx)
     fwy = convert_to_double(wy)
     keep_elem_refs(pObject, wx, wy, sx, sy, fwx, fwy)
     _fl_xyplot_w2s(pObject, fwx, fwy, sx, sy)
 
 
-_fl_set_xyplot_xscale = cfuncproto(
-        load_so_libforms(), "fl_set_xyplot_xscale",
-        None, [cty.POINTER(FL_OBJECT), cty.c_int, cty.c_double],
-        """void fl_set_xyplot_xscale(FL_OBJECT * ob, int scale, double base)
-        """)
 def fl_set_xyplot_xscale(pObject, scale, base):
     """ fl_set_xyplot_xscale(pObject, scale, base)
     """
 
-    iscale = convert_to_double(scale)
+    _fl_set_xyplot_xscale = cfuncproto(
+            load_so_libforms(), "fl_set_xyplot_xscale",
+            None, [cty.POINTER(FL_OBJECT), cty.c_int, cty.c_double],
+            """void fl_set_xyplot_xscale(FL_OBJECT * ob, int scale,
+               double base)
+            """)
+    iscale = convert_to_int(scale)
     fbase = convert_to_double(base)
     keep_elem_refs(pObject, scale, base, iscale, fbase)
     _fl_set_xyplot_xscale(pObject, iscale, fbase)
 
 
-_fl_set_xyplot_yscale = cfuncproto(
-        load_so_libforms(), "fl_set_xyplot_yscale",
-        None, [cty.POINTER(FL_OBJECT), cty.c_int, cty.c_double],
-        """void fl_set_xyplot_yscale(FL_OBJECT * ob, int scale, double base)
-        """)
 def fl_set_xyplot_yscale(pObject, scale, base):
     """ fl_set_xyplot_yscale(pObject, scale, base)
     """
 
+    _fl_set_xyplot_yscale = cfuncproto(
+            load_so_libforms(), "fl_set_xyplot_yscale",
+            None, [cty.POINTER(FL_OBJECT), cty.c_int, cty.c_double],
+            """void fl_set_xyplot_yscale(FL_OBJECT * ob, int scale,
+               double base)
+            """)
     iscale = convert_to_int(scale)
     fbase = convert_to_double(base)
     keep_elem_refs(pObject, scale, base, iscale, fbase)
     _fl_set_xyplot_yscale(pObject, iscale, fbase)
 
 
-_fl_clear_xyplot = cfuncproto(
-        load_so_libforms(), "fl_clear_xyplot",
-        None, [cty.POINTER(FL_OBJECT)],
-        """void fl_clear_xyplot(FL_OBJECT * ob)
-        """)
 def fl_clear_xyplot(pObject):
     """ fl_clear_xyplot(pObject)
     """
 
+    _fl_clear_xyplot = cfuncproto(
+            load_so_libforms(), "fl_clear_xyplot",
+            None, [cty.POINTER(FL_OBJECT)],
+            """void fl_clear_xyplot(FL_OBJECT * ob)
+            """)
     keep_elem_refs(pObject)
     _fl_clear_xyplot(pObject)
 
 
-_fl_set_xyplot_linewidth = cfuncproto(
-        load_so_libforms(), "fl_set_xyplot_linewidth",
-        None, [cty.POINTER(FL_OBJECT), cty.c_int, cty.c_int],
-        """void fl_set_xyplot_linewidth(FL_OBJECT * ob, int id, int lw)
-        """)
 def fl_set_xyplot_linewidth(pObject, idnum, lw):
     """ fl_set_xyplot_linewidth(pObject, idnum, lw)
     """
 
+    _fl_set_xyplot_linewidth = cfuncproto(
+            load_so_libforms(), "fl_set_xyplot_linewidth",
+            None, [cty.POINTER(FL_OBJECT), cty.c_int, cty.c_int],
+            """void fl_set_xyplot_linewidth(FL_OBJECT * ob, int id, int lw)
+            """)
     iidnum = convert_to_int(idnum)
     ilw = convert_to_int(lw)
     keep_elem_refs(pObject, idnum, lw, iidnum, ilw)
     _fl_set_xyplot_linewidth(pObject, iidnum, ilw)
 
 
-_fl_set_xyplot_xgrid = cfuncproto(
-        load_so_libforms(), "fl_set_xyplot_xgrid",
-        None, [cty.POINTER(FL_OBJECT), cty.c_int],
-        """void fl_set_xyplot_xgrid(FL_OBJECT * ob, int xgrid)
-        """)
 def fl_set_xyplot_xgrid(pObject, xgrid):
     """ fl_set_xyplot_xgrid(pObject, xgrid)
     """
 
+    _fl_set_xyplot_xgrid = cfuncproto(
+            load_so_libforms(), "fl_set_xyplot_xgrid",
+            None, [cty.POINTER(FL_OBJECT), cty.c_int],
+            """void fl_set_xyplot_xgrid(FL_OBJECT * ob, int xgrid)
+            """)
     ixgrid = convert_to_int(xgrid)
     keep_elem_refs(pObject, xgrid, ixgrid)
     _fl_set_xyplot_xgrid(pObject, ixgrid)
 
 
-_fl_set_xyplot_ygrid = cfuncproto(
-        load_so_libforms(), "fl_set_xyplot_ygrid",
-        None, [cty.POINTER(FL_OBJECT), cty.c_int],
-        """void fl_set_xyplot_ygrid(FL_OBJECT * ob, int ygrid)
-        """)
 def fl_set_xyplot_ygrid(pObject, ygrid):
     """ fl_set_xyplot_ygrid(pObject, ygrid)
     """
 
+    _fl_set_xyplot_ygrid = cfuncproto(
+            load_so_libforms(), "fl_set_xyplot_ygrid",
+            None, [cty.POINTER(FL_OBJECT), cty.c_int],
+            """void fl_set_xyplot_ygrid(FL_OBJECT * ob, int ygrid)
+            """)
     iygrid = convert_to_int(ygrid)
     keep_elem_refs(pObject, ygrid, iygrid)
     _fl_set_xyplot_ygrid(pObject, iygrid)
 
 
-_fl_set_xyplot_grid_linestyle = cfuncproto(
-        load_so_libforms(), "fl_set_xyplot_grid_linestyle",
-        cty.c_int, [cty.POINTER(FL_OBJECT), cty.c_int],
-        """int fl_set_xyplot_grid_linestyle(FL_OBJECT * ob, int style)
-        """)
 def fl_set_xyplot_grid_linestyle(pObject, style):
     """ fl_set_xyplot_grid_linestyle(pObject, style) -> num.
     """
 
+    _fl_set_xyplot_grid_linestyle = cfuncproto(
+            load_so_libforms(), "fl_set_xyplot_grid_linestyle",
+            cty.c_int, [cty.POINTER(FL_OBJECT), cty.c_int],
+            """int fl_set_xyplot_grid_linestyle(FL_OBJECT * ob, int style)
+            """)
     istyle = convert_to_int(style)
     keep_elem_refs(pObject, style, istyle)
     retval = _fl_set_xyplot_grid_linestyle(pObject, istyle)
     return retval
 
 
-_fl_set_xyplot_alphaxtics = cfuncproto(
-        load_so_libforms(), "fl_set_xyplot_alphaxtics",
-        None, [cty.POINTER(FL_OBJECT), STRING, STRING],
-        """void fl_set_xyplot_alphaxtics(FL_OBJECT * ob, const char * m,
-           const char * s)
-        """)
 def fl_set_xyplot_alphaxtics(pObject, m, s):
     """ fl_set_xyplot_alphaxtics(pObject, m, s)
     """
 
+    _fl_set_xyplot_alphaxtics = cfuncproto(
+            load_so_libforms(), "fl_set_xyplot_alphaxtics",
+            None, [cty.POINTER(FL_OBJECT), STRING, STRING],
+            """void fl_set_xyplot_alphaxtics(FL_OBJECT * ob, const char * m,
+               const char * s)
+            """)
     sm = convert_to_string(m)
     ss = convert_to_string(s)
     keep_elem_refs(pObject, m, s, sm, ss)
     _fl_set_xyplot_alphaxtics(pObject, sm, ss)
 
 
-_fl_set_xyplot_alphaytics = cfuncproto(
-        load_so_libforms(), "fl_set_xyplot_alphaytics",
-        None, [cty.POINTER(FL_OBJECT), STRING, STRING],
-        """void fl_set_xyplot_alphaytics(FL_OBJECT * ob, const char * m,
-           const char * s)
-        """)
 def fl_set_xyplot_alphaytics(pObject, m, s):
     """ fl_set_xyplot_alphaytics(pObject, m, s)
     """
 
+    _fl_set_xyplot_alphaytics = cfuncproto(
+            load_so_libforms(), "fl_set_xyplot_alphaytics",
+            None, [cty.POINTER(FL_OBJECT), STRING, STRING],
+            """void fl_set_xyplot_alphaytics(FL_OBJECT * ob, const char * m,
+               const char * s)
+            """)
     sm = convert_to_string(m)
     ss = convert_to_string(s)
     keep_elem_refs(pObject, m, s, sm, ss)
     _fl_set_xyplot_alphaytics(pObject, sm, ss)
 
 
-_fl_set_xyplot_fixed_xaxis = cfuncproto(
-        load_so_libforms(), "fl_set_xyplot_fixed_xaxis",
-        None, [cty.POINTER(FL_OBJECT), STRING, STRING],
-        """void fl_set_xyplot_fixed_xaxis(FL_OBJECT * ob, const char * lm,
-           const char * rm)
-        """)
 def fl_set_xyplot_fixed_xaxis(pObject, lm, rm):
     """ fl_set_xyplot_fixed_xaxis(pObject, lm, rm)
     """
 
+    _fl_set_xyplot_fixed_xaxis = cfuncproto(
+            load_so_libforms(), "fl_set_xyplot_fixed_xaxis",
+            None, [cty.POINTER(FL_OBJECT), STRING, STRING],
+            """void fl_set_xyplot_fixed_xaxis(FL_OBJECT * ob, const char * lm,
+               const char * rm)
+            """)
     slm = convert_to_string(lm)
     srm = convert_to_string(rm)
     keep_elem_refs(pObject, lm, rm, slm, srm)
     _fl_set_xyplot_fixed_xaxis(pObject, slm, srm)
 
 
-_fl_set_xyplot_fixed_yaxis = cfuncproto(
-        load_so_libforms(), "fl_set_xyplot_fixed_yaxis",
-        None, [cty.POINTER(FL_OBJECT), STRING, STRING],
-        """void fl_set_xyplot_fixed_yaxis(FL_OBJECT * ob, const char * bm,
-           const char * tm)
-        """)
 def fl_set_xyplot_fixed_yaxis(pObject, bm, tm):
     """ fl_set_xyplot_fixed_yaxis(pObject, bm, tm)
     """
 
+    _fl_set_xyplot_fixed_yaxis = cfuncproto(
+            load_so_libforms(), "fl_set_xyplot_fixed_yaxis",
+            None, [cty.POINTER(FL_OBJECT), STRING, STRING],
+            """void fl_set_xyplot_fixed_yaxis(FL_OBJECT * ob, const char * bm,
+               const char * tm)
+            """)
     sbm = convert_to_string(bm)
     stm = convert_to_string(tm)
     keep_elem_refs(pObject, bm, tm, sbm, stm)
     _fl_set_xyplot_fixed_yaxis(pObject, sbm, stm)
 
 
-_fl_interpolate = cfuncproto(
-        load_so_libforms(), "fl_interpolate",
-        cty.c_int, [cty.POINTER(cty.c_float), cty.POINTER(cty.c_float),
-        cty.c_int, cty.POINTER(cty.c_float), cty.POINTER(cty.c_float),
-        cty.c_double, cty.c_int],
-        """int fl_interpolate(const char * wx, const char * wy, int nin,
-           float * x, float * y, double grid, int ndeg)
-        """)
 def fl_interpolate(wx, wy, nin, x, y, grid, ndeg):
     """ fl_interpolate(wx, wy, nin, x, y, grid, ndeg) -> num.
     """
 
+    _fl_interpolate = cfuncproto(
+            load_so_libforms(), "fl_interpolate",
+            cty.c_int, [cty.POINTER(cty.c_float), cty.POINTER(cty.c_float),
+            cty.c_int, cty.POINTER(cty.c_float), cty.POINTER(cty.c_float),
+            cty.c_double, cty.c_int],
+            """int fl_interpolate(const char * wx, const char * wy, int nin,
+               float * x, float * y, double grid, int ndeg)
+            """)
     inin = convert_to_int(nin)
     fgrid = convert_to_double(grid)
     indeg = convert_to_int(ndeg)
@@ -15478,18 +15553,18 @@ def fl_interpolate(wx, wy, nin, x, y, grid, ndeg):
     return retval
 
 
-_fl_spline_interpolate = cfuncproto(
-        load_so_libforms(), "fl_spline_interpolate",
-        cty.c_int, [cty.POINTER(cty.c_float), cty.POINTER(cty.c_float),
-        cty.c_int, cty.POINTER(cty.c_float), cty.POINTER(cty.c_float),
-        cty.c_double],
-        """int fl_spline_interpolate(const char * wx, const char * wy,
-           int nin, float * x, float * y, double grid)
-        """)
 def fl_spline_interpolate(wx, wy, nin, x, y, grid):
     """ fl_spline_interpolate(wx, wy, nin, x, y, grid) -> num.
     """
 
+    _fl_spline_interpolate = cfuncproto(
+            load_so_libforms(), "fl_spline_interpolate",
+            cty.c_int, [cty.POINTER(cty.c_float), cty.POINTER(cty.c_float),
+            cty.c_int, cty.POINTER(cty.c_float), cty.POINTER(cty.c_float),
+            cty.c_double],
+            """int fl_spline_interpolate(const char * wx, const char * wy,
+               int nin, float * x, float * y, double grid)
+            """)
     inin = convert_to_int(nin)
     fgrid = convert_to_double(grid)
     keep_elem_refs(wx, wy, nin, x, y, grid, inin, fgrid)
@@ -15497,17 +15572,17 @@ def fl_spline_interpolate(wx, wy, nin, x, y, grid):
     return retval
 
 
-_fl_set_xyplot_symbol = cfuncproto(
-        load_so_libforms(), "fl_set_xyplot_symbol",
-        FL_XYPLOT_SYMBOL, [cty.POINTER(FL_OBJECT), cty.c_int,
-        FL_XYPLOT_SYMBOL],
-        """FL_XYPLOT_SYMBOL fl_set_xyplot_symbol(FL_OBJECT * ob, int id,
-           FL_XYPLOT_SYMBOL symbol)
-        """)
 def fl_set_xyplot_symbol(pObject, idnum, py_symbol):
     """ fl_set_xyplot_symbol(pObject, idnum, py_symbol) -> xyplot_symbol func.
     """
 
+    _fl_set_xyplot_symbol = cfuncproto(
+            load_so_libforms(), "fl_set_xyplot_symbol",
+            FL_XYPLOT_SYMBOL, [cty.POINTER(FL_OBJECT), cty.c_int,
+            FL_XYPLOT_SYMBOL],
+            """FL_XYPLOT_SYMBOL fl_set_xyplot_symbol(FL_OBJECT * ob, int id,
+               FL_XYPLOT_SYMBOL symbol)
+            """)
     iidnum = convert_to_int(idnum)
     c_symbol = FL_XYPLOT_SYMBOL(py_symbol)
     keep_cfunc_refs(c_symbol)
@@ -15516,15 +15591,15 @@ def fl_set_xyplot_symbol(pObject, idnum, py_symbol):
     return retval
 
 
-_fl_set_xyplot_mark_active = cfuncproto(
-        load_so_libforms(), "fl_set_xyplot_mark_active",
-        cty.c_int, [cty.POINTER(FL_OBJECT), cty.c_int],
-        """int fl_set_xyplot_mark_active(FL_OBJECT * ob, int y)
-        """)
 def fl_set_xyplot_mark_active(pObject, y):
     """ fl_set_xyplot_mark_active(pObject, y) -> num.
     """
 
+    _fl_set_xyplot_mark_active = cfuncproto(
+            load_so_libforms(), "fl_set_xyplot_mark_active",
+            cty.c_int, [cty.POINTER(FL_OBJECT), cty.c_int],
+            """int fl_set_xyplot_mark_active(FL_OBJECT * ob, int y)
+            """)
     iy = convert_to_int(y)
     keep_elem_refs(pObject, y, iy)
     retval = _fl_set_xyplot_mark_active(pObject, iy)
@@ -15535,80 +15610,80 @@ def fl_set_xyplot_mark_active(pObject, y):
 # removed from V0.89, but apparently this broke some applications that
 # were using them. Put them back in 10/22/00
 
-_fl_gc_ = cfuncproto(
-        load_so_libforms(), "fl_gc_",
-        GC, [],
-        """GC fl_gc_()
-        """)
 def fl_gc_():
     """ fl_gc_() -> gc
     """
 
+    _fl_gc_ = cfuncproto(
+            load_so_libforms(), "fl_gc_",
+            GC, [],
+            """GC fl_gc_()
+            """)
     retval = _fl_gc_()
     return retval
 
 
-_fl_textgc_ = cfuncproto(
-        load_so_libforms(), "fl_textgc_",
-        GC, [],
-        """)GC fl_textgc_()
-        """)
 def fl_textgc_():
     """ fl_textgc_() -> gc
     """
 
+    _fl_textgc_ = cfuncproto(
+            load_so_libforms(), "fl_textgc_",
+            GC, [],
+            """)GC fl_textgc_()
+            """)
     retval = _fl_textgc_()
     return retval
 
 
-_fl_fheight_ = cfuncproto(
-        load_so_libforms(), "fl_fheight_",
-        cty.c_int, [],
-        """int fl_fheight_()
-        """)
 def fl_fheight_():
     """ fl_fheight_() -> num.
     """
 
+    _fl_fheight_ = cfuncproto(
+            load_so_libforms(), "fl_fheight_",
+            cty.c_int, [],
+            """int fl_fheight_()
+            """)
     retval = _fl_fheight_()
     return retval
 
 
-_fl_fdesc_ = cfuncproto(
-        load_so_libforms(), "fl_fdesc_",
-        cty.c_int, [],
-        """int fl_fdesc_()
-        """)
 def fl_fdesc_():
     """ fl_fdesc_() -> num.
     """
 
+    _fl_fdesc_ = cfuncproto(
+            load_so_libforms(), "fl_fdesc_",
+            cty.c_int, [],
+            """int fl_fdesc_()
+            """)
     retval = _fl_fdesc_()
     return retval
 
 
-_fl_cur_win_ = cfuncproto(
-        load_so_libforms(), "fl_cur_win_",
-        Window, [],
-        """Window fl_cur_win_()
-        """)
 def fl_cur_win_():
     """ fl_cur_win_() -> window
     """
 
+    _fl_cur_win_ = cfuncproto(
+            load_so_libforms(), "fl_cur_win_",
+            Window, [],
+            """Window fl_cur_win_()
+            """)
     retval = _fl_cur_win_()
     return retval
 
 
-_fl_cur_fs_ = cfuncproto(
-        load_so_libforms(), "fl_cur_fs_",
-        cty.POINTER(XFontStruct), [],
-        """XFontStruct * fl_cur_fs_()
-        """)
 def fl_cur_fs_():
     """ fl_cur_fs_() -> XFontStruct class
     """
 
+    _fl_cur_fs_ = cfuncproto(
+            load_so_libforms(), "fl_cur_fs_",
+            cty.POINTER(XFontStruct), [],
+            """XFontStruct * fl_cur_fs_()
+            """)
     retval = _fl_cur_fs_()
     return retval
 
@@ -15628,15 +15703,15 @@ fl_fdesc = fl_fdesc_
 fl_cur_fs = fl_cur_fs_
 
 
-_fl_display_ = cfuncproto(
-        load_so_libforms(), "fl_display_",
-        cty.POINTER(Display), [],
-        """Display * fl_display_()
-        """)
 def fl_display_():
     """ fl_display_() -> pDisplay
     """
 
+    _fl_display_ = cfuncproto(
+            load_so_libforms(), "fl_display_",
+            cty.POINTER(Display), [],
+            """Display * fl_display_()
+            """)
     retval = _fl_display_()
     return retval
 
@@ -15668,59 +15743,60 @@ def FL_IsPacked(im):
     return (im.type == FL_IMAGE_PACKED)
 
 
-_flimage_setup = cfuncproto(
-        load_so_libflimage(), "flimage_setup",
-        None, [cty.POINTER(FLIMAGE_SETUP)],
-        """void flimage_setup(FLIMAGE_SETUP * setup)
-        """)
 def flimage_setup(pImageSetup):
     """ flimage_setup(setup)
     """
 
+    _flimage_setup = cfuncproto(
+            load_so_libflimage(), "flimage_setup",
+            None, [cty.POINTER(FLIMAGE_SETUP)],
+            """void flimage_setup(FLIMAGE_SETUP * setup)
+            """)
     keep_elem_refs(pImageSetup)
     _flimage_setup(pImageSetup)
 
 
 # basic IO routines
 
-_flimage_load = cfuncproto(
-        load_so_libflimage(), "flimage_load",
-        cty.POINTER(FL_IMAGE), [STRING],
-        """FL_IMAGE * flimage_load(const char * file)
-        """)
 def flimage_load(filename):
     """ flimage_load(filename) -> pImage
     """
 
+    _flimage_load = cfuncproto(
+            load_so_libflimage(), "flimage_load",
+            cty.POINTER(FL_IMAGE), [STRING],
+            """FL_IMAGE * flimage_load(const char * file)
+            """)
     sfilename = convert_to_string(filename)
     keep_elem_refs(filename, sfilename)
     retval = _flimage_load(sfilename)
     return retval
 
 
-_flimage_read = cfuncproto(
-        load_so_libflimage(), "flimage_read",
-        cty.POINTER(FL_IMAGE), [cty.POINTER(FL_IMAGE)],
-        """FL_IMAGE * flimage_read(FL_IMAGE * im)
-        """)
 def flimage_read(pImage):
     """ flimage_read(pImage) -> pImage
     """
 
+    _flimage_read = cfuncproto(
+            load_so_libflimage(), "flimage_read",
+            cty.POINTER(FL_IMAGE), [cty.POINTER(FL_IMAGE)],
+            """FL_IMAGE * flimage_read(FL_IMAGE * im)
+            """)
     keep_elem_refs(pImage)
     retval = _flimage_read(pImage)
     return retval
 
 
-_flimage_dump = cfuncproto(
-        load_so_libflimage(), "flimage_dump",
-        cty.c_int, [cty.POINTER(FL_IMAGE), STRING, STRING],
-        """int flimage_dump(FL_IMAGE * p1, const char * p2, const char * p3)
-        """)
 def flimage_dump(pImage, p2, p3):
     """ flimage_dump(pImage, p2, p3) -> num.
     """
 
+    _flimage_dump = cfuncproto(
+            load_so_libflimage(), "flimage_dump",
+            cty.c_int, [cty.POINTER(FL_IMAGE), STRING, STRING],
+            """int flimage_dump(FL_IMAGE * p1, const char * p2,
+               const char * p3)
+            """)
     sp2 = convert_to_string(p2)
     sp3 = convert_to_string(p3)
     keep_elem_refs(pImage, p2, p3, sp2, sp3)
@@ -15728,73 +15804,73 @@ def flimage_dump(pImage, p2, p3):
     return retval
 
 
-_flimage_close = cfuncproto(
-        load_so_libflimage(), "flimage_close",
-        cty.c_int, [cty.POINTER(FL_IMAGE)],
-        """int flimage_close(FL_IMAGE * p1)
-        """)
 def flimage_close(pImage):
     """ flimage_close(pImage) -> num.
     """
 
+    _flimage_close = cfuncproto(
+            load_so_libflimage(), "flimage_close",
+            cty.c_int, [cty.POINTER(FL_IMAGE)],
+            """int flimage_close(FL_IMAGE * p1)
+            """)
     keep_elem_refs(pImage)
     retval = _flimage_close(pImage)
     return retval
 
 
-_flimage_alloc = cfuncproto(
-        load_so_libflimage(), "flimage_alloc",
-        cty.POINTER(FL_IMAGE), [],
-        """FL_IMAGE * flimage_alloc()
-        """)
 def flimage_alloc():
     """ flimage_alloc() -> pImage
     """
 
+    _flimage_alloc = cfuncproto(
+            load_so_libflimage(), "flimage_alloc",
+            cty.POINTER(FL_IMAGE), [],
+            """FL_IMAGE * flimage_alloc()
+            """)
     retval = _flimage_alloc()
     return retval
 
 
-_flimage_getmem = cfuncproto(
-        load_so_libflimage(), "flimage_getmem",
-        cty.c_int, [cty.POINTER(FL_IMAGE)],
-        """int flimage_getmem(FL_IMAGE * p1)
-        """)
 def flimage_getmem(pImage):
     """ flimage_getmem(pImage) -> num.
     """
 
+    _flimage_getmem = cfuncproto(
+            load_so_libflimage(), "flimage_getmem",
+            cty.c_int, [cty.POINTER(FL_IMAGE)],
+            """int flimage_getmem(FL_IMAGE * p1)
+            """)
     keep_elem_refs(pImage)
     retval = _flimage_getmem(pImage)
     return retval
 
 
-_flimage_is_supported = cfuncproto(
-        load_so_libflimage(), "flimage_is_supported",
-        cty.c_int, [STRING],
-        """int flimage_is_supported(const char * p1)
-        """)
 def flimage_is_supported(p1):
     """ flimage_is_supported(p1) -> num.
     """
 
+    _flimage_is_supported = cfuncproto(
+            load_so_libflimage(), "flimage_is_supported",
+            cty.c_int, [STRING],
+            """int flimage_is_supported(const char * p1)
+            """)
     sp1 = convert_to_string(p1)
     keep_elem_refs(p1, sp1)
     retval = _flimage_is_supported(sp1)
     return retval
 
 
-_flimage_description_via_filter = cfuncproto(
-        load_so_libflimage(), "flimage_description_via_filter",
-        cty.c_int, [cty.POINTER(FL_IMAGE), cty.POINTER(STRING), STRING,
-        cty.c_int],
-        """int flimage_description_via_filter(FL_IMAGE * p1, const char * p2,
-           const char * p3, int p4)
-        """)
 def flimage_description_via_filter(pImage, p2, p3, p4):
     """ flimage_description_via_filter(pImage, p2, p3, p4) -> num.
     """
 
+    _flimage_description_via_filter = cfuncproto(
+            load_so_libflimage(), "flimage_description_via_filter",
+            cty.c_int, [cty.POINTER(FL_IMAGE), cty.POINTER(STRING), STRING,
+            cty.c_int],
+            """int flimage_description_via_filter(FL_IMAGE * p1,
+               const char * p2, const char * p3, int p4)
+            """)
     sp3 = convert_to_string(p3)
     ip4 = convert_to_string(p4)
     keep_elem_refs(pImage, p2, p3, p4, sp3, ip4)
@@ -15802,76 +15878,76 @@ def flimage_description_via_filter(pImage, p2, p3, p4):
     return retval
 
 
-_flimage_write_via_filter = cfuncproto(
-        load_so_libflimage(), "flimage_write_via_filter",
-        cty.c_int, [cty.POINTER(FL_IMAGE), cty.POINTER(STRING),
-        cty.POINTER(STRING), cty.c_int],
-        """int flimage_write_via_filter(FL_IMAGE * p1, const char * p2,
-           const char * p3, int p4)
-        """)
 def flimage_write_via_filter(pImage, p2, p3, p4):
     """ flimage_write_via_filter(pImage, p2, p3, p4) -> num.
     """
 
+    _flimage_write_via_filter = cfuncproto(
+            load_so_libflimage(), "flimage_write_via_filter",
+            cty.c_int, [cty.POINTER(FL_IMAGE), cty.POINTER(STRING),
+            cty.POINTER(STRING), cty.c_int],
+            """int flimage_write_via_filter(FL_IMAGE * p1, const char * p2,
+               const char * p3, int p4)
+            """)
     ip4 = convert_to_int(p4)
     keep_elem_refs(pImage, p2, p3, p4, ip4)
     retval = _flimage_write_via_filter(pImage, p2, p3, ip4)
     return retval
 
 
-_flimage_free = cfuncproto(
-        load_so_libflimage(), "flimage_free",
-        cty.c_int, [cty.POINTER(FL_IMAGE)],
-        """int flimage_free(FL_IMAGE * p1)
-        """)
 def flimage_free(pImage):
     """ flimage_free(pImage) -> num.
     """
 
+    _flimage_free = cfuncproto(
+            load_so_libflimage(), "flimage_free",
+            cty.c_int, [cty.POINTER(FL_IMAGE)],
+            """int flimage_free(FL_IMAGE * p1)
+            """)
     keep_elem_refs(pImage)
     retval = _flimage_free(pImage)
     return retval
 
 
-_flimage_display = cfuncproto(
-        load_so_libflimage(), "flimage_display",
-        cty.c_int, [cty.POINTER(FL_IMAGE), Window],
-        """int flimage_display(FL_IMAGE * p1, Window p2)
-        """)
 def flimage_display(pImage, win):
     """ flimage_display(pImage, win) -> num.
     """
 
+    _flimage_display = cfuncproto(
+            load_so_libflimage(), "flimage_display",
+            cty.c_int, [cty.POINTER(FL_IMAGE), Window],
+            """int flimage_display(FL_IMAGE * p1, Window p2)
+            """)
     ulwin = convert_to_Window(win)
     keep_elem_refs(pImage, win, ulwin)
     retval = _flimage_display(pImage, ulwin)
     return retval
 
 
-_flimage_sdisplay = cfuncproto(
-        load_so_libflimage(), "flimage_sdisplay",
-        cty.c_int, [cty.POINTER(FL_IMAGE), Window],
-        """int flimage_sdisplay(FL_IMAGE * p1, Window p2)
-        """)
 def flimage_sdisplay(pImage, win):
     """ flimage_sdisplay(pImage, win) -> num.
     """
 
+    _flimage_sdisplay = cfuncproto(
+            load_so_libflimage(), "flimage_sdisplay",
+            cty.c_int, [cty.POINTER(FL_IMAGE), Window],
+            """int flimage_sdisplay(FL_IMAGE * p1, Window p2)
+            """)
     ulwin = convert_to_Window(win)
     keep_elem_refs(pImage, win, ulwin)
     retval = _flimage_sdisplay(pImage, ulwin)
     return retval
 
 
-_flimage_convert = cfuncproto(
-        load_so_libflimage(), "flimage_convert",
-        cty.c_int, [cty.POINTER(FL_IMAGE), cty.c_int, cty.c_int],
-        """int flimage_convert(FL_IMAGE * p1, int p2, int p3)
-        """)
 def flimage_convert(pImage, p2, p3):
     """ flimage_convert(pImage, p2, p3) -> num.
     """
 
+    _flimage_convert = cfuncproto(
+            load_so_libflimage(), "flimage_convert",
+            cty.c_int, [cty.POINTER(FL_IMAGE), cty.c_int, cty.c_int],
+            """int flimage_convert(FL_IMAGE * p1, int p2, int p3)
+            """)
     ip2 = convert_to_int(p2)
     ip3 = convert_to_int(p3)
     keep_elem_refs(pImage, p2, p3, ip2, ip3)
@@ -15879,35 +15955,34 @@ def flimage_convert(pImage, p2, p3):
     return retval
 
 
-_flimage_type_name = cfuncproto(
-        load_so_libflimage(), "flimage_type_name",
-        STRING, [cty.c_int],
-        """const char * flimage_type_name(int type)
-        """)
 def flimage_type_name(flimagetype):
     """ flimage_type_name(flimagetype) -> name string
     """
 
+    _flimage_type_name = cfuncproto(
+            load_so_libflimage(), "flimage_type_name",
+            STRING, [cty.c_int],
+            """const char * flimage_type_name(int type)
+            """)
     iflimagetype = convert_to_int(flimagetype)
     keep_elem_refs(flimagetype, iflimagetype)
     retval = _flimage_type_name(iflimagetype)
     return retval
 
-#§§§
 
-_flimage_add_text = cfuncproto(
-        load_so_libflimage(), "flimage_add_text",
-        cty.c_int, [cty.POINTER(FL_IMAGE), STRING, cty.c_int, cty.c_int,
-        cty.c_int, cty.c_uint, cty.c_uint, cty.c_int, cty.c_double,
-        cty.c_double, cty.c_int],
-        """int flimage_add_text(FL_IMAGE * p1, const char * p2, int p3,
-           int p4, int p5, unsigned int p6, unsigned int p7, int p8,
-           double p9, double p10, int p11)
-        """)
 def flimage_add_text(pImage, text, p3, p4, p5, p6, p7, p8, p9, p10, p11):
     """ flimage_add_text(pImage, text, p3, p4, p5, p6, p7, p8, p9, p10, p11) -> num.
     """
 
+    _flimage_add_text = cfuncproto(
+            load_so_libflimage(), "flimage_add_text",
+            cty.c_int, [cty.POINTER(FL_IMAGE), STRING, cty.c_int, cty.c_int,
+            cty.c_int, cty.c_uint, cty.c_uint, cty.c_int, cty.c_double,
+            cty.c_double, cty.c_int],
+            """int flimage_add_text(FL_IMAGE * p1, const char * p2, int p3,
+               int p4, int p5, unsigned int p6, unsigned int p7, int p8,
+               double p9, double p10, int p11)
+            """)
     stext = convert_to_string(text)
     ip3 = convert_to_int(p3)
     ip4 = convert_to_int(p4)
@@ -15925,46 +16000,46 @@ def flimage_add_text(pImage, text, p3, p4, p5, p6, p7, p8, p9, p10, p11):
     return retval
 
 
-_flimage_add_text_struct = cfuncproto(
-        load_so_libflimage(), "flimage_add_text_struct",
-        cty.c_int, [cty.POINTER(FL_IMAGE), cty.POINTER(FLIMAGE_TEXT)],
-        """int flimage_add_text_struct(FL_IMAGE * p1, const char * p2)
-        """)
 def flimage_add_text_struct(pImage, pImageText):
     """ flimage_add_text_struct(pImage, pImageText) -> num.
     """
 
+    _flimage_add_text_struct = cfuncproto(
+            load_so_libflimage(), "flimage_add_text_struct",
+            cty.c_int, [cty.POINTER(FL_IMAGE), cty.POINTER(FLIMAGE_TEXT)],
+            """int flimage_add_text_struct(FL_IMAGE * p1, const char * p2)
+            """)
     keep_elem_refs(pImage, pImageText)
     retval = _flimage_add_text_struct(pImage, pImageText)
     return retval
 
 
-_flimage_delete_all_text = cfuncproto(
-        load_so_libflimage(), "flimage_delete_all_text",
-        None, [cty.POINTER(FL_IMAGE)],
-        """void flimage_delete_all_text(FL_IMAGE * p1)
-        """)
 def flimage_delete_all_text(pImage):
     """ flimage_delete_all_text(pImage)
     """
 
+    _flimage_delete_all_text = cfuncproto(
+            load_so_libflimage(), "flimage_delete_all_text",
+            None, [cty.POINTER(FL_IMAGE)],
+            """void flimage_delete_all_text(FL_IMAGE * p1)
+            """)
     keep_elem_refs(pImage)
     _flimage_delete_all_text(pImage)
 
 
-_flimage_add_marker = cfuncproto(
-        load_so_libflimage(), "flimage_add_marker",
-        cty.c_int, [cty.POINTER(FL_IMAGE), STRING, cty.c_double, cty.c_double,
-        cty.c_double, cty.c_double, cty.c_int, cty.c_int, cty.c_int,
-        cty.c_uint, cty.c_uint],
-        """int flimage_add_marker(FL_IMAGE * p1, const char * p2, double p3,
-           double p4, double p5, double p6, int p7, int p8, int p9,
-           unsigned int p10, unsigned int p11)
-        """)
 def flimage_add_marker(pImage, text, p3, p4, p5, p6, p7, p8, p9, p10, p11):
     """ flimage_add_marker(pImage, text, p3, p4, p5, p6, p7, p8, p9, p10, p11) -> num.
     """
 
+    _flimage_add_marker = cfuncproto(
+            load_so_libflimage(), "flimage_add_marker",
+            cty.c_int, [cty.POINTER(FL_IMAGE), STRING, cty.c_double,
+            cty.c_double, cty.c_double, cty.c_double, cty.c_int, cty.c_int,
+            cty.c_int, cty.c_uint, cty.c_uint],
+            """int flimage_add_marker(FL_IMAGE * p1, const char * p2,
+               double p3, double p4, double p5, double p6, int p7,
+               int p8, int p9, unsigned int p10, unsigned int p11)
+            """)
     stext = convert_to_string(text)
     fp3 = convert_to_double(p3)
     fp4 = convert_to_double(p4)
@@ -15982,30 +16057,30 @@ def flimage_add_marker(pImage, text, p3, p4, p5, p6, p7, p8, p9, p10, p11):
     return retval
 
 
-_flimage_add_marker_struct = cfuncproto(
-        load_so_libflimage(), "flimage_add_marker_struct",
-        cty.c_int, [cty.POINTER(FL_IMAGE), cty.POINTER(FLIMAGE_MARKER)],
-        """int flimage_add_marker_struct(FL_IMAGE * p1, const char * p2)
-        """)
-def flimage_add_marker_struct(pImage, p2):
-    """ flimage_add_marker_struct(pImage, p2) -> num.
+def flimage_add_marker_struct(pImage, pImageMarker):
+    """ flimage_add_marker_struct(pImage, pImageMarker) -> num.
     """
 
-    keep_elem_refs(pImage, p2)
-    retval = _flimage_add_marker_struct(pImage, p2)
+    _flimage_add_marker_struct = cfuncproto(
+            load_so_libflimage(), "flimage_add_marker_struct",
+            cty.c_int, [cty.POINTER(FL_IMAGE), cty.POINTER(FLIMAGE_MARKER)],
+            """int flimage_add_marker_struct(FL_IMAGE * p1, const char * p2)
+            """)
+    keep_elem_refs(pImage, pImageMarker)
+    retval = _flimage_add_marker_struct(pImage, pImageMarker)
     return retval
 
 
-_flimage_define_marker = cfuncproto(
-        load_so_libflimage(), "flimage_define_marker",
-        cty.c_int, [STRING, cty.POINTER(FLIMAGE_MARKER), STRING],
-        """int flimage_define_marker(const char *, void ( * )
-           (FLIMAGE_MARKER *), const char *
-        """)
 def flimage_define_marker(text1, pImageMarker, text2):
     """ flimage_define_marker(text1, pImageMarker, text2) -> num.
     """
 
+    _flimage_define_marker = cfuncproto(
+            load_so_libflimage(), "flimage_define_marker",
+            cty.c_int, [STRING, cty.POINTER(FLIMAGE_MARKER), STRING],
+            """int flimage_define_marker(const char *, void ( * )
+               (FLIMAGE_MARKER *), const char *)
+            """)
     stext1 = convert_to_string(text1)
     stext2 = convert_to_string(text2)
     keep_elem_refs(text1, pImageMarker, text2, stext1, stext2)
@@ -16013,44 +16088,43 @@ def flimage_define_marker(text1, pImageMarker, text2):
     return retval
 
 
-_flimage_delete_all_markers = cfuncproto(
-        load_so_libflimage(), "flimage_delete_all_markers",
-        None, [cty.POINTER(FL_IMAGE)],
-        """void flimage_delete_all_markers(FL_IMAGE * p1)
-        """)
-
 def flimage_delete_all_markers(pImage):
     """ flimage_delete_all_markers(pImage)
     """
 
+    _flimage_delete_all_markers = cfuncproto(
+            load_so_libflimage(), "flimage_delete_all_markers",
+            None, [cty.POINTER(FL_IMAGE)],
+            """void flimage_delete_all_markers(FL_IMAGE * p1)
+            """)
     keep_elem_refs(pImage)
     _flimage_delete_all_markers(pImage)
 
 
-_flimage_render_annotation = cfuncproto(
-        load_so_libflimage(), "flimage_render_annotation",
-        cty.c_int, [cty.POINTER(FL_IMAGE), FL_WINDOW],
-        """int flimage_render_annotation(FL_IMAGE * p1, FL_WINDOW p2)
-        """)
 def flimage_render_annotation(pImage, win):
     """ flimage_render_annotation(pImage, win) -> num.
     """
 
+    _flimage_render_annotation = cfuncproto(
+            load_so_libflimage(), "flimage_render_annotation",
+            cty.c_int, [cty.POINTER(FL_IMAGE), FL_WINDOW],
+            """int flimage_render_annotation(FL_IMAGE * p1, FL_WINDOW p2)
+            """)
     ulwin = convert_to_Window(win)
     keep_elem_refs(pImage, win, ulwin)
     retval = _flimage_render_annotation(pImage, ulwin)
     return retval
 
 
-_flimage_error = cfuncproto(
-        load_so_libflimage(), "flimage_error",
-        None, [cty.POINTER(FL_IMAGE), STRING],
-        """void flimage_error(FL_IMAGE * p1, const char * p2)
-        """)
 def flimage_error(pImage, text):
     """ flimage_error(pImage, text)
     """
 
+    _flimage_error = cfuncproto(
+            load_so_libflimage(), "flimage_error",
+            None, [cty.POINTER(FL_IMAGE), STRING],
+            """void flimage_error(FL_IMAGE * p1, const char * p2)
+            """)
     stext = convert_to_Window(text)
     keep_elem_refs(pImage, text, stext)
     _flimage_error(pImage, stext)
@@ -16058,15 +16132,15 @@ def flimage_error(pImage, text):
 
 # built-in format supports
 
-_flimage_enable_pnm = cfuncproto(
-        load_so_libflimage(), "flimage_enable_pnm",
-        None, [],
-        """void flimage_enable_pnm()
-        """)
 def flimage_enable_pnm():
     """ flimage_enable_pnm()
     """
 
+    _flimage_enable_pnm = cfuncproto(
+            load_so_libflimage(), "flimage_enable_pnm",
+            None, [],
+            """void flimage_enable_pnm()
+            """)
     _flimage_enable_pnm()
 
 
@@ -17558,27 +17632,27 @@ def flps_invalidate_linewidth_cache():
     _flps_invalidate_linewidth_cache()
 
 
-_flps_invalidate_symbol_cache = cfuncproto(
-        load_so_libflimage(), "flps_invalidate_symbol_cache",
-        None, [],
-        """void flps_invalidate_symbol_cache()
-        """)
 def flps_invalidate_symbol_cache():
     """ flps_invalidate_symbol_cache()
     """
 
+    _flps_invalidate_symbol_cache = cfuncproto(
+            load_so_libflimage(), "flps_invalidate_symbol_cache",
+            None, [],
+            """void flps_invalidate_symbol_cache()
+            """)
     _flps_invalidate_symbol_cache()
 
 
-_flps_line = cfuncproto(
-        load_so_libflimage(), "flps_line",
-        None, [cty.c_int, cty.c_int, cty.c_int, cty.c_int, cty.c_long],
-        """void flps_line(int p1, int p2, int p3, int p4, long int p5)
-        """)
 def flps_line(p1, p2, p3, p4, p5):
     """ flps_line(p1, p2, p3, p4, p5)
     """
 
+    _flps_line = cfuncproto(
+            load_so_libflimage(), "flps_line",
+            None, [cty.c_int, cty.c_int, cty.c_int, cty.c_int, cty.c_long],
+            """void flps_line(int p1, int p2, int p3, int p4, long int p5)
+            """)
     ip1 = convert_to_int(p1)
     ip2 = convert_to_int(p2)
     ip3 = convert_to_int(p3)
@@ -17588,87 +17662,88 @@ def flps_line(p1, p2, p3, p4, p5):
     _flps_line(ip1, ip2, ip3, ip4, lp5)
 
 
-_flps_lines = cfuncproto(
-        load_so_libflimage(), "flps_lines",
-        None, [cty.POINTER(FL_POINT), cty.c_int, cty.c_long],
-        """void flps_lines(FL_POINT * p1, int p2, long int p3)
-        """)
 def flps_lines(pPoint, p2, p3):
     """ flps_lines(pPoint, p2, p3)
     """
 
+    _flps_lines = cfuncproto(
+            load_so_libflimage(), "flps_lines",
+            None, [cty.POINTER(FL_POINT), cty.c_int, cty.c_long],
+            """void flps_lines(FL_POINT * p1, int p2, long int p3)
+            """)
     ip2 = convert_to_int(p2)
     lp3 = convert_to_long(p3)
     keep_elem_refs(pPoint, p2, p3, ip2, lp3)
     _flps_lines(pPoint, ip2, lp3)
 
 
-_flps_linestyle = cfuncproto(
-        load_so_libflimage(), "flps_linestyle",
-        None, [cty.c_int],
-        """void flps_linestyle(int p1)
-        """)
 def flps_linestyle(p1):
     """ flps_linestyle(p1)
     """
 
+    _flps_linestyle = cfuncproto(
+            load_so_libflimage(), "flps_linestyle",
+            None, [cty.c_int],
+            """void flps_linestyle(int p1)
+            """)
     ip1 = convert_to_int(p1)
     keep_elem_refs(p1, ip1)
     _flps_linestyle(ip1)
 
 
-_flps_linewidth = cfuncproto(
-        load_so_libflimage(), "flps_linewidth",
-        None, [cty.c_int],
-        """void flps_linewidth(int p1)
-        """)
 def flps_linewidth(p1):
     """ flps_linewidth(p1)
     """
 
+    _flps_linewidth = cfuncproto(
+            load_so_libflimage(), "flps_linewidth",
+            None, [cty.c_int],
+            """void flps_linewidth(int p1)
+            """)
     ip1 = convert_to_int(p1)
     keep_elem_refs(p1, ip1)
     _flps_linewidth(ip1)
 
 
-_flps_log = cfuncproto(
-        load_so_libflimage(), "flps_log",
-        None, [STRING],
-        """void flps_log(const char * p1)
-        """)
 def flps_log(p1):
     """ flps_log(p1)
     """
 
+    _flps_log = cfuncproto(
+            load_so_libflimage(), "flps_log",
+            None, [STRING],
+            """void flps_log(const char * p1)
+            """)
     sp1 = convert_to_string(p1)
     keep_elem_refs(p1, sp1)
     _flps_log(sp1)
 
 
-_flps_output = cfuncproto(
-        load_so_libflimage(), "flps_output",
-        None, [STRING],
-        """void flps_output(const char * p1)
-        """)
 def flps_output(p1):
     """ flps_output(p1)
     """
 
+    _flps_output = cfuncproto(
+            load_so_libflimage(), "flps_output",
+            None, [STRING],
+            """void flps_output(const char * p1)
+            """)
     sp1 = convert_to_string(p1)
     keep_elem_refs(p1, sp1)
     _flps_output(sp1)
 
 
-_flps_oval = cfuncproto(
-        load_so_libflimage(), "flps_oval",
-        None, [cty.c_int, cty.c_int, cty.c_int, cty.c_int, cty.c_int,
-        cty.c_long],
-        """void flps_oval(int p1, int p2, int p3, int p4, int p5, long int p6)
-        """)
 def flps_oval(p1, p2, p3, p4, p5, p6):
     """ flps_oval(p1, p2, p3, p4, p5, p6)
     """
 
+    _flps_oval = cfuncproto(
+            load_so_libflimage(), "flps_oval",
+            None, [cty.c_int, cty.c_int, cty.c_int, cty.c_int, cty.c_int,
+            cty.c_long],
+            """void flps_oval(int p1, int p2, int p3, int p4, int p5,
+               long int p6)
+            """)
     ip1 = convert_to_int(p1)
     ip2 = convert_to_int(p2)
     ip3 = convert_to_int(p3)
@@ -17679,17 +17754,17 @@ def flps_oval(p1, p2, p3, p4, p5, p6):
     _flps_oval(ip1, ip2, ip3, ip4, ip5, lp6)
 
 
-_flps_pieslice = cfuncproto(
-        load_so_libflimage(), "flps_pieslice",
-        None, [cty.c_int, cty.c_int, cty.c_int, cty.c_int, cty.c_int,
-        cty.c_int, cty.c_int, cty.c_long],
-        """void flps_pieslice(int p1, int p2, int p3, int p4, int p5, int p6,
-           int p7, long int p8)
-        """)
 def flps_pieslice(p1, p2, p3, p4, p5, p6, p7, p8):
     """ flps_pieslice(p1, p2, p3, p4, p5, p6, p7, p8)
     """
 
+    _flps_pieslice = cfuncproto(
+            load_so_libflimage(), "flps_pieslice",
+            None, [cty.c_int, cty.c_int, cty.c_int, cty.c_int, cty.c_int,
+            cty.c_int, cty.c_int, cty.c_long],
+            """void flps_pieslice(int p1, int p2, int p3, int p4, int p5,
+               int p6, int p7, long int p8)
+            """)
     ip1 = convert_to_int(p1)
     ip2 = convert_to_int(p2)
     ip3 = convert_to_int(p3)
@@ -17703,15 +17778,15 @@ def flps_pieslice(p1, p2, p3, p4, p5, p6, p7, p8):
     _flps_pieslice(ip1, ip2, ip3, ip4, ip5, ip6, ip7, lp8)
 
 
-_flps_poly = cfuncproto(
-        load_so_libflimage(), "flps_poly",
-        None, [cty.c_int, cty.POINTER(FL_POINT), cty.c_int, cty.c_long],
-        """void flps_poly(int p1, FL_POINT * p2, int p3, long int p4)
-        """)
 def flps_poly(p1, pPoint, p3, p4):
     """ flps_poly(p1, pPoint, p3, p4)
     """
 
+    _flps_poly = cfuncproto(
+            load_so_libflimage(), "flps_poly",
+            None, [cty.c_int, cty.POINTER(FL_POINT), cty.c_int, cty.c_long],
+            """void flps_poly(int p1, FL_POINT * p2, int p3, long int p4)
+            """)
     ip1 = convert_to_int(p1)
     ip3 = convert_to_int(p3)
     lp4 = convert_to_long(p4)
@@ -17719,17 +17794,17 @@ def flps_poly(p1, pPoint, p3, p4):
     _flps_poly(ip1, pPoint, ip3, lp4)
 
 
-_flps_rectangle = cfuncproto(
-        load_so_libflimage(), "flps_rectangle",
-        None, [cty.c_int, cty.c_int, cty.c_int, cty.c_int, cty.c_int,
-        cty.c_long],
-        """void flps_rectangle(int p1, int p2, int p3, int p4, int p5,
-           long int p6)
-        """)
 def flps_rectangle(p1, p2, p3, p4, p5, p6):
     """ flps_rectangle(p1, p2, p3, p4, p5, p6)
     """
 
+    _flps_rectangle = cfuncproto(
+            load_so_libflimage(), "flps_rectangle",
+            None, [cty.c_int, cty.c_int, cty.c_int, cty.c_int, cty.c_int,
+            cty.c_long],
+            """void flps_rectangle(int p1, int p2, int p3, int p4, int p5,
+               long int p6)
+            """)
     ip1 = convert_to_int(p1)
     ip2 = convert_to_int(p2)
     ip3 = convert_to_int(p3)
@@ -17740,51 +17815,51 @@ def flps_rectangle(p1, p2, p3, p4, p5, p6):
     _flps_rectangle(ip1, ip2, ip3, ip4, ip5, lp6)
 
 
-_flps_reset_cache = cfuncproto(
-        load_so_libflimage(), "flps_reset_cache",
-        None, [],
-        """void flps_reset_cache()
-        """)
 def flps_reset_cache():
     """ flps_reset_cache()
     """
 
+    _flps_reset_cache = cfuncproto(
+            load_so_libflimage(), "flps_reset_cache",
+            None, [],
+            """void flps_reset_cache()
+            """)
     _flps_reset_cache()
 
 
-_flps_reset_linewidth = cfuncproto(
-        load_so_libflimage(), "flps_reset_linewidth",
-        None, [],
-        """void flps_reset_linewidth()
-        """)
 def flps_reset_linewidth():
     """ flps_reset_linewidth()
     """
 
+    _flps_reset_linewidth = cfuncproto(
+            load_so_libflimage(), "flps_reset_linewidth",
+            None, [],
+            """void flps_reset_linewidth()
+            """)
     _flps_reset_linewidth()
 
 
-_flps_restore_flps = cfuncproto(
-        load_so_libflimage(), "flps_restore_flps",
-        None, [],
-        """void flps_restore_flps()
-        """)
 def flps_restore_flps():
     """ flps_restore_flps()
     """
 
+    _flps_restore_flps = cfuncproto(
+            load_so_libflimage(), "flps_restore_flps",
+            None, [],
+            """void flps_restore_flps()
+            """)
     _flps_restore_flps()
 
 
-_flps_rgbcolor = cfuncproto(
-        load_so_libflimage(), "flps_rgbcolor",
-        None, [cty.c_int, cty.c_int, cty.c_int],
-        """void flps_rgbcolor(int p1, int p2, int p3)
-        """)
 def flps_rgbcolor(p1, p2, p3):
     """ flps_rgbcolor(p1, p2, p3)
     """
 
+    _flps_rgbcolor = cfuncproto(
+            load_so_libflimage(), "flps_rgbcolor",
+            None, [cty.c_int, cty.c_int, cty.c_int],
+            """void flps_rgbcolor(int p1, int p2, int p3)
+            """)
     ip1 = convert_to_int(p1)
     ip2 = convert_to_int(p2)
     ip3 = convert_to_int(p3)
@@ -17792,17 +17867,17 @@ def flps_rgbcolor(p1, p2, p3):
     _flps_rgbcolor(ip1, ip2, ip3)
 
 
-_flps_roundrectangle = cfuncproto(
-        load_so_libflimage(), "flps_roundrectangle",
-        None, [cty.c_int, cty.c_int, cty.c_int, cty.c_int, cty.c_int,
-        cty.c_long],
-        """void flps_roundrectangle(int p1, int p2, int p3, int p4, int p5,
-           long int p6)
-        """)
 def flps_roundrectangle(p1, p2, p3, p4, p5, p6):
     """ flps_roundrectangle(p1, p2, p3, p4, p5, p6)
     """
 
+    _flps_roundrectangle = cfuncproto(
+            load_so_libflimage(), "flps_roundrectangle",
+            None, [cty.c_int, cty.c_int, cty.c_int, cty.c_int, cty.c_int,
+            cty.c_long],
+            """void flps_roundrectangle(int p1, int p2, int p3, int p4,
+               int p5, long int p6)
+            """)
     ip1 = convert_to_int(p1)
     ip2 = convert_to_int(p2)
     ip3 = convert_to_int(p3)
@@ -17813,15 +17888,15 @@ def flps_roundrectangle(p1, p2, p3, p4, p5, p6):
     _flps_roundrectangle(ip1, ip2, ip3, ip4, ip5, lp6)
 
 
-_flps_set_clipping = cfuncproto(
-        load_so_libflimage(), "flps_set_clipping",
-        None, [cty.c_int, cty.c_int, cty.c_int, cty.c_int],
-        """void flps_set_clipping(int p1, int p2, int p3, int p4)
-        """)
 def flps_set_clipping(p1, p2, p3, p4):
     """ flps_set_clipping(p1, p2, p3, p4)
     """
 
+    _flps_set_clipping = cfuncproto(
+            load_so_libflimage(), "flps_set_clipping",
+            None, [cty.c_int, cty.c_int, cty.c_int, cty.c_int],
+            """void flps_set_clipping(int p1, int p2, int p3, int p4)
+            """)
     ip1 = convert_to_int(p1)
     ip2 = convert_to_int(p2)
     ip3 = convert_to_int(p3)
@@ -17830,29 +17905,29 @@ def flps_set_clipping(p1, p2, p3, p4):
     _flps_set_clipping(ip1, ip2, ip3, ip4)
 
 
-_flps_set_font = cfuncproto(
-        load_so_libflimage(), "flps_set_font",
-        None, [cty.c_int, cty.c_int],
-        """void flps_set_font(int p1, int p2)
-        """)
 def flps_set_font(p1, p2):
     """ flps_set_font(p1, p2)
     """
 
+    _flps_set_font = cfuncproto(
+            load_so_libflimage(), "flps_set_font",
+            None, [cty.c_int, cty.c_int],
+            """void flps_set_font(int p1, int p2)
+            """)
     ip1 = convert_to_int(p1)
     ip2 = convert_to_int(p2)
     keep_elem_refs(p1, p2, ip1, ip2)
     _flps_set_font(ip1, ip2)
 
 
-_flps_unset_clipping = cfuncproto(
-        load_so_libflimage(), "flps_unset_clipping",
-        None, [],
-        """void flps_unset_clipping()
-        """)
 def flps_unset_clipping():
     """ flps_unset_clipping()
     """
 
+    _flps_unset_clipping = cfuncproto(
+            load_so_libflimage(), "flps_unset_clipping",
+            None, [],
+            """void flps_unset_clipping()
+            """)
     _flps_unset_clipping()
 
