@@ -1,6 +1,7 @@
 
 
 SVN
+    * Porting of choice example.
     * Porting of pushbutton example.
     * Porting of symbols example.
     * Some bugfixes for wrong types

@@ -122,10 +122,13 @@ def warn_deprecated_function(altfunc=""):
     """
 
     funcname = sys._getframe(1).f_code.co_name
+    if altfunc:
+        newaltfunc = "Use %s instead." % altfunc
+    else:
+        newaltfunc = ""
     warningmsg = "Function %s is deprecated and might be removed in future" \
-                  " releases. It should not be used anymore. %s" % \
-                  (funcname, altfunc)
-    warnings.warn(warningmsg, DeprecationWarning)
+                  " releases. %s" % (funcname, newaltfunc)
+    warnings.warn(warningmsg, DeprecationWarning, 3)
 
 
 def func_do_nothing_placeholder(cfunction):
@@ -12607,7 +12610,7 @@ def fl_clear_select(pObject):
 
 
 def fl_add_select_items(pObject, itemstr):
-    """ fl_add_select_items(pObject, itemstr) -> popup_entry
+    """ fl_add_select_items(pObject, itemstr) -> pPopupEntry
     """
 
     _fl_add_select_items = cfuncproto(
@@ -16370,74 +16373,77 @@ def flimage_add_format(p1, p2, p3, p4, py_fn5, py_fn6, py_fn7, py_fn8):
     return retval
 
 
-_flimage_set_annotation_support = cfuncproto(
-        load_so_libflimage(), "flimage_set_annotation_support",
-        None, [cty.c_int, cty.c_int],
-        """void flimage_set_annotation_support(int p1, int p2)
-        """)
 def flimage_set_annotation_support(p1, p2):
     """ flimage_set_annotation_support(p1, p2)
     """
 
+    _flimage_set_annotation_support = cfuncproto(
+            load_so_libflimage(), "flimage_set_annotation_support",
+            None, [cty.c_int, cty.c_int],
+            """void flimage_set_annotation_support(int p1, int p2)
+            """)
     ip1 = convert_to_int(p1)
     ip2 = convert_to_int(p2)
     keep_elem_refs(p1, p2, ip1, ip2)
     _flimage_set_annotation_support(ip1, ip2)
 
 
-_flimage_getcolormap = cfuncproto(
-        load_so_libflimage(), "flimage_getcolormap",
-        cty.c_int, [cty.POINTER(FL_IMAGE)],
-        """int flimage_getcolormap(FL_IMAGE * p1)
-        """)
 def flimage_getcolormap(pImage):
     """ flimage_getcolormap(pImage) -> num.
     """
 
+    _flimage_getcolormap = cfuncproto(
+            load_so_libflimage(), "flimage_getcolormap",
+            cty.c_int, [cty.POINTER(FL_IMAGE)],
+            """int flimage_getcolormap(FL_IMAGE * p1)
+            """)
     keep_elem_refs(pImage)
     retval = _flimage_getcolormap(pImage)
     return retval
 
 
 # it seems not to be defined --LK
-#_fl_select_octree_quantizer = cfuncproto(
-#       so_libflimage, "fl_select_octree_quantizer",
-#       None, [],
-#       """void fl_select_octree_quantizer()
-#       """)
 #def fl_select_octree_quantizer():
 #   """ fl_select_octree_quantizer()
 #   """
 #
+#   _fl_select_octree_quantizer = cfuncproto(
+#           so_libflimage, "fl_select_octree_quantizer",
+#           None, [],
+#           """void fl_select_octree_quantizer()
+#           """)
 #   fl_select_octree_quantizer()
 
 
-_fl_select_mediancut_quantizer = cfuncproto(
-        load_so_libflimage(), "fl_select_mediancut_quantizer",
-        None, [],
-        """void fl_select_mediancut_quantizer()
-        """)
 def fl_select_mediancut_quantizer():
     """ fl_select_mediancut_quantizer()
     """
 
+    _fl_select_mediancut_quantizer = cfuncproto(
+            load_so_libflimage(), "fl_select_mediancut_quantizer",
+            None, [],
+            """void fl_select_mediancut_quantizer()
+            """)
     _fl_select_mediancut_quantizer()
 
 
 # simple image processing routines
 
-_flimage_convolve = cfuncproto(
-        load_so_libflimage(), "flimage_convolve",
-        cty.c_int, [cty.POINTER(FL_IMAGE),
-        cty.POINTER(cty.POINTER(cty.c_int)), cty.c_int, cty.c_int],
-        """int flimage_convolve(FL_IMAGE * p1, int * * p2, int p3, int p4)
-        """)
 def flimage_convolve(pImage, p2, p3, p4):
     """ flimage_convolve(pImage, p2, p3, p4) -> num.
     """
 
-    keep_elem_refs(pImage, p2, p3, p4)
-    retval = _flimage_convolve(pImage, p2, p3, p4)
+    _flimage_convolve = cfuncproto(
+            load_so_libflimage(), "flimage_convolve",
+            cty.c_int, [cty.POINTER(FL_IMAGE),
+            cty.POINTER(cty.POINTER(cty.c_int)), cty.c_int, cty.c_int],
+            """int flimage_convolve(FL_IMAGE * p1, int * * p2, int p3,
+               int p4)
+            """)
+    ip3 = convert_to_int(p3)
+    ip4 = convert_to_int(p4)
+    keep_elem_refs(pImage, p2, p3, p4, ip3, ip4)
+    retval = _flimage_convolve(pImage, p2, ip3, ip4)
     return retval
 
 
@@ -16470,15 +16476,15 @@ def flimage_tint(pImage, p2, p3):
     return retval
 
 
-_flimage_rotate = cfuncproto(
-        load_so_libflimage(), "flimage_rotate",
-        cty.c_int, [cty.POINTER(FL_IMAGE), cty.c_int, cty.c_int],
-        """int flimage_rotate(FL_IMAGE * p1, int p2, int p3)
-        """)
 def flimage_rotate(pImage, p2, p3):
     """ flimage_rotate(pImage, p2, p3) -> num.
     """
 
+    _flimage_rotate = cfuncproto(
+            load_so_libflimage(), "flimage_rotate",
+            cty.c_int, [cty.POINTER(FL_IMAGE), cty.c_int, cty.c_int],
+            """int flimage_rotate(FL_IMAGE * p1, int p2, int p3)
+            """)
     ip2 = convert_to_int(p2)
     ip3 = convert_to_int(p3)
     keep_elem_refs(pImage, p2, p3, ip2, ip3)
@@ -16486,30 +16492,31 @@ def flimage_rotate(pImage, p2, p3):
     return retval
 
 
-_flimage_flip = cfuncproto(
-        load_so_libflimage(), "flimage_flip",
-        cty.c_int, [cty.POINTER(FL_IMAGE), cty.c_int],
-        """int flimage_flip(FL_IMAGE * p1, int p2)
-        """)
 def flimage_flip(pImage, p2):
     """ flimage_flip(pImage, p2) -> num.
     """
 
+    _flimage_flip = cfuncproto(
+            load_so_libflimage(), "flimage_flip",
+            cty.c_int, [cty.POINTER(FL_IMAGE), cty.c_int],
+            """int flimage_flip(FL_IMAGE * p1, int p2)
+            """)
     ip2 = convert_to_int(p2)
     keep_elem_refs(pImage, p2, ip2)
     retval = _flimage_flip(pImage, ip2)
     return retval
 
 
-_flimage_scale = cfuncproto(
-        load_so_libflimage(), "flimage_scale",
-        cty.c_int, [cty.POINTER(FL_IMAGE), cty.c_int, cty.c_int, cty.c_int],
-        """int flimage_scale(FL_IMAGE * p1, int p2, int p3, int p4)
-        """)
 def flimage_scale(pImage, p2, p3, p4):
     """ flimage_scale(pImage, p2, p3, p4) -> num.
     """
 
+    _flimage_scale = cfuncproto(
+            load_so_libflimage(), "flimage_scale",
+            cty.c_int, [cty.POINTER(FL_IMAGE), cty.c_int, cty.c_int,
+            cty.c_int],
+            """int flimage_scale(FL_IMAGE * p1, int p2, int p3, int p4)
+            """)
     ip2 = convert_to_int(p2)
     ip3 = convert_to_int(p3)
     ip4 = convert_to_int(p4)
@@ -16518,17 +16525,17 @@ def flimage_scale(pImage, p2, p3, p4):
     return retval
 
 
-_flimage_warp = cfuncproto(
-        load_so_libflimage(), "flimage_warp",
-        cty.c_int, [cty.POINTER(FL_IMAGE), cty.POINTER(cty.c_float * 2),
-        cty.c_int, cty.c_int, cty.c_int],
-        """int flimage_warp(FL_IMAGE * p1, float * p2, int p3, int p4,
-           int p5)
-        """)
 def flimage_warp(pImage, p2, p3, p4, p5):
     """ flimage_warp(pImage, p2, p3, p4, p5) -> num.
     """
 
+    _flimage_warp = cfuncproto(
+            load_so_libflimage(), "flimage_warp",
+            cty.c_int, [cty.POINTER(FL_IMAGE), cty.POINTER(cty.c_float * 2),
+            cty.c_int, cty.c_int, cty.c_int],
+            """int flimage_warp(FL_IMAGE * p1, float * p2, int p3, int p4,
+               int p5)
+            """)
     ip3 = convert_to_int(p3)
     ip4 = convert_to_int(p4)
     ip5 = convert_to_int(p5)
@@ -16570,16 +16577,16 @@ def flimage_get_autocrop(pImage, p2, p3, p4, p5, p6):
     return retval
 
 
-_flimage_crop = cfuncproto(
-        load_so_libflimage(), "flimage_crop",
-        cty.c_int, [cty.POINTER(FL_IMAGE), cty.c_int, cty.c_int,
-        cty.c_int, cty.c_int],
-        """int flimage_crop(FL_IMAGE * p1, int p2, int p3, int p4, int p5)
-        """)
 def flimage_crop(pImage, p2, p3, p4, p5):
     """ flimage_crop(pImage, p2, p3, p4, p5) -> num.
     """
 
+    _flimage_crop = cfuncproto(
+            load_so_libflimage(), "flimage_crop",
+            cty.c_int, [cty.POINTER(FL_IMAGE), cty.c_int, cty.c_int,
+            cty.c_int, cty.c_int],
+            """int flimage_crop(FL_IMAGE * p1, int p2, int p3, int p4, int p5)
+            """)
     ip2 = convert_to_int(p2)
     ip3 = convert_to_int(p3)
     ip4 = convert_to_int(p4)
@@ -16589,16 +16596,16 @@ def flimage_crop(pImage, p2, p3, p4, p5):
     return retval
 
 
-_flimage_replace_pixel = cfuncproto(
-        load_so_libflimage(), "flimage_replace_pixel",
-        cty.c_int, [cty.POINTER(FL_IMAGE), cty.c_uint, cty.c_uint],
-        """int flimage_replace_pixel(FL_IMAGE * p1, unsigned int p2,
-           unsigned int p3)
-        """)
 def flimage_replace_pixel(pImage, p2, p3):
     """ flimage_replace_pixel(pImage, p2, p3) -> num.
     """
 
+    _flimage_replace_pixel = cfuncproto(
+            load_so_libflimage(), "flimage_replace_pixel",
+            cty.c_int, [cty.POINTER(FL_IMAGE), cty.c_uint, cty.c_uint],
+            """int flimage_replace_pixel(FL_IMAGE * p1, unsigned int p2,
+               unsigned int p3)
+            """)
     uip2 = convert_to_uint(p2)
     uip3 = convert_to_uint(p3)
     keep_elem_refs(pImage, p2, p3, uip2, uip3)
@@ -16668,30 +16675,30 @@ def flimage_from_pixmap(pImage, pixmap):
     return retval
 
 
-_flimage_to_pixmap = cfuncproto(
-        load_so_libflimage(), "flimage_to_pixmap",
-        Pixmap, [cty.POINTER(FL_IMAGE), FL_WINDOW],
-        """Pixmap flimage_to_pixmap(FL_IMAGE * p1, FL_WINDOW p2)
-        """)
 def flimage_to_pixmap(pImage, win):
     """ flimage_to_pixmap(pImage, win) -> pixmap
     """
 
+    _flimage_to_pixmap = cfuncproto(
+            load_so_libflimage(), "flimage_to_pixmap",
+            Pixmap, [cty.POINTER(FL_IMAGE), FL_WINDOW],
+            """Pixmap flimage_to_pixmap(FL_IMAGE * p1, FL_WINDOW p2)
+            """)
     ulwin = convert_to_Window(win)
     keep_elem_refs(pImage, win, ulwin)
     retval = _flimage_to_pixmap(pImage, ulwin)
     return retval
 
 
-_flimage_dup = cfuncproto(
-        load_so_libflimage(), "flimage_dup",
-        cty.POINTER(FL_IMAGE), [cty.POINTER(FL_IMAGE)],
-        """FL_IMAGE * flimage_dup(FL_IMAGE * p1)
-        """)
 def flimage_dup(pImage):
     """ flimage_dup(pImage) -> pImage
     """
 
+    _flimage_dup = cfuncproto(
+            load_so_libflimage(), "flimage_dup",
+            cty.POINTER(FL_IMAGE), [cty.POINTER(FL_IMAGE)],
+            """FL_IMAGE * flimage_dup(FL_IMAGE * p1)
+            """)
     keep_elem_refs(pImage)
     retval = _flimage_dup(pImage)
     return retval
@@ -16746,29 +16753,30 @@ def fl_j2pass_quantize_packed(p1, p2, p3, p4, p5, p6, p7, p8, p9, pImage):
     return retval
 
 
-_fl_j2pass_quantize_rgb = cfuncproto(
-        load_so_libflimage(), "fl_j2pass_quantize_rgb",
-        cty.c_int, [cty.POINTER(cty.POINTER(cty.c_ubyte)),
-        cty.POINTER(cty.POINTER(cty.c_ubyte)),
-        cty.POINTER(cty.POINTER(cty.c_ubyte)), cty.c_int, cty.c_int,
-        cty.c_int, cty.POINTER(cty.POINTER(cty.c_ushort)),
-        cty.POINTER(cty.c_int), cty.POINTER(cty.c_int),
-        cty.POINTER(cty.c_int), cty.POINTER(cty.c_int),
-        cty.POINTER(FL_IMAGE)],
-        """int fl_j2pass_quantize_rgb(unsigned char * * p1,
-           unsigned char * * p2, unsigned char * * p3, int p4, int p5, int p6,
-           short unsigned int * * p7, int * p8, int * p9, int * p10,
-           int * p11, FL_IMAGE * p12)
-        """)
 def fl_j2pass_quantize_rgb(p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, pImage):
     """ fl_j2pass_quantize_rgb(p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, pImage) -> num.
     """
 
+    _fl_j2pass_quantize_rgb = cfuncproto(
+            load_so_libflimage(), "fl_j2pass_quantize_rgb",
+            cty.c_int, [cty.POINTER(cty.POINTER(cty.c_ubyte)),
+            cty.POINTER(cty.POINTER(cty.c_ubyte)),
+            cty.POINTER(cty.POINTER(cty.c_ubyte)), cty.c_int, cty.c_int,
+            cty.c_int, cty.POINTER(cty.POINTER(cty.c_ushort)),
+            cty.POINTER(cty.c_int), cty.POINTER(cty.c_int),
+            cty.POINTER(cty.c_int), cty.POINTER(cty.c_int),
+            cty.POINTER(FL_IMAGE)],
+            """int fl_j2pass_quantize_rgb(unsigned char * * p1,
+               unsigned char * * p2, unsigned char * * p3, int p4, int p5,
+               int p6, short unsigned int * * p7, int * p8, int * p9,
+               int * p10, int * p11, FL_IMAGE * p12)
+            """)
+    ip4 = convert_to_int(p4)
     ip5 = convert_to_int(p5)
     ip6 = convert_to_int(p6)
     keep_elem_refs(p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, pImage,
-                   ip5, ip6)
-    retval = _fl_j2pass_quantize_rgb(p1, p2, p3, p4, ip5, ip6, p7, p8, p9, \
+                   ip4, ip5, ip6)
+    retval = _fl_j2pass_quantize_rgb(p1, p2, p3, ip4, ip5, ip6, p7, p8, p9, \
                                      p10, p11, pImage)
     return retval
 
@@ -16842,32 +16850,33 @@ def fl_value_to_bits(p1):
     return retval
 
 
-_flimage_add_comments = cfuncproto(
-        load_so_libflimage(), "flimage_add_comments",
-        None, [cty.POINTER(FL_IMAGE), STRING, cty.c_int],
-        """void flimage_add_comments(FL_IMAGE * p1, const char * p2, int p3)
-        """)
 def flimage_add_comments(pImage, p2, p3):
     """ flimage_add_comments(pImage, p2, p3)
     """
 
+    _flimage_add_comments = cfuncproto(
+            load_so_libflimage(), "flimage_add_comments",
+            None, [cty.POINTER(FL_IMAGE), STRING, cty.c_int],
+            """void flimage_add_comments(FL_IMAGE * p1, const char * p2,
+               int p3)
+            """)
     sp2 = convert_to_string(p2)
     ip3 = convert_to_int(p3)
     keep_elem_refs(pImage, p2, p3, sp2, ip3)
     _flimage_add_comments(pImage, sp2, ip3)
 
 
-_flimage_color_to_pixel = cfuncproto(
-        load_so_libflimage(), "flimage_color_to_pixel",
-        cty.c_ulong, [cty.POINTER(FL_IMAGE), cty.c_int, cty.c_int, cty.c_int,
-        cty.POINTER(cty.c_int)],
-        """)long unsigned int flimage_color_to_pixel(FL_IMAGE * p1, int p2,
-           int p3, int p4, int * p5)
-        """)
 def flimage_color_to_pixel(pImage, p2, p3, p4, p5):
     """ flimage_color_to_pixel(pImage, p2, p3, p4, p5) -> num.
     """
 
+    _flimage_color_to_pixel = cfuncproto(
+            load_so_libflimage(), "flimage_color_to_pixel",
+            cty.c_ulong, [cty.POINTER(FL_IMAGE), cty.c_int, cty.c_int,
+            cty.c_int, cty.POINTER(cty.c_int)],
+            """)long unsigned int flimage_color_to_pixel(FL_IMAGE * p1,
+               int p2, int p3, int p4, int * p5)
+            """)
     ip2 = convert_to_int(p2)
     ip3 = convert_to_int(p3)
     ip4 = convert_to_int(p4)
@@ -16876,430 +16885,431 @@ def flimage_color_to_pixel(pImage, p2, p3, p4, p5):
     return retval
 
 
-_flimage_combine = cfuncproto(
-        load_so_libflimage(), "flimage_combine",
-        cty.POINTER(FL_IMAGE), [cty.POINTER(FL_IMAGE), cty.POINTER(FL_IMAGE),
-        cty.c_double],
-        """FL_IMAGE * flimage_combine(FL_IMAGE * p1, FL_IMAGE * p2, double p3)
-        """)
 def flimage_combine(pImage1, pImage2, p3):
     """ flimage_combine(pImage1, pImage2, p3) -> pImage
     """
 
+    _flimage_combine = cfuncproto(
+            load_so_libflimage(), "flimage_combine",
+            cty.POINTER(FL_IMAGE), [cty.POINTER(FL_IMAGE),
+            cty.POINTER(FL_IMAGE), cty.c_double],
+            """FL_IMAGE * flimage_combine(FL_IMAGE * p1, FL_IMAGE * p2,
+               double p3)
+            """)
     fp3 = convert_to_double(p3)
     keep_elem_refs(pImage1, pImage2, p3, fp3)
     retval = _flimage_combine(pImage1, pImage2, fp3)
     return retval
 
 
-_flimage_display_markers = cfuncproto(
-        load_so_libflimage(), "flimage_display_markers",
-        None, [cty.POINTER(FL_IMAGE)],
-        """void flimage_display_markers(FL_IMAGE * p1)
-        """)
 def flimage_display_markers(pImage):
     """ flimage_display_markers(pImage)
     """
 
+    _flimage_display_markers = cfuncproto(
+            load_so_libflimage(), "flimage_display_markers",
+            None, [cty.POINTER(FL_IMAGE)],
+            """void flimage_display_markers(FL_IMAGE * p1)
+            """)
     keep_elem_refs(pImage)
     _flimage_display_markers(pImage)
 
 
-_flimage_dup_ = cfuncproto(
-        load_so_libflimage(), "flimage_dup_",
-        cty.POINTER(FL_IMAGE), [cty.POINTER(FL_IMAGE), cty.c_int],
-        """FL_IMAGE * flimage_dup_(FL_IMAGE * p1, int p2)
-        """)
 def flimage_dup_(pImage, p2):
     """ flimage_dup_(pImage, p2) -> pImage
     """
 
+    _flimage_dup_ = cfuncproto(
+            load_so_libflimage(), "flimage_dup_",
+            cty.POINTER(FL_IMAGE), [cty.POINTER(FL_IMAGE), cty.c_int],
+            """FL_IMAGE * flimage_dup_(FL_IMAGE * p1, int p2)
+            """)
     ip2 = convert_to_int(p2)
     keep_elem_refs(pImage, p2, ip2)
     retval = _flimage_dup_(pImage, ip2)
     return retval
 
 
-_flimage_enable_bmp = cfuncproto(
-        load_so_libflimage(), "flimage_enable_bmp",
-        None, [],
-        """void flimage_enable_bmp()
-        """)
 def flimage_enable_bmp():
     """ flimage_enable_bmp()
     """
 
+    _flimage_enable_bmp = cfuncproto(
+            load_so_libflimage(), "flimage_enable_bmp",
+            None, [],
+            """void flimage_enable_bmp()
+            """)
     _flimage_enable_bmp()
 
 
-_flimage_enable_fits = cfuncproto(
-        load_so_libflimage(), "flimage_enable_fits",
-        None, [],
-        """void flimage_enable_fits()
-        """)
 def flimage_enable_fits():
     """ flimage_enable_fits()
     """
 
+    _flimage_enable_fits = cfuncproto(
+            load_so_libflimage(), "flimage_enable_fits",
+            None, [],
+            """void flimage_enable_fits()
+            """)
     _flimage_enable_fits()
 
 
-_flimage_enable_genesis = cfuncproto(
-        load_so_libflimage(), "flimage_enable_genesis",
-        None, [],
-        """void flimage_enable_genesis()
-        """)
 def flimage_enable_genesis():
     """ flimage_enable_genesis()
     """
 
+    _flimage_enable_genesis = cfuncproto(
+            load_so_libflimage(), "flimage_enable_genesis",
+            None, [],
+            """void flimage_enable_genesis()
+            """)
     _flimage_enable_genesis()
 
 
-_flimage_enable_gif = cfuncproto(
-        load_so_libflimage(), "flimage_enable_gif",
-        None, [],
-        """void flimage_enable_gif()
-        """)
 def flimage_enable_gif():
     """ flimage_enable_gif()
     """
 
+    _flimage_enable_gif = cfuncproto(
+            load_so_libflimage(), "flimage_enable_gif",
+            None, [],
+            """void flimage_enable_gif()
+            """)
     _flimage_enable_gif()
 
 
-_flimage_enable_gzip = cfuncproto(
-        load_so_libflimage(), "flimage_enable_gzip",
-        None, [],
-        """void flimage_enable_gzip()
-        """)
 def flimage_enable_gzip():
     """ flimage_enable_gzip()
     """
 
+    _flimage_enable_gzip = cfuncproto(
+            load_so_libflimage(), "flimage_enable_gzip",
+            None, [],
+            """void flimage_enable_gzip()
+            """)
     _flimage_enable_gzip()
 
 
-_flimage_enable_jpeg = cfuncproto(
-        load_so_libflimage(), "flimage_enable_jpeg",
-        None, [],
-        """void flimage_enable_jpeg()
-        """)
 def flimage_enable_jpeg():
     """ flimage_enable_jpeg()
     """
 
+    _flimage_enable_jpeg = cfuncproto(
+            load_so_libflimage(), "flimage_enable_jpeg",
+            None, [],
+            """void flimage_enable_jpeg()
+            """)
     _flimage_enable_jpeg()
 
 
-_flimage_enable_png = cfuncproto(
-        load_so_libflimage(), "flimage_enable_png",
-        None, [],
-        """void flimage_enable_png()
-        """)
 def flimage_enable_png():
     """ flimage_enable_png()
     """
 
+    _flimage_enable_png = cfuncproto(
+            load_so_libflimage(), "flimage_enable_png",
+            None, [],
+            """void flimage_enable_png()
+            """)
     _flimage_enable_png()
 
 
-_flimage_enable_ps = cfuncproto(
-        load_so_libflimage(), "flimage_enable_ps",
-        None, [],
-        """void flimage_enable_ps()
-        """)
 def flimage_enable_ps():
     """ flimage_enable_ps()
     """
 
+    _flimage_enable_ps = cfuncproto(
+            load_so_libflimage(), "flimage_enable_ps",
+            None, [],
+            """void flimage_enable_ps()
+            """)
     _flimage_enable_ps()
 
 
-_flimage_enable_sgi = cfuncproto(
-        load_so_libflimage(), "flimage_enable_sgi",
-        None, [],
-        """void flimage_enable_sgi()
-        """)
 def flimage_enable_sgi():
     """ flimage_enable_sgi()
     """
 
+    _flimage_enable_sgi = cfuncproto(
+            load_so_libflimage(), "flimage_enable_sgi",
+            None, [],
+            """void flimage_enable_sgi()
+            """)
     _flimage_enable_sgi()
 
 
-_flimage_enable_tiff = cfuncproto(
-        load_so_libflimage(), "flimage_enable_tiff",
-        None, [],
-        """void flimage_enable_tiff()
-        """)
 def flimage_enable_tiff():
     """ flimage_enable_tiff()
     """
 
+    _flimage_enable_tiff = cfuncproto(
+            load_so_libflimage(), "flimage_enable_tiff",
+            None, [],
+            """void flimage_enable_tiff()
+            """)
     _flimage_enable_tiff()
 
 
-_flimage_enable_xbm = cfuncproto(
-        load_so_libflimage(), "flimage_enable_xbm",
-        None, [],
-        """void flimage_enable_xbm()
-        """)
 def flimage_enable_xbm():
     """ flimage_enable_xbm()
     """
 
+    _flimage_enable_xbm = cfuncproto(
+            load_so_libflimage(), "flimage_enable_xbm",
+            None, [],
+            """void flimage_enable_xbm()
+            """)
     _flimage_enable_xbm()
 
 
-_flimage_enable_xpm = cfuncproto(
-        load_so_libflimage(), "flimage_enable_xpm",
-        None, [],
-        """void flimage_enable_xpm()
-        """)
 def flimage_enable_xpm():
     """ flimage_enable_xpm()
     """
 
+    _flimage_enable_xpm = cfuncproto(
+            load_so_libflimage(), "flimage_enable_xpm",
+            None, [],
+            """void flimage_enable_xpm()
+            """)
     _flimage_enable_xpm()
 
 
-_flimage_enable_xwd = cfuncproto(
-        load_so_libflimage(), "flimage_enable_xwd",
-        None, [],
-        """void flimage_enable_xwd()
-        """)
 def flimage_enable_xwd():
     """ flimage_enable_xwd()
     """
 
+    _flimage_enable_xwd = cfuncproto(
+            load_so_libflimage(), "flimage_enable_xwd",
+            None, [],
+            """void flimage_enable_xwd()
+            """)
     _flimage_enable_xwd()
 
 
-_flimage_free_ci = cfuncproto(
-        load_so_libflimage(), "flimage_free_ci",
-        None, [cty.POINTER(FL_IMAGE)],
-        """void flimage_free_ci(FL_IMAGE * p1)
-        """)
 def flimage_free_ci(pImage):
     """ flimage_free_ci(pImage)
     """
 
+    _flimage_free_ci = cfuncproto(
+            load_so_libflimage(), "flimage_free_ci",
+            None, [cty.POINTER(FL_IMAGE)],
+            """void flimage_free_ci(FL_IMAGE * p1)
+            """)
     keep_elem_refs(pImage)
     _flimage_free_ci(pImage)
 
 
-_flimage_free_gray = cfuncproto(
-        load_so_libflimage(), "flimage_free_gray",
-        None, [cty.POINTER(FL_IMAGE)],
-        """void flimage_free_gray(FL_IMAGE * p1)
-        """)
 def flimage_free_gray(pImage):
     """ flimage_free_gray(pImage)
     """
 
+    _flimage_free_gray = cfuncproto(
+            load_so_libflimage(), "flimage_free_gray",
+            None, [cty.POINTER(FL_IMAGE)],
+            """void flimage_free_gray(FL_IMAGE * p1)
+            """)
     keep_elem_refs(pImage)
     _flimage_free_gray(pImage)
 
 
-_flimage_free_linearlut = cfuncproto(
-        load_so_libflimage(), "flimage_free_linearlut",
-        None, [cty.POINTER(FL_IMAGE)],
-        """void flimage_free_linearlut(FL_IMAGE * p1)
-        """)
 def flimage_free_linearlut(pImage):
     """ flimage_free_linearlut(pImage)
     """
 
+    _flimage_free_linearlut = cfuncproto(
+            load_so_libflimage(), "flimage_free_linearlut",
+            None, [cty.POINTER(FL_IMAGE)],
+            """void flimage_free_linearlut(FL_IMAGE * p1)
+            """)
     keep_elem_refs(pImage)
     _flimage_free_linearlut(pImage)
 
 
-_flimage_free_rgb = cfuncproto(
-        load_so_libflimage(), "flimage_free_rgb",
-        None, [cty.POINTER(FL_IMAGE)],
-        """void flimage_free_rgb(FL_IMAGE * p1)
-        """)
 def flimage_free_rgb(pImage):
     """ flimage_free_rgb(pImage)
     """
 
+    _flimage_free_rgb = cfuncproto(
+            load_so_libflimage(), "flimage_free_rgb",
+            None, [cty.POINTER(FL_IMAGE)],
+            """void flimage_free_rgb(FL_IMAGE * p1)
+            """)
     keep_elem_refs(pImage)
     _flimage_free_rgb(pImage)
 
 
-_flimage_freemem = cfuncproto(
-        load_so_libflimage(), "flimage_freemem",
-        None, [cty.POINTER(FL_IMAGE)],
-        """void flimage_freemem(FL_IMAGE * p1)
-        """)
 def flimage_freemem(pImage):
     """ flimage_freemem(pImage)
     """
 
+    _flimage_freemem = cfuncproto(
+            load_so_libflimage(), "flimage_freemem",
+            None, [cty.POINTER(FL_IMAGE)],
+            """void flimage_freemem(FL_IMAGE * p1)
+            """)
     keep_elem_refs(pImage)
     _flimage_freemem(pImage)
 
 
-_flimage_get_closest_color_from_map = cfuncproto(
-        load_so_libflimage(), "flimage_get_closest_color_from_map",
-        cty.c_int, [cty.POINTER(FL_IMAGE), cty.c_uint],
-        """int flimage_get_closest_color_from_map(FL_IMAGE * p1,
-           unsigned int p2)
-        """)
 def flimage_get_closest_color_from_map(pImage, p2):
     """ flimage_get_closest_color_from_map(pImage, p2) -> num.
     """
 
+    _flimage_get_closest_color_from_map = cfuncproto(
+            load_so_libflimage(), "flimage_get_closest_color_from_map",
+            cty.c_int, [cty.POINTER(FL_IMAGE), cty.c_uint],
+            """int flimage_get_closest_color_from_map(FL_IMAGE * p1,
+               unsigned int p2)
+            """)
     uip2 = convert_to_uint(p2)
     keep_elem_refs(pImage, p2, uip2)
     retval = _flimage_get_closest_color_from_map(pImage, uip2)
     return retval
 
 
-_flimage_get_linearlut = cfuncproto(
-        load_so_libflimage(), "flimage_get_linearlut",
-        cty.c_int, [cty.POINTER(FL_IMAGE)],
-        """int flimage_get_linearlut(FL_IMAGE * p1)
-        """)
 def flimage_get_linearlut(pImage):
     """ flimage_get_linearlut(pImage) -> num.
     """
 
+    _flimage_get_linearlut = cfuncproto(
+            load_so_libflimage(), "flimage_get_linearlut",
+            cty.c_int, [cty.POINTER(FL_IMAGE)],
+            """int flimage_get_linearlut(FL_IMAGE * p1)
+            """)
     keep_elem_refs(pImage)
     retval = _flimage_get_linearlut(pImage)
     return retval
 
 
-_flimage_invalidate_pixels = cfuncproto(
-        load_so_libflimage(), "flimage_invalidate_pixels",
-        None, [cty.POINTER(FL_IMAGE)],
-        """void flimage_invalidate_pixels(FL_IMAGE * p1)
-        """)
 def flimage_invalidate_pixels(pImage):
     """ flimage_invalidate_pixels(pImage)
     """
 
+    _flimage_invalidate_pixels = cfuncproto(
+            load_so_libflimage(), "flimage_invalidate_pixels",
+            None, [cty.POINTER(FL_IMAGE)],
+            """void flimage_invalidate_pixels(FL_IMAGE * p1)
+            """)
     keep_elem_refs(pImage)
     _flimage_invalidate_pixels(pImage)
 
 
-_flimage_open = cfuncproto(
-        load_so_libflimage(), "flimage_open",
-        cty.POINTER(FL_IMAGE), [STRING],
-        """FL_IMAGE * flimage_open(const char * p1)
-        """)
 def flimage_open(filename):
     """ flimage_open(filename) -> pImage
     """
 
-    sfilename = convert_to_int(filename)
+    _flimage_open = cfuncproto(
+            load_so_libflimage(), "flimage_open",
+            cty.POINTER(FL_IMAGE), [STRING],
+            """FL_IMAGE * flimage_open(const char * p1)
+            """)
+    sfilename = convert_to_string(filename)
     keep_elem_refs(filename, sfilename)
     retval = _flimage_open(sfilename)
     return retval
 
 
-_flimage_read_annotation = cfuncproto(
-        load_so_libflimage(), "flimage_read_annotation",
-        cty.c_int, [cty.POINTER(FL_IMAGE)],
-        """int flimage_read_annotation(FL_IMAGE * p1)
-        """)
 def flimage_read_annotation(pImage):
     """ flimage_read_annotation(pImage) -> num.
     """
 
+    _flimage_read_annotation = cfuncproto(
+            load_so_libflimage(), "flimage_read_annotation",
+            cty.c_int, [cty.POINTER(FL_IMAGE)],
+            """int flimage_read_annotation(FL_IMAGE * p1)
+            """)
     keep_elem_refs(pImage)
     retval = _flimage_read_annotation(pImage)
     return retval
 
 
-_flimage_replace_image = cfuncproto(
-        load_so_libflimage(), "flimage_replace_image",
-        None, [cty.POINTER(FL_IMAGE), cty.c_int, cty.c_int, cty.c_void_p,
-        cty.c_void_p, cty.c_void_p],
-        """void flimage_replace_image(FL_IMAGE * p1, int p2, int p3,
-           void * p4, void * p5, void * p6)
-        """)
 def flimage_replace_image(pImage, p2, p3, p4, p5, p6):
     """ flimage_replace_image(pImage, p2, p3, p4, p5, p6)
     """
 
+    _flimage_replace_image = cfuncproto(
+            load_so_libflimage(), "flimage_replace_image",
+            None, [cty.POINTER(FL_IMAGE), cty.c_int, cty.c_int, cty.c_void_p,
+            cty.c_void_p, cty.c_void_p],
+            """void flimage_replace_image(FL_IMAGE * p1, int p2, int p3,
+               void * p4, void * p5, void * p6)
+            """)
     ip2 = convert_to_int(p2)
     ip3 = convert_to_int(p3)
     keep_elem_refs(pImage, p2, p3, p4, p5, p6, ip2, ip3)
     _flimage_replace_image(pImage, ip2, ip3, p4, p5, p6)
 
 
-_flimage_swapbuffer = cfuncproto(
-        load_so_libflimage(), "flimage_swapbuffer",
-        cty.c_int, [cty.POINTER(FL_IMAGE)],
-        """int flimage_swapbuffer(FL_IMAGE * p1)
-        """)
 def flimage_swapbuffer(pImage):
     """ flimage_swapbuffer(pImage) -> num.
     """
 
+    _flimage_swapbuffer = cfuncproto(
+            load_so_libflimage(), "flimage_swapbuffer",
+            cty.c_int, [cty.POINTER(FL_IMAGE)],
+            """int flimage_swapbuffer(FL_IMAGE * p1)
+            """)
     keep_elem_refs(pImage)
     retval = _flimage_swapbuffer(pImage)
     return retval
 
 
-_flimage_to_ximage = cfuncproto(
-        load_so_libflimage(), "flimage_to_ximage",
-        cty.c_int, [cty.POINTER(FL_IMAGE), FL_WINDOW,
-        cty.POINTER(XWindowAttributes)],
-        """int flimage_to_ximage(FL_IMAGE * p1, FL_WINDOW p2,
-           XWindowAttributes * p3)
-        """)
-def flimage_to_ximage(pImage, win, p3):
-    """ flimage_to_ximage(pImage, win, p3) -> num.
+def flimage_to_ximage(pImage, win, pXWindowAttributes):
+    """ flimage_to_ximage(pImage, win, pXWindowAttributes) -> num.
     """
 
-    ulwin = convert_to_int(win)
-    keep_elem_refs(pImage, win, p3, ulwin)
-    retval = _flimage_to_ximage(pImage, ulwin, p3)
+    _flimage_to_ximage = cfuncproto(
+            load_so_libflimage(), "flimage_to_ximage",
+            cty.c_int, [cty.POINTER(FL_IMAGE), FL_WINDOW,
+            cty.POINTER(XWindowAttributes)],
+            """int flimage_to_ximage(FL_IMAGE * p1, FL_WINDOW p2,
+               XWindowAttributes * p3)
+            """)
+    ulwin = convert_to_Window(win)
+    keep_elem_refs(pImage, win, pXWindowAttributes, ulwin)
+    retval = _flimage_to_ximage(pImage, ulwin, pXWindowAttributes)
     return retval
 
 
-_flimage_write_annotation = cfuncproto(
-        load_so_libflimage(), "flimage_write_annotation",
-        cty.c_int, [cty.POINTER(FL_IMAGE)],
-        """int flimage_write_annotation(FL_IMAGE * p1)
-        """)
 def flimage_write_annotation(pImage):
     """ flimage_write_annotation(pImage) -> num.
     """
 
+    _flimage_write_annotation = cfuncproto(
+            load_so_libflimage(), "flimage_write_annotation",
+            cty.c_int, [cty.POINTER(FL_IMAGE)],
+            """int flimage_write_annotation(FL_IMAGE * p1)
+            """)
     keep_elem_refs(pImage)
     retval = _flimage_write_annotation(pImage)
     return retval
 
 
-_flps_apply_gamma = cfuncproto(
-        load_so_libflimage(), "flps_apply_gamma",
-        None, [cty.c_float],
-        """void flps_apply_gamma(float p1)
-        """)
 def flps_apply_gamma(p1):
     """ flps_apply_gamma(p1)
     """
 
+    _flps_apply_gamma = cfuncproto(
+            load_so_libflimage(), "flps_apply_gamma",
+            None, [cty.c_float],
+            """void flps_apply_gamma(float p1)
+            """)
     fp1 = convert_to_float(p1)
     keep_elem_refs(p1, fp1)
     _flps_apply_gamma(fp1)
 
 
-_flps_arc = cfuncproto(
-        load_so_libflimage(), "flps_arc",
-        None, [cty.c_int, cty.c_int, cty.c_int, cty.c_int, cty.c_int,
-        cty.c_int, cty.c_long],
-        """void flps_arc(int p1, int p2, int p3, int p4, int p5, int p6,
-           long int p7)
-        """)
 def flps_arc(p1, p2, p3, p4, p5, p6, p7):
     """ flps_arc(p1, p2, p3, p4, p5, p6, p7)
     """
 
+    _flps_arc = cfuncproto(
+            load_so_libflimage(), "flps_arc",
+            None, [cty.c_int, cty.c_int, cty.c_int, cty.c_int, cty.c_int,
+            cty.c_int, cty.c_long],
+            """void flps_arc(int p1, int p2, int p3, int p4, int p5, int p6,
+               long int p7)
+            """)
     ip1 = convert_to_int(p1)
     ip2 = convert_to_int(p2)
     ip3 = convert_to_int(p3)
@@ -17312,15 +17322,15 @@ def flps_arc(p1, p2, p3, p4, p5, p6, p7):
     _flps_arc(ip1, ip2, ip3, ip4, ip5, ip6, lp7)
 
 
-_flps_circ = cfuncproto(
-        load_so_libflimage(), "flps_circ",
-        None, [cty.c_int, cty.c_int, cty.c_int, cty.c_int, cty.c_long],
-        """void flps_circ(int p1, int p2, int p3, int p4, long int p5)
-        """)
 def flps_circ(p1, p2, p3, p4, p5):
     """ flps_circ(p1, p2, p3, p4, p5)
     """
 
+    _flps_circ = cfuncproto(
+            load_so_libflimage(), "flps_circ",
+            None, [cty.c_int, cty.c_int, cty.c_int, cty.c_int, cty.c_long],
+            """void flps_circ(int p1, int p2, int p3, int p4, long int p5)
+            """)
     ip1 = convert_to_int(p1)
     ip2 = convert_to_int(p2)
     ip3 = convert_to_int(p3)
@@ -17330,31 +17340,31 @@ def flps_circ(p1, p2, p3, p4, p5):
     _flps_circ(ip1, ip2, ip3, ip4, lp5)
 
 
-_flps_color = cfuncproto(
-        load_so_libflimage(), "flps_color",
-        None, [cty.c_long],
-        """void flps_color(long int p1)
-        """)
 def flps_color(p1):
     """ flps_color(p1)
     """
 
+    _flps_color = cfuncproto(
+            load_so_libflimage(), "flps_color",
+            None, [cty.c_long],
+            """void flps_color(long int p1)
+            """)
     lp1 = convert_to_long(p1)
     keep_elem_refs(p1, lp1)
     _flps_color(lp1)
 
 
-_flps_draw_box = cfuncproto(
-        load_so_libflimage(), "flps_draw_box",
-        None, [cty.c_int, cty.c_int, cty.c_int, cty.c_int, cty.c_int,
-        cty.c_long, cty.c_int],
-        """void flps_draw_box(int p1, int p2, int p3, int p4, int p5,
-           long int p6, int p7)
-        """)
 def flps_draw_box(p1, p2, p3, p4, p5, p6, p7):
     """ flps_draw_box(p1, p2, p3, p4, p5, p6, p7)
     """
 
+    _flps_draw_box = cfuncproto(
+            load_so_libflimage(), "flps_draw_box",
+            None, [cty.c_int, cty.c_int, cty.c_int, cty.c_int, cty.c_int,
+            cty.c_long, cty.c_int],
+            """void flps_draw_box(int p1, int p2, int p3, int p4, int p5,
+               long int p6, int p7)
+            """)
     ip1 = convert_to_int(p1)
     ip2 = convert_to_int(p2)
     ip3 = convert_to_int(p3)
@@ -17367,17 +17377,17 @@ def flps_draw_box(p1, p2, p3, p4, p5, p6, p7):
     _flps_draw_box(ip1, ip2, ip3, ip4, ip5, lp6, ip7)
 
 
-_flps_draw_checkbox = cfuncproto(
-        load_so_libflimage(), "flps_draw_checkbox",
-        None, [cty.c_int, cty.c_int, cty.c_int, cty.c_int, cty.c_int,
-        cty.c_long, cty.c_int],
-        """void flps_draw_checkbox(int p1, int p2, int p3, int p4, int p5,
-           long int p6, int p7)
-        """)
 def flps_draw_checkbox(p1, p2, p3, p4, p5, p6, p7):
     """ flps_draw_checkbox(p1, p2, p3, p4, p5, p6, p7)
     """
 
+    _flps_draw_checkbox = cfuncproto(
+            load_so_libflimage(), "flps_draw_checkbox",
+            None, [cty.c_int, cty.c_int, cty.c_int, cty.c_int, cty.c_int,
+            cty.c_long, cty.c_int],
+            """void flps_draw_checkbox(int p1, int p2, int p3, int p4,
+               int p5, long int p6, int p7)
+            """)
     ip1 = convert_to_int(p1)
     ip2 = convert_to_int(p2)
     ip3 = convert_to_int(p3)
@@ -17390,17 +17400,17 @@ def flps_draw_checkbox(p1, p2, p3, p4, p5, p6, p7):
     _flps_draw_checkbox(ip1, ip2, ip3, ip4, ip5, lp6, ip7)
 
 
-_flps_draw_frame = cfuncproto(
-        load_so_libflimage(), "flps_draw_frame",
-        None, [cty.c_int, cty.c_int, cty.c_int, cty.c_int, cty.c_int,
-        cty.c_long, cty.c_int],
-        """void flps_draw_frame(int p1, int p2, int p3, int p4, int p5,
-           long int p6, int p7)
-        """)
 def flps_draw_frame(p1, p2, p3, p4, p5, p6, p7):
     """ flps_draw_frame(p1, p2, p3, p4, p5, p6, p7)
     """
 
+    _flps_draw_frame = cfuncproto(
+            load_so_libflimage(), "flps_draw_frame",
+            None, [cty.c_int, cty.c_int, cty.c_int, cty.c_int, cty.c_int,
+            cty.c_long, cty.c_int],
+            """void flps_draw_frame(int p1, int p2, int p3, int p4, int p5,
+               long int p6, int p7)
+            """)
     ip1 = convert_to_int(p1)
     ip2 = convert_to_int(p2)
     ip3 = convert_to_int(p3)
@@ -17413,18 +17423,18 @@ def flps_draw_frame(p1, p2, p3, p4, p5, p6, p7):
     _flps_draw_frame(ip1, ip2, ip3, ip4, ip5, lp6, ip7)
 
 
-_flps_draw_symbol = cfuncproto(
-        load_so_libflimage(), "flps_draw_symbol",
-        cty.c_int, [STRING, cty.c_int, cty.c_int, cty.c_int, cty.c_int,
-        cty.c_long],
-        """int flps_draw_symbol(const char * p1, int p2, int p3, int p4,
-           int p5, long int p6)
-        """)
 def flps_draw_symbol(text, p2, p3, p4, p5, p6):
     """ flps_draw_symbol(text, p2, p3, p4, p5, p6) -> num.
     """
 
-    stext = convert_to_int(text)
+    _flps_draw_symbol = cfuncproto(
+            load_so_libflimage(), "flps_draw_symbol",
+            cty.c_int, [STRING, cty.c_int, cty.c_int, cty.c_int, cty.c_int,
+            cty.c_long],
+            """int flps_draw_symbol(const char * p1, int p2, int p3, int p4,
+               int p5, long int p6)
+            """)
+    stext = convert_to_string(text)
     ip2 = convert_to_int(p2)
     ip3 = convert_to_int(p3)
     ip4 = convert_to_int(p4)
@@ -17435,17 +17445,17 @@ def flps_draw_symbol(text, p2, p3, p4, p5, p6):
     return retval
 
 
-_flps_draw_tbox = cfuncproto(
-        load_so_libflimage(), "flps_draw_tbox",
-        None, [cty.c_int, cty.c_int, cty.c_int, cty.c_int, cty.c_int,
-        cty.c_long, cty.c_int],
-        """void flps_draw_tbox(int p1, int p2, int p3, int p4, int p5,
-           long int p6, int p7)
-        """)
 def flps_draw_tbox(p1, p2, p3, p4, p5, p6, p7):
     """ flps_draw_tbox(p1, p2, p3, p4, p5, p6, p7)
     """
 
+    _flps_draw_tbox = cfuncproto(
+            load_so_libflimage(), "flps_draw_tbox",
+            None, [cty.c_int, cty.c_int, cty.c_int, cty.c_int, cty.c_int,
+            cty.c_long, cty.c_int],
+            """void flps_draw_tbox(int p1, int p2, int p3, int p4, int p5,
+               long int p6, int p7)
+            """)
     ip1 = convert_to_int(p1)
     ip2 = convert_to_int(p2)
     ip3 = convert_to_int(p3)
@@ -17458,17 +17468,17 @@ def flps_draw_tbox(p1, p2, p3, p4, p5, p6, p7):
     _flps_draw_tbox(ip1, ip2, ip3, ip4, ip5, lp6, ip7)
 
 
-_flps_draw_text = cfuncproto(
-        load_so_libflimage(), "flps_draw_text",
-        None, [cty.c_int, cty.c_int, cty.c_int, cty.c_int, cty.c_int,
-        cty.c_long, cty.c_int, cty.c_int, STRING],
-        """void flps_draw_text(int p1, int p2, int p3, int p4, int p5,
-           long int p6, int p7, int p8, const char * p9)
-        """)
 def flps_draw_text(p1, p2, p3, p4, p5, p6, p7, p8, text):
     """ flps_draw_text(p1, p2, p3, p4, p5, p6, p7, p8, text)
     """
 
+    _flps_draw_text = cfuncproto(
+            load_so_libflimage(), "flps_draw_text",
+            None, [cty.c_int, cty.c_int, cty.c_int, cty.c_int, cty.c_int,
+            cty.c_long, cty.c_int, cty.c_int, STRING],
+            """void flps_draw_text(int p1, int p2, int p3, int p4, int p5,
+               long int p6, int p7, int p8, const char * p9)
+            """)
     ip1 = convert_to_int(p1)
     ip2 = convert_to_int(p2)
     ip3 = convert_to_int(p3)
@@ -17483,17 +17493,17 @@ def flps_draw_text(p1, p2, p3, p4, p5, p6, p7, p8, text):
     _flps_draw_text(ip1, ip2, ip3, ip4, ip5, lp6, ip7, ip8, stext)
 
 
-_flps_draw_text_beside = cfuncproto(
-        load_so_libflimage(), "flps_draw_text_beside",
-        None, [cty.c_int, cty.c_int, cty.c_int, cty.c_int, cty.c_int,
-        cty.c_long, cty.c_int, cty.c_int, STRING],
-        """void flps_draw_text_beside(int p1, int p2, int p3, int p4, int p5,
-           long int p6, int p7, int p8, const char * p9)
-        """)
 def flps_draw_text_beside(p1, p2, p3, p4, p5, p6, p7, p8, text):
     """ flps_draw_text_beside(p1, p2, p3, p4, p5, p6, p7, p8, text)
     """
 
+    _flps_draw_text_beside = cfuncproto(
+            load_so_libflimage(), "flps_draw_text_beside",
+            None, [cty.c_int, cty.c_int, cty.c_int, cty.c_int, cty.c_int,
+            cty.c_long, cty.c_int, cty.c_int, STRING],
+            """void flps_draw_text_beside(int p1, int p2, int p3, int p4,
+               int p5, long int p6, int p7, int p8, const char * p9)
+            """)
     ip1 = convert_to_int(p1)
     ip2 = convert_to_int(p2)
     ip3 = convert_to_int(p3)
@@ -17508,17 +17518,18 @@ def flps_draw_text_beside(p1, p2, p3, p4, p5, p6, p7, p8, text):
     _flps_draw_text_beside(ip1, ip2, ip3, ip4, ip5, lp6, ip7, ip8, stext)
 
 
-_flps_emit_header = cfuncproto(
-        load_so_libflimage(), "flps_emit_header",
-        None, [STRING, cty.c_int, cty.c_int, cty.c_int, cty.c_int, cty.c_int],
-        """void flps_emit_header(const char * p1, int p2, int p3, int p4,
-           int p5, int p6)
-        """)
 def flps_emit_header(text, p2, p3, p4, p5, p6):
     """ flps_emit_header(text, p2, p3, p4, p5, p6)
     """
 
-    stext = convert_to_int(text)
+    _flps_emit_header = cfuncproto(
+            load_so_libflimage(), "flps_emit_header",
+            None, [STRING, cty.c_int, cty.c_int, cty.c_int, cty.c_int,
+            cty.c_int],
+            """void flps_emit_header(const char * p1, int p2, int p3,
+               int p4, int p5, int p6)
+            """)
+    stext = convert_to_string(text)
     ip2 = convert_to_int(p2)
     ip3 = convert_to_int(p3)
     ip4 = convert_to_int(p4)
@@ -17528,107 +17539,107 @@ def flps_emit_header(text, p2, p3, p4, p5, p6):
     _flps_emit_header(stext, ip2, ip3, ip4, ip5, ip6)
 
 
-_flps_emit_prolog = cfuncproto(
-        load_so_libflimage(), "flps_emit_prolog",
-        None, [],
-        """void flps_emit_prolog()
-        """)
 def flps_emit_prolog():
     """ flps_emit_prolog()
     """
 
+    _flps_emit_prolog = cfuncproto(
+            load_so_libflimage(), "flps_emit_prolog",
+            None, [],
+            """void flps_emit_prolog()
+            """)
     _flps_emit_prolog()
 
 
-_flps_get_gray255 = cfuncproto(
-        load_so_libflimage(), "flps_get_gray255",
-        cty.c_int, [cty.c_long],
-        """int flps_get_gray255(long int p1)
-        """)
 def flps_get_gray255(p1):
     """ flps_get_gray255(p1) -> num.
     """
 
+    _flps_get_gray255 = cfuncproto(
+            load_so_libflimage(), "flps_get_gray255",
+            cty.c_int, [cty.c_long],
+            """int flps_get_gray255(long int p1)
+            """)
     lp1 = convert_to_long(p1)
     keep_elem_refs(p1, lp1)
     retval = _flps_get_gray255(lp1)
     return retval
 
 
-_flps_get_linestyle = cfuncproto(
-        load_so_libflimage(), "flps_get_linestyle",
-        cty.c_int, [],
-        """int flps_get_linestyle()
-        """)
 def flps_get_linestyle():
     """ flps_get_linestyle() -> num.
     """
 
+    _flps_get_linestyle = cfuncproto(
+            load_so_libflimage(), "flps_get_linestyle",
+            cty.c_int, [],
+            """int flps_get_linestyle()
+            """)
     retval = _flps_get_linestyle()
     return retval
 
 
-_flps_get_linewidth = cfuncproto(
-        load_so_libflimage(), "flps_get_linewidth",
-        cty.c_int, [],
-        """int flps_get_linewidth()
-        """)
 def flps_get_linewidth():
     """ flps_get_linewidth() -> width num.
     """
 
+    _flps_get_linewidth = cfuncproto(
+            load_so_libflimage(), "flps_get_linewidth",
+            cty.c_int, [],
+            """int flps_get_linewidth()
+            """)
     retval = _flps_get_linewidth()
     return retval
 
 
-_flps_get_namedcolor = cfuncproto(
-        load_so_libflimage(), "flps_get_namedcolor",
-        cty.c_int, [STRING],
-        """int flps_get_namedcolor(const char * p1)
-        """)
 def flps_get_namedcolor(colrname):
     """ flps_get_namedcolor(colrname) -> num.
     """
 
+    _flps_get_namedcolor = cfuncproto(
+            load_so_libflimage(), "flps_get_namedcolor",
+            cty.c_int, [STRING],
+            """int flps_get_namedcolor(const char * p1)
+            """)
     scolrname = convert_to_string(colrname)
     keep_elem_refs(colrname, scolrname)
     retval = _flps_get_namedcolor(scolrname)
     return retval
 
 
-_flps_invalidate_color_cache = cfuncproto(
-        load_so_libflimage(), "flps_invalidate_color_cache",
-        None, [],
-        """void flps_invalidate_color_cache()
-        """)
 def flps_invalidate_color_cache():
     """ flps_invalidate_color_cache()
     """
 
+    _flps_invalidate_color_cache = cfuncproto(
+            load_so_libflimage(), "flps_invalidate_color_cache",
+            None, [],
+            """void flps_invalidate_color_cache()
+            """)
     _flps_invalidate_color_cache()
 
 
-_flps_invalidate_font_cache = cfuncproto(
-        load_so_libflimage(), "flps_invalidate_font_cache",
-        None, [],
-        """void flps_invalidate_font_cache()
-        """)
 def flps_invalidate_font_cache():
     """ flps_invalidate_font_cache()
     """
 
+    _flps_invalidate_font_cache = cfuncproto(
+            load_so_libflimage(), "flps_invalidate_font_cache",
+            None, [],
+            """void flps_invalidate_font_cache()
+            """)
     _flps_invalidate_font_cache()
 
 
-_flps_invalidate_linewidth_cache = cfuncproto(
-        load_so_libflimage(), "flps_invalidate_linewidth_cache",
-        None, [],
-        """void flps_invalidate_linewidth_cache()
-        """)
 def flps_invalidate_linewidth_cache():
     """ flps_invalidate_linewidth_cache()
     """
 
+    _flps_invalidate_linewidth_cache = cfuncproto(
+            load_so_libflimage(), "flps_invalidate_linewidth_cache",
+            None, [],
+            """void flps_invalidate_linewidth_cache()
+            """)
     _flps_invalidate_linewidth_cache()
 
 
