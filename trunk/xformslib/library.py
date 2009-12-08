@@ -2050,12 +2050,12 @@ def fl_set_object_callback(pObject, py_callback, argum):
             """FL_CALLBACKPTR fl_set_object_callback(FL_OBJECT * obj, \
             FL_CALLBACKPTR callback, long int argument)
             """)
-    l_argum = convert_to_long(argum)
-    #print "argum", argum, l_argum
+    largum = convert_to_long(argum)
+    #print "argum", argum, largum, largum.value
     c_callback = FL_CALLBACKPTR(py_callback)
     keep_cfunc_refs(c_callback)
-    keep_elem_refs(pObject, argum, l_argum)
-    retval = _fl_set_object_callback(pObject, c_callback, l_argum.value)
+    keep_elem_refs(pObject, argum, largum)
+    retval = _fl_set_object_callback(pObject, c_callback, largum.value)
     return retval
 
 
