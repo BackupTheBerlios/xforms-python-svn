@@ -1,6 +1,7 @@
 
 
 SVN
+    * Porting of colsel1 example.
     * Porting of goodies example.
     * Initial review to give meaningful names as functions'
     parameters and to modify API for getter functions who return
