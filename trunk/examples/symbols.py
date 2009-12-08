@@ -65,8 +65,6 @@ def make_symbols():
 
         obj = xf.fl_add_box(xfc.FL_UP_BOX, x, y, dx, dy, symbols[i])
         xf.fl_set_object_lcol(obj, xfc.FL_BOTTOM_BCOL)
-        #print "buf", buf
-        print "symbols[i]", i, symbols[i]
         buf = " " + symbols[i]
         xf.fl_add_box(xfc.FL_FLAT_BOX, x, y + dy, dx, ty, buf)
 
@@ -86,8 +84,6 @@ def main(lsysargv, sysargv):
     form = make_symbols()
     xf.fl_show_form(form, xfc.FL_PLACE_FREE, xfc.FL_FULLBORDER, "test")
 
-    #while xf.fl_do_forms():
-    #    pass           # empty
     while True:
         obj1 = xf.fl_do_forms()
         if obj1[0] != obj[0]:
@@ -100,3 +96,4 @@ def main(lsysargv, sysargv):
 
 if __name__ == '__main__':
     main(len(sys.argv), sys.argv)
+

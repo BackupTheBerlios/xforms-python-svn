@@ -1924,13 +1924,13 @@ def fl_get_object_geometry(pObject):
         """void fl_get_object_geometry(FL_OBJECT * ob, FL_Coord * x,
            FL_Coord * y, FL_Coord * w, FL_Coord * h)
         """)
-    ix, px = make_FL_Coord_pointer()
-    iy, py = make_FL_Coord_pointer()
-    iw, pw = make_FL_Coord_pointer()
-    ih. ph = make_FL_Coord_pointer()
-    keep_elem_refs(pObject, x, ix, px, y, iy, py, w, iw, pw, h, ih, ph)
+    x, px = make_FL_Coord_pointer()
+    y, py = make_FL_Coord_pointer()
+    w, pw = make_FL_Coord_pointer()
+    h, ph = make_FL_Coord_pointer()
+    keep_elem_refs(pObject, x, px, y, py, w, pw, h, ph)
     _fl_get_object_geometry(pObject, px, py, pw, ph)
-    return ix, iy, iw, ih
+    return x, y, w, h
 
 
 #def fl_get_object_position(pObject, x, y):
