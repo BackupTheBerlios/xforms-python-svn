@@ -1,6 +1,10 @@
 
 
 SVN
+    * Porting of goodies example.
+    * Initial review to give meaningful names as functions'
+    parameters and to modify API for getter functions who return
+    multiple values
     * Porting of choice example.
     * Porting of pushbutton example.
     * Porting of symbols example.
@@ -9,7 +13,7 @@ SVN
     * Porting of flclock example.
     * Porting of timerprec example.
     * Porting of longlabel example.
-    * Insert c function prototype into python function body (WIP)
+    * Insert c function prototypes into python functions body (WIP)
     * Continuing explicit conversion for base types
     * Initial warning function if a deprecated XForms function is
     used

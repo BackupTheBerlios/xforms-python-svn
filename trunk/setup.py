@@ -2,9 +2,10 @@
 
 from distutils.core import setup
 import os, sys, shutil
+from xformslib.library import __version__
 
 name = 'xforms-python'
-version = "0.1.0_1.0.92sp2"
+version = __version__
 long_description = """
 xforms-python - Python wrapper for XForms X11 Windows System GUI C toolkit.
 """

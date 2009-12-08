@@ -1328,13 +1328,6 @@ FL_ALL_EVENT = (KeyPressMask | KeyReleaseMask \
                     | ButtonMotionMask | PointerMotionMask )
 
 
-# my add --LK
-class XEvent(cty.Union):
-    pass
-XEvent._fields_ = []
-
-FL_APPEVENT_CB = cty.CFUNCTYPE(cty.c_int, cty.POINTER(XEvent), cty.c_void_p)
-
 # Resources
 
 # values for enumeration 'FL_RTYPE'
@@ -1860,8 +1853,6 @@ XSetWindowAttributes._fields_ = [
     ('cursor', Cursor),
 ]
 
-FL_HANDLE_CANVAS = cty.CFUNCTYPE(cty.c_int, cty.POINTER(FL_OBJECT), Window,
-            cty.c_int, cty.c_int, cty.POINTER(XEvent), cty.c_void_p)
 
 FL_MODIFY_CANVAS_PROP = cty.CFUNCTYPE(cty.c_int, cty.POINTER(FL_OBJECT))
 
@@ -3870,3 +3861,8 @@ _XEvent._fields_ = [
 ]
 XEvent = _XEvent
 
+
+FL_APPEVENT_CB = cty.CFUNCTYPE(cty.c_int, cty.POINTER(XEvent), cty.c_void_p)
+
+FL_HANDLE_CANVAS = cty.CFUNCTYPE(cty.c_int, cty.POINTER(FL_OBJECT), Window,
+            cty.c_int, cty.c_int, cty.POINTER(XEvent), cty.c_void_p)
