@@ -1,6 +1,7 @@
 
 
 SVN
+    * Porting of lalign example.
     * Porting of objinactive example.
     * Porting of colsel1 example.
     * Porting of goodies example.
