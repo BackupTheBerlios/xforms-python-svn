@@ -12688,11 +12688,6 @@ def fl_set_select_items(pObject, pPopupItem):
     return retval
 
 
-_fl_get_select_popup = cfuncproto(
-        load_so_libforms(), "fl_get_select_popup",
-        cty.POINTER(FL_POPUP), [cty.POINTER(FL_OBJECT)],
-        """FL_POPUP * fl_get_select_popup(FL_OBJECT * p1)
-        """)
 def fl_get_select_popup(pObject):
     """ fl_get_select_popup(pObject) -> pPopup
     """
@@ -16147,71 +16142,71 @@ def flimage_enable_pnm():
     _flimage_enable_pnm()
 
 
-_flimage_set_fits_bits = cfuncproto(
-        load_so_libflimage(), "flimage_set_fits_bits",
-        cty.c_int, [cty.c_int],
-        """int flimage_set_fits_bits(int p1)
-        """)
 def flimage_set_fits_bits(p1):
     """ flimage_set_fits_bits(p1) -> num.
     """
 
+    _flimage_set_fits_bits = cfuncproto(
+            load_so_libflimage(), "flimage_set_fits_bits",
+            cty.c_int, [cty.c_int],
+            """int flimage_set_fits_bits(int p1)
+            """)
     ip1 = convert_to_int(p1)
     keep_elem_refs(p1, ip1)
     retval = _flimage_set_fits_bits(ip1)
     return retval
 
 
-_flimage_jpeg_options = cfuncproto(
-        load_so_libflimage(), "flimage_jpeg_options",
-        None, [cty.POINTER(FLIMAGE_JPEG_OPTION)],
-        """void flimage_jpeg_options(FLIMAGE_JPEG_OPTION * p1)
-        """)
 def flimage_jpeg_options(pImageJpegOption):
     """ flimage_jpeg_options(pImageJpegOption)
     """
 
+    _flimage_jpeg_options = cfuncproto(
+            load_so_libflimage(), "flimage_jpeg_options",
+            None, [cty.POINTER(FLIMAGE_JPEG_OPTION)],
+            """void flimage_jpeg_options(FLIMAGE_JPEG_OPTION * p1)
+            """)
     keep_elem_refs(pImageJpegOption)
     _flimage_jpeg_options(pImageJpegOption)
 
 
-_flimage_pnm_options = cfuncproto(
-        load_so_libflimage(), "flimage_pnm_options",
-        None, [cty.c_int],
-        """void flimage_pnm_options(int p1)
-        """)
 def flimage_pnm_options(p1):
     """ flimage_pnm_options(p1)
     """
 
+    _flimage_pnm_options = cfuncproto(
+            load_so_libflimage(), "flimage_pnm_options",
+            None, [cty.c_int],
+            """void flimage_pnm_options(int p1)
+            """)
     ip1 = convert_to_int(p1)
     keep_elem_refs(p1, ip1)
     _flimage_pnm_options(ip1)
 
 
-_flimage_gif_options = cfuncproto(
-        load_so_libflimage(), "flimage_gif_options",
-        None, [cty.c_int],
-        """void flimage_gif_options(int p1)
-        """)
 def flimage_gif_options(p1):
     """ flimage_gif_options(p1)
     """
 
+    _flimage_gif_options = cfuncproto(
+            load_so_libflimage(), "flimage_gif_options",
+            None, [cty.c_int],
+            """void flimage_gif_options(int p1)
+            """)
     ip1 = convert_to_int(p1)
     keep_elem_refs(p1, ip1)
     _flimage_gif_options(ip1)
 
 
-_flimage_ps_options = cfuncproto(
-        load_so_libflimage(), "flimage_ps_options",
-        cty.POINTER(FLPS_CONTROL), [],
-        """FLPS_CONTROL * flimage_ps_options()
-        """)
 def flimage_ps_options():
     """ flimage_ps_options() -> flps_control class
     """
 
+    _flimage_ps_options = cfuncproto(
+            load_so_libflimage(), "flimage_ps_options",
+            cty.POINTER(FLPS_CONTROL), [],
+            """FLPS_CONTROL * flimage_ps_options()
+            """)
     retval = _flimage_ps_options()
     return retval
 
@@ -16221,43 +16216,43 @@ flimage_pnm_output_options = flimage_pnm_options
 flimage_gif_output_options = flimage_gif_options
 
 
-_flimage_get_number_of_formats = cfuncproto(
-        load_so_libflimage(), "flimage_get_number_of_formats",
-        cty.c_int, [],
-        """int flimage_get_number_of_formats()
-        """)
 def flimage_get_number_of_formats():
     """ flimage_get_number_of_formats() -> num.
     """
 
+    _flimage_get_number_of_formats = cfuncproto(
+            load_so_libflimage(), "flimage_get_number_of_formats",
+            cty.c_int, [],
+            """int flimage_get_number_of_formats()
+            """)
     retval = _flimage_get_number_of_formats()
     return retval
 
 
-_flimage_get_format_info = cfuncproto(
-        load_so_libflimage(), "flimage_get_format_info",
-        cty.POINTER(FLIMAGE_FORMAT_INFO), [cty.c_int],
-        """const char * flimage_get_format_info(int p1)
-        """)
 def flimage_get_format_info(p1):
     """ flimage_get_format_info(p1) -> format_info class instance
     """
 
+    _flimage_get_format_info = cfuncproto(
+            load_so_libflimage(), "flimage_get_format_info",
+            cty.POINTER(FLIMAGE_FORMAT_INFO), [cty.c_int],
+            """const char * flimage_get_format_info(int p1)
+            """)
     ip1 = convert_to_int(p1)
     keep_elem_refs(p1, ip1)
     retval = _flimage_get_format_info(ip1)
     return retval
 
 
-_fl_get_matrix = cfuncproto(
-        load_so_libflimage(), "fl_get_matrix",
-        cty.c_void_p, [cty.c_int, cty.c_int, cty.c_uint],
-        """void * fl_get_matrix(int p1, int p2, unsigned int p3)
-        """)
 def fl_get_matrix(p1, p2, p3):
     """ fl_get_matrix(p1, p2, p3) -> ?
     """
 
+    _fl_get_matrix = cfuncproto(
+            load_so_libflimage(), "fl_get_matrix",
+            cty.c_void_p, [cty.c_int, cty.c_int, cty.c_uint],
+            """void * fl_get_matrix(int p1, int p2, unsigned int p3)
+            """)
     ip1 = convert_to_int(p1)
     ip2 = convert_to_int(p2)
     uip3 = convert_to_uint(p3)
@@ -16266,15 +16261,16 @@ def fl_get_matrix(p1, p2, p3):
     return retval
 
 
-_fl_make_matrix = cfuncproto(
-        load_so_libflimage(), "fl_make_matrix",
-        cty.c_void_p, [cty.c_int, cty.c_int, cty.c_uint, cty.c_void_p],
-        """void * fl_make_matrix(int p1, int p2, unsigned int p3, void * p4)
-        """)
 def fl_make_matrix(p1, p2, p3, p4):
     """ fl_make_matrix(p1, p2, p3, p4) -> ?
     """
 
+    _fl_make_matrix = cfuncproto(
+            load_so_libflimage(), "fl_make_matrix",
+            cty.c_void_p, [cty.c_int, cty.c_int, cty.c_uint, cty.c_void_p],
+            """void * fl_make_matrix(int p1, int p2, unsigned int p3,
+               void * p4)
+            """)
     ip1 = convert_to_int(p1)
     ip2 = convert_to_int(p2)
     uip3 = convert_to_uint(p3)
@@ -16283,29 +16279,29 @@ def fl_make_matrix(p1, p2, p3, p4):
     return retval
 
 
-_fl_free_matrix = cfuncproto(
-        load_so_libflimage(), "fl_free_matrix",
-        None, [cty.c_void_p],
-        """void fl_free_matrix(void * p1)
-        """)
 def fl_free_matrix(p1):
     """ fl_free_matrix(p1)
     """
 
+    _fl_free_matrix = cfuncproto(
+            load_so_libflimage(), "fl_free_matrix",
+            None, [cty.c_void_p],
+            """void fl_free_matrix(void * p1)
+            """)
     keep_elem_refs(p1)
     _fl_free_matrix(p1)
 
 
 # it seems not to be defined --LK
-#fl_basename = cfuncproto(
-#       so_libflimage, "fl_basename",
-#       STRING, [STRING],
-#       """char * void fl_basename(char * p1)
-#       """)
 #def fl_basename(text):
 #   """ fl_basename(text) -> name string
 #   """
 #
+#   _fl_basename = cfuncproto(
+#           so_libflimage, "fl_basename",
+#           STRING, [STRING],
+#           """char * void fl_basename(char * p1)
+#           """)
 #    stext = convert_to_string(text)
 #    keep_elem_refs(text, stext)
 #    retval = fl_basename(stext)
@@ -16314,50 +16310,51 @@ def fl_free_matrix(p1):
 
 # This function is retained for compatibility reasons only.
 # It returns 1 always.
-_fl_init_RGBdatabase = cfuncproto(
-        load_so_libflimage(), "fl_init_RGBdatabase",
-        cty.c_int, [STRING],
-        """int fl_init_RGBdatabase(const char * p1)
-        """)
 def fl_init_RGBdatabase(text):
     """ fl_init_RGBdatabase(text) -> num.
     """
 
+    _fl_init_RGBdatabase = cfuncproto(
+            load_so_libflimage(), "fl_init_RGBdatabase",
+            cty.c_int, [STRING],
+            """int fl_init_RGBdatabase(const char * p1)
+            """)
     stext = convert_to_string(text)
     keep_elem_refs(text, stext)
     retval = _fl_init_RGBdatabase(stext)
     return retval
 
 
-_fl_lookup_RGBcolor = cfuncproto(
-        load_so_libflimage(), "fl_lookup_RGBcolor",
-        cty.c_int, [STRING, cty.POINTER(cty.c_int), cty.POINTER(cty.c_int),
-        cty.POINTER(cty.c_int)],
-        """int fl_lookup_RGBcolor(const char * p1, int * p2, int * p3, int * p4)
-        """)
 def fl_lookup_RGBcolor(text, p2, p3, p4):
     """ fl_lookup_RGBcolor(text, p2, p3, p4) -> num.
     """
 
+    _fl_lookup_RGBcolor = cfuncproto(
+            load_so_libflimage(), "fl_lookup_RGBcolor",
+            cty.c_int, [STRING, cty.POINTER(cty.c_int), \
+            cty.POINTER(cty.c_int), cty.POINTER(cty.c_int)],
+            """int fl_lookup_RGBcolor(const char * p1, int * p2,
+               int * p3, int * p4)
+            """)
     stext = convert_to_string(text)
     keep_elem_refs(text, p2, p3, p4)
     retval = _fl_lookup_RGBcolor(stext, p2, p3, p4)
     return retval
 
 
-_flimage_add_format = cfuncproto(
-        load_so_libflimage(), "flimage_add_format",
-        cty.c_int, [STRING, STRING, STRING, cty.c_int, FLIMAGE_Identify,
-        FLIMAGE_Description, FLIMAGE_Read_Pixels, FLIMAGE_Write_Image],
-        """int flimage_add_format(const char * p1, const char * p2,
-           const char * p3, int p4, FLIMAGE_Identify p5,
-           FLIMAGE_Description p6, FLIMAGE_Read_Pixels p7,
-           FLIMAGE_Write_Image p8)
-        """)
 def flimage_add_format(p1, p2, p3, p4, py_fn5, py_fn6, py_fn7, py_fn8):
     """ flimage_add_format(p1, p2, p3, p4, py_fn5, py_fn6, py_fn7, py_fn8) -> num.
     """
 
+    _flimage_add_format = cfuncproto(
+            load_so_libflimage(), "flimage_add_format",
+            cty.c_int, [STRING, STRING, STRING, cty.c_int, FLIMAGE_Identify,
+            FLIMAGE_Description, FLIMAGE_Read_Pixels, FLIMAGE_Write_Image],
+            """int flimage_add_format(const char * p1, const char * p2,
+               const char * p3, int p4, FLIMAGE_Identify p5,
+               FLIMAGE_Description p6, FLIMAGE_Read_Pixels p7,
+               FLIMAGE_Write_Image p8)
+            """)
     sp1 = convert_to_string(p1)
     sp2 = convert_to_string(p2)
     sp3 = convert_to_string(p3)
@@ -16447,30 +16444,30 @@ def flimage_convolve(pImage, p2, p3, p4):
     return retval
 
 
-_flimage_convolvea = cfuncproto(
-        load_so_libflimage(), "flimage_convolvea",
-        cty.c_int, [cty.POINTER(FL_IMAGE), cty.POINTER(cty.c_int),
-        cty.c_int, cty.c_int],
-        """int flimage_convolvea(FL_IMAGE * p1, int * p2, int p3, int p4)
-        """)
 def flimage_convolvea(pImage, p2, p3, p4):
     """ flimage_convolvea(pImage, p2, p3, p4) -> num.
     """
 
+    _flimage_convolvea = cfuncproto(
+            load_so_libflimage(), "flimage_convolvea",
+            cty.c_int, [cty.POINTER(FL_IMAGE), cty.POINTER(cty.c_int),
+            cty.c_int, cty.c_int],
+            """int flimage_convolvea(FL_IMAGE * p1, int * p2, int p3, int p4)
+            """)
     keep_elem_refs(pImage, p2, p3, p4)
     retval = _flimage_convolvea(pImage, p2, p3, p4)
     return retval
 
 
-_flimage_tint = cfuncproto(
-        load_so_libflimage(), "flimage_tint",
-        cty.c_int, [cty.POINTER(FL_IMAGE), cty.c_uint, cty.c_double],
-        """int flimage_tint(FL_IMAGE * p1, unsigned int p2, double p3)
-        """)
 def flimage_tint(pImage, p2, p3):
     """ flimage_tint(pImage, p2, p3) -> num.
     """
 
+    _flimage_tint = cfuncproto(
+            load_so_libflimage(), "flimage_tint",
+            cty.c_int, [cty.POINTER(FL_IMAGE), cty.c_uint, cty.c_double],
+            """int flimage_tint(FL_IMAGE * p1, unsigned int p2, double p3)
+            """)
     keep_elem_refs(pImage, p2, p3)
     retval = _flimage_tint(pImage, p2, p3)
     return retval
@@ -16544,33 +16541,33 @@ def flimage_warp(pImage, p2, p3, p4, p5):
     return retval
 
 
-_flimage_autocrop = cfuncproto(
-        load_so_libflimage(), "flimage_autocrop",
-        cty.c_int, [cty.POINTER(FL_IMAGE), cty.c_uint],
-        """int flimage_autocrop(FL_IMAGE * p1, unsigned int p2)
-        """)
 def flimage_autocrop(pImage, p2):
     """ flimage_autocrop(pImage, p2) -> num.
     """
 
+    _flimage_autocrop = cfuncproto(
+            load_so_libflimage(), "flimage_autocrop",
+            cty.c_int, [cty.POINTER(FL_IMAGE), cty.c_uint],
+            """int flimage_autocrop(FL_IMAGE * p1, unsigned int p2)
+            """)
     uip2 = convert_to_uint(p2)
     keep_elem_refs(pImage, p2, uip2)
     retval = _flimage_autocrop(pImage, uip2)
     return retval
 
 
-_flimage_get_autocrop = cfuncproto(
-        load_so_libflimage(), "flimage_get_autocrop",
-        cty.c_int, [cty.POINTER(FL_IMAGE), cty.c_uint,
-        cty.POINTER(cty.c_int), cty.POINTER(cty.c_int),
-        cty.POINTER(cty.c_int), cty.POINTER(cty.c_int)],
-        """int flimage_get_autocrop(FL_IMAGE * p1, unsigned int p2,
-           int * p3, int * p4, int * p5, int * p6)
-        """)
 def flimage_get_autocrop(pImage, p2, p3, p4, p5, p6):
     """ flimage_get_autocrop(pImage, p2, p3, p4, p5, p6) -> num.
     """
 
+    _flimage_get_autocrop = cfuncproto(
+            load_so_libflimage(), "flimage_get_autocrop",
+            cty.c_int, [cty.POINTER(FL_IMAGE), cty.c_uint,
+            cty.POINTER(cty.c_int), cty.POINTER(cty.c_int),
+            cty.POINTER(cty.c_int), cty.POINTER(cty.c_int)],
+            """int flimage_get_autocrop(FL_IMAGE * p1, unsigned int p2,
+               int * p3, int * p4, int * p5, int * p6)
+            """)
     uip2 = convert_to_uint(p2)
     keep_elem_refs(pImage, p2, p3, p4, p5, p6, uip2)
     retval = _flimage_get_autocrop(pImage, uip2, p3, p4, p5, p6)
@@ -16585,7 +16582,8 @@ def flimage_crop(pImage, p2, p3, p4, p5):
             load_so_libflimage(), "flimage_crop",
             cty.c_int, [cty.POINTER(FL_IMAGE), cty.c_int, cty.c_int,
             cty.c_int, cty.c_int],
-            """int flimage_crop(FL_IMAGE * p1, int p2, int p3, int p4, int p5)
+            """int flimage_crop(FL_IMAGE * p1, int p2, int p3,
+               int p4, int p5)
             """)
     ip2 = convert_to_int(p2)
     ip3 = convert_to_int(p3)
@@ -16613,31 +16611,31 @@ def flimage_replace_pixel(pImage, p2, p3):
     return retval
 
 
-_flimage_transform_pixels = cfuncproto(
-        load_so_libflimage(), "flimage_transform_pixels",
-        cty.c_int, [cty.POINTER(FL_IMAGE), cty.POINTER(cty.c_int),
-        cty.POINTER(cty.c_int), cty.POINTER(cty.c_int)],
-        """int flimage_transform_pixels(FL_IMAGE * p1, int * p2, int * p3,
-           int * p4)
-        """)
 def flimage_transform_pixels(pImage, p2, p3, p4):
     """ flimage_transform_pixels(pImage, p2, p3, p4) -> num.
     """
 
+    _flimage_transform_pixels = cfuncproto(
+            load_so_libflimage(), "flimage_transform_pixels",
+            cty.c_int, [cty.POINTER(FL_IMAGE), cty.POINTER(cty.c_int),
+            cty.POINTER(cty.c_int), cty.POINTER(cty.c_int)],
+            """int flimage_transform_pixels(FL_IMAGE * p1, int * p2,
+               int * p3, int * p4)
+            """)
     keep_elem_refs(pImage, p2, p3, p4)
     retval = _flimage_transform_pixels(pImage, p2, p3, p4)
     return retval
 
 
-_flimage_windowlevel = cfuncproto(
-        load_so_libflimage(), "flimage_windowlevel",
-        cty.c_int, [cty.POINTER(FL_IMAGE), cty.c_int, cty.c_int],
-        """int flimage_windowlevel(FL_IMAGE * p1, int p2, int p3)
-        """)
 def flimage_windowlevel(pImage, p2, p3):
     """ flimage_windowlevel(pImage, p2, p3) -> num.
     """
 
+    _flimage_windowlevel = cfuncproto(
+            load_so_libflimage(), "flimage_windowlevel",
+            cty.c_int, [cty.POINTER(FL_IMAGE), cty.c_int, cty.c_int],
+            """int flimage_windowlevel(FL_IMAGE * p1, int p2, int p3)
+            """)
     ip2 = convert_to_int(p2)
     ip3 = convert_to_int(p3)
     keep_elem_refs(pImage, p2, p3, ip2, ip3)
@@ -16645,30 +16643,30 @@ def flimage_windowlevel(pImage, p2, p3):
     return retval
 
 
-_flimage_enhance = cfuncproto(
-        load_so_libflimage(), "flimage_enhance",
-        cty.c_int, [cty.POINTER(FL_IMAGE), cty.c_int],
-        """int flimage_enhance(FL_IMAGE * p1, int p2)
-        """)
 def flimage_enhance(pImage, p2):
     """ flimage_enhance(pImage, p2) -> num.
     """
 
+    _flimage_enhance = cfuncproto(
+            load_so_libflimage(), "flimage_enhance",
+            cty.c_int, [cty.POINTER(FL_IMAGE), cty.c_int],
+            """int flimage_enhance(FL_IMAGE * p1, int p2)
+            """)
     ip2 = convert_to_int(p2)
     keep_elem_refs(pImage, p2, ip2)
     retval = _flimage_enhance(pImage, ip2)
     return retval
 
 
-_flimage_from_pixmap = cfuncproto(
-        load_so_libflimage(), "flimage_from_pixmap",
-        cty.c_int, [cty.POINTER(FL_IMAGE), Pixmap],
-        """int flimage_from_pixmap(FL_IMAGE * p1, Pixmap p2)
-        """)
 def flimage_from_pixmap(pImage, pixmap):
     """ flimage_from_pixmap(pImage, pixmap) -> num.
     """
 
+    _flimage_from_pixmap = cfuncproto(
+            load_so_libflimage(), "flimage_from_pixmap",
+            cty.c_int, [cty.POINTER(FL_IMAGE), Pixmap],
+            """int flimage_from_pixmap(FL_IMAGE * p1, Pixmap p2)
+            """)
     ulpixmap = convert_to_Pixmap(pixmap)
     keep_elem_refs(pImage, pixmap, ulpixmap)
     retval = _flimage_from_pixmap(pImage, ulpixmap)
@@ -16706,17 +16704,17 @@ def flimage_dup(pImage):
 
 # Miscellaneous prototypes
 
-_fl_get_submatrix = cfuncproto(
-        load_so_libflimage(), "fl_get_submatrix",
-        cty.c_void_p, [cty.c_void_p, cty.c_int, cty.c_int, cty.c_int,
-        cty.c_int, cty.c_int, cty.c_int, cty.c_uint],
-        """void * fl_get_submatrix(void * p1, int p2, int p3, int p4, int p5,
-           int p6, int p7, unsigned int p8)
-        """)
 def fl_get_submatrix(p1, p2, p3, p4, p5, p6, p7, p8):
     """ fl_get_submatrix(p1, p2, p3, p4, p5, p6, p7, p8) -> ?
     """
 
+    _fl_get_submatrix = cfuncproto(
+            load_so_libflimage(), "fl_get_submatrix",
+            cty.c_void_p, [cty.c_void_p, cty.c_int, cty.c_int, cty.c_int,
+            cty.c_int, cty.c_int, cty.c_int, cty.c_uint],
+            """void * fl_get_submatrix(void * p1, int p2, int p3, int p4,
+               int p5, int p6, int p7, unsigned int p8)
+            """)
     ip2 = convert_to_int(p2)
     ip3 = convert_to_int(p3)
     ip4 = convert_to_int(p4)
@@ -16730,20 +16728,21 @@ def fl_get_submatrix(p1, p2, p3, p4, p5, p6, p7, p8):
     return retval
 
 
-_fl_j2pass_quantize_packed = cfuncproto(
-        load_so_libflimage(), "fl_j2pass_quantize_packed",
-        cty.c_int, [cty.POINTER(cty.POINTER(cty.c_uint)), cty.c_int,
-        cty.c_int, cty.c_int, cty.POINTER(cty.POINTER(cty.c_ushort)),
-        cty.POINTER(cty.c_int), cty.POINTER(cty.c_int),
-        cty.POINTER(cty.c_int), cty.POINTER(cty.c_int), cty.POINTER(FL_IMAGE)],
-        """int fl_j2pass_quantize_packed(unsigned int * * p1, int p2, int p3,
-           int p4, short unsigned int * * p5, int * p6, int * p7, int * p8,
-           int * p9, FL_IMAGE * p10)
-        """)
 def fl_j2pass_quantize_packed(p1, p2, p3, p4, p5, p6, p7, p8, p9, pImage):
     """ fl_j2pass_quantize_packed(p1, p2, p3, p4, p5, p6, p7, p8, p9, pImage) -> num.
     """
 
+    _fl_j2pass_quantize_packed = cfuncproto(
+            load_so_libflimage(), "fl_j2pass_quantize_packed",
+            cty.c_int, [cty.POINTER(cty.POINTER(cty.c_uint)), cty.c_int,
+            cty.c_int, cty.c_int, cty.POINTER(cty.POINTER(cty.c_ushort)),
+            cty.POINTER(cty.c_int), cty.POINTER(cty.c_int),
+            cty.POINTER(cty.c_int), cty.POINTER(cty.c_int),
+            cty.POINTER(FL_IMAGE)],
+            """int fl_j2pass_quantize_packed(unsigned int * * p1, int p2,
+               int p3, int p4, short unsigned int * * p5, int * p6,
+               int * p7, int * p8, int * p9, FL_IMAGE * p10)
+            """)
     ip2 = convert_to_int(p2)
     ip3 = convert_to_int(p3)
     ip4 = convert_to_int(p4)
@@ -16781,17 +16780,17 @@ def fl_j2pass_quantize_rgb(p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, pImage)
     return retval
 
 
-_fl_make_submatrix = cfuncproto(
-        load_so_libflimage(), "fl_make_submatrix",
-        cty.c_void_p, [cty.c_void_p, cty.c_int, cty.c_int, cty.c_int,
-        cty.c_int, cty.c_int, cty.c_int, cty.c_uint],
-        """void * fl_make_submatrix(void * p1, int p2, int p3, int p4,
-           int p5, int p6, int p7, unsigned int p8)
-        """)
 def fl_make_submatrix(p1, p2, p3, p4, p5, p6, p7, p8):
     """ fl_make_submatrix(p1, p2, p3, p4, p5, p6, p7, p8) -> ?
     """
 
+    _fl_make_submatrix = cfuncproto(
+            load_so_libflimage(), "fl_make_submatrix",
+            cty.c_void_p, [cty.c_void_p, cty.c_int, cty.c_int, cty.c_int,
+            cty.c_int, cty.c_int, cty.c_int, cty.c_uint],
+            """void * fl_make_submatrix(void * p1, int p2, int p3, int p4,
+               int p5, int p6, int p7, unsigned int p8)
+            """)
     ip2 = convert_to_int(p2)
     ip3 = convert_to_int(p3)
     ip4 = convert_to_int(p4)
@@ -16805,45 +16804,47 @@ def fl_make_submatrix(p1, p2, p3, p4, p5, p6, p7, p8):
     return retval
 
 
-_fl_pack_bits = cfuncproto(
-        load_so_libflimage(), "fl_pack_bits",
-        None, [cty.POINTER(cty.c_ubyte), cty.POINTER(cty.c_ushort), cty.c_int],
-        """void fl_pack_bits(unsigned char * p1, short unsigned int * p2,
-           int p3)
-        """)
 def fl_pack_bits(p1, p2, p3):
     """ fl_pack_bits(p1, p2, p3)
     """
 
+    _fl_pack_bits = cfuncproto(
+            load_so_libflimage(), "fl_pack_bits",
+            None, [cty.POINTER(cty.c_ubyte), cty.POINTER(cty.c_ushort),
+            cty.c_int],
+            """void fl_pack_bits(unsigned char * p1, short unsigned int * p2,
+               int p3)
+            """)
     ip3 = convert_to_int(p3)
     keep_elem_refs(p1, p2, p3, ip3)
     _fl_pack_bits(p1, p2, ip3)
 
 
-_fl_unpack_bits = cfuncproto(
-        load_so_libflimage(), "fl_unpack_bits",
-        None, [cty.POINTER(cty.c_ushort), cty.POINTER(cty.c_ubyte), cty.c_int],
-        """void fl_unpack_bits(short unsigned int * p1, unsigned char * p2,
-           int p3)
-        """)
 def fl_unpack_bits(p1, p2, p3):
     """ fl_unpack_bits(p1, p2, p3)
     """
 
+    _fl_unpack_bits = cfuncproto(
+            load_so_libflimage(), "fl_unpack_bits",
+            None, [cty.POINTER(cty.c_ushort), cty.POINTER(cty.c_ubyte),
+            cty.c_int],
+            """void fl_unpack_bits(short unsigned int * p1,
+               unsigned char * p2, int p3)
+            """)
     ip3 = convert_to_int(p3)
     keep_elem_refs(p1, p2, p3, ip3)
     _fl_unpack_bits(p1, p2, ip3)
 
 
-_fl_value_to_bits = cfuncproto(
-        load_so_libflimage(), "fl_value_to_bits",
-        cty.c_uint, [cty.c_uint],
-        """)unsigned int fl_value_to_bits(unsigned int p1)
-        """)
 def fl_value_to_bits(p1):
     """ fl_value_to_bits(p1) -> num.
     """
 
+    _fl_value_to_bits = cfuncproto(
+            load_so_libflimage(), "fl_value_to_bits",
+            cty.c_uint, [cty.c_uint],
+            """)unsigned int fl_value_to_bits(unsigned int p1)
+            """)
     uip1 = convert_to_uint(p1)
     keep_elem_refs(p1, uip1)
     retval = _fl_value_to_bits(uip1)
