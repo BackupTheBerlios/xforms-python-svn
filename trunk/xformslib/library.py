@@ -537,11 +537,6 @@ def fl_remove_signal_callback(sglnum):
     _fl_remove_signal_callback(isglnum)
 
 
-_fl_signal_caught = cfuncproto(
-        load_so_libforms(), "fl_signal_caught", \
-        None, [cty.c_int], \
-        """void fl_signal_caught(int s)
-        """)
 def fl_signal_caught(sglnum):
     """
         fl_signal_caught(sglnum)
@@ -550,6 +545,11 @@ def fl_signal_caught(sglnum):
         <sglnum> : signal number (e.g. signal.SIGALRM, signal.SIGINT, etc.)
     """
 
+    _fl_signal_caught = cfuncproto(
+            load_so_libforms(), "fl_signal_caught", \
+            None, [cty.c_int], \
+            """void fl_signal_caught(int s)
+            """)
     isglnum = convert_to_int(sglnum)
     keep_elem_refs(sglnum, isglnum)
     _fl_signal_caught(isglnum)
@@ -1331,15 +1331,15 @@ def fl_prepare_form_window(pForm, place, border, name):
     return retval
 
 
-_fl_show_form_window = cfuncproto(
-        load_so_libforms(), "fl_show_form_window", \
-        Window, [cty.POINTER(FL_FORM)], \
-        """Window fl_show_form_window(FL_FORM * form)
-        """)
 def fl_show_form_window(pForm):
     """ fl_show_form_window(pForm) -> window ID
     """
 
+    _fl_show_form_window = cfuncproto(
+            load_so_libforms(), "fl_show_form_window", \
+            Window, [cty.POINTER(FL_FORM)], \
+            """Window fl_show_form_window(FL_FORM * form)
+            """)
     keep_elem_refs(pForm)
     retval = _fl_show_form_window(pForm)
     return retval
@@ -4661,15 +4661,15 @@ def fl_remove_selected_xevent(win, mask):
 fl_add_selected_xevent = fl_addto_selected_xevent
 
 
-_fl_set_idle_delta = cfuncproto(
-        load_so_libforms(), "fl_set_idle_delta",
-        None, [cty.c_long],
-        """void fl_set_idle_delta(long int delta)
-        """)
 def fl_set_idle_delta(delta):
     """ fl_set_idle_delta(delta)
     """
 
+    _fl_set_idle_delta = cfuncproto(
+            load_so_libforms(), "fl_set_idle_delta",
+            None, [cty.c_long],
+            """void fl_set_idle_delta(long int delta)
+            """)
     ldelta = convert_to_long(delta)
     keep_elem_refs(delta, ldelta)
     _fl_set_idle_delta(ldelta)
@@ -7017,17 +7017,17 @@ def fl_create_round3dbutton(buttontype, x, y, w, h, label):
     return retval
 
 
-_fl_create_lightbutton = cfuncproto(
-        load_so_libforms(), "fl_create_lightbutton",
-        cty.POINTER(FL_OBJECT), [cty.c_int, FL_Coord, FL_Coord, FL_Coord,
-        FL_Coord, STRING],
-        """FL_OBJECT * fl_create_lightbutton(int type, FL_Coord x,
-           FL_Coord y, FL_Coord w, FL_Coord h, const char * label)
-        """)
 def fl_create_lightbutton(buttontype, x, y, w, h, label):
     """ fl_create_lightbutton(buttontype, x, y, w, h, label) -> pObject
     """
 
+    _fl_create_lightbutton = cfuncproto(
+            load_so_libforms(), "fl_create_lightbutton",
+            cty.POINTER(FL_OBJECT), [cty.c_int, FL_Coord, FL_Coord, FL_Coord,
+            FL_Coord, STRING],
+            """FL_OBJECT * fl_create_lightbutton(int type, FL_Coord x,
+               FL_Coord y, FL_Coord w, FL_Coord h, const char * label)
+            """)
     ibuttontype = convert_to_int(buttontype)
     ix = convert_to_int(x)
     iy = convert_to_int(y)
@@ -13229,15 +13229,15 @@ def fl_get_spinner_value(pObject):
     _fl_get_spinner_value(pObject)
 
 
-_fl_set_spinner_value = cfuncproto(
-        load_so_libforms(), "fl_set_spinner_value",
-        cty.c_double, [cty.POINTER(FL_OBJECT), cty.c_double],
-        """double fl_set_spinner_value(FL_OBJECT * obj, double val)
-        """)
 def fl_set_spinner_value(pObject, val):
     """ fl_set_spinner_value(pObject, val) -> num.
     """
 
+    _fl_set_spinner_value = cfuncproto(
+            load_so_libforms(), "fl_set_spinner_value",
+            cty.c_double, [cty.POINTER(FL_OBJECT), cty.c_double],
+            """double fl_set_spinner_value(FL_OBJECT * obj, double val)
+            """)
     fval = convert_to_double(val)
     keep_elem_refs(pObject, val, fval)
     _fl_set_spinner_value(pObject, fval)
