@@ -337,17 +337,17 @@ def convert_to_float(paramname):
     return retv
 
 
-def make_int_pointer():
+def make_int_and_pointer():
     """ Makes a ctypes c_int and its pointer, and returns both """
 
     baseval = cty.c_int()
     ptrbaseval = cty.byref(baseval)
     return baseval, ptrbaseval
 
-make_FL_Coord_pointer = make_int_pointer
+make_FL_Coord_and_pointer = make_int_and_pointer
 
 
-def make_uint_pointer():
+def make_uint_and_pointer():
     """ Makes a ctypes c_uint and its pointer, and returns both """
 
     baseval = cty.c_uint()
@@ -355,7 +355,7 @@ def make_uint_pointer():
     return baseval, ptrbaseval
 
 
-def make_long_pointer():
+def make_long_and_pointer():
     """ Makes a ctypes c_long and its pointer, and returns both """
 
     baseval = cty.c_long()
@@ -363,7 +363,7 @@ def make_long_pointer():
     return baseval, ptrbaseval
 
 
-def make_ulong_pointer():
+def make_ulong_and_pointer():
     """ Makes a ctypes c_ulong and its pointer, and returns both """
 
     baseval = cty.c_ulong()
@@ -371,7 +371,7 @@ def make_ulong_pointer():
     return baseval, ptrbaseval
 
 
-def make_float_pointer():
+def make_float_and_pointer():
     """ Makes a ctypes c_float and its pointer, and returns both """
 
     baseval = cty.c_float()
@@ -379,12 +379,23 @@ def make_float_pointer():
     return baseval, ptrbaseval
 
 
-def make_double_pointer():
+def make_double_and_pointer():
     """ Makes a ctypes c_double and its pointer, and returns both """
 
     baseval = cty.c_double()
     ptrbaseval = cty.byref(baseval)
     return baseval, ptrbaseval
+
+
+def convert_to_ptr_int(paramname):
+    """ Converts to a c_int then into a pointer to it, and returns only
+        pointer
+    """
+
+    iparam = convert_to_int(paramname)
+    retv = cty.pointer(iparam)
+    return retv
+
 
 
 def check_admissible_values(paramname, *valueslist):
@@ -1924,10 +1935,10 @@ def fl_get_object_geometry(pObject):
         """void fl_get_object_geometry(FL_OBJECT * ob, FL_Coord * x,
            FL_Coord * y, FL_Coord * w, FL_Coord * h)
         """)
-    x, px = make_FL_Coord_pointer()
-    y, py = make_FL_Coord_pointer()
-    w, pw = make_FL_Coord_pointer()
-    h, ph = make_FL_Coord_pointer()
+    x, px = make_FL_Coord_and_pointer()
+    y, py = make_FL_Coord_and_pointer()
+    w, pw = make_FL_Coord_and_pointer()
+    h, ph = make_FL_Coord_and_pointer()
     keep_elem_refs(pObject, x, px, y, py, w, pw, h, ph)
     _fl_get_object_geometry(pObject, px, py, pw, ph)
     return x, y, w, h
@@ -1945,8 +1956,8 @@ def fl_get_object_position(pObject):
             """void fl_get_object_position(FL_OBJECT * ob, FL_Coord * x,
                FL_Coord * y)
             """)
-    ix, px = make_FL_Coord_pointer()
-    iy, py = make_FL_Coord_pointer()
+    ix, px = make_FL_Coord_and_pointer()
+    iy, py = make_FL_Coord_and_pointer()
     keep_elem_refs(pObject, x, ix, px, y, iy, py)
     _fl_get_object_position(pObject, px, py)
     return ix, iy
@@ -2280,8 +2291,8 @@ def fl_get_char_width(style, size):
     return retval
 
 
-def fl_get_string_height(style, size, s, strglen, asc, desc):
-    """ fl_get_string_height(style, size, s, strglen, asc, desc) -> height num.
+def fl_get_string_height(style, size, strng, strglen, asc, desc):
+    """ fl_get_string_height(style, size, strng, strglen, asc, desc) -> height num.
     """
 
     _fl_get_string_height = cfuncproto(
@@ -2293,11 +2304,14 @@ def fl_get_string_height(style, size, s, strglen, asc, desc):
             """)
     istyle = convert_to_int(style)
     isize = convert_to_int(size)
-    ss = convert_to_string(s)
+    sstrng = convert_to_string(strng)
     istrglen = convert_to_int(strglen)
-    keep_elem_refs(style, istyle, size, isize, s, ss, strglen, istrglen,
-                   asc, desc)
-    retval = _fl_get_string_height(istyle, isize, ss, istrglen, asc, desc)
+    pasc = convert_to_ptr_int(asc)
+    pdesc = convert_to_ptr_int(desc)
+    keep_elem_refs(style, istyle, size, isize, strng, sstrng, strglen, \
+                   istrglen, asc, desc, pasc, pdesc)
+    retval = _fl_get_string_height(istyle, isize, sstrng, istrglen, \
+                                   pasc, pdesc)
     return retval
 
 
@@ -2993,8 +3007,8 @@ def fl_gettime():
             None, [cty.POINTER(cty.c_long), cty.POINTER(cty.c_long)], \
             """void fl_gettime(long int * sec, long int * usec)
             """)
-    sec, psec = make_long_pointer()
-    usec, pusec = make_long_pointer()
+    sec, psec = make_long_and_pointer()
+    usec, pusec = make_long_and_pointer()
     keep_elem_refs(sec, usec, psec, pusec)
     _fl_gettime(psec, pusec)
     return sec, usec
@@ -4429,8 +4443,8 @@ def fl_get_winsize(win):
             """void fl_get_winsize(Window win, FL_Coord * w, FL_Coord * h)
             """)
     ulwin = convert_to_Window(win)
-    iw, pw = make_int_pointer()
-    ih, ph = make_int_pointer()
+    iw, pw = make_int_and_pointer()
+    ih, ph = make_int_and_pointer()
     keep_elem_refs(win, ulwin, iw, ih, pw, ph)
     _fl_get_winsize(ulwin, pw, ph)
     return iw, ih
@@ -4447,8 +4461,8 @@ def fl_get_winorigin(win):
             """void fl_get_winorigin(Window win, FL_Coord * x, FL_Coord * y)
             """)
     ulwin = convert_to_Window(win)
-    x, px = make_FL_Coord_pointer()
-    y, py = make_FL_Coord_pointer()
+    x, px = make_FL_Coord_and_pointer()
+    y, py = make_FL_Coord_and_pointer()
     keep_elem_refs(win, ulwin, x, y, px, py)
     _fl_get_winorigin(win, px, py)
     return ix, iy
@@ -4467,10 +4481,10 @@ def fl_get_wingeometry(win):
                FL_Coord * w, FL_Coord * h)
             """)
     ulwin = convert_to_Window(win)
-    x, px = make_FL_Coord_pointer()
-    y, py = make_FL_Coord_pointer()
-    w, pw = make_FL_Coord_pointer()
-    h, ph = make_FL_Coord_pointer()
+    x, px = make_FL_Coord_and_pointer()
+    y, py = make_FL_Coord_and_pointer()
+    w, pw = make_FL_Coord_and_pointer()
+    h, ph = make_FL_Coord_and_pointer()
     keep_elem_refs(win, x, y, w, h, ulwin, px, py, pw, ph)
     _fl_get_wingeometry(ulwin, px, py, pw, ph)
     return x, y, w, h
@@ -5369,8 +5383,8 @@ def fl_popup_entry_get_font(pPopup):
             cty.POINTER(cty.c_int)],
             """void fl_popup_entry_get_font(FL_POPUP * p1, int * p2, int * p3)
             """)
-    val1, pval1 = make_int_pointer()
-    val2, pval2 = make_int_pointer()
+    val1, pval1 = make_int_and_pointer()
+    val2, pval2 = make_int_and_pointer()
     keep_elem_refs(pPopup, val1, val2, pval1, pval2)
     _fl_popup_entry_get_font(pPopup, pval1, pval2)
     return val1, val2
@@ -8225,8 +8239,8 @@ def fl_get_chart_bounds(pObject):
             """void fl_get_chart_bounds(FL_OBJECT * ob, double * min,
                double * max)
             """)
-    minbound, pminbound = make_double_pointer()
-    maxbound, pmaxbound = make_double_pointer()
+    minbound, pminbound = make_double_and_pointer()
+    maxbound, pmaxbound = make_double_and_pointer()
     keep_elem_refs(pObject, minbound, maxbound, pminbound, pmaxbound)
     _fl_get_chart_bounds(pObject, pminbound, pmaxbound)
     return minbound, maxbound
@@ -8744,9 +8758,9 @@ def fl_get_clock(pObject):
             cty.POINTER(cty.c_int), cty.POINTER(cty.c_int)],
             """void fl_get_clock(FL_OBJECT * ob, int * h, int * m, int * s)
             """)
-    hr, phr = make_int_pointer()
-    mn, pmn = make_int_pointer()
-    sec, psec = make_int_pointer()
+    hr, phr = make_int_and_pointer()
+    mn, pmn = make_int_and_pointer()
+    sec, psec = make_int_and_pointer()
     keep_elem_refs(pObject, hr, mn, sec, phr, pmn, psec)
     _fl_get_clock(pObject, phr, pmn, psec)
     return hr, mn, sec
@@ -8948,8 +8962,8 @@ def fl_get_counter_bounds(pObject):
             """void fl_get_counter_bounds(FL_OBJECT * ob, double * min,
                double * max)
             """)
-    minbound, pminbound = make_double_pointer()
-    maxbound, pmaxbound = make_double_pointer()
+    minbound, pminbound = make_double_and_pointer()
+    maxbound, pmaxbound = make_double_and_pointer()
     keep_elem_refs(pObject, minbound, maxbound, pminbound, pmaxbound)
     _fl_get_counter_bounds(pObject, pminbound, pmaxbound)
     return minbound, maxbound
@@ -8967,8 +8981,8 @@ def fl_get_counter_step(pObject):
             """void fl_get_counter_step(FL_OBJECT * ob, double * s,
                double * l)
             """)
-    s, ps = make_double_pointer()
-    l, pl = make_double_pointer()
+    s, ps = make_double_and_pointer()
+    l, pl = make_double_and_pointer()
     keep_elem_refs(pObject, s, l, ps, pl)
     _fl_get_counter_step(pObject, ps, pl)
     return s, l
@@ -9276,8 +9290,8 @@ def fl_get_dial_bounds(pObject):
             """void fl_get_dial_bounds(FL_OBJECT * ob, double * min,
                double * max)
             """)
-    minbound, pminbound = make_double_pointer()
-    maxbound, pmaxbound = make_double_pointer()
+    minbound, pminbound = make_double_and_pointer()
+    maxbound, pmaxbound = make_double_and_pointer()
     keep_elem_refs(pObject, minbound, maxbound, pminbound, pmaxbound)
     _fl_get_dial_bounds(pObject, pminbound, pmaxbound)
     return minbound, maxbound
@@ -9637,10 +9651,10 @@ def fl_get_formbrowser_area(pObject):
             """int fl_get_formbrowser_area(FL_OBJECT * ob, int * x, int * y,
                int * w, int * h)
             """)
-    x, px = make_int_pointer()
-    y, py = make_int_pointer()
-    w, pw = make_int_pointer()
-    h, ph = make_int_pointer()
+    x, px = make_int_and_pointer()
+    y, py = make_int_and_pointer()
+    w, pw = make_int_and_pointer()
+    h, ph = make_int_and_pointer()
     keep_elem_refs(pObject, x, y, w, h, px, py, pw, ph)
     retval = _fl_get_formbrowser_area(pObject, px, py, pw, ph)
     return retval, x, y, w, h
@@ -11073,8 +11087,8 @@ def fl_get_input_color(pObject):
             """void fl_get_input_color(FL_OBJECT * ob, FL_COLOR * textcol,
                FL_COLOR * curscol)
             """)
-    textcolr, ptextcolr = make_ulong_pointer()
-    curscolr, pcurscolr = make_ulong_pointer()
+    textcolr, ptextcolr = make_ulong_and_pointer()
+    curscolr, pcurscolr = make_ulong_and_pointer()
     keep_elem_refs(pObject, textcolr, curscolr)
     _fl_get_input_color(pObject, ptextcolr, pcurscolr)
     return textcolr, curscolr
@@ -11253,8 +11267,8 @@ def fl_get_input_scrollbarsize(pObject):
             """void fl_get_input_scrollbarsize(FL_OBJECT * ob,
                int * hh, int * vw)
             """)
-    hh, phh = make_int_pointer()
-    vw, pvw = make_int_pointer()
+    hh, phh = make_int_and_pointer()
+    vw, pvw = make_int_and_pointer()
     keep_elem_refs(pObject, hh, vw)
     _fl_get_input_scrollbarsize(pObject, phh, pvw)
     return hh, vw
@@ -11342,8 +11356,8 @@ def fl_get_input_cursorpos(pObject):
             cty.POINTER(cty.c_int)],
             """int fl_get_input_cursorpos(FL_OBJECT * ob, int * x, int * y)
             """)
-    x, px = make_int_pointer()
-    y, py = make_int_pointer()
+    x, px = make_int_and_pointer()
+    y, py = make_int_and_pointer()
     keep_elem_refs(pObject, x, y)
     retval = _fl_get_input_cursorpos(pObject, px, py)
     return retval, x, y
@@ -11388,8 +11402,8 @@ def fl_get_input_format(pObject):
             cty.POINTER(cty.c_int)],
             """void fl_get_input_format(FL_OBJECT * ob, int * fmt, int * sep)
             """)
-    fmt, pfmt = make_int_pointer()
-    sep, psep = make_int_pointer()
+    fmt, pfmt = make_int_and_pointer()
+    sep, psep = make_int_and_pointer()
     keep_elem_refs(pObject, fmt, sep, pfmt, psep)
     _fl_get_input_format(pObject, pfmt, psep)
     return fmt, sep
@@ -12262,8 +12276,8 @@ def fl_get_positioner_xbounds(pObject):
             """void fl_get_positioner_xbounds(FL_OBJECT * ob, double * min,
             double * max)
             """)
-    minbound, pminbound = make_double_pointer()
-    maxbound, pmaxbound = make_double_pointer()
+    minbound, pminbound = make_double_and_pointer()
+    maxbound, pmaxbound = make_double_and_pointer()
     keep_elem_refs(pObject, minbound, maxbound, pminbound, pmaxbound)
     _fl_get_positioner_xbounds(pObject, pminbound, pmaxbound)
     return minbound, maxbound
@@ -12325,8 +12339,8 @@ def fl_get_positioner_ybounds(pObject):
             """void fl_get_positioner_ybounds(FL_OBJECT * ob, double * min,
                double * max)
             """)
-    minbound, pminbound = make_double_pointer()
-    maxbound, pmaxbound = make_double_pointer()
+    minbound, pminbound = make_double_and_pointer()
+    maxbound, pmaxbound = make_double_and_pointer()
     keep_elem_refs(pObject, minbound, maxbound, pminbound, pmaxbound)
     _fl_get_positioner_ybounds(pObject, pminbound, pmaxbound)
     return minbound, maxbound
@@ -12490,8 +12504,8 @@ def fl_get_scrollbar_increment(pObject):
             """void fl_get_scrollbar_increment(FL_OBJECT * ob, double * a,
                double * b)
             """)
-    a, pa = make_double_pointer()
-    b, pb = make_double_pointer()
+    a, pa = make_double_and_pointer()
+    b, pb = make_double_and_pointer()
     keep_elem_refs(pObject, a, b, pa, pb)
     _fl_get_scrollbar_increment(pObject, pa, pb)
     return a, b
@@ -12847,8 +12861,8 @@ def fl_get_select_text_font(pObject):
             cty.POINTER(cty.c_int)],
             """int fl_get_select_text_font(FL_OBJECT * p1, int * p2, int * p3)
             """)
-    num1, pnum1 = make_int_pointer()
-    num2, pnum2 = make_int_pointer()
+    num1, pnum1 = make_int_and_pointer()
+    num2, pnum2 = make_int_and_pointer()
     keep_elem_refs(pObject, num1, num2, pnum1, pnum2)
     retval = _fl_get_select_text_font(pObject, pnum2, pnum2)
     return retval, num1, num2
@@ -13070,8 +13084,8 @@ def fl_get_slider_bounds(pObject):
             """void fl_get_slider_bounds(FL_OBJECT * ob, double * min,
                double * max)
             """)
-    minbound, pminbound = make_double_pointer()
-    maxbound, pmaxbound = make_double_pointer()
+    minbound, pminbound = make_double_and_pointer()
+    maxbound, pmaxbound = make_double_and_pointer()
     keep_elem_refs(pObject, minbound, maxbound, pminbound, pmaxbound)
     _fl_get_slider_bounds(pObject, pminbound, pmaxbound)
     return minbound, maxbound
@@ -13133,8 +13147,8 @@ def fl_get_slider_increment(pObject):
             """void fl_get_slider_increment(FL_OBJECT * ob, double * l,
                double * r)
             """)
-    l, pl = make_double_pointer()
-    r, pr = make_double_pointer()
+    l, pl = make_double_and_pointer()
+    r, pr = make_double_and_pointer()
     keep_elem_refs(pObject, l, r, pl, pr)
     _fl_get_slider_increment(pObject, pl, pr)
     return l, r
@@ -13284,8 +13298,8 @@ def fl_get_spinner_bounds(pObject):
             """void fl_get_spinner_bounds(FL_OBJECT * obj, double * min,
                double * max)
             """)
-    minbound, pminbound = make_double_pointer()
-    maxbound, pmaxbound = make_double_pointer()
+    minbound, pminbound = make_double_and_pointer()
+    maxbound, pmaxbound = make_double_and_pointer()
     keep_elem_refs(pObject, minbound, maxbound, pminbound, pmaxbound)
     _fl_get_spinner_bounds(pObject, pminbound, pmaxbound)
     return minbound, maxbound
@@ -13681,10 +13695,10 @@ def fl_get_folder_area(pObject):
             """void fl_get_folder_area(FL_OBJECT * ob, FL_Coord * x,
                FL_Coord * y, FL_Coord * w, FL_Coord * h)
             """)
-    x, px = make_int_pointer()
-    y, py = make_int_pointer()
-    w, pw = make_int_pointer()
-    h, ph = make_int_pointer()
+    x, px = make_int_and_pointer()
+    y, py = make_int_and_pointer()
+    w, pw = make_int_and_pointer()
+    h, ph = make_int_and_pointer()
     keep_elem_refs(pObject, x, y, w, h, px, py, pw, ph)
     _fl_get_folder_area(pObject, px, py, pw, ph)
     return x, y, w, h
@@ -13922,8 +13936,8 @@ def fl_get_thumbwheel_bounds(pObject):
             """void fl_get_thumbwheel_bounds(FL_OBJECT * ob, double * min,
                double * max)
             """)
-    minbound, pminbound = make_double_pointer()
-    maxbound, pmaxbound = make_double_pointer()
+    minbound, pminbound = make_double_and_pointer()
+    maxbound, pmaxbound = make_double_and_pointer()
     keep_elem_refs(pObject, minbound, maxbound, pminbound, pmaxbound)
     _fl_get_thumbwheel_bounds(pObject, pminbound, pmaxbound)
     return minbound, maxbound
@@ -14963,8 +14977,8 @@ def fl_get_xyplot_xbounds(pObject):
             """void fl_get_xyplot_xbounds(FL_OBJECT * ob, float * xmin,
                float * xmax)
             """)
-    minbound, pminbound = make_float_pointer()
-    maxbound, pmaxbound = make_float_pointer()
+    minbound, pminbound = make_float_and_pointer()
+    maxbound, pmaxbound = make_float_and_pointer()
     keep_elem_refs(pObject, minbound, maxbound, pminbound, pmaxbound)
     _fl_get_xyplot_xbounds(pObject, pminbound, pmaxbound)
     return minbound, maxbound
@@ -14982,8 +14996,8 @@ def fl_get_xyplot_ybounds(pObject):
             """void fl_get_xyplot_ybounds(FL_OBJECT * ob, float * ymin,
                float * ymax)
             """)
-    minbound, pminbound = make_float_pointer()
-    maxbound, pmaxbound = make_float_pointer()
+    minbound, pminbound = make_float_and_pointer()
+    maxbound, pmaxbound = make_float_and_pointer()
     keep_elem_refs(pObject, minbound, maxbound, pminbound, pmaxbound)
     _fl_get_xyplot_ybounds(pObject, pminbound, pmaxbound)
     return minbound, maxbound
@@ -15001,9 +15015,9 @@ def fl_get_xyplot(pObject):
             """void fl_get_xyplot(FL_OBJECT * ob, float * x, float * y,
                int * i)
             """)
-    x, px = make_float_pointer()
-    y, py = make_float_pointer()
-    i, pi = make_int_pointer()
+    x, px = make_float_and_pointer()
+    y, py = make_float_and_pointer()
+    i, pi = make_int_and_pointer()
     keep_elem_refs(pObject, x, y, i, px, py, pi)
     _fl_get_xyplot(pObject, px, py, pi)
     return x, y, i
@@ -15021,9 +15035,9 @@ def fl_get_xyplot_data(pObject):
             """void fl_get_xyplot_data(FL_OBJECT * ob, float * x, float * y,
                int * n)
             """)
-    x, px = make_float_pointer()
-    y, py = make_float_pointer()
-    n, pn = make_int_pointer()
+    x, px = make_float_and_pointer()
+    y, py = make_float_and_pointer()
+    n, pn = make_int_and_pointer()
     keep_elem_refs(pObject, x, y, n, px, py, pn)
     _fl_get_xyplot_data(pObject, px, py, pn)
     return x, y, n
@@ -15043,9 +15057,9 @@ def fl_get_xyplot_data_pointer(pObject, idnum):
                float * * x, float * * y, int * n)
             """)
     iidnum = convert_to_int(idnum)
-    x, px = make_float_pointer()
-    y, py = make_float_pointer()
-    n, pn = make_int_pointer()
+    x, px = make_float_and_pointer()
+    y, py = make_float_and_pointer()
+    n, pn = make_int_and_pointer()
     keep_elem_refs(pObject, idnum, iidnum, x, y, n, px, py, pn)
     _fl_get_xyplot_data_pointer(pObject, iidnum, px, py, pn)
     return x, y, n
@@ -15064,9 +15078,9 @@ def fl_get_xyplot_overlay_data(pObject, idnum):
                float * x, float * y, int * n)
             """)
     iidnum = convert_to_int(idnum)
-    x, px = make_float_pointer()
-    y, py = make_float_pointer()
-    n, pn = make_int_pointer()
+    x, px = make_float_and_pointer()
+    y, py = make_float_and_pointer()
+    n, pn = make_int_and_pointer()
     keep_elem_refs(pObject, idnum, iidnum, x, y, n, px, py, pn)
     _fl_get_xyplot_overlay_data(pObject, iidnum, px, py, pn)
     return x, y, n
@@ -15202,8 +15216,8 @@ def fl_get_xyplot_xmapping(pObject):
             """void fl_get_xyplot_xmapping(FL_OBJECT * ob, float * a,
                float * b)
             """)
-    a, pa = make_float_pointer()
-    b, pb = make_float_pointer()
+    a, pa = make_float_and_pointer()
+    b, pb = make_float_and_pointer()
     keep_elem_refs(pObject, a, b, pa, pb)
     _fl_get_xyplot_xmapping(pObject, pa, pb)
     return a, b
@@ -15221,8 +15235,8 @@ def fl_get_xyplot_ymapping(pObject):
             """void fl_get_xyplot_ymapping(FL_OBJECT * ob, float * a,
                float * b)
             """)
-    a, pa = make_float_pointer()
-    b, pb = make_float_pointer()
+    a, pa = make_float_and_pointer()
+    b, pb = make_float_and_pointer()
     keep_elem_refs(pObject, a, b, pa, pb)
     _fl_get_xyplot_ymapping(pObject, pa, pb)
     return a, b

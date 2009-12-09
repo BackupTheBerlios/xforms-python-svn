@@ -1,6 +1,7 @@
 
 
 SVN
+    * Porting of strsize example.
     * Porting of thumbwheel example.
     * Porting of secretinput example.
     * Porting of lalign example.
