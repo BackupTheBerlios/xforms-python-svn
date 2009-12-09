@@ -8585,9 +8585,9 @@ def fl_set_choice_item_mode(pObject, item, mode):
                unsigned int mode)
             """)
     iitem = convert_to_int(item)
-    imode = convert_to_int(mode)
-    keep_elem_refs(pObject, item, mode, iitem, imode)
-    _fl_set_choice_item_mode(pObject, iitem, imode)
+    uimode = convert_to_uint(mode)
+    keep_elem_refs(pObject, item, mode, iitem, uimode)
+    _fl_set_choice_item_mode(pObject, iitem, uimode)
 
 
 def fl_set_choice_item_shortcut(pObject, item, sctext):
