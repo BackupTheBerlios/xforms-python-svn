@@ -1,6 +1,7 @@
 
 
 SVN
+    * Porting of invslider example.
     * Porting of ndial example.
     * Porting of strsize example.
     * Porting of thumbwheel example.
@@ -9,7 +10,7 @@ SVN
     * Porting of objinactive example.
     * Porting of colsel1 example.
     * Porting of goodies example.
-    * Initial review to give meaningful names as functions'
+    * Initial review to give meaningful names to functions'
     parameters and to modify API for getter functions who return
     multiple values
     * Porting of choice example.

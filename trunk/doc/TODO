@@ -6,7 +6,7 @@ using "fl_set_object_callback" only, instead of using a
 - For some functions who use some parameters as an address
 value (e.g. in c: &a) that is modified by the function
 itself, there has been a change in API so these arguments
-represent a return value.
+represent multiple return values.
 - First two parameters of fl_initialize (len(sys.argv) and
 sys.argv) are ignored, to prevent an unexplicable segfault
 - public functions are not guaranteed to remain stable and
@@ -15,7 +15,7 @@ name and directory layout might change in order to achieve
 a better reorganization.
 - some ported-to-python XForms c function are for internal
 use or low level work in XForms: as maybe they are not useful
-will be commented/disabled, when I find all of them.
+in python, will be commented/disabled, when I find all of them.
 - this software is mainly focused on GNU/Linux operating
 systems. Apple MacOS and MS Windows are not supported, yet.
 Other unix-like operating systems may or may not be working.
@@ -25,8 +25,7 @@ are working well. Other ones are being tested on case-by-case
 basis (as type conversion from python to c are somehow
 problematic, in some critical cases).
 - testing is much appreciated, but be warned this software
-is in a halfway phase between proof-of-concept and alpha
-development state, presently.
+is in a alpha development state, presently.
 
 
 
@@ -37,14 +36,14 @@ development state, presently.
 
 - for each acquired c function I need to improve a python
 wrapping function, in order to check if a parameter of
-correct type has been passed and convert it. (high priority).
+correct type has been passed and convert it. (high priority) (WIP).
 
 - convert XForms c examples to be used as python scripts
-(they can be used as working tests as well) (high priority).
+(they can be used as working tests as well) (high priority) (WIP).
 
 - polish wrapper to remove unnecessary comments (DONE)
 
-- verify external functions/data from Xlib and c stdlib
+- verify external functions/data from Xlib and C stdlib
 to be resolved and correct related shared library loaded
 by ctypes, remove external functions not directy referenced
 by XForms library.
@@ -56,7 +55,7 @@ function; this is absolutely annoying as I have to manually
 copy functions' description and parameters' lists from XForms
 documentation, so it may take several months. But, meantime,
 I plan to rename functions' parameters, where possible, in
-order to improve usability.
+order to improve usability. (WIP)
 
 - have a minimal but complete function reference guide; I
 do not intend to do a real developer/user manual as
@@ -64,5 +63,5 @@ xforms.pdf present in XForms is absolutely great and
 functions call in xforms-python are only slightly modified.
 
 - find some way to get rid of all direct X11/Xlib functions,
-depending only on XForms library functions.
+depending only on XForms library functions (hopefully).
 
