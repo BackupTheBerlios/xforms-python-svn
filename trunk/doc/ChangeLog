@@ -1,6 +1,7 @@
 
 
 SVN
+    * Porting of sldinactive example.
     * Porting of invslider example.
     * Porting of ndial example.
     * Porting of strsize example.
