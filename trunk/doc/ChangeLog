@@ -1,6 +1,7 @@
 
 
 SVN
+    * Porting of demo05 example.
     * Porting of cursor example.
     * Porting of browserop example.
     * Porting of sldinactive example.
