@@ -337,6 +337,13 @@ def convert_to_float(paramname):
     return retv
 
 
+def convert_to_ubyte(paramname):
+    """ Converts paramname to ctypes c_ubyte """
+
+    retv = cty.c_ubyte(paramname)
+    return retv
+
+
 def make_int_and_pointer():
     """ Makes a ctypes c_int and its pointer, and returns both """
 
@@ -396,6 +403,25 @@ def convert_to_ptr_int(paramname):
     retv = cty.pointer(iparam)
     return retv
 
+
+def convert_to_ptr_float(paramname):
+    """ Converts to a c_float then into a pointer to it, and returns only
+        pointer
+    """
+
+    fparam = convert_to_float(paramname)
+    retv = cty.pointer(fparam)
+    return retv
+
+
+def convert_to_ptr_ubyte(paramname):
+    """ Converts to a c_ubyte then into a pointer to it, and returns only
+        pointer
+    """
+
+    ubparam = convert_to_ubyte(paramname)
+    retv = cty.pointer(ubparam)
+    return retv
 
 
 def check_admissible_values(paramname, *valueslist):
@@ -5950,8 +5976,9 @@ def fl_set_bitmap_data(pObject, w, h, data):
             """)
     iw = convert_to_int(w)
     ih = convert_to_int(h)
-    keep_elem_refs(pObject, w, h, data, iw, ih)
-    _fl_set_bitmap_data(pObject, iw, ih, data)
+    pdata = convert_to_ptr_ubyte(data)
+    keep_elem_refs(pObject, w, h, data, iw, ih, pdata)
+    _fl_set_bitmap_data(pObject, iw, ih, pdata)
 
 
 def fl_set_bitmap_file(pObject, fname):
@@ -9160,9 +9187,10 @@ def fl_create_animated_cursor(curnames, timeout):
             cty.c_int, [cty.POINTER(cty.c_int), cty.c_int],
             """int fl_create_animated_cursor(int * cur_names, int timeout)
             """)
+    pcurnames = cty.cast(curnames, cty.POINTER(cty.c_int))     #convert_to_ptr_int(curnames)
     itimeout = convert_to_int(timeout)
-    keep_elem_refs(curnames, timeout, itimeout)
-    retval = _fl_create_animated_cursor(curnames, itimeout)
+    keep_elem_refs(curnames, timeout, pcurnames, itimeout)
+    retval = _fl_create_animated_cursor(pcurnames, itimeout)
     return retval
 
 
@@ -14729,13 +14757,15 @@ def fl_set_xyplot_data(pObject, x, y, n, title, xlabel, ylabel):
                int n, const char * title, const char * xlabel,
                const char * ylabel)
             """)
+    px = convert_to_ptr_float(x)
+    py = convert_to_ptr_float(y)
     inum = convert_to_int(n)
     stitle = convert_to_string(title)
     sxlabel = convert_to_string(xlabel)
     sylabel = convert_to_string(ylabel)
-    keep_elem_refs(pObject, x, y, n, title, xlabel, ylabel, inum, stitle,
-                   sxlabel, sylabel)
-    retval = _fl_set_xyplot_data(pObject, x, y, inum, stitle, \
+    keep_elem_refs(pObject, x, y, n, title, px, py, xlabel, ylabel, \
+                   inum, stitle, sxlabel, sylabel)
+    retval = _fl_set_xyplot_data(pObject, px, py, inum, stitle, \
                                  sxlabel, sylabel)
     return retval
 
@@ -14865,10 +14895,13 @@ def fl_add_xyplot_overlay(pObject, idnum, x, y, n, colr):
                float * y, int n, FL_COLOR col)
             """)
     iidnum = convert_to_int(idnum)
+    px = convert_to_ptr_float(x)
+    py = convert_to_ptr_float(y)
     inum = convert_to_int(n)
     ulcolr = convert_to_FL_COLOR(colr)
-    keep_elem_refs(pObject, idnum, x, y, n, colr, iidnum, inum, ulcolr)
-    _fl_add_xyplot_overlay(pObject, iidnum, x, y, inum, ulcolr)
+    keep_elem_refs(pObject, idnum, x, y, n, colr, iidnum, px, py, inum, \
+                   ulcolr)
+    _fl_add_xyplot_overlay(pObject, iidnum, px, py, inum, ulcolr)
 
 
 def fl_add_xyplot_overlay_file(pObject, idnum, f, colr):
