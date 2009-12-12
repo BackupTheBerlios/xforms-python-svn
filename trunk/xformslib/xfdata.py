@@ -977,11 +977,10 @@ FL_OBJECT_._fields_ = [
 
 
 #FL_EVENT = (cty.POINTER(FL_OBJECT)).in_dll(load_so_libforms(), 'FL_EVENT')
-FL_EVENT = cty.POINTER(FL_OBJECT)
+FL_EVENT = cty.POINTER(FL_OBJECT)()
 #fl_current_form = (cty.POINTER(FL_FORM)).in_dll(load_so_libforms(), \
 #                  'fl_current_form')
-fl_current_form = cty.POINTER(FL_FORM)
-#fl_current_form = FL_FORM()
+fl_current_form = cty.POINTER(FL_FORM)()
 
 
 # error callback
