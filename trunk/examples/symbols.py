@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 #  This file is part of xforms-python, and it has been ported from
-#  symbols.c XForms demo, with some adaptation.
+#  symbols.c XForms demo, with some adaptations.
 #
 #  symbols.c was written by M. Overmars and T.C. Zhao (1997),
 #  See CREDITS file for XForms copyright attribution, and LICENSE

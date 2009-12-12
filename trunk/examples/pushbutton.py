@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 #  This file is part of xforms-python, and it has been ported from
-#  pushbutton.c XForms demo, with some adaptation.
+#  pushbutton.c XForms demo, with some adaptations.
 #
 #  See CREDITS file for XForms copyright attribution, and LICENSE
 #  file for xforms-python license and copyright attribution.
