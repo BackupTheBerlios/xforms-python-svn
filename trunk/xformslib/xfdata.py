@@ -3888,6 +3888,44 @@ _XEvent._fields_ = [
 XEvent = _XEvent
 
 
+# *** start - from /usr/include/X11/X.h ***
+# Event names.  Used in "type" field in XEvent structures.  Not to be
+# confused with event masks above.  They start from 2 because 0 and 1
+# are reserved in the protocol for errors and replies. */
+KeyPress = 2
+KeyRelease = 3
+ButtonPress = 4
+ButtonRelease = 5
+MotionNotify = 6
+EnterNotify = 7
+LeaveNotify = 8
+FocusIn = 9
+FocusOut = 10
+KeymapNotify = 11
+Expose = 12
+GraphicsExpose = 13
+NoExpose = 14
+VisibilityNotify = 15
+CreateNotify = 16
+DestroyNotify = 17
+UnmapNotify = 18
+MapNotify = 19
+MapRequest = 20
+ReparentNotify = 21
+ConfigureNotify = 22
+ConfigureRequest = 23
+GravityNotify = 24
+ResizeRequest = 25
+CirculateNotify = 26
+CirculateRequest = 27
+PropertyNotify = 28
+SelectionClear = 29
+SelectionRequest = 30
+SelectionNotify = 31
+# *** end - from /usr/include/X11/X.h ***
+
+
+
 FL_APPEVENT_CB = cty.CFUNCTYPE(cty.c_int, cty.POINTER(XEvent), cty.c_void_p)
 
 FL_HANDLE_CANVAS = cty.CFUNCTYPE(cty.c_int, cty.POINTER(FL_OBJECT), Window,

@@ -262,13 +262,17 @@ def convert_to_string(paramname):
 def convert_to_int(paramname):
     """ Converts paramname to python int and to ctypes c_int """
 
-    try:
-        retv0 = int(paramname)
-    except ValueError:
-        raise XFormsTypeError("Parameter cannot be converted into an 'int'")
-    retv = cty.c_int(retv0)
-    #print "int", paramname, retv0, retv
-    return retv
+    if not isinstance(paramname, cty.c_int):
+        try:
+            retv0 = int(paramname)
+        except ValueError:
+            raise XFormsTypeError("Parameter cannot be converted into" \
+                                  " 'int'/'c_int'")
+        retv = cty.c_int(retv0)
+        #print "int", paramname, retv0, retv
+        return retv
+    else:
+        return paramname
 
 convert_to_FL_Coord = convert_to_int
 
@@ -276,37 +280,53 @@ convert_to_FL_Coord = convert_to_int
 def convert_to_uint(paramname):
     """ Converts paramname to python int and to ctypes c_uint """
 
-    try:
-        retv0 = int(paramname)
-    except ValueError:
-        raise XFormsTypeError("Parameter cannot be converted into an 'int'")
-    retv = cty.c_uint(retv0)
-    #print "uint", paramname, retv0, retv
-    return retv
+    if not isinstance(paramname, cty.c_int):
+        try:
+            retv0 = int(paramname)
+        except ValueError:
+            raise XFormsTypeError("Parameter cannot be converted into" \
+                                  " 'int'/'c_uint'")
+        else:
+            retv = cty.c_uint(retv0)
+            #print "uint", paramname, retv0, retv
+            return retv
+    else:
+        return paramname
 
 
 def convert_to_long(paramname):
     """ Converts paramname to python long and to ctypes c_long """
 
-    try:
-        retv0 = long(paramname)
-    except ValueError:
-        raise XFormsTypeError("Parameter cannot be converted into a 'long'")
-    retv = cty.c_long(retv0)
-    #print "long", paramname, retv0, retv
-    return retv
+    if not isinstance(paramname, cty.c_long):
+        try:
+            retv0 = long(paramname)
+        except ValueError:
+            raise XFormsTypeError("Parameter cannot be converted into" \
+                                  " 'long'/'c_long'")
+        else:
+            retv = cty.c_long(retv0)
+            #print "long", paramname, retv0, retv
+            return retv
+    else:
+        return paramname
 
 
 def convert_to_ulong(paramname):
     """ Converts paramname to python long and to ctypes c_ulong """
 
-    try:
-        retv0 = long(paramname)
-    except ValueError:
-        raise XFormsTypeError("Parameter cannot be converted into a 'long'")
-    retv = cty.c_ulong(retv0)
-    #print "ulong", paramname, retv0, retv
-    return retv
+    if isinstance(paramname, cty.c_ulong):
+        try:
+            retv0 = long(paramname)
+        except ValueError:
+            raise XFormsTypeError("Parameter cannot be converted into" \
+                              " 'long'/'c_ulong'")
+        else:
+            retv = cty.c_ulong(retv0)
+            #print "ulong", paramname, retv0, retv
+            return retv
+    else:
+        return paramname
+
 
 convert_to_FL_COLOR = convert_to_ulong
 convert_to_Window = convert_to_ulong
@@ -316,25 +336,35 @@ convert_to_Pixmap = convert_to_ulong
 def convert_to_double(paramname):
     """ Converts paramname to python float and to ctypes c_double """
 
-    try:
-        retv0 = float(paramname)
-    except ValueError:
-        raise XFormsTypeError("Parameter cannot be converted into a 'float'")
-    retv = cty.c_double(retv0)
-    #print "double", paramname, retv0, retv
-    return retv
+    if isinstance(paramname, cty.c_double):
+        try:
+            retv0 = float(paramname)
+        except ValueError:
+            raise XFormsTypeError("Parameter cannot be converted into" \
+                                  " 'float'/'c_double'")
+        else:
+            retv = cty.c_double(retv0)
+            #print "double", paramname, retv0, retv
+            return retv
+    else:
+        return paramname
 
 
 def convert_to_float(paramname):
     """ Converts paramname to python float and to ctypes c_float """
 
-    try:
-        retv0 = float(paramname)
-    except ValueError:
-        raise XFormsTypeError("Parameter cannot be converted into a 'float'")
-    retv = cty.c_float(retv0)
-    #print "float", paramname, retv0, retv
-    return retv
+    if isinstance(paramname, cty.c_float):
+        try:
+            retv0 = float(paramname)
+        except ValueError:
+            raise XFormsTypeError("Parameter cannot be converted into" \
+                                  " 'float'/'c_float'")
+        else:
+            retv = cty.c_float(retv0)
+            #print "float", paramname, retv0, retv
+            return retv
+    else:
+        return paramname
 
 
 def convert_to_ubyte(paramname):
@@ -411,6 +441,23 @@ def convert_to_ptr_float(paramname):
 
     fparam = convert_to_float(paramname)
     retv = cty.pointer(fparam)
+    return retv
+
+
+def convert_to_ptr_double(paramname):
+    """ Converts to a c_double then into a pointer to it, and returns only
+        pointer
+    """
+
+    fparam = convert_to_double(paramname)
+    retv = cty.pointer(fparam)
+    return retv
+
+
+def convert_to_ptr_void(paramname):
+    """ Casts param into a pointer to void """
+
+    retv = cty.cast(paramname, cty.c_void_p)
     return retv
 
 
@@ -632,7 +679,7 @@ def fl_add_timeout(msec, py_callback, data):
                FL_TIMEOUT_CALLBACK callback, void * data)
             """)
     lmsec = convert_to_long(msec)
-    pdata = pointer(data)
+    pdata = cty.cast(data, cty.c_char_p)
     c_callback = FL_TIMEOUT_CALLBACK(py_callback)
     keep_cfunc_refs(c_callback)
     keep_elem_refs(msec, lmsec, data, pdata)
@@ -699,7 +746,7 @@ def fl_bgn_form(formtype, w, h):
     iw = convert_to_FL_Coord(w)
     ih = convert_to_FL_Coord(h)
     keep_elem_refs(formtype, iformtype, w, iw, h, ih)
-    retval = _fl_bgn_form(iformtype.value, iw, ih)
+    retval = _fl_bgn_form(iformtype, iw, ih)
     return retval
 
 
@@ -1733,7 +1780,7 @@ def fl_set_object_color(pObject, colr1, colr2):
     ulcolr1 = convert_to_FL_COLOR(colr1)
     ulcolr2 = convert_to_FL_COLOR(colr2)
     keep_elem_refs(pObject, colr1, ulcolr1, colr2, ulcolr2)
-    _fl_set_object_color(pObject, ulcolr1.value, ulcolr2.value)
+    _fl_set_object_color(pObject, ulcolr1, ulcolr2)
 
 
 def fl_set_object_label(pObject, label):
@@ -1983,11 +2030,11 @@ def fl_get_object_position(pObject):
             """void fl_get_object_position(FL_OBJECT * ob, FL_Coord * x,
                FL_Coord * y)
             """)
-    ix, px = make_FL_Coord_and_pointer()
-    iy, py = make_FL_Coord_and_pointer()
-    keep_elem_refs(pObject, x, ix, px, y, iy, py)
+    x, px = make_FL_Coord_and_pointer()
+    y, py = make_FL_Coord_and_pointer()
+    keep_elem_refs(pObject, x, px, y, py)
     _fl_get_object_position(pObject, px, py)
-    return ix, iy
+    return x, y
 
 
 def fl_get_object_label(pObject):
@@ -2691,8 +2738,12 @@ def fl_get_pixel(colr):
     return retval
 
 
-def fl_get_icm_color(colr, r, g, b):
-    """ fl_get_icm_color(colr, r, g, b)
+fl_get_flcolor = fl_get_pixel
+
+
+#def fl_get_icm_color(colr, r, g, b)
+def fl_get_icm_color(colr):
+    """ fl_get_icm_color(colr) -> r, g, b
     """
 
     _fl_get_icm_color = cfuncproto(
@@ -2702,8 +2753,12 @@ def fl_get_icm_color(colr, r, g, b):
             """void fl_get_icm_color(FL_COLOR col, int * r, int * g, int * b)
             """)
     ulcolr = convert_to_FL_COLOR(colr)
-    keep_elem_refs(colr, ulcolr, r, g, b)
-    _fl_get_icm_color(ulcolr, r, g, b)
+    r, pr = make_int_and_pointer()
+    g, pg = make_int_and_pointer()
+    b, pb = make_int_and_pointer()
+    keep_elem_refs(colr, ulcolr, r, g, b, pr, pg, pb)
+    _fl_get_icm_color(ulcolr, pr, pg, pb)
+    return r, g, b
 
 
 def fl_set_icm_color(colr, r, g, b):
@@ -2967,7 +3022,7 @@ def fl_set_thinscrollbar(t):
         t_type = FL_THIN_SCROLLBAR
     else:
         t_type = FL_NORMAL_SCROLLBAR
-    _fl_set_scrollbar_type(t_type)
+    fl_set_scrollbar_type(t_type)
 
 
 def fl_flip_yorigin():
@@ -3801,8 +3856,9 @@ def fl_set_mouse(mx, my):
     _fl_set_mouse(imx, imy)
 
 
-def fl_get_win_mouse(win, x, y, keymask):
-    """ fl_get_win_mouse(win, x, y, keymask) -> window
+#def fl_get_win_mouse(win, x, y, keymask)
+def fl_get_win_mouse(win):
+    """ fl_get_win_mouse(win) -> window, x, y, keymask
     """
 
     _fl_get_win_mouse = cfuncproto(
@@ -3813,13 +3869,17 @@ def fl_get_win_mouse(win, x, y, keymask):
             unsigned int * keymask)
             """)
     ulwin = convert_to_Window(win)
-    keep_elem_refs(win, x, y, keymask, ulwin)
-    retval = _fl_get_win_mouse(ulwin, x, y, keymask)
-    return retval
+    x, px = make_FL_Coord_and_pointer()
+    y, py = make_FL_Coord_and_pointer()
+    keymask, pkeymask = make_uint_and_pointer()
+    keep_elem_refs(win, x, y, keymask, ulwin, px, py, pkeymask)
+    retval = _fl_get_win_mouse(ulwin, px, py, pkeymask)
+    return retval, x, y, keymask
 
 
-def fl_get_form_mouse(fm, x, y, keymask):
-    """ fl_get_form_mouse(fm, x, y, keymask)
+#def fl_get_form_mouse(fm, x, y, keymask)
+def fl_get_form_mouse(pForm):
+    """ fl_get_form_mouse(pForm) -> window, x, y, keymask
     """
 
     _fl_get_form_mouse = cfuncproto(
@@ -3829,8 +3889,12 @@ def fl_get_form_mouse(fm, x, y, keymask):
             """Window fl_get_form_mouse(FL_FORM * fm, FL_Coord * x,
                FL_Coord * y, unsigned int * keymask)
             """)
-    keep_elem_refs(fm, x, y, keymask)
-    _fl_get_form_mouse(fm, x, y, keymask)
+    x, px = make_FL_Coord_and_pointer()
+    y, py = make_FL_Coord_and_pointer()
+    keymask, pkeymask = make_uint_and_pointer()
+    keep_elem_refs(pForm, x, y, keymask)
+    retval = _fl_get_form_mouse(pForm, px, py, pkeymask)
+    return retval, x, y, keymask
 
 
 def fl_win_to_form(win):
@@ -3896,9 +3960,9 @@ def XRaiseWindow(pDisplay, win):
     return retval
 
 
-def fl_raise_form(f):
-    if (f.window):
-        XRaiseWindow(fl_display, f.window)
+def fl_raise_form(pForm):
+    if (pForm[0].window):
+        XRaiseWindow(fl_display, pForm[0].window)
 
 
 # /usr/include/X11/Xlib.h 2791
@@ -3917,9 +3981,9 @@ def XLowerWindow(pDisplay, win):
     return retval
 
 
-def fl_lower_form(f):
-    if (f.window):
-        XLowerWindow(fl_display, f.window)
+def fl_lower_form(pForm):
+    if (pForm[0].window):
+        XLowerWindow(fl_display, pForm[0].window)
 
 
 # /usr/include/X11/Xlib.h 3241
@@ -4103,7 +4167,7 @@ def fl_iconify(win):
             cty.c_int, [Window], \
             """int fl_iconify(Window win)
             """)
-    ulwin = convert_to_double(win)
+    ulwin = convert_to_Window(win)
     keep_elem_refs(win, ulwin)
     retval = _fl_iconify(ulwin)
     return retval
@@ -4118,7 +4182,7 @@ def fl_winresize(win, neww, newh):
             None, [Window, FL_Coord, FL_Coord], \
             """void fl_winresize(Window win, FL_Coord neww, FL_Coord newh)
             """)
-    ulwin = convert_to_double(win)
+    ulwin = convert_to_Window(win)
     ineww = convert_to_int(neww)
     inewh = convert_to_int(newh)
     keep_elem_refs(win, neww, newh, ulwin, ineww, inewh)
@@ -4134,7 +4198,7 @@ def fl_winmove(win, dx, dy):
             None, [Window, FL_Coord, FL_Coord], \
             """void fl_winmove(Window win, FL_Coord dx, FL_Coord dy)
             """)
-    ulwin = convert_to_double(win)
+    ulwin = convert_to_Window(win)
     idx = convert_to_int(dx)
     idy = convert_to_int(dy)
     keep_elem_refs(win, dx, dy, ulwin, idx, idy)
@@ -4151,7 +4215,7 @@ def fl_winreshape(win, dx, dy, w, h):
             """void fl_winreshape(Window win, FL_Coord dx, FL_Coord dy,
                FL_Coord w, FL_Coord h)
             """)
-    ulwin = convert_to_double(win)
+    ulwin = convert_to_Window(win)
     idx = convert_to_int(dx)
     idy = convert_to_int(dy)
     iw = convert_to_FL_Coord(w)
@@ -4169,9 +4233,9 @@ def fl_winicon(win, icon, mask):
             None, [Window, Pixmap, Pixmap], \
             """void fl_winicon(Window win, Pixmap p, Pixmap m)
             """)
-    ulwin = convert_to_double(win)
-    ulicon = convert_to_double(icon)
-    ulmask = convert_to_double(mask)
+    ulwin = convert_to_Window(win)
+    ulicon = convert_to_Pixmap(icon)
+    ulmask = convert_to_Pixmap(mask)
     keep_elem_refs(win, icon, mask, ulwin, ulicon, ulmask)
     _fl_winicon(ulwin, ulicon, ulmask)
 
@@ -4185,8 +4249,8 @@ def fl_winbackground(win, bkcolr):
             None, [Window, FL_COLOR], \
             """void fl_winbackground(Window win, FL_COLOR bk)
             """)
-    ulwin = convert_to_double(win)
-    ulbkcolr = convert_to_double(bkcolr)
+    ulwin = convert_to_Window(win)
+    ulbkcolr = convert_to_FL_COLOR(bkcolr)
     keep_elem_refs(win, bkcolr, ulwin, ulbkcolr)
     _fl_winbackground(ulwin, ulbkcolr)
 
@@ -4200,7 +4264,7 @@ def fl_winstepunit(win, dx, dy):
             None, [Window, FL_Coord, FL_Coord], \
             """void fl_winstepunit(Window win, FL_Coord dx, FL_Coord dy)
             """)
-    ulwin = convert_to_double(win)
+    ulwin = convert_to_Window(win)
     idx = convert_to_int(dx)
     idy = convert_to_int(dy)
     keep_elem_refs(win, dx, dy, ulwin, idx, idy)
@@ -4216,7 +4280,7 @@ def fl_winisvalid(win):
             cty.c_int, [Window], \
             """int fl_winisvalid(Window win)
             """)
-    ulwin = convert_to_double(win)
+    ulwin = convert_to_Window(win)
     keep_elem_refs(win, ulwin)
     retval = _fl_winisvalid(ulwin)
     return retval
@@ -4231,7 +4295,7 @@ def fl_wintitle(win, title):
             None, [Window, STRING], \
             """void fl_wintitle(Window win, const char * title)
             """)
-    ulwin = convert_to_double(win)
+    ulwin = convert_to_Window(win)
     stitle = convert_to_string(title)
     keep_elem_refs(win, title, ulwin, stitle)
     _fl_wintitle(ulwin, stitle)
@@ -4246,7 +4310,7 @@ def fl_winicontitle(win, title):
             None, [Window, STRING], \
             """void fl_winicontitle(Window win, const char * title)
             """)
-    ulwin = convert_to_double(win)
+    ulwin = convert_to_Window(win)
     stitle = convert_to_string(title)
     keep_elem_refs(win, title, ulwin, stitle)
     _fl_winicontitle(ulwin, stitle)
@@ -4477,7 +4541,7 @@ def fl_get_winsize(win):
     return iw, ih
 
 
-#def fl_get_winorigin(win, x, y):
+#def fl_get_winorigin(win, x, y)
 def fl_get_winorigin(win):
     """ fl_get_winorigin(win) -> x, y
     """
@@ -4492,7 +4556,7 @@ def fl_get_winorigin(win):
     y, py = make_FL_Coord_and_pointer()
     keep_elem_refs(win, ulwin, x, y, px, py)
     _fl_get_winorigin(win, px, py)
-    return ix, iy
+    return x, y
 
 
 #def fl_get_wingeometry(win, x, y, w, h)
@@ -4890,7 +4954,7 @@ def fl_get_app_resources(pResource, n):
             """void fl_get_app_resources(FL_RESOURCE * appresource, int n)
             """)
     inum = convert_to_int(n)
-    keep_elem_refs(appresource, n, inum)
+    keep_elem_refs(pResource, n, inum)
     _fl_get_app_resources(pResource, inum)
 
 
@@ -5215,8 +5279,8 @@ def fl_popup_add(win, p2):
     return retval
 
 
-def fl_popup_add_entries(pPopup, extrytxt):
-    """ fl_popup_add_entries(pPopup, extrytxt) -> pPopupEntry
+def fl_popup_add_entries(pPopup, entrytxt):
+    """ fl_popup_add_entries(pPopup, entrytxt) -> pPopupEntry
     """
 
     _fl_popup_add_entries = cfuncproto(
@@ -5225,9 +5289,9 @@ def fl_popup_add_entries(pPopup, extrytxt):
             """FL_POPUP_ENTRY * fl_popup_add_entries(FL_POPUP * p1,
                const char * p2)
             """)
-    sextrytxt = convert_to_string(extrytxt)
-    keep_elem_refs(pPopup, entrytxt, sextrytxt)
-    retval = _fl_popup_add_entries(pPopup, sextrytxt)
+    sentrytxt = convert_to_string(entrytxt)
+    keep_elem_refs(pPopup, entrytxt, sentrytxt)
+    retval = _fl_popup_add_entries(pPopup, sentrytxt)
     return retval
 
 
@@ -5680,8 +5744,8 @@ def fl_popup_entry_set_text(p1, txtstr):
     return retval
 
 
-def fl_popup_entry_set_shortcut(p1, sctext):
-    """ fl_popup_entry_set_shortcut(p1, sctext)
+def fl_popup_entry_set_shortcut(pPopupEntry, sctext):
+    """ fl_popup_entry_set_shortcut(pPopupEntry, sctext)
     """
 
     _fl_popup_entry_set_shortcut = cfuncproto(
@@ -5691,12 +5755,12 @@ def fl_popup_entry_set_shortcut(p1, sctext):
                const char * p2)
             """)
     ssctext = convert_to_string(sctext)
-    keep_elem_refs(p1, sctext, ssctext)
-    _fl_popup_entry_set_shortcut(p1, ssctext)
+    keep_elem_refs(pPopupEntry, sctext, ssctext)
+    _fl_popup_entry_set_shortcut(pPopupEntry, ssctext)
 
 
-def fl_popup_entry_set_value(p1, val):
-    """ fl_popup_entry_set_value(p1, p2) -> num.
+def fl_popup_entry_set_value(pPopupEntry, val):
+    """ fl_popup_entry_set_value(pPopupEntry, p2) -> num.
     """
 
     _fl_popup_entry_set_value = cfuncproto(
@@ -5706,13 +5770,13 @@ def fl_popup_entry_set_value(p1, val):
                long int p2)
             """)
     lval = convert_to_long(val)
-    keep_elem_refs(p1, val, lval)
-    retval = _fl_popup_entry_set_value(p1, lval)
+    keep_elem_refs(pPopupEntry, val, lval)
+    retval = _fl_popup_entry_set_value(pPopupEntry, lval)
     return retval
 
 
-def fl_popup_entry_set_user_data(p1, p2):
-    """ fl_popup_entry_set_user_data(p1, p2) -> ?
+def fl_popup_entry_set_user_data(pPopupEntry, p2):
+    """ fl_popup_entry_set_user_data(pPopupEntry, p2) -> ?
     """
 
     _fl_popup_entry_set_user_data = cfuncproto(
@@ -5721,13 +5785,13 @@ def fl_popup_entry_set_user_data(p1, p2):
             """void * fl_popup_entry_set_user_data(FL_POPUP_ENTRY * p1,
                void * p2)
             """)
-    keep_elem_refs(p1, p2)
-    retval = _fl_popup_entry_set_user_data(p1, p2)
+    keep_elem_refs(pPopupEntry, p2)
+    retval = _fl_popup_entry_set_user_data(pPopupEntry, p2)
     return retval
 
 
-def fl_popup_entry_get_by_position(p1, p2):
-    """ fl_popup_entry_get_by_position(p1, p2) -> popup_entry
+def fl_popup_entry_get_by_position(pPopup, num):
+    """ fl_popup_entry_get_by_position(pPopup, num) -> pPopupEntry
     """
 
     _fl_popup_entry_get_by_position = cfuncproto(
@@ -5736,14 +5800,14 @@ def fl_popup_entry_get_by_position(p1, p2):
             """FL_POPUP_ENTRY * fl_popup_entry_get_by_position(FL_POPUP * p1,
                int p2)
             """)
-    ip2 = convert_to_int(p2)
-    keep_elem_refs(p1, p2, ip2)
-    retval = _fl_popup_entry_get_by_position(p1, ip2)
+    inum = convert_to_int(num)
+    keep_elem_refs(pPopup, num, inum)
+    retval = _fl_popup_entry_get_by_position(pPopup, inum)
     return retval
 
 
-def fl_popup_entry_get_by_value(p1, p2):
-    """ fl_popup_entry_get_by_value(p1, p2) -> popup_entry
+def fl_popup_entry_get_by_value(pPopup, val):
+    """ fl_popup_entry_get_by_value(pPopup, val) -> pPopupEntry
     """
 
     _fl_popup_entry_get_by_value = cfuncproto(
@@ -5752,14 +5816,14 @@ def fl_popup_entry_get_by_value(p1, p2):
             """FL_POPUP_ENTRY * fl_popup_entry_get_by_value(FL_POPUP * p1,
                long int p2)
             """)
-    lp2 = convert_to_long(p2)
-    keep_elem_refs(p1, p2, lp2)
-    retval = _fl_popup_entry_get_by_value(p1, lp2)
+    lval = convert_to_long(val)
+    keep_elem_refs(pPopup, val, lval)
+    retval = _fl_popup_entry_get_by_value(pPopup, lval)
     return retval
 
 
-def fl_popup_entry_get_by_user_data(p1, p2):
-    """ fl_popup_entry_get_by_user_data(p1, p2) -> popup_entry
+def fl_popup_entry_get_by_user_data(pPopup, p2):
+    """ fl_popup_entry_get_by_user_data(pPopup, p2) -> pPopupEntry
     """
 
     _fl_popup_entry_get_by_user_data = cfuncproto(
@@ -5768,13 +5832,13 @@ def fl_popup_entry_get_by_user_data(p1, p2):
             """FL_POPUP_ENTRY * fl_popup_entry_get_by_user_data(FL_POPUP * p1,
                void * p2)
             """)
-    keep_elem_refs(p1, p2)
-    retval = _fl_popup_entry_get_by_user_data(p1, p2)
+    keep_elem_refs(pPopup, p2)
+    retval = _fl_popup_entry_get_by_user_data(pPopup, p2)
     return retval
 
 
-def fl_popup_entry_get_by_text(p1, entrytxt):
-    """ fl_popup_entry_get_by_text(p1, entrytxt) -> popup_entry
+def fl_popup_entry_get_by_text(pPopup, text):
+    """ fl_popup_entry_get_by_text(pPopup, text) -> pPopupEntry
     """
 
     _fl_popup_entry_get_by_text = cfuncproto(
@@ -5783,14 +5847,14 @@ def fl_popup_entry_get_by_text(p1, entrytxt):
             """FL_POPUP_ENTRY * fl_popup_entry_get_by_text(FL_POPUP * p1,
                const char * p2)
             """)
-    sentrytxt = convert_to_string(entrytxt)
-    keep_elem_refs(p1, entrytxt, sentrytxt)
-    retval = _fl_popup_entry_get_by_text(p1, sentrytxt)
+    stext = convert_to_string(text)
+    keep_elem_refs(pPopup, text, stext)
+    retval = _fl_popup_entry_get_by_text(pPopup, stext)
     return retval
 
 
-def fl_popup_entry_get_by_label(p1, labeltxt):
-    """ fl_popup_entry_get_by_label(p1, labeltxt) -> popup_entry
+def fl_popup_entry_get_by_label(pPopup, label):
+    """ fl_popup_entry_get_by_label(pPopup, label) -> pPopupEntry
     """
 
     _fl_popup_entry_get_by_label = cfuncproto(
@@ -5799,14 +5863,14 @@ def fl_popup_entry_get_by_label(p1, labeltxt):
             """FL_POPUP_ENTRY * fl_popup_entry_get_by_label(FL_POPUP * p1,
                const char * p2)
             """)
-    slabeltxt = convert_to_string(labeltxt)
-    keep_elem_refs(p1, labeltxt, slabeltxt)
-    retval = _fl_popup_entry_get_by_label(p1, slabeltxt)
+    slabel = convert_to_string(label)
+    keep_elem_refs(pPopup, label, slabel)
+    retval = _fl_popup_entry_get_by_label(pPopup, slabel)
     return retval
 
 
-def fl_popup_entry_get_group(p1):
-    """ fl_popup_entry_get_group(p1) -> num.
+def fl_popup_entry_get_group(pPopupEntry):
+    """ fl_popup_entry_get_group(pPopupEntry) -> num.
     """
 
     _fl_popup_entry_get_group = cfuncproto(
@@ -5814,13 +5878,13 @@ def fl_popup_entry_get_group(p1):
             cty.c_int, [cty.POINTER(FL_POPUP_ENTRY)],
             """int fl_popup_entry_get_group(FL_POPUP_ENTRY * p1)
             """)
-    keep_elem_refs(p1)
-    retval = _fl_popup_entry_get_group(p1)
+    keep_elem_refs(pPopupEntry)
+    retval = _fl_popup_entry_get_group(pPopupEntry)
     return retval
 
 
-def fl_popup_entry_set_group(p1, p2):
-    """ fl_popup_entry_set_group(p1, p2) -> num.
+def fl_popup_entry_set_group(pPopupEntry, num):
+    """ fl_popup_entry_set_group(pPopupEntry, num) -> num.
     """
 
     _fl_popup_entry_set_group = cfuncproto(
@@ -5828,14 +5892,14 @@ def fl_popup_entry_set_group(p1, p2):
             cty.c_int, [cty.POINTER(FL_POPUP_ENTRY), cty.c_int],
             """int fl_popup_entry_set_group(FL_POPUP_ENTRY * p1, int p2)
             """)
-    ip2 = convert_to_int(p2)
-    keep_elem_refs(p1, p2, ip2)
-    retval = _fl_popup_entry_set_group(p1, ip2)
+    inum = convert_to_int(num)
+    keep_elem_refs(pPopupEntry, num, inum)
+    retval = _fl_popup_entry_set_group(pPopupEntry, inum)
     return retval
 
 
-def fl_popup_entry_get_subpopup(p1):
-    """ fl_popup_entry_get_subpopup(p1) -> popup
+def fl_popup_entry_get_subpopup(pPopupEntry):
+    """ fl_popup_entry_get_subpopup(pPopupEntry) -> pPopup
     """
 
     _fl_popup_entry_get_subpopup = cfuncproto(
@@ -5843,13 +5907,13 @@ def fl_popup_entry_get_subpopup(p1):
             cty.POINTER(FL_POPUP), [cty.POINTER(FL_POPUP_ENTRY)],
             """FL_POPUP * fl_popup_entry_get_subpopup(FL_POPUP_ENTRY * p1)
             """)
-    keep_elem_refs(p1)
-    retval = _fl_popup_entry_get_subpopup(p1)
+    keep_elem_refs(pPopupEntry)
+    retval = _fl_popup_entry_get_subpopup(pPopupEntry)
     return retval
 
 
-def fl_popup_entry_set_subpopup(p1, p2):
-    """ fl_popup_entry_set_subpopup(p1, p2) -> popup
+def fl_popup_entry_set_subpopup(pPopupEntry, pPopup):
+    """ fl_popup_entry_set_subpopup(pPopupEntry, pPopup) -> pPopup
     """
 
     _fl_popup_entry_set_subpopup = cfuncproto(
@@ -5859,13 +5923,13 @@ def fl_popup_entry_set_subpopup(p1, p2):
             """FL_POPUP * fl_popup_entry_set_subpopup(FL_POPUP_ENTRY * p1,
                FL_POPUP * p2)
             """)
-    keep_elem_refs(p1, p2)
-    retval = _fl_popup_entry_set_subpopup(p1, p2)
+    keep_elem_refs(pPopupEntry, pPopup)
+    retval = _fl_popup_entry_set_subpopup(pPopupEntry, pPopup)
     return retval
 
 
-def fl_popup_get_size(p1, p2, p3):
-    """ fl_popup_get_size(p1, p2, p3) -> size num.
+def fl_popup_get_size(pPopup, p2, p3):
+    """ fl_popup_get_size(pPopup, p2, p3) -> size num.
     """
 
     _fl_popup_get_size = cfuncproto(
@@ -5875,13 +5939,13 @@ def fl_popup_get_size(p1, p2, p3):
             """int fl_popup_get_size(FL_POPUP * p1, unsigned int * p2,
                unsigned int * p3)
             """)
-    keep_elem_refs(p1, p2, p3)
-    retval = _fl_popup_get_size(p1, p2, p3)
+    keep_elem_refs(pPopup, p2, p3)
+    retval = _fl_popup_get_size(pPopup, p2, p3)
     return retval
 
 
-def fl_popup_get_min_width(p1):
-    """ fl_popup_get_min_width(p1) -> width num.
+def fl_popup_get_min_width(pPopup):
+    """ fl_popup_get_min_width(pPopup) -> width num.
     """
 
     _fl_popup_get_min_width = cfuncproto(
@@ -5889,12 +5953,12 @@ def fl_popup_get_min_width(p1):
             cty.c_int, [cty.POINTER(FL_POPUP)],
             """int fl_popup_get_min_width(FL_POPUP * p1)
             """)
-    keep_elem_refs(p1)
-    retval = _fl_popup_get_min_width(p1)
+    keep_elem_refs(pPopup)
+    retval = _fl_popup_get_min_width(pPopup)
     return retval
 
 
-def fl_popup_set_min_width(p1, p2):
+def fl_popup_set_min_width(pPopup, num):
     """ fl_popup_set_min_width(p1, p2) -> width num.
     """
 
@@ -5903,9 +5967,9 @@ def fl_popup_set_min_width(p1, p2):
             cty.c_int, [cty.POINTER(FL_POPUP), cty.c_int],
             """int fl_popup_set_min_width(FL_POPUP * p1, int p2)
             """)
-    ip2 = convert_to_int(p2)
-    keep_elem_refs(p1, p2, ip2)
-    retval = _fl_popup_set_min_width(p1, ip2)
+    inum = convert_to_int(num)
+    keep_elem_refs(pPopup, num, inum)
+    retval = _fl_popup_set_min_width(pPopup, inum)
     return retval
 
 
@@ -10771,7 +10835,7 @@ def fl_set_fselector_transient(b):
         argval = FL_TRANSIENT
     else:
         argval = FL_FULLBORDER
-    _fl_set_fselector_border(argval)
+    fl_set_fselector_border(argval)
 
 
 def fl_set_fselector_callback(py_cb, p2):
@@ -11996,7 +12060,7 @@ def fl_clear_nmenu(pObject):
 
 
 def fl_add_nmenu_items(pObject, itemstr):
-    """ fl_add_nmenu_items(pObject, itemstr) -> popup_entry
+    """ fl_add_nmenu_items(pObject, itemstr) -> pPopupEntry
     """
 
     _fl_add_nmenu_items = cfuncproto(
@@ -12012,7 +12076,7 @@ def fl_add_nmenu_items(pObject, itemstr):
 
 
 def fl_insert_nmenu_items(pObject, pPopupEntry, itemstr):
-    """ fl_insert_nmenu_items(pObject, pPopupEntry, itemstr) -> popup_entry
+    """ fl_insert_nmenu_items(pObject, pPopupEntry, itemstr) -> pPopupEntry
     """
 
     _fl_insert_nmenu_items = cfuncproto(
@@ -12060,7 +12124,7 @@ def fl_delete_nmenu_item(pObject, pPopupEntry):
 
 
 def fl_set_nmenu_items(pObject, pPopupItem):
-    """ fl_set_nmenu_items(pObject, pPopupItem) -> popup_entry
+    """ fl_set_nmenu_items(pObject, pPopupItem) -> pPopupEntry
     """
 
     _fl_set_nmenu_items = cfuncproto(
@@ -12076,7 +12140,7 @@ def fl_set_nmenu_items(pObject, pPopupItem):
 
 
 def fl_get_nmenu_popup(pObject):
-    """ fl_get_nmenu_popup(pObject) -> popup
+    """ fl_get_nmenu_popup(pObject) -> pPopup
     """
 
     _fl_get_nmenu_popup = cfuncproto(
@@ -12104,7 +12168,7 @@ def fl_set_nmenu_popup(pObject, pPopup):
 
 
 def fl_get_nmenu_item(pObject):
-    """ fl_get_nmenu_item(pObject) -> popup_return
+    """ fl_get_nmenu_item(pObject) -> pPopupReturn
     """
 
     _fl_get_nmenu_item = cfuncproto(
@@ -12134,7 +12198,7 @@ def fl_get_nmenu_item_by_value(pObject, value):
 
 
 def fl_get_nmenu_item_by_label(pObject, label):
-    """ fl_get_nmenu_item_by_label(pObject, label) -> popup_entry
+    """ fl_get_nmenu_item_by_label(pObject, label) -> pPopupEntry
     """
 
     _fl_get_nmenu_item_by_label = cfuncproto(
@@ -12149,8 +12213,8 @@ def fl_get_nmenu_item_by_label(pObject, label):
     return retval
 
 
-def fl_get_nmenu_item_by_text(pObject, txtstr):
-    """ fl_get_nmenu_item_by_text(pObject, txtstr) -> popup_entry
+def fl_get_nmenu_item_by_text(pObject, text):
+    """ fl_get_nmenu_item_by_text(pObject, text) -> pPopupEntry
     """
 
     _fl_get_nmenu_item_by_text = cfuncproto(
@@ -12159,14 +12223,14 @@ def fl_get_nmenu_item_by_text(pObject, txtstr):
             """FL_POPUP_ENTRY * fl_get_nmenu_item_by_text(FL_OBJECT * p1,
                const char * p2)
             """)
-    stxtstr = convert_to_string(txtstr)
-    keep_elem_refs(pObject, txtstr, stxtstr)
-    retval = _fl_get_nmenu_item_by_text(pObject, stxtstr)
+    stext = convert_to_string(text)
+    keep_elem_refs(pObject, text, stext)
+    retval = _fl_get_nmenu_item_by_text(pObject, stext)
     return retval
 
 
-def fl_set_nmenu_policy(pObject, p2):
-    """ fl_set_nmenu_policy(pObject, p2) -> num.
+def fl_set_nmenu_policy(pObject, num):
+    """ fl_set_nmenu_policy(pObject, num) -> num.
     """
 
     _fl_set_nmenu_policy = cfuncproto(
@@ -12174,9 +12238,9 @@ def fl_set_nmenu_policy(pObject, p2):
             cty.c_int, [cty.POINTER(FL_OBJECT), cty.c_int],
             """int fl_set_nmenu_policy(FL_OBJECT * p1, int p2)
             """)
-    ip2 = convert_to_int(p2)
-    keep_elem_refs(pObject, p2, ip2)
-    retval = _fl_set_nmenu_policy(pObject, ip2)
+    inum = convert_to_int(num)
+    keep_elem_refs(pObject, num, inum)
+    retval = _fl_set_nmenu_policy(pObject, inum)
     return retval
 
 
@@ -12211,8 +12275,8 @@ def fl_create_positioner(postype, x, y, w, h, label):
             load_so_libforms(), "fl_create_positioner",
             cty.POINTER(FL_OBJECT), [cty.c_int, FL_Coord, FL_Coord, FL_Coord,
             FL_Coord, STRING],
-            """FL_OBJECT * fl_create_positioner(int type, FL_Coord x, FL_Coord y,
-               FL_Coord w, FL_Coord h, const char * label)
+            """FL_OBJECT * fl_create_positioner(int type, FL_Coord x,
+               FL_Coord y, FL_Coord w, FL_Coord h, const char * label)
             """)
     ipostype = convert_to_int(postype)
     ix = convert_to_FL_Coord(x)
@@ -12264,7 +12328,7 @@ def fl_set_positioner_xvalue(pObject, val):
 
 
 def fl_get_positioner_xvalue(pObject):
-    """ fl_get_positioner_xvalue(pObject) -> num.
+    """ fl_get_positioner_xvalue(pObject) -> floatnum
     """
 
     _fl_get_positioner_xvalue = cfuncproto(
@@ -12327,7 +12391,7 @@ def fl_set_positioner_yvalue(pObject, val):
 
 
 def fl_get_positioner_yvalue(pObject):
-    """ fl_get_positioner_yvalue(pObject) -> num.
+    """ fl_get_positioner_yvalue(pObject) -> floatnum
     """
 
     _fl_get_positioner_yvalue = cfuncproto(
@@ -12464,7 +12528,7 @@ def fl_add_scrollbar(scrolltype, x, y, w, h, label):
 
 
 def fl_get_scrollbar_value(pObject):
-    """ fl_get_scrollbar_value(pObject) -> num.
+    """ fl_get_scrollbar_value(pObject) -> floatnum
     """
 
     _fl_get_scrollbar_value = cfuncproto(
@@ -12505,7 +12569,7 @@ def fl_set_scrollbar_size(pObject, val):
     _fl_set_scrollbar_size(pObject, fval)
 
 
-def fl_set_scrollbar_increment(pObject, l, r):
+def fl_set_scrollbar_increment(pObject, valleftbtn, valmidlbtn):
     """ fl_set_scrollbar_increment(pObject, l, r)
     """
 
@@ -12515,15 +12579,16 @@ def fl_set_scrollbar_increment(pObject, l, r):
             """void fl_set_scrollbar_increment(FL_OBJECT * ob, double l,
                double r)
             """)
-    fl = convert_to_double(l)
-    fr = convert_to_double(r)
-    keep_elem_refs(pObject, l, r, fl, fr)
-    _fl_set_scrollbar_increment(pObject, fl, fr)
+    fvalleftbtn = convert_to_double(valleftbtn)
+    fvalmidlbtn = convert_to_double(valmidlbtn)
+    keep_elem_refs(pObject, valleftbtn, valmidlbtn, fvalleftbtn, \
+                   fvalmidlbtn)
+    _fl_set_scrollbar_increment(pObject, fvalleftbtn, fvalmidlbtn)
 
 
-#def fl_get_scrollbar_increment(pObject, a, b)
+#def fl_get_scrollbar_increment(pObject, valleftbtn, valmidlbtn)
 def fl_get_scrollbar_increment(pObject):
-    """ fl_get_scrollbar_increment(pObject) -> a, b
+    """ fl_get_scrollbar_increment(pObject) -> valleftbtn, valmidlbtn
     """
 
     _fl_get_scrollbar_increment = cfuncproto(
@@ -12533,11 +12598,11 @@ def fl_get_scrollbar_increment(pObject):
             """void fl_get_scrollbar_increment(FL_OBJECT * ob, double * a,
                double * b)
             """)
-    a, pa = make_double_and_pointer()
-    b, pb = make_double_and_pointer()
-    keep_elem_refs(pObject, a, b, pa, pb)
-    _fl_get_scrollbar_increment(pObject, pa, pb)
-    return a, b
+    valleftbtn, pvalleftbtn = make_double_and_pointer()
+    valmidlbtn, pvalmidlbtn = make_double_and_pointer()
+    keep_elem_refs(pObject, valleftbtn, valmidlbtn, pvalleftbtn, pvalmidlbtn)
+    _fl_get_scrollbar_increment(pObject, pvalleftbtn, pvalmidlbtn)
+    return valleftbtn, valmidlbtn
 
 
 def fl_set_scrollbar_bounds(pObject, minbound, maxbound):
@@ -12555,8 +12620,9 @@ def fl_set_scrollbar_bounds(pObject, minbound, maxbound):
     _fl_set_scrollbar_bounds(pObject, fminbound, fmaxbound)
 
 
-def fl_get_scrollbar_bounds(pObject, b1, b2):
-    """ fl_get_scrollbar_bounds(pObject, b1, b2)
+#def fl_get_scrollbar_bounds(pObject, b1, b2)
+def fl_get_scrollbar_bounds(pObject):
+    """ fl_get_scrollbar_bounds(pObject) -> minbound, maxbound
     """
 
     _fl_get_scrollbar_bounds = cfuncproto(
@@ -12566,8 +12632,11 @@ def fl_get_scrollbar_bounds(pObject, b1, b2):
             """void fl_get_scrollbar_bounds(FL_OBJECT * ob, double * b1,
                double * b2)
             """)
-    keep_elem_refs(pObject, b1, b2)
-    _fl_get_scrollbar_bounds(pObject, b1, b2)
+    minbound, pminbound = make_double_and_pointer()
+    maxbound, pmaxbound = make_double_and_pointer()
+    keep_elem_refs(pObject, minbound, pminbound, maxbound, pmaxbound)
+    _fl_get_scrollbar_bounds(pObject, pminbound, pmaxbound)
+    return minbound, maxbound
 
 
 def fl_set_scrollbar_return(pObject, ret):
@@ -12881,7 +12950,7 @@ def fl_set_select_text_color(pObject, colr):
 
 #def fl_get_select_text_font(pObject, p2, p3)
 def fl_get_select_text_font(pObject):
-    """ fl_get_select_text_font(pObject) -> num., num1, num2
+    """ fl_get_select_text_font(pObject) -> num, num1, num2
     """
 
     _fl_get_select_text_font = cfuncproto(
@@ -12942,8 +13011,8 @@ def fl_set_select_text_align(pObject, p2):
     return retval
 
 
-def fl_set_select_policy(pObject, p2):
-    """ fl_set_select_policy(pObject, p2) -> num.
+def fl_set_select_policy(pObject, num):
+    """ fl_set_select_policy(pObject, num) -> num.
     """
 
     _fl_set_select_policy = cfuncproto(
@@ -12951,9 +13020,9 @@ def fl_set_select_policy(pObject, p2):
             cty.c_int, [cty.POINTER(FL_OBJECT), cty.c_int],
             """int fl_set_select_policy(FL_OBJECT * p1, int p2)
             """)
-    ip2 = convert_to_int(p2)
-    keep_elem_refs(pObject, p2, ip2)
-    retval = _fl_set_select_policy(pObject, ip2)
+    inum = convert_to_int(num)
+    keep_elem_refs(pObject, num, inum)
+    retval = _fl_set_select_policy(pObject, inum)
     return retval
 
 
@@ -13072,7 +13141,7 @@ def fl_set_slider_value(pObject, val):
 
 
 def fl_get_slider_value(pObject):
-    """ fl_get_slider_value(pObject) -> num.
+    """ fl_get_slider_value(pObject) -> floatnum
     """
 
     _fl_get_slider_value = cfuncproto(
@@ -14209,8 +14278,8 @@ def fl_defpup(win, pupstr):
     return retval
 
 
-def fl_addtopup(n, pupstr):
-    """ fl_addtopup(n, pupstr) -> num.
+def fl_addtopup(popupid, pupstr):
+    """ fl_addtopup(popupid, pupstr) -> num.
     """
 
     _fl_addtopup = cfuncproto(
@@ -14218,15 +14287,15 @@ def fl_addtopup(n, pupstr):
             cty.c_int, [cty.c_int, STRING],
             """int fl_addtopup(int n, const char * str)
             """)
-    inum = convert_to_int(n)
+    ipopupid = convert_to_int(popupid)
     spupstr = convert_to_string(pupstr)
-    keep_elem_refs(n, pupstr, inum, spupstr)
-    retval = _fl_addtopup(inum, spupstr)
+    keep_elem_refs(popupid, pupstr, ipopupid, spupstr)
+    retval = _fl_addtopup(ipopupid, spupstr)
     return retval
 
 
-def fl_setpup_mode(nm, ni, mode):
-    """ fl_setpup_mode(nm, ni, mode) -> num.
+def fl_setpup_mode(popupid, itemval, mode):
+    """ fl_setpup_mode(popupid, itemval, mode) -> num.
     """
 
     _fl_setpup_mode = cfuncproto(
@@ -14234,16 +14303,16 @@ def fl_setpup_mode(nm, ni, mode):
             cty.c_int, [cty.c_int, cty.c_int, cty.c_uint],
             """int fl_setpup_mode(int nm, int ni, unsigned int mode)
             """)
-    inm = convert_to_int(nm)
-    ini = convert_to_int(ni)
+    ipopupid = convert_to_int(popupid)
+    iitemval = convert_to_int(itemval)
     uimode = convert_to_uint(mode)
-    keep_elem_refs(nm, ni, mode, inm, ini, uimode)
-    retval = _fl_setpup_mode(inm, ini, uimode)
+    keep_elem_refs(popupid, itemval, mode, ipopupid, iitemval, uimode)
+    retval = _fl_setpup_mode(ipopupid, iitemval, uimode)
     return retval
 
 
-def fl_freepup(n):
-    """ fl_freepup(n)
+def fl_freepup(popupid):
+    """ fl_freepup(popupid)
     """
 
     _fl_freepup = cfuncproto(
@@ -14251,13 +14320,13 @@ def fl_freepup(n):
             None, [cty.c_int],
             """void fl_freepup(int n)
             """)
-    inum = convert_to_int(n)
-    keep_elem_refs(n, inum)
-    _fl_freepup(inum)
+    ipopupid = convert_to_int(popupid)
+    keep_elem_refs(popupid, ipopupid)
+    _fl_freepup(ipopupid)
 
 
-def fl_dopup(n):
-    """ fl_dopup(n) -> num.
+def fl_dopup(popupid):
+    """ fl_dopup(popupid) -> num.
     """
 
     _fl_dopup = cfuncproto(
@@ -14265,9 +14334,9 @@ def fl_dopup(n):
             cty.c_int, [cty.c_int],
             """int fl_dopup(int n)
             """)
-    inum = convert_to_int(n)
-    keep_elem_refs(n, inum)
-    retval = _fl_dopup(inum)
+    ipopupid = convert_to_int(popupid)
+    keep_elem_refs(popupid, ipopupid)
+    retval = _fl_dopup(ipopupid)
     return retval
 
 
@@ -14367,8 +14436,8 @@ def fl_setpup_default_bw(bw):
     return retval
 
 
-def fl_setpup_shortcut(nm, ni, sctext):
-    """ fl_setpup_shortcut(nm, ni, sctext)
+def fl_setpup_shortcut(popupid, itemval, hotkeystxt):
+    """ fl_setpup_shortcut(popupid, itemval, hotkeystxt)
     """
 
     _fl_setpup_shortcut = cfuncproto(
@@ -14376,11 +14445,12 @@ def fl_setpup_shortcut(nm, ni, sctext):
             None, [cty.c_int, cty.c_int, STRING],
             """void fl_setpup_shortcut(int nm, int ni, const char * sc)
             """)
-    inm = convert_to_int(nm)
-    ini = convert_to_int(ni)
-    ssctext = convert_to_string(sctext)
-    keep_elem_refs(nm, ni, sctext, inm, ini, ssctext)
-    _fl_setpup_shortcut(inm, ini, ssctext)
+    ipopupid = convert_to_int(popupid)
+    iitemval = convert_to_int(itemval)
+    shotkeystxt = convert_to_string(hotkeystxt)
+    keep_elem_refs(popupid, itemval, hotkeystxt, ipopupid, iitemval, \
+                   shotkeystxt)
+    _fl_setpup_shortcut(ipopupid, iitemval, shotkeystxt)
 
 
 def fl_setpup_position(x, y):
@@ -14398,8 +14468,8 @@ def fl_setpup_position(x, y):
     _fl_setpup_position(ix, iy)
 
 
-def fl_setpup_selection(nm, ni):
-    """ fl_setpup_selection(nm, ni)
+def fl_setpup_selection(popupid, itemval):
+    """ fl_setpup_selection(popupid, itemval)
     """
 
     _fl_setpup_selection = cfuncproto(
@@ -14407,14 +14477,14 @@ def fl_setpup_selection(nm, ni):
             None, [cty.c_int, cty.c_int],
             """void fl_setpup_selection(int nm, int ni)
             """)
-    inm = convert_to_int(nm)
-    ini = convert_to_int(ni)
-    keep_elem_refs(nm, ni, inm, ini)
-    _fl_setpup_selection(inm, ini)
+    ipopupid = convert_to_int(popupid)
+    iitemval = convert_to_int(itemval)
+    keep_elem_refs(popupid, itemval, ipopupid, iitemval)
+    _fl_setpup_selection(ipopupid, iitemval)
 
 
-def fl_setpup_shadow(n, y):
-    """ fl_setpup_shadow(n, y)
+def fl_setpup_shadow(popupid, flag):
+    """ fl_setpup_shadow(popupid, flag)
     """
 
     _fl_setpup_shadow = cfuncproto(
@@ -14422,14 +14492,14 @@ def fl_setpup_shadow(n, y):
             None, [cty.c_int, cty.c_int],
             """void fl_setpup_shadow(int n, int y)
             """)
-    inum = convert_to_int(n)
-    iy = convert_to_int(y)
-    keep_elem_refs(n, y, inum, iy)
-    _fl_setpup_shadow(inum, iy)
+    ipopupid = convert_to_int(popupid)
+    iflag = convert_to_int(flag)
+    keep_elem_refs(popupid, flag, ipopupid, iflag)
+    _fl_setpup_shadow(ipopupid, iflag)
 
 
-def fl_setpup_softedge(n, y):
-    """ fl_setpup_softedge(n, y)
+def fl_setpup_softedge(popupid, flag):
+    """ fl_setpup_softedge(popupid, flag)
     """
 
     _fl_setpup_softedge = cfuncproto(
@@ -14437,14 +14507,14 @@ def fl_setpup_softedge(n, y):
             None, [cty.c_int, cty.c_int],
             """void fl_setpup_softedge(int n, int y)
             """)
-    inum = convert_to_int(n)
-    iy = convert_to_int(y)
-    keep_elem_refs(n, y, inum, iy)
-    _fl_setpup_softedge(inum, iy)
+    ipopupid = convert_to_int(popupid)
+    iflag = convert_to_int(flag)
+    keep_elem_refs(popupid, flag, ipopupid, iflag)
+    _fl_setpup_softedge(ipopupid, iflag)
 
 
-def fl_setpup_bw(n, bw):
-    """ fl_setpup_bw(n, bw)
+def fl_setpup_bw(popupid, bw):
+    """ fl_setpup_bw(popupid, bw)
     """
 
     _fl_setpup_bw = cfuncproto(
@@ -14452,14 +14522,14 @@ def fl_setpup_bw(n, bw):
             None, [cty.c_int, cty.c_int],
             """void fl_setpup_bw(int n, int bw)
             """)
-    inum = convert_to_int(n)
+    ipopupid = convert_to_int(popupid)
     ibw = convert_to_int(bw)
-    keep_elem_refs(n, bw, inum, ibw)
-    _fl_setpup_bw(inum, ibw)
+    keep_elem_refs(popupid, bw, ipopupid, ibw)
+    _fl_setpup_bw(ipopupid, ibw)
 
 
-def fl_setpup_title(nm, title):
-    """ fl_setpup_title(nm, title)
+def fl_setpup_title(popupid, title):
+    """ fl_setpup_title(popupid, title)
     """
 
     _fl_setpup_title = cfuncproto(
@@ -14467,14 +14537,14 @@ def fl_setpup_title(nm, title):
             None, [cty.c_int, STRING],
             """void fl_setpup_title(int nm, const char * title)
             """)
-    inm = convert_to_int(nm)
+    ipopupid = convert_to_int(popupid)
     stitle = convert_to_string(title)
-    keep_elem_refs(nm, title, inm, stitle)
-    _fl_setpup_title(inm, stitle)
+    keep_elem_refs(popupid, title, ipopupid, stitle)
+    _fl_setpup_title(ipopupid, stitle)
 
 
-def fl_setpup_entercb(nm, py_cb, data):
-    """ fl_setpup_entercb(nm, py_cb, data) -> pup_entercb
+def fl_setpup_entercb(popupid, py_cb, data):
+    """ fl_setpup_entercb(popupid, py_cb, data) -> pup_entercb
     """
 
     _fl_setpup_entercb = cfuncproto(
@@ -14483,16 +14553,17 @@ def fl_setpup_entercb(nm, py_cb, data):
             """FL_PUP_ENTERCB fl_setpup_entercb(int nm, FL_PUP_ENTERCB cb,
                void * data)
             """)
-    inm = convert_to_int(nm)
+    ipopupid = convert_to_int(popupid)
     c_cb = FL_PUP_ENTERCB(py_cb)
+    pdata = cty.cast(data, cty.c_void_p)
     keep_cfunc_refs(c_cb)
-    keep_elem_refs(nm, data, inm)
-    retval = _fl_setpup_entercb(inm, c_cb, data)
+    keep_elem_refs(popupid, data, ipopupid, pdata)
+    retval = _fl_setpup_entercb(ipopupid, c_cb, pdata)
     return retval
 
 
-def fl_setpup_leavecb(nm, py_cb, data):
-    """ fl_setpup_leavecb(nm, py_cb, data) -> pup_leavecb
+def fl_setpup_leavecb(popupid, py_cb, data):
+    """ fl_setpup_leavecb(popupid, py_cb, data) -> pup_leavecb
     """
 
     _fl_setpup_leavecb = cfuncproto(
@@ -14501,16 +14572,17 @@ def fl_setpup_leavecb(nm, py_cb, data):
             """FL_PUP_LEAVECB fl_setpup_leavecb(int nm, FL_PUP_LEAVECB cb,
                void * data)
             """)
-    inm = convert_to_int(nm)
+    ipopupid = convert_to_int(popupid)
     c_cb = FL_PUP_LEAVECB(py_cb)
+    pdata = cty.cast(data, cty.c_void_p)
     keep_cfunc_refs(c_cb)
-    keep_elem_refs(nm, data, inm)
-    retval = _fl_setpup_leavecb(inm, c_cb, data)
+    keep_elem_refs(popupid, data, ipopupid, pdata)
+    retval = _fl_setpup_leavecb(ipopupid, c_cb, pdata)
     return retval
 
 
-def fl_setpup_pad(n, padw, padh):
-    """ fl_setpup_pad(n, padw, padh)
+def fl_setpup_pad(popupid, padw, padh):
+    """ fl_setpup_pad(popupid, padw, padh)
     """
 
     _fl_setpup_pad = cfuncproto(
@@ -14518,15 +14590,15 @@ def fl_setpup_pad(n, padw, padh):
             None, [cty.c_int, cty.c_int, cty.c_int],
             """void fl_setpup_pad(int n, int padw, int padh)
             """)
-    inum = convert_to_int(n)
+    ipopupid = convert_to_int(popupid)
     ipadw = convert_to_int(padw)
     ipadh = convert_to_int(padh)
-    keep_elem_refs(n, padw, padh, inum, ipadw, ipadh)
-    _fl_setpup_pad(inum, ipadw, ipadh)
+    keep_elem_refs(popupid, padw, padh, ipopupid, ipadw, ipadh)
+    _fl_setpup_pad(ipopupid, ipadw, ipadh)
 
 
-def fl_setpup_cursor(nm, cursor):
-    """ fl_setpup_cursor(nm, cursor) -> cursor
+def fl_setpup_cursor(popupid, cursor):
+    """ fl_setpup_cursor(popupid, cursor) -> cursor
     """
 
     _fl_setpup_cursor = cfuncproto(
@@ -14534,15 +14606,15 @@ def fl_setpup_cursor(nm, cursor):
             Cursor, [cty.c_int, cty.c_int],
             """Cursor fl_setpup_cursor(int nm, int cursor)
             """)
-    inm = convert_to_int(nm)
+    ipopupid = convert_to_int(popupid)
     icursor = convert_to_int(cursor)
-    keep_elem_refs(nm, cursor, inm, icursor)
-    retval = _fl_setpup_cursor(inm, icursor)
+    keep_elem_refs(popupid, cursor, ipopupid, icursor)
+    retval = _fl_setpup_cursor(ipopupid, icursor)
     return retval
 
 
-def fl_setpup_maxpup(n):
-    """ fl_setpup_maxpup(n) -> num.
+def fl_setpup_maxpup(newmaxnum):
+    """ fl_setpup_maxpup(newmaxnum) -> num.
     """
 
     _fl_setpup_maxpup = cfuncproto(
@@ -14550,14 +14622,14 @@ def fl_setpup_maxpup(n):
             cty.c_int, [cty.c_int],
             """int fl_setpup_maxpup(int n)
             """)
-    inum = convert_to_int(n)
-    keep_elem_refs(n, inum)
-    retval = _fl_setpup_maxpup(inum)
+    inewmaxnum = convert_to_int(newmaxnum)
+    keep_elem_refs(newmaxnum, inewmaxnum)
+    retval = _fl_setpup_maxpup(inewmaxnum)
     return retval
 
 
-def fl_getpup_mode(nm, ni):
-    """ fl_getpup_mode(nm, ni) -> num.
+def fl_getpup_mode(popupid, itemval):
+    """ fl_getpup_mode(popupid, itemval) -> num.
     """
 
     _fl_getpup_mode = cfuncproto(
@@ -14565,15 +14637,15 @@ def fl_getpup_mode(nm, ni):
             cty.c_uint, [cty.c_int, cty.c_int],
             """unsigned int fl_getpup_mode(int nm, int ni)
             """)
-    inm = convert_to_int(nm)
-    ini = convert_to_int(ni)
-    keep_elem_refs(nm, ni, inm, ini)
-    retval = _fl_getpup_mode(inm, ini)
+    ipopupid = convert_to_int(popupid)
+    iitemval = convert_to_int(itemval)
+    keep_elem_refs(popupid, itemval, ipopupid, iitemval)
+    retval = _fl_getpup_mode(ipopupid, iitemval)
     return retval
 
 
-def fl_getpup_text(nm, ni):
-    """ fl_getpup_text(nm, ni) -> text string
+def fl_getpup_text(popupid, itemval):
+    """ fl_getpup_text(popupid, itemval) -> text string
     """
 
     _fl_getpup_text = cfuncproto(
@@ -14581,15 +14653,15 @@ def fl_getpup_text(nm, ni):
             STRING, [cty.c_int, cty.c_int],
             """const char * fl_getpup_text(int nm, int ni)
             """)
-    inm = convert_to_int(nm)
-    ini = convert_to_int(ni)
-    keep_elem_refs(nm, ni, inm, ini)
-    retval = _fl_getpup_text(inm, ini)
+    ipopupid = convert_to_int(popupid)
+    iitemval = convert_to_int(itemval)
+    keep_elem_refs(popupid, itemval, ipopupid, iitemval)
+    retval = _fl_getpup_text(ipopupid, iitemval)
     return retval
 
 
-def fl_showpup(n):
-    """ fl_showpup(n)
+def fl_showpup(popupid):
+    """ fl_showpup(popupid)
     """
 
     _fl_showpup = cfuncproto(
@@ -14597,13 +14669,13 @@ def fl_showpup(n):
             None, [cty.c_int],
             """void fl_showpup(int n)
             """)
-    inum = convert_to_int(n)
-    keep_elem_refs(n, inum)
-    _fl_showpup(inum)
+    ipopupid = convert_to_int(popupid)
+    keep_elem_refs(popupid, ipopupid)
+    _fl_showpup(ipopupid)
 
 
-def fl_hidepup(n):
-    """ fl_hidepup(n)
+def fl_hidepup(popupid):
+    """ fl_hidepup(popupid)
     """
 
     _fl_hidepup = cfuncproto(
@@ -14611,13 +14683,13 @@ def fl_hidepup(n):
             None, [cty.c_int],
             """void fl_hidepup(int n)
             """)
-    inum = convert_to_int(n)
-    keep_elem_refs(n, inum)
-    _fl_hidepup(inum)
+    ipopupid = convert_to_int(popupid)
+    keep_elem_refs(popupid, ipopupid)
+    _fl_hidepup(ipopupid)
 
 
-def fl_getpup_items(n):
-    """ fl_getpup_items(n) -> num.
+def fl_getpup_items(popupid):
+    """ fl_getpup_items(popupid) -> num.
     """
 
     _fl_getpup_items = cfuncproto(
@@ -14625,9 +14697,9 @@ def fl_getpup_items(n):
             cty.c_int, [cty.c_int],
             """int fl_getpup_items(int n)
             """)
-    inum = convert_to_int(n)
-    keep_elem_refs(n, inum)
-    retval = _fl_getpup_items(inum)
+    ipopupid = convert_to_int(popupid)
+    keep_elem_refs(popupid, ipopupid)
+    retval = _fl_getpup_items(ipopupid)
     return retval
 
 
@@ -14644,8 +14716,8 @@ def fl_current_pup():
     return retval
 
 
-def fl_setpup_itemcb(nm, ni, py_cb):
-    """ fl_setpup_itemcb(nm, ni, py_cb) -> pup_cb
+def fl_setpup_itemcb(popupid, itemval, py_cb):
+    """ fl_setpup_itemcb(popupid, itemval, py_cb) -> pup_cb
     """
 
     _fl_setpup_itemcb = cfuncproto(
@@ -14653,17 +14725,17 @@ def fl_setpup_itemcb(nm, ni, py_cb):
             FL_PUP_CB, [cty.c_int, cty.c_int, FL_PUP_CB],
             """FL_PUP_CB fl_setpup_itemcb(int nm, int ni, FL_PUP_CB cb)
             """)
-    inm = convert_to_int(nm)
-    ini = convert_to_int(ni)
+    ipopupid = convert_to_int(popupid)
+    iitemval = convert_to_int(itemval)
     c_cb = FL_PUP_CB(py_cb)
     keep_cfunc_refs(c_cb)
-    keep_elem_refs(nm, ni, inm, ini)
-    retval = _fl_setpup_itemcb(inm, ini, c_cb)
+    keep_elem_refs(popupid, itemval, ipopupid, iitemval)
+    retval = _fl_setpup_itemcb(ipopupid, iitemval, c_cb)
     return retval
 
 
-def fl_setpup_menucb(nm, py_cb):
-    """ fl_setpup_menucb(nm, py_cb) -> pup_cb func.
+def fl_setpup_menucb(popupid, py_cb):
+    """ fl_setpup_menucb(popupid, py_cb) -> pup_cb func.
     """
 
     _fl_setpup_menucb = cfuncproto(
@@ -14671,16 +14743,16 @@ def fl_setpup_menucb(nm, py_cb):
             FL_PUP_CB, [cty.c_int, FL_PUP_CB],
             """FL_PUP_CB fl_setpup_menucb(int nm, FL_PUP_CB cb)
             """)
-    inm = convert_to_int(nm)
+    ipopupid = convert_to_int(popupid)
     c_cb = FL_PUP_CB(py_cb)
     keep_cfunc_refs(c_cb)
-    keep_elem_refs(nm, inm)
-    retval = _fl_setpup_menucb(inm, c_cb)
+    keep_elem_refs(popupid, ipopupid)
+    retval = _fl_setpup_menucb(ipopupid, c_cb)
     return retval
 
 
-def fl_setpup_submenu(m, i, subm):
-    """ fl_setpup_submenu(m, i, subm)
+def fl_setpup_submenu(popupid, itemval, subpopupid):
+    """ fl_setpup_submenu(popupid, itemval, subpopupid)
     """
 
     _fl_setpup_submenu = cfuncproto(
@@ -14688,11 +14760,12 @@ def fl_setpup_submenu(m, i, subm):
             None, [cty.c_int, cty.c_int, cty.c_int],
             """void fl_setpup_submenu(int m, int i, int subm)
             """)
-    im = convert_to_int(m)
-    ii = convert_to_int(i)
-    isubm = convert_to_int(subm)
-    keep_elem_refs(m, i, subm, im, ii, isubm)
-    _fl_setpup_submenu(im, ii, isubm)
+    ipopupid = convert_to_int(popupid)
+    iitemval = convert_to_int(itemval)
+    isubpopupid = convert_to_int(subpopupid)
+    keep_elem_refs(popupid, itemval, subpopupid, ipopupid, iitemval, \
+                   isubpopupid)
+    _fl_setpup_submenu(ipopupid, iitemval, isubpopupid)
 
 
 fl_setpup = fl_setpup_mode
@@ -14783,13 +14856,15 @@ def fl_set_xyplot_data_double(pObject, x, y, n, title, xlabel, ylabel):
                double * y, int n, const char * title, const char * xlabel,
                const char * ylabel)
             """)
+    px = convert_to_ptr_double(x)
+    py = convert_to_ptr_double(y)
     inum = convert_to_int(n)
     stitle = convert_to_string(title)
     sxlabel = convert_to_string(xlabel)
     sylabel = convert_to_string(ylabel)
-    keep_elem_refs(pObject, x, y, n, title, xlabel, ylabel, inum, stitle,
-                   sxlabel, sylabel)
-    retval = _fl_set_xyplot_data_double(pObject, x, y, n, title, \
+    keep_elem_refs(pObject, x, y, n, title, xlabel, ylabel, px, py, inum, \
+                   stitle, sxlabel, sylabel)
+    retval = _fl_set_xyplot_data_double(pObject, px, py, n, title, \
                                         xlabel, ylabel, inum, stitle, \
                                         sxlabel, sylabel)
     return retval
@@ -18004,4 +18079,20 @@ def flps_unset_clipping():
             """void flps_unset_clipping()
             """)
     _flps_unset_clipping()
+
+
+# /usr/include/X11/Xlib.h 2118
+def XClearWindow(pDisplay, win):
+    """ XClearWindow(pDisplay, win) -> num.
+    """
+
+    _XClearWindow = cfuncproto(
+            load_so_libx11(), "XClearWindow", \
+            cty.c_int, [cty.POINTER(Display), Window], \
+            """int XClearWindow(Display * display, Window w)
+            """)
+    ulwin = convert_to_Window(win)
+    keep_elem_refs(pDisplay, win, ulwin)
+    retval = _XClearWindow(pDisplay, ulwin)
+    return retval
 
