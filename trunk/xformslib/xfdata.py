@@ -3892,3 +3892,13 @@ FL_APPEVENT_CB = cty.CFUNCTYPE(cty.c_int, cty.POINTER(XEvent), cty.c_void_p)
 
 FL_HANDLE_CANVAS = cty.CFUNCTYPE(cty.c_int, cty.POINTER(FL_OBJECT), Window,
             cty.c_int, cty.c_int, cty.POINTER(XEvent), cty.c_void_p)
+
+
+# my add --LK
+# As ctypes creates a new instance of each object every time, they aren't
+# really comparable. Here an escamotage can be used: comparing u_ldata
+# element of every concerned objects.
+# e.g.: if fl_do_forms()[0].u_ldata == otherobj[0].u_ldata ...
+
+EXITVAL = 255       # value for "u_ldata" to allow a comparation
+

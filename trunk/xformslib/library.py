@@ -632,10 +632,11 @@ def fl_add_timeout(msec, py_callback, data):
                FL_TIMEOUT_CALLBACK callback, void * data)
             """)
     lmsec = convert_to_long(msec)
+    pdata = pointer(data)
     c_callback = FL_TIMEOUT_CALLBACK(py_callback)
     keep_cfunc_refs(c_callback)
-    keep_elem_refs(msec, lmsec, data)
-    retval = _fl_add_timeout(lmsec, c_callback, data)
+    keep_elem_refs(msec, lmsec, data, pdata)
+    retval = _fl_add_timeout(lmsec, c_callback, pdata)
     return retval
 
 
