@@ -5463,9 +5463,9 @@ def fl_popup_set_title_font(pPopup, p2, p3):
     _fl_popup_set_title_font(pPopup, ip2, ip3)
 
 
-#def fl_popup_entry_get_font(pPopup, val1, val2):
+#def fl_popup_entry_get_font(pPopup, style, size)
 def fl_popup_entry_get_font(pPopup):
-    """ fl_popup_entry_get_font(pPopup) -> val1, val2
+    """ fl_popup_entry_get_font(pPopup) -> style, size
     """
 
     _fl_popup_entry_get_font = cfuncproto(
@@ -5474,15 +5474,15 @@ def fl_popup_entry_get_font(pPopup):
             cty.POINTER(cty.c_int)],
             """void fl_popup_entry_get_font(FL_POPUP * p1, int * p2, int * p3)
             """)
-    val1, pval1 = make_int_and_pointer()
-    val2, pval2 = make_int_and_pointer()
-    keep_elem_refs(pPopup, val1, val2, pval1, pval2)
-    _fl_popup_entry_get_font(pPopup, pval1, pval2)
-    return val1, val2
+    style, pstyle = make_int_and_pointer()
+    size, psize = make_int_and_pointer()
+    keep_elem_refs(pPopup, style, size, pstyle, psize)
+    _fl_popup_entry_get_font(pPopup, pstyle, psize)
+    return style, size
 
 
-def fl_popup_entry_set_font(p1, p2, p3):
-    """ fl_popup_entry_set_font(p1, p2, p3)
+def fl_popup_entry_set_font(pPopup, style, size):
+    """ fl_popup_entry_set_font(pPopup, style, size)
     """
 
     _fl_popup_entry_set_font = cfuncproto(
@@ -5490,10 +5490,10 @@ def fl_popup_entry_set_font(p1, p2, p3):
             None, [cty.POINTER(FL_POPUP), cty.c_int, cty.c_int],
             """void fl_popup_entry_set_font(FL_POPUP * p1, int p2, int p3)
             """)
-    ip2 = convert_to_int(p2)
-    ip3 = convert_to_int(p3)
-    keep_elem_refs(p1, p2, p3, ip2, ip3)
-    _fl_popup_entry_set_font(p1, ip2, ip3)
+    istyle = convert_to_int(style)
+    isize = convert_to_int(size)
+    keep_elem_refs(pPopup, style, size, istyle, isize)
+    _fl_popup_entry_set_font(pPopup, istyle, isize)
 
 
 def fl_popup_get_bw(p1):
