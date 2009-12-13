@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 from distutils.core import setup
-import os, sys, shutil
+import os, sys
 from xformslib.library import __version__
 
 name = 'xforms-python'
@@ -22,4 +22,9 @@ setup(name = name,
     url = 'http://xforms-python.berlios.de',
     packages=['xformslib'],
     package_dir={'xformslib' : 'xformslib'},
+    data_files=[('doc/xforms-python-'+version, \
+		 ['doc/ChangeLog', 'doc/CREDITS', 'doc/INSTALL', \
+		 'doc/lgpl-2.1.txt', 'doc/LICENSE', 'doc/README', \
+		 'doc/TODO'])]
     )
+
