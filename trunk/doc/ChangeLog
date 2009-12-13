@@ -1,6 +1,7 @@
 
 
 SVN
+    * Porting of sld_radio example.
     * Porting of sldsize example.
     * Porting of preemptive example.
     * Porting of rescale example.
