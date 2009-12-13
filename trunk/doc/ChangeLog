@@ -1,6 +1,7 @@
 
 
 SVN
+    * Porting of sliderall example.
     * Porting of positioner and positionerXOR examples.
     * Porting of sld_radio example.
     * Porting of sldsize example.
