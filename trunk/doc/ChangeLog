@@ -1,6 +1,7 @@
 
 
 SVN
+    * Porting of fbrowse example
     * Enable .visible and .active attributes for a
     FL_OBJECT object
     * Introduce a check if some numeric parameters are valid
