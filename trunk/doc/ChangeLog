@@ -1,6 +1,7 @@
 
 
 SVN
+    * Porting of timeoutprec example.
     * Porting of sliderall example.
     * Porting of positioner and positionerXOR examples.
     * Porting of sld_radio example.

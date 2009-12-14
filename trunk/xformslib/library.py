@@ -632,7 +632,7 @@ def fl_add_timeout(msec, py_callback, data):
                FL_TIMEOUT_CALLBACK callback, void * data)
             """)
     lmsec = convert_to_long(msec)
-    pdata = cty.cast(data, cty.c_char_p)
+    pdata = cty.cast(data, cty.c_void_p)
     c_callback = FL_TIMEOUT_CALLBACK(py_callback)
     keep_cfunc_refs(c_callback)
     keep_elem_refs(msec, lmsec, data, pdata)
@@ -9432,8 +9432,9 @@ def fl_set_dial_direction(pObject, directn):
 # read dir with pattern filtering. All dirs read might be cached.
 # must not change dirlist in anyway.
 
-def fl_get_dirlist(directory, pattern, n, rescan):
-    """ fl_get_dirlist(directory, pattern, n, rescan) -> dirlist class
+#def fl_get_dirlist(directory, pattern, n, rescan)
+def fl_get_dirlist(directory, pattern, rescan):
+    """ fl_get_dirlist(directory, pattern, n, rescan) -> pDirList, n
     """
 
     _fl_get_dirlist = cfuncproto(
@@ -9445,11 +9446,12 @@ def fl_get_dirlist(directory, pattern, n, rescan):
             """)
     sdirectory = convert_to_string(directory)
     spattern = convert_to_string(pattern)
+    n, pn = make_int_and_pointer()
     irescan = convert_to_int(rescan)
     keep_elem_refs(directory, pattern, n, rescan, sdirectory, spattern,
-                   irescan)
-    retval = _fl_get_dirlist(sdirectory, spattern, n, irescan)
-    return retval
+                   pn, irescan)
+    retval = _fl_get_dirlist(sdirectory, spattern, pn, irescan)
+    return retval, n
 
 
 def fl_set_dirlist_filter(py_filter):
