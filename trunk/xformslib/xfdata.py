@@ -978,15 +978,10 @@ FL_OBJECT_._fields_ = [
 
 #FL_EVENT = (cty.POINTER(FL_OBJECT)).in_dll(load_so_libforms(), 'FL_EVENT')
 FL_EVENT = cty.POINTER(FL_OBJECT)()
-#fl_current_form = (cty.POINTER(FL_FORM)).in_dll(load_so_libforms(), \
-#                  'fl_current_form')
-fl_current_form = cty.POINTER(FL_FORM)()
 
 
 # error callback
 FL_ERROR_FUNC = cty.CFUNCTYPE(None, STRING, STRING)
-
-# FL_EVENT already defined in main library
 
 # form visibility state: form->visible
 # values for unnamed enumeration
@@ -1044,6 +1039,10 @@ FL_DRAWPTR = cty.CFUNCTYPE(None, FL_Coord, FL_Coord, FL_Coord, FL_Coord,
                            cty.c_int, FL_COLOR)
 
 FL_FSCB = cty.CFUNCTYPE(cty.c_int, STRING, cty.c_void_p)
+
+#fl_current_form = (cty.POINTER(FL_FORM)).in_dll(load_so_libforms(), \
+#                  'fl_current_form')
+fl_current_form = cty.POINTER(FL_FORM)()
 
 size_t = cty.c_uint
 
@@ -1212,8 +1211,8 @@ _XDisplay._fields_ = []
 Display = _XDisplay
 #Display = _XDisplay.in_dll(so_libforms, "_XDisplay") # NOTWORKING
 
-#fl_state = (cty.POINTER(FL_State)).in_dll(load_so_libforms(), 'fl_state')
-fl_state = FL_State()
+# Global variables
+
 #fl_display = (cty.POINTER(Display)).in_dll(load_so_libforms(), 'fl_display')
 fl_display = cty.POINTER(Display)()
 #fl_screen = (cty.c_int).in_dll(so_libforms, 'fl_screen')
@@ -1229,6 +1228,11 @@ fl_scrw = cty.c_int()
 #fl_vmode = (cty.c_int).in_dll(so_libforms, 'fl_vmode')
 fl_vmode = cty.c_int()
 
+#fl_state = (cty.POINTER(FL_State)).in_dll(load_so_libforms(), 'fl_state')
+fl_state = cty.POINTER(FL_State)()
+
+fl_ul_magic_char = STRING()
+
 
 # Fonts related
 
@@ -1237,10 +1241,10 @@ FL_MAX_FONTSIZES = 10
 class FL_FONT(cty.Structure):
     pass
 FL_FONT._fields_ = [
-    ('fs', cty.POINTER(XFontStruct) * FL_MAX_FONTSIZES),
-    ('size', cty.c_short * FL_MAX_FONTSIZES),
-    ('nsize', cty.c_short),
-    ('fname', cty.c_char * 80),
+    ('fs', cty.POINTER(XFontStruct) * FL_MAX_FONTSIZES),  # cached fontstruct
+    ('size', cty.c_short * FL_MAX_FONTSIZES),       # cached sizes
+    ('nsize', cty.c_short),                         # cached so far
+    ('fname', cty.c_char * 80),                     # without size info
 ]
 
 # /usr/include/X11/Xlib.h 439
@@ -1683,6 +1687,11 @@ FL_SELECT_BROWSER = 1
 FL_HOLD_BROWSER = 2
 FL_MULTI_BROWSER = 3
 
+# my add - list of possible values --LK
+BROWSERTYPE_list = [FL_NORMAL_BROWSER, FL_SELECT_BROWSER, FL_HOLD_BROWSER, \
+                    FL_MULTI_BROWSER]
+
+
 # Defaults
 FL_BROWSER_BOXTYPE = FL_DOWN_BOX
 FL_BROWSER_COL1 = FL_COL1
@@ -1720,6 +1729,12 @@ FL_HIDDEN_RET_BUTTON = 7
 FL_MENU_BUTTON = 8
 
 FL_TOGGLE_BUTTON = FL_PUSH_BUTTON
+
+# my add - list of possible values --LK
+BTNTYPE_list = [FL_NORMAL_BUTTON, FL_PUSH_BUTTON, FL_RADIO_BUTTON, \
+                FL_HIDDEN_BUTTON, FL_TOUCH_BUTTON, FL_INOUT_BUTTON, \
+                FL_RETURN_BUTTON, FL_HIDDEN_RET_BUTTON, FL_MENU_BUTTON, \
+                FL_TOGGLE_BUTTON]
 
 
 class FL_BUTTON_SPEC(cty.Structure):
@@ -2335,6 +2350,12 @@ FL_MULTILINE_INPUT = 4
 FL_HIDDEN_INPUT = 5
 FL_SECRET_INPUT = 6
 
+# my add - list of possible values --LK
+INPUTTYPE_list = [FL_NORMAL_INPUT, FL_FLOAT_INPUT, FL_INT_INPUT, \
+                  FL_DATE_INPUT, FL_MULTILINE_INPUT, FL_HIDDEN_INPUT, \
+                  FL_SECRET_INPUT]
+
+
 # for date input
 # values for unnamed enumeration
 FL_INPUT_MMDD = 0
@@ -2401,6 +2422,10 @@ FL_MENU_TYPE = cty.c_int # enum
 FL_TOUCH_MENU = 0
 FL_PUSH_MENU = 1
 FL_PULLDOWN_MENU = 2
+
+# my add - list of possbile values --LK
+MENUTYPE_list = [FL_TOUCH_MENU, FL_PUSH_MENU, FL_PULLDOWN_MENU]
+
 
 # Defaults
 FL_MENU_BOXTYPE = FL_BORDER_BOX
@@ -2470,6 +2495,15 @@ FL_NORMAL_SCROLLBAR = 0
 FL_THIN_SCROLLBAR = 1
 FL_NICE_SCROLLBAR = 2
 FL_PLAIN_SCROLLBAR = 3
+
+# my add - list of possible values --LK
+SCROLLTYPE_list = [FL_VERT_SCROLLBAR, FL_HOR_SCROLLBAR, \
+                  FL_VERT_THIN_SCROLLBAR, FL_HOR_THIN_SCROLLBAR, \
+                  FL_VERT_NICE_SCROLLBAR, FL_HOR_NICE_SCROLLBAR, \
+                  FL_VERT_PLAIN_SCROLLBAR, FL_HOR_PLAIN_SCROLLBAR, \
+                  FL_HOR_BASIC_SCROLLBAR, FL_VERT_BASIC_SCROLLBAR, \
+                  FL_NORMAL_SCROLLBAR, FL_THIN_SCROLLBAR, \
+                  FL_NICE_SCROLLBAR, FL_PLAIN_SCROLLBAR]
 
 
 #####################

@@ -253,7 +253,8 @@ def convert_to_string(paramname):
     try:
         retv0 = str(paramname)
     except ValueError:
-        raise XFormsTypeError("Parameter cannot be converted into a 'str'")
+        raise XFormsTypeError("Parameter cannot be converted into" \
+                              "'str'/'c_char_p'")
     retv = cty.c_char_p(retv0)
     #print "string", paramname, retv0, retv
     return retv
@@ -424,11 +425,15 @@ def make_double_and_pointer():
     return baseval, ptrbaseval
 
 
-def check_admissible_values(paramname, *valueslist):
+def check_admitted_listvalues(paramname, *valueslist):
     """ Check if paramname value is valid in accordance to a list of
         admissible values.
     """
-    pass
+
+    if isinstance(valueslist, list):
+        if param not in valueslist:
+            raise XFormsTypeError("Parameter must be a values in list " \
+                                  "%s." % valueslist)
 
 
 
@@ -695,6 +700,7 @@ def fl_bgn_form(formtype, w, h):
             cty.POINTER(FL_FORM), [cty.c_int, FL_Coord, FL_Coord], \
             """FL_FORM * fl_bgn_form(int type, FL_Coord w, FL_Coord h)
             """)
+    check_admitted_listvalues(formtype, BOXTYPE_list)
     iformtype = convert_to_int(formtype)
     iw = convert_to_FL_Coord(w)
     ih = convert_to_FL_Coord(h)
@@ -1293,6 +1299,8 @@ def fl_show_form(pForm, place, border, name):
             """Window fl_show_form(FL_FORM * form, int place, int border,
                const char * name)
             """)
+    check_admitted_listvalues(place, PLACE_list)
+    check_admitted_listvalues(border, DECORATION_list)
     iplace = convert_to_int(place)
     iborder = convert_to_int(border)
     sname = convert_to_string(name)
@@ -1500,6 +1508,7 @@ def fl_set_object_boxtype(pObject, boxtype):
             None, [cty.POINTER(FL_OBJECT), cty.c_int], \
             """void fl_set_object_boxtype(FL_OBJECT * ob, int boxtype)
             """)
+    check_admitted_listvalues(boxtype, BOXTYPE_list)
     iboxtype = convert_to_int(boxtype)
     keep_elem_refs(pObject, boxtype, iboxtype)
     _fl_set_object_boxtype(pObject, iboxtype)
@@ -1613,6 +1622,7 @@ def fl_set_object_lstyle(pObject, lstyle):
             None, [cty.POINTER(FL_OBJECT), cty.c_int], \
             """void fl_set_object_lstyle(FL_OBJECT * ob, int lstyle)
             """)
+    check_admitted_listvalues(lstyle, TEXTSTYLE_list)
     ilstyle = convert_to_int(lstyle)
     keep_elem_refs(pObject, lstyle, ilstyle)
     _fl_set_object_lstyle(pObject, ilstyle)
@@ -1627,6 +1637,7 @@ def fl_set_object_lcol(pObject, lcolr):
             None, [cty.POINTER(FL_OBJECT), FL_COLOR], \
             """void fl_set_object_lcol(FL_OBJECT * ob, FL_COLOR lcol)
             """)
+    check_admitted_listvalues(lcolr, COLOR_list)
     ullcolr = convert_to_FL_COLOR(lcolr)
     keep_elem_refs(pObject, lcolr, ullcolr)
     _fl_set_object_lcol(pObject, ullcolr)
@@ -1670,6 +1681,7 @@ def fl_set_object_lalign(pObject, align):
             None, [cty.POINTER(FL_OBJECT), cty.c_int], \
             """void fl_set_object_lalign(FL_OBJECT * ob, int align)
             """)
+    check_admitted_listvalues(align, ALIGN_list)
     ialign = convert_to_int(align)
     keep_elem_refs(pObject, align, ialign)
     _fl_set_object_lalign(pObject, ialign)
@@ -1730,6 +1742,8 @@ def fl_set_object_color(pObject, colr1, colr2):
             """void fl_set_object_color(FL_OBJECT * ob, FL_COLOR col1,
                FL_COLOR col2)
             """)
+    check_admitted_listvalues(colr1, COLOR_list)
+    check_admitted_listvalues(colr2, COLOR_list)
     ulcolr1 = convert_to_FL_COLOR(colr1)
     ulcolr2 = convert_to_FL_COLOR(colr2)
     keep_elem_refs(pObject, colr1, ulcolr1, colr2, ulcolr2)
@@ -2140,6 +2154,7 @@ def fl_show_object(pObject):
             """)
     keep_elem_refs(pObject)
     _fl_show_object(pObject)
+    pObject[0].visible = 1
 
 
 def fl_hide_object(pObject):
@@ -2153,6 +2168,7 @@ def fl_hide_object(pObject):
             """)
     keep_elem_refs(pObject)
     _fl_hide_object(pObject)
+    pObject[0].visible = 0
 
 
 def fl_free_object(pObject):
@@ -2219,6 +2235,7 @@ def fl_activate_object(pObject):
             """)
     keep_elem_refs(pObject)
     _fl_activate_object(pObject)
+    pObject[0].active = 1
 
 
 def fl_deactivate_object(pObject):
@@ -2232,6 +2249,7 @@ def fl_deactivate_object(pObject):
             """)
     keep_elem_refs(pObject)
     _fl_deactivate_object(pObject)
+    pObject[0].active = 0
 
 
 def fl_enumerate_fonts(py_output, shortform):
@@ -6304,6 +6322,7 @@ def fl_create_box(boxtype, x, y, w, h, label):
             """FL_OBJECT * fl_create_box(int type, FL_Coord x, FL_Coord y,
                FL_Coord w, FL_Coord h, const char * label)
             """)
+    check_admitted_listvalues(boxtype, BOXTYPE_list)
     iboxtype = convert_to_int(boxtype)
     ix = convert_to_FL_Coord(x)
     iy = convert_to_FL_Coord(y)
@@ -6327,6 +6346,7 @@ def fl_add_box(boxtype, x, y, w, h, label):
             """FL_OBJECT * fl_add_box(int type, FL_Coord x, FL_Coord y,
                FL_Coord w, FL_Coord h, const char * label)
             """)
+    check_admitted_listvalues(boxtype, BOXTYPE_list)
     iboxtype = convert_to_int(boxtype)
     ix = convert_to_FL_Coord(x)
     iy = convert_to_FL_Coord(y)
@@ -6358,6 +6378,7 @@ def fl_create_browser(browsertype, x, y, w, h, label):
             """FL_OBJECT * fl_create_browser(int type, FL_Coord x, FL_Coord y,
                FL_Coord w, FL_Coord h, const char * label)
             """)
+    check_admitted_listvalues(browsertype, BROWSERTYPE_list)
     ibrowsertype = convert_to_int(browsertype)
     ix = convert_to_FL_Coord(x)
     iy = convert_to_FL_Coord(y)
@@ -6381,6 +6402,7 @@ def fl_add_browser(browsertype, x, y, w, h, label):
             """FL_OBJECT * fl_add_browser(int type, FL_Coord x, FL_Coord y,
                FL_Coord w, FL_Coord h, const char * label)
             """)
+    check_admitted_listvalues(browsertype, BROWSERTYPE_list)
     ibrowsertype = convert_to_int(browsertype)
     ix = convert_to_FL_Coord(x)
     iy = convert_to_FL_Coord(y)
@@ -7027,6 +7049,7 @@ def fl_create_button(buttontype, x, y, w, h, label):
             """FL_OBJECT * fl_create_button(int type, FL_Coord x, FL_Coord y,
                FL_Coord w, FL_Coord h, const char * label)
             """)
+    check_admitted_listvalues(buttontype, BTNTYPE_list)
     ibuttontype = convert_to_int(buttontype)
     ix = convert_to_FL_Coord(x)
     iy = convert_to_FL_Coord(y)
@@ -7050,6 +7073,7 @@ def fl_create_roundbutton(buttontype, x, y, w, h, label):
             """FL_OBJECT * fl_create_roundbutton(int type, FL_Coord x,
                FL_Coord y, FL_Coord w, FL_Coord h, const char * label)
             """)
+    check_admitted_listvalues(buttontype, BTNTYPE_list)
     ibuttontype = convert_to_int(buttontype)
     ix = convert_to_FL_Coord(x)
     iy = convert_to_FL_Coord(y)
@@ -7073,6 +7097,7 @@ def fl_create_round3dbutton(buttontype, x, y, w, h, label):
             """FL_OBJECT * fl_create_round3dbutton(int type, FL_Coord x,
                FL_Coord y, FL_Coord w, FL_Coord h, const char * label)
             """)
+    check_admitted_listvalues(buttontype, BTNTYPE_list)
     ibuttontype = convert_to_int(buttontype)
     ix = convert_to_FL_Coord(x)
     iy = convert_to_FL_Coord(y)
@@ -7096,6 +7121,7 @@ def fl_create_lightbutton(buttontype, x, y, w, h, label):
             """FL_OBJECT * fl_create_lightbutton(int type, FL_Coord x,
                FL_Coord y, FL_Coord w, FL_Coord h, const char * label)
             """)
+    check_admitted_listvalues(buttontype, BTNTYPE_list)
     ibuttontype = convert_to_int(buttontype)
     ix = convert_to_FL_Coord(x)
     iy = convert_to_FL_Coord(y)
@@ -7119,6 +7145,7 @@ def fl_create_checkbutton(buttontype, x, y, w, h, label):
             """FL_OBJECT * fl_create_checkbutton(int type, FL_Coord x,
                FL_Coord y, FL_Coord w, FL_Coord h, const char * label)
             """)
+    check_admitted_listvalues(buttontype, BTNTYPE_list)
     ibuttontype = convert_to_int(buttontype)
     ix = convert_to_FL_Coord(x)
     iy = convert_to_FL_Coord(y)
@@ -7142,6 +7169,7 @@ def fl_create_bitmapbutton(buttontype, x, y, w, h, label):
             """FL_OBJECT * fl_create_bitmapbutton(int type, FL_Coord x,
                FL_Coord y, FL_Coord w, FL_Coord h, const char * label)
             """)
+    check_admitted_listvalues(buttontype, BTNTYPE_list)
     ibuttontype = convert_to_int(buttontype)
     ix = convert_to_FL_Coord(x)
     iy = convert_to_FL_Coord(y)
@@ -7165,6 +7193,7 @@ def fl_create_pixmapbutton(buttontype, x, y, w, h, label):
             """FL_OBJECT * fl_create_pixmapbutton(int type, FL_Coord x,
                FL_Coord y, FL_Coord w, FL_Coord h, const char * label)
             """)
+    check_admitted_listvalues(buttontype, BTNTYPE_list)
     ibuttontype = convert_to_int(buttontype)
     ix = convert_to_FL_Coord(x)
     iy = convert_to_FL_Coord(y)
@@ -7188,6 +7217,7 @@ def fl_create_scrollbutton(buttontype, x, y, w, h, label):
             """FL_OBJECT * fl_create_scrollbutton(int type, FL_Coord x,
                FL_Coord y, FL_Coord w, FL_Coord h, const char * label)
             """)
+    check_admitted_listvalues(buttontype, BTNTYPE_list)
     ibuttontype = convert_to_int(buttontype)
     ix = convert_to_FL_Coord(x)
     iy = convert_to_FL_Coord(y)
@@ -7211,6 +7241,7 @@ def fl_create_labelbutton(buttontype, x, y, w, h, label):
             """FL_OBJECT * fl_create_labelbutton(int type, FL_Coord x,
                FL_Coord y, FL_Coord w, FL_Coord h, const char * label)
             """)
+    check_admitted_listvalues(buttontype, BTNTYPE_list)
     ibuttontype = convert_to_int(buttontype)
     ix = convert_to_FL_Coord(x)
     iy = convert_to_FL_Coord(y)
@@ -7234,6 +7265,7 @@ def fl_add_roundbutton(buttontype, x, y, w, h, label):
             """FL_OBJECT * fl_add_roundbutton(int type, FL_Coord x,
                FL_Coord y, FL_Coord w, FL_Coord h, const char * label)
             """)
+    check_admitted_listvalues(buttontype, BTNTYPE_list)
     ibuttontype = convert_to_int(buttontype)
     ix = convert_to_FL_Coord(x)
     iy = convert_to_FL_Coord(y)
@@ -7257,6 +7289,7 @@ def fl_add_round3dbutton(buttontype, x, y, w, h, label):
             """FL_OBJECT * fl_add_round3dbutton(int type, FL_Coord x,
                FL_Coord y, FL_Coord w, FL_Coord h, const char * label)
             """)
+    check_admitted_listvalues(buttontype, BTNTYPE_list)
     ibuttontype = convert_to_int(buttontype)
     ix = convert_to_FL_Coord(x)
     iy = convert_to_FL_Coord(y)
@@ -7280,6 +7313,7 @@ def fl_add_lightbutton(buttontype, x, y, w, h, label):
             """FL_OBJECT * fl_add_lightbutton(int type, FL_Coord x, FL_Coord y,
                FL_Coord w, FL_Coord h, const char * label)
             """)
+    check_admitted_listvalues(buttontype, BTNTYPE_list)
     ibuttontype = convert_to_int(buttontype)
     ix = convert_to_FL_Coord(x)
     iy = convert_to_FL_Coord(y)
@@ -7303,6 +7337,7 @@ def fl_add_checkbutton(buttontype, x, y, w, h, label):
             """FL_OBJECT * fl_add_checkbutton(int type, FL_Coord x, FL_Coord y,
                FL_Coord w, FL_Coord h, const char * label)
             """)
+    check_admitted_listvalues(buttontype, BTNTYPE_list)
     ibuttontype = convert_to_int(buttontype)
     ix = convert_to_FL_Coord(x)
     iy = convert_to_FL_Coord(y)
@@ -7326,6 +7361,7 @@ def fl_add_button(buttontype, x, y, w, h, label):
             """FL_OBJECT * fl_add_button(int type, FL_Coord x, FL_Coord y,
                FL_Coord w, FL_Coord h, const char * label)
             """)
+    check_admitted_listvalues(buttontype, BTNTYPE_list)
     ibuttontype = convert_to_int(buttontype)
     ix = convert_to_FL_Coord(x)
     iy = convert_to_FL_Coord(y)
@@ -7349,6 +7385,7 @@ def fl_add_bitmapbutton(buttontype, x, y, w, h, label):
             """FL_OBJECT * fl_add_bitmapbutton(int type, FL_Coord x,
                FL_Coord y, FL_Coord w, FL_Coord h, const char * label)
             """)
+    check_admitted_listvalues(buttontype, BTNTYPE_list)
     ibuttontype = convert_to_int(buttontype)
     ix = convert_to_FL_Coord(x)
     iy = convert_to_FL_Coord(y)
@@ -7372,6 +7409,7 @@ def fl_add_scrollbutton(buttontype, x, y, w, h, label):
             """FL_OBJECT * fl_add_scrollbutton(int type, FL_Coord x,
                FL_Coord y, FL_Coord w, FL_Coord h, const char * label)
             """)
+    check_admitted_listvalues(buttontype, BTNTYPE_list)
     ibuttontype = convert_to_int(buttontype)
     ix = convert_to_FL_Coord(x)
     iy = convert_to_FL_Coord(y)
@@ -7395,6 +7433,7 @@ def fl_add_labelbutton(buttontype, x, y, w, h, label):
             """FL_OBJECT * fl_add_labelbutton(int type, FL_Coord x,
                FL_Coord y, FL_Coord w, FL_Coord h, const char * label)
             """)
+    check_admitted_listvalues(buttontype, BTNTYPE_list)
     ibuttontype = convert_to_int(buttontype)
     ix = convert_to_FL_Coord(x)
     iy = convert_to_FL_Coord(y)
@@ -7441,6 +7480,7 @@ def fl_add_pixmapbutton(buttontype, x, y, w, h, label):
             """FL_OBJECT * fl_add_pixmapbutton(int type, FL_Coord x,
                FL_Coord y, FL_Coord w, FL_Coord h, const char * label)
             """)
+    check_admitted_listvalues(buttontype, BTNTYPE_list)
     ibuttontype = convert_to_int(buttontype)
     ix = convert_to_FL_Coord(x)
     iy = convert_to_FL_Coord(y)
@@ -11049,6 +11089,7 @@ def fl_create_input(inputtype, x, y, w, h, label):
             """FL_OBJECT * fl_create_input(int type, FL_Coord x, FL_Coord y,
                FL_Coord w, FL_Coord h, const char * label)
             """)
+    check_admitted_listvalues(inputtype, INPUTTYPE_list)
     iinputtype = convert_to_int(inputtype)
     ix = convert_to_FL_Coord(x)
     iy = convert_to_FL_Coord(y)
@@ -11072,6 +11113,7 @@ def fl_add_input(inputtype, x, y, w, h, label):
             """FL_OBJECT * fl_add_input(int type, FL_Coord x, FL_Coord y,
                FL_Coord w, FL_Coord h, const char * label)
             """)
+    check_admitted_listvalues(inputtype, INPUTTYPE_list)
     iinputtype = convert_to_int(inputtype)
     ix = convert_to_FL_Coord(x)
     iy = convert_to_FL_Coord(y)
@@ -11543,6 +11585,7 @@ def fl_create_menu(menutype, x, y, w, h, label):
             """FL_OBJECT * fl_create_menu(int type, FL_Coord x, FL_Coord y,
                FL_Coord w, FL_Coord h, const char * label)
             """)
+    check_admitted_listvalues(menutype, MENUTYPE_list)
     imenutype = convert_to_int(menutype)
     ix = convert_to_FL_Coord(x)
     iy = convert_to_FL_Coord(y)
@@ -11566,6 +11609,7 @@ def fl_add_menu(menutype, x, y, w, h, label):
             """FL_OBJECT * fl_add_menu(int type, FL_Coord x, FL_Coord y,
                FL_Coord w, FL_Coord h, const char * label)    DEPRECATED
             """)
+    check_admitted_listvalues(menutype, MENUTYPE_list)
     imenutype = convert_to_int(menutype)
     ix = convert_to_FL_Coord(x)
     iy = convert_to_FL_Coord(y)
@@ -12452,6 +12496,7 @@ def fl_create_scrollbar(scrolltype, x, y, w, h, label):
             """FL_OBJECT * fl_create_scrollbar(int type, FL_Coord x,
                FL_Coord y, FL_Coord w, FL_Coord h, const char * label)
             """)
+    check_admitted_listvalues(scrolltype, SCROLLTYPE_list)
     iscrolltype = convert_to_int(scrolltype)
     ix = convert_to_FL_Coord(x)
     iy = convert_to_FL_Coord(y)
@@ -12475,6 +12520,7 @@ def fl_add_scrollbar(scrolltype, x, y, w, h, label):
             """FL_OBJECT * fl_add_scrollbar(int type, FL_Coord x, FL_Coord y,
                FL_Coord w, FL_Coord h, const char * label)
             """)
+    check_admitted_listvalues(scrolltype, SCROLLTYPE_list)
     iscrolltype = convert_to_int(scrolltype)
     ix = convert_to_FL_Coord(x)
     iy = convert_to_FL_Coord(y)
