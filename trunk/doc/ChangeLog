@@ -1,12 +1,13 @@
 
 
 SVN
-    * Porting of fbrowse example
+    * Porting of multilabel example.
+    * Porting of fbrowse example.
     * Enable .visible and .active attributes for a
-    FL_OBJECT object
+    FL_OBJECT object.
     * Introduce a check if some numeric parameters are valid
     in accordance to a list of admitted values.
-    * Porting of scrollbar example
+    * Porting of scrollbar example.
     * Porting of timer2 example.
     * Porting of timeoutprec example.
     * Porting of sliderall example.
