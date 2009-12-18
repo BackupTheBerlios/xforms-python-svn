@@ -26,8 +26,16 @@ def valchange_cb(ob, data):
 
 def returnchange_cb(ob, data):
 
-    #n = xf.fl_get_select_item(ob)[0].val
     n = xf.fl_get_choice(ob)
+
+    if n == 1:
+        n = xfc.FL_RETURN_END_CHANGED
+    elif n == 2:
+        n = xfc.FL_RETURN_CHANGED
+    elif n == 3:
+        n = xfc.FL_RETURN_END
+    else:
+        n = xfc.FL_RETURN_ALWAYS
 
     xf.fl_set_thumbwheel_return(vert, n)
     xf.fl_set_thumbwheel_return(hor, n)

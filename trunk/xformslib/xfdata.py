@@ -37,8 +37,11 @@ import ctypes as cty
 
 FL_VERSION = 1
 FL_REVISION = 0
-FL_FIXLEVEL = "92sp2"
+FL_FIXLEVEL = "93pre1"
 FL_INCLUDE_VERSION = (FL_VERSION * 1000 + FL_REVISION)
+
+
+INT_MAX = 2147483647L
 
 
 ########################################
@@ -58,26 +61,16 @@ FL_WHEN_NEEDED = FL_AUTO        #2
 FL_OFF = 0
 FL_CANCEL = 0
 FL_INVALID = 0
-FL_NONE = 0     # defined elsewhere
 # WM_DELETE_WINDOW callback return
 FL_IGNORE = -1
-FL_CLOSE = -2
-# miscty. return types
-FL_ARGUMENT = -3
-FL_ALLOC = -4
-FL_BAD_OBJECT = -5
 
 # max directory length
 # FL_PATH_MAX / PATH_MAX
 FL_PATH_MAX = 1024
 
 
-
 # The screen coordinate unit, FL_Coord, must be of signed type.
-# If FL_Coord is float, FL_CoordIsFloat must be defined to be 1 so that
-# round-off error can be checked. **TODO Float not tested
 FL_Coord = cty.c_int
-Fl_CoordIsFloat = 0     # make it 1 if FL_Coord is of type float of type float
 
 FL_COLOR = cty.c_ulong
 
@@ -185,10 +178,9 @@ PLACE_list = [FL_PLACE_FREE, FL_PLACE_MOUSE, FL_PLACE_CENTER,
 FL_FULLBORDER = 1       # normal
 FL_TRANSIENT = 2        # set TRANSIENT_FOR property
 FL_NOBORDER = 3         # use override_redirect to supress decor.
-FL_MODAL = 256          #1<<8  not implemented yet
 
 # my add, list of possible values --LK
-DECORATION_list = [FL_FULLBORDER, FL_TRANSIENT, FL_NOBORDER, FL_MODAL]
+DECORATION_list = [FL_FULLBORDER, FL_TRANSIENT, FL_NOBORDER]
 
 # All box types
 # values for enumeration 'FL_BOX_TYPE'
@@ -216,7 +208,6 @@ FL_TOPTAB_UPBOX = 18
 FL_SELECTED_TOPTAB_UPBOX = 19
 FL_BOTTOMTAB_UPBOX = 20
 FL_SELECTED_BOTTOMTAB_UPBOX = 21
-FL_OSHADOW_BOX = 22                   # not used
 FL_MAX_BOX_STYLES = 23                # sentinel
 
 # my add, list of possible values --LK
@@ -481,7 +472,7 @@ FL_FREE_COL13 = 268
 FL_FREE_COL14 = 269
 FL_FREE_COL15 = 270
 FL_FREE_COL16 = 271
-FL_NOCOLOR = 2147483647           #INT_MAX
+FL_NOCOLOR = INT_MAX
 
 FL_BUILT_IN_COLS = FL_YELLOWGREEN + 1
 FL_INACTIVE_COL = FL_INACTIVE
@@ -557,11 +548,9 @@ FL_LEAVE = 5
 FL_MOTION = 6
 FL_FOCUS = 7
 FL_UNFOCUS = 8
-FL_KEYBOARD = 9
-FL_KEYPRESS = FL_KEYBOARD
+FL_KEYPRESS = 9
 FL_UPDATE = 10      # for objects that need to update something from time to
                     # time
-FL_MOUSE = FL_UPDATE
 FL_STEP = 11
 FL_SHORTCUT = 12
 FL_FREEMEM = 13
@@ -579,8 +568,10 @@ FL_MOVEORIGIN = 21  # dragging the form across the screen changes its
 FL_RESIZED = 22     # the object has been resized by scale_form
                     # Tell it that this has happened so that
                     # it can resize any FL_FORMs that it contains.
-
-FL_MOVE = FL_MOTION    # for compatibility
+# The following are only for backward compatibility, not used anymore
+FL_MOVE = FL_MOTION
+FL_KEYBOARD = FL_KEYPRESS
+FL_MOUSE = FL_UPDATE
 
 
 # Resize policies
@@ -650,7 +641,6 @@ FL_PUP_ENTRY._fields_ = [
     ('callback', FL_PUP_CB),        # the callback function
     ('shortcut', STRING),           # hotkeys
     ('mode', cty.c_int),            # FL_PUP_GRAY, FL_PUP_CHECK, etcty.
-    ('reserved', cty.c_long * 2),   # left in for backward compatibility
 ]
 
 FL_MENU_ENTRY = FL_PUP_ENTRY
@@ -942,11 +932,12 @@ FL_OBJECT_._fields_ = [
     ('next', cty.POINTER(FL_OBJECT)),     # next obj in form
     ('parent', cty.POINTER(FL_OBJECT)),
     ('child', cty.POINTER(FL_OBJECT)),
-    ('nc', cty.POINTER(FL_OBJECT)),
-    ('returned', cty.c_int),
+    ('nc', cty.POINTER(FL_OBJECT)),     # next child
     ('flpixmap', cty.POINTER(FL_pixmap)), # pixmap double buffering stateinfo
     ('use_pixmap', cty.c_int),          # true to use pixmap double buffering
     # some interaction flags
+    ('returned', cty.c_int),            # what last interaction returned
+    ('how_return', cty.c_int),          # under which conditions to return
     ('double_buffer', cty.c_int),         # only used by mesa/gl canvas
     ('pushed', cty.c_int),
     ('focus', cty.c_int),
@@ -964,10 +955,7 @@ FL_OBJECT_._fields_ = [
     ('c_vdata', cty.c_void_p),            # for class use
     ('c_cdata', STRING),                # for class use
     ('c_ldata', cty.c_long),              # for class use
-    ('aux_col1', FL_COLOR),             # aux colors
-    ('aux_col2', FL_COLOR),
     ('dbl_background', FL_COLOR),       # double buffer background
-    ('how_return', cty.c_int),
     ('tooltip', STRING),
     ('tipID', cty.c_int),
     ('group_id', cty.c_int),
@@ -1704,7 +1692,7 @@ FL_BROWSER_SLCOL = FL_COL1
 FL_BROWSER_FONTSIZE = FL_SMALL_FONT
 
 # This exists only for backward compatibility and isn't used anymore!
-FL_BROWSER_LINELENGTH = 2048
+FL_BROWSER_LINELENGTH = INT_MAX
 
 
 FL_BROWSER_SCROLL_CALLBACK = cty.CFUNCTYPE(None, cty.POINTER(FL_OBJECT),
@@ -1744,7 +1732,7 @@ FL_BUTTON_SPEC._fields_ = [
     ('mask', Pixmap),
     ('bits_w', cty.c_uint),
     ('bits_h', cty.c_uint),
-    ('val', cty.c_int),               # whether on
+    ('val', cty.c_int),               # state of button whether (on/off)
     ('mousebut', cty.c_int),          # mouse button that caused the push
     ('timdel', cty.c_int),            # time since last touch (TOUCH buttons)
     ('event', cty.c_int),             # what event triggers redraw
@@ -1896,7 +1884,7 @@ FL_SPIKE_CHART = 4
 FL_PIE_CHART = 5
 FL_SPECIALPIE_CHART = 6
 
-FL_FILLED_CHART = FL_FILL_CHART     # compatibility
+FL_FILLED_CHART = FL_FILL_CHART     # for backward compatibility
 
 # Defaults
 FL_CHART_BOXTYPE = FL_BORDER_BOX
@@ -2439,22 +2427,6 @@ FL_MENU_MAXITEMS = 128
 FL_MENU_MAXSTR = 64        # not used anymore! JTT
 
 
-##############################################
-# forms.h (menubar.h)
-# Object Class: MenuBar
-# THIS FILE SEEMS NOT TO BE NEEDED AT ALL JTT
-##############################################
-
-# values for unnamed enumeration
-FL_NORMAL_MENUBAR = 0
-
-# Defaults
-FL_MENUBAR_BOXTYPE = FL_UP_BOX
-FL_MENUBAR_COL1 = FL_COL1
-FL_MENUBAR_COL2 = FL_MCOL
-FL_MENUBAR_LCOL = FL_LCOL
-
-
 # Nmenu object types
 # values for unnamed enumeration
 FL_NORMAL_NMENU = 0
@@ -2463,12 +2435,14 @@ FL_BUTTON_NMENU = 2
 FL_BUTTON_TOUCH_NMENU = 3
 
 
+
 #########################
 # forms.h (positioner.h)
 #########################
 
 FL_NORMAL_POSITIONER = 0
 FL_OVERLAY_POSITIONER = 1
+FL_INVISIBLE_POSITIONER = 2
 
 # Defaults
 FL_POSITIONER_BOXTYPE = FL_DOWN_BOX
@@ -2530,10 +2504,6 @@ FL_SELECT_ALIGN = FL_ALIGN_LEFT
 
 # values for enumeration 'FL_SLIDER_TYPE'
 FL_SLIDER_TYPE = cty.c_int # enum
-#######################
-# forms.h (slider.h)
-# Object Class: Slider
-#######################
 
 FL_HOR_FLAG = 1
 FL_SCROLL_FLAG = 8
@@ -2779,7 +2749,6 @@ flimage_text_._fields_ = [
     ('style', cty.c_int),
     ('angle', cty.c_int),           # in 1/10th of a degrees
     ('align', cty.c_int),           # alignment wrt to (x,y)
-    ('reserved', cty.c_int * 6),
 ]
 FLIMAGE_TEXT = flimage_text_
 
@@ -2802,7 +2771,6 @@ flimage_marker_._fields_ = [
     ('gc', cty.c_void_p),
     ('win', FL_WINDOW),
     ('psdraw', STRING),
-    ('reserved', cty.c_int * 6),
 ]
 FLIMAGE_MARKER = flimage_marker_
 
@@ -2887,7 +2855,6 @@ flimage_._fields_ = [
     ('wxd', cty.c_int),
     ('wyd', cty.c_int),
     ('fmt_name', STRING),       # format name (ppm,jpg etc)
-    ('bi_reserved', cty.c_int * 8),
     # annotation stuff
     ('text', cty.POINTER(FLIMAGE_TEXT)),
     ('ntext', cty.c_int),
@@ -2901,7 +2868,6 @@ flimage_._fields_ = [
     ('dont_display_marker', cty.c_int),
     ('display_markers', cty.CFUNCTYPE(None, cty.POINTER(flimage_))),
     ('free_markers', cty.CFUNCTYPE(None, cty.POINTER(flimage_))),
-    ('an_reserved', cty.c_int * 8),
     # physicalValue = poffset + pixelValue * pscale
     ('pmin', cty.c_double),         # physical data range
     ('pmax', cty.c_double),
@@ -2912,7 +2878,6 @@ flimage_._fields_ = [
     ('xdist_scale', cty.c_double),
     ('ydist_offset', cty.c_double),
     ('ydist_scale', cty.c_double),
-    ('px_reserved', cty.c_int * 8),
     ('infile', STRING),
     ('outfile', STRING),
     ('foffset', cty.c_long),
@@ -2921,7 +2886,6 @@ flimage_._fields_ = [
     # if pre_write returns -1, the output will be canceled
     ('pre_write', cty.CFUNCTYPE(cty.c_int, cty.POINTER(flimage_))),
     ('post_write', cty.CFUNCTYPE(cty.c_int, cty.POINTER(flimage_))),
-    ('f_reserved', cty.c_int * 16),
     # image processing stuff
     ('subx', cty.c_int),        # subimage origin
     ('suby', cty.c_int),
@@ -2933,7 +2897,6 @@ flimage_._fields_ = [
     ('llut', cty.POINTER(cty.c_int) * 3),   # linear lut
     ('llut_len', cty.c_int),
     ('hist', cty.POINTER(cty.c_uint) * 4),
-    ('ip_reserved', cty.c_int * 16),
     # application handlers
     ('total', cty.c_int),
     ('completed', cty.c_int),
@@ -2958,7 +2921,6 @@ flimage_._fields_ = [
     ('rewind_frame', cty.CFUNCTYPE(cty.c_int, cty.POINTER(flimage_))),
     ('cleanup', cty.CFUNCTYPE(None, cty.POINTER(flimage_))),
     ('stop_looping', cty.c_int),
-    ('mi_reserved', cty.c_int * 16),
     # the following are for internal use
     ('fpin', cty.POINTER(FILE)),
     ('fpout', cty.POINTER(FILE)),
@@ -2984,7 +2946,6 @@ flimage_._fields_ = [
     ('isPixmap', cty.c_int),
     ('setup', FLIMAGESETUP),
     ('info', STRING),
-    ('internal_reserved', cty.c_int * 14),
 ]
 FL_IMAGE = flimage_
 
@@ -3013,7 +2974,6 @@ flimage_setup_._fields_ = [
     # internal use
     ('trailblazer', cty.c_ulong),
     ('header_info', cty.c_int),
-    ('reserved', cty.c_int * 8),
 ]
 
 FLIMAGE_SETUP = flimage_setup_
@@ -3026,7 +2986,6 @@ class FLIMAGE_JPEG_OPTION(cty.Structure):
 FLIMAGE_JPEG_OPTION._fields_ = [
     ('quality', cty.c_int),
     ('smoothing', cty.c_int),
-    ('reserved', cty.c_int * 6),
 ]
 
 
@@ -3043,16 +3002,15 @@ FLIMAGE_FORMAT_INFO._fields_ = [
     ('type', cty.c_int),
     ('read_write', cty.c_int),
     ('annotation', cty.c_int),
-    ('reserved', cty.c_int * 5),
 ]
 
 
 # simple image processing routines
 
-#FLIMAGE_SHARPEN = cty.POINTER(cty.POINTER(cty.c_int(-1)))
-FLIMAGE_SHARPEN = cty.c_int(-1)
-#FLIMAGE_SMOOTH = cty.POINTER(cty.POINTER(cty.c_int(-2)))
-FLIMAGE_SMOOTH = cty.c_int(-2)
+FLIMAGE_SHARPEN = cty.pointer(cty.pointer(cty.c_int(-1)))
+#FLIMAGE_SHARPEN = cty.c_int(-1)
+FLIMAGE_SMOOTH = cty.pointer(cty.pointer(cty.c_int(-2)))
+#FLIMAGE_SMOOTH = cty.c_int(-2)
 FL_SMOOTH = FLIMAGE_SMOOTH
 FL_SHARPEN = FLIMAGE_SHARPEN
 

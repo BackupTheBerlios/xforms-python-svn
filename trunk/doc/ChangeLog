@@ -1,10 +1,11 @@
 
 
 SVN
+    * Updated for XForms 1.0.93pre1 variations
     * Porting of multilabel example.
     * Porting of fbrowse example.
     * Enable .visible and .active attributes for a
-    FL_OBJECT object.
+    FL_OBJECT object, in some functions.
     * Introduce a check if some numeric parameters are valid
     in accordance to a list of admitted values.
     * Porting of scrollbar example.

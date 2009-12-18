@@ -38,8 +38,8 @@ from xfdata import *       # data types and constants from XForms
 
 
 # xforms-python version
-__mainversion__ = "0.3.0"               # real version
-__vers_against_xforms__ = "1.0.92sp2"   # xforms version to be built against
+__mainversion__ = "0.3.1"               # real version
+__vers_against_xforms__ = "1.0.93pre1"   # xforms version to be built against
 __version__ = __mainversion__+"_"+__vers_against_xforms__
 
 
@@ -54,15 +54,15 @@ def get_xforms_version():
     try:
         formsh = open(header_filename, "r")
     except IOError:
-        raise XFormsLoadError("XForms library toolkit is not installed" \
-                              "properly")
+        raise XFormsLoadError("XForms library toolkit header is not " \
+                              " installed properly")
     else:
         try:
             # a reasonable size to catch version values
             fconten = formsh.read(2500)
         except IOError:
-            raise XFormsLoadError("XForms library toolkit is not installed" \
-                                  "properly")
+            raise XFormsLoadError("XForms library toolkit header is not " \
+                                  "installed properly")
         else:
             formsh.close()
             listconten = fconten.split("\n")
@@ -171,7 +171,7 @@ loaded_xlibraries = {'libforms' : None, 'libflimage' : None, \
 
 
 def load_so_libforms():
-    """ Load libforms.so.1 else raise an error -> library instance
+    """ Load libforms.so else raise an error -> library instance
     """
 
     if loaded_xlibraries['libforms'] is None:
@@ -185,7 +185,7 @@ def load_so_libforms():
 
 
 def load_so_libflimage():
-    """ Load libflimage.so.1 else raise an error -> library instance
+    """ Load libflimage.so else raise an error -> library instance
     """
 
     if loaded_xlibraries['libflimage'] is None:
@@ -199,7 +199,7 @@ def load_so_libflimage():
 
 
 def load_so_libformsgl():
-    """ Load libformsGL.so.1 else raise an error -> library instance
+    """ Load libformsGL.so else raise an error -> library instance
     """
 
     if loaded_xlibraries['libformsgl'] is None:
@@ -8337,18 +8337,17 @@ def fl_get_chart_bounds(pObject):
 
 
 def fl_set_chart_maxnumb(pObject, maxnumb):
-    """ fl_set_chart_maxnumb(pObject, maxnumb) -> num.
+    """ fl_set_chart_maxnumb(pObject, maxnumb)
     """
 
     _fl_set_chart_maxnumb = cfuncproto(
             load_so_libforms(), "fl_set_chart_maxnumb",
-            cty.c_int, [cty.POINTER(FL_OBJECT), cty.c_int],
-            """int fl_set_chart_maxnumb(FL_OBJECT * ob, int maxnumb)
+            None, [cty.POINTER(FL_OBJECT), cty.c_int],
+            """void fl_set_chart_maxnumb(FL_OBJECT * ob, int maxnumb)
             """)
     imaxnumb = convert_to_int(maxnumb)
     keep_elem_refs(pObject, maxnumb, imaxnumb)
-    retval = _fl_set_chart_maxnumb(pObject, imaxnumb)
-    return retval
+    _fl_set_chart_maxnumb(pObject, imaxnumb)
 
 
 def fl_set_chart_autosize(pObject, autosize):
@@ -10425,24 +10424,24 @@ def fl_hide_choice():
     _fl_hide_choice()
 
 
-def fl_set_choice_shortcut(p1, p2, p3):
-    """ fl_set_choice_shortcut(p1, p2, p3)
+def fl_set_choices_shortcut(p1, p2, p3):
+    """ fl_set_choices_shortcut(p1, p2, p3)
     """
 
-    _fl_set_choice_shortcut = cfuncproto(
-            load_so_libforms(), "fl_set_choice_shortcut",
+    _fl_set_choices_shortcut = cfuncproto(
+            load_so_libforms(), "fl_set_choices_shortcut",
             None, [STRING, STRING, STRING],
-            """void fl_set_choice_shortcut(const char * p1, const char * p2,
+            """void fl_set_choices_shortcut(const char * p1, const char * p2,
                const char * p3)
             """)
     sp1 = convert_to_string(p1)
     sp2 = convert_to_string(p2)
     sp3 = convert_to_string(p3)
     keep_elem_refs(p1, p2, p3, sp1, sp2, sp3)
-    _fl_set_choice_shortcut(sp1, sp2, sp3)
+    _fl_set_choices_shortcut(sp1, sp2, sp3)
 
 
-fl_set_choicesshortcut = fl_set_choice_shortcut
+fl_set_choice_shortcut = fl_set_choices_shortcut
 
 
 # one liner
@@ -11904,104 +11903,7 @@ def fl_set_menu_item_id(pObject, item, idnum):
 
 
 
-##############################################
-# forms.h (menubar.h)
-# Object Class: MenuBar
-# THIS FILE SEEMS NOT TO BE NEEDED AT ALL JTT
-##############################################
-
-# Routines not active anymore:
-
-#def fl_create_menubar(bartype, x, y, w, h, label):
-#   """ fl_create_menubar(bartype, x, y, w, h, label) -> pObject
-#   """
-#
-#    _fl_create_menubar = cfuncproto(
-#           load_so_libforms(), "fl_create_menubar",
-#           cty.POINTER(FL_OBJECT), [cty.c_int, FL_Coord, FL_Coord, FL_Coord,
-#           FL_Coord, STRING],
-#           """FL_OBJECT * fl_create_menubar(int type, FL_Coord x, FL_Coord y,
-#           FL_Coord w, FL_Coord h, char * label)    REMOVED
-#           """)
-#    ibartype = convert_to_int(bartype)
-#    ix = convert_to_FL_Coord(x)
-#    iy = convert_to_FL_Coord(y)
-#    iw = convert_to_FL_Coord(w)
-#    ih = convert_to_FL_Coord(h)
-#    slabel = convert_to_string(label)
-#    keep_elem_refs(bartype, x, y, w, h, label, ibartype, ix, iy,
-#                   iw, ih, slabel)
-#    retval = _fl_create_menubar(ibartype, ix, iy, iw, ih, slabel)
-#    return retval
-
-
-#def fl_add_menubar(bartype, x, y, w, h, label):
-#   """ fl_add_menubar(bartype, x, y, w, h, label) -> pObject
-#   """
-#
-#    _fl_add_menubar = cfuncproto(
-#           load_so_libforms(), "fl_add_menubar",
-#           cty.POINTER(FL_OBJECT), [cty.c_int, FL_Coord, FL_Coord, FL_Coord,
-#           FL_Coord, STRING],
-#           ""FL_OBJECT * fl_add_menubar(int type, FL_Coord x, FL_Coord y,
-#           FL_Coord w, FL_Coord h, char * label)    REMOVED
-#           """)
-#    ibartype = convert_to_int(bartype)
-#    ix = convert_to_FL_Coord(x)
-#    iy = convert_to_FL_Coord(y)
-#    iw = convert_to_FL_Coord(w)
-#    ih = convert_to_FL_Coord(h)
-#    slabel = convert_to_string(label)
-#    keep_elem_refs(bartype, x, y, w, h, label, ibartype, ix, iy,
-#                   iw, ih, slabel)
-#    retval = _fl_add_menubar(ibartype, ix, iy, iw, ih, slabel)
-#    return retval
-
-
-#def fl_clear_menubar(pObject):
-#   """ fl_clear_menubar(pObject)
-#   """
-#
-#    _fl_clear_menubar = cfuncproto(
-#           load_so_libforms(), "fl_clear_menubar",
-#           None, [cty.POINTER(FL_OBJECT)],
-#           """void fl_clear_menubar(FL_OBJECT * ob)    REMOVED
-#           """)
-#    keep_elem_refs(pObject)
-#    fl_clear_menubar(pObject)
-
-
-#def fl_set_menubar(pObject, label):
-#   """ fl_set_menubar(pObject, label)
-#   """
-#
-#    _fl_set_menubar = cfuncproto(
-#           load_so_libforms(), "fl_set_menubar",
-#           None, [cty.POINTER(FL_OBJECT), STRING],
-#           """void fl_set_menubar(FL_OBJECT * ob, char * label)    REMOVED
-#           """)
-#    slabel = convert_to_string(label)
-#    keep_elem_refs(pObject, label, slabel)
-#    fl_set_menubar(pObject, slabel)
-
-
-#def fl_set_menubar_entries(pObject, label, pup):
-#   """ fl_set_menubar_entries(pObject, label, pup)
-#   """
-#
-#    _fl_set_menubar_entries = cfuncproto(
-#           load_so_libforms(), "fl_set_menubar_entries",
-#           None, [cty.POINTER(FL_OBJECT), STRING, cty.POINTER(FL_PUP_ENTRY)],
-#           """void fl_set_menubar_entries(FL_OBJECT * ob, char * label,
-#           FL_PUP_ENTRY * label)    REMOVED
-#           """)
-#    slabel = convert_to_string(label)
-#    keep_elem_refs(pObject, label, pup, slabel)
-#    fl_set_menubar_entries(pObject, slabel, pup)
-
-
 # Nmenu object types
-
 
 def fl_create_nmenu(nmenutype, x, y, w, h, label):
     """ fl_create_nmenu(nmenutype, x, y, w, h, label) -> pObject
@@ -14361,19 +14263,20 @@ def fl_setpup_default_cursor(cursor):
     return retval
 
 
-def fl_setpup_color(fgcolr, bgcolr):
-    """ fl_setpup_color(fgcolr, bgcolr)
+# ALERT
+def fl_setpup_default_color(fgcolr, bgcolr):
+    """ fl_setpup_default_color(fgcolr, bgcolr)
     """
 
-    _fl_setpup_color = cfuncproto(
-            load_so_libforms(), "fl_setpup_color",
+    _fl_setpup_default_color = cfuncproto(
+            load_so_libforms(), "fl_setpup_default_color",
             None, [FL_COLOR, FL_COLOR],
-            """void fl_setpup_color(FL_COLOR fg, FL_COLOR bg)
+            """void fl_setpup_default_color(FL_COLOR fg, FL_COLOR bg)
             """)
     ulfgcolr = convert_to_FL_COLOR(fgcolr)
     ulbgcolr = convert_to_FL_COLOR(bgcolr)
     keep_elem_refs(fgcolr, bgcolr, ulfgcolr, ulbgcolr)
-    _fl_setpup_color(ulfgcolr, ulbgcolr)
+    _fl_setpup_default_color(ulfgcolr, ulbgcolr)
 
 
 def fl_setpup_default_pup_checked_color(colr):
@@ -14390,39 +14293,39 @@ def fl_setpup_default_pup_checked_color(colr):
     _fl_setpup_default_pup_checked_color(ulcolr)
 
 
-def fl_setpup_fontsize(size):
-    """ fl_setpup_fontsize(size) -> num.
+def fl_setpup_default_fontsize(size):
+    """ fl_setpup_default_fontsize(size) -> num.
     """
 
-    _fl_setpup_fontsize = cfuncproto(
-            load_so_libforms(), "fl_setpup_fontsize",
+    _fl_setpup_default_fontsize = cfuncproto(
+            load_so_libforms(), "fl_setpup_default_fontsize",
             cty.c_int, [cty.c_int],
-            """int fl_setpup_fontsize(int size)    DEPRECATED?
+            """int fl_setpup_default_fontsize(int size)    DEPRECATED?
             """)
     isize = convert_to_int(size)
     keep_elem_refs(size, isize)
-    retval = _fl_setpup_fontsize(isize)
+    retval = _fl_setpup_default_fontsize(isize)
     return retval
 
 
-def fl_setpup_fontstyle(style):
-    """ fl_setpup_fontstyle(style) -> num.
+def fl_setpup_default_fontstyle(style):
+    """ fl_setpup_default_fontstyle(style) -> num.
     """
 
-    _fl_setpup_fontstyle = cfuncproto(
-            load_so_libforms(), "fl_setpup_fontstyle",
+    _fl_setpup_default_fontstyle = cfuncproto(
+            load_so_libforms(), "fl_setpup_default_fontstyle",
             cty.c_int, [cty.c_int],
-            """int fl_setpup_fontstyle(int style)
+            """int fl_setpup_default_fontstyle(int style)
             """)
     istyle = convert_to_int(style)
     keep_elem_refs(style, istyle)
-    retval = _fl_setpup_fontstyle(istyle)
+    retval = _fl_setpup_default_fontstyle(istyle)
     return retval
 
 
-fl_setpup_default_fontsize = fl_setpup_fontsize
-fl_setpup_default_fontstyle = fl_setpup_fontstyle
-fl_setpup_default_color = fl_setpup_color
+fl_setpup_fontsize = fl_setpup_default_fontsize
+fl_setpup_fontstyle = fl_setpup_default_fontstyle
+fl_setpup_color = fl_setpup_default_color
 fl_setpup_default_checkcolor = fl_setpup_default_pup_checked_color
 fl_setpup_checkcolor = fl_setpup_default_pup_checked_color
 
@@ -14826,14 +14729,14 @@ def fl_add_xyplot(plottype, x, y, w, h, label):
 
 
 def fl_set_xyplot_data(pObject, xlist, ylist, n, title, xlabel, ylabel):
-    """ fl_set_xyplot_data(pObject, xlist, ylist, n, title, xlabel, ylabel) -> num.
+    """ fl_set_xyplot_data(pObject, xlist, ylist, n, title, xlabel, ylabel)
     """
 
     _fl_set_xyplot_data = cfuncproto(
             load_so_libforms(), "fl_set_xyplot_data",
-            cty.c_int, [cty.POINTER(FL_OBJECT), cty.POINTER(cty.c_float),
+            None, [cty.POINTER(FL_OBJECT), cty.POINTER(cty.c_float),
             cty.POINTER(cty.c_float), cty.c_int, STRING, STRING, STRING],
-            """int fl_set_xyplot_data(FL_OBJECT * ob, float * x, float * y,
+            """void fl_set_xyplot_data(FL_OBJECT * ob, float * x, float * y,
                int n, const char * title, const char * xlabel,
                const char * ylabel)
             """)
@@ -14852,22 +14755,20 @@ def fl_set_xyplot_data(pObject, xlist, ylist, n, title, xlabel, ylabel):
     stitle = convert_to_string(title)
     sxlabel = convert_to_string(xlabel)
     sylabel = convert_to_string(ylabel)
-    keep_elem_refs(pObject, xlist, ylist, n, fx, fy, px, py, title, xlabel, ylabel, \
-                   inum, stitle, sxlabel, sylabel)
-    retval = _fl_set_xyplot_data(pObject, px, py, inum, stitle, \
-                                 sxlabel, sylabel)
-    return retval
+    keep_elem_refs(pObject, xlist, ylist, n, fx, fy, px, py, title, \
+                   xlabel, ylabel, inum, stitle, sxlabel, sylabel)
+    _fl_set_xyplot_data(pObject, px, py, inum, stitle, sxlabel, sylabel)
 
 
 def fl_set_xyplot_data_double(pObject, x, y, n, title, xlabel, ylabel):
-    """ fl_set_xyplot_data_double(pObject, x, y, n, title, xlabel, ylabel) -> num.
+    """ fl_set_xyplot_data_double(pObject, x, y, n, title, xlabel, ylabel)
     """
 
     _fl_set_xyplot_data_double = cfuncproto(
             load_so_libforms(), "fl_set_xyplot_data_double",
-            cty.c_int, [cty.POINTER(FL_OBJECT), cty.POINTER(cty.c_double),
+            None, [cty.POINTER(FL_OBJECT), cty.POINTER(cty.c_double),
             cty.POINTER(cty.c_double), cty.c_int, STRING, STRING, STRING],
-            """int fl_set_xyplot_data_double(FL_OBJECT * ob, double * x,
+            """void fl_set_xyplot_data_double(FL_OBJECT * ob, double * x,
                double * y, int n, const char * title, const char * xlabel,
                const char * ylabel)
             """)
@@ -14879,10 +14780,9 @@ def fl_set_xyplot_data_double(pObject, x, y, n, title, xlabel, ylabel):
     sylabel = convert_to_string(ylabel)
     keep_elem_refs(pObject, x, y, n, title, xlabel, ylabel, px, py, inum, \
                    stitle, sxlabel, sylabel)
-    retval = _fl_set_xyplot_data_double(pObject, px, py, n, title, \
+    _fl_set_xyplot_data_double(pObject, px, py, n, title, \
                                         xlabel, ylabel, inum, stitle, \
                                         sxlabel, sylabel)
-    return retval
 
 
 def fl_set_xyplot_file(pObject, f, title, xl, yl):
@@ -16309,45 +16209,45 @@ def flimage_set_fits_bits(p1):
     return retval
 
 
-def flimage_jpeg_options(pImageJpegOption):
-    """ flimage_jpeg_options(pImageJpegOption)
+def flimage_jpeg_output_options(pImageJpegOption):
+    """ flimage_jpeg_output_options(pImageJpegOption)
     """
 
-    _flimage_jpeg_options = cfuncproto(
-            load_so_libflimage(), "flimage_jpeg_options",
+    _flimage_jpeg_output_options = cfuncproto(
+            load_so_libflimage(), "flimage_jpeg_output_options",
             None, [cty.POINTER(FLIMAGE_JPEG_OPTION)],
-            """void flimage_jpeg_options(FLIMAGE_JPEG_OPTION * p1)
+            """void flimage_jpeg_output_options(FLIMAGE_JPEG_OPTION * p1)
             """)
     keep_elem_refs(pImageJpegOption)
-    _flimage_jpeg_options(pImageJpegOption)
+    _flimage_jpeg_output_options(pImageJpegOption)
 
 
-def flimage_pnm_options(p1):
-    """ flimage_pnm_options(p1)
+def flimage_pnm_output_options(p1):
+    """ flimage_pnm_output_options(p1)
     """
 
-    _flimage_pnm_options = cfuncproto(
-            load_so_libflimage(), "flimage_pnm_options",
+    _flimage_pnm_output_options = cfuncproto(
+            load_so_libflimage(), "flimage_pnm_output_options",
             None, [cty.c_int],
-            """void flimage_pnm_options(int p1)
+            """void flimage_pnm_output_options(int p1)
             """)
     ip1 = convert_to_int(p1)
     keep_elem_refs(p1, ip1)
-    _flimage_pnm_options(ip1)
+    _flimage_pnm_output_options(ip1)
 
 
-def flimage_gif_options(p1):
-    """ flimage_gif_options(p1)
+def flimage_gif_output_options(p1):
+    """ flimage_gif_output_options(p1)
     """
 
-    _flimage_gif_options = cfuncproto(
-            load_so_libflimage(), "flimage_gif_options",
+    _flimage_gif_output_options = cfuncproto(
+            load_so_libflimage(), "flimage_gif_output_options",
             None, [cty.c_int],
-            """void flimage_gif_options(int p1)
+            """void flimage_gif_output_options(int p1)
             """)
     ip1 = convert_to_int(p1)
     keep_elem_refs(p1, ip1)
-    _flimage_gif_options(ip1)
+    _flimage_gif_output_options(ip1)
 
 
 def flimage_ps_options():
@@ -16363,9 +16263,9 @@ def flimage_ps_options():
     return retval
 
 
-flimage_jpeg_output_options = flimage_jpeg_options
-flimage_pnm_output_options = flimage_pnm_options
-flimage_gif_output_options = flimage_gif_options
+flimage_jpeg_options = flimage_jpeg_output_options
+flimage_pnm_options = flimage_pnm_output_options
+flimage_gif_options = flimage_gif_output_options
 
 
 def flimage_get_number_of_formats():
@@ -16443,22 +16343,6 @@ def fl_free_matrix(p1):
             """)
     keep_elem_refs(p1)
     _fl_free_matrix(p1)
-
-
-# it seems not to be defined --LK
-#def fl_basename(text):
-#   """ fl_basename(text) -> name string
-#   """
-#
-#   _fl_basename = cfuncproto(
-#           so_libflimage, "fl_basename",
-#           STRING, [STRING],
-#           """char * void fl_basename(char * p1)
-#           """)
-#    stext = convert_to_string(text)
-#    keep_elem_refs(text, stext)
-#    retval = fl_basename(stext)
-#    return retval
 
 
 # This function is retained for compatibility reasons only.
