@@ -1,0 +1,129 @@
+This file contains a list of differences between XForms C toolkit APIs
+and xforms-python APIs (e.g. different number of parameters passed to a
+function, multiple number of return values, etc..).
+
+
+fl_get_object_bw(pObject) -> bw
+
+fl_get_object_resize(pObject) -> what
+
+fl_get_object_gravity(pObject) -> nw, se
+
+fl_get_object_size(pObject) -> w, h
+
+fl_get_object_geometry(pObject) -> x, y, w, h
+
+fl_get_object_position(pObject) -> x, y
+
+fl_get_object_bbox(pObject) -> x, y, w, h
+fl_compute_object_geometry(pObject) -> x, y, w, h
+
+fl_get_object_bbox(pObject) -> x, y, w, h
+
+fl_get_char_height(style, size) -> height num., asc, desc       # unsure
+
+fl_get_string_height(style, size, strng, strglen) -> height num., asc, desc  # unsure
+
+fl_get_string_dimension(fntstyle, fntsize, s, strglen) -> width, height
+fl_get_string_size(fntstyle, fntsize, s, strglen) -> width, height
+
+fl_get_align_xy(align, x, y, w, h, xsize, ysize, xoff, yoff) -> xx, yy
+
+fl_getmcolor(colr) -> num., r, g, b
+
+fl_get_icm_color(colr) -> r, g, b
+
+fl_gettime() -> sec, usec
+
+fl_get_mouse() -> window, x, y, keymask         # unsure
+
+fl_get_win_mouse(win) -> window, x, y, keymask
+
+fl_get_form_mouse(pForm) -> window, x, y, keymask
+
+fl_get_decoration_sizes(pForm) -> size num., top, right, bottom, left
+
+fl_get_winsize(win) -> w, h
+fl_get_win_size(win) -> w, h
+
+fl_get_winorigin(win) -> x, y
+fl_get_win_origin(win) -> x, y
+
+fl_get_wingeometry(win) -> x, y, w, h
+fl_get_win_geometry(win) -> x, y, w, h
+
+fl_popup_get_title_font(pPopup) -> style, size
+
+fl_popup_get_size(pPopup) -> size num., w, h
+
+fl_get_pixmap_pixmap(pObject) -> pixmap, p, m
+
+fl_get_browser_dimension(pObject) -> x, y, w, h
+
+fl_get_button_mouse_buttons(pObject) -> buttons
+
+fl_get_chart_bounds(pObject) -> minbound, maxbound
+
+fl_get_clock(pObject) -> hr, mn, sec
+
+fl_get_counter_bounds(pObject) -> minbound, maxbound
+
+fl_get_counter_step(pObject) -> s, l
+
+fl_get_dial_bounds(pObject) -> minbound, maxbound
+
+fl_get_dirlist(directory, pattern, rescan) -> pDirList, n
+
+fl_get_formbrowser_area(pObject) -> num., x, y, w, h
+
+fl_get_input_color(pObject) -> textcolr, curscolr
+
+fl_get_input_selected_range(pObject) -> string, begin, end
+
+fl_get_input_scrollbarsize(pObject) -> hh, vw
+
+fl_get_input_cursorpos(pObject) -> num., x, y
+
+fl_get_input_format(pObject) -> fmt, sep
+
+fl_get_positioner_xbounds(pObject) -> minbound, maxbound
+
+fl_get_positioner_ybounds(pObject) -> minbound, maxbound
+
+fl_get_scrollbar_increment(pObject) -> leftbtnval, midlbtnval
+
+fl_get_scrollbar_bounds(pObject) -> minbound, maxbound
+
+fl_get_select_text_font(pObject) -> num, num1, num2
+
+fl_get_slider_bounds(pObject) -> minbound, maxbound
+
+fl_get_slider_increment(pObject) -> leftbtnval, midlbtnval
+
+fl_get_spinner_bounds(pObject) -> minbound, maxbound
+
+fl_get_folder_area(pObject) -> x, y, w, h
+
+fl_get_thumbwheel_bounds(pObject) -> minbound, maxbound
+
+fl_get_xyplot_xbounds(pObject) -> minbound, maxbound
+
+fl_get_xyplot_ybounds(pObject) -> minbound, maxbound
+
+fl_get_xyplot(pObject) -> x, y, i
+
+fl_get_xyplot_data(pObject) -> x, y, n
+
+fl_get_xyplot_data_pointer(pObject, idnum) -> x, y, n
+
+fl_get_xyplot_overlay_data(pObject, idnum) -> x, y, n
+
+fl_get_xyplot_xmapping(pObject) -> a, b
+
+fl_get_xyplot_ymapping(pObject) -> a, b
+
+
+
+
+
+
