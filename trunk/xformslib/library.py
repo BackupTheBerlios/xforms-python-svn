@@ -17565,8 +17565,8 @@ def flps_draw_checkbox(boxtype, x, y, w, h, colr, bw):
     _flps_draw_checkbox(iboxtype, ix, iy, iw, ih, lcolr, ibw)
 
 
-def flps_draw_frame(p1, p2, p3, p4, p5, p6, p7):
-    """ flps_draw_frame(p1, p2, p3, p4, p5, p6, p7)
+def flps_draw_frame(style, x, y, w, h, colr, bw):
+    """ flps_draw_frame(style, x, y, w, h, colr, bw)
     """
 
     _flps_draw_frame = cfuncproto(
@@ -17576,20 +17576,20 @@ def flps_draw_frame(p1, p2, p3, p4, p5, p6, p7):
             """void flps_draw_frame(int p1, int p2, int p3, int p4, int p5,
                long int p6, int p7)
             """)
-    ip1 = convert_to_int(p1)
-    ip2 = convert_to_int(p2)
-    ip3 = convert_to_int(p3)
-    ip4 = convert_to_int(p4)
-    ip5 = convert_to_int(p5)
-    lp6 = convert_to_long(p6)
-    ip7 = convert_to_int(p7)
-    keep_elem_refs(p1, p2, p3, p4, p5, p6, p7, ip1, ip2, ip3, ip4, ip5,
-                   lp6, ip7)
-    _flps_draw_frame(ip1, ip2, ip3, ip4, ip5, lp6, ip7)
+    istyle = convert_to_int(style)
+    ix = convert_to_int(x)
+    iy = convert_to_int(y)
+    iw = convert_to_int(w)
+    ih = convert_to_int(h)
+    lcolr = convert_to_long(colr)
+    ibw = convert_to_int(bw)
+    keep_elem_refs(style, x, y, w, h, colr, bw, istyle, ix, iy, iw, ih, \
+                   lcolr, ibw)
+    _flps_draw_frame(istyle, ix, iy, iw, ih, lcolr, ibw)
 
 
-def flps_draw_symbol(text, p2, p3, p4, p5, p6):
-    """ flps_draw_symbol(text, p2, p3, p4, p5, p6) -> num.
+def flps_draw_symbol(label, x, y, w, h, colr):
+    """ flps_draw_symbol(label, x, y, w, h, colr) -> num.
     """
 
     _flps_draw_symbol = cfuncproto(
@@ -17599,19 +17599,19 @@ def flps_draw_symbol(text, p2, p3, p4, p5, p6):
             """int flps_draw_symbol(const char * p1, int p2, int p3, int p4,
                int p5, long int p6)
             """)
-    stext = convert_to_string(text)
-    ip2 = convert_to_int(p2)
-    ip3 = convert_to_int(p3)
-    ip4 = convert_to_int(p4)
-    ip5 = convert_to_int(p5)
-    lp6 = convert_to_long(p6)
-    keep_elem_refs(text, p2, p3, p4, p5, p6, stext, ip2, ip3, ip4, ip5, lp6)
-    retval = _flps_draw_symbol(stext, ip2, ip3, ip4, ip5, lp6)
+    slabel = convert_to_string(label)
+    ix = convert_to_int(x)
+    iy = convert_to_int(y)
+    iw = convert_to_int(w)
+    ih = convert_to_int(h)
+    lcolr = convert_to_long(colr)
+    keep_elem_refs(label, x, y, w, h, colr, slabel, ix, iy, iw, ih, lcolr)
+    retval = _flps_draw_symbol(slabel, ix, iy, iw, ih, lcolr)
     return retval
 
 
-def flps_draw_tbox(p1, p2, p3, p4, p5, p6, p7):
-    """ flps_draw_tbox(p1, p2, p3, p4, p5, p6, p7)
+def flps_draw_tbox(style, x, y, w, h, colr, bw):
+    """ flps_draw_tbox(style, x, y, w, h, colr, bw)
     """
 
     _flps_draw_tbox = cfuncproto(
@@ -17621,20 +17621,19 @@ def flps_draw_tbox(p1, p2, p3, p4, p5, p6, p7):
             """void flps_draw_tbox(int p1, int p2, int p3, int p4, int p5,
                long int p6, int p7)
             """)
-    ip1 = convert_to_int(p1)
-    ip2 = convert_to_int(p2)
-    ip3 = convert_to_int(p3)
-    ip4 = convert_to_int(p4)
-    ip5 = convert_to_int(p5)
-    lp6 = convert_to_long(p6)
-    ip7 = convert_to_int(p7)
-    keep_elem_refs(p1, p2, p3, p4, p5, p6, p7, ip1, ip2, ip3, ip4, ip5,
-                   lp6, ip7)
-    _flps_draw_tbox(ip1, ip2, ip3, ip4, ip5, lp6, ip7)
+    istyle = convert_to_int(style)
+    ix = convert_to_int(x)
+    iy = convert_to_int(y)
+    iw = convert_to_int(w)
+    ih = convert_to_int(h)
+    lcolr = convert_to_long(colr)
+    ibw = convert_to_int(bw)
+    keep_elem_refs(style, x, y, w, h, colr, bw, istyle, ix, iy, iw, ih, lcolr, ibw)
+    _flps_draw_tbox(istyle, ix, iy, iw, ih, lcolr, ibw)
 
 
-def flps_draw_text(p1, p2, p3, p4, p5, p6, p7, p8, text):
-    """ flps_draw_text(p1, p2, p3, p4, p5, p6, p7, p8, text)
+def flps_draw_text(align, x, y, w, h, colr, style, size, text):
+    """ flps_draw_text(align, x, y, w, h, colr, style, size, text)
     """
 
     _flps_draw_text = cfuncproto(
@@ -17644,22 +17643,22 @@ def flps_draw_text(p1, p2, p3, p4, p5, p6, p7, p8, text):
             """void flps_draw_text(int p1, int p2, int p3, int p4, int p5,
                long int p6, int p7, int p8, const char * p9)
             """)
-    ip1 = convert_to_int(p1)
-    ip2 = convert_to_int(p2)
-    ip3 = convert_to_int(p3)
-    ip4 = convert_to_int(p4)
-    ip5 = convert_to_int(p5)
-    lp6 = convert_to_long(p6)
-    ip7 = convert_to_int(p7)
-    ip8 = convert_to_int(p8)
+    ialign = convert_to_int(align)
+    ix = convert_to_int(x)
+    iy = convert_to_int(y)
+    iw = convert_to_int(w)
+    ih = convert_to_int(h)
+    lcolr = convert_to_long(colr)
+    istyle = convert_to_int(style)
+    isize = convert_to_int(size)
     stext = convert_to_string(text)
-    keep_elem_refs(p1, p2, p3, p4, p5, p6, p7, p8, text, ip1, ip2, ip3,
-                   ip4, ip5, lp6, ip7, ip8, stext)
-    _flps_draw_text(ip1, ip2, ip3, ip4, ip5, lp6, ip7, ip8, stext)
+    keep_elem_refs(align, x, y, w, h, colr, style, size, text, ialign, \
+                   ix, iy, iw, ih, lcolr, istyle, isize, stext)
+    _flps_draw_text(ialign, ix, iy, iw, ih, lcolr, istyle, isize, stext)
 
 
-def flps_draw_text_beside(p1, p2, p3, p4, p5, p6, p7, p8, text):
-    """ flps_draw_text_beside(p1, p2, p3, p4, p5, p6, p7, p8, text)
+def flps_draw_text_beside(align, x, y, w, h, colr, style, size, text):
+    """ flps_draw_text_beside(align, x, y, w, h, colr, style, size, text)
     """
 
     _flps_draw_text_beside = cfuncproto(
@@ -17669,22 +17668,22 @@ def flps_draw_text_beside(p1, p2, p3, p4, p5, p6, p7, p8, text):
             """void flps_draw_text_beside(int p1, int p2, int p3, int p4,
                int p5, long int p6, int p7, int p8, const char * p9)
             """)
-    ip1 = convert_to_int(p1)
-    ip2 = convert_to_int(p2)
-    ip3 = convert_to_int(p3)
-    ip4 = convert_to_int(p4)
-    ip5 = convert_to_int(p5)
-    lp6 = convert_to_long(p6)
-    ip7 = convert_to_int(p7)
-    ip8 = convert_to_int(p8)
+    ialign = convert_to_int(align)
+    ix = convert_to_int(x)
+    iy = convert_to_int(y)
+    iw = convert_to_int(w)
+    ih = convert_to_int(h)
+    lcolr = convert_to_long(colr)
+    istyle = convert_to_int(style)
+    isize = convert_to_int(size)
     stext = convert_to_string(text)
-    keep_elem_refs(p1, p2, p3, p4, p5, p6, p7, p8, text, ip1, ip2, ip3,
-                   ip4, ip5, lp6, ip7, ip8, stext)
-    _flps_draw_text_beside(ip1, ip2, ip3, ip4, ip5, lp6, ip7, ip8, stext)
+    keep_elem_refs(align, x, y, w, h, colr, style, size, text, ialign, \
+                   ix, iy, iw, ih, lcolr, istyle, isize, stext)
+_flps_draw_text_beside(ialign, ix, iy, iw, ih, lcolr, istyle, isize, stext)
 
 
-def flps_emit_header(text, p2, p3, p4, p5, p6):
-    """ flps_emit_header(text, p2, p3, p4, p5, p6)
+def flps_emit_header(title, npages, xi, yi, xf, yf):
+    """ flps_emit_header(title, npages, xi, yi, xf, yf)
     """
 
     _flps_emit_header = cfuncproto(
@@ -17694,14 +17693,15 @@ def flps_emit_header(text, p2, p3, p4, p5, p6):
             """void flps_emit_header(const char * p1, int p2, int p3,
                int p4, int p5, int p6)
             """)
-    stext = convert_to_string(text)
-    ip2 = convert_to_int(p2)
-    ip3 = convert_to_int(p3)
-    ip4 = convert_to_int(p4)
-    ip5 = convert_to_int(p5)
-    ip6 = convert_to_int(p6)
-    keep_elem_refs(text, p2, p3, p4, p5, p6, stext, ip2, ip3, ip4, ip5, ip6)
-    _flps_emit_header(stext, ip2, ip3, ip4, ip5, ip6)
+    stitle = convert_to_string(title)
+    inpages = convert_to_int(npages)
+    ixi = convert_to_int(xi)
+    iyi = convert_to_int(yi)
+    ixf = convert_to_int(xf)
+    iyf = convert_to_int(yf)
+    keep_elem_refs(title, npages, xi, yi, xf, yf, stitle, inpages, ixi, \
+                   iyi, ixf, iyf)
+    _flps_emit_header(stitle, inpages, ixi, iyi, ixf, iyf)
 
 
 def flps_emit_prolog():
@@ -17716,8 +17716,8 @@ def flps_emit_prolog():
     _flps_emit_prolog()
 
 
-def flps_get_gray255(p1):
-    """ flps_get_gray255(p1) -> num.
+def flps_get_gray255(colr):
+    """ flps_get_gray255(colr) -> num.
     """
 
     _flps_get_gray255 = cfuncproto(
@@ -17725,9 +17725,9 @@ def flps_get_gray255(p1):
             cty.c_int, [cty.c_long],
             """int flps_get_gray255(long int p1)
             """)
-    lp1 = convert_to_long(p1)
-    keep_elem_refs(p1, lp1)
-    retval = _flps_get_gray255(lp1)
+    lcolr = convert_to_long(colr)
+    keep_elem_refs(colr, lcolr)
+    retval = _flps_get_gray255(lcolr)
     return retval
 
 
@@ -17820,8 +17820,8 @@ def flps_invalidate_symbol_cache():
     _flps_invalidate_symbol_cache()
 
 
-def flps_line(p1, p2, p3, p4, p5):
-    """ flps_line(p1, p2, p3, p4, p5)
+def flps_line(xi, yi, xf, yf, colr):
+    """ flps_line(xi, yi, xf, yf, colr)
     """
 
     _flps_line = cfuncproto(
@@ -17834,12 +17834,12 @@ def flps_line(p1, p2, p3, p4, p5):
     ip3 = convert_to_int(p3)
     ip4 = convert_to_int(p4)
     lp5 = convert_to_long(p5)
-    keep_elem_refs(p1, p2, p3, p4, p5, ip1, ip2, ip3, ip4, lp5)
-    _flps_line(ip1, ip2, ip3, ip4, lp5)
+    keep_elem_refs(xi, yi, xf, yf, colr, ixi, iyi, ixf, iyf, lcolr)
+    _flps_line(ixi, iyi, ixf, iyf, lcolr)
 
 
-def flps_lines(pPoint, p2, p3):
-    """ flps_lines(pPoint, p2, p3)
+def flps_lines(pPoint, num, colr):
+    """ flps_lines(pPoint, num, colr)
     """
 
     _flps_lines = cfuncproto(
@@ -17847,14 +17847,14 @@ def flps_lines(pPoint, p2, p3):
             None, [cty.POINTER(FL_POINT), cty.c_int, cty.c_long],
             """void flps_lines(FL_POINT * p1, int p2, long int p3)
             """)
-    ip2 = convert_to_int(p2)
-    lp3 = convert_to_long(p3)
-    keep_elem_refs(pPoint, p2, p3, ip2, lp3)
-    _flps_lines(pPoint, ip2, lp3)
+    inum = convert_to_int(num)
+    lcolr = convert_to_long(colr)
+    keep_elem_refs(pPoint, num, colr, inum, lcolr)
+    _flps_lines(pPoint, inum, lcolr)
 
 
-def flps_linestyle(p1):
-    """ flps_linestyle(p1)
+def flps_linestyle(linestyle):
+    """ flps_linestyle(linestyle)
     """
 
     _flps_linestyle = cfuncproto(
@@ -17862,13 +17862,14 @@ def flps_linestyle(p1):
             None, [cty.c_int],
             """void flps_linestyle(int p1)
             """)
-    ip1 = convert_to_int(p1)
-    keep_elem_refs(p1, ip1)
-    _flps_linestyle(ip1)
+    check_admitted_listvalues(linestyle, LINE_list)
+    ilinestyle = convert_to_int(linestyle)
+    keep_elem_refs(linestyle, ilinestyle)
+    _flps_linestyle(ilinestyle)
 
 
-def flps_linewidth(p1):
-    """ flps_linewidth(p1)
+def flps_linewidth(linewidth):
+    """ flps_linewidth(linewidth)
     """
 
     _flps_linewidth = cfuncproto(
@@ -17876,13 +17877,13 @@ def flps_linewidth(p1):
             None, [cty.c_int],
             """void flps_linewidth(int p1)
             """)
-    ip1 = convert_to_int(p1)
-    keep_elem_refs(p1, ip1)
-    _flps_linewidth(ip1)
+    ilinewidth = convert_to_int(linewidth)
+    keep_elem_refs(linewidth, ilinewidth)
+    _flps_linewidth(ilinewidth)
 
 
-def flps_log(p1):
-    """ flps_log(p1)
+def flps_log(text):
+    """ flps_log(text)
     """
 
     _flps_log = cfuncproto(
@@ -17890,13 +17891,13 @@ def flps_log(p1):
             None, [STRING],
             """void flps_log(const char * p1)
             """)
-    sp1 = convert_to_string(p1)
-    keep_elem_refs(p1, sp1)
-    _flps_log(sp1)
+    stext = convert_to_string(text)
+    keep_elem_refs(text, stext)
+    _flps_log(stext)
 
 
-def flps_output(p1):
-    """ flps_output(p1)
+def flps_output(fmt):
+    """ flps_output(fmt)
     """
 
     _flps_output = cfuncproto(
@@ -17904,13 +17905,13 @@ def flps_output(p1):
             None, [STRING],
             """void flps_output(const char * p1)
             """)
-    sp1 = convert_to_string(p1)
-    keep_elem_refs(p1, sp1)
-    _flps_output(sp1)
+    sfmt = convert_to_string(fmt)
+    keep_elem_refs(fmt, sfmt)
+    _flps_output(sfmt)
 
 
-def flps_oval(p1, p2, p3, p4, p5, p6):
-    """ flps_oval(p1, p2, p3, p4, p5, p6)
+def flps_oval(fill, x, y, w, h, colr):
+    """ flps_oval(fill, x, y, w, h, colr)
     """
 
     _flps_oval = cfuncproto(
@@ -17920,18 +17921,18 @@ def flps_oval(p1, p2, p3, p4, p5, p6):
             """void flps_oval(int p1, int p2, int p3, int p4, int p5,
                long int p6)
             """)
-    ip1 = convert_to_int(p1)
-    ip2 = convert_to_int(p2)
-    ip3 = convert_to_int(p3)
-    ip4 = convert_to_int(p4)
-    ip5 = convert_to_int(p5)
-    lp6 = convert_to_long(p6)
-    keep_elem_refs(p1, p2, p3, p4, p5, p6, ip1, ip2, ip3, ip4, ip5, lp6)
-    _flps_oval(ip1, ip2, ip3, ip4, ip5, lp6)
+    ifill = convert_to_int(fill)
+    ix = convert_to_int(x)
+    iy = convert_to_int(y)
+    iw = convert_to_int(w)
+    ih = convert_to_int(h)
+    lcolr = convert_to_long(colr)
+    keep_elem_refs(fill, x, y, w, h, colr, ifill, ix, iy, iw, ih, lcolr)
+    _flps_oval(ifill, ix, iy, iw, ih, lcolr)
 
 
-def flps_pieslice(p1, p2, p3, p4, p5, p6, p7, p8):
-    """ flps_pieslice(p1, p2, p3, p4, p5, p6, p7, p8)
+def flps_pieslice(fill, x, y, w, h, t1, t2, colr):
+    """ flps_pieslice(fill, x, y, w, h, t1, t2, colr)
     """
 
     _flps_pieslice = cfuncproto(
@@ -17941,21 +17942,21 @@ def flps_pieslice(p1, p2, p3, p4, p5, p6, p7, p8):
             """void flps_pieslice(int p1, int p2, int p3, int p4, int p5,
                int p6, int p7, long int p8)
             """)
-    ip1 = convert_to_int(p1)
-    ip2 = convert_to_int(p2)
-    ip3 = convert_to_int(p3)
-    ip4 = convert_to_int(p4)
-    ip5 = convert_to_int(p5)
-    ip6 = convert_to_int(p6)
-    ip7 = convert_to_int(p7)
-    lp8 = convert_to_long(p8)
-    keep_elem_refs(p1, p2, p3, p4, p5, p6, p7, p8, ip1, ip2, ip3, ip4,
-                   ip5, ip6, ip7, lp8)
-    _flps_pieslice(ip1, ip2, ip3, ip4, ip5, ip6, ip7, lp8)
+    ifill = convert_to_int(fill)
+    ix = convert_to_int(x)
+    iy = convert_to_int(y)
+    iw = convert_to_int(w)
+    ih = convert_to_int(h)
+    it1 = convert_to_int(t1)
+    it2 = convert_to_int(t2)
+    lcolr = convert_to_long(colr)
+    keep_elem_refs(fill, x, y, w, h, t1, t2, colr, ifill, ix, iy, iw, \
+                   ih, it1, it2, lcolr)
+    _flps_pieslice(ifill, ix, iy, iw, ih, it1, it2, lcolr))
 
 
-def flps_poly(p1, pPoint, p3, p4):
-    """ flps_poly(p1, pPoint, p3, p4)
+def flps_poly(fill, pPoint, num, colr):
+    """ flps_poly(fill, pPoint, num, colr)
     """
 
     _flps_poly = cfuncproto(
@@ -17963,15 +17964,15 @@ def flps_poly(p1, pPoint, p3, p4):
             None, [cty.c_int, cty.POINTER(FL_POINT), cty.c_int, cty.c_long],
             """void flps_poly(int p1, FL_POINT * p2, int p3, long int p4)
             """)
-    ip1 = convert_to_int(p1)
-    ip3 = convert_to_int(p3)
-    lp4 = convert_to_long(p4)
-    keep_elem_refs(p1, pPoint, p3, p4, ip1, ip3, lp4)
-    _flps_poly(ip1, pPoint, ip3, lp4)
+    ifill = convert_to_int(fill)
+    inum = convert_to_int(num)
+    lcolr = convert_to_long(colr)
+    keep_elem_refs(fill, pPoint, num, colr, ifill, inum, lcolr)
+    _flps_poly(ifill, pPoint, inum, lcolr)
 
 
-def flps_rectangle(p1, p2, p3, p4, p5, p6):
-    """ flps_rectangle(p1, p2, p3, p4, p5, p6)
+def flps_rectangle(fill, x, y, w, h, colr):
+    """ flps_rectangle(fill, x, y, w, h, colr)
     """
 
     _flps_rectangle = cfuncproto(
@@ -17987,8 +17988,8 @@ def flps_rectangle(p1, p2, p3, p4, p5, p6):
     ip4 = convert_to_int(p4)
     ip5 = convert_to_int(p5)
     lp6 = convert_to_long(p6)
-    keep_elem_refs(p1, p2, p3, p4, p5, p6, ip1, ip2, ip3, ip4, ip5, lp6)
-    _flps_rectangle(ip1, ip2, ip3, ip4, ip5, lp6)
+    keep_elem_refs(fill, x, y, w, h, colr, ifill, ix, iy, iw, ih, lcolr)
+    _flps_rectangle(ifill, ix, iy, iw, ih, lcolr)
 
 
 def flps_reset_cache():
@@ -18027,8 +18028,8 @@ def flps_restore_flps():
     _flps_restore_flps()
 
 
-def flps_rgbcolor(p1, p2, p3):
-    """ flps_rgbcolor(p1, p2, p3)
+def flps_rgbcolor(r, g, b):
+    """ flps_rgbcolor(r, g, b)
     """
 
     _flps_rgbcolor = cfuncproto(
@@ -18036,15 +18037,15 @@ def flps_rgbcolor(p1, p2, p3):
             None, [cty.c_int, cty.c_int, cty.c_int],
             """void flps_rgbcolor(int p1, int p2, int p3)
             """)
-    ip1 = convert_to_int(p1)
-    ip2 = convert_to_int(p2)
-    ip3 = convert_to_int(p3)
-    keep_elem_refs(p1, p2, p3, ip1, ip2, ip3)
-    _flps_rgbcolor(ip1, ip2, ip3)
+    ir = convert_to_int(r)
+    ig = convert_to_int(g)
+    ib = convert_to_int(b)
+    keep_elem_refs(r, g, b, ir, ig, ib)
+    _flps_rgbcolor(ir, ig, ib)
 
 
-def flps_roundrectangle(p1, p2, p3, p4, p5, p6):
-    """ flps_roundrectangle(p1, p2, p3, p4, p5, p6)
+def flps_roundrectangle(fill, x, y, w, h, colr):
+    """ flps_roundrectangle(fill, x, y, w, h, colr)
     """
 
     _flps_roundrectangle = cfuncproto(
@@ -18054,14 +18055,14 @@ def flps_roundrectangle(p1, p2, p3, p4, p5, p6):
             """void flps_roundrectangle(int p1, int p2, int p3, int p4,
                int p5, long int p6)
             """)
-    ip1 = convert_to_int(p1)
-    ip2 = convert_to_int(p2)
-    ip3 = convert_to_int(p3)
-    ip4 = convert_to_int(p4)
-    ip5 = convert_to_int(p5)
-    lp6 = convert_to_long(p6)
-    keep_elem_refs(p1, p2, p3, p4, p5, p6, ip1, ip2, ip3, ip4, ip5, lp6)
-    _flps_roundrectangle(ip1, ip2, ip3, ip4, ip5, lp6)
+    ifill = convert_to_int(fill)
+    ix = convert_to_int(x)
+    iy = convert_to_int(y)
+    iw = convert_to_int(w)
+    ih = convert_to_int(h)
+    lcolr = convert_to_long(colr)
+    keep_elem_refs(fill, x, y, w, h, colr, ifill, ix, iy, iw, ih, lcolr)
+    _flps_roundrectangle(ifill, ix, iy, iw, ih, lcolr)
 
 
 def flps_set_clipping(p1, p2, p3, p4):
