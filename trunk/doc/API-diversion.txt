@@ -122,6 +122,8 @@ fl_get_xyplot_xmapping(pObject) -> a, b
 
 fl_get_xyplot_ymapping(pObject) -> a, b
 
+flimage_get_autocrop(pImage, bk) -> num., xl, yt, xr, yb
+
 
 
 

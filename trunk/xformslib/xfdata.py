@@ -1819,6 +1819,7 @@ FL_PIXMAPBUTTON_MCOL2 = FL_BUTTON_MCOL2
 FL_PIXMAPBUTTON_ALIGN = FL_ALIGN_BOTTOM
 
 
+
 #######################
 # forms.h (canvas.h)
 # Header for FL_CANVAS
@@ -1828,6 +1829,10 @@ FL_PIXMAPBUTTON_ALIGN = FL_ALIGN_BOTTOM
 FL_CANVAS_TYPE = cty.c_int # enum
 FL_NORMAL_CANVAS = 0
 FL_SCROLLED_CANVAS = 1
+
+# list of possible values - my add --LK
+CANVASTYPE_list = [FL_NORMAL_CANVAS, FL_SCROLLED_CANVAS]
+
 
 # Default
 FL_CANVAS_BOXTYPE = FL_DOWN_BOX     # really the decoration frame
@@ -1886,6 +1891,12 @@ FL_SPECIALPIE_CHART = 6
 
 FL_FILLED_CHART = FL_FILL_CHART     # for backward compatibility
 
+# list of possible values - my add --LK
+CHARTTYPE_list = [FL_BAR_CHART, FL_HORBAR_CHART, FL_LINE_CHART, \
+                  FL_FILL_CHART, FL_SPIKE_CHART, FL_PIE_CHART, \
+                  FL_SPECIALPIE_CHART, FL_FILLED_CHART]
+
+
 # Defaults
 FL_CHART_BOXTYPE = FL_BORDER_BOX
 FL_CHART_COL1 = FL_COL1
@@ -1908,6 +1919,11 @@ FL_DROPLIST_CHOICE = 2
 FL_BROWSER_CHOICE = 3
 
 FL_SIMPLE_CHOICE = FL_NORMAL_CHOICE
+
+# list of possible values - my add --LK
+CHOICETYPE_list = [FL_NORMAL_CHOICE, FL_NORMAL_CHOICE2, FL_DROPLIST_CHOICE, \
+                   FL_BROWSER_CHOICE, FL_SIMPLE_CHOICE]
+
 
 # Defaults
 FL_CHOICE_BOXTYPE = FL_ROUNDED_BOX
@@ -1944,6 +1960,10 @@ FL_LOSE_SELECTION_CALLBACK = FL_LOSE_SELECTION_CB
 FL_ANALOG_CLOCK = 0
 FL_DIGITAL_CLOCK = 1
 
+# list of possible values - my add --LK
+CLOCKTYPE_list = [FL_ANALOG_CLOCK, FL_DIGITAL_CLOCK]
+
+
 FL_CLOCK_BOXTYPE = FL_UP_BOX
 FL_CLOCK_COL1 = FL_INACTIVE_COL
 FL_CLOCK_COL2 = FL_BOTTOM_BCOL
@@ -1961,6 +1981,10 @@ FL_CLOCK_TOPCOL = FL_COL1
 FL_COUNTER_TYPE = cty.c_int # enum
 FL_NORMAL_COUNTER = 0
 FL_SIMPLE_COUNTER = 1
+
+# list of possible values - my add --LK
+COUNTERTYPE_list = [FL_NORMAL_COUNTER, FL_SIMPLE_COUNTER]
+
 
 # Defaults
 FL_COUNTER_BOXTYPE = FL_UP_BOX
@@ -2107,6 +2131,10 @@ FL_NORMAL_DIAL = 0
 FL_LINE_DIAL = 1
 FL_FILL_DIAL = 2
 
+# list of possible values - my add --LK
+DIALTYPE_list = [FL_NORMAL_DIAL, FL_LINE_DIAL, FL_FILL_DIAL]
+
+
 # values for unnamed enumeration
 FL_DIAL_CW = 0
 FL_DIAL_CCW = 1
@@ -2211,6 +2239,10 @@ FLPS_CONTROL._fields_ = [
 # values for unnamed enumeration
 FL_NORMAL_FORMBROWSER = 0
 
+# list of possible values - my add --LK
+FORMBRWSTYPE_list = [FL_NORMAL_FORMBROWSER, ]
+
+
 # values for unnamed enumeration
 FL_SMOOTH_SCROLL = 0
 FL_JUMP_SCROLL = 1
@@ -2218,6 +2250,7 @@ FL_JUMP_SCROLL = 1
 FL_FORMBROWSER_BOXTYPE = FL_DOWN_BOX
 FL_FORMBROWSER_COL1 = FL_COL1
 FL_FORMBROWSER_ALIGN = FL_ALIGN_TOP
+
 
 
 ####################
@@ -2236,9 +2269,16 @@ FL_ROUNDED_FRAME = 6
 FL_EMBOSSED_FRAME = 7
 FL_OVAL_FRAME = 8
 
+# list of possible values - my add --LK
+FRAMETYPE_list = [FL_NO_FRAME, FL_UP_FRAME, FL_DOWN_FRAME, FL_BORDER_FRAME,
+                  FL_SHADOW_FRAME, FL_ENGRAVED_FRAME, FL_ROUNDED_FRAME,
+                  FL_EMBOSSED_FRAME, FL_OVAL_FRAME]
+
+
 FL_FRAME_COL1 = FL_BLACK        # border color
 FL_FRAME_COL2 = FL_COL1         # label background
 FL_FRAME_LCOL = FL_BLACK        # label color
+
 
 
 #####################
@@ -2256,6 +2296,9 @@ FL_ALL_FREE = 4
 
 FL_SLEEPING_FREE = FL_INACTIVE_FREE
 
+# list of possible values - my add --LK
+FREETYPE_list = [FL_NORMAL_FREE, FL_INACTIVE_FREE, FL_INPUT_FREE,
+                 FL_CONTINUOUS_FREE, FL_ALL_FREE, FL_SLEEPING_FREE]
 
 
 
@@ -2320,6 +2363,7 @@ FD_FSELECTOR._fields_ = [
 ]
 
 
+# c function prototype for _fl_add_fselector_appbutton
 cfunc_none_voidp = cty.CFUNCTYPE(None, cty.c_void_p)
 
 
@@ -2434,6 +2478,10 @@ FL_NORMAL_TOUCH_NMENU = 1
 FL_BUTTON_NMENU = 2
 FL_BUTTON_TOUCH_NMENU = 3
 
+# list of possible values - my add --LK
+NMENUTYPE_list = [FL_NORMAL_NMENU, FL_NORMAL_TOUCH_NMENU, FL_BUTTON_NMENU, \
+                  FL_BUTTON_TOUCH_NMENU]
+
 
 
 #########################
@@ -2443,6 +2491,11 @@ FL_BUTTON_TOUCH_NMENU = 3
 FL_NORMAL_POSITIONER = 0
 FL_OVERLAY_POSITIONER = 1
 FL_INVISIBLE_POSITIONER = 2
+
+# list of possible values - my add --LK
+POSITIONERTYPE_list = [FL_NORMAL_POSITIONER, FL_OVERLAY_POSITIONER,
+                       FL_INVISIBLE_POSITIONER]
+
 
 # Defaults
 FL_POSITIONER_BOXTYPE = FL_DOWN_BOX
@@ -2480,6 +2533,7 @@ SCROLLTYPE_list = [FL_VERT_SCROLLBAR, FL_HOR_SCROLLBAR, \
                   FL_NICE_SCROLLBAR, FL_PLAIN_SCROLLBAR]
 
 
+
 #####################
 # forms.h (select.h)
 #####################
@@ -2489,6 +2543,10 @@ SCROLLTYPE_list = [FL_VERT_SCROLLBAR, FL_HOR_SCROLLBAR, \
 FL_NORMAL_SELECT = 0
 FL_MENU_SELECT = 1
 FL_DROPLIST_SELECT = 2
+
+# list of possible values - my add --LK
+SELECTTYPE_list = [FL_NORMAL_SELECT, FL_MENU_SELECT, FL_DROPLIST_SELECT]
+
 
 # Defaults
 FL_SELECT_COL1 = FL_COL1
@@ -2502,11 +2560,11 @@ FL_SELECT_ALIGN = FL_ALIGN_LEFT
 # Object Class: Slider
 #######################
 
-# values for enumeration 'FL_SLIDER_TYPE'
-FL_SLIDER_TYPE = cty.c_int # enum
-
 FL_HOR_FLAG = 1
 FL_SCROLL_FLAG = 8
+
+# values for enumeration 'FL_SLIDER_TYPE'
+FL_SLIDER_TYPE = cty.c_int # enum
 
 # values for enumeration 'FL_SLIDER_TYPE'
 FL_VERT_SLIDER = 0
@@ -2534,6 +2592,18 @@ FL_HOR_NICE_SLIDER2 = FL_HOR_NICE_SLIDER | FL_SCROLL_FLAG
 FL_VERT_BASIC_SLIDER = FL_VERT_BROWSER_SLIDER | FL_SCROLL_FLAG
 FL_HOR_BASIC_SLIDER = FL_HOR_BROWSER_SLIDER | FL_SCROLL_FLAG
 
+# list of possible values - my add --LK
+SLIDERTYPE_list = [FL_VERT_SLIDER, FL_HOR_SLIDER, FL_VERT_FILL_SLIDER, \
+                   FL_HOR_FILL_SLIDER, FL_VERT_NICE_SLIDER, \
+                   FL_HOR_NICE_SLIDER, FL_VERT_BROWSER_SLIDER, \
+                   FL_HOR_BROWSER_SLIDER, FL_VERT_BROWSER_SLIDER2, \
+                   FL_HOR_BROWSER_SLIDER2, FL_VERT_THIN_SLIDER, \
+                   FL_HOR_THIN_SLIDER, FL_VERT_THIN_SLIDER, \
+                   FL_HOR_THIN_SLIDER, FL_VERT_NICE_SLIDER2, \
+                   FL_HOR_NICE_SLIDER2, FL_VERT_BASIC_SLIDER, \
+                   FL_HOR_BASIC_SLIDER]
+
+
 # Defaults
 FL_SLIDER_BW1 = FL_BOUND_WIDTH
 FL_SLIDER_BW2 = 0             #FL_abs(FL_BOUND_WIDTH) - 1
@@ -2553,6 +2623,9 @@ FL_SPINNER_TYPE = cty.c_int # enum
 FL_INT_SPINNER = 0
 FL_FLOAT_SPINNER = 1
 
+# list of possible values - my add --LK
+SPINNERTYPE_list = [FL_INT_SPINNER, FL_FLOAT_SPINNER]
+
 
 ########################
 # forms.h (tabfolder.h)
@@ -2565,10 +2638,16 @@ FL_LEFT_TABFOLDER = 2
 FL_RIGHT_TABFOLDER = 3
 FL_NORMAL_TABFOLDER = FL_TOP_TABFOLDER
 
+# list of possible values - my add --LK
+TABFOLDERTYPE_list = [FL_TOP_TABFOLDER, FL_BOTTOM_TABFOLDER, FL_LEFT_TABFOLDER, \
+                  FL_RIGHT_TABFOLDER, FL_NORMAL_TABFOLDER]
+
+
 # values for unnamed enumeration
 FL_NO = 0
 FL_FIT = 1
 FL_ENLARGE_ONLY = 2
+
 
 
 ###################
@@ -2578,11 +2657,16 @@ FL_ENLARGE_ONLY = 2
 # values for unnamed enumeration
 FL_NORMAL_TEXT = 0
 
+# list of possible values - my add --LK
+TEXTTYPE_list = [FL_NORMAL_TEXT, ]
+
+
 FL_TEXT_BOXTYPE = FL_FLAT_BOX
 FL_TEXT_COL1 = FL_COL1
 FL_TEXT_COL2 = FL_MCOL
 FL_TEXT_LCOL = FL_LCOL
 FL_TEXT_ALIGN = FL_ALIGN_LEFT
+
 
 
 #########################
@@ -2593,12 +2677,17 @@ FL_TEXT_ALIGN = FL_ALIGN_LEFT
 FL_VERT_THUMBWHEEL = 0
 FL_HOR_THUMBWHEEL = 1
 
+# list of possible values - my add --LK
+THUMBWHEELTYPE_list = [FL_VERT_THUMBWHEEL, FL_HOR_THUMBWHEEL]
+
+
 # defaults
 FL_THUMBWHEEL_COL1 = FL_COL1
 FL_THUMBWHEEL_COL2 = FL_COL1
 FL_THUMBWHEEL_LCOL = FL_BLACK
 FL_THUMBWHEEL_BOXTYPE = FL_BORDER_BOX
 FL_THUMBWHEEL_ALIGN = FL_ALIGN_BOTTOM
+
 
 
 ######################
@@ -2611,6 +2700,10 @@ FL_TIMER_TYPE = cty.c_int # enum
 FL_NORMAL_TIMER = 0
 FL_VALUE_TIMER = 1
 FL_HIDDEN_TIMER = 2
+
+# list of possible values - my add --LK
+TIMERTYPE_list = [FL_NORMAL_TIMER, FL_VALUE_TIMER, FL_HIDDEN_TIMER]
+
 
 # Defaults
 FL_TIMER_BOXTYPE = FL_DOWN_BOX
@@ -2653,6 +2746,14 @@ FL_DOTTED_XYPLOT = 9
 FL_DOTDASHED_XYPLOT = 10
 FL_LONGDASHED_XYPLOT = 11
 FL_LINEPOINTS_XYPLOT = 12   # line & points
+
+# list of possible values - my add --LK
+XYPLOTTYPE_list = [FL_NORMAL_XYPLOT, FL_SQUARE_XYPLOT, FL_CIRCLE_XYPLOT, \
+                   FL_FILL_XYPLOT, FL_POINTS_XYPLOT, FL_DASHED_XYPLOT, \
+                   FL_IMPULSE_XYPLOT, FL_ACTIVE_XYPLOT, FL_EMPTY_XYPLOT , \
+                   FL_DOTTED_XYPLOT, FL_DOTDASHED_XYPLOT, \
+                   FL_LONGDASHED_XYPLOT, FL_LINEPOINTS_XYPLOT]
+
 
 # values for unnamed enumeration
 FL_LINEAR = 0

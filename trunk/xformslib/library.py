@@ -1120,7 +1120,7 @@ def fl_set_app_mainform(pForm):
 
 
 def fl_get_app_mainform():
-    """ fl_get_app_mainform() -> pForm reference
+    """ fl_get_app_mainform() -> pForm
     """
 
     _fl_get_app_mainform = cfuncproto(
@@ -1528,8 +1528,9 @@ def fl_set_object_bw(pObject, bw):
     _fl_set_object_bw(pObject, ibw)
 
 
-def fl_get_object_bw(pObject, bw):
-    """ fl_get_object_bw(pObject, bw)
+#def fl_get_object_bw(pObject, bw)
+def fl_get_object_bw(pObject):
+    """ fl_get_object_bw(pObject) -> bw
     """
 
     _fl_get_object_bw = cfuncproto(
@@ -1537,8 +1538,10 @@ def fl_get_object_bw(pObject, bw):
             None, [cty.POINTER(FL_OBJECT), cty.POINTER(cty.c_int)], \
             """void fl_get_object_bw(FL_OBJECT * ob, int * bw)
             """)
-    keep_elem_refs(pObject, bw)
-    _fl_get_object_bw(pObject, bw)
+    bw, pbw = make_int_and_pointer()
+    keep_elem_refs(pObject, bw, pbw)
+    _fl_get_object_bw(pObject, pbw)
+    return bw
 
 
 def fl_set_object_resize(pObject, what):
@@ -1555,8 +1558,9 @@ def fl_set_object_resize(pObject, what):
     _fl_set_object_resize(pObject, uiwhat)
 
 
-def fl_get_object_resize(pObject, what):
-    """ fl_get_object_resize(pObject, what)
+#def fl_get_object_resize(pObject, what)
+def fl_get_object_resize(pObject):
+    """ fl_get_object_resize(pObject) -> what
     """
 
     _fl_get_object_resize = cfuncproto(
@@ -1564,8 +1568,10 @@ def fl_get_object_resize(pObject, what):
              None, [cty.POINTER(FL_OBJECT), cty.POINTER(cty.c_uint)], \
             """void fl_get_object_resize(FL_OBJECT * ob, unsigned int * what)
             """)
-    keep_elem_refs(pObject, what)
-    _fl_get_object_resize(pObject, what)
+    what, pwhat = make_uint_and_pointer()
+    keep_elem_refs(pObject, what, pwhat)
+    _fl_get_object_resize(pObject, pwhat)
+    return what
 
 
 def fl_set_object_gravity(pObject, nw, se):
@@ -1584,8 +1590,9 @@ def fl_set_object_gravity(pObject, nw, se):
     _fl_set_object_gravity(pObject, uinw, uise)
 
 
-def fl_get_object_gravity(pObject, nw, se):
-    """ fl_get_object_gravity(pObject, nw, se)
+#def fl_get_object_gravity(pObject, nw, se)
+def fl_get_object_gravity(pObject):
+    """ fl_get_object_gravity(pObject) -> nw, se
     """
 
     _fl_get_object_gravity = cfuncproto(
@@ -1595,8 +1602,11 @@ def fl_get_object_gravity(pObject, nw, se):
             """void fl_get_object_gravity(FL_OBJECT * ob, unsigned int * nw,
                unsigned int * se)
             """)
-    keep_elem_refs(pObject, nw, se)
-    _fl_get_object_gravity(pObject, nw, se)
+    nw, pnw = make_uint_and_pointer()
+    se, pse = make_uint_and_pointer()
+    keep_elem_refs(pObject, nw, se, pnw, pse)
+    _fl_get_object_gravity(pObject, pnw, pse)
+    return nw, se
 
 
 def fl_set_object_lsize(pObject, lsize):
@@ -1794,8 +1804,9 @@ def fl_set_object_position(pObject, x, y):
     _fl_set_object_position(pObject, ix, iy)
 
 
-def fl_get_object_size(pObject, w, h):
-    """ fl_get_object_size(pObject, w, h)
+#def fl_get_object_size(pObject, w, h)
+def fl_get_object_size(pObject):
+    """ fl_get_object_size(pObject) -> w, h
     """
 
     _fl_get_object_size = cfuncproto(
@@ -1805,8 +1816,11 @@ def fl_get_object_size(pObject, w, h):
             """void fl_get_object_size(FL_OBJECT * obj, FL_Coord * w,
                FL_Coord * h)
             """)
-    keep_elem_refs(pObject, w, h)
-    _fl_get_object_size(pObject, w, h)
+    w, pw = make_FL_Coord_and_pointer()
+    h, ph = make_FL_Coord_and_pointer()
+    keep_elem_refs(pObject, w, h, pw, ph)
+    _fl_get_object_size(pObject, pw, ph)
+    return w, h
 
 
 def fl_set_object_size(pObject, w, h):
@@ -2020,8 +2034,9 @@ def fl_get_object_label(pObject):
 
 # this one takes into account the label
 
-def fl_get_object_bbox(pObject, x, y, w, h):
-    """ fl_get_object_bbox(pObject, x, y, w, h)
+#def fl_get_object_bbox(pObject, x, y, w, h)
+def fl_get_object_bbox(pObject):
+    """ fl_get_object_bbox(pObject) -> x, y, w, h
     """
 
     _fl_get_object_bbox = cfuncproto(
@@ -2032,8 +2047,13 @@ def fl_get_object_bbox(pObject, x, y, w, h):
             """void fl_get_object_bbox(FL_OBJECT * obj, FL_Coord * x,
                FL_Coord * y, FL_Coord * w, FL_Coord * h)
             """)
-    keep_elem_refs(pObject, x, y, w, h)
-    _fl_get_object_bbox(pObject, x, y, w, h)
+    x, px = make_FL_Coord_and_pointer()
+    y, py = make_FL_Coord_and_pointer()
+    w, pw = make_FL_Coord_and_pointer()
+    h, ph = make_FL_Coord_and_pointer()
+    keep_elem_refs(pObject, x, y, w, h, px, py, pw, ph)
+    _fl_get_object_bbox(pObject, px, py, pw, ph)
+    return x, y, w, h
 
 
 fl_compute_object_geometry = fl_get_object_bbox
@@ -2053,7 +2073,7 @@ def fl_call_object_callback(pObject):
 
 
 def fl_set_object_prehandler(pObject, py_phandler):
-    """ fl_set_object_prehandler(pObject, py_phandler) -> handler_pointer
+    """ fl_set_object_prehandler(pObject, py_phandler) ->  pHandlerPtr
     """
 
     _fl_set_object_prehandler = cfuncproto(
@@ -2070,7 +2090,7 @@ def fl_set_object_prehandler(pObject, py_phandler):
 
 
 def fl_set_object_posthandler(pObject, py_post):
-    """fl_set_object_posthandler(pObject, py_post) -> handler_pointer
+    """fl_set_object_posthandler(pObject, py_post) -> pHandlerPtr
     """
 
     _fl_set_object_posthandler = cfuncproto(
@@ -2302,8 +2322,9 @@ def fl_set_font(numb, size):
 
 # routines that facilitate free object
 
-def fl_get_char_height(style, size, asc, desc):
-    """ fl_get_char_height(style, size, asc, desc) -> height num.
+#def fl_get_char_height(style, size, asc, desc)
+def fl_get_char_height(style, size):
+    """ fl_get_char_height(style, size) -> height num., asc, desc
     """
 
     _fl_get_char_height = cfuncproto(
@@ -2315,9 +2336,11 @@ def fl_get_char_height(style, size, asc, desc):
             """)
     istyle = convert_to_int(style)
     isize = convert_to_int(size)
-    keep_elem_refs(style, istyle, size, isize, asc, desc)
-    retval = _fl_get_char_height(istyle, isize, asc, desc)
-    return retval
+    asc, pasc = make_int_and_pointer()          # not sure
+    desc, pdesc = make_int_and_pointer()
+    keep_elem_refs(style, istyle, size, isize, asc, desc, pasc, pdesc)
+    retval = _fl_get_char_height(istyle, isize, pasc, pdesc)
+    return retval, asc, desc
 
 
 def fl_get_char_width(style, size):
@@ -2336,8 +2359,9 @@ def fl_get_char_width(style, size):
     return retval
 
 
-def fl_get_string_height(style, size, strng, strglen, asc, desc):
-    """ fl_get_string_height(style, size, strng, strglen, asc, desc) -> height num.
+#def fl_get_string_height(style, size, strng, strglen, asc, desc)
+def fl_get_string_height(style, size, strng, strglen):
+    """ fl_get_string_height(style, size, strng, strglen) -> height num., asc, desc
     """
 
     _fl_get_string_height = cfuncproto(
@@ -2351,13 +2375,15 @@ def fl_get_string_height(style, size, strng, strglen, asc, desc):
     isize = convert_to_int(size)
     sstrng = convert_to_string(strng)
     istrglen = convert_to_int(strglen)
-    pasc = cty.cast(asc, cty.POINTER(cty.c_int))
-    pdesc = cty.cast(desc, cty.POINTER(cty.c_int))
+    #pasc = cty.cast(asc, cty.POINTER(cty.c_int))
+    asc, pasc = make_int_and_pointer()
+    #pdesc = cty.cast(desc, cty.POINTER(cty.c_int))
+    desc, pdesc = make_int_and_pointer()
     keep_elem_refs(style, istyle, size, isize, strng, sstrng, strglen, \
                    istrglen, asc, desc, pasc, pdesc)
     retval = _fl_get_string_height(istyle, isize, sstrng, istrglen, \
                                    pasc, pdesc)
-    return retval
+    return retval, asc, desc
 
 
 def fl_get_string_width(style, size, s, strglen):
@@ -2398,8 +2424,9 @@ def fl_get_string_widthTAB(style, size, s, strglen):
     return retval
 
 
-def fl_get_string_dimension(fntstyle, fntsize, s, strglen, width, height):
-    """ fl_get_string_dimension(fntstyle, fntsize, s, strglen, width, height)
+#def fl_get_string_dimension(fntstyle, fntsize, s, strglen, width, height)
+def fl_get_string_dimension(fntstyle, fntsize, s, strglen):
+    """ fl_get_string_dimension(fntstyle, fntsize, s, strglen) -> width, height
     """
 
     _fl_get_string_dimension = cfuncproto(
@@ -2413,18 +2440,21 @@ def fl_get_string_dimension(fntstyle, fntsize, s, strglen, width, height):
     ifntsize = convert_to_int(fntsize)
     ss = convert_to_string(s)
     istrglen = convert_to_int(strglen)
+    width, pwidth = make_int_and_pointer()
+    heigth, pheigth = make_int_and_pointer()
     keep_elem_refs(fntstyle, ifntstyle, fntsize, ifntsize, s, ss, strglen,
-                   istrglen, width, height)
-    _fl_get_string_dimension(ifntstyle, ifntsize, ss, istrglen, width,
-                            height)
-    #return retval
+                   istrglen, width, height, pwidth, pheight)
+    _fl_get_string_dimension(ifntstyle, ifntsize, ss, istrglen, pwidth,
+                            pheight)
+    return width, height
 
 
 fl_get_string_size = fl_get_string_dimension
 
 
-def fl_get_align_xy(align, x, y, w, h, xsize, ysize, xoff, yoff, xx, yy):
-    """ fl_get_align_xy(align, x, y, w, h, xsize, ysize, xoff, yoff, xx, yy)
+#def fl_get_align_xy(align, x, y, w, h, xsize, ysize, xoff, yoff, xx, yy)
+def fl_get_align_xy(align, x, y, w, h, xsize, ysize, xoff, yoff):
+    """ fl_get_align_xy(align, x, y, w, h, xsize, ysize, xoff, yoff) -> xx, yy
     """
 
     _fl_get_align_xy = cfuncproto(
@@ -2444,10 +2474,13 @@ def fl_get_align_xy(align, x, y, w, h, xsize, ysize, xoff, yoff, xx, yy):
     iysize = convert_to_int(ysize)
     ixoff = convert_to_int(xoff)
     iyoff = convert_to_int(yoff)
-    keep_elem_refs(align, ialign, x, ix, y, iy, w, iw, h, ih, xsize,
-                   ixsize, ysize, iysize, xoff, ixoff, yoff, iyoff, xx, yy)
+    xx, pxx = make_int_and_pointer()
+    yy, pyy = make_int_and_pointer()
+    keep_elem_refs(align, ialign, x, ix, y, iy, w, iw, h, ih, xsize, ixsize,
+                   ysize, iysize, xoff, ixoff, yoff, iyoff, xx, yy, pxx, pyy)
     _fl_get_align_xy(ialign, ix, iy, iw, ih, ixsize, iysize, ixoff,
-                     iyoff, xx, yy)
+                     iyoff, pxx, pyy)
+    return xx, yy
 
 
 def fl_drw_text(align, x, y, w, h, colr, style, size, txtstr):
@@ -2677,8 +2710,9 @@ def fl_set_color_leak(y):
     _fl_set_color_leak(iy)
 
 
-def fl_getmcolor(colr, r, g, b):
-    """ fl_getmcolor(colr, r, g, b) -> num
+#def fl_getmcolor(colr, r, g, b):
+def fl_getmcolor(colr):
+    """ fl_getmcolor(colr) -> num., r, g, b
     """
 
     _fl_getmcolor = cfuncproto(
@@ -2689,9 +2723,12 @@ def fl_getmcolor(colr, r, g, b):
                int * b)
             """)
     ulcolr = convert_to_FL_COLOR(colr)
-    keep_elem_refs(colr, ulcolr, r, g, b)
-    retval = _fl_getmcolor(ulcolr, r, g, b)
-    return retval
+    r, pr = make_int_and_pointer()
+    g, pg = make_int_and_pointer()
+    b, pb = make_int_and_pointer()
+    keep_elem_refs(colr, ulcolr, r, g, b, pr, pg, pb)
+    retval = _fl_getmcolor(ulcolr, pr, pg, pb)
+    return retval, r, g, b
 
 
 def fl_get_pixel(colr):
@@ -2983,6 +3020,7 @@ def fl_set_scrollbar_type(t):
             None, [cty.c_int], \
             """void fl_set_scrollbar_type(int t)
             """)
+    check_admitted_listvalues(t, SCROLLTYPE_list)
     it = convert_to_int(t)
     keep_elem_refs(t, it)
     _fl_set_scrollbar_type(it)
@@ -3106,8 +3144,8 @@ def fl_mouse_button():
     return retval
 
 
-def fl_strdup(s):
-    """ fl_strdup(s) -> string
+def fl_strdup(strng):
+    """ fl_strdup(strng) -> string
     """
 
     _fl_strdup = cfuncproto(
@@ -3115,14 +3153,14 @@ def fl_strdup(s):
             STRING, [STRING], \
             """char * fl_strdup(const char * s)
             """)
-    ss = convert_to_string(s)
-    keep_elem_refs(s, ss)
-    retval = _fl_strdup(ss)
+    sstrng = convert_to_string(strng)
+    keep_elem_refs(strng, sstrng)
+    retval = _fl_strdup(sstrng)
     return retval
 
 
-def fl_set_err_logfp(fp):
-    """ fl_set_err_logfp(fp)
+def fl_set_err_logfp(pFile):
+    """ fl_set_err_logfp(pFile)
     """
 
     _fl_set_err_logfp = cfuncproto(
@@ -3130,8 +3168,8 @@ def fl_set_err_logfp(fp):
             None, [cty.POINTER(FILE)], \
             """void fl_set_err_logfp(FILE * fp)
             """)
-    keep_elem_refs(fp)
-    _fl_set_err_logfp(fp)
+    keep_elem_refs(pFile)
+    _fl_set_err_logfp(pFile)
 
 
 def fl_set_error_handler(py_user_func):
@@ -3300,11 +3338,11 @@ def fl_mode_capable(mode, warn):
 
 
 def fl_default_win():
-    return fl_state.trailblazer
+    return fl_state[0].trailblazer
     #fl_state[fl_vmode].trailblazer
 
 def fl_default_window():
-    return fl_state.trailblazer
+    return fl_state[0].trailblazer
     #fl_state[fl_vmode].trailblazer
 
 
@@ -3796,8 +3834,9 @@ fl_get_font_struct = fl_get_fontstruct
 fl_get_fntstruct = fl_get_font_struct
 
 
-def fl_get_mouse(x, y, keymask):
-    """ fl_get_mouse(x, y, keymask) -> window
+#def fl_get_mouse(x, y, keymask)
+def fl_get_mouse():
+    """ fl_get_mouse() -> window, x, y, keymask
     """
 
     _fl_get_mouse = cfuncproto(
@@ -3807,9 +3846,12 @@ def fl_get_mouse(x, y, keymask):
             """Window fl_get_mouse(FL_Coord * x, FL_Coord * y,
               unsigned int * keymask)
             """)
-    keep_elem_refs(x, y, keymask)
-    retval = _fl_get_mouse(x, y, keymask)
-    return retval
+    x, px = make_FL_Coord_and_pointer()
+    y, py = make_FL_Coord_and_pointer()
+    keymask, pkeymask = make_uint_and_pointer()
+    keep_elem_refs(x, y, keymask, px, py, pkeymask)
+    retval = _fl_get_mouse(px, py, pkeymask)
+    return retval, x, y, keymask
 
 
 def fl_set_mouse(mx, my):
@@ -3898,8 +3940,9 @@ def fl_set_form_icon(pForm, icon, mask):
     _fl_set_form_icon(pForm, ulicon, ulmask)
 
 
-def fl_get_decoration_sizes(pForm, top, right, bottom, left):
-    """ fl_get_decoration_sizes(pForm, top, right, bottom, left) -> size num.
+#def fl_get_decoration_sizes(pForm, top, right, bottom, left)
+def fl_get_decoration_sizes(pForm):
+    """ fl_get_decoration_sizes(pForm) -> size num., top, right, bottom, left
     """
 
     _fl_get_decoration_sizes = cfuncproto(
@@ -3910,9 +3953,14 @@ def fl_get_decoration_sizes(pForm, top, right, bottom, left):
             """int fl_get_decoration_sizes(FL_FORM * form, int * top,
                int * right, int * bottom, int * left)
             """)
-    keep_elem_refs(pForm, top, right, bottom, left)
-    retval = _fl_get_decoration_sizes(pForm, top, right, bottom, left)
-    return retval
+    top, ptop = make_int_and_pointer()
+    right, pright = make_int_and_pointer()
+    bottom, pbottom = make_int_and_pointer()
+    left, pleft = make_int_and_pointer()
+    keep_elem_refs(pForm, top, right, bottom, left, ptop, pright, pbottom,
+                   pleft)
+    retval = _fl_get_decoration_sizes(pForm, ptop, pright, pbottom, pleft)
+    return retval, top, right, bottom, left
 
 
 # /usr/include/X11/Xlib.h 3026
@@ -3932,7 +3980,7 @@ def XRaiseWindow(pDisplay, win):
 
 
 def fl_raise_form(pForm):
-    if (pForm[0].window):
+    if pForm[0].window:
         XRaiseWindow(fl_display, pForm[0].window)
 
 
@@ -3953,7 +4001,7 @@ def XLowerWindow(pDisplay, win):
 
 
 def fl_lower_form(pForm):
-    if (pForm[0].window):
+    if pForm[0].window:
         XLowerWindow(fl_display, pForm[0].window)
 
 
@@ -4672,8 +4720,8 @@ def fl_last_event():
     return retval
 
 
-def fl_set_event_callback(py_callback, user_data):
-    """ fl_set_event_callback(py_callback, user_data) -> event callback
+def fl_set_event_callback(py_callback, userdata):
+    """ fl_set_event_callback(py_callback, userdata) -> event callback
     """
 
     _fl_set_event_callback = cfuncproto(
@@ -4684,8 +4732,8 @@ def fl_set_event_callback(py_callback, user_data):
             """)
     c_callback = FL_APPEVENT_CB(py_callback)
     keep_cfunc_refs(c_callback)
-    keep_elem_refs(user_data)
-    retval = _fl_set_event_callback(c_callback, user_data)
+    keep_elem_refs(userdata)
+    retval = _fl_set_event_callback(c_callback, userdata)
     return retval
 
 
@@ -4810,7 +4858,8 @@ def fl_print_xevent_name(where, pXEvent):
     _fl_print_xevent_name = cfuncproto(
             load_so_libforms(), "fl_print_xevent_name",
             cty.POINTER(XEvent), [STRING, cty.POINTER(XEvent)],
-            """XEvent * fl_print_xevent_name(const char * where, const char * xev)
+            """XEvent * fl_print_xevent_name(const char * where,
+               const char * xev)
             """)
     swhere = convert_to_string(where)
     keep_elem_refs(where, pXEvent, swhere)
@@ -4839,23 +4888,24 @@ def button_down(mask):
 # Resources
 
 def fl_initialize(lsysargv, sysargv, appclass, appopt, nappopt):
-    """ fl_initialize(num_args, args, appl_class, appl_options, num_appl_opts) -> pDisplay
+    """ fl_initialize(numargs, args, applclass, apploptions, numapplopts) -> pDisplay
     """
 
     _fl_initialize = cfuncproto(
             load_so_libforms(), "fl_initialize",
             cty.POINTER(Display), [cty.POINTER(cty.c_int),
-            cty.POINTER(STRING), STRING, cty.POINTER(XrmOptionDescRec), cty.c_int],
+            cty.POINTER(STRING), STRING, cty.POINTER(XrmOptionDescRec),
+            cty.c_int],
             """Display * fl_initialize(int * na, char * * arg,
                const char * appclass, FL_CMD_OPT * appopt, int nappopt)
             """)
     verify_version_compatibility()      # verify if installed XForms
                                         # is compatible with this one
     lsysargv = 1
-    cliargs_nr = cty.c_int(lsysargv)                   #1
+    cliargs_nr = cty.c_int(lsysargv)               #1
     cliargs_nr_p = cty.byref(cliargs_nr)
     argum = "".join(sysargv)
-    scliargs = convert_to_string(argum)                      # " "
+    scliargs = convert_to_string(argum)            # " "
     sappclass = convert_to_string(appclass)
     structopts = cty.POINTER(FL_CMD_OPT)()
     keep_elem_refs(cliargs_nr_p, scliargs, appclass, sappclass, structopts,
@@ -4958,8 +5008,8 @@ def fl_set_visualID(idnum):
     _fl_set_visualID(lidnum)
 
 
-def fl_keysym_pressed(k):
-    """ fl_keysym_pressed(k) -> num.
+def fl_keysym_pressed(keysym):
+    """ fl_keysym_pressed(keysym) -> num.
     """
 
     _fl_keysym_pressed = cfuncproto(
@@ -4967,9 +5017,9 @@ def fl_keysym_pressed(k):
             cty.c_int, [KeySym],
             """int fl_keysym_pressed(KeySym k)
             """)
-    ulk = convert_to_ulong(k)
-    keep_elem_refs(k, ulk)
-    retval = _fl_keysym_pressed(ulk)
+    ulkeysym = convert_to_ulong(keysym)
+    keep_elem_refs(keysym, ulkeysym)
+    retval = _fl_keysym_pressed(ulkeysym)
     return retval
 
 
@@ -5904,8 +5954,9 @@ def fl_popup_entry_set_subpopup(pPopupEntry, pPopup):
     return retval
 
 
-def fl_popup_get_size(pPopup, p2, p3):
-    """ fl_popup_get_size(pPopup, p2, p3) -> size num.
+#def fl_popup_get_size(pPopup, w, h)
+def fl_popup_get_size(pPopup):
+    """ fl_popup_get_size(pPopup) -> size num., w, h
     """
 
     _fl_popup_get_size = cfuncproto(
@@ -5915,9 +5966,11 @@ def fl_popup_get_size(pPopup, p2, p3):
             """int fl_popup_get_size(FL_POPUP * p1, unsigned int * p2,
                unsigned int * p3)
             """)
-    keep_elem_refs(pPopup, p2, p3)
-    retval = _fl_popup_get_size(pPopup, p2, p3)
-    return retval
+    w, pw = make_uint_and_pointer()
+    h, ph = make_uint_and_pointer()
+    keep_elem_refs(pPopup, w, h, pw, ph)
+    retval = _fl_popup_get_size(pPopup, pw, ph)
+    return retval, w, h
 
 
 def fl_popup_get_min_width(pPopup):
@@ -6050,8 +6103,13 @@ def fl_read_bitmapfile(win, filename, w, h, hotx, hoty):
             """)
     ulwin = convert_to_Window(win)
     sfilename = convert_to_string(filename)
-    keep_elem_refs(win, filename, w, h, hotx, hoty, ulwin, sfilename)
-    retval = _fl_read_bitmapfile(ulwin, sfilename, w, h, hotx, hoty)
+    pw = cty.cast(w, cty.POINTER(cty.c_uint))
+    ph = cty.cast(h, cty.POINTER(cty.c_uint))
+    photx = cty.cast(hotx, cty.POINTER(cty.c_int))
+    photy = cty.cast(hoty, cty.POINTER(cty.c_int))
+    keep_elem_refs(win, filename, w, h, hotx, hoty, ulwin, sfilename,
+                   pw, ph, photx, photy)
+    retval = _fl_read_bitmapfile(ulwin, sfilename, pw, ph, photx, photy)
     return retval
 
 
@@ -6221,8 +6279,9 @@ def fl_free_pixmap_pixmap(pObject):
     _fl_free_pixmap_pixmap(pObject)
 
 
-def fl_get_pixmap_pixmap(pObject, p, m):
-    """ fl_get_pixmap_pixmap(pObject, p, m) -> pixmap
+#def fl_get_pixmap_pixmap(pObject, p, m)
+def fl_get_pixmap_pixmap(pObject):
+    """ fl_get_pixmap_pixmap(pObject) -> pixmap, p, m
     """
 
     _fl_get_pixmap_pixmap = cfuncproto(
@@ -6232,11 +6291,11 @@ def fl_get_pixmap_pixmap(pObject, p, m):
             """Pixmap fl_get_pixmap_pixmap(FL_OBJECT * ob, Pixmap * p,
                Pixmap * m)
             """)
-    ulp = convert_to_ulong(p)
-    ulm = convert_to_ulong(m)
-    keep_elem_refs(pObject, p, m, ulp, ulm)
-    retval = _fl_get_pixmap_pixmap(pObject, ulp, ulm)
-    return retval
+    p, pp = make_ulong_and_pointer()
+    m, pm = make_ulong_and_pointer()
+    keep_elem_refs(pObject, p, m, pp, pm)
+    retval = _fl_get_pixmap_pixmap(pObject, pp, pm)
+    return retval, p, m
 
 
 def fl_read_pixmapfile(win, filename, w, h, shape_mask, hotx, hoty, tran):
@@ -6257,8 +6316,8 @@ def fl_read_pixmapfile(win, filename, w, h, shape_mask, hotx, hoty, tran):
     ultran = convert_to_FL_COLOR(tran)
     keep_elem_refs(win, filename, w, h, shape_mask, hotx, hoty, tran, ulwin,
                    sfilename, ultran)
-    retval = _fl_read_pixmapfile(ulwin, sfilename, w, h, shape_mask, hotx, hoty,
-                                ultran)
+    retval = _fl_read_pixmapfile(ulwin, sfilename, w, h, shape_mask, \
+                                 hotx, hoty, ultran)
     return retval
 
 
@@ -6761,8 +6820,9 @@ def fl_set_browser_line_selectable(pObject, line, flag):
     _fl_set_browser_line_selectable(pObject, iline, iflag)
 
 
-def fl_get_browser_dimension(pObject, x, y, w, h):
-    """ fl_get_browser_dimension(pObject, x, y, w, h)
+#def fl_get_browser_dimension(pObject, x, y, w, h)
+def fl_get_browser_dimension(pObject):
+    """ fl_get_browser_dimension(pObject) -> x, y, w, h
     """
 
     _fl_get_browser_dimension = cfuncproto(
@@ -6773,8 +6833,13 @@ def fl_get_browser_dimension(pObject, x, y, w, h):
             """void fl_get_browser_dimension(FL_OBJECT * ob, FL_Coord * x,
                FL_Coord * y, FL_Coord * w, FL_Coord * h)
             """)
-    keep_elem_refs(pObject, x, y, w, h)
-    _fl_get_browser_dimension(pObject, x, y, w, h)
+    x, px = make_FL_Coord_and_pointer()
+    y, py = make_FL_Coord_and_pointer()
+    w, pw = make_FL_Coord_and_pointer()
+    h, ph = make_FL_Coord_and_pointer()
+    keep_elem_refs(pObject, x, y, w, h, px, py, pw, ph)
+    _fl_get_browser_dimension(pObject, px, py, pw, ph)
+    return x, y, w, h
 
 
 def fl_set_browser_dblclick_callback(pObject, py_cb, argum):
@@ -7462,8 +7527,9 @@ def fl_set_bitmapbutton_data(pObject, w, h, bits):
             """)
     iw = convert_to_int(w)
     ih = convert_to_int(h)
-    keep_elem_refs(pObject, w, h, bits, iw, ih)
-    _fl_set_bitmapbutton_data(pObject, iw, ih, bits)
+    pbits = cty.cast(bits, cty.POINTER(cty.c_ubyte))
+    keep_elem_refs(pObject, w, h, bits, iw, ih, pbits)
+    _fl_set_bitmapbutton_data(pObject, iw, ih, pbits)
 
 
 fl_set_bitmapbutton_datafile = fl_set_bitmapbutton_file
@@ -7666,8 +7732,9 @@ def fl_set_button_mouse_buttons(pObject, buttons):
     _fl_set_button_mouse_buttons(pObject, ibuttons)
 
 
-def fl_get_button_mouse_buttons(pObject, buttons):
-    """ fl_get_button_mouse_buttons(pObject, buttons)
+#def fl_get_button_mouse_buttons(pObject, buttons)
+def fl_get_button_mouse_buttons(pObject):
+    """ fl_get_button_mouse_buttons(pObject) -> buttons
     """
 
     _fl_get_button_mouse_buttons = cfuncproto(
@@ -7676,9 +7743,10 @@ def fl_get_button_mouse_buttons(pObject, buttons):
             """void fl_get_button_mouse_buttons(FL_OBJECT * ob,
                unsigned int * buttons)
             """)
-    keep_elem_refs(pObject, buttons)
-    _fl_get_button_mouse_buttons(pObject, buttons)
-
+    buttons, pbuttons = make_uint_and_pointer()
+    keep_elem_refs(pObject, buttons, pbuttons)
+    _fl_get_button_mouse_buttons(pObject, pbuttons)
+    return buttons
 
 
 #######################
@@ -7700,6 +7768,7 @@ def fl_create_generic_canvas(canvasclass, canvastype, x, y, w, h, label):
                int type, FL_Coord x, FL_Coord y, FL_Coord w, FL_Coord h,
                const char * label)
             """)
+    check_admitted_listvalues(canvastype, CANVASTYPE_list)
     icanvasclass = convert_to_int(canvasclass)
     icanvastype = convert_to_int(canvastype)
     ix = convert_to_FL_Coord(x)
@@ -7725,6 +7794,7 @@ def fl_add_canvas(canvastype, x, y, w, h, label):
             """FL_OBJECT * fl_add_canvas(int type, FL_Coord x, FL_Coord y,
                FL_Coord w, FL_Coord h, const char * label)
             """)
+    check_admitted_listvalues(canvastype, CANVASTYPE_list)
     icanvastype = convert_to_int(canvastype)
     ix = convert_to_FL_Coord(x)
     iy = convert_to_FL_Coord(y)
@@ -7748,6 +7818,7 @@ def fl_create_canvas(canvastype, x, y, w, h, label):
             """FL_OBJECT * fl_create_canvas(int type, FL_Coord x, FL_Coord y,
                FL_Coord w, FL_Coord h, const char * label)
             """)
+    check_admitted_listvalues(canvastype, CANVASTYPE_list)
     icanvastype = convert_to_int(canvastype)
     ix = convert_to_FL_Coord(x)
     iy = convert_to_FL_Coord(y)
@@ -7995,6 +8066,7 @@ def fl_create_glcanvas(canvastype, x, y, w, h, label):
             """FL_OBJECT * fl_create_glcanvas(int type, FL_Coord x, FL_Coord y,
                FL_Coord w, FL_Coord h, const char * label)
             """)
+    check_admitted_listvalues(canvastype, CANVASTYPE_list)
     icanvastype = convert_to_int(canvastype)
     ix = convert_to_FL_Coord(x)
     iy = convert_to_FL_Coord(y)
@@ -8018,6 +8090,7 @@ def fl_add_glcanvas(canvastype, x, y, w, h, label):
             """FL_OBJECT * fl_add_glcanvas(int type, FL_Coord x, FL_Coord y,
                FL_Coord w, FL_Coord h, const char * label)
             """)
+    check_admitted_listvalues(canvastype, CANVASTYPE_list)
     icanvastype = convert_to_int(canvastype)
     ix = convert_to_FL_Coord(x)
     iy = convert_to_FL_Coord(y)
@@ -8196,6 +8269,7 @@ def fl_create_chart(charttype, x, y, w, h, label):
             """FL_OBJECT * fl_create_chart(int type, FL_Coord x, FL_Coord y,
                FL_Coord w, FL_Coord h, const char * label)
             """)
+    check_admitted_listvalues(charttype, CHARTTYPE_list)
     icharttype = convert_to_int(charttype)
     ix = convert_to_FL_Coord(x)
     iy = convert_to_FL_Coord(y)
@@ -8219,6 +8293,7 @@ def fl_add_chart(charttype, x, y, w, h, label):
             """FL_OBJECT * fl_add_chart(int type, FL_Coord x, FL_Coord y,
                FL_Coord w, FL_Coord h, const char * label)
             """)
+    check_admitted_listvalues(charttype, CHARTTYPE_list)
     icharttype = convert_to_int(charttype)
     ix = convert_to_FL_Coord(x)
     iy = convert_to_FL_Coord(y)
@@ -8441,6 +8516,7 @@ def fl_create_choice(choicetype, x, y, w, h, label):
             """FL_OBJECT * fl_create_choice(int type, FL_Coord x, FL_Coord y,
                FL_Coord w, FL_Coord h, const char * label)
             """)
+    check_admitted_listvalues(choicetext, CHOICETYPE_list)
     ichoicetype = convert_to_int(choicetype)
     ix = convert_to_FL_Coord(x)
     iy = convert_to_FL_Coord(y)
@@ -8464,6 +8540,7 @@ def fl_add_choice(choicetype, x, y, w, h, label):
             """FL_OBJECT * fl_add_choice(int type, FL_Coord x, FL_Coord y,
                FL_Coord w, FL_Coord h, const char * label)  DEPRECATED
             """)
+    check_admitted_listvalues(choicetext, CHOICETYPE_list)
     ichoicetype = convert_to_int(choicetype)
     ix = convert_to_FL_Coord(x)
     iy = convert_to_FL_Coord(y)
@@ -8756,7 +8833,7 @@ def fl_stuff_clipboard(pObject, clipbdtype, data, size, py_lose_callback):
                const char * data, long int size,
                FL_LOSE_SELECTION_CB lose_callback)
             """)
-    lclipbdtype = convert_to_long(clipbdtype)
+    lclipbdtype = convert_to_long(clipbdtype)       # type is not used
     lsize = convert_to_long(size)
     c_lose_callback = FL_LOSE_SELECTION_CB(py_lose_callback)
     keep_cfunc_refs(c_lose_callback)
@@ -8776,7 +8853,7 @@ def fl_request_clipboard(pObject, clipbdtype, py_got_it_callback):
             """int fl_request_clipboard(FL_OBJECT * ob, long int type,
                FL_SELECTION_CB got_it_callback)
             """)
-    lclipbdtype = convert_to_long(clipbdtype)
+    lclipbdtype = convert_to_long(clipbdtype)       # type is not used
     c_got_it_callback = FL_SELECTION_CB(py_got_it_callback)
     keep_cfunc_refs(c_got_it_callback)
     keep_elem_refs(pObject, clipbdtype, lclipbdtype)
@@ -8801,6 +8878,7 @@ def fl_create_clock(clocktype, x, y, w, h, s):
             """FL_OBJECT * fl_create_clock(int type, FL_Coord x, FL_Coord y,
                FL_Coord w, FL_Coord h, const char * s)
             """)
+    check_admitted_listvalues(clocktype, CLOCKTYPE_list)
     iclocktype = convert_to_int(clocktype)
     ix = convert_to_FL_Coord(x)
     iy = convert_to_FL_Coord(y)
@@ -8824,6 +8902,7 @@ def fl_add_clock(clocktype, x, y, w, h, s):
             """FL_OBJECT * fl_add_clock(int type, FL_Coord x, FL_Coord y,
                FL_Coord w, FL_Coord h, const char * s)
             """)
+    check_admitted_listvalues(clocktype, CLOCKTYPE_list)
     iclocktype = convert_to_int(clocktype)
     ix = convert_to_FL_Coord(x)
     iy = convert_to_FL_Coord(y)
@@ -8903,6 +8982,7 @@ def fl_create_counter(countertype, x, y, w, h, label):
             """FL_OBJECT * fl_create_counter(int type, FL_Coord x, FL_Coord y,
                FL_Coord w, FL_Coord h, const char * label)
             """)
+    check_admitted_listvalues(countertype, COUNTERTYPE_list)
     icountertype = convert_to_int(countertype)
     ix = convert_to_FL_Coord(x)
     iy = convert_to_FL_Coord(y)
@@ -8926,6 +9006,7 @@ def fl_add_counter(countertype, x, y, w, h, label):
             """FL_OBJECT * fl_add_counter(int type, FL_Coord x, FL_Coord y,
                FL_Coord w, FL_Coord h, const char * label)
             """)
+    check_admitted_listvalues(countertype, COUNTERTYPE_list)
     icountertype = convert_to_int(countertype)
     ix = convert_to_FL_Coord(x)
     iy = convert_to_FL_Coord(y)
@@ -9289,6 +9370,7 @@ def fl_create_dial(dialtype, x, y, w, h, label):
             """FL_OBJECT * fl_create_dial(int type, FL_Coord x, FL_Coord y,
                FL_Coord w, FL_Coord h, const char * label)
             """)
+    check_admitted_listvalues(dialtype, DIALTYPE_list)
     idialtype = convert_to_int(dialtype)
     ix = convert_to_FL_Coord(x)
     iy = convert_to_FL_Coord(y)
@@ -9312,6 +9394,7 @@ def fl_add_dial(dialtype, x, y, w, h, label):
             """FL_OBJECT * fl_add_dial(int type, FL_Coord x, FL_Coord y,
                FL_Coord w, FL_Coord h, const char * label)
             """)
+    check_admitted_listvalues(dialtype, DIALTYPE_list)
     idialtype = convert_to_int(dialtype)
     ix = convert_to_FL_Coord(x)
     iy = convert_to_FL_Coord(y)
@@ -9473,7 +9556,7 @@ def fl_set_dial_direction(pObject, directn):
 
 #def fl_get_dirlist(directory, pattern, n, rescan)
 def fl_get_dirlist(directory, pattern, rescan):
-    """ fl_get_dirlist(directory, pattern, n, rescan) -> pDirList, n
+    """ fl_get_dirlist(directory, pattern, rescan) -> pDirList, n
     """
 
     _fl_get_dirlist = cfuncproto(
@@ -9911,8 +9994,8 @@ def fl_find_formbrowser_form_number(pObject, pFormCandidate):
     return retval
 
 
-def fl_add_formbrowser(browsertype, x, y, w, h, label):
-    """ fl_add_formbrowser(browsertype, x, y, w, h, label) -> pObject
+def fl_add_formbrowser(frmbrwstype, x, y, w, h, label):
+    """ fl_add_formbrowser(frmbrwstype, x, y, w, h, label) -> pObject
     """
 
     _fl_add_formbrowser = cfuncproto(
@@ -9922,20 +10005,21 @@ def fl_add_formbrowser(browsertype, x, y, w, h, label):
             """FL_OBJECT * fl_add_formbrowser(int type, FL_Coord x,
                FL_Coord y, FL_Coord w, FL_Coord h, const char * label)
             """)
-    ibrowsertype = convert_to_int(browsertype)
+    check_admitted_listvalues(frmbrwstype, FORMBRWSTYPE_list)
+    ifrmbrwstype = convert_to_int(frmbrwstype)
     ix = convert_to_FL_Coord(x)
     iy = convert_to_FL_Coord(y)
     iw = convert_to_FL_Coord(w)
     ih = convert_to_FL_Coord(h)
     slabel = convert_to_string(label)
-    keep_elem_refs(browsertype, x, y, w, h, label, ibrowsertype, ix, iy,
+    keep_elem_refs(frmbrwstype, x, y, w, h, label, ifrmbrwstype, ix, iy,
                    iw, ih, slabel)
-    retval = _fl_add_formbrowser(ibrowsertype, ix, iy, iw, ih, slabel)
+    retval = _fl_add_formbrowser(ifrmbrwstype, ix, iy, iw, ih, slabel)
     return retval
 
 
-def fl_create_formbrowser(browsertype, x, y, w, h, label):
-    """ fl_create_formbrowser(browsertype, x, y, w, h, label) -> pObject
+def fl_create_formbrowser(frmbrwstype, x, y, w, h, label):
+    """ fl_create_formbrowser(frmbrwstype, x, y, w, h, label) -> pObject
     """
 
     _fl_create_formbrowser = cfuncproto(
@@ -9945,15 +10029,16 @@ def fl_create_formbrowser(browsertype, x, y, w, h, label):
             """FL_OBJECT * fl_create_formbrowser(int type, FL_Coord x,
                FL_Coord y, FL_Coord w, FL_Coord h, const char * label)
             """)
-    ibrowsertype = convert_to_int(browsertype)
+    check_admitted_listvalues(frmbrwstype, FORMBRWSTYPE_list)
+    ifrmbrwstype = convert_to_int(frmbrwstype)
     ix = convert_to_FL_Coord(x)
     iy = convert_to_FL_Coord(y)
     iw = convert_to_FL_Coord(w)
     ih = convert_to_FL_Coord(h)
     slabel = convert_to_string(label)
-    keep_elem_refs(browsertype, x, y, w, h, label, ibrowsertype, ix, iy,
+    keep_elem_refs(frmbrwstype, x, y, w, h, label, ifrmbrwstype, ix, iy,
                    iw, ih, slabel)
-    retval = _fl_create_formbrowser(ibrowsertype, ix, iy, iw, ih, slabel)
+    retval = _fl_create_formbrowser(ifrmbrwstype, ix, iy, iw, ih, slabel)
     return retval
 
 
@@ -10002,6 +10087,7 @@ def fl_create_frame(frametype, x, y, w, h, label):
             """FL_OBJECT * fl_create_frame(int type, FL_Coord x, FL_Coord y,
                FL_Coord w, FL_Coord h, const char * label)
             """)
+    check_admitted_listvalues(frametype, FRAMETYPE_list)
     iframetype = convert_to_int(frametype)
     ix = convert_to_FL_Coord(x)
     iy = convert_to_FL_Coord(y)
@@ -10025,6 +10111,7 @@ def fl_add_frame(frametype, x, y, w, h, label):
             """FL_OBJECT * fl_add_frame(int type, FL_Coord x, FL_Coord y,
                FL_Coord w, FL_Coord h, const char * label)
             """)
+    check_admitted_listvalues(frametype, FRAMETYPE_list)
     iframetype = convert_to_int(frametype)
     ix = convert_to_FL_Coord(x)
     iy = convert_to_FL_Coord(y)
@@ -10103,6 +10190,7 @@ def fl_create_free(freetype, x, y, w, h, label, py_handle):
                FL_Coord w, FL_Coord h, const char * label,
                FL_HANDLEPTR handle)
             """)
+    check_admitted_listvalues(freetype, FREETYPE_list)
     ifreetype = convert_to_int(freetype)
     ix = convert_to_FL_Coord(x)
     iy = convert_to_FL_Coord(y)
@@ -10129,6 +10217,7 @@ def fl_add_free(freetype, x, y, w, h, label, py_handle):
                FL_Coord w, FL_Coord h, const char * label,
                FL_HANDLEPTR handle)
             """)
+    check_admitted_listvalues(freetype, FREETYPE_list)
     ifreetype = convert_to_int(freetype)
     ix = convert_to_FL_Coord(x)
     iy = convert_to_FL_Coord(y)
@@ -10720,7 +10809,7 @@ def fl_set_command_log_position(p1, p2):
 
 
 def fl_get_command_log_fdstruct():
-    """ fl_get_command_log_fdstruct() -> cmdlog class
+    """ fl_get_command_log_fdstruct() -> pCmdlog
     """
 
     _fl_get_command_log_fdstruct = cfuncproto(
@@ -10931,8 +11020,6 @@ def fl_refresh_fselector():
             """)
     _fl_refresh_fselector()
 
-
-cfunc_none_voidp = cty.CFUNCTYPE(None, cty.c_void_p)
 
 def fl_add_fselector_appbutton(p1, py_fn, p3):
     """ fl_add_fselector_appbutton(p1, py_fn, p3)
@@ -11247,8 +11334,9 @@ def fl_set_input_selected_range(pObject, begin, end):
     _fl_set_input_selected_range(pObject, ibegin, iend)
 
 
-def fl_get_input_selected_range(pObject, begin, end):
-    """ fl_get_input_selected_range(pObject, begin, end) -> string
+#def fl_get_input_selected_range(pObject, begin, end)
+def fl_get_input_selected_range(pObject):
+    """ fl_get_input_selected_range(pObject) -> string, begin, end
     """
 
     _fl_get_input_selected_range = cfuncproto(
@@ -11258,9 +11346,11 @@ def fl_get_input_selected_range(pObject, begin, end):
             """const char * fl_get_input_selected_range(FL_OBJECT * ob,
                int * begin, int * end)
             """)
-    keep_elem_refs(pObject, begin, end)
-    retval = _fl_get_input_selected_range(pObject, begin, end)
-    return retval
+    begin, pbegin = make_int_and_pointer()
+    end, pend = make_int_and_pointer()
+    keep_elem_refs(pObject, begin, end, pbegin, pend)
+    retval = _fl_get_input_selected_range(pObject, pbegin, pend)
+    return retval, begin, end
 
 
 def fl_set_input_maxchars(pObject, maxchars):
@@ -11501,6 +11591,7 @@ def fl_get_input_format(pObject):
     keep_elem_refs(pObject, fmt, sep, pfmt, psep)
     _fl_get_input_format(pObject, pfmt, psep)
     return fmt, sep
+
 
 def fl_get_input(pObject):
     """ fl_get_input(pObject) -> input string
@@ -11916,6 +12007,7 @@ def fl_create_nmenu(nmenutype, x, y, w, h, label):
             """FL_OBJECT * fl_create_nmenu(int p1, FL_Coord p2, FL_Coord p3,
                FL_Coord p4, FL_Coord p5, const char * p6)
             """)
+    check_admitted_listvalues(nmenutype, NMENUTYPE_list)
     inmenutype = convert_to_int(nmenutype)
     ix = convert_to_FL_Coord(x)
     iy = convert_to_FL_Coord(y)
@@ -11939,6 +12031,7 @@ def fl_add_nmenu(nmenutype, x, y, w, h, label):
             """FL_OBJECT * fl_add_nmenu(int p1, FL_Coord p2, FL_Coord p3,
                FL_Coord p4, FL_Coord p5, const char * p6)
             """)
+    check_admitted_listvalues(nmenutype, NMENUTYPE_list)
     inmenutype = convert_to_int(nmenutype)
     ix = convert_to_FL_Coord(x)
     iy = convert_to_FL_Coord(y)
@@ -12184,6 +12277,7 @@ def fl_create_positioner(postype, x, y, w, h, label):
             """FL_OBJECT * fl_create_positioner(int type, FL_Coord x,
                FL_Coord y, FL_Coord w, FL_Coord h, const char * label)
             """)
+    check_admitted_listvalues(postype, POSITIONERTYPE_list)
     ipostype = convert_to_int(postype)
     ix = convert_to_FL_Coord(x)
     iy = convert_to_FL_Coord(y)
@@ -12207,6 +12301,7 @@ def fl_add_positioner(postype, x, y, w, h, label):
             """FL_OBJECT * fl_add_positioner(int type, FL_Coord x, FL_Coord y,
                FL_Coord w, FL_Coord h, const char * label)
             """)
+    check_admitted_listvalues(postype, POSITIONERTYPE_list)
     ipostype = convert_to_int(postype)
     ix = convert_to_FL_Coord(x)
     iy = convert_to_FL_Coord(y)
@@ -12477,8 +12572,8 @@ def fl_set_scrollbar_size(pObject, val):
     _fl_set_scrollbar_size(pObject, fval)
 
 
-def fl_set_scrollbar_increment(pObject, valleftbtn, valmidlbtn):
-    """ fl_set_scrollbar_increment(pObject, l, r)
+def fl_set_scrollbar_increment(pObject, leftbtnval, midlbtnval):
+    """ fl_set_scrollbar_increment(pObject, leftbtnval, midlbtnval)
     """
 
     _fl_set_scrollbar_increment = cfuncproto(
@@ -12487,16 +12582,16 @@ def fl_set_scrollbar_increment(pObject, valleftbtn, valmidlbtn):
             """void fl_set_scrollbar_increment(FL_OBJECT * ob, double l,
                double r)
             """)
-    fvalleftbtn = convert_to_double(valleftbtn)
-    fvalmidlbtn = convert_to_double(valmidlbtn)
-    keep_elem_refs(pObject, valleftbtn, valmidlbtn, fvalleftbtn, \
-                   fvalmidlbtn)
-    _fl_set_scrollbar_increment(pObject, fvalleftbtn, fvalmidlbtn)
+    fleftbtnval = convert_to_double(leftbtnval)
+    fmidlbtnval = convert_to_double(midlbtnval)
+    keep_elem_refs(pObject, leftbtnval, midlbtnval, fleftbtnval, \
+                   fvalmidlbtnval)
+    _fl_set_scrollbar_increment(pObject, fleftbtnval, fmidlbtnval)
 
 
-#def fl_get_scrollbar_increment(pObject, valleftbtn, valmidlbtn)
+#def fl_get_scrollbar_increment(pObject, leftbtnval, valmidlbtnval)
 def fl_get_scrollbar_increment(pObject):
-    """ fl_get_scrollbar_increment(pObject) -> valleftbtn, valmidlbtn
+    """ fl_get_scrollbar_increment(pObject) -> leftbtnval, midlbtnval
     """
 
     _fl_get_scrollbar_increment = cfuncproto(
@@ -12506,11 +12601,11 @@ def fl_get_scrollbar_increment(pObject):
             """void fl_get_scrollbar_increment(FL_OBJECT * ob, double * a,
                double * b)
             """)
-    valleftbtn, pvalleftbtn = make_double_and_pointer()
-    valmidlbtn, pvalmidlbtn = make_double_and_pointer()
-    keep_elem_refs(pObject, valleftbtn, valmidlbtn, pvalleftbtn, pvalmidlbtn)
-    _fl_get_scrollbar_increment(pObject, pvalleftbtn, pvalmidlbtn)
-    return valleftbtn, valmidlbtn
+    leftbtnval, pleftbtnval = make_double_and_pointer()
+    midlbtnval, pmidlbtnval = make_double_and_pointer()
+    keep_elem_refs(pObject, leftbtnval, midlbtnval, pleftbtnval, pmidlbtnval)
+    _fl_get_scrollbar_increment(pObject, pleftbtnval, pmidlbtnval)
+    return leftbtnval, midlbtnval
 
 
 def fl_set_scrollbar_bounds(pObject, minbound, maxbound):
@@ -12547,8 +12642,8 @@ def fl_get_scrollbar_bounds(pObject):
     return minbound, maxbound
 
 
-def fl_set_scrollbar_return(pObject, ret):
-    """ fl_set_scrollbar_return(pObject, ret)
+def fl_set_scrollbar_return(pObject, returnnum):
+    """ fl_set_scrollbar_return(pObject, returnnum)
     """
 
     _fl_set_scrollbar_return = cfuncproto(
@@ -12556,9 +12651,10 @@ def fl_set_scrollbar_return(pObject, ret):
             None, [cty.POINTER(FL_OBJECT), cty.c_int],
             """void fl_set_scrollbar_return(FL_OBJECT * ob, int ret)
             """)
-    iret = convert_to_int(ret)
-    keep_elem_refs(pObject, ret, iret)
-    _fl_set_scrollbar_return(pObject, iret)
+    check_admitted_listvalues(returnnum, RETURN_list)
+    ireturnnum = convert_to_int(returnnum)
+    keep_elem_refs(pObject, returnnum, ireturnnum)
+    _fl_set_scrollbar_return(pObject, ireturnnum)
 
 
 def fl_set_scrollbar_step(pObject, step):
@@ -12593,6 +12689,7 @@ def fl_create_select(selecttype, x, y, w, h, label):
             """FL_OBJECT * fl_create_select(int p1, FL_Coord p2, FL_Coord p3,
                FL_Coord p4, FL_Coord p5, const char * p6)
             """)
+    check_admitted_listvalues(selecttype, SELECTTYPE_list)
     iselecttype = convert_to_int(selecttype)
     ix = convert_to_FL_Coord(x)
     iy = convert_to_FL_Coord(y)
@@ -12616,6 +12713,7 @@ def fl_add_select(selecttype, x, y, w, h, label):
             """FL_OBJECT * fl_add_select(int p1, FL_Coord p2, FL_Coord p3,
                FL_Coord p4, FL_Coord p5, const char * p6)
             """)
+    check_admitted_listvalues(selecttype, SELECTTYPE_list)
     iselecttype = convert_to_int(selecttype)
     ix = convert_to_FL_Coord(x)
     iy = convert_to_FL_Coord(y)
@@ -12953,6 +13051,7 @@ def fl_create_slider(slidertype, x, y, w, h, label):
             """FL_OBJECT * fl_create_slider(int type, FL_Coord x, FL_Coord y,
                FL_Coord w, FL_Coord h, const char * label)
             """)
+    check_admitted_listvalues(slidertype, SLIDERTYPE_list)
     islidertype = convert_to_int(slidertype)
     ix = convert_to_FL_Coord(x)
     iy = convert_to_FL_Coord(y)
@@ -12976,6 +13075,7 @@ def fl_add_slider(slidertype, x, y, w, h, label):
             """FL_OBJECT * fl_add_slider(int type, FL_Coord x, FL_Coord y,
                FL_Coord w, FL_Coord h, const char * label)
             """)
+    check_admitted_listvalues(slidertype, SLIDERTYPE_list)
     islidertype = convert_to_int(slidertype)
     ix = convert_to_FL_Coord(x)
     iy = convert_to_FL_Coord(y)
@@ -12999,6 +13099,7 @@ def fl_create_valslider(slidertype, x, y, w, h, label):
             """FL_OBJECT * fl_create_valslider(int type, FL_Coord x,
                FL_Coord y, FL_Coord w, FL_Coord h, const char * label)
             """)
+    check_admitted_listvalues(slidertype, SLIDERTYPE_list)
     islidertype = convert_to_int(slidertype)
     ix = convert_to_FL_Coord(x)
     iy = convert_to_FL_Coord(y)
@@ -13022,6 +13123,7 @@ def fl_add_valslider(slidertype, x, y, w, h, label):
             """FL_OBJECT * fl_add_valslider(int type, FL_Coord x, FL_Coord y,
                FL_Coord w, FL_Coord h, const char * label)
             """)
+    check_admitted_listvalues(slidertype, SLIDERTYPE_list)
     islidertype = convert_to_int(slidertype)
     ix = convert_to_FL_Coord(x)
     iy = convert_to_FL_Coord(y)
@@ -13097,8 +13199,8 @@ def fl_get_slider_bounds(pObject):
     return minbound, maxbound
 
 
-def fl_set_slider_return(pObject, value):
-    """ fl_set_slider_return(pObject, value)
+def fl_set_slider_return(pObject, returnnum):
+    """ fl_set_slider_return(pObject, returnnum)
     """
 
     _fl_set_slider_return = cfuncproto(
@@ -13106,9 +13208,10 @@ def fl_set_slider_return(pObject, value):
             None, [cty.POINTER(FL_OBJECT), cty.c_int],
             """void fl_set_slider_return(FL_OBJECT * ob, int value)
             """)
-    ivalue = convert_to_int(value)
-    keep_elem_refs(pObject, value, ivalue)
-    _fl_set_slider_return(pObject, ivalue)
+    check_admitted_listvalues(returnnum, RETURN_list)
+    ireturnnum = convert_to_int(returnnum)
+    keep_elem_refs(pObject, returnnum, ireturnnum)
+    _fl_set_slider_return(pObject, ireturnnum)
 
 
 def fl_set_slider_step(pObject, value):
@@ -13125,8 +13228,8 @@ def fl_set_slider_step(pObject, value):
     _fl_set_slider_step(pObject, fvalue)
 
 
-def fl_set_slider_increment(pObject, l, r):
-    """ fl_set_slider_increment(pObject, l, r)
+def fl_set_slider_increment(pObject, leftbtnval, midlbtnval):
+    """ fl_set_slider_increment(pObject, leftbtnval, midlbtnval)
     """
 
     _fl_set_slider_increment = cfuncproto(
@@ -13135,15 +13238,15 @@ def fl_set_slider_increment(pObject, l, r):
             """void fl_set_slider_increment(FL_OBJECT * ob, double l,
                double r)
             """)
-    fl = convert_to_double(l)
-    fr = convert_to_double(r)
-    keep_elem_refs(pObject, l, r, fl, fr)
-    _fl_set_slider_increment(pObject, fl, fr)
+    fleftbtnval = convert_to_double(leftbtnval)
+    fmidlbtnval = convert_to_double(midlbtnval)
+    keep_elem_refs(pObject, leftbtnval, midlbtnval, fleftbtnval, fmidlbtnval)
+    _fl_set_slider_increment(pObject, fleftbtnval, fmidlbtnval)
 
 
-#def fl_get_slider_increment(pObject, l, r)
+#def fl_get_slider_increment(pObject, leftbtnval, midlbtnval)
 def fl_get_slider_increment(pObject):
-    """ fl_get_slider_increment(pObject) -> l, r
+    """ fl_get_slider_increment(pObject) -> leftbtnval, midlbtnval
     """
 
     _fl_get_slider_increment = cfuncproto(
@@ -13153,11 +13256,11 @@ def fl_get_slider_increment(pObject):
             """void fl_get_slider_increment(FL_OBJECT * ob, double * l,
                double * r)
             """)
-    l, pl = make_double_and_pointer()
-    r, pr = make_double_and_pointer()
-    keep_elem_refs(pObject, l, r, pl, pr)
-    _fl_get_slider_increment(pObject, pl, pr)
-    return l, r
+    leftbtnval, pleftbtnval = make_double_and_pointer()
+    midlbtnval, pmidlbtnval = make_double_and_pointer()
+    keep_elem_refs(pObject, leftbtnval, midlbtnval, pleftbtnval, pmidlbtnval)
+    _fl_get_slider_increment(pObject, pleftbtnval, pmidlbtnval)
+    return leftbtnval, midlbtnval
 
 
 def fl_set_slider_size(pObject, size):
@@ -13174,8 +13277,8 @@ def fl_set_slider_size(pObject, size):
     _fl_set_slider_size(pObject, fsize)
 
 
-def fl_set_slider_precision(pObject, prec):
-    """ fl_set_slider_precision(pObject, prec)
+def fl_set_slider_precision(pObject, precnum):
+    """ fl_set_slider_precision(pObject, precnum)
     """
 
     _fl_set_slider_precision = cfuncproto(
@@ -13183,9 +13286,9 @@ def fl_set_slider_precision(pObject, prec):
             None, [cty.POINTER(FL_OBJECT), cty.c_int],
             """void fl_set_slider_precision(FL_OBJECT * ob, int prec)
             """)
-    iprec = convert_to_int(prec)
-    keep_elem_refs(pObject, prec, iprec)
-    _fl_set_slider_precision(pObject, iprec)
+    iprecnum = convert_to_int(precnum)
+    keep_elem_refs(pObject, precnum, iprecnum)
+    _fl_set_slider_precision(pObject, iprecnum)
 
 
 def fl_set_slider_filter(pObject, py_filter):
@@ -13214,6 +13317,7 @@ def fl_create_spinner(spinnertype, x, y, w, h, label):
             """FL_OBJECT * fl_create_spinner(int type, FL_Coord x, FL_Coord y,
                FL_Coord w, FL_Coord h, const char * label)
             """)
+    check_admitted_listvalues(spinnertype, SPINNERTYPE_list)
     ispinnertype = convert_to_int(spinnertype)
     ix = convert_to_FL_Coord(x)
     iy = convert_to_FL_Coord(y)
@@ -13237,6 +13341,7 @@ def fl_add_spinner(spinnertype, x, y, w, h, label):
             """FL_OBJECT * fl_add_spinner(int type, FL_Coord x, FL_Coord y,
             FL_Coord w, FL_Coord h, const char * label)
             """)
+    check_admitted_listvalues(spinnertype, SPINNERTYPE_list)
     ispinnertype = convert_to_int(spinnertype)
     ix = convert_to_FL_Coord(x)
     iy = convert_to_FL_Coord(y)
@@ -13250,7 +13355,7 @@ def fl_add_spinner(spinnertype, x, y, w, h, label):
 
 
 def fl_get_spinner_value(pObject):
-    """ fl_get_spinner_value(pObject)
+    """ fl_get_spinner_value(pObject) -> floatval
     """
 
     _fl_get_spinner_value = cfuncproto(
@@ -13259,7 +13364,8 @@ def fl_get_spinner_value(pObject):
             """double fl_get_spinner_value(FL_OBJECT * obj)
             """)
     keep_elem_refs(pObject)
-    _fl_get_spinner_value(pObject)
+    retval = _fl_get_spinner_value(pObject)
+    return retval
 
 
 def fl_set_spinner_value(pObject, val):
@@ -13339,8 +13445,8 @@ def fl_get_spinner_step(pObject):
     return retval
 
 
-def fl_set_spinner_precision(pObject, prec):
-    """ fl_set_spinner_precision(pObject, prec)
+def fl_set_spinner_precision(pObject, precnum):
+    """ fl_set_spinner_precision(pObject, precnum)
     """
 
     _fl_set_spinner_precision = cfuncproto(
@@ -13348,13 +13454,13 @@ def fl_set_spinner_precision(pObject, prec):
             None, [cty.POINTER(FL_OBJECT), cty.c_int],
             """void fl_set_spinner_precision(FL_OBJECT * obj, int prec)
             """)
-    iprec = convert_to_int(prec)
-    keep_elem_refs(pObject, prec, iprec)
-    _fl_set_spinner_precision(pObject, iprec)
+    iprecnum = convert_to_int(precnum)
+    keep_elem_refs(pObject, precnum, iprecnum)
+    _fl_set_spinner_precision(pObject, iprecnum)
 
 
 def fl_get_spinner_precision(pObject):
-    """ fl_get_spinner_precision(pObject)
+    """ fl_get_spinner_precision(pObject) -> num.
     """
 
     _fl_get_spinner_precision = cfuncproto(
@@ -13363,7 +13469,8 @@ def fl_get_spinner_precision(pObject):
             """int fl_get_spinner_precision(FL_OBJECT * obj)
             """)
     keep_elem_refs(pObject)
-    _fl_get_spinner_precision(pObject)
+    retval = _fl_get_spinner_precision(pObject)
+    return retval
 
 
 def fl_get_spinner_input(pObject):
@@ -13424,6 +13531,7 @@ def fl_create_tabfolder(foldertype, x, y, w, h, label):
             """FL_OBJECT * fl_create_tabfolder(int type, FL_Coord x,
                FL_Coord y, FL_Coord w, FL_Coord h, const char * label)
             """)
+    check_admitted_listvalues(foldertype, TABFOLDERTYPE_list)
     ifoldertype = convert_to_int(foldertype)
     ix = convert_to_FL_Coord(x)
     iy = convert_to_FL_Coord(y)
@@ -13447,6 +13555,7 @@ def fl_add_tabfolder(foldertype, x, y, w, h, label):
             """FL_OBJECT * fl_add_tabfolder(int type, FL_Coord x, FL_Coord y,
                FL_Coord w, FL_Coord h, const char * label)
             """)
+    check_admitted_listvalues(foldertype, TABFOLDERTYPE_list)
     ifoldertype = convert_to_int(foldertype)
     ix = convert_to_FL_Coord(x)
     iy = convert_to_FL_Coord(y)
@@ -13786,6 +13895,7 @@ def fl_create_text(texttype, x, y, w, h, label):
             """FL_OBJECT * fl_create_text(int type, FL_Coord x, FL_Coord y,
                FL_Coord w, FL_Coord h, const char * label)
             """)
+    check_admitted_listvalues(texttype, TEXTTYPE_list)
     itexttype = convert_to_int(texttype)
     ix = convert_to_FL_Coord(x)
     iy = convert_to_FL_Coord(y)
@@ -13809,6 +13919,7 @@ def fl_add_text(texttype, x, y, w, h, label):
             """FL_OBJECT * fl_add_text(int type, FL_Coord x, FL_Coord y,
                FL_Coord w, FL_Coord h, const char * label)
             """)
+    check_admitted_listvalues(texttype, TEXTTYPE_list)
     itexttype = convert_to_int(texttype)
     ix = convert_to_FL_Coord(x)
     iy = convert_to_FL_Coord(y)
@@ -13884,8 +13995,8 @@ def fl_set_thumbwheel_step(pObject, step):
     return retval
 
 
-def fl_set_thumbwheel_return(pObject, how):
-    """ fl_set_thumbwheel_return(pObject, how) -> num.
+def fl_set_thumbwheel_return(pObject, when):
+    """ fl_set_thumbwheel_return(pObject, when) -> num.
     """
 
     _fl_set_thumbwheel_return = cfuncproto(
@@ -13893,9 +14004,10 @@ def fl_set_thumbwheel_return(pObject, how):
             cty.c_int, [cty.POINTER(FL_OBJECT), cty.c_int],
             """int fl_set_thumbwheel_return(FL_OBJECT * ob, int how)
             """)
-    ihow = convert_to_int(how)
-    keep_elem_refs(pObject, how, ihow)
-    retval = _fl_set_thumbwheel_return(pObject, ihow)
+    check_admitted_listvalues(when, RETURN_list)
+    iwhen = convert_to_int(when)
+    keep_elem_refs(pObject, when, iwhen)
+    retval = _fl_set_thumbwheel_return(pObject, when)
     return retval
 
 
@@ -13960,6 +14072,7 @@ def fl_create_thumbwheel(wheeltype, x, y, w, h, label):
             """FL_OBJECT * fl_create_thumbwheel(int type, FL_Coord x,
                FL_Coord y, FL_Coord w, FL_Coord h, const char * label)
             """)
+    check_admitted_listvalues(wheeltype, THUMBWHEELTYPE_list)
     iwheeltype = convert_to_int(wheeltype)
     ix = convert_to_FL_Coord(x)
     iy = convert_to_FL_Coord(y)
@@ -13983,6 +14096,7 @@ def fl_add_thumbwheel(wheeltype, x, y, w, h, label):
             """FL_OBJECT * fl_add_thumbwheel(int type, FL_Coord x, FL_Coord y,
                FL_Coord w, FL_Coord h, const char * label)
             """)
+    check_admitted_listvalues(wheeltype, THUMBWHEELTYPE_list)
     iwheeltype = convert_to_int(wheeltype)
     ix = convert_to_FL_Coord(x)
     iy = convert_to_FL_Coord(y)
@@ -14014,6 +14128,7 @@ def fl_create_timer(timertype, x, y, w, h, label):
             """FL_OBJECT * fl_create_timer(int type, FL_Coord x, FL_Coord y,
             FL_Coord w, FL_Coord h, const char * label)
             """)
+    check_admitted_listvalues(timertype, TIMERTYPE_list)
     itimertype = convert_to_int(timertype)
     ix = convert_to_FL_Coord(x)
     iy = convert_to_FL_Coord(y)
@@ -14037,6 +14152,7 @@ def fl_add_timer(timertype, x, y, w, h, label):
             """FL_OBJECT * fl_add_timer(int type, FL_Coord x, FL_Coord y,
             FL_Coord w, FL_Coord h, const char * label)
             """)
+    check_admitted_listvalues(timertype, TIMERTYPE_list)
     itimertype = convert_to_int(timertype)
     ix = convert_to_FL_Coord(x)
     iy = convert_to_FL_Coord(y)
@@ -14140,8 +14256,8 @@ def fl_resume_timer(pObject):
 # Prototypes for xpop-up menus
 ###############################
 
-def fl_setpup_entries(nm, pPopupEntry):
-    """ fl_setpup_entries(nm, pPopupEntry) -> num.
+def fl_setpup_entries(popupid, pPopupEntry):
+    """ fl_setpup_entries(popupid, pPopupEntry) -> num.
     """
 
     _fl_setpup_entries = cfuncproto(
@@ -14149,9 +14265,9 @@ def fl_setpup_entries(nm, pPopupEntry):
             cty.c_int, [cty.c_int, cty.POINTER(FL_PUP_ENTRY)],
             """int fl_setpup_entries(int nm, FL_PUP_ENTRY * entries)
             """)
-    inm = convert_to_int(nm)
-    keep_elem_refs(nm, pPopupEntry, inm)
-    retval = _fl_setpup_entries(inm, pPopupEntry)
+    ipopupid = convert_to_int(popupid)
+    keep_elem_refs(popupid, pPopupEntry, ipopupid)
+    retval = _fl_setpup_entries(ipopupid, pPopupEntry)
     return retval
 
 
@@ -14263,7 +14379,6 @@ def fl_setpup_default_cursor(cursor):
     return retval
 
 
-# ALERT
 def fl_setpup_default_color(fgcolr, bgcolr):
     """ fl_setpup_default_color(fgcolr, bgcolr)
     """
@@ -14693,6 +14808,7 @@ def fl_create_xyplot(plottype, x, y, w, h, label):
             """FL_OBJECT * fl_create_xyplot(int t, FL_Coord x, FL_Coord y,
                FL_Coord w, FL_Coord h, const char * label)
             """)
+    check_admitted_listvalues(plottype, XYPLOTTYPE_list)
     iplottype = convert_to_int(plottype)
     ix = convert_to_FL_Coord(x)
     iy = convert_to_FL_Coord(y)
@@ -14716,6 +14832,7 @@ def fl_add_xyplot(plottype, x, y, w, h, label):
             """FL_OBJECT * fl_add_xyplot(int t, FL_Coord x, FL_Coord y,
                FL_Coord w, FL_Coord h, const char * label)
             """)
+    check_admitted_listvalues(plottype, XYPLOTTYPE_list)
     iplottype = convert_to_int(plottype)
     ix = convert_to_FL_Coord(x)
     iy = convert_to_FL_Coord(y)
@@ -15215,10 +15332,10 @@ def fl_replace_xyplot_point_in_overlay(pObject, i, setID, valx, valy):
 
     _fl_replace_xyplot_point_in_overlay = cfuncproto(
             load_so_libforms(), "fl_replace_xyplot_point_in_overlay",
-            None, [cty.POINTER(FL_OBJECT), cty.c_int, cty.c_int, cty.c_double,
-            cty.c_double],
-            """void fl_replace_xyplot_point_in_overlay(FL_OBJECT * ob, int i,
-               int setID, double x, double y)
+            None, [cty.POINTER(FL_OBJECT), cty.c_int, cty.c_int, \
+            cty.c_double, cty.c_double],
+            """void fl_replace_xyplot_point_in_overlay(FL_OBJECT * ob,
+               int i, int setID, double x, double y)
             """)
     ii = convert_to_int(i)
     isetID = convert_to_int(setID)
@@ -15361,7 +15478,7 @@ def fl_set_xyplot_fontsize(pObject, size):
             None, [cty.POINTER(FL_OBJECT), cty.c_int],
             """void fl_set_xyplot_fontsize(FL_OBJECT * ob, int size) DEPRECATED
             """)
-    warn_deprecated_function()
+    warn_deprecated_function("Use fl_set_lsize, instead.")
     isize = convert_to_int(size)
     keep_elem_refs(pObject, size, isize)
     _fl_set_xyplot_fontsize(pObject, isize)
@@ -15376,7 +15493,7 @@ def fl_set_xyplot_fontstyle(pObject, style):
             None, [cty.POINTER(FL_OBJECT), cty.c_int],
             """void fl_set_xyplot_fontstyle(FL_OBJECT * ob, int style) DEPRECATED
             """)
-    warn_deprecated_function()
+    warn_deprecated_function("Use fl_set_lstyle, instead.")
     istyle = convert_to_int(style)
     keep_elem_refs(pObject, style, istyle)
     _fl_set_xyplot_fontstyle(pObject, istyle)
@@ -15738,7 +15855,7 @@ def fl_cur_fs_():
     return retval
 
 
-# TODO: Verify; commented to prevent a SegmentationFault --LK
+# commented to prevent a SegmentationFault during installation --LK
 #fl_textgc = fl_textgc_()
 fl_textgc = fl_textgc_
 #fl_gc = fl_gc_()
@@ -15772,10 +15889,11 @@ def fl_display_():
 # Image related routines
 #########################
 
-def fl_safe_free(p):
-    if p:
-        fl_free(p)
-        p = None        # UNSURE
+# low-level, maybe unused in python --LK
+#def fl_safe_free(p):
+#    if p:
+#        fl_free(p)
+#        p = None        # UNSURE
 
 def FL_RGB2GRAY(r, g, b):
     return cty.c_uint((78 * (r) + 150 * (g) + 28 * (b)) >> 8)
@@ -16593,8 +16711,9 @@ def flimage_autocrop(pImage, p2):
     return retval
 
 
-def flimage_get_autocrop(pImage, p2, p3, p4, p5, p6):
-    """ flimage_get_autocrop(pImage, p2, p3, p4, p5, p6) -> num.
+#def flimage_get_autocrop(pImage, bk, xl, yt, xr, yb)
+def flimage_get_autocrop(pImage, bk):
+    """ flimage_get_autocrop(pImage, bk) -> num., xl, yt, xr, yb
     """
 
     _flimage_get_autocrop = cfuncproto(
@@ -16605,10 +16724,14 @@ def flimage_get_autocrop(pImage, p2, p3, p4, p5, p6):
             """int flimage_get_autocrop(FL_IMAGE * p1, unsigned int p2,
                int * p3, int * p4, int * p5, int * p6)
             """)
-    uip2 = convert_to_uint(p2)
-    keep_elem_refs(pImage, p2, p3, p4, p5, p6, uip2)
-    retval = _flimage_get_autocrop(pImage, uip2, p3, p4, p5, p6)
-    return retval
+    uibk = convert_to_uint(bk)
+    xl, pxl = make_int_and_pointer()
+    yt, pyt = make_int_and_pointer()
+    xr, pxr = make_int_and_pointer()
+    yb, pyb = make_int_and_pointer()
+    keep_elem_refs(pImage, bk, uibk, xl, pxl, yt, pyt, xr, pxr, yb, pyb)
+    retval = _flimage_get_autocrop(pImage, uibk, pxl, pyt, pxr, pyb)
+    return retval, xl, yt, xr, yb
 
 
 def flimage_crop(pImage, p2, p3, p4, p5):
@@ -16648,8 +16771,8 @@ def flimage_replace_pixel(pImage, p2, p3):
     return retval
 
 
-def flimage_transform_pixels(pImage, p2, p3, p4):
-    """ flimage_transform_pixels(pImage, p2, p3, p4) -> num.
+def flimage_transform_pixels(pImage, red, green, blue):
+    """ flimage_transform_pixels(pImage, red, green, blue) -> num.
     """
 
     _flimage_transform_pixels = cfuncproto(
@@ -16659,8 +16782,11 @@ def flimage_transform_pixels(pImage, p2, p3, p4):
             """int flimage_transform_pixels(FL_IMAGE * p1, int * p2,
                int * p3, int * p4)
             """)
-    keep_elem_refs(pImage, p2, p3, p4)
-    retval = _flimage_transform_pixels(pImage, p2, p3, p4)
+    pred = cty.cast(red, cty.POINTER(cty.c_int))
+    pgreen = cty.cast(green, cty.POINTER(cty.c_int))
+    pblue = cty.cast(blue, cty.POINTER(cty.c_int))
+    keep_elem_refs(pImage, red, green, blue, pred, pgreen, pblue)
+    retval = _flimage_transform_pixels(pImage, pred, pgreen, pblue)
     return retval
 
 
@@ -16741,8 +16867,8 @@ def flimage_dup(pImage):
 
 # Miscellaneous prototypes
 
-def fl_get_submatrix(p1, p2, p3, p4, p5, p6, p7, p8):
-    """ fl_get_submatrix(p1, p2, p3, p4, p5, p6, p7, p8) -> ?
+def fl_get_submatrix(in_, rows, cols, r1, c1, rs, cs, esize):
+    """ fl_get_submatrix(in_, rows, cols, r1, c1, rs, cs, esize) -> ?
     """
 
     _fl_get_submatrix = cfuncproto(
@@ -16752,16 +16878,16 @@ def fl_get_submatrix(p1, p2, p3, p4, p5, p6, p7, p8):
             """void * fl_get_submatrix(void * p1, int p2, int p3, int p4,
                int p5, int p6, int p7, unsigned int p8)
             """)
-    ip2 = convert_to_int(p2)
-    ip3 = convert_to_int(p3)
-    ip4 = convert_to_int(p4)
-    ip5 = convert_to_int(p5)
-    ip6 = convert_to_int(p6)
-    ip7 = convert_to_int(p7)
-    uip8 = convert_to_uint(p8)
-    keep_elem_refs(p1, p2, p3, p4, p5, p6, p7, p8, ip2, ip3, ip4, ip5,
-                   ip6, ip7, uip8)
-    retval = _fl_get_submatrix(p1, ip2, ip3, ip4, ip5, ip6, ip7, uip8)
+    irows = convert_to_int(rows)
+    icols = convert_to_int(cols)
+    ir1 = convert_to_int(r1)
+    ic1 = convert_to_int(c1)
+    irs = convert_to_int(rs)
+    ics = convert_to_int(cs)
+    uiesize = convert_to_uint(esize)
+    keep_elem_refs(in_, rows, cols, r1, c1, rs, cs, esize, irows, icols, \
+                   ir1, ic1, irs, ics, uiesize)
+    retval = _fl_get_submatrix(in_, irows, icols, ir1, ic1, irs, ics, uiesize)
     return retval
 
 
@@ -16817,8 +16943,8 @@ def fl_j2pass_quantize_rgb(p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, pImage)
     return retval
 
 
-def fl_make_submatrix(p1, p2, p3, p4, p5, p6, p7, p8):
-    """ fl_make_submatrix(p1, p2, p3, p4, p5, p6, p7, p8) -> ?
+def fl_make_submatrix(in_, rows, cols, r1, c1, rs, cs, esize):
+    """ fl_make_submatrix(in_, rows, cols, r1, c1, rs, cs, esize) -> ?
     """
 
     _fl_make_submatrix = cfuncproto(
@@ -16828,16 +16954,17 @@ def fl_make_submatrix(p1, p2, p3, p4, p5, p6, p7, p8):
             """void * fl_make_submatrix(void * p1, int p2, int p3, int p4,
                int p5, int p6, int p7, unsigned int p8)
             """)
-    ip2 = convert_to_int(p2)
-    ip3 = convert_to_int(p3)
-    ip4 = convert_to_int(p4)
-    ip5 = convert_to_int(p5)
-    ip6 = convert_to_int(p6)
-    ip7 = convert_to_int(p7)
-    uip8 = convert_to_uint(p8)
-    keep_elem_refs(p1, p2, p3, p4, p5, p6, p7, p8, ip2, ip3, ip4, ip5,
-                   ip6, ip7, uip8)
-    retval = _fl_make_submatrix(p1, ip2, ip3, ip4, ip5, ip6, ip7, uip8)
+    irows = convert_to_int(rows)
+    icols = convert_to_int(cols)
+    ir1 = convert_to_int(r1)
+    ic1 = convert_to_int(c1)
+    irs = convert_to_int(rs)
+    ics = convert_to_int(cs)
+    uiesize = convert_to_uint(esize)
+    keep_elem_refs(in_, rows, cols, r1, c1, rs, cs, esize, irows, icols, \
+               ir1, ic1, irs, ics, uiesize)
+    retval = _fl_make_submatrix(in_, irows, icols, ir1, ic1, irs, ics, \
+                                uiesize)
     return retval
 
 
@@ -17337,7 +17464,7 @@ def flps_apply_gamma(p1):
     _flps_apply_gamma(fp1)
 
 
-def flps_arc(p1, p2, p3, p4, p5, p6, p7):
+def flps_arc(fill, x, y, r, t1, t2, colr):
     """ flps_arc(p1, p2, p3, p4, p5, p6, p7)
     """
 
@@ -17348,20 +17475,20 @@ def flps_arc(p1, p2, p3, p4, p5, p6, p7):
             """void flps_arc(int p1, int p2, int p3, int p4, int p5, int p6,
                long int p7)
             """)
-    ip1 = convert_to_int(p1)
-    ip2 = convert_to_int(p2)
-    ip3 = convert_to_int(p3)
-    ip4 = convert_to_int(p4)
-    ip5 = convert_to_int(p5)
-    ip6 = convert_to_int(p6)
-    lp7 = convert_to_long(p7)
-    keep_elem_refs(p1, p2, p3, p4, p5, p6, p7, ip1, ip2, ip3, ip4, ip5,
-                   ip6, lp7)
-    _flps_arc(ip1, ip2, ip3, ip4, ip5, ip6, lp7)
+    ifill = convert_to_int(fill)
+    ix = convert_to_int(x)
+    iy = convert_to_int(y)
+    ir = convert_to_int(r)
+    it1 = convert_to_int(t1)
+    it2 = convert_to_int(t2)
+    lcolr = convert_to_long(colr)
+    keep_elem_refs(fill, x, y, r, t1, t2, colr, ifill, ix, iy, ir, it1, \
+                   it2, lcolr)
+    _flps_arc(ifill, ix, iy, ir, it1, it2, lcolr)
 
 
-def flps_circ(p1, p2, p3, p4, p5):
-    """ flps_circ(p1, p2, p3, p4, p5)
+def flps_circ(fill, x, y, r, colr):
+    """ flps_circ(fill, x, y, r, colr)
     """
 
     _flps_circ = cfuncproto(
@@ -17369,17 +17496,17 @@ def flps_circ(p1, p2, p3, p4, p5):
             None, [cty.c_int, cty.c_int, cty.c_int, cty.c_int, cty.c_long],
             """void flps_circ(int p1, int p2, int p3, int p4, long int p5)
             """)
-    ip1 = convert_to_int(p1)
-    ip2 = convert_to_int(p2)
-    ip3 = convert_to_int(p3)
-    ip4 = convert_to_int(p4)
-    lp5 = convert_to_long(p5)
-    keep_elem_refs(p1, p2, p3, p4, p5, ip1, ip2, ip3, ip4, lp5)
-    _flps_circ(ip1, ip2, ip3, ip4, lp5)
+    ifill = convert_to_int(fill)
+    ix = convert_to_int(x)
+    iy = convert_to_int(y)
+    ir = convert_to_int(r)
+    lcolr = convert_to_long(colr)
+    keep_elem_refs(fill, x, y, r, colr, ifill, ix, iy, ir, lcolr)
+    _flps_circ(fill, x, y, r, colr, ifill, ix, iy, ir, lcolr)
 
 
-def flps_color(p1):
-    """ flps_color(p1)
+def flps_color(colr):
+    """ flps_color(colr)
     """
 
     _flps_color = cfuncproto(
@@ -17387,13 +17514,13 @@ def flps_color(p1):
             None, [cty.c_long],
             """void flps_color(long int p1)
             """)
-    lp1 = convert_to_long(p1)
-    keep_elem_refs(p1, lp1)
-    _flps_color(lp1)
+    lcolr = convert_to_long(colr)
+    keep_elem_refs(colr, lcolr)
+    _flps_color(lcolr)
 
 
-def flps_draw_box(p1, p2, p3, p4, p5, p6, p7):
-    """ flps_draw_box(p1, p2, p3, p4, p5, p6, p7)
+def flps_draw_box(style, x, y, w, h, colr, bwIn):
+    """ flps_draw_box(style, x, y, w, h, colr, bwIn)
     """
 
     _flps_draw_box = cfuncproto(
@@ -17403,20 +17530,20 @@ def flps_draw_box(p1, p2, p3, p4, p5, p6, p7):
             """void flps_draw_box(int p1, int p2, int p3, int p4, int p5,
                long int p6, int p7)
             """)
-    ip1 = convert_to_int(p1)
-    ip2 = convert_to_int(p2)
-    ip3 = convert_to_int(p3)
-    ip4 = convert_to_int(p4)
-    ip5 = convert_to_int(p5)
-    lp6 = convert_to_long(p6)
-    ip7 = convert_to_int(p7)
-    keep_elem_refs(p1, p2, p3, p4, p5, p6, p7, ip1, ip2, ip3, ip4, ip5,
-                   lp6, ip7)
-    _flps_draw_box(ip1, ip2, ip3, ip4, ip5, lp6, ip7)
+    istyle = convert_to_int(style)
+    ix = convert_to_int(x)
+    iy = convert_to_int(y)
+    iw = convert_to_int(w)
+    ih = convert_to_int(h)
+    lcolr = convert_to_long(colr)
+    ibwIn = convert_to_int(bwIn)
+    keep_elem_refs(style, x, y, w, h, colr, bwIn, istyle, ix, iy, iw, ih, \
+                   lcolr, ibwIn)
+    _flps_draw_box(istyle, ix, iy, iw, ih, lcolr, ibwIn)
 
 
-def flps_draw_checkbox(p1, p2, p3, p4, p5, p6, p7):
-    """ flps_draw_checkbox(p1, p2, p3, p4, p5, p6, p7)
+def flps_draw_checkbox(boxtype, x, y, w, h, colr, bw):
+    """ flps_draw_checkbox(boxtype, x, y, w, h, colr, bw)
     """
 
     _flps_draw_checkbox = cfuncproto(
@@ -17426,16 +17553,16 @@ def flps_draw_checkbox(p1, p2, p3, p4, p5, p6, p7):
             """void flps_draw_checkbox(int p1, int p2, int p3, int p4,
                int p5, long int p6, int p7)
             """)
-    ip1 = convert_to_int(p1)
-    ip2 = convert_to_int(p2)
-    ip3 = convert_to_int(p3)
-    ip4 = convert_to_int(p4)
-    ip5 = convert_to_int(p5)
-    lp6 = convert_to_long(p6)
-    ip7 = convert_to_int(p7)
-    keep_elem_refs(p1, p2, p3, p4, p5, p6, p7, ip1, ip2, ip3, ip4, ip5,
-                   lp6, ip7)
-    _flps_draw_checkbox(ip1, ip2, ip3, ip4, ip5, lp6, ip7)
+    iboxtype = convert_to_int(boxtype)
+    ix = convert_to_int(x)
+    iy = convert_to_int(y)
+    iw = convert_to_int(w)
+    ih = convert_to_int(h)
+    lcolr = convert_to_long(colr)
+    ibw = convert_to_int(bw)
+    keep_elem_refs(boxtype, x, y, w, h, colr, bw, iboxtype, ix, iy, iw, ih, \
+                   lcolr, ibw)
+    _flps_draw_checkbox(iboxtype, ix, iy, iw, ih, lcolr, ibw)
 
 
 def flps_draw_frame(p1, p2, p3, p4, p5, p6, p7):

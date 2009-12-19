@@ -1,6 +1,12 @@
 
 
 SVN
+    * Changing some other param names and restructure
+    other getter functions.
+    * Add a documentation initial draft using python 
+    docstrings with epydoc.
+    * Documented API differences between upstream XForms
+    library and xforms-python API.
     * Updated for XForms 1.0.93pre1 variations
     * Porting of multilabel example.
     * Porting of fbrowse example.
