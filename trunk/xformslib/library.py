@@ -17679,7 +17679,8 @@ def flps_draw_text_beside(align, x, y, w, h, colr, style, size, text):
     stext = convert_to_string(text)
     keep_elem_refs(align, x, y, w, h, colr, style, size, text, ialign, \
                    ix, iy, iw, ih, lcolr, istyle, isize, stext)
-_flps_draw_text_beside(ialign, ix, iy, iw, ih, lcolr, istyle, isize, stext)
+    _flps_draw_text_beside(ialign, ix, iy, iw, ih, lcolr, istyle, isize, \
+                           stext)
 
 
 def flps_emit_header(title, npages, xi, yi, xf, yf):
@@ -17829,11 +17830,11 @@ def flps_line(xi, yi, xf, yf, colr):
             None, [cty.c_int, cty.c_int, cty.c_int, cty.c_int, cty.c_long],
             """void flps_line(int p1, int p2, int p3, int p4, long int p5)
             """)
-    ip1 = convert_to_int(p1)
-    ip2 = convert_to_int(p2)
-    ip3 = convert_to_int(p3)
-    ip4 = convert_to_int(p4)
-    lp5 = convert_to_long(p5)
+    ixi = convert_to_int(xi)
+    iyi = convert_to_int(yi)
+    ixf = convert_to_int(xf)
+    iyf = convert_to_int(yf)
+    lcolr = convert_to_long(colr)
     keep_elem_refs(xi, yi, xf, yf, colr, ixi, iyi, ixf, iyf, lcolr)
     _flps_line(ixi, iyi, ixf, iyf, lcolr)
 
@@ -17952,7 +17953,7 @@ def flps_pieslice(fill, x, y, w, h, t1, t2, colr):
     lcolr = convert_to_long(colr)
     keep_elem_refs(fill, x, y, w, h, t1, t2, colr, ifill, ix, iy, iw, \
                    ih, it1, it2, lcolr)
-    _flps_pieslice(ifill, ix, iy, iw, ih, it1, it2, lcolr))
+    _flps_pieslice(ifill, ix, iy, iw, ih, it1, it2, lcolr)
 
 
 def flps_poly(fill, pPoint, num, colr):
@@ -17982,12 +17983,12 @@ def flps_rectangle(fill, x, y, w, h, colr):
             """void flps_rectangle(int p1, int p2, int p3, int p4, int p5,
                long int p6)
             """)
-    ip1 = convert_to_int(p1)
-    ip2 = convert_to_int(p2)
-    ip3 = convert_to_int(p3)
-    ip4 = convert_to_int(p4)
-    ip5 = convert_to_int(p5)
-    lp6 = convert_to_long(p6)
+    ifill = convert_to_int(fill)
+    ix = convert_to_int(x)
+    iy = convert_to_int(y)
+    iw = convert_to_int(w)
+    ih = convert_to_int(h)
+    lcolr = convert_to_long(colr)
     keep_elem_refs(fill, x, y, w, h, colr, ifill, ix, iy, iw, ih, lcolr)
     _flps_rectangle(ifill, ix, iy, iw, ih, lcolr)
 
@@ -18065,8 +18066,8 @@ def flps_roundrectangle(fill, x, y, w, h, colr):
     _flps_roundrectangle(ifill, ix, iy, iw, ih, lcolr)
 
 
-def flps_set_clipping(p1, p2, p3, p4):
-    """ flps_set_clipping(p1, p2, p3, p4)
+def flps_set_clipping(x, y, w, h):
+    """ flps_set_clipping(x, y, w, h)
     """
 
     _flps_set_clipping = cfuncproto(
@@ -18074,16 +18075,16 @@ def flps_set_clipping(p1, p2, p3, p4):
             None, [cty.c_int, cty.c_int, cty.c_int, cty.c_int],
             """void flps_set_clipping(int p1, int p2, int p3, int p4)
             """)
-    ip1 = convert_to_int(p1)
-    ip2 = convert_to_int(p2)
-    ip3 = convert_to_int(p3)
-    ip4 = convert_to_int(p4)
-    keep_elem_refs(p1, p2, p3, p4, ip1, ip2, ip3, ip4)
-    _flps_set_clipping(ip1, ip2, ip3, ip4)
+    ix = convert_to_int(x)
+    iy = convert_to_int(y)
+    iw = convert_to_int(w)
+    ih = convert_to_int(h)
+    keep_elem_refs(x, y, w, h, ix, iy, iw, ih)
+    _flps_set_clipping(ix, iy, iw, ih)
 
 
-def flps_set_font(p1, p2):
-    """ flps_set_font(p1, p2)
+def flps_set_font(style, size):
+    """ flps_set_font(style, size)
     """
 
     _flps_set_font = cfuncproto(
@@ -18091,10 +18092,11 @@ def flps_set_font(p1, p2):
             None, [cty.c_int, cty.c_int],
             """void flps_set_font(int p1, int p2)
             """)
-    ip1 = convert_to_int(p1)
-    ip2 = convert_to_int(p2)
-    keep_elem_refs(p1, p2, ip1, ip2)
-    _flps_set_font(ip1, ip2)
+    check_admitted_listvalues(style, TEXTSTYLE_list)
+    istyle = convert_to_int(style)
+    isize = convert_to_int(size)
+    keep_elem_refs(style, size, istyle, isize)
+    _flps_set_font(istyle, isize)
 
 
 def flps_unset_clipping():
