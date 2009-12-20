@@ -34,8 +34,9 @@ def input_cb(ob, data):
     s = xf.fl_get_input(ob)
     w = xf.fl_get_string_width(ob[0].lstyle, ob[0].lsize, \
                                s, len(s))
-    h = xf.fl_get_string_height(ob[0].lstyle, ob[0].lsize, \
-                                s, len(s), 0, 0)
+    h, asc, desc = xf.fl_get_string_height(ob[0].lstyle, ob[0].lsize, \
+                                s, len(s))
+    print asc, desc
 
     buf = "w=%d h=%d" % (w, h)
     xf.fl_set_object_label(fd_form0.text, buf)

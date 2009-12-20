@@ -64,8 +64,7 @@ FL_INVALID = 0
 # WM_DELETE_WINDOW callback return
 FL_IGNORE = -1
 
-# max directory length
-# FL_PATH_MAX / PATH_MAX
+# max directory length  FL_PATH_MAX / PATH_MAX
 FL_PATH_MAX = 1024
 
 
@@ -965,7 +964,7 @@ FL_OBJECT_._fields_ = [
 
 
 #FL_EVENT = (cty.POINTER(FL_OBJECT)).in_dll(load_so_libforms(), 'FL_EVENT')
-FL_EVENT = cty.POINTER(FL_OBJECT)()
+#FL_EVENT = cty.POINTER(FL_OBJECT)()
 
 
 # error callback
@@ -977,7 +976,6 @@ FL_BEING_HIDDEN = -1
 FL_HIDDEN = 0
 FL_INVISIBLE = FL_HIDDEN
 FL_VISIBLE = 1
-
 
 # my add, list of possible values --LK
 VISIBLE_list = [FL_BEING_HIDDEN, FL_HIDDEN, FL_INVISIBLE, FL_VISIBLE]
@@ -1030,7 +1028,7 @@ FL_FSCB = cty.CFUNCTYPE(cty.c_int, STRING, cty.c_void_p)
 
 #fl_current_form = (cty.POINTER(FL_FORM)).in_dll(load_so_libforms(), \
 #                  'fl_current_form')
-fl_current_form = cty.POINTER(FL_FORM)()
+#fl_current_form = cty.POINTER(FL_FORM)()
 
 size_t = cty.c_uint
 
@@ -1055,12 +1053,12 @@ FL_XOR = 6              # GXxor
 FL_COPY = 3             # GXcopy
 FL_AND = 1              # GXand
 
-
 # my add, list of possible values --LK
 DRAWMODE_list = [FL_XOR, FL_COPY, FL_AND]
 
 
 FL_MINDEPTH = 1
+
 
 # FL_xxx does not do anything anymore, but kept for compatibility
 # values for unnamed enumeration
@@ -1197,29 +1195,27 @@ class _XDisplay(cty.Structure):
 _XDisplay._fields_ = []
 
 Display = _XDisplay
-#Display = _XDisplay.in_dll(so_libforms, "_XDisplay") # NOTWORKING
 
 # Global variables
 
 #fl_display = (cty.POINTER(Display)).in_dll(load_so_libforms(), 'fl_display')
-fl_display = cty.POINTER(Display)()
+#fl_display = cty.POINTER(Display)()
 #fl_screen = (cty.c_int).in_dll(so_libforms, 'fl_screen')
-fl_screen = cty.c_int()
+#fl_screen = cty.c_int()
 #fl_root = (Window).in_dll(so_libforms, 'fl_root')       # root window
-fl_root = Window()    # cty.c_ulong
+#fl_root = Window()    # cty.c_ulong
 #fl_vroot = (Window).in_dll(so_libforms, 'fl_vroot')     # virtual root window
-fl_vroot = Window()    # cty.c_ulong
+#fl_vroot = Window()    # cty.c_ulong
 #fl_scrh = (cty.c_int).in_dll(so_libforms, 'fl_scrh')      # screen dimension in pixels
-fl_scrh = cty.c_int()
+#fl_scrh = cty.c_int()
 #fl_scrw = (cty.c_int).in_dll(so_libforms, 'fl_scrw')
-fl_scrw = cty.c_int()
+#fl_scrw = cty.c_int()
 #fl_vmode = (cty.c_int).in_dll(so_libforms, 'fl_vmode')
-fl_vmode = cty.c_int()
-
+#fl_vmode = cty.c_int()
 #fl_state = (cty.POINTER(FL_State)).in_dll(load_so_libforms(), 'fl_state')
-fl_state = cty.POINTER(FL_State)()
-
-fl_ul_magic_char = STRING()
+#fl_state = cty.POINTER(FL_State)()
+#fl_ul_magic_char = (STRING.in_dll(load_so_libforms(), 'fl_state')
+#fl_ul_magic_char = STRING()
 
 
 # Fonts related
