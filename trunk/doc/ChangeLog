@@ -1,6 +1,7 @@
 
 
 SVN
+    * Improved documentation (initial)
     * bugfixes
     * Changing some other param names and restructure
     other getter functions.

@@ -408,6 +408,8 @@ def make_ulong_and_pointer():
     ptrbaseval = cty.byref(baseval)
     return baseval, ptrbaseval
 
+make_Pixmap_and_pointer = make_uint_and_pointer
+
 
 def make_float_and_pointer():
     """ Makes a ctypes c_float and its pointer, and returns both """
@@ -511,7 +513,10 @@ def fl_object_returned(pObject):
 def fl_add_io_callback(fd, mask, py_callback, data):
     """
         fl_add_io_callback(fd, mask, py_callback, data)
+
         Registers an input callback function when input is available from fd.
+
+        @params:
         <fd> : a valid file descriptor in a unix system
         <mask> : under what circumstance the input callback should be invoked
                  (FL_READ, FL_WRITE or FL_EXCEPT)
@@ -536,7 +541,11 @@ def fl_add_io_callback(fd, mask, py_callback, data):
 def fl_remove_io_callback(fd, mask, py_cb):
     """
         fl_remove_io_callback(fd, mask, py_cb)
-        Removes the registered callback function when input is available from fd.
+
+        Removes the registered callback function when input is available
+         from fd.
+
+        @params:
         <fd> : a valid file descriptor in a unix system
         <mask> : under what circumstance the input callback should be removed
                  (FL_READ, FL_WRITE, FL_EXCEPT)
@@ -549,6 +558,7 @@ def fl_remove_io_callback(fd, mask, py_cb):
             """void fl_remove_io_callback(int fd, unsigned int mask,
                FL_IO_CALLBACK cb)
             """)
+    check_admitted_listvalues(mask, ASYNCIO_list)
     ifd = convert_to_int(fd)
     uimask = convert_to_uint(mask)
     c_cb = FL_IO_CALLBACK(py_cb)
@@ -562,8 +572,11 @@ def fl_remove_io_callback(fd, mask, py_cb):
 def fl_add_signal_callback(sglnum, py_cb, data):
     """
         fl_add_signal_callback(sglnum, py_cb, data)
+
         Handles the receipt of a signal by registering a callback function
          that gets called when a signal is caught (only 1 function per signal)
+
+        @params:
         <sglnum> : signal number (e.g. signal.SIGALRM, signal.SIGINT, etc.)
         <py_cb> : python function to be invoked after catching the signal
         <data> : argument to be passed to function
@@ -585,7 +598,10 @@ def fl_add_signal_callback(sglnum, py_cb, data):
 def fl_remove_signal_callback(sglnum):
     """
         fl_remove_signal_callback(sglnum)
+
         Removes a previously registered callback function related to a signal
+
+        @params:
         <sglnum> : signal number (e.g. signal.SIGALRM, signal.SIGINT, etc.)
     """
 
@@ -602,8 +618,11 @@ def fl_remove_signal_callback(sglnum):
 def fl_signal_caught(sglnum):
     """
         fl_signal_caught(sglnum)
+
         Informs the main loop of the delivery of the signal signum, the signal
          is received by the application program
+
+        @params:
         <sglnum> : signal number (e.g. signal.SIGALRM, signal.SIGINT, etc.)
     """
 
@@ -620,9 +639,12 @@ def fl_signal_caught(sglnum):
 def fl_app_signal_direct(y):
     """
         fl_app_signal_direct(y)
-        Changes the default behavior of the built-in signal facilities (to be
-         called with a true value for flag prior to any use of
-         fl_add_signal_callback()
+
+        Changes the default behavior of the built-in signal facilities (to
+         be called with a true value for flag prior to any use of
+         fl_add_signal_callback(...)
+
+        @params:
         <y> : flag (e.g. True, False)
     """
 
@@ -641,7 +663,10 @@ def fl_app_signal_direct(y):
 def fl_add_timeout(msec, py_callback, data):
     """
         fl_add_timeout(msec, py_callback, data) -> timer ID
+
         Adds a timeout callback after a specified elapsed time
+
+        @params:
         <msec> : time elapsed in milliseconds
         <py_callback> : python function to be invoked after time
         <data> : argument to be passed to function
@@ -665,7 +690,10 @@ def fl_add_timeout(msec, py_callback, data):
 def fl_remove_timeout(idnum):
     """
         fl_remove_timeout(idnum)
+
         Removes a timeout callback function (created with fl_add_timeout)
+
+        @params:
         <idnum> : ID timeout number
     """
 
@@ -681,11 +709,15 @@ def fl_remove_timeout(idnum):
 
 # Basic public routine prototypes
 
-def fl_library_version(ver, rev):
+#def fl_library_version(ver, rev)
+def fl_library_version():
     """
-        fl_library_version(ver, rev) -> version_rev ID
-        Returns a consolidated version information, computed as 1000 * version
-         + revision.
+        fl_library_version() -> version_rev ID, ver, rev
+
+        Returns consolidated version informations
+
+        @returns:
+        <version_rev> : computed as 1000 * version + revision
         <ver> : version (e.g. 1 in 1.x.yy)
         <rev> : revision (e.g. 0 in x.0.yy)
     """
@@ -695,9 +727,11 @@ def fl_library_version(ver, rev):
             cty.c_int, [cty.POINTER(cty.c_int), cty.POINTER(cty.c_int)], \
             """int fl_library_version(int * ver, int * rev)
             """)
-    keep_elem_refs(ver, rev)
-    retval = _fl_library_version(ver, rev)
-    return retval
+    ver, pver = make_int_and_pointer()
+    rev, prev = make_int_and_pointer()
+    keep_elem_refs(ver, rev, pver, prev)
+    retval = _fl_library_version(pver, prev)
+    return retval, ver, rev
 
 
 # Generic routines that deal with FORMS
@@ -705,9 +739,12 @@ def fl_library_version(ver, rev):
 def fl_bgn_form(formtype, w, h):
     """
         fl_bgn_form(formtype, w, h) -> pForm
+
         Starts the definition of a form call
-        <formtype> : the type of the box that is used as a background
-                     (e.g. FL_DOWN_BOX, FL_BORDER_BOX, FL_SHADOW_BOX, etc.)
+
+        @params:
+        <formtype> : type of box that is used as a background
+         (e.g. FL_DOWN_BOX, FL_BORDER_BOX, FL_SHADOW_BOX, etc.)
         <w> : width of the new form
         <h> : height of the new form
     """
@@ -729,6 +766,7 @@ def fl_bgn_form(formtype, w, h):
 def fl_end_form():
     """
         fl_end_form()
+
         Ends the definition for a form call, after all required objects
         have been added to a form call
     """
@@ -744,8 +782,9 @@ def fl_end_form():
 def fl_do_forms():
     """
         fl_do_forms() -> pObject
-        Starts the main loop of the program and returns only when the state of
-         an object changes that has no callback bound to it.
+
+        Starts the main loop of the program and returns only when the state
+         of an object changes that has no callback bound to it.
     """
 
     _fl_do_forms = cfuncproto(
@@ -760,6 +799,7 @@ def fl_do_forms():
 def fl_check_forms():
     """
         fl_check_forms() -> pObject
+
         Returns None immediately unless the state of one of the object
          (without a callback bound to it) changed.
     """
@@ -776,6 +816,7 @@ def fl_check_forms():
 def fl_do_only_forms():
     """
         fl_do_only_forms() -> pObject
+
         Starts the main loop of the program and returns only when the state of
          an object changes that has no callback bound to it. It does not
          handle user events generated by application windows opened via
@@ -792,7 +833,10 @@ def fl_do_only_forms():
 
 
 def fl_check_only_forms():
-    """ fl_check_only_forms() -> pObject
+    """
+
+        fl_check_only_forms() -> pObject
+
         Returns None immediately unless the state of one of the object
          (without a callback bound to it) changed. It does not handle user
          events generated by application windows opened via fl_winopen() or
@@ -809,10 +853,14 @@ def fl_check_only_forms():
 
 
 def fl_freeze_form(pForm):
-    """ fl_freeze_form(pForm)
+    """
+        fl_freeze_form(pForm)
+
         It does not temporarily redraw a form while changes are being made, so
          all changes made are instead buffered internally.
-        <pForm> : form not to be re-drawn temporarly
+
+        @params:
+        <pForm> : pointer to form not to be re-drawn temporarly
     """
 
     _fl_freeze_form = cfuncproto(
@@ -825,10 +873,14 @@ def fl_freeze_form(pForm):
 
 
 def fl_set_focus_object(pForm, pObject):
-    """ fl_set_focus_object(pForm, pObject)
+    """
+        fl_set_focus_object(pForm, pObject)
+
         Sets the input focus in form to object pObject.
-        <pForm> : form whose object has to be focused
-        <pObject> : object to be focused
+
+        @params:
+        <pForm> : pointer to form whose object has to be focused
+        <pObject> : pointer to object to be focused
     """
 
     _fl_set_focus_object = cfuncproto(
@@ -841,9 +893,13 @@ def fl_set_focus_object(pForm, pObject):
 
 
 def fl_get_focus_object(pForm):
-    """ fl_get_focus_object(pForm) -> pObject
+    """
+        fl_get_focus_object(pForm) -> pObject
+
         Obtains the object that has the focus on a form
-        <pForm> : form that has a focused object
+
+        @params:
+        <pForm> : pointer to form that has a focused object
     """
 
     _fl_get_focus_object = cfuncproto(
@@ -857,9 +913,13 @@ def fl_get_focus_object(pForm):
 
 
 def fl_reset_focus_object(pObject):
-    """ fl_reset_focus_object(pObject)
-        Override the FL_UNFOCUS event
-        <pObject> : object towards applying event
+    """
+        fl_reset_focus_object(pObject)
+
+        Override the FL_UNFOCUS event.
+
+        @params:
+        <pObject> : pointer to object towards applying event
     """
 
     _fl_reset_focus_object = cfuncproto(
@@ -875,9 +935,13 @@ fl_set_object_focus = fl_set_focus_object
 
 
 def fl_set_form_atclose(pForm, py_fmclose, data):
-    """ fl_set_form_atclose(pForm, py_fmclose, data) -> form atclose reference
+    """
+        fl_set_form_atclose(pForm, py_fmclose, data) -> FormAtclose func.
+
         Calls a callback function before closing the form.
-        <pForm> : form the receive the message
+
+        @params:
+        <pForm> : pointer to form that receives the message
         <py_fmclose> : python callback function to be called
         <data> : argument to be passed to function
     """
@@ -890,15 +954,20 @@ def fl_set_form_atclose(pForm, py_fmclose, data):
                FL_FORM_ATCLOSE fmclose, void * data)
             """)
     c_fmclose = FL_FORM_ATCLOSE(py_fmclose)
+    pdata = cty.cast(data, cty.c_void_p)
     keep_cfunc_refs(c_fmclose)
-    keep_elem_refs(pForm, data)
-    retval = _fl_set_form_atclose(pForm, c_fmclose, data)
+    keep_elem_refs(pForm, data, pdata)
+    retval = _fl_set_form_atclose(pForm, c_fmclose, pdata)
     return retval
 
 
 def fl_set_atclose(py_fmclose, data):
-    """ fl_set_atclose(py_fmclose, data) -> atclose reference
+    """
+        fl_set_atclose(py_fmclose, data) -> FormAtclose func.
+
         Calls a callback function before terminating the application.
+
+        @params:
         <py_fmclose> : callback function to be called
         <data> : argument to be passed to function
     """
@@ -910,17 +979,22 @@ def fl_set_atclose(py_fmclose, data):
                void * data)
             """)
     c_fmclose = FL_FORM_ATCLOSE(py_fmclose)
+    pdata = cty.cast(data, cty.c_void_p)
     keep_cfunc_refs(c_fmclose)
-    keep_elem_refs(data)
-    retval = _fl_set_atclose(c_fmclose, data)
+    keep_elem_refs(data, pdata)
+    retval = _fl_set_atclose(c_fmclose, pdata)
     return retval
 
 
 def fl_set_form_atactivate(pForm, py_cb, data):
-    """ fl_set_form_atactivate(pForm, py_cb, data) -> form atactivate
+    """
+        fl_set_form_atactivate(pForm, py_cb, data) -> FormAtactivate func.
+
         Register a callback that is called when activation status of a forms
-         is enabled
-        <pForm> : form activated
+         is enabled,
+
+        @params:
+        <pForm> : activated form
         <py_cb> : python callback function called
         <data> : argument to be passed to function
     """
@@ -933,17 +1007,21 @@ def fl_set_form_atactivate(pForm, py_cb, data):
                FL_FORM_ATACTIVATE cb, void * data)
             """)
     c_cb = FL_FORM_ATACTIVATE(py_cb)
+    pdata = cty.cast(data, cty.c_void_p)
     keep_cfunc_refs(c_cb)
-    keep_elem_refs(pForm, data)
-    retval = _fl_set_form_atactivate(pForm, c_cb, data)
+    keep_elem_refs(pForm, data, pdata)
+    retval = _fl_set_form_atactivate(pForm, c_cb, pdata)
     return retval
 
 
 def fl_set_form_atdeactivate(pForm, py_cb, data):
-    """ fl_set_form_atdeactivate(pForm, py_cb, data) -> form atdeactivate
+    """
+        fl_set_form_atdeactivate(pForm, py_cb, data) -> FormAtdeactivate func.
         Register a callback that is called when activation status of a forms
          is disabled
-        <pForm> : form de-activated
+
+        @params:
+        <pForm> : pointer to de-activated form
         <py_cb> : python callback function called
         <data> : argument to be passed to function
     """
@@ -956,17 +1034,22 @@ def fl_set_form_atdeactivate(pForm, py_cb, data):
                FL_FORM_ATDEACTIVATE cb, void * data)
             """)
     c_cb = FL_FORM_ATDEACTIVATE(py_cb)
+    pdata = cty.cast(data, cty.c_void_p)
     keep_cfunc_refs(c_cb)
-    keep_elem_refs(pForm, data)
-    retval = _fl_set_form_atdeactivate(pForm, c_cb, data)
+    keep_elem_refs(pForm, data, pdata)
+    retval = _fl_set_form_atdeactivate(pForm, c_cb, pdata)
     return retval
 
 
 def fl_unfreeze_form(pForm):
-    """ fl_unfreeze_form(pForm)
+    """
+        fl_unfreeze_form(pForm)
+
         All changes made in the meantime in a form are drawn at once,
          reverting previous freeze
-        <pForm> : form to be re-drawn after freezing
+
+        @params:
+        <pForm> : pointer to form to be re-drawn after freezing
     """
 
     _fl_unfreeze_form = cfuncproto(
@@ -979,10 +1062,14 @@ def fl_unfreeze_form(pForm):
 
 
 def fl_deactivate_form(pForm):
-    """ fl_deactivate_form(pForm)
+    """
+        fl_deactivate_form(pForm)
+
         Deactivates form temporarily, without hiding it, but not allowing the
          user to interact with elements contained in form (buttons, etc.)
-        <pForm> : form to be de-activated
+
+        @params:
+        <pForm> : pointer to form to be de-activated
     """
 
     _fl_deactivate_form = cfuncproto(
@@ -995,10 +1082,13 @@ def fl_deactivate_form(pForm):
 
 
 def fl_activate_form(pForm):
-    """ fl_activate_form(pForm)
+    """
+        fl_activate_form(pForm)
+
         Re-activates form, allowing the user to interact again with elements
          contained in form (buttons, etc.)
-        <pForm> : form to be re-activated
+
+        <pForm> : pointer to form to be re-activated
     """
 
     _fl_activate_form = cfuncproto(
@@ -1011,8 +1101,10 @@ def fl_activate_form(pForm):
 
 
 def fl_deactivate_all_forms():
-    """ fl_deactivate_all_forms()
-        De-activates all current forms
+    """
+        fl_deactivate_all_forms()
+
+        De-activates all current forms.
     """
 
     _fl_deactivate_all_forms = cfuncproto(
@@ -1024,8 +1116,10 @@ def fl_deactivate_all_forms():
 
 
 def fl_activate_all_forms():
-    """ fl_activate_all_forms()
-        Re-activates all current forms
+    """
+        fl_activate_all_forms()
+
+        Re-activates all current forms.
     """
 
     _fl_activate_all_forms = cfuncproto(
@@ -1037,7 +1131,9 @@ def fl_activate_all_forms():
 
 
 def fl_freeze_all_forms():
-    """ fl_freeze_all_forms()
+    """
+        fl_freeze_all_forms()
+
         It does not temporarily redraw all current forms while changes are
          being made, so all changes made are instead buffered internally.
     """
@@ -1051,9 +1147,11 @@ def fl_freeze_all_forms():
 
 
 def fl_unfreeze_all_forms():
-    """ fl_unfreeze_all_forms()
+    """
+        fl_unfreeze_all_forms()
+
         All changes made in the meantime in all current forms are drawn at
-         once, reverting previous freeze
+         once, reverting previous freeze.
     """
 
     _fl_unfreeze_all_forms = cfuncproto(
@@ -1065,11 +1163,15 @@ def fl_unfreeze_all_forms():
 
 
 def fl_scale_form(pForm, xsc, ysc):
-    """ fl_scale_form(pForm, xsc, ysc)
+    """
+        fl_scale_form(pForm, xsc, ysc)
+
         Scales a form and the objects on it in size and position, indicating
          a scaling factor in x- and y-direction with respect to the current
-         size
-        <pForm> : form to be scaled
+         size.
+
+        @params:
+        <pForm> : pointer to form to be scaled
         <xsc> : scaling factor in horizonthal direction
         <ysc> : scaling factor in vertical direction
     """
@@ -1086,10 +1188,14 @@ def fl_scale_form(pForm, xsc, ysc):
 
 
 def fl_set_form_position(pForm, x, y):
-    """ fl_set_form_position(pForm, x, y)
+    """
+        fl_set_form_position(pForm, x, y)
+
         Sets position of form, when placing a form on the screen with
-         FL_PLACE_GEOMETRY as place argument
-        <pForm> : form whose position is to be set
+         FL_PLACE_GEOMETRY as place argument.
+
+        @params:
+        <pForm> : pointer to form whose position is to be set
         <x> : horizonthal position
         <y> : vertical position
     """
@@ -1107,9 +1213,13 @@ def fl_set_form_position(pForm, x, y):
 
 
 def fl_set_form_title(pForm, name):
-    """ fl_set_form_title(pForm, name)
+    """
+        fl_set_form_title(pForm, name)
+
         Changes the form title (and the icon name) after it is shown.
-        <pForm> : form whose title has to be changed
+
+        @params:
+        <pForm> : pointer to form whose title has to be changed
         <name> : new name for the form
     """
 
@@ -1163,8 +1273,15 @@ def fl_set_app_nomainform(flag):
     _fl_set_app_nomainform(iflag)
 
 
-def fl_set_form_callback(pForm, pycallback, data):
-    """ fl_set_form_callback(pForm, pycallback, data)
+def fl_set_form_callback(pForm, py_callback, data):
+    """ fl_set_form_callback(pForm, py_callback, data)
+
+        Sets the callback routine for the form.
+
+        @params:
+        <pForm> : pointer to form
+        <py_callback> : python callback to be set
+        <data> : argument to be passed to function
     """
 
     _fl_set_form_callback = cfuncproto(
@@ -1173,17 +1290,26 @@ def fl_set_form_callback(pForm, pycallback, data):
             """void fl_set_form_callback(FL_FORM * form,
                FL_FORMCALLBACKPTR callback, void * d)
             """)
-    c_callback = FL_FORMCALLBACKPTR(pycallback)
+    c_callback = FL_FORMCALLBACKPTR(py_callback)
+    pdata = cty.cast(data, cty.c_void_p)
     keep_cfunc_refs(c_callback)
-    keep_elem_refs(pForm, data)
-    _fl_set_form_callback(pForm, c_callback, data)
+    keep_elem_refs(pForm, data, pdata)
+    _fl_set_form_callback(pForm, c_callback, pdata)
 
 
 fl_set_form_call_back = fl_set_form_callback
 
 
 def fl_set_form_size(pForm, w, h):
-    """ fl_set_form_size(pForm, w, h)
+    """
+        fl_set_form_size(pForm, w, h)
+
+        Sets the size of form.
+
+        @params:
+        <pForm> : pointer to form
+        <w> : width of form
+        <h> : height of form
     """
 
     _fl_set_form_size = cfuncproto(
@@ -1198,13 +1324,22 @@ def fl_set_form_size(pForm, w, h):
 
 
 def fl_set_form_hotspot(pForm, x, y):
-    """ fl_set_form_hotspot(pForm, x, y)
+    """
+        fl_set_form_hotspot(pForm, x, y)
+
+        Sets the position of the hotspot of a form.
+
+        @params:
+        <pForm> : pointer to form
+        <x> : horizonthal position
+        <y> : vertical position
     """
 
     _fl_set_form_hotspot = cfuncproto(
             load_so_libforms(), "fl_set_form_hotspot", \
             None, [cty.POINTER(FL_FORM), FL_Coord, FL_Coord], \
-            """void fl_set_form_hotspot(FL_FORM * form, FL_Coord x, FL_Coord y)
+            """void fl_set_form_hotspot(FL_FORM * form, FL_Coord x,
+               FL_Coord y)
             """)
     ix = convert_to_FL_Coord(x)
     iy = convert_to_FL_Coord(y)
@@ -1213,7 +1348,12 @@ def fl_set_form_hotspot(pForm, x, y):
 
 
 def fl_set_form_hotobject(pForm, pObject):
-    """ fl_set_form_hotobject(pForm, pObject)
+    """
+        fl_set_form_hotobject(pForm, pObject)
+
+        @params:
+        <pForm> : pointer to form
+        <pObject> : pointer to object
     """
 
     _fl_set_form_hotobject = cfuncproto(
@@ -1226,7 +1366,13 @@ def fl_set_form_hotobject(pForm, pObject):
 
 
 def fl_set_form_minsize(pForm, w, h):
-    """ fl_set_form_minsize(pForm, w, h)
+    """
+        fl_set_form_minsize(pForm, w, h)
+
+        @params:
+        <pForm> : pointer to form
+        <w> : width of form
+        <h> : height of form
     """
 
     _fl_set_form_minsize = cfuncproto(
@@ -1241,7 +1387,13 @@ def fl_set_form_minsize(pForm, w, h):
 
 
 def fl_set_form_maxsize(pForm, w, h):
-    """ fl_set_form_maxsize(pForm, w, h)
+    """
+        fl_set_form_maxsize(pForm, w, h)
+
+        @params:
+        <pForm> : pointer to form
+        <w> : width of form
+        <h> : height of form
     """
 
     _fl_set_form_maxsize = cfuncproto(
@@ -1256,7 +1408,12 @@ def fl_set_form_maxsize(pForm, w, h):
 
 
 def fl_set_form_event_cmask(pForm, cmask):
-    """ fl_set_form_event_cmask(pForm, cmask)
+    """
+        fl_set_form_event_cmask(pForm, cmask)
+
+        @params:
+        <pForm> : pointer to form
+        <cmask> : compress mask for form
     """
 
     _fl_set_form_event_cmask = cfuncproto(
@@ -1271,7 +1428,14 @@ def fl_set_form_event_cmask(pForm, cmask):
 
 
 def fl_get_form_event_cmask(pForm):
-    """ fl_get_form_event_cmask(pForm) -> cmask ID
+    """
+        fl_get_form_event_cmask(pForm) -> cmask ID
+
+        @params:
+        <pForm> : pointer to form
+
+        @returns:
+            compress mask for form
     """
 
     _fl_get_form_event_cmask = cfuncproto(
@@ -1284,8 +1448,17 @@ def fl_get_form_event_cmask(pForm):
     return retval
 
 
+# alert until upstream bugfix
 def fl_set_form_geometry(pForm, x, y, w, h):
-    """ fl_set_form_geometry(pForm, x, y, w, h)
+    """
+        fl_set_form_geometry(pForm, x, y, w, h)
+
+        @params:
+        <pForm> : pointer to form
+        <x> : horizonthal position
+        <y> : vertical position
+        <w> : width of form
+        <h> : height of form
     """
 
     _fl_set_form_geometry = cfuncproto(
@@ -1307,7 +1480,16 @@ fl_set_initial_placement = fl_set_form_geometry
 
 
 def fl_show_form(pForm, place, border, name):
-    """ fl_show_form(pForm, place, border, name) -> window
+    """
+        fl_show_form(pForm, place, border, name) -> window
+
+        Shows the form.
+
+        @params:
+        <pForm> : pointer to form
+        <place> : where form has to be placed
+        <border> : type of window manager decoration
+        <name> : title of form
     """
 
     _fl_show_form = cfuncproto(
@@ -1327,7 +1509,13 @@ def fl_show_form(pForm, place, border, name):
 
 
 def fl_hide_form(pForm):
-    """ fl_hide_form(pForm)
+    """
+        fl_hide_form(pForm)
+
+        Hides the form.
+
+        @params:
+        <pForm> : pointer to form
     """
 
     _fl_hide_form = cfuncproto(
@@ -1340,7 +1528,13 @@ def fl_hide_form(pForm):
 
 
 def fl_free_form(pForm):
-    """ fl_free_form(pForm)
+    """
+        fl_free_form(pForm)
+
+        Frees the memory used by a form together with all its objects.
+
+        @params:
+        <pForm> : pointer to form
     """
 
     _fl_free_form = cfuncproto(
@@ -1353,7 +1547,13 @@ def fl_free_form(pForm):
 
 
 def fl_redraw_form(pForm):
-    """ fl_redraw_form(pForm)
+    """
+        fl_redraw_form(pForm)
+
+        Draws a form.
+
+        @params:
+        <pForm> : pointer to form
     """
 
     _fl_redraw_form = cfuncproto(
@@ -1367,6 +1567,10 @@ def fl_redraw_form(pForm):
 
 def fl_set_form_dblbuffer(pForm, y):
     """ fl_set_form_dblbuffer(pForm, y)
+
+        @params:
+        <pForm> : pointer to form
+        <y> : flag (0|1) for disabling/enabling doublebuffer
     """
 
     _fl_set_form_dblbuffer = cfuncproto(
@@ -1381,6 +1585,14 @@ def fl_set_form_dblbuffer(pForm, y):
 
 def fl_prepare_form_window(pForm, place, border, name):
     """ fl_prepare_form_window(pForm, place, border, name) -> window ID
+
+        Displays a particular form, returns its window handle.
+
+        @params:
+        <pForm> : pointer to form
+        <place> : where has to be placed
+        <border> : window manager decoration
+        <name> : title of form
     """
 
     _fl_prepare_form_window = cfuncproto(
@@ -1398,7 +1610,11 @@ def fl_prepare_form_window(pForm, place, border, name):
 
 
 def fl_show_form_window(pForm):
-    """ fl_show_form_window(pForm) -> window ID
+    """
+        fl_show_form_window(pForm) -> window ID
+
+        @params:
+        <pForm> : pointer to form
     """
 
     _fl_show_form_window = cfuncproto(
@@ -1412,7 +1628,14 @@ def fl_show_form_window(pForm):
 
 
 def fl_adjust_form_size(pForm):
-    """ fl_adjust_form_size(pForm) -> ID
+    """ fl_adjust_form_size(pForm) -> max_factor id
+
+        Similar to fit_object_label, but will do it for all objects and has
+         a smaller threshold. Mainly intended for compensation for font size
+         variations
+
+        @params:
+        <pForm> : pointer to form
     """
 
     _fl_adjust_form_size = cfuncproto(
@@ -1426,7 +1649,13 @@ def fl_adjust_form_size(pForm):
 
 
 def fl_form_is_visible(pForm):
-    """ fl_form_is_visible(pForm) -> ID
+    """
+        fl_form_is_visible(pForm) -> state id
+
+        Return if form is visible
+
+        @params:
+        <pForm> : pointer to form
     """
 
     _fl_form_is_visible = cfuncproto(
@@ -1440,7 +1669,12 @@ def fl_form_is_visible(pForm):
 
 
 def fl_form_is_iconified(pForm):
-    """ fl_form_is_iconified(pForm) -> ID
+    """ fl_form_is_iconified(pForm) -> state id
+
+        Returns if a forms window is in iconified state
+
+        @params:
+        <pForm> : pointer to form
     """
 
     _fl_form_is_iconified = cfuncproto(
@@ -1454,7 +1688,15 @@ def fl_form_is_iconified(pForm):
 
 
 def fl_register_raw_callback(pForm, mask, py_rcb):
-    """ fl_register_raw_callback(pForm, mask, py_rcb) -> raw_callback func.
+    """
+        fl_register_raw_callback(pForm, mask, py_rcb) -> raw_callback func.
+
+        Register pre-emptive event handlers
+
+        @params:
+        <pForm> : pointer to form
+        <mask> : key/button event mask (press/release/motion etc..)
+        <py_rcb> : python callback function
     """
 
     _fl_register_raw_callback = cfuncproto(
@@ -1477,6 +1719,8 @@ fl_register_call_back = fl_register_raw_callback
 
 def fl_bgn_group():
     """ fl_bgn_group() -> pObject
+
+        Starts a group definition.
     """
 
     _fl_bgn_group = cfuncproto(
@@ -1489,7 +1733,10 @@ def fl_bgn_group():
 
 
 def fl_end_group():
-    """ fl_end_group()
+    """
+        fl_end_group()
+
+        Ends a group definition.
     """
 
     _fl_end_group = cfuncproto(
@@ -1500,8 +1747,13 @@ def fl_end_group():
     _fl_end_group()
 
 
-def fl_addto_group(pObjectGroup):
-    """ fl_addto_group(pObjectGroup) -> pForm
+def fl_addto_group(pGroup):
+    """
+        fl_addto_group(pGroup) -> pForm
+
+        Reopens a group to allow addition of further objects
+
+        @param pGroup: pointer to group object to reopen
     """
 
     _fl_addto_group = cfuncproto(
@@ -1509,8 +1761,8 @@ def fl_addto_group(pObjectGroup):
             cty.POINTER(FL_OBJECT), [cty.POINTER(FL_OBJECT)], \
             """FL_OBJECT * fl_addto_group(FL_OBJECT * group)
             """)
-    keep_elem_refs(pObjectGroup)
-    retval = _fl_addto_group(pObjectGroup)
+    keep_elem_refs(pGroup)
+    retval = _fl_addto_group(pGroup)
     return retval
 
 
@@ -1518,6 +1770,12 @@ def fl_addto_group(pObjectGroup):
 
 def fl_set_object_boxtype(pObject, boxtype):
     """ fl_set_object_boxtype(pObject, boxtype)
+
+        Sets the boxtype of the object.
+
+        @params:
+        <pObject> : pointer to object
+        <boxtype> : type of the box
     """
 
     _fl_set_object_boxtype = cfuncproto(
@@ -1533,6 +1791,12 @@ def fl_set_object_boxtype(pObject, boxtype):
 
 def fl_set_object_bw(pObject, bw):
     """ fl_set_object_bw(pObject, bw)
+
+        Sets the borderwidth of an object
+
+        @params:
+            <pObject> : pointer to object
+            <bw> : borderwidth of object
     """
 
     _fl_set_object_bw = cfuncproto(
@@ -1547,7 +1811,13 @@ def fl_set_object_bw(pObject, bw):
 
 #def fl_get_object_bw(pObject, bw)
 def fl_get_object_bw(pObject):
-    """ fl_get_object_bw(pObject) -> bw
+    """
+        fl_get_object_bw(pObject) -> bw
+
+        Returns the borderwidth of an object
+
+        @params:
+            <pObject> : pointer to object
     """
 
     _fl_get_object_bw = cfuncproto(
@@ -1562,7 +1832,14 @@ def fl_get_object_bw(pObject):
 
 
 def fl_set_object_resize(pObject, what):
-    """ fl_set_object_resize(pObject, what)
+    """
+        fl_set_object_resize(pObject, what)
+
+        Sets the resize property of an object.
+
+        @params:
+            <pObject> : pointer to object
+            <what> : resize property
     """
 
     _fl_set_object_resize = cfuncproto(
@@ -1577,7 +1854,13 @@ def fl_set_object_resize(pObject, what):
 
 #def fl_get_object_resize(pObject, what)
 def fl_get_object_resize(pObject):
-    """ fl_get_object_resize(pObject) -> what
+    """
+        fl_get_object_resize(pObject) -> what
+
+        Returns the resize property of an object.
+
+        @params:
+            <pObject> : pointer to object
     """
 
     _fl_get_object_resize = cfuncproto(
@@ -1592,7 +1875,15 @@ def fl_get_object_resize(pObject):
 
 
 def fl_set_object_gravity(pObject, nw, se):
-    """ fl_set_object_gravity(pObject, nw, se)
+    """
+        fl_set_object_gravity(pObject, nw, se)
+
+        Sets the gravity properties of an object
+
+    @params:
+        <pObject> : pointer to object
+        <nw> : gravity property for NorthWest
+        <se> : gravity property for SouthEast
     """
 
     _fl_set_object_gravity = cfuncproto(
@@ -1609,7 +1900,13 @@ def fl_set_object_gravity(pObject, nw, se):
 
 #def fl_get_object_gravity(pObject, nw, se)
 def fl_get_object_gravity(pObject):
-    """ fl_get_object_gravity(pObject) -> nw, se
+    """
+        fl_get_object_gravity(pObject) -> nw, se
+
+        Returns the gravity properties of an object
+
+        @params:
+            <pObject> : pointer to object
     """
 
     _fl_get_object_gravity = cfuncproto(
@@ -1627,7 +1924,14 @@ def fl_get_object_gravity(pObject):
 
 
 def fl_set_object_lsize(pObject, lsize):
-    """ fl_set_object_lsize(pObject, lsize)
+    """
+        fl_set_object_lsize(pObject, lsize)
+
+        Sets the label size of an object
+
+        @params:
+            <pObject> : pointer to object
+            <lsize> : label size
     """
 
     _fl_set_object_lsize = cfuncproto(
@@ -1641,7 +1945,14 @@ def fl_set_object_lsize(pObject, lsize):
 
 
 def fl_set_object_lstyle(pObject, lstyle):
-    """ fl_set_object_lstyle(pObject, lstyle)
+    """
+        fl_set_object_lstyle(pObject, lstyle)
+
+        Sets the label style of an object.
+
+        @params:
+            <pObject> : pointer to object
+            <lstyle> : label style
     """
 
     _fl_set_object_lstyle = cfuncproto(
@@ -1656,7 +1967,14 @@ def fl_set_object_lstyle(pObject, lstyle):
 
 
 def fl_set_object_lcol(pObject, lcolr):
-    """ fl_set_object_lcol(pObject, lcolr)
+    """
+        fl_set_object_lcol(pObject, lcolr)
+
+        Sets the label color of an object.
+
+        @params:
+            <pObject> : pointer to object
+            <lcolr> : label color
     """
 
     _fl_set_object_lcol = cfuncproto(
@@ -1671,7 +1989,19 @@ def fl_set_object_lcol(pObject, lcolr):
 
 
 def fl_set_object_return(pObject, when):
-    """ fl_set_object_return(pObject, when) -> ID num
+    """
+        fl_set_object_return(pObject, when) -> ID num
+
+        Function for setting the conditions under which an object gets
+        returned (or its callback invoked). If the object has to do
+        additional work on setting te condition (e.g. it has child
+        objects that also need to be set) it has to set up it's own
+        function that then will called in the end. This function should
+        only be called once an object has been created completely!
+
+        @params:
+            <pObject> : pointer to object
+            <when> : return type
     """
 
     _fl_set_object_return = cfuncproto(
@@ -1679,6 +2009,7 @@ def fl_set_object_return(pObject, when):
             cty.c_int, [cty.POINTER(FL_OBJECT), cty.c_int], \
             """int fl_set_object_return(FL_OBJECT * ob, int when)   DEPRECATED
             """)
+    check_admitted_listvalues(when, RETURN_list)
     iwhen = convert_to_int(when)
     keep_elem_refs(pObject, when, iwhen)
     retval = _fl_set_object_return(pObject, iwhen)
@@ -1700,7 +2031,14 @@ def fl_notify_object(pObject, cause):
 
 
 def fl_set_object_lalign(pObject, align):
-    """ fl_set_object_lalign(pObject, align)
+    """
+        fl_set_object_lalign(pObject, align)
+
+        Sets alignment of an object.
+
+        @params:
+            <pObject> : pointer to object
+            <align> : alignment
     """
 
     _fl_set_object_lalign = cfuncproto(
@@ -3951,8 +4289,8 @@ def fl_set_form_icon(pForm, icon, mask):
             None, [cty.POINTER(FL_FORM), Pixmap, Pixmap], \
             """void fl_set_form_icon(FL_FORM * form, Pixmap p, Pixmap m)
             """)
-    ulicon = convert_to_int(icon)
-    ulmask = convert_to_int(mask)
+    ulicon = convert_to_Pixmap(icon)
+    ulmask = convert_to_Pixmap(mask)
     keep_elem_refs(pForm, icon, mask, ulicon, ulmask)
     _fl_set_form_icon(pForm, ulicon, ulmask)
 
@@ -6315,8 +6653,9 @@ def fl_get_pixmap_pixmap(pObject):
     return retval, p, m
 
 
-def fl_read_pixmapfile(win, filename, w, h, shape_mask, hotx, hoty, tran):
-    """ fl_read_pixmapfile(win, filename, w, h, shape_mask, hotx, hoty, tran) -> pixmap
+#def fl_read_pixmapfile(win, filename, w, h, shape_mask, hotx, hoty, tran)
+def fl_read_pixmapfile(win, filename, tran):
+    """ fl_read_pixmapfile(win, filename, tran) -> pixmap, w, h, shapemask, hotx, hoty
     """
 
     _fl_read_pixmapfile = cfuncproto(
@@ -6331,11 +6670,16 @@ def fl_read_pixmapfile(win, filename, w, h, shape_mask, hotx, hoty, tran):
     ulwin = convert_to_Window(win)
     sfilename = convert_to_string(filename)
     ultran = convert_to_FL_COLOR(tran)
-    keep_elem_refs(win, filename, w, h, shape_mask, hotx, hoty, tran, ulwin,
-                   sfilename, ultran)
-    retval = _fl_read_pixmapfile(ulwin, sfilename, w, h, shape_mask, \
-                                 hotx, hoty, ultran)
-    return retval
+    w, pw = make_uint_and_pointer()
+    h, ph = make_uint_and_pointer()
+    shapemask, pshapemask = make_ulong_and_pointer()
+    hotx, photx = make_int_and_pointer()
+    hoty, photy = make_int_and_pointer()
+    keep_elem_refs(win, filename, w, h, shapemask, hotx, hoty, tran, ulwin,
+                   sfilename, ultran, pw, ph, pshapemask, photx, photy)
+    retval = _fl_read_pixmapfile(ulwin, sfilename, pw, ph, pshapemask, \
+                                 photx, photy, ultran)
+    return retval, w, h, shapemask, hotx, hoty
 
 
 def fl_create_from_pixmapdata(win, data, w, h, sm, hotx, hoty, tran):

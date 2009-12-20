@@ -3,6 +3,8 @@ and xforms-python APIs (e.g. different number of parameters passed to a
 function, multiple number of return values, etc..).
 
 
+fl_library_version() -> version_rev ID, ver, rev
+
 fl_get_object_bw(pObject) -> bw
 
 fl_get_object_resize(pObject) -> what
@@ -123,6 +125,8 @@ fl_get_xyplot_xmapping(pObject) -> a, b
 fl_get_xyplot_ymapping(pObject) -> a, b
 
 flimage_get_autocrop(pImage, bk) -> num., xl, yt, xr, yb
+
+fl_read_pixmapfile(win, filename, tran) -> pixmap, w, h, shapemask, hotx, hoty
 
 
 
