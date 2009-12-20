@@ -431,7 +431,7 @@ def check_admitted_listvalues(paramname, *valueslist):
     """
 
     if isinstance(valueslist, list):
-        if param not in valueslist:
+        if paramname not in valueslist:
             raise XFormsTypeError("Parameter must be a values in list " \
                                   "%s." % valueslist)
 
@@ -2458,7 +2458,7 @@ def fl_get_string_dimension(fntstyle, fntsize, s, strglen):
     ss = convert_to_string(s)
     istrglen = convert_to_int(strglen)
     width, pwidth = make_int_and_pointer()
-    heigth, pheigth = make_int_and_pointer()
+    height, pheight = make_int_and_pointer()
     keep_elem_refs(fntstyle, ifntstyle, fntsize, ifntsize, s, ss, strglen,
                    istrglen, width, height, pwidth, pheight)
     _fl_get_string_dimension(ifntstyle, ifntsize, ss, istrglen, pwidth,
@@ -5499,7 +5499,7 @@ def fl_popup_set_title_font(pPopup, style, size):
             None, [cty.POINTER(FL_POPUP), cty.c_int, cty.c_int],
             """void fl_popup_set_title_font(FL_POPUP * p1, int p2, int p3)
             """)
-    istyle = convert_to_int(sytle)
+    istyle = convert_to_int(style)
     isize = convert_to_int(size)
     keep_elem_refs(pPopup, style, size, istyle, isize)
     _fl_popup_set_title_font(pPopup, istyle, isize)
@@ -5621,7 +5621,7 @@ def fl_popup_get_title(pPopup):
             STRING, [cty.POINTER(FL_POPUP)],
             """const char * fl_popup_get_title(FL_POPUP * p1)
             """)
-    keep_elem_refs(pPoint)
+    keep_elem_refs(pPopup)
     retval = _fl_popup_get_title(pPopup)
     return retval
 
@@ -5636,7 +5636,7 @@ def fl_popup_set_title(pPopup, title):
             """FL_POPUP * fl_popup_set_title(FL_POPUP * p1, const char * p2)
             """)
     stitle = convert_to_string(title)
-    keep_elem_refs(p1, title, stitle)
+    keep_elem_refs(pPopup, title, stitle)
     retval = _fl_popup_set_title(pPopup, stitle)
     return retval
 
@@ -5782,7 +5782,7 @@ def fl_popup_entry_set_text(pPopupEntry, text):
             """)
     stext = convert_to_string(text)
     keep_elem_refs(pPopupEntry, text, stext)
-    retval = _fl_popup_entry_set_text(PopupEntry, stext)
+    retval = _fl_popup_entry_set_text(pPopupEntry, stext)
     return retval
 
 
@@ -12602,7 +12602,7 @@ def fl_set_scrollbar_increment(pObject, leftbtnval, midlbtnval):
     fleftbtnval = convert_to_double(leftbtnval)
     fmidlbtnval = convert_to_double(midlbtnval)
     keep_elem_refs(pObject, leftbtnval, midlbtnval, fleftbtnval, \
-                   fvalmidlbtnval)
+                   fmidlbtnval)
     _fl_set_scrollbar_increment(pObject, fleftbtnval, fmidlbtnval)
 
 
@@ -14876,11 +14876,13 @@ def fl_set_xyplot_data(pObject, xlist, ylist, n, title, xlabel, ylabel):
             """)
     #px = cty.cast(x, cty.POINTER(cty.c_float))
     print xlist, xlist[0]
+    fx = []
     for a in range(xlist):
         fx[a] = convert_to_float(xlist[a])
     px = cty.pointer(fx)
     print "x, fx, px", xlist, fx, px
     #py = cty.cast(y, cty.POINTER(cty.c_float))
+    fy = []
     for a in range(ylist):
         fy[a] = convert_to_float(ylist[a])
     py = cty.pointer(fy)
@@ -15020,8 +15022,8 @@ def fl_add_xyplot_overlay(pObject, idnum, x, y, n, colr):
                float * y, int n, FL_COLOR col)
             """)
     iidnum = convert_to_int(idnum)
-    px = cty.cast(asc, cty.POINTER(cty.c_float))
-    py = cty.cast(asc, cty.POINTER(cty.c_float))
+    px = cty.cast(x, cty.POINTER(cty.c_float))
+    py = cty.cast(y, cty.POINTER(cty.c_float))
     inum = convert_to_int(n)
     ulcolr = convert_to_FL_COLOR(colr)
     keep_elem_refs(pObject, idnum, x, y, n, colr, iidnum, px, py, inum, \
