@@ -516,12 +516,12 @@ def fl_add_io_callback(fd, mask, py_callback, data):
 
         Registers an input callback function when input is available from fd.
 
-        @params:
-        <fd> : a valid file descriptor in a unix system
-        <mask> : under what circumstance the input callback should be invoked
-                 (FL_READ, FL_WRITE or FL_EXCEPT)
-        <py_callback> : python function to be invoked under mask condition
-        <data> : argument to be passed to function
+        @param fd : a valid file descriptor in a unix system
+        @param mask : under what circumstance the input callback should be
+           invoked (FL_READ, FL_WRITE or FL_EXCEPT)
+        @param py_callback : python function to be invoked under mask
+           condition
+        @param data : argument to be passed to function
     """
 
     _fl_add_io_callback = cfuncproto(
@@ -543,13 +543,12 @@ def fl_remove_io_callback(fd, mask, py_cb):
         fl_remove_io_callback(fd, mask, py_cb)
 
         Removes the registered callback function when input is available
-         from fd.
+        from fd.
 
-        @params:
-        <fd> : a valid file descriptor in a unix system
-        <mask> : under what circumstance the input callback should be removed
-                 (FL_READ, FL_WRITE, FL_EXCEPT)
-        <py_cb> : python function to be invoked under mask condition
+        @param fd : a valid file descriptor in a unix system
+        @param mask : under what circumstance the input callback should be
+           removed (FL_READ, FL_WRITE, FL_EXCEPT)
+        @param py_cb : python function to be removed under mask condition
     """
 
     _fl_remove_io_callback = cfuncproto(
@@ -574,12 +573,11 @@ def fl_add_signal_callback(sglnum, py_cb, data):
         fl_add_signal_callback(sglnum, py_cb, data)
 
         Handles the receipt of a signal by registering a callback function
-         that gets called when a signal is caught (only 1 function per signal)
+        that gets called when a signal is caught (only 1 function per signal)
 
-        @params:
-        <sglnum> : signal number (e.g. signal.SIGALRM, signal.SIGINT, etc.)
-        <py_cb> : python function to be invoked after catching the signal
-        <data> : argument to be passed to function
+        @param sglnum : signal number (e.g. SIGALRM, SIGINT, etc.)
+        @param py_cb : python function to be invoked after catching the signal
+        @param data : argument to be passed to function
     """
 
     _fl_add_signal_callback = cfuncproto(
@@ -599,10 +597,9 @@ def fl_remove_signal_callback(sglnum):
     """
         fl_remove_signal_callback(sglnum)
 
-        Removes a previously registered callback function related to a signal
+        Removes a previously registered callback function related to a signal.
 
-        @params:
-        <sglnum> : signal number (e.g. signal.SIGALRM, signal.SIGINT, etc.)
+        @param sglnum : signal number (e.g. SIGALRM, SIGINT, etc.)
     """
 
     _fl_remove_signal_callback = cfuncproto(
@@ -620,10 +617,9 @@ def fl_signal_caught(sglnum):
         fl_signal_caught(sglnum)
 
         Informs the main loop of the delivery of the signal signum, the signal
-         is received by the application program
+        is received by the application program
 
-        @params:
-        <sglnum> : signal number (e.g. signal.SIGALRM, signal.SIGINT, etc.)
+        @param sglnum : signal number (e.g. SIGALRM, SIGINT, etc.)
     """
 
     _fl_signal_caught = cfuncproto(
@@ -641,11 +637,10 @@ def fl_app_signal_direct(y):
         fl_app_signal_direct(y)
 
         Changes the default behavior of the built-in signal facilities (to
-         be called with a true value for flag prior to any use of
-         fl_add_signal_callback(...)
+        be called with a true value for flag prior to any use of
+        fl_add_signal_callback
 
-        @params:
-        <y> : flag (e.g. True, False)
+        @param y : flag (0|1)
     """
 
     _fl_app_signal_direct = cfuncproto(
@@ -664,12 +659,11 @@ def fl_add_timeout(msec, py_callback, data):
     """
         fl_add_timeout(msec, py_callback, data) -> timer ID
 
-        Adds a timeout callback after a specified elapsed time
+        Adds a timeout callback after a specified elapsed time.
 
-        @params:
-        <msec> : time elapsed in milliseconds
-        <py_callback> : python function to be invoked after time
-        <data> : argument to be passed to function
+        @param msec : time elapsed in milliseconds
+        @param py_callback : python function to be invoked after time
+        @param data : argument to be passed to function
     """
 
     _fl_add_timeout = cfuncproto(
@@ -691,10 +685,9 @@ def fl_remove_timeout(idnum):
     """
         fl_remove_timeout(idnum)
 
-        Removes a timeout callback function (created with fl_add_timeout)
+        Removes a timeout callback function (created with fl_add_timeout).
 
-        @params:
-        <idnum> : ID timeout number
+        @param idnum : ID timeout number
     """
 
     _fl_remove_timeout = cfuncproto(
@@ -714,9 +707,9 @@ def fl_library_version():
     """
         fl_library_version() -> version_rev ID, ver, rev
 
-        Returns consolidated version informations
+        Returns consolidated version informations.
 
-        @returns:
+        Returns:
         <version_rev> : computed as 1000 * version + revision
         <ver> : version (e.g. 1 in 1.x.yy)
         <rev> : revision (e.g. 0 in x.0.yy)
@@ -740,13 +733,12 @@ def fl_bgn_form(formtype, w, h):
     """
         fl_bgn_form(formtype, w, h) -> pForm
 
-        Starts the definition of a form call
+        Starts the definition of a form call.
 
-        @params:
-        <formtype> : type of box that is used as a background
-         (e.g. FL_DOWN_BOX, FL_BORDER_BOX, FL_SHADOW_BOX, etc.)
-        <w> : width of the new form
-        <h> : height of the new form
+        @param formtype : type of box that is used as a background
+           (e.g. FL_DOWN_BOX, FL_BORDER_BOX, FL_SHADOW_BOX, etc.)
+        @param w : width of the new form
+        @param h : height of the new form
     """
 
     _fl_bgn_form = cfuncproto(
@@ -768,7 +760,7 @@ def fl_end_form():
         fl_end_form()
 
         Ends the definition for a form call, after all required objects
-        have been added to a form call
+        have been added to a form call.
     """
 
     _fl_end_form = cfuncproto(
@@ -784,7 +776,7 @@ def fl_do_forms():
         fl_do_forms() -> pObject
 
         Starts the main loop of the program and returns only when the state
-         of an object changes that has no callback bound to it.
+        of an object changes that has no callback bound to it.
     """
 
     _fl_do_forms = cfuncproto(
@@ -801,7 +793,7 @@ def fl_check_forms():
         fl_check_forms() -> pObject
 
         Returns None immediately unless the state of one of the object
-         (without a callback bound to it) changed.
+        (without a callback bound to it) changed.
     """
 
     _fl_check_forms = cfuncproto(
@@ -818,9 +810,9 @@ def fl_do_only_forms():
         fl_do_only_forms() -> pObject
 
         Starts the main loop of the program and returns only when the state of
-         an object changes that has no callback bound to it. It does not
-         handle user events generated by application windows opened via
-         fl_winopen() or similar routines.
+        an object changes that has no callback bound to it. It does not
+        handle user events generated by application windows opened via
+        fl_winopen() or similar routines.
     """
 
     _fl_do_only_forms = cfuncproto(
@@ -834,13 +826,12 @@ def fl_do_only_forms():
 
 def fl_check_only_forms():
     """
-
         fl_check_only_forms() -> pObject
 
         Returns None immediately unless the state of one of the object
-         (without a callback bound to it) changed. It does not handle user
-         events generated by application windows opened via fl_winopen() or
-         similar routines.
+        (without a callback bound to it) changed. It does not handle user
+        events generated by application windows opened via fl_winopen() or
+        similar routines.
     """
 
     _fl_check_only_forms = cfuncproto(
@@ -857,10 +848,9 @@ def fl_freeze_form(pForm):
         fl_freeze_form(pForm)
 
         It does not temporarily redraw a form while changes are being made, so
-         all changes made are instead buffered internally.
+        all changes made are instead buffered internally.
 
-        @params:
-        <pForm> : pointer to form not to be re-drawn temporarly
+        @param pForm : pointer to form not to be re-drawn temporarly
     """
 
     _fl_freeze_form = cfuncproto(
@@ -878,9 +868,8 @@ def fl_set_focus_object(pForm, pObject):
 
         Sets the input focus in form to object pObject.
 
-        @params:
-        <pForm> : pointer to form whose object has to be focused
-        <pObject> : pointer to object to be focused
+        @param pForm : pointer to form whose object has to be focused
+        @param pObject : pointer to object to be focused
     """
 
     _fl_set_focus_object = cfuncproto(
@@ -892,14 +881,16 @@ def fl_set_focus_object(pForm, pObject):
     _fl_set_focus_object(pForm, pObject)
 
 
+fl_set_object_focus = fl_set_focus_object
+
+
 def fl_get_focus_object(pForm):
     """
         fl_get_focus_object(pForm) -> pObject
 
-        Obtains the object that has the focus on a form
+        Obtains the object that has the focus on a form.
 
-        @params:
-        <pForm> : pointer to form that has a focused object
+        @param pForm : pointer to form that has a focused object
     """
 
     _fl_get_focus_object = cfuncproto(
@@ -918,8 +909,7 @@ def fl_reset_focus_object(pObject):
 
         Override the FL_UNFOCUS event.
 
-        @params:
-        <pObject> : pointer to object towards applying event
+        @param pObject : pointer to object towards applying event
     """
 
     _fl_reset_focus_object = cfuncproto(
@@ -931,19 +921,15 @@ def fl_reset_focus_object(pObject):
     _fl_reset_focus_object(pObject)
 
 
-fl_set_object_focus = fl_set_focus_object
-
-
 def fl_set_form_atclose(pForm, py_fmclose, data):
     """
         fl_set_form_atclose(pForm, py_fmclose, data) -> FormAtclose func.
 
         Calls a callback function before closing the form.
 
-        @params:
-        <pForm> : pointer to form that receives the message
-        <py_fmclose> : python callback function to be called
-        <data> : argument to be passed to function
+        @param pForm : pointer to form that receives the message
+        @param py_fmclose : python callback function to be called
+        @param data : argument to be passed to function
     """
 
     _fl_set_form_atclose = cfuncproto(
@@ -967,9 +953,8 @@ def fl_set_atclose(py_fmclose, data):
 
         Calls a callback function before terminating the application.
 
-        @params:
-        <py_fmclose> : callback function to be called
-        <data> : argument to be passed to function
+        @param py_fmclose : callback function to be called
+        @param data : argument to be passed to function
     """
 
     _fl_set_atclose = cfuncproto(
@@ -991,12 +976,11 @@ def fl_set_form_atactivate(pForm, py_cb, data):
         fl_set_form_atactivate(pForm, py_cb, data) -> FormAtactivate func.
 
         Register a callback that is called when activation status of a forms
-         is enabled,
+        is enabled,
 
-        @params:
-        <pForm> : activated form
-        <py_cb> : python callback function called
-        <data> : argument to be passed to function
+        @param pForm : activated form
+        @param py_cb : python callback function called
+        @param data : argument to be passed to function
     """
 
     _fl_set_form_atactivate = cfuncproto(
@@ -1017,13 +1001,13 @@ def fl_set_form_atactivate(pForm, py_cb, data):
 def fl_set_form_atdeactivate(pForm, py_cb, data):
     """
         fl_set_form_atdeactivate(pForm, py_cb, data) -> FormAtdeactivate func.
+        
         Register a callback that is called when activation status of a forms
-         is disabled
+        is disabled.
 
-        @params:
-        <pForm> : pointer to de-activated form
-        <py_cb> : python callback function called
-        <data> : argument to be passed to function
+        @param pForm : pointer to de-activated form
+        @param py_cb : python callback function called
+        @param data : argument to be passed to function
     """
 
     _fl_set_form_atdeactivate = cfuncproto(
@@ -1046,10 +1030,9 @@ def fl_unfreeze_form(pForm):
         fl_unfreeze_form(pForm)
 
         All changes made in the meantime in a form are drawn at once,
-         reverting previous freeze
+        reverting previous freeze.
 
-        @params:
-        <pForm> : pointer to form to be re-drawn after freezing
+        @param pForm : pointer to form to be re-drawn after freezing
     """
 
     _fl_unfreeze_form = cfuncproto(
@@ -1066,10 +1049,9 @@ def fl_deactivate_form(pForm):
         fl_deactivate_form(pForm)
 
         Deactivates form temporarily, without hiding it, but not allowing the
-         user to interact with elements contained in form (buttons, etc.)
+        user to interact with elements contained in form (buttons, etc.).
 
-        @params:
-        <pForm> : pointer to form to be de-activated
+        @param pForm : pointer to form to be de-activated
     """
 
     _fl_deactivate_form = cfuncproto(
@@ -1086,9 +1068,9 @@ def fl_activate_form(pForm):
         fl_activate_form(pForm)
 
         Re-activates form, allowing the user to interact again with elements
-         contained in form (buttons, etc.)
+        contained in form (buttons, etc.).
 
-        <pForm> : pointer to form to be re-activated
+        @param pForm : pointer to form to be re-activated
     """
 
     _fl_activate_form = cfuncproto(
@@ -1135,7 +1117,7 @@ def fl_freeze_all_forms():
         fl_freeze_all_forms()
 
         It does not temporarily redraw all current forms while changes are
-         being made, so all changes made are instead buffered internally.
+        being made, so all changes made are instead buffered internally.
     """
 
     _fl_freeze_all_forms = cfuncproto(
@@ -1151,7 +1133,7 @@ def fl_unfreeze_all_forms():
         fl_unfreeze_all_forms()
 
         All changes made in the meantime in all current forms are drawn at
-         once, reverting previous freeze.
+        once, reverting previous freeze.
     """
 
     _fl_unfreeze_all_forms = cfuncproto(
@@ -1167,13 +1149,12 @@ def fl_scale_form(pForm, xsc, ysc):
         fl_scale_form(pForm, xsc, ysc)
 
         Scales a form and the objects on it in size and position, indicating
-         a scaling factor in x- and y-direction with respect to the current
-         size.
+        a scaling factor in x- and y-direction with respect to the current
+        size.
 
-        @params:
-        <pForm> : pointer to form to be scaled
-        <xsc> : scaling factor in horizonthal direction
-        <ysc> : scaling factor in vertical direction
+        @param pForm : pointer to form to be scaled
+        @param xsc : scaling factor in horizonthal direction
+        @param ysc : scaling factor in vertical direction
     """
 
     _fl_scale_form = cfuncproto(
@@ -1192,12 +1173,11 @@ def fl_set_form_position(pForm, x, y):
         fl_set_form_position(pForm, x, y)
 
         Sets position of form, when placing a form on the screen with
-         FL_PLACE_GEOMETRY as place argument.
+        FL_PLACE_GEOMETRY as place argument.
 
-        @params:
-        <pForm> : pointer to form whose position is to be set
-        <x> : horizonthal position
-        <y> : vertical position
+        @param pForm : pointer to form whose position is to be set
+        @param x : horizonthal position
+        @param y : vertical position
     """
 
     _fl_set_form_position = cfuncproto(
@@ -1218,9 +1198,8 @@ def fl_set_form_title(pForm, name):
 
         Changes the form title (and the icon name) after it is shown.
 
-        @params:
-        <pForm> : pointer to form whose title has to be changed
-        <name> : new name for the form
+        @param pForm : pointer to form whose title has to be changed
+        @param name : new name for the form
     """
 
     _fl_set_form_title = cfuncproto(
@@ -1278,10 +1257,9 @@ def fl_set_form_callback(pForm, py_callback, data):
 
         Sets the callback routine for the form.
 
-        @params:
-        <pForm> : pointer to form
-        <py_callback> : python callback to be set
-        <data> : argument to be passed to function
+        @param pForm : pointer to form
+        @param py_callback : python callback to be set
+        @param data : argument to be passed to function
     """
 
     _fl_set_form_callback = cfuncproto(
@@ -1306,10 +1284,9 @@ def fl_set_form_size(pForm, w, h):
 
         Sets the size of form.
 
-        @params:
-        <pForm> : pointer to form
-        <w> : width of form
-        <h> : height of form
+        @param pForm : pointer to form
+        @param w : width of form
+        @param h : height of form
     """
 
     _fl_set_form_size = cfuncproto(
@@ -1329,10 +1306,9 @@ def fl_set_form_hotspot(pForm, x, y):
 
         Sets the position of the hotspot of a form.
 
-        @params:
-        <pForm> : pointer to form
-        <x> : horizonthal position
-        <y> : vertical position
+        @param pForm : pointer to form
+        @param x : horizonthal position
+        @param y : vertical position
     """
 
     _fl_set_form_hotspot = cfuncproto(
@@ -1351,9 +1327,8 @@ def fl_set_form_hotobject(pForm, pObject):
     """
         fl_set_form_hotobject(pForm, pObject)
 
-        @params:
-        <pForm> : pointer to form
-        <pObject> : pointer to object
+        @param pForm : pointer to form
+        @param pObject : pointer to object
     """
 
     _fl_set_form_hotobject = cfuncproto(
@@ -1369,10 +1344,9 @@ def fl_set_form_minsize(pForm, w, h):
     """
         fl_set_form_minsize(pForm, w, h)
 
-        @params:
-        <pForm> : pointer to form
-        <w> : width of form
-        <h> : height of form
+        @param pForm : pointer to form
+        @param w : width of form
+        @param h : height of form
     """
 
     _fl_set_form_minsize = cfuncproto(
@@ -1390,10 +1364,9 @@ def fl_set_form_maxsize(pForm, w, h):
     """
         fl_set_form_maxsize(pForm, w, h)
 
-        @params:
-        <pForm> : pointer to form
-        <w> : width of form
-        <h> : height of form
+        @param pForm : pointer to form
+        @param w : width of form
+        @param h : height of form
     """
 
     _fl_set_form_maxsize = cfuncproto(
@@ -1411,9 +1384,8 @@ def fl_set_form_event_cmask(pForm, cmask):
     """
         fl_set_form_event_cmask(pForm, cmask)
 
-        @params:
-        <pForm> : pointer to form
-        <cmask> : compress mask for form
+        @param pForm : pointer to form
+        @param cmask : compress mask for form
     """
 
     _fl_set_form_event_cmask = cfuncproto(
@@ -1431,10 +1403,9 @@ def fl_get_form_event_cmask(pForm):
     """
         fl_get_form_event_cmask(pForm) -> cmask ID
 
-        @params:
-        <pForm> : pointer to form
+        @param pForm : pointer to form
 
-        @returns:
+        Returns:
             compress mask for form
     """
 
@@ -1453,12 +1424,11 @@ def fl_set_form_geometry(pForm, x, y, w, h):
     """
         fl_set_form_geometry(pForm, x, y, w, h)
 
-        @params:
-        <pForm> : pointer to form
-        <x> : horizonthal position
-        <y> : vertical position
-        <w> : width of form
-        <h> : height of form
+        @param pForm : pointer to form
+        @param x : horizonthal position
+        @param y : vertical position
+        @param w : width of form
+        @param h : height of form
     """
 
     _fl_set_form_geometry = cfuncproto(
@@ -1485,11 +1455,10 @@ def fl_show_form(pForm, place, border, name):
 
         Shows the form.
 
-        @params:
-        <pForm> : pointer to form
-        <place> : where form has to be placed
-        <border> : type of window manager decoration
-        <name> : title of form
+        @param pForm : pointer to form
+        @param place : where form has to be placed
+        @param border : type of window manager decoration
+        @param name : title of form
     """
 
     _fl_show_form = cfuncproto(
@@ -1514,8 +1483,7 @@ def fl_hide_form(pForm):
 
         Hides the form.
 
-        @params:
-        <pForm> : pointer to form
+        @param pForm : pointer to form
     """
 
     _fl_hide_form = cfuncproto(
@@ -1533,8 +1501,7 @@ def fl_free_form(pForm):
 
         Frees the memory used by a form together with all its objects.
 
-        @params:
-        <pForm> : pointer to form
+        @param pForm : pointer to form
     """
 
     _fl_free_form = cfuncproto(
@@ -1552,8 +1519,7 @@ def fl_redraw_form(pForm):
 
         Draws a form.
 
-        @params:
-        <pForm> : pointer to form
+        @param pForm : pointer to form
     """
 
     _fl_redraw_form = cfuncproto(
@@ -1566,11 +1532,11 @@ def fl_redraw_form(pForm):
 
 
 def fl_set_form_dblbuffer(pForm, y):
-    """ fl_set_form_dblbuffer(pForm, y)
+    """
+        fl_set_form_dblbuffer(pForm, y)
 
-        @params:
-        <pForm> : pointer to form
-        <y> : flag (0|1) for disabling/enabling doublebuffer
+        @param pForm : pointer to form
+        @param y : flag (0|1) for disabling/enabling doublebuffer
     """
 
     _fl_set_form_dblbuffer = cfuncproto(
@@ -1584,15 +1550,15 @@ def fl_set_form_dblbuffer(pForm, y):
 
 
 def fl_prepare_form_window(pForm, place, border, name):
-    """ fl_prepare_form_window(pForm, place, border, name) -> window ID
+    """
+        fl_prepare_form_window(pForm, place, border, name) -> window ID
 
         Displays a particular form, returns its window handle.
 
-        @params:
-        <pForm> : pointer to form
-        <place> : where has to be placed
-        <border> : window manager decoration
-        <name> : title of form
+        @param pForm : pointer to form
+        @param place : where has to be placed
+        @param border : window manager decoration
+        @param name : title of form
     """
 
     _fl_prepare_form_window = cfuncproto(
@@ -1613,8 +1579,7 @@ def fl_show_form_window(pForm):
     """
         fl_show_form_window(pForm) -> window ID
 
-        @params:
-        <pForm> : pointer to form
+        @param pForm : pointer to form
     """
 
     _fl_show_form_window = cfuncproto(
@@ -1628,14 +1593,14 @@ def fl_show_form_window(pForm):
 
 
 def fl_adjust_form_size(pForm):
-    """ fl_adjust_form_size(pForm) -> max_factor id
+    """
+        fl_adjust_form_size(pForm) -> max_factor id
 
         Similar to fit_object_label, but will do it for all objects and has
-         a smaller threshold. Mainly intended for compensation for font size
-         variations
+        a smaller threshold. Mainly intended for compensation for font size
+        variations.
 
-        @params:
-        <pForm> : pointer to form
+        @param pForm : pointer to form
     """
 
     _fl_adjust_form_size = cfuncproto(
@@ -1652,10 +1617,9 @@ def fl_form_is_visible(pForm):
     """
         fl_form_is_visible(pForm) -> state id
 
-        Return if form is visible
+        Returns if form is visible.
 
-        @params:
-        <pForm> : pointer to form
+        @param pForm : pointer to form
     """
 
     _fl_form_is_visible = cfuncproto(
@@ -1669,12 +1633,12 @@ def fl_form_is_visible(pForm):
 
 
 def fl_form_is_iconified(pForm):
-    """ fl_form_is_iconified(pForm) -> state id
+    """
+        fl_form_is_iconified(pForm) -> state id
 
-        Returns if a forms window is in iconified state
+        Returns if a forms window is in iconified state.
 
-        @params:
-        <pForm> : pointer to form
+        @param pForm : pointer to form
     """
 
     _fl_form_is_iconified = cfuncproto(
@@ -1691,12 +1655,11 @@ def fl_register_raw_callback(pForm, mask, py_rcb):
     """
         fl_register_raw_callback(pForm, mask, py_rcb) -> raw_callback func.
 
-        Register pre-emptive event handlers
+        Register pre-emptive event handlers.
 
-        @params:
-        <pForm> : pointer to form
-        <mask> : key/button event mask (press/release/motion etc..)
-        <py_rcb> : python callback function
+        @param pForm : pointer to form
+        @param mask : key/button event mask (press/release/motion etc..)
+        @param py_rcb : python callback function
     """
 
     _fl_register_raw_callback = cfuncproto(
@@ -1718,7 +1681,8 @@ fl_register_call_back = fl_register_raw_callback
 
 
 def fl_bgn_group():
-    """ fl_bgn_group() -> pObject
+    """
+        fl_bgn_group() -> pObject
 
         Starts a group definition.
     """
@@ -1751,9 +1715,9 @@ def fl_addto_group(pGroup):
     """
         fl_addto_group(pGroup) -> pForm
 
-        Reopens a group to allow addition of further objects
+        Reopens a group to allow addition of further objects.
 
-        @param pGroup: pointer to group object to reopen
+        @param pGroup : pointer to group object to reopen
     """
 
     _fl_addto_group = cfuncproto(
@@ -1769,13 +1733,13 @@ def fl_addto_group(pGroup):
 # Routines that deal with FL_OBJECTS
 
 def fl_set_object_boxtype(pObject, boxtype):
-    """ fl_set_object_boxtype(pObject, boxtype)
+    """
+        fl_set_object_boxtype(pObject, boxtype)
 
         Sets the boxtype of the object.
 
-        @params:
-        <pObject> : pointer to object
-        <boxtype> : type of the box
+        @param pObject : pointer to object
+        @param boxtype : type of the box
     """
 
     _fl_set_object_boxtype = cfuncproto(
@@ -1790,13 +1754,13 @@ def fl_set_object_boxtype(pObject, boxtype):
 
 
 def fl_set_object_bw(pObject, bw):
-    """ fl_set_object_bw(pObject, bw)
+    """
+        fl_set_object_bw(pObject, bw)
 
-        Sets the borderwidth of an object
+        Sets the borderwidth of an object.
 
-        @params:
-            <pObject> : pointer to object
-            <bw> : borderwidth of object
+        @param pObject : pointer to object
+        @param bw : borderwidth of object
     """
 
     _fl_set_object_bw = cfuncproto(
@@ -1814,10 +1778,9 @@ def fl_get_object_bw(pObject):
     """
         fl_get_object_bw(pObject) -> bw
 
-        Returns the borderwidth of an object
+        Returns the borderwidth of an object.
 
-        @params:
-            <pObject> : pointer to object
+        @param pObject : pointer to object
     """
 
     _fl_get_object_bw = cfuncproto(
@@ -1837,9 +1800,8 @@ def fl_set_object_resize(pObject, what):
 
         Sets the resize property of an object.
 
-        @params:
-            <pObject> : pointer to object
-            <what> : resize property
+        @param pObject : pointer to object
+        @param what : resize property
     """
 
     _fl_set_object_resize = cfuncproto(
@@ -1859,8 +1821,7 @@ def fl_get_object_resize(pObject):
 
         Returns the resize property of an object.
 
-        @params:
-            <pObject> : pointer to object
+        @param pObject : pointer to object
     """
 
     _fl_get_object_resize = cfuncproto(
@@ -1878,12 +1839,11 @@ def fl_set_object_gravity(pObject, nw, se):
     """
         fl_set_object_gravity(pObject, nw, se)
 
-        Sets the gravity properties of an object
+        Sets the gravity properties of an object.
 
-    @params:
-        <pObject> : pointer to object
-        <nw> : gravity property for NorthWest
-        <se> : gravity property for SouthEast
+        @param pObject : pointer to object
+        @param nw : gravity property for NorthWest
+        @param se : gravity property for SouthEast
     """
 
     _fl_set_object_gravity = cfuncproto(
@@ -1903,10 +1863,9 @@ def fl_get_object_gravity(pObject):
     """
         fl_get_object_gravity(pObject) -> nw, se
 
-        Returns the gravity properties of an object
+        Returns the gravity properties of an object.
 
-        @params:
-            <pObject> : pointer to object
+        @param pObject : pointer to object
     """
 
     _fl_get_object_gravity = cfuncproto(
@@ -1927,11 +1886,10 @@ def fl_set_object_lsize(pObject, lsize):
     """
         fl_set_object_lsize(pObject, lsize)
 
-        Sets the label size of an object
+        Sets the label size of an object.
 
-        @params:
-            <pObject> : pointer to object
-            <lsize> : label size
+        @param pObject : pointer to object
+        @param lsize : label size
     """
 
     _fl_set_object_lsize = cfuncproto(
@@ -1950,9 +1908,8 @@ def fl_set_object_lstyle(pObject, lstyle):
 
         Sets the label style of an object.
 
-        @params:
-            <pObject> : pointer to object
-            <lstyle> : label style
+        @param pObject : pointer to object
+        @param lstyle : label style
     """
 
     _fl_set_object_lstyle = cfuncproto(
@@ -1972,9 +1929,8 @@ def fl_set_object_lcol(pObject, lcolr):
 
         Sets the label color of an object.
 
-        @params:
-            <pObject> : pointer to object
-            <lcolr> : label color
+        @param pObject : pointer to object
+        @param lcolr : label color
     """
 
     _fl_set_object_lcol = cfuncproto(
@@ -1999,9 +1955,8 @@ def fl_set_object_return(pObject, when):
         function that then will called in the end. This function should
         only be called once an object has been created completely!
 
-        @params:
-            <pObject> : pointer to object
-            <when> : return type
+        @param pObject : pointer to object
+        @param when : return type
     """
 
     _fl_set_object_return = cfuncproto(
@@ -2017,7 +1972,11 @@ def fl_set_object_return(pObject, when):
 
 
 def fl_notify_object(pObject, cause):
-    """ fl_notify_object(pObject, cause)
+    """
+        fl_notify_object(pObject, cause)
+
+        @param pObject : pointer to object
+        @param cause : ?
     """
 
     _fl_notify_object = cfuncproto(
@@ -2036,9 +1995,8 @@ def fl_set_object_lalign(pObject, align):
 
         Sets alignment of an object.
 
-        @params:
-            <pObject> : pointer to object
-            <align> : alignment
+        @param pObject : pointer to object
+        @param align : alignment of object
     """
 
     _fl_set_object_lalign = cfuncproto(
@@ -2053,7 +2011,12 @@ def fl_set_object_lalign(pObject, align):
 
 
 def fl_set_object_shortcut(pObject, sstr, showit):
-    """ fl_set_object_shortcut(pObject, sstr, showit)
+    """
+        fl_set_object_shortcut(pObject, sstr, showit)
+
+        @param pObject : pointer to object
+        @param sstr : shortcut string
+        @param showit : flag (0|1)
     """
 
     _fl_set_object_shortcut = cfuncproto(
@@ -2069,7 +2032,11 @@ def fl_set_object_shortcut(pObject, sstr, showit):
 
 
 def fl_set_object_shortcutkey(pObject, keysym):
-    """ fl_set_object_shortcutkey(pObject, keysym)
+    """
+        fl_set_object_shortcutkey(pObject, keysym)
+
+        @param pObject : pointer to object
+        @param keysym : ?
     """
 
     _fl_set_object_shortcutkey = cfuncproto(
@@ -2084,7 +2051,11 @@ def fl_set_object_shortcutkey(pObject, keysym):
 
 
 def fl_set_object_dblbuffer(pObject, y):
-    """ fl_set_object_dblbuffer(pObject, y)
+    """
+        fl_set_object_dblbuffer(pObject, y)
+
+        @param pObject : pointer to object
+        @param y : flag (0|1) to disable/enable double buffer
     """
 
     _fl_set_object_dblbuffer = cfuncproto(
@@ -2097,8 +2068,15 @@ def fl_set_object_dblbuffer(pObject, y):
     _fl_set_object_dblbuffer(pObject, iy)
 
 
-def fl_set_object_color(pObject, colr1, colr2):
-    """ fl_set_object_color(pObject, colr1, colr2)
+def fl_set_object_color(pObject, fgcolr, bgcolr):
+    """
+        fl_set_object_color(pObject, fgcolr, bgcolr)
+
+        Sets the color of an object.
+
+        @param pObject : pointer to object
+        @param fgcolr : foreground color
+        @param bgcolr : background color
     """
 
     _fl_set_object_color = cfuncproto(
@@ -2107,16 +2085,22 @@ def fl_set_object_color(pObject, colr1, colr2):
             """void fl_set_object_color(FL_OBJECT * ob, FL_COLOR col1,
                FL_COLOR col2)
             """)
-    check_admitted_listvalues(colr1, COLOR_list)
-    check_admitted_listvalues(colr2, COLOR_list)
-    ulcolr1 = convert_to_FL_COLOR(colr1)
-    ulcolr2 = convert_to_FL_COLOR(colr2)
-    keep_elem_refs(pObject, colr1, ulcolr1, colr2, ulcolr2)
-    _fl_set_object_color(pObject, ulcolr1, ulcolr2)
+    check_admitted_listvalues(fgcolr, COLOR_list)
+    check_admitted_listvalues(bgcolr, COLOR_list)
+    ulfgcolr = convert_to_FL_COLOR(fgcolr)
+    ulbgcolr = convert_to_FL_COLOR(bgcolr)
+    keep_elem_refs(pObject, fgcolr, ulfgcolr, bgcolr, ulbgcolr)
+    _fl_set_object_color(pObject, ulfgcolr, ulbgcolr)
 
 
 def fl_set_object_label(pObject, label):
-    """ fl_set_object_label(pObject, label)
+    """
+        fl_set_object_label(pObject, label)
+
+        Sets the label of an object.
+
+        @param pObject : pointer to object
+        @param label : label of object
     """
 
     _fl_set_object_label = cfuncproto(
@@ -2130,7 +2114,13 @@ def fl_set_object_label(pObject, label):
 
 
 def fl_set_object_helper(pObject, tip):
-    """ fl_set_object_helper(pObject, tip)
+    """
+        fl_set_object_helper(pObject, tip)
+
+        Sets the tooltip of an object.
+
+        @param pObject : pointer to object
+        @param tip : tooltip text for object
     """
 
     _fl_set_object_helper = cfuncproto(
@@ -2144,7 +2134,14 @@ def fl_set_object_helper(pObject, tip):
 
 
 def fl_set_object_position(pObject, x, y):
-    """ fl_set_object_position(pObject, x, y)
+    """
+        fl_set_object_position(pObject, x, y)
+
+        Sets position of an object.
+
+        @param pObject : pointer of object
+        @param x : horizonthal position
+        @param y : vertical position
     """
 
     _fl_set_object_position = cfuncproto(
@@ -2161,7 +2158,12 @@ def fl_set_object_position(pObject, x, y):
 
 #def fl_get_object_size(pObject, w, h)
 def fl_get_object_size(pObject):
-    """ fl_get_object_size(pObject) -> w, h
+    """
+        fl_get_object_size(pObject) -> width, height
+
+        Returns the size of an object.
+
+        @param pObject : pointer to object
     """
 
     _fl_get_object_size = cfuncproto(
@@ -2179,7 +2181,14 @@ def fl_get_object_size(pObject):
 
 
 def fl_set_object_size(pObject, w, h):
-    """ fl_set_object_size(pObject, w, h)
+    """
+        fl_set_object_size(pObject, w, h)
+
+        Sets the size of an object.
+
+        @param pObject : pointer to object
+        @param w : width of object
+        @param h : height of object
     """
 
     _fl_set_object_size = cfuncproto(
@@ -2195,7 +2204,11 @@ def fl_set_object_size(pObject, w, h):
 
 
 def fl_set_object_automatic(pObject, flag):
-    """ fl_set_object_automatic(pObject, flag)
+    """
+        fl_set_object_automatic(pObject, flag)
+
+        @param pObject : pointer to object
+        @param flag : flag (0|1)
     """
 
     _fl_set_object_automatic = cfuncproto(
@@ -2209,7 +2222,10 @@ def fl_set_object_automatic(pObject, flag):
 
 
 def fl_draw_object_label(pObject):
-    """ fl_draw_object_label(pObject)
+    """
+        fl_draw_object_label(pObject)
+
+        @param pObject : pointer to object
     """
 
     _fl_draw_object_label = cfuncproto(
@@ -2222,7 +2238,10 @@ def fl_draw_object_label(pObject):
 
 
 def fl_draw_object_label_outside(pObject):
-    """ fl_draw_object_label_outside(pObject)
+    """
+        fl_draw_object_label_outside(pObject)
+
+        @param pObject : pointer to object
     """
 
     _fl_draw_object_label_outside = cfuncproto(
@@ -2257,7 +2276,10 @@ def fl_get_object_component(pObjectComposite, objclass, compontype, numb):
 
 
 def fl_for_all_objects(pForm, py_cb, v):
-    """ fl_for_all_objects(pForm, py_cb, v)
+    """
+        fl_for_all_objects(pForm, py_cb, v)
+
+        @param pForm : pointer to form
     """
 
     _fl_for_all_objects = cfuncproto(
@@ -2281,7 +2303,10 @@ def fl_set_object_dblclick(pObject, timeout):
 
 
 def fl_set_object_geometry(pObject, x, y, w, h):
-    """ fl_set_object_geometry(pObject, x, y, w, h)
+    """
+        fl_set_object_geometry(pObject, x, y, w, h)
+
+        @param pObject : pointer to object
     """
 
     _fl_set_object_geometry = cfuncproto(
@@ -2300,7 +2325,10 @@ def fl_set_object_geometry(pObject, x, y, w, h):
 
 
 def fl_move_object(pObject, dx, dy):
-    """ fl_move_object(pObject, dx, dy)
+    """
+        fl_move_object(pObject, dx, dy)
+
+        @param pObject : pointer to object
     """
 
     _fl_move_object = cfuncproto(
@@ -2318,7 +2346,10 @@ fl_set_object_lcolor = fl_set_object_lcol
 
 
 def fl_fit_object_label(pObject, xmargin, ymargin):
-    """ fl_fit_object_label(pObject, xmargin, ymargin)
+    """
+        fl_fit_object_label(pObject, xmargin, ymargin)
+
+        @param pObject : pointer to object
     """
 
     _fl_fit_object_label = cfuncproto(
@@ -2335,7 +2366,10 @@ def fl_fit_object_label(pObject, xmargin, ymargin):
 
 #def fl_get_object_geometry(pObject, x, y, w, h):
 def fl_get_object_geometry(pObject):
-    """ fl_get_object_geometry(pObject) -> x, y, w, h
+    """
+        fl_get_object_geometry(pObject) -> x_horz-pos, y_vert-pos, width, height
+
+        @param pObject : pointer to object
     """
 
     _fl_get_object_geometry = cfuncproto(
@@ -2356,7 +2390,10 @@ def fl_get_object_geometry(pObject):
 
 #def fl_get_object_position(pObject, x, y):
 def fl_get_object_position(pObject):
-    """ fl_get_object_position(pObject) -> x, y
+    """
+        fl_get_object_position(pObject) -> x, y
+
+        @param pObject : pointer to object
     """
 
     _fl_get_object_position = cfuncproto(
@@ -2374,7 +2411,10 @@ def fl_get_object_position(pObject):
 
 
 def fl_get_object_label(pObject):
-    """ fl_get_object_label(pObject) -> labelname_string
+    """
+        fl_get_object_label(pObject) -> labelname_string
+
+        @param pObject : pointer to object
     """
 
     _fl_get_object_label = cfuncproto(
@@ -2391,7 +2431,10 @@ def fl_get_object_label(pObject):
 
 #def fl_get_object_bbox(pObject, x, y, w, h)
 def fl_get_object_bbox(pObject):
-    """ fl_get_object_bbox(pObject) -> x, y, w, h
+    """
+        fl_get_object_bbox(pObject) -> x, y, w, h
+
+        @param pObject : pointer to object
     """
 
     _fl_get_object_bbox = cfuncproto(
@@ -2415,7 +2458,10 @@ fl_compute_object_geometry = fl_get_object_bbox
 
 
 def fl_call_object_callback(pObject):
-    """ fl_call_object_callback(pObject)
+    """
+        fl_call_object_callback(pObject)
+
+        @param pObject : pointer to object
     """
 
     _fl_call_object_callback = cfuncproto(
@@ -2428,7 +2474,11 @@ def fl_call_object_callback(pObject):
 
 
 def fl_set_object_prehandler(pObject, py_phandler):
-    """ fl_set_object_prehandler(pObject, py_phandler) ->  pHandlerPtr
+    """
+        fl_set_object_prehandler(pObject, py_phandler) ->  pHandlerPtr
+
+        @param pObject : pointer to object
+        @param py_phandler : python callback function
     """
 
     _fl_set_object_prehandler = cfuncproto(
@@ -2445,7 +2495,10 @@ def fl_set_object_prehandler(pObject, py_phandler):
 
 
 def fl_set_object_posthandler(pObject, py_post):
-    """fl_set_object_posthandler(pObject, py_post) -> pHandlerPtr
+    """
+        fl_set_object_posthandler(pObject, py_post) -> pHandlerPtr
+
+        @param pObject : pointer to object
     """
 
     _fl_set_object_posthandler = cfuncproto(
@@ -2462,12 +2515,15 @@ def fl_set_object_posthandler(pObject, py_post):
 
 
 def fl_set_object_callback(pObject, py_callback, argum):
-    """ fl_set_object_callback(pObject, py_callback, argum) -> c_callback func.
+    """
+        fl_set_object_callback(pObject, py_callback, argum) -> c_callback func.
+
         Calls a callback function bound to an object, if a condition is met.
-        <pObject> : an object reference (form, button, etc..)
-        <py_callback> : a python function with no () and no args to be used
-         as callback; the calleee is e.g.: somename(obj, data)
-        <argum> : argument being passed to function
+
+        @param pObject : pointer to object
+        @param py_callback : a python function with no () and no args to be
+           used as callback; the calleee is e.g.: somename(obj, data)
+        @param argum : argument being passed to function
     """
 
     _fl_set_object_callback = cfuncproto(
@@ -2491,7 +2547,10 @@ fl_set_call_back = fl_set_object_callback
 
 
 def fl_redraw_object(pObject):
-    """ fl_redraw_object(pObject)
+    """
+        fl_redraw_object(pObject)
+
+        @param pObject : pointer to object
     """
 
     _fl_redraw_object = cfuncproto(
@@ -2504,7 +2563,14 @@ def fl_redraw_object(pObject):
 
 
 def fl_scale_object(pObject, xs, ys):
-    """ fl_scale_object(pObject, xs, ys)
+    """
+        fl_scale_object(pObject, xs, ys)
+
+        Scales (shrink/enlarge) an object
+
+        @param pObject : pointer to object
+        @param xs : new horizonthal factor
+        @param ys : new vertical factor
     """
 
     _fl_scale_object = cfuncproto(
@@ -2519,7 +2585,10 @@ def fl_scale_object(pObject, xs, ys):
 
 
 def fl_show_object(pObject):
-    """ fl_show_object(pObject)
+    """
+        fl_show_object(pObject)
+
+        @param pObject : pointer to object
     """
 
     _fl_show_object = cfuncproto(
@@ -2533,7 +2602,10 @@ def fl_show_object(pObject):
 
 
 def fl_hide_object(pObject):
-    """ fl_hide_object(pObject)
+    """
+        fl_hide_object(pObject)
+
+        @param pObject : pointer to object
     """
 
     _fl_hide_object = cfuncproto(
@@ -2547,7 +2619,10 @@ def fl_hide_object(pObject):
 
 
 def fl_free_object(pObject):
-    """ fl_free_object(pObject)
+    """
+        fl_free_object(pObject)
+
+        @param pObject : pointer to object
     """
 
     _fl_free_object = cfuncproto(
@@ -2560,7 +2635,10 @@ def fl_free_object(pObject):
 
 
 def fl_delete_object(pObject):
-    """ fl_delete_object(pObject)
+    """
+        fl_delete_object(pObject)
+
+        @param pObject : pointer to object
     """
 
     _fl_delete_object = cfuncproto(
@@ -2573,7 +2651,10 @@ def fl_delete_object(pObject):
 
 
 def fl_get_object_return_state(pObject):
-    """ fl_get_object_return_state(pObject) -> ID num
+    """
+        fl_get_object_return_state(pObject) -> ID num
+
+        @param pObject : pointer to object
     """
 
     _fl_get_object_return_state = cfuncproto(
@@ -2587,7 +2668,10 @@ def fl_get_object_return_state(pObject):
 
 
 def fl_trigger_object(pObject):
-    """ fl_trigger_object(pObject)
+    """
+        fl_trigger_object(pObject)
+
+        @param pObject : pointer to object
     """
 
     _fl_trigger_object = cfuncproto(
@@ -2600,7 +2684,10 @@ def fl_trigger_object(pObject):
 
 
 def fl_activate_object(pObject):
-    """ fl_activate_object(pObject)
+    """
+        fl_activate_object(pObject)
+
+        @param pObject : pointer to object
     """
 
     _fl_activate_object = cfuncproto(
@@ -2614,7 +2701,10 @@ def fl_activate_object(pObject):
 
 
 def fl_deactivate_object(pObject):
-    """ fl_deactivate_object(pObject)
+    """
+        fl_deactivate_object(pObject)
+
+        @param pObject : pointer to object
     """
 
     _fl_deactivate_object = cfuncproto(
@@ -2820,6 +2910,7 @@ def fl_get_align_xy(align, x, y, w, h, xsize, ysize, xoff, yoff):
             """void fl_get_align_xy(int align, int x, int y, int w, int h,
             int xsize, int ysize, int xoff, int yoff, int * xx, int * yy)
             """)
+    check_admitted_listvalues(align, ALIGN_list)
     ialign = convert_to_int(align)
     ix = convert_to_int(x)
     iy = convert_to_int(y)
@@ -2849,6 +2940,7 @@ def fl_drw_text(align, x, y, w, h, colr, style, size, txtstr):
             """void fl_drw_text(int align, FL_Coord x, FL_Coord y, FL_Coord w,
                FL_Coord h, FL_COLOR c, int style, int size, const char * istr)
             """)
+    check_admitted_listvalues(align, ALIGN_list)
     ialign = convert_to_int(align)
     ix = convert_to_FL_Coord(x)
     iy = convert_to_FL_Coord(y)
@@ -2876,6 +2968,7 @@ def fl_drw_text_beside(align, x, y, w, h, colr, style, size, txtstr):
                FL_Coord w, FL_Coord h, FL_COLOR c, int style, int size,
                const char * str)
             """)
+    check_admitted_listvalues(align, ALIGN_list)
     ialign = convert_to_int(align)
     ix = convert_to_FL_Coord(x)
     iy = convert_to_FL_Coord(y)
@@ -2903,6 +2996,7 @@ def fl_drw_text_cursor(align, x, y, w, h, colr, style, size, txtstr, cc, pos):
                FL_Coord w, FL_Coord h, FL_COLOR c, int style, int size,
                const char * str, int cc, int pos)
             """)
+    check_admitted_listvalues(align, ALIGN_list)
     ialign = convert_to_int(align)
     ix = convert_to_FL_Coord(x)
     iy = convert_to_FL_Coord(y)
@@ -3077,6 +3171,7 @@ def fl_getmcolor(colr):
             """long unsigned int fl_getmcolor(FL_COLOR i, int * r, int * g,
                int * b)
             """)
+    check_admitted_listvalues(colr, COLOR_list)
     ulcolr = convert_to_FL_COLOR(colr)
     r, pr = make_int_and_pointer()
     g, pg = make_int_and_pointer()
@@ -3095,6 +3190,7 @@ def fl_get_pixel(colr):
             cty.c_ulong, [FL_COLOR], \
             """long unsigned int fl_get_pixel(FL_COLOR col)
             """)
+    check_admitted_listvalues(colr, COLOR_list)
     ulcolr = convert_to_FL_COLOR(colr)
     keep_elem_refs(colr, ulcolr)
     retval = _fl_get_pixel(ulcolr)
@@ -3115,6 +3211,7 @@ def fl_get_icm_color(colr):
             cty.POINTER(cty.c_int)], \
             """void fl_get_icm_color(FL_COLOR col, int * r, int * g, int * b)
             """)
+    check_admitted_listvalues(colr, COLOR_list)
     ulcolr = convert_to_FL_COLOR(colr)
     r, pr = make_int_and_pointer()
     g, pg = make_int_and_pointer()
@@ -3150,6 +3247,7 @@ def fl_color(colr):
             None, [FL_COLOR], \
             """void fl_color(FL_COLOR col)
             """)
+    check_admitted_listvalues(colr, COLOR_list)
     ulcolr = convert_to_FL_COLOR(colr)
     keep_elem_refs(colr, ulcolr)
     _fl_color(ulcolr)
@@ -3164,6 +3262,7 @@ def fl_bk_color(colr):
             None, [FL_COLOR], \
             """void fl_bk_color(FL_COLOR col)
             """)
+    check_admitted_listvalues(colr, COLOR_list)
     ulcolr = convert_to_FL_COLOR(colr)
     keep_elem_refs(colr, ulcolr)
     _fl_bk_color(ulcolr)
@@ -3178,6 +3277,7 @@ def fl_textcolor(colr):
             None, [FL_COLOR], \
             """void fl_textcolor(FL_COLOR col)
             """)
+    check_admitted_listvalues(colr, COLOR_list)
     ulcolr = convert_to_FL_COLOR(colr)
     keep_elem_refs(colr, ulcolr)
     _fl_textcolor(ulcolr)
@@ -3192,13 +3292,19 @@ def fl_bk_textcolor(colr):
             None, [FL_COLOR], \
             """void fl_bk_textcolor(FL_COLOR col)
             """)
+    check_admitted_listvalues(colr, COLOR_list)
     ulcolr = convert_to_FL_COLOR(colr)
     keep_elem_refs(colr, ulcolr)
     _fl_bk_textcolor(ulcolr)
 
 
 def fl_set_gamma(r, g, b):
-    """ fl_set_gamma(r, g, b)
+    """
+        fl_set_gamma(r, g, b)
+
+        @param r : value for red
+        @param g : value for green
+        @param b : value for blue
     """
 
     _fl_set_gamma = cfuncproto(
@@ -3271,7 +3377,11 @@ def FL_crnd(a):
 # utilities for new objects
 
 def fl_add_object(pForm, pObject):
-    """ fl_add_object(pForm, pObject)
+    """
+        fl_add_object(pForm, pObject)
+
+        @param pForm : pointer to form
+        @param pObject : pointer to object
     """
 
     _fl_add_object = cfuncproto(
@@ -3284,7 +3394,10 @@ def fl_add_object(pForm, pObject):
 
 
 def fl_addto_form(pForm):
-    """ fl_addto_form(pForm) -> pForm
+    """
+        fl_addto_form(pForm) -> pForm
+
+        @param pForm : pointer to form
     """
 
     _fl_addto_form = cfuncproto(
@@ -3326,7 +3439,11 @@ def fl_make_object(objclass, objtype, x, y, w, h, label, py_handle):
 
 
 def fl_add_child(pObject1, pObject2):
-    """ fl_add_child(pObject1, pObject2)
+    """
+        fl_add_child(pObject1, pObject2)
+
+        @param pObject1 : pointer to father object
+        @param pObject2 : pointer to child object
     """
 
     _fl_add_child = cfuncproto(
@@ -3339,7 +3456,10 @@ def fl_add_child(pObject1, pObject2):
 
 
 def fl_set_coordunit(u):
-    """ fl_set_coordunit(u)
+    """
+        fl_set_coordunit(u)
+
+        @param u : ?
     """
 
     _fl_set_coordunit = cfuncproto(
@@ -3353,7 +3473,10 @@ def fl_set_coordunit(u):
 
 
 def fl_set_border_width(bw):
-    """ fl_set_border_width(bw)
+    """
+        fl_set_border_width(bw)
+
+        @param bw : width of border
     """
 
     _fl_set_border_width = cfuncproto(
@@ -3366,8 +3489,11 @@ def fl_set_border_width(bw):
     _fl_set_border_width(ibw)
 
 
-def fl_set_scrollbar_type(t):
-    """ fl_set_scrollbar_type(t)
+def fl_set_scrollbar_type(sbtype):
+    """
+        fl_set_scrollbar_type(sbtype)
+
+        @param sbtype : type of scrollbar
     """
 
     _fl_set_scrollbar_type = cfuncproto(
@@ -3375,10 +3501,10 @@ def fl_set_scrollbar_type(t):
             None, [cty.c_int], \
             """void fl_set_scrollbar_type(int t)
             """)
-    check_admitted_listvalues(t, SCROLLTYPE_list)
-    it = convert_to_int(t)
-    keep_elem_refs(t, it)
-    _fl_set_scrollbar_type(it)
+    check_admitted_listvalues(sbtype, SCROLLTYPE_list)
+    isbtype = convert_to_int(sbtype)
+    keep_elem_refs(sbtype, isbtype)
+    _fl_set_scrollbar_type(isbtype)
 
 
 def fl_set_thinscrollbar(t):
@@ -3527,8 +3653,8 @@ def fl_set_err_logfp(pFile):
     _fl_set_err_logfp(pFile)
 
 
-def fl_set_error_handler(py_user_func):
-    """ fl_set_error_handler(py_user_func)
+def fl_set_error_handler(py_userfunc):
+    """ fl_set_error_handler(py_userfunc)
     """
 
     _fl_set_error_handler = cfuncproto(
@@ -3536,9 +3662,9 @@ def fl_set_error_handler(py_user_func):
             None, [FL_ERROR_FUNC], \
             """void fl_set_error_handler(FL_ERROR_FUNC user_func)
             """)
-    c_user_func = FL_ERROR_FUNC(py_user_func)
-    keep_cfunc_refs(c_user_func)
-    retval = _fl_set_error_handler(c_user_func)
+    c_userfunc = FL_ERROR_FUNC(py_userfunc)
+    keep_cfunc_refs(c_userfunc)
+    retval = _fl_set_error_handler(c_userfunc)
     return retval
 
 
@@ -3638,7 +3764,10 @@ def fl_free(p1):
 
 
 def fl_msleep(msec):
-    """ fl_msleep(msec) -> num.
+    """
+        fl_msleep(msec) -> num.
+
+        @param msec : milliseconds to sleep
     """
 
     _fl_msleep = cfuncproto(
@@ -3677,7 +3806,11 @@ def fl_get_gc():
 
 
 def fl_mode_capable(mode, warn):
-    """ fl_mode_capable(mode, warn) -> mode num.
+    """
+        fl_mode_capable(mode, warn) -> mode num.
+
+        @param mode : ?
+        @param warn : ?
     """
 
     _fl_mode_capable = cfuncproto(
@@ -3695,6 +3828,7 @@ def fl_mode_capable(mode, warn):
 def fl_default_win():
     return fl_state[0].trailblazer
     #fl_state[fl_vmode].trailblazer
+
 
 def fl_default_window():
     return fl_state[0].trailblazer
@@ -3716,6 +3850,7 @@ def fl_rectangle(fill, x, y, w, h, colr):
             """void fl_rectangle(int fill, FL_Coord x, FL_Coord y,
                FL_Coord w, FL_Coord h, FL_COLOR col)
             """)
+    check_admitted_listvalues(colr, COLOR_list)
     ifill = convert_to_int(fill)
     ix = convert_to_FL_Coord(x)
     iy = convert_to_FL_Coord(y)
@@ -3737,6 +3872,7 @@ def fl_rectbound(x, y, w, h, colr):
             """void fl_rectbound(FL_Coord x, FL_Coord y, FL_Coord w,
                FL_Coord h, FL_COLOR col)
             """)
+    check_admitted_listvalues(colr, COLOR_list)
     ix = convert_to_FL_Coord(x)
     iy = convert_to_FL_Coord(y)
     iw = convert_to_FL_Coord(w)
@@ -3748,6 +3884,7 @@ def fl_rectbound(x, y, w, h, colr):
 
 def fl_rectf(x, y, w, h, colr):
     fl_rectangle(1, x, y, w, h, colr)
+
 
 def fl_rect(x, y, w, h, colr):
     fl_rectangle(0, x, y, w, h, colr)
@@ -3766,6 +3903,7 @@ def fl_roundrectangle(fill, x, y, w, h, colr):
             """void fl_roundrectangle(int fill, FL_Coord x, FL_Coord y,
                FL_Coord w, FL_Coord h, FL_COLOR col)
             """)
+    check_admitted_listvalues(colr, COLOR_list)
     ifill = convert_to_int(fill)
     ix = convert_to_FL_Coord(x)
     iy = convert_to_FL_Coord(y)
@@ -3780,14 +3918,15 @@ def fl_roundrectangle(fill, x, y, w, h, colr):
 def fl_roundrectf(x, y, w, h, colr):
     fl_roundrectangle(1, x, y, w, h, colr)
 
+
 def fl_roundrect(x, y, w, h, colr):
     fl_roundrectangle(0, x, y, w, h, colr)
 
 
 # General polygon and polylines
 
-def fl_polygon(fill, xp, n, colr):
-    """ fl_polygon(fill, xp, n, colr)
+def fl_polygon(fill, pPoint, n, colr):
+    """ fl_polygon(fill, pPoint, n, colr)
     """
 
     _fl_polygon = cfuncproto(
@@ -3795,26 +3934,28 @@ def fl_polygon(fill, xp, n, colr):
             None, [cty.c_int, cty.POINTER(FL_POINT), cty.c_int, FL_COLOR], \
             """void fl_polygon(int fill, FL_POINT * xp, int n, FL_COLOR col)
             """)
+    check_admitted_listvalues(colr, COLOR_list)
     ifill = convert_to_int(fill)
     inum = convert_to_int(n)
     ulcolr = convert_to_FL_COLOR(colr)
-    keep_elem_refs(fill, xp, n, colr, ifill, inum, ulcolr)
-    _fl_polygon(ifill, xp, inum, ulcolr)
+    keep_elem_refs(fill, pPoint, n, colr, ifill, inum, ulcolr)
+    _fl_polygon(ifill, pPoint, inum, ulcolr)
 
 
-def fl_polyf(xp, n, colr):
-    fl_polygon(1, xp, n, colr)
-
-def fl_polyl(xp, n, colr):
-    fl_polygon(0, xp, n, colr)
-
-def fl_polybound(xp, n, colr):
-    fl_polygon(1, xp, n, colr)
-    fl_polygon(0, xp, n, FL_BLACK)
+def fl_polyf(pPoint, n, colr):
+    fl_polygon(1, pPoint, n, colr)
 
 
-def fl_lines(xp, n, colr):
-    """ fl_lines(xp, n, colr)
+def fl_polyl(pPoint, n, colr):
+    fl_polygon(0, pPoint, n, colr)
+
+def fl_polybound(pPoint, n, colr):
+    fl_polygon(1, pPoint, n, colr)
+    fl_polygon(0, pPoint, n, FL_BLACK)
+
+
+def fl_lines(pPoint, n, colr):
+    """ fl_lines(pPoint, n, colr)
     """
 
     _fl_lines = cfuncproto(
@@ -3822,10 +3963,11 @@ def fl_lines(xp, n, colr):
             None, [cty.POINTER(FL_POINT), cty.c_int, FL_COLOR], \
             """void fl_lines(FL_POINT * xp, int n, FL_COLOR col)
             """)
+    check_admitted_listvalues(colr, COLOR_list)
     inum = convert_to_int(n)
     ulcolr = convert_to_FL_COLOR(colr)
-    keep_elem_refs(xp, n, colr, inum, ulcolr)
-    _fl_lines(xp, inum, ulcolr)
+    keep_elem_refs(pPoint, n, colr, inum, ulcolr)
+    _fl_lines(pPoint, inum, ulcolr)
 
 
 def fl_line(xi, yi, xf, yf, colr):
@@ -3838,6 +3980,7 @@ def fl_line(xi, yi, xf, yf, colr):
             """void fl_line(FL_Coord xi, FL_Coord yi, FL_Coord xf,
                FL_Coord yf, FL_COLOR c)
             """)
+    check_admitted_listvalues(colr, COLOR_list)
     ixi = convert_to_int(xi)
     iyi = convert_to_int(yi)
     ixf = convert_to_int(xf)
@@ -3856,6 +3999,7 @@ def fl_point(x, y, colr):
             None, [FL_Coord, FL_Coord, FL_COLOR], \
             """void fl_point(FL_Coord x, FL_Coord y, FL_COLOR c)
             """)
+    check_admitted_listvalues(colr, COLOR_list)
     ix = convert_to_FL_Coord(x)
     iy = convert_to_FL_Coord(y)
     ulcolr = convert_to_FL_COLOR(colr)
@@ -3872,6 +4016,7 @@ def fl_points(pPoint, np, colr):
             None, [cty.POINTER(FL_POINT), cty.c_int, FL_COLOR], \
             """void fl_points(FL_POINT * p, int np, FL_COLOR c)
             """)
+    check_admitted_listvalues(colr, COLOR_list)
     inump = convert_to_int(np)
     ulcolr = convert_to_FL_COLOR(colr)
     keep_elem_refs(pPoint, np, colr, inump, ulcolr)
@@ -4015,6 +4160,7 @@ def fl_oval(fill, x, y, w, h, colr):
             """void fl_oval(int fill, FL_Coord x, FL_Coord y, FL_Coord w,
                FL_Coord h, FL_COLOR col)
             """)
+    check_admitted_listvalues(colr, COLOR_list)
     ifill = convert_to_int(fill)
     ix = convert_to_FL_Coord(x)
     iy = convert_to_FL_Coord(y)
@@ -4036,6 +4182,7 @@ def fl_ovalbound(x, y, w, h, colr):
             """void fl_ovalbound(FL_Coord x, FL_Coord y, FL_Coord w,
                FL_Coord h, FL_COLOR col)
             """)
+    check_admitted_listvalues(colr, COLOR_list)
     ix = convert_to_FL_Coord(x)
     iy = convert_to_FL_Coord(y)
     iw = convert_to_FL_Coord(w)
@@ -4056,6 +4203,7 @@ def fl_ovalarc(fill, x, y, w, h, t0, dt, colr):
             """void fl_ovalarc(int fill, FL_Coord x, FL_Coord y, FL_Coord w,
                FL_Coord h, int t0, int dt, FL_COLOR col)
             """)
+    check_admitted_listvalues(colr, COLOR_list)
     ifill = convert_to_int(fill)
     ix = convert_to_FL_Coord(x)
     iy = convert_to_FL_Coord(y)
@@ -4072,6 +4220,7 @@ def fl_ovalarc(fill, x, y, w, h, t0, dt, colr):
 def fl_ovalf(x, y, w, h, colr):
     fl_oval(1, x, y, w, h, colr)
 
+
 def fl_ovall(x, y, w, h, colr):
     fl_oval(0, x, y, w, h, colr)
 
@@ -4081,6 +4230,7 @@ fl_oval_bound = fl_ovalbound
 
 def fl_circf(x, y, r, colr):
     fl_oval(1, (x) - (r), (y) - (r), 2 * (r), 2 * (r), colr)
+
 
 def fl_circ( x, y, r, colr):
     fl_oval(0, (x) - (r), (y) - (r), 2 * (r), 2 * (r), colr)
@@ -4099,6 +4249,7 @@ def fl_pieslice(fill, x, y, w, h, a1, a2, colr):
             """void fl_pieslice(int fill, FL_Coord x, FL_Coord y, FL_Coord w,
                FL_Coord h, int a1, int a2, FL_COLOR col)
             """)
+    check_admitted_listvalues(colr, COLOR_list)
     ifill = convert_to_int(fill)
     ix = convert_to_FL_Coord(x)
     iy = convert_to_FL_Coord(y)
@@ -4114,6 +4265,7 @@ def fl_pieslice(fill, x, y, w, h, a1, a2, colr):
 
 def fl_arcf(x, y, r, a1, a2, colr):
     fl_pieslice(1, (x - r), (y - r), (2 * r), (2 * r), a1, a2, colr)
+
 
 def fl_arc(x, y, r, a1, a2, colr):
     fl_pieslice(0, (x - r), (y - r), (2 * r), (2 * r), a1, a2, colr)
@@ -4132,6 +4284,7 @@ def fl_drw_frame(style, x, y, w, h, colr, bw):
             """void fl_drw_frame(int style, FL_Coord x, FL_Coord y,
                FL_Coord w, FL_Coord h, FL_COLOR c, int bw)
             """)
+    check_admitted_listvalues(colr, COLOR_list)
     istyle = convert_to_int(style)
     ix = convert_to_FL_Coord(x)
     iy = convert_to_FL_Coord(y)
@@ -4155,6 +4308,7 @@ def fl_drw_checkbox(boxtype, x, y, w, h, colr, bw):
             """void fl_drw_checkbox(int type, FL_Coord x, FL_Coord y,
                FL_Coord w, FL_Coord h, FL_COLOR col, int bw)
             """)
+    check_admitted_listvalues(colr, COLOR_list)
     iboxtype = convert_to_int(boxtype)
     ix = convert_to_FL_Coord(x)
     iy = convert_to_FL_Coord(y)
@@ -4248,6 +4402,8 @@ def fl_get_win_mouse(win):
 #def fl_get_form_mouse(fm, x, y, keymask)
 def fl_get_form_mouse(pForm):
     """ fl_get_form_mouse(pForm) -> window, x, y, keymask
+
+        @param pForm : pointer to form
     """
 
     _fl_get_form_mouse = cfuncproto(
@@ -4282,6 +4438,8 @@ def fl_win_to_form(win):
 
 def fl_set_form_icon(pForm, icon, mask):
     """ fl_set_form_icon(pForm, icon, mask)
+
+        @param pForm : pointer to form
     """
 
     _fl_set_form_icon = cfuncproto(
@@ -4298,6 +4456,8 @@ def fl_set_form_icon(pForm, icon, mask):
 #def fl_get_decoration_sizes(pForm, top, right, bottom, left)
 def fl_get_decoration_sizes(pForm):
     """ fl_get_decoration_sizes(pForm) -> size num., top, right, bottom, left
+
+        @param pForm : pointer to form
     """
 
     _fl_get_decoration_sizes = cfuncproto(
@@ -4549,6 +4709,10 @@ def fl_iconify(win):
 
 def fl_winresize(win, neww, newh):
     """ fl_winresize(win, neww, newh)
+
+        @param win : window to resize
+        @param neww : new width
+        @param newh : new height
     """
 
     _fl_winresize = cfuncproto(
@@ -4565,6 +4729,10 @@ def fl_winresize(win, neww, newh):
 
 def fl_winmove(win, dx, dy):
     """ fl_winmove(win, dx, dy)
+
+        @param win : window to move to a new position
+        @param dx : new horizonthal position
+        @param dy : new vertical position
     """
 
     _fl_winmove = cfuncproto(
@@ -4623,6 +4791,7 @@ def fl_winbackground(win, bkcolr):
             None, [Window, FL_COLOR], \
             """void fl_winbackground(Window win, FL_COLOR bk)
             """)
+    check_admitted_listvalues(bkcolr, COLOR_list)
     ulwin = convert_to_Window(win)
     ulbkcolr = convert_to_FL_COLOR(bkcolr)
     keep_elem_refs(win, bkcolr, ulwin, ulbkcolr)
@@ -4662,6 +4831,9 @@ def fl_winisvalid(win):
 
 def fl_wintitle(win, title):
     """ fl_wintitle(win, title)
+
+        @param win : window
+        @param title : title to be set
     """
 
     _fl_wintitle = cfuncproto(
@@ -4899,7 +5071,9 @@ def fl_transient():
 
 #def fl_get_winsize(win, w, h)
 def fl_get_winsize(win):
-    """ fl_get_winsize(win) -> w, h
+    """ fl_get_winsize(win) -> width, height
+
+        @param win : window
     """
 
     _fl_get_winsize = cfuncproto(
@@ -4936,6 +5110,8 @@ def fl_get_winorigin(win):
 #def fl_get_wingeometry(win, x, y, w, h)
 def fl_get_wingeometry(win):
     """ fl_get_wingeometry(win) -> x, y, w, h
+
+        @param win : window
     """
 
     _fl_get_wingeometry = cfuncproto(
@@ -4965,11 +5141,14 @@ fl_initial_winposition = fl_pref_winposition
 def fl_get_display():       # NOT SURE
     return fl_display
 
+
 def FL_FormDisplay(pForm):   # NOT SURE
     return fl_display
 
+
 def FL_ObjectDisplay(object):   # NOT SURE
     return fl_display
+
 
 def FL_IS_CANVAS(pObject):
     if (pObject[0].objclass == FL_CANVAS) or \
@@ -4989,6 +5168,8 @@ def FL_ObjWin(pObject):
 
 def fl_get_real_object_window(pObject):
     """ fl_get_real_object_window(pObject) -> window
+
+        @param pObject : pointer to object
     """
 
     _fl_get_real_object_window = cfuncproto(
@@ -5194,6 +5375,8 @@ def fl_remove_event_callback(win, ev):
 
 def fl_activate_event_callbacks(win):
     """ fl_activate_event_callbacks(win)
+
+        @param win : window whose events are referred to
     """
 
     _fl_activate_event_callbacks = cfuncproto(
@@ -5225,11 +5408,14 @@ def fl_print_xevent_name(where, pXEvent):
 def metakey_down(mask):
     return (mask & Mod1Mask)
 
+
 def shiftkey_down(mask):
     return (mask & ShiftMask)
 
+
 def controlkey_down(mask):
     return (mask & ControlMask)
+
 
 def button_down(mask):
     if (mask & Button1Mask) or (mask & Button2Mask) or \
@@ -5307,6 +5493,9 @@ def fl_get_resource(rname, cname, dtype, defval, val, size):
 
 def fl_set_resource(resstr, val):
     """ fl_set_resource(resstr, val)
+
+        @param resstr : resource name
+        @param val : new string value for resource
     """
 
     _fl_set_resource = cfuncproto(
@@ -5639,8 +5828,8 @@ def FL_PCCLAMP(a):
 #   return r, g, b, a
 
 
-def fl_popup_add(win, p2):
-    """ fl_popup_add(win, p2) -> pPopup
+def fl_popup_add(win, text):
+    """ fl_popup_add(win, text) -> pPopup
     """
 
     _fl_popup_add = cfuncproto(
@@ -5649,9 +5838,9 @@ def fl_popup_add(win, p2):
             """FL_POPUP * fl_popup_add(Window p1, const char * p2)
             """)
     ulwin = convert_to_Window(win)
-    sp2 = convert_to_string(p2)
-    keep_elem_refs(win, p2, ulwin, sp2)
-    retval = _fl_popup_add(ulwin, sp2)
+    stext = convert_to_string(text)
+    keep_elem_refs(win, text, ulwin, stext)
+    retval = _fl_popup_add(ulwin, stext)
     return retval
 
 
@@ -5688,8 +5877,8 @@ def fl_popup_insert_entries(pPopup, pPopupEntry, entrytxt):
     return retval
 
 
-def fl_popup_create(win, p2, pPopupItem):
-    """ fl_popup_create(win, p2, pPopupItem) -> pPopup
+def fl_popup_create(win, text, pPopupItem):
+    """ fl_popup_create(win, text, pPopupItem) -> pPopup
     """
 
     _fl_popup_create = cfuncproto(
@@ -5700,9 +5889,9 @@ def fl_popup_create(win, p2, pPopupItem):
                FL_POPUP_ITEM * p3)
             """)
     ulwin = convert_to_Window(win)
-    sp2 = convert_to_string(p2)
-    keep_elem_refs(win, p2, pPopupItem, ulwin, sp2)
-    retval = _fl_popup_create(ulwin, sp2, pPopupItem)
+    stext = convert_to_string(text)
+    keep_elem_refs(win, text, pPopupItem, ulwin, stext)
+    retval = _fl_popup_create(ulwin, stext, pPopupItem)
     return retval
 
 
@@ -5748,8 +5937,15 @@ def fl_popup_do(pPopup):
     return retval
 
 
-def fl_popup_set_position(pPopup, p2, p3):
-    """ fl_popup_set_position(pPopup, p2, p3)
+def fl_popup_set_position(pPopup, x, y):
+    """ fl_popup_set_position(pPopup, x, y)
+
+        Sets position where the popup is supposed to appear (if never called
+         the popup appears at the mouse position)
+
+        @param pPopup : pointer to Popup
+        @param x : horizonthal position
+        @param y : vertical position
     """
 
     _fl_popup_set_position = cfuncproto(
@@ -5757,10 +5953,10 @@ def fl_popup_set_position(pPopup, p2, p3):
             None, [cty.POINTER(FL_POPUP), cty.c_int, cty.c_int],
             """void fl_popup_set_position(FL_POPUP * p1, int p2, int p3)
             """)
-    ip2 = convert_to_int(p2)
-    ip3 = convert_to_int(p3)
-    keep_elem_refs(pPopup, p2, p3, ip2, ip3)
-    _fl_popup_set_position(pPopup, ip2, ip3)
+    ix = convert_to_int(x)
+    iy = convert_to_int(y)
+    keep_elem_refs(pPopup, x, y, ix, iy)
+    _fl_popup_set_position(pPopup, ix, iy)
 
 
 def fl_popup_get_policy(pPopup):
@@ -5777,8 +5973,14 @@ def fl_popup_get_policy(pPopup):
     return retval
 
 
-def fl_popup_set_policy(pPopup, p2):
-    """ fl_popup_set_policy(pPopup, p2) -> num.
+def fl_popup_set_policy(pPopup, policy):
+    """ fl_popup_set_policy(pPopup, policy) -> num.
+
+        Sets policy of handling the popup (i.e. does it get closed when the
+         user releases the mouse button outside an active entry or not?)
+
+        @param pPopup : pointer to Popup
+        @param policy : policy to be set
     """
 
     _fl_popup_set_policy = cfuncproto(
@@ -5786,9 +5988,9 @@ def fl_popup_set_policy(pPopup, p2):
             cty.c_int, [cty.POINTER(FL_POPUP), cty.c_int],
             """int fl_popup_set_policy(FL_POPUP * p1, int p2)
             """)
-    ip2 = convert_to_int(p2)
-    keep_elem_refs(pPopup, p2, ip2)
-    retval = _fl_popup_set_policy(pPopup, ip2)
+    ipolicy = convert_to_int(policy)
+    keep_elem_refs(pPopup, policy, ipolicy)
+    retval = _fl_popup_set_policy(pPopup, ipolicy)
     return retval
 
 
@@ -5863,6 +6065,10 @@ def fl_popup_entry_get_font(pPopup):
 
 def fl_popup_entry_set_font(pPopup, style, size):
     """ fl_popup_entry_set_font(pPopup, style, size)
+
+        @param pPopup : pointer to Popup
+        @param style : style of the popup entry
+        @param size : size of the popup entry
     """
 
     _fl_popup_entry_set_font = cfuncproto(
@@ -5877,7 +6083,7 @@ def fl_popup_entry_set_font(pPopup, style, size):
 
 
 def fl_popup_get_bw(pPopup):
-    """ fl_popup_get_bw(pPopup) -> num.
+    """ fl_popup_get_bw(pPopup) -> borderwidth
     """
 
     _fl_popup_get_bw = cfuncproto(
@@ -5890,8 +6096,8 @@ def fl_popup_get_bw(pPopup):
     return retval
 
 
-def fl_popup_set_bw(pPopup, p2):
-    """ fl_popup_set_bw(pPopup, p2) -> num.
+def fl_popup_set_bw(pPopup, bw):
+    """ fl_popup_set_bw(pPopup, bw) -> num.
     """
 
     _fl_popup_set_bw = cfuncproto(
@@ -5899,9 +6105,9 @@ def fl_popup_set_bw(pPopup, p2):
             cty.c_int, [cty.POINTER(FL_POPUP), cty.c_int],
             """int fl_popup_set_bw(FL_POPUP * p1, int p2)
             """)
-    ip2 = convert_to_int(p2)
-    keep_elem_refs(pPopup, p2, ip2)
-    retval = _fl_popup_set_bw(pPopup, ip2)
+    ibw = convert_to_int(bw)
+    keep_elem_refs(pPopup, bw, ibw)
+    retval = _fl_popup_set_bw(pPopup, ibw)
     return retval
 
 
@@ -5929,8 +6135,9 @@ def fl_popup_set_color(pPopup, p2, colr):
             FL_COLOR, [cty.POINTER(FL_POPUP), cty.c_int, FL_COLOR],
             """FL_COLOR fl_popup_set_color(FL_POPUP * p1, int p2, FL_COLOR p3)
             """)
+    check_admitted_listvalues(colr, COLOR_list)
     ip2 = convert_to_int(p2)
-    ulcolr = convert_to_int(colr)
+    ulcolr = convert_to_FL_COLOR(colr)
     keep_elem_refs(pPopup, p2, colr, ip2, ulcolr)
     retval = _fl_popup_set_color(pPopup, ip2, ulcolr)
     return retval
@@ -5966,6 +6173,9 @@ def fl_popup_get_title(pPopup):
 
 def fl_popup_set_title(pPopup, title):
     """ fl_popup_set_title(pPopup, title) -> popup
+
+        @param pPopup : pointer to Popup
+        @param title : title of the popup
     """
 
     _fl_popup_set_title = cfuncproto(
@@ -6044,8 +6254,8 @@ def fl_popup_entry_get_state(pPopupEntry):
     return retval
 
 
-def fl_popup_entry_set_state(pPopupEntry, p2):
-    """ fl_popup_entry_set_state(pPopupEntry, p2) -> state num.
+def fl_popup_entry_set_state(pPopupEntry, state):
+    """ fl_popup_entry_set_state(pPopupEntry, state) -> state num.
     """
 
     _fl_popup_entry_set_state = cfuncproto(
@@ -6054,14 +6264,14 @@ def fl_popup_entry_set_state(pPopupEntry, p2):
             """unsigned int fl_popup_entry_set_state(FL_POPUP_ENTRY * p1,
                unsigned int p2)
             """)
-    uip2 = convert_to_uint(p2)
-    keep_elem_refs(pPopupEntry, p2, uip2)
-    retval = _fl_popup_entry_set_state(pPopupEntry, uip2)
+    uistate = convert_to_uint(state)
+    keep_elem_refs(pPopupEntry, state, uistate)
+    retval = _fl_popup_entry_set_state(pPopupEntry, uistate)
     return retval
 
 
-def fl_popup_entry_clear_state(pPopupEntry, p2):
-    """ fl_popup_entry_clear_state(pPopupEntry, p2) -> state num.
+def fl_popup_entry_clear_state(pPopupEntry, state):
+    """ fl_popup_entry_clear_state(pPopupEntry, state) -> state num.
     """
 
     _fl_popup_entry_clear_state = cfuncproto(
@@ -6070,14 +6280,14 @@ def fl_popup_entry_clear_state(pPopupEntry, p2):
             """unsigned int fl_popup_entry_clear_state(FL_POPUP_ENTRY * p1,
                unsigned int p2)
             """)
-    uip2 = convert_to_uint(p2)
-    keep_elem_refs(pPopupEntry, p2, uip2)
-    retval = _fl_popup_entry_clear_state(pPopupEntry, uip2)
+    uistate = convert_to_uint(state)
+    keep_elem_refs(pPopupEntry, state, uistate)
+    retval = _fl_popup_entry_clear_state(pPopupEntry, uistate)
     return retval
 
 
-def fl_popup_entry_raise_state(pPopupEntry, p2):
-    """ fl_popup_entry_raise_state(pPopupEntry, p2) -> state num.
+def fl_popup_entry_raise_state(pPopupEntry, state):
+    """ fl_popup_entry_raise_state(pPopupEntry, state) -> state num.
     """
 
     _fl_popup_entry_raise_state = cfuncproto(
@@ -6086,14 +6296,14 @@ def fl_popup_entry_raise_state(pPopupEntry, p2):
             """unsigned int fl_popup_entry_raise_state(FL_POPUP_ENTRY * p1,
                unsigned int p2)
             """)
-    uip2 = convert_to_uint(p2)
-    keep_elem_refs(pPopupEntry, p2, uip2)
-    retval = _fl_popup_entry_raise_state(pPopupEntry, uip2)
+    uistate = convert_to_uint(state)
+    keep_elem_refs(pPopupEntry, state, uistate)
+    retval = _fl_popup_entry_raise_state(pPopupEntry, uistate)
     return retval
 
 
-def fl_popup_entry_toggle_state(pPopupEntry, p2):
-    """ fl_popup_entry_toggle_state(pPopupEntry, p2) -> num.
+def fl_popup_entry_toggle_state(pPopupEntry, state):
+    """ fl_popup_entry_toggle_state(pPopupEntry, state) -> num.
     """
 
     _fl_popup_entry_toggle_state = cfuncproto(
@@ -6102,9 +6312,9 @@ def fl_popup_entry_toggle_state(pPopupEntry, p2):
             """unsigned int fl_popup_entry_toggle_state(FL_POPUP_ENTRY * p1,
                unsigned int p2)
             """)
-    uip2 = convert_to_uint(p2)
-    keep_elem_refs(pPopupEntry, p2, uip2)
-    retval = _fl_popup_entry_toggle_state(pPopupEntry, uip2)
+    uistate = convert_to_uint(state)
+    keep_elem_refs(pPopupEntry, state, uistate)
+    retval = _fl_popup_entry_toggle_state(pPopupEntry, uistate)
     return retval
 
 
@@ -6124,8 +6334,8 @@ def fl_popup_entry_set_text(pPopupEntry, text):
     return retval
 
 
-def fl_popup_entry_set_shortcut(pPopupEntry, sctext):
-    """ fl_popup_entry_set_shortcut(pPopupEntry, sctext)
+def fl_popup_entry_set_shortcut(pPopupEntry, textsc):
+    """ fl_popup_entry_set_shortcut(pPopupEntry, textsc)
     """
 
     _fl_popup_entry_set_shortcut = cfuncproto(
@@ -6134,9 +6344,9 @@ def fl_popup_entry_set_shortcut(pPopupEntry, sctext):
             """void fl_popup_entry_set_shortcut(FL_POPUP_ENTRY * p1,
                const char * p2)
             """)
-    ssctext = convert_to_string(sctext)
-    keep_elem_refs(pPopupEntry, sctext, ssctext)
-    _fl_popup_entry_set_shortcut(pPopupEntry, ssctext)
+    stextsc = convert_to_string(textsc)
+    keep_elem_refs(pPopupEntry, textsc, stextsc)
+    _fl_popup_entry_set_shortcut(pPopupEntry, stextsc)
 
 
 def fl_popup_entry_set_value(pPopupEntry, val):
@@ -6213,8 +6423,9 @@ def fl_popup_entry_get_by_user_data(pPopup, p2):
             """FL_POPUP_ENTRY * fl_popup_entry_get_by_user_data(FL_POPUP * p1,
                void * p2)
             """)
-    keep_elem_refs(pPopup, p2)
-    retval = _fl_popup_entry_get_by_user_data(pPopup, p2)
+    pp2 = cty.cast(p2, cty.c_void_p)
+    keep_elem_refs(pPopup, p2, pp2)
+    retval = _fl_popup_entry_get_by_user_data(pPopup, pp2)
     return retval
 
 
@@ -6311,7 +6522,7 @@ def fl_popup_entry_set_subpopup(pPopupEntry, pPopup):
 
 #def fl_popup_get_size(pPopup, w, h)
 def fl_popup_get_size(pPopup):
-    """ fl_popup_get_size(pPopup) -> size num., w, h
+    """ fl_popup_get_size(pPopup) -> size num., width, height
     """
 
     _fl_popup_get_size = cfuncproto(
@@ -6342,8 +6553,8 @@ def fl_popup_get_min_width(pPopup):
     return retval
 
 
-def fl_popup_set_min_width(pPopup, num):
-    """ fl_popup_set_min_width(p1, p2) -> width num.
+def fl_popup_set_min_width(pPopup, minwidth):
+    """ fl_popup_set_min_width(pPopup, minwidth) -> width num.
     """
 
     _fl_popup_set_min_width = cfuncproto(
@@ -6351,9 +6562,9 @@ def fl_popup_set_min_width(pPopup, num):
             cty.c_int, [cty.POINTER(FL_POPUP), cty.c_int],
             """int fl_popup_set_min_width(FL_POPUP * p1, int p2)
             """)
-    inum = convert_to_int(num)
-    keep_elem_refs(pPopup, num, inum)
-    retval = _fl_popup_set_min_width(pPopup, inum)
+    iminwidth = convert_to_int(minwidth)
+    keep_elem_refs(pPopup, minwidth, iminwidth)
+    retval = _fl_popup_set_min_width(pPopup, iminwidth)
     return retval
 
 
@@ -6377,6 +6588,7 @@ def fl_create_bitmap(bitmaptype, x, y, w, h, label):
             """FL_OBJECT * fl_create_bitmap(int type, FL_Coord x, FL_Coord y,
                FL_Coord w, FL_Coord h, const char * label)
             """)
+    check_admitted_listvalues(bitmaptype, BITMAPTYPE_list)
     ibitmaptype = convert_to_int(bitmaptype)
     ix = convert_to_FL_Coord(x)
     iy = convert_to_FL_Coord(y)
@@ -6400,6 +6612,7 @@ def fl_add_bitmap(bitmaptype, x, y, w, h, label):
             """FL_OBJECT * fl_add_bitmap(int type, FL_Coord x, FL_Coord y,
                FL_Coord w, FL_Coord h, const char * label)
             """)
+    check_admitted_listvalues(bitmaptype, BITMAPTYPE_list)
     ibitmaptype = convert_to_int(bitmaptype)
     ix = convert_to_FL_Coord(x)
     iy = convert_to_FL_Coord(y)
@@ -6414,6 +6627,11 @@ def fl_add_bitmap(bitmaptype, x, y, w, h, label):
 
 def fl_set_bitmap_data(pObject, w, h, data):
     """ fl_set_bitmap_data(pObject, w, h, data)
+
+        @param pObject : pointer to object
+        @param w : width of bitmap
+        @param h : height of bitmap
+        @param data : bitmap data ubytes
     """
 
     _fl_set_bitmap_data = cfuncproto(
@@ -6432,6 +6650,9 @@ def fl_set_bitmap_data(pObject, w, h, data):
 
 def fl_set_bitmap_file(pObject, fname):
     """ fl_set_bitmap_file(pObject, fname)
+
+        @param pObject : pointer to object
+        @param fname : name of bitmap file
     """
 
     _fl_set_bitmap_file = cfuncproto(
@@ -6469,8 +6690,8 @@ def fl_read_bitmapfile(win, filename, w, h, hotx, hoty):
 
 
 # /usr/include/X11/Xlib.h 1621
-def XCreateBitmapFromData(pDisplay, p2, p3, p4, p5):
-    """ XCreateBitmapFromData(pDisplay, p2, p3, p4, p5) -> pixmap
+def XCreateBitmapFromData(pDisplay, win, data, w, h):
+    """ XCreateBitmapFromData(pDisplay, win, data, w, h) -> pixmap
     """
 
     _XCreateBitmapFromData = cfuncproto(
@@ -6480,12 +6701,12 @@ def XCreateBitmapFromData(pDisplay, p2, p3, p4, p5):
             """Pixmap XCreateBitmapFromData(Display * p1, Drawable p2,
                const char * p3, unsigned int p4, unsigned int p5)
             """)
-    ulp2 = convert_to_ulong(p2)
-    sp3 = convert_to_string(p3)
-    uip4 = convert_to_uint(p4)
-    uip5 = convert_to_uint(p5)
-    keep_elem_refs(pDisplay, p2, p3, p4, p5, ulp2, sp3, uip4, uip5)
-    retval = _XCreateBitmapFromData(pDisplay, ulp2, sp3, uip4, uip5)
+    ulwin = convert_to_ulong(win)
+    sdata = convert_to_string(data)
+    uiw = convert_to_uint(w)
+    uih = convert_to_uint(h)
+    keep_elem_refs(pDisplay, win, data, w, h, ulwin, sdata, uiw, uih)
+    retval = _XCreateBitmapFromData(pDisplay, ulwin, sdata, uiw, uih)
     return retval
 
 
@@ -6509,6 +6730,7 @@ def fl_create_pixmap(pixmaptype, x, y, w, h, label):
             """FL_OBJECT * fl_create_pixmap(int type, FL_Coord x, FL_Coord y,
                FL_Coord w, FL_Coord h, const char * label)
             """)
+    check_admitted_listvalues(pixmaptype, PIXMAPTYPE_list)
     ipixmaptype = convert_to_int(pixmaptype)
     ix = convert_to_FL_Coord(x)
     iy = convert_to_FL_Coord(y)
@@ -6532,6 +6754,7 @@ def fl_add_pixmap(pixmaptype, x, y, w, h, label):
             """FL_OBJECT * fl_add_pixmap(int type, FL_Coord x, FL_Coord y,
                FL_Coord w, FL_Coord h, const char * label)
             """)
+    check_admitted_listvalues(pixmaptype, PIXMAPTYPE_list)
     ipixmaptype = convert_to_int(pixmaptype)
     ix = convert_to_FL_Coord(x)
     iy = convert_to_FL_Coord(y)
@@ -6559,6 +6782,9 @@ def fl_set_pixmap_data(pObject, bits):
 
 def fl_set_pixmap_file(pObject, fname):
     """ fl_set_pixmap_file(pObject, fname)
+
+        @param pObject : pointer to object
+        @param fname : name of the pixmap file
     """
 
     _fl_set_pixmap_file = cfuncproto(
@@ -6581,6 +6807,7 @@ def fl_set_pixmap_align(pObject, align, xmargin, ymargin):
             """void fl_set_pixmap_align(FL_OBJECT * ob, int align,
                int xmargin, int ymargin)
             """)
+    check_admitted_listvalues(align, ALIGN_list)
     ialign = convert_to_int(align)
     ixmargin = convert_to_int(xmargin)
     iymargin = convert_to_int(ymargin)
@@ -6623,6 +6850,8 @@ def fl_set_pixmap_colorcloseness(red, green, blue):
 
 def fl_free_pixmap_pixmap(pObject):
     """ fl_free_pixmap_pixmap(pObject)
+
+        @param pObject : pointer to object
     """
 
     _fl_free_pixmap_pixmap = cfuncproto(
@@ -6636,7 +6865,9 @@ def fl_free_pixmap_pixmap(pObject):
 
 #def fl_get_pixmap_pixmap(pObject, p, m)
 def fl_get_pixmap_pixmap(pObject):
-    """ fl_get_pixmap_pixmap(pObject) -> pixmap, p, m
+    """ fl_get_pixmap_pixmap(pObject) -> pixmap, pPixmap, pPixmap_mask
+
+        @param pObject : pointer to object
     """
 
     _fl_get_pixmap_pixmap = cfuncproto(
@@ -6667,6 +6898,7 @@ def fl_read_pixmapfile(win, filename, tran):
                unsigned int * w, unsigned int * h, Pixmap * shape_mask,
                int * hotx, int * hoty, FL_COLOR tran)
             """)
+    check_admitted_listvalues(tran, COLOR_list)
     ulwin = convert_to_Window(win)
     sfilename = convert_to_string(filename)
     ultran = convert_to_FL_COLOR(tran)
@@ -6695,6 +6927,7 @@ def fl_create_from_pixmapdata(win, data, w, h, sm, hotx, hoty, tran):
             unsigned int * w, unsigned int * h, Pixmap * sm, int * hotx,
             int * hoty, FL_COLOR tran)
             """)
+    check_admitted_listvalues(tran, COLOR_list)
     ulwin = convert_to_Window(win)
     ultran = convert_to_FL_COLOR(tran)
     keep_elem_refs(win, data, w, h, sm, hotx, hoty, tran, ulwin, ultran)
@@ -6999,6 +7232,8 @@ def fl_deselect_browser_line(pObject, line):
 
 def fl_deselect_browser(pObject):
     """ fl_deselect_browser(pObject)
+
+        @param pObject : pointer to object
     """
 
     _fl_deselect_browser = cfuncproto(

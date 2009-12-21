@@ -1637,12 +1637,17 @@ FL_POPUP_DISABLED_TEXT_COLOR = 5
 FL_POPUP_RADIO_COLOR = 6
 
 
+
 #######################
 # forms.h (bitmap.h)
 # Object Class: Bitmap
 #######################
 
 FL_NORMAL_BITMAP = 0
+
+# my add - list of possible values --LK
+BITMAPTYPE_list = [FL_NORMAL_BITMAP, ]
+
 
 # Defaults
 FL_BITMAP_BOXTYPE = FL_NO_BOX
@@ -1657,6 +1662,9 @@ Drawable = XID    # cty.c_ulong
 # PIXMAP stuff
 
 FL_NORMAL_PIXMAP = 0
+
+# my add - list of possible values --LK
+PIXMAPTYPE_list = [FL_NORMAL_PIXMAP, ]
 
 
 #######################

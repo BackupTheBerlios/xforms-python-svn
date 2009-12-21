@@ -1,8 +1,10 @@
 
 
 SVN
-    * Improved documentation (initial)
-    * bugfixes
+    * Improved docstrings to comply with epydoc guidelines
+    (partial).
+    * Improved documentation (initial).
+    * bugfixes.
     * Changing some other param names and restructure
     other getter functions.
     * Add a documentation initial draft using python 
