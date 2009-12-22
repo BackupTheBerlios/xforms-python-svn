@@ -1,6 +1,8 @@
 
 
 SVN
+    * Some other better docstrings.
+    * Corrected some typos.
     * Improved docstrings to comply with epydoc guidelines
     (partial).
     * Improved documentation (initial).
