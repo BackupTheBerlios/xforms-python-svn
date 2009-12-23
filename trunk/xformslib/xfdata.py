@@ -1002,50 +1002,11 @@ FL_EXCEPT = 4
 ASYNCIO_list = [FL_READ, FL_WRITE, FL_EXCEPT]
 
 
-# IO other than XEvent Q
-
-FL_IO_CALLBACK = cty.CFUNCTYPE(None, cty.c_int, cty.c_void_p)
-
-# signals
-
-FL_SIGNAL_HANDLER = cty.CFUNCTYPE(None, cty.c_int, cty.c_void_p)
-
-#timeouts
-
-FL_TIMEOUT_CALLBACK = cty.CFUNCTYPE(None, cty.c_int, cty.c_void_p)
-
-# cfunction for _fl_for_all_objects
-cfunc_int_pobject_pvoid = cty.CFUNCTYPE(cty.c_int, cty.POINTER(FL_OBJECT), \
-                                        cty.c_void_p)
-
-# cfunction for _fl_enumerate_fonts
-cfunc_none_string = cty.CFUNCTYPE(None, STRING)
-
-FL_DRAWPTR = cty.CFUNCTYPE(None, FL_Coord, FL_Coord, FL_Coord, FL_Coord,
-                           cty.c_int, FL_COLOR)
-
-FL_FSCB = cty.CFUNCTYPE(cty.c_int, STRING, cty.c_void_p)
-
-#fl_current_form = (cty.POINTER(FL_FORM)).in_dll(load_so_libforms(), \
-#                  'fl_current_form')
-#fl_current_form = cty.POINTER(FL_FORM)()
-
 size_t = cty.c_uint
-
-# cfunction for _fl_malloc
-cfunc_none_sizet = cty.CFUNCTYPE(cty.c_void_p, size_t)
-
-# cfunction for _fl_calloc
-cfunc_none_sizet_sizet = cty.CFUNCTYPE(cty.c_void_p, size_t, size_t)
-
-# cfunction for _fl_realloc
-cfunc_voidp_voidp_sizet = cty.CFUNCTYPE(cty.c_void_p, cty.c_void_p, size_t)
 
 
 FL_MAX_MENU_CHOICE_ITEMS = 128
 
-FL_VAL_FILTER = cty.CFUNCTYPE(STRING, cty.POINTER(FL_OBJECT), cty.c_double, \
-                              cty.c_int)
 
 # Draw mode
 # values for unnamed enumeration
@@ -1503,7 +1464,6 @@ class FL_POPUP_RETURN_(cty.Structure):
     pass
 FL_POPUP_RETURN = FL_POPUP_RETURN_
 
-FL_POPUP_CB = cty.CFUNCTYPE(cty.c_int, cty.POINTER(FL_POPUP_RETURN))
 
 FL_POPUP_RETURN_._fields_ = [
     ('val', cty.c_long),              # value assigned to popup entry
@@ -1515,6 +1475,8 @@ FL_POPUP_RETURN_._fields_ = [
     ('popup', cty.POINTER(FL_POPUP)),         # popup we're called for
 ]
 
+
+FL_POPUP_CB = cty.CFUNCTYPE(cty.c_int, cty.POINTER(FL_POPUP_RETURN))
 
 FL_POPUP_._fields_ = [
     ('next', cty.POINTER(FL_POPUP)),      # next in linked list
@@ -1699,9 +1661,6 @@ FL_BROWSER_FONTSIZE = FL_SMALL_FONT
 FL_BROWSER_LINELENGTH = INT_MAX
 
 
-FL_BROWSER_SCROLL_CALLBACK = cty.CFUNCTYPE(None, cty.POINTER(FL_OBJECT),
-                cty.c_int, cty.c_void_p)
-
 
 #############################################################
 # forms.h (button.h)
@@ -1752,11 +1711,6 @@ FL_BUTTON_SPEC._fields_ = [
 
 FL_BUTTON_STRUCT = FL_BUTTON_SPEC
 
-FL_DrawButton = cty.CFUNCTYPE(None, cty.POINTER(FL_OBJECT))
-FL_CleanupButton = cty.CFUNCTYPE(None, cty.POINTER(FL_BUTTON_SPEC))
-
-FL_DRAWBUTTON = FL_DrawButton
-FL_CLEANUPBUTTON = FL_CleanupButton
 
 # normal button default
 FL_BUTTON_BOXTYPE = FL_UP_BOX
@@ -1865,8 +1819,6 @@ XSetWindowAttributes._fields_ = [
 ]
 
 
-FL_MODIFY_CANVAS_PROP = cty.CFUNCTYPE(cty.c_int, cty.POINTER(FL_OBJECT))
-
 
 #############
 # glcanvas.h
@@ -1911,6 +1863,7 @@ FL_CHART_ALIGN = FL_ALIGN_BOTTOM
 FL_CHART_MAX = 2048
 
 
+
 #####################
 # forms.h (choice.h)
 #####################
@@ -1941,19 +1894,14 @@ FL_CHOICE_MCOL = FL_MCOL
 FL_CHOICE_MAXITEMS = 128
 
 
+
 #################################
 # forms.h (clipbd.h)
 # prototypes for clipboard stuff
 #################################
 
 FL_CPTYPE = Atom
-FL_LOSE_SELECTION_CB = cty.CFUNCTYPE(cty.c_int, cty.POINTER(FL_OBJECT),
-                                     cty.c_long)
-FL_SELECTION_CB = cty.CFUNCTYPE(cty.c_int, cty.POINTER(FL_OBJECT),
-                                cty.c_long, cty.c_void_p, cty.c_long)
 
-FL_SELECTION_CALLBACK = FL_SELECTION_CB
-FL_LOSE_SELECTION_CALLBACK = FL_LOSE_SELECTION_CB
 
 
 #################################
@@ -2119,7 +2067,7 @@ XC_invisible = FL_INVISIBLE_CURSOR
 
 
 # my add --LK
-Cursors_list = [FL_INVISIBLE_CURSOR, FL_DEFAULT_CURSOR, FL_BUSY_CURSOR, \
+CURSORS_list = [FL_INVISIBLE_CURSOR, FL_DEFAULT_CURSOR, FL_BUSY_CURSOR, \
                 FL_CROSSHAIR_CURSOR, FL_KILL_CURSOR, FL_NWARROW_CURSOR, \
                 FL_NEARROW_CURSOR]
 
@@ -2152,6 +2100,7 @@ FL_DIAL_ALIGN = FL_ALIGN_BOTTOM
 
 # Others
 FL_DIAL_TOPCOL = FL_COL1
+
 
 
 ############################################
@@ -2190,8 +2139,6 @@ FL_RSIZESORT = 6            # sort in decreasing size order
 FL_CASEALPHASORT = 7        # sort case insensitive
 FL_RCASEALPHASORT = 8       # sort case insensitive
 
-
-FL_DIRLIST_FILTER = cty.CFUNCTYPE(cty.c_int, STRING, cty.c_int)
 
 
 ###################
@@ -2234,6 +2181,7 @@ FLPS_CONTROL._fields_ = [
     ('first_page_only', cty.c_int),
     ('clip', cty.c_int),
 ]
+
 
 
 #########################
@@ -2367,9 +2315,6 @@ FD_FSELECTOR._fields_ = [
 ]
 
 
-# c function prototype for _fl_add_fselector_appbutton
-cfunc_none_voidp = cty.CFUNCTYPE(None, cty.c_void_p)
-
 
 ####################
 # forms.h (input.h)
@@ -2410,9 +2355,6 @@ FL_INPUT_CCOL = FL_BLUE
 
 FL_RINGBELL = (1<<4)
 
-
-FL_INPUTVALIDATOR = cty.CFUNCTYPE(cty.c_int, cty.POINTER(FL_OBJECT), STRING,
-                                  STRING, cty.c_int)
 
 
 # edit keys
@@ -2559,6 +2501,7 @@ FL_SELECT_LCOL = FL_LCOL
 FL_SELECT_ALIGN = FL_ALIGN_LEFT
 
 
+
 #######################
 # forms.h (slider.h)
 # Object Class: Slider
@@ -2629,6 +2572,7 @@ FL_FLOAT_SPINNER = 1
 
 # list of possible values - my add --LK
 SPINNERTYPE_list = [FL_INT_SPINNER, FL_FLOAT_SPINNER]
+
 
 
 ########################
@@ -2719,7 +2663,6 @@ FL_TIMER_ALIGN = FL_ALIGN_CENTER
 # Others
 FL_TIMER_BLINKRATE = 0.2
 
-FL_TIMER_FILTER = cty.CFUNCTYPE(STRING, cty.POINTER(FL_OBJECT), cty.c_double)
 
 
 ###############################
@@ -2729,9 +2672,6 @@ FL_TIMER_FILTER = cty.CFUNCTYPE(STRING, cty.POINTER(FL_OBJECT), cty.c_double)
 
 FL_MAXPUPI = 128    # max item each pup
 FL_PUP_PADH = 4     # space between each items
-
-FL_PUP_ENTERCB = cty.CFUNCTYPE(None, cty.c_int, cty.c_void_p)
-FL_PUP_LEAVECB = cty.CFUNCTYPE(None, cty.c_int, cty.c_void_p)
 
 
 # Class FL_XYPLOT
@@ -2776,10 +2716,6 @@ FL_XYPLOT_ALIGN = FL_ALIGN_BOTTOM
 FL_MAX_XYPLOTOVERLAY = 32
 
 
-FL_XYPLOT_SYMBOL = cty.CFUNCTYPE(None, cty.POINTER(FL_OBJECT), cty.c_int,
-            cty.POINTER(FL_POINT), cty.c_int, cty.c_int, cty.c_int)
-
-
 FL_FALSE = 0
 FL_TRUE = (not FL_FALSE)
 
@@ -2788,6 +2724,7 @@ Mask = cty.c_ulong
 Time = cty.c_ulong
 GContext = XID    # cty.c_ulong
 KeyCode = cty.c_ubyte
+
 
 
 #########################
@@ -2856,6 +2793,7 @@ flimage_text_._fields_ = [
     ('align', cty.c_int),           # alignment wrt to (x,y)
 ]
 FLIMAGE_TEXT = flimage_text_
+
 
 class flimage_marker_(cty.Structure):
     pass
@@ -3055,12 +2993,6 @@ flimage_._fields_ = [
 FL_IMAGE = flimage_
 
 
-FLIMAGE_Identify = cty.CFUNCTYPE(cty.c_int, cty.POINTER(FILE))
-FLIMAGE_Description = cty.CFUNCTYPE(cty.c_int, cty.POINTER(FL_IMAGE))
-FLIMAGE_Read_Pixels = cty.CFUNCTYPE(cty.c_int, cty.POINTER(FL_IMAGE))
-FLIMAGE_Write_Image = cty.CFUNCTYPE(cty.c_int, cty.POINTER(FL_IMAGE))
-
-
 # some configuration stuff
 
 flimage_setup_._fields_ = [
@@ -3098,6 +3030,7 @@ FLIMAGE_JPEG_OPTION._fields_ = [
 FLIMAGE_WRITABLE = FL_WRITE
 FLIMAGE_READABLE = FL_READ
 
+
 class FLIMAGE_FORMAT_INFO(cty.Structure):
     pass
 FLIMAGE_FORMAT_INFO._fields_ = [
@@ -3132,6 +3065,7 @@ FLIMAGE_NOCENTER = FL_ALIGN_LEFT_TOP
 class XWindowAttributes(cty.Structure):
     pass
 
+
 # /usr/include/X11/Xlib.h 176
 class XExtCodes(cty.Structure):
     pass
@@ -3141,6 +3075,7 @@ XExtCodes._fields_ = [
     ('first_event', cty.c_int),
     ('first_error', cty.c_int),
 ]
+
 
 # /usr/include/X11/Xlib.h 186
 class XPixmapFormatValues(cty.Structure):
@@ -3216,6 +3151,7 @@ Screen._fields_ = [
     ('root_input_mask', cty.c_long),
 ]
 
+
 # /usr/include/X11/Xlib.h 296
 class ScreenFormat(cty.Structure):
     pass
@@ -3252,6 +3188,7 @@ XWindowAttributes._fields_ = [
     ('screen', cty.POINTER(Screen)),
 ]
 
+
 # /usr/include/X11/Xlib.h 356
 class XHostAddress(cty.Structure):
     pass
@@ -3260,6 +3197,7 @@ XHostAddress._fields_ = [
     ('length', cty.c_int),
     ('address', STRING),
 ]
+
 
 # /usr/include/X11/Xlib.h 366
 class XServerInterpretedAddress(cty.Structure):
@@ -3271,9 +3209,11 @@ XServerInterpretedAddress._fields_ = [
     ('value', STRING),
 ]
 
+
 # /usr/include/X11/Xlib.h 371
 class _XImage(cty.Structure):
     pass
+
 
 # /usr/include/X11/Xlib.h 387
 class funcs(cty.Structure):
@@ -3291,6 +3231,7 @@ funcs._fields_ = [
     cty.c_int, cty.c_int, cty.c_uint, cty.c_uint)),
     ('add_pixel', cty.CFUNCTYPE(cty.c_int, cty.POINTER(_XImage), cty.c_long)),
 ]
+
 
 _XImage._fields_ = [
     ('width', cty.c_int),
@@ -3313,6 +3254,7 @@ _XImage._fields_ = [
 ]
 XImage = _XImage
 
+
 # /usr/include/X11/Xlib.h 416
 class XWindowChanges(cty.Structure):
     pass
@@ -3326,6 +3268,7 @@ XWindowChanges._fields_ = [
     ('stack_mode', cty.c_int),
 ]
 
+
 # /usr/include/X11/Xlib.h 426
 class XColor(cty.Structure):
     pass
@@ -3338,6 +3281,7 @@ XColor._fields_ = [
     ('pad', cty.c_char),
 ]
 
+
 # /usr/include/X11/Xlib.h 435
 class XSegment(cty.Structure):
     pass
@@ -3348,10 +3292,12 @@ XSegment._fields_ = [
     ('y2', cty.c_short),
 ]
 
+
 XPoint._fields_ = [
     ('x', cty.c_short),
     ('y', cty.c_short),
 ]
+
 
 # /usr/include/X11/Xlib.h 444
 XRectangle._fields_ = [
@@ -3360,6 +3306,7 @@ XRectangle._fields_ = [
     ('width',  cty.c_ushort),
     ('height',  cty.c_ushort),
 ]
+
 
 # /usr/include/X11/Xlib.h 450
 class XArc(cty.Structure):
@@ -3373,6 +3320,7 @@ XArc._fields_ = [
     ('angle1', cty.c_short),
     ('angle2', cty.c_short),
 ]
+
 
 # /usr/include/X11/Xlib.h 464
 class XKeyboardControl(cty.Structure):
@@ -3388,6 +3336,7 @@ XKeyboardControl._fields_ = [
     ('auto_repeat_mode', cty.c_int),
 ]
 
+
 # /usr/include/X11/Xlib.h 475
 class XKeyboardState(cty.Structure):
     pass
@@ -3401,6 +3350,7 @@ XKeyboardState._fields_ = [
     ('auto_repeats', cty.c_char * 32),
 ]
 
+
 # /usr/include/X11/Xlib.h 482
 class XTimeCoord(cty.Structure):
     pass
@@ -3410,6 +3360,7 @@ XTimeCoord._fields_ = [
     ('y', cty.c_short),
 ]
 
+
 # /usr/include/X11/Xlib.h 489
 class XModifierKeymap(cty.Structure):
     pass
@@ -3418,17 +3369,21 @@ XModifierKeymap._fields_ = [
     ('modifiermap', cty.POINTER(KeyCode)),
 ]
 
+
 Display = _XDisplay
+
 
 # /usr/include/X11/Xlib.h 501
 class _XPrivate(cty.Structure):
     pass
 _XPrivate._fields_ = []
 
+
 # /usr/include/X11/Xlib.h 502
 class _XrmHashBucketRec(cty.Structure):
     pass
 _XrmHashBucketRec._fields_ = []
+
 
 # /usr/include/X11/Xlib.h 582
 class XKeyEvent(cty.Structure):
@@ -3453,6 +3408,7 @@ XKeyEvent._fields_ = [
 XKeyPressedEvent = XKeyEvent
 XKeyReleasedEvent = XKeyEvent
 
+
 # /usr/include/X11/Xlib.h 600
 class XButtonEvent(cty.Structure):
     pass
@@ -3476,6 +3432,7 @@ XButtonEvent._fields_ = [
 XButtonPressedEvent = XButtonEvent
 XButtonReleasedEvent = XButtonEvent
 
+
 # /usr/include/X11/Xlib.h 618
 class XMotionEvent(cty.Structure):
     pass
@@ -3497,6 +3454,7 @@ XMotionEvent._fields_ = [
     ('same_screen', cty.c_int),
 ]
 XPointerMovedEvent = XMotionEvent
+
 
 # /usr/include/X11/Xlib.h 641
 class XCrossingEvent(cty.Structure):
@@ -3523,6 +3481,7 @@ XCrossingEvent._fields_ = [
 XEnterWindowEvent = XCrossingEvent
 XLeaveWindowEvent = XCrossingEvent
 
+
 # /usr/include/X11/Xlib.h 659
 class XFocusChangeEvent(cty.Structure):
     pass
@@ -3538,6 +3497,7 @@ XFocusChangeEvent._fields_ = [
 XFocusInEvent = XFocusChangeEvent
 XFocusOutEvent = XFocusChangeEvent
 
+
 # /usr/include/X11/Xlib.h 671
 class XKeymapEvent(cty.Structure):
     pass
@@ -3549,6 +3509,7 @@ XKeymapEvent._fields_ = [
     ('window', Window),
     ('key_vector', cty.c_char * 32),
 ]
+
 
 # /usr/include/X11/Xlib.h 682
 class XExposeEvent(cty.Structure):
@@ -3565,6 +3526,7 @@ XExposeEvent._fields_ = [
     ('height', cty.c_int),
     ('count', cty.c_int),
 ]
+
 
 # /usr/include/X11/Xlib.h 695
 class XGraphicsExposeEvent(cty.Structure):
@@ -3584,6 +3546,7 @@ XGraphicsExposeEvent._fields_ = [
     ('minor_code', cty.c_int),
 ]
 
+
 # /usr/include/X11/Xlib.h 705
 class XNoExposeEvent(cty.Structure):
     pass
@@ -3597,6 +3560,7 @@ XNoExposeEvent._fields_ = [
     ('minor_code', cty.c_int),
 ]
 
+
 # /usr/include/X11/Xlib.h 714
 class XVisibilityEvent(cty.Structure):
     pass
@@ -3608,6 +3572,7 @@ XVisibilityEvent._fields_ = [
     ('window', Window),
     ('state', cty.c_int),
 ]
+
 
 # /usr/include/X11/Xlib.h 727
 class XCreateWindowEvent(cty.Structure):
@@ -3627,6 +3592,7 @@ XCreateWindowEvent._fields_ = [
     ('override_redirect', cty.c_int),
 ]
 
+
 # /usr/include/X11/Xlib.h 736
 class XDestroyWindowEvent(cty.Structure):
     pass
@@ -3638,6 +3604,7 @@ XDestroyWindowEvent._fields_ = [
     ('event', Window),
     ('window', Window),
 ]
+
 
 # /usr/include/X11/Xlib.h 746
 class XUnmapEvent(cty.Structure):
@@ -3652,6 +3619,7 @@ XUnmapEvent._fields_ = [
     ('from_configure', cty.c_int),
 ]
 
+
 # /usr/include/X11/Xlib.h 756
 class XMapEvent(cty.Structure):
     pass
@@ -3665,6 +3633,7 @@ XMapEvent._fields_ = [
     ('override_redirect', cty.c_int),
 ]
 
+
 # /usr/include/X11/Xlib.h 765
 class XMapRequestEvent(cty.Structure):
     pass
@@ -3676,6 +3645,7 @@ XMapRequestEvent._fields_ = [
     ('parent', Window),
     ('window', Window),
 ]
+
 
 # /usr/include/X11/Xlib.h 777
 class XReparentEvent(cty.Structure):
@@ -3692,6 +3662,7 @@ XReparentEvent._fields_ = [
     ('y', cty.c_int),
     ('override_redirect', cty.c_int),
 ]
+
 
 # /usr/include/X11/Xlib.h 791
 class XConfigureEvent(cty.Structure):
@@ -3712,6 +3683,7 @@ XConfigureEvent._fields_ = [
     ('override_redirect', cty.c_int),
 ]
 
+
 # /usr/include/X11/Xlib.h 801
 class XGravityEvent(cty.Structure):
     pass
@@ -3726,6 +3698,7 @@ XGravityEvent._fields_ = [
     ('y', cty.c_int),
 ]
 
+
 # /usr/include/X11/Xlib.h 810
 class XResizeRequestEvent(cty.Structure):
     pass
@@ -3738,6 +3711,7 @@ XResizeRequestEvent._fields_ = [
     ('width', cty.c_int),
     ('height', cty.c_int),
 ]
+
 
 # /usr/include/X11/Xlib.h 825
 class XConfigureRequestEvent(cty.Structure):
@@ -3759,6 +3733,7 @@ XConfigureRequestEvent._fields_ = [
     ('value_mask', cty.c_ulong),
 ]
 
+
 # /usr/include/X11/Xlib.h 835
 class XCirculateEvent(cty.Structure):
     pass
@@ -3772,6 +3747,7 @@ XCirculateEvent._fields_ = [
     ('place', cty.c_int),
 ]
 
+
 # /usr/include/X11/Xlib.h 845
 class XCirculateRequestEvent(cty.Structure):
     pass
@@ -3784,6 +3760,7 @@ XCirculateRequestEvent._fields_ = [
     ('window', Window),
     ('place', cty.c_int),
 ]
+
 
 # /usr/include/X11/Xlib.h 856
 class XPropertyEvent(cty.Structure):
@@ -3799,6 +3776,7 @@ XPropertyEvent._fields_ = [
     ('state', cty.c_int),
 ]
 
+
 # /usr/include/X11/Xlib.h 866
 class XSelectionClearEvent(cty.Structure):
     pass
@@ -3811,6 +3789,7 @@ XSelectionClearEvent._fields_ = [
     ('selection', Atom),
     ('time', Time),
 ]
+
 
 # /usr/include/X11/Xlib.h 879
 class XSelectionRequestEvent(cty.Structure):
@@ -3827,6 +3806,8 @@ XSelectionRequestEvent._fields_ = [
     ('property', Atom),
     ('time', Time),
 ]
+
+
 # /usr/include/X11/Xlib.h 891
 class XSelectionEvent(cty.Structure):
     pass
@@ -3841,6 +3822,8 @@ XSelectionEvent._fields_ = [
     ('property', Atom),
     ('time', Time),
 ]
+
+
 # /usr/include/X11/Xlib.h 906
 class XColormapEvent(cty.Structure):
     pass
@@ -3855,6 +3838,7 @@ XColormapEvent._fields_ = [
     ('state', cty.c_int),
 ]
 
+
 # /usr/include/X11/Xlib.h 916
 class N19XClientMessageEvent4DOT_71E(cty.Union):
     pass
@@ -3863,6 +3847,7 @@ N19XClientMessageEvent4DOT_71E._fields_ = [
     ('s', cty.c_short * 10),
     ('l', cty.c_long * 5),
 ]
+
 
 # /usr/include/X11/Xlib.h 921
 class XClientMessageEvent(cty.Structure):
@@ -3878,6 +3863,7 @@ XClientMessageEvent._fields_ = [
     ('data', N19XClientMessageEvent4DOT_71E),
 ]
 
+
 # /usr/include/X11/Xlib.h 933
 class XMappingEvent(cty.Structure):
     pass
@@ -3892,6 +3878,7 @@ XMappingEvent._fields_ = [
     ('count', cty.c_int),
 ]
 
+
 # /usr/include/X11/Xlib.h 943
 class XErrorEvent(cty.Structure):
     pass
@@ -3905,6 +3892,7 @@ XErrorEvent._fields_ = [
     ('minor_code', cty.c_ubyte),
 ]
 
+
 # /usr/include/X11/Xlib.h 951
 class XAnyEvent(cty.Structure):
     pass
@@ -3915,6 +3903,7 @@ XAnyEvent._fields_ = [
     ('display', cty.POINTER(Display)),
     ('window', Window),
 ]
+
 
 # /usr/include/X11/Xlib.h 967
 class XGenericEvent(cty.Structure):
@@ -3927,6 +3916,7 @@ XGenericEvent._fields_ = [
     ('extension', cty.c_int),
     ('evtype', cty.c_int),
 ]
+
 
 # /usr/include/X11/Xlib.h 978
 class XGenericEventCookie(cty.Structure):
@@ -3941,6 +3931,7 @@ XGenericEventCookie._fields_ = [
     ('cookie', cty.c_uint),
     ('data', cty.c_void_p),
 ]
+
 
 # /usr/include/X11/Xlib.h 984
 class _XEvent(cty.Union):
@@ -3988,7 +3979,7 @@ XEvent = _XEvent
 # *** start - from /usr/include/X11/X.h ***
 # Event names.  Used in "type" field in XEvent structures.  Not to be
 # confused with event masks above.  They start from 2 because 0 and 1
-# are reserved in the protocol for errors and replies. */
+# are reserved in the protocol for errors and replies.
 KeyPress = 2
 KeyRelease = 3
 ButtonPress = 4
@@ -4022,16 +4013,9 @@ SelectionNotify = 31
 # *** end - from /usr/include/X11/X.h ***
 
 
-
-FL_APPEVENT_CB = cty.CFUNCTYPE(cty.c_int, cty.POINTER(XEvent), cty.c_void_p)
-
-FL_HANDLE_CANVAS = cty.CFUNCTYPE(cty.c_int, cty.POINTER(FL_OBJECT), Window,
-            cty.c_int, cty.c_int, cty.POINTER(XEvent), cty.c_void_p)
-
-
 # my add --LK
-# As ctypes creates a new instance of each object every time, they aren't
-# really comparable. Here an escamotage can be used: comparing u_ldata
+# As ctypes creates a new instance of each object every time, two objects
+# aren't really comparable. Here an escamotage can be used: comparing u_ldata
 # element of every concerned objects.
 # e.g.: if fl_do_forms()[0].u_ldata == otherobj[0].u_ldata ...
 

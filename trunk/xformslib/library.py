@@ -510,15 +510,17 @@ def fl_object_returned(pObject):
 
 # IO other than XEvent Q
 
+FL_IO_CALLBACK = cty.CFUNCTYPE(None, cty.c_int, cty.c_void_p)
+
 def fl_add_io_callback(fd, mask, py_callback, data):
     """
         fl_add_io_callback(fd, mask, py_callback, data)
 
         Registers an input callback function when input is available from fd.
 
-        @param fd : a valid file descriptor in a unix system
+        @param fd : a valid file descriptor in a *nix system
         @param mask : under what circumstance the input callback should be
-           invoked (FL_READ, FL_WRITE or FL_EXCEPT)
+           invoked (i.e. FL_READ, FL_WRITE or FL_EXCEPT)
         @param py_callback : python function to be invoked under mask
            condition
         @param data : argument to be passed to function
@@ -567,6 +569,8 @@ def fl_remove_io_callback(fd, mask, py_cb):
 
 
 # signals
+
+FL_SIGNAL_HANDLER = cty.CFUNCTYPE(None, cty.c_int, cty.c_void_p)
 
 def fl_add_signal_callback(sglnum, py_cb, data):
     """
@@ -654,6 +658,8 @@ def fl_app_signal_direct(y):
 
 
 # timeouts
+
+FL_TIMEOUT_CALLBACK = cty.CFUNCTYPE(None, cty.c_int, cty.c_void_p)
 
 def fl_add_timeout(msec, py_callback, data):
     """
@@ -2274,6 +2280,9 @@ def fl_get_object_component(pObjectComposite, objclass, compontype, numb):
     return retval
 
 
+# cfunction for _fl_for_all_objects
+cfunc_int_pobject_pvoid = cty.CFUNCTYPE(cty.c_int, cty.POINTER(FL_OBJECT), \
+                                        cty.c_void_p)
 
 def fl_for_all_objects(pForm, py_cb, v):
     """
@@ -2284,8 +2293,8 @@ def fl_for_all_objects(pForm, py_cb, v):
 
     _fl_for_all_objects = cfuncproto(
             load_so_libforms(), "fl_for_all_objects", \
-            None, [cty.POINTER(FL_FORM), cty.CFUNCTYPE(cty.c_int,
-            cty.POINTER(FL_OBJECT), cty.c_void_p), cty.c_void_p], \
+            None, [cty.POINTER(FL_FORM), cfunc_int_pobject_pvoid, \
+            cty.c_void_p], \
             """void fl_for_all_objects(FL_FORM * form, const char * cb,
                void * v)
             """)
@@ -2705,7 +2714,7 @@ def fl_activate_object(pObject):
             """)
     keep_elem_refs(pObject)
     _fl_activate_object(pObject)
-    pObject[0].active =1
+    pObject[0].active = 1
 
 
 def fl_deactivate_object(pObject):
@@ -2722,8 +2731,11 @@ def fl_deactivate_object(pObject):
             """)
     keep_elem_refs(pObject)
     _fl_deactivate_object(pObject)
-    pObject[0].active =0
+    pObject[0].active = 0
 
+
+# cfunction for _fl_enumerate_fonts
+cfunc_none_string = cty.CFUNCTYPE(None, STRING)
 
 def fl_enumerate_fonts(py_output, shortform):
     """ fl_enumerate_fonts(py_output, shortform) -> ID num
@@ -2731,7 +2743,7 @@ def fl_enumerate_fonts(py_output, shortform):
 
     _fl_enumerate_fonts = cfuncproto(
             load_so_libforms(), "fl_enumerate_fonts",\
-            cty.c_int, [cty.CFUNCTYPE(None, STRING), cty.c_int],\
+            cty.c_int, [cfunc_none_string, cty.c_int],\
             """int fl_enumerate_fonts(const char * output, int shortform)
             """)
     ishortform = convert_to_int(shortform)
@@ -3045,6 +3057,9 @@ def fl_drw_box(style, x, y, w, h, colr, bwIn):
                    ulcolr, bwIn, ibwIn)
     _fl_drw_box(style, x, y, w, h, ulcolr, ibwIn)
 
+
+FL_DRAWPTR = cty.CFUNCTYPE(None, FL_Coord, FL_Coord, FL_Coord, FL_Coord,
+                           cty.c_int, FL_COLOR)
 
 def fl_add_symbol(name, py_drawit, scalable):
     """ fl_add_symbol(name, py_drawit, scalable) -> num.
@@ -3733,6 +3748,9 @@ def fl_free(p1):
     _fl_free(p1)
 
 
+# cfunction for _fl_malloc
+cfunc_none_sizet = cty.CFUNCTYPE(cty.c_void_p, size_t)
+
 # low-level function maybe unused in python
 ##fl_malloc = (cty.CFUNCTYPE(cty.c_void_p, size_t)).in_dll(load_so_libforms(),
 #             'fl_malloc')
@@ -3750,6 +3768,9 @@ def fl_free(p1):
 #    return retval
 
 
+# cfunction for _fl_calloc
+cfunc_none_sizet_sizet = cty.CFUNCTYPE(cty.c_void_p, size_t, size_t)
+
 # low-level function maybe unused in python
 ##fl_calloc = (cty.CFUNCTYPE(cty.c_void_p, size_t, size_t)).in_dll(\
 #             load_so_libforms(), 'fl_calloc')
@@ -3766,6 +3787,9 @@ def fl_free(p1):
 #    retval = _fl_calloc(uisize)
 #    return retval
 
+
+# cfunction for _fl_realloc
+cfunc_voidp_voidp_sizet = cty.CFUNCTYPE(cty.c_void_p, cty.c_void_p, size_t)
 
 # low-level function maybe unused in python
 ##fl_realloc = (cty.CFUNCTYPE(cty.c_void_p, cty.c_void_p, size_t)).in_dll(\
@@ -5407,6 +5431,8 @@ def fl_last_event():
     return retval
 
 
+FL_APPEVENT_CB = cty.CFUNCTYPE(cty.c_int, cty.POINTER(XEvent), cty.c_void_p)
+
 def fl_set_event_callback(py_callback, userdata):
     """ fl_set_event_callback(py_callback, userdata) -> event callback
     """
@@ -6144,6 +6170,9 @@ def fl_popup_set_policy(pPopup, policy):
     retval = _fl_popup_set_policy(pPopup, ipolicy)
     return retval
 
+
+# already defined in xfdata
+#FL_POPUP_CB = cty.CFUNCTYPE(cty.c_int, cty.POINTER(FL_POPUP_RETURN))
 
 def fl_popup_set_callback(pPopup, py_cb):
     """ fl_popup_set_callback(pPopup, py_cb) -> popup callback func.
@@ -7763,6 +7792,9 @@ def fl_set_default_browser_maxlinelength(n):
     return retval
 
 
+FL_BROWSER_SCROLL_CALLBACK = cty.CFUNCTYPE(None, cty.POINTER(FL_OBJECT),
+                cty.c_int, cty.c_void_p)
+
 def fl_set_browser_hscroll_callback(pObject, py_cb, data):
     """ fl_set_browser_hscroll_callback(pObject, py_cb, data)
     """
@@ -8446,6 +8478,12 @@ def fl_create_generic_button(objclass, buttontype, x, y, w, h, label):
     return retval
 
 
+FL_DrawButton = cty.CFUNCTYPE(None, cty.POINTER(FL_OBJECT))
+FL_CleanupButton = cty.CFUNCTYPE(None, cty.POINTER(FL_BUTTON_SPEC))
+
+FL_DRAWBUTTON = FL_DrawButton
+FL_CLEANUPBUTTON = FL_CleanupButton
+
 def fl_add_button_class(bclass, py_drawit, py_cleanup):
     """ fl_add_button_class(bclass, py_drawit, py_cleanup)
     """
@@ -8639,6 +8677,9 @@ def fl_set_canvas_attributes(pObject, mask, pXSetWindowAttributes):
     _fl_set_canvas_attributes(pObject, uimask, pXSetWindowAttributes)
 
 
+FL_HANDLE_CANVAS = cty.CFUNCTYPE(cty.c_int, cty.POINTER(FL_OBJECT), Window,
+            cty.c_int, cty.c_int, cty.POINTER(XEvent), cty.c_void_p)
+
 def fl_add_canvas_handler(pObject, ev, py_handler, udata):
     """ fl_add_canvas_handler(pObject, ev, py_handler, udata) -> canvas handler
     """
@@ -8756,6 +8797,8 @@ def fl_clear_canvas(pObject):
     keep_elem_refs(pObject)
     _fl_clear_canvas(pObject)
 
+
+FL_MODIFY_CANVAS_PROP = cty.CFUNCTYPE(cty.c_int, cty.POINTER(FL_OBJECT))
 
 def fl_modify_canvas_prop(pObject, py_init, py_activate, py_cleanup):
     """ fl_modify_canvas_prop(pObject, py_init, py_activate, py_cleanup)
@@ -9568,6 +9611,10 @@ def fl_set_choice_notitle(pObject, n):
 # prototypes for clipboard stuff
 #################################
 
+FL_LOSE_SELECTION_CB = cty.CFUNCTYPE(cty.c_int, cty.POINTER(FL_OBJECT),
+                                     cty.c_long)
+FL_LOSE_SELECTION_CALLBACK = FL_LOSE_SELECTION_CB
+
 def fl_stuff_clipboard(pObject, clipbdtype, data, size, py_lose_callback):
     """ fl_stuff_clipboard(pObject, clipbdtype, data, size, py_lose_callback) -> num.
     """
@@ -9589,6 +9636,10 @@ def fl_stuff_clipboard(pObject, clipbdtype, data, size, py_lose_callback):
                                  c_lose_callback)
     return retval
 
+
+FL_SELECTION_CB = cty.CFUNCTYPE(cty.c_int, cty.POINTER(FL_OBJECT),
+                                cty.c_long, cty.c_void_p, cty.c_long)
+FL_SELECTION_CALLBACK = FL_SELECTION_CB
 
 def fl_request_clipboard(pObject, clipbdtype, py_got_it_callback):
     """ fl_request_clipboard(pObject, clipbdtype, py_got_it_callback) -> num.
@@ -10322,6 +10373,8 @@ def fl_get_dirlist(directory, pattern, rescan):
     retval = _fl_get_dirlist(sdirectory, spattern, pn, irescan)
     return retval, n
 
+
+FL_DIRLIST_FILTER = cty.CFUNCTYPE(cty.c_int, STRING, cty.c_int)
 
 def fl_set_dirlist_filter(py_filter):
     """ fl_set_dirlist_filter(py_filter) -> dirlist_filter func.
@@ -11673,6 +11726,8 @@ def fl_set_fselector_transient(b):
     fl_set_fselector_border(argval)
 
 
+FL_FSCB = cty.CFUNCTYPE(cty.c_int, STRING, cty.c_void_p)
+
 def fl_set_fselector_callback(py_cb, p2):
     """ fl_set_fselector_callback(py_cb, p2)
     """
@@ -11768,13 +11823,16 @@ def fl_refresh_fselector():
     _fl_refresh_fselector()
 
 
+# c function prototype for _fl_add_fselector_appbutton
+cfunc_none_voidp = cty.CFUNCTYPE(None, cty.c_void_p)
+
 def fl_add_fselector_appbutton(p1, py_fn, p3):
     """ fl_add_fselector_appbutton(p1, py_fn, p3)
     """
 
     _fl_add_fselector_appbutton = cfuncproto(
             load_so_libforms(), "fl_add_fselector_appbutton",
-            None, [STRING, cty.CFUNCTYPE(None, cty.c_void_p), cty.c_void_p],
+            None, [STRING, cfunc_none_voidp, cty.c_void_p],
             """void fl_add_fselector_appbutton(const char * p1,
                const char * p2, void * p3)
             """)
@@ -12353,6 +12411,9 @@ def fl_get_input(pObject):
     retval = _fl_get_input(pObject)
     return retval
 
+
+FL_INPUTVALIDATOR = cty.CFUNCTYPE(cty.c_int, cty.POINTER(FL_OBJECT), STRING,
+                                  STRING, cty.c_int)
 
 def fl_set_input_filter(pObject, py_validate):
     """ fl_set_input_filter(pObject, py_validate) -> input_filter func.
@@ -13254,7 +13315,17 @@ def fl_create_scrollbar(scrolltype, x, y, w, h, label):
 
 
 def fl_add_scrollbar(scrolltype, x, y, w, h, label):
-    """ fl_add_scrollbar(scrolltype, x, y, w, h, label) -> pObject
+    """
+        fl_add_scrollbar(scrolltype, x, y, w, h, label) -> pObject
+
+        Adds a scrollbar to a form.
+
+        @param scrolltype : type of scrollbar
+        @param x : horizontal position (upper-left corner)
+        @param y : vertical position (upper-left corner)
+        @param w : width of the scrollbar
+        @param h : height of the scrollbar
+        @param label : label text of the scrollbar
     """
 
     _fl_add_scrollbar = cfuncproto(
@@ -13278,7 +13349,12 @@ def fl_add_scrollbar(scrolltype, x, y, w, h, label):
 
 
 def fl_get_scrollbar_value(pObject):
-    """ fl_get_scrollbar_value(pObject) -> floatnum
+    """
+        fl_get_scrollbar_value(pObject) -> value[float]
+
+        Returns the value of a scrollbar.
+
+        @param pObject : pointer to object
     """
 
     _fl_get_scrollbar_value = cfuncproto(
@@ -13292,7 +13368,13 @@ def fl_get_scrollbar_value(pObject):
 
 
 def fl_set_scrollbar_value(pObject, val):
-    """ fl_set_scrollbar_value(pObject, val)
+    """
+        fl_set_scrollbar_value(pObject, val)
+
+        Sets the value of a scrollbar.
+
+        @param pObject : pointer to object
+        @param val : value of the scrollbar to be set
     """
 
     _fl_set_scrollbar_value = cfuncproto(
@@ -13320,7 +13402,16 @@ def fl_set_scrollbar_size(pObject, val):
 
 
 def fl_set_scrollbar_increment(pObject, leftbtnval, midlbtnval):
-    """ fl_set_scrollbar_increment(pObject, leftbtnval, midlbtnval)
+    """
+        fl_set_scrollbar_increment(pObject, leftbtnval, midlbtnval)
+
+        Sets the size of the steps of a scrollbar jump.
+
+        @param pObject : pointer to object
+        @param leftbtnval : value to increment if the left mouse button is
+           pressed
+        @param midlbtnval : value to increment if the middle mouse button is
+           pressed
     """
 
     _fl_set_scrollbar_increment = cfuncproto(
@@ -13338,7 +13429,13 @@ def fl_set_scrollbar_increment(pObject, leftbtnval, midlbtnval):
 
 #def fl_get_scrollbar_increment(pObject, leftbtnval, valmidlbtnval)
 def fl_get_scrollbar_increment(pObject):
-    """ fl_get_scrollbar_increment(pObject) -> leftbtnval, midlbtnval
+    """
+        fl_get_scrollbar_increment(pObject) -> leftbtnval[double], midlbtnval[double]
+
+        Returns the increment of size of a scrollbar for left and middle mouse
+        buttons.
+
+        @param pObject : pointer to object
     """
 
     _fl_get_scrollbar_increment = cfuncproto(
@@ -13356,7 +13453,14 @@ def fl_get_scrollbar_increment(pObject):
 
 
 def fl_set_scrollbar_bounds(pObject, minbound, maxbound):
-    """ fl_set_scrollbar_bounds(pObject, minbound, maxbound)
+    """
+        fl_set_scrollbar_bounds(pObject, minbound, maxbound)
+
+        Sets the bounds/limits of a scrollbar.
+
+        @param pObject : pointer to object
+        @param minbound : minimum bound of scrollbar
+        @param maxbound : maximum bound of scrollbar
     """
 
     _fl_set_scrollbar_bounds = cfuncproto(
@@ -13372,7 +13476,12 @@ def fl_set_scrollbar_bounds(pObject, minbound, maxbound):
 
 #def fl_get_scrollbar_bounds(pObject, b1, b2)
 def fl_get_scrollbar_bounds(pObject):
-    """ fl_get_scrollbar_bounds(pObject) -> minbound, maxbound
+    """
+        fl_get_scrollbar_bounds(pObject) -> minbound, maxbound
+
+        Returns the bounds/limits of a scrollbar.
+
+        @param pObject : pointer to scrollbar object
     """
 
     _fl_get_scrollbar_bounds = cfuncproto(
@@ -13390,7 +13499,13 @@ def fl_get_scrollbar_bounds(pObject):
 
 
 def fl_set_scrollbar_return(pObject, returnnum):
-    """ fl_set_scrollbar_return(pObject, returnnum)
+    """
+        fl_set_scrollbar_return(pObject, returnnum)
+
+        Sets the type of return of a scrollbar.
+
+        @param pObject : pointer to scrollbar object
+        @param returnnum : value of return type
     """
 
     _fl_set_scrollbar_return = cfuncproto(
@@ -13812,7 +13927,17 @@ def fl_create_slider(slidertype, x, y, w, h, label):
 
 
 def fl_add_slider(slidertype, x, y, w, h, label):
-    """ fl_add_slider(slidertype, x, y, w, h, label) -> pObject
+    """
+        fl_add_slider(slidertype, x, y, w, h, label) -> pObject
+
+        Adds a slider to a form. No value is displayed.
+
+        @param slidertype : type of the slider
+        @param x : horizontal position (upper-left corner)
+        @param y : vertical position (upper-left corner)
+        @param w : width of the slider
+        @param h : height of the slider
+        @param label : label of the slider (placed below it by default)
     """
 
     _fl_add_slider = cfuncproto(
@@ -13860,7 +13985,18 @@ def fl_create_valslider(slidertype, x, y, w, h, label):
 
 
 def fl_add_valslider(slidertype, x, y, w, h, label):
-    """ fl_add_valslider(slidertype, x, y, w, h, label) -> pObject
+    """
+        fl_add_valslider(slidertype, x, y, w, h, label) -> pObject
+
+        Adds a slider to a form. Its value is displayed above or to the
+        left of the slider.
+
+        @param slidertype : type of the slider
+        @param x : horizontal position (upper-left corner)
+        @param y : vertical position (upper-left corner)
+        @param w : width of the slider
+        @param h : height of the slider
+        @param label : label of the slider (placed below it by default)
     """
 
     _fl_add_valslider = cfuncproto(
@@ -13884,7 +14020,13 @@ def fl_add_valslider(slidertype, x, y, w, h, label):
 
 
 def fl_set_slider_value(pObject, val):
-    """ fl_set_slider_value(pObject, val)
+    """
+        fl_set_slider_value(pObject, val)
+
+        Changes the value of a slider.
+
+        @param pObject : pointer to object
+        @param val : new value of slider
     """
 
     _fl_set_slider_value = cfuncproto(
@@ -13898,7 +14040,12 @@ def fl_set_slider_value(pObject, val):
 
 
 def fl_get_slider_value(pObject):
-    """ fl_get_slider_value(pObject) -> floatnum
+    """
+        fl_get_slider_value(pObject) -> value[float]
+
+        Returns value of a slider.
+
+        @param pObject : pointer to object
     """
 
     _fl_get_slider_value = cfuncproto(
@@ -13912,7 +14059,14 @@ def fl_get_slider_value(pObject):
 
 
 def fl_set_slider_bounds(pObject, minbound, maxbound):
-    """ fl_set_slider_bounds(pObject, minbound, maxbound)
+    """
+        fl_set_slider_bounds(pObject, minbound, maxbound)
+
+        Sets bounds/limits of a slider.
+
+        @param pObject : pointer to object
+        @param minbound : minimum bound of slider
+        @param maxbound : maximum bound of slider
     """
 
     _fl_set_slider_bounds = cfuncproto(
@@ -13929,7 +14083,12 @@ def fl_set_slider_bounds(pObject, minbound, maxbound):
 
 #def fl_get_slider_bounds(pObject, minbound, maxbound)
 def fl_get_slider_bounds(pObject):
-    """ fl_get_slider_bounds(pObject) -> minbound, maxbound
+    """
+        fl_get_slider_bounds(pObject) -> minbound[float], maxbound[float]
+
+        Returns bounds/limits of a slider.
+
+        @param pObject : pointer to object
     """
 
     _fl_get_slider_bounds = cfuncproto(
@@ -13947,7 +14106,13 @@ def fl_get_slider_bounds(pObject):
 
 
 def fl_set_slider_return(pObject, returnnum):
-    """ fl_set_slider_return(pObject, returnnum)
+    """
+        fl_set_slider_return(pObject, returnnum)
+
+        Sets the return value of a slider.
+
+        @param pObject : pointer to object
+        @param returnnum : value of return (e.g. xfc.FL_RETURN_NONE, etc..)
     """
 
     _fl_set_slider_return = cfuncproto(
@@ -14011,7 +14176,13 @@ def fl_get_slider_increment(pObject):
 
 
 def fl_set_slider_size(pObject, size):
-    """ fl_set_slider_size(pObject, size)
+    """
+        fl_set_slider_size(pObject, size)
+
+        Sets the size of a slider.
+
+        @param pObject : pointer to object
+        @param size : value of size of the slider
     """
 
     _fl_set_slider_size = cfuncproto(
@@ -14025,7 +14196,13 @@ def fl_set_slider_size(pObject, size):
 
 
 def fl_set_slider_precision(pObject, precnum):
-    """ fl_set_slider_precision(pObject, precnum)
+    """
+        fl_set_slider_precision(pObject, precnum)
+
+        Sets precision with which value a valslider is shown.
+
+        @param pObject : pointer to object
+        @param precnum : precision of shown value
     """
 
     _fl_set_slider_precision = cfuncproto(
@@ -14038,8 +14215,19 @@ def fl_set_slider_precision(pObject, precnum):
     _fl_set_slider_precision(pObject, iprecnum)
 
 
+FL_VAL_FILTER = cty.CFUNCTYPE(STRING, cty.POINTER(FL_OBJECT), cty.c_double, \
+                              cty.c_int)
+
 def fl_set_slider_filter(pObject, py_filter):
-    """ fl_set_slider_filter(pObject, py_filter)
+    """
+        fl_set_slider_filter(pObject, py_filter)
+
+        Overrides the default (slider value shown in floating point format)
+        by registering a filter function.
+
+        @param pObject : pointer to oject
+        @param py_filter : function (pObject, value[float], precision[int])
+           returning a string
     """
 
     _fl_set_slider_filter = cfuncproto(
@@ -14447,7 +14635,10 @@ def fl_set_folder_bynumber(pObject, num):
 
 
 def fl_get_folder(pObject):
-    """ fl_get_folder(pObject) -> pForm
+    """
+        fl_get_folder(pObject) -> pForm
+
+        @param pObject : pointer to object
     """
 
     _fl_get_folder = cfuncproto(
@@ -14461,7 +14652,10 @@ def fl_get_folder(pObject):
 
 
 def fl_get_folder_number(pObject):
-    """ fl_get_folder_number(pObject) -> folder num.
+    """
+        fl_get_folder_number(pObject) -> folder num.
+
+        @param pObject : pointer to object
     """
 
     _fl_get_folder_number = cfuncproto(
@@ -14475,7 +14669,10 @@ def fl_get_folder_number(pObject):
 
 
 def fl_get_folder_name(pObject):
-    """ fl_get_folder_name(pObject) -> name string
+    """
+        fl_get_folder_name(pObject) -> name string
+
+        @param pObject : pointer to object
     """
 
     _fl_get_folder_name = cfuncproto(
@@ -14489,7 +14686,10 @@ def fl_get_folder_name(pObject):
 
 
 def fl_get_tabfolder_numfolders(pObject):
-    """ fl_get_tabfolder_numfolders(pObject) -> num.
+    """
+        fl_get_tabfolder_numfolders(pObject) -> num.
+
+        @param pObject : pointer to object
     """
 
     _fl_get_tabfolder_numfolders = cfuncproto(
@@ -14503,7 +14703,10 @@ def fl_get_tabfolder_numfolders(pObject):
 
 
 def fl_get_active_folder(pObject):
-    """ fl_get_active_folder(pObject) -> pForm
+    """
+        fl_get_active_folder(pObject) -> pForm
+
+        @param pObject : pointer to object
     """
 
     _fl_get_active_folder = cfuncproto(
@@ -14517,7 +14720,10 @@ def fl_get_active_folder(pObject):
 
 
 def fl_get_active_folder_number(pObject):
-    """ fl_get_active_folder_number(pObject) -> num.
+    """
+        fl_get_active_folder_number(pObject) -> num.
+
+        @param pObject : pointer to object
     """
 
     _fl_get_active_folder_number = cfuncproto(
@@ -14531,7 +14737,10 @@ def fl_get_active_folder_number(pObject):
 
 
 def fl_get_active_folder_name(pObject):
-    """ fl_get_active_folder_name(pObject) -> name string
+    """
+        fl_get_active_folder_name(pObject) -> name string
+
+        @param pObject : pointer to object
     """
 
     _fl_get_active_folder_name = cfuncproto(
@@ -14546,7 +14755,10 @@ def fl_get_active_folder_name(pObject):
 
 #def fl_get_folder_area(pObject, x, y, w, h)
 def fl_get_folder_area(pObject):
-    """ fl_get_folder_area(pObject) -> x, y, w, h
+    """
+        fl_get_folder_area(pObject) -> x, y, w, h
+
+        @param pObject : pointer to object
     """
 
     _fl_get_folder_area = cfuncproto(
@@ -14567,7 +14779,10 @@ def fl_get_folder_area(pObject):
 
 
 def fl_replace_folder_bynumber(pObject, num, pForm):
-    """ fl_replace_folder_bynumber(pObject, num, pForm)
+    """
+        fl_replace_folder_bynumber(pObject, num, pForm)
+
+        @param pObject : pointer to object
     """
 
     _fl_replace_folder_bynumber = cfuncproto(
@@ -14582,7 +14797,10 @@ def fl_replace_folder_bynumber(pObject, num, pForm):
 
 
 def fl_set_tabfolder_autofit(pObject, num):
-    """ fl_set_tabfolder_autofit(pObject, num) -> num.
+    """
+        fl_set_tabfolder_autofit(pObject, num) -> num.
+
+        @param pObject : pointer to object
     """
 
     _fl_set_tabfolder_autofit = cfuncproto(
@@ -14597,7 +14815,8 @@ def fl_set_tabfolder_autofit(pObject, num):
 
 
 def fl_set_default_tabfolder_corner(n):
-    """ fl_set_default_tabfolder_corner(n) -> num.
+    """
+        fl_set_default_tabfolder_corner(n) -> num.
     """
 
     _fl_set_default_tabfolder_corner = cfuncproto(
@@ -14612,7 +14831,10 @@ def fl_set_default_tabfolder_corner(n):
 
 
 def fl_set_tabfolder_offset(pObject, offset):
-    """ fl_set_tabfolder_offset(pObject, offset) -> num.
+    """
+        fl_set_tabfolder_offset(pObject, offset) -> num.
+
+        @param pObject : pointer to tabfolder object
     """
 
     _fl_set_tabfolder_offset = cfuncproto(
@@ -14632,7 +14854,8 @@ def fl_set_tabfolder_offset(pObject, offset):
 ###################
 
 def fl_create_text(texttype, x, y, w, h, label):
-    """ fl_create_text(texttype, x, y, w, h, label) -> pObject
+    """
+        fl_create_text(texttype, x, y, w, h, label) -> pObject
     """
 
     _fl_create_text = cfuncproto(
@@ -14656,7 +14879,8 @@ def fl_create_text(texttype, x, y, w, h, label):
 
 
 def fl_add_text(texttype, x, y, w, h, label):
-    """ fl_add_text(texttype, x, y, w, h, label) -> pObject
+    """
+        fl_add_text(texttype, x, y, w, h, label) -> pObject
     """
 
     _fl_add_text = cfuncproto(
@@ -14685,7 +14909,10 @@ def fl_add_text(texttype, x, y, w, h, label):
 #########################
 
 def fl_get_thumbwheel_value(pObject):
-    """ fl_get_thumbwheel_value(pObject) -> num.
+    """
+        fl_get_thumbwheel_value(pObject) -> num.
+
+        @param pObject : pointer to object
     """
 
     _fl_get_thumbwheel_value = cfuncproto(
@@ -14699,7 +14926,10 @@ def fl_get_thumbwheel_value(pObject):
 
 
 def fl_set_thumbwheel_value(pObject, value):
-    """ fl_set_thumbwheel_value(pObject, value)
+    """
+        fl_set_thumbwheel_value(pObject, value)
+
+        @param pObject : pointer to object
     """
 
     _fl_set_thumbwheel_value = cfuncproto(
@@ -14714,7 +14944,10 @@ def fl_set_thumbwheel_value(pObject, value):
 
 
 def fl_get_thumbwheel_step(pObject):
-    """ fl_get_thumbwheel_step(pObject) -> num.
+    """
+        fl_get_thumbwheel_step(pObject) -> num.
+
+        @param pObject : pointer to object
     """
 
     _fl_get_thumbwheel_step = cfuncproto(
@@ -14728,7 +14961,10 @@ def fl_get_thumbwheel_step(pObject):
 
 
 def fl_set_thumbwheel_step(pObject, step):
-    """ fl_set_thumbwheel_step(pObject, step) -> num.
+    """
+        fl_set_thumbwheel_step(pObject, step) -> num.
+
+        @param pObject : pointer to object
     """
 
     _fl_set_thumbwheel_step = cfuncproto(
@@ -14743,7 +14979,10 @@ def fl_set_thumbwheel_step(pObject, step):
 
 
 def fl_set_thumbwheel_return(pObject, when):
-    """ fl_set_thumbwheel_return(pObject, when) -> num.
+    """
+        fl_set_thumbwheel_return(pObject, when) -> num.
+
+        @param pObject : pointer to object
     """
 
     _fl_set_thumbwheel_return = cfuncproto(
@@ -14759,7 +14998,10 @@ def fl_set_thumbwheel_return(pObject, when):
 
 
 def fl_set_thumbwheel_crossover(pObject, flag):
-    """ fl_set_thumbwheel_crossover(pObject, flag) -> num.
+    """
+        fl_set_thumbwheel_crossover(pObject, flag) -> num.
+
+        @param pObject : pointer to object
     """
 
     _fl_set_thumbwheel_crossover = cfuncproto(
@@ -14774,7 +15016,10 @@ def fl_set_thumbwheel_crossover(pObject, flag):
 
 
 def fl_set_thumbwheel_bounds(pObject, minbound, maxbound):
-    """ fl_set_thumbwheel_bounds(pObject, minbound, maxbound)
+    """
+        fl_set_thumbwheel_bounds(pObject, minbound, maxbound)
+
+        @param pObject : pointer to object
     """
 
     _fl_set_thumbwheel_bounds = cfuncproto(
@@ -14791,7 +15036,10 @@ def fl_set_thumbwheel_bounds(pObject, minbound, maxbound):
 
 #def fl_get_thumbwheel_bounds(pObject, minbound, maxbound)
 def fl_get_thumbwheel_bounds(pObject):
-    """ fl_get_thumbwheel_bounds(pObject) -> minbound, maxbound
+    """
+        fl_get_thumbwheel_bounds(pObject) -> minbound, maxbound
+
+        @param pObject : pointer to thumbwheel object
     """
 
     _fl_get_thumbwheel_bounds = cfuncproto(
@@ -14809,7 +15057,8 @@ def fl_get_thumbwheel_bounds(pObject):
 
 
 def fl_create_thumbwheel(wheeltype, x, y, w, h, label):
-    """ fl_create_thumbwheel(wheeltype, x, y, w, h, label) -> pObject
+    """
+        fl_create_thumbwheel(wheeltype, x, y, w, h, label) -> pObject
     """
 
     _fl_create_thumbwheel = cfuncproto(
@@ -14833,7 +15082,8 @@ def fl_create_thumbwheel(wheeltype, x, y, w, h, label):
 
 
 def fl_add_thumbwheel(wheeltype, x, y, w, h, label):
-    """ fl_add_thumbwheel(wheeltype, x, y, w, h, label) -> pObject
+    """
+        fl_add_thumbwheel(wheeltype, x, y, w, h, label) -> pObject
     """
 
     _fl_add_thumbwheel = cfuncproto(
@@ -14865,7 +15115,10 @@ def fl_add_thumbwheel(wheeltype, x, y, w, h, label):
 # Routines
 
 def fl_create_timer(timertype, x, y, w, h, label):
-    """ fl_create_timer(timertype, x, y, w, h, label) -> pObject
+    """
+        fl_create_timer(timertype, x, y, w, h, label) -> pObject
+
+        @param pObject : pointer to object
     """
 
     _fl_create_timer = cfuncproto(
@@ -14889,7 +15142,8 @@ def fl_create_timer(timertype, x, y, w, h, label):
 
 
 def fl_add_timer(timertype, x, y, w, h, label):
-    """ fl_add_timer(timertype, x, y, w, h, label) -> pObject
+    """
+        fl_add_timer(timertype, x, y, w, h, label) -> pObject
     """
 
     _fl_add_timer = cfuncproto(
@@ -14913,7 +15167,10 @@ def fl_add_timer(timertype, x, y, w, h, label):
 
 
 def fl_set_timer(pObject, total):
-    """ fl_set_timer(pObject, total)
+    """
+        fl_set_timer(pObject, total)
+
+        @param pObject : pointer to object
     """
 
     _fl_set_timer = cfuncproto(
@@ -14927,7 +15184,10 @@ def fl_set_timer(pObject, total):
 
 
 def fl_get_timer(pObject):
-    """ fl_get_timer(pObject) -> num.
+    """
+        fl_get_timer(pObject) -> num.
+
+        @param pObject : pointer to object
     """
 
     _fl_get_timer = cfuncproto(
@@ -14941,7 +15201,10 @@ def fl_get_timer(pObject):
 
 
 def fl_set_timer_countup(pObject, yes):
-    """ fl_set_timer_countup(pObject, yes)
+    """
+        fl_set_timer_countup(pObject, yes)
+
+        @param pObject : pointer to object
     """
 
     _fl_set_timer_countup = cfuncproto(
@@ -14954,8 +15217,13 @@ def fl_set_timer_countup(pObject, yes):
     _fl_set_timer_countup(pObject, iyes)
 
 
+FL_TIMER_FILTER = cty.CFUNCTYPE(STRING, cty.POINTER(FL_OBJECT), cty.c_double)
+
 def fl_set_timer_filter(pObject, py_filter):
-    """ fl_set_timer_filter(pObject, py_filter) -> timer_filter func.
+    """
+        fl_set_timer_filter(pObject, py_filter) -> timer_filter func.
+
+        @param pObject : pointer to object
     """
 
     _fl_set_timer_filter = cfuncproto(
@@ -14972,7 +15240,10 @@ def fl_set_timer_filter(pObject, py_filter):
 
 
 def fl_suspend_timer(pObject):
-    """ fl_suspend_timer(pObject)
+    """
+        fl_suspend_timer(pObject)
+
+        @param pObject : pointer to object
     """
 
     _fl_suspend_timer = cfuncproto(
@@ -14985,7 +15256,10 @@ def fl_suspend_timer(pObject):
 
 
 def fl_resume_timer(pObject):
-    """ fl_resume_timer(pObject)
+    """
+        fl_resume_timer(pObject)
+
+        @param pObject : pointer to object
     """
 
     _fl_resume_timer = cfuncproto(
@@ -15004,7 +15278,8 @@ def fl_resume_timer(pObject):
 ###############################
 
 def fl_setpup_entries(popupid, pPopupEntry):
-    """ fl_setpup_entries(popupid, pPopupEntry) -> num.
+    """
+        fl_setpup_entries(popupid, pPopupEntry) -> num.
     """
 
     _fl_setpup_entries = cfuncproto(
@@ -15019,7 +15294,8 @@ def fl_setpup_entries(popupid, pPopupEntry):
 
 
 def fl_newpup(win):
-    """ fl_newpup(win) -> num.
+    """
+        fl_newpup(win) -> num.
     """
 
     _fl_newpup = cfuncproto(
@@ -15034,7 +15310,8 @@ def fl_newpup(win):
 
 
 def fl_defpup(win, pupstr):
-    """ fl_defpup(win, pupstr) -> num.
+    """
+        fl_defpup(win, pupstr) -> num.
     """
 
     _fl_defpup = cfuncproto(
@@ -15050,7 +15327,8 @@ def fl_defpup(win, pupstr):
 
 
 def fl_addtopup(popupid, pupstr):
-    """ fl_addtopup(popupid, pupstr) -> num.
+    """
+        fl_addtopup(popupid, pupstr) -> num.
     """
 
     _fl_addtopup = cfuncproto(
@@ -15066,7 +15344,8 @@ def fl_addtopup(popupid, pupstr):
 
 
 def fl_setpup_mode(popupid, itemval, mode):
-    """ fl_setpup_mode(popupid, itemval, mode) -> num.
+    """
+        fl_setpup_mode(popupid, itemval, mode) -> num.
     """
 
     _fl_setpup_mode = cfuncproto(
@@ -15083,7 +15362,8 @@ def fl_setpup_mode(popupid, itemval, mode):
 
 
 def fl_freepup(popupid):
-    """ fl_freepup(popupid)
+    """
+        fl_freepup(popupid)
     """
 
     _fl_freepup = cfuncproto(
@@ -15097,7 +15377,8 @@ def fl_freepup(popupid):
 
 
 def fl_dopup(popupid):
-    """ fl_dopup(popupid) -> num.
+    """
+        fl_dopup(popupid) -> num.
     """
 
     _fl_dopup = cfuncproto(
@@ -15112,7 +15393,8 @@ def fl_dopup(popupid):
 
 
 def fl_setpup_default_cursor(cursor):
-    """ fl_setpup_default_cursor(cursor) -> cursor
+    """
+        fl_setpup_default_cursor(cursor) -> cursor
     """
 
     _fl_setpup_default_cursor = cfuncproto(
@@ -15127,7 +15409,8 @@ def fl_setpup_default_cursor(cursor):
 
 
 def fl_setpup_default_color(fgcolr, bgcolr):
-    """ fl_setpup_default_color(fgcolr, bgcolr)
+    """
+        fl_setpup_default_color(fgcolr, bgcolr)
     """
 
     _fl_setpup_default_color = cfuncproto(
@@ -15142,7 +15425,8 @@ def fl_setpup_default_color(fgcolr, bgcolr):
 
 
 def fl_setpup_default_pup_checked_color(colr):
-    """ fl_setpup_default_pup_checked_color(colr):
+    """
+        fl_setpup_default_pup_checked_color(colr):
     """
 
     _fl_setpup_default_pup_checked_color = cfuncproto(
@@ -15156,7 +15440,8 @@ def fl_setpup_default_pup_checked_color(colr):
 
 
 def fl_setpup_default_fontsize(size):
-    """ fl_setpup_default_fontsize(size) -> num.
+    """
+        fl_setpup_default_fontsize(size) -> num.
     """
 
     _fl_setpup_default_fontsize = cfuncproto(
@@ -15171,7 +15456,8 @@ def fl_setpup_default_fontsize(size):
 
 
 def fl_setpup_default_fontstyle(style):
-    """ fl_setpup_default_fontstyle(style) -> num.
+    """
+        fl_setpup_default_fontstyle(style) -> num.
     """
 
     _fl_setpup_default_fontstyle = cfuncproto(
@@ -15193,7 +15479,8 @@ fl_setpup_checkcolor = fl_setpup_default_pup_checked_color
 
 
 def fl_setpup_default_bw(bw):
-    """ fl_setpup_default_bw(bw) -> num.
+    """
+        fl_setpup_default_bw(bw) -> num.
     """
 
     _fl_setpup_default_bw = cfuncproto(
@@ -15208,7 +15495,8 @@ def fl_setpup_default_bw(bw):
 
 
 def fl_setpup_shortcut(popupid, itemval, hotkeystxt):
-    """ fl_setpup_shortcut(popupid, itemval, hotkeystxt)
+    """
+        fl_setpup_shortcut(popupid, itemval, hotkeystxt)
     """
 
     _fl_setpup_shortcut = cfuncproto(
@@ -15225,7 +15513,8 @@ def fl_setpup_shortcut(popupid, itemval, hotkeystxt):
 
 
 def fl_setpup_position(x, y):
-    """ fl_setpup_position(x, y)
+    """
+        fl_setpup_position(x, y)
     """
 
     _fl_setpup_position = cfuncproto(
@@ -15240,7 +15529,8 @@ def fl_setpup_position(x, y):
 
 
 def fl_setpup_selection(popupid, itemval):
-    """ fl_setpup_selection(popupid, itemval)
+    """
+        fl_setpup_selection(popupid, itemval)
     """
 
     _fl_setpup_selection = cfuncproto(
@@ -15255,7 +15545,8 @@ def fl_setpup_selection(popupid, itemval):
 
 
 def fl_setpup_shadow(popupid, flag):
-    """ fl_setpup_shadow(popupid, flag)
+    """
+        fl_setpup_shadow(popupid, flag)
     """
 
     _fl_setpup_shadow = cfuncproto(
@@ -15270,7 +15561,8 @@ def fl_setpup_shadow(popupid, flag):
 
 
 def fl_setpup_softedge(popupid, flag):
-    """ fl_setpup_softedge(popupid, flag)
+    """
+        fl_setpup_softedge(popupid, flag)
     """
 
     _fl_setpup_softedge = cfuncproto(
@@ -15285,7 +15577,8 @@ def fl_setpup_softedge(popupid, flag):
 
 
 def fl_setpup_bw(popupid, bw):
-    """ fl_setpup_bw(popupid, bw)
+    """
+        fl_setpup_bw(popupid, bw)
     """
 
     _fl_setpup_bw = cfuncproto(
@@ -15300,7 +15593,8 @@ def fl_setpup_bw(popupid, bw):
 
 
 def fl_setpup_title(popupid, title):
-    """ fl_setpup_title(popupid, title)
+    """
+        fl_setpup_title(popupid, title)
     """
 
     _fl_setpup_title = cfuncproto(
@@ -15314,8 +15608,11 @@ def fl_setpup_title(popupid, title):
     _fl_setpup_title(ipopupid, stitle)
 
 
+FL_PUP_ENTERCB = cty.CFUNCTYPE(None, cty.c_int, cty.c_void_p)
+
 def fl_setpup_entercb(popupid, py_cb, data):
-    """ fl_setpup_entercb(popupid, py_cb, data) -> pup_entercb
+    """
+        fl_setpup_entercb(popupid, py_cb, data) -> pup_entercb
     """
 
     _fl_setpup_entercb = cfuncproto(
@@ -15333,8 +15630,11 @@ def fl_setpup_entercb(popupid, py_cb, data):
     return retval
 
 
+FL_PUP_LEAVECB = cty.CFUNCTYPE(None, cty.c_int, cty.c_void_p)
+
 def fl_setpup_leavecb(popupid, py_cb, data):
-    """ fl_setpup_leavecb(popupid, py_cb, data) -> pup_leavecb
+    """
+        fl_setpup_leavecb(popupid, py_cb, data) -> pup_leavecb
     """
 
     _fl_setpup_leavecb = cfuncproto(
@@ -15353,7 +15653,8 @@ def fl_setpup_leavecb(popupid, py_cb, data):
 
 
 def fl_setpup_pad(popupid, padw, padh):
-    """ fl_setpup_pad(popupid, padw, padh)
+    """
+        fl_setpup_pad(popupid, padw, padh)
     """
 
     _fl_setpup_pad = cfuncproto(
@@ -15369,7 +15670,8 @@ def fl_setpup_pad(popupid, padw, padh):
 
 
 def fl_setpup_cursor(popupid, cursor):
-    """ fl_setpup_cursor(popupid, cursor) -> cursor
+    """
+        fl_setpup_cursor(popupid, cursor) -> cursor
     """
 
     _fl_setpup_cursor = cfuncproto(
@@ -15385,7 +15687,8 @@ def fl_setpup_cursor(popupid, cursor):
 
 
 def fl_setpup_maxpup(newmaxnum):
-    """ fl_setpup_maxpup(newmaxnum) -> num.
+    """
+        fl_setpup_maxpup(newmaxnum) -> num.
     """
 
     _fl_setpup_maxpup = cfuncproto(
@@ -15400,7 +15703,8 @@ def fl_setpup_maxpup(newmaxnum):
 
 
 def fl_getpup_mode(popupid, itemval):
-    """ fl_getpup_mode(popupid, itemval) -> num.
+    """
+        fl_getpup_mode(popupid, itemval) -> num.
     """
 
     _fl_getpup_mode = cfuncproto(
@@ -15416,7 +15720,8 @@ def fl_getpup_mode(popupid, itemval):
 
 
 def fl_getpup_text(popupid, itemval):
-    """ fl_getpup_text(popupid, itemval) -> text string
+    """
+        fl_getpup_text(popupid, itemval) -> text string
     """
 
     _fl_getpup_text = cfuncproto(
@@ -15432,7 +15737,8 @@ def fl_getpup_text(popupid, itemval):
 
 
 def fl_showpup(popupid):
-    """ fl_showpup(popupid)
+    """
+        fl_showpup(popupid)
     """
 
     _fl_showpup = cfuncproto(
@@ -15446,7 +15752,8 @@ def fl_showpup(popupid):
 
 
 def fl_hidepup(popupid):
-    """ fl_hidepup(popupid)
+    """
+        fl_hidepup(popupid)
     """
 
     _fl_hidepup = cfuncproto(
@@ -15460,7 +15767,8 @@ def fl_hidepup(popupid):
 
 
 def fl_getpup_items(popupid):
-    """ fl_getpup_items(popupid) -> num.
+    """
+        fl_getpup_items(popupid) -> num.
     """
 
     _fl_getpup_items = cfuncproto(
@@ -15475,7 +15783,8 @@ def fl_getpup_items(popupid):
 
 
 def fl_current_pup():
-    """ fl_current_pup() -> num.
+    """
+        fl_current_pup() -> num.
     """
 
     _fl_current_pup = cfuncproto(
@@ -15488,7 +15797,8 @@ def fl_current_pup():
 
 
 def fl_setpup_itemcb(popupid, itemval, py_cb):
-    """ fl_setpup_itemcb(popupid, itemval, py_cb) -> pup_cb
+    """
+        fl_setpup_itemcb(popupid, itemval, py_cb) -> pup_cb
     """
 
     _fl_setpup_itemcb = cfuncproto(
@@ -15523,7 +15833,8 @@ def fl_setpup_menucb(popupid, py_cb):
 
 
 def fl_setpup_submenu(popupid, itemval, subpopupid):
-    """ fl_setpup_submenu(popupid, itemval, subpopupid)
+    """
+        fl_setpup_submenu(popupid, itemval, subpopupid)
     """
 
     _fl_setpup_submenu = cfuncproto(
@@ -15545,7 +15856,8 @@ fl_setpup = fl_setpup_mode
 # Others
 
 def fl_create_xyplot(plottype, x, y, w, h, label):
-    """ fl_create_xyplot(plottype, x, y, w, h, label) -> pObject
+    """
+        fl_create_xyplot(plottype, x, y, w, h, label) -> pObject
     """
 
     _fl_create_xyplot = cfuncproto(
@@ -15569,7 +15881,8 @@ def fl_create_xyplot(plottype, x, y, w, h, label):
 
 
 def fl_add_xyplot(plottype, x, y, w, h, label):
-    """ fl_add_xyplot(plottype, x, y, w, h, label) -> pObject
+    """
+        fl_add_xyplot(plottype, x, y, w, h, label) -> pObject
     """
 
     _fl_add_xyplot = cfuncproto(
@@ -15594,6 +15907,8 @@ def fl_add_xyplot(plottype, x, y, w, h, label):
 
 def fl_set_xyplot_data(pObject, xlist, ylist, n, title, xlabel, ylabel):
     """ fl_set_xyplot_data(pObject, xlist, ylist, n, title, xlabel, ylabel)
+
+    @param pObject : pointer to object
     """
 
     _fl_set_xyplot_data = cfuncproto(
@@ -15628,6 +15943,8 @@ def fl_set_xyplot_data(pObject, xlist, ylist, n, title, xlabel, ylabel):
 
 def fl_set_xyplot_data_double(pObject, x, y, n, title, xlabel, ylabel):
     """ fl_set_xyplot_data_double(pObject, x, y, n, title, xlabel, ylabel)
+
+    @param pObject : pointer to object
     """
 
     _fl_set_xyplot_data_double = cfuncproto(
@@ -15653,6 +15970,8 @@ def fl_set_xyplot_data_double(pObject, x, y, n, title, xlabel, ylabel):
 
 def fl_set_xyplot_file(pObject, f, title, xl, yl):
     """ fl_set_xyplot_file(pObject, f, title, xl, yl) -> num.
+
+    @param pObject : pointer to object
     """
 
     _fl_set_xyplot_file = cfuncproto(
@@ -15673,6 +15992,8 @@ def fl_set_xyplot_file(pObject, f, title, xl, yl):
 
 def fl_insert_xyplot_data(pObject, idnum, n, valx, valy):
     """ fl_insert_xyplot_data(pObject, idnum, n, valx, valy)
+
+    @param pObject : pointer to object
     """
 
     _fl_insert_xyplot_data = cfuncproto(
@@ -15692,6 +16013,8 @@ def fl_insert_xyplot_data(pObject, idnum, n, valx, valy):
 
 def fl_add_xyplot_text(pObject, valx, valy, text, al, colr):
     """ fl_add_xyplot_text(pObject, valx, valy, text, al, colr)
+
+    @param pObject : pointer to object
     """
 
     _fl_add_xyplot_text = cfuncproto(
@@ -15713,6 +16036,8 @@ def fl_add_xyplot_text(pObject, valx, valy, text, al, colr):
 
 def fl_delete_xyplot_text(pObject, text):
     """ fl_delete_xyplot_text(pObject, text)
+
+    @param pObject : pointer to object
     """
 
     _fl_delete_xyplot_text = cfuncproto(
@@ -15727,6 +16052,8 @@ def fl_delete_xyplot_text(pObject, text):
 
 def fl_set_xyplot_maxoverlays(pObject, maxover):
     """ fl_set_xyplot_maxoverlays(pObject, maxover) -> num.
+
+    @param pObject : pointer to object
     """
 
     _fl_set_xyplot_maxoverlays = cfuncproto(
@@ -15742,6 +16069,8 @@ def fl_set_xyplot_maxoverlays(pObject, maxover):
 
 def fl_add_xyplot_overlay(pObject, idnum, x, y, n, colr):
     """ fl_add_xyplot_overlay(pObject, idnum, x, y, n, colr)
+
+    @param pObject : pointer to object
     """
 
     _fl_add_xyplot_overlay = cfuncproto(
@@ -15763,6 +16092,8 @@ def fl_add_xyplot_overlay(pObject, idnum, x, y, n, colr):
 
 def fl_add_xyplot_overlay_file(pObject, idnum, f, colr):
     """ fl_add_xyplot_overlay_file(pObject, idnum, f, colr) -> num.
+
+    @param pObject : pointer to object
     """
 
     _fl_add_xyplot_overlay_file = cfuncproto(
@@ -15781,6 +16112,8 @@ def fl_add_xyplot_overlay_file(pObject, idnum, f, colr):
 
 def fl_set_xyplot_return(pObject, when):
     """ fl_set_xyplot_return(pObject, when)
+
+    @param pObject : pointer to object
     """
 
     _fl_set_xyplot_return = cfuncproto(
@@ -15795,6 +16128,8 @@ def fl_set_xyplot_return(pObject, when):
 
 def fl_set_xyplot_xtics(pObject, major, minor):
     """ fl_set_xyplot_xtics(pObject, major, minor)
+
+    @param pObject : pointer to object
     """
 
     _fl_set_xyplot_xtics = cfuncproto(
@@ -15810,6 +16145,8 @@ def fl_set_xyplot_xtics(pObject, major, minor):
 
 def fl_set_xyplot_ytics(pObject, major, minor):
     """ fl_set_xyplot_ytics(pObject, major, minor)
+
+    @param pObject : pointer to object
     """
 
     _fl_set_xyplot_ytics = cfuncproto(
@@ -15825,6 +16162,8 @@ def fl_set_xyplot_ytics(pObject, major, minor):
 
 def fl_set_xyplot_xbounds(pObject, minbound, maxbound):
     """ fl_set_xyplot_xbounds(pObject, minbound, maxbound)
+
+    @param pObject : pointer to object
     """
 
     _fl_set_xyplot_xbounds = cfuncproto(
@@ -15841,6 +16180,8 @@ def fl_set_xyplot_xbounds(pObject, minbound, maxbound):
 
 def fl_set_xyplot_ybounds(pObject, minbound, maxbound):
     """ fl_set_xyplot_ybounds(pObject, minbound, maxbound)
+
+    @param pObject : pointer to object
     """
 
     _fl_set_xyplot_ybounds = cfuncproto(
@@ -15858,6 +16199,8 @@ def fl_set_xyplot_ybounds(pObject, minbound, maxbound):
 #def fl_get_xyplot_xbounds(pObject, minbound, maxbound)
 def fl_get_xyplot_xbounds(pObject):
     """ fl_get_xyplot_xbounds(pObject) -> minbound, maxbound
+
+    @param pObject : pointer to object
     """
 
     _fl_get_xyplot_xbounds = cfuncproto(
@@ -15877,6 +16220,8 @@ def fl_get_xyplot_xbounds(pObject):
 #def fl_get_xyplot_ybounds(pObject, minbound, maxbound)
 def fl_get_xyplot_ybounds(pObject):
     """ fl_get_xyplot_ybounds(pObject) -> minbound, maxbound
+
+    @param pObject : pointer to object
     """
 
     _fl_get_xyplot_ybounds = cfuncproto(
@@ -15895,7 +16240,10 @@ def fl_get_xyplot_ybounds(pObject):
 
 #def fl_get_xyplot(pObject, x, y, i)
 def fl_get_xyplot(pObject):
-    """ fl_get_xyplot(pObject) -> x, y, i
+    """
+        fl_get_xyplot(pObject) -> x, y, i
+
+        @param pObject : pointer to object
     """
 
     _fl_get_xyplot = cfuncproto(
@@ -15916,6 +16264,8 @@ def fl_get_xyplot(pObject):
 #def fl_get_xyplot_data(pObject, x, y, n)
 def fl_get_xyplot_data(pObject):
     """ fl_get_xyplot_data(pObject) -> x, y, n
+
+    @param pObject : pointer to object
     """
 
     _fl_get_xyplot_data = cfuncproto(
@@ -15936,6 +16286,8 @@ def fl_get_xyplot_data(pObject):
 #def fl_get_xyplot_data_pointer(pObject, idnum, x, y, n)
 def fl_get_xyplot_data_pointer(pObject, idnum):
     """ fl_get_xyplot_data_pointer(pObject, idnum) -> x, y, n
+
+    @param pObject : pointer to object
     """
 
     _fl_get_xyplot_data_pointer = cfuncproto(
@@ -15958,6 +16310,8 @@ def fl_get_xyplot_data_pointer(pObject, idnum):
 #def fl_get_xyplot_overlay_data(pObject, idnum, x, y, n)
 def fl_get_xyplot_overlay_data(pObject, idnum):
     """ fl_get_xyplot_overlay_data(pObject, idnum) -> x, y, n
+
+    @param pObject : pointer to object
     """
 
     _fl_get_xyplot_overlay_data = cfuncproto(
@@ -15978,6 +16332,8 @@ def fl_get_xyplot_overlay_data(pObject, idnum):
 
 def fl_set_xyplot_overlay_type(pObject, idnum, plottype):
     """ fl_set_xyplot_overlay_type(pObject, idnum, plottype)
+
+    @param pObject : pointer to object
     """
 
     _fl_set_xyplot_overlay_type = cfuncproto(
@@ -15994,6 +16350,8 @@ def fl_set_xyplot_overlay_type(pObject, idnum, plottype):
 
 def fl_delete_xyplot_overlay(pObject, idnum):
     """ fl_delete_xyplot_overlay(pObject, idnum)
+
+    @param pObject : pointer to object
     """
 
     _fl_delete_xyplot_overlay = cfuncproto(
@@ -16007,7 +16365,10 @@ def fl_delete_xyplot_overlay(pObject, idnum):
 
 
 def fl_set_xyplot_interpolate(pObject, idnum, deg, grid):
-    """ fl_set_xyplot_interpolate(pObject, idnum, deg, grid)
+    """
+        fl_set_xyplot_interpolate(pObject, idnum, deg, grid)
+
+        @param pObject : pointer to object
     """
 
     _fl_set_xyplot_interpolate = cfuncproto(
@@ -16025,7 +16386,10 @@ def fl_set_xyplot_interpolate(pObject, idnum, deg, grid):
 
 
 def fl_set_xyplot_inspect(pObject, yes):
-    """ fl_set_xyplot_inspect(pObject, yes)
+    """
+        fl_set_xyplot_inspect(pObject, yes)
+
+        @param pObject : pointer to object
     """
 
     _fl_set_xyplot_inspect = cfuncproto(
@@ -16039,7 +16403,10 @@ def fl_set_xyplot_inspect(pObject, yes):
 
 
 def fl_set_xyplot_symbolsize(pObject, n):
-    """ fl_set_xyplot_symbolsize(pObject, n)
+    """
+        fl_set_xyplot_symbolsize(pObject, n)
+
+        @param pObject : pointer to object
     """
 
     _fl_set_xyplot_symbolsize = cfuncproto(
@@ -16053,7 +16420,10 @@ def fl_set_xyplot_symbolsize(pObject, n):
 
 
 def fl_replace_xyplot_point(pObject, i, valx, valy):
-    """ fl_replace_xyplot_point(pObject, i, valx, valy)
+    """
+        fl_replace_xyplot_point(pObject, i, valx, valy)
+
+        @param pObject : pointer to object
     """
 
     _fl_replace_xyplot_point = cfuncproto(
@@ -16076,7 +16446,10 @@ def fl_replace_xyplot_point(pObject, i, valx, valy):
 # which acts on the first dataset only.
 
 def fl_replace_xyplot_point_in_overlay(pObject, i, setID, valx, valy):
-    """ fl_replace_xyplot_point_in_overlay(pObject, i, setID, valx, valy)
+    """
+        fl_replace_xyplot_point_in_overlay(pObject, i, setID, valx, valy)
+
+        @param pObject : pointer to object
     """
 
     _fl_replace_xyplot_point_in_overlay = cfuncproto(
@@ -16096,7 +16469,10 @@ def fl_replace_xyplot_point_in_overlay(pObject, i, setID, valx, valy):
 
 #def fl_get_xyplot_xmapping(pObject, a, b):
 def fl_get_xyplot_xmapping(pObject):
-    """ fl_get_xyplot_xmapping(pObject) -> a, b
+    """
+        fl_get_xyplot_xmapping(pObject) -> a, b
+
+        @param pObject : pointer to object
     """
 
     _fl_get_xyplot_xmapping = cfuncproto(
@@ -16115,7 +16491,10 @@ def fl_get_xyplot_xmapping(pObject):
 
 #def fl_get_xyplot_ymapping(pObject, a, b):
 def fl_get_xyplot_ymapping(pObject):
-    """ fl_get_xyplot_ymapping(pObject) -> a, b
+    """
+        fl_get_xyplot_ymapping(pObject) -> a, b
+
+        @param pObject : pointer to object
     """
 
     _fl_get_xyplot_ymapping = cfuncproto(
@@ -16133,7 +16512,10 @@ def fl_get_xyplot_ymapping(pObject):
 
 
 def fl_set_xyplot_keys(pObject, keys, valx, valy, align):
-    """ fl_set_xyplot_keys(pObject, keys, valx, valy, align)
+    """
+        fl_set_xyplot_keys(pObject, keys, valx, valy, align)
+
+        @param pObject : pointer to object
     """
 
     _fl_set_xyplot_keys = cfuncproto(
@@ -16151,7 +16533,10 @@ def fl_set_xyplot_keys(pObject, keys, valx, valy, align):
 
 
 def fl_set_xyplot_key(pObject, idnum, keytxt):
-    """ fl_set_xyplot_key(pObject, idnum, keytxt)
+    """
+        fl_set_xyplot_key(pObject, idnum, keytxt)
+
+        @param pObject : pointer to object
     """
 
     _fl_set_xyplot_key = cfuncproto(
@@ -16167,7 +16552,10 @@ def fl_set_xyplot_key(pObject, idnum, keytxt):
 
 
 def fl_set_xyplot_key_position(pObject, valx, valy, align):
-    """ fl_set_xyplot_key_position(pObject, valx, valy, align)
+    """
+        fl_set_xyplot_key_position(pObject, valx, valy, align)
+
+        @param pObject : pointer to object
     """
 
     _fl_set_xyplot_key_position = cfuncproto(
@@ -16185,7 +16573,10 @@ def fl_set_xyplot_key_position(pObject, valx, valy, align):
 
 
 def fl_set_xyplot_key_font(pObject, style, size):
-    """ fl_set_xyplot_key_font(pObject, style, size)
+    """
+        fl_set_xyplot_key_font(pObject, style, size)
+
+        @param pObject : pointer to object
     """
 
     _fl_set_xyplot_key_font = cfuncproto(
@@ -16201,7 +16592,10 @@ def fl_set_xyplot_key_font(pObject, style, size):
 
 
 def fl_get_xyplot_numdata(pObject, idnum):
-    """ fl_get_xyplot_numdata(pObject, idnum) -> num.
+    """
+        fl_get_xyplot_numdata(pObject, idnum) -> num.
+
+        @param pObject : pointer to object
     """
 
     _fl_get_xyplot_numdata = cfuncproto(
@@ -16219,7 +16613,10 @@ def fl_get_xyplot_numdata(pObject, idnum):
 # Use fl_set_object_l[size|style] for the functionalities
 
 def fl_set_xyplot_fontsize(pObject, size):
-    """ fl_set_xyplot_fontsize(pObject, size)
+    """
+        fl_set_xyplot_fontsize(pObject, size)
+
+        @param pObject : pointer to object
     """
 
     _fl_set_xyplot_fontsize = cfuncproto(
@@ -16234,7 +16631,10 @@ def fl_set_xyplot_fontsize(pObject, size):
 
 
 def fl_set_xyplot_fontstyle(pObject, style):
-    """ fl_set_xyplot_fontstyle(pObject, style)
+    """
+        fl_set_xyplot_fontstyle(pObject, style)
+
+        @param pObject : pointer to object
     """
 
     _fl_set_xyplot_fontstyle = cfuncproto(
@@ -16249,7 +16649,10 @@ def fl_set_xyplot_fontstyle(pObject, style):
 
 
 def fl_xyplot_s2w(pObject, sx, sy, wx, wy):
-    """ fl_xyplot_s2w(pObject, sx, sy, wx, wy)
+    """
+        fl_xyplot_s2w(pObject, sx, sy, wx, wy)
+
+        @param pObject : pointer to object
     """
 
     _fl_xyplot_s2w = cfuncproto(
@@ -16266,7 +16669,10 @@ def fl_xyplot_s2w(pObject, sx, sy, wx, wy):
 
 
 def fl_xyplot_w2s(pObject, wx, wy, sx, sy):
-    """ fl_xyplot_w2s(pObject, wx, wy, sx, sy)
+    """
+        fl_xyplot_w2s(pObject, wx, wy, sx, sy)
+
+        @param pObject : pointer to object
     """
 
     _fl_xyplot_w2s = cfuncproto(
@@ -16283,7 +16689,10 @@ def fl_xyplot_w2s(pObject, wx, wy, sx, sy):
 
 
 def fl_set_xyplot_xscale(pObject, scale, base):
-    """ fl_set_xyplot_xscale(pObject, scale, base)
+    """
+        fl_set_xyplot_xscale(pObject, scale, base)
+
+        @param pObject : pointer to object
     """
 
     _fl_set_xyplot_xscale = cfuncproto(
@@ -16299,7 +16708,10 @@ def fl_set_xyplot_xscale(pObject, scale, base):
 
 
 def fl_set_xyplot_yscale(pObject, scale, base):
-    """ fl_set_xyplot_yscale(pObject, scale, base)
+    """
+        fl_set_xyplot_yscale(pObject, scale, base)
+
+        @param pObject : pointer to object
     """
 
     _fl_set_xyplot_yscale = cfuncproto(
@@ -16315,7 +16727,10 @@ def fl_set_xyplot_yscale(pObject, scale, base):
 
 
 def fl_clear_xyplot(pObject):
-    """ fl_clear_xyplot(pObject)
+    """
+        fl_clear_xyplot(pObject)
+
+        @param pObject : pointer to object
     """
 
     _fl_clear_xyplot = cfuncproto(
@@ -16328,7 +16743,10 @@ def fl_clear_xyplot(pObject):
 
 
 def fl_set_xyplot_linewidth(pObject, idnum, lw):
-    """ fl_set_xyplot_linewidth(pObject, idnum, lw)
+    """
+        fl_set_xyplot_linewidth(pObject, idnum, lw)
+
+        @param pObject : pointer to object
     """
 
     _fl_set_xyplot_linewidth = cfuncproto(
@@ -16343,7 +16761,10 @@ def fl_set_xyplot_linewidth(pObject, idnum, lw):
 
 
 def fl_set_xyplot_xgrid(pObject, xgrid):
-    """ fl_set_xyplot_xgrid(pObject, xgrid)
+    """
+        fl_set_xyplot_xgrid(pObject, xgrid)
+
+        @param pObject : pointer to object
     """
 
     _fl_set_xyplot_xgrid = cfuncproto(
@@ -16357,7 +16778,10 @@ def fl_set_xyplot_xgrid(pObject, xgrid):
 
 
 def fl_set_xyplot_ygrid(pObject, ygrid):
-    """ fl_set_xyplot_ygrid(pObject, ygrid)
+    """
+        fl_set_xyplot_ygrid(pObject, ygrid)
+
+        @param pObject : pointer to object
     """
 
     _fl_set_xyplot_ygrid = cfuncproto(
@@ -16371,7 +16795,10 @@ def fl_set_xyplot_ygrid(pObject, ygrid):
 
 
 def fl_set_xyplot_grid_linestyle(pObject, style):
-    """ fl_set_xyplot_grid_linestyle(pObject, style) -> num.
+    """
+        fl_set_xyplot_grid_linestyle(pObject, style) -> num.
+
+        @param pObject : pointer to object
     """
 
     _fl_set_xyplot_grid_linestyle = cfuncproto(
@@ -16386,7 +16813,10 @@ def fl_set_xyplot_grid_linestyle(pObject, style):
 
 
 def fl_set_xyplot_alphaxtics(pObject, m, s):
-    """ fl_set_xyplot_alphaxtics(pObject, m, s)
+    """
+        fl_set_xyplot_alphaxtics(pObject, m, s)
+
+        @param pObject : pointer to object
     """
 
     _fl_set_xyplot_alphaxtics = cfuncproto(
@@ -16402,7 +16832,10 @@ def fl_set_xyplot_alphaxtics(pObject, m, s):
 
 
 def fl_set_xyplot_alphaytics(pObject, m, s):
-    """ fl_set_xyplot_alphaytics(pObject, m, s)
+    """
+        fl_set_xyplot_alphaytics(pObject, m, s)
+
+        @param pObject : pointer to object
     """
 
     _fl_set_xyplot_alphaytics = cfuncproto(
@@ -16418,7 +16851,10 @@ def fl_set_xyplot_alphaytics(pObject, m, s):
 
 
 def fl_set_xyplot_fixed_xaxis(pObject, lm, rm):
-    """ fl_set_xyplot_fixed_xaxis(pObject, lm, rm)
+    """
+        fl_set_xyplot_fixed_xaxis(pObject, lm, rm)
+
+        @param pObject : pointer to object
     """
 
     _fl_set_xyplot_fixed_xaxis = cfuncproto(
@@ -16434,7 +16870,10 @@ def fl_set_xyplot_fixed_xaxis(pObject, lm, rm):
 
 
 def fl_set_xyplot_fixed_yaxis(pObject, bm, tm):
-    """ fl_set_xyplot_fixed_yaxis(pObject, bm, tm)
+    """
+        fl_set_xyplot_fixed_yaxis(pObject, bm, tm)
+
+        @param pObject : pointer to object
     """
 
     _fl_set_xyplot_fixed_yaxis = cfuncproto(
@@ -16488,8 +16927,14 @@ def fl_spline_interpolate(wx, wy, nin, x, y, grid):
     return retval
 
 
+FL_XYPLOT_SYMBOL = cty.CFUNCTYPE(None, cty.POINTER(FL_OBJECT), cty.c_int,
+            cty.POINTER(FL_POINT), cty.c_int, cty.c_int, cty.c_int)
+
 def fl_set_xyplot_symbol(pObject, idnum, py_symbol):
-    """ fl_set_xyplot_symbol(pObject, idnum, py_symbol) -> xyplot_symbol func.
+    """
+        fl_set_xyplot_symbol(pObject, idnum, py_symbol) -> xyplot_symbol func.
+
+        @param pObject : pointer to object
     """
 
     _fl_set_xyplot_symbol = cfuncproto(
@@ -16508,7 +16953,10 @@ def fl_set_xyplot_symbol(pObject, idnum, py_symbol):
 
 
 def fl_set_xyplot_mark_active(pObject, y):
-    """ fl_set_xyplot_mark_active(pObject, y) -> num.
+    """
+        fl_set_xyplot_mark_active(pObject, y) -> num.
+
+        @param pObject : pointer to object
     """
 
     _fl_set_xyplot_mark_active = cfuncproto(
@@ -17245,6 +17693,11 @@ def fl_lookup_RGBcolor(text, p2, p3, p4):
     retval = _fl_lookup_RGBcolor(stext, p2, p3, p4)
     return retval
 
+
+FLIMAGE_Identify = cty.CFUNCTYPE(cty.c_int, cty.POINTER(FILE))
+FLIMAGE_Description = cty.CFUNCTYPE(cty.c_int, cty.POINTER(FL_IMAGE))
+FLIMAGE_Read_Pixels = cty.CFUNCTYPE(cty.c_int, cty.POINTER(FL_IMAGE))
+FLIMAGE_Write_Image = cty.CFUNCTYPE(cty.c_int, cty.POINTER(FL_IMAGE))
 
 def flimage_add_format(p1, p2, p3, p4, py_fn5, py_fn6, py_fn7, py_fn8):
     """ flimage_add_format(p1, p2, p3, p4, py_fn5, py_fn6, py_fn7, py_fn8) -> num.
