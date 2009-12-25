@@ -1,6 +1,7 @@
 
 
 SVN
+    * Porting of counter example
     * Porting of inputall example
     * Porting of objreturn example
     * Some other better docstrings.
