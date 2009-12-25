@@ -1,6 +1,7 @@
 
 
 SVN
+    * Better names for certain function parameters
     * Porting of counter example
     * Porting of inputall example
     * Porting of objreturn example

@@ -1682,7 +1682,7 @@ FL_MENU_BUTTON = 8
 FL_TOGGLE_BUTTON = FL_PUSH_BUTTON
 
 # my add - list of possible values --LK
-BTNTYPE_list = [FL_NORMAL_BUTTON, FL_PUSH_BUTTON, FL_RADIO_BUTTON, \
+BUTTONTYPE_list = [FL_NORMAL_BUTTON, FL_PUSH_BUTTON, FL_RADIO_BUTTON, \
                 FL_HIDDEN_BUTTON, FL_TOUCH_BUTTON, FL_INOUT_BUTTON, \
                 FL_RETURN_BUTTON, FL_HIDDEN_RET_BUTTON, FL_MENU_BUTTON, \
                 FL_TOGGLE_BUTTON]
@@ -2273,7 +2273,6 @@ FLInputCancelLabel = "flInput.cancel.label"
 FLInputTitle = "flInput.title"
 
 FLChoiceTitle = "flChoice.title"
-
 
 
 # command log
