@@ -368,7 +368,7 @@ def make_folder(folder):
     xf.fl_addto_choice(fd_choiceform.choice, \
                        "Choice1|Choice2|Choice3|Choice4|Choice5|Choice6")
 
-    xf.fl_load_browser(fd_choiceform.browser, "01Readme")
+    xf.fl_load_browser(fd_choiceform.browser, "Readme")
 
     xf.fl_addto_tabfolder(folder,"ButtonObj", fd_buttonform.buttonform)
     xf.fl_addto_tabfolder(folder,"StaticObj", fd_staticform.staticform)
