@@ -535,9 +535,10 @@ def fl_add_io_callback(fd, mask, py_IoCallback, data):
     ifd = convert_to_int(fd)
     uimask = convert_to_uint(mask)
     c_IoCallback = FL_IO_CALLBACK(py_IoCallback)
+    pdata = cty.cast(data, cty.c_void_p)
     keep_cfunc_refs(py_callback, c_IoCallback)
-    keep_elem_refs(fd, ifd, mask, uimask, data)
-    _fl_add_io_callback(ifd, uimask, c_IoCallback, data)
+    keep_elem_refs(fd, ifd, mask, uimask, data, pdata)
+    _fl_add_io_callback(ifd, uimask, c_IoCallback, pdata)
 
 
 def fl_remove_io_callback(fd, mask, py_IoCallback):
@@ -594,9 +595,10 @@ def fl_add_signal_callback(sglnum, py_SignalHandler, data):
             """)
     isglnum = convert_to_int(sglnum)
     c_SignalHandler = FL_SIGNAL_HANDLER(py_SignalHandler)
+    pdata = cty.cast(data, cty.c_void_p)
     keep_cfunc_refs(c_SignalHandler, py_SignalHandler)
-    keep_elem_refs(sglnum, isglnum, data)
-    _fl_add_signal_callback(isglnum, c_SignalHandler, data)
+    keep_elem_refs(sglnum, isglnum, data, pdata)
+    _fl_add_signal_callback(isglnum, c_SignalHandler, pdata)
 
 
 def fl_remove_signal_callback(sglnum):
@@ -1089,7 +1091,7 @@ def fl_activate_form(pForm):
     """
         fl_activate_form(pForm)
 
-        Re-activates form, allowing the user to interact again with elements
+        (Re)activates form, allowing the user to interact again with elements
         contained in form (buttons, etc.).
 
         @param pForm : pointer to form to be re-activated
@@ -1108,7 +1110,7 @@ def fl_deactivate_all_forms():
     """
         fl_deactivate_all_forms()
 
-        De-activates all current forms.
+        De-activates all current forms, forbidding any user interactions.
     """
 
     _fl_deactivate_all_forms = cfuncproto(
@@ -1123,7 +1125,7 @@ def fl_activate_all_forms():
     """
         fl_activate_all_forms()
 
-        Re-activates all current forms.
+        (Re)activates all current forms, allowing user interaction.
     """
 
     _fl_activate_all_forms = cfuncproto(
@@ -1172,7 +1174,7 @@ def fl_scale_form(pForm, xsc, ysc):
 
         Scales a form and the objects on it in size and position, indicating
         a scaling factor in x- and y-direction with respect to the current
-        size.
+        size, and reshapes the window.
 
         @param pForm : pointer to form to be scaled
         @param xsc : scaling factor in horizontal direction
@@ -1527,7 +1529,7 @@ def fl_free_form(pForm):
 
         Frees the memory used by a form together with all its objects.
 
-        @param pForm : pointer to form
+        @param pForm : pointer to form to be freed
     """
 
     _fl_free_form = cfuncproto(
@@ -1622,9 +1624,9 @@ def fl_adjust_form_size(pForm):
     """
         fl_adjust_form_size(pForm) -> max_factor id
 
-        Similar to fit_object_label, but will do it for all objects and has
-        a smaller threshold. Mainly intended for compensation for font size
-        variations.
+        Similar to fl_fit_object_label, but will do it for all objects and
+        has a smaller threshold. Mainly intended for compensation for font
+        size variations.
 
         @param pForm : pointer to form
     """
@@ -1767,7 +1769,7 @@ def fl_set_object_boxtype(pObject, boxtype):
     """
         fl_set_object_boxtype(pObject, boxtype)
 
-        Sets the boxtype of the object.
+        Sets the type of box of an object.
 
         @param pObject : pointer to object
         @param boxtype : type of the box
@@ -2317,7 +2319,7 @@ def fl_for_all_objects(pForm, py_cb, v):
 
         @param pForm : pointer to form
         @param py_cb : python function, fn(pObject, ptr_void) -> num.
-        @param v : ?
+        @param v : argument
     """
 
     _fl_for_all_objects = cfuncproto(
@@ -2328,9 +2330,10 @@ def fl_for_all_objects(pForm, py_cb, v):
                ( FL_OBJECT *, void * ), void * v)
             """)
     c_cb = cfunc_int_pobject_pvoid(py_cb)
+    pv = cty.cast(v, cty.c_void_p)
     keep_cfunc_refs(c_cb, py_cb)
-    keep_elem_refs(pForm, v)
-    _fl_for_all_objects(pForm, c_cb, v)
+    keep_elem_refs(pForm, v, pv)
+    _fl_for_all_objects(pForm, c_cb, pv)
 
 
 fl_draw_object_outside_label = fl_draw_object_label_outside
@@ -2393,7 +2396,14 @@ def fl_fit_object_label(pObject, xmargin, ymargin):
     """
         fl_fit_object_label(pObject, xmargin, ymargin)
 
+        Checks if the label of an object fits into it (after x- and
+        y-margin have been added). If not, all objects and the form
+        are enlarged by the necessary factor (but never by more than
+        a factor of 1.5)
+
         @param pObject : pointer to object
+        @param xmargin : horizontal margin
+        @param ymargin : vertical margin
     """
 
     _fl_fit_object_label = cfuncproto(
@@ -3469,6 +3479,8 @@ def fl_addto_form(pForm):
     """
         fl_addto_form(pForm) -> pForm
 
+        Reopens a form for input.
+
         @param pForm : pointer to form
     """
 
@@ -4535,7 +4547,12 @@ def fl_get_form_mouse(pForm):
 
 
 def fl_win_to_form(win):
-    """ fl_win_to_form(win) -> pForm
+    """
+        fl_win_to_form(win) -> pForm
+
+        Returns the form that's shown in win.
+
+        @param win  : window id whose form is shown
     """
 
     _fl_win_to_form = cfuncproto(
@@ -4568,7 +4585,12 @@ def fl_set_form_icon(pForm, icon, mask):
 
 #def fl_get_decoration_sizes(pForm, top, right, bottom, left)
 def fl_get_decoration_sizes(pForm):
-    """ fl_get_decoration_sizes(pForm) -> size num., top, right, bottom, left
+    """
+        fl_get_decoration_sizes(pForm) -> num., top, right, bottom, left
+
+        Returns the sizes of the "decorations" the window manager puts around
+        a form's window. Returns 0 on success and 1 if the form isn't visible
+        or it's a form embedded into another form.
 
         @param pForm : pointer to form
     """
@@ -5498,9 +5520,10 @@ def fl_set_event_callback(py_AppEventCb, userdata):
                void * user_data)
             """)
     c_AppEventCb = FL_APPEVENT_CB(py_AppEventCb)
+    puserdata = cty.cast(userdata, cty.c_void_p)
     keep_cfunc_refs(c_AppEventCb, py_AppEventCb)
-    keep_elem_refs(userdata)
-    retval = _fl_set_event_callback(c_AppEventCb, userdata)
+    keep_elem_refs(userdata, puserdata)
+    retval = _fl_set_event_callback(c_AppEventCb, puserdata)
     return retval
 
 
@@ -5515,9 +5538,10 @@ def fl_set_idle_callback(py_AppEventCb, userdata):
                void * user_data)
             """)
     c_AppEventCb = FL_APPEVENT_CB(py_AppEventCb)
+    puserdata = cty.cast(userdata, cty.c_void_p)
     keep_cfunc_refs(c_AppEventCb, py_AppEventCb)
-    keep_elem_refs(userdata)
-    retval = _fl_set_idle_callback(c_AppEventCb, userdata)
+    keep_elem_refs(userdata, puserdata)
+    retval = _fl_set_idle_callback(c_AppEventCb, puserdata)
     return retval
 
 
@@ -5573,6 +5597,14 @@ def fl_set_idle_delta(delta):
 def fl_add_event_callback(win, ev, py_AppEventCb, userdata):
     """
         fl_add_event_callback(win, ev, py_AppEventCb, userdata) -> event callback
+
+        Adds an event handler for a window.
+
+        @param win : window id to add event handler to
+        @param ev : event number
+        @param py_AppEventCb : python function for handling event, fn(pXevent,
+           ptr_void) -> num
+        @param userdata : user data argument
     """
 
     _fl_add_event_callback = cfuncproto(
@@ -5584,14 +5616,22 @@ def fl_add_event_callback(win, ev, py_AppEventCb, userdata):
     ulwin = convert_to_Window(win)
     iev = convert_to_int(ev)
     c_AppEventCb = FL_APPEVENT_CB(py_AppEventCb)
+    puserdata = cty.cast(userdata, cty.c_void_p)
     keep_cfunc_refs(c_AppEventCb, py_AppEventCb)
-    keep_elem_refs(win, ev, userdata, ulwin, iev)
-    retval = _fl_add_event_callback(ulwin, iev, c_AppEventCb, userdata)
+    keep_elem_refs(win, ev, userdata, ulwin, iev, puserdata)
+    retval = _fl_add_event_callback(ulwin, iev, c_AppEventCb, puserdata)
     return retval
 
 
 def fl_remove_event_callback(win, ev):
-    """ fl_remove_event_callback(win, ev)
+    """
+        fl_remove_event_callback(win, ev)
+
+        Removes one or all event callbacks for a window. May be called
+        with for a window for which no event callbacks have been set.
+
+        @param win : window id
+        @param ev : evnet number
     """
 
     _fl_remove_event_callback = cfuncproto(
@@ -5716,10 +5756,11 @@ def fl_get_resource(rname, cname, dtype, defval, val, size):
     scname = convert_to_string(cname)
     idtype = convert_to_int(dtype)
     sdefval = convert_to_string(defval)
+    pval = cty.cast(val, cty.c_void_p)
     isize = convert_to_int(size)
     keep_elem_refs(rname, cname, dtype, defval, val, size, srname, scname,
-                   idtype, sdefval, isize)
-    retval = _fl_get_resource(srname, scname, idtype, sdefval, val, isize)
+                   idtype, sdefval, pval, isize)
+    retval = _fl_get_resource(srname, scname, idtype, sdefval, pval, isize)
     return retval
 
 
@@ -6648,8 +6689,8 @@ def fl_popup_entry_get_by_value(pPopup, val):
     return retval
 
 
-def fl_popup_entry_get_by_user_data(pPopup, p2):
-    """ fl_popup_entry_get_by_user_data(pPopup, p2) -> pPopupEntry
+def fl_popup_entry_get_by_user_data(pPopup, userdata):
+    """ fl_popup_entry_get_by_user_data(pPopup, userdata) -> pPopupEntry
     """
 
     _fl_popup_entry_get_by_user_data = cfuncproto(
@@ -6658,9 +6699,9 @@ def fl_popup_entry_get_by_user_data(pPopup, p2):
             """FL_POPUP_ENTRY * fl_popup_entry_get_by_user_data(FL_POPUP * p1,
                void * p2)
             """)
-    pp2 = cty.cast(p2, cty.c_void_p)
-    keep_elem_refs(pPopup, p2, pp2)
-    retval = _fl_popup_entry_get_by_user_data(pPopup, pp2)
+    puserdata = cty.cast(userdata, cty.c_void_p)
+    keep_elem_refs(pPopup, userdata, puserdata)
+    retval = _fl_popup_entry_get_by_user_data(pPopup, puserdata)
     return retval
 
 
@@ -6813,7 +6854,17 @@ def fl_popup_set_min_width(pPopup, minwidth):
 # Routines
 
 def fl_create_bitmap(bitmaptype, x, y, w, h, label):
-    """ fl_create_bitmap(bitmaptype, x, y, w, h, label) -> pObject
+    """
+        fl_create_bitmap(bitmaptype, x, y, w, h, label) -> pObject
+
+        Creates a bitmap object.
+
+        @param bitmaptype : type of bitmap to create
+        @param x : horizontal position of bitmap (upper-left corner)
+        @param y : vertical position of bitmap (upper-left corner)
+        @param w : width of bitmap in pixels
+        @param h : height of bitmap in pixels
+        @param label : text label of bitmap
     """
 
     _fl_create_bitmap = cfuncproto(
@@ -6837,7 +6888,17 @@ def fl_create_bitmap(bitmaptype, x, y, w, h, label):
 
 
 def fl_add_bitmap(bitmaptype, x, y, w, h, label):
-    """ fl_add_bitmap(bitmaptype, x, y, w, h, label) -> pObject
+    """
+        fl_add_bitmap(bitmaptype, x, y, w, h, label) -> pObject
+
+        Adds a bitmap object.
+
+        @param bitmaptype : type of bitmap to be added
+        @param x : horizontal position of bitmap (upper-left corner)
+        @param y : vertical position of bitmap (upper-left corner)
+        @param w : width of bitmap in pixels
+        @param h : height of bitmap in pixels
+        @param label : text label of bitmap
     """
 
     _fl_add_bitmap = cfuncproto(
@@ -6860,13 +6921,15 @@ def fl_add_bitmap(bitmaptype, x, y, w, h, label):
     return retval
 
 
-def fl_set_bitmap_data(pObject, w, h, data):
-    """ fl_set_bitmap_data(pObject, w, h, data)
+def fl_set_bitmap_data(pObject, w, h, xbmcontents):
+    """ fl_set_bitmap_data(pObject, w, h, xbmcontents)
+
+        Fills the bitmap with a bitmap.
 
         @param pObject : pointer to object
-        @param w : width of bitmap
-        @param h : height of bitmap
-        @param data : bitmap data ubytes
+        @param w : width of bitmap in pixels
+        @param h : height of bitmap in pixels
+        @param xbmcontents : bitmap data used for contents in ubytes
     """
 
     _fl_set_bitmap_data = cfuncproto(
@@ -6878,9 +6941,9 @@ def fl_set_bitmap_data(pObject, w, h, data):
             """)
     iw = convert_to_int(w)
     ih = convert_to_int(h)
-    pdata = cty.cast(data, cty.POINTER(cty.c_ubyte))
-    keep_elem_refs(pObject, w, h, data, iw, ih, pdata)
-    _fl_set_bitmap_data(pObject, iw, ih, pdata)
+    pxbmcontents = cty.cast(data, cty.POINTER(cty.c_ubyte))
+    keep_elem_refs(pObject, w, h, xbmcontents, iw, ih, pxbmcontents)
+    _fl_set_bitmap_data(pObject, iw, ih, pxbmcontents)
 
 
 def fl_set_bitmap_file(pObject, fname):
@@ -7200,7 +7263,17 @@ def fl_free_pixmap(idnum):
 ##################
 
 def fl_create_box(boxtype, x, y, w, h, label):
-    """ fl_create_box(boxtype, x, y, w, h, label) -> pObject
+    """
+        fl_create_box(boxtype, x, y, w, h, label) -> pObject
+
+        Creates a box object.
+
+        @param boxtype : type of the box to be created
+        @param x : horizontal position of box (upper-left corner)
+        @param y : vertical position of box (upper-left corner)
+        @param w : width of box in pixel
+        @param h : height of box in pixel
+        @param label : text label of box
     """
 
     _fl_create_box = cfuncproto(
@@ -7224,7 +7297,17 @@ def fl_create_box(boxtype, x, y, w, h, label):
 
 
 def fl_add_box(boxtype, x, y, w, h, label):
-    """ fl_add_box(boxtype, x, y, w, h, label) -> pObject
+    """
+        fl_add_box(boxtype, x, y, w, h, label) -> pObject
+
+        Adds a box object.
+
+        @param boxtype : type of the box to be added
+        @param x : horizontal position of box (upper-left corner)
+        @param y : vertical position of box (upper-left corner)
+        @param w : width of box in pixel
+        @param h : height of box in pixel
+        @param label : text label of box
     """
 
     _fl_add_box = cfuncproto(
@@ -7256,7 +7339,17 @@ def fl_add_box(boxtype, x, y, w, h, label):
 # Routines
 
 def fl_create_browser(browsertype, x, y, w, h, label):
-    """ fl_create_browser(browsertype, x, y, w, h, label) -> pObject
+    """
+        fl_create_browser(browsertype, x, y, w, h, label) -> pObject
+
+        Creates a browser object.
+
+        @param browsertype : type of the browser to be created
+        @param x : horizontal position of browser (upper-left corner)
+        @param y : vertical position of browser (upper-left corner)
+        @param w : width of browser in pixel
+        @param h : height of browser in pixel
+        @param label : text label of browser
     """
 
     _fl_create_browser = cfuncproto(
@@ -7280,7 +7373,17 @@ def fl_create_browser(browsertype, x, y, w, h, label):
 
 
 def fl_add_browser(browsertype, x, y, w, h, label):
-    """ fl_add_browser(browsertype, x, y, w, h, label) -> pObject
+    """
+        fl_add_browser(browsertype, x, y, w, h, label) -> pObject
+
+        Adds a browser object.
+
+        @param browsertype : type of the browser to be added
+        @param x : horizontal position of browser (upper-left corner)
+        @param y : vertical position of browser (upper-left corner)
+        @param w : width of browser in pixels
+        @param h : height of browser in pixels
+        @param label : text label of browser
     """
 
     _fl_add_browser = cfuncproto(
@@ -7304,7 +7407,12 @@ def fl_add_browser(browsertype, x, y, w, h, label):
 
 
 def fl_clear_browser(pObject):
-    """ fl_clear_browser(pObject)
+    """
+        fl_clear_browser(pObject)
+
+        Clears browser object's contents.
+
+        @param pObject : poiter to browser object
     """
 
     _fl_clear_browser = cfuncproto(
@@ -7317,7 +7425,13 @@ def fl_clear_browser(pObject):
 
 
 def fl_add_browser_line(pObject, newtext):
-    """ fl_add_browser_line(pObject, newtext)
+    """
+        fl_add_browser_line(pObject, newtext)
+
+        Add a line to a browser object.
+
+        @param pObject : pointer to browser object
+        @param newtext : line of text to be added
     """
 
     _fl_add_browser_line = cfuncproto(
@@ -7538,7 +7652,13 @@ def fl_get_browser_maxline(pObject):
 
 
 def fl_get_browser_screenlines(pObject):
-    """ fl_get_browser_screenlines(pObject) -> lines num.
+    """
+        fl_get_browser_screenlines(pObject) -> lines num.
+
+        Returns an approximation of the number of lines shown in the
+        browser.
+
+        @param pObject : pointer to browser object
     """
 
     _fl_get_browser_screenlines = cfuncproto(
@@ -7552,7 +7672,13 @@ def fl_get_browser_screenlines(pObject):
 
 
 def fl_set_browser_topline(pObject, topline):
-    """ fl_set_browser_topline(pObject, topline)
+    """
+        fl_set_browser_topline(pObject, topline)
+
+        Moves a line to the top of the browser.
+
+        @param pObject : pointer to browser object
+        @param topline : number of text line to be moved to top
     """
 
     _fl_set_browser_topline = cfuncproto(
@@ -7565,9 +7691,31 @@ def fl_set_browser_topline(pObject, topline):
     _fl_set_browser_topline(pObject, itopline)
 
 
+def fl_set_browser_bottomline(pObject, topline):
+    """
+        fl_set_browser_bottomline(pObject, topline)
+
+        Moves a line to the bottom of the browser.
+
+        @param pObject : pointer to browser object
+        @param topline : number of text line to be moved to bottom
+    """
+
+    _fl_set_browser_bottomline = cfuncproto(
+            load_so_libforms(), "fl_set_browser_bottomline",
+            None, [cty.POINTER(FL_OBJECT), cty.c_int],
+            """void fl_set_browser_bottomline(FL_OBJECT * ob, int topline)
+            """)
+    itopline = convert_to_int(topline)
+    keep_elem_refs(pObject, topline, itopline)
+    _fl_set_browser_bottomline(pObject, itopline)
+
+
 def fl_set_browser_fontsize(pObject, size):
     """
         fl_set_browser_fontsize(pObject, size)
+
+        Sets the font size of a browser object.
 
         @param pObject : pointer to browser object
         @param size : font size to be set
@@ -7587,6 +7735,8 @@ def fl_set_browser_fontstyle(pObject, style):
     """
         fl_set_browser_fontstyle(pObject, style)
 
+        Sets the font style of a browser object.
+
         @param pObject : pointer to browser object
         @param style : font style to be set
     """
@@ -7602,7 +7752,13 @@ def fl_set_browser_fontstyle(pObject, style):
 
 
 def fl_set_browser_specialkey(pObject, specialkey):
-    """ fl_set_browser_specialkey(pObject, specialkey)
+    """
+        fl_set_browser_specialkey(pObject, specialkey)
+
+        Sets the escape key used in the text.
+
+        @param pObject : pointer to browser object
+        @param specialkey : escape key to be set
     """
 
     _fl_set_browser_specialkey = cfuncproto(
@@ -7661,7 +7817,12 @@ def fl_set_browser_line_selectable(pObject, line, flag):
 
 #def fl_get_browser_dimension(pObject, x, y, w, h)
 def fl_get_browser_dimension(pObject):
-    """ fl_get_browser_dimension(pObject) -> x, y, w, h
+    """
+        fl_get_browser_dimension(pObject) -> hor.xpos, ver.ypos, width, height
+
+        Returns all dimensions of a browser object.
+
+        @param pObject : pointer to browser object
     """
 
     _fl_get_browser_dimension = cfuncproto(
@@ -7830,8 +7991,14 @@ def fl_set_browser_scrollbarsize(pObject, hh, vw):
     _fl_set_browser_scrollbarsize(pObject, ihh, ivw)
 
 
-def fl_show_browser_line(pObject, j):
-    """ fl_show_browser_line(pObject, j)
+def fl_show_browser_line(pObject, line):
+    """
+        fl_show_browser_line(pObject, line)
+
+        Bring a browser line into view.
+
+        @param pObject : pointer to browser object
+        @param line : line to show
     """
 
     _fl_show_browser_line = cfuncproto(
@@ -7839,13 +8006,18 @@ def fl_show_browser_line(pObject, j):
             None, [cty.POINTER(FL_OBJECT), cty.c_int],
             """void fl_show_browser_line(FL_OBJECT * ob, int j)
             """)
-    ij = convert_to_int(j)
-    keep_elem_refs(pObject, j, ij)
-    _fl_show_browser_line(pObject, ij)
+    iline = convert_to_int(line)
+    keep_elem_refs(pObject, line, iline)
+    _fl_show_browser_line(pObject, iline)
 
 
 def fl_set_default_browser_maxlinelength(n):
-    """ fl_set_default_browser_maxlinelength(n) -> length num.
+    """
+        fl_set_default_browser_maxlinelength(n) -> length num.
+
+        Inactive function. Returns always 0
+
+        @param n : unused parameter
     """
 
     _fl_set_default_browser_maxlinelength = cfuncproto(
@@ -7969,6 +8141,15 @@ def fl_get_browser_vscroll_callback(pObject):
 
 def fl_create_button(buttontype, x, y, w, h, label):
     """ fl_create_button(buttontype, x, y, w, h, label) -> pObject
+
+        Creates a button object.
+
+        @param buttontype : type of button object to be created
+        @param x : horizontal position of button (upper-left corner)
+        @param x : vertical position of button (upper-left corner)
+        @param w : width of button in pixels
+        @param h : height of button in pixels
+        @param label : text label of button
     """
 
     _fl_create_button = cfuncproto(
@@ -7992,7 +8173,15 @@ def fl_create_button(buttontype, x, y, w, h, label):
 
 
 def fl_create_roundbutton(buttontype, x, y, w, h, label):
-    """ fl_create_roundbutton(buttontype, x, y, w, h, label) -> pObject
+    """
+        fl_create_roundbutton(buttontype, x, y, w, h, label) -> pObject
+
+        @param buttontype : type of button object to be created
+        @param x : horizontal position of button (upper-left corner)
+        @param x : vertical position of button (upper-left corner)
+        @param w : width of button in pixels
+        @param h : height of button in pixels
+        @param label : text label of button
     """
 
     _fl_create_roundbutton = cfuncproto(
@@ -8016,7 +8205,15 @@ def fl_create_roundbutton(buttontype, x, y, w, h, label):
 
 
 def fl_create_round3dbutton(buttontype, x, y, w, h, label):
-    """ fl_create_round3dbutton(buttontype, x, y, w, h, label) -> pObject
+    """
+        fl_create_round3dbutton(buttontype, x, y, w, h, label) -> pObject
+
+        @param buttontype : type of button object to be created
+        @param x : horizontal position of button (upper-left corner)
+        @param x : vertical position of button (upper-left corner)
+        @param w : width of button in pixels
+        @param h : height of button in pixels
+        @param label : text label of button
     """
 
     _fl_create_round3dbutton = cfuncproto(
@@ -8040,7 +8237,15 @@ def fl_create_round3dbutton(buttontype, x, y, w, h, label):
 
 
 def fl_create_lightbutton(buttontype, x, y, w, h, label):
-    """ fl_create_lightbutton(buttontype, x, y, w, h, label) -> pObject
+    """
+        fl_create_lightbutton(buttontype, x, y, w, h, label) -> pObject
+
+        @param buttontype : type of button object to be created
+        @param x : horizontal position of button (upper-left corner)
+        @param x : vertical position of button (upper-left corner)
+        @param w : width of button in pixels
+        @param h : height of button in pixels
+        @param label : text label of button
     """
 
     _fl_create_lightbutton = cfuncproto(
@@ -8064,7 +8269,17 @@ def fl_create_lightbutton(buttontype, x, y, w, h, label):
 
 
 def fl_create_checkbutton(buttontype, x, y, w, h, label):
-    """ fl_create_checkbutton(buttontype, x, y, w, h, label) -> pObject
+    """
+        fl_create_checkbutton(buttontype, x, y, w, h, label) -> pObject
+
+        Creates a checkbutton object.
+
+        @param buttontype : type of button object to be created
+        @param x : horizontal position of button (upper-left corner)
+        @param x : vertical position of button (upper-left corner)
+        @param w : width of button in pixels
+        @param h : height of button in pixels
+        @param label : text label of button
     """
 
     _fl_create_checkbutton = cfuncproto(
@@ -8088,7 +8303,15 @@ def fl_create_checkbutton(buttontype, x, y, w, h, label):
 
 
 def fl_create_bitmapbutton(buttontype, x, y, w, h, label):
-    """ fl_create_bitmapbutton(buttontype, x, y, w, h, label) -> pObject
+    """
+        fl_create_bitmapbutton(buttontype, x, y, w, h, label) -> pObject
+
+        @param buttontype : type of button object to be created
+        @param x : horizontal position of button (upper-left corner)
+        @param x : vertical position of button (upper-left corner)
+        @param w : width of button in pixels
+        @param h : height of button in pixels
+        @param label : text label of button
     """
 
     _fl_create_bitmapbutton = cfuncproto(
@@ -8112,7 +8335,15 @@ def fl_create_bitmapbutton(buttontype, x, y, w, h, label):
 
 
 def fl_create_pixmapbutton(buttontype, x, y, w, h, label):
-    """ fl_create_pixmapbutton(buttontype, x, y, w, h, label) -> pObject
+    """
+        fl_create_pixmapbutton(buttontype, x, y, w, h, label) -> pObject
+
+        @param buttontype : type of button object to be created
+        @param x : horizontal position of button (upper-left corner)
+        @param x : vertical position of button (upper-left corner)
+        @param w : width of button in pixels
+        @param h : height of button in pixels
+        @param label : text label of button
     """
 
     _fl_create_pixmapbutton = cfuncproto(
@@ -8136,7 +8367,15 @@ def fl_create_pixmapbutton(buttontype, x, y, w, h, label):
 
 
 def fl_create_scrollbutton(buttontype, x, y, w, h, label):
-    """ fl_create_scrollbutton(buttontype, x, y, w, h, label) -> pObject
+    """
+        fl_create_scrollbutton(buttontype, x, y, w, h, label) -> pObject
+
+        @param buttontype : type of button object to be created
+        @param x : horizontal position of button (upper-left corner)
+        @param x : vertical position of button (upper-left corner)
+        @param w : width of button in pixels
+        @param h : height of button in pixels
+        @param label : text label of button
     """
 
     _fl_create_scrollbutton = cfuncproto(
@@ -8160,7 +8399,15 @@ def fl_create_scrollbutton(buttontype, x, y, w, h, label):
 
 
 def fl_create_labelbutton(buttontype, x, y, w, h, label):
-    """ fl_create_labelbutton(buttontype, x, y, w, h, label) -> pObject
+    """
+        fl_create_labelbutton(buttontype, x, y, w, h, label) -> pObject
+
+        @param buttontype : type of button object to be created
+        @param x : horizontal position of button (upper-left corner)
+        @param x : vertical position of button (upper-left corner)
+        @param w : width of button in pixels
+        @param h : height of button in pixels
+        @param label : text label of button
     """
 
     _fl_create_labelbutton = cfuncproto(
@@ -8184,7 +8431,15 @@ def fl_create_labelbutton(buttontype, x, y, w, h, label):
 
 
 def fl_add_roundbutton(buttontype, x, y, w, h, label):
-    """ fl_add_roundbutton(buttontype, x, y, w, h, label) -> pObject
+    """
+        fl_add_roundbutton(buttontype, x, y, w, h, label) -> pObject
+
+        @param buttontype : type of button object to be added
+        @param x : horizontal position of button (upper-left corner)
+        @param x : vertical position of button (upper-left corner)
+        @param w : width of button in pixels
+        @param h : height of button in pixels
+        @param label : text label of button
     """
 
     _fl_add_roundbutton = cfuncproto(
@@ -8208,7 +8463,15 @@ def fl_add_roundbutton(buttontype, x, y, w, h, label):
 
 
 def fl_add_round3dbutton(buttontype, x, y, w, h, label):
-    """ fl_add_round3dbutton(buttontype, x, y, w, h, label) -> pObject
+    """
+        fl_add_round3dbutton(buttontype, x, y, w, h, label) -> pObject
+
+        @param buttontype : type of button object to be added
+        @param x : horizontal position of button (upper-left corner)
+        @param x : vertical position of button (upper-left corner)
+        @param w : width of button in pixels
+        @param h : height of button in pixels
+        @param label : text label of button
     """
 
     _fl_add_round3dbutton = cfuncproto(
@@ -8232,7 +8495,15 @@ def fl_add_round3dbutton(buttontype, x, y, w, h, label):
 
 
 def fl_add_lightbutton(buttontype, x, y, w, h, label):
-    """ fl_add_lightbutton(buttontype, x, y, w, h, label) -> pObject
+    """
+        fl_add_lightbutton(buttontype, x, y, w, h, label) -> pObject
+
+        @param buttontype : type of button object to be added
+        @param x : horizontal position of button (upper-left corner)
+        @param x : vertical position of button (upper-left corner)
+        @param w : width of button in pixels
+        @param h : height of button in pixels
+        @param label : text label of button
     """
 
     _fl_add_lightbutton = cfuncproto(
@@ -8256,7 +8527,17 @@ def fl_add_lightbutton(buttontype, x, y, w, h, label):
 
 
 def fl_add_checkbutton(buttontype, x, y, w, h, label):
-    """ fl_add_checkbutton(buttontype, x, y, w, h, label) -> pObject
+    """
+        fl_add_checkbutton(buttontype, x, y, w, h, label) -> pObject
+
+        Adds a checkbutton object.
+
+        @param buttontype : type of button object to be added
+        @param x : horizontal position of button (upper-left corner)
+        @param x : vertical position of button (upper-left corner)
+        @param w : width of button in pixels
+        @param h : height of button in pixels
+        @param label : text label of button
     """
 
     _fl_add_checkbutton = cfuncproto(
@@ -8280,7 +8561,17 @@ def fl_add_checkbutton(buttontype, x, y, w, h, label):
 
 
 def fl_add_button(buttontype, x, y, w, h, label):
-    """ fl_add_button(buttontype, x, y, w, h, label) -> pObject
+    """
+        fl_add_button(buttontype, x, y, w, h, label) -> pObject
+
+        Adds a button to the current form.
+
+        @param buttontype : type of button object to be added
+        @param x : horizontal position of button (upper-left corner)
+        @param x : vertical position of button (upper-left corner)
+        @param w : width of button in pixels
+        @param h : height of button in pixels
+        @param label : text label of button
     """
 
     _fl_add_button = cfuncproto(
@@ -8304,7 +8595,15 @@ def fl_add_button(buttontype, x, y, w, h, label):
 
 
 def fl_add_bitmapbutton(buttontype, x, y, w, h, label):
-    """ fl_add_bitmapbutton(buttontype, x, y, w, h, label) -> pObject
+    """
+        fl_add_bitmapbutton(buttontype, x, y, w, h, label) -> pObject
+
+        @param buttontype : type of button object to be added
+        @param x : horizontal position of button (upper-left corner)
+        @param x : vertical position of button (upper-left corner)
+        @param w : width of button in pixels
+        @param h : height of button in pixels
+        @param label : text label of button
     """
 
     _fl_add_bitmapbutton = cfuncproto(
@@ -8328,7 +8627,15 @@ def fl_add_bitmapbutton(buttontype, x, y, w, h, label):
 
 
 def fl_add_scrollbutton(buttontype, x, y, w, h, label):
-    """ fl_add_scrollbutton(buttontype, x, y, w, h, label) -> pObject
+    """
+        fl_add_scrollbutton(buttontype, x, y, w, h, label) -> pObject
+
+        @param buttontype : type of button object to be added
+        @param x : horizontal position of button (upper-left corner)
+        @param x : vertical position of button (upper-left corner)
+        @param w : width of button in pixels
+        @param h : height of button in pixels
+        @param label : text label of button
     """
 
     _fl_add_scrollbutton = cfuncproto(
@@ -8352,7 +8659,15 @@ def fl_add_scrollbutton(buttontype, x, y, w, h, label):
 
 
 def fl_add_labelbutton(buttontype, x, y, w, h, label):
-    """ fl_add_labelbutton(buttontype, x, y, w, h, label) -> pObject
+    """
+        fl_add_labelbutton(buttontype, x, y, w, h, label) -> pObject
+
+        @param buttontype : type of button object to be added
+        @param x : horizontal position of button (upper-left corner)
+        @param x : vertical position of button (upper-left corner)
+        @param w : width of button in pixels
+        @param h : height of button in pixels
+        @param label : text label of button
     """
 
     _fl_add_labelbutton = cfuncproto(
@@ -8400,7 +8715,15 @@ fl_set_bitmapbutton_datafile = fl_set_bitmapbutton_file
 
 
 def fl_add_pixmapbutton(buttontype, x, y, w, h, label):
-    """ fl_add_pixmapbutton(buttontype, x, y, w, h, label) -> pObject
+    """
+        fl_add_pixmapbutton(buttontype, x, y, w, h, label) -> pObject
+
+        @param buttontype : type of button object to be added
+        @param x : horizontal position of button (upper-left corner)
+        @param x : vertical position of button (upper-left corner)
+        @param w : width of button in pixels
+        @param h : height of button in pixels
+        @param label : text label of button
     """
 
     _fl_add_pixmapbutton = cfuncproto(
@@ -8493,7 +8816,12 @@ def fl_set_pixmapbutton_focus_pixmap(pObject, idnum, mask):
 
 
 def fl_get_button(pObject):
-    """ fl_get_button(pObject) -> num.
+    """
+        fl_get_button(pObject) -> num.
+
+        Returns the value of the button.
+
+        @param pObject : pointer to button object
     """
 
     _fl_get_button = cfuncproto(
@@ -8507,7 +8835,13 @@ def fl_get_button(pObject):
 
 
 def fl_set_button(pObject, pushed):
-    """ fl_set_button(pObject, pushed)
+    """
+        fl_set_button(pObject, pushed)
+
+        Sets the button state (not pushed/pushed).
+
+        @param pObject : pointer to button object
+        @param pushed : state of button to be set (0|1)
     """
 
     _fl_set_button = cfuncproto(
@@ -8521,7 +8855,13 @@ def fl_set_button(pObject, pushed):
 
 
 def fl_get_button_numb(pObject):
-    """ fl_get_button_numb(pObject) -> num.
+    """
+        fl_get_button_numb(pObject) -> num.
+
+        Returns the number of the last used  mouse button. fl_mouse_button
+        will also return the mouse number.
+
+        @param pObject : pointer to button object
     """
 
     _fl_get_button_numb = cfuncproto(
@@ -8538,7 +8878,18 @@ fl_set_button_shortcut = fl_set_object_shortcut
 
 
 def fl_create_generic_button(objclass, buttontype, x, y, w, h, label):
-    """ fl_create_generic_button(objclass, buttontype, x, y, w, h, label) -> pObject
+    """
+        fl_create_generic_button(objclass, buttontype, x, y, w, h, label) -> pObject
+
+        Creates a generic button object.
+
+        @param objclass : value of a new button class
+        @param buttontype : type of button object to be created
+        @param x : horizontal position of button (upper-left corner)
+        @param x : vertical position of button (upper-left corner)
+        @param w : width of button in pixels
+        @param h : height of button in pixels
+        @param label : text label of button
     """
 
     _fl_create_generic_button = cfuncproto(
@@ -8576,7 +8927,7 @@ def fl_add_button_class(bclass, py_DrawButton, py_CleanupButton):
 
         Associates a button class with a drawing function.
 
-        @param bclass : value of new button class
+        @param bclass : value of a new button class
         @param py_DrawButton : python function to draw button, fn(pObject)
         @param py_CleanupButton : python function to cleanup button,
            fn(pButtonSpec)
@@ -8598,7 +8949,14 @@ def fl_add_button_class(bclass, py_DrawButton, py_CleanupButton):
 
 
 def fl_set_button_mouse_buttons(pObject, buttons):
-    """ fl_set_button_mouse_buttons(pObject, buttons)
+    """
+        fl_set_button_mouse_buttons(pObject, buttons)
+
+        Function allows to set up to which mouse buttons the button object
+        will react.
+
+        @param pObject : pointer to button object
+        @param buttons : value of mouse buttons to be set
     """
 
     _fl_set_button_mouse_buttons = cfuncproto(
@@ -8614,7 +8972,13 @@ def fl_set_button_mouse_buttons(pObject, buttons):
 
 #def fl_get_button_mouse_buttons(pObject, buttons)
 def fl_get_button_mouse_buttons(pObject):
-    """ fl_get_button_mouse_buttons(pObject) -> buttons
+    """
+        fl_get_button_mouse_buttons(pObject) -> buttons value
+
+        Returns a value indicating which mouse buttons the button object
+        will react to.
+
+        @param pObject : pointer to button object
     """
 
     _fl_get_button_mouse_buttons = cfuncproto(
@@ -8637,7 +9001,18 @@ def fl_get_button_mouse_buttons(pObject):
 # Interfaces
 
 def fl_create_generic_canvas(canvasclass, canvastype, x, y, w, h, label):
-    """ fl_create_generic_canvas(canvasclass, canvastype, x, y, w, h, label) -> pObject
+    """
+        fl_create_generic_canvas(canvasclass, canvastype, x, y, w, h, label) -> pObject
+
+        Creates a generic canvas object.
+
+        @param canvasclass : value of a new canvas class
+        @param canvastype : type of canvas object to be created
+        @param x : horizontal position of canvas (upper-left corner)
+        @param x : vertical position of canvas (upper-left corner)
+        @param w : width of canvas in pixels
+        @param h : height of canvas in pixels
+        @param label : text label of canvas
     """
 
     _fl_create_generic_canvas = cfuncproto(
@@ -8664,7 +9039,17 @@ def fl_create_generic_canvas(canvasclass, canvastype, x, y, w, h, label):
 
 
 def fl_add_canvas(canvastype, x, y, w, h, label):
-    """ fl_add_canvas(canvastype, x, y, w, h, label) -> pObject
+    """
+        fl_add_canvas(canvastype, x, y, w, h, label) -> pObject
+
+        Adds a canvas object.
+
+        @param canvastype : type of canvas object to be added
+        @param x : horizontal position of canvas (upper-left corner)
+        @param x : vertical position of canvas (upper-left corner)
+        @param w : width of canvas in pixels
+        @param h : height of canvas in pixels
+        @param label : text label of canvas
     """
 
     _fl_add_canvas = cfuncproto(
@@ -8688,7 +9073,17 @@ def fl_add_canvas(canvastype, x, y, w, h, label):
 
 
 def fl_create_canvas(canvastype, x, y, w, h, label):
-    """ fl_create_canvas(canvastype, x, y, w, h, label) -> pObject
+    """
+        fl_create_canvas(canvastype, x, y, w, h, label) -> pObject
+
+        Creates a canvas object.
+
+        @param canvastype : type of canvas object to be created
+        @param x : horizontal position of canvas (upper-left corner)
+        @param x : vertical position of canvas (upper-left corner)
+        @param w : width of canvas in pixels
+        @param h : height of canvas in pixels
+        @param label : text label of canvas
     """
 
     _fl_create_canvas = cfuncproto(
@@ -8788,15 +9183,18 @@ def fl_add_canvas_handler(pObject, ev, py_HandleCanvas, udata):
             """)
     iev = convert_to_int(ev)
     c_HandleCanvas = FL_HANDLE_CANVAS(py_HandleCanvas)
+    pudata = cty.cast(udata, cty.c_void_p)
     keep_cfunc_refs(c_HandleCanvas, py_HandleCanvas)
-    keep_elem_refs(pObject, ev, udata, iev)
-    retval = _fl_add_canvas_handler(pObject, iev, c_HandleCanvas, udata)
+    keep_elem_refs(pObject, ev, udata, iev, pudata)
+    retval = _fl_add_canvas_handler(pObject, iev, c_HandleCanvas, pudata)
     return retval
 
 
 def fl_get_canvas_id(pObject):
     """
         fl_get_canvas_id(pObject) -> window
+
+        Returns the window ID of the canvas window.
 
         @param pObject : pointer to canvas object
     """
@@ -8840,7 +9238,15 @@ def fl_get_canvas_depth(pObject):
 
 
 def fl_remove_canvas_handler(pObject, ev, py_HandleCanvas):
-    """ fl_remove_canvas_handler(pObject, ev, py_HandleCanvas)
+    """
+        fl_remove_canvas_handler(pObject, ev, py_HandleCanvas)
+
+        Remove a particular handler for event ev. If ev is invalid, removes
+        all handlers and their corresponding event mask.
+
+        @param pObject : pointer to canvas object
+        @param ev : event number
+        @param py_HandleCanvas : python function for canvas handler
     """
 
     _fl_remove_canvas_handler = cfuncproto(
@@ -8889,7 +9295,13 @@ def fl_share_canvas_colormap(pObject, colormap):
 
 
 def fl_clear_canvas(pObject):
-    """ fl_clear_canvas(pObject)
+    """
+        fl_clear_canvas(pObject)
+
+        Clears the canvas to the background color. If no background is
+        defined use black.
+
+        @param pObject : pointer to canvas object
     """
 
     _fl_clear_canvas = cfuncproto(
@@ -9161,7 +9573,17 @@ def fl_glwinopen(config, pGLXContext, w, h):
 # Routines
 
 def fl_create_chart(charttype, x, y, w, h, label):
-    """ fl_create_chart(charttype, x, y, w, h, label) -> pObject
+    """
+        fl_create_chart(charttype, x, y, w, h, label) -> pObject
+
+        Creates a chart object.
+
+        @param charttype : type of chart object to be created
+        @param x : horizontal position of chart (upper-left corner)
+        @param x : vertical position of chart (upper-left corner)
+        @param w : width of chart in pixels
+        @param h : height of chart in pixels
+        @param label : text label of chart
     """
 
     _fl_create_chart = cfuncproto(
@@ -9185,7 +9607,17 @@ def fl_create_chart(charttype, x, y, w, h, label):
 
 
 def fl_add_chart(charttype, x, y, w, h, label):
-    """ fl_add_chart(charttype, x, y, w, h, label) -> pObject
+    """
+        fl_add_chart(charttype, x, y, w, h, label) -> pObject
+
+        Adds a chart object.
+
+        @param charttype : type of chart object to be created
+        @param x : horizontal position of chart (upper-left corner)
+        @param x : vertical position of chart (upper-left corner)
+        @param w : width of chart in pixels
+        @param h : height of chart in pixels
+        @param label : text label of chart
     """
 
     _fl_add_chart = cfuncproto(
@@ -9210,6 +9642,10 @@ def fl_add_chart(charttype, x, y, w, h, label):
 
 def fl_clear_chart(pObject):
     """ fl_clear_chart(pObject)
+
+        Clears the contents of a chart.
+
+        @param pObject : pointer to chart object
     """
 
     _fl_clear_chart = cfuncproto(
@@ -9221,8 +9657,16 @@ def fl_clear_chart(pObject):
     _fl_clear_chart(pObject)
 
 
-def fl_add_chart_value(pObject, val, labeltext, col):
-    """ fl_add_chart_value(pObject, val, labeltext, col)
+def fl_add_chart_value(pObject, val, label, col):
+    """
+        fl_add_chart_value(pObject, val, label, col)
+
+        Adds an item to the chart.
+
+        @param pObject : pointer to chart object
+        @param val : value of chart item
+        @param label : text label of chart object
+        @param col : ?
     """
 
     _fl_add_chart_value = cfuncproto(
@@ -9232,14 +9676,23 @@ def fl_add_chart_value(pObject, val, labeltext, col):
                const char * str, int col)
             """)
     fval = convert_to_double(val)
-    slabeltext = convert_to_string(labeltext)
+    slabel = convert_to_string(label)
     icol = convert_to_int(col)
-    keep_elem_refs(pObject, val, labeltext, col, fval, slabeltext, icol)
-    _fl_add_chart_value(pObject, fval, slabeltext, icol)
+    keep_elem_refs(pObject, val, label, col, fval, slabel, icol)
+    _fl_add_chart_value(pObject, fval, slabel, icol)
 
 
-def fl_insert_chart_value(pObject, indx, val, labeltext, col):
-    """ fl_insert_chart_value(pObject, indx, val, labeltext, col)
+def fl_insert_chart_value(pObject, indx, val, label, col):
+    """
+        fl_insert_chart_value(pObject, indx, val, label, col)
+
+        Inserts an item before indx to the chart.
+
+        @param pObject : pointer to chart object
+        @param indx : index position of previous item
+        @param val : value of chart item
+        @param label : text label of chart
+        @param col : ?
     """
 
     _fl_insert_chart_value = cfuncproto(
@@ -9251,15 +9704,24 @@ def fl_insert_chart_value(pObject, indx, val, labeltext, col):
             """)
     iindx = convert_to_int(indx)
     fval = convert_to_double(val)
-    slabeltext = convert_to_string(labeltext)
+    slabel = convert_to_string(label)
     icol = convert_to_int(col)
-    keep_elem_refs(pObject, indx, val, labeltext, col, iindx, fval,
-                   slabeltext, icol)
-    _fl_insert_chart_value(pObject, iindx, fval, slabeltext, icol)
+    keep_elem_refs(pObject, indx, val, label, col, iindx, fval,
+                   slabel, icol)
+    _fl_insert_chart_value(pObject, iindx, fval, slabel, icol)
 
 
-def fl_replace_chart_value(pObject, indx, val, labeltext, col):
-    """ fl_replace_chart_value(pObject, indx, val, labeltext, col)
+def fl_replace_chart_value(pObject, indx, val, label, col):
+    """
+        fl_replace_chart_value(pObject, indx, val, label, col)
+
+        Replaces value in the chart.
+
+        @param pObject : pointer to chart object
+        @param indx : index position of item to be replaced
+        @param val : value of chart item
+        @param label : text label of chart
+        @param col : ?
     """
 
     _fl_replace_chart_value = cfuncproto(
@@ -9271,15 +9733,22 @@ def fl_replace_chart_value(pObject, indx, val, labeltext, col):
             """)
     iindx = convert_to_int(indx)
     fval = convert_to_double(val)
-    slabeltext = convert_to_string(labeltext)
+    slabel = convert_to_string(label)
     icol = convert_to_int(col)
-    keep_elem_refs(pObject, indx, val, labeltext, col, iindx, fval,
-                   slabeltext, icol)
-    _fl_replace_chart_value(pObject, iindx, fval, slabeltext, icol)
+    keep_elem_refs(pObject, indx, val, label, col, iindx, fval,
+                   slabel, icol)
+    _fl_replace_chart_value(pObject, iindx, fval, slabel, icol)
 
 
 def fl_set_chart_bounds(pObject, minbound, maxbound):
-    """ fl_set_chart_bounds(pObject, minbound, maxbound)
+    """
+        fl_set_chart_bounds(pObject, minbound, maxbound)
+
+        Sets the boundaries/limits for values of a chart object.
+
+        @param pObject : pointer to chart object
+        @param minbound : minimum bounds to be set
+        @param maxbound : maximum bounds to be set
     """
 
     _fl_set_chart_bounds = cfuncproto(
@@ -9296,7 +9765,12 @@ def fl_set_chart_bounds(pObject, minbound, maxbound):
 
 #def fl_get_chart_bounds(pObject, minbound, maxbound)
 def fl_get_chart_bounds(pObject):
-    """ fl_get_chart_bounds(pObject) -> minbound, maxbound
+    """
+        fl_get_chart_bounds(pObject) -> minbound, maxbound
+
+        Returns the boundaries/limits set for values of a chart object.
+
+        @param pObject : pointer to chart object
     """
 
     _fl_get_chart_bounds = cfuncproto(
@@ -9314,7 +9788,13 @@ def fl_get_chart_bounds(pObject):
 
 
 def fl_set_chart_maxnumb(pObject, maxnumb):
-    """ fl_set_chart_maxnumb(pObject, maxnumb)
+    """
+        fl_set_chart_maxnumb(pObject, maxnumb)
+
+        Sets the maximal number of values displayed in the chart.
+
+        @param pObject : pointer to chart object
+        @param maxnum : maximum number of values to display
     """
 
     _fl_set_chart_maxnumb = cfuncproto(
@@ -9328,7 +9808,13 @@ def fl_set_chart_maxnumb(pObject, maxnumb):
 
 
 def fl_set_chart_autosize(pObject, autosize):
-    """ fl_set_chart_autosize(pObject, autosize)
+    """
+        fl_set_chart_autosize(pObject, autosize)
+
+        Sets whether the chart should autosize along the x-axis.
+
+        @param pObject : pointer to chart object
+        @param autosize : autosize flag is enabled/disabled (1|0)
     """
 
     _fl_set_chart_autosize = cfuncproto(
@@ -9408,7 +9894,17 @@ fl_set_chart_lcol = fl_set_chart_lcolor
 # Routines
 
 def fl_create_choice(choicetype, x, y, w, h, label):
-    """ fl_create_choice(choicetype, x, y, w, h, label) -> pObject
+    """
+        fl_create_choice(choicetype, x, y, w, h, label) -> pObject
+
+        Creates a choice object.
+
+        @param choicetype : type of choice object to be created
+        @param x : horizontal position of choice (upper-left corner)
+        @param x : vertical position of choice (upper-left corner)
+        @param w : width of choice in pixels
+        @param h : height of choice in pixels
+        @param label : text label of choice
     """
 
     _fl_create_choice = cfuncproto(
@@ -9432,7 +9928,17 @@ def fl_create_choice(choicetype, x, y, w, h, label):
 
 
 def fl_add_choice(choicetype, x, y, w, h, label):
-    """ fl_add_choice(choicetype, x, y, w, h, label) -> pObject
+    """
+        fl_add_choice(choicetype, x, y, w, h, label) -> pObject
+
+        Adds a choice object.
+
+        @param choicetype : type of choice object to be added
+        @param x : horizontal position of choice (upper-left corner)
+        @param x : vertical position of choice (upper-left corner)
+        @param w : width of choice in pixels
+        @param h : height of choice in pixels
+        @param label : text label of choice
     """
 
     _fl_add_choice = cfuncproto(
@@ -9456,7 +9962,12 @@ def fl_add_choice(choicetype, x, y, w, h, label):
 
 
 def fl_clear_choice(pObject):
-    """ fl_clear_choice(pObject)
+    """
+        fl_clear_choice(pObject)
+
+        Clears the choice object.
+
+        @param pObject : pointer to chioce object
     """
 
     _fl_clear_choice = cfuncproto(
@@ -9468,8 +9979,14 @@ def fl_clear_choice(pObject):
     _fl_clear_choice(pObject)
 
 
-def fl_addto_choice(pObject, choicetext):
-    """ fl_addto_choice(pObject, choicetext) -> num.
+def fl_addto_choice(pObject, choicetxt):
+    """
+        fl_addto_choice(pObject, choicetxt) -> num.
+
+        Adds a single or multiple (delimited by '|') item(s) to a choice.
+
+        @param pObject : pointer to choice object
+        @param choicetxt : text of item(s) to be added
     """
 
     _fl_addto_choice = cfuncproto(
@@ -9478,14 +9995,21 @@ def fl_addto_choice(pObject, choicetext):
             """int fl_addto_choice(FL_OBJECT * ob, const char * str)    DEPRECATED
             """)
     warn_deprecated_function()
-    schoicetext = convert_to_string(choicetext)
-    keep_elem_refs(pObject, choicetext, schoicetext)
-    retval = _fl_addto_choice(pObject, schoicetext)
+    schoicetxt = convert_to_string(choicetxt)
+    keep_elem_refs(pObject, choicetxt, schoicetxt)
+    retval = _fl_addto_choice(pObject, schoicetxt)
     return retval
 
 
-def fl_replace_choice(pObject, numb, choicetext):
-    """ fl_replace_choice(pObject, numb, choicetext)
+def fl_replace_choice(pObject, itemnum, choicetxt):
+    """
+        fl_replace_choice(pObject, itemnum, choicetxt)
+
+        Replaces a line to the choice item.
+
+        @param pObject : pointer to choice object
+        @param itemnum : item number to be replaced
+        @param choicetxt : text of item to replace
     """
 
     _fl_replace_choice = cfuncproto(
@@ -9494,14 +10018,20 @@ def fl_replace_choice(pObject, numb, choicetext):
             """void fl_replace_choice(FL_OBJECT * ob, int numb,
                const char * str)    DEPRECATED
             """)
-    inumb = convert_to_int(numb)
-    schoicetext = convert_to_string(choicetext)
-    keep_elem_refs(pObject, numb, choicetext, inumb, schoicetext)
-    _fl_replace_choice(pObject, inumb, schoicetext)
+    iitemnum = convert_to_int(itemnum)
+    schoicetxt = convert_to_string(choicetxt)
+    keep_elem_refs(pObject, itemnum, choicetxt, iitemnum, schoicetxt)
+    _fl_replace_choice(pObject, iitemnum, schoicetxt)
 
 
-def fl_delete_choice(pObject, numb):
-    """ fl_delete_choice(pObject, numb)
+def fl_delete_choice(pObject, itemnum):
+    """
+        fl_delete_choice(pObject, itemnum)
+
+        Removes a line from the choice item.
+
+        @param pObject : pointer to choice object
+        @param itemnum : item number
     """
 
     _fl_delete_choice = cfuncproto(
@@ -9509,13 +10039,19 @@ def fl_delete_choice(pObject, numb):
             None, [cty.POINTER(FL_OBJECT), cty.c_int],
             """void fl_delete_choice(FL_OBJECT * ob, int numb)    DEPRECATED
             """)
-    inumb = convert_to_int(numb)
-    keep_elem_refs(pObject, numb, inumb)
-    _fl_delete_choice(pObject, inumb)
+    iitemnum = convert_to_int(itemnum)
+    keep_elem_refs(pObject, itemnum, iitemnum)
+    _fl_delete_choice(pObject, iitemnum)
 
 
 def fl_set_choice(pObject, choice):
-    """ fl_set_choice(pObject, choice)
+    """
+        fl_set_choice(pObject, choice)
+
+        Sets the number of the choice.
+
+        @param pObject : pointer to choice object
+        @param choice : choice number
     """
 
     _fl_set_choice = cfuncproto(
@@ -9528,8 +10064,14 @@ def fl_set_choice(pObject, choice):
     _fl_set_choice(pObject, ichoice)
 
 
-def fl_set_choice_text(pObject, choicetext):
-    """ fl_set_choice_text(pObject, choicetext)
+def fl_set_choice_text(pObject, choicetxt):
+    """
+        fl_set_choice_text(pObject, choicetxt)
+
+        Sets the choice using choice text.
+
+        @param pObject : pointer to choice object
+        @param choicetxt : text of choice
     """
 
     _fl_set_choice_text = cfuncproto(
@@ -9537,13 +10079,18 @@ def fl_set_choice_text(pObject, choicetext):
             None, [cty.POINTER(FL_OBJECT), STRING],
             """void fl_set_choice_text(FL_OBJECT * ob, const char * txt)    DEPRECATED
             """)
-    schoicetext = convert_to_string(choicetext)
-    keep_elem_refs(pObject, choicetext, schoicetext)
-    _fl_set_choice_text(pObject, schoicetext)
+    schoicetxt = convert_to_string(choicetxt)
+    keep_elem_refs(pObject, choicetxt, schoicetxt)
+    _fl_set_choice_text(pObject, schoicetxt)
 
 
 def fl_get_choice(pObject):
-    """ fl_get_choice(pObject) -> num.
+    """
+        fl_get_choice(pObject) -> num.
+
+        Returns the number of the choice.
+
+        @param pObject : pointer to choice object
     """
 
     _fl_get_choice = cfuncproto(
@@ -9586,7 +10133,12 @@ def fl_get_choice_maxitems(pObject):
 
 
 def fl_get_choice_text(pObject):
-    """ fl_get_choice_text(pObject) -> text string
+    """
+        fl_get_choice_text(pObject) -> text string
+
+        Returns the text of the choice.
+
+        @param pObject : pointer to choice object
     """
 
     _fl_get_choice_text = cfuncproto(
@@ -9600,7 +10152,13 @@ def fl_get_choice_text(pObject):
 
 
 def fl_set_choice_fontsize(pObject, size):
-    """ fl_set_choice_fontsize(pObject, size)
+    """
+        fl_set_choice_fontsize(pObject, size)
+
+        Sets the font size inside the choice.
+
+        @param pObject : pointer to choice object
+        @param size : font size of choice to be set
     """
 
     _fl_set_choice_fontsize = cfuncproto(
@@ -9614,7 +10172,13 @@ def fl_set_choice_fontsize(pObject, size):
 
 
 def fl_set_choice_fontstyle(pObject, style):
-    """ fl_set_choice_fontstyle(pObject, style)
+    """
+        fl_set_choice_fontstyle(pObject, style)
+
+        Sets the font style inside the choice.
+
+        @param pObject : pointer to choice object
+        @param style : font style of choice to be set
     """
 
     _fl_set_choice_fontstyle = cfuncproto(
@@ -9628,7 +10192,13 @@ def fl_set_choice_fontstyle(pObject, style):
 
 
 def fl_set_choice_align(pObject, align):
-    """ fl_set_choice_align(pObject, align)
+    """
+        fl_set_choice_align(pObject, align)
+
+        Sets alignment of text inside the choice.
+
+        @param pObject : pointer to choice object
+        @param align : alignment of choice text to be set
     """
 
     _fl_set_choice_align = cfuncproto(
@@ -9656,8 +10226,15 @@ def fl_get_choice_item_mode(pObject, item):
     return retval
 
 
-def fl_set_choice_item_mode(pObject, item, mode):
-    """ fl_set_choice_item_mode(pObject, item, mode)
+def fl_set_choice_item_mode(pObject, itemnum, mode):
+    """
+        fl_set_choice_item_mode(pObject, itemnum, mode)
+
+        Sets the mode of an item in a choice object.
+
+        @param pObject : pointer to choice object
+        @param itemnum : item number whose mode is to be set
+        @param mode : mode of item
     """
 
     _fl_set_choice_item_mode = cfuncproto(
@@ -9777,8 +10354,18 @@ def fl_request_clipboard(pObject, clipbdtype, py_SelectionCb):
 #################################
 
 
-def fl_create_clock(clocktype, x, y, w, h, s):
-    """ fl_create_clock(clocktype, x, y, w, h, s) -> pObject
+def fl_create_clock(clocktype, x, y, w, h, label):
+    """
+        fl_create_clock(clocktype, x, y, w, h, label) -> pObject
+
+        Creates a clock object.
+
+        @param clocktype : type of clock object to be created
+        @param x : horizontal position of clock (upper-left corner)
+        @param x : vertical position of clock (upper-left corner)
+        @param w : width of clock in pixels
+        @param h : height of clock in pixels
+        @param label : text label of clock
     """
 
     _fl_create_clock = cfuncproto(
@@ -9794,15 +10381,25 @@ def fl_create_clock(clocktype, x, y, w, h, s):
     iy = convert_to_FL_Coord(y)
     iw = convert_to_FL_Coord(w)
     ih = convert_to_FL_Coord(h)
-    ss = convert_to_string(s)
-    keep_elem_refs(clocktype, x, y, w, h, s, iclocktype, ix, iy,
-                   iw, ih, ss)
-    retval = _fl_create_clock(iclocktype, ix, iy, iw, ih, ss)
+    slabel = convert_to_string(label)
+    keep_elem_refs(clocktype, x, y, w, h, label, iclocktype, ix, iy,
+                   iw, ih, slabel)
+    retval = _fl_create_clock(iclocktype, ix, iy, iw, ih, slabel)
     return retval
 
 
-def fl_add_clock(clocktype, x, y, w, h, s):
-    """ fl_add_clock(clocktype, x, y, w, h, s) -> pObject
+def fl_add_clock(clocktype, x, y, w, h, label):
+    """
+        fl_add_clock(clocktype, x, y, w, h, label) -> pObject
+
+        Adds a clock object.
+
+        @param clocktype : type of clock object to be added
+        @param x : horizontal position of clock (upper-left corner)
+        @param x : vertical position of clock (upper-left corner)
+        @param w : width of clock in pixels
+        @param h : height of clock in pixels
+        @param label : text label of clock
     """
 
     _fl_add_clock = cfuncproto(
@@ -9818,16 +10415,20 @@ def fl_add_clock(clocktype, x, y, w, h, s):
     iy = convert_to_FL_Coord(y)
     iw = convert_to_FL_Coord(w)
     ih = convert_to_FL_Coord(h)
-    ss = convert_to_string(s)
-    keep_elem_refs(clocktype, x, y, w, h, s, iclocktype, ix, iy,
-                   iw, ih, ss)
-    retval = _fl_add_clock(iclocktype, ix, iy, iw, ih, ss)
+    slabel = convert_to_string(label)
+    keep_elem_refs(clocktype, x, y, w, h, label, iclocktype, ix, iy,
+                   iw, ih, slabel)
+    retval = _fl_add_clock(iclocktype, ix, iy, iw, ih, slabel)
     return retval
 
 
 #def fl_get_clock(pObject, hr, mn, sec)
 def fl_get_clock(pObject):
     """ fl_get_clock(pObject) -> hr, mn, sec
+
+        Returns time values from a clock object.
+
+        @param pObject : pointer to clock object
     """
 
     _fl_get_clock = cfuncproto(
@@ -9882,7 +10483,17 @@ def fl_set_clock_ampm(pObject, y):
 # Routines
 
 def fl_create_counter(countertype, x, y, w, h, label):
-    """ fl_create_counter(countertype, x, y, w, h, label) -> pObject
+    """
+        fl_create_counter(countertype, x, y, w, h, label) -> pObject
+
+        Creates a counter object.
+
+        @param countertype : type of counter object to be created
+        @param x : horizontal position of counter (upper-left corner)
+        @param x : vertical position of counter (upper-left corner)
+        @param w : width of counter in pixels
+        @param h : height of counter in pixels
+        @param label : text label of counter
     """
 
     _fl_create_counter = cfuncproto(
@@ -9906,7 +10517,17 @@ def fl_create_counter(countertype, x, y, w, h, label):
 
 
 def fl_add_counter(countertype, x, y, w, h, label):
-    """ fl_add_counter(countertype, x, y, w, h, label) -> pObject
+    """
+        fl_add_counter(countertype, x, y, w, h, label) -> pObject
+
+        Adds a counter object.
+
+        @param countertype : type of counter object to be added
+        @param x : horizontal position of counter (upper-left corner)
+        @param x : vertical position of counter (upper-left corner)
+        @param w : width of counter in pixels
+        @param h : height of counter in pixels
+        @param label : text label of counter
     """
 
     _fl_add_counter = cfuncproto(
@@ -11911,9 +12532,10 @@ def fl_set_fselector_callback(py_FSCB, data):
             """void fl_set_fselector_callback(FL_FSCB p1, void * p2)
             """)
     c_FSCB = FL_FSCB(py_FSCB)
+    pdata = cty.cast(data, cty.c_void_p)
     keep_cfunc_refs(c_FSCB, py_FSCB)
-    keep_elem_refs(data)
-    _fl_set_fselector_callback(c_FSCB, data)
+    keep_elem_refs(data, pdata)
+    _fl_set_fselector_callback(c_FSCB, pdata)
 
 
 def fl_get_filename():
@@ -11999,8 +12621,8 @@ def fl_refresh_fselector():
 # c function prototype for _fl_add_fselector_appbutton
 cfunc_none_voidp = cty.CFUNCTYPE(None, cty.c_void_p)
 
-def fl_add_fselector_appbutton(p1, py_fn, p3):
-    """ fl_add_fselector_appbutton(p1, py_fn, p3)
+def fl_add_fselector_appbutton(label, py_fn, data):
+    """ fl_add_fselector_appbutton(label, py_fn, data)
     """
 
     _fl_add_fselector_appbutton = cfuncproto(
@@ -12009,15 +12631,16 @@ def fl_add_fselector_appbutton(p1, py_fn, p3):
             """void fl_add_fselector_appbutton(const char * p1,
                const char * p2, void * p3)
             """)
-    sp1 = convert_to_string(p1)
+    slabel = convert_to_string(label)
     c_fn = cfunc_none_voidp(py_fn)
+    pdata = cty.cast(data, cty.c_void_p)
     keep_cfunc_refs(c_fn, py_fn)
-    keep_elem_refs(p1, p3, sp1)
-    _fl_add_fselector_appbutton(sp1, c_fn, p3)
+    keep_elem_refs(label, data, slabel, pdata)
+    _fl_add_fselector_appbutton(slabel, c_fn, pdata)
 
 
-def fl_remove_fselector_appbutton(p1):
-    """ fl_remove_fselector_appbutton(p1)
+def fl_remove_fselector_appbutton(label):
+    """ fl_remove_fselector_appbutton(label)
     """
 
     _fl_remove_fselector_appbutton = cfuncproto(
@@ -12025,13 +12648,13 @@ def fl_remove_fselector_appbutton(p1):
             None, [STRING],
             """void fl_remove_fselector_appbutton(const char * p1)
             """)
-    sp1 = convert_to_string(p1)
-    keep_elem_refs(p1, sp1)
-    _fl_remove_fselector_appbutton(sp1)
+    slabel = convert_to_string(label)
+    keep_elem_refs(label, slabel)
+    _fl_remove_fselector_appbutton(slabel)
 
 
-def fl_disable_fselector_cache(p1):
-    """ fl_disable_fselector_cache(p1)
+def fl_disable_fselector_cache(yes):
+    """ fl_disable_fselector_cache(yes)
     """
 
     _fl_disable_fselector_cache = cfuncproto(
@@ -12039,9 +12662,9 @@ def fl_disable_fselector_cache(p1):
             None, [cty.c_int],
             """void fl_disable_fselector_cache(int p1)
             """)
-    ip1 = convert_to_int(p1)
-    keep_elem_refs(p1, ip1)
-    _fl_disable_fselector_cache(ip1)
+    iyes = convert_to_int(yes)
+    keep_elem_refs(yes, iyes)
+    _fl_disable_fselector_cache(iyes)
 
 
 def fl_invalidate_fselector_cache():
@@ -12117,12 +12740,12 @@ fl_show_file_selector = fl_show_fselector
 fl_set_fselector_cb = fl_set_fselector_callback
 
 
-def fl_set_fselector_title(s):
-    fl_set_form_title(fl_get_fselector_form(), s)
+def fl_set_fselector_title(title):
+    fl_set_form_title(fl_get_fselector_form(), title)
 
 
-def fl_goodies_atclose(pForm, p2):
-    """ fl_goodies_atclose(pForm, p2) -> num.
+def fl_goodies_atclose(pForm, data):
+    """ fl_goodies_atclose(pForm, data) -> num.
     """
 
     _fl_goodies_atclose = cfuncproto(
@@ -12130,8 +12753,9 @@ def fl_goodies_atclose(pForm, p2):
             cty.c_int, [cty.POINTER(FL_FORM), cty.c_void_p],
             """int fl_goodies_atclose(FL_FORM * p1, void * p2)
             """)
-    keep_elem_refs(pForm, p2)
-    retval = _fl_goodies_atclose(pForm, p2)
+    pdata = cty.cast(data, cty.c_void_p)
+    keep_elem_refs(pForm, data, pdata)
+    retval = _fl_goodies_atclose(pForm, pdata)
     return retval
 
 
@@ -17845,8 +18469,8 @@ def flimage_get_format_info(p1):
     return retval
 
 
-def fl_get_matrix(p1, p2, p3):
-    """ fl_get_matrix(p1, p2, p3) -> ?
+def fl_get_matrix(nrows, ncols, esize):
+    """ fl_get_matrix(nrows, ncols, esize) -> ?
     """
 
     _fl_get_matrix = cfuncproto(
@@ -17854,16 +18478,24 @@ def fl_get_matrix(p1, p2, p3):
             cty.c_void_p, [cty.c_int, cty.c_int, cty.c_uint],
             """void * fl_get_matrix(int p1, int p2, unsigned int p3)
             """)
-    ip1 = convert_to_int(p1)
-    ip2 = convert_to_int(p2)
-    uip3 = convert_to_uint(p3)
-    keep_elem_refs(p1, p2, p3, ip1, ip2, uip3)
-    retval = _fl_get_matrix(ip1, ip2, uip3)
+    inrows = convert_to_int(nrows)
+    incols = convert_to_int(ncols)
+    uiesize = convert_to_uint(esize)
+    keep_elem_refs(nrows, ncols, esize, inrows, incols, uiesize)
+    retval = _fl_get_matrix(inrows, incols, uiesize)
     return retval
 
 
-def fl_make_matrix(p1, p2, p3, p4):
-    """ fl_make_matrix(p1, p2, p3, p4) -> ?
+def fl_make_matrix(nrows, ncols, esize, mem):
+    """
+        fl_make_matrix(nrows, ncols, esize, mem) -> ?
+
+        Makes a matrix out of a given piece of memory.
+
+        @param nrows : number of rows
+        @param ncols : number of columns
+        @param esize : size of matrix
+        @param mem : memory
     """
 
     _fl_make_matrix = cfuncproto(
@@ -17872,17 +18504,17 @@ def fl_make_matrix(p1, p2, p3, p4):
             """void * fl_make_matrix(int p1, int p2, unsigned int p3,
                void * p4)
             """)
-    ip1 = convert_to_int(p1)
-    ip2 = convert_to_int(p2)
-    uip3 = convert_to_uint(p3)
-    vp4 = cty.cast(p4, cty.c_void_p)
-    keep_elem_refs(p1, p2, p3, p4, ip1, ip2, uip3, vp4)
-    retval = _fl_make_matrix(ip1, ip2, uip3, vp4)
+    inrows = convert_to_int(nrows)
+    incols = convert_to_int(ncols)
+    uiesize = convert_to_uint(esize)
+    pmem = cty.cast(mem, cty.c_void_p)
+    keep_elem_refs(nrows, ncols, esize, mem, inrows, incols, uiesize, pmem)
+    retval = _fl_make_matrix(inrows, incols, uiesize, pmem)
     return retval
 
 
-def fl_free_matrix(p1):
-    """ fl_free_matrix(p1)
+def fl_free_matrix(mtrx):
+    """ fl_free_matrix(mtrx)
     """
 
     _fl_free_matrix = cfuncproto(
@@ -17890,8 +18522,9 @@ def fl_free_matrix(p1):
             None, [cty.c_void_p],
             """void fl_free_matrix(void * p1)
             """)
-    keep_elem_refs(p1)
-    _fl_free_matrix(p1)
+    pmtrx = cty.cast(mtrx, cty.c_void_p)
+    keep_elem_refs(mtrx, pmtrx)
+    _fl_free_matrix(pmtrx)
 
 
 # This function is retained for compatibility reasons only.
@@ -18308,8 +18941,8 @@ def flimage_dup(pImage):
 
 # Miscellaneous prototypes
 
-def fl_get_submatrix(in_, rows, cols, r1, c1, rs, cs, esize):
-    """ fl_get_submatrix(in_, rows, cols, r1, c1, rs, cs, esize) -> ?
+def fl_get_submatrix(inmtrx, rows, cols, r1, c1, rs, cs, esize):
+    """ fl_get_submatrix(inmtrx, rows, cols, r1, c1, rs, cs, esize) -> ?
     """
 
     _fl_get_submatrix = cfuncproto(
@@ -18319,6 +18952,7 @@ def fl_get_submatrix(in_, rows, cols, r1, c1, rs, cs, esize):
             """void * fl_get_submatrix(void * p1, int p2, int p3, int p4,
                int p5, int p6, int p7, unsigned int p8)
             """)
+    pinmtrx = cty.cast(inmtrx, cty.c_void_p)
     irows = convert_to_int(rows)
     icols = convert_to_int(cols)
     ir1 = convert_to_int(r1)
@@ -18326,9 +18960,10 @@ def fl_get_submatrix(in_, rows, cols, r1, c1, rs, cs, esize):
     irs = convert_to_int(rs)
     ics = convert_to_int(cs)
     uiesize = convert_to_uint(esize)
-    keep_elem_refs(in_, rows, cols, r1, c1, rs, cs, esize, irows, icols, \
-                   ir1, ic1, irs, ics, uiesize)
-    retval = _fl_get_submatrix(in_, irows, icols, ir1, ic1, irs, ics, uiesize)
+    keep_elem_refs(inmtrx, rows, cols, r1, c1, rs, cs, esize, pinmtrx, \
+                   irows, icols, ir1, ic1, irs, ics, uiesize)
+    retval = _fl_get_submatrix(pinmtrx, irows, icols, ir1, ic1, irs, ics, \
+                               uiesize)
     return retval
 
 
@@ -18829,8 +19464,8 @@ def flimage_read_annotation(pImage):
     return retval
 
 
-def flimage_replace_image(pImage, p2, p3, p4, p5, p6):
-    """ flimage_replace_image(pImage, p2, p3, p4, p5, p6)
+def flimage_replace_image(pImage, w, h, r, g, b):
+    """ flimage_replace_image(pImage, w, h, r, g, b)
     """
 
     _flimage_replace_image = cfuncproto(
@@ -18840,10 +19475,13 @@ def flimage_replace_image(pImage, p2, p3, p4, p5, p6):
             """void flimage_replace_image(FL_IMAGE * p1, int p2, int p3,
                void * p4, void * p5, void * p6)
             """)
-    ip2 = convert_to_int(p2)
-    ip3 = convert_to_int(p3)
-    keep_elem_refs(pImage, p2, p3, p4, p5, p6, ip2, ip3)
-    _flimage_replace_image(pImage, ip2, ip3, p4, p5, p6)
+    iw = convert_to_int(w)
+    ih = convert_to_int(h)
+    pr = cty.cast(r, cty.c_void_p)
+    pg = cty.cast(g, cty.c_void_p)
+    pb = cty.cast(b, cty.c_void_p)
+    keep_elem_refs(pImage, w, h, r, g, b, iw, ih, pr, pg, pb)
+    _flimage_replace_image(pImage, iw, ih, pr, pg, pb)
 
 
 def flimage_swapbuffer(pImage):
