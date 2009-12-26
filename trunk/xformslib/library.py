@@ -1931,6 +1931,7 @@ def fl_set_object_lsize(pObject, lsize):
     ilsize = convert_to_int(lsize)
     keep_elem_refs(pObject, lsize, ilsize)
     _fl_set_object_lsize(pObject, ilsize)
+    #pObject[0].lsize = lsize       causes fl_get_pixel bad request error
 
 
 def fl_set_object_lstyle(pObject, lstyle):
@@ -1952,6 +1953,7 @@ def fl_set_object_lstyle(pObject, lstyle):
     ilstyle = convert_to_int(lstyle)
     keep_elem_refs(pObject, lstyle, ilstyle)
     _fl_set_object_lstyle(pObject, ilstyle)
+
 
 
 def fl_set_object_lcol(pObject, lcolr):
@@ -7564,7 +7566,11 @@ def fl_set_browser_topline(pObject, topline):
 
 
 def fl_set_browser_fontsize(pObject, size):
-    """ fl_set_browser_fontsize(pObject, size)
+    """
+        fl_set_browser_fontsize(pObject, size)
+
+        @param pObject : pointer to browser object
+        @param size : font size to be set
     """
 
     _fl_set_browser_fontsize = cfuncproto(
@@ -7578,7 +7584,11 @@ def fl_set_browser_fontsize(pObject, size):
 
 
 def fl_set_browser_fontstyle(pObject, style):
-    """ fl_set_browser_fontstyle(pObject, style)
+    """
+        fl_set_browser_fontstyle(pObject, style)
+
+        @param pObject : pointer to browser object
+        @param style : font style to be set
     """
 
     _fl_set_browser_fontstyle = cfuncproto(
@@ -7853,7 +7863,14 @@ FL_BROWSER_SCROLL_CALLBACK = cty.CFUNCTYPE(None, cty.POINTER(FL_OBJECT),
                 cty.c_int, cty.c_void_p)
 
 def fl_set_browser_hscroll_callback(pObject, py_BrowserScrollCallback, data):
-    """ fl_set_browser_hscroll_callback(pObject, py_BrowserScrollCallback, data)
+    """
+        fl_set_browser_hscroll_callback(pObject, py_BrowserScrollCallback,
+        data)
+
+        @param pObject : pointer to browser object
+        @param py_BrowserScrollCallback : python function, fn(pObject, num,
+           data)
+        @param data : user data argument
     """
 
     _fl_set_browser_hscroll_callback = cfuncproto(
@@ -7863,14 +7880,23 @@ def fl_set_browser_hscroll_callback(pObject, py_BrowserScrollCallback, data):
             """void fl_set_browser_hscroll_callback(FL_OBJECT * ob,
                FL_BROWSER_SCROLL_CALLBACK cb, void * data)
             """)
-    c_BrowserScrollCallback = FL_BROWSER_SCROLL_CALLBACK(py_cb)
+    c_BrowserScrollCallback = FL_BROWSER_SCROLL_CALLBACK( \
+                                py_BrowserScrollCallback)
+    pdata = cty.cast(data, cty.c_void_p)
     keep_cfunc_refs(c_BrowserScrollCallback, py_BrowserScrollCallback)
-    keep_elem_refs(pObject, data)
-    _fl_set_browser_hscroll_callback(pObject, c_BrowserScrollCallback, data)
+    keep_elem_refs(pObject, data, pdata)
+    _fl_set_browser_hscroll_callback(pObject, c_BrowserScrollCallback, pdata)
 
 
 def fl_set_browser_vscroll_callback(pObject, py_BrowserScrollCallback, data):
-    """ fl_set_browser_vscroll_callback(pObject, py_BrowserScrollCallback, data)
+    """
+        fl_set_browser_vscroll_callback(pObject, py_BrowserScrollCallback,
+        data)
+
+        @param pObject : pointer to browser object
+        @param py_BrowserScrollCallback : python function, fn(pObject, num,
+           data)
+        @param data : user data argument
     """
 
     _fl_set_browser_vscroll_callback = cfuncproto(
@@ -7882,9 +7908,10 @@ def fl_set_browser_vscroll_callback(pObject, py_BrowserScrollCallback, data):
             """)
     c_BrowserScrollCallback = FL_BROWSER_SCROLL_CALLBACK( \
                                 py_BrowserScrollCallback)
+    pdata = cty.cast(data, cty.c_void_p)
     keep_cfunc_refs(c_BrowserScrollCallback, py_BrowserScrollCallback)
-    keep_elem_refs(pObject, data)
-    _fl_set_browser_vscroll_callback(pObject, c_BrowserScrollCallback, data)
+    keep_elem_refs(pObject, data, pdata)
+    _fl_set_browser_vscroll_callback(pObject, c_BrowserScrollCallback, pdata)
 
 
 def fl_get_browser_line_yoffset(pObject, line):
