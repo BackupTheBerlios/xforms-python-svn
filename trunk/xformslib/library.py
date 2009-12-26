@@ -536,7 +536,7 @@ def fl_add_io_callback(fd, mask, py_IoCallback, data):
     uimask = convert_to_uint(mask)
     c_IoCallback = FL_IO_CALLBACK(py_IoCallback)
     pdata = cty.cast(data, cty.c_void_p)
-    keep_cfunc_refs(py_callback, c_IoCallback)
+    keep_cfunc_refs(c_IoCallback, py_IoCallback)
     keep_elem_refs(fd, ifd, mask, uimask, data, pdata)
     _fl_add_io_callback(ifd, uimask, c_IoCallback, pdata)
 
@@ -657,7 +657,7 @@ def fl_app_signal_direct(flag):
             """void fl_app_signal_direct(int y)
             """)
     iflag = convert_to_int(flag)
-    keep_elem_refs(flag, flagy)
+    keep_elem_refs(flag, iflag)
     _fl_app_signal_direct(iflag)
 
 
@@ -6941,7 +6941,7 @@ def fl_set_bitmap_data(pObject, w, h, xbmcontents):
             """)
     iw = convert_to_int(w)
     ih = convert_to_int(h)
-    pxbmcontents = cty.cast(data, cty.POINTER(cty.c_ubyte))
+    pxbmcontents = cty.cast(xbmcontents, cty.POINTER(cty.c_ubyte))
     keep_elem_refs(pObject, w, h, xbmcontents, iw, ih, pxbmcontents)
     _fl_set_bitmap_data(pObject, iw, ih, pxbmcontents)
 
@@ -9256,7 +9256,7 @@ def fl_remove_canvas_handler(pObject, ev, py_HandleCanvas):
                FL_HANDLE_CANVAS h)
             """)
     iev = convert_to_int(ev)
-    c_HandleCanvas = FL_HANDLE_CANVAS(py_handler)
+    c_HandleCanvas = FL_HANDLE_CANVAS(py_HandleCanvas)
     keep_cfunc_refs(c_HandleCanvas, py_HandleCanvas)
     keep_elem_refs(pObject, ev, iev)
     _fl_remove_canvas_handler(pObject, iev, c_HandleCanvas)
@@ -10243,10 +10243,10 @@ def fl_set_choice_item_mode(pObject, itemnum, mode):
             """void fl_set_choice_item_mode(FL_OBJECT * ob, int item,
                unsigned int mode)
             """)
-    iitem = convert_to_int(item)
+    iitemnum = convert_to_int(itemnum)
     uimode = convert_to_uint(mode)
-    keep_elem_refs(pObject, item, mode, iitem, uimode)
-    _fl_set_choice_item_mode(pObject, iitem, uimode)
+    keep_elem_refs(pObject, itemnum, mode, iitemnum, uimode)
+    _fl_set_choice_item_mode(pObject, iitemnum, uimode)
 
 
 def fl_set_choice_item_shortcut(pObject, item, sctext):
