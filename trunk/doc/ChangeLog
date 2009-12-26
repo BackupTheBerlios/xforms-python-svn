@@ -1,6 +1,7 @@
 
 
 SVN
+    * Porting of minput and minput2 examples
     * Better names for certain function parameters
     * Porting of counter example
     * Porting of inputall example

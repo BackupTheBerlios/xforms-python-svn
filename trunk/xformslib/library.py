@@ -1682,12 +1682,13 @@ def fl_form_is_iconified(pForm):
 
 def fl_register_raw_callback(pForm, mask, py_RawCallback):
     """
-        fl_register_raw_callback(pForm, mask, py_RawCallback) -> raw_callback func.
+        fl_register_raw_callback(pForm, mask, py_RawCallback) -> old raw_callback func.
 
         Register pre-emptive event handlers.
 
         @param pForm : pointer to form
-        @param mask : key/button event mask (press/release/motion etc..)
+        @param mask : key/button/window event mask (press, release, motion,
+           enter, leave etc..)
         @param py_RawCallback : python callback function,
            fn(pForm, ptr_void) -> num
     """

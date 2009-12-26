@@ -809,10 +809,16 @@ FL_FORMCALLBACKPTR = cty.CFUNCTYPE(None, cty.POINTER(FL_OBJECT), cty.c_void_p)
 # object callback function
 FL_CALLBACKPTR = cty.CFUNCTYPE(None, cty.POINTER(FL_OBJECT), cty.c_long)
 
-# preemptive callback function
-FL_RAW_CALLBACK = cty.CFUNCTYPE(cty.c_int, cty.POINTER(FL_FORM), cty.c_void_p)
+# /usr/include/X11/Xlib.h 984
+class _XEvent(cty.Union):
+    pass
+XEvent = _XEvent
 
-# at close (WM menu delete/close etcty.)
+# preemptive callback function - pXEvent is necessary as type cast is not handled
+#FL_RAW_CALLBACK = cty.CFUNCTYPE(cty.c_int, cty.POINTER(FL_FORM), cty.c_void_p)
+FL_RAW_CALLBACK = cty.CFUNCTYPE(cty.c_int, cty.POINTER(FL_FORM), cty.POINTER(XEvent))
+
+# at close (WM menu delete/close etc.)
 FL_FORM_ATCLOSE = cty.CFUNCTYPE(cty.c_int, cty.POINTER(FL_FORM), cty.c_void_p)
 
 # deactivate/activate callback
@@ -3932,9 +3938,12 @@ XGenericEventCookie._fields_ = [
 ]
 
 
+## /usr/include/X11/Xlib.h 984
+#class _XEvent(cty.Union):
+#    pass
+#XEvent = _XEvent
+
 # /usr/include/X11/Xlib.h 984
-class _XEvent(cty.Union):
-    pass
 _XEvent._fields_ = [
     ('type', cty.c_int),
     ('xany', XAnyEvent),
@@ -3972,7 +3981,6 @@ _XEvent._fields_ = [
     ('xcookie', XGenericEventCookie),
     ('pad', cty.c_long * 24),
 ]
-XEvent = _XEvent
 
 
 # *** start - from /usr/include/X11/X.h ***
