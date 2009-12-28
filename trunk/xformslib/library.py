@@ -39,7 +39,7 @@ from xfdata import *       # data types and constants from XForms
 
 # xforms-python version
 __mainversion__ = "0.3.1"               # real version
-__vers_against_xforms__ = "1.0.93pre1"   # xforms version to be built against
+__vers_against_xforms__ = "1.0.93pre2"   # xforms version to be built against
 __version__ = __mainversion__+"_"+__vers_against_xforms__
 
 
@@ -10899,8 +10899,11 @@ def fl_create_animated_cursor(curnames, timeout):
     return retval
 
 
-def fl_get_cursor_byname(numb):
-    """ fl_get_cursor_byname(numb) -> cursor
+def fl_get_cursor_byname(cursnum):
+    """
+         fl_get_cursor_byname(cursnum) -> cursor
+
+         @param cursnum : cursor number
     """
 
     _fl_get_cursor_byname = cfuncproto(
@@ -10908,10 +10911,18 @@ def fl_get_cursor_byname(numb):
             Cursor, [cty.c_int],
             """Cursor fl_get_cursor_byname(int name)
             """)
-    inumb = convert_to_int(numb)
-    keep_elem_refs(numb, inumb)
-    retval = _fl_get_cursor_byname(inumb)
+    icursnum = convert_to_int(cursnum)
+    keep_elem_refs(cursnum, icursnum)
+    retval = _fl_get_cursor_byname(icursnum)
     return retval
+
+
+def fl_reset_cursor(win):
+    """
+        Reset used cursor, reverting to default one.
+    """
+
+    fl_set_cursor(win, FL_DEFAULT_CURSOR)
 
 
 
@@ -20202,18 +20213,18 @@ def flps_unset_clipping():
     _flps_unset_clipping()
 
 
-# /usr/include/X11/Xlib.h 2118
-def XClearWindow(pDisplay, win):
-    """ XClearWindow(pDisplay, win) -> num.
-    """
-
-    _XClearWindow = cfuncproto(
-            load_so_libx11(), "XClearWindow", \
-            cty.c_int, [cty.POINTER(Display), Window], \
-            """int XClearWindow(Display * display, Window w)
-            """)
-    ulwin = convert_to_Window(win)
-    keep_elem_refs(pDisplay, win, ulwin)
-    retval = _XClearWindow(pDisplay, ulwin)
-    return retval
+## /usr/include/X11/Xlib.h 2118
+#def XClearWindow(pDisplay, win):
+#    """ XClearWindow(pDisplay, win) -> num.
+#    """
+#
+#    _XClearWindow = cfuncproto(
+#            load_so_libx11(), "XClearWindow", \
+#            cty.c_int, [cty.POINTER(Display), Window], \
+#            """int XClearWindow(Display * display, Window w)
+#            """)
+#    ulwin = convert_to_Window(win)
+#    keep_elem_refs(pDisplay, win, ulwin)
+#    retval = _XClearWindow(pDisplay, ulwin)
+#    return retval
 
