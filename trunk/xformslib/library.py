@@ -502,6 +502,37 @@ def special_style(a):
         return False
 
 
+def fl_is_same_object(pObject1, pObject2):
+    """
+        fl_is_same_object(pObject1, pObject2)
+
+        Does a comparison between two objects.
+    """
+
+    _fl_is_same_object = cfuncproto(
+            load_so_libforms(), "fl_is_same_object", \
+            cty.c_int, [cty.POINTER(FL_OBJECT), cty.POINTER(FL_OBJECT)], \
+            """int fl_is_same_object(FL_OBJECT *, FL_OBJECT *)
+            """)
+    keep_elem_refs(pObject1, pObject2)
+    retval = _fl_is_same_object(pObject1, pObject2)
+    return retval
+
+
+def fl_object_id(pObject):
+    _fl_object_id = cfuncproto(
+            load_so_libforms(), "fl_is_same_object", \
+            cty.c_ulong, [cty.POINTER(FL_OBJECT)], \
+            """int fl_object_id(FL_OBJECT *)
+            """)
+    keep_elem_refs(pObject)
+    retval = _fl_object_id(pObject)
+    return retval
+
+
+
+
+
 # Macro for getting at the object handlers return value
 
 def fl_object_returned(pObject):
@@ -4613,86 +4644,72 @@ def fl_get_decoration_sizes(pForm):
     return retval, top, right, bottom, left
 
 
-# /usr/include/X11/Xlib.h 3026
-def XRaiseWindow(pDisplay, win):
-    """ XRaiseWindow(pDisplay, win) -> num.
-    """
-
-    _XRaiseWindow = cfuncproto(
-            load_so_libx11(), "XRaiseWindow",\
-            cty.c_int, [cty.POINTER(Display), Window],\
-            """int XRaiseWindow(Display * p1, Window p2)
-            """)
-    ulwin = convert_to_Window(win)
-    keep_elem_refs(pDisplay, win, ulwin)
-    retval = _XRaiseWindow(pDisplay, ulwin)
-    return retval
-
-
 def fl_raise_form(pForm):
-    if pForm[0].window:
-        XRaiseWindow(fl_display, pForm[0].window)
+    """
+         fl_raise_form(pForm)
 
-
-# /usr/include/X11/Xlib.h 2791
-def XLowerWindow(pDisplay, win):
-    """ XLowerWindow(pDisplay, win) -> num.
+         @param pForm : pouinter to form to be raised
     """
 
-    _XLowerWindow = cfuncproto(
-            load_so_libx11(), "XLowerWindow",\
-            cty.c_int, [cty.POINTER(Display), Window],\
-            """int XLowerWindow(Display * p1, Window p2)
+    _fl_raise_form = cfuncproto(
+            load_so_libforms(), "fl_raise_form",\
+            None, [cty.POINTER(FL_FORM)],\
+            """void fl_raise_form(FL_FORM * p1)
             """)
-    ulwin = convert_to_Window(win)
-    keep_elem_refs(pDisplay, win, ulwin)
-    retval = _XLowerWindow(pDisplay, ulwin)
-    return retval
+    keep_elem_refs(pForm)
+    _fl_raise_form(pForm)
 
 
 def fl_lower_form(pForm):
-    if pForm[0].window:
-        XLowerWindow(fl_display, pForm[0].window)
+    """
+         fl_lower_form(pForm)
 
-
-# /usr/include/X11/Xlib.h 3241
-def XSetForeground(pDisplay, p2, p3):
-    """ XSetForeground(pDisplay, p2, p3) -> num.
+         @param pForm : pouinter to form to be lowered
     """
 
-    _XSetForeground = cfuncproto(
-            load_so_libx11(), "XSetForeground",\
-            cty.c_int, [cty.POINTER(Display), GC, cty.c_ulong],\
-            """int XSetForeground(Display * p1, GC p2, long unsigned int p3)
+    _fl_lower_form = cfuncproto(
+            load_so_libforms(), "fl_lower_form",\
+            None, [cty.POINTER(FL_FORM)],\
+            """void fl_lower_form(FL_FORM * p1)
             """)
-    ulp3 = convert_to_ulong(p3)
-    keep_elem_refs(pDisplay, p2, p3, ulp3)
-    retval = _XSetForeground(pDisplay, p2, ulp3)
-    return retval
+    keep_elem_refs(pForm)
+    _fl_lower_form(pForm)
 
 
-def fl_set_foreground(gc, c):
-    XSetForeground(fl_display, gc, fl_get_pixel(c))
+def fl_set_foreground(gc, colr):
+    """
+        fl_set_foreground(gc, colr)
 
-
-# /usr/include/X11/Xlib.h 3168
-def XSetBackground(pDisplay, p2, p3):
-    """ XSetBackground(pDisplay, p2, p3) -> num.
+        @param gc : ?
+        @param colr : color value to be set as foreground
     """
 
-    _XSetBackground = cfuncproto(
-            load_so_libforms(), "XSetBackground",\
-            cty.c_int, [cty.POINTER(Display), GC, cty.c_ulong],\
-            """int XSetBackground(Display * p1, GC p2, long unsigned int p3)
+    _fl_set_foreground = cfuncproto(
+            load_so_libforms(), "fl_set_foreground",\
+            None, [GC, FL_COLOR],\
+            """oid fl_set_foreground(GC gc, FL_COLOR col)
             """)
-    ulp3 = convert_to_ulong(p3)
-    keep_elem_refs(pDisplay, p2, p3, ulp3)
-    retval = _XSetBackground(pDisplay, p2, ulp3)
-    return retval
+    ulcolr = convert_to_FL_COLOR(colr)
+    keep_elem_refs(gc, colr, ulcolr)
+    _fl_set_foreground(gc, ulcolr)
 
 
-def fl_set_background(gc, c):
-    XSetBackground(fl_display, gc, fl_get_pixel(c))
+def fl_set_background(gc, colr):
+    """
+        fl_set_background(gc, colr)
+
+        @param gc : ?
+        @param colr : color value to be set as background
+    """
+
+    _fl_set_background = cfuncproto(
+            load_so_libforms(), "fl_set_background",\
+            None, [GC, FL_COLOR],\
+            """oid fl_set_background(GC gc, FL_COLOR col)
+            """)
+    ulcolr = convert_to_FL_COLOR(colr)
+    keep_elem_refs(gc, colr, ulcolr)
+    _fl_set_background(gc, ulcolr)
 
 
 # General windowing support
@@ -4739,9 +4756,9 @@ def fl_winshow(win):
 
 def fl_winopen(title):
     """
-        fl_winopen(title) -> window         Opens (creates and shows) a toplevel window with the specified
+        fl_winopen(title) -> window
+        Opens (creates and shows) a toplevel window with the specified
         title.
-
 
         @param title : title of the window
     """
@@ -4968,24 +4985,24 @@ def fl_winbackground(win, bkcolr):
     _fl_winbackground(ulwin, ulbkcolr)
 
 
-def fl_winstepunit(win, dx, dy):
-    """ fl_winstepunit(win, dx, dy)
+def fl_winstepsize(win, dx, dy):
+    """ fl_winstepsize(win, dx, dy)
     """
 
-    _fl_winstepunit = cfuncproto(
-            load_so_libforms(), "fl_winstepunit", \
+    _fl_winstepsize = cfuncproto(
+            load_so_libforms(), "fl_winstepsize", \
             None, [Window, FL_Coord, FL_Coord], \
-            """void fl_winstepunit(Window win, FL_Coord dx, FL_Coord dy)
+            """void fl_winstepsize(Window win, FL_Coord dx, FL_Coord dy)
             """)
     ulwin = convert_to_Window(win)
     idx = convert_to_int(dx)
     idy = convert_to_int(dy)
     keep_elem_refs(win, dx, dy, ulwin, idx, idy)
-    _fl_winstepunit(ulwin, idx, idy)
+    _fl_winstepsize(ulwin, idx, idy)
 
 
-# my add --LK (temporarily)
-fl_winstepsize = fl_winstepunit
+fl_winstepunit = fl_winstepsize
+fl_set_winstepunit = fl_winstepsize
 
 
 def fl_winisvalid(win):
@@ -5669,12 +5686,27 @@ def fl_print_xevent_name(where, pXEvent):
             load_so_libforms(), "fl_print_xevent_name",
             cty.POINTER(XEvent), [STRING, cty.POINTER(XEvent)],
             """XEvent * fl_print_xevent_name(const char * where,
-               const char * xev)
+               const Xevent * xev)
             """)
     swhere = convert_to_string(where)
     keep_elem_refs(where, pXEvent, swhere)
     retval = _fl_print_xevent_name(swhere, pXEvent)
     return retval
+
+
+def fl_XFlush():
+    """
+         fl_XFlush()
+
+         Convenience replacement for XFlush()
+    """
+
+    _fl_XFlush = cfuncproto(
+            load_so_libforms(), "fl_XFlush",
+            None, [],
+            """void fl_XFlush(void)
+            """)
+    _fl_XFlush()
 
 
 def metakey_down(mask):
@@ -6061,44 +6093,47 @@ def FL_PCCLAMP(a):
 
 # If PCBITS is not 8, we need to apply the RGBmask
 
-# maybe unused in python?
-#def FL_GETG(packed):
-#    return ((packed) >> FL_GSHIFT) & FL_PCMAX
+def FL_GETR(packed):
+    return ((packed >> FL_RSHIFT) & FL_RMASK)
 
 # maybe unused in python?
-#def FL_GETB(packed):
-#    return ((packed) >> FL_BSHIFT) & FL_PCMAX
+def FL_GETG(packed):
+    return ((packed) >> FL_GSHIFT) & FL_PCMAX
 
 # maybe unused in python?
-#def FL_GETA(packed):
-#    return ((packed) >> FL_ASHIFT) & FL_PCMAX
+def FL_GETB(packed):
+    return ((packed) >> FL_BSHIFT) & FL_PCMAX
 
 # maybe unused in python?
-#def FL_PACK3(r, g, b ):
-#    return (r<<FL_RSHIFT) | (g<<FL_GSHIFT) | (b<<FL_BSHIFT)
+def FL_GETA(packed):
+    return ((packed) >> FL_ASHIFT) & FL_PCMAX
 
 # maybe unused in python?
-#FL_PACK = FL_PACK3
+def FL_PACK3(r, g, b ):
+    return (r<<FL_RSHIFT) | (g<<FL_GSHIFT) | (b<<FL_BSHIFT)
 
 # maybe unused in python?
-#def FL_PACK4(r, g, b, a):
-#    return (FL_PACK3(r, g, b) | (a<<FL_ASHIFT))
+FL_PACK = FL_PACK3
 
 # maybe unused in python?
-#def FL_UNPACK(p, r, g, b):
-#    r = FL_GETR(p)
-#    g = FL_GETG(p)
-#    b = FL_GETB(p)
-#   return r, g, b
+def FL_PACK4(r, g, b, a):
+    return (FL_PACK3(r, g, b) | (a<<FL_ASHIFT))
 
 # maybe unused in python?
-#FL_UNPACK3 = FL_UNPACK
+def FL_UNPACK(p, r, g, b):
+    r = FL_GETR(p)
+    g = FL_GETG(p)
+    b = FL_GETB(p)
+    return r, g, b
 
 # maybe unused in python?
-#def FL_UNPACK4(p, r, g, b, a):
-#    r, g, b = FL_UNPACK3(p, r, g, b)
-#    a = FL_GETA(p)
-#   return r, g, b, a
+FL_UNPACK3 = FL_UNPACK
+
+# maybe unused in python?
+def FL_UNPACK4(p, r, g, b, a):
+    r, g, b = FL_UNPACK3(p, r, g, b)
+    a = FL_GETA(p)
+    return r, g, b, a
 
 
 def fl_popup_add(win, text):
@@ -6987,33 +7022,34 @@ def fl_read_bitmapfile(win, filename, w, h, hotx, hoty):
     return retval
 
 
-# /usr/include/X11/Xlib.h 1621
-def XCreateBitmapFromData(pDisplay, win, data, w, h):
-    """ XCreateBitmapFromData(pDisplay, win, data, w, h) -> pixmap
+def fl_create_from_bitmapdata(win, data, w, h):
+    """
+         fl_create_from_bitmapdata(win, data, w, h) -> pixmap
+
+         @param win : window
+         @param data : bitmap data
+         @param w : width of bitmap in pixels
+         @param h : height of bitmap in pixels
     """
 
-    _XCreateBitmapFromData = cfuncproto(
-            load_so_libx11(), "XCreateBitmapFromData",
-            Pixmap, [cty.POINTER(Display), Drawable, STRING, cty.c_uint,
-            cty.c_uint],
-            """Pixmap XCreateBitmapFromData(Display * p1, Drawable p2,
-               const char * p3, unsigned int p4, unsigned int p5)
+    _fl_create_from_bitmapdata = cfuncproto(
+            load_so_libforms(), "fl_create_from_bitmapdata",
+            Pixmap, [Window, STRING, cty.c_int, cty.c_int],
+            """Pixmap fl_create_from_bitmapdata(Window win, const
+               char * data, int width, int height)
             """)
     ulwin = convert_to_ulong(win)
     sdata = convert_to_string(data)
-    uiw = convert_to_uint(w)
-    uih = convert_to_uint(h)
-    keep_elem_refs(pDisplay, win, data, w, h, ulwin, sdata, uiw, uih)
-    retval = _XCreateBitmapFromData(pDisplay, ulwin, sdata, uiw, uih)
+    iw = convert_to_int(w)
+    ih = convert_to_int(h)
+    keep_elem_refs(win, data, w, h, ulwin, sdata, iw, ih)
+    retval = _fl_create_from_bitmapdata(ulwin, sdata, iw, ih)
     return retval
-
-
-def fl_create_from_bitmapdata(win, data, w, h):
-    return XCreateBitmapFromData(fl_get_display(), win, data, w, h)
 
 
 # for compatibility
 fl_set_bitmap_datafile = fl_set_bitmap_file
+
 
 # PIXMAP stuff
 
@@ -7234,28 +7270,20 @@ def fl_create_from_pixmapdata(win, data, w, h, sm, hotx, hoty, tran):
     return retval
 
 
-# /usr/include/X11/Xlib.h 2570
-def XFreePixmap(pDisplay, pixmap):
-    """ XFreePixmap(pDisplay, pixmap) -> num.
+def fl_free_pixmap(idnum):
+    """ fl_free_pixmap(idnum)
+
+        @param idnum : Pixmap id to be freed
     """
 
-    _XFreePixmap = cfuncproto(
-            load_so_libx11(), "XFreePixmap",
-            cty.c_int, [cty.POINTER(Display), Pixmap],
-            """int XFreePixmap(Display * p1, Pixmap p2)
+    _fl_free_pixmap = cfuncproto(
+            load_so_libforms(), "fl_free_pixmap",
+            None, [Pixmap],
+            """void fl_free_pixmap(Pixmap id)
             """)
-    ulpixmap = convert_to_Pixmap(pixmap)
-    keep_elem_refs(pDisplay, pixmap, ulpixmap)
-    retval = _XFreePixmap(pDisplay, ulpixmap)
-    return retval
-
-
-def fl_free_pixmap(idnum):
-    if (idnum != None):
-        return XFreePixmap(fl_display, idnum)
-    else:
-        return None         # UNSURE
-
+    ulidnum = convert_to_Pixmap(idnum)
+    keep_elem_refs(idnum, ulidnum)
+    _fl_free_pixmap(ulidnum)
 
 
 ##################
@@ -7671,44 +7699,44 @@ def fl_get_browser_screenlines(pObject):
     return retval
 
 
-def fl_set_browser_topline(pObject, topline):
+def fl_set_browser_topline(pObject, line):
     """
-        fl_set_browser_topline(pObject, topline)
+        fl_set_browser_topline(pObject, line)
 
         Moves a line to the top of the browser.
 
         @param pObject : pointer to browser object
-        @param topline : number of text line to be moved to top
+        @param line : number of text line to be moved to top
     """
 
     _fl_set_browser_topline = cfuncproto(
             load_so_libforms(), "fl_set_browser_topline",
             None, [cty.POINTER(FL_OBJECT), cty.c_int],
-            """void fl_set_browser_topline(FL_OBJECT * ob, int topline)
+            """void fl_set_browser_topline(FL_OBJECT * ob, int line)
             """)
-    itopline = convert_to_int(topline)
-    keep_elem_refs(pObject, topline, itopline)
-    _fl_set_browser_topline(pObject, itopline)
+    iline = convert_to_int(line)
+    keep_elem_refs(pObject, line, iline)
+    _fl_set_browser_topline(pObject, iline)
 
 
-def fl_set_browser_bottomline(pObject, topline):
+def fl_set_browser_bottomline(pObject, line):
     """
-        fl_set_browser_bottomline(pObject, topline)
+        fl_set_browser_bottomline(pObject, line)
 
         Moves a line to the bottom of the browser.
 
         @param pObject : pointer to browser object
-        @param topline : number of text line to be moved to bottom
+        @param line : number of text line to be moved to bottom
     """
 
     _fl_set_browser_bottomline = cfuncproto(
             load_so_libforms(), "fl_set_browser_bottomline",
             None, [cty.POINTER(FL_OBJECT), cty.c_int],
-            """void fl_set_browser_bottomline(FL_OBJECT * ob, int topline)
+            """void fl_set_browser_bottomline(FL_OBJECT * ob, int line)
             """)
-    itopline = convert_to_int(topline)
-    keep_elem_refs(pObject, topline, itopline)
-    _fl_set_browser_bottomline(pObject, itopline)
+    iline = convert_to_int(line)
+    keep_elem_refs(pObject, line, iline)
+    _fl_set_browser_bottomline(pObject, iline)
 
 
 def fl_set_browser_fontsize(pObject, size):
@@ -17956,9 +17984,6 @@ def FL_RGB2GRAY(r, g, b):
 
 # if PCBITS is not 8, we need to apply the RGBmask
 
-def FL_GETR(packed):
-    return (packed & FL_RMASK)
-
 def FL_IsRGB(im):
     return (im.type == FL_IMAGE_RGB)
 
@@ -18626,19 +18651,6 @@ def flimage_getcolormap(pImage):
     keep_elem_refs(pImage)
     retval = _flimage_getcolormap(pImage)
     return retval
-
-
-# it seems not to be defined --LK
-#def fl_select_octree_quantizer():
-#   """ fl_select_octree_quantizer()
-#   """
-#
-#   _fl_select_octree_quantizer = cfuncproto(
-#           so_libflimage, "fl_select_octree_quantizer",
-#           None, [],
-#           """void fl_select_octree_quantizer()
-#           """)
-#   fl_select_octree_quantizer()
 
 
 def fl_select_mediancut_quantizer():

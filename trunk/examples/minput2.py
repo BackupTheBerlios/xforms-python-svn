@@ -36,7 +36,7 @@ def peek_event(form, xev):
     #if ( ( ( XEvent * )xev )->type == KeyPress )
     if xev[0].type == xfc.KeyPress:
         xf.fl_set_object_label(ui.status, "keyboard input")
-        # XFlush( fl_get_display( ) );   /* necessary to show the label */
+        xf.fl_XFlush()   # necessary to show the label
         xf.fl_msleep(50)
 
     return 0
@@ -62,10 +62,10 @@ def main(lsysargv, sysargv):
 
 def input_callback(ob, data):
 
-     buf = "Input%ld returned" % data
-     xf.fl_set_object_label(ui.status, buf)
-     #XFlush( xf.fl_get_display( ))
-     xf.fl_msleep(50)
+    buf = "Input%ld returned" % data
+    xf.fl_set_object_label(ui.status, buf)
+    xf.fl_XFlush()
+    xf.fl_msleep(50)
 
 
 

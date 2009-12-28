@@ -51,7 +51,6 @@ def create_form():
     form = xf.fl_bgn_form(xfc.FL_NO_BOX, 590, 610)
     obj1 = xf.fl_add_box(xfc.FL_UP_BOX, 0, 0, 590, 610, "")
 
-    br = xfc.FL_OBJECT()
     br = xf.fl_add_browser(xfc.FL_NORMAL_BROWSER, 20, 20, 550, 530, "")
     xf.fl_set_object_boxtype(br, xfc.FL_EMBOSSED_BOX)
 

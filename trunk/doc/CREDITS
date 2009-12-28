@@ -2,13 +2,13 @@ This work could not be possible without these really great people
 I owe huge thanks and a respectful acknowledgement to:
 
 
-###################################
-#                                 #
-# XForms toolkit developers       #
-#                                 #
-#  http://www.xforms-toolkit.org  #
-#                                 #
-###################################
+##########################################
+#                                        #
+# XForms toolkit developers              #
+#                                        #
+#  http://www.xforms-toolkit.org         #
+#                                        #
+##########################################
 
 Copyright owners and original authors:
  (C) 1996-2000 by T.C. Zhao and Mark Overmars
@@ -16,6 +16,10 @@ Copyright owners and original authors:
 
 Past and current maintainers:
 Jean-Marc Lasgouttes, Angus Leeming, Jens Thoms Toerring
+
+I would particularly thank Jens Thoms Toerring for his
+dedication and helpfulness with problems I've found.
+
 
 
 ###########################################

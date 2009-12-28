@@ -5,3 +5,5 @@ serve as testing/QA programs, so if you have a problem with
 a particular object, see if the same object works in the
 demo program.
 
+All demos have been ported from XForms .c demos to python.
+

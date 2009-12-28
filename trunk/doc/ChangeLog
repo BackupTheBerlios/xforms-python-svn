@@ -1,6 +1,7 @@
 
 
 SVN
+    * Re-align to XForms 1.0.93pre2
     * Porting of folder example.
     * Porting of chartall example.
     * Porting of fbrowse1 example.

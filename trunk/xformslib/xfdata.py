@@ -37,7 +37,7 @@ import ctypes as cty
 
 FL_VERSION = 1
 FL_REVISION = 0
-FL_FIXLEVEL = "93pre1"
+FL_FIXLEVEL = "93pre2"
 FL_INCLUDE_VERSION = (FL_VERSION * 1000 + FL_REVISION)
 
 
@@ -869,14 +869,13 @@ FL_FORM_._fields_ = [
     ('icon_pixmap', Pixmap),
     ('icon_mask', Pixmap),
     # interaction and other flags
-    ('vmode', cty.c_int),                     # current X visual class
-    ('deactivated', cty.c_int),               # true if sensitive
+    ('deactivated', cty.c_int),               # non-zero if deactiated
     ('use_pixmap', cty.c_int),                # true if dbl buffering
     ('frozen', cty.c_int),                    # true if sync change
     ('visible', cty.c_int),                   # true if mapped
     ('wm_border', cty.c_int),                 # window manager info
     ('prop', cty.c_uint),                     # other attributes
-    ('has_auto_objects', cty.c_int),
+    ('num_auto_objects', cty.c_int),
     ('top', cty.c_int),
     ('sort_of_modal', cty.c_int),             # internal use
     ('parent', cty.POINTER(FL_FORM)),
@@ -890,6 +889,7 @@ FL_FORM_._fields_ = [
 
 FL_OBJECT_._pack_ = 4
 FL_OBJECT_._fields_ = [
+    ('oid', cty.c_ulong),               # unique id ....
     ('form', cty.POINTER(FL_FORM)),   # the form this object belongs to
     ('u_vdata', cty.c_void_p),        # anything the user likes
     ('u_cdata', STRING),              # anything the user likes
@@ -1664,7 +1664,7 @@ FL_BROWSER_SLCOL = FL_COL1
 FL_BROWSER_FONTSIZE = FL_SMALL_FONT
 
 # This exists only for backward compatibility and isn't used anymore!
-FL_BROWSER_LINELENGTH = INT_MAX
+FL_BROWSER_LINELENGTH = 2048
 
 
 
