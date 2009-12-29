@@ -18,33 +18,33 @@ from xformslib import xfdata as xfc
 
 
 
-def slider_cb(ob, data):
-    strng = "%f" % xf.fl_get_slider_value(ob)
-    xf.fl_set_object_label(boxvalue, strng)
+def slider_cb(pobj, data):
+    strng = "%f" % xf.fl_get_slider_value(pobj)
+    xf.fl_set_object_label(pboxvalue, strng)
 
 
 
 def main(lsysargv, sysargv):
-    global boxvalue
+    global pboxvalue
 
     xf.fl_initialize(lsysargv, sysargv, "FormDemo", 0, 0)
 
-    form = xf.fl_bgn_form(xfc.FL_UP_BOX, 240, 400)
+    pform = xf.fl_bgn_form(xfc.FL_UP_BOX, 240, 400)
 
-    boxvalue = xf.fl_add_box(xfc.FL_DOWN_BOX, 120, 180, 100, 30, "")
-    xf.fl_set_object_lalign(boxvalue, xfc.FL_ALIGN_CENTER)
+    pboxvalue = xf.fl_add_box(xfc.FL_DOWN_BOX, 120, 180, 100, 30, "")
+    xf.fl_set_object_lalign(pboxvalue, xfc.FL_ALIGN_CENTER)
 
-    slider = xf.fl_add_slider(xfc.FL_VERT_SLIDER, 40, 40, 60, 320, "")
-    xf.fl_set_slider_bounds(slider, -1, 1)
-    xf.fl_set_slider_value(slider, 0)
-    xf.fl_set_object_color(slider, xfc.FL_SLIDER_COL1, xfc.FL_GREEN)
-    xf.fl_set_object_callback(slider, slider_cb, 0)
+    pslider = xf.fl_add_slider(xfc.FL_VERT_SLIDER, 40, 40, 60, 320, "")
+    xf.fl_set_slider_bounds(pslider, -1, 1)
+    xf.fl_set_slider_value(pslider, 0)
+    xf.fl_set_object_color(pslider, xfc.FL_SLIDER_COL1, xfc.FL_GREEN)
+    xf.fl_set_object_callback(pslider, slider_cb, 0)
 
     xf.fl_add_button(xfc.FL_RETURN_BUTTON, 120, 290, 100, 30, "Exit")
 
     xf.fl_end_form()
 
-    xf.fl_show_form(form, xfc.FL_PLACE_CENTER, xfc.FL_NOBORDER, "Slider")
+    xf.fl_show_form(pform, xfc.FL_PLACE_CENTER, xfc.FL_NOBORDER, "Slider")
 
     xf.fl_do_forms()
     xf.fl_finish()

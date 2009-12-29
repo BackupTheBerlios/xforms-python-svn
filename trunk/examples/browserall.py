@@ -17,92 +17,92 @@ from xformslib import xfdata as xfc
 
 
 
-br = [0, 0, 0, 0]
+pbr = [0, 0, 0, 0]
 bnames = ["NORMAL_BROWSER", "SELECT_BROWSER", "HOLD_BROWSER", \
           "MULTI_BROWSER"]
 
 
 def create_form():
-    global form, br, readout
+    global pform, pbr, preadout
 
-    form = xf.fl_bgn_form(xfc.FL_UP_BOX, 700, 570)
+    pform = xf.fl_bgn_form(xfc.FL_UP_BOX, 700, 570)
 
-    readout = xf.fl_add_text(xfc.FL_NORMAL_TEXT, 50, 30, 600, 50, "")
-    xf.fl_set_object_lsize(readout, xfc.FL_NORMAL_SIZE)
-    xf.fl_set_object_lalign(readout, xfc.FL_ALIGN_CENTER)
-    xf.fl_set_object_lstyle(readout, xfc.FL_BOLD_STYLE)
-    xf.fl_set_object_boxtype(readout, xfc.FL_UP_BOX)
-    xf.fl_set_object_color(readout, xfc.FL_MAGENTA, xfc.FL_MAGENTA)
+    preadout = xf.fl_add_text(xfc.FL_NORMAL_TEXT, 50, 30, 600, 50, "")
+    xf.fl_set_object_lsize(preadout, xfc.FL_NORMAL_SIZE)
+    xf.fl_set_object_lalign(preadout, xfc.FL_ALIGN_CENTER)
+    xf.fl_set_object_lstyle(preadout, xfc.FL_BOLD_STYLE)
+    xf.fl_set_object_boxtype(preadout, xfc.FL_UP_BOX)
+    xf.fl_set_object_color(preadout, xfc.FL_MAGENTA, xfc.FL_MAGENTA)
 
-    br[0] = xf.fl_add_browser(xfc.FL_NORMAL_BROWSER, 20, 120, 150, 290,
-                              bnames[0])
-    xf.fl_set_object_callback(br[0], br_callback, 0)
+    pbr[0] = xf.fl_add_browser(xfc.FL_NORMAL_BROWSER, 20, 120, 150, 290,
+                               bnames[0])
+    xf.fl_set_object_callback(pbr[0], br_callback, 0)
 
-    br[1] = xf.fl_add_browser(xfc.FL_SELECT_BROWSER, 190, 120, 150, 290,
-                              bnames[1])
-    xf.fl_set_object_callback(br[1], br_callback, 1)
+    pbr[1] = xf.fl_add_browser(xfc.FL_SELECT_BROWSER, 190, 120, 150, 290,
+                               bnames[1])
+    xf.fl_set_object_callback(pbr[1], br_callback, 1)
 
-    br[2] = xf.fl_add_browser(xfc.FL_HOLD_BROWSER, 360, 120, 150, 290,
-                              bnames[2])
-    xf.fl_set_object_color(br[2], xfc.FL_WHITE, xfc.FL_GREEN)
-    xf.fl_set_object_callback(br[2], br_callback, 2)
+    pbr[2] = xf.fl_add_browser(xfc.FL_HOLD_BROWSER, 360, 120, 150, 290,
+                               bnames[2])
+    xf.fl_set_object_color(pbr[2], xfc.FL_WHITE, xfc.FL_GREEN)
+    xf.fl_set_object_callback(pbr[2], br_callback, 2)
 
-    br[3] = xf.fl_add_browser(xfc.FL_MULTI_BROWSER, 530, 120, 150, 290,
-                              bnames[3])
-    xf.fl_set_object_color(br[3],xfc.FL_WHITE, xfc.FL_CYAN)
-    xf.fl_set_object_callback(br[3], br_callback, 3)
+    pbr[3] = xf.fl_add_browser(xfc.FL_MULTI_BROWSER, 530, 120, 150, 290,
+                               bnames[3])
+    xf.fl_set_object_color(pbr[3],xfc.FL_WHITE, xfc.FL_CYAN)
+    xf.fl_set_object_callback(pbr[3], br_callback, 3)
 
-    exitobj = xf.fl_add_button(xfc.FL_NORMAL_BUTTON, 560, 510, 120, 30, "Exit")
+    pexitobj = xf.fl_add_button(xfc.FL_NORMAL_BUTTON, 560, 510, 120, 30, "Exit")
 
-    obj1 = xf.fl_add_button(xfc.FL_NORMAL_BUTTON, 560, 460, 120, 30, "Deselect")
-    xf.fl_set_object_callback(obj1, deselect, 0)
+    pobj1 = xf.fl_add_button(xfc.FL_NORMAL_BUTTON, 560, 460, 120, 30, "Deselect")
+    xf.fl_set_object_callback(pobj1, deselect, 0)
 
     xf.fl_bgn_group()
 
-    obj2 = xf.fl_add_lightbutton(xfc.FL_RADIO_BUTTON, 20, 500, 100, 30, "Tiny")
-    xf.fl_set_object_lsize(obj2, xfc.FL_TINY_SIZE)
-    xf.fl_set_object_callback(obj2, set_size, xfc.FL_TINY_SIZE)
+    pobj2 = xf.fl_add_lightbutton(xfc.FL_RADIO_BUTTON, 20, 500, 100, 30, "Tiny")
+    xf.fl_set_object_lsize(pobj2, xfc.FL_TINY_SIZE)
+    xf.fl_set_object_callback(pobj2, set_size, xf.fl_get_object_lsize(pobj2))
 
-    obj3 = xf.fl_add_lightbutton(xfc.FL_RADIO_BUTTON, 130, 500, 100, 30, "Small")
-    xf.fl_set_object_lsize(obj3, xfc.FL_SMALL_SIZE)
-    xf.fl_set_object_callback(obj3, set_size, xfc.FL_SMALL_SIZE)
-    xf.fl_set_button(obj3, 1)
+    pobj3 = xf.fl_add_lightbutton(xfc.FL_RADIO_BUTTON, 130, 500, 100, 30, "Small")
+    xf.fl_set_object_lsize(pobj3, xfc.FL_SMALL_SIZE)
+    xf.fl_set_object_callback(pobj3, set_size, xf.fl_get_object_lsize(pobj3))
+    xf.fl_set_button(pobj3, 1)
 
-    obj4 = xf.fl_add_lightbutton(xfc.FL_RADIO_BUTTON, 240, 500, 100, 30, "Normal")
-    xf.fl_set_object_lsize(obj4, xfc.FL_NORMAL_SIZE)
-    xf.fl_set_object_callback(obj4, set_size, xfc.FL_NORMAL_SIZE)
+    pobj4 = xf.fl_add_lightbutton(xfc.FL_RADIO_BUTTON, 240, 500, 100, 30, "Normal")
+    xf.fl_set_object_lsize(pobj4, xfc.FL_NORMAL_SIZE)
+    xf.fl_set_object_callback(pobj4, set_size, xf.fl_get_object_lsize(pobj4))
 
-    obj5 = xf.fl_add_lightbutton(xfc.FL_RADIO_BUTTON, 350, 500, 100, 30, "Large")
-    xf.fl_set_object_lsize(obj5, xfc.FL_LARGE_SIZE)
-    xf.fl_set_object_callback(obj5, set_size, xfc.FL_LARGE_SIZE)
+    pobj5 = xf.fl_add_lightbutton(xfc.FL_RADIO_BUTTON, 350, 500, 100, 30, "Large")
+    xf.fl_set_object_lsize(pobj5, xfc.FL_LARGE_SIZE)
+    xf.fl_set_object_callback(pobj5, set_size, xf.fl_get_object_lsize(pobj5))
 
-    obj6 = xf.fl_add_button(xfc.FL_BUTTON, 470, 510, 45,30, "Link")
-    xf.fl_set_object_callback(obj6, link_browsers, 0)
+    pobj6 = xf.fl_add_button(xfc.FL_BUTTON, 470, 510, 45,30, "Link")
+    xf.fl_set_object_callback(pobj6, link_browsers, 0)
 
     xf.fl_end_group()
 
     xf.fl_bgn_group()
 
-    obj7 = xf.fl_add_lightbutton(xfc.FL_RADIO_BUTTON, 20, 450, 100, 30, \
-                                 "Normal")
-    xf.fl_set_object_callback(obj7, set_style, xfc.FL_NORMAL_STYLE)
-    xf.fl_set_button(obj7, 1)
+    pobj7 = xf.fl_add_lightbutton(xfc.FL_RADIO_BUTTON, 20, 450, 100, 30, \
+                                  "Normal")
+    xf.fl_set_object_callback(pobj7, set_style, xfc.FL_NORMAL_STYLE)
+    xf.fl_set_button(pobj7, 1)
 
-    obj8 = xf.fl_add_lightbutton(xfc.FL_RADIO_BUTTON, 120, 450, 100, 30, \
-                                 "Bold")
-    xf.fl_set_object_callback(obj8, set_style, xfc.FL_BOLD_STYLE)
+    pobj8 = xf.fl_add_lightbutton(xfc.FL_RADIO_BUTTON, 120, 450, 100, 30, \
+                                  "Bold")
+    xf.fl_set_object_callback(pobj8, set_style, xfc.FL_BOLD_STYLE)
 
-    obj9 = xf.fl_add_lightbutton(xfc.FL_RADIO_BUTTON, 220, 450, 100, 30, \
-                                "Italic")
-    xf.fl_set_object_callback(obj9, set_style, xfc.FL_ITALIC_STYLE)
+    pobj9 = xf.fl_add_lightbutton(xfc.FL_RADIO_BUTTON, 220, 450, 100, 30, \
+                                  "Italic")
+    xf.fl_set_object_callback(pobj9, set_style, xfc.FL_ITALIC_STYLE)
 
-    obj10 = xf.fl_add_lightbutton(xfc.FL_RADIO_BUTTON, 320, 450, 100, 30,
-                                "BoldItalic")
-    xf.fl_set_object_callback(obj10, set_style, xfc.FL_BOLDITALIC_STYLE)
+    pobj10 = xf.fl_add_lightbutton(xfc.FL_RADIO_BUTTON, 320, 450, 100, 30,
+                                   "BoldItalic")
+    xf.fl_set_object_callback(pobj10, set_style, xfc.FL_BOLDITALIC_STYLE)
 
-    obj11 = xf.fl_add_lightbutton(xfc.FL_RADIO_BUTTON, 420, 450, 100, 30, \
-                                "Fixed")
-    xf.fl_set_object_callback(obj11, set_style, xfc.FL_FIXED_STYLE)
+    pobj11 = xf.fl_add_lightbutton(xfc.FL_RADIO_BUTTON, 420, 450, 100, 30, \
+                                   "Fixed")
+    xf.fl_set_object_callback(pobj11, set_style, xfc.FL_FIXED_STYLE)
 
     xf.fl_end_group()
 
@@ -115,33 +115,33 @@ def main(lsysargv, sysargv):
     xf.fl_initialize(lsysargv, sysargv, "FormDemo", 0, 0)
     create_form()
     fill_browsers()
-    xf.fl_show_form(form,xfc.FL_PLACE_CENTER | xfc.FL_FREE_SIZE, \
+    xf.fl_show_form(pform,xfc.FL_PLACE_CENTER | xfc.FL_FREE_SIZE, \
                     xfc.FL_TRANSIENT, "All Browsers")
     xf.fl_do_forms()
-    xf.fl_hide_form(form)
+    xf.fl_hide_form(pform)
     return 0
 
 
 
-def deselect(obj, arg):
+def deselect(pobj, arg):
     for i in range(0, 4):
-        xf.fl_deselect_browser(br[i])
+        xf.fl_deselect_browser(pbr[i])
 
 
 
-def set_size(obj, arg):
+def set_size(pobj, arg):
     for i in range(0, 4):
-        xf.fl_set_browser_fontsize(br[i], arg)
+        xf.fl_set_browser_fontsize(pbr[i], arg)
 
 
 
-def set_style(obj, arg):
+def set_style(pobj, arg):
     for i in range(0, 4):
-        xf.fl_set_browser_fontstyle(br[i], arg)
+        xf.fl_set_browser_fontstyle(pbr[i], arg)
 
 
 
-def br_callback(ob, arg):
+def br_callback(pobj, arg):
 
     mb = ["left", "middle", "right", "scroll-up", "scroll-down"]
 
@@ -151,7 +151,7 @@ def br_callback(ob, arg):
     else:
         buf = "In %s: " % bnames[arg]
 
-    i = xf.fl_get_browser(ob)
+    i = xf.fl_get_browser(pobj)
     if i:
         if i > 0:
             ii = i
@@ -159,44 +159,44 @@ def br_callback(ob, arg):
         else:
             ii = -i
             txtsel = "was deselected."
-        buf += xf.fl_get_browser_line(ob, ii)
+        buf += xf.fl_get_browser_line(pobj, ii)
         buf += txtsel
 
-    xf.fl_set_object_label(readout, buf)
+    xf.fl_set_object_label(preadout, buf)
 
 
 
-def vcallback(ob, topline, data):
+def vcallback(pobj, topline, data):
 
-    yoffset = xf.fl_get_browser_yoffset(br[0])
+    yoffset = xf.fl_get_browser_yoffset(pbr[0])
     for i in range(0, 4):
-        xf.fl_set_browser_yoffset(br[i], yoffset)
+        xf.fl_set_browser_yoffset(pbr[i], yoffset)
 
 
-def donothing(ob, topline, data):
+def donothing(pobj, topline, data):
     pass        # placeholder for disabled vcallback
 
 
 
-def link_browsers(ob, data):
+def link_browsers(pobj, data):
 
-    sync = xf.fl_get_button(ob)
+    sync = xf.fl_get_button(pobj)
     if sync:
         linktxt = "Unlink"
     else:
         linktxt = "Link"
-    xf.fl_set_object_label(ob, linktxt)
+    xf.fl_set_object_label(pobj, linktxt)
 
     if sync:
-        yoffset = xf.fl_get_browser_yoffset(br[0])
+        yoffset = xf.fl_get_browser_yoffset(pbr[0])
         for i in range(1, 4):
-            xf.fl_set_browser_vscrollbar(br[i], xfc.FL_OFF)
-            xf.fl_set_browser_yoffset(br[i], yoffset)
-        xf.fl_set_browser_vscroll_callback(br[0], vcallback, 0)
+            xf.fl_set_browser_vscrollbar(pbr[i], xfc.FL_OFF)
+            xf.fl_set_browser_yoffset(pbr[i], yoffset)
+        xf.fl_set_browser_vscroll_callback(pbr[0], vcallback, 0)
     else:
         for i in range(1, 4):
-            xf.fl_set_browser_vscrollbar(br[i], xfc.FL_ON)
-        xf.fl_set_browser_vscroll_callback(br[0], donothing, 0)
+            xf.fl_set_browser_vscrollbar(pbr[i], xfc.FL_ON)
+        xf.fl_set_browser_vscroll_callback(pbr[0], donothing, 0)
 
 
 
@@ -214,7 +214,7 @@ def fill_browsers():
             else:
                 buf = "Line with qb %3d" % j
 
-            xf.fl_add_browser_line(br[i], buf)
+            xf.fl_add_browser_line(pbr[i], buf)
 
 
 

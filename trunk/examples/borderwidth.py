@@ -17,29 +17,29 @@ from xformslib import xfdata as xfc
 
 # callbacks for form bwform
 
-def done_callback(obj, data):
+def done_callback(pobj, data):
     xf.fl_finish()
     sys.exit(0)
 
 
-def bw_callback(obj, data):
+def bw_callback(pobj, data):
     bws = [-5, -4, -3, -2, -1, 1, 2, 3, 4, 5]
-    r = xf.fl_get_select_item(obj)
-    if not r:
+    pr = xf.fl_get_select_item(pobj)
+    if not pr or not pr.contents:
         print "error: NULL pointer"
         sys.exit(1)
     else:
-        indx = r[0].val
+        indx = pr.contents.val
         bw = bws[indx]
-        xf.fl_set_object_bw(bwgroup, bw)
-        xf.fl_set_object_bw(doneobj, bw)
-        xf.fl_popup_set_bw(r[0].popup, bw)
+        xf.fl_set_object_bw(pbwgroup, bw)
+        xf.fl_set_object_bw(pdoneobj, bw)
+        xf.fl_popup_set_bw(pr.contents.popup, bw)
 
 
 
 def main(lsysargv, sysargv):
 
-    global bwgroup, doneobj
+    global pbwgroup, pdoneobj
 
     # application default. Can be overriden by the command line options
 
@@ -47,9 +47,9 @@ def main(lsysargv, sysargv):
 
     xf.fl_initialize(lsysargv, sysargv, "FormDemo", 0, 0)
 
-    bwform = xf.fl_bgn_form(xfc.FL_NO_BOX, 380, 340)
+    pbwform = xf.fl_bgn_form(xfc.FL_NO_BOX, 380, 340)
 
-    bwgroup = xf.fl_bgn_group()
+    pbwgroup = xf.fl_bgn_group()
 
     xf.fl_add_box(xfc.FL_UP_BOX, 0, 0, 380, 340, "")
 
@@ -61,13 +61,13 @@ def main(lsysargv, sysargv):
 
     xf.fl_add_valslider(xfc.FL_HOR_BROWSER_SLIDER, 25, 105, 160, 20, "")
 
-    obj = xf.fl_add_scrollbar(xfc.FL_HOR_THIN_SCROLLBAR, 25, 140, 160, 20, "")
-    xf.fl_set_scrollbar_size(obj, 0.2)
+    pobj = xf.fl_add_scrollbar(xfc.FL_HOR_THIN_SCROLLBAR, 25, 140, 160, 20, "")
+    xf.fl_set_scrollbar_size(pobj, 0.2)
 
     xf.fl_add_counter(xfc.FL_NORMAL_COUNTER, 25, 175, 160, 20, "")
 
-    pmobj = xf.fl_add_pixmapbutton(xfc.FL_NORMAL_BUTTON, 305, 145, \
-                                             40, 35, "")
+    ppmobj = xf.fl_add_pixmapbutton(xfc.FL_NORMAL_BUTTON, 305, 145, \
+                                    40, 35, "")
 
     xf.fl_add_positioner(xfc.FL_NORMAL_POSITIONER, 30, 225, 100, 80, "")
 
@@ -77,23 +77,23 @@ def main(lsysargv, sysargv):
 
     xf.fl_add_roundbutton(xfc.FL_PUSH_BUTTON, 230, 128, 80, 32, "Button")
 
-    obj = xf.fl_add_round3dbutton(xfc.FL_PUSH_BUTTON, 230, 152, 80, 32, \
+    pobj = xf.fl_add_round3dbutton(xfc.FL_PUSH_BUTTON, 230, 152, 80, 32, \
                                   "Button")
-    xf.fl_set_object_color(obj, xfc.FL_COL1, xfc.FL_BLUE)
+    xf.fl_set_object_color(pobj, xfc.FL_COL1, xfc.FL_BLUE)
 
     xf.fl_add_checkbutton(xfc.FL_PUSH_BUTTON, 230, 175, 80, 32, "Button")
 
     xf.fl_add_input(xfc.FL_NORMAL_INPUT, 195, 240, 160, 28, "Input")
 
-    bw_select = xf.fl_add_select(xfc.FL_MENU_SELECT, 105, \
-                                 20, 100, 28, "Border Width")
-    xf.fl_set_object_callback(bw_select, bw_callback, 0)
+    pbwselect = xf.fl_add_select(xfc.FL_MENU_SELECT, 105, \
+                                  20, 100, 28, "Border Width")
+    xf.fl_set_object_callback(pbwselect, bw_callback, 0)
 
     xf.fl_end_group()
 
-    doneobj = xf.fl_add_button(xfc.FL_NORMAL_BUTTON, 270, 290, \
-                                            75, 30, "Done" )
-    xf.fl_set_object_callback(doneobj, done_callback, 0)
+    pdoneobj = xf.fl_add_button(xfc.FL_NORMAL_BUTTON, 270, 290, \
+                                75, 30, "Done")
+    xf.fl_set_object_callback(pdoneobj, done_callback, 0)
 
     xf.fl_end_form()
 
@@ -101,23 +101,23 @@ def main(lsysargv, sysargv):
 
     # form initialization code
 
-    xf.fl_set_pixmapbutton_file(pmobj, "crab.xpm")
+    xf.fl_set_pixmapbutton_file(ppmobj, "crab.xpm")
 
-    xf.fl_add_select_items(bw_select, \
+    xf.fl_add_select_items(pbwselect, \
              "-5 Pixel|-4 Pixel|-3 Pixel|-2 Pixel|-1 Pixel|" \
              " 1 Pixel| 2 Pixel| 3 Pixel| 4 Pixel| 5 Pixel")
 
-    bw = xf.fl_get_border_width()
-    if (bw < -5 or bw == 0 or bw > 5):
-        xf.fl_set_border_width(bw = -2)
+    pbw = xf.fl_get_border_width()
+    if (pbw < -5 or pbw == 0 or pbw > 5):
+        xf.fl_set_border_width(pbw = -2)
 
-    txt = "%2d Pixel" % bw
-    pupretn = xf.fl_get_select_item_by_label(bw_select, txt)
-    xf.fl_set_select_item(bw_select, pupretn)
+    txt = "%2d Pixel" % pbw
+    ppupretn = xf.fl_get_select_item_by_label(pbwselect, txt)
+    xf.fl_set_select_item(pbwselect, ppupretn)
 
     # show the form
 
-    xf.fl_show_form(bwform, xfc.FL_PLACE_CENTER, xfc.FL_TRANSIENT, \
+    xf.fl_show_form(pbwform, xfc.FL_PLACE_CENTER, xfc.FL_TRANSIENT, \
                     "bwform")
 
     while xf.fl_do_forms():

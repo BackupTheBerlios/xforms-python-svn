@@ -26,9 +26,9 @@ class FD_inv(object):
     done = None
 
 
-def invert_it(ob, data):
+def invert_it(pobj, data):
 
-    if xf.fl_get_button(ob):
+    if xf.fl_get_button(pobj):
         xf.fl_set_slider_bounds(ui.sl[0], 1.0, 0.0)
         xf.fl_set_slider_bounds(ui.sl[1], 1.0, 0.0)
         xf.fl_set_slider_bounds(ui.sl[2], 1.0, 0.0)
@@ -38,7 +38,7 @@ def invert_it(ob, data):
         xf.fl_set_slider_bounds(ui.sl[2], 0.0, 1.0)
 
 
-def exitcb(ob, data):
+def exitcb(pobj, data):
     xf.fl_finish()
     sys.exit(0)
 
@@ -82,8 +82,8 @@ def create_form_inv():
     fdui.done = xf.fl_add_button(xfc.FL_RETURN_BUTTON, 160, 235, 75, 30, "Exit")
     xf.fl_set_object_callback(fdui.done, exitcb, 0)
 
-    obj = xf.fl_add_checkbutton(xfc.FL_PUSH_BUTTON, 165, 30, 75, 35, "Invert")
-    xf.fl_set_object_callback(obj, invert_it, 0)
+    pobj = xf.fl_add_checkbutton(xfc.FL_PUSH_BUTTON, 165, 30, 75, 35, "Invert")
+    xf.fl_set_object_callback(pobj, invert_it, 0)
 
     xf.fl_end_form()
 

@@ -29,7 +29,7 @@ def main(lsysargv, sysargv):
 
     xf.fl_set_resource(xfc.FLOKLabel, "Go")
 
-    if xf.fl_show_question("Do you want bold font ?",1 ):
+    if xf.fl_show_question("Do you want bold font ?", 1):
         xf.fl_set_goodies_font(xfc.FL_BOLD_STYLE, xfc.FL_NORMAL_SIZE)
 
     xf.fl_show_messages("This is a test program for the goodies of the "

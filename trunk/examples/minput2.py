@@ -34,7 +34,7 @@ class FD_inputform(object):
 def peek_event(form, xev):
 
     #if ( ( ( XEvent * )xev )->type == KeyPress )
-    if xev[0].type == xfc.KeyPress:
+    if xev.contents.type == xfc.KeyPress:
         xf.fl_set_object_label(ui.status, "keyboard input")
         xf.fl_XFlush()   # necessary to show the label
         xf.fl_msleep(50)
@@ -60,7 +60,7 @@ def main(lsysargv, sysargv):
 
 
 
-def input_callback(ob, data):
+def input_callback(pobj, data):
 
     buf = "Input%ld returned" % data
     xf.fl_set_object_label(ui.status, buf)
@@ -69,9 +69,9 @@ def input_callback(ob, data):
 
 
 
-def howreturn_callback(ob, data):
-    xf.fl_set_input_return(ui.input1, xf.fl_get_button(ob))
-    xf.fl_set_input_return(ui.input2, xf.fl_get_button(ob))
+def howreturn_callback(pobj, data):
+    xf.fl_set_input_return(ui.input1, xf.fl_get_button(pobj))
+    xf.fl_set_input_return(ui.input2, xf.fl_get_button(pobj))
 
 
 
@@ -81,7 +81,7 @@ def create_form_inputform():
 
     fdui.inputform = xf.fl_bgn_form(xfc.FL_NO_BOX, 475, 485)
 
-    obj = xf.fl_add_box(xfc.FL_UP_BOX, 0, 0, 475, 485, "")
+    pobj = xf.fl_add_box(xfc.FL_UP_BOX, 0, 0, 475, 485, "")
     fdui.input1 = xf.fl_add_input(xfc.FL_MULTILINE_INPUT, 15, 275, 350, 180,
                                   "")
     xf.fl_set_object_lalign(fdui.input1, xfc.FL_ALIGN_TOP)

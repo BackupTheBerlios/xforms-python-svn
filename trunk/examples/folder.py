@@ -58,7 +58,7 @@ class FD_inputform(genericform):
 
 # callback routines
 
-def hide_show_cb(ob, data):
+def hide_show_cb(pobj, data):
 
     if data:
         xf.fl_show_object(fdui.folder)
@@ -66,34 +66,34 @@ def hide_show_cb(ob, data):
         xf.fl_hide_object(fdui.folder)
 
 
-def reshow_cb(ob, data):
-    xf.fl_hide_form(ob[0].form[0])
-    xf.fl_show_form(ob[0].form[0], xfc.FL_PLACE_POSITION, \
+def reshow_cb(pobj, data):
+    xf.fl_hide_form(pobj.contents.form.contents)
+    xf.fl_show_form(pobj.contents.form.contents, xfc.FL_PLACE_POSITION, \
                     xfc.FL_FULLBORDER, "TabFolder")
 
 
-def set_cb(ob, data):
+def set_cb(pobj, data):
     n = xf.fl_get_active_folder_number(fdui.folder)
     xf.fl_set_folder_bynumber(fdui.folder, n % 5 + 1)
 
 
-def deactivate_cb(ob, data):
-    if fdui.folder[0].active:
-        xf.fl_set_object_label(ob, "Activate")
+def deactivate_cb(pobj, data):
+    if fdui.folder.contents.active:
+        xf.fl_set_object_label(pobj, "Activate")
         xf.fl_deactivate_object(fdui.folder)
     else:
-        xf.fl_set_object_label(ob, "Deactivate")
+        xf.fl_set_object_label(pobj, "Deactivate")
         xf.fl_activate_object(fdui.folder)
 
 
 
-def done_cb(ob, data):
+def done_cb(pobj, data):
 
     if xf.fl_show_question("Do you want to quit ?", 0):
         print("will quit after 5 seconds\n")
         xf.fl_msleep(5000)
-        xf.fl_hide_form(ob[0].form[0])
-        xf.fl_free_form(ob[0].form[0])
+        xf.fl_hide_form(pobj.contents.form.contents)
+        xf.fl_free_form(pobj.contents.form.contents)
         xf.fl_finish()
         sys.exit(0)
     else:
@@ -107,44 +107,44 @@ def create_form_buttonform():
 
     fdui.buttonform = xf.fl_bgn_form(xfc.FL_NO_BOX, 430, 210)
 
-    obj = xf.fl_add_box(xfc.FL_FLAT_BOX, 0, 0, 430, 210, "")
+    pobj = xf.fl_add_box(xfc.FL_FLAT_BOX, 0, 0, 430, 210, "")
 
-    obj1 = xf.fl_add_button(xfc.FL_NORMAL_BUTTON, 30, 151, \
+    pobj1 = xf.fl_add_button(xfc.FL_NORMAL_BUTTON, 30, 151, \
                            80, 30, "Button")
-    xf.fl_set_object_lalign(obj1, xfc.FL_ALIGN_CENTER)
+    xf.fl_set_object_lalign(pobj1, xfc.FL_ALIGN_CENTER)
 
-    obj2 = xf.fl_add_roundbutton(xfc.FL_PUSH_BUTTON, 40, 91, \
+    pobj2 = xf.fl_add_roundbutton(xfc.FL_PUSH_BUTTON, 40, 91, \
                                 100, 30, "RoundButton")
 
-    obj3 = xf.fl_add_round3dbutton(xfc.FL_PUSH_BUTTON, 135, 151, \
+    pobj3 = xf.fl_add_round3dbutton(xfc.FL_PUSH_BUTTON, 135, 151, \
                                   110, 30, "Round3DButton")
-    xf.fl_set_object_color(obj3, xfc.FL_COL1, xfc.FL_BLUE)
+    xf.fl_set_object_color(pobj3, xfc.FL_COL1, xfc.FL_BLUE)
 
-    obj4 = xf.fl_add_checkbutton(xfc.FL_PUSH_BUTTON, 170, 111, \
+    pobj4 = xf.fl_add_checkbutton(xfc.FL_PUSH_BUTTON, 170, 111, \
                                 110, 30, "CheckButton")
 
-    obj4 = xf.fl_add_lightbutton(xfc.FL_PUSH_BUTTON, 30, 31, \
+    pobj4 = xf.fl_add_lightbutton(xfc.FL_PUSH_BUTTON, 30, 31, \
                                 100, 30, "LightButton")
 
-    obj5 = xf.fl_add_pixmapbutton(xfc.FL_NORMAL_BUTTON, 320, 36, \
+    pobj5 = xf.fl_add_pixmapbutton(xfc.FL_NORMAL_BUTTON, 320, 36, \
                                  80, 80, "PixmapButton")
-    xf.fl_set_object_color(obj5, xfc.FL_COL1, xfc.FL_YELLOW)
-    xf.fl_set_pixmapbutton_file(obj5, "porsche.xpm")
+    xf.fl_set_object_color(pobj5, xfc.FL_COL1, xfc.FL_YELLOW)
+    xf.fl_set_pixmapbutton_file(pobj5, "porsche.xpm")
 
-    obj6 = xf.fl_add_button(xfc.FL_NORMAL_BUTTON, 185, 26, \
+    pobj6 = xf.fl_add_button(xfc.FL_NORMAL_BUTTON, 185, 26, \
                            100, 30, "Button")
-    xf.fl_set_object_boxtype(obj6, xfc.FL_ROUNDED3D_UPBOX)
-    xf.fl_set_object_lalign(obj6, xfc.FL_ALIGN_CENTER)
+    xf.fl_set_object_boxtype(pobj6, xfc.FL_ROUNDED3D_UPBOX)
+    xf.fl_set_object_lalign(pobj6, xfc.FL_ALIGN_CENTER)
 
-    obj7 = xf.fl_add_lightbutton(xfc.FL_PUSH_BUTTON, 290, 146, \
+    pobj7 = xf.fl_add_lightbutton(xfc.FL_PUSH_BUTTON, 290, 146, \
                                 100, 30, "Button")
-    xf.fl_set_object_boxtype(obj7, xfc.FL_EMBOSSED_BOX)
+    xf.fl_set_object_boxtype(pobj7, xfc.FL_EMBOSSED_BOX)
 
-    obj8 = xf.fl_add_button(xfc.FL_NORMAL_BUTTON, 175, 71, \
+    pobj8 = xf.fl_add_button(xfc.FL_NORMAL_BUTTON, 175, 71, \
                            60, 25, "Button")
-    xf.fl_set_object_boxtype(obj8, xfc.FL_SHADOW_BOX)
-    xf.fl_set_object_color(obj8, xfc.FL_COL1, xfc.FL_SLATEBLUE)
-    xf.fl_set_object_lalign(obj8, xfc.FL_ALIGN_CENTER)
+    xf.fl_set_object_boxtype(pobj8, xfc.FL_SHADOW_BOX)
+    xf.fl_set_object_color(pobj8, xfc.FL_COL1, xfc.FL_SLATEBLUE)
+    xf.fl_set_object_lalign(pobj8, xfc.FL_ALIGN_CENTER)
 
     xf.fl_end_form()
 
@@ -158,32 +158,32 @@ def create_form_staticform():
 
     fdui.staticform = xf.fl_bgn_form(xfc.FL_NO_BOX, 431, 211)
 
-    obj = xf.fl_add_box(xfc.FL_FLAT_BOX, 0, 0, 431, 211, "")
-    xf.fl_set_object_color(obj, xfc.FL_INDIANRED, xfc.FL_INDIANRED)
-    xf.fl_set_object_lcolor(obj, xfc.FL_INDIANRED)
+    pobj = xf.fl_add_box(xfc.FL_FLAT_BOX, 0, 0, 431, 211, "")
+    xf.fl_set_object_color(pobj, xfc.FL_INDIANRED, xfc.FL_INDIANRED)
+    xf.fl_set_object_lcolor(pobj, xfc.FL_INDIANRED)
 
-    obj1 = xf.fl_add_box(xfc.FL_UP_BOX, 40, 40, 60, 45, "A Box")
+    pobj1 = xf.fl_add_box(xfc.FL_UP_BOX, 40, 40, 60, 45, "A Box")
 
-    obj2 = xf.fl_add_labelframe(xfc.FL_ENGRAVED_FRAME, 130, 30, \
+    pobj2 = xf.fl_add_labelframe(xfc.FL_ENGRAVED_FRAME, 130, 30, \
                                 120, 55, "LabelFrame")
-    xf.fl_set_object_color(obj2, xfc.FL_BLACK, xfc.FL_INDIANRED)
-    xf.fl_set_object_lstyle(obj2, xfc.FL_BOLD_STYLE)
+    xf.fl_set_object_color(pobj2, xfc.FL_BLACK, xfc.FL_INDIANRED)
+    xf.fl_set_object_lstyle(pobj2, xfc.FL_BOLD_STYLE)
 
     fdui.chart = xf.fl_add_chart(xfc.FL_PIE_CHART, 270, 20, \
                                  130, 105, "")
     xf.fl_set_object_color(fdui.chart, xfc.FL_INDIANRED, xfc.FL_COL1)
 
-    obj3 = xf.fl_add_clock(xfc.FL_ANALOG_CLOCK, 30, 100, 85, 85, "")
-    xf.fl_set_object_color(obj3, xfc.FL_COL1, xfc.FL_RIGHT_BCOL)
+    pobj3 = xf.fl_add_clock(xfc.FL_ANALOG_CLOCK, 30, 100, 85, 85, "")
+    xf.fl_set_object_color(pobj3, xfc.FL_COL1, xfc.FL_RIGHT_BCOL)
 
-    obj4 = xf.fl_add_bitmap(xfc.FL_NORMAL_BITMAP, 150, 140, 30, 25, "")
-    xf.fl_set_bitmap_file(obj4, "srs.xbm")
+    pobj4 = xf.fl_add_bitmap(xfc.FL_NORMAL_BITMAP, 150, 140, 30, 25, "")
+    xf.fl_set_bitmap_file(pobj4, "srs.xbm")
 
-    obj5 = xf.fl_add_pixmap(xfc.FL_NORMAL_PIXMAP, 210, 120, 60, 60, "")
-    xf.fl_set_pixmap_file(obj5, "porsche.xpm")
+    pobj5 = xf.fl_add_pixmap(xfc.FL_NORMAL_PIXMAP, 210, 120, 60, 60, "")
+    xf.fl_set_pixmap_file(pobj5, "porsche.xpm")
 
-    obj6 = xf.fl_add_text(xfc.FL_NORMAL_TEXT, 310, 150, 70, 25, "Text")
-    xf.fl_set_object_boxtype(obj6, xfc.FL_BORDER_BOX)
+    pobj6 = xf.fl_add_text(xfc.FL_NORMAL_TEXT, 310, 150, 70, 25, "Text")
+    xf.fl_set_object_boxtype(pobj6, xfc.FL_BORDER_BOX)
 
     xf.fl_end_form()
 
@@ -198,7 +198,7 @@ def create_form_mainform():
 
     fdui.mainform = xf.fl_bgn_form(xfc.FL_NO_BOX, 461, 291)
 
-    obj = xf.fl_add_box(xfc.FL_UP_BOX, 0, 0, 461, 291, "")
+    pobj = xf.fl_add_box(xfc.FL_UP_BOX, 0, 0, 461, 291, "")
 
     fdui.done = xf.fl_add_button(xfc.FL_NORMAL_BUTTON, 381, 250, \
                                  64, 25, "Done")
@@ -249,47 +249,47 @@ def create_form_valuatorform():
 
     fdui.valuatorform = xf.fl_bgn_form(xfc.FL_NO_BOX, 431, 211)
 
-    obj = xf.fl_add_box(xfc.FL_FLAT_BOX, 0, 0, 431, 211, "")
+    pobj = xf.fl_add_box(xfc.FL_FLAT_BOX, 0, 0, 431, 211, "")
 
-    obj1 = xf.fl_add_positioner(xfc.FL_NORMAL_POSITIONER, 280, 50, 82, 72, "")
-    xf.fl_set_positioner_xvalue(obj1, 0.679012)
-    xf.fl_set_positioner_yvalue(obj1, 0.71831)
+    pobj1 = xf.fl_add_positioner(xfc.FL_NORMAL_POSITIONER, 280, 50, 82, 72, "")
+    xf.fl_set_positioner_xvalue(pobj1, 0.679012)
+    xf.fl_set_positioner_yvalue(pobj1, 0.71831)
 
-    obj2 = xf.fl_add_valslider(xfc.FL_HOR_NICE_SLIDER, 55, 10, 240, 20, "")
-    xf.fl_set_object_boxtype(obj2, xfc.FL_FLAT_BOX)
-    xf.fl_set_object_color(obj2, xfc.FL_COL1, xfc.FL_RIGHT_BCOL)
-    xf.fl_set_object_return(obj2, xfc.FL_RETURN_CHANGED)
-    xf.fl_set_slider_value(obj2, 0.87)
+    pobj2 = xf.fl_add_valslider(xfc.FL_HOR_NICE_SLIDER, 55, 10, 240, 20, "")
+    xf.fl_set_object_boxtype(pobj2, xfc.FL_FLAT_BOX)
+    xf.fl_set_object_color(pobj2, xfc.FL_COL1, xfc.FL_RIGHT_BCOL)
+    xf.fl_set_object_return(pobj2, xfc.FL_RETURN_CHANGED)
+    xf.fl_set_slider_value(pobj2, 0.87)
 
-    obj3 = xf.fl_add_counter(xfc.FL_NORMAL_COUNTER, 130, 110, 110, 20, "")
-    xf.fl_set_counter_value(obj3, -1.0)
+    pobj3 = xf.fl_add_counter(xfc.FL_NORMAL_COUNTER, 130, 110, 110, 20, "")
+    xf.fl_set_counter_value(pobj3, -1.0)
 
-    obj4 = xf.fl_add_slider(xfc.FL_VERT_NICE_SLIDER, 10, 30, 20, 160, "")
-    xf.fl_set_object_boxtype(obj4, xfc.FL_FLAT_BOX)
-    xf.fl_set_object_color(obj4, xfc.FL_COL1, xfc.FL_RED)
-    xf.fl_set_object_return(obj4, xfc.FL_RETURN_CHANGED)
-    xf.fl_set_slider_value(obj4, 0.49)
+    pobj4 = xf.fl_add_slider(xfc.FL_VERT_NICE_SLIDER, 10, 30, 20, 160, "")
+    xf.fl_set_object_boxtype(pobj4, xfc.FL_FLAT_BOX)
+    xf.fl_set_object_color(pobj4, xfc.FL_COL1, xfc.FL_RED)
+    xf.fl_set_object_return(pobj4, xfc.FL_RETURN_CHANGED)
+    xf.fl_set_slider_value(pobj4, 0.49)
 
-    obj5 = xf.fl_add_valslider(xfc.FL_HOR_BROWSER_SLIDER, 70, 170, 150, 21, "")
-    xf.fl_set_object_return(obj5, xfc.FL_RETURN_CHANGED)
+    pobj5 = xf.fl_add_valslider(xfc.FL_HOR_BROWSER_SLIDER, 70, 170, 150, 21, "")
+    xf.fl_set_object_return(pobj5, xfc.FL_RETURN_CHANGED)
 
-    obj6 = xf.fl_add_slider(xfc.FL_HOR_FILL_SLIDER, 69, 57, 159, 22, "")
-    xf.fl_set_object_color(obj6, xfc.FL_COL1, xfc.FL_SLATEBLUE)
-    xf.fl_set_object_return(obj6, xfc.FL_RETURN_CHANGED)
-    xf.fl_set_slider_value(obj6, 0.25)
+    pobj6 = xf.fl_add_slider(xfc.FL_HOR_FILL_SLIDER, 69, 57, 159, 22, "")
+    xf.fl_set_object_color(pobj6, xfc.FL_COL1, xfc.FL_SLATEBLUE)
+    xf.fl_set_object_return(pobj6, xfc.FL_RETURN_CHANGED)
+    xf.fl_set_slider_value(pobj6, 0.25)
 
-    obj7 = xf.fl_add_dial(xfc.FL_NORMAL_DIAL, 60, 90, 60, 58, "")
-    xf.fl_set_object_boxtype(obj7, xfc.FL_UP_BOX)
-    xf.fl_set_object_return(obj7, xfc.FL_RETURN_END_CHANGED)
+    pobj7 = xf.fl_add_dial(xfc.FL_NORMAL_DIAL, 60, 90, 60, 58, "")
+    xf.fl_set_object_boxtype(pobj7, xfc.FL_UP_BOX)
+    xf.fl_set_object_return(pobj7, xfc.FL_RETURN_END_CHANGED)
 
-    obj8 = xf.fl_add_scrollbar(xfc.FL_VERT_THIN_SCROLLBAR, 394, 14, 18, 180, "")
-    xf.fl_set_object_boxtype(obj8, xfc.FL_DOWN_BOX)
-    xf.fl_set_object_resize(obj8, xfc.FL_RESIZE_ALL)
-    xf.fl_set_scrollbar_size(obj8, 0.20)
+    pobj8 = xf.fl_add_scrollbar(xfc.FL_VERT_THIN_SCROLLBAR, 394, 14, 18, 180, "")
+    xf.fl_set_object_boxtype(pobj8, xfc.FL_DOWN_BOX)
+    xf.fl_set_object_resize(pobj8, xfc.FL_RESIZE_ALL)
+    xf.fl_set_scrollbar_size(pobj8, 0.20)
 
-    obj9 = xf.fl_add_scrollbar(xfc.FL_HOR_SCROLLBAR, 238, 158, 140, 16, "")
-    xf.fl_set_object_resize(obj9, xfc.FL_RESIZE_ALL)
-    xf.fl_set_scrollbar_size(obj9, 0.25)
+    pobj9 = xf.fl_add_scrollbar(xfc.FL_HOR_SCROLLBAR, 238, 158, 140, 16, "")
+    xf.fl_set_object_resize(pobj9, xfc.FL_RESIZE_ALL)
+    xf.fl_set_scrollbar_size(pobj9, 0.25)
 
     xf.fl_end_form()
 
@@ -303,7 +303,7 @@ def create_form_choiceform():
 
     fdui.choiceform = xf.fl_bgn_form(xfc.FL_NO_BOX, 431, 211)
 
-    obj = xf.fl_add_box(xfc.FL_FLAT_BOX, 0, 0, 431, 211, "")
+    pobj = xf.fl_add_box(xfc.FL_FLAT_BOX, 0, 0, 431, 211, "")
 
     fdui.pulldown = xf.fl_add_menu(xfc.FL_PULLDOWN_MENU, 45, 36, \
                                          45, 21, "Menu")
@@ -331,13 +331,13 @@ def create_form_inputform():
 
     fdui.inputform = xf.fl_bgn_form(xfc.FL_NO_BOX, 430, 210)
 
-    obj = xf.fl_add_box(xfc.FL_FLAT_BOX, 0, 0, 430, 210, "")
+    pobj = xf.fl_add_box(xfc.FL_FLAT_BOX, 0, 0, 430, 210, "")
 
-    obj1 = xf.fl_add_input(xfc.FL_MULTILINE_INPUT, 70, 20, 280, 90, "MultiLine\nInput")
-    xf.fl_set_object_return(obj1, xfc.FL_RETURN_ALWAYS)
+    pobj1 = xf.fl_add_input(xfc.FL_MULTILINE_INPUT, 70, 20, 280, 90, "MultiLine\nInput")
+    xf.fl_set_object_return(pobj1, xfc.FL_RETURN_ALWAYS)
 
-    obj2 = xf.fl_add_input(xfc.FL_NORMAL_INPUT, 80, 132, 250, 34, "Input")
-    xf.fl_set_object_return(obj2, xfc.FL_RETURN_END_CHANGED)
+    pobj2 = xf.fl_add_input(xfc.FL_NORMAL_INPUT, 80, 132, 250, 34, "Input")
+    xf.fl_set_object_return(pobj2, xfc.FL_RETURN_END_CHANGED)
 
     xf.fl_end_form()
 
@@ -361,6 +361,7 @@ def make_folder(folder):
 
     for i in range (0, len(y)):
         xf.fl_add_chart_value(fd_staticform.chart, y[i], label[i], i + 1)
+
     xf.fl_addto_menu(fd_choiceform.pulldown, \
                     "MenuEntry1|MenuEntry2|MenuEntry3|MenuEntry4")
     xf.fl_addto_menu(fd_choiceform.pushmenu, \
@@ -370,11 +371,11 @@ def make_folder(folder):
 
     xf.fl_load_browser(fd_choiceform.browser, "Readme")
 
-    xf.fl_addto_tabfolder(folder,"ButtonObj", fd_buttonform.buttonform)
-    xf.fl_addto_tabfolder(folder,"StaticObj", fd_staticform.staticform)
-    xf.fl_addto_tabfolder(folder,"ValuatorObj", fd_valuatorform.valuatorform)
-    xf.fl_addto_tabfolder(folder,"ChoiceObj", fd_choiceform.choiceform)
-    xf.fl_addto_tabfolder(folder,"InputObj", fd_inputform.inputform)
+    xf.fl_addto_tabfolder(folder, "ButtonObj", fd_buttonform.buttonform)
+    xf.fl_addto_tabfolder(folder, "StaticObj", fd_staticform.staticform)
+    xf.fl_addto_tabfolder(folder, "ValuatorObj", fd_valuatorform.valuatorform)
+    xf.fl_addto_tabfolder(folder, "ChoiceObj", fd_choiceform.choiceform)
+    xf.fl_addto_tabfolder(folder, "InputObj", fd_inputform.inputform)
 
 
 

@@ -25,6 +25,6 @@ setup(name = name,
     data_files=[('doc/xforms-python-'+version, \
 		 ['doc/ChangeLog', 'doc/CREDITS', 'doc/INSTALL', \
 		 'doc/lgpl-2.1.txt', 'doc/LICENSE', 'doc/README', \
-		 'doc/TODO', 'doc/api.pdf'])]
+		 'doc/TODO'])]
     )
 

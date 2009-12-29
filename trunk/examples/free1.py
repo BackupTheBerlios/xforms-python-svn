@@ -21,27 +21,28 @@ dcol = 1
 
 # The call back routine
 
-def handle_free1(obj, event, mx, my, key, ev):
+def handle_free1(pobj, event, mx, my, key, ev):
 
     global on
     dcol = 1
 
     if event == xfc.FL_DRAW:
-        xf.fl_rectf(obj[0].x, obj[0].y, obj[0].w, obj[0].h, obj[0].u_ldata)
+        xf.fl_rectf(pobj.contents.x, pobj.contents.y, pobj.contents.w, \
+                    pobj.contents.h, pobj.contents.u_ldata)
     elif event == xfc.FL_RELEASE:
         on = not on
     elif event ==  xfc.FL_STEP:
         if on:
-            if obj[0].u_ldata >= cole:
+            if pobj.contents.u_ldata >= cole:
                 dcol = -1
-            if (obj[0].u_ldata <= xfc.FL_FREE_COL1):
+            if (pobj.contents.u_ldata <= xfc.FL_FREE_COL1):
                 dcol = 1
-            obj[0].u_ldata += dcol
-            xf.fl_redraw_object(obj)
+            pobj.contents.u_ldata += dcol
+            xf.fl_redraw_object(pobj)
     return 0
 
 
-def done(ob, data):
+def done(pobj, data):
     xf.fl_finish()
     sys.exit(0)
 
@@ -53,11 +54,11 @@ def main(lsysargv, sysargv):
 
     xf.fl_initialize(lsysargv, sysargv, "FormDemo", 0, 0)
 
-    form = xf.fl_bgn_form(xfc.FL_UP_BOX, 400, 400)
-    obj = xf.fl_add_button(xfc.FL_NORMAL_BUTTON, 320, 20, 40, 30, \
+    pform = xf.fl_bgn_form(xfc.FL_UP_BOX, 400, 400)
+    pobj = xf.fl_add_button(xfc.FL_NORMAL_BUTTON, 320, 20, 40, 30, \
                            "Exit")
-    xf.fl_set_object_callback(obj, done, 0)
-    obj = xf.fl_add_free(xfc.FL_CONTINUOUS_FREE, 40, 80, 320, 280, \
+    xf.fl_set_object_callback(pobj, done, 0)
+    pobj = xf.fl_add_free(xfc.FL_CONTINUOUS_FREE, 40, 80, 320, 280, \
                          "", handle_free1)
     xf.fl_end_form()
 
@@ -65,7 +66,7 @@ def main(lsysargv, sysargv):
     depth  = xf.fl_get_visual_depth()
 
     if depth < 4:
-        sys.stderr.write("This Demo requires a depth of at least 4 bits\n")
+        print "This Demo requires a depth of at least 4 bits\n"
         xf.fl_finish()
         sys.exit(1)
 
@@ -77,14 +78,14 @@ def main(lsysargv, sysargv):
     if cole > 64:
         cole = 64
 
-    obj.u_ldata = col = xfc.FL_FREE_COL1
+    pobj.contents.u_ldata = col = xfc.FL_FREE_COL1
     cole += col
 
     for i in range(col, cole+1):
         j =  255 * (i - col) / (cole - col)
         xf.fl_mapcolor(i, j, j, j)
 
-    xf.fl_show_form(form, xfc.FL_PLACE_CENTER, xfc.FL_NOBORDER, \
+    xf.fl_show_form(pform, xfc.FL_PLACE_CENTER, xfc.FL_NOBORDER, \
                     "Free Object")
     xf.fl_do_forms()
 
@@ -94,3 +95,4 @@ def main(lsysargv, sysargv):
 
 if __name__ == '__main__':
     main(len(sys.argv), sys.argv)
+

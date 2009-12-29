@@ -31,19 +31,19 @@ class FD_input(object):
 
 # callbacks for form input
 
-def done_cb(ob, data):
+def done_cb(pobj, data):
     xf.fl_finish()
     sys.exit(0)
 
 
-def input_cb(ob, data):
-    unused, cx, cy = xf.fl_get_input_cursorpos(ob)
+def input_cb(pobj, data):
+    unused, cx, cy = xf.fl_get_input_cursorpos(pobj)
     buf = "x=%d y=%d" % (cx.value, cy.value)
     xf.fl_set_object_label(fd_input.report, buf)
 
 
-def hide_show_cb(ob, data):
-    if fd_input.multiinput[0].visible:
+def hide_show_cb(pobj, data):
+    if fd_input.multiinput.contents.visible:
         xf.fl_hide_object(fd_input.multiinput)
     else:
         xf.fl_show_object(fd_input.multiinput)
@@ -82,7 +82,7 @@ def create_form_input():
 
     fdui.input_ = xf.fl_bgn_form( xfc.FL_NO_BOX, 441, 441)
 
-    obj = xf.fl_add_box( xfc.FL_UP_BOX, 0, 0, 441, 441, "")
+    pobj = xf.fl_add_box( xfc.FL_UP_BOX, 0, 0, 441, 441, "")
 
     fdui.norminput = xf.fl_add_input(xfc.FL_NORMAL_INPUT, 40, 40, \
                                      340, 30, "Normal Input")
@@ -90,25 +90,25 @@ def create_form_input():
     xf.fl_set_object_callback(fdui.norminput, input_cb, 0)
     xf.fl_set_object_return(fdui.norminput, xfc.FL_RETURN_END_CHANGED)
 
-    obj = xf.fl_add_input(xfc.FL_INT_INPUT, 40, 100, 160, 30, \
+    pobj = xf.fl_add_input(xfc.FL_INT_INPUT, 40, 100, 160, 30, \
                           "Integer Input")
-    xf.fl_set_object_lalign(obj, xfc.FL_ALIGN_LEFT_TOP)
-    xf.fl_set_object_return(obj, xfc.FL_RETURN_END_CHANGED)
+    xf.fl_set_object_lalign(pobj, xfc.FL_ALIGN_LEFT_TOP)
+    xf.fl_set_object_return(pobj, xfc.FL_RETURN_END_CHANGED)
 
-    obj = xf.fl_add_input(xfc.FL_FLOAT_INPUT, 230, 100, 160, 30, \
+    pobj = xf.fl_add_input(xfc.FL_FLOAT_INPUT, 230, 100, 160, 30, \
                           "Float Input")
-    xf.fl_set_object_lalign(obj, xfc.FL_ALIGN_LEFT_TOP)
-    xf.fl_set_object_return(obj, xfc.FL_RETURN_END_CHANGED)
+    xf.fl_set_object_lalign(pobj, xfc.FL_ALIGN_LEFT_TOP)
+    xf.fl_set_object_return(pobj, xfc.FL_RETURN_END_CHANGED)
 
-    obj = xf.fl_add_input(xfc.FL_DATE_INPUT, 40, 150, 160, 30, \
+    pobj = xf.fl_add_input(xfc.FL_DATE_INPUT, 40, 150, 160, 30, \
                           "Date Input")
-    xf.fl_set_object_lalign(obj, xfc.FL_ALIGN_LEFT_TOP)
-    xf.fl_set_object_return(obj, xfc.FL_RETURN_END_CHANGED)
+    xf.fl_set_object_lalign(pobj, xfc.FL_ALIGN_LEFT_TOP)
+    xf.fl_set_object_return(pobj, xfc.FL_RETURN_END_CHANGED)
 
-    obj = xf.fl_add_input(xfc.FL_SECRET_INPUT, 230, 150, 160, 30, \
+    pobj = xf.fl_add_input(xfc.FL_SECRET_INPUT, 230, 150, 160, 30, \
                           "Secret Input")
-    xf.fl_set_object_lalign(obj, xfc.FL_ALIGN_LEFT_TOP)
-    xf.fl_set_object_return(obj, xfc.FL_RETURN_END_CHANGED)
+    xf.fl_set_object_lalign(pobj, xfc.FL_ALIGN_LEFT_TOP)
+    xf.fl_set_object_return(pobj, xfc.FL_RETURN_END_CHANGED)
 
     fdui.multiinput = xf.fl_add_input(xfc.FL_MULTILINE_INPUT, 40, 210, \
                                       360, 180, "Multi-line input")
@@ -119,13 +119,13 @@ def create_form_input():
     fdui.report = xf.fl_add_text(xfc.FL_NORMAL_TEXT, 30, 400, 210, 30, \
                                  "")
 
-    obj = xf.fl_add_button(xfc.FL_NORMAL_BUTTON, 330, 400, 70, 30, "Done")
-    xf.fl_set_object_lalign(obj, xfc.FL_ALIGN_CENTER)
-    xf.fl_set_object_callback(obj, done_cb, 0)
+    pobj = xf.fl_add_button(xfc.FL_NORMAL_BUTTON, 330, 400, 70, 30, "Done")
+    xf.fl_set_object_lalign(pobj, xfc.FL_ALIGN_CENTER)
+    xf.fl_set_object_callback(pobj, done_cb, 0)
 
-    obj = xf.fl_add_button(xfc.FL_NORMAL_BUTTON, 250, 400, 70, 30, "Hide/Show")
-    xf.fl_set_object_lalign(obj, xfc.FL_ALIGN_CENTER)
-    xf.fl_set_object_callback(obj, hide_show_cb, 0)
+    pobj = xf.fl_add_button(xfc.FL_NORMAL_BUTTON, 250, 400, 70, 30, "Hide/Show")
+    xf.fl_set_object_lalign(pobj, xfc.FL_ALIGN_CENTER)
+    xf.fl_set_object_callback(pobj, hide_show_cb, 0)
 
     xf.fl_end_form()
 

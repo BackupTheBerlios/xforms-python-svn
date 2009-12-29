@@ -1,6 +1,13 @@
 
 
 SVN
+    * Get rid of api.pdf, use html documentation for API,
+    instead.
+    * Correct some names in demo examples to avoid confusion
+    * Re-sync with XForms upstream adding some new getter
+    functions.
+    * Bugfixes.
+    * New docstrings.
     * Add missing fl_reset_cursor function.
     * Re-align to XForms 1.0.93pre2
     * Porting of folder example.

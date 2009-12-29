@@ -889,7 +889,6 @@ FL_FORM_._fields_ = [
 
 FL_OBJECT_._pack_ = 4
 FL_OBJECT_._fields_ = [
-    ('oid', cty.c_ulong),               # unique id ....
     ('form', cty.POINTER(FL_FORM)),   # the form this object belongs to
     ('u_vdata', cty.c_void_p),        # anything the user likes
     ('u_cdata', STRING),              # anything the user likes
@@ -1002,7 +1001,6 @@ FD_Any._fields_ = [
 FL_READ   = 1
 FL_WRITE  = 2
 FL_EXCEPT = 4
-
 
 # my add, list of possible values --LK
 ASYNCIO_list = [FL_READ, FL_WRITE, FL_EXCEPT]
@@ -1960,8 +1958,8 @@ FL_COUNTER_BW = 0        #(FL_BOUND_WIDTH - 1)
 # Cursor defs and prototypes
 #############################
 
-# *** start - from /usr/include/cursorfont.h ***
-XC_num_glyphs = 154
+# *** start - from /usr/include/X11/cursorfont.h ***
+XC_num_glyphs = 255             # original 154
 XC_X_cursor = 0
 XC_arrow = 2
 XC_based_arrow_down = 4
@@ -2038,7 +2036,7 @@ XC_umbrella = 146
 XC_ur_angle = 148
 XC_watch = 150
 XC_xterm = 152
-# *** end - from /usr/include/cursorfont.h ***
+# *** end - from /usr/include/X11/cursorfont.h ***
 
 # my add  --LK
 XCursors_list = [XC_arrow, XC_based_arrow_down, XC_based_arrow_up, \
@@ -2778,8 +2776,6 @@ FLIMAGE_AUTOCOLOR = 0x7fffffff
 FLIMAGE_BADCOLOR = FLIMAGE_AUTOCOLOR
 
 FL_WINDOW = Window    # cty.c_ulong
-
-Pixmap = XID    # cty.c_ulong
 
 
 class flimage_text_(cty.Structure):
@@ -4020,11 +4016,9 @@ SelectionNotify = 31
 # *** end - from /usr/include/X11/X.h ***
 
 
-# my add --LK
+# my add --LK  - obsoleted by fl_is_same_object() function
 # As ctypes creates a new instance of each object every time, two objects
-# aren't really comparable. Here an escamotage can be used: comparing u_ldata
+# aren't really comparable. Here a trick can be used: comparing u_ldata
 # element of every concerned objects.
 # e.g.: if fl_do_forms()[0].u_ldata == otherobj[0].u_ldata ...
-
-EXITVAL = 255       # value for "u_ldata" to allow a comparation
-
+#EXITVAL = 255       # value for "u_ldata" to allow a comparison

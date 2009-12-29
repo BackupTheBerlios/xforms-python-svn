@@ -19,14 +19,14 @@ from xformslib import xfdata as xfc
 
 
 def make_form1():
-    global form, but
+    global pform, pbut
 
-    form = xf.fl_bgn_form(xfc.FL_UP_BOX, 500, 400)
+    pform = xf.fl_bgn_form(xfc.FL_UP_BOX, 500, 400)
 
     xf.fl_bgn_group()
 
-    obj = xf.fl_add_box(xfc.FL_UP_BOX, 150, 295, 300, 65, "Children  ")
-    xf.fl_set_object_lalign(obj, xfc.FL_ALIGN_LEFT);
+    pobj = xf.fl_add_box(xfc.FL_UP_BOX, 150, 295, 300, 65, "Children  ")
+    xf.fl_set_object_lalign(pobj, xfc.FL_ALIGN_LEFT)
     xf.fl_add_lightbutton(xfc.FL_RADIO_BUTTON, 175, 310, 50, 35, "1")
     xf.fl_add_lightbutton(xfc.FL_RADIO_BUTTON, 241, 310, 50, 35, "2")
     xf.fl_add_lightbutton(xfc.FL_RADIO_BUTTON, 308, 310, 50, 35, "3")
@@ -36,8 +36,8 @@ def make_form1():
 
     xf.fl_bgn_group()
 
-    obj = xf.fl_add_box(xfc.FL_UP_BOX, 150, 230, 300, 65, "Married  ")
-    xf.fl_set_object_lalign(obj, xfc.FL_ALIGN_LEFT)
+    pobj = xf.fl_add_box(xfc.FL_UP_BOX, 150, 230, 300, 65, "Married  ")
+    xf.fl_set_object_lalign(pobj, xfc.FL_ALIGN_LEFT)
     xf.fl_add_lightbutton(xfc.FL_RADIO_BUTTON, 175, 245, 100, 35, "Yes")
     xf.fl_add_lightbutton(xfc.FL_RADIO_BUTTON, 325, 245, 100, 35, "No")
 
@@ -45,8 +45,8 @@ def make_form1():
 
     xf.fl_bgn_group()
 
-    obj = xf.fl_add_box(xfc.FL_UP_BOX, 150, 165, 300, 65, "Sex  ")
-    xf.fl_set_object_lalign(obj, xfc.FL_ALIGN_LEFT)
+    pobj = xf.fl_add_box(xfc.FL_UP_BOX, 150, 165, 300, 65, "Sex  ")
+    xf.fl_set_object_lalign(pobj, xfc.FL_ALIGN_LEFT)
     xf.fl_add_lightbutton(xfc.FL_RADIO_BUTTON, 175, 180, 100, 35, "Male")
     xf.fl_add_lightbutton(xfc.FL_RADIO_BUTTON, 325, 180, 100, 35, "Female")
 
@@ -58,8 +58,8 @@ def make_form1():
 
     xf.fl_add_input(xfc.FL_NORMAL_INPUT, 150, 120, 300, 30, "City  ")
 
-    but = xf.fl_add_button(xfc.FL_NORMAL_BUTTON, 25, 360, 75, 30, "OK")
-    but[0].u_ldata = 254
+    pbut = xf.fl_add_button(xfc.FL_NORMAL_BUTTON, 25, 360, 75, 30, "OK")
+    pbut.contents.u_ldata = 255
 
     xf.fl_end_form()
 
@@ -69,11 +69,11 @@ def main(lsysargv, sysargv):
 
     xf.fl_initialize(lsysargv, sysargv, "FormDemo", 0, 0)
     make_form1()
-    xf.fl_show_form(form, xfc.FL_PLACE_CENTER, xfc.FL_NOBORDER, "Demo06")
+    xf.fl_show_form(pform, xfc.FL_PLACE_CENTER, xfc.FL_NOBORDER, "Demo06")
 
     while True:
-        obj = xf.fl_do_forms()
-        if obj[0].u_ldata == but[0].u_ldata:    # escamotage to compare 2 objects
+        pobj = xf.fl_do_forms()
+        if pobj.contents.u_ldata == pbut.contents.u_ldata:    # temporary trick to compare 2 objects
             if xf.fl_show_question("Do you really want to Quit?", 0):
                 xf.fl_finish()
                 sys.exit(0)

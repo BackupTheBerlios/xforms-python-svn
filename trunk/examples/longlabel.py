@@ -41,31 +41,31 @@ def main(lsysargv, sysargv):
 
     xf.fl_initialize(lsysargv, sysargv, "FormDemo", 0, 0)
 
-    form = xf.fl_bgn_form(xfc.FL_UP_BOX, 400, 300)
+    pform = xf.fl_bgn_form(xfc.FL_UP_BOX, 400, 300)
 
-    strobj = xf.fl_add_box(xfc.FL_DOWN_BOX, 10, 10, 380, 240, "Press Next")
-    xf.fl_set_object_lsize(strobj, xfc.FL_NORMAL_SIZE)
+    pstrobj = xf.fl_add_box(xfc.FL_DOWN_BOX, 10, 10, 380, 240, "Press Next")
+    xf.fl_set_object_lsize(pstrobj, xfc.FL_NORMAL_SIZE)
 
-    but = xf.fl_add_button(xfc.FL_NORMAL_BUTTON, 160, 260, 80, 30, "Next")
+    pbut = xf.fl_add_button(xfc.FL_NORMAL_BUTTON, 160, 260, 80, 30, "Next")
 
     xf.fl_end_form()
 
-    xf.fl_set_form_hotobject(form, but)
+    xf.fl_set_form_hotobject(pform, pbut)
 
-    xf.fl_show_form(form, xfc.FL_PLACE_HOTSPOT, xfc.FL_TRANSIENT, "longlabel")
+    xf.fl_show_form(pform, xfc.FL_PLACE_HOTSPOT, xfc.FL_TRANSIENT, "longlabel")
     xf.fl_do_forms()
 
-    xf.fl_set_object_label(strobj, label1)
+    xf.fl_set_object_label(pstrobj, label1)
     xf.fl_do_forms()
 
-    xf.fl_set_object_label(strobj, label2)
+    xf.fl_set_object_label(pstrobj, label2)
     xf.fl_do_forms()
 
-    xf.fl_set_object_label(strobj, "Now we turn to a short label")
+    xf.fl_set_object_label(pstrobj, "Now we turn to a short label")
     xf.fl_do_forms()
 
-    xf.fl_set_object_label(strobj, label3)
-    xf.fl_set_object_label(but, "Quit")
+    xf.fl_set_object_label(pstrobj, label3)
+    xf.fl_set_object_label(pbut, "Quit")
     xf.fl_do_forms()
 
     xf.fl_finish()

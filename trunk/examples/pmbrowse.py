@@ -37,7 +37,7 @@ def create_form_ttt():
 
     fdui.ttt = xf.fl_bgn_form(xfc.FL_NO_BOX, 330, 320)
 
-    obj = xf.fl_add_box(xfc.FL_UP_BOX, 0, 0, 330, 320, "")
+    pobj = xf.fl_add_box(xfc.FL_UP_BOX, 0, 0, 330, 320, "")
 
     fdui.bm = xf.fl_add_bitmap(xfc.FL_NORMAL_BITMAP, 30, 20, 270, 240, "")
     xf.fl_set_object_boxtype(fdui.bm, xfc.FL_FLAT_BOX)
@@ -107,13 +107,13 @@ def load_file(fname, data):
 
 
 
-def done(ob, q):
+def done(pobj, q):
     xf.fl_finish()
     sys.exit(0)
 
 
 
-def reloadfile(ob, q):
+def reloadfile(pobj, q):
     xf.fl_set_fselector_placement(xfc.FL_PLACE_MOUSE)
     xf.fl_set_fselector_callback(load_file, 0)
     xf.fl_show_fselector("Load a Pix/bitMap file", None, None, None)
@@ -123,5 +123,4 @@ def reloadfile(ob, q):
 
 if __name__ == '__main__':
     main(len(sys.argv), sys.argv)
-
 

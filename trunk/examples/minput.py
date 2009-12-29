@@ -15,10 +15,10 @@ from xformslib import xfdata as xfc
 
 
 
-def input_cb(ob, data):
+def input_cb(pobj, data):
 
     global x, y
-    notused, x, y = xf.fl_get_input_cursorpos(ob)
+    notused, x, y = xf.fl_get_input_cursorpos(pobj)
     print "x=%d y=%d\n" % x, y
     print "vediamo un po"
 
@@ -28,26 +28,26 @@ def main(lsysargv, sysargv):
 
     xf.fl_initialize(lsysargv, sysargv, "FormDemo", 0, 0)
 
-    form = xf.fl_bgn_form(xfc.FL_UP_BOX, 400, 450)
+    pform = xf.fl_bgn_form(xfc.FL_UP_BOX, 400, 450)
 
-    obj1 = xf.fl_add_input(xfc.FL_MULTILINE_INPUT, 30, 270, 340, 150, "")
-    xf.fl_set_object_callback(obj1, input_cb, 0)
+    pobj1 = xf.fl_add_input(xfc.FL_MULTILINE_INPUT, 30, 270, 340, 150, "")
+    xf.fl_set_object_callback(pobj1, input_cb, 0)
 
-    obj2 = xf.fl_add_input(xfc.FL_MULTILINE_INPUT, 30, 90, 340, 150, "")
-    xf.fl_set_object_lsize(obj2, xfc.FL_NORMAL_SIZE)
-    xf.fl_set_object_callback(obj2, input_cb, 0)
+    pobj2 = xf.fl_add_input(xfc.FL_MULTILINE_INPUT, 30, 90, 340, 150, "")
+    xf.fl_set_object_lsize(pobj2, xfc.FL_NORMAL_SIZE)
+    xf.fl_set_object_callback(pobj2, input_cb, 0)
 
-    but = xf.fl_add_button(xfc.FL_NORMAL_BUTTON, 160, 30, 80, 30, "Exit")
-    but[0].u_ldata = xfc.EXITVAL
+    pbut = xf.fl_add_button(xfc.FL_NORMAL_BUTTON, 160, 30, 80, 30, "Exit")
+    pbut.contents.u_ldata = xfc.EXITVAL
 
     xf.fl_end_form()
 
-    xf.fl_show_form(form, xfc.FL_PLACE_CENTERFREE, xfc.FL_FULLBORDER, \
+    xf.fl_show_form(pform, xfc.FL_PLACE_CENTERFREE, xfc.FL_FULLBORDER, \
                     "MultiLineInput")
 
     while True:
-        obj = xf.fl_do_forms()
-        if obj[0].u_ldata == but[0].u_ldata:
+        pobj = xf.fl_do_forms()
+        if pobj.contents.u_ldata == pbut.contents.u_ldata:
             break
 
     xf.fl_finish()
