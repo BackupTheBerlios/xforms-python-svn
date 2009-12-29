@@ -28,15 +28,13 @@ class FD_inputform(object):
     input2 = None
 
 
-#FD_inputform *ui;
 
 
 def peek_event(form, xev):
 
-    #if ( ( ( XEvent * )xev )->type == KeyPress )
     if xev.contents.type == xfc.KeyPress:
         xf.fl_set_object_label(ui.status, "keyboard input")
-        xf.fl_XFlush()   # necessary to show the label
+        xf.fl_XFlush()          # necessary to show the label
         xf.fl_msleep(50)
 
     return 0

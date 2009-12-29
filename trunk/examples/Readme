@@ -7,3 +7,7 @@ demo program.
 
 All demos have been ported from XForms .c demos to python.
 
+All bitmap/pixmap image file are part of XForms (see CREDITS
+file for acknowledgements), and are used only for the purpose
+of usage demonstration.
+

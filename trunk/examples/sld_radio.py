@@ -20,30 +20,26 @@ def main(lsysarg, sysargv):
 
     xf.fl_initialize(lsysarg, sysargv, "FormDemo", 0, 0)
 
-    form = xf.fl_bgn_form(xfc.FL_UP_BOX, 300, 300)
-    sl = xf.fl_add_slider(xfc.FL_VERT_SLIDER, 40, 40, 60, 220, "X")
-    sl[0].radio = 1
-    but1 = xf.fl_add_lightbutton(xfc.FL_RADIO_BUTTON, 140, 220, 120, 40, "0.0")
-    but1[0].u_ldata = 252
-    but2 = xf.fl_add_lightbutton(xfc.FL_RADIO_BUTTON, 140, 160, 120, 40, "0.5")
-    but2[0].u_ldata = 253
-    but3 = xf.fl_add_lightbutton(xfc.FL_RADIO_BUTTON, 140, 100, 120, 40, "1.0")
-    but3[0].u_ldata = 254
-    but = xf.fl_add_button(xfc.FL_NORMAL_BUTTON, 140, 40, 120, 40, "Exit")
-    but[0].u_ldata = xfc.EXITVAL
+    pform = xf.fl_bgn_form(xfc.FL_UP_BOX, 300, 300)
+    psl = xf.fl_add_slider(xfc.FL_VERT_SLIDER, 40, 40, 60, 220, "X")
+    psl.contents.radio = 1
+    pbut1 = xf.fl_add_lightbutton(xfc.FL_RADIO_BUTTON, 140, 220, 120, 40, "0.0")
+    pbut2 = xf.fl_add_lightbutton(xfc.FL_RADIO_BUTTON, 140, 160, 120, 40, "0.5")
+    pbut3 = xf.fl_add_lightbutton(xfc.FL_RADIO_BUTTON, 140, 100, 120, 40, "1.0")
+    pbut = xf.fl_add_button(xfc.FL_NORMAL_BUTTON, 140, 40, 120, 40, "Exit")
     xf.fl_end_form()
 
-    xf.fl_show_form(form, xfc.FL_PLACE_CENTER, xfc.FL_NOBORDER, "slRadio")
+    xf.fl_show_form(pform, xfc.FL_PLACE_CENTER, xfc.FL_NOBORDER, "slRadio")
 
     while True:
-        obj = xf.fl_do_forms()
-        if obj[0].u_ldata == but1[0].u_ldata:
-            xf.fl_set_slider_value(sl, 0.0)
-        elif obj[0].u_ldata == but2[0].u_ldata:
-            xf.fl_set_slider_value(sl, 0.5)
-        elif obj[0].u_ldata == but3[0].u_ldata:
-            xf.fl_set_slider_value(sl, 1.0)
-        elif obj[0].u_ldata == but[0].u_ldata:
+        pobj = xf.fl_do_forms()
+        if xf.fl_is_same_object(pobj, pbut1):
+            xf.fl_set_slider_value(psl, 0.0)
+        elif xf.fl_is_same_object(pobj, pbut2):
+            xf.fl_set_slider_value(psl, 0.5)
+        elif xf.fl_is_same_object(pobj, pbut3):
+            xf.fl_set_slider_value(psl, 1.0)
+        elif xf.fl_is_same_object(pobj, pbut):
             break
 
     xf.fl_finish()

@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 #  This file is part of xforms-python, and it has been ported from
-#  objpos.c XForms demo, with some adaptations.
+#  objpos.c XForms demo, with some adaptations and modifications.
 #
 #  objpos.c was written by M. Overmars and T.C. Zhao
 #  See CREDITS file for XForms copyright attribution, and LICENSE
@@ -23,7 +23,6 @@ def move_cb(pobj, data):
     dx = 8
     dy = 8
 
-    #xf.fl_get_object_geometry(pbut, x, y, w, h)
     x, y, w, h = xf.fl_get_object_geometry(pbut)
 
     xlimitup = x.value + w.value + dx
@@ -58,7 +57,7 @@ def main(lsysargv, sysargv):
     pobj = xf.fl_add_button(xfc.FL_TOUCH_BUTTON, 330, 150, 50, 30, "Move")
     xf.fl_set_object_resize(pobj, xfc.FL_RESIZE_NONE)
     xf.fl_set_object_gravity(pobj, xfc.FL_SouthEast, xfc.FL_SouthEast )
-    xf.fl_set_object_callback(pobj,move_cb, 0)   # but
+    xf.fl_set_object_callback(pobj, move_cb, 0)   # but
     xf.fl_end_form()
 
     xf.fl_show_form(pform, xfc.FL_PLACE_MOUSE | xfc.FL_FREE_SIZE, \

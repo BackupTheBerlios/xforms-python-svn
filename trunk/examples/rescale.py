@@ -17,12 +17,12 @@ from xformslib import xfdata as xfc
 
 
 class FD_form(object):
-    form = None
-    smallerobj = None
-    largerobj = None
-    scaleobj = None
-    cell00 = None
-    exitobj = None
+    pform = None
+    psmallerobj = None
+    plargerobj = None
+    pscaleobj = None
+    pcell00 = None
+    pexitobj = None
 
 
 
@@ -30,29 +30,25 @@ def create_form_form():
 
     fdui = FD_form()
 
-    fdui.form = xf.fl_bgn_form(xfc.FL_NO_BOX, 470, 370)
+    fdui.pform = xf.fl_bgn_form(xfc.FL_NO_BOX, 470, 370)
 
-    obj = xf.fl_add_box(xfc.FL_UP_BOX, 0, 0, 470, 370, "")
+    pobj = xf.fl_add_box(xfc.FL_UP_BOX, 0, 0, 470, 370, "")
 
-    obj = xf.fl_add_box(xfc.FL_SHADOW_BOX, 30, 30, 410, 70, "Scaling Forms")
-    xf.fl_set_object_color(obj, 9, 47)
-    xf.fl_set_object_lsize(obj, 16)
+    pobj = xf.fl_add_box(xfc.FL_SHADOW_BOX, 30, 30, 410, 70, "Scaling Forms")
+    xf.fl_set_object_color(pobj, 9, 47)
+    xf.fl_set_object_lsize(pobj, 16)
 
-    fdui.smallerobj = xf.fl_add_button(xfc.FL_NORMAL_BUTTON, 30, 220, 130, 40,
+    fdui.psmallerobj = xf.fl_add_button(xfc.FL_NORMAL_BUTTON, 30, 220, 130, 40,
                                        "Smaller")
-    fdui.smallerobj[0].u_ldata = 254
 
-    fdui.largerobj = xf.fl_add_button(xfc.FL_NORMAL_BUTTON, 310, 220, 130, 40,
+    fdui.plargerobj = xf.fl_add_button(xfc.FL_NORMAL_BUTTON, 310, 220, 130, 40,
                                       "Larger")
-    fdui.largerobj[0].u_ldata = 253
 
-    fdui.scaleobj = xf.fl_add_input(xfc.FL_FLOAT_INPUT, 170, 140, 270, 40,
+    fdui.pscaleobj = xf.fl_add_input(xfc.FL_FLOAT_INPUT, 170, 140, 270, 40,
                                     "Scale:")
-    fdui.scaleobj[0].u_ldata = 252
 
-    fdui.exitobj = xf.fl_add_button(xfc.FL_NORMAL_BUTTON, 310, 300, 130, 40,
+    fdui.pexitobj = xf.fl_add_button(xfc.FL_NORMAL_BUTTON, 310, 300, 130, 40,
                                     "Exit")
-    fdui.exitobj[0].u_ldata = 251
 
     xf.fl_end_form()
 
@@ -67,23 +63,23 @@ def main(lsysargv, sysargv):
     xf.fl_initialize(lsysargv, sysargv, "FormDemo", 0, 0)
     ui = create_form_form()
     strng = "%.2f" % sc
-    xf.fl_set_input(ui.scaleobj, strng)
+    xf.fl_set_input(ui.pscaleobj, strng)
 
-    xf.fl_show_form(ui.form, xfc.FL_PLACE_CENTER | xfc.FL_FREE_SIZE,
+    xf.fl_show_form(ui.pform, xfc.FL_PLACE_CENTER | xfc.FL_FREE_SIZE,
                     xfc.FL_FULLBORDER, "Scaling")
 
     while True:
         oldsc = sc
-        obj = xf.fl_do_forms()
+        pobj = xf.fl_do_forms()
 
-        if obj[0].u_ldata == ui.exitobj[0].u_ldata:
+        if xf.fl_is_same_object(pobj, ui.pexitobj):
             sys.exit(0)
-        elif obj[0].u_ldata == ui.smallerobj[0].u_ldata:
+        elif xf.fl_is_same_object(pobj, ui.psmallerobj):
             sc = sc * 0.8
-        elif obj[0].u_ldata == ui.largerobj[0].u_ldata:
+        elif xf.fl_is_same_object(pobj, ui.plargerobj):
             sc = sc / 0.8
-        elif obj[0].u_ldata == ui.scaleobj[0].u_ldata:
-            sc = float(xf.fl_get_input( ui.scaleobj))
+        elif xf.fl_is_same_object(pobj, ui.pscaleobj):
+            sc = float(xf.fl_get_input(ui.pscaleobj))
 
         if sc < 0.50:
             sc = 0.50
@@ -91,10 +87,10 @@ def main(lsysargv, sysargv):
             sc = 3
 
         if sc != oldsc:
-            xf.fl_scale_form(ui.form, sc/oldsc, sc/oldsc)
-            xf.fl_redraw_form(ui.form)          # to avoid garbage on screen
+            xf.fl_scale_form(ui.pform, sc/oldsc, sc/oldsc)
+            xf.fl_redraw_form(ui.pform)          # to avoid garbage on screen
             strng = "%.2f" % sc
-            xf.fl_set_input(ui.scaleobj, strng)
+            xf.fl_set_input(ui.pscaleobj, strng)
 
 
 

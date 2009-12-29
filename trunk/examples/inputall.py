@@ -43,7 +43,7 @@ def input_cb(pobj, data):
 
 
 def hide_show_cb(pobj, data):
-    if fd_input.multiinput.contents.visible:
+    if xf.fl_object_is_visible(fd_input.multiinput):
         xf.fl_hide_object(fd_input.multiinput)
     else:
         xf.fl_show_object(fd_input.multiinput)

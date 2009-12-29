@@ -39,7 +39,6 @@ def create_form_0():
     preadyobj = xf.fl_add_button(xfc.FL_NORMAL_BUTTON, 280, 400, \
                                  100, 50, "I am sure\nthat I am\nReady")
     xf.fl_set_object_lsize(preadyobj, xfc.FL_SMALL_SIZE)
-    preadyobj.contents.u_ldata = xfc.EXITVAL
 
     pobj = xf.fl_add_text(xfc.FL_NORMAL_TEXT, 260, 160, 120, 120,
                           "This is\na multi-line\nlabelR")
@@ -70,7 +69,7 @@ def main(lsysargv, sysargv):
 
     while True:
         pobj = xf.fl_do_forms()
-        if pobj.contents.u_ldata == preadyobj.contents.u_ldata:
+        if xf.fl_is_same_object(pobj, preadyobj):
             break
 
     xf.fl_hide_form(pform)

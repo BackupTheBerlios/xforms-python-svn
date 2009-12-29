@@ -2534,7 +2534,43 @@ fl_draw_object_outside_label = fl_draw_object_label_outside
 
 
 def fl_set_object_dblclick(pObject, timeout):
-    pObject.contents.click_timeout = timeout
+    """
+        fl_set_object_dblclick(pObject, timeout)
+
+        Sets double click timeout value of an object.
+
+        @param pObject : pointer to object
+        @param timeout : timeout value for double click
+    """
+
+    _fl_set_object_dblclick = cfuncproto(
+            load_so_libforms(), "fl_set_object_dblclick", \
+            None, [cty.POINTER(FL_OBJECT), cty.c_ulong], \
+            """void fl_set_object_dblclick(FL_OBJECT *obj, unsigned \
+               long timeout)
+            """)
+    ultimeout = convert_to_ulong(timeout)
+    keep_elem_refs(pObject, timeout, ultimeout)
+    _fl_set_object_dblclick(pObject, ultimeout)
+
+
+def fl_get_object_dblclick(pObject):
+    """
+        fl_get_object_dblclick(pObject) -> timeout value
+
+        Return double click timeout value of an object.
+
+        @param pObject : pointer to object
+    """
+
+    _fl_get_object_dblclick = cfuncproto(
+            load_so_libforms(), "fl_get_object_dblclick", \
+            cty.c_ulong, [cty.POINTER(FL_OBJECT)], \
+            """unsigned long fl_get_object_dblclick(FL_OBJECT *obj)
+            """)
+    keep_elem_refs(pObject)
+    retval = _fl_get_object_dblclick(pObject)
+    return retval
 
 
 def fl_set_object_geometry(pObject, x, y, w, h):
@@ -2842,7 +2878,6 @@ def fl_show_object(pObject):
             """)
     keep_elem_refs(pObject)
     _fl_show_object(pObject)
-    #pObject.contents.visible = 1
 
 
 def fl_hide_object(pObject):
@@ -2859,7 +2894,6 @@ def fl_hide_object(pObject):
             """)
     keep_elem_refs(pObject)
     _fl_hide_object(pObject)
-    #pObject.contents.visible = 0
 
 
 def fl_object_is_visible(pObject):
@@ -2958,7 +2992,6 @@ def fl_activate_object(pObject):
             """)
     keep_elem_refs(pObject)
     _fl_activate_object(pObject)
-    #pObject.contents.active = 1
 
 
 def fl_deactivate_object(pObject):
@@ -2975,12 +3008,13 @@ def fl_deactivate_object(pObject):
             """)
     keep_elem_refs(pObject)
     _fl_deactivate_object(pObject)
-    #pObject.contents.active = 0
 
 
 def fl_object_is_active(pObject):
     """
         fl_object_is_active(pObject) -> num.
+
+        Returns if object is active and reacts to event.
 
         @param pObject : pointer to object
     """

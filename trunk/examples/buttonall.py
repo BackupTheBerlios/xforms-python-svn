@@ -104,11 +104,11 @@ def create_form_buttform():
     xf.fl_set_object_color(pobj, xfc.FL_COL1, xfc.FL_GREEN)
 
     fdui.bbutt = xf.fl_add_bitmapbutton(xfc.FL_NORMAL_BUTTON, 25, 85, 40, 40, \
-					"bitmapbutton")
+                                        "bitmapbutton")
     xf.fl_set_object_color(fdui.bbutt, xfc.FL_COL1, xfc.FL_BLACK)
 
     fdui.pbutt = xf.fl_add_pixmapbutton(xfc.FL_NORMAL_BUTTON, 25, 25, 40, 40, \
-					"pixmapbutton")
+                                        "pixmapbutton")
     xf.fl_set_object_color(fdui.pbutt, xfc.FL_COL1, xfc.FL_YELLOW)
 
     pobj = xf.fl_add_checkbutton(xfc.FL_RADIO_BUTTON, 100, 31, 70, 32, "Red")

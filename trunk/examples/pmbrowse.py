@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 #  This file is part of xforms-python, and it has been ported from
-#  pmbrowse.c XForms demo, with some adaptations.
+#  pmbrowse.c XForms demo, with some adaptations and modifications.
 #
 #  pmbrowse.c was written by M. Overmars and T.C. Zhao.
 #  See CREDITS file for XForms copyright attribution, and LICENSE

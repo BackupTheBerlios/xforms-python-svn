@@ -28,7 +28,7 @@ symbols = [ \
 N = len(symbols) / 2*len(symbols[0]) - 1
 
 
-def done_cb(ob, data):
+def done_cb(pobj, data):
     sys.exit(0)
 
 
@@ -46,10 +46,10 @@ def make_symbols():
     tmpval = not (N % n)
     h = (2 * y0 + (1 + N / n - tmpval) * (dy + ty + ysep))
 
-    form = xf.fl_bgn_form(xfc.FL_FLAT_BOX, w+5, h+5)
+    pform = xf.fl_bgn_form(xfc.FL_FLAT_BOX, w+5, h+5)
 
-    obj = xf.fl_add_button(xfc.FL_HIDDEN_BUTTON, 0, 0, w, h, "")
-    xf.fl_set_object_callback(obj, done_cb, 0)
+    pobj0 = xf.fl_add_button(xfc.FL_HIDDEN_BUTTON, 0, 0, w, h, "")
+    xf.fl_set_object_callback(pobj0, done_cb, 0)
 
     x = y = j = 0
     for i in range(0, len(symbols)):
@@ -63,17 +63,17 @@ def make_symbols():
         else:
             x += dx + xsep
 
-        obj = xf.fl_add_box(xfc.FL_UP_BOX, x, y, dx, dy, symbols[i])
-        xf.fl_set_object_lcol(obj, xfc.FL_BOTTOM_BCOL)
+        pobj = xf.fl_add_box(xfc.FL_UP_BOX, x, y, dx, dy, symbols[i])
+        xf.fl_set_object_lcol(pobj, xfc.FL_BOTTOM_BCOL)
         buf = " " + symbols[i]
         xf.fl_add_box(xfc.FL_FLAT_BOX, x, y + dy, dx, ty, buf)
 
 
     xf.fl_end_form()
 
-    xf.fl_adjust_form_size(form)
+    xf.fl_adjust_form_size(pform)
 
-    return form
+    return pform
 
 
 
@@ -81,16 +81,12 @@ def make_symbols():
 def main(lsysargv, sysargv):
 
     xf.fl_initialize(lsysargv, sysargv, 0, 0, 0)
-    form = make_symbols()
-    xf.fl_show_form(form, xfc.FL_PLACE_FREE, xfc.FL_FULLBORDER, "test")
+    pform = make_symbols()
+    xf.fl_show_form(pform, xfc.FL_PLACE_FREE, xfc.FL_FULLBORDER, "test")
 
-    while True:
-        obj1 = xf.fl_do_forms()
-        if obj1[0] != obj[0]:
-            break
+    while xf.fl_do_forms():
+        pass
 
-
-    return 0
 
 
 

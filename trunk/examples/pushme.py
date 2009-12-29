@@ -16,14 +16,14 @@ from xformslib import xfdata as xfc
 def main(lsysargv, sysargv):
 
     xf.fl_initialize(lsysargv, sysargv, "FormDemo", 0, 0)
-    simpleform = xf.fl_bgn_form(xfc.FL_UP_BOX, 230, 160)
+    psimpleform = xf.fl_bgn_form(xfc.FL_UP_BOX, 230, 160)
     xf.fl_add_button(xfc.FL_NORMAL_BUTTON, 40, 50, 150, 60, "Push Me")
     xf.fl_end_form()
 
-    xf.fl_show_form(simpleform, xfc.FL_PLACE_MOUSE, xfc.FL_NOBORDER, "PushMe")
+    xf.fl_show_form(psimpleform, xfc.FL_PLACE_MOUSE, xfc.FL_NOBORDER, "PushMe")
 
     xf.fl_do_forms()
-    xf.fl_hide_form(simpleform)
+    xf.fl_hide_form(psimpleform)
     return 0
 
 

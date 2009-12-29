@@ -73,7 +73,7 @@ def main(lsysargv, sysargv):
 
     while True:
         pobj = xf.fl_do_forms()
-        if pobj.contents.u_ldata == pbut.contents.u_ldata:    # temporary trick to compare 2 objects
+        if xf.fl_is_same_object(pobj, pbut):
             if xf.fl_show_question("Do you really want to Quit?", 0):
                 xf.fl_finish()
                 sys.exit(0)

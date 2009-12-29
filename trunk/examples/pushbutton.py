@@ -15,33 +15,33 @@ from xformslib import library as xf
 from xformslib import xfdata as xfc
 
 
-abox = [0, 0, 0, 0, 0, 0, 0, 0]
+pabox = [0, 0, 0, 0, 0, 0, 0, 0]
 
 
-def push_cb(ob, n):
-    if xf.fl_get_button(ob):
-        xf.fl_show_object(abox[n])
+def push_cb(pobj, n):
+    if xf.fl_get_button(pobj):
+        xf.fl_show_object(pabox[n])
     else:
-        xf.fl_hide_object(abox[n])
+        xf.fl_hide_object(pabox[n])
 
 
 def makeform():
-    global form
+    global pform
 
-    form = xf.fl_bgn_form( xfc.FL_UP_BOX, 400, 400)
+    pform = xf.fl_bgn_form(xfc.FL_UP_BOX, 400, 400)
 
     for i in range(0, 8):
-        obj = xf.fl_add_button(xfc.FL_PUSH_BUTTON, 40, 310 - 40 * i, \
-                               80, 30, "")
-        xf.fl_set_object_color(obj, xfc.FL_BLACK + i + 1, \
+        pobj = xf.fl_add_button(xfc.FL_PUSH_BUTTON, 40, 310 - 40 * i, \
+                                80, 30, "")
+        xf.fl_set_object_color(pobj, xfc.FL_BLACK + i + 1, \
                                xfc.FL_BLACK + i + 1)
-        xf.fl_set_object_callback(obj, push_cb, i)
+        xf.fl_set_object_callback(pobj, push_cb, i)
 
-        abox[i] = xf.fl_add_box(xfc.FL_DOWN_BOX, 150 + 30 * i, 40, \
-                                25, 320, "")
-        xf.fl_set_object_color(abox[i], xfc.FL_BLACK + i + 1, \
+        pabox[i] = xf.fl_add_box(xfc.FL_DOWN_BOX, 150 + 30 * i, 40, \
+                                 25, 320, "")
+        xf.fl_set_object_color(pabox[i], xfc.FL_BLACK + i + 1, \
                                xfc.FL_BLACK + i + 1)
-        xf.fl_hide_object(abox[i])
+        xf.fl_hide_object(pabox[i])
 
     xf.fl_add_button(xfc.FL_NORMAL_BUTTON, 40, 350, 80, 30, "Exit")
     xf.fl_end_form()
@@ -53,7 +53,7 @@ def main(lsysarg, sysarg):
     xf.fl_initialize(lsysarg, sysarg, "FormDemo", 0, 0)
     makeform()
 
-    xf.fl_show_form(form, xfc.FL_PLACE_CENTER, xfc.FL_NOBORDER, \
+    xf.fl_show_form(pform, xfc.FL_PLACE_CENTER, xfc.FL_NOBORDER, \
                     "Push Buttons")
 
     # xf.fl_do_forms will return only when Exit is pressed

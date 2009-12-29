@@ -34,8 +34,7 @@ def exit_program(pobj, data):
 
 
 def hide_show(pobj, data):
-    print "visible", pbr.contents.visible
-    if pbr.contents.visible:
+    if xf.fl_object_is_visible(pbr):
         xf.fl_hide_object(pbr)
     else:
         xf.fl_show_object(pbr)
@@ -64,12 +63,12 @@ def create_form():
 
     pobj3 = xf.fl_add_lightbutton(xfc.FL_RADIO_BUTTON, x , 565, dx, dy, "Small")
     xf.fl_set_object_callback(pobj3, set_size, xfc.FL_SMALL_SIZE)
-    xf.fl_set_button(pobj3, xfc.FL_SMALL_SIZE)           # == xfc.FL_BROWSER_FONTSIZE
+    xf.fl_set_button(pobj3, xfc.FL_SMALL_SIZE == xfc.FL_BROWSER_FONTSIZE)
     x += dx
 
     pobj4 = xf.fl_add_lightbutton(xfc.FL_RADIO_BUTTON, x , 565, dx, dy, "Normal")
     xf.fl_set_object_callback(pobj4, set_size, xfc.FL_NORMAL_SIZE)
-    xf.fl_set_button(pobj4, xfc.FL_NORMAL_SIZE)          # == xfc.FL_BROWSER_FONTSIZE
+    xf.fl_set_button(pobj4, xfc.FL_NORMAL_SIZE == xfc.FL_BROWSER_FONTSIZE)
     x += dx
 
     pobj5 = xf.fl_add_lightbutton(xfc.FL_RADIO_BUTTON, x , 565, dx, dy, "Large")

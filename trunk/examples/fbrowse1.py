@@ -37,7 +37,6 @@ def main(lsysargv, sysargv):
     pbr = xf.fl_add_browser(xfc.FL_NORMAL_BROWSER, 5, 5, 95, 90, "")
 
     pbut = xf.fl_add_button(xfc.FL_NORMAL_BUTTON, 105, 5, 20, 8, "Exit")
-    pbut.contents.u_ldata = xfc.EXITVAL
 
     pobj = xf.fl_add_button(xfc.FL_NORMAL_BUTTON, 105, 75, 20, 8, "Load")
     xf.fl_set_object_callback(pobj, load_file, 0)
@@ -65,7 +64,7 @@ def main(lsysargv, sysargv):
 
     while True:
         pobj = xf.fl_do_forms()
-        if pobj.contents.u_ldata == pbut.contents.u_ldata:
+        if xf.fl_is_same_object(pobj, pbut):
             break
 
     xf.fl_hide_form(pform)

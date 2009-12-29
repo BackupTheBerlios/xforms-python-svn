@@ -55,7 +55,7 @@ def main(lsysargv, sysargv):
 
     while True:
         pret = xf.fl_do_forms()
-        if pret.contents != ptopbox.contents:
+        if xf.fl_is_same_object(pret, ptopbox):
             break
 
     xf.fl_hide_form(pform)

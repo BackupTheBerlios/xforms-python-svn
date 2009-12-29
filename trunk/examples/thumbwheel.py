@@ -17,16 +17,16 @@ from xformslib import xfdata as xfc
 
 # callbacks and freeobj handles for form twheelform
 
-def valchange_cb(ob, data):
+def valchange_cb(pobj, data):
 
-    buf = "%.3f" % xf.fl_get_thumbwheel_value(ob)
-    xf.fl_set_object_label(report, buf)
+    buf = "%.3f" % xf.fl_get_thumbwheel_value(pobj)
+    xf.fl_set_object_label(preport, buf)
 
 
 
-def returnchange_cb(ob, data):
+def returnchange_cb(pobj, data):
 
-    n = xf.fl_get_choice(ob)
+    n = xf.fl_get_choice(pobj)
 
     if n == 1:
         n = xfc.FL_RETURN_END_CHANGED
@@ -37,8 +37,8 @@ def returnchange_cb(ob, data):
     else:
         n = xfc.FL_RETURN_ALWAYS
 
-    xf.fl_set_thumbwheel_return(vert, n)
-    xf.fl_set_thumbwheel_return(hor, n)
+    xf.fl_set_thumbwheel_return(pvert, n)
+    xf.fl_set_thumbwheel_return(phor, n)
 
 
 
@@ -57,46 +57,46 @@ def main(lsysargv, sysargv):
 
 
 def create_form_twheelform():
-    global hor, vert, report
+    global phor, pvert, preport
 
     twheelform = xf.fl_bgn_form(xfc.FL_NO_BOX, 220, 260)
 
-    obj = xf.fl_add_box(xfc.FL_UP_BOX, 0, 0, 220, 260, "")
+    pobj = xf.fl_add_box(xfc.FL_UP_BOX, 0, 0, 220, 260, "")
 
-    obj = xf.fl_add_frame(xfc.FL_ENGRAVED_FRAME, 15, 70, 190, 130, "")
+    pobj = xf.fl_add_frame(xfc.FL_ENGRAVED_FRAME, 15, 70, 190, 130, "")
 
-    vert = xf.fl_add_thumbwheel(xfc.FL_VERT_THUMBWHEEL, \
-                                30, 90, 20, 100, "")
-    xf.fl_set_object_callback(vert, valchange_cb, 0)
-    xf.fl_set_thumbwheel_step(vert, 0.01)
+    pvert = xf.fl_add_thumbwheel(xfc.FL_VERT_THUMBWHEEL, \
+                                 30, 90, 20, 100, "")
+    xf.fl_set_object_callback(pvert, valchange_cb, 0)
+    xf.fl_set_thumbwheel_step(pvert, 0.01)
 
-    hor = xf.fl_add_thumbwheel(xfc.FL_HOR_THUMBWHEEL, \
-                               60, 130, 120, 23, "")
-    xf.fl_set_object_callback(hor, valchange_cb, 0)
-    xf.fl_set_thumbwheel_step(hor, 0.01)
+    phor = xf.fl_add_thumbwheel(xfc.FL_HOR_THUMBWHEEL, \
+                                60, 130, 120, 23, "")
+    xf.fl_set_object_callback(phor, valchange_cb, 0)
+    xf.fl_set_thumbwheel_step(phor, 0.01)
 
-    report = xf.fl_add_text(xfc.FL_NORMAL_TEXT, 60, 90, \
-                            120, 30, "")
-    xf.fl_set_object_lalign(report, xfc.FL_ALIGN_CENTER | \
+    preport = xf.fl_add_text(xfc.FL_NORMAL_TEXT, 60, 90, \
+                             120, 30, "")
+    xf.fl_set_object_lalign(preport, xfc.FL_ALIGN_CENTER | \
                             xfc.FL_ALIGN_INSIDE)
 
-    returnsetting = xf.fl_add_choice(xfc.FL_NORMAL_CHOICE2, \
+    preturnsetting = xf.fl_add_choice(xfc.FL_NORMAL_CHOICE2, \
                                      35, 20, 160, 30, "")
-    xf.fl_set_object_boxtype(returnsetting, xfc.FL_EMBOSSED_BOX)
-    xf.fl_set_object_callback(returnsetting, returnchange_cb, 0)
-    xf.fl_addto_choice(returnsetting, "End & Changed")
-    xf.fl_set_choice_item_mode(returnsetting, 1, xfc.FL_PUP_NONE)
-    xf.fl_addto_choice(returnsetting, "Whenever Changed")
-    xf.fl_set_choice_item_mode(returnsetting, 2, xfc.FL_PUP_NONE)
-    xf.fl_addto_choice(returnsetting, "Always At End")
-    xf.fl_set_choice_item_mode(returnsetting, 3, xfc.FL_PUP_NONE)
-    xf.fl_addto_choice(returnsetting, "Always")
-    xf.fl_set_choice_item_mode(returnsetting, 4, xfc.FL_PUP_NONE)
-    xf.fl_set_choice(returnsetting, 2)
+    xf.fl_set_object_boxtype(preturnsetting, xfc.FL_EMBOSSED_BOX)
+    xf.fl_set_object_callback(preturnsetting, returnchange_cb, 0)
+    xf.fl_addto_choice(preturnsetting, "End & Changed")
+    xf.fl_set_choice_item_mode(preturnsetting, 1, xfc.FL_PUP_NONE)
+    xf.fl_addto_choice(preturnsetting, "Whenever Changed")
+    xf.fl_set_choice_item_mode(preturnsetting, 2, xfc.FL_PUP_NONE)
+    xf.fl_addto_choice(preturnsetting, "Always At End")
+    xf.fl_set_choice_item_mode(preturnsetting, 3, xfc.FL_PUP_NONE)
+    xf.fl_addto_choice(preturnsetting, "Always")
+    xf.fl_set_choice_item_mode(preturnsetting, 4, xfc.FL_PUP_NONE)
+    xf.fl_set_choice(preturnsetting, 2)
 
-    obj = xf.fl_add_button(xfc.FL_NORMAL_BUTTON, 120, 215, \
-                           80, 30, "Enough")
-    xf.fl_set_object_lalign(obj, xfc.FL_ALIGN_CENTER)
+    pobj = xf.fl_add_button(xfc.FL_NORMAL_BUTTON, 120, 215, \
+                            80, 30, "Enough")
+    xf.fl_set_object_lalign(pobj, xfc.FL_ALIGN_CENTER)
 
     xf.fl_end_form()
 

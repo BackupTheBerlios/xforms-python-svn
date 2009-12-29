@@ -38,7 +38,7 @@ class FD_form0(object):
 # which event to take over is better kept in a state variable even though
 # query the status via xf.fl_get_button is cheap
 
-def preemptive_handler(ob, event, mx, my, key, xev):
+def preemptive_handler(pobj, event, mx, my, key, xev):
 
     override = xf.fl_get_button(fd_form0.override)
     if override:
@@ -56,7 +56,7 @@ def preemptive_handler(ob, event, mx, my, key, xev):
                 return 0
 
     elif event == xfc.FL_LEAVE:
-        if xf.fl_get_button( fd_form0.leave):
+        if xf.fl_get_button(fd_form0.leave):
             buf ="%s %s" % ("FL_LEAVE", what)
             xf.fl_set_object_label(fd_form0.event, buf)
             if override:
@@ -92,22 +92,22 @@ INTERVAL = 800          # wait this long before show tip
 
 def do_tips(id_, p):
 
-    ob = p
-    xf.fl_show_oneliner(ob[0].u_vdata, ob[0].form.x + ob[0].x, \
-                        ob[0].form.y + ob[0].y + ob[0].h + 1)
-    timeoutID = xf.fl_add_timeout(INTERVAL, do_tips, ob)
+    pobj = p
+    xf.fl_show_oneliner(pobj.contents.u_vdata, pobj.contents.form.x + pobj.contents.x, \
+                        pobj.contents.form.y + pobj.contents.y + pobj.contents.h + 1)
+    timeoutID = xf.fl_add_timeout(INTERVAL, do_tips, pobj)
 
 
 
 # use the post handler as a tipper
 
-def post_handler(ob, event, mx, my, key, xev):
+def post_handler(pobj, event, mx, my, key, xev):
 
-    if not ob[0].u_vdata:
+    if not pobj.contents.u_vdata:
         return 0
 
     if event == xfc.FL_ENTER:
-        timeoutID = xf.fl_add_timeout(INTERVAL, do_tips, ob)
+        timeoutID = xf.fl_add_timeout(INTERVAL, do_tips, pobj)
     elif event == xfc.FL_LEAVE or event == xfc.FL_PUSH:
         xf.fl_hide_oneliner()
         if timeoutID:
@@ -118,9 +118,9 @@ def post_handler(ob, event, mx, my, key, xev):
 
 
 
-def set_tip(ob, strng):
-    ob[0].u_cdata = strng
-    xf.fl_set_object_posthandler(ob, post_handler)
+def set_tip(pobj, strng):
+    pobj.contents.u_cdata = strng
+    xf.fl_set_object_posthandler(pobj, post_handler)
 
 
 
@@ -150,7 +150,7 @@ def main(lsysargv, sysargv):
     xf.fl_show_form(fd_form0.form0, xfc.FL_PLACE_CENTER, \
                     xfc.FL_TRANSIENT, "Preemptive")
 
-    while xf.fl_do_forms()[0].u_ldata != fd_form0.done[0].u_ldata:
+    while not xf.fl_is_same_object(xf.fl_do_forms(), fd_form0.done):
         pass        # empty
 
     return 0
@@ -184,14 +184,14 @@ def create_form_form0():
     fdui.release = xf.fl_add_checkbutton(xfc.FL_PUSH_BUTTON, 210, 140, 60, 30,
                                          "Release")
 
-    obj = xf.fl_add_text(xfc.FL_NORMAL_TEXT, 55, 15, 220, 30, "Pre-emptive Handler")
-    xf.fl_set_object_lsize(obj, xfc.FL_MEDIUM_SIZE)
-    xf.fl_set_object_lalign(obj, xfc.FL_ALIGN_CENTER)
-    xf.fl_set_object_lstyle(obj, xfc.FL_BOLD_STYLE)
+    pobj = xf.fl_add_text(xfc.FL_NORMAL_TEXT, 55, 15, 220, 30, "Pre-emptive Handler")
+    xf.fl_set_object_lsize(pobj, xfc.FL_MEDIUM_SIZE)
+    xf.fl_set_object_lalign(pobj, xfc.FL_ALIGN_CENTER)
+    xf.fl_set_object_lstyle(pobj, xfc.FL_BOLD_STYLE)
 
-    fdui.peek = obj = xf.fl_add_checkbutton(xfc.FL_RADIO_BUTTON, 190, 40, 35, 30,
-                                            "Peek")
-    xf.fl_set_object_color(obj, xfc.FL_COL1, xfc.FL_BLUE)
+    fdui.peek = xf.fl_add_checkbutton(xfc.FL_RADIO_BUTTON, 190, 40, 35, 30,
+                                      "Peek")
+    xf.fl_set_object_color(fdui.peek, xfc.FL_COL1, xfc.FL_BLUE)
 
     fdui.override = xf.fl_add_checkbutton(xfc.FL_RADIO_BUTTON, 240, 40, \
                                           35, 30, "Override")
@@ -200,7 +200,7 @@ def create_form_form0():
     fdui.event = xf.fl_add_box(xfc.FL_FLAT_BOX, 40, 180, 245, 25, "")
 
     fdui.done = xf.fl_add_button(xfc.FL_NORMAL_BUTTON, 170, 210, 100, 30, "Done")
-    fdui.done[0].u_ldata = xfc.EXITVAL
+
     xf.fl_end_form()
 
     return fdui

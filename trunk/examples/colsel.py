@@ -20,6 +20,7 @@ def main(lsysargv, sysargv):
     i = 0
     xf.fl_initialize(lsysargv, sysargv, "FormDemo", 0, 0 )
 
+    print "Click one of trasparent colors to exit"
     while True:
         i = xf.fl_show_colormap(i)
         if i > xfc.FL_YELLOWGREEN:

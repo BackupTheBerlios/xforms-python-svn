@@ -28,7 +28,7 @@ class FD_form(object):
     report = None
 
 
-def exit_cb(ob, data):
+def exit_cb(pobj, data):
     xf.fl_finish()
     sys.exit(0)
 
@@ -53,7 +53,7 @@ def timer_cb(idt, data):
 
 
 
-def start_timer(ob, data):
+def start_timer(pobj, data):
     global start_sec, start_usec
 
     if fd_form.timer_id:
@@ -63,7 +63,7 @@ def start_timer(ob, data):
     buf = "Timer accuracy testing %.3f sec ..." % float(fd_form.ldata * 0.001)
     xf.fl_set_object_label(fd_form.report, buf)
     start_sec, start_usec = xf.fl_gettime()
-    fd_form.timer_id = xf.fl_add_timeout(fd_form.ldata, timer_cb, 0)                 #fd_form)
+    fd_form.timer_id = xf.fl_add_timeout(fd_form.ldata, timer_cb, 0)
 
 
 
@@ -95,10 +95,10 @@ def create_form_form():
 
     fdui.form = xf.fl_bgn_form(xfc.FL_NO_BOX, 320, 130)
 
-    obj = xf.fl_add_box(xfc.FL_UP_BOX, 0, 0, 320, 130, "")
+    pobj = xf.fl_add_box(xfc.FL_UP_BOX, 0, 0, 320, 130, "")
 
-    obj = xf.fl_add_button(xfc.FL_NORMAL_BUTTON, 210, 80, 90, 35, "Done")
-    xf.fl_set_object_callback( obj, exit_cb, 0)
+    pobj = xf.fl_add_button(xfc.FL_NORMAL_BUTTON, 210, 80, 90, 35, "Done")
+    xf.fl_set_object_callback(pobj, exit_cb, 0)
 
     fdui.restart = xf.fl_add_button(xfc.FL_TOUCH_BUTTON, 110, 80, \
                                     90, 35, "Restart")

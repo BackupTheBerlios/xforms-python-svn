@@ -76,17 +76,17 @@ def main(lsysargv, sysargv):
     xf.fl_popup_entry_set_shortcut(pitem1st, xfc.FL_RETURN_NONE)
 
     pitem2nd = xf.fl_insert_select_items(fd_form0.when, pitem1st, \
-                                        "RETURN_CHANGED")
+                                         "RETURN_CHANGED")
     xf.fl_popup_entry_set_shortcut(pitem2nd, xfc.FL_RETURN_CHANGED)
 
     pitem3rd = xf.fl_insert_select_items(fd_form0.when, pitem2nd, \
-                                        "RETURN_END")
+                                         "RETURN_END")
     xf.fl_popup_entry_set_shortcut(pitem3rd,  xfc.FL_RETURN_END)
     pitem4th = xf.fl_insert_select_items(fd_form0.when, pitem3rd, \
-                                        "RETURN_END_CHANGED")
+                                         "RETURN_END_CHANGED")
     xf.fl_popup_entry_set_shortcut(pitem4th, xfc.FL_RETURN_END_CHANGED)
     pitem5th = xf.fl_insert_select_items(fd_form0.when, pitem4th, \
-                                        "RETURN_ALWAYS")
+                                         "RETURN_ALWAYS")
     xf.fl_popup_entry_set_shortcut(pitem5th, xfc.FL_RETURN_ALWAYS)
 
     # show the first form

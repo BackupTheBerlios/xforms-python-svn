@@ -18,8 +18,8 @@ from xformslib import xfdata as xfc
 
 # Forms and Objects
 
-TEST_PIXMAP_ALIGN = False
-#TEST_PIXMAP_ALIGN = True
+#TEST_PIXMAP_ALIGN = False
+TEST_PIXMAP_ALIGN = True
 
 
 class FD_form0(object):

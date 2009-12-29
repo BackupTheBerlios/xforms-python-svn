@@ -21,21 +21,20 @@ def main(lsysargv, sysargv):
 
     xf.fl_initialize(lsysargv, sysargv, "FormDemo", 0, 0 )
 
-    form = xf.fl_bgn_form(xfc.FL_UP_BOX, 320, 120)
+    pform = xf.fl_bgn_form(xfc.FL_UP_BOX, 320, 120)
 
     xf.fl_add_box(xfc.FL_NO_BOX, 0, 10, 320, 40, "Do you want to quit?")
-    yes = xf.fl_add_button(xfc.FL_NORMAL_BUTTON, 40, 70, 80, 30," Yes")
-    yes[0].u_ldata = 254
-    no = xf.fl_add_button(xfc.FL_NORMAL_BUTTON, 200, 70, 80, 30, "No")
+    pyes = xf.fl_add_button(xfc.FL_NORMAL_BUTTON, 40, 70, 80, 30," Yes")
+    pno = xf.fl_add_button(xfc.FL_NORMAL_BUTTON, 200, 70, 80, 30, "No")
 
     xf.fl_end_form()
 
-    xf.fl_show_form(form, xfc.FL_PLACE_MOUSE, xfc.FL_TRANSIENT, "Question")
+    xf.fl_show_form(pform, xfc.FL_PLACE_MOUSE, xfc.FL_TRANSIENT, "Question")
 
     while True:
-        obj = xf.fl_do_forms()
-        if obj[0].u_ldata == yes[0].u_ldata:
-            xf.fl_hide_form(form)
+        pobj = xf.fl_do_forms()
+        if xf.fl_is_same_object(pobj, pyes):
+            xf.fl_hide_form(pform)
             sys.exit(0)
 
     xf.fl_finish()
@@ -46,3 +45,4 @@ def main(lsysargv, sysargv):
 
 if __name__ == '__main__':
     main(len(sys.argv), sys.argv)
+

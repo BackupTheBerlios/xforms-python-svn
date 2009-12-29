@@ -40,7 +40,7 @@ def create_form_scb():
 
     fdui.scb = xf.fl_bgn_form(xfc.FL_NO_BOX, 470, 230)
 
-    obj = xf.fl_add_box(xfc.FL_UP_BOX, 0, 0, 470, 230, "")
+    pobj = xf.fl_add_box(xfc.FL_UP_BOX, 0, 0, 470, 230, "")
 
     fdui.hor = xf.fl_add_scrollbar(xfc.FL_HOR_SCROLLBAR, 30, 15, 230, 17, "HOR_SCROLLBAR")
     xf.fl_set_object_lsize(fdui.hor, xfc.FL_TINY_SIZE)
@@ -77,9 +77,9 @@ def create_form_scb():
     xf.fl_set_object_lalign(fdui.deactivate, xfc.FL_ALIGN_CENTER)
     xf.fl_set_object_callback(fdui.deactivate, deactivate_cb, 0)
 
-    obj = xf.fl_add_button(xfc.FL_NORMAL_BUTTON, 200, 195, 80, 25, "Done")
-    xf.fl_set_object_lalign(obj, xfc.FL_ALIGN_CENTER)
-    xf.fl_set_object_callback(obj, done_cb, 0)
+    pobj = xf.fl_add_button(xfc.FL_NORMAL_BUTTON, 200, 195, 80, 25, "Done")
+    xf.fl_set_object_lalign(pobj, xfc.FL_ALIGN_CENTER)
+    xf.fl_set_object_callback(pobj, done_cb, 0)
 
     fdui.vert_nice = xf.fl_add_scrollbar(xfc.FL_VERT_NICE_SCROLLBAR, 370, 10, 17, 185, "")
     xf.fl_set_object_boxtype(fdui.vert_nice, xfc.FL_FRAME_BOX)
@@ -87,20 +87,20 @@ def create_form_scb():
     xf.fl_set_object_callback(fdui.vert_nice, noop_cb, 0)
     xf.fl_set_scrollbar_value(fdui.vert_nice, 1)
 
-    obj = xf.fl_add_scrollbar(xfc.FL_HOR_PLAIN_SCROLLBAR, 30, 155, 230, 18, "HOR_PLAIN_SCROLLBAR")
-    xf.fl_set_object_boxtype(obj, xfc.FL_DOWN_BOX)
-    xf.fl_set_object_lsize(obj, xfc.FL_TINY_SIZE)
-    xf.fl_set_object_resize(obj, xfc.FL_RESIZE_ALL)
-    xf.fl_set_object_callback(obj, noop_cb, 0)
-    xf.fl_set_scrollbar_value(obj, 0.77)
-    xf.fl_set_scrollbar_size(obj, 0.20)
+    pobj = xf.fl_add_scrollbar(xfc.FL_HOR_PLAIN_SCROLLBAR, 30, 155, 230, 18, "HOR_PLAIN_SCROLLBAR")
+    xf.fl_set_object_boxtype(pobj, xfc.FL_DOWN_BOX)
+    xf.fl_set_object_lsize(pobj, xfc.FL_TINY_SIZE)
+    xf.fl_set_object_resize(pobj, xfc.FL_RESIZE_ALL)
+    xf.fl_set_object_callback(pobj, noop_cb, 0)
+    xf.fl_set_scrollbar_value(pobj, 0.77)
+    xf.fl_set_scrollbar_size(pobj, 0.20)
 
-    obj = xf.fl_add_scrollbar(xfc.FL_VERT_PLAIN_SCROLLBAR, 410, 10, 17, 185, "")
-    xf.fl_set_object_boxtype(obj, xfc.FL_DOWN_BOX)
-    xf.fl_set_object_resize(obj, xfc.FL_RESIZE_ALL)
-    xf.fl_set_object_callback(obj, noop_cb, 0)
-    xf.fl_set_scrollbar_value(obj, 0.97)
-    xf.fl_set_scrollbar_size(obj, 0.20)
+    pobj = xf.fl_add_scrollbar(xfc.FL_VERT_PLAIN_SCROLLBAR, 410, 10, 17, 185, "")
+    xf.fl_set_object_boxtype(pobj, xfc.FL_DOWN_BOX)
+    xf.fl_set_object_resize(pobj, xfc.FL_RESIZE_ALL)
+    xf.fl_set_object_callback(pobj, noop_cb, 0)
+    xf.fl_set_scrollbar_value(pobj, 0.97)
+    xf.fl_set_scrollbar_size(pobj, 0.20)
 
     xf.fl_end_form()
 
@@ -108,9 +108,9 @@ def create_form_scb():
 
 
 
-def hide_cb(ob, data):
+def hide_cb(pobj, data):
 
-    if fd_scb.hor_thin[0].visible:
+    if xf.fl_object_is_visible(fd_scb.hor_thin):
         xf.fl_set_object_label(fd_scb.hide, "Show")
         xf.fl_hide_object(fd_scb.hor_thin)
     else:
@@ -119,9 +119,9 @@ def hide_cb(ob, data):
 
 
 
-def deactivate_cb(ob, data):
+def deactivate_cb(pobj, data):
 
-    if fd_scb.hor_thin[0].active == 1:
+    if xf.fl_object_is_active(fd_scb.hor_thin):
         xf.fl_set_object_label(fd_scb.deactivate, "Activate")
         xf.fl_deactivate_object(fd_scb.hor_thin)
     else:
@@ -129,13 +129,13 @@ def deactivate_cb(ob, data):
         xf.fl_activate_object(fd_scb.hor_thin)
 
 
-def done_cb(ob, data):
+def done_cb(pobj, data):
     xf.fl_finish()
     sys.exit(0)
 
 
 
-def noop_cb(ob, data):
+def noop_cb(pobj, data):
     pass
 
 

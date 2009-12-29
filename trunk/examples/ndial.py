@@ -42,7 +42,7 @@ def makeform():
     pform = xf.fl_bgn_form(xfc.FL_UP_BOX, 300, 330)
 
     pobj = xf.fl_add_button(xfc.FL_NORMAL_BUTTON, 45, 15, \
-                           210, 45, "Color Editor")
+                            210, 45, "Color Editor")
     xf.fl_set_object_lsize(pobj, xfc.FL_LARGE_SIZE)
 
     for i in range (0, 3):
@@ -56,7 +56,7 @@ def makeform():
         xf.fl_set_object_return(pdials[i], xfc.FL_RETURN_CHANGED)
 
         ptexts[i] = xf.fl_add_box(xfc.FL_DOWN_BOX, 105, y + 17, \
-                                 50, 25, "128")
+                                  50, 25, "128")
         y += 85
 
     presult = xf.fl_add_box(xfc.FL_DOWN_BOX, 180, 70, 90, 245, "")

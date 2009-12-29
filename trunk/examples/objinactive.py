@@ -18,7 +18,7 @@ from xformslib import xfdata as xfc
 
 def exit_cb(pobj, data):
     xf.fl_finish()
-    sys.exit( 0)
+    sys.exit(0)
 
 
 def setit(pobj, val):

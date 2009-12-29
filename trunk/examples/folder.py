@@ -59,7 +59,6 @@ class FD_inputform(genericform):
 # callback routines
 
 def hide_show_cb(pobj, data):
-
     if data:
         xf.fl_show_object(fdui.folder)
     else:
@@ -78,7 +77,7 @@ def set_cb(pobj, data):
 
 
 def deactivate_cb(pobj, data):
-    if fdui.folder.contents.active:
+    if xf.fl_object_is_active(fdui.folder):
         xf.fl_set_object_label(pobj, "Activate")
         xf.fl_deactivate_object(fdui.folder)
     else:
@@ -92,8 +91,8 @@ def done_cb(pobj, data):
     if xf.fl_show_question("Do you want to quit ?", 0):
         print("will quit after 5 seconds\n")
         xf.fl_msleep(5000)
-        xf.fl_hide_form(pobj.contents.form.contents)
-        xf.fl_free_form(pobj.contents.form.contents)
+        xf.fl_hide_form(pobj.contents.form)
+        xf.fl_free_form(pobj.contents.form)
         xf.fl_finish()
         sys.exit(0)
     else:
