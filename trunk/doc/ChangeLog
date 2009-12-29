@@ -1,6 +1,8 @@
 
 
 SVN
+    * more docstrings
+    * Porting of select example.
     * bugfixes in some demos. Add lalign_pixmap example.
     * Complete correction of names in demo files (e.g. pobj is
     a meaningful name than obj for a pointer to object, and

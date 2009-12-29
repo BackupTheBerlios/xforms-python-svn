@@ -4159,9 +4159,10 @@ def fl_is_same_object(pObject1, pObject2):
 
 
 
-###################
-# XBasic.h
-##################
+###########################
+# forms.h (XBasic.h)
+# X Window dependent stuff
+###########################
 
 def FL_is_gray(v):
     if (v == GrayScale) or (v == StaticGray):
@@ -5136,7 +5137,10 @@ def fl_winresize(win, neww, newh):
 
 
 def fl_winmove(win, dx, dy):
-    """ fl_winmove(win, dx, dy)
+    """
+        fl_winmove(win, dx, dy)
+
+        Moves a window to a new position.
 
         @param win : window to move to a new position
         @param dx : new horizontal position
@@ -5240,7 +5244,12 @@ fl_set_winstepunit = fl_winstepsize
 
 
 def fl_winisvalid(win):
-    """ fl_winisvalid(win) -> num.
+    """
+        fl_winisvalid(win) -> num.
+
+        Returns if a window is a valid one.
+
+        @param win : window to evaluate
     """
 
     _fl_winisvalid = cfuncproto(
@@ -5327,7 +5336,7 @@ def fl_winminsize(win, w, h):
         fl_winminsize(win, w, h)
 
         Sets a constraint for a resizable window whose size will be within a
-        range not less than minumum (before calling fl_winopen).
+        range not less than minumum (to be used before calling fl_winopen).
 
         @param win : window to be set
         @param w : minimum width of window
@@ -5610,7 +5619,10 @@ def fl_get_winorigin(win):
 
 #def fl_get_wingeometry(win, x, y, w, h)       *API change*
 def fl_get_wingeometry(win):
-    """ fl_get_wingeometry(win) -> x, y, w, h
+    """
+        fl_get_wingeometry(win) -> x, y, w, h
+
+        Returns geometry (position and size) of a window.
 
         @param win : window
     """
@@ -5652,8 +5664,8 @@ def FL_ObjectDisplay(object):   # NOT SURE
 
 
 def FL_IS_CANVAS(pObject):
-    if (pObject[0].objclass == FL_CANVAS) or \
-        (pObject[0].objclass == FL_GLCANVAS):
+    if (pObject.contents.objclass == FL_CANVAS) or \
+        (pObject.contents.objclass == FL_GLCANVAS):
         return True
     else:
         return False
@@ -5664,7 +5676,7 @@ def FL_ObjWin(pObject):
     if FL_IS_CANVAS(pObject):
         return fl_get_canvas_id(pObject)
     else:
-        return pObject[0].form[0].window
+        return pObject.contents.form.contents.window
 
 
 def fl_get_real_object_window(pObject):
@@ -17084,9 +17096,10 @@ def fl_add_xyplot(plottype, x, y, w, h, label):
 
 
 def fl_set_xyplot_data(pObject, xlist, ylist, n, title, xlabel, ylabel):
-    """ fl_set_xyplot_data(pObject, xlist, ylist, n, title, xlabel, ylabel)
+    """
+         fl_set_xyplot_data(pObject, xlist, ylist, n, title, xlabel, ylabel)
 
-    @param pObject : pointer to object
+        @param pObject : pointer to object
     """
 
     _fl_set_xyplot_data = cfuncproto(
@@ -17122,7 +17135,7 @@ def fl_set_xyplot_data(pObject, xlist, ylist, n, title, xlabel, ylabel):
 def fl_set_xyplot_data_double(pObject, x, y, n, title, xlabel, ylabel):
     """ fl_set_xyplot_data_double(pObject, x, y, n, title, xlabel, ylabel)
 
-    @param pObject : pointer to object
+        @param pObject : pointer to object
     """
 
     _fl_set_xyplot_data_double = cfuncproto(
@@ -17149,7 +17162,7 @@ def fl_set_xyplot_data_double(pObject, x, y, n, title, xlabel, ylabel):
 def fl_set_xyplot_file(pObject, f, title, xl, yl):
     """ fl_set_xyplot_file(pObject, f, title, xl, yl) -> num.
 
-    @param pObject : pointer to object
+        @param pObject : pointer to object
     """
 
     _fl_set_xyplot_file = cfuncproto(
@@ -17169,9 +17182,10 @@ def fl_set_xyplot_file(pObject, f, title, xl, yl):
 
 
 def fl_insert_xyplot_data(pObject, idnum, n, valx, valy):
-    """ fl_insert_xyplot_data(pObject, idnum, n, valx, valy)
+    """ 
+        fl_insert_xyplot_data(pObject, idnum, n, valx, valy)
 
-    @param pObject : pointer to object
+        @param pObject : pointer to object
     """
 
     _fl_insert_xyplot_data = cfuncproto(
@@ -17190,9 +17204,10 @@ def fl_insert_xyplot_data(pObject, idnum, n, valx, valy):
 
 
 def fl_add_xyplot_text(pObject, valx, valy, text, al, colr):
-    """ fl_add_xyplot_text(pObject, valx, valy, text, al, colr)
+    """
+        fl_add_xyplot_text(pObject, valx, valy, text, al, colr)
 
-    @param pObject : pointer to object
+        @param pObject : pointer to object
     """
 
     _fl_add_xyplot_text = cfuncproto(
@@ -17213,9 +17228,10 @@ def fl_add_xyplot_text(pObject, valx, valy, text, al, colr):
 
 
 def fl_delete_xyplot_text(pObject, text):
-    """ fl_delete_xyplot_text(pObject, text)
+    """
+        fl_delete_xyplot_text(pObject, text)
 
-    @param pObject : pointer to object
+        @param pObject : pointer to object
     """
 
     _fl_delete_xyplot_text = cfuncproto(
@@ -17229,9 +17245,10 @@ def fl_delete_xyplot_text(pObject, text):
 
 
 def fl_set_xyplot_maxoverlays(pObject, maxover):
-    """ fl_set_xyplot_maxoverlays(pObject, maxover) -> num.
+    """
+        fl_set_xyplot_maxoverlays(pObject, maxover) -> num.
 
-    @param pObject : pointer to object
+        @param pObject : pointer to object
     """
 
     _fl_set_xyplot_maxoverlays = cfuncproto(
@@ -17246,9 +17263,10 @@ def fl_set_xyplot_maxoverlays(pObject, maxover):
 
 
 def fl_add_xyplot_overlay(pObject, idnum, x, y, n, colr):
-    """ fl_add_xyplot_overlay(pObject, idnum, x, y, n, colr)
+    """
+        fl_add_xyplot_overlay(pObject, idnum, x, y, n, colr)
 
-    @param pObject : pointer to object
+        @param pObject : pointer to object
     """
 
     _fl_add_xyplot_overlay = cfuncproto(
@@ -17269,9 +17287,10 @@ def fl_add_xyplot_overlay(pObject, idnum, x, y, n, colr):
 
 
 def fl_add_xyplot_overlay_file(pObject, idnum, f, colr):
-    """ fl_add_xyplot_overlay_file(pObject, idnum, f, colr) -> num.
+    """
+        fl_add_xyplot_overlay_file(pObject, idnum, f, colr) -> num.
 
-    @param pObject : pointer to object
+        @param pObject : pointer to object
     """
 
     _fl_add_xyplot_overlay_file = cfuncproto(
@@ -17289,9 +17308,10 @@ def fl_add_xyplot_overlay_file(pObject, idnum, f, colr):
 
 
 def fl_set_xyplot_return(pObject, when):
-    """ fl_set_xyplot_return(pObject, when)
+    """
+        fl_set_xyplot_return(pObject, when)
 
-    @param pObject : pointer to object
+        @param pObject : pointer to object
     """
 
     _fl_set_xyplot_return = cfuncproto(
@@ -17305,9 +17325,10 @@ def fl_set_xyplot_return(pObject, when):
 
 
 def fl_set_xyplot_xtics(pObject, major, minor):
-    """ fl_set_xyplot_xtics(pObject, major, minor)
+    """
+        fl_set_xyplot_xtics(pObject, major, minor)
 
-    @param pObject : pointer to object
+        @param pObject : pointer to object
     """
 
     _fl_set_xyplot_xtics = cfuncproto(
@@ -17322,9 +17343,10 @@ def fl_set_xyplot_xtics(pObject, major, minor):
 
 
 def fl_set_xyplot_ytics(pObject, major, minor):
-    """ fl_set_xyplot_ytics(pObject, major, minor)
+    """
+        fl_set_xyplot_ytics(pObject, major, minor)
 
-    @param pObject : pointer to object
+        @param pObject : pointer to object
     """
 
     _fl_set_xyplot_ytics = cfuncproto(
@@ -17339,9 +17361,10 @@ def fl_set_xyplot_ytics(pObject, major, minor):
 
 
 def fl_set_xyplot_xbounds(pObject, minbound, maxbound):
-    """ fl_set_xyplot_xbounds(pObject, minbound, maxbound)
+    """
+        fl_set_xyplot_xbounds(pObject, minbound, maxbound)
 
-    @param pObject : pointer to object
+        @param pObject : pointer to object
     """
 
     _fl_set_xyplot_xbounds = cfuncproto(
@@ -17357,9 +17380,10 @@ def fl_set_xyplot_xbounds(pObject, minbound, maxbound):
 
 
 def fl_set_xyplot_ybounds(pObject, minbound, maxbound):
-    """ fl_set_xyplot_ybounds(pObject, minbound, maxbound)
+    """
+        fl_set_xyplot_ybounds(pObject, minbound, maxbound)
 
-    @param pObject : pointer to object
+        @param pObject : pointer to object
     """
 
     _fl_set_xyplot_ybounds = cfuncproto(
@@ -17376,9 +17400,10 @@ def fl_set_xyplot_ybounds(pObject, minbound, maxbound):
 
 #def fl_get_xyplot_xbounds(pObject, minbound, maxbound)       *API change*
 def fl_get_xyplot_xbounds(pObject):
-    """ fl_get_xyplot_xbounds(pObject) -> minbound, maxbound
+    """
+        fl_get_xyplot_xbounds(pObject) -> minbound, maxbound
 
-    @param pObject : pointer to object
+        @param pObject : pointer to object
     """
 
     _fl_get_xyplot_xbounds = cfuncproto(
@@ -17397,9 +17422,10 @@ def fl_get_xyplot_xbounds(pObject):
 
 #def fl_get_xyplot_ybounds(pObject, minbound, maxbound)       *API change*
 def fl_get_xyplot_ybounds(pObject):
-    """ fl_get_xyplot_ybounds(pObject) -> minbound, maxbound
+    """
+        fl_get_xyplot_ybounds(pObject) -> minbound, maxbound
 
-    @param pObject : pointer to object
+        @param pObject : pointer to object
     """
 
     _fl_get_xyplot_ybounds = cfuncproto(
@@ -17441,9 +17467,10 @@ def fl_get_xyplot(pObject):
 
 #def fl_get_xyplot_data(pObject, x, y, n)       *API change*
 def fl_get_xyplot_data(pObject):
-    """ fl_get_xyplot_data(pObject) -> x, y, n
+    """
+        fl_get_xyplot_data(pObject) -> x, y, n
 
-    @param pObject : pointer to object
+        @param pObject : pointer to object
     """
 
     _fl_get_xyplot_data = cfuncproto(
@@ -17463,9 +17490,10 @@ def fl_get_xyplot_data(pObject):
 
 #def fl_get_xyplot_data_pointer(pObject, idnum, x, y, n)       *API change*
 def fl_get_xyplot_data_pointer(pObject, idnum):
-    """ fl_get_xyplot_data_pointer(pObject, idnum) -> x, y, n
+    """
+        fl_get_xyplot_data_pointer(pObject, idnum) -> x, y, n
 
-    @param pObject : pointer to object
+        @param pObject : pointer to object
     """
 
     _fl_get_xyplot_data_pointer = cfuncproto(
@@ -17487,9 +17515,10 @@ def fl_get_xyplot_data_pointer(pObject, idnum):
 
 #def fl_get_xyplot_overlay_data(pObject, idnum, x, y, n)       *API change*
 def fl_get_xyplot_overlay_data(pObject, idnum):
-    """ fl_get_xyplot_overlay_data(pObject, idnum) -> x, y, n
+    """
+        fl_get_xyplot_overlay_data(pObject, idnum) -> x, y, n
 
-    @param pObject : pointer to object
+        @param pObject : pointer to object
     """
 
     _fl_get_xyplot_overlay_data = cfuncproto(
@@ -17509,9 +17538,10 @@ def fl_get_xyplot_overlay_data(pObject, idnum):
 
 
 def fl_set_xyplot_overlay_type(pObject, idnum, plottype):
-    """ fl_set_xyplot_overlay_type(pObject, idnum, plottype)
+    """
+        fl_set_xyplot_overlay_type(pObject, idnum, plottype)
 
-    @param pObject : pointer to object
+        @param pObject : pointer to object
     """
 
     _fl_set_xyplot_overlay_type = cfuncproto(
@@ -17527,9 +17557,10 @@ def fl_set_xyplot_overlay_type(pObject, idnum, plottype):
 
 
 def fl_delete_xyplot_overlay(pObject, idnum):
-    """ fl_delete_xyplot_overlay(pObject, idnum)
+    """
+        fl_delete_xyplot_overlay(pObject, idnum)
 
-    @param pObject : pointer to object
+        @param pObject : pointer to object
     """
 
     _fl_delete_xyplot_overlay = cfuncproto(
@@ -18067,7 +18098,8 @@ def fl_set_xyplot_fixed_yaxis(pObject, bm, tm):
 
 
 def fl_interpolate(wx, wy, nin, x, y, grid, ndeg):
-    """ fl_interpolate(wx, wy, nin, x, y, grid, ndeg) -> num.
+    """
+        fl_interpolate(wx, wy, nin, x, y, grid, ndeg) -> num.
     """
 
     _fl_interpolate = cfuncproto(
@@ -18087,7 +18119,8 @@ def fl_interpolate(wx, wy, nin, x, y, grid, ndeg):
 
 
 def fl_spline_interpolate(wx, wy, nin, x, y, grid):
-    """ fl_spline_interpolate(wx, wy, nin, x, y, grid) -> num.
+    """
+        fl_spline_interpolate(wx, wy, nin, x, y, grid) -> num.
     """
 
     _fl_spline_interpolate = cfuncproto(
@@ -18153,7 +18186,8 @@ def fl_set_xyplot_mark_active(pObject, y):
 # were using them. Put them back in 10/22/00
 
 def fl_gc_():
-    """ fl_gc_() -> gc
+    """
+        fl_gc_() -> gc
     """
 
     _fl_gc_ = cfuncproto(
@@ -18166,7 +18200,8 @@ def fl_gc_():
 
 
 def fl_textgc_():
-    """ fl_textgc_() -> gc
+    """
+        fl_textgc_() -> gc
     """
 
     _fl_textgc_ = cfuncproto(
@@ -18179,7 +18214,8 @@ def fl_textgc_():
 
 
 def fl_fheight_():
-    """ fl_fheight_() -> num.
+    """
+        fl_fheight_() -> num.
     """
 
     _fl_fheight_ = cfuncproto(
@@ -18192,7 +18228,8 @@ def fl_fheight_():
 
 
 def fl_fdesc_():
-    """ fl_fdesc_() -> num.
+    """
+        fl_fdesc_() -> num.
     """
 
     _fl_fdesc_ = cfuncproto(
@@ -18205,7 +18242,8 @@ def fl_fdesc_():
 
 
 def fl_cur_win_():
-    """ fl_cur_win_() -> window
+    """
+        fl_cur_win_() -> window
     """
 
     _fl_cur_win_ = cfuncproto(
@@ -18218,7 +18256,8 @@ def fl_cur_win_():
 
 
 def fl_cur_fs_():
-    """ fl_cur_fs_() -> XFontStruct class
+    """
+        fl_cur_fs_() -> XFontStruct class
     """
 
     _fl_cur_fs_ = cfuncproto(
@@ -18246,7 +18285,8 @@ fl_cur_fs = fl_cur_fs_
 
 
 def fl_display_():
-    """ fl_display_() -> pDisplay
+    """
+        fl_display_() -> pDisplay
     """
 
     _fl_display_ = cfuncproto(
@@ -18276,15 +18316,18 @@ def FL_RGB2GRAY(r, g, b):
 
 # if PCBITS is not 8, we need to apply the RGBmask
 
-def FL_IsRGB(im):
-    return (im.type == FL_IMAGE_RGB)
+def FL_IsRGB(pImage):
+    return (pImage.contents.type == FL_IMAGE_RGB)
 
-def FL_IsPacked(im):
-    return (im.type == FL_IMAGE_PACKED)
+def FL_IsPacked(pImage):
+    return (pImage.contents.type == FL_IMAGE_PACKED)
 
 
 def flimage_setup(pImageSetup):
-    """ flimage_setup(setup)
+    """
+        flimage_setup(pImageSetup)
+
+        @param pImageSetup : pointer to imagesetup struct
     """
 
     _flimage_setup = cfuncproto(
@@ -18299,7 +18342,10 @@ def flimage_setup(pImageSetup):
 # basic IO routines
 
 def flimage_load(filename):
-    """ flimage_load(filename) -> pImage
+    """
+        flimage_load(filename) -> pImage
+
+        @param filename : name of file to load
     """
 
     _flimage_load = cfuncproto(
@@ -18314,7 +18360,10 @@ def flimage_load(filename):
 
 
 def flimage_read(pImage):
-    """ flimage_read(pImage) -> pImage
+    """
+        flimage_read(pImage) -> pImage
+
+        @param pImage : pointer to image
     """
 
     _flimage_read = cfuncproto(
@@ -18328,7 +18377,10 @@ def flimage_read(pImage):
 
 
 def flimage_dump(pImage, p2, p3):
-    """ flimage_dump(pImage, p2, p3) -> num.
+    """
+        flimage_dump(pImage, p2, p3) -> num.
+
+        @param pImage : pointer to image
     """
 
     _flimage_dump = cfuncproto(
@@ -18345,7 +18397,10 @@ def flimage_dump(pImage, p2, p3):
 
 
 def flimage_close(pImage):
-    """ flimage_close(pImage) -> num.
+    """
+        flimage_close(pImage) -> num.
+
+        @param pImage : pointer to image
     """
 
     _flimage_close = cfuncproto(
@@ -18359,7 +18414,8 @@ def flimage_close(pImage):
 
 
 def flimage_alloc():
-    """ flimage_alloc() -> pImage
+    """
+        flimage_alloc() -> pImage
     """
 
     _flimage_alloc = cfuncproto(
@@ -18372,7 +18428,10 @@ def flimage_alloc():
 
 
 def flimage_getmem(pImage):
-    """ flimage_getmem(pImage) -> num.
+    """
+        flimage_getmem(pImage) -> num.
+
+        @param pImage : pointer to image
     """
 
     _flimage_getmem = cfuncproto(
@@ -18385,8 +18444,11 @@ def flimage_getmem(pImage):
     return retval
 
 
-def flimage_is_supported(p1):
-    """ flimage_is_supported(p1) -> num.
+def flimage_is_supported(fname):
+    """
+        flimage_is_supported(fname) -> num.
+
+        @param fname : filename
     """
 
     _flimage_is_supported = cfuncproto(
@@ -18394,14 +18456,17 @@ def flimage_is_supported(p1):
             cty.c_int, [STRING],
             """int flimage_is_supported(const char * p1)
             """)
-    sp1 = convert_to_string(p1)
-    keep_elem_refs(p1, sp1)
-    retval = _flimage_is_supported(sp1)
+    sfname = convert_to_string(fname)
+    keep_elem_refs(fname, sfname)
+    retval = _flimage_is_supported(sfname)
     return retval
 
 
 def flimage_description_via_filter(pImage, p2, p3, p4):
-    """ flimage_description_via_filter(pImage, p2, p3, p4) -> num.
+    """
+        flimage_description_via_filter(pImage, p2, p3, p4) -> num.
+
+        @param pImage : pointer to image
     """
 
     _flimage_description_via_filter = cfuncproto(
@@ -18419,7 +18484,10 @@ def flimage_description_via_filter(pImage, p2, p3, p4):
 
 
 def flimage_write_via_filter(pImage, p2, p3, p4):
-    """ flimage_write_via_filter(pImage, p2, p3, p4) -> num.
+    """
+        flimage_write_via_filter(pImage, p2, p3, p4) -> num.
+
+        @param pImage : pointer to image
     """
 
     _flimage_write_via_filter = cfuncproto(
@@ -18436,7 +18504,10 @@ def flimage_write_via_filter(pImage, p2, p3, p4):
 
 
 def flimage_free(pImage):
-    """ flimage_free(pImage) -> num.
+    """
+        flimage_free(pImage) -> num.
+
+        @param pImage : pointer to image
     """
 
     _flimage_free = cfuncproto(
@@ -18450,7 +18521,11 @@ def flimage_free(pImage):
 
 
 def flimage_display(pImage, win):
-    """ flimage_display(pImage, win) -> num.
+    """
+        flimage_display(pImage, win) -> num.
+
+        @param pImage : pointer to image
+        @param win : window
     """
 
     _flimage_display = cfuncproto(
@@ -18465,7 +18540,11 @@ def flimage_display(pImage, win):
 
 
 def flimage_sdisplay(pImage, win):
-    """ flimage_sdisplay(pImage, win) -> num.
+    """
+        flimage_sdisplay(pImage, win) -> num.
+
+        @param pImage : pointer to image
+        @parma win : window
     """
 
     _flimage_sdisplay = cfuncproto(
@@ -18479,8 +18558,15 @@ def flimage_sdisplay(pImage, win):
     return retval
 
 
-def flimage_convert(pImage, p2, p3):
-    """ flimage_convert(pImage, p2, p3) -> num.
+def flimage_convert(pImage, newtype, ncolors):
+    """
+        flimage_convert(pImage, newtype, ncolors) -> num.
+
+        Convert an image to a new type.
+
+        @param pImage : pointer to image
+        @param newtype : new type of flimage to convert to
+        @param ncolors : number of colors
     """
 
     _flimage_convert = cfuncproto(
@@ -18488,15 +18574,18 @@ def flimage_convert(pImage, p2, p3):
             cty.c_int, [cty.POINTER(FL_IMAGE), cty.c_int, cty.c_int],
             """int flimage_convert(FL_IMAGE * p1, int p2, int p3)
             """)
-    ip2 = convert_to_int(p2)
-    ip3 = convert_to_int(p3)
-    keep_elem_refs(pImage, p2, p3, ip2, ip3)
-    retval = _flimage_convert(pImage, ip2, ip3)
+    inewtype2 = convert_to_int(newtype)
+    incolors = convert_to_int(ncolors)
+    keep_elem_refs(pImage, newtype, ncolors, inewtype, incolors)
+    retval = _flimage_convert(pImage, inewtype, incolors)
     return retval
 
 
 def flimage_type_name(flimagetype):
-    """ flimage_type_name(flimagetype) -> name string
+    """
+        flimage_type_name(flimagetype) -> name string
+        
+        @param flimagetype : type of flimage
     """
 
     _flimage_type_name = cfuncproto(
@@ -18504,14 +18593,18 @@ def flimage_type_name(flimagetype):
             STRING, [cty.c_int],
             """const char * flimage_type_name(int type)
             """)
+    check_admitted_values(flimagetype, FLIMAGETYPE_list)
     iflimagetype = convert_to_int(flimagetype)
     keep_elem_refs(flimagetype, iflimagetype)
     retval = _flimage_type_name(iflimagetype)
     return retval
 
 
-def flimage_add_text(pImage, text, p3, p4, p5, p6, p7, p8, p9, p10, p11):
-    """ flimage_add_text(pImage, text, p3, p4, p5, p6, p7, p8, p9, p10, p11) -> num.
+def flimage_add_text(pImage, text, length, style, size, txtcolr, bgcolr, tran, tx, ty, rot):
+    """
+        flimage_add_text(pImage, text, length, style, size, txtcolr, bgcolr, tran, tx, ty, rot) -> num.
+
+        @param pImage : pointer to image
     """
 
     _flimage_add_text = cfuncproto(
@@ -18519,29 +18612,33 @@ def flimage_add_text(pImage, text, p3, p4, p5, p6, p7, p8, p9, p10, p11):
             cty.c_int, [cty.POINTER(FL_IMAGE), STRING, cty.c_int, cty.c_int,
             cty.c_int, cty.c_uint, cty.c_uint, cty.c_int, cty.c_double,
             cty.c_double, cty.c_int],
-            """int flimage_add_text(FL_IMAGE * p1, const char * p2, int p3,
-               int p4, int p5, unsigned int p6, unsigned int p7, int p8,
-               double p9, double p10, int p11)
+            """int flimage_add_text(FL_IMAGE * im, const char * str, int len,
+               int style, int size, unsigned int tcol, unsigned int bcol,
+               int tran, double tx, double ty, int rot)
             """)
     stext = convert_to_string(text)
-    ip3 = convert_to_int(p3)
-    ip4 = convert_to_int(p4)
-    ip5 = convert_to_int(p5)
-    uip6 = convert_to_uint(p6)
-    uip7 = convert_to_uint(p7)
-    ip8 = convert_to_int(p8)
-    fp9 = convert_to_double(p9)
-    fp10 = convert_to_double(p10)
-    ip11 = convert_to_int(p11)
-    keep_elem_refs(pImage, text, p3, p4, p5, p6, p7, p8, p9, p10, p11,
-                   stext, ip3, ip4, ip5, uip6, uip7, ip8, fp9, fp10, ip11)
-    retval = _flimage_add_text(pImage, stext, ip3, ip4, ip5, uip6, uip7,
-                               ip8, fp9, fp10, ip11)
+    ilength = convert_to_int(length)
+    istyle = convert_to_int(style)
+    isize = convert_to_int(size)
+    uitxtcol = convert_to_uint(txtcolr)
+    uibgcol = convert_to_uint(bgcolr)
+    itran = convert_to_int(tran)
+    ftx = convert_to_double(tx)
+    fty = convert_to_double(ty)
+    irot = convert_to_int(rot)
+    keep_elem_refs(pImage, text, length, style, size, txtcolr, bgcolr, tran, \
+                   tx, ty, rot, stext, ilength, istyle, isize, uitxtcolr, \
+                   uibgcolr, itran, ftx, fty, irot)
+    retval = _flimage_add_text(pImage, stext, ilength, istyle, isize, uitxtcolr, \
+                               uibgcolr, itran, ftx, fty, irot)
     return retval
 
 
 def flimage_add_text_struct(pImage, pImageText):
-    """ flimage_add_text_struct(pImage, pImageText) -> num.
+    """
+        flimage_add_text_struct(pImage, pImageText) -> num.
+
+        @param pImage : pointer to image
     """
 
     _flimage_add_text_struct = cfuncproto(
@@ -18555,7 +18652,10 @@ def flimage_add_text_struct(pImage, pImageText):
 
 
 def flimage_delete_all_text(pImage):
-    """ flimage_delete_all_text(pImage)
+    """
+        flimage_delete_all_text(pImage)
+
+        @param pImage : pointer to image
     """
 
     _flimage_delete_all_text = cfuncproto(
@@ -18568,7 +18668,10 @@ def flimage_delete_all_text(pImage):
 
 
 def flimage_add_marker(pImage, text, p3, p4, p5, p6, p7, p8, p9, p10, p11):
-    """ flimage_add_marker(pImage, text, p3, p4, p5, p6, p7, p8, p9, p10, p11) -> num.
+    """
+        flimage_add_marker(pImage, text, p3, p4, p5, p6, p7, p8, p9, p10, p11) -> num.
+
+        @param pImage : pointer to image
     """
 
     _flimage_add_marker = cfuncproto(
@@ -18598,7 +18701,10 @@ def flimage_add_marker(pImage, text, p3, p4, p5, p6, p7, p8, p9, p10, p11):
 
 
 def flimage_add_marker_struct(pImage, pImageMarker):
-    """ flimage_add_marker_struct(pImage, pImageMarker) -> num.
+    """
+        flimage_add_marker_struct(pImage, pImageMarker) -> num.
+
+        @param pImage : pointer to image
     """
 
     _flimage_add_marker_struct = cfuncproto(
@@ -18629,7 +18735,10 @@ def flimage_define_marker(text1, pImageMarker, text2):
 
 
 def flimage_delete_all_markers(pImage):
-    """ flimage_delete_all_markers(pImage)
+    """
+        flimage_delete_all_markers(pImage)
+
+        @param pImage : pointer to image
     """
 
     _flimage_delete_all_markers = cfuncproto(
@@ -18642,7 +18751,11 @@ def flimage_delete_all_markers(pImage):
 
 
 def flimage_render_annotation(pImage, win):
-    """ flimage_render_annotation(pImage, win) -> num.
+    """
+        flimage_render_annotation(pImage, win) -> num.
+
+        @param pImage : pointer to image
+        @param win : window
     """
 
     _flimage_render_annotation = cfuncproto(
@@ -18657,7 +18770,10 @@ def flimage_render_annotation(pImage, win):
 
 
 def flimage_error(pImage, text):
-    """ flimage_error(pImage, text)
+    """
+        flimage_error(pImage, text)
+
+        @param pImage : pointer to image
     """
 
     _flimage_error = cfuncproto(
@@ -18673,7 +18789,8 @@ def flimage_error(pImage, text):
 # built-in format supports
 
 def flimage_enable_pnm():
-    """ flimage_enable_pnm()
+    """
+        flimage_enable_pnm()
     """
 
     _flimage_enable_pnm = cfuncproto(
@@ -18685,7 +18802,8 @@ def flimage_enable_pnm():
 
 
 def flimage_set_fits_bits(p1):
-    """ flimage_set_fits_bits(p1) -> num.
+    """
+        flimage_set_fits_bits(p1) -> num.
     """
 
     _flimage_set_fits_bits = cfuncproto(
@@ -18700,7 +18818,8 @@ def flimage_set_fits_bits(p1):
 
 
 def flimage_jpeg_output_options(pImageJpegOption):
-    """ flimage_jpeg_output_options(pImageJpegOption)
+    """
+        flimage_jpeg_output_options(pImageJpegOption)
     """
 
     _flimage_jpeg_output_options = cfuncproto(
@@ -18713,7 +18832,8 @@ def flimage_jpeg_output_options(pImageJpegOption):
 
 
 def flimage_pnm_output_options(p1):
-    """ flimage_pnm_output_options(p1)
+    """
+        flimage_pnm_output_options(p1)
     """
 
     _flimage_pnm_output_options = cfuncproto(
@@ -18727,7 +18847,8 @@ def flimage_pnm_output_options(p1):
 
 
 def flimage_gif_output_options(p1):
-    """ flimage_gif_output_options(p1)
+    """
+        flimage_gif_output_options(p1)
     """
 
     _flimage_gif_output_options = cfuncproto(
@@ -18741,7 +18862,8 @@ def flimage_gif_output_options(p1):
 
 
 def flimage_ps_options():
-    """ flimage_ps_options() -> flps_control class
+    """
+        flimage_ps_options() -> pFlpsControl
     """
 
     _flimage_ps_options = cfuncproto(
@@ -18759,7 +18881,8 @@ flimage_gif_options = flimage_gif_output_options
 
 
 def flimage_get_number_of_formats():
-    """ flimage_get_number_of_formats() -> num.
+    """
+        flimage_get_number_of_formats() -> num.
     """
 
     _flimage_get_number_of_formats = cfuncproto(
@@ -18772,7 +18895,8 @@ def flimage_get_number_of_formats():
 
 
 def flimage_get_format_info(p1):
-    """ flimage_get_format_info(p1) -> format_info class instance
+    """
+        flimage_get_format_info(p1) -> ImageFormatInfo class instance
     """
 
     _flimage_get_format_info = cfuncproto(
@@ -18787,7 +18911,12 @@ def flimage_get_format_info(p1):
 
 
 def fl_get_matrix(nrows, ncols, esize):
-    """ fl_get_matrix(nrows, ncols, esize) -> ?
+    """
+        fl_get_matrix(nrows, ncols, esize) -> ?
+
+        @param nrows : number of rows
+        @param ncols : number of columns
+        @param esize : size of matrix
     """
 
     _fl_get_matrix = cfuncproto(
@@ -18831,7 +18960,8 @@ def fl_make_matrix(nrows, ncols, esize, mem):
 
 
 def fl_free_matrix(mtrx):
-    """ fl_free_matrix(mtrx)
+    """
+        fl_free_matrix(mtrx)
     """
 
     _fl_free_matrix = cfuncproto(
@@ -18847,7 +18977,8 @@ def fl_free_matrix(mtrx):
 # This function is retained for compatibility reasons only.
 # It returns 1 always.
 def fl_init_RGBdatabase(text):
-    """ fl_init_RGBdatabase(text) -> num.
+    """
+        fl_init_RGBdatabase(text) -> num.
     """
 
     _fl_init_RGBdatabase = cfuncproto(
@@ -18862,7 +18993,8 @@ def fl_init_RGBdatabase(text):
 
 
 def fl_lookup_RGBcolor(text, p2, p3, p4):
-    """ fl_lookup_RGBcolor(text, p2, p3, p4) -> num.
+    """
+        fl_lookup_RGBcolor(text, p2, p3, p4) -> num.
     """
 
     _fl_lookup_RGBcolor = cfuncproto(
@@ -18883,10 +19015,12 @@ FLIMAGE_Description = cty.CFUNCTYPE(cty.c_int, cty.POINTER(FL_IMAGE))
 FLIMAGE_Read_Pixels = cty.CFUNCTYPE(cty.c_int, cty.POINTER(FL_IMAGE))
 FLIMAGE_Write_Image = cty.CFUNCTYPE(cty.c_int, cty.POINTER(FL_IMAGE))
 
-def flimage_add_format(p1, p2, p3, p4, py_ImageIdentify, py_ImageDescription,
+def flimage_add_format(formalname, shortname, extension, flimagetype, \
+                       py_ImageIdentify, py_ImageDescription, \
                        py_ImageReadPixels, py_ImageWriteImage):
-    """ flimage_add_format(p1, p2, p3, p4, py_ImageIdentify,
-        py_ImageDescription, py_ImageReadPixels, py_ImageWriteImage) -> num.
+    """ flimage_add_format(formalname, shortname, extension, flimagetype,
+        py_ImageIdentify, py_ImageDescription, py_ImageReadPixels,
+        py_ImageWriteImage) -> num.
     """
 
     _flimage_add_format = cfuncproto(
@@ -18898,10 +19032,11 @@ def flimage_add_format(p1, p2, p3, p4, py_ImageIdentify, py_ImageDescription,
                FLIMAGE_Description p6, FLIMAGE_Read_Pixels p7,
                FLIMAGE_Write_Image p8)
             """)
-    sp1 = convert_to_string(p1)
-    sp2 = convert_to_string(p2)
-    sp3 = convert_to_string(p3)
-    ip4 = convert_to_int(p4)
+    check_admitted_values(flimagetype, FLIMAGETYPE_list)
+    sformalname = convert_to_string(formalname)
+    sshortname = convert_to_string(shortname)
+    sextension = convert_to_string(extension)
+    iflimagetype = convert_to_int(flimagetype)
     c_ImageIdentify = FLIMAGE_Identify(py_ImageIdentify)
     c_ImageDescription = FLIMAGE_Description(py_ImageDescription)
     c_ImageReadPixels = FLIMAGE_Read_Pixels(py_ImageReadPixels)
@@ -18909,10 +19044,11 @@ def flimage_add_format(p1, p2, p3, p4, py_ImageIdentify, py_ImageDescription,
     keep_cfunc_refs(c_ImageIdentify, py_ImageIdentify, c_ImageDescription, \
                     py_ImageDescription, c_ImageReadPixels, py_ImageReadPixels,
                     c_ImageWriteImage, py_ImageWriteImage)
-    keep_elem_refs(p1, p2, p3, p4, sp1, sp2, sp3, ip4)
-    retval = _flimage_add_format(sp1, sp2, sp3, ip4, c_ImageIdentify, \
-                                 c_ImageDescription, c_ImageReadPixels, \
-                                 c_ImageWriteImage)
+    keep_elem_refs(formalname, shortname, extension, flimagetype, \
+                   sformalname, sshortname, sextension, iflimagetype)
+    retval = _flimage_add_format(sformalname, sshortname, sextension, \
+                    flimagetype, c_ImageIdentify, c_ImageDescription, \
+                    c_ImageReadPixels, c_ImageWriteImage)
     return retval
 
 
@@ -18932,7 +19068,10 @@ def flimage_set_annotation_support(p1, p2):
 
 
 def flimage_getcolormap(pImage):
-    """ flimage_getcolormap(pImage) -> num.
+    """
+        flimage_getcolormap(pImage) -> num.
+
+        @param pImage : pointer to image
     """
 
     _flimage_getcolormap = cfuncproto(
@@ -18946,7 +19085,8 @@ def flimage_getcolormap(pImage):
 
 
 def fl_select_mediancut_quantizer():
-    """ fl_select_mediancut_quantizer()
+    """
+        fl_select_mediancut_quantizer()
     """
 
     _fl_select_mediancut_quantizer = cfuncproto(
@@ -18960,7 +19100,10 @@ def fl_select_mediancut_quantizer():
 # simple image processing routines
 
 def flimage_convolve(pImage, p2, p3, p4):
-    """ flimage_convolve(pImage, p2, p3, p4) -> num.
+    """
+        flimage_convolve(pImage, p2, p3, p4) -> num.
+
+        @param pImage : pointer to image
     """
 
     _flimage_convolve = cfuncproto(
@@ -18978,7 +19121,10 @@ def flimage_convolve(pImage, p2, p3, p4):
 
 
 def flimage_convolvea(pImage, p2, p3, p4):
-    """ flimage_convolvea(pImage, p2, p3, p4) -> num.
+    """
+        flimage_convolvea(pImage, p2, p3, p4) -> num.
+
+        @param pImage : pointer to image
     """
 
     _flimage_convolvea = cfuncproto(
@@ -18993,7 +19139,10 @@ def flimage_convolvea(pImage, p2, p3, p4):
 
 
 def flimage_tint(pImage, p2, p3):
-    """ flimage_tint(pImage, p2, p3) -> num.
+    """
+        flimage_tint(pImage, p2, p3) -> num.
+
+        @param pImage : pointer to image
     """
 
     _flimage_tint = cfuncproto(
@@ -19007,7 +19156,10 @@ def flimage_tint(pImage, p2, p3):
 
 
 def flimage_rotate(pImage, p2, p3):
-    """ flimage_rotate(pImage, p2, p3) -> num.
+    """
+        flimage_rotate(pImage, p2, p3) -> num.
+
+        @param pImage : pointer to image
     """
 
     _flimage_rotate = cfuncproto(
@@ -19023,7 +19175,10 @@ def flimage_rotate(pImage, p2, p3):
 
 
 def flimage_flip(pImage, p2):
-    """ flimage_flip(pImage, p2) -> num.
+    """
+        flimage_flip(pImage, p2) -> num.
+
+        @param pImage : pointer to image
     """
 
     _flimage_flip = cfuncproto(
@@ -19038,7 +19193,10 @@ def flimage_flip(pImage, p2):
 
 
 def flimage_scale(pImage, p2, p3, p4):
-    """ flimage_scale(pImage, p2, p3, p4) -> num.
+    """
+        flimage_scale(pImage, p2, p3, p4) -> num.
+
+        @param pImage : pointer to image
     """
 
     _flimage_scale = cfuncproto(
@@ -19056,7 +19214,10 @@ def flimage_scale(pImage, p2, p3, p4):
 
 
 def flimage_warp(pImage, p2, p3, p4, p5):
-    """ flimage_warp(pImage, p2, p3, p4, p5) -> num.
+    """
+        flimage_warp(pImage, p2, p3, p4, p5) -> num.
+
+        @param pImage : pointer to image
     """
 
     _flimage_warp = cfuncproto(
@@ -19075,7 +19236,10 @@ def flimage_warp(pImage, p2, p3, p4, p5):
 
 
 def flimage_autocrop(pImage, p2):
-    """ flimage_autocrop(pImage, p2) -> num.
+    """
+        flimage_autocrop(pImage, p2) -> num.
+
+        @param pImage : pointer to image
     """
 
     _flimage_autocrop = cfuncproto(
@@ -19092,6 +19256,8 @@ def flimage_autocrop(pImage, p2):
 #def flimage_get_autocrop(pImage, bk, xl, yt, xr, yb)       *API change*
 def flimage_get_autocrop(pImage, bk):
     """ flimage_get_autocrop(pImage, bk) -> num., xl, yt, xr, yb
+
+        @param pImage : pointer to image
     """
 
     _flimage_get_autocrop = cfuncproto(
@@ -19113,7 +19279,10 @@ def flimage_get_autocrop(pImage, bk):
 
 
 def flimage_crop(pImage, p2, p3, p4, p5):
-    """ flimage_crop(pImage, p2, p3, p4, p5) -> num.
+    """
+        flimage_crop(pImage, p2, p3, p4, p5) -> num.
+
+        @param pImage : pointer to image
     """
 
     _flimage_crop = cfuncproto(
@@ -19133,7 +19302,10 @@ def flimage_crop(pImage, p2, p3, p4, p5):
 
 
 def flimage_replace_pixel(pImage, p2, p3):
-    """ flimage_replace_pixel(pImage, p2, p3) -> num.
+    """
+        flimage_replace_pixel(pImage, p2, p3) -> num.
+
+        @param pImage : pointer to image
     """
 
     _flimage_replace_pixel = cfuncproto(
@@ -19150,7 +19322,10 @@ def flimage_replace_pixel(pImage, p2, p3):
 
 
 def flimage_transform_pixels(pImage, red, green, blue):
-    """ flimage_transform_pixels(pImage, red, green, blue) -> num.
+    """
+        flimage_transform_pixels(pImage, red, green, blue) -> num.
+
+        @param pImage : pointer to image
     """
 
     _flimage_transform_pixels = cfuncproto(
@@ -19169,7 +19344,10 @@ def flimage_transform_pixels(pImage, red, green, blue):
 
 
 def flimage_windowlevel(pImage, p2, p3):
-    """ flimage_windowlevel(pImage, p2, p3) -> num.
+    """
+        flimage_windowlevel(pImage, p2, p3) -> num.
+
+        @param pImage : pointer to image
     """
 
     _flimage_windowlevel = cfuncproto(
@@ -19185,7 +19363,10 @@ def flimage_windowlevel(pImage, p2, p3):
 
 
 def flimage_enhance(pImage, p2):
-    """ flimage_enhance(pImage, p2) -> num.
+    """
+        flimage_enhance(pImage, p2) -> num.
+
+        @param pImage : pointer to image
     """
 
     _flimage_enhance = cfuncproto(
@@ -19200,7 +19381,11 @@ def flimage_enhance(pImage, p2):
 
 
 def flimage_from_pixmap(pImage, pixmap):
-    """ flimage_from_pixmap(pImage, pixmap) -> num.
+    """
+        flimage_from_pixmap(pImage, pixmap) -> num.
+
+        @param pImage : pointer to image
+        @param pixmap : pixmap value
     """
 
     _flimage_from_pixmap = cfuncproto(
@@ -19215,7 +19400,11 @@ def flimage_from_pixmap(pImage, pixmap):
 
 
 def flimage_to_pixmap(pImage, win):
-    """ flimage_to_pixmap(pImage, win) -> pixmap
+    """
+        flimage_to_pixmap(pImage, win) -> pixmap
+
+        @param pImage : pointer to image
+        @param win : window id
     """
 
     _flimage_to_pixmap = cfuncproto(
@@ -19231,6 +19420,8 @@ def flimage_to_pixmap(pImage, win):
 
 def flimage_dup(pImage):
     """ flimage_dup(pImage) -> pImage
+
+        @param pImage : pointer to image
     """
 
     _flimage_dup = cfuncproto(
@@ -19380,23 +19571,29 @@ def fl_unpack_bits(p1, p2, p3):
     _fl_unpack_bits(p1, p2, ip3)
 
 
-def fl_value_to_bits(p1):
-    """ fl_value_to_bits(p1) -> num.
+def fl_value_to_bits(val):
+    """
+        fl_value_to_bits(val) -> num.
+        
+        @param val : value to convert to bits
     """
 
     _fl_value_to_bits = cfuncproto(
             load_so_libflimage(), "fl_value_to_bits",
             cty.c_uint, [cty.c_uint],
-            """)unsigned int fl_value_to_bits(unsigned int p1)
+            """unsigned int fl_value_to_bits(unsigned int p1)
             """)
-    uip1 = convert_to_uint(p1)
-    keep_elem_refs(p1, uip1)
-    retval = _fl_value_to_bits(uip1)
+    uival = convert_to_uint(val)
+    keep_elem_refs(val, uival)
+    retval = _fl_value_to_bits(uival)
     return retval
 
 
 def flimage_add_comments(pImage, p2, p3):
-    """ flimage_add_comments(pImage, p2, p3)
+    """
+        flimage_add_comments(pImage, p2, p3)
+
+        @param pImage : pointer to image
     """
 
     _flimage_add_comments = cfuncproto(
@@ -19412,7 +19609,10 @@ def flimage_add_comments(pImage, p2, p3):
 
 
 def flimage_color_to_pixel(pImage, p2, p3, p4, p5):
-    """ flimage_color_to_pixel(pImage, p2, p3, p4, p5) -> num.
+    """
+        flimage_color_to_pixel(pImage, p2, p3, p4, p5) -> num.
+
+        @param pImage : pointer to image
     """
 
     _flimage_color_to_pixel = cfuncproto(
@@ -19430,8 +19630,12 @@ def flimage_color_to_pixel(pImage, p2, p3, p4, p5):
     return retval
 
 
-def flimage_combine(pImage1, pImage2, p3):
-    """ flimage_combine(pImage1, pImage2, p3) -> pImage
+def flimage_combine(pImage1, pImage2, alpha):
+    """ flimage_combine(pImage1, pImage2, alpha) -> pImage
+
+        @param pImage1 : pointer to first image to combine
+        @param pImage2 : pointer to second image to combine
+        @param alpha : alpha level?
     """
 
     _flimage_combine = cfuncproto(
@@ -19441,14 +19645,17 @@ def flimage_combine(pImage1, pImage2, p3):
             """FL_IMAGE * flimage_combine(FL_IMAGE * p1, FL_IMAGE * p2,
                double p3)
             """)
-    fp3 = convert_to_double(p3)
-    keep_elem_refs(pImage1, pImage2, p3, fp3)
-    retval = _flimage_combine(pImage1, pImage2, fp3)
+    falpha = convert_to_double(alpha)
+    keep_elem_refs(pImage1, pImage2, alpha, falpha)
+    retval = _flimage_combine(pImage1, pImage2, falpha)
     return retval
 
 
 def flimage_display_markers(pImage):
-    """ flimage_display_markers(pImage)
+    """
+        flimage_display_markers(pImage)
+
+        @param pImage : pointer to image
     """
 
     _flimage_display_markers = cfuncproto(
@@ -19461,7 +19668,10 @@ def flimage_display_markers(pImage):
 
 
 def flimage_dup_(pImage, p2):
-    """ flimage_dup_(pImage, p2) -> pImage
+    """
+        flimage_dup_(pImage, p2) -> pImage
+
+        @param pImage : pointer to image
     """
 
     _flimage_dup_ = cfuncproto(
@@ -19476,7 +19686,8 @@ def flimage_dup_(pImage, p2):
 
 
 def flimage_enable_bmp():
-    """ flimage_enable_bmp()
+    """
+        flimage_enable_bmp()
     """
 
     _flimage_enable_bmp = cfuncproto(
@@ -19488,7 +19699,8 @@ def flimage_enable_bmp():
 
 
 def flimage_enable_fits():
-    """ flimage_enable_fits()
+    """
+        flimage_enable_fits()
     """
 
     _flimage_enable_fits = cfuncproto(
@@ -19500,7 +19712,8 @@ def flimage_enable_fits():
 
 
 def flimage_enable_genesis():
-    """ flimage_enable_genesis()
+    """
+        flimage_enable_genesis()
     """
 
     _flimage_enable_genesis = cfuncproto(
@@ -19512,7 +19725,8 @@ def flimage_enable_genesis():
 
 
 def flimage_enable_gif():
-    """ flimage_enable_gif()
+    """
+        flimage_enable_gif()
     """
 
     _flimage_enable_gif = cfuncproto(
@@ -19524,7 +19738,8 @@ def flimage_enable_gif():
 
 
 def flimage_enable_gzip():
-    """ flimage_enable_gzip()
+    """
+        flimage_enable_gzip()
     """
 
     _flimage_enable_gzip = cfuncproto(
@@ -19536,7 +19751,8 @@ def flimage_enable_gzip():
 
 
 def flimage_enable_jpeg():
-    """ flimage_enable_jpeg()
+    """
+        flimage_enable_jpeg()
     """
 
     _flimage_enable_jpeg = cfuncproto(
@@ -19548,7 +19764,8 @@ def flimage_enable_jpeg():
 
 
 def flimage_enable_png():
-    """ flimage_enable_png()
+    """
+        flimage_enable_png()
     """
 
     _flimage_enable_png = cfuncproto(
@@ -19560,7 +19777,8 @@ def flimage_enable_png():
 
 
 def flimage_enable_ps():
-    """ flimage_enable_ps()
+    """
+        flimage_enable_ps()
     """
 
     _flimage_enable_ps = cfuncproto(
@@ -19572,7 +19790,8 @@ def flimage_enable_ps():
 
 
 def flimage_enable_sgi():
-    """ flimage_enable_sgi()
+    """
+        flimage_enable_sgi()
     """
 
     _flimage_enable_sgi = cfuncproto(
@@ -19584,7 +19803,8 @@ def flimage_enable_sgi():
 
 
 def flimage_enable_tiff():
-    """ flimage_enable_tiff()
+    """
+        flimage_enable_tiff()
     """
 
     _flimage_enable_tiff = cfuncproto(
@@ -19596,7 +19816,8 @@ def flimage_enable_tiff():
 
 
 def flimage_enable_xbm():
-    """ flimage_enable_xbm()
+    """
+        flimage_enable_xbm()
     """
 
     _flimage_enable_xbm = cfuncproto(
@@ -19608,7 +19829,8 @@ def flimage_enable_xbm():
 
 
 def flimage_enable_xpm():
-    """ flimage_enable_xpm()
+    """
+        flimage_enable_xpm()
     """
 
     _flimage_enable_xpm = cfuncproto(
@@ -19620,7 +19842,8 @@ def flimage_enable_xpm():
 
 
 def flimage_enable_xwd():
-    """ flimage_enable_xwd()
+    """
+        flimage_enable_xwd()
     """
 
     _flimage_enable_xwd = cfuncproto(
@@ -19632,7 +19855,10 @@ def flimage_enable_xwd():
 
 
 def flimage_free_ci(pImage):
-    """ flimage_free_ci(pImage)
+    """
+        flimage_free_ci(pImage)
+
+        @param pImage : pointer to image
     """
 
     _flimage_free_ci = cfuncproto(
@@ -19645,7 +19871,10 @@ def flimage_free_ci(pImage):
 
 
 def flimage_free_gray(pImage):
-    """ flimage_free_gray(pImage)
+    """
+        flimage_free_gray(pImage)
+
+        @param pImage : pointer to image
     """
 
     _flimage_free_gray = cfuncproto(
@@ -19658,7 +19887,10 @@ def flimage_free_gray(pImage):
 
 
 def flimage_free_linearlut(pImage):
-    """ flimage_free_linearlut(pImage)
+    """
+        flimage_free_linearlut(pImage)
+
+        @param pImage : pointer to image
     """
 
     _flimage_free_linearlut = cfuncproto(
@@ -19671,7 +19903,10 @@ def flimage_free_linearlut(pImage):
 
 
 def flimage_free_rgb(pImage):
-    """ flimage_free_rgb(pImage)
+    """
+        flimage_free_rgb(pImage)
+
+        @param pImage : pointer to image
     """
 
     _flimage_free_rgb = cfuncproto(
@@ -19684,7 +19919,10 @@ def flimage_free_rgb(pImage):
 
 
 def flimage_freemem(pImage):
-    """ flimage_freemem(pImage)
+    """
+        flimage_freemem(pImage)
+
+        @param pImage : pointer to image
     """
 
     _flimage_freemem = cfuncproto(
@@ -19697,7 +19935,10 @@ def flimage_freemem(pImage):
 
 
 def flimage_get_closest_color_from_map(pImage, p2):
-    """ flimage_get_closest_color_from_map(pImage, p2) -> num.
+    """
+        flimage_get_closest_color_from_map(pImage, p2) -> num.
+
+        @param pImage : pointer to image
     """
 
     _flimage_get_closest_color_from_map = cfuncproto(
@@ -19713,7 +19954,10 @@ def flimage_get_closest_color_from_map(pImage, p2):
 
 
 def flimage_get_linearlut(pImage):
-    """ flimage_get_linearlut(pImage) -> num.
+    """
+        flimage_get_linearlut(pImage) -> num.
+
+        @param pImage : pointer to image
     """
 
     _flimage_get_linearlut = cfuncproto(
@@ -19727,7 +19971,10 @@ def flimage_get_linearlut(pImage):
 
 
 def flimage_invalidate_pixels(pImage):
-    """ flimage_invalidate_pixels(pImage)
+    """
+        flimage_invalidate_pixels(pImage)
+
+        @param pImage : pointer to image
     """
 
     _flimage_invalidate_pixels = cfuncproto(
@@ -19740,7 +19987,10 @@ def flimage_invalidate_pixels(pImage):
 
 
 def flimage_open(filename):
-    """ flimage_open(filename) -> pImage
+    """
+        flimage_open(filename) -> pImage
+
+        @param filename : name of file to open
     """
 
     _flimage_open = cfuncproto(
@@ -19755,7 +20005,10 @@ def flimage_open(filename):
 
 
 def flimage_read_annotation(pImage):
-    """ flimage_read_annotation(pImage) -> num.
+    """
+        flimage_read_annotation(pImage) -> num.
+
+        @param pImage : pointer to image
     """
 
     _flimage_read_annotation = cfuncproto(
@@ -19769,7 +20022,10 @@ def flimage_read_annotation(pImage):
 
 
 def flimage_replace_image(pImage, w, h, r, g, b):
-    """ flimage_replace_image(pImage, w, h, r, g, b)
+    """
+        flimage_replace_image(pImage, w, h, r, g, b)
+
+        @param pImage : pointer to image
     """
 
     _flimage_replace_image = cfuncproto(
@@ -19789,7 +20045,10 @@ def flimage_replace_image(pImage, w, h, r, g, b):
 
 
 def flimage_swapbuffer(pImage):
-    """ flimage_swapbuffer(pImage) -> num.
+    """
+        flimage_swapbuffer(pImage) -> num.
+
+        @param pImage : pointer to image
     """
 
     _flimage_swapbuffer = cfuncproto(
@@ -19803,7 +20062,12 @@ def flimage_swapbuffer(pImage):
 
 
 def flimage_to_ximage(pImage, win, pXWindowAttributes):
-    """ flimage_to_ximage(pImage, win, pXWindowAttributes) -> num.
+    """
+        flimage_to_ximage(pImage, win, pXWindowAttributes) -> num.
+
+        @param pImage : pointer to image
+        @param win : window id
+        @param pXWindowAttribute : pointer to XWindowAttribute
     """
 
     _flimage_to_ximage = cfuncproto(
@@ -19820,7 +20084,10 @@ def flimage_to_ximage(pImage, win, pXWindowAttributes):
 
 
 def flimage_write_annotation(pImage):
-    """ flimage_write_annotation(pImage) -> num.
+    """
+        flimage_write_annotation(pImage) -> num.
+
+        @param pImage : pointer to image
     """
 
     _flimage_write_annotation = cfuncproto(
@@ -20224,6 +20491,8 @@ def flps_line(xi, yi, xf, yf, colr):
 
 def flps_lines(pPoint, num, colr):
     """ flps_lines(pPoint, num, colr)
+
+        @param pPoint : pointer to point struct
     """
 
     _flps_lines = cfuncproto(

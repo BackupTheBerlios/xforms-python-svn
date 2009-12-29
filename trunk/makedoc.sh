@@ -8,5 +8,5 @@ if [[ ! -x /usr/bin/epydoc ]]; then
     fi
 fi
 
-epydoc -v --html xformslib/library.py xformslib/xfdata.py -o doc/api
+epydoc -v --html xformslib/library.py xformslib/xfdata.py -o doc/api --url http://xforms-python.berlios.de
 
