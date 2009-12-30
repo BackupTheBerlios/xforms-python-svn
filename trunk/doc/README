@@ -1,4 +1,4 @@
-xforms-python (py
+xforms-python
 
 Python wrapper to XForms X11 Window System GUI C toolkit library.
 It has nothing to do with W3C XML XForms.
@@ -14,8 +14,11 @@ adaptations.
 Author: Luca Lazzaroni (LukenShiro) lukenshiro@ngi.it
 Homepage: http://xforms-python.berlios.de
 
+
 See LICENSE to read license and copyright attribution.
 See CREDITS to read dependencies' copyright attribution.
 See INSTALL to read about installation.
 See TODO to read about future development and present limitations.
+
+Documentation is in HTML format on website, and in LaTex format.
 

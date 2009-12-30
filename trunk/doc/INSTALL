@@ -27,7 +27,7 @@ you may use:
 (to install in "<otherdir>")
 
 
-To install API docs (HTML format) you have to copy doc/api/ directory.
+To install API docs (LaTex format) you have to copy doc/tex/ directory.
 
 
 This software is mainly intended to be used on GNU/Linux. For other
