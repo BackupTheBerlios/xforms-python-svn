@@ -1,6 +1,8 @@
 
 
 SVN
+    * Porting of iconify example (partiually, as some segfault 
+    problems prevent a complete porting).
     * some docstrings and bugfixes
     * Porting of grav example.
     * HTML documentation will be only on website (too heavy to

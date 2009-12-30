@@ -7379,6 +7379,9 @@ def fl_add_pixmap(pixmaptype, x, y, w, h, label):
 
 def fl_set_pixmap_data(pObject, bits):
     """ fl_set_pixmap_data(pObject, bits)
+
+        @param pObject : pointer to object
+        @param bits : bits contents of pixmap
     """
 
     _fl_set_pixmap_data = cfuncproto(
@@ -7386,8 +7389,13 @@ def fl_set_pixmap_data(pObject, bits):
             None, [cty.POINTER(FL_OBJECT), cty.POINTER(STRING)],
             """void fl_set_pixmap_data(FL_OBJECT * ob, char * * bits)
             """)
-    keep_elem_refs(pObject, bits)
-    _fl_set_pixmap_data(pObject, bits)
+    print "bits", bits
+    sbits = convert_to_string(bits)
+    print "sbits", sbits
+    pbits = cty.pointer(sbits)     #cty.cast(bits, cty.POINTER(STRING))
+    print "pbits", pbits
+    keep_elem_refs(pObject, bits, sbits, pbits)
+    _fl_set_pixmap_data(pObject, pbits)
 
 
 def fl_set_pixmap_file(pObject, fname):
