@@ -18544,7 +18544,7 @@ def flimage_sdisplay(pImage, win):
         flimage_sdisplay(pImage, win) -> num.
 
         @param pImage : pointer to image
-        @parma win : window
+        @param win : window
     """
 
     _flimage_sdisplay = cfuncproto(
@@ -20067,7 +20067,8 @@ def flimage_to_ximage(pImage, win, pXWindowAttributes):
 
         @param pImage : pointer to image
         @param win : window id
-        @param pXWindowAttribute : pointer to XWindowAttribute
+        @param pXWindowAttributes : pointer to XWindowAttributes
+           struct
     """
 
     _flimage_to_ximage = cfuncproto(

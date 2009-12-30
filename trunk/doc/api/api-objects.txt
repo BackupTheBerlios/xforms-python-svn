@@ -584,6 +584,7 @@ xformslib.library.fl_setpup_fontstyle	xformslib.library-module.html#fl_setpup_fo
 xformslib.library.fl_set_xyplot_return	xformslib.library-module.html#fl_set_xyplot_return
 xformslib.library.fl_set_formbrowser_yoffset	xformslib.library-module.html#fl_set_formbrowser_yoffset
 xformslib.library.fl_show_command_log	xformslib.library-module.html#fl_show_command_log
+xformslib.library.fl_show_choice	xformslib.library-module.html#fl_show_choice
 xformslib.library.fl_popup_entry_set_subpopup	xformslib.library-module.html#fl_popup_entry_set_subpopup
 xformslib.library.fl_add_free	xformslib.library-module.html#fl_add_free
 xformslib.library.get_xforms_version	xformslib.library-module.html#get_xforms_version
@@ -643,6 +644,7 @@ xformslib.library.fl_addto_browser	xformslib.library-module.html#fl_addto_browse
 xformslib.library.fl_set_input_hscrollbar	xformslib.library-module.html#fl_set_input_hscrollbar
 xformslib.library.fl_hide_message	xformslib.library-module.html#fl_hide_message
 xformslib.library.fl_get_nmenu_item	xformslib.library-module.html#fl_get_nmenu_item
+xformslib.library.FLIMAGETYPE_list	xformslib.library-module.html#FLIMAGETYPE_list
 xformslib.library.fl_replace_menu_item	xformslib.library-module.html#fl_replace_menu_item
 xformslib.library.fl_set_gc_clipping	xformslib.library-module.html#fl_set_gc_clipping
 xformslib.library.fl_add_fselector_appbutton	xformslib.library-module.html#fl_add_fselector_appbutton
@@ -1144,7 +1146,7 @@ xformslib.library.flps_reset_cache	xformslib.library-module.html#flps_reset_cach
 xformslib.library.fl_set_input_scrollbarsize	xformslib.library-module.html#fl_set_input_scrollbarsize
 xformslib.library.fl_get_counter_precision	xformslib.library-module.html#fl_get_counter_precision
 xformslib.library.FL_GETR	xformslib.library-module.html#FL_GETR
-xformslib.library.fl_show_choice	xformslib.library-module.html#fl_show_choice
+xformslib.library.fl_get_object_dblclick	xformslib.library-module.html#fl_get_object_dblclick
 xformslib.library.fl_drw_text	xformslib.library-module.html#fl_drw_text
 xformslib.library.flps_get_gray255	xformslib.library-module.html#flps_get_gray255
 xformslib.library.flps_draw_symbol	xformslib.library-module.html#flps_draw_symbol
@@ -1422,6 +1424,7 @@ xformslib.xfdata.FL_ALIGN_TOP	xformslib.xfdata-module.html#FL_ALIGN_TOP
 xformslib.xfdata.FL_ROUNDBUTTON_COL1	xformslib.xfdata-module.html#FL_ROUNDBUTTON_COL1
 xformslib.xfdata.FLIMAGE_ASPECT	xformslib.xfdata-module.html#FLIMAGE_ASPECT
 xformslib.xfdata.FL_PLACE_FULLSCREEN	xformslib.xfdata-module.html#FL_PLACE_FULLSCREEN
+xformslib.xfdata.FL_LONGDASH	xformslib.xfdata-module.html#FL_LONGDASH
 xformslib.xfdata.FLPS_PORTRAIT	xformslib.xfdata-module.html#FLPS_PORTRAIT
 xformslib.xfdata.XrmoptionSepArg	xformslib.xfdata-module.html#XrmoptionSepArg
 xformslib.xfdata.FL_MBUTTON5	xformslib.xfdata-module.html#FL_MBUTTON5
@@ -2015,7 +2018,7 @@ xformslib.xfdata.FL_FREE_COL15	xformslib.xfdata-module.html#FL_FREE_COL15
 xformslib.xfdata.FL_NO	xformslib.xfdata-module.html#FL_NO
 xformslib.xfdata.FL_SQUARE_XYPLOT	xformslib.xfdata-module.html#FL_SQUARE_XYPLOT
 xformslib.xfdata.FT_LINK	xformslib.xfdata-module.html#FT_LINK
-xformslib.xfdata.FL_LONGDASH	xformslib.xfdata-module.html#FL_LONGDASH
+xformslib.xfdata.FLIMAGETYPE_list	xformslib.xfdata-module.html#FLIMAGETYPE_list
 xformslib.xfdata.FL_LINE_CHART	xformslib.xfdata-module.html#FL_LINE_CHART
 xformslib.xfdata.FL_SPRINGGREEN	xformslib.xfdata-module.html#FL_SPRINGGREEN
 xformslib.xfdata.FL_ALIGN_BOTTOM_RIGHT	xformslib.xfdata-module.html#FL_ALIGN_BOTTOM_RIGHT

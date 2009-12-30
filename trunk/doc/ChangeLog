@@ -1,6 +1,7 @@
 
 
 SVN
+    * Porting of nmenu example.
     * more docstrings
     * Porting of select example.
     * bugfixes in some demos. Add lalign_pixmap example.

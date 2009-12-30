@@ -27,7 +27,12 @@
       <th>&nbsp;&nbsp;&nbsp;<a
         href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
 
-      <th class="navbar" width="100%"></th>
+  <!-- Project homepage -->
+      <th class="navbar" align="right" width="100%">
+        <table border="0" cellpadding="0" cellspacing="0">
+          <tr><th class="navbar" align="center"
+            ><a class="navbar" target="_top" href="http://xforms-python.berlios.de">Project Homepage</a></th>
+          </tr></table></th>
   </tr>
 </table>
 <table width="100%" cellpadding="0" cellspacing="0">
@@ -1593,11 +1598,12 @@
   </tr>
 <tr>
     <td width="15%" align="right" valign="top" class="summary">
-      <span class="summary-type">cmask ID</span>
+      <span class="summary-type">compress mask ID</span>
     </td><td class="summary">
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
-          <td><span class="summary-sig"><a href="xformslib.library-module.html#fl_get_form_event_cmask" class="summary-sig-name">fl_get_form_event_cmask</a>(<span class="summary-sig-arg">pForm</span>)</span></td>
+          <td><span class="summary-sig"><a href="xformslib.library-module.html#fl_get_form_event_cmask" class="summary-sig-name">fl_get_form_event_cmask</a>(<span class="summary-sig-arg">pForm</span>)</span><br />
+      Returns event compress mask for form.</td>
           <td align="right" valign="top">
             <span class="codelink"><a href="xformslib.library-pysrc.html#fl_get_form_event_cmask">source&nbsp;code</a></span>
             
@@ -2583,10 +2589,28 @@
     </td><td class="summary">
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
-          <td><span class="summary-sig"><a name="fl_set_object_dblclick"></a><span class="summary-sig-name">fl_set_object_dblclick</span>(<span class="summary-sig-arg">pObject</span>,
-        <span class="summary-sig-arg">timeout</span>)</span></td>
+          <td><span class="summary-sig"><a href="xformslib.library-module.html#fl_set_object_dblclick" class="summary-sig-name">fl_set_object_dblclick</a>(<span class="summary-sig-arg">pObject</span>,
+        <span class="summary-sig-arg">timeout</span>)</span><br />
+      Sets double click timeout value of an object.</td>
           <td align="right" valign="top">
             <span class="codelink"><a href="xformslib.library-pysrc.html#fl_set_object_dblclick">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">timeout value</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="xformslib.library-module.html#fl_get_object_dblclick" class="summary-sig-name">fl_get_object_dblclick</a>(<span class="summary-sig-arg">pObject</span>)</span><br />
+      Return double click timeout value of an object.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="xformslib.library-pysrc.html#fl_get_object_dblclick">source&nbsp;code</a></span>
             
           </td>
         </tr>
@@ -3028,7 +3052,8 @@
     </td><td class="summary">
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
-          <td><span class="summary-sig"><a href="xformslib.library-module.html#fl_object_is_active" class="summary-sig-name">fl_object_is_active</a>(<span class="summary-sig-arg">pObject</span>)</span></td>
+          <td><span class="summary-sig"><a href="xformslib.library-module.html#fl_object_is_active" class="summary-sig-name">fl_object_is_active</a>(<span class="summary-sig-arg">pObject</span>)</span><br />
+      Returns if object is active and reacts to event.</td>
           <td align="right" valign="top">
             <span class="codelink"><a href="xformslib.library-pysrc.html#fl_object_is_active">source&nbsp;code</a></span>
             
@@ -5516,7 +5541,8 @@
         <tr>
           <td><span class="summary-sig"><a href="xformslib.library-module.html#fl_winmove" class="summary-sig-name">fl_winmove</a>(<span class="summary-sig-arg">win</span>,
         <span class="summary-sig-arg">dx</span>,
-        <span class="summary-sig-arg">dy</span>)</span></td>
+        <span class="summary-sig-arg">dy</span>)</span><br />
+      Moves a window to a new position.</td>
           <td align="right" valign="top">
             <span class="codelink"><a href="xformslib.library-pysrc.html#fl_winmove">source&nbsp;code</a></span>
             
@@ -5625,7 +5651,8 @@
     </td><td class="summary">
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
-          <td><span class="summary-sig"><a name="fl_winisvalid"></a><span class="summary-sig-name">fl_winisvalid</span>(<span class="summary-sig-arg">win</span>)</span></td>
+          <td><span class="summary-sig"><a href="xformslib.library-module.html#fl_winisvalid" class="summary-sig-name">fl_winisvalid</a>(<span class="summary-sig-arg">win</span>)</span><br />
+      Returns if a window is a valid one.</td>
           <td align="right" valign="top">
             <span class="codelink"><a href="xformslib.library-pysrc.html#fl_winisvalid">source&nbsp;code</a></span>
             
@@ -5753,7 +5780,7 @@
         <span class="summary-sig-arg">w</span>,
         <span class="summary-sig-arg">h</span>)</span><br />
       Sets a constraint for a resizable window whose size will be within a 
-      range not less than minumum (before calling fl_winopen).</td>
+      range not less than minumum (to be used before calling fl_winopen).</td>
           <td align="right" valign="top">
             <span class="codelink"><a href="xformslib.library-pysrc.html#fl_winminsize">source&nbsp;code</a></span>
             
@@ -6043,7 +6070,8 @@
     </td><td class="summary">
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
-          <td><span class="summary-sig"><a href="xformslib.library-module.html#fl_get_wingeometry" class="summary-sig-name">fl_get_wingeometry</a>(<span class="summary-sig-arg">win</span>)</span></td>
+          <td><span class="summary-sig"><a href="xformslib.library-module.html#fl_get_wingeometry" class="summary-sig-name">fl_get_wingeometry</a>(<span class="summary-sig-arg">win</span>)</span><br />
+      Returns geometry (position and size) of a window.</td>
           <td align="right" valign="top">
             <span class="codelink"><a href="xformslib.library-pysrc.html#fl_get_wingeometry">source&nbsp;code</a></span>
             
@@ -6091,7 +6119,8 @@
     </td><td class="summary">
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
-          <td><span class="summary-sig"><a href="xformslib.library-module.html#fl_get_win_geometry" class="summary-sig-name">fl_get_win_geometry</a>(<span class="summary-sig-arg">win</span>)</span></td>
+          <td><span class="summary-sig"><a href="xformslib.library-module.html#fl_get_win_geometry" class="summary-sig-name">fl_get_win_geometry</a>(<span class="summary-sig-arg">win</span>)</span><br />
+      Returns geometry (position and size) of a window.</td>
           <td align="right" valign="top">
             <span class="codelink"><a href="xformslib.library-pysrc.html#fl_get_wingeometry">source&nbsp;code</a></span>
             
@@ -18573,7 +18602,7 @@
   </tr>
 <tr>
     <td width="15%" align="right" valign="top" class="summary">
-      <span class="summary-type">num</span>
+      <span class="summary-type">num.</span>
     </td><td class="summary">
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
@@ -18595,7 +18624,7 @@
   </tr>
 <tr>
     <td width="15%" align="right" valign="top" class="summary">
-      <span class="summary-type">num</span>
+      <span class="summary-type">num.</span>
     </td><td class="summary">
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
@@ -18683,7 +18712,7 @@
   </tr>
 <tr>
     <td width="15%" align="right" valign="top" class="summary">
-      <span class="summary-type">num</span>
+      <span class="summary-type">num.</span>
     </td><td class="summary">
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
@@ -18699,7 +18728,7 @@
   </tr>
 <tr>
     <td width="15%" align="right" valign="top" class="summary">
-      <span class="summary-type">num</span>
+      <span class="summary-type">num.</span>
     </td><td class="summary">
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
@@ -18795,7 +18824,7 @@
   </tr>
 <tr>
     <td width="15%" align="right" valign="top" class="summary">
-      <span class="summary-type">num</span>
+      <span class="summary-type">num.</span>
     </td><td class="summary">
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
@@ -18811,7 +18840,7 @@
   </tr>
 <tr>
     <td width="15%" align="right" valign="top" class="summary">
-      <span class="summary-type">num</span>
+      <span class="summary-type">num.</span>
     </td><td class="summary">
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
@@ -18881,7 +18910,7 @@
     </td><td class="summary">
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
-          <td><span class="summary-sig"><a name="FL_IsRGB"></a><span class="summary-sig-name">FL_IsRGB</span>(<span class="summary-sig-arg">im</span>)</span></td>
+          <td><span class="summary-sig"><a name="FL_IsRGB"></a><span class="summary-sig-name">FL_IsRGB</span>(<span class="summary-sig-arg">pImage</span>)</span></td>
           <td align="right" valign="top">
             <span class="codelink"><a href="xformslib.library-pysrc.html#FL_IsRGB">source&nbsp;code</a></span>
             
@@ -18897,7 +18926,7 @@
     </td><td class="summary">
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
-          <td><span class="summary-sig"><a name="FL_IsPacked"></a><span class="summary-sig-name">FL_IsPacked</span>(<span class="summary-sig-arg">im</span>)</span></td>
+          <td><span class="summary-sig"><a name="FL_IsPacked"></a><span class="summary-sig-name">FL_IsPacked</span>(<span class="summary-sig-arg">pImage</span>)</span></td>
           <td align="right" valign="top">
             <span class="codelink"><a href="xformslib.library-pysrc.html#FL_IsPacked">source&nbsp;code</a></span>
             
@@ -18913,7 +18942,7 @@
     </td><td class="summary">
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
-          <td><span class="summary-sig"><a name="flimage_setup"></a><span class="summary-sig-name">flimage_setup</span>(<span class="summary-sig-arg">setup</span>)</span></td>
+          <td><span class="summary-sig"><a href="xformslib.library-module.html#flimage_setup" class="summary-sig-name">flimage_setup</a>(<span class="summary-sig-arg">pImageSetup</span>)</span></td>
           <td align="right" valign="top">
             <span class="codelink"><a href="xformslib.library-pysrc.html#flimage_setup">source&nbsp;code</a></span>
             
@@ -18929,7 +18958,7 @@
     </td><td class="summary">
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
-          <td><span class="summary-sig"><a name="flimage_load"></a><span class="summary-sig-name">flimage_load</span>(<span class="summary-sig-arg">filename</span>)</span></td>
+          <td><span class="summary-sig"><a href="xformslib.library-module.html#flimage_load" class="summary-sig-name">flimage_load</a>(<span class="summary-sig-arg">filename</span>)</span></td>
           <td align="right" valign="top">
             <span class="codelink"><a href="xformslib.library-pysrc.html#flimage_load">source&nbsp;code</a></span>
             
@@ -18945,7 +18974,7 @@
     </td><td class="summary">
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
-          <td><span class="summary-sig"><a name="flimage_read"></a><span class="summary-sig-name">flimage_read</span>(<span class="summary-sig-arg">pImage</span>)</span></td>
+          <td><span class="summary-sig"><a href="xformslib.library-module.html#flimage_read" class="summary-sig-name">flimage_read</a>(<span class="summary-sig-arg">pImage</span>)</span></td>
           <td align="right" valign="top">
             <span class="codelink"><a href="xformslib.library-pysrc.html#flimage_read">source&nbsp;code</a></span>
             
@@ -18961,7 +18990,7 @@
     </td><td class="summary">
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
-          <td><span class="summary-sig"><a name="flimage_dump"></a><span class="summary-sig-name">flimage_dump</span>(<span class="summary-sig-arg">pImage</span>,
+          <td><span class="summary-sig"><a href="xformslib.library-module.html#flimage_dump" class="summary-sig-name">flimage_dump</a>(<span class="summary-sig-arg">pImage</span>,
         <span class="summary-sig-arg">p2</span>,
         <span class="summary-sig-arg">p3</span>)</span></td>
           <td align="right" valign="top">
@@ -18979,7 +19008,7 @@
     </td><td class="summary">
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
-          <td><span class="summary-sig"><a name="flimage_close"></a><span class="summary-sig-name">flimage_close</span>(<span class="summary-sig-arg">pImage</span>)</span></td>
+          <td><span class="summary-sig"><a href="xformslib.library-module.html#flimage_close" class="summary-sig-name">flimage_close</a>(<span class="summary-sig-arg">pImage</span>)</span></td>
           <td align="right" valign="top">
             <span class="codelink"><a href="xformslib.library-pysrc.html#flimage_close">source&nbsp;code</a></span>
             
@@ -19011,7 +19040,7 @@
     </td><td class="summary">
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
-          <td><span class="summary-sig"><a name="flimage_getmem"></a><span class="summary-sig-name">flimage_getmem</span>(<span class="summary-sig-arg">pImage</span>)</span></td>
+          <td><span class="summary-sig"><a href="xformslib.library-module.html#flimage_getmem" class="summary-sig-name">flimage_getmem</a>(<span class="summary-sig-arg">pImage</span>)</span></td>
           <td align="right" valign="top">
             <span class="codelink"><a href="xformslib.library-pysrc.html#flimage_getmem">source&nbsp;code</a></span>
             
@@ -19027,7 +19056,7 @@
     </td><td class="summary">
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
-          <td><span class="summary-sig"><a name="flimage_is_supported"></a><span class="summary-sig-name">flimage_is_supported</span>(<span class="summary-sig-arg">p1</span>)</span></td>
+          <td><span class="summary-sig"><a href="xformslib.library-module.html#flimage_is_supported" class="summary-sig-name">flimage_is_supported</a>(<span class="summary-sig-arg">fname</span>)</span></td>
           <td align="right" valign="top">
             <span class="codelink"><a href="xformslib.library-pysrc.html#flimage_is_supported">source&nbsp;code</a></span>
             
@@ -19043,7 +19072,7 @@
     </td><td class="summary">
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
-          <td><span class="summary-sig"><a name="flimage_description_via_filter"></a><span class="summary-sig-name">flimage_description_via_filter</span>(<span class="summary-sig-arg">pImage</span>,
+          <td><span class="summary-sig"><a href="xformslib.library-module.html#flimage_description_via_filter" class="summary-sig-name">flimage_description_via_filter</a>(<span class="summary-sig-arg">pImage</span>,
         <span class="summary-sig-arg">p2</span>,
         <span class="summary-sig-arg">p3</span>,
         <span class="summary-sig-arg">p4</span>)</span></td>
@@ -19062,7 +19091,7 @@
     </td><td class="summary">
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
-          <td><span class="summary-sig"><a name="flimage_write_via_filter"></a><span class="summary-sig-name">flimage_write_via_filter</span>(<span class="summary-sig-arg">pImage</span>,
+          <td><span class="summary-sig"><a href="xformslib.library-module.html#flimage_write_via_filter" class="summary-sig-name">flimage_write_via_filter</a>(<span class="summary-sig-arg">pImage</span>,
         <span class="summary-sig-arg">p2</span>,
         <span class="summary-sig-arg">p3</span>,
         <span class="summary-sig-arg">p4</span>)</span></td>
@@ -19081,7 +19110,7 @@
     </td><td class="summary">
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
-          <td><span class="summary-sig"><a name="flimage_free"></a><span class="summary-sig-name">flimage_free</span>(<span class="summary-sig-arg">pImage</span>)</span></td>
+          <td><span class="summary-sig"><a href="xformslib.library-module.html#flimage_free" class="summary-sig-name">flimage_free</a>(<span class="summary-sig-arg">pImage</span>)</span></td>
           <td align="right" valign="top">
             <span class="codelink"><a href="xformslib.library-pysrc.html#flimage_free">source&nbsp;code</a></span>
             
@@ -19097,7 +19126,7 @@
     </td><td class="summary">
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
-          <td><span class="summary-sig"><a name="flimage_display"></a><span class="summary-sig-name">flimage_display</span>(<span class="summary-sig-arg">pImage</span>,
+          <td><span class="summary-sig"><a href="xformslib.library-module.html#flimage_display" class="summary-sig-name">flimage_display</a>(<span class="summary-sig-arg">pImage</span>,
         <span class="summary-sig-arg">win</span>)</span></td>
           <td align="right" valign="top">
             <span class="codelink"><a href="xformslib.library-pysrc.html#flimage_display">source&nbsp;code</a></span>
@@ -19114,7 +19143,7 @@
     </td><td class="summary">
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
-          <td><span class="summary-sig"><a name="flimage_sdisplay"></a><span class="summary-sig-name">flimage_sdisplay</span>(<span class="summary-sig-arg">pImage</span>,
+          <td><span class="summary-sig"><a href="xformslib.library-module.html#flimage_sdisplay" class="summary-sig-name">flimage_sdisplay</a>(<span class="summary-sig-arg">pImage</span>,
         <span class="summary-sig-arg">win</span>)</span></td>
           <td align="right" valign="top">
             <span class="codelink"><a href="xformslib.library-pysrc.html#flimage_sdisplay">source&nbsp;code</a></span>
@@ -19131,9 +19160,10 @@
     </td><td class="summary">
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
-          <td><span class="summary-sig"><a name="flimage_convert"></a><span class="summary-sig-name">flimage_convert</span>(<span class="summary-sig-arg">pImage</span>,
-        <span class="summary-sig-arg">p2</span>,
-        <span class="summary-sig-arg">p3</span>)</span></td>
+          <td><span class="summary-sig"><a href="xformslib.library-module.html#flimage_convert" class="summary-sig-name">flimage_convert</a>(<span class="summary-sig-arg">pImage</span>,
+        <span class="summary-sig-arg">newtype</span>,
+        <span class="summary-sig-arg">ncolors</span>)</span><br />
+      Convert an image to a new type.</td>
           <td align="right" valign="top">
             <span class="codelink"><a href="xformslib.library-pysrc.html#flimage_convert">source&nbsp;code</a></span>
             
@@ -19149,7 +19179,7 @@
     </td><td class="summary">
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
-          <td><span class="summary-sig"><a name="flimage_type_name"></a><span class="summary-sig-name">flimage_type_name</span>(<span class="summary-sig-arg">flimagetype</span>)</span></td>
+          <td><span class="summary-sig"><a href="xformslib.library-module.html#flimage_type_name" class="summary-sig-name">flimage_type_name</a>(<span class="summary-sig-arg">flimagetype</span>)</span></td>
           <td align="right" valign="top">
             <span class="codelink"><a href="xformslib.library-pysrc.html#flimage_type_name">source&nbsp;code</a></span>
             
@@ -19165,17 +19195,17 @@
     </td><td class="summary">
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
-          <td><span class="summary-sig"><a name="flimage_add_text"></a><span class="summary-sig-name">flimage_add_text</span>(<span class="summary-sig-arg">pImage</span>,
+          <td><span class="summary-sig"><a href="xformslib.library-module.html#flimage_add_text" class="summary-sig-name">flimage_add_text</a>(<span class="summary-sig-arg">pImage</span>,
         <span class="summary-sig-arg">text</span>,
-        <span class="summary-sig-arg">p3</span>,
-        <span class="summary-sig-arg">p4</span>,
-        <span class="summary-sig-arg">p5</span>,
-        <span class="summary-sig-arg">p6</span>,
-        <span class="summary-sig-arg">p7</span>,
-        <span class="summary-sig-arg">p8</span>,
-        <span class="summary-sig-arg">p9</span>,
-        <span class="summary-sig-arg">p10</span>,
-        <span class="summary-sig-arg">p11</span>)</span></td>
+        <span class="summary-sig-arg">length</span>,
+        <span class="summary-sig-arg">style</span>,
+        <span class="summary-sig-arg">size</span>,
+        <span class="summary-sig-arg">txtcolr</span>,
+        <span class="summary-sig-arg">bgcolr</span>,
+        <span class="summary-sig-arg">tran</span>,
+        <span class="summary-sig-arg">tx</span>,
+        <span class="summary-sig-arg">ty</span>,
+        <span class="summary-sig-arg">rot</span>)</span></td>
           <td align="right" valign="top">
             <span class="codelink"><a href="xformslib.library-pysrc.html#flimage_add_text">source&nbsp;code</a></span>
             
@@ -19191,7 +19221,7 @@
     </td><td class="summary">
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
-          <td><span class="summary-sig"><a name="flimage_add_text_struct"></a><span class="summary-sig-name">flimage_add_text_struct</span>(<span class="summary-sig-arg">pImage</span>,
+          <td><span class="summary-sig"><a href="xformslib.library-module.html#flimage_add_text_struct" class="summary-sig-name">flimage_add_text_struct</a>(<span class="summary-sig-arg">pImage</span>,
         <span class="summary-sig-arg">pImageText</span>)</span></td>
           <td align="right" valign="top">
             <span class="codelink"><a href="xformslib.library-pysrc.html#flimage_add_text_struct">source&nbsp;code</a></span>
@@ -19208,7 +19238,7 @@
     </td><td class="summary">
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
-          <td><span class="summary-sig"><a name="flimage_delete_all_text"></a><span class="summary-sig-name">flimage_delete_all_text</span>(<span class="summary-sig-arg">pImage</span>)</span></td>
+          <td><span class="summary-sig"><a href="xformslib.library-module.html#flimage_delete_all_text" class="summary-sig-name">flimage_delete_all_text</a>(<span class="summary-sig-arg">pImage</span>)</span></td>
           <td align="right" valign="top">
             <span class="codelink"><a href="xformslib.library-pysrc.html#flimage_delete_all_text">source&nbsp;code</a></span>
             
@@ -19224,7 +19254,7 @@
     </td><td class="summary">
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
-          <td><span class="summary-sig"><a name="flimage_add_marker"></a><span class="summary-sig-name">flimage_add_marker</span>(<span class="summary-sig-arg">pImage</span>,
+          <td><span class="summary-sig"><a href="xformslib.library-module.html#flimage_add_marker" class="summary-sig-name">flimage_add_marker</a>(<span class="summary-sig-arg">pImage</span>,
         <span class="summary-sig-arg">text</span>,
         <span class="summary-sig-arg">p3</span>,
         <span class="summary-sig-arg">p4</span>,
@@ -19250,7 +19280,7 @@
     </td><td class="summary">
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
-          <td><span class="summary-sig"><a name="flimage_add_marker_struct"></a><span class="summary-sig-name">flimage_add_marker_struct</span>(<span class="summary-sig-arg">pImage</span>,
+          <td><span class="summary-sig"><a href="xformslib.library-module.html#flimage_add_marker_struct" class="summary-sig-name">flimage_add_marker_struct</a>(<span class="summary-sig-arg">pImage</span>,
         <span class="summary-sig-arg">pImageMarker</span>)</span></td>
           <td align="right" valign="top">
             <span class="codelink"><a href="xformslib.library-pysrc.html#flimage_add_marker_struct">source&nbsp;code</a></span>
@@ -19285,7 +19315,7 @@
     </td><td class="summary">
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
-          <td><span class="summary-sig"><a name="flimage_delete_all_markers"></a><span class="summary-sig-name">flimage_delete_all_markers</span>(<span class="summary-sig-arg">pImage</span>)</span></td>
+          <td><span class="summary-sig"><a href="xformslib.library-module.html#flimage_delete_all_markers" class="summary-sig-name">flimage_delete_all_markers</a>(<span class="summary-sig-arg">pImage</span>)</span></td>
           <td align="right" valign="top">
             <span class="codelink"><a href="xformslib.library-pysrc.html#flimage_delete_all_markers">source&nbsp;code</a></span>
             
@@ -19301,7 +19331,7 @@
     </td><td class="summary">
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
-          <td><span class="summary-sig"><a name="flimage_render_annotation"></a><span class="summary-sig-name">flimage_render_annotation</span>(<span class="summary-sig-arg">pImage</span>,
+          <td><span class="summary-sig"><a href="xformslib.library-module.html#flimage_render_annotation" class="summary-sig-name">flimage_render_annotation</a>(<span class="summary-sig-arg">pImage</span>,
         <span class="summary-sig-arg">win</span>)</span></td>
           <td align="right" valign="top">
             <span class="codelink"><a href="xformslib.library-pysrc.html#flimage_render_annotation">source&nbsp;code</a></span>
@@ -19318,7 +19348,7 @@
     </td><td class="summary">
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
-          <td><span class="summary-sig"><a name="flimage_error"></a><span class="summary-sig-name">flimage_error</span>(<span class="summary-sig-arg">pImage</span>,
+          <td><span class="summary-sig"><a href="xformslib.library-module.html#flimage_error" class="summary-sig-name">flimage_error</a>(<span class="summary-sig-arg">pImage</span>,
         <span class="summary-sig-arg">text</span>)</span></td>
           <td align="right" valign="top">
             <span class="codelink"><a href="xformslib.library-pysrc.html#flimage_error">source&nbsp;code</a></span>
@@ -19347,7 +19377,7 @@
   </tr>
 <tr>
     <td width="15%" align="right" valign="top" class="summary">
-      <span class="summary-type">num</span>
+      <span class="summary-type">num.</span>
     </td><td class="summary">
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
@@ -19411,7 +19441,7 @@
   </tr>
 <tr>
     <td width="15%" align="right" valign="top" class="summary">
-      <span class="summary-type">flps_control class</span>
+      <span class="summary-type">pFlpsControl</span>
     </td><td class="summary">
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
@@ -19475,7 +19505,7 @@
   </tr>
 <tr>
     <td width="15%" align="right" valign="top" class="summary">
-      <span class="summary-type">num</span>
+      <span class="summary-type">num.</span>
     </td><td class="summary">
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
@@ -19491,7 +19521,7 @@
   </tr>
 <tr>
     <td width="15%" align="right" valign="top" class="summary">
-      <span class="summary-type">format_info class instance</span>
+      <span class="summary-type">ImageFormatInfo class instance</span>
     </td><td class="summary">
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
@@ -19511,7 +19541,7 @@
     </td><td class="summary">
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
-          <td><span class="summary-sig"><a name="fl_get_matrix"></a><span class="summary-sig-name">fl_get_matrix</span>(<span class="summary-sig-arg">nrows</span>,
+          <td><span class="summary-sig"><a href="xformslib.library-module.html#fl_get_matrix" class="summary-sig-name">fl_get_matrix</a>(<span class="summary-sig-arg">nrows</span>,
         <span class="summary-sig-arg">ncols</span>,
         <span class="summary-sig-arg">esize</span>)</span></td>
           <td align="right" valign="top">
@@ -19561,7 +19591,7 @@
   </tr>
 <tr>
     <td width="15%" align="right" valign="top" class="summary">
-      <span class="summary-type">num</span>
+      <span class="summary-type">num.</span>
     </td><td class="summary">
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
@@ -19577,7 +19607,7 @@
   </tr>
 <tr>
     <td width="15%" align="right" valign="top" class="summary">
-      <span class="summary-type">num</span>
+      <span class="summary-type">num.</span>
     </td><td class="summary">
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
@@ -19600,10 +19630,10 @@
     </td><td class="summary">
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
-          <td><span class="summary-sig"><a name="flimage_add_format"></a><span class="summary-sig-name">flimage_add_format</span>(<span class="summary-sig-arg">p1</span>,
-        <span class="summary-sig-arg">p2</span>,
-        <span class="summary-sig-arg">p3</span>,
-        <span class="summary-sig-arg">p4</span>,
+          <td><span class="summary-sig"><a name="flimage_add_format"></a><span class="summary-sig-name">flimage_add_format</span>(<span class="summary-sig-arg">formalname</span>,
+        <span class="summary-sig-arg">shortname</span>,
+        <span class="summary-sig-arg">extension</span>,
+        <span class="summary-sig-arg">flimagetype</span>,
         <span class="summary-sig-arg">py_ImageIdentify</span>,
         <span class="summary-sig-arg">py_ImageDescription</span>,
         <span class="summary-sig-arg">py_ImageReadPixels</span>,
@@ -19640,7 +19670,7 @@
     </td><td class="summary">
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
-          <td><span class="summary-sig"><a name="flimage_getcolormap"></a><span class="summary-sig-name">flimage_getcolormap</span>(<span class="summary-sig-arg">pImage</span>)</span></td>
+          <td><span class="summary-sig"><a href="xformslib.library-module.html#flimage_getcolormap" class="summary-sig-name">flimage_getcolormap</a>(<span class="summary-sig-arg">pImage</span>)</span></td>
           <td align="right" valign="top">
             <span class="codelink"><a href="xformslib.library-pysrc.html#flimage_getcolormap">source&nbsp;code</a></span>
             
@@ -19672,7 +19702,7 @@
     </td><td class="summary">
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
-          <td><span class="summary-sig"><a name="flimage_convolve"></a><span class="summary-sig-name">flimage_convolve</span>(<span class="summary-sig-arg">pImage</span>,
+          <td><span class="summary-sig"><a href="xformslib.library-module.html#flimage_convolve" class="summary-sig-name">flimage_convolve</a>(<span class="summary-sig-arg">pImage</span>,
         <span class="summary-sig-arg">p2</span>,
         <span class="summary-sig-arg">p3</span>,
         <span class="summary-sig-arg">p4</span>)</span></td>
@@ -19691,7 +19721,7 @@
     </td><td class="summary">
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
-          <td><span class="summary-sig"><a name="flimage_convolvea"></a><span class="summary-sig-name">flimage_convolvea</span>(<span class="summary-sig-arg">pImage</span>,
+          <td><span class="summary-sig"><a href="xformslib.library-module.html#flimage_convolvea" class="summary-sig-name">flimage_convolvea</a>(<span class="summary-sig-arg">pImage</span>,
         <span class="summary-sig-arg">p2</span>,
         <span class="summary-sig-arg">p3</span>,
         <span class="summary-sig-arg">p4</span>)</span></td>
@@ -19710,7 +19740,7 @@
     </td><td class="summary">
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
-          <td><span class="summary-sig"><a name="flimage_tint"></a><span class="summary-sig-name">flimage_tint</span>(<span class="summary-sig-arg">pImage</span>,
+          <td><span class="summary-sig"><a href="xformslib.library-module.html#flimage_tint" class="summary-sig-name">flimage_tint</a>(<span class="summary-sig-arg">pImage</span>,
         <span class="summary-sig-arg">p2</span>,
         <span class="summary-sig-arg">p3</span>)</span></td>
           <td align="right" valign="top">
@@ -19728,7 +19758,7 @@
     </td><td class="summary">
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
-          <td><span class="summary-sig"><a name="flimage_rotate"></a><span class="summary-sig-name">flimage_rotate</span>(<span class="summary-sig-arg">pImage</span>,
+          <td><span class="summary-sig"><a href="xformslib.library-module.html#flimage_rotate" class="summary-sig-name">flimage_rotate</a>(<span class="summary-sig-arg">pImage</span>,
         <span class="summary-sig-arg">p2</span>,
         <span class="summary-sig-arg">p3</span>)</span></td>
           <td align="right" valign="top">
@@ -19746,7 +19776,7 @@
     </td><td class="summary">
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
-          <td><span class="summary-sig"><a name="flimage_flip"></a><span class="summary-sig-name">flimage_flip</span>(<span class="summary-sig-arg">pImage</span>,
+          <td><span class="summary-sig"><a href="xformslib.library-module.html#flimage_flip" class="summary-sig-name">flimage_flip</a>(<span class="summary-sig-arg">pImage</span>,
         <span class="summary-sig-arg">p2</span>)</span></td>
           <td align="right" valign="top">
             <span class="codelink"><a href="xformslib.library-pysrc.html#flimage_flip">source&nbsp;code</a></span>
@@ -19763,7 +19793,7 @@
     </td><td class="summary">
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
-          <td><span class="summary-sig"><a name="flimage_scale"></a><span class="summary-sig-name">flimage_scale</span>(<span class="summary-sig-arg">pImage</span>,
+          <td><span class="summary-sig"><a href="xformslib.library-module.html#flimage_scale" class="summary-sig-name">flimage_scale</a>(<span class="summary-sig-arg">pImage</span>,
         <span class="summary-sig-arg">p2</span>,
         <span class="summary-sig-arg">p3</span>,
         <span class="summary-sig-arg">p4</span>)</span></td>
@@ -19782,7 +19812,7 @@
     </td><td class="summary">
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
-          <td><span class="summary-sig"><a name="flimage_warp"></a><span class="summary-sig-name">flimage_warp</span>(<span class="summary-sig-arg">pImage</span>,
+          <td><span class="summary-sig"><a href="xformslib.library-module.html#flimage_warp" class="summary-sig-name">flimage_warp</a>(<span class="summary-sig-arg">pImage</span>,
         <span class="summary-sig-arg">p2</span>,
         <span class="summary-sig-arg">p3</span>,
         <span class="summary-sig-arg">p4</span>,
@@ -19802,7 +19832,7 @@
     </td><td class="summary">
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
-          <td><span class="summary-sig"><a name="flimage_autocrop"></a><span class="summary-sig-name">flimage_autocrop</span>(<span class="summary-sig-arg">pImage</span>,
+          <td><span class="summary-sig"><a href="xformslib.library-module.html#flimage_autocrop" class="summary-sig-name">flimage_autocrop</a>(<span class="summary-sig-arg">pImage</span>,
         <span class="summary-sig-arg">p2</span>)</span></td>
           <td align="right" valign="top">
             <span class="codelink"><a href="xformslib.library-pysrc.html#flimage_autocrop">source&nbsp;code</a></span>
@@ -19819,7 +19849,7 @@
     </td><td class="summary">
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
-          <td><span class="summary-sig"><a name="flimage_get_autocrop"></a><span class="summary-sig-name">flimage_get_autocrop</span>(<span class="summary-sig-arg">pImage</span>,
+          <td><span class="summary-sig"><a href="xformslib.library-module.html#flimage_get_autocrop" class="summary-sig-name">flimage_get_autocrop</a>(<span class="summary-sig-arg">pImage</span>,
         <span class="summary-sig-arg">bk</span>)</span></td>
           <td align="right" valign="top">
             <span class="codelink"><a href="xformslib.library-pysrc.html#flimage_get_autocrop">source&nbsp;code</a></span>
@@ -19836,7 +19866,7 @@
     </td><td class="summary">
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
-          <td><span class="summary-sig"><a name="flimage_crop"></a><span class="summary-sig-name">flimage_crop</span>(<span class="summary-sig-arg">pImage</span>,
+          <td><span class="summary-sig"><a href="xformslib.library-module.html#flimage_crop" class="summary-sig-name">flimage_crop</a>(<span class="summary-sig-arg">pImage</span>,
         <span class="summary-sig-arg">p2</span>,
         <span class="summary-sig-arg">p3</span>,
         <span class="summary-sig-arg">p4</span>,
@@ -19856,7 +19886,7 @@
     </td><td class="summary">
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
-          <td><span class="summary-sig"><a name="flimage_replace_pixel"></a><span class="summary-sig-name">flimage_replace_pixel</span>(<span class="summary-sig-arg">pImage</span>,
+          <td><span class="summary-sig"><a href="xformslib.library-module.html#flimage_replace_pixel" class="summary-sig-name">flimage_replace_pixel</a>(<span class="summary-sig-arg">pImage</span>,
         <span class="summary-sig-arg">p2</span>,
         <span class="summary-sig-arg">p3</span>)</span></td>
           <td align="right" valign="top">
@@ -19874,7 +19904,7 @@
     </td><td class="summary">
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
-          <td><span class="summary-sig"><a name="flimage_transform_pixels"></a><span class="summary-sig-name">flimage_transform_pixels</span>(<span class="summary-sig-arg">pImage</span>,
+          <td><span class="summary-sig"><a href="xformslib.library-module.html#flimage_transform_pixels" class="summary-sig-name">flimage_transform_pixels</a>(<span class="summary-sig-arg">pImage</span>,
         <span class="summary-sig-arg">red</span>,
         <span class="summary-sig-arg">green</span>,
         <span class="summary-sig-arg">blue</span>)</span></td>
@@ -19893,7 +19923,7 @@
     </td><td class="summary">
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
-          <td><span class="summary-sig"><a name="flimage_windowlevel"></a><span class="summary-sig-name">flimage_windowlevel</span>(<span class="summary-sig-arg">pImage</span>,
+          <td><span class="summary-sig"><a href="xformslib.library-module.html#flimage_windowlevel" class="summary-sig-name">flimage_windowlevel</a>(<span class="summary-sig-arg">pImage</span>,
         <span class="summary-sig-arg">p2</span>,
         <span class="summary-sig-arg">p3</span>)</span></td>
           <td align="right" valign="top">
@@ -19911,7 +19941,7 @@
     </td><td class="summary">
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
-          <td><span class="summary-sig"><a name="flimage_enhance"></a><span class="summary-sig-name">flimage_enhance</span>(<span class="summary-sig-arg">pImage</span>,
+          <td><span class="summary-sig"><a href="xformslib.library-module.html#flimage_enhance" class="summary-sig-name">flimage_enhance</a>(<span class="summary-sig-arg">pImage</span>,
         <span class="summary-sig-arg">p2</span>)</span></td>
           <td align="right" valign="top">
             <span class="codelink"><a href="xformslib.library-pysrc.html#flimage_enhance">source&nbsp;code</a></span>
@@ -19928,7 +19958,7 @@
     </td><td class="summary">
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
-          <td><span class="summary-sig"><a name="flimage_from_pixmap"></a><span class="summary-sig-name">flimage_from_pixmap</span>(<span class="summary-sig-arg">pImage</span>,
+          <td><span class="summary-sig"><a href="xformslib.library-module.html#flimage_from_pixmap" class="summary-sig-name">flimage_from_pixmap</a>(<span class="summary-sig-arg">pImage</span>,
         <span class="summary-sig-arg">pixmap</span>)</span></td>
           <td align="right" valign="top">
             <span class="codelink"><a href="xformslib.library-pysrc.html#flimage_from_pixmap">source&nbsp;code</a></span>
@@ -19945,7 +19975,7 @@
     </td><td class="summary">
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
-          <td><span class="summary-sig"><a name="flimage_to_pixmap"></a><span class="summary-sig-name">flimage_to_pixmap</span>(<span class="summary-sig-arg">pImage</span>,
+          <td><span class="summary-sig"><a href="xformslib.library-module.html#flimage_to_pixmap" class="summary-sig-name">flimage_to_pixmap</a>(<span class="summary-sig-arg">pImage</span>,
         <span class="summary-sig-arg">win</span>)</span></td>
           <td align="right" valign="top">
             <span class="codelink"><a href="xformslib.library-pysrc.html#flimage_to_pixmap">source&nbsp;code</a></span>
@@ -19962,7 +19992,7 @@
     </td><td class="summary">
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
-          <td><span class="summary-sig"><a name="flimage_dup"></a><span class="summary-sig-name">flimage_dup</span>(<span class="summary-sig-arg">pImage</span>)</span></td>
+          <td><span class="summary-sig"><a href="xformslib.library-module.html#flimage_dup" class="summary-sig-name">flimage_dup</a>(<span class="summary-sig-arg">pImage</span>)</span></td>
           <td align="right" valign="top">
             <span class="codelink"><a href="xformslib.library-pysrc.html#flimage_dup">source&nbsp;code</a></span>
             
@@ -20112,7 +20142,7 @@
     </td><td class="summary">
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
-          <td><span class="summary-sig"><a name="fl_value_to_bits"></a><span class="summary-sig-name">fl_value_to_bits</span>(<span class="summary-sig-arg">p1</span>)</span></td>
+          <td><span class="summary-sig"><a href="xformslib.library-module.html#fl_value_to_bits" class="summary-sig-name">fl_value_to_bits</a>(<span class="summary-sig-arg">val</span>)</span></td>
           <td align="right" valign="top">
             <span class="codelink"><a href="xformslib.library-pysrc.html#fl_value_to_bits">source&nbsp;code</a></span>
             
@@ -20128,7 +20158,7 @@
     </td><td class="summary">
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
-          <td><span class="summary-sig"><a name="flimage_add_comments"></a><span class="summary-sig-name">flimage_add_comments</span>(<span class="summary-sig-arg">pImage</span>,
+          <td><span class="summary-sig"><a href="xformslib.library-module.html#flimage_add_comments" class="summary-sig-name">flimage_add_comments</a>(<span class="summary-sig-arg">pImage</span>,
         <span class="summary-sig-arg">p2</span>,
         <span class="summary-sig-arg">p3</span>)</span></td>
           <td align="right" valign="top">
@@ -20146,7 +20176,7 @@
     </td><td class="summary">
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
-          <td><span class="summary-sig"><a name="flimage_color_to_pixel"></a><span class="summary-sig-name">flimage_color_to_pixel</span>(<span class="summary-sig-arg">pImage</span>,
+          <td><span class="summary-sig"><a href="xformslib.library-module.html#flimage_color_to_pixel" class="summary-sig-name">flimage_color_to_pixel</a>(<span class="summary-sig-arg">pImage</span>,
         <span class="summary-sig-arg">p2</span>,
         <span class="summary-sig-arg">p3</span>,
         <span class="summary-sig-arg">p4</span>,
@@ -20166,9 +20196,9 @@
     </td><td class="summary">
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
-          <td><span class="summary-sig"><a name="flimage_combine"></a><span class="summary-sig-name">flimage_combine</span>(<span class="summary-sig-arg">pImage1</span>,
+          <td><span class="summary-sig"><a href="xformslib.library-module.html#flimage_combine" class="summary-sig-name">flimage_combine</a>(<span class="summary-sig-arg">pImage1</span>,
         <span class="summary-sig-arg">pImage2</span>,
-        <span class="summary-sig-arg">p3</span>)</span></td>
+        <span class="summary-sig-arg">alpha</span>)</span></td>
           <td align="right" valign="top">
             <span class="codelink"><a href="xformslib.library-pysrc.html#flimage_combine">source&nbsp;code</a></span>
             
@@ -20184,7 +20214,7 @@
     </td><td class="summary">
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
-          <td><span class="summary-sig"><a name="flimage_display_markers"></a><span class="summary-sig-name">flimage_display_markers</span>(<span class="summary-sig-arg">pImage</span>)</span></td>
+          <td><span class="summary-sig"><a href="xformslib.library-module.html#flimage_display_markers" class="summary-sig-name">flimage_display_markers</a>(<span class="summary-sig-arg">pImage</span>)</span></td>
           <td align="right" valign="top">
             <span class="codelink"><a href="xformslib.library-pysrc.html#flimage_display_markers">source&nbsp;code</a></span>
             
@@ -20200,7 +20230,7 @@
     </td><td class="summary">
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
-          <td><span class="summary-sig"><a name="flimage_dup_"></a><span class="summary-sig-name">flimage_dup_</span>(<span class="summary-sig-arg">pImage</span>,
+          <td><span class="summary-sig"><a href="xformslib.library-module.html#flimage_dup_" class="summary-sig-name">flimage_dup_</a>(<span class="summary-sig-arg">pImage</span>,
         <span class="summary-sig-arg">p2</span>)</span></td>
           <td align="right" valign="top">
             <span class="codelink"><a href="xformslib.library-pysrc.html#flimage_dup_">source&nbsp;code</a></span>
@@ -20425,7 +20455,7 @@
     </td><td class="summary">
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
-          <td><span class="summary-sig"><a name="flimage_free_ci"></a><span class="summary-sig-name">flimage_free_ci</span>(<span class="summary-sig-arg">pImage</span>)</span></td>
+          <td><span class="summary-sig"><a href="xformslib.library-module.html#flimage_free_ci" class="summary-sig-name">flimage_free_ci</a>(<span class="summary-sig-arg">pImage</span>)</span></td>
           <td align="right" valign="top">
             <span class="codelink"><a href="xformslib.library-pysrc.html#flimage_free_ci">source&nbsp;code</a></span>
             
@@ -20441,7 +20471,7 @@
     </td><td class="summary">
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
-          <td><span class="summary-sig"><a name="flimage_free_gray"></a><span class="summary-sig-name">flimage_free_gray</span>(<span class="summary-sig-arg">pImage</span>)</span></td>
+          <td><span class="summary-sig"><a href="xformslib.library-module.html#flimage_free_gray" class="summary-sig-name">flimage_free_gray</a>(<span class="summary-sig-arg">pImage</span>)</span></td>
           <td align="right" valign="top">
             <span class="codelink"><a href="xformslib.library-pysrc.html#flimage_free_gray">source&nbsp;code</a></span>
             
@@ -20457,7 +20487,7 @@
     </td><td class="summary">
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
-          <td><span class="summary-sig"><a name="flimage_free_linearlut"></a><span class="summary-sig-name">flimage_free_linearlut</span>(<span class="summary-sig-arg">pImage</span>)</span></td>
+          <td><span class="summary-sig"><a href="xformslib.library-module.html#flimage_free_linearlut" class="summary-sig-name">flimage_free_linearlut</a>(<span class="summary-sig-arg">pImage</span>)</span></td>
           <td align="right" valign="top">
             <span class="codelink"><a href="xformslib.library-pysrc.html#flimage_free_linearlut">source&nbsp;code</a></span>
             
@@ -20473,7 +20503,7 @@
     </td><td class="summary">
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
-          <td><span class="summary-sig"><a name="flimage_free_rgb"></a><span class="summary-sig-name">flimage_free_rgb</span>(<span class="summary-sig-arg">pImage</span>)</span></td>
+          <td><span class="summary-sig"><a href="xformslib.library-module.html#flimage_free_rgb" class="summary-sig-name">flimage_free_rgb</a>(<span class="summary-sig-arg">pImage</span>)</span></td>
           <td align="right" valign="top">
             <span class="codelink"><a href="xformslib.library-pysrc.html#flimage_free_rgb">source&nbsp;code</a></span>
             
@@ -20489,7 +20519,7 @@
     </td><td class="summary">
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
-          <td><span class="summary-sig"><a name="flimage_freemem"></a><span class="summary-sig-name">flimage_freemem</span>(<span class="summary-sig-arg">pImage</span>)</span></td>
+          <td><span class="summary-sig"><a href="xformslib.library-module.html#flimage_freemem" class="summary-sig-name">flimage_freemem</a>(<span class="summary-sig-arg">pImage</span>)</span></td>
           <td align="right" valign="top">
             <span class="codelink"><a href="xformslib.library-pysrc.html#flimage_freemem">source&nbsp;code</a></span>
             
@@ -20505,7 +20535,7 @@
     </td><td class="summary">
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
-          <td><span class="summary-sig"><a name="flimage_get_closest_color_from_map"></a><span class="summary-sig-name">flimage_get_closest_color_from_map</span>(<span class="summary-sig-arg">pImage</span>,
+          <td><span class="summary-sig"><a href="xformslib.library-module.html#flimage_get_closest_color_from_map" class="summary-sig-name">flimage_get_closest_color_from_map</a>(<span class="summary-sig-arg">pImage</span>,
         <span class="summary-sig-arg">p2</span>)</span></td>
           <td align="right" valign="top">
             <span class="codelink"><a href="xformslib.library-pysrc.html#flimage_get_closest_color_from_map">source&nbsp;code</a></span>
@@ -20522,7 +20552,7 @@
     </td><td class="summary">
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
-          <td><span class="summary-sig"><a name="flimage_get_linearlut"></a><span class="summary-sig-name">flimage_get_linearlut</span>(<span class="summary-sig-arg">pImage</span>)</span></td>
+          <td><span class="summary-sig"><a href="xformslib.library-module.html#flimage_get_linearlut" class="summary-sig-name">flimage_get_linearlut</a>(<span class="summary-sig-arg">pImage</span>)</span></td>
           <td align="right" valign="top">
             <span class="codelink"><a href="xformslib.library-pysrc.html#flimage_get_linearlut">source&nbsp;code</a></span>
             
@@ -20538,7 +20568,7 @@
     </td><td class="summary">
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
-          <td><span class="summary-sig"><a name="flimage_invalidate_pixels"></a><span class="summary-sig-name">flimage_invalidate_pixels</span>(<span class="summary-sig-arg">pImage</span>)</span></td>
+          <td><span class="summary-sig"><a href="xformslib.library-module.html#flimage_invalidate_pixels" class="summary-sig-name">flimage_invalidate_pixels</a>(<span class="summary-sig-arg">pImage</span>)</span></td>
           <td align="right" valign="top">
             <span class="codelink"><a href="xformslib.library-pysrc.html#flimage_invalidate_pixels">source&nbsp;code</a></span>
             
@@ -20554,7 +20584,7 @@
     </td><td class="summary">
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
-          <td><span class="summary-sig"><a name="flimage_open"></a><span class="summary-sig-name">flimage_open</span>(<span class="summary-sig-arg">filename</span>)</span></td>
+          <td><span class="summary-sig"><a href="xformslib.library-module.html#flimage_open" class="summary-sig-name">flimage_open</a>(<span class="summary-sig-arg">filename</span>)</span></td>
           <td align="right" valign="top">
             <span class="codelink"><a href="xformslib.library-pysrc.html#flimage_open">source&nbsp;code</a></span>
             
@@ -20570,7 +20600,7 @@
     </td><td class="summary">
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
-          <td><span class="summary-sig"><a name="flimage_read_annotation"></a><span class="summary-sig-name">flimage_read_annotation</span>(<span class="summary-sig-arg">pImage</span>)</span></td>
+          <td><span class="summary-sig"><a href="xformslib.library-module.html#flimage_read_annotation" class="summary-sig-name">flimage_read_annotation</a>(<span class="summary-sig-arg">pImage</span>)</span></td>
           <td align="right" valign="top">
             <span class="codelink"><a href="xformslib.library-pysrc.html#flimage_read_annotation">source&nbsp;code</a></span>
             
@@ -20586,7 +20616,7 @@
     </td><td class="summary">
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
-          <td><span class="summary-sig"><a name="flimage_replace_image"></a><span class="summary-sig-name">flimage_replace_image</span>(<span class="summary-sig-arg">pImage</span>,
+          <td><span class="summary-sig"><a href="xformslib.library-module.html#flimage_replace_image" class="summary-sig-name">flimage_replace_image</a>(<span class="summary-sig-arg">pImage</span>,
         <span class="summary-sig-arg">w</span>,
         <span class="summary-sig-arg">h</span>,
         <span class="summary-sig-arg">r</span>,
@@ -20607,7 +20637,7 @@
     </td><td class="summary">
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
-          <td><span class="summary-sig"><a name="flimage_swapbuffer"></a><span class="summary-sig-name">flimage_swapbuffer</span>(<span class="summary-sig-arg">pImage</span>)</span></td>
+          <td><span class="summary-sig"><a href="xformslib.library-module.html#flimage_swapbuffer" class="summary-sig-name">flimage_swapbuffer</a>(<span class="summary-sig-arg">pImage</span>)</span></td>
           <td align="right" valign="top">
             <span class="codelink"><a href="xformslib.library-pysrc.html#flimage_swapbuffer">source&nbsp;code</a></span>
             
@@ -20623,7 +20653,7 @@
     </td><td class="summary">
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
-          <td><span class="summary-sig"><a name="flimage_to_ximage"></a><span class="summary-sig-name">flimage_to_ximage</span>(<span class="summary-sig-arg">pImage</span>,
+          <td><span class="summary-sig"><a href="xformslib.library-module.html#flimage_to_ximage" class="summary-sig-name">flimage_to_ximage</a>(<span class="summary-sig-arg">pImage</span>,
         <span class="summary-sig-arg">win</span>,
         <span class="summary-sig-arg">pXWindowAttributes</span>)</span></td>
           <td align="right" valign="top">
@@ -20641,7 +20671,7 @@
     </td><td class="summary">
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
-          <td><span class="summary-sig"><a name="flimage_write_annotation"></a><span class="summary-sig-name">flimage_write_annotation</span>(<span class="summary-sig-arg">pImage</span>)</span></td>
+          <td><span class="summary-sig"><a href="xformslib.library-module.html#flimage_write_annotation" class="summary-sig-name">flimage_write_annotation</a>(<span class="summary-sig-arg">pImage</span>)</span></td>
           <td align="right" valign="top">
             <span class="codelink"><a href="xformslib.library-pysrc.html#flimage_write_annotation">source&nbsp;code</a></span>
             
@@ -21073,7 +21103,7 @@
     </td><td class="summary">
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
-          <td><span class="summary-sig"><a name="flps_lines"></a><span class="summary-sig-name">flps_lines</span>(<span class="summary-sig-arg">pPoint</span>,
+          <td><span class="summary-sig"><a href="xformslib.library-module.html#flps_lines" class="summary-sig-name">flps_lines</a>(<span class="summary-sig-arg">pPoint</span>,
         <span class="summary-sig-arg">num</span>,
         <span class="summary-sig-arg">colr</span>)</span></td>
           <td align="right" valign="top">
@@ -21430,7 +21460,7 @@
       <span class="summary-type">&nbsp;</span>
     </td><td class="summary">
         <a href="xformslib.library-module.html#loaded_xlibraries" class="summary-name">loaded_xlibraries</a> = <code title="{'libflimage': None,
- 'libforms': &lt;CDLL 'libforms.so.2', handle 2038e40 at 1fcf310&gt;,
+ 'libforms': &lt;CDLL 'libforms.so.2', handle 2134760 at 88f3d0&gt;,
  'libformsgl': None,
  'libx11': None}"><code class="variable-group">{</code><code class="variable-quote">'</code><code class="variable-string">libflimage</code><code class="variable-quote">'</code><code class="variable-op">: </code>None<code class="variable-op">, </code><code class="variable-quote">'</code><code class="variable-string">libforms</code><code class="variable-quote">'</code><code class="variable-op">: </code>&lt;CDLL 'li<code class="variable-ellipsis">...</code></code>
     </td>
@@ -21510,6 +21540,13 @@
       <span class="summary-type">&nbsp;</span>
     </td><td class="summary">
         <a name="fl_ul_magic_char"></a><span class="summary-name">fl_ul_magic_char</span> = <code title="c_char_p(None)">c_char_p(None)</code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="xformslib.library-module.html#FLIMAGETYPE_list" class="summary-name">FLIMAGETYPE_list</a> = <code title="[0, 1, 2, 4, 8, 16, 32, 64, 1023, 0, 1, 2, 4, 8, 16, 32, 64, 1023]"><code class="variable-group">[</code>0<code class="variable-op">, </code>1<code class="variable-op">, </code>2<code class="variable-op">, </code>4<code class="variable-op">, </code>8<code class="variable-op">, </code>16<code class="variable-op">, </code>32<code class="variable-op">, </code>64<code class="variable-op">, </code>1023<code class="variable-op">, </code>0<code class="variable-op">, </code>1<code class="variable-op">, </code>2<code class="variable-op">, </code><code class="variable-ellipsis">...</code></code>
     </td>
   </tr>
 <tr>
@@ -22486,13 +22523,13 @@
     </td>
   </tr></table>
   
-  
+  <p>Returns event compress mask for form.</p>
   <dl class="fields">
     <dt>Parameters:</dt>
     <dd><ul class="nomargin-top">
-        <li><strong class="pname"><code>pForm</code></strong> - pointer to form @returns : compress mask for form</li>
+        <li><strong class="pname"><code>pForm</code></strong> - pointer to form</li>
     </ul></dd>
-    <dt>Returns: cmask ID</dt>
+    <dt>Returns: compress mask ID</dt>
   </dl>
 </td></tr></table>
 </div>
@@ -23815,6 +23852,55 @@
   </dl>
 </td></tr></table>
 </div>
+<a name="fl_set_object_dblclick"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">fl_set_object_dblclick</span>(<span class="sig-arg">pObject</span>,
+        <span class="sig-arg">timeout</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="xformslib.library-pysrc.html#fl_set_object_dblclick">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Sets double click timeout value of an object.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>pObject</code></strong> - pointer to object</li>
+        <li><strong class="pname"><code>timeout</code></strong> - timeout value for double click</li>
+    </ul></dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="fl_get_object_dblclick"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">fl_get_object_dblclick</span>(<span class="sig-arg">pObject</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="xformslib.library-pysrc.html#fl_get_object_dblclick">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Return double click timeout value of an object.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>pObject</code></strong> - pointer to object</li>
+    </ul></dd>
+    <dt>Returns: timeout value</dt>
+  </dl>
+</td></tr></table>
+</div>
 <a name="fl_set_object_geometry"></a>
 <div>
 <table class="details" border="1" cellpadding="3"
@@ -24456,7 +24542,7 @@
     </td>
   </tr></table>
   
-  
+  <p>Returns if object is active and reacts to event.</p>
   <dl class="fields">
     <dt>Parameters:</dt>
     <dd><ul class="nomargin-top">
@@ -25125,7 +25211,7 @@
     </td>
   </tr></table>
   
-  
+  <p>Moves a window to a new position.</p>
   <dl class="fields">
     <dt>Parameters:</dt>
     <dd><ul class="nomargin-top">
@@ -25185,6 +25271,30 @@
         <li><strong class="pname"><code>win</code></strong> - window</li>
         <li><strong class="pname"><code>bkcolr</code></strong> - background color to be set</li>
     </ul></dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="fl_winisvalid"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">fl_winisvalid</span>(<span class="sig-arg">win</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="xformslib.library-pysrc.html#fl_winisvalid">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Returns if a window is a valid one.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>win</code></strong> - window to evaluate</li>
+    </ul></dd>
+    <dt>Returns: num</dt>
   </dl>
 </td></tr></table>
 </div>
@@ -25330,7 +25440,7 @@
   </tr></table>
   
   <p>Sets a constraint for a resizable window whose size will be within a 
-  range not less than minumum (before calling fl_winopen).</p>
+  range not less than minumum (to be used before calling fl_winopen).</p>
   <dl class="fields">
     <dt>Parameters:</dt>
     <dd><ul class="nomargin-top">
@@ -25602,7 +25712,7 @@
     </td>
   </tr></table>
   
-  
+  <p>Returns geometry (position and size) of a window.</p>
   <dl class="fields">
     <dt>Parameters:</dt>
     <dd><ul class="nomargin-top">
@@ -25650,7 +25760,7 @@
     </td>
   </tr></table>
   
-  
+  <p>Returns geometry (position and size) of a window.</p>
   <dl class="fields">
     <dt>Parameters:</dt>
     <dd><ul class="nomargin-top">
@@ -31770,6 +31880,599 @@
   </dl>
 </td></tr></table>
 </div>
+<a name="flimage_setup"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">flimage_setup</span>(<span class="sig-arg">pImageSetup</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="xformslib.library-pysrc.html#flimage_setup">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>pImageSetup</code></strong> - pointer to imagesetup struct</li>
+    </ul></dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="flimage_load"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">flimage_load</span>(<span class="sig-arg">filename</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="xformslib.library-pysrc.html#flimage_load">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>filename</code></strong> - name of file to load</li>
+    </ul></dd>
+    <dt>Returns: pImage</dt>
+  </dl>
+</td></tr></table>
+</div>
+<a name="flimage_read"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">flimage_read</span>(<span class="sig-arg">pImage</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="xformslib.library-pysrc.html#flimage_read">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>pImage</code></strong> - pointer to image</li>
+    </ul></dd>
+    <dt>Returns: pImage</dt>
+  </dl>
+</td></tr></table>
+</div>
+<a name="flimage_dump"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">flimage_dump</span>(<span class="sig-arg">pImage</span>,
+        <span class="sig-arg">p2</span>,
+        <span class="sig-arg">p3</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="xformslib.library-pysrc.html#flimage_dump">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>pImage</code></strong> - pointer to image</li>
+    </ul></dd>
+    <dt>Returns: num</dt>
+  </dl>
+</td></tr></table>
+</div>
+<a name="flimage_close"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">flimage_close</span>(<span class="sig-arg">pImage</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="xformslib.library-pysrc.html#flimage_close">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>pImage</code></strong> - pointer to image</li>
+    </ul></dd>
+    <dt>Returns: num</dt>
+  </dl>
+</td></tr></table>
+</div>
+<a name="flimage_getmem"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">flimage_getmem</span>(<span class="sig-arg">pImage</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="xformslib.library-pysrc.html#flimage_getmem">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>pImage</code></strong> - pointer to image</li>
+    </ul></dd>
+    <dt>Returns: num</dt>
+  </dl>
+</td></tr></table>
+</div>
+<a name="flimage_is_supported"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">flimage_is_supported</span>(<span class="sig-arg">fname</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="xformslib.library-pysrc.html#flimage_is_supported">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>fname</code></strong> - filename</li>
+    </ul></dd>
+    <dt>Returns: num</dt>
+  </dl>
+</td></tr></table>
+</div>
+<a name="flimage_description_via_filter"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">flimage_description_via_filter</span>(<span class="sig-arg">pImage</span>,
+        <span class="sig-arg">p2</span>,
+        <span class="sig-arg">p3</span>,
+        <span class="sig-arg">p4</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="xformslib.library-pysrc.html#flimage_description_via_filter">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>pImage</code></strong> - pointer to image</li>
+    </ul></dd>
+    <dt>Returns: num</dt>
+  </dl>
+</td></tr></table>
+</div>
+<a name="flimage_write_via_filter"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">flimage_write_via_filter</span>(<span class="sig-arg">pImage</span>,
+        <span class="sig-arg">p2</span>,
+        <span class="sig-arg">p3</span>,
+        <span class="sig-arg">p4</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="xformslib.library-pysrc.html#flimage_write_via_filter">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>pImage</code></strong> - pointer to image</li>
+    </ul></dd>
+    <dt>Returns: num</dt>
+  </dl>
+</td></tr></table>
+</div>
+<a name="flimage_free"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">flimage_free</span>(<span class="sig-arg">pImage</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="xformslib.library-pysrc.html#flimage_free">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>pImage</code></strong> - pointer to image</li>
+    </ul></dd>
+    <dt>Returns: num</dt>
+  </dl>
+</td></tr></table>
+</div>
+<a name="flimage_display"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">flimage_display</span>(<span class="sig-arg">pImage</span>,
+        <span class="sig-arg">win</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="xformslib.library-pysrc.html#flimage_display">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>pImage</code></strong> - pointer to image</li>
+        <li><strong class="pname"><code>win</code></strong> - window</li>
+    </ul></dd>
+    <dt>Returns: num</dt>
+  </dl>
+</td></tr></table>
+</div>
+<a name="flimage_sdisplay"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">flimage_sdisplay</span>(<span class="sig-arg">pImage</span>,
+        <span class="sig-arg">win</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="xformslib.library-pysrc.html#flimage_sdisplay">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>pImage</code></strong> - pointer to image</li>
+        <li><strong class="pname"><code>win</code></strong> - window</li>
+    </ul></dd>
+    <dt>Returns: num</dt>
+  </dl>
+</td></tr></table>
+</div>
+<a name="flimage_convert"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">flimage_convert</span>(<span class="sig-arg">pImage</span>,
+        <span class="sig-arg">newtype</span>,
+        <span class="sig-arg">ncolors</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="xformslib.library-pysrc.html#flimage_convert">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Convert an image to a new type.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>pImage</code></strong> - pointer to image</li>
+        <li><strong class="pname"><code>newtype</code></strong> - new type of flimage to convert to</li>
+        <li><strong class="pname"><code>ncolors</code></strong> - number of colors</li>
+    </ul></dd>
+    <dt>Returns: num</dt>
+  </dl>
+</td></tr></table>
+</div>
+<a name="flimage_type_name"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">flimage_type_name</span>(<span class="sig-arg">flimagetype</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="xformslib.library-pysrc.html#flimage_type_name">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>flimagetype</code></strong> - type of flimage</li>
+    </ul></dd>
+    <dt>Returns: name string</dt>
+  </dl>
+</td></tr></table>
+</div>
+<a name="flimage_add_text"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">flimage_add_text</span>(<span class="sig-arg">pImage</span>,
+        <span class="sig-arg">text</span>,
+        <span class="sig-arg">length</span>,
+        <span class="sig-arg">style</span>,
+        <span class="sig-arg">size</span>,
+        <span class="sig-arg">txtcolr</span>,
+        <span class="sig-arg">bgcolr</span>,
+        <span class="sig-arg">tran</span>,
+        <span class="sig-arg">tx</span>,
+        <span class="sig-arg">ty</span>,
+        <span class="sig-arg">rot</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="xformslib.library-pysrc.html#flimage_add_text">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>pImage</code></strong> - pointer to image</li>
+    </ul></dd>
+    <dt>Returns: num</dt>
+  </dl>
+</td></tr></table>
+</div>
+<a name="flimage_add_text_struct"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">flimage_add_text_struct</span>(<span class="sig-arg">pImage</span>,
+        <span class="sig-arg">pImageText</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="xformslib.library-pysrc.html#flimage_add_text_struct">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>pImage</code></strong> - pointer to image</li>
+    </ul></dd>
+    <dt>Returns: num</dt>
+  </dl>
+</td></tr></table>
+</div>
+<a name="flimage_delete_all_text"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">flimage_delete_all_text</span>(<span class="sig-arg">pImage</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="xformslib.library-pysrc.html#flimage_delete_all_text">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>pImage</code></strong> - pointer to image</li>
+    </ul></dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="flimage_add_marker"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">flimage_add_marker</span>(<span class="sig-arg">pImage</span>,
+        <span class="sig-arg">text</span>,
+        <span class="sig-arg">p3</span>,
+        <span class="sig-arg">p4</span>,
+        <span class="sig-arg">p5</span>,
+        <span class="sig-arg">p6</span>,
+        <span class="sig-arg">p7</span>,
+        <span class="sig-arg">p8</span>,
+        <span class="sig-arg">p9</span>,
+        <span class="sig-arg">p10</span>,
+        <span class="sig-arg">p11</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="xformslib.library-pysrc.html#flimage_add_marker">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>pImage</code></strong> - pointer to image</li>
+    </ul></dd>
+    <dt>Returns: num</dt>
+  </dl>
+</td></tr></table>
+</div>
+<a name="flimage_add_marker_struct"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">flimage_add_marker_struct</span>(<span class="sig-arg">pImage</span>,
+        <span class="sig-arg">pImageMarker</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="xformslib.library-pysrc.html#flimage_add_marker_struct">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>pImage</code></strong> - pointer to image</li>
+    </ul></dd>
+    <dt>Returns: num</dt>
+  </dl>
+</td></tr></table>
+</div>
+<a name="flimage_delete_all_markers"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">flimage_delete_all_markers</span>(<span class="sig-arg">pImage</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="xformslib.library-pysrc.html#flimage_delete_all_markers">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>pImage</code></strong> - pointer to image</li>
+    </ul></dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="flimage_render_annotation"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">flimage_render_annotation</span>(<span class="sig-arg">pImage</span>,
+        <span class="sig-arg">win</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="xformslib.library-pysrc.html#flimage_render_annotation">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>pImage</code></strong> - pointer to image</li>
+        <li><strong class="pname"><code>win</code></strong> - window</li>
+    </ul></dd>
+    <dt>Returns: num</dt>
+  </dl>
+</td></tr></table>
+</div>
+<a name="flimage_error"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">flimage_error</span>(<span class="sig-arg">pImage</span>,
+        <span class="sig-arg">text</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="xformslib.library-pysrc.html#flimage_error">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>pImage</code></strong> - pointer to image</li>
+    </ul></dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="fl_get_matrix"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">fl_get_matrix</span>(<span class="sig-arg">nrows</span>,
+        <span class="sig-arg">ncols</span>,
+        <span class="sig-arg">esize</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="xformslib.library-pysrc.html#fl_get_matrix">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>nrows</code></strong> - number of rows</li>
+        <li><strong class="pname"><code>ncols</code></strong> - number of columns</li>
+        <li><strong class="pname"><code>esize</code></strong> - size of matrix</li>
+    </ul></dd>
+    <dt>Returns: ?</dt>
+  </dl>
+</td></tr></table>
+</div>
 <a name="fl_make_matrix"></a>
 <div>
 <table class="details" border="1" cellpadding="3"
@@ -31797,6 +32500,991 @@
         <li><strong class="pname"><code>mem</code></strong> - memory</li>
     </ul></dd>
     <dt>Returns: ?</dt>
+  </dl>
+</td></tr></table>
+</div>
+<a name="flimage_getcolormap"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">flimage_getcolormap</span>(<span class="sig-arg">pImage</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="xformslib.library-pysrc.html#flimage_getcolormap">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>pImage</code></strong> - pointer to image</li>
+    </ul></dd>
+    <dt>Returns: num</dt>
+  </dl>
+</td></tr></table>
+</div>
+<a name="flimage_convolve"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">flimage_convolve</span>(<span class="sig-arg">pImage</span>,
+        <span class="sig-arg">p2</span>,
+        <span class="sig-arg">p3</span>,
+        <span class="sig-arg">p4</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="xformslib.library-pysrc.html#flimage_convolve">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>pImage</code></strong> - pointer to image</li>
+    </ul></dd>
+    <dt>Returns: num</dt>
+  </dl>
+</td></tr></table>
+</div>
+<a name="flimage_convolvea"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">flimage_convolvea</span>(<span class="sig-arg">pImage</span>,
+        <span class="sig-arg">p2</span>,
+        <span class="sig-arg">p3</span>,
+        <span class="sig-arg">p4</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="xformslib.library-pysrc.html#flimage_convolvea">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>pImage</code></strong> - pointer to image</li>
+    </ul></dd>
+    <dt>Returns: num</dt>
+  </dl>
+</td></tr></table>
+</div>
+<a name="flimage_tint"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">flimage_tint</span>(<span class="sig-arg">pImage</span>,
+        <span class="sig-arg">p2</span>,
+        <span class="sig-arg">p3</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="xformslib.library-pysrc.html#flimage_tint">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>pImage</code></strong> - pointer to image</li>
+    </ul></dd>
+    <dt>Returns: num</dt>
+  </dl>
+</td></tr></table>
+</div>
+<a name="flimage_rotate"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">flimage_rotate</span>(<span class="sig-arg">pImage</span>,
+        <span class="sig-arg">p2</span>,
+        <span class="sig-arg">p3</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="xformslib.library-pysrc.html#flimage_rotate">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>pImage</code></strong> - pointer to image</li>
+    </ul></dd>
+    <dt>Returns: num</dt>
+  </dl>
+</td></tr></table>
+</div>
+<a name="flimage_flip"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">flimage_flip</span>(<span class="sig-arg">pImage</span>,
+        <span class="sig-arg">p2</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="xformslib.library-pysrc.html#flimage_flip">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>pImage</code></strong> - pointer to image</li>
+    </ul></dd>
+    <dt>Returns: num</dt>
+  </dl>
+</td></tr></table>
+</div>
+<a name="flimage_scale"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">flimage_scale</span>(<span class="sig-arg">pImage</span>,
+        <span class="sig-arg">p2</span>,
+        <span class="sig-arg">p3</span>,
+        <span class="sig-arg">p4</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="xformslib.library-pysrc.html#flimage_scale">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>pImage</code></strong> - pointer to image</li>
+    </ul></dd>
+    <dt>Returns: num</dt>
+  </dl>
+</td></tr></table>
+</div>
+<a name="flimage_warp"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">flimage_warp</span>(<span class="sig-arg">pImage</span>,
+        <span class="sig-arg">p2</span>,
+        <span class="sig-arg">p3</span>,
+        <span class="sig-arg">p4</span>,
+        <span class="sig-arg">p5</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="xformslib.library-pysrc.html#flimage_warp">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>pImage</code></strong> - pointer to image</li>
+    </ul></dd>
+    <dt>Returns: num</dt>
+  </dl>
+</td></tr></table>
+</div>
+<a name="flimage_autocrop"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">flimage_autocrop</span>(<span class="sig-arg">pImage</span>,
+        <span class="sig-arg">p2</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="xformslib.library-pysrc.html#flimage_autocrop">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>pImage</code></strong> - pointer to image</li>
+    </ul></dd>
+    <dt>Returns: num</dt>
+  </dl>
+</td></tr></table>
+</div>
+<a name="flimage_get_autocrop"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">flimage_get_autocrop</span>(<span class="sig-arg">pImage</span>,
+        <span class="sig-arg">bk</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="xformslib.library-pysrc.html#flimage_get_autocrop">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>pImage</code></strong> - pointer to image</li>
+    </ul></dd>
+    <dt>Returns: num., xl, yt, xr, yb</dt>
+  </dl>
+</td></tr></table>
+</div>
+<a name="flimage_crop"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">flimage_crop</span>(<span class="sig-arg">pImage</span>,
+        <span class="sig-arg">p2</span>,
+        <span class="sig-arg">p3</span>,
+        <span class="sig-arg">p4</span>,
+        <span class="sig-arg">p5</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="xformslib.library-pysrc.html#flimage_crop">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>pImage</code></strong> - pointer to image</li>
+    </ul></dd>
+    <dt>Returns: num</dt>
+  </dl>
+</td></tr></table>
+</div>
+<a name="flimage_replace_pixel"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">flimage_replace_pixel</span>(<span class="sig-arg">pImage</span>,
+        <span class="sig-arg">p2</span>,
+        <span class="sig-arg">p3</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="xformslib.library-pysrc.html#flimage_replace_pixel">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>pImage</code></strong> - pointer to image</li>
+    </ul></dd>
+    <dt>Returns: num</dt>
+  </dl>
+</td></tr></table>
+</div>
+<a name="flimage_transform_pixels"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">flimage_transform_pixels</span>(<span class="sig-arg">pImage</span>,
+        <span class="sig-arg">red</span>,
+        <span class="sig-arg">green</span>,
+        <span class="sig-arg">blue</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="xformslib.library-pysrc.html#flimage_transform_pixels">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>pImage</code></strong> - pointer to image</li>
+    </ul></dd>
+    <dt>Returns: num</dt>
+  </dl>
+</td></tr></table>
+</div>
+<a name="flimage_windowlevel"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">flimage_windowlevel</span>(<span class="sig-arg">pImage</span>,
+        <span class="sig-arg">p2</span>,
+        <span class="sig-arg">p3</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="xformslib.library-pysrc.html#flimage_windowlevel">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>pImage</code></strong> - pointer to image</li>
+    </ul></dd>
+    <dt>Returns: num</dt>
+  </dl>
+</td></tr></table>
+</div>
+<a name="flimage_enhance"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">flimage_enhance</span>(<span class="sig-arg">pImage</span>,
+        <span class="sig-arg">p2</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="xformslib.library-pysrc.html#flimage_enhance">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>pImage</code></strong> - pointer to image</li>
+    </ul></dd>
+    <dt>Returns: num</dt>
+  </dl>
+</td></tr></table>
+</div>
+<a name="flimage_from_pixmap"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">flimage_from_pixmap</span>(<span class="sig-arg">pImage</span>,
+        <span class="sig-arg">pixmap</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="xformslib.library-pysrc.html#flimage_from_pixmap">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>pImage</code></strong> - pointer to image</li>
+        <li><strong class="pname"><code>pixmap</code></strong> - pixmap value</li>
+    </ul></dd>
+    <dt>Returns: num</dt>
+  </dl>
+</td></tr></table>
+</div>
+<a name="flimage_to_pixmap"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">flimage_to_pixmap</span>(<span class="sig-arg">pImage</span>,
+        <span class="sig-arg">win</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="xformslib.library-pysrc.html#flimage_to_pixmap">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>pImage</code></strong> - pointer to image</li>
+        <li><strong class="pname"><code>win</code></strong> - window id</li>
+    </ul></dd>
+    <dt>Returns: pixmap</dt>
+  </dl>
+</td></tr></table>
+</div>
+<a name="flimage_dup"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">flimage_dup</span>(<span class="sig-arg">pImage</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="xformslib.library-pysrc.html#flimage_dup">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>pImage</code></strong> - pointer to image</li>
+    </ul></dd>
+    <dt>Returns: pImage</dt>
+  </dl>
+</td></tr></table>
+</div>
+<a name="fl_value_to_bits"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">fl_value_to_bits</span>(<span class="sig-arg">val</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="xformslib.library-pysrc.html#fl_value_to_bits">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>val</code></strong> - value to convert to bits</li>
+    </ul></dd>
+    <dt>Returns: num</dt>
+  </dl>
+</td></tr></table>
+</div>
+<a name="flimage_add_comments"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">flimage_add_comments</span>(<span class="sig-arg">pImage</span>,
+        <span class="sig-arg">p2</span>,
+        <span class="sig-arg">p3</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="xformslib.library-pysrc.html#flimage_add_comments">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>pImage</code></strong> - pointer to image</li>
+    </ul></dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="flimage_color_to_pixel"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">flimage_color_to_pixel</span>(<span class="sig-arg">pImage</span>,
+        <span class="sig-arg">p2</span>,
+        <span class="sig-arg">p3</span>,
+        <span class="sig-arg">p4</span>,
+        <span class="sig-arg">p5</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="xformslib.library-pysrc.html#flimage_color_to_pixel">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>pImage</code></strong> - pointer to image</li>
+    </ul></dd>
+    <dt>Returns: num</dt>
+  </dl>
+</td></tr></table>
+</div>
+<a name="flimage_combine"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">flimage_combine</span>(<span class="sig-arg">pImage1</span>,
+        <span class="sig-arg">pImage2</span>,
+        <span class="sig-arg">alpha</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="xformslib.library-pysrc.html#flimage_combine">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>pImage1</code></strong> - pointer to first image to combine</li>
+        <li><strong class="pname"><code>pImage2</code></strong> - pointer to second image to combine</li>
+        <li><strong class="pname"><code>alpha</code></strong> - alpha level?</li>
+    </ul></dd>
+    <dt>Returns: pImage</dt>
+  </dl>
+</td></tr></table>
+</div>
+<a name="flimage_display_markers"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">flimage_display_markers</span>(<span class="sig-arg">pImage</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="xformslib.library-pysrc.html#flimage_display_markers">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>pImage</code></strong> - pointer to image</li>
+    </ul></dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="flimage_dup_"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">flimage_dup_</span>(<span class="sig-arg">pImage</span>,
+        <span class="sig-arg">p2</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="xformslib.library-pysrc.html#flimage_dup_">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>pImage</code></strong> - pointer to image</li>
+    </ul></dd>
+    <dt>Returns: pImage</dt>
+  </dl>
+</td></tr></table>
+</div>
+<a name="flimage_free_ci"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">flimage_free_ci</span>(<span class="sig-arg">pImage</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="xformslib.library-pysrc.html#flimage_free_ci">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>pImage</code></strong> - pointer to image</li>
+    </ul></dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="flimage_free_gray"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">flimage_free_gray</span>(<span class="sig-arg">pImage</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="xformslib.library-pysrc.html#flimage_free_gray">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>pImage</code></strong> - pointer to image</li>
+    </ul></dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="flimage_free_linearlut"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">flimage_free_linearlut</span>(<span class="sig-arg">pImage</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="xformslib.library-pysrc.html#flimage_free_linearlut">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>pImage</code></strong> - pointer to image</li>
+    </ul></dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="flimage_free_rgb"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">flimage_free_rgb</span>(<span class="sig-arg">pImage</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="xformslib.library-pysrc.html#flimage_free_rgb">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>pImage</code></strong> - pointer to image</li>
+    </ul></dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="flimage_freemem"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">flimage_freemem</span>(<span class="sig-arg">pImage</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="xformslib.library-pysrc.html#flimage_freemem">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>pImage</code></strong> - pointer to image</li>
+    </ul></dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="flimage_get_closest_color_from_map"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">flimage_get_closest_color_from_map</span>(<span class="sig-arg">pImage</span>,
+        <span class="sig-arg">p2</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="xformslib.library-pysrc.html#flimage_get_closest_color_from_map">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>pImage</code></strong> - pointer to image</li>
+    </ul></dd>
+    <dt>Returns: num</dt>
+  </dl>
+</td></tr></table>
+</div>
+<a name="flimage_get_linearlut"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">flimage_get_linearlut</span>(<span class="sig-arg">pImage</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="xformslib.library-pysrc.html#flimage_get_linearlut">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>pImage</code></strong> - pointer to image</li>
+    </ul></dd>
+    <dt>Returns: num</dt>
+  </dl>
+</td></tr></table>
+</div>
+<a name="flimage_invalidate_pixels"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">flimage_invalidate_pixels</span>(<span class="sig-arg">pImage</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="xformslib.library-pysrc.html#flimage_invalidate_pixels">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>pImage</code></strong> - pointer to image</li>
+    </ul></dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="flimage_open"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">flimage_open</span>(<span class="sig-arg">filename</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="xformslib.library-pysrc.html#flimage_open">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>filename</code></strong> - name of file to open</li>
+    </ul></dd>
+    <dt>Returns: pImage</dt>
+  </dl>
+</td></tr></table>
+</div>
+<a name="flimage_read_annotation"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">flimage_read_annotation</span>(<span class="sig-arg">pImage</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="xformslib.library-pysrc.html#flimage_read_annotation">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>pImage</code></strong> - pointer to image</li>
+    </ul></dd>
+    <dt>Returns: num</dt>
+  </dl>
+</td></tr></table>
+</div>
+<a name="flimage_replace_image"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">flimage_replace_image</span>(<span class="sig-arg">pImage</span>,
+        <span class="sig-arg">w</span>,
+        <span class="sig-arg">h</span>,
+        <span class="sig-arg">r</span>,
+        <span class="sig-arg">g</span>,
+        <span class="sig-arg">b</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="xformslib.library-pysrc.html#flimage_replace_image">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>pImage</code></strong> - pointer to image</li>
+    </ul></dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="flimage_swapbuffer"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">flimage_swapbuffer</span>(<span class="sig-arg">pImage</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="xformslib.library-pysrc.html#flimage_swapbuffer">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>pImage</code></strong> - pointer to image</li>
+    </ul></dd>
+    <dt>Returns: num</dt>
+  </dl>
+</td></tr></table>
+</div>
+<a name="flimage_to_ximage"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">flimage_to_ximage</span>(<span class="sig-arg">pImage</span>,
+        <span class="sig-arg">win</span>,
+        <span class="sig-arg">pXWindowAttributes</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="xformslib.library-pysrc.html#flimage_to_ximage">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>pImage</code></strong> - pointer to image</li>
+        <li><strong class="pname"><code>win</code></strong> - window id</li>
+        <li><strong class="pname"><code>pXWindowAttributes</code></strong> - pointer to XWindowAttributes struct</li>
+    </ul></dd>
+    <dt>Returns: num</dt>
+  </dl>
+</td></tr></table>
+</div>
+<a name="flimage_write_annotation"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">flimage_write_annotation</span>(<span class="sig-arg">pImage</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="xformslib.library-pysrc.html#flimage_write_annotation">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>pImage</code></strong> - pointer to image</li>
+    </ul></dd>
+    <dt>Returns: num</dt>
+  </dl>
+</td></tr></table>
+</div>
+<a name="flps_lines"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">flps_lines</span>(<span class="sig-arg">pPoint</span>,
+        <span class="sig-arg">num</span>,
+        <span class="sig-arg">colr</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="xformslib.library-pysrc.html#flps_lines">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>pPoint</code></strong> - pointer to point struct</li>
+    </ul></dd>
   </dl>
 </td></tr></table>
 </div>
@@ -31832,7 +33520,7 @@
     <dt>Value:</dt>
       <dd><table><tr><td><pre class="variable">
 <code class="variable-group">{</code><code class="variable-quote">'</code><code class="variable-string">libflimage</code><code class="variable-quote">'</code><code class="variable-op">: </code>None<code class="variable-op">,</code>
- <code class="variable-quote">'</code><code class="variable-string">libforms</code><code class="variable-quote">'</code><code class="variable-op">: </code>&lt;CDLL 'libforms.so.2', handle 2038e40 at 1fcf310&gt;<code class="variable-op">,</code>
+ <code class="variable-quote">'</code><code class="variable-string">libforms</code><code class="variable-quote">'</code><code class="variable-op">: </code>&lt;CDLL 'libforms.so.2', handle 2134760 at 88f3d0&gt;<code class="variable-op">,</code>
  <code class="variable-quote">'</code><code class="variable-string">libformsgl</code><code class="variable-quote">'</code><code class="variable-op">: </code>None<code class="variable-op">,</code>
  <code class="variable-quote">'</code><code class="variable-string">libx11</code><code class="variable-quote">'</code><code class="variable-op">: </code>None<code class="variable-group">}</code>
 </pre></td></tr></table>
@@ -31912,6 +33600,24 @@ cty.POINTER(FL_State).in_dll(load_so_libforms(), 'fl_state')
   </dl>
 </td></tr></table>
 </div>
+<a name="FLIMAGETYPE_list"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <h3 class="epydoc">FLIMAGETYPE_list</h3>
+  
+  <dl class="fields">
+  </dl>
+  <dl class="fields">
+    <dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+<code class="variable-group">[</code>0<code class="variable-op">, </code>1<code class="variable-op">, </code>2<code class="variable-op">, </code>4<code class="variable-op">, </code>8<code class="variable-op">, </code>16<code class="variable-op">, </code>32<code class="variable-op">, </code>64<code class="variable-op">, </code>1023<code class="variable-op">, </code>0<code class="variable-op">, </code>1<code class="variable-op">, </code>2<code class="variable-op">, </code>4<code class="variable-op">, </code>8<code class="variable-op">, </code>16<code class="variable-op">, </code>32<code class="variable-op">, </code>64<code class="variable-op">, </code>1023<code class="variable-group">]</code>
+</pre></td></tr></table>
+</dd>
+  </dl>
+</td></tr></table>
+</div>
 <br />
 <!-- ==================== NAVIGATION BAR ==================== -->
 <table class="navbar" border="0" width="100%" cellpadding="0"
@@ -31930,13 +33636,18 @@ cty.POINTER(FL_State).in_dll(load_so_libforms(), 'fl_state')
       <th>&nbsp;&nbsp;&nbsp;<a
         href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
 
-      <th class="navbar" width="100%"></th>
+  <!-- Project homepage -->
+      <th class="navbar" align="right" width="100%">
+        <table border="0" cellpadding="0" cellspacing="0">
+          <tr><th class="navbar" align="center"
+            ><a class="navbar" target="_top" href="http://xforms-python.berlios.de">Project Homepage</a></th>
+          </tr></table></th>
   </tr>
 </table>
 <table border="0" cellpadding="0" cellspacing="0" width="100%%">
   <tr>
     <td align="left" class="footer">
-    Generated by Epydoc 3.0.1 on Tue Dec 29 14:55:01 2009
+    Generated by Epydoc 3.0.1 on Wed Dec 30 00:30:01 2009
     </td>
     <td align="right" class="footer">
       <a target="mainFrame" href="http://epydoc.sourceforge.net"
