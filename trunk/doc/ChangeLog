@@ -1,6 +1,7 @@
 
 
 SVN
+    * Re-sync with upstream XForms adjustments
     * Porting of iconify example (partiually, as some segfault 
     problems prevent a complete porting).
     * some docstrings and bugfixes

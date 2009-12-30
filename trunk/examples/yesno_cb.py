@@ -32,7 +32,7 @@ def main(lsysargv, sysargv):
 
     pform = xf.fl_bgn_form(xfc.FL_UP_BOX, 320, 120)
 
-    xf.fl_add_box(xfc.FL_NO_BOX, 160, 40, 0, 0, "Do you want to Quit?")
+    xf.fl_add_box(xfc.FL_NO_BOX, 80, 20, 160, 40, "Do you want to Quit?")
 
     pobj = xf.fl_add_button(xfc.FL_NORMAL_BUTTON, 40, 70, 80, 30, "Yes")
     xf.fl_set_object_callback(pobj, yes_push, 0)

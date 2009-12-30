@@ -47,7 +47,7 @@ header_filename = "/usr/include/forms.h"
 
 
 def get_xforms_version():
-    """ Return version string of installed XForms library/header
+    """ Returns version string of installed XForms library/header
     """
 
     complete_xf_version = ""
@@ -2111,13 +2111,13 @@ def fl_set_object_return(pObject, when):
 
     _fl_set_object_return = cfuncproto(
             load_so_libforms(), "fl_set_object_return", \
-            cty.c_int, [cty.POINTER(FL_OBJECT), cty.c_int], \
-            """int fl_set_object_return(FL_OBJECT * ob, int when)   DEPRECATED
+            cty.c_int, [cty.POINTER(FL_OBJECT), cty.c_uint], \
+            """int fl_set_object_return(FL_OBJECT * ob, unsigned int when)
             """)
     check_admitted_listvalues(when, RETURN_list)
-    iwhen = convert_to_int(when)
-    keep_elem_refs(pObject, when, iwhen)
-    retval = _fl_set_object_return(pObject, iwhen)
+    uiwhen = convert_to_uint(when)
+    keep_elem_refs(pObject, when, uiwhen)
+    retval = _fl_set_object_return(pObject, uiwhen)
     return retval
 
 
@@ -4327,10 +4327,11 @@ def fl_polygon(fill, pPoint, n, colr):
             """)
     check_admitted_listvalues(colr, COLOR_list)
     ifill = convert_to_int(fill)
+    ppPoint = cty.cast(pPoint, cty.POINTER(FL_POINT))
     inum = convert_to_int(n)
     ulcolr = convert_to_FL_COLOR(colr)
-    keep_elem_refs(fill, pPoint, n, colr, ifill, inum, ulcolr)
-    _fl_polygon(ifill, pPoint, inum, ulcolr)
+    keep_elem_refs(fill, pPoint, n, colr, ifill, ppPoint, inum, ulcolr)
+    _fl_polygon(ifill, ppPoint, inum, ulcolr)
 
 
 def fl_polyf(pPoint, n, colr):
@@ -5774,6 +5775,10 @@ FL_APPEVENT_CB = cty.CFUNCTYPE(cty.c_int, cty.POINTER(XEvent), cty.c_void_p)
 def fl_set_event_callback(py_AppEventCb, userdata):
     """
         fl_set_event_callback(py_AppEventCb, userdata) -> event callback
+
+        @param py_AppEventCb : python function callback, fn(pXEvent,
+           ptr_void) -> num.
+        @param userdata : argument
     """
 
     _fl_set_event_callback = cfuncproto(
@@ -11021,12 +11026,13 @@ def fl_set_counter_return(pObject, how):
 
     _fl_set_counter_return = cfuncproto(
             load_so_libforms(), "fl_set_counter_return",
-            None, [cty.POINTER(FL_OBJECT), cty.c_int],
-            """void fl_set_counter_return(FL_OBJECT * ob, int how)
+            None, [cty.POINTER(FL_OBJECT), cty.c_uint],
+            """void fl_set_counter_return(FL_OBJECT * ob, unsigned
+               int how)
             """)
-    ihow = convert_to_int(how)
-    keep_elem_refs(pObject, how, ihow)
-    _fl_set_counter_return(pObject, ihow)
+    uihow = convert_to_uint(how)
+    keep_elem_refs(pObject, how, uihow)
+    _fl_set_counter_return(pObject, uihow)
 
 
 def fl_get_counter_value(pObject):
@@ -11444,12 +11450,13 @@ def fl_set_dial_return(pObject, value):
 
     _fl_set_dial_return = cfuncproto(
             load_so_libforms(), "fl_set_dial_return",
-            None, [cty.POINTER(FL_OBJECT), cty.c_int],
-            """void fl_set_dial_return(FL_OBJECT * ob, int value)
+            None, [cty.POINTER(FL_OBJECT), cty.c_uint],
+            """void fl_set_dial_return(FL_OBJECT * ob, unsigned
+               int value)
             """)
-    ivalue = convert_to_int(value)
-    keep_elem_refs(pObject, value, ivalue)
-    _fl_set_dial_return(pObject, ivalue)
+    uivalue = convert_to_uint(value)
+    keep_elem_refs(pObject, value, uivalue)
+    _fl_set_dial_return(pObject, uivalue)
 
 
 def fl_set_dial_angles(pObject, angmin, angmax):
@@ -13249,17 +13256,22 @@ def fl_set_input(pObject, inputstr):
 
 
 def fl_set_input_return(pObject, value):
-    """ fl_set_input_return(pObject, value)
+    """
+        fl_set_input_return(pObject, value)
+        
+        @param pObject : pointer to input object
+        @param value : return type
     """
 
     _fl_set_input_return = cfuncproto(
             load_so_libforms(), "fl_set_input_return",
-            None, [cty.POINTER(FL_OBJECT), cty.c_int],
-            """void fl_set_input_return(FL_OBJECT * ob, int value)
+            None, [cty.POINTER(FL_OBJECT), cty.c_uint],
+            """void fl_set_input_return(FL_OBJECT * ob, unsigned
+               int value)
             """)
-    ivalue = convert_to_int(value)
-    keep_elem_refs(pObject, value, ivalue)
-    _fl_set_input_return(pObject, ivalue)
+    uivalue = convert_to_uint(value)
+    keep_elem_refs(pObject, value, uivalue)
+    _fl_set_input_return(pObject, uivalue)
 
 
 def fl_set_input_color(pObject, textcolr, curscolr):
@@ -14544,17 +14556,22 @@ def fl_set_positioner_ystep(pObject, value):
 
 
 def fl_set_positioner_return(pObject, value):
-    """ fl_set_positioner_return(pObject, value)
+    """
+        fl_set_positioner_return(pObject, value)
+        
+        @param pObject : pointer to positioner object
+        @param value : return type
     """
 
     _fl_set_positioner_return = cfuncproto(
             load_so_libforms(), "fl_set_positioner_return",
-            None, [cty.POINTER(FL_OBJECT), cty.c_int],
-            """void fl_set_positioner_return(FL_OBJECT * ob, int value)
+            None, [cty.POINTER(FL_OBJECT), cty.c_uint],
+            """void fl_set_positioner_return(FL_OBJECT * ob, unsigned
+               int value)
             """)
-    ivalue = convert_to_int(value)
-    keep_elem_refs(pObject, value, ivalue)
-    _fl_set_positioner_return(pObject, ivalue)
+    uivalue = convert_to_uint(value)
+    keep_elem_refs(pObject, value, uivalue)
+    _fl_set_positioner_return(pObject, uivalue)
 
 
 def fl_create_scrollbar(scrolltype, x, y, w, h, label):
@@ -14777,13 +14794,14 @@ def fl_set_scrollbar_return(pObject, returnnum):
 
     _fl_set_scrollbar_return = cfuncproto(
             load_so_libforms(), "fl_set_scrollbar_return",
-            None, [cty.POINTER(FL_OBJECT), cty.c_int],
-            """void fl_set_scrollbar_return(FL_OBJECT * ob, int ret)
+            None, [cty.POINTER(FL_OBJECT), cty.c_uint],
+            """void fl_set_scrollbar_return(FL_OBJECT * ob, unsigned 
+               int ret)
             """)
     check_admitted_listvalues(returnnum, RETURN_list)
-    ireturnnum = convert_to_int(returnnum)
-    keep_elem_refs(pObject, returnnum, ireturnnum)
-    _fl_set_scrollbar_return(pObject, ireturnnum)
+    uireturnnum = convert_to_uint(returnnum)
+    keep_elem_refs(pObject, returnnum, uireturnnum)
+    _fl_set_scrollbar_return(pObject, uireturnnum)
 
 
 def fl_set_scrollbar_step(pObject, step):
@@ -15392,13 +15410,14 @@ def fl_set_slider_return(pObject, returnnum):
 
     _fl_set_slider_return = cfuncproto(
             load_so_libforms(), "fl_set_slider_return",
-            None, [cty.POINTER(FL_OBJECT), cty.c_int],
-            """void fl_set_slider_return(FL_OBJECT * ob, int value)
+            None, [cty.POINTER(FL_OBJECT), cty.c_uint],
+            """void fl_set_slider_return(FL_OBJECT * ob, unsigned
+               int value)
             """)
     check_admitted_listvalues(returnnum, RETURN_list)
-    ireturnnum = convert_to_int(returnnum)
-    keep_elem_refs(pObject, returnnum, ireturnnum)
-    _fl_set_slider_return(pObject, ireturnnum)
+    uireturnnum = convert_to_uint(returnnum)
+    keep_elem_refs(pObject, returnnum, uireturnnum)
+    _fl_set_slider_return(pObject, uireturnnum)
 
 
 def fl_set_slider_step(pObject, value):
@@ -16259,17 +16278,19 @@ def fl_set_thumbwheel_return(pObject, when):
         fl_set_thumbwheel_return(pObject, when) -> num.
 
         @param pObject : pointer to object
+        @param when : return type
     """
 
     _fl_set_thumbwheel_return = cfuncproto(
             load_so_libforms(), "fl_set_thumbwheel_return",
-            cty.c_int, [cty.POINTER(FL_OBJECT), cty.c_int],
-            """int fl_set_thumbwheel_return(FL_OBJECT * ob, int how)
+            cty.c_int, [cty.POINTER(FL_OBJECT), cty.c_uint],
+            """int fl_set_thumbwheel_return(FL_OBJECT * ob, unsigned
+               int how)
             """)
     check_admitted_listvalues(when, RETURN_list)
-    iwhen = convert_to_int(when)
-    keep_elem_refs(pObject, when, iwhen)
-    retval = _fl_set_thumbwheel_return(pObject, when)
+    uiwhen = convert_to_uint(when)
+    keep_elem_refs(pObject, when, uiwhen)
+    retval = _fl_set_thumbwheel_return(pObject, uiwhen)
     return retval
 
 
@@ -17400,16 +17421,18 @@ def fl_set_xyplot_return(pObject, when):
         fl_set_xyplot_return(pObject, when)
 
         @param pObject : pointer to object
+        @param when : return type
     """
 
     _fl_set_xyplot_return = cfuncproto(
             load_so_libforms(), "fl_set_xyplot_return",
-            None, [cty.POINTER(FL_OBJECT), cty.c_int],
-            """void fl_set_xyplot_return(FL_OBJECT * ob, int when)
+            None, [cty.POINTER(FL_OBJECT), cty.c_uint],
+            """void fl_set_xyplot_return(FL_OBJECT * ob, unsigned
+               int when)
             """)
-    iwhen = convert_to_int(when)
-    keep_elem_refs(pObject, when, iwhen)
-    _fl_set_xyplot_return(pObject, iwhen)
+    uiwhen = convert_to_uint(when)
+    keep_elem_refs(pObject, when, uiwhen)
+    _fl_set_xyplot_return(pObject, uiwhen)
 
 
 def fl_set_xyplot_xtics(pObject, major, minor):
