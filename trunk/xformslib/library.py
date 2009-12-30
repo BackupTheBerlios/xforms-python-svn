@@ -9379,15 +9379,6 @@ def fl_add_canvas(canvastype, x, y, w, h, label):
 def fl_create_canvas(canvastype, x, y, w, h, label):
     """
         fl_create_canvas(canvastype, x, y, w, h, label) -> pObject
-
-        Creates a canvas object.
-
-        @param canvastype : type of canvas object to be created
-        @param x : horizontal position of canvas (upper-left corner)
-        @param x : vertical position of canvas (upper-left corner)
-        @param w : width of canvas in pixels
-        @param h : height of canvas in pixels
-        @param label : text label of canvas
     """
 
     _fl_create_canvas = cfuncproto(
@@ -9428,8 +9419,12 @@ def fl_set_canvas_colormap(pObject, colormap):
     _fl_set_canvas_colormap(pObject, ulcolormap)
 
 
-def fl_set_canvas_visual(pObject, vi):
-    """ fl_set_canvas_visual(pObject, vi)
+def fl_set_canvas_visual(pObject, pVisual):
+    """
+        fl_set_canvas_visual(pObject, pVisual)
+
+        @param pObject : pointer to canvas object
+        @param pVisual : pointer to Visual
     """
 
     _fl_set_canvas_visual = cfuncproto(
@@ -9437,12 +9432,16 @@ def fl_set_canvas_visual(pObject, vi):
             None, [cty.POINTER(FL_OBJECT), cty.POINTER(Visual)],
             """void fl_set_canvas_visual(FL_OBJECT * obj, Visual * vi)
             """)
-    keep_elem_refs(pObject, vi)
-    _fl_set_canvas_visual(pObject, vi)
+    keep_elem_refs(pObject, pVisual)
+    _fl_set_canvas_visual(pObject, pVisual)
 
 
 def fl_set_canvas_depth(pObject, depth):
-    """ fl_set_canvas_depth(pObject, depth)
+    """
+        fl_set_canvas_depth(pObject, depth)
+
+        @param pObject : pointer to canvas object
+        @param depth : depth value of canvas
     """
 
     _fl_set_canvas_depth = cfuncproto(
@@ -9456,7 +9455,12 @@ def fl_set_canvas_depth(pObject, depth):
 
 
 def fl_set_canvas_attributes(pObject, mask, pXSetWindowAttributes):
-    """ fl_set_canvas_attributes(pObject, mask, pXSetWindowAttributes)
+    """
+        fl_set_canvas_attributes(pObject, mask, pXSetWindowAttributes)
+
+        @param pObject : pointer to canvas object
+        @param mask : mask num.
+        @param pXSetWindowAttributes : pointer to XSetWindowAttributes
     """
 
     _fl_set_canvas_attributes = cfuncproto(
@@ -9475,7 +9479,13 @@ FL_HANDLE_CANVAS = cty.CFUNCTYPE(cty.c_int, cty.POINTER(FL_OBJECT), Window,
             cty.c_int, cty.c_int, cty.POINTER(XEvent), cty.c_void_p)
 
 def fl_add_canvas_handler(pObject, ev, py_HandleCanvas, udata):
-    """ fl_add_canvas_handler(pObject, ev, py_HandleCanvas, udata) -> canvas handler
+    """
+        fl_add_canvas_handler(pObject, ev, py_HandleCanvas, udata) -> canvas handler
+
+        @param pObject : pointer to canvas object
+        @param ev : event number
+        @param py_HandleCanvas : python function, fn(pObject, win, num, num,
+           pXEvent, ptr_void) -> num
     """
 
     _fl_add_canvas_handler = cfuncproto(
@@ -9514,7 +9524,12 @@ def fl_get_canvas_id(pObject):
 
 
 def fl_get_canvas_colormap(pObject):
-    """ fl_get_canvas_colormap(pObject) -> colormap
+    """
+        fl_get_canvas_colormap(pObject) -> colormap
+
+        Returns the colormap of a canas object
+
+        @param pObject : pointer to canvas object
     """
 
     _fl_get_canvas_colormap = cfuncproto(
@@ -9528,7 +9543,12 @@ def fl_get_canvas_colormap(pObject):
 
 
 def fl_get_canvas_depth(pObject):
-    """ fl_get_canvas_depth(pObject) -> depth num.
+    """
+        fl_get_canvas_depth(pObject) -> depth num.
+
+        Returns the depth of a canvas object.
+
+        @param pObject : pointer to canvas object
     """
 
     _fl_get_canvas_depth = cfuncproto(
@@ -9624,7 +9644,6 @@ def fl_modify_canvas_prop(pObject, py_initModifyCanvasProp, \
     """
         fl_modify_canvas_prop(pObject, py_initModifyCanvasProp, \
         py_activateModifyCanvasProp, py_cleanupModifyCanvasProp)
-
     """
 
     _fl_modify_canvas_prop = cfuncproto(
@@ -9675,6 +9694,15 @@ def fl_canvas_yield_to_shortcut(pObject, yes):
 
 def fl_create_glcanvas(canvastype, x, y, w, h, label):
     """ fl_create_glcanvas(canvastype, x, y, w, h, label) -> pObject
+
+        Creates a glcanvas object.
+
+        @param canvastype : type of glcanvas object to be created
+        @param x : horizontal position of glcanvas (upper-left corner)
+        @param x : vertical position of glcanvas (upper-left corner)
+        @param w : width of glcanvas in pixels
+        @param h : height of glcanvas in pixels
+        @param label : text label of glcanvas
     """
 
     _fl_create_glcanvas = cfuncproto(
@@ -9698,7 +9726,17 @@ def fl_create_glcanvas(canvastype, x, y, w, h, label):
 
 
 def fl_add_glcanvas(canvastype, x, y, w, h, label):
-    """ fl_add_glcanvas(canvastype, x, y, w, h, label) -> pObject
+    """
+        fl_add_glcanvas(canvastype, x, y, w, h, label) -> pObject
+
+        Adds a glcanvas object to the form.
+
+        @param canvastype : type of glcanvas object to be added
+        @param x : horizontal position of glcanvas (upper-left corner)
+        @param x : vertical position of glcanvas (upper-left corner)
+        @param w : width of glcanvas in pixels
+        @param h : height of glcanvas in pixels
+        @param label : text label of glcanvas
     """
 
     _fl_add_glcanvas = cfuncproto(
@@ -9722,7 +9760,12 @@ def fl_add_glcanvas(canvastype, x, y, w, h, label):
 
 
 def fl_set_glcanvas_defaults(config):
-    """ fl_set_glcanvas_defaults(config):
+    """
+        fl_set_glcanvas_defaults(config)
+
+        Modifies the global defaults for glcanvas.
+
+        @param config : configuration settings
     """
 
     _fl_set_glcanvas_defaults = cfuncproto(
@@ -9730,13 +9773,17 @@ def fl_set_glcanvas_defaults(config):
             None, [cty.POINTER(cty.c_int)],
             """void fl_set_glcanvas_defaults(const int * config):
             """)
-    #iconfig = convert_to_int(config)
-    keep_elem_refs(config)  #, iconfig)
-    _fl_set_glcanvas_defaults(config)
+    pconfig = cty.cast(config, cty.POINTER(cty.c_int))
+    keep_elem_refs(config, pconfig)
+    _fl_set_glcanvas_defaults(pconfig)
 
 
-def fl_get_glcanvas_defaults(config):
-    """ fl_get_glcanvas_defaults(config):
+#def fl_get_glcanvas_defaults(config)           *API change*
+def fl_get_glcanvas_defaults():
+    """
+        fl_get_glcanvas_defaults() -> configuration settings
+
+        Returns the global defaults for glcanvas.
     """
 
     _fl_get_glcanvas_defaults = cfuncproto(
@@ -9744,13 +9791,21 @@ def fl_get_glcanvas_defaults(config):
             None, [cty.c_int],
             """void fl_get_glcanvas_defaults(int config[ ]):
             """)
-    iconfig = convert_to_int(config)
-    keep_elem_refs(config, iconfig)
-    _fl_get_glcanvas_defaults(iconfig)
+    config, pconfig = make_int_and_pointer()
+    keep_elem_refs(config, pconfig)
+    _fl_get_glcanvas_defaults(pconfig)
+    return config
 
 
 def fl_set_glcanvas_attributes(pObject, config):
-    """ fl_set_glcanvas_attributes(pObject, config)
+    """
+        fl_set_glcanvas_attributes(pObject, config)
+
+        Modifies the default configuration of a particular glcanvas
+        object.
+
+        @param pObject : pointer to glcanvas object
+        @param config : configuration settings to be set
     """
 
     _fl_set_glcanvas_attributes = cfuncproto(
@@ -9759,12 +9814,19 @@ def fl_set_glcanvas_attributes(pObject, config):
             """void fl_set_glcanvas_attributes(FL_OBJECT * ob,
                const int * config)
             """)
-    keep_elem_refs(pObject, config)
-    _fl_set_glcanvas_attributes(pObject, config)
+    pconfig = cty.cast(config, cty.POINTER(cty.c_int))
+    keep_elem_refs(pObject, config, pconfig)
+    _fl_set_glcanvas_attributes(pObject, pconfig)
 
 
-def fl_get_glcanvas_attributes(pObject, attributes):
-    """ fl_get_glcanvas_attributes(pObject, attributes)
+#def fl_get_glcanvas_attributes(pObject, attributes)    *API change*
+def fl_get_glcanvas_attributes(pObject):
+    """
+        fl_get_glcanvas_attributes(pObject) -> attributes
+
+        Returns the attributes of a glcanvas object.
+
+        @param pObject : pointer to glcanvas object
     """
 
     _fl_get_glcanvas_attributes = cfuncproto(
@@ -9773,12 +9835,17 @@ def fl_get_glcanvas_attributes(pObject, attributes):
             """void fl_get_glcanvas_attributes(FL_OBJECT * ob,
                int * attributes)
             """)
-    keep_elem_refs(pObject, attributes)
-    _fl_get_glcanvas_attributes(pObject, attributes)
+    attributes, pattributes = make_int_and_pointer()
+    keep_elem_refs(pObject, attributes, pattributes)
+    _fl_get_glcanvas_attributes(pObject, pattributes)
+    return attributes
 
 
 def fl_set_glcanvas_direct(pObject, direct):
-    """ fl_set_glcanvas_direct(pObject, direct)
+    """
+        fl_set_glcanvas_direct(pObject, direct)
+
+        @param pObject : pointer to glcanvas object
     """
 
     _fl_set_glcanvas_direct = cfuncproto(
@@ -9792,7 +9859,12 @@ def fl_set_glcanvas_direct(pObject, direct):
 
 
 def fl_activate_glcanvas(pObject):
-    """ fl_activate_glcanvas(pObject)
+    """
+        fl_activate_glcanvas(pObject)
+
+        Activates a glcanvas object, allowing user interaction.
+
+        @param pObject : pointer to glcanvas object
     """
 
     _fl_activate_glcanvas = cfuncproto(
@@ -9805,7 +9877,12 @@ def fl_activate_glcanvas(pObject):
 
 
 def fl_get_glcanvas_xvisualinfo(pObject):
-    """ fl_get_glcanvas_xvisualinfo(pObject) -> xvisualinfo class
+    """
+        fl_get_glcanvas_xvisualinfo(pObject) -> xvisualinfo class
+
+        Returns XVisualInfo strust of a glcanvas object.
+
+        @param pObject : pointer to glcanvas object
     """
 
     _fl_get_glcanvas_xvisualinfo = cfuncproto(
@@ -9819,7 +9896,10 @@ def fl_get_glcanvas_xvisualinfo(pObject):
 
 
 def fl_get_glcanvas_context(pObject):
-    """ fl_get_glcanvas_context(pObject) -> glxcontext class
+    """
+        fl_get_glcanvas_context(pObject) -> glxcontext class
+
+        @param pObject : pointer to glcanvas object
     """
 
     _fl_get_glcanvas_context = cfuncproto(
@@ -18574,7 +18654,7 @@ def flimage_convert(pImage, newtype, ncolors):
             cty.c_int, [cty.POINTER(FL_IMAGE), cty.c_int, cty.c_int],
             """int flimage_convert(FL_IMAGE * p1, int p2, int p3)
             """)
-    inewtype2 = convert_to_int(newtype)
+    inewtype = convert_to_int(newtype)
     incolors = convert_to_int(ncolors)
     keep_elem_refs(pImage, newtype, ncolors, inewtype, incolors)
     retval = _flimage_convert(pImage, inewtype, incolors)
@@ -18584,7 +18664,7 @@ def flimage_convert(pImage, newtype, ncolors):
 def flimage_type_name(flimagetype):
     """
         flimage_type_name(flimagetype) -> name string
-        
+
         @param flimagetype : type of flimage
     """
 
@@ -18593,7 +18673,7 @@ def flimage_type_name(flimagetype):
             STRING, [cty.c_int],
             """const char * flimage_type_name(int type)
             """)
-    check_admitted_values(flimagetype, FLIMAGETYPE_list)
+    check_admitted_listvalues(flimagetype, FLIMAGETYPE_list)
     iflimagetype = convert_to_int(flimagetype)
     keep_elem_refs(flimagetype, iflimagetype)
     retval = _flimage_type_name(iflimagetype)
@@ -18620,8 +18700,8 @@ def flimage_add_text(pImage, text, length, style, size, txtcolr, bgcolr, tran, t
     ilength = convert_to_int(length)
     istyle = convert_to_int(style)
     isize = convert_to_int(size)
-    uitxtcol = convert_to_uint(txtcolr)
-    uibgcol = convert_to_uint(bgcolr)
+    uitxtcolr = convert_to_uint(txtcolr)
+    uibgcolr = convert_to_uint(bgcolr)
     itran = convert_to_int(tran)
     ftx = convert_to_double(tx)
     fty = convert_to_double(ty)
@@ -19032,7 +19112,7 @@ def flimage_add_format(formalname, shortname, extension, flimagetype, \
                FLIMAGE_Description p6, FLIMAGE_Read_Pixels p7,
                FLIMAGE_Write_Image p8)
             """)
-    check_admitted_values(flimagetype, FLIMAGETYPE_list)
+    check_admitted_listvalues(flimagetype, FLIMAGETYPE_list)
     sformalname = convert_to_string(formalname)
     sshortname = convert_to_string(shortname)
     sextension = convert_to_string(extension)

@@ -1,6 +1,7 @@
 
 
 SVN
+    * some docstrings and bugfixes
     * Porting of grav example.
     * HTML documentation will be only on website (too heavy to
     be uploaded every time). New documentation format will be LaTex.
