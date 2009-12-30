@@ -1,8 +1,9 @@
 
 
 SVN
+    * Porting of grav example.
     * HTML documentation will be only on website (too heavy to
-    upload every time). New documentation format will be LaTex.
+    be uploaded every time). New documentation format will be LaTex.
     * Porting of nmenu example.
     * more docstrings
     * Porting of select example.
