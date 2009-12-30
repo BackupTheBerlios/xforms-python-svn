@@ -1,6 +1,8 @@
 
 
 SVN
+    * HTML documentation will be only on website (too heavy to
+    upload every time). New documentation format will be LaTex.
     * Porting of nmenu example.
     * more docstrings
     * Porting of select example.
@@ -9,8 +11,8 @@ SVN
     a meaningful name than obj for a pointer to object, and
     .contents is better than [0] to deal with pointer to Structure
     attributes)
-    * Thanks to J. T. Toerring (XForms current maintainer)
-    I can finally get rid of my ugly hacks for .visible,
+    * Thanks to J. T. Toerring (XForms current maintainer) I
+    can finally get rid of my ugly hacks for .visible,
     .active, and object comparison.
     * Get rid of api.pdf, use html documentation for API,
     instead.
