@@ -12655,8 +12655,16 @@ def fl_hide_question():
     _fl_hide_question()
 
 
-def fl_show_alert(p1, p2, p3, p4):
-    """ fl_show_alert(p1, p2, p3, p4)
+def fl_show_alert(title, msg1, msg2, centered):
+    """
+        fl_show_alert(title, msg1, msg2, centered)
+
+        Shows an alert message.
+
+        @param title : title of alert
+        @param msg1 : first message text
+        @param msg2 : other message text
+        @param centered : if alert has to be displayed centered or not
     """
 
     _fl_show_alert = cfuncproto(
@@ -12665,16 +12673,23 @@ def fl_show_alert(p1, p2, p3, p4):
             """void fl_show_alert(const char * p1, const char * p2,
                const char * p3, int p4)
             """)
-    sp1 = convert_to_string(p1)
-    sp2 = convert_to_string(p2)
-    sp3 = convert_to_string(p3)
-    ip4 = convert_to_int(p4)
-    keep_elem_refs(p1, p2, p3, p4, sp1, sp2, sp3, ip4)
-    _fl_show_alert(sp1, sp2, sp3, ip4)
+    stitle = convert_to_string(title)
+    smsg1 = convert_to_string(msg1)
+    smsg2 = convert_to_string(msg2)
+    icentered = convert_to_int(centered)
+    keep_elem_refs(title, msg1, msg2, centered, stitle, smsg1, smsg2,
+                   icentered)
+    _fl_show_alert(stitle, smsg1, smsg2, icentered)
 
 
-def fl_show_alert2(c, fmt):
-    """ fl_show_alert2(c, fmt)
+def fl_show_alert2(centered, fmt):
+    """
+        fl_show_alert2(centered, fmt)
+
+        Shows a formatted alert message.
+
+        @param fmt : formatted message text
+        @param centered : if alert has to be displayed centered or not
     """
 
     _fl_show_alert2 = cfuncproto(
@@ -12682,14 +12697,17 @@ def fl_show_alert2(c, fmt):
             None, [cty.c_int, STRING],
             """void fl_show_alert2(int c, const char * fmt)
             """)
-    ic = convert_to_int(c)
+    icentered = convert_to_int(centered)
     sfmt = convert_to_string(fmt)
-    keep_elem_refs(c, fmt, ic, sfmt)
-    _fl_show_alert2(ic, sfmt)
+    keep_elem_refs(centered, fmt, icentered, sfmt)
+    _fl_show_alert2(icentered, sfmt)
 
 
 def fl_hide_alert():
-    """ fl_hide_alert()
+    """
+        fl_hide_alert()
+
+        Hides a previously shown alert message.
     """
 
     _fl_hide_alert = cfuncproto(
@@ -12700,8 +12718,15 @@ def fl_hide_alert():
     _fl_hide_alert()
 
 
-def fl_show_input(p1, p2):
-    """ fl_show_input(p1, p2) -> input string
+def fl_show_input(msgtxt, defstr):
+    """
+        fl_show_input(msgtxt, defstr) -> input string
+
+        Obtains some text from user, showing a default text. It has an OK and
+        Cancel buttons.
+
+        @param msgtxt : text used to ask for input
+        @param defstr : default user answer to show
     """
 
     _fl_show_input = cfuncproto(
@@ -12709,15 +12734,18 @@ def fl_show_input(p1, p2):
             STRING, [STRING, STRING],
             """const char * fl_show_input(const char * p1, const char * p2)
             """)
-    sp1 = convert_to_string(p1)
-    sp2 = convert_to_string(p2)
-    keep_elem_refs(p1, p2, sp1, sp2)
-    retval = _fl_show_input(sp1, sp2)
+    smsgtxt = convert_to_string(msgtxt)
+    sdefstr = convert_to_string(defstr)
+    keep_elem_refs(msgtxt, defstr, smsgtxt, sdefstr)
+    retval = _fl_show_input(smsgtxt, sdefstr)
     return retval
 
 
 def fl_hide_input():
-    """ fl_hide_input()
+    """
+        fl_hide_input()
+
+        Hides a previously shown input object.
     """
 
     _fl_hide_input = cfuncproto(
@@ -12732,9 +12760,9 @@ def fl_show_simple_input(msgtxt, defstr):
     """
         fl_show_simple_input(msgtxt, defstr) -> input string
 
-        Asks the user for textual input.
+        Asks the user for textual input. It has an OK button only.
 
-        @param msgtxt : text message
+        @param msgtxt : message used to ask for input
         @param defstr : default user answer in input
     """
 
