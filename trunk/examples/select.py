@@ -44,7 +44,6 @@ def create_form():
     xf.fl_popup_entry_set_callback(pmaleent, cb)
     xf.fl_popup_entry_set_state(pmaleent, xfc.FL_POPUP_NONE)            # 0
     xf.fl_popup_entry_set_shortcut(pmaleent, "M")
-    #pmaleent.contents.type = xfc.FL_POPUP_TOGGLE etc..
 
     pfemaleent = xf.fl_add_select_items(psexobj, "Female%SF")
     xf.fl_popup_entry_set_callback(pfemaleent, cb)

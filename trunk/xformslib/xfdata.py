@@ -65,6 +65,7 @@ FL_INVALID = 0
 FL_IGNORE = -1
 
 # max directory length  FL_PATH_MAX / PATH_MAX
+# minimum value to enhance OS compatibility (for linux 4096)
 FL_PATH_MAX = 1024
 
 
@@ -81,6 +82,10 @@ FL_COORD_MM = 1             # milli-meter
 FL_COORD_POINT = 2          # point
 FL_COORD_centiMM = 3        # one hundredth of a mm
 FL_COORD_centiPOINT = 4     # one hundredth of a point
+
+# my add --LK list of possible values
+COORDUNIT_list = [FL_COORD_PIXEL, FL_COORD_MM, FL_COORD_POINT, 
+                  FL_COORD_centiMM, FL_COORD_centiPOINT]
 
 
 # All object classes.
@@ -232,11 +237,12 @@ FL_ALIGN_LEFT_BOTTOM = (FL_ALIGN_BOTTOM|FL_ALIGN_LEFT)
 FL_ALIGN_RIGHT_BOTTOM = (FL_ALIGN_BOTTOM|FL_ALIGN_RIGHT)
 FL_ALIGN_INSIDE = 8192      # (1<<13)
 FL_ALIGN_VERT = 16384       # (1<<14)  not functional yet
+# backward data dismissed --LK
 # the rest is for backward compatibility only, don't use!
-FL_ALIGN_TOP_LEFT     = FL_ALIGN_LEFT_TOP
-FL_ALIGN_TOP_RIGHT    = FL_ALIGN_RIGHT_TOP
-FL_ALIGN_BOTTOM_LEFT  = FL_ALIGN_LEFT_BOTTOM
-FL_ALIGN_BOTTOM_RIGHT = FL_ALIGN_RIGHT_BOTTOM
+#FL_ALIGN_TOP_LEFT     = FL_ALIGN_LEFT_TOP
+#FL_ALIGN_TOP_RIGHT    = FL_ALIGN_RIGHT_TOP
+#FL_ALIGN_BOTTOM_LEFT  = FL_ALIGN_LEFT_BOTTOM
+#FL_ALIGN_BOTTOM_RIGHT = FL_ALIGN_RIGHT_BOTTOM
 
 # my add, list of possible values --LK
 ALIGN_list = [FL_ALIGN_CENTER, FL_ALIGN_TOP, FL_ALIGN_BOTTOM, FL_ALIGN_LEFT,
@@ -567,10 +573,11 @@ FL_MOVEORIGIN = 21  # dragging the form across the screen changes its
 FL_RESIZED = 22     # the object has been resized by scale_form
                     # Tell it that this has happened so that
                     # it can resize any FL_FORMs that it contains.
+# backward data dismissed --LK
 # The following are only for backward compatibility, not used anymore
-FL_MOVE = FL_MOTION
-FL_KEYBOARD = FL_KEYPRESS
-FL_MOUSE = FL_UPDATE
+#FL_MOVE = FL_MOTION
+#FL_KEYBOARD = FL_KEYPRESS
+#FL_MOUSE = FL_UPDATE
 
 
 # Resize policies
@@ -702,19 +709,20 @@ SIZE_list = [FL_TINY_SIZE, FL_SMALL_SIZE, FL_NORMAL_SIZE, FL_MEDIUM_SIZE,
              FL_LARGE_SIZE, FL_HUGE_SIZE, FL_DEFAULT_SIZE]
 
 
+# backward data dismissed --LK
 # Defines for compatibility
-FL_TINY_FONT = FL_TINY_SIZE
-FL_SMALL_FONT = FL_SMALL_SIZE
-FL_NORMAL_FONT = FL_NORMAL_SIZE
-FL_MEDIUM_FONT = FL_MEDIUM_SIZE
-FL_LARGE_FONT = FL_LARGE_SIZE
-FL_HUGE_FONT = FL_HUGE_SIZE
-FL_NORMAL_FONT1 = FL_SMALL_FONT
-FL_NORMAL_FONT2 = FL_NORMAL_FONT
-FL_DEFAULT_FONT = FL_SMALL_FONT
+#FL_TINY_FONT = FL_TINY_SIZE
+#FL_SMALL_FONT = FL_SMALL_SIZE
+#FL_NORMAL_FONT = FL_NORMAL_SIZE
+#FL_MEDIUM_FONT = FL_MEDIUM_SIZE
+#FL_LARGE_FONT = FL_LARGE_SIZE
+#FL_HUGE_FONT = FL_HUGE_SIZE
+#FL_NORMAL_FONT1 = FL_SMALL_FONT
+#FL_NORMAL_FONT2 = FL_NORMAL_FONT
+#FL_DEFAULT_FONT = FL_SMALL_FONT
 
-FL_BOUND_WIDTH = FL_Coord(1)     # Border width of boxes
-#FL_BOUND_WIDTH = 1     # Border width of boxes
+#FL_BOUND_WIDTH = FL_Coord(1)     # Border width of boxes
+FL_BOUND_WIDTH = 1     # Border width of boxes
 
 
 # Definition of basic struct that holds an object
@@ -1150,7 +1158,8 @@ FL_State._fields_ = [
     ('bbits', cty.c_uint),
 ]
 
-FL_STATE = FL_State     # for compatibility
+# backward data dismissed --LK
+#FL_STATE = FL_State     # for compatibility
 
 
 # Global variables
@@ -1659,10 +1668,11 @@ FL_BROWSER_ALIGN = FL_ALIGN_BOTTOM
 
 # Others
 FL_BROWSER_SLCOL = FL_COL1
-FL_BROWSER_FONTSIZE = FL_SMALL_FONT
+FL_BROWSER_FONTSIZE = FL_SMALL_SIZE             #FL_SMALL_FONT
 
+# backward data dismissed --LK
 # This exists only for backward compatibility and isn't used anymore!
-FL_BROWSER_LINELENGTH = 2048
+#FL_BROWSER_LINELENGTH = 2048
 
 
 
@@ -1849,12 +1859,13 @@ FL_SPIKE_CHART = 4
 FL_PIE_CHART = 5
 FL_SPECIALPIE_CHART = 6
 
-FL_FILLED_CHART = FL_FILL_CHART     # for backward compatibility
+# backward data dismissed --LK
+#FL_FILLED_CHART = FL_FILL_CHART     # for backward compatibility
 
 # list of possible values - my add --LK
 CHARTTYPE_list = [FL_BAR_CHART, FL_HORBAR_CHART, FL_LINE_CHART, \
                   FL_FILL_CHART, FL_SPIKE_CHART, FL_PIE_CHART, \
-                  FL_SPECIALPIE_CHART, FL_FILLED_CHART]
+                  FL_SPECIALPIE_CHART]
 
 
 # Defaults
@@ -1950,7 +1961,7 @@ FL_COUNTER_LCOL = FL_LCOL           # ct reporting
 FL_COUNTER_ALIGN = FL_ALIGN_BOTTOM
 
 # Others
-FL_COUNTER_BW = 0        #(FL_BOUND_WIDTH - 1)
+FL_COUNTER_BW = (FL_BOUND_WIDTH - 1)
 
 
 #############################
@@ -2132,6 +2143,7 @@ FL_Dirlist._fields_ = [
     ('dl_mtime', cty.c_long),         # file modification time
     ('dl_size', cty.c_ulong),         # file size in bytes
 ]
+
 
 # values for unnamed enumeration
 FL_ALPHASORT = 1            # sort in alphabetic order
@@ -2417,7 +2429,8 @@ FL_MENU_ALIGN = FL_ALIGN_CENTER
 
 # Others
 FL_MENU_MAXITEMS = 128
-FL_MENU_MAXSTR = 64        # not used anymore! JTT
+# backward data dismissed --LK
+#FL_MENU_MAXSTR = 64        # not used anymore! JTT
 
 
 # Nmenu object types

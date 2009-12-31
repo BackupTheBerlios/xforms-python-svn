@@ -17,7 +17,13 @@ from xformslib import xfdata as xfc
 
 def input_cb(pobj, data):
     notused, x, y = xf.fl_get_input_cursorpos(pobj)
-    print "x=%d y=%d\n" % x, y
+    print "INPUT - x=%d y=%d\n" % x, y
+
+
+def input2_cb(pobj, data):
+    notused, x, y = xf.fl_get_input_cursorpos(pobj)
+    print "INPUT2 - y=%d x=%d\n" % y, x
+
 
 
 def main(lsysargv, sysargv):
@@ -26,10 +32,12 @@ def main(lsysargv, sysargv):
 
     pform = xf.fl_bgn_form(xfc.FL_UP_BOX, 400, 450)
 
-    xf.fl_add_input(xfc.FL_MULTILINE_INPUT, 30, 270, 340, 150, "")
+    pobj1 = xf.fl_add_input(xfc.FL_MULTILINE_INPUT, 30, 270, 340, 150, "")
+    xf.fl_set_object_callback(pobj1, input2_cb, 0)
 
     pobj2 = xf.fl_add_input(xfc.FL_MULTILINE_INPUT, 30, 90, 340, 150, "")
     xf.fl_set_object_lsize(pobj2, xfc.FL_NORMAL_SIZE)
+    xf.fl_set_object_callback(pobj2, input_cb, 0)
 
     pbut = xf.fl_add_button(xfc.FL_NORMAL_BUTTON, 160, 30, 80, 30, "Exit")
 
