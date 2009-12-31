@@ -1,8 +1,9 @@
 
 
 SVN
-    * Start a global review to monitor functiona for
-    completing docstrings and testing effectie working state
+    * Porting of demo27 example.
+    * Start a global review to monitor functions for
+    completing docstrings and testing real working state
     (this surely will take several weeks, but I think it's
     absolutely necessary).
     * FL_POINT argument better handled in functions who used it
