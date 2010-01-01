@@ -1,6 +1,10 @@
 
 
 SVN
+    * library prepared to be able to give status of testing, 
+    documentation, example presence, and working state.
+    * Get rid of API-diversion.txt, insert API change state in
+    docstrings (more easily keeping update)
     * Porting of demotest2 example.
     * some variables in xfdata have now their docstrings (and can be
     documented in .tex files)
