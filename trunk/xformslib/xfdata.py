@@ -36,11 +36,14 @@ import ctypes as cty
 
 
 FL_VERSION = 1
+"""The major version number"""
 FL_REVISION = 0
+"""Revision number"""
 FL_FIXLEVEL = "93pre2"
 FL_INCLUDE_VERSION = (FL_VERSION * 1000 + FL_REVISION)
 
 
+# my add --LK
 INT_MAX = 2147483647L
 
 
@@ -77,13 +80,23 @@ FL_COLOR = cty.c_ulong
 # Coordinates can be in pixels, milli-meters or points (1/72inch)
 # values for enumeration 'FL_COORD_UNIT'
 FL_COORD_UNIT = cty.c_int  # enum
-FL_COORD_PIXEL = 0          # default, Pixel
-FL_COORD_MM = 1             # milli-meter
-FL_COORD_POINT = 2          # point
-FL_COORD_centiMM = 3        # one hundredth of a mm
-FL_COORD_centiPOINT = 4     # one hundredth of a point
+# default, Pixel:
+FL_COORD_PIXEL = 0
+"""Screen coordinate units in pixel"""
+# milli-meter:
+FL_COORD_MM = 1
+"""Screen coordinate units in millimeters"""
+# point:
+FL_COORD_POINT = 2
+"""Screen coordinate units in points (1/72 inch)"""
+# one hundredth of a mm:
+FL_COORD_centiMM = 3
+"""Screen coordinate units in centi-millimeters"""
+# one hundredth of a point:
+FL_COORD_centiPOINT = 4
+"""Screen coordinate units in centi-points, i.e., 1/100 of a point"""
 
-# my add --LK list of possible values
+# my add, list of possible values --LK
 COORDUNIT_list = [FL_COORD_PIXEL, FL_COORD_MM, FL_COORD_POINT, 
                   FL_COORD_centiMM, FL_COORD_centiPOINT]
 
@@ -92,50 +105,95 @@ COORDUNIT_list = [FL_COORD_PIXEL, FL_COORD_MM, FL_COORD_POINT,
 # values for enumeration 'FL_CLASS'
 FL_CLASS = cty.c_int  # enum
 FL_INVALID_CLASS = 0
+""""""
 FL_BUTTON = 1
+""""""
 FL_LIGHTBUTTON = 2
+""""""
 FL_ROUNDBUTTON = 3
+""""""
 FL_ROUND3DBUTTON = 4
+""""""
 FL_CHECKBUTTON = 5
+""""""
 FL_BITMAPBUTTON = 6
+""""""
 FL_PIXMAPBUTTON = 7
+""""""
 FL_BITMAP = 8
+""""""
 FL_PIXMAP = 9
+""""""
 FL_BOX = 10
+""""""
 FL_TEXT = 11
+""""""
 FL_MENU = 12
+""""""
 FL_CHART = 13
+""""""
 FL_CHOICE = 14
+""""""
 FL_COUNTER = 15
+""""""
 FL_SLIDER = 16
+""""""
 FL_VALSLIDER = 17
+""""""
 FL_INPUT = 18
+""""""
 FL_BROWSER = 19
+""""""
 FL_DIAL = 20
+""""""
 FL_TIMER = 21
+""""""
 FL_CLOCK = 22
+""""""
 FL_POSITIONER = 23
+""""""
 FL_FREE = 24
+""""""
 FL_XYPLOT = 25
+""""""
 FL_FRAME = 26
+""""""
 FL_LABELFRAME = 27
+""""""
 FL_CANVAS = 28
+""""""
 FL_GLCANVAS = 29
+""""""
 FL_TABFOLDER = 30
+""""""
 FL_SCROLLBAR = 31
+""""""
 FL_SCROLLBUTTON = 32
+""""""
 FL_MENUBAR = 33
+""""""
 FL_TEXTBOX = 34             # internal use
+""""""
 FL_LABELBUTTON = 35
+""""""
 FL_COMBOBOX = 36
+""""""
 FL_IMAGECANVAS = 37
+""""""
 FL_THUMBWHEEL = 38
+""""""
 FL_COLORWHEEL = 39
+""""""
 FL_FORMBROWSER = 40
+""""""
 FL_SELECT = 41
+""""""
 FL_NMENU = 42
+""""""
 FL_SPINNER = 43
+""""""
 FL_TBOX = 44
+""""""
 FL_CLASS_END = 45           # sentinel
 
 
@@ -151,23 +209,61 @@ FL_MAX_BW = 10
 # how to display a form onto screen
 # values for enumeration 'FL_PLACE'
 FL_PLACE = cty.c_int # enum
-FL_PLACE_FREE = 0             # size remain resizable
-FL_PLACE_MOUSE = 1            # mouse centered on form
-FL_PLACE_CENTER = 2           # center of the screen
-FL_PLACE_POSITION = 4         # specific size
-FL_PLACE_SIZE = 8             # specific size
-FL_PLACE_GEOMETRY = 16        # specific position
-FL_PLACE_ASPECT =  32         # keep aspect ratio
-FL_PLACE_FULLSCREEN = 64      # scale to fit screen
-FL_PLACE_HOTSPOT = 128        # so mouse fall on (x,y)
+# size remain resizable:
+FL_PLACE_FREE = 0
+"""Both the position and size are completely free. The initial size used
+is the designed size. Initial position, if set via fl_set_form_position(),
+will be used otherwise interactive positioning may be possible if the window
+manager allows it."""
+# mouse centered on form:
+FL_PLACE_MOUSE = 1
+"""The form is placed centered below the mouse. Interactive resizing will
+not be allowed unless this option is accompanied by FL_FREE_SIZE as in
+FL_PLACE_MOUSE | FL_FREE_SIZE"""
+# center of the screen:
+FL_PLACE_CENTER = 2
+"""The form is placed in the center of the screen. If FL_FREE_SIZE
+is also specified, interactive resizing will be allowed."""
+# specific size:
+FL_PLACE_POSITION = 4
+"""Initial position used will be the one set via fl_set_form_position().
+Interactive resizing is possible."""
+# specific size:
+FL_PLACE_SIZE = 8
+"""The user can control the position but the size is fixed. Interactive
+resizing is not allowed once the form becomes visible."""
+# specific position:
+FL_PLACE_GEOMETRY = 16
+"""Place at the latest position and size (see also below) or the geometry
+set via fl_set_form_geometry() etc. A form so shown will have a fixed size
+and interactive resizing is not allowed."""
+# keep aspect ratio:
+FL_PLACE_ASPECT =  32
+"""Allows interactive resizing but any new size will have the aspect ratio
+as that of the initial size."""
+# scale to fit screen:
+FL_PLACE_FULLSCREEN = 64
+"""The form is scaled to cover the full screen. If FL_FREE_SIZE is also
+ specified, interative resizing will be allowed."""
+# so mouse fall on (x,y):
+FL_PLACE_HOTSPOT = 128
+"""The form is so placed that mouse is on the "hotspot". If FL_FREE_SIZE
+is also specified, interactive resizing will be allowed."""
 FL_PLACE_ICONIC = 256
+"""The form is shown initially iconified. The size and location used are
+the window manager's default."""
 # modifiers
 FL_FREE_SIZE = 16384          #(1<<14)
+""""""
 FL_FIX_SIZE = 32768           #(1<<15)
+""""""
 
 FL_PLACE_FREE_CENTER = (FL_PLACE_CENTER|FL_FREE_SIZE)
+"""Same as FL_PLACE_CENTER | FL_FREE_SIZE, i.e., place the form at the 
+center of the screen and allow resizing."""
 FL_PLACE_CENTERFREE = (FL_PLACE_CENTER|FL_FREE_SIZE)
-
+"""Same as FL_PLACE_CENTER | FL_FREE_SIZE, i.e., place the form at the 
+center of the screen and allow resizing."""
 
 # my add, list of possible values --LK
 PLACE_list = [FL_PLACE_FREE, FL_PLACE_MOUSE, FL_PLACE_CENTER,
@@ -180,8 +276,13 @@ PLACE_list = [FL_PLACE_FREE, FL_PLACE_MOUSE, FL_PLACE_CENTER,
 # Window manager decoration request and forms attributes
 # values for unnamed enumeration
 FL_FULLBORDER = 1       # normal
+"""Draw full border with title"""
 FL_TRANSIENT = 2        # set TRANSIENT_FOR property
+"""Draw borders with possibly less decoration (depends on the window
+managers behaviour). You might not be able to iconify a form under
+some WMs."""
 FL_NOBORDER = 3         # use override_redirect to supress decor.
+"""Draw no border at all. You can't iconify a form with no borders"""
 
 # my add, list of possible values --LK
 DECORATION_list = [FL_FULLBORDER, FL_TRANSIENT, FL_NOBORDER]
@@ -190,28 +291,50 @@ DECORATION_list = [FL_FULLBORDER, FL_TRANSIENT, FL_NOBORDER]
 # values for enumeration 'FL_BOX_TYPE'
 FL_BOX_TYPE = cty.c_int  # enum
 FL_NO_BOX = 0
+"""No box at all (it's transparent), just a label"""
 FL_UP_BOX = 1
+"""A box that comes out of the screen"""
 FL_DOWN_BOX = 2
+"""A box that goes down into the screen"""
 FL_BORDER_BOX = 3
+"""A flat box with a border"""
 FL_SHADOW_BOX = 4
+"""A flat box with a shadow"""
 FL_FRAME_BOX = 5
+"""A flat box with an engraved frame"""
 FL_ROUNDED_BOX = 6
+"""A rounded box"""
 FL_EMBOSSED_BOX = 7
+"""A flat box with an embossed frame"""
 FL_FLAT_BOX = 8
+"""A flat box without a border (normally invisible unless given a
+different color than the surroundings)"""
 FL_RFLAT_BOX = 9
+"""A rounded box without a border (normally invisible unless given a
+different color than the surroundings)"""
 FL_RSHADOW_BOX = 10
+"""A rounded box with a shadow"""
 FL_OVAL_BOX = 11
+"""A box shaped like an ellipse"""
 FL_ROUNDED3D_UPBOX = 12
+"""A rounded box coming out of the screen"""
 FL_ROUNDED3D_DOWNBOX = 13
+"""A rounded box going into the screen"""
 FL_OVAL3D_UPBOX = 14
+"""An oval box coming out of the screen"""
 FL_OVAL3D_DOWNBOX = 15
+"""An oval box going into the screen"""
 FL_OVAL3D_FRAMEBOX = 16
+""""""
 FL_OVAL3D_EMBOSSEDBOX = 17
+""""""
+# internal data dismissed --LK
 # for internal use only
-FL_TOPTAB_UPBOX = 18
-FL_SELECTED_TOPTAB_UPBOX = 19
-FL_BOTTOMTAB_UPBOX = 20
-FL_SELECTED_BOTTOMTAB_UPBOX = 21
+#FL_TOPTAB_UPBOX = 18
+#FL_SELECTED_TOPTAB_UPBOX = 19
+#FL_BOTTOMTAB_UPBOX = 20
+#FL_SELECTED_BOTTOMTAB_UPBOX = 21
+
 FL_MAX_BOX_STYLES = 23                # sentinel
 
 # my add, list of possible values --LK
@@ -227,16 +350,27 @@ BOXTYPE_list = [FL_NO_BOX, FL_UP_BOX, FL_DOWN_BOX, FL_BORDER_BOX, \
 # values for enumeration 'FL_ALIGN'
 FL_ALIGN = cty.c_int  # enum
 FL_ALIGN_CENTER = 0
+"""In the middle of the box (inside it)"""
 FL_ALIGN_TOP = 1
+"""To the top of the box (outside it, if FL_ALIGN_INSIDE isn't used)"""
 FL_ALIGN_BOTTOM = 2
+"""To the bottom of the box (outside it, if FL_ALIGN_INSIDE isn't used)"""
 FL_ALIGN_LEFT = 4
+"""To the left of the box (outside it, if FL_ALIGN_INSIDE isn't used)"""
 FL_ALIGN_RIGHT = 8
+"""To the right of the box (outside it, if FL_ALIGN_INSIDE isn't used)"""
 FL_ALIGN_LEFT_TOP = (FL_ALIGN_TOP|FL_ALIGN_LEFT)
+"""To the left and top of the box (outside it, if FL_ALIGN_INSIDE isn't used)"""
 FL_ALIGN_RIGHT_TOP = (FL_ALIGN_TOP|FL_ALIGN_RIGHT)
+"""To the right and top of the box (outside it, if FL_ALIGN_INSIDE isn't used)"""
 FL_ALIGN_LEFT_BOTTOM = (FL_ALIGN_BOTTOM|FL_ALIGN_LEFT)
+"""To the left and bottom of the box (outside it, if FL_ALIGN_INSIDE isn't used)"""
 FL_ALIGN_RIGHT_BOTTOM = (FL_ALIGN_BOTTOM|FL_ALIGN_RIGHT)
+"""To the right and bottom of the box (outside it, if FL_ALIGN_INSIDE isn't used)"""
 FL_ALIGN_INSIDE = 8192      # (1<<13)
+"""places the text inside the box"""
 FL_ALIGN_VERT = 16384       # (1<<14)  not functional yet
+""""""
 # backward data dismissed --LK
 # the rest is for backward compatibility only, don't use!
 #FL_ALIGN_TOP_LEFT     = FL_ALIGN_LEFT_TOP
@@ -254,23 +388,37 @@ ALIGN_list = [FL_ALIGN_CENTER, FL_ALIGN_TOP, FL_ALIGN_BOTTOM, FL_ALIGN_LEFT,
 # Mouse buttons. Don't have to be consecutive
 # values for unnamed enumeration
 FL_MBUTTON1 = 1
+"""Left mouse button was pressed"""
 FL_MBUTTON2 = 2
+"""Middle mouse button was pressed"""
 FL_MBUTTON3 = 3
+"""Right mouse button was pressed"""
 FL_MBUTTON4 = 4
+"""Mouse scroll wheel was rotated in up direction"""
 FL_MBUTTON5 = 5
+"""Mouse scroll wheel was rotated in down direction"""
 
 FL_LEFT_MOUSE = FL_MBUTTON1
+"""Left mouse button was pressed"""
 FL_MIDDLE_MOUSE = FL_MBUTTON2
+"""Middle mouse button was pressed"""
 FL_RIGHT_MOUSE = FL_MBUTTON3
+"""Right mouse button was pressed"""
 FL_SCROLLUP_MOUSE = FL_MBUTTON4
+"""Mouse scroll wheel was rotated in up direction"""
 FL_SCROLLDOWN_MOUSE = FL_MBUTTON5
+"""Mouse scroll wheel was rotated in down direction"""
 
 FL_LEFTMOUSE = FL_LEFT_MOUSE
+"""Left mouse button was pressed"""
 FL_MIDDLEMOUSE = FL_MIDDLE_MOUSE
+"""Middle mouse button was pressed"""
 FL_RIGHTMOUSE = FL_RIGHT_MOUSE
+"""Right mouse button was pressed"""
 FL_SCROLLUPMOUSE = FL_SCROLLUP_MOUSE
+"""Mouse scroll wheel was rotated in up direction"""
 FL_SCROLLDOWNMOUSE = FL_SCROLLDOWN_MOUSE
-
+"""Mouse scroll wheel was rotated in down direction"""
 
 # my add, list of possible values --LK
 MOUSEBTN_list = [FL_MBUTTON1, FL_MBUTTON2, FL_MBUTTON3, FL_MBUTTON4,
@@ -283,14 +431,24 @@ MOUSEBTN_list = [FL_MBUTTON1, FL_MBUTTON2, FL_MBUTTON3, FL_MBUTTON4,
 # control when to return input, slider and dial etc. object.
 # values for unnamed enumeration
 FL_RETURN_NONE = 0
+"""Never return or invoke a callback."""
 FL_RETURN_CHANGED = 1
+"""Return or invoke callback whenever an item is selected (this is the
+default)."""
 FL_RETURN_END = 2
+"""Return or invoke callback on end of an interaction."""
 FL_RETURN_END_CHANGED = 4
+"""Return or invoke callback if end of interaction and selection of an
+item coincide."""
 FL_RETURN_SELECTION = 8
+""""""
 FL_RETURN_DESELECTION = 16
+""""""
 FL_RETURN_TRIGGERED = 1024
+""""""
 FL_RETURN_ALWAYS = ~ FL_RETURN_END_CHANGED
-
+"""Return (or invoke callback) whenever the interaction ends and/or
+an item is selected.Never return or invoke a callback."""
 
 # my add, list of possible values --LK
 RETURN_list = [FL_RETURN_NONE, FL_RETURN_CHANGED, FL_RETURN_END,
@@ -304,197 +462,372 @@ RETURN_list = [FL_RETURN_NONE, FL_RETURN_CHANGED, FL_RETURN_END,
 # values for enumeration 'FL_PD_COL'
 FL_PD_COL = cty.c_int  # enum
 FL_BLACK = 0
+""""""
 FL_RED = 1
+""""""
 FL_GREEN = 2
+""""""
 FL_YELLOW = 3
+""""""
 FL_BLUE = 4
+""""""
 FL_MAGENTA = 5
+""""""
 FL_CYAN = 6
+""""""
 FL_WHITE = 7
+""""""
 FL_TOMATO = 8
+""""""
 FL_INDIANRED = 9
+""""""
 FL_SLATEBLUE = 10
+""""""
 FL_COL1 = 11
+""""""
 FL_RIGHT_BCOL = 12
+""""""
 FL_BOTTOM_BCOL = 13
+""""""
 FL_TOP_BCOL = 14
+""""""
 FL_LEFT_BCOL = 15
+""""""
 FL_MCOL = 16
+""""""
 FL_INACTIVE = 17
+""""""
 FL_PALEGREEN = 18
+""""""
 FL_DARKGOLD = 19
+""""""
 FL_ORCHID = 20
+""""""
 FL_DARKCYAN = 21
+""""""
 FL_DARKTOMATO = 22
+""""""
 FL_WHEAT = 23
+""""""
 FL_DARKORANGE = 24
+""""""
 FL_DEEPPINK = 25
+""""""
 FL_CHARTREUSE = 26
+""""""
 FL_DARKVIOLET = 27
+""""""
 FL_SPRINGGREEN = 28
+""""""
 FL_DODGERBLUE = 29
+""""""
 FL_LIGHTER_COL1 = 30
+""""""
 FL_DARKER_COL1 = 31
+""""""
 FL_ALICEBLUE = 32
+""""""
 FL_ANTIQUEWHITE = 33
+""""""
 FL_AQUA = 34
+""""""
 FL_AQUAMARINE = 35
+""""""
 FL_AZURE = 36
+""""""
 FL_BEIGE = 37
+""""""
 FL_BISQUE = 38
+""""""
 FL_BLANCHEDALMOND = 39
+""""""
 FL_BLUEVIOLET = 40
+""""""
 FL_BROWN = 41
+""""""
 FL_BURLYWOOD = 42
+""""""
 FL_CADETBLUE = 43
+""""""
 FL_CHOCOLATE = 44
+""""""
 FL_CORAL = 45
+""""""
 FL_CORNFLOWERBLUE = 46
+""""""
 FL_CORNSILK = 47
+""""""
 FL_CRIMSON = 48
+""""""
 FL_DARKBLUE = 49
+""""""
 FL_DARKGOLDENROD = 50
+""""""
 FL_DARKGRAY = 51
+""""""
 FL_DARKGREEN = 52
+""""""
 FL_DARKGREY = 53
+""""""
 FL_DARKKHAKI = 54
+""""""
 FL_DARKMAGENTA = 55
+""""""
 FL_DARKOLIVEGREEN = 56
+""""""
 FL_DARKORCHID = 57
+""""""
 FL_DARKRED = 58
+""""""
 FL_DARKSALMON = 59
+""""""
 FL_DARKSEAGREEN = 60
+""""""
 FL_DARKSLATEBLUE = 61
+""""""
 FL_DARKSLATEGRAY = 62
+""""""
 FL_DARKSLATEGREY = 63
+""""""
 FL_DARKTURQUOISE = 64
+""""""
 FL_DEEPSKYBLUE = 65
+""""""
 FL_DIMGRAY = 66
+""""""
 FL_DIMGREY = 67
+""""""
 FL_FIREBRICK = 68
+""""""
 FL_FLORALWHITE = 69
+""""""
 FL_FORESTGREEN = 70
+""""""
 FL_FUCHSIA = 71
+""""""
 FL_GAINSBORO = 72
+""""""
 FL_GHOSTWHITE = 73
+""""""
 FL_GOLD = 74
+""""""
 FL_GOLDENROD = 75
+""""""
 FL_GRAY = 76
+""""""
 FL_GREENYELLOW = 77
+""""""
 FL_GREY = 78
+""""""
 FL_HONEYDEW = 79
+""""""
 FL_HOTPINK = 80
+""""""
 FL_INDIGO = 81
+""""""
 FL_IVORY = 82
+""""""
 FL_KHAKI = 83
+""""""
 FL_LAVENDER = 84
+""""""
 FL_LAVENDERBLUSH = 85
+""""""
 FL_LAWNGREEN = 86
+""""""
 FL_LEMONCHIFFON = 87
+""""""
 FL_LIGHTBLUE = 88
+""""""
 FL_LIGHTCORAL = 89
+""""""
 FL_LIGHTCYAN = 90
+""""""
 FL_LIGHTGOLDENRODYELLOW = 91
+""""""
 FL_LIGHTGRAY = 92
+""""""
 FL_LIGHTGREEN = 93
+""""""
 FL_LIGHTGREY = 94
+""""""
 FL_LIGHTPINK = 95
+""""""
 FL_LIGHTSALMON = 96
+""""""
 FL_LIGHTSEAGREEN = 97
+""""""
 FL_LIGHTSKYBLUE = 98
+""""""
 FL_LIGHTSLATEGRAY = 99
+""""""
 FL_LIGHTSLATEGREY = 100
+""""""
 FL_LIGHTSTEELBLUE = 101
+""""""
 FL_LIGHTYELLOW = 102
+""""""
 FL_LIME = 103
+""""""
 FL_LIMEGREEN = 104
+""""""
 FL_LINEN = 105
+""""""
 FL_MAROON = 106
+""""""
 FL_MEDIUMAQUAMARINE = 107
+""""""
 FL_MEDIUMBLUE = 108
+""""""
 FL_MEDIUMORCHID = 109
+""""""
 FL_MEDIUMPURPLE = 110
+""""""
 FL_MEDIUMSEAGREEN = 111
+""""""
 FL_MEDIUMSLATEBLUE = 112
+""""""
 FL_MEDIUMSPRINGGREEN = 113
+""""""
 FL_MEDIUMTURQUOISE = 114
+""""""
 FL_MEDIUMVIOLETRED = 115
+""""""
 FL_MIDNIGHTBLUE = 116
+""""""
 FL_MINTCREAM = 117
+""""""
 FL_MISTYROSE = 118
+""""""
 FL_MOCCASIN = 119
+""""""
 FL_NAVAJOWHITE = 120
+""""""
 FL_NAVY = 121
+""""""
 FL_OLDLACE = 122
+""""""
 FL_OLIVE = 123
+""""""
 FL_OLIVEDRAB = 124
+""""""
 FL_ORANGE = 125
+""""""
 FL_ORANGERED = 126
+""""""
 FL_PALEGOLDENROD = 127
+""""""
 FL_PALETURQUOISE = 128
+""""""
 FL_PALEVIOLETRED = 129
+""""""
 FL_PAPAYAWHIP = 130
+""""""
 FL_PEACHPUFF = 131
+""""""
 FL_PERU = 132
+""""""
 FL_PINK = 133
+""""""
 FL_PLUM = 134
+""""""
 FL_POWDERBLUE = 135
+""""""
 FL_PURPLE = 136
+""""""
 FL_ROSYBROWN = 137
+""""""
 FL_ROYALBLUE = 138
+""""""
 FL_SADDLEBROWN = 139
+""""""
 FL_SALMON = 140
+""""""
 FL_SANDYBROWN = 141
+""""""
 FL_SEAGREEN = 142
+""""""
 FL_SEASHELL = 143
+""""""
 FL_SIENNA = 144
+""""""
 FL_SILVER = 145
+""""""
 FL_SKYBLUE = 146
+""""""
 FL_SLATEGRAY = 147
+""""""
 FL_SLATEGREY = 148
+""""""
 FL_SNOW = 149
+""""""
 FL_STEELBLUE = 150
+""""""
 FL_TAN = 151
+""""""
 FL_TEAL = 152
+""""""
 FL_THISTLE = 153
+""""""
 FL_TURQUOISE = 154
+""""""
 FL_VIOLET = 155
+""""""
 FL_WHITESMOKE = 156
+""""""
 FL_YELLOWGREEN = 157
+""""""
 FL_FREE_COL1 = 256
+""""""
 FL_FREE_COL2 = 257
+""""""
 FL_FREE_COL3 = 258
+""""""
 FL_FREE_COL4 = 259
+""""""
 FL_FREE_COL5 = 260
+""""""
 FL_FREE_COL6 = 261
+""""""
 FL_FREE_COL7 = 262
+""""""
 FL_FREE_COL8 = 263
+""""""
 FL_FREE_COL9 = 264
+""""""
 FL_FREE_COL10 = 265
+""""""
 FL_FREE_COL11 = 266
+""""""
 FL_FREE_COL12 = 267
+""""""
 FL_FREE_COL13 = 268
+""""""
 FL_FREE_COL14 = 269
+""""""
 FL_FREE_COL15 = 270
+""""""
 FL_FREE_COL16 = 271
+""""""
 FL_NOCOLOR = INT_MAX
+""""""
 
 FL_BUILT_IN_COLS = FL_YELLOWGREEN + 1
 FL_INACTIVE_COL = FL_INACTIVE
 
+# backwards data dismissed --LK
 # Some aliases for the color. This is actually backwards ...
-FL_GRAY16 = FL_RIGHT_BCOL
-FL_GRAY35 = FL_BOTTOM_BCOL
-FL_GRAY80 = FL_TOP_BCOL
-FL_GRAY90 = FL_LEFT_BCOL
-FL_GRAY63 = FL_COL1
-FL_GRAY75 = FL_MCOL
+#FL_GRAY16 = FL_RIGHT_BCOL
+#FL_GRAY35 = FL_BOTTOM_BCOL
+#FL_GRAY80 = FL_TOP_BCOL
+#FL_GRAY90 = FL_LEFT_BCOL
+#FL_GRAY63 = FL_COL1
+#FL_GRAY75 = FL_MCOL
 FL_LCOL = FL_BLACK
 FL_NoColor = FL_NOCOLOR
-
 # An alias probably for an earlier typo
-FL_DOGERBLUE = FL_DODGERBLUE
-
+#FL_DOGERBLUE = FL_DODGERBLUE
+# end backward --LK
 
 # my add, list of possible values --LK
 COLOR_list = [FL_BLACK, FL_RED, FL_GREEN, FL_YELLOW, FL_BLUE, FL_MAGENTA,
@@ -545,49 +878,160 @@ COLOR_list = [FL_BLACK, FL_RED, FL_GREEN, FL_YELLOW, FL_BLUE, FL_MAGENTA,
 # values for enumeration 'FL_EVENTS'
 FL_EVENTS = cty.c_int # enum
 FL_NOEVENT = 0
+""""""
 FL_DRAW = 1
+"""The object has to be (re)drawn. To figure out the actual size of the
+object you can use the fields pObject.contents.x, pObject.contents.y,
+pObject.contents.w and pObject.contents.h. Many Xlib drawing routines
+require a window ID, which you can obtain from the object pointer using
+FL_ObjWin(pObject). Some other aspects might also influence the way
+the object has to be drawn. E.g., you might want to draw the object
+differently when the mouse is on top of it or when the mouse is
+pressed on it. This can be figured out the following way: The field
+pObject.contents.belowmouse tells you whether the object is below the
+mouse. The field pObject.contents.pushed indicates whether the object is
+currently being pushed with the mouse. Finally, pObject.contents.focus
+indicate whether input focus is directed towards this object. Note
+that drawing of the object is the full responsibility of the object
+class, including the bounding box and the label, which can be found in
+the field pObject.contents.label. The Forms Library provides a large number
+of routines to help you draw object.
+One important caution about your draw event handling code: none of the
+high level routines (fl_freeze_form(), fl_deactivate_form()) etc. can be
+used. The only routines allowed to be used are (direct) drawing functions
+and object internal book keeping routines. Attribute modifying routines,
+such as fl_set_object_color() etc. are not allowed (using them can lead
+to infinite recursions). In addition, (re)drawing of other objects using
+fl_redraw_object() while handling FL_DRAW will also not work.
+Due to the way double buffering is handled, at the time the FL_DRAW event
+is passed to the handling function (and only then) FL_ObjWin(pObject) might
+return a pixmap used as the backbuffer (at least if the object is double
+buffered). What that means is that FL_ObjWin(pObject) should not be used
+when a real window is needed. For a real window you can change the window's
+cursor or query the mouse position within it. You can't do either of these
+with the backbuffer pixmap. If there is a need to obtain the real window ID
+the following routine can be used: fl_get_real_object_window() 
+To summarize: use FL_ObjWin(pObject) when drawing and use
+fl_get_real_object_window() for cursor or pointer routines. This distinction
+is important only while handling FL_DRAW events, FL_ObjWin(obj) should be
+used anywhere else."""
 FL_PUSH = 2
+"""The user has pushed a mouse button on the object. Normally this
+requires some actual action. The number of the mouse button pushed is
+given in the 'key' parameter, having one of FL_*_MOUSE values."""
 FL_RELEASE = 3
+"""The user has released the mouse button. This event is only sent if a
+FL_PUSH event was sent before."""
 FL_ENTER = 4
+"""This event is sent when the mouse has entered the bounding box and
+might require some action. Note also that the field
+pObject.content.belowmouse in the object is being set. If entering an
+objects area only changes its appearance, redrawing it normally
+suffices. Don't do this directly! Always redraw the object by calling 
+fl_redraw_object(). It will send an FL_DRAW event to the object but also
+does some other things (like setting window IDs and taking care of double
+buffering etc.)."""
 FL_LEAVE = 5
+"""The mouse has left the bounding box. Again, normally a redraw is enough
+(or nothing at all)."""
 FL_MOTION = 6
+"""Motion events get sent between FL_ENTER and FL_LEAVE events when the
+mouse position changes on the object. The mouse position is given as an
+argument to the handle routine."""
 FL_FOCUS = 7
+"""Input got focussed to this object. This type of event and the next two
+are only sent to objects for which the field pObject.contents.input is set
+to 1 (see below)."""
 FL_UNFOCUS = 8
+"""Input is no longer focussed on the object."""
 FL_KEYPRESS = 9
-FL_UPDATE = 10      # for objects that need to update something from time to
-                    # time
+"""A key was pressed. The ASCII value (or KeySym if non-ASCII) is passed
+to the routine via the 'key' argument, modifier keys can be retrieved from
+the state member of the XEvent also passed to the function via 'xev'.
+This event only happens between FL_FOCUS and FL_UNFOCUS events. Not all
+objects sent keyboard events, only those that have non-zero value in field
+pOobject.contents.input or pObject.contents.wantkey."""
+# for objects that need to update something from time to time:
+FL_UPDATE = 10
+"""An FL_UPDATE event, like the FL_STEP event, also gets send about every 50
+msec (but less often under high load) to objects while they are
+"pushed", i.e. between receiving a FL_PUSH and a FL_RELEASE event if the
+pObject.contents.want_update field is set for the object. Like for the
+FL_STEP event the handling routine receives a synthetic MotionNotify event
+as the XEvent. This is typically used by objects that have to perform tasks
+at regular time intervals while they are "pushed" (e.g. counters that need
+to count up or down while the mouse is pushed on one of its buttons)."""
 FL_STEP = 11
+"""A FL_STEP event is sent all the time (typically about 20 times a second
+but possibly less often because of system delays and other time-consuming
+tasks) to objects for which the field pObject.contents.automatic has been
+set to a non-zero value. The handling routine receives a synthetic
+MotionNotify event as the XEvent. This can be used to make an object change
+appearance without user action. Clock and timer objects use this type of
+event."""
 FL_SHORTCUT = 12
+"""The user used a keyboard shortcut. The shortcut used is given in the
+parameter key. See below for more on shortcuts."""
 FL_FREEMEM = 13
-FL_OTHER = 14       # property, selection etc
+"""This event is sent when the object is to be freed. All memory
+allocated for the object must be freed when this event is received"""
+# property, selection etc.:
+FL_OTHER = 14
+"""Events other than the above. These events currently include
+ClientMessage, Selection and possibly other window manager events. All
+information about the event is contained in 'xev' parameter and 'mx',
+'my' may or may not reflect the actual position of the mouse."""
 FL_DRAWLABEL = 15
-FL_DBLCLICK = 16    # double click
-FL_TRPLCLICK = 17   # triple click
+"""This event typically follows FL_DRAW and indicates that the object label
+needs to be (re)drawn. If the object in question always draws its label
+inside the bounding box and this is taken care of by handing FL_DRAW, you
+can ignore this event."""
+# double click:
+FL_DBLCLICK = 16
+"""The user has pushed a mouse button twice within a certain time limit
+(FL_CLICK_TIMEOUT), which by default is 400 msec. This event is sent
+after two FL_PUSH, FL_RELEASE sequence. Note that FL_DBLCLICK is only
+generated for objects that have non-zero pObject.contents.click timeout
+fields and it will not be generated for events from the scroll wheel."""
+# triple click:
+FL_TRPLCLICK = 17
+"""The user has pushed a mouse button three times within a certain time
+window. This event is sent after a FL_DBLCLICK, FL_PUSH, FL_RELEASE
+sequence. Set click timeout to none-zero to activate FL_TRPLCLICK"""
 FL_ATTRIB = 18      # attribute change
+""""""
 FL_KEYRELEASE = 19
+""""""
 FL_PS = 20          # dump a form into EPS
+""""""
 FL_MOVEORIGIN = 21  # dragging the form across the screen changes its
+""""""
                     # absolute x,y coords. Objects that themselves
                     # contain forms should ensure that they are up to
                     # date.
 FL_RESIZED = 22     # the object has been resized by scale_form
+""""""
                     # Tell it that this has happened so that
                     # it can resize any FL_FORMs that it contains.
+
 # backward data dismissed --LK
 # The following are only for backward compatibility, not used anymore
 #FL_MOVE = FL_MOTION
 #FL_KEYBOARD = FL_KEYPRESS
 #FL_MOUSE = FL_UPDATE
-
+# end backward --LK
 
 # Resize policies
 # values for enumeration 'FL_RESIZE_T'
 FL_RESIZE_T = cty.c_int  # enum
 FL_RESIZE_NONE = 0
+"""Can't be rescaled/resized"""
 FL_RESIZE_X = 1
+"""Can be rescaled on horizontal axis"""
 FL_RESIZE_Y = 2
-FL_RESIZE_ALL = (FL_RESIZE_X|FL_RESIZE_Y)
-
+"""Can be rescaled on vertical axis"""
+FL_RESIZE_ALL = (FL_RESIZE_X | FL_RESIZE_Y)
+"""Can be rescaled on both axis"""
 
 # my add, list of possible values --LK
 RESIZE_list = [FL_RESIZE_NONE, FL_RESIZE_X, FL_RESIZE_Y, FL_RESIZE_ALL]
@@ -597,14 +1041,23 @@ RESIZE_list = [FL_RESIZE_NONE, FL_RESIZE_X, FL_RESIZE_Y, FL_RESIZE_ALL]
 # values for enumeration 'FL_KEY'
 FL_KEY = cty.c_int  # enum
 FL_KEY_NORMAL  = 1     # normal keys(0-255) - tab +left/right
+""""""
 FL_KEY_TAB     = 2     # normal keys + 4 direction cursor
+""""""
 FL_KEY_SPECIAL = 4     # only needs special keys(>255)
+""""""
 FL_KEY_ALL     = 7     # all keys
+""""""
 
 FL_ALT_MASK = (1L<<25)      # alt + Key --> FL_ALT_MASK + key
+""""""
 FL_CONTROL_MASK = (1L<<26)
+""""""
 FL_SHIFT_MASK = (1L<<27)
-FL_ALT_VAL = FL_ALT_MASK    # Don't use!
+""""""
+# backward data dismissed --LK
+#FL_ALT_VAL = FL_ALT_MASK    # Don't use!
+# end backward --LK
 
 MAX_SHORTCUTS = 8
 
@@ -618,19 +1071,28 @@ KEY_list = [FL_KEY_NORMAL, FL_KEY_TAB, FL_KEY_SPECIAL, FL_KEY_ALL,
 # choice and menu class where mode is kept by a single byte
 # values for unnamed enumeration
 FL_PUP_NONE = 0
+""""""
 FL_PUP_GREY = 1
+""""""
 FL_PUP_BOX = 2
+""""""
 FL_PUP_CHECK = 4
+""""""
 FL_PUP_RADIO = 8
+""""""
 
 FL_PUP_GRAY = FL_PUP_GREY
-FL_PUP_TOGGLE = FL_PUP_BOX          # not used anymore
+""""""
+#backward data dismissed --LK
+#FL_PUP_TOGGLE = FL_PUP_BOX          # not used anymore
+#end backward
 FL_PUP_INACTIVE = FL_PUP_GREY
+""""""
 
 
 # my add, list of possible values --LK
 PUP_list = [FL_PUP_NONE, FL_PUP_GREY, FL_PUP_BOX, FL_PUP_CHECK, FL_PUP_RADIO,
-            FL_PUP_GRAY, FL_PUP_TOGGLE, FL_PUP_INACTIVE]
+            FL_PUP_GRAY, FL_PUP_INACTIVE]
 
 
 # Popup and menu entries
@@ -646,7 +1108,7 @@ FL_PUP_ENTRY._fields_ = [
     ('text', STRING),               # label of a popup/menu item
     ('callback', FL_PUP_CB),        # the callback function
     ('shortcut', STRING),           # hotkeys
-    ('mode', cty.c_int),            # FL_PUP_GRAY, FL_PUP_CHECK, etcty.
+    ('mode', cty.c_int),            # FL_PUP_GRAY, FL_PUP_CHECK, etc.
 ]
 
 FL_MENU_ENTRY = FL_PUP_ENTRY
@@ -658,28 +1120,49 @@ FL_MAXFONTS = 48        # max number of fonts
 # values for enumeration 'FL_TEXT_STYLE'
 FL_TEXT_STYLE = cty.c_int # enum
 FL_INVALID_STYLE = -1
+""""""
 FL_NORMAL_STYLE = 0
+""""""
 FL_BOLD_STYLE = 1
+""""""
 FL_ITALIC_STYLE = 2
+""""""
 FL_BOLDITALIC_STYLE = 3
+""""""
 FL_FIXED_STYLE = 4
+""""""
 FL_FIXEDBOLD_STYLE = 5
+""""""
 FL_FIXEDITALIC_STYLE = 6
+""""""
 FL_FIXEDBOLDITALIC_STYLE = 7
+""""""
 FL_TIMES_STYLE = 8
+""""""
 FL_TIMESBOLD_STYLE = 9
+""""""
 FL_TIMESITALIC_STYLE = 10
+""""""
 FL_TIMESBOLDITALIC_STYLE = 11
+""""""
 FL_MISC_STYLE = 12
+""""""
 FL_MISCBOLD_STYLE = 13
+""""""
 FL_MISCITALIC_STYLE = 14
+""""""
 FL_SYMBOL_STYLE = 15
+""""""
 # modifier masks. Need to fit a short
 FL_SHADOW_STYLE = 512           #(1<<9)
+""""""
 FL_ENGRAVED_STYLE = 1024        #(1<<10)
+""""""
 FL_EMBOSSED_STYLE = 2048        #(1<<11)
+""""""
 
 FL_FONT_STYLE = FL_TEXT_STYLE
+""""""
 
 
 # my add, list of possible values --LK
@@ -696,12 +1179,19 @@ TEXTSTYLE_list = [FL_INVALID_STYLE, FL_NORMAL_STYLE, FL_BOLD_STYLE,
 
 # Standard sizes in XForms
 FL_TINY_SIZE = 8
+""""""
 FL_SMALL_SIZE = 10
+""""""
 FL_NORMAL_SIZE = 12
+""""""
 FL_MEDIUM_SIZE = 14
+""""""
 FL_LARGE_SIZE = 18
+""""""
 FL_HUGE_SIZE = 24
+""""""
 FL_DEFAULT_SIZE = FL_SMALL_SIZE
+""""""
 
 
 # my add, list of possible values --LK
@@ -720,9 +1210,10 @@ SIZE_list = [FL_TINY_SIZE, FL_SMALL_SIZE, FL_NORMAL_SIZE, FL_MEDIUM_SIZE,
 #FL_NORMAL_FONT1 = FL_SMALL_FONT
 #FL_NORMAL_FONT2 = FL_NORMAL_FONT
 #FL_DEFAULT_FONT = FL_SMALL_FONT
+#end backward --LK
 
-#FL_BOUND_WIDTH = FL_Coord(1)     # Border width of boxes
-FL_BOUND_WIDTH = 1     # Border width of boxes
+FL_BOUND_WIDTH = 1     # Border width of boxes, FL_Coord(1)
+""""""
 
 
 # Definition of basic struct that holds an object
@@ -976,19 +1467,19 @@ FL_OBJECT_._fields_ = [
 ]
 
 
-#FL_EVENT = (cty.POINTER(FL_OBJECT)).in_dll(load_so_libforms(), 'FL_EVENT')
-#FL_EVENT = cty.POINTER(FL_OBJECT)()
-
-
 # error callback
 FL_ERROR_FUNC = cty.CFUNCTYPE(None, STRING, STRING)
 
-# form visibility state: form->visible
+# form visibility state: form .visible
 # values for unnamed enumeration
 FL_BEING_HIDDEN = -1
+"""The forms is visible but is in the process of being hidden"""
 FL_HIDDEN = 0
+"""The form is not visible"""
 FL_INVISIBLE = FL_HIDDEN
+"""The form is not visible"""
 FL_VISIBLE = 1
+"""The form is visible"""
 
 # my add, list of possible values --LK
 VISIBLE_list = [FL_BEING_HIDDEN, FL_HIDDEN, FL_INVISIBLE, FL_VISIBLE]
@@ -1007,8 +1498,11 @@ FD_Any._fields_ = [
 
 # Async IO stuff
 FL_READ   = 1
+"""File descriptor has data available."""
 FL_WRITE  = 2
+"""File descriptor is available for writing."""
 FL_EXCEPT = 4
+"""an I/O error has occurred."""
 
 # my add, list of possible values --LK
 ASYNCIO_list = [FL_READ, FL_WRITE, FL_EXCEPT]
@@ -1023,8 +1517,11 @@ FL_MAX_MENU_CHOICE_ITEMS = 128
 # Draw mode
 # values for unnamed enumeration
 FL_XOR = 6              # GXxor
+""""""
 FL_COPY = 3             # GXcopy
+""""""
 FL_AND = 1              # GXand
+""""""
 
 # my add, list of possible values --LK
 DRAWMODE_list = [FL_XOR, FL_COPY, FL_AND]
@@ -1036,13 +1533,21 @@ FL_MINDEPTH = 1
 # FL_xxx does not do anything anymore, but kept for compatibility
 # values for unnamed enumeration
 FL_IllegalVisual = -1
+""""""
 FL_StaticGray = 0           # StaticGray
+""""""
 FL_GrayScale = 1            # GrayScale
+""""""
 FL_StaticColor = 2          # StaticColor
+""""""
 FL_PseudoColor = 3          # PseudoColor
+""""""
 FL_TrueColor = 4            # TrueColor
+""""""
 FL_DirectColor = 5          # DirectColor
+""""""
 FL_DefaultVisual = 10       # special request
+""""""
 
 # my add --LK
 TrueColor = FL_TrueColor
@@ -1054,16 +1559,25 @@ StaticGrey = StaticGray = 0         #StaticGray
 
 # values for unnamed enumeration
 FL_North = 2                            #NorthGravity
+""""""
 FL_NorthEast = 3                        #NorthEastGravity
+""""""
 FL_NorthWest = 1                        #NorthWestGravity
+""""""
 FL_South = 8                            #SouthGravity
+""""""
 FL_SouthEast = 9                        #SouthEastGravity
+""""""
 FL_SouthWest = 7                        #SouthWestGravity
+""""""
 FL_East = 6                             #EastGravity
+""""""
 FL_West = 4                             #WestGravity
+""""""
 FL_NoGravity = 0                        #ForgetGravity
+""""""
 FL_ForgetGravity = FL_NoGravity         #ForgetGravity
-
+""""""
 
 # my add, list of possible values --LK
 GRAVITY_list = [FL_North, FL_NorthEast, FL_NorthWest, FL_South, FL_SouthEast,
@@ -1170,27 +1684,6 @@ _XDisplay._fields_ = []
 
 Display = _XDisplay
 
-# Global variables
-
-#fl_display = (cty.POINTER(Display)).in_dll(load_so_libforms(), 'fl_display')
-#fl_display = cty.POINTER(Display)()
-#fl_screen = (cty.c_int).in_dll(so_libforms, 'fl_screen')
-#fl_screen = cty.c_int()
-#fl_root = (Window).in_dll(so_libforms, 'fl_root')       # root window
-#fl_root = Window()    # cty.c_ulong
-#fl_vroot = (Window).in_dll(so_libforms, 'fl_vroot')     # virtual root window
-#fl_vroot = Window()    # cty.c_ulong
-#fl_scrh = (cty.c_int).in_dll(so_libforms, 'fl_scrh')      # screen dimension in pixels
-#fl_scrh = cty.c_int()
-#fl_scrw = (cty.c_int).in_dll(so_libforms, 'fl_scrw')
-#fl_scrw = cty.c_int()
-#fl_vmode = (cty.c_int).in_dll(so_libforms, 'fl_vmode')
-#fl_vmode = cty.c_int()
-#fl_state = (cty.POINTER(FL_State)).in_dll(load_so_libforms(), 'fl_state')
-#fl_state = cty.POINTER(FL_State)()
-#fl_ul_magic_char = (STRING.in_dll(load_so_libforms(), 'fl_state')
-#fl_ul_magic_char = STRING()
-
 
 # Fonts related
 
@@ -1220,12 +1713,19 @@ FL_RECT = XRectangle
 
 # values for unnamed enumeration
 FL_SOLID = 0                 #LineSolid
+""""""
 FL_USERDASH = 1               #LineOnOffDash
+""""""
 FL_USERDOUBLEDASH = 2        #LineDoubleDash
+""""""
 FL_DOT = 3
+""""""
 FL_DOTDASH = 4
+""""""
 FL_DASH = 5
+""""""
 FL_LONGDASH = 6
+""""""
 
 
 # my add, list of possible values --LK
@@ -1294,12 +1794,19 @@ FL_ALL_EVENT = (KeyPressMask | KeyReleaseMask \
 # values for enumeration 'FL_RTYPE'
 FL_RTYPE = cty.c_int  # enum
 FL_NONE = 0
+"""type for variables not to be used (or not available)"""
 FL_SHORT = 10
+"""type for short variable"""
 FL_BOOL = 11
+"""for boolean variable (int)"""
 FL_INT = 12
+"""for int variable"""
 FL_LONG = 13
+"""for long variable"""
 FL_FLOAT = 14
+"""for float variable"""
 FL_STRING = 15
+"""for char[]/string variable"""
 
 RTYPE_list = [FL_NONE, FL_SHORT, FL_BOOL, FL_INT, FL_LONG, FL_FLOAT, FL_STRING]
 
@@ -1426,7 +1933,7 @@ FL_PDButtonLabel = FL_PDButtonLabelSize
 
 
 # How we pack and unpack colors
-FL_PCTYPE = cty.c_ubyte
+FL_PCTYPE = cty.c_ubyte         # primary color type
 FL_PCBITS = 8
 FL_PCMAX = (1<<FL_PCBITS) - 1
 
@@ -1434,13 +1941,21 @@ FL_PACKED4 = cty.c_uint
 FL_PACKED = FL_PACKED4
 
 FL_RMASK = 0x000000ff
+""""""
 FL_RSHIFT = 0
+""""""
 FL_GMASK = 0x0000ff00
+""""""
 FL_GSHIFT = 8
+""""""
 FL_BMASK = 0x00ff0000
+""""""
 FL_BSHIFT = 16
+""""""
 FL_AMASK = 0xff000000
+""""""
 FL_ASHIFT = 24
+""""""
 
 
 class FL_RGB2PIXEL_(cty.Structure):
@@ -1584,32 +2099,50 @@ FL_POPUP_ITEM._fields_ = [
 # Popup policies
 # values for unnamed enumeration
 FL_POPUP_NORMAL_SELECT = 0
+""""""
 FL_POPUP_DRAG_SELECT = 1
+""""""
 
 # Popup states
 # values for unnamed enumeration
 FL_POPUP_NONE = 0
+""""""
 FL_POPUP_DISABLED = 1       # entry is disabled
+""""""
 FL_POPUP_HIDDEN   = 2       # entry is temporarily hidden
+""""""
 FL_POPUP_CHECKED  = 4       # toggle/radio item is in on state
+""""""
 
 # Popup entry types
 # values for unnamed enumeration
 FL_POPUP_NORMAL = 0         # normal popup entry
+""""""
 FL_POPUP_TOGGLE = 1         # toggle ("binary") popup entry
+""""""
 FL_POPUP_RADIO = 2          # radio popup entry
+""""""
 FL_POPUP_SUB = 3            # sub-popup popup entry
+""""""
 FL_POPUP_LINE = 4           # line popup entry
+""""""
 
 # Popup color types
 # values for unnamed enumeration
 FL_POPUP_BACKGROUND_COLOR = 0
+""""""
 FL_POPUP_HIGHLIGHT_COLOR = 1
+""""""
 FL_POPUP_TITLE_COLOR = 2
+""""""
 FL_POPUP_TEXT_COLOR = 3
+""""""
 FL_POPUP_HIGHLIGHT_TEXT_COLOR = 4
+""""""
 FL_POPUP_DISABLED_TEXT_COLOR = 5
+""""""
 FL_POPUP_RADIO_COLOR = 6
+""""""
 
 
 
@@ -1619,6 +2152,7 @@ FL_POPUP_RADIO_COLOR = 6
 #######################
 
 FL_NORMAL_BITMAP = 0
+""""""
 
 # my add - list of possible values --LK
 BITMAPTYPE_list = [FL_NORMAL_BITMAP, ]
@@ -1637,6 +2171,7 @@ Drawable = XID    # cty.c_ulong
 # PIXMAP stuff
 
 FL_NORMAL_PIXMAP = 0
+""""""
 
 # my add - list of possible values --LK
 PIXMAPTYPE_list = [FL_NORMAL_PIXMAP, ]
@@ -1650,9 +2185,13 @@ PIXMAPTYPE_list = [FL_NORMAL_PIXMAP, ]
 # values for enumeration 'FL_BROWSER_TYPE'
 FL_BROWSER_TYPE = cty.c_int # enum
 FL_NORMAL_BROWSER = 0
+""""""
 FL_SELECT_BROWSER = 1
+""""""
 FL_HOLD_BROWSER = 2
+""""""
 FL_MULTI_BROWSER = 3
+""""""
 
 # my add - list of possible values --LK
 BROWSERTYPE_list = [FL_NORMAL_BROWSER, FL_SELECT_BROWSER, FL_HOLD_BROWSER, \
@@ -1684,16 +2223,26 @@ FL_BROWSER_FONTSIZE = FL_SMALL_SIZE             #FL_SMALL_FONT
 # values for enumeration 'FL_BUTTON_TYPE'
 FL_BUTTON_TYPE = cty.c_int # enum
 FL_NORMAL_BUTTON = 0
+""""""
 FL_PUSH_BUTTON = 1
+""""""
 FL_RADIO_BUTTON = 2
+""""""
 FL_HIDDEN_BUTTON = 3
+""""""
 FL_TOUCH_BUTTON = 4
+""""""
 FL_INOUT_BUTTON = 5
+""""""
 FL_RETURN_BUTTON = 6
+""""""
 FL_HIDDEN_RET_BUTTON = 7
+""""""
 FL_MENU_BUTTON = 8
+""""""
 
 FL_TOGGLE_BUTTON = FL_PUSH_BUTTON
+""""""
 
 # my add - list of possible values --LK
 BUTTONTYPE_list = [FL_NORMAL_BUTTON, FL_PUSH_BUTTON, FL_RADIO_BUTTON, \
@@ -1800,7 +2349,9 @@ FL_PIXMAPBUTTON_ALIGN = FL_ALIGN_BOTTOM
 # values for enumeration 'FL_CANVAS_TYPE'
 FL_CANVAS_TYPE = cty.c_int # enum
 FL_NORMAL_CANVAS = 0
+""""""
 FL_SCROLLED_CANVAS = 1
+""""""
 
 # list of possible values - my add --LK
 CANVASTYPE_list = [FL_NORMAL_CANVAS, FL_SCROLLED_CANVAS]
@@ -1852,12 +2403,19 @@ GLXContext._fields_ = []
 # values for enumeration 'FL_CHART_TYPE'
 FL_CHART_TYPE = cty.c_int # enum
 FL_BAR_CHART = 0
+""""""
 FL_HORBAR_CHART = 1
+""""""
 FL_LINE_CHART = 2
+""""""
 FL_FILL_CHART = 3
+""""""
 FL_SPIKE_CHART = 4
+""""""
 FL_PIE_CHART = 5
+""""""
 FL_SPECIALPIE_CHART = 6
+""""""
 
 # backward data dismissed --LK
 #FL_FILLED_CHART = FL_FILL_CHART     # for backward compatibility
@@ -1886,9 +2444,13 @@ FL_CHART_MAX = 2048
 # values for enumeration 'FL_CHOICE_TYPE'
 FL_CHOICE_TYPE = cty.c_int # enum
 FL_NORMAL_CHOICE = 0
+""""""
 FL_NORMAL_CHOICE2 = 1
+""""""
 FL_DROPLIST_CHOICE = 2
+""""""
 FL_BROWSER_CHOICE = 3
+""""""
 
 FL_SIMPLE_CHOICE = FL_NORMAL_CHOICE
 
@@ -1925,7 +2487,9 @@ FL_CPTYPE = Atom
 
 # values for unnamed enumeration
 FL_ANALOG_CLOCK = 0
+""""""
 FL_DIGITAL_CLOCK = 1
+""""""
 
 # list of possible values - my add --LK
 CLOCKTYPE_list = [FL_ANALOG_CLOCK, FL_DIGITAL_CLOCK]
@@ -1947,7 +2511,9 @@ FL_CLOCK_TOPCOL = FL_COL1
 # values for enumeration 'FL_COUNTER_TYPE'
 FL_COUNTER_TYPE = cty.c_int # enum
 FL_NORMAL_COUNTER = 0
+""""""
 FL_SIMPLE_COUNTER = 1
+""""""
 
 # list of possible values - my add --LK
 COUNTERTYPE_list = [FL_NORMAL_COUNTER, FL_SIMPLE_COUNTER]
@@ -1961,7 +2527,7 @@ FL_COUNTER_LCOL = FL_LCOL           # ct reporting
 FL_COUNTER_ALIGN = FL_ALIGN_BOTTOM
 
 # Others
-FL_COUNTER_BW = (FL_BOUND_WIDTH - 1)
+FL_COUNTER_BW = FL_BOUND_WIDTH - 1
 
 
 #############################
@@ -2071,17 +2637,24 @@ XCursors_list = [XC_arrow, XC_based_arrow_down, XC_based_arrow_up, \
 
 # values for unnamed enumeration
 FL_INVISIBLE_CURSOR = -2
+""""""
 FL_DEFAULT_CURSOR = -1
+""""""
 FL_BUSY_CURSOR = XC_watch               #150
+""""""
 FL_CROSSHAIR_CURSOR = XC_tcross         #130
+""""""
 FL_KILL_CURSOR = XC_pirate              #88
+""""""
 FL_NWARROW_CURSOR = XC_top_left_arrow   #132
+""""""
 FL_NEARROW_CURSOR = XC_arrow            #2
+""""""
 
 XC_invisible = FL_INVISIBLE_CURSOR
 
 
-# my add --LK
+# list of possible values, my add --LK
 CURSORS_list = [FL_INVISIBLE_CURSOR, FL_DEFAULT_CURSOR, FL_BUSY_CURSOR, \
                 FL_CROSSHAIR_CURSOR, FL_KILL_CURSOR, FL_NWARROW_CURSOR, \
                 FL_NEARROW_CURSOR]
@@ -2095,8 +2668,11 @@ CURSORS_list = [FL_INVISIBLE_CURSOR, FL_DEFAULT_CURSOR, FL_BUSY_CURSOR, \
 # values for enumeration 'FL_DIAL_TYPE'
 FL_DIAL_TYPE = cty.c_int # enum
 FL_NORMAL_DIAL = 0
+""""""
 FL_LINE_DIAL = 1
+""""""
 FL_FILL_DIAL = 2
+""""""
 
 # list of possible values - my add --LK
 DIALTYPE_list = [FL_NORMAL_DIAL, FL_LINE_DIAL, FL_FILL_DIAL]
@@ -2104,7 +2680,9 @@ DIALTYPE_list = [FL_NORMAL_DIAL, FL_LINE_DIAL, FL_FILL_DIAL]
 
 # values for unnamed enumeration
 FL_DIAL_CW = 0
+""""""
 FL_DIAL_CCW = 1
+""""""
 
 # Defaults
 FL_DIAL_BOXTYPE = FL_FLAT_BOX
@@ -2126,17 +2704,30 @@ FL_DIAL_TOPCOL = FL_COL1
 # File types
 # values for unnamed enumeration
 FT_FILE = 0
+"""a regular file type"""
 FT_DIR = 1
+"""a directory file type"""
 FT_LINK = 2
+"""a symbolic link file type"""
 FT_SOCK = 3
+"""a socket file type"""
 FT_FIFO = 4
+"""a pipe or FIFO file type"""
 FT_BLK = 5
+"""a block device file type"""
 FT_CHR = 6
+"""a character device file type"""
 FT_OTHER = 7
+"""other(?) file type"""
 
 
 class FL_Dirlist(cty.Structure):
+    """@cvar name: entry name
+    @cvar type: file type
+    @cvar dl_mtime: file modification time
+    @cvar dl_size: file size in bytes"""
     pass
+
 FL_Dirlist._fields_ = [
     ('name', STRING),               # entry name
     ('type', cty.c_int),              # FILE_TYPE
@@ -2146,14 +2737,23 @@ FL_Dirlist._fields_ = [
 
 
 # values for unnamed enumeration
+#FL_NONE                    # Don't sort the entries (defined elsewhere)
 FL_ALPHASORT = 1            # sort in alphabetic order
+"""Sort the entries in alphabetic order - this is the default"""
 FL_RALPHASORT = 2           # sort in reverse alphabetic order
+"""Sort the entries in reverse alphabetic order"""
 FL_MTIMESORT = 3            # sort according to modifcation time
+"""Sort the entries according to the modification time"""
 FL_RMTIMESORT = 4           # sort in reverse modificaiton time
+"""Sort the entries according to the modification time, but reverse the order, i.e., latest first"""
 FL_SIZESORT = 5             # sort in increasing size order
+"""Sort the entries in increasing size order"""
 FL_RSIZESORT = 6            # sort in decreasing size order
+"""Sort the entries in decreasing size order"""
 FL_CASEALPHASORT = 7        # sort case insensitive
+"""Sort the entries in alphabetic order with no regard to case"""
 FL_RCASEALPHASORT = 8       # sort case insensitive
+"""Sort the entries in reverse alphabetic order with no regard to case."""
 
 
 
@@ -2164,14 +2764,21 @@ FL_RCASEALPHASORT = 8       # sort case insensitive
 # postscript stuff
 # values for unnamed enumeration
 FLPS_AUTO = 0              # switch to landscale if does not fit
+""""""
 FLPS_LANDSCAPE = 1         # landscape always
+""""""
 FLPS_PORTRAIT = 2          # portrait always
+""""""
 FLPS_BESTFIT = 3           # even margins/best fit
+""""""
 
 # values for unnamed enumeration
 FLPS_BW = -1
+""""""
 FLPS_GRAYSCALE = 0
+""""""
 FLPS_COLOR = 1
+""""""
 
 
 class FLPS_CONTROL(cty.Structure):
@@ -2206,6 +2813,7 @@ FLPS_CONTROL._fields_ = [
 
 # values for unnamed enumeration
 FL_NORMAL_FORMBROWSER = 0
+""""""
 
 # list of possible values - my add --LK
 FORMBRWSTYPE_list = [FL_NORMAL_FORMBROWSER, ]
@@ -2213,8 +2821,11 @@ FORMBRWSTYPE_list = [FL_NORMAL_FORMBROWSER, ]
 
 # values for unnamed enumeration
 FL_SMOOTH_SCROLL = 0
+""""""
 FL_JUMP_SCROLL = 1
+""""""
 
+# defaults?
 FL_FORMBROWSER_BOXTYPE = FL_DOWN_BOX
 FL_FORMBROWSER_COL1 = FL_COL1
 FL_FORMBROWSER_ALIGN = FL_ALIGN_TOP
@@ -2228,14 +2839,23 @@ FL_FORMBROWSER_ALIGN = FL_ALIGN_TOP
 # types of frames
 # values for unnamed enumeration
 FL_NO_FRAME = 0
+""""""
 FL_UP_FRAME = 1
+""""""
 FL_DOWN_FRAME = 2
+""""""
 FL_BORDER_FRAME = 3
+""""""
 FL_SHADOW_FRAME = 4
+""""""
 FL_ENGRAVED_FRAME = 5
+""""""
 FL_ROUNDED_FRAME = 6
+""""""
 FL_EMBOSSED_FRAME = 7
+""""""
 FL_OVAL_FRAME = 8
+""""""
 
 # list of possible values - my add --LK
 FRAMETYPE_list = [FL_NO_FRAME, FL_UP_FRAME, FL_DOWN_FRAME, FL_BORDER_FRAME,
@@ -2243,6 +2863,7 @@ FRAMETYPE_list = [FL_NO_FRAME, FL_UP_FRAME, FL_DOWN_FRAME, FL_BORDER_FRAME,
                   FL_EMBOSSED_FRAME, FL_OVAL_FRAME]
 
 
+# defaults?
 FL_FRAME_COL1 = FL_BLACK        # border color
 FL_FRAME_COL2 = FL_COL1         # label background
 FL_FRAME_LCOL = FL_BLACK        # label color
@@ -2257,12 +2878,18 @@ FL_FRAME_LCOL = FL_BLACK        # label color
 # values for enumeration 'FL_FREE_TYPE'
 FL_FREE_TYPE = cty.c_int # enum
 FL_NORMAL_FREE = 0
+""""""
 FL_INACTIVE_FREE = 1
+""""""
 FL_INPUT_FREE = 2
+""""""
 FL_CONTINUOUS_FREE = 3
+""""""
 FL_ALL_FREE = 4
+""""""
 
 FL_SLEEPING_FREE = FL_INACTIVE_FREE
+""""""
 
 # list of possible values - my add --LK
 FREETYPE_list = [FL_NORMAL_FREE, FL_INACTIVE_FREE, FL_INPUT_FREE,
@@ -2275,20 +2902,29 @@ FREETYPE_list = [FL_NORMAL_FREE, FL_INACTIVE_FREE, FL_INPUT_FREE,
 ######################
 
 # Resources and misc. goodie routines
-
 FLAlertDismissLabel = "flAlert.dismiss.label"
+""""""
 FLAlertTitle = "flAlert.title"
+""""""
 
 FLQuestionYesLabel = "flQuestion.yes.label"
+""""""
 FLQuestionNoLabel = "flQuestion.no.label"
+""""""
 FLQuestionTitle = "flQuestion.title"
+""""""
 
 FLOKLabel = "flInput.ok.label"
+""""""
 FLInputClearLabel = "flInput.clear.label"
+""""""
 FLInputCancelLabel = "flInput.cancel.label"
+""""""
 FLInputTitle = "flInput.title"
+""""""
 
 FLChoiceTitle = "flChoice.title"
+""""""
 
 
 # command log
@@ -2339,12 +2975,19 @@ FD_FSELECTOR._fields_ = [
 # values for enumeration 'FL_INPUT_TYPE'
 FL_INPUT_TYPE = cty.c_int # enum
 FL_NORMAL_INPUT = 0
+""""""
 FL_FLOAT_INPUT = 1
+""""""
 FL_INT_INPUT = 2
+""""""
 FL_DATE_INPUT = 3
+""""""
 FL_MULTILINE_INPUT = 4
+""""""
 FL_HIDDEN_INPUT = 5
+""""""
 FL_SECRET_INPUT = 6
+""""""
 
 # my add - list of possible values --LK
 INPUTTYPE_list = [FL_NORMAL_INPUT, FL_FLOAT_INPUT, FL_INT_INPUT, \
@@ -2355,7 +2998,9 @@ INPUTTYPE_list = [FL_NORMAL_INPUT, FL_FLOAT_INPUT, FL_INT_INPUT, \
 # for date input
 # values for unnamed enumeration
 FL_INPUT_MMDD = 0
+""""""
 FL_INPUT_DDMM = 1
+""""""
 
 # Defaults
 FL_INPUT_BOXTYPE = FL_DOWN_BOX
@@ -2369,6 +3014,7 @@ FL_INPUT_TCOL = FL_LCOL
 FL_INPUT_CCOL = FL_BLUE
 
 FL_RINGBELL = (1<<4)
+""""""
 
 
 
@@ -2413,8 +3059,11 @@ FL_EditKeymap._fields_ = [
 # values for enumeration 'FL_MENU_TYPE'
 FL_MENU_TYPE = cty.c_int # enum
 FL_TOUCH_MENU = 0
+""""""
 FL_PUSH_MENU = 1
+""""""
 FL_PULLDOWN_MENU = 2
+""""""
 
 # my add - list of possbile values --LK
 MENUTYPE_list = [FL_TOUCH_MENU, FL_PUSH_MENU, FL_PULLDOWN_MENU]
@@ -2431,14 +3080,18 @@ FL_MENU_ALIGN = FL_ALIGN_CENTER
 FL_MENU_MAXITEMS = 128
 # backward data dismissed --LK
 #FL_MENU_MAXSTR = 64        # not used anymore! JTT
-
+#end backward --LK
 
 # Nmenu object types
 # values for unnamed enumeration
 FL_NORMAL_NMENU = 0
+""""""
 FL_NORMAL_TOUCH_NMENU = 1
+""""""
 FL_BUTTON_NMENU = 2
+""""""
 FL_BUTTON_TOUCH_NMENU = 3
+""""""
 
 # list of possible values - my add --LK
 NMENUTYPE_list = [FL_NORMAL_NMENU, FL_NORMAL_TOUCH_NMENU, FL_BUTTON_NMENU, \
@@ -2451,8 +3104,11 @@ NMENUTYPE_list = [FL_NORMAL_NMENU, FL_NORMAL_TOUCH_NMENU, FL_BUTTON_NMENU, \
 #########################
 
 FL_NORMAL_POSITIONER = 0
+""""""
 FL_OVERLAY_POSITIONER = 1
+""""""
 FL_INVISIBLE_POSITIONER = 2
+""""""
 
 # list of possible values - my add --LK
 POSITIONERTYPE_list = [FL_NORMAL_POSITIONER, FL_OVERLAY_POSITIONER,
@@ -2469,23 +3125,37 @@ FL_POSITIONER_ALIGN = FL_ALIGN_BOTTOM
 
 # values for unnamed enumeration
 FL_VERT_SCROLLBAR = 0
+""""""
 FL_HOR_SCROLLBAR = 1
+""""""
 FL_VERT_THIN_SCROLLBAR = 2
+""""""
 FL_HOR_THIN_SCROLLBAR = 3
+""""""
 FL_VERT_NICE_SCROLLBAR = 4
+""""""
 FL_HOR_NICE_SCROLLBAR = 5
+""""""
 FL_VERT_PLAIN_SCROLLBAR = 6
+""""""
 FL_HOR_PLAIN_SCROLLBAR = 7
+""""""
 FL_HOR_BASIC_SCROLLBAR = FL_HOR_PLAIN_SCROLLBAR
+""""""
 FL_VERT_BASIC_SCROLLBAR = FL_VERT_PLAIN_SCROLLBAR
+""""""
 
 # values for unnamed enumeration
 FL_NORMAL_SCROLLBAR = 0
+""""""
 FL_THIN_SCROLLBAR = 1
+""""""
 FL_NICE_SCROLLBAR = 2
+""""""
 FL_PLAIN_SCROLLBAR = 3
+""""""
 
-# my add - list of possible values --LK
+# my add - list of possible values --LK         TODO: verify
 SCROLLTYPE_list = [FL_VERT_SCROLLBAR, FL_HOR_SCROLLBAR, \
                   FL_VERT_THIN_SCROLLBAR, FL_HOR_THIN_SCROLLBAR, \
                   FL_VERT_NICE_SCROLLBAR, FL_HOR_NICE_SCROLLBAR, \
@@ -2503,8 +3173,11 @@ SCROLLTYPE_list = [FL_VERT_SCROLLBAR, FL_HOR_SCROLLBAR, \
 # Select object types
 # values for unnamed enumeration
 FL_NORMAL_SELECT = 0
+""""""
 FL_MENU_SELECT = 1
+""""""
 FL_DROPLIST_SELECT = 2
+""""""
 
 # list of possible values - my add --LK
 SELECTTYPE_list = [FL_NORMAL_SELECT, FL_MENU_SELECT, FL_DROPLIST_SELECT]
@@ -2524,36 +3197,54 @@ FL_SELECT_ALIGN = FL_ALIGN_LEFT
 #######################
 
 FL_HOR_FLAG = 1
+""""""
 FL_SCROLL_FLAG = 8
+""""""
 
 # values for enumeration 'FL_SLIDER_TYPE'
 FL_SLIDER_TYPE = cty.c_int # enum
-
-# values for enumeration 'FL_SLIDER_TYPE'
 FL_VERT_SLIDER = 0
+""""""
 FL_HOR_SLIDER = FL_VERT_SLIDER | FL_HOR_FLAG
+""""""
 FL_VERT_FILL_SLIDER = 2
+""""""
 FL_HOR_FILL_SLIDER = FL_VERT_FILL_SLIDER | FL_HOR_FLAG
+""""""
 FL_VERT_NICE_SLIDER = 4
+""""""
 FL_HOR_NICE_SLIDER = FL_VERT_NICE_SLIDER | FL_HOR_FLAG
+""""""
 FL_VERT_BROWSER_SLIDER = 6
+""""""
 FL_HOR_BROWSER_SLIDER = FL_VERT_BROWSER_SLIDER | FL_HOR_FLAG
+""""""
 # The following are for use with scrollbars only!
 # for FL_VERT_SCROLLBAR and FL_HOR_SCROLLBAR
 FL_VERT_BROWSER_SLIDER2 = FL_VERT_SLIDER | FL_SCROLL_FLAG
+""""""
 FL_HOR_BROWSER_SLIDER2 = FL_HOR_SLIDER | FL_SCROLL_FLAG
+""""""
 # for FL_VERT_THIN_SCROLLBAR and FL_VERT_THIN_SCROLLBAR
 FL_VERT_THIN_SLIDER = FL_VERT_FILL_SLIDER | FL_SCROLL_FLAG
+""""""
 FL_HOR_THIN_SLIDER = FL_HOR_FILL_SLIDER | FL_SCROLL_FLAG
+""""""
 # for FL_VERT_NICE_SCROLLBAR and FL_HOR_NICE_SCROLLBAR
 FL_VERT_THIN_SLIDER = FL_VERT_FILL_SLIDER | FL_SCROLL_FLAG
+""""""
 FL_HOR_THIN_SLIDER = FL_HOR_FILL_SLIDER | FL_SCROLL_FLAG
+""""""
 # for FL_VERT_NICE_SCROLLBAR and FL_HOR_NICE_SCROLLBAR
 FL_VERT_NICE_SLIDER2 = FL_VERT_NICE_SLIDER | FL_SCROLL_FLAG
+""""""
 FL_HOR_NICE_SLIDER2 = FL_HOR_NICE_SLIDER | FL_SCROLL_FLAG
+""""""
 # for use as FL_VERT_PLAIN_SCROLLBAR and FL_VERT_PLAIN_SCROLLBAR
 FL_VERT_BASIC_SLIDER = FL_VERT_BROWSER_SLIDER | FL_SCROLL_FLAG
+""""""
 FL_HOR_BASIC_SLIDER = FL_HOR_BROWSER_SLIDER | FL_SCROLL_FLAG
+""""""
 
 # list of possible values - my add --LK
 SLIDERTYPE_list = [FL_VERT_SLIDER, FL_HOR_SLIDER, FL_VERT_FILL_SLIDER, \
@@ -2584,7 +3275,9 @@ FL_SLIDER_WIDTH = 0.10
 # values for enumeration 'FL_SPINNER_TYPE'
 FL_SPINNER_TYPE = cty.c_int # enum
 FL_INT_SPINNER = 0
+""""""
 FL_FLOAT_SPINNER = 1
+""""""
 
 # list of possible values - my add --LK
 SPINNERTYPE_list = [FL_INT_SPINNER, FL_FLOAT_SPINNER]
@@ -2597,10 +3290,15 @@ SPINNERTYPE_list = [FL_INT_SPINNER, FL_FLOAT_SPINNER]
 
 # values for unnamed enumeration
 FL_TOP_TABFOLDER = 0        # tab on top
+""""""
 FL_BOTTOM_TABFOLDER = 1
+""""""
 FL_LEFT_TABFOLDER = 2
+""""""
 FL_RIGHT_TABFOLDER = 3
+""""""
 FL_NORMAL_TABFOLDER = FL_TOP_TABFOLDER
+""""""
 
 # list of possible values - my add --LK
 TABFOLDERTYPE_list = [FL_TOP_TABFOLDER, FL_BOTTOM_TABFOLDER, FL_LEFT_TABFOLDER, \
@@ -2609,8 +3307,11 @@ TABFOLDERTYPE_list = [FL_TOP_TABFOLDER, FL_BOTTOM_TABFOLDER, FL_LEFT_TABFOLDER, 
 
 # values for unnamed enumeration
 FL_NO = 0
+""""""
 FL_FIT = 1
+""""""
 FL_ENLARGE_ONLY = 2
+""""""
 
 
 
@@ -2620,6 +3321,7 @@ FL_ENLARGE_ONLY = 2
 
 # values for unnamed enumeration
 FL_NORMAL_TEXT = 0
+""""""
 
 # list of possible values - my add --LK
 TEXTTYPE_list = [FL_NORMAL_TEXT, ]
@@ -2639,7 +3341,9 @@ FL_TEXT_ALIGN = FL_ALIGN_LEFT
 
 # values for unnamed enumeration
 FL_VERT_THUMBWHEEL = 0
+""""""
 FL_HOR_THUMBWHEEL = 1
+""""""
 
 # list of possible values - my add --LK
 THUMBWHEELTYPE_list = [FL_VERT_THUMBWHEEL, FL_HOR_THUMBWHEEL]
@@ -2662,8 +3366,12 @@ FL_THUMBWHEEL_ALIGN = FL_ALIGN_BOTTOM
 # values for enumeration 'FL_TIMER_TYPE'
 FL_TIMER_TYPE = cty.c_int # enum
 FL_NORMAL_TIMER = 0
+"""Visible, Shows a label in a box which blinks when the timer expires."""
 FL_VALUE_TIMER = 1
+"""Visible, showing the time left or the elapsed time. Blinks if the
+timer expires."""
 FL_HIDDEN_TIMER = 2
+"""Not visible."""
 
 # list of possible values - my add --LK
 TIMERTYPE_list = [FL_NORMAL_TIMER, FL_VALUE_TIMER, FL_HIDDEN_TIMER]
@@ -2690,22 +3398,34 @@ FL_MAXPUPI = 128    # max item each pup
 FL_PUP_PADH = 4     # space between each items
 
 
-# Class FL_XYPLOT
 # values for enumeration 'FL_XYPLOT_TYPE'
 FL_XYPLOT_TYPE = cty.c_int # enum
 FL_NORMAL_XYPLOT = 0    # solid line
+""""""
 FL_SQUARE_XYPLOT = 1    # with added square
+""""""
 FL_CIRCLE_XYPLOT = 2    # with added circle
+""""""
 FL_FILL_XYPLOT = 3      # fill completely
+""""""
 FL_POINTS_XYPLOT = 4    # only data points
+""""""
 FL_DASHED_XYPLOT = 5    # dashed line
+""""""
 FL_IMPULSE_XYPLOT = 6
+""""""
 FL_ACTIVE_XYPLOT = 7    # accepts interactive manipulations
+""""""
 FL_EMPTY_XYPLOT = 8
+""""""
 FL_DOTTED_XYPLOT = 9
+""""""
 FL_DOTDASHED_XYPLOT = 10
+""""""
 FL_LONGDASHED_XYPLOT = 11
+""""""
 FL_LINEPOINTS_XYPLOT = 12   # line & points
+""""""
 
 # list of possible values - my add --LK
 XYPLOTTYPE_list = [FL_NORMAL_XYPLOT, FL_SQUARE_XYPLOT, FL_CIRCLE_XYPLOT, \
@@ -2717,12 +3437,17 @@ XYPLOTTYPE_list = [FL_NORMAL_XYPLOT, FL_SQUARE_XYPLOT, FL_CIRCLE_XYPLOT, \
 
 # values for unnamed enumeration
 FL_LINEAR = 0
+""""""
 FL_LOG = 1
+""""""
 
 # values for unnamed enumeration
 FL_GRID_NONE  = 0
+""""""
 FL_GRID_MAJOR = 1
+""""""
 FL_GRID_MINOR = 2
+""""""
 
 # Defaults
 FL_XYPLOT_BOXTYPE = FL_FLAT_BOX
@@ -2733,7 +3458,9 @@ FL_MAX_XYPLOTOVERLAY = 32
 
 
 FL_FALSE = 0
+""""""
 FL_TRUE = (not FL_FALSE)
+""""""
 
 
 Mask = cty.c_ulong
@@ -2750,24 +3477,42 @@ KeyCode = cty.c_ubyte
 
 # values for unnamed enumeration
 FL_IMAGE_NONE = 0
+""""""
 FL_IMAGE_MONO = 1           # b&w. 1bit. 0=white 1=black
+""""""
 FL_IMAGE_GRAY = 2           # 8 bit gray image
+""""""
 FL_IMAGE_CI = 4             # colormmaped image
+""""""
 FL_IMAGE_RGB = 8            # RGBA image. 8bit each
+""""""
 FL_IMAGE_PACKED = 16        # RGBA packed into an int
+""""""
 FL_IMAGE_GRAY16 = 32        # 12bit gray scale image
+""""""
 FL_IMAGE_RGB16 = 64         # 36bits color image
+""""""
 FL_IMAGE_FLEX = 1023        # all formats
+""""""
 # aliases
 FLIMAGE_NONE = FL_IMAGE_NONE
+""""""
 FLIMAGE_MONO = FL_IMAGE_MONO
+""""""
 FLIMAGE_GRAY = FL_IMAGE_GRAY
+""""""
 FLIMAGE_CI = FL_IMAGE_CI
+""""""
 FLIMAGE_RGB = FL_IMAGE_RGB
+""""""
 FLIMAGE_PACKED = FL_IMAGE_PACKED
+""""""
 FLIMAGE_GRAY16 = FL_IMAGE_GRAY16
+""""""
 FLIMAGE_RGB16 = FL_IMAGE_RGB16
+""""""
 FLIMAGE_FLEX = FL_IMAGE_FLEX
+""""""
 
 # my add --LK - list of possible values
 FLIMAGETYPE_list = [FL_IMAGE_NONE, FL_IMAGE_MONO, FL_IMAGE_GRAY, \
@@ -2778,24 +3523,13 @@ FLIMAGETYPE_list = [FL_IMAGE_NONE, FL_IMAGE_MONO, FL_IMAGE_GRAY, \
 		     FLIMAGE_GRAY16, FLIMAGE_RGB16, FLIMAGE_FLEX]
 
 
-FL_PCTYPE = cty.c_uint        # primary color type
-FL_PCBITS = 8               # primary color bits
-FL_PCMAX = (1 << FL_PCBITS) - 1
-
-FL_RMASK = 0x000000ff
-FL_RSHIFT = 0
-FL_GMASK = 0x0000ff00
-FL_GSHIFT = 8
-FL_BMASK = 0x00ff0000
-FL_BSHIFT = 16
-FL_AMASK = 0xff000000
-FL_ASHIFT = 24
-
 FL_LUTBITS = 12         # max colormap bits. 4096 entries
 
 # values for unnamed enumeration
 FLIMAGE_AUTOCOLOR = 0x7fffffff
+""""""
 FLIMAGE_BADCOLOR = FLIMAGE_AUTOCOLOR
+""""""
 
 FL_WINDOW = Window    # cty.c_ulong
 
@@ -2852,12 +3586,19 @@ FLIMAGESETUP = cty.POINTER(flimage_setup_)
 # possible errors from the library. Not currently (v0.89) used
 # values for unnamed enumeration
 FLIMAGE_ERR_NONE = 0
+""""""
 FLIMAGE_ERR_ALLOC = -50         # allocation error
+""""""
 FLIMAGE_ERR_INVALID = -49       # invalid image
+""""""
 FLIMAGE_ERR_ARGUMENT = -48      # bad argument/request
+""""""
 FLIMAGE_ERR_FILE = -47          # io error
+""""""
 FLIMAGE_ERR_INTERNAL = -46      # bugs
+""""""
 FLIMAGE_ERR_UNKNOWN = -45
+""""""
 
 
 class _IO_FILE(cty.Structure):
@@ -3051,7 +3792,9 @@ FLIMAGE_JPEG_OPTION._fields_ = [
 
 # values for unnamed enumeration
 FLIMAGE_WRITABLE = FL_WRITE
+""""""
 FLIMAGE_READABLE = FL_READ
+""""""
 
 
 class FLIMAGE_FORMAT_INFO(cty.Structure):
@@ -3077,11 +3820,17 @@ FL_SHARPEN = FLIMAGE_SHARPEN
 
 # values for unnamed enumeration
 FLIMAGE_NOSUBPIXEL = 0      # scale with no subpixel sampling
+""""""
 FLIMAGE_SUBPIXEL = 1        # scale with  subpixel sampling
+""""""
 FLIMAGE_CENTER = 2          # center warped image. default
+""""""
 FLIMAGE_RIGHT = 8           # flush right the warped image
+""""""
 FLIMAGE_ASPECT = 32         # fit the size
+""""""
 FLIMAGE_NOCENTER = FL_ALIGN_LEFT_TOP
+""""""
 
 
 # /usr/include/X11/Xlib.h 345

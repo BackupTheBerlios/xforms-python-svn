@@ -136,11 +136,19 @@ def func_do_nothing_placeholder(cfunction):
     """ Print a warning if called function doesn't exist
     """
 
-    warningmsg = "C function %s does NOT exist, hence its call is ignored," \
-                 " hence it is not wrappable and callable in python, as " \
-                 "well. Maybe removed or disabled?" % cfunction
+    warningmsg = "C function %s does NOT exist, hence it is not " \
+                 "wrappable and callable in python, so its call " \
+                 "is ignored. Maybe removed or disabled?" % cfunction
     warnings.warn(warningmsg, UserWarning)
     return None
+
+
+def do_nothing_placeholder_cb(pPopupReturn):
+    """ It replaces a callback function not defined for class instances
+        as e.g. FL_POPUP_ITEM            *temporary*
+    """
+
+    return 0                    # TODO: verify return value
 
 
 # placeholders to keep reference to c functions
@@ -15366,14 +15374,15 @@ def fl_delete_select_item(pObject, pPopupEntry):
     return retval
 
 
-def fl_set_select_items(pObject, PopupItem):
+def fl_set_select_items(pObject, pyclassPopupItem):
     """
-        fl_set_select_items(pObject, PopupItem) -> num.
+        fl_set_select_items(pObject, pyclassPopupItem) -> num.
 
         (Re)populates a select object popup.
 
         @param pObject : pointer to select object
-        @param PopupItem : xfc.FL_POPUP_ITEM class instance (array of it)
+        @param pyclassPopupItem : xfc.FL_POPUP_ITEM class instance (array of it)
+           class of item elements
     """
 
     _fl_set_select_items = cfuncproto(
@@ -15382,8 +15391,21 @@ def fl_set_select_items(pObject, PopupItem):
             """long int fl_set_select_items(FL_OBJECT * p1,
                FL_POPUP_ITEM * p2)
             """)
-    pPopupItem = cty.cast(PopupItem, cty.POINTER(FL_POPUP_ITEM))
-    keep_elem_refs(pObject, PopupItem, pPopupItem)
+    #if not PopupItem.callback:
+    #    PopupItem.callback = xfc.FL_POPUP_CB(do_nothing_placeholder)
+    #py_sel_item_cb = PopupItem.callback
+    #c_sel_item_cb = xfc.FL_POPUP_CB(py_sel_item_cb)
+    #PopupItem.callback = c_sel_item_cb
+
+    realitem = (FL_POPUP_ITEM * 1)()
+    realitem[0].text = pyclassPopupItem.text
+    realitem[0].state = pyclassPopupItem.state
+    realitem[0].shortcut = pyclassPopupItem.shortcut
+    realitem[0].callback = FL_POPUP_CB(pyclassPopupItem.callback)
+
+    pPopupItem = cty.cast(realitem, cty.POINTER(FL_POPUP_ITEM))
+    keep_cfunc_refs(realitem[0].callback, pyclassPopupItem.callback)
+    keep_elem_refs(pObject, realitem, pyclassPopupItem, pPopupItem)
     retval = _fl_set_select_items(pObject, pPopupItem)
     return retval
 
