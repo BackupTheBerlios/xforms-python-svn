@@ -1,6 +1,7 @@
 
 
 SVN
+    * Porting of demotest2 example.
     * some variables in xfdata have now their docstrings (and can be
     documented in .tex files)
     * Porting of demotest3 example.
