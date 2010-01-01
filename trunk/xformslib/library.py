@@ -12996,8 +12996,15 @@ def fl_set_tooltip_lalign(p1):
     _fl_set_tooltip_lalign(ip1)
 
 
-def fl_exe_command(p1, p2):
-    """ fl_exe_command(p1, p2) -> num.
+def fl_exe_command(command, block):
+    """
+        fl_exe_command(command, block) -> exit status
+
+        Forks a new process that runs specified command 
+
+        @param command : a shell command line
+        @param block : blocking flag indicating if the function should
+           wait for the child process to finish (non-zero) or not (zero).
     """
 
     _fl_exe_command = cfuncproto(
@@ -13005,15 +13012,22 @@ def fl_exe_command(p1, p2):
             cty.c_long, [STRING, cty.c_int],
             """long int fl_exe_command(const char * p1, int p2)
             """)
-    sp1 = convert_to_string(p1)
-    ip2 = convert_to_int(p2)
-    keep_elem_refs(p1, sp1, p2, ip2)
-    retval = _fl_exe_command(sp1, ip2)
+    scommand = convert_to_string(command)
+    iblock = convert_to_int(block)
+    keep_elem_refs(command, block, scommand, iblock)
+    retval = _fl_exe_command(scommand, iblock)
     return retval
 
 
-def fl_end_command(p1):
-    """ fl_end_command(p1) -> num.
+def fl_end_command(pid):
+    """
+        fl_end_command(pid) -> exit status
+
+        Suspends the current process and waits until the child process is
+        completed, then it returns the exit status of the child process or
+        -1 if an error has occurred.
+
+        @param pid : process id returned by fl_exe_command()
     """
 
     _fl_end_command = cfuncproto(
@@ -13021,14 +13035,21 @@ def fl_end_command(p1):
             cty.c_int, [cty.c_long],
             """int fl_end_command(long int p1)
             """)
-    lp1 = convert_to_long(p1)
-    keep_elem_refs(p1, lp1)
-    retval = _fl_end_command(lp1)
+    lpid = convert_to_long(pid)
+    keep_elem_refs(pid, lpid)
+    retval = _fl_end_command(lpid)
     return retval
 
 
-def fl_check_command(p1):
-    """ fl_check_command(p1) -> num.
+def fl_check_command(pid):
+    """
+        fl_check_command(pid) -> exit status
+
+        Polls the status of a child process. Returns 0 if the child process is
+        finished; 1 if the child process still exists (running or stopped) and
+        -1 if an error has occurred inside the function.
+
+        @param pid : process id returned by fl_exe_command()
     """
 
     _fl_check_command = cfuncproto(
@@ -13036,14 +13057,22 @@ def fl_check_command(p1):
             cty.c_int, [cty.c_long],
             """int fl_check_command(long int p1)
             """)
-    lp1 = convert_to_long(p1)
-    keep_elem_refs(p1, lp1)
-    retval = _fl_check_command(lp1)
+    lpid = convert_to_long(pid)
+    keep_elem_refs(pid, lpid)
+    retval = _fl_check_command(lpid)
     return retval
 
 
-def fl_popen(p1, p2):
-    """ fl_popen(p1, p2) -> FILE ptr.
+def fl_popen(command, otype):
+    """
+        fl_popen(command, otype) -> pFile
+
+        Executes the command in a child process, and logs the stderr messages
+        into the command log. If type is "w", stdout will also be logged into
+        the command browser.
+
+        @param command : filename to execute
+        @param otype : type for opening (e.g. w, r ..)
     """
 
     _fl_popen = cfuncproto(
@@ -13051,15 +13080,20 @@ def fl_popen(p1, p2):
             cty.POINTER(FILE), [STRING, STRING],
             """FILE * fl_popen(const char * p1, const char * p2)
             """)
-    sp1 = convert_to_string(p1)
-    sp2 = convert_to_string(p2)
-    keep_elem_refs(p1, p2, sp1, sp2)
-    retval = _fl_popen(sp1, sp2)
+    scommand = convert_to_string(command)
+    sotype = convert_to_string(otype)
+    keep_elem_refs(command, otype, scommand, sotype)
+    retval = _fl_popen(scommand, sotype)
     return retval
 
 
-def fl_pclose(p1):
-    """ fl_pclose(p1) -> num.
+def fl_pclose(pFile):
+    """
+        fl_pclose(pFile) -> num.
+
+        Cleans up the child process executed.
+
+        @param pFile : pointer to File stream returned by fl_popen()
     """
 
     _fl_pclose = cfuncproto(
@@ -13067,13 +13101,17 @@ def fl_pclose(p1):
             cty.c_int, [cty.POINTER(FILE)],
             """int fl_pclose(FILE * p1)
             """)
-    keep_elem_refs(p1)
-    retval = _fl_pclose(p1)
+    keep_elem_refs(pFile)
+    retval = _fl_pclose(pFile)
     return retval
 
 
 def fl_end_all_command():
-    """ fl_end_all_command() -> num.
+    """
+        fl_end_all_command() -> exit status
+
+        Wait for all the child processes initiated by fl_exe_command()
+        to complete. Returns the status of the last child process.
     """
 
     _fl_end_all_command = cfuncproto(
@@ -13085,8 +13123,13 @@ def fl_end_all_command():
     return retval
 
 
-def fl_show_command_log(p1):
-    """ fl_show_command_log(p1)
+def fl_show_command_log(border):
+    """
+        fl_show_command_log(border)
+
+        Shows the log of the command output.
+
+        @param border : window decoration type
     """
 
     _fl_show_command_log = cfuncproto(
@@ -13094,13 +13137,16 @@ def fl_show_command_log(p1):
             None, [cty.c_int],
             """void fl_show_command_log(int p1)
             """)
-    ip1 = convert_to_int(p1)
-    keep_elem_refs(p1, ip1)
-    _fl_show_command_log(ip1)
+    iborder = convert_to_int(border)
+    keep_elem_refs(border, iborder)
+    _fl_show_command_log(iborder)
 
 
 def fl_hide_command_log():
-    """ fl_hide_command_log()
+    """
+        fl_hide_command_log()
+
+        Hides the log of the command output.
     """
 
     _fl_hide_command_log = cfuncproto(
@@ -13112,7 +13158,10 @@ def fl_hide_command_log():
 
 
 def fl_clear_command_log():
-    """ fl_clear_command_log()
+    """
+        fl_clear_command_log()
+
+        Clears the browser and the logging output displayed within it.
     """
 
     _fl_clear_command_log = cfuncproto(
@@ -13123,8 +13172,13 @@ def fl_clear_command_log():
     _fl_clear_command_log()
 
 
-def fl_addto_command_log(p1):
-    """ fl_addto_command_log(p1)
+def fl_addto_command_log(txtstr):
+    """
+        fl_addto_command_log(txtstr)
+
+        Adds arbitrary text to the command browser 
+
+        @param txtstr : text line to be added
     """
 
     _fl_addto_command_log = cfuncproto(
@@ -13132,13 +13186,19 @@ def fl_addto_command_log(p1):
             None, [STRING],
             """void fl_addto_command_log(const char * p1)
             """)
-    sp1 = convert_to_string(p1)
-    keep_elem_refs(p1, sp1)
-    _fl_addto_command_log(sp1)
+    stxtstr = convert_to_string(txtstr)
+    keep_elem_refs(txtstr, stxtstr)
+    _fl_addto_command_log(stxtstr)
 
 
-def fl_set_command_log_position(p1, p2):
-    """ fl_set_command_log_position(p1, p2)
+def fl_set_command_log_position(x, y):
+    """
+        fl_set_command_log_position(x, y)
+
+        Changes the default placement of the command log.
+
+        @param x : horizontal position (upper-left corner)
+        @param y : vertical position (upper-left corner)
     """
 
     _fl_set_command_log_position = cfuncproto(
@@ -13146,10 +13206,10 @@ def fl_set_command_log_position(p1, p2):
             None, [cty.c_int, cty.c_int],
             """void fl_set_command_log_position(int p1, int p2)
             """)
-    ip1 = convert_to_int(p1)
-    ip2 = convert_to_int(p2)
-    keep_elem_refs(p1, p2, ip1, ip2)
-    _fl_set_command_log_position(ip1, ip2)
+    ix = convert_to_int(x)
+    iy = convert_to_int(y)
+    keep_elem_refs(x, y, ix, iy)
+    _fl_set_command_log_position(ix, iy)
 
 
 def fl_get_command_log_fdstruct():
