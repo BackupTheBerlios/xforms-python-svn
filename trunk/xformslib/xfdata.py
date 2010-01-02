@@ -441,9 +441,13 @@ FL_RETURN_END_CHANGED = 4
 """Return or invoke callback if end of interaction and selection of an
 item coincide."""
 FL_RETURN_SELECTION = 8
-""""""
+"""Return or invoke callback on selection of a line. Please note that for
+FL_MULTI_BROWSER the browser may be returned just once for a number of
+lines having been selected."""
 FL_RETURN_DESELECTION = 16
-""""""
+""" Return or invoke callback on deselection of a line. This only works
+for FL_MULTI_BROWSER browsers and the browser may be returned just once
+for a number of lines having been deselected."""
 FL_RETURN_TRIGGERED = 1024
 """"""
 FL_RETURN_ALWAYS = ~ FL_RETURN_END_CHANGED
@@ -815,19 +819,18 @@ FL_NOCOLOR = INT_MAX
 FL_BUILT_IN_COLS = FL_YELLOWGREEN + 1
 FL_INACTIVE_COL = FL_INACTIVE
 
-# backwards data dismissed --LK
-# Some aliases for the color. This is actually backwards ...
-#FL_GRAY16 = FL_RIGHT_BCOL
-#FL_GRAY35 = FL_BOTTOM_BCOL
-#FL_GRAY80 = FL_TOP_BCOL
-#FL_GRAY90 = FL_LEFT_BCOL
-#FL_GRAY63 = FL_COL1
-#FL_GRAY75 = FL_MCOL
+# Some aliases for a number of colors.
+FL_GRAY16 = FL_RIGHT_BCOL
+FL_GRAY35 = FL_BOTTOM_BCOL
+FL_GRAY80 = FL_TOP_BCOL
+FL_GRAY90 = FL_LEFT_BCOL
+FL_GRAY63 = FL_COL1
+FL_GRAY75 = FL_MCOL
 FL_LCOL = FL_BLACK
 FL_NoColor = FL_NOCOLOR
+
 # An alias probably for an earlier typo
 #FL_DOGERBLUE = FL_DODGERBLUE
-# end backward --LK
 
 # my add, list of possible values --LK
 COLOR_list = [FL_BLACK, FL_RED, FL_GREEN, FL_YELLOW, FL_BLUE, FL_MAGENTA,
@@ -2207,12 +2210,12 @@ FL_BROWSER_ALIGN = FL_ALIGN_BOTTOM
 
 # Others
 FL_BROWSER_SLCOL = FL_COL1
-FL_BROWSER_FONTSIZE = FL_SMALL_SIZE             #FL_SMALL_FONT
+FL_BROWSER_FONTSIZE = FL_SMALL_SIZE
 
 # backward data dismissed --LK
 # This exists only for backward compatibility and isn't used anymore!
 #FL_BROWSER_LINELENGTH = 2048
-
+# end backwards
 
 
 #############################################################

@@ -38,7 +38,7 @@ from xfdata import *       # data types and constants from XForms
 
 
 # xforms-python version
-__mainversion__ = "0.3.1"               # real version
+__mainversion__ = "0.3.2"               # real version
 __vers_against_xforms__ = "1.0.93pre2"   # xforms version to be built against
 __version__ = __mainversion__+"_"+__vers_against_xforms__
 
@@ -447,6 +447,169 @@ def check_admitted_listvalues(paramname, *valueslist):
                                   "list %s." % valueslist)
 
 
+class GenericPopupItem(object):
+    """ empty class to instantiate for use with makeClassPopupItem
+        and FL_POPUP_ITEM
+    """
+
+    pass
+
+
+def make_pPopupItem_from_dict(pidict):
+    """ Taking a python dict with a structure similar to FL_POPUP_ITEM
+        prepares and returns a C-compatible pointer to FL_POPUP_ITEM.
+    """
+
+    if not isinstance(pidict, dict):
+        raise XFormsTypeError("Parameter must be a dict")
+        return None, None
+
+    pyclstext = pidict['text']
+    spitext = convert_to_string(pyclstext)
+    pyclscallback = pidict['callback']
+    c_picallback = FL_POPUP_CB(pyclscallback)
+    pyclsshortcut = pidict['shortcut']
+    spishortcut = convert_to_string(pyclsshortcut)
+    pyclstype = pidict['type']
+    ipitype = convert_to_int(pyclstype)
+    pyclsstate = pidict['state']
+    ipistate = convert_to_int(pyclsstate)
+
+    popupitem = FL_POPUP_ITEM()
+    print "newPop", popupitem
+    popupitem.text = spitext
+    popupitem.callback = c_picallback
+    popupitem.shortcut = spishortcut
+    popupitem.type = ipitype
+    popupitem.state = ipistate
+
+    ppopupitem = popupitem
+    #ppopupitem = cty.pointer(popupitem)
+    #ppopupitem = cty.byref(popupitem)
+    #ppopupitem = cty.cast(popupitem, cty.POINTER(FL_POPUP_ITEM))
+    print "ptr", ppopupitem
+    keep_cfunc_refs(pyclscallback, c_picallback)
+    keep_elem_refs(pidict, pyclsshortcut, pyclstype,
+                   pyclstext, spitext, pyclsshortcut,
+                   spishortcut, pyclstype, ipitype, pyclsstate,
+                   ipistate, popupitem, ppopupitem)
+    return popupitem, popupitem    #, ppopupitem
+
+
+def make_pPopupItem_from_class(pycls):
+    """ Taking a python class with a structure similar to FL_POPUP_ITEM
+        prepares and returns a C-compatible pointer to FL_POPUP_ITEM.
+    """
+
+    pyclstext = pycls.text
+    spitext = convert_to_string(pyclstext)
+    pyclscallback = pycls.callback
+    c_picallback = FL_POPUP_CB(pyclscallback)
+    pyclsshortcut = pycls.shortcut
+    spishortcut = convert_to_string(pyclsshortcut)
+    pyclstype = pycls.type
+    ipitype = convert_to_int(pyclstype)
+    pyclsstate = pycls.state
+    ipistate = convert_to_int(pyclsstate)
+
+    popupitem = FL_POPUP_ITEM()
+    print "newPop", popupitem
+    popupitem.text = spitext
+    popupitem.callback = c_picallback
+    popupitem.shortcut = spishortcut
+    popupitem.type = ipitype
+    popupitem.state = ipistate
+
+    ppopupitem = cty.pointer(popupitem)
+    #ppopupitem = cty.byref(popupitem)
+    #ppopupitem = cty.cast(popupitem, cty.POINTER(FL_POPUP_ITEM))
+    print "ptr", ppopupitem
+    keep_cfunc_refs(pyclscallback, c_picallback)
+    keep_elem_refs(pycls, pycls.text, pyclsshortcut, pyclstype,
+                   pycls.state, pyclstext, spitext, pyclsshortcut,
+                   spishortcut, pyclstype, ipitype, pyclsstate,
+                   ipistate, popupitem, ppopupitem)
+    return popupitem, ppopupitem
+
+
+
+def makeOneListPopupItem(pitext, py_picallback, pishortcut, pitype, pistate):
+    """ Taking a python list with elements in the same order as
+        FL_POPUP_ITEM prepares and returns a C-compatible
+        pointer FL_POPUP_ITEM.
+    """
+
+    spitext = convert_to_string(pitext)
+    print "pitext", spitext, pitext
+    c_picallback = FL_POPUP_CB(py_picallback)
+    print "picallback", c_picallback, py_picallback
+    spishortcut = convert_to_string(pishortcut)
+    print "pishortc", spishortcut, pishortcut
+    ipitype = convert_to_int(pitype)
+    print "pitype", ipitype, pitype
+    ipistate = convert_to_int(pistate)
+    print "pistate", ipistate, pistate
+
+    newPopupItem = FL_POPUP_ITEM()
+    print "newPop", newPopupItem,
+    newPopupItem.text = spitext
+    print "newPop_text", newPopupItem.text,
+    newPopupItem.callback = c_picallback
+    print "newPop_cb", newPopupItem.callback,
+    newPopupItem.shortcut = spishortcut
+    print "newPop_shcut", newPopupItem.shortcut,
+    newPopupItem.type = ipitype
+    print "newPop_type", newPopupItem.type,
+    newPopupItem.state = ipistate
+    print "newPop_state", newPopupItem.state
+
+    pnewPopupItem = cty.pointer(newPopupItem)
+    print "ptr", pnewPopupItem
+    keep_cfunc_refs(py_picallback, c_picallback)
+    keep_elem_refs(pitext, spitext, pishortcut, spishortcut,
+                   pitype, ipitype, pistate, ipistate, 
+                   newPopupItem, pnewPopupItem)
+    return pnewPopupItem
+
+
+def makeMultiListPopupItem(*listofpopupitems):
+    """ Taking a python list of popupitems, with elements in the same order as
+        FL_POPUP_ITEM prepares and returns a C-compatible
+        pointer FL_POPUP_ITEM.
+    """
+
+    spitext = c_picallback = spishortcut = ipitype = ipistate = []
+    numarray = len(listofpopupitems)
+    popupitem = (FL_POPUP_ITEM * numarray)()
+
+    for indx in range(0, numarray-1):
+
+        spitext[indx] = convert_to_string(listofpopupitems[idx][0])
+        c_picallback[indx] = FL_POPUP_CB(listofpopupitems[idx][1])
+        spishortcut[indx] = convert_to_string(listofpopupitems[indx][2])
+        ipitype[indx] = convert_to_int(listofpopupitems[indx][3])
+        ipistate[indx] = convert_to_int(listofpopupitems[indx][4])
+
+        popupitem.text = spitext[indx]
+        popupitem[indx].callback = c_picallback[indx]
+        popupitem[indx].shortcut = spishortcut[indx]
+        popupitem[indx].type = ipitype[indx]
+        popupitem[indx].state = ipistate[indx]
+
+        keep_cfunc_refs(py_picallback, c_picallback)
+        keep_elem_refs(popupitem[indx], spitext[indx], 
+                       spishortcut[indx], ipitype[indx], 
+                       ipistate[indx])
+
+    ppopupitem = cty.pointer(popupitem[0])
+    print popupitem, ppopupitem, popupitem[0]
+    print "ptr", ppopupitem
+    keep_elem_refs(listofpopupitems, popupitem, ppopupitem)
+    return ppopupitem
+
+
+
+
 # exported variables
 FL_EVENT = (cty.POINTER(FL_OBJECT)).in_dll(load_so_libforms(), 'FL_EVENT')
 fl_current_form = (cty.POINTER(FL_FORM)).in_dll(load_so_libforms(), \
@@ -523,7 +686,6 @@ def fl_object_returned(pObject):
 FL_IO_CALLBACK = cty.CFUNCTYPE(None, cty.c_int, cty.c_void_p)
 
 
-# fl_add_io_callback(fd, mask, py_IoCallback, data)         $TEST $
 def fl_add_io_callback(fd, mask, py_IoCallback, data):
     """
         fl_add_io_callback(fd, mask, py_IoCallback, data)
@@ -555,7 +717,6 @@ def fl_add_io_callback(fd, mask, py_IoCallback, data):
     _fl_add_io_callback(ifd, uimask, c_IoCallback, pdata)
 
 
-# fl_remove_io_callback(fd, mask, py_IoCallback)            $TEST $
 def fl_remove_io_callback(fd, mask, py_IoCallback):
     """
         fl_remove_io_callback(fd, mask, py_IoCallback)
@@ -591,7 +752,6 @@ def fl_remove_io_callback(fd, mask, py_IoCallback):
 
 FL_SIGNAL_HANDLER = cty.CFUNCTYPE(None, cty.c_int, cty.c_void_p)
 
-# fl_add_signal_callback(sglnum, py_SignalHandler, data)            $TEST $
 def fl_add_signal_callback(sglnum, py_SignalHandler, data):
     """
         fl_add_signal_callback(sglnum, py_SignalHandler, data)
@@ -621,7 +781,6 @@ def fl_add_signal_callback(sglnum, py_SignalHandler, data):
     _fl_add_signal_callback(isglnum, c_SignalHandler, pdata)
 
 
-# fl_remove_signal_callback(sglnum)         $TEST $
 def fl_remove_signal_callback(sglnum):
     """
         fl_remove_signal_callback(sglnum)
@@ -643,7 +802,6 @@ def fl_remove_signal_callback(sglnum):
     _fl_remove_signal_callback(isglnum)
 
 
-# fl_signal_caught(sglnum)                $TEST state$
 def fl_signal_caught(sglnum):
     """
         fl_signal_caught(sglnum)
@@ -666,7 +824,6 @@ def fl_signal_caught(sglnum):
     _fl_signal_caught(isglnum)
 
 
-# fl_app_signal_direct(flag)                $TEST $
 def fl_app_signal_direct(flag):
     """
         fl_app_signal_direct(flag)
@@ -694,7 +851,6 @@ def fl_app_signal_direct(flag):
 
 FL_TIMEOUT_CALLBACK = cty.CFUNCTYPE(None, cty.c_int, cty.c_void_p)
 
-# fl_add_timeout(msec, py_TimeoutCallback, data)         $TEST $
 def fl_add_timeout(msec, py_TimeoutCallback, data):
     """
         fl_add_timeout(msec, py_TimeoutCallback, data) -> timer ID
@@ -724,7 +880,6 @@ def fl_add_timeout(msec, py_TimeoutCallback, data):
     return retval
 
 
-# fl_remove_timeout(idnum)          $TEST $
 def fl_remove_timeout(idnum):
     """
         fl_remove_timeout(idnum)
@@ -748,7 +903,6 @@ def fl_remove_timeout(idnum):
 
 # Basic public routine prototypes
 
-# NEW fl_library_version() -> num, ver, rev          $TEST $
 def fl_library_version():
     """
         fl_library_version() -> version_rev ID, ver, rev
@@ -780,7 +934,6 @@ def fl_library_version():
 
 # Generic routines that deal with FORMS
 
-# fl_bgn_form(formtype, w, h)               $TEST $
 def fl_bgn_form(formtype, w, h):
     """
         fl_bgn_form(formtype, w, h) -> pForm
@@ -809,7 +962,6 @@ def fl_bgn_form(formtype, w, h):
     return retval
 
 
-# fl_end_form()             $TEST $
 def fl_end_form():
     """
         fl_end_form()
@@ -828,7 +980,6 @@ def fl_end_form():
     _fl_end_form()
 
 
-# fl_do_forms()             $TEST $
 def fl_do_forms():
     """
         fl_do_forms() -> pObject
@@ -848,7 +999,6 @@ def fl_do_forms():
     return retval
 
 
-# fl_check_forms()          $TEST $
 def fl_check_forms():
     """
         fl_check_forms() -> pObject
@@ -868,7 +1018,6 @@ def fl_check_forms():
     return retval
 
 
-# fl_do_only_forms()        $TEST $
 def fl_do_only_forms():
     """
         fl_do_only_forms() -> pObject
@@ -890,7 +1039,6 @@ def fl_do_only_forms():
     return retval
 
 
-# fl_check_only_forms()             $TEST $
 def fl_check_only_forms():
     """
         fl_check_only_forms() -> pObject
@@ -912,7 +1060,6 @@ def fl_check_only_forms():
     return retval
 
 
-# fl_freeze_form(pForm)             $TEST $
 def fl_freeze_form(pForm):
     """
         fl_freeze_form(pForm)
@@ -934,7 +1081,6 @@ def fl_freeze_form(pForm):
     _fl_freeze_form(pForm)
 
 
-# fl_set_focus_object(pForm, pObject)       $TEST $
 def fl_set_focus_object(pForm, pObject):
     """
         fl_set_focus_object(pForm, pObject)
@@ -959,7 +1105,6 @@ def fl_set_focus_object(pForm, pObject):
 fl_set_object_focus = fl_set_focus_object
 
 
-# fl_get_focus_object(pForm)                $TEST $
 def fl_get_focus_object(pForm):
     """
         fl_get_focus_object(pForm) -> pObject
@@ -981,7 +1126,6 @@ def fl_get_focus_object(pForm):
     return retval
 
 
-# fl_reset_focus_object(pObject)            $TEST $
 def fl_reset_focus_object(pObject):
     """
         fl_reset_focus_object(pObject)
@@ -1005,7 +1149,6 @@ def fl_reset_focus_object(pObject):
 #already defined in xfdata
 #FL_FORM_ATCLOSE = cty.CFUNCTYPE(cty.c_int, cty.POINTER(FL_FORM), cty.c_void_p)
 
-# fl_set_form_atclose(pForm, py_FormAtclose, data)          $TEST $
 def fl_set_form_atclose(pForm, py_FormAtclose, data):
     """
         fl_set_form_atclose(pForm, py_FormAtclose, data) -> FormAtclose func.
@@ -1035,16 +1178,15 @@ def fl_set_form_atclose(pForm, py_FormAtclose, data):
     return retval
 
 
-# fl_set_atclose(py_FormAtclose, data)      $TEST $
-def fl_set_atclose(py_FormAtclose, data):
+def fl_set_atclose(py_FormAtclose, vdata):
     """
-        fl_set_atclose(py_FormAtclose, data) -> FormAtclose func.
+        fl_set_atclose(py_FormAtclose, vdata) -> FormAtclose func.
 
         Calls a callback function before terminating the application.
 
         @param py_FormAtclose : callback function to be called, fn(pForm,
            ptr_void) -> num
-        @param data : argument to be passed to function
+        @param vdata : user data to be passed to function
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -1056,20 +1198,19 @@ def fl_set_atclose(py_FormAtclose, data):
                void * data)
             """)
     c_FormAtclose = FL_FORM_ATCLOSE(py_FormAtclose)
-    pdata = cty.cast(data, cty.c_void_p)
+    pvdata = cty.cast(vdata, cty.c_void_p)
     keep_cfunc_refs(c_FormAtclose, py_FormAtclose)
-    keep_elem_refs(data, pdata)
-    retval = _fl_set_atclose(c_FormAtclose, pdata)
+    keep_elem_refs(vdata, pvdata)
+    retval = _fl_set_atclose(c_FormAtclose, pvdata)
     return retval
 
 
 #already defined in xfdata
 #FL_FORM_ATACTIVATE = cty.CFUNCTYPE(None, cty.POINTER(FL_FORM), cty.c_void_p)
 
-# fl_set_form_atactivate(pForm, py_FormAtactivate, data)    $TEST $
-def fl_set_form_atactivate(pForm, py_FormAtactivate, data):
+def fl_set_form_atactivate(pForm, py_FormAtactivate, vdata):
     """
-        fl_set_form_atactivate(pForm, py_FormAtactivate, data) -> FormAtactivate func.
+        fl_set_form_atactivate(pForm, py_FormAtactivate, vdata) -> FormAtactivate func.
 
         Register a callback that is called when activation status of a forms
         is enabled,
@@ -1077,7 +1218,7 @@ def fl_set_form_atactivate(pForm, py_FormAtactivate, data):
         @param pForm : activated form
         @param py_FormAtactivate : python callback function called, fn(pForm,
            ptr_void)
-        @param data : argument to be passed to function
+        @param vdata : user data to be passed to function
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -1090,20 +1231,19 @@ def fl_set_form_atactivate(pForm, py_FormAtactivate, data):
                FL_FORM_ATACTIVATE cb, void * data)
             """)
     c_FormAtactivate = FL_FORM_ATACTIVATE(py_FormAtactivate)
-    pdata = cty.cast(data, cty.c_void_p)
+    pvdata = cty.cast(vdata, cty.c_void_p)
     keep_cfunc_refs(c_FormAtactivate, py_FormAtactivate)
-    keep_elem_refs(pForm, data, pdata)
-    retval = _fl_set_form_atactivate(pForm, c_FormAtactivate, pdata)
+    keep_elem_refs(pForm, vdata, pvdata)
+    retval = _fl_set_form_atactivate(pForm, c_FormAtactivate, pvdata)
     return retval
 
 
 #already defined in xfdata
 #FL_FORM_ATDEACTIVATE = cty.CFUNCTYPE(None, cty.POINTER(FL_FORM), cty.c_void_p)
 
-# fl_set_form_atdeactivate(pForm, py_FormAtdeactivate, data)        $TEST $
-def fl_set_form_atdeactivate(pForm, py_FormAtdeactivate, data):
+def fl_set_form_atdeactivate(pForm, py_FormAtdeactivate, vdata):
     """
-        fl_set_form_atdeactivate(pForm, py_FormAtdeactivate, data) -> FormAtdeactivate func.
+        fl_set_form_atdeactivate(pForm, py_FormAtdeactivate, vdata) -> FormAtdeactivate func.
 
         Register a callback that is called when activation status of a forms
         is disabled.
@@ -1111,7 +1251,7 @@ def fl_set_form_atdeactivate(pForm, py_FormAtdeactivate, data):
         @param pForm : pointer to de-activated form
         @param py_FormAtdeactivate : python callback function called,
            fn(pForm, ptr_void)
-        @param data : argument to be passed to function
+        @param vdata : user data to be passed to function
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -1124,14 +1264,13 @@ def fl_set_form_atdeactivate(pForm, py_FormAtdeactivate, data):
                FL_FORM_ATDEACTIVATE cb, void * data)
             """)
     c_FormAtdeactivate = FL_FORM_ATDEACTIVATE(py_FormAtdeactivate)
-    pdata = cty.cast(data, cty.c_void_p)
+    pvdata = cty.cast(vdata, cty.c_void_p)
     keep_cfunc_refs(c_FormAtdeactivate, py_FormAtdeactivate)
-    keep_elem_refs(pForm, data, pdata)
-    retval = _fl_set_form_atdeactivate(pForm, c_FormAtdeactivate, pdata)
+    keep_elem_refs(pForm, vdata, pvdata)
+    retval = _fl_set_form_atdeactivate(pForm, c_FormAtdeactivate, pvdata)
     return retval
 
 
-# fl_unfreeze_form(pForm)           $TEST $
 def fl_unfreeze_form(pForm):
     """
         fl_unfreeze_form(pForm)
@@ -1153,7 +1292,6 @@ def fl_unfreeze_form(pForm):
     _fl_unfreeze_form(pForm)
 
 
-# fl_deactivate_form(pForm)         $TEST $
 def fl_deactivate_form(pForm):
     """
         fl_deactivate_form(pForm)
@@ -1175,7 +1313,6 @@ def fl_deactivate_form(pForm):
     _fl_deactivate_form(pForm)
 
 
-# fl_activate_form(pForm)           $TEST $
 def fl_activate_form(pForm):
     """
         fl_activate_form(pForm)
@@ -1197,7 +1334,6 @@ def fl_activate_form(pForm):
     _fl_activate_form(pForm)
 
 
-# fl_deactivate_all_forms()         $TEST $
 def fl_deactivate_all_forms():
     """
         fl_deactivate_all_forms()
@@ -1215,7 +1351,6 @@ def fl_deactivate_all_forms():
     _fl_deactivate_all_forms()
 
 
-# fl_activate_all_forms()           $TEST $
 def fl_activate_all_forms():
     """
         fl_activate_all_forms()
@@ -1233,7 +1368,6 @@ def fl_activate_all_forms():
     _fl_activate_all_forms()
 
 
-# fl_freeze_all_forms()             $TEST $
 def fl_freeze_all_forms():
     """
         fl_freeze_all_forms()
@@ -1252,7 +1386,6 @@ def fl_freeze_all_forms():
     _fl_freeze_all_forms()
 
 
-# fl_unfreeze_all_forms()           $TEST $
 def fl_unfreeze_all_forms():
     """
         fl_unfreeze_all_forms()
@@ -1271,7 +1404,6 @@ def fl_unfreeze_all_forms():
     _fl_unfreeze_all_forms()
 
 
-# fl_scale_form(pForm, xsc, ysc)              $TEST $
 def fl_scale_form(pForm, xsc, ysc):
     """
         fl_scale_form(pForm, xsc, ysc)
@@ -1298,7 +1430,6 @@ def fl_scale_form(pForm, xsc, ysc):
     _fl_scale_form(pForm, fxsc, fysc)
 
 
-# fl_set_form_position(pForm, x, y)             $TEST $
 def fl_set_form_position(pForm, x, y):
     """
         fl_set_form_position(pForm, x, y)
@@ -1325,7 +1456,6 @@ def fl_set_form_position(pForm, x, y):
     _fl_set_form_position(pForm, ix, iy)
 
 
-# fl_set_form_title(pForm, name)                $TEST $
 def fl_set_form_title(pForm, name):
     """
         fl_set_form_title(pForm, name)
@@ -1348,7 +1478,6 @@ def fl_set_form_title(pForm, name):
     _fl_set_form_title(pForm, sname)
 
 
-# fl_set_app_mainform(pForm)            $TEST $
 def fl_set_app_mainform(pForm):
     """
         fl_set_app_mainform(pForm)
@@ -1365,7 +1494,6 @@ def fl_set_app_mainform(pForm):
     _fl_set_app_mainform(pForm)
 
 
-# fl_get_app_mainform()                 $TEST $
 def fl_get_app_mainform():
     """
         fl_get_app_mainform() -> pForm
@@ -1382,7 +1510,6 @@ def fl_get_app_mainform():
     return retval
 
 
-# fl_set_app_nomainform(flag)           $TEST $
 def fl_set_app_nomainform(flag):
     """
         fl_set_app_nomainform(flag)
@@ -1403,7 +1530,6 @@ def fl_set_app_nomainform(flag):
 #already defined in xfdata
 #FL_FORMCALLBACKPTR = cty.CFUNCTYPE(None, cty.POINTER(FL_OBJECT), cty.c_void_p)
 
-# fl_set_form_callback(pForm, py_FormCallbackPtr, data)         $TEST $
 def fl_set_form_callback(pForm, py_FormCallbackPtr, vdata):
     """
         fl_set_form_callback(pForm, py_FormCallbackPtr, vdata)
@@ -1434,7 +1560,6 @@ def fl_set_form_callback(pForm, py_FormCallbackPtr, vdata):
 fl_set_form_call_back = fl_set_form_callback
 
 
-# fl_set_form_size(pForm, w, h)         $TEST $
 def fl_set_form_size(pForm, w, h):
     """
         fl_set_form_size(pForm, w, h)
@@ -1459,7 +1584,6 @@ def fl_set_form_size(pForm, w, h):
     _fl_set_form_size(pForm, iw, ih)
 
 
-# fl_set_form_hotspot(pForm, x, y)              $TEST $
 def fl_set_form_hotspot(pForm, x, y):
     """
         fl_set_form_hotspot(pForm, x, y)
@@ -1485,7 +1609,6 @@ def fl_set_form_hotspot(pForm, x, y):
     _fl_set_form_hotspot(pForm, ix, iy)
 
 
-# fl_set_form_hotobject(pForm, pObject)         $TEST $
 def fl_set_form_hotobject(pForm, pObject):
     """
         fl_set_form_hotobject(pForm, pObject)
@@ -1505,7 +1628,6 @@ def fl_set_form_hotobject(pForm, pObject):
     _fl_set_form_hotobject(pForm, pObject)
 
 
-# fl_set_form_minsize(pForm, w, h)              $TEST $
 def fl_set_form_minsize(pForm, w, h):
     """
         fl_set_form_minsize(pForm, w, h)
@@ -1528,7 +1650,6 @@ def fl_set_form_minsize(pForm, w, h):
     _fl_set_form_minsize(pForm, iw, ih)
 
 
-# fl_set_form_maxsize(pForm, w, h)      $TEST $
 def fl_set_form_maxsize(pForm, w, h):
     """
         fl_set_form_maxsize(pForm, w, h)
@@ -1551,7 +1672,6 @@ def fl_set_form_maxsize(pForm, w, h):
     _fl_set_form_maxsize(pForm, iw, ih)
 
 
-# fl_set_form_event_cmask(pForm, cmask)         $TEST $
 def fl_set_form_event_cmask(pForm, cmask):
     """
         fl_set_form_event_cmask(pForm, cmask)
@@ -1573,7 +1693,6 @@ def fl_set_form_event_cmask(pForm, cmask):
     _fl_set_form_event_cmask(pForm, ulcmask)
 
 
-# fl_get_form_event_cmask(pForm)                $TEST $
 def fl_get_form_event_cmask(pForm):
     """
         fl_get_form_event_cmask(pForm) -> compress mask ID
@@ -1595,7 +1714,6 @@ def fl_get_form_event_cmask(pForm):
     return retval
 
 
-# fl_set_form_geometry(pForm, x, y, w, h)       $TEST $
 def fl_set_form_geometry(pForm, x, y, w, h):
     """
         fl_set_form_geometry(pForm, x, y, w, h)
@@ -1627,7 +1745,6 @@ def fl_set_form_geometry(pForm, x, y, w, h):
 fl_set_initial_placement = fl_set_form_geometry
 
 
-# fl_show_form(pForm, place, border, title)             $TEST $
 def fl_show_form(pForm, place, border, title):
     """
         fl_show_form(pForm, place, border, title) -> window id
@@ -1658,7 +1775,6 @@ def fl_show_form(pForm, place, border, title):
     return retval
 
 
-# fl_hide_form(pForm)           $TEST $
 def fl_hide_form(pForm):
     """
         fl_hide_form(pForm)
@@ -1679,7 +1795,6 @@ def fl_hide_form(pForm):
     _fl_hide_form(pForm)
 
 
-# fl_free_form(pForm)           $TEST $
 def fl_free_form(pForm):
     """
         fl_free_form(pForm)
@@ -1700,7 +1815,6 @@ def fl_free_form(pForm):
     _fl_free_form(pForm)
 
 
-# fl_redraw_form(pForm)         $TEST $
 def fl_redraw_form(pForm):
     """
         fl_redraw_form(pForm)
@@ -1721,7 +1835,6 @@ def fl_redraw_form(pForm):
     _fl_redraw_form(pForm)
 
 
-# fl_set_form_dblbuffer(pForm, flag)            $TEST $
 def fl_set_form_dblbuffer(pForm, flag):
     """
         fl_set_form_dblbuffer(pForm, flag)
@@ -1742,7 +1855,6 @@ def fl_set_form_dblbuffer(pForm, flag):
     _fl_set_form_dblbuffer(pForm, iflag)
 
 
-# fl_prepare_form_window(pForm, place, border, name)    $TEST $
 def fl_prepare_form_window(pForm, place, border, name):
     """
         fl_prepare_form_window(pForm, place, border, name) -> window ID
@@ -1771,7 +1883,6 @@ def fl_prepare_form_window(pForm, place, border, name):
     return retval
 
 
-# fl_show_form_window(pForm)            $TEST $
 def fl_show_form_window(pForm):
     """
         fl_show_form_window(pForm) -> window id
@@ -1791,7 +1902,6 @@ def fl_show_form_window(pForm):
     return retval
 
 
-# fl_adjust_form_size(pForm)            $TEST $
 def fl_adjust_form_size(pForm):
     """
         fl_adjust_form_size(pForm) -> max_factor id
@@ -1815,7 +1925,6 @@ def fl_adjust_form_size(pForm):
     return retval
 
 
-# fl_form_is_visible(pForm)             $TEST $
 def fl_form_is_visible(pForm):
     """
         fl_form_is_visible(pForm) -> state id
@@ -1955,12 +2064,11 @@ def fl_addto_group(pGroup):
 
 # Routines that deal with FL_OBJECTS
 
-# fl_get_object_objclass(pObject)               $TEST $
 def fl_get_object_objclass(pObject):
     """
         fl_get_object_objclass(pObject) -> objclass id
 
-        Return the objclass of an object.
+        Return the object class of an object.
 
         @param pObject : pointer to object
 
@@ -1968,7 +2076,7 @@ def fl_get_object_objclass(pObject):
     """
 
     _fl_get_object_objclass = cfuncproto(
-            load_so_libforms(), "fl_get_object_obclass", \
+            load_so_libforms(), "fl_get_object_objclass", \
             cty.c_int, [cty.POINTER(FL_OBJECT)], \
             """int fl_get_object_objclass(FL_OBJECT * obj)
             """)
@@ -1977,7 +2085,6 @@ def fl_get_object_objclass(pObject):
     return retval
 
 
-# fl_get_object_type(pObject)           $TEST $
 def fl_get_object_type(pObject):
     """
         fl_get_object_type(pObject) -> type id
@@ -7547,6 +7654,44 @@ def fl_popup_create(win, text, pPopupItem):
     return retval
 
 
+def fl_popup_add_items(pPopup, pPopupItem):
+    """
+        fl_popup_add_items(pPopup, pPopupItem) -> pPopupEntry
+
+        @status: Untested + NoDoc + NoExample = NOT OK
+    """
+
+    _fl_popup_add_items = cfuncproto(
+            load_so_libforms(), "fl_popup_add_items",
+                cty.POINTER(FL_POPUP_ENTRY), [cty.POINTER(FL_POPUP),
+                cty.POINTER(FL_POPUP_ITEM)],
+            """FL_POPUP_ENTRY * fl_popup_add_items(FL_POPUP * p1,
+               FL_POPUP_ITEM * p2)
+            """)
+    keep_elem_refs(pPopup, pPopupItem)
+    retval = _fl_popup_add_items(pPopup, pPopupItem)
+    return retval
+
+
+def fl_popup_insert_items(pPopup, pPopupEntry, pPopupItem):
+    """
+        fl_popup_insert_items(pPopup, pPopupEntry, pPopupItem) -> pPopupEntry
+
+        @status: Untested + NoDoc + NoExample = NOT OK
+    """
+
+    _fl_popup_insert_items = cfuncproto(
+            load_so_libforms(), "fl_popup_insert_items",
+                cty.POINTER(FL_POPUP_ENTRY), [cty.POINTER(FL_POPUP),
+                cty.POINTER(FL_POPUP_ENTRY), cty.POINTER(FL_POPUP_ITEM)],
+            """FL_POPUP_ENTRY * fl_popup_insert_items(FL_POPUP * p1,
+               FL_POPUP_ENTRY * p2, FL_POPUP_ITEM * p3)
+            """)
+    keep_elem_refs(pPopup, pPopupEntry, pPopupItem)
+    retval = _fl_popup_insert_items(pPopup, pPopupEntry, pPopupItem)
+    return retval
+
+
 def fl_popup_delete(pPopup):
     """
         fl_popup_delete(pPopup) -> num.
@@ -8128,9 +8273,9 @@ def fl_popup_entry_set_value(pPopupEntry, val):
     return retval
 
 
-def fl_popup_entry_set_user_data(pPopupEntry, data):
+def fl_popup_entry_set_user_data(pPopupEntry, vdata):
     """
-        fl_popup_entry_set_user_data(pPopupEntry, data) -> ??
+        fl_popup_entry_set_user_data(pPopupEntry, vdata) -> ??
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -8141,9 +8286,9 @@ def fl_popup_entry_set_user_data(pPopupEntry, data):
             """void * fl_popup_entry_set_user_data(FL_POPUP_ENTRY * p1,
                void * p2)
             """)
-    pdata = cty.cast(data, cty.c_void_p)
-    keep_elem_refs(pPopupEntry, data, pdata)
-    retval = _fl_popup_entry_set_user_data(pPopupEntry, pdata)
+    pvdata = cty.cast(vdata, cty.c_void_p)
+    keep_elem_refs(pPopupEntry, vdata, pvdata)
+    retval = _fl_popup_entry_set_user_data(pPopupEntry, pvdata)
     return retval
 
 
@@ -8185,9 +8330,9 @@ def fl_popup_entry_get_by_value(pPopup, val):
     return retval
 
 
-def fl_popup_entry_get_by_user_data(pPopup, userdata):
+def fl_popup_entry_get_by_user_data(pPopup, vdata):
     """
-        fl_popup_entry_get_by_user_data(pPopup, userdata) -> pPopupEntry
+        fl_popup_entry_get_by_user_data(pPopup, vdata) -> pPopupEntry
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -8198,9 +8343,9 @@ def fl_popup_entry_get_by_user_data(pPopup, userdata):
             """FL_POPUP_ENTRY * fl_popup_entry_get_by_user_data(FL_POPUP * p1,
                void * p2)
             """)
-    puserdata = cty.cast(userdata, cty.c_void_p)
-    keep_elem_refs(pPopup, userdata, puserdata)
-    retval = _fl_popup_entry_get_by_user_data(pPopup, puserdata)
+    pv = cty.cast(vdata, cty.c_void_p)
+    keep_elem_refs(pPopup, vdata, pvdata)
+    retval = _fl_popup_entry_get_by_user_data(pPopup, pvdata)
     return retval
 
 
@@ -16509,6 +16654,64 @@ def fl_set_nmenu_items(pObject, pPopupItem):
     return retval
 
 
+def fl_add_nmenu_items2(pObject, pPopupItem):
+    """
+        fl_add_nmenu_items2(pObject, pPopupItem) -> pPopupEntry
+
+        @status: Untested + NoDoc + NoExample = NOT OK
+    """
+
+    _fl_add_nmenu_items2 = cfuncproto(
+            load_so_libforms(), "fl_add_nmenu_items2",
+            cty.POINTER(FL_POPUP_ENTRY), [cty.POINTER(FL_OBJECT),
+            cty.POINTER(FL_POPUP_ITEM)],
+            """FL_POPUP_ENTRY * fl_add_nmenu_items2(FL_OBJECT * obj,
+               FL_POPUP_ITEM * p2)
+            """)
+    #pPopupItem = cty.cast(PopupItem, cty.POINTER(FL_POPUP_ITEM))
+    keep_elem_refs(pObject, pPopupItem)
+    retval = _fl_add_nmenu_items2(pObject, pPopupItem)
+    return retval
+
+
+def fl_insert_nmenu_items2(pObject, pPopupEntry, pPopupItem):
+    """
+        fl_insert_nmenu_items2(pObject, pPopupEntry, pPopupItem) -> pPopupEntry
+
+        @status: Untested + NoDoc + NoExample = NOT OK
+    """
+
+    _fl_insert_nmenu_items2 = cfuncproto(
+            load_so_libforms(), "fl_insert_nmenu_items2",
+            cty.POINTER(FL_POPUP_ENTRY), [cty.POINTER(FL_OBJECT),
+            cty.POINTER(FL_POPUP_ENTRY), cty.POINTER(FL_POPUP_ITEM)],
+            """FL_POPUP_ENTRY * fl_insert_nmenu_items2(FL_OBJECT * obj,
+               FL_POPUP_ITEM * p2, FL_POPUP_ITEM * p3)
+            """)
+    keep_elem_refs(pObject, pPopupEntry, pPopupItem)
+    retval = _fl_insert_nmenu_items2(pObject, pPopupEntry, pPopupItem)
+    return retval
+
+
+def fl_replace_nmenu_item2(pObject, pPopupEntry, pPopupItem):
+    """
+        fl_replace_nmenu_item2(pObject, pPopupEntry, pPopupItem) -> pPopupEntry
+
+        @status: Untested + NoDoc + NoExample = NOT OK
+    """
+
+    _fl_replace_nmenu_item2 = cfuncproto(
+            load_so_libforms(), "fl_replace_nmenu_item2",
+            cty.POINTER(FL_POPUP_ENTRY), [cty.POINTER(FL_OBJECT),
+            cty.POINTER(FL_POPUP_ENTRY), cty.POINTER(FL_POPUP_ITEM)],
+            """FL_POPUP_ENTRY * fl_replace_nmenu_item2(FL_OBJECT * obj,
+               FL_POPUP_ENTRY * p2, FL_POPUP_ITEM * p3)
+            """)
+    keep_elem_refs(pObject, pPopupEntry, pPopupItem)
+    retval = _fl_replace_nmenu_item2(pObject, pPopupEntry, pPopupItem)
+    return retval
+
+
 def fl_get_nmenu_popup(pObject):
     """
         fl_get_nmenu_popup(pObject) -> pPopup
@@ -17377,15 +17580,14 @@ def fl_delete_select_item(pObject, pPopupEntry):
     return retval
 
 
-def fl_set_select_items(pObject, pyclassPopupItem):
+def fl_set_select_items(pObject, pPopupItem):
     """
-        fl_set_select_items(pObject, pyclassPopupItem) -> num.
+        fl_set_select_items(pObject, pPopupItem) -> num.
 
         (Re)populates a select object popup.
 
         @param pObject : pointer to select object
-        @param pyclassPopupItem : xfc.FL_POPUP_ITEM class instance (array of it)
-           class of item elements
+        @param pPopupItem : pointer to FL_POPUP_ITEM class instance (array of it)
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -17396,21 +17598,8 @@ def fl_set_select_items(pObject, pyclassPopupItem):
             """long int fl_set_select_items(FL_OBJECT * p1,
                FL_POPUP_ITEM * p2)
             """)
-    #if not PopupItem.callback:
-    #    PopupItem.callback = xfc.FL_POPUP_CB(do_nothing_placeholder)
-    #py_sel_item_cb = PopupItem.callback
-    #c_sel_item_cb = xfc.FL_POPUP_CB(py_sel_item_cb)
-    #PopupItem.callback = c_sel_item_cb
 
-    realitem = (FL_POPUP_ITEM * 1)()
-    realitem[0].text = pyclassPopupItem.text
-    realitem[0].state = pyclassPopupItem.state
-    realitem[0].shortcut = pyclassPopupItem.shortcut
-    realitem[0].callback = FL_POPUP_CB(pyclassPopupItem.callback)
-
-    pPopupItem = cty.cast(realitem, cty.POINTER(FL_POPUP_ITEM))
-    keep_cfunc_refs(realitem[0].callback, pyclassPopupItem.callback)
-    keep_elem_refs(pObject, realitem, pyclassPopupItem, pPopupItem)
+    keep_elem_refs(pObject, pPopupItem)
     retval = _fl_set_select_items(pObject, pPopupItem)
     return retval
 
@@ -17466,14 +17655,14 @@ def fl_get_select_item(pObject):
     return retval
 
 
-def fl_set_select_item(pObject, PopupEntry):
+def fl_set_select_item(pObject, pPopupEntry):
     """
-        fl_set_select_item(pObject, PopupEntry) -> pPopupReturn
+        fl_set_select_item(pObject, pPopupEntry) -> pPopupReturn
 
         Set a new item as currently selected.
 
         @param pObject : pointer to select object
-        @param PopupEntry : xfc.Fl_POPUP_ENTRY class instance
+        @param pPopupEntry : pointer to FL_POPUP_ENTRY class instance
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -17485,8 +17674,7 @@ def fl_set_select_item(pObject, PopupEntry):
             """FL_POPUP_RETURN * fl_set_select_item(FL_OBJECT * p1,
                FL_POPUP_ENTRY * p2)
             """)
-    pPopupEntry = cty.cast(PopupEntry, cty.POINTER(PopupEntry))
-    keep_elem_refs(pObject, PopupEntry, pPopupEntry)
+    keep_elem_refs(pObject, pPopupEntry)
     retval = _fl_set_select_item(pObject, pPopupEntry)
     return retval
 

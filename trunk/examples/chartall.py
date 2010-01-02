@@ -43,7 +43,7 @@ def main(lsysargv, sysargv):
    fill_in(phorbarchart)
    fill_in(plinechart)
    xf.fl_set_object_helper(plinechart, "A LineChart")
-   fill_in(pfilledchart)
+   fill_in(pfillchart)
    fill_in(pspikechart)
    fill_in(ppiechart)
    fill_in(pspecialpiechart)
@@ -58,7 +58,7 @@ def main(lsysargv, sysargv):
 
 
 def create_form_form():
-    global pform, pbarchart, phorbarchart, plinechart, pfilledchart
+    global pform, pbarchart, phorbarchart, plinechart, pfillchart
     global pspikechart, ppiechart, pspecialpiechart
 
     pform = xf.fl_bgn_form(xfc.FL_NO_BOX, 940, 360)
@@ -73,9 +73,9 @@ def create_form_form():
                                  "LINE_CHART")
     xf.fl_set_object_boxtype(plinechart, xfc.FL_RSHADOW_BOX)
 
-    pfilledchart = xf.fl_add_chart(xfc.FL_FILLED_CHART, 250, 190, 210, 140,
-                                   "FILLED_CHART")
-    xf.fl_set_object_boxtype(pfilledchart, xfc.FL_RSHADOW_BOX)
+    pfillchart = xf.fl_add_chart(xfc.FL_FILL_CHART, 250, 190, 210, 140,
+                                   "FILL_CHART")
+    xf.fl_set_object_boxtype(pfillchart, xfc.FL_RSHADOW_BOX)
 
     ppiechart = xf.fl_add_chart(xfc.FL_PIE_CHART, 480, 190, 210, 140,
                                 "PIE_CHART")
@@ -94,7 +94,7 @@ def create_form_form():
     xf.fl_set_object_boxtype(pspikechart, xfc.FL_RSHADOW_BOX)
 
     pexitbut = xf.fl_add_button(xfc.FL_NORMAL_BUTTON, 750, 260, 140, 30, \
-				"Exit")
+                                "Exit")
 
     xf.fl_end_form()
 
