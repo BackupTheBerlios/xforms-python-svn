@@ -429,7 +429,6 @@ MOUSEBTN_list = [FL_MBUTTON1, FL_MBUTTON2, FL_MBUTTON3, FL_MBUTTON4,
 
 
 # control when to return input, slider and dial etc. object.
-# values for unnamed enumeration
 FL_RETURN_NONE = 0
 """Never return or invoke a callback."""
 FL_RETURN_CHANGED = 1

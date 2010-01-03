@@ -1,6 +1,7 @@
 
 
 SVN
+    * separated namespace for xfdata preserved in library.
     * bugfixes in demo file because of some commented deprecated
     variables.
     * introduce some new functions for nmenus and popups
