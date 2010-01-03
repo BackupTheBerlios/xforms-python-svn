@@ -39,7 +39,7 @@ import xfdata as xfc       # data types and constants from XForms
 
 
 # xforms-python version
-__mainversion__ = "0.3.2"               # real version
+__mainversion__ = "0.3.3"               # real version
 __vers_against_xforms__ = "1.0.93pre2"   # xforms version to be built against
 __version__ = __mainversion__+"_"+__vers_against_xforms__
 
@@ -133,7 +133,7 @@ def warn_deprecated_function(altfunc=""):
     warnings.warn(warningmsg, DeprecationWarning, 3)
 
 
-def func_do_nothing_placeholder(cfunction):
+def func_notexists_placeholder(cfunction):
     """ Print a warning if called function doesn't exist
     """
 
@@ -142,14 +142,6 @@ def func_do_nothing_placeholder(cfunction):
                  "is ignored. Maybe removed or disabled?" % cfunction
     warnings.warn(warningmsg, UserWarning)
     return None
-
-
-def donothing_popupcb(pPopupReturn):
-    """ It replaces a callback function not defined for class instances
-        as e.g. xfc.FL_POPUP_ITEM            *temporary*
-    """
-
-    return 0                    # TODO: verify return value
 
 
 # placeholders to keep reference to c functions
@@ -244,7 +236,7 @@ def cfuncproto(library, cfuncname, retval, arglist, doc=""):
         loadedfunc = getattr(library, cfuncname)
     except AttributeError:
         # function doesn't exist
-        loadedfunc = func_do_nothing_placeholder(cfuncname)
+        loadedfunc = func_notexists_placeholder(cfuncname)
     else:
         loadedfunc.restype = retval
         loadedfunc.argtypes = arglist
@@ -448,6 +440,14 @@ def check_admitted_listvalues(paramname, *valueslist):
                                   "list %s." % valueslist)
 
 
+def donothing_popupcb(pPopupReturn):
+    """ It replaces a callback function not defined for class instances
+        as e.g. xfc.FL_POPUP_ITEM            *temporary*
+    """
+
+    return 0
+
+
 class GenericPopupItem(object):
     """ empty class to instantiate for use with makeClassPopupItem
         and xfc.FL_POPUP_ITEM
@@ -457,8 +457,9 @@ class GenericPopupItem(object):
 
 
 def make_pPopupItem_from_dict(pidict):
-    """ Taking a python dict with a structure similar to xfc.FL_POPUP_ITEM
-        prepares and returns a C-compatible pointer to xfc.FL_POPUP_ITEM.
+    """ Taking a python dict (for one dict item ONLY) with a structure similar
+        to xfc.FL_POPUP_ITEM prepares and returns a C-compatible pointer
+        to xfc.FL_POPUP_ITEM.
     """
 
     if not isinstance(pidict, dict):
@@ -476,138 +477,89 @@ def make_pPopupItem_from_dict(pidict):
     pyclsstate = pidict['state']
     ipistate = convert_to_int(pyclsstate)
 
-    popupitem = xfc.FL_POPUP_ITEM()
-    print "newPop", popupitem
-    popupitem.text = spitext
-    popupitem.callback = c_picallback
-    popupitem.shortcut = spishortcut
-    popupitem.type = ipitype
-    popupitem.state = ipistate
+    popupitem = (xfc.FL_POPUP_ITEM * 2)()
+    popupitem[0].text = spitext
+    popupitem[0].callback = c_picallback
+    popupitem[0].shortcut = spishortcut
+    popupitem[0].type = ipitype
+    popupitem[0].state = ipistate
+    popupitem[1].text = None        # this ends the array, preventing SegFault
 
-    ppopupitem = popupitem
-    #ppopupitem = cty.pointer(popupitem)
-    #ppopupitem = cty.byref(popupitem)
-    #ppopupitem = cty.cast(popupitem, cty.POINTER(xfc.FL_POPUP_ITEM))
-    print "ptr", ppopupitem
+    ppopupitem = cty.pointer(popupitem[0])
     keep_cfunc_refs(pyclscallback, c_picallback)
     keep_elem_refs(pidict, pyclsshortcut, pyclstype,
                    pyclstext, spitext, pyclsshortcut,
                    spishortcut, pyclstype, ipitype, pyclsstate,
                    ipistate, popupitem, ppopupitem)
-    return popupitem, popupitem    #, ppopupitem
-
-
-def make_pPopupItem_from_class(pycls):
-    """ Taking a python class with a structure similar to xfc.FL_POPUP_ITEM
-        prepares and returns a C-compatible pointer to xfc.FL_POPUP_ITEM.
-    """
-
-    pyclstext = pycls.text
-    spitext = convert_to_string(pyclstext)
-    pyclscallback = pycls.callback
-    c_picallback = xfc.FL_POPUP_CB(pyclscallback)
-    pyclsshortcut = pycls.shortcut
-    spishortcut = convert_to_string(pyclsshortcut)
-    pyclstype = pycls.type
-    ipitype = convert_to_int(pyclstype)
-    pyclsstate = pycls.state
-    ipistate = convert_to_int(pyclsstate)
-
-    popupitem = xfc.FL_POPUP_ITEM()
-    print "newPop", popupitem
-    popupitem.text = spitext
-    popupitem.callback = c_picallback
-    popupitem.shortcut = spishortcut
-    popupitem.type = ipitype
-    popupitem.state = ipistate
-
-    ppopupitem = cty.pointer(popupitem)
-    #ppopupitem = cty.byref(popupitem)
-    #ppopupitem = cty.cast(popupitem, cty.POINTER(xfc.FL_POPUP_ITEM))
-    print "ptr", ppopupitem
-    keep_cfunc_refs(pyclscallback, c_picallback)
-    keep_elem_refs(pycls, pycls.text, pyclsshortcut, pyclstype,
-                   pycls.state, pyclstext, spitext, pyclsshortcut,
-                   spishortcut, pyclstype, ipitype, pyclsstate,
-                   ipistate, popupitem, ppopupitem)
-    return popupitem, ppopupitem
-
-
-
-def makeOneListPopupItem(pitext, py_picallback, pishortcut, pitype, pistate):
-    """ Taking a python list with elements in the same order as
-        xfc.FL_POPUP_ITEM prepares and returns a C-compatible
-        pointer xfc.FL_POPUP_ITEM.
-    """
-
-    spitext = convert_to_string(pitext)
-    print "pitext", spitext, pitext
-    c_picallback = xfc.FL_POPUP_CB(py_picallback)
-    print "picallback", c_picallback, py_picallback
-    spishortcut = convert_to_string(pishortcut)
-    print "pishortc", spishortcut, pishortcut
-    ipitype = convert_to_int(pitype)
-    print "pitype", ipitype, pitype
-    ipistate = convert_to_int(pistate)
-    print "pistate", ipistate, pistate
-
-    newPopupItem = xfc.FL_POPUP_ITEM()
-    print "newPop", newPopupItem,
-    newPopupItem.text = spitext
-    print "newPop_text", newPopupItem.text,
-    newPopupItem.callback = c_picallback
-    print "newPop_cb", newPopupItem.callback,
-    newPopupItem.shortcut = spishortcut
-    print "newPop_shcut", newPopupItem.shortcut,
-    newPopupItem.type = ipitype
-    print "newPop_type", newPopupItem.type,
-    newPopupItem.state = ipistate
-    print "newPop_state", newPopupItem.state
-
-    pnewPopupItem = cty.pointer(newPopupItem)
-    print "ptr", pnewPopupItem
-    keep_cfunc_refs(py_picallback, c_picallback)
-    keep_elem_refs(pitext, spitext, pishortcut, spishortcut,
-                   pitype, ipitype, pistate, ipistate, 
-                   newPopupItem, pnewPopupItem)
-    return pnewPopupItem
-
-
-def makeMultiListPopupItem(*listofpopupitems):
-    """ Taking a python list of popupitems, with elements in the same order
-        as xfc.FL_POPUP_ITEM prepares and returns a C-compatible
-        pointer xfc.FL_POPUP_ITEM.
-    """
-
-    spitext = c_picallback = spishortcut = ipitype = ipistate = []
-    numarray = len(listofpopupitems)
-    popupitem = (xfc.FL_POPUP_ITEM * numarray)()
-
-    for indx in range(0, numarray-1):
-
-        spitext[indx] = convert_to_string(listofpopupitems[indx][0])
-        c_picallback[indx] = xfc.FL_POPUP_CB(listofpopupitems[indx][1])
-        spishortcut[indx] = convert_to_string(listofpopupitems[indx][2])
-        ipitype[indx] = convert_to_int(listofpopupitems[indx][3])
-        ipistate[indx] = convert_to_int(listofpopupitems[indx][4])
-
-        popupitem.text = spitext[indx]
-        popupitem[indx].callback = c_picallback[indx]
-        popupitem[indx].shortcut = spishortcut[indx]
-        popupitem[indx].type = ipitype[indx]
-        popupitem[indx].state = ipistate[indx]
-
-        keep_cfunc_refs(listofpopupitems[indx][1], c_picallback)
-        keep_elem_refs(popupitem[indx], spitext[indx], 
-                       spishortcut[indx], ipitype[indx], 
-                       ipistate[indx])
-
-    ppopupitem = cty.pointer(popupitem[0])
-    print popupitem, ppopupitem, popupitem[0]
-    print "ptr", ppopupitem
-    keep_elem_refs(listofpopupitems, popupitem, ppopupitem)
     return ppopupitem
 
+
+def make_pPopupItem_from_list(listofpopupitems):
+    """ Taking a python single list/several lists of popupitems, with elements
+        in the same order as xfc.FL_POPUP_ITEM prepares and returns a
+        C-compatible pointer xfc.FL_POPUP_ITEM.
+    """
+
+    # trick to manage both single list and several lists passed as arguments
+    try:
+        tmpval = listofpopupitems[1][0]
+
+    except TypeError:
+        # only one list passed (array of 2 member)
+        popupitem = (xfc.FL_POPUP_ITEM * 2)()   # 1 list and 1 None
+
+        spitext = convert_to_string(listofpopupitems[0])
+        popupitem[0].text = spitext
+        c_picallback = xfc.FL_POPUP_CB(listofpopupitems[1])
+        popupitem[0].callback = c_picallback
+        spishortcut = convert_to_string(listofpopupitems[2])
+        popupitem[0].shortcut = spishortcut
+        ipitype = convert_to_int(listofpopupitems[3])
+        popupitem[0].type = ipitype
+        ipistate = convert_to_int(listofpopupitems[4])
+        popupitem[0].state = ipistate
+
+        popupitem[1].text = None       # ends the array, preventing SegFault
+
+        keep_cfunc_refs(listofpopupitems[1], c_picallback)
+        keep_elem_refs(popupitem, spitext, spishortcut,
+                       ipitype, ipistate)
+
+        ppopupitem = cty.pointer(popupitem[0])
+        keep_elem_refs(listofpopupitems, popupitem, ppopupitem)
+        return ppopupitem
+        # end of 1 list
+
+    else:
+        # serie of lists passed (array of n+1 members)
+        numarray = len(listofpopupitems)
+        lngarray = numarray + 1         # consider final None
+        popupitem = (xfc.FL_POPUP_ITEM * lngarray)()
+        curitem = 0
+
+        for indx in range(0, numarray):
+            spitext = convert_to_string(listofpopupitems[indx][0])
+            popupitem[indx].text = spitext
+            c_picallback = xfc.FL_POPUP_CB(listofpopupitems[indx][1])
+            popupitem[indx].callback = c_picallback
+            spishortcut = convert_to_string(listofpopupitems[indx][2])
+            popupitem[indx].shortcut = spishortcut
+            ipitype = convert_to_int(listofpopupitems[indx][3])
+            popupitem[indx].type = ipitype
+            ipistate = convert_to_int(listofpopupitems[indx][4])
+            popupitem[indx].state = ipistate
+
+            keep_cfunc_refs(listofpopupitems[indx][1], c_picallback)
+            keep_elem_refs(popupitem[indx], spitext, spishortcut,
+                       ipitype, ipistate)
+            curitem = indx
+
+        curitem += 1
+        popupitem[curitem].text = None       # ends the array, preventing SegFault
+        ppopupitem = cty.pointer(popupitem[0])
+        keep_elem_refs(listofpopupitems, popupitem, ppopupitem)
+        return ppopupitem
+        # end of serie of lists
 
 
 
@@ -2669,7 +2621,6 @@ def fl_set_object_label(pObject, label):
     _fl_set_object_label(pObject, slabel)
 
 
-# fl_get_object_label(pObject)          $TEST $
 def fl_get_object_label(pObject):
     """
         fl_get_object_label(pObject) -> label
@@ -2691,7 +2642,6 @@ def fl_get_object_label(pObject):
     return retval
 
 
-# fl_set_object_helper(pObject, tip)            $TEST $
 def fl_set_object_helper(pObject, tip):
     """
         fl_set_object_helper(pObject, tip)
@@ -2714,7 +2664,6 @@ def fl_set_object_helper(pObject, tip):
     _fl_set_object_helper(pObject, stip)
 
 
-# fl_set_object_position(pObject, x, y)         $TEST $
 def fl_set_object_position(pObject, x, y):
     """
         fl_set_object_position(pObject, x, y)
@@ -2740,7 +2689,6 @@ def fl_set_object_position(pObject, x, y):
     _fl_set_object_position(pObject, ix, iy)
 
 
-# NEW fl_get_object_size(pObject) -> width, height      $TEST $
 def fl_get_object_size(pObject):
     """
         fl_get_object_size(pObject) -> width, height
@@ -2769,7 +2717,6 @@ def fl_get_object_size(pObject):
     return w, h
 
 
-# fl_set_object_size(pObject, w, h)             $TEST $
 def fl_set_object_size(pObject, w, h):
     """
         fl_set_object_size(pObject, w, h)
@@ -2795,7 +2742,6 @@ def fl_set_object_size(pObject, w, h):
     _fl_set_object_size(pObject, iw, ih)
 
 
-# fl_set_object_automatic(pObject, flag)                $TEST $
 def fl_set_object_automatic(pObject, flag):
     """
         fl_set_object_automatic(pObject, flag)
@@ -2816,7 +2762,6 @@ def fl_set_object_automatic(pObject, flag):
     _fl_set_object_automatic(pObject, iflag)
 
 
-# fl_object_is_automatic(pObject)               $TEST $
 def fl_object_is_automatic(pObject):
     """
         fl_object_is_automatic(pObject) -> flag num.
@@ -2836,7 +2781,6 @@ def fl_object_is_automatic(pObject):
     return retval
 
 
-# fl_draw_object_label(pObject)                 $TEST $
 def fl_draw_object_label(pObject):
     """
         fl_draw_object_label(pObject)
@@ -2855,7 +2799,6 @@ def fl_draw_object_label(pObject):
     _fl_draw_object_label(pObject)
 
 
-# fl_draw_object_label_outside(pObject)         $TEST $
 def fl_draw_object_label_outside(pObject):
     """
         fl_draw_object_label_outside(pObject)
@@ -2874,7 +2817,6 @@ def fl_draw_object_label_outside(pObject):
     _fl_draw_object_label_outside(pObject)
 
 
-# fl_get_object_component(pObjectComposite, objclass, compontype, numb)         $TEST $
 def fl_get_object_component(pObjectComposite, objclass, compontype, numb):
     """
         fl_get_object_component(pObjectComposite, objclass, compontype, numb) -> pObject
@@ -2903,7 +2845,6 @@ def fl_get_object_component(pObjectComposite, objclass, compontype, numb):
 cfunc_int_pobject_pvoid = cty.CFUNCTYPE(cty.c_int, cty.POINTER(xfc.FL_OBJECT), \
                                         cty.c_void_p)
 
-# fl_for_all_objects(pForm, py_cb, v)           $TEST $
 def fl_for_all_objects(pForm, py_cb, v):
     """
         fl_for_all_objects(pForm, py_cb, v)
@@ -2932,7 +2873,6 @@ def fl_for_all_objects(pForm, py_cb, v):
 fl_draw_object_outside_label = fl_draw_object_label_outside
 
 
-# fl_set_object_dblclick(pObject, timeout)              $TEST $
 def fl_set_object_dblclick(pObject, timeout):
     """
         fl_set_object_dblclick(pObject, timeout)
@@ -2956,7 +2896,6 @@ def fl_set_object_dblclick(pObject, timeout):
     _fl_set_object_dblclick(pObject, ultimeout)
 
 
-# fl_get_object_dblclick(pObject)               $TEST $
 def fl_get_object_dblclick(pObject):
     """
         fl_get_object_dblclick(pObject) -> timeout value
@@ -2978,7 +2917,6 @@ def fl_get_object_dblclick(pObject):
     return retval
 
 
-# fl_set_object_geometry(pObject, x, y, w, h)           $TEST $
 def fl_set_object_geometry(pObject, x, y, w, h):
     """
         fl_set_object_geometry(pObject, x, y, w, h)
@@ -3009,7 +2947,6 @@ def fl_set_object_geometry(pObject, x, y, w, h):
     _fl_set_object_geometry(pObject, ix, iy, iw, ih)
 
 
-# fl_move_object(pObject, dx, dy)               $TEST $
 def fl_move_object(pObject, dx, dy):
     """
         fl_move_object(pObject, dx, dy)
@@ -3060,7 +2997,6 @@ def fl_fit_object_label(pObject, xmargin, ymargin):
     _fl_fit_object_label(pObject, ixmargin, iymargin)
 
 
-# NEW fl_get_object_geometry(pObject) -> x, y, w, h               $TEST $
 def fl_get_object_geometry(pObject):
     """
         fl_get_object_geometry(pObject) -> hor-xpos, vert-ypos, width, height
@@ -3091,7 +3027,6 @@ def fl_get_object_geometry(pObject):
     return x, y, w,h
 
 
-# NEW fl_get_object_position(pObject) -> x, y           $TEST $
 def fl_get_object_position(pObject):
     """
         fl_get_object_position(pObject) -> hor-xpos, vert-ypos
@@ -3122,7 +3057,6 @@ def fl_get_object_position(pObject):
 
 # this one takes into account the label
 
-# NEW fl_get_object_bbox(pObject) -> x, y, w, h         $TEST $
 def fl_get_object_bbox(pObject):
     """
         fl_get_object_bbox(pObject) -> x, y, w, h
@@ -3155,7 +3089,6 @@ def fl_get_object_bbox(pObject):
 fl_compute_object_geometry = fl_get_object_bbox
 
 
-# fl_call_object_callback(pObject)              $TEST $
 def fl_call_object_callback(pObject):
     """
         fl_call_object_callback(pObject)
@@ -3178,7 +3111,6 @@ def fl_call_object_callback(pObject):
 #FL_HANDLEPTR = cty.CFUNCTYPE(cty.c_int, cty.POINTER(xfc.FL_OBJECT), cty.c_int, \
 #                FL_Coord, FL_Coord, cty.c_int, cty.c_void_p)
 
-# fl_set_object_prehandler(pObject, py_HandlerPtr)              $TEST $
 def fl_set_object_prehandler(pObject, py_HandlerPtr):
     """
         fl_set_object_prehandler(pObject, py_HandlerPtr) ->  pHandlerPtr
@@ -3201,7 +3133,6 @@ def fl_set_object_prehandler(pObject, py_HandlerPtr):
     return retval
 
 
-# fl_set_object_posthandler(pObject, py_HandlerPtr)             $TEST $
 def fl_set_object_posthandler(pObject, py_HandlerPtr):
     """
         fl_set_object_posthandler(pObject, py_HandlerPtr) -> pHandlerPtr
@@ -3229,7 +3160,6 @@ def fl_set_object_posthandler(pObject, py_HandlerPtr):
 #already defined in xfdata
 #FL_CALLBACKPTR = cty.CFUNCTYPE(None, cty.POINTER(xfc.FL_OBJECT), cty.c_long)
 
-# fl_set_object_callback(pObject, py_CallbackPtr, argum)                $TEST $
 def fl_set_object_callback(pObject, py_CallbackPtr, argum):
     """
         fl_set_object_callback(pObject, py_CallbackPtr, argum) -> c_callback func.
@@ -3263,7 +3193,6 @@ fl_set_object_align = fl_set_object_lalign
 fl_set_call_back = fl_set_object_callback
 
 
-# fl_redraw_object(pObject)             $TEST $
 def fl_redraw_object(pObject):
     """
         fl_redraw_object(pObject)
@@ -3282,7 +3211,6 @@ def fl_redraw_object(pObject):
     _fl_redraw_object(pObject)
 
 
-# fl_scale_object(pObject, xs, ys)              $TEST $
 def fl_scale_object(pObject, xs, ys):
     """
         fl_scale_object(pObject, xs, ys)
@@ -3307,7 +3235,6 @@ def fl_scale_object(pObject, xs, ys):
     _fl_scale_object(pObject, fxs, fys)
 
 
-# fl_show_object(pObject)               $TEST $
 def fl_show_object(pObject):
     """
         fl_show_object(pObject)
@@ -3328,7 +3255,6 @@ def fl_show_object(pObject):
     _fl_show_object(pObject)
 
 
-# fl_hide_object(pObject)               $TEST $
 def fl_hide_object(pObject):
     """
         fl_hide_object(pObject)
@@ -3349,7 +3275,6 @@ def fl_hide_object(pObject):
     _fl_hide_object(pObject)
 
 
-# fl_object_is_visible(pObject)         $TEST $
 def fl_object_is_visible(pObject):
     """
         fl_object_is_visible(pObject) -> num.
@@ -3371,7 +3296,6 @@ def fl_object_is_visible(pObject):
     return retval
 
 
-# fl_free_object(pObject)               $TEST $
 def fl_free_object(pObject):
     """
         fl_free_object(pObject)
@@ -3390,7 +3314,6 @@ def fl_free_object(pObject):
     _fl_free_object(pObject)
 
 
-# fl_delete_object(pObject)             $TEST $
 def fl_delete_object(pObject):
     """
         fl_delete_object(pObject)
@@ -3409,7 +3332,6 @@ def fl_delete_object(pObject):
     _fl_delete_object(pObject)
 
 
-# fl_get_object_return_state(pObject)           $TEST $
 def fl_get_object_return_state(pObject):
     """
         fl_get_object_return_state(pObject) -> ID num
@@ -3568,7 +3490,6 @@ def fl_set_font(numb, size):
 
 # routines that facilitate free object
 
-# NEW fl_get_char_height(style, size) -> height, asc, desc              $TEST $
 def fl_get_char_height(style, size):
     """
         fl_get_char_height(style, size) -> height num., asc, desc
@@ -3595,7 +3516,6 @@ def fl_get_char_height(style, size):
     return retval, asc, desc
 
 
-# fl_get_char_width(style, size)                $TEST $
 def fl_get_char_width(style, size):
     """
         fl_get_char_width(style, size) -> width num.
@@ -3615,7 +3535,6 @@ def fl_get_char_width(style, size):
     return retval
 
 
-# NEW fl_get_string_height(style, size, strng, strglen) -> height, asc, desc            $TEST $
 def fl_get_string_height(style, size, strng, strglen):
     """
         fl_get_string_height(style, size, strng, strglen) -> height num., asc, desc
@@ -3648,7 +3567,6 @@ def fl_get_string_height(style, size, strng, strglen):
     return retval, asc, desc
 
 
-# fl_get_string_width(style, size, s, strglen)          $TEST $
 def fl_get_string_width(style, size, strng, strglen):
     """
         fl_get_string_width(style, size, strng, strglen) -> width num.
@@ -3765,7 +3683,6 @@ def fl_get_align_xy(align, x, y, w, h, xsize, ysize, xoff, yoff):
     return xx, yy
 
 
-# fl_drw_text(align, x, y, w, h, colr, style, size, txtstr)             $TEST $
 def fl_drw_text(align, x, y, w, h, colr, style, size, txtstr):
     """
         fl_drw_text(align, x, y, w, h, colr, style, size, txtstr)
@@ -3797,7 +3714,6 @@ def fl_drw_text(align, x, y, w, h, colr, style, size, txtstr):
                  s_txtstr)
 
 
-# fl_drw_text_beside(align, x, y, w, h, colr, style, size, txtstr)              $TEST $
 def fl_drw_text_beside(align, x, y, w, h, colr, style, size, txtstr):
     """
         fl_drw_text_beside(align, x, y, w, h, colr, style, size, txtstr)
@@ -3830,7 +3746,6 @@ def fl_drw_text_beside(align, x, y, w, h, colr, style, size, txtstr):
                         isize, s_txtstr)
 
 
-# fl_drw_text_cursor(align, x, y, w, h, colr, style, size, txtstr, cc, pos)             $TEST $
 def fl_drw_text_cursor(align, x, y, w, h, colr, style, size, txtstr, cc, pos):
     """
         fl_drw_text_cursor(align, x, y, w, h, colr, style, size, txtstr, cc, pos)
@@ -3867,7 +3782,6 @@ def fl_drw_text_cursor(align, x, y, w, h, colr, style, size, txtstr, cc, pos):
                         isize, stxtstr, icc, ipos)
 
 
-# fl_drw_box(style, x, y, w, h, colr, bwIn)             $TEST $
 def fl_drw_box(style, x, y, w, h, colr, bwIn):
     """
         fl_drw_box(style, x, y, w, h, colr, bwIn)
@@ -3898,7 +3812,6 @@ def fl_drw_box(style, x, y, w, h, colr, bwIn):
 FL_DRAWPTR = cty.CFUNCTYPE(None, xfc.FL_Coord, xfc.FL_Coord, xfc.FL_Coord,
                            xfc.FL_Coord, cty.c_int, xfc.FL_COLOR)
 
-# fl_add_symbol(name, py_DrawPtr, scalable)             $TEST $
 def fl_add_symbol(name, py_DrawPtr, scalable):
     """
         fl_add_symbol(name, py_DrawPtr, scalable) -> num.
@@ -3928,7 +3841,6 @@ def fl_add_symbol(name, py_DrawPtr, scalable):
     return retval
 
 
-# fl_draw_symbol(label, x, y, w, h, colr)               $TEST $
 def fl_draw_symbol(label, x, y, w, h, colr):
     """
         fl_draw_symbol(label, x, y, w, h, colr) -> num.
@@ -3955,7 +3867,6 @@ def fl_draw_symbol(label, x, y, w, h, colr):
     return retval
 
 
-# fl_mapcolor(colr, r, g, b)            $TEST $
 def fl_mapcolor(colr, r, g, b):
     """
         fl_mapcolor(colr, r, g, b) -> num.
@@ -3985,7 +3896,6 @@ def fl_mapcolor(colr, r, g, b):
     return retval
 
 
-# fl_mapcolorname(colr, name)           $TEST $
 def fl_mapcolorname(colr, name):
     """
         fl_mapcolorname(colr, name) -> num.
@@ -4085,7 +3995,6 @@ def fl_getmcolor(colr):
     return retval, r, g,b
 
 
-# fl_get_pixel(colr)                    $TEST $
 def fl_get_pixel(colr):
     """
         fl_get_pixel(colr) -> pixel num.
@@ -4110,7 +4019,6 @@ def fl_get_pixel(colr):
 fl_get_flcolor = fl_get_pixel
 
 
-# NEW fl_get_icm_color(colr) -> r, g, b                 $TEST $
 def fl_get_icm_color(colr):
     """
         fl_get_icm_color(colr) -> r, g, b
@@ -4178,7 +4086,6 @@ def fl_color(colr):
     _fl_color(ulcolr)
 
 
-# fl_bk_color(colr)                 $TEST $
 def fl_bk_color(colr):
     """
         fl_bk_color(colr)
@@ -4199,7 +4106,6 @@ def fl_bk_color(colr):
     _fl_bk_color(ulcolr)
 
 
-# fl_textcolor(colr)            $TEST $
 def fl_textcolor(colr):
     """
         fl_textcolor(colr)
@@ -4220,7 +4126,6 @@ def fl_textcolor(colr):
     _fl_textcolor(ulcolr)
 
 
-# fl_bk_textcolor(colr)                 $TEST $
 def fl_bk_textcolor(colr):
     """
         fl_bk_textcolor(colr)
@@ -4241,7 +4146,6 @@ def fl_bk_textcolor(colr):
     _fl_bk_textcolor(ulcolr)
 
 
-# fl_set_gamma(r, g, b)         $TEST $
 def fl_set_gamma(r, g, b):
     """
         fl_set_gamma(r, g, b)
@@ -4265,7 +4169,6 @@ def fl_set_gamma(r, g, b):
     _fl_set_gamma(fr, fg, fb)
 
 
-# fl_show_errors(y)             $TEST $
 def fl_show_errors(y):
     """
         fl_show_errors(y)
@@ -4416,7 +4319,6 @@ def fl_make_object(objclass, objtype, x, y, w, h, label, py_HandlePtr):
     return retval
 
 
-# fl_add_child(pObject1, pObject2)              $TEST $
 def fl_add_child(pObject1, pObject2):
     """
         fl_add_child(pObject1, pObject2)
@@ -4436,7 +4338,6 @@ def fl_add_child(pObject1, pObject2):
     _fl_add_child(pObject1, pObject2)
 
 
-# fl_set_coordunit(unit)                   $TEST $
 def fl_set_coordunit(unit):
     """
         fl_set_coordunit(unit)
@@ -16686,7 +16587,6 @@ def fl_add_nmenu_items2(pObject, pPopupItem):
             """FL_POPUP_ENTRY * fl_add_nmenu_items2(FL_OBJECT * obj,
                FL_POPUP_ITEM * p2)
             """)
-    #pPopupItem = cty.cast(PopupItem, cty.POINTER(xfc.FL_POPUP_ITEM))
     keep_elem_refs(pObject, pPopupItem)
     retval = _fl_add_nmenu_items2(pObject, pPopupItem)
     return retval

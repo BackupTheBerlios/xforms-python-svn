@@ -1428,7 +1428,7 @@ FL_OBJECT_._fields_ = [
     cty.c_int, FL_Coord, FL_Coord, cty.c_int, cty.c_void_p)),
     ('posthandle', cty.CFUNCTYPE(cty.c_int, cty.POINTER(FL_OBJECT), \
     cty.c_int, FL_Coord, FL_Coord, cty.c_int, cty.c_void_p)),
-    ('set_return', cty.CFUNCTYPE(None, cty.POINTER(FL_OBJECT), cty.c_int)),
+    ('set_return', cty.CFUNCTYPE(None, cty.POINTER(FL_OBJECT), cty.c_uint)),
     # re-configure preference
     ('resize', cty.c_uint),               # what to do if WM resizes the FORM
     ('nwgravity', cty.c_uint),            # how to re-position top-left corner
@@ -1442,7 +1442,7 @@ FL_OBJECT_._fields_ = [
     ('use_pixmap', cty.c_int),          # true to use pixmap double buffering
     # some interaction flags
     ('returned', cty.c_int),            # what last interaction returned
-    ('how_return', cty.c_int),          # under which conditions to return
+    ('how_return', cty.c_uint),          # under which conditions to return
     ('double_buffer', cty.c_int),         # only used by mesa/gl canvas
     ('pushed', cty.c_int),
     ('focus', cty.c_int),
