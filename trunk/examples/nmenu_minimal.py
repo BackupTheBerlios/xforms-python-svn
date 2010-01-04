@@ -35,11 +35,11 @@ def item5_cb(r):
     return 0
 
 def item6_cb(r):
-    print "Choice 6 replace for choice 1", xf.fl_get_nmenu_item_by_value(pmenu1, 6)
+    print "choice 6 replace for choice 1", xf.fl_get_nmenu_item_by_value(pmenu1, 6)
     return 0
 
 def item7_cb(r):
-    print "Choice 7 replace for choice 2", xf.fl_get_nmenu_item_by_value(pmenu1, 7)
+    print "choice 7 replace for choice 2", xf.fl_get_nmenu_item_by_value(pmenu1, 7)
     return 0
 
 def done_cb(r):
@@ -51,7 +51,7 @@ def item9_cb(r):
     return 0
 
 def item10_cb(r):
-    print "Choice 10 added", xf.fl_get_nmenu_item_by_value(pmenu2, 10)
+    print "choice 10 added", xf.fl_get_nmenu_item_by_value(pmenu2, 10)
     return 0
 
 def item11_cb(r):

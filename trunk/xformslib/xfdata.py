@@ -196,6 +196,17 @@ FL_TBOX = 44
 """"""
 FL_CLASS_END = 45           # sentinel
 
+# my add, list of possible values --LK
+OBJCLASS_list = [FL_BUTTON, FL_LIGHTBUTTON, FL_ROUNDBUTTON, FL_ROUND3DBUTTON,
+                 FL_CHECKBUTTON, FL_BITMAPBUTTON, FL_PIXMAPBUTTON, FL_BITMAP,
+                 FL_PIXMAP, FL_BOX, FL_TEXT, FL_MENU, FL_CHART, FL_CHOICE,
+                 FL_COUNTER, FL_SLIDER, FL_VALSLIDER, FL_INPUT, FL_BROWSER,
+                 FL_DIAL, FL_TIMER, FL_CLOCK, FL_POSITIONER, FL_FREE,
+                 FL_XYPLOT, FL_FRAME, FL_LABELFRAME, FL_CANVAS, FL_GLCANVAS,
+                 FL_TABFOLDER, FL_SCROLLBAR, FL_SCROLLBUTTON, FL_MENUBAR,
+                 FL_TEXTBOX, FL_LABELBUTTON, FL_COMBOBOX, FL_IMAGECANVAS,
+                 FL_THUMBWHEEL, FL_COLORWHEEL, FL_FORMBROWSER, FL_SELECT,
+                 FL_NMENU, FL_SPINNER, FL_TBOX]
 
 FL_BEGIN_GROUP = 10000
 FL_END_GROUP = 20000
@@ -255,8 +266,6 @@ the window manager's default."""
 # modifiers
 FL_FREE_SIZE = 16384          #(1<<14)
 """"""
-FL_FIX_SIZE = 32768           #(1<<15)
-""""""
 
 FL_PLACE_FREE_CENTER = (FL_PLACE_CENTER|FL_FREE_SIZE)
 """Same as FL_PLACE_CENTER | FL_FREE_SIZE, i.e., place the form at the 
@@ -269,8 +278,8 @@ center of the screen and allow resizing."""
 PLACE_list = [FL_PLACE_FREE, FL_PLACE_MOUSE, FL_PLACE_CENTER,
               FL_PLACE_POSITION, FL_PLACE_SIZE, FL_PLACE_GEOMETRY,
               FL_PLACE_ASPECT, FL_PLACE_FULLSCREEN, FL_PLACE_HOTSPOT,
-              FL_PLACE_ICONIC, FL_FREE_SIZE, FL_FIX_SIZE,
-              FL_PLACE_FREE_CENTER, FL_PLACE_CENTERFREE]
+              FL_PLACE_ICONIC, FL_FREE_SIZE, FL_PLACE_FREE_CENTER,
+              FL_PLACE_CENTERFREE]
 
 
 # Window manager decoration request and forms attributes
@@ -334,6 +343,7 @@ FL_OVAL3D_EMBOSSEDBOX = 17
 #FL_SELECTED_TOPTAB_UPBOX = 19
 #FL_BOTTOMTAB_UPBOX = 20
 #FL_SELECTED_BOTTOMTAB_UPBOX = 21
+# end internal --LK
 
 FL_MAX_BOX_STYLES = 23                # sentinel
 
@@ -828,8 +838,10 @@ FL_GRAY75 = FL_MCOL
 FL_LCOL = FL_BLACK
 FL_NoColor = FL_NOCOLOR
 
+# backward data dismissed --LK
 # An alias probably for an earlier typo
 #FL_DOGERBLUE = FL_DODGERBLUE
+#end backwards --LK
 
 # my add, list of possible values --LK
 COLOR_list = [FL_BLACK, FL_RED, FL_GREEN, FL_YELLOW, FL_BLUE, FL_MAGENTA,
@@ -953,8 +965,7 @@ the state member of the XEvent also passed to the function via 'xev'.
 This event only happens between FL_FOCUS and FL_UNFOCUS events. Not all
 objects sent keyboard events, only those that have non-zero value in field
 pOobject.contents.input or pObject.contents.wantkey."""
-# for objects that need to update something from time to time:
-FL_UPDATE = 10
+FL_UPDATE = 10   # for objects that need to update something from time to time
 """An FL_UPDATE event, like the FL_STEP event, also gets send about every 50
 msec (but less often under high load) to objects while they are
 "pushed", i.e. between receiving a FL_PUSH and a FL_RELEASE event if the
@@ -977,8 +988,7 @@ parameter key. See below for more on shortcuts."""
 FL_FREEMEM = 13
 """This event is sent when the object is to be freed. All memory
 allocated for the object must be freed when this event is received"""
-# property, selection etc.:
-FL_OTHER = 14
+FL_OTHER = 14   # property, selection etc.
 """Events other than the above. These events currently include
 ClientMessage, Selection and possibly other window manager events. All
 information about the event is contained in 'xev' parameter and 'mx',
@@ -988,15 +998,13 @@ FL_DRAWLABEL = 15
 needs to be (re)drawn. If the object in question always draws its label
 inside the bounding box and this is taken care of by handing FL_DRAW, you
 can ignore this event."""
-# double click:
-FL_DBLCLICK = 16
+FL_DBLCLICK = 16        # double click
 """The user has pushed a mouse button twice within a certain time limit
 (FL_CLICK_TIMEOUT), which by default is 400 msec. This event is sent
 after two FL_PUSH, FL_RELEASE sequence. Note that FL_DBLCLICK is only
 generated for objects that have non-zero pObject.contents.click timeout
 fields and it will not be generated for events from the scroll wheel."""
-# triple click:
-FL_TRPLCLICK = 17
+FL_TRPLCLICK = 17               # triple click
 """The user has pushed a mouse button three times within a certain time
 window. This event is sent after a FL_DBLCLICK, FL_PUSH, FL_RELEASE
 sequence. Set click timeout to none-zero to activate FL_TRPLCLICK"""
@@ -1013,15 +1021,15 @@ FL_MOVEORIGIN = 21  # dragging the form across the screen changes its
                     # date.
 FL_RESIZED = 22     # the object has been resized by scale_form
 """"""
-                    # Tell it that this has happened so that
-                    # it can resize any FL_FORMs that it contains.
+# the object has been resized by scale_form. Tell it that this has happened
+# so that it can resize any FL_FORMs that it contains.
 
 # backward data dismissed --LK
 # The following are only for backward compatibility, not used anymore
 #FL_MOVE = FL_MOTION
 #FL_KEYBOARD = FL_KEYPRESS
 #FL_MOUSE = FL_UPDATE
-# end backward --LK
+#end backwards --LK
 
 # Resize policies
 # values for enumeration 'FL_RESIZE_T'
@@ -1165,7 +1173,6 @@ FL_EMBOSSED_STYLE = 2048        #(1<<11)
 
 FL_FONT_STYLE = FL_TEXT_STYLE
 """"""
-
 
 # my add, list of possible values --LK
 TEXTSTYLE_list = [FL_INVALID_STYLE, FL_NORMAL_STYLE, FL_BOLD_STYLE,

@@ -495,12 +495,12 @@ def make_pPopupItem_from_dict(pidict):
 
 
 def make_pPopupItem_from_list(listofpopupitems):
-    """ Taking a python single list/several lists of popupitems, with elements
-        in the same order as xfc.FL_POPUP_ITEM prepares and returns a
-        C-compatible pointer xfc.FL_POPUP_ITEM.
+    """ Taking a python single list/several lists of popup items, with
+        elements in the same order as xfc.FL_POPUP_ITEM prepares and
+        returns a C-compatible pointer xfc.FL_POPUP_ITEM.
     """
 
-    # trick to manage both single list and several lists passed as arguments
+    # hack to manage both single list and several lists passed as arguments
     try:
         tmpval = listofpopupitems[1][0]
 
@@ -869,7 +869,7 @@ def fl_library_version():
         <ver> : version (e.g. 1 in 1.x.yy)
         <rev> : revision (e.g. 0 in x.0.yy)
 
-        @attention: API change from XForms - old was
+        @attention: API change from XForms - upstream was
            fl_library_version(ver, rev)
 
         @status: Untested + NoDoc + NoExample = NOT OK
@@ -1675,11 +1675,13 @@ def fl_set_form_geometry(pForm, x, y, w, h):
     """
         fl_set_form_geometry(pForm, x, y, w, h)
 
-        @param pForm : pointer to form
+        Sets the geometry (position and size) of a form.
+
+        @param pForm : pointer to form to be set
         @param x : horizontal position (upper-left corner)
         @param y : vertical position (upper-left corner)
-        @param w : width of form in pixels
-        @param h : height of form in pixels
+        @param w : width of form in coord units
+        @param h : height of form in coord units
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -2136,7 +2138,7 @@ def fl_get_object_bw(pObject):
 
         @param pObject : pointer to object
 
-        @attention: API change from XForms - old was
+        @attention: API change from XForms - upstream was
            fl_get_object_bw(pObject, bw)
 
         @status: Untested + NoDoc + NoExample = NOT OK
@@ -2233,7 +2235,7 @@ def fl_get_object_gravity(pObject):
 
         @param pObject : pointer to object
 
-        @attention: API change from XForms - old was
+        @attention: API change from XForms - upstream was
            fl_get_object_gravity(pObject, nw, se)
 
         @status: Untested + NoDoc + NoExample = NOT OK
@@ -2579,7 +2581,7 @@ def fl_get_object_color(pObject):
 
         @param pObject : pointer to object
 
-        @attention: API change from XForms - old was
+        @attention: API change from XForms - upstream was
            fl_set_object_color(pObject, fgcolr, bgcolr)
 
         @status: Untested + NoDoc + NoExample = NOT OK
@@ -2697,7 +2699,7 @@ def fl_get_object_size(pObject):
 
         @param pObject : pointer to object
 
-        @attention: API change from XForms - old was
+        @attention: API change from XForms - upstream was
            fl_get_object_size(pObject, w, h)
 
         @status: Untested + NoDoc + NoExample = NOT OK
@@ -2926,8 +2928,8 @@ def fl_set_object_geometry(pObject, x, y, w, h):
         @param pObject : pointer to object
         @param x : horizontal position (upper-left corner)
         @param y : vertical position (upper-left corner)
-        @param w : width of the object in pixels
-        @param h : height of the object in pixels
+        @param w : width in coord units
+        @param h : height in coord units
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -3005,7 +3007,7 @@ def fl_get_object_geometry(pObject):
 
         @param pObject : pointer to object
 
-        @attention: API change from XForms - old was
+        @attention: API change from XForms - upstream was
            fl_get_object_geometry(pObject, x, y, w, h)
 
         @status: Untested + NoDoc + NoExample = NOT OK
@@ -3035,7 +3037,7 @@ def fl_get_object_position(pObject):
 
         @param pObject : pointer to object
 
-        @attention: API change from XForms - old was
+        @attention: API change from XForms - upstream was
            fl_get_object_position(pObject, x, y)
 
         @status: Untested + NoDoc + NoExample = NOT OK
@@ -3063,7 +3065,7 @@ def fl_get_object_bbox(pObject):
 
         @param pObject : pointer to object
 
-        @attention: API change from XForms - old was
+        @attention: API change from XForms - upstream was
            fl_get_object_bbox(pObject, x, y, w, h)
 
         @status: Untested + NoDoc + NoExample = NOT OK
@@ -3494,7 +3496,7 @@ def fl_get_char_height(style, size):
     """
         fl_get_char_height(style, size) -> height num., asc, desc
 
-        @attention: API change from XForms - old was
+        @attention: API change from XForms - upstream was
            fl_get_char_height(style, size, asc, desc)
 
         @status: Untested + NoDoc + NoExample = NOT OK
@@ -3539,7 +3541,7 @@ def fl_get_string_height(style, size, strng, strglen):
     """
         fl_get_string_height(style, size, strng, strglen) -> height num., asc, desc
 
-        @attention: API change from XForms - old was
+        @attention: API change from XForms - upstream was
            fl_get_string_height(style, size, strng, strglen, asc, desc)
 
         @status: Untested + NoDoc + NoExample = NOT OK
@@ -3855,6 +3857,7 @@ def fl_draw_symbol(label, x, y, w, h, colr):
             """int fl_draw_symbol(const char * label, FL_Coord x, FL_Coord y,
                FL_Coord w, FL_Coord h, FL_COLOR col)
             """)
+    check_admitted_listvalues(colr, xfc.COLOR_list)
     slabel = convert_to_string(label)
     ix = convert_to_FL_Coord(x)
     iy = convert_to_FL_Coord(y)
@@ -3972,7 +3975,7 @@ def fl_getmcolor(colr):
     """
         fl_getmcolor(colr) -> num., r, g,b
 
-        @attention: API change from XForms - old was
+        @attention: API change from XForms - upstream was
            fl_getmcolor(colr, r, g, b)
 
         @status: Untested + NoDoc + NoExample = NOT OK
@@ -4023,7 +4026,7 @@ def fl_get_icm_color(colr):
     """
         fl_get_icm_color(colr) -> r, g, b
 
-        @attention: API change from XForms - old was
+        @attention: API change from XForms - upstream was
            fl_get_icm_color(colr, r, g, b)
 
         @status: Untested + NoDoc + NoExample = NOT OK
@@ -4282,12 +4285,12 @@ def fl_make_object(objclass, objtype, x, y, w, h, label, py_HandlePtr):
 
         Makes a custom object.
 
-        @param objclass : class type of object
+        @param objclass : class type of object ot be made
         @param objtype : type of the object to be made
         @param x : horizontal position of object (upper-left corner)
         @param y : vertical position of object (upper-left corner)
-        @param w : width of object in pixels
-        @param h : height of object in pixels
+        @param w : width in coord units
+        @param h : height coord units
         @param label : text label of object
         @param py_HandlePtr : python function for handling object
 
@@ -4303,6 +4306,7 @@ def fl_make_object(objclass, objtype, x, y, w, h, label, py_HandlePtr):
                FL_Coord y, FL_Coord w, FL_Coord h, const char * label,
                FL_HANDLEPTR handle)
             """)
+    check_admitted_listvalues(objclass, xfc.OBJCLASS_list)
     iobjclass = convert_to_int(objclass)
     iobjtype = convert_to_int(objtype)
     ix = convert_to_FL_Coord(x)
@@ -4494,7 +4498,7 @@ def fl_gettime():
         since 00:00 GMT January, 1970. It is most useful for computing
         time differences
 
-        @attention: API change from XForms - old was
+        @attention: API change from XForms - upstream was
            fl_gettime(sec, usec)
 
         @status: Untested + NoDoc + NoExample = NOT OK
@@ -5538,7 +5542,7 @@ def fl_get_mouse():
     """
         fl_get_mouse() -> window, x, y, keymask
 
-        @attention: API change from XForms - old was
+        @attention: API change from XForms - upstream was
            fl_get_mouse(x, y, keymask)
 
         @status: Untested + NoDoc + NoExample = NOT OK
@@ -5581,7 +5585,7 @@ def fl_get_win_mouse(win):
     """
         fl_get_win_mouse(win) -> window, x, y, keymask
 
-        @attention: API change from XForms - old was
+        @attention: API change from XForms - upstream was
            fl_get_win_mouse(win, x, y, keymask)
 
         @status: Untested + NoDoc + NoExample = NOT OK
@@ -5609,7 +5613,7 @@ def fl_get_form_mouse(pForm):
 
         @param pForm : pointer to form
 
-        @attention: API change from XForms - old was
+        @attention: API change from XForms - upstream was
            fl_get_form_mouse(fm, x, y, keymask)
 
         @status: Untested + NoDoc + NoExample = NOT OK
@@ -5682,7 +5686,7 @@ def fl_get_decoration_sizes(pForm):
 
         @param pForm : pointer to form
 
-        @attention: API change from XForms - old was
+        @attention: API change from XForms - upstream was
            fl_get_decoration_sizes(pForm, top, right, bottom, left)
 
         @status: Untested + NoDoc + NoExample = NOT OK
@@ -5755,8 +5759,9 @@ def fl_set_foreground(gc, colr):
     _fl_set_foreground = cfuncproto(
             load_so_libforms(), "fl_set_foreground",\
             None, [xfc.GC, xfc.FL_COLOR],\
-            """oid fl_set_foreground(GC gc, FL_COLOR col)
+            """void fl_set_foreground(GC gc, FL_COLOR col)
             """)
+    check_admitted_listvalues(colr, xfc.COLOR_list)
     ulcolr = convert_to_FL_COLOR(colr)
     keep_elem_refs(gc, colr, ulcolr)
     _fl_set_foreground(gc, ulcolr)
@@ -5775,8 +5780,9 @@ def fl_set_background(gc, colr):
     _fl_set_background = cfuncproto(
             load_so_libforms(), "fl_set_background",\
             None, [xfc.GC, xfc.FL_COLOR],\
-            """oid fl_set_background(GC gc, FL_COLOR col)
+            """void fl_set_background(GC gc, FL_COLOR col)
             """)
+    check_admitted_listvalues(colr, xfc.COLOR_list)
     ulcolr = convert_to_FL_COLOR(colr)
     keep_elem_refs(gc, colr, ulcolr)
     _fl_set_background(gc, ulcolr)
@@ -6049,8 +6055,8 @@ def fl_winreshape(win, dx, dy, w, h):
         @param win : window to reshape
         @param dx : new horizontal position (upper-left corner)
         @param dy : new vertical position (upper-left corner)
-        @param w : width of window in pixels
-        @param h : height of window in pixels
+        @param w : width in coord units
+        @param h : height in coord units
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -6340,8 +6346,8 @@ def fl_winsize(w, h):
         Sets the preferred window size (before calling fl_winopen), and makes
         the window non-resizeable.
 
-        @param w : width of the window in pixels
-        @param h : height of the window in pixels
+        @param w : width in coord units
+        @param h : height in coord units
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -6363,8 +6369,8 @@ def fl_initial_winsize(w, h):
 
         Sets the preferred window size (before calling fl_winopen).
 
-        @param w : width of the window in pixels
-        @param h : height of the window in pixels
+        @param w : width in coord units
+        @param h : height in coord units
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -6425,10 +6431,10 @@ def fl_wingeometry(x, y, w, h):
         Sets the initial geometry (position and size) of the window to be
         opened; the window will not be resizable.
 
-        @param x : horizontal position of the window (upper-left corner)
-        @param y : vertical position of the window (upper-left corner)
-        @param w : width of the window in pixels
-        @param h : height of the window in pixels
+        @param x : horizontal position (upper-left corner)
+        @param y : vertical position (upper-left corner)
+        @param w : width in coord units
+        @param h : height in coord units
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -6457,10 +6463,10 @@ def fl_initial_wingeometry(x, y, w, h):
         Sets the initial geometry (position and size) of the window to be
         opened.
 
-        @param x : horizontal position of the window (upper-left corner)
-        @param y : vertical position of the window (upper-left corner)
-        @param w : width of the window in pixels
-        @param h : height of the window in pixels
+        @param x : horizontal position (upper-left corner)
+        @param y : vertical position (upper-left corner)
+        @param w : width in coord units
+        @param h : height in coord units
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -6520,7 +6526,7 @@ def fl_get_winsize(win):
 
         @param win : window
 
-        @attention: API change from XForms - old was
+        @attention: API change from XForms - upstream was
            fl_get_winsize(win, w, h)
 
         @status: Untested + NoDoc + NoExample = NOT OK
@@ -6544,7 +6550,7 @@ def fl_get_winorigin(win):
     """
         fl_get_winorigin(win) -> x, y
 
-        @attention: API change from XForms - old was
+        @attention: API change from XForms - upstream was
            fl_get_winorigin(win, x, y)
 
         @status: Untested + NoDoc + NoExample = NOT OK
@@ -6572,7 +6578,7 @@ def fl_get_wingeometry(win):
 
         @param win : window
 
-        @attention: API change from XForms - old was
+        @attention: API change from XForms - upstream was
            fl_get_wingeometry(win, x, y, w, h)
 
         @status: Untested + NoDoc + NoExample = NOT OK
@@ -7197,7 +7203,7 @@ def fl_get_defaults():
     """
         fl_get_defaults() -> Iopt
 
-        @attention: API change from XForms - old was
+        @attention: API change from XForms - upstream was
         fl_get_defaults(pIopt)
 
         @status: Untested + NoDoc + NoExample = NOT OK
@@ -7728,7 +7734,7 @@ def fl_popup_get_title_font(pPopup):
     """
         fl_popup_get_title_font(pPopup) -> style, size
 
-        @attention: API change from XForms - old was
+        @attention: API change from XForms - upstream was
            fl_popup_get_title_font(pPopup, style, size)
 
         @status: Untested + NoDoc + NoExample = NOT OK
@@ -7770,7 +7776,7 @@ def fl_popup_entry_get_font(pPopup):
     """
         fl_popup_entry_get_font(pPopup) -> style, size
 
-        @attention: API change from XForms - old was
+        @attention: API change from XForms - upstream was
            fl_popup_entry_get_font(pPopup, style, size)
 
         @status: Untested + NoDoc + NoExample = NOT OK
@@ -8359,7 +8365,7 @@ def fl_popup_get_size(pPopup):
     """
         fl_popup_get_size(pPopup) -> size num., width, height
 
-        @attention: API change from XForms - old was
+        @attention: API change from XForms - upstream was
            fl_popup_get_size(pPopup, w, h)
 
         @status: Untested + NoDoc + NoExample = NOT OK
@@ -8429,11 +8435,11 @@ def fl_create_bitmap(bitmaptype, x, y, w, h, label):
 
         Creates a bitmap object.
 
-        @param bitmaptype : type of bitmap to create
-        @param x : horizontal position of bitmap (upper-left corner)
-        @param y : vertical position of bitmap (upper-left corner)
-        @param w : width of bitmap in pixels
-        @param h : height of bitmap in pixels
+        @param bitmaptype : type of bitmap to be created
+        @param x : horizontal position (upper-left corner)
+        @param y : vertical position (upper-left corner)
+        @param w : width in coord units
+        @param h : height in coord units
         @param label : text label of bitmap
 
         @status: Untested + NoDoc + NoExample = NOT OK
@@ -8466,10 +8472,10 @@ def fl_add_bitmap(bitmaptype, x, y, w, h, label):
         Adds a bitmap object.
 
         @param bitmaptype : type of bitmap to be added
-        @param x : horizontal position of bitmap (upper-left corner)
+        @param x : horizontal position (upper-left corner)
         @param y : vertical position of bitmap (upper-left corner)
-        @param w : width of bitmap in pixels
-        @param h : height of bitmap in pixels
+        @param w : width in coord units
+        @param h : height in coord units
         @param label : text label of bitmap
 
         @status: Untested + NoDoc + NoExample = NOT OK
@@ -8576,8 +8582,8 @@ def fl_create_from_bitmapdata(win, data, w, h):
 
          @param win : window
          @param data : bitmap data
-         @param w : width of bitmap in pixels
-         @param h : height of bitmap in pixels
+         @param w : width in coord units
+         @param h : height in coord units
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -8609,6 +8615,15 @@ def fl_create_pixmap(pixmaptype, x, y, w, h, label):
     """
         fl_create_pixmap(pixmaptype, x, y, w, h, label) -> pObject
 
+        Creates a pixmap object.
+
+        @param pixmaptype : type of pixmap to be created
+        @param x : horizontal position (upper-left corner)
+        @param y : vertical position of bitmap (upper-left corner)
+        @param w : width in coord units
+        @param h : height in coord units
+        @param label : text label of pixmap
+
         @status: Untested + NoDoc + NoExample = NOT OK
     """
 
@@ -8635,6 +8650,15 @@ def fl_create_pixmap(pixmaptype, x, y, w, h, label):
 def fl_add_pixmap(pixmaptype, x, y, w, h, label):
     """
         fl_add_pixmap(pixmaptype, x, y, w, h, label) -> pObject
+
+        Adds a pixmap object.
+
+        @param pixmaptype : type of pixmap to be added
+        @param x : horizontal position (upper-left corner)
+        @param y : vertical position of bitmap (upper-left corner)
+        @param w : width in coord units
+        @param h : height in coord units
+        @param label : text label of pixmap
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -8788,7 +8812,7 @@ def fl_get_pixmap_pixmap(pObject):
 
         @param pObject : pointer to object
 
-        @attention: API change from XForms - old was
+        @attention: API change from XForms - upstream was
            fl_get_pixmap_pixmap(pObject, p, m)
 
         @status: Untested + NoDoc + NoExample = NOT OK
@@ -8812,7 +8836,7 @@ def fl_read_pixmapfile(win, filename, tran):
     """
         fl_read_pixmapfile(win, filename, tran) -> pixmap, w, h, shapemask, hotx, hoty
 
-        @attention: API change from XForms - old was
+        @attention: API change from XForms - upstream was
            fl_read_pixmapfile(win, filename, w, h, shape_mask, hotx, hoty, tran)
 
         @status: Untested + NoDoc + NoExample = NOT OK
@@ -8899,10 +8923,10 @@ def fl_create_box(boxtype, x, y, w, h, label):
         Creates a box object.
 
         @param boxtype : type of the box to be created
-        @param x : horizontal position of box (upper-left corner)
-        @param y : vertical position of box (upper-left corner)
-        @param w : width of box in pixel
-        @param h : height of box in pixel
+        @param x : horizontal position (upper-left corner)
+        @param y : vertical position (upper-left corner)
+        @param w : width in coord units
+        @param h : height in coord units
         @param label : text label of box
 
         @status: Untested + NoDoc + NoExample = NOT OK
@@ -8935,10 +8959,10 @@ def fl_add_box(boxtype, x, y, w, h, label):
         Adds a box object.
 
         @param boxtype : type of the box to be added
-        @param x : horizontal position of box (upper-left corner)
-        @param y : vertical position of box (upper-left corner)
-        @param w : width of box in pixel
-        @param h : height of box in pixel
+        @param x : horizontal position (upper-left corner)
+        @param y : vertical position (upper-left corner)
+        @param w : width in coord units
+        @param h : height in coord units
         @param label : text label of box
 
         @status: Untested + NoDoc + NoExample = NOT OK
@@ -8979,10 +9003,10 @@ def fl_create_browser(browsertype, x, y, w, h, label):
         Creates a browser object.
 
         @param browsertype : type of the browser to be created
-        @param x : horizontal position of browser (upper-left corner)
-        @param y : vertical position of browser (upper-left corner)
-        @param w : width of browser in pixel
-        @param h : height of browser in pixel
+        @param x : horizontal position (upper-left corner)
+        @param y : vertical position (upper-left corner)
+        @param w : width in coord units
+        @param h : height in coord units
         @param label : text label of browser
 
         @status: Untested + NoDoc + NoExample = NOT OK
@@ -9015,10 +9039,10 @@ def fl_add_browser(browsertype, x, y, w, h, label):
         Adds a browser object.
 
         @param browsertype : type of the browser to be added
-        @param x : horizontal position of browser (upper-left corner)
-        @param y : vertical position of browser (upper-left corner)
-        @param w : width of browser in pixels
-        @param h : height of browser in pixels
+        @param x : horizontal position (upper-left corner)
+        @param y : vertical position (upper-left corner)
+        @param w : width in coord units
+        @param h : height in coord units
         @param label : text label of browser
 
         @status: Untested + NoDoc + NoExample = NOT OK
@@ -9050,7 +9074,7 @@ def fl_clear_browser(pObject):
 
         Clears browser object's contents.
 
-        @param pObject : poiter to browser object
+        @param pObject : pointer to browser object
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -9528,7 +9552,7 @@ def fl_get_browser_dimension(pObject):
 
         @param pObject : pointer to browser object
 
-        @attention: API change from XForms - old was
+        @attention: API change from XForms - upstream was
            fl_get_browser_dimension(pObject, x, y, w, h)
 
         @status: Untested + NoDoc + NoExample = NOT OK
@@ -9902,10 +9926,10 @@ def fl_create_button(buttontype, x, y, w, h, label):
         Creates a button object.
 
         @param buttontype : type of button object to be created
-        @param x : horizontal position of button (upper-left corner)
-        @param x : vertical position of button (upper-left corner)
-        @param w : width of button in pixels
-        @param h : height of button in pixels
+        @param x : horizontal position (upper-left corner)
+        @param x : vertical position (upper-left corner)
+        @param w : width in coord units
+        @param h : height in coord units
         @param label : text label of button
 
         @status: Untested + NoDoc + NoExample = NOT OK
@@ -9935,11 +9959,13 @@ def fl_create_roundbutton(buttontype, x, y, w, h, label):
     """
         fl_create_roundbutton(buttontype, x, y, w, h, label) -> pObject
 
+        Creates a roundbutton object.
+
         @param buttontype : type of button object to be created
-        @param x : horizontal position of button (upper-left corner)
-        @param x : vertical position of button (upper-left corner)
-        @param w : width of button in pixels
-        @param h : height of button in pixels
+        @param x : horizontal position (upper-left corner)
+        @param x : vertical position (upper-left corner)
+        @param w : width in coord units
+        @param h : height in coord units
         @param label : text label of button
 
         @status: Untested + NoDoc + NoExample = NOT OK
@@ -9969,11 +9995,13 @@ def fl_create_round3dbutton(buttontype, x, y, w, h, label):
     """
         fl_create_round3dbutton(buttontype, x, y, w, h, label) -> pObject
 
+        Creates a 3D roundbutton object.
+
         @param buttontype : type of button object to be created
-        @param x : horizontal position of button (upper-left corner)
-        @param x : vertical position of button (upper-left corner)
-        @param w : width of button in pixels
-        @param h : height of button in pixels
+        @param x : horizontal position (upper-left corner)
+        @param x : vertical position (upper-left corner)
+        @param w : width in coord units
+        @param h : height in coord units
         @param label : text label of button
 
         @status: Untested + NoDoc + NoExample = NOT OK
@@ -10003,11 +10031,13 @@ def fl_create_lightbutton(buttontype, x, y, w, h, label):
     """
         fl_create_lightbutton(buttontype, x, y, w, h, label) -> pObject
 
-        @param buttontype : type of button object to be created
-        @param x : horizontal position of button (upper-left corner)
-        @param x : vertical position of button (upper-left corner)
-        @param w : width of button in pixels
-        @param h : height of button in pixels
+        Creates a lightbutton object  (with an on/off light switch).
+
+        @param buttontype : type of button to be created
+        @param x : horizontal position (upper-left corner)
+        @param x : vertical position (upper-left corner)
+        @param w : width in coord units
+        @param h : height in coord units
         @param label : text label of button
 
         @status: Untested + NoDoc + NoExample = NOT OK
@@ -10040,10 +10070,10 @@ def fl_create_checkbutton(buttontype, x, y, w, h, label):
         Creates a checkbutton object.
 
         @param buttontype : type of button object to be created
-        @param x : horizontal position of button (upper-left corner)
-        @param x : vertical position of button (upper-left corner)
-        @param w : width of button in pixels
-        @param h : height of button in pixels
+        @param x : horizontal position (upper-left corner)
+        @param x : vertical position (upper-left corner)
+        @param w : width in coord units
+        @param h : height in coord units
         @param label : text label of button
 
         @status: Untested + NoDoc + NoExample = NOT OK
@@ -10073,11 +10103,13 @@ def fl_create_bitmapbutton(buttontype, x, y, w, h, label):
     """
         fl_create_bitmapbutton(buttontype, x, y, w, h, label) -> pObject
 
+        Creates a bitmapbutton object.
+
         @param buttontype : type of button object to be created
-        @param x : horizontal position of button (upper-left corner)
-        @param x : vertical position of button (upper-left corner)
-        @param w : width of button in pixels
-        @param h : height of button in pixels
+        @param x : horizontal position (upper-left corner)
+        @param x : vertical position (upper-left corner)
+        @param w : width in coord units
+        @param h : height in coord units
         @param label : text label of button
 
         @status: Untested + NoDoc + NoExample = NOT OK
@@ -10107,11 +10139,13 @@ def fl_create_pixmapbutton(buttontype, x, y, w, h, label):
     """
         fl_create_pixmapbutton(buttontype, x, y, w, h, label) -> pObject
 
+        Creates a pixmapbutton object.
+
         @param buttontype : type of button object to be created
-        @param x : horizontal position of button (upper-left corner)
-        @param x : vertical position of button (upper-left corner)
-        @param w : width of button in pixels
-        @param h : height of button in pixels
+        @param x : horizontal position (upper-left corner)
+        @param x : vertical position (upper-left corner)
+        @param w : width in coord units
+        @param h : height in coord units
         @param label : text label of button
 
         @status: Untested + NoDoc + NoExample = NOT OK
@@ -10141,11 +10175,13 @@ def fl_create_scrollbutton(buttontype, x, y, w, h, label):
     """
         fl_create_scrollbutton(buttontype, x, y, w, h, label) -> pObject
 
+        Creates a scrollbutton object.
+
         @param buttontype : type of button object to be created
-        @param x : horizontal position of button (upper-left corner)
-        @param x : vertical position of button (upper-left corner)
-        @param w : width of button in pixels
-        @param h : height of button in pixels
+        @param x : horizontal position (upper-left corner)
+        @param x : vertical position (upper-left corner)
+        @param w : width in coord units
+        @param h : height in coord units
         @param label : text label of button
 
         @status: Untested + NoDoc + NoExample = NOT OK
@@ -10175,11 +10211,13 @@ def fl_create_labelbutton(buttontype, x, y, w, h, label):
     """
         fl_create_labelbutton(buttontype, x, y, w, h, label) -> pObject
 
+        Creates a labelbutton object.
+
         @param buttontype : type of button object to be created
-        @param x : horizontal position of button (upper-left corner)
-        @param x : vertical position of button (upper-left corner)
-        @param w : width of button in pixels
-        @param h : height of button in pixels
+        @param x : horizontal position (upper-left corner)
+        @param x : vertical position (upper-left corner)
+        @param w : width in coord units
+        @param h : height in coord units
         @param label : text label of button
 
         @status: Untested + NoDoc + NoExample = NOT OK
@@ -10209,11 +10247,13 @@ def fl_add_roundbutton(buttontype, x, y, w, h, label):
     """
         fl_add_roundbutton(buttontype, x, y, w, h, label) -> pObject
 
+        Adds a roundbutton object.
+
         @param buttontype : type of button object to be added
-        @param x : horizontal position of button (upper-left corner)
-        @param x : vertical position of button (upper-left corner)
-        @param w : width of button in pixels
-        @param h : height of button in pixels
+        @param x : horizontal position (upper-left corner)
+        @param x : vertical position (upper-left corner)
+        @param w : width in coord units
+        @param h : height in coord units
         @param label : text label of button
 
         @status: Untested + NoDoc + NoExample = NOT OK
@@ -10243,11 +10283,13 @@ def fl_add_round3dbutton(buttontype, x, y, w, h, label):
     """
         fl_add_round3dbutton(buttontype, x, y, w, h, label) -> pObject
 
+        Adds a 3D roundbutton object.
+
         @param buttontype : type of button object to be added
-        @param x : horizontal position of button (upper-left corner)
-        @param x : vertical position of button (upper-left corner)
-        @param w : width of button in pixels
-        @param h : height of button in pixels
+        @param x : horizontal position (upper-left corner)
+        @param x : vertical position (upper-left corner)
+        @param w : width in coord units
+        @param h : height in coord units
         @param label : text label of button
 
         @status: Untested + NoDoc + NoExample = NOT OK
@@ -10277,11 +10319,13 @@ def fl_add_lightbutton(buttontype, x, y, w, h, label):
     """
         fl_add_lightbutton(buttontype, x, y, w, h, label) -> pObject
 
-        @param buttontype : type of button object to be added
-        @param x : horizontal position of button (upper-left corner)
-        @param x : vertical position of button (upper-left corner)
-        @param w : width of button in pixels
-        @param h : height of button in pixels
+        Adds a lightbutton object (with an on/off light switch).
+
+        @param buttontype : type of button to be added
+        @param x : horizontal position (upper-left corner)
+        @param x : vertical position (upper-left corner)
+        @param w : width in coord units
+        @param h : height in coord units
         @param label : text label of button
 
         @status: Untested + NoDoc + NoExample = NOT OK
@@ -10314,10 +10358,10 @@ def fl_add_checkbutton(buttontype, x, y, w, h, label):
         Adds a checkbutton object.
 
         @param buttontype : type of button object to be added
-        @param x : horizontal position of button (upper-left corner)
-        @param x : vertical position of button (upper-left corner)
-        @param w : width of button in pixels
-        @param h : height of button in pixels
+        @param x : horizontal position (upper-left corner)
+        @param x : vertical position (upper-left corner)
+        @param w : width in coord units
+        @param h : height in coord units
         @param label : text label of button
 
         @status: Untested + NoDoc + NoExample = NOT OK
@@ -10347,13 +10391,13 @@ def fl_add_button(buttontype, x, y, w, h, label):
     """
         fl_add_button(buttontype, x, y, w, h, label) -> pObject
 
-        Adds a button to the current form.
+        Adds a button object to the current form.
 
-        @param buttontype : type of button object to be added
-        @param x : horizontal position of button (upper-left corner)
-        @param x : vertical position of button (upper-left corner)
-        @param w : width of button in pixels
-        @param h : height of button in pixels
+        @param buttontype : type of button to be added
+        @param x : horizontal position (upper-left corner)
+        @param x : vertical position (upper-left corner)
+        @param w : width in coord units
+        @param h : height in coord units
         @param label : text label of button
 
         @status: Untested + NoDoc + NoExample = NOT OK
@@ -10383,11 +10427,13 @@ def fl_add_bitmapbutton(buttontype, x, y, w, h, label):
     """
         fl_add_bitmapbutton(buttontype, x, y, w, h, label) -> pObject
 
-        @param buttontype : type of button object to be added
-        @param x : horizontal position of button (upper-left corner)
-        @param x : vertical position of button (upper-left corner)
-        @param w : width of button in pixels
-        @param h : height of button in pixels
+        Adds a bitmapbutton object.
+
+        @param buttontype : type of button to be added
+        @param x : horizontal position (upper-left corner)
+        @param x : vertical position (upper-left corner)
+        @param w : width in coord units
+        @param h : height in coord units
         @param label : text label of button
 
         @status: Untested + NoDoc + NoExample = NOT OK
@@ -10417,11 +10463,13 @@ def fl_add_scrollbutton(buttontype, x, y, w, h, label):
     """
         fl_add_scrollbutton(buttontype, x, y, w, h, label) -> pObject
 
-        @param buttontype : type of button object to be added
-        @param x : horizontal position of button (upper-left corner)
-        @param x : vertical position of button (upper-left corner)
-        @param w : width of button in pixels
-        @param h : height of button in pixels
+        Adds a scrollbutton object.
+
+        @param buttontype : type of button to be added
+        @param x : horizontal position (upper-left corner)
+        @param x : vertical position (upper-left corner)
+        @param w : width in coord units
+        @param h : height in coord units
         @param label : text label of button
 
         @status: Untested + NoDoc + NoExample = NOT OK
@@ -10451,11 +10499,13 @@ def fl_add_labelbutton(buttontype, x, y, w, h, label):
     """
         fl_add_labelbutton(buttontype, x, y, w, h, label) -> pObject
 
-        @param buttontype : type of button object to be added
-        @param x : horizontal position of button (upper-left corner)
-        @param x : vertical position of button (upper-left corner)
-        @param w : width of button in pixels
-        @param h : height of button in pixels
+        Adds a labelbutton object.
+
+        @param buttontype : type of button to be added
+        @param x : horizontal position (upper-left corner)
+        @param x : vertical position (upper-left corner)
+        @param w : width in coord units
+        @param h : height in coord units
         @param label : text label of button
 
         @status: Untested + NoDoc + NoExample = NOT OK
@@ -10512,11 +10562,13 @@ def fl_add_pixmapbutton(buttontype, x, y, w, h, label):
     """
         fl_add_pixmapbutton(buttontype, x, y, w, h, label) -> pObject
 
-        @param buttontype : type of button object to be added
-        @param x : horizontal position of button (upper-left corner)
-        @param x : vertical position of button (upper-left corner)
-        @param w : width of button in pixels
-        @param h : height of button in pixels
+        Adds a pixmapbutton object.
+
+        @param buttontype : type of button to be added
+        @param x : horizontal position (upper-left corner)
+        @param x : vertical position (upper-left corner)
+        @param w : width in coord units
+        @param h : height in coord units
         @param label : text label of button
 
         @status: Untested + NoDoc + NoExample = NOT OK
@@ -10670,8 +10722,8 @@ def fl_get_button_numb(pObject):
     """
         fl_get_button_numb(pObject) -> num.
 
-        Returns the number of the last used  mouse button. fl_mouse_button
-        will also return the mouse number.
+        Returns the number of the last used mouse button. fl_mouse_button
+        function will also return the mouse number.
 
         @param pObject : pointer to button object
 
@@ -10691,18 +10743,18 @@ def fl_get_button_numb(pObject):
 fl_set_button_shortcut = fl_set_object_shortcut
 
 
-def fl_create_generic_button(objclass, buttontype, x, y, w, h, label):
+def fl_create_generic_button(btnclass, buttontype, x, y, w, h, label):
     """
         fl_create_generic_button(objclass, buttontype, x, y, w, h, label) -> pObject
 
         Creates a generic button object.
 
-        @param objclass : value of a new button class
-        @param buttontype : type of button object to be created
-        @param x : horizontal position of button (upper-left corner)
-        @param x : vertical position of button (upper-left corner)
-        @param w : width of button in pixels
-        @param h : height of button in pixels
+        @param btnclass : value of a new button class
+        @param buttontype : type of button to be created
+        @param x : horizontal position (upper-left corner)
+        @param x : vertical position (upper-left corner)
+        @param w : width in coord units
+        @param h : height in coord units
         @param label : text label of button
 
         @status: Untested + NoDoc + NoExample = NOT OK
@@ -10717,16 +10769,16 @@ def fl_create_generic_button(objclass, buttontype, x, y, w, h, label):
                const char * label)
             """)
     check_admitted_listvalues(buttontype, xfc.BUTTONTYPE_list)
-    iobjclass = convert_to_int(objclass)
+    ibtnclass = convert_to_int(btnclass)
     ibuttontype = convert_to_int(buttontype)
     ix = convert_to_FL_Coord(x)
     iy = convert_to_FL_Coord(y)
     iw = convert_to_FL_Coord(w)
     ih = convert_to_FL_Coord(h)
     slabel = convert_to_string(label)
-    keep_elem_refs(objclass, buttontype, x, y, w, h, label, iobjclass,
+    keep_elem_refs(btnclass, buttontype, x, y, w, h, label, ibtnclass,
                    ibuttontype, ix, iy, iw, ih, slabel)
-    retval = _fl_create_generic_button(iobjclass, ibuttontype, ix, iy,
+    retval = _fl_create_generic_button(ibtnclass, ibuttontype, ix, iy,
                                        iw, ih, slabel)
     return retval
 
@@ -10737,13 +10789,13 @@ FL_CleanupButton = cty.CFUNCTYPE(None, cty.POINTER(xfc.FL_BUTTON_SPEC))
 FL_DRAWBUTTON = FL_DrawButton
 FL_CLEANUPBUTTON = FL_CleanupButton
 
-def fl_add_button_class(bclass, py_DrawButton, py_CleanupButton):
+def fl_add_button_class(btnclass, py_DrawButton, py_CleanupButton):
     """
-        fl_add_button_class(bclass, py_DrawButton, py_CleanupButton)
+        fl_add_button_class(btnclass, py_DrawButton, py_CleanupButton)
 
         Associates a button class with a drawing function.
 
-        @param bclass : value of a new button class
+        @param btnclass : value of a new button class
         @param py_DrawButton : python function to draw button, fn(pObject)
         @param py_CleanupButton : python function to cleanup button,
            fn(pButtonSpec)
@@ -10757,13 +10809,13 @@ def fl_add_button_class(bclass, py_DrawButton, py_CleanupButton):
             """void fl_add_button_class(int bclass, FL_DrawButton drawit,
                FL_CleanupButton cleanup)
             """)
-    ibclass = convert_to_int(bclass)
+    ibtnclass = convert_to_int(btnclass)
     c_DrawButton = FL_DrawButton(py_DrawButton)
     c_CleanupButton = FL_CleanupButton(py_CleanupButton)
     keep_cfunc_refs(c_DrawButton, py_DrawButton, c_CleanupButton,
-       py_CleanupButton)
-    keep_elem_refs(bclass, ibclass)
-    _fl_add_button_class(ibclass, c_DrawButton, c_CleanupButton)
+                    py_CleanupButton)
+    keep_elem_refs(btnclass, ibtnclass)
+    _fl_add_button_class(ibtnclass, c_DrawButton, c_CleanupButton)
 
 
 def fl_set_button_mouse_buttons(pObject, buttons):
@@ -10799,7 +10851,7 @@ def fl_get_button_mouse_buttons(pObject):
 
         @param pObject : pointer to button object
 
-        @attention: API change from XForms - old was
+        @attention: API change from XForms - upstream was
            fl_get_button_mouse_buttons(pObject, buttons)
 
         @status: Untested + NoDoc + NoExample = NOT OK
@@ -10831,11 +10883,11 @@ def fl_create_generic_canvas(canvasclass, canvastype, x, y, w, h, label):
         Creates a generic canvas object.
 
         @param canvasclass : value of a new canvas class
-        @param canvastype : type of canvas object to be created
-        @param x : horizontal position of canvas (upper-left corner)
-        @param x : vertical position of canvas (upper-left corner)
-        @param w : width of canvas in pixels
-        @param h : height of canvas in pixels
+        @param canvastype : type of canvas to be created
+        @param x : horizontal position (upper-left corner)
+        @param x : vertical position (upper-left corner)
+        @param w : width in coord units
+        @param h : height in coord units
         @param label : text label of canvas
 
         @status: Untested + NoDoc + NoExample = NOT OK
@@ -10870,11 +10922,11 @@ def fl_add_canvas(canvastype, x, y, w, h, label):
 
         Adds a canvas object.
 
-        @param canvastype : type of canvas object to be added
-        @param x : horizontal position of canvas (upper-left corner)
-        @param x : vertical position of canvas (upper-left corner)
-        @param w : width of canvas in pixels
-        @param h : height of canvas in pixels
+        @param canvastype : type of canvas to be added
+        @param x : horizontal position (upper-left corner)
+        @param x : vertical position (upper-left corner)
+        @param w : width in coord units
+        @param h : height in coord units
         @param label : text label of canvas
 
         @status: Untested + NoDoc + NoExample = NOT OK
@@ -10903,6 +10955,15 @@ def fl_add_canvas(canvastype, x, y, w, h, label):
 def fl_create_canvas(canvastype, x, y, w, h, label):
     """
         fl_create_canvas(canvastype, x, y, w, h, label) -> pObject
+
+        Creates a canvas object.
+
+        @param canvastype : type of canvas to be created
+        @param x : horizontal position (upper-left corner)
+        @param x : vertical position (upper-left corner)
+        @param w : width in coord units
+        @param h : height in coord units
+        @param label : text label of canvas
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -11257,11 +11318,11 @@ def fl_create_glcanvas(canvastype, x, y, w, h, label):
 
         Creates a glcanvas object.
 
-        @param canvastype : type of glcanvas object to be created
-        @param x : horizontal position of glcanvas (upper-left corner)
-        @param x : vertical position of glcanvas (upper-left corner)
-        @param w : width of glcanvas in pixels
-        @param h : height of glcanvas in pixels
+        @param canvastype : type of glcanvas to be created
+        @param x : horizontal position (upper-left corner)
+        @param x : vertical position (upper-left corner)
+        @param w : width in coord units
+        @param h : height in coord units
         @param label : text label of glcanvas
 
         @status: Untested + NoDoc + NoExample = NOT OK
@@ -11293,11 +11354,11 @@ def fl_add_glcanvas(canvastype, x, y, w, h, label):
 
         Adds a glcanvas object to the form.
 
-        @param canvastype : type of glcanvas object to be added
-        @param x : horizontal position of glcanvas (upper-left corner)
-        @param x : vertical position of glcanvas (upper-left corner)
-        @param w : width of glcanvas in pixels
-        @param h : height of glcanvas in pixels
+        @param canvastype : type of glcanvas to be added
+        @param x : horizontal position (upper-left corner)
+        @param x : vertical position (upper-left corner)
+        @param w : width in coord units
+        @param h : height in coord units
         @param label : text label of glcanvas
 
         @status: Untested + NoDoc + NoExample = NOT OK
@@ -11350,7 +11411,7 @@ def fl_get_glcanvas_defaults():
 
         Returns the global defaults for glcanvas.
 
-        @attention: API change from XForms - old was
+        @attention: API change from XForms - upstream was
            fl_get_glcanvas_defaults(config)
 
         @status: Untested + NoDoc + NoExample = NOT OK
@@ -11399,7 +11460,7 @@ def fl_get_glcanvas_attributes(pObject):
 
         @param pObject : pointer to glcanvas object
 
-        @attention: API change from XForms - old was
+        @attention: API change from XForms - upstream was
            fl_get_glcanvas_attributes(pObject, attributes)
     """
 
@@ -11550,11 +11611,11 @@ def fl_create_chart(charttype, x, y, w, h, label):
 
         Creates a chart object.
 
-        @param charttype : type of chart object to be created
-        @param x : horizontal position of chart (upper-left corner)
-        @param x : vertical position of chart (upper-left corner)
-        @param w : width of chart in pixels
-        @param h : height of chart in pixels
+        @param charttype : type of chart to be created
+        @param x : horizontal position (upper-left corner)
+        @param x : vertical position (upper-left corner)
+        @param w : width in coord units
+        @param h : height in coord units
         @param label : text label of chart
 
         @status: Untested + NoDoc + NoExample = NOT OK
@@ -11586,11 +11647,11 @@ def fl_add_chart(charttype, x, y, w, h, label):
 
         Adds a chart object.
 
-        @param charttype : type of chart object to be created
-        @param x : horizontal position of chart (upper-left corner)
-        @param x : vertical position of chart (upper-left corner)
-        @param w : width of chart in pixels
-        @param h : height of chart in pixels
+        @param charttype : type of chart to be created
+        @param x : horizontal position (upper-left corner)
+        @param x : vertical position (upper-left corner)
+        @param w : width in coord units
+        @param h : height in coord units
         @param label : text label of chart
 
         @status: Untested + NoDoc + NoExample = NOT OK
@@ -11759,7 +11820,7 @@ def fl_get_chart_bounds(pObject):
 
         @param pObject : pointer to chart object
 
-        @attention: API change from XForms - old was
+        @attention: API change from XForms - upstream was
            fl_get_chart_bounds(pObject, minbound, maxbound)
 
         @status: Untested + NoDoc + NoExample = NOT OK
@@ -11869,6 +11930,7 @@ def fl_set_chart_lcolor(pObject, colr):
             None, [cty.POINTER(xfc.FL_OBJECT), xfc.FL_COLOR],
             """void fl_set_chart_lcolor(FL_OBJECT * ob, FL_COLOR lcol)
             """)
+    check_admitted_listvalues(colr, xfc.COLOR_list)
     ulcolr = convert_to_FL_COLOR(colr)
     keep_elem_refs(pObject, colr, ulcolr)
     _fl_set_chart_lcolor(pObject, ulcolr)
@@ -11907,11 +11969,11 @@ def fl_create_choice(choicetype, x, y, w, h, label):
 
         Creates a choice object.
 
-        @param choicetype : type of choice object to be created
-        @param x : horizontal position of choice (upper-left corner)
-        @param x : vertical position of choice (upper-left corner)
-        @param w : width of choice in pixels
-        @param h : height of choice in pixels
+        @param choicetype : type of choice to be created
+        @param x : horizontal position (upper-left corner)
+        @param x : vertical position (upper-left corner)
+        @param w : width in coord units
+        @param h : height in coord units
         @param label : text label of choice
 
         @status: Untested + NoDoc + NoExample = NOT OK
@@ -11943,11 +12005,11 @@ def fl_add_choice(choicetype, x, y, w, h, label):
 
         Adds a choice object.
 
-        @param choicetype : type of choice object to be added
-        @param x : horizontal position of choice (upper-left corner)
-        @param x : vertical position of choice (upper-left corner)
-        @param w : width of choice in pixels
-        @param h : height of choice in pixels
+        @param choicetype : type of choice to be added
+        @param x : horizontal position (upper-left corner)
+        @param x : vertical position (upper-left corner)
+        @param w : width in coord units
+        @param h : height in coord units
         @param label : text label of choice
 
         @status: Untested + NoDoc + NoExample = NOT OK
@@ -12129,9 +12191,9 @@ def fl_get_choice(pObject):
     return retval
 
 
-def fl_get_choice_item_text(pObject, n):
+def fl_get_choice_item_text(pObject, itemnum):
     """
-        fl_get_choice_item_text(pObject, n) -> text string
+        fl_get_choice_item_text(pObject, itemnum) -> text string
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -12141,9 +12203,9 @@ def fl_get_choice_item_text(pObject, n):
             xfc.STRING, [cty.POINTER(xfc.FL_OBJECT), cty.c_int],
             """const char * fl_get_choice_item_text(FL_OBJECT * ob, int n)    DEPRECATED
             """)
-    inum = convert_to_int(n)
-    keep_elem_refs(pObject, n, inum)
-    retval = _fl_get_choice_item_text(pObject, inum)
+    iitemnum = convert_to_int(itemnum)
+    keep_elem_refs(pObject, itemnum, iitemnum)
+    retval = _fl_get_choice_item_text(pObject, iitemnum)
     return retval
 
 
@@ -12246,14 +12308,15 @@ def fl_set_choice_align(pObject, align):
             None, [cty.POINTER(xfc.FL_OBJECT), cty.c_int],
             """void fl_set_choice_align(FL_OBJECT * ob, int align)
             """)
+    check_admitted_listvalues(align, xfc.ALIGN_list)
     ialign = convert_to_int(align)
     keep_elem_refs(pObject, align, ialign)
     _fl_set_choice_align(pObject, ialign)
 
 
-def fl_get_choice_item_mode(pObject, item):
+def fl_get_choice_item_mode(pObject, itemnum):
     """
-        fl_get_choice_item_mode(pObject, item) -> mode num.
+        fl_get_choice_item_mode(pObject, itemnum) -> mode num.
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -12263,9 +12326,9 @@ def fl_get_choice_item_mode(pObject, item):
             cty.c_int, [cty.POINTER(xfc.FL_OBJECT), cty.c_int],
             """int fl_get_choice_item_mode(FL_OBJECT * ob, int item)    DEPRECATED
             """)
-    iitem = convert_to_int(item)
-    keep_elem_refs(pObject, item, iitem)
-    retval = _fl_get_choice_item_mode(pObject, iitem)
+    iitemnum = convert_to_int(itemnum)
+    keep_elem_refs(pObject, itemnum, iitemnum)
+    retval = _fl_get_choice_item_mode(pObject, iitemnum)
     return retval
 
 
@@ -12294,9 +12357,9 @@ def fl_set_choice_item_mode(pObject, itemnum, mode):
     _fl_set_choice_item_mode(pObject, iitemnum, uimode)
 
 
-def fl_set_choice_item_shortcut(pObject, item, sctext):
+def fl_set_choice_item_shortcut(pObject, itemnum, sctext):
     """
-        fl_set_choice_item_shortcut(pObject, item, sstext)
+        fl_set_choice_item_shortcut(pObject, itemnum, sstext)
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -12307,10 +12370,10 @@ def fl_set_choice_item_shortcut(pObject, item, sctext):
             """void fl_set_choice_item_shortcut(FL_OBJECT * ob, int item,
                const char * sc)
             """)
-    iitem = convert_to_int(item)
+    iitemnum = convert_to_int(itemnum)
     ssctext = convert_to_string(sctext)
-    keep_elem_refs(pObject, item, sctext, iitem, ssctext)
-    _fl_set_choice_item_shortcut(pObject, iitem, ssctext)
+    keep_elem_refs(pObject, itemnum, sctext, iitemnum, ssctext)
+    _fl_set_choice_item_shortcut(pObject, iitemnum, ssctext)
 
 
 def fl_set_choice_entries(pObject, pPopupEntry):
@@ -12422,11 +12485,11 @@ def fl_create_clock(clocktype, x, y, w, h, label):
 
         Creates a clock object.
 
-        @param clocktype : type of clock object to be created
-        @param x : horizontal position of clock (upper-left corner)
-        @param x : vertical position of clock (upper-left corner)
-        @param w : width of clock in pixels
-        @param h : height of clock in pixels
+        @param clocktype : type of clock to be created
+        @param x : horizontal position (upper-left corner)
+        @param x : vertical position (upper-left corner)
+        @param w : width in coord units
+        @param h : height in coord units
         @param label : text label of clock
 
         @status: Untested + NoDoc + NoExample = NOT OK
@@ -12460,11 +12523,11 @@ def fl_add_clock(clocktype, x, y, w, h, label):
 
         Adds a clock object.
 
-        @param clocktype : type of clock object to be added
-        @param x : horizontal position of clock (upper-left corner)
-        @param x : vertical position of clock (upper-left corner)
-        @param w : width of clock in pixels
-        @param h : height of clock in pixels
+        @param clocktype : type of clock to be added
+        @param x : horizontal position (upper-left corner)
+        @param x : vertical position (upper-left corner)
+        @param w : width in coord units
+        @param h : height in coord units
         @param label : text label of clock
 
         @status: Untested + NoDoc + NoExample = NOT OK
@@ -12498,7 +12561,7 @@ def fl_get_clock(pObject):
 
         @param pObject : pointer to clock object
 
-        @attention: API change from XForms - old was
+        @attention: API change from XForms - upstream was
            fl_get_clock(pObject, hr, mn, sec)
 
         @status: Untested + NoDoc + NoExample = NOT OK
@@ -12567,11 +12630,11 @@ def fl_create_counter(countertype, x, y, w, h, label):
 
         Creates a counter object.
 
-        @param countertype : type of counter object to be created
-        @param x : horizontal position of counter (upper-left corner)
-        @param x : vertical position of counter (upper-left corner)
-        @param w : width of counter in pixels
-        @param h : height of counter in pixels
+        @param countertype : type of counter to be created
+        @param x : horizontal position (upper-left corner)
+        @param x : vertical position (upper-left corner)
+        @param w : width in coord units
+        @param h : height in coord units
         @param label : text label of counter
 
         @status: Untested + NoDoc + NoExample = NOT OK
@@ -12603,11 +12666,11 @@ def fl_add_counter(countertype, x, y, w, h, label):
 
         Adds a counter object.
 
-        @param countertype : type of counter object to be added
-        @param x : horizontal position of counter (upper-left corner)
-        @param x : vertical position of counter (upper-left corner)
-        @param w : width of counter in pixels
-        @param h : height of counter in pixels
+        @param countertype : type of counter to be added
+        @param x : horizontal position (upper-left corner)
+        @param x : vertical position (upper-left corner)
+        @param w : width in coord units
+        @param h : height in coord units
         @param label : text label of counter
 
         @status: Untested + NoDoc + NoExample = NOT OK
@@ -12760,7 +12823,7 @@ def fl_get_counter_bounds(pObject):
     """
         fl_get_counter_bounds(pObject) -> minbound, maxbound
 
-        @attention: API change from XForms - old was
+        @attention: API change from XForms - upstream was
            fl_get_counter_bounds(pObject, minbound, maxbound)
 
         @status: Untested + NoDoc + NoExample = NOT OK
@@ -12784,7 +12847,7 @@ def fl_get_counter_step(pObject):
     """
         fl_get_counter_step(pObject) -> s, l
 
-        @attention: API change from XForms - old was
+        @attention: API change from XForms - upstream was
            fl_get_counter_step(pObject, s, l)
 
         @status: Untested + NoDoc + NoExample = NOT OK
@@ -13075,6 +13138,15 @@ def fl_create_dial(dialtype, x, y, w, h, label):
     """
         fl_create_dial(dialtype, x, y, w, h, label) -> pObject
 
+        Creates a dial object.
+
+        @param dialtype : type of dial to be created
+        @param x : horizontal position (upper-left corner)
+        @param x : vertical position (upper-left corner)
+        @param w : width in coord units
+        @param h : height in coord units
+        @param label : text label of dial
+
         @status: Untested + NoDoc + NoExample = NOT OK
     """
 
@@ -13101,6 +13173,15 @@ def fl_create_dial(dialtype, x, y, w, h, label):
 def fl_add_dial(dialtype, x, y, w, h, label):
     """
         fl_add_dial(dialtype, x, y, w, h, label) -> pObject
+
+        Adds a dial object.
+
+        @param dialtype : type of dial to be added
+        @param x : horizontal position (upper-left corner)
+        @param x : vertical position (upper-left corner)
+        @param w : width in coord units
+        @param h : height in coord units
+        @param label : text label of dial
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -13182,7 +13263,7 @@ def fl_get_dial_bounds(pObject):
     """
         fl_get_dial_bounds(pObject) -> minbound, maxbound
 
-        @attention: API change from XForms - old was
+        @attention: API change from XForms - upstream was
            fl_get_dial_bounds(pObject, minbound, maxbound)
 
         @status: Untested + NoDoc + NoExample = NOT OK
@@ -13306,7 +13387,7 @@ def fl_get_dirlist(directory, pattern, rescan):
     """
         fl_get_dirlist(directory, pattern, rescan) -> pDirList, n
 
-        @attention: API change from XForms - old was
+        @attention: API change from XForms - upstream was
            fl_get_dirlist(directory, pattern, n, rescan)
 
         @status: Untested + NoDoc + NoExample = NOT OK
@@ -13617,7 +13698,7 @@ def fl_get_formbrowser_area(pObject):
     """
         fl_get_formbrowser_area(pObject) -> num., x, y, w, h
 
-        @attention: API change from XForms - old was
+        @attention: API change from XForms - upstream was
            fl_get_formbrowser_area(pObject, x, y, w, h)
 
         @status: Untested + NoDoc + NoExample = NOT OK
@@ -13725,9 +13806,9 @@ def fl_set_formbrowser_topform(pObject, pForm):
     return retval
 
 
-def fl_set_formbrowser_topform_bynumber(pObject, n):
+def fl_set_formbrowser_topform_bynumber(pObject, num):
     """
-        fl_set_formbrowser_topform_bynumber(pObject, n) -> pForm
+        fl_set_formbrowser_topform_bynumber(pObject, num) -> pForm
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -13738,8 +13819,8 @@ def fl_set_formbrowser_topform_bynumber(pObject, n):
             """FL_FORM * fl_set_formbrowser_topform_bynumber( \
                FL_OBJECT * ob, int n)
             """)
-    inum = convert_to_int(n)
-    keep_elem_refs(pObject, n, inum)
+    inum = convert_to_int(num)
+    keep_elem_refs(pObject, num, inum)
     retval = _fl_set_formbrowser_topform_bynumber(pObject, inum)
     return retval
 
@@ -13858,6 +13939,15 @@ def fl_add_formbrowser(frmbrwstype, x, y, w, h, label):
     """
         fl_add_formbrowser(frmbrwstype, x, y, w, h, label) -> pObject
 
+        Adds a formbrowser object.
+
+        @param frmbrwstype : type of formbrowser to be added
+        @param x : horizontal position (upper-left corner)
+        @param x : vertical position (upper-left corner)
+        @param w : width in coord units
+        @param h : height in coord units
+        @param label : text label of formbrowser
+
         @status: Untested + NoDoc + NoExample = NOT OK
     """
 
@@ -13884,6 +13974,15 @@ def fl_add_formbrowser(frmbrwstype, x, y, w, h, label):
 def fl_create_formbrowser(frmbrwstype, x, y, w, h, label):
     """
         fl_create_formbrowser(frmbrwstype, x, y, w, h, label) -> pObject
+
+        Creates a formbrowser object.
+
+        @param frmbrwstype : type of formbrowser to be created
+        @param x : horizontal position (upper-left corner)
+        @param x : vertical position (upper-left corner)
+        @param w : width in coord units
+        @param h : height in coord units
+        @param label : text label of formbrowser
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -13925,9 +14024,9 @@ def fl_get_formbrowser_numforms(pObject):
     return retval
 
 
-def fl_get_formbrowser_form(pObject, n):
+def fl_get_formbrowser_form(pObject, num):
     """
-        fl_get_formbrowser_form(pObject, n) -> pForm
+        fl_get_formbrowser_form(pObject, num) -> pForm
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -13937,8 +14036,8 @@ def fl_get_formbrowser_form(pObject, n):
             cty.POINTER(xfc.FL_FORM), [cty.POINTER(xfc.FL_OBJECT), cty.c_int],
             """FL_FORM * fl_get_formbrowser_form(FL_OBJECT * ob, int n)
             """)
-    inum = convert_to_int(n)
-    keep_elem_refs(pObject, n, inum)
+    inum = convert_to_int(num)
+    keep_elem_refs(pObject, num, inum)
     retval = _fl_get_formbrowser_form(pObject, inum)
     return retval
 
@@ -13951,6 +14050,15 @@ def fl_get_formbrowser_form(pObject, n):
 def fl_create_frame(frametype, x, y, w, h, label):
     """
         fl_create_frame(frametype, x, y, w, h, label) -> pObject
+
+        Creates a frame object.
+
+        @param frametype : type of frame to be created
+        @param x : horizontal position (upper-left corner)
+        @param x : vertical position (upper-left corner)
+        @param w : width in coord units
+        @param h : height in coord units
+        @param label : text label of frame
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -13978,6 +14086,15 @@ def fl_create_frame(frametype, x, y, w, h, label):
 def fl_add_frame(frametype, x, y, w, h, label):
     """
         fl_add_frame(frametype, x, y, w, h, label) -> pObject
+
+        Adds a frame object.
+
+        @param frametype : type of frame to be added
+        @param x : horizontal position (upper-left corner)
+        @param x : vertical position (upper-left corner)
+        @param w : width in coord units
+        @param h : height in coord units
+        @param label : text label of frame
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -14008,6 +14125,15 @@ def fl_create_labelframe(frametype, x, y, w, h, label):
     """
         fl_create_labelframe(frametype, x, y, w, h, label) -> pObject
 
+        Creates a labelframe object.
+
+        @param frametype : type of labelframe to be created
+        @param x : horizontal position (upper-left corner)
+        @param x : vertical position (upper-left corner)
+        @param w : width in coord units
+        @param h : height in coord units
+        @param label : text label of labelframe
+
         @status: Untested + NoDoc + NoExample = NOT OK
     """
 
@@ -14034,6 +14160,15 @@ def fl_create_labelframe(frametype, x, y, w, h, label):
 def fl_add_labelframe(frametype, x, y, w, h, label):
     """
         fl_add_labelframe(frametype, x, y, w, h, label) -> pObject
+
+        Adds a labelframe object.
+
+        @param frametype : type of labelframe to be added
+        @param x : horizontal position (upper-left corner)
+        @param x : vertical position (upper-left corner)
+        @param w : width in coord units
+        @param h : height in coord units
+        @param label : text label of labelframe
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -14068,6 +14203,15 @@ def fl_create_free(freetype, x, y, w, h, label, py_HandlePtr):
     """
         fl_create_free(freetype, x, y, w, h, label, py_HandlePtr) -> pObject
 
+        Creates a free object.
+
+        @param freetype : type of free to be created
+        @param x : horizontal position (upper-left corner)
+        @param x : vertical position (upper-left corner)
+        @param w : width in coord units
+        @param h : height in coord units
+        @param label : text label of free
+
         @status: Untested + NoDoc + NoExample = NOT OK
     """
 
@@ -14098,6 +14242,15 @@ def fl_create_free(freetype, x, y, w, h, label, py_HandlePtr):
 def fl_add_free(freetype, x, y, w, h, label, py_HandlePtr):
     """
         fl_add_free(freetype, x, y, w, h, label, py_HandlePtr) -> pObject
+
+        Adds a free object.
+
+        @param freetype : type of free to be added
+        @param x : horizontal position (upper-left corner)
+        @param x : vertical position (upper-left corner)
+        @param w : width in coord units
+        @param h : height in coord units
+        @param label : text label of free
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -15359,6 +15512,15 @@ def fl_create_input(inputtype, x, y, w, h, label):
     """
         fl_create_input(inputtype, x, y, w, h, label) -> pObject
 
+        Creates an input object.
+
+        @param inputtype : type of input to be created
+        @param x : horizontal position (upper-left corner)
+        @param x : vertical position (upper-left corner)
+        @param w : width in coord units
+        @param h : height in coord units
+        @param label : text label of input
+
         @status: Untested + NoDoc + NoExample = NOT OK
     """
 
@@ -15385,6 +15547,15 @@ def fl_create_input(inputtype, x, y, w, h, label):
 def fl_add_input(inputtype, x, y, w, h, label):
     """
         fl_add_input(inputtype, x, y, w, h, label) -> pObject
+
+        Adds an input object.
+
+        @param inputtype : type of input to be added
+        @param x : horizontal position (upper-left corner)
+        @param x : vertical position (upper-left corner)
+        @param w : width in coord units
+        @param h : height in coord units
+        @param label : text label of input
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -15426,12 +15597,12 @@ def fl_set_input(pObject, inputstr):
     _fl_set_input(pObject, sinputstr)
 
 
-def fl_set_input_return(pObject, value):
+def fl_set_input_return(pObject, when):
     """
-        fl_set_input_return(pObject, value)
+        fl_set_input_return(pObject, when)
 
         @param pObject : pointer to input object
-        @param value : return type
+        @param when : return type (when it returns)
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -15442,9 +15613,10 @@ def fl_set_input_return(pObject, value):
             """void fl_set_input_return(FL_OBJECT * ob, unsigned
                int value)
             """)
-    uivalue = convert_to_uint(value)
-    keep_elem_refs(pObject, value, uivalue)
-    _fl_set_input_return(pObject, uivalue)
+    check_admitted_listvalues(when, xfc.RETURN_list)
+    uiwhen = convert_to_uint(when)
+    keep_elem_refs(pObject, when, uiwhen)
+    _fl_set_input_return(pObject, uiwhen)
 
 
 def fl_set_input_color(pObject, textcolr, curscolr):
@@ -15472,7 +15644,7 @@ def fl_get_input_color(pObject):
     """
         fl_get_input_color(pObject) -> textcolr, curscolr
 
-        @attention: API change from XForms - old was
+        @attention: API change from XForms - upstream was
            fl_get_input_color(pObject, textcolr, curscolr)
 
         @status: Untested + NoDoc + NoExample = NOT OK
@@ -15485,8 +15657,8 @@ def fl_get_input_color(pObject):
             """void fl_get_input_color(FL_OBJECT * ob, FL_COLOR * textcol,
                FL_COLOR * curscol)
             """)
-    textcolr, ptextcolr = make_ulong_and_pointer()
-    curscolr, pcurscolr = make_ulong_and_pointer()
+    textcolr, ptextcolr = make_FL_COLOR_and_pointer()
+    curscolr, pcurscolr = make_FL_COLOR_and_pointer()
     keep_elem_refs(pObject, textcolr, curscolr)
     _fl_get_input_color(pObject, ptextcolr, pcurscolr)
     return textcolr, curscolr
@@ -15567,7 +15739,7 @@ def fl_get_input_selected_range(pObject):
     """
         fl_get_input_selected_range(pObject) -> string, begin, end
 
-        @attention: API change from XForms - old was
+        @attention: API change from XForms - upstream was
            fl_get_input_selected_range(pObject, begin, end)
 
         @status: Untested + NoDoc + NoExample = NOT OK
@@ -15695,7 +15867,7 @@ def fl_get_input_scrollbarsize(pObject):
     """
         fl_get_input_scrollbarsize(pObject) -> hh, vw
 
-        @attention: API change from XForms - old was
+        @attention: API change from XForms - upstream was
            fl_get_input_scrollbarsize(pObject, hh, vw)
 
         @status: Untested + NoDoc + NoExample = NOT OK
@@ -15805,7 +15977,7 @@ def fl_get_input_cursorpos(pObject):
     """
         fl_get_input_cursorpos(pObject) -> num., x, y
 
-        @attention: API change from XForms - old was
+        @attention: API change from XForms - upstream was
            fl_get_input_cursorpos(pObject, x, y)
 
         @status: Untested + NoDoc + NoExample = NOT OK
@@ -15862,7 +16034,7 @@ def fl_get_input_format(pObject):
     """
         fl_get_input_format(pObject) -> fmt, sep
 
-        @attention: API change from XForms - old was
+        @attention: API change from XForms - upstream was
            fl_get_input_format(pObject, fmt, sep)
 
         @status: Untested + NoDoc + NoExample = NOT OK
@@ -15971,6 +16143,15 @@ def fl_create_menu(menutype, x, y, w, h, label):
     """
         fl_create_menu(menutype, x, y, w, h, label) -> pObject
 
+        Creates a menu object.
+
+        @param menutype : type of menu to be created
+        @param x : horizontal position (upper-left corner)
+        @param x : vertical position (upper-left corner)
+        @param w : width in coord units
+        @param h : height in coord units
+        @param label : text label of menu
+
         @status: Untested + NoDoc + NoExample = NOT OK
     """
 
@@ -15997,6 +16178,15 @@ def fl_create_menu(menutype, x, y, w, h, label):
 def fl_add_menu(menutype, x, y, w, h, label):
     """
         fl_add_menu(menutype, x, y, w, h, label) -> pObject
+
+        Adds a menu object.
+
+        @param menutype : type of menu to be added
+        @param x : horizontal position (upper-left corner)
+        @param x : vertical position (upper-left corner)
+        @param w : width in coord units
+        @param h : height in coord units
+        @param label : text label of menu
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -16096,9 +16286,9 @@ def fl_replace_menu_item(pObject, itemnum, itemstr):
     _fl_replace_menu_item(pObject, iitemnum, sitemstr)
 
 
-def fl_delete_menu_item(pObject, numb):
+def fl_delete_menu_item(pObject, itemnum):
     """
-        fl_delete_menu_item(pObject, numb)
+        fl_delete_menu_item(pObject, itemnum)
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -16108,9 +16298,9 @@ def fl_delete_menu_item(pObject, numb):
             None, [cty.POINTER(xfc.FL_OBJECT), cty.c_int],
             """void fl_delete_menu_item(FL_OBJECT * ob, int numb)    DEPRECATED
             """)
-    inumb = convert_to_int(numb)
-    keep_elem_refs(pObject, numb, inumb)
-    _fl_delete_menu_item(pObject, inumb)
+    iitemnum = convert_to_int(itemnum)
+    keep_elem_refs(pObject, itemnum, iitemnum)
+    _fl_delete_menu_item(pObject, iitemnum)
 
 
 #already defined in xfdata
@@ -16187,14 +16377,14 @@ def fl_set_menu_item_mode(pObject, itemnum, mode):
     _fl_set_menu_item_mode(pObject, iitemnum, uimode)
 
 
-def fl_show_menu_symbol(pObject, showflag):
+def fl_show_menu_symbol(pObject, flag):
     """
-        fl_show_menu_symbol(pObject, showflag)
+        fl_show_menu_symbol(pObject, flag)
 
         Makes the menu symbol visible or not.
 
         @param pObject : pointer to menu object
-        @param showflag : flag to show menu or not (1|0)
+        @param flag : flag to show menu or not (1|0)
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -16204,9 +16394,9 @@ def fl_show_menu_symbol(pObject, showflag):
             None, [cty.POINTER(xfc.FL_OBJECT), cty.c_int],
             """void fl_show_menu_symbol(FL_OBJECT * ob, int show)   DEPRECATED
             """)
-    ishowflag = convert_to_int(showflag)
-    keep_elem_refs(pObject, showflag, ishowflag)
-    _fl_show_menu_symbol(pObject, ishowflag)
+    iflag = convert_to_int(flag)
+    keep_elem_refs(pObject, flag, iflag)
+    _fl_show_menu_symbol(pObject, iflag)
 
 
 def fl_set_menu_popup(pObject, pup):
@@ -16393,11 +16583,11 @@ def fl_create_nmenu(nmenutype, x, y, w, h, label):
 
         Creates a nmenu object.
 
-        @param nmenutype : type of nmenu
-        @param x : horizontal position of nmenu (upper-left corner)
-        @param y : vertical position of nmenu (upper-left corner)
-        @param w : width of nmenu object in pixel
-        @param h : height of nmenu object in pixel
+        @param nmenutype : type of nmenu to be created
+        @param x : horizontal position (upper-left corner)
+        @param y : vertical position (upper-left corner)
+        @param w : width in coord units
+        @param h : height in coord units
         @param label : text label of nmenu object
 
         @status: Untested + NoDoc + NoExample = NOT OK
@@ -16429,11 +16619,11 @@ def fl_add_nmenu(nmenutype, x, y, w, h, label):
 
         Adds a nmenu object.
 
-        @param nmenutype : type of nmenu object
-        @param x : horizontal position of nmenu (upper-left corner)
-        @param y : vertical position of nmenu (upper-left corner)
-        @param w : width of nmenu object in pixel
-        @param h : height of nmenu object in pixel
+        @param nmenutype : type of nmenu to be added
+        @param x : horizontal position (upper-left corner)
+        @param y : vertical position (upper-left corner)
+        @param w : width in coord units
+        @param h : height in coord units
         @param label : text label of nmenu object
 
         @status: Untested + NoDoc + NoExample = NOT OK
@@ -16577,6 +16767,12 @@ def fl_add_nmenu_items2(pObject, pPopupItem):
     """
         fl_add_nmenu_items2(pObject, pPopupItem) -> pPopupEntry
 
+        @param pObject : pointer to nmenu object
+        @param pPopupItem : pointer to xfc.FL_POPUP_ITEM (it needs to be
+           prepared beforehand with make_pPopupItem_from_list(..) function for
+           single or multiple lists, or with make_pPopupItem_from_dict(..) for
+           a single dict.
+
         @status: Untested + NoDoc + NoExample = NOT OK
     """
 
@@ -16596,6 +16792,12 @@ def fl_insert_nmenu_items2(pObject, pPopupEntry, pPopupItem):
     """
         fl_insert_nmenu_items2(pObject, pPopupEntry, pPopupItem) -> pPopupEntry
 
+        @param pObject : pointer to nmenu object
+        @param pPopupItem : pointer to xfc.FL_POPUP_ITEM (it needs to be
+           prepared beforehand with make_pPopupItem_from_list(..) function for
+           single or multiple lists, or with make_pPopupItem_from_dict(..) for
+           a single dict.
+
         @status: Untested + NoDoc + NoExample = NOT OK
     """
 
@@ -16614,6 +16816,12 @@ def fl_insert_nmenu_items2(pObject, pPopupEntry, pPopupItem):
 def fl_replace_nmenu_items2(pObject, pPopupEntry, pPopupItem):
     """
         fl_replace_nmenu_items2(pObject, pPopupEntry, pPopupItem) -> pPopupEntry
+
+        @param pObject : pointer to nmenu object
+        @param pPopupItem : pointer to xfc.FL_POPUP_ITEM (it needs to be
+           prepared beforehand with make_pPopupItem_from_list(..) function for
+           single or multiple lists, or with make_pPopupItem_from_dict(..) for
+           a single dict.
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -16790,11 +16998,11 @@ def fl_create_positioner(postype, x, y, w, h, label):
         Creates a positioner object.
 
         @param postype : type of positioner to be created
-        @param x : horizontal position of positioner (upper-left corner)
-        @param y : vertical position of positioner (upper-left corner)
-        @param w : width of positioner object in pixel
-        @param h : height of positioner object in pixel
-        @param label : text label of positioner object
+        @param x : horizontal position (upper-left corner)
+        @param y : vertical position (upper-left corner)
+        @param w : width in coord units
+        @param h : height in coord units
+        @param label : text label of positioner
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -16826,11 +17034,11 @@ def fl_add_positioner(postype, x, y, w, h, label):
         Adds a positioner object.
 
         @param postype : type of positioner to be added
-        @param x : horizontal position of positioner (upper-left corner)
-        @param y : vertical position of positioner (upper-left corner)
-        @param w : width of positioner object in pixel
-        @param h : height of positioner object in pixel
-        @param label : text label of positioner object
+        @param x : horizontal position (upper-left corner)
+        @param y : vertical position (upper-left corner)
+        @param w : width in coord units
+        @param h : height in coord units
+        @param label : text label of positioner
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -16912,7 +17120,7 @@ def fl_get_positioner_xbounds(pObject):
     """
         fl_get_positioner_xbounds(pObject) -> minbound, maxbound
 
-        @attention: API change from XForms - old was
+        @attention: API change from XForms - upstream was
            fl_get_positioner_xbounds(pObject, minbound, maxbound)
 
         @status: Untested + NoDoc + NoExample = NOT OK
@@ -16989,7 +17197,7 @@ def fl_get_positioner_ybounds(pObject):
     """
         fl_get_positioner_ybounds(pObject) -> minbound, maxbound
 
-        @attention: API change from XForms - old was
+        @attention: API change from XForms - upstream was
            fl_get_positioner_ybounds(pObject, minbound, maxbound)
 
         @status: Untested + NoDoc + NoExample = NOT OK
@@ -17073,8 +17281,8 @@ def fl_create_scrollbar(scrolltype, x, y, w, h, label):
         @param scrolltype : type of scrollbar to be created
         @param x : horizontal position (upper-left corner)
         @param y : vertical position (upper-left corner)
-        @param w : width of the scrollbar in pixels
-        @param h : height of the scrollbar in pixels
+        @param w : width in coord units
+        @param h : height in coord units
         @param label : label text of the scrollbar
 
         @status: Untested + NoDoc + NoExample = NOT OK
@@ -17109,8 +17317,8 @@ def fl_add_scrollbar(scrolltype, x, y, w, h, label):
         @param scrolltype : type of scrollbar to be added
         @param x : horizontal position (upper-left corner)
         @param y : vertical position (upper-left corner)
-        @param w : width of the scrollbar in pixels
-        @param h : height of the scrollbar in pixels
+        @param w : width in coord units
+        @param h : height in coord units
         @param label : label text of the scrollbar
 
         @status: Untested + NoDoc + NoExample = NOT OK
@@ -17233,7 +17441,7 @@ def fl_get_scrollbar_increment(pObject):
 
         @param pObject : pointer to object
 
-        @attention: API change from XForms - old was
+        @attention: API change from XForms - upstream was
            fl_get_scrollbar_increment(pObject, leftbtnval, valmidlbtnval)
 
         @status: Untested + NoDoc + NoExample = NOT OK
@@ -17285,7 +17493,7 @@ def fl_get_scrollbar_bounds(pObject):
 
         @param pObject : pointer to scrollbar object
 
-        @attention: API change from XForms - old was
+        @attention: API change from XForms - upstream was
            fl_get_scrollbar_bounds(pObject, b1, b2)
     """
 
@@ -17355,6 +17563,15 @@ def fl_create_select(selecttype, x, y, w, h, label):
     """
         fl_create_select(selecttype, x, y, w, h, label) -> pObject
 
+        Creates a select object.
+
+        @param selecttype : type of select to be created
+        @param x : horizontal position (upper-left corner)
+        @param x : vertical position (upper-left corner)
+        @param w : width in coord units
+        @param h : height in coord units
+        @param label : text label of select
+
         @status: Untested + NoDoc + NoExample = NOT OK
     """
 
@@ -17381,6 +17598,15 @@ def fl_create_select(selecttype, x, y, w, h, label):
 def fl_add_select(selecttype, x, y, w, h, label):
     """
         fl_add_select(selecttype, x, y, w, h, label) -> pObject
+
+        Adds a select object.
+
+        @param selecttype : type of select to be added
+        @param x : horizontal position (upper-left corner)
+        @param x : vertical position (upper-left corner)
+        @param w : width in coord units
+        @param h : height in coord units
+        @param label : text label of select
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -17699,7 +17925,7 @@ def fl_get_select_text_font(pObject):
     """
         fl_get_select_text_font(pObject) -> num, num1, num2
 
-        @attention: API change from XForms - old was
+        @attention: API change from XForms - upstream was
            fl_get_select_text_font(pObject, p2, p3)
 
         @status: Untested + NoDoc + NoExample = NOT OK
@@ -17802,6 +18028,15 @@ def fl_create_slider(slidertype, x, y, w, h, label):
     """
         fl_create_slider(slidertype, x, y, w, h, label) -> pObject
 
+        Creates a slider object.
+
+        @param slidertype : type of slider to be created
+        @param x : horizontal position in coord units (upper-left corner)
+        @param x : vertical position (upper-left corner)
+        @param w : width in coord units
+        @param h : height in coord units
+        @param label : text label of slider
+
         @status: Untested + NoDoc + NoExample = NOT OK
     """
 
@@ -17831,11 +18066,11 @@ def fl_add_slider(slidertype, x, y, w, h, label):
 
         Adds a slider to a form. No value is displayed.
 
-        @param slidertype : type of the slider
+        @param slidertype : type of the slider to be added
         @param x : horizontal position (upper-left corner)
         @param y : vertical position (upper-left corner)
-        @param w : width of the slider
-        @param h : height of the slider
+        @param w : width in coord units
+        @param h : height in coord units
         @param label : label of the slider (placed below it by default)
 
         @status: Untested + NoDoc + NoExample = NOT OK
@@ -17864,6 +18099,15 @@ def fl_add_slider(slidertype, x, y, w, h, label):
 def fl_create_valslider(slidertype, x, y, w, h, label):
     """
         fl_create_valslider(slidertype, x, y, w, h, label) -> pObject
+
+        Creates a valslider object.
+
+        @param slidertype : type of slider to be created
+        @param x : horizontal position (upper-left corner)
+        @param x : vertical position (upper-left corner)
+        @param w : width in coord units
+        @param h : height in coord units
+        @param label : text label of slider
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -17898,9 +18142,9 @@ def fl_add_valslider(slidertype, x, y, w, h, label):
         @param slidertype : type of the slider
         @param x : horizontal position (upper-left corner)
         @param y : vertical position (upper-left corner)
-        @param w : width of the slider
-        @param h : height of the slider
-        @param label : label of the slider (placed below it by default)
+        @param w : width in coord units
+        @param h : height in coord units
+        @param label : text label of slider
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -18001,7 +18245,7 @@ def fl_get_slider_bounds(pObject):
 
         @param pObject : pointer to object
 
-        @attention: API change from XForms - old was
+        @attention: API change from XForms - upstream was
            fl_get_slider_bounds(pObject, minbound, maxbound)
 
         @status: Untested + NoDoc + NoExample = NOT OK
@@ -18085,7 +18329,7 @@ def fl_get_slider_increment(pObject):
     """
         fl_get_slider_increment(pObject) -> leftbtnval, midlbtnval
 
-        @attention: API change from XForms - old was
+        @attention: API change from XForms - upstream was
            fl_get_slider_increment(pObject, leftbtnval, midlbtnval)
 
         @status: Untested + NoDoc + NoExample = NOT OK
@@ -18178,6 +18422,15 @@ def fl_create_spinner(spinnertype, x, y, w, h, label):
     """
         fl_create_spinner(spinnertype, x, y, w, h, label) -> pObject
 
+        Creates a spinner object.
+
+        @param spinnertype : type of spinner to be created
+        @param x : horizontal position (upper-left corner)
+        @param x : vertical position (upper-left corner)
+        @param w : width in coord units
+        @param h : height in coord units
+        @param label : text label of spinner
+
         @status: Untested + NoDoc + NoExample = NOT OK
     """
 
@@ -18204,6 +18457,15 @@ def fl_create_spinner(spinnertype, x, y, w, h, label):
 def fl_add_spinner(spinnertype, x, y, w, h, label):
     """
         fl_add_spinner(spinnertype, x, y, w, h, label) -> pObject
+
+        Adds a spinner object.
+
+        @param spinnertype : type of spinner to be added
+        @param x : horizontal position (upper-left corner)
+        @param x : vertical position (upper-left corner)
+        @param w : width in coord units
+        @param h : height in coord units
+        @param label : text label of spinner
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -18285,7 +18547,7 @@ def fl_get_spinner_bounds(pObject):
     """
         fl_get_spinner_bounds(pObject) -> minbound, maxbound
 
-        @attention: API change from XForms - old was
+        @attention: API change from XForms - upstream was
            fl_get_spinner_bounds(pObject, minbound, maxbound)
 
         @status: Untested + NoDoc + NoExample = NOT OK
@@ -18433,6 +18695,15 @@ def fl_create_tabfolder(foldertype, x, y, w, h, label):
     """
         fl_create_tabfolder(foldertype, x, y, w, h, label) -> pObject
 
+        Creates a tabfolder object.
+
+        @param foldertype : type of tabfolder to be created
+        @param x : horizontal position (upper-left corner)
+        @param x : vertical position (upper-left corner)
+        @param w : width in coord units
+        @param h : height in coord units
+        @param label : text label of tabfolder
+
         @status: Untested + NoDoc + NoExample = NOT OK
     """
 
@@ -18459,6 +18730,15 @@ def fl_create_tabfolder(foldertype, x, y, w, h, label):
 def fl_add_tabfolder(foldertype, x, y, w, h, label):
     """
         fl_add_tabfolder(foldertype, x, y, w, h, label) -> pObject
+
+        Adds a tabfolder object.
+
+        @param foldertype : type of tabfolder to be added
+        @param x : horizontal position (upper-left corner)
+        @param x : vertical position (upper-left corner)
+        @param w : width in coord units
+        @param h : height in coord units
+        @param label : text label of tabfolder
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -18778,7 +19058,7 @@ def fl_get_folder_area(pObject):
 
         @param pObject : pointer to object
 
-        @attention: API change from XForms - old was
+        @attention: API change from XForms - upstream was
            fl_get_folder_area(pObject, x, y, w, h)
 
         @status: Untested + NoDoc + NoExample = NOT OK
@@ -18892,6 +19172,15 @@ def fl_create_text(texttype, x, y, w, h, label):
     """
         fl_create_text(texttype, x, y, w, h, label) -> pObject
 
+        Creates a text object.
+
+        @param texttype : type of text to be created
+        @param x : horizontal position (upper-left corner)
+        @param x : vertical position (upper-left corner)
+        @param w : width in coord units
+        @param h : height in coord units
+        @param label : text label of text
+
         @status: Untested + NoDoc + NoExample = NOT OK
     """
 
@@ -18918,6 +19207,15 @@ def fl_create_text(texttype, x, y, w, h, label):
 def fl_add_text(texttype, x, y, w, h, label):
     """
         fl_add_text(texttype, x, y, w, h, label) -> pObject
+
+        Adds a text object.
+
+        @param texttype : type of text to be added
+        @param x : horizontal position (upper-left corner)
+        @param x : vertical position (upper-left corner)
+        @param w : width in coord units
+        @param h : height in coord units
+        @param label : text label of text
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -19091,7 +19389,7 @@ def fl_get_thumbwheel_bounds(pObject):
 
         @param pObject : pointer to thumbwheel object
 
-        @attention: API change from XForms - old was
+        @attention: API change from XForms - upstream was
            fl_get_thumbwheel_bounds(pObject, minbound, maxbound)
 
         @status: Untested + NoDoc + NoExample = NOT OK
@@ -19114,6 +19412,15 @@ def fl_get_thumbwheel_bounds(pObject):
 def fl_create_thumbwheel(wheeltype, x, y, w, h, label):
     """
         fl_create_thumbwheel(wheeltype, x, y, w, h, label) -> pObject
+
+        Creates a thumbwheel object.
+
+        @param wheeltype : type of thumbwheel to be created
+        @param x : horizontal position (upper-left corner)
+        @param x : vertical position (upper-left corner)
+        @param w : width in coord units
+        @param h : height in coord units
+        @param label : text label of thumbwheel
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -19141,6 +19448,15 @@ def fl_create_thumbwheel(wheeltype, x, y, w, h, label):
 def fl_add_thumbwheel(wheeltype, x, y, w, h, label):
     """
         fl_add_thumbwheel(wheeltype, x, y, w, h, label) -> pObject
+
+        Adds a thumbwheel object.
+
+        @param wheeltype : type of thumbwheel to be added
+        @param x : horizontal position (upper-left corner)
+        @param x : vertical position (upper-left corner)
+        @param w : width in coord units
+        @param h : height in coord units
+        @param label : text label of thumbwheel
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -19177,6 +19493,15 @@ def fl_create_timer(timertype, x, y, w, h, label):
     """
         fl_create_timer(timertype, x, y, w, h, label) -> pObject
 
+        Creates a timer object.
+
+        @param timertype : type of timer to be created
+        @param x : horizontal position (upper-left corner)
+        @param x : vertical position (upper-left corner)
+        @param w : width in coord units
+        @param h : height in coord units
+        @param label : text label of timer
+
         @status: Untested + NoDoc + NoExample = NOT OK
     """
 
@@ -19203,6 +19528,15 @@ def fl_create_timer(timertype, x, y, w, h, label):
 def fl_add_timer(timertype, x, y, w, h, label):
     """
         fl_add_timer(timertype, x, y, w, h, label) -> pObject
+
+        Adds a timer object.
+
+        @param timertype : type of timer to be added
+        @param x : horizontal position (upper-left corner)
+        @param x : vertical position (upper-left corner)
+        @param w : width in coord units
+        @param h : height in coord units
+        @param label : text label of timer
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -20010,6 +20344,17 @@ fl_setpup = fl_setpup_mode
 def fl_create_xyplot(plottype, x, y, w, h, label):
     """
         fl_create_xyplot(plottype, x, y, w, h, label) -> pObject
+
+        Creates an xyplot object.
+
+        @param plottype : type of xyplot to be created
+        @param x : horizontal position (upper-left corner)
+        @param x : vertical position (upper-left corner)
+        @param w : width in coord units
+        @param h : height in coord units
+        @param label : text label of xyplot
+
+        @status: Untested + NoDoc + NoExample = NOT OK
     """
 
     _fl_create_xyplot = cfuncproto(
@@ -20035,6 +20380,15 @@ def fl_create_xyplot(plottype, x, y, w, h, label):
 def fl_add_xyplot(plottype, x, y, w, h, label):
     """
         fl_add_xyplot(plottype, x, y, w, h, label) -> pObject
+
+        Adds an xyplot object.
+
+        @param plottype : type of xyplot to be added
+        @param x : horizontal position (upper-left corner)
+        @param x : vertical position (upper-left corner)
+        @param w : width in coord units
+        @param h : height in coord units
+        @param label : text label of xyplot
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -20130,9 +20484,9 @@ def fl_set_xyplot_data_double(pObject, x, y, n, title, xlabel, ylabel):
                                         sxlabel, sylabel)
 
 
-def fl_set_xyplot_file(pObject, f, title, xl, yl):
+def fl_set_xyplot_file(pObject, fname, title, xl, yl):
     """
-        fl_set_xyplot_file(pObject, f, title, xl, yl) -> num.
+        fl_set_xyplot_file(pObject, fname, title, xl, yl) -> num.
 
         @param pObject : pointer to object
 
@@ -20146,12 +20500,12 @@ def fl_set_xyplot_file(pObject, f, title, xl, yl):
             """int fl_set_xyplot_file(FL_OBJECT * ob, const char * f,
                const char * title, const char * xl, const char * yl)
             """)
-    sf = convert_to_string(f)
+    sfname = convert_to_string(fname)
     stitle = convert_to_string(title)
     sxl = convert_to_string(xl)
     syl = convert_to_string(yl)
-    keep_elem_refs(pObject, f, title, xl, yl, sf, stitle, sxl, syl)
-    retval = _fl_set_xyplot_file(pObject, sf, stitle, sxl, syl)
+    keep_elem_refs(pObject, fname, title, xl, yl, sfname, stitle, sxl, syl)
+    retval = _fl_set_xyplot_file(pObject, sfname, stitle, sxl, syl)
     return retval
 
 
@@ -20273,9 +20627,9 @@ def fl_add_xyplot_overlay(pObject, idnum, x, y, n, colr):
     _fl_add_xyplot_overlay(pObject, iidnum, px, py, inum, ulcolr)
 
 
-def fl_add_xyplot_overlay_file(pObject, idnum, f, colr):
+def fl_add_xyplot_overlay_file(pObject, idnum, fname, colr):
     """
-        fl_add_xyplot_overlay_file(pObject, idnum, f, colr) -> num.
+        fl_add_xyplot_overlay_file(pObject, idnum, fname, colr) -> num.
 
         @param pObject : pointer to object
 
@@ -20291,10 +20645,10 @@ def fl_add_xyplot_overlay_file(pObject, idnum, f, colr):
             """)
     check_admitted_listvalues(colr, xfc.COLOR_list)
     iidnum = convert_to_int(idnum)
-    sf = convert_to_string(f)
+    sfname = convert_to_string(fname)
     ulcolr = convert_to_FL_COLOR(colr)
-    keep_elem_refs(pObject, idnum, f, colr, iidnum, sf, ulcolr)
-    retval = _fl_add_xyplot_overlay_file(pObject, iidnum, sf, ulcolr)
+    keep_elem_refs(pObject, idnum, fname, colr, iidnum, sfname, ulcolr)
+    retval = _fl_add_xyplot_overlay_file(pObject, iidnum, sfname, ulcolr)
     return retval
 
 
@@ -20407,7 +20761,7 @@ def fl_get_xyplot_xbounds(pObject):
 
         @param pObject : pointer to object
 
-        @attention: API change from XForms - old was
+        @attention: API change from XForms - upstream was
            fl_get_xyplot_xbounds(pObject, minbound, maxbound)
 
         @status: Untested + NoDoc + NoExample = NOT OK
@@ -20433,7 +20787,7 @@ def fl_get_xyplot_ybounds(pObject):
 
         @param pObject : pointer to object
 
-        @attention: API change from XForms - old was
+        @attention: API change from XForms - upstream was
            fl_get_xyplot_ybounds(pObject, minbound, maxbound)
 
         @status: Untested + NoDoc + NoExample = NOT OK
@@ -20459,7 +20813,7 @@ def fl_get_xyplot(pObject):
 
         @param pObject : pointer to object
 
-        @attention: API change from XForms - old was
+        @attention: API change from XForms - upstream was
            fl_get_xyplot(pObject, x, y, i)
 
         @status: Untested + NoDoc + NoExample = NOT OK
@@ -20486,7 +20840,7 @@ def fl_get_xyplot_data(pObject):
 
         @param pObject : pointer to object
 
-        @attention: API change from XForms - old was
+        @attention: API change from XForms - upstream was
            fl_get_xyplot_data(pObject, x, y, n)
 
         @status: Untested + NoDoc + NoExample = NOT OK
@@ -20513,7 +20867,7 @@ def fl_get_xyplot_data_pointer(pObject, idnum):
 
         @param pObject : pointer to object
 
-        @attention: API change from XForms - old was
+        @attention: API change from XForms - upstream was
            fl_get_xyplot_data_pointer(pObject, idnum, x, y, n)
 
         @status: Untested + NoDoc + NoExample = NOT OK
@@ -20542,7 +20896,7 @@ def fl_get_xyplot_overlay_data(pObject, idnum):
 
         @param pObject : pointer to object
 
-        @attention: API change from XForms - old was
+        @attention: API change from XForms - upstream was
            fl_get_xyplot_overlay_data(pObject, idnum, x, y, n)
 
         @status: Untested + NoDoc + NoExample = NOT OK
@@ -20723,7 +21077,7 @@ def fl_get_xyplot_xmapping(pObject):
 
         @param pObject : pointer to object
 
-        @attention: API change from XForms - old was
+        @attention: API change from XForms - upstream was
            fl_get_xyplot_xmapping(pObject, a, b)
 
         @status: Untested + NoDoc + NoExample = NOT OK
@@ -20749,7 +21103,7 @@ def fl_get_xyplot_ymapping(pObject):
 
         @param pObject : pointer to object
 
-        @attention: API change from XForms - old was
+        @attention: API change from XForms - upstream was
            fl_get_xyplot_ymapping(pObject, a, b)
 
         @status: Untested + NoDoc + NoExample = NOT OK
@@ -22172,6 +22526,7 @@ def fl_free_matrix(mtrx):
 #    keep_elem_refs(text, stext)
 #    retval = _fl_init_RGBdatabase(stext)
 #    return retval
+#end backwards --LK
 
 
 def fl_lookup_RGBcolor(text, p2, p3, p4):
@@ -22470,7 +22825,7 @@ def flimage_get_autocrop(pImage, bk):
 
         @param pImage : pointer to image
 
-        @attention: API change from XForms - old was
+        @attention: API change from XForms - upstream was
            flimage_get_autocrop(pImage, bk, xl, yt, xr, yb)
 
         @status: Untested + NoDoc + NoExample = NOT OK
