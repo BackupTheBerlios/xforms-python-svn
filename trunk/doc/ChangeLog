@@ -1,6 +1,9 @@
 
 
 SVN
+    * Deprecated from upstream functions (old menu/pup/choice and two
+    xlplot functions) are now clearly labeled and documented as such,
+    as they may be removed anytime.
     * some more docstrings.
     * Added nmenu_minimal example.
     * Thanks to Jens T. Toerring, now FL_POPUP_ITEM management
