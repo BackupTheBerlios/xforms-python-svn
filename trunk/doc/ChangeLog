@@ -1,6 +1,7 @@
 
 
 SVN
+    * First bunch of testing status of functions inserted in docstrings
     * Deprecated from upstream functions (old menu/pup/choice and two
     xlplot functions) are now clearly labeled and documented as such,
     as they may be removed anytime.

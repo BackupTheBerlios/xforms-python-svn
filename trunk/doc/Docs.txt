@@ -13,3 +13,20 @@ etc..). This is a really good guide.
 
 You can produce .pdf file from .tex, using a provided script.
 
+
+Every fl* function has a status representing its development state:
+
+a) status of testing:
+    1) Tested: it is fully tested and working
+    2) HalfTested : there is at least one occurence of good functioning
+    3) Untested: not tested
+b) status of documentation:
+    1) Doc: fully documented (function usage, parameters, and usable values)
+    2) NoDoc: not fully documented
+c) presence of demo/example:
+    1) Example: there is at least one example (ported from upstream or minimal)
+    2) NoExample: no demos/examples are available/ported
+d) Usable state:
+    1) OK: it is usable (if Tested and Example)
+    2) NOT OK: its usage is not verified or it fail under some conditions
+
