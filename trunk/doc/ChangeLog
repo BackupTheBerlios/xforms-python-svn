@@ -1,6 +1,9 @@
 
 
 SVN
+    * XForms internal and low-level functions I am aware of are (hopefully)
+    removed from library, as they are not supposed to be used here (just in
+    case I leave a placeholder and they are moved to a temporary file).
     * testing status of function with a working example is completed
     * First bunch of testing status of functions inserted in docstrings
     * Deprecated from upstream functions (old menu/pup/choice and two
