@@ -25,15 +25,11 @@ def done_callback(pobj, data):
 def bw_callback(pobj, data):
     bws = [-5, -4, -3, -2, -1, 1, 2, 3, 4, 5]
     pr = xf.fl_get_select_item(pobj)
-    if not pr or not pr.contents:
-        print "error: NULL pointer"
-        sys.exit(1)
-    else:
-        indx = pr.contents.val
-        bw = bws[indx]
-        xf.fl_set_object_bw(pbwgroup, bw)
-        xf.fl_set_object_bw(pdoneobj, bw)
-        xf.fl_popup_set_bw(pr.contents.popup, bw)
+    indx = pr.contents.val
+    bw = bws[indx]
+    xf.fl_set_object_bw(pbwgroup, bw)
+    xf.fl_set_object_bw(pdoneobj, bw)
+    xf.fl_popup_set_bw(pr.contents.popup, bw)
 
 
 
@@ -109,7 +105,8 @@ def main(lsysargv, sysargv):
 
     pbw = xf.fl_get_border_width()
     if (pbw < -5 or pbw == 0 or pbw > 5):
-        xf.fl_set_border_width(pbw = -2)
+        pbw = -2
+        xf.fl_set_border_width(pbw)
 
     txt = "%2d Pixel" % pbw
     ppupretn = xf.fl_get_select_item_by_label(pbwselect, txt)
