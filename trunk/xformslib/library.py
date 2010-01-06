@@ -30,11 +30,10 @@
 # Interface to XForms shared object libraries   #
 # ############################################# #
 
+
 import ctypes as cty
 import ctypes.util as ctyutil
-import sys
 import warnings
-#from xfdata import *       # data types and constants from XForms
 import xfdata as xfc       # data types and constants from XForms
 
 
@@ -609,21 +608,26 @@ def fl_object_returned(pObject):
 # IO other than XEvent Q
 
 FL_IO_CALLBACK = cty.CFUNCTYPE(None, cty.c_int, cty.c_void_p)
-
+""" FL_IO_CALLBACK(num, ptr_void)
+    prototype for handling IO callback - no return
+"""
 
 def fl_add_io_callback(fd, mask, py_IoCallback, data):
     """ fl_add_io_callback(fd, mask, py_IoCallback, data)
 
         Registers an input callback function when input is available from fd.
 
-        @param fd: a valid file descriptor in a *nix system
-        @param mask: under what circumstance the input callback should be
-                     invoked (i.e. FL_READ, FL_WRITE or FL_EXCEPT)
-        @param py_IoCallback: python function to be invoked under mask
-                              condition, fn(num, ptr_void)
+        @param fd: a valid file descriptor in a unix system
+        @type fd: num./int
+        @param mask: under what circumstance the input callback
+                     should be invoked
+        @type mask: [num./int] xfc.FL_READ, xfc.FL_WRITE, xfc.FL_EXCEPT
+        @param py_IoCallback: python function to be invoked - not return
+        @type py_IoCallback: func(num, ptr_void)
         @param data: argument to be passed to function
+        @type data: ptr_void
 
-        @status: Untested + NoDoc + NoExample = NOT OK
+        @status: Untested + Doc + NoExample = NOT OK
     """
 
     _fl_add_io_callback = cfuncproto(
@@ -648,12 +652,14 @@ def fl_remove_io_callback(fd, mask, py_IoCallback):
         from fd.
 
         @param fd: a valid file descriptor in a unix system
-        @param mask: under what circumstance the input callback should be
-                     removed (i.e. xfc.FL_READ, xfc.FL_WRITE, xfc.FL_EXCEPT)
-        @param py_IoCallback: python function to be removed under mask
-                              condition, fn(num, ptr_void)
+        @type fd: num./int
+        @param mask: under what circumstance the input callback should
+                     be removed
+        @type mask: [num./int] xfc.FL_READ, xfc.FL_WRITE, xfc.FL_EXCEPT
+        @param py_IoCallback: python function to be removed - no return
+        @type py_IoCallback: func(num, ptr_void)
 
-        @status: Untested + NoDoc + NoExample = NOT OK
+        @status: Untested + Doc + NoExample = NOT OK
     """
 
     _fl_remove_io_callback = cfuncproto(
@@ -674,6 +680,9 @@ def fl_remove_io_callback(fd, mask, py_IoCallback):
 # signals
 
 FL_SIGNAL_HANDLER = cty.CFUNCTYPE(None, cty.c_int, cty.c_void_p)
+""" FL_SIGNAL_HANDLER(num, ptr_void)
+    prototype for handling signal callback - no return
+"""
 
 def fl_add_signal_callback(sglnum, py_SignalHandler, data):
     """ fl_add_signal_callback(sglnum, py_SignalHandler, data)
@@ -681,13 +690,15 @@ def fl_add_signal_callback(sglnum, py_SignalHandler, data):
         Handles the receipt of a signal by registering a callback function
         that gets called when a signal is caught (only 1 function per signal)
 
-        @param sglnum: signal number (from signal module e.g. SIGALRM,
-                       SIGINT, etc.)
+        @param sglnum: signal number (from signal module)
+        @type sglnum: [num./int] SIGALRM, SIGINT, ...
         @param py_SignalHandler: python function to be invoked after
-                                 catching the signal, fn(num, ptr_void)
+                                 catching the signal - no return
+        @type py_SignalHandler: func(num, ptr_void)
         @param data: argument to be passed to function
+        @type data: ptr_void
 
-        @status: Untested + NoDoc + NoExample = NOT OK
+        @status: Untested + Doc + NoExample = NOT OK
     """
 
     _fl_add_signal_callback = cfuncproto(
@@ -709,10 +720,10 @@ def fl_remove_signal_callback(sglnum):
 
         Removes a previously registered callback function related to a signal.
 
-        @param sglnum: signal number (from signal module e.g. SIGALRM, SIGINT,
-                       etc.)
+        @param sglnum: signal number (from signal module)
+        @type sglnum: [num./int] SIGALRM, SIGINT, ...
 
-        @status: Untested + NoDoc + NoExample = NOT OK
+        @status: Untested + Doc + NoExample = NOT OK
     """
 
     _fl_remove_signal_callback = cfuncproto(
@@ -728,13 +739,13 @@ def fl_remove_signal_callback(sglnum):
 def fl_signal_caught(sglnum):
     """ fl_signal_caught(sglnum)
 
-        Informs the main loop of the delivery of the signal signum, the signal
-        is received by the application program
+        Informs the main loop of the delivery of the signal signum, the
+        signal is received by the application program.
 
-        @param sglnum: signal number (from signal module e.g. SIGALRM, SIGINT,
-                       etc.)
+        @param sglnum: signal number (from signal module)
+        @type sglnum: [num./int] SIGALRM, SIGINT, ...
 
-        @status: Untested + NoDoc + NoExample = NOT OK
+        @status: Untested + Doc + NoExample = NOT OK
     """
 
     _fl_signal_caught = cfuncproto(
@@ -750,13 +761,14 @@ def fl_signal_caught(sglnum):
 def fl_app_signal_direct(flag):
     """ fl_app_signal_direct(flag)
 
-        Changes the default behavior of the built-in signal facilities (to
-        be called with a true value for flag prior to any use of
-        fl_add_signal_callback
+        Changes the default behavior of the built-in signal facilities
+        (to be called with a true value for flag prior to any use of
+        fl_add_signal_callback)
 
-        @param flag: flag (0|1)
+        @param flag: flag to disable/enable
+        @type flag: [num./int] 0, 1
 
-        @status: Untested + NoDoc + NoExample = NOT OK
+        @status: Untested + Doc + NoExample = NOT OK
     """
 
     _fl_app_signal_direct = cfuncproto(
@@ -772,18 +784,25 @@ def fl_app_signal_direct(flag):
 # timeouts
 
 FL_TIMEOUT_CALLBACK = cty.CFUNCTYPE(None, cty.c_int, cty.c_void_p)
+""" FL_TIMEOUT_CALLBACK(num, ptr_void)
+    prototype for handling timeout callback
+"""
 
 def fl_add_timeout(msec, py_TimeoutCallback, vdata):
-    """ fl_add_timeout(msec, py_TimeoutCallback, vdata) -> timer ID
+    """ fl_add_timeout(msec, py_TimeoutCallback, vdata) -> timer id
 
         Adds a timeout callback after a specified elapsed time.
 
         @param msec: time elapsed in milliseconds
-        @param py_TimeoutCallback: python function to be invoked after time,
-                                   fn(num, ptr_void)
+        @type msec: [num./long]
+        @param py_TimeoutCallback: python function to be invoked - no return
+        @type py_TimeoutCallback: func(num, ptr_void)
         @param vdata: user data to be passed to function
+        @type vdata: ptr_void
+        @return: timer id
+        @rtype: num./int
 
-        @status: Tested + NoDoc + Example = OK
+        @status: Tested + Doc + Example = OK
     """
 
     _fl_add_timeout = cfuncproto(
@@ -806,9 +825,10 @@ def fl_remove_timeout(idnum):
 
         Removes a timeout callback function (created with fl_add_timeout).
 
-        @param idnum : ID timeout number
+        @param idnum : timeout id
+        @type idnum : [num./int]
 
-        @status: Tested + NoDoc + Example = OK
+        @status: Tested + Doc + Example = OK
     """
 
     _fl_remove_timeout = cfuncproto(
@@ -826,15 +846,16 @@ def fl_remove_timeout(idnum):
 def fl_library_version():
     """ fl_library_version() -> version_rev id, ver, rev
 
-        Returns consolidated version informations.
+        Returns consolidated, major and minor version informations.
 
         @return: version_rev computed as 1000 * version + revision,
                  version (e.g. 1 in 1.x.yy), revision (e.g. 0 in x.0.yy)
+        @rtype: num./int, num./int, num./int
 
         @attention: API change from XForms - upstream was
                     fl_library_version(ver, rev)
 
-        @status: Untested + NoDoc + NoExample = NOT OK
+        @status: Untested + Doc + NoExample = NOT OK
     """
 
     _fl_library_version = cfuncproto(
@@ -857,12 +878,22 @@ def fl_bgn_form(formtype, w, h):
         Starts the definition of a form call.
 
         @param formtype: type of box that is used as a background
-                         (e.g. xfc.FL_DOWN_BOX, xfc.FL_BORDER_BOX,
-                         xfc.FL_SHADOW_BOX, etc.)
+        @type: [num./int] xfc.FL_NO_BOX, xfc.FL_UP_BOX, xfc.FL_DOWN_BOX,
+               xfc.FL_BORDER_BOX, xfc.FL_SHADOW_BOX, xfc.FL_FRAME_BOX,
+               xfc.FL_ROUNDED_BOX, xfc.FL_EMBOSSED_BOX, xfc.FL_FLAT_BOX,
+               xfc.FL_RFLAT_BOX, xfc.FL_RSHADOW_BOX, xfc.FL_OVAL_BOX,
+               xfc.FL_ROUNDED3D_UPBOX, xfc.FL_ROUNDED3D_DOWNBOX,
+               xfc.FL_OVAL3D_UPBOX, xfc.FL_OVAL3D_DOWNBOX,
+               xfc.FL_OVAL3D_FRAMEBOX, xfc.FL_OVAL3D_EMBOSSEDBOX
         @param w: width of the new form
+        @type w: num./int
         @param h: height of the new form
+        @type h: num./int
 
-        @status: Tested + NoDoc + Example = OK
+        @return: pForm
+        @rtype: pointer to xfc.FL_FORM
+
+        @status: Tested + Doc + Example = OK
     """
 
     _fl_bgn_form = cfuncproto(
@@ -886,7 +917,7 @@ def fl_end_form():
         Ends the definition for a form call, after all required objects
         have been added to a form call.
 
-        @status: Tested + NoDoc + Example = OK
+        @status: Tested + Doc + Example = OK
     """
 
     _fl_end_form = cfuncproto(
@@ -901,10 +932,13 @@ def fl_do_forms():
     """
         fl_do_forms() -> pObject
 
-        Starts the main loop of the program and returns only when the state
-        of an object changes that has no callback bound to it.
+        Starts the main loop of the program and returns only when the
+        state of a FL_OBJECT changes that has no callback bound to it.
 
-        @status: Tested + NoDoc + Example = OK
+        @return: pObject
+        @rtype: pointer to xfc.FL_OBJECT changed
+
+        @status: Tested + Doc + Example = OK
     """
 
     _fl_do_forms = cfuncproto(
@@ -920,10 +954,13 @@ def fl_check_forms():
     """
         fl_check_forms() -> pObject
 
-        Returns None immediately unless the state of one of the object
+        Returns None immediately unless the state of one of FL_OBJECT
         (without a callback bound to it) changed.
 
-        @status: Untested + NoDoc + NoExample = NOT OK
+        @return: pObject
+        @rtype: pointer to xfc.FL_OBJECT changed
+
+        @status: Untested + Doc + NoExample = NOT OK
     """
 
     _fl_check_forms = cfuncproto(
@@ -939,12 +976,15 @@ def fl_do_only_forms():
     """
         fl_do_only_forms() -> pObject
 
-        Starts the main loop of the program and returns only when the state of
-        an object changes that has no callback bound to it. It does not
+        Starts the main loop of the program and returns only when the state
+        of an object changes that has no callback bound to it. It does not
         handle user events generated by application windows opened via
         fl_winopen() or similar routines.
 
-        @status: Untested + NoDoc + NoExample = NOT OK
+        @return: pObject
+        @rtype: pointer to xfc.FL_OBJECT changed
+
+        @status: Untested + Doc + NoExample = NOT OK
     """
 
     _fl_do_only_forms = cfuncproto(
@@ -962,10 +1002,13 @@ def fl_check_only_forms():
 
         Returns None immediately unless the state of one of the object
         (without a callback bound to it) changed. It does not handle user
-        events generated by application windows opened via fl_winopen() or
-        similar routines.
+        events generated by application windows opened via fl_winopen()
+        or similar routines.
 
-        @status: Untested + NoDoc + NoExample = NOT OK
+        @return: pObject
+        @rtype: pointer to xfc.FL_OBJECT changed
+
+        @status: Untested + Doc + NoExample = NOT OK
     """
 
     _fl_check_only_forms = cfuncproto(
@@ -981,12 +1024,13 @@ def fl_freeze_form(pForm):
     """
         fl_freeze_form(pForm)
 
-        It does not temporarily redraw a form while changes are being made, so
-        all changes made are instead buffered internally.
+        It does not temporarily redraw a form while changes are being made,
+        so all changes made are instead buffered internally.
 
         @param pForm: pointer to form not to be re-drawn temporarily
+        @type pForm: pointer to xfc.FL_FORM
 
-        @status: Tested + NoDoc + Example = OK
+        @status: Tested + Doc + Example = OK
     """
 
     _fl_freeze_form = cfuncproto(
@@ -1005,7 +1049,9 @@ def fl_set_focus_object(pForm, pObject):
         Sets the input focus in form to object pObject.
 
         @param pForm: pointer to form whose object has to be focused
+        @type pForm: pointer to xfc.FL_FORM
         @param pObject: pointer to object to be focused
+        @type pObject: pointer to xfc.FL_OBJECT
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -1029,6 +1075,10 @@ def fl_get_focus_object(pForm):
         Obtains the object that has the focus on a form.
 
         @param pForm: pointer to form that has a focused object
+        @type pForm: pointer to xfc.FL_FORM
+
+        @return pObject: pObject
+        @type pObject: pointer to xfc.FL_OBJECT
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -1050,8 +1100,9 @@ def fl_reset_focus_object(pObject):
         Override the FL_UNFOCUS event.
 
         @param pObject: pointer to object towards applying event
+        @type pObject: pointer to xfc.FL_OBJECT
 
-        @status: Untested + NoDoc + NoExample = NOT OK
+        @status: Untested + Doc + NoExample = NOT OK
     """
 
     _fl_reset_focus_object = cfuncproto(
@@ -1064,7 +1115,10 @@ def fl_reset_focus_object(pObject):
 
 
 #already defined in xfdata
-#FL_FORM_ATCLOSE = cty.CFUNCTYPE(cty.c_int, cty.POINTER(xfc.FL_FORM), cty.c_void_p)
+FL_FORM_ATCLOSE = cty.CFUNCTYPE(cty.c_int, cty.POINTER(xfc.FL_FORM), cty.c_void_p)
+""" FL_FORM_ATCLOSE(pForm, ptr_void) -> num.
+    prototype when a form is closed
+"""
 
 def fl_set_form_atclose(pForm, py_FormAtclose, vdata):
     """
@@ -1073,11 +1127,16 @@ def fl_set_form_atclose(pForm, py_FormAtclose, vdata):
         Calls a callback function before closing the form.
 
         @param pForm: pointer to form that receives the message
-        @param py_FormAtclose: python callback function to be called,
-           fn(pForm, ptr_void) -> num
+        @type pForm: pointer to xfc.FL_FORM
+        @param py_FormAtclose: python callback function to be called - return
+        @type py_FormAtclose: func(pForm, ptr_void) -> num
         @param vdata: user data to be passed to function
+        @type vdata: ptr_void
 
-        @status: Untested + NoDoc + NoExample = NOT OK
+        @return FormAtClose: function FormAtClose
+        @rtype FormAtClose: xfc.FL_FORM_ATCLOSE func.
+
+        @status: Untested + Doc + NoExample = NOT OK
     """
 
     _fl_set_form_atclose = cfuncproto(
@@ -1101,9 +1160,13 @@ def fl_set_atclose(py_FormAtclose, vdata):
 
         Calls a callback function before terminating the application.
 
-        @param py_FormAtclose: callback function to be called, fn(pForm,
-           ptr_void) -> num
+        @param py_FormAtclose: python callback function to be called - return
+        @type py_FormAtclose: func(pForm, ptr_void) -> num
         @param vdata: user data to be passed to function
+        @type vdata: ptr_void
+
+        @return FormAtClose: function FormAtClose
+        @rtype FormAtClose: xfc.FL_FORM_ATCLOSE func.
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -1123,7 +1186,10 @@ def fl_set_atclose(py_FormAtclose, vdata):
 
 
 #already defined in xfdata
-#FL_FORM_ATACTIVATE = cty.CFUNCTYPE(None, cty.POINTER(xfc.FL_FORM), cty.c_void_p)
+FL_FORM_ATACTIVATE = cty.CFUNCTYPE(None, cty.POINTER(xfc.FL_FORM), cty.c_void_p)
+""" FL_FORM_ATACTIVATE(pForm, ptr_void)
+    prototype when a form is activated
+"""
 
 def fl_set_form_atactivate(pForm, py_FormAtactivate, vdata):
     """
@@ -1133,11 +1199,15 @@ def fl_set_form_atactivate(pForm, py_FormAtactivate, vdata):
         is enabled,
 
         @param pForm: activated form
-        @param py_FormAtactivate: python callback function called, fn(pForm,
-           ptr_void)
+        @param py_FormAtactivate: python callback function called - no return
+        @type py_FormAtactivate: func(pForm, ptr_void)
         @param vdata: user data to be passed to function
+        @type vdata: ptr_void
 
-        @status: Untested + NoDoc + NoExample = NOT OK
+        @return FormAtActivate: function FormAtActivate
+        @rtype FormAtActivate: xfc.FL_FORM_ATACTIVATE func.
+
+        @status: Untested + Doc + NoExample = NOT OK
     """
 
     _fl_set_form_atactivate = cfuncproto(
@@ -1156,7 +1226,10 @@ def fl_set_form_atactivate(pForm, py_FormAtactivate, vdata):
 
 
 #already defined in xfdata
-#FL_FORM_ATDEACTIVATE = cty.CFUNCTYPE(None, cty.POINTER(xfc.FL_FORM), cty.c_void_p)
+FL_FORM_ATDEACTIVATE = cty.CFUNCTYPE(None, cty.POINTER(xfc.FL_FORM), cty.c_void_p)
+""" FL_FORM_ATDEACTIVATE(pForm, ptr_void)
+    prototype when a form is deactivated
+"""
 
 def fl_set_form_atdeactivate(pForm, py_FormAtdeactivate, vdata):
     """
@@ -1166,11 +1239,15 @@ def fl_set_form_atdeactivate(pForm, py_FormAtdeactivate, vdata):
         is disabled.
 
         @param pForm: pointer to de-activated form
-        @param py_FormAtdeactivate: python callback function called,
-           fn(pForm, ptr_void)
+        @param py_FormAtdeactivate: python callback function called - no return
+        @type py_FormAtdeactivate: func(pForm, ptr_void)
         @param vdata: user data to be passed to function
+        @type vdata: ptr_void
 
-        @status: Untested + NoDoc + NoExample = NOT OK
+        @return FormAtDeactivate: function FormAtDeactivate
+        @rtype FormAtDeactivate: xfc.FL_FORM_ATDEACTIVATE func.
+
+        @status: Untested + Doc + NoExample = NOT OK
     """
 
     _fl_set_form_atdeactivate = cfuncproto(
@@ -1192,12 +1269,13 @@ def fl_unfreeze_form(pForm):
     """
         fl_unfreeze_form(pForm)
 
-        All changes made in the meantime in a form are drawn at once,
-        reverting previous freeze (using fl_freeze_form function).
+        Reverts previous freeze set with fl_freeze_form function, all
+        changes made in the meantime in a form are drawn at once.
 
         @param pForm: pointer to form to be re-drawn after freezing
+        @type pForm: pointer to xfc.FL_FORM
 
-        @status: Tested + NoDoc + Example = OK
+        @status: Tested + Doc + Example = OK
     """
 
     _fl_unfreeze_form = cfuncproto(
@@ -1213,12 +1291,13 @@ def fl_deactivate_form(pForm):
     """
         fl_deactivate_form(pForm)
 
-        Deactivates form temporarily, without hiding it, but not allowing a
-        user to interact with elements contained in form (buttons, etc.).
+        Deactivates form temporarily, without hiding it, but not allowing
+        a user to interact with elements contained in form (buttons, etc.).
 
         @param pForm: pointer to form to be de-activated
+        @type pForm: pointer to xfc.FL_FORM
 
-        @status: Tested + NoDoc + Example = OK
+        @status: Tested + Doc + Example = OK
     """
 
     _fl_deactivate_form = cfuncproto(
@@ -1234,12 +1313,14 @@ def fl_activate_form(pForm):
     """
         fl_activate_form(pForm)
 
-        (Re)activates form, allowing the user to interact again with elements
-        contained in form (buttons, etc.).
+        (Re)activates form (deactivates with fl_deactivate_form),
+        allowing the user to interact again with elements contained in
+        form (buttons, etc.).
 
         @param pForm: pointer to form to be re-activated
+        @type pForm: pointer to xfc.FL_FORM
 
-        @status: Tested + NoDoc + Example = OK
+        @status: Tested + Doc + Example = OK
     """
 
     _fl_activate_form = cfuncproto(
@@ -1255,9 +1336,10 @@ def fl_deactivate_all_forms():
     """
         fl_deactivate_all_forms()
 
-        De-activates all current forms, forbidding any user interactions.
+        De-activates all current forms, forbidding any event/user
+        interaction.
 
-        @status: Untested + NoDoc + NoExample = NOT OK
+        @status: Untested + Doc + NoExample = NOT OK
     """
 
     _fl_deactivate_all_forms = cfuncproto(
@@ -1272,9 +1354,9 @@ def fl_activate_all_forms():
     """
         fl_activate_all_forms()
 
-        (Re)activates all current forms, allowing user interaction.
+        (Re)activates all current forms, allowing event/user interaction.
 
-        @status: Untested + NoDoc + NoExample = NOT OK
+        @status: Untested + Doc + NoExample = NOT OK
     """
 
     _fl_activate_all_forms = cfuncproto(
@@ -1289,10 +1371,10 @@ def fl_freeze_all_forms():
     """
         fl_freeze_all_forms()
 
-        It does not temporarily redraw all current forms while changes are
-        being made, so all changes made are instead buffered internally.
+        All current forms are not temporarily redrawn, while changes are
+        being made and are instead buffered internally.
 
-        @status: Untested + NoDoc + NoExample = NOT OK
+        @status: Untested + Doc + NoExample = NOT OK
     """
 
     _fl_freeze_all_forms = cfuncproto(
@@ -1307,10 +1389,10 @@ def fl_unfreeze_all_forms():
     """
         fl_unfreeze_all_forms()
 
-        All changes made in the meantime in all current forms are drawn at
-        once, reverting previous freeze.
+        All changes made in the meantime in all current forms are drawn
+        at once, reverting previous freeze.
 
-        @status: Untested + NoDoc + NoExample = NOT OK
+        @status: Untested + Doc + NoExample = NOT OK
     """
 
     _fl_unfreeze_all_forms = cfuncproto(
@@ -1330,8 +1412,11 @@ def fl_scale_form(pForm, xsc, ysc):
         size, and reshapes the window.
 
         @param pForm: pointer to form to be scaled
+        @type pForm: pointer to xfc.FL_FORM
         @param xsc: scaling factor in horizontal direction
+        @type xsc: num./float
         @param ysc: scaling factor in vertical direction
+        @type ysc: num./float
 
         @status: Tested + NoDoc + Example = OK
     """
@@ -1355,8 +1440,11 @@ def fl_set_form_position(pForm, x, y):
         FL_PLACE_GEOMETRY as place argument.
 
         @param pForm: pointer to form whose position is to be set
+        @type pForm: pointer to xfc.FL_FORM
         @param x: horizontal position
+        @type x: num./int
         @param y: vertical position
+        @type y: num./intt
 
         @status: Tested + NoDoc + Example = OK
     """
@@ -10792,7 +10880,7 @@ def fl_add_chart_value(pObject, val, label, colr):
         @param pObject: pointer to chart object
         @param val: value of chart item
         @param label: text label of chart object
-        @param colr: color num. (Not FL_COLOR)
+        @param colr: color num.
 
         @status: Tested + NoDoc + Example = OK
     """
@@ -10800,15 +10888,15 @@ def fl_add_chart_value(pObject, val, label, colr):
     _fl_add_chart_value = cfuncproto(
             load_so_libforms(), "fl_add_chart_value",
             None, [cty.POINTER(xfc.FL_OBJECT), cty.c_double, xfc.STRING,
-            cty.c_int],
+            xfc.FL_COLOR],
             """void fl_add_chart_value(FL_OBJECT * ob, double val,
-               const char * str, int col)
+               const char * str, FL_COLOR col)
             """)
     fval = convert_to_double(val)
     slabel = convert_to_string(label)
-    icolr = convert_to_int(colr)
-    keep_elem_refs(pObject, val, label, colr, fval, slabel, icolr)
-    _fl_add_chart_value(pObject, fval, slabel, icolr)
+    ulcolr = convert_to_FL_COLOR(colr)
+    keep_elem_refs(pObject, val, label, colr, fval, slabel, ulcolr)
+    _fl_add_chart_value(pObject, fval, slabel, ulcolr)
 
 
 def fl_insert_chart_value(pObject, indx, val, label, colr):
@@ -10820,7 +10908,7 @@ def fl_insert_chart_value(pObject, indx, val, label, colr):
         @param indx: index position of previous item
         @param val: value of chart item
         @param label: text label of chart
-        @param colr: color num. (Not FL_COLOR)
+        @param colr: color value
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -10828,17 +10916,17 @@ def fl_insert_chart_value(pObject, indx, val, label, colr):
     _fl_insert_chart_value = cfuncproto(
             load_so_libforms(), "fl_insert_chart_value",
             None, [cty.POINTER(xfc.FL_OBJECT), cty.c_int, cty.c_double,
-            xfc.STRING, cty.c_int],
+            xfc.STRING, xfc.FL_COLOR],
             """void fl_insert_chart_value(FL_OBJECT * ob, int indx,
-               double val, const char * str, int col)
+               double val, const char * str, FL_COLOR col)
             """)
     iindx = convert_to_int(indx)
     fval = convert_to_double(val)
     slabel = convert_to_string(label)
-    icolr = convert_to_int(colr)
+    ulcolr = convert_to_FL_COLOR(colr)
     keep_elem_refs(pObject, indx, val, label, colr, iindx, fval,
-                   slabel, icolr)
-    _fl_insert_chart_value(pObject, iindx, fval, slabel, icolr)
+                   slabel, ulcolr)
+    _fl_insert_chart_value(pObject, iindx, fval, slabel, ulcolr)
 
 
 def fl_replace_chart_value(pObject, indx, val, label, colr):
@@ -10850,7 +10938,7 @@ def fl_replace_chart_value(pObject, indx, val, label, colr):
         @param indx: index position of item to be replaced
         @param val: value of chart item
         @param label: text label of chart
-        @param colr: color num. (Not FL_COLOR)
+        @param colr: color value
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -10858,17 +10946,17 @@ def fl_replace_chart_value(pObject, indx, val, label, colr):
     _fl_replace_chart_value = cfuncproto(
             load_so_libforms(), "fl_replace_chart_value",
             None, [cty.POINTER(xfc.FL_OBJECT), cty.c_int, cty.c_double,
-            xfc.STRING, cty.c_int],
+            xfc.STRING, xfc.FL_COLOR],
             """void fl_replace_chart_value(FL_OBJECT * ob, int indx,
-               double val, const char * str, int col)
+               double val, const char * str, FL_COLOR col)
             """)
     iindx = convert_to_int(indx)
     fval = convert_to_double(val)
     slabel = convert_to_string(label)
-    icolr = convert_to_int(colr)
+    ulcolr = convert_to_FL_COLOR(colr)
     keep_elem_refs(pObject, indx, val, label, colr, iindx, fval,
-                   slabel, icolr)
-    _fl_replace_chart_value(pObject, iindx, fval, slabel, icolr)
+                   slabel, ulcolr)
+    _fl_replace_chart_value(pObject, iindx, fval, slabel, ulcolr)
 
 
 def fl_set_chart_bounds(pObject, minbound, maxbound):
@@ -10998,6 +11086,9 @@ def fl_set_chart_lsize(pObject, lsize):
 
 def fl_set_chart_lcolor(pObject, colr):
     """ fl_set_chart_lcolor(pObject, colr)
+
+        @param pObject: pointer to chart object
+        @param colr: color value
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -15978,30 +16069,7 @@ def fl_get_slider_bounds(pObject):
     return minbound, maxbound
 
 
-def fl_set_slider_return(pObject, when):
-    """
-        fl_set_slider_return(pObject, when)
-
-        Sets the return value of a slider.
-
-        @param pObject: pointer to object
-        @param when: return type (when it returns)
-
-        @status: Tested + NoDoc + Example = OK
-        #deprecated: Use fl_set_object_return function
-    """
-
-    _fl_set_slider_return = cfuncproto(
-            load_so_libforms(), "fl_set_slider_return",
-            None, [cty.POINTER(xfc.FL_OBJECT), cty.c_uint],
-            """void fl_set_slider_return(FL_OBJECT * ob, unsigned
-               int value)
-            """)
-    warn_deprecated_function("fl_set_object_return")
-    check_admitted_listvalues(when, xfc.RETURN_list)
-    uiwhen = convert_to_uint(when)
-    keep_elem_refs(pObject, when, uiwhen)
-    _fl_set_slider_return(pObject, uiwhen)
+# fl_set_slider_return function placeholder (deprecated)
 
 
 def fl_set_slider_step(pObject, value):
@@ -19053,9 +19121,9 @@ def flimage_delete_all_text(pImage):
     _flimage_delete_all_text(pImage)
 
 
-def flimage_add_marker(pImage, text, p3, p4, p5, p6, p7, p8, p9, p10, p11):
+def flimage_add_marker(pImage, text, p3, p4, p5, p6, p7, p8, p9, colr, bcolr):
     """
-        flimage_add_marker(pImage, text, p3, p4, p5, p6, p7, p8, p9, p10, p11) -> num.
+        flimage_add_marker(pImage, text, p3, p4, p5, p6, p7, p8, p9, colr, bcolr) -> num.
 
         @param pImage: pointer to image
 
@@ -19066,10 +19134,10 @@ def flimage_add_marker(pImage, text, p3, p4, p5, p6, p7, p8, p9, p10, p11):
             load_so_libflimage(), "flimage_add_marker",
             cty.c_int, [cty.POINTER(xfc.FL_IMAGE), xfc.STRING, cty.c_double,
             cty.c_double, cty.c_double, cty.c_double, cty.c_int, cty.c_int,
-            cty.c_int, cty.c_uint, cty.c_uint],
+            cty.c_int, xfc.FL_COLOR, xfc.FL_COLOR],
             """int flimage_add_marker(FL_IMAGE * p1, const char * p2,
                double p3, double p4, double p5, double p6, int p7,
-               int p8, int p9, unsigned int p10, unsigned int p11)
+               int p8, int p9, FL_COLOR p10, FL_COLOR p11)
             """)
     stext = convert_to_string(text)
     fp3 = convert_to_double(p3)
@@ -19079,12 +19147,12 @@ def flimage_add_marker(pImage, text, p3, p4, p5, p6, p7, p8, p9, p10, p11):
     ip7 = convert_to_int(p7)
     ip8 = convert_to_int(p8)
     ip9 = convert_to_int(p9)
-    uip10 = convert_to_uint(p10)
-    uip11 = convert_to_uint(p11)
-    keep_elem_refs(pImage, text, p3, p4, p5, p6, p7, p8, p9, p10, p11,
-                   stext, fp3, fp4, fp5, fp6, ip7, ip8, ip9, uip10, uip11)
+    ulcolr = convert_to_FL_COLOR(colr)
+    ulbcolr = convert_to_FL_COLOR(bcolr)
+    keep_elem_refs(pImage, text, p3, p4, p5, p6, p7, p8, p9, ulcolr, ulbcolr,
+                   stext, fp3, fp4, fp5, fp6, ip7, ip8, ip9, ulcolr, ulbcolr)
     retval = _flimage_add_marker(pImage, stext, fp3, fp4, fp5, fp6, ip7,
-                                 ip8, ip9, uip10, uip11)
+                                 ip8, ip9, ulcolr, ulbcolr)
     return retval
 
 

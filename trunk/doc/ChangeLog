@@ -1,6 +1,7 @@
 
 
 SVN
+    * Realign to upstream. Some docstrings completed.
     * Demo examples adapted to new internal/deprecated situation.
     * Deprecated from upstream functions are temporarily moved to a separate
     python file: you will have to explicitly import "oldfunc.py" if you want

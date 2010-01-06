@@ -1897,3 +1897,33 @@ def fl_set_xyplot_fontstyle(pObject, style):
     keep_elem_refs(pObject, style, istyle) 
     _fl_set_xyplot_fontstyle(pObject, istyle)
 
+
+#####################
+# forms.h (slider.h)
+#####################
+
+def fl_set_slider_return(pObject, when): 
+    """ 
+        fl_set_slider_return(pObject, when) 
+ 
+        Sets the return value of a slider. 
+ 
+        @param pObject: pointer to object 
+        @param when: return type (when it returns) 
+ 
+        @status: Tested + NoDoc + Example = OK 
+        @deprecated: Use fl_set_object_return function 
+    """ 
+ 
+    _fl_set_slider_return = cfuncproto( 
+            load_so_libforms(), "fl_set_slider_return", 
+            None, [cty.POINTER(xfc.FL_OBJECT), cty.c_uint], 
+            """void fl_set_slider_return(FL_OBJECT * ob, unsigned 
+               int value) 
+            """) 
+    warn_deprecated_function("fl_set_object_return") 
+    check_admitted_listvalues(when, xfc.RETURN_list) 
+    uiwhen = convert_to_uint(when) 
+    keep_elem_refs(pObject, when, uiwhen) 
+    _fl_set_slider_return(pObject, uiwhen) 
+
