@@ -14,6 +14,7 @@ import sys
 #sys.path.append("..")
 from xformslib import library as xf
 from xformslib import xfdata as xfc
+from xformslib import oldfunc as xfdepr
 
 
 global fdui
@@ -164,7 +165,7 @@ def create_form_staticform():
     pobj1 = xf.fl_add_box(xfc.FL_UP_BOX, 40, 40, 60, 45, "A Box")
 
     pobj2 = xf.fl_add_labelframe(xfc.FL_ENGRAVED_FRAME, 130, 30, \
-                                120, 55, "LabelFrame")
+                                 120, 55, "LabelFrame")
     xf.fl_set_object_color(pobj2, xfc.FL_BLACK, xfc.FL_INDIANRED)
     xf.fl_set_object_lstyle(pobj2, xfc.FL_BOLD_STYLE)
 
@@ -304,17 +305,19 @@ def create_form_choiceform():
 
     pobj = xf.fl_add_box(xfc.FL_FLAT_BOX, 0, 0, 431, 211, "")
 
-    fdui.pulldown = xf.fl_add_menu(xfc.FL_PULLDOWN_MENU, 45, 36, \
-                                         45, 21, "Menu")
+    fdui.pulldown = xfdepr.fl_add_menu(xfdepr.FL_PULLDOWN_MENU, 45, 36, \
+                                       45, 21, "Menu")
     xf.fl_set_object_color(fdui.pulldown, xfc.FL_COL1, xfc.FL_LEFT_BCOL)
     xf.fl_set_object_lstyle(fdui.pulldown, xfc.FL_BOLD_STYLE)
 
-    fdui.choice = xf.fl_add_choice(xfc.FL_NORMAL_CHOICE2, 24, 93, 111, 27, "")
+    fdui.choice = xfdepr.fl_add_choice(xfdepr.FL_NORMAL_CHOICE2, 24, 93, \
+                                       111, 27, "")
 
     fdui.browser = xf.fl_add_browser(xfc.FL_HOLD_BROWSER, 257, 14, 154, 179, "")
     xf.fl_set_object_color(fdui.browser, xfc.FL_COL1, xfc.FL_YELLOW)
 
-    fdui.pushmenu = xf.fl_add_menu(xfc.FL_PUSH_MENU, 152, 51, 75, 26, "Menu")
+    fdui.pushmenu = xfdepr.fl_add_menu(xfdepr.FL_PUSH_MENU, 152, 51, \
+                                       75, 26, "Menu")
     xf.fl_set_object_boxtype(fdui.pushmenu, xfc.FL_UP_BOX)
     xf.fl_set_object_lstyle(fdui.pushmenu, xfc.FL_BOLD_STYLE)
 
@@ -361,11 +364,11 @@ def make_folder(folder):
     for i in range (0, len(y)):
         xf.fl_add_chart_value(fd_staticform.chart, y[i], label[i], i + 1)
 
-    xf.fl_addto_menu(fd_choiceform.pulldown, \
+    xfdepr.fl_addto_menu(fd_choiceform.pulldown, \
                     "MenuEntry1|MenuEntry2|MenuEntry3|MenuEntry4")
-    xf.fl_addto_menu(fd_choiceform.pushmenu, \
+    xfdepr.fl_addto_menu(fd_choiceform.pushmenu, \
                      "MenEntry1|MenuEntry2|MenuEntry3")
-    xf.fl_addto_choice(fd_choiceform.choice, \
+    xfdepr.fl_addto_choice(fd_choiceform.choice, \
                        "Choice1|Choice2|Choice3|Choice4|Choice5|Choice6")
 
     xf.fl_load_browser(fd_choiceform.browser, "Readme")

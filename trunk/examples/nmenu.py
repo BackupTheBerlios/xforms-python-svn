@@ -208,6 +208,8 @@ def main(lsysargv, sysargv):
     xf.fl_do_forms()
     xf.fl_hide_form(pform)
 
+    xf.fl_finish()
+
     return 0
 
 

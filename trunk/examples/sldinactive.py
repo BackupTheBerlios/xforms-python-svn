@@ -43,7 +43,7 @@ def main(lsysargv, sysargv):
         xf.fl_set_slider_value(psl2, 1.0 - xf.fl_get_slider_value(psl1))
 
 
-    xf.fl_hide_form(form)
+    xf.fl_hide_form(pform)
     xf.fl_finish()
 
     return 0

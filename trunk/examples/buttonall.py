@@ -14,6 +14,7 @@ import sys
 #sys.path.append("..")
 from xformslib import library as xf
 from xformslib import xfdata as xfc
+from xformslib import oldfunc as xfdepr
 
 
 # Forms and Objects
@@ -42,21 +43,22 @@ def done_cb(pobj, data):
 def bw_cb(pobj, data):
 
     bws = [-4, -3, -2, -1, 1, 2, 3, 4]
-    n = xf.fl_get_choice(pobj) - 1
+    n = xfdepr.fl_get_choice(pobj) - 1
 
     xf.fl_freeze_form(pobj.contents.form)
-    xf.fl_set_object_bw(fdui.backface, bws[n])
-    xf.fl_set_object_bw(fdui.objsgroup, bws[n])
-    xf.fl_set_object_bw(fdui.done, bws[n])
+    xf.fl_set_object_bw(fd_buttform.backface, bws[n])
+    xf.fl_set_object_bw(fd_buttform.objsgroup, bws[n])
+    xf.fl_set_object_bw(fd_buttform.done, bws[n])
 
     # redrawing the backface wipes out the done button. Redraw it
 
-    xf.fl_redraw_object(fdui.done)
+    xf.fl_redraw_object(fd_buttform.done)
     xf.fl_unfreeze_form(pobj.contents.form)
 
 
 
 def main(lsysargv, sysargv):
+    global fd_buttform
 
     xf.fl_initialize(lsysargv, sysargv, 0, 0, 0)
     fd_buttform = create_form_buttform()
@@ -65,9 +67,9 @@ def main(lsysargv, sysargv):
 
     xf.fl_set_pixmapbutton_file(fd_buttform.pbutt, "crab45.xpm")
     xf.fl_set_bitmapbutton_file(fd_buttform.bbutt, "bm1.xbm")
-    xf.fl_addto_choice(fd_buttform.bw_obj,
-		       " -4 | -3 | -2 | -1 |  1|  2|  3|  4")
-    xf.fl_set_choice(fd_buttform.bw_obj, 5)
+    xfdepr.fl_addto_choice(fd_buttform.bw_obj,
+                           " -4 | -3 | -2 | -1 |  1|  2|  3|  4")
+    xfdepr.fl_set_choice(fd_buttform.bw_obj, 5)
 
     # show the first form
 
@@ -84,7 +86,6 @@ def main(lsysargv, sysargv):
 
 def create_form_buttform():
 
-    global fdui
     fdui = FD_buttform()
 
     fdui.buttform = xf.fl_bgn_form(xfc.FL_NO_BOX, 290, 260)
@@ -147,7 +148,8 @@ def create_form_buttform():
     xf.fl_set_object_boxtype(pobj, xfc.FL_ROUNDED3D_UPBOX)
     xf.fl_set_object_lalign(pobj, xfc.FL_ALIGN_CENTER)
 
-    fdui.bw_obj = xf.fl_add_choice(xfc.FL_NORMAL_CHOICE2, 105, 135, 80, 30, "BW")
+    fdui.bw_obj = xfdepr.fl_add_choice(xfdepr.FL_NORMAL_CHOICE2, 105, 135, \
+                                       80, 30, "BW")
     xf.fl_set_object_callback(fdui.bw_obj, bw_cb, 0)
 
     pobj = xf.fl_add_labelframe(xfc.FL_ENGRAVED_FRAME, 190, 25, 85, 100, \

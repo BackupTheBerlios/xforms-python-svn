@@ -12,6 +12,7 @@ import sys
 #sys.path.append("..")
 from xformslib import library as xf
 from xformslib import xfdata as xfc
+from xformslib import oldfunc as xfdepr
 
 
 
@@ -26,7 +27,7 @@ def valchange_cb(pobj, data):
 
 def returnchange_cb(pobj, data):
 
-    n = xf.fl_get_choice(pobj)
+    n = xfdepr.fl_get_choice(pobj)
 
     if n == 1:
         n = xfc.FL_RETURN_END_CHANGED
@@ -80,19 +81,19 @@ def create_form_twheelform():
     xf.fl_set_object_lalign(preport, xfc.FL_ALIGN_CENTER | \
                             xfc.FL_ALIGN_INSIDE)
 
-    preturnsetting = xf.fl_add_choice(xfc.FL_NORMAL_CHOICE2, \
-                                     35, 20, 160, 30, "")
+    preturnsetting = xfdepr.fl_add_choice(xfdepr.FL_NORMAL_CHOICE2, \
+                                          35, 20, 160, 30, "")
     xf.fl_set_object_boxtype(preturnsetting, xfc.FL_EMBOSSED_BOX)
     xf.fl_set_object_callback(preturnsetting, returnchange_cb, 0)
-    xf.fl_addto_choice(preturnsetting, "End & Changed")
-    xf.fl_set_choice_item_mode(preturnsetting, 1, xfc.FL_PUP_NONE)
-    xf.fl_addto_choice(preturnsetting, "Whenever Changed")
-    xf.fl_set_choice_item_mode(preturnsetting, 2, xfc.FL_PUP_NONE)
-    xf.fl_addto_choice(preturnsetting, "Always At End")
-    xf.fl_set_choice_item_mode(preturnsetting, 3, xfc.FL_PUP_NONE)
-    xf.fl_addto_choice(preturnsetting, "Always")
-    xf.fl_set_choice_item_mode(preturnsetting, 4, xfc.FL_PUP_NONE)
-    xf.fl_set_choice(preturnsetting, 2)
+    xfdepr.fl_addto_choice(preturnsetting, "End & Changed")
+    xfdepr.fl_set_choice_item_mode(preturnsetting, 1, xfdepr.FL_PUP_NONE)
+    xfdepr.fl_addto_choice(preturnsetting, "Whenever Changed")
+    xfdepr.fl_set_choice_item_mode(preturnsetting, 2, xfdepr.FL_PUP_NONE)
+    xfdepr.fl_addto_choice(preturnsetting, "Always At End")
+    xfdepr.fl_set_choice_item_mode(preturnsetting, 3, xfdepr.FL_PUP_NONE)
+    xfdepr.fl_addto_choice(preturnsetting, "Always")
+    xfdepr.fl_set_choice_item_mode(preturnsetting, 4, xfdepr.FL_PUP_NONE)
+    xfdepr.fl_set_choice(preturnsetting, 2)
 
     pobj = xf.fl_add_button(xfc.FL_NORMAL_BUTTON, 120, 215, \
                             80, 30, "Enough")

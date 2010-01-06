@@ -107,10 +107,10 @@ def main(lsysarg, sysargv):
     poret = xf.fl_do_forms()
 
     if poret.contents.label:
-        prndata = oret.contents.label
+        prndata = poret.contents.label
     else:
         prndata = ""
-    print "%p %d %s\n" % oret.contents, oret.contents.objclass, prndata
+    print "%p %d %s\n" % poret.contents, poret.contents.objclass, prndata
 
     xf.fl_hide_form(fdnew)
     xf.fl_free_form(fdnew)

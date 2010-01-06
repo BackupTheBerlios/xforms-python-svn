@@ -1066,57 +1066,25 @@ KEY_list = [FL_KEY_NORMAL, FL_KEY_TAB, FL_KEY_SPECIAL, FL_KEY_ALL,
             FL_ALT_MASK, FL_CONTROL_MASK, FL_SHIFT_MASK]
 
 
-# Pop-up menu item attributes. NOTE if more than 8, need to change
-# choice and menu class where mode is kept by a single byte
-# values for unnamed enumeration
-FL_PUP_NONE = 0
-"""No special display characteristic (default)"""
-FL_PUP_GREY = 1
-"""To be OR-ed with one of NONE, BOX, or RADIO to make that item appear
-greyed-out and disable it (i.e. not selectable anymore)."""
-FL_PUP_BOX = 2
-"""Binary entry, i.e. an entry that stands for a choice that can be switched
-on and off. Displayed with an unchecked box to the left."""
-FL_PUP_CHECK = 4
-"""To be OR-ed with one of BOX or RADIO to make the box to the left appear
-checked or pushed."""
-FL_PUP_RADIO = 8
-"""Radio item belonging to a group, so that gets automatically switched off
-when another item of the group is selected. Displayed with a diamonded-shaped
-box at the left"""
-
-FL_PUP_GRAY = FL_PUP_GREY
-"""To be OR-ed with one of NONE, BOX, or RADIO to make that item appear
-greyed-out and disable it (i.e. not selectable anymore)."""
-
-#FL_PUP_TOGGLE placeholder (backwards)
-
-FL_PUP_INACTIVE = FL_PUP_GREY
-"""To be OR-ed with one of NONE, BOX, or RADIO to make that item appear
-greyed-out and disable it (i.e. not selectable anymore)."""
-
+# FL_PUP_NONE placeholder (deprecated)
+#FL_PUP_GREY placeholder (deprecated)
+#FL_PUP_BOX placeholder (deprecated)
+#FL_PUP_CHECK placeholder (deprecated)
+#FL_PUP_RADIO placeholder (deprecated)
+#FL_PUP_GRAY placeholder (deprecated)
+#FL_PUP_TOGGLE placeholder (backwards and deprecated)
+#FL_PUP_INACTIVE placeholder (deprecated)
 # my add, list of possible values --LK
-PUP_list = [FL_PUP_NONE, FL_PUP_GREY, FL_PUP_BOX, FL_PUP_CHECK, FL_PUP_RADIO,
-            FL_PUP_GRAY, FL_PUP_INACTIVE]
+#PUP_list placeholder (deprecated)
 
-
-# Popup and menu entries
-
-FL_PUP_CB = cty.CFUNCTYPE(cty.c_int, cty.c_int)   # callback prototype
+# FL_PUP_CB placeholder (deprecated)
 
 STRING = cty.c_char_p
 WSTRING = cty.c_wchar_p
 
-class FL_PUP_ENTRY(cty.Structure):
-    pass
-FL_PUP_ENTRY._fields_ = [
-    ('text', STRING),               # label of a popup/menu item
-    ('callback', FL_PUP_CB),        # the callback function
-    ('shortcut', STRING),           # hotkeys
-    ('mode', cty.c_int),            # FL_PUP_GRAY, FL_PUP_CHECK, etc.
-]
+# class FL_PUP_ENTRY placeholder (deprecated)
+#FL_MENU_ENTRY placeholder (deprecated)
 
-FL_MENU_ENTRY = FL_PUP_ENTRY
 
 # ***** FONTS *****
 
@@ -1813,7 +1781,8 @@ FL_FLOAT = 14
 FL_STRING = 15
 """for char[]/string variable"""
 
-RTYPE_list = [FL_NONE, FL_SHORT, FL_BOOL, FL_INT, FL_LONG, FL_FLOAT, FL_STRING]
+RTYPE_list = [FL_NONE, FL_SHORT, FL_BOOL, FL_INT, FL_LONG, FL_FLOAT,
+              FL_STRING]
 
 
 class FL_RESOURCE(cty.Structure):
@@ -2475,35 +2444,21 @@ FL_CHART_MAX = 2048
 # forms.h (choice.h)
 #####################
 
-# values for enumeration 'FL_CHOICE_TYPE'
-FL_CHOICE_TYPE = cty.c_int # enum
-FL_NORMAL_CHOICE = 0
-"""Middle/right mouse button shortcut."""
-FL_NORMAL_CHOICE2 = 1
-"""Same as FL_NORMAL_CHOICE except drawn differently."""
-FL_DROPLIST_CHOICE = 2
-"""Menu is activated only by pressing and releasing the mouse on the arrow."""
-FL_BROWSER_CHOICE = 3
-""""""
-
-FL_SIMPLE_CHOICE = FL_NORMAL_CHOICE
-"""Middle/right mouse button shortcut."""
-
+#FL_CHOICE_TYPE placeholder (deprecated)
+#FL_NORMAL_CHOICE placeholder (deprecated)
+#FL_NORMAL_CHOICE2 placeholder (deprecated)
+#FL_DROPLIST_CHOICE placeholder (deprecated)
+#FL_BROWSER_CHOICE placeholder (deprecated)
+#FL_SIMPLE_CHOICE placeholder (deprecated)
 # list of possible values - my add --LK
-CHOICETYPE_list = [FL_NORMAL_CHOICE, FL_NORMAL_CHOICE2, FL_DROPLIST_CHOICE, \
-                   FL_BROWSER_CHOICE, FL_SIMPLE_CHOICE]
-
-
-# Defaults
-FL_CHOICE_BOXTYPE = FL_ROUNDED_BOX
-FL_CHOICE_COL1 = FL_COL1
-FL_CHOICE_COL2 = FL_LCOL
-FL_CHOICE_LCOL = FL_LCOL
-FL_CHOICE_ALIGN = FL_ALIGN_LEFT
-
-# Others
-FL_CHOICE_MCOL = FL_MCOL
-FL_CHOICE_MAXITEMS = 128
+#CHOICETYPE_list placeholder (deprecated)
+#FL_CHOICE_BOXTYPE placeholder (deprecated)
+#FL_CHOICE_COL1 placeholder (deprecated)
+#FL_CHOICE_COL2 placeholder (deprecated)
+#FL_CHOICE_LCOL placeholder (deprecated)
+#FL_CHOICE_ALIGN placeholder (deprecated)
+#FL_CHOICE_MCOL placeholder (deprecated)
+#FL_CHOICE_MAXITEMS placeholder (deprecated)
 
 
 
@@ -3098,31 +3053,25 @@ FL_EditKeymap._fields_ = [
 # Object Class: Menu
 #####################
 
-# values for enumeration 'FL_MENU_TYPE'
-FL_MENU_TYPE = cty.c_int # enum
-FL_TOUCH_MENU = 0
-""""""
-FL_PUSH_MENU = 1
-""""""
-FL_PULLDOWN_MENU = 2
-""""""
-
+# FL_MENU_TYPE placeholder (deprecated)
+# FL_TOUCH_MENU placeholder (deprecated)
+# FL_PUSH_MENU placeholder (deprecated)
+# FL_PULLDOWN_MENU placeholder (deprecated)
 # my add - list of possbile values --LK
-MENUTYPE_list = [FL_TOUCH_MENU, FL_PUSH_MENU, FL_PULLDOWN_MENU]
+# MENUTYPE_list placeholder (deprecated)
+# FL_MENU_BOXTYPE placeholder (deprecated)
+# FL_MENU_COL1 placeholder (deprecated)
+# FL_MENU_COL2 placeholder (deprecated)
+# FL_MENU_LCOL placeholder (deprecated)
+# FL_MENU_ALIGN placeholder (deprecated)
+# FL_MENU_MAXITEMS placeholder (deprecated)
 
 
-# Defaults
-FL_MENU_BOXTYPE = FL_BORDER_BOX
-FL_MENU_COL1 = FL_COL1
-FL_MENU_COL2 = FL_MCOL
-FL_MENU_LCOL = FL_LCOL
-FL_MENU_ALIGN = FL_ALIGN_CENTER
 
-# Others
-FL_MENU_MAXITEMS = 128
-# backward data dismissed --LK
-#FL_MENU_MAXSTR = 64        # not used anymore! JTT
-#end backward --LK
+
+#####################
+# forms.h (nmenu.h)
+#####################
 
 # Nmenu object types
 # values for unnamed enumeration
@@ -3436,9 +3385,14 @@ FL_TIMER_BLINKRATE = 0.2
 # Prototypes for xpop-up menus
 ###############################
 
-FL_MAXPUPI = 128    # max item each pup
-FL_PUP_PADH = 4     # space between each items
+# FL_MAXPUPI placeholder (deprecated)
+# FL_PUP_PADH placeholder (deprecated)
 
+
+
+###############################
+# forms.h (xyplot.h)
+###############################
 
 # values for enumeration 'FL_XYPLOT_TYPE'
 FL_XYPLOT_TYPE = cty.c_int # enum
