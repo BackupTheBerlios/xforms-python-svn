@@ -1,6 +1,10 @@
 
 
 SVN
+    * some more variables' docstrings.
+    * internal and deprecated variables (if not used for menu/pup/choice
+    functions) are removed for xfdata (just in case I leave a placeholder and
+    they are moved to a temporary file, too).
     * XForms internal and low-level functions I am aware of are (hopefully)
     removed from library, as they are not supposed to be used here (just in
     case I leave a placeholder and they are moved to a temporary file).

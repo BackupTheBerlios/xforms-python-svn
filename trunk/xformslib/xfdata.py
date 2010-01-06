@@ -68,7 +68,7 @@ FL_INVALID = 0
 FL_IGNORE = -1
 
 # max directory length  FL_PATH_MAX / PATH_MAX
-# minimum value to enhance OS compatibility (for linux 4096)
+# minimum value to enhance OS compatibility (for linux 4096) --LK
 FL_PATH_MAX = 1024
 
 
@@ -80,20 +80,15 @@ FL_COLOR = cty.c_ulong
 # Coordinates can be in pixels, milli-meters or points (1/72inch)
 # values for enumeration 'FL_COORD_UNIT'
 FL_COORD_UNIT = cty.c_int  # enum
-# default, Pixel:
-FL_COORD_PIXEL = 0
+FL_COORD_PIXEL = 0      # default, Pixel
 """Screen coordinate units in pixel"""
-# milli-meter:
-FL_COORD_MM = 1
+FL_COORD_MM = 1         # milli-meter
 """Screen coordinate units in millimeters"""
-# point:
-FL_COORD_POINT = 2
+FL_COORD_POINT = 2      # point
 """Screen coordinate units in points (1/72 inch)"""
-# one hundredth of a mm:
-FL_COORD_centiMM = 3
+FL_COORD_centiMM = 3    # one hundredth of a mm
 """Screen coordinate units in centi-millimeters"""
-# one hundredth of a point:
-FL_COORD_centiPOINT = 4
+FL_COORD_centiPOINT = 4    # one hundredth of a point
 """Screen coordinate units in centi-points, i.e., 1/100 of a point"""
 
 # my add, list of possible values --LK
@@ -172,8 +167,8 @@ FL_SCROLLBUTTON = 32
 """"""
 FL_MENUBAR = 33
 """"""
-FL_TEXTBOX = 34             # internal use
-""""""
+#FL_TEXTBOX placeholder (internal)
+
 FL_LABELBUTTON = 35
 """"""
 FL_COMBOBOX = 36
@@ -204,7 +199,7 @@ OBJCLASS_list = [FL_BUTTON, FL_LIGHTBUTTON, FL_ROUNDBUTTON, FL_ROUND3DBUTTON,
                  FL_DIAL, FL_TIMER, FL_CLOCK, FL_POSITIONER, FL_FREE,
                  FL_XYPLOT, FL_FRAME, FL_LABELFRAME, FL_CANVAS, FL_GLCANVAS,
                  FL_TABFOLDER, FL_SCROLLBAR, FL_SCROLLBUTTON, FL_MENUBAR,
-                 FL_TEXTBOX, FL_LABELBUTTON, FL_COMBOBOX, FL_IMAGECANVAS,
+                 FL_LABELBUTTON, FL_COMBOBOX, FL_IMAGECANVAS,
                  FL_THUMBWHEEL, FL_COLORWHEEL, FL_FORMBROWSER, FL_SELECT,
                  FL_NMENU, FL_SPINNER, FL_TBOX]
 
@@ -220,44 +215,36 @@ FL_MAX_BW = 10
 # how to display a form onto screen
 # values for enumeration 'FL_PLACE'
 FL_PLACE = cty.c_int # enum
-# size remain resizable:
-FL_PLACE_FREE = 0
+FL_PLACE_FREE = 0       # size remain resizable
 """Both the position and size are completely free. The initial size used
 is the designed size. Initial position, if set via fl_set_form_position(),
 will be used otherwise interactive positioning may be possible if the window
 manager allows it."""
-# mouse centered on form:
-FL_PLACE_MOUSE = 1
+FL_PLACE_MOUSE = 1      # mouse centered on form
 """The form is placed centered below the mouse. Interactive resizing will
 not be allowed unless this option is accompanied by FL_FREE_SIZE as in
 FL_PLACE_MOUSE | FL_FREE_SIZE"""
-# center of the screen:
-FL_PLACE_CENTER = 2
+FL_PLACE_CENTER = 2     # center of the screen
 """The form is placed in the center of the screen. If FL_FREE_SIZE
 is also specified, interactive resizing will be allowed."""
-# specific size:
-FL_PLACE_POSITION = 4
+
+FL_PLACE_POSITION = 4   # specific size
 """Initial position used will be the one set via fl_set_form_position().
 Interactive resizing is possible."""
-# specific size:
-FL_PLACE_SIZE = 8
+FL_PLACE_SIZE = 8       # specific size
 """The user can control the position but the size is fixed. Interactive
 resizing is not allowed once the form becomes visible."""
-# specific position:
-FL_PLACE_GEOMETRY = 16
+FL_PLACE_GEOMETRY = 16  # specific position
 """Place at the latest position and size (see also below) or the geometry
 set via fl_set_form_geometry() etc. A form so shown will have a fixed size
 and interactive resizing is not allowed."""
-# keep aspect ratio:
-FL_PLACE_ASPECT =  32
+FL_PLACE_ASPECT =  32   # keep aspect ratio
 """Allows interactive resizing but any new size will have the aspect ratio
 as that of the initial size."""
-# scale to fit screen:
-FL_PLACE_FULLSCREEN = 64
+FL_PLACE_FULLSCREEN = 64        # scale to fit screen
 """The form is scaled to cover the full screen. If FL_FREE_SIZE is also
  specified, interative resizing will be allowed."""
-# so mouse fall on (x,y):
-FL_PLACE_HOTSPOT = 128
+FL_PLACE_HOTSPOT = 128          # so mouse fall on (x,y)
 """The form is so placed that mouse is on the "hotspot". If FL_FREE_SIZE
 is also specified, interactive resizing will be allowed."""
 FL_PLACE_ICONIC = 256
@@ -265,7 +252,7 @@ FL_PLACE_ICONIC = 256
 the window manager's default."""
 # modifiers
 FL_FREE_SIZE = 16384          #(1<<14)
-""""""
+"""Allows resizing."""
 
 FL_PLACE_FREE_CENTER = (FL_PLACE_CENTER|FL_FREE_SIZE)
 """Same as FL_PLACE_CENTER | FL_FREE_SIZE, i.e., place the form at the 
@@ -295,6 +282,7 @@ FL_NOBORDER = 3         # use override_redirect to supress decor.
 
 # my add, list of possible values --LK
 DECORATION_list = [FL_FULLBORDER, FL_TRANSIENT, FL_NOBORDER]
+
 
 # All box types
 # values for enumeration 'FL_BOX_TYPE'
@@ -337,13 +325,10 @@ FL_OVAL3D_FRAMEBOX = 16
 """"""
 FL_OVAL3D_EMBOSSEDBOX = 17
 """"""
-# internal data dismissed --LK
-# for internal use only
-#FL_TOPTAB_UPBOX = 18
-#FL_SELECTED_TOPTAB_UPBOX = 19
-#FL_BOTTOMTAB_UPBOX = 20
-#FL_SELECTED_BOTTOMTAB_UPBOX = 21
-# end internal --LK
+#FL_TOPTAB_UPBOX placeholder (internal)
+#FL_SELECTED_TOPTAB_UPBOX placeholder (internal)
+#FL_BOTTOMTAB_UPBOX placeholder (internal)
+#FL_SELECTED_BOTTOMTAB_UPBOX placeholder (internal)
 
 FL_MAX_BOX_STYLES = 23                # sentinel
 
@@ -381,12 +366,10 @@ FL_ALIGN_INSIDE = 8192      # (1<<13)
 """places the text inside the box"""
 FL_ALIGN_VERT = 16384       # (1<<14)  not functional yet
 """"""
-# backward data dismissed --LK
-# the rest is for backward compatibility only, don't use!
-#FL_ALIGN_TOP_LEFT     = FL_ALIGN_LEFT_TOP
-#FL_ALIGN_TOP_RIGHT    = FL_ALIGN_RIGHT_TOP
-#FL_ALIGN_BOTTOM_LEFT  = FL_ALIGN_LEFT_BOTTOM
-#FL_ALIGN_BOTTOM_RIGHT = FL_ALIGN_RIGHT_BOTTOM
+#FL_ALIGN_TOP_LEFT placeholder (backwards)
+#FL_ALIGN_TOP_RIGHT placeholder (backwards)
+#FL_ALIGN_BOTTOM_LEFT placeholder (backwards)
+#FL_ALIGN_BOTTOM_RIGHT placeholder (backwards)
 
 # my add, list of possible values --LK
 ALIGN_list = [FL_ALIGN_CENTER, FL_ALIGN_TOP, FL_ALIGN_BOTTOM, FL_ALIGN_LEFT,
@@ -475,373 +458,379 @@ RETURN_list = [FL_RETURN_NONE, FL_RETURN_CHANGED, FL_RETURN_END,
 # values for enumeration 'FL_PD_COL'
 FL_PD_COL = cty.c_int  # enum
 FL_BLACK = 0
-""""""
+"""RGB triple (0,0,0)"""
 FL_RED = 1
-""""""
+"""RGB triple (255,0,0)"""
 FL_GREEN = 2
-""""""
+"""RGB triple (0,255,0)"""
 FL_YELLOW = 3
-""""""
+"""RGB triple (255,255,0)"""
 FL_BLUE = 4
-""""""
+"""RGB triple (0,0,255)"""
 FL_MAGENTA = 5
-""""""
+"""RGB triple (255,0,255)"""
 FL_CYAN = 6
-""""""
+"""RGB triple (0,255,255)"""
 FL_WHITE = 7
-""""""
+"""RGB triple (255,255,255)"""
 FL_TOMATO = 8
-""""""
+"""RGB triple (255,99,71)"""
 FL_INDIANRED = 9
-""""""
+"""RGB triple (198,113,113)"""
 FL_SLATEBLUE = 10
-""""""
+"""RGB triple (113,113,198)"""
 FL_COL1 = 11
-""""""
+"""RGB triple (173,173,173)"""
 FL_RIGHT_BCOL = 12
-""""""
+"""RGB triple (41,41,41)"""
 FL_BOTTOM_BCOL = 13
-""""""
+"""RGB triple (89,89,89)"""
 FL_TOP_BCOL = 14
-""""""
+"""RGB triple (204,204,204)"""
 FL_LEFT_BCOL = 15
-""""""
+"""RGB triple (222,222,222)"""
 FL_MCOL = 16
-""""""
+"""RGB triple (191,191,191)"""
 FL_INACTIVE = 17
-""""""
+"""RGB triple (110,110,110)"""
 FL_PALEGREEN = 18
-""""""
+"""RGB triple (113,198,113)"""
 FL_DARKGOLD = 19
-""""""
+"""RGB triple (205,149,10)"""
 FL_ORCHID = 20
-""""""
+"""RGB triple (205,105,201)"""
 FL_DARKCYAN = 21
-""""""
+"""RGB triple (40,170,175)"""
 FL_DARKTOMATO = 22
-""""""
+"""RGB triple (139,54,38)"""
 FL_WHEAT = 23
-""""""
+"""RGB triple (255,231,155)"""
 FL_DARKORANGE = 24
-""""""
+"""RGB triple (255,128,0)"""
 FL_DEEPPINK = 25
-""""""
+"""RGB triple (255,0,128)"""
 FL_CHARTREUSE = 26
-""""""
+"""RGB triple (128,255,0)"""
 FL_DARKVIOLET = 27
-""""""
+"""RGB triple (128,0,255)"""
 FL_SPRINGGREEN = 28
-""""""
+"""RGB triple (0,255,128)"""
 FL_DODGERBLUE = 29
-""""""
+"""RGB triple (0,128,255)"""
 FL_LIGHTER_COL1 = 30
-""""""
+"""RGB triple (204,204,204)"""
 FL_DARKER_COL1 = 31
-""""""
+"""RGB triple (161,161,161)"""
 FL_ALICEBLUE = 32
-""""""
+"""RGB triple (,,)"""
 FL_ANTIQUEWHITE = 33
-""""""
+"""RGB triple (,,)"""
 FL_AQUA = 34
-""""""
+"""RGB triple (,,)"""
 FL_AQUAMARINE = 35
-""""""
+"""RGB triple (,,)"""
 FL_AZURE = 36
-""""""
+"""RGB triple (,,)"""
 FL_BEIGE = 37
-""""""
+"""RGB triple (,,)"""
 FL_BISQUE = 38
-""""""
+"""RGB triple (,,)"""
 FL_BLANCHEDALMOND = 39
-""""""
+"""RGB triple (,,)"""
 FL_BLUEVIOLET = 40
-""""""
+"""RGB triple (,,)"""
 FL_BROWN = 41
-""""""
+"""RGB triple (,,)"""
 FL_BURLYWOOD = 42
-""""""
+"""RGB triple (,,)"""
 FL_CADETBLUE = 43
-""""""
+"""RGB triple (,,)"""
 FL_CHOCOLATE = 44
-""""""
+"""RGB triple (,,)"""
 FL_CORAL = 45
-""""""
+"""RGB triple (,,)"""
 FL_CORNFLOWERBLUE = 46
-""""""
+"""RGB triple (,,)"""
 FL_CORNSILK = 47
-""""""
+"""RGB triple (,,)"""
 FL_CRIMSON = 48
-""""""
+"""RGB triple (,,)"""
 FL_DARKBLUE = 49
-""""""
+"""RGB triple (,,)"""
 FL_DARKGOLDENROD = 50
-""""""
+"""RGB triple (,,)"""
 FL_DARKGRAY = 51
-""""""
+"""RGB triple (,,)"""
 FL_DARKGREEN = 52
-""""""
+"""RGB triple (,,)"""
 FL_DARKGREY = 53
-""""""
+"""RGB triple (,,)"""
 FL_DARKKHAKI = 54
-""""""
+"""RGB triple (,,)"""
 FL_DARKMAGENTA = 55
-""""""
+"""RGB triple (,,)"""
 FL_DARKOLIVEGREEN = 56
-""""""
+"""RGB triple (,,)"""
 FL_DARKORCHID = 57
-""""""
+"""RGB triple (,,)"""
 FL_DARKRED = 58
-""""""
+"""RGB triple (,,)"""
 FL_DARKSALMON = 59
-""""""
+"""RGB triple (,,)"""
 FL_DARKSEAGREEN = 60
-""""""
+"""RGB triple (,,)"""
 FL_DARKSLATEBLUE = 61
-""""""
+"""RGB triple (,,)"""
 FL_DARKSLATEGRAY = 62
-""""""
+"""RGB triple (,,)"""
 FL_DARKSLATEGREY = 63
-""""""
+"""RGB triple (,,)"""
 FL_DARKTURQUOISE = 64
-""""""
+"""RGB triple (,,)"""
 FL_DEEPSKYBLUE = 65
-""""""
+"""RGB triple (,,)"""
 FL_DIMGRAY = 66
-""""""
+"""RGB triple (,,)"""
 FL_DIMGREY = 67
-""""""
+"""RGB triple (,,)"""
 FL_FIREBRICK = 68
-""""""
+"""RGB triple (,,)"""
 FL_FLORALWHITE = 69
-""""""
+"""RGB triple (,,)"""
 FL_FORESTGREEN = 70
-""""""
+"""RGB triple (,,)"""
 FL_FUCHSIA = 71
-""""""
+"""RGB triple (,,)"""
 FL_GAINSBORO = 72
-""""""
+"""RGB triple (,,)"""
 FL_GHOSTWHITE = 73
-""""""
+"""RGB triple (,,)"""
 FL_GOLD = 74
-""""""
+"""RGB triple (,,)"""
 FL_GOLDENROD = 75
-""""""
+"""RGB triple (,,)"""
 FL_GRAY = 76
-""""""
+"""RGB triple (,,)"""
 FL_GREENYELLOW = 77
-""""""
+"""RGB triple (,,)"""
 FL_GREY = 78
-""""""
+"""RGB triple (,,)"""
 FL_HONEYDEW = 79
-""""""
+"""RGB triple (,,)"""
 FL_HOTPINK = 80
-""""""
+"""RGB triple (,,)"""
 FL_INDIGO = 81
-""""""
+"""RGB triple (,,)"""
 FL_IVORY = 82
-""""""
+"""RGB triple (,,)"""
 FL_KHAKI = 83
-""""""
+"""RGB triple (,,)"""
 FL_LAVENDER = 84
-""""""
+"""RGB triple (,,)"""
 FL_LAVENDERBLUSH = 85
-""""""
+"""RGB triple (,,)"""
 FL_LAWNGREEN = 86
-""""""
+"""RGB triple (,,)"""
 FL_LEMONCHIFFON = 87
-""""""
+"""RGB triple (,,)"""
 FL_LIGHTBLUE = 88
-""""""
+"""RGB triple (,,)"""
 FL_LIGHTCORAL = 89
-""""""
+"""RGB triple (,,)"""
 FL_LIGHTCYAN = 90
-""""""
+"""RGB triple (,,)"""
 FL_LIGHTGOLDENRODYELLOW = 91
-""""""
+"""RGB triple (,,)"""
 FL_LIGHTGRAY = 92
-""""""
+"""RGB triple (,,)"""
 FL_LIGHTGREEN = 93
-""""""
+"""RGB triple (,,)"""
 FL_LIGHTGREY = 94
-""""""
+"""RGB triple (,,)"""
 FL_LIGHTPINK = 95
-""""""
+"""RGB triple (,,)"""
 FL_LIGHTSALMON = 96
-""""""
+"""RGB triple (,,)"""
 FL_LIGHTSEAGREEN = 97
-""""""
+"""RGB triple (,,)"""
 FL_LIGHTSKYBLUE = 98
-""""""
+"""RGB triple (,,)"""
 FL_LIGHTSLATEGRAY = 99
-""""""
+"""RGB triple (,,)"""
 FL_LIGHTSLATEGREY = 100
-""""""
+"""RGB triple (,,)"""
 FL_LIGHTSTEELBLUE = 101
-""""""
+"""RGB triple (,,)"""
 FL_LIGHTYELLOW = 102
-""""""
+"""RGB triple (,,)"""
 FL_LIME = 103
-""""""
+"""RGB triple (,,)"""
 FL_LIMEGREEN = 104
-""""""
+"""RGB triple (,,)"""
 FL_LINEN = 105
-""""""
+"""RGB triple (,,)"""
 FL_MAROON = 106
-""""""
+"""RGB triple (,,)"""
 FL_MEDIUMAQUAMARINE = 107
-""""""
+"""RGB triple (,,)"""
 FL_MEDIUMBLUE = 108
-""""""
+"""RGB triple (,,)"""
 FL_MEDIUMORCHID = 109
-""""""
+"""RGB triple (,,)"""
 FL_MEDIUMPURPLE = 110
-""""""
+"""RGB triple (,,)"""
 FL_MEDIUMSEAGREEN = 111
-""""""
+"""RGB triple (,,)"""
 FL_MEDIUMSLATEBLUE = 112
-""""""
+"""RGB triple (,,)"""
 FL_MEDIUMSPRINGGREEN = 113
-""""""
+"""RGB triple (,,)"""
 FL_MEDIUMTURQUOISE = 114
-""""""
+"""RGB triple (,,)"""
 FL_MEDIUMVIOLETRED = 115
-""""""
+"""RGB triple (,,)"""
 FL_MIDNIGHTBLUE = 116
-""""""
+"""RGB triple (,,)"""
 FL_MINTCREAM = 117
-""""""
+"""RGB triple (,,)"""
 FL_MISTYROSE = 118
-""""""
+"""RGB triple (,,)"""
 FL_MOCCASIN = 119
-""""""
+"""RGB triple (,,)"""
 FL_NAVAJOWHITE = 120
-""""""
+"""RGB triple (,,)"""
 FL_NAVY = 121
-""""""
+"""RGB triple (,,)"""
 FL_OLDLACE = 122
-""""""
+"""RGB triple (,,)"""
 FL_OLIVE = 123
-""""""
+"""RGB triple (,,)"""
 FL_OLIVEDRAB = 124
-""""""
+"""RGB triple (,,)"""
 FL_ORANGE = 125
-""""""
+"""RGB triple (,,)"""
 FL_ORANGERED = 126
-""""""
+"""RGB triple (,,)"""
 FL_PALEGOLDENROD = 127
-""""""
+"""RGB triple (,,)"""
 FL_PALETURQUOISE = 128
-""""""
+"""RGB triple (,,)"""
 FL_PALEVIOLETRED = 129
-""""""
+"""RGB triple (,,)"""
 FL_PAPAYAWHIP = 130
-""""""
+"""RGB triple (,,)"""
 FL_PEACHPUFF = 131
-""""""
+"""RGB triple (,,)"""
 FL_PERU = 132
-""""""
+"""RGB triple (,,)"""
 FL_PINK = 133
-""""""
+"""RGB triple (,,)"""
 FL_PLUM = 134
-""""""
+"""RGB triple (,,)"""
 FL_POWDERBLUE = 135
-""""""
+"""RGB triple (,,)"""
 FL_PURPLE = 136
-""""""
+"""RGB triple (,,)"""
 FL_ROSYBROWN = 137
-""""""
+"""RGB triple (,,)"""
 FL_ROYALBLUE = 138
-""""""
+"""RGB triple (,,)"""
 FL_SADDLEBROWN = 139
-""""""
+"""RGB triple (,,)"""
 FL_SALMON = 140
-""""""
+"""RGB triple (,,)"""
 FL_SANDYBROWN = 141
-""""""
+"""RGB triple (,,)"""
 FL_SEAGREEN = 142
-""""""
+"""RGB triple (,,)"""
 FL_SEASHELL = 143
-""""""
+"""RGB triple (,,)"""
 FL_SIENNA = 144
-""""""
+"""RGB triple (,,)"""
 FL_SILVER = 145
-""""""
+"""RGB triple (,,)"""
 FL_SKYBLUE = 146
-""""""
+"""RGB triple (,,)"""
 FL_SLATEGRAY = 147
-""""""
+"""RGB triple (,,)"""
 FL_SLATEGREY = 148
-""""""
+"""RGB triple (,,)"""
 FL_SNOW = 149
-""""""
+"""RGB triple (,,)"""
 FL_STEELBLUE = 150
-""""""
+"""RGB triple (,,)"""
 FL_TAN = 151
-""""""
+"""RGB triple (,,)"""
 FL_TEAL = 152
-""""""
+"""RGB triple (,,)"""
 FL_THISTLE = 153
-""""""
+"""RGB triple (,,)"""
 FL_TURQUOISE = 154
-""""""
+"""RGB triple (,,)"""
 FL_VIOLET = 155
-""""""
+"""RGB triple (,,)"""
 FL_WHITESMOKE = 156
-""""""
+"""RGB triple (,,)"""
 FL_YELLOWGREEN = 157
-""""""
+"""RGB triple (,,)"""
 FL_FREE_COL1 = 256
-""""""
+"""RGB triple (,,)"""
 FL_FREE_COL2 = 257
-""""""
+"""RGB triple (,,)"""
 FL_FREE_COL3 = 258
-""""""
+"""RGB triple (,,)"""
 FL_FREE_COL4 = 259
-""""""
+"""RGB triple (,,)"""
 FL_FREE_COL5 = 260
-""""""
+"""RGB triple (,,)"""
 FL_FREE_COL6 = 261
-""""""
+"""RGB triple (,,)"""
 FL_FREE_COL7 = 262
-""""""
+"""RGB triple (,,)"""
 FL_FREE_COL8 = 263
-""""""
+"""RGB triple (,,)"""
 FL_FREE_COL9 = 264
-""""""
+"""RGB triple (,,)"""
 FL_FREE_COL10 = 265
-""""""
+"""RGB triple (,,)"""
 FL_FREE_COL11 = 266
-""""""
+"""RGB triple (,,)"""
 FL_FREE_COL12 = 267
-""""""
+"""RGB triple (,,)"""
 FL_FREE_COL13 = 268
-""""""
+"""RGB triple (,,)"""
 FL_FREE_COL14 = 269
-""""""
+"""RGB triple (,,)"""
 FL_FREE_COL15 = 270
-""""""
+"""RGB triple (,,)"""
 FL_FREE_COL16 = 271
-""""""
+"""RGB triple (,,)"""
 FL_NOCOLOR = INT_MAX
-""""""
+"""RGB triple (,,)"""
 
 FL_BUILT_IN_COLS = FL_YELLOWGREEN + 1
 FL_INACTIVE_COL = FL_INACTIVE
+"""RGB triple (110,110,110)"""
 
 # Some aliases for a number of colors.
 FL_GRAY16 = FL_RIGHT_BCOL
+"""RGB triple (41,41,41)"""
 FL_GRAY35 = FL_BOTTOM_BCOL
+"""RGB triple (89,89,89)"""
 FL_GRAY80 = FL_TOP_BCOL
+"""RGB triple (,,)"""
 FL_GRAY90 = FL_LEFT_BCOL
+"""RGB triple (,,)"""
 FL_GRAY63 = FL_COL1
+"""RGB triple (173,173,173)"""
 FL_GRAY75 = FL_MCOL
+"""RGB triple (191,191,191)"""
 FL_LCOL = FL_BLACK
+"""RGB triple (0,0,0)"""
 FL_NoColor = FL_NOCOLOR
+"""RGB triple (,,)"""
 
-# backward data dismissed --LK
-# An alias probably for an earlier typo
-#FL_DOGERBLUE = FL_DODGERBLUE
-#end backwards --LK
+#FL_DOGERBLUE placeholder (backwards)
 
 # my add, list of possible values --LK
 COLOR_list = [FL_BLACK, FL_RED, FL_GREEN, FL_YELLOW, FL_BLUE, FL_MAGENTA,
@@ -1024,12 +1013,10 @@ FL_RESIZED = 22     # the object has been resized by scale_form
 # the object has been resized by scale_form. Tell it that this has happened
 # so that it can resize any FL_FORMs that it contains.
 
-# backward data dismissed --LK
-# The following are only for backward compatibility, not used anymore
-#FL_MOVE = FL_MOTION
-#FL_KEYBOARD = FL_KEYPRESS
-#FL_MOUSE = FL_UPDATE
-#end backwards --LK
+#FL_MOVE placeholder (backwards)
+#FL_KEYBOARD placeholder (backwards)
+#FL_MOUSE placeholder (backwards)
+
 
 # Resize policies
 # values for enumeration 'FL_RESIZE_T'
@@ -1051,23 +1038,25 @@ RESIZE_list = [FL_RESIZE_NONE, FL_RESIZE_X, FL_RESIZE_Y, FL_RESIZE_ALL]
 # values for enumeration 'FL_KEY'
 FL_KEY = cty.c_int  # enum
 FL_KEY_NORMAL  = 1     # normal keys(0-255) - tab +left/right
-""""""
+"""The object receives left and right cursor, <Home> and <End> keys plus
+all normal keys (0-255) except <Tab> <Return> (default)."""
 FL_KEY_TAB     = 2     # normal keys + 4 direction cursor
-""""""
+"""Object receives the <Tab>, <Return> as well as the <Up> and <Down> cursor
+keys."""
 FL_KEY_SPECIAL = 4     # only needs special keys(>255)
-""""""
+"""The object receives all keys with a KeySym above 255 which aren't already
+covered by FL_KEY_NORMAL and FL_KEY_TAB (e.g. function keys etc.)"""
 FL_KEY_ALL     = 7     # all keys
-""""""
+"""Object receives all keys."""
 
 FL_ALT_MASK = (1L<<25)      # alt + Key --> FL_ALT_MASK + key
-""""""
+"""ALT combination with a key (value added to a KeySym)"""
 FL_CONTROL_MASK = (1L<<26)
-""""""
+"""CONTROL combination with a key (value added to a KeySym)"""
 FL_SHIFT_MASK = (1L<<27)
-""""""
-# backward data dismissed --LK
-#FL_ALT_VAL = FL_ALT_MASK    # Don't use!
-# end backward --LK
+"""SHIFT combination with a key (value added to a KeySym)"""
+
+#FL_ALT_VAL placeholder (backwards)
 
 MAX_SHORTCUTS = 8
 
@@ -1081,24 +1070,30 @@ KEY_list = [FL_KEY_NORMAL, FL_KEY_TAB, FL_KEY_SPECIAL, FL_KEY_ALL,
 # choice and menu class where mode is kept by a single byte
 # values for unnamed enumeration
 FL_PUP_NONE = 0
-""""""
+"""No special display characteristic (default)"""
 FL_PUP_GREY = 1
-""""""
+"""To be OR-ed with one of NONE, BOX, or RADIO to make that item appear
+greyed-out and disable it (i.e. not selectable anymore)."""
 FL_PUP_BOX = 2
-""""""
+"""Binary entry, i.e. an entry that stands for a choice that can be switched
+on and off. Displayed with an unchecked box to the left."""
 FL_PUP_CHECK = 4
-""""""
+"""To be OR-ed with one of BOX or RADIO to make the box to the left appear
+checked or pushed."""
 FL_PUP_RADIO = 8
-""""""
+"""Radio item belonging to a group, so that gets automatically switched off
+when another item of the group is selected. Displayed with a diamonded-shaped
+box at the left"""
 
 FL_PUP_GRAY = FL_PUP_GREY
-""""""
-#backward data dismissed --LK
-#FL_PUP_TOGGLE = FL_PUP_BOX          # not used anymore
-#end backward
-FL_PUP_INACTIVE = FL_PUP_GREY
-""""""
+"""To be OR-ed with one of NONE, BOX, or RADIO to make that item appear
+greyed-out and disable it (i.e. not selectable anymore)."""
 
+#FL_PUP_TOGGLE placeholder (backwards)
+
+FL_PUP_INACTIVE = FL_PUP_GREY
+"""To be OR-ed with one of NONE, BOX, or RADIO to make that item appear
+greyed-out and disable it (i.e. not selectable anymore)."""
 
 # my add, list of possible values --LK
 PUP_list = [FL_PUP_NONE, FL_PUP_GREY, FL_PUP_BOX, FL_PUP_CHECK, FL_PUP_RADIO,
@@ -1132,47 +1127,46 @@ FL_TEXT_STYLE = cty.c_int # enum
 FL_INVALID_STYLE = -1
 """"""
 FL_NORMAL_STYLE = 0
-""""""
+"""Helvetica normal text"""
 FL_BOLD_STYLE = 1
-""""""
+"""Helvetica boldface text"""
 FL_ITALIC_STYLE = 2
-""""""
+"""Helvetica italic text"""
 FL_BOLDITALIC_STYLE = 3
-""""""
+"""Helvetica boldface and italic text"""
 FL_FIXED_STYLE = 4
-""""""
+"""Courier fixed width (good for tables)"""
 FL_FIXEDBOLD_STYLE = 5
-""""""
+"""Courier bold fixed text"""
 FL_FIXEDITALIC_STYLE = 6
-""""""
+"""Courier italic fixed text"""
 FL_FIXEDBOLDITALIC_STYLE = 7
-""""""
+"""Courier boldface and italic fixed text"""
 FL_TIMES_STYLE = 8
-""""""
+"""Times-Roman like normal font"""
 FL_TIMESBOLD_STYLE = 9
-""""""
+"""Times-Roman like boldface text"""
 FL_TIMESITALIC_STYLE = 10
-""""""
+"""Times-Roman like italic text"""
 FL_TIMESBOLDITALIC_STYLE = 11
-""""""
+"""Times-Roman like boldface and italic text"""
 FL_MISC_STYLE = 12
-""""""
+"""Charter normal text"""
 FL_MISCBOLD_STYLE = 13
-""""""
+"""Charter boldface text"""
 FL_MISCITALIC_STYLE = 14
-""""""
+"""Charter italic text"""
 FL_SYMBOL_STYLE = 15
-""""""
+"""Symbol text"""
 # modifier masks. Need to fit a short
 FL_SHADOW_STYLE = 512           #(1<<9)
-""""""
+"""Text casting a shadow"""
 FL_ENGRAVED_STYLE = 1024        #(1<<10)
-""""""
+"""Text engraved into the form"""
 FL_EMBOSSED_STYLE = 2048        #(1<<11)
-""""""
+"""Text standing out"""
 
 FL_FONT_STYLE = FL_TEXT_STYLE
-""""""
 
 # my add, list of possible values --LK
 TEXTSTYLE_list = [FL_INVALID_STYLE, FL_NORMAL_STYLE, FL_BOLD_STYLE,
@@ -1188,38 +1182,34 @@ TEXTSTYLE_list = [FL_INVALID_STYLE, FL_NORMAL_STYLE, FL_BOLD_STYLE,
 
 # Standard sizes in XForms
 FL_TINY_SIZE = 8
-""""""
+"""8 points font size."""
 FL_SMALL_SIZE = 10
-""""""
+"""10 points font size (default)"""
 FL_NORMAL_SIZE = 12
-""""""
+"""12 points font size"""
 FL_MEDIUM_SIZE = 14
-""""""
+"""14 points font size"""
 FL_LARGE_SIZE = 18
-""""""
+"""18 points font size"""
 FL_HUGE_SIZE = 24
-""""""
+"""24 points font size"""
 FL_DEFAULT_SIZE = FL_SMALL_SIZE
-""""""
-
+"""10 points font size"""
 
 # my add, list of possible values --LK
 SIZE_list = [FL_TINY_SIZE, FL_SMALL_SIZE, FL_NORMAL_SIZE, FL_MEDIUM_SIZE,
              FL_LARGE_SIZE, FL_HUGE_SIZE, FL_DEFAULT_SIZE]
 
+#FL_TINY_FONT placeholder (backwards)
+#FL_SMALL_FONT placeholder (backwards)
+#FL_NORMAL_FONT placeholder (backwards)
+#FL_MEDIUM_FONT placeholder (backwards)
+#FL_LARGE_FONT placeholder (backwards)
+#FL_HUGE_FONT placeholder (backwards)
+#FL_NORMAL_FONT1 placeholder (backwards)
+#FL_NORMAL_FONT2 placeholder (backwards)
+#FL_DEFAULT_FONT placeholder (backwards)
 
-# backward data dismissed --LK
-# Defines for compatibility
-#FL_TINY_FONT = FL_TINY_SIZE
-#FL_SMALL_FONT = FL_SMALL_SIZE
-#FL_NORMAL_FONT = FL_NORMAL_SIZE
-#FL_MEDIUM_FONT = FL_MEDIUM_SIZE
-#FL_LARGE_FONT = FL_LARGE_SIZE
-#FL_HUGE_FONT = FL_HUGE_SIZE
-#FL_NORMAL_FONT1 = FL_SMALL_FONT
-#FL_NORMAL_FONT2 = FL_NORMAL_FONT
-#FL_DEFAULT_FONT = FL_SMALL_FONT
-#end backward --LK
 
 FL_BOUND_WIDTH = 1     # Border width of boxes, FL_Coord(1)
 """"""
@@ -1539,31 +1529,34 @@ DRAWMODE_list = [FL_XOR, FL_COPY, FL_AND]
 FL_MINDEPTH = 1
 
 
-# FL_xxx does not do anything anymore, but kept for compatibility
+#FL_IllegalVisual placeholder (backwards)
+#FL_StaticGray placeholder (backwards)
+#FL_GrayScale placeholder (backwards)
+#FL_StaticColor placeholder (backwards)
+#FL_PseudoColor placeholder (backwards)
+#FL_TrueColor placeholder (backwards)
+#FL_DirectColor placeholder (backwards)
+#FL_DefaultVisual placeholder (backwards)
+
 # values for unnamed enumeration
-FL_IllegalVisual = -1
+IllegalVisual = -1
 """"""
-FL_StaticGray = 0           # StaticGray
+StaticGray = 0           # StaticGray
 """"""
-FL_GrayScale = 1            # GrayScale
+GrayScale = 1            # GrayScale
 """"""
-FL_StaticColor = 2          # StaticColor
+StaticColor = 2          # StaticColor
 """"""
-FL_PseudoColor = 3          # PseudoColor
+PseudoColor = 3          # PseudoColor
 """"""
-FL_TrueColor = 4            # TrueColor
+TrueColor = 4            # TrueColor
 """"""
-FL_DirectColor = 5          # DirectColor
+DirectColor = 5          # DirectColor
 """"""
-FL_DefaultVisual = 10       # special request
+DefaultVisual = 10       # special request
 """"""
-
-# my add --LK
-TrueColor = FL_TrueColor
-DirectColor = FL_DirectColor
-
-GreyScale = GrayScale = 1           #GrayScale
-StaticGrey = StaticGray = 0         #StaticGray
+GreyScale = GrayScale           #GrayScale
+StaticGrey = StaticGray         #StaticGray
 
 
 # values for unnamed enumeration
@@ -1681,8 +1674,8 @@ FL_State._fields_ = [
     ('bbits', cty.c_uint),
 ]
 
-# backward data dismissed --LK
-#FL_STATE = FL_State     # for compatibility
+
+#FL_STATE placeholder (backwards)
 
 
 # Global variables
@@ -1722,20 +1715,23 @@ FL_RECT = XRectangle
 
 # values for unnamed enumeration
 FL_SOLID = 0                 #LineSolid
-""""""
+"""Solid line. Default and most efficient"""
 FL_USERDASH = 1               #LineOnOffDash
-""""""
+"""Dashed line, but the dash pattern is used-definable via 
+fl_dashedlinestyle(). Only the odd numbered segments are drawn
+with the foreground color."""
 FL_USERDOUBLEDASH = 2        #LineDoubleDash
-""""""
+"""Similar to FL_LINE_USERDASH bu both een and odd numbered
+segments are drawn, with the even numbered segments drawn in
+the background color (as set by fl_bk_color()."""
 FL_DOT = 3
-""""""
+"""Dotted line [....]"""
 FL_DOTDASH = 4
-""""""
+"""Dash-dot-dash line [-.-.]"""
 FL_DASH = 5
-""""""
+"""Dashed line [----]"""
 FL_LONGDASH = 6
-""""""
-
+"""Long dashed line [------]"""
 
 # my add, list of possible values --LK
 LINE_list = [FL_SOLID, FL_USERDASH, FL_USERDOUBLEDASH, FL_DOT, FL_DOTDASH,
@@ -2018,7 +2014,7 @@ FL_POPUP_CB = cty.CFUNCTYPE(cty.c_int, cty.POINTER(FL_POPUP_RETURN))
 FL_POPUP_._fields_ = [
     ('next', cty.POINTER(FL_POPUP)),      # next in linked list
     ('prev', cty.POINTER(FL_POPUP)),      # previous in linked list
-    ('parent', cty.POINTER(FL_POPUP)),        # for sub-popups: direct parent
+    ('parent', cty.POINTER(FL_POPUP)),        # for sub-popups, direct parent
     ('top_parent', cty.POINTER(FL_POPUP)),    # and top-most parent
     ('entries', cty.POINTER(FL_POPUP_ENTRY)),     # pointer to list of entries
     ('title', STRING),
@@ -2108,50 +2104,80 @@ FL_POPUP_ITEM._fields_ = [
 # Popup policies
 # values for unnamed enumeration
 FL_POPUP_NORMAL_SELECT = 0
-""""""
+"""Keeps the popup opened when the mouse isn't released on one of the
+selectable items."""
 FL_POPUP_DRAG_SELECT = 1
-""""""
+"""Close the popup immediately when the mouse button is released."""
+
+# list of possible values, my add --LK
+POPUPPOLICY_list = [FL_POPUP_NORMAL_SELECT, FL_POPUP_DRAG_SELECT]
+
 
 # Popup states
 # values for unnamed enumeration
 FL_POPUP_NONE = 0
-""""""
+"""No special flags are set for the state of the item."""
 FL_POPUP_DISABLED = 1       # entry is disabled
-""""""
+"""The item is disabled and can't be selected."""
 FL_POPUP_HIDDEN   = 2       # entry is temporarily hidden
-""""""
+"""The popup is hidden, i.e. does not get shown (and thus can't be
+selected)."""
 FL_POPUP_CHECKED  = 4       # toggle/radio item is in on state
-""""""
+"""Only relevant for toggle or radio items, marks it as in "on" state."""
+
+# list of possible values, my add --LK
+POPUPSTATE_list = [FL_POPUP_NONE, FL_POPUP_DISABLED, FL_POPUP_HIDDEN,
+                   FL_POPUP_CHECKED]
+
 
 # Popup entry types
 # values for unnamed enumeration
 FL_POPUP_NORMAL = 0         # normal popup entry
-""""""
+"""Normal popup entry with no special properties."""
 FL_POPUP_TOGGLE = 1         # toggle ("binary") popup entry
-""""""
+"""Toggle or binary entry, drawn with a check-mark to its left if
+in 'on' state"""
 FL_POPUP_RADIO = 2          # radio popup entry
-""""""
+"""Radio entry, drawn with a circle to its left (color-filled when
+'on'. The group member of the FL_POPUP_ENTRY structure determines to
+which group the entry belongs."""
 FL_POPUP_SUB = 3            # sub-popup popup entry
-""""""
+"""Entry for a sub-popup. The sub member of its FL_POPUP_ENTRY structure is a
+pointer to the sub-popup that gets shown when the mouse enters the entry."""
 FL_POPUP_LINE = 4           # line popup entry
-""""""
+"""Not a real entry, just indicates that a separator line is to be drawn
+between the previous and the next entry."""
+
+# list of possible values, my add --LK
+POPUPTYPE_list = [FL_POPUP_NORMAL, FL_POPUP_TOGGLE, FL_POPUP_RADIO,
+                    FL_POPUP_SUB, FL_POPUP_LINE]
+
 
 # Popup color types
 # values for unnamed enumeration
 FL_POPUP_BACKGROUND_COLOR = 0
-""""""
+"""Background color of the popup (default is FL_MCOL)"""
 FL_POPUP_HIGHLIGHT_COLOR = 1
-""""""
+"""Backgroud color an entry is drawn with when it's selectable and the
+mouse is on top of it (default is FL_BOTTOM_BCOL)"""
 FL_POPUP_TITLE_COLOR = 2
-""""""
+"""Color used for the title text of a popup (default is FL_BLACK)"""
 FL_POPUP_TEXT_COLOR = 3
-""""""
+"""Color normal used for entry texts (default is FL_BLACK)."""
 FL_POPUP_HIGHLIGHT_TEXT_COLOR = 4
-""""""
+"""Color of the entry text when it's selectable and the mouse is on
+top of it (default is FL_WHITE)"""
 FL_POPUP_DISABLED_TEXT_COLOR = 5
-""""""
+"""Color for drawing the text of disabled entries (default is
+FL_INACTIVE_COL)"""
 FL_POPUP_RADIO_COLOR = 6
-""""""
+"""Color the circle drawn for radio entris in 'on' state is drawn in."""
+
+# list of possible values, my add --LK
+POPUPCOLOR_list = [FL_POPUP_BACKGROUND_COLOR, FL_POPUP_HIGHLIGHT_COLOR,
+                   FL_POPUP_TITLE_COLOR, FL_POPUP_TEXT_COLOR,
+                   FL_POPUP_HIGHLIGHT_TEXT_COLOR,
+                   FL_POPUP_DISABLED_TEXT_COLOR, FL_POPUP_RADIO_COLOR]
 
 
 
@@ -2194,13 +2220,14 @@ PIXMAPTYPE_list = [FL_NORMAL_PIXMAP, ]
 # values for enumeration 'FL_BROWSER_TYPE'
 FL_BROWSER_TYPE = cty.c_int # enum
 FL_NORMAL_BROWSER = 0
-""""""
+"""A browser in which no selections can be made."""
 FL_SELECT_BROWSER = 1
-""""""
+"""In this case the user can make single line selections."""
 FL_HOLD_BROWSER = 2
-""""""
+"""Same to FL_SELECT_BROWSER but the selection remains visible until
+the next selection."""
 FL_MULTI_BROWSER = 3
-""""""
+"""Multiple selections can be made and remain visible till de-selected."""
 
 # my add - list of possible values --LK
 BROWSERTYPE_list = [FL_NORMAL_BROWSER, FL_SELECT_BROWSER, FL_HOLD_BROWSER, \
@@ -2218,10 +2245,9 @@ FL_BROWSER_ALIGN = FL_ALIGN_BOTTOM
 FL_BROWSER_SLCOL = FL_COL1
 FL_BROWSER_FONTSIZE = FL_SMALL_SIZE
 
-# backward data dismissed --LK
-# This exists only for backward compatibility and isn't used anymore!
-#FL_BROWSER_LINELENGTH = 2048
-# end backwards
+
+#FL_BROWSER_LINELENGTH placeholder (backwards)
+
 
 
 #############################################################
@@ -2232,26 +2258,26 @@ FL_BROWSER_FONTSIZE = FL_SMALL_SIZE
 # values for enumeration 'FL_BUTTON_TYPE'
 FL_BUTTON_TYPE = cty.c_int # enum
 FL_NORMAL_BUTTON = 0
-""""""
+"""Returns value when released."""
 FL_PUSH_BUTTON = 1
-""""""
+"""Stays pushed until user pushes it again."""
 FL_RADIO_BUTTON = 2
-""""""
+"""Push button that switches off other radio buttons."""
 FL_HIDDEN_BUTTON = 3
-""""""
+"""Invisible normal button."""
 FL_TOUCH_BUTTON = 4
-""""""
+"""Returns value as long as the user pushes it."""
 FL_INOUT_BUTTON = 5
-""""""
+"""Returns value both when pushed and when released."""
 FL_RETURN_BUTTON = 6
-""""""
+"""Like a normal button but reacts on the <Return> key."""
 FL_HIDDEN_RET_BUTTON = 7
-""""""
+"""Invisible return button."""
 FL_MENU_BUTTON = 8
-""""""
+"""Returns value when pushed, useful e.g. for opening a popup when pushed."""
 
 FL_TOGGLE_BUTTON = FL_PUSH_BUTTON
-""""""
+"""Stays pushed until user pushes it again."""
 
 # my add - list of possible values --LK
 BUTTONTYPE_list = [FL_NORMAL_BUTTON, FL_PUSH_BUTTON, FL_RADIO_BUTTON, \
@@ -2412,22 +2438,21 @@ GLXContext._fields_ = []
 # values for enumeration 'FL_CHART_TYPE'
 FL_CHART_TYPE = cty.c_int # enum
 FL_BAR_CHART = 0
-""""""
+"""A bar-chart (vertical)"""
 FL_HORBAR_CHART = 1
-""""""
+"""A horizontal bar-chart"""
 FL_LINE_CHART = 2
-""""""
+"""A line-chart"""
 FL_FILL_CHART = 3
-""""""
+"""A line-chart but the area below curve is filled"""
 FL_SPIKE_CHART = 4
-""""""
+"""A chart with a vertical spike for each value"""
 FL_PIE_CHART = 5
-""""""
+"""A pie-chart"""
 FL_SPECIALPIE_CHART = 6
-""""""
+"""A pie-chart with displaced first item."""
 
-# backward data dismissed --LK
-#FL_FILLED_CHART = FL_FILL_CHART     # for backward compatibility
+#FL_FILLED_CHART placeholder (backwards)
 
 # list of possible values - my add --LK
 CHARTTYPE_list = [FL_BAR_CHART, FL_HORBAR_CHART, FL_LINE_CHART, \
@@ -2453,15 +2478,16 @@ FL_CHART_MAX = 2048
 # values for enumeration 'FL_CHOICE_TYPE'
 FL_CHOICE_TYPE = cty.c_int # enum
 FL_NORMAL_CHOICE = 0
-""""""
+"""Middle/right mouse button shortcut."""
 FL_NORMAL_CHOICE2 = 1
-""""""
+"""Same as FL_NORMAL_CHOICE except drawn differently."""
 FL_DROPLIST_CHOICE = 2
-""""""
+"""Menu is activated only by pressing and releasing the mouse on the arrow."""
 FL_BROWSER_CHOICE = 3
 """"""
 
 FL_SIMPLE_CHOICE = FL_NORMAL_CHOICE
+"""Middle/right mouse button shortcut."""
 
 # list of possible values - my add --LK
 CHOICETYPE_list = [FL_NORMAL_CHOICE, FL_NORMAL_CHOICE2, FL_DROPLIST_CHOICE, \
@@ -2496,9 +2522,9 @@ FL_CPTYPE = Atom
 
 # values for unnamed enumeration
 FL_ANALOG_CLOCK = 0
-""""""
+"""An analog clock complete with the second hand."""
 FL_DIGITAL_CLOCK = 1
-""""""
+"""A digital clock."""
 
 # list of possible values - my add --LK
 CLOCKTYPE_list = [FL_ANALOG_CLOCK, FL_DIGITAL_CLOCK]
@@ -2520,9 +2546,9 @@ FL_CLOCK_TOPCOL = FL_COL1
 # values for enumeration 'FL_COUNTER_TYPE'
 FL_COUNTER_TYPE = cty.c_int # enum
 FL_NORMAL_COUNTER = 0
-""""""
+"""A counter with two buttons on each side."""
 FL_SIMPLE_COUNTER = 1
-""""""
+"""A counter with one button on each side."""
 
 # list of possible values - my add --LK
 COUNTERTYPE_list = [FL_NORMAL_COUNTER, FL_SIMPLE_COUNTER]
@@ -2677,11 +2703,11 @@ CURSORS_list = [FL_INVISIBLE_CURSOR, FL_DEFAULT_CURSOR, FL_BUSY_CURSOR, \
 # values for enumeration 'FL_DIAL_TYPE'
 FL_DIAL_TYPE = cty.c_int # enum
 FL_NORMAL_DIAL = 0
-""""""
+"""A dial with a knob indicating the position."""
 FL_LINE_DIAL = 1
-""""""
+"""A dial with a line indicating the position."""
 FL_FILL_DIAL = 2
-""""""
+"""The area between initial and current is filled."""
 
 # list of possible values - my add --LK
 DIALTYPE_list = [FL_NORMAL_DIAL, FL_LINE_DIAL, FL_FILL_DIAL]
@@ -2689,9 +2715,9 @@ DIALTYPE_list = [FL_NORMAL_DIAL, FL_LINE_DIAL, FL_FILL_DIAL]
 
 # values for unnamed enumeration
 FL_DIAL_CW = 0
-""""""
+"""Clockwise rotation."""
 FL_DIAL_CCW = 1
-""""""
+"""Counter-clockwise rotation."""
 
 # Defaults
 FL_DIAL_BOXTYPE = FL_FLAT_BOX
@@ -2731,10 +2757,6 @@ FT_OTHER = 7
 
 
 class FL_Dirlist(cty.Structure):
-    """@cvar name: entry name
-    @cvar type: file type
-    @cvar dl_mtime: file modification time
-    @cvar dl_size: file size in bytes"""
     pass
 
 FL_Dirlist._fields_ = [
@@ -2772,22 +2794,22 @@ FL_RCASEALPHASORT = 8       # sort case insensitive
 
 # postscript stuff
 # values for unnamed enumeration
-FLPS_AUTO = 0              # switch to landscale if does not fit
-""""""
+FLPS_AUTO = 0              # switch to landscape if does not fit
+"""Automatic orientation."""
 FLPS_LANDSCAPE = 1         # landscape always
-""""""
+"""Landscape  orientation (horizontal)."""
 FLPS_PORTRAIT = 2          # portrait always
-""""""
+"""Portrait orientation (vertical)."""
 FLPS_BESTFIT = 3           # even margins/best fit
-""""""
+"""Best fit orientation with even margin."""
 
 # values for unnamed enumeration
 FLPS_BW = -1
-""""""
+"""All drawings are black with white background."""
 FLPS_GRAYSCALE = 0
-""""""
+"""Grayscale color."""
 FLPS_COLOR = 1
-""""""
+"""Used full color."""
 
 
 class FLPS_CONTROL(cty.Structure):
@@ -2830,9 +2852,9 @@ FORMBRWSTYPE_list = [FL_NORMAL_FORMBROWSER, ]
 
 # values for unnamed enumeration
 FL_SMOOTH_SCROLL = 0
-""""""
+"""Default scroll."""
 FL_JUMP_SCROLL = 1
-""""""
+"""Scrolls in form increments."""
 
 # defaults?
 FL_FORMBROWSER_BOXTYPE = FL_DOWN_BOX
@@ -2848,23 +2870,23 @@ FL_FORMBROWSER_ALIGN = FL_ALIGN_TOP
 # types of frames
 # values for unnamed enumeration
 FL_NO_FRAME = 0
-""""""
+"""Nothing is drawn."""
 FL_UP_FRAME = 1
-""""""
+"""A frame appears coming out of the screen."""
 FL_DOWN_FRAME = 2
-""""""
+"""A frame that goes down into the screen."""
 FL_BORDER_FRAME = 3
-""""""
+"""A frame with a simple outline."""
 FL_SHADOW_FRAME = 4
 """"""
 FL_ENGRAVED_FRAME = 5
-""""""
+"""A frame appears to be engraved."""
 FL_ROUNDED_FRAME = 6
-""""""
+"""A rounded frame."""
 FL_EMBOSSED_FRAME = 7
-""""""
+"""A frame appears embossed."""
 FL_OVAL_FRAME = 8
-""""""
+"""An elliptic box."""
 
 # list of possible values - my add --LK
 FRAMETYPE_list = [FL_NO_FRAME, FL_UP_FRAME, FL_DOWN_FRAME, FL_BORDER_FRAME,
@@ -2887,18 +2909,27 @@ FL_FRAME_LCOL = FL_BLACK        # label color
 # values for enumeration 'FL_FREE_TYPE'
 FL_FREE_TYPE = cty.c_int # enum
 FL_NORMAL_FREE = 0
-""""""
+"""The object will receive the events FL_DRAW, FL_ENTER, FL_LEAVE, FL_MOTION,
+FL_PUSH, FL_RELEASE and FL_MOUSE."""
 FL_INACTIVE_FREE = 1
-""""""
+"""The object only receives FL_DRAW events. This should be used for objects
+without interaction (e.g. a picture)"""
 FL_INPUT_FREE = 2
-""""""
+"""Same as FL_NORMAL_FREE but the object also receives FL_FOCUS, FL_UNFOCUS
+and FL_KEYBOARD events. The obj->wantkey is by default set to FL_KEY_NORMAL,
+i.e., the free object will receive all normal keys (0-255) except <Tab> and
+<Return> key. If you're interested in <Tab> or <Return> key, you need to
+change obj->wantkey to FL_KEY_TAB or FL_KEY_ALL. See section Events, for
+details."""
 FL_CONTINUOUS_FREE = 3
-""""""
+"""Same as FL_NORMAL_FREE but the object also receives FL_STEP events.
+This should be used for objects that change themselves continuously."""
 FL_ALL_FREE = 4
-""""""
+"""The object receives all types of events."""
 
 FL_SLEEPING_FREE = FL_INACTIVE_FREE
-""""""
+"""The object only receives FL_DRAW events. This should be used for objects
+without interaction (e.g. a picture)"""
 
 # list of possible values - my add --LK
 FREETYPE_list = [FL_NORMAL_FREE, FL_INACTIVE_FREE, FL_INPUT_FREE,
@@ -2984,19 +3015,21 @@ FD_FSELECTOR._fields_ = [
 # values for enumeration 'FL_INPUT_TYPE'
 FL_INPUT_TYPE = cty.c_int # enum
 FL_NORMAL_INPUT = 0
-""""""
+"""Any type of text can be typed into this field"""
 FL_FLOAT_INPUT = 1
-""""""
+"""Only a float value can be typed in (e.g. -23.2e12)"""
 FL_INT_INPUT = 2
-""""""
+"""Only an integer value can be typed in (e.g. -86)"""
 FL_DATE_INPUT = 3
-""""""
+"""Only a date (MM/DD/YY or DD/MM/YY) can be typed in (and limited per
+default to 10 characters)"""
 FL_MULTILINE_INPUT = 4
-""""""
+"""An input field allowing for multiple lines"""
 FL_HIDDEN_INPUT = 5
-""""""
+"""A normal input field but invisible"""
 FL_SECRET_INPUT = 6
-""""""
+"""A normal input field that does not show the text (and limited per
+default to a maximum length of 16 characters)"""
 
 # my add - list of possible values --LK
 INPUTTYPE_list = [FL_NORMAL_INPUT, FL_FLOAT_INPUT, FL_INT_INPUT, \
@@ -3525,11 +3558,11 @@ FLIMAGE_FLEX = FL_IMAGE_FLEX
 
 # my add --LK - list of possible values
 FLIMAGETYPE_list = [FL_IMAGE_NONE, FL_IMAGE_MONO, FL_IMAGE_GRAY, \
-		     FL_IMAGE_CI, FL_IMAGE_RGB, FL_IMAGE_PACKED, \
-		     FL_IMAGE_GRAY16, FL_IMAGE_RGB16, FL_IMAGE_FLEX, \
-		     FLIMAGE_NONE, FLIMAGE_MONO, FLIMAGE_GRAY, \
-		     FLIMAGE_CI, FLIMAGE_RGB, FLIMAGE_PACKED, \
-		     FLIMAGE_GRAY16, FLIMAGE_RGB16, FLIMAGE_FLEX]
+		    FL_IMAGE_CI, FL_IMAGE_RGB, FL_IMAGE_PACKED, \
+		    FL_IMAGE_GRAY16, FL_IMAGE_RGB16, FL_IMAGE_FLEX, \
+		    FLIMAGE_NONE, FLIMAGE_MONO, FLIMAGE_GRAY, \
+		    FLIMAGE_CI, FLIMAGE_RGB, FLIMAGE_PACKED, \
+		    FLIMAGE_GRAY16, FLIMAGE_RGB16, FLIMAGE_FLEX]
 
 
 FL_LUTBITS = 12         # max colormap bits. 4096 entries
@@ -3650,7 +3683,7 @@ flimage_._fields_ = [
     ('wwidth', cty.c_int),
     ('wlut', cty.POINTER(cty.c_ushort)),        # lut for window levelling
     ('wlut_len', cty.c_int),
-    ('app_background', cty.c_int),          # transparent color: in RGB
+    ('app_background', cty.c_int),          # transparent color, in RGB
     ('comments', STRING),
     ('comments_len', cty.c_int),
     ('available_type', cty.c_int),
@@ -4795,10 +4828,3 @@ SelectionRequest = 30
 SelectionNotify = 31
 # *** end - from /usr/include/X11/X.h ***
 
-
-# my add --LK  - obsoleted by fl_is_same_object() function
-# As ctypes creates a new instance of each object every time, two objects
-# aren't really comparable. Here a trick can be used: comparing u_ldata
-# element of every concerned objects.
-# e.g.: if fl_do_forms()[0].u_ldata == otherobj[0].u_ldata ...
-#EXITVAL = 255       # value for "u_ldata" to allow a comparison

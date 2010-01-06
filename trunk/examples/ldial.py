@@ -74,7 +74,7 @@ def makeform():
 def main(lsysargv, sysargv):
     xf.fl_initialize(lsysargv, sysargv, "ColorEditor", 0, 0)
     makeform()
-    xf.fl_show_form(pform, xf.FL_PLACE_MOUSE, xf.FL_TRANSIENT, \
+    xf.fl_show_form(pform, xfc.FL_PLACE_MOUSE, xfc.FL_TRANSIENT, \
                     "Color Editor")
     xf.fl_do_forms()
     xf.fl_finish()

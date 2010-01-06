@@ -68,8 +68,8 @@ def input_callback(pobj, data):
 
 
 def howreturn_callback(pobj, data):
-    xf.fl_set_input_return(ui.input1, xf.fl_get_button(pobj))
-    xf.fl_set_input_return(ui.input2, xf.fl_get_button(pobj))
+    xf.fl_set_object_return(ui.input1, xf.fl_get_button(pobj))
+    xf.fl_set_object_return(ui.input2, xf.fl_get_button(pobj))
 
 
 

@@ -39,7 +39,7 @@ import xfdata as xfc       # data types and constants from XForms
 
 
 # xforms-python version
-__mainversion__ = "0.3.3"               # real version
+__mainversion__ = "0.3.4"               # real version
 __vers_against_xforms__ = "1.0.93pre2"   # xforms version to be built against
 __version__ = __mainversion__+"_"+__vers_against_xforms__
 
@@ -48,8 +48,7 @@ header_filename = "/usr/include/forms.h"
 
 
 def get_xforms_version():
-    """ Returns version string of installed XForms library/header
-    """
+    """ Returns version string of installed XForms library/header """
 
     complete_xf_version = ""
     try:
@@ -92,8 +91,7 @@ def get_xforms_version():
 
 
 def verify_version_compatibility():
-    """ verify compatibility between xforms-python version and XForms version
-    """
+    """ verify compatibility between xforms-python and XForms versions """
 
     xforms_vers = get_xforms_version()
     if __vers_against_xforms__ != xforms_vers:      # no match
@@ -134,8 +132,7 @@ def warn_deprecated_function(altfunc=""):
 
 
 def func_notexists_placeholder(cfunction):
-    """ Print a warning if called function doesn't exist
-    """
+    """ Print a warning if called function doesn't exist """
 
     warningmsg = "C function %s does NOT exist, hence it is not " \
                  "wrappable and callable in python, so its call " \
@@ -152,16 +149,14 @@ _elem_refs = []
 
 
 def keep_cfunc_refs(*cfunclist):
-    """ Adds a reference for _cfunc_refs list of values
-    """
+    """ Adds a reference for _cfunc_refs list of values """
 
     for singvalue in cfunclist:
         _cfunc_refs.append(singvalue)
 
 
 def keep_elem_refs(*elemlist):
-    """ Adds a reference for _elem_refs list of values
-    """
+    """ Adds a reference for _elem_refs list of values """
 
     for singvalue in elemlist:
         _elem_refs.append(singvalue)
@@ -172,8 +167,7 @@ loaded_xlibraries = {'libforms' : None, 'libflimage' : None, \
 
 
 def load_so_libforms():
-    """ Load libforms.so else raise an error -> library instance
-    """
+    """ Load libforms.so else raise an error -> library instance """
 
     if loaded_xlibraries['libforms'] is None:
         libfbase = ctyutil.find_library("forms")
@@ -186,8 +180,7 @@ def load_so_libforms():
 
 
 def load_so_libflimage():
-    """ Load libflimage.so else raise an error -> library instance
-    """
+    """ Load libflimage.so else raise an error -> library instance """
 
     if loaded_xlibraries['libflimage'] is None:
         libfimg = ctyutil.find_library("flimage")
@@ -200,8 +193,7 @@ def load_so_libflimage():
 
 
 def load_so_libformsgl():
-    """ Load libformsGL.so else raise an error -> library instance
-    """
+    """ Load libformsGL.so else raise an error -> library instance """
 
     if loaded_xlibraries['libformsgl'] is None:
         libfgl = ctyutil.find_library("formsGL")
@@ -214,8 +206,7 @@ def load_so_libformsgl():
 
 
 def load_so_libx11():
-    """ Load libX11.so.6 else raise an error -> library instance
-    """
+    """ Load libX11.so.6 else raise an error -> library instance """
 
     if loaded_xlibraries['libx11'] is None:
         libx11 = ctyutil.find_library("X11")
@@ -228,8 +219,7 @@ def load_so_libx11():
 
 
 def cfuncproto(library, cfuncname, retval, arglist, doc=""):
-    """ Prototype for C function to be wrapped in python
-    """
+    """ Prototype for C function to be wrapped in python """
 
     loadedfunc = None
     try:
@@ -465,8 +455,10 @@ def make_pPopupItem_from_dict(pidict):
     pyclsshortcut = pidict['shortcut']
     spishortcut = convert_to_string(pyclsshortcut)
     pyclstype = pidict['type']
+    check_admitted_listvalues(pyclstype, xfc.POPUPTYPE_list)
     ipitype = convert_to_int(pyclstype)
     pyclsstate = pidict['state']
+    check_admitted_listvalues(pyclstype, xfc.POPUPSTATE_list)
     ipistate = convert_to_int(pyclsstate)
 
     popupitem = (xfc.FL_POPUP_ITEM * 2)()
@@ -506,8 +498,10 @@ def make_pPopupItem_from_list(listofpopupitems):
         popupitem[0].callback = c_picallback
         spishortcut = convert_to_string(listofpopupitems[2])
         popupitem[0].shortcut = spishortcut
+        check_admitted_listvalues(listofpopupitems[3], xfc.POPUPTYPE_list)
         ipitype = convert_to_int(listofpopupitems[3])
         popupitem[0].type = ipitype
+        check_admitted_listvalues(listofpopupitems[4], xfc.POPUPSTATE_list)
         ipistate = convert_to_int(listofpopupitems[4])
         popupitem[0].state = ipistate
 
@@ -536,8 +530,10 @@ def make_pPopupItem_from_list(listofpopupitems):
             popupitem[indx].callback = c_picallback
             spishortcut = convert_to_string(listofpopupitems[indx][2])
             popupitem[indx].shortcut = spishortcut
+            check_admitted_listvalues(listofpopupitems[indx][3], xfc.POPUPTYPE_list)
             ipitype = convert_to_int(listofpopupitems[indx][3])
             popupitem[indx].type = ipitype
+            check_admitted_listvalues(listofpopupitems[indx][4], xfc.POPUPSTATE_list)
             ipistate = convert_to_int(listofpopupitems[indx][4])
             popupitem[indx].state = ipistate
 
@@ -632,17 +628,16 @@ FL_IO_CALLBACK = cty.CFUNCTYPE(None, cty.c_int, cty.c_void_p)
 
 
 def fl_add_io_callback(fd, mask, py_IoCallback, data):
-    """
-        fl_add_io_callback(fd, mask, py_IoCallback, data)
+    """ fl_add_io_callback(fd, mask, py_IoCallback, data)
 
         Registers an input callback function when input is available from fd.
 
-        @param fd : a valid file descriptor in a *nix system
-        @param mask : under what circumstance the input callback should be
-           invoked (i.e. FL_READ, FL_WRITE or FL_EXCEPT)
-        @param py_IoCallback : python function to be invoked under mask
-           condition, fn(num, ptr_void)
-        @param data : argument to be passed to function
+        @param fd: a valid file descriptor in a *nix system
+        @param mask: under what circumstance the input callback should be
+                     invoked (i.e. FL_READ, FL_WRITE or FL_EXCEPT)
+        @param py_IoCallback: python function to be invoked under mask
+                              condition, fn(num, ptr_void)
+        @param data: argument to be passed to function
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -663,17 +658,16 @@ def fl_add_io_callback(fd, mask, py_IoCallback, data):
 
 
 def fl_remove_io_callback(fd, mask, py_IoCallback):
-    """
-        fl_remove_io_callback(fd, mask, py_IoCallback)
+    """ fl_remove_io_callback(fd, mask, py_IoCallback)
 
         Removes the registered callback function when input is available
         from fd.
 
-        @param fd : a valid file descriptor in a unix system
-        @param mask : under what circumstance the input callback should be
-           removed (i.e. xfc.FL_READ, xfc.FL_WRITE, xfc.FL_EXCEPT)
-        @param py_IoCallback : python function to be removed under mask
-           condition, fn(num, ptr_void)
+        @param fd: a valid file descriptor in a unix system
+        @param mask: under what circumstance the input callback should be
+                     removed (i.e. xfc.FL_READ, xfc.FL_WRITE, xfc.FL_EXCEPT)
+        @param py_IoCallback: python function to be removed under mask
+                              condition, fn(num, ptr_void)
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -698,17 +692,16 @@ def fl_remove_io_callback(fd, mask, py_IoCallback):
 FL_SIGNAL_HANDLER = cty.CFUNCTYPE(None, cty.c_int, cty.c_void_p)
 
 def fl_add_signal_callback(sglnum, py_SignalHandler, data):
-    """
-        fl_add_signal_callback(sglnum, py_SignalHandler, data)
+    """ fl_add_signal_callback(sglnum, py_SignalHandler, data)
 
         Handles the receipt of a signal by registering a callback function
         that gets called when a signal is caught (only 1 function per signal)
 
-        @param sglnum : signal number (from signal module e.g. SIGALRM,
-           SIGINT, etc.)
-        @param py_SignalHandler : python function to be invoked after
-           catching the signal, fn(num, ptr_void)
-        @param data : argument to be passed to function
+        @param sglnum: signal number (from signal module e.g. SIGALRM,
+                       SIGINT, etc.)
+        @param py_SignalHandler: python function to be invoked after
+                                 catching the signal, fn(num, ptr_void)
+        @param data: argument to be passed to function
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -728,13 +721,12 @@ def fl_add_signal_callback(sglnum, py_SignalHandler, data):
 
 
 def fl_remove_signal_callback(sglnum):
-    """
-        fl_remove_signal_callback(sglnum)
+    """ fl_remove_signal_callback(sglnum)
 
         Removes a previously registered callback function related to a signal.
 
-        @param sglnum : signal number (from signal module e.g. SIGALRM, SIGINT,
-           etc.)
+        @param sglnum: signal number (from signal module e.g. SIGALRM, SIGINT,
+                       etc.)
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -750,13 +742,13 @@ def fl_remove_signal_callback(sglnum):
 
 
 def fl_signal_caught(sglnum):
-    """
-        fl_signal_caught(sglnum)
+    """ fl_signal_caught(sglnum)
 
         Informs the main loop of the delivery of the signal signum, the signal
         is received by the application program
 
-        @param sglnum : signal number (e.g. SIGALRM, SIGINT, etc.)
+        @param sglnum: signal number (from signal module e.g. SIGALRM, SIGINT,
+                       etc.)
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -772,14 +764,13 @@ def fl_signal_caught(sglnum):
 
 
 def fl_app_signal_direct(flag):
-    """
-        fl_app_signal_direct(flag)
+    """ fl_app_signal_direct(flag)
 
         Changes the default behavior of the built-in signal facilities (to
         be called with a true value for flag prior to any use of
         fl_add_signal_callback
 
-        @param flag : flag (0|1)
+        @param flag: flag (0|1)
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -799,15 +790,14 @@ def fl_app_signal_direct(flag):
 FL_TIMEOUT_CALLBACK = cty.CFUNCTYPE(None, cty.c_int, cty.c_void_p)
 
 def fl_add_timeout(msec, py_TimeoutCallback, vdata):
-    """
-        fl_add_timeout(msec, py_TimeoutCallback, vdata) -> timer ID
+    """ fl_add_timeout(msec, py_TimeoutCallback, vdata) -> timer ID
 
         Adds a timeout callback after a specified elapsed time.
 
-        @param msec : time elapsed in milliseconds
-        @param py_TimeoutCallback : python function to be invoked after time,
-           fn(num, ptr_void)
-        @param vdata : user data to be passed to function
+        @param msec: time elapsed in milliseconds
+        @param py_TimeoutCallback: python function to be invoked after time,
+                                   fn(num, ptr_void)
+        @param vdata: user data to be passed to function
 
         @status: Tested + NoDoc + Example = OK
     """
@@ -828,8 +818,7 @@ def fl_add_timeout(msec, py_TimeoutCallback, vdata):
 
 
 def fl_remove_timeout(idnum):
-    """
-        fl_remove_timeout(idnum)
+    """ fl_remove_timeout(idnum)
 
         Removes a timeout callback function (created with fl_add_timeout).
 
@@ -851,18 +840,15 @@ def fl_remove_timeout(idnum):
 # Basic public routine prototypes
 
 def fl_library_version():
-    """
-        fl_library_version() -> version_rev ID, ver, rev
+    """ fl_library_version() -> version_rev id, ver, rev
 
         Returns consolidated version informations.
 
-        Returns:
-        <version_rev> : computed as 1000 * version + revision
-        <ver> : version (e.g. 1 in 1.x.yy)
-        <rev> : revision (e.g. 0 in x.0.yy)
+        @return: version_rev computed as 1000 * version + revision,
+                 version (e.g. 1 in 1.x.yy), revision (e.g. 0 in x.0.yy)
 
         @attention: API change from XForms - upstream was
-           fl_library_version(ver, rev)
+                    fl_library_version(ver, rev)
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -882,15 +868,15 @@ def fl_library_version():
 # Generic routines that deal with FORMS
 
 def fl_bgn_form(formtype, w, h):
-    """
-        fl_bgn_form(formtype, w, h) -> pForm
+    """ fl_bgn_form(formtype, w, h) -> pForm
 
         Starts the definition of a form call.
 
-        @param formtype : type of box that is used as a background
-           (e.g. xfc.FL_DOWN_BOX, xfc.FL_BORDER_BOX, xfc.FL_SHADOW_BOX, etc.)
-        @param w : width of the new form
-        @param h : height of the new form
+        @param formtype: type of box that is used as a background
+                         (e.g. xfc.FL_DOWN_BOX, xfc.FL_BORDER_BOX,
+                         xfc.FL_SHADOW_BOX, etc.)
+        @param w: width of the new form
+        @param h: height of the new form
 
         @status: Tested + NoDoc + Example = OK
     """
@@ -1014,7 +1000,7 @@ def fl_freeze_form(pForm):
         It does not temporarily redraw a form while changes are being made, so
         all changes made are instead buffered internally.
 
-        @param pForm : pointer to form not to be re-drawn temporarily
+        @param pForm: pointer to form not to be re-drawn temporarily
 
         @status: Tested + NoDoc + Example = OK
     """
@@ -1034,8 +1020,8 @@ def fl_set_focus_object(pForm, pObject):
 
         Sets the input focus in form to object pObject.
 
-        @param pForm : pointer to form whose object has to be focused
-        @param pObject : pointer to object to be focused
+        @param pForm: pointer to form whose object has to be focused
+        @param pObject: pointer to object to be focused
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -1058,7 +1044,7 @@ def fl_get_focus_object(pForm):
 
         Obtains the object that has the focus on a form.
 
-        @param pForm : pointer to form that has a focused object
+        @param pForm: pointer to form that has a focused object
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -1079,7 +1065,7 @@ def fl_reset_focus_object(pObject):
 
         Override the FL_UNFOCUS event.
 
-        @param pObject : pointer to object towards applying event
+        @param pObject: pointer to object towards applying event
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -1102,10 +1088,10 @@ def fl_set_form_atclose(pForm, py_FormAtclose, vdata):
 
         Calls a callback function before closing the form.
 
-        @param pForm : pointer to form that receives the message
-        @param py_FormAtclose : python callback function to be called,
+        @param pForm: pointer to form that receives the message
+        @param py_FormAtclose: python callback function to be called,
            fn(pForm, ptr_void) -> num
-        @param vdata : user data to be passed to function
+        @param vdata: user data to be passed to function
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -1131,9 +1117,9 @@ def fl_set_atclose(py_FormAtclose, vdata):
 
         Calls a callback function before terminating the application.
 
-        @param py_FormAtclose : callback function to be called, fn(pForm,
+        @param py_FormAtclose: callback function to be called, fn(pForm,
            ptr_void) -> num
-        @param vdata : user data to be passed to function
+        @param vdata: user data to be passed to function
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -1162,10 +1148,10 @@ def fl_set_form_atactivate(pForm, py_FormAtactivate, vdata):
         Register a callback that is called when activation status of a forms
         is enabled,
 
-        @param pForm : activated form
-        @param py_FormAtactivate : python callback function called, fn(pForm,
+        @param pForm: activated form
+        @param py_FormAtactivate: python callback function called, fn(pForm,
            ptr_void)
-        @param vdata : user data to be passed to function
+        @param vdata: user data to be passed to function
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -1195,10 +1181,10 @@ def fl_set_form_atdeactivate(pForm, py_FormAtdeactivate, vdata):
         Register a callback that is called when activation status of a forms
         is disabled.
 
-        @param pForm : pointer to de-activated form
-        @param py_FormAtdeactivate : python callback function called,
+        @param pForm: pointer to de-activated form
+        @param py_FormAtdeactivate: python callback function called,
            fn(pForm, ptr_void)
-        @param vdata : user data to be passed to function
+        @param vdata: user data to be passed to function
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -1225,7 +1211,7 @@ def fl_unfreeze_form(pForm):
         All changes made in the meantime in a form are drawn at once,
         reverting previous freeze (using fl_freeze_form function).
 
-        @param pForm : pointer to form to be re-drawn after freezing
+        @param pForm: pointer to form to be re-drawn after freezing
 
         @status: Tested + NoDoc + Example = OK
     """
@@ -1246,7 +1232,7 @@ def fl_deactivate_form(pForm):
         Deactivates form temporarily, without hiding it, but not allowing a
         user to interact with elements contained in form (buttons, etc.).
 
-        @param pForm : pointer to form to be de-activated
+        @param pForm: pointer to form to be de-activated
 
         @status: Tested + NoDoc + Example = OK
     """
@@ -1267,7 +1253,7 @@ def fl_activate_form(pForm):
         (Re)activates form, allowing the user to interact again with elements
         contained in form (buttons, etc.).
 
-        @param pForm : pointer to form to be re-activated
+        @param pForm: pointer to form to be re-activated
 
         @status: Tested + NoDoc + Example = OK
     """
@@ -1359,9 +1345,9 @@ def fl_scale_form(pForm, xsc, ysc):
         a scaling factor in x- and y-direction with respect to the current
         size, and reshapes the window.
 
-        @param pForm : pointer to form to be scaled
-        @param xsc : scaling factor in horizontal direction
-        @param ysc : scaling factor in vertical direction
+        @param pForm: pointer to form to be scaled
+        @param xsc: scaling factor in horizontal direction
+        @param ysc: scaling factor in vertical direction
 
         @status: Tested + NoDoc + Example = OK
     """
@@ -1384,9 +1370,9 @@ def fl_set_form_position(pForm, x, y):
         Sets position of form, when placing a form on the screen with
         FL_PLACE_GEOMETRY as place argument.
 
-        @param pForm : pointer to form whose position is to be set
-        @param x : horizontal position
-        @param y : vertical position
+        @param pForm: pointer to form whose position is to be set
+        @param x: horizontal position
+        @param y: vertical position
 
         @status: Tested + NoDoc + Example = OK
     """
@@ -1409,8 +1395,8 @@ def fl_set_form_title(pForm, name):
 
         Changes the form title (and the icon name) after it is shown.
 
-        @param pForm : pointer to form whose title has to be changed
-        @param name : new name for the form
+        @param pForm: pointer to form whose title has to be changed
+        @param name: new name for the form
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -1483,10 +1469,10 @@ def fl_set_form_callback(pForm, py_FormCallbackPtr, vdata):
 
         Sets the callback routine for the form.
 
-        @param pForm : pointer to form
-        @param py_FormCallbackPtr : python callback to be set,
+        @param pForm: pointer to form
+        @param py_FormCallbackPtr: python callback to be set,
            fn(pObject, ptr_void)
-        @param vdata : user data
+        @param vdata: user data
 
         @status: Tested + NoDoc + Example = OK
     """
@@ -1514,9 +1500,9 @@ def fl_set_form_size(pForm, w, h):
 
         Sets the size of form.
 
-        @param pForm : pointer to form
-        @param w : width of form
-        @param h : height of form
+        @param pForm: pointer to form
+        @param w: width of form
+        @param h: height of form
 
         @status: Tested + NoDoc + Example = OK
     """
@@ -1538,9 +1524,9 @@ def fl_set_form_hotspot(pForm, x, y):
 
         Sets the position of the hotspot of a form.
 
-        @param pForm : pointer to form
-        @param x : horizontal position
-        @param y : vertical position
+        @param pForm: pointer to form
+        @param x: horizontal position
+        @param y: vertical position
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -1561,8 +1547,8 @@ def fl_set_form_hotobject(pForm, pObject):
     """
         fl_set_form_hotobject(pForm, pObject)
 
-        @param pForm : pointer to form
-        @param pObject : pointer to object
+        @param pForm: pointer to form
+        @param pObject: pointer to object
 
         @status: Tested + NoDoc + Example = OK
     """
@@ -1580,9 +1566,9 @@ def fl_set_form_minsize(pForm, w, h):
     """
         fl_set_form_minsize(pForm, w, h)
 
-        @param pForm : pointer to form
-        @param w : width of form
-        @param h : height of form
+        @param pForm: pointer to form
+        @param w: width of form
+        @param h: height of form
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -1602,9 +1588,9 @@ def fl_set_form_maxsize(pForm, w, h):
     """
         fl_set_form_maxsize(pForm, w, h)
 
-        @param pForm : pointer to form
-        @param w : width of form
-        @param h : height of form
+        @param pForm: pointer to form
+        @param w: width of form
+        @param h: height of form
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -1625,8 +1611,8 @@ def fl_set_form_event_cmask(pForm, cmask):
     """
         fl_set_form_event_cmask(pForm, cmask)
 
-        @param pForm : pointer to form
-        @param cmask : compress mask for form
+        @param pForm: pointer to form
+        @param cmask: compress mask for form
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -1648,7 +1634,7 @@ def fl_get_form_event_cmask(pForm):
 
         Returns event compress mask for form.
 
-        @param pForm : pointer to form
+        @param pForm: pointer to form
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -1669,11 +1655,11 @@ def fl_set_form_geometry(pForm, x, y, w, h):
 
         Sets the geometry (position and size) of a form.
 
-        @param pForm : pointer to form to be set
-        @param x : horizontal position (upper-left corner)
-        @param y : vertical position (upper-left corner)
-        @param w : width of form in coord units
-        @param h : height of form in coord units
+        @param pForm: pointer to form to be set
+        @param x: horizontal position (upper-left corner)
+        @param y: vertical position (upper-left corner)
+        @param w: width of form in coord units
+        @param h: height of form in coord units
 
         @status: Tested + NoDoc + Example = OK
     """
@@ -1702,10 +1688,10 @@ def fl_show_form(pForm, place, border, title):
 
         Shows the form.
 
-        @param pForm : pointer to form
-        @param place : where form has to be placed
-        @param border : type of window manager decoration
-        @param title : title of form
+        @param pForm: pointer to form
+        @param place: where form has to be placed
+        @param border: type of window manager decoration
+        @param title: title of form
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -1733,7 +1719,7 @@ def fl_hide_form(pForm):
 
         Hides the form.
 
-        @param pForm : pointer to form
+        @param pForm: pointer to form
 
         @status: Tested + NoDoc + Example = OK
     """
@@ -1753,7 +1739,7 @@ def fl_free_form(pForm):
 
         Frees the memory used by a form together with all its objects.
 
-        @param pForm : pointer to form to be freed
+        @param pForm: pointer to form to be freed
 
         @status: Tested + NoDoc + Example = OK
     """
@@ -1773,7 +1759,7 @@ def fl_redraw_form(pForm):
 
         (Re)draws a form.
 
-        @param pForm : pointer to form to redraw
+        @param pForm: pointer to form to redraw
 
         @status: Tested + NoDoc + Example = OK
     """
@@ -1791,8 +1777,8 @@ def fl_set_form_dblbuffer(pForm, flag):
     """
         fl_set_form_dblbuffer(pForm, flag)
 
-        @param pForm : pointer to form
-        @param flag : flag to disable/enable doublebuffer (0|1)
+        @param pForm: pointer to form
+        @param flag: flag to disable/enable doublebuffer (0|1)
 
         @status: Tested + NoDoc + Example = OK
     """
@@ -1813,10 +1799,10 @@ def fl_prepare_form_window(pForm, place, border, name):
 
         Displays a particular form, returns its window handle.
 
-        @param pForm : pointer to form
-        @param place : where has to be placed
-        @param border : window manager decoration
-        @param name : title of form
+        @param pForm: pointer to form
+        @param place: where has to be placed
+        @param border: window manager decoration
+        @param name: title of form
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -1842,7 +1828,7 @@ def fl_show_form_window(pForm):
     """
         fl_show_form_window(pForm) -> window id
 
-        @param pForm : pointer to form to be shown
+        @param pForm: pointer to form to be shown
 
         @status: Tested + NoDoc + Example = OK
     """
@@ -1865,7 +1851,7 @@ def fl_adjust_form_size(pForm):
         has a smaller threshold. Mainly intended for compensation for font
         size variations.
 
-        @param pForm : pointer to form
+        @param pForm: pointer to form
 
         @status: Tested + NoDoc + Example = OK
     """
@@ -1886,7 +1872,7 @@ def fl_form_is_visible(pForm):
 
         Returns if form is visible.
 
-        @param pForm : pointer to form
+        @param pForm: pointer to form
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -1907,7 +1893,7 @@ def fl_form_is_iconified(pForm):
 
         Returns if a forms window is in iconified state.
 
-        @param pForm : pointer to form
+        @param pForm: pointer to form
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -1931,10 +1917,10 @@ def fl_register_raw_callback(pForm, mask, py_RawCallback):
 
         Register pre-emptive event handlers.
 
-        @param pForm : pointer to form
-        @param mask : key/button/window event mask (press, release, motion,
+        @param pForm: pointer to form
+        @param mask: key/button/window event mask (press, release, motion,
            enter, leave etc..)
-        @param py_RawCallback : python callback function,
+        @param py_RawCallback: python callback function,
            fn(pForm, ptr_void) -> num
 
         @status: Tested + NoDoc + Example = OK
@@ -1999,7 +1985,7 @@ def fl_addto_group(pGroup):
 
         Reopens a group to allow addition of further objects.
 
-        @param pGroup : pointer to group object to reopen
+        @param pGroup: pointer to group object to reopen
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -2022,7 +2008,7 @@ def fl_get_object_objclass(pObject):
 
         Return the object class of an object.
 
-        @param pObject : pointer to object
+        @param pObject: pointer to object
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -2043,7 +2029,7 @@ def fl_get_object_type(pObject):
 
         Return the type of an object.
 
-        @param pObject : pointer to object
+        @param pObject: pointer to object
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -2064,8 +2050,8 @@ def fl_set_object_boxtype(pObject, boxtype):
 
         Sets the type of box of an object.
 
-        @param pObject : pointer to object
-        @param boxtype : type of the box
+        @param pObject: pointer to object
+        @param boxtype: type of the box
 
         @status: Tested + NoDoc + Example = OK
     """
@@ -2087,7 +2073,7 @@ def fl_get_object_boxtype(pObject):
 
         Return the boxtype of an object.
 
-        @param pObject : pointer to object
+        @param pObject: pointer to object
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -2108,8 +2094,8 @@ def fl_set_object_bw(pObject, bw):
 
         Sets the borderwidth of an object.
 
-        @param pObject : pointer to object
-        @param bw : borderwidth of object
+        @param pObject: pointer to object
+        @param bw: borderwidth of object
 
         @status: Tested + NoDoc + Example = OK
     """
@@ -2130,7 +2116,7 @@ def fl_get_object_bw(pObject):
 
         Returns the borderwidth of an object.
 
-        @param pObject : pointer to object
+        @param pObject: pointer to object
 
         @attention: API change from XForms - upstream was
            fl_get_object_bw(pObject, bw)
@@ -2155,8 +2141,8 @@ def fl_set_object_resize(pObject, what):
 
         Sets the resize property of an object.
 
-        @param pObject : pointer to object
-        @param what : resize property
+        @param pObject: pointer to object
+        @param what: resize property
 
         @status: Tested + NoDoc + Example = OK
     """
@@ -2177,7 +2163,7 @@ def fl_get_object_resize(pObject):
 
         Returns the resize property of an object.
 
-        @param pObject : pointer to object
+        @param pObject: pointer to object
 
         @attention: API change from upstream
            fl_get_object_resize(pObject, what)
@@ -2202,9 +2188,9 @@ def fl_set_object_gravity(pObject, nw, se):
 
         Sets the gravity properties of an object.
 
-        @param pObject : pointer to object
-        @param nw : gravity property for NorthWest
-        @param se : gravity property for SouthEast
+        @param pObject: pointer to object
+        @param nw: gravity property for NorthWest
+        @param se: gravity property for SouthEast
 
         @status: Tested + NoDoc + Example = OK
     """
@@ -2227,7 +2213,7 @@ def fl_get_object_gravity(pObject):
 
         Returns the gravity properties of an object.
 
-        @param pObject : pointer to object
+        @param pObject: pointer to object
 
         @attention: API change from XForms - upstream was
            fl_get_object_gravity(pObject, nw, se)
@@ -2255,8 +2241,8 @@ def fl_set_object_lsize(pObject, lsize):
 
         Sets the label size of an object.
 
-        @param pObject : pointer to object
-        @param lsize : label size
+        @param pObject: pointer to object
+        @param lsize: label size
 
         @status: Tested + NoDoc + Example = OK
     """
@@ -2277,7 +2263,7 @@ def fl_get_object_lsize(pObject):
 
         Returns the label size of an object.
 
-        @param pObject : pointer to object
+        @param pObject: pointer to object
 
         @status: Tested + NoDoc + Example = OK
     """
@@ -2298,8 +2284,8 @@ def fl_set_object_lstyle(pObject, lstyle):
 
         Sets the label style of an object.
 
-        @param pObject : pointer to object
-        @param lstyle : label style
+        @param pObject: pointer to object
+        @param lstyle: label style
 
         @status: Tested + NoDoc + Example = OK
     """
@@ -2321,7 +2307,7 @@ def fl_get_object_lstyle(pObject):
 
         Returns the label style of an object.
 
-        @param pObject : pointer to object
+        @param pObject: pointer to object
 
         @status: Tested + NoDoc + Example = OK
     """
@@ -2342,8 +2328,8 @@ def fl_set_object_lcol(pObject, lcolr):
 
         Sets the label color of an object.
 
-        @param pObject : pointer to object
-        @param lcolr : label color
+        @param pObject: pointer to object
+        @param lcolr: label color
 
         @status: Tested + NoDoc + Example = OK
     """
@@ -2368,7 +2354,7 @@ def fl_get_object_lcol(pObject):
 
         Returns the label color of an object.
 
-        @param pObject : pointer to object
+        @param pObject: pointer to object
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -2394,8 +2380,8 @@ def fl_set_object_return(pObject, when):
         called in the end. This should only be called once an object
         has been created completely!
 
-        @param pObject : pointer to object
-        @param when : return type (when it returns)
+        @param pObject: pointer to object
+        @param when: return type (when it returns)
 
         @status: Tested + NoDoc + Example = OK
     """
@@ -2416,8 +2402,8 @@ def fl_notify_object(pObject, cause):
     """
         fl_notify_object(pObject, cause)
 
-        @param pObject : pointer to object
-        @param cause : ?
+        @param pObject: pointer to object
+        @param cause: ?
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -2438,8 +2424,8 @@ def fl_set_object_lalign(pObject, align):
 
         Sets alignment of an object.
 
-        @param pObject : pointer to object
-        @param align : alignment of object
+        @param pObject: pointer to object
+        @param align: alignment of object
 
         @status: Tested + NoDoc + Example = OK
     """
@@ -2461,7 +2447,7 @@ def fl_get_object_lalign(pObject):
 
         Returns alignment of an object.
 
-        @param pObject : pointer to object
+        @param pObject: pointer to object
 
         @status: Tested + NoDoc + Example = OK
     """
@@ -2483,9 +2469,9 @@ def fl_set_object_shortcut(pObject, sstr, showit):
     """
         fl_set_object_shortcut(pObject, sstr, showit)
 
-        @param pObject : pointer to object
-        @param sstr : shortcut string
-        @param showit : flag (0|1)
+        @param pObject: pointer to object
+        @param sstr: shortcut string
+        @param showit: flag (0|1)
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -2506,8 +2492,8 @@ def fl_set_object_shortcutkey(pObject, keysym):
     """
         fl_set_object_shortcutkey(pObject, keysym)
 
-        @param pObject : pointer to object
-        @param keysym : key symbolic num.
+        @param pObject: pointer to object
+        @param keysym: key symbolic num.
 
         @status: Tested + NoDoc + Example = OK
     """
@@ -2527,8 +2513,8 @@ def fl_set_object_dblbuffer(pObject, flag):
     """
         fl_set_object_dblbuffer(pObject, flag)
 
-        @param pObject : pointer to object
-        @param flag : value to disable/enable double buffer (0|1)
+        @param pObject: pointer to object
+        @param flag: value to disable/enable double buffer (0|1)
 
         @status: Tested + NoDoc + Example = OK
     """
@@ -2549,9 +2535,9 @@ def fl_set_object_color(pObject, fgcolr, bgcolr):
 
         Sets the color of an object.
 
-        @param pObject : pointer to object
-        @param fgcolr : foreground color
-        @param bgcolr : background color
+        @param pObject: pointer to object
+        @param fgcolr: foreground color
+        @param bgcolr: background color
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -2576,7 +2562,7 @@ def fl_get_object_color(pObject):
 
         Returns the foreground and background colors of an object.
 
-        @param pObject : pointer to object
+        @param pObject: pointer to object
 
         @attention: API change from XForms - upstream was
            fl_set_object_color(pObject, fgcolr, bgcolr)
@@ -2604,8 +2590,8 @@ def fl_set_object_label(pObject, label):
 
         Sets the label of an object.
 
-        @param pObject : pointer to object
-        @param label : label of object
+        @param pObject: pointer to object
+        @param label: label of object
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -2626,7 +2612,7 @@ def fl_get_object_label(pObject):
 
         Returns the label of an object.
 
-        @param pObject : pointer to object
+        @param pObject: pointer to object
 
         @status: Tested + NoDoc + Example = OK
     """
@@ -2647,8 +2633,8 @@ def fl_set_object_helper(pObject, tip):
 
         Sets the tooltip of an object.
 
-        @param pObject : pointer to object
-        @param tip : tooltip text for object
+        @param pObject: pointer to object
+        @param tip: tooltip text for object
 
         @status: Tested + NoDoc + Example = OK
     """
@@ -2669,9 +2655,9 @@ def fl_set_object_position(pObject, x, y):
 
         Sets position of an object.
 
-        @param pObject : pointer of object
-        @param x : horizontal position (upper-left corner)
-        @param y : vertical position (upper-left corner)
+        @param pObject: pointer of object
+        @param x: horizontal position (upper-left corner)
+        @param y: vertical position (upper-left corner)
 
         @status: Tested + NoDoc + Example = OK
     """
@@ -2694,7 +2680,7 @@ def fl_get_object_size(pObject):
 
         Returns the size of an object.
 
-        @param pObject : pointer to object
+        @param pObject: pointer to object
 
         @attention: API change from XForms - upstream was
            fl_get_object_size(pObject, w, h)
@@ -2722,9 +2708,9 @@ def fl_set_object_size(pObject, w, h):
 
         Sets the size of an object.
 
-        @param pObject : pointer to object
-        @param w : width of object
-        @param h : height of object
+        @param pObject: pointer to object
+        @param w: width of object
+        @param h: height of object
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -2745,8 +2731,8 @@ def fl_set_object_automatic(pObject, flag):
     """
         fl_set_object_automatic(pObject, flag)
 
-        @param pObject : pointer to object
-        @param flag : flag (0|1)
+        @param pObject: pointer to object
+        @param flag: flag (0|1)
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -2765,7 +2751,7 @@ def fl_object_is_automatic(pObject):
     """
         fl_object_is_automatic(pObject) -> flag num.
 
-        @param pObject : pointer to object
+        @param pObject: pointer to object
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -2784,7 +2770,7 @@ def fl_draw_object_label(pObject):
     """
         fl_draw_object_label(pObject)
 
-        @param pObject : pointer to object
+        @param pObject: pointer to object
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -2802,7 +2788,7 @@ def fl_draw_object_label_outside(pObject):
     """
         fl_draw_object_label_outside(pObject)
 
-        @param pObject : pointer to object
+        @param pObject: pointer to object
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -2851,9 +2837,9 @@ def fl_for_all_objects(pForm, py_cb, v):
     """
         fl_for_all_objects(pForm, py_cb, v)
 
-        @param pForm : pointer to form
-        @param py_cb : python function, fn(pObject, ptr_void) -> num.
-        @param v : argument
+        @param pForm: pointer to form
+        @param py_cb: python function, fn(pObject, ptr_void) -> num.
+        @param v: argument
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -2878,8 +2864,8 @@ def fl_set_object_dblclick(pObject, timeout):
 
         Sets double click timeout value of an object.
 
-        @param pObject : pointer to object
-        @param timeout : timeout value for double click
+        @param pObject: pointer to object
+        @param timeout: timeout value for double click
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -2901,7 +2887,7 @@ def fl_get_object_dblclick(pObject):
 
         Return double click timeout value of an object.
 
-        @param pObject : pointer to object
+        @param pObject: pointer to object
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -2922,11 +2908,11 @@ def fl_set_object_geometry(pObject, x, y, w, h):
 
         Sets the geometry (position and size) of an object.
 
-        @param pObject : pointer to object
-        @param x : horizontal position (upper-left corner)
-        @param y : vertical position (upper-left corner)
-        @param w : width in coord units
-        @param h : height in coord units
+        @param pObject: pointer to object
+        @param x: horizontal position (upper-left corner)
+        @param y: vertical position (upper-left corner)
+        @param w: width in coord units
+        @param h: height in coord units
 
         @status: Tested + NoDoc + Example = OK
     """
@@ -2952,7 +2938,7 @@ def fl_move_object(pObject, dx, dy):
 
         Moves an object to a new position.
 
-        @param pObject : pointer to object to be moved
+        @param pObject: pointer to object to be moved
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -2977,9 +2963,9 @@ def fl_fit_object_label(pObject, xmargin, ymargin):
         are enlarged by the necessary factor (but never by more than
         a factor of 1.5).
 
-        @param pObject : pointer to object
-        @param xmargin : horizontal margin of label
-        @param ymargin : vertical margin of label
+        @param pObject: pointer to object
+        @param xmargin: horizontal margin of label
+        @param ymargin: vertical margin of label
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -3002,7 +2988,7 @@ def fl_get_object_geometry(pObject):
 
         Returns the geometry (position and size) of an object.
 
-        @param pObject : pointer to object
+        @param pObject: pointer to object
 
         @attention: API change from XForms - upstream was
            fl_get_object_geometry(pObject, x, y, w, h)
@@ -3032,7 +3018,7 @@ def fl_get_object_position(pObject):
 
         Returns the position of an object.
 
-        @param pObject : pointer to object
+        @param pObject: pointer to object
 
         @attention: API change from XForms - upstream was
            fl_get_object_position(pObject, x, y)
@@ -3060,7 +3046,7 @@ def fl_get_object_bbox(pObject):
     """
         fl_get_object_bbox(pObject) -> x, y, w, h
 
-        @param pObject : pointer to object
+        @param pObject: pointer to object
 
         @attention: API change from XForms - upstream was
            fl_get_object_bbox(pObject, x, y, w, h)
@@ -3089,10 +3075,9 @@ fl_compute_object_geometry = fl_get_object_bbox
 
 
 def fl_call_object_callback(pObject):
-    """
-        fl_call_object_callback(pObject)
+    """ fl_call_object_callback(pObject)
 
-        @param pObject : pointer to object
+        @param pObject: pointer to object
 
         @status: Tested + NoDoc + Example = OK
     """
@@ -3111,12 +3096,12 @@ def fl_call_object_callback(pObject):
 #                FL_Coord, FL_Coord, cty.c_int, cty.c_void_p)
 
 def fl_set_object_prehandler(pObject, py_HandlerPtr):
-    """
-        fl_set_object_prehandler(pObject, py_HandlerPtr) ->  pHandlerPtr
+    """ fl_set_object_prehandler(pObject, py_HandlerPtr) ->  pHandlerPtr
 
-        @param pObject : pointer to object
-        @param py_HandlerPtr : python callback function, fn(pObject,
-           num, coord, coord, num, ptr_void) -> num
+        @param pObject: pointer to object
+        @param py_HandlerPtr: python callback function with return value
+        @type py_HandlerPtr : fn(pObject, num, coord, coord, num,
+                              ptr_void) -> num
 
         @status: Tested + NoDoc + Example = OK
     """
@@ -3135,12 +3120,12 @@ def fl_set_object_prehandler(pObject, py_HandlerPtr):
 
 
 def fl_set_object_posthandler(pObject, py_HandlerPtr):
-    """
-        fl_set_object_posthandler(pObject, py_HandlerPtr) -> pHandlerPtr
+    """ fl_set_object_posthandler(pObject, py_HandlerPtr) -> pHandlerPtr
 
-        @param pObject : pointer to object
-        @param py_HandlerPtr : python callback function, fn(pObject,
-           num, coord, coord, num, ptr_void) -> num
+        @param pObject: pointer to object
+        @param py_HandlerPtr: python callback function,
+                              fn(pObject, num, coord, coord, num,
+                              ptr_void) -> num
 
         @status: Tested + NoDoc + Example = OK
     """
@@ -3162,15 +3147,14 @@ def fl_set_object_posthandler(pObject, py_HandlerPtr):
 #FL_CALLBACKPTR = cty.CFUNCTYPE(None, cty.POINTER(xfc.FL_OBJECT), cty.c_long)
 
 def fl_set_object_callback(pObject, py_CallbackPtr, argum):
-    """
-        fl_set_object_callback(pObject, py_CallbackPtr, argum) -> c_callback func.
+    """ fl_set_object_callback(pObject, py_CallbackPtr, argum) -> c_callback func.
 
         Calls a callback function bound to an object, if a condition is met.
 
-        @param pObject : pointer to object
-        @param py_CallbackPtr : a python function with no () and no args to
-           be used as callback, fn(pObject, longnum)
-        @param argum : argument being passed to function
+        @param pObject: pointer to object
+        @param py_CallbackPtr: a python function with no () and no args to
+                               be used as callback, fn(pObject, longnum)
+        @param argum: argument being passed to function
 
         @status: Tested + NoDoc + Example = OK
     """
@@ -3194,10 +3178,9 @@ fl_set_call_back = fl_set_object_callback
 
 
 def fl_redraw_object(pObject):
-    """
-        fl_redraw_object(pObject)
+    """ fl_redraw_object(pObject)
 
-        @param pObject : pointer to object to redraw
+        @param pObject: pointer to object to redraw
 
         @status: Tested + NoDoc + Example = OK
     """
@@ -3212,14 +3195,13 @@ def fl_redraw_object(pObject):
 
 
 def fl_scale_object(pObject, xs, ys):
-    """
-        fl_scale_object(pObject, xs, ys)
+    """ fl_scale_object(pObject, xs, ys)
 
         Scales (shrinking or enlarging) an object.
 
-        @param pObject : pointer to object to be scaled
-        @param xs : new horizontal factor
-        @param ys : new vertical factor
+        @param pObject: pointer to object to be scaled
+        @param xs: new horizontal factor
+        @param ys: new vertical factor
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -3236,12 +3218,11 @@ def fl_scale_object(pObject, xs, ys):
 
 
 def fl_show_object(pObject):
-    """
-        fl_show_object(pObject)
+    """ fl_show_object(pObject)
 
         Shows an (hidden) object.
 
-        @param pObject : pointer to object to be shown
+        @param pObject: pointer to object to be shown
 
         @status: Tested + NoDoc + Example = OK
     """
@@ -3256,12 +3237,11 @@ def fl_show_object(pObject):
 
 
 def fl_hide_object(pObject):
-    """
-        fl_hide_object(pObject)
+    """ fl_hide_object(pObject)
 
         Hides a shown object.
 
-        @param pObject : pointer to object to be hidden
+        @param pObject: pointer to object to be hidden
 
         @status: Tested + NoDoc + Example = OK
     """
@@ -3276,12 +3256,11 @@ def fl_hide_object(pObject):
 
 
 def fl_object_is_visible(pObject):
-    """
-        fl_object_is_visible(pObject) -> num.
+    """ fl_object_is_visible(pObject) -> num.
 
         Returns if an object is visible (non-zero) or not (zero).
 
-        @param pObject : pointer to object
+        @param pObject: pointer to object
 
         @status: Tested + NoDoc + Example = OK
     """
@@ -3297,10 +3276,9 @@ def fl_object_is_visible(pObject):
 
 
 def fl_free_object(pObject):
-    """
-        fl_free_object(pObject)
+    """ fl_free_object(pObject)
 
-        @param pObject : pointer to object
+        @param pObject: pointer to object
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -3315,10 +3293,9 @@ def fl_free_object(pObject):
 
 
 def fl_delete_object(pObject):
-    """
-        fl_delete_object(pObject)
+    """ fl_delete_object(pObject)
 
-        @param pObject : pointer to object
+        @param pObject: pointer to object
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -3333,10 +3310,9 @@ def fl_delete_object(pObject):
 
 
 def fl_get_object_return_state(pObject):
-    """
-        fl_get_object_return_state(pObject) -> ID num
+    """ fl_get_object_return_state(pObject) -> ID num
 
-        @param pObject : pointer to object
+        @param pObject: pointer to object
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -3352,10 +3328,9 @@ def fl_get_object_return_state(pObject):
 
 
 def fl_trigger_object(pObject):
-    """
-        fl_trigger_object(pObject)
+    """ fl_trigger_object(pObject)
 
-        @param pObject : pointer to object
+        @param pObject: pointer to object
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -3370,10 +3345,9 @@ def fl_trigger_object(pObject):
 
 
 def fl_activate_object(pObject):
-    """
-        fl_activate_object(pObject)
+    """ fl_activate_object(pObject)
 
-        @param pObject : pointer to object
+        @param pObject: pointer to object
 
         @status: Tested + NoDoc + Example = OK
     """
@@ -3388,10 +3362,9 @@ def fl_activate_object(pObject):
 
 
 def fl_deactivate_object(pObject):
-    """
-        fl_deactivate_object(pObject)
+    """ fl_deactivate_object(pObject)
 
-        @param pObject : pointer to object
+        @param pObject: pointer to object
 
         @status: Tested + NoDoc + Example = OK
     """
@@ -3406,13 +3379,12 @@ def fl_deactivate_object(pObject):
 
 
 def fl_object_is_active(pObject):
-    """
-        fl_object_is_active(pObject) -> num.
+    """ fl_object_is_active(pObject) -> num.
 
         Returns if object is active and reacting to
         events (non-zero) or not (zero).
 
-        @param pObject : pointer to object
+        @param pObject: pointer to object
 
         @status: Tested + NoDoc + Example = OK
     """
@@ -3431,8 +3403,7 @@ def fl_object_is_active(pObject):
 cfunc_none_string = cty.CFUNCTYPE(None, xfc.STRING)
 
 def fl_enumerate_fonts(py_output, shortform):
-    """
-        fl_enumerate_fonts(py_output, shortform) -> ID num
+    """ fl_enumerate_fonts(py_output, shortform) -> ID num
 
         @status: Tested + NoDoc + Example = OK
     """
@@ -3451,9 +3422,8 @@ def fl_enumerate_fonts(py_output, shortform):
     return retval
 
 
-def fl_set_font_name(n, name):
-    """
-        fl_set_font_name(n, name) -> ID num
+def fl_set_font_name(num, name):
+    """ fl_set_font_name(num, name) -> ID num
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -3463,16 +3433,15 @@ def fl_set_font_name(n, name):
             cty.c_int, [cty.c_int, xfc.STRING],\
             """int fl_set_font_name(int n, const char * name)
             """)
-    inum = convert_to_int(n)
+    inum = convert_to_int(num)
     sname = convert_to_string(name)
-    keep_elem_refs(n, inum, name, sname)
+    keep_elem_refs(num, inum, name, sname)
     retval = _fl_set_font_name(inum, sname)
     return retval
 
 
-def fl_set_font(numb, size):
-    """
-        fl_set_font(numb, size)
+def fl_set_font(num, size):
+    """ fl_set_font(num, size)
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -3482,20 +3451,19 @@ def fl_set_font(numb, size):
             None, [cty.c_int, cty.c_int],\
             """void fl_set_font(int numb, int size)
             """)
-    inumb = convert_to_int(numb)
+    inum = convert_to_int(num)
     isize = convert_to_int(size)
-    keep_elem_refs(numb, inumb, size, isize)
-    _fl_set_font(inumb, isize)
+    keep_elem_refs(num, inum, size, isize)
+    _fl_set_font(inum, isize)
 
 
 # routines that facilitate free object
 
 def fl_get_char_height(style, size):
-    """
-        fl_get_char_height(style, size) -> height num., asc, desc
+    """ fl_get_char_height(style, size) -> height num., asc, desc
 
         @attention: API change from XForms - upstream was
-           fl_get_char_height(style, size, asc, desc)
+                    fl_get_char_height(style, size, asc, desc)
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -3509,7 +3477,7 @@ def fl_get_char_height(style, size):
             """)
     istyle = convert_to_int(style)
     isize = convert_to_int(size)
-    asc, pasc = make_int_and_pointer()          # not sure
+    asc, pasc = make_int_and_pointer()
     desc, pdesc = make_int_and_pointer()
     keep_elem_refs(style, istyle, size, isize, asc, desc, pasc, pdesc)
     retval = _fl_get_char_height(istyle, isize, pasc, pdesc)
@@ -3517,8 +3485,7 @@ def fl_get_char_height(style, size):
 
 
 def fl_get_char_width(style, size):
-    """
-        fl_get_char_width(style, size) -> width num.
+    """ fl_get_char_width(style, size) -> width num.
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -3536,11 +3503,11 @@ def fl_get_char_width(style, size):
 
 
 def fl_get_string_height(style, size, strng, strglen):
-    """
-        fl_get_string_height(style, size, strng, strglen) -> height num., asc, desc
+    """ fl_get_string_height(style, size, strng, strglen) -> height num., asc, desc
 
         @attention: API change from XForms - upstream was
-           fl_get_string_height(style, size, strng, strglen, asc, desc)
+                    fl_get_string_height(style, size, strng, strglen,
+                    asc, desc)
 
         @status: Tested + NoDoc + Example = OK
     """
@@ -3566,8 +3533,7 @@ def fl_get_string_height(style, size, strng, strglen):
 
 
 def fl_get_string_width(style, size, strng, strglen):
-    """
-        fl_get_string_width(style, size, strng, strglen) -> width num.
+    """ fl_get_string_width(style, size, strng, strglen) -> width num.
 
         @status: Tested + NoDoc + Example = OK
     """
@@ -3589,8 +3555,7 @@ def fl_get_string_width(style, size, strng, strglen):
 
 
 def fl_get_string_widthTAB(style, size, strng, strglen):
-    """
-        fl_get_string_widthTAB(style, size, strng, strglen) -> width num.
+    """ fl_get_string_widthTAB(style, size, strng, strglen) -> width num.
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -3612,11 +3577,11 @@ def fl_get_string_widthTAB(style, size, strng, strglen):
 
 
 def fl_get_string_dimension(fntstyle, fntsize, strng, strglen):
-    """
-        fl_get_string_dimension(fntstyle, fntsize, strng, strglen) -> width, height
+    """ fl_get_string_dimension(fntstyle, fntsize, strng, strglen) -> width, height
 
         @attention: API change from upstream
-           fl_get_string_dimension(fntstyle, fntsize, strng, strglen, w, h)
+                    fl_get_string_dimension(fntstyle, fntsize, strng, strglen,
+                    w, h)
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -3645,11 +3610,11 @@ fl_get_string_size = fl_get_string_dimension
 
 
 def fl_get_align_xy(align, x, y, w, h, xsize, ysize, xoff, yoff):
-    """
-        fl_get_align_xy(align, x, y, w, h, xsize, ysize, xoff, yoff) -> xx, yy
+    """ fl_get_align_xy(align, x, y, w, h, xsize, ysize, xoff, yoff) -> xx, yy
 
         @attention: API change from upstream
-           fl_get_align_xy(align, x, y, w, h, xsize, ysize, xoff, yoff, xx, yy)
+                    fl_get_align_xy(align, x, y, w, h, xsize, ysize, xoff,
+                    yoff, xx, yy)
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -3682,8 +3647,7 @@ def fl_get_align_xy(align, x, y, w, h, xsize, ysize, xoff, yoff):
 
 
 def fl_drw_text(align, x, y, w, h, colr, style, size, txtstr):
-    """
-        fl_drw_text(align, x, y, w, h, colr, style, size, txtstr)
+    """ fl_drw_text(align, x, y, w, h, colr, style, size, txtstr)
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -3713,8 +3677,7 @@ def fl_drw_text(align, x, y, w, h, colr, style, size, txtstr):
 
 
 def fl_drw_text_beside(align, x, y, w, h, colr, style, size, txtstr):
-    """
-        fl_drw_text_beside(align, x, y, w, h, colr, style, size, txtstr)
+    """ fl_drw_text_beside(align, x, y, w, h, colr, style, size, txtstr)
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -3745,8 +3708,7 @@ def fl_drw_text_beside(align, x, y, w, h, colr, style, size, txtstr):
 
 
 def fl_drw_text_cursor(align, x, y, w, h, colr, style, size, txtstr, cc, pos):
-    """
-        fl_drw_text_cursor(align, x, y, w, h, colr, style, size, txtstr, cc, pos)
+    """ fl_drw_text_cursor(align, x, y, w, h, colr, style, size, txtstr, cc, pos)
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -3781,8 +3743,7 @@ def fl_drw_text_cursor(align, x, y, w, h, colr, style, size, txtstr, cc, pos):
 
 
 def fl_drw_box(style, x, y, w, h, colr, bwIn):
-    """
-        fl_drw_box(style, x, y, w, h, colr, bwIn)
+    """ fl_drw_box(style, x, y, w, h, colr, bwIn)
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -3811,15 +3772,14 @@ FL_DRAWPTR = cty.CFUNCTYPE(None, xfc.FL_Coord, xfc.FL_Coord, xfc.FL_Coord,
                            xfc.FL_Coord, cty.c_int, xfc.FL_COLOR)
 
 def fl_add_symbol(name, py_DrawPtr, scalable):
-    """
-        fl_add_symbol(name, py_DrawPtr, scalable) -> num.
+    """ fl_add_symbol(name, py_DrawPtr, scalable) -> num.
 
         Adds a symbol.
 
-        @param name : name of a symbol
-        @param py_DrawPtr : python function to draw symbol, fn(coord, coord,
-           coord, coord, num, colr)
-        @param scalable : not used
+        @param name: name of a symbol
+        @param py_DrawPtr: python function to draw symbol, fn(coord, coord,
+                           coord, coord, num, colr)
+        @param scalable: not used
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -3840,8 +3800,7 @@ def fl_add_symbol(name, py_DrawPtr, scalable):
 
 
 def fl_draw_symbol(label, x, y, w, h, colr):
-    """
-        fl_draw_symbol(label, x, y, w, h, colr) -> num.
+    """ fl_draw_symbol(label, x, y, w, h, colr) -> num.
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -3867,15 +3826,14 @@ def fl_draw_symbol(label, x, y, w, h, colr):
 
 
 def fl_mapcolor(colr, r, g, b):
-    """
-        fl_mapcolor(colr, r, g, b) -> num.
+    """ fl_mapcolor(colr, r, g, b) -> num.
 
         Maps a new color using specific values for red, green and blue.
 
-        @param colr : new color id
-        @param r : value for red
-        @param g : value for green
-        @param b : value for blue
+        @param colr: new color id
+        @param r: value for red
+        @param g: value for green
+        @param b: value for blue
 
         @status: Tested + NoDoc + Example = OK
     """
@@ -3896,8 +3854,7 @@ def fl_mapcolor(colr, r, g, b):
 
 
 def fl_mapcolorname(colr, name):
-    """
-        fl_mapcolorname(colr, name) -> num.
+    """ fl_mapcolorname(colr, name) -> num.
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -3919,8 +3876,7 @@ fl_mapcolor_name = fl_mapcolorname
 
 
 def fl_free_colors(pcolr, n):
-    """
-        fl_free_colors(pcolr, n)
+    """ fl_free_colors(pcolr, n)
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -3953,8 +3909,9 @@ def fl_free_pixels(pix, n):
 
 
 def fl_set_color_leak(y):
-    """
-        fl_set_color_leak(y)
+    """ fl_set_color_leak(y)
+
+        @status: Untested + NoDoc + NoExample = NOT OK
     """
 
     _fl_set_color_leak = cfuncproto(
@@ -3968,11 +3925,10 @@ def fl_set_color_leak(y):
 
 
 def fl_getmcolor(colr):
-    """
-        fl_getmcolor(colr) -> num., r, g,b
+    """ fl_getmcolor(colr) -> num., r, g,b
 
         @attention: API change from XForms - upstream was
-           fl_getmcolor(colr, r, g, b)
+                    fl_getmcolor(colr, r, g, b)
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -3995,10 +3951,9 @@ def fl_getmcolor(colr):
 
 
 def fl_get_pixel(colr):
-    """
-        fl_get_pixel(colr) -> pixel num.
+    """ fl_get_pixel(colr) -> pixel num.
 
-        @param colr : color id
+        @param colr: color id
 
         @status: Tested + NoDoc + Example = OK
     """
@@ -4019,11 +3974,10 @@ fl_get_flcolor = fl_get_pixel
 
 
 def fl_get_icm_color(colr):
-    """
-        fl_get_icm_color(colr) -> r, g, b
+    """ fl_get_icm_color(colr) -> r, g, b
 
         @attention: API change from XForms - upstream was
-           fl_get_icm_color(colr, r, g, b)
+                    fl_get_icm_color(colr, r, g, b)
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -4045,8 +3999,7 @@ def fl_get_icm_color(colr):
 
 
 def fl_set_icm_color(colr, r, g, b):
-    """
-        fl_set_icm_color(colr, r, g, b)
+    """ fl_set_icm_color(colr, r, g, b)
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -4066,10 +4019,9 @@ def fl_set_icm_color(colr, r, g, b):
 
 
 def fl_color(colr):
-    """
-        fl_color(colr)
+    """ fl_color(colr)
 
-        @param colr : color id
+        @param colr: color id
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -4086,10 +4038,9 @@ def fl_color(colr):
 
 
 def fl_bk_color(colr):
-    """
-        fl_bk_color(colr)
+    """ fl_bk_color(colr)
 
-        @param colr : color id
+        @param colr: color id
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -4106,10 +4057,9 @@ def fl_bk_color(colr):
 
 
 def fl_textcolor(colr):
-    """
-        fl_textcolor(colr)
+    """ fl_textcolor(colr)
 
-        @param colr : color id
+        @param colr: color id
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -4126,10 +4076,9 @@ def fl_textcolor(colr):
 
 
 def fl_bk_textcolor(colr):
-    """
-        fl_bk_textcolor(colr)
+    """ fl_bk_textcolor(colr)
 
-        @param colr : color id
+        @param colr: color id
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -4146,12 +4095,11 @@ def fl_bk_textcolor(colr):
 
 
 def fl_set_gamma(r, g, b):
-    """
-        fl_set_gamma(r, g, b)
+    """ fl_set_gamma(r, g, b)
 
-        @param r : value for red
-        @param g : value for green
-        @param b : value for blue
+        @param r: value for red
+        @param g: value for green
+        @param b: value for blue
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -4169,8 +4117,7 @@ def fl_set_gamma(r, g, b):
 
 
 def fl_show_errors(y):
-    """
-        fl_show_errors(y)
+    """ fl_show_errors(y)
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -4234,13 +4181,12 @@ def FL_crnd(a):
 # utilities for new objects
 
 def fl_add_object(pForm, pObject):
-    """
-        fl_add_object(pForm, pObject)
+    """ fl_add_object(pForm, pObject)
 
         Adds an object.
 
-        @param pForm : pointer to form
-        @param pObject : pointer to object to be added
+        @param pForm: pointer to form
+        @param pObject: pointer to object to be added
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -4255,12 +4201,11 @@ def fl_add_object(pForm, pObject):
 
 
 def fl_addto_form(pForm):
-    """
-        fl_addto_form(pForm) -> pForm
+    """ fl_addto_form(pForm) -> pForm
 
         Reopens a form for adding further objects.
 
-        @param pForm : pointer to form
+        @param pForm: pointer to form
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -4276,19 +4221,18 @@ def fl_addto_form(pForm):
 
 
 def fl_make_object(objclass, objtype, x, y, w, h, label, py_HandlePtr):
-    """
-        fl_make_object(objclass, objtype, x, y, w, h, label, py_HandlePtr) -> pObject
+    """ fl_make_object(objclass, objtype, x, y, w, h, label, py_HandlePtr) -> pObject
 
         Makes a custom object.
 
-        @param objclass : class type of object ot be made
-        @param objtype : type of the object to be made
-        @param x : horizontal position of object (upper-left corner)
-        @param y : vertical position of object (upper-left corner)
-        @param w : width in coord units
-        @param h : height coord units
-        @param label : text label of object
-        @param py_HandlePtr : python function for handling object
+        @param objclass: class type of object ot be made
+        @param objtype: type of the object to be made
+        @param x: horizontal position of object (upper-left corner)
+        @param y: vertical position of object (upper-left corner)
+        @param w: width in coord units
+        @param h: height coord units
+        @param label: text label of object
+        @param py_HandlePtr: python function for handling object
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -4320,11 +4264,10 @@ def fl_make_object(objclass, objtype, x, y, w, h, label, py_HandlePtr):
 
 
 def fl_add_child(pObject1, pObject2):
-    """
-        fl_add_child(pObject1, pObject2)
+    """ fl_add_child(pObject1, pObject2)
 
-        @param pObject1 : pointer to father object
-        @param pObject2 : pointer to child object
+        @param pObject1: pointer to father object
+        @param pObject2: pointer to child object
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -4339,12 +4282,11 @@ def fl_add_child(pObject1, pObject2):
 
 
 def fl_set_coordunit(unit):
-    """
-        fl_set_coordunit(unit)
+    """ fl_set_coordunit(unit)
 
         Sets the unit for screen coordinates.
 
-        @param unit : coord type (e.g. xfc.FL_COORD_PIXEL, ..)
+        @param unit: coord type (e.g. xfc.FL_COORD_PIXEL, ..)
 
         @status: Tested + NoDoc + Example = OK
     """
@@ -4361,12 +4303,11 @@ def fl_set_coordunit(unit):
 
 
 def fl_set_border_width(bw):
-    """
-        fl_set_border_width(bw)
+    """ fl_set_border_width(bw)
 
         Sets the width of the border.
 
-        @param bw : width of border
+        @param bw: width of border
 
         @status: Tested + NoDoc + Example = OK
     """
@@ -4382,12 +4323,11 @@ def fl_set_border_width(bw):
 
 
 def fl_set_scrollbar_type(sbtype):
-    """
-        fl_set_scrollbar_type(sbtype)
+    """ fl_set_scrollbar_type(sbtype)
 
         Sets the type of a scrollbar.
 
-        @param sbtype : type of scrollbar
+        @param sbtype: type of scrollbar
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -4404,6 +4344,14 @@ def fl_set_scrollbar_type(sbtype):
 
 
 def fl_set_thinscrollbar(thinflag):
+    """ fl_set_thinscrollbar(thinflag)
+
+        Sets if scrollbar type is thin or normal.
+
+        @param flag: flag (1 for thin or 0 for normal)
+
+        @status: Untested + NoDoc + NoExample = NOT OK
+    """
     if thinflag:
         sbtype = xfc.FL_THIN_SCROLLBAR
     else:
@@ -4412,8 +4360,7 @@ def fl_set_thinscrollbar(thinflag):
 
 
 def fl_flip_yorigin():
-    """
-        fl_flip_yorigin()
+    """ fl_flip_yorigin()
 
         @status: Tested + NoDoc + Example = OK
     """
@@ -4427,8 +4374,7 @@ def fl_flip_yorigin():
 
 
 def fl_get_coordunit():
-    """
-        fl_get_coordunit() -> coord_unit num.
+    """ fl_get_coordunit() -> coord_unit num.
 
         Returns the unit used for screen coordinates.
 
@@ -4445,8 +4391,7 @@ def fl_get_coordunit():
 
 
 def fl_get_border_width():
-    """
-        fl_get_border_width() -> width num.
+    """ fl_get_border_width() -> width num.
 
         Returns the width of border.
 
@@ -4465,13 +4410,12 @@ def fl_get_border_width():
 # misc. routines
 
 def fl_ringbell(percent):
-    """
-        fl_ringbell(percent)
+    """ fl_ringbell(percent)
 
         Sounds the keyboard ringbell (if capable).
 
-        @param percent : volume value for the bell, min -100 (off), max  100,
-           0 is default
+        @param percent: volume value for the bell, min -100 (off), 
+                        max  100, 0 is default.
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -4487,15 +4431,14 @@ def fl_ringbell(percent):
 
 
 def fl_gettime():
-    """
-        fl_gettime() -> sec, usec
+    """ fl_gettime() -> sec, usec
 
         Returns the current time, expressed in seconds and microseconds
         since 00:00 GMT January, 1970. It is most useful for computing
-        time differences
+        time differences.
 
         @attention: API change from XForms - upstream was
-           fl_gettime(sec, usec)
+                    fl_gettime(sec, usec)
 
         @status: Tested + NoDoc + Example = OK
     """
@@ -4513,8 +4456,7 @@ def fl_gettime():
 
 
 def fl_now():
-    """
-        fl_now() -> string
+    """ fl_now() -> string
 
         Returns a string form of the current date and time. The format of
         the string is of the form "Wed Jun 30 21:49:08 1993"
@@ -4532,8 +4474,7 @@ def fl_now():
 
 
 def fl_whoami():
-    """
-        fl_whoami() -> string
+    """ fl_whoami() -> string
 
         Returns the user name who is running the application.
 
@@ -4550,8 +4491,7 @@ def fl_whoami():
 
 
 def fl_mouse_button():
-    """
-        fl_mouse_button() -> num.
+    """ fl_mouse_button() -> num.
 
         @status: Tested + NoDoc + Example = OK
     """
@@ -4569,8 +4509,7 @@ fl_mousebutton = fl_mouse_button
 
 
 def fl_strdup(strng):
-    """
-        fl_strdup(strng) -> string
+    """ fl_strdup(strng) -> string
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -4587,8 +4526,7 @@ def fl_strdup(strng):
 
 
 def fl_set_err_logfp(pFile):
-    """
-        fl_set_err_logfp(pFile)
+    """ fl_set_err_logfp(pFile)
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -4609,8 +4547,7 @@ def fl_set_err_logfp(pFile):
 # FL_ERROR_FUNC = xty.CFUNCTYPE(...)
 
 def fl_set_error_handler(py_ErrorFunc):
-    """
-        fl_set_error_handler(py_ErrorFunc)
+    """ fl_set_error_handler(py_ErrorFunc)
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -4627,8 +4564,9 @@ def fl_set_error_handler(py_ErrorFunc):
 
 
 def fl_get_cmdline_args(numargs):
-    """
-        fl_get_cmdline_args(numargs) -> pointer to string
+    """ fl_get_cmdline_args(numargs) -> pointer to string
+
+        @status: Untested + NoDoc + NoExample = NOT OK
     """
 
     _fl_get_cmdline_args = cfuncproto(
@@ -4660,13 +4598,12 @@ cfunc_voidp_voidp_sizet = cty.CFUNCTYPE(cty.c_void_p, cty.c_void_p, xfc.size_t)
 
 
 def fl_msleep(msec):
-    """
-        fl_msleep(msec) -> num.
+    """ fl_msleep(msec) -> num.
 
         Waits for a number of milliseconds (with the best resolution
         possible on your system)
 
-        @param msec : milliseconds to sleep
+        @param msec: milliseconds to sleep
 
         @status: Tested + NoDoc + Example = OK
     """
@@ -4683,8 +4620,7 @@ def fl_msleep(msec):
 
 
 def fl_is_same_object(pObject1, pObject2):
-    """
-        fl_is_same_object(pObject1, pObject2) -> num.
+    """ fl_is_same_object(pObject1, pObject2) -> num.
 
         Does a comparison between two objects (returns non-zero is they are
         the same, zero if not).
@@ -4737,18 +4673,17 @@ def fl_get_gc():
 
 
 def fl_mode_capable(mode, warn):
-    """
-        fl_mode_capable(mode, warn) -> mode num.
+    """ fl_mode_capable(mode, warn) -> mode num.
 
         Determines the visual classes the system is capable of. It returns
         1 if the system is capable of displaying in this visual class and
         0 otherwise.
 
-        @param mode : visual mode (i.e. xfc.FL_GrayScale, xfc.FL_StaticGray,
-           xfc.FL_PseudoColor, xfc.FL_StaticColor, xfc.FL_DirectColor and
-           xfc.FL_TrueColor)
-        @param warn : warning (0|1), if set a warning is printed out in case
-           the capability asked for isn't available
+        @param mode: visual mode (i.e. xfc.GrayScale, xfc.StaticGray,
+                     xfc.PseudoColor, xfc.StaticColor, xfc.DirectColor and
+                     xfc.TrueColor)
+        @param warn: warning (0|1), if set a warning is printed out in case
+                     the capability asked for isn't available
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -4778,8 +4713,7 @@ def fl_default_window():
 # Rectangles
 
 def fl_rectangle(fill, x, y, w, h, colr):
-    """
-        fl_rectangle(fill, x, y, w, h, colr)
+    """ fl_rectangle(fill, x, y, w, h, colr)
 
         @status: Tested + NoDoc + Example = OK
     """
@@ -4804,8 +4738,7 @@ def fl_rectangle(fill, x, y, w, h, colr):
 
 
 def fl_rectbound(x, y, w, h, colr):
-    """
-        fl_rectbound(x, y, w, h, colr)
+    """ fl_rectbound(x, y, w, h, colr)
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -4828,8 +4761,7 @@ def fl_rectbound(x, y, w, h, colr):
 
 
 def fl_rectf(x, y, w, h, colr):
-    """
-        fl_rectf(x, y, w, h, colr)
+    """ fl_rectf(x, y, w, h, colr)
 
         @status: Tested + NoDoc + Example = OK
     """
@@ -4838,8 +4770,7 @@ def fl_rectf(x, y, w, h, colr):
 
 
 def fl_rect(x, y, w, h, colr):
-    """
-        fl_rect(x, y, w, h, colr)
+    """ fl_rect(x, y, w, h, colr)
 
         @status: Tested + NoDoc + Example = OK
     """
@@ -4850,8 +4781,7 @@ def fl_rect(x, y, w, h, colr):
 # Rectangle with rounded-corners
 
 def fl_roundrectangle(fill, x, y, w, h, colr):
-    """
-        fl_roundrectangle(fill, x, y, w, h, colr)
+    """ fl_roundrectangle(fill, x, y, w, h, colr)
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -4876,8 +4806,7 @@ def fl_roundrectangle(fill, x, y, w, h, colr):
 
 
 def fl_roundrectf(x, y, w, h, colr):
-    """
-        fl_roundrectf(x, y, w, h, colr)
+    """ fl_roundrectf(x, y, w, h, colr)
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -4886,8 +4815,7 @@ def fl_roundrectf(x, y, w, h, colr):
 
 
 def fl_roundrect(x, y, w, h, colr):
-    """
-        fl_roundrect(x, y, w, h, colr)
+    """ fl_roundrect(x, y, w, h, colr)
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -4898,13 +4826,12 @@ def fl_roundrect(x, y, w, h, colr):
 # General polygon and polylines
 
 def fl_polygon(fill, Point, numpt, colr):
-    """
-        fl_polygon(fill, Point, numpt, colr)
+    """ fl_polygon(fill, Point, numpt, colr)
 
-        @param fill : if polygon has to be filled or not (1|0)
-        @param Point : xfc.FL_POINT class instance (array)
-        @param numpt : number of points
-        @param colr : value of color to be set
+        @param fill: if polygon has to be filled or not (1|0)
+        @param Point: an array of xfc.FL_POINT class instance
+        @param numpt: number of points
+        @param colr: value of color to be set
 
         @status: Tested + NoDoc + Example = OK
     """
@@ -4925,12 +4852,11 @@ def fl_polygon(fill, Point, numpt, colr):
 
 
 def fl_polyf(Point, numpt, colr):
-    """
-        fl_polyf(Point, numpt, colr)
+    """ fl_polyf(Point, numpt, colr)
 
-        @param Point : xfc.FL_POINT class instance (array)
-        @param numpt : number of points
-        @param colr : value of color to be set
+        @param Point: an array of xfc.FL_POINT class instance
+        @param numpt: number of points
+        @param colr: value of color to be set
 
         @status: Tested + NoDoc + Example = OK
     """
@@ -4939,12 +4865,11 @@ def fl_polyf(Point, numpt, colr):
 
 
 def fl_polyl(Point, numpt, colr):
-    """
-        fl_polyl(Point, numpt, colr)
+    """ fl_polyl(Point, numpt, colr)
 
-        @param Point : xfc.FL_POINT class instance (array)
-        @param numpt : number of points
-        @param colr : value of color to be set
+        @param Point: an array of xfc.FL_POINT class instance
+        @param numpt: number of points
+        @param colr: value of color to be set
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -4953,12 +4878,11 @@ def fl_polyl(Point, numpt, colr):
 
 
 def fl_polybound(Point, numpt, colr):
-    """
-        fl_polyl(Point, numpt, colr)
+    """ fl_polyl(Point, numpt, colr)
 
-        @param Point : xfc.FL_POINT class instance (array)
-        @param numpt : number of points
-        @param colr : value of color to be set
+        @param Point: an array of xfc.FL_POINT class instance
+        @param numpt: number of points
+        @param colr: value of color to be set
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -4968,12 +4892,11 @@ def fl_polybound(Point, numpt, colr):
 
 
 def fl_lines(Point, numpt, colr):
-    """
-        fl_lines(Point, numpt, colr)
+    """ fl_lines(Point, numpt, colr)
 
-        @param Point : xfc.FL_POINT class instance (array)
-        @param numpt : number of points
-        @param colr : value of color to be set
+        @param Point: an array of xfc.FL_POINT class instance
+        @param numpt: number of points
+        @param colr: value of color to be set
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -4992,8 +4915,7 @@ def fl_lines(Point, numpt, colr):
 
 
 def fl_line(xi, yi, xf, yf, colr):
-    """
-        fl_line(xi, yi, xf, yf, colr)
+    """ fl_line(xi, yi, xf, yf, colr)
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -5039,12 +4961,11 @@ def fl_point(x, y, colr):
 
 
 def fl_points(Point, numpt, colr):
-    """
-        fl_points(Point, numpt, colr)
+    """ fl_points(Point, numpt, colr)
 
-        @param Point : xfc.FL_POINT class instance (array)
-        @param numpt : number of points
-        @param colr : value of color to be set
+        @param Point: an array of xfc.FL_POINT class instance
+        @param numpt: number of points
+        @param colr: value of color to be set
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -5144,8 +5065,7 @@ def fl_linestyle(n):
 
 
 def fl_drawmode(request):
-    """
-        fl_drawmode(request)
+    """ fl_drawmode(request)
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -5161,8 +5081,7 @@ def fl_drawmode(request):
 
 
 def fl_get_linewidth():
-    """
-        fl_get_linewidth() -> width num.
+    """ fl_get_linewidth() -> width num.
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -5180,8 +5099,7 @@ fl_set_linewidth = fl_linewidth
 
 
 def fl_get_linestyle():
-    """
-        fl_get_linestyle() -> style num.
+    """ fl_get_linestyle() -> style num.
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -5199,8 +5117,7 @@ fl_set_linestyle = fl_linestyle
 
 
 def fl_get_drawmode():
-    """
-        fl_get_drawmode() -> mode num.
+    """ fl_get_drawmode() -> mode num.
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -5220,8 +5137,7 @@ fl_set_drawmode = fl_drawmode
 # Ellipses
 
 def fl_oval(fill, x, y, w, h, colr):
-    """
-        fl_oval(fill, x, y, w, h, colr)
+    """ fl_oval(fill, x, y, w, h, colr)
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -5246,8 +5162,7 @@ def fl_oval(fill, x, y, w, h, colr):
 
 
 def fl_ovalbound(x, y, w, h, colr):
-    """
-        fl_ovalbound(x, y, w, h, colr)
+    """ fl_ovalbound(x, y, w, h, colr)
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -5270,8 +5185,7 @@ def fl_ovalbound(x, y, w, h, colr):
 
 
 def fl_ovalarc(fill, x, y, w, h, t0, dt, colr):
-    """
-        fl_ovalarc(fill, x, y, w, h, t0, dt, colr)
+    """ fl_ovalarc(fill, x, y, w, h, t0, dt, colr)
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -5298,8 +5212,7 @@ def fl_ovalarc(fill, x, y, w, h, t0, dt, colr):
 
 
 def fl_ovalf(x, y, w, h, colr):
-    """
-        fl_ovalf(x, y, w, h, colr)
+    """ fl_ovalf(x, y, w, h, colr)
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -5308,8 +5221,7 @@ def fl_ovalf(x, y, w, h, colr):
 
 
 def fl_ovall(x, y, w, h, colr):
-    """
-        fl_ovall(x, y, w, h, colr)
+    """ fl_ovall(x, y, w, h, colr)
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -5321,8 +5233,7 @@ fl_oval_bound = fl_ovalbound
 
 
 def fl_circf(x, y, r, colr):
-    """
-        fl_circf(x, y, r, colr)
+    """ fl_circf(x, y, r, colr)
 
         @status: Tested + NoDoc + Example = OK
     """
@@ -5331,8 +5242,7 @@ def fl_circf(x, y, r, colr):
 
 
 def fl_circ(x, y, r, colr):
-    """
-        fl_circ()x, y, r, colr
+    """ fl_circ()x, y, r, colr
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -5343,8 +5253,7 @@ def fl_circ(x, y, r, colr):
 # Arcs
 
 def fl_pieslice(fill, x, y, w, h, a1, a2, colr):
-    """
-        fl_pieslice(fill, x, y, w, h, a1, a2, colr)
+    """ fl_pieslice(fill, x, y, w, h, a1, a2, colr)
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -5371,8 +5280,7 @@ def fl_pieslice(fill, x, y, w, h, a1, a2, colr):
 
 
 def fl_arcf(x, y, r, a1, a2, colr):
-    """
-        fl_arcf(x, y, r, a1, a2, colr)
+    """ fl_arcf(x, y, r, a1, a2, colr)
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -5381,8 +5289,7 @@ def fl_arcf(x, y, r, a1, a2, colr):
 
 
 def fl_arc(x, y, r, a1, a2, colr):
-    """
-        fl_arc(x, y, r, a1, a2, colr)
+    """ fl_arc(x, y, r, a1, a2, colr)
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -5393,8 +5300,7 @@ def fl_arc(x, y, r, a1, a2, colr):
 # High level drawing routines
 
 def fl_drw_frame(style, x, y, w, h, colr, bw):
-    """
-        fl_drw_frame(style, x, y, w, h, colr, bw)
+    """ fl_drw_frame(style, x, y, w, h, colr, bw)
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -5420,8 +5326,7 @@ def fl_drw_frame(style, x, y, w, h, colr, bw):
 
 
 def fl_drw_checkbox(boxtype, x, y, w, h, colr, bw):
-    """
-        fl_drw_checkbox(boxtype, x, y, w, h, colr, bw)
+    """ fl_drw_checkbox(boxtype, x, y, w, h, colr, bw)
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -5433,6 +5338,7 @@ def fl_drw_checkbox(boxtype, x, y, w, h, colr, bw):
             """void fl_drw_checkbox(int type, FL_Coord x, FL_Coord y,
                FL_Coord w, FL_Coord h, FL_COLOR col, int bw)
             """)
+    check_admitted_listvalues(boxtype, xfc.BOXTYPE_list)
     check_admitted_listvalues(colr, xfc.COLOR_list)
     iboxtype = convert_to_int(boxtype)
     ix = convert_to_FL_Coord(x)
@@ -5449,8 +5355,7 @@ def fl_drw_checkbox(boxtype, x, y, w, h, colr, bw):
 # Interfaces
 
 def fl_get_fontstruct(style, size):
-    """
-        fl_get_fontstruct(style, size) -> XFontStruct class
+    """ fl_get_fontstruct(style, size) -> XFontStruct class
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -5472,11 +5377,10 @@ fl_get_fntstruct = fl_get_font_struct
 
 
 def fl_get_mouse():
-    """
-        fl_get_mouse() -> window, x, y, keymask
+    """ fl_get_mouse() -> window, x, y, keymask
 
         @attention: API change from XForms - upstream was
-           fl_get_mouse(x, y, keymask)
+                    fl_get_mouse(x, y, keymask)
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -5497,8 +5401,7 @@ def fl_get_mouse():
 
 
 def fl_set_mouse(mx, my):
-    """
-        fl_set_mouse(mx, my)
+    """ fl_set_mouse(mx, my)
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -5515,11 +5418,10 @@ def fl_set_mouse(mx, my):
 
 
 def fl_get_win_mouse(win):
-    """
-        fl_get_win_mouse(win) -> window, x, y, keymask
+    """ fl_get_win_mouse(win) -> window, x, y, keymask
 
         @attention: API change from XForms - upstream was
-           fl_get_win_mouse(win, x, y, keymask)
+                    fl_get_win_mouse(win, x, y, keymask)
 
         @status: Tested + NoDoc + Example = OK
     """
@@ -5541,13 +5443,12 @@ def fl_get_win_mouse(win):
 
 
 def fl_get_form_mouse(pForm):
-    """
-        fl_get_form_mouse(pForm) -> window, x, y, keymask
+    """ fl_get_form_mouse(pForm) -> window, x, y, keymask
 
-        @param pForm : pointer to form
+        @param pForm: pointer to form
 
         @attention: API change from XForms - upstream was
-           fl_get_form_mouse(fm, x, y, keymask)
+                    fl_get_form_mouse(fm, x, y, keymask)
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -5568,12 +5469,11 @@ def fl_get_form_mouse(pForm):
 
 
 def fl_win_to_form(win):
-    """
-        fl_win_to_form(win) -> pForm
+    """ fl_win_to_form(win) -> pForm
 
-        Returns the form that's shown in win.
+        Returns the form that is shown in win.
 
-        @param win  : window id whose form is shown
+        @param win : window id whose form is shown
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -5590,10 +5490,9 @@ def fl_win_to_form(win):
 
 
 def fl_set_form_icon(pForm, icon, mask):
-    """
-        fl_set_form_icon(pForm, icon, mask)
+    """ fl_set_form_icon(pForm, icon, mask)
 
-        @param pForm : pointer to form
+        @param pForm: pointer to form
 
         @status: Tested + NoDoc + Example = OK
     """
@@ -5610,14 +5509,13 @@ def fl_set_form_icon(pForm, icon, mask):
 
 
 def fl_get_decoration_sizes(pForm):
-    """
-        fl_get_decoration_sizes(pForm) -> num., top, right, bottom, left
+    """ fl_get_decoration_sizes(pForm) -> num., top, right, bottom, left
 
         Returns the sizes of the "decorations" the window manager puts around
         a form's window. Returns 0 on success and 1 if the form isn't visible
         or it's a form embedded into another form.
 
-        @param pForm : pointer to form
+        @param pForm: pointer to form
 
         @attention: API change from XForms - upstream was
            fl_get_decoration_sizes(pForm, top, right, bottom, left)
@@ -5644,10 +5542,9 @@ def fl_get_decoration_sizes(pForm):
 
 
 def fl_raise_form(pForm):
-    """
-        fl_raise_form(pForm)
+    """ fl_raise_form(pForm)
 
-        @param pForm : pouinter to form to be raised
+        @param pForm: pouinter to form to be raised
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -5662,10 +5559,9 @@ def fl_raise_form(pForm):
 
 
 def fl_lower_form(pForm):
-    """
-        fl_lower_form(pForm)
+    """ fl_lower_form(pForm)
 
-        @param pForm : pouinter to form to be lowered
+        @param pForm: pointer to form to be lowered
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -5680,11 +5576,10 @@ def fl_lower_form(pForm):
 
 
 def fl_set_foreground(gc, colr):
-    """
-        fl_set_foreground(gc, colr)
+    """ fl_set_foreground(gc, colr)
 
-        @param gc : ?
-        @param colr : color value to be set as foreground
+        @param gc: ?
+        @param colr: color value to be set as foreground
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -5701,11 +5596,10 @@ def fl_set_foreground(gc, colr):
 
 
 def fl_set_background(gc, colr):
-    """
-        fl_set_background(gc, colr)
+    """ fl_set_background(gc, colr)
 
-        @param gc : ?
-        @param colr : color value to be set as background
+        @param gc: ?
+        @param colr: color value to be set as background
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -5724,12 +5618,11 @@ def fl_set_background(gc, colr):
 # General windowing support
 
 def fl_wincreate(title):
-    """
-        fl_wincreate(title) -> window ID
+    """ fl_wincreate(title) -> window ID
 
         Creates a window with a specified title.
 
-        @param title : title of the window
+        @param title: title of the window
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -5746,12 +5639,11 @@ def fl_wincreate(title):
 
 
 def fl_winshow(win):
-    """
-        fl_winshow(win) -> window
+    """ fl_winshow(win) -> window
 
         Shows the window (created with fl_wincreate)
 
-        @param win : window id to show
+        @param win: window id to show
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -5768,13 +5660,12 @@ def fl_winshow(win):
 
 
 def fl_winopen(title):
-    """
-        fl_winopen(title) -> window
+    """ fl_winopen(title) -> window
 
         Opens (creates and shows) a toplevel window with the specified
         title.
 
-        @param title : title of the window
+        @param title: title of the window
 
         @status: Tested + NoDoc + Example = OK
     """
@@ -5791,12 +5682,11 @@ def fl_winopen(title):
 
 
 def fl_winhide(win):
-    """
-        fl_winhide(win)
+    """ fl_winhide(win)
 
         Hides a window.
 
-        @param win : window id
+        @param win: window id
     """
 
     _fl_winhide = cfuncproto(
@@ -5810,12 +5700,11 @@ def fl_winhide(win):
 
 
 def fl_winclose(win):
-    """
-        fl_winclose(win)
+    """ fl_winclose(win)
 
         Closes a window.
 
-        @param win : window id
+        @param win: window id
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -5831,10 +5720,9 @@ def fl_winclose(win):
 
 
 def fl_winset(win):
-    """
-        fl_winset(win)
+    """ fl_winset(win)
 
-        @param win : window id
+        @param win: window id
 
         @status: Tested + NoDoc + Example = OK
     """
@@ -5850,14 +5738,13 @@ def fl_winset(win):
 
 
 def fl_winreparent(win, winnewparent):
-    """
-        fl_winreparent(win, winnewparent) -> num.
+    """ fl_winreparent(win, winnewparent) -> num.
 
         Makes a toplevel window a subwindow of another (new parent) window;
         both the window and the parent window must be valid ones.
 
-        @param win : window to be made a subwindow
-        @param winnewparent : window to become its new parent window
+        @param win: window to be made a subwindow
+        @param winnewparent: window to become its new parent window
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -5875,10 +5762,9 @@ def fl_winreparent(win, winnewparent):
 
 
 def fl_winfocus(win):
-    """
-        fl_winfocus(win)
+    """ fl_winfocus(win)
 
-        @param win : window id
+        @param win: window id
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -5894,8 +5780,7 @@ def fl_winfocus(win):
 
 
 def fl_winget():
-    """
-        fl_winget() -> window
+    """ fl_winget() -> window
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -5910,10 +5795,9 @@ def fl_winget():
 
 
 def fl_iconify(win):
-    """
-        fl_iconify(win) -> num.
+    """ fl_iconify(win) -> num.
 
-        @param win : window id
+        @param win: window id
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -5930,14 +5814,13 @@ def fl_iconify(win):
 
 
 def fl_winresize(win, neww, newh):
-    """
-        fl_winresize(win, neww, newh)
+    """ fl_winresize(win, neww, newh)
 
         Resizes a window.
 
-        @param win : window to resize
-        @param neww : new width
-        @param newh : new height
+        @param win: window to resize
+        @param neww: new width
+        @param newh: new height
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -5955,14 +5838,13 @@ def fl_winresize(win, neww, newh):
 
 
 def fl_winmove(win, dx, dy):
-    """
-        fl_winmove(win, dx, dy)
+    """ fl_winmove(win, dx, dy)
 
         Moves a window to a new position.
 
-        @param win : window to move to a new position
-        @param dx : new horizontal position
-        @param dy : new vertical position
+        @param win: window to move to a new position
+        @param dx: new horizontal position
+        @param dy: new vertical position
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -5980,16 +5862,15 @@ def fl_winmove(win, dx, dy):
 
 
 def fl_winreshape(win, dx, dy, w, h):
-    """
-        fl_winreshape(win, dx, dy, w, h)
+    """ fl_winreshape(win, dx, dy, w, h)
 
-        Reshapes (resizes and moves) a window
+        Reshapes (resizes and moves) a window.
 
-        @param win : window to reshape
-        @param dx : new horizontal position (upper-left corner)
-        @param dy : new vertical position (upper-left corner)
-        @param w : width in coord units
-        @param h : height in coord units
+        @param win: window to reshape
+        @param dx: new horizontal position (upper-left corner)
+        @param dy: new vertical position (upper-left corner)
+        @param w: width in coord units
+        @param h: height in coord units
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -6011,14 +5892,13 @@ def fl_winreshape(win, dx, dy, w, h):
 
 
 def fl_winicon(win, icon, mask):
-    """
-        fl_winicon(win, icon, mask)
+    """ fl_winicon(win, icon, mask)
 
         Installs an icon for the window.
 
-        @param win : window
-        @param icon : pixmap icon to be installed in window
-        @param mask : mask
+        @param win: window
+        @param icon: pixmap icon to be installed in window
+        @param mask: mask
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -6036,13 +5916,12 @@ def fl_winicon(win, icon, mask):
 
 
 def fl_winbackground(win, bkcolr):
-    """
-        fl_winbackground(win, bkcolr)
+    """ fl_winbackground(win, bkcolr)
 
         Sets the background of window to a certain color.
 
-        @param win : window id
-        @param bkcolr : background color to be set
+        @param win: window id
+        @param bkcolr: background color to be set
 
         @status: Tested + NoDoc + Example = OK
     """
@@ -6063,8 +5942,7 @@ fl_win_background = fl_winbackground
 
 
 def fl_winstepsize(win, dx, dy):
-    """
-        fl_winstepsize(win, dx, dy)
+    """ fl_winstepsize(win, dx, dy)
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -6087,12 +5965,11 @@ fl_set_winstepunit = fl_winstepunit
 
 
 def fl_winisvalid(win):
-    """
-        fl_winisvalid(win) -> num.
+    """ fl_winisvalid(win) -> num.
 
         Returns if a window is a valid one.
 
-        @param win : window to evaluate
+        @param win: window to evaluate
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -6109,13 +5986,12 @@ def fl_winisvalid(win):
 
 
 def fl_wintitle(win, title):
-    """
-        fl_wintitle(win, title)
+    """ fl_wintitle(win, title)
 
         Changes the window title (and its associated icon title).
 
-        @param win : window
-        @param title : window title to be set
+        @param win: window
+        @param title: window title to be set
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -6132,13 +6008,12 @@ def fl_wintitle(win, title):
 
 
 def fl_winicontitle(win, title):
-    """
-        fl_winicontitle(win, title)
+    """ fl_winicontitle(win, title)
 
         Changes only the icon title for the window.
 
-        @param win : window
-        @param title : icon title to be set
+        @param win: window
+        @param title: icon title to be set
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -6155,13 +6030,12 @@ def fl_winicontitle(win, title):
 
 
 def fl_winposition(x, y):
-    """
-        fl_winposition(x, y)
+    """ fl_winposition(x, y)
 
         Sets the position of a window to be opened.
 
-        @param x : horizontal position of the window (upper-left corner)
-        @param y : vertical position of the window (upper-left corner)
+        @param x: horizontal position of the window (upper-left corner)
+        @param y: vertical position of the window (upper-left corner)
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -6181,15 +6055,14 @@ fl_pref_winposition = fl_winposition
 
 
 def fl_winminsize(win, w, h):
-    """
-        fl_winminsize(win, w, h)
+    """ fl_winminsize(win, w, h)
 
         Sets a constraint for a resizable window whose size will be within a
         range not less than minumum (to be used before calling fl_winopen).
 
-        @param win : window to be set
-        @param w : minimum width of window
-        @param h : minimum height of window
+        @param win: window to be set
+        @param w: minimum width of window
+        @param h: minimum height of window
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -6207,15 +6080,14 @@ def fl_winminsize(win, w, h):
 
 
 def fl_winmaxsize(win, w, h):
-    """
-        fl_winmaxsize(win, w, h)
+    """ fl_winmaxsize(win, w, h)
 
         Sets a constraint for a resizable window whose size will be within a
         range not bigger than maximum (before calling fl_winopen).
 
-        @param win : window to be set
-        @param w : maximum width of window
-        @param h : maximum height of window
+        @param win: window to be set
+        @param w: maximum width of window
+        @param h: maximum height of window
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -6233,14 +6105,13 @@ def fl_winmaxsize(win, w, h):
 
 
 def fl_winaspect(win, x, y):
-    """
-        fl_winaspect(win, x, y)
+    """ fl_winaspect(win, x, y)
 
         Sets the aspect ratio of the window for later interactive resizing.
 
-        @param win : window to be set
-        @param x : horizontal aspect ratio
-        @param y : vertical aspect ratio
+        @param win: window to be set
+        @param x: horizontal aspect ratio
+        @param y: vertical aspect ratio
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -6258,8 +6129,9 @@ def fl_winaspect(win, x, y):
 
 
 def fl_reset_winconstraints(win):
-    """
-        fl_reset_winconstraints(win)
+    """ fl_reset_winconstraints(win)
+
+        @param win: window to be reset
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -6275,14 +6147,13 @@ def fl_reset_winconstraints(win):
 
 
 def fl_winsize(w, h):
-    """
-        fl_winsize(w, h)
+    """ fl_winsize(w, h)
 
         Sets the preferred window size (before calling fl_winopen), and makes
         the window non-resizeable.
 
-        @param w : width in coord units
-        @param h : height in coord units
+        @param w: width in coord units
+        @param h: height in coord units
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -6302,13 +6173,12 @@ fl_pref_winsize = fl_winsize
 
 
 def fl_initial_winsize(w, h):
-    """
-        fl_initial_winsize(w, h)
+    """ fl_initial_winsize(w, h)
 
         Sets the preferred window size (before calling fl_winopen).
 
-        @param w : width in coord units
-        @param h : height in coord units
+        @param w: width in coord units
+        @param h: height in coord units
 
         @status: Tested + NoDoc + Example = OK
     """
@@ -6325,8 +6195,7 @@ def fl_initial_winsize(w, h):
 
 
 def fl_initial_winstate(state):
-    """
-        fl_initial_winstate(state)
+    """ fl_initial_winstate(state)
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -6342,8 +6211,7 @@ def fl_initial_winstate(state):
 
 
 def fl_create_colormap(pXVisualInfo, nfill):
-    """
-        fl_create_colormap(pXVisualInfo, nfill) -> colormap
+    """ fl_create_colormap(pXVisualInfo, nfill) -> colormap
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -6360,16 +6228,15 @@ def fl_create_colormap(pXVisualInfo, nfill):
 
 
 def fl_wingeometry(x, y, w, h):
-    """
-        fl_wingeometry(x, y, w, h)
+    """ fl_wingeometry(x, y, w, h)
 
         Sets the initial geometry (position and size) of the window to be
         opened; the window will not be resizable.
 
-        @param x : horizontal position (upper-left corner)
-        @param y : vertical position (upper-left corner)
-        @param w : width in coord units
-        @param h : height in coord units
+        @param x: horizontal position (upper-left corner)
+        @param y: vertical position (upper-left corner)
+        @param w: width in coord units
+        @param h: height in coord units
 
         @status: Tested + NoDoc + Example = OK
     """
@@ -6392,16 +6259,15 @@ fl_pref_wingeometry = fl_wingeometry
 
 
 def fl_initial_wingeometry(x, y, w, h):
-    """
-        fl_initial_wingeometry(x, y, w, h)
+    """ fl_initial_wingeometry(x, y, w, h)
 
         Sets the initial geometry (position and size) of the window to be
         opened.
 
-        @param x : horizontal position (upper-left corner)
-        @param y : vertical position (upper-left corner)
-        @param w : width in coord units
-        @param h : height in coord units
+        @param x: horizontal position (upper-left corner)
+        @param y: vertical position (upper-left corner)
+        @param w: width in coord units
+        @param h: height in coord units
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -6421,8 +6287,7 @@ def fl_initial_wingeometry(x, y, w, h):
 
 
 def fl_noborder():
-    """
-        fl_noborder()
+    """ fl_noborder()
 
         Suppresses the window manager's decoration (before creating the
         window).
@@ -6439,8 +6304,7 @@ def fl_noborder():
 
 
 def fl_transient():
-    """
-        fl_transient()
+    """ fl_transient()
 
         Makes a window a transient one (before creating the window).
 
@@ -6456,13 +6320,12 @@ def fl_transient():
 
 
 def fl_get_winsize(win):
-    """
-        fl_get_winsize(win) -> width, height
+    """ fl_get_winsize(win) -> width, height
 
-        @param win : window
+        @param win: window
 
         @attention: API change from XForms - upstream was
-           fl_get_winsize(win, w, h)
+                    fl_get_winsize(win, w, h)
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -6482,11 +6345,12 @@ def fl_get_winsize(win):
 
 
 def fl_get_winorigin(win):
-    """
-        fl_get_winorigin(win) -> x, y
+    """ fl_get_winorigin(win) -> x, y
+
+        @param win: window
 
         @attention: API change from XForms - upstream was
-           fl_get_winorigin(win, x, y)
+                    fl_get_winorigin(win, x, y)
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -6506,12 +6370,11 @@ def fl_get_winorigin(win):
 
 
 def fl_get_wingeometry(win):
-    """
-        fl_get_wingeometry(win) -> x, y, w, h
+    """ fl_get_wingeometry(win) -> x, y, w, h
 
         Returns geometry (position and size) of a window.
 
-        @param win : window
+        @param win: window
 
         @attention: API change from XForms - upstream was
            fl_get_wingeometry(win, x, y, w, h)
@@ -6567,8 +6430,9 @@ def FL_IS_CANVAS(pObject):
 
 # The window an object belongs to - for drawing
 def FL_ObjWin(pObject):
-    """
-        FL_ObjWin(pObject)
+    """ FL_ObjWin(pObject)
+
+        @param pObject: pointer to object
 
         @status: Tested + NoDoc + Example = OK
     """
@@ -6583,7 +6447,7 @@ def fl_get_real_object_window(pObject):
     """
         fl_get_real_object_window(pObject) -> window
 
-        @param pObject : pointer to object
+        @param pObject: pointer to object
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -6604,8 +6468,9 @@ FL_OBJECT_WID = FL_ObjWin
 # Replacements for X functions that access the event queue
 
 def fl_XNextEvent(pXEvent):
-    """
-        fl_XNextEvent(pXEvent) -> event num.
+    """ fl_XNextEvent(pXEvent) -> event num.
+
+        @param: pXEvent: pointer to XEvent
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -6621,8 +6486,9 @@ def fl_XNextEvent(pXEvent):
 
 
 def fl_XPeekEvent(pXEvent):
-    """
-        fl_XPeekEvent(pXEvent) -> event num.
+    """ fl_XPeekEvent(pXEvent) -> event num.
+
+        @param: pXEvent: pointer to XEvent
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -6638,8 +6504,7 @@ def fl_XPeekEvent(pXEvent):
 
 
 def fl_XEventsQueued(mode):
-    """
-        fl_XEventsQueued(mode) -> event num.
+    """ fl_XEventsQueued(mode) -> event num.
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -6656,8 +6521,9 @@ def fl_XEventsQueued(mode):
 
 
 def fl_XPutBackEvent(pXEvent):
-    """
-        fl_XPutBackEvent(pXEvent)
+    """ fl_XPutBackEvent(pXEvent)
+
+        @param: pXEvent: pointer to XEvent
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -6672,8 +6538,7 @@ def fl_XPutBackEvent(pXEvent):
 
 
 def fl_last_event():
-    """
-        fl_last_event() -> event
+    """ fl_last_event() -> pXEvent
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -6691,12 +6556,11 @@ FL_APPEVENT_CB = cty.CFUNCTYPE(cty.c_int, cty.POINTER(xfc.XEvent),
                                cty.c_void_p)
 
 def fl_set_event_callback(py_AppEventCb, vdata):
-    """
-        fl_set_event_callback(py_AppEventCb, vdata) -> event callback
+    """ fl_set_event_callback(py_AppEventCb, vdata) -> event callback
 
-        @param py_AppEventCb : python function callback, fn(pXEvent,
-           ptr_void) -> num.
-        @param vdata : user data
+        @param py_AppEventCb: python function callback, returning value
+        @type py_AppEventCb: fn(pXEvent, ptr_void) -> num.
+        @param vdata: user data
 
         @status: Tested + NoDoc + Example = OK
     """
@@ -6716,8 +6580,11 @@ def fl_set_event_callback(py_AppEventCb, vdata):
 
 
 def fl_set_idle_callback(py_AppEventCb, vdata):
-    """
-        fl_set_idle_callback(py_AppEventCb, vdata) -> event callback func.
+    """ fl_set_idle_callback(py_AppEventCb, vdata) -> event callback func.
+
+        @param py_AppEventCb: python function callback, returning value
+        @type py_AppEventCb: fn(pXEvent, ptr_void) -> num.
+        @param vdata: user data
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -6737,8 +6604,7 @@ def fl_set_idle_callback(py_AppEventCb, vdata):
 
 
 def fl_addto_selected_xevent(win, mask):
-    """
-        fl_addto_selected_xevent(win, mask) -> num.
+    """ fl_addto_selected_xevent(win, mask) -> num.
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -6756,8 +6622,7 @@ def fl_addto_selected_xevent(win, mask):
 
 
 def fl_remove_selected_xevent(win, mask):
-    """
-        fl_remove_selected_xevent(win, mask) -> num.
+    """ fl_remove_selected_xevent(win, mask) -> num.
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -6778,8 +6643,7 @@ fl_add_selected_xevent = fl_addto_selected_xevent
 
 
 def fl_set_idle_delta(delta):
-    """
-        fl_set_idle_delta(delta)
+    """ fl_set_idle_delta(delta)
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -6795,16 +6659,15 @@ def fl_set_idle_delta(delta):
 
 
 def fl_add_event_callback(win, ev, py_AppEventCb, vdata):
-    """
-        fl_add_event_callback(win, ev, py_AppEventCb, vdata) -> event callback
+    """ fl_add_event_callback(win, ev, py_AppEventCb, vdata) -> event callback
 
         Adds an event handler for a window.
 
-        @param win : window id to add event handler to
-        @param ev : event number
-        @param py_AppEventCb : python function for handling event, fn(pXevent,
-           ptr_void) -> num
-        @param vdata : user data
+        @param win: window id to add event handler to
+        @param ev: event number
+        @param py_AppEventCb: python function callback, returning value
+        @type py_AppEventCb: fn(pXEvent, ptr_void) -> num.
+        @param vdata: user data
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -6827,14 +6690,13 @@ def fl_add_event_callback(win, ev, py_AppEventCb, vdata):
 
 
 def fl_remove_event_callback(win, ev):
-    """
-        fl_remove_event_callback(win, ev)
+    """ fl_remove_event_callback(win, ev)
 
         Removes one or all event callbacks for a window. May be called
         with for a window for which no event callbacks have been set.
 
-        @param win : window id
-        @param ev : evnet number
+        @param win: window id
+        @param ev: event number
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -6851,10 +6713,9 @@ def fl_remove_event_callback(win, ev):
 
 
 def fl_activate_event_callbacks(win):
-    """
-        fl_activate_event_callbacks(win)
+    """ fl_activate_event_callbacks(win)
 
-        @param win : window whose events are referred to
+        @param win: window whose events are referred to
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -6870,8 +6731,7 @@ def fl_activate_event_callbacks(win):
 
 
 def fl_print_xevent_name(where, pXEvent):
-    """
-        fl_print_xevent_name(where, pXEvent) -> pXEvent
+    """ fl_print_xevent_name(where, pXEvent) -> pXEvent
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -6889,8 +6749,7 @@ def fl_print_xevent_name(where, pXEvent):
 
 
 def fl_XFlush():
-    """
-        fl_XFlush()
+    """ fl_XFlush()
 
         Convenience replacement for x11 XFlush()
 
@@ -6929,8 +6788,7 @@ def button_down(mask):
 # Resources
 
 def fl_initialize(lsysargv, sysargv, appclass, appopt, nappopt):
-    """
-        fl_initialize(numargs, args, applclass, apploptions, numapplopts) -> pDisplay
+    """ fl_initialize(numargs, args, applclass, apploptions, numapplopts) -> pDisplay
 
         @status: HalfTested + NoDoc + Example = NOT OK (command line args)
     """
@@ -6960,8 +6818,7 @@ def fl_initialize(lsysargv, sysargv, appclass, appopt, nappopt):
 
 
 def fl_finish():
-    """
-        fl_finish()
+    """ fl_finish()
 
         @status: Tested + NoDoc + Example = OK
     """
@@ -6975,8 +6832,7 @@ def fl_finish():
 
 
 def fl_get_resource(rname, cname, dtype, defval, val, size):
-    """
-        fl_get_resource(rname, cname, dtype, defval, val, size) -> string
+    """ fl_get_resource(rname, cname, dtype, defval, val, size) -> string
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -7002,11 +6858,10 @@ def fl_get_resource(rname, cname, dtype, defval, val, size):
 
 
 def fl_set_resource(resstr, val):
-    """
-        fl_set_resource(resstr, val)
+    """ fl_set_resource(resstr, val)
 
-        @param resstr : resource name
-        @param val : new string value for resource
+        @param resstr: resource name
+        @param val: new string value for resource
 
         @status: Tested + NoDoc + Example = OK
     """
@@ -7023,8 +6878,7 @@ def fl_set_resource(resstr, val):
 
 
 def fl_get_app_resources(pResource, n):
-    """
-        fl_get_app_resources(pResource, n)
+    """ fl_get_app_resources(pResource, n)
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -7040,8 +6894,7 @@ def fl_get_app_resources(pResource, n):
 
 
 def fl_set_graphics_mode(mode, doublebuf):
-    """
-        fl_set_graphics_mode(mode, doublebuf)
+    """ fl_set_graphics_mode(mode, doublebuf)
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -7058,8 +6911,7 @@ def fl_set_graphics_mode(mode, doublebuf):
 
 
 def fl_set_visualID(idnum):
-    """
-        fl_set_visualID(idnum)
+    """ fl_set_visualID(idnum)
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -7075,8 +6927,7 @@ def fl_set_visualID(idnum):
 
 
 def fl_keysym_pressed(keysym):
-    """
-        fl_keysym_pressed(keysym) -> num.
+    """ fl_keysym_pressed(keysym) -> num.
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -7098,8 +6949,7 @@ fl_keypressed = fl_keysym_pressed
 # Program default masks
 
 def fl_set_defaults(mask, pIopt):
-    """
-        fl_set_defaults(mask, pIopt)
+    """ fl_set_defaults(mask, pIopt)
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -7115,8 +6965,7 @@ def fl_set_defaults(mask, pIopt):
 
 
 def fl_set_tabstop(s):
-    """
-        fl_set_tabstop(s)
+    """ fl_set_tabstop(s)
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -7132,11 +6981,10 @@ def fl_set_tabstop(s):
 
 
 def fl_get_defaults():
-    """
-        fl_get_defaults() -> Iopt
+    """ fl_get_defaults() -> Iopt
 
         @attention: API change from XForms - upstream was
-        fl_get_defaults(pIopt)
+                    fl_get_defaults(pIopt)
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -7154,8 +7002,7 @@ def fl_get_defaults():
 
 
 def fl_get_visual_depth():
-    """
-        fl_get_visual_depth() -> depth num.
+    """ fl_get_visual_depth() -> depth num.
 
         @status: Tested + NoDoc + Example = OK
     """
@@ -7170,8 +7017,7 @@ def fl_get_visual_depth():
 
 
 def fl_vclass_name(n):
-    """
-        fl_vclass_name(n) -> name string
+    """ fl_vclass_name(n) -> name string
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -7187,8 +7033,7 @@ def fl_vclass_name(n):
 
 
 def fl_vclass_val(val):
-    """
-        fl_vclass_val(val) -> num.
+    """ fl_vclass_val(val) -> num.
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -7205,8 +7050,7 @@ def fl_vclass_val(val):
 
 
 def fl_set_ul_property(prop, thickness):
-    """
-        fl_set_ul_property(prop, thickness)
+    """ fl_set_ul_property(prop, thickness)
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -7223,8 +7067,7 @@ def fl_set_ul_property(prop, thickness):
 
 
 def fl_set_clipping(x, y, w, h):
-    """
-        fl_set_clipping(x, y, w, h)
+    """ fl_set_clipping(x, y, w, h)
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -7244,8 +7087,7 @@ def fl_set_clipping(x, y, w, h):
 
 
 def fl_set_gc_clipping(gc, x, y, w, h):
-    """
-        fl_set_gc_clipping(gc, x, y, w, h)
+    """ fl_set_gc_clipping(gc, x, y, w, h)
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -7266,8 +7108,7 @@ def fl_set_gc_clipping(gc, x, y, w, h):
 
 
 def fl_unset_gc_clipping(gc):
-    """
-        fl_unset_gc_clipping(gc)
+    """ fl_unset_gc_clipping(gc)
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -7282,8 +7123,7 @@ def fl_unset_gc_clipping(gc):
 
 
 def fl_set_clippings(pRect, n):
-    """
-        fl_set_clippings(pRect, n)
+    """ fl_set_clippings(pRect, n)
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -7299,8 +7139,7 @@ def fl_set_clippings(pRect, n):
 
 
 def fl_unset_clipping():
-    """
-        fl_unset_clipping()
+    """ fl_unset_clipping()
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -7314,8 +7153,7 @@ def fl_unset_clipping():
 
 
 def fl_set_text_clipping(x, y, w, h):
-    """
-        fl_set_text_clipping(x, y, w, h)
+    """ fl_set_text_clipping(x, y, w, h)
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -7335,8 +7173,7 @@ def fl_set_text_clipping(x, y, w, h):
 
 
 def fl_unset_text_clipping():
-    """
-        fl_unset_text_clipping()
+    """ fl_unset_text_clipping()
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -7405,9 +7242,12 @@ def FL_UNPACK4(p, r, g, b, a):
     return r, g, b, a
 
 
-def fl_popup_add(win, text):
-    """
-        fl_popup_add(win, text) -> pPopup
+def fl_popup_add(win, title):
+    """ fl_popup_add(win, title) -> pPopup
+
+        @param win: window
+        @param title: text of title shown at the top of the popup
+                      in a framed box
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -7418,15 +7258,14 @@ def fl_popup_add(win, text):
             """FL_POPUP * fl_popup_add(Window p1, const char * p2)
             """)
     ulwin = convert_to_Window(win)
-    stext = convert_to_string(text)
-    keep_elem_refs(win, text, ulwin, stext)
-    retval = _fl_popup_add(ulwin, stext)
+    stitle = convert_to_string(title)
+    keep_elem_refs(win, title, ulwin, stitle)
+    retval = _fl_popup_add(ulwin, stitle)
     return retval
 
 
 def fl_popup_add_entries(pPopup, entrytxt):
-    """
-        fl_popup_add_entries(pPopup, entrytxt) -> pPopupEntry
+    """ fl_popup_add_entries(pPopup, entrytxt) -> pPopupEntry
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -7444,8 +7283,7 @@ def fl_popup_add_entries(pPopup, entrytxt):
 
 
 def fl_popup_insert_entries(pPopup, pPopupEntry, entrytxt):
-    """
-        fl_popup_insert_entries(pPopup, pPopupEntry, entrytxt) -> pPopupEntry
+    """ fl_popup_insert_entries(pPopup, pPopupEntry, entrytxt) -> pPopupEntry
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -7464,8 +7302,7 @@ def fl_popup_insert_entries(pPopup, pPopupEntry, entrytxt):
 
 
 def fl_popup_create(win, text, pPopupItem):
-    """
-        fl_popup_create(win, text, pPopupItem) -> pPopup
+    """ fl_popup_create(win, text, pPopupItem) -> pPopup
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -7485,8 +7322,7 @@ def fl_popup_create(win, text, pPopupItem):
 
 
 def fl_popup_add_items(pPopup, pPopupItem):
-    """
-        fl_popup_add_items(pPopup, pPopupItem) -> pPopupEntry
+    """ fl_popup_add_items(pPopup, pPopupItem) -> pPopupEntry
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -7504,8 +7340,7 @@ def fl_popup_add_items(pPopup, pPopupItem):
 
 
 def fl_popup_insert_items(pPopup, pPopupEntry, pPopupItem):
-    """
-        fl_popup_insert_items(pPopup, pPopupEntry, pPopupItem) -> pPopupEntry
+    """ fl_popup_insert_items(pPopup, pPopupEntry, pPopupItem) -> pPopupEntry
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -7523,8 +7358,7 @@ def fl_popup_insert_items(pPopup, pPopupEntry, pPopupItem):
 
 
 def fl_popup_delete(pPopup):
-    """
-        fl_popup_delete(pPopup) -> num.
+    """ fl_popup_delete(pPopup) -> num.
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -7540,8 +7374,7 @@ def fl_popup_delete(pPopup):
 
 
 def fl_popup_entry_delete(pPopupEntry):
-    """
-        fl_popup_entry_delete(pPopupEntry) -> num.
+    """ fl_popup_entry_delete(pPopupEntry) -> num.
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -7557,8 +7390,7 @@ def fl_popup_entry_delete(pPopupEntry):
 
 
 def fl_popup_do(pPopup):
-    """
-        fl_popup_do(pPopup) -> pPopupReturn
+    """ fl_popup_do(pPopup) -> pPopupReturn
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -7574,15 +7406,14 @@ def fl_popup_do(pPopup):
 
 
 def fl_popup_set_position(pPopup, x, y):
-    """
-        fl_popup_set_position(pPopup, x, y)
+    """ fl_popup_set_position(pPopup, x, y)
 
         Sets position where the popup is supposed to appear (if never called
         the popup appears at the mouse position)
 
-        @param pPopup : pointer to Popup
-        @param x : horizontal position (upper-left corner)
-        @param y : vertical position (upper-left corner)
+        @param pPopup: pointer to Popup
+        @param x: horizontal position (upper-left corner)
+        @param y: vertical position (upper-left corner)
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -7599,8 +7430,9 @@ def fl_popup_set_position(pPopup, x, y):
 
 
 def fl_popup_get_policy(pPopup):
-    """
-        fl_popup_get_policy(pPopup) -> num.
+    """ fl_popup_get_policy(pPopup) -> num.
+
+        @param pPopup: pointer to Popup
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -7616,14 +7448,13 @@ def fl_popup_get_policy(pPopup):
 
 
 def fl_popup_set_policy(pPopup, policy):
-    """
-        fl_popup_set_policy(pPopup, policy) -> num.
+    """ fl_popup_set_policy(pPopup, policy) -> num.
 
         Sets policy of handling the popup (i.e. does it get closed when the
         user releases the mouse button outside an active entry or not?)
 
-        @param pPopup : pointer to Popup
-        @param policy : policy to be set
+        @param pPopup: pointer to Popup 
+        @param policy: policy to be set
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -7633,6 +7464,7 @@ def fl_popup_set_policy(pPopup, policy):
             cty.c_int, [cty.POINTER(xfc.FL_POPUP), cty.c_int],
             """int fl_popup_set_policy(FL_POPUP * p1, int p2)
             """)
+    check_admitted_listvalues(policy, xfc.POPUPPOLICY_list)
     ipolicy = convert_to_int(policy)
     keep_elem_refs(pPopup, policy, ipolicy)
     retval = _fl_popup_set_policy(pPopup, ipolicy)
@@ -7643,8 +7475,7 @@ def fl_popup_set_policy(pPopup, policy):
 #FL_POPUP_CB = cty.CFUNCTYPE(cty.c_int, cty.POINTER(xfc.FL_POPUP_RETURN))
 
 def fl_popup_set_callback(pPopup, py_PopupCb):
-    """
-        fl_popup_set_callback(pPopup, py_PopupCb) -> popup callback func.
+    """ fl_popup_set_callback(pPopup, py_PopupCb) -> popup callback func.
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -7663,11 +7494,10 @@ def fl_popup_set_callback(pPopup, py_PopupCb):
 
 
 def fl_popup_get_title_font(pPopup):
-    """
-        fl_popup_get_title_font(pPopup) -> style, size
+    """ fl_popup_get_title_font(pPopup) -> style, size
 
         @attention: API change from XForms - upstream was
-           fl_popup_get_title_font(pPopup, style, size)
+                    fl_popup_get_title_font(pPopup, style, size)
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -7687,8 +7517,7 @@ def fl_popup_get_title_font(pPopup):
 
 
 def fl_popup_set_title_font(pPopup, style, size):
-    """
-        fl_popup_set_title_font(pPopup, style, size)
+    """ fl_popup_set_title_font(pPopup, style, size)
 
         @status: Tested + NoDoc + Example = OK
     """
@@ -7705,11 +7534,10 @@ def fl_popup_set_title_font(pPopup, style, size):
 
 
 def fl_popup_entry_get_font(pPopup):
-    """
-        fl_popup_entry_get_font(pPopup) -> style, size
+    """ fl_popup_entry_get_font(pPopup) -> style, size
 
         @attention: API change from XForms - upstream was
-           fl_popup_entry_get_font(pPopup, style, size)
+                    fl_popup_entry_get_font(pPopup, style, size)
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -7728,14 +7556,13 @@ def fl_popup_entry_get_font(pPopup):
 
 
 def fl_popup_entry_set_font(pPopup, style, size):
-    """
-        fl_popup_entry_set_font(pPopup, style, size)
+    """ fl_popup_entry_set_font(pPopup, style, size)
 
         Sets the font of a popup entry.
 
-        @param pPopup : pointer to Popup
-        @param style : style of the popup entry
-        @param size : size of the popup entry
+        @param pPopup: pointer to Popup
+        @param style: style of the popup entry
+        @param size: size of the popup entry
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -7752,12 +7579,11 @@ def fl_popup_entry_set_font(pPopup, style, size):
 
 
 def fl_popup_get_bw(pPopup):
-    """
-        fl_popup_get_bw(pPopup) -> borderwidth
+    """ fl_popup_get_bw(pPopup) -> borderwidth
 
         Returns the border width of a popup.
 
-        @param pPopup : pointer to popup
+        @param pPopup: pointer to popup
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -7773,13 +7599,12 @@ def fl_popup_get_bw(pPopup):
 
 
 def fl_popup_set_bw(pPopup, bw):
-    """
-        fl_popup_set_bw(pPopup, bw) -> num.
+    """ fl_popup_set_bw(pPopup, bw) -> num.
 
         Sets the border width of a popup.
 
-        @param pPopup : pointer to popup
-        @param bw : border width value to be set
+        @param pPopup: pointer to popup
+        @param bw: border width value to be set
 
         @status: Tested + NoDoc + Example = OK
     """
@@ -7795,9 +7620,8 @@ def fl_popup_set_bw(pPopup, bw):
     return retval
 
 
-def fl_popup_get_color(pPopup, p2):
-    """
-        fl_popup_get_color(pPopup, p2) -> color
+def fl_popup_get_color(pPopup, colrpos):
+    """ fl_popup_get_color(pPopup, colrpos) -> color
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -7807,15 +7631,15 @@ def fl_popup_get_color(pPopup, p2):
             xfc.FL_COLOR, [cty.POINTER(xfc.FL_POPUP), cty.c_int],
             """FL_COLOR fl_popup_get_color(FL_POPUP * p1, int p2)
             """)
-    ip2 = convert_to_int(p2)
-    keep_elem_refs(pPopup, p2, ip2)
-    retval = _fl_popup_get_color(pPopup, ip2)
+    check_admitted_listvalues(colrpos, xfc.POPUPCOLOR_list)
+    icolrpos = convert_to_int(colrpos)
+    keep_elem_refs(pPopup, colrpos, icolrpos)
+    retval = _fl_popup_get_color(pPopup, icolrpos)
     return retval
 
 
-def fl_popup_set_color(pPopup, p2, colr):
-    """
-        fl_popup_set_color(pPopup, p2, colr) -> color
+def fl_popup_set_color(pPopup, colrpos, colr):
+    """ fl_popup_set_color(pPopup, colrpos, colr) -> color
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -7825,17 +7649,22 @@ def fl_popup_set_color(pPopup, p2, colr):
             xfc.FL_COLOR, [cty.POINTER(xfc.FL_POPUP), cty.c_int, xfc.FL_COLOR],
             """FL_COLOR fl_popup_set_color(FL_POPUP * p1, int p2, FL_COLOR p3)
             """)
-    check_admitted_listvalues(colr, xfc.COLOR_list)
-    ip2 = convert_to_int(p2)
+    check_admitted_listvalues(colrpos, xfc.POPUPCOLOR_list)
+    check_admitted_listvalues(colrpos, xfc.COLOR_list)
+    icolrpos = convert_to_int(colrpos)
     ulcolr = convert_to_FL_COLOR(colr)
-    keep_elem_refs(pPopup, p2, colr, ip2, ulcolr)
-    retval = _fl_popup_set_color(pPopup, ip2, ulcolr)
+    keep_elem_refs(pPopup, colrpos, colr, icolrpos, ulcolr)
+    retval = _fl_popup_set_color(pPopup, icolrpos, ulcolr)
     return retval
 
 
 def fl_popup_set_cursor(pPopup, cursnum):
-    """
-        fl_popup_set_cursor(pPopup, cursnum)
+    """ fl_popup_set_cursor(pPopup, cursnum)
+
+        Changes the cursor displayed when a popup is shown.
+
+        @param pPopup: pointer to FL_POPUP
+        @param cursnum: id of a symbolic cursor shapes' names
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -7851,12 +7680,11 @@ def fl_popup_set_cursor(pPopup, cursnum):
 
 
 def fl_popup_get_title(pPopup):
-    """
-        fl_popup_get_title(pPopup) -> title string
+    """ fl_popup_get_title(pPopup) -> title string
 
         Returns the title of a popup.
 
-        @param pPopup : pointer to popup
+        @param pPopup: pointer to popup
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -7872,13 +7700,12 @@ def fl_popup_get_title(pPopup):
 
 
 def fl_popup_set_title(pPopup, title):
-    """
-        fl_popup_set_title(pPopup, title) -> popup
+    """ fl_popup_set_title(pPopup, title) -> popup
 
         Sets the title of a popup.
 
-        @param pPopup : pointer to popup
-        @param title : title of the popup
+        @param pPopup: pointer to popup
+        @param title: title of the popup
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -7895,8 +7722,7 @@ def fl_popup_set_title(pPopup, title):
 
 
 def fl_popup_entry_set_callback(pPopupEntry, py_PopupCb):
-    """
-        fl_popup_entry_set_callback(pPopupEntry, py_PopupCb) -> popup_callback
+    """ fl_popup_entry_set_callback(pPopupEntry, py_PopupCb) -> popup_callback
 
         @status: Tested + NoDoc + Example = OK
     """
@@ -7916,8 +7742,7 @@ def fl_popup_entry_set_callback(pPopupEntry, py_PopupCb):
 
 
 def fl_popup_entry_set_enter_callback(pPopupEntry, py_PopupCb):
-    """
-        fl_popup_entry_set_enter_callback(pPopupEntry, py_PopupCb) -> popup_callback
+    """ fl_popup_entry_set_enter_callback(pPopupEntry, py_PopupCb) -> popup_callback
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -7937,8 +7762,7 @@ def fl_popup_entry_set_enter_callback(pPopupEntry, py_PopupCb):
 
 
 def fl_popup_entry_set_leave_callback(pPopupEntry, py_PopupCb):
-    """
-        fl_popup_entry_set_leave_callback(pPopupEntry, py_PopupCb) -> popup_callback
+    """ fl_popup_entry_set_leave_callback(pPopupEntry, py_PopupCb) -> popup_callback
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -7958,8 +7782,7 @@ def fl_popup_entry_set_leave_callback(pPopupEntry, py_PopupCb):
 
 
 def fl_popup_entry_get_state(pPopupEntry):
-    """
-        fl_popup_entry_get_state(pPopupEntry) -> state num.
+    """ fl_popup_entry_get_state(pPopupEntry) -> state num.
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -7975,8 +7798,7 @@ def fl_popup_entry_get_state(pPopupEntry):
 
 
 def fl_popup_entry_set_state(pPopupEntry, state):
-    """
-        fl_popup_entry_set_state(pPopupEntry, state) -> state num.
+    """ fl_popup_entry_set_state(pPopupEntry, state) -> state num.
 
         @status: Tested + NoDoc + Example = OK
     """
@@ -7994,8 +7816,7 @@ def fl_popup_entry_set_state(pPopupEntry, state):
 
 
 def fl_popup_entry_clear_state(pPopupEntry, state):
-    """
-        fl_popup_entry_clear_state(pPopupEntry, state) -> state num.
+    """ fl_popup_entry_clear_state(pPopupEntry, state) -> state num.
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -8013,8 +7834,7 @@ def fl_popup_entry_clear_state(pPopupEntry, state):
 
 
 def fl_popup_entry_raise_state(pPopupEntry, state):
-    """
-        fl_popup_entry_raise_state(pPopupEntry, state) -> state num.
+    """ fl_popup_entry_raise_state(pPopupEntry, state) -> state num.
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -8032,8 +7852,7 @@ def fl_popup_entry_raise_state(pPopupEntry, state):
 
 
 def fl_popup_entry_toggle_state(pPopupEntry, state):
-    """
-        fl_popup_entry_toggle_state(pPopupEntry, state) -> num.
+    """ fl_popup_entry_toggle_state(pPopupEntry, state) -> num.
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -8051,8 +7870,7 @@ def fl_popup_entry_toggle_state(pPopupEntry, state):
 
 
 def fl_popup_entry_set_text(pPopupEntry, text):
-    """
-        fl_popup_entry_set_text(p1, txtstr) -> num.
+    """ fl_popup_entry_set_text(p1, txtstr) -> num.
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -8070,8 +7888,7 @@ def fl_popup_entry_set_text(pPopupEntry, text):
 
 
 def fl_popup_entry_set_shortcut(pPopupEntry, textsc):
-    """
-        fl_popup_entry_set_shortcut(pPopupEntry, textsc)
+    """ fl_popup_entry_set_shortcut(pPopupEntry, textsc)
 
         @status: Tested + NoDoc + Example = OK
     """
@@ -8088,8 +7905,7 @@ def fl_popup_entry_set_shortcut(pPopupEntry, textsc):
 
 
 def fl_popup_entry_set_value(pPopupEntry, val):
-    """
-        fl_popup_entry_set_value(pPopupEntry, p2) -> num.
+    """ fl_popup_entry_set_value(pPopupEntry, p2) -> num.
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -8107,8 +7923,7 @@ def fl_popup_entry_set_value(pPopupEntry, val):
 
 
 def fl_popup_entry_set_user_data(pPopupEntry, vdata):
-    """
-        fl_popup_entry_set_user_data(pPopupEntry, vdata) -> ??
+    """ fl_popup_entry_set_user_data(pPopupEntry, vdata) -> ??
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -8126,8 +7941,7 @@ def fl_popup_entry_set_user_data(pPopupEntry, vdata):
 
 
 def fl_popup_entry_get_by_position(pPopup, numpos):
-    """
-        fl_popup_entry_get_by_position(pPopup, numpos) -> pPopupEntry
+    """ fl_popup_entry_get_by_position(pPopup, numpos) -> pPopupEntry
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -8145,8 +7959,7 @@ def fl_popup_entry_get_by_position(pPopup, numpos):
 
 
 def fl_popup_entry_get_by_value(pPopup, val):
-    """
-        fl_popup_entry_get_by_value(pPopup, val) -> pPopupEntry
+    """ fl_popup_entry_get_by_value(pPopup, val) -> pPopupEntry
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -8164,8 +7977,7 @@ def fl_popup_entry_get_by_value(pPopup, val):
 
 
 def fl_popup_entry_get_by_user_data(pPopup, vdata):
-    """
-        fl_popup_entry_get_by_user_data(pPopup, vdata) -> pPopupEntry
+    """ fl_popup_entry_get_by_user_data(pPopup, vdata) -> pPopupEntry
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -8183,8 +7995,7 @@ def fl_popup_entry_get_by_user_data(pPopup, vdata):
 
 
 def fl_popup_entry_get_by_text(pPopup, text):
-    """
-        fl_popup_entry_get_by_text(pPopup, text) -> pPopupEntry
+    """ fl_popup_entry_get_by_text(pPopup, text) -> pPopupEntry
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -8203,8 +8014,7 @@ def fl_popup_entry_get_by_text(pPopup, text):
 
 
 def fl_popup_entry_get_by_label(pPopup, label):
-    """
-        fl_popup_entry_get_by_label(pPopup, label) -> pPopupEntry
+    """ fl_popup_entry_get_by_label(pPopup, label) -> pPopupEntry
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -8223,8 +8033,7 @@ def fl_popup_entry_get_by_label(pPopup, label):
 
 
 def fl_popup_entry_get_group(pPopupEntry):
-    """
-        fl_popup_entry_get_group(pPopupEntry) -> num.
+    """ fl_popup_entry_get_group(pPopupEntry) -> num.
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -8240,8 +8049,7 @@ def fl_popup_entry_get_group(pPopupEntry):
 
 
 def fl_popup_entry_set_group(pPopupEntry, num):
-    """
-        fl_popup_entry_set_group(pPopupEntry, num) -> num.
+    """ fl_popup_entry_set_group(pPopupEntry, num) -> num.
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -8258,8 +8066,7 @@ def fl_popup_entry_set_group(pPopupEntry, num):
 
 
 def fl_popup_entry_get_subpopup(pPopupEntry):
-    """
-        fl_popup_entry_get_subpopup(pPopupEntry) -> pPopup
+    """ fl_popup_entry_get_subpopup(pPopupEntry) -> pPopup
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -8275,8 +8082,7 @@ def fl_popup_entry_get_subpopup(pPopupEntry):
 
 
 def fl_popup_entry_set_subpopup(pPopupEntry, pPopup):
-    """
-        fl_popup_entry_set_subpopup(pPopupEntry, pPopup) -> pPopup
+    """ fl_popup_entry_set_subpopup(pPopupEntry, pPopup) -> pPopup
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -8294,11 +8100,10 @@ def fl_popup_entry_set_subpopup(pPopupEntry, pPopup):
 
 
 def fl_popup_get_size(pPopup):
-    """
-        fl_popup_get_size(pPopup) -> size num., width, height
+    """ fl_popup_get_size(pPopup) -> size num., width, height
 
         @attention: API change from XForms - upstream was
-           fl_popup_get_size(pPopup, w, h)
+                    fl_popup_get_size(pPopup, w, h)
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -8318,8 +8123,7 @@ def fl_popup_get_size(pPopup):
 
 
 def fl_popup_get_min_width(pPopup):
-    """
-        fl_popup_get_min_width(pPopup) -> width num.
+    """ fl_popup_get_min_width(pPopup) -> width num.
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -8335,8 +8139,7 @@ def fl_popup_get_min_width(pPopup):
 
 
 def fl_popup_set_min_width(pPopup, minwidth):
-    """
-        fl_popup_set_min_width(pPopup, minwidth) -> width num.
+    """ fl_popup_set_min_width(pPopup, minwidth) -> width num.
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -8365,17 +8168,16 @@ def fl_popup_set_min_width(pPopup, minwidth):
 
 
 def fl_add_bitmap(bitmaptype, x, y, w, h, label):
-    """
-        fl_add_bitmap(bitmaptype, x, y, w, h, label) -> pObject
+    """ fl_add_bitmap(bitmaptype, x, y, w, h, label) -> pObject
 
         Adds a bitmap object.
 
-        @param bitmaptype : type of bitmap to be added
-        @param x : horizontal position (upper-left corner)
-        @param y : vertical position of bitmap (upper-left corner)
-        @param w : width in coord units
-        @param h : height in coord units
-        @param label : text label of bitmap
+        @param bitmaptype: type of bitmap to be added
+        @param x: horizontal position (upper-left corner)
+        @param y: vertical position of bitmap (upper-left corner)
+        @param w: width in coord units
+        @param h: height in coord units
+        @param label: text label of bitmap
 
         @status: Tested + NoDoc + Example = OK
     """
@@ -8401,15 +8203,14 @@ def fl_add_bitmap(bitmaptype, x, y, w, h, label):
 
 
 def fl_set_bitmap_data(pObject, w, h, xbmcontents):
-    """
-        fl_set_bitmap_data(pObject, w, h, xbmcontents)
+    """ fl_set_bitmap_data(pObject, w, h, xbmcontents)
 
         Fills the bitmap with a bitmap.
 
-        @param pObject : pointer to object
-        @param w : width of bitmap in pixels
-        @param h : height of bitmap in pixels
-        @param xbmcontents : bitmap data used for contents in ubytes
+        @param pObject: pointer to object
+        @param w: width of bitmap in pixels
+        @param h: height of bitmap in pixels
+        @param xbmcontents: bitmap data used for contents in ubytes
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -8429,11 +8230,10 @@ def fl_set_bitmap_data(pObject, w, h, xbmcontents):
 
 
 def fl_set_bitmap_file(pObject, fname):
-    """
-        fl_set_bitmap_file(pObject, fname)
+    """ fl_set_bitmap_file(pObject, fname)
 
-        @param pObject : pointer to object
-        @param fname : name of bitmap file
+        @param pObject: pointer to object
+        @param fname: name of bitmap file
 
         @status: Tested + NoDoc + Example = OK
     """
@@ -8449,13 +8249,13 @@ def fl_set_bitmap_file(pObject, fname):
 
 
 fl_set_bitmapbutton_file = fl_set_bitmap_file
+fl_set_bitmapbutton_datafile = fl_set_bitmapbutton_file
 
 # fl_set_bitmap_datafile placeholder (backwards)
 
 
 def fl_read_bitmapfile(win, filename, w, h, hotx, hoty):
-    """
-        fl_read_bitmapfile(win, filename, w, h, hotx, hoty) -> pixmap
+    """ fl_read_bitmapfile(win, filename, w, h, hotx, hoty) -> pixmap
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -8481,13 +8281,12 @@ def fl_read_bitmapfile(win, filename, w, h, hotx, hoty):
 
 
 def fl_create_from_bitmapdata(win, data, w, h):
-    """
-         fl_create_from_bitmapdata(win, data, w, h) -> pixmap
+    """ fl_create_from_bitmapdata(win, data, w, h) -> pixmap
 
-         @param win : window
-         @param data : bitmap data
-         @param w : width in coord units
-         @param h : height in coord units
+        @param win: window
+        @param data: bitmap data
+        @param w: width in coord units
+        @param h: height in coord units
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -8513,17 +8312,16 @@ def fl_create_from_bitmapdata(win, data, w, h):
 
 
 def fl_add_pixmap(pixmaptype, x, y, w, h, label):
-    """
-        fl_add_pixmap(pixmaptype, x, y, w, h, label) -> pObject
+    """ fl_add_pixmap(pixmaptype, x, y, w, h, label) -> pObject
 
         Adds a pixmap object.
 
-        @param pixmaptype : type of pixmap to be added
-        @param x : horizontal position (upper-left corner)
-        @param y : vertical position of bitmap (upper-left corner)
-        @param w : width in coord units
-        @param h : height in coord units
-        @param label : text label of pixmap
+        @param pixmaptype: type of pixmap to be added
+        @param x: horizontal position (upper-left corner)
+        @param y: vertical position of bitmap (upper-left corner)
+        @param w: width in coord units
+        @param h: height in coord units
+        @param label: text label of pixmap
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -8549,11 +8347,10 @@ def fl_add_pixmap(pixmaptype, x, y, w, h, label):
 
 
 def fl_set_pixmap_data(pObject, bits):
-    """
-        fl_set_pixmap_data(pObject, bits)
+    """ fl_set_pixmap_data(pObject, bits)
 
-        @param pObject : pointer to object
-        @param bits : bits contents of pixmap
+        @param pObject: pointer to object
+        @param bits: bits contents of pixmap
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -8573,11 +8370,10 @@ def fl_set_pixmap_data(pObject, bits):
 
 
 def fl_set_pixmap_file(pObject, fname):
-    """
-        fl_set_pixmap_file(pObject, fname)
+    """ fl_set_pixmap_file(pObject, fname)
 
-        @param pObject : pointer to object
-        @param fname : name of the pixmap file
+        @param pObject: pointer to object
+        @param fname: name of the pixmap file
 
         @status: Tested + NoDoc + Example = OK
     """
@@ -8597,8 +8393,7 @@ fl_set_pixmapbutton_datafile = fl_set_pixmapbutton_file
 
 
 def fl_set_pixmap_align(pObject, align, xmargin, ymargin):
-    """
-        fl_set_pixmap_align(pObject, align, xmargin, ymargin)
+    """ fl_set_pixmap_align(pObject, align, xmargin, ymargin)
 
         @status: Tested + NoDoc + Example = OK
     """
@@ -8619,9 +8414,11 @@ def fl_set_pixmap_align(pObject, align, xmargin, ymargin):
     _fl_set_pixmap_align(pObject, ialign, ixmargin, iymargin)
 
 
+fl_set_pixmapbutton_align = fl_set_pixmap_align
+
+
 def fl_set_pixmap_pixmap(pObject, idnum, mask):
-    """
-        fl_set_pixmap_pixmap(pObject, idnum, mask)
+    """ fl_set_pixmap_pixmap(pObject, idnum, mask)
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -8638,9 +8435,11 @@ def fl_set_pixmap_pixmap(pObject, idnum, mask):
     _fl_set_pixmap_pixmap(pObject, ulidnum, ulmask)
 
 
+fl_set_pixmapbutton_pixmap = fl_set_pixmap_pixmap
+
+
 def fl_set_pixmap_colorcloseness(red, green, blue):
-    """
-        fl_set_pixmap_colorcloseness(red, green, blue)
+    """ fl_set_pixmap_colorcloseness(red, green, blue)
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -8658,10 +8457,9 @@ def fl_set_pixmap_colorcloseness(red, green, blue):
 
 
 def fl_free_pixmap_pixmap(pObject):
-    """
-        fl_free_pixmap_pixmap(pObject)
+    """ fl_free_pixmap_pixmap(pObject)
 
-        @param pObject : pointer to object
+        @param pObject: pointer to object
 
         @status: Tested + NoDoc + Example = OK
     """
@@ -8675,14 +8473,16 @@ def fl_free_pixmap_pixmap(pObject):
     _fl_free_pixmap_pixmap(pObject)
 
 
-def fl_get_pixmap_pixmap(pObject):
-    """
-        fl_get_pixmap_pixmap(pObject) -> pixmap, pPixmap, pPixmap_mask
+fl_free_pixmapbutton_pixmap = fl_free_pixmap_pixmap
 
-        @param pObject : pointer to object
+
+def fl_get_pixmap_pixmap(pObject):
+    """ fl_get_pixmap_pixmap(pObject) -> pixmap, pPixmap, pPixmap_mask
+
+        @param pObject: pointer to object
 
         @attention: API change from XForms - upstream was
-           fl_get_pixmap_pixmap(pObject, p, m)
+                    fl_get_pixmap_pixmap(pObject, p, m)
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -8701,12 +8501,15 @@ def fl_get_pixmap_pixmap(pObject):
     return retval, p, m
 
 
+fl_get_pixmapbutton_pixmap = fl_get_pixmap_pixmap
+
+
 def fl_read_pixmapfile(win, filename, tran):
-    """
-        fl_read_pixmapfile(win, filename, tran) -> pixmap, w, h, shapemask, hotx, hoty
+    """ fl_read_pixmapfile(win, filename, tran) -> pixmap, w, h, shapemask, hotx, hoty
 
         @attention: API change from XForms - upstream was
-           fl_read_pixmapfile(win, filename, w, h, shape_mask, hotx, hoty, tran)
+                    fl_read_pixmapfile(win, filename, w, h, shape_mask,
+                    hotx, hoty, tran)
 
         @status: Tested + NoDoc + Example = OK
     """
@@ -8737,8 +8540,7 @@ def fl_read_pixmapfile(win, filename, tran):
 
 
 def fl_create_from_pixmapdata(win, data, w, h, sm, hotx, hoty, tran):
-    """
-        fl_create_from_pixmapdata(win, data, w, h, sm, hotx, hoty, tran) -> pixmap
+    """ fl_create_from_pixmapdata(win, data, w, h, sm, hotx, hoty, tran) -> pixmap
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -8763,10 +8565,9 @@ def fl_create_from_pixmapdata(win, data, w, h, sm, hotx, hoty, tran):
 
 
 def fl_free_pixmap(idnum):
-    """
-        fl_free_pixmap(idnum)
+    """ fl_free_pixmap(idnum)
 
-        @param idnum : Pixmap id to be freed
+        @param idnum: Pixmap id to be freed
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -8781,6 +8582,7 @@ def fl_free_pixmap(idnum):
     _fl_free_pixmap(ulidnum)
 
 
+
 ##################
 # forms.h (box.h)
 ##################
@@ -8789,17 +8591,16 @@ def fl_free_pixmap(idnum):
 
 
 def fl_add_box(boxtype, x, y, w, h, label):
-    """
-        fl_add_box(boxtype, x, y, w, h, label) -> pObject
+    """ fl_add_box(boxtype, x, y, w, h, label) -> pObject
 
         Adds a box object.
 
-        @param boxtype : type of the box to be added
-        @param x : horizontal position (upper-left corner)
-        @param y : vertical position (upper-left corner)
-        @param w : width in coord units
-        @param h : height in coord units
-        @param label : text label of box
+        @param boxtype: type of the box to be added
+        @param x: horizontal position (upper-left corner)
+        @param y: vertical position (upper-left corner)
+        @param w: width in coord units
+        @param h: height in coord units
+        @param label: text label of box
 
         @status: Tested + NoDoc + Example = OK
     """
@@ -8836,17 +8637,16 @@ def fl_add_box(boxtype, x, y, w, h, label):
 
 
 def fl_add_browser(browsertype, x, y, w, h, label):
-    """
-        fl_add_browser(browsertype, x, y, w, h, label) -> pObject
+    """ fl_add_browser(browsertype, x, y, w, h, label) -> pObject
 
         Adds a browser object.
 
-        @param browsertype : type of the browser to be added
-        @param x : horizontal position (upper-left corner)
-        @param y : vertical position (upper-left corner)
-        @param w : width in coord units
-        @param h : height in coord units
-        @param label : text label of browser
+        @param browsertype: type of the browser to be added
+        @param x: horizontal position (upper-left corner)
+        @param y: vertical position (upper-left corner)
+        @param w: width in coord units
+        @param h: height in coord units
+        @param label: text label of browser
 
         @status: Tested + NoDoc + Example = OK
     """
@@ -8872,12 +8672,11 @@ def fl_add_browser(browsertype, x, y, w, h, label):
 
 
 def fl_clear_browser(pObject):
-    """
-        fl_clear_browser(pObject)
+    """ fl_clear_browser(pObject)
 
         Clears contents of a browser object.
 
-        @param pObject : pointer to browser object
+        @param pObject: pointer to browser object
 
         @status: Tested + NoDoc + Example = OK
     """
@@ -8892,13 +8691,12 @@ def fl_clear_browser(pObject):
 
 
 def fl_add_browser_line(pObject, newtext):
-    """
-        fl_add_browser_line(pObject, newtext)
+    """ fl_add_browser_line(pObject, newtext)
 
         Add a line to a browser object.
 
-        @param pObject : pointer to browser object
-        @param newtext : line of text to be added
+        @param pObject: pointer to browser object
+        @param newtext: line of text to be added
 
         @status: Tested + NoDoc + Example = OK
     """
@@ -8914,8 +8712,7 @@ def fl_add_browser_line(pObject, newtext):
 
 
 def fl_addto_browser(pObject, newtext):
-    """
-        fl_addto_browser(pObject, newtext)
+    """ fl_addto_browser(pObject, newtext)
 
         @status: Tested + NoDoc + Example = OK
     """
@@ -8931,8 +8728,7 @@ def fl_addto_browser(pObject, newtext):
 
 
 def fl_addto_browser_chars(pObject, browsertext):
-    """
-        fl_addto_browser_chars(pObject, browsertext)
+    """ fl_addto_browser_chars(pObject, browsertext)
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -8951,8 +8747,7 @@ fl_append_browser = fl_addto_browser_chars
 
 
 def fl_insert_browser_line(pObject, linenum, newtext):
-    """
-        fl_insert_browser_line(pObject, linenum, newtext)
+    """ fl_insert_browser_line(pObject, linenum, newtext)
 
         @status: Tested + NoDoc + Example = OK
     """
@@ -8970,11 +8765,10 @@ def fl_insert_browser_line(pObject, linenum, newtext):
 
 
 def fl_delete_browser_line(pObject, linenum):
-    """
-        fl_delete_browser_line(pObject, linenum)
+    """ fl_delete_browser_line(pObject, linenum)
 
-        @param pObject : pointer to browser object
-        @param linenum : line number to delete
+        @param pObject: pointer to browser object
+        @param linenum: line number to delete
 
         @status: Tested + NoDoc + Example = OK
     """
@@ -8990,12 +8784,11 @@ def fl_delete_browser_line(pObject, linenum):
 
 
 def fl_replace_browser_line(pObject, linenum, newtext):
-    """
-        fl_replace_browser_line(pObject, linenum, newtext)
+    """ fl_replace_browser_line(pObject, linenum, newtext)
 
-        @param pObject : pointer to browser object
-        @param linenum : line number to replace
-        @param newtext : text line used as replacement
+        @param pObject: pointer to browser object
+        @param linenum: line number to replace
+        @param newtext: text line used as replacement
 
         @status: Tested + NoDoc + Example = OK
     """
@@ -9013,10 +8806,9 @@ def fl_replace_browser_line(pObject, linenum, newtext):
 
 
 def fl_get_browser_line(pObject, linenum):
-    """
-        fl_get_browser_line(pObject, linenum) -> line string
+    """ fl_get_browser_line(pObject, linenum) -> line string
 
-        @param pObject : pointer to browser object
+        @param pObject: pointer to browser object
         @param linenum: line number to return
 
         @status: Tested + NoDoc + Example = OK
@@ -9034,8 +8826,7 @@ def fl_get_browser_line(pObject, linenum):
 
 
 def fl_load_browser(pObject, filename):
-    """
-        fl_load_browser(pObject, filename) -> num.
+    """ fl_load_browser(pObject, filename) -> num.
 
         @status: Tested + NoDoc + Example = OK
     """
@@ -9052,8 +8843,7 @@ def fl_load_browser(pObject, filename):
 
 
 def fl_select_browser_line(pObject, line):
-    """
-        fl_select_browser_line(pObject, line)
+    """ fl_select_browser_line(pObject, line)
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -9069,8 +8859,7 @@ def fl_select_browser_line(pObject, line):
 
 
 def fl_deselect_browser_line(pObject, line):
-    """
-        fl_deselect_browser_line(pObject, line)
+    """ fl_deselect_browser_line(pObject, line)
 
         @status: Tested + NoDoc + Example = OK
     """
@@ -9086,10 +8875,9 @@ def fl_deselect_browser_line(pObject, line):
 
 
 def fl_deselect_browser(pObject):
-    """
-        fl_deselect_browser(pObject)
+    """ fl_deselect_browser(pObject)
 
-        @param pObject : pointer to browser object
+        @param pObject: pointer to browser object
 
         @status: Tested + NoDoc + Example = OK
     """
@@ -9104,8 +8892,7 @@ def fl_deselect_browser(pObject):
 
 
 def fl_isselected_browser_line(pObject, line):
-    """
-        fl_isselected_browser_line(pObject, line) -> num.
+    """ fl_isselected_browser_line(pObject, line) -> num.
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -9122,8 +8909,7 @@ def fl_isselected_browser_line(pObject, line):
 
 
 def fl_get_browser_topline(pObject):
-    """
-        fl_get_browser_topline(pObject) -> num.
+    """ fl_get_browser_topline(pObject) -> num.
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -9139,10 +8925,9 @@ def fl_get_browser_topline(pObject):
 
 
 def fl_get_browser(pObject):
-    """
-        fl_get_browser(pObject) -> num.
+    """ fl_get_browser(pObject) -> num.
 
-        @param pObject : pointer to browser object
+        @param pObject: pointer to browser object
 
         @status: Tested + NoDoc + Example = OK
     """
@@ -9158,8 +8943,7 @@ def fl_get_browser(pObject):
 
 
 def fl_get_browser_maxline(pObject):
-    """
-        fl_get_browser_maxline(pObject) -> line num.
+    """ fl_get_browser_maxline(pObject) -> line num.
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -9175,13 +8959,12 @@ def fl_get_browser_maxline(pObject):
 
 
 def fl_get_browser_screenlines(pObject):
-    """
-        fl_get_browser_screenlines(pObject) -> lines num.
+    """ fl_get_browser_screenlines(pObject) -> lines num.
 
         Returns an approximation of the number of lines shown in the
         browser.
 
-        @param pObject : pointer to browser object
+        @param pObject: pointer to browser object
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -9197,13 +8980,12 @@ def fl_get_browser_screenlines(pObject):
 
 
 def fl_set_browser_topline(pObject, line):
-    """
-        fl_set_browser_topline(pObject, line)
+    """ fl_set_browser_topline(pObject, line)
 
         Moves a line to the top of the browser.
 
-        @param pObject : pointer to browser object
-        @param line : number of text line to be moved to top
+        @param pObject: pointer to browser object
+        @param line: number of text line to be moved to top
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -9219,13 +9001,12 @@ def fl_set_browser_topline(pObject, line):
 
 
 def fl_set_browser_bottomline(pObject, line):
-    """
-        fl_set_browser_bottomline(pObject, line)
+    """ fl_set_browser_bottomline(pObject, line)
 
         Moves a line to the bottom of the browser.
 
-        @param pObject : pointer to browser object
-        @param line : number of text line to be moved to bottom
+        @param pObject: pointer to browser object
+        @param line: number of text line to be moved to bottom
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -9241,13 +9022,12 @@ def fl_set_browser_bottomline(pObject, line):
 
 
 def fl_set_browser_fontsize(pObject, size):
-    """
-        fl_set_browser_fontsize(pObject, size)
+    """ fl_set_browser_fontsize(pObject, size)
 
         Sets the font size of a browser object.
 
-        @param pObject : pointer to browser object
-        @param size : font size to be set
+        @param pObject: pointer to browser object
+        @param size: font size to be set
 
         @status: Tested + NoDoc + Example = OK
     """
@@ -9263,13 +9043,12 @@ def fl_set_browser_fontsize(pObject, size):
 
 
 def fl_set_browser_fontstyle(pObject, style):
-    """
-        fl_set_browser_fontstyle(pObject, style)
+    """ fl_set_browser_fontstyle(pObject, style)
 
         Sets the font style of a browser object.
 
-        @param pObject : pointer to browser object
-        @param style : font style to be set
+        @param pObject: pointer to browser object
+        @param style: font style to be set
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -9285,13 +9064,12 @@ def fl_set_browser_fontstyle(pObject, style):
 
 
 def fl_set_browser_specialkey(pObject, specialkey):
-    """
-        fl_set_browser_specialkey(pObject, specialkey)
+    """ fl_set_browser_specialkey(pObject, specialkey)
 
         Sets the escape key used in the text.
 
-        @param pObject : pointer to browser object
-        @param specialkey : escape key to be set
+        @param pObject: pointer to browser object
+        @param specialkey: escape key to be set
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -9307,8 +9085,7 @@ def fl_set_browser_specialkey(pObject, specialkey):
 
 
 def fl_set_browser_vscrollbar(pObject, on):
-    """
-        fl_set_browser_vscrollbar(pObject, on)
+    """ fl_set_browser_vscrollbar(pObject, on)
 
         @status: Tested + NoDoc + Example = OK
     """
@@ -9324,8 +9101,7 @@ def fl_set_browser_vscrollbar(pObject, on):
 
 
 def fl_set_browser_hscrollbar(pObject, on):
-    """
-        fl_set_browser_hscrollbar(pObject, on)
+    """ fl_set_browser_hscrollbar(pObject, on)
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -9341,8 +9117,7 @@ def fl_set_browser_hscrollbar(pObject, on):
 
 
 def fl_set_browser_line_selectable(pObject, line, flag):
-    """
-        fl_set_browser_line_selectable(pObject, line, flag)
+    """ fl_set_browser_line_selectable(pObject, line, flag)
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -9360,15 +9135,14 @@ def fl_set_browser_line_selectable(pObject, line, flag):
 
 
 def fl_get_browser_dimension(pObject):
-    """
-        fl_get_browser_dimension(pObject) -> hor.xpos, ver.ypos, width, height
+    """ fl_get_browser_dimension(pObject) -> hor.xpos, ver.ypos, width, height
 
         Returns all dimensions of a browser object.
 
-        @param pObject : pointer to browser object
+        @param pObject: pointer to browser object
 
         @attention: API change from XForms - upstream was
-           fl_get_browser_dimension(pObject, x, y, w, h)
+                    fl_get_browser_dimension(pObject, x, y, w, h)
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -9391,8 +9165,7 @@ def fl_get_browser_dimension(pObject):
 
 
 def fl_set_browser_dblclick_callback(pObject, py_CallbackPtr, argum):
-    """
-        fl_set_browser_dblclick_callback(pObject, py_CallbackPtr, argum)
+    """ fl_set_browser_dblclick_callback(pObject, py_CallbackPtr, argum)
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -9411,10 +9184,9 @@ def fl_set_browser_dblclick_callback(pObject, py_CallbackPtr, argum):
 
 
 def fl_get_browser_xoffset(pObject):
-    """
-        fl_get_browser_xoffset(pObject) -> coord num.
+    """ fl_get_browser_xoffset(pObject) -> coord num.
 
-        @param pObject : pointer to browser object
+        @param pObject: pointer to browser object
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -9430,10 +9202,9 @@ def fl_get_browser_xoffset(pObject):
 
 
 def fl_get_browser_rel_xoffset(pObject):
-    """
-        fl_get_browser_rel_xoffset(pObject) -> num.
+    """ fl_get_browser_rel_xoffset(pObject) -> num.
 
-        @param pObject : pointer to browser object
+        @param pObject: pointer to browser object
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -9449,8 +9220,7 @@ def fl_get_browser_rel_xoffset(pObject):
 
 
 def fl_set_browser_xoffset(pObject, npixels):
-    """
-        fl_set_browser_xoffset(pObject, npixels)
+    """ fl_set_browser_xoffset(pObject, npixels)
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -9466,8 +9236,7 @@ def fl_set_browser_xoffset(pObject, npixels):
 
 
 def fl_set_browser_rel_xoffset(pObject, val):
-    """
-        fl_set_browser_rel_xoffset(pObject, val)
+    """ fl_set_browser_rel_xoffset(pObject, val)
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -9483,10 +9252,9 @@ def fl_set_browser_rel_xoffset(pObject, val):
 
 
 def fl_get_browser_yoffset(pObject):
-    """
-        fl_get_browser_yoffset(pObject) -> coord num.
+    """ fl_get_browser_yoffset(pObject) -> coord num.
 
-        @param pObject : pointer to browser object
+        @param pObject: pointer to browser object
 
         @status: Tested + NoDoc + Example = OK
     """
@@ -9502,8 +9270,7 @@ def fl_get_browser_yoffset(pObject):
 
 
 def fl_get_browser_rel_yoffset(pObject):
-    """
-        fl_get_browser_rel_yoffset(pObject) -> num.
+    """ fl_get_browser_rel_yoffset(pObject) -> num.
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -9519,8 +9286,7 @@ def fl_get_browser_rel_yoffset(pObject):
 
 
 def fl_set_browser_yoffset(pObject, npixels):
-    """
-        fl_set_browser_yoffset(pObject, npixels)
+    """ fl_set_browser_yoffset(pObject, npixels)
 
         @status: Tested + NoDoc + Example = OK
     """
@@ -9536,8 +9302,7 @@ def fl_set_browser_yoffset(pObject, npixels):
 
 
 def fl_set_browser_rel_yoffset(pObject, val):
-    """
-        fl_set_browser_rel_yoffset(pObject, val)
+    """ fl_set_browser_rel_yoffset(pObject, val)
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -9553,8 +9318,7 @@ def fl_set_browser_rel_yoffset(pObject, val):
 
 
 def fl_set_browser_scrollbarsize(pObject, hh, vw):
-    """
-        fl_set_browser_scrollbarsize(pObject, hh, vw)
+    """ fl_set_browser_scrollbarsize(pObject, hh, vw)
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -9572,13 +9336,12 @@ def fl_set_browser_scrollbarsize(pObject, hh, vw):
 
 
 def fl_show_browser_line(pObject, line):
-    """
-        fl_show_browser_line(pObject, line)
+    """ fl_show_browser_line(pObject, line)
 
         Bring a browser line into view.
 
-        @param pObject : pointer to browser object
-        @param line : line to show
+        @param pObject: pointer to browser object
+        @param line: line to show
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -9593,15 +9356,15 @@ def fl_show_browser_line(pObject, line):
     _fl_show_browser_line(pObject, iline)
 
 
-def fl_set_default_browser_maxlinelength(n):
-    """
-        fl_set_default_browser_maxlinelength(n) -> length num.
+def fl_set_default_browser_maxlinelength(num):
+    """ fl_set_default_browser_maxlinelength(num) -> length num.
 
         Inactive function. Returns always 0
 
-        @param n : unused parameter
+        @param num: unused parameter
 
         @status: Untested + NoDoc + NoExample = NOT OK
+        @deprecated: do not use!
     """
 
     _fl_set_default_browser_maxlinelength = cfuncproto(
@@ -9609,8 +9372,9 @@ def fl_set_default_browser_maxlinelength(n):
             cty.c_int, [cty.c_int],
             """int fl_set_default_browser_maxlinelength(int n):
             """)
-    inum = convert_to_int(n)
-    keep_elem_refs(n, inum)
+    warn_deprecated_function()
+    inum = convert_to_int(num)
+    keep_elem_refs(num, inum)
     retval = _fl_set_default_browser_maxlinelength(inum)
     return retval
 
@@ -9619,14 +9383,12 @@ FL_BROWSER_SCROLL_CALLBACK = cty.CFUNCTYPE(None, cty.POINTER(xfc.FL_OBJECT),
                 cty.c_int, cty.c_void_p)
 
 def fl_set_browser_hscroll_callback(pObject, py_BrowserScrollCallback, vdata):
-    """
-        fl_set_browser_hscroll_callback(pObject, py_BrowserScrollCallback,
-        data)
+    """ fl_set_browser_hscroll_callback(pObject, py_BrowserScrollCallback, vdata)
 
-        @param pObject : pointer to browser object
-        @param py_BrowserScrollCallback : python function, fn(pObject, num,
-           data)
-        @param vdata : user data argument
+        @param pObject: pointer to browser object
+        @param py_BrowserScrollCallback: python function callback
+        @type py_BrowserScrollCallback: fn(pObject, num, data)
+        @param vdata: user data argument
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -9647,14 +9409,12 @@ def fl_set_browser_hscroll_callback(pObject, py_BrowserScrollCallback, vdata):
 
 
 def fl_set_browser_vscroll_callback(pObject, py_BrowserScrollCallback, vdata):
-    """
-        fl_set_browser_vscroll_callback(pObject, py_BrowserScrollCallback,
-        data)
+    """ fl_set_browser_vscroll_callback(pObject, py_BrowserScrollCallback, vdata)
 
-        @param pObject : pointer to browser object
-        @param py_BrowserScrollCallback : python function, fn(pObject, num,
-           data)
-        @param vdata : user data argument
+        @param pObject: pointer to browser object
+        @param py_BrowserScrollCallback: python function callback
+        @type py_BrowserScrollCallback: fn(pObject, num, data)
+        @param vdata: user data argument
 
         @status: Tested + NoDoc + Example = OK
     """
@@ -9675,8 +9435,7 @@ def fl_set_browser_vscroll_callback(pObject, py_BrowserScrollCallback, vdata):
 
 
 def fl_get_browser_line_yoffset(pObject, line):
-    """
-        fl_get_browser_line_yoffset(pObject, line) -> num.
+    """ fl_get_browser_line_yoffset(pObject, line) -> num.
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -9693,8 +9452,7 @@ def fl_get_browser_line_yoffset(pObject, line):
 
 
 def fl_get_browser_hscroll_callback(pObject):
-    """
-        fl_get_browser_hscroll_callback(pObject) -> callback
+    """ fl_get_browser_hscroll_callback(pObject) -> callback
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -9711,8 +9469,7 @@ def fl_get_browser_hscroll_callback(pObject):
 
 
 def fl_get_browser_vscroll_callback(pObject):
-    """
-        fl_get_browser_vscroll_callback(pObject) -> callback
+    """ fl_get_browser_vscroll_callback(pObject) -> callback
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -9756,17 +9513,16 @@ def fl_get_browser_vscroll_callback(pObject):
 
 
 def fl_add_roundbutton(buttontype, x, y, w, h, label):
-    """
-        fl_add_roundbutton(buttontype, x, y, w, h, label) -> pObject
+    """ fl_add_roundbutton(buttontype, x, y, w, h, label) -> pObject
 
         Adds a roundbutton object.
 
-        @param buttontype : type of button object to be added
-        @param x : horizontal position (upper-left corner)
-        @param x : vertical position (upper-left corner)
-        @param w : width in coord units
-        @param h : height in coord units
-        @param label : text label of button
+        @param buttontype: type of button object to be added
+        @param x: horizontal position (upper-left corner)
+        @param x: vertical position (upper-left corner)
+        @param w: width in coord units
+        @param h: height in coord units
+        @param label: text label of button
 
         @status: Tested + NoDoc + Example = OK
     """
@@ -9792,17 +9548,16 @@ def fl_add_roundbutton(buttontype, x, y, w, h, label):
 
 
 def fl_add_round3dbutton(buttontype, x, y, w, h, label):
-    """
-        fl_add_round3dbutton(buttontype, x, y, w, h, label) -> pObject
+    """ fl_add_round3dbutton(buttontype, x, y, w, h, label) -> pObject
 
         Adds a 3D roundbutton object.
 
-        @param buttontype : type of button object to be added
-        @param x : horizontal position (upper-left corner)
-        @param x : vertical position (upper-left corner)
-        @param w : width in coord units
-        @param h : height in coord units
-        @param label : text label of button
+        @param buttontype: type of button object to be added
+        @param x: horizontal position (upper-left corner)
+        @param x: vertical position (upper-left corner)
+        @param w: width in coord units
+        @param h: height in coord units
+        @param label: text label of button
 
         @status: Tested + NoDoc + Example = OK
     """
@@ -9828,17 +9583,16 @@ def fl_add_round3dbutton(buttontype, x, y, w, h, label):
 
 
 def fl_add_lightbutton(buttontype, x, y, w, h, label):
-    """
-        fl_add_lightbutton(buttontype, x, y, w, h, label) -> pObject
+    """ fl_add_lightbutton(buttontype, x, y, w, h, label) -> pObject
 
         Adds a lightbutton object (with an on/off light switch).
 
-        @param buttontype : type of button to be added
-        @param x : horizontal position (upper-left corner)
-        @param x : vertical position (upper-left corner)
-        @param w : width in coord units
-        @param h : height in coord units
-        @param label : text label of button
+        @param buttontype: type of button to be added
+        @param x: horizontal position (upper-left corner)
+        @param x: vertical position (upper-left corner)
+        @param w: width in coord units
+        @param h: height in coord units
+        @param label: text label of button
 
         @status: Tested + NoDoc + Example = OK
     """
@@ -9864,17 +9618,16 @@ def fl_add_lightbutton(buttontype, x, y, w, h, label):
 
 
 def fl_add_checkbutton(buttontype, x, y, w, h, label):
-    """
-        fl_add_checkbutton(buttontype, x, y, w, h, label) -> pObject
+    """ fl_add_checkbutton(buttontype, x, y, w, h, label) -> pObject
 
         Adds a checkbutton object.
 
-        @param buttontype : type of button object to be added
-        @param x : horizontal position (upper-left corner)
-        @param x : vertical position (upper-left corner)
-        @param w : width in coord units
-        @param h : height in coord units
-        @param label : text label of button
+        @param buttontype: type of button object to be added
+        @param x: horizontal position (upper-left corner)
+        @param x: vertical position (upper-left corner)
+        @param w: width in coord units
+        @param h: height in coord units
+        @param label: text label of button
 
         @status: Tested + NoDoc + Example = OK
     """
@@ -9900,17 +9653,16 @@ def fl_add_checkbutton(buttontype, x, y, w, h, label):
 
 
 def fl_add_button(buttontype, x, y, w, h, label):
-    """
-        fl_add_button(buttontype, x, y, w, h, label) -> pObject
+    """ fl_add_button(buttontype, x, y, w, h, label) -> pObject
 
         Adds a button object to the current form.
 
-        @param buttontype : type of button to be added
-        @param x : horizontal position (upper-left corner)
-        @param x : vertical position (upper-left corner)
-        @param w : width in coord units
-        @param h : height in coord units
-        @param label : text label of button
+        @param buttontype: type of button to be added
+        @param x: horizontal position (upper-left corner)
+        @param x: vertical position (upper-left corner)
+        @param w: width in coord units
+        @param h: height in coord units
+        @param label: text label of button
 
         @status: Tested + NoDoc + Example = OK
     """
@@ -9936,17 +9688,16 @@ def fl_add_button(buttontype, x, y, w, h, label):
 
 
 def fl_add_bitmapbutton(buttontype, x, y, w, h, label):
-    """
-        fl_add_bitmapbutton(buttontype, x, y, w, h, label) -> pObject
+    """ fl_add_bitmapbutton(buttontype, x, y, w, h, label) -> pObject
 
         Adds a bitmapbutton object.
 
-        @param buttontype : type of button to be added
-        @param x : horizontal position (upper-left corner)
-        @param x : vertical position (upper-left corner)
-        @param w : width in coord units
-        @param h : height in coord units
-        @param label : text label of button
+        @param buttontype: type of button to be added
+        @param x: horizontal position (upper-left corner)
+        @param x: vertical position (upper-left corner)
+        @param w: width in coord units
+        @param h: height in coord units
+        @param label: text label of button
 
         @status: Tested + NoDoc + Example = OK
     """
@@ -9972,17 +9723,16 @@ def fl_add_bitmapbutton(buttontype, x, y, w, h, label):
 
 
 def fl_add_scrollbutton(buttontype, x, y, w, h, label):
-    """
-        fl_add_scrollbutton(buttontype, x, y, w, h, label) -> pObject
+    """ fl_add_scrollbutton(buttontype, x, y, w, h, label) -> pObject
 
         Adds a scrollbutton object.
 
-        @param buttontype : type of button to be added
-        @param x : horizontal position (upper-left corner)
-        @param x : vertical position (upper-left corner)
-        @param w : width in coord units
-        @param h : height in coord units
-        @param label : text label of button
+        @param buttontype: type of button to be added
+        @param x: horizontal position (upper-left corner)
+        @param x: vertical position (upper-left corner)
+        @param w: width in coord units
+        @param h: height in coord units
+        @param label: text label of button
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -10008,17 +9758,16 @@ def fl_add_scrollbutton(buttontype, x, y, w, h, label):
 
 
 def fl_add_labelbutton(buttontype, x, y, w, h, label):
-    """
-        fl_add_labelbutton(buttontype, x, y, w, h, label) -> pObject
+    """ fl_add_labelbutton(buttontype, x, y, w, h, label) -> pObject
 
         Adds a labelbutton object.
 
-        @param buttontype : type of button to be added
-        @param x : horizontal position (upper-left corner)
-        @param x : vertical position (upper-left corner)
-        @param w : width in coord units
-        @param h : height in coord units
-        @param label : text label of button
+        @param buttontype: type of button to be added
+        @param x: horizontal position (upper-left corner)
+        @param x: vertical position (upper-left corner)
+        @param w: width in coord units
+        @param h: height in coord units
+        @param label: text label of button
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -10044,8 +9793,7 @@ def fl_add_labelbutton(buttontype, x, y, w, h, label):
 
 
 def fl_set_bitmapbutton_data(pObject, w, h, bits):
-    """
-        fl_set_bitmapbutton_data(pObject, w, h, bits)
+    """ fl_set_bitmapbutton_data(pObject, w, h, bits)
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -10064,21 +9812,19 @@ def fl_set_bitmapbutton_data(pObject, w, h, bits):
     _fl_set_bitmapbutton_data(pObject, iw, ih, pbits)
 
 
-fl_set_bitmapbutton_datafile = fl_set_bitmapbutton_file
 
 
 def fl_add_pixmapbutton(buttontype, x, y, w, h, label):
-    """
-        fl_add_pixmapbutton(buttontype, x, y, w, h, label) -> pObject
+    """ fl_add_pixmapbutton(buttontype, x, y, w, h, label) -> pObject
 
         Adds a pixmapbutton object.
 
-        @param buttontype : type of button to be added
-        @param x : horizontal position (upper-left corner)
-        @param x : vertical position (upper-left corner)
-        @param w : width in coord units
-        @param h : height in coord units
-        @param label : text label of button
+        @param buttontype: type of button to be added
+        @param x: horizontal position (upper-left corner)
+        @param x: vertical position (upper-left corner)
+        @param w: width in coord units
+        @param h: height in coord units
+        @param label: text label of button
 
         @status: Tested + NoDoc + Example = OK
     """
@@ -10104,8 +9850,7 @@ def fl_add_pixmapbutton(buttontype, x, y, w, h, label):
 
 
 def fl_set_pixmapbutton_focus_outline(pObject, yes):
-    """
-        fl_set_pixmapbutton_focus_outline(pObject, yes)
+    """ fl_set_pixmapbutton_focus_outline(pObject, yes)
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -10121,16 +9866,12 @@ def fl_set_pixmapbutton_focus_outline(pObject, yes):
 
 
 fl_set_pixmapbutton_data = fl_set_pixmap_data
-fl_set_pixmapbutton_pixmap = fl_set_pixmap_pixmap
-fl_get_pixmapbutton_pixmap = fl_get_pixmap_pixmap
-fl_set_pixmapbutton_align = fl_set_pixmap_align
-fl_free_pixmapbutton_pixmap = fl_free_pixmap_pixmap
 fl_set_pixmapbutton_show_focus = fl_set_pixmapbutton_focus_outline
 
 
+
 def fl_set_pixmapbutton_focus_data(pObject, bits):
-    """
-        fl_set_pixmapbutton_focus_data(pObject, bits)
+    """ fl_set_pixmapbutton_focus_data(pObject, bits)
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -10146,8 +9887,7 @@ def fl_set_pixmapbutton_focus_data(pObject, bits):
 
 
 def fl_set_pixmapbutton_focus_file(pObject, fname):
-    """
-        fl_set_pixmapbutton_focus_file(pObject, fname)
+    """ fl_set_pixmapbutton_focus_file(pObject, fname)
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -10164,8 +9904,7 @@ def fl_set_pixmapbutton_focus_file(pObject, fname):
 
 
 def fl_set_pixmapbutton_focus_pixmap(pObject, idnum, mask):
-    """
-        fl_set_pixmapbutton_focus_pixmap(pObject, idnum, mask)
+    """ fl_set_pixmapbutton_focus_pixmap(pObject, idnum, mask)
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -10183,12 +9922,11 @@ def fl_set_pixmapbutton_focus_pixmap(pObject, idnum, mask):
 
 
 def fl_get_button(pObject):
-    """
-        fl_get_button(pObject) -> num.
+    """ fl_get_button(pObject) -> num.
 
         Returns the value of the button.
 
-        @param pObject : pointer to button object
+        @param pObject: pointer to button object
 
         @status: Tested + NoDoc + Example = OK
     """
@@ -10204,13 +9942,12 @@ def fl_get_button(pObject):
 
 
 def fl_set_button(pObject, pushed):
-    """
-        fl_set_button(pObject, pushed)
+    """ fl_set_button(pObject, pushed)
 
         Sets the button state (not pushed/pushed).
 
-        @param pObject : pointer to button object
-        @param pushed : state of button to be set (0|1)
+        @param pObject: pointer to button object
+        @param pushed: state of button to be set (0|1)
 
         @status: Tested + NoDoc + Example = OK
     """
@@ -10226,13 +9963,12 @@ def fl_set_button(pObject, pushed):
 
 
 def fl_get_button_numb(pObject):
-    """
-        fl_get_button_numb(pObject) -> num.
+    """ fl_get_button_numb(pObject) -> num.
 
         Returns the number of the last used mouse button. fl_mouse_button
         function will also return the mouse number.
 
-        @param pObject : pointer to button object
+        @param pObject: pointer to button object
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -10251,18 +9987,17 @@ fl_set_button_shortcut = fl_set_object_shortcut
 
 
 def fl_create_generic_button(btnclass, buttontype, x, y, w, h, label):
-    """
-        fl_create_generic_button(btnclass, buttontype, x, y, w, h, label) -> pObject
+    """ fl_create_generic_button(btnclass, buttontype, x, y, w, h, label) -> pObject
 
         Creates a generic button object.
 
-        @param btnclass : value of a new button class
-        @param buttontype : type of button to be created
-        @param x : horizontal position (upper-left corner)
-        @param x : vertical position (upper-left corner)
-        @param w : width in coord units
-        @param h : height in coord units
-        @param label : text label of button
+        @param btnclass: value of a new button class
+        @param buttontype: type of button to be created
+        @param x: horizontal position (upper-left corner)
+        @param x: vertical position (upper-left corner)
+        @param w: width in coord units
+        @param h: height in coord units
+        @param label: text label of button
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -10297,15 +10032,15 @@ FL_DRAWBUTTON = FL_DrawButton
 FL_CLEANUPBUTTON = FL_CleanupButton
 
 def fl_add_button_class(btnclass, py_DrawButton, py_CleanupButton):
-    """
-        fl_add_button_class(btnclass, py_DrawButton, py_CleanupButton)
+    """ fl_add_button_class(btnclass, py_DrawButton, py_CleanupButton)
 
         Associates a button class with a drawing function.
 
-        @param btnclass : value of a new button class
-        @param py_DrawButton : python function to draw button, fn(pObject)
-        @param py_CleanupButton : python function to cleanup button,
-           fn(pButtonSpec)
+        @param btnclass: value of a new button class
+        @param py_DrawButton: python function to draw button
+        @type py_DrawButton: fn(pObject)
+        @param py_CleanupButton: python function to cleanup button
+        @type py_CleanupButton: fn(pButtonSpec)
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -10326,14 +10061,13 @@ def fl_add_button_class(btnclass, py_DrawButton, py_CleanupButton):
 
 
 def fl_set_button_mouse_buttons(pObject, buttons):
-    """
-        fl_set_button_mouse_buttons(pObject, buttons)
+    """ fl_set_button_mouse_buttons(pObject, buttons)
 
         Function allows to set up to which mouse buttons the button object
         will react.
 
-        @param pObject : pointer to button object
-        @param buttons : value of mouse buttons to be set
+        @param pObject: pointer to button object
+        @param buttons: value of mouse buttons to be set
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -10350,16 +10084,15 @@ def fl_set_button_mouse_buttons(pObject, buttons):
 
 
 def fl_get_button_mouse_buttons(pObject):
-    """
-        fl_get_button_mouse_buttons(pObject) -> buttons value
+    """ fl_get_button_mouse_buttons(pObject) -> buttons value
 
         Returns a value indicating which mouse buttons the button object
         will react to.
 
-        @param pObject : pointer to button object
+        @param pObject: pointer to button object
 
         @attention: API change from XForms - upstream was
-           fl_get_button_mouse_buttons(pObject, buttons)
+                    fl_get_button_mouse_buttons(pObject, buttons)
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -10384,18 +10117,17 @@ def fl_get_button_mouse_buttons(pObject):
 # Interfaces
 
 def fl_create_generic_canvas(canvasclass, canvastype, x, y, w, h, label):
-    """
-        fl_create_generic_canvas(canvasclass, canvastype, x, y, w, h, label) -> pObject
+    """ fl_create_generic_canvas(canvasclass, canvastype, x, y, w, h, label) -> pObject
 
         Creates a generic canvas object.
 
-        @param canvasclass : value of a new canvas class
-        @param canvastype : type of canvas to be created
-        @param x : horizontal position (upper-left corner)
-        @param x : vertical position (upper-left corner)
-        @param w : width in coord units
-        @param h : height in coord units
-        @param label : text label of canvas
+        @param canvasclass: value of a new canvas class
+        @param canvastype: type of canvas to be created
+        @param x: horizontal position (upper-left corner)
+        @param x: vertical position (upper-left corner)
+        @param w: width in coord units
+        @param h: height in coord units
+        @param label: text label of canvas
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -10424,17 +10156,16 @@ def fl_create_generic_canvas(canvasclass, canvastype, x, y, w, h, label):
 
 
 def fl_add_canvas(canvastype, x, y, w, h, label):
-    """
-        fl_add_canvas(canvastype, x, y, w, h, label) -> pObject
+    """ fl_add_canvas(canvastype, x, y, w, h, label) -> pObject
 
         Adds a canvas object.
 
-        @param canvastype : type of canvas to be added
-        @param x : horizontal position (upper-left corner)
-        @param x : vertical position (upper-left corner)
-        @param w : width in coord units
-        @param h : height in coord units
-        @param label : text label of canvas
+        @param canvastype: type of canvas to be added
+        @param x: horizontal position (upper-left corner)
+        @param x: vertical position (upper-left corner)
+        @param w: width in coord units
+        @param h: height in coord units
+        @param label: text label of canvas
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -10465,8 +10196,7 @@ def fl_add_canvas(canvastype, x, y, w, h, label):
 
 
 def fl_set_canvas_colormap(pObject, colormap):
-    """
-        fl_set_canvas_colormap(pObject, colormap)
+    """ fl_set_canvas_colormap(pObject, colormap)
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -10482,11 +10212,10 @@ def fl_set_canvas_colormap(pObject, colormap):
 
 
 def fl_set_canvas_visual(pObject, pVisual):
-    """
-        fl_set_canvas_visual(pObject, pVisual)
+    """ fl_set_canvas_visual(pObject, pVisual)
 
-        @param pObject : pointer to canvas object
-        @param pVisual : pointer to Visual
+        @param pObject: pointer to canvas object
+        @param pVisual: pointer to Visual class instance
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -10501,11 +10230,10 @@ def fl_set_canvas_visual(pObject, pVisual):
 
 
 def fl_set_canvas_depth(pObject, depth):
-    """
-        fl_set_canvas_depth(pObject, depth)
+    """ fl_set_canvas_depth(pObject, depth)
 
-        @param pObject : pointer to canvas object
-        @param depth : depth value of canvas
+        @param pObject: pointer to canvas object
+        @param depth: depth value of canvas
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -10521,12 +10249,11 @@ def fl_set_canvas_depth(pObject, depth):
 
 
 def fl_set_canvas_attributes(pObject, mask, pXSetWindowAttributes):
-    """
-        fl_set_canvas_attributes(pObject, mask, pXSetWindowAttributes)
+    """ fl_set_canvas_attributes(pObject, mask, pXSetWindowAttributes)
 
-        @param pObject : pointer to canvas object
-        @param mask : mask num.
-        @param pXSetWindowAttributes : pointer to XSetWindowAttributes
+        @param pObject: pointer to canvas object
+        @param mask: mask num.
+        @param pXSetWindowAttributes: pointer to XSetWindowAttributes
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -10548,13 +10275,13 @@ FL_HANDLE_CANVAS = cty.CFUNCTYPE(cty.c_int, cty.POINTER(xfc.FL_OBJECT),
                                  cty.POINTER(xfc.XEvent), cty.c_void_p)
 
 def fl_add_canvas_handler(pObject, ev, py_HandleCanvas, udata):
-    """
-        fl_add_canvas_handler(pObject, ev, py_HandleCanvas, udata) -> canvas handler
+    """ fl_add_canvas_handler(pObject, ev, py_HandleCanvas, udata) -> canvas handler
 
-        @param pObject : pointer to canvas object
-        @param ev : event number
-        @param py_HandleCanvas : python function, fn(pObject, win, num, num,
-           pXEvent, ptr_void) -> num
+        @param pObject: pointer to canvas object
+        @param ev: event number
+        @param py_HandleCanvas: python function to handle canvas
+        @type py_HandleCanvas: fn(pObject, win, num, num, pXEvent,
+                               ptr_void) -> num
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -10576,12 +10303,11 @@ def fl_add_canvas_handler(pObject, ev, py_HandleCanvas, udata):
 
 
 def fl_get_canvas_id(pObject):
-    """
-        fl_get_canvas_id(pObject) -> window
+    """ fl_get_canvas_id(pObject) -> window
 
         Returns the window ID of the canvas window.
 
-        @param pObject : pointer to canvas object
+        @param pObject: pointer to canvas object
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -10597,12 +10323,11 @@ def fl_get_canvas_id(pObject):
 
 
 def fl_get_canvas_colormap(pObject):
-    """
-        fl_get_canvas_colormap(pObject) -> colormap
+    """ fl_get_canvas_colormap(pObject) -> colormap
 
         Returns the colormap of a canas object
 
-        @param pObject : pointer to canvas object
+        @param pObject: pointer to canvas object
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -10618,12 +10343,11 @@ def fl_get_canvas_colormap(pObject):
 
 
 def fl_get_canvas_depth(pObject):
-    """
-        fl_get_canvas_depth(pObject) -> depth num.
+    """ fl_get_canvas_depth(pObject) -> depth num.
 
         Returns the depth of a canvas object.
 
-        @param pObject : pointer to canvas object
+        @param pObject: pointer to canvas object
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -10639,15 +10363,16 @@ def fl_get_canvas_depth(pObject):
 
 
 def fl_remove_canvas_handler(pObject, ev, py_HandleCanvas):
-    """
-        fl_remove_canvas_handler(pObject, ev, py_HandleCanvas)
+    """ fl_remove_canvas_handler(pObject, ev, py_HandleCanvas)
 
         Remove a particular handler for event ev. If ev is invalid, removes
         all handlers and their corresponding event mask.
 
-        @param pObject : pointer to canvas object
-        @param ev : event number
-        @param py_HandleCanvas : python function for canvas handler
+        @param pObject: pointer to canvas object
+        @param ev: event number
+        @param py_HandleCanvas: python function to handle canvas
+        @type py_HandleCanvas: fn(pObject, win, num, num, pXEvent,
+                               ptr_void) -> num
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -10666,12 +10391,11 @@ def fl_remove_canvas_handler(pObject, ev, py_HandleCanvas):
 
 
 def fl_hide_canvas(pObject):
-    """
-        fl_hide_canvas(pObject)
+    """ fl_hide_canvas(pObject)
 
         Hides a canvas object.
 
-        @param pObject : pointer to canvas object
+        @param pObject: pointer to canvas object
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -10686,8 +10410,7 @@ def fl_hide_canvas(pObject):
 
 
 def fl_share_canvas_colormap(pObject, colormap):
-    """
-        fl_share_canvas_colormap(pObject, colormap)
+    """ fl_share_canvas_colormap(pObject, colormap)
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -10703,13 +10426,12 @@ def fl_share_canvas_colormap(pObject, colormap):
 
 
 def fl_clear_canvas(pObject):
-    """
-        fl_clear_canvas(pObject)
+    """ fl_clear_canvas(pObject)
 
         Clears the canvas to the background color. If no background is
-        defined use black.
+        defined uses black.
 
-        @param pObject : pointer to canvas object
+        @param pObject: pointer to canvas object
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -10727,9 +10449,19 @@ FL_MODIFY_CANVAS_PROP = cty.CFUNCTYPE(cty.c_int, cty.POINTER(xfc.FL_OBJECT))
 
 def fl_modify_canvas_prop(pObject, py_initModifyCanvasProp,
      py_activateModifyCanvasProp, py_cleanupModifyCanvasProp):
-    """
-        fl_modify_canvas_prop(pObject, py_initModifyCanvasProp,
+    """ fl_modify_canvas_prop(pObject, py_initModifyCanvasProp,
         py_activateModifyCanvasProp, py_cleanupModifyCanvasProp)
+
+        @param pObject: pointer to canvas object
+        @param py_initModifyCanvasProp: python function callback,
+                                        returning value
+        @param py_initModifyCanvasProp: fn(pObject) -> num.
+        @param py_activateModifyCanvasProp: python function callback,
+                                            returning value
+        @param py_activateModifyCanvasProp: fn(pObject) -> num.
+        @param py_cleanupModifyCanvasProp: python function callback,
+                                           returning value
+        @param py_cleanupModifyCanvasProp: fn(pObject) -> num.
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -10756,8 +10488,7 @@ def fl_modify_canvas_prop(pObject, py_initModifyCanvasProp,
 
 
 def fl_canvas_yield_to_shortcut(pObject, yes):
-    """
-        fl_canvas_yield_to_shortcut(pObject, yes)
+    """ fl_canvas_yield_to_shortcut(pObject, yes)
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -10787,17 +10518,16 @@ def fl_canvas_yield_to_shortcut(pObject, yes):
 
 
 def fl_add_glcanvas(canvastype, x, y, w, h, label):
-    """
-        fl_add_glcanvas(canvastype, x, y, w, h, label) -> pObject
+    """ fl_add_glcanvas(canvastype, x, y, w, h, label) -> pObject
 
         Adds a glcanvas object to the form.
 
-        @param canvastype : type of glcanvas to be added
-        @param x : horizontal position (upper-left corner)
-        @param x : vertical position (upper-left corner)
-        @param w : width in coord units
-        @param h : height in coord units
-        @param label : text label of glcanvas
+        @param canvastype: type of glcanvas to be added
+        @param x: horizontal position (upper-left corner)
+        @param x: vertical position (upper-left corner)
+        @param w: width in coord units
+        @param h: height in coord units
+        @param label: text label of glcanvas
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -10823,12 +10553,11 @@ def fl_add_glcanvas(canvastype, x, y, w, h, label):
 
 
 def fl_set_glcanvas_defaults(config):
-    """
-        fl_set_glcanvas_defaults(config)
+    """ fl_set_glcanvas_defaults(config)
 
         Modifies the global defaults for glcanvas.
 
-        @param config : configuration settings
+        @param config: configuration settings
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -10844,8 +10573,7 @@ def fl_set_glcanvas_defaults(config):
 
 
 def fl_get_glcanvas_defaults():
-    """
-        fl_get_glcanvas_defaults() -> configuration settings
+    """ fl_get_glcanvas_defaults() -> configuration settings
 
         Returns the global defaults for glcanvas.
 
@@ -10867,14 +10595,13 @@ def fl_get_glcanvas_defaults():
 
 
 def fl_set_glcanvas_attributes(pObject, config):
-    """
-        fl_set_glcanvas_attributes(pObject, config)
+    """ fl_set_glcanvas_attributes(pObject, config)
 
         Modifies the default configuration of a particular glcanvas
         object.
 
-        @param pObject : pointer to glcanvas object
-        @param config : configuration settings to be set
+        @param pObject: pointer to glcanvas object
+        @param config: configuration settings to be set
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -10891,15 +10618,14 @@ def fl_set_glcanvas_attributes(pObject, config):
 
 
 def fl_get_glcanvas_attributes(pObject):
-    """
-        fl_get_glcanvas_attributes(pObject) -> attributes
+    """ fl_get_glcanvas_attributes(pObject) -> attributes
 
         Returns the attributes of a glcanvas object.
 
-        @param pObject : pointer to glcanvas object
+        @param pObject: pointer to glcanvas object
 
         @attention: API change from XForms - upstream was
-           fl_get_glcanvas_attributes(pObject, attributes)
+                    fl_get_glcanvas_attributes(pObject, attributes)
     """
 
     _fl_get_glcanvas_attributes = cfuncproto(
@@ -10915,10 +10641,9 @@ def fl_get_glcanvas_attributes(pObject):
 
 
 def fl_set_glcanvas_direct(pObject, direct):
-    """
-        fl_set_glcanvas_direct(pObject, direct)
+    """ fl_set_glcanvas_direct(pObject, direct)
 
-        @param pObject : pointer to glcanvas object
+        @param pObject: pointer to glcanvas object
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -10934,12 +10659,11 @@ def fl_set_glcanvas_direct(pObject, direct):
 
 
 def fl_activate_glcanvas(pObject):
-    """
-        fl_activate_glcanvas(pObject)
+    """ fl_activate_glcanvas(pObject)
 
         Activates a glcanvas object, allowing user interaction.
 
-        @param pObject : pointer to glcanvas object
+        @param pObject: pointer to glcanvas object
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -10954,12 +10678,11 @@ def fl_activate_glcanvas(pObject):
 
 
 def fl_get_glcanvas_xvisualinfo(pObject):
-    """
-        fl_get_glcanvas_xvisualinfo(pObject) -> xvisualinfo class
+    """ fl_get_glcanvas_xvisualinfo(pObject) -> xvisualinfo class
 
         Returns XVisualInfo strust of a glcanvas object.
 
-        @param pObject : pointer to glcanvas object
+        @param pObject: pointer to glcanvas object
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -10975,10 +10698,9 @@ def fl_get_glcanvas_xvisualinfo(pObject):
 
 
 def fl_get_glcanvas_context(pObject):
-    """
-        fl_get_glcanvas_context(pObject) -> glxcontext class
+    """ fl_get_glcanvas_context(pObject) -> glxcontext class
 
-        @param pObject : pointer to glcanvas object
+        @param pObject: pointer to glcanvas object
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -10994,8 +10716,7 @@ def fl_get_glcanvas_context(pObject):
 
 
 def fl_glwincreate(config, pGLXContext, w, h):
-    """
-        fl_glwincreate(config, pGLXContext, w, h) -> window
+    """ fl_glwincreate(config, pGLXContext, w, h) -> window
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -11015,8 +10736,7 @@ def fl_glwincreate(config, pGLXContext, w, h):
 
 
 def fl_glwinopen(config, pGLXContext, w, h):
-    """
-        fl_glwinopen(config, pGLXContext, w, h) -> window
+    """ fl_glwinopen(config, pGLXContext, w, h) -> window
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -11047,17 +10767,16 @@ def fl_glwinopen(config, pGLXContext, w, h):
 
 
 def fl_add_chart(charttype, x, y, w, h, label):
-    """
-        fl_add_chart(charttype, x, y, w, h, label) -> pObject
+    """ fl_add_chart(charttype, x, y, w, h, label) -> pObject
 
         Adds a chart object.
 
-        @param charttype : type of chart to be created
-        @param x : horizontal position (upper-left corner)
-        @param x : vertical position (upper-left corner)
-        @param w : width in coord units
-        @param h : height in coord units
-        @param label : text label of chart
+        @param charttype: type of chart to be created
+        @param x: horizontal position (upper-left corner)
+        @param x: vertical position (upper-left corner)
+        @param w: width in coord units
+        @param h: height in coord units
+        @param label: text label of chart
 
         @status: Tested + NoDoc + Example = OK
     """
@@ -11083,12 +10802,11 @@ def fl_add_chart(charttype, x, y, w, h, label):
 
 
 def fl_clear_chart(pObject):
-    """
-        fl_clear_chart(pObject)
+    """ fl_clear_chart(pObject)
 
         Clears the contents of a chart.
 
-        @param pObject : pointer to chart object
+        @param pObject: pointer to chart object
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -11103,15 +10821,14 @@ def fl_clear_chart(pObject):
 
 
 def fl_add_chart_value(pObject, val, label, colr):
-    """
-        fl_add_chart_value(pObject, val, label, colr)
+    """ fl_add_chart_value(pObject, val, label, colr)
 
         Adds an item to the chart.
 
-        @param pObject : pointer to chart object
-        @param val : value of chart item
-        @param label : text label of chart object
-        @param colr : color num. (Not FL_COLOR)
+        @param pObject: pointer to chart object
+        @param val: value of chart item
+        @param label: text label of chart object
+        @param colr: color num. (Not FL_COLOR)
 
         @status: Tested + NoDoc + Example = OK
     """
@@ -11131,16 +10848,15 @@ def fl_add_chart_value(pObject, val, label, colr):
 
 
 def fl_insert_chart_value(pObject, indx, val, label, colr):
-    """
-        fl_insert_chart_value(pObject, indx, val, label, colr)
+    """ fl_insert_chart_value(pObject, indx, val, label, colr)
 
         Inserts an item before indx to the chart.
 
-        @param pObject : pointer to chart object
-        @param indx : index position of previous item
-        @param val : value of chart item
-        @param label : text label of chart
-        @param colr : color num. (Not FL_COLOR)
+        @param pObject: pointer to chart object
+        @param indx: index position of previous item
+        @param val: value of chart item
+        @param label: text label of chart
+        @param colr: color num. (Not FL_COLOR)
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -11162,16 +10878,15 @@ def fl_insert_chart_value(pObject, indx, val, label, colr):
 
 
 def fl_replace_chart_value(pObject, indx, val, label, colr):
-    """
-        fl_replace_chart_value(pObject, indx, val, label, colr)
+    """ fl_replace_chart_value(pObject, indx, val, label, colr)
 
         Replaces value in the chart.
 
-        @param pObject : pointer to chart object
-        @param indx : index position of item to be replaced
-        @param val : value of chart item
-        @param label : text label of chart
-        @param colr : color num. (Not FL_COLOR)
+        @param pObject: pointer to chart object
+        @param indx: index position of item to be replaced
+        @param val: value of chart item
+        @param label: text label of chart
+        @param colr: color num. (Not FL_COLOR)
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -11193,14 +10908,13 @@ def fl_replace_chart_value(pObject, indx, val, label, colr):
 
 
 def fl_set_chart_bounds(pObject, minbound, maxbound):
-    """
-        fl_set_chart_bounds(pObject, minbound, maxbound)
+    """ fl_set_chart_bounds(pObject, minbound, maxbound)
 
         Sets the boundaries/limits for values of a chart object.
 
-        @param pObject : pointer to chart object
-        @param minbound : minimum bounds to be set
-        @param maxbound : maximum bounds to be set
+        @param pObject: pointer to chart object
+        @param minbound: minimum bounds to be set
+        @param maxbound: maximum bounds to be set
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -11218,15 +10932,14 @@ def fl_set_chart_bounds(pObject, minbound, maxbound):
 
 
 def fl_get_chart_bounds(pObject):
-    """
-        fl_get_chart_bounds(pObject) -> minbound, maxbound
+    """ fl_get_chart_bounds(pObject) -> minbound, maxbound
 
         Returns the boundaries/limits set for values of a chart object.
 
-        @param pObject : pointer to chart object
+        @param pObject: pointer to chart object
 
         @attention: API change from XForms - upstream was
-           fl_get_chart_bounds(pObject, minbound, maxbound)
+                    fl_get_chart_bounds(pObject, minbound, maxbound)
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -11246,13 +10959,12 @@ def fl_get_chart_bounds(pObject):
 
 
 def fl_set_chart_maxnumb(pObject, maxnum):
-    """
-        fl_set_chart_maxnumb(pObject, maxnum)
+    """ fl_set_chart_maxnumb(pObject, maxnum)
 
         Sets the maximum number of values displayed in the chart.
 
-        @param pObject : pointer to chart object
-        @param maxnum : maximum number of values to display
+        @param pObject: pointer to chart object
+        @param maxnum: maximum number of values to display
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -11268,13 +10980,12 @@ def fl_set_chart_maxnumb(pObject, maxnum):
 
 
 def fl_set_chart_autosize(pObject, autosize):
-    """
-        fl_set_chart_autosize(pObject, autosize)
+    """ fl_set_chart_autosize(pObject, autosize)
 
         Sets whether the chart should autosize along the x-axis.
 
-        @param pObject : pointer to chart object
-        @param autosize : autosize flag is enabled/disabled (1|0)
+        @param pObject: pointer to chart object
+        @param autosize: autosize flag is enabled/disabled (1|0)
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -11290,8 +11001,7 @@ def fl_set_chart_autosize(pObject, autosize):
 
 
 def fl_set_chart_lstyle(pObject, lstyle):
-    """
-        fl_set_chart_lstyle(pObject, lstyle)
+    """ fl_set_chart_lstyle(pObject, lstyle)
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -11307,8 +11017,7 @@ def fl_set_chart_lstyle(pObject, lstyle):
 
 
 def fl_set_chart_lsize(pObject, lsize):
-    """
-        fl_set_chart_lsize(pObject, lsize)
+    """ fl_set_chart_lsize(pObject, lsize)
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -11324,8 +11033,7 @@ def fl_set_chart_lsize(pObject, lsize):
 
 
 def fl_set_chart_lcolor(pObject, colr):
-    """
-        fl_set_chart_lcolor(pObject, colr)
+    """ fl_set_chart_lcolor(pObject, colr)
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -11342,8 +11050,7 @@ def fl_set_chart_lcolor(pObject, colr):
 
 
 def fl_set_chart_baseline(pObject, yesno):
-    """
-        fl_set_chart_baseline(pObject, yesno)
+    """ fl_set_chart_baseline(pObject, yesno)
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -11372,17 +11079,16 @@ fl_set_chart_lcol = fl_set_chart_lcolor
 
 
 def fl_add_choice(choicetype, x, y, w, h, label):
-    """
-        fl_add_choice(choicetype, x, y, w, h, label) -> pObject
+    """ fl_add_choice(choicetype, x, y, w, h, label) -> pObject
 
         Adds a choice object.
 
-        @param choicetype : type of choice to be added
-        @param x : horizontal position (upper-left corner)
-        @param x : vertical position (upper-left corner)
-        @param w : width in coord units
-        @param h : height in coord units
-        @param label : text label of choice
+        @param choicetype: type of choice to be added
+        @param x: horizontal position (upper-left corner)
+        @param x: vertical position (upper-left corner)
+        @param w: width in coord units
+        @param h: height in coord units
+        @param label: text label of choice
 
         @status: Tested + NoDoc + Example = OK
         @deprecated: Use corresponding fl_*select* function
@@ -11410,12 +11116,11 @@ def fl_add_choice(choicetype, x, y, w, h, label):
 
 
 def fl_clear_choice(pObject):
-    """
-        fl_clear_choice(pObject)
+    """ fl_clear_choice(pObject)
 
         Clears the choice object.
 
-        @param pObject : pointer to chioce object
+        @param pObject: pointer to chioce object
 
         @status: Untested + NoDoc + NoExample = NOT OK
         @deprecated: Use corresponding fl_*select* function
@@ -11432,13 +11137,12 @@ def fl_clear_choice(pObject):
 
 
 def fl_addto_choice(pObject, choicetxt):
-    """
-        fl_addto_choice(pObject, choicetxt) -> num.
+    """ fl_addto_choice(pObject, choicetxt) -> num.
 
         Adds a single or multiple (delimited by '|') item(s) to a choice.
 
-        @param pObject : pointer to choice object
-        @param choicetxt : text of item(s) to be added
+        @param pObject: pointer to choice object
+        @param choicetxt: text of item(s) to be added
 
         @status: HalfTested + NoDoc + Example = NOT OK (sequence param.)
         @deprecated: Use corresponding fl_*select* function
@@ -11457,14 +11161,13 @@ def fl_addto_choice(pObject, choicetxt):
 
 
 def fl_replace_choice(pObject, itemnum, choicetxt):
-    """
-        fl_replace_choice(pObject, itemnum, choicetxt)
+    """ fl_replace_choice(pObject, itemnum, choicetxt)
 
         Replaces a line to the choice item.
 
-        @param pObject : pointer to choice object
-        @param itemnum : item number to be replaced
-        @param choicetxt : text of item to replace
+        @param pObject: pointer to choice object
+        @param itemnum: item number to be replaced
+        @param choicetxt: text of item to replace
 
         @status: Untested + NoDoc + NoExample = NOT OK
         @deprecated: Use corresponding fl_*select* function
@@ -11484,13 +11187,12 @@ def fl_replace_choice(pObject, itemnum, choicetxt):
 
 
 def fl_delete_choice(pObject, itemnum):
-    """
-        fl_delete_choice(pObject, itemnum)
+    """ fl_delete_choice(pObject, itemnum)
 
         Removes a line from the choice item.
 
-        @param pObject : pointer to choice object
-        @param itemnum : item number
+        @param pObject: pointer to choice object
+        @param itemnum: item number
 
         @status: Untested + NoDoc + NoExample = NOT OK
         @deprecated: Use corresponding fl_*select* function
@@ -11508,13 +11210,12 @@ def fl_delete_choice(pObject, itemnum):
 
 
 def fl_set_choice(pObject, choice):
-    """
-        fl_set_choice(pObject, choice)
+    """ fl_set_choice(pObject, choice)
 
         Sets the number of the choice.
 
-        @param pObject : pointer to choice object
-        @param choice : choice number
+        @param pObject: pointer to choice object
+        @param choice: choice number
 
         @status: Tested + NoDoc + Example = OK
         @deprecated: Use corresponding fl_*select* function
@@ -11532,13 +11233,12 @@ def fl_set_choice(pObject, choice):
 
 
 def fl_set_choice_text(pObject, choicetxt):
-    """
-        fl_set_choice_text(pObject, choicetxt)
+    """ fl_set_choice_text(pObject, choicetxt)
 
         Sets the choice using choice text.
 
-        @param pObject : pointer to choice object
-        @param choicetxt : text of choice
+        @param pObject: pointer to choice object
+        @param choicetxt: text of choice
 
         @status: Untested + NoDoc + NoExample = NOT OK
         @deprecated: Use corresponding fl_*select* function
@@ -11556,12 +11256,11 @@ def fl_set_choice_text(pObject, choicetxt):
 
 
 def fl_get_choice(pObject):
-    """
-        fl_get_choice(pObject) -> num.
+    """ fl_get_choice(pObject) -> num.
 
         Returns the number of the choice.
 
-        @param pObject : pointer to choice object
+        @param pObject: pointer to choice object
 
         @status: Tested + NoDoc + Example = OK
         @deprecated: Use corresponding fl_*select* function
@@ -11579,8 +11278,7 @@ def fl_get_choice(pObject):
 
 
 def fl_get_choice_item_text(pObject, itemnum):
-    """
-        fl_get_choice_item_text(pObject, itemnum) -> text string
+    """ fl_get_choice_item_text(pObject, itemnum) -> text string
 
         @status: Untested + NoDoc + NoExample = NOT OK
         @deprecated: Use corresponding fl_*select* function
@@ -11599,8 +11297,7 @@ def fl_get_choice_item_text(pObject, itemnum):
 
 
 def fl_get_choice_maxitems(pObject):
-    """
-        fl_get_choice_maxitems(pObject) -> items num.
+    """ fl_get_choice_maxitems(pObject) -> items num.
 
         @status: Untested + NoDoc + NoExample = NOT OK
         @deprecated: Use corresponding fl_*select* function
@@ -11618,12 +11315,11 @@ def fl_get_choice_maxitems(pObject):
 
 
 def fl_get_choice_text(pObject):
-    """
-        fl_get_choice_text(pObject) -> text string
+    """ fl_get_choice_text(pObject) -> text string
 
         Returns the text of the choice.
 
-        @param pObject : pointer to choice object
+        @param pObject: pointer to choice object
 
         @status: Untested + NoDoc + NoExample = NOT OK
         @deprecated: Use corresponding fl_*select* function
@@ -11641,13 +11337,12 @@ def fl_get_choice_text(pObject):
 
 
 def fl_set_choice_fontsize(pObject, size):
-    """
-        fl_set_choice_fontsize(pObject, size)
+    """ fl_set_choice_fontsize(pObject, size)
 
         Sets the font size inside the choice.
 
-        @param pObject : pointer to choice object
-        @param size : font size of choice to be set
+        @param pObject: pointer to choice object
+        @param size: font size of choice to be set
 
         @status: Untested + NoDoc + NoExample = NOT OK
         @deprecated: Use corresponding fl_*select* function
@@ -11665,13 +11360,12 @@ def fl_set_choice_fontsize(pObject, size):
 
 
 def fl_set_choice_fontstyle(pObject, style):
-    """
-        fl_set_choice_fontstyle(pObject, style)
+    """ fl_set_choice_fontstyle(pObject, style)
 
         Sets the font style inside the choice.
 
-        @param pObject : pointer to choice object
-        @param style : font style of choice to be set
+        @param pObject: pointer to choice object
+        @param style: font style of choice to be set
 
         @status: Untested + NoDoc + NoExample = NOT OK
         @deprecated: Use corresponding fl_*select* function
@@ -11689,13 +11383,12 @@ def fl_set_choice_fontstyle(pObject, style):
 
 
 def fl_set_choice_align(pObject, align):
-    """
-        fl_set_choice_align(pObject, align)
+    """ fl_set_choice_align(pObject, align)
 
         Sets alignment of text inside the choice.
 
-        @param pObject : pointer to choice object
-        @param align : alignment of choice text to be set
+        @param pObject: pointer to choice object
+        @param align: alignment of choice text to be set
 
         @status: Untested + NoDoc + NoExample = NOT OK
         @deprecated: Use corresponding fl_*select* function
@@ -11714,8 +11407,7 @@ def fl_set_choice_align(pObject, align):
 
 
 def fl_get_choice_item_mode(pObject, itemnum):
-    """
-        fl_get_choice_item_mode(pObject, itemnum) -> mode num.
+    """ fl_get_choice_item_mode(pObject, itemnum) -> mode num.
 
         @status: Untested + NoDoc + NoExample = NOT OK
         @deprecated: Use corresponding fl_*select* function
@@ -11734,14 +11426,13 @@ def fl_get_choice_item_mode(pObject, itemnum):
 
 
 def fl_set_choice_item_mode(pObject, itemnum, mode):
-    """
-        fl_set_choice_item_mode(pObject, itemnum, mode)
+    """ fl_set_choice_item_mode(pObject, itemnum, mode)
 
         Sets the mode of an item in a choice object.
 
-        @param pObject : pointer to choice object
-        @param itemnum : item number whose mode is to be set
-        @param mode : mode of item
+        @param pObject: pointer to choice object
+        @param itemnum: item number whose mode is to be set
+        @param mode: mode of item
 
         @status: Tested + NoDoc + Example = OK
         @deprecated: Use corresponding fl_*select* function
@@ -11761,8 +11452,7 @@ def fl_set_choice_item_mode(pObject, itemnum, mode):
 
 
 def fl_set_choice_item_shortcut(pObject, itemnum, sctext):
-    """
-        fl_set_choice_item_shortcut(pObject, itemnum, sstext)
+    """ fl_set_choice_item_shortcut(pObject, itemnum, sstext)
 
         @status: Untested + NoDoc + NoExample = NOT OK
         @deprecated
@@ -11782,8 +11472,7 @@ def fl_set_choice_item_shortcut(pObject, itemnum, sctext):
 
 
 def fl_set_choice_entries(pObject, pPopupEntry):
-    """
-        fl_set_choice_entries(pObject, pPopupEntry) -> num.
+    """ fl_set_choice_entries(pObject, pPopupEntry) -> num.
 
         @status: Untested + NoDoc + NoExample = NOT OK
         @deprecated: Use corresponding fl_*select* function
@@ -11801,8 +11490,7 @@ def fl_set_choice_entries(pObject, pPopupEntry):
 
 
 def fl_set_choice_notitle(pObject, num):
-    """
-        fl_set_choice_notitle(pObject, num) -> num.
+    """ fl_set_choice_notitle(pObject, num) -> num.
 
         @status: Tested + NoDoc + Example = OK
         @deprecated: Use corresponding fl_*select* function
@@ -11831,8 +11519,10 @@ FL_LOSE_SELECTION_CB = cty.CFUNCTYPE(cty.c_int, cty.POINTER(xfc.FL_OBJECT),
 FL_LOSE_SELECTION_CALLBACK = FL_LOSE_SELECTION_CB
 
 def fl_stuff_clipboard(pObject, clipbdtype, data, size, py_LoseSelectionCb):
-    """
-        fl_stuff_clipboard(pObject, clipbdtype, data, size, py_LoseSelectionCb) -> num.
+    """ fl_stuff_clipboard(pObject, clipbdtype, data, size, py_LoseSelectionCb) -> num.
+
+        @param py_LoseSelectionCb: python function callback, returning value
+        @type py_LoseSelectionCb: fn(pObject, longnum) -> num.
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -11861,8 +11551,13 @@ FL_SELECTION_CB = cty.CFUNCTYPE(cty.c_int, cty.POINTER(xfc.FL_OBJECT),
 FL_SELECTION_CALLBACK = FL_SELECTION_CB
 
 def fl_request_clipboard(pObject, clipbdtype, py_SelectionCb):
-    """
-        fl_request_clipboard(pObject, clipbdtype, py_SelectionCb) -> num.
+    """ fl_request_clipboard(pObject, clipbdtype, py_SelectionCb) -> num.
+
+        @param pObject: pointer to clipboard object
+        @param clipbdtype: type of clipboard (not used)
+        @param py_SelectionCb: python function callback, returning value
+        @type py_SelectionCb: fn(pObject, longnum, ptr_void,
+                              longnum) -> num.
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -11874,7 +11569,7 @@ def fl_request_clipboard(pObject, clipbdtype, py_SelectionCb):
             """int fl_request_clipboard(FL_OBJECT * ob, long int type,
                FL_SELECTION_CB got_it_callback)
             """)
-    lclipbdtype = convert_to_long(clipbdtype)       # this type is not used
+    lclipbdtype = convert_to_long(clipbdtype)
     c_SelectionCb = FL_SELECTION_CB(py_SelectionCb)
     keep_cfunc_refs(c_SelectionCb, py_SelectionCb)
     keep_elem_refs(pObject, clipbdtype, lclipbdtype)
@@ -11891,17 +11586,16 @@ def fl_request_clipboard(pObject, clipbdtype, py_SelectionCb):
 
 
 def fl_add_clock(clocktype, x, y, w, h, label):
-    """
-        fl_add_clock(clocktype, x, y, w, h, label) -> pObject
+    """ fl_add_clock(clocktype, x, y, w, h, label) -> pObject
 
         Adds a clock object.
 
-        @param clocktype : type of clock to be added
-        @param x : horizontal position (upper-left corner)
-        @param x : vertical position (upper-left corner)
-        @param w : width in coord units
-        @param h : height in coord units
-        @param label : text label of clock
+        @param clocktype: type of clock to be added
+        @param x: horizontal position (upper-left corner)
+        @param x: vertical position (upper-left corner)
+        @param w: width in coord units
+        @param h: height in coord units
+        @param label: text label of clock
 
         @status: Tested + NoDoc + Example = OK
     """
@@ -11927,12 +11621,11 @@ def fl_add_clock(clocktype, x, y, w, h, label):
 
 
 def fl_get_clock(pObject):
-    """
-        fl_get_clock(pObject) -> hr, mn, sec
+    """ fl_get_clock(pObject) -> hr, mn, sec
 
         Returns time values from a clock object.
 
-        @param pObject : pointer to clock object
+        @param pObject: pointer to clock object
 
         @attention: API change from XForms - upstream was
            fl_get_clock(pObject, hr, mn, sec)
@@ -11955,8 +11648,7 @@ def fl_get_clock(pObject):
 
 
 def fl_set_clock_adjustment(pObject, offset):
-    """
-        fl_set_clock_adjustment(pObject, offset) -> num.
+    """ fl_set_clock_adjustment(pObject, offset) -> num.
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -11974,8 +11666,7 @@ def fl_set_clock_adjustment(pObject, offset):
 
 
 def fl_set_clock_ampm(pObject, y):
-    """
-        fl_set_clock_ampm(pObject, y)
+    """ fl_set_clock_ampm(pObject, y)
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -12001,17 +11692,16 @@ def fl_set_clock_ampm(pObject, y):
 
 
 def fl_add_counter(countertype, x, y, w, h, label):
-    """
-        fl_add_counter(countertype, x, y, w, h, label) -> pObject
+    """ fl_add_counter(countertype, x, y, w, h, label) -> pObject
 
         Adds a counter object.
 
-        @param countertype : type of counter to be added
-        @param x : horizontal position (upper-left corner)
-        @param x : vertical position (upper-left corner)
-        @param w : width in coord units
-        @param h : height in coord units
-        @param label : text label of counter
+        @param countertype: type of counter to be added
+        @param x: horizontal position (upper-left corner)
+        @param x: vertical position (upper-left corner)
+        @param w: width in coord units
+        @param h: height in coord units
+        @param label: text label of counter
 
         @status: Tested + NoDoc + Example = OK
     """
@@ -12037,8 +11727,7 @@ def fl_add_counter(countertype, x, y, w, h, label):
 
 
 def fl_set_counter_value(pObject, val):
-    """
-        fl_set_counter_value(pObject, val)
+    """ fl_set_counter_value(pObject, val)
 
         @status: Tested + NoDoc + Example = OK
     """
@@ -12054,8 +11743,7 @@ def fl_set_counter_value(pObject, val):
 
 
 def fl_set_counter_bounds(pObject, minbound, maxbound):
-    """
-        fl_set_counter_bounds(pObject, minbound, maxbound)
+    """ fl_set_counter_bounds(pObject, minbound, maxbound)
 
         @status: Tested + NoDoc + Example = OK
     """
@@ -12073,8 +11761,7 @@ def fl_set_counter_bounds(pObject, minbound, maxbound):
 
 
 def fl_set_counter_step(pObject, s, l):
-    """
-        fl_set_counter_step(pObject, s, l)
+    """ fl_set_counter_step(pObject, s, l)
 
         @status: Tested + NoDoc + Example = OK
     """
@@ -12091,8 +11778,7 @@ def fl_set_counter_step(pObject, s, l):
 
 
 def fl_set_counter_precision(pObject, prec):
-    """
-        fl_set_counter_precision(pObject, prec)
+    """ fl_set_counter_precision(pObject, prec)
 
         @status: Tested + NoDoc + Example = OK
     """
@@ -12108,8 +11794,7 @@ def fl_set_counter_precision(pObject, prec):
 
 
 def fl_get_counter_precision(pObject):
-    """
-        fl_get_counter_precision(pObject) -> num.
+    """ fl_get_counter_precision(pObject) -> num.
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -12125,10 +11810,9 @@ def fl_get_counter_precision(pObject):
 
 
 def fl_set_counter_return(pObject, when):
-    """
-        fl_set_counter_return(pObject, when)
+    """ fl_set_counter_return(pObject, when)
 
-        @param when : return type (when it returns)
+        @param when: return type (when it returns)
 
         @status: Tested + NoDoc + Example = OK
         @deprecated: Use fl_set_object_return function
@@ -12147,8 +11831,7 @@ def fl_set_counter_return(pObject, when):
 
 
 def fl_get_counter_value(pObject):
-    """
-        fl_get_counter_value(pObject) -> num.
+    """ fl_get_counter_value(pObject) -> num.
 
         @status: Tested + NoDoc + Example = OK
     """
@@ -12164,11 +11847,10 @@ def fl_get_counter_value(pObject):
 
 
 def fl_get_counter_bounds(pObject):
-    """
-        fl_get_counter_bounds(pObject) -> minbound, maxbound
+    """ fl_get_counter_bounds(pObject) -> minbound, maxbound
 
         @attention: API change from XForms - upstream was
-           fl_get_counter_bounds(pObject, minbound, maxbound)
+                    fl_get_counter_bounds(pObject, minbound, maxbound)
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -12188,11 +11870,10 @@ def fl_get_counter_bounds(pObject):
 
 
 def fl_get_counter_step(pObject):
-    """
-        fl_get_counter_step(pObject) -> s, l
+    """ fl_get_counter_step(pObject) -> s, l
 
         @attention: API change from XForms - upstream was
-           fl_get_counter_step(pObject, s, l)
+                    fl_get_counter_step(pObject, s, l)
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -12215,8 +11896,9 @@ FL_VAL_FILTER = cty.CFUNCTYPE(xfc.STRING, cty.POINTER(xfc.FL_OBJECT),
                               cty.c_double, cty.c_int)
 
 def fl_set_counter_filter(pObject, py_ValFilter):
-    """
-        fl_set_counter_filter(pObject, py_ValFilter)
+    """ fl_set_counter_filter(pObject, py_ValFilter)
+
+        @status: Untested + NoDoc + NoExample = NOT OK
     """
 
     _fl_set_counter_filter = cfuncproto(
@@ -12235,8 +11917,7 @@ def fl_set_counter_filter(pObject, py_ValFilter):
 # counter code to control modification of the counter value.
 
 def fl_get_counter_repeat(pObject):
-    """
-        fl_get_counter_repeat(pObject) -> num.
+    """ fl_get_counter_repeat(pObject) -> num.
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -12252,8 +11933,7 @@ def fl_get_counter_repeat(pObject):
 
 
 def fl_set_counter_repeat(pObject, msec):
-    """
-        fl_set_counter_repeat(pObject, msec)
+    """ fl_set_counter_repeat(pObject, msec)
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -12269,8 +11949,7 @@ def fl_set_counter_repeat(pObject, msec):
 
 
 def fl_get_counter_min_repeat(pObject):
-    """
-        fl_get_counter_min_repeat(pObject) -> num.
+    """ fl_get_counter_min_repeat(pObject) -> num.
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -12286,8 +11965,7 @@ def fl_get_counter_min_repeat(pObject):
 
 
 def fl_set_counter_min_repeat(pObject, msec):
-    """
-        fl_set_counter_min_repeat(pObject, msec)
+    """ fl_set_counter_min_repeat(pObject, msec)
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -12303,8 +11981,7 @@ def fl_set_counter_min_repeat(pObject, msec):
 
 
 def fl_get_counter_speedjump(pObject):
-    """
-        fl_get_counter_speedjump(pObject) -> num.
+    """ fl_get_counter_speedjump(pObject) -> num.
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -12320,8 +11997,7 @@ def fl_get_counter_speedjump(pObject):
 
 
 def fl_set_counter_speedjump(pObject, yesno):
-    """
-        fl_set_counter_speedjump(pObject, yesno)
+    """ fl_set_counter_speedjump(pObject, yesno)
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -12343,14 +12019,13 @@ def fl_set_counter_speedjump(pObject, yesno):
 #############################
 
 def fl_set_cursor(win, cursnum):
-    """
-        fl_set_cursor(win, cursnum)
+    """ fl_set_cursor(win, cursnum)
 
         Set cursor for window to provided cursor number name. Name
         is either the standard XC_ or Form defined.
 
-        @param win : window
-        @param cursnum : cursor number
+        @param win: window
+        @param cursnum: cursor number
 
         @status: Tested + NoDoc + Example = OK
     """
@@ -12367,14 +12042,13 @@ def fl_set_cursor(win, cursnum):
 
 
 def fl_set_cursor_color(cursnum, fgcolr, bgcolr):
-    """
-        fl_set_cursor_color(cursnum, fgcolr, bgcolr)
+    """ fl_set_cursor_color(cursnum, fgcolr, bgcolr)
 
         Sets foreground and background colors for cursor.
 
-        @param cursnum : cursor number
-        @param fgcolr : foreground color to be set
-        @param bgcolr : background color to be set
+        @param cursnum: cursor number
+        @param fgcolr: foreground color to be set
+        @param bgcolr: background color to be set
 
         @status: Tested + NoDoc + Example = OK
     """
@@ -12394,8 +12068,7 @@ def fl_set_cursor_color(cursnum, fgcolr, bgcolr):
 
 
 def fl_create_bitmap_cursor(source, maskstr, w, h, hotx, hoty):
-    """
-        fl_create_bitmap_cursor(source, maskstr, w, h, hotx, hoty) -> num.
+    """ fl_create_bitmap_cursor(source, maskstr, w, h, hotx, hoty) -> num.
 
         @status: HalfTested + NoDoc + Example = NOT OK (bitmap after animated problematic)
     """
@@ -12420,8 +12093,7 @@ def fl_create_bitmap_cursor(source, maskstr, w, h, hotx, hoty):
 
 
 def fl_create_animated_cursor(curnums, timeout):
-    """
-        fl_create_animated_cursor(curnums, timeout) -> num.
+    """ fl_create_animated_cursor(curnums, timeout) -> num.
 
         @status: HalfTested + NoDoc + Example = NOT OK (curnums data problematic)
     """
@@ -12440,12 +12112,11 @@ def fl_create_animated_cursor(curnums, timeout):
 
 
 def fl_get_cursor_byname(cursnum):
-    """
-        fl_get_cursor_byname(cursnum) -> cursor
+    """ fl_get_cursor_byname(cursnum) -> cursor
 
         Return cursor corresponding to number.
 
-        @param cursnum : cursor number
+        @param cursnum: cursor number
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -12462,10 +12133,9 @@ def fl_get_cursor_byname(cursnum):
 
 
 def fl_reset_cursor(win):
-    """
-        Reset used cursor, reverting to default one.
+    """ Reset used cursor, reverting to default one.
 
-        @param win : window
+        @param win: window
 
         @status: Tested + NoDoc + Example = OK
     """
@@ -12484,17 +12154,16 @@ def fl_reset_cursor(win):
 
 
 def fl_add_dial(dialtype, x, y, w, h, label):
-    """
-        fl_add_dial(dialtype, x, y, w, h, label) -> pObject
+    """ fl_add_dial(dialtype, x, y, w, h, label) -> pObject
 
         Adds a dial object.
 
-        @param dialtype : type of dial to be added
-        @param x : horizontal position (upper-left corner)
-        @param x : vertical position (upper-left corner)
-        @param w : width in coord units
-        @param h : height in coord units
-        @param label : text label of dial
+        @param dialtype: type of dial to be added
+        @param x: horizontal position (upper-left corner)
+        @param x: vertical position (upper-left corner)
+        @param w: width in coord units
+        @param h: height in coord units
+        @param label: text label of dial
 
         @status: Tested + NoDoc + Example = OK
     """
@@ -12520,8 +12189,7 @@ def fl_add_dial(dialtype, x, y, w, h, label):
 
 
 def fl_set_dial_value(pObject, val):
-    """
-        fl_set_dial_value(pObject, val)
+    """ fl_set_dial_value(pObject, val)
 
         @status: Tested + NoDoc + Example = OK
     """
@@ -12537,10 +12205,9 @@ def fl_set_dial_value(pObject, val):
 
 
 def fl_get_dial_value(pObject):
-    """
-        fl_get_dial_value(pObject) -> num.
+    """ fl_get_dial_value(pObject) -> num.
 
-        @param pObject : pointer to dial object
+        @param pObject: pointer to dial object
 
         @status: Tested + NoDoc + Example = OK
     """
@@ -12556,8 +12223,7 @@ def fl_get_dial_value(pObject):
 
 
 def fl_set_dial_bounds(pObject, minbound, maxbound):
-    """
-        fl_set_dial_bounds(pObject, minbound, maxbound)
+    """ fl_set_dial_bounds(pObject, minbound, maxbound)
 
         @status: Tested + NoDoc + Example = OK
     """
@@ -12575,11 +12241,10 @@ def fl_set_dial_bounds(pObject, minbound, maxbound):
 
 
 def fl_get_dial_bounds(pObject):
-    """
-        fl_get_dial_bounds(pObject) -> minbound, maxbound
+    """ fl_get_dial_bounds(pObject) -> minbound, maxbound
 
         @attention: API change from XForms - upstream was
-           fl_get_dial_bounds(pObject, minbound, maxbound)
+                    fl_get_dial_bounds(pObject, minbound, maxbound)
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -12599,8 +12264,7 @@ def fl_get_dial_bounds(pObject):
 
 
 def fl_set_dial_step(pObject, value):
-    """
-        fl_set_dial_step(pObject, value)
+    """ fl_set_dial_step(pObject, value)
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -12616,8 +12280,7 @@ def fl_set_dial_step(pObject, value):
 
 
 def fl_set_dial_return(pObject, value):
-    """
-        fl_set_dial_return(pObject, value)
+    """ fl_set_dial_return(pObject, value)
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -12634,8 +12297,7 @@ def fl_set_dial_return(pObject, value):
 
 
 def fl_set_dial_angles(pObject, angmin, angmax):
-    """
-        fl_set_dial_angles(pObject, angmin, angmax)
+    """ fl_set_dial_angles(pObject, angmin, angmax)
 
         @status: Tested + NoDoc + Example = OK
     """
@@ -13146,8 +12808,8 @@ def fl_set_formbrowser_xoffset(pObject, offset):
 
         Scrolls within a formbrowser in horizontal direction.
 
-        @param pObject : pointer to formbrowser object
-        @param offset : positive number, measuring in pixels the offset
+        @param pObject: pointer to formbrowser object
+        @param offset: positive number, measuring in pixels the offset
            from the the natural position from the left
 
         @status: Untested + NoDoc + NoExample = NOT OK
@@ -13170,8 +12832,8 @@ def fl_set_formbrowser_yoffset(pObject, offset):
 
         Scrolls within a formbrowser in vertical direction.
 
-        @param pObject : pointer to formbrowser object
-        @param offset : positive number, measuring in pixels the offset
+        @param pObject: pointer to formbrowser object
+        @param offset: positive number, measuring in pixels the offset
            from the the natural position from the top
 
         @status: Untested + NoDoc + NoExample = NOT OK
@@ -13195,7 +12857,7 @@ def fl_get_formbrowser_xoffset(pObject):
         Returns the current horizontal offset from left in pixel of a
         formbrowser.
 
-        @param pObject : pointer to formbrowser object
+        @param pObject: pointer to formbrowser object
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -13217,7 +12879,7 @@ def fl_get_formbrowser_yoffset(pObject):
         Returns the current vertical offset from top in pixel of a
         formbrowser.
 
-        @param pObject : pointer to formbrowser object
+        @param pObject: pointer to formbrowser object
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -13256,12 +12918,12 @@ def fl_add_formbrowser(frmbrwstype, x, y, w, h, label):
 
         Adds a formbrowser object.
 
-        @param frmbrwstype : type of formbrowser to be added
-        @param x : horizontal position (upper-left corner)
-        @param x : vertical position (upper-left corner)
-        @param w : width in coord units
-        @param h : height in coord units
-        @param label : text label of formbrowser
+        @param frmbrwstype: type of formbrowser to be added
+        @param x: horizontal position (upper-left corner)
+        @param x: vertical position (upper-left corner)
+        @param w: width in coord units
+        @param h: height in coord units
+        @param label: text label of formbrowser
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -13338,12 +13000,12 @@ def fl_add_frame(frametype, x, y, w, h, label):
 
         Adds a frame object.
 
-        @param frametype : type of frame to be added
-        @param x : horizontal position (upper-left corner)
-        @param x : vertical position (upper-left corner)
-        @param w : width in coord units
-        @param h : height in coord units
-        @param label : text label of frame
+        @param frametype: type of frame to be added
+        @param x: horizontal position (upper-left corner)
+        @param x: vertical position (upper-left corner)
+        @param w: width in coord units
+        @param h: height in coord units
+        @param label: text label of frame
 
         @status: Tested + NoDoc + Example = OK
     """
@@ -13379,12 +13041,12 @@ def fl_add_labelframe(frametype, x, y, w, h, label):
 
         Adds a labelframe object.
 
-        @param frametype : type of labelframe to be added
-        @param x : horizontal position (upper-left corner)
-        @param x : vertical position (upper-left corner)
-        @param w : width in coord units
-        @param h : height in coord units
-        @param label : text label of labelframe
+        @param frametype: type of labelframe to be added
+        @param x: horizontal position (upper-left corner)
+        @param x: vertical position (upper-left corner)
+        @param w: width in coord units
+        @param h: height in coord units
+        @param label: text label of labelframe
 
         @status: Tested + NoDoc + Example = OK
     """
@@ -13424,12 +13086,12 @@ def fl_add_free(freetype, x, y, w, h, label, py_HandlePtr):
 
         Adds a free object.
 
-        @param freetype : type of free to be added
-        @param x : horizontal position (upper-left corner)
-        @param x : vertical position (upper-left corner)
-        @param w : width in coord units
-        @param h : height in coord units
-        @param label : text label of free
+        @param freetype: type of free to be added
+        @param x: horizontal position (upper-left corner)
+        @param x: vertical position (upper-left corner)
+        @param w: width in coord units
+        @param h: height in coord units
+        @param label: text label of free
 
         @status: Tested + NoDoc + Example = OK
     """
@@ -13491,9 +13153,9 @@ def fl_show_message(msgtxt1, msgtxt2, msgtxt3):
 
         Shows a message.
 
-        @param msgtxt1 : first message to show
-        @param msgtxt2 : second message to show
-        @param msgtxt3 : third message to show
+        @param msgtxt1: first message to show
+        @param msgtxt2: second message to show
+        @param msgtxt3: third message to show
 
         @status: Tested + NoDoc + Example = OK
     """
@@ -13534,7 +13196,7 @@ def fl_show_msg(fmttxt):
 
         Shows a formatted text message.
 
-        @param fmttxt : text message to show (with format parameters, e.g.
+        @param fmttxt: text message to show (with format parameters, e.g.
            %s, %d, %f etc..)
 
         @status: Untested + NoDoc + NoExample = NOT OK
@@ -13577,8 +13239,8 @@ def fl_show_question(questmsg, p2):
 
         Shows a question message.
 
-        @param questmsg : text of question message to show
-        @param p2 : ?
+        @param questmsg: text of question message to show
+        @param p2: ?
 
         @status: Tested + NoDoc + Example = OK
     """
@@ -13618,10 +13280,10 @@ def fl_show_alert(title, msg1, msg2, centered):
 
         Shows an alert message.
 
-        @param title : title of alert
-        @param msg1 : first message text
-        @param msg2 : other message text
-        @param centered : if alert has to be displayed centered or not
+        @param title: title of alert
+        @param msg1: first message text
+        @param msg2: other message text
+        @param centered: if alert has to be displayed centered or not
 
         @status: Tested + NoDoc + Example = OK
     """
@@ -13647,8 +13309,8 @@ def fl_show_alert2(centered, fmt):
 
         Shows a formatted alert message.
 
-        @param fmt : formatted message text
-        @param centered : if alert has to be displayed centered or not
+        @param fmt: formatted message text
+        @param centered: if alert has to be displayed centered or not
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -13688,8 +13350,8 @@ def fl_show_input(msgtxt, defstr):
         Obtains some text from user, showing a default text. It has OK and
         Cancel buttons.
 
-        @param msgtxt : text used to ask for input
-        @param defstr : default user answer to show
+        @param msgtxt: text used to ask for input
+        @param defstr: default user answer to show
 
         @status: Tested + NoDoc + Example = OK
     """
@@ -13729,8 +13391,8 @@ def fl_show_simple_input(msgtxt, defstr):
 
         Asks the user for textual input. It has an OK button only.
 
-        @param msgtxt : message used to ask for input
-        @param defstr : default user answer in input
+        @param msgtxt: message used to ask for input
+        @param defstr: default user answer in input
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -13755,7 +13417,7 @@ def fl_show_colormap(oldcolr):
         Shows a colormap color selector from which the user can select a
         color.
 
-        @param oldcolr : color num. (Not FL_COLOR)
+        @param oldcolr: color num. (Not FL_COLOR)
 
         @status: Tested + NoDoc + Example = OK
     """
@@ -14017,8 +13679,8 @@ def fl_exe_command(command, block):
 
         Forks a new process that runs specified command 
 
-        @param command : a shell command line
-        @param block : blocking flag indicating if the function should
+        @param command: a shell command line
+        @param block: blocking flag indicating if the function should
            wait for the child process to finish (non-zero) or not (zero).
 
         @status: Untested + NoDoc + NoExample = NOT OK
@@ -14047,7 +13709,7 @@ def fl_end_command(pid):
         completed, then it returns the exit status of the child process or
         -1 if an error has occurred.
 
-        @param pid : process id returned by fl_exe_command()
+        @param pid: process id returned by fl_exe_command()
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -14074,7 +13736,7 @@ def fl_check_command(pid):
         finished; 1 if the child process still exists (running or stopped) and
         -1 if an error has occurred inside the function.
 
-        @param pid : process id returned by fl_exe_command()
+        @param pid: process id returned by fl_exe_command()
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -14098,8 +13760,8 @@ def fl_popen(command, otype):
         into the command log. If type is "w", stdout will also be logged into
         the command browser.
 
-        @param command : filename to execute
-        @param otype : type for opening (e.g. w, r ..)
+        @param command: filename to execute
+        @param otype: type for opening (e.g. w, r ..)
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -14122,7 +13784,7 @@ def fl_pclose(pFile):
 
         Cleans up the child process executed.
 
-        @param pFile : pointer to File stream returned by fl_popen()
+        @param pFile: pointer to File stream returned by fl_popen()
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -14162,7 +13824,7 @@ def fl_show_command_log(border):
 
         Shows the log of the command output.
 
-        @param border : window decoration type
+        @param border: window decoration type
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -14218,7 +13880,7 @@ def fl_addto_command_log(txtstr):
 
         Adds arbitrary text to the command browser 
 
-        @param txtstr : text line to be added
+        @param txtstr: text line to be added
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -14239,8 +13901,8 @@ def fl_set_command_log_position(x, y):
 
         Changes the default placement of the command log.
 
-        @param x : horizontal position (upper-left corner)
-        @param y : vertical position (upper-left corner)
+        @param x: horizontal position (upper-left corner)
+        @param y: vertical position (upper-left corner)
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -14355,7 +14017,7 @@ def fl_set_fselector_placement(place):
     """
         fl_set_fselector_placement(place)
 
-        @param place : where to place it
+        @param place: where to place it
 
         @status: Tested + NoDoc + Example = OK
     """
@@ -14375,7 +14037,7 @@ def fl_set_fselector_border(border):
     """
         fl_set_fselector_border(border)
 
-        @param border : decoration type
+        @param border: decoration type
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -14395,7 +14057,7 @@ def fl_set_fselector_transient(flag):
     """
         fl_set_fselector_transient(flag)
 
-        @param flag : flag if transient or not (1|0)
+        @param flag: flag if transient or not (1|0)
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -14709,12 +14371,12 @@ def fl_add_input(inputtype, x, y, w, h, label):
 
         Adds an input object.
 
-        @param inputtype : type of input to be added
-        @param x : horizontal position (upper-left corner)
-        @param x : vertical position (upper-left corner)
-        @param w : width in coord units
-        @param h : height in coord units
-        @param label : text label of input
+        @param inputtype: type of input to be added
+        @param x: horizontal position (upper-left corner)
+        @param x: vertical position (upper-left corner)
+        @param w: width in coord units
+        @param h: height in coord units
+        @param label: text label of input
 
         @status: Tested + NoDoc + Example = OK
     """
@@ -15288,12 +14950,12 @@ def fl_add_menu(menutype, x, y, w, h, label):
 
         Adds a menu object.
 
-        @param menutype : type of menu to be added
-        @param x : horizontal position (upper-left corner)
-        @param x : vertical position (upper-left corner)
-        @param w : width in coord units
-        @param h : height in coord units
-        @param label : text label of menu
+        @param menutype: type of menu to be added
+        @param x: horizontal position (upper-left corner)
+        @param x: vertical position (upper-left corner)
+        @param w: width in coord units
+        @param h: height in coord units
+        @param label: text label of menu
 
         @status: Tested + NoDoc + Example = OK
         @deprecated: Use corresponding fl_*nmenu* function
@@ -15344,8 +15006,8 @@ def fl_set_menu(pObject, menustr):
 
         Sets the menu to a particular menu string.
 
-        @param pObject : pointer to menu object
-        @param menustr : text string of menu
+        @param pObject: pointer to menu object
+        @param menustr: text string of menu
 
         @status: Untested + NoDoc + NoExample = NOT OK
         @deprecated: Use corresponding fl_*nmenu* function
@@ -15454,9 +15116,9 @@ def fl_set_menu_item_shortcut(pObject, itemnum, textsc):
 
         Sets the shortcut of a menu item.
 
-        @param pObject : pointer to menu object
-        @param itemnum : item number to be operated on
-        @param textsc : text of shortcut to be set
+        @param pObject: pointer to menu object
+        @param itemnum: item number to be operated on
+        @param textsc: text of shortcut to be set
 
         @status: Untested + NoDoc + NoExample = NOT OK
         @deprecated: Use corresponding fl_*nmenu* function
@@ -15481,9 +15143,9 @@ def fl_set_menu_item_mode(pObject, itemnum, mode):
 
         Sets the mode of a menu item.
 
-        @param pObject : pointer to menu object
-        @param itemnum : id of an item to be operated on
-        @param mode : mode to be set
+        @param pObject: pointer to menu object
+        @param itemnum: id of an item to be operated on
+        @param mode: mode to be set
 
         @status: Untested + NoDoc + NoExample = NOT OK
         @deprecated: Use corresponding fl_*nmenu* function
@@ -15508,8 +15170,8 @@ def fl_show_menu_symbol(pObject, flag):
 
         Makes the menu symbol visible or not.
 
-        @param pObject : pointer to menu object
-        @param flag : flag to show menu or not (1|0)
+        @param pObject: pointer to menu object
+        @param flag: flag to show menu or not (1|0)
 
         @status: Untested + NoDoc + NoExample = NOT OK
         @deprecated: Use corresponding fl_*nmenu* function
@@ -15733,12 +15395,12 @@ def fl_add_nmenu(nmenutype, x, y, w, h, label):
 
         Adds a nmenu object.
 
-        @param nmenutype : type of nmenu to be added
-        @param x : horizontal position (upper-left corner)
-        @param y : vertical position (upper-left corner)
-        @param w : width in coord units
-        @param h : height in coord units
-        @param label : text label of nmenu object
+        @param nmenutype: type of nmenu to be added
+        @param x: horizontal position (upper-left corner)
+        @param y: vertical position (upper-left corner)
+        @param w: width in coord units
+        @param h: height in coord units
+        @param label: text label of nmenu object
 
         @status: Tested + NoDoc + Example = OK
     """
@@ -15804,7 +15466,7 @@ def fl_insert_nmenu_items(pObject, pPopupEntry, itemstr):
     """
         fl_insert_nmenu_items(pObject, pPopupEntry, itemstr) -> pPopupEntry
 
-        @param itemstr : text of the item (among special sequences only %S is
+        @param itemstr: text of the item (among special sequences only %S is
            supported)
 
         @status: HalfTested + NoDoc + Example = NOT OK (special sequences)
@@ -15884,8 +15546,8 @@ def fl_add_nmenu_items2(pObject, pPopupItem):
     """
         fl_add_nmenu_items2(pObject, pPopupItem) -> pPopupEntry
 
-        @param pObject : pointer to nmenu object
-        @param pPopupItem : pointer to xfc.FL_POPUP_ITEM; it needs to be
+        @param pObject: pointer to nmenu object
+        @param pPopupItem: pointer to xfc.FL_POPUP_ITEM; it needs to be
            prepared beforehand with make_pPopupItem_from_list(..) function
            for single or multiple lists, or with make_pPopupItem_from_dict(..)
            for a single dict.
@@ -15909,8 +15571,8 @@ def fl_insert_nmenu_items2(pObject, pPopupEntry, pPopupItem):
     """
         fl_insert_nmenu_items2(pObject, pPopupEntry, pPopupItem) -> pPopupEntry
 
-        @param pObject : pointer to nmenu object
-        @param pPopupItem : pointer to xfc.FL_POPUP_ITEM; it needs to be
+        @param pObject: pointer to nmenu object
+        @param pPopupItem: pointer to xfc.FL_POPUP_ITEM; it needs to be
            prepared beforehand with make_pPopupItem_from_list(..) function
            for single or multiple lists, or with make_pPopupItem_from_dict(..)
            for a single dict.
@@ -15934,8 +15596,8 @@ def fl_replace_nmenu_items2(pObject, pPopupEntry, pPopupItem):
     """
         fl_replace_nmenu_items2(pObject, pPopupEntry, pPopupItem) -> pPopupEntry
 
-        @param pObject : pointer to nmenu object
-        @param pPopupItem : pointer to xfc.FL_POPUP_ITEM; it needs to be
+        @param pObject: pointer to nmenu object
+        @param pPopupItem: pointer to xfc.FL_POPUP_ITEM; it needs to be
            prepared beforehand with make_pPopupItem_from_list(..) function for
            for single or multiple lists, or with make_pPopupItem_from_dict(..)
            for a single dict.
@@ -16117,12 +15779,12 @@ def fl_add_positioner(postype, x, y, w, h, label):
 
         Adds a positioner object.
 
-        @param postype : type of positioner to be added
-        @param x : horizontal position (upper-left corner)
-        @param y : vertical position (upper-left corner)
-        @param w : width in coord units
-        @param h : height in coord units
-        @param label : text label of positioner
+        @param postype: type of positioner to be added
+        @param x: horizontal position (upper-left corner)
+        @param y: vertical position (upper-left corner)
+        @param w: width in coord units
+        @param h: height in coord units
+        @param label: text label of positioner
 
         @status: Tested + NoDoc + Example = OK
     """
@@ -16339,8 +16001,8 @@ def fl_set_positioner_return(pObject, value):
     """
         fl_set_positioner_return(pObject, value)
 
-        @param pObject : pointer to positioner object
-        @param value : return type
+        @param pObject: pointer to positioner object
+        @param value: return type
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -16365,12 +16027,12 @@ def fl_add_scrollbar(scrolltype, x, y, w, h, label):
 
         Adds a scrollbar object to a form.
 
-        @param scrolltype : type of scrollbar to be added
-        @param x : horizontal position (upper-left corner)
-        @param y : vertical position (upper-left corner)
-        @param w : width in coord units
-        @param h : height in coord units
-        @param label : label text of scrollbar
+        @param scrolltype: type of scrollbar to be added
+        @param x: horizontal position (upper-left corner)
+        @param y: vertical position (upper-left corner)
+        @param w: width in coord units
+        @param h: height in coord units
+        @param label: label text of scrollbar
 
         @status: Tested + NoDoc + Example = OK
     """
@@ -16401,7 +16063,7 @@ def fl_get_scrollbar_value(pObject):
 
         Returns the value of a scrollbar.
 
-        @param pObject : pointer to object
+        @param pObject: pointer to object
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -16422,8 +16084,8 @@ def fl_set_scrollbar_value(pObject, val):
 
         Sets the value of a scrollbar.
 
-        @param pObject : pointer to object
-        @param val : value of the scrollbar to be set
+        @param pObject: pointer to object
+        @param val: value of the scrollbar to be set
 
         @status: Tested + NoDoc + Example = OK
     """
@@ -16461,10 +16123,10 @@ def fl_set_scrollbar_increment(pObject, leftbtnval, midlbtnval):
 
         Sets the size of the steps of a scrollbar jump.
 
-        @param pObject : pointer to object
-        @param leftbtnval : value to increment if the left mouse button is
+        @param pObject: pointer to object
+        @param leftbtnval: value to increment if the left mouse button is
            pressed
-        @param midlbtnval : value to increment if the middle mouse button is
+        @param midlbtnval: value to increment if the middle mouse button is
            pressed
 
         @status: Untested + NoDoc + NoExample = NOT OK
@@ -16490,7 +16152,7 @@ def fl_get_scrollbar_increment(pObject):
         Returns the increment of size of a scrollbar for left and middle mouse
         buttons.
 
-        @param pObject : pointer to object
+        @param pObject: pointer to object
 
         @attention: API change from XForms - upstream was
            fl_get_scrollbar_increment(pObject, leftbtnval, valmidlbtnval)
@@ -16518,9 +16180,9 @@ def fl_set_scrollbar_bounds(pObject, minbound, maxbound):
 
         Sets the bounds/limits of a scrollbar.
 
-        @param pObject : pointer to object
-        @param minbound : minimum bound of scrollbar
-        @param maxbound : maximum bound of scrollbar
+        @param pObject: pointer to object
+        @param minbound: minimum bound of scrollbar
+        @param maxbound: maximum bound of scrollbar
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -16542,7 +16204,7 @@ def fl_get_scrollbar_bounds(pObject):
 
         Returns the bounds/limits of a scrollbar.
 
-        @param pObject : pointer to scrollbar object
+        @param pObject: pointer to scrollbar object
 
         @attention: API change from XForms - upstream was
            fl_get_scrollbar_bounds(pObject, b1, b2)
@@ -16598,12 +16260,12 @@ def fl_add_select(selecttype, x, y, w, h, label):
 
         Adds a select object.
 
-        @param selecttype : type of select to be added
-        @param x : horizontal position (upper-left corner)
-        @param x : vertical position (upper-left corner)
-        @param w : width in coord units
-        @param h : height in coord units
-        @param label : text label of select
+        @param selecttype: type of select to be added
+        @param x: horizontal position (upper-left corner)
+        @param x: vertical position (upper-left corner)
+        @param w: width in coord units
+        @param h: height in coord units
+        @param label: text label of select
 
         @status: Tested + NoDoc + Example = OK
     """
@@ -16632,7 +16294,7 @@ def fl_clear_select(pObject):
     """
         fl_clear_select(pObject)
 
-        @param pObject : pointer to select object
+        @param pObject: pointer to select object
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -16670,7 +16332,7 @@ def fl_insert_select_items(pObject, pPopupEntry, itemstr):
     """
         fl_insert_select_items(pObject, pPopupEntry, itemstr) -> pPopupEntry
 
-        @param itemstr : text of the item (among special sequences only %S is
+        @param itemstr: text of the item (among special sequences only %S is
            supported
 
         @status: HalfTested + NoDoc + Example = NOT OK (special sequence)
@@ -16732,8 +16394,8 @@ def fl_set_select_items(pObject, pPopupItem):
 
         (Re)populates a select object popup.
 
-        @param pObject : pointer to select object
-        @param pPopupItem : pointer to FL_POPUP_ITEM class instance (array of it)
+        @param pObject: pointer to select object
+        @param pPopupItem: pointer to FL_POPUP_ITEM class instance (array of it)
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -16807,8 +16469,8 @@ def fl_set_select_item(pObject, pPopupEntry):
 
         Set a new item as currently selected.
 
-        @param pObject : pointer to select object
-        @param pPopupEntry : pointer to FL_POPUP_ENTRY class instance
+        @param pObject: pointer to select object
+        @param pPopupEntry: pointer to FL_POPUP_ENTRY class instance
 
         @status: HalfTested + NoDoc + Example = NOT OK (FL_POPUP_ENTRY not prepared)
     """
@@ -17033,12 +16695,12 @@ def fl_add_slider(slidertype, x, y, w, h, label):
 
         Adds a slider to a form. No value is displayed.
 
-        @param slidertype : type of the slider to be added
-        @param x : horizontal position (upper-left corner)
-        @param y : vertical position (upper-left corner)
-        @param w : width in coord units
-        @param h : height in coord units
-        @param label : label of the slider (placed below it by default)
+        @param slidertype: type of the slider to be added
+        @param x: horizontal position (upper-left corner)
+        @param y: vertical position (upper-left corner)
+        @param w: width in coord units
+        @param h: height in coord units
+        @param label: label of the slider (placed below it by default)
 
         @status: Tested + NoDoc + Example = OK
     """
@@ -17073,12 +16735,12 @@ def fl_add_valslider(slidertype, x, y, w, h, label):
         Adds a slider to a form. Its value is displayed above or to the
         left of the slider.
 
-        @param slidertype : type of the slider
-        @param x : horizontal position (upper-left corner)
-        @param y : vertical position (upper-left corner)
-        @param w : width in coord units
-        @param h : height in coord units
-        @param label : text label of slider
+        @param slidertype: type of the slider
+        @param x: horizontal position (upper-left corner)
+        @param y: vertical position (upper-left corner)
+        @param w: width in coord units
+        @param h: height in coord units
+        @param label: text label of slider
 
         @status: Tested + NoDoc + Example = OK
     """
@@ -17109,8 +16771,8 @@ def fl_set_slider_value(pObject, val):
 
         Changes the value of a slider.
 
-        @param pObject : pointer to object
-        @param val : new value of slider
+        @param pObject: pointer to object
+        @param val: new value of slider
 
         @status: Tested + NoDoc + Example = OK
     """
@@ -17131,7 +16793,7 @@ def fl_get_slider_value(pObject):
 
         Returns value of a slider.
 
-        @param pObject : pointer to object
+        @param pObject: pointer to object
 
         @status: Tested + NoDoc + Example = OK
     """
@@ -17152,9 +16814,9 @@ def fl_set_slider_bounds(pObject, minbound, maxbound):
 
         Sets bounds/limits of a slider.
 
-        @param pObject : pointer to object
-        @param minbound : minimum bound of slider
-        @param maxbound : maximum bound of slider
+        @param pObject: pointer to object
+        @param minbound: minimum bound of slider
+        @param maxbound: maximum bound of slider
 
         @status: Tested + NoDoc + Example = OK
     """
@@ -17177,7 +16839,7 @@ def fl_get_slider_bounds(pObject):
 
         Returns bounds/limits of a slider.
 
-        @param pObject : pointer to object
+        @param pObject: pointer to object
 
         @attention: API change from XForms - upstream was
            fl_get_slider_bounds(pObject, minbound, maxbound)
@@ -17205,8 +16867,8 @@ def fl_set_slider_return(pObject, when):
 
         Sets the return value of a slider.
 
-        @param pObject : pointer to object
-        @param when : return type (when it returns)
+        @param pObject: pointer to object
+        @param when: return type (when it returns)
 
         @status: Tested + NoDoc + Example = OK
         #deprecated: Use fl_set_object_return function
@@ -17291,8 +16953,8 @@ def fl_set_slider_size(pObject, size):
 
         Sets the size of a slider.
 
-        @param pObject : pointer to object
-        @param size : value of size of the slider
+        @param pObject: pointer to object
+        @param size: value of size of the slider
 
         @status: Tested + NoDoc + Example = OK
     """
@@ -17313,8 +16975,8 @@ def fl_set_slider_precision(pObject, precnum):
 
         Sets precision with which value a valslider is shown.
 
-        @param pObject : pointer to object
-        @param precnum : precision of shown value
+        @param pObject: pointer to object
+        @param precnum: precision of shown value
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -17336,8 +16998,8 @@ def fl_set_slider_filter(pObject, py_ValFilter):
         Overrides the default (slider value shown in floating point format)
         by registering a filter function.
 
-        @param pObject : pointer to oject
-        @param py_ValFilter : python function, fn(pObject, valfloat,
+        @param pObject: pointer to oject
+        @param py_ValFilter: python function, fn(pObject, valfloat,
            intprecis) -> string
 
         @status: Untested + NoDoc + NoExample = NOT OK
@@ -17363,12 +17025,12 @@ def fl_add_spinner(spinnertype, x, y, w, h, label):
 
         Adds a spinner object.
 
-        @param spinnertype : type of spinner to be added
-        @param x : horizontal position (upper-left corner)
-        @param x : vertical position (upper-left corner)
-        @param w : width in coord units
-        @param h : height in coord units
-        @param label : text label of spinner
+        @param spinnertype: type of spinner to be added
+        @param x: horizontal position (upper-left corner)
+        @param x: vertical position (upper-left corner)
+        @param w: width in coord units
+        @param h: height in coord units
+        @param label: text label of spinner
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -17603,12 +17265,12 @@ def fl_add_tabfolder(foldertype, x, y, w, h, label):
 
         Adds a tabfolder object.
 
-        @param foldertype : type of tabfolder to be added
-        @param x : horizontal position (upper-left corner)
-        @param x : vertical position (upper-left corner)
-        @param w : width in coord units
-        @param h : height in coord units
-        @param label : text label of tabfolder
+        @param foldertype: type of tabfolder to be added
+        @param x: horizontal position (upper-left corner)
+        @param x: vertical position (upper-left corner)
+        @param w: width in coord units
+        @param h: height in coord units
+        @param label: text label of tabfolder
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -17793,7 +17455,7 @@ def fl_get_folder(pObject):
     """
         fl_get_folder(pObject) -> pForm
 
-        @param pObject : pointer to object
+        @param pObject: pointer to object
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -17812,7 +17474,7 @@ def fl_get_folder_number(pObject):
     """
         fl_get_folder_number(pObject) -> folder num.
 
-        @param pObject : pointer to object
+        @param pObject: pointer to object
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -17831,7 +17493,7 @@ def fl_get_folder_name(pObject):
     """
         fl_get_folder_name(pObject) -> name string
 
-        @param pObject : pointer to object
+        @param pObject: pointer to object
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -17850,7 +17512,7 @@ def fl_get_tabfolder_numfolders(pObject):
     """
         fl_get_tabfolder_numfolders(pObject) -> num.
 
-        @param pObject : pointer to object
+        @param pObject: pointer to object
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -17869,7 +17531,7 @@ def fl_get_active_folder(pObject):
     """
         fl_get_active_folder(pObject) -> pForm
 
-        @param pObject : pointer to object
+        @param pObject: pointer to object
 
         @status: Tested + NoDoc + Example = OK
     """
@@ -17888,7 +17550,7 @@ def fl_get_active_folder_number(pObject):
     """
         fl_get_active_folder_number(pObject) -> num.
 
-        @param pObject : pointer to object
+        @param pObject: pointer to object
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -17907,7 +17569,7 @@ def fl_get_active_folder_name(pObject):
     """
         fl_get_active_folder_name(pObject) -> name string
 
-        @param pObject : pointer to object
+        @param pObject: pointer to object
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -17926,7 +17588,7 @@ def fl_get_folder_area(pObject):
     """
         fl_get_folder_area(pObject) -> x, y, w, h
 
-        @param pObject : pointer to object
+        @param pObject: pointer to object
 
         @attention: API change from XForms - upstream was
            fl_get_folder_area(pObject, x, y, w, h)
@@ -17955,7 +17617,7 @@ def fl_replace_folder_bynumber(pObject, num, pForm):
     """
         fl_replace_folder_bynumber(pObject, num, pForm)
 
-        @param pObject : pointer to object
+        @param pObject: pointer to object
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -17975,7 +17637,7 @@ def fl_set_tabfolder_autofit(pObject, num):
     """
         fl_set_tabfolder_autofit(pObject, num) -> num.
 
-        @param pObject : pointer to object
+        @param pObject: pointer to object
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -17997,7 +17659,7 @@ def fl_set_default_tabfolder_corner(npixels):
 
         Adjusts the corner pixels, changing appearance of the tabs.
 
-        @param npixels : number of corner pixels (default 3)
+        @param npixels: number of corner pixels (default 3)
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -18017,7 +17679,7 @@ def fl_set_tabfolder_offset(pObject, offset):
     """
         fl_set_tabfolder_offset(pObject, offset) -> num.
 
-        @param pObject : pointer to tabfolder object
+        @param pObject: pointer to tabfolder object
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -18047,12 +17709,12 @@ def fl_add_text(texttype, x, y, w, h, label):
 
         Adds a text object.
 
-        @param texttype : type of text to be added
-        @param x : horizontal position (upper-left corner)
-        @param x : vertical position (upper-left corner)
-        @param w : width in coord units
-        @param h : height in coord units
-        @param label : text label of text
+        @param texttype: type of text to be added
+        @param x: horizontal position (upper-left corner)
+        @param x: vertical position (upper-left corner)
+        @param w: width in coord units
+        @param h: height in coord units
+        @param label: text label of text
 
         @status: Tested + NoDoc + Example = OK
     """
@@ -18086,7 +17748,7 @@ def fl_get_thumbwheel_value(pObject):
     """
         fl_get_thumbwheel_value(pObject) -> num.
 
-        @param pObject : pointer to object
+        @param pObject: pointer to object
 
         @status: Tested + NoDoc + Example = OK
     """
@@ -18105,7 +17767,7 @@ def fl_set_thumbwheel_value(pObject, value):
     """
         fl_set_thumbwheel_value(pObject, value)
 
-        @param pObject : pointer to object
+        @param pObject: pointer to object
     """
 
     _fl_set_thumbwheel_value = cfuncproto(
@@ -18123,7 +17785,7 @@ def fl_get_thumbwheel_step(pObject):
     """
         fl_get_thumbwheel_step(pObject) -> num.
 
-        @param pObject : pointer to object
+        @param pObject: pointer to object
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -18142,7 +17804,7 @@ def fl_set_thumbwheel_step(pObject, step):
     """
         fl_set_thumbwheel_step(pObject, step) -> num.
 
-        @param pObject : pointer to object
+        @param pObject: pointer to object
 
         @status: Tested + NoDoc + Example = OK
     """
@@ -18162,8 +17824,8 @@ def fl_set_thumbwheel_return(pObject, when):
     """
         fl_set_thumbwheel_return(pObject, when) -> num.
 
-        @param pObject : pointer to object
-        @param when : return type (when it returns)
+        @param pObject: pointer to object
+        @param when: return type (when it returns)
 
         @status: Tested + NoDoc + Example = OK
     """
@@ -18185,7 +17847,7 @@ def fl_set_thumbwheel_crossover(pObject, flag):
     """
         fl_set_thumbwheel_crossover(pObject, flag) -> num.
 
-        @param pObject : pointer to object
+        @param pObject: pointer to object
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -18205,7 +17867,7 @@ def fl_set_thumbwheel_bounds(pObject, minbound, maxbound):
     """
         fl_set_thumbwheel_bounds(pObject, minbound, maxbound)
 
-        @param pObject : pointer to object
+        @param pObject: pointer to object
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -18226,7 +17888,7 @@ def fl_get_thumbwheel_bounds(pObject):
     """
         fl_get_thumbwheel_bounds(pObject) -> minbound, maxbound
 
-        @param pObject : pointer to thumbwheel object
+        @param pObject: pointer to thumbwheel object
 
         @attention: API change from XForms - upstream was
            fl_get_thumbwheel_bounds(pObject, minbound, maxbound)
@@ -18257,12 +17919,12 @@ def fl_add_thumbwheel(wheeltype, x, y, w, h, label):
 
         Adds a thumbwheel object.
 
-        @param wheeltype : type of thumbwheel to be added
-        @param x : horizontal position (upper-left corner)
-        @param x : vertical position (upper-left corner)
-        @param w : width in coord units
-        @param h : height in coord units
-        @param label : text label of thumbwheel
+        @param wheeltype: type of thumbwheel to be added
+        @param x: horizontal position (upper-left corner)
+        @param x: vertical position (upper-left corner)
+        @param w: width in coord units
+        @param h: height in coord units
+        @param label: text label of thumbwheel
 
         @status: Tested + NoDoc + Example = OK
     """
@@ -18304,12 +17966,12 @@ def fl_add_timer(timertype, x, y, w, h, label):
 
         Adds a timer object.
 
-        @param timertype : type of timer to be added
-        @param x : horizontal position (upper-left corner)
-        @param x : vertical position (upper-left corner)
-        @param w : width in coord units
-        @param h : height in coord units
-        @param label : text label of timer
+        @param timertype: type of timer to be added
+        @param x: horizontal position (upper-left corner)
+        @param x: vertical position (upper-left corner)
+        @param w: width in coord units
+        @param h: height in coord units
+        @param label: text label of timer
 
         @status: Tested + NoDoc + Example = OK
     """
@@ -18338,7 +18000,7 @@ def fl_set_timer(pObject, total):
     """
         fl_set_timer(pObject, total)
 
-        @param pObject : pointer to object
+        @param pObject: pointer to object
 
         @status: Tested + NoDoc + Example = OK
     """
@@ -18357,7 +18019,7 @@ def fl_get_timer(pObject):
     """
         fl_get_timer(pObject) -> num.
 
-        @param pObject : pointer to object
+        @param pObject: pointer to object
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -18376,7 +18038,7 @@ def fl_set_timer_countup(pObject, yes):
     """
         fl_set_timer_countup(pObject, yes)
 
-        @param pObject : pointer to object
+        @param pObject: pointer to object
 
         @status: Tested + NoDoc + Example = OK
     """
@@ -18398,8 +18060,8 @@ def fl_set_timer_filter(pObject, py_TimerFilter):
     """
         fl_set_timer_filter(pObject, py_TimerFilter) -> timer_filter func.
 
-        @param pObject : pointer to object
-        @param py_TimerFilter : python function, fn(pObject, valfloat) ->
+        @param pObject: pointer to object
+        @param py_TimerFilter: python function, fn(pObject, valfloat) ->
            string
 
         @status: Untested + NoDoc + NoExample = NOT OK
@@ -18422,7 +18084,7 @@ def fl_suspend_timer(pObject):
     """
         fl_suspend_timer(pObject)
 
-        @param pObject : pointer to object
+        @param pObject: pointer to object
 
         @status: Tested + NoDoc + Example = OK
     """
@@ -18442,7 +18104,7 @@ def fl_resume_timer(pObject):
 
         Resume timer previously paused.
 
-        @param pObject : pointer to timer object
+        @param pObject: pointer to timer object
 
         @status: Tested + NoDoc + Example = OK
     """
@@ -19191,12 +18853,12 @@ def fl_add_xyplot(plottype, x, y, w, h, label):
 
         Adds an xyplot object.
 
-        @param plottype : type of xyplot to be added
-        @param x : horizontal position (upper-left corner)
-        @param x : vertical position (upper-left corner)
-        @param w : width in coord units
-        @param h : height in coord units
-        @param label : text label of xyplot
+        @param plottype: type of xyplot to be added
+        @param x: horizontal position (upper-left corner)
+        @param x: vertical position (upper-left corner)
+        @param w: width in coord units
+        @param h: height in coord units
+        @param label: text label of xyplot
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -19225,7 +18887,7 @@ def fl_set_xyplot_data(pObject, xlist, ylist, n, title, xlabel, ylabel):
     """
         fl_set_xyplot_data(pObject, xlist, ylist, n, title, xlabel, ylabel)
 
-        @param pObject : pointer to object
+        @param pObject: pointer to object
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -19265,7 +18927,7 @@ def fl_set_xyplot_data_double(pObject, x, y, n, title, xlabel, ylabel):
     """
         fl_set_xyplot_data_double(pObject, x, y, n, title, xlabel, ylabel)
 
-        @param pObject : pointer to object
+        @param pObject: pointer to object
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -19296,7 +18958,7 @@ def fl_set_xyplot_file(pObject, fname, title, xl, yl):
     """
         fl_set_xyplot_file(pObject, fname, title, xl, yl) -> num.
 
-        @param pObject : pointer to object
+        @param pObject: pointer to object
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -19321,7 +18983,7 @@ def fl_insert_xyplot_data(pObject, idnum, n, valx, valy):
     """ 
         fl_insert_xyplot_data(pObject, idnum, n, valx, valy)
 
-        @param pObject : pointer to object
+        @param pObject: pointer to object
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -19345,7 +19007,7 @@ def fl_add_xyplot_text(pObject, valx, valy, text, al, colr):
     """
         fl_add_xyplot_text(pObject, valx, valy, text, al, colr)
 
-        @param pObject : pointer to object
+        @param pObject: pointer to object
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -19372,7 +19034,7 @@ def fl_delete_xyplot_text(pObject, text):
     """
         fl_delete_xyplot_text(pObject, text)
 
-        @param pObject : pointer to object
+        @param pObject: pointer to object
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -19391,7 +19053,7 @@ def fl_set_xyplot_maxoverlays(pObject, maxover):
     """
         fl_set_xyplot_maxoverlays(pObject, maxover) -> num.
 
-        @param pObject : pointer to object
+        @param pObject: pointer to object
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -19411,7 +19073,7 @@ def fl_add_xyplot_overlay(pObject, idnum, x, y, n, colr):
     """
         fl_add_xyplot_overlay(pObject, idnum, x, y, n, colr)
 
-        @param pObject : pointer to object
+        @param pObject: pointer to object
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -19439,7 +19101,7 @@ def fl_add_xyplot_overlay_file(pObject, idnum, fname, colr):
     """
         fl_add_xyplot_overlay_file(pObject, idnum, fname, colr) -> num.
 
-        @param pObject : pointer to object
+        @param pObject: pointer to object
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -19464,8 +19126,8 @@ def fl_set_xyplot_return(pObject, when):
     """
         fl_set_xyplot_return(pObject, when)
 
-        @param pObject : pointer to object
-        @param when : return type
+        @param pObject: pointer to object
+        @param when: return type
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -19485,7 +19147,7 @@ def fl_set_xyplot_xtics(pObject, major, minor):
     """
         fl_set_xyplot_xtics(pObject, major, minor)
 
-        @param pObject : pointer to object
+        @param pObject: pointer to object
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -19505,7 +19167,7 @@ def fl_set_xyplot_ytics(pObject, major, minor):
     """
         fl_set_xyplot_ytics(pObject, major, minor)
 
-        @param pObject : pointer to object
+        @param pObject: pointer to object
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -19525,7 +19187,7 @@ def fl_set_xyplot_xbounds(pObject, minbound, maxbound):
     """
         fl_set_xyplot_xbounds(pObject, minbound, maxbound)
 
-        @param pObject : pointer to object
+        @param pObject: pointer to object
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -19546,7 +19208,7 @@ def fl_set_xyplot_ybounds(pObject, minbound, maxbound):
     """
         fl_set_xyplot_ybounds(pObject, minbound, maxbound)
 
-        @param pObject : pointer to object
+        @param pObject: pointer to object
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -19567,7 +19229,7 @@ def fl_get_xyplot_xbounds(pObject):
     """
         fl_get_xyplot_xbounds(pObject) -> minbound, maxbound
 
-        @param pObject : pointer to object
+        @param pObject: pointer to object
 
         @attention: API change from XForms - upstream was
            fl_get_xyplot_xbounds(pObject, minbound, maxbound)
@@ -19593,7 +19255,7 @@ def fl_get_xyplot_ybounds(pObject):
     """
         fl_get_xyplot_ybounds(pObject) -> minbound, maxbound
 
-        @param pObject : pointer to object
+        @param pObject: pointer to object
 
         @attention: API change from XForms - upstream was
            fl_get_xyplot_ybounds(pObject, minbound, maxbound)
@@ -19619,7 +19281,7 @@ def fl_get_xyplot(pObject):
     """
         fl_get_xyplot(pObject) -> x, y, i
 
-        @param pObject : pointer to object
+        @param pObject: pointer to object
 
         @attention: API change from XForms - upstream was
            fl_get_xyplot(pObject, x, y, i)
@@ -19646,7 +19308,7 @@ def fl_get_xyplot_data(pObject):
     """
         fl_get_xyplot_data(pObject) -> x, y, n
 
-        @param pObject : pointer to object
+        @param pObject: pointer to object
 
         @attention: API change from XForms - upstream was
            fl_get_xyplot_data(pObject, x, y, n)
@@ -19673,7 +19335,7 @@ def fl_get_xyplot_data_pointer(pObject, idnum):
     """
         fl_get_xyplot_data_pointer(pObject, idnum) -> x, y, n
 
-        @param pObject : pointer to object
+        @param pObject: pointer to object
 
         @attention: API change from XForms - upstream was
            fl_get_xyplot_data_pointer(pObject, idnum, x, y, n)
@@ -19702,7 +19364,7 @@ def fl_get_xyplot_overlay_data(pObject, idnum):
     """
         fl_get_xyplot_overlay_data(pObject, idnum) -> x, y, n
 
-        @param pObject : pointer to object
+        @param pObject: pointer to object
 
         @attention: API change from XForms - upstream was
            fl_get_xyplot_overlay_data(pObject, idnum, x, y, n)
@@ -19730,7 +19392,7 @@ def fl_set_xyplot_overlay_type(pObject, idnum, plottype):
     """
         fl_set_xyplot_overlay_type(pObject, idnum, plottype)
 
-        @param pObject : pointer to object
+        @param pObject: pointer to object
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -19751,7 +19413,7 @@ def fl_delete_xyplot_overlay(pObject, idnum):
     """
         fl_delete_xyplot_overlay(pObject, idnum)
 
-        @param pObject : pointer to object
+        @param pObject: pointer to object
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -19770,7 +19432,7 @@ def fl_set_xyplot_interpolate(pObject, idnum, deg, grid):
     """
         fl_set_xyplot_interpolate(pObject, idnum, deg, grid)
 
-        @param pObject : pointer to object
+        @param pObject: pointer to object
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -19793,7 +19455,7 @@ def fl_set_xyplot_inspect(pObject, yes):
     """
         fl_set_xyplot_inspect(pObject, yes)
 
-        @param pObject : pointer to object
+        @param pObject: pointer to object
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -19812,7 +19474,7 @@ def fl_set_xyplot_symbolsize(pObject, n):
     """
         fl_set_xyplot_symbolsize(pObject, n)
 
-        @param pObject : pointer to object
+        @param pObject: pointer to object
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -19831,7 +19493,7 @@ def fl_replace_xyplot_point(pObject, i, valx, valy):
     """
         fl_replace_xyplot_point(pObject, i, valx, valy)
 
-        @param pObject : pointer to object
+        @param pObject: pointer to object
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -19859,7 +19521,7 @@ def fl_replace_xyplot_point_in_overlay(pObject, i, setID, valx, valy):
     """
         fl_replace_xyplot_point_in_overlay(pObject, i, setID, valx, valy)
 
-        @param pObject : pointer to object
+        @param pObject: pointer to object
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -19883,7 +19545,7 @@ def fl_get_xyplot_xmapping(pObject):
     """
         fl_get_xyplot_xmapping(pObject) -> a, b
 
-        @param pObject : pointer to object
+        @param pObject: pointer to object
 
         @attention: API change from XForms - upstream was
            fl_get_xyplot_xmapping(pObject, a, b)
@@ -19909,7 +19571,7 @@ def fl_get_xyplot_ymapping(pObject):
     """
         fl_get_xyplot_ymapping(pObject) -> a, b
 
-        @param pObject : pointer to object
+        @param pObject: pointer to object
 
         @attention: API change from XForms - upstream was
            fl_get_xyplot_ymapping(pObject, a, b)
@@ -19935,7 +19597,7 @@ def fl_set_xyplot_keys(pObject, keys, valx, valy, align):
     """
         fl_set_xyplot_keys(pObject, keys, valx, valy, align)
 
-        @param pObject : pointer to object
+        @param pObject: pointer to object
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -19958,7 +19620,7 @@ def fl_set_xyplot_key(pObject, idnum, keytxt):
     """
         fl_set_xyplot_key(pObject, idnum, keytxt)
 
-        @param pObject : pointer to object
+        @param pObject: pointer to object
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -19979,7 +19641,7 @@ def fl_set_xyplot_key_position(pObject, valx, valy, align):
     """
         fl_set_xyplot_key_position(pObject, valx, valy, align)
 
-        @param pObject : pointer to object
+        @param pObject: pointer to object
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -20002,7 +19664,7 @@ def fl_set_xyplot_key_font(pObject, style, size):
     """
         fl_set_xyplot_key_font(pObject, style, size)
 
-        @param pObject : pointer to object
+        @param pObject: pointer to object
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -20023,7 +19685,7 @@ def fl_get_xyplot_numdata(pObject, idnum):
     """
         fl_get_xyplot_numdata(pObject, idnum) -> num.
 
-        @param pObject : pointer to object
+        @param pObject: pointer to object
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -20046,7 +19708,7 @@ def fl_set_xyplot_fontsize(pObject, size):
     """
         fl_set_xyplot_fontsize(pObject, size)
 
-        @param pObject : pointer to object
+        @param pObject: pointer to object
 
         @status: Untested + NoDoc + NoExample = NOT OK
         @deprecated: Use fl_set_object_lsize function
@@ -20067,7 +19729,7 @@ def fl_set_xyplot_fontstyle(pObject, style):
     """
         fl_set_xyplot_fontstyle(pObject, style)
 
-        @param pObject : pointer to object
+        @param pObject: pointer to object
 
         @status: Untested + NoDoc + NoExample = NOT OK
         @deprecated: Use fl_set_object_lstyle function
@@ -20088,7 +19750,7 @@ def fl_xyplot_s2w(pObject, sx, sy, wx, wy):
     """
         fl_xyplot_s2w(pObject, sx, sy, wx, wy)
 
-        @param pObject : pointer to object
+        @param pObject: pointer to object
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -20110,7 +19772,7 @@ def fl_xyplot_w2s(pObject, wx, wy, sx, sy):
     """
         fl_xyplot_w2s(pObject, wx, wy, sx, sy)
 
-        @param pObject : pointer to object
+        @param pObject: pointer to object
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -20132,7 +19794,7 @@ def fl_set_xyplot_xscale(pObject, scale, base):
     """
         fl_set_xyplot_xscale(pObject, scale, base)
 
-        @param pObject : pointer to object
+        @param pObject: pointer to object
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -20153,7 +19815,7 @@ def fl_set_xyplot_yscale(pObject, scale, base):
     """
         fl_set_xyplot_yscale(pObject, scale, base)
 
-        @param pObject : pointer to object
+        @param pObject: pointer to object
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -20174,7 +19836,7 @@ def fl_clear_xyplot(pObject):
     """
         fl_clear_xyplot(pObject)
 
-        @param pObject : pointer to object
+        @param pObject: pointer to object
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -20192,7 +19854,7 @@ def fl_set_xyplot_linewidth(pObject, idnum, lw):
     """
         fl_set_xyplot_linewidth(pObject, idnum, lw)
 
-        @param pObject : pointer to object
+        @param pObject: pointer to object
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -20212,7 +19874,7 @@ def fl_set_xyplot_xgrid(pObject, xgrid):
     """
         fl_set_xyplot_xgrid(pObject, xgrid)
 
-        @param pObject : pointer to object
+        @param pObject: pointer to object
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -20231,7 +19893,7 @@ def fl_set_xyplot_ygrid(pObject, ygrid):
     """
         fl_set_xyplot_ygrid(pObject, ygrid)
 
-        @param pObject : pointer to object
+        @param pObject: pointer to object
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -20250,7 +19912,7 @@ def fl_set_xyplot_grid_linestyle(pObject, style):
     """
         fl_set_xyplot_grid_linestyle(pObject, style) -> num.
 
-        @param pObject : pointer to object
+        @param pObject: pointer to object
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -20270,7 +19932,7 @@ def fl_set_xyplot_alphaxtics(pObject, m, s):
     """
         fl_set_xyplot_alphaxtics(pObject, m, s)
 
-        @param pObject : pointer to object
+        @param pObject: pointer to object
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -20291,7 +19953,7 @@ def fl_set_xyplot_alphaytics(pObject, m, s):
     """
         fl_set_xyplot_alphaytics(pObject, m, s)
 
-        @param pObject : pointer to object
+        @param pObject: pointer to object
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -20312,7 +19974,7 @@ def fl_set_xyplot_fixed_xaxis(pObject, lm, rm):
     """
         fl_set_xyplot_fixed_xaxis(pObject, lm, rm)
 
-        @param pObject : pointer to object
+        @param pObject: pointer to object
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -20333,7 +19995,7 @@ def fl_set_xyplot_fixed_yaxis(pObject, bm, tm):
     """
         fl_set_xyplot_fixed_yaxis(pObject, bm, tm)
 
-        @param pObject : pointer to object
+        @param pObject: pointer to object
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -20402,7 +20064,7 @@ def fl_set_xyplot_symbol(pObject, idnum, py_XyPlotSymbol):
     """
         fl_set_xyplot_symbol(pObject, idnum, py_XyPlotSymbol) -> xyplot_symbol func.
 
-        @param pObject : pointer to object
+        @param pObject: pointer to object
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -20426,7 +20088,7 @@ def fl_set_xyplot_mark_active(pObject, y):
     """
         fl_set_xyplot_mark_active(pObject, y) -> num.
 
-        @param pObject : pointer to object
+        @param pObject: pointer to object
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -20607,7 +20269,7 @@ def flimage_setup(pImageSetup):
     """
         flimage_setup(pImageSetup)
 
-        @param pImageSetup : pointer to imagesetup struct
+        @param pImageSetup: pointer to imagesetup struct
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -20627,7 +20289,7 @@ def flimage_load(filename):
     """
         flimage_load(filename) -> pImage
 
-        @param filename : name of file to load
+        @param filename: name of file to load
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -20647,7 +20309,7 @@ def flimage_read(pImage):
     """
         flimage_read(pImage) -> pImage
 
-        @param pImage : pointer to image
+        @param pImage: pointer to image
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -20666,7 +20328,7 @@ def flimage_dump(pImage, p2, p3):
     """
         flimage_dump(pImage, p2, p3) -> num.
 
-        @param pImage : pointer to image
+        @param pImage: pointer to image
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -20688,7 +20350,7 @@ def flimage_close(pImage):
     """
         flimage_close(pImage) -> num.
 
-        @param pImage : pointer to image
+        @param pImage: pointer to image
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -20723,7 +20385,7 @@ def flimage_getmem(pImage):
     """
         flimage_getmem(pImage) -> num.
 
-        @param pImage : pointer to image
+        @param pImage: pointer to image
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -20742,7 +20404,7 @@ def flimage_is_supported(fname):
     """
         flimage_is_supported(fname) -> num.
 
-        @param fname : filename
+        @param fname: filename
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -20762,7 +20424,7 @@ def flimage_description_via_filter(pImage, p2, p3, p4):
     """
         flimage_description_via_filter(pImage, p2, p3, p4) -> num.
 
-        @param pImage : pointer to image
+        @param pImage: pointer to image
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -20785,7 +20447,7 @@ def flimage_write_via_filter(pImage, p2, p3, p4):
     """
         flimage_write_via_filter(pImage, p2, p3, p4) -> num.
 
-        @param pImage : pointer to image
+        @param pImage: pointer to image
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -20807,7 +20469,7 @@ def flimage_free(pImage):
     """
         flimage_free(pImage) -> num.
 
-        @param pImage : pointer to image
+        @param pImage: pointer to image
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -20826,8 +20488,8 @@ def flimage_display(pImage, win):
     """
         flimage_display(pImage, win) -> num.
 
-        @param pImage : pointer to image
-        @param win : window
+        @param pImage: pointer to image
+        @param win: window
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -20847,8 +20509,8 @@ def flimage_sdisplay(pImage, win):
     """
         flimage_sdisplay(pImage, win) -> num.
 
-        @param pImage : pointer to image
-        @param win : window
+        @param pImage: pointer to image
+        @param win: window
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -20870,9 +20532,9 @@ def flimage_convert(pImage, newtype, ncolors):
 
         Convert an image to a new type.
 
-        @param pImage : pointer to image
-        @param newtype : new type of flimage to convert to
-        @param ncolors : number of colors
+        @param pImage: pointer to image
+        @param newtype: new type of flimage to convert to
+        @param ncolors: number of colors
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -20893,7 +20555,7 @@ def flimage_type_name(flimagetype):
     """
         flimage_type_name(flimagetype) -> name string
 
-        @param flimagetype : type of flimage
+        @param flimagetype: type of flimage
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -20914,7 +20576,7 @@ def flimage_add_text(pImage, text, length, style, size, txtcolr, bgcolr, tran, t
     """
         flimage_add_text(pImage, text, length, style, size, txtcolr, bgcolr, tran, tx, ty, rot) -> num.
 
-        @param pImage : pointer to image
+        @param pImage: pointer to image
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -20950,7 +20612,7 @@ def flimage_add_text_struct(pImage, pImageText):
     """
         flimage_add_text_struct(pImage, pImageText) -> num.
 
-        @param pImage : pointer to image
+        @param pImage: pointer to image
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -20970,7 +20632,7 @@ def flimage_delete_all_text(pImage):
     """
         flimage_delete_all_text(pImage)
 
-        @param pImage : pointer to image
+        @param pImage: pointer to image
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -20988,7 +20650,7 @@ def flimage_add_marker(pImage, text, p3, p4, p5, p6, p7, p8, p9, p10, p11):
     """
         flimage_add_marker(pImage, text, p3, p4, p5, p6, p7, p8, p9, p10, p11) -> num.
 
-        @param pImage : pointer to image
+        @param pImage: pointer to image
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -21023,7 +20685,7 @@ def flimage_add_marker_struct(pImage, pImageMarker):
     """
         flimage_add_marker_struct(pImage, pImageMarker) -> num.
 
-        @param pImage : pointer to image
+        @param pImage: pointer to image
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -21062,7 +20724,7 @@ def flimage_delete_all_markers(pImage):
     """
         flimage_delete_all_markers(pImage)
 
-        @param pImage : pointer to image
+        @param pImage: pointer to image
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -21080,8 +20742,8 @@ def flimage_render_annotation(pImage, win):
     """
         flimage_render_annotation(pImage, win) -> num.
 
-        @param pImage : pointer to image
-        @param win : window
+        @param pImage: pointer to image
+        @param win: window
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -21101,7 +20763,7 @@ def flimage_error(pImage, text):
     """
         flimage_error(pImage, text)
 
-        @param pImage : pointer to image
+        @param pImage: pointer to image
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -21260,9 +20922,9 @@ def fl_get_matrix(nrows, ncols, esize):
     """
         fl_get_matrix(nrows, ncols, esize) -> ?
 
-        @param nrows : number of rows
-        @param ncols : number of columns
-        @param esize : size of matrix
+        @param nrows: number of rows
+        @param ncols: number of columns
+        @param esize: size of matrix
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -21286,10 +20948,10 @@ def fl_make_matrix(nrows, ncols, esize, mem):
 
         Makes a matrix out of a given piece of memory.
 
-        @param nrows : number of rows
-        @param ncols : number of columns
-        @param esize : size of matrix
-        @param mem : memory
+        @param nrows: number of rows
+        @param ncols: number of columns
+        @param esize: size of matrix
+        @param mem: memory
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -21434,7 +21096,7 @@ def flimage_getcolormap(pImage):
     """
         flimage_getcolormap(pImage) -> num.
 
-        @param pImage : pointer to image
+        @param pImage: pointer to image
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -21470,7 +21132,7 @@ def flimage_convolve(pImage, p2, p3, p4):
     """
         flimage_convolve(pImage, p2, p3, p4) -> num.
 
-        @param pImage : pointer to image
+        @param pImage: pointer to image
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -21493,7 +21155,7 @@ def flimage_convolvea(pImage, p2, p3, p4):
     """
         flimage_convolvea(pImage, p2, p3, p4) -> num.
 
-        @param pImage : pointer to image
+        @param pImage: pointer to image
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -21513,7 +21175,7 @@ def flimage_tint(pImage, p2, p3):
     """
         flimage_tint(pImage, p2, p3) -> num.
 
-        @param pImage : pointer to image
+        @param pImage: pointer to image
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -21532,7 +21194,7 @@ def flimage_rotate(pImage, p2, p3):
     """
         flimage_rotate(pImage, p2, p3) -> num.
 
-        @param pImage : pointer to image
+        @param pImage: pointer to image
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -21553,7 +21215,7 @@ def flimage_flip(pImage, p2):
     """
         flimage_flip(pImage, p2) -> num.
 
-        @param pImage : pointer to image
+        @param pImage: pointer to image
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -21573,7 +21235,7 @@ def flimage_scale(pImage, p2, p3, p4):
     """
         flimage_scale(pImage, p2, p3, p4) -> num.
 
-        @param pImage : pointer to image
+        @param pImage: pointer to image
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -21596,7 +21258,7 @@ def flimage_warp(pImage, p2, p3, p4, p5):
     """
         flimage_warp(pImage, p2, p3, p4, p5) -> num.
 
-        @param pImage : pointer to image
+        @param pImage: pointer to image
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -21620,7 +21282,7 @@ def flimage_autocrop(pImage, p2):
     """
         flimage_autocrop(pImage, p2) -> num.
 
-        @param pImage : pointer to image
+        @param pImage: pointer to image
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -21640,7 +21302,7 @@ def flimage_get_autocrop(pImage, bk):
     """
         flimage_get_autocrop(pImage, bk) -> num., xl, yt, xr, yb
 
-        @param pImage : pointer to image
+        @param pImage: pointer to image
 
         @attention: API change from XForms - upstream was
            flimage_get_autocrop(pImage, bk, xl, yt, xr, yb)
@@ -21670,7 +21332,7 @@ def flimage_crop(pImage, p2, p3, p4, p5):
     """
         flimage_crop(pImage, p2, p3, p4, p5) -> num.
 
-        @param pImage : pointer to image
+        @param pImage: pointer to image
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -21695,7 +21357,7 @@ def flimage_replace_pixel(pImage, p2, p3):
     """
         flimage_replace_pixel(pImage, p2, p3) -> num.
 
-        @param pImage : pointer to image
+        @param pImage: pointer to image
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -21717,7 +21379,7 @@ def flimage_transform_pixels(pImage, red, green, blue):
     """
         flimage_transform_pixels(pImage, red, green, blue) -> num.
 
-        @param pImage : pointer to image
+        @param pImage: pointer to image
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -21741,7 +21403,7 @@ def flimage_windowlevel(pImage, p2, p3):
     """
         flimage_windowlevel(pImage, p2, p3) -> num.
 
-        @param pImage : pointer to image
+        @param pImage: pointer to image
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -21762,7 +21424,7 @@ def flimage_enhance(pImage, p2):
     """
         flimage_enhance(pImage, p2) -> num.
 
-        @param pImage : pointer to image
+        @param pImage: pointer to image
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -21782,8 +21444,8 @@ def flimage_from_pixmap(pImage, pixmap):
     """
         flimage_from_pixmap(pImage, pixmap) -> num.
 
-        @param pImage : pointer to image
-        @param pixmap : pixmap value
+        @param pImage: pointer to image
+        @param pixmap: pixmap value
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -21803,8 +21465,8 @@ def flimage_to_pixmap(pImage, win):
     """
         flimage_to_pixmap(pImage, win) -> pixmap
 
-        @param pImage : pointer to image
-        @param win : window id
+        @param pImage: pointer to image
+        @param win: window id
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -21824,7 +21486,7 @@ def flimage_dup(pImage):
     """
         flimage_dup(pImage) -> pImage
 
-        @param pImage : pointer to image
+        @param pImage: pointer to image
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -21998,7 +21660,7 @@ def fl_value_to_bits(val):
     """
         fl_value_to_bits(val) -> num.
 
-        @param val : value to convert to bits
+        @param val: value to convert to bits
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -22018,7 +21680,7 @@ def flimage_add_comments(pImage, p2, p3):
     """
         flimage_add_comments(pImage, p2, p3)
 
-        @param pImage : pointer to image
+        @param pImage: pointer to image
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -22039,7 +21701,7 @@ def flimage_color_to_pixel(pImage, p2, p3, p4, p5):
     """
         flimage_color_to_pixel(pImage, p2, p3, p4, p5) -> num.
 
-        @param pImage : pointer to image
+        @param pImage: pointer to image
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -22063,9 +21725,9 @@ def flimage_combine(pImage1, pImage2, alpha):
     """
         flimage_combine(pImage1, pImage2, alpha) -> pImage
 
-        @param pImage1 : pointer to first image to combine
-        @param pImage2 : pointer to second image to combine
-        @param alpha : alpha level?
+        @param pImage1: pointer to first image to combine
+        @param pImage2: pointer to second image to combine
+        @param alpha: alpha level?
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -22087,7 +21749,7 @@ def flimage_display_markers(pImage):
     """
         flimage_display_markers(pImage)
 
-        @param pImage : pointer to image
+        @param pImage: pointer to image
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -22105,7 +21767,7 @@ def flimage_dup_(pImage, p2):
     """
         flimage_dup_(pImage, p2) -> pImage
 
-        @param pImage : pointer to image
+        @param pImage: pointer to image
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -22320,7 +21982,7 @@ def flimage_free_ci(pImage):
     """
         flimage_free_ci(pImage)
 
-        @param pImage : pointer to image
+        @param pImage: pointer to image
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -22338,7 +22000,7 @@ def flimage_free_gray(pImage):
     """
         flimage_free_gray(pImage)
 
-        @param pImage : pointer to image
+        @param pImage: pointer to image
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -22356,7 +22018,7 @@ def flimage_free_linearlut(pImage):
     """
         flimage_free_linearlut(pImage)
 
-        @param pImage : pointer to image
+        @param pImage: pointer to image
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -22374,7 +22036,7 @@ def flimage_free_rgb(pImage):
     """
         flimage_free_rgb(pImage)
 
-        @param pImage : pointer to image
+        @param pImage: pointer to image
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -22392,7 +22054,7 @@ def flimage_freemem(pImage):
     """
         flimage_freemem(pImage)
 
-        @param pImage : pointer to image
+        @param pImage: pointer to image
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -22410,7 +22072,7 @@ def flimage_get_closest_color_from_map(pImage, p2):
     """
         flimage_get_closest_color_from_map(pImage, p2) -> num.
 
-        @param pImage : pointer to image
+        @param pImage: pointer to image
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -22431,7 +22093,7 @@ def flimage_get_linearlut(pImage):
     """
         flimage_get_linearlut(pImage) -> num.
 
-        @param pImage : pointer to image
+        @param pImage: pointer to image
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -22450,7 +22112,7 @@ def flimage_invalidate_pixels(pImage):
     """
         flimage_invalidate_pixels(pImage)
 
-        @param pImage : pointer to image
+        @param pImage: pointer to image
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -22468,7 +22130,7 @@ def flimage_open(filename):
     """
         flimage_open(filename) -> pImage
 
-        @param filename : name of file to open
+        @param filename: name of file to open
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -22488,7 +22150,7 @@ def flimage_read_annotation(pImage):
     """
         flimage_read_annotation(pImage) -> num.
 
-        @param pImage : pointer to image
+        @param pImage: pointer to image
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -22507,7 +22169,7 @@ def flimage_replace_image(pImage, w, h, r, g, b):
     """
         flimage_replace_image(pImage, w, h, r, g, b)
 
-        @param pImage : pointer to image
+        @param pImage: pointer to image
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -22532,7 +22194,7 @@ def flimage_swapbuffer(pImage):
     """
         flimage_swapbuffer(pImage) -> num.
 
-        @param pImage : pointer to image
+        @param pImage: pointer to image
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -22551,9 +22213,9 @@ def flimage_to_ximage(pImage, win, pXWindowAttributes):
     """
         flimage_to_ximage(pImage, win, pXWindowAttributes) -> num.
 
-        @param pImage : pointer to image
-        @param win : window id
-        @param pXWindowAttributes : pointer to XWindowAttributes
+        @param pImage: pointer to image
+        @param win: window id
+        @param pXWindowAttributes: pointer to XWindowAttributes
            class instance
 
         @status: Untested + NoDoc + NoExample = NOT OK
@@ -22576,7 +22238,7 @@ def flimage_write_annotation(pImage):
     """
         flimage_write_annotation(pImage) -> num.
 
-        @param pImage : pointer to image
+        @param pImage: pointer to image
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -23047,12 +22709,11 @@ def flps_line(xi, yi, xf, yf, colr):
 
 
 def flps_lines(Point, numpt, colr):
-    """
-        flps_lines(Point, numpt, colr)
+    """ flps_lines(Point, numpt, colr)
 
-        @param Point : FL_POINT class instance (array of it)
-        @param numpt : number of points
-        @param colr : value of color to be set
+        @param Point: an array of xfc.FL_POINT class instance
+        @param numpt: number of points
+        @param colr: value of color to be set
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -23070,8 +22731,7 @@ def flps_lines(Point, numpt, colr):
 
 
 def flps_linestyle(linestyle):
-    """
-        flps_linestyle(linestyle)
+    """ flps_linestyle(linestyle)
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -23088,8 +22748,7 @@ def flps_linestyle(linestyle):
 
 
 def flps_linewidth(linewidth):
-    """
-        flps_linewidth(linewidth)
+    """ flps_linewidth(linewidth)
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -23105,8 +22764,7 @@ def flps_linewidth(linewidth):
 
 
 def flps_log(text):
-    """
-        flps_log(text)
+    """ flps_log(text)
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -23122,8 +22780,7 @@ def flps_log(text):
 
 
 def flps_output(fmt):
-    """
-        flps_output(fmt)
+    """ flps_output(fmt)
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -23139,8 +22796,7 @@ def flps_output(fmt):
 
 
 def flps_oval(fill, x, y, w, h, colr):
-    """
-        flps_oval(fill, x, y, w, h, colr)
+    """ flps_oval(fill, x, y, w, h, colr)
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -23163,8 +22819,7 @@ def flps_oval(fill, x, y, w, h, colr):
 
 
 def flps_pieslice(fill, x, y, w, h, t1, t2, colr):
-    """
-        flps_pieslice(fill, x, y, w, h, t1, t2, colr)
+    """ flps_pieslice(fill, x, y, w, h, t1, t2, colr)
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -23190,13 +22845,12 @@ def flps_pieslice(fill, x, y, w, h, t1, t2, colr):
 
 
 def flps_poly(fill, Point, numpt, colr):
-    """
-        flps_poly(fill, Point, numpt, colr)
+    """ flps_poly(fill, Point, numpt, colr)
 
-        @param fill : if polygon has to be filled or not (1|0)
-        @param Point : Point class instance (array of FL_POINT)
-        @param numpt : number of points
-        @param colr : value of color to be set
+        @param fill: if polygon has to be filled or not (1|0)
+        @param Point: an array of xfc.FL_POINT class instance
+        @param numpt: number of points
+        @param colr: value of color to be set
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -23215,8 +22869,7 @@ def flps_poly(fill, Point, numpt, colr):
 
 
 def flps_rectangle(fill, x, y, w, h, colr):
-    """
-        flps_rectangle(fill, x, y, w, h, colr)
+    """ flps_rectangle(fill, x, y, w, h, colr)
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -23239,8 +22892,7 @@ def flps_rectangle(fill, x, y, w, h, colr):
 
 
 def flps_reset_cache():
-    """
-        flps_reset_cache()
+    """ flps_reset_cache()
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -23254,8 +22906,7 @@ def flps_reset_cache():
 
 
 def flps_reset_linewidth():
-    """
-        flps_reset_linewidth()
+    """ flps_reset_linewidth()
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -23269,8 +22920,7 @@ def flps_reset_linewidth():
 
 
 def flps_restore_flps():
-    """
-        flps_restore_flps()
+    """ flps_restore_flps()
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -23284,8 +22934,7 @@ def flps_restore_flps():
 
 
 def flps_rgbcolor(r, g, b):
-    """
-        flps_rgbcolor(r, g, b)
+    """ flps_rgbcolor(r, g, b)
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -23303,8 +22952,7 @@ def flps_rgbcolor(r, g, b):
 
 
 def flps_roundrectangle(fill, x, y, w, h, colr):
-    """
-        flps_roundrectangle(fill, x, y, w, h, colr)
+    """ flps_roundrectangle(fill, x, y, w, h, colr)
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -23327,8 +22975,7 @@ def flps_roundrectangle(fill, x, y, w, h, colr):
 
 
 def flps_set_clipping(x, y, w, h):
-    """
-        flps_set_clipping(x, y, w, h)
+    """ flps_set_clipping(x, y, w, h)
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -23347,8 +22994,7 @@ def flps_set_clipping(x, y, w, h):
 
 
 def flps_set_font(style, size):
-    """
-        flps_set_font(style, size)
+    """ flps_set_font(style, size)
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -23366,8 +23012,7 @@ def flps_set_font(style, size):
 
 
 def flps_unset_clipping():
-    """
-        flps_unset_clipping()
+    """ flps_unset_clipping()
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """

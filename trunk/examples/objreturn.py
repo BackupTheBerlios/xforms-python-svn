@@ -110,7 +110,7 @@ def create_form_form0():
     fdui.pobj[0] = xf.fl_add_valslider(xfc.FL_HOR_SLIDER, 12, 55, 138, 22, "")
     xf.fl_set_object_lalign(fdui.pobj[0] ,xfc.FL_ALIGN_BOTTOM| xfc.FL_ALIGN_INSIDE)
     xf.fl_set_object_callback(fdui.pobj[0], return_cb, 0)
-    xf.fl_set_slider_return(fdui.pobj[0], xfc.FL_RETURN_CHANGED)
+    xf.fl_set_object_return(fdui.pobj[0], xfc.FL_RETURN_CHANGED)
 
     fdui.pobj[1] = xf.fl_add_counter(xfc.FL_NORMAL_COUNTER, 12, 85, 138, 22, "")
     xf.fl_set_object_lalign(fdui.pobj[1], xfc.FL_ALIGN_BOTTOM | xfc.FL_ALIGN_INSIDE)

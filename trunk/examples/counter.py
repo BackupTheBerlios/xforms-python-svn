@@ -75,7 +75,7 @@ def main(lsysargv, sysargv):
         xf.fl_set_counter_bounds(pco[i], 0.0, 255.0)
         xf.fl_set_counter_step(pco[i], 1.0, 10.0)
         xf.fl_set_counter_precision(pco[i], 0)
-        xf.fl_set_counter_return(pco[i], 1)
+        xf.fl_set_object_return(pco[i], 1)
 
     xf.fl_call_object_callback(pco[0])
 
