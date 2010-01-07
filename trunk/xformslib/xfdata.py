@@ -1689,7 +1689,7 @@ FL_USERDASH = 1               #LineOnOffDash
 fl_dashedlinestyle(). Only the odd numbered segments are drawn
 with the foreground color."""
 FL_USERDOUBLEDASH = 2        #LineDoubleDash
-"""Similar to FL_LINE_USERDASH bu both een and odd numbered
+"""Similar to FL_LINE_USERDASH but both even and odd numbered
 segments are drawn, with the even numbered segments drawn in
 the background color (as set by fl_bk_color()."""
 FL_DOT = 3
@@ -1702,8 +1702,8 @@ FL_LONGDASH = 6
 """Long dashed line [------]"""
 
 # my add, list of possible values --LK
-LINE_list = [FL_SOLID, FL_USERDASH, FL_USERDOUBLEDASH, FL_DOT, FL_DOTDASH,
-             FL_DASH, FL_LONGDASH]
+LINESTYLE_list = [FL_SOLID, FL_USERDASH, FL_USERDOUBLEDASH, FL_DOT, FL_DOTDASH,
+                 FL_DASH, FL_LONGDASH]
 
 
 # *** start - from /usr/include/X11/X.h ***

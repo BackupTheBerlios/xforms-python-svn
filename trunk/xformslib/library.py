@@ -1856,15 +1856,24 @@ def fl_set_form_dblbuffer(pForm, flag):
     _fl_set_form_dblbuffer(pForm, iflag)
 
 
-def fl_prepare_form_window(pForm, place, border, name):
+def fl_prepare_form_window(pForm, place, border, title):
     """
-        fl_prepare_form_window(pForm, place, border, name) -> window ID
+        fl_prepare_form_window(pForm, place, border, title) -> window id
 
         Displays a particular form, returns its window handle.
 
         @param pForm: pointer to form
         @param place: where has to be placed
+        @type place: [num./int] xfc.FL_PLACE_FREE, xfc.FL_PLACE_MOUSE,
+                     xfc.FL_PLACE_CENTER, xfc.FL_PLACE_POSITION,
+                     xfc.FL_PLACE_SIZE, xfc.FL_PLACE_GEOMETRY,
+                     xfc.FL_PLACE_ASPECT, xfc.FL_PLACE_FULLSCREEN,
+                     xfc.FL_PLACE_HOTSPOT, xfc.FL_PLACE_ICONIC,
+                     xfc.FL_FREE_SIZE, xfc.FL_PLACE_FREE_CENTER,
+                     xfc.FL_PLACE_CENTERFREE
         @param border: window manager decoration
+        @type border: [num./int] xfc.FL_FULLBORDER, xfc.FL_TRANSIENT,
+                      xfc.FL_NOBORDER
         @param name: title of form
 
         @status: Untested + NoDoc + NoExample = NOT OK
@@ -1881,9 +1890,9 @@ def fl_prepare_form_window(pForm, place, border, name):
     check_admitted_listvalues(border, xfc.DECORATION_list)
     iplace = convert_to_int(place)
     iborder = convert_to_int(border)
-    sname = convert_to_string(name)
-    keep_elem_refs(pForm, place, iplace, border, iborder, name, sname)
-    retval = _fl_prepare_form_window(pForm, iplace, iborder, sname)
+    stitle = convert_to_string(title)
+    keep_elem_refs(pForm, place, iplace, border, iborder, title, stitle)
+    retval = _fl_prepare_form_window(pForm, iplace, iborder, stitle)
     return retval
 
 
@@ -2114,7 +2123,16 @@ def fl_set_object_boxtype(pObject, boxtype):
         Sets the type of box of an object.
 
         @param pObject: pointer to object
-        @param boxtype: type of the box
+        @param boxtype: type of the box to be set
+        @type boxtype: [num./int] xfc.FL_NO_BOX, xfc.FL_UP_BOX,
+                        xfc.FL_DOWN_BOX, xfc.FL_BORDER_BOX, xfc.FL_SHADOW_BOX,
+                        xfc.FL_FRAME_BOX, xfc.FL_ROUNDED_BOX,
+                        xfc.FL_EMBOSSED_BOX, xfc.FL_FLAT_BOX,
+                        xfc.FL_RFLAT_BOX, xfc.FL_RSHADOW_BOX,
+                        xfc.FL_OVAL_BOX, xfc.FL_ROUNDED3D_UPBOX,
+                        xfc.FL_ROUNDED3D_DOWNBOX, xfc.FL_OVAL3D_UPBOX,
+                        xfc.FL_OVAL3D_DOWNBOX, xfc.FL_OVAL3D_FRAMEBOX,
+                        xfc.FL_OVAL3D_EMBOSSEDBOX
 
         @status: Tested + NoDoc + Example = OK
     """
@@ -2445,6 +2463,10 @@ def fl_set_object_return(pObject, when):
 
         @param pObject: pointer to object
         @param when: return type (when it returns)
+        @type when: [num./int] xfc.FL_RETURN_NONE, xfc.FL_RETURN_CHANGED,
+                    xfc.FL_RETURN_END, xfc.FL_RETURN_END_CHANGED,
+                    xfc.FL_RETURN_SELECTION, xfc.FL_RETURN_DESELECTION,
+                    xfc.FL_RETURN_TRIGGERED, xfc.FL_RETURN_ALWAYS
 
         @status: Tested + NoDoc + Example = OK
     """
@@ -2489,6 +2511,12 @@ def fl_set_object_lalign(pObject, align):
 
         @param pObject: pointer to object
         @param align: alignment of object
+        @type align: [num./int] xfc.FL_ALIGN_CENTER, xfc.FL_ALIGN_TOP,
+                     xfc.FL_ALIGN_BOTTOM, xfc.FL_ALIGN_LEFT,
+                     xfc.FL_ALIGN_RIGHT, xfc.FL_ALIGN_LEFT_TOP,
+                     xfc.FL_ALIGN_RIGHT_TOP, xfc.FL_ALIGN_LEFT_BOTTOM,
+                     xfc.FL_ALIGN_RIGHT_BOTTOM, xfc.FL_ALIGN_INSIDE,
+                     xfc.FL_ALIGN_VERT
 
         @status: Tested + NoDoc + Example = OK
     """
@@ -3675,6 +3703,14 @@ fl_get_string_size = fl_get_string_dimension
 def fl_get_align_xy(align, x, y, w, h, xsize, ysize, xoff, yoff):
     """ fl_get_align_xy(align, x, y, w, h, xsize, ysize, xoff, yoff) -> xx, yy
 
+        @param align: alignment
+        @type align: [num./int] xfc.FL_ALIGN_CENTER, xfc.FL_ALIGN_TOP,
+                     xfc.FL_ALIGN_BOTTOM, xfc.FL_ALIGN_LEFT,
+                     xfc.FL_ALIGN_RIGHT, xfc.FL_ALIGN_LEFT_TOP,
+                     xfc.FL_ALIGN_RIGHT_TOP, xfc.FL_ALIGN_LEFT_BOTTOM,
+                     xfc.FL_ALIGN_RIGHT_BOTTOM, xfc.FL_ALIGN_INSIDE,
+                     xfc.FL_ALIGN_VERT
+
         @attention: API change from upstream
                     fl_get_align_xy(align, x, y, w, h, xsize, ysize, xoff,
                     yoff, xx, yy)
@@ -3712,6 +3748,14 @@ def fl_get_align_xy(align, x, y, w, h, xsize, ysize, xoff, yoff):
 def fl_drw_text(align, x, y, w, h, colr, style, size, txtstr):
     """ fl_drw_text(align, x, y, w, h, colr, style, size, txtstr)
 
+        @param align: alignment
+        @type align: [num./int] xfc.FL_ALIGN_CENTER, xfc.FL_ALIGN_TOP,
+                     xfc.FL_ALIGN_BOTTOM, xfc.FL_ALIGN_LEFT,
+                     xfc.FL_ALIGN_RIGHT, xfc.FL_ALIGN_LEFT_TOP,
+                     xfc.FL_ALIGN_RIGHT_TOP, xfc.FL_ALIGN_LEFT_BOTTOM,
+                     xfc.FL_ALIGN_RIGHT_BOTTOM, xfc.FL_ALIGN_INSIDE,
+                     xfc.FL_ALIGN_VERT
+
         @status: Untested + NoDoc + NoExample = NOT OK
     """
 
@@ -3741,6 +3785,14 @@ def fl_drw_text(align, x, y, w, h, colr, style, size, txtstr):
 
 def fl_drw_text_beside(align, x, y, w, h, colr, style, size, txtstr):
     """ fl_drw_text_beside(align, x, y, w, h, colr, style, size, txtstr)
+
+        @param align: alignment
+        @type align: [num./int] xfc.FL_ALIGN_CENTER, xfc.FL_ALIGN_TOP,
+                     xfc.FL_ALIGN_BOTTOM, xfc.FL_ALIGN_LEFT,
+                     xfc.FL_ALIGN_RIGHT, xfc.FL_ALIGN_LEFT_TOP,
+                     xfc.FL_ALIGN_RIGHT_TOP, xfc.FL_ALIGN_LEFT_BOTTOM,
+                     xfc.FL_ALIGN_RIGHT_BOTTOM, xfc.FL_ALIGN_INSIDE,
+                     xfc.FL_ALIGN_VERT
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -3772,6 +3824,14 @@ def fl_drw_text_beside(align, x, y, w, h, colr, style, size, txtstr):
 
 def fl_drw_text_cursor(align, x, y, w, h, colr, style, size, txtstr, cc, pos):
     """ fl_drw_text_cursor(align, x, y, w, h, colr, style, size, txtstr, cc, pos)
+
+        @param align: alignment
+        @type align: [num./int] xfc.FL_ALIGN_CENTER, xfc.FL_ALIGN_TOP,
+                     xfc.FL_ALIGN_BOTTOM, xfc.FL_ALIGN_LEFT,
+                     xfc.FL_ALIGN_RIGHT, xfc.FL_ALIGN_LEFT_TOP,
+                     xfc.FL_ALIGN_RIGHT_TOP, xfc.FL_ALIGN_LEFT_BOTTOM,
+                     xfc.FL_ALIGN_RIGHT_BOTTOM, xfc.FL_ALIGN_INSIDE,
+                     xfc.FL_ALIGN_VERT
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -4349,7 +4409,10 @@ def fl_set_coordunit(unit):
 
         Sets the unit for screen coordinates.
 
-        @param unit: coord type (e.g. xfc.FL_COORD_PIXEL, ..)
+        @param unit: coord type to set (default xfc.FL_COORD_PIXEL)
+        @type unit: [num./int] xfc.FL_COORD_PIXEL, xfc.FL_COORD_MM,
+                    xfc.FL_COORD_POINT, xfc.FL_COORD_centiMM,
+                    xfc.FL_COORD_centiPOINT
 
         @status: Tested + NoDoc + Example = OK
     """
@@ -5093,9 +5156,12 @@ def fl_diagline(x, y, w, h, colr):
 
 # Line attributes
 
-def fl_linewidth(n):
+def fl_linewidth(w):
     """
-        fl_linewidth(n)
+        fl_linewidth(w)
+
+        @param w: width of line in coord units
+        @type w: num./int
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -5105,14 +5171,22 @@ def fl_linewidth(n):
             None, [cty.c_int],\
             """void fl_linewidth(int n)
             """)
-    inum = convert_to_int(n)
-    keep_elem_refs(n, inum)
-    _fl_linewidth(inum)
+    iw = convert_to_int(w)
+    keep_elem_refs(w, iw)
+    _fl_linewidth(iw)
 
 
-def fl_linestyle(n):
+fl_set_linewidth = fl_linewidth
+
+
+def fl_linestyle(linestyle):
     """
-        fl_linestyle(n)
+        fl_linestyle(linestyle)
+
+        @param linestyle: style of the line to draw
+        @type linestyle: [num./int] from xfdata module FL_SOLID, FL_USERDASH,
+                         FL_USERDOUBLEDASH, FL_DOT, FL_DOTDASH, FL_DASH,
+                         FL_LONGDASH
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -5122,9 +5196,13 @@ def fl_linestyle(n):
             None, [cty.c_int],\
             """void fl_linestyle(int n)
             """)
-    inum = convert_to_int(n)
-    keep_elem_refs(n, inum)
-    _fl_linestyle(inum)
+    check_admitted_listvalues(linestyle, xfc.LINESTYLE_list)
+    ilinestyle = convert_to_int(linestyle)
+    keep_elem_refs(linestyle, ilinestyle)
+    _fl_linestyle(ilinestyle)
+
+
+fl_set_linestyle = fl_linestyle
 
 
 def fl_drawmode(request):
@@ -5158,9 +5236,6 @@ def fl_get_linewidth():
     return retval
 
 
-fl_set_linewidth = fl_linewidth
-
-
 def fl_get_linestyle():
     """ fl_get_linestyle() -> style num.
 
@@ -5174,9 +5249,6 @@ def fl_get_linestyle():
             """)
     retval = _fl_get_linestyle()
     return retval
-
-
-fl_set_linestyle = fl_linestyle
 
 
 def fl_get_drawmode():
@@ -5390,6 +5462,17 @@ def fl_drw_frame(style, x, y, w, h, colr, bw):
 
 def fl_drw_checkbox(boxtype, x, y, w, h, colr, bw):
     """ fl_drw_checkbox(boxtype, x, y, w, h, colr, bw)
+
+        @param boxtype: type of checkbox to draw
+        @type boxtype: [num./int] xfc.FL_NO_BOX, xfc.FL_UP_BOX,
+                        xfc.FL_DOWN_BOX, xfc.FL_BORDER_BOX, xfc.FL_SHADOW_BOX,
+                        xfc.FL_FRAME_BOX, xfc.FL_ROUNDED_BOX,
+                        xfc.FL_EMBOSSED_BOX, xfc.FL_FLAT_BOX,
+                        xfc.FL_RFLAT_BOX, xfc.FL_RSHADOW_BOX,
+                        xfc.FL_OVAL_BOX, xfc.FL_ROUNDED3D_UPBOX,
+                        xfc.FL_ROUNDED3D_DOWNBOX, xfc.FL_OVAL3D_UPBOX,
+                        xfc.FL_OVAL3D_DOWNBOX, xfc.FL_OVAL3D_FRAMEBOX,
+                        xfc.FL_OVAL3D_EMBOSSEDBOX
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -7686,6 +7769,11 @@ def fl_popup_set_bw(pPopup, bw):
 def fl_popup_get_color(pPopup, colrpos):
     """ fl_popup_get_color(pPopup, colrpos) -> color
 
+        @type colrpos: [num./int] from xfdata module FL_POPUP_BACKGROUND_COLOR,
+                       FL_POPUP_HIGHLIGHT_COLOR, FL_POPUP_TITLE_COLOR,
+                       FL_POPUP_TEXT_COLOR, FL_POPUP_HIGHLIGHT_TEXT_COLOR,
+                       FL_POPUP_DISABLED_TEXT_COLOR, FL_POPUP_RADIO_COLOR
+
         @status: Untested + NoDoc + NoExample = NOT OK
     """
 
@@ -7703,6 +7791,13 @@ def fl_popup_get_color(pPopup, colrpos):
 
 def fl_popup_set_color(pPopup, colrpos, colr):
     """ fl_popup_set_color(pPopup, colrpos, colr) -> color
+
+        @param colrpos: popup color type
+        @type colrpos: [num./int] from xfdata module FL_POPUP_BACKGROUND_COLOR,
+                       FL_POPUP_HIGHLIGHT_COLOR, FL_POPUP_TITLE_COLOR,
+                       FL_POPUP_TEXT_COLOR, FL_POPUP_HIGHLIGHT_TEXT_COLOR,
+                       FL_POPUP_DISABLED_TEXT_COLOR, FL_POPUP_RADIO_COLOR
+        @param colr: color value to be set
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -8236,6 +8331,7 @@ def fl_add_bitmap(bitmaptype, x, y, w, h, label):
         Adds a bitmap object.
 
         @param bitmaptype: type of bitmap to be added
+        @type bitmaptype: [num./int] xfc.FL_NORMAL_BITMAP
         @param x: horizontal position (upper-left corner)
         @param y: vertical position of bitmap (upper-left corner)
         @param w: width in coord units
@@ -8380,6 +8476,7 @@ def fl_add_pixmap(pixmaptype, x, y, w, h, label):
         Adds a pixmap object.
 
         @param pixmaptype: type of pixmap to be added
+        @type pixmaptype: [num./int] xfc.FL_NORMAL_PIXMAP
         @param x: horizontal position (upper-left corner)
         @param y: vertical position of bitmap (upper-left corner)
         @param w: width in coord units
@@ -8457,6 +8554,14 @@ fl_set_pixmapbutton_datafile = fl_set_pixmapbutton_file
 
 def fl_set_pixmap_align(pObject, align, xmargin, ymargin):
     """ fl_set_pixmap_align(pObject, align, xmargin, ymargin)
+
+        @param align: alignment
+        @type align: [num./int] xfc.FL_ALIGN_CENTER, xfc.FL_ALIGN_TOP,
+                     xfc.FL_ALIGN_BOTTOM, xfc.FL_ALIGN_LEFT,
+                     xfc.FL_ALIGN_RIGHT, xfc.FL_ALIGN_LEFT_TOP,
+                     xfc.FL_ALIGN_RIGHT_TOP, xfc.FL_ALIGN_LEFT_BOTTOM,
+                     xfc.FL_ALIGN_RIGHT_BOTTOM, xfc.FL_ALIGN_INSIDE,
+                     xfc.FL_ALIGN_VERT
 
         @status: Tested + NoDoc + Example = OK
     """
@@ -8659,6 +8764,15 @@ def fl_add_box(boxtype, x, y, w, h, label):
         Adds a box object.
 
         @param boxtype: type of the box to be added
+        @type boxtype: [num./int] xfc.FL_NO_BOX, xfc.FL_UP_BOX,
+                        xfc.FL_DOWN_BOX, xfc.FL_BORDER_BOX, xfc.FL_SHADOW_BOX,
+                        xfc.FL_FRAME_BOX, xfc.FL_ROUNDED_BOX,
+                        xfc.FL_EMBOSSED_BOX, xfc.FL_FLAT_BOX,
+                        xfc.FL_RFLAT_BOX, xfc.FL_RSHADOW_BOX,
+                        xfc.FL_OVAL_BOX, xfc.FL_ROUNDED3D_UPBOX,
+                        xfc.FL_ROUNDED3D_DOWNBOX, xfc.FL_OVAL3D_UPBOX,
+                        xfc.FL_OVAL3D_DOWNBOX, xfc.FL_OVAL3D_FRAMEBOX,
+                        xfc.FL_OVAL3D_EMBOSSEDBOX
         @param x: horizontal position (upper-left corner)
         @param y: vertical position (upper-left corner)
         @param w: width in coord units
@@ -8705,6 +8819,9 @@ def fl_add_browser(browsertype, x, y, w, h, label):
         Adds a browser object.
 
         @param browsertype: type of the browser to be added
+        @type browsertype: [num./int] xfc.FL_NORMAL_BROWSER,
+                           xfc.FL_SELECT_BROWSER, xfc.FL_HOLD_BROWSER,
+                           xfc.FL_MULTI_BROWSER
         @param x: horizontal position (upper-left corner)
         @param y: vertical position (upper-left corner)
         @param w: width in coord units
@@ -9561,6 +9678,11 @@ def fl_add_roundbutton(buttontype, x, y, w, h, label):
         Adds a roundbutton object.
 
         @param buttontype: type of button object to be added
+        @type buttontype: [num./int] xfc.FL_NORMAL_BUTTON, xfc.FL_PUSH_BUTTON,
+                          xfc.FL_RADIO_BUTTON, xfc.FL_HIDDEN_BUTTON,
+                          xfc.FL_TOUCH_BUTTON, xfc.FL_INOUT_BUTTON,
+                          xfc.FL_RETURN_BUTTON, xfc.FL_HIDDEN_RET_BUTTON,
+                          xfc.FL_MENU_BUTTON, xfc.FL_TOGGLE_BUTTON
         @param x: horizontal position (upper-left corner)
         @param x: vertical position (upper-left corner)
         @param w: width in coord units
@@ -9596,6 +9718,11 @@ def fl_add_round3dbutton(buttontype, x, y, w, h, label):
         Adds a 3D roundbutton object.
 
         @param buttontype: type of button object to be added
+        @type buttontype: [num./int] xfc.FL_NORMAL_BUTTON, xfc.FL_PUSH_BUTTON,
+                          xfc.FL_RADIO_BUTTON, xfc.FL_HIDDEN_BUTTON,
+                          xfc.FL_TOUCH_BUTTON, xfc.FL_INOUT_BUTTON,
+                          xfc.FL_RETURN_BUTTON, xfc.FL_HIDDEN_RET_BUTTON,
+                          xfc.FL_MENU_BUTTON, xfc.FL_TOGGLE_BUTTON
         @param x: horizontal position (upper-left corner)
         @param x: vertical position (upper-left corner)
         @param w: width in coord units
@@ -9631,6 +9758,11 @@ def fl_add_lightbutton(buttontype, x, y, w, h, label):
         Adds a lightbutton object (with an on/off light switch).
 
         @param buttontype: type of button to be added
+        @type buttontype: [num./int] xfc.FL_NORMAL_BUTTON, xfc.FL_PUSH_BUTTON,
+                          xfc.FL_RADIO_BUTTON, xfc.FL_HIDDEN_BUTTON,
+                          xfc.FL_TOUCH_BUTTON, xfc.FL_INOUT_BUTTON,
+                          xfc.FL_RETURN_BUTTON, xfc.FL_HIDDEN_RET_BUTTON,
+                          xfc.FL_MENU_BUTTON, xfc.FL_TOGGLE_BUTTON
         @param x: horizontal position (upper-left corner)
         @param x: vertical position (upper-left corner)
         @param w: width in coord units
@@ -9666,6 +9798,11 @@ def fl_add_checkbutton(buttontype, x, y, w, h, label):
         Adds a checkbutton object.
 
         @param buttontype: type of button object to be added
+        @type buttontype: [num./int] xfc.FL_NORMAL_BUTTON, xfc.FL_PUSH_BUTTON,
+                          xfc.FL_RADIO_BUTTON, xfc.FL_HIDDEN_BUTTON,
+                          xfc.FL_TOUCH_BUTTON, xfc.FL_INOUT_BUTTON,
+                          xfc.FL_RETURN_BUTTON, xfc.FL_HIDDEN_RET_BUTTON,
+                          xfc.FL_MENU_BUTTON, xfc.FL_TOGGLE_BUTTON
         @param x: horizontal position (upper-left corner)
         @param x: vertical position (upper-left corner)
         @param w: width in coord units
@@ -9701,6 +9838,11 @@ def fl_add_button(buttontype, x, y, w, h, label):
         Adds a button object to the current form.
 
         @param buttontype: type of button to be added
+        @type buttontype: [num./int] xfc.FL_NORMAL_BUTTON, xfc.FL_PUSH_BUTTON,
+                          xfc.FL_RADIO_BUTTON, xfc.FL_HIDDEN_BUTTON,
+                          xfc.FL_TOUCH_BUTTON, xfc.FL_INOUT_BUTTON,
+                          xfc.FL_RETURN_BUTTON, xfc.FL_HIDDEN_RET_BUTTON,
+                          xfc.FL_MENU_BUTTON, xfc.FL_TOGGLE_BUTTON
         @param x: horizontal position (upper-left corner)
         @param x: vertical position (upper-left corner)
         @param w: width in coord units
@@ -9736,6 +9878,11 @@ def fl_add_bitmapbutton(buttontype, x, y, w, h, label):
         Adds a bitmapbutton object.
 
         @param buttontype: type of button to be added
+        @type buttontype: [num./int] xfc.FL_NORMAL_BUTTON, xfc.FL_PUSH_BUTTON,
+                          xfc.FL_RADIO_BUTTON, xfc.FL_HIDDEN_BUTTON,
+                          xfc.FL_TOUCH_BUTTON, xfc.FL_INOUT_BUTTON,
+                          xfc.FL_RETURN_BUTTON, xfc.FL_HIDDEN_RET_BUTTON,
+                          xfc.FL_MENU_BUTTON, xfc.FL_TOGGLE_BUTTON
         @param x: horizontal position (upper-left corner)
         @param x: vertical position (upper-left corner)
         @param w: width in coord units
@@ -9771,6 +9918,11 @@ def fl_add_scrollbutton(buttontype, x, y, w, h, label):
         Adds a scrollbutton object.
 
         @param buttontype: type of button to be added
+        @type buttontype: [num./int] xfc.FL_NORMAL_BUTTON, xfc.FL_PUSH_BUTTON,
+                          xfc.FL_RADIO_BUTTON, xfc.FL_HIDDEN_BUTTON,
+                          xfc.FL_TOUCH_BUTTON, xfc.FL_INOUT_BUTTON,
+                          xfc.FL_RETURN_BUTTON, xfc.FL_HIDDEN_RET_BUTTON,
+                          xfc.FL_MENU_BUTTON, xfc.FL_TOGGLE_BUTTON
         @param x: horizontal position (upper-left corner)
         @param x: vertical position (upper-left corner)
         @param w: width in coord units
@@ -9806,6 +9958,11 @@ def fl_add_labelbutton(buttontype, x, y, w, h, label):
         Adds a labelbutton object.
 
         @param buttontype: type of button to be added
+        @type buttontype: [num./int] xfc.FL_NORMAL_BUTTON, xfc.FL_PUSH_BUTTON,
+                          xfc.FL_RADIO_BUTTON, xfc.FL_HIDDEN_BUTTON,
+                          xfc.FL_TOUCH_BUTTON, xfc.FL_INOUT_BUTTON,
+                          xfc.FL_RETURN_BUTTON, xfc.FL_HIDDEN_RET_BUTTON,
+                          xfc.FL_MENU_BUTTON, xfc.FL_TOGGLE_BUTTON
         @param x: horizontal position (upper-left corner)
         @param x: vertical position (upper-left corner)
         @param w: width in coord units
@@ -9863,6 +10020,11 @@ def fl_add_pixmapbutton(buttontype, x, y, w, h, label):
         Adds a pixmapbutton object.
 
         @param buttontype: type of button to be added
+        @type buttontype: [num./int] xfc.FL_NORMAL_BUTTON, xfc.FL_PUSH_BUTTON,
+                          xfc.FL_RADIO_BUTTON, xfc.FL_HIDDEN_BUTTON,
+                          xfc.FL_TOUCH_BUTTON, xfc.FL_INOUT_BUTTON,
+                          xfc.FL_RETURN_BUTTON, xfc.FL_HIDDEN_RET_BUTTON,
+                          xfc.FL_MENU_BUTTON, xfc.FL_TOGGLE_BUTTON
         @param x: horizontal position (upper-left corner)
         @param x: vertical position (upper-left corner)
         @param w: width in coord units
@@ -10036,6 +10198,11 @@ def fl_create_generic_button(btnclass, buttontype, x, y, w, h, label):
 
         @param btnclass: value of a new button class
         @param buttontype: type of button to be created
+        @type buttontype: [num./int] xfc.FL_NORMAL_BUTTON, xfc.FL_PUSH_BUTTON,
+                          xfc.FL_RADIO_BUTTON, xfc.FL_HIDDEN_BUTTON,
+                          xfc.FL_TOUCH_BUTTON, xfc.FL_INOUT_BUTTON,
+                          xfc.FL_RETURN_BUTTON, xfc.FL_HIDDEN_RET_BUTTON,
+                          xfc.FL_MENU_BUTTON, xfc.FL_TOGGLE_BUTTON
         @param x: horizontal position (upper-left corner)
         @param x: vertical position (upper-left corner)
         @param w: width in coord units
@@ -10166,6 +10333,8 @@ def fl_create_generic_canvas(canvasclass, canvastype, x, y, w, h, label):
 
         @param canvasclass: value of a new canvas class
         @param canvastype: type of canvas to be created
+        @type canvastype: [num./int] xfc.FL_NORMAL_CANVAS,
+                          xfc.FL_SCROLLED_CANVAS
         @param x: horizontal position (upper-left corner)
         @param x: vertical position (upper-left corner)
         @param w: width in coord units
@@ -10204,6 +10373,8 @@ def fl_add_canvas(canvastype, x, y, w, h, label):
         Adds a canvas object.
 
         @param canvastype: type of canvas to be added
+        @type canvastype: [num./int] xfc.FL_NORMAL_CANVAS,
+                          xfc.FL_SCROLLED_CANVAS
         @param x: horizontal position (upper-left corner)
         @param x: vertical position (upper-left corner)
         @param w: width in coord units
@@ -10566,6 +10737,8 @@ def fl_add_glcanvas(canvastype, x, y, w, h, label):
         Adds a glcanvas object to the form.
 
         @param canvastype: type of glcanvas to be added
+        @type canvastype: [num./int] xfc.FL_NORMAL_CANVAS,
+                          xfc.FL_SCROLLED_CANVAS
         @param x: horizontal position (upper-left corner)
         @param x: vertical position (upper-left corner)
         @param w: width in coord units
@@ -10815,6 +10988,10 @@ def fl_add_chart(charttype, x, y, w, h, label):
         Adds a chart object.
 
         @param charttype: type of chart to be created
+        @param charttype: [num./int] xfc.FL_BAR_CHART, xfc.FL_HORBAR_CHART,
+                          xfc.FL_LINE_CHART, xfc.FL_FILL_CHART,
+                          xfc.FL_SPIKE_CHART, xfc.FL_PIE_CHART,
+                          xfc.FL_SPECIALPIE_CHART
         @param x: horizontal position (upper-left corner)
         @param x: vertical position (upper-left corner)
         @param w: width in coord units
@@ -11224,6 +11401,7 @@ def fl_add_clock(clocktype, x, y, w, h, label):
         Adds a clock object.
 
         @param clocktype: type of clock to be added
+        @type clocktype: [num./int] xfc.FL_ANALOG_CLOCK, xfc.FL_DIGITAL_CLOCK
         @param x: horizontal position (upper-left corner)
         @param x: vertical position (upper-left corner)
         @param w: width in coord units
@@ -11330,6 +11508,8 @@ def fl_add_counter(countertype, x, y, w, h, label):
         Adds a counter object.
 
         @param countertype: type of counter to be added
+        @type countertype: [num./int] xfc.FL_NORMAL_COUNTER,
+                           xfc.FL_SIMPLE_COUNTER
         @param x: horizontal position (upper-left corner)
         @param x: vertical position (upper-left corner)
         @param w: width in coord units
@@ -11774,8 +11954,10 @@ def fl_add_dial(dialtype, x, y, w, h, label):
         Adds a dial object.
 
         @param dialtype: type of dial to be added
+        @type dialtype: [num./int] xfc.FL_NORMAL_DIAL, xfc.FL_LINE_DIAL,
+                        xfc.FL_FILL_DIAL
         @param x: horizontal position (upper-left corner)
-        @param x: vertical position (upper-left corner)
+        @param y: vertical position (upper-left corner)
         @param w: width in coord units
         @param h: height in coord units
         @param label: text label of dial
@@ -12534,8 +12716,9 @@ def fl_add_formbrowser(frmbrwstype, x, y, w, h, label):
         Adds a formbrowser object.
 
         @param frmbrwstype: type of formbrowser to be added
+        @type frmbrwstype: [num./int] xfc.FL_NORMAL_FORMBROWSER
         @param x: horizontal position (upper-left corner)
-        @param x: vertical position (upper-left corner)
+        @param y: vertical position (upper-left corner)
         @param w: width in coord units
         @param h: height in coord units
         @param label: text label of formbrowser
@@ -12616,6 +12799,10 @@ def fl_add_frame(frametype, x, y, w, h, label):
         Adds a frame object.
 
         @param frametype: type of frame to be added
+        @param frametype: [num./int] from xfdata module FL_NO_FRAME,
+                          FL_UP_FRAME, FL_DOWN_FRAME, FL_BORDER_FRAME,
+                          FL_SHADOW_FRAME, FL_ENGRAVED_FRAME, FL_ROUNDED_FRAME,
+                          FL_EMBOSSED_FRAME, FL_OVAL_FRAME
         @param x: horizontal position (upper-left corner)
         @param x: vertical position (upper-left corner)
         @param w: width in coord units
@@ -12657,6 +12844,10 @@ def fl_add_labelframe(frametype, x, y, w, h, label):
         Adds a labelframe object.
 
         @param frametype: type of labelframe to be added
+        @param frametype: [num./int] from xfdata module FL_NO_FRAME,
+                          FL_UP_FRAME, FL_DOWN_FRAME, FL_BORDER_FRAME,
+                          FL_SHADOW_FRAME, FL_ENGRAVED_FRAME, FL_ROUNDED_FRAME,
+                          FL_EMBOSSED_FRAME, FL_OVAL_FRAME
         @param x: horizontal position (upper-left corner)
         @param x: vertical position (upper-left corner)
         @param w: width in coord units
@@ -12702,6 +12893,9 @@ def fl_add_free(freetype, x, y, w, h, label, py_HandlePtr):
         Adds a free object.
 
         @param freetype: type of free to be added
+        @type freetype: [num./int] from xfdata module FL_NORMAL_FREE,
+                        FL_INACTIVE_FREE, FL_INPUT_FREE, FL_CONTINUOUS_FREE,
+                        FL_ALL_FREE, FL_SLEEPING_FREE
         @param x: horizontal position (upper-left corner)
         @param x: vertical position (upper-left corner)
         @param w: width in coord units
@@ -13439,7 +13633,9 @@ def fl_show_command_log(border):
 
         Shows the log of the command output.
 
-        @param border: window decoration type
+        @param border: window manager decoration
+        @type border: [num./int] xfc.FL_FULLBORDER, xfc.FL_TRANSIENT,
+                      xfc.FL_NOBORDER
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -13633,6 +13829,13 @@ def fl_set_fselector_placement(place):
         fl_set_fselector_placement(place)
 
         @param place: where to place it
+        @type place: [num./int] xfc.FL_PLACE_FREE, xfc.FL_PLACE_MOUSE,
+                     xfc.FL_PLACE_CENTER, xfc.FL_PLACE_POSITION,
+                     xfc.FL_PLACE_SIZE, xfc.FL_PLACE_GEOMETRY,
+                     xfc.FL_PLACE_ASPECT, xfc.FL_PLACE_FULLSCREEN,
+                     xfc.FL_PLACE_HOTSPOT, xfc.FL_PLACE_ICONIC,
+                     xfc.FL_FREE_SIZE, xfc.FL_PLACE_FREE_CENTER,
+                     xfc.FL_PLACE_CENTERFREE
 
         @status: Tested + NoDoc + Example = OK
     """
@@ -13652,7 +13855,9 @@ def fl_set_fselector_border(border):
     """
         fl_set_fselector_border(border)
 
-        @param border: decoration type
+        @param border: window manager decoration
+        @type border: [num./int] xfc.FL_FULLBORDER, xfc.FL_TRANSIENT,
+                      xfc.FL_NOBORDER
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -15895,6 +16100,16 @@ def fl_add_slider(slidertype, x, y, w, h, label):
         Adds a slider to a form. No value is displayed.
 
         @param slidertype: type of the slider to be added
+        @type slidertype: [num./int] from xfdata module FL_VERT_SLIDER,
+                          FL_HOR_SLIDER, FL_VERT_FILL_SLIDER,
+                          FL_HOR_FILL_SLIDER, FL_VERT_NICE_SLIDER,
+                          FL_HOR_NICE_SLIDER, FL_VERT_BROWSER_SLIDER,
+                          FL_HOR_BROWSER_SLIDER, FL_VERT_BROWSER_SLIDER2,
+                          FL_HOR_BROWSER_SLIDER2, FL_VERT_THIN_SLIDER,
+                          FL_HOR_THIN_SLIDER, FL_VERT_THIN_SLIDER,
+                          FL_HOR_THIN_SLIDER, FL_VERT_NICE_SLIDER2,
+                          FL_HOR_NICE_SLIDER2, FL_VERT_BASIC_SLIDER,
+                          FL_HOR_BASIC_SLIDER
         @param x: horizontal position (upper-left corner)
         @param y: vertical position (upper-left corner)
         @param w: width in coord units
@@ -15935,6 +16150,16 @@ def fl_add_valslider(slidertype, x, y, w, h, label):
         left of the slider.
 
         @param slidertype: type of the slider
+        @type slidertype: [num./int] from xfdata module FL_VERT_SLIDER,
+                          FL_HOR_SLIDER, FL_VERT_FILL_SLIDER,
+                          FL_HOR_FILL_SLIDER, FL_VERT_NICE_SLIDER,
+                          FL_HOR_NICE_SLIDER, FL_VERT_BROWSER_SLIDER,
+                          FL_HOR_BROWSER_SLIDER, FL_VERT_BROWSER_SLIDER2,
+                          FL_HOR_BROWSER_SLIDER2, FL_VERT_THIN_SLIDER,
+                          FL_HOR_THIN_SLIDER, FL_VERT_THIN_SLIDER,
+                          FL_HOR_THIN_SLIDER, FL_VERT_NICE_SLIDER2,
+                          FL_HOR_NICE_SLIDER2, FL_VERT_BASIC_SLIDER,
+                          FL_HOR_BASIC_SLIDER
         @param x: horizontal position (upper-left corner)
         @param y: vertical position (upper-left corner)
         @param w: width in coord units
@@ -16202,6 +16427,8 @@ def fl_add_spinner(spinnertype, x, y, w, h, label):
         Adds a spinner object.
 
         @param spinnertype: type of spinner to be added
+        @type spinnertype: [num./int] from xfdata module FL_INT_SPINNER,
+                           FL_FLOAT_SPINNER
         @param x: horizontal position (upper-left corner)
         @param x: vertical position (upper-left corner)
         @param w: width in coord units
@@ -17002,6 +17229,10 @@ def fl_set_thumbwheel_return(pObject, when):
 
         @param pObject: pointer to object
         @param when: return type (when it returns)
+        @type when: [num./int] xfc.FL_RETURN_NONE, xfc.FL_RETURN_CHANGED,
+                    xfc.FL_RETURN_END, xfc.FL_RETURN_END_CHANGED,
+                    xfc.FL_RETURN_SELECTION, xfc.FL_RETURN_DESELECTION,
+                    xfc.FL_RETURN_TRIGGERED, xfc.FL_RETURN_ALWAYS
 
         @status: Tested + NoDoc + Example = OK
     """
@@ -18374,11 +18605,15 @@ def fl_set_xyplot_ygrid(pObject, ygrid):
     _fl_set_xyplot_ygrid(pObject, iygrid)
 
 
-def fl_set_xyplot_grid_linestyle(pObject, style):
+def fl_set_xyplot_grid_linestyle(pObject, linestyle):
     """
-        fl_set_xyplot_grid_linestyle(pObject, style) -> num.
+        fl_set_xyplot_grid_linestyle(pObject, linestyle) -> num.
 
         @param pObject: pointer to object
+        @param linestyle: style of the line to draw
+        @type linestyle: [num./int] from xfdata module FL_SOLID, FL_USERDASH,
+                         FL_USERDOUBLEDASH, FL_DOT, FL_DOTDASH, FL_DASH,
+                         FL_LONGDASH
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -18388,9 +18623,9 @@ def fl_set_xyplot_grid_linestyle(pObject, style):
             cty.c_int, [cty.POINTER(xfc.FL_OBJECT), cty.c_int],
             """int fl_set_xyplot_grid_linestyle(FL_OBJECT * ob, int style)
             """)
-    istyle = convert_to_int(style)
-    keep_elem_refs(pObject, style, istyle)
-    retval = _fl_set_xyplot_grid_linestyle(pObject, istyle)
+    ilinestyle = convert_to_int(linestyle)
+    keep_elem_refs(pObject, linestyle, ilinestyle)
+    retval = _fl_set_xyplot_grid_linestyle(pObject, ilinestyle)
     return retval
 
 
@@ -21199,6 +21434,11 @@ def flps_lines(Point, numpt, colr):
 def flps_linestyle(linestyle):
     """ flps_linestyle(linestyle)
 
+        @param linestyle: style of the line to draw
+        @type linestyle: [num./int] from xfdata module FL_SOLID, FL_USERDASH,
+                         FL_USERDOUBLEDASH, FL_DOT, FL_DOTDASH, FL_DASH,
+                         FL_LONGDASH
+
         @status: Untested + NoDoc + NoExample = NOT OK
     """
 
@@ -21207,7 +21447,7 @@ def flps_linestyle(linestyle):
             None, [cty.c_int],
             """void flps_linestyle(int p1)
             """)
-    check_admitted_listvalues(linestyle, xfc.LINE_list)
+    check_admitted_listvalues(linestyle, xfc.LINESTYLE_list)
     ilinestyle = convert_to_int(linestyle)
     keep_elem_refs(linestyle, ilinestyle)
     _flps_linestyle(ilinestyle)

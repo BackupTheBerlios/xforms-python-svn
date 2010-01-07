@@ -1,6 +1,7 @@
 
 
 SVN
+    * Some function parameters with value in a range list are documented
     * Realign to upstream. Some docstrings completed.
     * Demo examples adapted to new internal/deprecated situation.
     * Deprecated from upstream functions are temporarily moved to a separate
