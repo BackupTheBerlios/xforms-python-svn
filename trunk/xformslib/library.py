@@ -20986,7 +20986,7 @@ def flps_apply_gamma(p1):
 
 def flps_arc(fill, x, y, r, t1, t2, colr):
     """
-        flps_arc(p1, p2, p3, p4, p5, p6, p7)
+        flps_arc(fill, x, y, r, t1, t2, colr)
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
@@ -20994,20 +20994,21 @@ def flps_arc(fill, x, y, r, t1, t2, colr):
     _flps_arc = cfuncproto(
             load_so_libflimage(), "flps_arc",
             None, [cty.c_int, cty.c_int, cty.c_int, cty.c_int, cty.c_int,
-            cty.c_int, cty.c_long],
+            cty.c_int, xfc.FL_COLOR],
             """void flps_arc(int p1, int p2, int p3, int p4, int p5, int p6,
-               long int p7)
+               FL_COLOR p7)
             """)
+    check_admitted_listvalues(colr, xfc.COLOR_list)
     ifill = convert_to_int(fill)
     ix = convert_to_int(x)
     iy = convert_to_int(y)
     ir = convert_to_int(r)
     it1 = convert_to_int(t1)
     it2 = convert_to_int(t2)
-    lcolr = convert_to_long(colr)
+    ulcolr = convert_to_FL_COLOR(colr)
     keep_elem_refs(fill, x, y, r, t1, t2, colr, ifill, ix, iy, ir, it1, \
-                   it2, lcolr)
-    _flps_arc(ifill, ix, iy, ir, it1, it2, lcolr)
+                   it2, ulcolr)
+    _flps_arc(ifill, ix, iy, ir, it1, it2, ulcolr)
 
 
 def flps_circ(fill, x, y, r, colr):
@@ -21019,16 +21020,17 @@ def flps_circ(fill, x, y, r, colr):
 
     _flps_circ = cfuncproto(
             load_so_libflimage(), "flps_circ",
-            None, [cty.c_int, cty.c_int, cty.c_int, cty.c_int, cty.c_long],
-            """void flps_circ(int p1, int p2, int p3, int p4, long int p5)
+            None, [cty.c_int, cty.c_int, cty.c_int, cty.c_int, xfc.FL_COLOR],
+            """void flps_circ(int p1, int p2, int p3, int p4, FL_COLOR p5)
             """)
+    check_admitted_listvalues(colr, xfc.COLOR_list)
     ifill = convert_to_int(fill)
     ix = convert_to_int(x)
     iy = convert_to_int(y)
     ir = convert_to_int(r)
-    lcolr = convert_to_long(colr)
-    keep_elem_refs(fill, x, y, r, colr, ifill, ix, iy, ir, lcolr)
-    _flps_circ(fill, x, y, r, colr, ifill, ix, iy, ir, lcolr)
+    ulcolr = convert_to_FL_COLOR(colr)
+    keep_elem_refs(fill, x, y, r, colr, ifill, ix, iy, ir, ulcolr)
+    _flps_circ(fill, x, y, r, colr, ifill, ix, iy, ir, ulcolr)
 
 
 def flps_color(colr):
@@ -21040,12 +21042,13 @@ def flps_color(colr):
 
     _flps_color = cfuncproto(
             load_so_libflimage(), "flps_color",
-            None, [cty.c_long],
-            """void flps_color(long int p1)
+            None, [xfc.FL_COLOR],
+            """void flps_color(FL_COLOR p1)
             """)
-    lcolr = convert_to_long(colr)
-    keep_elem_refs(colr, lcolr)
-    _flps_color(lcolr)
+    check_admitted_listvalues(colr, xfc.COLOR_list)
+    ulcolr = convert_to_FL_COLOR(colr)
+    keep_elem_refs(colr, ulcolr)
+    _flps_color(ulcolr)
 
 
 def flps_draw_box(style, x, y, w, h, colr, bwIn):
@@ -21058,20 +21061,21 @@ def flps_draw_box(style, x, y, w, h, colr, bwIn):
     _flps_draw_box = cfuncproto(
             load_so_libflimage(), "flps_draw_box",
             None, [cty.c_int, cty.c_int, cty.c_int, cty.c_int, cty.c_int,
-            cty.c_long, cty.c_int],
+            xfc.FL_COLOR, cty.c_int],
             """void flps_draw_box(int p1, int p2, int p3, int p4, int p5,
-               long int p6, int p7)
+               FL_COLOR p6, int p7)
             """)
+    check_admitted_listvalues(colr, xfc.COLOR_list)
     istyle = convert_to_int(style)
     ix = convert_to_int(x)
     iy = convert_to_int(y)
     iw = convert_to_int(w)
     ih = convert_to_int(h)
-    lcolr = convert_to_long(colr)
+    ulcolr = convert_to_FL_COLOR(colr)
     ibwIn = convert_to_int(bwIn)
     keep_elem_refs(style, x, y, w, h, colr, bwIn, istyle, ix, iy, iw, ih, \
-                   lcolr, ibwIn)
-    _flps_draw_box(istyle, ix, iy, iw, ih, lcolr, ibwIn)
+                   ulcolr, ibwIn)
+    _flps_draw_box(istyle, ix, iy, iw, ih, ulcolr, ibwIn)
 
 
 def flps_draw_checkbox(boxtype, x, y, w, h, colr, bw):
@@ -21084,20 +21088,21 @@ def flps_draw_checkbox(boxtype, x, y, w, h, colr, bw):
     _flps_draw_checkbox = cfuncproto(
             load_so_libflimage(), "flps_draw_checkbox",
             None, [cty.c_int, cty.c_int, cty.c_int, cty.c_int, cty.c_int,
-            cty.c_long, cty.c_int],
+            xfc.FL_COLOR, cty.c_int],
             """void flps_draw_checkbox(int p1, int p2, int p3, int p4,
-               int p5, long int p6, int p7)
+               int p5, FL_COLOR p6, int p7)
             """)
+    check_admitted_listvalues(colr, xfc.COLOR_list)
     iboxtype = convert_to_int(boxtype)
     ix = convert_to_int(x)
     iy = convert_to_int(y)
     iw = convert_to_int(w)
     ih = convert_to_int(h)
-    lcolr = convert_to_long(colr)
+    ulcolr = convert_to_FL_COLOR(colr)
     ibw = convert_to_int(bw)
     keep_elem_refs(boxtype, x, y, w, h, colr, bw, iboxtype, ix, iy, iw, ih, \
-                   lcolr, ibw)
-    _flps_draw_checkbox(iboxtype, ix, iy, iw, ih, lcolr, ibw)
+                   ulcolr, ibw)
+    _flps_draw_checkbox(iboxtype, ix, iy, iw, ih, ulcolr, ibw)
 
 
 def flps_draw_frame(style, x, y, w, h, colr, bw):
@@ -21110,20 +21115,21 @@ def flps_draw_frame(style, x, y, w, h, colr, bw):
     _flps_draw_frame = cfuncproto(
             load_so_libflimage(), "flps_draw_frame",
             None, [cty.c_int, cty.c_int, cty.c_int, cty.c_int, cty.c_int,
-            cty.c_long, cty.c_int],
+            xfc.FL_COLOR, cty.c_int],
             """void flps_draw_frame(int p1, int p2, int p3, int p4, int p5,
-               long int p6, int p7)
+               FL_COLOR p6, int p7)
             """)
+    check_admitted_listvalues(colr, xfc.COLOR_list)
     istyle = convert_to_int(style)
     ix = convert_to_int(x)
     iy = convert_to_int(y)
     iw = convert_to_int(w)
     ih = convert_to_int(h)
-    lcolr = convert_to_long(colr)
+    ulcolr = convert_to_FL_COLOR(colr)
     ibw = convert_to_int(bw)
     keep_elem_refs(style, x, y, w, h, colr, bw, istyle, ix, iy, iw, ih, \
-                   lcolr, ibw)
-    _flps_draw_frame(istyle, ix, iy, iw, ih, lcolr, ibw)
+                   ulcolr, ibw)
+    _flps_draw_frame(istyle, ix, iy, iw, ih, ulcolr, ibw)
 
 
 def flps_draw_symbol(label, x, y, w, h, colr):
@@ -21136,18 +21142,19 @@ def flps_draw_symbol(label, x, y, w, h, colr):
     _flps_draw_symbol = cfuncproto(
             load_so_libflimage(), "flps_draw_symbol",
             cty.c_int, [xfc.STRING, cty.c_int, cty.c_int, cty.c_int, cty.c_int,
-            cty.c_long],
+            xfc.FL_COLOR],
             """int flps_draw_symbol(const char * p1, int p2, int p3, int p4,
-               int p5, long int p6)
+               int p5, FL_COLOR p6)
             """)
+    check_admitted_listvalues(colr, xfc.COLOR_list)
     slabel = convert_to_string(label)
     ix = convert_to_int(x)
     iy = convert_to_int(y)
     iw = convert_to_int(w)
     ih = convert_to_int(h)
-    lcolr = convert_to_long(colr)
-    keep_elem_refs(label, x, y, w, h, colr, slabel, ix, iy, iw, ih, lcolr)
-    retval = _flps_draw_symbol(slabel, ix, iy, iw, ih, lcolr)
+    ulcolr = convert_to_FL_COLOR(colr)
+    keep_elem_refs(label, x, y, w, h, colr, slabel, ix, iy, iw, ih, ulcolr)
+    retval = _flps_draw_symbol(slabel, ix, iy, iw, ih, ulcolr)
     return retval
 
 
@@ -21161,19 +21168,20 @@ def flps_draw_tbox(style, x, y, w, h, colr, bw):
     _flps_draw_tbox = cfuncproto(
             load_so_libflimage(), "flps_draw_tbox",
             None, [cty.c_int, cty.c_int, cty.c_int, cty.c_int, cty.c_int,
-            cty.c_long, cty.c_int],
+            xfc.FL_COLOR, cty.c_int],
             """void flps_draw_tbox(int p1, int p2, int p3, int p4, int p5,
-               long int p6, int p7)
+               FL_COLOR p6, int p7)
             """)
+    check_admitted_listvalues(colr, xfc.COLOR_list)
     istyle = convert_to_int(style)
     ix = convert_to_int(x)
     iy = convert_to_int(y)
     iw = convert_to_int(w)
     ih = convert_to_int(h)
-    lcolr = convert_to_long(colr)
+    ulcolr = convert_to_FL_COLOR(colr)
     ibw = convert_to_int(bw)
-    keep_elem_refs(style, x, y, w, h, colr, bw, istyle, ix, iy, iw, ih, lcolr, ibw)
-    _flps_draw_tbox(istyle, ix, iy, iw, ih, lcolr, ibw)
+    keep_elem_refs(style, x, y, w, h, colr, bw, istyle, ix, iy, iw, ih, ulcolr, ibw)
+    _flps_draw_tbox(istyle, ix, iy, iw, ih, ulcolr, ibw)
 
 
 def flps_draw_text(align, x, y, w, h, colr, style, size, text):
@@ -21186,22 +21194,23 @@ def flps_draw_text(align, x, y, w, h, colr, style, size, text):
     _flps_draw_text = cfuncproto(
             load_so_libflimage(), "flps_draw_text",
             None, [cty.c_int, cty.c_int, cty.c_int, cty.c_int, cty.c_int,
-            cty.c_long, cty.c_int, cty.c_int, xfc.STRING],
+            xfc.FL_COLOR, cty.c_int, cty.c_int, xfc.STRING],
             """void flps_draw_text(int p1, int p2, int p3, int p4, int p5,
-               long int p6, int p7, int p8, const char * p9)
+               FL_COLOR p6, int p7, int p8, const char * p9)
             """)
+    check_admitted_listvalues(colr, xfc.COLOR_list)
     ialign = convert_to_int(align)
     ix = convert_to_int(x)
     iy = convert_to_int(y)
     iw = convert_to_int(w)
     ih = convert_to_int(h)
-    lcolr = convert_to_long(colr)
+    ulcolr = convert_to_FL_COLOR(colr)
     istyle = convert_to_int(style)
     isize = convert_to_int(size)
     stext = convert_to_string(text)
     keep_elem_refs(align, x, y, w, h, colr, style, size, text, ialign, \
-                   ix, iy, iw, ih, lcolr, istyle, isize, stext)
-    _flps_draw_text(ialign, ix, iy, iw, ih, lcolr, istyle, isize, stext)
+                   ix, iy, iw, ih, ulcolr, istyle, isize, stext)
+    _flps_draw_text(ialign, ix, iy, iw, ih, ulcolr, istyle, isize, stext)
 
 
 def flps_draw_text_beside(align, x, y, w, h, colr, style, size, text):
@@ -21214,22 +21223,23 @@ def flps_draw_text_beside(align, x, y, w, h, colr, style, size, text):
     _flps_draw_text_beside = cfuncproto(
             load_so_libflimage(), "flps_draw_text_beside",
             None, [cty.c_int, cty.c_int, cty.c_int, cty.c_int, cty.c_int,
-            cty.c_long, cty.c_int, cty.c_int, xfc.STRING],
+            xfc.FL_COLOR, cty.c_int, cty.c_int, xfc.STRING],
             """void flps_draw_text_beside(int p1, int p2, int p3, int p4,
-               int p5, long int p6, int p7, int p8, const char * p9)
+               int p5, FL_COLOR p6, int p7, int p8, const char * p9)
             """)
+    check_admitted_listvalues(colr, xfc.COLOR_list)
     ialign = convert_to_int(align)
     ix = convert_to_int(x)
     iy = convert_to_int(y)
     iw = convert_to_int(w)
     ih = convert_to_int(h)
-    lcolr = convert_to_long(colr)
+    ulcolr = convert_to_FL_COLOR(colr)
     istyle = convert_to_int(style)
     isize = convert_to_int(size)
     stext = convert_to_string(text)
     keep_elem_refs(align, x, y, w, h, colr, style, size, text, ialign, \
-                   ix, iy, iw, ih, lcolr, istyle, isize, stext)
-    _flps_draw_text_beside(ialign, ix, iy, iw, ih, lcolr, istyle, isize, \
+                   ix, iy, iw, ih, ulcolr, istyle, isize, stext)
+    _flps_draw_text_beside(ialign, ix, iy, iw, ih, ulcolr, istyle, isize, \
                            stext)
 
 
@@ -21282,12 +21292,13 @@ def flps_get_gray255(colr):
 
     _flps_get_gray255 = cfuncproto(
             load_so_libflimage(), "flps_get_gray255",
-            cty.c_int, [cty.c_long],
-            """int flps_get_gray255(long int p1)
+            cty.c_int, [xfc.FL_COLOR],
+            """int flps_get_gray255(FL_COLORp1)
             """)
-    lcolr = convert_to_long(colr)
-    keep_elem_refs(colr, lcolr)
-    retval = _flps_get_gray255(lcolr)
+    check_admitted_listvalues(colr, xfc.COLOR_list)
+    ulcolr = convert_to_FL_COLOR(colr)
+    keep_elem_refs(colr, ulcolr)
+    retval = _flps_get_gray255(ulcolr)
     return retval
 
 
@@ -21325,15 +21336,15 @@ def flps_get_linewidth():
 
 def flps_get_namedcolor(colrname):
     """
-        flps_get_namedcolor(colrname) -> num.
+        flps_get_namedcolor(colrname) -> color value
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
 
     _flps_get_namedcolor = cfuncproto(
             load_so_libflimage(), "flps_get_namedcolor",
-            cty.c_int, [xfc.STRING],
-            """int flps_get_namedcolor(const char * p1)
+            xfc.FL_COLOR, [xfc.STRING],
+            """FL_COLOR flps_get_namedcolor(const char * p1)
             """)
     scolrname = convert_to_string(colrname)
     keep_elem_refs(colrname, scolrname)
@@ -21410,16 +21421,17 @@ def flps_line(xi, yi, xf, yf, colr):
 
     _flps_line = cfuncproto(
             load_so_libflimage(), "flps_line",
-            None, [cty.c_int, cty.c_int, cty.c_int, cty.c_int, cty.c_long],
-            """void flps_line(int p1, int p2, int p3, int p4, long int p5)
+            None, [cty.c_int, cty.c_int, cty.c_int, cty.c_int, xfc.FL_COLOR],
+            """void flps_line(int p1, int p2, int p3, int p4, FL_COLOR p5)
             """)
+    check_admitted_listvalues(colr, xfc.COLOR_list)
     ixi = convert_to_int(xi)
     iyi = convert_to_int(yi)
     ixf = convert_to_int(xf)
     iyf = convert_to_int(yf)
-    lcolr = convert_to_long(colr)
-    keep_elem_refs(xi, yi, xf, yf, colr, ixi, iyi, ixf, iyf, lcolr)
-    _flps_line(ixi, iyi, ixf, iyf, lcolr)
+    ulcolr = convert_to_FL_COLOR(colr)
+    keep_elem_refs(xi, yi, xf, yf, colr, ixi, iyi, ixf, iyf, ulcolr)
+    _flps_line(ixi, iyi, ixf, iyf, ulcolr)
 
 
 def flps_lines(Point, numpt, colr):
@@ -21434,14 +21446,15 @@ def flps_lines(Point, numpt, colr):
 
     _flps_lines = cfuncproto(
             load_so_libflimage(), "flps_lines",
-            None, [cty.POINTER(xfc.FL_POINT), cty.c_int, cty.c_long],
-            """void flps_lines(FL_POINT * p1, int p2, long int p3)
+            None, [cty.POINTER(xfc.FL_POINT), cty.c_int, xfc.FL_COLOR],
+            """void flps_lines(FL_POINT * p1, int p2, FL_COLORp3)
             """)
+    check_admitted_listvalues(colr, xfc.COLOR_list)
     pPoint = cty.cast(Point, cty.POINTER(xfc.FL_POINT))
     inumpt = convert_to_int(numpt)
-    lcolr = convert_to_long(colr)
-    keep_elem_refs(Point, numpt, colr, pPoint, inumpt, lcolr)
-    _flps_lines(pPoint, inumpt, lcolr)
+    ulcolr = convert_to_FL_COLOR(colr)
+    keep_elem_refs(Point, numpt, colr, pPoint, inumpt, ulcolr)
+    _flps_lines(pPoint, inumpt, ulcolr)
 
 
 def flps_linestyle(linestyle):
@@ -21523,18 +21536,19 @@ def flps_oval(fill, x, y, w, h, colr):
     _flps_oval = cfuncproto(
             load_so_libflimage(), "flps_oval",
             None, [cty.c_int, cty.c_int, cty.c_int, cty.c_int, cty.c_int,
-            cty.c_long],
+            xfc.FL_COLOR],
             """void flps_oval(int p1, int p2, int p3, int p4, int p5,
-               long int p6)
+               FL_COLOR p6)
             """)
+    check_admitted_listvalues(colr, xfc.COLOR_list)
     ifill = convert_to_int(fill)
     ix = convert_to_int(x)
     iy = convert_to_int(y)
     iw = convert_to_int(w)
     ih = convert_to_int(h)
-    lcolr = convert_to_long(colr)
-    keep_elem_refs(fill, x, y, w, h, colr, ifill, ix, iy, iw, ih, lcolr)
-    _flps_oval(ifill, ix, iy, iw, ih, lcolr)
+    ulcolr = convert_to_FL_COLOR(colr)
+    keep_elem_refs(fill, x, y, w, h, colr, ifill, ix, iy, iw, ih, ulcolr)
+    _flps_oval(ifill, ix, iy, iw, ih, ulcolr)
 
 
 def flps_pieslice(fill, x, y, w, h, t1, t2, colr):
@@ -21546,10 +21560,11 @@ def flps_pieslice(fill, x, y, w, h, t1, t2, colr):
     _flps_pieslice = cfuncproto(
             load_so_libflimage(), "flps_pieslice",
             None, [cty.c_int, cty.c_int, cty.c_int, cty.c_int, cty.c_int,
-            cty.c_int, cty.c_int, cty.c_long],
+            cty.c_int, cty.c_int, xfc.FL_COLOR],
             """void flps_pieslice(int p1, int p2, int p3, int p4, int p5,
-               int p6, int p7, long int p8)
+               int p6, int p7, FL_COLOR p8)
             """)
+    check_admitted_listvalues(colr, xfc.COLOR_list)
     ifill = convert_to_int(fill)
     ix = convert_to_int(x)
     iy = convert_to_int(y)
@@ -21557,10 +21572,10 @@ def flps_pieslice(fill, x, y, w, h, t1, t2, colr):
     ih = convert_to_int(h)
     it1 = convert_to_int(t1)
     it2 = convert_to_int(t2)
-    lcolr = convert_to_long(colr)
+    ulcolr = convert_to_FL_COLOR(colr)
     keep_elem_refs(fill, x, y, w, h, t1, t2, colr, ifill, ix, iy, iw, \
-                   ih, it1, it2, lcolr)
-    _flps_pieslice(ifill, ix, iy, iw, ih, it1, it2, lcolr)
+                   ih, it1, it2, ulcolr)
+    _flps_pieslice(ifill, ix, iy, iw, ih, it1, it2, ulcolr)
 
 
 def flps_poly(fill, Point, numpt, colr):
@@ -21576,15 +21591,16 @@ def flps_poly(fill, Point, numpt, colr):
 
     _flps_poly = cfuncproto(
             load_so_libflimage(), "flps_poly",
-            None, [cty.c_int, cty.POINTER(xfc.FL_POINT), cty.c_int, cty.c_long],
-            """void flps_poly(int p1, FL_POINT * p2, int p3, long int p4)
+            None, [cty.c_int, cty.POINTER(xfc.FL_POINT), cty.c_int, xfc.FL_COLOR],
+            """void flps_poly(int p1, FL_POINT * p2, int p3, FL_COLOR p4)
             """)
+    check_admitted_listvalues(colr, xfc.COLOR_list)
     ifill = convert_to_int(fill)
     pPoint = cty.cast(Point, cty.POINTER(xfc.FL_POINT))
     inumpt = convert_to_int(numpt)
-    lcolr = convert_to_long(colr)
-    keep_elem_refs(fill, Point, numpt, colr, ifill, pPoint, inumpt, lcolr)
-    _flps_poly(ifill, pPoint, inumpt, lcolr)
+    ulcolr = convert_to_FL_COLOR(colr)
+    keep_elem_refs(fill, Point, numpt, colr, ifill, pPoint, inumpt, ulcolr)
+    _flps_poly(ifill, pPoint, inumpt, ulcolr)
 
 
 def flps_rectangle(fill, x, y, w, h, colr):
@@ -21596,18 +21612,19 @@ def flps_rectangle(fill, x, y, w, h, colr):
     _flps_rectangle = cfuncproto(
             load_so_libflimage(), "flps_rectangle",
             None, [cty.c_int, cty.c_int, cty.c_int, cty.c_int, cty.c_int,
-            cty.c_long],
+            xfc.FL_COLOR],
             """void flps_rectangle(int p1, int p2, int p3, int p4, int p5,
-               long int p6)
+               FL_COLOR p6)
             """)
+    check_admitted_listvalues(colr, xfc.COLOR_list)
     ifill = convert_to_int(fill)
     ix = convert_to_int(x)
     iy = convert_to_int(y)
     iw = convert_to_int(w)
     ih = convert_to_int(h)
-    lcolr = convert_to_long(colr)
-    keep_elem_refs(fill, x, y, w, h, colr, ifill, ix, iy, iw, ih, lcolr)
-    _flps_rectangle(ifill, ix, iy, iw, ih, lcolr)
+    ulcolr = convert_to_FL_COLOR(colr)
+    keep_elem_refs(fill, x, y, w, h, colr, ifill, ix, iy, iw, ih, ulcolr)
+    _flps_rectangle(ifill, ix, iy, iw, ih, ulcolr)
 
 
 def flps_reset_cache():
@@ -21679,18 +21696,19 @@ def flps_roundrectangle(fill, x, y, w, h, colr):
     _flps_roundrectangle = cfuncproto(
             load_so_libflimage(), "flps_roundrectangle",
             None, [cty.c_int, cty.c_int, cty.c_int, cty.c_int, cty.c_int,
-            cty.c_long],
+            xfc.FL_COLOR],
             """void flps_roundrectangle(int p1, int p2, int p3, int p4,
-               int p5, long int p6)
+               int p5, FL_COLOR p6)
             """)
+    check_admitted_listvalues(colr, xfc.COLOR_list)
     ifill = convert_to_int(fill)
     ix = convert_to_int(x)
     iy = convert_to_int(y)
     iw = convert_to_int(w)
     ih = convert_to_int(h)
-    lcolr = convert_to_long(colr)
-    keep_elem_refs(fill, x, y, w, h, colr, ifill, ix, iy, iw, ih, lcolr)
-    _flps_roundrectangle(ifill, ix, iy, iw, ih, lcolr)
+    ulcolr = convert_to_FL_COLOR(colr)
+    keep_elem_refs(fill, x, y, w, h, colr, ifill, ix, iy, iw, ih, ulcolr)
+    _flps_roundrectangle(ifill, ix, iy, iw, ih, ulcolr)
 
 
 def flps_set_clipping(x, y, w, h):

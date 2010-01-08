@@ -1,6 +1,7 @@
 
 
 SVN
+    * realign to upstream (modification of color parameter in flps_*)
     * other docstrings; added simpletable example.
     * Some function parameters with value in a range list are documented
     * Realign to upstream. Some docstrings completed.
@@ -24,7 +25,7 @@ SVN
     * some more docstrings.
     * Added nmenu_minimal example.
     * Thanks to Jens T. Toerring, now FL_POPUP_ITEM management
-    is correctly supported (for one item with a dict o a single
+    is correctly supported (for one item with a dict or a single
     list, for more than one with a serie of lists) in functions
     who use it.
     * separated namespace for xfdata preserved in library.
