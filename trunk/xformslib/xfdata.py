@@ -1165,8 +1165,8 @@ FL_DEFAULT_SIZE = FL_SMALL_SIZE
 """10 points font size"""
 
 # my add, list of possible values --LK
-SIZE_list = [FL_TINY_SIZE, FL_SMALL_SIZE, FL_NORMAL_SIZE, FL_MEDIUM_SIZE,
-             FL_LARGE_SIZE, FL_HUGE_SIZE, FL_DEFAULT_SIZE]
+FONTSIZE_list = [FL_TINY_SIZE, FL_SMALL_SIZE, FL_NORMAL_SIZE, FL_MEDIUM_SIZE,
+                 FL_LARGE_SIZE, FL_HUGE_SIZE, FL_DEFAULT_SIZE]
 
 #FL_TINY_FONT placeholder (backwards)
 #FL_SMALL_FONT placeholder (backwards)

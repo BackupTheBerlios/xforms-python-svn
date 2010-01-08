@@ -1,6 +1,7 @@
 
 
 SVN
+    * some revision of docstrings
     * realign to upstream (modification of color parameter in flps_*)
     * other docstrings; added simpletable example.
     * Some function parameters with value in a range list are documented
