@@ -2224,6 +2224,8 @@ def fl_set_object_resize(pObject, what):
 
         @param pObject: pointer to object
         @param what: resize property
+        @type what: [num./int>=0] from xfdata module FL_RESIZE_NONE,
+                    FL_RESIZE_X, FL_RESIZE_Y, FL_RESIZE_ALL
 
         @status: Tested + NoDoc + Example = OK
     """
@@ -2233,6 +2235,7 @@ def fl_set_object_resize(pObject, what):
             None, [cty.POINTER(xfc.FL_OBJECT), cty.c_uint], \
             """void fl_set_object_resize(xfc.FL_OBJECT * ob, unsigned int what)
             """)
+    check_admitted_listvalues(what, xfc.RESIZE_list)
     uiwhat = convert_to_uint(what)
     keep_elem_refs(pObject, what, uiwhat)
     _fl_set_object_resize(pObject, uiwhat)
@@ -2367,6 +2370,15 @@ def fl_set_object_lstyle(pObject, lstyle):
 
         @param pObject: pointer to object
         @param lstyle: label style
+        @type lstyle: [num./int] from xfdata module FL_NORMAL_STYLE,
+                      FL_BOLD_STYLE, FL_ITALIC_STYLE, FL_BOLDITALIC_STYLE,
+                      FL_FIXED_STYLE, FL_FIXEDBOLD_STYLE,
+                      FL_FIXEDITALIC_STYLE, FL_FIXEDBOLDITALIC_STYLE,
+                      FL_TIMES_STYLE, FL_TIMESBOLD_STYLE,
+                      FL_TIMESITALIC_STYLE, FL_TIMESBOLDITALIC_STYLE,
+                      FL_MISC_STYLE, FL_MISCBOLD_STYLE, FL_MISCITALIC_STYLE,
+                      FL_SYMBOL_STYLE, FL_SHADOW_STYLE, FL_ENGRAVED_STYLE,
+                      FL_EMBOSSED_STYLE
 
         @status: Tested + NoDoc + Example = OK
     """
@@ -17113,6 +17125,7 @@ def fl_add_text(texttype, x, y, w, h, label):
         Adds a text object.
 
         @param texttype: type of text to be added
+        @param texttype: [num./int] xfc.FL_NORMAL_TEXT
         @param x: horizontal position (upper-left corner)
         @param x: vertical position (upper-left corner)
         @param w: width in coord units
@@ -21701,6 +21714,17 @@ def flps_set_clipping(x, y, w, h):
 
 def flps_set_font(style, size):
     """ flps_set_font(style, size)
+
+        @param style: label style
+        @type style: [num./int] from xfdata module FL_NORMAL_STYLE,
+                      FL_BOLD_STYLE, FL_ITALIC_STYLE, FL_BOLDITALIC_STYLE,
+                      FL_FIXED_STYLE, FL_FIXEDBOLD_STYLE,
+                      FL_FIXEDITALIC_STYLE, FL_FIXEDBOLDITALIC_STYLE,
+                      FL_TIMES_STYLE, FL_TIMESBOLD_STYLE,
+                      FL_TIMESITALIC_STYLE, FL_TIMESBOLDITALIC_STYLE,
+                      FL_MISC_STYLE, FL_MISCBOLD_STYLE, FL_MISCITALIC_STYLE,
+                      FL_SYMBOL_STYLE, FL_SHADOW_STYLE, FL_ENGRAVED_STYLE,
+                      FL_EMBOSSED_STYLE
 
         @status: Untested + NoDoc + NoExample = NOT OK
     """
