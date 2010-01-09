@@ -1,6 +1,7 @@
 
 
 SVN
+    * some more docstrings and checked parameters
     * flps_* functions (except flps_init) are removed from library. After an
     interesting discussion with XForms upstream maintainer I've decided to get
     rid of them as they has been undocumented already in old (0.89) docs, and

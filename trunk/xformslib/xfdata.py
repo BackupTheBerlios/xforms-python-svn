@@ -2995,9 +2995,17 @@ INPUTTYPE_list = [FL_NORMAL_INPUT, FL_FLOAT_INPUT, FL_INT_INPUT, \
 # for date input
 # values for unnamed enumeration
 FL_INPUT_MMDD = 0
-""""""
+"""Used as format for FL_DATE_INPUT, it places the month before the day"""
 FL_INPUT_DDMM = 1
-""""""
+"""Used as format for FL_DATE_INPUT, it places the day before the month"""
+
+# my add - list of possible values --LK
+DATEFMT_list = [FL_INPUT_MMDD, FL_INPUT_DDMM]
+
+
+# my add - list of possible values --LK
+SCROLLBARVAL_list = [FL_AUTO, FL_ON, FL_OFF]
+
 
 # Defaults
 FL_INPUT_BOXTYPE = FL_DOWN_BOX
