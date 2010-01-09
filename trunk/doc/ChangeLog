@@ -1,6 +1,11 @@
 
 
 SVN
+    * flps_* functions (except flps_init) are removed from library. After an
+    interesting discussion with XForms upstream maintainer I've decided to get
+    rid of them as they has been undocumented already in old (0.89) docs, and
+    they should be used only in fd2ps program (just in case I leave a
+    placeholder and they are moved to a temporary file, too).
     * some revision of docstrings
     * realign to upstream (modification of color parameter in flps_*)
     * other docstrings; added simpletable example.
