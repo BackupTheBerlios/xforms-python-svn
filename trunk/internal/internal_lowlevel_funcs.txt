@@ -2461,3 +2461,24 @@ def flps_unset_clipping():
     _flps_unset_clipping() 
 
 
+def fl_show_errors(y):
+#    """ fl_show_errors(y) 
+# 
+#        @param y: (<int>) 
+# 
+#        @example:. 
+# 
+#        @status: Untested + NoDoc + NoDemo = NOT OK 
+#    """ 
+# 
+#    _fl_show_errors = cfuncproto( 
+#            load_so_libforms(), "fl_show_errors",\ 
+#            None, [cty.c_int],\ 
+#            """void fl_show_errors(int y) 
+#            """) 
+#    iy = convert_to_int(y) 
+#    keep_elem_refs(y, iy) 
+#    _fl_show_errors(iy) 
+
+
+

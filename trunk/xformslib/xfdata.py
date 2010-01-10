@@ -423,7 +423,10 @@ MOUSEBTN_list = [FL_MBUTTON1, FL_MBUTTON2, FL_MBUTTON3, FL_MBUTTON4,
 
 # control when to return input, slider and dial etc. object.
 FL_RETURN_NONE = 0
-"""Never return or invoke a callback."""
+"""Never notiy the application about interactions with this object (i.e.
+never return it nor invoke its callback). Note: this is not meant for
+deactivation of an object, it will still seem to work as normal, it just
+doesn't get returned to the application nor does its callback get invoked."""
 FL_RETURN_CHANGED = 1
 """Return or invoke callback whenever an item is selected (this is the
 default)."""
@@ -444,7 +447,8 @@ FL_RETURN_TRIGGERED = 1024
 """"""
 FL_RETURN_ALWAYS = ~ FL_RETURN_END_CHANGED
 """Return (or invoke callback) whenever the interaction ends and/or
-an item is selected.Never return or invoke a callback."""
+an item is selected. It includes all conditions except
+FL_RETURN_END_CHANGED."""
 
 # my add, list of possible values --LK
 RETURN_list = [FL_RETURN_NONE, FL_RETURN_CHANGED, FL_RETURN_END,
@@ -1710,30 +1714,30 @@ LINESTYLE_list = [FL_SOLID, FL_USERDASH, FL_USERDOUBLEDASH, FL_DOT, FL_DOTDASH,
 # Input Event Masks. Used as event-mask window attribute and as arguments
 # to Grab requests.  Not to be confused with event names.
 NoEventMask = 0L
-KeyPressMask = (1L<<0)
-KeyReleaseMask = (1L<<1)
-ButtonPressMask = (1L<<2)
-ButtonReleaseMask = (1L<<3)
-EnterWindowMask = (1L<<4)
-LeaveWindowMask = (1L<<5)
-PointerMotionMask = (1L<<6)
-PointerMotionHintMask = (1L<<7)
-Button1MotionMask = (1L<<8)
-Button2MotionMask = (1L<<9)
-Button3MotionMask = (1L<<10)
-Button4MotionMask = (1L<<11)
-Button5MotionMask = (1L<<12)
-ButtonMotionMask = (1L<<13)
-KeymapStateMask = (1L<<14)
-ExposureMask = (1L<<15)
-VisibilityChangeMask = (1L<<16)
-StructureNotifyMask = (1L<<17)
-ResizeRedirectMask = (1L<<18)
-SubstructureNotifyMask = (1L<<19)
-SubstructureRedirectMask = (1L<<20)
-FocusChangeMask = (1L<<21)
-ColormapChangeMask = (1L<<23)
-OwnerGrabButtonMask = (1L<<24)
+KeyPressMask = (1L<<0)                  # 1
+KeyReleaseMask = (1L<<1)                # 2
+ButtonPressMask = (1L<<2)               # 4
+ButtonReleaseMask = (1L<<3)             # 8
+EnterWindowMask = (1L<<4)               # 16
+LeaveWindowMask = (1L<<5)               # 32
+PointerMotionMask = (1L<<6)             # 64
+PointerMotionHintMask = (1L<<7)         # 128
+Button1MotionMask = (1L<<8)             # 256
+Button2MotionMask = (1L<<9)             # 512
+Button3MotionMask = (1L<<10)            # 1024
+Button4MotionMask = (1L<<11)            # 2048
+Button5MotionMask = (1L<<12)            # 4096
+ButtonMotionMask = (1L<<13)             # 8192
+KeymapStateMask = (1L<<14)              # 16384
+ExposureMask = (1L<<15)                 # 32768
+VisibilityChangeMask = (1L<<16)         # 65536
+StructureNotifyMask = (1L<<17)          # 131072
+ResizeRedirectMask = (1L<<18)           # 262144
+SubstructureNotifyMask = (1L<<19)       # 524288
+SubstructureRedirectMask = (1L<<20)     # 1048576
+FocusChangeMask = (1L<<21)              # 2097152
+ColormapChangeMask = (1L<<23)           # 4194304
+OwnerGrabButtonMask = (1L<<24)          # 8388608
 # Key masks. Used as modifiers to GrabButton and GrabKey, results of QueryPointer,
 # state in various key-, mouse-, and button-related events.
 ShiftMask = (1<<0)

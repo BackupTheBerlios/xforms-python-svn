@@ -1,6 +1,8 @@
 
 
 SVN
+    * some more function tested and documented
+    * removed backward fl_show_errors function.
     * workaround for fl_set_input_format to accept characters (e.g. "/") and
     ascii numeric values (e.g. 47), as separator.
     * some more docstrings and checked parameters
