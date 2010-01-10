@@ -1,6 +1,8 @@
 
 
 SVN
+    * workaround for fl_set_input_format to accept characters (e.g. "/") and
+    ascii numeric values (e.g. 47), as separator.
     * some more docstrings and checked parameters
     * flps_* functions (except flps_init) are removed from library. After an
     interesting discussion with XForms upstream maintainer I've decided to get

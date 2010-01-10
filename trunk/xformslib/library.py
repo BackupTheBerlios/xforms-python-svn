@@ -15027,7 +15027,6 @@ def fl_set_input_maxchars(pObject, maxchars):
     _fl_set_input_maxchars(pObject, imaxchars)
 
 
-# TODO: verify with upstream
 def fl_set_input_format(pObject, fmt, sep):
     """
         fl_set_input_format(pObject, fmt, sep)
@@ -15037,20 +15036,24 @@ def fl_set_input_format(pObject, fmt, sep):
 
         @param fmt: format for the input [int_num]
         @type fmt: (from xfdata module) FL_INPUT_DDMM, FL_INPUT_MMDD
-        @param sep: printable character used as separator [int_num]
+        @param sep: printable character used as separator [int_num or char]
 
         @status: Untested + Doc + NoExample = NOT OK
     """
 
     _fl_set_input_format = cfuncproto(
             load_so_libforms(), "fl_set_input_format",
-            None, [cty.POINTER(xfc.FL_OBJECT), cty.c_int, cty.c_char],
+            None, [cty.POINTER(xfc.FL_OBJECT), cty.c_int, cty.c_int],
             """void fl_set_input_format(FL_OBJECT * ob, int fmt, int sep)
             """)
     check_admitted_listvalues(fmt, xfc.DATEFMT_list)
+    if isinstance(sep, str):
+        ordsep = ord(sep)            # workaround to let a character as argument
+    else:
+        ordsep = sep
     ifmt = convert_to_int(fmt)
-    isep = convert_to_string(sep)          # int??
-    keep_elem_refs(pObject, fmt, sep, ifmt, isep)
+    isep = convert_to_int(ordsep)
+    keep_elem_refs(pObject, fmt, sep, ordsep, ifmt, isep)
     _fl_set_input_format(pObject, ifmt, isep)
 
 
