@@ -1,6 +1,7 @@
 
 
 SVN
+    * Porting of chartstrip example.
     * some more function tested and documented
     * removed backward fl_show_errors function.
     * workaround for fl_set_input_format to accept characters (e.g. "/") and
