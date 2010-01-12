@@ -1021,6 +1021,13 @@ FL_RESIZED = 22     # the object has been resized by scale_form
 #FL_KEYBOARD placeholder (backwards)
 #FL_MOUSE placeholder (backwards)
 
+# my add - list of possible values --LK
+EVENTS_list = [FL_DRAW, FL_PUSH, FL_RELEASE, FL_ENTER, FL_LEAVE,
+               FL_MOTION, FL_FOCUS, FL_UNFOCUS, FL_KEYPRESS, FL_UPDATE,
+               FL_STEP, FL_SHORTCUT, FL_FREEMEM, FL_OTHER, FL_DRAWLABEL,
+               FL_DBLCLICK, FL_TRPLCLICK, FL_ATTRIB, FL_KEYRELEASE,
+               FL_PS, FL_MOVEORIGIN, FL_RESIZED]
+
 
 # Resize policies
 # values for enumeration 'FL_RESIZE_T'
@@ -1273,27 +1280,84 @@ FL_pixmap_._fields_ = [
     ('pixel', FL_COLOR),
 ]
 
+
+FL_IO_CALLBACK = cty.CFUNCTYPE(None, cty.c_int, cty.c_void_p)
+""" FL_IO_CALLBACK(num, ptr_void) 
+ 
+    prototype for handling IO callback (used by fl_add_io_callback,
+    fl_remove_io_callback) - no return 
+"""
+
+FL_SIGNAL_HANDLER = cty.CFUNCTYPE(None, cty.c_int, cty.c_void_p)
+""" FL_SIGNAL_HANDLER(num, ptr_void) 
+ 
+    prototype for handling signal callback (used by fl_add_signal_callback)
+    - no return 
+"""
+
+FL_TIMEOUT_CALLBACK = cty.CFUNCTYPE(None, cty.c_int, cty.c_void_p)
+""" FL_TIMEOUT_CALLBACK(num, ptr_void) 
+ 
+    prototype for handling timeout callback (used by fl_add_timeout)
+    - no return 
+ """
+
+
+# at close (WM menu delete/close etc.)
+FL_FORM_ATCLOSE = cty.CFUNCTYPE(cty.c_int, cty.POINTER(FL_FORM), \
+                                cty.c_void_p)
+""" FL_FORM_ATCLOSE(pForm, ptr_void) -> num
+
+    prototype when a form is closed (used by fl_set_form_atclose,
+    fl_set_atclose) - returning value 
+"""
+
+# deactivate/activate callbacks
+FL_FORM_ATACTIVATE = cty.CFUNCTYPE(None, cty.POINTER(FL_FORM), cty.c_void_p)
+""" FL_FORM_ATACTIVATE(pForm, ptr_void) 
+ 
+    prototype when a form is activated (used by fl_set_form_atactivate)
+    - no return value
+"""
+
+FL_FORM_ATDEACTIVATE = cty.CFUNCTYPE(None, cty.POINTER(FL_FORM), cty.c_void_p)
+""" FL_FORM_DEATACTIVATE(pForm, ptr_void) 
+
+    prototype when a form is deactivated (used by fl_set_form_atdeactivate)
+    - no return value
+"""
+
+
 # callback function for an entire form
 FL_FORMCALLBACKPTR = cty.CFUNCTYPE(None, cty.POINTER(FL_OBJECT), cty.c_void_p)
+""" FL_FORMCALLBACKPTR(pObject, ptr_void) 
 
-# object callback function
-FL_CALLBACKPTR = cty.CFUNCTYPE(None, cty.POINTER(FL_OBJECT), cty.c_long)
+    prototype for handling a callback for the entire form (used by
+    fl_set_form_callback) - no return value
+"""
+
 
 # /usr/include/X11/Xlib.h 984
 class _XEvent(cty.Union):
     pass
 XEvent = _XEvent
 
-# preemptive callback function - pXEvent is necessary as type cast is not handled
+# preemptive callback function - pXEvent is necessary as type cast is not
+# handled
 #FL_RAW_CALLBACK = cty.CFUNCTYPE(cty.c_int, cty.POINTER(FL_FORM), cty.c_void_p)
-FL_RAW_CALLBACK = cty.CFUNCTYPE(cty.c_int, cty.POINTER(FL_FORM), cty.POINTER(XEvent))
+FL_RAW_CALLBACK = cty.CFUNCTYPE(cty.c_int, cty.POINTER(FL_FORM), \
+                                cty.POINTER(XEvent))
+""" FL_RAW_CALLBACK(pForm, pXEvent) -> num.
 
-# at close (WM menu delete/close etc.)
-FL_FORM_ATCLOSE = cty.CFUNCTYPE(cty.c_int, cty.POINTER(FL_FORM), cty.c_void_p)
+    prototype for handling a raw callback for X events (used by
+    fl_register_raw_callback) - with returning value
+"""
 
-# deactivate/activate callback
-FL_FORM_ATDEACTIVATE = cty.CFUNCTYPE(None, cty.POINTER(FL_FORM), cty.c_void_p)
-FL_FORM_ATACTIVATE = cty.CFUNCTYPE(None, cty.POINTER(FL_FORM), cty.c_void_p)
+
+# object callback function
+FL_CALLBACKPTR = cty.CFUNCTYPE(None, cty.POINTER(FL_OBJECT), cty.c_long)
+
+
 FL_HANDLEPTR = cty.CFUNCTYPE(cty.c_int, cty.POINTER(FL_OBJECT), cty.c_int, \
                 FL_Coord, FL_Coord, cty.c_int, cty.c_void_p)
 

@@ -1,6 +1,7 @@
 
 
 SVN
+    * another bunch of functions tested and documented.
     * Porting of chartstrip example.
     * some more function tested and documented
     * removed backward fl_show_errors function.
