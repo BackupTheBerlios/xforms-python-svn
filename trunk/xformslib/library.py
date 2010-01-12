@@ -2926,7 +2926,8 @@ def fl_set_object_shortcut(pObject, shctxt, showit):
         the function keys. For example, "&2" stands for the <F2> function key.
         The four cursors keys (up, down, right, and left) can be given as "&A",
         "&B", "&C" and "&D", respectively. The key '&' itself can be obtained
-        as a shortcut by prefixing it with '^'.
+        as a shortcut by prefixing it with '^'. It resets any previous defined
+        shortcuts for the object.
 
         @param pObject: object
                         (<pointer to xfdata.FL_OBJECT>)
@@ -2957,13 +2958,17 @@ def fl_set_object_shortcutkey(pObject, keysym):
     """
         fl_set_object_shortcutkey(pObject, keysym)
 
+        Uses a special key as a shortcut. It always appends the specified key
+        to the current shortcuts. Special keys can't be underlined.
+
         @param pObject: object
                         (<pointer to xfdata.FL_OBJECT>)
-        @param keysym: key symbolic num. (<int_pos>)
+        @param keysym: X key symbolic num. (<int_pos>)
+        @type keysym: see xfdata module for a (maybe) incomplete list
 
-        @example: 
+        @example: fl_set_object_shortcutkey(pobj, xfdata.XK_Home)
 
-        @status: Tested + NoDoc + NoDemo = OK
+        @status: Tested + Doc + NoDemo = OK
     """
 
     _fl_set_object_shortcutkey = cfuncproto(

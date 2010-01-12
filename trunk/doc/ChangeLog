@@ -1,6 +1,8 @@
 
 
 SVN
+    * use some constants from X11/keysymdef.h to be used with
+    fl_set_object_shortcutkey.
     * another bunch of functions tested and documented.
     * Porting of chartstrip example.
     * some more function tested and documented
