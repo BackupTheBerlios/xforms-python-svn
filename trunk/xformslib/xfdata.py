@@ -1191,7 +1191,7 @@ FONTSIZE_list = [FL_TINY_SIZE, FL_SMALL_SIZE, FL_NORMAL_SIZE, FL_MEDIUM_SIZE,
 
 
 FL_BOUND_WIDTH = 1     # Border width of boxes, FL_Coord(1)
-""""""
+"""Default border width of boxes"""
 
 
 # Definition of basic struct that holds an object
@@ -1285,21 +1285,21 @@ FL_IO_CALLBACK = cty.CFUNCTYPE(None, cty.c_int, cty.c_void_p)
 """ FL_IO_CALLBACK(num, ptr_void) 
  
     prototype for handling IO callback (used by fl_add_io_callback,
-    fl_remove_io_callback) - no return 
+    fl_remove_io_callback), no return 
 """
 
 FL_SIGNAL_HANDLER = cty.CFUNCTYPE(None, cty.c_int, cty.c_void_p)
 """ FL_SIGNAL_HANDLER(num, ptr_void) 
  
-    prototype for handling signal callback (used by fl_add_signal_callback)
-    - no return 
+    prototype for handling signal callback (used by fl_add_signal_callback),
+    no return 
 """
 
 FL_TIMEOUT_CALLBACK = cty.CFUNCTYPE(None, cty.c_int, cty.c_void_p)
 """ FL_TIMEOUT_CALLBACK(num, ptr_void) 
  
-    prototype for handling timeout callback (used by fl_add_timeout)
-    - no return 
+    prototype for handling timeout callback (used by fl_add_timeout),
+    no return 
  """
 
 
@@ -1309,22 +1309,22 @@ FL_FORM_ATCLOSE = cty.CFUNCTYPE(cty.c_int, cty.POINTER(FL_FORM), \
 """ FL_FORM_ATCLOSE(pForm, ptr_void) -> num
 
     prototype when a form is closed (used by fl_set_form_atclose,
-    fl_set_atclose) - returning value 
+    fl_set_atclose), returning value 
 """
 
 # deactivate/activate callbacks
 FL_FORM_ATACTIVATE = cty.CFUNCTYPE(None, cty.POINTER(FL_FORM), cty.c_void_p)
 """ FL_FORM_ATACTIVATE(pForm, ptr_void) 
  
-    prototype when a form is activated (used by fl_set_form_atactivate)
-    - no return value
+    prototype when a form is activated (used by fl_set_form_atactivate),
+    no return value
 """
 
 FL_FORM_ATDEACTIVATE = cty.CFUNCTYPE(None, cty.POINTER(FL_FORM), cty.c_void_p)
 """ FL_FORM_DEATACTIVATE(pForm, ptr_void) 
 
-    prototype when a form is deactivated (used by fl_set_form_atdeactivate)
-    - no return value
+    prototype when a form is deactivated (used by fl_set_form_atdeactivate),
+    no return value
 """
 
 
@@ -1354,12 +1354,49 @@ FL_RAW_CALLBACK = cty.CFUNCTYPE(cty.c_int, cty.POINTER(FL_FORM), \
 """
 
 
-# object callback function
-FL_CALLBACKPTR = cty.CFUNCTYPE(None, cty.POINTER(FL_OBJECT), cty.c_long)
+# cfunction for _fl_for_all_objects 
+cfunc_int_pobject_pvoid = cty.CFUNCTYPE(cty.c_int, cty.POINTER(FL_OBJECT), \
+                                        cty.c_void_p)
 
 
 FL_HANDLEPTR = cty.CFUNCTYPE(cty.c_int, cty.POINTER(FL_OBJECT), cty.c_int, \
                 FL_Coord, FL_Coord, cty.c_int, cty.c_void_p)
+""" FL_HANDLEPTR(pObject, num, coord, coord, num, ptr_void) -> num
+
+    prototype for registering a pre- or post- handler for an object,
+    returning value (used by fl_set_object_prehandler,
+    fl_set_object_posthandler, fl_make_object)
+"""
+
+
+# object callback function
+FL_CALLBACKPTR = cty.CFUNCTYPE(None, cty.POINTER(FL_OBJECT), cty.c_long)
+""" FL_CALLBACKPTR(pObject, longnum)
+
+    prototype for handling a callback function bound to an object, no return
+    value (used by fl_set_object_callback)
+"""
+
+
+# cfunction for _fl_enumerate_fonts 
+cfunc_none_string = cty.CFUNCTYPE(None, STRING)
+
+
+FL_DRAWPTR = cty.CFUNCTYPE(None, FL_Coord, FL_Coord, FL_Coord, FL_Coord,
+                           cty.c_int, FL_COLOR)
+""" FL_DRAWPTR(x, y, w, h, angle_degree_rotaion, colr)
+
+    prototype for handling a symbol drawing (used by fl_add_symbol), no return
+""" 
+
+
+# error callback
+FL_ERROR_FUNC = cty.CFUNCTYPE(None, STRING, STRING)
+""" FL_ERROR_FUNC(function_name, error_message)
+
+    prototype for handling errors (used by fl_set_error_handler), no return
+"""
+
 
 FL_FORM_._pack_ = 4
 FL_FORM_._fields_ = [
@@ -1502,8 +1539,6 @@ FL_OBJECT_._fields_ = [
 ]
 
 
-# error callback
-FL_ERROR_FUNC = cty.CFUNCTYPE(None, STRING, STRING)
 
 # form visibility state: form .visible
 # values for unnamed enumeration

@@ -32,8 +32,18 @@
  #            """) 
  #    keep_elem_refs(p1) 
  #    _fl_free(p1) 
- 
- 
+
+
+# cfunction for _fl_malloc 
+cfunc_none_sizet = cty.CFUNCTYPE(cty.c_void_p, xfc.size_t)
+
+# cfunction for _fl_calloc 
+cfunc_none_sizet_sizet = cty.CFUNCTYPE(cty.c_void_p, xfc.size_t, xfc.size_t)
+
+# cfunction for _fl_realloc 
+cfunc_voidp_voidp_sizet = cty.CFUNCTYPE(cty.c_void_p, cty.c_void_p, xfc.size_t)
+
+
 # low-level function maybe unused in python 
 ##fl_malloc = (cty.CFUNCTYPE(cty.c_void_p, xfc.size_t)).in_dll(load_so_libforms(
 #             'fl_malloc') 
@@ -2480,5 +2490,21 @@ def fl_show_errors(y):
 #    keep_elem_refs(y, iy) 
 #    _fl_show_errors(iy) 
 
+
+def fl_strdup(strng):
+    """ fl_strdup(strng) -> string 
+ 
+        @status: Untested + NoDoc + NoDemo = NOT OK 
+    """
+ 
+    _fl_strdup = cfuncproto( 
+            load_so_libforms(), "fl_strdup",\
+            xfc.STRING, [xfc.STRING],\
+            """char * fl_strdup(const char * s) 
+            """) 
+    sstrng = convert_to_string(strng) 
+    keep_elem_refs(strng, sstrng) 
+    retval = _fl_strdup(sstrng) 
+    return retval 
 
 
