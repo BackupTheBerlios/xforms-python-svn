@@ -2,6 +2,7 @@
 
 SVN
 
+    * other functions are tested and documented.
     * lowlevel fl_strdup() removed.
     * another bunch of functions have been tested and documented; in getter
     functions who return multiple values use .value attribute to return value

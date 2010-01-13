@@ -193,7 +193,6 @@ def drawit(stobj):
     elif stobj.type == 3:
         point = (xfc.FL_POINT * 3)()          # point[ 3 ]
 
-        #for pt in point:
         point[0].x = stobj.x.value - stobj.size
         point[0].y = stobj.y.value + stobj.size
         point[1].x = stobj.x.value + stobj.size

@@ -1587,11 +1587,13 @@ FL_MAX_MENU_CHOICE_ITEMS = 128
 # Draw mode
 # values for unnamed enumeration
 FL_XOR = 6              # GXxor
-""""""
+"""Bitwise XOR (exclusive-or) of the pixel value to be drawn witn the
+pixel value already on the screen. Useful for rubber-banding."""
 FL_COPY = 3             # GXcopy
-""""""
+"""Default overwrite mode, final pixel value is the same as source."""
 FL_AND = 1              # GXand
-""""""
+"""Bitwise AND of the pixel value to be drawn with the pixel value
+already on the screen."""
 
 # my add, list of possible values --LK
 DRAWMODE_list = [FL_XOR, FL_COPY, FL_AND]
