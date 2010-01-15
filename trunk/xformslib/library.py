@@ -1984,7 +1984,13 @@ def fl_redraw_form(pForm):
 def fl_set_form_dblbuffer(pForm, flag):
     """ fl_set_form_dblbuffer(pForm, flag)
 
-        Uses double buffering on a per-form basis.
+        Uses double buffering on a per-form basis. Since Xlib doesn't support
+        double buffering, XForms library simulates this functionality with
+        pixmap bit-bliting. In practice, the effect is hardly distinguishable
+        from double buffering and performance is on par with multi-buffering
+        extensions (It is slower than drawing into a window directly on most
+        workstations however). Bear in mind that a pixmap can be resource
+        hungry, so use this option with discretion.
 
         @param pForm: form to set
                       (<pointer to xfdata.FL_FORM>)
@@ -2399,7 +2405,8 @@ def fl_set_object_bw(pObject, bw):
         fl_set_object_bw(pObject, bw)
 
         Sets the borderwidth of an object. If requested borderwidth is 0,
-        -1 is used.
+        -1 is used. If set to a negative number, all objects appear to have
+        a softer appearance (e.g. -2).
 
         @param pObject: object
                         (<pointer to xfdata.FL_OBJECT>)
@@ -2951,6 +2958,12 @@ def fl_set_object_dblbuffer(pObject, flag):
         well. A nonrectangular box means that there are regions within the
         bounding box that should not be painted, which is not easily done
         without complex and expensive clipping and unacceptable inefficiency.
+        Since Xlib doesn't support double buffering, XForms library simulates
+        this functionality with pixmap bit-bliting. In practice, the effect
+        is hardly distinguishable from double buffering and performance is on
+        par with multi-buffering extensions (It is slower than drawing into
+        a window directly on most workstations however). Bear in mind that
+        a pixmap can be resource hungry, so use this option with discretion.
 
         @param pObject: object
                         (<pointer to xfdata.FL_OBJECT>)
@@ -3199,7 +3212,9 @@ def fl_set_object_automatic(pObject, flag):
     """ fl_set_object_automatic(pObject, flag)
 
         Enables or disables an object to receive a xfdata.FL_STEP event.
-        This should not be used with built-in objects.
+        This should not be used with built-in objects. An object is automatic
+        if it automatically (without user actions) has to change its contents.
+        Automatic objects get a FL_STEP event about every 50 msec.
 
         @param pObject: object
                         (<pointer to xfdata.FL_OBJECT>)
@@ -3222,15 +3237,17 @@ def fl_set_object_automatic(pObject, flag):
 def fl_object_is_automatic(pObject):
     """ fl_object_is_automatic(pObject) -> flag num.
 
-        Returns if an object receives xfdata.FL_STEP events.
+        Returns if an object receives xfdata.FL_STEP events. An object is
+        automatic if it automatically (without user actions) has to change
+        its contents. Automatic objects get a FL_STEP event about every 50
+        msec.
 
         @param pObject: object to evaluate
                         (<pointer to xfdata.FL_OBJECT>)
 
         @returns: flag if it's automatic (1) or not (0) (<int>)
 
-        @example: if xf.fl_object_is_automatic(pobj):
-                  > ...
+        @example: if xf.fl_object_is_automatic(pobj): ...
 
         @status: Tested + Doc + NoDemo = OK
     """
@@ -4389,7 +4406,7 @@ def fl_get_string_dimension(style, size, strng, strglen):
     """ fl_get_string_dimension(style, size, strng, strglen) -> w, h
 
         Returns the width and height of a string in one call. In addition,
-        the string passed can contain embedded newline characters '\n' and the
+        the string passed can contain embedded newline characters and the
         routine will make proper adjustment so the values returned are (just)
         large enough to contain the multiple lines of text.
 
@@ -4475,7 +4492,7 @@ def fl_get_align_xy(align, x, y, w, h, xsize, ysize, xoff, yoff):
         @example: xpos, ypos = fl_get_align_xy(xfdata.FL_ALIGN_CENTER, 200,
                   300, 110, 30, 120, 40, 15, 15)
 
-        @attention: API change from upstream
+        @attention: API change from XForms - upstream was
                     fl_get_align_xy(align, x, y, w, h, xsize, ysize, xoff,
                     yoff, xx, yy)
 
@@ -4638,11 +4655,11 @@ def fl_drw_text_beside(align, x, y, w, h, colr, style, size, txtstr):
     ulcolr = convert_to_FL_COLOR(colr)
     istyle = convert_to_int(style)
     isize = convert_to_int(size)
-    s_txtstr = convert_to_string(txtstr)
+    stxtstr = convert_to_string(txtstr)
     keep_elem_refs(align, ialign, x, ix, y, iy, w, iw, h, ih, colr,
-                   ulcolr, style, istyle, size, isize, txtstr, s_txtstr)
+                   ulcolr, style, istyle, size, isize, txtstr, stxtstr)
     _fl_drw_text_beside(ialign, ix, iy, iw, ih, ulcolr, istyle,
-                        isize, s_txtstr)
+                        isize, stxtstr)
 
 
 def fl_drw_text_cursor(align, x, y, w, h, colr, style, size, txtstr, curscolr, pos):
@@ -4969,8 +4986,8 @@ def fl_free_pixels(pix, num):
     _fl_free_pixels(ppix, inum)
 
 
-def fl_set_color_leak(y):
-    """ fl_set_color_leak(y)
+def fl_set_color_leak(flag):
+    """ fl_set_color_leak(flag)
 
         Enables or disables the leakage of color.
 
@@ -4987,9 +5004,9 @@ def fl_set_color_leak(y):
             None, [cty.c_int],\
             """void fl_set_color_leak(int y)
             """)
-    iy = convert_to_int(y)
-    keep_elem_refs(y, iy)
-    _fl_set_color_leak(iy)
+    iflag = convert_to_int(flag)
+    keep_elem_refs(flag, iflag)
+    _fl_set_color_leak(iflag)
 
 
 def fl_getmcolor(colr):
@@ -5457,7 +5474,8 @@ def fl_set_coordunit(unit):
 def fl_set_border_width(bw):
     """ fl_set_border_width(bw)
 
-        Sets the width of the border.
+        Sets the width of the border.  If set to a negative number, all
+        objects appear to have a softer appearance.
 
         @param bw: value of border width (<int>)
 
@@ -5512,7 +5530,7 @@ def fl_set_thinscrollbar(flag):
         Sets if scrollbar type is thin or normal.
 
         @param flag: flag if thin scrollbar or not
-        @type: 1 (for thin) or 0 (for normal)
+        @type flag: 1 (for thin) or 0 (for normal)
 
         @example: fl_set_thinscrollbar(1)
 
@@ -5569,7 +5587,7 @@ def fl_get_coordunit():
 
 
 def fl_get_border_width():
-    """ fl_get_border_width() -> width num.
+    """ fl_get_border_width() -> bw
 
         Returns the width of border.
 
@@ -6518,7 +6536,7 @@ def fl_drawmode(mode):
 
 
 def fl_get_linewidth():
-    """ fl_get_linewidth() -> width num.
+    """ fl_get_linewidth() -> w
 
         Returns the width of line.
 
@@ -6539,7 +6557,7 @@ def fl_get_linewidth():
 
 
 def fl_get_linestyle():
-    """ fl_get_linestyle() -> style num.
+    """ fl_get_linestyle() -> style
 
         Returns the style of line (e.g. xfdata.FL_SOLID, xfdata.FL_DOT, etc..).
 
@@ -6560,7 +6578,7 @@ def fl_get_linestyle():
 
 
 def fl_get_drawmode():
-    """ fl_get_drawmode() -> mode num.
+    """ fl_get_drawmode() -> mode
 
         Returns the drawing mode of lines (e.g. xfdata.FL_AND,
         xfdata.FL_XOR etc..).
@@ -6593,7 +6611,7 @@ def fl_oval(fill, x, y, w, h, colr):
         circle.
 
         @param fill: flag if filled or open ellipse (<int>)
-        @type param: 1 (if filled ellipse) or 0 (if open)
+        @type fill: 1 (if filled ellipse) or 0 (if open)
         @param x: horizontal position (upper-left corner) (<int>)
         @param y: vertical position (upper-left corner) (<int>)
         @param w: width in coord units (<int>)
@@ -6929,7 +6947,7 @@ def fl_drw_frame(boxtype, x, y, w, h, colr, bw):
 def fl_drw_checkbox(boxtype, x, y, w, h, colr, bw):
     """ fl_drw_checkbox(boxtype, x, y, w, h, colr, bw)
 
-        Draws a checkbox.
+        Draws a box retated 45 degrees.
 
         @param boxtype: type of checkbox to draw (<int>)
         @type boxtype: (from xfdata module) FL_NO_BOX, FL_UP_BOX, FL_DOWN_BOX,
@@ -7997,9 +8015,9 @@ def fl_initial_winsize(w, h):
 def fl_initial_winstate(state):
     """ fl_initial_winstate(state)
 
-        Sets initial state of the window. ?
+        Sets initial state of the window.
 
-        @param: state: window state to be set (<int>)
+        @param state: window state to be set (<int>)
 
         @status: Untested + NoDoc + NoDemo = NOT OK
     """
@@ -8405,26 +8423,40 @@ def fl_last_event():
     return retval
 
 
-FL_APPEVENT_CB = cty.CFUNCTYPE(cty.c_int, cty.POINTER(xfc.XEvent),
-                               cty.c_void_p)
 
 def fl_set_event_callback(py_AppEventCb, vdata):
     """ fl_set_event_callback(py_AppEventCb, vdata) -> event callback
 
-        @param py_AppEventCb: python function callback, returning value
-        @type py_AppEventCb: fn(pXEvent, ptr_void) -> num.
-        @param vdata: user data
+        Setups an event callback routine. Whenever an event happens the
+        callback function is invoked with the event as the first argument.
+        This assumes the application program solicits the events and further,
+        the callback routine should be prepared to handle all XEvent for all
+        non-form windows. The callback function normally should return 0
+        unless the event isn't for one of the applcation-managed windows.
+        This routine will be called whenever an XEvent is pending for the
+        application's own window.
 
-        @status: Tested + NoDoc + Demo = OK
+        @param py_AppEventCb: python function callback, returning value
+        @type py_AppEventCb: __ funcname (pXEvent, ptr_void) -> num. __
+        @param vdata: user data to be passed to function (<pointer to void>)
+
+        @returns: callback (<pointer to xfdata.FL_APPEVENT_CB>)
+
+        @example: § def eventcb(pxev, vdata): ... ; return 0
+                  § fl_set_event_callback(eventcb, None)
+
+        @status: Tested + Doc + Demo = OK
     """
 
+    #FL_APPEVENT_CB = cty.CFUNCTYPE(cty.c_int, cty.POINTER(xfc.XEvent),
+    #                               cty.c_void_p)
     _fl_set_event_callback = cfuncproto(
             load_so_libforms(), "fl_set_event_callback",
-            FL_APPEVENT_CB, [FL_APPEVENT_CB, cty.c_void_p],
+            xfc.FL_APPEVENT_CB, [xfc.FL_APPEVENT_CB, cty.c_void_p],
             """FL_APPEVENT_CB fl_set_event_callback(FL_APPEVENT_CB callback,
                void * user_data)
             """)
-    c_AppEventCb = FL_APPEVENT_CB(py_AppEventCb)
+    c_AppEventCb = xfc.FL_APPEVENT_CB(py_AppEventCb)
     pvdata = cty.cast(vdata, cty.c_void_p)
     keep_cfunc_refs(c_AppEventCb, py_AppEventCb)
     keep_elem_refs(vdata, pvdata)
@@ -8440,12 +8472,15 @@ def fl_set_idle_callback(py_AppEventCb, vdata):
         device or application state etc.
         An idle callback is an application function that is registered with
         the system and is called whenever there are no events pending for
-        forms (or application windows). If called with a donothing function
-        as callback it removes idle callback.
+        forms (or application windows). If called with a function as callback
+        who does nothing, it removes idle callback.
+        The time interval between invocations of the idle callback can vary
+        considerably depending on interface activity and other factors. A
+        range between 50 and 300 msec should be expected.
 
         @param py_AppEventCb: python function callback, returning unused value
         @type py_AppEventCb: __ funcname (pXEvent, ptr_void) -> num __
-        @param vdata: user data (<pointer to void>)
+        @param vdata: user data to be passed to function (<pointer to void>)
 
         @example: def idlecb(xev, userdata):
                   > ... ; return 0
@@ -8454,16 +8489,18 @@ def fl_set_idle_callback(py_AppEventCb, vdata):
                   > pass
                   removedcb = fl_set_idle_callback(donothing_idlecb, None)
 
-        @status: Tested + Doc + NoDemo = NOT OK
+        @status: Tested + Doc + NoDemo = OK
     """
 
+    #FL_APPEVENT_CB = cty.CFUNCTYPE(cty.c_int, cty.POINTER(xfc.XEvent),
+    #                               cty.c_void_p)
     _fl_set_idle_callback = cfuncproto(
             load_so_libforms(), "fl_set_idle_callback",
-            FL_APPEVENT_CB, [FL_APPEVENT_CB, cty.c_void_p],
+            xfc.FL_APPEVENT_CB, [xfc.FL_APPEVENT_CB, cty.c_void_p],
             """FL_APPEVENT_CB fl_set_idle_callback(FL_APPEVENT_CB callback,
                void * user_data)
             """)
-    c_AppEventCb = FL_APPEVENT_CB(py_AppEventCb)
+    c_AppEventCb = xfc.FL_APPEVENT_CB(py_AppEventCb)
     pvdata = cty.cast(vdata, cty.c_void_p)
     keep_cfunc_refs(c_AppEventCb, py_AppEventCb)
     keep_elem_refs(vdata, pvdata)
@@ -8474,7 +8511,17 @@ def fl_set_idle_callback(py_AppEventCb, vdata):
 def fl_addto_selected_xevent(win, mask):
     """ fl_addto_selected_xevent(win, mask) -> num.
 
-        @status: Untested + NoDoc + NoDemo = NOT OK
+        Adds solicited event masks on the fly without altering other masks
+        already selected.
+
+        @param win: window id (<long_pos>)
+        @param mask : event mask (<long>)
+
+        @returns: num. (<long_pos>)
+
+        @example: lnum = fl_addto_selected_xevent(win7, xfdata.ButtonMotionMask)
+
+        @status: Tested + Doc + NoDemo = OK
     """
 
     _fl_addto_selected_xevent = cfuncproto(
@@ -8492,7 +8539,18 @@ def fl_addto_selected_xevent(win, mask):
 def fl_remove_selected_xevent(win, mask):
     """ fl_remove_selected_xevent(win, mask) -> num.
 
-        @status: Untested + NoDoc + NoDemo = NOT OK
+        Removes solicited event masks on the fly without altering other masks
+        already selected.
+
+        @param win: window id (<long_pos>)
+        @param mask : event mask (<long>)
+
+        @returns: num. (<long_pos>)
+
+        @example: lnum = fl_remove_selected_xevent(win7,
+                  xfdata.ButtonMotionMask)
+
+        @status: Tested + Doc + NoDemo = OK
     """
 
     _fl_remove_selected_xevent = cfuncproto(
@@ -8510,10 +8568,20 @@ def fl_remove_selected_xevent(win, mask):
 fl_add_selected_xevent = fl_addto_selected_xevent
 
 
-def fl_set_idle_delta(delta):
-    """ fl_set_idle_delta(delta)
+def fl_set_idle_delta(msec):
+    """ fl_set_idle_delta(msec)
 
-        @status: Untested + NoDoc + NoDemo = NOT OK
+        Changes what the library considers to be "idle". Be aware that under
+        some conditions ad idle callback can be called sooner than the minimum
+        interval; if the timing of the idle callback is of concerned, timeouts
+        should be used.
+
+        @param msec: minimum time interval of inactivity, after which the
+                     main loop is considered to be in idle state (<long>)
+
+        @example: fl_set_idle_delta(800)
+
+        @status: Tested + Doc + NoDemo = OK
     """
 
     _fl_set_idle_delta = cfuncproto(
@@ -8521,52 +8589,68 @@ def fl_set_idle_delta(delta):
             None, [cty.c_long],
             """void fl_set_idle_delta(long int delta)
             """)
-    ldelta = convert_to_long(delta)
-    keep_elem_refs(delta, ldelta)
-    _fl_set_idle_delta(ldelta)
+    lmsec = convert_to_long(msec)
+    keep_elem_refs(msec, lmsec)
+    _fl_set_idle_delta(lmsec)
 
 
-def fl_add_event_callback(win, ev, py_AppEventCb, vdata):
-    """ fl_add_event_callback(win, ev, py_AppEventCb, vdata) -> event callback
+def fl_add_event_callback(win, evttype, py_AppEventCb, vdata):
+    """ fl_add_event_callback(win, evttype, py_AppEventCb, vdata) -> event callback
 
-        Adds an event handler for a window.
+        Adds an event handler for a window. Manipulates the event callback
+        functions for the window specified, which will be called when an
+        event of specified type is pending for the window. It does not
+        solicit any event for the caller, i.e. the XForms library assumes
+        the caller opens the window and solicits all events before calling
+        these routines.
 
-        @param win: window id to add event handler to
-        @param ev: event number
+        @param win: window id to add event handler to (<long_pos>)
+        @param evttype: event type number. 0 signifies that a callback for
+                        all event for window (<int>)
         @param py_AppEventCb: python function callback, returning value
-        @type py_AppEventCb: fn(pXEvent, ptr_void) -> num.
-        @param vdata: user data
+        @type py_AppEventCb: __ funcname (pXEvent, ptr_void) -> num. __
+        @param vdata: user data to be passed to function (<pointer to void>)
 
-        @status: Untested + NoDoc + NoDemo = NOT OK
+        @returns: callback (<pointer to xfdata.FL_APPEVENT_CB>)
+
+        @example: § def eventcb(pxev, vdata): ... ; return 0
+                  § fl_add_event_callback(win2, 0, eventcb, None)
+
+        @status: Tested + Doc + NoDemo = OK
     """
 
+    #FL_APPEVENT_CB = cty.CFUNCTYPE(cty.c_int, cty.POINTER(xfc.XEvent),
+    #                               cty.c_void_p)
     _fl_add_event_callback = cfuncproto(
             load_so_libforms(), "fl_add_event_callback",
-            FL_APPEVENT_CB, [xfc.Window, cty.c_int, FL_APPEVENT_CB,
+            xfc.FL_APPEVENT_CB, [xfc.Window, cty.c_int, xfc.FL_APPEVENT_CB,
             cty.c_void_p],
             """FL_APPEVENT_CB fl_add_event_callback(Window win, int ev,
                FL_APPEVENT_CB wincb, void * user_data)
             """)
     ulwin = convert_to_Window(win)
-    iev = convert_to_int(ev)
-    c_AppEventCb = FL_APPEVENT_CB(py_AppEventCb)
+    ievttype = convert_to_int(evttype)
+    c_AppEventCb = xfc.FL_APPEVENT_CB(py_AppEventCb)
     pvdata = cty.cast(vdata, cty.c_void_p)
     keep_cfunc_refs(c_AppEventCb, py_AppEventCb)
-    keep_elem_refs(win, ev, vdata, ulwin, iev, pvdata)
-    retval = _fl_add_event_callback(ulwin, iev, c_AppEventCb, pvdata)
+    keep_elem_refs(win, evttype, vdata, ulwin, ievttype, pvdata)
+    retval = _fl_add_event_callback(ulwin, ievttype, c_AppEventCb, pvdata)
     return retval
 
 
-def fl_remove_event_callback(win, ev):
-    """ fl_remove_event_callback(win, ev)
+def fl_remove_event_callback(win, evttype):
+    """ fl_remove_event_callback(win, evttype)
 
-        Removes one or all event callbacks for a window. May be called
-        with for a window for which no event callbacks have been set.
+        Removes one or all event callbacks for a window and for an event of
+        specified type. May be called with for a window for which no event
+        callbacks have been set.
 
-        @param win: window id
-        @param ev: event number
+        @param win: window id (<long_pos>)
+        @param evttype: event type number (<int>)
 
-        @status: Untested + NoDoc + NoDemo = NOT OK
+        @example: fl_remove_event_callback(win2, 0)
+
+        @status: Tested + Doc + NoDemo = OK
     """
 
     _fl_remove_event_callback = cfuncproto(
@@ -8575,17 +8659,25 @@ def fl_remove_event_callback(win, ev):
             """void fl_remove_event_callback(Window win, int ev)
             """)
     ulwin = convert_to_Window(win)
-    iev = convert_to_int(ev)
-    keep_elem_refs(win, ev, ulwin, iev)
-    _fl_remove_event_callback(ulwin, iev)
+    ievttype = convert_to_int(evttype)
+    keep_elem_refs(win, evttype, ulwin, ievttype)
+    _fl_remove_event_callback(ulwin, ievttype)
 
 
 def fl_activate_event_callbacks(win):
     """ fl_activate_event_callbacks(win)
 
-        @param win: window whose events are referred to
+        Handles event solicitation. Activates the default mapping of events
+        to event masks built-in in the XForms Library, and causes the system
+        to solicit the events for you. Note however, the mapping of events
+        to masks are not unique and depending on applications, the default
+        mapping may or may not be the one you want.
 
-        @status: Untested + NoDoc + NoDemo = NOT OK
+        @param win: window whose events are referred to (<long_pos>)
+
+        @example: fl_activate_event_callback(win3)
+
+        @status: Tested + Doc + NoDemo = OK
     """
 
     _fl_activate_event_callbacks = cfuncproto(
@@ -8601,7 +8693,16 @@ def fl_activate_event_callbacks(win):
 def fl_print_xevent_name(where, pXEvent):
     """ fl_print_xevent_name(where, pXEvent) -> pXEvent
 
-        @status: Untested + NoDoc + NoDemo = NOT OK
+        Print the name of an XEvent and some other infos.
+
+        @param where: can indicate where this function is called (<string>)
+        @param pXEvent: event (<pointer to xfdata.XEvent>)
+
+        @returns: event (<pointer to xfdata.XEvent>)
+
+        @example: pxev = fl_print_xevent_name("from whatever.py", pxev)
+
+        @status: Tested + Doc + NoDemo = OK
     """
 
     _fl_print_xevent_name = cfuncproto(
@@ -8619,9 +8720,11 @@ def fl_print_xevent_name(where, pXEvent):
 def fl_XFlush():
     """ fl_XFlush()
 
-        Convenience replacement for x11 XFlush()
+        Flushes the output buffer. Convenience replacement for X11 XFlush()
 
-        @status: Tested + NoDoc + Demo = OK
+        @example: fl_XFlush()
+
+        @status: Tested + Doc + Demo = OK
     """
 
     _fl_XFlush = cfuncproto(
@@ -8655,33 +8758,54 @@ def button_down(mask):
 
 # Resources
 
-def fl_initialize(lsysargv, sysargv, appclass, appopt, nappopt):
-    """ fl_initialize(numargs, args, applclass, apploptions, numapplopts) -> pDisplay
+def fl_initialize(numargs, argslist, appname, appoptions, nappopts):
+    """ fl_initialize(numargs, argslist, appname, appoptions, nappopts) -> pDisplay
 
-        @status: HalfTested + NoDoc + Demo = NOT OK (command line args)
+        Initializes XForms library. It should always be called before any
+        other calls to the XForms Library (except fl_set_defaults() and a few
+        other functions that alter some of the defaults of the library.
+        Command line arguments are NOT supported here, but you can always set
+        most of parameters with relative functions.
+
+        @param numargs: number of arguments passed to command line, unused
+                        in python (<int>)
+        @param argslist: arguments passed to command line, unused in python
+                         (<list of string>)
+        @param appname: application class name (<string>)
+        @param appoptions: options passed, instance of xfdata.FL_CMD_OPT
+        @param nappopts: number of options (<int>)
+
+        @returns: display (<pointer to xfdata.XDisplay>) or None (on falilure,
+                  if a connection couldn't be made)
+
+        @example: § import sys
+                  § fl_initialize(len(sys.argv), sys.argv, "MyFormDemo", 0, 0)
+
+        @status: HalfTested + Doc + Demo = HALF OK (not for command line args)
     """
 
     _fl_initialize = cfuncproto(
             load_so_libforms(), "fl_initialize",
             cty.POINTER(xfc.Display), [cty.POINTER(cty.c_int),
             cty.POINTER(xfc.STRING), xfc.STRING,
-            cty.POINTER(xfc.XrmOptionDescRec), cty.c_int],
+            cty.POINTER(xfc.FL_CMD_OPT), cty.c_int],
             """Display * fl_initialize(int * na, char * * arg,
                const char * appclass, FL_CMD_OPT * appopt, int nappopt)
             """)
     verify_version_compatibility()      # verify if installed XForms
                                         # is compatible with this one
-    lsysargv = 1
-    cliargsnr = convert_to_int(lsysargv)
-    pcliargsnr = cty.byref(cliargsnr)
-    argum = "".join(sysargv)
-    scliargs = convert_to_string(argum)
-    sappclass = convert_to_string(appclass)
-    structopts = cty.POINTER(xfc.FL_CMD_OPT)()
-    keep_elem_refs(pcliargsnr, scliargs, appclass, sappclass, structopts,
-                   nappopt)
-    retval = _fl_initialize(pcliargsnr, scliargs, sappclass, structopts,
-                            nappopt)
+
+    numargs = 1
+    inumargs = convert_to_int(numargs)
+    argslist = " "                      # discard any script arguments
+    sargslist = convert_to_string(argslist)
+    sappname = convert_to_string(appname)
+    pappoptions = cty.cast(appoptions, cty.POINTER(xfc.FL_CMD_OPT))
+    inappopts = convert_to_int(nappopts)
+    keep_elem_refs(numargs, inumargs, argslist, sargslist, appname,
+                   sappname, appoptions, pappoptions, nappopts, inappopts)
+    retval = _fl_initialize(inumargs, sargslist, sappname, pappoptions,
+                            inappopts)
     return retval
 
 
@@ -8707,6 +8831,23 @@ def fl_finish():
 def fl_get_resource(rname, cname, dtype, defval, val, size):
     """ fl_get_resource(rname, cname, dtype, defval, val, size) -> string
 
+        @param rname: complete resource name specification (minus the
+                      application name) and should not contain wildcards of
+                      any kind (<string>)
+        @param cname: complete resource class specification (minus the
+                      application name) and should not contain wildcards of
+                      any kind (<string>)
+        @param dtype: type of resource (<int>)
+        @type dtype: (from xfdata module) FL_NONE, FL_SHORT, FL_BOOL, FL_INT,
+                      FL_LONG, FL_FLOAT, FL_STRING
+        @param defval: (<string>)
+        @param val: (<pointer to void>)
+        @param size: number of bytes, used only if dtype is FL_STRING (<int>)
+
+        @returns: string representation of the resource value (<string>)
+
+        @example: 
+
         @status: Untested + NoDoc + NoDemo = NOT OK
     """
 
@@ -8718,6 +8859,7 @@ def fl_get_resource(rname, cname, dtype, defval, val, size):
                const char * cname, FL_RTYPE dtype, const char * defval,
                void * val, int size)
             """)
+    check_admitted_listvalues(dtype, xfc.RTYPE_list)
     srname = convert_to_string(rname)
     scname = convert_to_string(cname)
     idtype = convert_to_int(dtype)
@@ -8733,6 +8875,8 @@ def fl_get_resource(rname, cname, dtype, defval, val, size):
 def fl_set_resource(resstr, val):
     """ fl_set_resource(resstr, val)
 
+        Changes some of the built-in button labels with proper resource names.
+        
         @param resstr: resource name
         @param val: new string value for resource
 
@@ -8837,10 +8981,24 @@ def fl_set_defaults(mask, pIopt):
     _fl_set_defaults(ulmask, pIopt)
 
 
-def fl_set_tabstop(s):
-    """ fl_set_tabstop(s)
+def fl_set_tabstop(strng):
+    """ fl_set_tabstop(strng)
 
-        @status: Untested + NoDoc + NoDemo = NOT OK
+        Adjusts the distance by setting the tab stops. For proportional font,
+        substituting tabs with spaces is not always appropriate because this
+        most likely will fail to align text properly. Instead, a tab is
+        treated as an absolute measure of distance, in pixels, and a tab
+        stop will always end at multiples of this distance. The default is
+        "aaaaaaaa", i.e. eight 'a's.
+
+        @param strng: text string whose width in pixel is to be used as the
+                      tab length. The font used to calculate the width is
+                      the same font that is used to render the string in
+                      which the tab is embedded (<strng>)
+
+        @example: fl_set_tabstop("aaaa")
+
+        @status: Tested + Doc + NoDemo = OK
     """
 
     _fl_set_tabstop = cfuncproto(
@@ -8848,18 +9006,24 @@ def fl_set_tabstop(s):
             None, [xfc.STRING],
             """void fl_set_tabstop(const char * s)
             """)
-    ss = convert_to_string(s)
-    keep_elem_refs(s, ss)
-    _fl_set_tabstop(ss)
+    sstrng = convert_to_string(strng)
+    keep_elem_refs(strng, sstrng)
+    _fl_set_tabstop(sstrng)
 
 
 def fl_get_defaults():
     """ fl_get_defaults() -> Iopt
 
+        Return program defaults from the resource database.
+
+        @returns: instance of xfdata.FL_IOPT
+
+        @example: defprgres = fl_get_defaults()
+
         @attention: API change from XForms - upstream was
                     fl_get_defaults(pIopt)
 
-        @status: Untested + NoDoc + NoDemo = NOT OK
+        @status: Tested + Doc + NoDemo = OK
     """
 
     _fl_get_defaults = cfuncproto(
@@ -8877,7 +9041,13 @@ def fl_get_defaults():
 def fl_get_visual_depth():
     """ fl_get_visual_depth() -> depth num.
 
-        @status: Tested + NoDoc + Demo = OK
+        Returns the visual depth.
+
+        @returns: visual depth for current mode (<int>)
+
+        @example: curdepth = fl_get_visual_depth()
+
+        @status: Tested + Doc + Demo = OK
     """
 
     _fl_get_visual_depth = cfuncproto(
