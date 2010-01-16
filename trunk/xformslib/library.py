@@ -433,8 +433,6 @@ def make_double_and_pointer():
     return baseval, ptrbaseval
 
 
-
-
 def check_admitted_listvalues(paramname, *valueslist):
     """ Check if paramname value is valid in accordance to a list
         of admissible values.
@@ -660,33 +658,38 @@ def special_style(style):
 
 # Macro for getting at the object handlers return value
 
-def fl_object_returned(pObject):
-    return pObject.contents.returned
+def fl_object_returned(pFlObject):
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pFlObject)
+    return pFlObject.contents.returned
 
 
 # IO other than XEvent Q
 
 # TODO: verify what function can open file
 def fl_add_io_callback(fd, mask, py_IoCallback, vdata):
-    """ fl_add_io_callback(fd, mask, py_IoCallback, vdata)
+    """
+    fl_add_io_callback(fd, mask, py_IoCallback, vdata)
 
-        Registers an input callback function when input is available from fd.
+    Registers an input callback function when input is available from fd.
 
-        @param fd: a valid file descriptor in a unix system (<int>)
-        @param mask: under what circumstance the input callback
-                     should be invoked (<int>)
-        @type mask: (from xfdata module) FL_READ, FL_WRITE, FL_EXCEPT
-        @param py_IoCallback: python function to be invoked - no return
-        @type py_IoCallback: __ funcname (num, ptr_void) __
-        @param vdata: user data argument to be passed to function (<pointer to
-                      void>)
+    @param fd: a valid file descriptor in a unix system
+    @type fd: int
+    @param mask: under what circumstance the input callback
+        should be invoked. Values (from xfdata module) i.e. FL_READ,
+        FL_WRITE, FL_EXCEPT
+    @type mask: int
+    @param py_IoCallback: python function to be invoked, no return
+    @type py_IoCallback: __ funcname (num, ptr_void) __
+    @param vdata: user data argument to be passed to function
+    @type vdata: pointer to void
 
-        @example: def iocb(num, vdata):
-        @example: |->| ...
-        @example: fdesc = ... function to open file
-        @example: fl_add_io_callback(fdesc, xfdata.FL_READ, iocb, None)
+    @example: def iocb(num, vdata):
+    @example: |->| ...
+    @example: fdesc = ... function to open file
+    @example: fl_add_io_callback(fdesc, xfdata.FL_READ, iocb, None)
 
-        @status: Tested + Doc + NoDemo = OK
+    @status: Tested + Doc + NoDemo = OK
     """
 
     #FL_IO_CALLBACK = cty.CFUNCTYPE(None, cty.c_int, cty.c_void_p)
@@ -707,24 +710,25 @@ def fl_add_io_callback(fd, mask, py_IoCallback, vdata):
 
 
 def fl_remove_io_callback(fd, mask, py_IoCallback):
-    """ fl_remove_io_callback(fd, mask, py_IoCallback)
+    """
+    fl_remove_io_callback(fd, mask, py_IoCallback)
 
-        Removes the registered callback function when input is available
-        from fd.
+    Removes the registered callback function when input is available from fd.
 
-        @param fd: a valid file descriptor in a unix system (<int>)
-        @param mask: under what circumstance the input callback should
-                     be removed (<int>)
-        @type mask: (from xfdata module) FL_READ, FL_WRITE, FL_EXCEPT
-        @param py_IoCallback: python function to be removed - no return
-        @type py_IoCallback: __ funcname (num, ptr_void) __
+    @param fd: a valid file descriptor in a unix system
+    @type fd: int
+    @param mask: under what circumstance the input callback should be removed.
+        Values (from xfdata module) i.e. FL_READ, FL_WRITE, FL_EXCEPT
+    @type fd: int
+    @param py_IoCallback: python function to be removed, no return
+    @type py_IoCallback: __ funcname (num, ptr_void) __
 
-        @example: def iocb(num, vdata):
-        @example: |->| ...
-        @example: fdesc = ... function to open file
-        @example: fl_remove_io_callback(fdesc, xfdata.FL_READ, iocb, None)
+    @example: def iocb(num, vdata):
+    @example: |->| ...
+    @example: fdesc = ... function to open file
+    @example: fl_remove_io_callback(fdesc, xfdata.FL_READ, iocb, None)
 
-        @status: Tested + Doc + NoDemo = OK
+    @status: Tested + Doc + NoDemo = OK
     """
 
     #FL_IO_CALLBACK = cty.CFUNCTYPE(None, cty.c_int, cty.c_void_p)
@@ -747,23 +751,26 @@ def fl_remove_io_callback(fd, mask, py_IoCallback):
 # signals
 
 def fl_add_signal_callback(sglnum, py_SignalHandler, vdata):
-    """ fl_add_signal_callback(sglnum, py_SignalHandler, vdata)
+    """
+    fl_add_signal_callback(sglnum, py_SignalHandler, vdata)
 
-        Handles the receipt of a signal by registering a callback function
-        that gets called when a signal is caught (only 1 function per signal)
+    Handles the receipt of a signal by registering a callback function that
+    gets called when a signal is caught (only 1 function per signal).
 
-        @param sglnum: signal number (<int>)
-        @type sglnum: (from signal module) SIGALRM, SIGINT, ...
-        @param py_SignalHandler: python function to be invoked after
-                                 catching the signal - no return
-        @type py_SignalHandler: __ funcname (num, ptr_void) __
-        @param vdata: argument to be passed to function (<pointer to void>)
+    @param sglnum: signal number. Values (from signal module) e.g. SIGALRM,
+        SIGINT, ...
+    @type sglnum: int
+    @param py_SignalHandler: python function to be invoked after catching the
+        signal, no return
+    @type py_SignalHandler: __ funcname (num, ptr_void) __
+    @param vdata: argument to be passed to function
+    @type vdata: pointer to void
 
-        @example: def sglhandl(numsgl, vdata):
-        @example: |->| ...
-        @example: fl_add_signal_callback(signal.SIGALRM, sglhandl, None)
+    @example: def sglhandl(numsgl, vdata):
+    @example: |->| ...
+    @example: fl_add_signal_callback(signal.SIGALRM, sglhandl, None)
 
-        @status: Tested + Doc + NoDemo = OK
+    @status: Tested + Doc + NoDemo = OK
     """
 
     #FL_SIGNAL_HANDLER = cty.CFUNCTYPE(None, cty.c_int, cty.c_void_p)
@@ -783,16 +790,18 @@ def fl_add_signal_callback(sglnum, py_SignalHandler, vdata):
 
 
 def fl_remove_signal_callback(sglnum):
-    """ fl_remove_signal_callback(sglnum)
+    """
+    fl_remove_signal_callback(sglnum)
 
-        Removes a previously registered callback function related to a signal.
+    Removes a previously registered callback function related to a signal.
 
-        @param sglnum: signal number (<int>)
-        @type sglnum: (from signal module) SIGALRM, SIGINT, ...
+    @param sglnum: signal number. Values (from signal module) e.g. SIGALRM,
+        SIGINT, ...
+    @type sglnum: int
 
-        @example: fl_remove_signal_callback(signal.SIGALRM)
+    @example: fl_remove_signal_callback(signal.SIGALRM)
 
-        @status: Tested + Doc + NoDemo = OK
+    @status: Tested + Doc + NoDemo = OK
     """
 
     _fl_remove_signal_callback = cfuncproto(
@@ -807,17 +816,19 @@ def fl_remove_signal_callback(sglnum):
 
 
 def fl_signal_caught(sglnum):
-    """ fl_signal_caught(sglnum)
+    """
+    fl_signal_caught(sglnum)
 
-        Informs the main loop of the delivery of the particular signal. The
-        signal is received by the application program.
+    Informs the main loop of the delivery of the particular signal. The signal
+    is received by the application program.
 
-        @param sglnum: signal number (int_num)
-        @type sglnum: (from signal module) SIGALRM, SIGINT, ...
+    @param sglnum: signal number. Values (from signal module) e.g. SIGALRM,
+        SIGINT, ...
+    @type sglnum: int
 
-        @example: fl_signal_caught(signal.SIGALRM)
+    @example: fl_signal_caught(signal.SIGALRM)
 
-        @status: Tested + Doc + NoDemo = OK
+    @status: Tested + Doc + NoDemo = OK
     """
 
     _fl_signal_caught = cfuncproto(
@@ -832,18 +843,20 @@ def fl_signal_caught(sglnum):
 
 
 def fl_app_signal_direct(flag):
-    """ fl_app_signal_direct(flag)
+    """ 
+    fl_app_signal_direct(flag)
 
-        Changes the default behavior of the built-in signal facilities
-        (to be called with a true value for flag prior to any use of
-        fl_add_signal_callback)
+    Changes the default behavior of the built-in signal facilities (to be
+    called with a true value for flag prior to any use of
+    fl_add_signal_callback)
 
-        @param flag: flag to disable/enable (<int>)
-        @type flag: 0 (disabled) or 1 (enabled)
+    @param flag: flag to disable/enable signal. Values i.e. 0 (disabled) or
+        1 (enabled)
+    @type flag: int
 
-        @example: fl_app_signal_direct(1)
+    @example: fl_app_signal_direct(1)
 
-        @status: Tested + Doc + NoDemo = OK
+    @status: Tested + Doc + NoDemo = OK
     """
 
     _fl_app_signal_direct = cfuncproto(
@@ -860,22 +873,25 @@ def fl_app_signal_direct(flag):
 # timeouts
 
 def fl_add_timeout(msec, py_TimeoutCallback, vdata):
-    """ fl_add_timeout(msec, py_TimeoutCallback, vdata) -> timer_id
+    """
+    fl_add_timeout(msec, py_TimeoutCallback, vdata) -> int
 
-        Adds a timeout callback after a specified elapsed time.
+    Adds a timeout callback after a specified elapsed time.
 
-        @param msec: time elapsed in milliseconds (<long>)
-        @param py_TimeoutCallback: python function to be invoked - no return
-        @type py_TimeoutCallback: __ funcname (num, ptr_void) __
-        @param vdata: user data to be passed to function (<pointer to void>)
+    @param msec: time elapsed in milliseconds
+    @type msec: long
+    @param py_TimeoutCallback: python function to be invoked - no return
+    @type py_TimeoutCallback: __ funcname (num, ptr_void) __
+    @param vdata: user data to be passed to function
+    @type vdata: pointer to void
 
-        @return: timer number id (<int>)
+    @return: timer number id
 
-        @example: def timeoutcb(num, vdata):
-        @example: |->| ...
-        @example: timnum = fl_add_timeout(100, timeoutcb, None) 
+    @example: def timeoutcb(num, vdata):
+    @example: |->| ...
+    @example: timnum = fl_add_timeout(100, timeoutcb, None) 
 
-        @status: Tested + Doc + Demo = OK
+    @status: Tested + Doc + Demo = OK
     """
 
     #FL_TIMEOUT_CALLBACK = cty.CFUNCTYPE(None, cty.c_int, cty.c_void_p)
@@ -896,15 +912,17 @@ def fl_add_timeout(msec, py_TimeoutCallback, vdata):
 
 
 def fl_remove_timeout(idnum):
-    """ fl_remove_timeout(idnum)
+    """
+    fl_remove_timeout(idnum)
 
-        Removes a timeout callback function (created with fl_add_timeout).
+    Removes a timeout callback function (created with fl_add_timeout).
 
-        @param idnum: timeout number id (<int>)
+    @param idnum: timeout number id
+    @type idnum: int
 
-        @example: fl_remove_timeout(timnum)
+    @example: fl_remove_timeout(timnum)
 
-        @status: Tested + Doc + Demo = OK
+    @status: Tested + Doc + Demo = OK
     """
 
     _fl_remove_timeout = cfuncproto(
@@ -921,20 +939,20 @@ def fl_remove_timeout(idnum):
 # Basic public routine prototypes
 
 def fl_library_version():
-    """ fl_library_version() -> version_rev_id, ver, rev
+    """
+    fl_library_version() -> int, int, int
 
-        Returns consolidated, major and minor version informations.
+    Returns consolidated, major and minor version informations.
 
-        @return: (<int>, <int>, <int>) version_rev (computed as 1000 * version
-                 + revision), version (e.g. 1 in 1.x.yy), revision (e.g. 0 in
-                 x.0.yy)
+    @return: version_rev (computed as 1000 * version + revision), version
+        (e.g. 1 in 1.x.yy), revision (e.g. 0 in x.0.yy)
 
-        @example: compver, ver, rev = fl_library_version()
+    @example: compver, ver, rev = fl_library_version()
 
-        @attention: API change from XForms - upstream was
-                    fl_library_version(ver, rev)
+    @attention: API change from XForms - upstream was fl_library_version(ver,
+        rev)
 
-        @status: Tested + Doc + NoDemo = OK
+    @status: Tested + Doc + NoDemo = OK
     """
 
     _fl_library_version = cfuncproto(
@@ -953,26 +971,28 @@ def fl_library_version():
 # Generic routines that deal with FORMS
 
 def fl_bgn_form(formtype, w, h):
-    """ fl_bgn_form(formtype, w, h) -> pForm
+    """
+    fl_bgn_form(formtype, w, h) -> pFlForm
 
-        Starts the definition of a form call.
+    Starts the definition of a form call.
 
-        @param formtype: type of box that is used as a background (<int>)
-        @type formtype: (from xfdata module) FL_NO_BOX, FL_UP_BOX,
-                        FL_DOWN_BOX, FL_BORDER_BOX, FL_SHADOW_BOX,
-                        FL_FRAME_BOX, FL_ROUNDED_BOX, FL_EMBOSSED_BOX,
-                        FL_FLAT_BOX, FL_RFLAT_BOX, FL_RSHADOW_BOX,
-                        FL_OVAL_BOX, FL_ROUNDED3D_UPBOX, FL_ROUNDED3D_DOWNBOX,
-                        FL_OVAL3D_UPBOX, FL_OVAL3D_DOWNBOX, FL_OVAL3D_FRAMEBOX,
-                        FL_OVAL3D_EMBOSSEDBOX
-        @param w: width of the new form in coord units (<int>)
-        @param h: height of the new form in coord units (<int>)
+    @param formtype: type of box that is used as a background. Values (from
+        xfdata module) i.e. FL_NO_BOX, FL_UP_BOX, FL_DOWN_BOX, FL_BORDER_BOX,
+        FL_SHADOW_BOX, FL_FRAME_BOX, FL_ROUNDED_BOX, FL_EMBOSSED_BOX,
+        FL_FLAT_BOX, FL_RFLAT_BOX, FL_RSHADOW_BOX, FL_OVAL_BOX,
+        FL_ROUNDED3D_UPBOX, FL_ROUNDED3D_DOWNBOX, FL_OVAL3D_UPBOX,
+        FL_OVAL3D_DOWNBOX, FL_OVAL3D_FRAMEBOX, FL_OVAL3D_EMBOSSEDBOX
+    @type formtype: int
+    @param w: width of the new form in coord units
+    @type w: int
+    @param h: height of the new form in coord units
+    @type h: int
 
-        @return: form to define (<pointer to xfdata.FL_FORM>)
+    @return: form to define (<pointer to xfdata.FL_FORM>)
 
-        @example: pform = fl_bgn_form(xfdata.FL_UP_BOX, 400, 500)
+    @example: pform = fl_bgn_form(xfdata.FL_UP_BOX, 400, 500)
 
-        @status: Tested + Doc + Demo = OK
+    @status: Tested + Doc + Demo = OK
     """
 
     _fl_bgn_form = cfuncproto(
@@ -991,14 +1011,15 @@ def fl_bgn_form(formtype, w, h):
 
 
 def fl_end_form():
-    """ fl_end_form()
+    """
+    fl_end_form()
 
-        Ends the definition for a form call, after all required objects
-        have been added to a form call.
+    Ends the definition for a form call, after all required objects have been
+    added to a form call.
 
-        @example: fl_end_form()
+    @example: fl_end_form()
 
-        @status: Tested + Doc + Demo = OK
+    @status: Tested + Doc + Demo = OK
     """
 
     _fl_end_form = cfuncproto(
@@ -1011,17 +1032,18 @@ def fl_end_form():
 
 
 def fl_do_forms():
-    """ fl_do_forms() -> pObject
+    """
+    fl_do_forms() -> pFlObject
 
-        Starts the main loop of the program and returns only when the state
-        of a xfdata.FL_OBJECT (that has no callback bound to it) changes.
+    Starts the main loop of the program and returns only when the state of a
+    xfdata.FL_OBJECT (that has no callback bound to it) changes.
 
-        @return: object changed (<pointer to xfdata.FL_OBJECT>)
+    @return: object changed (<pointer to xfdata.FL_OBJECT>)
 
-        @example: while fl_do_forms():
-        @example: |->| pass
+    @example: while fl_do_forms():
+    @example: |->| pass
 
-        @status: Tested + Doc + Demo = OK
+    @status: Tested + Doc + Demo = OK
     """
 
     _fl_do_forms = cfuncproto(
@@ -1035,16 +1057,17 @@ def fl_do_forms():
 
 
 def fl_check_forms():
-    """ fl_check_forms() -> pObject
+    """
+    fl_check_forms() -> pFlObject
 
-        Returns None immediately unless the state of one of xfdata.FL_OBJECT
-        (without a callback bound to it) changed.
+    Returns None immediately unless the state of one of xfdata.FL_OBJECT
+    (without a callback bound to it) changed.
 
-        @return: object changed (<pointer to xfdata.FL_OBJECT>)
+    @return: object changed (<pointer to xfdata.FL_OBJECT>)
 
-        @example: pobj = fl_check_forms()
+    @example: pobj = fl_check_forms()
 
-        @status: Tested + Doc + Demo = OK
+    @status: Tested + Doc + Demo = OK
     """
 
     _fl_check_forms = cfuncproto(
@@ -1058,18 +1081,19 @@ def fl_check_forms():
 
 
 def fl_do_only_forms():
-    """ fl_do_only_forms() -> pObject
+    """
+    fl_do_only_forms() -> pFlObject
 
-        Starts the main loop of the program and returns only when the state
-        of an object changes that has no callback bound to it. It does not
-        handle user events generated by application windows opened via
-        fl_winopen() or similar routines.
+    Starts the main loop of the program and returns only when the state of an
+    object changes that has no callback bound to it. It does not handle user
+    events generated by application windows opened via fl_winopen() or similar
+    routines.
 
-        @return: object changed (<pointer to xfdata.FL_OBJECT>)
+    @return: object changed (<pointer to xfdata.FL_OBJECT>)
 
-        @example: pobj = fl_do_only_forms()
+    @example: pobj = fl_do_only_forms()
 
-        @status: Tested + Doc + NoDemo = OK
+    @status: Tested + Doc + NoDemo = OK
     """
 
     _fl_do_only_forms = cfuncproto(
@@ -1083,18 +1107,18 @@ def fl_do_only_forms():
 
 
 def fl_check_only_forms():
-    """ fl_check_only_forms() -> pObject
+    """
+    fl_check_only_forms() -> pFlObject
 
-        Returns None immediately unless the state of one of the object
-        (without a callback bound to it) changed. It does not handle user
-        events generated by application windows opened via fl_winopen()
-        or similar routines.
+    Returns None immediately unless the state of one of the object (without a
+    callback bound to it) changed. It does not handle user events generated by
+    application windows opened via fl_winopen() or similar routines.
 
-        @return: object changed (<pointer to xfdata.FL_OBJECT>)
+    @return: object changed (<pointer to xfdata.FL_OBJECT>)
 
-        @example: pobj = fl_check_only_forms()
+    @example: pobj = fl_check_only_forms()
 
-        @status: Tested + Doc + NoDemo = OK
+    @status: Tested + Doc + NoDemo = OK
     """
 
     _fl_check_only_forms = cfuncproto(
@@ -1107,18 +1131,19 @@ def fl_check_only_forms():
     return retval
 
 
-def fl_freeze_form(pForm):
-    """ fl_freeze_form(pForm)
+def fl_freeze_form(pFlForm):
+    """
+    fl_freeze_form(pFlForm)
 
-        Redraw of a form is temporarily suspended, while changes are being
-        made, so all changes made are instead buffered internally.
+    Redraw of a form is temporarily suspended, while changes are being made,
+    so all changes made are instead buffered internally.
 
-        @param pForm: form not to be re-drawn temporarily
-                      (<pointer to xfdata.FL_FORM>)
+    @param pFlForm: form not to be re-drawn temporarily
+    @type pFlForm: pointer to xfdata.FL_FORM
 
-        @example: fl_freeze_form(pform1)
+    @example: fl_freeze_form(pform1)
 
-        @status: Tested + Doc + Demo = OK
+    @status: Tested + Doc + Demo = OK
     """
 
     _fl_freeze_form = cfuncproto(
@@ -1127,23 +1152,24 @@ def fl_freeze_form(pForm):
             """void fl_freeze_form(FL_FORM * form)
             """)
     check_if_initialized()
-    keep_elem_refs(pForm)
-    _fl_freeze_form(pForm)
+    keep_elem_refs(pFlForm)
+    _fl_freeze_form(pFlForm)
 
 
-def fl_set_focus_object(pForm, pObject):
-    """ fl_set_focus_object(pForm, pObject)
+def fl_set_focus_object(pFlForm, pFlObject):
+    """
+    fl_set_focus_object(pFlForm, pFlObject)
 
-        Sets the input focus in form to object pObject.
+    Sets the input focus in form to object pFlObject.
 
-        @param pForm: form whose object has to be focused
-                      (<pointer to xfdata.FL_FORM>)
-        @param pObject: object to be focused
-                        (<pointer to xfdata.FL_OBJECT>)
+    @param pFlForm: form whose object has to be focused
+    @type pFlForm: pointer to xfdata.FL_FORM
+    @param pFlObject: object to be focused
+    @type pFlObject: pointer to xfdata.FL_OBJECT
 
-        @example: fl_set_focus_object(pform, pobj)
+    @example: fl_set_focus_object(pform, pobj)
 
-        @status: Tested + Doc + NoDemo = OK
+    @status: Tested + Doc + NoDemo = OK
     """
 
     _fl_set_focus_object = cfuncproto(
@@ -1152,28 +1178,29 @@ def fl_set_focus_object(pForm, pObject):
             """void fl_set_focus_object(FL_FORM * form, FL_OBJECT * obj)
             """)
     check_if_initialized()
-    check_if_FL_FORM_ptr(pForm)
-    check_if_FL_OBJECT_ptr(pObject)
-    keep_elem_refs(pForm, pObject)
-    _fl_set_focus_object(pForm, pObject)
+    check_if_FL_FORM_ptr(pFlForm)
+    check_if_FL_OBJECT_ptr(pFlObject)
+    keep_elem_refs(pFlForm, pFlObject)
+    _fl_set_focus_object(pFlForm, pFlObject)
 
 
 fl_set_object_focus = fl_set_focus_object
 
 
-def fl_get_focus_object(pForm):
-    """ fl_get_focus_object(pForm) -> pObject
+def fl_get_focus_object(pFlForm):
+    """
+    fl_get_focus_object(pFlForm) -> pFlObject
 
-        Obtains the object that has the focus on a form.
+    Obtains the object that has the focus on a form.
 
-        @param pForm: form that has a focused object in
-                      (<pointer to xfdata.FL_FORM>)
+    @param pFlForm: form that has a focused object in
+    @type pFlForm: pointer to xfdata.FL_FORM
 
-        @return: focused object (<pointer to xfdata.FL_OBJECT>)
+    @return: focused object (<pointer to xfdata.FL_OBJECT>)
 
-        @example: pobj2 = fl_get_focus_object(pform1)
+    @example: pobj2 = fl_get_focus_object(pform1)
 
-        @status: Tested + Doc + NoDemo = OK
+    @status: Tested + Doc + NoDemo = OK
     """
 
     _fl_get_focus_object = cfuncproto(
@@ -1182,24 +1209,24 @@ def fl_get_focus_object(pForm):
             """FL_OBJECT * fl_get_focus_object(FL_FORM * form)
             """)
     check_if_initialized()
-    check_if_FL_FORM_ptr(pForm)
-    keep_elem_refs(pForm)
-    retval = _fl_get_focus_object(pForm)
+    check_if_FL_FORM_ptr(pFlForm)
+    keep_elem_refs(pFlForm)
+    retval = _fl_get_focus_object(pFlForm)
     return retval
 
 
-def fl_reset_focus_object(pObject):
-    """ fl_reset_focus_object(pObject)
+def fl_reset_focus_object(pFlObject):
+    """
+    fl_reset_focus_object(pFlObject)
 
-        Resets focus on current object, overriding the xfdata.FL_UNFOCUS
-        event.
+    Resets focus on current object, overriding the xfdata.FL_UNFOCUS event.
 
-        @param pObject: object towards applying event
-                        (<pointer to xfdata.FL_OBJECT>)
+    @param pFlObject: object towards applying event
+    @type pFlObject: pointer to xfdata.FL_OBJECT
 
-        @example: fl_reset_focus_object(pobj2)
+    @example: fl_reset_focus_object(pobj2)
 
-        @status: Tested + Doc + NoDemo = OK
+    @status: Tested + Doc + NoDemo = OK
     """
 
     _fl_reset_focus_object = cfuncproto(
@@ -1208,31 +1235,33 @@ def fl_reset_focus_object(pObject):
             """void fl_reset_focus_object(FL_OBJECT * ob)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
-    keep_elem_refs(pObject)
-    _fl_reset_focus_object(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
+    keep_elem_refs(pFlObject)
+    _fl_reset_focus_object(pFlObject)
 
 
-def fl_set_form_atclose(pForm, py_FormAtclose, vdata):
-    """ fl_set_form_atclose(pForm, py_FormAtclose, vdata) -> old FormAtclose func.
+def fl_set_form_atclose(pFlForm, py_FormAtclose, vdata):
+    """
+    fl_set_form_atclose(pFlForm, py_FormAtclose, vdata) -> old FormAtclose func.
 
-        Calls a callback function before closing the form.
+    Calls a callback function before closing the form.
 
-        @param pForm: form that receives the message
-                      (<pointer to xfdata.FL_FORM>)
-        @param py_FormAtclose: python callback function to be called, with
-                               returning value
-        @type py_FormAtclose: __ funcname (pForm, ptr_void) -> num __
-        @param vdata: user data to be passed to function (<pointer to void>)
+    @param pFlForm: form that receives the message
+    @type pFlForm: pointer to xfdata.FL_FORM
+    @param py_FormAtclose: python callback function to be called, with
+        returning value
+    @type py_FormAtclose: __ funcname (pFlForm, ptr_void) -> num __
+    @param vdata: user data to be passed to function 
+    @type vdata: pointer to void
 
-        @return: xfdata.FL_FORM_ATCLOSE function
+    @return: xfdata.FL_FORM_ATCLOSE function
 
-        @example: def atcolsecb(pform, vdata):
-        @example: |->| ...
-        @example: |->| return 0
-        @example: oldatclosecb = fl_set_form_atclose(pform1, None)
+    @example: def atcolsecb(pform, vdata):
+    @example: |->| ...
+    @example: |->| return 0
+    @example: oldatclosecb = fl_set_form_atclose(pform1, None)
 
-        @status: Tested + Doc + NoDemo = OK
+    @status: Tested + Doc + NoDemo = OK
     """
 
     # FL_FORM_ATCLOSE = cty.CFUNCTYPE(cty.c_int, cty.POINTER(xfc.FL_FORM), \
@@ -1245,33 +1274,35 @@ def fl_set_form_atclose(pForm, py_FormAtclose, vdata):
                FL_FORM_ATCLOSE fmclose, void * data)
             """)
     check_if_initialized()
-    check_if_FL_FORM_ptr(pForm)
+    check_if_FL_FORM_ptr(pFlForm)
     c_FormAtclose = xfc.FL_FORM_ATCLOSE(py_FormAtclose)
     pvdata = cty.cast(vdata, cty.c_void_p)
     keep_cfunc_refs(c_FormAtclose, py_FormAtclose)
-    keep_elem_refs(pForm, vdata, pvdata)
-    retval = _fl_set_form_atclose(pForm, c_FormAtclose, pvdata)
+    keep_elem_refs(pFlForm, vdata, pvdata)
+    retval = _fl_set_form_atclose(pFlForm, c_FormAtclose, pvdata)
     return retval
 
 
 def fl_set_atclose(py_FormAtclose, vdata):
-    """ fl_set_atclose(py_FormAtclose, vdata) -> old FormAtclose func.
+    """
+    fl_set_atclose(py_FormAtclose, vdata) -> old FormAtclose func.
 
-        Calls a callback function before terminating the application.
+    Calls a callback function before terminating the application.
 
-        @param py_FormAtclose: python callback function to be called, with
-                               returning value
-        @type py_FormAtclose: __ funcname (pForm, ptr_void) -> num __
-        @param vdata: user data to be passed to function (<pointer to void>)
+    @param py_FormAtclose: python callback function to be called, with
+        returning value
+    @type py_FormAtclose: __ funcname (pFlForm, ptr_void) -> num __
+    @param vdata: user data to be passed to function
+    @type vdata: pointer to void
 
-        @return: old xfdata.FL_FORM_ATCLOSE function
+    @return: old xfdata.FL_FORM_ATCLOSE function
 
-        @example: def atclose(pform, vdata):
-        @example: |->| ... 
-        @example: |->| return 0
-        @example: oldatclosefunc = fl_set_atclose(atclose, None)
+    @example: def atclose(pform, vdata):
+    @example: |->| ... 
+    @example: |->| return 0
+    @example: oldatclosefunc = fl_set_atclose(atclose, None)
 
-        @status: Tested + Doc + NoDemo = OK
+    @status: Tested + Doc + NoDemo = OK
     """
 
     # FL_FORM_ATCLOSE = cty.CFUNCTYPE(cty.c_int, cty.POINTER(xfc.FL_FORM), \
@@ -1291,25 +1322,27 @@ def fl_set_atclose(py_FormAtclose, vdata):
     return retval
 
 
-def fl_set_form_atactivate(pForm, py_FormAtactivate, vdata):
-    """ fl_set_form_atactivate(pForm, py_FormAtactivate, vdata) -> old FormAtactivate func.
+def fl_set_form_atactivate(pFlForm, py_FormAtactivate, vdata):
+    """
+    fl_set_form_atactivate(pFlForm, py_FormAtactivate, vdata) -> old FormAtactivate func.
 
-        Register a callback that is called when activation status of a forms
-        is enabled,
+    Register a callback that is called when activation status of a forms is
+    enabled.
 
-        @param pForm: activated form (<pointer to xfdata.FL_FORM>)
-        @param py_FormAtactivate: python callback function called - no return
-        @type py_FormAtactivate: __ funcname (pForm, ptr_void) __
-        @param vdata: user data to be passed to function (<pointer to void>)
+    @param pFlForm: activated form
+    @type pFlForm: pointer to xfdata.FL_FORM
+    @param py_FormAtactivate: python callback function called, no return
+    @type py_FormAtactivate: __ funcname (pFlForm, ptr_void) __
+    @param vdata: user data to be passed to function
+    @type vdata:pointer to void
 
-        @return: old xfdata.FL_FORM_ATACTIVATE function
+    @return: old xfdata.FL_FORM_ATACTIVATE function
 
-        @example: def atactcb(pform, vdata):
-        @example: |->| ...
-        @example: oldactfunc = xf.fl_set_form_atdeactivate(pform, atactcb,
-                  None)
+    @example: def atactcb(pform, vdata):
+    @example: |->| ...
+    @example: oldactfunc = xf.fl_set_form_atdeactivate(pform, atactcb, None)
 
-        @status: Tested + Doc + NoDemo = OK
+    @status: Tested + Doc + NoDemo = OK
     """
 
     #FL_FORM_ATACTIVATE = cty.CFUNCTYPE(None, cty.POINTER(xfc.FL_FORM), \
@@ -1322,34 +1355,37 @@ def fl_set_form_atactivate(pForm, py_FormAtactivate, vdata):
                FL_FORM_ATACTIVATE cb, void * data)
             """)
     check_if_initialized()
-    check_if_FL_FORM_ptr(pForm)
+    check_if_FL_FORM_ptr(pFlForm)
     c_FormAtactivate = xfc.FL_FORM_ATACTIVATE(py_FormAtactivate)
     pvdata = cty.cast(vdata, cty.c_void_p)
     keep_cfunc_refs(c_FormAtactivate, py_FormAtactivate)
-    keep_elem_refs(pForm, vdata, pvdata)
-    retval = _fl_set_form_atactivate(pForm, c_FormAtactivate, pvdata)
+    keep_elem_refs(pFlForm, vdata, pvdata)
+    retval = _fl_set_form_atactivate(pFlForm, c_FormAtactivate, pvdata)
     return retval
 
 
-def fl_set_form_atdeactivate(pForm, py_FormAtdeactivate, vdata):
-    """ fl_set_form_atdeactivate(pForm, py_FormAtdeactivate, vdata) -> old FormAtdeactivate func.
+def fl_set_form_atdeactivate(pFlForm, py_FormAtdeactivate, vdata):
+    """
+    fl_set_form_atdeactivate(pFlForm, py_FormAtdeactivate, vdata) -> old FormAtdeactivate func.
 
-        Register a callback that is called when activation status of a forms
-        is disabled.
+    Register a callback that is called when activation status of a forms is
+    disabled.
 
-        @param pForm: de-activated form (<pointer to xfdata.FL_FORM>)
-        @param py_FormAtdeactivate: python callback function called - no return
-        @type py_FormAtdeactivate: __ funcname (pForm, ptr_void) __
-        @param vdata: user data to be passed to function (<pointer to void>)
+    @param pFlForm: de-activated form
+    @type pFlForm: pointer to xfdata.FL_FORM
+    @param py_FormAtdeactivate: python callback function called, no return
+    @type py_FormAtdeactivate: __ funcname (pFlForm, ptr_void) __
+    @param vdata: user data to be passed to function
+    @type vdata: pointer to void
 
-        @return: old xfdata.FL_FORM_ATDEACTIVATE function
+    @return: old xfdata.FL_FORM_ATDEACTIVATE function
 
-        @example: def atdeactcb(pform, vdata):
-        @example: |->| ...
-        @example: oldatdeactfunc = xf.fl_set_form_atdeactivate(pform, 
-                  atdeactiatecb, None)
+    @example: def atdeactcb(pform, vdata):
+    @example: |->| ...
+    @example: oldatdeactfunc = xf.fl_set_form_atdeactivate(pform,
+        atdeactcb, None)
 
-        @status: Tested + Doc + NoDemo = OK
+    @status: Tested + Doc + NoDemo = OK
     """
 
     #FL_FORM_ATDEACTIVATE = cty.CFUNCTYPE(None, cty.POINTER(xfc.FL_FORM), \
@@ -1362,27 +1398,28 @@ def fl_set_form_atdeactivate(pForm, py_FormAtdeactivate, vdata):
                FL_FORM_ATDEACTIVATE cb, void * data)
             """)
     check_if_initialized()
-    check_if_FL_FORM_ptr(pForm)
+    check_if_FL_FORM_ptr(pFlForm)
     c_FormAtdeactivate = xfc.FL_FORM_ATDEACTIVATE(py_FormAtdeactivate)
     pvdata = cty.cast(vdata, cty.c_void_p)
     keep_cfunc_refs(c_FormAtdeactivate, py_FormAtdeactivate)
-    keep_elem_refs(pForm, vdata, pvdata)
-    retval = _fl_set_form_atdeactivate(pForm, c_FormAtdeactivate, pvdata)
+    keep_elem_refs(pFlForm, vdata, pvdata)
+    retval = _fl_set_form_atdeactivate(pFlForm, c_FormAtdeactivate, pvdata)
     return retval
 
 
-def fl_unfreeze_form(pForm):
-    """ fl_unfreeze_form(pForm)
+def fl_unfreeze_form(pFlForm):
+    """
+    fl_unfreeze_form(pFlForm)
 
-        Reverts previous freeze (set with fl_freeze_form function), all
-        changes made in the meantime in a form are drawn at once.
+    Reverts previous freeze (set with fl_freeze_form function), all changes
+    made in the meantime in a form are drawn at once.
 
-        @param pForm: form to be re-drawn after freezing
-                      (<pointer to xfdata.FL_FORM)
+    @param pFlForm: form to be re-drawn after freezing
+    @type pFlForm: pointer to xfdata.FL_FORM
 
-        @example: fl_unfreeze_form(pform)
+    @example: fl_unfreeze_form(pform)
 
-        @status: Tested + Doc + Demo = OK
+    @status: Tested + Doc + Demo = OK
     """
 
     _fl_unfreeze_form = cfuncproto(
@@ -1391,23 +1428,24 @@ def fl_unfreeze_form(pForm):
             """void fl_unfreeze_form(FL_FORM * form)
             """)
     check_if_initialized()
-    check_if_FL_FORM_ptr(pForm)
-    keep_elem_refs(pForm)
-    _fl_unfreeze_form(pForm)
+    check_if_FL_FORM_ptr(pFlForm)
+    keep_elem_refs(pFlForm)
+    _fl_unfreeze_form(pFlForm)
 
 
-def fl_deactivate_form(pForm):
-    """ fl_deactivate_form(pForm)
+def fl_deactivate_form(pFlForm):
+    """
+    fl_deactivate_form(pFlForm)
 
-        Deactivates form temporarily, without hiding it, but not allowing
-        a user to interact with elements contained in form (buttons, etc.).
+    Deactivates form temporarily, without hiding it, but not allowing a user
+    to interact with elements contained in form (buttons, etc.).
 
-        @param pForm: form to be de-activated
-                      (<pointer to xfdata.FL_FORM)
+    @param pFlForm: form to be de-activated
+    @type pFlForm: pointer to xfdata.FL_FORM
 
-        @example: fl_deactivate_form(pform)
+    @example: fl_deactivate_form(pform)
 
-        @status: Tested + Doc + Demo = OK
+    @status: Tested + Doc + Demo = OK
     """
 
     _fl_deactivate_form = cfuncproto(
@@ -1416,24 +1454,24 @@ def fl_deactivate_form(pForm):
             """void fl_deactivate_form(FL_FORM * form)
             """)
     check_if_initialized()
-    check_if_FL_FORM_ptr(pForm)
-    keep_elem_refs(pForm)
-    _fl_deactivate_form(pForm)
+    check_if_FL_FORM_ptr(pFlForm)
+    keep_elem_refs(pFlForm)
+    _fl_deactivate_form(pFlForm)
 
 
-def fl_activate_form(pForm):
-    """ fl_activate_form(pForm)
+def fl_activate_form(pFlForm):
+    """
+    fl_activate_form(pFlForm)
 
-        (Re)activates form (deactivated with fl_deactivate_form),
-        allowing the user to interact again with elements contained in
-        form (buttons, etc.).
+    (Re)activates form (deactivated with fl_deactivate_form), allowing the
+    user to interact again with elements contained in form (buttons, etc.).
 
-        @param pForm: form to be re-activated
-                      (<pointer to xfdata.FL_FORM)
+    @param pFlForm: form to be re-activated
+    @type pFlForm: pointer to xfdata.FL_FORM
 
-        @example: fl_activate_form(pform)
+    @example: fl_activate_form(pform)
 
-        @status: Tested + Doc + Demo = OK
+    @status: Tested + Doc + Demo = OK
     """
 
     _fl_activate_form = cfuncproto(
@@ -1442,20 +1480,20 @@ def fl_activate_form(pForm):
             """void fl_activate_form(FL_FORM * form)
             """)
     check_if_initialized()
-    check_if_FL_FORM_ptr(pForm)
-    keep_elem_refs(pForm)
-    _fl_activate_form(pForm)
+    check_if_FL_FORM_ptr(pFlForm)
+    keep_elem_refs(pFlForm)
+    _fl_activate_form(pFlForm)
 
 
 def fl_deactivate_all_forms():
-    """ fl_deactivate_all_forms()
+    """
+    fl_deactivate_all_forms()
 
-        De-activates all current forms, forbidding any event/user
-        interaction.
+    De-activates all current forms, forbidding any event/user interaction.
 
-        @example: fl_deactivate_all_forms()
+    @example: fl_deactivate_all_forms()
 
-        @status: Tested + Doc + NoDemo = OK
+    @status: Tested + Doc + NoDemo = OK
     """
 
     _fl_deactivate_all_forms = cfuncproto(
@@ -1487,14 +1525,15 @@ def fl_activate_all_forms():
 
 
 def fl_freeze_all_forms():
-    """ fl_freeze_all_forms()
+    """
+    fl_freeze_all_forms()
 
-        All current forms are not temporarily redrawn, while changes are
-        being made and are instead buffered internally.
+    All current forms are not temporarily redrawn, while changes are being
+    made and are instead buffered internally.
 
-        @example: fl_freeze_all_forms()
+    @example: fl_freeze_all_forms()
 
-        @status: Tested + Doc + NoDemo = OK
+    @status: Tested + Doc + NoDemo = OK
     """
 
     _fl_freeze_all_forms = cfuncproto(
@@ -1507,14 +1546,15 @@ def fl_freeze_all_forms():
 
 
 def fl_unfreeze_all_forms():
-    """ fl_unfreeze_all_forms()
+    """
+    fl_unfreeze_all_forms()
 
-        All changes made in the meantime in all current forms are drawn
-        at once, reverting previous freeze.
+    All changes made in the meantime in all current forms are drawn at once,
+    reverting previous freeze.
 
-        @example: fl_unfreeze_all_forms()
+    @example: fl_unfreeze_all_forms()
 
-        @status: Tested + Doc + NoDemo = OK
+    @status: Tested + Doc + NoDemo = OK
     """
 
     _fl_unfreeze_all_forms = cfuncproto(
@@ -1526,21 +1566,24 @@ def fl_unfreeze_all_forms():
     _fl_unfreeze_all_forms()
 
 
-def fl_scale_form(pForm, xsc, ysc):
-    """ fl_scale_form(pForm, xsc, ysc)
+def fl_scale_form(pFlForm, xsc, ysc):
+    """
+    fl_scale_form(pFlForm, xsc, ysc)
 
-        Scales a form and the objects on it in size and position, indicating
-        a scaling factor in x- and y-direction (1.1 = 110 percent, 0.5 = 50,
-        etc.) with respect to the current size, and reshapes the window.
+    Scales a form and the objects on it in size and position, indicating a
+    scaling factor in x- and y-direction (1.1 = 110 percent, 0.5 = 50, etc.)
+    with respect to the current size, and reshapes the window.
 
-        @param pForm: form to be scaled
-                      (<pointer to xfdata.FL_FORM>)
-        @param xsc: scaling factor in horizontal direction (<float>)
-        @param ysc: scaling factor in vertical direction (<float>)
+    @param pFlForm: form to be scaled
+    @type pFlForm: pointer to xfdata.FL_FORM
+    @param xsc: scaling factor in horizontal direction
+    @type xsc: float
+    @param ysc: scaling factor in vertical direction
+    @type ysc: float
 
-        @example: fl_scale_form(pform, 0.8, 1.2)
+    @example: fl_scale_form(pform, 0.8, 1.2)
 
-        @status: Tested + Doc + Demo = OK
+    @status: Tested + Doc + Demo = OK
     """
 
     _fl_scale_form = cfuncproto(
@@ -1549,27 +1592,30 @@ def fl_scale_form(pForm, xsc, ysc):
             """void fl_scale_form(FL_FORM * form, double xsc, double ysc)
             """)
     check_if_initialized()
-    check_if_FL_FORM_ptr(pForm)
+    check_if_FL_FORM_ptr(pFlForm)
     fxsc = convert_to_double(xsc)
     fysc = convert_to_double(ysc)
-    keep_elem_refs(pForm, xsc, fxsc, ysc, fysc)
-    _fl_scale_form(pForm, fxsc, fysc)
+    keep_elem_refs(pFlForm, xsc, fxsc, ysc, fysc)
+    _fl_scale_form(pFlForm, fxsc, fysc)
 
 
-def fl_set_form_position(pForm, x, y):
-    """ fl_set_form_position(pForm, x, y)
+def fl_set_form_position(pFlForm, x, y):
+    """
+    fl_set_form_position(pFlForm, x, y)
 
-        Sets position of form, when placing a form on the screen with
-        xfdata.FL_PLACE_GEOMETRY as place argument.
+    Sets position of form, when placing a form on the screen with
+    xfdata.FL_PLACE_GEOMETRY as place argument.
 
-        @param pForm: form whose position is to be set
-                      (<pointer to xfdata.FL_FORM>)
-        @param x: horizontal position (upper-left corner) (<int>)
-        @param y: vertical position (upper-left corner) (<int>)
+    @param pFlForm: form whose position is to be set
+    @type pFlForm: pointer to xfdata.FL_FORM
+    @param x: horizontal position (upper-left corner)
+    @type x: int
+    @param y: vertical position (upper-left corner)
+    @type y: int
 
-        @example: fl_set_form_position(pform, 125, 250)
+    @example: fl_set_form_position(pform, 125, 250)
 
-        @status: Tested + Doc + Demo = OK
+    @status: Tested + Doc + Demo = OK
     """
 
     _fl_set_form_position = cfuncproto(
@@ -1579,25 +1625,27 @@ def fl_set_form_position(pForm, x, y):
                FL_Coord y)
             """)
     check_if_initialized()
-    check_if_FL_FORM_ptr(pForm)
+    check_if_FL_FORM_ptr(pFlForm)
     ix = convert_to_FL_Coord(x)
     iy = convert_to_FL_Coord(y)
-    keep_elem_refs(pForm, x, ix, y, iy)
-    _fl_set_form_position(pForm, ix, iy)
+    keep_elem_refs(pFlForm, x, ix, y, iy)
+    _fl_set_form_position(pFlForm, ix, iy)
 
 
-def fl_set_form_title(pForm, title):
-    """ fl_set_form_title(pForm, title)
+def fl_set_form_title(pFlForm, title):
+    """
+    fl_set_form_title(pFlForm, title)
 
-        Changes the form title (and the icon name) after it is shown.
+    Changes the form title (and the icon name) after it is shown.
 
-        @param pForm: form whose title has to be changed
-                      (<pointer to xfdata.FL_FORM>)
-        @param title: new title text for the form (<string>)
+    @param pFlForm: form whose title has to be changed
+    @type pFlForm: pointer to xfdata.FL_FORM
+    @param title: new title text for the form
+    @type title: string
 
-        @example: fl_set_form_title(pform, "My great form")
+    @example: fl_set_form_title(pform, "My great form")
 
-        @status: Tested + Doc + NoDemo = OK
+    @status: Tested + Doc + NoDemo = OK
     """
 
     _fl_set_form_title = cfuncproto(
@@ -1606,24 +1654,25 @@ def fl_set_form_title(pForm, title):
             """void fl_set_form_title(FL_FORM * form, const char * name)
             """)
     check_if_initialized()
-    check_if_FL_FORM_ptr(pForm)
+    check_if_FL_FORM_ptr(pFlForm)
     stitle = convert_to_string(title)
-    keep_elem_refs(pForm, title, stitle)
-    _fl_set_form_title(pForm, stitle)
+    keep_elem_refs(pFlForm, title, stitle)
+    _fl_set_form_title(pFlForm, stitle)
 
 
-def fl_set_app_mainform(pForm):
-    """ fl_set_app_mainform(pForm)
+def fl_set_app_mainform(pFlForm):
+    """
+    fl_set_app_mainform(pFlForm)
 
-        Designates the main form. By default, the main form is set
-        automatically by the library to the first full-bordered form shown.
+    Designates the main form. By default, the main form is set automatically
+    by the library to the first full-bordered form shown.
 
-        @param pForm: form to be set as main one
-                      (<pointer to xfdata.FL_FORM>)
+    @param pFlForm: form to be set as main one
+    @type pFlForm: pointer to xfdata.FL_FORM
 
-        @example: fl_set_app_mainform(pform2)
+    @example: fl_set_app_mainform(pform2)
 
-        @status: Tested + Doc + Demo = OK
+    @status: Tested + Doc + Demo = OK
     """
 
     _fl_set_app_mainform = cfuncproto(
@@ -1632,21 +1681,22 @@ def fl_set_app_mainform(pForm):
             """void fl_set_app_mainform(FL_FORM * form)
             """)
     check_if_initialized()
-    check_if_FL_FORM_ptr(pForm)
-    keep_elem_refs(pForm)
-    _fl_set_app_mainform(pForm)
+    check_if_FL_FORM_ptr(pFlForm)
+    keep_elem_refs(pFlForm)
+    _fl_set_app_mainform(pFlForm)
 
 
 def fl_get_app_mainform():
-    """ fl_get_app_mainform() -> pForm
+    """
+    fl_get_app_mainform() -> pFlForm
 
-        Return the current mainform.
+    Return the current mainform.
 
-        @return: main form (<pointer to xfdata.FL_FORM>)
+    @return: main form (<pointer to xfdata.FL_FORM>)
 
-        @example: fl_get_app_mainform()
+    @example: fl_get_app_mainform()
 
-        @status: Tested + Doc + NoDemo = OK
+    @status: Tested + Doc + NoDemo = OK
     """
 
     _fl_get_app_mainform = cfuncproto(
@@ -1660,21 +1710,23 @@ def fl_get_app_mainform():
 
 
 def fl_set_app_nomainform(flag):
-    """ fl_set_app_nomainform(flag)
+    """
+    fl_set_app_nomainform(flag)
 
-        In some situations, either because the concept of an application main
-        form does not apply (for example, an application might have multiple
-        full-bordered windows), or under some (buggy) window managers, the
-        designation of a main form may cause stacking order problems. To
-        workaround these, it can disable the designation of a main form
-        (must be called before any full-bordered form is shown)
+    In some situations, either because the concept of an application main form
+    does not apply (for example, an application might have multiple
+    full-bordered windows), or under some (buggy) window managers, the
+    designation of a main form may cause stacking order problems. To
+    workaround these, it can disable the designation of a main form (must be
+    called before any full-bordered form is shown)
  
-        @param flag: flag to disable/enable mainform designation (<int>)
-        @type flag: 1 (to disable designation) or 1 (to enable designation)
+    @param flag: flag to disable/enable mainform designation. Values i.e.
+        1 (to disable) or 0 (to enable)
+    @type flag: int
 
-        @example: fl_set_app_nomainform(1)
+    @example: fl_set_app_nomainform(1)
 
-        @status: Tested + Doc + NoDemo = OK
+    @status: Tested + Doc + NoDemo = OK
     """
 
     _fl_set_app_nomainform = cfuncproto(
@@ -1688,27 +1740,28 @@ def fl_set_app_nomainform(flag):
     _fl_set_app_nomainform(iflag)
 
 
-def fl_set_form_callback(pForm, py_FormCallbackPtr, vdata):
-    """ fl_set_form_callback(pForm, py_FormCallbackPtr, vdata)
+def fl_set_form_callback(pFlForm, py_FormCallbackPtr, vdata):
+    """
+    fl_set_form_callback(pFlForm, py_FormCallbackPtr, vdata)
 
-        Sets the callback function bound to an entire form. Whenever
-        fl_do_forms() or fl_check_forms() would return an object in form they
-        call the routine callback instead, with the object as an argument. So
-        With each form you can associate its own callback routine. For
-        objects that have their own callbacks, the object callbacks have
-        priority over the form callback.
+    Sets the callback function bound to an entire form. Whenever fl_do_forms()
+    or fl_check_forms() would return an object in form they call the routine
+    callback instead, with the object as an argument. So with each form you
+    can associate its own callback routine. For objects that have their own
+    callbacks, the object callbacks have priority over the form callback.
 
-        @param pForm: form whose callback has to be set
-                      (<pointer to xfdata.FL_FORM>)
-        @param py_FormCallbackPtr: python callback to be set - no return
-        @type py_FormCallbackPtr: __ funcname (pObject, ptr_void) __
-        @param vdata: user data to be passed to function (<pointer to void>))
+    @param pFlForm: form whose callback has to be set
+    @type pFlForm: pointer to xfdata.FL_FORM
+    @param py_FormCallbackPtr: python callback to be set, no return
+    @type py_FormCallbackPtr: __ funcname (pFlObject, ptr_void) __
+    @param vdata: user data to be passed to function
+    @type vdata: pointer to void
 
-        @example: def formcb(pobj, vdata):
-        @example: |->| ...
-        @example: fl_set_form_callback(pform, formcb, None)
+    @example: def formcb(pobj, vdata):
+    @example: |->| ...
+    @example: fl_set_form_callback(pform, formcb, None)
 
-        @status: Tested + Doc + Demo = OK
+    @status: Tested + Doc + Demo = OK
     """
 
     #FL_FORMCALLBACKPTR = cty.CFUNCTYPE(None, cty.POINTER(xfc.FL_OBJECT), \
@@ -1721,30 +1774,33 @@ def fl_set_form_callback(pForm, py_FormCallbackPtr, vdata):
                FL_FORMCALLBACKPTR callback, void * d)
             """)
     check_if_initialized()
-    check_if_FL_FORM_ptr(pForm)
+    check_if_FL_FORM_ptr(pFlForm)
     c_FormCallbackPtr = xfc.FL_FORMCALLBACKPTR(py_FormCallbackPtr)
     pvdata = cty.cast(vdata, cty.c_void_p)
     keep_cfunc_refs(c_FormCallbackPtr, py_FormCallbackPtr)
-    keep_elem_refs(pForm, vdata, pvdata)
-    _fl_set_form_callback(pForm, c_FormCallbackPtr, pvdata)
+    keep_elem_refs(pFlForm, vdata, pvdata)
+    _fl_set_form_callback(pFlForm, c_FormCallbackPtr, pvdata)
 
 
 fl_set_form_call_back = fl_set_form_callback
 
 
-def fl_set_form_size(pForm, w, h):
-    """ fl_set_form_size(pForm, w, h)
+def fl_set_form_size(pFlForm, w, h):
+    """
+    fl_set_form_size(pFlForm, w, h)
 
-        Sets the size of form.
+    Sets the size of form.
 
-        @param pForm: form whose size has to be set
-                      (<pointer to xfdata.FL_FORM>)
-        @param w: width of form in coord units (<int>)
-        @param h: height of form in coord units (<int>)
+    @param pFlForm: form whose size has to be set
+    @type pFlForm: pointer to xfdata.FL_FORM
+    @param w: width of form in coord units
+    @type w: int
+    @param h: height of form in coord units
+    @type h: int
 
-        @example: fl_set_form_size(pform, 200, 200)
+    @example: fl_set_form_size(pform, 200, 200)
 
-        @status: Tested + Doc + Demo = OK
+    @status: Tested + Doc + Demo = OK
     """
 
     _fl_set_form_size = cfuncproto(
@@ -1753,28 +1809,31 @@ def fl_set_form_size(pForm, w, h):
             """void fl_set_form_size(FL_FORM * form, FL_Coord w, FL_Coord h)
             """)
     check_if_initialized()
-    check_if_FL_FORM_ptr(pForm)
+    check_if_FL_FORM_ptr(pFlForm)
     iw = convert_to_FL_Coord(w)
     ih = convert_to_FL_Coord(h)
-    keep_elem_refs(pForm, w, iw, h, ih)
-    _fl_set_form_size(pForm, iw, ih)
+    keep_elem_refs(pFlForm, w, iw, h, ih)
+    _fl_set_form_size(pFlForm, iw, ih)
 
 
-def fl_set_form_hotspot(pForm, x, y):
-    """ fl_set_form_hotspot(pForm, x, y)
+def fl_set_form_hotspot(pFlForm, x, y):
+    """
+    fl_set_form_hotspot(pFlForm, x, y)
 
-        Sets the position of the hotspot, for showing a form so that a
-        particular point is under the mouse. You have to use
-        xfdata.FL_PLACE_HOTSPOT as place argument in fl_show_form().
+    Sets the position of the hotspot, for showing a form so that a particular
+    point is under the mouse. You have to use xfdata.FL_PLACE_HOTSPOT as
+    place argument in fl_show_form().
 
-        @param pForm: form to be set
-                      (<pointer to xfdata.FL_FORM>)
-        @param x: horizontal position (upper-left corner) (<int>)
-        @param y: vertical position (upper-left corner) (<int>)
+    @param pFlForm: form to be set
+    @type pFlForm: pointer to xfdata.FL_FORM
+    @param x: horizontal position (upper-left corner)
+    @type x: int
+    @param y: vertical position (upper-left corner)
+    @type y: int
 
-        @example: fl_set_form_hotspot(pform, 300, 50)
+    @example: fl_set_form_hotspot(pform, 300, 50)
 
-        @status: Tested + Doc + NoDemo = OK
+    @status: Tested + Doc + NoDemo = OK
     """
 
     _fl_set_form_hotspot = cfuncproto(
@@ -1784,28 +1843,29 @@ def fl_set_form_hotspot(pForm, x, y):
                FL_Coord y)
             """)
     check_if_initialized()
-    check_if_FL_FORM_ptr(pForm)
+    check_if_FL_FORM_ptr(pFlForm)
     ix = convert_to_FL_Coord(x)
     iy = convert_to_FL_Coord(y)
-    keep_elem_refs(pForm, x, ix, y, iy)
-    _fl_set_form_hotspot(pForm, ix, iy)
+    keep_elem_refs(pFlForm, x, ix, y, iy)
+    _fl_set_form_hotspot(pFlForm, ix, iy)
 
 
-def fl_set_form_hotobject(pForm, pObject):
-    """ fl_set_form_hotobject(pForm, pObject)
+def fl_set_form_hotobject(pFlForm, pFlObject):
+    """
+    fl_set_form_hotobject(pFlForm, pFlObject)
 
-        Sets the hotspot for showing a form so that a particular object is
-        under the mouse. You have to use xfdata.FL_PLACE_HOTSPOT as place
-        argument in fl_show_form().
+    Sets the hotspot for showing a form so that a particular object is under
+    the mouse. You have to use xfdata.FL_PLACE_HOTSPOT as place argument in
+    fl_show_form().
 
-        @param pForm: form whose object has to be set
-                      (<pointer to xfdata.FL_FORM>)
-        @param pObject: object
-                        (<pointer to xfdata.FL_OBJECT>)
+    @param pFlForm: form whose object has to be set
+    @type pFlForm: pointer to xfdata.FL_FORM
+    @param pFlObject: object
+    @type pFlObject: pointer to xfdata.FL_OBJECT
 
-        @example: fl_set_form_hotobject(pform, pobj)
+    @example: fl_set_form_hotobject(pform, pobj)
 
-        @status: Tested + Doc + Demo = OK
+    @status: Tested + Doc + Demo = OK
     """
 
     _fl_set_form_hotobject = cfuncproto(
@@ -1814,26 +1874,29 @@ def fl_set_form_hotobject(pForm, pObject):
             """void fl_set_form_hotobject(FL_FORM * form, FL_OBJECT * ob)
             """)
     check_if_initialized()
-    check_if_FL_FORM_ptr(pForm)
-    check_if_FL_OBJECT_ptr(pObject)
-    keep_elem_refs(pForm, pObject)
-    _fl_set_form_hotobject(pForm, pObject)
+    check_if_FL_FORM_ptr(pFlForm)
+    check_if_FL_OBJECT_ptr(pFlObject)
+    keep_elem_refs(pFlForm, pFlObject)
+    _fl_set_form_hotobject(pFlForm, pFlObject)
 
 
-def fl_set_form_minsize(pForm, w, h):
-    """ fl_set_form_minsize(pForm, w, h)
+def fl_set_form_minsize(pFlForm, w, h):
+    """ 
+    fl_set_form_minsize(pFlForm, w, h)
 
-        Sets the minimum size a form can have, if interactive resizing is
-        allowed (e.g., by showing the form with xfdata.FL_PLACE_POSITION).
+    Sets the minimum size a form can have, if interactive resizing is allowed
+    (e.g., by showing the form with xfdata.FL_PLACE_POSITION).
 
-        @param pForm: form
-                      (<pointer to xfdata.FL_FORM>)
-        @param w: width of form in coord units (<int>)
-        @param h: height of form in coord units (<int>)
+    @param pFlForm: form
+    @type pFlForm: pointer to xfdata.FL_FORM
+    @param w: width of form in coord units
+    @type w: int
+    @param h: height of form in coord units
+    @type h: int
 
-        @example: fl_set_form_minsize(pform, 200, 300)
+    @example: fl_set_form_minsize(pform, 200, 300)
 
-        @status: Tested + Doc + NoDemo = OK
+    @status: Tested + Doc + NoDemo = OK
     """
 
     _fl_set_form_minsize = cfuncproto(
@@ -1842,27 +1905,30 @@ def fl_set_form_minsize(pForm, w, h):
             """void fl_set_form_minsize(FL_FORM * form, FL_Coord w, FL_Coord h)
             """)
     check_if_initialized()
-    check_if_FL_FORM_ptr(pForm)
+    check_if_FL_FORM_ptr(pFlForm)
     iw = convert_to_FL_Coord(w)
     ih = convert_to_FL_Coord(h)
-    keep_elem_refs(pForm, w, iw, h, ih)
-    _fl_set_form_minsize(pForm, iw, ih)
+    keep_elem_refs(pFlForm, w, iw, h, ih)
+    _fl_set_form_minsize(pFlForm, iw, ih)
 
 
-def fl_set_form_maxsize(pForm, w, h):
-    """ fl_set_form_maxsize(pForm, w, h)
+def fl_set_form_maxsize(pFlForm, w, h):
+    """
+    fl_set_form_maxsize(pFlForm, w, h)
 
-        Sets the maximum size a form can have, if interactive resizing is
-        allowed (e.g. by showing the form with xfdata.FL_PLACE_POSITION).
+    Sets the maximum size a form can have, if interactive resizing is allowed
+    (e.g. by showing the form with xfdata.FL_PLACE_POSITION).
 
-        @param pForm: form whose size has to be set
-                      (<pointer to xdata.FL_FORM>)
-        @param w: width of form in coord units (<int>)
-        @param h: height of form in coord units (<int>)
+    @param pFlForm: form whose size has to be set
+    @type pFlForm: pointer to xdata.FL_FORM
+    @param w: width of form in coord units
+    @type w: int
+    @param h: height of form in coord units
+    @type h: int
 
-        @example: fl_set_form_maxsize(pform, 400, 450)
+    @example: fl_set_form_maxsize(pform, 400, 450)
 
-        @status: Tested + Doc + NoDemo = OK
+    @status: Tested + Doc + NoDemo = OK
     """
 
     _fl_set_form_maxsize = cfuncproto(
@@ -1872,37 +1938,36 @@ def fl_set_form_maxsize(pForm, w, h):
                FL_Coord h)
             """)
     check_if_initialized()
-    check_if_FL_FORM_ptr(pForm)
+    check_if_FL_FORM_ptr(pFlForm)
     iw = convert_to_FL_Coord(w)
     ih = convert_to_FL_Coord(h)
-    keep_elem_refs(pForm, w, iw, h, ih)
-    _fl_set_form_maxsize(pForm, iw, ih)
+    keep_elem_refs(pFlForm, w, iw, h, ih)
+    _fl_set_form_maxsize(pFlForm, iw, ih)
 
 
 # TODO: find if key mask have to be included
-def fl_set_form_event_cmask(pForm, cmask):
-    """ fl_set_form_event_cmask(pForm, cmask)
+def fl_set_form_event_cmask(pFlForm, cmask):
+    """
+    fl_set_form_event_cmask(pFlForm, cmask)
 
-        Sets the event compress mask a form can react to.
+    Sets the event compress mask a form can react to.
 
-        @param pForm: form
-                      (<pointer to xfdata.FL_FORM>)
-        @param cmask: event compress mask for form (<long_pos>)
-        @type cmask: (from xfdata module) one or more OR-ed between
-                     NoEventMask, KeyPressMask, KeyReleaseMask, ButtonPressMask,
-                     ButtonReleaseMask, EnterWindowMask, LeaveWindowMask,
-                     PointerMotionMask, PointerMotionHintMask,
-                     Button1MotionMask, Button2MotionMask, Button3MotionMask,
-                     Button4MotionMask, Button5MotionMask, ButtonMotionMask,
-                     KeymapStateMask, ExposureMask, VisibilityChangeMask,
-                     StructureNotifyMask, ResizeRedirectMask,
-                     SubstructureNotifyMask, SubstructureRedirectMask,
-                     FocusChangeMask, ColormapChangeMask, OwnerGrabButtonMask,
-                     FL_ALL_EVENT, ... ?
+    @param pFlForm: form
+    @type pFlForm: pointer to xfdata.FL_FORM
+    @param cmask: event compress mask for form. Values (from xfdata module)
+        one or more OR-ed between NoEventMask, KeyPressMask, KeyReleaseMask,
+        ButtonPressMask, ButtonReleaseMask, EnterWindowMask, LeaveWindowMask,
+        PointerMotionMask, PointerMotionHintMask, Button1MotionMask,
+        Button2MotionMask, Button3MotionMask, Button4MotionMask,
+        Button5MotionMask, ButtonMotionMask, KeymapStateMask, ExposureMask,
+        VisibilityChangeMask, StructureNotifyMask, ResizeRedirectMask,
+        SubstructureNotifyMask, SubstructureRedirectMask, FocusChangeMask,
+        ColormapChangeMask, OwnerGrabButtonMask, FL_ALL_EVENT, ... ?
+    @type cmask: long_pos
 
-        @example: fl_set_form_event_cmask(pform, xfdata.FL_ALL_EVENT)
+    @example: fl_set_form_event_cmask(pform, xfdata.FL_ALL_EVENT)
 
-        @status: Tested + Doc + NoDemo = OK
+    @status: Tested + Doc + NoDemo = OK
     """
 
     _fl_set_form_event_cmask = cfuncproto(
@@ -1912,25 +1977,26 @@ def fl_set_form_event_cmask(pForm, cmask):
                long unsigned int cmask)
             """)
     check_if_initialized()
-    check_if_FL_FORM_ptr(pForm)
+    check_if_FL_FORM_ptr(pFlForm)
     ulcmask = convert_to_ulong(cmask)
-    keep_elem_refs(pForm, cmask, ulcmask)
-    _fl_set_form_event_cmask(pForm, ulcmask)
+    keep_elem_refs(pFlForm, cmask, ulcmask)
+    _fl_set_form_event_cmask(pFlForm, ulcmask)
 
 
-def fl_get_form_event_cmask(pForm):
-    """ fl_get_form_event_cmask(pForm) -> compress mask ID
+def fl_get_form_event_cmask(pFlForm):
+    """
+    fl_get_form_event_cmask(pFlForm) -> long_pos
 
-        Returns event compress mask a form can react to.
+    Returns event compress mask a form can react to.
 
-        @param pForm: pointer to form
-                      (<pointer to xfdata.FL_FORM>)
+    @param pFlForm: pointer to form
+    @type pFlForm: pointer to xfdata.FL_FORM
 
-        @return: event mask <long_pos>
+    @return: event compress mask id
 
-        @example: cmaskid = fl_get_form_event_cmask(pform)
+    @example: cmaskid = fl_get_form_event_cmask(pform)
 
-        @status: Tested + Doc + NoDemo = OK
+    @status: Tested + Doc + NoDemo = OK
     """
 
     _fl_get_form_event_cmask = cfuncproto(
@@ -1939,27 +2005,32 @@ def fl_get_form_event_cmask(pForm):
             """long unsigned int fl_get_form_event_cmask(FL_FORM * form)
             """)
     check_if_initialized()
-    check_if_FL_FORM_ptr(pForm)
-    keep_elem_refs(pForm)
-    retval = _fl_get_form_event_cmask(pForm)
+    check_if_FL_FORM_ptr(pFlForm)
+    keep_elem_refs(pFlForm)
+    retval = _fl_get_form_event_cmask(pFlForm)
     return retval
 
 
-def fl_set_form_geometry(pForm, x, y, w, h):
-    """ fl_set_form_geometry(pForm, x, y, w, h)
+def fl_set_form_geometry(pFlForm, x, y, w, h):
+    """
+    fl_set_form_geometry(pFlForm, x, y, w, h)
 
-        Sets the geometry (position and size) of a form.
+    Sets the geometry (position and size) of a form.
 
-        @param pForm: pointer to form to be set
-                      (<pointer to xfdata.FL_FORM>)
-        @param x: horizontal position (upper-left corner) (<int>)
-        @param y: vertical position (upper-left corner) (<int>)
-        @param w: width of form in coord units (<int>)
-        @param h: height of form in coord units (<int>)
+    @param pFlForm: pointer to form to be set
+    @type pFlForm: pointer to xfdata.FL_FORM
+    @param x: horizontal position (upper-left corner)
+    @type h: int
+    @param y: vertical position (upper-left corner)
+    @type h: int
+    @param w: width of form in coord units
+    @type h: int
+    @param h: height of form in coord units
+    @type h: int
 
-        @example: fl_set_form_geometry(pform, 300, 400, 150, 150)
+    @example: fl_set_form_geometry(pform, 300, 400, 150, 150)
 
-        @status: Tested + Doc + Demo = OK
+    @status: Tested + Doc + Demo = OK
     """
 
     _fl_set_form_geometry = cfuncproto(
@@ -1970,42 +2041,44 @@ def fl_set_form_geometry(pForm, x, y, w, h):
                FL_Coord y, FL_Coord w, FL_Coord h)
             """)
     check_if_initialized()
-    check_if_FL_FORM_ptr(pForm)
+    check_if_FL_FORM_ptr(pFlForm)
     ix = convert_to_FL_Coord(x)
     iy = convert_to_FL_Coord(y)
     iw = convert_to_FL_Coord(w)
     ih = convert_to_FL_Coord(h)
-    keep_elem_refs(pForm, x, ix, y, iy, w, iw, h, ih)
-    _fl_set_form_geometry(pForm, ix, iy, iw, ih)
+    keep_elem_refs(pFlForm, x, ix, y, iy, w, iw, h, ih)
+    _fl_set_form_geometry(pFlForm, ix, iy, iw, ih)
 
 
 fl_set_initial_placement = fl_set_form_geometry
 
 
-def fl_show_form(pForm, place, border, title):
-    """ fl_show_form(pForm, place, border, title) -> win
+def fl_show_form(pFlForm, place, border, title):
+    """
+    fl_show_form(pFlForm, place, border, title) -> win
 
-        Shows the form.
+    Shows the form.
 
-        @param pForm: form to be shown
-                      (<pointer to xfdata.FL_FORM>)
-        @param place: where form has to be placed (<int>)
-        @type place: (from xfdata module) FL_PLACE_FREE, FL_PLACE_MOUSE,
-                     FL_PLACE_CENTER, FL_PLACE_POSITION, FL_PLACE_SIZE,
-                     FL_PLACE_GEOMETRY, FL_PLACE_ASPECT, FL_PLACE_FULLSCREEN,
-                     FL_PLACE_HOTSPOT, FL_PLACE_ICONIC, FL_FREE_SIZE,
-                     FL_PLACE_FREE_CENTER, FL_PLACE_CENTERFREE
-        @param border: window manager decoration (<int>)
-        @type border: (from xfdata module) FL_FULLBORDER, FL_TRANSIENT,
-                      FL_NOBORDER
-        @param title: title of form (<string>)
+    @param pFlForm: form to be shown
+    @type pFlForm: pointer to xfdata.FL_FORM
+    @param place: where form has to be placed. Values (from xfdata module) i.e.
+        FL_PLACE_FREE, FL_PLACE_MOUSE, FL_PLACE_CENTER, FL_PLACE_POSITION,
+        FL_PLACE_SIZE, FL_PLACE_GEOMETRY, FL_PLACE_ASPECT, FL_PLACE_FULLSCREEN,
+        FL_PLACE_HOTSPOT, FL_PLACE_ICONIC, FL_FREE_SIZE, FL_PLACE_FREE_CENTER,
+        FL_PLACE_CENTERFREE
+    @type place: int
+    @param border: window manager decoration. Values (from xfdata module)
+        i.e. FL_FULLBORDER, FL_TRANSIENT, FL_NOBORDER
+    @type border: int
+    @param title: title of form
+    @type title: string
 
-        @returns: window id (<long_pos>)
+    @returns: window id (<long_pos>)
 
-        @example: wind = fl_show_form(pform0, FL_PLACE_FREE, FL_FULLBORDER,
-                  "MyForm")
+    @example: wind = fl_show_form(pform0, FL_PLACE_FREE, FL_FULLBORDER,
+        "MyForm")
 
-        @status: Tested + Doc + Demo = OK
+    @status: Tested + Doc + Demo = OK
     """
 
     _fl_show_form = cfuncproto(
@@ -2016,28 +2089,29 @@ def fl_show_form(pForm, place, border, title):
                const char * name)
             """)
     check_if_initialized()
-    check_if_FL_FORM_ptr(pForm)
+    check_if_FL_FORM_ptr(pFlForm)
     check_admitted_listvalues(place, xfc.PLACE_list)
     check_admitted_listvalues(border, xfc.DECORATION_list)
     iplace = convert_to_int(place)
     iborder = convert_to_int(border)
     stitle = convert_to_string(title)
-    keep_elem_refs(pForm, place, iplace, border, iborder, title, stitle)
-    retval = _fl_show_form(pForm, iplace, iborder, stitle)
+    keep_elem_refs(pFlForm, place, iplace, border, iborder, title, stitle)
+    retval = _fl_show_form(pFlForm, iplace, iborder, stitle)
     return retval
 
 
-def fl_hide_form(pForm):
-    """ fl_hide_form(pForm)
+def fl_hide_form(pFlForm):
+    """
+    fl_hide_form(pFlForm)
 
-        Hides the form.
+    Hides the form.
 
-        @param pForm: form to be hidden
-                      (<pointer to xfdata.FL_FORM>)
+    @param pFlForm: form to be hidden
+    @type pFlForm: pointer to xfdata.FL_FORM
 
-        @example: fl_hide_form(pform0)
+    @example: fl_hide_form(pform0)
 
-        @status: Tested + Doc + Demo = OK
+    @status: Tested + Doc + Demo = OK
     """
 
     _fl_hide_form = cfuncproto(
@@ -2046,23 +2120,24 @@ def fl_hide_form(pForm):
             """void fl_hide_form(FL_FORM * form)
             """)
     check_if_initialized()
-    check_if_FL_FORM_ptr(pForm)
-    keep_elem_refs(pForm)
-    _fl_hide_form(pForm)
+    check_if_FL_FORM_ptr(pFlForm)
+    keep_elem_refs(pFlForm)
+    _fl_hide_form(pFlForm)
 
 
-def fl_free_form(pForm):
-    """ fl_free_form(pForm)
+def fl_free_form(pFlForm):
+    """
+    fl_free_form(pFlForm)
 
-        Frees the memory used by a form, hiding and deleting it together
-        with all its objects.
+    Frees the memory used by a form, hiding and deleting it together with all
+    its objects.
 
-        @param pForm: form to be freed
-                      (<pointer to xfdata.FL_FORM>)
+    @param pFlForm: form to be freed
+    @type pFlForm: pointer to xfdata.FL_FORM
 
-        @example: fl_free_form(pform0)
+    @example: fl_free_form(pform0)
 
-        @status: Tested + Doc + Demo = OK
+    @status: Tested + Doc + Demo = OK
     """
 
     _fl_free_form = cfuncproto(
@@ -2071,22 +2146,23 @@ def fl_free_form(pForm):
             """void fl_free_form(FL_FORM * form)
             """)
     check_if_initialized()
-    check_if_FL_FORM_ptr(pForm)
-    keep_elem_refs(pForm)
-    _fl_free_form(pForm)
+    check_if_FL_FORM_ptr(pFlForm)
+    keep_elem_refs(pFlForm)
+    _fl_free_form(pFlForm)
 
 
-def fl_redraw_form(pForm):
-    """ fl_redraw_form(pForm)
+def fl_redraw_form(pFlForm):
+    """
+    fl_redraw_form(pFlForm)
 
-        (Re)draws an entire form.
+    (Re)draws an entire form.
 
-        @param pForm: form to redraw
-                      (<pointer to xfdata.FL_FORM>)
+    @param pFlForm: form to redraw
+    @type pFlForm: pointer to xfdata.FL_FORM
 
-        @example: fl_redraw_form(pform0)
+    @example: fl_redraw_form(pform0)
 
-        @status: Tested + Doc + Demo = OK
+    @status: Tested + Doc + Demo = OK
     """
 
     _fl_redraw_form = cfuncproto(
@@ -2095,30 +2171,32 @@ def fl_redraw_form(pForm):
             """void fl_redraw_form(FL_FORM * form)
             """)
     check_if_initialized()
-    check_if_FL_FORM_ptr(pForm)
-    keep_elem_refs(pForm)
-    _fl_redraw_form(pForm)
+    check_if_FL_FORM_ptr(pFlForm)
+    keep_elem_refs(pFlForm)
+    _fl_redraw_form(pFlForm)
 
 
-def fl_set_form_dblbuffer(pForm, flag):
-    """ fl_set_form_dblbuffer(pForm, flag)
+def fl_set_form_dblbuffer(pFlForm, flag):
+    """
+    fl_set_form_dblbuffer(pFlForm, flag)
 
-        Uses double buffering on a per-form basis. Since Xlib doesn't support
-        double buffering, XForms library simulates this functionality with
-        pixmap bit-bliting. In practice, the effect is hardly distinguishable
-        from double buffering and performance is on par with multi-buffering
-        extensions (It is slower than drawing into a window directly on most
-        workstations however). Bear in mind that a pixmap can be resource
-        hungry, so use this option with discretion.
+    Uses double buffering on a per-form basis. Since Xlib doesn't support
+    double buffering, XForms library simulates this functionality with pixmap
+    bit-bliting. In practice, the effect is hardly distinguishable from double
+    buffering and performance is on par with multi-buffering extensions (it is
+    slower than drawing into a window directly on most workstations however).
+    Bear in mind that a pixmap can be resource hungry, so use this option with
+    discretion.
 
-        @param pForm: form to set
-                      (<pointer to xfdata.FL_FORM>)
-        @param flag: flag to disable/enable doublebuffer (<int>)
-        @type flag: 0 (disabled) or 1 (enabled)
+    @param pFlForm: form to set
+    @type pFlForm: pointer to xfdata.FL_FORM
+    @param flag: flag to disable/enable doublebuffer. Values i.e. 0 (disabled)
+        or 1 (enabled)
+    @type flag: int
 
-        @example: fl_set_form_dblbuffer(1)
+    @example: fl_set_form_dblbuffer(1)
 
-        @status: Tested + Doc + Demo = OK
+    @status: Tested + Doc + Demo = OK
     """
 
     _fl_set_form_dblbuffer = cfuncproto(
@@ -2127,39 +2205,40 @@ def fl_set_form_dblbuffer(pForm, flag):
             """void fl_set_form_dblbuffer(FL_FORM * form, int y)
             """)
     check_if_initialized()
-    check_if_FL_FORM_ptr(pForm)
+    check_if_FL_FORM_ptr(pFlForm)
     iflag = convert_to_int(flag)
-    keep_elem_refs(pForm, flag, iflag)
-    _fl_set_form_dblbuffer(pForm, iflag)
+    keep_elem_refs(pFlForm, flag, iflag)
+    _fl_set_form_dblbuffer(pFlForm, iflag)
 
 
-def fl_prepare_form_window(pForm, place, border, title):
+def fl_prepare_form_window(pFlForm, place, border, title):
     """
-        fl_prepare_form_window(pForm, place, border, title) -> win
+    fl_prepare_form_window(pFlForm, place, border, title) -> win
 
-        Creates a window that obeys any and all constraints just as
-        fl_show_form() does but remains unmapped (not shown), returning
-        its window handle. You after need fl_show_form_window() to show it.
+    Creates a window that obeys any and all constraints just as fl_show_form()
+    does but remains unmapped (not shown), returning its window handle. You
+    after need fl_show_form_window() to show it.
 
-        @param pForm: form to display
-                      (<pointer to xfdata.FL_FORM>)
-        @param place: where has to be placed (<int>)
-        @type place: (from xfdata module) FL_PLACE_FREE, FL_PLACE_MOUSE,
-                     FL_PLACE_CENTER, FL_PLACE_POSITION, FL_PLACE_SIZE,
-                     FL_PLACE_GEOMETRY, FL_PLACE_ASPECT, FL_PLACE_FULLSCREEN,
-                     FL_PLACE_HOTSPOT, FL_PLACE_ICONIC, FL_FREE_SIZE,
-                     FL_PLACE_FREE_CENTER, FL_PLACE_CENTERFREE
-        @param border: window manager decoration (<int>)
-        @type border: (from xfdata module) FL_FULLBORDER, FL_TRANSIENT,
-                      FL_NOBORDER
-        @param title: text title of form (<string>)
+    @param pFlForm: form to display
+    @type pFlForm: pointer to xfdata.FL_FORM
+    @param place: where has to be placed. Values (from xfdata module) i.e.
+        FL_PLACE_FREE, FL_PLACE_MOUSE, FL_PLACE_CENTER, FL_PLACE_POSITION,
+        FL_PLACE_SIZE, FL_PLACE_GEOMETRY, FL_PLACE_ASPECT, FL_PLACE_FULLSCREEN,
+        FL_PLACE_HOTSPOT, FL_PLACE_ICONIC, FL_FREE_SIZE, FL_PLACE_FREE_CENTER,
+        FL_PLACE_CENTERFREE
+    @type place: int
+    @param border: window manager decoration. Values (from xfdata module) i.e.
+        FL_FULLBORDER, FL_TRANSIENT, FL_NOBORDER
+    @type border: int
+    @param title: text title of form (<string>)
+    @type title: int
 
-        @returns: window id (<long_pos>)
+    @returns: window id (<long_pos>)
 
-        @example: wind = fl_prepare_form_window(pform2, FL_PLACE_FREE,
-                  FL_FULLBORDER, "MyForm")
+    @example: wind = fl_prepare_form_window(pform2, FL_PLACE_FREE,
+        FL_FULLBORDER, "MyForm")
 
-        @status: Tested + Doc + NoDemo = OK
+    @status: Tested + Doc + NoDemo = OK
     """
 
     _fl_prepare_form_window = cfuncproto(
@@ -2170,32 +2249,32 @@ def fl_prepare_form_window(pForm, place, border, title):
                int border, const char * name)
             """)
     check_if_initialized()
-    check_if_FL_FORM_ptr(pForm)
+    check_if_FL_FORM_ptr(pFlForm)
     check_admitted_listvalues(place, xfc.PLACE_list)
     check_admitted_listvalues(border, xfc.DECORATION_list)
     iplace = convert_to_int(place)
     iborder = convert_to_int(border)
     stitle = convert_to_string(title)
-    keep_elem_refs(pForm, place, iplace, border, iborder, title, stitle)
-    retval = _fl_prepare_form_window(pForm, iplace, iborder, stitle)
+    keep_elem_refs(pFlForm, place, iplace, border, iborder, title, stitle)
+    retval = _fl_prepare_form_window(pFlForm, iplace, iborder, stitle)
     return retval
 
 
-def fl_show_form_window(pForm):
+def fl_show_form_window(pFlForm):
     """
-        fl_show_form_window(pForm) -> win
+    fl_show_form_window(pFlForm) -> win
 
-        Maps (shows) a window of form that has been created before with
-        fl_prepare_form_window().
+    Maps (shows) a window of form that has been created before with
+    fl_prepare_form_window().
 
-        @param pForm: form whose window has to be shown
-                      (<pointer to xfdata.FL_FORM>)
+        @param pFlForm: form whose window has to be shown
+        @type pFlForm: pointer to xfdata.FL_FORM
 
-        @returns: window id (<long_pos>)
+    @returns: window id (<long_pos>)
 
-        @example: win1 = fl_show_form_window(pform2)
+    @example: win1 = fl_show_form_window(pform2)
 
-        @status: Tested + Doc + Demo = OK
+    @status: Tested + Doc + Demo = OK
     """
 
     _fl_show_form_window = cfuncproto(
@@ -2204,28 +2283,28 @@ def fl_show_form_window(pForm):
             """Window fl_show_form_window(FL_FORM * form)
             """)
     check_if_initialized()
-    check_if_FL_FORM_ptr(pForm)
-    keep_elem_refs(pForm)
-    retval = _fl_show_form_window(pForm)
+    check_if_FL_FORM_ptr(pFlForm)
+    keep_elem_refs(pFlForm)
+    retval = _fl_show_form_window(pFlForm)
     return retval
 
 
-def fl_adjust_form_size(pForm):
+def fl_adjust_form_size(pFlForm):
     """
-        fl_adjust_form_size(pForm) -> maxfact
+    fl_adjust_form_size(pFlForm) -> maxfact
 
-        Similar to fl_fit_object_label, but will do it for all objects and
-        has a smaller threshold. Mainly intended for compensation for font
-        size variations.
+    Similar to fl_fit_object_label, but will do it for all objects and has a
+    smaller threshold. Mainly intended for compensation for font size
+    variations.
 
-        @param pForm: form whose size has to be adjusted
-                      (<pointer to xfdata.FL_FORM>)
+    @param pFlForm: form whose size has to be adjusted
+    @type pFlForm: pointer to xfdata.FL_FORM
 
-        @returns: max factor id (<float>)
+    @returns: max factor id (<float>)
 
-        @example: mfactor = fl_adjust_form_size(pform)
+    @example: mfactor = fl_adjust_form_size(pform)
 
-        @status: Tested + Doc + Demo = OK
+    @status: Tested + Doc + Demo = OK
     """
 
     _fl_adjust_form_size = cfuncproto(
@@ -2234,26 +2313,26 @@ def fl_adjust_form_size(pForm):
             """double fl_adjust_form_size(FL_FORM * form)
             """)
     check_if_initialized()
-    check_if_FL_FORM_ptr(pForm)
-    keep_elem_refs(pForm)
-    retval = _fl_adjust_form_size(pForm)
+    check_if_FL_FORM_ptr(pFlForm)
+    keep_elem_refs(pFlForm)
+    retval = _fl_adjust_form_size(pFlForm)
     return retval
 
 
-def fl_form_is_visible(pForm):
+def fl_form_is_visible(pFlForm):
     """
-        fl_form_is_visible(pForm) -> state
+    fl_form_is_visible(pFlForm) -> int
 
-        Returns if form is visible or not.
+    Returns if form is visible or not.
 
-        @param pForm: form to evaluate
-                      (<pointer to xfdata.FL_FORM>)
+    @param pFlForm: form to evaluate
+    @type pFlForm: pointer to xfdata.FL_FORM
 
-        @returns: visibility state (0 invisible, non-zero visible) (<int>)
+    @returns: visibility state (0 invisible, non-zero visible) (<int>)
 
-        @example: visib = fl_form_is_visible(pform)
+    @example: visib = fl_form_is_visible(pform)
 
-        @status: Tested + Doc + NoDemo = OK
+    @status: Tested + Doc + NoDemo = OK
     """
 
     _fl_form_is_visible = cfuncproto(
@@ -2262,26 +2341,26 @@ def fl_form_is_visible(pForm):
             """int fl_form_is_visible(FL_FORM * form)
             """)
     check_if_initialized()
-    check_if_FL_FORM_ptr(pForm)
-    keep_elem_refs(pForm)
-    retval = _fl_form_is_visible(pForm)
+    check_if_FL_FORM_ptr(pFlForm)
+    keep_elem_refs(pFlForm)
+    retval = _fl_form_is_visible(pFlForm)
     return retval
 
 
-def fl_form_is_iconified(pForm):
+def fl_form_is_iconified(pFlForm):
     """
-        fl_form_is_iconified(pForm) -> state
+    fl_form_is_iconified(pFlForm) ->  int
 
-        Returns if a form's window is in iconified state or not.
+    Returns if a form's window is in iconified state or not.
 
-        @param pForm: form to evaluate
-                      (<pointer to xfdata.FL_FORM>)
+    @param pFlForm: form to evaluate
+    @type pFlForm: pointer to xfdata.FL_FORM
 
-        @returns: iconic state (0 not iconified, non-zero iconified) (<int>)
+    @returns: iconic state (0 not iconified, non-zero iconified) (<int>)
 
-        @example: iconif = fl_form_is_iconified(pform)
+    @example: iconif = fl_form_is_iconified(pform)
 
-        @status: Tested + Doc + NoDemo = OK
+    @status: Tested + Doc + NoDemo = OK
     """
 
     _fl_form_is_iconified = cfuncproto(
@@ -2290,39 +2369,39 @@ def fl_form_is_iconified(pForm):
             """int fl_form_is_iconified(FL_FORM * form)
             """)
     check_if_initialized()
-    check_if_FL_FORM_ptr(pForm)
-    keep_elem_refs(pForm)
-    retval = _fl_form_is_iconified(pForm)
+    check_if_FL_FORM_ptr(pFlForm)
+    keep_elem_refs(pFlForm)
+    retval = _fl_form_is_iconified(pFlForm)
     return retval
 
 
-def fl_register_raw_callback(pForm, mask, py_RawCallback):
+def fl_register_raw_callback(pFlForm, mask, py_RawCallback):
     """
-        fl_register_raw_callback(pForm, mask, py_RawCallback) -> old raw_callback func.
+    fl_register_raw_callback(pFlForm, mask, py_RawCallback) -> old raw_callback func.
 
-        Register pre-emptive event handlers. Only one handler is allowed
-        for each eent pair.
+    Register pre-emptive event handlers. Only one handler is allowed for each
+    event pair.
 
-        @param pForm: form
-                      (<pointer to xfdata.FL_FORM>)
-        @param mask: key/button/window event mask (press, release, motion,
-                     enter, leave etc..) (<long_pos>)
-        @type mask: (from xfdata module) KeyPressMask and KeyReleaseMask,
-                    ButtonPressMask and ButtonReleaseMask,
-                    EnterWindowMask and LeaveWindowMask, ButtonMotionMask
-                    and PointerMotionMask, FL_ALL_EVENT
-        @param py_RawCallback: python callback function, with return value
-        @type py_RawCallback: __ funcname (pForm, pXEvent) -> num __
+    @param pFlForm: form
+    @type pFlForm: pointer to xfdata.FL_FORM
+    @param mask: key/button/window event mask (press, release, motion,
+        enter, leave etc..). Values (from xfdata module) i.e. KeyPressMask
+        and KeyReleaseMask, ButtonPressMask and ButtonReleaseMask,
+        EnterWindowMask and LeaveWindowMask, ButtonMotionMask and
+        PointerMotionMask, FL_ALL_EVENT
+    @type mask: long_pos
+    @param py_RawCallback: python callback function, with return value
+    @type py_RawCallback: __ funcname (pFlForm, pXEvent) -> num __
 
-        @return: xfdata.FL_RAW_CALLBACK old function
+    @return: xfdata.FL_RAW_CALLBACK old function
 
-        @example: def rawcb(pform, xev):
-        @example: |->| ...
-        @example: |->| return 0
-        @example: oldrawcb = fl_register_callback(pform3, xfdata.KeyPressMask,
-                  rawcb)
+    @example: def rawcb(pform, xev):
+    @example: |->| ...
+    @example: |->| return 0
+    @example: oldrawcb = fl_register_callback(pform3, xfdata.KeyPressMask,
+        rawcb)
 
-        @status: Tested + Doc + Demo = OK
+    @status: Tested + Doc + Demo = OK
     """
 
     #FL_RAW_CALLBACK = cty.CFUNCTYPE(cty.c_int, cty.POINTER(xfc.FL_FORM), \
@@ -2335,12 +2414,12 @@ def fl_register_raw_callback(pForm, mask, py_RawCallback):
                long unsigned int mask, FL_RAW_CALLBACK rcb)
             """)
     check_if_initialized()
-    check_if_FL_FORM_ptr(pForm)
+    check_if_FL_FORM_ptr(pFlForm)
     ulmask = convert_to_ulong(mask)
     c_RawCallback = xfc.FL_RAW_CALLBACK(py_RawCallback)
     keep_cfunc_refs(c_RawCallback, py_RawCallback)
-    keep_elem_refs(pForm, mask, ulmask)
-    retval = _fl_register_raw_callback(pForm, ulmask, c_RawCallback)
+    keep_elem_refs(pFlForm, mask, ulmask)
+    retval = _fl_register_raw_callback(pFlForm, ulmask, c_RawCallback)
     return retval
 
 
@@ -2349,17 +2428,17 @@ fl_register_call_back = fl_register_raw_callback
 
 def fl_bgn_group():
     """
-        fl_bgn_group() -> pObject
+    fl_bgn_group() -> pFlObject
 
-        Starts a group of objects definition. It purpose can be e.g. to define
-        a series of objects to be hidden or deactivated or to define a series
-        of radio buttons.
+    Starts a group of objects definition. It purpose can be e.g. to define a
+    series of objects to be hidden or deactivated or to define a series of
+    radio buttons.
 
-        @returns: group started (<pointer to xfdata.FL_OBJECT>)
+    @returns: group started (<pointer to xfdata.FL_OBJECT>)
 
-        @example: group0 = fl_bgn_group()
+    @example: group0 = fl_bgn_group()
 
-        @status: Tested + Doc + Demo = OK
+    @status: Tested + Doc + Demo = OK
     """
 
     _fl_bgn_group = cfuncproto(
@@ -2374,13 +2453,13 @@ def fl_bgn_group():
 
 def fl_end_group():
     """
-        fl_end_group()
+    fl_end_group()
 
-        Ends a group definition.
+    Ends a group definition.
 
-        @example: fl_end_group()
+    @example: fl_end_group()
 
-        @status: Tested + Doc + Demo = OK
+    @status: Tested + Doc + Demo = OK
     """
 
     _fl_end_group = cfuncproto(
@@ -2392,21 +2471,20 @@ def fl_end_group():
     _fl_end_group()
 
 
-def fl_addto_group(pObject):
+def fl_addto_group(pFlObject):
     """
-        fl_addto_group(pObject) -> pForm
+    fl_addto_group(pFlObject) -> pFlForm
 
-        Reopens a group (after fl_end_group) to allow addition of further
-        objects.
+    Reopens a group (after fl_end_group) to allow addition of further objects.
 
-        @param pObject: group object to reopen
-                        (<pointer to xfdata.FL_OBJECT>)
+    @param pFlObject: group object to reopen
+    @type pFlObject: pointer to xfdata.FL_OBJECT
 
-        @returns: form (<pointer to xfdata.FL_FORM>) or None (on failure)
+    @returns: form (<pointer to xfdata.FL_FORM>) or None (on failure)
 
-        @example: group1 = fl_addto_group(closedgroup)
+    @example: group1 = fl_addto_group(closedgroup)
 
-        @status: Tested + Doc + NoDemo = OK
+    @status: Tested + Doc + NoDemo = OK
     """
 
     _fl_addto_group = cfuncproto(
@@ -2415,29 +2493,29 @@ def fl_addto_group(pObject):
             """FL_OBJECT * fl_addto_group(xfc.FL_OBJECT * group)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
-    keep_elem_refs(pObject)
-    retval = _fl_addto_group(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
+    keep_elem_refs(pFlObject)
+    retval = _fl_addto_group(pFlObject)
     return retval
 
 
 # Routines that deal with FL_OBJECTS
 
-def fl_get_object_objclass(pObject):
+def fl_get_object_objclass(pFlObject):
     """
-        fl_get_object_objclass(pObject) -> id
+    fl_get_object_objclass(pFlObject) -> int
 
-        Return the object class of an object. (e.g. button, lightbutton,
-        box, nmenu, counter, etc.) 
+    Return the object class of an object. (e.g. button, lightbutton, box,
+    nmenu, counter, etc.) 
 
-        @param pObject: object to evaluate
-                        (<pointer to xfc.FL_OBJECT>)
+    @param pFlObject: object to evaluate
+    @type pFlObject: pointer to xfdata.FL_OBJECT
 
-        @returns: objclass id (<int>) or -1 (on failure)
+    @returns: objclass id (<int>) or -1 (on failure)
 
-        @example: obcls = fl_get_object_objclass(pobj)
+    @example: obcls = fl_get_object_objclass(pobj)
 
-        @status: Tested + Doc + NoDemo = OK
+    @status: Tested + Doc + NoDemo = OK
     """
 
     _fl_get_object_objclass = cfuncproto(
@@ -2446,27 +2524,27 @@ def fl_get_object_objclass(pObject):
             """int fl_get_object_objclass(xfc.FL_OBJECT * obj)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
-    keep_elem_refs(pObject)
-    retval = _fl_get_object_objclass(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
+    keep_elem_refs(pFlObject)
+    retval = _fl_get_object_objclass(pFlObject)
     return retval
 
 
-def fl_get_object_type(pObject):
+def fl_get_object_type(pFlObject):
     """
-        fl_get_object_type(pObject) -> type id
+    fl_get_object_type(pFlObject) -> int
 
-        Return the type of an object (e.g. radio button, multiline input,
-        normal browser, etc..).
+    Return the type of an object (e.g. radio button, multiline input, normal
+    browser, etc..).
 
-        @param pObject: object to evaluate
-                        (<pointer to xfdata.FL_OBJECT>)
+    @param pFlObject: object to evaluate
+    @type pFlObject: pointer to xfdata.FL_OBJECT
 
-        @returns: type id (<int>) or -1 (on failure)
+    @returns: type id (<int>) or -1 (on failure)
 
-        @example: obtype = fl_get_object_type(pobj)
+    @example: obtype = fl_get_object_type(pobj)
 
-        @status: Tested + Doc + NoDemo = OK
+    @status: Tested + Doc + NoDemo = OK
     """
 
     _fl_get_object_type = cfuncproto(
@@ -2475,33 +2553,31 @@ def fl_get_object_type(pObject):
             """int fl_get_object_type(xfc.FL_OBJECT * obj)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
-    keep_elem_refs(pObject)
-    retval = _fl_get_object_type(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
+    keep_elem_refs(pFlObject)
+    retval = _fl_get_object_type(pFlObject)
     return retval
 
 
-def fl_set_object_boxtype(pObject, boxtype):
+def fl_set_object_boxtype(pFlObject, boxtype):
     """
-        fl_set_object_boxtype(pObject, boxtype)
+    fl_set_object_boxtype(pFlObject, boxtype)
 
-        Sets the shape of box of an object. Not all possible boxtypes are
-        suitable for all types of objects.
+    Sets the shape of box of an object. Not all possible boxtypes are suitable
+    for all types of objects.
 
-        @param pObject: object whose boxtype has to be set
-                        (<pointer to xfdata.FL_OBJECT>)
-        @param boxtype: type of the box to be set (<int>)
-        @type boxtype: (from xfdata module) FL_NO_BOX, FL_UP_BOX, FL_DOWN_BOX,
-                       FL_BORDER_BOX, FL_SHADOW_BOX, FL_FRAME_BOX,
-                       FL_ROUNDED_BOX, FL_EMBOSSED_BOX, FL_FLAT_BOX,
-                       FL_RFLAT_BOX, FL_RSHADOW_BOX, FL_OVAL_BOX,
-                       FL_ROUNDED3D_UPBOX, FL_ROUNDED3D_DOWNBOX,
-                       FL_OVAL3D_UPBOX, FL_OVAL3D_DOWNBOX, FL_OVAL3D_FRAMEBOX,
-                       FL_OVAL3D_EMBOSSEDBOX
+    @param pFlObject: object whose boxtype has to be set
+    @type pFlObject: pointer to xfdata.FL_OBJECT
+    @param boxtype: type of the box to be set. Values (from xfdata module)
+        i.e. FL_NO_BOX, FL_UP_BOX, FL_DOWN_BOX, FL_BORDER_BOX, FL_SHADOW_BOX,
+        FL_FRAME_BOX, FL_ROUNDED_BOX, FL_EMBOSSED_BOX, FL_FLAT_BOX,
+        FL_RFLAT_BOX, FL_RSHADOW_BOX, FL_OVAL_BOX, FL_ROUNDED3D_UPBOX,
+        FL_ROUNDED3D_DOWNBOX, FL_OVAL3D_UPBOX, FL_OVAL3D_DOWNBOX,
+        FL_OVAL3D_FRAMEBOX, FL_OVAL3D_EMBOSSEDBOX
 
-        @example: fl_set_object_boxtype(ptextobj, xfdata.FL_BORDER_BOX)
+    @example: fl_set_object_boxtype(ptextobj, xfdata.FL_BORDER_BOX)
 
-        @status: Tested + Doc + Demo = OK
+    @status: Tested + Doc + Demo = OK
     """
 
     _fl_set_object_boxtype = cfuncproto(
@@ -2510,28 +2586,28 @@ def fl_set_object_boxtype(pObject, boxtype):
             """void fl_set_object_boxtype(xfc.FL_OBJECT * ob, int boxtype)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
     check_admitted_listvalues(boxtype, xfc.BOXTYPE_list)
     iboxtype = convert_to_int(boxtype)
-    keep_elem_refs(pObject, boxtype, iboxtype)
-    _fl_set_object_boxtype(pObject, iboxtype)
+    keep_elem_refs(pFlObject, boxtype, iboxtype)
+    _fl_set_object_boxtype(pFlObject, iboxtype)
 
 
-def fl_get_object_boxtype(pObject):
+def fl_get_object_boxtype(pFlObject):
     """
-        fl_get_object_boxtype(pObject) -> boxtype id
+    fl_get_object_boxtype(pFlObject) -> boxtype id
 
-        Returns the current boxtype of an object (e.g. no box, up box, shadow
-        box, etc..).
+    Returns the current boxtype of an object (e.g. no box, up box, shadow box,
+    etc..).
 
-        @param pObject: object to evaluate
-                        (<pointer to xfdata.FL_OBJECT>)
+    @param pFlObject: object to evaluate
+    @type pFlObject: pointer to xfdata.FL_OBJECT
 
-        @returns: boxtype id (<int>) or -1 (on failure)
+    @returns: boxtype id (<int>) or -1 (on failure)
 
-        @example: boxtp = fl_get_object_boxtype(ptextobj)
+    @example: boxtp = fl_get_object_boxtype(ptextobj)
 
-        @status: Tested + Doc + NoDemo = OK
+    @status: Tested + Doc + NoDemo = OK
     """
 
     _fl_get_object_boxtype = cfuncproto(
@@ -2540,27 +2616,28 @@ def fl_get_object_boxtype(pObject):
             """int fl_get_object_boxtype(xfc.FL_OBJECT * obj)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
-    keep_elem_refs(pObject)
-    retval = _fl_get_object_boxtype(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
+    keep_elem_refs(pFlObject)
+    retval = _fl_get_object_boxtype(pFlObject)
     return retval
 
 
-def fl_set_object_bw(pObject, bw):
+def fl_set_object_bw(pFlObject, bw):
     """
-        fl_set_object_bw(pObject, bw)
+    fl_set_object_bw(pFlObject, bw)
 
-        Sets the borderwidth of an object. If requested borderwidth is 0,
-        -1 is used. If set to a negative number, all objects appear to have
-        a softer appearance (e.g. -2).
+    Sets the borderwidth of an object. If requested borderwidth is 0, -1 is
+    used. If set to a negative number, all objects appear to have a softer
+    appearance.
 
-        @param pObject: object
-                        (<pointer to xfdata.FL_OBJECT>)
-        @param bw: borderwidth of object to be set (<int>)
+    @param pFlObject: object
+    @type pFlObject: pointer to xfdata.FL_OBJECT
+    @param bw: borderwidth of object to be set
+    @type bw: int
 
-        @example: fl_set_object_bw(pobj, 2)
+    @example: fl_set_object_bw(pobj, 2)
 
-        @status: Tested + Doc + Demo = OK
+    @status: Tested + Doc + Demo = OK
     """
 
     _fl_set_object_bw = cfuncproto(
@@ -2569,29 +2646,29 @@ def fl_set_object_bw(pObject, bw):
             """void fl_set_object_bw(xfc.FL_OBJECT * ob, int bw)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
     ibw = convert_to_int(bw)
-    keep_elem_refs(pObject, bw, ibw)
-    _fl_set_object_bw(pObject, ibw)
+    keep_elem_refs(pFlObject, bw, ibw)
+    _fl_set_object_bw(pFlObject, ibw)
 
 
-def fl_get_object_bw(pObject):
+def fl_get_object_bw(pFlObject):
     """
-        fl_get_object_bw(pObject) -> bw
+    fl_get_object_bw(pFlObject) -> int
 
-        Returns the borderwidth of an object.
+    Returns the borderwidth of an object.
 
-        @param pObject: object to evaluate
-                        (<pointer to xfdata.FL_OBJECT>)
+    @param pFlObject: object to evaluate
+    @type pFlObject: pointer to xfdata.FL_OBJECT
 
-        @returns: borderwidth (<int>)
+    @returns: borderwidth (<int>)
 
-        @example: currbw = fl_get_object_bw(pobj)
+    @example: currbw = fl_get_object_bw(pobj)
 
-        @attention: API change from XForms - upstream was
-                    fl_get_object_bw(pObject, bw)
+    @attention: API change from XForms - upstream was
+        fl_get_object_bw(pFlObject, bw)
 
-        @status: Tested + Doc + NoDemo = OK
+    @status: Tested + Doc + NoDemo = OK
     """
 
     _fl_get_object_bw = cfuncproto(
@@ -2600,28 +2677,28 @@ def fl_get_object_bw(pObject):
             """void fl_get_object_bw(xfc.FL_OBJECT * ob, int * bw)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
     bw, pbw = make_int_and_pointer()
-    keep_elem_refs(pObject, bw, pbw)
-    _fl_get_object_bw(pObject, pbw)
+    keep_elem_refs(pFlObject, bw, pbw)
+    _fl_get_object_bw(pFlObject, pbw)
     return bw.value
 
 
-def fl_set_object_resize(pObject, what):
+def fl_set_object_resize(pFlObject, what):
     """
-        fl_set_object_resize(pObject, what)
+    fl_set_object_resize(pFlObject, what)
 
-        Sets the resize property of an object.
+    Sets the resize property of an object.
 
-        @param pObject: object to set
-                        (<pointer to xfdata.FL_OBJECT>)
-        @param what: resize property (<int_pos>)
-        @type what: (from xfdata module) FL_RESIZE_NONE, FL_RESIZE_X,
-                    FL_RESIZE_Y, FL_RESIZE_ALL
+    @param pFlObject: object to set
+    @type pFlObject: pointer to xfdata.FL_OBJECT
+    @param what: resize property. Values (from xfdata module) i.e.
+        FL_RESIZE_NONE, FL_RESIZE_X, FL_RESIZE_Y, FL_RESIZE_ALL
+    @type what: int_pos
 
-        @example: fl_set_object_resize(pobj, xfdata.FL_RESIZE_ALL)
+    @example: fl_set_object_resize(pobj, xfdata.FL_RESIZE_ALL)
 
-        @status: Tested + Doc + Demo = OK
+    @status: Tested + Doc + Demo = OK
     """
 
     _fl_set_object_resize = cfuncproto(
@@ -2630,31 +2707,31 @@ def fl_set_object_resize(pObject, what):
             """void fl_set_object_resize(xfc.FL_OBJECT * ob, unsigned int what)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
     check_admitted_listvalues(what, xfc.RESIZE_list)
     uiwhat = convert_to_uint(what)
-    keep_elem_refs(pObject, what, uiwhat)
-    _fl_set_object_resize(pObject, uiwhat)
+    keep_elem_refs(pFlObject, what, uiwhat)
+    _fl_set_object_resize(pFlObject, uiwhat)
 
 
-def fl_get_object_resize(pObject):
+def fl_get_object_resize(pFlObject):
     """
-        fl_get_object_resize(pObject) -> what
+    fl_get_object_resize(pFlObject) -> int_pos
 
-        Returns the resize property of an object (e.g. resize all, resize
-        none, etc..).
+    Returns the resize property of an object (e.g. resize all, resize none,
+    etc..).
 
-        @param pObject: object to evaluate
-                        (<pointer to xfdata.FL_OBJECT>)
+    @param pFlObject: object to evaluate
+    @type pFlObject: pointer to xfdata.FL_OBJECT
 
-        @returns: resize property (<int_pos>)
+    @returns: resize property (<int_pos>)
 
-        @attention: API change from XForms - upstream was
-                    fl_get_object_resize(pObject, what)
+    @attention: API change from XForms - upstream was
+        fl_get_object_resize(pFlObject, what)
 
-        @example: reszprop = fl_get_object_resize(pobj)
+    @example: reszprop = fl_get_object_resize(pobj)
 
-        @status: Tested + Doc + NoDemo = OK
+    @status: Tested + Doc + NoDemo = OK
     """
 
     _fl_get_object_resize = cfuncproto(
@@ -2664,33 +2741,33 @@ def fl_get_object_resize(pObject):
                unsigned int * what)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
     what, pwhat = make_uint_and_pointer()
-    keep_elem_refs(pObject, what, pwhat)
-    _fl_get_object_resize(pObject, pwhat)
+    keep_elem_refs(pFlObject, what, pwhat)
+    _fl_get_object_resize(pFlObject, pwhat)
     return what.value
 
 
-def fl_set_object_gravity(pObject, nw, se):
+def fl_set_object_gravity(pFlObject, nw, se):
     """
-        fl_set_object_gravity(pObject, nw, se)
+    fl_set_object_gravity(pFlObject, nw, se)
 
-        Sets the gravity properties of an object.
+    Sets the gravity properties of an object.
 
-        @param pObject: object to be set
-                        (<pointer to xfdata.FL_OBJECT>)
-        @param nw: gravity property for NorthWest (<int_pos>)
-        @type nw: (from xfdata module) FL_North, FL_NorthEast, FL_NorthWest,
-                  FL_South, FL_SouthEast, FL_SouthWest, FL_East, FL_West,
-                  FL_NoGravity, FL_ForgetGravity
-        @param se: gravity property for SouthEast (<int_pos>)
-        @type se: (from xfdata module) FL_North, FL_NorthEast, FL_NorthWest,
-                  FL_South, FL_SouthEast, FL_SouthWest, FL_East, FL_West,
-                  FL_NoGravity, FL_ForgetGravity
+    @param pFlObject: object to be set
+    @type pFlObject: pointer to xfdata.FL_OBJECT
+    @param nw: gravity property for NorthWest. Values (from xfdata module) i.e.
+        FL_North, FL_NorthEast, FL_NorthWest, FL_South, FL_SouthEast,
+        FL_SouthWest, FL_East, FL_West, FL_NoGravity, FL_ForgetGravity
+    @type nw: int_pos
+    @param se: gravity property for SouthEast. Values (from xfdata module) i.e.
+        FL_North, FL_NorthEast, FL_NorthWest, FL_South, FL_SouthEast,
+        FL_SouthWest, FL_East, FL_West, FL_NoGravity, FL_ForgetGravity
+    @type se: int_pos
 
-        @example: fl_set_object_gravity(pobj, xfdata.FL_North, xfdata.FL_East)
+    @example: fl_set_object_gravity(pobj, xfdata.FL_North, xfdata.FL_East)
 
-        @status: Tested + Doc + Demo = OK
+    @status: Tested + Doc + Demo = OK
     """
 
     _fl_set_object_gravity = cfuncproto(
@@ -2700,33 +2777,32 @@ def fl_set_object_gravity(pObject, nw, se):
                unsigned int se)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
     check_admitted_listvalues(nw, xfc.GRAVITY_list)
     check_admitted_listvalues(se, xfc.GRAVITY_list)
     uinw = convert_to_uint(nw)
     uise = convert_to_uint(se)
-    keep_elem_refs(pObject, nw, uinw, se, uise)
-    _fl_set_object_gravity(pObject, uinw, uise)
+    keep_elem_refs(pFlObject, nw, uinw, se, uise)
+    _fl_set_object_gravity(pFlObject, uinw, uise)
 
 
-def fl_get_object_gravity(pObject):
+def fl_get_object_gravity(pFlObject):
     """
-        fl_get_object_gravity(pObject) -> nw, se
+    fl_get_object_gravity(pFlObject) -> int_pos, int_pos
 
-        Returns the gravity properties of an object (e.g. North, SouthWest,
-        etc..).
+    Returns the gravity properties of an object (e.g. North, SouthWest, etc..).
 
-        @param pObject: object to set
-                        (<pointer to xfdata.FL_OBJECT>)
+    @param pFlObject: object to set
+    @type pFlObject: pointer to xfdata.FL_OBJECT
 
-        @returns: NorthWest and SouthEast gravity (<int_pos>, <int_pos>)
+    @returns: NorthWest and SouthEast gravity (<int_pos>, <int_pos>)
 
-        @attention: API change from XForms - upstream was
-                    fl_get_object_gravity(pObject, nw, se)
+    @attention: API change from XForms - upstream was
+        fl_get_object_gravity(pFlObject, nw, se)
 
-        @example: nowe, soea = fl_get_object_gravity(pobj)
+    @example: nowe, soea = fl_get_object_gravity(pobj)
 
-        @status: Tested + Doc + NoDemo = OK
+    @status: Tested + Doc + NoDemo = OK
     """
 
     _fl_get_object_gravity = cfuncproto(
@@ -2737,29 +2813,30 @@ def fl_get_object_gravity(pObject):
                unsigned int * nw, unsigned int * se)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
     nw, pnw = make_uint_and_pointer()
     se, pse = make_uint_and_pointer()
-    keep_elem_refs(pObject, nw, se, pnw, pse)
-    _fl_get_object_gravity(pObject, pnw, pse)
+    keep_elem_refs(pFlObject, nw, se, pnw, pse)
+    _fl_get_object_gravity(pFlObject, pnw, pse)
     return nw.value, se.value
 
 
-def fl_set_object_lsize(pObject, size):
-    """ fl_set_object_lsize(pObject, size)
+def fl_set_object_lsize(pFlObject, size):
+    """
+    fl_set_object_lsize(pFlObject, size)
 
-        Sets the label size of an object.
+    Sets the label size of an object.
 
-        @param pObject: object to be set
-                        (<pointer to xfdata.FL_OBJECT>)
-        @param size: label size (<int>)
-        @type size: (from xfdata module) FL_TINY_SIZE, FL_SMALL_SIZE, 
-                    FL_NORMAL_SIZE, FL_MEDIUM_SIZE, FL_LARGE_SIZE,
-                    FL_HUGE_SIZE, FL_DEFAULT_SIZE
+    @param pFlObject: object to be set
+    @type pFlObject: pointer to xfdata.FL_OBJECT
+    @param size: label size. Values (from xfdata module) i.e. FL_TINY_SIZE,
+        FL_SMALL_SIZE, FL_NORMAL_SIZE, FL_MEDIUM_SIZE, FL_LARGE_SIZE,
+        FL_HUGE_SIZE, FL_DEFAULT_SIZE
+    @type size: int
 
-        @example: fl_set_object_lsize(pobj, xfdata.FL_MEDIUM_SIZE)
+    @example: fl_set_object_lsize(pobj, xfdata.FL_MEDIUM_SIZE)
 
-        @status: Tested + Doc + Demo = OK
+    @status: Tested + Doc + Demo = OK
     """
 
     _fl_set_object_lsize = cfuncproto(
@@ -2768,26 +2845,27 @@ def fl_set_object_lsize(pObject, size):
             """void fl_set_object_lsize(xfc.FL_OBJECT * ob, int lsize)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
     check_admitted_listvalues(size, xfc.FONTSIZE_list)
     isize = convert_to_int(size)
-    keep_elem_refs(pObject, size, isize)
-    _fl_set_object_lsize(pObject, isize)
+    keep_elem_refs(pFlObject, size, isize)
+    _fl_set_object_lsize(pFlObject, isize)
 
 
-def fl_get_object_lsize(pObject):
-    """ fl_get_object_lsize(pObject) -> size
+def fl_get_object_lsize(pFlObject):
+    """
+    fl_get_object_lsize(pFlObject) -> int
 
-        Returns the label size of an object.
+    Returns the label size of an object.
 
-        @param pObject: object to evaluate
-                        (<pointer to xfdata.FL_OBJECT>)
+    @param pFlObject: object to evaluate
+    @type pFlObject: pointer to xfdata.FL_OBJECT
 
-        @returns: label size (<int>)
+    @returns: label size (<int>)
 
-        @example: lsize = fl_get_object_lsize(pobj)
+    @example: lsize = fl_get_object_lsize(pobj)
 
-        @status: Tested + Doc + Demo = OK
+    @status: Tested + Doc + Demo = OK
     """
 
     _fl_get_object_lsize = cfuncproto(
@@ -2796,32 +2874,32 @@ def fl_get_object_lsize(pObject):
             """int fl_get_object_lsize(xfc.FL_OBJECT * obj)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
-    keep_elem_refs(pObject)
-    retval = _fl_get_object_lsize(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
+    keep_elem_refs(pFlObject)
+    retval = _fl_get_object_lsize(pFlObject)
     return retval
 
 
-def fl_set_object_lstyle(pObject, style):
-    """ fl_set_object_lstyle(pObject, style)
+def fl_set_object_lstyle(pFlObject, style):
+    """
+    fl_set_object_lstyle(pFlObject, style)
 
-        Sets the label style of an object.
+    Sets the label style of an object.
 
-        @param pObject: object ot be set
-                        (<pointer to xfdata.FL_OBJECT>)
-        @param style: label style (<int>)
-        @type style: (from xfdata module) FL_NORMAL_STYLE, FL_BOLD_STYLE,
-                     FL_ITALIC_STYLE, FL_BOLDITALIC_STYLE, FL_FIXED_STYLE,
-                     FL_FIXEDBOLD_STYLE, FL_FIXEDITALIC_STYLE,
-                     FL_FIXEDBOLDITALIC_STYLE, FL_TIMES_STYLE,
-                     FL_TIMESBOLD_STYLE, FL_TIMESITALIC_STYLE,
-                     FL_TIMESBOLDITALIC_STYLE, FL_MISC_STYLE,
-                     FL_MISCBOLD_STYLE, FL_MISCITALIC_STYLE, FL_SYMBOL_STYLE,
-                     FL_SHADOW_STYLE, FL_ENGRAVED_STYLE, FL_EMBOSSED_STYLE
+    @param pFlObject: object ot be set
+    @type pFlObject: pointer to xfdata.FL_OBJECT
+    @param style: label style. Values (from xfdata module) i.e.
+        FL_NORMAL_STYLE, FL_BOLD_STYLE, FL_ITALIC_STYLE, FL_BOLDITALIC_STYLE,
+        FL_FIXED_STYLE, FL_FIXEDBOLD_STYLE, FL_FIXEDITALIC_STYLE,
+        FL_FIXEDBOLDITALIC_STYLE, FL_TIMES_STYLE, FL_TIMESBOLD_STYLE,
+        FL_TIMESITALIC_STYLE, FL_TIMESBOLDITALIC_STYLE, FL_MISC_STYLE,
+        FL_MISCBOLD_STYLE, FL_MISCITALIC_STYLE, FL_SYMBOL_STYLE,
+        FL_SHADOW_STYLE, FL_ENGRAVED_STYLE, FL_EMBOSSED_STYLE
+    @type style: int
 
-        @example: fl_set_object_lstyle(pobj, xfdata.FL_TIMESITALIC_STYLE)
+    @example: fl_set_object_lstyle(pobj, xfdata.FL_TIMESITALIC_STYLE)
 
-        @status: Tested + Doc + Demo = OK
+    @status: Tested + Doc + Demo = OK
     """
 
     _fl_set_object_lstyle = cfuncproto(
@@ -2830,27 +2908,28 @@ def fl_set_object_lstyle(pObject, style):
             """void fl_set_object_lstyle(xfc.FL_OBJECT * ob, int lstyle)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
     check_admitted_listvalues(style, xfc.TEXTSTYLE_list)
     istyle = convert_to_int(style)
-    keep_elem_refs(pObject, style, istyle)
-    _fl_set_object_lstyle(pObject, istyle)
+    keep_elem_refs(pFlObject, style, istyle)
+    _fl_set_object_lstyle(pFlObject, istyle)
 
 
-def fl_get_object_lstyle(pObject):
-    """ fl_get_object_lstyle(pObject) -> style
+def fl_get_object_lstyle(pFlObject):
+    """
+    fl_get_object_lstyle(pFlObject) -> int
 
-        Returns the label style of an object (e.g. xfdata.FL_BOLD_STYLE,
-        xfdata.FL_NORMAL_STYLE, etc..).
+    Returns the label style of an object (e.g. xfdata.FL_BOLD_STYLE,
+    xfdata.FL_NORMAL_STYLE, etc..).
 
-        @param pObject: object to evaluate
-                        (<pointer to xfdata.FL_OBJECT>)
+    @param pFlObject: object to evaluate
+    @type pFlObject: pointer to xfdata.FL_OBJECT
 
-        @returns: label style (<int>)
+    @returns: label style (<int>)
 
-        @example: lstyle = fl_get_object_lstyle(pobj)
+    @example: lstyle = fl_get_object_lstyle(pobj)
 
-        @status: Tested + NoDoc + Demo = OK
+    @status: Tested + NoDoc + Demo = OK
     """
 
     _fl_get_object_lstyle = cfuncproto(
@@ -2859,26 +2938,27 @@ def fl_get_object_lstyle(pObject):
             """int fl_get_object_lstyle(xfc.FL_OBJECT * obj)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
-    keep_elem_refs(pObject)
-    retval = _fl_get_object_lstyle(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
+    keep_elem_refs(pFlObject)
+    retval = _fl_get_object_lstyle(pFlObject)
     return retval
 
 
-def fl_set_object_lcol(pObject, colr):
-    """ fl_set_object_lcol(pObject, colr)
+def fl_set_object_lcol(pFlObject, colr):
+    """
+    fl_set_object_lcol(pFlObject, colr)
 
-        Sets the label color of an object.
+    Sets the label color of an object.
 
-        @param pObject: object to be set
-                        (<pointer to xfdata.FL_OBJECT>)
-        @param colr: label color <long_pos>
-        @type colr: (from xfdata module) one of defined colors FL_BLACK, ...
-                    FL_BLUE, ... FL_GREEN, ... FL_RED, ... etc..
+    @param pFlObject: object to be set
+    @type pFlObject: pointer to xfdata.FL_OBJECT
+    @param colr: label color. Values (from xfdata module) one of defined
+        colors FL_BLACK, ... FL_BLUE, ... FL_GREEN, ... FL_RED, ... etc..
+    @type colr: long_pos
 
-        @example: fl_set_object_lcol(pobj, xfdata.FL_BLUE)
+    @example: fl_set_object_lcol(pobj, xfdata.FL_BLUE)
 
-        @status: Tested + Doc + Demo = OK
+    @status: Tested + Doc + Demo = OK
     """
 
     _fl_set_object_lcol = cfuncproto(
@@ -2887,30 +2967,31 @@ def fl_set_object_lcol(pObject, colr):
             """void fl_set_object_lcol(xfc.FL_OBJECT * ob, FL_COLOR lcol)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
     check_admitted_listvalues(colr, xfc.COLOR_list)
     ulcolr = convert_to_FL_COLOR(colr)
-    keep_elem_refs(pObject, colr, ulcolr)
-    _fl_set_object_lcol(pObject, ulcolr)
+    keep_elem_refs(pFlObject, colr, ulcolr)
+    _fl_set_object_lcol(pFlObject, ulcolr)
 
 
 fl_set_object_lcolor = fl_set_object_lcol
 
 
-def fl_get_object_lcol(pObject):
-    """ fl_get_object_lcol(pObject) -> color
+def fl_get_object_lcol(pFlObject):
+    """
+    fl_get_object_lcol(pFlObject) -> long_pos
 
-        Returns the label color of an object (e.g. xfdata.FL_WHITE,
-        xfdata.FL_LIME, etc..).
+    Returns the label color of an object (e.g. xfdata.FL_WHITE,
+    xfdata.FL_LIME, etc..).
 
-        @param pObject: object
-                        (<pointer to xfdata.FL_OBJECT>)
+    @param pFlObject: object
+    @type pFlObject: pointer to xfdata.FL_OBJECT
 
-        @returns: color value (<long_pos>)
+    @returns: color value (<long_pos>)
 
-        @example: obcolor = fl_get_object_lcol(pobj)
+    @example: obcolor = fl_get_object_lcol(pobj)
 
-        @status: Tested + Doc + NoDemo = OK
+    @status: Tested + Doc + NoDemo = OK
     """
 
     _fl_get_object_lcol = cfuncproto(
@@ -2919,36 +3000,36 @@ def fl_get_object_lcol(pObject):
             """FL_COLOR fl_set_object_lcol(xfc.FL_OBJECT * obj)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
-    keep_elem_refs(pObject)
-    retval = _fl_get_object_lcol(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
+    keep_elem_refs(pFlObject)
+    retval = _fl_get_object_lcol(pFlObject)
     return retval
 
 
-def fl_set_object_return(pObject, when):
-    """ fl_set_object_return(pObject, when) -> ID num
+def fl_set_object_return(pFlObject, when):
+    """
+    fl_set_object_return(pFlObject, when) -> int
 
-        Sets the conditions under which an object gets returned (or its
-        callback invoked). If the object has to do additional work on
-        setting te condition (e.g. it has child objects that also need
-        to be set) it has to set up it's own function that then will
-        called in the end. This should only be called once an object
-        has been created completely! Not all return types make sense
-        for all objects.
+    Sets the conditions under which an object gets returned (or its callback
+    invoked). If the object has to do additional work on setting te condition
+    (e.g. it has child objects that also need to be set) it has to set up it's
+    own function that then will called in the end. This should only be called
+    once an object has been created completely! Not all return types make
+    sense for all objects.
 
-        @param pObject: object
-                        (<pointer to xfdata.FL_OBJECT>)
-        @param when: return type (when it returns) (<int_pos>)
-        @type when: (from xfdata module) FL_RETURN_NONE, FL_RETURN_CHANGED,
-                    FL_RETURN_END, FL_RETURN_END_CHANGED, FL_RETURN_SELECTION,
-                    FL_RETURN_DESELECTION, FL_RETURN_TRIGGERED,
-                    FL_RETURN_ALWAYS
+    @param pFlObject: object
+    @type pFlObject: pointer to xfdata.FL_OBJECT
+    @param when: return type (when it returns). Values (from xfdata module)
+        i.e. FL_RETURN_NONE, FL_RETURN_CHANGED, FL_RETURN_END,
+        FL_RETURN_END_CHANGED, FL_RETURN_SELECTION, FL_RETURN_DESELECTION,
+        FL_RETURN_TRIGGERED, FL_RETURN_ALWAYS
+    @type when: int_pos
 
-        @returns: return type id (<int>)
+    @returns: return type id (<int>)
 
-        @example: fl_set_object_return(pobj, xfdata.FL_RETURN_CHANGED)
+    @example: fl_set_object_return(pobj, xfdata.FL_RETURN_CHANGED)
 
-        @status: Tested + Doc + Demo = OK
+    @status: Tested + Doc + Demo = OK
     """
 
     _fl_set_object_return = cfuncproto(
@@ -2957,26 +3038,27 @@ def fl_set_object_return(pObject, when):
             """int fl_set_object_return(xfc.FL_OBJECT * ob, unsigned int when)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
     check_admitted_listvalues(when, xfc.RETURN_list)
     uiwhen = convert_to_uint(when)
-    keep_elem_refs(pObject, when, uiwhen)
-    retval = _fl_set_object_return(pObject, uiwhen)
+    keep_elem_refs(pFlObject, when, uiwhen)
+    retval = _fl_set_object_return(pFlObject, uiwhen)
     return retval
 
 
-def fl_notify_object(pObject, cause):
-    """ fl_notify_object(pObject, cause)
+def fl_notify_object(pFlObject, cause):
+    """
+    fl_notify_object(pFlObject, cause)
 
-        @param pObject: pointer to object
-                        (<pointer to xfdata.FL_OBJECT>)
-        @param cause: cause for notification (<int>)
-        @type cause: (from xfdata module) FL_ATTRIB, FL_RESIZED,
-                     FL_MOVEORIGIN
+    @param pFlObject: pointer to object
+    @type pFlObject: pointer to xfdata.FL_OBJECT
+    @param cause: cause for notification. Values (from xfdata module) i.e.
+        FL_ATTRIB, FL_RESIZED, FL_MOVEORIGIN
+    @type cause: int
 
-        @example: fl_notify_object(pobj5, xfdata.FL_RESIZED)
+    @example: fl_notify_object(pobj5, xfdata.FL_RESIZED)
 
-        @status: Tested + NoDoc + NoDemo = NOT OK (not clear purpose)
+    @status: Tested + NoDoc + NoDemo = NOT OK (not clear purpose)
     """
 
     _fl_notify_object = cfuncproto(
@@ -2985,30 +3067,31 @@ def fl_notify_object(pObject, cause):
             """void fl_notify_object(xfc.FL_OBJECT * obj, int cause)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
     check_admitted_listvalues(cause, xfc.EVENTS_list)
     icause = convert_to_int(cause)
-    keep_elem_refs(pObject, cause, icause)
-    _fl_notify_object(pObject, icause)
+    keep_elem_refs(pFlObject, cause, icause)
+    _fl_notify_object(pFlObject, icause)
 
 
-def fl_set_object_lalign(pObject, align):
-    """ fl_set_object_lalign(pObject, align)
+def fl_set_object_lalign(pFlObject, align):
+    """
+    fl_set_object_lalign(pFlObject, align)
 
-        Sets alignment of an object's label.
+    Sets alignment of an object's label.
 
-        @param pObject: object to be set
-                        (<pointer to xfdata.FL_OBJECT>)
-        @param align: alignment of label (<int>)
-        @type align: (from xfdata module) FL_ALIGN_CENTER, FL_ALIGN_TOP,
-                     FL_ALIGN_BOTTOM, FL_ALIGN_LEFT, FL_ALIGN_RIGHT,
-                     FL_ALIGN_LEFT_TOP, FL_ALIGN_RIGHT_TOP,
-                     FL_ALIGN_LEFT_BOTTOM, FL_ALIGN_RIGHT_BOTTOM,
-                     FL_ALIGN_INSIDE, FL_ALIGN_VERT
+    @param pFlObject: object to be set
+    @type pFlObject: pointer to xfdata.FL_OBJECT
+    @param align: alignment of label. Values (from xfdata module) i.e.
+        FL_ALIGN_CENTER, FL_ALIGN_TOP, FL_ALIGN_BOTTOM, FL_ALIGN_LEFT,
+        FL_ALIGN_RIGHT, FL_ALIGN_LEFT_TOP, FL_ALIGN_RIGHT_TOP,
+        FL_ALIGN_LEFT_BOTTOM, FL_ALIGN_RIGHT_BOTTOM, FL_ALIGN_INSIDE,
+        FL_ALIGN_VERT
+    @type align: int
 
-        @example: fl_set_object_lalign(pobj8, xfdata.FL_ALIGN_RIGHT)
+    @example: fl_set_object_lalign(pobj8, xfdata.FL_ALIGN_RIGHT)
 
-        @status: Tested + Doc + Demo = OK
+    @status: Tested + Doc + Demo = OK
     """
 
     _fl_set_object_lalign = cfuncproto(
@@ -3017,25 +3100,26 @@ def fl_set_object_lalign(pObject, align):
             """void fl_set_object_lalign(xfc.FL_OBJECT * ob, int align)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
     check_admitted_listvalues(align, xfc.ALIGN_list)
     ialign = convert_to_int(align)
-    keep_elem_refs(pObject, align, ialign)
-    _fl_set_object_lalign(pObject, ialign)
+    keep_elem_refs(pFlObject, align, ialign)
+    _fl_set_object_lalign(pFlObject, ialign)
 
 
-def fl_get_object_lalign(pObject):
-    """ fl_get_object_lalign(pObject) -> align num.
+def fl_get_object_lalign(pFlObject):
+    """
+    fl_get_object_lalign(pFlObject) -> align num.
 
-        Returns alignment of an object's label (e.g. xfdata.FL_ALIGN_LEFT,
-        xfdata.FL_ALIGN_RIGHT_TOP, etc..).
+    Returns alignment of an object's label (e.g. xfdata.FL_ALIGN_LEFT,
+    xfdata.FL_ALIGN_RIGHT_TOP, etc..).
 
-        @param pObject: object to be set
-                        (<pointer to xfdata.FL_OBJECT>)
+    @param pFlObject: object to be set
+    @type pFlObject: pointer to xfdata.FL_OBJECT
 
-        @example: obalign = fl_get_object_lalign(pobj8)
+    @example: obalign = fl_get_object_lalign(pobj8)
 
-        @status: Tested + Doc + Demo = OK
+    @status: Tested + Doc + Demo = OK
     """
 
     _fl_get_object_lalign = cfuncproto(
@@ -3044,49 +3128,50 @@ def fl_get_object_lalign(pObject):
             """int fl_set_object_lalign(xfc.FL_OBJECT * ob)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
-    keep_elem_refs(pObject)
-    retval = _fl_get_object_lalign(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
+    keep_elem_refs(pFlObject)
+    retval = _fl_get_object_lalign(pFlObject)
     return retval
 
 
 fl_set_object_align = fl_set_object_lalign
 
 
-def fl_set_object_shortcut(pObject, shctxt, showit):
-    """ fl_set_object_shortcut(pObject, shctxt, showit)
+def fl_set_object_shortcut(pFlObject, shctxt, showit):
+    """
+    fl_set_object_shortcut(pFlObject, shctxt, showit)
 
-        Sets a shortcut, binding a key or a series of keys to an object. It
-        resets any previous defined shortcuts for the object.
-        Using e.g. "acE#d^h" the keys 'a', 'c', 'E', <Alt>d and <Ctrl>h are
-        associated with the object. The precise format is as follows: any
-        character in the string is considered as a shortcut, except '^' and
-        '#', which stand for combinations with the <Ctrl> and <Alt> keys.
-        (the case of the key following '#' or '^' is not important, i.e. no
-        distiction is made between e.g. "^C" and "^c", both encode the key
-        combination <Ctrl>C as well as <Ctrl>C.) The key '^' itself can be
-        set as a shortcut key by using "^^" in the string defining the
-        shortcut. The key '#' can be obtained as a shortcut by using the
-        string "^#". So, e.g. "#^#" encodes <ALT>#. The <Esc> key can be given
-        as "^[". Another special character not mentioned yet is '&', which
-        indicates function and arrow keys. Use a sequence starting with '&'
-        and directly followed by a number between 1 and 35 to represent one of
-        the function keys. For example, "&2" stands for the <F2> function key.
-        The four cursors keys (up, down, right, and left) can be given as "&A",
-        "&B", "&C" and "&D", respectively. The key '&' itself can be obtained
-        as a shortcut by prefixing it with '^'. 
+    Sets a shortcut, binding a key or a series of keys to an object. It resets
+    any previous defined shortcuts for the object. Using e.g. "acE#d^h" the
+    keys 'a', 'c', 'E', <Alt>d and <Ctrl>h are associated with the object. The
+    precise format is as follows: any character in the string is considered as
+    a shortcut, except '^' and '#', which stand for combinations with the
+    <Ctrl> and <Alt> keys; the case of the key following '#' or '^' is not
+    important, i.e. no distinction is made between e.g. "^C" and "^c", both
+    encode the key combination <Ctrl>C as well as <Ctrl>C.) The key '^' itself
+    can be set as a shortcut key by using "^^" in the string defining the
+    shortcut. The key '#' can be obtained as a shortcut by using the string
+    "^#". So, e.g. "#^#" encodes <ALT>#. The <Esc> key can be given as "^[".
+    Another special character not mentioned yet is '&', which indicates
+    function and arrow keys. Use a sequence starting with '&' and directly
+    followed by a number between 1 and 35 to represent one of the function
+    keys. For example, "&2" stands for the <F2> function key. The four cursors
+    keys (up, down, right, and left) can be given as "&A", "&B", "&C" and "&D",
+    respectively. The key '&' itself can be obtained as a shortcut by
+    prefixing it with '^'. 
 
-        @param pObject: object
-                        (<pointer to xfdata.FL_OBJECT>)
-        @param shctxt: shortcut text to be set (<string>)
-        @param showit: flag if shortcut letter has to be underlined or not if
-                       a match exists (only the 1st alphanumeric character is
-                       used.
-        @type showit: 0 (underline not shown) or 1 (shown)
+    @param pFlObject: object
+    @type pFlObject: pointer to xfdata.FL_OBJECT
+    @param shctxt: shortcut text to be set
+    @type shctxt: string
+    @param showit: flag if shortcut letter has to be underlined or not if
+        a match exists (only the 1st alphanumeric character is used). Values
+        i.e. 0 (underline not shown) or 1 (shown)
+    @type showit: int
 
-        @example: fl_set_object_shortcut(pobj6, "aA#A^A", 1)
+    @example: fl_set_object_shortcut(pobj6, "aA#A^A", 1)
 
-        @status: Tested + Doc + NoDemo = OK
+    @status: Tested + Doc + NoDemo = OK
     """
 
     _fl_set_object_shortcut = cfuncproto(
@@ -3096,27 +3181,29 @@ def fl_set_object_shortcut(pObject, shctxt, showit):
                const char * sstr, int showit)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
     sshctxt = convert_to_string(shctxt)
     ishowit = convert_to_int(showit)
-    keep_elem_refs(pObject, shctxt, sshctxt, showit, ishowit)
-    _fl_set_object_shortcut(pObject, sshctxt, ishowit)
+    keep_elem_refs(pFlObject, shctxt, sshctxt, showit, ishowit)
+    _fl_set_object_shortcut(pFlObject, sshctxt, ishowit)
 
 
-def fl_set_object_shortcutkey(pObject, keysym):
-    """ fl_set_object_shortcutkey(pObject, keysym)
+def fl_set_object_shortcutkey(pFlObject, keysym):
+    """
+    fl_set_object_shortcutkey(pFlObject, keysym)
 
-        Uses a special key as a shortcut. It always appends the specified key
-        to the current shortcuts. Special keys can't be underlined.
+    Uses a special key as a shortcut. It always appends the specified key to
+    the current shortcuts. Special keys can't be underlined.
 
-        @param pObject: object
-                        (<pointer to xfdata.FL_OBJECT>)
-        @param keysym: X key symbolic num. (<int_pos>)
-        @type keysym: see xfdata module for a (maybe) incomplete list
+    @param pFlObject: object
+    @type pFlObject: pointer to xfdata.FL_OBJECT
+    @param keysym: X key symbolic num. See xfdata module for a (maybe)
+        incomplete list
+    @type keysym: int_pos
 
-        @example: fl_set_object_shortcutkey(pobj, xfdata.XK_Home)
+    @example: fl_set_object_shortcutkey(pobj, xfdata.XK_Home)
 
-        @status: Tested + Doc + NoDemo = OK
+    @status: Tested + Doc + NoDemo = OK
     """
 
     _fl_set_object_shortcutkey = cfuncproto(
@@ -3126,35 +3213,36 @@ def fl_set_object_shortcutkey(pObject, keysym):
                unsigned int keysym)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
     uikeysym = convert_to_uint(keysym)
-    keep_elem_refs(pObject, keysym, uikeysym)
-    _fl_set_object_shortcutkey(pObject, uikeysym)
+    keep_elem_refs(pFlObject, keysym, uikeysym)
+    _fl_set_object_shortcutkey(pFlObject, uikeysym)
 
 
-def fl_set_object_dblbuffer(pObject, flag):
-    """ fl_set_object_dblbuffer(pObject, flag)
+def fl_set_object_dblbuffer(pFlObject, flag):
+    """
+    fl_set_object_dblbuffer(pFlObject, flag)
 
-        Uses double buffering on a per-object basis. Currently double
-        buffering for objects having a non-rectangular box might not work
-        well. A nonrectangular box means that there are regions within the
-        bounding box that should not be painted, which is not easily done
-        without complex and expensive clipping and unacceptable inefficiency.
-        Since Xlib doesn't support double buffering, XForms library simulates
-        this functionality with pixmap bit-bliting. In practice, the effect
-        is hardly distinguishable from double buffering and performance is on
-        par with multi-buffering extensions (It is slower than drawing into
-        a window directly on most workstations however). Bear in mind that
-        a pixmap can be resource hungry, so use this option with discretion.
+    Uses double buffering on a per-object basis. Currently double buffering
+    for objects having a non-rectangular box might not work well. A
+    nonrectangular box means that there are regions within the bounding box
+    that should not be painted, which is not easily done without complex and
+    expensive clipping and unacceptable inefficiency. Since Xlib doesn't
+    support double buffering, XForms library simulates this functionality with
+    pixmap bit-bliting. In practice, the effect is hardly distinguishable from
+    double buffering and performance is on par with multi-buffering extensions
+    (it is slower than drawing into a window directly on most workstations
+    however). Bear in mind that a pixmap can be resource hungry, so use this
+    option with discretion.
 
-        @param pObject: object
-                        (<pointer to xfdata.FL_OBJECT>)
-        @param flag: flag to disable/enable double buffer (<int>)
-        @type flag: 0 (disabled) or 1 (enabled)
+    @param pFlObject: object
+    @type pFlObject: pointer to xfdata.FL_OBJECT
+    @param flag: flag to disable/enable double buffer. Values i.e. 0
+        (disabled) or 1 (enabled)
 
-        @example: fl_set_object_dblbuffer(pobj7, 1)
+    @example: fl_set_object_dblbuffer(pobj7, 1)
 
-        @status: Tested + Doc + Demo = OK
+    @status: Tested + Doc + Demo = OK
     """
 
     _fl_set_object_dblbuffer = cfuncproto(
@@ -3163,25 +3251,28 @@ def fl_set_object_dblbuffer(pObject, flag):
             """void fl_set_object_dblbuffer(xfc.FL_OBJECT * ob, int y)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
     iflag = convert_to_int(flag)
-    keep_elem_refs(pObject, flag, iflag)
-    _fl_set_object_dblbuffer(pObject, iflag)
+    keep_elem_refs(pFlObject, flag, iflag)
+    _fl_set_object_dblbuffer(pFlObject, iflag)
 
 
-def fl_set_object_color(pObject, fgcolr, bgcolr):
-    """ fl_set_object_color(pObject, fgcolr, bgcolr)
+def fl_set_object_color(pFlObject, fgcolr, bgcolr):
+    """
+    fl_set_object_color(pFlObject, fgcolr, bgcolr)
 
-        Sets the color of an object.
+    Sets the color of an object.
 
-        @param pObject: object
-                        (<pointer to xfdata.FL_OBJECT>)
-        @param fgcolr: foreground color value (<long_pos>)
-        @param bgcolr: background color value (<long_pos>)
+    @param pFlObject: object
+    @type pFlObject: pointer to xfdata.FL_OBJECT
+    @param fgcolr: foreground color value
+    @type fgcolr: long_pos
+    @param bgcolr: background color value
+    @type bgcolr: long_pos
 
-        @example: fl_set_object_color(pbutob7, xfdata.FL_AQUA, xfdata.FL_WHEAT)
+    @example: fl_set_object_color(pbutob7, xfdata.FL_AQUA, xfdata.FL_WHEAT)
 
-        @status: Tested + Doc + NoDemo = OK
+    @status: Tested + Doc + NoDemo = OK
     """
 
     _fl_set_object_color = cfuncproto(
@@ -3191,32 +3282,32 @@ def fl_set_object_color(pObject, fgcolr, bgcolr):
                FL_COLOR col2)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
     check_admitted_listvalues(fgcolr, xfc.COLOR_list)
     check_admitted_listvalues(bgcolr, xfc.COLOR_list)
     ulfgcolr = convert_to_FL_COLOR(fgcolr)
     ulbgcolr = convert_to_FL_COLOR(bgcolr)
-    keep_elem_refs(pObject, fgcolr, ulfgcolr, bgcolr, ulbgcolr)
-    _fl_set_object_color(pObject, ulfgcolr, ulbgcolr)
+    keep_elem_refs(pFlObject, fgcolr, ulfgcolr, bgcolr, ulbgcolr)
+    _fl_set_object_color(pFlObject, ulfgcolr, ulbgcolr)
 
 
-def fl_get_object_color(pObject):
-    """ fl_get_object_color(pObject) -> fgcolr, bgcolr
+def fl_get_object_color(pFlObject):
+    """
+    fl_get_object_color(pFlObject) -> long_pos, long_pos
 
-        Returns the foreground and background colors of an object.
+    Returns the foreground and background colors of an object.
 
-        @param pObject: object
-                        (<pointer to xfdata.FL_OBJECT>)
+    @param pFlObject: object
+    @type pFlObject: pointer to xfdata.FL_OBJECT
 
-        @returns: foreground and background color values
-                  (<long_pos>, <long_pos>)
+    @returns: foreground and background color values (<long_pos>, <long_pos>)
 
-        @example: primcol, secncol = fl_get_object_color(pobj)
+    @example: primcol, secncol = fl_get_object_color(pobj)
 
-        @attention: API change from XForms - upstream was
-                    fl_set_object_color(pObject, fgcolr, bgcolr)
+    @attention: API change from XForms - upstream was
+        fl_set_object_color(pFlObject, fgcolr, bgcolr)
 
-        @status: Tested + Doc + Demo = OK
+    @status: Tested + Doc + Demo = OK
     """
 
     _fl_get_object_color = cfuncproto(
@@ -3227,26 +3318,29 @@ def fl_get_object_color(pObject):
                FL_COLOR * col2)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
     fgcolr, pfgcolr = make_FL_COLOR_and_pointer()
     bgcolr, pbgcolr = make_FL_COLOR_and_pointer()
-    keep_elem_refs(pObject, fgcolr, pfgcolr, bgcolr, pbgcolr)
-    _fl_get_object_color(pObject, pfgcolr, pbgcolr)
+    keep_elem_refs(pFlObject, fgcolr, pfgcolr, bgcolr, pbgcolr)
+    _fl_get_object_color(pFlObject, pfgcolr, pbgcolr)
     return fgcolr.value, bgcolr.value
 
 
-def fl_set_object_label(pObject, label):
-    """ fl_set_object_label(pObject, label)
+def fl_set_object_label(pFlObject, label):
+    """
+    fl_set_object_label(pFlObject, label)
 
-        Sets the label of an object.
+    Sets the label of an object.
 
-        @param pObject: object
-                        (<pointer to xfdata.FL_OBJECT>)
-        @param label: text label of object (<string>)
+    @param pFlObject: object
+    @type pFlObject: pointer to xfdata.FL_OBJECT
 
-        @example: fl_set_object_label(pobj, "My New Label")
+    @param label: text label of object
+    @type label: string
 
-        @status: Tested + Doc + NoDemo = OK
+    @example: fl_set_object_label(pobj, "My New Label")
+
+    @status: Tested + Doc + NoDemo = OK
     """
 
     _fl_set_object_label = cfuncproto(
@@ -3255,25 +3349,26 @@ def fl_set_object_label(pObject, label):
             """void fl_set_object_label(xfc.FL_OBJECT * ob, const char * label)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
     slabel = convert_to_string(label)
-    keep_elem_refs(pObject, label, slabel)
-    _fl_set_object_label(pObject, slabel)
+    keep_elem_refs(pFlObject, label, slabel)
+    _fl_set_object_label(pFlObject, slabel)
 
 
-def fl_get_object_label(pObject):
-    """ fl_get_object_label(pObject) -> label
+def fl_get_object_label(pFlObject):
+    """
+    fl_get_object_label(pFlObject) -> str
 
-        Returns the label of an object.
+    Returns the label of an object.
 
-        @param pObject: object
-                        (<pointer to xfdata.FL_OBJECT>)
+    @param pFlObject: object
+    @type pFlObject: pointer to xfdata.FL_OBJECT
 
-        @returns: text of label (<string>)
+    @returns: text of label (<string>)
 
-        @example: currlbl = fl_get_object_label(pobj)
+    @example: currlbl = fl_get_object_label(pobj)
 
-        @status: Tested + Doc + Demo = OK
+    @status: Tested + Doc + Demo = OK
     """
 
     _fl_get_object_label = cfuncproto(
@@ -3282,26 +3377,28 @@ def fl_get_object_label(pObject):
             """const char * fl_set_object_label(xfc.FL_OBJECT * obj)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
-    keep_elem_refs(pObject)
-    retval = _fl_get_object_label(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
+    keep_elem_refs(pFlObject)
+    retval = _fl_get_object_label(pFlObject)
     return retval
 
 
-def fl_set_object_helper(pObject, tip):
-    """ fl_set_object_helper(pObject, tip)
+def fl_set_object_helper(pFlObject, tip):
+    """
+    fl_set_object_helper(pFlObject, tip)
 
-        Sets the tooltip of an object (with possible embedded newlines in it)
-        that will be shown when the mouse hovers over the object for more than
-        about 600 msec.
+    Sets the tooltip of an object (with possible embedded newlines in it) that
+    will be shown when the mouse hovers over the object for more than about
+    600 msec.
 
-        @param pObject: object
-                        (<pointer to xfdata.FL_OBJECT>)
-        @param tip: tooltip text for object (<string>)
+    @param pFlObject: object
+    @type pFlObject: pointer to xfdata.FL_OBJECT
+    @param tip: tooltip text for object
+    @type tip: str
 
-        @example: fl_set_object_helper(pobj, "Button to exit the procedure.")
+    @example: fl_set_object_helper(pobj, "Button to exit the procedure.")
 
-        @status: Tested + Doc + Demo = OK
+    @status: Tested + Doc + Demo = OK
     """
 
     _fl_set_object_helper = cfuncproto(
@@ -3310,25 +3407,28 @@ def fl_set_object_helper(pObject, tip):
             """void fl_set_object_helper(xfc.FL_OBJECT * ob, const char * tip)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
     stip = convert_to_string(tip)
-    keep_elem_refs(pObject, tip, stip)
-    _fl_set_object_helper(pObject, stip)
+    keep_elem_refs(pFlObject, tip, stip)
+    _fl_set_object_helper(pFlObject, stip)
 
 
-def fl_set_object_position(pObject, x, y):
-    """ fl_set_object_position(pObject, x, y)
+def fl_set_object_position(pFlObject, x, y):
+    """
+    fl_set_object_position(pFlObject, x, y)
 
-        Sets position of an object.
+    Sets position of an object.
 
-        @param pObject: object
-                        (<pointer to xfdata.FL_OBJECT>)
-        @param x: horizontal position (upper-left corner) (<int>))
-        @param y: vertical position (upper-left corner) (<int>)
+    @param pFlObject: object
+    @type pFlObject: pointer to xfdata.FL_OBJECT
+    @param x: horizontal position (upper-left corner)
+    @type x: int
+    @param y: vertical position (upper-left corner)
+    @type y: int
 
-        @example: fl_set_object_position(pobj, 235, 123)
+    @example: fl_set_object_position(pobj, 235, 123)
 
-        @status: Tested + Doc + Demo = OK
+    @status: Tested + Doc + Demo = OK
     """
 
     _fl_set_object_position = cfuncproto(
@@ -3338,29 +3438,30 @@ def fl_set_object_position(pObject, x, y):
                FL_Coord y)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
     ix = convert_to_FL_Coord(x)
     iy = convert_to_FL_Coord(y)
-    keep_elem_refs(pObject, x, ix, y, iy)
-    _fl_set_object_position(pObject, ix, iy)
+    keep_elem_refs(pFlObject, x, ix, y, iy)
+    _fl_set_object_position(pFlObject, ix, iy)
 
 
-def fl_get_object_size(pObject):
-    """ fl_get_object_size(pObject) -> width, height
+def fl_get_object_size(pFlObject):
+    """
+    fl_get_object_size(pFlObject) -> int, int
 
-        Returns the size of an object.
+    Returns the size of an object.
 
-        @param pObject: object to evaluate
-                        (<pointer to xfdata.FL_OBJECT>)
+    @param pFlObject: object to evaluate
+    @type pFlObject: pointer to xfdata.FL_OBJECT
 
-        @returns: width and height in coord units (<int>, <int>)
+    @returns: width and height in coord units (<int>, <int>)
 
-        @example: wid, hei = fl_get_object_size(pobj)
+    @example: wid, hei = fl_get_object_size(pobj)
 
-        @attention: API change from XForms - upstream was
-                    fl_get_object_size(pObject, w, h)
+    @attention: API change from XForms - upstream was
+        fl_get_object_size(pFlObject, w, h)
 
-        @status: Tested + Doc + NoDemo = OK
+    @status: Tested + Doc + NoDemo = OK
     """
 
     _fl_get_object_size = cfuncproto(
@@ -3371,27 +3472,30 @@ def fl_get_object_size(pObject):
                FL_Coord * h)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
     w, pw = make_FL_Coord_and_pointer()
     h, ph = make_FL_Coord_and_pointer()
-    keep_elem_refs(pObject, w, h, pw, ph)
-    _fl_get_object_size(pObject, pw, ph)
+    keep_elem_refs(pFlObject, w, h, pw, ph)
+    _fl_get_object_size(pFlObject, pw, ph)
     return w.value, h.value
 
 
-def fl_set_object_size(pObject, w, h):
-    """ fl_set_object_size(pObject, w, h)
+def fl_set_object_size(pFlObject, w, h):
+    """
+    fl_set_object_size(pFlObject, w, h)
 
-        Sets the size of an object.
+    Sets the size of an object.
 
-        @param pObject: object
-                        (<pointer to xfdata.FL_OBJECT>)
-        @param w: width of object in coord units (<int>)
-        @param h: height of object in coord units (<int>)
+    @param pFlObject: object
+    @type pFlObject: pointer to xfdata.FL_OBJECT
+    @param w: width of object in coord units
+    @type w: int
+    @param h: height of object in coord units
+    @type h: int
 
-        @example: fl_set_object_size(pobj, 90, 35)
+    @example: fl_set_object_size(pobj, 90, 35)
 
-        @status: Tested + Doc + NoDemo = OK
+    @status: Tested + Doc + NoDemo = OK
     """
 
     _fl_set_object_size = cfuncproto(
@@ -3401,23 +3505,23 @@ def fl_set_object_size(pObject, w, h):
                FL_Coord h)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
     iw = convert_to_FL_Coord(w)
     ih = convert_to_FL_Coord(h)
-    keep_elem_refs(pObject, w, iw, h, ih)
-    _fl_set_object_size(pObject, iw, ih)
+    keep_elem_refs(pFlObject, w, iw, h, ih)
+    _fl_set_object_size(pFlObject, iw, ih)
 
 
-def fl_set_object_automatic(pObject, flag):
-    """ fl_set_object_automatic(pObject, flag)
+def fl_set_object_automatic(pFlObject, flag):
+    """ fl_set_object_automatic(pFlObject, flag)
 
         Enables or disables an object to receive a xfdata.FL_STEP event.
         This should not be used with built-in objects. An object is automatic
         if it automatically (without user actions) has to change its contents.
         Automatic objects get a FL_STEP event about every 50 msec.
 
-        @param pObject: object
-                        (<pointer to xfdata.FL_OBJECT>)
+        @param pFlObject: object
+        @type pFlObject: pointer to xfdata.FL_OBJECT
         @param flag: flag if automatic or not (<int>)
         @type flag: 0 (not automatic) or 1 (automatic)
 
@@ -3430,22 +3534,22 @@ def fl_set_object_automatic(pObject, flag):
             """void fl_set_object_automatic(xfc.FL_OBJECT * ob, int flag)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
     iflag = convert_to_int(flag)
-    keep_elem_refs(pObject, flag, iflag)
-    _fl_set_object_automatic(pObject, iflag)
+    keep_elem_refs(pFlObject, flag, iflag)
+    _fl_set_object_automatic(pFlObject, iflag)
 
 
-def fl_object_is_automatic(pObject):
-    """ fl_object_is_automatic(pObject) -> flag num.
+def fl_object_is_automatic(pFlObject):
+    """ fl_object_is_automatic(pFlObject) -> flag num.
 
         Returns if an object receives xfdata.FL_STEP events. An object is
         automatic if it automatically (without user actions) has to change
         its contents. Automatic objects get a FL_STEP event about every 50
         msec.
 
-        @param pObject: object to evaluate
-                        (<pointer to xfdata.FL_OBJECT>)
+        @param pFlObject: object to evaluate
+        @type pFlObject: pointer to xfdata.FL_OBJECT
 
         @returns: flag if it's automatic (1) or not (0) (<int>)
 
@@ -3460,20 +3564,20 @@ def fl_object_is_automatic(pObject):
             """int fl_object_is_automatic(xfc.FL_OBJECT * obj)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
-    keep_elem_refs(pObject)
-    retval = _fl_object_is_automatic(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
+    keep_elem_refs(pFlObject)
+    retval = _fl_object_is_automatic(pFlObject)
     return retval
 
 
-def fl_draw_object_label(pObject):
-    """ fl_draw_object_label(pObject)
+def fl_draw_object_label(pFlObject):
+    """ fl_draw_object_label(pFlObject)
 
         Draws the label according to the alignment, which could be inside
         or outside of the bounding box.
 
-        @param pObject: object
-                        (<pointer to xfdata.FL_OBJECT>)
+        @param pFlObject: object
+        @type pFlObject: pointer to xfdata.FL_OBJECT
 
         @example: fl_draw_object_label(pobj3)
 
@@ -3486,18 +3590,18 @@ def fl_draw_object_label(pObject):
             """void fl_draw_object_label(xfc.FL_OBJECT * ob)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
-    keep_elem_refs(pObject)
-    _fl_draw_object_label(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
+    keep_elem_refs(pFlObject)
+    _fl_draw_object_label(pFlObject)
 
 
-def fl_draw_object_label_outside(pObject):
-    """ fl_draw_object_label_outside(pObject)
+def fl_draw_object_label_outside(pFlObject):
+    """ fl_draw_object_label_outside(pFlObject)
 
         Draws the label outside of the bounding box.
 
-        @param pObject: object
-                        (<pointer to xfdata.FL_OBJECT>)
+        @param pFlObject: object
+        @type pFlObject: pointer to xfdata.FL_OBJECT
 
         @example: fl_draw_object_label_outside(pobj3)
 
@@ -3510,22 +3614,22 @@ def fl_draw_object_label_outside(pObject):
             """void fl_draw_object_label_outside(xfc.FL_OBJECT * ob)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
-    keep_elem_refs(pObject)
-    _fl_draw_object_label_outside(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
+    keep_elem_refs(pFlObject)
+    _fl_draw_object_label_outside(pFlObject)
 
 
 fl_draw_object_outside_label = fl_draw_object_label_outside
 
 
-def fl_get_object_component(pObject, objclass, compontype, num):
-    """ fl_get_object_component(pObject, objclass, compontype, num) -> pObject
+def fl_get_object_component(pFlObject, objclass, compontype, num):
+    """ fl_get_object_component(pFlObject, objclass, compontype, num) -> pFlObject
 
         Returns the object that is a component of a composite object. E.g.
         the scrollbar object is made of a slider and two scroll buttons.
 
-        @param pObject: composite object
-                        (<pointer to xfdata.FL_OBJECT>)
+        @param pFlObject: composite object
+        @type pFlObject: pointer to xfdata.FL_OBJECT
         @param objclass: component object's class id (<int>)
         @param compontype: component object's type id (<int>)
         @param num: the sequence number of the desired object in case the
@@ -3533,7 +3637,7 @@ def fl_get_object_component(pObject, objclass, compontype, num):
                     type. You cans use -1 to indicate any type of specified
                     class (<int>)
 
-        @returns: component object found (<pointer to xfdata.FL_OBJECT>) or
+        @returns: component object found @type pFlObject: pointer to xfdata.FL_OBJECT or
                   None (no object found)
 
         @example: fl_get_object_component(browserobj, xfdata.FL_SCROLLBAR,
@@ -3550,28 +3654,28 @@ def fl_get_object_component(pObject, objclass, compontype, num):
                int objclass, int type, int numb)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
     iobjclass = convert_to_int(objclass)
     icompontype = convert_to_int(compontype)
     inum = convert_to_int(num)
-    keep_elem_refs(pObject, objclass, iobjclass, compontype, icompontype, \
+    keep_elem_refs(pFlObject, objclass, iobjclass, compontype, icompontype, \
                    num, inum)
-    retval = _fl_get_object_component(pObject, iobjclass, icompontype, inum)
+    retval = _fl_get_object_component(pFlObject, iobjclass, icompontype, inum)
     return retval
 
 
-def fl_for_all_objects(pForm, py_operatecb, vdata):
-    """ fl_for_all_objects(pForm, py_operatecb, vdata)
+def fl_for_all_objects(pFlForm, py_operatecb, vdata):
+    """ fl_for_all_objects(pFlForm, py_operatecb, vdata)
 
         Serves as an iterator to change an attribute for all objects on a
         particular form. Specified operating function is called for every
         object of the form form unless it returns nonzero, which terminates
         the iterator.
 
-        @param pForm: form
-                      (<pointer to xfdata.FL_FORM>)
+        @param pFlForm: form
+                      @type pFlForm: pointer to xfdata.FL_FORM
         @param py_operatecb: python callback function, returning value
-        @type py_operatecb: __ funcname (pObject, ptr_void) -> num __
+        @type py_operatecb: __ funcname (pFlObject, ptr_void) -> num __
         @param vdata: user data to be passed (<pointer to void>)
 
         @example: def operatecb(pobj, vdata):
@@ -3592,22 +3696,22 @@ def fl_for_all_objects(pForm, py_operatecb, vdata):
                ( FL_OBJECT *, void * ), void * v)
             """)
     check_if_initialized()
-    check_if_FL_FORM_ptr(pForm)
+    check_if_FL_FORM_ptr(pFlForm)
     c_operatecb = xfc.cfunc_int_pobject_pvoid(py_operatecb)
     pvdata = cty.cast(vdata, cty.c_void_p)
     keep_cfunc_refs(c_operatecb, py_operatecb)
-    keep_elem_refs(pForm, vdata, pvdata)
-    _fl_for_all_objects(pForm, c_operatecb, pvdata)
+    keep_elem_refs(pFlForm, vdata, pvdata)
+    _fl_for_all_objects(pFlForm, c_operatecb, pvdata)
 
 
-def fl_set_object_dblclick(pObject, timeout):
-    """ fl_set_object_dblclick(pObject, timeout)
+def fl_set_object_dblclick(pFlObject, timeout):
+    """ fl_set_object_dblclick(pFlObject, timeout)
 
         Sets double click timeout value of an object, enabling or disabling
         it to receive the xfdata.FL_DBLCLICK event.
 
-        @param pObject: object
-                        (<pointer to xfdata.FL_OBJECT>)
+        @param pFlObject: object
+        @type pFlObject: pointer to xfdata.FL_OBJECT
         @param timeout: maximum time interval (in msec) between two clicks
                         for them to be considered a double-click (using 0
                         disables double-click detection) (<long_pos>)
@@ -3624,19 +3728,19 @@ def fl_set_object_dblclick(pObject, timeout):
                long timeout)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
     ultimeout = convert_to_ulong(timeout)
-    keep_elem_refs(pObject, timeout, ultimeout)
-    _fl_set_object_dblclick(pObject, ultimeout)
+    keep_elem_refs(pFlObject, timeout, ultimeout)
+    _fl_set_object_dblclick(pFlObject, ultimeout)
 
 
-def fl_get_object_dblclick(pObject):
-    """ fl_get_object_dblclick(pObject) -> timeout
+def fl_get_object_dblclick(pFlObject):
+    """ fl_get_object_dblclick(pFlObject) -> timeout
 
         Return double click timeout value of an object.
 
-        @param pObject: object to evaluate
-                        (<pointer to xfdata.FL_OBJECT>)
+        @param pFlObject: object to evaluate
+        @type pFlObject: pointer to xfdata.FL_OBJECT
 
         @returns: timeout value (<long_pos>)
 
@@ -3651,19 +3755,19 @@ def fl_get_object_dblclick(pObject):
             """unsigned long fl_get_object_dblclick(xfc.FL_OBJECT *obj)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
-    keep_elem_refs(pObject)
-    retval = _fl_get_object_dblclick(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
+    keep_elem_refs(pFlObject)
+    retval = _fl_get_object_dblclick(pFlObject)
     return retval
 
 
-def fl_set_object_geometry(pObject, x, y, w, h):
-    """ fl_set_object_geometry(pObject, x, y, w, h)
+def fl_set_object_geometry(pFlObject, x, y, w, h):
+    """ fl_set_object_geometry(pFlObject, x, y, w, h)
 
         Sets the geometry (position and size) of an object.
 
-        @param pObject: object to modify
-                        (<pointer to xfdata.FL_OBJECT>)
+        @param pFlObject: object to modify
+        @type pFlObject: pointer to xfdata.FL_OBJECT
         @param x: horizontal position (upper-left corner) (<int>)
         @param y: vertical position (upper-left corner) (<int>)
         @param w: width in coord units (<int>)
@@ -3682,22 +3786,22 @@ def fl_set_object_geometry(pObject, x, y, w, h):
             FL_Coord y, FL_Coord w, FL_Coord h)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
     ix = convert_to_FL_Coord(x)
     iy = convert_to_FL_Coord(y)
     iw = convert_to_FL_Coord(w)
     ih = convert_to_FL_Coord(h)
-    keep_elem_refs(pObject, x, ix, y, iy, w, iw, h, ih)
-    _fl_set_object_geometry(pObject, ix, iy, iw, ih)
+    keep_elem_refs(pFlObject, x, ix, y, iy, w, iw, h, ih)
+    _fl_set_object_geometry(pFlObject, ix, iy, iw, ih)
 
 
-def fl_move_object(pObject, x, y):
-    """ fl_move_object(pObject, x, y)
+def fl_move_object(pFlObject, x, y):
+    """ fl_move_object(pFlObject, x, y)
 
         Moves an object to a new position.
 
-        @param pObject: object to be moved
-                        (<pointer to xfdata.FL_OBJECT>)
+        @param pFlObject: object to be moved
+        @type pFlObject: pointer to xfdata.FL_OBJECT
         @param x: new horizontal position (upper-left corner) (<int>)
         @param y: new vertical position (upper-left corner) (<int>)
 
@@ -3713,23 +3817,23 @@ def fl_move_object(pObject, x, y):
                FL_Coord dy)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
     ix = convert_to_int(x)
     iy = convert_to_int(y)
-    keep_elem_refs(pObject, x, ix, y, iy)
-    _fl_move_object(pObject, ix, iy)
+    keep_elem_refs(pFlObject, x, ix, y, iy)
+    _fl_move_object(pFlObject, ix, iy)
 
 
-def fl_fit_object_label(pObject, xmargin, ymargin):
-    """ fl_fit_object_label(pObject, xmargin, ymargin)
+def fl_fit_object_label(pFlObject, xmargin, ymargin):
+    """ fl_fit_object_label(pFlObject, xmargin, ymargin)
 
         Checks if the label of an object fits into it (after x- and
         y-margin have been added). If not, all objects and the form
         are enlarged by the necessary factor (but never by more than
         a factor of 1.5).
 
-        @param pObject: object
-                        (<pointer to xfdata.FL_OBJECT>)
+        @param pFlObject: object
+        @type pFlObject: pointer to xfdata.FL_OBJECT
         @param xmargin: horizontal margin of label in coord units (<int>)
         @param ymargin: vertical margin of label in coord units (<int>)
 
@@ -3743,20 +3847,20 @@ def fl_fit_object_label(pObject, xmargin, ymargin):
                FL_Coord ymargin)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
     ixmargin = convert_to_int(xmargin)
     iymargin = convert_to_int(ymargin)
-    keep_elem_refs(pObject, xmargin, ixmargin, ymargin, iymargin)
-    _fl_fit_object_label(pObject, ixmargin, iymargin)
+    keep_elem_refs(pFlObject, xmargin, ixmargin, ymargin, iymargin)
+    _fl_fit_object_label(pFlObject, ixmargin, iymargin)
 
 
-def fl_get_object_geometry(pObject):
-    """ fl_get_object_geometry(pObject) -> x, y, w, h
+def fl_get_object_geometry(pFlObject):
+    """ fl_get_object_geometry(pFlObject) -> x, y, w, h
 
         Returns the geometry (position and size) of an object.
 
-        @param pObject: object
-                        (<pointer to xfdata.FL_OBJECT>)
+        @param pFlObject: object
+        @type pFlObject: pointer to xfdata.FL_OBJECT
 
         @returns: horizontal, vertical position, width, height
                   (<int>, <int>, <int>, <int>)
@@ -3764,7 +3868,7 @@ def fl_get_object_geometry(pObject):
         @example: xpos, ypos, wid, hei = fl_get_object_geometry(pobj1)
 
         @attention: API change from XForms - upstream was
-                    fl_get_object_geometry(pObject, x, y, w, h)
+                    fl_get_object_geometry(pFlObject, x, y, w, h)
 
         @status: Tested + Doc + Demo = OK
     """
@@ -3778,30 +3882,30 @@ def fl_get_object_geometry(pObject):
            FL_Coord * y, FL_Coord * w, FL_Coord * h)
         """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
     x, px = make_FL_Coord_and_pointer()
     y, py = make_FL_Coord_and_pointer()
     w, pw = make_FL_Coord_and_pointer()
     h, ph = make_FL_Coord_and_pointer()
-    keep_elem_refs(pObject, x, px, y, py, w, pw, h, ph)
-    _fl_get_object_geometry(pObject, px, py, pw, ph)
+    keep_elem_refs(pFlObject, x, px, y, py, w, pw, h, ph)
+    _fl_get_object_geometry(pFlObject, px, py, pw, ph)
     return x.value, y.value, w.value, h.value
 
 
-def fl_get_object_position(pObject):
-    """ fl_get_object_position(pObject) -> x, y
+def fl_get_object_position(pFlObject):
+    """ fl_get_object_position(pFlObject) -> x, y
 
         Returns the position of an object.
 
-        @param pObject: object to evaluate
-                        (<pointer to xfdata.FL_OBJECT>)
+        @param pFlObject: object to evaluate
+        @type pFlObject: pointer to xfdata.FL_OBJECT
 
         @returns: horizontal and vertical position (<int>, <int>)
 
         @example: xpos, ypos = fl_get_object_position(pobj2)
 
         @attention: API change from XForms - upstream was
-                    fl_get_object_position(pObject, x, y)
+                    fl_get_object_position(pFlObject, x, y)
 
         @status: Tested + Doc + NoDemo = OK
     """
@@ -3814,24 +3918,24 @@ def fl_get_object_position(pObject):
                FL_Coord * y)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
     x, px = make_FL_Coord_and_pointer()
     y, py = make_FL_Coord_and_pointer()
-    keep_elem_refs(pObject, x, px, y, py)
-    _fl_get_object_position(pObject, px, py)
+    keep_elem_refs(pFlObject, x, px, y, py)
+    _fl_get_object_position(pFlObject, px, py)
     return x.value, y.value
 
 
 # this one takes into account the label
 
-def fl_get_object_bbox(pObject):
-    """ fl_get_object_bbox(pObject) -> x, y, w, h
+def fl_get_object_bbox(pFlObject):
+    """ fl_get_object_bbox(pFlObject) -> x, y, w, h
 
         Returns the bounding box size that has the label, which could be
         drawn outside of the object figured in.
 
-        @param pObject: object to evaluate
-                        (<pointer to xfdata.FL_OBJECT>)
+        @param pFlObject: object to evaluate
+        @type pFlObject: pointer to xfdata.FL_OBJECT
 
         @returns: horizontal, vertical position, width, height
                   (<int>, <int>, <int>, <int>)
@@ -3839,7 +3943,7 @@ def fl_get_object_bbox(pObject):
         @example: xpos, ypos, wid, hei = fl_get_object_bbox(pobj4)
 
         @attention: API change from XForms - upstream was
-                    fl_get_object_bbox(pObject, x, y, w, h)
+                    fl_get_object_bbox(pFlObject, x, y, w, h)
 
         @status: Tested + Doc + NoDemo = OK
     """
@@ -3853,28 +3957,28 @@ def fl_get_object_bbox(pObject):
                FL_Coord * y, FL_Coord * w, FL_Coord * h)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
     x, px = make_FL_Coord_and_pointer()
     y, py = make_FL_Coord_and_pointer()
     w, pw = make_FL_Coord_and_pointer()
     h, ph = make_FL_Coord_and_pointer()
-    keep_elem_refs(pObject, x, y, w, h, px, py, pw, ph)
-    _fl_get_object_bbox(pObject, px, py, pw, ph)
+    keep_elem_refs(pFlObject, x, y, w, h, px, py, pw, ph)
+    _fl_get_object_bbox(pFlObject, px, py, pw, ph)
     return x.value, y.value, w.value, h.value
 
 
 fl_compute_object_geometry = fl_get_object_bbox
 
 
-def fl_call_object_callback(pObject):
-    """ fl_call_object_callback(pObject)
+def fl_call_object_callback(pFlObject):
+    """ fl_call_object_callback(pFlObject)
 
         Invokes the callback manually (as opposed to invocation by the main
         loop). If the object does not have a callback associated with it, this
         call has not effect.
 
-        @param pObject: object
-                        (<pointer to xfdata.FL_OBJECT>)
+        @param pFlObject: object
+        @type pFlObject: pointer to xfdata.FL_OBJECT
 
         @example: fl_call_object_callback(pobj_with_cb)
 
@@ -3887,23 +3991,23 @@ def fl_call_object_callback(pObject):
             """void fl_call_object_callback(xfc.FL_OBJECT * ob)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
-    keep_elem_refs(pObject)
-    _fl_call_object_callback(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
+    keep_elem_refs(pFlObject)
+    _fl_call_object_callback(pFlObject)
 
 
-def fl_set_object_prehandler(pObject, py_HandlerPtr):
-    """ fl_set_object_prehandler(pObject, py_HandlerPtr) ->  pHandlerPtr
+def fl_set_object_prehandler(pFlObject, py_HandlerPtr):
+    """ fl_set_object_prehandler(pFlObject, py_HandlerPtr) ->  pHandlerPtr
 
         By-passes the internal event processing for a particular object.
         The pre-handler will be called before the built-in object handler.
         By electing to handle some of the events, a pre-handler can, in
         effect, replace part of the built-in handler.
 
-        @param pObject: object
-                        (<pointer to xfdata.FL_OBJECT>)
+        @param pFlObject: object
+        @type pFlObject: pointer to xfdata.FL_OBJECT
         @param py_HandlerPtr: python callback function, returning value
-        @type py_HandlerPtr: __ funcname (pObject, num, coord, coord, num,
+        @type py_HandlerPtr: __ funcname (pFlObject, num, coord, coord, num,
                              ptr_void) -> num __
 
         @example: def prehandlecb(pobj, num, crd, crd, num2, vdata):
@@ -3923,26 +4027,26 @@ def fl_set_object_prehandler(pObject, py_HandlerPtr):
                FL_HANDLEPTR phandler)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
     c_HandlerPtr = xfc.FL_HANDLEPTR(py_HandlerPtr)
     keep_cfunc_refs(c_HandlerPtr, py_HandlerPtr)
-    keep_elem_refs(pObject)
-    retval = _fl_set_object_prehandler(pObject, c_HandlerPtr)
+    keep_elem_refs(pFlObject)
+    retval = _fl_set_object_prehandler(pFlObject, c_HandlerPtr)
     return retval
 
 
-def fl_set_object_posthandler(pObject, py_HandlerPtr):
-    """ fl_set_object_posthandler(pObject, py_HandlerPtr) -> pHandlerPtr
+def fl_set_object_posthandler(pFlObject, py_HandlerPtr):
+    """ fl_set_object_posthandler(pFlObject, py_HandlerPtr) -> pHandlerPtr
 
         By-passes the internal event processing for a particular object.
         The post-handler will be invoked after the built-in handler finishes.
         Whenever possible a post-handler should be used instead of a
         pre-handler.
 
-        @param pObject: pointer to object
-                        (<pointer to xfdata.FL_OBJECT>)
+        @param pFlObject: pointer to object
+        @type pFlObject: pointer to xfdata.FL_OBJECT
         @param py_HandlerPtr: python callback function, returning value
-        @type py_HandlerPtr: __ funcname (pObject, num, coord, coord, num,
+        @type py_HandlerPtr: __ funcname (pFlObject, num, coord, coord, num,
                              ptr_void) -> num __
 
         @example: def posthandlecb(pobj, num, crd, crd, num2, vdata):
@@ -3962,24 +4066,24 @@ def fl_set_object_posthandler(pObject, py_HandlerPtr):
                FL_HANDLEPTR post)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
     c_HandlerPtr = xfc.FL_HANDLEPTR(py_HandlerPtr)
     keep_cfunc_refs(c_HandlerPtr, py_HandlerPtr)
-    keep_elem_refs(pObject)
-    retval = _fl_set_object_posthandler(pObject, c_HandlerPtr)
+    keep_elem_refs(pFlObject)
+    retval = _fl_set_object_posthandler(pFlObject, c_HandlerPtr)
     return retval
 
 
-def fl_set_object_callback(pObject, py_CallbackPtr, data):
-    """ fl_set_object_callback(pObject, py_CallbackPtr, data) -> c_callback func.
+def fl_set_object_callback(pFlObject, py_CallbackPtr, data):
+    """ fl_set_object_callback(pFlObject, py_CallbackPtr, data) -> c_callback func.
 
         Calls a callback function bound to an object, if a condition is met.
 
-        @param pObject: object the callback is bound to
-                        (<pointer to xfdata.FL_OBJECT>)
+        @param pFlObject: object the callback is bound to
+        @type pFlObject: pointer to xfdata.FL_OBJECT
         @param py_CallbackPtr: a python function with no () and no args to
                                be used as callback, no return
-        @type py_CallbackPtr: __ funcname (pObject, longnum) __
+        @type py_CallbackPtr: __ funcname (pFlObject, longnum) __
         @param data: argument being passed to function <long>
         
         @returns: old xfdata.FL_CALLBACKPTR function
@@ -4001,28 +4105,28 @@ def fl_set_object_callback(pObject, py_CallbackPtr, data):
                FL_CALLBACKPTR callback, long int argument)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
     ldata = convert_to_long(data)
     c_CallbackPtr = xfc.FL_CALLBACKPTR(py_CallbackPtr)
     keep_cfunc_refs(c_CallbackPtr, py_CallbackPtr)
-    keep_elem_refs(pObject, data, ldata)
-    retval = _fl_set_object_callback(pObject, c_CallbackPtr, ldata)
+    keep_elem_refs(pFlObject, data, ldata)
+    retval = _fl_set_object_callback(pFlObject, c_CallbackPtr, ldata)
     return retval
 
 
 fl_set_call_back = fl_set_object_callback
 
 
-def fl_redraw_object(pObject):
-    """ fl_redraw_object(pObject)
+def fl_redraw_object(pFlObject):
+    """ fl_redraw_object(pFlObject)
 
         Redraws the particular object. If it is a group it redraws the
         complete group. Normally you should never need this routine because
         all library routines take care of redrawing objects when necessary,
         but there might be situations in which an explicit redraw is required.
 
-        @param pObject: object to redraw
-                        (<pointer to xfdata.FL_OBJECT>)
+        @param pFlObject: object to redraw
+        @type pFlObject: pointer to xfdata.FL_OBJECT
 
         @example: fl_redraw_object(pobj)
 
@@ -4035,19 +4139,19 @@ def fl_redraw_object(pObject):
             """void fl_redraw_object(FL_OBJECT * obj)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
-    keep_elem_refs(pObject)
-    _fl_redraw_object(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
+    keep_elem_refs(pFlObject)
+    _fl_redraw_object(pFlObject)
 
 
-def fl_scale_object(pObject, xs, ys):
-    """ fl_scale_object(pObject, xs, ys)
+def fl_scale_object(pFlObject, xs, ys):
+    """ fl_scale_object(pFlObject, xs, ys)
 
         Scales (shrinking or enlarging) an object, indicating a scaling
         factor in x- and y-direction (1.1 = 110 percent, 0.5 = 50, etc.)
 
-        @param pObject: object to be scaled
-                        (<pointer to xfdata.FL_OBJECT>)
+        @param pFlObject: object to be scaled
+        @type pFlObject: pointer to xfdata.FL_OBJECT
         @param xs: new horizontal factor (<float>)
         @param ys: new vertical factor (<float>)
 
@@ -4062,20 +4166,20 @@ def fl_scale_object(pObject, xs, ys):
             """void fl_scale_object(FL_OBJECT * ob, double xs, double ys)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
     fxs = convert_to_double(xs)
     fys = convert_to_double(ys)
-    keep_elem_refs(pObject, xs, fxs, ys, fys)
-    _fl_scale_object(pObject, fxs, fys)
+    keep_elem_refs(pFlObject, xs, fxs, ys, fys)
+    _fl_scale_object(pFlObject, fxs, fys)
 
 
-def fl_show_object(pObject):
-    """ fl_show_object(pObject)
+def fl_show_object(pFlObject):
+    """ fl_show_object(pFlObject)
 
         Shows an (hidden) object.
 
-        @param pObject: object to be shown
-                        (<pointer to xfdata.FL_OBJECT>)
+        @param pFlObject: object to be shown
+        @type pFlObject: pointer to xfdata.FL_OBJECT
 
         @example: fl_show_object(pobj8)
 
@@ -4088,18 +4192,18 @@ def fl_show_object(pObject):
             """void fl_show_object(FL_OBJECT * ob)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
-    keep_elem_refs(pObject)
-    _fl_show_object(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
+    keep_elem_refs(pFlObject)
+    _fl_show_object(pFlObject)
 
 
-def fl_hide_object(pObject):
-    """ fl_hide_object(pObject)
+def fl_hide_object(pFlObject):
+    """ fl_hide_object(pFlObject)
 
         Hides a shown object.
 
-        @param pObject: object to be hidden
-                        (<pointer to xfdata.FL_OBJECT>)
+        @param pFlObject: object to be hidden
+        @type pFlObject: pointer to xfdata.FL_OBJECT
 
         @example: fl_hide_object(pobj8)
 
@@ -4112,18 +4216,18 @@ def fl_hide_object(pObject):
             """void fl_hide_object(FL_OBJECT * ob)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
-    keep_elem_refs(pObject)
-    _fl_hide_object(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
+    keep_elem_refs(pFlObject)
+    _fl_hide_object(pFlObject)
 
 
-def fl_object_is_visible(pObject):
-    """ fl_object_is_visible(pObject) -> flag
+def fl_object_is_visible(pFlObject):
+    """ fl_object_is_visible(pFlObject) -> flag
 
         Returns if an object is visible or not.
 
-        @param pObject: object to evaluate
-                        (<pointer to xfdata.FL_OBJECT>)
+        @param pFlObject: object to evaluate
+        @type pFlObject: pointer to xfdata.FL_OBJECT
 
         @returns: flag 0 (invisible) or non-zero (visible) (<int>)
 
@@ -4139,19 +4243,19 @@ def fl_object_is_visible(pObject):
             """int fl_object_is_visible(FL_OBJECT * obj)
             """)
     check_if_initialized()
-    keep_elem_refs(pObject)
-    retval = _fl_object_is_visible(pObject)
+    keep_elem_refs(pFlObject)
+    retval = _fl_object_is_visible(pFlObject)
     return retval
 
 
-def fl_free_object(pObject):
-    """ fl_free_object(pObject)
+def fl_free_object(pFlObject):
+    """ fl_free_object(pFlObject)
 
         Frees the object and finally destroys it (if necessary deletes 
         the object first).
 
-        @param pObject: object to free
-                        (<pointer to xfdata.FL_OBJECT>)
+        @param pFlObject: object to free
+        @type pFlObject: pointer to xfdata.FL_OBJECT
 
         @example: fl_free_object(pobj)
 
@@ -4163,19 +4267,19 @@ def fl_free_object(pObject):
             None, [cty.POINTER(xfc.FL_OBJECT)],\
             """void fl_free_object(FL_OBJECT * obj)
             """)
-    check_if_FL_OBJECT_ptr(pObject)
-    keep_elem_refs(pObject)
-    _fl_free_object(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
+    keep_elem_refs(pFlObject)
+    _fl_free_object(pFlObject)
 
 
-def fl_delete_object(pObject):
-    """ fl_delete_object(pObject)
+def fl_delete_object(pFlObject):
+    """ fl_delete_object(pFlObject)
 
         Deletes an object, breaking its connection to the form, but not
         destroying it.
 
-        @param pObject: object to delete
-                        (<pointer to xfdata.FL_OBJECT>)
+        @param pFlObject: object to delete
+        @type pFlObject: pointer to xfdata.FL_OBJECT
 
         @example: fl_delete_object(pobj)
 
@@ -4188,20 +4292,20 @@ def fl_delete_object(pObject):
             """void fl_delete_object(FL_OBJECT * obj)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
-    keep_elem_refs(pObject)
-    _fl_delete_object(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
+    keep_elem_refs(pFlObject)
+    _fl_delete_object(pFlObject)
 
 
-def fl_get_object_return_state(pObject):
-    """ fl_get_object_return_state(pObject) -> ID num
+def fl_get_object_return_state(pFlObject):
+    """ fl_get_object_return_state(pFlObject) -> ID num
 
         Determines the reason an object was returned (or its callback
         invoked) you. The returned value is logical OR of the conditions
         that led to the object getting returned.
 
-        @param pObject: object to evaluate
-                        (<pointer to xfdata.FL_OBJECT>)
+        @param pFlObject: object to evaluate
+        @type pFlObject: pointer to xfdata.FL_OBJECT
 
         @returns: current return state (<int>)
 
@@ -4216,14 +4320,14 @@ def fl_get_object_return_state(pObject):
             """int fl_get_object_return_state(FL_OBJECT * obj)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
-    keep_elem_refs(pObject)
-    retval = _fl_get_object_return_state(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
+    keep_elem_refs(pFlObject)
+    retval = _fl_get_object_return_state(pFlObject)
     return retval
 
 
-def fl_trigger_object(pObject):
-    """ fl_trigger_object(pObject)
+def fl_trigger_object(pFlObject):
+    """ fl_trigger_object(pFlObject)
 
         Simulates the action of an object being triggered from within the
         program. Calling this routine on an object obj results in the object
@@ -4232,8 +4336,8 @@ def fl_trigger_object(pObject):
         fl_trigger_object(button) will not make the button object named button
         appearing to be pushed.
 
-        @param pObject: object to trigger
-                        (<pointer to xfdata.FL_OBJECT>)
+        @param pFlObject: object to trigger
+        @type pFlObject: pointer to xfdata.FL_OBJECT
 
         @example: fl_trigger_object(pobj
 
@@ -4246,18 +4350,18 @@ def fl_trigger_object(pObject):
             """void fl_trigger_object(FL_OBJECT * obj)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
-    keep_elem_refs(pObject)
-    _fl_trigger_object(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
+    keep_elem_refs(pFlObject)
+    _fl_trigger_object(pFlObject)
 
 
-def fl_activate_object(pObject):
-    """ fl_activate_object(pObject)
+def fl_activate_object(pFlObject):
+    """ fl_activate_object(pFlObject)
 
         (Re)activates an object, (re)enabling user interaction.
 
-        @param pObject: object to activate
-                        (<pointer to xfdata.FL_OBJECT>)
+        @param pFlObject: object to activate
+        @type pFlObject: pointer to xfdata.FL_OBJECT
 
         @example: fl_activate_object(pobj)
 
@@ -4270,21 +4374,21 @@ def fl_activate_object(pObject):
             """void fl_activate_object(FL_OBJECT * ob)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
-    keep_elem_refs(pObject)
-    _fl_activate_object(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
+    keep_elem_refs(pFlObject)
+    _fl_activate_object(pFlObject)
 
 
-def fl_deactivate_object(pObject):
-    """ fl_deactivate_object(pObject)
+def fl_deactivate_object(pFlObject):
+    """ fl_deactivate_object(pFlObject)
 
         Makes a particular object to be temporarily inactive, disabling
         user interaction, e.g., you want to make it impossible for the user
         to press a particular button or to type input in a particular field.
         When object is a group, the whole group is deactivate.
 
-        @param pObject: object to deactivate
-                        (<pointer to xfdata.FL_OBJECT>)
+        @param pFlObject: object to deactivate
+        @type pFlObject: pointer to xfdata.FL_OBJECT
 
         @example: fl_deactivate_object(pactobj)
 
@@ -4297,18 +4401,18 @@ def fl_deactivate_object(pObject):
             """void fl_deactivate_object(FL_OBJECT * ob)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
-    keep_elem_refs(pObject)
-    _fl_deactivate_object(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
+    keep_elem_refs(pFlObject)
+    _fl_deactivate_object(pFlObject)
 
 
-def fl_object_is_active(pObject):
-    """ fl_object_is_active(pObject) -> flag
+def fl_object_is_active(pFlObject):
+    """ fl_object_is_active(pFlObject) -> flag
 
         Returns if object is active and reacting to events, or not.
 
-        @param pObject: object to evaluate
-                        (<pointer to xfdata.FL_OBJECT>)
+        @param pFlObject: object to evaluate
+        @type pFlObject: pointer to xfdata.FL_OBJECT
 
         @returns: flag 0 (not active) or non-zero (active) (<int>)
 
@@ -4324,9 +4428,9 @@ def fl_object_is_active(pObject):
             """int fl_object_is_active(FL_OBJECT * ob)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
-    keep_elem_refs(pObject)
-    retval = _fl_object_is_active(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
+    keep_elem_refs(pFlObject)
+    retval = _fl_object_is_active(pFlObject)
     return retval
 
 
@@ -5607,8 +5711,8 @@ def FL_crnd(a):
 
 # utilities for new objects
 
-def fl_add_object(pForm, pObject):
-    """ fl_add_object(pForm, pObject)
+def fl_add_object(pFlForm, pFlObject):
+    """ fl_add_object(pFlForm, pFlObject)
 
         The object remains available (except if it's an object that marks the
         start or end of a group) and can be added again to the same or another
@@ -5616,10 +5720,10 @@ def fl_add_object(pForm, pObject):
         newly created object to a form. It may not be used for objects
         representing the start or end of a group.
 
-        @param pForm: form which an object will be added to
-                      (<pointer to xfdata.FL_FORM>)
-        @param pObject: object to be added
-                        (<pointer to xfdata.FL_OBJECT>)
+        @param pFlForm: form which an object will be added to
+                      @type pFlForm: pointer to xfdata.FL_FORM
+        @param pFlObject: object to be added
+        @type pFlObject: pointer to xfdata.FL_OBJECT
 
         @example: fl_add_object(pform2, pobjnew2)
 
@@ -5632,21 +5736,21 @@ def fl_add_object(pForm, pObject):
             """void fl_add_object(FL_FORM * form, FL_OBJECT * obj)
             """)
     check_if_initialized()
-    check_if_FL_FORM_ptr(pForm)
-    check_if_FL_OBJECT_ptr(pObject)
-    keep_elem_refs(pForm, pObject)
-    _fl_add_object(pForm, pObject)
+    check_if_FL_FORM_ptr(pFlForm)
+    check_if_FL_OBJECT_ptr(pFlObject)
+    keep_elem_refs(pFlForm, pFlObject)
+    _fl_add_object(pFlForm, pFlObject)
 
 
-def fl_addto_form(pForm):
-    """ fl_addto_form(pForm) -> pForm
+def fl_addto_form(pFlForm):
+    """ fl_addto_form(pFlForm) -> pFlForm
 
         Reopens a form (after fl_end_form) for adding further objects to it.
 
-        @param pForm: form
-                      (<pointer to xfdata.FL_FORM>)
+        @param pFlForm: form
+                      @type pFlForm: pointer to xfdata.FL_FORM
 
-        @returns: form (<pointer to xfdata.FL_FORM>) or None (on failure)
+        @returns: form @type pFlForm: pointer to xfdata.FL_FORM or None (on failure)
 
         @example: form = fl_addto_form(closedform)
 
@@ -5659,14 +5763,14 @@ def fl_addto_form(pForm):
             """FL_FORM * fl_addto_form(FL_FORM * form)
             """)
     check_if_initialized()
-    check_if_FL_FORM_ptr(pForm)
-    keep_elem_refs(pForm)
-    retval = _fl_addto_form(pForm)
+    check_if_FL_FORM_ptr(pFlForm)
+    keep_elem_refs(pFlForm)
+    retval = _fl_addto_form(pFlForm)
     return retval
 
 
 def fl_make_object(objclass, objtype, x, y, w, h, label, py_HandlePtr):
-    """ fl_make_object(objclass, objtype, x, y, w, h, label, py_HandlePtr) -> pObject
+    """ fl_make_object(objclass, objtype, x, y, w, h, label, py_HandlePtr) -> pFlObject
 
         Makes a custom object.
 
@@ -5679,10 +5783,10 @@ def fl_make_object(objclass, objtype, x, y, w, h, label, py_HandlePtr):
         @param label: text label of object (<string>)
         @param py_HandlePtr: python function for handling object, with
                              returning value
-        @type py_HandlePtr: __ funcname (pObject, num, coord, coord, num,
+        @type py_HandlePtr: __ funcname (pFlObject, num, coord, coord, num,
                             ptr_void) -> num __
 
-        @returns: object made (<pointer to xfdata.FL_OBJECT>)
+        @returns: object made @type pFlObject: pointer to xfdata.FL_OBJECT
 
         @example: def handlecb(pobj, num, w, h, num, vdata):
         @example: |->| ...
@@ -5721,13 +5825,13 @@ def fl_make_object(objclass, objtype, x, y, w, h, label, py_HandlePtr):
     return retval
 
 
-def fl_add_child(pObject1, pObject2):
-    """ fl_add_child(pObject1, pObject2)
+def fl_add_child(pFlObject1, pFlObject2):
+    """ fl_add_child(pFlObject1, pFlObject2)
 
-        @param pObject1: father object
-                         (<pointer to xfdata.FL_OBJECT>)
-        @param pObject2: child object to add
-                         (<pointer to xfdata.FL_OBJECT>)
+        @param pFlObject1: father object
+         @type pFlObject: pointer to xfdata.FL_OBJECT
+        @param pFlObject2: child object to add
+         @type pFlObject: pointer to xfdata.FL_OBJECT
 
         @example: 
 
@@ -5740,10 +5844,10 @@ def fl_add_child(pObject1, pObject2):
             """void fl_add_child(FL_OBJECT * p1, FL_OBJECT * p2)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject1)
-    check_if_FL_OBJECT_ptr(pObject2)
-    keep_elem_refs(pObject1, pObject2)
-    _fl_add_child(pObject1, pObject2)
+    check_if_FL_OBJECT_ptr(pFlObject1)
+    check_if_FL_OBJECT_ptr(pFlObject2)
+    keep_elem_refs(pFlObject1, pFlObject2)
+    _fl_add_child(pFlObject1, pFlObject2)
 
 
 def fl_set_coordunit(unit):
@@ -6159,15 +6263,15 @@ def fl_msleep(msec):
     return retval
 
 
-def fl_is_same_object(pObject1, pObject2):
-    """ fl_is_same_object(pObject1, pObject2) -> num.
+def fl_is_same_object(pFlObject1, pFlObject2):
+    """ fl_is_same_object(pFlObject1, pFlObject2) -> num.
 
         Does a comparison between two objects, if they are the same, or not.
 
-        @param pObject1: 1st object to compare
-                         (<pointer to xfdata.FL_OBJECT>)
-        @param pObject2: 2nd object to compare
-                         (<pointer to xfdata.FL_OBJECT>)
+        @param pFlObject1: 1st object to compare
+         @type pFlObject: pointer to xfdata.FL_OBJECT
+        @param pFlObject2: 2nd object to compare
+         @type pFlObject: pointer to xfdata.FL_OBJECT
 
         @returns: 0 (if they are not the same) or non-zero (if they are)
 
@@ -6181,10 +6285,10 @@ def fl_is_same_object(pObject1, pObject2):
             """int fl_is_same_object(FL_OBJECT * obj1, FL_OBJECT * obj2)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject1)
-    check_if_FL_OBJECT_ptr(pObject2)
-    keep_elem_refs(pObject1, pObject2)
-    retval = _fl_is_same_object(pObject1, pObject2)
+    check_if_FL_OBJECT_ptr(pFlObject1)
+    check_if_FL_OBJECT_ptr(pFlObject2)
+    keep_elem_refs(pFlObject1, pFlObject2)
+    retval = _fl_is_same_object(pFlObject1, pFlObject2)
     return retval
 
 
@@ -7471,13 +7575,13 @@ def fl_get_win_mouse(win):
     return retval, x.value, y.value, keymask.value
 
 
-def fl_get_form_mouse(pForm):
-    """ fl_get_form_mouse(pForm) -> win, x, y, keymask
+def fl_get_form_mouse(pFlForm):
+    """ fl_get_form_mouse(pFlForm) -> win, x, y, keymask
 
         Obtains the position of the mouse relative to a certain form, and
         the current state of the modifier keys and pointer buttons.
 
-        @param pForm: form (<pointer to xfdata.FL_FORM>)
+        @param pFlForm: form @type pFlForm: pointer to xfdata.FL_FORM
 
         @returns: window the mouse is in, horizontal and vertical position,
                   keymask (<long_pos>, <int>, <int>, <int_pos>)
@@ -7498,23 +7602,23 @@ def fl_get_form_mouse(pForm):
                FL_Coord * y, unsigned int * keymask)
             """)
     check_if_initialized()
-    check_if_FL_FORM_ptr(pForm)
+    check_if_FL_FORM_ptr(pFlForm)
     x, px = make_FL_Coord_and_pointer()
     y, py = make_FL_Coord_and_pointer()
     keymask, pkeymask = make_uint_and_pointer()
-    keep_elem_refs(pForm, x, y, keymask)
-    retval = _fl_get_form_mouse(pForm, px, py, pkeymask)
+    keep_elem_refs(pFlForm, x, y, keymask)
+    retval = _fl_get_form_mouse(pFlForm, px, py, pkeymask)
     return retval, x.value, y.value, keymask.value
 
 
 def fl_win_to_form(win):
-    """ fl_win_to_form(win) -> pForm
+    """ fl_win_to_form(win) -> pFlForm
 
         Returns the form the specified window belongs to.
 
         @param win : window id (<long_pos>)
 
-        @returns: form (<pointer to xfdata.FL_FORM>) or None (on failure)
+        @returns: form @type pFlForm: pointer to xfdata.FL_FORM or None (on failure)
 
         @example: pform2 = fl_win_to_form(win1)
 
@@ -7533,12 +7637,12 @@ def fl_win_to_form(win):
     return retval
 
 
-def fl_set_form_icon(pForm, icon, mask):
-    """ fl_set_form_icon(pForm, icon, mask)
+def fl_set_form_icon(pFlForm, icon, mask):
+    """ fl_set_form_icon(pFlForm, icon, mask)
 
         Sets or changes the icon shown when a form is iconified.
 
-        @param pForm: form (<pointer to xfdata.FL_FORM>)
+        @param pFlForm: form @type pFlForm: pointer to xfdata.FL_FORM
         @param icon: icon pixmap id (<long_pos>)
         @param mask: mask pixmap id (<long_pos>)
 
@@ -7551,27 +7655,27 @@ def fl_set_form_icon(pForm, icon, mask):
             """void fl_set_form_icon(FL_FORM * form, Pixmap p, Pixmap m)
             """)
     check_if_initialized()
-    check_if_FL_FORM_ptr(pForm)
+    check_if_FL_FORM_ptr(pFlForm)
     ulicon = convert_to_Pixmap(icon)
     ulmask = convert_to_Pixmap(mask)
-    keep_elem_refs(pForm, icon, mask, ulicon, ulmask)
-    _fl_set_form_icon(pForm, ulicon, ulmask)
+    keep_elem_refs(pFlForm, icon, mask, ulicon, ulmask)
+    _fl_set_form_icon(pFlForm, ulicon, ulmask)
 
 
-def fl_get_decoration_sizes(pForm):
-    """ fl_get_decoration_sizes(pForm) -> num., top, right, bottom, left
+def fl_get_decoration_sizes(pFlForm):
+    """ fl_get_decoration_sizes(pFlForm) -> num., top, right, bottom, left
 
         Returns the sizes of the "decorations" the window manager puts around
         a form's window. Returns 0 on success and 1 if the form isn't visible
         or it's a form embedded into another form.
 
-        @param pForm: form (<pointer to xfdata.FL_FORM>)
+        @param pFlForm: form @type pFlForm: pointer to xfdata.FL_FORM
 
         @returns: num. (0 or 1), top size, right size, bottom size, left size
                   (<int>, <int>, <int>, <int>)
 
         @attention: API change from XForms - upstream was
-                    fl_get_decoration_sizes(pForm, top, right, bottom, left)
+                    fl_get_decoration_sizes(pFlForm, top, right, bottom, left)
 
         @status: Tested + Doc + NoDemo = OK
     """
@@ -7585,23 +7689,23 @@ def fl_get_decoration_sizes(pForm):
                int * right, int * bottom, int * left)
             """)
     check_if_initialized()
-    check_if_FL_FORM_ptr(pForm)
+    check_if_FL_FORM_ptr(pFlForm)
     top, ptop = make_int_and_pointer()
     right, pright = make_int_and_pointer()
     bottom, pbottom = make_int_and_pointer()
     left, pleft = make_int_and_pointer()
-    keep_elem_refs(pForm, top, right, bottom, left, ptop, pright, pbottom,
+    keep_elem_refs(pFlForm, top, right, bottom, left, ptop, pright, pbottom,
                    pleft)
-    retval = _fl_get_decoration_sizes(pForm, ptop, pright, pbottom, pleft)
+    retval = _fl_get_decoration_sizes(pFlForm, ptop, pright, pbottom, pleft)
     return retval, top.value, right.value, bottom.value, left.value
 
 
-def fl_raise_form(pForm):
-    """ fl_raise_form(pForm)
+def fl_raise_form(pFlForm):
+    """ fl_raise_form(pFlForm)
 
         Raises a form to the top of the screen so no other forms obscure it.
 
-        @param pForm: form to be raised (<pointer to xfdata.FL_FORM>)
+        @param pFlForm: form to be raised @type pFlForm: pointer to xfdata.FL_FORM
 
         @example: fl_raise_form(pform2)
 
@@ -7614,17 +7718,17 @@ def fl_raise_form(pForm):
             """void fl_raise_form(FL_FORM * p1)
             """)
     check_if_initialized()
-    check_if_FL_FORM_ptr(pForm)
-    keep_elem_refs(pForm)
-    _fl_raise_form(pForm)
+    check_if_FL_FORM_ptr(pFlForm)
+    keep_elem_refs(pFlForm)
+    _fl_raise_form(pFlForm)
 
 
-def fl_lower_form(pForm):
-    """ fl_lower_form(pForm)
+def fl_lower_form(pFlForm):
+    """ fl_lower_form(pFlForm)
 
         Lowers a form to the bottom of the stack.
 
-        @param pForm: form to be lowered (<pointer to xfdata.FL_FORM>)
+        @param pFlForm: form to be lowered @type pFlForm: pointer to xfdata.FL_FORM
 
         @example: fl_lower_form(pform2)
 
@@ -7637,9 +7741,9 @@ def fl_lower_form(pForm):
             """void fl_lower_form(FL_FORM * p1)
             """)
     check_if_initialized()
-    check_if_FL_FORM_ptr(pForm)
-    keep_elem_refs(pForm)
-    _fl_lower_form(pForm)
+    check_if_FL_FORM_ptr(pFlForm)
+    keep_elem_refs(pFlForm)
+    _fl_lower_form(pFlForm)
 
 
 def fl_set_foreground(gc, colr):
@@ -8658,35 +8762,35 @@ def fl_get_display():
     return fl_display
 
 
-def FL_FormDisplay(pForm):
+def FL_FormDisplay(pFlForm):
     check_if_initialized()
-    check_if_FL_FORM_ptr(pForm)
+    check_if_FL_FORM_ptr(pFlForm)
     return fl_display
 
 
 # undocumented data maybe dismissed --LK
-def FL_ObjectDisplay(pObject):
+def FL_ObjectDisplay(pFlObject):
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
     return fl_display
 
 
-def FL_IS_CANVAS(pObject):
-    if (fl_get_object_objclass(pObject) == xfc.FL_CANVAS) or \
-        (fl_get_object_objclass(pObject) == xfc.FL_GLCANVAS):
+def FL_IS_CANVAS(pFlObject):
+    if (fl_get_object_objclass(pFlObject) == xfc.FL_CANVAS) or \
+        (fl_get_object_objclass(pFlObject) == xfc.FL_GLCANVAS):
         return True
     else:
         return False
 
 
 # The window an object belongs to - for drawing
-def FL_ObjWin(pObject):
-    """ FL_ObjWin(pObject) -> win
+def FL_ObjWin(pFlObject):
+    """ FL_ObjWin(pFlObject) -> win
 
         Obtains the window id an object belongs to (for general use).
 
-        @param pObject: object
-                        (<pointer to xfdata.FL_OBJECT>)
+        @param pFlObject: object
+        @type pFlObject: pointer to xfdata.FL_OBJECT
 
         @returns: window id (<long_pos>)
 
@@ -8696,22 +8800,22 @@ def FL_ObjWin(pObject):
     """
 
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
-    if FL_IS_CANVAS(pObject):
-        return fl_get_canvas_id(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
+    if FL_IS_CANVAS(pFlObject):
+        return fl_get_canvas_id(pFlObject)
     else:
-        return pObject.contents.form.contents.window
+        return pFlObject.contents.form.contents.window
 
 
-def fl_get_real_object_window(pObject):
+def fl_get_real_object_window(pFlObject):
     """
-        fl_get_real_object_window(pObject) -> win
+        fl_get_real_object_window(pFlObject) -> win
 
         Obtains the real window id an object belongs to (to be used for cursor
         or pointer routines).
 
-        @param pObject: object
-                        (<pointer to xfdata.FL_OBJECT>)
+        @param pFlObject: object
+        @type pFlObject: pointer to xfdata.FL_OBJECT
 
         @returns: window id (<long_pos>)
 
@@ -8726,9 +8830,9 @@ def fl_get_real_object_window(pObject):
             """Window fl_get_real_object_window(FL_OBJECT * ob)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
-    keep_elem_refs(pObject)
-    retval = _fl_get_real_object_window(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
+    keep_elem_refs(pFlObject)
+    retval = _fl_get_real_object_window(pFlObject)
     return retval
 
 
@@ -10697,7 +10801,7 @@ def fl_popup_set_min_width(pPopup, minwidth):
 
 
 def fl_add_bitmap(bitmaptype, x, y, w, h, label):
-    """ fl_add_bitmap(bitmaptype, x, y, w, h, label) -> pObject
+    """ fl_add_bitmap(bitmaptype, x, y, w, h, label) -> pFlObject
 
         Adds a bitmap object.
 
@@ -10733,13 +10837,13 @@ def fl_add_bitmap(bitmaptype, x, y, w, h, label):
     return retval
 
 
-def fl_set_bitmap_data(pObject, w, h, xbmcontents):
-    """ fl_set_bitmap_data(pObject, w, h, xbmcontents)
+def fl_set_bitmap_data(pFlObject, w, h, xbmcontents):
+    """ fl_set_bitmap_data(pFlObject, w, h, xbmcontents)
 
         Fills the bitmap object with a bitmap.
 
-        @param pObject: pointer to object
-                (<pointer to xfdata.FL_OBJECT>)
+        @param pFlObject: pointer to object
+@type pFlObject: pointer to xfdata.FL_OBJECT
         @param w: width of bitmap in cood units
         @param h: height of bitmap in coord units
         @param xbmcontents: bitmap data used for contents in ubytes
@@ -10755,19 +10859,19 @@ def fl_set_bitmap_data(pObject, w, h, xbmcontents):
                unsigned char * data)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
     iw = convert_to_int(w)
     ih = convert_to_int(h)
     pxbmcontents = cty.cast(xbmcontents, cty.POINTER(cty.c_ubyte))
-    keep_elem_refs(pObject, w, h, xbmcontents, iw, ih, pxbmcontents)
-    _fl_set_bitmap_data(pObject, iw, ih, pxbmcontents)
+    keep_elem_refs(pFlObject, w, h, xbmcontents, iw, ih, pxbmcontents)
+    _fl_set_bitmap_data(pFlObject, iw, ih, pxbmcontents)
 
 
-def fl_set_bitmap_file(pObject, fname):
-    """ fl_set_bitmap_file(pObject, fname)
+def fl_set_bitmap_file(pFlObject, fname):
+    """ fl_set_bitmap_file(pFlObject, fname)
 
-        @param pObject: pointer to object
-                (<pointer to xfdata.FL_OBJECT>)
+        @param pFlObject: pointer to object
+@type pFlObject: pointer to xfdata.FL_OBJECT
         @param fname: name of bitmap file
 
         @status: Tested + NoDoc + Demo = OK
@@ -10779,10 +10883,10 @@ def fl_set_bitmap_file(pObject, fname):
             """void fl_set_bitmap_file(FL_OBJECT * ob, const char * fname)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
     sfname = convert_to_string(fname)
-    keep_elem_refs(pObject, fname, sfname)
-    _fl_set_bitmap_file(pObject, sfname)
+    keep_elem_refs(pFlObject, fname, sfname)
+    _fl_set_bitmap_file(pFlObject, sfname)
 
 
 fl_set_bitmapbutton_file = fl_set_bitmap_file
@@ -10851,7 +10955,7 @@ def fl_create_from_bitmapdata(win, data, w, h):
 
 
 def fl_add_pixmap(pixmaptype, x, y, w, h, label):
-    """ fl_add_pixmap(pixmaptype, x, y, w, h, label) -> pObject
+    """ fl_add_pixmap(pixmaptype, x, y, w, h, label) -> pFlObject
 
         Adds a pixmap object.
 
@@ -10887,11 +10991,11 @@ def fl_add_pixmap(pixmaptype, x, y, w, h, label):
     return retval
 
 
-def fl_set_pixmap_data(pObject, bits):
-    """ fl_set_pixmap_data(pObject, bits)
+def fl_set_pixmap_data(pFlObject, bits):
+    """ fl_set_pixmap_data(pFlObject, bits)
 
-        @param pObject: pointer to object
-                (<pointer to xfdata.FL_OBJECT>)
+        @param pFlObject: pointer to object
+@type pFlObject: pointer to xfdata.FL_OBJECT
         @param bits: bits contents of pixmap
 
         @status: Untested + NoDoc + NoDemo = NOT OK
@@ -10903,21 +11007,21 @@ def fl_set_pixmap_data(pObject, bits):
             """void fl_set_pixmap_data(FL_OBJECT * ob, char * * bits)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
     print "bits", bits
     sbits = convert_to_string(bits)
     print "sbits", sbits
     pbits = cty.pointer(sbits)     #cty.cast(bits, cty.POINTER(xfc.STRING))
     print "pbits", pbits
-    keep_elem_refs(pObject, bits, sbits, pbits)
-    _fl_set_pixmap_data(pObject, pbits)
+    keep_elem_refs(pFlObject, bits, sbits, pbits)
+    _fl_set_pixmap_data(pFlObject, pbits)
 
 
-def fl_set_pixmap_file(pObject, fname):
-    """ fl_set_pixmap_file(pObject, fname)
+def fl_set_pixmap_file(pFlObject, fname):
+    """ fl_set_pixmap_file(pFlObject, fname)
 
-        @param pObject: pointer to object
-                (<pointer to xfdata.FL_OBJECT>)
+        @param pFlObject: pointer to object
+@type pFlObject: pointer to xfdata.FL_OBJECT
         @param fname: name of the pixmap file
 
         @status: Tested + NoDoc + Demo = OK
@@ -10929,21 +11033,21 @@ def fl_set_pixmap_file(pObject, fname):
             """void fl_set_pixmap_file(FL_OBJECT * ob, const char * fname)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
     sfname = convert_to_string(fname)
-    keep_elem_refs(pObject, fname, sfname)
-    _fl_set_pixmap_file(pObject, sfname)
+    keep_elem_refs(pFlObject, fname, sfname)
+    _fl_set_pixmap_file(pFlObject, sfname)
 
 
 fl_set_pixmapbutton_file = fl_set_pixmap_file
 fl_set_pixmapbutton_datafile = fl_set_pixmapbutton_file
 
 
-def fl_set_pixmap_align(pObject, align, xmargin, ymargin):
-    """ fl_set_pixmap_align(pObject, align, xmargin, ymargin)
+def fl_set_pixmap_align(pFlObject, align, xmargin, ymargin):
+    """ fl_set_pixmap_align(pFlObject, align, xmargin, ymargin)
 
-        @param pObject: pixmap object
-                        (<pointer to xfdata.FL_OBJECT>)
+        @param pFlObject: pixmap object
+        @type pFlObject: pointer to xfdata.FL_OBJECT
         @param align: alignment of pixmap (<int>)
         @type align: (from xfdata module) FL_ALIGN_CENTER, FL_ALIGN_TOP,
                      FL_ALIGN_BOTTOM, FL_ALIGN_LEFT, FL_ALIGN_RIGHT,
@@ -10962,24 +11066,24 @@ def fl_set_pixmap_align(pObject, align, xmargin, ymargin):
                int xmargin, int ymargin)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
     check_admitted_listvalues(align, xfc.ALIGN_list)
     ialign = convert_to_int(align)
     ixmargin = convert_to_int(xmargin)
     iymargin = convert_to_int(ymargin)
-    keep_elem_refs(pObject, align, xmargin, ymargin, ialign, ixmargin,
+    keep_elem_refs(pFlObject, align, xmargin, ymargin, ialign, ixmargin,
                    iymargin)
-    _fl_set_pixmap_align(pObject, ialign, ixmargin, iymargin)
+    _fl_set_pixmap_align(pFlObject, ialign, ixmargin, iymargin)
 
 
 fl_set_pixmapbutton_align = fl_set_pixmap_align
 
 
-def fl_set_pixmap_pixmap(pObject, idnum, mask):
-    """ fl_set_pixmap_pixmap(pObject, idnum, mask)
+def fl_set_pixmap_pixmap(pFlObject, idnum, mask):
+    """ fl_set_pixmap_pixmap(pFlObject, idnum, mask)
 
-        @param pObject: pointer to object
-                (<pointer to xfdata.FL_OBJECT>)
+        @param pFlObject: pointer to object
+@type pFlObject: pointer to xfdata.FL_OBJECT
 
         @status: Untested + NoDoc + NoDemo = NOT OK
     """
@@ -10991,11 +11095,11 @@ def fl_set_pixmap_pixmap(pObject, idnum, mask):
                Pixmap mask)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
     ulidnum = convert_to_ulong(idnum)
     ulmask = convert_to_ulong(mask)
-    keep_elem_refs(pObject, idnum, mask, ulidnum, ulmask)
-    _fl_set_pixmap_pixmap(pObject, ulidnum, ulmask)
+    keep_elem_refs(pFlObject, idnum, mask, ulidnum, ulmask)
+    _fl_set_pixmap_pixmap(pFlObject, ulidnum, ulmask)
 
 
 fl_set_pixmapbutton_pixmap = fl_set_pixmap_pixmap
@@ -11020,11 +11124,11 @@ def fl_set_pixmap_colorcloseness(red, green, blue):
     _fl_set_pixmap_colorcloseness(ired, igreen, iblue)
 
 
-def fl_free_pixmap_pixmap(pObject):
-    """ fl_free_pixmap_pixmap(pObject)
+def fl_free_pixmap_pixmap(pFlObject):
+    """ fl_free_pixmap_pixmap(pFlObject)
 
-        @param pObject: pointer to object
-                (<pointer to xfdata.FL_OBJECT>)
+        @param pFlObject: pointer to object
+@type pFlObject: pointer to xfdata.FL_OBJECT
 
         @status: Tested + NoDoc + Demo = OK
     """
@@ -11035,22 +11139,22 @@ def fl_free_pixmap_pixmap(pObject):
             """void fl_free_pixmap_pixmap(FL_OBJECT * ob)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
-    keep_elem_refs(pObject)
-    _fl_free_pixmap_pixmap(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
+    keep_elem_refs(pFlObject)
+    _fl_free_pixmap_pixmap(pFlObject)
 
 
 fl_free_pixmapbutton_pixmap = fl_free_pixmap_pixmap
 
 
-def fl_get_pixmap_pixmap(pObject):
-    """ fl_get_pixmap_pixmap(pObject) -> pixmap, Pixmap, Pixmap_mask
+def fl_get_pixmap_pixmap(pFlObject):
+    """ fl_get_pixmap_pixmap(pFlObject) -> pixmap, Pixmap, Pixmap_mask
 
-        @param pObject: object
-                        (<pointer to xfdata.FL_OBJECT>)
+        @param pFlObject: object
+        @type pFlObject: pointer to xfdata.FL_OBJECT
 
         @attention: API change from XForms - upstream was
-                    fl_get_pixmap_pixmap(pObject, p, m)
+                    fl_get_pixmap_pixmap(pFlObject, p, m)
 
         @status: Untested + NoDoc + NoDemo = NOT OK
     """
@@ -11063,11 +11167,11 @@ def fl_get_pixmap_pixmap(pObject):
                Pixmap * m)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
     p, pp = make_ulong_and_pointer()
     m, pm = make_ulong_and_pointer()
-    keep_elem_refs(pObject, p, m, pp, pm)
-    retval = _fl_get_pixmap_pixmap(pObject, pp, pm)
+    keep_elem_refs(pFlObject, p, m, pp, pm)
+    retval = _fl_get_pixmap_pixmap(pFlObject, pp, pm)
     return retval, p.value, m.value
 
 
@@ -11164,7 +11268,7 @@ def fl_free_pixmap(idnum):
 
 
 def fl_add_box(boxtype, x, y, w, h, label):
-    """ fl_add_box(boxtype, x, y, w, h, label) -> pObject
+    """ fl_add_box(boxtype, x, y, w, h, label) -> pFlObject
 
         Adds a box object.
 
@@ -11218,7 +11322,7 @@ def fl_add_box(boxtype, x, y, w, h, label):
 
 
 def fl_add_browser(browsertype, x, y, w, h, label):
-    """ fl_add_browser(browsertype, x, y, w, h, label) -> pObject
+    """ fl_add_browser(browsertype, x, y, w, h, label) -> pFlObject
 
         Adds a browser object.
 
@@ -11256,13 +11360,13 @@ def fl_add_browser(browsertype, x, y, w, h, label):
     return retval
 
 
-def fl_clear_browser(pObject):
-    """ fl_clear_browser(pObject)
+def fl_clear_browser(pFlObject):
+    """ fl_clear_browser(pFlObject)
 
         Clears contents of a browser object.
 
-        @param pObject: pointer to browser object
-                (<pointer to xfdata.FL_OBJECT>)
+        @param pFlObject: pointer to browser object
+@type pFlObject: pointer to xfdata.FL_OBJECT
 
         @status: Tested + NoDoc + Demo = OK
     """
@@ -11273,18 +11377,18 @@ def fl_clear_browser(pObject):
             """void fl_clear_browser(FL_OBJECT * ob)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
-    keep_elem_refs(pObject)
-    _fl_clear_browser(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
+    keep_elem_refs(pFlObject)
+    _fl_clear_browser(pFlObject)
 
 
-def fl_add_browser_line(pObject, newtext):
-    """ fl_add_browser_line(pObject, newtext)
+def fl_add_browser_line(pFlObject, newtext):
+    """ fl_add_browser_line(pFlObject, newtext)
 
         Add a line to a browser object.
 
-        @param pObject: pointer to browser object
-                (<pointer to xfdata.FL_OBJECT>)
+        @param pFlObject: pointer to browser object
+@type pFlObject: pointer to xfdata.FL_OBJECT
         @param newtext: line of text to be added
 
         @status: Tested + NoDoc + Demo = OK
@@ -11296,17 +11400,17 @@ def fl_add_browser_line(pObject, newtext):
             """void fl_add_browser_line(FL_OBJECT * ob, const char * newtext)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
     snewtext = convert_to_string(newtext)
-    keep_elem_refs(pObject, newtext, snewtext)
-    _fl_add_browser_line(pObject, snewtext)
+    keep_elem_refs(pFlObject, newtext, snewtext)
+    _fl_add_browser_line(pFlObject, snewtext)
 
 
-def fl_addto_browser(pObject, newtext):
-    """ fl_addto_browser(pObject, newtext)
+def fl_addto_browser(pFlObject, newtext):
+    """ fl_addto_browser(pFlObject, newtext)
 
-        @param pObject: pointer to object
-                (<pointer to xfdata.FL_OBJECT>)
+        @param pFlObject: pointer to object
+@type pFlObject: pointer to xfdata.FL_OBJECT
 
         @status: Tested + NoDoc + Demo = OK
     """
@@ -11317,14 +11421,14 @@ def fl_addto_browser(pObject, newtext):
             """void fl_addto_browser(FL_OBJECT * ob, const char * newtext)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
     snewtext = convert_to_string(newtext)
-    keep_elem_refs(pObject, newtext, snewtext)
-    _fl_addto_browser(pObject, snewtext)
+    keep_elem_refs(pFlObject, newtext, snewtext)
+    _fl_addto_browser(pFlObject, snewtext)
 
 
-def fl_addto_browser_chars(pObject, browsertext):
-    """ fl_addto_browser_chars(pObject, browsertext)
+def fl_addto_browser_chars(pFlObject, browsertext):
+    """ fl_addto_browser_chars(pFlObject, browsertext)
 
         @status: Untested + NoDoc + NoDemo = NOT OK
     """
@@ -11335,20 +11439,20 @@ def fl_addto_browser_chars(pObject, browsertext):
             """void fl_addto_browser_chars(FL_OBJECT * ob, const char * str)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
     sbrowsertext = convert_to_string(browsertext)
-    keep_elem_refs(pObject, browsertext, sbrowsertext)
-    _fl_addto_browser_chars(pObject, sbrowsertext)
+    keep_elem_refs(pFlObject, browsertext, sbrowsertext)
+    _fl_addto_browser_chars(pFlObject, sbrowsertext)
 
 
 fl_append_browser = fl_addto_browser_chars
 
 
-def fl_insert_browser_line(pObject, linenum, newtext):
-    """ fl_insert_browser_line(pObject, linenum, newtext)
+def fl_insert_browser_line(pFlObject, linenum, newtext):
+    """ fl_insert_browser_line(pFlObject, linenum, newtext)
 
-        @param pObject: pointer to object
-                (<pointer to xfdata.FL_OBJECT>)
+        @param pFlObject: pointer to object
+@type pFlObject: pointer to xfdata.FL_OBJECT
 
         @status: Tested + NoDoc + Demo = OK
     """
@@ -11360,18 +11464,18 @@ def fl_insert_browser_line(pObject, linenum, newtext):
                const char * newtext)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
     ilinenum = convert_to_int(linenum)
     snewtext = convert_to_string(newtext)
-    keep_elem_refs(pObject, linenum, newtext, ilinenum, snewtext)
-    _fl_insert_browser_line(pObject, ilinenum, snewtext)
+    keep_elem_refs(pFlObject, linenum, newtext, ilinenum, snewtext)
+    _fl_insert_browser_line(pFlObject, ilinenum, snewtext)
 
 
-def fl_delete_browser_line(pObject, linenum):
-    """ fl_delete_browser_line(pObject, linenum)
+def fl_delete_browser_line(pFlObject, linenum):
+    """ fl_delete_browser_line(pFlObject, linenum)
 
-        @param pObject: pointer to browser object
-                (<pointer to xfdata.FL_OBJECT>)
+        @param pFlObject: pointer to browser object
+@type pFlObject: pointer to xfdata.FL_OBJECT
         @param linenum: line number to delete
 
         @status: Tested + NoDoc + Demo = OK
@@ -11382,17 +11486,17 @@ def fl_delete_browser_line(pObject, linenum):
             None, [cty.POINTER(xfc.FL_OBJECT), cty.c_int],
             """void fl_delete_browser_line(FL_OBJECT * ob, int linenumb)
             """)
-    check_if_FL_OBJECT_ptr(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
     ilinenum = convert_to_int(linenum)
-    keep_elem_refs(pObject, linenum, ilinenum)
-    _fl_delete_browser_line(pObject, ilinenum)
+    keep_elem_refs(pFlObject, linenum, ilinenum)
+    _fl_delete_browser_line(pFlObject, ilinenum)
 
 
-def fl_replace_browser_line(pObject, linenum, newtext):
-    """ fl_replace_browser_line(pObject, linenum, newtext)
+def fl_replace_browser_line(pFlObject, linenum, newtext):
+    """ fl_replace_browser_line(pFlObject, linenum, newtext)
 
-        @param pObject: pointer to browser object
-                (<pointer to xfdata.FL_OBJECT>)
+        @param pFlObject: pointer to browser object
+@type pFlObject: pointer to xfdata.FL_OBJECT
         @param linenum: line number to replace
         @param newtext: text line used as replacement
 
@@ -11406,21 +11510,25 @@ def fl_replace_browser_line(pObject, linenum, newtext):
                const char * newtext)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
     ilinenum = convert_to_int(linenum)
     snewtext = convert_to_string(newtext)
-    keep_elem_refs(pObject, linenum, newtext, ilinenum, snewtext)
-    _fl_replace_browser_line(pObject, ilinenum, snewtext)
+    keep_elem_refs(pFlObject, linenum, newtext, ilinenum, snewtext)
+    _fl_replace_browser_line(pFlObject, ilinenum, snewtext)
 
 
-def fl_get_browser_line(pObject, linenum):
-    """ fl_get_browser_line(pObject, linenum) -> line string
+def fl_get_browser_line(pFlObject, linenum):
+    """
+    fl_get_browser_line(pFlObject, linenum) -> str
 
-        @param pObject: pointer to browser object
-                (<pointer to xfdata.FL_OBJECT>)
-        @param linenum: line number to return
+    @param pFlObject: pointer to browser object
+    @type pFlObject: pointer to xfdata.FL_OBJECT
+    @param linenum: line number to return
+    @type linenum: int
 
-        @status: Tested + NoDoc + Demo = OK
+    @returns: line string
+
+    @status: Tested + NoDoc + Demo = OK
     """
 
     _fl_get_browser_line = cfuncproto(
@@ -11429,20 +11537,25 @@ def fl_get_browser_line(pObject, linenum):
             """const char * fl_get_browser_line(FL_OBJECT * ob, int linenumb)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
     ilinenum = convert_to_int(linenum)
-    keep_elem_refs(pObject, linenum, ilinenum)
-    retval = _fl_get_browser_line(pObject, ilinenum)
+    keep_elem_refs(pFlObject, linenum, ilinenum)
+    retval = _fl_get_browser_line(pFlObject, ilinenum)
     return retval
 
 
-def fl_load_browser(pObject, filename):
-    """ fl_load_browser(pObject, filename) -> num.
+def fl_load_browser(pFlObject, filename):
+    """
+    fl_load_browser(pFlObject, filename) -> int
 
-        @param pObject: pointer to object
-                (<pointer to xfdata.FL_OBJECT>)
+    @param pFlObject: pointer to object
+    @type pFlObject: pointer to xfdata.FL_OBJECT
+    @param filename: name of the file
+    @type filename: str
 
-        @status: Tested + NoDoc + Demo = OK
+    @returns: num.
+
+    @status: Tested + NoDoc + Demo = OK
     """
 
     _fl_load_browser = cfuncproto(
@@ -11450,20 +11563,23 @@ def fl_load_browser(pObject, filename):
             cty.c_int, [cty.POINTER(xfc.FL_OBJECT), xfc.STRING],
             """int fl_load_browser(FL_OBJECT * ob, const char * filename)
             """)
-    check_if_FL_OBJECT_ptr(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
     sfilename = convert_to_string(filename)
-    keep_elem_refs(pObject, filename, sfilename)
-    retval = _fl_load_browser(pObject, sfilename)
+    keep_elem_refs(pFlObject, filename, sfilename)
+    retval = _fl_load_browser(pFlObject, sfilename)
     return retval
 
 
-def fl_select_browser_line(pObject, line):
-    """ fl_select_browser_line(pObject, line)
+def fl_select_browser_line(pFlObject, line):
+    """
+    fl_select_browser_line(pFlObject, line)
 
-        @param pObject: pointer to object
-                (<pointer to xfdata.FL_OBJECT>)
+    @param pFlObject: pointer to object
+    @type pFlObject: pointer to xfdata.FL_OBJECT
+    @param line: ?
+    @type line: int
 
-        @status: Untested + NoDoc + NoDemo = NOT OK
+    @status: Untested + NoDoc + NoDemo = NOT OK
     """
 
     _fl_select_browser_line = cfuncproto(
@@ -11472,19 +11588,22 @@ def fl_select_browser_line(pObject, line):
             """void fl_select_browser_line(FL_OBJECT * ob, int line)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
     iline = convert_to_int(line)
-    keep_elem_refs(pObject, line, iline)
-    _fl_select_browser_line(pObject, iline)
+    keep_elem_refs(pFlObject, line, iline)
+    _fl_select_browser_line(pFlObject, iline)
 
 
-def fl_deselect_browser_line(pObject, line):
-    """ fl_deselect_browser_line(pObject, line)
+def fl_deselect_browser_line(pFlObject, line):
+    """
+    fl_deselect_browser_line(pFlObject, line)
 
-        @param pObject: pointer to object
-                (<pointer to xfdata.FL_OBJECT>)
+    @param pFlObject: pointer to object
+    @type pFlObject: pointer to xfdata.FL_OBJECT
+    @param line: ?
+    @type line: int
 
-        @status: Tested + NoDoc + Demo = OK
+    @status: Tested + NoDoc + Demo = OK
     """
 
     _fl_deselect_browser_line = cfuncproto(
@@ -11493,19 +11612,20 @@ def fl_deselect_browser_line(pObject, line):
             """void fl_deselect_browser_line(FL_OBJECT * ob, int line)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
     iline = convert_to_int(line)
-    keep_elem_refs(pObject, line, iline)
-    _fl_deselect_browser_line(pObject, iline)
+    keep_elem_refs(pFlObject, line, iline)
+    _fl_deselect_browser_line(pFlObject, iline)
 
 
-def fl_deselect_browser(pObject):
-    """ fl_deselect_browser(pObject)
+def fl_deselect_browser(pFlObject):
+    """
+    fl_deselect_browser(pFlObject)
 
-        @param pObject: pointer to browser object
-                (<pointer to xfdata.FL_OBJECT>)
+    @param pFlObject: pointer to browser object
+    @type pFlObject: pointer to xfdata.FL_OBJECT
 
-        @status: Tested + NoDoc + Demo = OK
+    @status: Tested + NoDoc + Demo = OK
     """
 
     _fl_deselect_browser = cfuncproto(
@@ -11514,18 +11634,21 @@ def fl_deselect_browser(pObject):
             """void fl_deselect_browser(FL_OBJECT * ob)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
-    keep_elem_refs(pObject)
-    _fl_deselect_browser(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
+    keep_elem_refs(pFlObject)
+    _fl_deselect_browser(pFlObject)
 
 
-def fl_isselected_browser_line(pObject, line):
-    """ fl_isselected_browser_line(pObject, line) -> num.
+def fl_isselected_browser_line(pFlObject, line):
+    """
+    fl_isselected_browser_line(pFlObject, line) -> int
 
-        @param pObject: pointer to object
-                (<pointer to xfdata.FL_OBJECT>)
+    @param pFlObject: pointer to object
+    @type pFlObject: pointer to xfdata.FL_OBJECT
+    @param line: ?
+    @type line: int
 
-        @status: Untested + NoDoc + NoDemo = NOT OK
+    @status: Untested + NoDoc + NoDemo = NOT OK
     """
 
     _fl_isselected_browser_line = cfuncproto(
@@ -11534,20 +11657,23 @@ def fl_isselected_browser_line(pObject, line):
             """int fl_isselected_browser_line(FL_OBJECT * ob, int line)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
     iline = convert_to_int(line)
-    keep_elem_refs(pObject, line, iline)
-    retval = _fl_isselected_browser_line(pObject, iline)
+    keep_elem_refs(pFlObject, line, iline)
+    retval = _fl_isselected_browser_line(pFlObject, iline)
     return retval
 
 
-def fl_get_browser_topline(pObject):
-    """ fl_get_browser_topline(pObject) -> num.
+def fl_get_browser_topline(pFlObject):
+    """
+    fl_get_browser_topline(pFlObject) -> int
 
-        @param pObject: pointer to object
-                (<pointer to xfdata.FL_OBJECT>)
+    @param pFlObject: pointer to object
+    @type pFlObject: pointer to xfdata.FL_OBJECT
 
-        @status: Untested + NoDoc + NoDemo = NOT OK
+    @returns: line number
+
+    @status: Untested + NoDoc + NoDemo = NOT OK
     """
 
     _fl_get_browser_topline = cfuncproto(
@@ -11556,17 +11682,17 @@ def fl_get_browser_topline(pObject):
             """int fl_get_browser_topline(FL_OBJECT * ob)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
-    keep_elem_refs(pObject)
-    retval = _fl_get_browser_topline(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
+    keep_elem_refs(pFlObject)
+    retval = _fl_get_browser_topline(pFlObject)
     return retval
 
 
-def fl_get_browser(pObject):
-    """ fl_get_browser(pObject) -> num.
+def fl_get_browser(pFlObject):
+    """ fl_get_browser(pFlObject) -> num.
 
-        @param pObject: pointer to browser object
-                (<pointer to xfdata.FL_OBJECT>)
+        @param pFlObject: pointer to browser object
+@type pFlObject: pointer to xfdata.FL_OBJECT
 
         @status: Tested + NoDoc + Demo = OK
     """
@@ -11577,19 +11703,22 @@ def fl_get_browser(pObject):
             """int fl_get_browser(FL_OBJECT * ob)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
-    keep_elem_refs(pObject)
-    retval = _fl_get_browser(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
+    keep_elem_refs(pFlObject)
+    retval = _fl_get_browser(pFlObject)
     return retval
 
 
-def fl_get_browser_maxline(pObject):
-    """ fl_get_browser_maxline(pObject) -> line num.
+def fl_get_browser_maxline(pFlObject):
+    """
+    fl_get_browser_maxline(pFlObject) -> int
 
-        @param pObject: pointer to object
-                (<pointer to xfdata.FL_OBJECT>)
+    @param pFlObject: pointer to object
+    @type pFlObject: pointer to xfdata.FL_OBJECT
 
-        @status: Untested + NoDoc + NoDemo = NOT OK
+    @returns: line num.
+
+    @status: Untested + NoDoc + NoDemo = NOT OK
     """
 
     _fl_get_browser_maxline = cfuncproto(
@@ -11598,22 +11727,24 @@ def fl_get_browser_maxline(pObject):
             """int fl_get_browser_maxline(FL_OBJECT * ob)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
-    keep_elem_refs(pObject)
-    retval = _fl_get_browser_maxline(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
+    keep_elem_refs(pFlObject)
+    retval = _fl_get_browser_maxline(pFlObject)
     return retval
 
 
-def fl_get_browser_screenlines(pObject):
-    """ fl_get_browser_screenlines(pObject) -> lines num.
+def fl_get_browser_screenlines(pFlObject):
+    """
+    fl_get_browser_screenlines(pFlObject) -> int
 
-        Returns an approximation of the number of lines shown in the
-        browser.
+    Returns an approximation of the number of lines shown in the browser.
 
-        @param pObject: pointer to browser object
-                (<pointer to xfdata.FL_OBJECT>)
+    @param pFlObject: pointer to browser object
+    @type pFlObject: pointer to xfdata.FL_OBJECT
 
-        @status: Untested + NoDoc + NoDemo = NOT OK
+    @returns: number of lines
+
+    @status: Untested + NoDoc + NoDemo = NOT OK
     """
 
     _fl_get_browser_screenlines = cfuncproto(
@@ -11622,22 +11753,24 @@ def fl_get_browser_screenlines(pObject):
             """int fl_get_browser_screenlines(FL_OBJECT * ob)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
-    keep_elem_refs(pObject)
-    retval = _fl_get_browser_screenlines(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
+    keep_elem_refs(pFlObject)
+    retval = _fl_get_browser_screenlines(pFlObject)
     return retval
 
 
-def fl_set_browser_topline(pObject, line):
-    """ fl_set_browser_topline(pObject, line)
+def fl_set_browser_topline(pFlObject, line):
+    """
+    fl_set_browser_topline(pFlObject, line)
 
-        Moves a line to the top of the browser.
+    Moves a line to the top of the browser.
 
-        @param pObject: pointer to browser object
-                (<pointer to xfdata.FL_OBJECT>)
-        @param line: number of text line to be moved to top
+    @param pFlObject: pointer to browser object
+    @type pFlObject: pointer to xfdata.FL_OBJECT
+    @param line: text line number to be moved to top
+    @type line: int
 
-        @status: Untested + NoDoc + NoDemo = NOT OK
+    @status: Untested + NoDoc + NoDemo = NOT OK
     """
 
     _fl_set_browser_topline = cfuncproto(
@@ -11646,22 +11779,24 @@ def fl_set_browser_topline(pObject, line):
             """void fl_set_browser_topline(FL_OBJECT * ob, int line)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
     iline = convert_to_int(line)
-    keep_elem_refs(pObject, line, iline)
-    _fl_set_browser_topline(pObject, iline)
+    keep_elem_refs(pFlObject, line, iline)
+    _fl_set_browser_topline(pFlObject, iline)
 
 
-def fl_set_browser_bottomline(pObject, line):
-    """ fl_set_browser_bottomline(pObject, line)
+def fl_set_browser_bottomline(pFlObject, line):
+    """
+    fl_set_browser_bottomline(pFlObject, line)
 
-        Moves a line to the bottom of the browser.
+    Moves a line to the bottom of the browser.
 
-        @param pObject: pointer to browser object
-                (<pointer to xfdata.FL_OBJECT>)
-        @param line: number of text line to be moved to bottom
+    @param pFlObject: pointer to browser object
+    @type pFlObject: pointer to xfdata.FL_OBJECT
+    @param line: text line number to be moved to bottom
+    @type line: int
 
-        @status: Untested + NoDoc + NoDemo = NOT OK
+    @status: Untested + NoDoc + NoDemo = NOT OK
     """
 
     _fl_set_browser_bottomline = cfuncproto(
@@ -11670,22 +11805,24 @@ def fl_set_browser_bottomline(pObject, line):
             """void fl_set_browser_bottomline(FL_OBJECT * ob, int line)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
     iline = convert_to_int(line)
-    keep_elem_refs(pObject, line, iline)
-    _fl_set_browser_bottomline(pObject, iline)
+    keep_elem_refs(pFlObject, line, iline)
+    _fl_set_browser_bottomline(pFlObject, iline)
 
 
-def fl_set_browser_fontsize(pObject, size):
-    """ fl_set_browser_fontsize(pObject, size)
+def fl_set_browser_fontsize(pFlObject, size):
+    """
+    fl_set_browser_fontsize(pFlObject, size)
 
-        Sets the font size of a browser object.
+    Sets the font size of a browser object.
 
-        @param pObject: pointer to browser object
-                (<pointer to xfdata.FL_OBJECT>)
-        @param size: font size to be set
+    @param pFlObject: pointer to browser object
+    @type pFlObject: pointer to xfdata.FL_OBJECT
+    @param size: font size to be set
+    @type size: int
 
-        @status: Tested + NoDoc + Demo = OK
+    @status: Tested + NoDoc + Demo = OK
     """
 
     _fl_set_browser_fontsize = cfuncproto(
@@ -11694,22 +11831,24 @@ def fl_set_browser_fontsize(pObject, size):
             """void fl_set_browser_fontsize(FL_OBJECT * ob, int size)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
     isize = convert_to_int(size)
-    keep_elem_refs(pObject, size, isize)
-    _fl_set_browser_fontsize(pObject, isize)
+    keep_elem_refs(pFlObject, size, isize)
+    _fl_set_browser_fontsize(pFlObject, isize)
 
 
-def fl_set_browser_fontstyle(pObject, style):
-    """ fl_set_browser_fontstyle(pObject, style)
+def fl_set_browser_fontstyle(pFlObject, style):
+    """
+    fl_set_browser_fontstyle(pFlObject, style)
 
-        Sets the font style of a browser object.
+    Sets the font style of a browser object.
 
-        @param pObject: pointer to browser object
-                (<pointer to xfdata.FL_OBJECT>)
-        @param style: font style to be set
+    @param pFlObject: pointer to browser object
+    @type pFlObject: pointer to xfdata.FL_OBJECT
+    @param style: font style to be set
+    @type style: int
 
-        @status: Untested + NoDoc + NoDemo = NOT OK
+    @status: Untested + NoDoc + NoDemo = NOT OK
     """
 
     _fl_set_browser_fontstyle = cfuncproto(
@@ -11718,22 +11857,24 @@ def fl_set_browser_fontstyle(pObject, style):
             """void fl_set_browser_fontstyle(FL_OBJECT * ob, int style)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
     istyle = convert_to_int(style)
-    keep_elem_refs(pObject, style, istyle)
-    _fl_set_browser_fontstyle(pObject, istyle)
+    keep_elem_refs(pFlObject, style, istyle)
+    _fl_set_browser_fontstyle(pFlObject, istyle)
 
 
-def fl_set_browser_specialkey(pObject, specialkey):
-    """ fl_set_browser_specialkey(pObject, specialkey)
+def fl_set_browser_specialkey(pFlObject, specialkey):
+    """
+    fl_set_browser_specialkey(pFlObject, specialkey)
 
-        Sets the escape key used in the text.
+    Sets the escape key used in the text.
 
-        @param pObject: pointer to browser object
-                (<pointer to xfdata.FL_OBJECT>)
-        @param specialkey: escape key to be set
+    @param pFlObject: pointer to browser object
+    @type pFlObject: pointer to xfdata.FL_OBJECT
+    @param specialkey: escape key to be set
+    @type specialkey: int
 
-        @status: Untested + NoDoc + NoDemo = NOT OK
+    @status: Untested + NoDoc + NoDemo = NOT OK
     """
 
     _fl_set_browser_specialkey = cfuncproto(
@@ -11742,19 +11883,22 @@ def fl_set_browser_specialkey(pObject, specialkey):
             """void fl_set_browser_specialkey(FL_OBJECT * ob, int specialkey)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
     ispecialkey = convert_to_int(specialkey)
-    keep_elem_refs(pObject, specialkey, ispecialkey)
-    _fl_set_browser_specialkey(pObject, ispecialkey)
+    keep_elem_refs(pFlObject, specialkey, ispecialkey)
+    _fl_set_browser_specialkey(pFlObject, ispecialkey)
 
 
-def fl_set_browser_vscrollbar(pObject, on):
-    """ fl_set_browser_vscrollbar(pObject, on)
+def fl_set_browser_vscrollbar(pFlObject, on):
+    """
+    fl_set_browser_vscrollbar(pFlObject, on)
 
-        @param pObject: pointer to object
-                (<pointer to xfdata.FL_OBJECT>)
+    @param pFlObject: pointer to object
+    @type pFlObject: pointer to xfdata.FL_OBJECT
+    @param on: ?
+    @type on: int
 
-        @status: Tested + NoDoc + Demo = OK
+    @status: Tested + NoDoc + Demo = OK
     """
 
     _fl_set_browser_vscrollbar = cfuncproto(
@@ -11763,19 +11907,22 @@ def fl_set_browser_vscrollbar(pObject, on):
             """void fl_set_browser_vscrollbar(FL_OBJECT * ob, int on)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
     ion = convert_to_int(on)
-    keep_elem_refs(pObject, on, ion)
-    _fl_set_browser_vscrollbar(pObject, ion)
+    keep_elem_refs(pFlObject, on, ion)
+    _fl_set_browser_vscrollbar(pFlObject, ion)
 
 
-def fl_set_browser_hscrollbar(pObject, on):
-    """ fl_set_browser_hscrollbar(pObject, on)
+def fl_set_browser_hscrollbar(pFlObject, on):
+    """
+    fl_set_browser_hscrollbar(pFlObject, on)
 
-        @param pObject: pointer to object
-                (<pointer to xfdata.FL_OBJECT>)
+    @param pFlObject: pointer to object
+    @type pFlObject: pointer to xfdata.FL_OBJECT
+    @param on: ?
+    @type on: int
 
-        @status: Untested + NoDoc + NoDemo = NOT OK
+    @status: Untested + NoDoc + NoDemo = NOT OK
     """
 
     _fl_set_browser_hscrollbar = cfuncproto(
@@ -11784,19 +11931,24 @@ def fl_set_browser_hscrollbar(pObject, on):
             """void fl_set_browser_hscrollbar(FL_OBJECT * ob, int on)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
     ion = convert_to_int(on)
-    keep_elem_refs(pObject, on, ion)
-    _fl_set_browser_hscrollbar(pObject, ion)
+    keep_elem_refs(pFlObject, on, ion)
+    _fl_set_browser_hscrollbar(pFlObject, ion)
 
 
-def fl_set_browser_line_selectable(pObject, line, flag):
-    """ fl_set_browser_line_selectable(pObject, line, flag)
+def fl_set_browser_line_selectable(pFlObject, line, flag):
+    """
+    fl_set_browser_line_selectable(pFlObject, line, flag)
 
-        @param pObject: pointer to object
-                (<pointer to xfdata.FL_OBJECT>)
+    @param pFlObject: pointer to object
+    @type pFlObject: pointer to xfdata.FL_OBJECT
+    @param line: ?
+    @type line: int
+    @param flag: ?
+    @type flag: int
 
-        @status: Untested + NoDoc + NoDemo = NOT OK
+    @status: Untested + NoDoc + NoDemo = NOT OK
     """
 
     _fl_set_browser_line_selectable = cfuncproto(
@@ -11806,25 +11958,28 @@ def fl_set_browser_line_selectable(pObject, line, flag):
                int flag)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
     iline = convert_to_int(line)
     iflag = convert_to_int(flag)
-    keep_elem_refs(pObject, line, flag, iline, iflag)
-    _fl_set_browser_line_selectable(pObject, iline, iflag)
+    keep_elem_refs(pFlObject, line, flag, iline, iflag)
+    _fl_set_browser_line_selectable(pFlObject, iline, iflag)
 
 
-def fl_get_browser_dimension(pObject):
-    """ fl_get_browser_dimension(pObject) -> hor.xpos, ver.ypos, width, height
+def fl_get_browser_dimension(pFlObject):
+    """
+    fl_get_browser_dimension(pFlObject) -> int, int, int, int
 
-        Returns all dimensions of a browser object.
+    Returns all dimensions of a browser object.
 
-        @param pObject: pointer to browser object
-                (<pointer to xfdata.FL_OBJECT>)
+    @param pFlObject: pointer to browser object
+    @type pFlObject: pointer to xfdata.FL_OBJECT
 
-        @attention: API change from XForms - upstream was
-                    fl_get_browser_dimension(pObject, x, y, w, h)
+    @returns: horizontal and vertical position, width, height (x, y, w, h)
 
-        @status: Untested + NoDoc + NoDemo = NOT OK
+    @attention: API change from XForms - upstream was
+        fl_get_browser_dimension(pFlObject, x, y, w, h)
+
+    @status: Untested + NoDoc + NoDemo = NOT OK
     """
 
     _fl_get_browser_dimension = cfuncproto(
@@ -11836,23 +11991,28 @@ def fl_get_browser_dimension(pObject):
                FL_Coord * y, FL_Coord * w, FL_Coord * h)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
     x, px = make_FL_Coord_and_pointer()
     y, py = make_FL_Coord_and_pointer()
     w, pw = make_FL_Coord_and_pointer()
     h, ph = make_FL_Coord_and_pointer()
-    keep_elem_refs(pObject, x, y, w, h, px, py, pw, ph)
-    _fl_get_browser_dimension(pObject, px, py, pw, ph)
+    keep_elem_refs(pFlObject, x, y, w, h, px, py, pw, ph)
+    _fl_get_browser_dimension(pFlObject, px, py, pw, ph)
     return x.value, y.value, w.value, h.value
 
 
-def fl_set_browser_dblclick_callback(pObject, py_CallbackPtr, data):
-    """ fl_set_browser_dblclick_callback(pObject, py_CallbackPtr, data)
+def fl_set_browser_dblclick_callback(pFlObject, py_CallbackPtr, data):
+    """
+    fl_set_browser_dblclick_callback(pFlObject, py_CallbackPtr, data)
 
-        @param pObject: pointer to object
-                (<pointer to xfdata.FL_OBJECT>)
+    @param pFlObject: pointer to object
+    @type pFlObject: pointer to xfdata.FL_OBJECT
+    @param py_CallbackPtr: python function callback ..
+    @type py_CallbackPtr: __ funcname (..) __
+    @param data: user data to be passed to function
+    @param data: long
 
-        @status: Untested + NoDoc + NoDemo = NOT OK
+    @status: Untested + NoDoc + NoDemo = NOT OK
     """
 
     _fl_set_browser_dblclick_callback = cfuncproto(
@@ -11862,21 +12022,24 @@ def fl_set_browser_dblclick_callback(pObject, py_CallbackPtr, data):
                FL_CALLBACKPTR cb, long int a)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
     ldata = convert_to_long(data)
     c_CallbackPtr = xfc.FL_CALLBACKPTR(py_CallbackPtr)
     keep_cfunc_refs(c_CallbackPtr, py_CallbackPtr)
-    keep_elem_refs(pObject, data, ldata)
-    _fl_set_browser_dblclick_callback(pObject, c_CallbackPtr, ldata)
+    keep_elem_refs(pFlObject, data, ldata)
+    _fl_set_browser_dblclick_callback(pFlObject, c_CallbackPtr, ldata)
 
 
-def fl_get_browser_xoffset(pObject):
-    """ fl_get_browser_xoffset(pObject) -> coord num.
+def fl_get_browser_xoffset(pFlObject):
+    """
+    fl_get_browser_xoffset(pFlObject) -> int
 
-        @param pObject: pointer to browser object
-                (<pointer to xfdata.FL_OBJECT>)
+    @param pFlObject: pointer to browser object
+    @type pFlObject: pointer to xfdata.FL_OBJECT
 
-        @status: Untested + NoDoc + NoDemo = NOT OK
+    @returns: coord num.
+
+    @status: Untested + NoDoc + NoDemo = NOT OK
     """
 
     _fl_get_browser_xoffset = cfuncproto(
@@ -11885,19 +12048,22 @@ def fl_get_browser_xoffset(pObject):
             """FL_Coord fl_get_browser_xoffset(FL_OBJECT * ob)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
-    keep_elem_refs(pObject)
-    retval = _fl_get_browser_xoffset(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
+    keep_elem_refs(pFlObject)
+    retval = _fl_get_browser_xoffset(pFlObject)
     return retval
 
 
-def fl_get_browser_rel_xoffset(pObject):
-    """ fl_get_browser_rel_xoffset(pObject) -> num.
+def fl_get_browser_rel_xoffset(pFlObject):
+    """
+    fl_get_browser_rel_xoffset(pFlObject) -> float
 
-        @param pObject: pointer to browser object
-                (<pointer to xfdata.FL_OBJECT>)
+    @param pFlObject: pointer to browser object
+    @type pFlObject: pointer to xfdata.FL_OBJECT
 
-        @status: Untested + NoDoc + NoDemo = NOT OK
+    @returns: relative offset
+
+    @status: Untested + NoDoc + NoDemo = NOT OK
     """
 
     _fl_get_browser_rel_xoffset = cfuncproto(
@@ -11906,19 +12072,22 @@ def fl_get_browser_rel_xoffset(pObject):
             """double fl_get_browser_rel_xoffset(FL_OBJECT * ob)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
-    keep_elem_refs(pObject)
-    retval = _fl_get_browser_rel_xoffset(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
+    keep_elem_refs(pFlObject)
+    retval = _fl_get_browser_rel_xoffset(pFlObject)
     return retval
 
 
-def fl_set_browser_xoffset(pObject, npixels):
-    """ fl_set_browser_xoffset(pObject, npixels)
+def fl_set_browser_xoffset(pFlObject, npixels):
+    """
+    fl_set_browser_xoffset(pFlObject, npixels)
 
-        @param pObject: pointer to browser object
-                (<pointer to xfdata.FL_OBJECT>)
+    @param pFlObject: pointer to browser object
+    @type pFlObject: pointer to xfdata.FL_OBJECT
+    @param npixels: offset
+    @type npixels: int
 
-        @status: Untested + NoDoc + NoDemo = NOT OK
+    @status: Untested + NoDoc + NoDemo = NOT OK
     """
 
     _fl_set_browser_xoffset = cfuncproto(
@@ -11927,19 +12096,22 @@ def fl_set_browser_xoffset(pObject, npixels):
             """void fl_set_browser_xoffset(FL_OBJECT * ob, FL_Coord npixels)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
     inpixels = convert_to_FL_Coord(npixels)
-    keep_elem_refs(pObject, npixels, inpixels)
-    _fl_set_browser_xoffset(pObject, inpixels)
+    keep_elem_refs(pFlObject, npixels, inpixels)
+    _fl_set_browser_xoffset(pFlObject, inpixels)
 
 
-def fl_set_browser_rel_xoffset(pObject, val):
-    """ fl_set_browser_rel_xoffset(pObject, val)
+def fl_set_browser_rel_xoffset(pFlObject, val):
+    """
+    fl_set_browser_rel_xoffset(pFlObject, val)
 
-        @param pObject: pointer to browser object
-                (<pointer to xfdata.FL_OBJECT>)
+    @param pFlObject: pointer to browser object
+    @type pFlObject: pointer to xfdata.FL_OBJECT
+    @param val: offset
+    @type val: float
 
-        @status: Untested + NoDoc + NoDemo = NOT OK
+    @status: Untested + NoDoc + NoDemo = NOT OK
     """
 
     _fl_set_browser_rel_xoffset = cfuncproto(
@@ -11948,19 +12120,22 @@ def fl_set_browser_rel_xoffset(pObject, val):
             """void fl_set_browser_rel_xoffset(FL_OBJECT * ob, double val)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
     fval = convert_to_double(val)
-    keep_elem_refs(pObject, val, fval)
-    _fl_set_browser_rel_xoffset(pObject, fval)
+    keep_elem_refs(pFlObject, val, fval)
+    _fl_set_browser_rel_xoffset(pFlObject, fval)
 
 
-def fl_get_browser_yoffset(pObject):
-    """ fl_get_browser_yoffset(pObject) -> coord num.
+def fl_get_browser_yoffset(pFlObject):
+    """
+    fl_get_browser_yoffset(pFlObject) -> int
 
-        @param pObject: pointer to browser object
-                (<pointer to xfdata.FL_OBJECT>)
+    @param pFlObject: pointer to browser object
+    @type pFlObject: pointer to xfdata.FL_OBJECT
 
-        @status: Tested + NoDoc + Demo = OK
+    @returns: coord. num.
+
+    @status: Tested + NoDoc + Demo = OK
     """
 
     _fl_get_browser_yoffset = cfuncproto(
@@ -11969,19 +12144,22 @@ def fl_get_browser_yoffset(pObject):
             """FL_Coord fl_get_browser_yoffset(FL_OBJECT * ob)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
-    keep_elem_refs(pObject)
-    retval = _fl_get_browser_yoffset(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
+    keep_elem_refs(pFlObject)
+    retval = _fl_get_browser_yoffset(pFlObject)
     return retval
 
 
-def fl_get_browser_rel_yoffset(pObject):
-    """ fl_get_browser_rel_yoffset(pObject) -> num.
+def fl_get_browser_rel_yoffset(pFlObject):
+    """
+    fl_get_browser_rel_yoffset(pFlObject) -> float
 
-        @param pObject: pointer to browser object
-                (<pointer to xfdata.FL_OBJECT>)
+    @param pFlObject: pointer to browser object
+    @type pFlObject: pointer to xfdata.FL_OBJECT
 
-        @status: Untested + NoDoc + NoDemo = NOT OK
+    @returns: relative offset
+
+    @status: Untested + NoDoc + NoDemo = NOT OK
     """
 
     _fl_get_browser_rel_yoffset = cfuncproto(
@@ -11990,19 +12168,22 @@ def fl_get_browser_rel_yoffset(pObject):
             """double fl_get_browser_rel_yoffset(FL_OBJECT * ob)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
-    keep_elem_refs(pObject)
-    retval = _fl_get_browser_rel_yoffset(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
+    keep_elem_refs(pFlObject)
+    retval = _fl_get_browser_rel_yoffset(pFlObject)
     return retval
 
 
-def fl_set_browser_yoffset(pObject, npixels):
-    """ fl_set_browser_yoffset(pObject, npixels)
+def fl_set_browser_yoffset(pFlObject, npixels):
+    """
+    fl_set_browser_yoffset(pFlObject, npixels)
 
-        @param pObject: pointer to browser object
-                (<pointer to xfdata.FL_OBJECT>)
+    @param pFlObject: pointer to browser object
+    @type pFlObject: pointer to xfdata.FL_OBJECT
+    @param npixels: offset
+    @type npixels: int
 
-        @status: Tested + NoDoc + Demo = OK
+    @status: Tested + NoDoc + Demo = OK
     """
 
     _fl_set_browser_yoffset = cfuncproto(
@@ -12011,19 +12192,22 @@ def fl_set_browser_yoffset(pObject, npixels):
             """void fl_set_browser_yoffset(FL_OBJECT * ob, FL_Coord npixels)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
     inpixels = convert_to_FL_Coord(npixels)
-    keep_elem_refs(pObject, npixels, inpixels)
-    _fl_set_browser_yoffset(pObject, inpixels)
+    keep_elem_refs(pFlObject, npixels, inpixels)
+    _fl_set_browser_yoffset(pFlObject, inpixels)
 
 
-def fl_set_browser_rel_yoffset(pObject, val):
-    """ fl_set_browser_rel_yoffset(pObject, val)
+def fl_set_browser_rel_yoffset(pFlObject, val):
+    """
+    fl_set_browser_rel_yoffset(pFlObject, val)
 
-        @param pObject: pointer to browser object
-                (<pointer to xfdata.FL_OBJECT>)
+    @param pFlObject: pointer to browser object
+    @type pFlObject: pointer to xfdata.FL_OBJECT
+    @param val: offset
+    @type val: float
 
-        @status: Untested + NoDoc + NoDemo = NOT OK
+    @status: Untested + NoDoc + NoDemo = NOT OK
     """
 
     _fl_set_browser_rel_yoffset = cfuncproto(
@@ -12032,19 +12216,24 @@ def fl_set_browser_rel_yoffset(pObject, val):
             """void fl_set_browser_rel_yoffset(FL_OBJECT * ob, double val)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
     fval = convert_to_double(val)
-    keep_elem_refs(pObject, val, fval)
-    _fl_set_browser_rel_yoffset(pObject, fval)
+    keep_elem_refs(pFlObject, val, fval)
+    _fl_set_browser_rel_yoffset(pFlObject, fval)
 
 
-def fl_set_browser_scrollbarsize(pObject, hh, vw):
-    """ fl_set_browser_scrollbarsize(pObject, hh, vw)
+def fl_set_browser_scrollbarsize(pFlObject, hh, vw):
+    """
+    fl_set_browser_scrollbarsize(pFlObject, hh, vw)
 
-        @param pObject: pointer to browser object
-                (<pointer to xfdata.FL_OBJECT>)
+    @param pFlObject: pointer to browser object
+    @type pFlObject: pointer to xfdata.FL_OBJECT
+    @param hh: ?
+    @type hh: int
+    @param vw: ?
+    @type vw: int
 
-        @status: Untested + NoDoc + NoDemo = NOT OK
+    @status: Untested + NoDoc + NoDemo = NOT OK
     """
 
     _fl_set_browser_scrollbarsize = cfuncproto(
@@ -12054,23 +12243,25 @@ def fl_set_browser_scrollbarsize(pObject, hh, vw):
                int hh, int vw)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
     ihh = convert_to_int(hh)
     ivw = convert_to_int(vw)
-    keep_elem_refs(pObject, hh, vw, ihh, ivw)
-    _fl_set_browser_scrollbarsize(pObject, ihh, ivw)
+    keep_elem_refs(pFlObject, hh, vw, ihh, ivw)
+    _fl_set_browser_scrollbarsize(pFlObject, ihh, ivw)
 
 
-def fl_show_browser_line(pObject, line):
-    """ fl_show_browser_line(pObject, line)
+def fl_show_browser_line(pFlObject, line):
+    """
+    fl_show_browser_line(pFlObject, line)
 
-        Bring a browser line into view.
+    Bring a browser line into view.
 
-        @param pObject: pointer to browser object
-                (<pointer to xfdata.FL_OBJECT>)
-        @param line: line to show
+    @param pFlObject: pointer to browser object
+    @type pFlObject: pointer to xfdata.FL_OBJECT
+    @param line: line number to show
+    @type line: int
 
-        @status: Untested + NoDoc + NoDemo = NOT OK
+    @status: Untested + NoDoc + NoDemo = NOT OK
     """
 
     _fl_show_browser_line = cfuncproto(
@@ -12079,10 +12270,10 @@ def fl_show_browser_line(pObject, line):
             """void fl_show_browser_line(FL_OBJECT * ob, int j)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
     iline = convert_to_int(line)
-    keep_elem_refs(pObject, line, iline)
-    _fl_show_browser_line(pObject, iline)
+    keep_elem_refs(pFlObject, line, iline)
+    _fl_show_browser_line(pFlObject, iline)
 
 
 # fl_set_default_browser_maxlinelength function placeholder (deprecated)
@@ -12091,16 +12282,18 @@ def fl_show_browser_line(pObject, line):
 FL_BROWSER_SCROLL_CALLBACK = cty.CFUNCTYPE(None, cty.POINTER(xfc.FL_OBJECT),
                 cty.c_int, cty.c_void_p)
 
-def fl_set_browser_hscroll_callback(pObject, py_BrowserScrollCallback, vdata):
-    """ fl_set_browser_hscroll_callback(pObject, py_BrowserScrollCallback, vdata)
+def fl_set_browser_hscroll_callback(pFlObject, py_BrowserScrollCallback, vdata):
+    """
+    fl_set_browser_hscroll_callback(pFlObject, py_BrowserScrollCallback, vdata)
 
-        @param pObject: pointer to browser object
-                (<pointer to xfdata.FL_OBJECT>)
-        @param py_BrowserScrollCallback: python function callback
-        @type py_BrowserScrollCallback: fn(pObject, num, data)
-        @param vdata: user data argument
+    @param pFlObject: pointer to browser object
+    @type pFlObject: pointer to xfdata.FL_OBJECT
+    @param py_BrowserScrollCallback: python function callback, no return
+    @type py_BrowserScrollCallback: __ funcname (pFlObject, num, vdata) __
+    @param vdata: user data to be passed to function
+    @type vdata: pointer to void
 
-        @status: Untested + NoDoc + NoDemo = NOT OK
+    @status: Untested + NoDoc + NoDemo = NOT OK
     """
 
     _fl_set_browser_hscroll_callback = cfuncproto(
@@ -12111,25 +12304,27 @@ def fl_set_browser_hscroll_callback(pObject, py_BrowserScrollCallback, vdata):
                FL_BROWSER_SCROLL_CALLBACK cb, void * data)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
     c_BrowserScrollCallback = FL_BROWSER_SCROLL_CALLBACK( \
                                 py_BrowserScrollCallback)
     pvdata = cty.cast(vdata, cty.c_void_p)
     keep_cfunc_refs(c_BrowserScrollCallback, py_BrowserScrollCallback)
-    keep_elem_refs(pObject, vdata, pvdata)
-    _fl_set_browser_hscroll_callback(pObject, c_BrowserScrollCallback, pvdata)
+    keep_elem_refs(pFlObject, vdata, pvdata)
+    _fl_set_browser_hscroll_callback(pFlObject, c_BrowserScrollCallback, pvdata)
 
 
-def fl_set_browser_vscroll_callback(pObject, py_BrowserScrollCallback, vdata):
-    """ fl_set_browser_vscroll_callback(pObject, py_BrowserScrollCallback, vdata)
+def fl_set_browser_vscroll_callback(pFlObject, py_BrowserScrollCallback, vdata):
+    """
+    fl_set_browser_vscroll_callback(pFlObject, py_BrowserScrollCallback, vdata)
 
-        @param pObject: pointer to browser object
-                (<pointer to xfdata.FL_OBJECT>)
-        @param py_BrowserScrollCallback: python function callback
-        @type py_BrowserScrollCallback: fn(pObject, num, data)
-        @param vdata: user data argument
+    @param pFlObject: pointer to browser object
+    @type pFlObject: pointer to xfdata.FL_OBJECT
+    @param py_BrowserScrollCallback: python function callback, no return
+    @type py_BrowserScrollCallback: __ funcname (pFlObject, num, vdata) __
+    @param vdata: user data to be passed to function
+    @type vdata: pointer to void
 
-        @status: Tested + NoDoc + Demo = OK
+    @status: Tested + NoDoc + Demo = OK
     """
 
     _fl_set_browser_vscroll_callback = cfuncproto(
@@ -12140,22 +12335,25 @@ def fl_set_browser_vscroll_callback(pObject, py_BrowserScrollCallback, vdata):
                FL_BROWSER_SCROLL_CALLBACK cb, void * data)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
     c_BrowserScrollCallback = FL_BROWSER_SCROLL_CALLBACK( \
                                 py_BrowserScrollCallback)
     pvdata = cty.cast(vdata, cty.c_void_p)
     keep_cfunc_refs(c_BrowserScrollCallback, py_BrowserScrollCallback)
-    keep_elem_refs(pObject, vdata, pvdata)
-    _fl_set_browser_vscroll_callback(pObject, c_BrowserScrollCallback, pvdata)
+    keep_elem_refs(pFlObject, vdata, pvdata)
+    _fl_set_browser_vscroll_callback(pFlObject, c_BrowserScrollCallback, pvdata)
 
 
-def fl_get_browser_line_yoffset(pObject, line):
-    """ fl_get_browser_line_yoffset(pObject, line) -> num.
+def fl_get_browser_line_yoffset(pFlObject, line):
+    """
+    fl_get_browser_line_yoffset(pFlObject, line) -> int
 
-        @param pObject: pointer to browser object
-                (<pointer to xfdata.FL_OBJECT>)
+    @param pFlObject: pointer to browser object
+    @type pFlObject: pointer to xfdata.FL_OBJECT
 
-        @status: Untested + NoDoc + NoDemo = NOT OK
+    @returns: num.
+
+    @status: Untested + NoDoc + NoDemo = NOT OK
     """
 
     _fl_get_browser_line_yoffset = cfuncproto(
@@ -12164,20 +12362,21 @@ def fl_get_browser_line_yoffset(pObject, line):
             """int fl_get_browser_line_yoffset(FL_OBJECT * obj, int line)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
     iline = convert_to_int(line)
-    keep_elem_refs(pObject, line, iline)
-    retval = _fl_get_browser_line_yoffset(pObject, iline)
+    keep_elem_refs(pFlObject, line, iline)
+    retval = _fl_get_browser_line_yoffset(pFlObject, iline)
     return retval
 
 
-def fl_get_browser_hscroll_callback(pObject):
-    """ fl_get_browser_hscroll_callback(pObject) -> callback
+def fl_get_browser_hscroll_callback(pFlObject):
+    """
+    fl_get_browser_hscroll_callback(pFlObject) -> callback
 
-        @param pObject: pointer to browser object
-                (<pointer to xfdata.FL_OBJECT>)
+    @param pFlObject: pointer to browser object
+    @type pFlObject: pointer to xfdata.FL_OBJECT
 
-        @status: Untested + NoDoc + NoDemo = NOT OK
+    @status: Untested + NoDoc + NoDemo = NOT OK
     """
 
     _fl_get_browser_hscroll_callback = cfuncproto(
@@ -12187,19 +12386,20 @@ def fl_get_browser_hscroll_callback(pObject):
                FL_OBJECT * ob)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
-    keep_elem_refs(pObject)
-    retval = _fl_get_browser_hscroll_callback(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
+    keep_elem_refs(pFlObject)
+    retval = _fl_get_browser_hscroll_callback(pFlObject)
     return retval
 
 
-def fl_get_browser_vscroll_callback(pObject):
-    """ fl_get_browser_vscroll_callback(pObject) -> callback
+def fl_get_browser_vscroll_callback(pFlObject):
+    """
+    fl_get_browser_vscroll_callback(pFlObject) -> callback
 
-        @param pObject: pointer to browser object
-                (<pointer to xfdata.FL_OBJECT>)
+    @param pFlObject: pointer to browser object
+    @type pFlObject: pointer to xfdata.FL_OBJECT
 
-        @status: Untested + NoDoc + NoDemo = NOT OK
+    @status: Untested + NoDoc + NoDemo = NOT OK
     """
 
     _fl_get_browser_vscroll_callback = cfuncproto(
@@ -12209,9 +12409,9 @@ def fl_get_browser_vscroll_callback(pObject):
                FL_OBJECT * ob)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
-    keep_elem_refs(pObject)
-    retval = _fl_get_browser_vscroll_callback(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
+    keep_elem_refs(pFlObject)
+    retval = _fl_get_browser_vscroll_callback(pFlObject)
     return retval
 
 
@@ -12235,23 +12435,28 @@ def fl_get_browser_vscroll_callback(pObject):
 
 
 def fl_add_roundbutton(buttontype, x, y, w, h, label):
-    """ fl_add_roundbutton(buttontype, x, y, w, h, label) -> pObject
+    """
+    fl_add_roundbutton(buttontype, x, y, w, h, label) -> pFlObject
 
-        Adds a roundbutton object.
+    Adds a roundbutton object.
 
-        @param buttontype: type of button object to be added
-        @type buttontype: [num./int] from xfdata module FL_NORMAL_BUTTON,
-                          FL_PUSH_BUTTON, FL_RADIO_BUTTON, FL_HIDDEN_BUTTON,
-                          FL_TOUCH_BUTTON, FL_INOUT_BUTTON, FL_RETURN_BUTTON,
-                          FL_HIDDEN_RET_BUTTON, FL_MENU_BUTTON,
-                          FL_TOGGLE_BUTTON
-        @param x: horizontal position (upper-left corner)
-        @param x: vertical position (upper-left corner)
-        @param w: width in coord units
-        @param h: height in coord units
-        @param label: text label of button
+    @param buttontype: type of button object to be added. Values (from xfdata
+        module) i.e. FL_NORMAL_BUTTON, FL_PUSH_BUTTON, FL_RADIO_BUTTON,
+        FL_HIDDEN_BUTTON, FL_TOUCH_BUTTON, FL_INOUT_BUTTON, FL_RETURN_BUTTON,
+        FL_HIDDEN_RET_BUTTON, FL_MENU_BUTTON, FL_TOGGLE_BUTTON
+    @type buttontype: int
+    @param x: horizontal position (upper-left corner)
+    @type x: int
+    @param y: vertical position (upper-left corner)
+    @type y: int
+    @param w: width in coord units
+    @type w: int
+    @param h: height in coord units
+    @type h: int
+    @param label: text label of button
+    @type label: str
 
-        @status: Tested + NoDoc + Demo = OK
+    @status: Tested + NoDoc + Demo = OK
     """
 
     _fl_add_roundbutton = cfuncproto(
@@ -12276,23 +12481,28 @@ def fl_add_roundbutton(buttontype, x, y, w, h, label):
 
 
 def fl_add_round3dbutton(buttontype, x, y, w, h, label):
-    """ fl_add_round3dbutton(buttontype, x, y, w, h, label) -> pObject
+    """
+    fl_add_round3dbutton(buttontype, x, y, w, h, label) -> pFlObject
 
-        Adds a 3D roundbutton object.
+    Adds a 3D roundbutton object.
 
-        @param buttontype: type of button object to be added
-        @type buttontype: [num./int] from xfdata module FL_NORMAL_BUTTON,
-                          FL_PUSH_BUTTON, FL_RADIO_BUTTON, FL_HIDDEN_BUTTON,
-                          FL_TOUCH_BUTTON, FL_INOUT_BUTTON, FL_RETURN_BUTTON,
-                          FL_HIDDEN_RET_BUTTON, FL_MENU_BUTTON,
-                          FL_TOGGLE_BUTTON
-        @param x: horizontal position (upper-left corner)
-        @param x: vertical position (upper-left corner)
-        @param w: width in coord units
-        @param h: height in coord units
-        @param label: text label of button
+    @param buttontype: type of button object to be added. Values (from xfdata
+        module) i.e. FL_NORMAL_BUTTON, FL_PUSH_BUTTON, FL_RADIO_BUTTON,
+        FL_HIDDEN_BUTTON, FL_TOUCH_BUTTON, FL_INOUT_BUTTON, FL_RETURN_BUTTON,
+        FL_HIDDEN_RET_BUTTON, FL_MENU_BUTTON, FL_TOGGLE_BUTTON
+    @type buttontype: int
+    @param x: horizontal position (upper-left corner)
+    @type x: int
+    @param y: vertical position (upper-left corner)
+    @type y: int
+    @param w: width in coord units
+    @type w: int
+    @param h: height in coord units
+    @type h: int
+    @param label: text label of button
+    @type label: str
 
-        @status: Tested + NoDoc + Demo = OK
+    @status: Tested + NoDoc + Demo = OK
     """
 
     _fl_add_round3dbutton = cfuncproto(
@@ -12317,23 +12527,28 @@ def fl_add_round3dbutton(buttontype, x, y, w, h, label):
 
 
 def fl_add_lightbutton(buttontype, x, y, w, h, label):
-    """ fl_add_lightbutton(buttontype, x, y, w, h, label) -> pObject
+    """
+    fl_add_lightbutton(buttontype, x, y, w, h, label) -> pFlObject
 
-        Adds a lightbutton object (with an on/off light switch).
+    Adds a lightbutton object (with an on/off light switch).
 
-        @param buttontype: type of button to be added
-        @type buttontype: [num./int] xfc.FL_NORMAL_BUTTON, xfc.FL_PUSH_BUTTON,
-                          xfc.FL_RADIO_BUTTON, xfc.FL_HIDDEN_BUTTON,
-                          xfc.FL_TOUCH_BUTTON, xfc.FL_INOUT_BUTTON,
-                          xfc.FL_RETURN_BUTTON, xfc.FL_HIDDEN_RET_BUTTON,
-                          xfc.FL_MENU_BUTTON, xfc.FL_TOGGLE_BUTTON
-        @param x: horizontal position (upper-left corner)
-        @param x: vertical position (upper-left corner)
-        @param w: width in coord units
-        @param h: height in coord units
-        @param label: text label of button
+    @param buttontype: type of button to be added. Values (from xfdata module)
+        i.e. FL_NORMAL_BUTTON, FL_PUSH_BUTTON, FL_RADIO_BUTTON,
+        FL_HIDDEN_BUTTON, FL_TOUCH_BUTTON, FL_INOUT_BUTTON, FL_RETURN_BUTTON,
+        FL_HIDDEN_RET_BUTTON, FL_MENU_BUTTON, FL_TOGGLE_BUTTON
+    @type buttontype: int
+    @param x: horizontal position (upper-left corner)
+    @type x: int
+    @param y: vertical position (upper-left corner)
+    @type y: int
+    @param w: width in coord units
+    @type w: int
+    @param h: height in coord units
+    @type h: int
+    @param label: text label of button
+    @type label: str
 
-        @status: Tested + NoDoc + Demo = OK
+    @status: Tested + NoDoc + Demo = OK
     """
 
     _fl_add_lightbutton = cfuncproto(
@@ -12358,23 +12573,28 @@ def fl_add_lightbutton(buttontype, x, y, w, h, label):
 
 
 def fl_add_checkbutton(buttontype, x, y, w, h, label):
-    """ fl_add_checkbutton(buttontype, x, y, w, h, label) -> pObject
+    """
+    fl_add_checkbutton(buttontype, x, y, w, h, label) -> pFlObject
 
-        Adds a checkbutton object.
+    Adds a checkbutton object.
 
-        @param buttontype: type of button object to be added
-        @type buttontype: [num./int] xfc.FL_NORMAL_BUTTON, xfc.FL_PUSH_BUTTON,
-                          xfc.FL_RADIO_BUTTON, xfc.FL_HIDDEN_BUTTON,
-                          xfc.FL_TOUCH_BUTTON, xfc.FL_INOUT_BUTTON,
-                          xfc.FL_RETURN_BUTTON, xfc.FL_HIDDEN_RET_BUTTON,
-                          xfc.FL_MENU_BUTTON, xfc.FL_TOGGLE_BUTTON
-        @param x: horizontal position (upper-left corner)
-        @param x: vertical position (upper-left corner)
-        @param w: width in coord units
-        @param h: height in coord units
-        @param label: text label of button
+    @param buttontype: type of button object to be added. Values (from xfdata
+        module) i.e. FL_NORMAL_BUTTON, FL_PUSH_BUTTON, FL_RADIO_BUTTON,
+        FL_HIDDEN_BUTTON, FL_TOUCH_BUTTON, FL_INOUT_BUTTON, FL_RETURN_BUTTON,
+        FL_HIDDEN_RET_BUTTON, FL_MENU_BUTTON, FL_TOGGLE_BUTTON
+    @type buttontype: int
+    @param x: horizontal position (upper-left corner)
+    @type x: int
+    @param y: vertical position (upper-left corner)
+    @type y: int
+    @param w: width in coord units
+    @type w: int
+    @param h: height in coord units
+    @type h: int
+    @param label: text label of button
+    @type label: str
 
-        @status: Tested + NoDoc + Demo = OK
+    @status: Tested + NoDoc + Demo = OK
     """
 
     _fl_add_checkbutton = cfuncproto(
@@ -12399,23 +12619,28 @@ def fl_add_checkbutton(buttontype, x, y, w, h, label):
 
 
 def fl_add_button(buttontype, x, y, w, h, label):
-    """ fl_add_button(buttontype, x, y, w, h, label) -> pObject
+    """
+    fl_add_button(buttontype, x, y, w, h, label) -> pFlObject
 
-        Adds a button object to the current form.
+    Adds a button object to the current form.
 
-        @param buttontype: type of button to be added
-        @type buttontype: [num./int] xfc.FL_NORMAL_BUTTON, xfc.FL_PUSH_BUTTON,
-                          xfc.FL_RADIO_BUTTON, xfc.FL_HIDDEN_BUTTON,
-                          xfc.FL_TOUCH_BUTTON, xfc.FL_INOUT_BUTTON,
-                          xfc.FL_RETURN_BUTTON, xfc.FL_HIDDEN_RET_BUTTON,
-                          xfc.FL_MENU_BUTTON, xfc.FL_TOGGLE_BUTTON
-        @param x: horizontal position (upper-left corner)
-        @param x: vertical position (upper-left corner)
-        @param w: width in coord units
-        @param h: height in coord units
-        @param label: text label of button
+    @param buttontype: type of button to be added. Values (from xfdata
+        module) i.e. FL_NORMAL_BUTTON, FL_PUSH_BUTTON, FL_RADIO_BUTTON,
+        FL_HIDDEN_BUTTON, FL_TOUCH_BUTTON, FL_INOUT_BUTTON, FL_RETURN_BUTTON,
+        FL_HIDDEN_RET_BUTTON, FL_MENU_BUTTON, FL_TOGGLE_BUTTON
+    @type buttontype: int
+    @param x: horizontal position (upper-left corner)
+    @type x: int
+    @param y: vertical position (upper-left corner)
+    @type y: int
+    @param w: width in coord units
+    @type w: int
+    @param h: height in coord units
+    @type h: int
+    @param label: text label of button
+    @type label: str
 
-        @status: Tested + NoDoc + Demo = OK
+    @status: Tested + NoDoc + Demo = OK
     """
 
     _fl_add_button = cfuncproto(
@@ -12440,23 +12665,28 @@ def fl_add_button(buttontype, x, y, w, h, label):
 
 
 def fl_add_bitmapbutton(buttontype, x, y, w, h, label):
-    """ fl_add_bitmapbutton(buttontype, x, y, w, h, label) -> pObject
+    """
+    fl_add_bitmapbutton(buttontype, x, y, w, h, label) -> pFlObject
 
-        Adds a bitmapbutton object.
+    Adds a bitmapbutton object.
 
-        @param buttontype: type of button to be added
-        @type buttontype: [num./int] xfc.FL_NORMAL_BUTTON, xfc.FL_PUSH_BUTTON,
-                          xfc.FL_RADIO_BUTTON, xfc.FL_HIDDEN_BUTTON,
-                          xfc.FL_TOUCH_BUTTON, xfc.FL_INOUT_BUTTON,
-                          xfc.FL_RETURN_BUTTON, xfc.FL_HIDDEN_RET_BUTTON,
-                          xfc.FL_MENU_BUTTON, xfc.FL_TOGGLE_BUTTON
-        @param x: horizontal position (upper-left corner)
-        @param x: vertical position (upper-left corner)
-        @param w: width in coord units
-        @param h: height in coord units
-        @param label: text label of button
+    @param buttontype: type of button to be added. Values (from xfdata
+        module) i.e. FL_NORMAL_BUTTON, FL_PUSH_BUTTON, FL_RADIO_BUTTON,
+        FL_HIDDEN_BUTTON, FL_TOUCH_BUTTON, FL_INOUT_BUTTON, FL_RETURN_BUTTON,
+        FL_HIDDEN_RET_BUTTON, FL_MENU_BUTTON, FL_TOGGLE_BUTTON
+    @type buttontype: int
+    @param x: horizontal position (upper-left corner)
+    @type x: int
+    @param y: vertical position (upper-left corner)
+    @type y: int
+    @param w: width in coord units
+    @type w: int
+    @param h: height in coord units
+    @type h: int
+    @param label: text label of button
+    @type label: str
 
-        @status: Tested + NoDoc + Demo = OK
+    @status: Tested + NoDoc + Demo = OK
     """
 
     _fl_add_bitmapbutton = cfuncproto(
@@ -12481,23 +12711,28 @@ def fl_add_bitmapbutton(buttontype, x, y, w, h, label):
 
 
 def fl_add_scrollbutton(buttontype, x, y, w, h, label):
-    """ fl_add_scrollbutton(buttontype, x, y, w, h, label) -> pObject
+    """
+    fl_add_scrollbutton(buttontype, x, y, w, h, label) -> pFlObject
 
-        Adds a scrollbutton object.
+    Adds a scrollbutton object.
 
-        @param buttontype: type of button to be added
-        @type buttontype: [num./int] xfc.FL_NORMAL_BUTTON, xfc.FL_PUSH_BUTTON,
-                          xfc.FL_RADIO_BUTTON, xfc.FL_HIDDEN_BUTTON,
-                          xfc.FL_TOUCH_BUTTON, xfc.FL_INOUT_BUTTON,
-                          xfc.FL_RETURN_BUTTON, xfc.FL_HIDDEN_RET_BUTTON,
-                          xfc.FL_MENU_BUTTON, xfc.FL_TOGGLE_BUTTON
-        @param x: horizontal position (upper-left corner)
-        @param x: vertical position (upper-left corner)
-        @param w: width in coord units
-        @param h: height in coord units
-        @param label: text label of button
+    @param buttontype: type of button to be added. Values (from xfdata
+        module) i.e. FL_NORMAL_BUTTON, FL_PUSH_BUTTON, FL_RADIO_BUTTON,
+        FL_HIDDEN_BUTTON, FL_TOUCH_BUTTON, FL_INOUT_BUTTON, FL_RETURN_BUTTON,
+        FL_HIDDEN_RET_BUTTON, FL_MENU_BUTTON, FL_TOGGLE_BUTTON
+    @type buttontype: int
+    @param x: horizontal position (upper-left corner)
+    @type x: int
+    @param y: vertical position (upper-left corner)
+    @type y: int
+    @param w: width in coord units
+    @type w: int
+    @param h: height in coord units
+    @type h: int
+    @param label: text label of button
+    @type label: str
 
-        @status: Untested + NoDoc + NoDemo = NOT OK
+    @status: Untested + NoDoc + NoDemo = NOT OK
     """
 
     _fl_add_scrollbutton = cfuncproto(
@@ -12522,23 +12757,28 @@ def fl_add_scrollbutton(buttontype, x, y, w, h, label):
 
 
 def fl_add_labelbutton(buttontype, x, y, w, h, label):
-    """ fl_add_labelbutton(buttontype, x, y, w, h, label) -> pObject
+    """
+    fl_add_labelbutton(buttontype, x, y, w, h, label) -> pFlObject
 
-        Adds a labelbutton object.
+    Adds a labelbutton object.
 
-        @param buttontype: type of button to be added
-        @type buttontype: [num./int] xfc.FL_NORMAL_BUTTON, xfc.FL_PUSH_BUTTON,
-                          xfc.FL_RADIO_BUTTON, xfc.FL_HIDDEN_BUTTON,
-                          xfc.FL_TOUCH_BUTTON, xfc.FL_INOUT_BUTTON,
-                          xfc.FL_RETURN_BUTTON, xfc.FL_HIDDEN_RET_BUTTON,
-                          xfc.FL_MENU_BUTTON, xfc.FL_TOGGLE_BUTTON
-        @param x: horizontal position (upper-left corner)
-        @param x: vertical position (upper-left corner)
-        @param w: width in coord units
-        @param h: height in coord units
-        @param label: text label of button
+    @param buttontype: type of button to be added. Values (from xfdata module)
+        i.e. FL_NORMAL_BUTTON, FL_PUSH_BUTTON, FL_RADIO_BUTTON,
+        FL_HIDDEN_BUTTON, FL_TOUCH_BUTTON, FL_INOUT_BUTTON, FL_RETURN_BUTTON,
+        FL_HIDDEN_RET_BUTTON, FL_MENU_BUTTON, FL_TOGGLE_BUTTON
+    @type buttontype: int
+    @param x: horizontal position (upper-left corner)
+    @type x: int
+    @param y: vertical position (upper-left corner)
+    @type y: int
+    @param w: width in coord units
+    @type w: int
+    @param h: height in coord units
+    @type h: int
+    @param label: text label of button
+    @type label: str
 
-        @status: Untested + NoDoc + NoDemo = NOT OK
+    @status: Untested + NoDoc + NoDemo = NOT OK
     """
 
     _fl_add_labelbutton = cfuncproto(
@@ -12562,13 +12802,20 @@ def fl_add_labelbutton(buttontype, x, y, w, h, label):
     return retval
 
 
-def fl_set_bitmapbutton_data(pObject, w, h, bits):
-    """ fl_set_bitmapbutton_data(pObject, w, h, bits)
+def fl_set_bitmapbutton_data(pFlObject, w, h, bits):
+    """
+    fl_set_bitmapbutton_data(pFlObject, w, h, bits)
 
-        @param pObject: pointer to object
-                (<pointer to xfdata.FL_OBJECT>)
+    @param pFlObject: object
+    @type pFlObject: pointer to xfdata.FL_OBJECT
+    @param w: width in coord units
+    @type w: int
+    @param h: height in coord units
+    @type h: int
+    @param bits: bitmap data
+    @type bits: ubyte
 
-        @status: Untested + NoDoc + NoDemo = NOT OK
+    @status: Untested + NoDoc + NoDemo = NOT OK
     """
 
     _fl_set_bitmapbutton_data = cfuncproto(
@@ -12579,32 +12826,35 @@ def fl_set_bitmapbutton_data(pObject, w, h, bits):
                unsigned char * bits)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
     iw = convert_to_int(w)
     ih = convert_to_int(h)
     pbits = cty.cast(bits, cty.POINTER(cty.c_ubyte))
-    keep_elem_refs(pObject, w, h, bits, iw, ih, pbits)
-    _fl_set_bitmapbutton_data(pObject, iw, ih, pbits)
-
-
+    keep_elem_refs(pFlObject, w, h, bits, iw, ih, pbits)
+    _fl_set_bitmapbutton_data(pFlObject, iw, ih, pbits)
 
 
 def fl_add_pixmapbutton(buttontype, x, y, w, h, label):
-    """ fl_add_pixmapbutton(buttontype, x, y, w, h, label) -> pObject
+    """ fl_add_pixmapbutton(buttontype, x, y, w, h, label) -> pFlObject
 
         Adds a pixmapbutton object.
 
-        @param buttontype: type of button to be added
-        @type buttontype: [num./int] xfc.FL_NORMAL_BUTTON, xfc.FL_PUSH_BUTTON,
-                          xfc.FL_RADIO_BUTTON, xfc.FL_HIDDEN_BUTTON,
-                          xfc.FL_TOUCH_BUTTON, xfc.FL_INOUT_BUTTON,
-                          xfc.FL_RETURN_BUTTON, xfc.FL_HIDDEN_RET_BUTTON,
-                          xfc.FL_MENU_BUTTON, xfc.FL_TOGGLE_BUTTON
+        @param buttontype: type of button to be added. Values (from xfdata
+            module) i.e. FL_NORMAL_BUTTON, FL_PUSH_BUTTON, FL_RADIO_BUTTON,
+            FL_HIDDEN_BUTTON, FL_TOUCH_BUTTON, FL_INOUT_BUTTON,
+            FL_RETURN_BUTTON, FL_HIDDEN_RET_BUTTON, FL_MENU_BUTTON,
+            FL_TOGGLE_BUTTON
+        @type buttontype: int
         @param x: horizontal position (upper-left corner)
-        @param x: vertical position (upper-left corner)
+        @type x: int
+        @param y: vertical position (upper-left corner)
+        @type y: int
         @param w: width in coord units
+        @type w: int
         @param h: height in coord units
+        @type h: int
         @param label: text label of button
+        @type label: str
 
         @status: Tested + NoDoc + Demo = OK
     """
@@ -12630,13 +12880,14 @@ def fl_add_pixmapbutton(buttontype, x, y, w, h, label):
     return retval
 
 
-def fl_set_pixmapbutton_focus_outline(pObject, yes):
-    """ fl_set_pixmapbutton_focus_outline(pObject, yes)
+def fl_set_pixmapbutton_focus_outline(pFlObject, yes):
+    """
+    fl_set_pixmapbutton_focus_outline(pFlObject, yes)
 
-        @param pObject: pointer to object
-                (<pointer to xfdata.FL_OBJECT>)
+    @param pFlObject: pointer to object
+    @type pFlObject: pointer to xfdata.FL_OBJECT
 
-        @status: Untested + NoDoc + NoDemo = NOT OK
+    @status: Untested + NoDoc + NoDemo = NOT OK
     """
 
     _fl_set_pixmapbutton_focus_outline = cfuncproto(
@@ -12645,10 +12896,10 @@ def fl_set_pixmapbutton_focus_outline(pObject, yes):
             """void fl_set_pixmapbutton_focus_outline(FL_OBJECT * ob, int yes)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
     iyes = convert_to_int(yes)
-    keep_elem_refs(pObject, yes, iyes)
-    _fl_set_pixmapbutton_focus_outline(pObject, iyes)
+    keep_elem_refs(pFlObject, yes, iyes)
+    _fl_set_pixmapbutton_focus_outline(pFlObject, iyes)
 
 
 fl_set_pixmapbutton_data = fl_set_pixmap_data
@@ -12656,13 +12907,16 @@ fl_set_pixmapbutton_show_focus = fl_set_pixmapbutton_focus_outline
 
 
 
-def fl_set_pixmapbutton_focus_data(pObject, bits):
-    """ fl_set_pixmapbutton_focus_data(pObject, bits)
+def fl_set_pixmapbutton_focus_data(pFlObject, bits):
+    """
+    fl_set_pixmapbutton_focus_data(pFlObject, bits)
 
-        @param pObject: pointer to object
-                (<pointer to xfdata.FL_OBJECT>)
+    @param pFlObject: pointer to object
+    @type pFlObject: pointer to xfdata.FL_OBJECT
+    @param bits: pixmap data
+    @type bits: str
 
-        @status: Untested + NoDoc + NoDemo = NOT OK
+    @status: Untested + NoDoc + NoDemo = NOT OK
     """
 
     _fl_set_pixmapbutton_focus_data = cfuncproto(
@@ -12672,18 +12926,22 @@ def fl_set_pixmapbutton_focus_data(pObject, bits):
                char * * bits)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
-    keep_elem_refs(pObject, bits)
-    _fl_set_pixmapbutton_focus_data(pObject, bits)
+    check_if_FL_OBJECT_ptr(pFlObject)
+    pbits = cty.cast(bits, cty.POINTER(xfc.STRING))
+    keep_elem_refs(pFlObject, bits, pbits)
+    _fl_set_pixmapbutton_focus_data(pFlObject, pbits)
 
 
-def fl_set_pixmapbutton_focus_file(pObject, fname):
-    """ fl_set_pixmapbutton_focus_file(pObject, fname)
+def fl_set_pixmapbutton_focus_file(pFlObject, fname):
+    """
+    fl_set_pixmapbutton_focus_file(pFlObject, fname)
 
-        @param pObject: pointer to object
-                (<pointer to xfdata.FL_OBJECT>)
+    @param pFlObject: pointer to object
+    @type pFlObject: pointer to xfdata.FL_OBJECT
+    @param fname: filename
+    @type fname: str
 
-        @status: Untested + NoDoc + NoDemo = NOT OK
+    @status: Untested + NoDoc + NoDemo = NOT OK
     """
 
     _fl_set_pixmapbutton_focus_file = cfuncproto(
@@ -12693,19 +12951,24 @@ def fl_set_pixmapbutton_focus_file(pObject, fname):
                const char * fname)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
     sfname = convert_to_string(fname)
-    keep_elem_refs(pObject, fname, sfname)
-    _fl_set_pixmapbutton_focus_file(pObject, sfname)
+    keep_elem_refs(pFlObject, fname, sfname)
+    _fl_set_pixmapbutton_focus_file(pFlObject, sfname)
 
 
-def fl_set_pixmapbutton_focus_pixmap(pObject, idnum, mask):
-    """ fl_set_pixmapbutton_focus_pixmap(pObject, idnum, mask)
+def fl_set_pixmapbutton_focus_pixmap(pFlObject, pix, mask):
+    """
+    fl_set_pixmapbutton_focus_pixmap(pFlObject, pix, mask)
 
-        @param pObject: pointer to object
-                (<pointer to xfdata.FL_OBJECT>)
+    @param pFlObject: pointer to object
+    @type pFlObject: pointer to xfdata.FL_OBJECT
+    @param pix: pixmap id
+    @type pix: long_pos
+    @param mask: pixmap id
+    @type mask: long_pos
 
-        @status: Untested + NoDoc + NoDemo = NOT OK
+    @status: Untested + NoDoc + NoDemo = NOT OK
     """
 
     _fl_set_pixmapbutton_focus_pixmap = cfuncproto(
@@ -12715,20 +12978,23 @@ def fl_set_pixmapbutton_focus_pixmap(pObject, idnum, mask):
                Pixmap id, Pixmap mask)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
-    ulidnum = convert_to_ulong(idnum)
+    check_if_FL_OBJECT_ptr(pFlObject)
+    ulpix = convert_to_ulong(pix)
     ulmask = convert_to_ulong(mask)
-    keep_elem_refs(pObject, idnum, mask, ulidnum, ulmask)
-    _fl_set_pixmapbutton_focus_pixmap(pObject, ulidnum, ulmask)
+    keep_elem_refs(pFlObject, pix, mask, ulpix, ulmask)
+    _fl_set_pixmapbutton_focus_pixmap(pFlObject, ulpix, ulmask)
 
 
-def fl_get_button(pObject):
-    """ fl_get_button(pObject) -> num.
+def fl_get_button(pFlObject):
+    """
+    fl_get_button(pFlObject) -> int
 
-        Returns the value of the button.
+    Returns the value of the button.
 
-        @param pObject: pointer to button object
-                (<pointer to xfdata.FL_OBJECT>)
+    @param pFlObject: pointer to button object
+    @type pFlObject: pointer to xfdata.FL_OBJECT
+
+    @returns: num.
 
         @status: Tested + NoDoc + Demo = OK
     """
@@ -12738,22 +13004,25 @@ def fl_get_button(pObject):
             cty.c_int, [cty.POINTER(xfc.FL_OBJECT)],
             """int fl_get_button(FL_OBJECT * ob)
             """)
-    check_if_FL_OBJECT_ptr(pObject)
-    keep_elem_refs(pObject)
-    retval = _fl_get_button(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
+    keep_elem_refs(pFlObject)
+    retval = _fl_get_button(pFlObject)
     return retval
 
 
-def fl_set_button(pObject, pushed):
-    """ fl_set_button(pObject, pushed)
+def fl_set_button(pFlObject, pushed):
+    """
+    fl_set_button(pFlObject, pushed)
 
-        Sets the button state (not pushed/pushed).
+    Sets the button state (not pushed/pushed).
 
-        @param pObject: pointer to button object
-                (<pointer to xfdata.FL_OBJECT>)
-        @param pushed: state of button to be set (0|1)
+    @param pFlObject: pointer to button object
+    @type pFlObject: pointer to xfdata.FL_OBJECT
+    @param pushed: state of button to be set. Values i.e. 0 (if not pushed) or
+        1 (if pushed)
+    @type pushed: int
 
-        @status: Tested + NoDoc + Demo = OK
+    @status: Tested + NoDoc + Demo = OK
     """
 
     _fl_set_button = cfuncproto(
@@ -12762,22 +13031,25 @@ def fl_set_button(pObject, pushed):
             """void fl_set_button(FL_OBJECT * ob, int pushed)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
     ipushed = convert_to_int(pushed)
-    keep_elem_refs(pObject, pushed, ipushed)
-    _fl_set_button(pObject, ipushed)
+    keep_elem_refs(pFlObject, pushed, ipushed)
+    _fl_set_button(pFlObject, ipushed)
 
 
-def fl_get_button_numb(pObject):
-    """ fl_get_button_numb(pObject) -> num.
+def fl_get_button_numb(pFlObject):
+    """
+    fl_get_button_numb(pFlObject) -> int
 
-        Returns the number of the last used mouse button. fl_mouse_button
-        function will also return the mouse number.
+    Returns the number of the last used mouse button. fl_mouse_button function
+    will also return the mouse number.
 
-        @param pObject: pointer to button object
-                (<pointer to xfdata.FL_OBJECT>)
+    @param pFlObject: pointer to button object
+    @type pFlObject: pointer to xfdata.FL_OBJECT
 
-        @status: Untested + NoDoc + NoDemo = NOT OK
+    @returns: num.
+
+    @status: Untested + NoDoc + NoDemo = NOT OK
     """
 
     _fl_get_button_numb = cfuncproto(
@@ -12786,9 +13058,9 @@ def fl_get_button_numb(pObject):
             """int fl_get_button_numb(FL_OBJECT * ob)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
-    keep_elem_refs(pObject)
-    retval = _fl_get_button_numb(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
+    keep_elem_refs(pFlObject)
+    retval = _fl_get_button_numb(pFlObject)
     return retval
 
 
@@ -12796,24 +13068,30 @@ fl_set_button_shortcut = fl_set_object_shortcut
 
 
 def fl_create_generic_button(btnclass, buttontype, x, y, w, h, label):
-    """ fl_create_generic_button(btnclass, buttontype, x, y, w, h, label) -> pObject
+    """
+    fl_create_generic_button(btnclass, buttontype, x, y, w, h, label) -> pFlObject
 
-        Creates a generic button object.
+    Creates a generic button object.
 
-        @param btnclass: value of a new button class
-        @param buttontype: type of button to be created
-        @type buttontype: [num./int] xfc.FL_NORMAL_BUTTON, xfc.FL_PUSH_BUTTON,
-                          xfc.FL_RADIO_BUTTON, xfc.FL_HIDDEN_BUTTON,
-                          xfc.FL_TOUCH_BUTTON, xfc.FL_INOUT_BUTTON,
-                          xfc.FL_RETURN_BUTTON, xfc.FL_HIDDEN_RET_BUTTON,
-                          xfc.FL_MENU_BUTTON, xfc.FL_TOGGLE_BUTTON
-        @param x: horizontal position (upper-left corner)
-        @param x: vertical position (upper-left corner)
-        @param w: width in coord units
-        @param h: height in coord units
-        @param label: text label of button
+    @param btnclass: value of a new button class
+    @type btnclass: int
+    @param buttontype: type of button to be created. Values (from xfdata
+        module) i.e. FL_NORMAL_BUTTON, FL_PUSH_BUTTON, FL_RADIO_BUTTON,
+        FL_HIDDEN_BUTTON, FL_TOUCH_BUTTON, FL_INOUT_BUTTON, FL_RETURN_BUTTON,
+        FL_HIDDEN_RET_BUTTON, FL_MENU_BUTTON, xfc.FL_TOGGLE_BUTTON
+    @type buttontype: int
+    @param x: horizontal position (upper-left corner)
+    @type x: int
+    @param y: vertical position (upper-left corner)
+    @type y: int
+    @param w: width in coord units
+    @type w: int
+    @param h: height in coord units
+    @type h: int
+    @param label: text label of button
+    @type label: str
 
-        @status: Untested + NoDoc + NoDemo = NOT OK
+    @status: Untested + NoDoc + NoDemo = NOT OK
     """
 
     _fl_create_generic_button = cfuncproto(
@@ -12847,17 +13125,19 @@ FL_DRAWBUTTON = FL_DrawButton
 FL_CLEANUPBUTTON = FL_CleanupButton
 
 def fl_add_button_class(btnclass, py_DrawButton, py_CleanupButton):
-    """ fl_add_button_class(btnclass, py_DrawButton, py_CleanupButton)
+    """
+    fl_add_button_class(btnclass, py_DrawButton, py_CleanupButton)
 
-        Associates a button class with a drawing function.
+    Associates a button class with a drawing function.
 
-        @param btnclass: value of a new button class
-        @param py_DrawButton: python function to draw button
-        @type py_DrawButton: fn(pObject)
-        @param py_CleanupButton: python function to cleanup button
-        @type py_CleanupButton: fn(pButtonSpec)
+    @param btnclass: value of a new button class
+    @type btnclass: int
+    @param py_DrawButton: python function to draw button, no return
+    @type py_DrawButton: __ funcname (pFlObject) __
+    @param py_CleanupButton: python function to cleanup button, no return
+    @type py_CleanupButton: __ funcname (pButtonSpec) __
 
-        @status: Untested + NoDoc + NoDemo = NOT OK
+    @status: Untested + NoDoc + NoDemo = NOT OK
     """
 
     _fl_add_button_class = cfuncproto(
@@ -12876,17 +13156,19 @@ def fl_add_button_class(btnclass, py_DrawButton, py_CleanupButton):
     _fl_add_button_class(ibtnclass, c_DrawButton, c_CleanupButton)
 
 
-def fl_set_button_mouse_buttons(pObject, buttons):
-    """ fl_set_button_mouse_buttons(pObject, buttons)
+def fl_set_button_mouse_buttons(pFlObject, buttons):
+    """
+    fl_set_button_mouse_buttons(pFlObject, buttons)
 
-        Function allows to set up to which mouse buttons the button object
-        will react.
+    Function allows to set up to which mouse buttons the button object will
+    react.
 
-        @param pObject: pointer to button object
-                (<pointer to xfdata.FL_OBJECT>)
-        @param buttons: value of mouse buttons to be set
+    @param pFlObject: pointer to button object
+    @type pFlObject: pointer to xfdata.FL_OBJECT
+    @param buttons: value of mouse buttons to be set
+    @type buttons: int_pos
 
-        @status: Untested + NoDoc + NoDemo = NOT OK
+    @status: Untested + NoDoc + NoDemo = NOT OK
     """
 
     _fl_set_button_mouse_buttons = cfuncproto(
@@ -12896,25 +13178,28 @@ def fl_set_button_mouse_buttons(pObject, buttons):
                unsigned int buttons)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
     ibuttons = convert_to_int(buttons)
-    keep_elem_refs(pObject, buttons, ibuttons)
-    _fl_set_button_mouse_buttons(pObject, ibuttons)
+    keep_elem_refs(pFlObject, buttons, ibuttons)
+    _fl_set_button_mouse_buttons(pFlObject, ibuttons)
 
 
-def fl_get_button_mouse_buttons(pObject):
-    """ fl_get_button_mouse_buttons(pObject) -> buttons value
+def fl_get_button_mouse_buttons(pFlObject):
+    """
+    fl_get_button_mouse_buttons(pFlObject) -> int_pos
 
-        Returns a value indicating which mouse buttons the button object
-        will react to.
+    Returns a value indicating which mouse buttons the button object will
+    react to.
 
-        @param pObject: pointer to button object
-                (<pointer to xfdata.FL_OBJECT>)
+    @param pFlObject: pointer to button object
+    @type pFlObject: pointer to xfdata.FL_OBJECT
 
-        @attention: API change from XForms - upstream was
-                    fl_get_button_mouse_buttons(pObject, buttons)
+    @returns: buttons value
 
-        @status: Untested + NoDoc + NoDemo = NOT OK
+    @attention: API change from XForms - upstream was
+        fl_get_button_mouse_buttons(pFlObject, buttons)
+
+    @status: Untested + NoDoc + NoDemo = NOT OK
     """
 
     _fl_get_button_mouse_buttons = cfuncproto(
@@ -12924,10 +13209,10 @@ def fl_get_button_mouse_buttons(pObject):
                unsigned int * buttons)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
     buttons, pbuttons = make_uint_and_pointer()
-    keep_elem_refs(pObject, buttons, pbuttons)
-    _fl_get_button_mouse_buttons(pObject, pbuttons)
+    keep_elem_refs(pFlObject, buttons, pbuttons)
+    _fl_get_button_mouse_buttons(pFlObject, pbuttons)
     return buttons.value
 
 
@@ -12939,21 +13224,28 @@ def fl_get_button_mouse_buttons(pObject):
 # Interfaces
 
 def fl_create_generic_canvas(canvasclass, canvastype, x, y, w, h, label):
-    """ fl_create_generic_canvas(canvasclass, canvastype, x, y, w, h, label) -> pObject
+    """
+    fl_create_generic_canvas(canvasclass, canvastype, x, y, w, h, label) -> pFlObject
 
-        Creates a generic canvas object.
+    Creates a generic canvas object.
 
-        @param canvasclass: value of a new canvas class
-        @param canvastype: type of canvas to be created
-        @type canvastype: [num./int] xfc.FL_NORMAL_CANVAS,
-                          xfc.FL_SCROLLED_CANVAS
-        @param x: horizontal position (upper-left corner)
-        @param x: vertical position (upper-left corner)
-        @param w: width in coord units
-        @param h: height in coord units
-        @param label: text label of canvas
+    @param canvasclass: value of a new canvas class
+    @type canvasclass: int
+    @param canvastype: type of canvas to be created. Values (from xfdata
+        module) i.e. FL_NORMAL_CANVAS, FL_SCROLLED_CANVAS (not enabled)
+    @type canvastype: int
+    @param x: horizontal position (upper-left corner)
+    @type x: int
+    @param y: vertical position (upper-left corner)
+    @type y: int
+    @param w: width in coord units
+    @type w: int
+    @param h: height in coord units
+    @type h: int
+    @param label: text label of canvas
+    @type label: str
 
-        @status: Untested + NoDoc + NoDemo = NOT OK
+    @status: Untested + NoDoc + NoDemo = NOT OK
     """
 
     _fl_create_generic_canvas = cfuncproto(
@@ -12981,20 +13273,28 @@ def fl_create_generic_canvas(canvasclass, canvastype, x, y, w, h, label):
 
 
 def fl_add_canvas(canvastype, x, y, w, h, label):
-    """ fl_add_canvas(canvastype, x, y, w, h, label) -> pObject
+    """
+    fl_add_canvas(canvastype, x, y, w, h, label) -> pFlObject
 
-        Adds a canvas object.
+    Adds a canvas object.
 
-        @param canvastype: type of canvas to be added
-        @type canvastype: [num./int] xfc.FL_NORMAL_CANVAS,
-                          xfc.FL_SCROLLED_CANVAS
-        @param x: horizontal position (upper-left corner)
-        @param x: vertical position (upper-left corner)
-        @param w: width in coord units
-        @param h: height in coord units
-        @param label: text label of canvas
+    @param canvastype: type of canvas to be added. Values (from xfdata
+        modules) i.e. FL_NORMAL_CANVAS, FL_SCROLLED_CANVAS (not enabled)
+    @type canvastype: int
+    @param x: horizontal position (upper-left corner)
+    @type x: int
+    @param y: vertical position (upper-left corner)
+    @type y: int
+    @param w: width in coord units
+    @type w: int
+    @param h: height in coord units
+    @type h: int
+    @param label: text label of canvas
+    @type label: str
 
-        @status: Untested + NoDoc + NoDemo = NOT OK
+    @returns: object added (<pointer to xfdata.FL_OBJECT>)
+
+    @status: Untested + NoDoc + NoDemo = NOT OK
     """
 
     _fl_add_canvas = cfuncproto(
@@ -13023,13 +13323,16 @@ def fl_add_canvas(canvastype, x, y, w, h, label):
 # fl_set_canvas_decoration placeholder (backwards)
 
 
-def fl_set_canvas_colormap(pObject, colormap):
-    """ fl_set_canvas_colormap(pObject, colormap)
+def fl_set_canvas_colormap(pFlObject, colormap):
+    """
+    fl_set_canvas_colormap(pFlObject, colormap)
 
-        @param pObject: pointer to object
-                (<pointer to xfdata.FL_OBJECT>)
+    @param pFlObject: pointer to object
+    @type pFlObject: pointer to xfdata.FL_OBJECT
+    @param colormap: colormap of canvas
+    @type colormap: long_pos
 
-        @status: Untested + NoDoc + NoDemo = NOT OK
+    @status: Untested + NoDoc + NoDemo = NOT OK
     """
 
     _fl_set_canvas_colormap = cfuncproto(
@@ -13038,17 +13341,17 @@ def fl_set_canvas_colormap(pObject, colormap):
             """void fl_set_canvas_colormap(FL_OBJECT * ob, Colormap colormap)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
     ulcolormap = convert_to_ulong(colormap)
-    keep_elem_refs(pObject, colormap, ulcolormap)
-    _fl_set_canvas_colormap(pObject, ulcolormap)
+    keep_elem_refs(pFlObject, colormap, ulcolormap)
+    _fl_set_canvas_colormap(pFlObject, ulcolormap)
 
 
-def fl_set_canvas_visual(pObject, pVisual):
-    """ fl_set_canvas_visual(pObject, pVisual)
+def fl_set_canvas_visual(pFlObject, pVisual):
+    """ fl_set_canvas_visual(pFlObject, pVisual)
 
-        @param pObject: pointer to canvas object
-                (<pointer to xfdata.FL_OBJECT>)
+        @param pFlObject: pointer to canvas object
+        @type pFlObject: pointer to xfdata.FL_OBJECT
         @param pVisual: pointer to Visual class instance
 
         @status: Untested + NoDoc + NoDemo = NOT OK
@@ -13060,19 +13363,21 @@ def fl_set_canvas_visual(pObject, pVisual):
             """void fl_set_canvas_visual(FL_OBJECT * obj, Visual * vi)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
-    keep_elem_refs(pObject, pVisual)
-    _fl_set_canvas_visual(pObject, pVisual)
+    check_if_FL_OBJECT_ptr(pFlObject)
+    keep_elem_refs(pFlObject, pVisual)
+    _fl_set_canvas_visual(pFlObject, pVisual)
 
 
-def fl_set_canvas_depth(pObject, depth):
-    """ fl_set_canvas_depth(pObject, depth)
+def fl_set_canvas_depth(pFlObject, depth):
+    """
+    fl_set_canvas_depth(pFlObject, depth)
 
-        @param pObject: pointer to canvas object
-                (<pointer to xfdata.FL_OBJECT>)
-        @param depth: depth value of canvas
+    @param pFlObject: pointer to canvas object
+    @type pFlObject: pointer to xfdata.FL_OBJECT
+    @param depth: depth value of canvas
+    @type depth: int
 
-        @status: Untested + NoDoc + NoDemo = NOT OK
+    @status: Untested + NoDoc + NoDemo = NOT OK
     """
 
     _fl_set_canvas_depth = cfuncproto(
@@ -13081,21 +13386,23 @@ def fl_set_canvas_depth(pObject, depth):
             """void fl_set_canvas_depth(FL_OBJECT * obj, int depth)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
     idepth = convert_to_int(depth)
-    keep_elem_refs(pObject, depth, idepth)
-    _fl_set_canvas_depth(pObject, idepth)
+    keep_elem_refs(pFlObject, depth, idepth)
+    _fl_set_canvas_depth(pFlObject, idepth)
 
 
-def fl_set_canvas_attributes(pObject, mask, pXSetWindowAttributes):
-    """ fl_set_canvas_attributes(pObject, mask, pXSetWindowAttributes)
+def fl_set_canvas_attributes(pFlObject, mask, pXSetWindowAttributes):
+    """
+    fl_set_canvas_attributes(pFlObject, mask, pXSetWindowAttributes)
 
-        @param pObject: pointer to canvas object
-                (<pointer to xfdata.FL_OBJECT>)
-        @param mask: mask num.
-        @param pXSetWindowAttributes: pointer to XSetWindowAttributes
+    @param pFlObject: pointer to canvas object
+    @type pFlObject: pointer to xfdata.FL_OBJECT
+    @param mask: mask num.
+    @type mask: int_pos
+    @param pXSetWindowAttributes: pointer to XSetWindowAttributes
 
-        @status: Untested + NoDoc + NoDemo = NOT OK
+    @status: Untested + NoDoc + NoDemo = NOT OK
     """
 
     _fl_set_canvas_attributes = cfuncproto(
@@ -13106,27 +13413,29 @@ def fl_set_canvas_attributes(pObject, mask, pXSetWindowAttributes):
                unsigned int mask, XSetWindowAttributes * xswa)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
     uimask = convert_to_uint(mask)
-    keep_elem_refs(pObject, mask, pXSetWindowAttributes, uimask)
-    _fl_set_canvas_attributes(pObject, uimask, pXSetWindowAttributes)
+    keep_elem_refs(pFlObject, mask, pXSetWindowAttributes, uimask)
+    _fl_set_canvas_attributes(pFlObject, uimask, pXSetWindowAttributes)
 
 
 FL_HANDLE_CANVAS = cty.CFUNCTYPE(cty.c_int, cty.POINTER(xfc.FL_OBJECT),
                                  xfc.Window, cty.c_int, cty.c_int,
                                  cty.POINTER(xfc.XEvent), cty.c_void_p)
 
-def fl_add_canvas_handler(pObject, ev, py_HandleCanvas, udata):
-    """ fl_add_canvas_handler(pObject, ev, py_HandleCanvas, udata) -> canvas handler
+def fl_add_canvas_handler(pFlObject, ev, py_HandleCanvas, udata):
+    """
+    fl_add_canvas_handler(pFlObject, ev, py_HandleCanvas, udata) -> canvas handler
 
-        @param pObject: pointer to canvas object
-                (<pointer to xfdata.FL_OBJECT>)
-        @param ev: event number
-        @param py_HandleCanvas: python function to handle canvas
-        @type py_HandleCanvas: fn(pObject, win, num, num, pXEvent,
-                               ptr_void) -> num
+    @param pFlObject: pointer to canvas object
+    @type pFlObject: pointer to xfdata.FL_OBJECT
+    @param ev: event number
+    @type ev: int
+    @param py_HandleCanvas: python function to handle canvas
+    @type py_HandleCanvas: __ funcname (pFlObject, win, num, num, pXEvent,
+        ptr_void) -> num __
 
-        @status: Untested + NoDoc + NoDemo = NOT OK
+    @status: Untested + NoDoc + NoDemo = NOT OK
     """
 
     _fl_add_canvas_handler = cfuncproto(
@@ -13137,25 +13446,26 @@ def fl_add_canvas_handler(pObject, ev, py_HandleCanvas, udata):
                FL_HANDLE_CANVAS h, void * udata)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
     iev = convert_to_int(ev)
     c_HandleCanvas = FL_HANDLE_CANVAS(py_HandleCanvas)
     pudata = cty.cast(udata, cty.c_void_p)
     keep_cfunc_refs(c_HandleCanvas, py_HandleCanvas)
-    keep_elem_refs(pObject, ev, udata, iev, pudata)
-    retval = _fl_add_canvas_handler(pObject, iev, c_HandleCanvas, pudata)
+    keep_elem_refs(pFlObject, ev, udata, iev, pudata)
+    retval = _fl_add_canvas_handler(pFlObject, iev, c_HandleCanvas, pudata)
     return retval
 
 
-def fl_get_canvas_id(pObject):
-    """ fl_get_canvas_id(pObject) -> window
+def fl_get_canvas_id(pFlObject):
+    """
+    fl_get_canvas_id(pFlObject) -> win
 
-        Returns the window ID of the canvas window.
+    Returns the window ID of the canvas window.
 
-        @param pObject: pointer to canvas object
-                (<pointer to xfdata.FL_OBJECT>)
+    @param pFlObject: pointer to canvas object
+    @type pFlObject: pointer to xfdata.FL_OBJECT
 
-        @status: Untested + NoDoc + NoDemo = NOT OK
+    @status: Untested + NoDoc + NoDemo = NOT OK
     """
 
     _fl_get_canvas_id = cfuncproto(
@@ -13163,21 +13473,22 @@ def fl_get_canvas_id(pObject):
             xfc.Window, [cty.POINTER(xfc.FL_OBJECT)],
             """Window fl_get_canvas_id(FL_OBJECT * ob)
             """)
-    check_if_FL_OBJECT_ptr(pObject)
-    keep_elem_refs(pObject)
-    retval = _fl_get_canvas_id(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
+    keep_elem_refs(pFlObject)
+    retval = _fl_get_canvas_id(pFlObject)
     return retval
 
 
-def fl_get_canvas_colormap(pObject):
-    """ fl_get_canvas_colormap(pObject) -> colormap
+def fl_get_canvas_colormap(pFlObject):
+    """
+    fl_get_canvas_colormap(pFlObject) -> colormap
 
-        Returns the colormap of a canas object
+    Returns the colormap of a canas object
 
-        @param pObject: pointer to canvas object
-                (<pointer to xfdata.FL_OBJECT>)
+    @param pFlObject: pointer to canvas object
+    @type pFlObject: pointer to xfdata.FL_OBJECT
 
-        @status: Untested + NoDoc + NoDemo = NOT OK
+    @status: Untested + NoDoc + NoDemo = NOT OK
     """
 
     _fl_get_canvas_colormap = cfuncproto(
@@ -13186,21 +13497,24 @@ def fl_get_canvas_colormap(pObject):
             """Colormap fl_get_canvas_colormap(FL_OBJECT * ob)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
-    keep_elem_refs(pObject)
-    retval = _fl_get_canvas_colormap(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
+    keep_elem_refs(pFlObject)
+    retval = _fl_get_canvas_colormap(pFlObject)
     return retval
 
 
-def fl_get_canvas_depth(pObject):
-    """ fl_get_canvas_depth(pObject) -> depth num.
+def fl_get_canvas_depth(pFlObject):
+    """
+    fl_get_canvas_depth(pFlObject) -> int
 
-        Returns the depth of a canvas object.
+    Returns the depth of a canvas object.
 
-        @param pObject: pointer to canvas object
-                (<pointer to xfdata.FL_OBJECT>)
+    @param pFlObject: pointer to canvas object
+    @type pFlObject: pointer to xfdata.FL_OBJECT
 
-        @status: Untested + NoDoc + NoDemo = NOT OK
+    @returns: depth num.
+
+    @status: Untested + NoDoc + NoDemo = NOT OK
     """
 
     _fl_get_canvas_depth = cfuncproto(
@@ -13209,26 +13523,28 @@ def fl_get_canvas_depth(pObject):
             """int fl_get_canvas_depth(FL_OBJECT * obj)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
-    keep_elem_refs(pObject)
-    retval = _fl_get_canvas_depth(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
+    keep_elem_refs(pFlObject)
+    retval = _fl_get_canvas_depth(pFlObject)
     return retval
 
 
-def fl_remove_canvas_handler(pObject, ev, py_HandleCanvas):
-    """ fl_remove_canvas_handler(pObject, ev, py_HandleCanvas)
+def fl_remove_canvas_handler(pFlObject, ev, py_HandleCanvas):
+    """
+    fl_remove_canvas_handler(pFlObject, ev, py_HandleCanvas)
 
-        Remove a particular handler for event ev. If ev is invalid, removes
-        all handlers and their corresponding event mask.
+    Remove a particular handler for event ev. If ev is invalid, removes all
+    handlers and their corresponding event mask.
 
-        @param pObject: pointer to canvas object
-                (<pointer to xfdata.FL_OBJECT>)
-        @param ev: event number
-        @param py_HandleCanvas: python function to handle canvas
-        @type py_HandleCanvas: fn(pObject, win, num, num, pXEvent,
-                               ptr_void) -> num
+    @param pFlObject: pointer to canvas object
+    @type pFlObject: pointer to xfdata.FL_OBJECT
+    @param ev: event number
+    @type ev: int
+    @param py_HandleCanvas: python function to handle canvas
+    @type py_HandleCanvas: __ funcname (pFlObject, win, num, num, pXEvent,
+        ptr_void) -> num
 
-        @status: Untested + NoDoc + NoDemo = NOT OK
+    @status: Untested + NoDoc + NoDemo = NOT OK
     """
 
     _fl_remove_canvas_handler = cfuncproto(
@@ -13238,23 +13554,24 @@ def fl_remove_canvas_handler(pObject, ev, py_HandleCanvas):
                FL_HANDLE_CANVAS h)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
     iev = convert_to_int(ev)
     c_HandleCanvas = FL_HANDLE_CANVAS(py_HandleCanvas)
     keep_cfunc_refs(c_HandleCanvas, py_HandleCanvas)
-    keep_elem_refs(pObject, ev, iev)
-    _fl_remove_canvas_handler(pObject, iev, c_HandleCanvas)
+    keep_elem_refs(pFlObject, ev, iev)
+    _fl_remove_canvas_handler(pFlObject, iev, c_HandleCanvas)
 
 
-def fl_hide_canvas(pObject):
-    """ fl_hide_canvas(pObject)
+def fl_hide_canvas(pFlObject):
+    """
+    fl_hide_canvas(pFlObject)
 
-        Hides a canvas object.
+    Hides a canvas object.
 
-        @param pObject: pointer to canvas object
-                (<pointer to xfdata.FL_OBJECT>)
+    @param pFlObject: pointer to canvas object
+    @type pFlObject: pointer to xfdata.FL_OBJECT
 
-        @status: Untested + NoDoc + NoDemo = NOT OK
+    @status: Untested + NoDoc + NoDemo = NOT OK
     """
 
     _fl_hide_canvas = cfuncproto(
@@ -13263,18 +13580,19 @@ def fl_hide_canvas(pObject):
             """void fl_hide_canvas(FL_OBJECT * ob)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
-    keep_elem_refs(pObject)
-    _fl_hide_canvas(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
+    keep_elem_refs(pFlObject)
+    _fl_hide_canvas(pFlObject)
 
 
-def fl_share_canvas_colormap(pObject, colormap):
-    """ fl_share_canvas_colormap(pObject, colormap)
+def fl_share_canvas_colormap(pFlObject, colormap):
+    """
+    fl_share_canvas_colormap(pFlObject, colormap)
 
-        @param pObject: pointer to object
-                (<pointer to xfdata.FL_OBJECT>)
+    @param pFlObject: pointer to object
+    @type pFlObject: pointer to xfdata.FL_OBJECT
 
-        @status: Untested + NoDoc + NoDemo = NOT OK
+    @status: Untested + NoDoc + NoDemo = NOT OK
     """
 
     _fl_share_canvas_colormap = cfuncproto(
@@ -13283,22 +13601,23 @@ def fl_share_canvas_colormap(pObject, colormap):
             """void fl_share_canvas_colormap(FL_OBJECT * ob, Colormap colormap)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
     ulcolormap = convert_to_ulong(colormap)
-    keep_elem_refs(pObject, colormap, ulcolormap)
-    _fl_share_canvas_colormap(pObject, ulcolormap)
+    keep_elem_refs(pFlObject, colormap, ulcolormap)
+    _fl_share_canvas_colormap(pFlObject, ulcolormap)
 
 
-def fl_clear_canvas(pObject):
-    """ fl_clear_canvas(pObject)
+def fl_clear_canvas(pFlObject):
+    """
+    fl_clear_canvas(pFlObject)
 
-        Clears the canvas to the background color. If no background is
-        defined uses black.
+    Clears the canvas to the background color. If no background is defined
+    uses black.
 
-        @param pObject: pointer to canvas object
-                (<pointer to xfdata.FL_OBJECT>)
+    @param pFlObject: pointer to canvas object
+    @type pFlObject: pointer to xfdata.FL_OBJECT
 
-        @status: Untested + NoDoc + NoDemo = NOT OK
+    @status: Untested + NoDoc + NoDemo = NOT OK
     """
 
     _fl_clear_canvas = cfuncproto(
@@ -13307,31 +13626,31 @@ def fl_clear_canvas(pObject):
             """void fl_clear_canvas(FL_OBJECT * ob)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
-    keep_elem_refs(pObject)
-    _fl_clear_canvas(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
+    keep_elem_refs(pFlObject)
+    _fl_clear_canvas(pFlObject)
 
 
 FL_MODIFY_CANVAS_PROP = cty.CFUNCTYPE(cty.c_int, cty.POINTER(xfc.FL_OBJECT))
 
-def fl_modify_canvas_prop(pObject, py_initModifyCanvasProp,
+def fl_modify_canvas_prop(pFlObject, py_initModifyCanvasProp,
      py_activateModifyCanvasProp, py_cleanupModifyCanvasProp):
-    """ fl_modify_canvas_prop(pObject, py_initModifyCanvasProp,
-        py_activateModifyCanvasProp, py_cleanupModifyCanvasProp)
+    """
+    fl_modify_canvas_prop(pFlObject, py_initModifyCanvasProp,
+     py_activateModifyCanvasProp, py_cleanupModifyCanvasProp)
 
-        @param pObject: pointer to canvas object
-                (<pointer to xfdata.FL_OBJECT>)
-        @param py_initModifyCanvasProp: python function callback,
-                                        returning value
-        @param py_initModifyCanvasProp: fn(pObject) -> num.
-        @param py_activateModifyCanvasProp: python function callback,
-                                            returning value
-        @param py_activateModifyCanvasProp: fn(pObject) -> num.
-        @param py_cleanupModifyCanvasProp: python function callback,
-                                           returning value
-        @param py_cleanupModifyCanvasProp: fn(pObject) -> num.
+    @param pFlObject: pointer to canvas object
+    @type pFlObject: pointer to xfdata.FL_OBJECT
+    @param py_initModifyCanvasProp: python function callback, returning value
+    @param py_initModifyCanvasProp: __ funcname (pFlObject) -> num. __
+    @param py_activateModifyCanvasProp: python function callback, returning
+        value
+    @param py_activateModifyCanvasProp: __ funcname (pFlObject) -> num. __
+    @param py_cleanupModifyCanvasProp: python function callback, returning
+        value
+    @param py_cleanupModifyCanvasProp: __ funcname (pFlObject) -> num. __
 
-        @status: Untested + NoDoc + NoDemo = NOT OK
+    @status: Untested + NoDoc + NoDemo = NOT OK
     """
 
     _fl_modify_canvas_prop = cfuncproto(
@@ -13343,7 +13662,7 @@ def fl_modify_canvas_prop(pObject, py_initModifyCanvasProp,
                FL_MODIFY_CANVAS_PROP cleanup)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
     c_initModifyCanvasProp = FL_MODIFY_CANVAS_PROP(py_initModifyCanvasProp)
     c_activateModifyCanvasProp = FL_MODIFY_CANVAS_PROP( \
                 py_activateModifyCanvasProp)
@@ -13352,18 +13671,23 @@ def fl_modify_canvas_prop(pObject, py_initModifyCanvasProp,
     keep_cfunc_refs(c_initModifyCanvasProp, py_initModifyCanvasProp, \
                 c_activateModifyCanvasProp, py_activateModifyCanvasProp, \
                 c_cleanupModifyCanvasProp, py_cleanupModifyCanvasProp)
-    keep_elem_refs(pObject)
-    _fl_modify_canvas_prop(pObject, c_initModifyCanvasProp,
+    keep_elem_refs(pFlObject)
+    _fl_modify_canvas_prop(pFlObject, c_initModifyCanvasProp,
                     c_activateModifyCanvasProp, c_cleanupModifyCanvasProp)
 
 
-def fl_canvas_yield_to_shortcut(pObject, yes):
-    """ fl_canvas_yield_to_shortcut(pObject, yes)
+def fl_canvas_yield_to_shortcut(pFlObject, yes):
+    """
+    fl_canvas_yield_to_shortcut(pFlObject, yes)
 
-        @param pObject: pointer to object
-                (<pointer to xfdata.FL_OBJECT>)
+    @param pFlObject: pointer to object
+    @type pFlObject: pointer to xfdata.FL_OBJECT
+    @param yes: ?
+    @type yes: int
 
-        @status: Untested + NoDoc + NoDemo = NOT OK
+    @example: 
+
+    @status: Untested + NoDoc + NoDemo = NOT OK
     """
 
     _fl_canvas_yield_to_shortcut = cfuncproto(
@@ -13372,10 +13696,10 @@ def fl_canvas_yield_to_shortcut(pObject, yes):
             """void fl_canvas_yield_to_shortcut(FL_OBJECT * ob, int yes)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
     iyes = convert_to_int(yes)
-    keep_elem_refs(pObject, yes, iyes)
-    _fl_canvas_yield_to_shortcut(pObject, iyes)
+    keep_elem_refs(pFlObject, yes, iyes)
+    _fl_canvas_yield_to_shortcut(pFlObject, iyes)
 
 
 
@@ -13393,20 +13717,26 @@ def fl_canvas_yield_to_shortcut(pObject, yes):
 
 
 def fl_add_glcanvas(canvastype, x, y, w, h, label):
-    """ fl_add_glcanvas(canvastype, x, y, w, h, label) -> pObject
+    """
+    fl_add_glcanvas(canvastype, x, y, w, h, label) -> pFlObject
 
-        Adds a glcanvas object to the form.
+    Adds a glcanvas object to the form.
 
-        @param canvastype: type of glcanvas to be added
-        @type canvastype: [num./int] from xfdata FL_NORMAL_CANVAS,
-                          FL_SCROLLED_CANVAS (not enabled)
-        @param x: horizontal position (upper-left corner)
-        @param x: vertical position (upper-left corner)
-        @param w: width in coord units
-        @param h: height in coord units
-        @param label: text label of glcanvas
+    @param canvastype: type of glcanvas to be added. Values (from xfdata
+        module) i.e. FL_NORMAL_CANVAS, FL_SCROLLED_CANVAS (not enabled)
+    @type canvastype: int
+    @param x: horizontal position (upper-left corner)
+    @type x: int
+    @param y: vertical position (upper-left corner)
+    @type y: int
+    @param w: width in coord units
+    @type w: int
+    @param h: height in coord units
+    @type h: int
+    @param label: text label of glcanvas
+    @type label: str
 
-        @status: Untested + NoDoc + NoDemo = NOT OK
+    @status: Untested + NoDoc + NoDemo = NOT OK
     """
 
     _fl_add_glcanvas = cfuncproto(
@@ -13431,13 +13761,15 @@ def fl_add_glcanvas(canvastype, x, y, w, h, label):
 
 
 def fl_set_glcanvas_defaults(config):
-    """ fl_set_glcanvas_defaults(config)
+    """
+    fl_set_glcanvas_defaults(config)
 
-        Modifies the global defaults for glcanvas.
+    Modifies the global defaults for glcanvas.
 
-        @param config: configuration settings
+    @param config: configuration settings
+    @type config: int
 
-        @status: Untested + NoDoc + NoDemo = NOT OK
+    @status: Untested + NoDoc + NoDemo = NOT OK
     """
 
     _fl_set_glcanvas_defaults = cfuncproto(
@@ -13451,14 +13783,16 @@ def fl_set_glcanvas_defaults(config):
 
 
 def fl_get_glcanvas_defaults():
-    """ fl_get_glcanvas_defaults() -> configuration settings
+    """
+    fl_get_glcanvas_defaults() -> int
 
-        Returns the global defaults for glcanvas.
+    Returns the global defaults for glcanvas.
 
-        @attention: API change from XForms - upstream was
-           fl_get_glcanvas_defaults(config)
+    @returns: configuration settings
+    @attention: API change from XForms - upstream was
+        fl_get_glcanvas_defaults(config)
 
-        @status: Untested + NoDoc + NoDemo = NOT OK
+    @status: Untested + NoDoc + NoDemo = NOT OK
     """
 
     _fl_get_glcanvas_defaults = cfuncproto(
@@ -13472,14 +13806,14 @@ def fl_get_glcanvas_defaults():
     return config.value
 
 
-def fl_set_glcanvas_attributes(pObject, config):
-    """ fl_set_glcanvas_attributes(pObject, config)
+def fl_set_glcanvas_attributes(pFlObject, config):
+    """ fl_set_glcanvas_attributes(pFlObject, config)
 
         Modifies the default configuration of a particular glcanvas
         object.
 
-        @param pObject: pointer to glcanvas object
-                (<pointer to xfdata.FL_OBJECT>)
+        @param pFlObject: pointer to glcanvas object
+@type pFlObject: pointer to xfdata.FL_OBJECT
         @param config: configuration settings to be set
 
         @status: Untested + NoDoc + NoDemo = NOT OK
@@ -13491,22 +13825,22 @@ def fl_set_glcanvas_attributes(pObject, config):
             """void fl_set_glcanvas_attributes(FL_OBJECT * ob,
                const int * config)
             """)
-    check_if_FL_OBJECT_ptr(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
     pconfig = cty.cast(config, cty.POINTER(cty.c_int))
-    keep_elem_refs(pObject, config, pconfig)
-    _fl_set_glcanvas_attributes(pObject, pconfig)
+    keep_elem_refs(pFlObject, config, pconfig)
+    _fl_set_glcanvas_attributes(pFlObject, pconfig)
 
 
-def fl_get_glcanvas_attributes(pObject):
-    """ fl_get_glcanvas_attributes(pObject) -> attributes
+def fl_get_glcanvas_attributes(pFlObject):
+    """ fl_get_glcanvas_attributes(pFlObject) -> attributes
 
         Returns the attributes of a glcanvas object.
 
-        @param pObject: glcanvas object
-                        (<pointer to xfdata.FL_OBJECT>)
+        @param pFlObject: glcanvas object
+        @type pFlObject: pointer to xfdata.FL_OBJECT
 
         @attention: API change from XForms - upstream was
-                    fl_get_glcanvas_attributes(pObject, attributes)
+                    fl_get_glcanvas_attributes(pFlObject, attributes)
     """
 
     _fl_get_glcanvas_attributes = cfuncproto(
@@ -13515,18 +13849,18 @@ def fl_get_glcanvas_attributes(pObject):
             """void fl_get_glcanvas_attributes(FL_OBJECT * ob,
                int * attributes)
             """)
-    check_if_FL_OBJECT_ptr(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
     attributes, pattributes = make_int_and_pointer()
-    keep_elem_refs(pObject, attributes, pattributes)
-    _fl_get_glcanvas_attributes(pObject, pattributes)
+    keep_elem_refs(pFlObject, attributes, pattributes)
+    _fl_get_glcanvas_attributes(pFlObject, pattributes)
     return attributes.value
 
 
-def fl_set_glcanvas_direct(pObject, direct):
-    """ fl_set_glcanvas_direct(pObject, direct)
+def fl_set_glcanvas_direct(pFlObject, direct):
+    """ fl_set_glcanvas_direct(pFlObject, direct)
 
-        @param pObject: pointer to glcanvas object
-                (<pointer to xfdata.FL_OBJECT>)
+        @param pFlObject: pointer to glcanvas object
+@type pFlObject: pointer to xfdata.FL_OBJECT
 
         @status: Untested + NoDoc + NoDemo = NOT OK
     """
@@ -13537,19 +13871,19 @@ def fl_set_glcanvas_direct(pObject, direct):
             """void fl_set_glcanvas_direct(FL_OBJECT * ob, int direct)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
     idirect = convert_to_int(direct)
-    keep_elem_refs(pObject, direct, idirect)
-    _fl_set_glcanvas_direct(pObject, idirect)
+    keep_elem_refs(pFlObject, direct, idirect)
+    _fl_set_glcanvas_direct(pFlObject, idirect)
 
 
-def fl_activate_glcanvas(pObject):
-    """ fl_activate_glcanvas(pObject)
+def fl_activate_glcanvas(pFlObject):
+    """ fl_activate_glcanvas(pFlObject)
 
         Activates a glcanvas object, allowing user interaction.
 
-        @param pObject: pointer to glcanvas object
-                (<pointer to xfdata.FL_OBJECT>)
+        @param pFlObject: pointer to glcanvas object
+@type pFlObject: pointer to xfdata.FL_OBJECT
 
         @status: Untested + NoDoc + NoDemo = NOT OK
     """
@@ -13560,18 +13894,18 @@ def fl_activate_glcanvas(pObject):
             """void fl_activate_glcanvas(FL_OBJECT * ob)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
-    keep_elem_refs(pObject)
-    _fl_activate_glcanvas(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
+    keep_elem_refs(pFlObject)
+    _fl_activate_glcanvas(pFlObject)
 
 
-def fl_get_glcanvas_xvisualinfo(pObject):
-    """ fl_get_glcanvas_xvisualinfo(pObject) -> xvisualinfo class
+def fl_get_glcanvas_xvisualinfo(pFlObject):
+    """ fl_get_glcanvas_xvisualinfo(pFlObject) -> xvisualinfo class
 
         Returns XVisualInfo class of a glcanvas object.
 
-        @param pObject: pointer to glcanvas object
-                (<pointer to xfdata.FL_OBJECT>)
+        @param pFlObject: pointer to glcanvas object
+@type pFlObject: pointer to xfdata.FL_OBJECT
 
         @status: Untested + NoDoc + NoDemo = NOT OK
     """
@@ -13582,17 +13916,17 @@ def fl_get_glcanvas_xvisualinfo(pObject):
             """XVisualInfo * fl_get_glcanvas_xvisualinfo(FL_OBJECT * ob)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
-    keep_elem_refs(pObject)
-    retval = _fl_get_glcanvas_xvisualinfo(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
+    keep_elem_refs(pFlObject)
+    retval = _fl_get_glcanvas_xvisualinfo(pFlObject)
     return retval
 
 
-def fl_get_glcanvas_context(pObject):
-    """ fl_get_glcanvas_context(pObject) -> glxcontext class
+def fl_get_glcanvas_context(pFlObject):
+    """ fl_get_glcanvas_context(pFlObject) -> glxcontext class
 
-        @param pObject: pointer to glcanvas object
-                (<pointer to xfdata.FL_OBJECT>)
+        @param pFlObject: pointer to glcanvas object
+@type pFlObject: pointer to xfdata.FL_OBJECT
 
         @status: Untested + NoDoc + NoDemo = NOT OK
     """
@@ -13603,9 +13937,9 @@ def fl_get_glcanvas_context(pObject):
             """GLXContext fl_get_glcanvas_context(FL_OBJECT * ob)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
-    keep_elem_refs(pObject)
-    retval = _fl_get_glcanvas_context(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
+    keep_elem_refs(pFlObject)
+    retval = _fl_get_glcanvas_context(pFlObject)
     return retval
 
 
@@ -13664,7 +13998,7 @@ def fl_glwinopen(config, glxcontext, w, h):
 
 
 def fl_add_chart(charttype, x, y, w, h, label):
-    """ fl_add_chart(charttype, x, y, w, h, label) -> pObject
+    """ fl_add_chart(charttype, x, y, w, h, label) -> pFlObject
 
         Adds a chart object.
 
@@ -13702,13 +14036,13 @@ def fl_add_chart(charttype, x, y, w, h, label):
     return retval
 
 
-def fl_clear_chart(pObject):
-    """ fl_clear_chart(pObject)
+def fl_clear_chart(pFlObject):
+    """ fl_clear_chart(pFlObject)
 
         Clears the contents of a chart.
 
-        @param pObject: pointer to chart object
-                (<pointer to xfdata.FL_OBJECT>)
+        @param pFlObject: pointer to chart object
+@type pFlObject: pointer to xfdata.FL_OBJECT
 
         @status: Untested + NoDoc + NoDemo = NOT OK
     """
@@ -13719,18 +14053,18 @@ def fl_clear_chart(pObject):
             """void fl_clear_chart(FL_OBJECT * ob)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
-    keep_elem_refs(pObject)
-    _fl_clear_chart(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
+    keep_elem_refs(pFlObject)
+    _fl_clear_chart(pFlObject)
 
 
-def fl_add_chart_value(pObject, val, label, colr):
-    """ fl_add_chart_value(pObject, val, label, colr)
+def fl_add_chart_value(pFlObject, val, label, colr):
+    """ fl_add_chart_value(pFlObject, val, label, colr)
 
         Adds an item to the chart.
 
-        @param pObject: pointer to chart object
-                (<pointer to xfdata.FL_OBJECT>)
+        @param pFlObject: pointer to chart object
+@type pFlObject: pointer to xfdata.FL_OBJECT
         @param val: value of chart item
         @param label: text label of chart object
         @param colr: color num.
@@ -13746,21 +14080,21 @@ def fl_add_chart_value(pObject, val, label, colr):
                const char * str, FL_COLOR col)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
     fval = convert_to_double(val)
     slabel = convert_to_string(label)
     ulcolr = convert_to_FL_COLOR(colr)
-    keep_elem_refs(pObject, val, label, colr, fval, slabel, ulcolr)
-    _fl_add_chart_value(pObject, fval, slabel, ulcolr)
+    keep_elem_refs(pFlObject, val, label, colr, fval, slabel, ulcolr)
+    _fl_add_chart_value(pFlObject, fval, slabel, ulcolr)
 
 
-def fl_insert_chart_value(pObject, indx, val, label, colr):
-    """ fl_insert_chart_value(pObject, indx, val, label, colr)
+def fl_insert_chart_value(pFlObject, indx, val, label, colr):
+    """ fl_insert_chart_value(pFlObject, indx, val, label, colr)
 
         Inserts an item before indx to the chart.
 
-        @param pObject: pointer to chart object
-                (<pointer to xfdata.FL_OBJECT>)
+        @param pFlObject: pointer to chart object
+@type pFlObject: pointer to xfdata.FL_OBJECT
         @param indx: index position of previous item
         @param val: value of chart item
         @param label: text label of chart
@@ -13777,23 +14111,23 @@ def fl_insert_chart_value(pObject, indx, val, label, colr):
                double val, const char * str, FL_COLOR col)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
     iindx = convert_to_int(indx)
     fval = convert_to_double(val)
     slabel = convert_to_string(label)
     ulcolr = convert_to_FL_COLOR(colr)
-    keep_elem_refs(pObject, indx, val, label, colr, iindx, fval,
+    keep_elem_refs(pFlObject, indx, val, label, colr, iindx, fval,
                    slabel, ulcolr)
-    _fl_insert_chart_value(pObject, iindx, fval, slabel, ulcolr)
+    _fl_insert_chart_value(pFlObject, iindx, fval, slabel, ulcolr)
 
 
-def fl_replace_chart_value(pObject, indx, val, label, colr):
-    """ fl_replace_chart_value(pObject, indx, val, label, colr)
+def fl_replace_chart_value(pFlObject, indx, val, label, colr):
+    """ fl_replace_chart_value(pFlObject, indx, val, label, colr)
 
         Replaces value in the chart.
 
-        @param pObject: pointer to chart object
-                (<pointer to xfdata.FL_OBJECT>)
+        @param pFlObject: pointer to chart object
+@type pFlObject: pointer to xfdata.FL_OBJECT
         @param indx: index position of item to be replaced
         @param val: value of chart item
         @param label: text label of chart
@@ -13810,23 +14144,23 @@ def fl_replace_chart_value(pObject, indx, val, label, colr):
                double val, const char * str, FL_COLOR col)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
     iindx = convert_to_int(indx)
     fval = convert_to_double(val)
     slabel = convert_to_string(label)
     ulcolr = convert_to_FL_COLOR(colr)
-    keep_elem_refs(pObject, indx, val, label, colr, iindx, fval,
+    keep_elem_refs(pFlObject, indx, val, label, colr, iindx, fval,
                    slabel, ulcolr)
-    _fl_replace_chart_value(pObject, iindx, fval, slabel, ulcolr)
+    _fl_replace_chart_value(pFlObject, iindx, fval, slabel, ulcolr)
 
 
-def fl_set_chart_bounds(pObject, minbound, maxbound):
-    """ fl_set_chart_bounds(pObject, minbound, maxbound)
+def fl_set_chart_bounds(pFlObject, minbound, maxbound):
+    """ fl_set_chart_bounds(pFlObject, minbound, maxbound)
 
         Sets the boundaries/limits for values of a chart object.
 
-        @param pObject: pointer to chart object
-                (<pointer to xfdata.FL_OBJECT>)
+        @param pFlObject: pointer to chart object
+@type pFlObject: pointer to xfdata.FL_OBJECT
         @param minbound: minimum bounds to be set
         @param maxbound: maximum bounds to be set
 
@@ -13840,23 +14174,23 @@ def fl_set_chart_bounds(pObject, minbound, maxbound):
                double max)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
     fminbound = convert_to_double(minbound)
     fmaxbound = convert_to_double(maxbound)
-    keep_elem_refs(pObject, minbound, maxbound, fminbound, fmaxbound)
-    _fl_set_chart_bounds(pObject, fminbound, fmaxbound)
+    keep_elem_refs(pFlObject, minbound, maxbound, fminbound, fmaxbound)
+    _fl_set_chart_bounds(pFlObject, fminbound, fmaxbound)
 
 
-def fl_get_chart_bounds(pObject):
-    """ fl_get_chart_bounds(pObject) -> minbound, maxbound
+def fl_get_chart_bounds(pFlObject):
+    """ fl_get_chart_bounds(pFlObject) -> minbound, maxbound
 
         Returns the boundaries/limits set for values of a chart object.
 
-        @param pObject: pointer to chart object
-                (<pointer to xfdata.FL_OBJECT>)
+        @param pFlObject: pointer to chart object
+@type pFlObject: pointer to xfdata.FL_OBJECT
 
         @attention: API change from XForms - upstream was
-                    fl_get_chart_bounds(pObject, minbound, maxbound)
+                    fl_get_chart_bounds(pFlObject, minbound, maxbound)
 
         @status: Untested + NoDoc + NoDemo = NOT OK
     """
@@ -13869,21 +14203,21 @@ def fl_get_chart_bounds(pObject):
                double * max)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
     minbound, pminbound = make_double_and_pointer()
     maxbound, pmaxbound = make_double_and_pointer()
-    keep_elem_refs(pObject, minbound, maxbound, pminbound, pmaxbound)
-    _fl_get_chart_bounds(pObject, pminbound, pmaxbound)
+    keep_elem_refs(pFlObject, minbound, maxbound, pminbound, pmaxbound)
+    _fl_get_chart_bounds(pFlObject, pminbound, pmaxbound)
     return minbound.value, maxbound.value
 
 
-def fl_set_chart_maxnumb(pObject, maxnum):
-    """ fl_set_chart_maxnumb(pObject, maxnum)
+def fl_set_chart_maxnumb(pFlObject, maxnum):
+    """ fl_set_chart_maxnumb(pFlObject, maxnum)
 
         Sets the maximum number of values displayed in the chart.
 
-        @param pObject: chart object
-                        (<pointer to xfdata.FL_OBJECT>)
+        @param pFlObject: chart object
+        @type pFlObject: pointer to xfdata.FL_OBJECT
         @param maxnum: maximum number of values to display
 
         @status: Untested + NoDoc + NoDemo = NOT OK
@@ -13895,19 +14229,19 @@ def fl_set_chart_maxnumb(pObject, maxnum):
             """void fl_set_chart_maxnumb(FL_OBJECT * ob, int maxnumb)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
     imaxnum = convert_to_int(maxnum)
-    keep_elem_refs(pObject, maxnum, imaxnum)
-    _fl_set_chart_maxnumb(pObject, imaxnum)
+    keep_elem_refs(pFlObject, maxnum, imaxnum)
+    _fl_set_chart_maxnumb(pFlObject, imaxnum)
 
 
-def fl_set_chart_autosize(pObject, autosize):
-    """ fl_set_chart_autosize(pObject, autosize)
+def fl_set_chart_autosize(pFlObject, autosize):
+    """ fl_set_chart_autosize(pFlObject, autosize)
 
         Sets whether the chart should autosize along the x-axis.
 
-        @param pObject: pointer to chart object
-                (<pointer to xfdata.FL_OBJECT>)
+        @param pFlObject: pointer to chart object
+@type pFlObject: pointer to xfdata.FL_OBJECT
         @param autosize: autosize flag is enabled/disabled (1|0)
 
         @status: Untested + NoDoc + NoDemo = NOT OK
@@ -13919,17 +14253,17 @@ def fl_set_chart_autosize(pObject, autosize):
             """void fl_set_chart_autosize(FL_OBJECT * ob, int autosize)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
     iautosize = convert_to_int(autosize)
-    keep_elem_refs(pObject, autosize, iautosize)
-    _fl_set_chart_autosize(pObject, iautosize)
+    keep_elem_refs(pFlObject, autosize, iautosize)
+    _fl_set_chart_autosize(pFlObject, iautosize)
 
 
-def fl_set_chart_lstyle(pObject, lstyle):
-    """ fl_set_chart_lstyle(pObject, lstyle)
+def fl_set_chart_lstyle(pFlObject, lstyle):
+    """ fl_set_chart_lstyle(pFlObject, lstyle)
 
-        @param pObject: pointer to object
-                (<pointer to xfdata.FL_OBJECT>)
+        @param pFlObject: pointer to object
+@type pFlObject: pointer to xfdata.FL_OBJECT
 
         @status: Untested + NoDoc + NoDemo = NOT OK
     """
@@ -13940,17 +14274,17 @@ def fl_set_chart_lstyle(pObject, lstyle):
             """void fl_set_chart_lstyle(FL_OBJECT * ob, int lstyle)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
     ilstyle = convert_to_int(lstyle)
-    keep_elem_refs(pObject, lstyle, ilstyle)
-    _fl_set_chart_lstyle(pObject, ilstyle)
+    keep_elem_refs(pFlObject, lstyle, ilstyle)
+    _fl_set_chart_lstyle(pFlObject, ilstyle)
 
 
-def fl_set_chart_lsize(pObject, lsize):
-    """ fl_set_chart_lsize(pObject, lsize)
+def fl_set_chart_lsize(pFlObject, lsize):
+    """ fl_set_chart_lsize(pFlObject, lsize)
 
-        @param pObject: pointer to object
-                (<pointer to xfdata.FL_OBJECT>)
+        @param pFlObject: pointer to object
+@type pFlObject: pointer to xfdata.FL_OBJECT
 
         @status: Untested + NoDoc + NoDemo = NOT OK
     """
@@ -13961,17 +14295,17 @@ def fl_set_chart_lsize(pObject, lsize):
             """void fl_set_chart_lsize(FL_OBJECT * ob, int lsize)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
     ilsize = convert_to_int(lsize)
-    keep_elem_refs(pObject, lsize, ilsize)
-    _fl_set_chart_lsize(pObject, ilsize)
+    keep_elem_refs(pFlObject, lsize, ilsize)
+    _fl_set_chart_lsize(pFlObject, ilsize)
 
 
-def fl_set_chart_lcolor(pObject, colr):
-    """ fl_set_chart_lcolor(pObject, colr)
+def fl_set_chart_lcolor(pFlObject, colr):
+    """ fl_set_chart_lcolor(pFlObject, colr)
 
-        @param pObject: pointer to chart object
-                (<pointer to xfdata.FL_OBJECT>)
+        @param pFlObject: pointer to chart object
+@type pFlObject: pointer to xfdata.FL_OBJECT
         @param colr: color value
 
         @status: Untested + NoDoc + NoDemo = NOT OK
@@ -13983,18 +14317,18 @@ def fl_set_chart_lcolor(pObject, colr):
             """void fl_set_chart_lcolor(FL_OBJECT * ob, FL_COLOR lcol)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
     check_admitted_listvalues(colr, xfc.COLOR_list)
     ulcolr = convert_to_FL_COLOR(colr)
-    keep_elem_refs(pObject, colr, ulcolr)
-    _fl_set_chart_lcolor(pObject, ulcolr)
+    keep_elem_refs(pFlObject, colr, ulcolr)
+    _fl_set_chart_lcolor(pFlObject, ulcolr)
 
 
-def fl_set_chart_baseline(pObject, yesno):
-    """ fl_set_chart_baseline(pObject, yesno)
+def fl_set_chart_baseline(pFlObject, yesno):
+    """ fl_set_chart_baseline(pFlObject, yesno)
 
-        @param pObject: pointer to object
-                (<pointer to xfdata.FL_OBJECT>)
+        @param pFlObject: pointer to object
+@type pFlObject: pointer to xfdata.FL_OBJECT
 
         @status: Untested + NoDoc + NoDemo = NOT OK
     """
@@ -14005,10 +14339,10 @@ def fl_set_chart_baseline(pObject, yesno):
             """void fl_set_chart_baseline(FL_OBJECT * ob, int iYesNo)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
     iyesno = convert_to_int(yesno)
-    keep_elem_refs(pObject, yesno, iyesno)
-    _fl_set_chart_baseline(pObject, iyesno)
+    keep_elem_refs(pFlObject, yesno, iyesno)
+    _fl_set_chart_baseline(pFlObject, iyesno)
 
 
 fl_set_chart_lcol = fl_set_chart_lcolor
@@ -14051,15 +14385,15 @@ FL_LOSE_SELECTION_CB = cty.CFUNCTYPE(cty.c_int, cty.POINTER(xfc.FL_OBJECT),
                                      cty.c_long)
 FL_LOSE_SELECTION_CALLBACK = FL_LOSE_SELECTION_CB
 
-def fl_stuff_clipboard(pObject, clipbdtype, data, size, py_LoseSelectionCb):
-    """ fl_stuff_clipboard(pObject, clipbdtype, data, size, py_LoseSelectionCb) -> num.
+def fl_stuff_clipboard(pFlObject, clipbdtype, data, size, py_LoseSelectionCb):
+    """ fl_stuff_clipboard(pFlObject, clipbdtype, data, size, py_LoseSelectionCb) -> num.
 
-        @param pObject: pointer to clipboard object
-                (<pointer to xfdata.FL_OBJECT>)
+        @param pFlObject: pointer to clipboard object
+@type pFlObject: pointer to xfdata.FL_OBJECT
         @param clipbdtype: type of clipboard (not used)
         @type clipbdtype: num./long
         @param py_LoseSelectionCb: python function callback, returning value
-        @type py_LoseSelectionCb: func(pObject, longnum) -> num.
+        @type py_LoseSelectionCb: func(pFlObject, longnum) -> num.
 
         @status: Untested + NoDoc + NoDemo = NOT OK
     """
@@ -14073,14 +14407,14 @@ def fl_stuff_clipboard(pObject, clipbdtype, data, size, py_LoseSelectionCb):
                FL_LOSE_SELECTION_CB lose_callback)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
     lclipbdtype = convert_to_long(clipbdtype)
     pdata = cty.cast(data, cty.c_void_p)
     lsize = convert_to_long(size)
     c_LoseSelectionCb = FL_LOSE_SELECTION_CB(py_LoseSelectionCb)
     keep_cfunc_refs(c_LoseSelectionCb, py_LoseSelectionCb)
-    keep_elem_refs(pObject, clipbdtype, data, size, lclipbdtype, pdata, lsize)
-    retval = _fl_stuff_clipboard(pObject, lclipbdtype, pdata, lsize,
+    keep_elem_refs(pFlObject, clipbdtype, data, size, lclipbdtype, pdata, lsize)
+    retval = _fl_stuff_clipboard(pFlObject, lclipbdtype, pdata, lsize,
                                  c_LoseSelectionCb)
     return retval
 
@@ -14089,14 +14423,14 @@ FL_SELECTION_CB = cty.CFUNCTYPE(cty.c_int, cty.POINTER(xfc.FL_OBJECT),
                                 cty.c_long, cty.c_void_p, cty.c_long)
 FL_SELECTION_CALLBACK = FL_SELECTION_CB
 
-def fl_request_clipboard(pObject, clipbdtype, py_SelectionCb):
-    """ fl_request_clipboard(pObject, clipbdtype, py_SelectionCb) -> num.
+def fl_request_clipboard(pFlObject, clipbdtype, py_SelectionCb):
+    """ fl_request_clipboard(pFlObject, clipbdtype, py_SelectionCb) -> num.
 
-        @param pObject: pointer to clipboard object
-                (<pointer to xfdata.FL_OBJECT>)
+        @param pFlObject: pointer to clipboard object
+@type pFlObject: pointer to xfdata.FL_OBJECT
         @param clipbdtype: type of clipboard (not used)
         @param py_SelectionCb: python function callback, returning value
-        @type py_SelectionCb: func(pObject, longnum, ptr_void,
+        @type py_SelectionCb: func(pFlObject, longnum, ptr_void,
                               longnum) -> num.
 
         @status: Untested + NoDoc + NoDemo = NOT OK
@@ -14110,12 +14444,12 @@ def fl_request_clipboard(pObject, clipbdtype, py_SelectionCb):
                FL_SELECTION_CB got_it_callback)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
     lclipbdtype = convert_to_long(clipbdtype)
     c_SelectionCb = FL_SELECTION_CB(py_SelectionCb)
     keep_cfunc_refs(c_SelectionCb, py_SelectionCb)
-    keep_elem_refs(pObject, clipbdtype, lclipbdtype)
-    retval = _fl_request_clipboard(pObject, lclipbdtype, c_SelectionCb)
+    keep_elem_refs(pFlObject, clipbdtype, lclipbdtype)
+    retval = _fl_request_clipboard(pFlObject, lclipbdtype, c_SelectionCb)
     return retval
 
 
@@ -14128,7 +14462,7 @@ def fl_request_clipboard(pObject, clipbdtype, py_SelectionCb):
 
 
 def fl_add_clock(clocktype, x, y, w, h, label):
-    """ fl_add_clock(clocktype, x, y, w, h, label) -> pObject
+    """ fl_add_clock(clocktype, x, y, w, h, label) -> pFlObject
 
         Adds a clock object.
 
@@ -14165,16 +14499,16 @@ def fl_add_clock(clocktype, x, y, w, h, label):
     return retval
 
 
-def fl_get_clock(pObject):
-    """ fl_get_clock(pObject) -> hr, mn, sec
+def fl_get_clock(pFlObject):
+    """ fl_get_clock(pFlObject) -> hr, mn, sec
 
         Returns time values from a clock object.
 
-        @param pObject: pointer to clock object
-                (<pointer to xfdata.FL_OBJECT>)
+        @param pFlObject: pointer to clock object
+@type pFlObject: pointer to xfdata.FL_OBJECT
 
         @attention: API change from XForms - upstream was
-                    fl_get_clock(pObject, hr, mn, sec)
+                    fl_get_clock(pFlObject, hr, mn, sec)
 
         @status: Untested + NoDoc + NoDemo = NOT OK
     """
@@ -14186,20 +14520,20 @@ def fl_get_clock(pObject):
             """void fl_get_clock(FL_OBJECT * ob, int * h, int * m, int * s)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
     hr, phr = make_int_and_pointer()
     mn, pmn = make_int_and_pointer()
     sec, psec = make_int_and_pointer()
-    keep_elem_refs(pObject, hr, mn, sec, phr, pmn, psec)
-    _fl_get_clock(pObject, phr, pmn, psec)
+    keep_elem_refs(pFlObject, hr, mn, sec, phr, pmn, psec)
+    _fl_get_clock(pFlObject, phr, pmn, psec)
     return hr.value, mn.value, sec.value
 
 
-def fl_set_clock_adjustment(pObject, offset):
-    """ fl_set_clock_adjustment(pObject, offset) -> num.
+def fl_set_clock_adjustment(pFlObject, offset):
+    """ fl_set_clock_adjustment(pFlObject, offset) -> num.
 
-        @param pObject: pointer to object
-                (<pointer to xfdata.FL_OBJECT>)
+        @param pFlObject: pointer to object
+@type pFlObject: pointer to xfdata.FL_OBJECT
 
         @status: Untested + NoDoc + NoDemo = NOT OK
     """
@@ -14211,18 +14545,18 @@ def fl_set_clock_adjustment(pObject, offset):
                long int offset)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
     loffset = convert_to_long(offset)
-    keep_elem_refs(pObject, offset, loffset)
-    retval = _fl_set_clock_adjustment(pObject, loffset)
+    keep_elem_refs(pFlObject, offset, loffset)
+    retval = _fl_set_clock_adjustment(pFlObject, loffset)
     return retval
 
 
-def fl_set_clock_ampm(pObject, y):
-    """ fl_set_clock_ampm(pObject, y)
+def fl_set_clock_ampm(pFlObject, y):
+    """ fl_set_clock_ampm(pFlObject, y)
 
-        @param pObject: pointer to object
-                (<pointer to xfdata.FL_OBJECT>)
+        @param pFlObject: pointer to object
+@type pFlObject: pointer to xfdata.FL_OBJECT
 
         @status: Untested + NoDoc + NoDemo = NOT OK
     """
@@ -14233,10 +14567,10 @@ def fl_set_clock_ampm(pObject, y):
             """void fl_set_clock_ampm(FL_OBJECT * ob, int y)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
     iy = convert_to_int(y)
-    keep_elem_refs(pObject, y, iy)
-    _fl_set_clock_ampm(pObject, iy)
+    keep_elem_refs(pFlObject, y, iy)
+    _fl_set_clock_ampm(pFlObject, iy)
 
 
 
@@ -14250,7 +14584,7 @@ def fl_set_clock_ampm(pObject, y):
 
 
 def fl_add_counter(countertype, x, y, w, h, label):
-    """ fl_add_counter(countertype, x, y, w, h, label) -> pObject
+    """ fl_add_counter(countertype, x, y, w, h, label) -> pFlObject
 
         Adds a counter object.
 
@@ -14287,11 +14621,11 @@ def fl_add_counter(countertype, x, y, w, h, label):
     return retval
 
 
-def fl_set_counter_value(pObject, val):
-    """ fl_set_counter_value(pObject, val)
+def fl_set_counter_value(pFlObject, val):
+    """ fl_set_counter_value(pFlObject, val)
 
-        @param pObject: pointer to object
-                (<pointer to xfdata.FL_OBJECT>)
+        @param pFlObject: pointer to object
+@type pFlObject: pointer to xfdata.FL_OBJECT
 
         @status: Tested + NoDoc + Demo = OK
     """
@@ -14302,17 +14636,17 @@ def fl_set_counter_value(pObject, val):
             """void fl_set_counter_value(FL_OBJECT * ob, double val)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
     fval = convert_to_double(val)
-    keep_elem_refs(pObject, val, fval)
-    _fl_set_counter_value(pObject, fval)
+    keep_elem_refs(pFlObject, val, fval)
+    _fl_set_counter_value(pFlObject, fval)
 
 
-def fl_set_counter_bounds(pObject, minbound, maxbound):
-    """ fl_set_counter_bounds(pObject, minbound, maxbound)
+def fl_set_counter_bounds(pFlObject, minbound, maxbound):
+    """ fl_set_counter_bounds(pFlObject, minbound, maxbound)
 
-        @param pObject: pointer to counter object
-                (<pointer to xfdata.FL_OBJECT>)
+        @param pFlObject: pointer to counter object
+@type pFlObject: pointer to xfdata.FL_OBJECT
 
         @status: Tested + NoDoc + Demo = OK
     """
@@ -14324,18 +14658,18 @@ def fl_set_counter_bounds(pObject, minbound, maxbound):
                double max)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
     fminbound = convert_to_double(minbound)
     fmaxbound = convert_to_double(maxbound)
-    keep_elem_refs(pObject, minbound, maxbound, fminbound, fmaxbound)
-    _fl_set_counter_bounds(pObject, fminbound, fmaxbound)
+    keep_elem_refs(pFlObject, minbound, maxbound, fminbound, fmaxbound)
+    _fl_set_counter_bounds(pFlObject, fminbound, fmaxbound)
 
 
-def fl_set_counter_step(pObject, s, l):
-    """ fl_set_counter_step(pObject, s, l)
+def fl_set_counter_step(pFlObject, s, l):
+    """ fl_set_counter_step(pFlObject, s, l)
 
-        @param pObject: pointer to object
-                (<pointer to xfdata.FL_OBJECT>)
+        @param pFlObject: pointer to object
+@type pFlObject: pointer to xfdata.FL_OBJECT
 
         @status: Tested + NoDoc + Demo = OK
     """
@@ -14345,18 +14679,18 @@ def fl_set_counter_step(pObject, s, l):
             None, [cty.POINTER(xfc.FL_OBJECT), cty.c_double, cty.c_double],
             """void fl_set_counter_step(FL_OBJECT * ob, double s, double l)
             """)
-    check_if_FL_OBJECT_ptr(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
     fs = convert_to_double(s)
     fl = convert_to_double(l)
-    keep_elem_refs(pObject, s, l, fs, fl)
-    _fl_set_counter_step(pObject, fs, fl)
+    keep_elem_refs(pFlObject, s, l, fs, fl)
+    _fl_set_counter_step(pFlObject, fs, fl)
 
 
-def fl_set_counter_precision(pObject, prec):
-    """ fl_set_counter_precision(pObject, prec)
+def fl_set_counter_precision(pFlObject, prec):
+    """ fl_set_counter_precision(pFlObject, prec)
 
-        @param pObject: pointer to object
-                (<pointer to xfdata.FL_OBJECT>)
+        @param pFlObject: pointer to object
+@type pFlObject: pointer to xfdata.FL_OBJECT
 
         @status: Tested + NoDoc + Demo = OK
     """
@@ -14367,17 +14701,17 @@ def fl_set_counter_precision(pObject, prec):
             """void fl_set_counter_precision(FL_OBJECT * ob, int prec)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
     iprec = convert_to_int(prec)
-    keep_elem_refs(pObject, prec, iprec)
-    _fl_set_counter_precision(pObject, iprec)
+    keep_elem_refs(pFlObject, prec, iprec)
+    _fl_set_counter_precision(pFlObject, iprec)
 
 
-def fl_get_counter_precision(pObject):
-    """ fl_get_counter_precision(pObject) -> num.
+def fl_get_counter_precision(pFlObject):
+    """ fl_get_counter_precision(pFlObject) -> num.
 
-        @param pObject: pointer to object
-                (<pointer to xfdata.FL_OBJECT>)
+        @param pFlObject: pointer to object
+@type pFlObject: pointer to xfdata.FL_OBJECT
 
         @status: Untested + NoDoc + NoDemo = NOT OK
     """
@@ -14388,20 +14722,20 @@ def fl_get_counter_precision(pObject):
             """int fl_get_counter_precision(FL_OBJECT * ob)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
-    keep_elem_refs(pObject)
-    retval = _fl_get_counter_precision(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
+    keep_elem_refs(pFlObject)
+    retval = _fl_get_counter_precision(pFlObject)
     return retval
 
 
 # fl_set_counter_return function placeholder (deprecated)
 
 
-def fl_get_counter_value(pObject):
-    """ fl_get_counter_value(pObject) -> num.
+def fl_get_counter_value(pFlObject):
+    """ fl_get_counter_value(pFlObject) -> num.
 
-        @param pObject: pointer to object
-                (<pointer to xfdata.FL_OBJECT>)
+        @param pFlObject: pointer to object
+@type pFlObject: pointer to xfdata.FL_OBJECT
 
         @status: Tested + NoDoc + Demo = OK
     """
@@ -14412,20 +14746,20 @@ def fl_get_counter_value(pObject):
             """double fl_get_counter_value(FL_OBJECT * ob)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
-    keep_elem_refs(pObject)
-    retval = _fl_get_counter_value(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
+    keep_elem_refs(pFlObject)
+    retval = _fl_get_counter_value(pFlObject)
     return retval
 
 
-def fl_get_counter_bounds(pObject):
-    """ fl_get_counter_bounds(pObject) -> minbound, maxbound
+def fl_get_counter_bounds(pFlObject):
+    """ fl_get_counter_bounds(pFlObject) -> minbound, maxbound
 
-        @param pObject: pointer to object
-                (<pointer to xfdata.FL_OBJECT>)
+        @param pFlObject: pointer to object
+@type pFlObject: pointer to xfdata.FL_OBJECT
 
         @attention: API change from XForms - upstream was
-                    fl_get_counter_bounds(pObject, minbound, maxbound)
+                    fl_get_counter_bounds(pFlObject, minbound, maxbound)
 
         @status: Untested + NoDoc + NoDemo = NOT OK
     """
@@ -14438,22 +14772,22 @@ def fl_get_counter_bounds(pObject):
                double * max)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
     minbound, pminbound = make_double_and_pointer()
     maxbound, pmaxbound = make_double_and_pointer()
-    keep_elem_refs(pObject, minbound, maxbound, pminbound, pmaxbound)
-    _fl_get_counter_bounds(pObject, pminbound, pmaxbound)
+    keep_elem_refs(pFlObject, minbound, maxbound, pminbound, pmaxbound)
+    _fl_get_counter_bounds(pFlObject, pminbound, pmaxbound)
     return minbound.value, maxbound.value
 
 
-def fl_get_counter_step(pObject):
-    """ fl_get_counter_step(pObject) -> s, l
+def fl_get_counter_step(pFlObject):
+    """ fl_get_counter_step(pFlObject) -> s, l
 
-        @param pObject: pointer to object
-                (<pointer to xfdata.FL_OBJECT>)
+        @param pFlObject: pointer to object
+@type pFlObject: pointer to xfdata.FL_OBJECT
 
         @attention: API change from XForms - upstream was
-                    fl_get_counter_step(pObject, s, l)
+                    fl_get_counter_step(pFlObject, s, l)
 
         @status: Untested + NoDoc + NoDemo = NOT OK
     """
@@ -14466,22 +14800,22 @@ def fl_get_counter_step(pObject):
                double * l)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
     s, ps = make_double_and_pointer()
     l, pl = make_double_and_pointer()
-    keep_elem_refs(pObject, s, l, ps, pl)
-    _fl_get_counter_step(pObject, ps, pl)
+    keep_elem_refs(pFlObject, s, l, ps, pl)
+    _fl_get_counter_step(pFlObject, ps, pl)
     return s.value, l.value
 
 
 FL_VAL_FILTER = cty.CFUNCTYPE(xfc.STRING, cty.POINTER(xfc.FL_OBJECT),
                               cty.c_double, cty.c_int)
 
-def fl_set_counter_filter(pObject, py_ValFilter):
-    """ fl_set_counter_filter(pObject, py_ValFilter)
+def fl_set_counter_filter(pFlObject, py_ValFilter):
+    """ fl_set_counter_filter(pFlObject, py_ValFilter)
 
-        @param pObject: pointer to object
-                (<pointer to xfdata.FL_OBJECT>)
+        @param pFlObject: pointer to object
+@type pFlObject: pointer to xfdata.FL_OBJECT
 
         @status: Untested + NoDoc + NoDemo = NOT OK
     """
@@ -14493,21 +14827,21 @@ def fl_set_counter_filter(pObject, py_ValFilter):
                FL_VAL_FILTER filter)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
     c_ValFilter = FL_VAL_FILTER(py_ValFilter)
     keep_cfunc_refs(c_ValFilter, py_ValFilter)
-    keep_elem_refs(pObject)
-    _fl_set_counter_filter(pObject, c_ValFilter)
+    keep_elem_refs(pFlObject)
+    _fl_set_counter_filter(pFlObject, c_ValFilter)
 
 
 # Functions to set and get the timeout value used by the
 # counter code to control modification of the counter value.
 
-def fl_get_counter_repeat(pObject):
-    """ fl_get_counter_repeat(pObject) -> num.
+def fl_get_counter_repeat(pFlObject):
+    """ fl_get_counter_repeat(pFlObject) -> num.
 
-        @param pObject: pointer to object
-                (<pointer to xfdata.FL_OBJECT>)
+        @param pFlObject: pointer to object
+@type pFlObject: pointer to xfdata.FL_OBJECT
 
         @status: Untested + NoDoc + NoDemo = NOT OK
     """
@@ -14518,17 +14852,17 @@ def fl_get_counter_repeat(pObject):
             """int fl_get_counter_repeat(FL_OBJECT * ob)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
-    keep_elem_refs(pObject)
-    retval = _fl_get_counter_repeat(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
+    keep_elem_refs(pFlObject)
+    retval = _fl_get_counter_repeat(pFlObject)
     return retval
 
 
-def fl_set_counter_repeat(pObject, msec):
-    """ fl_set_counter_repeat(pObject, msec)
+def fl_set_counter_repeat(pFlObject, msec):
+    """ fl_set_counter_repeat(pFlObject, msec)
 
-        @param pObject: pointer to object
-                (<pointer to xfdata.FL_OBJECT>)
+        @param pFlObject: pointer to object
+@type pFlObject: pointer to xfdata.FL_OBJECT
 
         @status: Untested + NoDoc + NoDemo = NOT OK
     """
@@ -14539,17 +14873,17 @@ def fl_set_counter_repeat(pObject, msec):
             """void fl_set_counter_repeat(FL_OBJECT * ob, int millisec)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
     imsec = convert_to_int(msec)
-    keep_elem_refs(pObject, msec, imsec)
-    _fl_set_counter_repeat(pObject, imsec)
+    keep_elem_refs(pFlObject, msec, imsec)
+    _fl_set_counter_repeat(pFlObject, imsec)
 
 
-def fl_get_counter_min_repeat(pObject):
-    """ fl_get_counter_min_repeat(pObject) -> num.
+def fl_get_counter_min_repeat(pFlObject):
+    """ fl_get_counter_min_repeat(pFlObject) -> num.
 
-        @param pObject: pointer to object
-                (<pointer to xfdata.FL_OBJECT>)
+        @param pFlObject: pointer to object
+@type pFlObject: pointer to xfdata.FL_OBJECT
 
         @status: Untested + NoDoc + NoDemo = NOT OK
     """
@@ -14559,17 +14893,17 @@ def fl_get_counter_min_repeat(pObject):
             cty.c_int, [cty.POINTER(xfc.FL_OBJECT)],
             """int fl_get_counter_min_repeat(FL_OBJECT * ob)
             """)
-    check_if_FL_OBJECT_ptr(pObject)
-    keep_elem_refs(pObject)
-    retval = _fl_get_counter_min_repeat(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
+    keep_elem_refs(pFlObject)
+    retval = _fl_get_counter_min_repeat(pFlObject)
     return retval
 
 
-def fl_set_counter_min_repeat(pObject, msec):
-    """ fl_set_counter_min_repeat(pObject, msec)
+def fl_set_counter_min_repeat(pFlObject, msec):
+    """ fl_set_counter_min_repeat(pFlObject, msec)
 
-        @param pObject: pointer to object
-                (<pointer to xfdata.FL_OBJECT>)
+        @param pFlObject: pointer to object
+@type pFlObject: pointer to xfdata.FL_OBJECT
 
         @status: Untested + NoDoc + NoDemo = NOT OK
     """
@@ -14580,17 +14914,17 @@ def fl_set_counter_min_repeat(pObject, msec):
             """void fl_set_counter_min_repeat(FL_OBJECT * ob, int millisec)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
     imsec = convert_to_int(msec)
-    keep_elem_refs(pObject, msec, imsec)
-    _fl_set_counter_min_repeat(pObject, imsec)
+    keep_elem_refs(pFlObject, msec, imsec)
+    _fl_set_counter_min_repeat(pFlObject, imsec)
 
 
-def fl_get_counter_speedjump(pObject):
-    """ fl_get_counter_speedjump(pObject) -> num.
+def fl_get_counter_speedjump(pFlObject):
+    """ fl_get_counter_speedjump(pFlObject) -> num.
 
-        @param pObject: pointer to object
-                (<pointer to xfdata.FL_OBJECT>)
+        @param pFlObject: pointer to object
+@type pFlObject: pointer to xfdata.FL_OBJECT
 
         @status: Untested + NoDoc + NoDemo = NOT OK
     """
@@ -14601,17 +14935,17 @@ def fl_get_counter_speedjump(pObject):
             """int fl_get_counter_speedjump(FL_OBJECT * ob)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
-    keep_elem_refs(pObject)
-    retval = _fl_get_counter_speedjump(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
+    keep_elem_refs(pFlObject)
+    retval = _fl_get_counter_speedjump(pFlObject)
     return retval
 
 
-def fl_set_counter_speedjump(pObject, yesno):
-    """ fl_set_counter_speedjump(pObject, yesno)
+def fl_set_counter_speedjump(pFlObject, yesno):
+    """ fl_set_counter_speedjump(pFlObject, yesno)
 
-        @param pObject: pointer to object
-                (<pointer to xfdata.FL_OBJECT>)
+        @param pFlObject: pointer to object
+@type pFlObject: pointer to xfdata.FL_OBJECT
 
         @status: Untested + NoDoc + NoDemo = NOT OK
     """
@@ -14622,10 +14956,10 @@ def fl_set_counter_speedjump(pObject, yesno):
             """void fl_set_counter_speedjump(FL_OBJECT * ob, int yes_no)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
     iyesno = convert_to_int(yesno)
-    keep_elem_refs(pObject, yesno, iyesno)
-    _fl_set_counter_speedjump(pObject, iyesno)
+    keep_elem_refs(pFlObject, yesno, iyesno)
+    _fl_set_counter_speedjump(pFlObject, iyesno)
 
 
 
@@ -14775,7 +15109,7 @@ def fl_reset_cursor(win):
 
 
 def fl_add_dial(dialtype, x, y, w, h, label):
-    """ fl_add_dial(dialtype, x, y, w, h, label) -> pObject
+    """ fl_add_dial(dialtype, x, y, w, h, label) -> pFlObject
 
         Adds a dial object.
 
@@ -14812,11 +15146,11 @@ def fl_add_dial(dialtype, x, y, w, h, label):
     return retval
 
 
-def fl_set_dial_value(pObject, val):
-    """ fl_set_dial_value(pObject, val)
+def fl_set_dial_value(pFlObject, val):
+    """ fl_set_dial_value(pFlObject, val)
 
-        @param pObject: pointer to object
-                (<pointer to xfdata.FL_OBJECT>)
+        @param pFlObject: pointer to object
+@type pFlObject: pointer to xfdata.FL_OBJECT
 
         @status: Tested + NoDoc + Demo = OK
     """
@@ -14827,17 +15161,17 @@ def fl_set_dial_value(pObject, val):
             """void fl_set_dial_value(FL_OBJECT * ob, double val)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
     fval = convert_to_double(val)
-    keep_elem_refs(pObject, val, fval)
-    _fl_set_dial_value(pObject, fval)
+    keep_elem_refs(pFlObject, val, fval)
+    _fl_set_dial_value(pFlObject, fval)
 
 
-def fl_get_dial_value(pObject):
-    """ fl_get_dial_value(pObject) -> num.
+def fl_get_dial_value(pFlObject):
+    """ fl_get_dial_value(pFlObject) -> num.
 
-        @param pObject: pointer to dial object
-                (<pointer to xfdata.FL_OBJECT>)
+        @param pFlObject: pointer to dial object
+@type pFlObject: pointer to xfdata.FL_OBJECT
 
         @status: Tested + NoDoc + Demo = OK
     """
@@ -14848,17 +15182,17 @@ def fl_get_dial_value(pObject):
             """double fl_get_dial_value(FL_OBJECT * ob)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
-    keep_elem_refs(pObject)
-    retval = _fl_get_dial_value(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
+    keep_elem_refs(pFlObject)
+    retval = _fl_get_dial_value(pFlObject)
     return retval
 
 
-def fl_set_dial_bounds(pObject, minbound, maxbound):
-    """ fl_set_dial_bounds(pObject, minbound, maxbound)
+def fl_set_dial_bounds(pFlObject, minbound, maxbound):
+    """ fl_set_dial_bounds(pFlObject, minbound, maxbound)
 
-        @param pObject: pointer to object
-                (<pointer to xfdata.FL_OBJECT>)
+        @param pFlObject: pointer to object
+@type pFlObject: pointer to xfdata.FL_OBJECT
 
         @status: Tested + NoDoc + Demo = OK
     """
@@ -14870,21 +15204,21 @@ def fl_set_dial_bounds(pObject, minbound, maxbound):
                double max)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
     fminbound = convert_to_double(minbound)
     fmaxbound = convert_to_double(maxbound)
-    keep_elem_refs(pObject, minbound, maxbound, fminbound, fmaxbound)
-    _fl_set_dial_bounds(pObject, fminbound, fmaxbound)
+    keep_elem_refs(pFlObject, minbound, maxbound, fminbound, fmaxbound)
+    _fl_set_dial_bounds(pFlObject, fminbound, fmaxbound)
 
 
-def fl_get_dial_bounds(pObject):
-    """ fl_get_dial_bounds(pObject) -> minbound, maxbound
+def fl_get_dial_bounds(pFlObject):
+    """ fl_get_dial_bounds(pFlObject) -> minbound, maxbound
 
-        @param pObject: pointer to object
-                (<pointer to xfdata.FL_OBJECT>)
+        @param pFlObject: pointer to object
+@type pFlObject: pointer to xfdata.FL_OBJECT
 
         @attention: API change from XForms - upstream was
-                    fl_get_dial_bounds(pObject, minbound, maxbound)
+                    fl_get_dial_bounds(pFlObject, minbound, maxbound)
 
         @status: Untested + NoDoc + NoDemo = NOT OK
     """
@@ -14897,19 +15231,19 @@ def fl_get_dial_bounds(pObject):
                double * max)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
     minbound, pminbound = make_double_and_pointer()
     maxbound, pmaxbound = make_double_and_pointer()
-    keep_elem_refs(pObject, minbound, maxbound, pminbound, pmaxbound)
-    _fl_get_dial_bounds(pObject, pminbound, pmaxbound)
+    keep_elem_refs(pFlObject, minbound, maxbound, pminbound, pmaxbound)
+    _fl_get_dial_bounds(pFlObject, pminbound, pmaxbound)
     return minbound.value, maxbound.value
 
 
-def fl_set_dial_step(pObject, value):
-    """ fl_set_dial_step(pObject, value)
+def fl_set_dial_step(pFlObject, value):
+    """ fl_set_dial_step(pFlObject, value)
 
-        @param pObject: pointer to object
-                (<pointer to xfdata.FL_OBJECT>)
+        @param pFlObject: pointer to object
+@type pFlObject: pointer to xfdata.FL_OBJECT
 
         @status: Untested + NoDoc + NoDemo = NOT OK
     """
@@ -14920,17 +15254,17 @@ def fl_set_dial_step(pObject, value):
             """void fl_set_dial_step(FL_OBJECT * ob, double value)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
     fvalue = convert_to_double(value)
-    keep_elem_refs(pObject, value, fvalue)
-    _fl_set_dial_step(pObject, fvalue)
+    keep_elem_refs(pFlObject, value, fvalue)
+    _fl_set_dial_step(pFlObject, fvalue)
 
 
-def fl_set_dial_return(pObject, value):
-    """ fl_set_dial_return(pObject, value)
+def fl_set_dial_return(pFlObject, value):
+    """ fl_set_dial_return(pFlObject, value)
 
-        @param pObject: pointer to object
-                (<pointer to xfdata.FL_OBJECT>)
+        @param pFlObject: pointer to object
+@type pFlObject: pointer to xfdata.FL_OBJECT
 
         @status: Untested + NoDoc + NoDemo = NOT OK
     """
@@ -14942,17 +15276,17 @@ def fl_set_dial_return(pObject, value):
                int value)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
     uivalue = convert_to_uint(value)
-    keep_elem_refs(pObject, value, uivalue)
-    _fl_set_dial_return(pObject, uivalue)
+    keep_elem_refs(pFlObject, value, uivalue)
+    _fl_set_dial_return(pFlObject, uivalue)
 
 
-def fl_set_dial_angles(pObject, angmin, angmax):
-    """ fl_set_dial_angles(pObject, angmin, angmax)
+def fl_set_dial_angles(pFlObject, angmin, angmax):
+    """ fl_set_dial_angles(pFlObject, angmin, angmax)
 
-        @param pObject: pointer to object
-                (<pointer to xfdata.FL_OBJECT>)
+        @param pFlObject: pointer to object
+@type pFlObject: pointer to xfdata.FL_OBJECT
 
         @status: Tested + NoDoc + Demo = OK
     """
@@ -14964,19 +15298,19 @@ def fl_set_dial_angles(pObject, angmin, angmax):
                double amax)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
     fangmin = convert_to_double(angmin)
     fangmax = convert_to_double(angmax)
-    keep_elem_refs(pObject, angmin, angmax, fangmin, fangmax)
-    _fl_set_dial_angles(pObject, fangmin, fangmax)
+    keep_elem_refs(pFlObject, angmin, angmax, fangmin, fangmax)
+    _fl_set_dial_angles(pFlObject, fangmin, fangmax)
 
 
-def fl_set_dial_cross(pObject, flag):
+def fl_set_dial_cross(pFlObject, flag):
     """
-        fl_set_dial_cross(pObject, flag)
+        fl_set_dial_cross(pFlObject, flag)
 
-        @param pObject: pointer to object
-                (<pointer to xfdata.FL_OBJECT>)
+        @param pFlObject: pointer to object
+@type pFlObject: pointer to xfdata.FL_OBJECT
 
         @status: Untested + NoDoc + NoDemo = NOT OK
     """
@@ -14987,21 +15321,21 @@ def fl_set_dial_cross(pObject, flag):
             """void fl_set_dial_cross(FL_OBJECT * ob, int flag)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
     iflag = convert_to_int(flag)
-    keep_elem_refs(pObject, flag, iflag)
-    _fl_set_dial_cross(pObject, iflag)
+    keep_elem_refs(pFlObject, flag, iflag)
+    _fl_set_dial_cross(pFlObject, iflag)
 
 
 fl_set_dial_crossover = fl_set_dial_cross
 
 
-def fl_set_dial_direction(pObject, directn):
+def fl_set_dial_direction(pFlObject, directn):
     """
-        fl_set_dial_direction(pObject, directn)
+        fl_set_dial_direction(pFlObject, directn)
 
-        @param pObject: pointer to object
-                (<pointer to xfdata.FL_OBJECT>)
+        @param pFlObject: pointer to object
+@type pFlObject: pointer to xfdata.FL_OBJECT
 
         @status: Tested + NoDoc + Demo = OK
     """
@@ -15012,10 +15346,10 @@ def fl_set_dial_direction(pObject, directn):
             """void fl_set_dial_direction(FL_OBJECT * ob, int dir)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
     idirectn = convert_to_int(directn)
-    keep_elem_refs(pObject, directn, idirectn)
-    _fl_set_dial_direction(pObject, idirectn)
+    keep_elem_refs(pFlObject, directn, idirectn)
+    _fl_set_dial_direction(pFlObject, idirectn)
 
 
 
@@ -15232,12 +15566,12 @@ def flps_init():
     return retval
 
 
-def fl_object_ps_dump(pObject, fname):
+def fl_object_ps_dump(pFlObject, fname):
     """
-        fl_object_ps_dump(pObject, fname) -> num.
+        fl_object_ps_dump(pFlObject, fname) -> num.
 
-        @param pObject: pointer to object
-                (<pointer to xfdata.FL_OBJECT>)
+        @param pFlObject: pointer to object
+@type pFlObject: pointer to xfdata.FL_OBJECT
 
         @status: Untested + NoDoc + NoDemo = NOT OK
     """
@@ -15248,10 +15582,10 @@ def fl_object_ps_dump(pObject, fname):
             """int fl_object_ps_dump(FL_OBJECT * ob, const char * fname)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
     sfname = convert_to_string(fname)
-    keep_elem_refs(pObject, fname, sfname)
-    retval = _fl_object_ps_dump(pObject, sfname)
+    keep_elem_refs(pFlObject, fname, sfname)
+    retval = _fl_object_ps_dump(pFlObject, sfname)
     return retval
 
 
@@ -15260,12 +15594,12 @@ def fl_object_ps_dump(pObject, fname):
 # forms.h (formbrowser.h)
 ##########################
 
-def fl_addto_formbrowser(pObject, pForm):
+def fl_addto_formbrowser(pFlObject, pFlForm):
     """
-        fl_addto_formbrowser(pObject, pForm) -> num.
+        fl_addto_formbrowser(pFlObject, pFlForm) -> num.
 
-        @param pObject: pointer to object
-                (<pointer to xfdata.FL_OBJECT>)
+        @param pFlObject: pointer to object
+@type pFlObject: pointer to xfdata.FL_OBJECT
 
         @status: Untested + NoDoc + NoDemo = NOT OK
     """
@@ -15276,18 +15610,18 @@ def fl_addto_formbrowser(pObject, pForm):
             """int fl_addto_formbrowser(FL_OBJECT * ob, FL_FORM * form)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
-    keep_elem_refs(pObject, pForm)
-    retval = _fl_addto_formbrowser(pObject, pForm)
+    check_if_FL_OBJECT_ptr(pFlObject)
+    keep_elem_refs(pFlObject, pFlForm)
+    retval = _fl_addto_formbrowser(pFlObject, pFlForm)
     return retval
 
 
-def fl_delete_formbrowser_bynumber(pObject, num):
+def fl_delete_formbrowser_bynumber(pFlObject, num):
     """
-        fl_delete_formbrowser_bynumber(pObject, num) -> pForm
+        fl_delete_formbrowser_bynumber(pFlObject, num) -> pFlForm
 
-        @param pObject: pointer to object
-                (<pointer to xfdata.FL_OBJECT>)
+        @param pFlObject: pointer to object
+@type pFlObject: pointer to xfdata.FL_OBJECT
 
         @status: Untested + NoDoc + NoDemo = NOT OK
     """
@@ -15299,21 +15633,21 @@ def fl_delete_formbrowser_bynumber(pObject, num):
                int num)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
     inum = convert_to_int(num)
-    keep_elem_refs(pObject, num, inum)
-    retval = _fl_delete_formbrowser_bynumber(pObject, inum)
+    keep_elem_refs(pFlObject, num, inum)
+    retval = _fl_delete_formbrowser_bynumber(pFlObject, inum)
     return retval
 
 
-def fl_delete_formbrowser(pObject, pForm):
+def fl_delete_formbrowser(pFlObject, pFlForm):
     """
-        fl_delete_formbrowser(pObject, pForm) -> num.
+        fl_delete_formbrowser(pFlObject, pFlForm) -> num.
 
-        @param pObject: object the formbrowser belongs to
-                        (<pointer to xfdata.FL_OBJECT>)
-        @param pForm: form candidate to deletion
-                      (<pointer to xfdata.FL_FORM>)
+        @param pFlObject: object the formbrowser belongs to
+        @type pFlObject: pointer to xfdata.FL_OBJECT
+        @param pFlForm: form candidate to deletion
+                      @type pFlForm: pointer to xfdata.FL_FORM
 
         @status: Untested + NoDoc + NoDemo = NOT OK
     """
@@ -15325,22 +15659,22 @@ def fl_delete_formbrowser(pObject, pForm):
                FL_FORM * candidate_form)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
-    check_if_FL_FORM_ptr(pForm)
-    keep_elem_refs(pObject, pForm)
-    retval = _fl_delete_formbrowser(pObject, pForm)
+    check_if_FL_OBJECT_ptr(pFlObject)
+    check_if_FL_FORM_ptr(pFlForm)
+    keep_elem_refs(pFlObject, pFlForm)
+    retval = _fl_delete_formbrowser(pFlObject, pFlForm)
     return retval
 
 
-def fl_replace_formbrowser(pObject, num, pForm):
+def fl_replace_formbrowser(pFlObject, num, pFlForm):
     """
-        fl_replace_formbrowser(pObject, num, pForm)
+        fl_replace_formbrowser(pFlObject, num, pFlForm)
 
-        @param pObject: formbrowser object
-                        (<pointer to xfdata.FL_OBJECT>)
+        @param pFlObject: formbrowser object
+        @type pFlObject: pointer to xfdata.FL_OBJECT
         @param num: formbrowser number to be replaced (<int>)
-        @param pForm: form used as replacement
-                      (<pointer to xfdata.FL_FORM>)
+        @param pFlForm: form used as replacement
+                      @type pFlForm: pointer to xfdata.FL_FORM
 
         @status: Untested + NoDoc + NoDemo = NOT OK
     """
@@ -15353,22 +15687,22 @@ def fl_replace_formbrowser(pObject, num, pForm):
                FL_FORM * form)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
     inum = convert_to_int(num)
-    keep_elem_refs(pObject, num, pForm, inum)
-    retval = _fl_replace_formbrowser(pObject, inum, pForm)
+    keep_elem_refs(pFlObject, num, pFlForm, inum)
+    retval = _fl_replace_formbrowser(pFlObject, inum, pFlForm)
     return retval
 
 
-def fl_insert_formbrowser(pObject, line, pForm):
+def fl_insert_formbrowser(pFlObject, line, pFlForm):
     """
-        fl_insert_formbrowser(pObject, line, pForm) -> num.
+        fl_insert_formbrowser(pFlObject, line, pFlForm) -> num.
 
-        @param pObject: formbrowser object
-                        (<pointer to xfdata.FL_OBJECT>)
+        @param pFlObject: formbrowser object
+        @type pFlObject: pointer to xfdata.FL_OBJECT
         @param line: line after which new form is inserted
-        @param pForm: new form to insert
-                      (<pointer to xfdata.FL_FORM>)
+        @param pFlForm: new form to insert
+                      @type pFlForm: pointer to xfdata.FL_FORM
 
         @status: Untested + NoDoc + NoDemo = NOT OK
     """
@@ -15381,22 +15715,22 @@ def fl_insert_formbrowser(pObject, line, pForm):
                FL_FORM * new_form)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
     iline = convert_to_int(line)
-    keep_elem_refs(pObject, line, iline, pForm)
-    retval = _fl_insert_formbrowser(pObject, iline, pForm)
+    keep_elem_refs(pFlObject, line, iline, pFlForm)
+    retval = _fl_insert_formbrowser(pFlObject, iline, pFlForm)
     return retval
 
 
-def fl_get_formbrowser_area(pObject):
+def fl_get_formbrowser_area(pFlObject):
     """
-        fl_get_formbrowser_area(pObject) -> num., x, y, w, h
+        fl_get_formbrowser_area(pFlObject) -> num., x, y, w, h
 
-        @param pObject: formbrowser object
-                        (<pointer to xfdata.FL_OBJECT>)
+        @param pFlObject: formbrowser object
+        @type pFlObject: pointer to xfdata.FL_OBJECT
 
         @attention: API change from XForms - upstream was
-                    fl_get_formbrowser_area(pObject, x, y, w, h)
+                    fl_get_formbrowser_area(pFlObject, x, y, w, h)
 
         @status: Untested + NoDoc + NoDemo = NOT OK
     """
@@ -15410,22 +15744,22 @@ def fl_get_formbrowser_area(pObject):
                int * w, int * h)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
     x, px = make_int_and_pointer()
     y, py = make_int_and_pointer()
     w, pw = make_int_and_pointer()
     h, ph = make_int_and_pointer()
-    keep_elem_refs(pObject, x, y, w, h, px, py, pw, ph)
-    retval = _fl_get_formbrowser_area(pObject, px, py, pw, ph)
+    keep_elem_refs(pFlObject, x, y, w, h, px, py, pw, ph)
+    retval = _fl_get_formbrowser_area(pFlObject, px, py, pw, ph)
     return retval, x.value, y.value, w.value, h.value
 
 
-def fl_set_formbrowser_scroll(pObject, how):
+def fl_set_formbrowser_scroll(pFlObject, how):
     """
-        fl_set_formbrowser_scroll(pObject, how)
+        fl_set_formbrowser_scroll(pFlObject, how)
 
-        @param pObject: formbrowser object
-                        (<pointer to xfdata.FL_OBJECT>)
+        @param pFlObject: formbrowser object
+        @type pFlObject: pointer to xfdata.FL_OBJECT
         @param how: ?
 
         @status: Untested + NoDoc + NoDemo = NOT OK
@@ -15437,18 +15771,18 @@ def fl_set_formbrowser_scroll(pObject, how):
             """void fl_set_formbrowser_scroll(FL_OBJECT * ob, int how)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
     ihow = convert_to_int(how)
-    keep_elem_refs(pObject, how, ihow)
-    _fl_set_formbrowser_scroll(pObject, ihow)
+    keep_elem_refs(pFlObject, how, ihow)
+    _fl_set_formbrowser_scroll(pFlObject, ihow)
 
 
-def fl_set_formbrowser_hscrollbar(pObject, how):
+def fl_set_formbrowser_hscrollbar(pFlObject, how):
     """
-        fl_set_formbrowser_hscrollbar(pObject, how)
+        fl_set_formbrowser_hscrollbar(pFlObject, how)
 
-        @param pObject: formbrowser object
-                        (<pointer to xfdata.FL_OBJECT>)
+        @param pFlObject: formbrowser object
+        @type pFlObject: pointer to xfdata.FL_OBJECT
         @param how: ?
 
         @status: Untested + NoDoc + NoDemo = NOT OK
@@ -15460,18 +15794,18 @@ def fl_set_formbrowser_hscrollbar(pObject, how):
             """void fl_set_formbrowser_hscrollbar(FL_OBJECT * ob, int how)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
     ihow = convert_to_int(how)
-    keep_elem_refs(pObject, how, ihow)
-    _fl_set_formbrowser_hscrollbar(pObject, ihow)
+    keep_elem_refs(pFlObject, how, ihow)
+    _fl_set_formbrowser_hscrollbar(pFlObject, ihow)
 
 
-def fl_set_formbrowser_vscrollbar(pObject, how):
+def fl_set_formbrowser_vscrollbar(pFlObject, how):
     """
-        fl_set_formbrowser_vscrollbar(pObject, how)
+        fl_set_formbrowser_vscrollbar(pFlObject, how)
 
-        @param pObject: formbrowser object
-                        (<pointer to xfdata.FL_OBJECT>)
+        @param pFlObject: formbrowser object
+        @type pFlObject: pointer to xfdata.FL_OBJECT
         @param how: ?
 
         @status: Untested + NoDoc + NoDemo = NOT OK
@@ -15483,18 +15817,18 @@ def fl_set_formbrowser_vscrollbar(pObject, how):
             """void fl_set_formbrowser_vscrollbar(FL_OBJECT * ob, int how)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
     ihow = convert_to_int(how)
-    keep_elem_refs(pObject, how, ihow)
-    _fl_set_formbrowser_vscrollbar(pObject, ihow)
+    keep_elem_refs(pFlObject, how, ihow)
+    _fl_set_formbrowser_vscrollbar(pFlObject, ihow)
 
 
-def fl_get_formbrowser_topform(pObject):
+def fl_get_formbrowser_topform(pFlObject):
     """
-        fl_get_formbrowser_topform(pObject) -> pForm
+        fl_get_formbrowser_topform(pFlObject) -> pFlForm
 
-        @param pObject: formbrowser object
-                        (<pointer to xfdata.FL_OBJECT>)
+        @param pFlObject: formbrowser object
+        @type pFlObject: pointer to xfdata.FL_OBJECT
 
         @status: Untested + NoDoc + NoDemo = NOT OK
     """
@@ -15505,20 +15839,20 @@ def fl_get_formbrowser_topform(pObject):
             """FL_FORM * fl_get_formbrowser_topform(FL_OBJECT * ob)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
-    keep_elem_refs(pObject)
-    retval = _fl_get_formbrowser_topform(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
+    keep_elem_refs(pFlObject)
+    retval = _fl_get_formbrowser_topform(pFlObject)
     return retval
 
 
-def fl_set_formbrowser_topform(pObject, pForm):
+def fl_set_formbrowser_topform(pFlObject, pFlForm):
     """
-        fl_set_formbrowser_topform(pObject, pForm) -> num.
+        fl_set_formbrowser_topform(pFlObject, pFlForm) -> num.
 
-        @param pObject: formbrowser object
-                        (<pointer to xfdata.FL_OBJECT>)
-        @param pForm: form
-                      (<pointer to xfdata.FL_FORM>)
+        @param pFlObject: formbrowser object
+        @type pFlObject: pointer to xfdata.FL_OBJECT
+        @param pFlForm: form
+                      @type pFlForm: pointer to xfdata.FL_FORM
 
         @status: Untested + NoDoc + NoDemo = NOT OK
     """
@@ -15529,19 +15863,19 @@ def fl_set_formbrowser_topform(pObject, pForm):
             """int fl_set_formbrowser_topform(FL_OBJECT * ob, FL_FORM * form)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
-    check_if_FL_FORM_ptr(pForm)
-    keep_elem_refs(pObject, pForm)
-    retval = _fl_set_formbrowser_topform(pObject, pForm)
+    check_if_FL_OBJECT_ptr(pFlObject)
+    check_if_FL_FORM_ptr(pFlForm)
+    keep_elem_refs(pFlObject, pFlForm)
+    retval = _fl_set_formbrowser_topform(pFlObject, pFlForm)
     return retval
 
 
-def fl_set_formbrowser_topform_bynumber(pObject, num):
+def fl_set_formbrowser_topform_bynumber(pFlObject, num):
     """
-        fl_set_formbrowser_topform_bynumber(pObject, num) -> pForm
+        fl_set_formbrowser_topform_bynumber(pFlObject, num) -> pFlForm
 
-        @param pObject: formbrowser object
-                        (<pointer to xfdata.FL_OBJECT>)
+        @param pFlObject: formbrowser object
+        @type pFlObject: pointer to xfdata.FL_OBJECT
         @param num: ?
 
         @status: Untested + NoDoc + NoDemo = NOT OK
@@ -15554,21 +15888,21 @@ def fl_set_formbrowser_topform_bynumber(pObject, num):
                FL_OBJECT * ob, int n)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
     inum = convert_to_int(num)
-    keep_elem_refs(pObject, num, inum)
-    retval = _fl_set_formbrowser_topform_bynumber(pObject, inum)
+    keep_elem_refs(pFlObject, num, inum)
+    retval = _fl_set_formbrowser_topform_bynumber(pFlObject, inum)
     return retval
 
 
-def fl_set_formbrowser_xoffset(pObject, offset):
+def fl_set_formbrowser_xoffset(pFlObject, offset):
     """
-        fl_set_formbrowser_xoffset(pObject, offset) -> num.
+        fl_set_formbrowser_xoffset(pFlObject, offset) -> num.
 
         Scrolls within a formbrowser in horizontal direction.
 
-        @param pObject: formbrowser object
-                        (<pointer to xfdata.FL_OBJECT>)
+        @param pFlObject: formbrowser object
+        @type pFlObject: pointer to xfdata.FL_OBJECT
         @param offset: positive number, measuring in pixels the offset
                        from the the natural position from the left (<int>)
 
@@ -15581,21 +15915,21 @@ def fl_set_formbrowser_xoffset(pObject, offset):
             """int fl_set_formbrowser_xoffset(FL_OBJECT * ob, int offset)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
     ioffset = convert_to_int(offset)
-    keep_elem_refs(pObject, offset, ioffset)
-    retval = _fl_set_formbrowser_xoffset(pObject, ioffset)
+    keep_elem_refs(pFlObject, offset, ioffset)
+    retval = _fl_set_formbrowser_xoffset(pFlObject, ioffset)
     return retval
 
 
-def fl_set_formbrowser_yoffset(pObject, offset):
+def fl_set_formbrowser_yoffset(pFlObject, offset):
     """
-        fl_set_formbrowser_yoffset(pObject, offset) -> num.
+        fl_set_formbrowser_yoffset(pFlObject, offset) -> num.
 
         Scrolls within a formbrowser in vertical direction.
 
-        @param pObject: formbrowser object
-                        (<pointer to xfdata.FL_OBJECT>)
+        @param pFlObject: formbrowser object
+        @type pFlObject: pointer to xfdata.FL_OBJECT
         @param offset: positive number, measuring in pixels the offset
                        from the the natural position from the top (<int>)
 
@@ -15608,22 +15942,22 @@ def fl_set_formbrowser_yoffset(pObject, offset):
             """int fl_set_formbrowser_yoffset(FL_OBJECT * ob, int offset)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
     ioffset = convert_to_int(offset)
-    keep_elem_refs(pObject, offset, ioffset)
-    retval = _fl_set_formbrowser_yoffset(pObject, ioffset)
+    keep_elem_refs(pFlObject, offset, ioffset)
+    retval = _fl_set_formbrowser_yoffset(pFlObject, ioffset)
     return retval
 
 
-def fl_get_formbrowser_xoffset(pObject):
+def fl_get_formbrowser_xoffset(pFlObject):
     """
-        fl_get_formbrowser_xoffset(pObject) -> num.
+        fl_get_formbrowser_xoffset(pFlObject) -> num.
 
         Returns the current horizontal offset from left in pixel of a
         formbrowser.
 
-        @param pObject: formbrowser object
-                        (<pointer to xfdata.FL_OBJECT>)
+        @param pFlObject: formbrowser object
+        @type pFlObject: pointer to xfdata.FL_OBJECT
 
         @status: Untested + NoDoc + NoDemo = NOT OK
     """
@@ -15634,21 +15968,21 @@ def fl_get_formbrowser_xoffset(pObject):
             """int fl_get_formbrowser_xoffset(FL_OBJECT * ob)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
-    keep_elem_refs(pObject)
-    retval = _fl_get_formbrowser_xoffset(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
+    keep_elem_refs(pFlObject)
+    retval = _fl_get_formbrowser_xoffset(pFlObject)
     return retval
 
 
-def fl_get_formbrowser_yoffset(pObject):
+def fl_get_formbrowser_yoffset(pFlObject):
     """
-        fl_get_formbrowser_yoffset(pObject) -> num.
+        fl_get_formbrowser_yoffset(pFlObject) -> num.
 
         Returns the current vertical offset from top in pixel of a
         formbrowser.
 
-        @param pObject: formbrowser object
-                        (<pointer to xfdata.FL_OBJECT>)
+        @param pFlObject: formbrowser object
+        @type pFlObject: pointer to xfdata.FL_OBJECT
 
         @status: Untested + NoDoc + NoDemo = NOT OK
     """
@@ -15659,19 +15993,19 @@ def fl_get_formbrowser_yoffset(pObject):
             """int fl_get_formbrowser_yoffset(FL_OBJECT * ob)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
-    keep_elem_refs(pObject)
-    retval = _fl_get_formbrowser_yoffset(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
+    keep_elem_refs(pFlObject)
+    retval = _fl_get_formbrowser_yoffset(pFlObject)
     return retval
 
 
-def fl_find_formbrowser_form_number(pObject, pForm):
+def fl_find_formbrowser_form_number(pFlObject, pFlForm):
     """
-        fl_find_formbrowser_form_number(pObject, pForm) -> num.
+        fl_find_formbrowser_form_number(pFlObject, pFlForm) -> num.
 
-        @param pObject: formbrowser object
-                        (<pointer to xfdata.FL_OBJECT>)
-        @param pForm: form candidate to be found
+        @param pFlObject: formbrowser object
+        @type pFlObject: pointer to xfdata.FL_OBJECT
+        @param pFlForm: form candidate to be found
 
         @status: Untested + NoDoc + NoDemo = NOT OK
     """
@@ -15683,16 +16017,16 @@ def fl_find_formbrowser_form_number(pObject, pForm):
                FL_FORM * candidate_form)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
-    check_if_FL_FORM_ptr(pForm)
-    keep_elem_refs(pObject, pForm)
-    retval = _fl_find_formbrowser_form_number(pObject, pForm)
+    check_if_FL_OBJECT_ptr(pFlObject)
+    check_if_FL_FORM_ptr(pFlForm)
+    keep_elem_refs(pFlObject, pFlForm)
+    retval = _fl_find_formbrowser_form_number(pFlObject, pFlForm)
     return retval
 
 
 def fl_add_formbrowser(frmbrwstype, x, y, w, h, label):
     """
-        fl_add_formbrowser(frmbrwstype, x, y, w, h, label) -> pObject
+        fl_add_formbrowser(frmbrwstype, x, y, w, h, label) -> pFlObject
 
         Adds a formbrowser object.
 
@@ -15731,12 +16065,12 @@ def fl_add_formbrowser(frmbrwstype, x, y, w, h, label):
 # fl_create_formbrowser function placeholder (internal)
 
 
-def fl_get_formbrowser_numforms(pObject):
+def fl_get_formbrowser_numforms(pFlObject):
     """
-        fl_get_formbrowser_numforms(pObject) -> forms num.
+        fl_get_formbrowser_numforms(pFlObject) -> forms num.
 
-        @param pObject: formbrowser object
-                        (<pointer to xfdata.FL_OBJECT>)
+        @param pFlObject: formbrowser object
+        @type pFlObject: pointer to xfdata.FL_OBJECT
 
         @status: Untested + NoDoc + NoDemo = NOT OK
     """
@@ -15747,18 +16081,18 @@ def fl_get_formbrowser_numforms(pObject):
             """int fl_get_formbrowser_numforms(FL_OBJECT * ob)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
-    keep_elem_refs(pObject)
-    retval = _fl_get_formbrowser_numforms(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
+    keep_elem_refs(pFlObject)
+    retval = _fl_get_formbrowser_numforms(pFlObject)
     return retval
 
 
-def fl_get_formbrowser_form(pObject, num):
+def fl_get_formbrowser_form(pFlObject, num):
     """
-        fl_get_formbrowser_form(pObject, num) -> pForm
+        fl_get_formbrowser_form(pFlObject, num) -> pFlForm
 
-        @param pObject: formbrowser object
-                        (<pointer to xfdata.FL_OBJECT>)
+        @param pFlObject: formbrowser object
+        @type pFlObject: pointer to xfdata.FL_OBJECT
 
         @status: Untested + NoDoc + NoDemo = NOT OK
     """
@@ -15769,10 +16103,10 @@ def fl_get_formbrowser_form(pObject, num):
             """FL_FORM * fl_get_formbrowser_form(FL_OBJECT * ob, int n)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
     inum = convert_to_int(num)
-    keep_elem_refs(pObject, num, inum)
-    retval = _fl_get_formbrowser_form(pObject, inum)
+    keep_elem_refs(pFlObject, num, inum)
+    retval = _fl_get_formbrowser_form(pFlObject, inum)
     return retval
 
 
@@ -15786,7 +16120,7 @@ def fl_get_formbrowser_form(pObject, num):
 
 def fl_add_frame(frametype, x, y, w, h, label):
     """
-        fl_add_frame(frametype, x, y, w, h, label) -> pObject
+        fl_add_frame(frametype, x, y, w, h, label) -> pFlObject
 
         Adds a frame object.
 
@@ -15832,7 +16166,7 @@ def fl_add_frame(frametype, x, y, w, h, label):
 
 def fl_add_labelframe(frametype, x, y, w, h, label):
     """
-        fl_add_labelframe(frametype, x, y, w, h, label) -> pObject
+        fl_add_labelframe(frametype, x, y, w, h, label) -> pFlObject
 
         Adds a labelframe object.
 
@@ -15882,7 +16216,7 @@ def fl_add_labelframe(frametype, x, y, w, h, label):
 
 def fl_add_free(freetype, x, y, w, h, label, py_HandlePtr):
     """
-        fl_add_free(freetype, x, y, w, h, label, py_HandlePtr) -> pObject
+        fl_add_free(freetype, x, y, w, h, label, py_HandlePtr) -> pFlObject
 
         Adds a free object.
 
@@ -17246,7 +17580,7 @@ def fl_invalidate_fselector_cache():
 
 def fl_get_fselector_form():
     """
-        fl_get_fselector_form() -> pForm
+        fl_get_fselector_form() -> pFlForm
 
         @status: Untested + NoDoc + NoDemo = NOT OK
     """
@@ -17329,13 +17663,16 @@ def fl_set_fselector_title(title):
     fl_set_form_title(fl_get_fselector_form(), title)
 
 
-def fl_goodies_atclose(pForm, vdata):
-    """ fl_goodies_atclose(pForm, vdata) -> num.
+def fl_goodies_atclose(pFlForm, vdata):
+    """
+    fl_goodies_atclose(pFlForm, vdata) -> int
 
-        @param pForm: form
-                      (<pointer to xfdata.FL_FORM>)
+    @param pFlForm: form
+    @type pFlForm: pointer to xfdata.FL_FORM
 
-        @status: Untested + NoDoc + NoDemo = NOT OK
+    @returns: num.
+
+    @status: Untested + NoDoc + NoDemo = NOT OK
     """
 
     _fl_goodies_atclose = cfuncproto(
@@ -17345,8 +17682,8 @@ def fl_goodies_atclose(pForm, vdata):
             """)
     check_if_initialized()
     pvdata = cty.cast(vdata, cty.c_void_p)
-    keep_elem_refs(pForm, vdata, pvdata)
-    retval = _fl_goodies_atclose(pForm, pvdata)
+    keep_elem_refs(pFlForm, vdata, pvdata)
+    retval = _fl_goodies_atclose(pFlForm, pvdata)
     return retval
 
 
@@ -17362,7 +17699,7 @@ def fl_goodies_atclose(pForm, vdata):
 
 def fl_add_input(inputtype, x, y, w, h, label):
     """
-        fl_add_input(inputtype, x, y, w, h, label) -> pObject
+        fl_add_input(inputtype, x, y, w, h, label) -> pFlObject
 
         Adds an input object.
 
@@ -17376,7 +17713,7 @@ def fl_add_input(inputtype, x, y, w, h, label):
         @param h: height in coord units (<int>)
         @param label: text label of input (<string>)
 
-        @returns: object created (<pointer to xfdata.FL_OBJECT>)
+        @returns: object created @type pFlObject: pointer to xfdata.FL_OBJECT
 
         @status: Tested + Doc + Demo = OK
     """
@@ -17402,15 +17739,15 @@ def fl_add_input(inputtype, x, y, w, h, label):
     return retval
 
 
-def fl_set_input(pObject, text):
+def fl_set_input(pFlObject, text):
     """
-        fl_set_input(pObject, text)
+        fl_set_input(pFlObject, text)
 
         Sets the particular input string, with no checks for validity.
         An empty string can be used to clear an input field. 
 
-        @param pObject: input object
-                        (<pointer to xfdata.FL_OBJECT>)
+        @param pFlObject: input object
+        @type pFlObject: pointer to xfdata.FL_OBJECT
         @param text: input text (<string>)
 
         @status: Tested + Doc + Demo = OK
@@ -17422,21 +17759,21 @@ def fl_set_input(pObject, text):
             """void fl_set_input(FL_OBJECT * ob, const char * str)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
     stext = convert_to_string(text)
-    keep_elem_refs(pObject, text, stext)
-    _fl_set_input(pObject, stext)
+    keep_elem_refs(pFlObject, text, stext)
+    _fl_set_input(pFlObject, stext)
 
 
 # fl_set_input_return function placeholder (internal)
 
 
-def fl_set_input_color(pObject, txtcolr, curscolr):
+def fl_set_input_color(pFlObject, txtcolr, curscolr):
     """
-        fl_set_input_color(pObject, txtcolr, curscolr)
+        fl_set_input_color(pFlObject, txtcolr, curscolr)
 
-        @param pObject: input object
-                        (<pointer to xfdata.FL_OBJECT>)
+        @param pFlObject: input object
+        @type pFlObject: pointer to xfdata.FL_OBJECT
         @param txtcolr: color value for text <long(pos)>
         @param curscolr: color value for cursor <long(pos)>
 
@@ -17450,27 +17787,27 @@ def fl_set_input_color(pObject, txtcolr, curscolr):
                FL_COLOR curscol)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
     check_admitted_listvalues(txtcolr, xfc.COLOR_list)
     check_admitted_listvalues(curscolr, xfc.COLOR_list)
     ultxtcolr = convert_to_FL_COLOR(txtcolr)
     ulcurscolr = convert_to_FL_COLOR(curscolr)
-    keep_elem_refs(pObject, txtcolr, curscolr, ultxtcolr, ulcurscolr)
-    _fl_set_input_color(pObject, ultxtcolr, ulcurscolr)
+    keep_elem_refs(pFlObject, txtcolr, curscolr, ultxtcolr, ulcurscolr)
+    _fl_set_input_color(pFlObject, ultxtcolr, ulcurscolr)
 
 
-def fl_get_input_color(pObject):
+def fl_get_input_color(pFlObject):
     """
-        fl_get_input_color(pObject) -> txtcolr, curscolr
+        fl_get_input_color(pFlObject) -> txtcolr, curscolr
 
-        @param pObject: input object
-                        (<pointer to xfdata.FL_OBJECT>)
+        @param pFlObject: input object
+        @type pFlObject: pointer to xfdata.FL_OBJECT
 
         @returns: color value for text, color value for cursor
                   <long(pos), long(pos)>
 
         @attention: API change from XForms - upstream was
-                    fl_get_input_color(pObject, textcolr, curscolr)
+                    fl_get_input_color(pFlObject, textcolr, curscolr)
 
         @status: Untested + NoDoc + NoDemo = NOT OK
     """
@@ -17483,20 +17820,20 @@ def fl_get_input_color(pObject):
                FL_COLOR * curscol)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
     txtcolr, ptxtcolr = make_FL_COLOR_and_pointer()
     curscolr, pcurscolr = make_FL_COLOR_and_pointer()
-    keep_elem_refs(pObject, txtcolr, curscolr)
-    _fl_get_input_color(pObject, ptxtcolr, pcurscolr)
+    keep_elem_refs(pFlObject, txtcolr, curscolr)
+    _fl_get_input_color(pFlObject, ptxtcolr, pcurscolr)
     return txtcolr.value, curscolr.value
 
 
-def fl_set_input_scroll(pObject, yes):
+def fl_set_input_scroll(pFlObject, yes):
     """
-        fl_set_input_scroll(pObject, yes)
+        fl_set_input_scroll(pFlObject, yes)
 
-        @param pObject: input object
-                        (<pointer to xfdata.FL_OBJECT>)
+        @param pFlObject: input object
+        @type pFlObject: pointer to xfdata.FL_OBJECT
         @param yes: (<int>)
 
         @status: Untested + NoDoc + NoDemo = NOT OK
@@ -17508,20 +17845,20 @@ def fl_set_input_scroll(pObject, yes):
             """void fl_set_input_scroll(FL_OBJECT * ob, int yes)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
     iyes = convert_to_int(yes)
-    keep_elem_refs(pObject, yes, iyes)
-    _fl_set_input_scroll(pObject, iyes)
+    keep_elem_refs(pFlObject, yes, iyes)
+    _fl_set_input_scroll(pFlObject, iyes)
 
 
-def fl_set_input_cursorpos(pObject, xpos, ypos):
+def fl_set_input_cursorpos(pFlObject, xpos, ypos):
     """
-        fl_set_input_cursorpos(pObject, xpos, ypos)
+        fl_set_input_cursorpos(pFlObject, xpos, ypos)
 
         Moves the cursor within the input field.
 
-        @param pObject: input object
-                        (<pointer to xfdata.FL_OBJECT>)
+        @param pFlObject: input object
+        @type pFlObject: pointer to xfdata.FL_OBJECT
         @param xpos: horizontal cursor position in characters (<int>)
         @param ypos: vertical cursor position in lines (<int>)
 
@@ -17534,22 +17871,22 @@ def fl_set_input_cursorpos(pObject, xpos, ypos):
             """void fl_set_input_cursorpos(FL_OBJECT * ob, int xpos, int ypos)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
     ixpos = convert_to_int(xpos)
     iypos = convert_to_int(ypos)
-    keep_elem_refs(pObject, xpos, ypos, ixpos, iypos)
-    _fl_set_input_cursorpos(pObject, ixpos, iypos)
+    keep_elem_refs(pFlObject, xpos, ypos, ixpos, iypos)
+    _fl_set_input_cursorpos(pFlObject, ixpos, iypos)
 
 
-def fl_set_input_selected(pObject, flag):
+def fl_set_input_selected(pFlObject, flag):
     """
-        fl_set_input_selected(pObject, flag)
+        fl_set_input_selected(pFlObject, flag)
 
         Selects or deselects the current input. It places the cursor at
         the end of the string when selected 
 
-        @param pObject: input object
-                        (<pointer to xfdata.FL_OBJECT>)
+        @param pFlObject: input object
+        @type pFlObject: pointer to xfdata.FL_OBJECT
         @param flag: flag to deselect/select (<int>)
         @type flag: 0 or 1
 
@@ -17562,22 +17899,22 @@ def fl_set_input_selected(pObject, flag):
             """void fl_set_input_selected(FL_OBJECT * ob, int yes)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
     iflag = convert_to_int(flag)
-    keep_elem_refs(pObject, flag, iflag)
-    _fl_set_input_selected(pObject, iflag)
+    keep_elem_refs(pFlObject, flag, iflag)
+    _fl_set_input_selected(pFlObject, iflag)
 
 
-def fl_set_input_selected_range(pObject, begin, end):
+def fl_set_input_selected_range(pFlObject, begin, end):
     """
-        fl_set_input_selected_range(pObject, begin, end)
+        fl_set_input_selected_range(pFlObject, begin, end)
 
         Selects or deselects the current input of part of it. When begin is
         0 and end is the last character number, all input is selected. It
         places the cursor at the beginning of selected string.
 
-        @param pObject: input object
-                        (<pointer to xfdata.FL_OBJECT>)
+        @param pFlObject: input object
+        @type pFlObject: pointer to xfdata.FL_OBJECT
         @param begin: starting value in characters (<int>)
         @param end: ending value in characters (<int>)
 
@@ -17591,28 +17928,28 @@ def fl_set_input_selected_range(pObject, begin, end):
                int begin, int end)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
     ibegin = convert_to_int(begin)
     iend = convert_to_int(end)
-    keep_elem_refs(pObject, begin, end, ibegin, iend)
-    _fl_set_input_selected_range(pObject, ibegin, iend)
+    keep_elem_refs(pFlObject, begin, end, ibegin, iend)
+    _fl_set_input_selected_range(pFlObject, ibegin, iend)
 
 
-def fl_get_input_selected_range(pObject):
+def fl_get_input_selected_range(pFlObject):
     """
-        fl_get_input_selected_range(pObject) -> string, begin, end
+        fl_get_input_selected_range(pFlObject) -> string, begin, end
 
         Obtains the currently selected range, either selected by the
         application or by the user.
 
-        @param pObject: input object
-                        (<pointer to xfdata.FL_OBJECT>)
+        @param pFlObject: input object
+        @type pFlObject: pointer to xfdata.FL_OBJECT
 
         @returns: selected string, starting and ending values of selection
                   in characters [string, int_num, int_num]
 
         @attention: API change from XForms - upstream was
-                    fl_get_input_selected_range(pObject, begin, end)
+                    fl_get_input_selected_range(pFlObject, begin, end)
 
         @status: Untested + Doc + NoDemo = NOT OK
     """
@@ -17625,17 +17962,17 @@ def fl_get_input_selected_range(pObject):
                int * begin, int * end)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
     begin, pbegin = make_int_and_pointer()
     end, pend = make_int_and_pointer()
-    keep_elem_refs(pObject, begin, end, pbegin, pend)
-    retval = _fl_get_input_selected_range(pObject, pbegin, pend)
+    keep_elem_refs(pFlObject, begin, end, pbegin, pend)
+    retval = _fl_get_input_selected_range(pFlObject, pbegin, pend)
     return retval, begin.value, end.value
 
 
-def fl_set_input_maxchars(pObject, maxchars):
+def fl_set_input_maxchars(pFlObject, maxchars):
     """
-        fl_set_input_maxchars(pObject, maxchars)
+        fl_set_input_maxchars(pFlObject, maxchars)
 
         Limits the number of characters per line for input fields of type
         xfdata.FL_NORMAL_INPUT. To reset the limit to infinite, set maxchars
@@ -17643,8 +17980,8 @@ def fl_set_input_maxchars(pObject, maxchars):
         limited to 10 characters per default and those of type
         xfdata.FL_SECRET_INPUT to 16.
  
-        @param pObject: input object
-                        (<pointer to xfdata.FL_OBJECT>)
+        @param pFlObject: input object
+        @type pFlObject: pointer to xfdata.FL_OBJECT
         @param maxchars: maximum characters to be set (<int>)
 
         @status: Untested + Doc + NoDemo = NOT OK
@@ -17656,15 +17993,15 @@ def fl_set_input_maxchars(pObject, maxchars):
             """void fl_set_input_maxchars(FL_OBJECT * ob, int maxchars)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
     imaxchars = convert_to_int(maxchars)
-    keep_elem_refs(pObject, maxchars, imaxchars)
-    _fl_set_input_maxchars(pObject, imaxchars)
+    keep_elem_refs(pFlObject, maxchars, imaxchars)
+    _fl_set_input_maxchars(pFlObject, imaxchars)
 
 
-def fl_set_input_format(pObject, fmt, sep):
+def fl_set_input_format(pFlObject, fmt, sep):
     """
-        fl_set_input_format(pObject, fmt, sep)
+        fl_set_input_format(pFlObject, fmt, sep)
 
         Sets the format used for an input object. Currently used only for
         xfdata.FL_DATE_INPUT objects.
@@ -17683,7 +18020,7 @@ def fl_set_input_format(pObject, fmt, sep):
             """void fl_set_input_format(FL_OBJECT * ob, int fmt, int sep)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
     check_admitted_listvalues(fmt, xfc.DATEFMT_list)
     if isinstance(sep, str):
         ordsep = ord(sep)        # workaround to let a character as int argument
@@ -17691,16 +18028,16 @@ def fl_set_input_format(pObject, fmt, sep):
         ordsep = sep
     ifmt = convert_to_int(fmt)
     isep = convert_to_int(ordsep)
-    keep_elem_refs(pObject, fmt, sep, ordsep, ifmt, isep)
-    _fl_set_input_format(pObject, ifmt, isep)
+    keep_elem_refs(pFlObject, fmt, sep, ordsep, ifmt, isep)
+    _fl_set_input_format(pFlObject, ifmt, isep)
 
 
-def fl_set_input_hscrollbar(pObject, pref):
+def fl_set_input_hscrollbar(pFlObject, pref):
     """
-        fl_set_input_hscrollbar(pObject, pref)
+        fl_set_input_hscrollbar(pFlObject, pref)
 
-        @param pObject: input object
-                        (<pointer to xfdata.FL_OBJECT>)
+        @param pFlObject: input object
+        @type pFlObject: pointer to xfdata.FL_OBJECT
         @param pref: horizontal scrollbar flag (<int>)
         @type pref: (from xfdata module) FL_AUTO, FL_ON, FL_OFF
 
@@ -17713,19 +18050,19 @@ def fl_set_input_hscrollbar(pObject, pref):
             """void fl_set_input_hscrollbar(FL_OBJECT * ob, int pref)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
     check_admitted_listvalues(pref, xfc.SCROLLBARVAL_list)
     ipref = convert_to_int(pref)
-    keep_elem_refs(pObject, pref, ipref)
-    _fl_set_input_hscrollbar(pObject, ipref)
+    keep_elem_refs(pFlObject, pref, ipref)
+    _fl_set_input_hscrollbar(pFlObject, ipref)
 
 
-def fl_set_input_vscrollbar(pObject, pref):
+def fl_set_input_vscrollbar(pFlObject, pref):
     """
-        fl_set_input_vscrollbar(pObject, pref)
+        fl_set_input_vscrollbar(pFlObject, pref)
 
-        @param pObject: input object
-                        (<pointer to xfdata.FL_OBJECT>)
+        @param pFlObject: input object
+        @type pFlObject: pointer to xfdata.FL_OBJECT
         @param pref: vertical scrollbar flag (<int>)
         @type pref: (from xfdata module) FL_AUTO, FL_ON, FL_OFF
 
@@ -17738,19 +18075,19 @@ def fl_set_input_vscrollbar(pObject, pref):
             """void fl_set_input_vscrollbar(FL_OBJECT * ob, int pref)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
     check_admitted_listvalues(pref, xfc.SCROLLBARVAL_list)
     ipref = convert_to_int(pref)
-    keep_elem_refs(pObject, pref, ipref)
-    _fl_set_input_vscrollbar(pObject, ipref)
+    keep_elem_refs(pFlObject, pref, ipref)
+    _fl_set_input_vscrollbar(pFlObject, ipref)
 
 
-def fl_set_input_topline(pObject, top):
+def fl_set_input_topline(pFlObject, top):
     """
-        fl_set_input_topline(pObject, top)
+        fl_set_input_topline(pFlObject, top)
 
-        @param pObject: input object
-                        (<pointer to xfdata.FL_OBJECT>)
+        @param pFlObject: input object
+        @type pFlObject: pointer to xfdata.FL_OBJECT
         @param top: ? (<int>)
 
         @status: Untested + NoDoc + NoDemo = NOT OK
@@ -17762,18 +18099,18 @@ def fl_set_input_topline(pObject, top):
             """void fl_set_input_topline(FL_OBJECT * ob, int top)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
     itop = convert_to_int(top)
-    keep_elem_refs(pObject, top, itop)
-    _fl_set_input_topline(pObject, itop)
+    keep_elem_refs(pFlObject, top, itop)
+    _fl_set_input_topline(pFlObject, itop)
 
 
-def fl_set_input_scrollbarsize(pObject, hh, vw):
+def fl_set_input_scrollbarsize(pFlObject, hh, vw):
     """
-        fl_set_input_scrollbarsize(pObject, hh, vw)
+        fl_set_input_scrollbarsize(pFlObject, hh, vw)
 
-        @param pObject: input object
-                        (<pointer to xfdata.FL_OBJECT>)
+        @param pFlObject: input object
+        @type pFlObject: pointer to xfdata.FL_OBJECT
 
         @status: Untested + NoDoc + NoDemo = NOT OK
     """
@@ -17784,20 +18121,20 @@ def fl_set_input_scrollbarsize(pObject, hh, vw):
             """void fl_set_input_scrollbarsize(FL_OBJECT * ob, int hh, int vw)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
     ihh = convert_to_int(hh)
     ivw = convert_to_int(vw)
-    keep_elem_refs(pObject, hh, vw, ihh, ivw)
-    _fl_set_input_scrollbarsize(pObject, ihh, ivw)
+    keep_elem_refs(pFlObject, hh, vw, ihh, ivw)
+    _fl_set_input_scrollbarsize(pFlObject, ihh, ivw)
 
 
-def fl_get_input_scrollbarsize(pObject):
+def fl_get_input_scrollbarsize(pFlObject):
     """
-        fl_get_input_scrollbarsize(pObject) -> hh, vw
+        fl_get_input_scrollbarsize(pFlObject) -> hh, vw
 
 
         @attention: API change from XForms - upstream was
-                    fl_get_input_scrollbarsize(pObject, hh, vw)
+                    fl_get_input_scrollbarsize(pFlObject, hh, vw)
 
         @status: Untested + NoDoc + NoDemo = NOT OK
     """
@@ -17810,20 +18147,20 @@ def fl_get_input_scrollbarsize(pObject):
                int * hh, int * vw)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
     hh, phh = make_int_and_pointer()
     vw, pvw = make_int_and_pointer()
-    keep_elem_refs(pObject, hh, vw)
-    _fl_get_input_scrollbarsize(pObject, phh, pvw)
+    keep_elem_refs(pFlObject, hh, vw)
+    _fl_get_input_scrollbarsize(pFlObject, phh, pvw)
     return hh.value, vw.value
 
 
-def fl_set_input_xoffset(pObject, xoff):
+def fl_set_input_xoffset(pFlObject, xoff):
     """
-        fl_set_input_xoffset(pObject, xoff)
+        fl_set_input_xoffset(pFlObject, xoff)
 
-        @param pObject: input object
-                        (<pointer to xfdata.FL_OBJECT>)
+        @param pFlObject: input object
+        @type pFlObject: pointer to xfdata.FL_OBJECT
 
         @status: Untested + NoDoc + NoDemo = NOT OK
     """
@@ -17834,18 +18171,18 @@ def fl_set_input_xoffset(pObject, xoff):
             """void fl_set_input_xoffset(FL_OBJECT * ob, int xoff)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
     ixoff = convert_to_int(xoff)
-    keep_elem_refs(pObject, xoff, ixoff)
-    _fl_set_input_xoffset(pObject, ixoff)
+    keep_elem_refs(pFlObject, xoff, ixoff)
+    _fl_set_input_xoffset(pFlObject, ixoff)
 
 
-def fl_get_input_xoffset(pObject):
+def fl_get_input_xoffset(pFlObject):
     """
-        fl_get_input_xoffset(pObject) -> num.
+        fl_get_input_xoffset(pFlObject) -> num.
 
-        @param pObject: input object
-                        (<pointer to xfdata.FL_OBJECT>)
+        @param pFlObject: input object
+        @type pFlObject: pointer to xfdata.FL_OBJECT
 
         @status: Untested + NoDoc + NoDemo = NOT OK
     """
@@ -17856,18 +18193,18 @@ def fl_get_input_xoffset(pObject):
             """int fl_get_input_xoffset(FL_OBJECT * ob)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
-    keep_elem_refs(pObject)
-    retval = _fl_get_input_xoffset(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
+    keep_elem_refs(pFlObject)
+    retval = _fl_get_input_xoffset(pFlObject)
     return retval
 
 
-def fl_set_input_fieldchar(pObject, fldchar):
+def fl_set_input_fieldchar(pFlObject, fldchar):
     """
-        fl_set_input_fieldchar(pObject, fldchar) -> num.
+        fl_set_input_fieldchar(pFlObject, fldchar) -> num.
 
-        @param pObject: input object
-                        (<pointer to xfdata.FL_OBJECT>)
+        @param pFlObject: input object
+        @type pFlObject: pointer to xfdata.FL_OBJECT
 
         @status: Untested + NoDoc + NoDemo = NOT OK
     """
@@ -17878,19 +18215,19 @@ def fl_set_input_fieldchar(pObject, fldchar):
             """int fl_set_input_fieldchar(FL_OBJECT * ob, int fchar)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
     ifldchar = convert_to_int(fldchar)
-    keep_elem_refs(pObject, fldchar, ifldchar)
-    retval = _fl_set_input_fieldchar(pObject, ifldchar)
+    keep_elem_refs(pFlObject, fldchar, ifldchar)
+    retval = _fl_set_input_fieldchar(pFlObject, ifldchar)
     return retval
 
 
-def fl_get_input_topline(pObject):
+def fl_get_input_topline(pFlObject):
     """
-        fl_get_input_topline(pObject) -> num.
+        fl_get_input_topline(pFlObject) -> num.
 
-        @param pObject: input object
-                        (<pointer to xfdata.FL_OBJECT>)
+        @param pFlObject: input object
+        @type pFlObject: pointer to xfdata.FL_OBJECT
 
         @status: Untested + NoDoc + NoDemo = NOT OK
     """
@@ -17901,18 +18238,18 @@ def fl_get_input_topline(pObject):
             """int fl_get_input_topline(FL_OBJECT * ob)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
-    keep_elem_refs(pObject)
-    retval = _fl_get_input_topline(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
+    keep_elem_refs(pFlObject)
+    retval = _fl_get_input_topline(pFlObject)
     return retval
 
 
-def fl_get_input_screenlines(pObject):
+def fl_get_input_screenlines(pFlObject):
     """
-        fl_get_input_screenlines(pObject) -> num.
+        fl_get_input_screenlines(pFlObject) -> num.
 
-        @param pObject: input object
-                        (<pointer to xfdata.FL_OBJECT>)
+        @param pFlObject: input object
+        @type pFlObject: pointer to xfdata.FL_OBJECT
 
         @status: Untested + NoDoc + NoDemo = NOT OK
     """
@@ -17923,21 +18260,21 @@ def fl_get_input_screenlines(pObject):
             """int fl_get_input_screenlines(FL_OBJECT * ob)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
-    keep_elem_refs(pObject)
-    retval = _fl_get_input_screenlines(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
+    keep_elem_refs(pFlObject)
+    retval = _fl_get_input_screenlines(pFlObject)
     return retval
 
 
-def fl_get_input_cursorpos(pObject):
+def fl_get_input_cursorpos(pFlObject):
     """
-        fl_get_input_cursorpos(pObject) -> num., x, y
+        fl_get_input_cursorpos(pFlObject) -> num., x, y
 
-        @param pObject: input object
-                        (<pointer to xfdata.FL_OBJECT>)
+        @param pFlObject: input object
+        @type pFlObject: pointer to xfdata.FL_OBJECT
 
         @attention: API change from XForms - upstream was
-                    fl_get_input_cursorpos(pObject, x, y)
+                    fl_get_input_cursorpos(pFlObject, x, y)
 
         @status: Tested + NoDoc + Demo = OK
     """
@@ -17949,20 +18286,20 @@ def fl_get_input_cursorpos(pObject):
             """int fl_get_input_cursorpos(FL_OBJECT * ob, int * x, int * y)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
     x, px = make_int_and_pointer()
     y, py = make_int_and_pointer()
-    keep_elem_refs(pObject, x, y)
-    retval = _fl_get_input_cursorpos(pObject, px, py)
+    keep_elem_refs(pFlObject, x, y)
+    retval = _fl_get_input_cursorpos(pFlObject, px, py)
     return retval, x.value, y.value
 
 
-def fl_set_input_cursor_visible(pObject, visible):
+def fl_set_input_cursor_visible(pFlObject, visible):
     """
-        fl_set_input_cursor_visible(pObject, visible)
+        fl_set_input_cursor_visible(pFlObject, visible)
 
-        @param pObject: input object
-                        (<pointer to xfdata.FL_OBJECT>)
+        @param pFlObject: input object
+        @type pFlObject: pointer to xfdata.FL_OBJECT
 
         @status: Untested + NoDoc + NoDemo = NOT OK
     """
@@ -17973,18 +18310,18 @@ def fl_set_input_cursor_visible(pObject, visible):
             """void fl_set_input_cursor_visible(FL_OBJECT * ob, int visible)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
     ivisible = convert_to_int(visible)
-    keep_elem_refs(pObject, visible, ivisible)
-    _fl_set_input_cursor_visible(pObject, ivisible)
+    keep_elem_refs(pFlObject, visible, ivisible)
+    _fl_set_input_cursor_visible(pFlObject, ivisible)
 
 
-def fl_get_input_numberoflines(pObject):
+def fl_get_input_numberoflines(pFlObject):
     """
-        fl_get_input_numberoflines(pObject) -> lines num.
+        fl_get_input_numberoflines(pFlObject) -> lines num.
 
-        @param pObject: input object
-                        (<pointer to xfdata.FL_OBJECT>)
+        @param pFlObject: input object
+        @type pFlObject: pointer to xfdata.FL_OBJECT
 
         @status: Untested + NoDoc + NoDemo = NOT OK
     """
@@ -17995,21 +18332,21 @@ def fl_get_input_numberoflines(pObject):
             """int fl_get_input_numberoflines(FL_OBJECT * ob)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
-    keep_elem_refs(pObject)
-    retval = _fl_get_input_numberoflines(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
+    keep_elem_refs(pFlObject)
+    retval = _fl_get_input_numberoflines(pFlObject)
     return retval
 
 
-def fl_get_input_format(pObject):
+def fl_get_input_format(pFlObject):
     """
-        fl_get_input_format(pObject) -> fmt, sep
+        fl_get_input_format(pFlObject) -> fmt, sep
 
-        @param pObject: input object
-                        (<pointer to xfdata.FL_OBJECT>)
+        @param pFlObject: input object
+        @type pFlObject: pointer to xfdata.FL_OBJECT
 
         @attention: API change from XForms - upstream was
-                    fl_get_input_format(pObject, fmt, sep)
+                    fl_get_input_format(pFlObject, fmt, sep)
 
         @status: Untested + NoDoc + NoDemo = NOT OK
     """
@@ -18021,20 +18358,20 @@ def fl_get_input_format(pObject):
             """void fl_get_input_format(FL_OBJECT * ob, int * fmt, int * sep)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
     fmt, pfmt = make_int_and_pointer()
     sep, psep = make_int_and_pointer()
-    keep_elem_refs(pObject, fmt, sep, pfmt, psep)
-    _fl_get_input_format(pObject, pfmt, psep)
+    keep_elem_refs(pFlObject, fmt, sep, pfmt, psep)
+    _fl_get_input_format(pFlObject, pfmt, psep)
     return fmt.value, sep.value
 
 
-def fl_get_input(pObject):
+def fl_get_input(pFlObject):
     """
-        fl_get_input(pObject) -> input string
+        fl_get_input(pFlObject) -> input string
 
-        @param pObject: input object
-                        (<pointer to xfdata.FL_OBJECT>)
+        @param pFlObject: input object
+        @type pFlObject: pointer to xfdata.FL_OBJECT
 
         @status: Tested + NoDoc + Demo = OK
     """
@@ -18045,21 +18382,21 @@ def fl_get_input(pObject):
             """const char * fl_get_input(FL_OBJECT * ob)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
-    keep_elem_refs(pObject)
-    retval = _fl_get_input(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
+    keep_elem_refs(pFlObject)
+    retval = _fl_get_input(pFlObject)
     return retval
 
 
 FL_INPUTVALIDATOR = cty.CFUNCTYPE(cty.c_int, cty.POINTER(xfc.FL_OBJECT),
                                   xfc.STRING, xfc.STRING, cty.c_int)
 
-def fl_set_input_filter(pObject, py_InputValidator):
+def fl_set_input_filter(pFlObject, py_InputValidator):
     """
-        fl_set_input_filter(pObject, py_InputValidator) -> input_filter func.
+        fl_set_input_filter(pFlObject, py_InputValidator) -> input_filter func.
 
-        @param pObject: input object
-                        (<pointer to xfdata.FL_OBJECT>)
+        @param pFlObject: input object
+        @type pFlObject: pointer to xfdata.FL_OBJECT
 
         @status: Untested + NoDoc + NoDemo = NOT OK
     """
@@ -18071,24 +18408,24 @@ def fl_set_input_filter(pObject, py_InputValidator):
                FL_INPUTVALIDATOR validate)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
     c_InputValidator = FL_INPUTVALIDATOR(py_InputValidator)
     keep_cfunc_refs(c_InputValidator, py_InputValidator)
-    keep_elem_refs(pObject)
-    retval = _fl_set_input_filter(pObject, c_InputValidator)
+    keep_elem_refs(pFlObject)
+    retval = _fl_set_input_filter(pFlObject, c_InputValidator)
     return retval
 
 
-def fl_validate_input(pObject):
+def fl_validate_input(pFlObject):
     """
-        fl_validate_input(pObject) -> num.
+        fl_validate_input(pFlObject) -> num.
 
         Tests if the value in an input field is valid. It returns
         xfdata.FL_VALID if the value is valid or if there is no validator
         function set for the input, otherwise xfdata.FL_INVALID. 
 
-        @param pObject: input object
-                        (<pointer to xfdata.FL_OBJECT>)
+        @param pFlObject: input object
+        @type pFlObject: pointer to xfdata.FL_OBJECT
 
         @returns: (from xfdata module) FL_VALID or FL_INVALID (<int>)
 
@@ -18101,9 +18438,9 @@ def fl_validate_input(pObject):
             """int fl_validate_input(FL_OBJECT * obj)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
-    keep_elem_refs(pObject)
-    retval = _fl_validate_input(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
+    keep_elem_refs(pFlObject)
+    retval = _fl_validate_input(pFlObject)
     return retval
 
 
@@ -18174,7 +18511,7 @@ def fl_set_input_editkeymap(pEditKeymap):
 
 def fl_add_nmenu(nmenutype, x, y, w, h, label):
     """
-        fl_add_nmenu(nmenutype, x, y, w, h, label) -> pObject
+        fl_add_nmenu(nmenutype, x, y, w, h, label) -> pFlObject
 
         Adds a nmenu object.
 
@@ -18209,9 +18546,9 @@ def fl_add_nmenu(nmenutype, x, y, w, h, label):
     return retval
 
 
-def fl_clear_nmenu(pObject):
+def fl_clear_nmenu(pFlObject):
     """
-        fl_clear_nmenu(pObject) -> num.
+        fl_clear_nmenu(pFlObject) -> num.
 
 
         @status: Untested + NoDoc + NoDemo = NOT OK
@@ -18223,18 +18560,18 @@ def fl_clear_nmenu(pObject):
             """int fl_clear_nmenu(FL_OBJECT * p1)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
-    keep_elem_refs(pObject)
-    retval = _fl_clear_nmenu(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
+    keep_elem_refs(pFlObject)
+    retval = _fl_clear_nmenu(pFlObject)
     return retval
 
 
-def fl_add_nmenu_items(pObject, itemstr):
+def fl_add_nmenu_items(pFlObject, itemstr):
     """
-        fl_add_nmenu_items(pObject, itemstr) -> pPopupEntry
+        fl_add_nmenu_items(pFlObject, itemstr) -> pPopupEntry
 
-        @param pObject: nmenu object
-                        (<pointer to xfdata.FL_OBJECT>)
+        @param pFlObject: nmenu object
+        @type pFlObject: pointer to xfdata.FL_OBJECT
 
         @status: HalfTested + NoDoc + Demo = NOT OK (sequence param.)
     """
@@ -18247,19 +18584,19 @@ def fl_add_nmenu_items(pObject, itemstr):
                const char * p2)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
     sitemstr = convert_to_string(itemstr)
-    keep_elem_refs(pObject, itemstr, sitemstr)
-    retval = _fl_add_nmenu_items(pObject, sitemstr)
+    keep_elem_refs(pFlObject, itemstr, sitemstr)
+    retval = _fl_add_nmenu_items(pFlObject, sitemstr)
     return retval
 
 
-def fl_insert_nmenu_items(pObject, pPopupEntry, itemstr):
+def fl_insert_nmenu_items(pFlObject, pPopupEntry, itemstr):
     """
-        fl_insert_nmenu_items(pObject, pPopupEntry, itemstr) -> pPopupEntry
+        fl_insert_nmenu_items(pFlObject, pPopupEntry, itemstr) -> pPopupEntry
 
-        @param pObject: nmenu object
-                        (<pointer to xfdata.FL_OBJECT>)
+        @param pFlObject: nmenu object
+        @type pFlObject: pointer to xfdata.FL_OBJECT
         @param itemstr: text of the item (among special sequences only %S is
                         supported)
 
@@ -18274,19 +18611,19 @@ def fl_insert_nmenu_items(pObject, pPopupEntry, itemstr):
                FL_POPUP_ENTRY * p2, const char * p3)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
     sitemstr = convert_to_string(itemstr)
-    keep_elem_refs(pObject, pPopupEntry, itemstr, sitemstr)
-    retval = _fl_insert_nmenu_items(pObject, pPopupEntry, sitemstr)
+    keep_elem_refs(pFlObject, pPopupEntry, itemstr, sitemstr)
+    retval = _fl_insert_nmenu_items(pFlObject, pPopupEntry, sitemstr)
     return retval
 
 
-def fl_replace_nmenu_item(pObject, pPopupEntry, itemstr):
+def fl_replace_nmenu_item(pFlObject, pPopupEntry, itemstr):
     """
-        fl_replace_nmenu_item(pObject, pPopupEntry, itemstr) -> pPopupEntry
+        fl_replace_nmenu_item(pFlObject, pPopupEntry, itemstr) -> pPopupEntry
 
-        @param pObject: nmenu object
-                        (<pointer to xfdata.FL_OBJECT>)
+        @param pFlObject: nmenu object
+        @type pFlObject: pointer to xfdata.FL_OBJECT
 
         @status: Untested + NoDoc + NoDemo = NOT OK
     """
@@ -18299,16 +18636,16 @@ def fl_replace_nmenu_item(pObject, pPopupEntry, itemstr):
                FL_POPUP_ENTRY * p2, const char * p3)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
     sitemstr = convert_to_string(itemstr)
-    keep_elem_refs(pObject, pPopupEntry, itemstr, sitemstr)
-    retval = _fl_replace_nmenu_item(pObject, pPopupEntry, sitemstr)
+    keep_elem_refs(pFlObject, pPopupEntry, itemstr, sitemstr)
+    retval = _fl_replace_nmenu_item(pFlObject, pPopupEntry, sitemstr)
     return retval
 
 
-def fl_delete_nmenu_item(pObject, pPopupEntry):
+def fl_delete_nmenu_item(pFlObject, pPopupEntry):
     """
-        fl_delete_nmenu_item(pObject, pPopupEntry) -> num.
+        fl_delete_nmenu_item(pFlObject, pPopupEntry) -> num.
 
 
         @status: Untested + NoDoc + NoDemo = NOT OK
@@ -18321,15 +18658,15 @@ def fl_delete_nmenu_item(pObject, pPopupEntry):
             """int fl_delete_nmenu_item(FL_OBJECT * p1, FL_POPUP_ENTRY * p2)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
-    keep_elem_refs(pObject, pPopupEntry)
-    retval = _fl_delete_nmenu_item(pObject, pPopupEntry)
+    check_if_FL_OBJECT_ptr(pFlObject)
+    keep_elem_refs(pFlObject, pPopupEntry)
+    retval = _fl_delete_nmenu_item(pFlObject, pPopupEntry)
     return retval
 
 
-def fl_set_nmenu_items(pObject, pPopupItem):
+def fl_set_nmenu_items(pFlObject, pPopupItem):
     """
-        fl_set_nmenu_items(pObject, pPopupItem) -> pPopupEntry
+        fl_set_nmenu_items(pFlObject, pPopupItem) -> pPopupEntry
 
 
         @status: Untested + NoDoc + NoDemo = NOT OK
@@ -18343,18 +18680,18 @@ def fl_set_nmenu_items(pObject, pPopupItem):
                FL_POPUP_ITEM * p2)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
-    keep_elem_refs(pObject, pPopupItem)
-    retval = _fl_set_nmenu_items(pObject, pPopupItem)
+    check_if_FL_OBJECT_ptr(pFlObject)
+    keep_elem_refs(pFlObject, pPopupItem)
+    retval = _fl_set_nmenu_items(pFlObject, pPopupItem)
     return retval
 
 
-def fl_add_nmenu_items2(pObject, pPopupItem):
+def fl_add_nmenu_items2(pFlObject, pPopupItem):
     """
-        fl_add_nmenu_items2(pObject, pPopupItem) -> pPopupEntry
+        fl_add_nmenu_items2(pFlObject, pPopupItem) -> pPopupEntry
 
-        @param pObject: nmenu object
-                        (<pointer to xfdata.FL_OBJECT>)
+        @param pFlObject: nmenu object
+        @type pFlObject: pointer to xfdata.FL_OBJECT
         @param pPopupItem: pointer to xfc.FL_POPUP_ITEM; it needs to be
            prepared beforehand with make_pPopupItem_from_list(..) function
            for single or multiple lists, or with make_pPopupItem_from_dict(..)
@@ -18371,18 +18708,18 @@ def fl_add_nmenu_items2(pObject, pPopupItem):
                FL_POPUP_ITEM * p2)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
-    keep_elem_refs(pObject, pPopupItem)
-    retval = _fl_add_nmenu_items2(pObject, pPopupItem)
+    check_if_FL_OBJECT_ptr(pFlObject)
+    keep_elem_refs(pFlObject, pPopupItem)
+    retval = _fl_add_nmenu_items2(pFlObject, pPopupItem)
     return retval
 
 
-def fl_insert_nmenu_items2(pObject, pPopupEntry, pPopupItem):
+def fl_insert_nmenu_items2(pFlObject, pPopupEntry, pPopupItem):
     """
-        fl_insert_nmenu_items2(pObject, pPopupEntry, pPopupItem) -> pPopupEntry
+        fl_insert_nmenu_items2(pFlObject, pPopupEntry, pPopupItem) -> pPopupEntry
 
-        @param pObject: nmenu object
-                        (<pointer to xfdata.FL_OBJECT>)
+        @param pFlObject: nmenu object
+        @type pFlObject: pointer to xfdata.FL_OBJECT
         @param pPopupItem: pointer to xfc.FL_POPUP_ITEM; it needs to be
            prepared beforehand with make_pPopupItem_from_list(..) function
            for single or multiple lists, or with make_pPopupItem_from_dict(..)
@@ -18399,18 +18736,18 @@ def fl_insert_nmenu_items2(pObject, pPopupEntry, pPopupItem):
                FL_POPUP_ITEM * p2, FL_POPUP_ITEM * p3)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
-    keep_elem_refs(pObject, pPopupEntry, pPopupItem)
-    retval = _fl_insert_nmenu_items2(pObject, pPopupEntry, pPopupItem)
+    check_if_FL_OBJECT_ptr(pFlObject)
+    keep_elem_refs(pFlObject, pPopupEntry, pPopupItem)
+    retval = _fl_insert_nmenu_items2(pFlObject, pPopupEntry, pPopupItem)
     return retval
 
 
-def fl_replace_nmenu_items2(pObject, pPopupEntry, pPopupItem):
+def fl_replace_nmenu_items2(pFlObject, pPopupEntry, pPopupItem):
     """
-        fl_replace_nmenu_items2(pObject, pPopupEntry, pPopupItem) -> pPopupEntry
+        fl_replace_nmenu_items2(pFlObject, pPopupEntry, pPopupItem) -> pPopupEntry
 
-        @param pObject: nmenu object
-                        (<pointer to xfdata.FL_OBJECT>)
+        @param pFlObject: nmenu object
+        @type pFlObject: pointer to xfdata.FL_OBJECT
         @param pPopupItem: pointer to xfc.FL_POPUP_ITEM; it needs to be
            prepared beforehand with make_pPopupItem_from_list(..) function for
            for single or multiple lists, or with make_pPopupItem_from_dict(..)
@@ -18427,18 +18764,18 @@ def fl_replace_nmenu_items2(pObject, pPopupEntry, pPopupItem):
                FL_POPUP_ENTRY * p2, FL_POPUP_ITEM * p3)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
-    keep_elem_refs(pObject, pPopupEntry, pPopupItem)
-    retval = _fl_replace_nmenu_items2(pObject, pPopupEntry, pPopupItem)
+    check_if_FL_OBJECT_ptr(pFlObject)
+    keep_elem_refs(pFlObject, pPopupEntry, pPopupItem)
+    retval = _fl_replace_nmenu_items2(pFlObject, pPopupEntry, pPopupItem)
     return retval
 
 
-def fl_get_nmenu_popup(pObject):
+def fl_get_nmenu_popup(pFlObject):
     """
-        fl_get_nmenu_popup(pObject) -> pPopup
+        fl_get_nmenu_popup(pFlObject) -> pPopup
 
-        @param pObject: nmenu object
-                        (<pointer to xfdata.FL_OBJECT>)
+        @param pFlObject: nmenu object
+        @type pFlObject: pointer to xfdata.FL_OBJECT
 
         @status: Untested + NoDoc + NoDemo = NOT OK
     """
@@ -18448,18 +18785,18 @@ def fl_get_nmenu_popup(pObject):
             cty.POINTER(xfc.FL_POPUP), [cty.POINTER(xfc.FL_OBJECT)],
             """FL_POPUP * fl_get_nmenu_popup(FL_OBJECT * p1)
             """)
-    check_if_FL_OBJECT_ptr(pObject)
-    keep_elem_refs(pObject)
-    retval = _fl_get_nmenu_popup(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
+    keep_elem_refs(pFlObject)
+    retval = _fl_get_nmenu_popup(pFlObject)
     return retval
 
 
-def fl_set_nmenu_popup(pObject, pPopup):
+def fl_set_nmenu_popup(pFlObject, pPopup):
     """
-        fl_set_nmenu_popup(pObject, pPopup) -> num.
+        fl_set_nmenu_popup(pFlObject, pPopup) -> num.
 
-        @param pObject: nmenu object
-                        (<pointer to xfdata.FL_OBJECT>)
+        @param pFlObject: nmenu object
+        @type pFlObject: pointer to xfdata.FL_OBJECT
 
         @status: Untested + NoDoc + NoDemo = NOT OK
     """
@@ -18470,18 +18807,18 @@ def fl_set_nmenu_popup(pObject, pPopup):
             """int fl_set_nmenu_popup(FL_OBJECT * p1, FL_POPUP * p2)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
-    keep_elem_refs(pObject, pPopup)
-    retval = _fl_set_nmenu_popup(pObject, pPopup)
+    check_if_FL_OBJECT_ptr(pFlObject)
+    keep_elem_refs(pFlObject, pPopup)
+    retval = _fl_set_nmenu_popup(pFlObject, pPopup)
     return retval
 
 
-def fl_get_nmenu_item(pObject):
+def fl_get_nmenu_item(pFlObject):
     """
-        fl_get_nmenu_item(pObject) -> pPopupReturn
+        fl_get_nmenu_item(pFlObject) -> pPopupReturn
 
-        @param pObject: nmenu object
-                        (<pointer to xfdata.FL_OBJECT>)
+        @param pFlObject: nmenu object
+        @type pFlObject: pointer to xfdata.FL_OBJECT
 
         @status: Tested + NoDoc + Demo = OK
     """
@@ -18492,18 +18829,18 @@ def fl_get_nmenu_item(pObject):
             """FL_POPUP_RETURN * fl_get_nmenu_item(FL_OBJECT * p1)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
-    keep_elem_refs(pObject)
-    retval = _fl_get_nmenu_item(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
+    keep_elem_refs(pFlObject)
+    retval = _fl_get_nmenu_item(pFlObject)
     return retval
 
 
-def fl_get_nmenu_item_by_value(pObject, value):
+def fl_get_nmenu_item_by_value(pFlObject, value):
     """
-        fl_get_nmenu_item_by_value(pObject, value) -> pPopupEntry
+        fl_get_nmenu_item_by_value(pFlObject, value) -> pPopupEntry
 
-        @param pObject: nmenu object
-                        (<pointer to xfdata.FL_OBJECT>)
+        @param pFlObject: nmenu object
+        @type pFlObject: pointer to xfdata.FL_OBJECT
 
         @status: Tested + NoDoc + Demo = OK
     """
@@ -18515,19 +18852,19 @@ def fl_get_nmenu_item_by_value(pObject, value):
                long int p2)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
     lvalue = convert_to_long(value)
-    keep_elem_refs(pObject, value, lvalue)
-    retval = _fl_get_nmenu_item_by_value(pObject, lvalue)
+    keep_elem_refs(pFlObject, value, lvalue)
+    retval = _fl_get_nmenu_item_by_value(pFlObject, lvalue)
     return retval
 
 
-def fl_get_nmenu_item_by_label(pObject, label):
+def fl_get_nmenu_item_by_label(pFlObject, label):
     """
-        fl_get_nmenu_item_by_label(pObject, label) -> pPopupEntry
+        fl_get_nmenu_item_by_label(pFlObject, label) -> pPopupEntry
 
-        @param pObject: nmenu object
-                        (<pointer to xfdata.FL_OBJECT>)
+        @param pFlObject: nmenu object
+        @type pFlObject: pointer to xfdata.FL_OBJECT
 
         @status: Untested + NoDoc + NoDemo = NOT OK
     """
@@ -18539,19 +18876,19 @@ def fl_get_nmenu_item_by_label(pObject, label):
                const char * p2)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
     slabel = convert_to_string(label)
-    keep_elem_refs(pObject, label, slabel)
-    retval = _fl_get_nmenu_item_by_label(pObject, slabel)
+    keep_elem_refs(pFlObject, label, slabel)
+    retval = _fl_get_nmenu_item_by_label(pFlObject, slabel)
     return retval
 
 
-def fl_get_nmenu_item_by_text(pObject, text):
+def fl_get_nmenu_item_by_text(pFlObject, text):
     """
-        fl_get_nmenu_item_by_text(pObject, text) -> pPopupEntry
+        fl_get_nmenu_item_by_text(pFlObject, text) -> pPopupEntry
 
-        @param pObject: nmenu object
-                        (<pointer to xfdata.FL_OBJECT>)
+        @param pFlObject: nmenu object
+        @type pFlObject: pointer to xfdata.FL_OBJECT
 
         @status: Untested + NoDoc + NoDemo = NOT OK
     """
@@ -18563,19 +18900,19 @@ def fl_get_nmenu_item_by_text(pObject, text):
                const char * p2)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
     stext = convert_to_string(text)
-    keep_elem_refs(pObject, text, stext)
-    retval = _fl_get_nmenu_item_by_text(pObject, stext)
+    keep_elem_refs(pFlObject, text, stext)
+    retval = _fl_get_nmenu_item_by_text(pFlObject, stext)
     return retval
 
 
-def fl_set_nmenu_policy(pObject, num):
+def fl_set_nmenu_policy(pFlObject, num):
     """
-        fl_set_nmenu_policy(pObject, num) -> num.
+        fl_set_nmenu_policy(pFlObject, num) -> num.
 
-        @param pObject: nmenu object
-                        (<pointer to xfdata.FL_OBJECT>)
+        @param pFlObject: nmenu object
+        @type pFlObject: pointer to xfdata.FL_OBJECT
 
         @status: Untested + NoDoc + NoDemo = NOT OK
     """
@@ -18586,19 +18923,19 @@ def fl_set_nmenu_policy(pObject, num):
             """int fl_set_nmenu_policy(FL_OBJECT * p1, int p2)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
     inum = convert_to_int(num)
-    keep_elem_refs(pObject, num, inum)
-    retval = _fl_set_nmenu_policy(pObject, inum)
+    keep_elem_refs(pFlObject, num, inum)
+    retval = _fl_set_nmenu_policy(pFlObject, inum)
     return retval
 
 
-def fl_set_nmenu_hl_text_color(pObject, colr):
+def fl_set_nmenu_hl_text_color(pFlObject, colr):
     """
-        fl_set_nmenu_hl_text_color(pObject, colr) -> color
+        fl_set_nmenu_hl_text_color(pFlObject, colr) -> color
 
-        @param pObject: nmenu object
-                        (<pointer to xfdata.FL_OBJECT>)
+        @param pFlObject: nmenu object
+        @type pFlObject: pointer to xfdata.FL_OBJECT
 
         @status: Untested + NoDoc + NoDemo = NOT OK
     """
@@ -18610,11 +18947,11 @@ def fl_set_nmenu_hl_text_color(pObject, colr):
                FL_COLOR p2)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
     check_admitted_listvalues(colr, xfc.COLOR_list)
     ulcolr = convert_to_FL_COLOR(colr)
-    keep_elem_refs(pObject, colr, ulcolr)
-    retval = _fl_set_nmenu_hl_text_color(pObject, ulcolr)
+    keep_elem_refs(pFlObject, colr, ulcolr)
+    retval = _fl_set_nmenu_hl_text_color(pFlObject, ulcolr)
     return retval
 
 
@@ -18630,7 +18967,7 @@ def fl_set_nmenu_hl_text_color(pObject, colr):
 
 def fl_add_positioner(postype, x, y, w, h, label):
     """
-        fl_add_positioner(postype, x, y, w, h, label) -> pObject
+        fl_add_positioner(postype, x, y, w, h, label) -> pFlObject
 
         Adds a positioner object.
 
@@ -18665,12 +19002,12 @@ def fl_add_positioner(postype, x, y, w, h, label):
     return retval
 
 
-def fl_set_positioner_xvalue(pObject, val):
+def fl_set_positioner_xvalue(pFlObject, val):
     """
-        fl_set_positioner_xvalue(pObject, val)
+        fl_set_positioner_xvalue(pFlObject, val)
 
-        @param pObject: positioner object
-                        (<pointer to xfdata.FL_OBJECT>)
+        @param pFlObject: positioner object
+        @type pFlObject: pointer to xfdata.FL_OBJECT
 
         @status: Tested + NoDoc + Demo = OK
     """
@@ -18681,18 +19018,18 @@ def fl_set_positioner_xvalue(pObject, val):
             """void fl_set_positioner_xvalue(FL_OBJECT * ob, double val)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
     fval = convert_to_double(val)
-    keep_elem_refs(pObject, val, fval)
-    _fl_set_positioner_xvalue(pObject, fval)
+    keep_elem_refs(pFlObject, val, fval)
+    _fl_set_positioner_xvalue(pFlObject, fval)
 
 
-def fl_get_positioner_xvalue(pObject):
+def fl_get_positioner_xvalue(pFlObject):
     """
-        fl_get_positioner_xvalue(pObject) -> floatnum
+        fl_get_positioner_xvalue(pFlObject) -> floatnum
 
-        @param pObject: positioner object
-                        (<pointer to xfdata.FL_OBJECT>)
+        @param pFlObject: positioner object
+        @type pFlObject: pointer to xfdata.FL_OBJECT
 
         @status: Tested + NoDoc + Demo = OK
     """
@@ -18703,18 +19040,18 @@ def fl_get_positioner_xvalue(pObject):
             """double fl_get_positioner_xvalue(FL_OBJECT * ob)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
-    keep_elem_refs(pObject)
-    retval = _fl_get_positioner_xvalue(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
+    keep_elem_refs(pFlObject)
+    retval = _fl_get_positioner_xvalue(pFlObject)
     return retval
 
 
-def fl_set_positioner_xbounds(pObject, minbound, maxbound):
+def fl_set_positioner_xbounds(pFlObject, minbound, maxbound):
     """
-        fl_set_positioner_xbounds(pObject, minbound, maxbound)
+        fl_set_positioner_xbounds(pFlObject, minbound, maxbound)
 
-        @param pObject: positioner object
-                        (<pointer to xfdata.FL_OBJECT>)
+        @param pFlObject: positioner object
+        @type pFlObject: pointer to xfdata.FL_OBJECT
 
         @status: Tested + NoDoc + Demo = OK
     """
@@ -18726,22 +19063,22 @@ def fl_set_positioner_xbounds(pObject, minbound, maxbound):
                double max)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
     fminbound = convert_to_double(minbound)
     fmaxbound = convert_to_double(maxbound)
-    keep_elem_refs(pObject, minbound, maxbound, fminbound, fmaxbound)
-    _fl_set_positioner_xbounds(pObject, fminbound, fmaxbound)
+    keep_elem_refs(pFlObject, minbound, maxbound, fminbound, fmaxbound)
+    _fl_set_positioner_xbounds(pFlObject, fminbound, fmaxbound)
 
 
-def fl_get_positioner_xbounds(pObject):
+def fl_get_positioner_xbounds(pFlObject):
     """
-        fl_get_positioner_xbounds(pObject) -> minbound, maxbound
+        fl_get_positioner_xbounds(pFlObject) -> minbound, maxbound
 
-        @param pObject: positioner object
-                        (<pointer to xfdata.FL_OBJECT>)
+        @param pFlObject: positioner object
+        @type pFlObject: pointer to xfdata.FL_OBJECT
 
         @attention: API change from XForms - upstream was
-                    fl_get_positioner_xbounds(pObject, minbound, maxbound)
+                    fl_get_positioner_xbounds(pFlObject, minbound, maxbound)
 
         @status: Untested + NoDoc + NoDemo = NOT OK
     """
@@ -18754,20 +19091,20 @@ def fl_get_positioner_xbounds(pObject):
             double * max)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
     minbound, pminbound = make_double_and_pointer()
     maxbound, pmaxbound = make_double_and_pointer()
-    keep_elem_refs(pObject, minbound, maxbound, pminbound, pmaxbound)
-    _fl_get_positioner_xbounds(pObject, pminbound, pmaxbound)
+    keep_elem_refs(pFlObject, minbound, maxbound, pminbound, pmaxbound)
+    _fl_get_positioner_xbounds(pFlObject, pminbound, pmaxbound)
     return minbound.value, maxbound.value
 
 
-def fl_set_positioner_yvalue(pObject, val):
+def fl_set_positioner_yvalue(pFlObject, val):
     """
-        fl_set_positioner_yvalue(pObject, val)
+        fl_set_positioner_yvalue(pFlObject, val)
 
-        @param pObject: positioner object
-                        (<pointer to xfdata.FL_OBJECT>)
+        @param pFlObject: positioner object
+        @type pFlObject: pointer to xfdata.FL_OBJECT
 
         @status: Tested + NoDoc + Demo = OK
     """
@@ -18778,18 +19115,18 @@ def fl_set_positioner_yvalue(pObject, val):
             """void fl_set_positioner_yvalue(FL_OBJECT * ob, double val)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
     fval = convert_to_double(val)
-    keep_elem_refs(pObject, val, fval)
-    _fl_set_positioner_yvalue(pObject, fval)
+    keep_elem_refs(pFlObject, val, fval)
+    _fl_set_positioner_yvalue(pFlObject, fval)
 
 
-def fl_get_positioner_yvalue(pObject):
+def fl_get_positioner_yvalue(pFlObject):
     """
-        fl_get_positioner_yvalue(pObject) -> floatnum
+        fl_get_positioner_yvalue(pFlObject) -> floatnum
 
-        @param pObject: positioner object
-                        (<pointer to xfdata.FL_OBJECT>)
+        @param pFlObject: positioner object
+        @type pFlObject: pointer to xfdata.FL_OBJECT
 
         @status: Untested + NoDoc + NoDemo = NOT OK
     """
@@ -18800,18 +19137,18 @@ def fl_get_positioner_yvalue(pObject):
             """double fl_get_positioner_yvalue(FL_OBJECT * ob)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
-    keep_elem_refs(pObject)
-    retval = _fl_get_positioner_yvalue(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
+    keep_elem_refs(pFlObject)
+    retval = _fl_get_positioner_yvalue(pFlObject)
     return retval
 
 
-def fl_set_positioner_ybounds(pObject, minbound, maxbound):
+def fl_set_positioner_ybounds(pFlObject, minbound, maxbound):
     """
-        fl_set_positioner_ybounds(pObject, minbound, maxbound)
+        fl_set_positioner_ybounds(pFlObject, minbound, maxbound)
 
-        @param pObject: positioner object
-                        (<pointer to xfdata.FL_OBJECT>)
+        @param pFlObject: positioner object
+        @type pFlObject: pointer to xfdata.FL_OBJECT
 
         @status: Tested + NoDoc + Demo = OK
     """
@@ -18823,22 +19160,22 @@ def fl_set_positioner_ybounds(pObject, minbound, maxbound):
                double max)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
     fminbound = convert_to_double(minbound)
     fmaxbound = convert_to_double(maxbound)
-    keep_elem_refs(pObject, minbound, maxbound, fminbound, fmaxbound)
-    _fl_set_positioner_ybounds(pObject, fminbound, fmaxbound)
+    keep_elem_refs(pFlObject, minbound, maxbound, fminbound, fmaxbound)
+    _fl_set_positioner_ybounds(pFlObject, fminbound, fmaxbound)
 
 
-def fl_get_positioner_ybounds(pObject):
+def fl_get_positioner_ybounds(pFlObject):
     """
-        fl_get_positioner_ybounds(pObject) -> minbound, maxbound
+        fl_get_positioner_ybounds(pFlObject) -> minbound, maxbound
 
-        @param pObject: positioner object
-                        (<pointer to xfdata.FL_OBJECT>)
+        @param pFlObject: positioner object
+        @type pFlObject: pointer to xfdata.FL_OBJECT
 
         @attention: API change from XForms - upstream was
-                    fl_get_positioner_ybounds(pObject, minbound, maxbound)
+                    fl_get_positioner_ybounds(pFlObject, minbound, maxbound)
 
         @status: Untested + NoDoc + NoDemo = NOT OK
     """
@@ -18851,22 +19188,22 @@ def fl_get_positioner_ybounds(pObject):
                double * max)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
     minbound, pminbound = make_double_and_pointer()
     maxbound, pmaxbound = make_double_and_pointer()
-    keep_elem_refs(pObject, minbound, maxbound, pminbound, pmaxbound)
-    _fl_get_positioner_ybounds(pObject, pminbound, pmaxbound)
+    keep_elem_refs(pFlObject, minbound, maxbound, pminbound, pmaxbound)
+    _fl_get_positioner_ybounds(pFlObject, pminbound, pmaxbound)
     return minbound.value, maxbound.value
 
 
-def fl_set_positioner_xstep(pObject, value):
+def fl_set_positioner_xstep(pFlObject, value):
     """
-        fl_set_positioner_xstep(pObject, value)
+    fl_set_positioner_xstep(pFlObject, value)
 
-        @param pObject: positioner object
-                        (<pointer to xfdata.FL_OBJECT>)
+    @param pFlObject: positioner object
+    @type pFlObject: pointer to xfdata.FL_OBJECT
 
-        @status: Untested + NoDoc + NoDemo = NOT OK
+    @status: Untested + NoDoc + NoDemo = NOT OK
     """
 
     _fl_set_positioner_xstep = cfuncproto(
@@ -18875,20 +19212,20 @@ def fl_set_positioner_xstep(pObject, value):
             """void fl_set_positioner_xstep(FL_OBJECT * ob, double value)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
     fvalue = convert_to_double(value)
-    keep_elem_refs(pObject, value, fvalue)
-    _fl_set_positioner_xstep(pObject, fvalue)
+    keep_elem_refs(pFlObject, value, fvalue)
+    _fl_set_positioner_xstep(pFlObject, fvalue)
 
 
-def fl_set_positioner_ystep(pObject, value):
+def fl_set_positioner_ystep(pFlObject, value):
     """
-        fl_set_positioner_ystep(pObject, value)
+    fl_set_positioner_ystep(pFlObject, value)
 
-        @param pObject: positioner object
-                        (<pointer to xfdata.FL_OBJECT>)
+    @param pFlObject: positioner object
+    @type pFlObject: pointer to xfdata.FL_OBJECT
 
-        @status: Untested + NoDoc + NoDemo = NOT OK
+    @status: Untested + NoDoc + NoDemo = NOT OK
     """
 
     _fl_set_positioner_ystep = cfuncproto(
@@ -18897,21 +19234,22 @@ def fl_set_positioner_ystep(pObject, value):
             """void fl_set_positioner_ystep(FL_OBJECT * ob, double value)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
     fvalue = convert_to_double(value)
-    keep_elem_refs(pObject, value, fvalue)
-    _fl_set_positioner_ystep(pObject, fvalue)
+    keep_elem_refs(pFlObject, value, fvalue)
+    _fl_set_positioner_ystep(pFlObject, fvalue)
 
 
-def fl_set_positioner_return(pObject, value):
+def fl_set_positioner_return(pFlObject, when):
     """
-        fl_set_positioner_return(pObject, value)
+    fl_set_positioner_return(pFlObject, when)
 
-        @param pObject: positioner object
-                        (<pointer to xfdata.FL_OBJECT>)
-        @param value: return type
+    @param pFlObject: positioner object
+    @type pFlObject: pointer to xfdata.FL_OBJECT
+    @param when: return type (when it returns)
+    @type when: int_pos
 
-        @status: Untested + NoDoc + NoDemo = NOT OK
+    @status: Untested + NoDoc + NoDemo = NOT OK
     """
 
     _fl_set_positioner_return = cfuncproto(
@@ -18921,10 +19259,10 @@ def fl_set_positioner_return(pObject, value):
                int value)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
-    uivalue = convert_to_uint(value)
-    keep_elem_refs(pObject, value, uivalue)
-    _fl_set_positioner_return(pObject, uivalue)
+    check_if_FL_OBJECT_ptr(pFlObject)
+    uiwhen = convert_to_uint(when)
+    keep_elem_refs(pFlObject, when, uiwhen)
+    _fl_set_positioner_return(pFlObject, uiwhen)
 
 
 # fl_create_scrollbar function placeholder (internal)
@@ -18932,18 +19270,24 @@ def fl_set_positioner_return(pObject, value):
 
 def fl_add_scrollbar(scrolltype, x, y, w, h, label):
     """
-        fl_add_scrollbar(scrolltype, x, y, w, h, label) -> pObject
+    fl_add_scrollbar(scrolltype, x, y, w, h, label) -> pFlObject
 
-        Adds a scrollbar object to a form.
+    Adds a scrollbar object to a form.
 
-        @param scrolltype: type of scrollbar to be added
-        @param x: horizontal position (upper-left corner)
-        @param y: vertical position (upper-left corner)
-        @param w: width in coord units
-        @param h: height in coord units
-        @param label: label text of scrollbar
+    @param scrolltype: type of scrollbar to be added
+    @type scrolltype: int
+    @param x: horizontal position (upper-left corner)
+    @type x: int
+    @param y: vertical position (upper-left corner)
+    @type y: int
+    @param w: width in coord units
+    @type w: int
+    @param h: height in coord units
+    @type h: int
+    @param label: label text of scrollbar
+    @type label: string
 
-        @status: Tested + NoDoc + Demo = OK
+    @status: Tested + NoDoc + Demo = OK
     """
 
     _fl_add_scrollbar = cfuncproto(
@@ -18967,13 +19311,13 @@ def fl_add_scrollbar(scrolltype, x, y, w, h, label):
     return retval
 
 
-def fl_get_scrollbar_value(pObject):
+def fl_get_scrollbar_value(pFlObject):
     """
-        fl_get_scrollbar_value(pObject) -> value[float]
+        fl_get_scrollbar_value(pFlObject) -> value[float]
 
         Returns the value of a scrollbar.
 
-        @param pObject: pointer to object
+        @param pFlObject: pointer to object
 
         @status: Untested + NoDoc + NoDemo = NOT OK
     """
@@ -18984,19 +19328,19 @@ def fl_get_scrollbar_value(pObject):
             """double fl_get_scrollbar_value(FL_OBJECT * ob)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
-    keep_elem_refs(pObject)
-    retval = _fl_get_scrollbar_value(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
+    keep_elem_refs(pFlObject)
+    retval = _fl_get_scrollbar_value(pFlObject)
     return retval
 
 
-def fl_set_scrollbar_value(pObject, val):
+def fl_set_scrollbar_value(pFlObject, val):
     """
-        fl_set_scrollbar_value(pObject, val)
+        fl_set_scrollbar_value(pFlObject, val)
 
         Sets the value of a scrollbar.
 
-        @param pObject: pointer to object
+        @param pFlObject: pointer to object
         @param val: value of the scrollbar to be set
 
         @status: Tested + NoDoc + Demo = OK
@@ -19008,15 +19352,15 @@ def fl_set_scrollbar_value(pObject, val):
             """void fl_set_scrollbar_value(FL_OBJECT * ob, double val)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
     fval = convert_to_double(val)
-    keep_elem_refs(pObject, val, fval)
-    _fl_set_scrollbar_value(pObject, fval)
+    keep_elem_refs(pFlObject, val, fval)
+    _fl_set_scrollbar_value(pFlObject, fval)
 
 
-def fl_set_scrollbar_size(pObject, val):
+def fl_set_scrollbar_size(pFlObject, val):
     """
-        fl_set_scrollbar_size(pObject, val)
+        fl_set_scrollbar_size(pFlObject, val)
 
         @status: Tested + NoDoc + Demo = OK
     """
@@ -19027,19 +19371,19 @@ def fl_set_scrollbar_size(pObject, val):
             """void fl_set_scrollbar_size(FL_OBJECT * ob, double val)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
     fval = convert_to_double(val)
-    keep_elem_refs(pObject, val, fval)
-    _fl_set_scrollbar_size(pObject, fval)
+    keep_elem_refs(pFlObject, val, fval)
+    _fl_set_scrollbar_size(pFlObject, fval)
 
 
-def fl_set_scrollbar_increment(pObject, leftbtnval, midlbtnval):
+def fl_set_scrollbar_increment(pFlObject, leftbtnval, midlbtnval):
     """
-        fl_set_scrollbar_increment(pObject, leftbtnval, midlbtnval)
+        fl_set_scrollbar_increment(pFlObject, leftbtnval, midlbtnval)
 
         Sets the size of the steps of a scrollbar jump.
 
-        @param pObject: pointer to object
+        @param pFlObject: pointer to object
         @param leftbtnval: value to increment if the left mouse button is
            pressed
         @param midlbtnval: value to increment if the middle mouse button is
@@ -19055,25 +19399,25 @@ def fl_set_scrollbar_increment(pObject, leftbtnval, midlbtnval):
                double r)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
     fleftbtnval = convert_to_double(leftbtnval)
     fmidlbtnval = convert_to_double(midlbtnval)
-    keep_elem_refs(pObject, leftbtnval, midlbtnval, fleftbtnval, \
+    keep_elem_refs(pFlObject, leftbtnval, midlbtnval, fleftbtnval, \
                    fmidlbtnval)
-    _fl_set_scrollbar_increment(pObject, fleftbtnval, fmidlbtnval)
+    _fl_set_scrollbar_increment(pFlObject, fleftbtnval, fmidlbtnval)
 
 
-def fl_get_scrollbar_increment(pObject):
+def fl_get_scrollbar_increment(pFlObject):
     """
-        fl_get_scrollbar_increment(pObject) -> leftbtnval[double], midlbtnval[double]
+        fl_get_scrollbar_increment(pFlObject) -> leftbtnval[double], midlbtnval[double]
 
         Returns the increment of size of a scrollbar for left and middle mouse
         buttons.
 
-        @param pObject: pointer to object
+        @param pFlObject: pointer to object
 
         @attention: API change from XForms - upstream was
-                    fl_get_scrollbar_increment(pObject, leftbtnval,
+                    fl_get_scrollbar_increment(pFlObject, leftbtnval,
                     valmidlbtnval)
 
         @status: Untested + NoDoc + NoDemo = NOT OK
@@ -19087,21 +19431,21 @@ def fl_get_scrollbar_increment(pObject):
                double * b)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
     leftbtnval, pleftbtnval = make_double_and_pointer()
     midlbtnval, pmidlbtnval = make_double_and_pointer()
-    keep_elem_refs(pObject, leftbtnval, midlbtnval, pleftbtnval, pmidlbtnval)
-    _fl_get_scrollbar_increment(pObject, pleftbtnval, pmidlbtnval)
+    keep_elem_refs(pFlObject, leftbtnval, midlbtnval, pleftbtnval, pmidlbtnval)
+    _fl_get_scrollbar_increment(pFlObject, pleftbtnval, pmidlbtnval)
     return leftbtnval.value, midlbtnval.value
 
 
-def fl_set_scrollbar_bounds(pObject, minbound, maxbound):
+def fl_set_scrollbar_bounds(pFlObject, minbound, maxbound):
     """
-        fl_set_scrollbar_bounds(pObject, minbound, maxbound)
+        fl_set_scrollbar_bounds(pFlObject, minbound, maxbound)
 
         Sets the bounds/limits of a scrollbar.
 
-        @param pObject: pointer to object
+        @param pFlObject: pointer to object
         @param minbound: minimum bound of scrollbar
         @param maxbound: maximum bound of scrollbar
 
@@ -19114,23 +19458,23 @@ def fl_set_scrollbar_bounds(pObject, minbound, maxbound):
             """void fl_set_scrollbar_bounds(FL_OBJECT * ob, double b1, double b2)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
     fminbound = convert_to_double(minbound)
     fmaxbound = convert_to_double(maxbound)
-    keep_elem_refs(pObject, minbound, maxbound, fminbound, fmaxbound)
-    _fl_set_scrollbar_bounds(pObject, fminbound, fmaxbound)
+    keep_elem_refs(pFlObject, minbound, maxbound, fminbound, fmaxbound)
+    _fl_set_scrollbar_bounds(pFlObject, fminbound, fmaxbound)
 
 
-def fl_get_scrollbar_bounds(pObject):
+def fl_get_scrollbar_bounds(pFlObject):
     """
-        fl_get_scrollbar_bounds(pObject) -> minbound, maxbound
+        fl_get_scrollbar_bounds(pFlObject) -> minbound, maxbound
 
         Returns the bounds/limits of a scrollbar.
 
-        @param pObject: pointer to scrollbar object
+        @param pFlObject: pointer to scrollbar object
 
         @attention: API change from XForms - upstream was
-           fl_get_scrollbar_bounds(pObject, b1, b2)
+           fl_get_scrollbar_bounds(pFlObject, b1, b2)
     """
 
     _fl_get_scrollbar_bounds = cfuncproto(
@@ -19141,20 +19485,20 @@ def fl_get_scrollbar_bounds(pObject):
                double * b2)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
     minbound, pminbound = make_double_and_pointer()
     maxbound, pmaxbound = make_double_and_pointer()
-    keep_elem_refs(pObject, minbound, pminbound, maxbound, pmaxbound)
-    _fl_get_scrollbar_bounds(pObject, pminbound, pmaxbound)
+    keep_elem_refs(pFlObject, minbound, pminbound, maxbound, pmaxbound)
+    _fl_get_scrollbar_bounds(pFlObject, pminbound, pmaxbound)
     return minbound.value, maxbound.value
 
 
 # fl_set_scrollbar_return function placeholder (internal)
 
 
-def fl_set_scrollbar_step(pObject, step):
+def fl_set_scrollbar_step(pFlObject, step):
     """
-        fl_set_scrollbar_step(pObject, step)
+        fl_set_scrollbar_step(pFlObject, step)
 
         @status: Untested + NoDoc + NoDemo = NOT OK
     """
@@ -19165,10 +19509,10 @@ def fl_set_scrollbar_step(pObject, step):
             """void fl_set_scrollbar_step(FL_OBJECT * ob, double step)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
     fstep = convert_to_double(step)
-    keep_elem_refs(pObject, step, fstep)
-    _fl_set_scrollbar_step(pObject, fstep)
+    keep_elem_refs(pFlObject, step, fstep)
+    _fl_set_scrollbar_step(pFlObject, fstep)
 
 
 
@@ -19183,7 +19527,7 @@ def fl_set_scrollbar_step(pObject, step):
 
 def fl_add_select(selecttype, x, y, w, h, label):
     """
-        fl_add_select(selecttype, x, y, w, h, label) -> pObject
+        fl_add_select(selecttype, x, y, w, h, label) -> pFlObject
 
         Adds a select object.
 
@@ -19218,11 +19562,11 @@ def fl_add_select(selecttype, x, y, w, h, label):
     return retval
 
 
-def fl_clear_select(pObject):
+def fl_clear_select(pFlObject):
     """
-        fl_clear_select(pObject)
+        fl_clear_select(pFlObject)
 
-        @param pObject: pointer to select object
+        @param pFlObject: pointer to select object
 
         @status: Untested + NoDoc + NoDemo = NOT OK
     """
@@ -19233,14 +19577,14 @@ def fl_clear_select(pObject):
             """int fl_clear_select(FL_OBJECT * p1)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
-    keep_elem_refs(pObject)
-    _fl_clear_select(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
+    keep_elem_refs(pFlObject)
+    _fl_clear_select(pFlObject)
 
 
-def fl_add_select_items(pObject, itemstr):
+def fl_add_select_items(pFlObject, itemstr):
     """
-        fl_add_select_items(pObject, itemstr) -> pPopupEntry
+        fl_add_select_items(pFlObject, itemstr) -> pPopupEntry
 
         @status: HalfTested + NoDoc + Demo = NOT OK (sequence param.)
     """
@@ -19253,16 +19597,16 @@ def fl_add_select_items(pObject, itemstr):
                const char * p2)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
     sitemstr = convert_to_string(itemstr)
-    keep_elem_refs(pObject, itemstr, sitemstr)
-    retval = _fl_add_select_items(pObject, sitemstr)
+    keep_elem_refs(pFlObject, itemstr, sitemstr)
+    retval = _fl_add_select_items(pFlObject, sitemstr)
     return retval
 
 
-def fl_insert_select_items(pObject, pPopupEntry, itemstr):
+def fl_insert_select_items(pFlObject, pPopupEntry, itemstr):
     """
-        fl_insert_select_items(pObject, pPopupEntry, itemstr) -> pPopupEntry
+        fl_insert_select_items(pFlObject, pPopupEntry, itemstr) -> pPopupEntry
 
         @param itemstr: text of the item (among special sequences only %S is
            supported
@@ -19278,16 +19622,16 @@ def fl_insert_select_items(pObject, pPopupEntry, itemstr):
                FL_POPUP_ENTRY * p2, const char * p3)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
     sitemstr = convert_to_string(itemstr)
-    keep_elem_refs(pObject, pPopupEntry, itemstr, sitemstr)
-    retval = _fl_insert_select_items(pObject, pPopupEntry, sitemstr)
+    keep_elem_refs(pFlObject, pPopupEntry, itemstr, sitemstr)
+    retval = _fl_insert_select_items(pFlObject, pPopupEntry, sitemstr)
     return retval
 
 
-def fl_replace_select_item(pObject, pPopupEntry, itemstr):
+def fl_replace_select_item(pFlObject, pPopupEntry, itemstr):
     """
-        fl_replace_select_item(pObject, pPopupEntry, itemstr) -> pPopupEntry
+        fl_replace_select_item(pFlObject, pPopupEntry, itemstr) -> pPopupEntry
 
         @status: Untested + NoDoc + NoDemo = NOT OK
     """
@@ -19300,16 +19644,16 @@ def fl_replace_select_item(pObject, pPopupEntry, itemstr):
                FL_POPUP_ENTRY * p2, const char * p3)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
     sitemstr = convert_to_string(itemstr)
-    keep_elem_refs(pObject, pPopupEntry, itemstr, sitemstr)
-    retval = _fl_replace_select_item(pObject, pPopupEntry, sitemstr)
+    keep_elem_refs(pFlObject, pPopupEntry, itemstr, sitemstr)
+    retval = _fl_replace_select_item(pFlObject, pPopupEntry, sitemstr)
     return retval
 
 
-def fl_delete_select_item(pObject, pPopupEntry):
+def fl_delete_select_item(pFlObject, pPopupEntry):
     """
-        fl_delete_select_item(pObject, pPopupEntry) -> num.
+        fl_delete_select_item(pFlObject, pPopupEntry) -> num.
 
         @status: Untested + NoDoc + NoDemo = NOT OK
     """
@@ -19320,19 +19664,19 @@ def fl_delete_select_item(pObject, pPopupEntry):
             """int fl_delete_select_item(FL_OBJECT * p1, FL_POPUP_ENTRY * p2)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
-    keep_elem_refs(pObject, pPopupEntry)
-    retval = _fl_delete_select_item(pObject, pPopupEntry)
+    check_if_FL_OBJECT_ptr(pFlObject)
+    keep_elem_refs(pFlObject, pPopupEntry)
+    retval = _fl_delete_select_item(pFlObject, pPopupEntry)
     return retval
 
 
-def fl_set_select_items(pObject, pPopupItem):
+def fl_set_select_items(pFlObject, pPopupItem):
     """
-        fl_set_select_items(pObject, pPopupItem) -> num.
+        fl_set_select_items(pFlObject, pPopupItem) -> num.
 
         (Re)populates a select object popup.
 
-        @param pObject: pointer to select object
+        @param pFlObject: pointer to select object
         @param pPopupItem: pointer to FL_POPUP_ITEM class instance (array of it)
 
         @status: Untested + NoDoc + NoDemo = NOT OK
@@ -19346,15 +19690,15 @@ def fl_set_select_items(pObject, pPopupItem):
             """)
 
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
-    keep_elem_refs(pObject, pPopupItem)
-    retval = _fl_set_select_items(pObject, pPopupItem)
+    check_if_FL_OBJECT_ptr(pFlObject)
+    keep_elem_refs(pFlObject, pPopupItem)
+    retval = _fl_set_select_items(pFlObject, pPopupItem)
     return retval
 
 
-def fl_get_select_popup(pObject):
+def fl_get_select_popup(pFlObject):
     """
-        fl_get_select_popup(pObject) -> pPopup
+        fl_get_select_popup(pFlObject) -> pPopup
 
         @status: Tested + NoDoc + Demo = OK
     """
@@ -19365,15 +19709,15 @@ def fl_get_select_popup(pObject):
             """FL_POPUP * fl_get_select_popup(FL_OBJECT * p1)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
-    keep_elem_refs(pObject)
-    retval = _fl_get_select_popup(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
+    keep_elem_refs(pFlObject)
+    retval = _fl_get_select_popup(pFlObject)
     return retval
 
 
-def fl_set_select_popup(pObject, pPopup):
+def fl_set_select_popup(pFlObject, pPopup):
     """
-        fl_set_select_popup(pObject, pPopup) -> num.
+        fl_set_select_popup(pFlObject, pPopup) -> num.
 
         @status: Untested + NoDoc + NoDemo = NOT OK
     """
@@ -19384,15 +19728,15 @@ def fl_set_select_popup(pObject, pPopup):
             """int fl_set_select_popup(FL_OBJECT * p1, FL_POPUP * p2)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
-    keep_elem_refs(pObject, pPopup)
-    retval = _fl_set_select_popup(pObject, pPopup)
+    check_if_FL_OBJECT_ptr(pFlObject)
+    keep_elem_refs(pFlObject, pPopup)
+    retval = _fl_set_select_popup(pFlObject, pPopup)
     return retval
 
 
-def fl_get_select_item(pObject):
+def fl_get_select_item(pFlObject):
     """
-        fl_get_select_item(pObject) -> pPopupReturn
+        fl_get_select_item(pFlObject) -> pPopupReturn
 
         @status: Tested + NoDoc + Demo = OK
     """
@@ -19403,19 +19747,19 @@ def fl_get_select_item(pObject):
             """FL_POPUP_RETURN * fl_get_select_item(FL_OBJECT * p1)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
-    keep_elem_refs(pObject)
-    retval = _fl_get_select_item(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
+    keep_elem_refs(pFlObject)
+    retval = _fl_get_select_item(pFlObject)
     return retval
 
 
-def fl_set_select_item(pObject, pPopupEntry):
+def fl_set_select_item(pFlObject, pPopupEntry):
     """
-        fl_set_select_item(pObject, pPopupEntry) -> pPopupReturn
+        fl_set_select_item(pFlObject, pPopupEntry) -> pPopupReturn
 
         Set a new item as currently selected.
 
-        @param pObject: pointer to select object
+        @param pFlObject: pointer to select object
         @param pPopupEntry: pointer to FL_POPUP_ENTRY class instance
 
         @status: HalfTested + NoDoc + Demo = NOT OK (FL_POPUP_ENTRY not prepared)
@@ -19429,15 +19773,15 @@ def fl_set_select_item(pObject, pPopupEntry):
                FL_POPUP_ENTRY * p2)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
-    keep_elem_refs(pObject, pPopupEntry)
-    retval = _fl_set_select_item(pObject, pPopupEntry)
+    check_if_FL_OBJECT_ptr(pFlObject)
+    keep_elem_refs(pFlObject, pPopupEntry)
+    retval = _fl_set_select_item(pFlObject, pPopupEntry)
     return retval
 
 
-def fl_get_select_item_by_value(pObject, value):
+def fl_get_select_item_by_value(pFlObject, value):
     """
-        fl_get_select_item_by_value(pObject, value) -> pPopupEntry
+        fl_get_select_item_by_value(pFlObject, value) -> pPopupEntry
 
         @status: Untested + NoDoc + NoDemo = NOT OK
     """
@@ -19450,16 +19794,16 @@ def fl_get_select_item_by_value(pObject, value):
                long int p2)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
     lvalue = convert_to_long(value)
-    keep_elem_refs(pObject, value, lvalue)
-    retval = _fl_get_select_item_by_value(pObject, lvalue)
+    keep_elem_refs(pFlObject, value, lvalue)
+    retval = _fl_get_select_item_by_value(pFlObject, lvalue)
     return retval
 
 
-def fl_get_select_item_by_label(pObject, label):
+def fl_get_select_item_by_label(pFlObject, label):
     """
-        fl_get_select_item_by_label(pObject, label) -> pPopupEntry
+        fl_get_select_item_by_label(pFlObject, label) -> pPopupEntry
 
         @status: Tested + NoDoc + Demo = OK
     """
@@ -19472,16 +19816,16 @@ def fl_get_select_item_by_label(pObject, label):
                const char * p2)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
     slabel = convert_to_string(label)
-    keep_elem_refs(pObject, label, slabel)
-    retval = _fl_get_select_item_by_label(pObject, slabel)
+    keep_elem_refs(pFlObject, label, slabel)
+    retval = _fl_get_select_item_by_label(pFlObject, slabel)
     return retval
 
 
-def fl_get_select_item_by_text(pObject, txtstr):
+def fl_get_select_item_by_text(pFlObject, txtstr):
     """
-        fl_get_select_item_by_text(pObject, txtstr) -> pPopupEntry
+        fl_get_select_item_by_text(pFlObject, txtstr) -> pPopupEntry
 
         @status: Untested + NoDoc + NoDemo = NOT OK
     """
@@ -19494,16 +19838,16 @@ def fl_get_select_item_by_text(pObject, txtstr):
                const char * p2)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
     stxtstr = convert_to_string(txtstr)
-    keep_elem_refs(pObject, txtstr, stxtstr)
-    retval = _fl_get_select_item_by_text(pObject, stxtstr)
+    keep_elem_refs(pFlObject, txtstr, stxtstr)
+    retval = _fl_get_select_item_by_text(pFlObject, stxtstr)
     return retval
 
 
-def fl_get_select_text_color(pObject):
+def fl_get_select_text_color(pFlObject):
     """
-        fl_get_select_text_color(pObject) -> color
+        fl_get_select_text_color(pFlObject) -> color
 
         @status: Untested + NoDoc + NoDemo = NOT OK
     """
@@ -19514,15 +19858,15 @@ def fl_get_select_text_color(pObject):
             """FL_COLOR fl_get_select_text_color(FL_OBJECT * p1)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
-    keep_elem_refs(pObject)
-    retval = _fl_get_select_text_color(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
+    keep_elem_refs(pFlObject)
+    retval = _fl_get_select_text_color(pFlObject)
     return retval
 
 
-def fl_set_select_text_color(pObject, colr):
+def fl_set_select_text_color(pFlObject, colr):
     """
-        fl_set_select_text_color(pObject, colr) -> color
+        fl_set_select_text_color(pFlObject, colr) -> color
 
         @status: Untested + NoDoc + NoDemo = NOT OK
     """
@@ -19533,20 +19877,20 @@ def fl_set_select_text_color(pObject, colr):
             """FL_COLOR fl_set_select_text_color(FL_OBJECT * p1, FL_COLOR p2)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
     check_admitted_listvalues(colr, xfc.COLOR_list)
     ulcolr = convert_to_FL_COLOR(colr)
-    keep_elem_refs(pObject, colr, ulcolr)
-    retval = _fl_set_select_text_color(pObject, ulcolr)
+    keep_elem_refs(pFlObject, colr, ulcolr)
+    retval = _fl_set_select_text_color(pFlObject, ulcolr)
     return retval
 
 
-def fl_get_select_text_font(pObject):
+def fl_get_select_text_font(pFlObject):
     """
-        fl_get_select_text_font(pObject) -> num, num1, num2
+        fl_get_select_text_font(pFlObject) -> num, num1, num2
 
         @attention: API change from XForms - upstream was
-           fl_get_select_text_font(pObject, p2, p3)
+           fl_get_select_text_font(pFlObject, p2, p3)
 
         @status: Untested + NoDoc + NoDemo = NOT OK
     """
@@ -19558,17 +19902,17 @@ def fl_get_select_text_font(pObject):
             """int fl_get_select_text_font(FL_OBJECT * p1, int * p2, int * p3)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
     num1, pnum1 = make_int_and_pointer()
     num2, pnum2 = make_int_and_pointer()
-    keep_elem_refs(pObject, num1, num2, pnum1, pnum2)
-    retval = _fl_get_select_text_font(pObject, pnum2, pnum2)
+    keep_elem_refs(pFlObject, num1, num2, pnum1, pnum2)
+    retval = _fl_get_select_text_font(pFlObject, pnum2, pnum2)
     return retval, num1.value, num2.value
 
 
-def fl_set_select_text_font(pObject, p2, p3):
+def fl_set_select_text_font(pFlObject, p2, p3):
     """
-        fl_set_select_text_font(pObject, p2, p3) -> font num.
+        fl_set_select_text_font(pFlObject, p2, p3) -> font num.
 
         @status: Untested + NoDoc + NoDemo = NOT OK
     """
@@ -19579,17 +19923,17 @@ def fl_set_select_text_font(pObject, p2, p3):
             """int fl_set_select_text_font(FL_OBJECT * p1, int p2, int p3)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
     ip2 = convert_to_int(p2)
     ip3 = convert_to_int(p3)
-    keep_elem_refs(pObject, p2, p3, ip2, ip3)
-    retval = _fl_set_select_text_font(pObject, ip2, ip3)
+    keep_elem_refs(pFlObject, p2, p3, ip2, ip3)
+    retval = _fl_set_select_text_font(pFlObject, ip2, ip3)
     return retval
 
 
-def fl_get_select_text_align(pObject):
+def fl_get_select_text_align(pFlObject):
     """
-        fl_get_select_text_align(pObject) -> num.
+        fl_get_select_text_align(pFlObject) -> num.
 
         @status: Untested + NoDoc + NoDemo = NOT OK
     """
@@ -19600,15 +19944,15 @@ def fl_get_select_text_align(pObject):
             """int fl_get_select_text_align(FL_OBJECT * p1)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
-    keep_elem_refs(pObject)
-    retval = _fl_get_select_text_align(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
+    keep_elem_refs(pFlObject)
+    retval = _fl_get_select_text_align(pFlObject)
     return retval
 
 
-def fl_set_select_text_align(pObject, p2):
+def fl_set_select_text_align(pFlObject, p2):
     """
-        fl_set_select_text_align(pObject, p2) -> num.
+        fl_set_select_text_align(pFlObject, p2) -> num.
 
         @status: Untested + NoDoc + NoDemo = NOT OK
     """
@@ -19619,16 +19963,16 @@ def fl_set_select_text_align(pObject, p2):
             """int fl_set_select_text_align(FL_OBJECT * p1, int p2)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
     ip2 = convert_to_int(p2)
-    keep_elem_refs(pObject, p2, ip2)
-    retval = _fl_set_select_text_align(pObject, ip2)
+    keep_elem_refs(pFlObject, p2, ip2)
+    retval = _fl_set_select_text_align(pFlObject, ip2)
     return retval
 
 
-def fl_set_select_policy(pObject, num):
+def fl_set_select_policy(pFlObject, num):
     """
-        fl_set_select_policy(pObject, num) -> num.
+        fl_set_select_policy(pFlObject, num) -> num.
 
         @status: Tested + NoDoc + Demo = OK
     """
@@ -19639,10 +19983,10 @@ def fl_set_select_policy(pObject, num):
             """int fl_set_select_policy(FL_OBJECT * p1, int p2)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
     inum = convert_to_int(num)
-    keep_elem_refs(pObject, num, inum)
-    retval = _fl_set_select_policy(pObject, inum)
+    keep_elem_refs(pFlObject, num, inum)
+    retval = _fl_set_select_policy(pFlObject, inum)
     return retval
 
 
@@ -19659,7 +20003,7 @@ def fl_set_select_policy(pObject, num):
 
 def fl_add_slider(slidertype, x, y, w, h, label):
     """
-        fl_add_slider(slidertype, x, y, w, h, label) -> pObject
+        fl_add_slider(slidertype, x, y, w, h, label) -> pFlObject
 
         Adds a slider to a form. No value is displayed.
 
@@ -19709,7 +20053,7 @@ def fl_add_slider(slidertype, x, y, w, h, label):
 
 def fl_add_valslider(slidertype, x, y, w, h, label):
     """
-        fl_add_valslider(slidertype, x, y, w, h, label) -> pObject
+        fl_add_valslider(slidertype, x, y, w, h, label) -> pFlObject
 
         Adds a slider to a form. Its value is displayed above or to the
         left of the slider.
@@ -19755,13 +20099,13 @@ def fl_add_valslider(slidertype, x, y, w, h, label):
     return retval
 
 
-def fl_set_slider_value(pObject, val):
+def fl_set_slider_value(pFlObject, val):
     """
-        fl_set_slider_value(pObject, val)
+        fl_set_slider_value(pFlObject, val)
 
         Changes the value of a slider.
 
-        @param pObject: pointer to object
+        @param pFlObject: pointer to object
         @param val: new value of slider
 
         @status: Tested + NoDoc + Demo = OK
@@ -19773,19 +20117,19 @@ def fl_set_slider_value(pObject, val):
             """void fl_set_slider_value(FL_OBJECT * ob, double val)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
     fval = convert_to_double(val)
-    keep_elem_refs(pObject, val, fval)
-    _fl_set_slider_value(pObject, fval)
+    keep_elem_refs(pFlObject, val, fval)
+    _fl_set_slider_value(pFlObject, fval)
 
 
-def fl_get_slider_value(pObject):
+def fl_get_slider_value(pFlObject):
     """
-        fl_get_slider_value(pObject) -> value[float]
+        fl_get_slider_value(pFlObject) -> value[float]
 
         Returns value of a slider.
 
-        @param pObject: pointer to object
+        @param pFlObject: pointer to object
 
         @status: Tested + NoDoc + Demo = OK
     """
@@ -19796,19 +20140,19 @@ def fl_get_slider_value(pObject):
             """double fl_get_slider_value(FL_OBJECT * ob)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
-    keep_elem_refs(pObject)
-    retval = _fl_get_slider_value(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
+    keep_elem_refs(pFlObject)
+    retval = _fl_get_slider_value(pFlObject)
     return retval
 
 
-def fl_set_slider_bounds(pObject, minbound, maxbound):
+def fl_set_slider_bounds(pFlObject, minbound, maxbound):
     """
-        fl_set_slider_bounds(pObject, minbound, maxbound)
+        fl_set_slider_bounds(pFlObject, minbound, maxbound)
 
         Sets bounds/limits of a slider.
 
-        @param pObject: pointer to object
+        @param pFlObject: pointer to object
         @param minbound: minimum bound of slider
         @param maxbound: maximum bound of slider
 
@@ -19822,23 +20166,23 @@ def fl_set_slider_bounds(pObject, minbound, maxbound):
                double max)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
     fminbound = convert_to_double(minbound)
     fmaxbound = convert_to_double(maxbound)
-    keep_elem_refs(pObject, minbound, maxbound, fminbound, fmaxbound)
-    _fl_set_slider_bounds(pObject, fminbound, fmaxbound)
+    keep_elem_refs(pFlObject, minbound, maxbound, fminbound, fmaxbound)
+    _fl_set_slider_bounds(pFlObject, fminbound, fmaxbound)
 
 
-def fl_get_slider_bounds(pObject):
+def fl_get_slider_bounds(pFlObject):
     """
-        fl_get_slider_bounds(pObject) -> minbound[float], maxbound[float]
+        fl_get_slider_bounds(pFlObject) -> minbound[float], maxbound[float]
 
         Returns bounds/limits of a slider.
 
-        @param pObject: pointer to object
+        @param pFlObject: pointer to object
 
         @attention: API change from XForms - upstream was
-           fl_get_slider_bounds(pObject, minbound, maxbound)
+           fl_get_slider_bounds(pFlObject, minbound, maxbound)
 
         @status: Untested + NoDoc + NoDemo = NOT OK
     """
@@ -19851,20 +20195,20 @@ def fl_get_slider_bounds(pObject):
                double * max)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
     minbound, pminbound = make_double_and_pointer()
     maxbound, pmaxbound = make_double_and_pointer()
-    keep_elem_refs(pObject, minbound, maxbound, pminbound, pmaxbound)
-    _fl_get_slider_bounds(pObject, pminbound, pmaxbound)
+    keep_elem_refs(pFlObject, minbound, maxbound, pminbound, pmaxbound)
+    _fl_get_slider_bounds(pFlObject, pminbound, pmaxbound)
     return minbound.value, maxbound.value
 
 
 # fl_set_slider_return function placeholder (deprecated)
 
 
-def fl_set_slider_step(pObject, value):
+def fl_set_slider_step(pFlObject, value):
     """
-        fl_set_slider_step(pObject, value)
+        fl_set_slider_step(pFlObject, value)
 
         @status: Untested + NoDoc + NoDemo = NOT OK
     """
@@ -19875,15 +20219,15 @@ def fl_set_slider_step(pObject, value):
             """void fl_set_slider_step(FL_OBJECT * ob, double value)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
     fvalue = convert_to_double(value)
-    keep_elem_refs(pObject, value, fvalue)
-    _fl_set_slider_step(pObject, fvalue)
+    keep_elem_refs(pFlObject, value, fvalue)
+    _fl_set_slider_step(pFlObject, fvalue)
 
 
-def fl_set_slider_increment(pObject, leftbtnval, midlbtnval):
+def fl_set_slider_increment(pFlObject, leftbtnval, midlbtnval):
     """
-        fl_set_slider_increment(pObject, leftbtnval, midlbtnval)
+        fl_set_slider_increment(pFlObject, leftbtnval, midlbtnval)
 
         @status: Untested + NoDoc + NoDemo = NOT OK
     """
@@ -19895,18 +20239,18 @@ def fl_set_slider_increment(pObject, leftbtnval, midlbtnval):
                double r)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
     fleftbtnval = convert_to_double(leftbtnval)
     fmidlbtnval = convert_to_double(midlbtnval)
-    keep_elem_refs(pObject, leftbtnval, midlbtnval, fleftbtnval, fmidlbtnval)
-    _fl_set_slider_increment(pObject, fleftbtnval, fmidlbtnval)
+    keep_elem_refs(pFlObject, leftbtnval, midlbtnval, fleftbtnval, fmidlbtnval)
+    _fl_set_slider_increment(pFlObject, fleftbtnval, fmidlbtnval)
 
 
-def fl_get_slider_increment(pObject):
-    """ fl_get_slider_increment(pObject) -> leftbtnval, midlbtnval
+def fl_get_slider_increment(pFlObject):
+    """ fl_get_slider_increment(pFlObject) -> leftbtnval, midlbtnval
 
         @attention: API change from XForms - upstream was
-                    fl_get_slider_increment(pObject, leftbtnval, midlbtnval)
+                    fl_get_slider_increment(pFlObject, leftbtnval, midlbtnval)
 
         @status: Untested + NoDoc + NoDemo = NOT OK
     """
@@ -19919,21 +20263,21 @@ def fl_get_slider_increment(pObject):
                double * r)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
     leftbtnval, pleftbtnval = make_double_and_pointer()
     midlbtnval, pmidlbtnval = make_double_and_pointer()
-    keep_elem_refs(pObject, leftbtnval, midlbtnval, pleftbtnval, pmidlbtnval)
-    _fl_get_slider_increment(pObject, pleftbtnval, pmidlbtnval)
+    keep_elem_refs(pFlObject, leftbtnval, midlbtnval, pleftbtnval, pmidlbtnval)
+    _fl_get_slider_increment(pFlObject, pleftbtnval, pmidlbtnval)
     return leftbtnval.value, midlbtnval.value
 
 
-def fl_set_slider_size(pObject, size):
+def fl_set_slider_size(pFlObject, size):
     """
-        fl_set_slider_size(pObject, size)
+        fl_set_slider_size(pFlObject, size)
 
         Sets the size of a slider.
 
-        @param pObject: pointer to object
+        @param pFlObject: pointer to object
         @param size: value of size of the slider
 
         @status: Tested + NoDoc + Demo = OK
@@ -19945,19 +20289,19 @@ def fl_set_slider_size(pObject, size):
             """void fl_set_slider_size(FL_OBJECT * ob, double size)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
     fsize = convert_to_double(size)
-    keep_elem_refs(pObject, size, fsize)
-    _fl_set_slider_size(pObject, fsize)
+    keep_elem_refs(pFlObject, size, fsize)
+    _fl_set_slider_size(pFlObject, fsize)
 
 
-def fl_set_slider_precision(pObject, precnum):
+def fl_set_slider_precision(pFlObject, precnum):
     """
-        fl_set_slider_precision(pObject, precnum)
+        fl_set_slider_precision(pFlObject, precnum)
 
         Sets precision with which value a valslider is shown.
 
-        @param pObject: pointer to object
+        @param pFlObject: pointer to object
         @param precnum: precision of shown value
 
         @status: Untested + NoDoc + NoDemo = NOT OK
@@ -19969,21 +20313,21 @@ def fl_set_slider_precision(pObject, precnum):
             """void fl_set_slider_precision(FL_OBJECT * ob, int prec)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
     iprecnum = convert_to_int(precnum)
-    keep_elem_refs(pObject, precnum, iprecnum)
-    _fl_set_slider_precision(pObject, iprecnum)
+    keep_elem_refs(pFlObject, precnum, iprecnum)
+    _fl_set_slider_precision(pFlObject, iprecnum)
 
 
-def fl_set_slider_filter(pObject, py_ValFilter):
+def fl_set_slider_filter(pFlObject, py_ValFilter):
     """
-        fl_set_slider_filter(pObject, py_ValFilter)
+        fl_set_slider_filter(pFlObject, py_ValFilter)
 
         Overrides the default (slider value shown in floating point format)
         by registering a filter function.
 
-        @param pObject: pointer to oject
-        @param py_ValFilter: python function, fn(pObject, valfloat,
+        @param pFlObject: pointer to oject
+        @param py_ValFilter: python function, fn(pFlObject, valfloat,
            intprecis) -> string
 
         @status: Untested + NoDoc + NoDemo = NOT OK
@@ -19995,11 +20339,11 @@ def fl_set_slider_filter(pObject, py_ValFilter):
             """void fl_set_slider_filter(FL_OBJECT * ob, FL_VAL_FILTER filter)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
     c_ValFilter = FL_VAL_FILTER(py_ValFilter)
     keep_cfunc_refs(c_ValFilter, py_ValFilter)
-    keep_elem_refs(pObject)
-    _fl_set_slider_filter(pObject, c_ValFilter)
+    keep_elem_refs(pFlObject)
+    _fl_set_slider_filter(pFlObject, c_ValFilter)
 
 
 # fl_create_spinner function placeholder (internal)
@@ -20007,7 +20351,7 @@ def fl_set_slider_filter(pObject, py_ValFilter):
 
 def fl_add_spinner(spinnertype, x, y, w, h, label):
     """
-        fl_add_spinner(spinnertype, x, y, w, h, label) -> pObject
+        fl_add_spinner(spinnertype, x, y, w, h, label) -> pFlObject
 
         Adds a spinner object.
 
@@ -20044,9 +20388,9 @@ def fl_add_spinner(spinnertype, x, y, w, h, label):
     return retval
 
 
-def fl_get_spinner_value(pObject):
+def fl_get_spinner_value(pFlObject):
     """
-        fl_get_spinner_value(pObject) -> floatval
+        fl_get_spinner_value(pFlObject) -> floatval
 
         @status: Untested + NoDoc + NoDemo = NOT OK
     """
@@ -20057,15 +20401,15 @@ def fl_get_spinner_value(pObject):
             """double fl_get_spinner_value(FL_OBJECT * obj)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
-    keep_elem_refs(pObject)
-    retval = _fl_get_spinner_value(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
+    keep_elem_refs(pFlObject)
+    retval = _fl_get_spinner_value(pFlObject)
     return retval
 
 
-def fl_set_spinner_value(pObject, val):
+def fl_set_spinner_value(pFlObject, val):
     """
-        fl_set_spinner_value(pObject, val) -> num.
+        fl_set_spinner_value(pFlObject, val) -> num.
 
         @status: Untested + NoDoc + NoDemo = NOT OK
     """
@@ -20075,15 +20419,15 @@ def fl_set_spinner_value(pObject, val):
             cty.c_double, [cty.POINTER(xfc.FL_OBJECT), cty.c_double],
             """double fl_set_spinner_value(FL_OBJECT * obj, double val)
             """)
-    check_if_FL_OBJECT_ptr(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
     fval = convert_to_double(val)
-    keep_elem_refs(pObject, val, fval)
-    _fl_set_spinner_value(pObject, fval)
+    keep_elem_refs(pFlObject, val, fval)
+    _fl_set_spinner_value(pFlObject, fval)
 
 
-def fl_set_spinner_bounds(pObject, minbound, maxbound):
+def fl_set_spinner_bounds(pFlObject, minbound, maxbound):
     """
-        fl_set_spinner_bounds(pObject, minbound, maxbound)
+        fl_set_spinner_bounds(pFlObject, minbound, maxbound)
 
         @status: Untested + NoDoc + NoDemo = NOT OK
     """
@@ -20095,19 +20439,19 @@ def fl_set_spinner_bounds(pObject, minbound, maxbound):
                double max)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
     fminbound = convert_to_double(minbound)
     fmaxbound = convert_to_double(maxbound)
-    keep_elem_refs(pObject, minbound, maxbound, fminbound, fmaxbound)
-    _fl_set_spinner_bounds(pObject, fminbound, fmaxbound)
+    keep_elem_refs(pFlObject, minbound, maxbound, fminbound, fmaxbound)
+    _fl_set_spinner_bounds(pFlObject, fminbound, fmaxbound)
 
 
-def fl_get_spinner_bounds(pObject):
+def fl_get_spinner_bounds(pFlObject):
     """
-        fl_get_spinner_bounds(pObject) -> minbound, maxbound
+        fl_get_spinner_bounds(pFlObject) -> minbound, maxbound
 
         @attention: API change from XForms - upstream was
-                    fl_get_spinner_bounds(pObject, minbound, maxbound)
+                    fl_get_spinner_bounds(pFlObject, minbound, maxbound)
 
         @status: Untested + NoDoc + NoDemo = NOT OK
     """
@@ -20120,17 +20464,17 @@ def fl_get_spinner_bounds(pObject):
                double * max)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
     minbound, pminbound = make_double_and_pointer()
     maxbound, pmaxbound = make_double_and_pointer()
-    keep_elem_refs(pObject, minbound, maxbound, pminbound, pmaxbound)
-    _fl_get_spinner_bounds(pObject, pminbound, pmaxbound)
+    keep_elem_refs(pFlObject, minbound, maxbound, pminbound, pmaxbound)
+    _fl_get_spinner_bounds(pFlObject, pminbound, pmaxbound)
     return minbound.value, maxbound.value
 
 
-def fl_set_spinner_step(pObject, step):
+def fl_set_spinner_step(pFlObject, step):
     """
-        fl_set_spinner_step(pObject, step)
+        fl_set_spinner_step(pFlObject, step)
 
         @status: Untested + NoDoc + NoDemo = NOT OK
     """
@@ -20141,15 +20485,15 @@ def fl_set_spinner_step(pObject, step):
             """void fl_set_spinner_step(FL_OBJECT * obj, double step)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
     fstep = convert_to_double(step)
-    keep_elem_refs(pObject, step, fstep)
-    _fl_set_spinner_step(pObject, fstep)
+    keep_elem_refs(pFlObject, step, fstep)
+    _fl_set_spinner_step(pFlObject, fstep)
 
 
-def fl_get_spinner_step(pObject):
+def fl_get_spinner_step(pFlObject):
     """
-        fl_get_spinner_step(pObject) -> num.
+        fl_get_spinner_step(pFlObject) -> num.
 
         @status: Untested + NoDoc + NoDemo = NOT OK
     """
@@ -20160,15 +20504,15 @@ def fl_get_spinner_step(pObject):
             """double fl_get_spinner_step(FL_OBJECT * obj)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
-    keep_elem_refs(pObject)
-    retval = _fl_get_spinner_step(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
+    keep_elem_refs(pFlObject)
+    retval = _fl_get_spinner_step(pFlObject)
     return retval
 
 
-def fl_set_spinner_precision(pObject, precnum):
+def fl_set_spinner_precision(pFlObject, precnum):
     """
-        fl_set_spinner_precision(pObject, precnum)
+        fl_set_spinner_precision(pFlObject, precnum)
 
         @status: Untested + NoDoc + NoDemo = NOT OK
     """
@@ -20179,15 +20523,15 @@ def fl_set_spinner_precision(pObject, precnum):
             """void fl_set_spinner_precision(FL_OBJECT * obj, int prec)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
     iprecnum = convert_to_int(precnum)
-    keep_elem_refs(pObject, precnum, iprecnum)
-    _fl_set_spinner_precision(pObject, iprecnum)
+    keep_elem_refs(pFlObject, precnum, iprecnum)
+    _fl_set_spinner_precision(pFlObject, iprecnum)
 
 
-def fl_get_spinner_precision(pObject):
+def fl_get_spinner_precision(pFlObject):
     """
-        fl_get_spinner_precision(pObject) -> num.
+        fl_get_spinner_precision(pFlObject) -> num.
 
         @status: Untested + NoDoc + NoDemo = NOT OK
     """
@@ -20198,15 +20542,15 @@ def fl_get_spinner_precision(pObject):
             """int fl_get_spinner_precision(FL_OBJECT * obj)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
-    keep_elem_refs(pObject)
-    retval = _fl_get_spinner_precision(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
+    keep_elem_refs(pFlObject)
+    retval = _fl_get_spinner_precision(pFlObject)
     return retval
 
 
-def fl_get_spinner_input(pObject):
+def fl_get_spinner_input(pFlObject):
     """
-        fl_get_spinner_input(pObject) -> pObject
+        fl_get_spinner_input(pFlObject) -> pFlObject
 
         @status: Untested + NoDoc + NoDemo = NOT OK
     """
@@ -20217,15 +20561,15 @@ def fl_get_spinner_input(pObject):
             """FL_OBJECT * fl_get_spinner_input(FL_OBJECT * obj)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
-    keep_elem_refs(pObject)
-    retval = _fl_get_spinner_input(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
+    keep_elem_refs(pFlObject)
+    retval = _fl_get_spinner_input(pFlObject)
     return retval
 
 
-def fl_get_spinner_up_button(pObject):
+def fl_get_spinner_up_button(pFlObject):
     """
-        fl_get_spinner_up_button(pObject) -> pObject
+        fl_get_spinner_up_button(pFlObject) -> pFlObject
 
         @status: Untested + NoDoc + NoDemo = NOT OK
     """
@@ -20236,15 +20580,15 @@ def fl_get_spinner_up_button(pObject):
             """FL_OBJECT * fl_get_spinner_up_button(FL_OBJECT * obj)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
-    keep_elem_refs(pObject)
-    retval = _fl_get_spinner_up_button(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
+    keep_elem_refs(pFlObject)
+    retval = _fl_get_spinner_up_button(pFlObject)
     return retval
 
 
-def fl_get_spinner_down_button(pObject):
+def fl_get_spinner_down_button(pFlObject):
     """
-        fl_get_spinner_down_button(pObject) -> pObject
+        fl_get_spinner_down_button(pFlObject) -> pFlObject
 
         @status: Untested + NoDoc + NoDemo = NOT OK
     """
@@ -20255,9 +20599,9 @@ def fl_get_spinner_down_button(pObject):
             """FL_OBJECT * fl_get_spinner_down_button(FL_OBJECT * obj)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
-    keep_elem_refs(pObject)
-    retval = _fl_get_spinner_down_button(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
+    keep_elem_refs(pFlObject)
+    retval = _fl_get_spinner_down_button(pFlObject)
     return retval
 
 
@@ -20271,7 +20615,7 @@ def fl_get_spinner_down_button(pObject):
 
 def fl_add_tabfolder(foldertype, x, y, w, h, label):
     """
-        fl_add_tabfolder(foldertype, x, y, w, h, label) -> pObject
+        fl_add_tabfolder(foldertype, x, y, w, h, label) -> pFlObject
 
         Adds a tabfolder object.
 
@@ -20306,9 +20650,9 @@ def fl_add_tabfolder(foldertype, x, y, w, h, label):
     return retval
 
 
-def fl_addto_tabfolder(pObject, title, pForm):
+def fl_addto_tabfolder(pFlObject, title, pFlForm):
     """
-        fl_addto_tabfolder(pObject, title, pForm) -> pObject
+        fl_addto_tabfolder(pFlObject, title, pFlForm) -> pFlObject
 
         @status: Tested + NoDoc + Demo = OK
     """
@@ -20321,16 +20665,16 @@ def fl_addto_tabfolder(pObject, title, pForm):
                const char * title, FL_FORM * form)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
     stitle = convert_to_string(title)
-    keep_elem_refs(pObject, title, pForm, stitle)
-    retval = _fl_addto_tabfolder(pObject, stitle, pForm)
+    keep_elem_refs(pFlObject, title, pFlForm, stitle)
+    retval = _fl_addto_tabfolder(pFlObject, stitle, pFlForm)
     return retval
 
 
-def fl_get_tabfolder_folder_bynumber(pObject, num):
+def fl_get_tabfolder_folder_bynumber(pFlObject, num):
     """
-        fl_get_tabfolder_folder_bynumber(pObject, num) -> pForm
+        fl_get_tabfolder_folder_bynumber(pFlObject, num) -> pFlForm
 
         @status: Untested + NoDoc + NoDemo = NOT OK
     """
@@ -20341,16 +20685,16 @@ def fl_get_tabfolder_folder_bynumber(pObject, num):
             """FL_FORM * fl_get_tabfolder_folder_bynumber(FL_OBJECT * ob,
                int num)
             """)
-    check_if_FL_OBJECT_ptr(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
     inum = convert_to_int(num)
-    keep_elem_refs(pObject, num, inum)
-    retval = _fl_get_tabfolder_folder_bynumber(pObject, inum)
+    keep_elem_refs(pFlObject, num, inum)
+    retval = _fl_get_tabfolder_folder_bynumber(pFlObject, inum)
     return retval
 
 
-def fl_get_tabfolder_folder_byname(pObject, name):
+def fl_get_tabfolder_folder_byname(pFlObject, name):
     """
-        fl_get_tabfolder_folder_byname(pObject, name) -> pForm
+        fl_get_tabfolder_folder_byname(pFlObject, name) -> pFlForm
 
         @status: Untested + NoDoc + NoDemo = NOT OK
     """
@@ -20362,16 +20706,16 @@ def fl_get_tabfolder_folder_byname(pObject, name):
                const char * name)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
     sname = convert_to_string(name)
-    keep_elem_refs(pObject, name, sname)
-    retval = _fl_get_tabfolder_folder_byname(pObject, sname)
+    keep_elem_refs(pFlObject, name, sname)
+    retval = _fl_get_tabfolder_folder_byname(pFlObject, sname)
     return retval
 
 
-def fl_delete_folder(pObject, pForm):
+def fl_delete_folder(pFlObject, pFlForm):
     """
-        fl_delete_folder(pObject, pForm)
+        fl_delete_folder(pFlObject, pFlForm)
 
         @status: Untested + NoDoc + NoDemo = NOT OK
     """
@@ -20382,14 +20726,14 @@ def fl_delete_folder(pObject, pForm):
             """void fl_delete_folder(FL_OBJECT * ob, FL_FORM * form)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
-    keep_elem_refs(pObject, pForm)
-    _fl_delete_folder(pObject, pForm)
+    check_if_FL_OBJECT_ptr(pFlObject)
+    keep_elem_refs(pFlObject, pFlForm)
+    _fl_delete_folder(pFlObject, pFlForm)
 
 
-def fl_delete_folder_bynumber(pObject, num):
+def fl_delete_folder_bynumber(pFlObject, num):
     """
-        fl_delete_folder_bynumber(pObject, num)
+        fl_delete_folder_bynumber(pFlObject, num)
 
         @status: Untested + NoDoc + NoDemo = NOT OK
     """
@@ -20400,15 +20744,15 @@ def fl_delete_folder_bynumber(pObject, num):
             """void fl_delete_folder_bynumber(FL_OBJECT * ob, int num)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
     inum = convert_to_int(num)
-    keep_elem_refs(pObject, num, inum)
-    _fl_delete_folder_bynumber(pObject, inum)
+    keep_elem_refs(pFlObject, num, inum)
+    _fl_delete_folder_bynumber(pFlObject, inum)
 
 
-def fl_delete_folder_byname(pObject, name):
+def fl_delete_folder_byname(pFlObject, name):
     """
-        fl_delete_folder_byname(pObject, name)
+        fl_delete_folder_byname(pFlObject, name)
 
         @status: Untested + NoDoc + NoDemo = NOT OK
     """
@@ -20419,14 +20763,14 @@ def fl_delete_folder_byname(pObject, name):
             """void fl_delete_folder_byname(FL_OBJECT * ob, const char * name)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
     sname = convert_to_string(name)
-    keep_elem_refs(pObject, name, sname)
-    _fl_delete_folder_byname(pObject, sname)
+    keep_elem_refs(pFlObject, name, sname)
+    _fl_delete_folder_byname(pFlObject, sname)
 
 
-def fl_set_folder(pObject, pForm):
-    """ fl_set_folder(pObject, pForm)
+def fl_set_folder(pFlObject, pFlForm):
+    """ fl_set_folder(pFlObject, pFlForm)
 
         @status: Untested + NoDoc + NoDemo = NOT OK
     """
@@ -20437,14 +20781,14 @@ def fl_set_folder(pObject, pForm):
             """void fl_set_folder(FL_OBJECT * ob, FL_FORM * form)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
-    check_if_FL_FORM_ptr(pForm)
-    keep_elem_refs(pObject, pForm)
-    _fl_set_folder(pObject, pForm)
+    check_if_FL_OBJECT_ptr(pFlObject)
+    check_if_FL_FORM_ptr(pFlForm)
+    keep_elem_refs(pFlObject, pFlForm)
+    _fl_set_folder(pFlObject, pFlForm)
 
 
-def fl_set_folder_byname(pObject, name):
-    """ fl_set_folder_byname(pObject, name)
+def fl_set_folder_byname(pFlObject, name):
+    """ fl_set_folder_byname(pFlObject, name)
 
         @status: Untested + NoDoc + NoDemo = NOT OK
     """
@@ -20455,15 +20799,15 @@ def fl_set_folder_byname(pObject, name):
             """void fl_set_folder_byname(FL_OBJECT * ob, const char * name)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
     sname = convert_to_string(name)
-    keep_elem_refs(pObject, name, sname)
-    _fl_set_folder_byname(pObject, name)
+    keep_elem_refs(pFlObject, name, sname)
+    _fl_set_folder_byname(pFlObject, name)
 
 
-def fl_set_folder_bynumber(pObject, num):
+def fl_set_folder_bynumber(pFlObject, num):
     """
-        fl_set_folder_bynumber(pObject, num)
+        fl_set_folder_bynumber(pFlObject, num)
 
         @status: Tested + NoDoc + Demo = OK
     """
@@ -20474,17 +20818,17 @@ def fl_set_folder_bynumber(pObject, num):
             """void fl_set_folder_bynumber(FL_OBJECT * ob, int num)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
     inum = convert_to_int(num)
-    keep_elem_refs(pObject, num, inum)
-    _fl_set_folder_bynumber(pObject, inum)
+    keep_elem_refs(pFlObject, num, inum)
+    _fl_set_folder_bynumber(pFlObject, inum)
 
 
-def fl_get_folder(pObject):
+def fl_get_folder(pFlObject):
     """
-        fl_get_folder(pObject) -> pForm
+        fl_get_folder(pFlObject) -> pFlForm
 
-        @param pObject: pointer to object
+        @param pFlObject: pointer to object
 
         @status: Untested + NoDoc + NoDemo = NOT OK
     """
@@ -20495,17 +20839,17 @@ def fl_get_folder(pObject):
             """FL_FORM * fl_get_folder(FL_OBJECT * ob)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
-    keep_elem_refs(pObject)
-    retval = _fl_get_folder(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
+    keep_elem_refs(pFlObject)
+    retval = _fl_get_folder(pFlObject)
     return retval
 
 
-def fl_get_folder_number(pObject):
+def fl_get_folder_number(pFlObject):
     """
-        fl_get_folder_number(pObject) -> folder num.
+        fl_get_folder_number(pFlObject) -> folder num.
 
-        @param pObject: pointer to object
+        @param pFlObject: pointer to object
 
         @status: Untested + NoDoc + NoDemo = NOT OK
     """
@@ -20516,17 +20860,17 @@ def fl_get_folder_number(pObject):
             """int fl_get_folder_number(FL_OBJECT * ob)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
-    keep_elem_refs(pObject)
-    retval = _fl_get_folder_number(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
+    keep_elem_refs(pFlObject)
+    retval = _fl_get_folder_number(pFlObject)
     return retval
 
 
-def fl_get_folder_name(pObject):
+def fl_get_folder_name(pFlObject):
     """
-        fl_get_folder_name(pObject) -> name string
+        fl_get_folder_name(pFlObject) -> name string
 
-        @param pObject: pointer to object
+        @param pFlObject: pointer to object
 
         @status: Untested + NoDoc + NoDemo = NOT OK
     """
@@ -20537,17 +20881,17 @@ def fl_get_folder_name(pObject):
             """const char * fl_get_folder_name(FL_OBJECT * ob)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
-    keep_elem_refs(pObject)
-    retval = _fl_get_folder_name(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
+    keep_elem_refs(pFlObject)
+    retval = _fl_get_folder_name(pFlObject)
     return retval
 
 
-def fl_get_tabfolder_numfolders(pObject):
+def fl_get_tabfolder_numfolders(pFlObject):
     """
-        fl_get_tabfolder_numfolders(pObject) -> num.
+        fl_get_tabfolder_numfolders(pFlObject) -> num.
 
-        @param pObject: pointer to object
+        @param pFlObject: pointer to object
 
         @status: Untested + NoDoc + NoDemo = NOT OK
     """
@@ -20558,17 +20902,17 @@ def fl_get_tabfolder_numfolders(pObject):
             """int fl_get_tabfolder_numfolders(FL_OBJECT * ob)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
-    keep_elem_refs(pObject)
-    retval = _fl_get_tabfolder_numfolders(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
+    keep_elem_refs(pFlObject)
+    retval = _fl_get_tabfolder_numfolders(pFlObject)
     return retval
 
 
-def fl_get_active_folder(pObject):
+def fl_get_active_folder(pFlObject):
     """
-        fl_get_active_folder(pObject) -> pForm
+        fl_get_active_folder(pFlObject) -> pFlForm
 
-        @param pObject: pointer to object
+        @param pFlObject: pointer to object
 
         @status: Tested + NoDoc + Demo = OK
     """
@@ -20579,17 +20923,17 @@ def fl_get_active_folder(pObject):
             """FL_FORM * fl_get_active_folder(FL_OBJECT * ob)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
-    keep_elem_refs(pObject)
-    retval = _fl_get_active_folder(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
+    keep_elem_refs(pFlObject)
+    retval = _fl_get_active_folder(pFlObject)
     return retval
 
 
-def fl_get_active_folder_number(pObject):
+def fl_get_active_folder_number(pFlObject):
     """
-        fl_get_active_folder_number(pObject) -> num.
+        fl_get_active_folder_number(pFlObject) -> num.
 
-        @param pObject: pointer to object
+        @param pFlObject: pointer to object
 
         @status: Untested + NoDoc + NoDemo = NOT OK
     """
@@ -20600,17 +20944,17 @@ def fl_get_active_folder_number(pObject):
             """int fl_get_active_folder_number(FL_OBJECT * ob)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
-    keep_elem_refs(pObject)
-    retval = _fl_get_active_folder_number(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
+    keep_elem_refs(pFlObject)
+    retval = _fl_get_active_folder_number(pFlObject)
     return retval
 
 
-def fl_get_active_folder_name(pObject):
+def fl_get_active_folder_name(pFlObject):
     """
-        fl_get_active_folder_name(pObject) -> name string
+        fl_get_active_folder_name(pFlObject) -> name string
 
-        @param pObject: pointer to object
+        @param pFlObject: pointer to object
 
         @status: Untested + NoDoc + NoDemo = NOT OK
     """
@@ -20621,20 +20965,20 @@ def fl_get_active_folder_name(pObject):
             """const char * fl_get_active_folder_name(FL_OBJECT * ob)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
-    keep_elem_refs(pObject)
-    retval = _fl_get_active_folder_name(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
+    keep_elem_refs(pFlObject)
+    retval = _fl_get_active_folder_name(pFlObject)
     return retval
 
 
-def fl_get_folder_area(pObject):
+def fl_get_folder_area(pFlObject):
     """
-        fl_get_folder_area(pObject) -> x, y, w, h
+        fl_get_folder_area(pFlObject) -> x, y, w, h
 
-        @param pObject: pointer to object
+        @param pFlObject: pointer to object
 
         @attention: API change from XForms - upstream was
-                    fl_get_folder_area(pObject, x, y, w, h)
+                    fl_get_folder_area(pFlObject, x, y, w, h)
 
         @status: Untested + NoDoc + NoDemo = NOT OK
     """
@@ -20648,21 +20992,21 @@ def fl_get_folder_area(pObject):
                FL_Coord * y, FL_Coord * w, FL_Coord * h)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
     x, px = make_int_and_pointer()
     y, py = make_int_and_pointer()
     w, pw = make_int_and_pointer()
     h, ph = make_int_and_pointer()
-    keep_elem_refs(pObject, x, y, w, h, px, py, pw, ph)
-    _fl_get_folder_area(pObject, px, py, pw, ph)
+    keep_elem_refs(pFlObject, x, y, w, h, px, py, pw, ph)
+    _fl_get_folder_area(pFlObject, px, py, pw, ph)
     return x.value, y.value, w.value, h.value
 
 
-def fl_replace_folder_bynumber(pObject, num, pForm):
+def fl_replace_folder_bynumber(pFlObject, num, pFlForm):
     """
-        fl_replace_folder_bynumber(pObject, num, pForm)
+        fl_replace_folder_bynumber(pFlObject, num, pFlForm)
 
-        @param pObject: pointer to object
+        @param pFlObject: pointer to object
 
         @status: Untested + NoDoc + NoDemo = NOT OK
     """
@@ -20674,17 +21018,17 @@ def fl_replace_folder_bynumber(pObject, num, pForm):
                FL_FORM * form)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
     inum = convert_to_int(num)
-    keep_elem_refs(pObject, num, pForm, inum)
-    _fl_replace_folder_bynumber(pObject, inum, pForm)
+    keep_elem_refs(pFlObject, num, pFlForm, inum)
+    _fl_replace_folder_bynumber(pFlObject, inum, pFlForm)
 
 
-def fl_set_tabfolder_autofit(pObject, num):
+def fl_set_tabfolder_autofit(pFlObject, num):
     """
-        fl_set_tabfolder_autofit(pObject, num) -> num.
+        fl_set_tabfolder_autofit(pFlObject, num) -> num.
 
-        @param pObject: pointer to object
+        @param pFlObject: pointer to object
 
         @status: Untested + NoDoc + NoDemo = NOT OK
     """
@@ -20695,10 +21039,10 @@ def fl_set_tabfolder_autofit(pObject, num):
             """int fl_set_tabfolder_autofit(FL_OBJECT * ob, int y)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
     inum = convert_to_int(num)
-    keep_elem_refs(pObject, num, inum)
-    retval = _fl_set_tabfolder_autofit(pObject, inum)
+    keep_elem_refs(pFlObject, num, inum)
+    retval = _fl_set_tabfolder_autofit(pFlObject, inum)
     return retval
 
 
@@ -20725,11 +21069,11 @@ def fl_set_default_tabfolder_corner(npixels):
     return retval
 
 
-def fl_set_tabfolder_offset(pObject, offset):
+def fl_set_tabfolder_offset(pFlObject, offset):
     """
-        fl_set_tabfolder_offset(pObject, offset) -> num.
+        fl_set_tabfolder_offset(pFlObject, offset) -> num.
 
-        @param pObject: pointer to tabfolder object
+        @param pFlObject: pointer to tabfolder object
 
         @status: Untested + NoDoc + NoDemo = NOT OK
     """
@@ -20740,10 +21084,10 @@ def fl_set_tabfolder_offset(pObject, offset):
             """int fl_set_tabfolder_offset(FL_OBJECT * ob, int offset)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
     ioffset = convert_to_int(offset)
-    keep_elem_refs(pObject, offset, ioffset)
-    retval = _fl_set_tabfolder_offset(pObject, ioffset)
+    keep_elem_refs(pFlObject, offset, ioffset)
+    retval = _fl_set_tabfolder_offset(pFlObject, ioffset)
     return retval
 
 
@@ -20757,7 +21101,7 @@ def fl_set_tabfolder_offset(pObject, offset):
 
 def fl_add_text(texttype, x, y, w, h, label):
     """
-        fl_add_text(texttype, x, y, w, h, label) -> pObject
+        fl_add_text(texttype, x, y, w, h, label) -> pFlObject
 
         Adds a text object.
 
@@ -20798,11 +21142,11 @@ def fl_add_text(texttype, x, y, w, h, label):
 # forms.h (thumbwheel.h)
 #########################
 
-def fl_get_thumbwheel_value(pObject):
+def fl_get_thumbwheel_value(pFlObject):
     """
-        fl_get_thumbwheel_value(pObject) -> num.
+        fl_get_thumbwheel_value(pFlObject) -> num.
 
-        @param pObject: pointer to object
+        @param pFlObject: pointer to object
 
         @status: Tested + NoDoc + Demo = OK
     """
@@ -20813,17 +21157,17 @@ def fl_get_thumbwheel_value(pObject):
             """double fl_get_thumbwheel_value(FL_OBJECT * ob)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
-    keep_elem_refs(pObject)
-    retval = _fl_get_thumbwheel_value(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
+    keep_elem_refs(pFlObject)
+    retval = _fl_get_thumbwheel_value(pFlObject)
     return retval
 
 
-def fl_set_thumbwheel_value(pObject, value):
+def fl_set_thumbwheel_value(pFlObject, value):
     """
-        fl_set_thumbwheel_value(pObject, value)
+        fl_set_thumbwheel_value(pFlObject, value)
 
-        @param pObject: pointer to object
+        @param pFlObject: pointer to object
     """
 
     _fl_set_thumbwheel_value = cfuncproto(
@@ -20832,18 +21176,18 @@ def fl_set_thumbwheel_value(pObject, value):
             """double fl_set_thumbwheel_value(FL_OBJECT * ob, double value)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
     fvalue = convert_to_double(value)
-    keep_elem_refs(pObject, value, fvalue)
-    retval = _fl_set_thumbwheel_value(pObject, fvalue)
+    keep_elem_refs(pFlObject, value, fvalue)
+    retval = _fl_set_thumbwheel_value(pFlObject, fvalue)
     return retval
 
 
-def fl_get_thumbwheel_step(pObject):
+def fl_get_thumbwheel_step(pFlObject):
     """
-        fl_get_thumbwheel_step(pObject) -> num.
+        fl_get_thumbwheel_step(pFlObject) -> num.
 
-        @param pObject: pointer to object
+        @param pFlObject: pointer to object
 
         @status: Untested + NoDoc + NoDemo = NOT OK
     """
@@ -20854,17 +21198,17 @@ def fl_get_thumbwheel_step(pObject):
             """double fl_get_thumbwheel_step(FL_OBJECT * ob)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
-    keep_elem_refs(pObject)
-    retval = _fl_get_thumbwheel_step(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
+    keep_elem_refs(pFlObject)
+    retval = _fl_get_thumbwheel_step(pFlObject)
     return retval
 
 
-def fl_set_thumbwheel_step(pObject, step):
+def fl_set_thumbwheel_step(pFlObject, step):
     """
-        fl_set_thumbwheel_step(pObject, step) -> num.
+        fl_set_thumbwheel_step(pFlObject, step) -> num.
 
-        @param pObject: pointer to object
+        @param pFlObject: pointer to object
 
         @status: Tested + NoDoc + Demo = OK
     """
@@ -20875,18 +21219,18 @@ def fl_set_thumbwheel_step(pObject, step):
             """double fl_set_thumbwheel_step(FL_OBJECT * ob, double step)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
     fstep = convert_to_double(step)
-    keep_elem_refs(pObject, step, fstep)
-    retval = _fl_set_thumbwheel_step(pObject, fstep)
+    keep_elem_refs(pFlObject, step, fstep)
+    retval = _fl_set_thumbwheel_step(pFlObject, fstep)
     return retval
 
 
-def fl_set_thumbwheel_return(pObject, when):
+def fl_set_thumbwheel_return(pFlObject, when):
     """
-        fl_set_thumbwheel_return(pObject, when) -> num.
+        fl_set_thumbwheel_return(pFlObject, when) -> num.
 
-        @param pObject: pointer to object
+        @param pFlObject: pointer to object
         @param when: return type (when it returns)
         @type when: [num./int] xfc.FL_RETURN_NONE, xfc.FL_RETURN_CHANGED,
                     xfc.FL_RETURN_END, xfc.FL_RETURN_END_CHANGED,
@@ -20903,19 +21247,19 @@ def fl_set_thumbwheel_return(pObject, when):
                int how)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
     check_admitted_listvalues(when, xfc.RETURN_list)
     uiwhen = convert_to_uint(when)
-    keep_elem_refs(pObject, when, uiwhen)
-    retval = _fl_set_thumbwheel_return(pObject, uiwhen)
+    keep_elem_refs(pFlObject, when, uiwhen)
+    retval = _fl_set_thumbwheel_return(pFlObject, uiwhen)
     return retval
 
 
-def fl_set_thumbwheel_crossover(pObject, flag):
+def fl_set_thumbwheel_crossover(pFlObject, flag):
     """
-        fl_set_thumbwheel_crossover(pObject, flag) -> num.
+        fl_set_thumbwheel_crossover(pFlObject, flag) -> num.
 
-        @param pObject: pointer to object
+        @param pFlObject: pointer to object
 
         @status: Untested + NoDoc + NoDemo = NOT OK
     """
@@ -20926,18 +21270,18 @@ def fl_set_thumbwheel_crossover(pObject, flag):
             """int fl_set_thumbwheel_crossover(FL_OBJECT * ob, int flag)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
     iflag = convert_to_int(flag)
-    keep_elem_refs(pObject, flag, iflag)
-    retval = _fl_set_thumbwheel_crossover(pObject, iflag)
+    keep_elem_refs(pFlObject, flag, iflag)
+    retval = _fl_set_thumbwheel_crossover(pFlObject, iflag)
     return retval
 
 
-def fl_set_thumbwheel_bounds(pObject, minbound, maxbound):
+def fl_set_thumbwheel_bounds(pFlObject, minbound, maxbound):
     """
-        fl_set_thumbwheel_bounds(pObject, minbound, maxbound)
+        fl_set_thumbwheel_bounds(pFlObject, minbound, maxbound)
 
-        @param pObject: pointer to object
+        @param pFlObject: pointer to object
 
         @status: Untested + NoDoc + NoDemo = NOT OK
     """
@@ -20949,20 +21293,20 @@ def fl_set_thumbwheel_bounds(pObject, minbound, maxbound):
                double max)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
     fminbound = convert_to_double(minbound)
     fmaxbound = convert_to_double(maxbound)
-    keep_elem_refs(pObject, minbound, maxbound, fminbound, fmaxbound)
-    _fl_set_thumbwheel_bounds(pObject, fminbound, fmaxbound)
+    keep_elem_refs(pFlObject, minbound, maxbound, fminbound, fmaxbound)
+    _fl_set_thumbwheel_bounds(pFlObject, fminbound, fmaxbound)
 
 
-def fl_get_thumbwheel_bounds(pObject):
-    """ fl_get_thumbwheel_bounds(pObject) -> minbound, maxbound
+def fl_get_thumbwheel_bounds(pFlObject):
+    """ fl_get_thumbwheel_bounds(pFlObject) -> minbound, maxbound
 
-        @param pObject: pointer to thumbwheel object
+        @param pFlObject: pointer to thumbwheel object
 
         @attention: API change from XForms - upstream was
-                    fl_get_thumbwheel_bounds(pObject, minbound, maxbound)
+                    fl_get_thumbwheel_bounds(pFlObject, minbound, maxbound)
 
         @status: Untested + NoDoc + NoDemo = NOT OK
     """
@@ -20975,11 +21319,11 @@ def fl_get_thumbwheel_bounds(pObject):
                double * max)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
     minbound, pminbound = make_double_and_pointer()
     maxbound, pmaxbound = make_double_and_pointer()
-    keep_elem_refs(pObject, minbound, maxbound, pminbound, pmaxbound)
-    _fl_get_thumbwheel_bounds(pObject, pminbound, pmaxbound)
+    keep_elem_refs(pFlObject, minbound, maxbound, pminbound, pmaxbound)
+    _fl_get_thumbwheel_bounds(pFlObject, pminbound, pmaxbound)
     return minbound.value, maxbound.value
 
 
@@ -20988,7 +21332,7 @@ def fl_get_thumbwheel_bounds(pObject):
 
 def fl_add_thumbwheel(wheeltype, x, y, w, h, label):
     """
-        fl_add_thumbwheel(wheeltype, x, y, w, h, label) -> pObject
+        fl_add_thumbwheel(wheeltype, x, y, w, h, label) -> pFlObject
 
         Adds a thumbwheel object.
 
@@ -21036,7 +21380,7 @@ def fl_add_thumbwheel(wheeltype, x, y, w, h, label):
 
 def fl_add_timer(timertype, x, y, w, h, label):
     """
-        fl_add_timer(timertype, x, y, w, h, label) -> pObject
+        fl_add_timer(timertype, x, y, w, h, label) -> pFlObject
 
         Adds a timer object.
 
@@ -21071,11 +21415,11 @@ def fl_add_timer(timertype, x, y, w, h, label):
     return retval
 
 
-def fl_set_timer(pObject, total):
+def fl_set_timer(pFlObject, total):
     """
-        fl_set_timer(pObject, total)
+        fl_set_timer(pFlObject, total)
 
-        @param pObject: pointer to object
+        @param pFlObject: pointer to object
 
         @status: Tested + NoDoc + Demo = OK
     """
@@ -21086,17 +21430,17 @@ def fl_set_timer(pObject, total):
             """void fl_set_timer(FL_OBJECT * ob, double total)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
     ftotal = convert_to_double(total)
-    keep_elem_refs(pObject, total, ftotal)
-    _fl_set_timer(pObject, ftotal)
+    keep_elem_refs(pFlObject, total, ftotal)
+    _fl_set_timer(pFlObject, ftotal)
 
 
-def fl_get_timer(pObject):
+def fl_get_timer(pFlObject):
     """
-        fl_get_timer(pObject) -> num.
+        fl_get_timer(pFlObject) -> num.
 
-        @param pObject: pointer to object
+        @param pFlObject: pointer to object
 
         @status: Untested + NoDoc + NoDemo = NOT OK
     """
@@ -21107,17 +21451,17 @@ def fl_get_timer(pObject):
             """double fl_get_timer(FL_OBJECT * ob)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
-    keep_elem_refs(pObject)
-    retval = _fl_get_timer(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
+    keep_elem_refs(pFlObject)
+    retval = _fl_get_timer(pFlObject)
     return retval
 
 
-def fl_set_timer_countup(pObject, yes):
+def fl_set_timer_countup(pFlObject, yes):
     """
-        fl_set_timer_countup(pObject, yes)
+        fl_set_timer_countup(pFlObject, yes)
 
-        @param pObject: pointer to object
+        @param pFlObject: pointer to object
 
         @status: Tested + NoDoc + Demo = OK
     """
@@ -21128,21 +21472,21 @@ def fl_set_timer_countup(pObject, yes):
             """void fl_set_timer_countup(FL_OBJECT * ob, int yes)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
     iyes = convert_to_int(yes)
-    keep_elem_refs(pObject, yes, iyes)
-    _fl_set_timer_countup(pObject, iyes)
+    keep_elem_refs(pFlObject, yes, iyes)
+    _fl_set_timer_countup(pFlObject, iyes)
 
 
 FL_TIMER_FILTER = cty.CFUNCTYPE(xfc.STRING, cty.POINTER(xfc.FL_OBJECT),
                                 cty.c_double)
 
-def fl_set_timer_filter(pObject, py_TimerFilter):
+def fl_set_timer_filter(pFlObject, py_TimerFilter):
     """
-        fl_set_timer_filter(pObject, py_TimerFilter) -> timer_filter func.
+        fl_set_timer_filter(pFlObject, py_TimerFilter) -> timer_filter func.
 
-        @param pObject: pointer to object
-        @param py_TimerFilter: python function, fn(pObject, valfloat) ->
+        @param pFlObject: pointer to object
+        @param py_TimerFilter: python function, fn(pFlObject, valfloat) ->
            string
 
         @status: Untested + NoDoc + NoDemo = NOT OK
@@ -21155,19 +21499,19 @@ def fl_set_timer_filter(pObject, py_TimerFilter):
                FL_TIMER_FILTER filter)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
     c_TimerFilter = FL_TIMER_FILTER(py_TimerFilter)
     keep_cfunc_refs(c_TimerFilter, py_TimerFilter)
-    keep_elem_refs(pObject)
-    retval = _fl_set_timer_filter(pObject, c_TimerFilter)
+    keep_elem_refs(pFlObject)
+    retval = _fl_set_timer_filter(pFlObject, c_TimerFilter)
     return retval
 
 
-def fl_suspend_timer(pObject):
+def fl_suspend_timer(pFlObject):
     """
-        fl_suspend_timer(pObject)
+        fl_suspend_timer(pFlObject)
 
-        @param pObject: pointer to object
+        @param pFlObject: pointer to object
 
         @status: Tested + NoDoc + Demo = OK
     """
@@ -21178,18 +21522,18 @@ def fl_suspend_timer(pObject):
             """void fl_suspend_timer(FL_OBJECT * ob)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
-    keep_elem_refs(pObject)
-    _fl_suspend_timer(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
+    keep_elem_refs(pFlObject)
+    _fl_suspend_timer(pFlObject)
 
 
-def fl_resume_timer(pObject):
+def fl_resume_timer(pFlObject):
     """
-        fl_resume_timer(pObject)
+        fl_resume_timer(pFlObject)
 
         Resume timer previously paused.
 
-        @param pObject: pointer to timer object
+        @param pFlObject: pointer to timer object
 
         @status: Tested + NoDoc + Demo = OK
     """
@@ -21200,9 +21544,9 @@ def fl_resume_timer(pObject):
             """void fl_resume_timer(FL_OBJECT * ob)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
-    keep_elem_refs(pObject)
-    _fl_resume_timer(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
+    keep_elem_refs(pFlObject)
+    _fl_resume_timer(pFlObject)
 
 
 
@@ -21267,7 +21611,7 @@ def fl_resume_timer(pObject):
 
 def fl_add_xyplot(plottype, x, y, w, h, label):
     """
-        fl_add_xyplot(plottype, x, y, w, h, label) -> pObject
+        fl_add_xyplot(plottype, x, y, w, h, label) -> pFlObject
 
         Adds an xyplot object.
 
@@ -21302,11 +21646,11 @@ def fl_add_xyplot(plottype, x, y, w, h, label):
     return retval
 
 
-def fl_set_xyplot_data(pObject, xlist, ylist, n, title, xlabel, ylabel):
+def fl_set_xyplot_data(pFlObject, xlist, ylist, n, title, xlabel, ylabel):
     """
-        fl_set_xyplot_data(pObject, xlist, ylist, n, title, xlabel, ylabel)
+        fl_set_xyplot_data(pFlObject, xlist, ylist, n, title, xlabel, ylabel)
 
-        @param pObject: pointer to object
+        @param pFlObject: pointer to object
 
         @status: Untested + NoDoc + NoDemo = NOT OK
     """
@@ -21321,7 +21665,7 @@ def fl_set_xyplot_data(pObject, xlist, ylist, n, title, xlabel, ylabel):
                const char * ylabel)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
     #px = cty.cast(x, cty.POINTER(cty.c_float))
     print xlist, xlist[0]
     fx = []
@@ -21339,16 +21683,16 @@ def fl_set_xyplot_data(pObject, xlist, ylist, n, title, xlabel, ylabel):
     stitle = convert_to_string(title)
     sxlabel = convert_to_string(xlabel)
     sylabel = convert_to_string(ylabel)
-    keep_elem_refs(pObject, xlist, ylist, n, fx, fy, px, py, title, \
+    keep_elem_refs(pFlObject, xlist, ylist, n, fx, fy, px, py, title, \
                    xlabel, ylabel, inum, stitle, sxlabel, sylabel)
-    _fl_set_xyplot_data(pObject, px, py, inum, stitle, sxlabel, sylabel)
+    _fl_set_xyplot_data(pFlObject, px, py, inum, stitle, sxlabel, sylabel)
 
 
-def fl_set_xyplot_data_double(pObject, x, y, n, title, xlabel, ylabel):
+def fl_set_xyplot_data_double(pFlObject, x, y, n, title, xlabel, ylabel):
     """
-        fl_set_xyplot_data_double(pObject, x, y, n, title, xlabel, ylabel)
+        fl_set_xyplot_data_double(pFlObject, x, y, n, title, xlabel, ylabel)
 
-        @param pObject: pointer to object
+        @param pFlObject: pointer to object
 
         @status: Untested + NoDoc + NoDemo = NOT OK
     """
@@ -21363,25 +21707,25 @@ def fl_set_xyplot_data_double(pObject, x, y, n, title, xlabel, ylabel):
                const char * ylabel)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
     px = cty.cast(x, cty.POINTER(cty.c_double))
     py = cty.cast(y, cty.POINTER(cty.c_double))
     inum = convert_to_int(n)
     stitle = convert_to_string(title)
     sxlabel = convert_to_string(xlabel)
     sylabel = convert_to_string(ylabel)
-    keep_elem_refs(pObject, x, y, n, title, xlabel, ylabel, px, py, inum, \
+    keep_elem_refs(pFlObject, x, y, n, title, xlabel, ylabel, px, py, inum, \
                    stitle, sxlabel, sylabel)
-    _fl_set_xyplot_data_double(pObject, px, py, n, title, \
+    _fl_set_xyplot_data_double(pFlObject, px, py, n, title, \
                                         xlabel, ylabel, inum, stitle, \
                                         sxlabel, sylabel)
 
 
-def fl_set_xyplot_file(pObject, fname, title, xl, yl):
+def fl_set_xyplot_file(pFlObject, fname, title, xl, yl):
     """
-        fl_set_xyplot_file(pObject, fname, title, xl, yl) -> num.
+        fl_set_xyplot_file(pFlObject, fname, title, xl, yl) -> num.
 
-        @param pObject: pointer to object
+        @param pFlObject: pointer to object
 
         @status: Untested + NoDoc + NoDemo = NOT OK
     """
@@ -21394,21 +21738,21 @@ def fl_set_xyplot_file(pObject, fname, title, xl, yl):
                const char * title, const char * xl, const char * yl)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
     sfname = convert_to_string(fname)
     stitle = convert_to_string(title)
     sxl = convert_to_string(xl)
     syl = convert_to_string(yl)
-    keep_elem_refs(pObject, fname, title, xl, yl, sfname, stitle, sxl, syl)
-    retval = _fl_set_xyplot_file(pObject, sfname, stitle, sxl, syl)
+    keep_elem_refs(pFlObject, fname, title, xl, yl, sfname, stitle, sxl, syl)
+    retval = _fl_set_xyplot_file(pFlObject, sfname, stitle, sxl, syl)
     return retval
 
 
-def fl_insert_xyplot_data(pObject, idnum, n, valx, valy):
+def fl_insert_xyplot_data(pFlObject, idnum, n, valx, valy):
     """ 
-        fl_insert_xyplot_data(pObject, idnum, n, valx, valy)
+        fl_insert_xyplot_data(pFlObject, idnum, n, valx, valy)
 
-        @param pObject: pointer to object
+        @param pFlObject: pointer to object
 
         @status: Untested + NoDoc + NoDemo = NOT OK
     """
@@ -21421,20 +21765,20 @@ def fl_insert_xyplot_data(pObject, idnum, n, valx, valy):
                double x, double y)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
     iidnum = convert_to_int(idnum)
     inum = convert_to_int(n)
     fvalx = convert_to_double(valx)
     fvaly = convert_to_double(valy)
-    keep_elem_refs(pObject, idnum, n, valx, valy, iidnum, inum, fvalx, fvaly)
-    _fl_insert_xyplot_data(pObject, iidnum, inum, fvalx, fvaly)
+    keep_elem_refs(pFlObject, idnum, n, valx, valy, iidnum, inum, fvalx, fvaly)
+    _fl_insert_xyplot_data(pFlObject, iidnum, inum, fvalx, fvaly)
 
 
-def fl_add_xyplot_text(pObject, valx, valy, text, al, colr):
+def fl_add_xyplot_text(pFlObject, valx, valy, text, al, colr):
     """
-        fl_add_xyplot_text(pObject, valx, valy, text, al, colr)
+        fl_add_xyplot_text(pFlObject, valx, valy, text, al, colr)
 
-        @param pObject: pointer to object
+        @param pFlObject: pointer to object
 
         @status: Untested + NoDoc + NoDemo = NOT OK
     """
@@ -21447,23 +21791,23 @@ def fl_add_xyplot_text(pObject, valx, valy, text, al, colr):
                const char * text, int al, FL_COLOR col)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
     check_admitted_listvalues(colr, xfc.COLOR_list)
     fvalx = convert_to_double(valx)
     fvaly = convert_to_double(valy)
     stext = convert_to_string(text)
     ial = convert_to_int(al)
     ulcolr = convert_to_FL_COLOR(colr)
-    keep_elem_refs(pObject, valx, valy, text, al, colr, fvalx, fvaly, \
+    keep_elem_refs(pFlObject, valx, valy, text, al, colr, fvalx, fvaly, \
                    stext, ial, ulcolr)
-    _fl_add_xyplot_text(pObject, fvalx, fvaly, stext, ial, ulcolr)
+    _fl_add_xyplot_text(pFlObject, fvalx, fvaly, stext, ial, ulcolr)
 
 
-def fl_delete_xyplot_text(pObject, text):
+def fl_delete_xyplot_text(pFlObject, text):
     """
-        fl_delete_xyplot_text(pObject, text)
+        fl_delete_xyplot_text(pFlObject, text)
 
-        @param pObject: pointer to object
+        @param pFlObject: pointer to object
 
         @status: Untested + NoDoc + NoDemo = NOT OK
     """
@@ -21474,17 +21818,17 @@ def fl_delete_xyplot_text(pObject, text):
             """void fl_delete_xyplot_text(FL_OBJECT * ob, const char * text)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
     stext = convert_to_string(text)
-    keep_elem_refs(pObject, text, stext)
-    _fl_delete_xyplot_text(pObject, stext)
+    keep_elem_refs(pFlObject, text, stext)
+    _fl_delete_xyplot_text(pFlObject, stext)
 
 
-def fl_set_xyplot_maxoverlays(pObject, maxover):
+def fl_set_xyplot_maxoverlays(pFlObject, maxover):
     """
-        fl_set_xyplot_maxoverlays(pObject, maxover) -> num.
+        fl_set_xyplot_maxoverlays(pFlObject, maxover) -> num.
 
-        @param pObject: pointer to object
+        @param pFlObject: pointer to object
 
         @status: Untested + NoDoc + NoDemo = NOT OK
     """
@@ -21495,18 +21839,18 @@ def fl_set_xyplot_maxoverlays(pObject, maxover):
             """int fl_set_xyplot_maxoverlays(FL_OBJECT * ob, int maxover)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
     imaxover = convert_to_int(maxover)
-    keep_elem_refs(pObject, maxover, imaxover)
-    retval = _fl_set_xyplot_maxoverlays(pObject, imaxover)
+    keep_elem_refs(pFlObject, maxover, imaxover)
+    retval = _fl_set_xyplot_maxoverlays(pFlObject, imaxover)
     return retval
 
 
-def fl_add_xyplot_overlay(pObject, idnum, x, y, n, colr):
+def fl_add_xyplot_overlay(pFlObject, idnum, x, y, n, colr):
     """
-        fl_add_xyplot_overlay(pObject, idnum, x, y, n, colr)
+        fl_add_xyplot_overlay(pFlObject, idnum, x, y, n, colr)
 
-        @param pObject: pointer to object
+        @param pFlObject: pointer to object
 
         @status: Untested + NoDoc + NoDemo = NOT OK
     """
@@ -21520,23 +21864,23 @@ def fl_add_xyplot_overlay(pObject, idnum, x, y, n, colr):
                float * y, int n, FL_COLOR col)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
     check_admitted_listvalues(colr, xfc.COLOR_list)
     iidnum = convert_to_int(idnum)
     px = cty.cast(x, cty.POINTER(cty.c_float))
     py = cty.cast(y, cty.POINTER(cty.c_float))
     inum = convert_to_int(n)
     ulcolr = convert_to_FL_COLOR(colr)
-    keep_elem_refs(pObject, idnum, x, y, n, colr, iidnum, px, py, inum, \
+    keep_elem_refs(pFlObject, idnum, x, y, n, colr, iidnum, px, py, inum, \
                    ulcolr)
-    _fl_add_xyplot_overlay(pObject, iidnum, px, py, inum, ulcolr)
+    _fl_add_xyplot_overlay(pFlObject, iidnum, px, py, inum, ulcolr)
 
 
-def fl_add_xyplot_overlay_file(pObject, idnum, fname, colr):
+def fl_add_xyplot_overlay_file(pFlObject, idnum, fname, colr):
     """
-        fl_add_xyplot_overlay_file(pObject, idnum, fname, colr) -> num.
+        fl_add_xyplot_overlay_file(pFlObject, idnum, fname, colr) -> num.
 
-        @param pObject: pointer to object
+        @param pFlObject: pointer to object
 
         @status: Untested + NoDoc + NoDemo = NOT OK
     """
@@ -21549,21 +21893,21 @@ def fl_add_xyplot_overlay_file(pObject, idnum, fname, colr):
             const char * f, FL_COLOR c)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
     check_admitted_listvalues(colr, xfc.COLOR_list)
     iidnum = convert_to_int(idnum)
     sfname = convert_to_string(fname)
     ulcolr = convert_to_FL_COLOR(colr)
-    keep_elem_refs(pObject, idnum, fname, colr, iidnum, sfname, ulcolr)
-    retval = _fl_add_xyplot_overlay_file(pObject, iidnum, sfname, ulcolr)
+    keep_elem_refs(pFlObject, idnum, fname, colr, iidnum, sfname, ulcolr)
+    retval = _fl_add_xyplot_overlay_file(pFlObject, iidnum, sfname, ulcolr)
     return retval
 
 
-def fl_set_xyplot_return(pObject, when):
+def fl_set_xyplot_return(pFlObject, when):
     """
-        fl_set_xyplot_return(pObject, when)
+        fl_set_xyplot_return(pFlObject, when)
 
-        @param pObject: pointer to object
+        @param pFlObject: pointer to object
         @param when: return type
 
         @status: Untested + NoDoc + NoDemo = NOT OK
@@ -21576,17 +21920,17 @@ def fl_set_xyplot_return(pObject, when):
                int when)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
     uiwhen = convert_to_uint(when)
-    keep_elem_refs(pObject, when, uiwhen)
-    _fl_set_xyplot_return(pObject, uiwhen)
+    keep_elem_refs(pFlObject, when, uiwhen)
+    _fl_set_xyplot_return(pFlObject, uiwhen)
 
 
-def fl_set_xyplot_xtics(pObject, major, minor):
+def fl_set_xyplot_xtics(pFlObject, major, minor):
     """
-        fl_set_xyplot_xtics(pObject, major, minor)
+        fl_set_xyplot_xtics(pFlObject, major, minor)
 
-        @param pObject: pointer to object
+        @param pFlObject: pointer to object
 
         @status: Untested + NoDoc + NoDemo = NOT OK
     """
@@ -21597,18 +21941,18 @@ def fl_set_xyplot_xtics(pObject, major, minor):
             """void fl_set_xyplot_xtics(FL_OBJECT * ob, int major, int minor)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
     imajor = convert_to_int(major)
     iminor = convert_to_int(minor)
-    keep_elem_refs(pObject, major, minor, imajor, iminor)
-    _fl_set_xyplot_xtics(pObject, imajor, iminor)
+    keep_elem_refs(pFlObject, major, minor, imajor, iminor)
+    _fl_set_xyplot_xtics(pFlObject, imajor, iminor)
 
 
-def fl_set_xyplot_ytics(pObject, major, minor):
+def fl_set_xyplot_ytics(pFlObject, major, minor):
     """
-        fl_set_xyplot_ytics(pObject, major, minor)
+        fl_set_xyplot_ytics(pFlObject, major, minor)
 
-        @param pObject: pointer to object
+        @param pFlObject: pointer to object
 
         @status: Untested + NoDoc + NoDemo = NOT OK
     """
@@ -21619,18 +21963,18 @@ def fl_set_xyplot_ytics(pObject, major, minor):
             """void fl_set_xyplot_ytics(FL_OBJECT * ob, int major, int minor)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
     imajor = convert_to_int(major)
     iminor = convert_to_int(minor)
-    keep_elem_refs(pObject, major, minor, imajor, iminor)
-    _fl_set_xyplot_ytics(pObject, imajor, iminor)
+    keep_elem_refs(pFlObject, major, minor, imajor, iminor)
+    _fl_set_xyplot_ytics(pFlObject, imajor, iminor)
 
 
-def fl_set_xyplot_xbounds(pObject, minbound, maxbound):
+def fl_set_xyplot_xbounds(pFlObject, minbound, maxbound):
     """
-        fl_set_xyplot_xbounds(pObject, minbound, maxbound)
+        fl_set_xyplot_xbounds(pFlObject, minbound, maxbound)
 
-        @param pObject: pointer to object
+        @param pFlObject: pointer to object
 
         @status: Untested + NoDoc + NoDemo = NOT OK
     """
@@ -21642,18 +21986,18 @@ def fl_set_xyplot_xbounds(pObject, minbound, maxbound):
                double xmax)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
     fminbound = convert_to_double(minbound)
     fmaxbound = convert_to_double(maxbound)
-    keep_elem_refs(pObject, minbound, maxbound, fminbound, fmaxbound)
-    _fl_set_xyplot_xbounds(pObject, fminbound, fmaxbound)
+    keep_elem_refs(pFlObject, minbound, maxbound, fminbound, fmaxbound)
+    _fl_set_xyplot_xbounds(pFlObject, fminbound, fmaxbound)
 
 
-def fl_set_xyplot_ybounds(pObject, minbound, maxbound):
+def fl_set_xyplot_ybounds(pFlObject, minbound, maxbound):
     """
-        fl_set_xyplot_ybounds(pObject, minbound, maxbound)
+        fl_set_xyplot_ybounds(pFlObject, minbound, maxbound)
 
-        @param pObject: pointer to object
+        @param pFlObject: pointer to object
 
         @status: Untested + NoDoc + NoDemo = NOT OK
     """
@@ -21665,21 +22009,21 @@ def fl_set_xyplot_ybounds(pObject, minbound, maxbound):
                double ymax)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
     fminbound = convert_to_double(minbound)
     fmaxbound = convert_to_double(maxbound)
-    keep_elem_refs(pObject, minbound, maxbound, fminbound, fmaxbound)
-    _fl_set_xyplot_ybounds(pObject, fminbound, fmaxbound)
+    keep_elem_refs(pFlObject, minbound, maxbound, fminbound, fmaxbound)
+    _fl_set_xyplot_ybounds(pFlObject, fminbound, fmaxbound)
 
 
-def fl_get_xyplot_xbounds(pObject):
+def fl_get_xyplot_xbounds(pFlObject):
     """
-        fl_get_xyplot_xbounds(pObject) -> minbound, maxbound
+        fl_get_xyplot_xbounds(pFlObject) -> minbound, maxbound
 
-        @param pObject: pointer to object
+        @param pFlObject: pointer to object
 
         @attention: API change from XForms - upstream was
-           fl_get_xyplot_xbounds(pObject, minbound, maxbound)
+           fl_get_xyplot_xbounds(pFlObject, minbound, maxbound)
 
         @status: Untested + NoDoc + NoDemo = NOT OK
     """
@@ -21692,22 +22036,22 @@ def fl_get_xyplot_xbounds(pObject):
                float * xmax)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
     minbound, pminbound = make_float_and_pointer()
     maxbound, pmaxbound = make_float_and_pointer()
-    keep_elem_refs(pObject, minbound, maxbound, pminbound, pmaxbound)
-    _fl_get_xyplot_xbounds(pObject, pminbound, pmaxbound)
+    keep_elem_refs(pFlObject, minbound, maxbound, pminbound, pmaxbound)
+    _fl_get_xyplot_xbounds(pFlObject, pminbound, pmaxbound)
     return minbound.value, maxbound.value
 
 
-def fl_get_xyplot_ybounds(pObject):
+def fl_get_xyplot_ybounds(pFlObject):
     """
-        fl_get_xyplot_ybounds(pObject) -> minbound, maxbound
+        fl_get_xyplot_ybounds(pFlObject) -> minbound, maxbound
 
-        @param pObject: pointer to object
+        @param pFlObject: pointer to object
 
         @attention: API change from XForms - upstream was
-           fl_get_xyplot_ybounds(pObject, minbound, maxbound)
+           fl_get_xyplot_ybounds(pFlObject, minbound, maxbound)
 
         @status: Untested + NoDoc + NoDemo = NOT OK
     """
@@ -21720,22 +22064,22 @@ def fl_get_xyplot_ybounds(pObject):
                float * ymax)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
     minbound, pminbound = make_float_and_pointer()
     maxbound, pmaxbound = make_float_and_pointer()
-    keep_elem_refs(pObject, minbound, maxbound, pminbound, pmaxbound)
-    _fl_get_xyplot_ybounds(pObject, pminbound, pmaxbound)
+    keep_elem_refs(pFlObject, minbound, maxbound, pminbound, pmaxbound)
+    _fl_get_xyplot_ybounds(pFlObject, pminbound, pmaxbound)
     return minbound.value, maxbound.value
 
 
-def fl_get_xyplot(pObject):
+def fl_get_xyplot(pFlObject):
     """
-        fl_get_xyplot(pObject) -> x, y, i
+        fl_get_xyplot(pFlObject) -> x, y, i
 
-        @param pObject: pointer to object
+        @param pFlObject: pointer to object
 
         @attention: API change from XForms - upstream was
-                    fl_get_xyplot(pObject, x, y, i)
+                    fl_get_xyplot(pFlObject, x, y, i)
 
         @status: Untested + NoDoc + NoDemo = NOT OK
     """
@@ -21748,23 +22092,23 @@ def fl_get_xyplot(pObject):
                int * i)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
     x, px = make_float_and_pointer()
     y, py = make_float_and_pointer()
     i, pi = make_int_and_pointer()
-    keep_elem_refs(pObject, x, y, i, px, py, pi)
-    _fl_get_xyplot(pObject, px, py, pi)
+    keep_elem_refs(pFlObject, x, y, i, px, py, pi)
+    _fl_get_xyplot(pFlObject, px, py, pi)
     return x.value, y.value, i.value
 
 
-def fl_get_xyplot_data(pObject):
+def fl_get_xyplot_data(pFlObject):
     """
-        fl_get_xyplot_data(pObject) -> x, y, n
+        fl_get_xyplot_data(pFlObject) -> x, y, n
 
-        @param pObject: pointer to object
+        @param pFlObject: pointer to object
 
         @attention: API change from XForms - upstream was
-                    fl_get_xyplot_data(pObject, x, y, n)
+                    fl_get_xyplot_data(pFlObject, x, y, n)
 
         @status: Untested + NoDoc + NoDemo = NOT OK
     """
@@ -21777,23 +22121,23 @@ def fl_get_xyplot_data(pObject):
                int * n)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
     x, px = make_float_and_pointer()
     y, py = make_float_and_pointer()
     n, pn = make_int_and_pointer()
-    keep_elem_refs(pObject, x, y, n, px, py, pn)
-    _fl_get_xyplot_data(pObject, px, py, pn)
+    keep_elem_refs(pFlObject, x, y, n, px, py, pn)
+    _fl_get_xyplot_data(pFlObject, px, py, pn)
     return x.value, y.value, n.value
 
 
-def fl_get_xyplot_data_pointer(pObject, idnum):
+def fl_get_xyplot_data_pointer(pFlObject, idnum):
     """
-        fl_get_xyplot_data_pointer(pObject, idnum) -> x, y, n
+        fl_get_xyplot_data_pointer(pFlObject, idnum) -> x, y, n
 
-        @param pObject: pointer to object
+        @param pFlObject: pointer to object
 
         @attention: API change from XForms - upstream was
-           fl_get_xyplot_data_pointer(pObject, idnum, x, y, n)
+           fl_get_xyplot_data_pointer(pFlObject, idnum, x, y, n)
 
         @status: Untested + NoDoc + NoDemo = NOT OK
     """
@@ -21807,24 +22151,24 @@ def fl_get_xyplot_data_pointer(pObject, idnum):
                float * * x, float * * y, int * n)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
     iidnum = convert_to_int(idnum)
     x, px = make_float_and_pointer()
     y, py = make_float_and_pointer()
     n, pn = make_int_and_pointer()
-    keep_elem_refs(pObject, idnum, iidnum, x, y, n, px, py, pn)
-    _fl_get_xyplot_data_pointer(pObject, iidnum, px, py, pn)
+    keep_elem_refs(pFlObject, idnum, iidnum, x, y, n, px, py, pn)
+    _fl_get_xyplot_data_pointer(pFlObject, iidnum, px, py, pn)
     return x.value, y.value, n.value
 
 
-def fl_get_xyplot_overlay_data(pObject, idnum):
+def fl_get_xyplot_overlay_data(pFlObject, idnum):
     """
-        fl_get_xyplot_overlay_data(pObject, idnum) -> x, y, n
+        fl_get_xyplot_overlay_data(pFlObject, idnum) -> x, y, n
 
-        @param pObject: pointer to object
+        @param pFlObject: pointer to object
 
         @attention: API change from XForms - upstream was
-           fl_get_xyplot_overlay_data(pObject, idnum, x, y, n)
+           fl_get_xyplot_overlay_data(pFlObject, idnum, x, y, n)
 
         @status: Untested + NoDoc + NoDemo = NOT OK
     """
@@ -21837,21 +22181,21 @@ def fl_get_xyplot_overlay_data(pObject, idnum):
                float * x, float * y, int * n)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
     iidnum = convert_to_int(idnum)
     x, px = make_float_and_pointer()
     y, py = make_float_and_pointer()
     n, pn = make_int_and_pointer()
-    keep_elem_refs(pObject, idnum, iidnum, x, y, n, px, py, pn)
-    _fl_get_xyplot_overlay_data(pObject, iidnum, px, py, pn)
+    keep_elem_refs(pFlObject, idnum, iidnum, x, y, n, px, py, pn)
+    _fl_get_xyplot_overlay_data(pFlObject, iidnum, px, py, pn)
     return x.value, y.value, n.value
 
 
-def fl_set_xyplot_overlay_type(pObject, idnum, plottype):
+def fl_set_xyplot_overlay_type(pFlObject, idnum, plottype):
     """
-        fl_set_xyplot_overlay_type(pObject, idnum, plottype)
+        fl_set_xyplot_overlay_type(pFlObject, idnum, plottype)
 
-        @param pObject: pointer to object
+        @param pFlObject: pointer to object
 
         @status: Untested + NoDoc + NoDemo = NOT OK
     """
@@ -21863,18 +22207,18 @@ def fl_set_xyplot_overlay_type(pObject, idnum, plottype):
                int type)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
     iidnum = convert_to_int(idnum)
     iplottype = convert_to_int(plottype)
-    keep_elem_refs(pObject, idnum, plottype, iidnum, iplottype)
-    _fl_set_xyplot_overlay_type(pObject, iidnum, iplottype)
+    keep_elem_refs(pFlObject, idnum, plottype, iidnum, iplottype)
+    _fl_set_xyplot_overlay_type(pFlObject, iidnum, iplottype)
 
 
-def fl_delete_xyplot_overlay(pObject, idnum):
+def fl_delete_xyplot_overlay(pFlObject, idnum):
     """
-        fl_delete_xyplot_overlay(pObject, idnum)
+        fl_delete_xyplot_overlay(pFlObject, idnum)
 
-        @param pObject: pointer to object
+        @param pFlObject: pointer to object
 
         @status: Untested + NoDoc + NoDemo = NOT OK
     """
@@ -21885,17 +22229,17 @@ def fl_delete_xyplot_overlay(pObject, idnum):
             """void fl_delete_xyplot_overlay(FL_OBJECT * ob, int id)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
     iidnum = convert_to_int(idnum)
-    keep_elem_refs(pObject, idnum, iidnum)
-    _fl_delete_xyplot_overlay(pObject, iidnum)
+    keep_elem_refs(pFlObject, idnum, iidnum)
+    _fl_delete_xyplot_overlay(pFlObject, iidnum)
 
 
-def fl_set_xyplot_interpolate(pObject, idnum, deg, grid):
+def fl_set_xyplot_interpolate(pFlObject, idnum, deg, grid):
     """
-        fl_set_xyplot_interpolate(pObject, idnum, deg, grid)
+        fl_set_xyplot_interpolate(pFlObject, idnum, deg, grid)
 
-        @param pObject: pointer to object
+        @param pFlObject: pointer to object
 
         @status: Untested + NoDoc + NoDemo = NOT OK
     """
@@ -21908,19 +22252,19 @@ def fl_set_xyplot_interpolate(pObject, idnum, deg, grid):
                int deg, double grid)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
     iidnum = convert_to_int(idnum)
     ideg = convert_to_int(deg)
     fgrid = convert_to_double(grid)
-    keep_elem_refs(pObject, idnum, deg, grid, iidnum, ideg, fgrid)
-    _fl_set_xyplot_interpolate(pObject, iidnum, ideg, fgrid)
+    keep_elem_refs(pFlObject, idnum, deg, grid, iidnum, ideg, fgrid)
+    _fl_set_xyplot_interpolate(pFlObject, iidnum, ideg, fgrid)
 
 
-def fl_set_xyplot_inspect(pObject, yes):
+def fl_set_xyplot_inspect(pFlObject, yes):
     """
-        fl_set_xyplot_inspect(pObject, yes)
+        fl_set_xyplot_inspect(pFlObject, yes)
 
-        @param pObject: pointer to object
+        @param pFlObject: pointer to object
 
         @status: Untested + NoDoc + NoDemo = NOT OK
     """
@@ -21931,17 +22275,17 @@ def fl_set_xyplot_inspect(pObject, yes):
             """void fl_set_xyplot_inspect(FL_OBJECT * ob, int yes)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
     iyes = convert_to_int(yes)
-    keep_elem_refs(pObject, yes, iyes)
-    _fl_set_xyplot_inspect(pObject, iyes)
+    keep_elem_refs(pFlObject, yes, iyes)
+    _fl_set_xyplot_inspect(pFlObject, iyes)
 
 
-def fl_set_xyplot_symbolsize(pObject, n):
+def fl_set_xyplot_symbolsize(pFlObject, n):
     """
-        fl_set_xyplot_symbolsize(pObject, n)
+        fl_set_xyplot_symbolsize(pFlObject, n)
 
-        @param pObject: pointer to object
+        @param pFlObject: pointer to object
 
         @status: Untested + NoDoc + NoDemo = NOT OK
     """
@@ -21952,17 +22296,17 @@ def fl_set_xyplot_symbolsize(pObject, n):
             """void fl_set_xyplot_symbolsize(FL_OBJECT * ob, int n)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
     inum = convert_to_int(n)
-    keep_elem_refs(pObject, n, inum)
-    _fl_set_xyplot_symbolsize(pObject, inum)
+    keep_elem_refs(pFlObject, n, inum)
+    _fl_set_xyplot_symbolsize(pFlObject, inum)
 
 
-def fl_replace_xyplot_point(pObject, i, valx, valy):
+def fl_replace_xyplot_point(pFlObject, i, valx, valy):
     """
-        fl_replace_xyplot_point(pObject, i, valx, valy)
+        fl_replace_xyplot_point(pFlObject, i, valx, valy)
 
-        @param pObject: pointer to object
+        @param pFlObject: pointer to object
 
         @status: Untested + NoDoc + NoDemo = NOT OK
     """
@@ -21975,12 +22319,12 @@ def fl_replace_xyplot_point(pObject, i, valx, valy):
                double x, double y)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
     ii = convert_to_int(i)
     fvalx = convert_to_double(valx)
     fvaly = convert_to_double(valy)
-    keep_elem_refs(pObject, i, valx, valy, ii, fvalx, fvaly)
-    _fl_replace_xyplot_point(pObject, ii, fvalx, fvaly)
+    keep_elem_refs(pFlObject, i, valx, valy, ii, fvalx, fvaly)
+    _fl_replace_xyplot_point(pFlObject, ii, fvalx, fvaly)
 
 
 # Replace the value of a particular point in dataset setID,
@@ -21988,11 +22332,11 @@ def fl_replace_xyplot_point(pObject, i, valx, valy):
 # This routine is an extension of fl_replace_xyplot_point
 # which acts on the first dataset only.
 
-def fl_replace_xyplot_point_in_overlay(pObject, i, setID, valx, valy):
+def fl_replace_xyplot_point_in_overlay(pFlObject, i, setID, valx, valy):
     """
-        fl_replace_xyplot_point_in_overlay(pObject, i, setID, valx, valy)
+        fl_replace_xyplot_point_in_overlay(pFlObject, i, setID, valx, valy)
 
-        @param pObject: pointer to object
+        @param pFlObject: pointer to object
 
         @status: Untested + NoDoc + NoDemo = NOT OK
     """
@@ -22005,23 +22349,23 @@ def fl_replace_xyplot_point_in_overlay(pObject, i, setID, valx, valy):
                int i, int setID, double x, double y)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
     ii = convert_to_int(i)
     isetID = convert_to_int(setID)
     fvalx = convert_to_double(valx)
     fvaly = convert_to_double(valy)
-    keep_elem_refs(pObject, i, setID, valx, valy, ii, isetID, fvalx, fvaly)
-    _fl_replace_xyplot_point_in_overlay(pObject, ii, isetID, fvalx, fvaly)
+    keep_elem_refs(pFlObject, i, setID, valx, valy, ii, isetID, fvalx, fvaly)
+    _fl_replace_xyplot_point_in_overlay(pFlObject, ii, isetID, fvalx, fvaly)
 
 
-def fl_get_xyplot_xmapping(pObject):
+def fl_get_xyplot_xmapping(pFlObject):
     """
-        fl_get_xyplot_xmapping(pObject) -> a, b
+        fl_get_xyplot_xmapping(pFlObject) -> a, b
 
-        @param pObject: pointer to object
+        @param pFlObject: pointer to object
 
         @attention: API change from XForms - upstream was
-           fl_get_xyplot_xmapping(pObject, a, b)
+           fl_get_xyplot_xmapping(pFlObject, a, b)
 
         @status: Untested + NoDoc + NoDemo = NOT OK
     """
@@ -22034,22 +22378,22 @@ def fl_get_xyplot_xmapping(pObject):
                float * b)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
     a, pa = make_float_and_pointer()
     b, pb = make_float_and_pointer()
-    keep_elem_refs(pObject, a, b, pa, pb)
-    _fl_get_xyplot_xmapping(pObject, pa, pb)
+    keep_elem_refs(pFlObject, a, b, pa, pb)
+    _fl_get_xyplot_xmapping(pFlObject, pa, pb)
     return a.value, b.value
 
 
-def fl_get_xyplot_ymapping(pObject):
+def fl_get_xyplot_ymapping(pFlObject):
     """
-        fl_get_xyplot_ymapping(pObject) -> a, b
+        fl_get_xyplot_ymapping(pFlObject) -> a, b
 
-        @param pObject: pointer to object
+        @param pFlObject: pointer to object
 
         @attention: API change from XForms - upstream was
-           fl_get_xyplot_ymapping(pObject, a, b)
+           fl_get_xyplot_ymapping(pFlObject, a, b)
 
         @status: Untested + NoDoc + NoDemo = NOT OK
     """
@@ -22062,19 +22406,19 @@ def fl_get_xyplot_ymapping(pObject):
                float * b)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
     a, pa = make_float_and_pointer()
     b, pb = make_float_and_pointer()
-    keep_elem_refs(pObject, a, b, pa, pb)
-    _fl_get_xyplot_ymapping(pObject, pa, pb)
+    keep_elem_refs(pFlObject, a, b, pa, pb)
+    _fl_get_xyplot_ymapping(pFlObject, pa, pb)
     return a.value, b.value
 
 
-def fl_set_xyplot_keys(pObject, keys, valx, valy, align):
+def fl_set_xyplot_keys(pFlObject, keys, valx, valy, align):
     """
-        fl_set_xyplot_keys(pObject, keys, valx, valy, align)
+        fl_set_xyplot_keys(pFlObject, keys, valx, valy, align)
 
-        @param pObject: pointer to object
+        @param pFlObject: pointer to object
 
         @status: Untested + NoDoc + NoDemo = NOT OK
     """
@@ -22087,19 +22431,19 @@ def fl_set_xyplot_keys(pObject, keys, valx, valy, align):
                float y, int align)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
     fvalx = convert_to_float(valx)
     fvaly = convert_to_float(valy)
     ialign = convert_to_int(align)
-    keep_elem_refs(pObject, keys, valx, valy, align, fvalx, fvaly, ialign)
-    _fl_set_xyplot_keys(pObject, keys, fvalx, fvaly, ialign)
+    keep_elem_refs(pFlObject, keys, valx, valy, align, fvalx, fvaly, ialign)
+    _fl_set_xyplot_keys(pFlObject, keys, fvalx, fvaly, ialign)
 
 
-def fl_set_xyplot_key(pObject, idnum, keytxt):
+def fl_set_xyplot_key(pFlObject, idnum, keytxt):
     """
-        fl_set_xyplot_key(pObject, idnum, keytxt)
+        fl_set_xyplot_key(pFlObject, idnum, keytxt)
 
-        @param pObject: pointer to object
+        @param pFlObject: pointer to object
 
         @status: Untested + NoDoc + NoDemo = NOT OK
     """
@@ -22111,18 +22455,18 @@ def fl_set_xyplot_key(pObject, idnum, keytxt):
                const char * key)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
     iidnum = convert_to_int(idnum)
     skeytxt = convert_to_string(keytxt)
-    keep_elem_refs(pObject, idnum, keytxt, iidnum, skeytxt)
-    _fl_set_xyplot_key(pObject, iidnum, skeytxt)
+    keep_elem_refs(pFlObject, idnum, keytxt, iidnum, skeytxt)
+    _fl_set_xyplot_key(pFlObject, iidnum, skeytxt)
 
 
-def fl_set_xyplot_key_position(pObject, valx, valy, align):
+def fl_set_xyplot_key_position(pFlObject, valx, valy, align):
     """
-        fl_set_xyplot_key_position(pObject, valx, valy, align)
+        fl_set_xyplot_key_position(pFlObject, valx, valy, align)
 
-        @param pObject: pointer to object
+        @param pFlObject: pointer to object
 
         @status: Untested + NoDoc + NoDemo = NOT OK
     """
@@ -22135,19 +22479,19 @@ def fl_set_xyplot_key_position(pObject, valx, valy, align):
                float y, int align)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
     fvalx = convert_to_float(valx)
     fvaly = convert_to_float(valy)
     ialign = convert_to_int(align)
-    keep_elem_refs(pObject, valx, valy, align, fvalx, fvaly, ialign)
-    _fl_set_xyplot_key_position(pObject, fvalx, fvaly, ialign)
+    keep_elem_refs(pFlObject, valx, valy, align, fvalx, fvaly, ialign)
+    _fl_set_xyplot_key_position(pFlObject, fvalx, fvaly, ialign)
 
 
-def fl_set_xyplot_key_font(pObject, style, size):
+def fl_set_xyplot_key_font(pFlObject, style, size):
     """
-        fl_set_xyplot_key_font(pObject, style, size)
+        fl_set_xyplot_key_font(pFlObject, style, size)
 
-        @param pObject: pointer to object
+        @param pFlObject: pointer to object
 
         @status: Untested + NoDoc + NoDemo = NOT OK
     """
@@ -22159,18 +22503,18 @@ def fl_set_xyplot_key_font(pObject, style, size):
                int size)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
     istyle = convert_to_int(style)
     isize = convert_to_int(size)
-    keep_elem_refs(pObject, style, size, istyle, isize)
-    _fl_set_xyplot_key_font(pObject, istyle, isize)
+    keep_elem_refs(pFlObject, style, size, istyle, isize)
+    _fl_set_xyplot_key_font(pFlObject, istyle, isize)
 
 
-def fl_get_xyplot_numdata(pObject, idnum):
+def fl_get_xyplot_numdata(pFlObject, idnum):
     """
-        fl_get_xyplot_numdata(pObject, idnum) -> num.
+        fl_get_xyplot_numdata(pFlObject, idnum) -> num.
 
-        @param pObject: pointer to object
+        @param pFlObject: pointer to object
 
         @status: Untested + NoDoc + NoDemo = NOT OK
     """
@@ -22181,10 +22525,10 @@ def fl_get_xyplot_numdata(pObject, idnum):
             """int fl_get_xyplot_numdata(FL_OBJECT * ob, int id)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
     iidnum = convert_to_int(idnum)
-    keep_elem_refs(pObject, idnum, iidnum)
-    retval = _fl_get_xyplot_numdata(pObject, iidnum)
+    keep_elem_refs(pFlObject, idnum, iidnum)
+    retval = _fl_get_xyplot_numdata(pFlObject, iidnum)
     return retval
 
 
@@ -22192,11 +22536,11 @@ def fl_get_xyplot_numdata(pObject, idnum):
 # fl_set_xyplot_fontstyle function placeholder (deprecated)
 
 
-def fl_xyplot_s2w(pObject, sx, sy, wx, wy):
+def fl_xyplot_s2w(pFlObject, sx, sy, wx, wy):
     """
-        fl_xyplot_s2w(pObject, sx, sy, wx, wy)
+        fl_xyplot_s2w(pFlObject, sx, sy, wx, wy)
 
-        @param pObject: pointer to object
+        @param pFlObject: pointer to object
 
         @status: Untested + NoDoc + NoDemo = NOT OK
     """
@@ -22209,18 +22553,18 @@ def fl_xyplot_s2w(pObject, sx, sy, wx, wy):
                float * wx, float * wy)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
     fsx = convert_to_double(sx)
     fsy = convert_to_double(sy)
-    keep_elem_refs(pObject, sx, sy, wx, wy, fsx, fsy)
-    _fl_xyplot_s2w(pObject, fsx, fsy, wx, wy)
+    keep_elem_refs(pFlObject, sx, sy, wx, wy, fsx, fsy)
+    _fl_xyplot_s2w(pFlObject, fsx, fsy, wx, wy)
 
 
-def fl_xyplot_w2s(pObject, wx, wy, sx, sy):
+def fl_xyplot_w2s(pFlObject, wx, wy, sx, sy):
     """
-        fl_xyplot_w2s(pObject, wx, wy, sx, sy)
+        fl_xyplot_w2s(pFlObject, wx, wy, sx, sy)
 
-        @param pObject: pointer to object
+        @param pFlObject: pointer to object
 
         @status: Untested + NoDoc + NoDemo = NOT OK
     """
@@ -22233,18 +22577,18 @@ def fl_xyplot_w2s(pObject, wx, wy, sx, sy):
                float * sx, float * sy)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
     fwx = convert_to_double(wx)
     fwy = convert_to_double(wy)
-    keep_elem_refs(pObject, wx, wy, sx, sy, fwx, fwy)
-    _fl_xyplot_w2s(pObject, fwx, fwy, sx, sy)
+    keep_elem_refs(pFlObject, wx, wy, sx, sy, fwx, fwy)
+    _fl_xyplot_w2s(pFlObject, fwx, fwy, sx, sy)
 
 
-def fl_set_xyplot_xscale(pObject, scale, base):
+def fl_set_xyplot_xscale(pFlObject, scale, base):
     """
-        fl_set_xyplot_xscale(pObject, scale, base)
+        fl_set_xyplot_xscale(pFlObject, scale, base)
 
-        @param pObject: pointer to object
+        @param pFlObject: pointer to object
 
         @status: Untested + NoDoc + NoDemo = NOT OK
     """
@@ -22256,18 +22600,18 @@ def fl_set_xyplot_xscale(pObject, scale, base):
                double base)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
     iscale = convert_to_int(scale)
     fbase = convert_to_double(base)
-    keep_elem_refs(pObject, scale, base, iscale, fbase)
-    _fl_set_xyplot_xscale(pObject, iscale, fbase)
+    keep_elem_refs(pFlObject, scale, base, iscale, fbase)
+    _fl_set_xyplot_xscale(pFlObject, iscale, fbase)
 
 
-def fl_set_xyplot_yscale(pObject, scale, base):
+def fl_set_xyplot_yscale(pFlObject, scale, base):
     """
-        fl_set_xyplot_yscale(pObject, scale, base)
+        fl_set_xyplot_yscale(pFlObject, scale, base)
 
-        @param pObject: pointer to object
+        @param pFlObject: pointer to object
 
         @status: Untested + NoDoc + NoDemo = NOT OK
     """
@@ -22279,18 +22623,18 @@ def fl_set_xyplot_yscale(pObject, scale, base):
                double base)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
     iscale = convert_to_int(scale)
     fbase = convert_to_double(base)
-    keep_elem_refs(pObject, scale, base, iscale, fbase)
-    _fl_set_xyplot_yscale(pObject, iscale, fbase)
+    keep_elem_refs(pFlObject, scale, base, iscale, fbase)
+    _fl_set_xyplot_yscale(pFlObject, iscale, fbase)
 
 
-def fl_clear_xyplot(pObject):
+def fl_clear_xyplot(pFlObject):
     """
-        fl_clear_xyplot(pObject)
+        fl_clear_xyplot(pFlObject)
 
-        @param pObject: pointer to object
+        @param pFlObject: pointer to object
 
         @status: Untested + NoDoc + NoDemo = NOT OK
     """
@@ -22301,16 +22645,16 @@ def fl_clear_xyplot(pObject):
             """void fl_clear_xyplot(FL_OBJECT * ob)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
-    keep_elem_refs(pObject)
-    _fl_clear_xyplot(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
+    keep_elem_refs(pFlObject)
+    _fl_clear_xyplot(pFlObject)
 
 
-def fl_set_xyplot_linewidth(pObject, idnum, lw):
+def fl_set_xyplot_linewidth(pFlObject, idnum, lw):
     """
-        fl_set_xyplot_linewidth(pObject, idnum, lw)
+        fl_set_xyplot_linewidth(pFlObject, idnum, lw)
 
-        @param pObject: pointer to object
+        @param pFlObject: pointer to object
 
         @status: Untested + NoDoc + NoDemo = NOT OK
     """
@@ -22321,18 +22665,18 @@ def fl_set_xyplot_linewidth(pObject, idnum, lw):
             """void fl_set_xyplot_linewidth(FL_OBJECT * ob, int id, int lw)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
     iidnum = convert_to_int(idnum)
     ilw = convert_to_int(lw)
-    keep_elem_refs(pObject, idnum, lw, iidnum, ilw)
-    _fl_set_xyplot_linewidth(pObject, iidnum, ilw)
+    keep_elem_refs(pFlObject, idnum, lw, iidnum, ilw)
+    _fl_set_xyplot_linewidth(pFlObject, iidnum, ilw)
 
 
-def fl_set_xyplot_xgrid(pObject, xgrid):
+def fl_set_xyplot_xgrid(pFlObject, xgrid):
     """
-        fl_set_xyplot_xgrid(pObject, xgrid)
+        fl_set_xyplot_xgrid(pFlObject, xgrid)
 
-        @param pObject: pointer to object
+        @param pFlObject: pointer to object
 
         @status: Untested + NoDoc + NoDemo = NOT OK
     """
@@ -22343,17 +22687,17 @@ def fl_set_xyplot_xgrid(pObject, xgrid):
             """void fl_set_xyplot_xgrid(FL_OBJECT * ob, int xgrid)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
     ixgrid = convert_to_int(xgrid)
-    keep_elem_refs(pObject, xgrid, ixgrid)
-    _fl_set_xyplot_xgrid(pObject, ixgrid)
+    keep_elem_refs(pFlObject, xgrid, ixgrid)
+    _fl_set_xyplot_xgrid(pFlObject, ixgrid)
 
 
-def fl_set_xyplot_ygrid(pObject, ygrid):
+def fl_set_xyplot_ygrid(pFlObject, ygrid):
     """
-        fl_set_xyplot_ygrid(pObject, ygrid)
+        fl_set_xyplot_ygrid(pFlObject, ygrid)
 
-        @param pObject: pointer to object
+        @param pFlObject: pointer to object
 
         @status: Untested + NoDoc + NoDemo = NOT OK
     """
@@ -22364,17 +22708,17 @@ def fl_set_xyplot_ygrid(pObject, ygrid):
             """void fl_set_xyplot_ygrid(FL_OBJECT * ob, int ygrid)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
     iygrid = convert_to_int(ygrid)
-    keep_elem_refs(pObject, ygrid, iygrid)
-    _fl_set_xyplot_ygrid(pObject, iygrid)
+    keep_elem_refs(pFlObject, ygrid, iygrid)
+    _fl_set_xyplot_ygrid(pFlObject, iygrid)
 
 
-def fl_set_xyplot_grid_linestyle(pObject, linestyle):
+def fl_set_xyplot_grid_linestyle(pFlObject, linestyle):
     """
-        fl_set_xyplot_grid_linestyle(pObject, linestyle) -> num.
+        fl_set_xyplot_grid_linestyle(pFlObject, linestyle) -> num.
 
-        @param pObject: pointer to object
+        @param pFlObject: pointer to object
         @param linestyle: style of the line to draw
         @type linestyle: [num./int] from xfdata module FL_SOLID, FL_USERDASH,
                          FL_USERDOUBLEDASH, FL_DOT, FL_DOTDASH, FL_DASH,
@@ -22389,18 +22733,18 @@ def fl_set_xyplot_grid_linestyle(pObject, linestyle):
             """int fl_set_xyplot_grid_linestyle(FL_OBJECT * ob, int style)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
     ilinestyle = convert_to_int(linestyle)
-    keep_elem_refs(pObject, linestyle, ilinestyle)
-    retval = _fl_set_xyplot_grid_linestyle(pObject, ilinestyle)
+    keep_elem_refs(pFlObject, linestyle, ilinestyle)
+    retval = _fl_set_xyplot_grid_linestyle(pFlObject, ilinestyle)
     return retval
 
 
-def fl_set_xyplot_alphaxtics(pObject, m, s):
+def fl_set_xyplot_alphaxtics(pFlObject, m, s):
     """
-        fl_set_xyplot_alphaxtics(pObject, m, s)
+        fl_set_xyplot_alphaxtics(pFlObject, m, s)
 
-        @param pObject: pointer to object
+        @param pFlObject: pointer to object
 
         @status: Untested + NoDoc + NoDemo = NOT OK
     """
@@ -22412,18 +22756,18 @@ def fl_set_xyplot_alphaxtics(pObject, m, s):
                const char * s)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
     sm = convert_to_string(m)
     ss = convert_to_string(s)
-    keep_elem_refs(pObject, m, s, sm, ss)
-    _fl_set_xyplot_alphaxtics(pObject, sm, ss)
+    keep_elem_refs(pFlObject, m, s, sm, ss)
+    _fl_set_xyplot_alphaxtics(pFlObject, sm, ss)
 
 
-def fl_set_xyplot_alphaytics(pObject, m, s):
+def fl_set_xyplot_alphaytics(pFlObject, m, s):
     """
-        fl_set_xyplot_alphaytics(pObject, m, s)
+        fl_set_xyplot_alphaytics(pFlObject, m, s)
 
-        @param pObject: pointer to object
+        @param pFlObject: pointer to object
 
         @status: Untested + NoDoc + NoDemo = NOT OK
     """
@@ -22435,18 +22779,18 @@ def fl_set_xyplot_alphaytics(pObject, m, s):
                const char * s)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
     sm = convert_to_string(m)
     ss = convert_to_string(s)
-    keep_elem_refs(pObject, m, s, sm, ss)
-    _fl_set_xyplot_alphaytics(pObject, sm, ss)
+    keep_elem_refs(pFlObject, m, s, sm, ss)
+    _fl_set_xyplot_alphaytics(pFlObject, sm, ss)
 
 
-def fl_set_xyplot_fixed_xaxis(pObject, lm, rm):
+def fl_set_xyplot_fixed_xaxis(pFlObject, lm, rm):
     """
-        fl_set_xyplot_fixed_xaxis(pObject, lm, rm)
+        fl_set_xyplot_fixed_xaxis(pFlObject, lm, rm)
 
-        @param pObject: pointer to object
+        @param pFlObject: pointer to object
 
         @status: Untested + NoDoc + NoDemo = NOT OK
     """
@@ -22458,18 +22802,18 @@ def fl_set_xyplot_fixed_xaxis(pObject, lm, rm):
                const char * rm)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
     slm = convert_to_string(lm)
     srm = convert_to_string(rm)
-    keep_elem_refs(pObject, lm, rm, slm, srm)
-    _fl_set_xyplot_fixed_xaxis(pObject, slm, srm)
+    keep_elem_refs(pFlObject, lm, rm, slm, srm)
+    _fl_set_xyplot_fixed_xaxis(pFlObject, slm, srm)
 
 
-def fl_set_xyplot_fixed_yaxis(pObject, bm, tm):
+def fl_set_xyplot_fixed_yaxis(pFlObject, bm, tm):
     """
-        fl_set_xyplot_fixed_yaxis(pObject, bm, tm)
+        fl_set_xyplot_fixed_yaxis(pFlObject, bm, tm)
 
-        @param pObject: pointer to object
+        @param pFlObject: pointer to object
 
         @status: Untested + NoDoc + NoDemo = NOT OK
     """
@@ -22481,11 +22825,11 @@ def fl_set_xyplot_fixed_yaxis(pObject, bm, tm):
                const char * tm)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
     sbm = convert_to_string(bm)
     stm = convert_to_string(tm)
-    keep_elem_refs(pObject, bm, tm, sbm, stm)
-    _fl_set_xyplot_fixed_yaxis(pObject, sbm, stm)
+    keep_elem_refs(pFlObject, bm, tm, sbm, stm)
+    _fl_set_xyplot_fixed_yaxis(pFlObject, sbm, stm)
 
 
 def fl_interpolate(wx, wy, nin, x, y, grid, ndeg):
@@ -22538,11 +22882,11 @@ def fl_spline_interpolate(wx, wy, nin, x, y, grid):
 FL_XYPLOT_SYMBOL = cty.CFUNCTYPE(None, cty.POINTER(xfc.FL_OBJECT), cty.c_int,
             cty.POINTER(xfc.FL_POINT), cty.c_int, cty.c_int, cty.c_int)
 
-def fl_set_xyplot_symbol(pObject, idnum, py_XyPlotSymbol):
+def fl_set_xyplot_symbol(pFlObject, idnum, py_XyPlotSymbol):
     """
-        fl_set_xyplot_symbol(pObject, idnum, py_XyPlotSymbol) -> xyplot_symbol func.
+        fl_set_xyplot_symbol(pFlObject, idnum, py_XyPlotSymbol) -> xyplot_symbol func.
 
-        @param pObject: pointer to object
+        @param pFlObject: pointer to object
 
         @status: Untested + NoDoc + NoDemo = NOT OK
     """
@@ -22555,20 +22899,20 @@ def fl_set_xyplot_symbol(pObject, idnum, py_XyPlotSymbol):
                FL_XYPLOT_SYMBOL symbol)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
     iidnum = convert_to_int(idnum)
     c_XyPlotSymbol = FL_XYPLOT_SYMBOL(py_XyPlotSymbol)
     keep_cfunc_refs(c_XyPlotSymbol, py_XyPlotSymbol)
-    keep_elem_refs(pObject, idnum, iidnum)
-    retval = _fl_set_xyplot_symbol(pObject, iidnum, c_XyPlotSymbol)
+    keep_elem_refs(pFlObject, idnum, iidnum)
+    retval = _fl_set_xyplot_symbol(pFlObject, iidnum, c_XyPlotSymbol)
     return retval
 
 
-def fl_set_xyplot_mark_active(pObject, y):
+def fl_set_xyplot_mark_active(pFlObject, y):
     """
-        fl_set_xyplot_mark_active(pObject, y) -> num.
+        fl_set_xyplot_mark_active(pFlObject, y) -> num.
 
-        @param pObject: pointer to object
+        @param pFlObject: pointer to object
 
         @status: Untested + NoDoc + NoDemo = NOT OK
     """
@@ -22579,10 +22923,10 @@ def fl_set_xyplot_mark_active(pObject, y):
             """int fl_set_xyplot_mark_active(FL_OBJECT * ob, int y)
             """)
     check_if_initialized()
-    check_if_FL_OBJECT_ptr(pObject)
+    check_if_FL_OBJECT_ptr(pFlObject)
     iy = convert_to_int(y)
-    keep_elem_refs(pObject, y, iy)
-    retval = _fl_set_xyplot_mark_active(pObject, iy)
+    keep_elem_refs(pFlObject, y, iy)
+    retval = _fl_set_xyplot_mark_active(pFlObject, iy)
     return retval
 
 
