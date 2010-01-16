@@ -2508,3 +2508,24 @@ def fl_strdup(strng):
     return retval 
 
 
+
+# backward data dismissed --LK 
+# This function is retained for compatibility reasons only. 
+# It returns 1 always. 
+#def fl_init_RGBdatabase(text): 
+#    """ 
+#        fl_init_RGBdatabase(text) -> num. 
+#    """ 
+# 
+#    _fl_init_RGBdatabase = cfuncproto( 
+#            load_so_libflimage(), "fl_init_RGBdatabase", 
+#            cty.c_int, [xfc.STRING], 
+#            """int fl_init_RGBdatabase(const char * p1) 
+#            """) 
+#    stext = convert_to_string(text) 
+#    keep_elem_refs(text, stext) 
+#    retval = _fl_init_RGBdatabase(stext) 
+#    return retval 
+#end backwards --LK 
+
+

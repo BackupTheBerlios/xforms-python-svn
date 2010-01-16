@@ -2,6 +2,8 @@
 
 SVN
 
+    * new checks for pointer to FL_OBJECT/FL_FORM existence, and for
+    required initialization.
     * other functions are tested and documented.
     * lowlevel fl_strdup() removed.
     * another bunch of functions have been tested and documented; in getter

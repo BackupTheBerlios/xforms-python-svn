@@ -424,7 +424,7 @@ MOUSEBTN_list = [FL_MBUTTON1, FL_MBUTTON2, FL_MBUTTON3, FL_MBUTTON4,
 # control when to return input, slider and dial etc. object.
 FL_RETURN_NONE = 0
 """Never notiy the application about interactions with this object (i.e.
-never return it nor invoke its callback). Note: this is not meant for
+never return it nor invoke its callback). Note, this is not meant for
 deactivation of an object, it will still seem to work as normal, it just
 doesn't get returned to the application nor does its callback get invoked."""
 FL_RETURN_CHANGED = 1
@@ -894,7 +894,7 @@ require a window ID, which you can obtain from the object pointer using
 FL_ObjWin(pObject). Some other aspects might also influence the way
 the object has to be drawn. E.g., you might want to draw the object
 differently when the mouse is on top of it or when the mouse is
-pressed on it. This can be figured out the following way: The field
+pressed on it. This can be figured out the following way, the field
 pObject.contents.belowmouse tells you whether the object is below the
 mouse. The field pObject.contents.pushed indicates whether the object is
 currently being pushed with the mouse. Finally, pObject.contents.focus
@@ -903,7 +903,7 @@ that drawing of the object is the full responsibility of the object
 class, including the bounding box and the label, which can be found in
 the field pObject.contents.label. The Forms Library provides a large number
 of routines to help you draw object.
-One important caution about your draw event handling code: none of the
+One important caution about your draw event handling code, none of the
 high level routines (fl_freeze_form(), fl_deactivate_form()) etc. can be
 used. The only routines allowed to be used are (direct) drawing functions
 and object internal book keeping routines. Attribute modifying routines,
@@ -917,8 +917,8 @@ buffered). What that means is that FL_ObjWin(pObject) should not be used
 when a real window is needed. For a real window you can change the window's
 cursor or query the mouse position within it. You can't do either of these
 with the backbuffer pixmap. If there is a need to obtain the real window ID
-the following routine can be used: fl_get_real_object_window() 
-To summarize: use FL_ObjWin(pObject) when drawing and use
+the following routine can be used fl_get_real_object_window() 
+To summarize, use FL_ObjWin(pObject) when drawing and use
 fl_get_real_object_window() for cursor or pointer routines. This distinction
 is important only while handling FL_DRAW events, FL_ObjWin(obj) should be
 used anywhere else."""
@@ -1350,7 +1350,7 @@ FL_RAW_CALLBACK = cty.CFUNCTYPE(cty.c_int, cty.POINTER(FL_FORM), \
 """ FL_RAW_CALLBACK(pForm, pXEvent) -> num.
 
     prototype for handling a raw callback for X events (used by
-    fl_register_raw_callback) - with returning value
+    fl_register_raw_callback), with returning value
 """
 
 
@@ -1549,7 +1549,7 @@ FL_OBJECT_._fields_ = [
 
 
 
-# form visibility state: form .visible
+# form visibility state, form .visible
 # values for unnamed enumeration
 FL_BEING_HIDDEN = -1
 """The forms is visible but is in the process of being hidden"""
@@ -2302,7 +2302,7 @@ POPUPCOLOR_list = [FL_POPUP_BACKGROUND_COLOR, FL_POPUP_HIGHLIGHT_COLOR,
 
 #######################
 # forms.h (bitmap.h)
-# Object Class: Bitmap
+# Bitmap object class
 #######################
 
 FL_NORMAL_BITMAP = 0
@@ -2371,7 +2371,7 @@ FL_BROWSER_FONTSIZE = FL_SMALL_SIZE
 
 #############################################################
 # forms.h (button.h)
-# All Buttons: regular button, light button and round button
+# All Buttons, regular button, light button and round button
 #############################################################
 
 # values for enumeration 'FL_BUTTON_TYPE'
@@ -2551,7 +2551,7 @@ GLXContext._fields_ = []
 
 #############################
 # forms.h (chart.h)
-# Object Class: Chart
+# Chart object class
 #############################
 
 # values for enumeration 'FL_CHART_TYPE'
@@ -3008,7 +3008,7 @@ FL_FRAME_LCOL = FL_BLACK        # label color
 
 #####################
 # forms.h (free.h)
-# Object Class: Free
+# Free object class
 #####################
 
 # values for enumeration 'FL_FREE_TYPE'
@@ -3208,7 +3208,7 @@ FL_EditKeymap._fields_ = [
 
 #####################
 # forms.h (menu.h)
-# Object Class: Menu
+#  Menu object class
 #####################
 
 # FL_MENU_TYPE placeholder (deprecated)
@@ -3234,13 +3234,18 @@ FL_EditKeymap._fields_ = [
 # Nmenu object types
 # values for unnamed enumeration
 FL_NORMAL_NMENU = 0
-""""""
+"""Probably the most often used type: shown as text on a borderless background,
+popup gets opened when clicked on."""
 FL_NORMAL_TOUCH_NMENU = 1
-""""""
+"""Also shown as text on a borderless background, but popup gets opened when
+the mouse is moved on top of it without any further user action required."""
 FL_BUTTON_NMENU = 2
-""""""
+"""When not active shown as text on borderless background, when clicked on
+popup is shown and the object itself being dispayed as a button."""
 FL_BUTTON_TOUCH_NMENU = 3
-""""""
+"""When not active shown as text on borderless background, when mouse is
+moved onto it the popup is shown and the object itself is displayed as a
+button."""
 
 # list of possible values - my add --LK
 NMENUTYPE_list = [FL_NORMAL_NMENU, FL_NORMAL_TOUCH_NMENU, FL_BUTTON_NMENU, \
@@ -3253,11 +3258,13 @@ NMENUTYPE_list = [FL_NORMAL_NMENU, FL_NORMAL_TOUCH_NMENU, FL_BUTTON_NMENU, \
 #########################
 
 FL_NORMAL_POSITIONER = 0
-""""""
+"""Cross-hair inside a box."""
 FL_OVERLAY_POSITIONER = 1
-""""""
+"""Cross-hair inside a transparent box (i.e. drawn in in XOR mode)."""
 FL_INVISIBLE_POSITIONER = 2
-""""""
+"""Completely invisible positioner to be used just for the side effect of
+obtaining a position (typically an object is below below it that otherwise
+would receive user events)."""
 
 # list of possible values - my add --LK
 POSITIONERTYPE_list = [FL_NORMAL_POSITIONER, FL_OVERLAY_POSITIONER,
@@ -3274,25 +3281,26 @@ FL_POSITIONER_ALIGN = FL_ALIGN_BOTTOM
 
 # values for unnamed enumeration
 FL_VERT_SCROLLBAR = 0
-""""""
+"""A vertical scrollbar."""
 FL_HOR_SCROLLBAR = 1
-""""""
+"""A horizontal scrollbar."""
 FL_VERT_THIN_SCROLLBAR = 2
-""""""
+"""A different looking vertical scrollbar."""
 FL_HOR_THIN_SCROLLBAR = 3
-""""""
+"""A different looking horizontal scrollbar."""
 FL_VERT_NICE_SCROLLBAR = 4
-""""""
+"""A vertical scrollbar using FL_NICE_SLIDER."""
 FL_HOR_NICE_SCROLLBAR = 5
-""""""
+"""A horizontal scrollbar using FL_NICE_SLIDER."""
 FL_VERT_PLAIN_SCROLLBAR = 6
-""""""
+"""Similar to FL_THIN_SCROLLBAR."""
 FL_HOR_PLAIN_SCROLLBAR = 7
-""""""
+"""Similar to FL_HOR_THIN_SCROLLBAR."""
 FL_HOR_BASIC_SCROLLBAR = FL_HOR_PLAIN_SCROLLBAR
-""""""
+"""Similar to FL_HOR_THIN_SCROLLBAR."""
 FL_VERT_BASIC_SCROLLBAR = FL_VERT_PLAIN_SCROLLBAR
-""""""
+"""Similar to FL_THIN_SCROLLBAR."""
+
 
 # values for unnamed enumeration
 FL_NORMAL_SCROLLBAR = 0
@@ -3304,7 +3312,7 @@ FL_NICE_SCROLLBAR = 2
 FL_PLAIN_SCROLLBAR = 3
 """"""
 
-# my add - list of possible values --LK         TODO: verify
+# my add - list of possible values --LK
 SCROLLTYPE_list = [FL_VERT_SCROLLBAR, FL_HOR_SCROLLBAR, \
                   FL_VERT_THIN_SCROLLBAR, FL_HOR_THIN_SCROLLBAR, \
                   FL_VERT_NICE_SCROLLBAR, FL_HOR_NICE_SCROLLBAR, \
@@ -3322,11 +3330,17 @@ SCROLLTYPE_list = [FL_VERT_SCROLLBAR, FL_HOR_SCROLLBAR, \
 # Select object types
 # values for unnamed enumeration
 FL_NORMAL_SELECT = 0
-""""""
+"""Per default this type is drawn as a rounded, flat box (but you can change
+that by setting a different boxtype for the object) with the text of the
+currently selected item in its center."""
 FL_MENU_SELECT = 1
-""""""
+"""This select object looks like a button with a little extra box at its right
+side (just like a FL_MENU_BUTTON) and the text of the currently selected item
+is drawn on the button-like object."""
 FL_DROPLIST_SELECT = 2
-""""""
+"""This type looks like a button with the text of the currently selected item
+on top of it and a second square button directly beside it with an downward
+pointing arrow on it."""
 
 # list of possible values - my add --LK
 SELECTTYPE_list = [FL_NORMAL_SELECT, FL_MENU_SELECT, FL_DROPLIST_SELECT]
@@ -3342,7 +3356,7 @@ FL_SELECT_ALIGN = FL_ALIGN_LEFT
 
 #######################
 # forms.h (slider.h)
-# Object Class: Slider
+# Slider object class
 #######################
 
 FL_HOR_FLAG = 1
@@ -3509,7 +3523,7 @@ FL_THUMBWHEEL_ALIGN = FL_ALIGN_BOTTOM
 
 ######################
 # forms.h (timer.h)
-# Object Class: Timer
+# Timer object class
 ######################
 
 # values for enumeration 'FL_TIMER_TYPE'
@@ -3759,13 +3773,14 @@ class _IO_FILE(cty.Structure):
     pass
 FILE = _IO_FILE
 
+
 class flimage_(cty.Structure):
     pass
 flimage_._fields_ = [
     ('type', cty.c_int),            # image type
-    ('w', cty.c_int),
-    ('h', cty.c_int),               # image size
-    ('app_data', cty.c_void_p),     #for application at setup time
+    ('w', cty.c_int),               # image size
+    ('h', cty.c_int),
+    ('app_data', cty.c_void_p),     # for application at setup time
     ('u_vdata', cty.c_void_p),      # for application
     ('u_ldata', cty.c_long),        # for application
     ('red', cty.POINTER(cty.POINTER(cty.c_ubyte))),
@@ -3865,7 +3880,7 @@ flimage_._fields_ = [
     ('error_message', cty.CFUNCTYPE(None, cty.POINTER(flimage_), STRING)),
     ('error_code', cty.c_int),      # not currently used
     ('display_type', cty.c_int),    # just before handing it to X
-    ('pixels', cty.POINTER(cty.POINTER( cty.c_ushort))),
+    ('pixels', cty.POINTER(cty.POINTER(cty.c_ushort))),
     ('image_spec', cty.c_void_p),   # additional image info
     ('xdisplay', cty.c_void_p),     # the X connection
     ('tran_rgb', cty.c_int),        # RGB color that should be transparent
@@ -3908,6 +3923,7 @@ flimage_._fields_ = [
     ('setup', FLIMAGESETUP),
     ('info', STRING),
 ]
+
 FL_IMAGE = flimage_
 
 
@@ -4858,11 +4874,6 @@ XGenericEventCookie._fields_ = [
     ('data', cty.c_void_p),
 ]
 
-
-## /usr/include/X11/Xlib.h 984
-#class _XEvent(cty.Union):
-#    pass
-#XEvent = _XEvent
 
 # /usr/include/X11/Xlib.h 984
 _XEvent._fields_ = [

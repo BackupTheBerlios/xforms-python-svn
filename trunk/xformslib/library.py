@@ -2,9 +2,8 @@
 # -*- coding: iso8859-1 -*-
 
 """
-    *****************************************************************
-    xforms-python
-    *****************************************************************
+
+    ***** xforms-python *****
 
     Python wrapper for XForms (X11) GUI C toolkit library using ctypes
 
@@ -28,7 +27,8 @@
     *****************************************************************
 
 
-    @newfield example: Example
+    @newfield example: Example, Example
+    @newfield values: Possible values, Possible values
 """
 
 
@@ -122,6 +122,13 @@ class XFormsLoadError(OSError):
 
 class XFormsTypeError(TypeError):
     """ Generic error for type mismatch """
+
+    pass
+
+
+class XFormsInitError(OSError):
+    """ Error in initializing library, not using fl_initialize() before
+        functions who require it. """
 
     pass
 
@@ -231,6 +238,19 @@ def cfuncproto(library, cfuncname, retval, arglist, doc=""):
     return loadedfunc
 
 
+flinitialized = False               # if fl_initialize() not called before
+
+def check_if_initialized():
+    """ Check if fl_initialize() has been called before caller function.
+        Needed for most functions, except those supposed to be used
+        *BEFORE* initialization.
+    """
+
+    if not flinitialized:       # fl_initialize() not called
+        raise XFormsInitError("You must call fl_initialize() before using" \
+                              " this function.")
+
+
 # functions to convert a parameter into a python type then into the
 # equivalent ctypes type
 
@@ -240,8 +260,8 @@ def convert_to_string(paramname):
     try:
         retv0 = str(paramname)
     except ValueError:
-        raise XFormsTypeError("Parameter cannot be converted into" \
-                              " 'str'/'c_char_p'")
+        raise XFormsTypeError("Parameter %s cannot be converted into" \
+                              " 'str'/'c_char_p'" % paramname)
     retv = cty.c_char_p(retv0)
     return retv
 
@@ -253,8 +273,8 @@ def convert_to_int(paramname):
         try:
             retv0 = int(paramname)
         except ValueError:
-            raise XFormsTypeError("Parameter cannot be converted into" \
-                                  " 'int'/'c_int'")
+            raise XFormsTypeError("Parameter %s cannot be converted into" \
+                                  " 'int'/'c_int'" % paramname)
         retv = cty.c_int(retv0)
         return retv
     else:
@@ -271,8 +291,8 @@ def convert_to_uint(paramname):
         try:
             retv0 = int(paramname)
         except ValueError:
-            raise XFormsTypeError("Parameter cannot be converted into" \
-                                  " 'int'/'c_uint'")
+            raise XFormsTypeError("Parameter %s cannot be converted into" \
+                                  " 'int'/'c_uint'" % paramname)
         else:
             retv = cty.c_uint(retv0)
             return retv
@@ -287,8 +307,8 @@ def convert_to_long(paramname):
         try:
             retv0 = long(paramname)
         except ValueError:
-            raise XFormsTypeError("Parameter cannot be converted into" \
-                                  " 'long'/'c_long'")
+            raise XFormsTypeError("Parameter %s cannot be converted into" \
+                                  " 'long'/'c_long'" % paramname)
         else:
             retv = cty.c_long(retv0)
             return retv
@@ -303,8 +323,8 @@ def convert_to_ulong(paramname):
         try:
             retv0 = long(paramname)
         except ValueError:
-            raise XFormsTypeError("Parameter cannot be converted into" \
-                                  " 'long'/'c_ulong'")
+            raise XFormsTypeError("Parameter %s cannot be converted into" \
+                                  " 'long'/'c_ulong'" % paramname)
         else:
             retv = cty.c_ulong(retv0)
             return retv
@@ -324,8 +344,8 @@ def convert_to_double(paramname):
         try:
             retv0 = float(paramname)
         except ValueError:
-            raise XFormsTypeError("Parameter cannot be converted into" \
-                                  " 'float'/'c_double'")
+            raise XFormsTypeError("Parameter %s cannot be converted into" \
+                                  " 'float'/'c_double'" % paramname)
         else:
             retv = cty.c_double(retv0)
             #print "double", paramname, retv0, retv
@@ -341,8 +361,8 @@ def convert_to_float(paramname):
         try:
             retv0 = float(paramname)
         except ValueError:
-            raise XFormsTypeError("Parameter cannot be converted into" \
-                                  " 'float'/'c_float'")
+            raise XFormsTypeError("Parameter %s cannot be converted into" \
+                                  " 'float'/'c_float'" % paramname)
         else:
             retv = cty.c_float(retv0)
             #print "float", paramname, retv0, retv
@@ -413,6 +433,8 @@ def make_double_and_pointer():
     return baseval, ptrbaseval
 
 
+
+
 def check_admitted_listvalues(paramname, *valueslist):
     """ Check if paramname value is valid in accordance to a list
         of admissible values.
@@ -420,8 +442,26 @@ def check_admitted_listvalues(paramname, *valueslist):
 
     if isinstance(valueslist, list):
         if paramname not in valueslist:
-            raise XFormsTypeError("Parameter value must be included in " \
-                                  "list %s." % valueslist)
+            raise XFormsTypeError("Parameter %s value must be included in " \
+                                  "list %s." % (paramname, valueslist))
+
+
+def check_if_FL_OBJECT_ptr(paramname):
+    """ Check if paramname value is a valid pointer to xfdata.FL_OBJECT.
+    """
+
+    if not isinstance(paramname, cty.POINTER(xfc.FL_OBJECT)):
+        raise XFormsTypeError("Parameter value %s must be a pointer to " \
+                              "xfdata.FL_OBJECT." % paramname)
+
+
+def check_if_FL_FORM_ptr(paramname):
+    """ Check if paramname value is a valid pointer to xfdata.FL_FORM.
+    """
+
+    if not isinstance(paramname, cty.POINTER(xfc.FL_FORM)):
+        raise XFormsTypeError("Parameter value %s must be a pointer to " \
+                              "xfdata.FL_FORM." % paramname)
 
 
 def donothing_popupcb(pPopupReturn):
@@ -642,9 +682,9 @@ def fl_add_io_callback(fd, mask, py_IoCallback, vdata):
                       void>)
 
         @example: def iocb(num, vdata):
-                  > ...
-                  fdesc = ... function to open file
-                  fl_add_io_callback(fdesc, xfdata.FL_READ, iocb, None)
+        @example: |->| ...
+        @example: fdesc = ... function to open file
+        @example: fl_add_io_callback(fdesc, xfdata.FL_READ, iocb, None)
 
         @status: Tested + Doc + NoDemo = OK
     """
@@ -656,6 +696,7 @@ def fl_add_io_callback(fd, mask, py_IoCallback, vdata):
             """void fl_add_io_callback(int fd, unsigned int mask,
                FL_IO_CALLBACK callback, void * data)
             """)
+    check_if_initialized()
     ifd = convert_to_int(fd)
     uimask = convert_to_uint(mask)
     c_IoCallback = xfc.FL_IO_CALLBACK(py_IoCallback)
@@ -679,9 +720,9 @@ def fl_remove_io_callback(fd, mask, py_IoCallback):
         @type py_IoCallback: __ funcname (num, ptr_void) __
 
         @example: def iocb(num, vdata):
-                  > ...
-                  fdesc = ... function to open file
-                  fl_remove_io_callback(fdesc, xfdata.FL_READ, iocb, None)
+        @example: |->| ...
+        @example: fdesc = ... function to open file
+        @example: fl_remove_io_callback(fdesc, xfdata.FL_READ, iocb, None)
 
         @status: Tested + Doc + NoDemo = OK
     """
@@ -693,6 +734,7 @@ def fl_remove_io_callback(fd, mask, py_IoCallback):
             """void fl_remove_io_callback(int fd, unsigned int mask,
                FL_IO_CALLBACK cb)
             """)
+    check_if_initialized()
     check_admitted_listvalues(mask, xfc.ASYNCIO_list)
     ifd = convert_to_int(fd)
     uimask = convert_to_uint(mask)
@@ -718,8 +760,8 @@ def fl_add_signal_callback(sglnum, py_SignalHandler, vdata):
         @param vdata: argument to be passed to function (<pointer to void>)
 
         @example: def sglhandl(numsgl, vdata):
-                  > ...
-                  fl_add_signal_callback(signal.SIGALRM, sglhandl, None)
+        @example: |->| ...
+        @example: fl_add_signal_callback(signal.SIGALRM, sglhandl, None)
 
         @status: Tested + Doc + NoDemo = OK
     """
@@ -731,6 +773,7 @@ def fl_add_signal_callback(sglnum, py_SignalHandler, vdata):
             """void fl_add_signal_callback(int s, FL_SIGNAL_HANDLER cb,
                void * data)
             """)
+    check_if_initialized()
     isglnum = convert_to_int(sglnum)
     c_SignalHandler = xfc.FL_SIGNAL_HANDLER(py_SignalHandler)
     pvdata = cty.cast(vdata, cty.c_void_p)
@@ -757,6 +800,7 @@ def fl_remove_signal_callback(sglnum):
             None, [cty.c_int], \
             """void fl_remove_signal_callback(int s)
             """)
+    check_if_initialized()
     isglnum = convert_to_int(sglnum)
     keep_elem_refs(sglnum, isglnum)
     _fl_remove_signal_callback(isglnum)
@@ -781,6 +825,7 @@ def fl_signal_caught(sglnum):
             None, [cty.c_int], \
             """void fl_signal_caught(int s)
             """)
+    check_if_initialized()
     isglnum = convert_to_int(sglnum)
     keep_elem_refs(sglnum, isglnum)
     _fl_signal_caught(isglnum)
@@ -806,6 +851,7 @@ def fl_app_signal_direct(flag):
             None, [cty.c_int], \
             """void fl_app_signal_direct(int y)
             """)
+    check_if_initialized()
     iflag = convert_to_int(flag)
     keep_elem_refs(flag, iflag)
     _fl_app_signal_direct(iflag)
@@ -826,8 +872,8 @@ def fl_add_timeout(msec, py_TimeoutCallback, vdata):
         @return: timer number id (<int>)
 
         @example: def timeoutcb(num, vdata):
-                  > ...
-                  timnum = fl_add_timeout(100, timeoutcb, None) 
+        @example: |->| ...
+        @example: timnum = fl_add_timeout(100, timeoutcb, None) 
 
         @status: Tested + Doc + Demo = OK
     """
@@ -839,6 +885,7 @@ def fl_add_timeout(msec, py_TimeoutCallback, vdata):
             """int fl_add_timeout(long int msec,
                FL_TIMEOUT_CALLBACK callback, void * data)
             """)
+    check_if_initialized()
     lmsec = convert_to_long(msec)
     pvdata = cty.cast(vdata, cty.c_void_p)
     c_TimeoutCallback = xfc.FL_TIMEOUT_CALLBACK(py_TimeoutCallback)
@@ -865,6 +912,7 @@ def fl_remove_timeout(idnum):
             None, [cty.c_int], \
             """void fl_remove_timeout(int id)
             """)
+    check_if_initialized()
     iidnum = convert_to_int(idnum)
     keep_elem_refs(idnum, iidnum)
     _fl_remove_timeout(iidnum)
@@ -894,6 +942,7 @@ def fl_library_version():
             cty.c_int, [cty.POINTER(cty.c_int), cty.POINTER(cty.c_int)], \
             """int fl_library_version(int * ver, int * rev)
             """)
+    check_if_initialized()
     ver, pver = make_int_and_pointer()
     rev, prev = make_int_and_pointer()
     keep_elem_refs(ver, rev, pver, prev)
@@ -931,6 +980,7 @@ def fl_bgn_form(formtype, w, h):
             cty.POINTER(xfc.FL_FORM), [cty.c_int, xfc.FL_Coord, xfc.FL_Coord],
             """FL_FORM * fl_bgn_form(int type, FL_Coord w, FL_Coord h)
             """)
+    check_if_initialized()
     check_admitted_listvalues(formtype, xfc.BOXTYPE_list)
     iformtype = convert_to_int(formtype)
     iw = convert_to_FL_Coord(w)
@@ -956,6 +1006,7 @@ def fl_end_form():
             None, [], \
             """void fl_end_form()
             """)
+    check_if_initialized()
     _fl_end_form()
 
 
@@ -968,7 +1019,7 @@ def fl_do_forms():
         @return: object changed (<pointer to xfdata.FL_OBJECT>)
 
         @example: while fl_do_forms():
-                  > pass
+        @example: |->| pass
 
         @status: Tested + Doc + Demo = OK
     """
@@ -978,6 +1029,7 @@ def fl_do_forms():
             cty.POINTER(xfc.FL_OBJECT), [], \
             """FL_OBJECT * fl_do_forms()
             """)
+    check_if_initialized()
     retval = _fl_do_forms()
     return retval
 
@@ -1000,6 +1052,7 @@ def fl_check_forms():
             cty.POINTER(xfc.FL_OBJECT), [], \
             """FL_OBJECT * fl_check_forms()
             """)
+    check_if_initialized()
     retval = _fl_check_forms()
     return retval
 
@@ -1024,6 +1077,7 @@ def fl_do_only_forms():
             cty.POINTER(xfc.FL_OBJECT), [], \
             """FL_OBJECT * fl_do_only_forms()
             """)
+    check_if_initialized()
     retval = _fl_do_only_forms()
     return retval
 
@@ -1048,6 +1102,7 @@ def fl_check_only_forms():
             cty.POINTER(xfc.FL_OBJECT), [], \
             """FL_OBJECT * fl_check_only_forms()
             """)
+    check_if_initialized()
     retval = _fl_check_only_forms()
     return retval
 
@@ -1071,6 +1126,7 @@ def fl_freeze_form(pForm):
             None, [cty.POINTER(xfc.FL_FORM)], \
             """void fl_freeze_form(FL_FORM * form)
             """)
+    check_if_initialized()
     keep_elem_refs(pForm)
     _fl_freeze_form(pForm)
 
@@ -1095,6 +1151,9 @@ def fl_set_focus_object(pForm, pObject):
             None, [cty.POINTER(xfc.FL_FORM), cty.POINTER(xfc.FL_OBJECT)], \
             """void fl_set_focus_object(FL_FORM * form, FL_OBJECT * obj)
             """)
+    check_if_initialized()
+    check_if_FL_FORM_ptr(pForm)
+    check_if_FL_OBJECT_ptr(pObject)
     keep_elem_refs(pForm, pObject)
     _fl_set_focus_object(pForm, pObject)
 
@@ -1122,6 +1181,8 @@ def fl_get_focus_object(pForm):
             cty.POINTER(xfc.FL_OBJECT), [cty.POINTER(xfc.FL_FORM)], \
             """FL_OBJECT * fl_get_focus_object(FL_FORM * form)
             """)
+    check_if_initialized()
+    check_if_FL_FORM_ptr(pForm)
     keep_elem_refs(pForm)
     retval = _fl_get_focus_object(pForm)
     return retval
@@ -1146,6 +1207,8 @@ def fl_reset_focus_object(pObject):
             None, [cty.POINTER(xfc.FL_OBJECT)], \
             """void fl_reset_focus_object(FL_OBJECT * ob)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     keep_elem_refs(pObject)
     _fl_reset_focus_object(pObject)
 
@@ -1165,8 +1228,9 @@ def fl_set_form_atclose(pForm, py_FormAtclose, vdata):
         @return: xfdata.FL_FORM_ATCLOSE function
 
         @example: def atcolsecb(pform, vdata):
-                  > ... ; return 0
-                  oldatclosecb = fl_set_form_atclose(pform1, None)
+        @example: |->| ...
+        @example: |->| return 0
+        @example: oldatclosecb = fl_set_form_atclose(pform1, None)
 
         @status: Tested + Doc + NoDemo = OK
     """
@@ -1180,6 +1244,8 @@ def fl_set_form_atclose(pForm, py_FormAtclose, vdata):
             """FL_FORM_ATCLOSE fl_set_form_atclose(FL_FORM * form,
                FL_FORM_ATCLOSE fmclose, void * data)
             """)
+    check_if_initialized()
+    check_if_FL_FORM_ptr(pForm)
     c_FormAtclose = xfc.FL_FORM_ATCLOSE(py_FormAtclose)
     pvdata = cty.cast(vdata, cty.c_void_p)
     keep_cfunc_refs(c_FormAtclose, py_FormAtclose)
@@ -1201,8 +1267,9 @@ def fl_set_atclose(py_FormAtclose, vdata):
         @return: old xfdata.FL_FORM_ATCLOSE function
 
         @example: def atclose(pform, vdata):
-                  > ... ; return 0
-                  oldatclosefunc = fl_set_atclose(atclose, None)
+        @example: |->| ... 
+        @example: |->| return 0
+        @example: oldatclosefunc = fl_set_atclose(atclose, None)
 
         @status: Tested + Doc + NoDemo = OK
     """
@@ -1215,6 +1282,7 @@ def fl_set_atclose(py_FormAtclose, vdata):
             """FL_FORM_ATCLOSE fl_set_atclose(FL_FORM_ATCLOSE fmclose,
                void * data)
             """)
+    check_if_initialized()
     c_FormAtclose = xfc.FL_FORM_ATCLOSE(py_FormAtclose)
     pvdata = cty.cast(vdata, cty.c_void_p)
     keep_cfunc_refs(c_FormAtclose, py_FormAtclose)
@@ -1237,8 +1305,8 @@ def fl_set_form_atactivate(pForm, py_FormAtactivate, vdata):
         @return: old xfdata.FL_FORM_ATACTIVATE function
 
         @example: def atactcb(pform, vdata):
-                  > ...
-                  oldactfunc = xf.fl_set_form_atdeactivate(pform, atactcb,
+        @example: |->| ...
+        @example: oldactfunc = xf.fl_set_form_atdeactivate(pform, atactcb,
                   None)
 
         @status: Tested + Doc + NoDemo = OK
@@ -1253,6 +1321,8 @@ def fl_set_form_atactivate(pForm, py_FormAtactivate, vdata):
             """FL_FORM_ATACTIVATE fl_set_form_atactivate(FL_FORM * form,
                FL_FORM_ATACTIVATE cb, void * data)
             """)
+    check_if_initialized()
+    check_if_FL_FORM_ptr(pForm)
     c_FormAtactivate = xfc.FL_FORM_ATACTIVATE(py_FormAtactivate)
     pvdata = cty.cast(vdata, cty.c_void_p)
     keep_cfunc_refs(c_FormAtactivate, py_FormAtactivate)
@@ -1275,8 +1345,8 @@ def fl_set_form_atdeactivate(pForm, py_FormAtdeactivate, vdata):
         @return: old xfdata.FL_FORM_ATDEACTIVATE function
 
         @example: def atdeactcb(pform, vdata):
-                  > ...
-                  oldatdeactfunc = xf.fl_set_form_atdeactivate(pform, 
+        @example: |->| ...
+        @example: oldatdeactfunc = xf.fl_set_form_atdeactivate(pform, 
                   atdeactiatecb, None)
 
         @status: Tested + Doc + NoDemo = OK
@@ -1291,6 +1361,8 @@ def fl_set_form_atdeactivate(pForm, py_FormAtdeactivate, vdata):
             """FL_FORM_ATDEACTIVATE fl_set_form_atdeactivate(FL_FORM * form,
                FL_FORM_ATDEACTIVATE cb, void * data)
             """)
+    check_if_initialized()
+    check_if_FL_FORM_ptr(pForm)
     c_FormAtdeactivate = xfc.FL_FORM_ATDEACTIVATE(py_FormAtdeactivate)
     pvdata = cty.cast(vdata, cty.c_void_p)
     keep_cfunc_refs(c_FormAtdeactivate, py_FormAtdeactivate)
@@ -1318,6 +1390,8 @@ def fl_unfreeze_form(pForm):
             None, [cty.POINTER(xfc.FL_FORM)], \
             """void fl_unfreeze_form(FL_FORM * form)
             """)
+    check_if_initialized()
+    check_if_FL_FORM_ptr(pForm)
     keep_elem_refs(pForm)
     _fl_unfreeze_form(pForm)
 
@@ -1341,6 +1415,8 @@ def fl_deactivate_form(pForm):
             None, [cty.POINTER(xfc.FL_FORM)], \
             """void fl_deactivate_form(FL_FORM * form)
             """)
+    check_if_initialized()
+    check_if_FL_FORM_ptr(pForm)
     keep_elem_refs(pForm)
     _fl_deactivate_form(pForm)
 
@@ -1365,6 +1441,8 @@ def fl_activate_form(pForm):
             None, [cty.POINTER(xfc.FL_FORM)], \
             """void fl_activate_form(FL_FORM * form)
             """)
+    check_if_initialized()
+    check_if_FL_FORM_ptr(pForm)
     keep_elem_refs(pForm)
     _fl_activate_form(pForm)
 
@@ -1385,6 +1463,7 @@ def fl_deactivate_all_forms():
             None, [], \
             """void fl_deactivate_all_forms()
             """)
+    check_if_initialized()
     _fl_deactivate_all_forms()
 
 
@@ -1403,6 +1482,7 @@ def fl_activate_all_forms():
             None, [], \
             """void fl_activate_all_forms()
             """)
+    check_if_initialized()
     _fl_activate_all_forms()
 
 
@@ -1422,6 +1502,7 @@ def fl_freeze_all_forms():
             None, [], \
             """void fl_freeze_all_forms()
             """)
+    check_if_initialized()
     _fl_freeze_all_forms()
 
 
@@ -1441,6 +1522,7 @@ def fl_unfreeze_all_forms():
             None, [], \
             """void fl_unfreeze_all_forms()
             """)
+    check_if_initialized()
     _fl_unfreeze_all_forms()
 
 
@@ -1466,6 +1548,8 @@ def fl_scale_form(pForm, xsc, ysc):
             None, [cty.POINTER(xfc.FL_FORM), cty.c_double, cty.c_double], \
             """void fl_scale_form(FL_FORM * form, double xsc, double ysc)
             """)
+    check_if_initialized()
+    check_if_FL_FORM_ptr(pForm)
     fxsc = convert_to_double(xsc)
     fysc = convert_to_double(ysc)
     keep_elem_refs(pForm, xsc, fxsc, ysc, fysc)
@@ -1494,6 +1578,8 @@ def fl_set_form_position(pForm, x, y):
             """void fl_set_form_position(FL_FORM * form, FL_Coord x,
                FL_Coord y)
             """)
+    check_if_initialized()
+    check_if_FL_FORM_ptr(pForm)
     ix = convert_to_FL_Coord(x)
     iy = convert_to_FL_Coord(y)
     keep_elem_refs(pForm, x, ix, y, iy)
@@ -1519,6 +1605,8 @@ def fl_set_form_title(pForm, title):
             None, [cty.POINTER(xfc.FL_FORM), xfc.STRING], \
             """void fl_set_form_title(FL_FORM * form, const char * name)
             """)
+    check_if_initialized()
+    check_if_FL_FORM_ptr(pForm)
     stitle = convert_to_string(title)
     keep_elem_refs(pForm, title, stitle)
     _fl_set_form_title(pForm, stitle)
@@ -1543,6 +1631,8 @@ def fl_set_app_mainform(pForm):
             None, [cty.POINTER(xfc.FL_FORM)], \
             """void fl_set_app_mainform(FL_FORM * form)
             """)
+    check_if_initialized()
+    check_if_FL_FORM_ptr(pForm)
     keep_elem_refs(pForm)
     _fl_set_app_mainform(pForm)
 
@@ -1564,6 +1654,7 @@ def fl_get_app_mainform():
             cty.POINTER(xfc.FL_FORM), [], \
             """FL_FORM * fl_get_app_mainform()
             """)
+    check_if_initialized()
     retval = _fl_get_app_mainform()
     return retval
 
@@ -1591,6 +1682,7 @@ def fl_set_app_nomainform(flag):
             None, [cty.c_int], \
             """void fl_set_app_nomainform(int flag)
             """)
+    check_if_initialized()
     iflag = convert_to_int(flag)
     keep_elem_refs(flag, iflag)
     _fl_set_app_nomainform(iflag)
@@ -1613,8 +1705,8 @@ def fl_set_form_callback(pForm, py_FormCallbackPtr, vdata):
         @param vdata: user data to be passed to function (<pointer to void>))
 
         @example: def formcb(pobj, vdata):
-                  > ...
-                  fl_set_form_callback(pform, formcb, None)
+        @example: |->| ...
+        @example: fl_set_form_callback(pform, formcb, None)
 
         @status: Tested + Doc + Demo = OK
     """
@@ -1628,6 +1720,8 @@ def fl_set_form_callback(pForm, py_FormCallbackPtr, vdata):
             """void fl_set_form_callback(FL_FORM * form,
                FL_FORMCALLBACKPTR callback, void * d)
             """)
+    check_if_initialized()
+    check_if_FL_FORM_ptr(pForm)
     c_FormCallbackPtr = xfc.FL_FORMCALLBACKPTR(py_FormCallbackPtr)
     pvdata = cty.cast(vdata, cty.c_void_p)
     keep_cfunc_refs(c_FormCallbackPtr, py_FormCallbackPtr)
@@ -1658,6 +1752,8 @@ def fl_set_form_size(pForm, w, h):
             None, [cty.POINTER(xfc.FL_FORM), xfc.FL_Coord, xfc.FL_Coord], \
             """void fl_set_form_size(FL_FORM * form, FL_Coord w, FL_Coord h)
             """)
+    check_if_initialized()
+    check_if_FL_FORM_ptr(pForm)
     iw = convert_to_FL_Coord(w)
     ih = convert_to_FL_Coord(h)
     keep_elem_refs(pForm, w, iw, h, ih)
@@ -1687,6 +1783,8 @@ def fl_set_form_hotspot(pForm, x, y):
             """void fl_set_form_hotspot(FL_FORM * form, FL_Coord x,
                FL_Coord y)
             """)
+    check_if_initialized()
+    check_if_FL_FORM_ptr(pForm)
     ix = convert_to_FL_Coord(x)
     iy = convert_to_FL_Coord(y)
     keep_elem_refs(pForm, x, ix, y, iy)
@@ -1715,6 +1813,9 @@ def fl_set_form_hotobject(pForm, pObject):
             None, [cty.POINTER(xfc.FL_FORM), cty.POINTER(xfc.FL_OBJECT)], \
             """void fl_set_form_hotobject(FL_FORM * form, FL_OBJECT * ob)
             """)
+    check_if_initialized()
+    check_if_FL_FORM_ptr(pForm)
+    check_if_FL_OBJECT_ptr(pObject)
     keep_elem_refs(pForm, pObject)
     _fl_set_form_hotobject(pForm, pObject)
 
@@ -1740,6 +1841,8 @@ def fl_set_form_minsize(pForm, w, h):
             None, [cty.POINTER(xfc.FL_FORM), xfc.FL_Coord, xfc.FL_Coord], \
             """void fl_set_form_minsize(FL_FORM * form, FL_Coord w, FL_Coord h)
             """)
+    check_if_initialized()
+    check_if_FL_FORM_ptr(pForm)
     iw = convert_to_FL_Coord(w)
     ih = convert_to_FL_Coord(h)
     keep_elem_refs(pForm, w, iw, h, ih)
@@ -1768,6 +1871,8 @@ def fl_set_form_maxsize(pForm, w, h):
             """void fl_set_form_maxsize(FL_FORM * form, FL_Coord w,
                FL_Coord h)
             """)
+    check_if_initialized()
+    check_if_FL_FORM_ptr(pForm)
     iw = convert_to_FL_Coord(w)
     ih = convert_to_FL_Coord(h)
     keep_elem_refs(pForm, w, iw, h, ih)
@@ -1806,6 +1911,8 @@ def fl_set_form_event_cmask(pForm, cmask):
             """void fl_set_form_event_cmask(FL_FORM * form,
                long unsigned int cmask)
             """)
+    check_if_initialized()
+    check_if_FL_FORM_ptr(pForm)
     ulcmask = convert_to_ulong(cmask)
     keep_elem_refs(pForm, cmask, ulcmask)
     _fl_set_form_event_cmask(pForm, ulcmask)
@@ -1831,6 +1938,8 @@ def fl_get_form_event_cmask(pForm):
             cty.c_ulong, [cty.POINTER(xfc.FL_FORM)], \
             """long unsigned int fl_get_form_event_cmask(FL_FORM * form)
             """)
+    check_if_initialized()
+    check_if_FL_FORM_ptr(pForm)
     keep_elem_refs(pForm)
     retval = _fl_get_form_event_cmask(pForm)
     return retval
@@ -1860,6 +1969,8 @@ def fl_set_form_geometry(pForm, x, y, w, h):
             """void fl_set_form_geometry(FL_FORM * form, FL_Coord x,
                FL_Coord y, FL_Coord w, FL_Coord h)
             """)
+    check_if_initialized()
+    check_if_FL_FORM_ptr(pForm)
     ix = convert_to_FL_Coord(x)
     iy = convert_to_FL_Coord(y)
     iw = convert_to_FL_Coord(w)
@@ -1904,6 +2015,8 @@ def fl_show_form(pForm, place, border, title):
             """Window fl_show_form(FL_FORM * form, int place, int border,
                const char * name)
             """)
+    check_if_initialized()
+    check_if_FL_FORM_ptr(pForm)
     check_admitted_listvalues(place, xfc.PLACE_list)
     check_admitted_listvalues(border, xfc.DECORATION_list)
     iplace = convert_to_int(place)
@@ -1932,6 +2045,8 @@ def fl_hide_form(pForm):
             None, [cty.POINTER(xfc.FL_FORM)], \
             """void fl_hide_form(FL_FORM * form)
             """)
+    check_if_initialized()
+    check_if_FL_FORM_ptr(pForm)
     keep_elem_refs(pForm)
     _fl_hide_form(pForm)
 
@@ -1955,6 +2070,8 @@ def fl_free_form(pForm):
             None, [cty.POINTER(xfc.FL_FORM)], \
             """void fl_free_form(FL_FORM * form)
             """)
+    check_if_initialized()
+    check_if_FL_FORM_ptr(pForm)
     keep_elem_refs(pForm)
     _fl_free_form(pForm)
 
@@ -1977,6 +2094,8 @@ def fl_redraw_form(pForm):
             None, [cty.POINTER(xfc.FL_FORM)], \
             """void fl_redraw_form(FL_FORM * form)
             """)
+    check_if_initialized()
+    check_if_FL_FORM_ptr(pForm)
     keep_elem_refs(pForm)
     _fl_redraw_form(pForm)
 
@@ -2007,6 +2126,8 @@ def fl_set_form_dblbuffer(pForm, flag):
             None, [cty.POINTER(xfc.FL_FORM), cty.c_int], \
             """void fl_set_form_dblbuffer(FL_FORM * form, int y)
             """)
+    check_if_initialized()
+    check_if_FL_FORM_ptr(pForm)
     iflag = convert_to_int(flag)
     keep_elem_refs(pForm, flag, iflag)
     _fl_set_form_dblbuffer(pForm, iflag)
@@ -2048,6 +2169,8 @@ def fl_prepare_form_window(pForm, place, border, title):
             """Window fl_prepare_form_window(FL_FORM * form, int place,
                int border, const char * name)
             """)
+    check_if_initialized()
+    check_if_FL_FORM_ptr(pForm)
     check_admitted_listvalues(place, xfc.PLACE_list)
     check_admitted_listvalues(border, xfc.DECORATION_list)
     iplace = convert_to_int(place)
@@ -2080,6 +2203,8 @@ def fl_show_form_window(pForm):
             xfc.Window, [cty.POINTER(xfc.FL_FORM)], \
             """Window fl_show_form_window(FL_FORM * form)
             """)
+    check_if_initialized()
+    check_if_FL_FORM_ptr(pForm)
     keep_elem_refs(pForm)
     retval = _fl_show_form_window(pForm)
     return retval
@@ -2108,6 +2233,8 @@ def fl_adjust_form_size(pForm):
             cty.c_double, [cty.POINTER(xfc.FL_FORM)], \
             """double fl_adjust_form_size(FL_FORM * form)
             """)
+    check_if_initialized()
+    check_if_FL_FORM_ptr(pForm)
     keep_elem_refs(pForm)
     retval = _fl_adjust_form_size(pForm)
     return retval
@@ -2134,6 +2261,8 @@ def fl_form_is_visible(pForm):
             cty.c_int, [cty.POINTER(xfc.FL_FORM)], \
             """int fl_form_is_visible(FL_FORM * form)
             """)
+    check_if_initialized()
+    check_if_FL_FORM_ptr(pForm)
     keep_elem_refs(pForm)
     retval = _fl_form_is_visible(pForm)
     return retval
@@ -2160,6 +2289,8 @@ def fl_form_is_iconified(pForm):
             cty.c_int, [cty.POINTER(xfc.FL_FORM)], \
             """int fl_form_is_iconified(FL_FORM * form)
             """)
+    check_if_initialized()
+    check_if_FL_FORM_ptr(pForm)
     keep_elem_refs(pForm)
     retval = _fl_form_is_iconified(pForm)
     return retval
@@ -2186,8 +2317,9 @@ def fl_register_raw_callback(pForm, mask, py_RawCallback):
         @return: xfdata.FL_RAW_CALLBACK old function
 
         @example: def rawcb(pform, xev):
-                  > ... ; return 0
-                  oldrawcb = fl_register_callback(pform3, xfdata.KeyPressMask,
+        @example: |->| ...
+        @example: |->| return 0
+        @example: oldrawcb = fl_register_callback(pform3, xfdata.KeyPressMask,
                   rawcb)
 
         @status: Tested + Doc + Demo = OK
@@ -2202,6 +2334,8 @@ def fl_register_raw_callback(pForm, mask, py_RawCallback):
             """FL_RAW_CALLBACK fl_register_raw_callback(FL_FORM * form,
                long unsigned int mask, FL_RAW_CALLBACK rcb)
             """)
+    check_if_initialized()
+    check_if_FL_FORM_ptr(pForm)
     ulmask = convert_to_ulong(mask)
     c_RawCallback = xfc.FL_RAW_CALLBACK(py_RawCallback)
     keep_cfunc_refs(c_RawCallback, py_RawCallback)
@@ -2233,6 +2367,7 @@ def fl_bgn_group():
             cty.POINTER(xfc.FL_OBJECT), [], \
             """FL_OBJECT * fl_bgn_group()
             """)
+    check_if_initialized()
     retval = _fl_bgn_group()
     return retval
 
@@ -2253,6 +2388,7 @@ def fl_end_group():
             None, [], \
             """void fl_end_group()
             """)
+    check_if_initialized()
     _fl_end_group()
 
 
@@ -2278,6 +2414,8 @@ def fl_addto_group(pObject):
             cty.POINTER(xfc.FL_OBJECT), [cty.POINTER(xfc.FL_OBJECT)], \
             """FL_OBJECT * fl_addto_group(xfc.FL_OBJECT * group)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     keep_elem_refs(pObject)
     retval = _fl_addto_group(pObject)
     return retval
@@ -2307,6 +2445,8 @@ def fl_get_object_objclass(pObject):
             cty.c_int, [cty.POINTER(xfc.FL_OBJECT)], \
             """int fl_get_object_objclass(xfc.FL_OBJECT * obj)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     keep_elem_refs(pObject)
     retval = _fl_get_object_objclass(pObject)
     return retval
@@ -2334,6 +2474,8 @@ def fl_get_object_type(pObject):
             cty.c_int, [cty.POINTER(xfc.FL_OBJECT)], \
             """int fl_get_object_type(xfc.FL_OBJECT * obj)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     keep_elem_refs(pObject)
     retval = _fl_get_object_type(pObject)
     return retval
@@ -2367,6 +2509,8 @@ def fl_set_object_boxtype(pObject, boxtype):
             None, [cty.POINTER(xfc.FL_OBJECT), cty.c_int], \
             """void fl_set_object_boxtype(xfc.FL_OBJECT * ob, int boxtype)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     check_admitted_listvalues(boxtype, xfc.BOXTYPE_list)
     iboxtype = convert_to_int(boxtype)
     keep_elem_refs(pObject, boxtype, iboxtype)
@@ -2395,6 +2539,8 @@ def fl_get_object_boxtype(pObject):
             cty.c_int, [cty.POINTER(xfc.FL_OBJECT)], \
             """int fl_get_object_boxtype(xfc.FL_OBJECT * obj)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     keep_elem_refs(pObject)
     retval = _fl_get_object_boxtype(pObject)
     return retval
@@ -2422,6 +2568,8 @@ def fl_set_object_bw(pObject, bw):
             None, [cty.POINTER(xfc.FL_OBJECT), cty.c_int], \
             """void fl_set_object_bw(xfc.FL_OBJECT * ob, int bw)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     ibw = convert_to_int(bw)
     keep_elem_refs(pObject, bw, ibw)
     _fl_set_object_bw(pObject, ibw)
@@ -2451,6 +2599,8 @@ def fl_get_object_bw(pObject):
             None, [cty.POINTER(xfc.FL_OBJECT), cty.POINTER(cty.c_int)], \
             """void fl_get_object_bw(xfc.FL_OBJECT * ob, int * bw)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     bw, pbw = make_int_and_pointer()
     keep_elem_refs(pObject, bw, pbw)
     _fl_get_object_bw(pObject, pbw)
@@ -2479,6 +2629,8 @@ def fl_set_object_resize(pObject, what):
             None, [cty.POINTER(xfc.FL_OBJECT), cty.c_uint], \
             """void fl_set_object_resize(xfc.FL_OBJECT * ob, unsigned int what)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     check_admitted_listvalues(what, xfc.RESIZE_list)
     uiwhat = convert_to_uint(what)
     keep_elem_refs(pObject, what, uiwhat)
@@ -2497,7 +2649,7 @@ def fl_get_object_resize(pObject):
 
         @returns: resize property (<int_pos>)
 
-        @attention: API change from upstream
+        @attention: API change from XForms - upstream was
                     fl_get_object_resize(pObject, what)
 
         @example: reszprop = fl_get_object_resize(pobj)
@@ -2511,6 +2663,8 @@ def fl_get_object_resize(pObject):
             """void fl_get_object_resize(xfc.FL_OBJECT * ob,
                unsigned int * what)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     what, pwhat = make_uint_and_pointer()
     keep_elem_refs(pObject, what, pwhat)
     _fl_get_object_resize(pObject, pwhat)
@@ -2545,6 +2699,8 @@ def fl_set_object_gravity(pObject, nw, se):
             """void fl_set_object_gravity(xfc.FL_OBJECT * ob, unsigned int nw,
                unsigned int se)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     check_admitted_listvalues(nw, xfc.GRAVITY_list)
     check_admitted_listvalues(se, xfc.GRAVITY_list)
     uinw = convert_to_uint(nw)
@@ -2580,6 +2736,8 @@ def fl_get_object_gravity(pObject):
             """void fl_get_object_gravity(xfc.FL_OBJECT * ob,
                unsigned int * nw, unsigned int * se)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     nw, pnw = make_uint_and_pointer()
     se, pse = make_uint_and_pointer()
     keep_elem_refs(pObject, nw, se, pnw, pse)
@@ -2609,6 +2767,8 @@ def fl_set_object_lsize(pObject, size):
             None, [cty.POINTER(xfc.FL_OBJECT), cty.c_int], \
             """void fl_set_object_lsize(xfc.FL_OBJECT * ob, int lsize)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     check_admitted_listvalues(size, xfc.FONTSIZE_list)
     isize = convert_to_int(size)
     keep_elem_refs(pObject, size, isize)
@@ -2635,6 +2795,8 @@ def fl_get_object_lsize(pObject):
             cty.c_int, [cty.POINTER(xfc.FL_OBJECT)], \
             """int fl_get_object_lsize(xfc.FL_OBJECT * obj)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     keep_elem_refs(pObject)
     retval = _fl_get_object_lsize(pObject)
     return retval
@@ -2667,6 +2829,8 @@ def fl_set_object_lstyle(pObject, style):
             None, [cty.POINTER(xfc.FL_OBJECT), cty.c_int], \
             """void fl_set_object_lstyle(xfc.FL_OBJECT * ob, int lstyle)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     check_admitted_listvalues(style, xfc.TEXTSTYLE_list)
     istyle = convert_to_int(style)
     keep_elem_refs(pObject, style, istyle)
@@ -2694,6 +2858,8 @@ def fl_get_object_lstyle(pObject):
             cty.c_int, [cty.POINTER(xfc.FL_OBJECT)], \
             """int fl_get_object_lstyle(xfc.FL_OBJECT * obj)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     keep_elem_refs(pObject)
     retval = _fl_get_object_lstyle(pObject)
     return retval
@@ -2720,6 +2886,8 @@ def fl_set_object_lcol(pObject, colr):
             None, [cty.POINTER(xfc.FL_OBJECT), xfc.FL_COLOR], \
             """void fl_set_object_lcol(xfc.FL_OBJECT * ob, FL_COLOR lcol)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     check_admitted_listvalues(colr, xfc.COLOR_list)
     ulcolr = convert_to_FL_COLOR(colr)
     keep_elem_refs(pObject, colr, ulcolr)
@@ -2750,6 +2918,8 @@ def fl_get_object_lcol(pObject):
             xfc.FL_COLOR, [cty.POINTER(xfc.FL_OBJECT)], \
             """FL_COLOR fl_set_object_lcol(xfc.FL_OBJECT * obj)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     keep_elem_refs(pObject)
     retval = _fl_get_object_lcol(pObject)
     return retval
@@ -2786,6 +2956,8 @@ def fl_set_object_return(pObject, when):
             cty.c_int, [cty.POINTER(xfc.FL_OBJECT), cty.c_uint], \
             """int fl_set_object_return(xfc.FL_OBJECT * ob, unsigned int when)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     check_admitted_listvalues(when, xfc.RETURN_list)
     uiwhen = convert_to_uint(when)
     keep_elem_refs(pObject, when, uiwhen)
@@ -2812,6 +2984,8 @@ def fl_notify_object(pObject, cause):
             None, [cty.POINTER(xfc.FL_OBJECT), cty.c_int], \
             """void fl_notify_object(xfc.FL_OBJECT * obj, int cause)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     check_admitted_listvalues(cause, xfc.EVENTS_list)
     icause = convert_to_int(cause)
     keep_elem_refs(pObject, cause, icause)
@@ -2842,6 +3016,8 @@ def fl_set_object_lalign(pObject, align):
             None, [cty.POINTER(xfc.FL_OBJECT), cty.c_int], \
             """void fl_set_object_lalign(xfc.FL_OBJECT * ob, int align)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     check_admitted_listvalues(align, xfc.ALIGN_list)
     ialign = convert_to_int(align)
     keep_elem_refs(pObject, align, ialign)
@@ -2867,6 +3043,8 @@ def fl_get_object_lalign(pObject):
             cty.c_int, [cty.POINTER(xfc.FL_OBJECT)], \
             """int fl_set_object_lalign(xfc.FL_OBJECT * ob)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     keep_elem_refs(pObject)
     retval = _fl_get_object_lalign(pObject)
     return retval
@@ -2917,6 +3095,8 @@ def fl_set_object_shortcut(pObject, shctxt, showit):
             """void fl_set_object_shortcut(xfc.FL_OBJECT * obj,
                const char * sstr, int showit)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     sshctxt = convert_to_string(shctxt)
     ishowit = convert_to_int(showit)
     keep_elem_refs(pObject, shctxt, sshctxt, showit, ishowit)
@@ -2945,6 +3125,8 @@ def fl_set_object_shortcutkey(pObject, keysym):
             """void fl_set_object_shortcutkey(xfc.FL_OBJECT * obj,
                unsigned int keysym)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     uikeysym = convert_to_uint(keysym)
     keep_elem_refs(pObject, keysym, uikeysym)
     _fl_set_object_shortcutkey(pObject, uikeysym)
@@ -2980,6 +3162,8 @@ def fl_set_object_dblbuffer(pObject, flag):
             None, [cty.POINTER(xfc.FL_OBJECT), cty.c_int], \
             """void fl_set_object_dblbuffer(xfc.FL_OBJECT * ob, int y)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     iflag = convert_to_int(flag)
     keep_elem_refs(pObject, flag, iflag)
     _fl_set_object_dblbuffer(pObject, iflag)
@@ -3006,6 +3190,8 @@ def fl_set_object_color(pObject, fgcolr, bgcolr):
             """void fl_set_object_color(xfc.FL_OBJECT * ob, FL_COLOR col1,
                FL_COLOR col2)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     check_admitted_listvalues(fgcolr, xfc.COLOR_list)
     check_admitted_listvalues(bgcolr, xfc.COLOR_list)
     ulfgcolr = convert_to_FL_COLOR(fgcolr)
@@ -3040,6 +3226,8 @@ def fl_get_object_color(pObject):
             """void fl_get_object_color(xfc.FL_OBJECT * ob, FL_COLOR * col1,
                FL_COLOR * col2)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     fgcolr, pfgcolr = make_FL_COLOR_and_pointer()
     bgcolr, pbgcolr = make_FL_COLOR_and_pointer()
     keep_elem_refs(pObject, fgcolr, pfgcolr, bgcolr, pbgcolr)
@@ -3066,6 +3254,8 @@ def fl_set_object_label(pObject, label):
             None, [cty.POINTER(xfc.FL_OBJECT), xfc.STRING], \
             """void fl_set_object_label(xfc.FL_OBJECT * ob, const char * label)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     slabel = convert_to_string(label)
     keep_elem_refs(pObject, label, slabel)
     _fl_set_object_label(pObject, slabel)
@@ -3091,6 +3281,8 @@ def fl_get_object_label(pObject):
             xfc.STRING, [cty.POINTER(xfc.FL_OBJECT)], \
             """const char * fl_set_object_label(xfc.FL_OBJECT * obj)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     keep_elem_refs(pObject)
     retval = _fl_get_object_label(pObject)
     return retval
@@ -3117,6 +3309,8 @@ def fl_set_object_helper(pObject, tip):
             None, [cty.POINTER(xfc.FL_OBJECT), xfc.STRING], \
             """void fl_set_object_helper(xfc.FL_OBJECT * ob, const char * tip)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     stip = convert_to_string(tip)
     keep_elem_refs(pObject, tip, stip)
     _fl_set_object_helper(pObject, stip)
@@ -3143,6 +3337,8 @@ def fl_set_object_position(pObject, x, y):
             """void fl_set_object_position(xfc.FL_OBJECT * obj, FL_Coord x,
                FL_Coord y)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     ix = convert_to_FL_Coord(x)
     iy = convert_to_FL_Coord(y)
     keep_elem_refs(pObject, x, ix, y, iy)
@@ -3174,6 +3370,8 @@ def fl_get_object_size(pObject):
             """void fl_get_object_size(xfc.FL_OBJECT * obj, FL_Coord * w,
                FL_Coord * h)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     w, pw = make_FL_Coord_and_pointer()
     h, ph = make_FL_Coord_and_pointer()
     keep_elem_refs(pObject, w, h, pw, ph)
@@ -3202,6 +3400,8 @@ def fl_set_object_size(pObject, w, h):
             """void fl_set_object_size(xfc.FL_OBJECT * obj, FL_Coord w,
                FL_Coord h)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     iw = convert_to_FL_Coord(w)
     ih = convert_to_FL_Coord(h)
     keep_elem_refs(pObject, w, iw, h, ih)
@@ -3229,6 +3429,8 @@ def fl_set_object_automatic(pObject, flag):
             None, [cty.POINTER(xfc.FL_OBJECT), cty.c_int], \
             """void fl_set_object_automatic(xfc.FL_OBJECT * ob, int flag)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     iflag = convert_to_int(flag)
     keep_elem_refs(pObject, flag, iflag)
     _fl_set_object_automatic(pObject, iflag)
@@ -3257,6 +3459,8 @@ def fl_object_is_automatic(pObject):
             cty.c_int, [cty.POINTER(xfc.FL_OBJECT)], \
             """int fl_object_is_automatic(xfc.FL_OBJECT * obj)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     keep_elem_refs(pObject)
     retval = _fl_object_is_automatic(pObject)
     return retval
@@ -3281,6 +3485,8 @@ def fl_draw_object_label(pObject):
             None, [cty.POINTER(xfc.FL_OBJECT)], \
             """void fl_draw_object_label(xfc.FL_OBJECT * ob)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     keep_elem_refs(pObject)
     _fl_draw_object_label(pObject)
 
@@ -3303,6 +3509,8 @@ def fl_draw_object_label_outside(pObject):
             None, [cty.POINTER(xfc.FL_OBJECT)], \
             """void fl_draw_object_label_outside(xfc.FL_OBJECT * ob)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     keep_elem_refs(pObject)
     _fl_draw_object_label_outside(pObject)
 
@@ -3341,6 +3549,8 @@ def fl_get_object_component(pObject, objclass, compontype, num):
             """FL_OBJECT * fl_get_object_component(xfc.FL_OBJECT * composite,
                int objclass, int type, int numb)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     iobjclass = convert_to_int(objclass)
     icompontype = convert_to_int(compontype)
     inum = convert_to_int(num)
@@ -3365,8 +3575,9 @@ def fl_for_all_objects(pForm, py_operatecb, vdata):
         @param vdata: user data to be passed (<pointer to void>)
 
         @example: def operatecb(pobj, vdata):
-                  > ... ; > return 0; 
-                  fl_for_all_objects(pform5, operatecb, None)
+        @example: |->| ...
+        @example: |->| return 0; 
+        @example: fl_for_all_objects(pform5, operatecb, None)
 
         @status: Untested + Doc + NoDemo = NOT OK
     """
@@ -3380,6 +3591,8 @@ def fl_for_all_objects(pForm, py_operatecb, vdata):
             """void fl_for_all_objects(FL_FORM * form, int ( * cb ) \
                ( FL_OBJECT *, void * ), void * v)
             """)
+    check_if_initialized()
+    check_if_FL_FORM_ptr(pForm)
     c_operatecb = xfc.cfunc_int_pobject_pvoid(py_operatecb)
     pvdata = cty.cast(vdata, cty.c_void_p)
     keep_cfunc_refs(c_operatecb, py_operatecb)
@@ -3410,6 +3623,8 @@ def fl_set_object_dblclick(pObject, timeout):
             """void fl_set_object_dblclick(xfc.FL_OBJECT *obj, unsigned \
                long timeout)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     ultimeout = convert_to_ulong(timeout)
     keep_elem_refs(pObject, timeout, ultimeout)
     _fl_set_object_dblclick(pObject, ultimeout)
@@ -3435,6 +3650,8 @@ def fl_get_object_dblclick(pObject):
             cty.c_ulong, [cty.POINTER(xfc.FL_OBJECT)], \
             """unsigned long fl_get_object_dblclick(xfc.FL_OBJECT *obj)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     keep_elem_refs(pObject)
     retval = _fl_get_object_dblclick(pObject)
     return retval
@@ -3464,6 +3681,8 @@ def fl_set_object_geometry(pObject, x, y, w, h):
             """void fl_set_object_geometry(FL_OBJECT * obj, FL_Coord x,
             FL_Coord y, FL_Coord w, FL_Coord h)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     ix = convert_to_FL_Coord(x)
     iy = convert_to_FL_Coord(y)
     iw = convert_to_FL_Coord(w)
@@ -3493,6 +3712,8 @@ def fl_move_object(pObject, x, y):
             """void fl_move_object(xfc.FL_OBJECT * obj, FL_Coord dx,
                FL_Coord dy)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     ix = convert_to_int(x)
     iy = convert_to_int(y)
     keep_elem_refs(pObject, x, ix, y, iy)
@@ -3521,6 +3742,8 @@ def fl_fit_object_label(pObject, xmargin, ymargin):
             """void fl_fit_object_label(xfc.FL_OBJECT * obj, FL_Coord xmargin,
                FL_Coord ymargin)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     ixmargin = convert_to_int(xmargin)
     iymargin = convert_to_int(ymargin)
     keep_elem_refs(pObject, xmargin, ixmargin, ymargin, iymargin)
@@ -3554,6 +3777,8 @@ def fl_get_object_geometry(pObject):
         """void fl_get_object_geometry(xfc.FL_OBJECT * ob, FL_Coord * x,
            FL_Coord * y, FL_Coord * w, FL_Coord * h)
         """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     x, px = make_FL_Coord_and_pointer()
     y, py = make_FL_Coord_and_pointer()
     w, pw = make_FL_Coord_and_pointer()
@@ -3588,6 +3813,8 @@ def fl_get_object_position(pObject):
             """void fl_get_object_position(xfc.FL_OBJECT * ob, FL_Coord * x,
                FL_Coord * y)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     x, px = make_FL_Coord_and_pointer()
     y, py = make_FL_Coord_and_pointer()
     keep_elem_refs(pObject, x, px, y, py)
@@ -3625,6 +3852,8 @@ def fl_get_object_bbox(pObject):
             """void fl_get_object_bbox(xfc.FL_OBJECT * obj, FL_Coord * x,
                FL_Coord * y, FL_Coord * w, FL_Coord * h)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     x, px = make_FL_Coord_and_pointer()
     y, py = make_FL_Coord_and_pointer()
     w, pw = make_FL_Coord_and_pointer()
@@ -3657,6 +3886,8 @@ def fl_call_object_callback(pObject):
             None, [cty.POINTER(xfc.FL_OBJECT)],\
             """void fl_call_object_callback(xfc.FL_OBJECT * ob)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     keep_elem_refs(pObject)
     _fl_call_object_callback(pObject)
 
@@ -3676,8 +3907,9 @@ def fl_set_object_prehandler(pObject, py_HandlerPtr):
                              ptr_void) -> num __
 
         @example: def prehandlecb(pobj, num, crd, crd, num2, vdata):
-                  > ... ; return 0
-                  fl_set_object_prehandler(pobj2, prehandlecb)
+        @example: |->| ...
+        @example: |->| return 0
+        @example: fl_set_object_prehandler(pobj2, prehandlecb)
 
         @status: Tested + Doc + Demo = OK
     """
@@ -3690,6 +3922,8 @@ def fl_set_object_prehandler(pObject, py_HandlerPtr):
             """FL_HANDLEPTR fl_set_object_prehandler(xfc.FL_OBJECT * ob,
                FL_HANDLEPTR phandler)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     c_HandlerPtr = xfc.FL_HANDLEPTR(py_HandlerPtr)
     keep_cfunc_refs(c_HandlerPtr, py_HandlerPtr)
     keep_elem_refs(pObject)
@@ -3712,8 +3946,9 @@ def fl_set_object_posthandler(pObject, py_HandlerPtr):
                              ptr_void) -> num __
 
         @example: def posthandlecb(pobj, num, crd, crd, num2, vdata):
-                  > ... ; return 0
-                  fl_set_object_posthandler(pobj2, posthandlecb)
+        @example: |->| ...
+        @example: |->| return 0
+        @example: fl_set_object_posthandler(pobj2, posthandlecb)
 
         @status: Tested + Doc + Demo = OK
     """
@@ -3726,6 +3961,8 @@ def fl_set_object_posthandler(pObject, py_HandlerPtr):
             """FL_HANDLEPTR fl_set_object_posthandler(xfc.FL_OBJECT * ob,
                FL_HANDLEPTR post)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     c_HandlerPtr = xfc.FL_HANDLEPTR(py_HandlerPtr)
     keep_cfunc_refs(c_HandlerPtr, py_HandlerPtr)
     keep_elem_refs(pObject)
@@ -3748,8 +3985,8 @@ def fl_set_object_callback(pObject, py_CallbackPtr, data):
         @returns: old xfdata.FL_CALLBACKPTR function
 
         @example: def myobcb(pobj, longdata):
-                  > ...
-                  oldcb = fl_set_object_callback(pobj3, myobjcb, 0)
+        @example: |->| ...
+        @example: oldcb = fl_set_object_callback(pobj3, myobjcb, 0)
 
         @status: Tested + Doc + Demo = OK
     """
@@ -3763,6 +4000,8 @@ def fl_set_object_callback(pObject, py_CallbackPtr, data):
             """FL_CALLBACKPTR fl_set_object_callback(xfc.FL_OBJECT * obj,\
                FL_CALLBACKPTR callback, long int argument)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     ldata = convert_to_long(data)
     c_CallbackPtr = xfc.FL_CALLBACKPTR(py_CallbackPtr)
     keep_cfunc_refs(c_CallbackPtr, py_CallbackPtr)
@@ -3795,6 +4034,8 @@ def fl_redraw_object(pObject):
             None, [cty.POINTER(xfc.FL_OBJECT)],\
             """void fl_redraw_object(FL_OBJECT * obj)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     keep_elem_refs(pObject)
     _fl_redraw_object(pObject)
 
@@ -3820,6 +4061,8 @@ def fl_scale_object(pObject, xs, ys):
             None, [cty.POINTER(xfc.FL_OBJECT), cty.c_double, cty.c_double],\
             """void fl_scale_object(FL_OBJECT * ob, double xs, double ys)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     fxs = convert_to_double(xs)
     fys = convert_to_double(ys)
     keep_elem_refs(pObject, xs, fxs, ys, fys)
@@ -3844,6 +4087,8 @@ def fl_show_object(pObject):
             None, [cty.POINTER(xfc.FL_OBJECT)],\
             """void fl_show_object(FL_OBJECT * ob)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     keep_elem_refs(pObject)
     _fl_show_object(pObject)
 
@@ -3866,6 +4111,8 @@ def fl_hide_object(pObject):
             None, [cty.POINTER(xfc.FL_OBJECT)],\
             """void fl_hide_object(FL_OBJECT * ob)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     keep_elem_refs(pObject)
     _fl_hide_object(pObject)
 
@@ -3891,6 +4138,7 @@ def fl_object_is_visible(pObject):
             cty.c_int, [cty.POINTER(xfc.FL_OBJECT)],\
             """int fl_object_is_visible(FL_OBJECT * obj)
             """)
+    check_if_initialized()
     keep_elem_refs(pObject)
     retval = _fl_object_is_visible(pObject)
     return retval
@@ -3915,6 +4163,7 @@ def fl_free_object(pObject):
             None, [cty.POINTER(xfc.FL_OBJECT)],\
             """void fl_free_object(FL_OBJECT * obj)
             """)
+    check_if_FL_OBJECT_ptr(pObject)
     keep_elem_refs(pObject)
     _fl_free_object(pObject)
 
@@ -3938,6 +4187,8 @@ def fl_delete_object(pObject):
             None, [cty.POINTER(xfc.FL_OBJECT)],\
             """void fl_delete_object(FL_OBJECT * obj)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     keep_elem_refs(pObject)
     _fl_delete_object(pObject)
 
@@ -3964,6 +4215,8 @@ def fl_get_object_return_state(pObject):
             cty.c_int, [cty.POINTER(xfc.FL_OBJECT)],\
             """int fl_get_object_return_state(FL_OBJECT * obj)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     keep_elem_refs(pObject)
     retval = _fl_get_object_return_state(pObject)
     return retval
@@ -3992,6 +4245,8 @@ def fl_trigger_object(pObject):
             None, [cty.POINTER(xfc.FL_OBJECT)],\
             """void fl_trigger_object(FL_OBJECT * obj)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     keep_elem_refs(pObject)
     _fl_trigger_object(pObject)
 
@@ -4014,6 +4269,8 @@ def fl_activate_object(pObject):
             None, [cty.POINTER(xfc.FL_OBJECT)],\
             """void fl_activate_object(FL_OBJECT * ob)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     keep_elem_refs(pObject)
     _fl_activate_object(pObject)
 
@@ -4039,6 +4296,8 @@ def fl_deactivate_object(pObject):
             None, [cty.POINTER(xfc.FL_OBJECT)],\
             """void fl_deactivate_object(FL_OBJECT * ob)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     keep_elem_refs(pObject)
     _fl_deactivate_object(pObject)
 
@@ -4064,6 +4323,8 @@ def fl_object_is_active(pObject):
             cty.c_int, [cty.POINTER(xfc.FL_OBJECT)],\
             """int fl_object_is_active(FL_OBJECT * ob)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     keep_elem_refs(pObject)
     retval = _fl_object_is_active(pObject)
     return retval
@@ -4082,8 +4343,8 @@ def fl_enumerate_fonts(py_output, shortform):
         @returns: number of listed fonts (<int>)
 
         @example: def pyoutput(strng):
-                  > print strng
-                  numfonts = fl_enumerate(pyoutput, 0)
+        @example: |->| print strng
+        @example: numfonts = fl_enumerate(pyoutput, 0)
 
         @status: Tested + Doc + Demo = OK
     """
@@ -4095,6 +4356,7 @@ def fl_enumerate_fonts(py_output, shortform):
             """int fl_enumerate_fonts(void ( * output )( const char *s ), \
                int shortform)
             """)
+    check_if_initialized()
     ishortform = convert_to_int(shortform)
     c_output = xfc.cfunc_none_string(py_output)
     keep_cfunc_refs(c_output, py_output)
@@ -4127,6 +4389,7 @@ def fl_set_font_name(fontnum, name):
             cty.c_int, [cty.c_int, xfc.STRING],\
             """int fl_set_font_name(int n, const char * name)
             """)
+    check_if_initialized()
     ifontnum = convert_to_int(fontnum)
     sname = convert_to_string(name)
     keep_elem_refs(fontnum, ifontnum, name, sname)
@@ -4155,6 +4418,7 @@ def fl_set_font(fontnum, size):
             None, [cty.c_int, cty.c_int],\
             """void fl_set_font(int numb, int size)
             """)
+    check_if_initialized()
     check_admitted_listvalues(size, xfc.FONTSIZE_list)
     ifontnum = convert_to_int(fontnum)
     isize = convert_to_int(size)
@@ -4202,6 +4466,7 @@ def fl_get_char_height(style, size):
             """int fl_get_char_height(int style, int size, int * asc,
                int * desc)
             """)
+    check_if_initialized()
     check_admitted_listvalues(style, xfc.TEXTSTYLE_list)
     check_admitted_listvalues(size, xfc.FONTSIZE_list)
     istyle = convert_to_int(style)
@@ -4245,6 +4510,7 @@ def fl_get_char_width(style, size):
             cty.c_int, [cty.c_int, cty.c_int],\
             """int fl_get_char_width(int style, int size)
             """)
+    check_if_initialized()
     check_admitted_listvalues(style, xfc.TEXTSTYLE_list)
     check_admitted_listvalues(size, xfc.FONTSIZE_list)
     istyle = convert_to_int(style)
@@ -4295,6 +4561,7 @@ def fl_get_string_height(style, size, strng, strglen):
             """int fl_get_string_height(int style, int size, const char * s,
                int len, int * asc, int * desc)
             """)
+    check_if_initialized()
     check_admitted_listvalues(style, xfc.TEXTSTYLE_list)
     check_admitted_listvalues(size, xfc.FONTSIZE_list)
     istyle = convert_to_int(style)
@@ -4345,6 +4612,7 @@ def fl_get_string_width(style, size, strng, strglen):
             """int fl_get_string_width(int style, int size, const char * s,
                int len)
             """)
+    check_if_initialized()
     check_admitted_listvalues(style, xfc.TEXTSTYLE_list)
     check_admitted_listvalues(size, xfc.FONTSIZE_list)
     istyle = convert_to_int(style)
@@ -4390,6 +4658,7 @@ def fl_get_string_widthTAB(style, size, strng, strglen):
             """int fl_get_string_widthTAB(int style, int size, const char * s,
                int len)
             """)
+    check_if_initialized()
     check_admitted_listvalues(style, xfc.TEXTSTYLE_list)
     check_admitted_listvalues(size, xfc.FONTSIZE_list)
     istyle = convert_to_int(style)
@@ -4445,6 +4714,7 @@ def fl_get_string_dimension(style, size, strng, strglen):
             """void fl_get_string_dimension(int fntstyle, int fntsize,
                const char * s, int len, int * width, int * height)
             """)
+    check_if_initialized()
     check_admitted_listvalues(style, xfc.TEXTSTYLE_list)
     check_admitted_listvalues(size, xfc.FONTSIZE_list)
     istyle = convert_to_int(style)
@@ -4505,8 +4775,9 @@ def fl_get_align_xy(align, x, y, w, h, xsize, ysize, xoff, yoff):
             cty.c_int, cty.c_int, cty.c_int, cty.c_int,
             cty.POINTER(cty.c_int), cty.POINTER(cty.c_int)],\
             """void fl_get_align_xy(int align, int x, int y, int w, int h,
-            int xsize, int ysize, int xoff, int yoff, int * xx, int * yy)
+               int xsize, int ysize, int xoff, int yoff, int * xx, int * yy)
             """)
+    check_if_initialized()
     check_admitted_listvalues(align, xfc.ALIGN_list)
     ialign = convert_to_int(align)
     ix = convert_to_int(x)
@@ -4523,7 +4794,7 @@ def fl_get_align_xy(align, x, y, w, h, xsize, ysize, xoff, yoff):
                    ysize, iysize, xoff, ixoff, yoff, iyoff, xx, yy, pxx, pyy)
     _fl_get_align_xy(ialign, ix, iy, iw, ih, ixsize, iysize, ixoff,
                      iyoff, pxx, pyy)
-    return xx, yy
+    return xx.value, yy.value
 
 
 def fl_drw_text(align, x, y, w, h, colr, style, size, txtstr):
@@ -4576,6 +4847,7 @@ def fl_drw_text(align, x, y, w, h, colr, style, size, txtstr):
             """void fl_drw_text(int align, FL_Coord x, FL_Coord y, FL_Coord w,
                FL_Coord h, FL_COLOR c, int style, int size, const char * istr)
             """)
+    check_if_initialized()
     check_admitted_listvalues(align, xfc.ALIGN_list)
     check_admitted_listvalues(colr, xfc.COLOR_list)
     check_admitted_listvalues(style, xfc.TEXTSTYLE_list)
@@ -4643,6 +4915,7 @@ def fl_drw_text_beside(align, x, y, w, h, colr, style, size, txtstr):
                FL_Coord w, FL_Coord h, FL_COLOR c, int style, int size,
                const char * str)
             """)
+    check_if_initialized()
     check_admitted_listvalues(align, xfc.ALIGN_list)
     check_admitted_listvalues(align, xfc.COLOR_list)
     check_admitted_listvalues(style, xfc.TEXTSTYLE_list)
@@ -4714,6 +4987,7 @@ def fl_drw_text_cursor(align, x, y, w, h, colr, style, size, txtstr, curscolr, p
                FL_Coord w, FL_Coord h, FL_COLOR c, int style, int size,
                const char * str, int cc, int pos)
             """)
+    check_if_initialized()
     check_admitted_listvalues(align, xfc.ALIGN_list)
     check_admitted_listvalues(colr, xfc.COLOR_list)
     check_admitted_listvalues(style, xfc.TEXTSTYLE_list)
@@ -4770,6 +5044,7 @@ def fl_drw_box(boxtype, x, y, w, h, colr, bw):
             """void fl_drw_box(int style, FL_Coord x, FL_Coord y, FL_Coord w,
                FL_Coord h, FL_COLOR c, int bw_in)
             """)
+    check_if_initialized()
     check_admitted_listvalues(boxtype, xfc.BOXTYPE_list)
     check_admitted_listvalues(colr, xfc.COLOR_list)
     iboxtype = convert_to_int(boxtype)
@@ -4798,8 +5073,8 @@ def fl_add_symbol(symbname, py_DrawPtr, scalable):
         @param scalable: not used, a value of 0 will be fine (<int>)
 
         @example: def drawsymb(x, y, w, h, angle, col):
-                  > ...
-                  xf.fl_add_symbol("MySymbol", drawsymb, 0)
+        @example: |->| ...
+        @example: xf.fl_add_symbol("MySymbol", drawsymb, 0)
 
         @status: Tested + Doc + NoDemo = OK
     """
@@ -4811,6 +5086,7 @@ def fl_add_symbol(symbname, py_DrawPtr, scalable):
             """int fl_add_symbol(const char * name, FL_DRAWPTR drawit,
                int scalable)
             """)
+    check_if_initialized()
     ssymbname = convert_to_string(symbname)
     iscalable = convert_to_int(scalable)
     c_DrawPtr = xfc.FL_DRAWPTR(py_DrawPtr)
@@ -4847,6 +5123,7 @@ def fl_draw_symbol(symbname, x, y, w, h, colr):
             """int fl_draw_symbol(const char * label, FL_Coord x, FL_Coord y,
                FL_Coord w, FL_Coord h, FL_COLOR col)
             """)
+    check_if_initialized()
     check_admitted_listvalues(colr, xfc.COLOR_list)
     ssymbname = convert_to_string(symbname)
     ix = convert_to_FL_Coord(x)
@@ -4888,6 +5165,7 @@ def fl_mapcolor(colr, r, g, b):
             cty.c_ulong, [xfc.FL_COLOR, cty.c_int, cty.c_int, cty.c_int],
             """unsigned long fl_mapcolor(FL_COLOR col, int r, int g, int b)
             """)
+    check_if_initialized()
     check_admitted_listvalues(colr, xfc.COLOR_list)
     ulcolr = convert_to_FL_COLOR(colr)
     ir = convert_to_int(r)
@@ -4921,6 +5199,7 @@ def fl_mapcolorname(colr, rgbcolrname):
             cty.c_long, [xfc.FL_COLOR, xfc.STRING],\
             """long int fl_mapcolorname(FL_COLOR col, const char * name)
             """)
+    check_if_initialized()
     check_admitted_listvalues(colr, xfc.COLOR_list)
     ulcolr = convert_to_FL_COLOR(colr)
     srgbcolrname = convert_to_string(rgbcolrname)
@@ -4953,6 +5232,7 @@ def fl_free_colors(colr, num):
             None, [cty.POINTER(xfc.FL_COLOR), cty.c_int],\
             """void fl_free_colors(FL_COLOR * c, int n)
             """)
+    check_if_initialized()
     pcolr = cty.cast(colr, cty.POINTER(xfc.FL_COLOR))
     inum = convert_to_int(num)
     keep_elem_refs(colr, pcolr, num, inum)
@@ -4980,6 +5260,7 @@ def fl_free_pixels(pix, num):
             None, [cty.POINTER(cty.c_ulong), cty.c_int],\
             """void fl_free_pixels(long unsigned int * pix, int n)
             """)
+    check_if_initialized()
     ppix = cty.cast(pix, cty.POINTER(cty.c_ulong))
     inum = convert_to_int(num)
     keep_elem_refs(pix, ppix, num, inum)
@@ -5004,6 +5285,7 @@ def fl_set_color_leak(flag):
             None, [cty.c_int],\
             """void fl_set_color_leak(int y)
             """)
+    check_if_initialized()
     iflag = convert_to_int(flag)
     keep_elem_refs(flag, iflag)
     _fl_set_color_leak(iflag)
@@ -5036,6 +5318,7 @@ def fl_getmcolor(colr):
             """long unsigned int fl_getmcolor(FL_COLOR i, int * r, int * g,
                int * b)
             """)
+    check_if_initialized()
     check_admitted_listvalues(colr, xfc.COLOR_list)
     ulcolr = convert_to_FL_COLOR(colr)
     r, pr = make_int_and_pointer()
@@ -5069,6 +5352,7 @@ def fl_get_pixel(colr):
             cty.c_ulong, [xfc.FL_COLOR],\
             """long unsigned int fl_get_pixel(FL_COLOR col)
             """)
+    check_if_initialized()
     check_admitted_listvalues(colr, xfc.COLOR_list)
     ulcolr = convert_to_FL_COLOR(colr)
     keep_elem_refs(colr, ulcolr)
@@ -5106,6 +5390,7 @@ def fl_get_icm_color(colr):
             cty.POINTER(cty.c_int), cty.POINTER(cty.c_int)],\
             """void fl_get_icm_color(FL_COLOR col, int * r, int * g, int * b)
             """)
+    check_if_initialized()
     check_admitted_listvalues(colr, xfc.COLOR_list)
     ulcolr = convert_to_FL_COLOR(colr)
     r, pr = make_int_and_pointer()
@@ -5141,6 +5426,7 @@ def fl_set_icm_color(colr, r, g, b):
             None, [xfc.FL_COLOR, cty.c_int, cty.c_int, cty.c_int],\
             """void fl_set_icm_color(FL_COLOR col, int r, int g, int b)
             """)
+    check_if_initialized()
     check_admitted_listvalues(colr, xfc.COLOR_list)
     ulcolr = convert_to_FL_COLOR(colr)
     ir = convert_to_int(r)
@@ -5167,6 +5453,7 @@ def fl_color(colr):
             None, [xfc.FL_COLOR],\
             """void fl_color(FL_COLOR col)
             """)
+    check_if_initialized()
     check_admitted_listvalues(colr, xfc.COLOR_list)
     ulcolr = convert_to_FL_COLOR(colr)
     keep_elem_refs(colr, ulcolr)
@@ -5190,6 +5477,7 @@ def fl_bk_color(colr):
             None, [xfc.FL_COLOR],\
             """void fl_bk_color(FL_COLOR col)
             """)
+    check_if_initialized()
     check_admitted_listvalues(colr, xfc.COLOR_list)
     ulcolr = convert_to_FL_COLOR(colr)
     keep_elem_refs(colr, ulcolr)
@@ -5211,6 +5499,7 @@ def fl_textcolor(colr):
             None, [xfc.FL_COLOR],\
             """void fl_textcolor(FL_COLOR col)
             """)
+    check_if_initialized()
     check_admitted_listvalues(colr, xfc.COLOR_list)
     ulcolr = convert_to_FL_COLOR(colr)
     keep_elem_refs(colr, ulcolr)
@@ -5232,6 +5521,7 @@ def fl_bk_textcolor(colr):
             None, [xfc.FL_COLOR],\
             """void fl_bk_textcolor(FL_COLOR col)
             """)
+    check_if_initialized()
     check_admitted_listvalues(colr, xfc.COLOR_list)
     ulcolr = convert_to_FL_COLOR(colr)
     keep_elem_refs(colr, ulcolr)
@@ -5341,6 +5631,9 @@ def fl_add_object(pForm, pObject):
             None, [cty.POINTER(xfc.FL_FORM), cty.POINTER(xfc.FL_OBJECT)],
             """void fl_add_object(FL_FORM * form, FL_OBJECT * obj)
             """)
+    check_if_initialized()
+    check_if_FL_FORM_ptr(pForm)
+    check_if_FL_OBJECT_ptr(pObject)
     keep_elem_refs(pForm, pObject)
     _fl_add_object(pForm, pObject)
 
@@ -5365,6 +5658,8 @@ def fl_addto_form(pForm):
             cty.POINTER(xfc.FL_FORM), [cty.POINTER(xfc.FL_FORM)],\
             """FL_FORM * fl_addto_form(FL_FORM * form)
             """)
+    check_if_initialized()
+    check_if_FL_FORM_ptr(pForm)
     keep_elem_refs(pForm)
     retval = _fl_addto_form(pForm)
     return retval
@@ -5390,8 +5685,9 @@ def fl_make_object(objclass, objtype, x, y, w, h, label, py_HandlePtr):
         @returns: object made (<pointer to xfdata.FL_OBJECT>)
 
         @example: def handlecb(pobj, num, w, h, num, vdata):
-                  > ... ; return 0
-                  fl_make_object(...)
+        @example: |->| ...
+        @example: |->| return 0
+        @example: fl_make_object(...)
 
         @status: Untested + NoDoc + NoDemo = NOT OK
     """
@@ -5407,6 +5703,7 @@ def fl_make_object(objclass, objtype, x, y, w, h, label, py_HandlePtr):
                FL_Coord y, FL_Coord w, FL_Coord h, const char * label,
                FL_HANDLEPTR handle)
             """)
+    check_if_initialized()
     check_admitted_listvalues(objclass, xfc.OBJCLASS_list)
     iobjclass = convert_to_int(objclass)
     iobjtype = convert_to_int(objtype)
@@ -5442,6 +5739,9 @@ def fl_add_child(pObject1, pObject2):
             None, [cty.POINTER(xfc.FL_OBJECT), cty.POINTER(xfc.FL_OBJECT)],
             """void fl_add_child(FL_OBJECT * p1, FL_OBJECT * p2)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject1)
+    check_if_FL_OBJECT_ptr(pObject2)
     keep_elem_refs(pObject1, pObject2)
     _fl_add_child(pObject1, pObject2)
 
@@ -5465,6 +5765,7 @@ def fl_set_coordunit(unit):
             None, [cty.c_int],\
             """void fl_set_coordunit(int u)
             """)
+    check_if_initialized()
     check_admitted_listvalues(unit, xfc.COORDUNIT_list)
     iunit = convert_to_int(unit)
     keep_elem_refs(unit, iunit)
@@ -5582,6 +5883,7 @@ def fl_get_coordunit():
             cty.c_int, [],\
             """int fl_get_coordunit()
             """)
+    check_if_initialized()
     retval = _fl_get_coordunit()
     return retval
 
@@ -5601,6 +5903,7 @@ def fl_get_border_width():
             cty.c_int, [],\
             """int fl_get_border_width()
             """)
+    check_if_initialized()
     retval = _fl_get_border_width()
     return retval
 
@@ -5626,6 +5929,7 @@ def fl_ringbell(percent):
             None, [cty.c_int],\
             """void fl_ringbell(int percent)
             """)
+    check_if_initialized()
     ipercent = convert_to_int(percent)
     keep_elem_refs(percent, ipercent)
     _fl_ringbell(ipercent)
@@ -5653,6 +5957,7 @@ def fl_gettime():
             None, [cty.POINTER(cty.c_long), cty.POINTER(cty.c_long)],\
             """void fl_gettime(long int * sec, long int * usec)
             """)
+    check_if_initialized()
     sec, psec = make_long_and_pointer()
     usec, pusec = make_long_and_pointer()
     keep_elem_refs(sec, usec, psec, pusec)
@@ -5678,6 +5983,7 @@ def fl_now():
             xfc.STRING, [],\
             """const char * fl_now()
             """)
+    check_if_initialized()
     retval = _fl_now()
     return retval
 
@@ -5699,6 +6005,7 @@ def fl_whoami():
             xfc.STRING, [],\
             """const char * fl_whoami()
             """)
+    check_if_initialized()
     retval = _fl_whoami()
     return retval
 
@@ -5731,8 +6038,10 @@ def fl_mouse_button():
             cty.c_long, [],\
             """long int fl_mouse_button()
             """)
+    check_if_initialized()
     retval = _fl_mouse_button()
     return retval
+
 
 fl_mousebutton = fl_mouse_button
 
@@ -5758,6 +6067,7 @@ def fl_set_err_logfp(pFile):
             None, [cty.POINTER(xfc.FILE)],\
             """void fl_set_err_logfp(FILE * fp)
             """)
+    check_if_initialized()
     keep_elem_refs(pFile)
     _fl_set_err_logfp(pFile)
 
@@ -5780,8 +6090,8 @@ def fl_set_error_handler(py_ErrorFunc):
         @type py_ErrorFunc: __ funcname (strng, strng) __
 
         @example: def errhandler(funcnam, errmsg):
-                  > print "Error caught in %s: %s." % (funcnam, errmsg)
-                  fl_set_error_handler(errhandler)
+        @example: |->| print "Error caught in %s: %s." % (funcnam, errmsg)
+        @example: fl_set_error_handler(errhandler)
 
         @status: Tested + Doc + NoDemo = OK
     """
@@ -5792,6 +6102,7 @@ def fl_set_error_handler(py_ErrorFunc):
             None, [xfc.FL_ERROR_FUNC],\
             """void fl_set_error_handler(FL_ERROR_FUNC user_func)
             """)
+    check_if_initialized()
     c_ErrorFunc = xfc.FL_ERROR_FUNC(py_ErrorFunc)
     keep_cfunc_refs(c_ErrorFunc, py_ErrorFunc)
     retval = _fl_set_error_handler(c_ErrorFunc)
@@ -5809,6 +6120,7 @@ def fl_get_cmdline_args(numargs):
             cty.POINTER(xfc.STRING), [cty.POINTER(cty.c_int)],\
             """)char * * fl_get_cmdline_args(int * p1)
             """)
+    check_if_initialized()
     keep_elem_refs(numargs)
     retval = _fl_get_cmdline_args(numargs)
     return retval
@@ -5840,6 +6152,7 @@ def fl_msleep(msec):
             cty.c_int, [cty.c_ulong],\
             """int fl_msleep(long unsigned int msec)
             """)
+    check_if_initialized()
     ulmsec = convert_to_ulong(msec)
     keep_elem_refs(msec, ulmsec)
     retval = _fl_msleep(ulmsec)
@@ -5867,6 +6180,9 @@ def fl_is_same_object(pObject1, pObject2):
             cty.POINTER(xfc.FL_OBJECT)], \
             """int fl_is_same_object(FL_OBJECT * obj1, FL_OBJECT * obj2)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject1)
+    check_if_FL_OBJECT_ptr(pObject2)
     keep_elem_refs(pObject1, pObject2)
     retval = _fl_is_same_object(pObject1, pObject2)
     return retval
@@ -5930,6 +6246,7 @@ def fl_mode_capable(mode, warn):
             cty.c_int, [cty.c_int, cty.c_int],\
             """int fl_mode_capable(int mode, int warn)
             """)
+    check_if_initialized()
     imode = convert_to_int(mode)
     iwarn = convert_to_int(warn)
     keep_elem_refs(mode, warn, imode, iwarn)
@@ -5975,6 +6292,7 @@ def fl_rectangle(fill, x, y, w, h, colr):
             """void fl_rectangle(int fill, FL_Coord x, FL_Coord y,
                FL_Coord w, FL_Coord h, FL_COLOR col)
             """)
+    check_if_initialized()
     check_admitted_listvalues(colr, xfc.COLOR_list)
     ifill = convert_to_int(fill)
     ix = convert_to_FL_Coord(x)
@@ -6010,6 +6328,7 @@ def fl_rectbound(x, y, w, h, colr):
             """void fl_rectbound(FL_Coord x, FL_Coord y, FL_Coord w,
                FL_Coord h, FL_COLOR col)
             """)
+    check_if_initialized()
     check_admitted_listvalues(colr, xfc.COLOR_list)
     ix = convert_to_FL_Coord(x)
     iy = convert_to_FL_Coord(y)
@@ -6086,6 +6405,7 @@ def fl_roundrectangle(fill, x, y, w, h, colr):
             """void fl_roundrectangle(int fill, FL_Coord x, FL_Coord y,
                FL_Coord w, FL_Coord h, FL_COLOR col)
             """)
+    check_if_initialized()
     check_admitted_listvalues(colr, xfc.COLOR_list)
     ifill = convert_to_int(fill)
     ix = convert_to_FL_Coord(x)
@@ -6165,6 +6485,7 @@ def fl_polygon(fill, Point, numpt, colr):
             xfc.FL_COLOR],
             """void fl_polygon(int fill, FL_POINT * xp, int n, FL_COLOR col)
             """)
+    check_if_initialized()
     check_admitted_listvalues(colr, xfc.COLOR_list)
     ifill = convert_to_int(fill)
     pPoint = cty.cast(Point, cty.POINTER(xfc.FL_POINT))
@@ -6261,6 +6582,7 @@ def fl_lines(Point, numpt, colr):
             None, [cty.POINTER(xfc.FL_POINT), cty.c_int, xfc.FL_COLOR],\
             """void fl_lines(FL_POINT * xp, int n, FL_COLOR col)
             """)
+    check_if_initialized()
     check_admitted_listvalues(colr, xfc.COLOR_list)
     pPoint = cty.cast(Point, cty.POINTER(xfc.FL_POINT))
     inumpt = convert_to_int(numpt)
@@ -6292,6 +6614,7 @@ def fl_line(xi, yi, xf, yf, colr):
             """void fl_line(FL_Coord xi, FL_Coord yi, FL_Coord xf,
                FL_Coord yf, FL_COLOR c)
             """)
+    check_if_initialized()
     check_admitted_listvalues(colr, xfc.COLOR_list)
     ixi = convert_to_int(xi)
     iyi = convert_to_int(yi)
@@ -6324,6 +6647,7 @@ def fl_point(x, y, colr):
             None, [xfc.FL_Coord, xfc.FL_Coord, xfc.FL_COLOR],\
             """void fl_point(FL_Coord x, FL_Coord y, FL_COLOR c)
             """)
+    check_if_initialized()
     check_admitted_listvalues(colr, xfc.COLOR_list)
     ix = convert_to_FL_Coord(x)
     iy = convert_to_FL_Coord(y)
@@ -6355,6 +6679,7 @@ def fl_points(Point, numpt, colr):
             None, [cty.POINTER(xfc.FL_POINT), cty.c_int, xfc.FL_COLOR],
             """void fl_points(FL_POINT * p, int np, FL_COLOR c)
             """)
+    check_if_initialized()
     check_admitted_listvalues(colr, xfc.COLOR_list)
     pPoint = cty.cast(Point, cty.POINTER(xfc.FL_POINT))
     inumpt = convert_to_int(numpt)
@@ -6392,6 +6717,7 @@ def fl_dashedlinestyle(dash, ndash):
             None, [xfc.STRING, cty.c_int],\
             """void fl_dashedlinestyle(const char * dash, int ndash)
             """)
+    check_if_initialized()
     sdash = convert_to_string(dash)
     indash = convert_to_int(ndash)
     keep_elem_refs(dash, ndash, sdash, indash)
@@ -6425,6 +6751,7 @@ def fl_update_display(block):
             None, [cty.c_int],\
             """void fl_update_display(int block)
             """)
+    check_if_initialized()
     iblock = convert_to_int(block)
     keep_elem_refs(block, iblock)
     _fl_update_display(iblock)
@@ -6472,6 +6799,7 @@ def fl_linewidth(w):
             None, [cty.c_int],\
             """void fl_linewidth(int n)
             """)
+    check_if_initialized()
     iw = convert_to_int(w)
     keep_elem_refs(w, iw)
     _fl_linewidth(iw)
@@ -6501,6 +6829,7 @@ def fl_linestyle(linestyle):
             None, [cty.c_int],\
             """void fl_linestyle(int n)
             """)
+    check_if_initialized()
     check_admitted_listvalues(linestyle, xfc.LINESTYLE_list)
     ilinestyle = convert_to_int(linestyle)
     keep_elem_refs(linestyle, ilinestyle)
@@ -6530,6 +6859,7 @@ def fl_drawmode(mode):
             None, [cty.c_int],\
             """void fl_drawmode(int request)
             """)
+    check_if_initialized()
     imode = convert_to_int(mode)
     keep_elem_refs(mode, imode)
     _fl_drawmode(imode)
@@ -6573,6 +6903,7 @@ def fl_get_linestyle():
             cty.c_int, [],\
             """int fl_get_linestyle()
             """)
+    check_if_initialized()
     retval = _fl_get_linestyle()
     return retval
 
@@ -6595,6 +6926,7 @@ def fl_get_drawmode():
             cty.c_int, [],\
             """int fl_get_drawmode()
             """)
+    check_if_initialized()
     retval = _fl_get_drawmode()
     return retval
 
@@ -6630,6 +6962,7 @@ def fl_oval(fill, x, y, w, h, colr):
             """void fl_oval(int fill, FL_Coord x, FL_Coord y, FL_Coord w,
                FL_Coord h, FL_COLOR col)
             """)
+    check_if_initialized()
     check_admitted_listvalues(colr, xfc.COLOR_list)
     ifill = convert_to_int(fill)
     ix = convert_to_FL_Coord(x)
@@ -6665,6 +6998,7 @@ def fl_ovalbound(x, y, w, h, colr):
             """void fl_ovalbound(FL_Coord x, FL_Coord y, FL_Coord w,
                FL_Coord h, FL_COLOR col)
             """)
+    check_if_initialized()
     check_admitted_listvalues(colr, xfc.COLOR_list)
     ix = convert_to_FL_Coord(x)
     iy = convert_to_FL_Coord(y)
@@ -6707,6 +7041,7 @@ def fl_ovalarc(fill, x, y, w, h, stheta, dtheta, colr):
             """void fl_ovalarc(int fill, FL_Coord x, FL_Coord y, FL_Coord w,
                FL_Coord h, int t0, int dt, FL_COLOR col)
             """)
+    check_if_initialized()
     check_admitted_listvalues(colr, xfc.COLOR_list)
     ifill = convert_to_int(fill)
     ix = convert_to_FL_Coord(x)
@@ -6829,6 +7164,7 @@ def fl_pieslice(fill, x, y, w, h, stheta, etheta, colr):
             """void fl_pieslice(int fill, FL_Coord x, FL_Coord y, FL_Coord w,
                FL_Coord h, int a1, int a2, FL_COLOR col)
             """)
+    check_if_initialized()
     check_admitted_listvalues(colr, xfc.COLOR_list)
     ifill = convert_to_int(fill)
     ix = convert_to_FL_Coord(x)
@@ -6930,6 +7266,7 @@ def fl_drw_frame(boxtype, x, y, w, h, colr, bw):
             """void fl_drw_frame(int style, FL_Coord x, FL_Coord y,
                FL_Coord w, FL_Coord h, FL_COLOR c, int bw)
             """)
+    check_if_initialized()
     check_admitted_listvalues(boxtype, xfc.BOXTYPE_list)
     check_admitted_listvalues(colr, xfc.COLOR_list)
     iboxtype = convert_to_int(boxtype)
@@ -6977,6 +7314,7 @@ def fl_drw_checkbox(boxtype, x, y, w, h, colr, bw):
             """void fl_drw_checkbox(int type, FL_Coord x, FL_Coord y,
                FL_Coord w, FL_Coord h, FL_COLOR col, int bw)
             """)
+    check_if_initialized()
     check_admitted_listvalues(boxtype, xfc.BOXTYPE_list)
     check_admitted_listvalues(colr, xfc.COLOR_list)
     iboxtype = convert_to_int(boxtype)
@@ -7023,6 +7361,7 @@ def fl_get_fontstruct(style, size):
             cty.POINTER(xfc.XFontStruct), [cty.c_int, cty.c_int],\
             """)XFontStruct * fl_get_fontstruct(int style, int size)
             """)
+    check_if_initialized()
     check_admitted_listvalues(style, xfc.TEXTSTYLE_list)
     check_admitted_listvalues(size, xfc.FONTSIZE_list)
     istyle = convert_to_int(style)
@@ -7060,6 +7399,7 @@ def fl_get_mouse():
             """Window fl_get_mouse(FL_Coord * x, FL_Coord * y,
               unsigned int * keymask)
             """)
+    check_if_initialized()
     x, px = make_FL_Coord_and_pointer()
     y, py = make_FL_Coord_and_pointer()
     keymask, pkeymask = make_uint_and_pointer()
@@ -7088,6 +7428,7 @@ def fl_set_mouse(x, y):
             None, [xfc.FL_Coord, xfc.FL_Coord],\
             """void fl_set_mouse(FL_Coord mx, FL_Coord my)
             """)
+    check_if_initialized()
     ix = convert_to_FL_Coord(x)
     iy = convert_to_FL_Coord(y)
     keep_elem_refs(x, y, ix, iy)
@@ -7120,6 +7461,7 @@ def fl_get_win_mouse(win):
             """Window fl_get_win_mouse(Window win, FL_Coord * x, FL_Coord * y,
             unsigned int * keymask)
             """)
+    check_if_initialized()
     ulwin = convert_to_Window(win)
     x, px = make_FL_Coord_and_pointer()
     y, py = make_FL_Coord_and_pointer()
@@ -7155,6 +7497,8 @@ def fl_get_form_mouse(pForm):
             """Window fl_get_form_mouse(FL_FORM * fm, FL_Coord * x,
                FL_Coord * y, unsigned int * keymask)
             """)
+    check_if_initialized()
+    check_if_FL_FORM_ptr(pForm)
     x, px = make_FL_Coord_and_pointer()
     y, py = make_FL_Coord_and_pointer()
     keymask, pkeymask = make_uint_and_pointer()
@@ -7182,6 +7526,7 @@ def fl_win_to_form(win):
             cty.POINTER(xfc.FL_FORM), [xfc.Window],\
             """FL_FORM * fl_win_to_form(Window win)
             """)
+    check_if_initialized()
     ulwin = convert_to_Window(win)
     keep_elem_refs(win, ulwin)
     retval = _fl_win_to_form(ulwin)
@@ -7205,6 +7550,8 @@ def fl_set_form_icon(pForm, icon, mask):
             None, [cty.POINTER(xfc.FL_FORM), xfc.Pixmap, xfc.Pixmap],\
             """void fl_set_form_icon(FL_FORM * form, Pixmap p, Pixmap m)
             """)
+    check_if_initialized()
+    check_if_FL_FORM_ptr(pForm)
     ulicon = convert_to_Pixmap(icon)
     ulmask = convert_to_Pixmap(mask)
     keep_elem_refs(pForm, icon, mask, ulicon, ulmask)
@@ -7237,6 +7584,8 @@ def fl_get_decoration_sizes(pForm):
             """int fl_get_decoration_sizes(FL_FORM * form, int * top,
                int * right, int * bottom, int * left)
             """)
+    check_if_initialized()
+    check_if_FL_FORM_ptr(pForm)
     top, ptop = make_int_and_pointer()
     right, pright = make_int_and_pointer()
     bottom, pbottom = make_int_and_pointer()
@@ -7264,6 +7613,8 @@ def fl_raise_form(pForm):
             None, [cty.POINTER(xfc.FL_FORM)],\
             """void fl_raise_form(FL_FORM * p1)
             """)
+    check_if_initialized()
+    check_if_FL_FORM_ptr(pForm)
     keep_elem_refs(pForm)
     _fl_raise_form(pForm)
 
@@ -7285,6 +7636,8 @@ def fl_lower_form(pForm):
             None, [cty.POINTER(xfc.FL_FORM)],\
             """void fl_lower_form(FL_FORM * p1)
             """)
+    check_if_initialized()
+    check_if_FL_FORM_ptr(pForm)
     keep_elem_refs(pForm)
     _fl_lower_form(pForm)
 
@@ -7308,6 +7661,7 @@ def fl_set_foreground(gc, colr):
             None, [xfc.GC, xfc.FL_COLOR],\
             """void fl_set_foreground(GC gc, FL_COLOR col)
             """)
+    check_if_initialized()
     check_admitted_listvalues(colr, xfc.COLOR_list)
     ulcolr = convert_to_FL_COLOR(colr)
     keep_elem_refs(gc, colr, ulcolr)
@@ -7333,6 +7687,7 @@ def fl_set_background(gc, colr):
             None, [xfc.GC, xfc.FL_COLOR],\
             """void fl_set_background(GC gc, FL_COLOR col)
             """)
+    check_if_initialized()
     check_admitted_listvalues(colr, xfc.COLOR_list)
     ulcolr = convert_to_FL_COLOR(colr)
     keep_elem_refs(gc, colr, ulcolr)
@@ -7360,6 +7715,7 @@ def fl_wincreate(title):
             xfc.Window, [xfc.STRING],\
             """Window fl_wincreate(const char * label)
             """)
+    check_if_initialized()
     stitle = convert_to_string(title)
     keep_elem_refs(title, stitle)
     retval = _fl_wincreate(stitle)
@@ -7385,6 +7741,7 @@ def fl_winshow(win):
             xfc.Window, [xfc.Window],\
             """Window fl_winshow(Window win)
             """)
+    check_if_initialized()
     ulwin = convert_to_Window(win)
     keep_elem_refs(win, ulwin)
     retval = _fl_winshow(ulwin)
@@ -7411,6 +7768,7 @@ def fl_winopen(title):
             xfc.Window, [xfc.STRING], \
             """Window fl_winopen(const char * label)
             """)
+    check_if_initialized()
     stitle = convert_to_string(title)
     keep_elem_refs(title, stitle)
     retval = _fl_winopen(stitle)
@@ -7434,6 +7792,7 @@ def fl_winhide(win):
             None, [xfc.Window], \
             """void fl_winhide(Window win)
             """)
+    check_if_initialized()
     ulwin = convert_to_Window(win)
     keep_elem_refs(win, ulwin)
     _fl_winhide(ulwin)
@@ -7456,6 +7815,7 @@ def fl_winclose(win):
             None, [xfc.Window], \
             """void fl_winclose(Window win)
             """)
+    check_if_initialized()
     ulwin = convert_to_Window(win)
     keep_elem_refs(win, ulwin)
     _fl_winclose(win, ulwin)
@@ -7479,6 +7839,7 @@ def fl_winset(win):
             None, [xfc.Window], \
             """void fl_winset(Window win)
             """)
+    check_if_initialized()
     ulwin = convert_to_Window(win)
     keep_elem_refs(win, ulwin)
     _fl_winset(ulwin)
@@ -7506,6 +7867,7 @@ def fl_winreparent(win, winnewparent):
             cty.c_int, [xfc.Window, xfc.Window], \
             """int fl_winreparent(Window win, Window new_parent)
             """)
+    check_if_initialized()
     ulwin = convert_to_Window(win)
     ulwinnewparent = convert_to_Window(winnewparent)
     keep_elem_refs(win, winnewparent, ulwin, ulwinnewparent)
@@ -7531,6 +7893,7 @@ def fl_winfocus(win):
             None, [xfc.Window], \
             """void fl_winfocus(Window win)
             """)
+    check_if_initialized()
     ulwin = convert_to_Window(win)
     keep_elem_refs(win, ulwin)
     _fl_winfocus(ulwin)
@@ -7556,6 +7919,7 @@ def fl_winget():
             xfc.Window, [], \
             """Window fl_winget()
             """)
+    check_if_initialized()
     retval = _fl_winget()
     return retval
 
@@ -7579,6 +7943,7 @@ def fl_iconify(win):
             cty.c_int, [xfc.Window], \
             """int fl_iconify(Window win)
             """)
+    check_if_initialized()
     ulwin = convert_to_Window(win)
     keep_elem_refs(win, ulwin)
     retval = _fl_iconify(ulwin)
@@ -7604,6 +7969,7 @@ def fl_winresize(win, w, h):
             None, [xfc.Window, xfc.FL_Coord, xfc.FL_Coord], \
             """void fl_winresize(Window win, FL_Coord neww, FL_Coord newh)
             """)
+    check_if_initialized()
     ulwin = convert_to_Window(win)
     iw = convert_to_int(w)
     ih = convert_to_int(h)
@@ -7630,6 +7996,7 @@ def fl_winmove(win, x, y):
             None, [xfc.Window, xfc.FL_Coord, xfc.FL_Coord], \
             """void fl_winmove(Window win, FL_Coord dx, FL_Coord dy)
             """)
+    check_if_initialized()
     ulwin = convert_to_Window(win)
     ix = convert_to_int(x)
     iy = convert_to_int(y)
@@ -7660,6 +8027,7 @@ def fl_winreshape(win, x, y, w, h):
             """void fl_winreshape(Window win, FL_Coord dx, FL_Coord dy,
                FL_Coord w, FL_Coord h)
             """)
+    check_if_initialized()
     ulwin = convert_to_Window(win)
     ix = convert_to_int(x)
     iy = convert_to_int(y)
@@ -7688,6 +8056,7 @@ def fl_winicon(win, icon, mask):
             None, [xfc.Window, xfc.Pixmap, xfc.Pixmap], \
             """void fl_winicon(Window win, Pixmap p, Pixmap m)
             """)
+    check_if_initialized()
     ulwin = convert_to_Window(win)
     ulicon = convert_to_Pixmap(icon)
     ulmask = convert_to_Pixmap(mask)
@@ -7713,6 +8082,7 @@ def fl_winbackground(win, bkcolr):
             None, [xfc.Window, xfc.FL_COLOR], \
             """void fl_winbackground(Window win, FL_COLOR bk)
             """)
+    check_if_initialized()
     check_admitted_listvalues(bkcolr, xfc.COLOR_list)
     ulwin = convert_to_Window(win)
     ulbkcolr = convert_to_FL_COLOR(bkcolr)
@@ -7745,6 +8115,7 @@ def fl_winstepsize(win, xunit, yunit):
             None, [xfc.Window, xfc.FL_Coord, xfc.FL_Coord], \
             """void fl_winstepsize(Window win, FL_Coord dx, FL_Coord dy)
             """)
+    check_if_initialized()
     ulwin = convert_to_Window(win)
     ixunit = convert_to_int(xunit)
     iyunit = convert_to_int(yunit)
@@ -7777,6 +8148,7 @@ def fl_winisvalid(win):
             cty.c_int, [xfc.Window], \
             """int fl_winisvalid(Window win)
             """)
+    check_if_initialized()
     ulwin = convert_to_Window(win)
     keep_elem_refs(win, ulwin)
     retval = _fl_winisvalid(ulwin)
@@ -7801,6 +8173,7 @@ def fl_wintitle(win, title):
             None, [xfc.Window, xfc.STRING], \
             """void fl_wintitle(Window win, const char * title)
             """)
+    check_if_initialized()
     ulwin = convert_to_Window(win)
     stitle = convert_to_string(title)
     keep_elem_refs(win, title, ulwin, stitle)
@@ -7825,6 +8198,7 @@ def fl_winicontitle(win, title):
             None, [xfc.Window, xfc.STRING], \
             """void fl_winicontitle(Window win, const char * title)
             """)
+    check_if_initialized()
     ulwin = convert_to_Window(win)
     stitle = convert_to_string(title)
     keep_elem_refs(win, title, ulwin, stitle)
@@ -7849,6 +8223,7 @@ def fl_winposition(x, y):
             None, [xfc.FL_Coord, xfc.FL_Coord],
             """void fl_winposition(FL_Coord x, FL_Coord y)
             """)
+    check_if_initialized()
     ix = convert_to_FL_Coord(x)
     iy = convert_to_FL_Coord(y)
     keep_elem_refs(x, y, ix, iy)
@@ -7878,6 +8253,7 @@ def fl_winminsize(win, w, h):
             None, [xfc.Window, xfc.FL_Coord, xfc.FL_Coord],
             """void fl_winminsize(Window win, FL_Coord w, FL_Coord h)
             """)
+    check_if_initialized()
     ulwin = convert_to_Window(win)
     iw = convert_to_FL_Coord(w)
     ih = convert_to_FL_Coord(h)
@@ -7905,6 +8281,7 @@ def fl_winmaxsize(win, w, h):
             None, [xfc.Window, xfc.FL_Coord, xfc.FL_Coord],
             """void fl_winmaxsize(Window win, FL_Coord w, FL_Coord h)
             """)
+    check_if_initialized()
     ulwin = convert_to_Window(win)
     iw = convert_to_FL_Coord(w)
     ih = convert_to_FL_Coord(h)
@@ -7931,6 +8308,7 @@ def fl_winaspect(win, x, y):
             None, [xfc.Window, xfc.FL_Coord, xfc.FL_Coord],
             """void fl_winaspect(Window win, FL_Coord x, FL_Coord y)
             """)
+    check_if_initialized()
     ulwin = convert_to_Window(win)
     ix = convert_to_FL_Coord(x)
     iy = convert_to_FL_Coord(y)
@@ -7955,6 +8333,7 @@ def fl_reset_winconstraints(win):
             None, [xfc.Window],
             """void fl_reset_winconstraints(Window win)
             """)
+    check_if_initialized()
     ulwin = convert_to_Window(win)
     keep_elem_refs(win)
     _fl_reset_winconstraints(ulwin)
@@ -7979,6 +8358,7 @@ def fl_winsize(w, h):
             None, [xfc.FL_Coord, xfc.FL_Coord],
             """void fl_winsize(FL_Coord w, FL_Coord h)
             """)
+    check_if_initialized()
     iw = convert_to_FL_Coord(w)
     ih = convert_to_FL_Coord(h)
     keep_elem_refs(w, h, iw, ih)
@@ -8006,6 +8386,7 @@ def fl_initial_winsize(w, h):
             None, [xfc.FL_Coord, xfc.FL_Coord],
             """void fl_initial_winsize(FL_Coord w, FL_Coord h)
             """)
+    check_if_initialized()
     iw = convert_to_FL_Coord(w)
     ih = convert_to_FL_Coord(h)
     keep_elem_refs(w, h, iw, ih)
@@ -8027,6 +8408,7 @@ def fl_initial_winstate(state):
             None, [cty.c_int],
             """void fl_initial_winstate(int state)
             """)
+    check_if_initialized()
     istate = convert_to_int(state)
     keep_elem_refs(state, istate)
     _fl_initial_winstate(istate)
@@ -8053,6 +8435,7 @@ def fl_create_colormap(pXVisualInfo, nfill):
             xfc.Colormap, [cty.POINTER(xfc.XVisualInfo), cty.c_int],
             """Colormap fl_create_colormap(XVisualInfo * xv, int nfill)
             """)
+    check_if_initialized()
     infill = convert_to_int(nfill)
     keep_elem_refs(pXVisualInfo, nfill, infill)
     retval = _fl_create_colormap(pXVisualInfo, infill)
@@ -8081,6 +8464,7 @@ def fl_wingeometry(x, y, w, h):
             """void fl_wingeometry(FL_Coord x, FL_Coord y, FL_Coord w,
                FL_Coord h)
             """)
+    check_if_initialized()
     ix = convert_to_FL_Coord(x)
     iy = convert_to_FL_Coord(y)
     iw = convert_to_FL_Coord(w)
@@ -8114,6 +8498,7 @@ def fl_initial_wingeometry(x, y, w, h):
             """void fl_initial_wingeometry(FL_Coord x, FL_Coord y,
                FL_Coord w, FL_Coord h)
             """)
+    check_if_initialized()
     ix = convert_to_FL_Coord(x)
     iy = convert_to_FL_Coord(y)
     iw = convert_to_FL_Coord(w)
@@ -8138,6 +8523,7 @@ def fl_noborder():
             None, [],
             """void fl_noborder()
             """)
+    check_if_initialized()
     _fl_noborder()
 
 
@@ -8156,6 +8542,7 @@ def fl_transient():
             None, [], \
             """void fl_transient()
             """)
+    check_if_initialized()
     _fl_transient()
 
 
@@ -8182,6 +8569,7 @@ def fl_get_winsize(win):
             cty.POINTER(xfc.FL_Coord)],
             """void fl_get_winsize(Window win, FL_Coord * w, FL_Coord * h)
             """)
+    check_if_initialized()
     ulwin = convert_to_Window(win)
     w, pw = make_int_and_pointer()
     h, ph = make_int_and_pointer()
@@ -8213,6 +8601,7 @@ def fl_get_winorigin(win):
             cty.POINTER(xfc.FL_Coord)],
             """void fl_get_winorigin(Window win, FL_Coord * x, FL_Coord * y)
             """)
+    check_if_initialized()
     ulwin = convert_to_Window(win)
     x, px = make_FL_Coord_and_pointer()
     y, py = make_FL_Coord_and_pointer()
@@ -8247,6 +8636,7 @@ def fl_get_wingeometry(win):
             """void fl_get_wingeometry(Window win, FL_Coord * x,
                FL_Coord * y, FL_Coord * w, FL_Coord * h)
             """)
+    check_if_initialized()
     ulwin = convert_to_Window(win)
     x, px = make_FL_Coord_and_pointer()
     y, py = make_FL_Coord_and_pointer()
@@ -8264,15 +8654,20 @@ def fl_get_wingeometry(win):
 
 
 def fl_get_display():
+    check_if_initialized()
     return fl_display
 
 
 def FL_FormDisplay(pForm):
+    check_if_initialized()
+    check_if_FL_FORM_ptr(pForm)
     return fl_display
 
 
 # undocumented data maybe dismissed --LK
 def FL_ObjectDisplay(pObject):
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     return fl_display
 
 
@@ -8300,6 +8695,8 @@ def FL_ObjWin(pObject):
         @status: Tested + Doc + Demo = OK
     """
 
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     if FL_IS_CANVAS(pObject):
         return fl_get_canvas_id(pObject)
     else:
@@ -8328,6 +8725,8 @@ def fl_get_real_object_window(pObject):
             xfc.Window, [cty.POINTER(xfc.FL_OBJECT)],
             """Window fl_get_real_object_window(FL_OBJECT * ob)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     keep_elem_refs(pObject)
     retval = _fl_get_real_object_window(pObject)
     return retval
@@ -8351,6 +8750,7 @@ def fl_XNextEvent(pXEvent):
             cty.c_int, [cty.POINTER(xfc.XEvent)],
             """int fl_XNextEvent(XEvent * xev)
             """)
+    check_if_initialized()
     keep_elem_refs(pXEvent)
     retval = _fl_XNextEvent(pXEvent)
     return retval
@@ -8369,6 +8769,7 @@ def fl_XPeekEvent(pXEvent):
             cty.c_int, [cty.POINTER(xfc.XEvent)],
             """int fl_XPeekEvent(XEvent * xev)
             """)
+    check_if_initialized()
     keep_elem_refs(pXEvent)
     retval = _fl_XPeekEvent(pXEvent)
     return retval
@@ -8385,6 +8786,7 @@ def fl_XEventsQueued(mode):
             cty.c_int, [cty.c_int],
             """int fl_XEventsQueued(int mode)
             """)
+    check_if_initialized()
     imode = convert_to_int(mode)
     keep_elem_refs(mode, imode)
     retval = _fl_XEventsQueued(imode)
@@ -8404,6 +8806,7 @@ def fl_XPutBackEvent(pXEvent):
             None, [cty.POINTER(xfc.XEvent)],
             """void fl_XPutBackEvent(XEvent * xev)
             """)
+    check_if_initialized()
     keep_elem_refs(pXEvent)
     _fl_XPutBackEvent(pXEvent)
 
@@ -8419,6 +8822,7 @@ def fl_last_event():
             cty.POINTER(xfc.XEvent), [],
             """const char * fl_last_event()
             """)
+    check_if_initialized()
     retval = _fl_last_event()
     return retval
 
@@ -8442,8 +8846,10 @@ def fl_set_event_callback(py_AppEventCb, vdata):
 
         @returns: callback (<pointer to xfdata.FL_APPEVENT_CB>)
 
-        @example: § def eventcb(pxev, vdata): ... ; return 0
-                  § fl_set_event_callback(eventcb, None)
+        @example: def eventcb(pxev, vdata):
+        @example: |->| ...
+        @example: |->| return 0
+        @example: fl_set_event_callback(eventcb, None)
 
         @status: Tested + Doc + Demo = OK
     """
@@ -8456,6 +8862,7 @@ def fl_set_event_callback(py_AppEventCb, vdata):
             """FL_APPEVENT_CB fl_set_event_callback(FL_APPEVENT_CB callback,
                void * user_data)
             """)
+    check_if_initialized()
     c_AppEventCb = xfc.FL_APPEVENT_CB(py_AppEventCb)
     pvdata = cty.cast(vdata, cty.c_void_p)
     keep_cfunc_refs(c_AppEventCb, py_AppEventCb)
@@ -8483,11 +8890,12 @@ def fl_set_idle_callback(py_AppEventCb, vdata):
         @param vdata: user data to be passed to function (<pointer to void>)
 
         @example: def idlecb(xev, userdata):
-                  > ... ; return 0
-                  appevtcb = fl_set_idle_callback(idlecb, None)
-                  def donothing_idlecb(xev, userdata):
-                  > pass
-                  removedcb = fl_set_idle_callback(donothing_idlecb, None)
+        @example: |->| ...
+        @example: |->| return 0
+        @example: appevtcb = fl_set_idle_callback(idlecb, None)
+        @example: def donothing_idlecb(xev, userdata):
+        @example: |->| pass
+        @example: removedcb = fl_set_idle_callback(donothing_idlecb, None)
 
         @status: Tested + Doc + NoDemo = OK
     """
@@ -8500,6 +8908,7 @@ def fl_set_idle_callback(py_AppEventCb, vdata):
             """FL_APPEVENT_CB fl_set_idle_callback(FL_APPEVENT_CB callback,
                void * user_data)
             """)
+    check_if_initialized()
     c_AppEventCb = xfc.FL_APPEVENT_CB(py_AppEventCb)
     pvdata = cty.cast(vdata, cty.c_void_p)
     keep_cfunc_refs(c_AppEventCb, py_AppEventCb)
@@ -8529,6 +8938,7 @@ def fl_addto_selected_xevent(win, mask):
             cty.c_long, [xfc.Window, cty.c_long],
             """long int fl_addto_selected_xevent(Window win, long int mask)
             """)
+    check_if_initialized()
     ulwin = convert_to_Window(win)
     lmask = convert_to_long(mask)
     keep_elem_refs(win, mask, ulwin, lmask)
@@ -8558,6 +8968,7 @@ def fl_remove_selected_xevent(win, mask):
             cty.c_long, [xfc.Window, cty.c_long],
             """long int fl_remove_selected_xevent(Window win, long int mask)
             """)
+    check_if_initialized()
     ulwin = convert_to_Window(win)
     lmask = convert_to_long(mask)
     keep_elem_refs(win, mask, ulwin, lmask)
@@ -8589,6 +9000,7 @@ def fl_set_idle_delta(msec):
             None, [cty.c_long],
             """void fl_set_idle_delta(long int delta)
             """)
+    check_if_initialized()
     lmsec = convert_to_long(msec)
     keep_elem_refs(msec, lmsec)
     _fl_set_idle_delta(lmsec)
@@ -8613,8 +9025,10 @@ def fl_add_event_callback(win, evttype, py_AppEventCb, vdata):
 
         @returns: callback (<pointer to xfdata.FL_APPEVENT_CB>)
 
-        @example: § def eventcb(pxev, vdata): ... ; return 0
-                  § fl_add_event_callback(win2, 0, eventcb, None)
+        @example: def eventcb(pxev, vdata):
+        @example: |->|  ...
+        @example: |->| return 0
+        @example: fl_add_event_callback(win2, 0, eventcb, None)
 
         @status: Tested + Doc + NoDemo = OK
     """
@@ -8628,6 +9042,7 @@ def fl_add_event_callback(win, evttype, py_AppEventCb, vdata):
             """FL_APPEVENT_CB fl_add_event_callback(Window win, int ev,
                FL_APPEVENT_CB wincb, void * user_data)
             """)
+    check_if_initialized()
     ulwin = convert_to_Window(win)
     ievttype = convert_to_int(evttype)
     c_AppEventCb = xfc.FL_APPEVENT_CB(py_AppEventCb)
@@ -8658,6 +9073,7 @@ def fl_remove_event_callback(win, evttype):
             None, [xfc.Window, cty.c_int],
             """void fl_remove_event_callback(Window win, int ev)
             """)
+    check_if_initialized()
     ulwin = convert_to_Window(win)
     ievttype = convert_to_int(evttype)
     keep_elem_refs(win, evttype, ulwin, ievttype)
@@ -8685,6 +9101,7 @@ def fl_activate_event_callbacks(win):
             None, [xfc.Window],
             """void fl_activate_event_callbacks(Window win)
             """)
+    check_if_initialized()
     ulwin = convert_to_Window(win)
     keep_elem_refs(win, ulwin)
     _fl_activate_event_callbacks(ulwin)
@@ -8711,6 +9128,7 @@ def fl_print_xevent_name(where, pXEvent):
             """XEvent * fl_print_xevent_name(const char * where,
                const Xevent * xev)
             """)
+    check_if_initialized()
     swhere = convert_to_string(where)
     keep_elem_refs(where, pXEvent, swhere)
     retval = _fl_print_xevent_name(swhere, pXEvent)
@@ -8778,8 +9196,8 @@ def fl_initialize(numargs, argslist, appname, appoptions, nappopts):
         @returns: display (<pointer to xfdata.XDisplay>) or None (on falilure,
                   if a connection couldn't be made)
 
-        @example: § import sys
-                  § fl_initialize(len(sys.argv), sys.argv, "MyFormDemo", 0, 0)
+        @example: import sys
+        @example: fl_initialize(len(sys.argv), sys.argv, "MyFormDemo", 0, 0)
 
         @status: HalfTested + Doc + Demo = HALF OK (not for command line args)
     """
@@ -8794,6 +9212,8 @@ def fl_initialize(numargs, argslist, appname, appoptions, nappopts):
             """)
     verify_version_compatibility()      # verify if installed XForms
                                         # is compatible with this one
+    global flinitialized
+    flinitialized = True
 
     numargs = 1
     inumargs = convert_to_int(numargs)
@@ -8825,6 +9245,7 @@ def fl_finish():
             None, [],
             """void fl_finish()
             """)
+    check_if_initialized()
     _fl_finish()
 
 
@@ -8876,7 +9297,7 @@ def fl_set_resource(resstr, val):
     """ fl_set_resource(resstr, val)
 
         Changes some of the built-in button labels with proper resource names.
-        
+
         @param resstr: resource name
         @param val: new string value for resource
 
@@ -8921,6 +9342,7 @@ def fl_set_graphics_mode(mode, doublebuf):
             None, [cty.c_int, cty.c_int],
             """void fl_set_graphics_mode(int mode, int doublebuf)
             """)
+    check_if_initialized()
     imode = convert_to_int(mode)
     idoublebuf = convert_to_int(doublebuf)
     keep_elem_refs(mode, doublebuf, imode, idoublebuf)
@@ -8954,6 +9376,7 @@ def fl_keysym_pressed(keysym):
             cty.c_int, [xfc.KeySym],
             """int fl_keysym_pressed(KeySym k)
             """)
+    check_if_initialized()
     ulkeysym = convert_to_ulong(keysym)
     keep_elem_refs(keysym, ulkeysym)
     retval = _fl_keysym_pressed(ulkeysym)
@@ -9006,6 +9429,7 @@ def fl_set_tabstop(strng):
             None, [xfc.STRING],
             """void fl_set_tabstop(const char * s)
             """)
+    check_if_initialized()
     sstrng = convert_to_string(strng)
     keep_elem_refs(strng, sstrng)
     _fl_set_tabstop(sstrng)
@@ -9055,6 +9479,7 @@ def fl_get_visual_depth():
             cty.c_int, [],
             """int fl_get_visual_depth()
             """)
+    check_if_initialized()
     retval = _fl_get_visual_depth()
     return retval
 
@@ -9070,6 +9495,7 @@ def fl_vclass_name(n):
             xfc.STRING, [cty.c_int],
             """const char * fl_vclass_name(int n)
             """)
+    check_if_initialized()
     inum = convert_to_int(n)
     keep_elem_refs(n, inum)
     _fl_vclass_name(inum)
@@ -9086,6 +9512,7 @@ def fl_vclass_val(val):
             cty.c_int, [xfc.STRING],
             """int fl_vclass_val(const char * v)
             """)
+    check_if_initialized()
     sval = convert_to_string(val)
     keep_elem_refs(val, sval)
     retval = _fl_vclass_val(sval)
@@ -9300,6 +9727,7 @@ def fl_popup_add(win, title):
             cty.POINTER(xfc.FL_POPUP), [xfc.Window, xfc.STRING],
             """FL_POPUP * fl_popup_add(Window p1, const char * p2)
             """)
+    check_if_initialized()
     ulwin = convert_to_Window(win)
     stitle = convert_to_string(title)
     keep_elem_refs(win, title, ulwin, stitle)
@@ -9319,6 +9747,7 @@ def fl_popup_add_entries(pPopup, entrytxt):
             """FL_POPUP_ENTRY * fl_popup_add_entries(FL_POPUP * p1,
                const char * p2)
             """)
+    check_if_initialized()
     sentrytxt = convert_to_string(entrytxt)
     keep_elem_refs(pPopup, entrytxt, sentrytxt)
     retval = _fl_popup_add_entries(pPopup, sentrytxt)
@@ -9338,6 +9767,7 @@ def fl_popup_insert_entries(pPopup, pPopupEntry, entrytxt):
             """FL_POPUP_ENTRY * fl_popup_insert_entries(FL_POPUP * p1,
                FL_POPUP_ENTRY * p2, const char * p3)
             """)
+    check_if_initialized()
     sentrytxt = convert_to_string(entrytxt)
     keep_elem_refs(pPopup, pPopupEntry, entrytxt, sentrytxt)
     retval = _fl_popup_insert_entries(pPopup, pPopupEntry, sentrytxt)
@@ -9357,6 +9787,7 @@ def fl_popup_create(win, text, pPopupItem):
             """FL_POPUP * fl_popup_create(Window p1, const char * p2,
                FL_POPUP_ITEM * p3)
             """)
+    check_if_initialized()
     ulwin = convert_to_Window(win)
     stext = convert_to_string(text)
     keep_elem_refs(win, text, pPopupItem, ulwin, stext)
@@ -9377,6 +9808,7 @@ def fl_popup_add_items(pPopup, pPopupItem):
             """FL_POPUP_ENTRY * fl_popup_add_items(FL_POPUP * p1,
                FL_POPUP_ITEM * p2)
             """)
+    check_if_initialized()
     keep_elem_refs(pPopup, pPopupItem)
     retval = _fl_popup_add_items(pPopup, pPopupItem)
     return retval
@@ -9395,6 +9827,7 @@ def fl_popup_insert_items(pPopup, pPopupEntry, pPopupItem):
             """FL_POPUP_ENTRY * fl_popup_insert_items(FL_POPUP * p1,
                FL_POPUP_ENTRY * p2, FL_POPUP_ITEM * p3)
             """)
+    check_if_initialized()
     keep_elem_refs(pPopup, pPopupEntry, pPopupItem)
     retval = _fl_popup_insert_items(pPopup, pPopupEntry, pPopupItem)
     return retval
@@ -9411,6 +9844,7 @@ def fl_popup_delete(pPopup):
             cty.c_int, [cty.POINTER(xfc.FL_POPUP)],
             """int fl_popup_delete(FL_POPUP * p1)
             """)
+    check_if_initialized()
     keep_elem_refs(pPopup)
     retval = _fl_popup_delete(pPopup)
     return retval
@@ -9427,6 +9861,7 @@ def fl_popup_entry_delete(pPopupEntry):
             cty.c_int, [cty.POINTER(xfc.FL_POPUP_ENTRY)],
             """int fl_popup_entry_delete(FL_POPUP_ENTRY * p1)
             """)
+    check_if_initialized()
     keep_elem_refs(pPopupEntry)
     retval = _fl_popup_entry_delete(pPopupEntry)
     return retval
@@ -9443,6 +9878,7 @@ def fl_popup_do(pPopup):
             cty.POINTER(xfc.FL_POPUP_RETURN), [cty.POINTER(xfc.FL_POPUP)],
             """FL_POPUP_RETURN * fl_popup_do(FL_POPUP * p1)
             """)
+    check_if_initialized()
     keep_elem_refs(pPopup)
     retval = _fl_popup_do(pPopup)
     return retval
@@ -9466,6 +9902,7 @@ def fl_popup_set_position(pPopup, x, y):
             None, [cty.POINTER(xfc.FL_POPUP), cty.c_int, cty.c_int],
             """void fl_popup_set_position(FL_POPUP * p1, int p2, int p3)
             """)
+    check_if_initialized()
     ix = convert_to_int(x)
     iy = convert_to_int(y)
     keep_elem_refs(pPopup, x, y, ix, iy)
@@ -9485,6 +9922,7 @@ def fl_popup_get_policy(pPopup):
             cty.c_int, [cty.POINTER(xfc.FL_POPUP)],
             """int fl_popup_get_policy(FL_POPUP * p1)
             """)
+    check_if_initialized()
     keep_elem_refs(pPopup)
     retval = _fl_popup_get_policy(pPopup)
     return retval
@@ -9507,6 +9945,7 @@ def fl_popup_set_policy(pPopup, policy):
             cty.c_int, [cty.POINTER(xfc.FL_POPUP), cty.c_int],
             """int fl_popup_set_policy(FL_POPUP * p1, int p2)
             """)
+    check_if_initialized()
     check_admitted_listvalues(policy, xfc.POPUPPOLICY_list)
     ipolicy = convert_to_int(policy)
     keep_elem_refs(pPopup, policy, ipolicy)
@@ -9529,6 +9968,7 @@ def fl_popup_set_callback(pPopup, py_PopupCb):
             """FL_POPUP_CB fl_popup_set_callback(FL_POPUP * p1,
                FL_POPUP_CB p2)
             """)
+    check_if_initialized()
     c_PopupCb = xfc.FL_POPUP_CB(py_PopupCb)
     keep_cfunc_refs(c_PopupCb, py_PopupCb)
     keep_elem_refs(pPopup)
@@ -9552,11 +9992,12 @@ def fl_popup_get_title_font(pPopup):
             """void fl_popup_get_title_font(FL_POPUP * p1, int * p2,
                int * p3)
             """)
+    check_if_initialized()
     style, pstyle = make_int_and_pointer()
     size, psize = make_int_and_pointer()
     keep_elem_refs(pPopup, style, size, pstyle, psize)
     _fl_popup_get_title_font(pPopup, pstyle, psize)
-    return style, size
+    return style.value, size.value
 
 
 def fl_popup_set_title_font(pPopup, style, size):
@@ -9570,6 +10011,7 @@ def fl_popup_set_title_font(pPopup, style, size):
             None, [cty.POINTER(xfc.FL_POPUP), cty.c_int, cty.c_int],
             """void fl_popup_set_title_font(FL_POPUP * p1, int p2, int p3)
             """)
+    check_if_initialized()
     istyle = convert_to_int(style)
     isize = convert_to_int(size)
     keep_elem_refs(pPopup, style, size, istyle, isize)
@@ -9591,11 +10033,12 @@ def fl_popup_entry_get_font(pPopup):
             cty.POINTER(cty.c_int)],
             """void fl_popup_entry_get_font(FL_POPUP * p1, int * p2, int * p3)
             """)
+    check_if_initialized()
     style, pstyle = make_int_and_pointer()
     size, psize = make_int_and_pointer()
     keep_elem_refs(pPopup, style, size, pstyle, psize)
     _fl_popup_entry_get_font(pPopup, pstyle, psize)
-    return style, size
+    return style.value, size.value
 
 
 def fl_popup_entry_set_font(pPopup, style, size):
@@ -9615,6 +10058,7 @@ def fl_popup_entry_set_font(pPopup, style, size):
             None, [cty.POINTER(xfc.FL_POPUP), cty.c_int, cty.c_int],
             """void fl_popup_entry_set_font(FL_POPUP * p1, int p2, int p3)
             """)
+    check_if_initialized()
     istyle = convert_to_int(style)
     isize = convert_to_int(size)
     keep_elem_refs(pPopup, style, size, istyle, isize)
@@ -9636,6 +10080,7 @@ def fl_popup_get_bw(pPopup):
             cty.c_int, [cty.POINTER(xfc.FL_POPUP)],
             """int fl_popup_get_bw(FL_POPUP * p1)
             """)
+    check_if_initialized()
     keep_elem_refs(pPopup)
     retval = _fl_popup_get_bw(pPopup)
     return retval
@@ -9657,6 +10102,7 @@ def fl_popup_set_bw(pPopup, bw):
             cty.c_int, [cty.POINTER(xfc.FL_POPUP), cty.c_int],
             """int fl_popup_set_bw(FL_POPUP * p1, int p2)
             """)
+    check_if_initialized()
     ibw = convert_to_int(bw)
     keep_elem_refs(pPopup, bw, ibw)
     retval = _fl_popup_set_bw(pPopup, ibw)
@@ -9679,6 +10125,7 @@ def fl_popup_get_color(pPopup, colrpos):
             xfc.FL_COLOR, [cty.POINTER(xfc.FL_POPUP), cty.c_int],
             """FL_COLOR fl_popup_get_color(FL_POPUP * p1, int p2)
             """)
+    check_if_initialized()
     check_admitted_listvalues(colrpos, xfc.POPUPCOLOR_list)
     icolrpos = convert_to_int(colrpos)
     keep_elem_refs(pPopup, colrpos, icolrpos)
@@ -9704,6 +10151,7 @@ def fl_popup_set_color(pPopup, colrpos, colr):
             xfc.FL_COLOR, [cty.POINTER(xfc.FL_POPUP), cty.c_int, xfc.FL_COLOR],
             """FL_COLOR fl_popup_set_color(FL_POPUP * p1, int p2, FL_COLOR p3)
             """)
+    check_if_initialized()
     check_admitted_listvalues(colrpos, xfc.POPUPCOLOR_list)
     check_admitted_listvalues(colrpos, xfc.COLOR_list)
     icolrpos = convert_to_int(colrpos)
@@ -9749,6 +10197,7 @@ def fl_popup_get_title(pPopup):
             xfc.STRING, [cty.POINTER(xfc.FL_POPUP)],
             """const char * fl_popup_get_title(FL_POPUP * p1)
             """)
+    check_if_initialized()
     keep_elem_refs(pPopup)
     retval = _fl_popup_get_title(pPopup)
     return retval
@@ -9770,6 +10219,7 @@ def fl_popup_set_title(pPopup, title):
             cty.POINTER(xfc.FL_POPUP), [cty.POINTER(xfc.FL_POPUP), xfc.STRING],
             """FL_POPUP * fl_popup_set_title(FL_POPUP * p1, const char * p2)
             """)
+    check_if_initialized()
     stitle = convert_to_string(title)
     keep_elem_refs(pPopup, title, stitle)
     retval = _fl_popup_set_title(pPopup, stitle)
@@ -9789,6 +10239,7 @@ def fl_popup_entry_set_callback(pPopupEntry, py_PopupCb):
             """FL_POPUP_CB fl_popup_entry_set_callback(FL_POPUP_ENTRY * p1,
                FL_POPUP_CB p2)
             """)
+    check_if_initialized()
     c_PopupCb = xfc.FL_POPUP_CB(py_PopupCb)
     keep_cfunc_refs(c_PopupCb, py_PopupCb)
     keep_elem_refs(pPopupEntry)
@@ -9809,6 +10260,7 @@ def fl_popup_entry_set_enter_callback(pPopupEntry, py_PopupCb):
             """FL_POPUP_CB fl_popup_entry_set_enter_callback(
                FL_POPUP_ENTRY * p1, FL_POPUP_CB p2)
             """)
+    check_if_initialized()
     c_PopupCb = xfc.FL_POPUP_CB(py_PopupCb)
     keep_cfunc_refs(c_PopupCb, py_PopupCb)
     keep_elem_refs(pPopupEntry)
@@ -9829,6 +10281,7 @@ def fl_popup_entry_set_leave_callback(pPopupEntry, py_PopupCb):
             """FL_POPUP_CB fl_popup_entry_set_leave_callback(
                FL_POPUP_ENTRY * p1, FL_POPUP_CB p2)
             """)
+    check_if_initialized()
     c_PopupCb = xfc.FL_POPUP_CB(py_PopupCb)
     keep_cfunc_refs(c_PopupCb, py_PopupCb)
     keep_elem_refs(pPopupEntry)
@@ -9847,6 +10300,7 @@ def fl_popup_entry_get_state(pPopupEntry):
             cty.c_uint, [cty.POINTER(xfc.FL_POPUP_ENTRY)],
             """unsigned int fl_popup_entry_get_state(FL_POPUP_ENTRY * p1)
             """)
+    check_if_initialized()
     keep_elem_refs(pPopupEntry)
     retval = _fl_popup_entry_get_state(pPopupEntry)
     return retval
@@ -9864,6 +10318,7 @@ def fl_popup_entry_set_state(pPopupEntry, state):
             """unsigned int fl_popup_entry_set_state(FL_POPUP_ENTRY * p1,
                unsigned int p2)
             """)
+    check_if_initialized()
     uistate = convert_to_uint(state)
     keep_elem_refs(pPopupEntry, state, uistate)
     retval = _fl_popup_entry_set_state(pPopupEntry, uistate)
@@ -9882,6 +10337,7 @@ def fl_popup_entry_clear_state(pPopupEntry, state):
             """unsigned int fl_popup_entry_clear_state(FL_POPUP_ENTRY * p1,
                unsigned int p2)
             """)
+    check_if_initialized()
     uistate = convert_to_uint(state)
     keep_elem_refs(pPopupEntry, state, uistate)
     retval = _fl_popup_entry_clear_state(pPopupEntry, uistate)
@@ -9900,6 +10356,7 @@ def fl_popup_entry_raise_state(pPopupEntry, state):
             """unsigned int fl_popup_entry_raise_state(FL_POPUP_ENTRY * p1,
                unsigned int p2)
             """)
+    check_if_initialized()
     uistate = convert_to_uint(state)
     keep_elem_refs(pPopupEntry, state, uistate)
     retval = _fl_popup_entry_raise_state(pPopupEntry, uistate)
@@ -9918,6 +10375,7 @@ def fl_popup_entry_toggle_state(pPopupEntry, state):
             """unsigned int fl_popup_entry_toggle_state(FL_POPUP_ENTRY * p1,
                unsigned int p2)
             """)
+    check_if_initialized()
     uistate = convert_to_uint(state)
     keep_elem_refs(pPopupEntry, state, uistate)
     retval = _fl_popup_entry_toggle_state(pPopupEntry, uistate)
@@ -9936,6 +10394,7 @@ def fl_popup_entry_set_text(pPopupEntry, text):
             """int fl_popup_entry_set_text(FL_POPUP_ENTRY * p1,
                const char * p2)
             """)
+    check_if_initialized()
     stext = convert_to_string(text)
     keep_elem_refs(pPopupEntry, text, stext)
     retval = _fl_popup_entry_set_text(pPopupEntry, stext)
@@ -9954,6 +10413,7 @@ def fl_popup_entry_set_shortcut(pPopupEntry, textsc):
             """void fl_popup_entry_set_shortcut(FL_POPUP_ENTRY * p1,
                const char * p2)
             """)
+    check_if_initialized()
     stextsc = convert_to_string(textsc)
     keep_elem_refs(pPopupEntry, textsc, stextsc)
     _fl_popup_entry_set_shortcut(pPopupEntry, stextsc)
@@ -9971,6 +10431,7 @@ def fl_popup_entry_set_value(pPopupEntry, val):
             """long int fl_popup_entry_set_value(FL_POPUP_ENTRY * p1,
                long int p2)
             """)
+    check_if_initialized()
     lval = convert_to_long(val)
     keep_elem_refs(pPopupEntry, val, lval)
     retval = _fl_popup_entry_set_value(pPopupEntry, lval)
@@ -9989,6 +10450,7 @@ def fl_popup_entry_set_user_data(pPopupEntry, vdata):
             """void * fl_popup_entry_set_user_data(FL_POPUP_ENTRY * p1,
                void * p2)
             """)
+    check_if_initialized()
     pvdata = cty.cast(vdata, cty.c_void_p)
     keep_elem_refs(pPopupEntry, vdata, pvdata)
     retval = _fl_popup_entry_set_user_data(pPopupEntry, pvdata)
@@ -10007,6 +10469,7 @@ def fl_popup_entry_get_by_position(pPopup, numpos):
             """FL_POPUP_ENTRY * fl_popup_entry_get_by_position(FL_POPUP * p1,
                int p2)
             """)
+    check_if_initialized()
     inumpos = convert_to_int(numpos)
     keep_elem_refs(pPopup, numpos, inumpos)
     retval = _fl_popup_entry_get_by_position(pPopup, inumpos)
@@ -10025,6 +10488,7 @@ def fl_popup_entry_get_by_value(pPopup, val):
             """FL_POPUP_ENTRY * fl_popup_entry_get_by_value(FL_POPUP * p1,
                long int p2)
             """)
+    check_if_initialized()
     lval = convert_to_long(val)
     keep_elem_refs(pPopup, val, lval)
     retval = _fl_popup_entry_get_by_value(pPopup, lval)
@@ -10043,6 +10507,7 @@ def fl_popup_entry_get_by_user_data(pPopup, vdata):
             """FL_POPUP_ENTRY * fl_popup_entry_get_by_user_data(FL_POPUP * p1,
                void * p2)
             """)
+    check_if_initialized()
     pvdata = cty.cast(vdata, cty.c_void_p)
     keep_elem_refs(pPopup, vdata, pvdata)
     retval = _fl_popup_entry_get_by_user_data(pPopup, pvdata)
@@ -10062,6 +10527,7 @@ def fl_popup_entry_get_by_text(pPopup, text):
             """FL_POPUP_ENTRY * fl_popup_entry_get_by_text(FL_POPUP * p1,
                const char * p2)
             """)
+    check_if_initialized()
     stext = convert_to_string(text)
     keep_elem_refs(pPopup, text, stext)
     retval = _fl_popup_entry_get_by_text(pPopup, stext)
@@ -10081,6 +10547,7 @@ def fl_popup_entry_get_by_label(pPopup, label):
             """FL_POPUP_ENTRY * fl_popup_entry_get_by_label(FL_POPUP * p1,
                const char * p2)
             """)
+    check_if_initialized()
     slabel = convert_to_string(label)
     keep_elem_refs(pPopup, label, slabel)
     retval = _fl_popup_entry_get_by_label(pPopup, slabel)
@@ -10098,6 +10565,7 @@ def fl_popup_entry_get_group(pPopupEntry):
             cty.c_int, [cty.POINTER(xfc.FL_POPUP_ENTRY)],
             """int fl_popup_entry_get_group(FL_POPUP_ENTRY * p1)
             """)
+    check_if_initialized()
     keep_elem_refs(pPopupEntry)
     retval = _fl_popup_entry_get_group(pPopupEntry)
     return retval
@@ -10114,6 +10582,7 @@ def fl_popup_entry_set_group(pPopupEntry, num):
             cty.c_int, [cty.POINTER(xfc.FL_POPUP_ENTRY), cty.c_int],
             """int fl_popup_entry_set_group(FL_POPUP_ENTRY * p1, int p2)
             """)
+    check_if_initialized()
     inum = convert_to_int(num)
     keep_elem_refs(pPopupEntry, num, inum)
     retval = _fl_popup_entry_set_group(pPopupEntry, inum)
@@ -10131,6 +10600,7 @@ def fl_popup_entry_get_subpopup(pPopupEntry):
             cty.POINTER(xfc.FL_POPUP), [cty.POINTER(xfc.FL_POPUP_ENTRY)],
             """FL_POPUP * fl_popup_entry_get_subpopup(FL_POPUP_ENTRY * p1)
             """)
+    check_if_initialized()
     keep_elem_refs(pPopupEntry)
     retval = _fl_popup_entry_get_subpopup(pPopupEntry)
     return retval
@@ -10149,6 +10619,7 @@ def fl_popup_entry_set_subpopup(pPopupEntry, pPopup):
             """FL_POPUP * fl_popup_entry_set_subpopup(FL_POPUP_ENTRY * p1,
                FL_POPUP * p2)
             """)
+    check_if_initialized()
     keep_elem_refs(pPopupEntry, pPopup)
     retval = _fl_popup_entry_set_subpopup(pPopupEntry, pPopup)
     return retval
@@ -10170,11 +10641,12 @@ def fl_popup_get_size(pPopup):
             """int fl_popup_get_size(FL_POPUP * p1, unsigned int * p2,
                unsigned int * p3)
             """)
+    check_if_initialized()
     w, pw = make_uint_and_pointer()
     h, ph = make_uint_and_pointer()
     keep_elem_refs(pPopup, w, h, pw, ph)
     retval = _fl_popup_get_size(pPopup, pw, ph)
-    return retval, w, h
+    return retval, w.value, h.value
 
 
 def fl_popup_get_min_width(pPopup):
@@ -10188,6 +10660,7 @@ def fl_popup_get_min_width(pPopup):
             cty.c_int, [cty.POINTER(xfc.FL_POPUP)],
             """int fl_popup_get_min_width(FL_POPUP * p1)
             """)
+    check_if_initialized()
     keep_elem_refs(pPopup)
     retval = _fl_popup_get_min_width(pPopup)
     return retval
@@ -10204,6 +10677,7 @@ def fl_popup_set_min_width(pPopup, minwidth):
             cty.c_int, [cty.POINTER(xfc.FL_POPUP), cty.c_int],
             """int fl_popup_set_min_width(FL_POPUP * p1, int p2)
             """)
+    check_if_initialized()
     iminwidth = convert_to_int(minwidth)
     keep_elem_refs(pPopup, minwidth, iminwidth)
     retval = _fl_popup_set_min_width(pPopup, iminwidth)
@@ -10245,6 +10719,7 @@ def fl_add_bitmap(bitmaptype, x, y, w, h, label):
             """FL_OBJECT * fl_add_bitmap(int type, FL_Coord x, FL_Coord y,
                FL_Coord w, FL_Coord h, const char * label)
             """)
+    check_if_initialized()
     check_admitted_listvalues(bitmaptype, xfc.BITMAPTYPE_list)
     ibitmaptype = convert_to_int(bitmaptype)
     ix = convert_to_FL_Coord(x)
@@ -10279,6 +10754,8 @@ def fl_set_bitmap_data(pObject, w, h, xbmcontents):
             """void fl_set_bitmap_data(FL_OBJECT * ob, int w, int h,
                unsigned char * data)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     iw = convert_to_int(w)
     ih = convert_to_int(h)
     pxbmcontents = cty.cast(xbmcontents, cty.POINTER(cty.c_ubyte))
@@ -10301,6 +10778,8 @@ def fl_set_bitmap_file(pObject, fname):
             None, [cty.POINTER(xfc.FL_OBJECT), xfc.STRING],
             """void fl_set_bitmap_file(FL_OBJECT * ob, const char * fname)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     sfname = convert_to_string(fname)
     keep_elem_refs(pObject, fname, sfname)
     _fl_set_bitmap_file(pObject, sfname)
@@ -10326,6 +10805,7 @@ def fl_read_bitmapfile(win, filename, w, h, hotx, hoty):
             """Pixmap fl_read_bitmapfile(Window win, const char * file,
                unsigned int * w, unsigned int * h, int * hotx, int * hoty)
             """)
+    check_if_initialized()
     ulwin = convert_to_Window(win)
     sfilename = convert_to_string(filename)
     pw = cty.cast(w, cty.POINTER(cty.c_uint))
@@ -10355,6 +10835,7 @@ def fl_create_from_bitmapdata(win, data, w, h):
             """Pixmap fl_create_from_bitmapdata(Window win, const
                char * data, int width, int height)
             """)
+    check_if_initialized()
     ulwin = convert_to_Window(win)
     sdata = convert_to_string(data)
     iw = convert_to_int(w)
@@ -10392,6 +10873,7 @@ def fl_add_pixmap(pixmaptype, x, y, w, h, label):
             """FL_OBJECT * fl_add_pixmap(int type, FL_Coord x, FL_Coord y,
                FL_Coord w, FL_Coord h, const char * label)
             """)
+    check_if_initialized()
     check_admitted_listvalues(pixmaptype, xfc.PIXMAPTYPE_list)
     ipixmaptype = convert_to_int(pixmaptype)
     ix = convert_to_FL_Coord(x)
@@ -10420,6 +10902,8 @@ def fl_set_pixmap_data(pObject, bits):
             None, [cty.POINTER(xfc.FL_OBJECT), cty.POINTER(xfc.STRING)],
             """void fl_set_pixmap_data(FL_OBJECT * ob, char * * bits)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     print "bits", bits
     sbits = convert_to_string(bits)
     print "sbits", sbits
@@ -10444,6 +10928,8 @@ def fl_set_pixmap_file(pObject, fname):
             None, [cty.POINTER(xfc.FL_OBJECT), xfc.STRING],
             """void fl_set_pixmap_file(FL_OBJECT * ob, const char * fname)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     sfname = convert_to_string(fname)
     keep_elem_refs(pObject, fname, sfname)
     _fl_set_pixmap_file(pObject, sfname)
@@ -10475,6 +10961,8 @@ def fl_set_pixmap_align(pObject, align, xmargin, ymargin):
             """void fl_set_pixmap_align(FL_OBJECT * ob, int align,
                int xmargin, int ymargin)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     check_admitted_listvalues(align, xfc.ALIGN_list)
     ialign = convert_to_int(align)
     ixmargin = convert_to_int(xmargin)
@@ -10502,6 +10990,8 @@ def fl_set_pixmap_pixmap(pObject, idnum, mask):
             """void fl_set_pixmap_pixmap(FL_OBJECT * ob, Pixmap id,
                Pixmap mask)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     ulidnum = convert_to_ulong(idnum)
     ulmask = convert_to_ulong(mask)
     keep_elem_refs(pObject, idnum, mask, ulidnum, ulmask)
@@ -10522,6 +11012,7 @@ def fl_set_pixmap_colorcloseness(red, green, blue):
             None, [cty.c_int, cty.c_int, cty.c_int],
             """void fl_set_pixmap_colorcloseness(int red, int green, int blue)
             """)
+    check_if_initialized()
     ired = convert_to_int(red)
     igreen = convert_to_int(green)
     iblue = convert_to_int(blue)
@@ -10543,6 +11034,8 @@ def fl_free_pixmap_pixmap(pObject):
             None, [cty.POINTER(xfc.FL_OBJECT)],
             """void fl_free_pixmap_pixmap(FL_OBJECT * ob)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     keep_elem_refs(pObject)
     _fl_free_pixmap_pixmap(pObject)
 
@@ -10551,10 +11044,10 @@ fl_free_pixmapbutton_pixmap = fl_free_pixmap_pixmap
 
 
 def fl_get_pixmap_pixmap(pObject):
-    """ fl_get_pixmap_pixmap(pObject) -> pixmap, pPixmap, pPixmap_mask
+    """ fl_get_pixmap_pixmap(pObject) -> pixmap, Pixmap, Pixmap_mask
 
-        @param pObject: pointer to object
-                (<pointer to xfdata.FL_OBJECT>)
+        @param pObject: object
+                        (<pointer to xfdata.FL_OBJECT>)
 
         @attention: API change from XForms - upstream was
                     fl_get_pixmap_pixmap(pObject, p, m)
@@ -10569,11 +11062,13 @@ def fl_get_pixmap_pixmap(pObject):
             """Pixmap fl_get_pixmap_pixmap(FL_OBJECT * ob, Pixmap * p,
                Pixmap * m)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     p, pp = make_ulong_and_pointer()
     m, pm = make_ulong_and_pointer()
     keep_elem_refs(pObject, p, m, pp, pm)
     retval = _fl_get_pixmap_pixmap(pObject, pp, pm)
-    return retval, p, m
+    return retval, p.value, m.value
 
 
 fl_get_pixmapbutton_pixmap = fl_get_pixmap_pixmap
@@ -10598,6 +11093,7 @@ def fl_read_pixmapfile(win, filename, tran):
                unsigned int * w, unsigned int * h, Pixmap * shape_mask,
                int * hotx, int * hoty, FL_COLOR tran)
             """)
+    check_if_initialized()
     check_admitted_listvalues(tran, xfc.COLOR_list)
     ulwin = convert_to_Window(win)
     sfilename = convert_to_string(filename)
@@ -10611,7 +11107,7 @@ def fl_read_pixmapfile(win, filename, tran):
                    sfilename, ultran, pw, ph, pshapemask, photx, photy)
     retval = _fl_read_pixmapfile(ulwin, sfilename, pw, ph, pshapemask, \
                                  photx, photy, ultran)
-    return retval, w, h, shapemask, hotx, hoty
+    return retval, w.value, h.value, shapemask.value, hotx.value, hoty.value
 
 
 def fl_create_from_pixmapdata(win, data, w, h, sm, hotx, hoty, tran):
@@ -10630,6 +11126,7 @@ def fl_create_from_pixmapdata(win, data, w, h, sm, hotx, hoty, tran):
             unsigned int * w, unsigned int * h, Pixmap * sm, int * hotx,
             int * hoty, FL_COLOR tran)
             """)
+    check_if_initialized()
     check_admitted_listvalues(tran, xfc.COLOR_list)
     ulwin = convert_to_Window(win)
     ultran = convert_to_FL_COLOR(tran)
@@ -10652,6 +11149,7 @@ def fl_free_pixmap(idnum):
             None, [xfc.Pixmap],
             """void fl_free_pixmap(Pixmap id)
             """)
+    check_if_initialized()
     ulidnum = convert_to_Pixmap(idnum)
     keep_elem_refs(idnum, ulidnum)
     _fl_free_pixmap(ulidnum)
@@ -10694,6 +11192,7 @@ def fl_add_box(boxtype, x, y, w, h, label):
             """FL_OBJECT * fl_add_box(int type, FL_Coord x, FL_Coord y,
                FL_Coord w, FL_Coord h, const char * label)
             """)
+    check_if_initialized()
     check_admitted_listvalues(boxtype, xfc.BOXTYPE_list)
     iboxtype = convert_to_int(boxtype)
     ix = convert_to_FL_Coord(x)
@@ -10743,6 +11242,7 @@ def fl_add_browser(browsertype, x, y, w, h, label):
             """FL_OBJECT * fl_add_browser(int type, FL_Coord x, FL_Coord y,
                FL_Coord w, FL_Coord h, const char * label)
             """)
+    check_if_initialized()
     check_admitted_listvalues(browsertype, xfc.BROWSERTYPE_list)
     ibrowsertype = convert_to_int(browsertype)
     ix = convert_to_FL_Coord(x)
@@ -10772,6 +11272,8 @@ def fl_clear_browser(pObject):
             None, [cty.POINTER(xfc.FL_OBJECT)],
             """void fl_clear_browser(FL_OBJECT * ob)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     keep_elem_refs(pObject)
     _fl_clear_browser(pObject)
 
@@ -10793,6 +11295,8 @@ def fl_add_browser_line(pObject, newtext):
             None, [cty.POINTER(xfc.FL_OBJECT), xfc.STRING],
             """void fl_add_browser_line(FL_OBJECT * ob, const char * newtext)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     snewtext = convert_to_string(newtext)
     keep_elem_refs(pObject, newtext, snewtext)
     _fl_add_browser_line(pObject, snewtext)
@@ -10812,6 +11316,8 @@ def fl_addto_browser(pObject, newtext):
             None, [cty.POINTER(xfc.FL_OBJECT), xfc.STRING],
             """void fl_addto_browser(FL_OBJECT * ob, const char * newtext)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     snewtext = convert_to_string(newtext)
     keep_elem_refs(pObject, newtext, snewtext)
     _fl_addto_browser(pObject, snewtext)
@@ -10828,6 +11334,8 @@ def fl_addto_browser_chars(pObject, browsertext):
             None, [cty.POINTER(xfc.FL_OBJECT), xfc.STRING],
             """void fl_addto_browser_chars(FL_OBJECT * ob, const char * str)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     sbrowsertext = convert_to_string(browsertext)
     keep_elem_refs(pObject, browsertext, sbrowsertext)
     _fl_addto_browser_chars(pObject, sbrowsertext)
@@ -10851,6 +11359,8 @@ def fl_insert_browser_line(pObject, linenum, newtext):
             """void fl_insert_browser_line(FL_OBJECT * ob, int linenumb,
                const char * newtext)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     ilinenum = convert_to_int(linenum)
     snewtext = convert_to_string(newtext)
     keep_elem_refs(pObject, linenum, newtext, ilinenum, snewtext)
@@ -10872,6 +11382,7 @@ def fl_delete_browser_line(pObject, linenum):
             None, [cty.POINTER(xfc.FL_OBJECT), cty.c_int],
             """void fl_delete_browser_line(FL_OBJECT * ob, int linenumb)
             """)
+    check_if_FL_OBJECT_ptr(pObject)
     ilinenum = convert_to_int(linenum)
     keep_elem_refs(pObject, linenum, ilinenum)
     _fl_delete_browser_line(pObject, ilinenum)
@@ -10894,6 +11405,8 @@ def fl_replace_browser_line(pObject, linenum, newtext):
             """void fl_replace_browser_line(FL_OBJECT * ob, int linenumb,
                const char * newtext)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     ilinenum = convert_to_int(linenum)
     snewtext = convert_to_string(newtext)
     keep_elem_refs(pObject, linenum, newtext, ilinenum, snewtext)
@@ -10915,6 +11428,8 @@ def fl_get_browser_line(pObject, linenum):
             xfc.STRING, [cty.POINTER(xfc.FL_OBJECT), cty.c_int],
             """const char * fl_get_browser_line(FL_OBJECT * ob, int linenumb)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     ilinenum = convert_to_int(linenum)
     keep_elem_refs(pObject, linenum, ilinenum)
     retval = _fl_get_browser_line(pObject, ilinenum)
@@ -10935,6 +11450,7 @@ def fl_load_browser(pObject, filename):
             cty.c_int, [cty.POINTER(xfc.FL_OBJECT), xfc.STRING],
             """int fl_load_browser(FL_OBJECT * ob, const char * filename)
             """)
+    check_if_FL_OBJECT_ptr(pObject)
     sfilename = convert_to_string(filename)
     keep_elem_refs(pObject, filename, sfilename)
     retval = _fl_load_browser(pObject, sfilename)
@@ -10955,6 +11471,8 @@ def fl_select_browser_line(pObject, line):
             None, [cty.POINTER(xfc.FL_OBJECT), cty.c_int],
             """void fl_select_browser_line(FL_OBJECT * ob, int line)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     iline = convert_to_int(line)
     keep_elem_refs(pObject, line, iline)
     _fl_select_browser_line(pObject, iline)
@@ -10974,6 +11492,8 @@ def fl_deselect_browser_line(pObject, line):
             None, [cty.POINTER(xfc.FL_OBJECT), cty.c_int],
             """void fl_deselect_browser_line(FL_OBJECT * ob, int line)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     iline = convert_to_int(line)
     keep_elem_refs(pObject, line, iline)
     _fl_deselect_browser_line(pObject, iline)
@@ -10993,6 +11513,8 @@ def fl_deselect_browser(pObject):
             None, [cty.POINTER(xfc.FL_OBJECT)],
             """void fl_deselect_browser(FL_OBJECT * ob)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     keep_elem_refs(pObject)
     _fl_deselect_browser(pObject)
 
@@ -11011,6 +11533,8 @@ def fl_isselected_browser_line(pObject, line):
             cty.c_int, [cty.POINTER(xfc.FL_OBJECT), cty.c_int],
             """int fl_isselected_browser_line(FL_OBJECT * ob, int line)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     iline = convert_to_int(line)
     keep_elem_refs(pObject, line, iline)
     retval = _fl_isselected_browser_line(pObject, iline)
@@ -11031,6 +11555,8 @@ def fl_get_browser_topline(pObject):
             cty.c_int, [cty.POINTER(xfc.FL_OBJECT)],
             """int fl_get_browser_topline(FL_OBJECT * ob)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     keep_elem_refs(pObject)
     retval = _fl_get_browser_topline(pObject)
     return retval
@@ -11050,6 +11576,8 @@ def fl_get_browser(pObject):
             cty.c_int, [cty.POINTER(xfc.FL_OBJECT)],
             """int fl_get_browser(FL_OBJECT * ob)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     keep_elem_refs(pObject)
     retval = _fl_get_browser(pObject)
     return retval
@@ -11069,6 +11597,8 @@ def fl_get_browser_maxline(pObject):
             cty.c_int, [cty.POINTER(xfc.FL_OBJECT)],
             """int fl_get_browser_maxline(FL_OBJECT * ob)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     keep_elem_refs(pObject)
     retval = _fl_get_browser_maxline(pObject)
     return retval
@@ -11091,6 +11621,8 @@ def fl_get_browser_screenlines(pObject):
             cty.c_int, [cty.POINTER(xfc.FL_OBJECT)],
             """int fl_get_browser_screenlines(FL_OBJECT * ob)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     keep_elem_refs(pObject)
     retval = _fl_get_browser_screenlines(pObject)
     return retval
@@ -11113,6 +11645,8 @@ def fl_set_browser_topline(pObject, line):
             None, [cty.POINTER(xfc.FL_OBJECT), cty.c_int],
             """void fl_set_browser_topline(FL_OBJECT * ob, int line)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     iline = convert_to_int(line)
     keep_elem_refs(pObject, line, iline)
     _fl_set_browser_topline(pObject, iline)
@@ -11135,6 +11669,8 @@ def fl_set_browser_bottomline(pObject, line):
             None, [cty.POINTER(xfc.FL_OBJECT), cty.c_int],
             """void fl_set_browser_bottomline(FL_OBJECT * ob, int line)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     iline = convert_to_int(line)
     keep_elem_refs(pObject, line, iline)
     _fl_set_browser_bottomline(pObject, iline)
@@ -11157,6 +11693,8 @@ def fl_set_browser_fontsize(pObject, size):
             None, [cty.POINTER(xfc.FL_OBJECT), cty.c_int],
             """void fl_set_browser_fontsize(FL_OBJECT * ob, int size)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     isize = convert_to_int(size)
     keep_elem_refs(pObject, size, isize)
     _fl_set_browser_fontsize(pObject, isize)
@@ -11179,6 +11717,8 @@ def fl_set_browser_fontstyle(pObject, style):
             None, [cty.POINTER(xfc.FL_OBJECT), cty.c_int],
             """void fl_set_browser_fontstyle(FL_OBJECT * ob, int style)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     istyle = convert_to_int(style)
     keep_elem_refs(pObject, style, istyle)
     _fl_set_browser_fontstyle(pObject, istyle)
@@ -11201,6 +11741,8 @@ def fl_set_browser_specialkey(pObject, specialkey):
             None, [cty.POINTER(xfc.FL_OBJECT), cty.c_int],
             """void fl_set_browser_specialkey(FL_OBJECT * ob, int specialkey)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     ispecialkey = convert_to_int(specialkey)
     keep_elem_refs(pObject, specialkey, ispecialkey)
     _fl_set_browser_specialkey(pObject, ispecialkey)
@@ -11220,6 +11762,8 @@ def fl_set_browser_vscrollbar(pObject, on):
             None, [cty.POINTER(xfc.FL_OBJECT), cty.c_int],
             """void fl_set_browser_vscrollbar(FL_OBJECT * ob, int on)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     ion = convert_to_int(on)
     keep_elem_refs(pObject, on, ion)
     _fl_set_browser_vscrollbar(pObject, ion)
@@ -11239,6 +11783,8 @@ def fl_set_browser_hscrollbar(pObject, on):
             None, [cty.POINTER(xfc.FL_OBJECT), cty.c_int],
             """void fl_set_browser_hscrollbar(FL_OBJECT * ob, int on)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     ion = convert_to_int(on)
     keep_elem_refs(pObject, on, ion)
     _fl_set_browser_hscrollbar(pObject, ion)
@@ -11259,6 +11805,8 @@ def fl_set_browser_line_selectable(pObject, line, flag):
             """void fl_set_browser_line_selectable(FL_OBJECT * ob, int line,
                int flag)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     iline = convert_to_int(line)
     iflag = convert_to_int(flag)
     keep_elem_refs(pObject, line, flag, iline, iflag)
@@ -11287,17 +11835,19 @@ def fl_get_browser_dimension(pObject):
             """void fl_get_browser_dimension(FL_OBJECT * ob, FL_Coord * x,
                FL_Coord * y, FL_Coord * w, FL_Coord * h)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     x, px = make_FL_Coord_and_pointer()
     y, py = make_FL_Coord_and_pointer()
     w, pw = make_FL_Coord_and_pointer()
     h, ph = make_FL_Coord_and_pointer()
     keep_elem_refs(pObject, x, y, w, h, px, py, pw, ph)
     _fl_get_browser_dimension(pObject, px, py, pw, ph)
-    return x, y, w, h
+    return x.value, y.value, w.value, h.value
 
 
-def fl_set_browser_dblclick_callback(pObject, py_CallbackPtr, argum):
-    """ fl_set_browser_dblclick_callback(pObject, py_CallbackPtr, argum)
+def fl_set_browser_dblclick_callback(pObject, py_CallbackPtr, data):
+    """ fl_set_browser_dblclick_callback(pObject, py_CallbackPtr, data)
 
         @param pObject: pointer to object
                 (<pointer to xfdata.FL_OBJECT>)
@@ -11311,11 +11861,13 @@ def fl_set_browser_dblclick_callback(pObject, py_CallbackPtr, argum):
             """void fl_set_browser_dblclick_callback(FL_OBJECT * ob,
                FL_CALLBACKPTR cb, long int a)
             """)
-    largum = convert_to_long(argum)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
+    ldata = convert_to_long(data)
     c_CallbackPtr = xfc.FL_CALLBACKPTR(py_CallbackPtr)
     keep_cfunc_refs(c_CallbackPtr, py_CallbackPtr)
-    keep_elem_refs(pObject, argum, largum)
-    _fl_set_browser_dblclick_callback(pObject, c_CallbackPtr, largum)
+    keep_elem_refs(pObject, data, ldata)
+    _fl_set_browser_dblclick_callback(pObject, c_CallbackPtr, ldata)
 
 
 def fl_get_browser_xoffset(pObject):
@@ -11332,6 +11884,8 @@ def fl_get_browser_xoffset(pObject):
             xfc.FL_Coord, [cty.POINTER(xfc.FL_OBJECT)],
             """FL_Coord fl_get_browser_xoffset(FL_OBJECT * ob)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     keep_elem_refs(pObject)
     retval = _fl_get_browser_xoffset(pObject)
     return retval
@@ -11351,6 +11905,8 @@ def fl_get_browser_rel_xoffset(pObject):
             cty.c_double, [cty.POINTER(xfc.FL_OBJECT)],
             """double fl_get_browser_rel_xoffset(FL_OBJECT * ob)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     keep_elem_refs(pObject)
     retval = _fl_get_browser_rel_xoffset(pObject)
     return retval
@@ -11370,6 +11926,8 @@ def fl_set_browser_xoffset(pObject, npixels):
             None, [cty.POINTER(xfc.FL_OBJECT), xfc.FL_Coord],
             """void fl_set_browser_xoffset(FL_OBJECT * ob, FL_Coord npixels)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     inpixels = convert_to_FL_Coord(npixels)
     keep_elem_refs(pObject, npixels, inpixels)
     _fl_set_browser_xoffset(pObject, inpixels)
@@ -11389,6 +11947,8 @@ def fl_set_browser_rel_xoffset(pObject, val):
             None, [cty.POINTER(xfc.FL_OBJECT), cty.c_double],
             """void fl_set_browser_rel_xoffset(FL_OBJECT * ob, double val)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     fval = convert_to_double(val)
     keep_elem_refs(pObject, val, fval)
     _fl_set_browser_rel_xoffset(pObject, fval)
@@ -11408,6 +11968,8 @@ def fl_get_browser_yoffset(pObject):
             xfc.FL_Coord, [cty.POINTER(xfc.FL_OBJECT)],
             """FL_Coord fl_get_browser_yoffset(FL_OBJECT * ob)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     keep_elem_refs(pObject)
     retval = _fl_get_browser_yoffset(pObject)
     return retval
@@ -11427,6 +11989,8 @@ def fl_get_browser_rel_yoffset(pObject):
             cty.c_double, [cty.POINTER(xfc.FL_OBJECT)],
             """double fl_get_browser_rel_yoffset(FL_OBJECT * ob)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     keep_elem_refs(pObject)
     retval = _fl_get_browser_rel_yoffset(pObject)
     return retval
@@ -11446,6 +12010,8 @@ def fl_set_browser_yoffset(pObject, npixels):
             None, [cty.POINTER(xfc.FL_OBJECT), xfc.FL_Coord],
             """void fl_set_browser_yoffset(FL_OBJECT * ob, FL_Coord npixels)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     inpixels = convert_to_FL_Coord(npixels)
     keep_elem_refs(pObject, npixels, inpixels)
     _fl_set_browser_yoffset(pObject, inpixels)
@@ -11465,6 +12031,8 @@ def fl_set_browser_rel_yoffset(pObject, val):
             None, [cty.POINTER(xfc.FL_OBJECT), cty.c_double],
             """void fl_set_browser_rel_yoffset(FL_OBJECT * ob, double val)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     fval = convert_to_double(val)
     keep_elem_refs(pObject, val, fval)
     _fl_set_browser_rel_yoffset(pObject, fval)
@@ -11485,6 +12053,8 @@ def fl_set_browser_scrollbarsize(pObject, hh, vw):
             """void fl_set_browser_scrollbarsize(FL_OBJECT * ob,
                int hh, int vw)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     ihh = convert_to_int(hh)
     ivw = convert_to_int(vw)
     keep_elem_refs(pObject, hh, vw, ihh, ivw)
@@ -11508,6 +12078,8 @@ def fl_show_browser_line(pObject, line):
             None, [cty.POINTER(xfc.FL_OBJECT), cty.c_int],
             """void fl_show_browser_line(FL_OBJECT * ob, int j)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     iline = convert_to_int(line)
     keep_elem_refs(pObject, line, iline)
     _fl_show_browser_line(pObject, iline)
@@ -11538,6 +12110,8 @@ def fl_set_browser_hscroll_callback(pObject, py_BrowserScrollCallback, vdata):
             """void fl_set_browser_hscroll_callback(FL_OBJECT * ob,
                FL_BROWSER_SCROLL_CALLBACK cb, void * data)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     c_BrowserScrollCallback = FL_BROWSER_SCROLL_CALLBACK( \
                                 py_BrowserScrollCallback)
     pvdata = cty.cast(vdata, cty.c_void_p)
@@ -11565,6 +12139,8 @@ def fl_set_browser_vscroll_callback(pObject, py_BrowserScrollCallback, vdata):
             """void fl_set_browser_vscroll_callback(FL_OBJECT * ob,
                FL_BROWSER_SCROLL_CALLBACK cb, void * data)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     c_BrowserScrollCallback = FL_BROWSER_SCROLL_CALLBACK( \
                                 py_BrowserScrollCallback)
     pvdata = cty.cast(vdata, cty.c_void_p)
@@ -11587,6 +12163,8 @@ def fl_get_browser_line_yoffset(pObject, line):
             cty.c_int, [cty.POINTER(xfc.FL_OBJECT), cty.c_int],
             """int fl_get_browser_line_yoffset(FL_OBJECT * obj, int line)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     iline = convert_to_int(line)
     keep_elem_refs(pObject, line, iline)
     retval = _fl_get_browser_line_yoffset(pObject, iline)
@@ -11608,6 +12186,8 @@ def fl_get_browser_hscroll_callback(pObject):
             """FL_BROWSER_SCROLL_CALLBACK fl_get_browser_hscroll_callback(
                FL_OBJECT * ob)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     keep_elem_refs(pObject)
     retval = _fl_get_browser_hscroll_callback(pObject)
     return retval
@@ -11628,6 +12208,8 @@ def fl_get_browser_vscroll_callback(pObject):
             """FL_BROWSER_SCROLL_CALLBACK fl_get_browser_vscroll_callback(
                FL_OBJECT * ob)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     keep_elem_refs(pObject)
     retval = _fl_get_browser_vscroll_callback(pObject)
     return retval
@@ -11642,21 +12224,13 @@ def fl_get_browser_vscroll_callback(pObject):
 # Routines
 
 # fl_create_button function placeholder (internal)
-
 # fl_create_roundbutton function placeholder (internal)
-
 # fl_create_round3dbutton function placeholder (internal)
-
 # fl_create_lightbutton function placeholder (internal)
-
 # fl_create_checkbutton function placeholder (internal)
-
 # fl_create_bitmapbutton function placeholder (internal)
-
 # fl_create_pixmapbutton function placeholder (internal)
-
 # fl_create_scrollbutton function placeholder (internal)
-
 # fl_create_labelbutton function placeholder (internal)
 
 
@@ -11687,6 +12261,7 @@ def fl_add_roundbutton(buttontype, x, y, w, h, label):
             """FL_OBJECT * fl_add_roundbutton(int type, FL_Coord x,
                FL_Coord y, FL_Coord w, FL_Coord h, const char * label)
             """)
+    check_if_initialized()
     check_admitted_listvalues(buttontype, xfc.BUTTONTYPE_list)
     ibuttontype = convert_to_int(buttontype)
     ix = convert_to_FL_Coord(x)
@@ -11727,6 +12302,7 @@ def fl_add_round3dbutton(buttontype, x, y, w, h, label):
             """FL_OBJECT * fl_add_round3dbutton(int type, FL_Coord x,
                FL_Coord y, FL_Coord w, FL_Coord h, const char * label)
             """)
+    check_if_initialized()
     check_admitted_listvalues(buttontype, xfc.BUTTONTYPE_list)
     ibuttontype = convert_to_int(buttontype)
     ix = convert_to_FL_Coord(x)
@@ -11767,6 +12343,7 @@ def fl_add_lightbutton(buttontype, x, y, w, h, label):
             """FL_OBJECT * fl_add_lightbutton(int type, FL_Coord x, FL_Coord y,
                FL_Coord w, FL_Coord h, const char * label)
             """)
+    check_if_initialized()
     check_admitted_listvalues(buttontype, xfc.BUTTONTYPE_list)
     ibuttontype = convert_to_int(buttontype)
     ix = convert_to_FL_Coord(x)
@@ -11807,6 +12384,7 @@ def fl_add_checkbutton(buttontype, x, y, w, h, label):
             """FL_OBJECT * fl_add_checkbutton(int type, FL_Coord x, FL_Coord y,
                FL_Coord w, FL_Coord h, const char * label)
             """)
+    check_if_initialized()
     check_admitted_listvalues(buttontype, xfc.BUTTONTYPE_list)
     ibuttontype = convert_to_int(buttontype)
     ix = convert_to_FL_Coord(x)
@@ -11847,6 +12425,7 @@ def fl_add_button(buttontype, x, y, w, h, label):
             """FL_OBJECT * fl_add_button(int type, FL_Coord x, FL_Coord y,
                FL_Coord w, FL_Coord h, const char * label)
             """)
+    check_if_initialized()
     check_admitted_listvalues(buttontype, xfc.BUTTONTYPE_list)
     ibuttontype = convert_to_int(buttontype)
     ix = convert_to_FL_Coord(x)
@@ -11887,6 +12466,7 @@ def fl_add_bitmapbutton(buttontype, x, y, w, h, label):
             """FL_OBJECT * fl_add_bitmapbutton(int type, FL_Coord x,
                FL_Coord y, FL_Coord w, FL_Coord h, const char * label)
             """)
+    check_if_initialized()
     check_admitted_listvalues(buttontype, xfc.BUTTONTYPE_list)
     ibuttontype = convert_to_int(buttontype)
     ix = convert_to_FL_Coord(x)
@@ -11927,6 +12507,7 @@ def fl_add_scrollbutton(buttontype, x, y, w, h, label):
             """FL_OBJECT * fl_add_scrollbutton(int type, FL_Coord x,
                FL_Coord y, FL_Coord w, FL_Coord h, const char * label)
             """)
+    check_if_initialized()
     check_admitted_listvalues(buttontype, xfc.BUTTONTYPE_list)
     ibuttontype = convert_to_int(buttontype)
     ix = convert_to_FL_Coord(x)
@@ -11967,6 +12548,7 @@ def fl_add_labelbutton(buttontype, x, y, w, h, label):
             """FL_OBJECT * fl_add_labelbutton(int type, FL_Coord x,
                FL_Coord y, FL_Coord w, FL_Coord h, const char * label)
             """)
+    check_if_initialized()
     check_admitted_listvalues(buttontype, xfc.BUTTONTYPE_list)
     ibuttontype = convert_to_int(buttontype)
     ix = convert_to_FL_Coord(x)
@@ -11996,6 +12578,8 @@ def fl_set_bitmapbutton_data(pObject, w, h, bits):
             """void fl_set_bitmapbutton_data(FL_OBJECT * ob, int w, int h,
                unsigned char * bits)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     iw = convert_to_int(w)
     ih = convert_to_int(h)
     pbits = cty.cast(bits, cty.POINTER(cty.c_ubyte))
@@ -12032,6 +12616,7 @@ def fl_add_pixmapbutton(buttontype, x, y, w, h, label):
             """FL_OBJECT * fl_add_pixmapbutton(int type, FL_Coord x,
                FL_Coord y, FL_Coord w, FL_Coord h, const char * label)
             """)
+    check_if_initialized()
     check_admitted_listvalues(buttontype, xfc.BUTTONTYPE_list)
     ibuttontype = convert_to_int(buttontype)
     ix = convert_to_FL_Coord(x)
@@ -12059,6 +12644,8 @@ def fl_set_pixmapbutton_focus_outline(pObject, yes):
             None, [cty.POINTER(xfc.FL_OBJECT), cty.c_int],
             """void fl_set_pixmapbutton_focus_outline(FL_OBJECT * ob, int yes)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     iyes = convert_to_int(yes)
     keep_elem_refs(pObject, yes, iyes)
     _fl_set_pixmapbutton_focus_outline(pObject, iyes)
@@ -12084,6 +12671,8 @@ def fl_set_pixmapbutton_focus_data(pObject, bits):
             """void fl_set_pixmapbutton_focus_data(FL_OBJECT * ob,
                char * * bits)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     keep_elem_refs(pObject, bits)
     _fl_set_pixmapbutton_focus_data(pObject, bits)
 
@@ -12103,6 +12692,8 @@ def fl_set_pixmapbutton_focus_file(pObject, fname):
             """void fl_set_pixmapbutton_focus_file(FL_OBJECT * ob,
                const char * fname)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     sfname = convert_to_string(fname)
     keep_elem_refs(pObject, fname, sfname)
     _fl_set_pixmapbutton_focus_file(pObject, sfname)
@@ -12123,6 +12714,8 @@ def fl_set_pixmapbutton_focus_pixmap(pObject, idnum, mask):
             """void fl_set_pixmapbutton_focus_pixmap(FL_OBJECT * ob,
                Pixmap id, Pixmap mask)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     ulidnum = convert_to_ulong(idnum)
     ulmask = convert_to_ulong(mask)
     keep_elem_refs(pObject, idnum, mask, ulidnum, ulmask)
@@ -12145,6 +12738,7 @@ def fl_get_button(pObject):
             cty.c_int, [cty.POINTER(xfc.FL_OBJECT)],
             """int fl_get_button(FL_OBJECT * ob)
             """)
+    check_if_FL_OBJECT_ptr(pObject)
     keep_elem_refs(pObject)
     retval = _fl_get_button(pObject)
     return retval
@@ -12167,6 +12761,8 @@ def fl_set_button(pObject, pushed):
             None, [cty.POINTER(xfc.FL_OBJECT), cty.c_int],
             """void fl_set_button(FL_OBJECT * ob, int pushed)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     ipushed = convert_to_int(pushed)
     keep_elem_refs(pObject, pushed, ipushed)
     _fl_set_button(pObject, ipushed)
@@ -12189,6 +12785,8 @@ def fl_get_button_numb(pObject):
             cty.c_int, [cty.POINTER(xfc.FL_OBJECT)],
             """int fl_get_button_numb(FL_OBJECT * ob)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     keep_elem_refs(pObject)
     retval = _fl_get_button_numb(pObject)
     return retval
@@ -12226,6 +12824,7 @@ def fl_create_generic_button(btnclass, buttontype, x, y, w, h, label):
                FL_Coord x, FL_Coord y, FL_Coord w, FL_Coord h,
                const char * label)
             """)
+    check_if_initialized()
     check_admitted_listvalues(buttontype, xfc.BUTTONTYPE_list)
     ibtnclass = convert_to_int(btnclass)
     ibuttontype = convert_to_int(buttontype)
@@ -12267,6 +12866,7 @@ def fl_add_button_class(btnclass, py_DrawButton, py_CleanupButton):
             """void fl_add_button_class(int bclass, FL_DrawButton drawit,
                FL_CleanupButton cleanup)
             """)
+    check_if_initialized()
     ibtnclass = convert_to_int(btnclass)
     c_DrawButton = FL_DrawButton(py_DrawButton)
     c_CleanupButton = FL_CleanupButton(py_CleanupButton)
@@ -12295,6 +12895,8 @@ def fl_set_button_mouse_buttons(pObject, buttons):
             """void fl_set_button_mouse_buttons(FL_OBJECT * ob,
                unsigned int buttons)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     ibuttons = convert_to_int(buttons)
     keep_elem_refs(pObject, buttons, ibuttons)
     _fl_set_button_mouse_buttons(pObject, ibuttons)
@@ -12321,10 +12923,12 @@ def fl_get_button_mouse_buttons(pObject):
             """void fl_get_button_mouse_buttons(FL_OBJECT * ob,
                unsigned int * buttons)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     buttons, pbuttons = make_uint_and_pointer()
     keep_elem_refs(pObject, buttons, pbuttons)
     _fl_get_button_mouse_buttons(pObject, pbuttons)
-    return buttons
+    return buttons.value
 
 
 #######################
@@ -12360,6 +12964,7 @@ def fl_create_generic_canvas(canvasclass, canvastype, x, y, w, h, label):
                int type, FL_Coord x, FL_Coord y, FL_Coord w, FL_Coord h,
                const char * label)
             """)
+    check_if_initialized()
     check_admitted_listvalues(canvastype, xfc.CANVASTYPE_list)
     icanvasclass = convert_to_int(canvasclass)
     icanvastype = convert_to_int(canvastype)
@@ -12399,6 +13004,7 @@ def fl_add_canvas(canvastype, x, y, w, h, label):
             """FL_OBJECT * fl_add_canvas(int type, FL_Coord x, FL_Coord y,
                FL_Coord w, FL_Coord h, const char * label)
             """)
+    check_if_initialized()
     check_admitted_listvalues(canvastype, xfc.CANVASTYPE_list)
     icanvastype = convert_to_int(canvastype)
     ix = convert_to_FL_Coord(x)
@@ -12431,6 +13037,8 @@ def fl_set_canvas_colormap(pObject, colormap):
             None, [cty.POINTER(xfc.FL_OBJECT), xfc.Colormap],
             """void fl_set_canvas_colormap(FL_OBJECT * ob, Colormap colormap)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     ulcolormap = convert_to_ulong(colormap)
     keep_elem_refs(pObject, colormap, ulcolormap)
     _fl_set_canvas_colormap(pObject, ulcolormap)
@@ -12451,6 +13059,8 @@ def fl_set_canvas_visual(pObject, pVisual):
             None, [cty.POINTER(xfc.FL_OBJECT), cty.POINTER(xfc.Visual)],
             """void fl_set_canvas_visual(FL_OBJECT * obj, Visual * vi)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     keep_elem_refs(pObject, pVisual)
     _fl_set_canvas_visual(pObject, pVisual)
 
@@ -12470,6 +13080,8 @@ def fl_set_canvas_depth(pObject, depth):
             None, [cty.POINTER(xfc.FL_OBJECT), cty.c_int],
             """void fl_set_canvas_depth(FL_OBJECT * obj, int depth)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     idepth = convert_to_int(depth)
     keep_elem_refs(pObject, depth, idepth)
     _fl_set_canvas_depth(pObject, idepth)
@@ -12493,6 +13105,8 @@ def fl_set_canvas_attributes(pObject, mask, pXSetWindowAttributes):
             """void fl_set_canvas_attributes(FL_OBJECT * ob,
                unsigned int mask, XSetWindowAttributes * xswa)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     uimask = convert_to_uint(mask)
     keep_elem_refs(pObject, mask, pXSetWindowAttributes, uimask)
     _fl_set_canvas_attributes(pObject, uimask, pXSetWindowAttributes)
@@ -12522,6 +13136,8 @@ def fl_add_canvas_handler(pObject, ev, py_HandleCanvas, udata):
             """FL_HANDLE_CANVAS fl_add_canvas_handler(FL_OBJECT * ob, int ev,
                FL_HANDLE_CANVAS h, void * udata)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     iev = convert_to_int(ev)
     c_HandleCanvas = FL_HANDLE_CANVAS(py_HandleCanvas)
     pudata = cty.cast(udata, cty.c_void_p)
@@ -12547,6 +13163,7 @@ def fl_get_canvas_id(pObject):
             xfc.Window, [cty.POINTER(xfc.FL_OBJECT)],
             """Window fl_get_canvas_id(FL_OBJECT * ob)
             """)
+    check_if_FL_OBJECT_ptr(pObject)
     keep_elem_refs(pObject)
     retval = _fl_get_canvas_id(pObject)
     return retval
@@ -12568,6 +13185,8 @@ def fl_get_canvas_colormap(pObject):
             xfc.Colormap, [cty.POINTER(xfc.FL_OBJECT)],
             """Colormap fl_get_canvas_colormap(FL_OBJECT * ob)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     keep_elem_refs(pObject)
     retval = _fl_get_canvas_colormap(pObject)
     return retval
@@ -12589,6 +13208,8 @@ def fl_get_canvas_depth(pObject):
             cty.c_int, [cty.POINTER(xfc.FL_OBJECT)],
             """int fl_get_canvas_depth(FL_OBJECT * obj)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     keep_elem_refs(pObject)
     retval = _fl_get_canvas_depth(pObject)
     return retval
@@ -12616,6 +13237,8 @@ def fl_remove_canvas_handler(pObject, ev, py_HandleCanvas):
             """void fl_remove_canvas_handler(FL_OBJECT * ob, int ev,
                FL_HANDLE_CANVAS h)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     iev = convert_to_int(ev)
     c_HandleCanvas = FL_HANDLE_CANVAS(py_HandleCanvas)
     keep_cfunc_refs(c_HandleCanvas, py_HandleCanvas)
@@ -12639,6 +13262,8 @@ def fl_hide_canvas(pObject):
             None, [cty.POINTER(xfc.FL_OBJECT)],
             """void fl_hide_canvas(FL_OBJECT * ob)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     keep_elem_refs(pObject)
     _fl_hide_canvas(pObject)
 
@@ -12657,6 +13282,8 @@ def fl_share_canvas_colormap(pObject, colormap):
             None, [cty.POINTER(xfc.FL_OBJECT), xfc.Colormap],
             """void fl_share_canvas_colormap(FL_OBJECT * ob, Colormap colormap)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     ulcolormap = convert_to_ulong(colormap)
     keep_elem_refs(pObject, colormap, ulcolormap)
     _fl_share_canvas_colormap(pObject, ulcolormap)
@@ -12679,6 +13306,8 @@ def fl_clear_canvas(pObject):
             None, [cty.POINTER(xfc.FL_OBJECT)],
             """void fl_clear_canvas(FL_OBJECT * ob)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     keep_elem_refs(pObject)
     _fl_clear_canvas(pObject)
 
@@ -12713,6 +13342,8 @@ def fl_modify_canvas_prop(pObject, py_initModifyCanvasProp,
                FL_MODIFY_CANVAS_PROP init, FL_MODIFY_CANVAS_PROP activate,
                FL_MODIFY_CANVAS_PROP cleanup)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     c_initModifyCanvasProp = FL_MODIFY_CANVAS_PROP(py_initModifyCanvasProp)
     c_activateModifyCanvasProp = FL_MODIFY_CANVAS_PROP( \
                 py_activateModifyCanvasProp)
@@ -12740,6 +13371,8 @@ def fl_canvas_yield_to_shortcut(pObject, yes):
             None, [cty.POINTER(xfc.FL_OBJECT), cty.c_int],
             """void fl_canvas_yield_to_shortcut(FL_OBJECT * ob, int yes)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     iyes = convert_to_int(yes)
     keep_elem_refs(pObject, yes, iyes)
     _fl_canvas_yield_to_shortcut(pObject, iyes)
@@ -12783,6 +13416,7 @@ def fl_add_glcanvas(canvastype, x, y, w, h, label):
             """FL_OBJECT * fl_add_glcanvas(int type, FL_Coord x, FL_Coord y,
                FL_Coord w, FL_Coord h, const char * label)
             """)
+    check_if_initialized()
     check_admitted_listvalues(canvastype, xfc.CANVASTYPE_list)
     icanvastype = convert_to_int(canvastype)
     ix = convert_to_FL_Coord(x)
@@ -12829,13 +13463,13 @@ def fl_get_glcanvas_defaults():
 
     _fl_get_glcanvas_defaults = cfuncproto(
             load_so_libformsgl(), "fl_get_glcanvas_defaults",
-            None, [cty.c_int],
+            None, [cty.POINTER(cty.c_int)],
             """void fl_get_glcanvas_defaults(int config[ ]):
             """)
     config, pconfig = make_int_and_pointer()
     keep_elem_refs(config, pconfig)
     _fl_get_glcanvas_defaults(pconfig)
-    return config
+    return config.value
 
 
 def fl_set_glcanvas_attributes(pObject, config):
@@ -12857,6 +13491,7 @@ def fl_set_glcanvas_attributes(pObject, config):
             """void fl_set_glcanvas_attributes(FL_OBJECT * ob,
                const int * config)
             """)
+    check_if_FL_OBJECT_ptr(pObject)
     pconfig = cty.cast(config, cty.POINTER(cty.c_int))
     keep_elem_refs(pObject, config, pconfig)
     _fl_set_glcanvas_attributes(pObject, pconfig)
@@ -12867,8 +13502,8 @@ def fl_get_glcanvas_attributes(pObject):
 
         Returns the attributes of a glcanvas object.
 
-        @param pObject: pointer to glcanvas object
-                (<pointer to xfdata.FL_OBJECT>)
+        @param pObject: glcanvas object
+                        (<pointer to xfdata.FL_OBJECT>)
 
         @attention: API change from XForms - upstream was
                     fl_get_glcanvas_attributes(pObject, attributes)
@@ -12880,10 +13515,11 @@ def fl_get_glcanvas_attributes(pObject):
             """void fl_get_glcanvas_attributes(FL_OBJECT * ob,
                int * attributes)
             """)
+    check_if_FL_OBJECT_ptr(pObject)
     attributes, pattributes = make_int_and_pointer()
     keep_elem_refs(pObject, attributes, pattributes)
     _fl_get_glcanvas_attributes(pObject, pattributes)
-    return attributes
+    return attributes.value
 
 
 def fl_set_glcanvas_direct(pObject, direct):
@@ -12900,6 +13536,8 @@ def fl_set_glcanvas_direct(pObject, direct):
             None, [cty.POINTER(xfc.FL_OBJECT), cty.c_int],
             """void fl_set_glcanvas_direct(FL_OBJECT * ob, int direct)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     idirect = convert_to_int(direct)
     keep_elem_refs(pObject, direct, idirect)
     _fl_set_glcanvas_direct(pObject, idirect)
@@ -12921,6 +13559,8 @@ def fl_activate_glcanvas(pObject):
             None, [cty.POINTER(xfc.FL_OBJECT)],
             """void fl_activate_glcanvas(FL_OBJECT * ob)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     keep_elem_refs(pObject)
     _fl_activate_glcanvas(pObject)
 
@@ -12928,7 +13568,7 @@ def fl_activate_glcanvas(pObject):
 def fl_get_glcanvas_xvisualinfo(pObject):
     """ fl_get_glcanvas_xvisualinfo(pObject) -> xvisualinfo class
 
-        Returns XVisualInfo strust of a glcanvas object.
+        Returns XVisualInfo class of a glcanvas object.
 
         @param pObject: pointer to glcanvas object
                 (<pointer to xfdata.FL_OBJECT>)
@@ -12941,6 +13581,8 @@ def fl_get_glcanvas_xvisualinfo(pObject):
             cty.POINTER(xfc.XVisualInfo), [cty.POINTER(xfc.FL_OBJECT)],
             """XVisualInfo * fl_get_glcanvas_xvisualinfo(FL_OBJECT * ob)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     keep_elem_refs(pObject)
     retval = _fl_get_glcanvas_xvisualinfo(pObject)
     return retval
@@ -12960,13 +13602,15 @@ def fl_get_glcanvas_context(pObject):
             xfc.GLXContext, [cty.POINTER(xfc.FL_OBJECT)],
             """GLXContext fl_get_glcanvas_context(FL_OBJECT * ob)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     keep_elem_refs(pObject)
     retval = _fl_get_glcanvas_context(pObject)
     return retval
 
 
-def fl_glwincreate(config, pGLXContext, w, h):
-    """ fl_glwincreate(config, pGLXContext, w, h) -> window
+def fl_glwincreate(config, glxcontext, w, h):
+    """ fl_glwincreate(config, glxcontext, w, h) -> window
 
         @status: Untested + NoDoc + NoDemo = NOT OK
     """
@@ -12978,6 +13622,7 @@ def fl_glwincreate(config, pGLXContext, w, h):
             """Window fl_glwincreate(int * config, GLXContext * context,
                int w, int h)
             """)
+    pGLXContext = cty.cast(glxcontext, cty.POINTER(xfc.GLXContext))
     iw = convert_to_int(w)
     ih = convert_to_int(h)
     keep_elem_refs(config, pGLXContext, w, h, iw, ih)
@@ -12985,8 +13630,8 @@ def fl_glwincreate(config, pGLXContext, w, h):
     return retval
 
 
-def fl_glwinopen(config, pGLXContext, w, h):
-    """ fl_glwinopen(config, pGLXContext, w, h) -> window
+def fl_glwinopen(config, glxcontext, w, h):
+    """ fl_glwinopen(config, glxcontext, w, h) -> window
 
         @status: Untested + NoDoc + NoDemo = NOT OK
     """
@@ -12998,6 +13643,8 @@ def fl_glwinopen(config, pGLXContext, w, h):
             """Window fl_glwinopen(int * config, GLXContext * context,
                int w, int h
             """)
+    check_if_initialized()
+    pGLXContext = cty.cast(glxcontext, cty.POINTER(xfc.GLXContext))
     iw = convert_to_int(w)
     ih = convert_to_int(h)
     keep_elem_refs(config, pGLXContext, w, h, iw, ih)
@@ -13041,6 +13688,7 @@ def fl_add_chart(charttype, x, y, w, h, label):
             """FL_OBJECT * fl_add_chart(int type, FL_Coord x, FL_Coord y,
                FL_Coord w, FL_Coord h, const char * label)
             """)
+    check_if_initialized()
     check_admitted_listvalues(charttype, xfc.CHARTTYPE_list)
     icharttype = convert_to_int(charttype)
     ix = convert_to_FL_Coord(x)
@@ -13070,6 +13718,8 @@ def fl_clear_chart(pObject):
             None, [cty.POINTER(xfc.FL_OBJECT)],
             """void fl_clear_chart(FL_OBJECT * ob)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     keep_elem_refs(pObject)
     _fl_clear_chart(pObject)
 
@@ -13095,6 +13745,8 @@ def fl_add_chart_value(pObject, val, label, colr):
             """void fl_add_chart_value(FL_OBJECT * ob, double val,
                const char * str, FL_COLOR col)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     fval = convert_to_double(val)
     slabel = convert_to_string(label)
     ulcolr = convert_to_FL_COLOR(colr)
@@ -13124,6 +13776,8 @@ def fl_insert_chart_value(pObject, indx, val, label, colr):
             """void fl_insert_chart_value(FL_OBJECT * ob, int indx,
                double val, const char * str, FL_COLOR col)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     iindx = convert_to_int(indx)
     fval = convert_to_double(val)
     slabel = convert_to_string(label)
@@ -13155,6 +13809,8 @@ def fl_replace_chart_value(pObject, indx, val, label, colr):
             """void fl_replace_chart_value(FL_OBJECT * ob, int indx,
                double val, const char * str, FL_COLOR col)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     iindx = convert_to_int(indx)
     fval = convert_to_double(val)
     slabel = convert_to_string(label)
@@ -13183,6 +13839,8 @@ def fl_set_chart_bounds(pObject, minbound, maxbound):
             """void fl_set_chart_bounds(FL_OBJECT * ob, double min,
                double max)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     fminbound = convert_to_double(minbound)
     fmaxbound = convert_to_double(maxbound)
     keep_elem_refs(pObject, minbound, maxbound, fminbound, fmaxbound)
@@ -13210,11 +13868,13 @@ def fl_get_chart_bounds(pObject):
             """void fl_get_chart_bounds(FL_OBJECT * ob, double * min,
                double * max)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     minbound, pminbound = make_double_and_pointer()
     maxbound, pmaxbound = make_double_and_pointer()
     keep_elem_refs(pObject, minbound, maxbound, pminbound, pmaxbound)
     _fl_get_chart_bounds(pObject, pminbound, pmaxbound)
-    return minbound, maxbound
+    return minbound.value, maxbound.value
 
 
 def fl_set_chart_maxnumb(pObject, maxnum):
@@ -13222,8 +13882,8 @@ def fl_set_chart_maxnumb(pObject, maxnum):
 
         Sets the maximum number of values displayed in the chart.
 
-        @param pObject: pointer to chart object
-                (<pointer to xfdata.FL_OBJECT>)
+        @param pObject: chart object
+                        (<pointer to xfdata.FL_OBJECT>)
         @param maxnum: maximum number of values to display
 
         @status: Untested + NoDoc + NoDemo = NOT OK
@@ -13234,6 +13894,8 @@ def fl_set_chart_maxnumb(pObject, maxnum):
             None, [cty.POINTER(xfc.FL_OBJECT), cty.c_int],
             """void fl_set_chart_maxnumb(FL_OBJECT * ob, int maxnumb)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     imaxnum = convert_to_int(maxnum)
     keep_elem_refs(pObject, maxnum, imaxnum)
     _fl_set_chart_maxnumb(pObject, imaxnum)
@@ -13256,6 +13918,8 @@ def fl_set_chart_autosize(pObject, autosize):
             None, [cty.POINTER(xfc.FL_OBJECT), cty.c_int],
             """void fl_set_chart_autosize(FL_OBJECT * ob, int autosize)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     iautosize = convert_to_int(autosize)
     keep_elem_refs(pObject, autosize, iautosize)
     _fl_set_chart_autosize(pObject, iautosize)
@@ -13275,6 +13939,8 @@ def fl_set_chart_lstyle(pObject, lstyle):
             None, [cty.POINTER(xfc.FL_OBJECT), cty.c_int],
             """void fl_set_chart_lstyle(FL_OBJECT * ob, int lstyle)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     ilstyle = convert_to_int(lstyle)
     keep_elem_refs(pObject, lstyle, ilstyle)
     _fl_set_chart_lstyle(pObject, ilstyle)
@@ -13294,6 +13960,8 @@ def fl_set_chart_lsize(pObject, lsize):
             None, [cty.POINTER(xfc.FL_OBJECT), cty.c_int],
             """void fl_set_chart_lsize(FL_OBJECT * ob, int lsize)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     ilsize = convert_to_int(lsize)
     keep_elem_refs(pObject, lsize, ilsize)
     _fl_set_chart_lsize(pObject, ilsize)
@@ -13314,6 +13982,8 @@ def fl_set_chart_lcolor(pObject, colr):
             None, [cty.POINTER(xfc.FL_OBJECT), xfc.FL_COLOR],
             """void fl_set_chart_lcolor(FL_OBJECT * ob, FL_COLOR lcol)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     check_admitted_listvalues(colr, xfc.COLOR_list)
     ulcolr = convert_to_FL_COLOR(colr)
     keep_elem_refs(pObject, colr, ulcolr)
@@ -13334,6 +14004,8 @@ def fl_set_chart_baseline(pObject, yesno):
             None, [cty.POINTER(xfc.FL_OBJECT), cty.c_int],
             """void fl_set_chart_baseline(FL_OBJECT * ob, int iYesNo)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     iyesno = convert_to_int(yesno)
     keep_elem_refs(pObject, yesno, iyesno)
     _fl_set_chart_baseline(pObject, iyesno)
@@ -13400,6 +14072,8 @@ def fl_stuff_clipboard(pObject, clipbdtype, data, size, py_LoseSelectionCb):
                const char * data, long int size,
                FL_LOSE_SELECTION_CB lose_callback)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     lclipbdtype = convert_to_long(clipbdtype)
     pdata = cty.cast(data, cty.c_void_p)
     lsize = convert_to_long(size)
@@ -13435,6 +14109,8 @@ def fl_request_clipboard(pObject, clipbdtype, py_SelectionCb):
             """int fl_request_clipboard(FL_OBJECT * ob, long int type,
                FL_SELECTION_CB got_it_callback)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     lclipbdtype = convert_to_long(clipbdtype)
     c_SelectionCb = FL_SELECTION_CB(py_SelectionCb)
     keep_cfunc_refs(c_SelectionCb, py_SelectionCb)
@@ -13475,6 +14151,7 @@ def fl_add_clock(clocktype, x, y, w, h, label):
             """FL_OBJECT * fl_add_clock(int type, FL_Coord x, FL_Coord y,
                FL_Coord w, FL_Coord h, const char * s)
             """)
+    check_if_initialized()
     check_admitted_listvalues(clocktype, xfc.CLOCKTYPE_list)
     iclocktype = convert_to_int(clocktype)
     ix = convert_to_FL_Coord(x)
@@ -13508,12 +14185,14 @@ def fl_get_clock(pObject):
             cty.POINTER(cty.c_int), cty.POINTER(cty.c_int)],
             """void fl_get_clock(FL_OBJECT * ob, int * h, int * m, int * s)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     hr, phr = make_int_and_pointer()
     mn, pmn = make_int_and_pointer()
     sec, psec = make_int_and_pointer()
     keep_elem_refs(pObject, hr, mn, sec, phr, pmn, psec)
     _fl_get_clock(pObject, phr, pmn, psec)
-    return hr, mn, sec
+    return hr.value, mn.value, sec.value
 
 
 def fl_set_clock_adjustment(pObject, offset):
@@ -13531,6 +14210,8 @@ def fl_set_clock_adjustment(pObject, offset):
             """long int fl_set_clock_adjustment(FL_OBJECT * ob,
                long int offset)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     loffset = convert_to_long(offset)
     keep_elem_refs(pObject, offset, loffset)
     retval = _fl_set_clock_adjustment(pObject, loffset)
@@ -13551,6 +14232,8 @@ def fl_set_clock_ampm(pObject, y):
             None, [cty.POINTER(xfc.FL_OBJECT), cty.c_int],
             """void fl_set_clock_ampm(FL_OBJECT * ob, int y)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     iy = convert_to_int(y)
     keep_elem_refs(pObject, y, iy)
     _fl_set_clock_ampm(pObject, iy)
@@ -13590,6 +14273,7 @@ def fl_add_counter(countertype, x, y, w, h, label):
             """FL_OBJECT * fl_add_counter(int type, FL_Coord x, FL_Coord y,
                FL_Coord w, FL_Coord h, const char * label)
             """)
+    check_if_initialized()
     check_admitted_listvalues(countertype, xfc.COUNTERTYPE_list)
     icountertype = convert_to_int(countertype)
     ix = convert_to_FL_Coord(x)
@@ -13617,6 +14301,8 @@ def fl_set_counter_value(pObject, val):
             None, [cty.POINTER(xfc.FL_OBJECT), cty.c_double],
             """void fl_set_counter_value(FL_OBJECT * ob, double val)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     fval = convert_to_double(val)
     keep_elem_refs(pObject, val, fval)
     _fl_set_counter_value(pObject, fval)
@@ -13637,6 +14323,8 @@ def fl_set_counter_bounds(pObject, minbound, maxbound):
             """void fl_set_counter_bounds(FL_OBJECT * ob, double min,
                double max)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     fminbound = convert_to_double(minbound)
     fmaxbound = convert_to_double(maxbound)
     keep_elem_refs(pObject, minbound, maxbound, fminbound, fmaxbound)
@@ -13657,6 +14345,7 @@ def fl_set_counter_step(pObject, s, l):
             None, [cty.POINTER(xfc.FL_OBJECT), cty.c_double, cty.c_double],
             """void fl_set_counter_step(FL_OBJECT * ob, double s, double l)
             """)
+    check_if_FL_OBJECT_ptr(pObject)
     fs = convert_to_double(s)
     fl = convert_to_double(l)
     keep_elem_refs(pObject, s, l, fs, fl)
@@ -13677,6 +14366,8 @@ def fl_set_counter_precision(pObject, prec):
             None, [cty.POINTER(xfc.FL_OBJECT), cty.c_int],
             """void fl_set_counter_precision(FL_OBJECT * ob, int prec)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     iprec = convert_to_int(prec)
     keep_elem_refs(pObject, prec, iprec)
     _fl_set_counter_precision(pObject, iprec)
@@ -13696,6 +14387,8 @@ def fl_get_counter_precision(pObject):
             cty.c_int, [cty.POINTER(xfc.FL_OBJECT)],
             """int fl_get_counter_precision(FL_OBJECT * ob)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     keep_elem_refs(pObject)
     retval = _fl_get_counter_precision(pObject)
     return retval
@@ -13718,6 +14411,8 @@ def fl_get_counter_value(pObject):
             cty.c_double, [cty.POINTER(xfc.FL_OBJECT)],
             """double fl_get_counter_value(FL_OBJECT * ob)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     keep_elem_refs(pObject)
     retval = _fl_get_counter_value(pObject)
     return retval
@@ -13742,11 +14437,13 @@ def fl_get_counter_bounds(pObject):
             """void fl_get_counter_bounds(FL_OBJECT * ob, double * min,
                double * max)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     minbound, pminbound = make_double_and_pointer()
     maxbound, pmaxbound = make_double_and_pointer()
     keep_elem_refs(pObject, minbound, maxbound, pminbound, pmaxbound)
     _fl_get_counter_bounds(pObject, pminbound, pmaxbound)
-    return minbound, maxbound
+    return minbound.value, maxbound.value
 
 
 def fl_get_counter_step(pObject):
@@ -13768,11 +14465,13 @@ def fl_get_counter_step(pObject):
             """void fl_get_counter_step(FL_OBJECT * ob, double * s,
                double * l)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     s, ps = make_double_and_pointer()
     l, pl = make_double_and_pointer()
     keep_elem_refs(pObject, s, l, ps, pl)
     _fl_get_counter_step(pObject, ps, pl)
-    return s, l
+    return s.value, l.value
 
 
 FL_VAL_FILTER = cty.CFUNCTYPE(xfc.STRING, cty.POINTER(xfc.FL_OBJECT),
@@ -13793,6 +14492,8 @@ def fl_set_counter_filter(pObject, py_ValFilter):
             """void fl_set_counter_filter(FL_OBJECT * ob,
                FL_VAL_FILTER filter)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     c_ValFilter = FL_VAL_FILTER(py_ValFilter)
     keep_cfunc_refs(c_ValFilter, py_ValFilter)
     keep_elem_refs(pObject)
@@ -13816,6 +14517,8 @@ def fl_get_counter_repeat(pObject):
             cty.c_int, [cty.POINTER(xfc.FL_OBJECT)],
             """int fl_get_counter_repeat(FL_OBJECT * ob)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     keep_elem_refs(pObject)
     retval = _fl_get_counter_repeat(pObject)
     return retval
@@ -13835,6 +14538,8 @@ def fl_set_counter_repeat(pObject, msec):
             None, [cty.POINTER(xfc.FL_OBJECT), cty.c_int],
             """void fl_set_counter_repeat(FL_OBJECT * ob, int millisec)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     imsec = convert_to_int(msec)
     keep_elem_refs(pObject, msec, imsec)
     _fl_set_counter_repeat(pObject, imsec)
@@ -13854,6 +14559,7 @@ def fl_get_counter_min_repeat(pObject):
             cty.c_int, [cty.POINTER(xfc.FL_OBJECT)],
             """int fl_get_counter_min_repeat(FL_OBJECT * ob)
             """)
+    check_if_FL_OBJECT_ptr(pObject)
     keep_elem_refs(pObject)
     retval = _fl_get_counter_min_repeat(pObject)
     return retval
@@ -13873,6 +14579,8 @@ def fl_set_counter_min_repeat(pObject, msec):
             None, [cty.POINTER(xfc.FL_OBJECT), cty.c_int],
             """void fl_set_counter_min_repeat(FL_OBJECT * ob, int millisec)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     imsec = convert_to_int(msec)
     keep_elem_refs(pObject, msec, imsec)
     _fl_set_counter_min_repeat(pObject, imsec)
@@ -13892,6 +14600,8 @@ def fl_get_counter_speedjump(pObject):
             cty.c_int, [cty.POINTER(xfc.FL_OBJECT)],
             """int fl_get_counter_speedjump(FL_OBJECT * ob)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     keep_elem_refs(pObject)
     retval = _fl_get_counter_speedjump(pObject)
     return retval
@@ -13911,6 +14621,8 @@ def fl_set_counter_speedjump(pObject, yesno):
             None, [cty.POINTER(xfc.FL_OBJECT), cty.c_int],
             """void fl_set_counter_speedjump(FL_OBJECT * ob, int yes_no)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     iyesno = convert_to_int(yesno)
     keep_elem_refs(pObject, yesno, iyesno)
     _fl_set_counter_speedjump(pObject, iyesno)
@@ -13939,6 +14651,7 @@ def fl_set_cursor(win, cursnum):
             None, [xfc.Window, cty.c_int],
             """void fl_set_cursor(Window win, int name)
             """)
+    check_if_initialized()
     ulwin = convert_to_Window(win)
     icursnum = convert_to_int(cursnum)
     keep_elem_refs(win, cursnum, ulwin, icursnum)
@@ -13962,6 +14675,7 @@ def fl_set_cursor_color(cursnum, fgcolr, bgcolr):
             None, [cty.c_int, xfc.FL_COLOR, xfc.FL_COLOR],
             """void fl_set_cursor_color(int name, FL_COLOR fg, FL_COLOR bg)
             """)
+    check_if_initialized()
     check_admitted_listvalues(fgcolr, xfc.COLOR_list)
     check_admitted_listvalues(bgcolr, xfc.COLOR_list)
     icursnum = convert_to_int(cursnum)
@@ -13984,6 +14698,7 @@ def fl_create_bitmap_cursor(source, maskstr, w, h, hotx, hoty):
             """int fl_create_bitmap_cursor(const char * source,
                const char * mask, int w, int h, int hotx, int hoty)
             """)
+    check_if_initialized()
     ssource = convert_to_string(source)
     smaskstr = convert_to_string(maskstr)
     iw = convert_to_int(w)
@@ -14007,6 +14722,7 @@ def fl_create_animated_cursor(curnums, timeout):
             cty.c_int, [cty.POINTER(cty.c_int), cty.c_int],
             """int fl_create_animated_cursor(int * cur_names, int timeout)
             """)
+    check_if_initialized()
     pcurnums = cty.cast(curnums, cty.POINTER(cty.c_int))
     #print "pcurnums", pcurnums
     itimeout = convert_to_int(timeout)
@@ -14030,6 +14746,7 @@ def fl_get_cursor_byname(cursnum):
             xfc.Cursor, [cty.c_int],
             """Cursor fl_get_cursor_byname(int name)
             """)
+    check_if_initialized()
     icursnum = convert_to_int(cursnum)
     keep_elem_refs(cursnum, icursnum)
     retval = _fl_get_cursor_byname(icursnum)
@@ -14081,6 +14798,7 @@ def fl_add_dial(dialtype, x, y, w, h, label):
             """FL_OBJECT * fl_add_dial(int type, FL_Coord x, FL_Coord y,
                FL_Coord w, FL_Coord h, const char * label)
             """)
+    check_if_initialized()
     check_admitted_listvalues(dialtype, xfc.DIALTYPE_list)
     idialtype = convert_to_int(dialtype)
     ix = convert_to_FL_Coord(x)
@@ -14108,6 +14826,8 @@ def fl_set_dial_value(pObject, val):
             None, [cty.POINTER(xfc.FL_OBJECT), cty.c_double],
             """void fl_set_dial_value(FL_OBJECT * ob, double val)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     fval = convert_to_double(val)
     keep_elem_refs(pObject, val, fval)
     _fl_set_dial_value(pObject, fval)
@@ -14127,6 +14847,8 @@ def fl_get_dial_value(pObject):
             cty.c_double, [cty.POINTER(xfc.FL_OBJECT)],
             """double fl_get_dial_value(FL_OBJECT * ob)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     keep_elem_refs(pObject)
     retval = _fl_get_dial_value(pObject)
     return retval
@@ -14147,6 +14869,8 @@ def fl_set_dial_bounds(pObject, minbound, maxbound):
             """void fl_set_dial_bounds(FL_OBJECT * ob, double min,
                double max)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     fminbound = convert_to_double(minbound)
     fmaxbound = convert_to_double(maxbound)
     keep_elem_refs(pObject, minbound, maxbound, fminbound, fmaxbound)
@@ -14172,11 +14896,13 @@ def fl_get_dial_bounds(pObject):
             """void fl_get_dial_bounds(FL_OBJECT * ob, double * min,
                double * max)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     minbound, pminbound = make_double_and_pointer()
     maxbound, pmaxbound = make_double_and_pointer()
     keep_elem_refs(pObject, minbound, maxbound, pminbound, pmaxbound)
     _fl_get_dial_bounds(pObject, pminbound, pmaxbound)
-    return minbound, maxbound
+    return minbound.value, maxbound.value
 
 
 def fl_set_dial_step(pObject, value):
@@ -14193,6 +14919,8 @@ def fl_set_dial_step(pObject, value):
             None, [cty.POINTER(xfc.FL_OBJECT), cty.c_double],
             """void fl_set_dial_step(FL_OBJECT * ob, double value)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     fvalue = convert_to_double(value)
     keep_elem_refs(pObject, value, fvalue)
     _fl_set_dial_step(pObject, fvalue)
@@ -14213,6 +14941,8 @@ def fl_set_dial_return(pObject, value):
             """void fl_set_dial_return(FL_OBJECT * ob, unsigned
                int value)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     uivalue = convert_to_uint(value)
     keep_elem_refs(pObject, value, uivalue)
     _fl_set_dial_return(pObject, uivalue)
@@ -14233,6 +14963,8 @@ def fl_set_dial_angles(pObject, angmin, angmax):
             """void fl_set_dial_angles(FL_OBJECT * ob, double amin,
                double amax)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     fangmin = convert_to_double(angmin)
     fangmax = convert_to_double(angmax)
     keep_elem_refs(pObject, angmin, angmax, fangmin, fangmax)
@@ -14254,6 +14986,8 @@ def fl_set_dial_cross(pObject, flag):
             None, [cty.POINTER(xfc.FL_OBJECT), cty.c_int],
             """void fl_set_dial_cross(FL_OBJECT * ob, int flag)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     iflag = convert_to_int(flag)
     keep_elem_refs(pObject, flag, iflag)
     _fl_set_dial_cross(pObject, iflag)
@@ -14277,6 +15011,8 @@ def fl_set_dial_direction(pObject, directn):
             None, [cty.POINTER(xfc.FL_OBJECT), cty.c_int],
             """void fl_set_dial_direction(FL_OBJECT * ob, int dir)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     idirectn = convert_to_int(directn)
     keep_elem_refs(pObject, directn, idirectn)
     _fl_set_dial_direction(pObject, idirectn)
@@ -14308,6 +15044,7 @@ def fl_get_dirlist(directory, pattern, rescan):
             """const char * fl_get_dirlist(const char * dir,
                const char * pattern, int * n, int rescan)
             """)
+    check_if_initialized()
     sdirectory = convert_to_string(directory)
     spattern = convert_to_string(pattern)
     n, pn = make_int_and_pointer()
@@ -14315,7 +15052,7 @@ def fl_get_dirlist(directory, pattern, rescan):
     keep_elem_refs(directory, pattern, n, rescan, sdirectory, spattern,
                    pn, irescan)
     retval = _fl_get_dirlist(sdirectory, spattern, pn, irescan)
-    return retval, n
+    return retval, n.value
 
 
 FL_DIRLIST_FILTER = cty.CFUNCTYPE(cty.c_int, xfc.STRING, cty.c_int)
@@ -14333,6 +15070,7 @@ def fl_set_dirlist_filter(py_DirFilter):
             """FL_DIRLIST_FILTER fl_set_dirlist_filter( \
                FL_DIRLIST_FILTER filter)
             """)
+    check_if_initialized()
     c_DirFilter = FL_DIRLIST_FILTER(py_DirFilter)
     keep_cfunc_refs(c_DirFilter, py_DirFilter)
     retval = _fl_set_dirlist_filter(c_DirFilter)
@@ -14351,6 +15089,7 @@ def fl_set_dirlist_sort(method):
             cty.c_int, [cty.c_int],
             """int fl_set_dirlist_sort(int method)
             """)
+    check_if_initialized()
     imethod = convert_to_int(method)
     keep_elem_refs(method, imethod)
     retval = _fl_set_dirlist_sort(imethod)
@@ -14369,6 +15108,7 @@ def fl_set_dirlist_filterdir(yes):
             cty.c_int, [cty.c_int],
             """int fl_set_dirlist_filterdir(int yes)
             """)
+    check_if_initialized()
     iyes = convert_to_int(yes)
     keep_elem_refs(yes, iyes)
     retval = _fl_set_dirlist_filterdir(iyes)
@@ -14387,6 +15127,7 @@ def fl_free_dirlist(pDirList):
             None, [cty.POINTER(xfc.FL_Dirlist)],
             """void fl_free_dirlist(FL_Dirlist * dl)
             """)
+    check_if_initialized()
     keep_elem_refs(pDirList)
     _fl_free_dirlist(pDirList)
 
@@ -14405,6 +15146,7 @@ def fl_free_all_dirlist():
             None, [],
             """void fl_free_all_dirlist()
             """)
+    check_if_initialized()
     _fl_free_all_dirlist()
 
 
@@ -14420,6 +15162,7 @@ def fl_is_valid_dir(name):
             cty.c_int, [xfc.STRING],
             """int fl_is_valid_dir(const char * name)
             """)
+    check_if_initialized()
     sname = convert_to_string(name)
     keep_elem_refs(name, sname)
     retval = _fl_is_valid_dir(sname)
@@ -14438,6 +15181,7 @@ def fl_fmtime(timestr):
             cty.c_ulong, [xfc.STRING],
             """long unsigned int fl_fmtime(const char * s)
             """)
+    check_if_initialized()
     stimestr = convert_to_string(timestr)
     keep_elem_refs(timestr, stimestr)
     retval = _fl_fmtime(stimestr)
@@ -14456,6 +15200,7 @@ def fl_fix_dirname(directory):
             xfc.STRING, [xfc.STRING],
             """char * fl_fix_dirname(char * dir)
             """)
+    check_if_initialized()
     sdirectory = convert_to_string(directory)
     keep_elem_refs(directory, sdirectory)
     retval = _fl_fix_dirname(sdirectory)
@@ -14482,6 +15227,7 @@ def flps_init():
             cty.POINTER(xfc.FLPS_CONTROL), [],
             """FLPS_CONTROL * flps_init()
             """)
+    check_if_initialized()
     retval = _flps_init()
     return retval
 
@@ -14501,6 +15247,8 @@ def fl_object_ps_dump(pObject, fname):
             cty.c_int, [cty.POINTER(xfc.FL_OBJECT), xfc.STRING],
             """int fl_object_ps_dump(FL_OBJECT * ob, const char * fname)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     sfname = convert_to_string(fname)
     keep_elem_refs(pObject, fname, sfname)
     retval = _fl_object_ps_dump(pObject, sfname)
@@ -14527,6 +15275,8 @@ def fl_addto_formbrowser(pObject, pForm):
             cty.c_int, [cty.POINTER(xfc.FL_OBJECT), cty.POINTER(xfc.FL_FORM)],
             """int fl_addto_formbrowser(FL_OBJECT * ob, FL_FORM * form)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     keep_elem_refs(pObject, pForm)
     retval = _fl_addto_formbrowser(pObject, pForm)
     return retval
@@ -14548,6 +15298,8 @@ def fl_delete_formbrowser_bynumber(pObject, num):
             """FL_FORM * fl_delete_formbrowser_bynumber(FL_OBJECT * ob,
                int num)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     inum = convert_to_int(num)
     keep_elem_refs(pObject, num, inum)
     retval = _fl_delete_formbrowser_bynumber(pObject, inum)
@@ -14572,6 +15324,9 @@ def fl_delete_formbrowser(pObject, pForm):
             """int fl_delete_formbrowser(FL_OBJECT * ob,
                FL_FORM * candidate_form)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
+    check_if_FL_FORM_ptr(pForm)
     keep_elem_refs(pObject, pForm)
     retval = _fl_delete_formbrowser(pObject, pForm)
     return retval
@@ -14597,6 +15352,8 @@ def fl_replace_formbrowser(pObject, num, pForm):
             """FL_FORM * fl_replace_formbrowser(FL_OBJECT * ob, int num,
                FL_FORM * form)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     inum = convert_to_int(num)
     keep_elem_refs(pObject, num, pForm, inum)
     retval = _fl_replace_formbrowser(pObject, inum, pForm)
@@ -14623,6 +15380,8 @@ def fl_insert_formbrowser(pObject, line, pForm):
             """int fl_insert_formbrowser(FL_OBJECT * ob, int line,
                FL_FORM * new_form)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     iline = convert_to_int(line)
     keep_elem_refs(pObject, line, iline, pForm)
     retval = _fl_insert_formbrowser(pObject, iline, pForm)
@@ -14650,13 +15409,15 @@ def fl_get_formbrowser_area(pObject):
             """int fl_get_formbrowser_area(FL_OBJECT * ob, int * x, int * y,
                int * w, int * h)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     x, px = make_int_and_pointer()
     y, py = make_int_and_pointer()
     w, pw = make_int_and_pointer()
     h, ph = make_int_and_pointer()
     keep_elem_refs(pObject, x, y, w, h, px, py, pw, ph)
     retval = _fl_get_formbrowser_area(pObject, px, py, pw, ph)
-    return retval, x, y, w, h
+    return retval, x.value, y.value, w.value, h.value
 
 
 def fl_set_formbrowser_scroll(pObject, how):
@@ -14675,6 +15436,8 @@ def fl_set_formbrowser_scroll(pObject, how):
             None, [cty.POINTER(xfc.FL_OBJECT), cty.c_int],
             """void fl_set_formbrowser_scroll(FL_OBJECT * ob, int how)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     ihow = convert_to_int(how)
     keep_elem_refs(pObject, how, ihow)
     _fl_set_formbrowser_scroll(pObject, ihow)
@@ -14696,6 +15459,8 @@ def fl_set_formbrowser_hscrollbar(pObject, how):
             None, [cty.POINTER(xfc.FL_OBJECT), cty.c_int],
             """void fl_set_formbrowser_hscrollbar(FL_OBJECT * ob, int how)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     ihow = convert_to_int(how)
     keep_elem_refs(pObject, how, ihow)
     _fl_set_formbrowser_hscrollbar(pObject, ihow)
@@ -14717,6 +15482,8 @@ def fl_set_formbrowser_vscrollbar(pObject, how):
             None, [cty.POINTER(xfc.FL_OBJECT), cty.c_int],
             """void fl_set_formbrowser_vscrollbar(FL_OBJECT * ob, int how)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     ihow = convert_to_int(how)
     keep_elem_refs(pObject, how, ihow)
     _fl_set_formbrowser_vscrollbar(pObject, ihow)
@@ -14737,6 +15504,8 @@ def fl_get_formbrowser_topform(pObject):
             cty.POINTER(xfc.FL_FORM), [cty.POINTER(xfc.FL_OBJECT)],
             """FL_FORM * fl_get_formbrowser_topform(FL_OBJECT * ob)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     keep_elem_refs(pObject)
     retval = _fl_get_formbrowser_topform(pObject)
     return retval
@@ -14759,6 +15528,9 @@ def fl_set_formbrowser_topform(pObject, pForm):
             cty.c_int, [cty.POINTER(xfc.FL_OBJECT), cty.POINTER(xfc.FL_FORM)],
             """int fl_set_formbrowser_topform(FL_OBJECT * ob, FL_FORM * form)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
+    check_if_FL_FORM_ptr(pForm)
     keep_elem_refs(pObject, pForm)
     retval = _fl_set_formbrowser_topform(pObject, pForm)
     return retval
@@ -14781,6 +15553,8 @@ def fl_set_formbrowser_topform_bynumber(pObject, num):
             """FL_FORM * fl_set_formbrowser_topform_bynumber( \
                FL_OBJECT * ob, int n)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     inum = convert_to_int(num)
     keep_elem_refs(pObject, num, inum)
     retval = _fl_set_formbrowser_topform_bynumber(pObject, inum)
@@ -14806,6 +15580,8 @@ def fl_set_formbrowser_xoffset(pObject, offset):
             cty.c_int, [cty.POINTER(xfc.FL_OBJECT), cty.c_int],
             """int fl_set_formbrowser_xoffset(FL_OBJECT * ob, int offset)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     ioffset = convert_to_int(offset)
     keep_elem_refs(pObject, offset, ioffset)
     retval = _fl_set_formbrowser_xoffset(pObject, ioffset)
@@ -14831,6 +15607,8 @@ def fl_set_formbrowser_yoffset(pObject, offset):
             cty.c_int, [cty.POINTER(xfc.FL_OBJECT), cty.c_int],
             """int fl_set_formbrowser_yoffset(FL_OBJECT * ob, int offset)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     ioffset = convert_to_int(offset)
     keep_elem_refs(pObject, offset, ioffset)
     retval = _fl_set_formbrowser_yoffset(pObject, ioffset)
@@ -14855,6 +15633,8 @@ def fl_get_formbrowser_xoffset(pObject):
             cty.c_int, [cty.POINTER(xfc.FL_OBJECT)],
             """int fl_get_formbrowser_xoffset(FL_OBJECT * ob)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     keep_elem_refs(pObject)
     retval = _fl_get_formbrowser_xoffset(pObject)
     return retval
@@ -14878,17 +15658,20 @@ def fl_get_formbrowser_yoffset(pObject):
             cty.c_int, [cty.POINTER(xfc.FL_OBJECT)],
             """int fl_get_formbrowser_yoffset(FL_OBJECT * ob)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     keep_elem_refs(pObject)
     retval = _fl_get_formbrowser_yoffset(pObject)
     return retval
 
 
-def fl_find_formbrowser_form_number(pObject, pFormCandidate):
+def fl_find_formbrowser_form_number(pObject, pForm):
     """
-        fl_find_formbrowser_form_number(pObject, pFormCandidate) -> num.
+        fl_find_formbrowser_form_number(pObject, pForm) -> num.
 
         @param pObject: formbrowser object
                         (<pointer to xfdata.FL_OBJECT>)
+        @param pForm: form candidate to be found
 
         @status: Untested + NoDoc + NoDemo = NOT OK
     """
@@ -14899,8 +15682,11 @@ def fl_find_formbrowser_form_number(pObject, pFormCandidate):
             """int fl_find_formbrowser_form_number(FL_OBJECT * ob,
                FL_FORM * candidate_form)
             """)
-    keep_elem_refs(pObject, pFormCandidate)
-    retval = _fl_find_formbrowser_form_number(pObject, pFormCandidate)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
+    check_if_FL_FORM_ptr(pForm)
+    keep_elem_refs(pObject, pForm)
+    retval = _fl_find_formbrowser_form_number(pObject, pForm)
     return retval
 
 
@@ -14928,6 +15714,7 @@ def fl_add_formbrowser(frmbrwstype, x, y, w, h, label):
             """FL_OBJECT * fl_add_formbrowser(int type, FL_Coord x,
                FL_Coord y, FL_Coord w, FL_Coord h, const char * label)
             """)
+    check_if_initialized()
     check_admitted_listvalues(frmbrwstype, xfc.FORMBRWSTYPE_list)
     ifrmbrwstype = convert_to_int(frmbrwstype)
     ix = convert_to_FL_Coord(x)
@@ -14959,6 +15746,8 @@ def fl_get_formbrowser_numforms(pObject):
             cty.c_int, [cty.POINTER(xfc.FL_OBJECT)],
             """int fl_get_formbrowser_numforms(FL_OBJECT * ob)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     keep_elem_refs(pObject)
     retval = _fl_get_formbrowser_numforms(pObject)
     return retval
@@ -14979,6 +15768,8 @@ def fl_get_formbrowser_form(pObject, num):
             cty.POINTER(xfc.FL_FORM), [cty.POINTER(xfc.FL_OBJECT), cty.c_int],
             """FL_FORM * fl_get_formbrowser_form(FL_OBJECT * ob, int n)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     inum = convert_to_int(num)
     keep_elem_refs(pObject, num, inum)
     retval = _fl_get_formbrowser_form(pObject, inum)
@@ -15020,6 +15811,7 @@ def fl_add_frame(frametype, x, y, w, h, label):
             """FL_OBJECT * fl_add_frame(int type, FL_Coord x, FL_Coord y,
                FL_Coord w, FL_Coord h, const char * label)
             """)
+    check_if_initialized()
     check_admitted_listvalues(frametype, xfc.FRAMETYPE_list)
     iframetype = convert_to_int(frametype)
     ix = convert_to_FL_Coord(x)
@@ -15065,6 +15857,7 @@ def fl_add_labelframe(frametype, x, y, w, h, label):
             """FL_OBJECT * fl_add_labelframe(int type, FL_Coord x, FL_Coord y,
                FL_Coord w, FL_Coord h, const char * label)
             """)
+    check_if_initialized()
     check_admitted_listvalues(frametype, xfc.FRAMETYPE_list)
     iframetype = convert_to_int(frametype)
     ix = convert_to_FL_Coord(x)
@@ -15115,6 +15908,7 @@ def fl_add_free(freetype, x, y, w, h, label, py_HandlePtr):
                FL_Coord w, FL_Coord h, const char * label,
                FL_HANDLEPTR handle)
             """)
+    check_if_initialized()
     check_admitted_listvalues(freetype, xfc.FREETYPE_list)
     ifreetype = convert_to_int(freetype)
     ix = convert_to_FL_Coord(x)
@@ -15149,6 +15943,7 @@ def fl_set_goodies_font(style, size):
             None, [cty.c_int, cty.c_int],
             """void fl_set_goodies_font(int style, int size)
             """)
+    check_if_initialized()
     istyle = convert_to_int(style)
     isize = convert_to_int(size)
     keep_elem_refs(style, size, istyle, isize)
@@ -15176,6 +15971,7 @@ def fl_show_message(msgtxt1, msgtxt2, msgtxt3):
             """void fl_show_message(const char * p1, const char * p2,
                const char * p3)
             """)
+    check_if_initialized()
     smsgtxt1 = convert_to_string(msgtxt1)
     smsgtxt2 = convert_to_string(msgtxt2)
     smsgtxt3 = convert_to_string(msgtxt3)
@@ -15195,6 +15991,7 @@ def fl_show_messages(p1):
             None, [xfc.STRING],
             """void fl_show_messages(const char * p1)
             """)
+    check_if_initialized()
     sp1 = convert_to_string(p1)
     keep_elem_refs(p1, sp1)
     _fl_show_messages(sp1)
@@ -15217,6 +16014,7 @@ def fl_show_msg(fmttxt):
             None, [xfc.STRING],
             """void fl_show_msg(const char * p1)
             """)
+    check_if_initialized()
     sfmttxt = convert_to_string(fmttxt)
     keep_elem_refs(fmttxt, sfmttxt)
     _fl_show_msg(sfmttxt)
@@ -15236,6 +16034,7 @@ def fl_hide_message():
             None, [],
             """void fl_hide_message()
             """)
+    check_if_initialized()
     _fl_hide_message()
 
 
@@ -15260,6 +16059,7 @@ def fl_show_question(questmsg, p2):
             cty.c_int, [xfc.STRING, cty.c_int],
             """int fl_show_question(const char * p1, int p2)
             """)
+    check_if_initialized()
     squestmsg = convert_to_string(questmsg)
     ip2 = convert_to_int(p2)
     keep_elem_refs(questmsg, p2, squestmsg, ip2)
@@ -15281,6 +16081,7 @@ def fl_hide_question():
             None, [],
             """void fl_hide_question()
             """)
+    check_if_initialized()
     _fl_hide_question()
 
 
@@ -15304,6 +16105,7 @@ def fl_show_alert(title, msg1, msg2, centered):
             """void fl_show_alert(const char * p1, const char * p2,
                const char * p3, int p4)
             """)
+    check_if_initialized()
     stitle = convert_to_string(title)
     smsg1 = convert_to_string(msg1)
     smsg2 = convert_to_string(msg2)
@@ -15330,6 +16132,7 @@ def fl_show_alert2(centered, fmt):
             None, [cty.c_int, xfc.STRING],
             """void fl_show_alert2(int c, const char * fmt)
             """)
+    check_if_initialized()
     icentered = convert_to_int(centered)
     sfmt = convert_to_string(fmt)
     keep_elem_refs(centered, fmt, icentered, sfmt)
@@ -15350,6 +16153,7 @@ def fl_hide_alert():
             None, [],
             """void fl_hide_alert()
             """)
+    check_if_initialized()
     _fl_hide_alert()
 
 
@@ -15371,6 +16175,7 @@ def fl_show_input(msgtxt, defstr):
             xfc.STRING, [xfc.STRING, xfc.STRING],
             """const char * fl_show_input(const char * p1, const char * p2)
             """)
+    check_if_initialized()
     smsgtxt = convert_to_string(msgtxt)
     sdefstr = convert_to_string(defstr)
     keep_elem_refs(msgtxt, defstr, smsgtxt, sdefstr)
@@ -15392,6 +16197,7 @@ def fl_hide_input():
             None, [],
             """void fl_hide_input()
             """)
+    check_if_initialized()
     _fl_hide_input()
 
 
@@ -15404,7 +16210,10 @@ def fl_show_simple_input(msgtxt, defstr):
         @param msgtxt: message used to ask for input
         @param defstr: default user answer in input
 
-        @status: Untested + NoDoc + NoDemo = NOT OK
+        @example: inpstr = fl_show_simple_input("Insert name and surname:",
+            "John Doe")
+
+        @status: Tested + Doc + NoDemo = OK
     """
 
     _fl_show_simple_input = cfuncproto(
@@ -15413,6 +16222,7 @@ def fl_show_simple_input(msgtxt, defstr):
             """const char * fl_show_simple_input(const char * p1,
                const char * p2)
             """)
+    check_if_initialized()
     smsgtxt = convert_to_string(msgtxt)
     sdefstr = convert_to_string(defstr)
     keep_elem_refs(msgtxt, defstr, smsgtxt, sdefstr)
@@ -15438,6 +16248,7 @@ def fl_show_colormap(oldcolr):
             cty.c_int, [cty.c_int],
             """int fl_show_colormap(int p1)
             """)
+    check_if_initialized()
     ioldcolr = convert_to_int(oldcolr)
     keep_elem_refs(oldcolr, ioldcolr)
     retval = _fl_show_colormap(ioldcolr)
@@ -15460,6 +16271,7 @@ def fl_show_choices(msgtxt, p2, p3, p4, p5, p6):
             """int fl_show_choices(const char * p1, int p2,
                const char * p3, const char * p4, const char * p5, int p6)
             """)
+    check_if_initialized()
     smsgtxt = convert_to_string(msgtxt)
     ip2 = convert_to_int(p2)
     sp3 = convert_to_string(p3)
@@ -15486,6 +16298,7 @@ def fl_show_choice(p1, p2, p3, p4, p5, p6, p7, p8):
                const char * p3, int p4, const char * p5, const char * p6,
                const char * p7, int p8)
             """)
+    check_if_initialized()
     sp1 = convert_to_string(p1)
     sp2 = convert_to_string(p2)
     sp3 = convert_to_string(p3)
@@ -15511,6 +16324,7 @@ def fl_hide_choice():
             None, [],
             """void fl_hide_choice()
             """)
+    check_if_initialized()
     _fl_hide_choice()
 
 
@@ -15527,6 +16341,7 @@ def fl_set_choices_shortcut(p1, p2, p3):
             """void fl_set_choices_shortcut(const char * p1, const char * p2,
                const char * p3)
             """)
+    check_if_initialized()
     sp1 = convert_to_string(p1)
     sp2 = convert_to_string(p2)
     sp3 = convert_to_string(p3)
@@ -15552,6 +16367,7 @@ def fl_show_oneliner(p1, p2, p3):
             """void fl_show_oneliner(const char * p1, FL_Coord p2,
                FL_Coord p3)
             """)
+    check_if_initialized()
     sp1 = convert_to_string(p1)
     ip2 = convert_to_FL_Coord(p2)
     ip3 = convert_to_FL_Coord(p3)
@@ -15571,6 +16387,7 @@ def fl_hide_oneliner():
             None, [],
             """void fl_hide_oneliner()
             """)
+    check_if_initialized()
     _fl_hide_oneliner()
 
 
@@ -15600,6 +16417,7 @@ def fl_set_oneliner_font(style, size):
             None, [cty.c_int, cty.c_int],
             """void fl_set_oneliner_font(int p1, int p2)
             """)
+    check_if_initialized()
     check_admitted_listvalues(style, xfc.TEXTSTYLE_list)
     check_admitted_listvalues(size, xfc.FONTSIZE_list)
     istyle = convert_to_int(style)
@@ -15620,6 +16438,7 @@ def fl_set_oneliner_color(fgcolr, bgcolr):
             None, [xfc.FL_COLOR, xfc.FL_COLOR],
             """void fl_set_oneliner_color(FL_COLOR p1, FL_COLOR p2)
             """)
+    check_if_initialized()
     check_admitted_listvalues(fgcolr, xfc.COLOR_list)
     check_admitted_listvalues(bgcolr, xfc.COLOR_list)
     ulfgcolr = convert_to_FL_COLOR(fgcolr)
@@ -15654,6 +16473,7 @@ def fl_set_tooltip_font(style, size):
             None, [cty.c_int, cty.c_int],
             """void fl_set_tooltip_font(int p1, int p2)
             """)
+    check_if_initialized()
     check_admitted_listvalues(style, xfc.TEXTSTYLE_list)
     check_admitted_listvalues(size, xfc.FONTSIZE_list)
     istyle = convert_to_int(style)
@@ -15674,6 +16494,7 @@ def fl_set_tooltip_color(fgcolr, bgcolr):
             None, [xfc.FL_COLOR, xfc.FL_COLOR],
             """void fl_set_tooltip_color(FL_COLOR p1, FL_COLOR p2)
             """)
+    check_if_initialized()
     check_admitted_listvalues(fgcolr, xfc.COLOR_list)
     check_admitted_listvalues(bgcolr, xfc.COLOR_list)
     ulfgcolr = convert_to_FL_COLOR(fgcolr)
@@ -15703,6 +16524,7 @@ def fl_set_tooltip_boxtype(boxtype):
             None, [cty.c_int],
             """void fl_set_tooltip_boxtype(int p1)
             """)
+    check_if_initialized()
     check_admitted_listvalues(boxtype, xfc.BOXTYPE_list)
     iboxtype = convert_to_int(boxtype)
     keep_elem_refs(boxtype, iboxtype)
@@ -15728,6 +16550,7 @@ def fl_set_tooltip_lalign(align):
             None, [cty.c_int],
             """void fl_set_tooltip_lalign(int p1)
             """)
+    check_if_initialized()
     check_admitted_listvalues(align, xfc.ALIGN_list)
     ialign = convert_to_int(align)
     keep_elem_refs(align, ialign)
@@ -15742,7 +16565,8 @@ def fl_exe_command(command, block):
 
         @param command: a shell command line
         @param block: blocking flag indicating if the function should
-           wait for the child process to finish (non-zero) or not (zero).
+                      wait for the child process to finish or not (<int>)
+        @type block: non-zero (for waiting) or 0 (don't wait).
 
         @status: Untested + NoDoc + NoDemo = NOT OK
     """
@@ -15752,6 +16576,7 @@ def fl_exe_command(command, block):
             cty.c_long, [xfc.STRING, cty.c_int],
             """long int fl_exe_command(const char * p1, int p2)
             """)
+    check_if_initialized()
     scommand = convert_to_string(command)
     iblock = convert_to_int(block)
     keep_elem_refs(command, block, scommand, iblock)
@@ -15780,6 +16605,7 @@ def fl_end_command(pid):
             cty.c_int, [cty.c_long],
             """int fl_end_command(long int p1)
             """)
+    check_if_initialized()
     lpid = convert_to_long(pid)
     keep_elem_refs(pid, lpid)
     retval = _fl_end_command(lpid)
@@ -15807,6 +16633,7 @@ def fl_check_command(pid):
             cty.c_int, [cty.c_long],
             """int fl_check_command(long int p1)
             """)
+    check_if_initialized()
     lpid = convert_to_long(pid)
     keep_elem_refs(pid, lpid)
     retval = _fl_check_command(lpid)
@@ -15822,9 +16649,11 @@ def fl_popen(command, otype):
         the command browser.
 
         @param command: filename to execute (<string>)
-        @param otype: type for opening (e.g. w, r ..) (<string>)
+        @values: existing filename
+        @param otype: type of opening (e.g. w, r ..) (<string>)
+        @values: letter between 'w', 'r', etc..
 
-        @returns: pointer to FILE opened
+        @returns: file opened (<pointer to FILE>)
 
         @status: Untested + NoDoc + NoDemo = NOT OK
     """
@@ -15834,6 +16663,7 @@ def fl_popen(command, otype):
             cty.POINTER(xfc.FILE), [xfc.STRING, xfc.STRING],
             """FILE * fl_popen(const char * p1, const char * p2)
             """)
+    check_if_initialized()
     scommand = convert_to_string(command)
     sotype = convert_to_string(otype)
     keep_elem_refs(command, otype, scommand, sotype)
@@ -15848,9 +16678,14 @@ def fl_pclose(pFile):
         Cleans up the child process executed.
 
         @param pFile: opened file stream returned by fl_popen()
-                      [pointer to FILE]
+                      (<pointer to FILE>)
 
-        @status: Untested + NoDoc + NoDemo = NOT OK
+        @returns: non-zero (<int>) or -1 (on failure)
+
+        @example: if fl_pclose(pfile) == -1:
+        @example: ...
+
+        @status: Tested + Doc + NoDemo = OK
     """
 
     _fl_pclose = cfuncproto(
@@ -15858,6 +16693,7 @@ def fl_pclose(pFile):
             cty.c_int, [cty.POINTER(xfc.FILE)],
             """int fl_pclose(FILE * p1)
             """)
+    check_if_initialized()
     keep_elem_refs(pFile)
     retval = _fl_pclose(pFile)
     return retval
@@ -15889,8 +16725,10 @@ def fl_show_command_log(border):
         Shows the log of the command output.
 
         @param border: window manager decoration (<int>)
-        @type border: (from xfdata module) FL_FULLBORDER, FL_TRANSIENT,
-                      FL_NOBORDER
+        @values: (from xfdata module) L{FL_FULLBORDER}, L{FL_TRANSIENT},
+                      L{FL_NOBORDER}
+        @type border: (from xfdata module) L{FL_FULLBORDER}, L{FL_TRANSIENT},
+                      L{FL_NOBORDER}
 
         @status: Untested + NoDoc + NoDemo = NOT OK
     """
@@ -15900,6 +16738,7 @@ def fl_show_command_log(border):
             None, [cty.c_int],
             """void fl_show_command_log(int p1)
             """)
+    check_if_initialized()
     check_admitted_listvalues(border, xfc.DECORATION_list)
     iborder = convert_to_int(border)
     keep_elem_refs(border, iborder)
@@ -15920,6 +16759,7 @@ def fl_hide_command_log():
             None, [],
             """void fl_hide_command_log()
             """)
+    check_if_initialized()
     _fl_hide_command_log()
 
 
@@ -15937,6 +16777,7 @@ def fl_clear_command_log():
             None, [],
             """void fl_clear_command_log()
             """)
+    check_if_initialized()
     _fl_clear_command_log()
 
 
@@ -15956,6 +16797,7 @@ def fl_addto_command_log(txtstr):
             None, [xfc.STRING],
             """void fl_addto_command_log(const char * p1)
             """)
+    check_if_initialized()
     stxtstr = convert_to_string(txtstr)
     keep_elem_refs(txtstr, stxtstr)
     _fl_addto_command_log(stxtstr)
@@ -15978,6 +16820,7 @@ def fl_set_command_log_position(x, y):
             None, [cty.c_int, cty.c_int],
             """void fl_set_command_log_position(int p1, int p2)
             """)
+    check_if_initialized()
     ix = convert_to_int(x)
     iy = convert_to_int(y)
     keep_elem_refs(x, y, ix, iy)
@@ -15996,6 +16839,7 @@ def fl_get_command_log_fdstruct():
             cty.POINTER(xfc.FD_CMDLOG), [],
             """)FD_CMDLOG * fl_get_command_log_fdstruct()
             """)
+    check_if_initialized()
     retval = _fl_get_command_log_fdstruct()
     return retval
 
@@ -16017,6 +16861,7 @@ def fl_use_fselector(num):
             cty.c_int, [cty.c_int],
             """int fl_use_fselector(int p1)
             """)
+    check_if_initialized()
     inum = convert_to_int(num)
     keep_elem_refs(num, inum)
     retval = _fl_use_fselector(inum)
@@ -16040,6 +16885,7 @@ def fl_show_fselector(msgtxt, p2, p3, p4):
             """const char * fl_show_fselector(const char * p1,
                const char * p2, const char * p3, const char * p4)
             """)
+    check_if_initialized()
     smsgtxt = convert_to_string(msgtxt)
     sp2 = convert_to_string(p2)
     sp3 = convert_to_string(p3)
@@ -16069,6 +16915,7 @@ def fl_set_fselector_fontsize(size):
             None, [cty.c_int],
             """void fl_set_fselector_fontsize(int p1)
             """)
+    check_if_initialized()
     check_admitted_listvalues(size, xfc.FONTSIZE_list)
     isize = convert_to_int(size)
     keep_elem_refs(size, isize)
@@ -16097,6 +16944,7 @@ def fl_set_fselector_fontstyle(style):
             None, [cty.c_int],
             """void fl_set_fselector_fontstyle(int p1)
             """)
+    check_if_initialized()
     check_admitted_listvalues(style, xfc.TEXTSTYLE_list)
     istyle = convert_to_int(style)
     keep_elem_refs(style, istyle)
@@ -16122,6 +16970,7 @@ def fl_set_fselector_placement(place):
             None, [cty.c_int],
             """void fl_set_fselector_placement(int p1)
             """)
+    check_if_initialized()
     check_admitted_listvalues(place, xfc.PLACE_list)
     iplace = convert_to_int(place)
     keep_elem_refs(place, iplace)
@@ -16144,6 +16993,7 @@ def fl_set_fselector_border(border):
             None, [cty.c_int],
             """void fl_set_fselector_border(int p1)
             """)
+    check_if_initialized()
     check_admitted_listvalues(border, xfc.DECORATION_list)
     iborder = convert_to_int(border)
     keep_elem_refs(border, iborder)
@@ -16175,7 +17025,7 @@ def fl_set_fselector_callback(py_FSCB, vdata):
 
         @param py_FSCB: python function callback, returning value
         @type py_FSCB: __ funcname (string, ptr_void) -> num __
-        @param vdata: user data to be passed to function [pointer to void]
+        @param vdata: user data to be passed to function (<pointer to void>)
 
         @status: Tested + NoDoc + Demo = OK
     """
@@ -16185,6 +17035,7 @@ def fl_set_fselector_callback(py_FSCB, vdata):
             None, [FL_FSCB, cty.c_void_p],
             """void fl_set_fselector_callback(FL_FSCB p1, void * p2)
             """)
+    check_if_initialized()
     c_FSCB = FL_FSCB(py_FSCB)
     pvdata = cty.cast(vdata, cty.c_void_p)
     keep_cfunc_refs(c_FSCB, py_FSCB)
@@ -16209,6 +17060,7 @@ def fl_get_filename():
             xfc.STRING, [],
             """const char * fl_get_filename()
             """)
+    check_if_initialized()
     retval = _fl_get_filename()
     return retval
 
@@ -16245,6 +17097,7 @@ def fl_get_pattern():
             xfc.STRING, [],
             """const char * fl_get_pattern()
             """)
+    check_if_initialized()
     retval = _fl_get_pattern()
     return retval
 
@@ -16263,6 +17116,7 @@ def fl_set_directory(dirname):
             cty.c_int, [xfc.STRING],
             """int fl_set_directory(const char * p1)
             """)
+    check_if_initialized()
     sdirname = convert_to_string(dirname)
     keep_elem_refs(dirname, sdirname)
     retval = _fl_set_directory(sdirname)
@@ -16283,6 +17137,7 @@ def fl_set_pattern(pattern):
             None, [xfc.STRING],
             """void fl_set_pattern(const char * p1)
             """)
+    check_if_initialized()
     spattern = convert_to_string(pattern)
     keep_elem_refs(pattern, spattern)
     _fl_set_pattern(spattern)
@@ -16300,6 +17155,7 @@ def fl_refresh_fselector():
             None, [],
             """void fl_refresh_fselector()
             """)
+    check_if_initialized()
     _fl_refresh_fselector()
 
 
@@ -16324,6 +17180,7 @@ def fl_add_fselector_appbutton(label, py_fn, vdata):
             """void fl_add_fselector_appbutton(const char * p1,
                const char * p2, void * p3)
             """)
+    check_if_initialized()
     slabel = convert_to_string(label)
     c_fn = cfunc_none_voidp(py_fn)
     pvdata = cty.cast(vdata, cty.c_void_p)
@@ -16346,6 +17203,7 @@ def fl_remove_fselector_appbutton(label):
             None, [xfc.STRING],
             """void fl_remove_fselector_appbutton(const char * p1)
             """)
+    check_if_initialized()
     slabel = convert_to_string(label)
     keep_elem_refs(label, slabel)
     _fl_remove_fselector_appbutton(slabel)
@@ -16364,6 +17222,7 @@ def fl_disable_fselector_cache(yes):
             None, [cty.c_int],
             """void fl_disable_fselector_cache(int p1)
             """)
+    check_if_initialized()
     iyes = convert_to_int(yes)
     keep_elem_refs(yes, iyes)
     _fl_disable_fselector_cache(iyes)
@@ -16381,6 +17240,7 @@ def fl_invalidate_fselector_cache():
             None, [],
             """void fl_invalidate_fselector_cache()
             """)
+    check_if_initialized()
     _fl_invalidate_fselector_cache()
 
 
@@ -16396,6 +17256,7 @@ def fl_get_fselector_form():
             cty.POINTER(xfc.FL_FORM), [],
             """FL_FORM * fl_get_fselector_form()
             """)
+    check_if_initialized()
     retval = _fl_get_fselector_form()
     return retval
 
@@ -16414,6 +17275,7 @@ def fl_get_fselector_fdstruct():
             cty.POINTER(xfc.FD_FSELECTOR), [],
             """FD_FSELECTOR * fl_get_fselector_fdstruct()
             """)
+    check_if_initialized()
     retval = _fl_get_fselector_fdstruct()
     return retval
 
@@ -16430,6 +17292,7 @@ def fl_hide_fselector():
             None, [],
             """void fl_hide_fselector()
             """)
+    check_if_initialized()
     _fl_hide_fselector()
 
 
@@ -16445,6 +17308,7 @@ def fl_set_fselector_filetype_marker(p1, p2, p3, p4, p5):
             """void fl_set_fselector_filetype_marker(int p1, int p2, int p3,
                int p4, int p5)
             """)
+    check_if_initialized()
     ip1 = convert_to_int(p1)
     ip2 = convert_to_int(p2)
     ip3 = convert_to_int(p3)
@@ -16479,6 +17343,7 @@ def fl_goodies_atclose(pForm, vdata):
             cty.c_int, [cty.POINTER(xfc.FL_FORM), cty.c_void_p],
             """int fl_goodies_atclose(FL_FORM * p1, void * p2)
             """)
+    check_if_initialized()
     pvdata = cty.cast(vdata, cty.c_void_p)
     keep_elem_refs(pForm, vdata, pvdata)
     retval = _fl_goodies_atclose(pForm, pvdata)
@@ -16523,6 +17388,7 @@ def fl_add_input(inputtype, x, y, w, h, label):
             """FL_OBJECT * fl_add_input(int type, FL_Coord x, FL_Coord y,
                FL_Coord w, FL_Coord h, const char * label)
             """)
+    check_if_initialized()
     check_admitted_listvalues(inputtype, xfc.INPUTTYPE_list)
     iinputtype = convert_to_int(inputtype)
     ix = convert_to_FL_Coord(x)
@@ -16555,6 +17421,8 @@ def fl_set_input(pObject, text):
             None, [cty.POINTER(xfc.FL_OBJECT), xfc.STRING],
             """void fl_set_input(FL_OBJECT * ob, const char * str)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     stext = convert_to_string(text)
     keep_elem_refs(pObject, text, stext)
     _fl_set_input(pObject, stext)
@@ -16581,6 +17449,8 @@ def fl_set_input_color(pObject, txtcolr, curscolr):
             """void fl_set_input_color(FL_OBJECT * ob, FL_COLOR textcol,
                FL_COLOR curscol)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     check_admitted_listvalues(txtcolr, xfc.COLOR_list)
     check_admitted_listvalues(curscolr, xfc.COLOR_list)
     ultxtcolr = convert_to_FL_COLOR(txtcolr)
@@ -16612,11 +17482,13 @@ def fl_get_input_color(pObject):
             """void fl_get_input_color(FL_OBJECT * ob, FL_COLOR * textcol,
                FL_COLOR * curscol)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     txtcolr, ptxtcolr = make_FL_COLOR_and_pointer()
     curscolr, pcurscolr = make_FL_COLOR_and_pointer()
     keep_elem_refs(pObject, txtcolr, curscolr)
     _fl_get_input_color(pObject, ptxtcolr, pcurscolr)
-    return txtcolr, curscolr
+    return txtcolr.value, curscolr.value
 
 
 def fl_set_input_scroll(pObject, yes):
@@ -16635,6 +17507,8 @@ def fl_set_input_scroll(pObject, yes):
             None, [cty.POINTER(xfc.FL_OBJECT), cty.c_int],
             """void fl_set_input_scroll(FL_OBJECT * ob, int yes)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     iyes = convert_to_int(yes)
     keep_elem_refs(pObject, yes, iyes)
     _fl_set_input_scroll(pObject, iyes)
@@ -16659,6 +17533,8 @@ def fl_set_input_cursorpos(pObject, xpos, ypos):
             None, [cty.POINTER(xfc.FL_OBJECT), cty.c_int, cty.c_int],
             """void fl_set_input_cursorpos(FL_OBJECT * ob, int xpos, int ypos)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     ixpos = convert_to_int(xpos)
     iypos = convert_to_int(ypos)
     keep_elem_refs(pObject, xpos, ypos, ixpos, iypos)
@@ -16685,6 +17561,8 @@ def fl_set_input_selected(pObject, flag):
             None, [cty.POINTER(xfc.FL_OBJECT), cty.c_int],
             """void fl_set_input_selected(FL_OBJECT * ob, int yes)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     iflag = convert_to_int(flag)
     keep_elem_refs(pObject, flag, iflag)
     _fl_set_input_selected(pObject, iflag)
@@ -16712,6 +17590,8 @@ def fl_set_input_selected_range(pObject, begin, end):
             """void fl_set_input_selected_range(FL_OBJECT * ob,
                int begin, int end)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     ibegin = convert_to_int(begin)
     iend = convert_to_int(end)
     keep_elem_refs(pObject, begin, end, ibegin, iend)
@@ -16744,11 +17624,13 @@ def fl_get_input_selected_range(pObject):
             """const char * fl_get_input_selected_range(FL_OBJECT * ob,
                int * begin, int * end)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     begin, pbegin = make_int_and_pointer()
     end, pend = make_int_and_pointer()
     keep_elem_refs(pObject, begin, end, pbegin, pend)
     retval = _fl_get_input_selected_range(pObject, pbegin, pend)
-    return retval, begin, end
+    return retval, begin.value, end.value
 
 
 def fl_set_input_maxchars(pObject, maxchars):
@@ -16773,6 +17655,8 @@ def fl_set_input_maxchars(pObject, maxchars):
             None, [cty.POINTER(xfc.FL_OBJECT), cty.c_int],
             """void fl_set_input_maxchars(FL_OBJECT * ob, int maxchars)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     imaxchars = convert_to_int(maxchars)
     keep_elem_refs(pObject, maxchars, imaxchars)
     _fl_set_input_maxchars(pObject, imaxchars)
@@ -16798,6 +17682,8 @@ def fl_set_input_format(pObject, fmt, sep):
             None, [cty.POINTER(xfc.FL_OBJECT), cty.c_int, cty.c_int],
             """void fl_set_input_format(FL_OBJECT * ob, int fmt, int sep)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     check_admitted_listvalues(fmt, xfc.DATEFMT_list)
     if isinstance(sep, str):
         ordsep = ord(sep)        # workaround to let a character as int argument
@@ -16826,6 +17712,8 @@ def fl_set_input_hscrollbar(pObject, pref):
             None, [cty.POINTER(xfc.FL_OBJECT), cty.c_int],
             """void fl_set_input_hscrollbar(FL_OBJECT * ob, int pref)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     check_admitted_listvalues(pref, xfc.SCROLLBARVAL_list)
     ipref = convert_to_int(pref)
     keep_elem_refs(pObject, pref, ipref)
@@ -16849,6 +17737,8 @@ def fl_set_input_vscrollbar(pObject, pref):
             None, [cty.POINTER(xfc.FL_OBJECT), cty.c_int],
             """void fl_set_input_vscrollbar(FL_OBJECT * ob, int pref)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     check_admitted_listvalues(pref, xfc.SCROLLBARVAL_list)
     ipref = convert_to_int(pref)
     keep_elem_refs(pObject, pref, ipref)
@@ -16871,6 +17761,8 @@ def fl_set_input_topline(pObject, top):
             None, [cty.POINTER(xfc.FL_OBJECT), cty.c_int],
             """void fl_set_input_topline(FL_OBJECT * ob, int top)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     itop = convert_to_int(top)
     keep_elem_refs(pObject, top, itop)
     _fl_set_input_topline(pObject, itop)
@@ -16891,6 +17783,8 @@ def fl_set_input_scrollbarsize(pObject, hh, vw):
             None, [cty.POINTER(xfc.FL_OBJECT), cty.c_int, cty.c_int],
             """void fl_set_input_scrollbarsize(FL_OBJECT * ob, int hh, int vw)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     ihh = convert_to_int(hh)
     ivw = convert_to_int(vw)
     keep_elem_refs(pObject, hh, vw, ihh, ivw)
@@ -16915,11 +17809,13 @@ def fl_get_input_scrollbarsize(pObject):
             """void fl_get_input_scrollbarsize(FL_OBJECT * ob,
                int * hh, int * vw)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     hh, phh = make_int_and_pointer()
     vw, pvw = make_int_and_pointer()
     keep_elem_refs(pObject, hh, vw)
     _fl_get_input_scrollbarsize(pObject, phh, pvw)
-    return hh, vw
+    return hh.value, vw.value
 
 
 def fl_set_input_xoffset(pObject, xoff):
@@ -16937,6 +17833,8 @@ def fl_set_input_xoffset(pObject, xoff):
             None, [cty.POINTER(xfc.FL_OBJECT), cty.c_int],
             """void fl_set_input_xoffset(FL_OBJECT * ob, int xoff)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     ixoff = convert_to_int(xoff)
     keep_elem_refs(pObject, xoff, ixoff)
     _fl_set_input_xoffset(pObject, ixoff)
@@ -16957,6 +17855,8 @@ def fl_get_input_xoffset(pObject):
             cty.c_int, [cty.POINTER(xfc.FL_OBJECT)],
             """int fl_get_input_xoffset(FL_OBJECT * ob)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     keep_elem_refs(pObject)
     retval = _fl_get_input_xoffset(pObject)
     return retval
@@ -16977,6 +17877,8 @@ def fl_set_input_fieldchar(pObject, fldchar):
             cty.c_int, [cty.POINTER(xfc.FL_OBJECT), cty.c_int],
             """int fl_set_input_fieldchar(FL_OBJECT * ob, int fchar)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     ifldchar = convert_to_int(fldchar)
     keep_elem_refs(pObject, fldchar, ifldchar)
     retval = _fl_set_input_fieldchar(pObject, ifldchar)
@@ -16998,6 +17900,8 @@ def fl_get_input_topline(pObject):
             cty.c_int, [cty.POINTER(xfc.FL_OBJECT)],
             """int fl_get_input_topline(FL_OBJECT * ob)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     keep_elem_refs(pObject)
     retval = _fl_get_input_topline(pObject)
     return retval
@@ -17018,6 +17922,8 @@ def fl_get_input_screenlines(pObject):
             cty.c_int, [cty.POINTER(xfc.FL_OBJECT)],
             """int fl_get_input_screenlines(FL_OBJECT * ob)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     keep_elem_refs(pObject)
     retval = _fl_get_input_screenlines(pObject)
     return retval
@@ -17042,11 +17948,13 @@ def fl_get_input_cursorpos(pObject):
             cty.POINTER(cty.c_int)],
             """int fl_get_input_cursorpos(FL_OBJECT * ob, int * x, int * y)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     x, px = make_int_and_pointer()
     y, py = make_int_and_pointer()
     keep_elem_refs(pObject, x, y)
     retval = _fl_get_input_cursorpos(pObject, px, py)
-    return retval, x, y
+    return retval, x.value, y.value
 
 
 def fl_set_input_cursor_visible(pObject, visible):
@@ -17064,6 +17972,8 @@ def fl_set_input_cursor_visible(pObject, visible):
             None, [cty.POINTER(xfc.FL_OBJECT), cty.c_int],
             """void fl_set_input_cursor_visible(FL_OBJECT * ob, int visible)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     ivisible = convert_to_int(visible)
     keep_elem_refs(pObject, visible, ivisible)
     _fl_set_input_cursor_visible(pObject, ivisible)
@@ -17084,6 +17994,8 @@ def fl_get_input_numberoflines(pObject):
             cty.c_int, [cty.POINTER(xfc.FL_OBJECT)],
             """int fl_get_input_numberoflines(FL_OBJECT * ob)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     keep_elem_refs(pObject)
     retval = _fl_get_input_numberoflines(pObject)
     return retval
@@ -17108,11 +18020,13 @@ def fl_get_input_format(pObject):
             cty.POINTER(cty.c_int)],
             """void fl_get_input_format(FL_OBJECT * ob, int * fmt, int * sep)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     fmt, pfmt = make_int_and_pointer()
     sep, psep = make_int_and_pointer()
     keep_elem_refs(pObject, fmt, sep, pfmt, psep)
     _fl_get_input_format(pObject, pfmt, psep)
-    return fmt, sep
+    return fmt.value, sep.value
 
 
 def fl_get_input(pObject):
@@ -17130,6 +18044,8 @@ def fl_get_input(pObject):
             xfc.STRING, [cty.POINTER(xfc.FL_OBJECT)],
             """const char * fl_get_input(FL_OBJECT * ob)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     keep_elem_refs(pObject)
     retval = _fl_get_input(pObject)
     return retval
@@ -17154,6 +18070,8 @@ def fl_set_input_filter(pObject, py_InputValidator):
             """FL_INPUTVALIDATOR fl_set_input_filter(FL_OBJECT * ob,
                FL_INPUTVALIDATOR validate)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     c_InputValidator = FL_INPUTVALIDATOR(py_InputValidator)
     keep_cfunc_refs(c_InputValidator, py_InputValidator)
     keep_elem_refs(pObject)
@@ -17182,6 +18100,8 @@ def fl_validate_input(pObject):
             cty.c_int, [cty.POINTER(xfc.FL_OBJECT)],
             """int fl_validate_input(FL_OBJECT * obj)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     keep_elem_refs(pObject)
     retval = _fl_validate_input(pObject)
     return retval
@@ -17207,6 +18127,7 @@ def fl_set_input_editkeymap(pEditKeymap):
             None, [cty.POINTER(xfc.FL_EditKeymap)],
             """void fl_set_input_editkeymap(const char * keymap)
             """)
+    check_if_initialized()
     keep_elem_refs(pEditKeymap)
     _fl_set_input_editkeymap(pEditKeymap)
 
@@ -17274,6 +18195,7 @@ def fl_add_nmenu(nmenutype, x, y, w, h, label):
             """FL_OBJECT * fl_add_nmenu(int p1, FL_Coord p2, FL_Coord p3,
                FL_Coord p4, FL_Coord p5, const char * p6)
             """)
+    check_if_initialized()
     check_admitted_listvalues(nmenutype, xfc.NMENUTYPE_list)
     inmenutype = convert_to_int(nmenutype)
     ix = convert_to_FL_Coord(x)
@@ -17300,6 +18222,8 @@ def fl_clear_nmenu(pObject):
             cty.c_int, [cty.POINTER(xfc.FL_OBJECT)],
             """int fl_clear_nmenu(FL_OBJECT * p1)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     keep_elem_refs(pObject)
     retval = _fl_clear_nmenu(pObject)
     return retval
@@ -17322,6 +18246,8 @@ def fl_add_nmenu_items(pObject, itemstr):
             """FL_POPUP_ENTRY * fl_add_nmenu_items(FL_OBJECT * p1,
                const char * p2)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     sitemstr = convert_to_string(itemstr)
     keep_elem_refs(pObject, itemstr, sitemstr)
     retval = _fl_add_nmenu_items(pObject, sitemstr)
@@ -17347,6 +18273,8 @@ def fl_insert_nmenu_items(pObject, pPopupEntry, itemstr):
             """FL_POPUP_ENTRY * fl_insert_nmenu_items(FL_OBJECT * p1,
                FL_POPUP_ENTRY * p2, const char * p3)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     sitemstr = convert_to_string(itemstr)
     keep_elem_refs(pObject, pPopupEntry, itemstr, sitemstr)
     retval = _fl_insert_nmenu_items(pObject, pPopupEntry, sitemstr)
@@ -17370,6 +18298,8 @@ def fl_replace_nmenu_item(pObject, pPopupEntry, itemstr):
             """FL_POPUP_ENTRY * fl_replace_nmenu_item(FL_OBJECT * p1,
                FL_POPUP_ENTRY * p2, const char * p3)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     sitemstr = convert_to_string(itemstr)
     keep_elem_refs(pObject, pPopupEntry, itemstr, sitemstr)
     retval = _fl_replace_nmenu_item(pObject, pPopupEntry, sitemstr)
@@ -17390,6 +18320,8 @@ def fl_delete_nmenu_item(pObject, pPopupEntry):
             cty.POINTER(xfc.FL_POPUP_ENTRY)],
             """int fl_delete_nmenu_item(FL_OBJECT * p1, FL_POPUP_ENTRY * p2)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     keep_elem_refs(pObject, pPopupEntry)
     retval = _fl_delete_nmenu_item(pObject, pPopupEntry)
     return retval
@@ -17410,6 +18342,8 @@ def fl_set_nmenu_items(pObject, pPopupItem):
             """FL_POPUP_ENTRY * fl_set_nmenu_items(FL_OBJECT * p1,
                FL_POPUP_ITEM * p2)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     keep_elem_refs(pObject, pPopupItem)
     retval = _fl_set_nmenu_items(pObject, pPopupItem)
     return retval
@@ -17436,6 +18370,8 @@ def fl_add_nmenu_items2(pObject, pPopupItem):
             """FL_POPUP_ENTRY * fl_add_nmenu_items2(FL_OBJECT * obj,
                FL_POPUP_ITEM * p2)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     keep_elem_refs(pObject, pPopupItem)
     retval = _fl_add_nmenu_items2(pObject, pPopupItem)
     return retval
@@ -17462,6 +18398,8 @@ def fl_insert_nmenu_items2(pObject, pPopupEntry, pPopupItem):
             """FL_POPUP_ENTRY * fl_insert_nmenu_items2(FL_OBJECT * obj,
                FL_POPUP_ITEM * p2, FL_POPUP_ITEM * p3)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     keep_elem_refs(pObject, pPopupEntry, pPopupItem)
     retval = _fl_insert_nmenu_items2(pObject, pPopupEntry, pPopupItem)
     return retval
@@ -17488,6 +18426,8 @@ def fl_replace_nmenu_items2(pObject, pPopupEntry, pPopupItem):
             """FL_POPUP_ENTRY * fl_replace_nmenu_items2(FL_OBJECT * obj,
                FL_POPUP_ENTRY * p2, FL_POPUP_ITEM * p3)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     keep_elem_refs(pObject, pPopupEntry, pPopupItem)
     retval = _fl_replace_nmenu_items2(pObject, pPopupEntry, pPopupItem)
     return retval
@@ -17508,6 +18448,7 @@ def fl_get_nmenu_popup(pObject):
             cty.POINTER(xfc.FL_POPUP), [cty.POINTER(xfc.FL_OBJECT)],
             """FL_POPUP * fl_get_nmenu_popup(FL_OBJECT * p1)
             """)
+    check_if_FL_OBJECT_ptr(pObject)
     keep_elem_refs(pObject)
     retval = _fl_get_nmenu_popup(pObject)
     return retval
@@ -17528,6 +18469,8 @@ def fl_set_nmenu_popup(pObject, pPopup):
             cty.c_int, [cty.POINTER(xfc.FL_OBJECT), cty.POINTER(xfc.FL_POPUP)],
             """int fl_set_nmenu_popup(FL_OBJECT * p1, FL_POPUP * p2)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     keep_elem_refs(pObject, pPopup)
     retval = _fl_set_nmenu_popup(pObject, pPopup)
     return retval
@@ -17548,6 +18491,8 @@ def fl_get_nmenu_item(pObject):
             cty.POINTER(xfc.FL_POPUP_RETURN), [cty.POINTER(xfc.FL_OBJECT)],
             """FL_POPUP_RETURN * fl_get_nmenu_item(FL_OBJECT * p1)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     keep_elem_refs(pObject)
     retval = _fl_get_nmenu_item(pObject)
     return retval
@@ -17569,6 +18514,8 @@ def fl_get_nmenu_item_by_value(pObject, value):
             """FL_POPUP_ENTRY * fl_get_nmenu_item_by_value(FL_OBJECT * p1,
                long int p2)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     lvalue = convert_to_long(value)
     keep_elem_refs(pObject, value, lvalue)
     retval = _fl_get_nmenu_item_by_value(pObject, lvalue)
@@ -17591,6 +18538,8 @@ def fl_get_nmenu_item_by_label(pObject, label):
             """FL_POPUP_ENTRY * fl_get_nmenu_item_by_label(FL_OBJECT * p1,
                const char * p2)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     slabel = convert_to_string(label)
     keep_elem_refs(pObject, label, slabel)
     retval = _fl_get_nmenu_item_by_label(pObject, slabel)
@@ -17613,6 +18562,8 @@ def fl_get_nmenu_item_by_text(pObject, text):
             """FL_POPUP_ENTRY * fl_get_nmenu_item_by_text(FL_OBJECT * p1,
                const char * p2)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     stext = convert_to_string(text)
     keep_elem_refs(pObject, text, stext)
     retval = _fl_get_nmenu_item_by_text(pObject, stext)
@@ -17634,6 +18585,8 @@ def fl_set_nmenu_policy(pObject, num):
             cty.c_int, [cty.POINTER(xfc.FL_OBJECT), cty.c_int],
             """int fl_set_nmenu_policy(FL_OBJECT * p1, int p2)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     inum = convert_to_int(num)
     keep_elem_refs(pObject, num, inum)
     retval = _fl_set_nmenu_policy(pObject, inum)
@@ -17656,6 +18609,8 @@ def fl_set_nmenu_hl_text_color(pObject, colr):
             """FL_COLOR fl_set_nmenu_hl_text_color(FL_OBJECT * p1,
                FL_COLOR p2)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     check_admitted_listvalues(colr, xfc.COLOR_list)
     ulcolr = convert_to_FL_COLOR(colr)
     keep_elem_refs(pObject, colr, ulcolr)
@@ -17696,6 +18651,7 @@ def fl_add_positioner(postype, x, y, w, h, label):
             """FL_OBJECT * fl_add_positioner(int type, FL_Coord x, FL_Coord y,
                FL_Coord w, FL_Coord h, const char * label)
             """)
+    check_if_initialized()
     check_admitted_listvalues(postype, xfc.POSITIONERTYPE_list)
     ipostype = convert_to_int(postype)
     ix = convert_to_FL_Coord(x)
@@ -17724,6 +18680,8 @@ def fl_set_positioner_xvalue(pObject, val):
             None, [cty.POINTER(xfc.FL_OBJECT), cty.c_double],
             """void fl_set_positioner_xvalue(FL_OBJECT * ob, double val)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     fval = convert_to_double(val)
     keep_elem_refs(pObject, val, fval)
     _fl_set_positioner_xvalue(pObject, fval)
@@ -17744,6 +18702,8 @@ def fl_get_positioner_xvalue(pObject):
             cty.c_double, [cty.POINTER(xfc.FL_OBJECT)],
             """double fl_get_positioner_xvalue(FL_OBJECT * ob)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     keep_elem_refs(pObject)
     retval = _fl_get_positioner_xvalue(pObject)
     return retval
@@ -17765,6 +18725,8 @@ def fl_set_positioner_xbounds(pObject, minbound, maxbound):
             """void fl_set_positioner_xbounds(FL_OBJECT * ob, double min,
                double max)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     fminbound = convert_to_double(minbound)
     fmaxbound = convert_to_double(maxbound)
     keep_elem_refs(pObject, minbound, maxbound, fminbound, fmaxbound)
@@ -17791,11 +18753,13 @@ def fl_get_positioner_xbounds(pObject):
             """void fl_get_positioner_xbounds(FL_OBJECT * ob, double * min,
             double * max)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     minbound, pminbound = make_double_and_pointer()
     maxbound, pmaxbound = make_double_and_pointer()
     keep_elem_refs(pObject, minbound, maxbound, pminbound, pmaxbound)
     _fl_get_positioner_xbounds(pObject, pminbound, pmaxbound)
-    return minbound, maxbound
+    return minbound.value, maxbound.value
 
 
 def fl_set_positioner_yvalue(pObject, val):
@@ -17813,6 +18777,8 @@ def fl_set_positioner_yvalue(pObject, val):
             None, [cty.POINTER(xfc.FL_OBJECT), cty.c_double],
             """void fl_set_positioner_yvalue(FL_OBJECT * ob, double val)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     fval = convert_to_double(val)
     keep_elem_refs(pObject, val, fval)
     _fl_set_positioner_yvalue(pObject, fval)
@@ -17833,6 +18799,8 @@ def fl_get_positioner_yvalue(pObject):
             cty.c_double, [cty.POINTER(xfc.FL_OBJECT)],
             """double fl_get_positioner_yvalue(FL_OBJECT * ob)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     keep_elem_refs(pObject)
     retval = _fl_get_positioner_yvalue(pObject)
     return retval
@@ -17854,6 +18822,8 @@ def fl_set_positioner_ybounds(pObject, minbound, maxbound):
             """void fl_set_positioner_ybounds(FL_OBJECT * ob, double min,
                double max)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     fminbound = convert_to_double(minbound)
     fmaxbound = convert_to_double(maxbound)
     keep_elem_refs(pObject, minbound, maxbound, fminbound, fmaxbound)
@@ -17880,11 +18850,13 @@ def fl_get_positioner_ybounds(pObject):
             """void fl_get_positioner_ybounds(FL_OBJECT * ob, double * min,
                double * max)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     minbound, pminbound = make_double_and_pointer()
     maxbound, pmaxbound = make_double_and_pointer()
     keep_elem_refs(pObject, minbound, maxbound, pminbound, pmaxbound)
     _fl_get_positioner_ybounds(pObject, pminbound, pmaxbound)
-    return minbound, maxbound
+    return minbound.value, maxbound.value
 
 
 def fl_set_positioner_xstep(pObject, value):
@@ -17902,6 +18874,8 @@ def fl_set_positioner_xstep(pObject, value):
             None, [cty.POINTER(xfc.FL_OBJECT), cty.c_double],
             """void fl_set_positioner_xstep(FL_OBJECT * ob, double value)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     fvalue = convert_to_double(value)
     keep_elem_refs(pObject, value, fvalue)
     _fl_set_positioner_xstep(pObject, fvalue)
@@ -17922,6 +18896,8 @@ def fl_set_positioner_ystep(pObject, value):
             None, [cty.POINTER(xfc.FL_OBJECT), cty.c_double],
             """void fl_set_positioner_ystep(FL_OBJECT * ob, double value)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     fvalue = convert_to_double(value)
     keep_elem_refs(pObject, value, fvalue)
     _fl_set_positioner_ystep(pObject, fvalue)
@@ -17944,6 +18920,8 @@ def fl_set_positioner_return(pObject, value):
             """void fl_set_positioner_return(FL_OBJECT * ob, unsigned
                int value)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     uivalue = convert_to_uint(value)
     keep_elem_refs(pObject, value, uivalue)
     _fl_set_positioner_return(pObject, uivalue)
@@ -17975,6 +18953,7 @@ def fl_add_scrollbar(scrolltype, x, y, w, h, label):
             """FL_OBJECT * fl_add_scrollbar(int type, FL_Coord x, FL_Coord y,
                FL_Coord w, FL_Coord h, const char * label)
             """)
+    check_if_initialized()
     check_admitted_listvalues(scrolltype, xfc.SCROLLTYPE_list)
     iscrolltype = convert_to_int(scrolltype)
     ix = convert_to_FL_Coord(x)
@@ -18004,6 +18983,8 @@ def fl_get_scrollbar_value(pObject):
             cty.c_double, [cty.POINTER(xfc.FL_OBJECT)],
             """double fl_get_scrollbar_value(FL_OBJECT * ob)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     keep_elem_refs(pObject)
     retval = _fl_get_scrollbar_value(pObject)
     return retval
@@ -18026,6 +19007,8 @@ def fl_set_scrollbar_value(pObject, val):
             None, [cty.POINTER(xfc.FL_OBJECT), cty.c_double],
             """void fl_set_scrollbar_value(FL_OBJECT * ob, double val)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     fval = convert_to_double(val)
     keep_elem_refs(pObject, val, fval)
     _fl_set_scrollbar_value(pObject, fval)
@@ -18043,6 +19026,8 @@ def fl_set_scrollbar_size(pObject, val):
             None, [cty.POINTER(xfc.FL_OBJECT), cty.c_double],
             """void fl_set_scrollbar_size(FL_OBJECT * ob, double val)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     fval = convert_to_double(val)
     keep_elem_refs(pObject, val, fval)
     _fl_set_scrollbar_size(pObject, fval)
@@ -18069,6 +19054,8 @@ def fl_set_scrollbar_increment(pObject, leftbtnval, midlbtnval):
             """void fl_set_scrollbar_increment(FL_OBJECT * ob, double l,
                double r)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     fleftbtnval = convert_to_double(leftbtnval)
     fmidlbtnval = convert_to_double(midlbtnval)
     keep_elem_refs(pObject, leftbtnval, midlbtnval, fleftbtnval, \
@@ -18086,7 +19073,8 @@ def fl_get_scrollbar_increment(pObject):
         @param pObject: pointer to object
 
         @attention: API change from XForms - upstream was
-           fl_get_scrollbar_increment(pObject, leftbtnval, valmidlbtnval)
+                    fl_get_scrollbar_increment(pObject, leftbtnval,
+                    valmidlbtnval)
 
         @status: Untested + NoDoc + NoDemo = NOT OK
     """
@@ -18098,11 +19086,13 @@ def fl_get_scrollbar_increment(pObject):
             """void fl_get_scrollbar_increment(FL_OBJECT * ob, double * a,
                double * b)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     leftbtnval, pleftbtnval = make_double_and_pointer()
     midlbtnval, pmidlbtnval = make_double_and_pointer()
     keep_elem_refs(pObject, leftbtnval, midlbtnval, pleftbtnval, pmidlbtnval)
     _fl_get_scrollbar_increment(pObject, pleftbtnval, pmidlbtnval)
-    return leftbtnval, midlbtnval
+    return leftbtnval.value, midlbtnval.value
 
 
 def fl_set_scrollbar_bounds(pObject, minbound, maxbound):
@@ -18123,6 +19113,8 @@ def fl_set_scrollbar_bounds(pObject, minbound, maxbound):
             None, [cty.POINTER(xfc.FL_OBJECT), cty.c_double, cty.c_double],
             """void fl_set_scrollbar_bounds(FL_OBJECT * ob, double b1, double b2)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     fminbound = convert_to_double(minbound)
     fmaxbound = convert_to_double(maxbound)
     keep_elem_refs(pObject, minbound, maxbound, fminbound, fmaxbound)
@@ -18148,11 +19140,13 @@ def fl_get_scrollbar_bounds(pObject):
             """void fl_get_scrollbar_bounds(FL_OBJECT * ob, double * b1,
                double * b2)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     minbound, pminbound = make_double_and_pointer()
     maxbound, pmaxbound = make_double_and_pointer()
     keep_elem_refs(pObject, minbound, pminbound, maxbound, pmaxbound)
     _fl_get_scrollbar_bounds(pObject, pminbound, pmaxbound)
-    return minbound, maxbound
+    return minbound.value, maxbound.value
 
 
 # fl_set_scrollbar_return function placeholder (internal)
@@ -18170,6 +19164,8 @@ def fl_set_scrollbar_step(pObject, step):
             None, [cty.POINTER(xfc.FL_OBJECT), cty.c_double],
             """void fl_set_scrollbar_step(FL_OBJECT * ob, double step)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     fstep = convert_to_double(step)
     keep_elem_refs(pObject, step, fstep)
     _fl_set_scrollbar_step(pObject, fstep)
@@ -18208,6 +19204,7 @@ def fl_add_select(selecttype, x, y, w, h, label):
             """FL_OBJECT * fl_add_select(int p1, FL_Coord p2, FL_Coord p3,
                FL_Coord p4, FL_Coord p5, const char * p6)
             """)
+    check_if_initialized()
     check_admitted_listvalues(selecttype, xfc.SELECTTYPE_list)
     iselecttype = convert_to_int(selecttype)
     ix = convert_to_FL_Coord(x)
@@ -18235,6 +19232,8 @@ def fl_clear_select(pObject):
             cty.c_int, [cty.POINTER(xfc.FL_OBJECT)],
             """int fl_clear_select(FL_OBJECT * p1)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     keep_elem_refs(pObject)
     _fl_clear_select(pObject)
 
@@ -18253,6 +19252,8 @@ def fl_add_select_items(pObject, itemstr):
             """FL_POPUP_ENTRY * fl_add_select_items(FL_OBJECT * p1,
                const char * p2)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     sitemstr = convert_to_string(itemstr)
     keep_elem_refs(pObject, itemstr, sitemstr)
     retval = _fl_add_select_items(pObject, sitemstr)
@@ -18276,6 +19277,8 @@ def fl_insert_select_items(pObject, pPopupEntry, itemstr):
             """FL_POPUP_ENTRY * fl_insert_select_items(FL_OBJECT * p1,
                FL_POPUP_ENTRY * p2, const char * p3)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     sitemstr = convert_to_string(itemstr)
     keep_elem_refs(pObject, pPopupEntry, itemstr, sitemstr)
     retval = _fl_insert_select_items(pObject, pPopupEntry, sitemstr)
@@ -18296,6 +19299,8 @@ def fl_replace_select_item(pObject, pPopupEntry, itemstr):
             """FL_POPUP_ENTRY * fl_replace_select_item(FL_OBJECT * p1,
                FL_POPUP_ENTRY * p2, const char * p3)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     sitemstr = convert_to_string(itemstr)
     keep_elem_refs(pObject, pPopupEntry, itemstr, sitemstr)
     retval = _fl_replace_select_item(pObject, pPopupEntry, sitemstr)
@@ -18314,6 +19319,8 @@ def fl_delete_select_item(pObject, pPopupEntry):
             cty.c_int, [cty.POINTER(xfc.FL_OBJECT), cty.POINTER(xfc.FL_POPUP_ENTRY)],
             """int fl_delete_select_item(FL_OBJECT * p1, FL_POPUP_ENTRY * p2)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     keep_elem_refs(pObject, pPopupEntry)
     retval = _fl_delete_select_item(pObject, pPopupEntry)
     return retval
@@ -18338,6 +19345,8 @@ def fl_set_select_items(pObject, pPopupItem):
                FL_POPUP_ITEM * p2)
             """)
 
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     keep_elem_refs(pObject, pPopupItem)
     retval = _fl_set_select_items(pObject, pPopupItem)
     return retval
@@ -18355,6 +19364,8 @@ def fl_get_select_popup(pObject):
             cty.POINTER(xfc.FL_POPUP), [cty.POINTER(xfc.FL_OBJECT)],
             """FL_POPUP * fl_get_select_popup(FL_OBJECT * p1)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     keep_elem_refs(pObject)
     retval = _fl_get_select_popup(pObject)
     return retval
@@ -18372,6 +19383,8 @@ def fl_set_select_popup(pObject, pPopup):
             cty.c_int, [cty.POINTER(xfc.FL_OBJECT), cty.POINTER(xfc.FL_POPUP)],
             """int fl_set_select_popup(FL_OBJECT * p1, FL_POPUP * p2)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     keep_elem_refs(pObject, pPopup)
     retval = _fl_set_select_popup(pObject, pPopup)
     return retval
@@ -18389,6 +19402,8 @@ def fl_get_select_item(pObject):
             cty.POINTER(xfc.FL_POPUP_RETURN), [cty.POINTER(xfc.FL_OBJECT)],
             """FL_POPUP_RETURN * fl_get_select_item(FL_OBJECT * p1)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     keep_elem_refs(pObject)
     retval = _fl_get_select_item(pObject)
     return retval
@@ -18413,6 +19428,8 @@ def fl_set_select_item(pObject, pPopupEntry):
             """FL_POPUP_RETURN * fl_set_select_item(FL_OBJECT * p1,
                FL_POPUP_ENTRY * p2)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     keep_elem_refs(pObject, pPopupEntry)
     retval = _fl_set_select_item(pObject, pPopupEntry)
     return retval
@@ -18432,6 +19449,8 @@ def fl_get_select_item_by_value(pObject, value):
             """FL_POPUP_ENTRY * fl_get_select_item_by_value(FL_OBJECT * p1,
                long int p2)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     lvalue = convert_to_long(value)
     keep_elem_refs(pObject, value, lvalue)
     retval = _fl_get_select_item_by_value(pObject, lvalue)
@@ -18452,6 +19471,8 @@ def fl_get_select_item_by_label(pObject, label):
             """FL_POPUP_ENTRY * fl_get_select_item_by_label(FL_OBJECT * p1,
                const char * p2)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     slabel = convert_to_string(label)
     keep_elem_refs(pObject, label, slabel)
     retval = _fl_get_select_item_by_label(pObject, slabel)
@@ -18472,6 +19493,8 @@ def fl_get_select_item_by_text(pObject, txtstr):
             """FL_POPUP_ENTRY * fl_get_select_item_by_text(FL_OBJECT * p1,
                const char * p2)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     stxtstr = convert_to_string(txtstr)
     keep_elem_refs(pObject, txtstr, stxtstr)
     retval = _fl_get_select_item_by_text(pObject, stxtstr)
@@ -18490,6 +19513,8 @@ def fl_get_select_text_color(pObject):
             xfc.FL_COLOR, [cty.POINTER(xfc.FL_OBJECT)],
             """FL_COLOR fl_get_select_text_color(FL_OBJECT * p1)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     keep_elem_refs(pObject)
     retval = _fl_get_select_text_color(pObject)
     return retval
@@ -18507,6 +19532,8 @@ def fl_set_select_text_color(pObject, colr):
             xfc.FL_COLOR, [cty.POINTER(xfc.FL_OBJECT), xfc.FL_COLOR],
             """FL_COLOR fl_set_select_text_color(FL_OBJECT * p1, FL_COLOR p2)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     check_admitted_listvalues(colr, xfc.COLOR_list)
     ulcolr = convert_to_FL_COLOR(colr)
     keep_elem_refs(pObject, colr, ulcolr)
@@ -18530,11 +19557,13 @@ def fl_get_select_text_font(pObject):
             cty.POINTER(cty.c_int)],
             """int fl_get_select_text_font(FL_OBJECT * p1, int * p2, int * p3)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     num1, pnum1 = make_int_and_pointer()
     num2, pnum2 = make_int_and_pointer()
     keep_elem_refs(pObject, num1, num2, pnum1, pnum2)
     retval = _fl_get_select_text_font(pObject, pnum2, pnum2)
-    return retval, num1, num2
+    return retval, num1.value, num2.value
 
 
 def fl_set_select_text_font(pObject, p2, p3):
@@ -18549,6 +19578,8 @@ def fl_set_select_text_font(pObject, p2, p3):
             cty.c_int, [cty.POINTER(xfc.FL_OBJECT), cty.c_int, cty.c_int],
             """int fl_set_select_text_font(FL_OBJECT * p1, int p2, int p3)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     ip2 = convert_to_int(p2)
     ip3 = convert_to_int(p3)
     keep_elem_refs(pObject, p2, p3, ip2, ip3)
@@ -18568,6 +19599,8 @@ def fl_get_select_text_align(pObject):
             cty.c_int, [cty.POINTER(xfc.FL_OBJECT)],
             """int fl_get_select_text_align(FL_OBJECT * p1)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     keep_elem_refs(pObject)
     retval = _fl_get_select_text_align(pObject)
     return retval
@@ -18585,6 +19618,8 @@ def fl_set_select_text_align(pObject, p2):
             cty.c_int, [cty.POINTER(xfc.FL_OBJECT), cty.c_int],
             """int fl_set_select_text_align(FL_OBJECT * p1, int p2)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     ip2 = convert_to_int(p2)
     keep_elem_refs(pObject, p2, ip2)
     retval = _fl_set_select_text_align(pObject, ip2)
@@ -18603,6 +19638,8 @@ def fl_set_select_policy(pObject, num):
             cty.c_int, [cty.POINTER(xfc.FL_OBJECT), cty.c_int],
             """int fl_set_select_policy(FL_OBJECT * p1, int p2)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     inum = convert_to_int(num)
     keep_elem_refs(pObject, num, inum)
     retval = _fl_set_select_policy(pObject, inum)
@@ -18653,6 +19690,7 @@ def fl_add_slider(slidertype, x, y, w, h, label):
             """FL_OBJECT * fl_add_slider(int type, FL_Coord x, FL_Coord y,
                FL_Coord w, FL_Coord h, const char * label)
             """)
+    check_if_initialized()
     check_admitted_listvalues(slidertype, xfc.SLIDERTYPE_list)
     islidertype = convert_to_int(slidertype)
     ix = convert_to_FL_Coord(x)
@@ -18703,6 +19741,7 @@ def fl_add_valslider(slidertype, x, y, w, h, label):
             """FL_OBJECT * fl_add_valslider(int type, FL_Coord x, FL_Coord y,
                FL_Coord w, FL_Coord h, const char * label)
             """)
+    check_if_initialized()
     check_admitted_listvalues(slidertype, xfc.SLIDERTYPE_list)
     islidertype = convert_to_int(slidertype)
     ix = convert_to_FL_Coord(x)
@@ -18733,6 +19772,8 @@ def fl_set_slider_value(pObject, val):
             None, [cty.POINTER(xfc.FL_OBJECT), cty.c_double],
             """void fl_set_slider_value(FL_OBJECT * ob, double val)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     fval = convert_to_double(val)
     keep_elem_refs(pObject, val, fval)
     _fl_set_slider_value(pObject, fval)
@@ -18754,6 +19795,8 @@ def fl_get_slider_value(pObject):
             cty.c_double, [cty.POINTER(xfc.FL_OBJECT)],
             """double fl_get_slider_value(FL_OBJECT * ob)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     keep_elem_refs(pObject)
     retval = _fl_get_slider_value(pObject)
     return retval
@@ -18778,6 +19821,8 @@ def fl_set_slider_bounds(pObject, minbound, maxbound):
             """void fl_set_slider_bounds(FL_OBJECT * ob, double min,
                double max)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     fminbound = convert_to_double(minbound)
     fmaxbound = convert_to_double(maxbound)
     keep_elem_refs(pObject, minbound, maxbound, fminbound, fmaxbound)
@@ -18805,11 +19850,13 @@ def fl_get_slider_bounds(pObject):
             """void fl_get_slider_bounds(FL_OBJECT * ob, double * min,
                double * max)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     minbound, pminbound = make_double_and_pointer()
     maxbound, pmaxbound = make_double_and_pointer()
     keep_elem_refs(pObject, minbound, maxbound, pminbound, pmaxbound)
     _fl_get_slider_bounds(pObject, pminbound, pmaxbound)
-    return minbound, maxbound
+    return minbound.value, maxbound.value
 
 
 # fl_set_slider_return function placeholder (deprecated)
@@ -18827,6 +19874,8 @@ def fl_set_slider_step(pObject, value):
             None, [cty.POINTER(xfc.FL_OBJECT), cty.c_double],
             """void fl_set_slider_step(FL_OBJECT * ob, double value)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     fvalue = convert_to_double(value)
     keep_elem_refs(pObject, value, fvalue)
     _fl_set_slider_step(pObject, fvalue)
@@ -18845,6 +19894,8 @@ def fl_set_slider_increment(pObject, leftbtnval, midlbtnval):
             """void fl_set_slider_increment(FL_OBJECT * ob, double l,
                double r)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     fleftbtnval = convert_to_double(leftbtnval)
     fmidlbtnval = convert_to_double(midlbtnval)
     keep_elem_refs(pObject, leftbtnval, midlbtnval, fleftbtnval, fmidlbtnval)
@@ -18852,11 +19903,10 @@ def fl_set_slider_increment(pObject, leftbtnval, midlbtnval):
 
 
 def fl_get_slider_increment(pObject):
-    """
-        fl_get_slider_increment(pObject) -> leftbtnval, midlbtnval
+    """ fl_get_slider_increment(pObject) -> leftbtnval, midlbtnval
 
         @attention: API change from XForms - upstream was
-           fl_get_slider_increment(pObject, leftbtnval, midlbtnval)
+                    fl_get_slider_increment(pObject, leftbtnval, midlbtnval)
 
         @status: Untested + NoDoc + NoDemo = NOT OK
     """
@@ -18868,11 +19918,13 @@ def fl_get_slider_increment(pObject):
             """void fl_get_slider_increment(FL_OBJECT * ob, double * l,
                double * r)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     leftbtnval, pleftbtnval = make_double_and_pointer()
     midlbtnval, pmidlbtnval = make_double_and_pointer()
     keep_elem_refs(pObject, leftbtnval, midlbtnval, pleftbtnval, pmidlbtnval)
     _fl_get_slider_increment(pObject, pleftbtnval, pmidlbtnval)
-    return leftbtnval, midlbtnval
+    return leftbtnval.value, midlbtnval.value
 
 
 def fl_set_slider_size(pObject, size):
@@ -18892,6 +19944,8 @@ def fl_set_slider_size(pObject, size):
             None, [cty.POINTER(xfc.FL_OBJECT), cty.c_double],
             """void fl_set_slider_size(FL_OBJECT * ob, double size)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     fsize = convert_to_double(size)
     keep_elem_refs(pObject, size, fsize)
     _fl_set_slider_size(pObject, fsize)
@@ -18914,6 +19968,8 @@ def fl_set_slider_precision(pObject, precnum):
             None, [cty.POINTER(xfc.FL_OBJECT), cty.c_int],
             """void fl_set_slider_precision(FL_OBJECT * ob, int prec)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     iprecnum = convert_to_int(precnum)
     keep_elem_refs(pObject, precnum, iprecnum)
     _fl_set_slider_precision(pObject, iprecnum)
@@ -18938,6 +19994,8 @@ def fl_set_slider_filter(pObject, py_ValFilter):
             None, [cty.POINTER(xfc.FL_OBJECT), FL_VAL_FILTER],
             """void fl_set_slider_filter(FL_OBJECT * ob, FL_VAL_FILTER filter)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     c_ValFilter = FL_VAL_FILTER(py_ValFilter)
     keep_cfunc_refs(c_ValFilter, py_ValFilter)
     keep_elem_refs(pObject)
@@ -18972,6 +20030,7 @@ def fl_add_spinner(spinnertype, x, y, w, h, label):
             """FL_OBJECT * fl_add_spinner(int type, FL_Coord x, FL_Coord y,
             FL_Coord w, FL_Coord h, const char * label)
             """)
+    check_if_initialized()
     check_admitted_listvalues(spinnertype, xfc.SPINNERTYPE_list)
     ispinnertype = convert_to_int(spinnertype)
     ix = convert_to_FL_Coord(x)
@@ -18997,6 +20056,8 @@ def fl_get_spinner_value(pObject):
             cty.c_double, [cty.POINTER(xfc.FL_OBJECT)],
             """double fl_get_spinner_value(FL_OBJECT * obj)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     keep_elem_refs(pObject)
     retval = _fl_get_spinner_value(pObject)
     return retval
@@ -19014,6 +20075,7 @@ def fl_set_spinner_value(pObject, val):
             cty.c_double, [cty.POINTER(xfc.FL_OBJECT), cty.c_double],
             """double fl_set_spinner_value(FL_OBJECT * obj, double val)
             """)
+    check_if_FL_OBJECT_ptr(pObject)
     fval = convert_to_double(val)
     keep_elem_refs(pObject, val, fval)
     _fl_set_spinner_value(pObject, fval)
@@ -19032,6 +20094,8 @@ def fl_set_spinner_bounds(pObject, minbound, maxbound):
             """void fl_set_spinner_bounds(FL_OBJECT * obj, double min,
                double max)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     fminbound = convert_to_double(minbound)
     fmaxbound = convert_to_double(maxbound)
     keep_elem_refs(pObject, minbound, maxbound, fminbound, fmaxbound)
@@ -19043,7 +20107,7 @@ def fl_get_spinner_bounds(pObject):
         fl_get_spinner_bounds(pObject) -> minbound, maxbound
 
         @attention: API change from XForms - upstream was
-           fl_get_spinner_bounds(pObject, minbound, maxbound)
+                    fl_get_spinner_bounds(pObject, minbound, maxbound)
 
         @status: Untested + NoDoc + NoDemo = NOT OK
     """
@@ -19055,11 +20119,13 @@ def fl_get_spinner_bounds(pObject):
             """void fl_get_spinner_bounds(FL_OBJECT * obj, double * min,
                double * max)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     minbound, pminbound = make_double_and_pointer()
     maxbound, pmaxbound = make_double_and_pointer()
     keep_elem_refs(pObject, minbound, maxbound, pminbound, pmaxbound)
     _fl_get_spinner_bounds(pObject, pminbound, pmaxbound)
-    return minbound, maxbound
+    return minbound.value, maxbound.value
 
 
 def fl_set_spinner_step(pObject, step):
@@ -19074,6 +20140,8 @@ def fl_set_spinner_step(pObject, step):
             None, [cty.POINTER(xfc.FL_OBJECT), cty.c_double],
             """void fl_set_spinner_step(FL_OBJECT * obj, double step)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     fstep = convert_to_double(step)
     keep_elem_refs(pObject, step, fstep)
     _fl_set_spinner_step(pObject, fstep)
@@ -19091,6 +20159,8 @@ def fl_get_spinner_step(pObject):
             cty.c_double, [cty.POINTER(xfc.FL_OBJECT)],
             """double fl_get_spinner_step(FL_OBJECT * obj)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     keep_elem_refs(pObject)
     retval = _fl_get_spinner_step(pObject)
     return retval
@@ -19108,6 +20178,8 @@ def fl_set_spinner_precision(pObject, precnum):
             None, [cty.POINTER(xfc.FL_OBJECT), cty.c_int],
             """void fl_set_spinner_precision(FL_OBJECT * obj, int prec)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     iprecnum = convert_to_int(precnum)
     keep_elem_refs(pObject, precnum, iprecnum)
     _fl_set_spinner_precision(pObject, iprecnum)
@@ -19125,6 +20197,8 @@ def fl_get_spinner_precision(pObject):
             cty.c_int, [cty.POINTER(xfc.FL_OBJECT)],
             """int fl_get_spinner_precision(FL_OBJECT * obj)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     keep_elem_refs(pObject)
     retval = _fl_get_spinner_precision(pObject)
     return retval
@@ -19142,6 +20216,8 @@ def fl_get_spinner_input(pObject):
             cty.POINTER(xfc.FL_OBJECT), [cty.POINTER(xfc.FL_OBJECT)],
             """FL_OBJECT * fl_get_spinner_input(FL_OBJECT * obj)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     keep_elem_refs(pObject)
     retval = _fl_get_spinner_input(pObject)
     return retval
@@ -19159,6 +20235,8 @@ def fl_get_spinner_up_button(pObject):
             cty.POINTER(xfc.FL_OBJECT), [cty.POINTER(xfc.FL_OBJECT)],
             """FL_OBJECT * fl_get_spinner_up_button(FL_OBJECT * obj)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     keep_elem_refs(pObject)
     retval = _fl_get_spinner_up_button(pObject)
     return retval
@@ -19176,6 +20254,8 @@ def fl_get_spinner_down_button(pObject):
             cty.POINTER(xfc.FL_OBJECT), [cty.POINTER(xfc.FL_OBJECT)],
             """FL_OBJECT * fl_get_spinner_down_button(FL_OBJECT * obj)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     keep_elem_refs(pObject)
     retval = _fl_get_spinner_down_button(pObject)
     return retval
@@ -19212,6 +20292,7 @@ def fl_add_tabfolder(foldertype, x, y, w, h, label):
             """FL_OBJECT * fl_add_tabfolder(int type, FL_Coord x, FL_Coord y,
                FL_Coord w, FL_Coord h, const char * label)
             """)
+    check_if_initialized()
     check_admitted_listvalues(foldertype, xfc.TABFOLDERTYPE_list)
     ifoldertype = convert_to_int(foldertype)
     ix = convert_to_FL_Coord(x)
@@ -19239,6 +20320,8 @@ def fl_addto_tabfolder(pObject, title, pForm):
             """FL_OBJECT * fl_addto_tabfolder(FL_OBJECT * ob,
                const char * title, FL_FORM * form)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     stitle = convert_to_string(title)
     keep_elem_refs(pObject, title, pForm, stitle)
     retval = _fl_addto_tabfolder(pObject, stitle, pForm)
@@ -19258,6 +20341,7 @@ def fl_get_tabfolder_folder_bynumber(pObject, num):
             """FL_FORM * fl_get_tabfolder_folder_bynumber(FL_OBJECT * ob,
                int num)
             """)
+    check_if_FL_OBJECT_ptr(pObject)
     inum = convert_to_int(num)
     keep_elem_refs(pObject, num, inum)
     retval = _fl_get_tabfolder_folder_bynumber(pObject, inum)
@@ -19277,6 +20361,8 @@ def fl_get_tabfolder_folder_byname(pObject, name):
             """FL_FORM * fl_get_tabfolder_folder_byname(FL_OBJECT * ob,
                const char * name)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     sname = convert_to_string(name)
     keep_elem_refs(pObject, name, sname)
     retval = _fl_get_tabfolder_folder_byname(pObject, sname)
@@ -19295,6 +20381,8 @@ def fl_delete_folder(pObject, pForm):
             None, [cty.POINTER(xfc.FL_OBJECT), cty.POINTER(xfc.FL_FORM)],
             """void fl_delete_folder(FL_OBJECT * ob, FL_FORM * form)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     keep_elem_refs(pObject, pForm)
     _fl_delete_folder(pObject, pForm)
 
@@ -19311,6 +20399,8 @@ def fl_delete_folder_bynumber(pObject, num):
             None, [cty.POINTER(xfc.FL_OBJECT), cty.c_int],
             """void fl_delete_folder_bynumber(FL_OBJECT * ob, int num)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     inum = convert_to_int(num)
     keep_elem_refs(pObject, num, inum)
     _fl_delete_folder_bynumber(pObject, inum)
@@ -19328,6 +20418,8 @@ def fl_delete_folder_byname(pObject, name):
             None, [cty.POINTER(xfc.FL_OBJECT), xfc.STRING],
             """void fl_delete_folder_byname(FL_OBJECT * ob, const char * name)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     sname = convert_to_string(name)
     keep_elem_refs(pObject, name, sname)
     _fl_delete_folder_byname(pObject, sname)
@@ -19344,6 +20436,9 @@ def fl_set_folder(pObject, pForm):
             None, [cty.POINTER(xfc.FL_OBJECT), cty.POINTER(xfc.FL_FORM)],
             """void fl_set_folder(FL_OBJECT * ob, FL_FORM * form)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
+    check_if_FL_FORM_ptr(pForm)
     keep_elem_refs(pObject, pForm)
     _fl_set_folder(pObject, pForm)
 
@@ -19359,6 +20454,8 @@ def fl_set_folder_byname(pObject, name):
             None, [cty.POINTER(xfc.FL_OBJECT), xfc.STRING],
             """void fl_set_folder_byname(FL_OBJECT * ob, const char * name)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     sname = convert_to_string(name)
     keep_elem_refs(pObject, name, sname)
     _fl_set_folder_byname(pObject, name)
@@ -19376,6 +20473,8 @@ def fl_set_folder_bynumber(pObject, num):
             None, [cty.POINTER(xfc.FL_OBJECT), cty.c_int],
             """void fl_set_folder_bynumber(FL_OBJECT * ob, int num)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     inum = convert_to_int(num)
     keep_elem_refs(pObject, num, inum)
     _fl_set_folder_bynumber(pObject, inum)
@@ -19395,6 +20494,8 @@ def fl_get_folder(pObject):
             cty.POINTER(xfc.FL_FORM), [cty.POINTER(xfc.FL_OBJECT)],
             """FL_FORM * fl_get_folder(FL_OBJECT * ob)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     keep_elem_refs(pObject)
     retval = _fl_get_folder(pObject)
     return retval
@@ -19414,6 +20515,8 @@ def fl_get_folder_number(pObject):
             cty.c_int, [cty.POINTER(xfc.FL_OBJECT)],
             """int fl_get_folder_number(FL_OBJECT * ob)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     keep_elem_refs(pObject)
     retval = _fl_get_folder_number(pObject)
     return retval
@@ -19433,6 +20536,8 @@ def fl_get_folder_name(pObject):
             xfc.STRING, [cty.POINTER(xfc.FL_OBJECT)],
             """const char * fl_get_folder_name(FL_OBJECT * ob)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     keep_elem_refs(pObject)
     retval = _fl_get_folder_name(pObject)
     return retval
@@ -19452,6 +20557,8 @@ def fl_get_tabfolder_numfolders(pObject):
             cty.c_int, [cty.POINTER(xfc.FL_OBJECT)],
             """int fl_get_tabfolder_numfolders(FL_OBJECT * ob)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     keep_elem_refs(pObject)
     retval = _fl_get_tabfolder_numfolders(pObject)
     return retval
@@ -19471,6 +20578,8 @@ def fl_get_active_folder(pObject):
             cty.POINTER(xfc.FL_FORM), [cty.POINTER(xfc.FL_OBJECT)],
             """FL_FORM * fl_get_active_folder(FL_OBJECT * ob)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     keep_elem_refs(pObject)
     retval = _fl_get_active_folder(pObject)
     return retval
@@ -19490,6 +20599,8 @@ def fl_get_active_folder_number(pObject):
             cty.c_int, [cty.POINTER(xfc.FL_OBJECT)],
             """int fl_get_active_folder_number(FL_OBJECT * ob)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     keep_elem_refs(pObject)
     retval = _fl_get_active_folder_number(pObject)
     return retval
@@ -19509,6 +20620,8 @@ def fl_get_active_folder_name(pObject):
             xfc.STRING, [cty.POINTER(xfc.FL_OBJECT)],
             """const char * fl_get_active_folder_name(FL_OBJECT * ob)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     keep_elem_refs(pObject)
     retval = _fl_get_active_folder_name(pObject)
     return retval
@@ -19521,7 +20634,7 @@ def fl_get_folder_area(pObject):
         @param pObject: pointer to object
 
         @attention: API change from XForms - upstream was
-           fl_get_folder_area(pObject, x, y, w, h)
+                    fl_get_folder_area(pObject, x, y, w, h)
 
         @status: Untested + NoDoc + NoDemo = NOT OK
     """
@@ -19534,13 +20647,15 @@ def fl_get_folder_area(pObject):
             """void fl_get_folder_area(FL_OBJECT * ob, FL_Coord * x,
                FL_Coord * y, FL_Coord * w, FL_Coord * h)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     x, px = make_int_and_pointer()
     y, py = make_int_and_pointer()
     w, pw = make_int_and_pointer()
     h, ph = make_int_and_pointer()
     keep_elem_refs(pObject, x, y, w, h, px, py, pw, ph)
     _fl_get_folder_area(pObject, px, py, pw, ph)
-    return x, y, w, h
+    return x.value, y.value, w.value, h.value
 
 
 def fl_replace_folder_bynumber(pObject, num, pForm):
@@ -19558,6 +20673,8 @@ def fl_replace_folder_bynumber(pObject, num, pForm):
             """void fl_replace_folder_bynumber(FL_OBJECT * ob, int num,
                FL_FORM * form)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     inum = convert_to_int(num)
     keep_elem_refs(pObject, num, pForm, inum)
     _fl_replace_folder_bynumber(pObject, inum, pForm)
@@ -19577,6 +20694,8 @@ def fl_set_tabfolder_autofit(pObject, num):
             cty.c_int, [cty.POINTER(xfc.FL_OBJECT), cty.c_int],
             """int fl_set_tabfolder_autofit(FL_OBJECT * ob, int y)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     inum = convert_to_int(num)
     keep_elem_refs(pObject, num, inum)
     retval = _fl_set_tabfolder_autofit(pObject, inum)
@@ -19599,6 +20718,7 @@ def fl_set_default_tabfolder_corner(npixels):
             cty.c_int, [cty.c_int],
             """int fl_set_default_tabfolder_corner(int n):
             """)
+    check_if_initialized()
     ipixels = convert_to_int(npixels)
     keep_elem_refs(npixels, ipixels)
     retval = _fl_set_default_tabfolder_corner(ipixels)
@@ -19619,6 +20739,8 @@ def fl_set_tabfolder_offset(pObject, offset):
             cty.c_int, [cty.POINTER(xfc.FL_OBJECT), cty.c_int],
             """int fl_set_tabfolder_offset(FL_OBJECT * ob, int offset)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     ioffset = convert_to_int(offset)
     keep_elem_refs(pObject, offset, ioffset)
     retval = _fl_set_tabfolder_offset(pObject, ioffset)
@@ -19657,6 +20779,7 @@ def fl_add_text(texttype, x, y, w, h, label):
             """FL_OBJECT * fl_add_text(int type, FL_Coord x, FL_Coord y,
                FL_Coord w, FL_Coord h, const char * label)
             """)
+    check_if_initialized()
     check_admitted_listvalues(texttype, xfc.TEXTTYPE_list)
     itexttype = convert_to_int(texttype)
     ix = convert_to_FL_Coord(x)
@@ -19689,6 +20812,8 @@ def fl_get_thumbwheel_value(pObject):
             cty.c_double, [cty.POINTER(xfc.FL_OBJECT)],
             """double fl_get_thumbwheel_value(FL_OBJECT * ob)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     keep_elem_refs(pObject)
     retval = _fl_get_thumbwheel_value(pObject)
     return retval
@@ -19706,6 +20831,8 @@ def fl_set_thumbwheel_value(pObject, value):
             cty.c_double, [cty.POINTER(xfc.FL_OBJECT), cty.c_double],
             """double fl_set_thumbwheel_value(FL_OBJECT * ob, double value)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     fvalue = convert_to_double(value)
     keep_elem_refs(pObject, value, fvalue)
     retval = _fl_set_thumbwheel_value(pObject, fvalue)
@@ -19726,6 +20853,8 @@ def fl_get_thumbwheel_step(pObject):
             cty.c_double, [cty.POINTER(xfc.FL_OBJECT)],
             """double fl_get_thumbwheel_step(FL_OBJECT * ob)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     keep_elem_refs(pObject)
     retval = _fl_get_thumbwheel_step(pObject)
     return retval
@@ -19745,6 +20874,8 @@ def fl_set_thumbwheel_step(pObject, step):
             cty.c_double, [cty.POINTER(xfc.FL_OBJECT), cty.c_double],
             """double fl_set_thumbwheel_step(FL_OBJECT * ob, double step)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     fstep = convert_to_double(step)
     keep_elem_refs(pObject, step, fstep)
     retval = _fl_set_thumbwheel_step(pObject, fstep)
@@ -19771,6 +20902,8 @@ def fl_set_thumbwheel_return(pObject, when):
             """int fl_set_thumbwheel_return(FL_OBJECT * ob, unsigned
                int how)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     check_admitted_listvalues(when, xfc.RETURN_list)
     uiwhen = convert_to_uint(when)
     keep_elem_refs(pObject, when, uiwhen)
@@ -19792,6 +20925,8 @@ def fl_set_thumbwheel_crossover(pObject, flag):
             cty.c_int, [cty.POINTER(xfc.FL_OBJECT), cty.c_int],
             """int fl_set_thumbwheel_crossover(FL_OBJECT * ob, int flag)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     iflag = convert_to_int(flag)
     keep_elem_refs(pObject, flag, iflag)
     retval = _fl_set_thumbwheel_crossover(pObject, iflag)
@@ -19813,6 +20948,8 @@ def fl_set_thumbwheel_bounds(pObject, minbound, maxbound):
             """void fl_set_thumbwheel_bounds(FL_OBJECT * ob, double min,
                double max)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     fminbound = convert_to_double(minbound)
     fmaxbound = convert_to_double(maxbound)
     keep_elem_refs(pObject, minbound, maxbound, fminbound, fmaxbound)
@@ -19820,13 +20957,12 @@ def fl_set_thumbwheel_bounds(pObject, minbound, maxbound):
 
 
 def fl_get_thumbwheel_bounds(pObject):
-    """
-        fl_get_thumbwheel_bounds(pObject) -> minbound, maxbound
+    """ fl_get_thumbwheel_bounds(pObject) -> minbound, maxbound
 
         @param pObject: pointer to thumbwheel object
 
         @attention: API change from XForms - upstream was
-           fl_get_thumbwheel_bounds(pObject, minbound, maxbound)
+                    fl_get_thumbwheel_bounds(pObject, minbound, maxbound)
 
         @status: Untested + NoDoc + NoDemo = NOT OK
     """
@@ -19838,11 +20974,13 @@ def fl_get_thumbwheel_bounds(pObject):
             """void fl_get_thumbwheel_bounds(FL_OBJECT * ob, double * min,
                double * max)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     minbound, pminbound = make_double_and_pointer()
     maxbound, pmaxbound = make_double_and_pointer()
     keep_elem_refs(pObject, minbound, maxbound, pminbound, pmaxbound)
     _fl_get_thumbwheel_bounds(pObject, pminbound, pmaxbound)
-    return minbound, maxbound
+    return minbound.value, maxbound.value
 
 
 # fl_create_thumbwheel function placeholder (internal)
@@ -19871,6 +21009,7 @@ def fl_add_thumbwheel(wheeltype, x, y, w, h, label):
             """FL_OBJECT * fl_add_thumbwheel(int type, FL_Coord x, FL_Coord y,
                FL_Coord w, FL_Coord h, const char * label)
             """)
+    check_if_initialized()
     check_admitted_listvalues(wheeltype, xfc.THUMBWHEELTYPE_list)
     iwheeltype = convert_to_int(wheeltype)
     ix = convert_to_FL_Coord(x)
@@ -19918,6 +21057,7 @@ def fl_add_timer(timertype, x, y, w, h, label):
             """FL_OBJECT * fl_add_timer(int type, FL_Coord x, FL_Coord y,
             FL_Coord w, FL_Coord h, const char * label)
             """)
+    check_if_initialized()
     check_admitted_listvalues(timertype, xfc.TIMERTYPE_list)
     itimertype = convert_to_int(timertype)
     ix = convert_to_FL_Coord(x)
@@ -19945,6 +21085,8 @@ def fl_set_timer(pObject, total):
             None, [cty.POINTER(xfc.FL_OBJECT), cty.c_double],
             """void fl_set_timer(FL_OBJECT * ob, double total)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     ftotal = convert_to_double(total)
     keep_elem_refs(pObject, total, ftotal)
     _fl_set_timer(pObject, ftotal)
@@ -19964,6 +21106,8 @@ def fl_get_timer(pObject):
             cty.c_double, [cty.POINTER(xfc.FL_OBJECT)],
             """double fl_get_timer(FL_OBJECT * ob)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     keep_elem_refs(pObject)
     retval = _fl_get_timer(pObject)
     return retval
@@ -19983,6 +21127,8 @@ def fl_set_timer_countup(pObject, yes):
             None, [cty.POINTER(xfc.FL_OBJECT), cty.c_int],
             """void fl_set_timer_countup(FL_OBJECT * ob, int yes)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     iyes = convert_to_int(yes)
     keep_elem_refs(pObject, yes, iyes)
     _fl_set_timer_countup(pObject, iyes)
@@ -20008,6 +21154,8 @@ def fl_set_timer_filter(pObject, py_TimerFilter):
             """FL_TIMER_FILTER fl_set_timer_filter(FL_OBJECT * ob,
                FL_TIMER_FILTER filter)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     c_TimerFilter = FL_TIMER_FILTER(py_TimerFilter)
     keep_cfunc_refs(c_TimerFilter, py_TimerFilter)
     keep_elem_refs(pObject)
@@ -20029,6 +21177,8 @@ def fl_suspend_timer(pObject):
             None, [cty.POINTER(xfc.FL_OBJECT)],
             """void fl_suspend_timer(FL_OBJECT * ob)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     keep_elem_refs(pObject)
     _fl_suspend_timer(pObject)
 
@@ -20049,6 +21199,8 @@ def fl_resume_timer(pObject):
             None, [cty.POINTER(xfc.FL_OBJECT)],
             """void fl_resume_timer(FL_OBJECT * ob)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     keep_elem_refs(pObject)
     _fl_resume_timer(pObject)
 
@@ -20136,6 +21288,7 @@ def fl_add_xyplot(plottype, x, y, w, h, label):
             """FL_OBJECT * fl_add_xyplot(int t, FL_Coord x, FL_Coord y,
                FL_Coord w, FL_Coord h, const char * label)
             """)
+    check_if_initialized()
     check_admitted_listvalues(plottype, xfc.XYPLOTTYPE_list)
     iplottype = convert_to_int(plottype)
     ix = convert_to_FL_Coord(x)
@@ -20167,6 +21320,8 @@ def fl_set_xyplot_data(pObject, xlist, ylist, n, title, xlabel, ylabel):
                int n, const char * title, const char * xlabel,
                const char * ylabel)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     #px = cty.cast(x, cty.POINTER(cty.c_float))
     print xlist, xlist[0]
     fx = []
@@ -20207,6 +21362,8 @@ def fl_set_xyplot_data_double(pObject, x, y, n, title, xlabel, ylabel):
                double * y, int n, const char * title, const char * xlabel,
                const char * ylabel)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     px = cty.cast(x, cty.POINTER(cty.c_double))
     py = cty.cast(y, cty.POINTER(cty.c_double))
     inum = convert_to_int(n)
@@ -20236,6 +21393,8 @@ def fl_set_xyplot_file(pObject, fname, title, xl, yl):
             """int fl_set_xyplot_file(FL_OBJECT * ob, const char * f,
                const char * title, const char * xl, const char * yl)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     sfname = convert_to_string(fname)
     stitle = convert_to_string(title)
     sxl = convert_to_string(xl)
@@ -20261,6 +21420,8 @@ def fl_insert_xyplot_data(pObject, idnum, n, valx, valy):
             """void fl_insert_xyplot_data(FL_OBJECT * ob, int id, int n,
                double x, double y)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     iidnum = convert_to_int(idnum)
     inum = convert_to_int(n)
     fvalx = convert_to_double(valx)
@@ -20285,6 +21446,8 @@ def fl_add_xyplot_text(pObject, valx, valy, text, al, colr):
             """void fl_add_xyplot_text(FL_OBJECT * ob, double x, double y,
                const char * text, int al, FL_COLOR col)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     check_admitted_listvalues(colr, xfc.COLOR_list)
     fvalx = convert_to_double(valx)
     fvaly = convert_to_double(valy)
@@ -20310,6 +21473,8 @@ def fl_delete_xyplot_text(pObject, text):
             None, [cty.POINTER(xfc.FL_OBJECT), xfc.STRING],
             """void fl_delete_xyplot_text(FL_OBJECT * ob, const char * text)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     stext = convert_to_string(text)
     keep_elem_refs(pObject, text, stext)
     _fl_delete_xyplot_text(pObject, stext)
@@ -20329,6 +21494,8 @@ def fl_set_xyplot_maxoverlays(pObject, maxover):
             cty.c_int, [cty.POINTER(xfc.FL_OBJECT), cty.c_int],
             """int fl_set_xyplot_maxoverlays(FL_OBJECT * ob, int maxover)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     imaxover = convert_to_int(maxover)
     keep_elem_refs(pObject, maxover, imaxover)
     retval = _fl_set_xyplot_maxoverlays(pObject, imaxover)
@@ -20352,6 +21519,8 @@ def fl_add_xyplot_overlay(pObject, idnum, x, y, n, colr):
             """void fl_add_xyplot_overlay(FL_OBJECT * ob, int id, float * x,
                float * y, int n, FL_COLOR col)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     check_admitted_listvalues(colr, xfc.COLOR_list)
     iidnum = convert_to_int(idnum)
     px = cty.cast(x, cty.POINTER(cty.c_float))
@@ -20379,6 +21548,8 @@ def fl_add_xyplot_overlay_file(pObject, idnum, fname, colr):
             """int fl_add_xyplot_overlay_file(FL_OBJECT * ob, int id,
             const char * f, FL_COLOR c)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     check_admitted_listvalues(colr, xfc.COLOR_list)
     iidnum = convert_to_int(idnum)
     sfname = convert_to_string(fname)
@@ -20404,6 +21575,8 @@ def fl_set_xyplot_return(pObject, when):
             """void fl_set_xyplot_return(FL_OBJECT * ob, unsigned
                int when)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     uiwhen = convert_to_uint(when)
     keep_elem_refs(pObject, when, uiwhen)
     _fl_set_xyplot_return(pObject, uiwhen)
@@ -20423,6 +21596,8 @@ def fl_set_xyplot_xtics(pObject, major, minor):
             None, [cty.POINTER(xfc.FL_OBJECT), cty.c_int, cty.c_int],
             """void fl_set_xyplot_xtics(FL_OBJECT * ob, int major, int minor)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     imajor = convert_to_int(major)
     iminor = convert_to_int(minor)
     keep_elem_refs(pObject, major, minor, imajor, iminor)
@@ -20443,6 +21618,8 @@ def fl_set_xyplot_ytics(pObject, major, minor):
             None, [cty.POINTER(xfc.FL_OBJECT), cty.c_int, cty.c_int],
             """void fl_set_xyplot_ytics(FL_OBJECT * ob, int major, int minor)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     imajor = convert_to_int(major)
     iminor = convert_to_int(minor)
     keep_elem_refs(pObject, major, minor, imajor, iminor)
@@ -20464,6 +21641,8 @@ def fl_set_xyplot_xbounds(pObject, minbound, maxbound):
             """void fl_set_xyplot_xbounds(FL_OBJECT * ob, double xmin,
                double xmax)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     fminbound = convert_to_double(minbound)
     fmaxbound = convert_to_double(maxbound)
     keep_elem_refs(pObject, minbound, maxbound, fminbound, fmaxbound)
@@ -20485,6 +21664,8 @@ def fl_set_xyplot_ybounds(pObject, minbound, maxbound):
             """void fl_set_xyplot_ybounds(FL_OBJECT * ob, double ymin,
                double ymax)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     fminbound = convert_to_double(minbound)
     fmaxbound = convert_to_double(maxbound)
     keep_elem_refs(pObject, minbound, maxbound, fminbound, fmaxbound)
@@ -20510,11 +21691,13 @@ def fl_get_xyplot_xbounds(pObject):
             """void fl_get_xyplot_xbounds(FL_OBJECT * ob, float * xmin,
                float * xmax)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     minbound, pminbound = make_float_and_pointer()
     maxbound, pmaxbound = make_float_and_pointer()
     keep_elem_refs(pObject, minbound, maxbound, pminbound, pmaxbound)
     _fl_get_xyplot_xbounds(pObject, pminbound, pmaxbound)
-    return minbound, maxbound
+    return minbound.value, maxbound.value
 
 
 def fl_get_xyplot_ybounds(pObject):
@@ -20536,11 +21719,13 @@ def fl_get_xyplot_ybounds(pObject):
             """void fl_get_xyplot_ybounds(FL_OBJECT * ob, float * ymin,
                float * ymax)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     minbound, pminbound = make_float_and_pointer()
     maxbound, pmaxbound = make_float_and_pointer()
     keep_elem_refs(pObject, minbound, maxbound, pminbound, pmaxbound)
     _fl_get_xyplot_ybounds(pObject, pminbound, pmaxbound)
-    return minbound, maxbound
+    return minbound.value, maxbound.value
 
 
 def fl_get_xyplot(pObject):
@@ -20550,7 +21735,7 @@ def fl_get_xyplot(pObject):
         @param pObject: pointer to object
 
         @attention: API change from XForms - upstream was
-           fl_get_xyplot(pObject, x, y, i)
+                    fl_get_xyplot(pObject, x, y, i)
 
         @status: Untested + NoDoc + NoDemo = NOT OK
     """
@@ -20562,12 +21747,14 @@ def fl_get_xyplot(pObject):
             """void fl_get_xyplot(FL_OBJECT * ob, float * x, float * y,
                int * i)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     x, px = make_float_and_pointer()
     y, py = make_float_and_pointer()
     i, pi = make_int_and_pointer()
     keep_elem_refs(pObject, x, y, i, px, py, pi)
     _fl_get_xyplot(pObject, px, py, pi)
-    return x, y, i
+    return x.value, y.value, i.value
 
 
 def fl_get_xyplot_data(pObject):
@@ -20577,7 +21764,7 @@ def fl_get_xyplot_data(pObject):
         @param pObject: pointer to object
 
         @attention: API change from XForms - upstream was
-           fl_get_xyplot_data(pObject, x, y, n)
+                    fl_get_xyplot_data(pObject, x, y, n)
 
         @status: Untested + NoDoc + NoDemo = NOT OK
     """
@@ -20589,12 +21776,14 @@ def fl_get_xyplot_data(pObject):
             """void fl_get_xyplot_data(FL_OBJECT * ob, float * x, float * y,
                int * n)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     x, px = make_float_and_pointer()
     y, py = make_float_and_pointer()
     n, pn = make_int_and_pointer()
     keep_elem_refs(pObject, x, y, n, px, py, pn)
     _fl_get_xyplot_data(pObject, px, py, pn)
-    return x, y, n
+    return x.value, y.value, n.value
 
 
 def fl_get_xyplot_data_pointer(pObject, idnum):
@@ -20617,13 +21806,15 @@ def fl_get_xyplot_data_pointer(pObject, idnum):
             """void fl_get_xyplot_data_cty.POINTER(xfc.FL_OBJECT * ob, int id,
                float * * x, float * * y, int * n)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     iidnum = convert_to_int(idnum)
     x, px = make_float_and_pointer()
     y, py = make_float_and_pointer()
     n, pn = make_int_and_pointer()
     keep_elem_refs(pObject, idnum, iidnum, x, y, n, px, py, pn)
     _fl_get_xyplot_data_pointer(pObject, iidnum, px, py, pn)
-    return x, y, n
+    return x.value, y.value, n.value
 
 
 def fl_get_xyplot_overlay_data(pObject, idnum):
@@ -20645,13 +21836,15 @@ def fl_get_xyplot_overlay_data(pObject, idnum):
             """void fl_get_xyplot_overlay_data(FL_OBJECT * ob, int id,
                float * x, float * y, int * n)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     iidnum = convert_to_int(idnum)
     x, px = make_float_and_pointer()
     y, py = make_float_and_pointer()
     n, pn = make_int_and_pointer()
     keep_elem_refs(pObject, idnum, iidnum, x, y, n, px, py, pn)
     _fl_get_xyplot_overlay_data(pObject, iidnum, px, py, pn)
-    return x, y, n
+    return x.value, y.value, n.value
 
 
 def fl_set_xyplot_overlay_type(pObject, idnum, plottype):
@@ -20669,6 +21862,8 @@ def fl_set_xyplot_overlay_type(pObject, idnum, plottype):
             """void fl_set_xyplot_overlay_type(FL_OBJECT * ob, int id,
                int type)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     iidnum = convert_to_int(idnum)
     iplottype = convert_to_int(plottype)
     keep_elem_refs(pObject, idnum, plottype, iidnum, iplottype)
@@ -20689,6 +21884,8 @@ def fl_delete_xyplot_overlay(pObject, idnum):
             None, [cty.POINTER(xfc.FL_OBJECT), cty.c_int],
             """void fl_delete_xyplot_overlay(FL_OBJECT * ob, int id)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     iidnum = convert_to_int(idnum)
     keep_elem_refs(pObject, idnum, iidnum)
     _fl_delete_xyplot_overlay(pObject, iidnum)
@@ -20710,6 +21907,8 @@ def fl_set_xyplot_interpolate(pObject, idnum, deg, grid):
             """void fl_set_xyplot_interpolate(FL_OBJECT * ob, int id,
                int deg, double grid)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     iidnum = convert_to_int(idnum)
     ideg = convert_to_int(deg)
     fgrid = convert_to_double(grid)
@@ -20731,6 +21930,8 @@ def fl_set_xyplot_inspect(pObject, yes):
             None, [cty.POINTER(xfc.FL_OBJECT), cty.c_int],
             """void fl_set_xyplot_inspect(FL_OBJECT * ob, int yes)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     iyes = convert_to_int(yes)
     keep_elem_refs(pObject, yes, iyes)
     _fl_set_xyplot_inspect(pObject, iyes)
@@ -20750,6 +21951,8 @@ def fl_set_xyplot_symbolsize(pObject, n):
             None, [cty.POINTER(xfc.FL_OBJECT), cty.c_int],
             """void fl_set_xyplot_symbolsize(FL_OBJECT * ob, int n)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     inum = convert_to_int(n)
     keep_elem_refs(pObject, n, inum)
     _fl_set_xyplot_symbolsize(pObject, inum)
@@ -20771,6 +21974,8 @@ def fl_replace_xyplot_point(pObject, i, valx, valy):
             """void fl_replace_xyplot_point(FL_OBJECT * ob, int i,
                double x, double y)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     ii = convert_to_int(i)
     fvalx = convert_to_double(valx)
     fvaly = convert_to_double(valy)
@@ -20799,6 +22004,8 @@ def fl_replace_xyplot_point_in_overlay(pObject, i, setID, valx, valy):
             """void fl_replace_xyplot_point_in_overlay(FL_OBJECT * ob,
                int i, int setID, double x, double y)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     ii = convert_to_int(i)
     isetID = convert_to_int(setID)
     fvalx = convert_to_double(valx)
@@ -20826,11 +22033,13 @@ def fl_get_xyplot_xmapping(pObject):
             """void fl_get_xyplot_xmapping(FL_OBJECT * ob, float * a,
                float * b)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     a, pa = make_float_and_pointer()
     b, pb = make_float_and_pointer()
     keep_elem_refs(pObject, a, b, pa, pb)
     _fl_get_xyplot_xmapping(pObject, pa, pb)
-    return a, b
+    return a.value, b.value
 
 
 def fl_get_xyplot_ymapping(pObject):
@@ -20852,11 +22061,13 @@ def fl_get_xyplot_ymapping(pObject):
             """void fl_get_xyplot_ymapping(FL_OBJECT * ob, float * a,
                float * b)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     a, pa = make_float_and_pointer()
     b, pb = make_float_and_pointer()
     keep_elem_refs(pObject, a, b, pa, pb)
     _fl_get_xyplot_ymapping(pObject, pa, pb)
-    return a, b
+    return a.value, b.value
 
 
 def fl_set_xyplot_keys(pObject, keys, valx, valy, align):
@@ -20875,6 +22086,8 @@ def fl_set_xyplot_keys(pObject, keys, valx, valy, align):
             """void fl_set_xyplot_keys(FL_OBJECT * ob, char * * keys, float x,
                float y, int align)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     fvalx = convert_to_float(valx)
     fvaly = convert_to_float(valy)
     ialign = convert_to_int(align)
@@ -20897,6 +22110,8 @@ def fl_set_xyplot_key(pObject, idnum, keytxt):
             """void fl_set_xyplot_key(FL_OBJECT * ob, int id,
                const char * key)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     iidnum = convert_to_int(idnum)
     skeytxt = convert_to_string(keytxt)
     keep_elem_refs(pObject, idnum, keytxt, iidnum, skeytxt)
@@ -20919,6 +22134,8 @@ def fl_set_xyplot_key_position(pObject, valx, valy, align):
             """void fl_set_xyplot_key_position(FL_OBJECT * ob, float x,
                float y, int align)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     fvalx = convert_to_float(valx)
     fvaly = convert_to_float(valy)
     ialign = convert_to_int(align)
@@ -20941,6 +22158,8 @@ def fl_set_xyplot_key_font(pObject, style, size):
             """void fl_set_xyplot_key_font(FL_OBJECT * ob, int style,
                int size)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     istyle = convert_to_int(style)
     isize = convert_to_int(size)
     keep_elem_refs(pObject, style, size, istyle, isize)
@@ -20961,6 +22180,8 @@ def fl_get_xyplot_numdata(pObject, idnum):
             cty.c_int, [cty.POINTER(xfc.FL_OBJECT), cty.c_int],
             """int fl_get_xyplot_numdata(FL_OBJECT * ob, int id)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     iidnum = convert_to_int(idnum)
     keep_elem_refs(pObject, idnum, iidnum)
     retval = _fl_get_xyplot_numdata(pObject, iidnum)
@@ -20987,6 +22208,8 @@ def fl_xyplot_s2w(pObject, sx, sy, wx, wy):
             """void fl_xyplot_s2w(FL_OBJECT * ob, double sx, double sy,
                float * wx, float * wy)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     fsx = convert_to_double(sx)
     fsy = convert_to_double(sy)
     keep_elem_refs(pObject, sx, sy, wx, wy, fsx, fsy)
@@ -21009,6 +22232,8 @@ def fl_xyplot_w2s(pObject, wx, wy, sx, sy):
             """void fl_xyplot_w2s(FL_OBJECT * ob, double wx, double wy,
                float * sx, float * sy)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     fwx = convert_to_double(wx)
     fwy = convert_to_double(wy)
     keep_elem_refs(pObject, wx, wy, sx, sy, fwx, fwy)
@@ -21030,6 +22255,8 @@ def fl_set_xyplot_xscale(pObject, scale, base):
             """void fl_set_xyplot_xscale(FL_OBJECT * ob, int scale,
                double base)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     iscale = convert_to_int(scale)
     fbase = convert_to_double(base)
     keep_elem_refs(pObject, scale, base, iscale, fbase)
@@ -21051,6 +22278,8 @@ def fl_set_xyplot_yscale(pObject, scale, base):
             """void fl_set_xyplot_yscale(FL_OBJECT * ob, int scale,
                double base)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     iscale = convert_to_int(scale)
     fbase = convert_to_double(base)
     keep_elem_refs(pObject, scale, base, iscale, fbase)
@@ -21071,6 +22300,8 @@ def fl_clear_xyplot(pObject):
             None, [cty.POINTER(xfc.FL_OBJECT)],
             """void fl_clear_xyplot(FL_OBJECT * ob)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     keep_elem_refs(pObject)
     _fl_clear_xyplot(pObject)
 
@@ -21089,6 +22320,8 @@ def fl_set_xyplot_linewidth(pObject, idnum, lw):
             None, [cty.POINTER(xfc.FL_OBJECT), cty.c_int, cty.c_int],
             """void fl_set_xyplot_linewidth(FL_OBJECT * ob, int id, int lw)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     iidnum = convert_to_int(idnum)
     ilw = convert_to_int(lw)
     keep_elem_refs(pObject, idnum, lw, iidnum, ilw)
@@ -21109,6 +22342,8 @@ def fl_set_xyplot_xgrid(pObject, xgrid):
             None, [cty.POINTER(xfc.FL_OBJECT), cty.c_int],
             """void fl_set_xyplot_xgrid(FL_OBJECT * ob, int xgrid)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     ixgrid = convert_to_int(xgrid)
     keep_elem_refs(pObject, xgrid, ixgrid)
     _fl_set_xyplot_xgrid(pObject, ixgrid)
@@ -21128,6 +22363,8 @@ def fl_set_xyplot_ygrid(pObject, ygrid):
             None, [cty.POINTER(xfc.FL_OBJECT), cty.c_int],
             """void fl_set_xyplot_ygrid(FL_OBJECT * ob, int ygrid)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     iygrid = convert_to_int(ygrid)
     keep_elem_refs(pObject, ygrid, iygrid)
     _fl_set_xyplot_ygrid(pObject, iygrid)
@@ -21151,6 +22388,8 @@ def fl_set_xyplot_grid_linestyle(pObject, linestyle):
             cty.c_int, [cty.POINTER(xfc.FL_OBJECT), cty.c_int],
             """int fl_set_xyplot_grid_linestyle(FL_OBJECT * ob, int style)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     ilinestyle = convert_to_int(linestyle)
     keep_elem_refs(pObject, linestyle, ilinestyle)
     retval = _fl_set_xyplot_grid_linestyle(pObject, ilinestyle)
@@ -21172,6 +22411,8 @@ def fl_set_xyplot_alphaxtics(pObject, m, s):
             """void fl_set_xyplot_alphaxtics(FL_OBJECT * ob, const char * m,
                const char * s)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     sm = convert_to_string(m)
     ss = convert_to_string(s)
     keep_elem_refs(pObject, m, s, sm, ss)
@@ -21193,6 +22434,8 @@ def fl_set_xyplot_alphaytics(pObject, m, s):
             """void fl_set_xyplot_alphaytics(FL_OBJECT * ob, const char * m,
                const char * s)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     sm = convert_to_string(m)
     ss = convert_to_string(s)
     keep_elem_refs(pObject, m, s, sm, ss)
@@ -21214,6 +22457,8 @@ def fl_set_xyplot_fixed_xaxis(pObject, lm, rm):
             """void fl_set_xyplot_fixed_xaxis(FL_OBJECT * ob, const char * lm,
                const char * rm)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     slm = convert_to_string(lm)
     srm = convert_to_string(rm)
     keep_elem_refs(pObject, lm, rm, slm, srm)
@@ -21235,6 +22480,8 @@ def fl_set_xyplot_fixed_yaxis(pObject, bm, tm):
             """void fl_set_xyplot_fixed_yaxis(FL_OBJECT * ob, const char * bm,
                const char * tm)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     sbm = convert_to_string(bm)
     stm = convert_to_string(tm)
     keep_elem_refs(pObject, bm, tm, sbm, stm)
@@ -21256,6 +22503,7 @@ def fl_interpolate(wx, wy, nin, x, y, grid, ndeg):
             """int fl_interpolate(const char * wx, const char * wy, int nin,
                float * x, float * y, double grid, int ndeg)
             """)
+    check_if_initialized()
     inin = convert_to_int(nin)
     fgrid = convert_to_double(grid)
     indeg = convert_to_int(ndeg)
@@ -21279,6 +22527,7 @@ def fl_spline_interpolate(wx, wy, nin, x, y, grid):
             """int fl_spline_interpolate(const char * wx, const char * wy,
                int nin, float * x, float * y, double grid)
             """)
+    check_if_initialized()
     inin = convert_to_int(nin)
     fgrid = convert_to_double(grid)
     keep_elem_refs(wx, wy, nin, x, y, grid, inin, fgrid)
@@ -21305,6 +22554,8 @@ def fl_set_xyplot_symbol(pObject, idnum, py_XyPlotSymbol):
             """FL_XYPLOT_SYMBOL fl_set_xyplot_symbol(FL_OBJECT * ob, int id,
                FL_XYPLOT_SYMBOL symbol)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     iidnum = convert_to_int(idnum)
     c_XyPlotSymbol = FL_XYPLOT_SYMBOL(py_XyPlotSymbol)
     keep_cfunc_refs(c_XyPlotSymbol, py_XyPlotSymbol)
@@ -21327,6 +22578,8 @@ def fl_set_xyplot_mark_active(pObject, y):
             cty.c_int, [cty.POINTER(xfc.FL_OBJECT), cty.c_int],
             """int fl_set_xyplot_mark_active(FL_OBJECT * ob, int y)
             """)
+    check_if_initialized()
+    check_if_FL_OBJECT_ptr(pObject)
     iy = convert_to_int(y)
     keep_elem_refs(pObject, y, iy)
     retval = _fl_set_xyplot_mark_active(pObject, iy)
@@ -21349,6 +22602,7 @@ def fl_gc_():
             xfc.GC, [],
             """GC fl_gc_()
             """)
+    check_if_initialized()
     retval = _fl_gc_()
     return retval
 
@@ -21367,8 +22621,9 @@ def fl_textgc_():
     _fl_textgc_ = cfuncproto(
             load_so_libforms(), "fl_textgc_",
             xfc.GC, [],
-            """)GC fl_textgc_()
+            """GC fl_textgc_()
             """)
+    check_if_initialized()
     retval = _fl_textgc_()
     return retval
 
@@ -21389,6 +22644,7 @@ def fl_fheight_():
             cty.c_int, [],
             """int fl_fheight_()
             """)
+    check_if_initialized()
     retval = _fl_fheight_()
     return retval
 
@@ -21409,6 +22665,7 @@ def fl_fdesc_():
             cty.c_int, [],
             """int fl_fdesc_()
             """)
+    check_if_initialized()
     retval = _fl_fdesc_()
     return retval
 
@@ -21429,6 +22686,7 @@ def fl_cur_win_():
             xfc.Window, [],
             """Window fl_cur_win_()
             """)
+    check_if_initialized()
     retval = _fl_cur_win_()
     return retval
 
@@ -21447,6 +22705,7 @@ def fl_cur_fs_():
             cty.POINTER(xfc.XFontStruct), [],
             """XFontStruct * fl_cur_fs_()
             """)
+    check_if_initialized()
     retval = _fl_cur_fs_()
     return retval
 
@@ -21467,6 +22726,7 @@ def fl_display_():
             cty.POINTER(xfc.Display), [],
             """Display * fl_display_()
             """)
+    check_if_initialized()
     retval = _fl_display_()
     return retval
 
@@ -21508,6 +22768,7 @@ def flimage_setup(pImageSetup):
             None, [cty.POINTER(xfc.FLIMAGE_SETUP)],
             """void flimage_setup(FLIMAGE_SETUP * setup)
             """)
+    check_if_initialized()
     keep_elem_refs(pImageSetup)
     _flimage_setup(pImageSetup)
 
@@ -21528,6 +22789,7 @@ def flimage_load(filename):
             cty.POINTER(xfc.FL_IMAGE), [xfc.STRING],
             """FL_IMAGE * flimage_load(const char * file)
             """)
+    check_if_initialized()
     sfilename = convert_to_string(filename)
     keep_elem_refs(filename, sfilename)
     retval = _flimage_load(sfilename)
@@ -21548,6 +22810,7 @@ def flimage_read(pImage):
             cty.POINTER(xfc.FL_IMAGE), [cty.POINTER(xfc.FL_IMAGE)],
             """FL_IMAGE * flimage_read(FL_IMAGE * im)
             """)
+    check_if_initialized()
     keep_elem_refs(pImage)
     retval = _flimage_read(pImage)
     return retval
@@ -21568,6 +22831,7 @@ def flimage_dump(pImage, p2, p3):
             """int flimage_dump(FL_IMAGE * p1, const char * p2,
                const char * p3)
             """)
+    check_if_initialized()
     sp2 = convert_to_string(p2)
     sp3 = convert_to_string(p3)
     keep_elem_refs(pImage, p2, p3, sp2, sp3)
@@ -21589,6 +22853,7 @@ def flimage_close(pImage):
             cty.c_int, [cty.POINTER(xfc.FL_IMAGE)],
             """int flimage_close(FL_IMAGE * p1)
             """)
+    check_if_initialized()
     keep_elem_refs(pImage)
     retval = _flimage_close(pImage)
     return retval
@@ -21606,6 +22871,7 @@ def flimage_alloc():
             cty.POINTER(xfc.FL_IMAGE), [],
             """FL_IMAGE * flimage_alloc()
             """)
+    check_if_initialized()
     retval = _flimage_alloc()
     return retval
 
@@ -21624,6 +22890,7 @@ def flimage_getmem(pImage):
             cty.c_int, [cty.POINTER(xfc.FL_IMAGE)],
             """int flimage_getmem(FL_IMAGE * p1)
             """)
+    check_if_initialized()
     keep_elem_refs(pImage)
     retval = _flimage_getmem(pImage)
     return retval
@@ -21643,6 +22910,7 @@ def flimage_is_supported(fname):
             cty.c_int, [xfc.STRING],
             """int flimage_is_supported(const char * p1)
             """)
+    check_if_initialized()
     sfname = convert_to_string(fname)
     keep_elem_refs(fname, sfname)
     retval = _flimage_is_supported(sfname)
@@ -21665,6 +22933,7 @@ def flimage_description_via_filter(pImage, p2, p3, p4):
             """int flimage_description_via_filter(FL_IMAGE * p1,
                const char * p2, const char * p3, int p4)
             """)
+    check_if_initialized()
     sp3 = convert_to_string(p3)
     ip4 = convert_to_string(p4)
     keep_elem_refs(pImage, p2, p3, p4, sp3, ip4)
@@ -21688,6 +22957,7 @@ def flimage_write_via_filter(pImage, p2, p3, p4):
             """int flimage_write_via_filter(FL_IMAGE * p1, const char * p2,
                const char * p3, int p4)
             """)
+    check_if_initialized()
     ip4 = convert_to_int(p4)
     keep_elem_refs(pImage, p2, p3, p4, ip4)
     retval = _flimage_write_via_filter(pImage, p2, p3, ip4)
@@ -21708,6 +22978,7 @@ def flimage_free(pImage):
             cty.c_int, [cty.POINTER(xfc.FL_IMAGE)],
             """int flimage_free(FL_IMAGE * p1)
             """)
+    check_if_initialized()
     keep_elem_refs(pImage)
     retval = _flimage_free(pImage)
     return retval
@@ -21728,6 +22999,7 @@ def flimage_display(pImage, win):
             cty.c_int, [cty.POINTER(xfc.FL_IMAGE), xfc.Window],
             """int flimage_display(FL_IMAGE * p1, Window p2)
             """)
+    check_if_initialized()
     ulwin = convert_to_Window(win)
     keep_elem_refs(pImage, win, ulwin)
     retval = _flimage_display(pImage, ulwin)
@@ -21749,6 +23021,7 @@ def flimage_sdisplay(pImage, win):
             cty.c_int, [cty.POINTER(xfc.FL_IMAGE), xfc.Window],
             """int flimage_sdisplay(FL_IMAGE * p1, Window p2)
             """)
+    check_if_initialized()
     ulwin = convert_to_Window(win)
     keep_elem_refs(pImage, win, ulwin)
     retval = _flimage_sdisplay(pImage, ulwin)
@@ -21773,6 +23046,7 @@ def flimage_convert(pImage, newtype, ncolors):
             cty.c_int, [cty.POINTER(xfc.FL_IMAGE), cty.c_int, cty.c_int],
             """int flimage_convert(FL_IMAGE * p1, int p2, int p3)
             """)
+    check_if_initialized()
     inewtype = convert_to_int(newtype)
     incolors = convert_to_int(ncolors)
     keep_elem_refs(pImage, newtype, ncolors, inewtype, incolors)
@@ -21794,6 +23068,7 @@ def flimage_type_name(flimagetype):
             xfc.STRING, [cty.c_int],
             """const char * flimage_type_name(int type)
             """)
+    check_if_initialized()
     check_admitted_listvalues(flimagetype, xfc.FLIMAGETYPE_list)
     iflimagetype = convert_to_int(flimagetype)
     keep_elem_refs(flimagetype, iflimagetype)
@@ -21819,6 +23094,7 @@ def flimage_add_text(pImage, text, length, style, size, txtcolr, bgcolr, tran, t
                int style, int size, unsigned int tcol, unsigned int bcol,
                int tran, double tx, double ty, int rot)
             """)
+    check_if_initialized()
     stext = convert_to_string(text)
     ilength = convert_to_int(length)
     istyle = convert_to_int(style)
@@ -21852,6 +23128,7 @@ def flimage_add_text_struct(pImage, pImageText):
             cty.POINTER(xfc.FLIMAGE_TEXT)],
             """int flimage_add_text_struct(FL_IMAGE * p1, const char * p2)
             """)
+    check_if_initialized()
     keep_elem_refs(pImage, pImageText)
     retval = _flimage_add_text_struct(pImage, pImageText)
     return retval
@@ -21871,6 +23148,7 @@ def flimage_delete_all_text(pImage):
             None, [cty.POINTER(xfc.FL_IMAGE)],
             """void flimage_delete_all_text(FL_IMAGE * p1)
             """)
+    check_if_initialized()
     keep_elem_refs(pImage)
     _flimage_delete_all_text(pImage)
 
@@ -21893,6 +23171,7 @@ def flimage_add_marker(pImage, text, p3, p4, p5, p6, p7, p8, p9, colr, bcolr):
                double p3, double p4, double p5, double p6, int p7,
                int p8, int p9, FL_COLOR p10, FL_COLOR p11)
             """)
+    check_if_initialized()
     stext = convert_to_string(text)
     fp3 = convert_to_double(p3)
     fp4 = convert_to_double(p4)
@@ -21924,6 +23203,7 @@ def flimage_add_marker_struct(pImage, pImageMarker):
             cty.c_int, [cty.POINTER(xfc.FL_IMAGE), cty.POINTER(xfc.FLIMAGE_MARKER)],
             """int flimage_add_marker_struct(FL_IMAGE * p1, const char * p2)
             """)
+    check_if_initialized()
     keep_elem_refs(pImage, pImageMarker)
     retval = _flimage_add_marker_struct(pImage, pImageMarker)
     return retval
@@ -21963,6 +23243,7 @@ def flimage_delete_all_markers(pImage):
             None, [cty.POINTER(xfc.FL_IMAGE)],
             """void flimage_delete_all_markers(FL_IMAGE * p1)
             """)
+    check_if_initialized()
     keep_elem_refs(pImage)
     _flimage_delete_all_markers(pImage)
 
@@ -21982,6 +23263,7 @@ def flimage_render_annotation(pImage, win):
             cty.c_int, [cty.POINTER(xfc.FL_IMAGE), xfc.FL_WINDOW],
             """int flimage_render_annotation(FL_IMAGE * p1, FL_WINDOW p2)
             """)
+    check_if_initialized()
     ulwin = convert_to_Window(win)
     keep_elem_refs(pImage, win, ulwin)
     retval = _flimage_render_annotation(pImage, ulwin)
@@ -22002,6 +23284,7 @@ def flimage_error(pImage, text):
             None, [cty.POINTER(xfc.FL_IMAGE), xfc.STRING],
             """void flimage_error(FL_IMAGE * p1, const char * p2)
             """)
+    check_if_initialized()
     stext = convert_to_Window(text)
     keep_elem_refs(pImage, text, stext)
     _flimage_error(pImage, stext)
@@ -22011,9 +23294,13 @@ def flimage_error(pImage, text):
 
 def flimage_enable_pnm():
     """
-        flimage_enable_pnm()
+    flimage_enable_pnm()
 
-        @status: Untested + NoDoc + NoDemo = NOT OK
+    Enables use of PNM (Portable anymap) image format
+
+    @example: flimage_enable_pnm()
+
+    @status: Tested + Doc + NoDemo = OK
     """
 
     _flimage_enable_pnm = cfuncproto(
@@ -22021,6 +23308,7 @@ def flimage_enable_pnm():
             None, [],
             """void flimage_enable_pnm()
             """)
+    check_if_initialized()
     _flimage_enable_pnm()
 
 
@@ -22036,6 +23324,7 @@ def flimage_set_fits_bits(p1):
             cty.c_int, [cty.c_int],
             """int flimage_set_fits_bits(int p1)
             """)
+    check_if_initialized()
     ip1 = convert_to_int(p1)
     keep_elem_refs(p1, ip1)
     retval = _flimage_set_fits_bits(ip1)
@@ -22054,6 +23343,7 @@ def flimage_jpeg_output_options(pImageJpegOption):
             None, [cty.POINTER(xfc.FLIMAGE_JPEG_OPTION)],
             """void flimage_jpeg_output_options(FLIMAGE_JPEG_OPTION * p1)
             """)
+    check_if_initialized()
     keep_elem_refs(pImageJpegOption)
     _flimage_jpeg_output_options(pImageJpegOption)
 
@@ -22070,6 +23360,7 @@ def flimage_pnm_output_options(p1):
             None, [cty.c_int],
             """void flimage_pnm_output_options(int p1)
             """)
+    check_if_initialized()
     ip1 = convert_to_int(p1)
     keep_elem_refs(p1, ip1)
     _flimage_pnm_output_options(ip1)
@@ -22087,6 +23378,7 @@ def flimage_gif_output_options(p1):
             None, [cty.c_int],
             """void flimage_gif_output_options(int p1)
             """)
+    check_if_initialized()
     ip1 = convert_to_int(p1)
     keep_elem_refs(p1, ip1)
     _flimage_gif_output_options(ip1)
@@ -22104,6 +23396,7 @@ def flimage_ps_options():
             cty.POINTER(xfc.FLPS_CONTROL), [],
             """FLPS_CONTROL * flimage_ps_options()
             """)
+    check_if_initialized()
     retval = _flimage_ps_options()
     return retval
 
@@ -22125,6 +23418,7 @@ def flimage_get_number_of_formats():
             cty.c_int, [],
             """int flimage_get_number_of_formats()
             """)
+    check_if_initialized()
     retval = _flimage_get_number_of_formats()
     return retval
 
@@ -22141,6 +23435,7 @@ def flimage_get_format_info(p1):
             cty.POINTER(xfc.FLIMAGE_FORMAT_INFO), [cty.c_int],
             """const char * flimage_get_format_info(int p1)
             """)
+    check_if_initialized()
     ip1 = convert_to_int(p1)
     keep_elem_refs(p1, ip1)
     retval = _flimage_get_format_info(ip1)
@@ -22163,6 +23458,7 @@ def fl_get_matrix(nrows, ncols, esize):
             cty.c_void_p, [cty.c_int, cty.c_int, cty.c_uint],
             """void * fl_get_matrix(int p1, int p2, unsigned int p3)
             """)
+    check_if_initialized()
     inrows = convert_to_int(nrows)
     incols = convert_to_int(ncols)
     uiesize = convert_to_uint(esize)
@@ -22191,6 +23487,7 @@ def fl_make_matrix(nrows, ncols, esize, mem):
             """void * fl_make_matrix(int p1, int p2, unsigned int p3,
                void * p4)
             """)
+    check_if_initialized()
     inrows = convert_to_int(nrows)
     incols = convert_to_int(ncols)
     uiesize = convert_to_uint(esize)
@@ -22212,29 +23509,13 @@ def fl_free_matrix(mtrx):
             None, [cty.c_void_p],
             """void fl_free_matrix(void * p1)
             """)
+    check_if_initialized()
     pmtrx = cty.cast(mtrx, cty.c_void_p)
     keep_elem_refs(mtrx, pmtrx)
     _fl_free_matrix(pmtrx)
 
 
-# backward data dismissed --LK
-# This function is retained for compatibility reasons only.
-# It returns 1 always.
-#def fl_init_RGBdatabase(text):
-#    """
-#        fl_init_RGBdatabase(text) -> num.
-#    """
-#
-#    _fl_init_RGBdatabase = cfuncproto(
-#            load_so_libflimage(), "fl_init_RGBdatabase",
-#            cty.c_int, [xfc.STRING],
-#            """int fl_init_RGBdatabase(const char * p1)
-#            """)
-#    stext = convert_to_string(text)
-#    keep_elem_refs(text, stext)
-#    retval = _fl_init_RGBdatabase(stext)
-#    return retval
-#end backwards --LK
+# fl_init_RGBdatabase(text) function prototype (deprecated)
 
 
 def fl_lookup_RGBcolor(text, p2, p3, p4):
@@ -22251,6 +23532,7 @@ def fl_lookup_RGBcolor(text, p2, p3, p4):
             """int fl_lookup_RGBcolor(const char * p1, int * p2,
                int * p3, int * p4)
             """)
+    check_if_initialized()
     stext = convert_to_string(text)
     keep_elem_refs(text, p2, p3, p4)
     retval = _fl_lookup_RGBcolor(stext, p2, p3, p4)
@@ -22283,6 +23565,7 @@ def flimage_add_format(formalname, shortname, extension, flimagetype, \
                FLIMAGE_Description p6, FLIMAGE_Read_Pixels p7,
                FLIMAGE_Write_Image p8)
             """)
+    check_if_initialized()
     check_admitted_listvalues(flimagetype, xfc.FLIMAGETYPE_list)
     sformalname = convert_to_string(formalname)
     sshortname = convert_to_string(shortname)
@@ -22315,6 +23598,7 @@ def flimage_set_annotation_support(p1, p2):
             None, [cty.c_int, cty.c_int],
             """void flimage_set_annotation_support(int p1, int p2)
             """)
+    check_if_initialized()
     ip1 = convert_to_int(p1)
     ip2 = convert_to_int(p2)
     keep_elem_refs(p1, p2, ip1, ip2)
@@ -22335,6 +23619,7 @@ def flimage_getcolormap(pImage):
             cty.c_int, [cty.POINTER(xfc.FL_IMAGE)],
             """int flimage_getcolormap(FL_IMAGE * p1)
             """)
+    check_if_initialized()
     keep_elem_refs(pImage)
     retval = _flimage_getcolormap(pImage)
     return retval
@@ -22352,6 +23637,7 @@ def fl_select_mediancut_quantizer():
             None, [],
             """void fl_select_mediancut_quantizer()
             """)
+    check_if_initialized()
     _fl_select_mediancut_quantizer()
 
 
@@ -22373,6 +23659,7 @@ def flimage_convolve(pImage, p2, p3, p4):
             """int flimage_convolve(FL_IMAGE * p1, int * * p2, int p3,
                int p4)
             """)
+    check_if_initialized()
     ip3 = convert_to_int(p3)
     ip4 = convert_to_int(p4)
     keep_elem_refs(pImage, p2, p3, p4, ip3, ip4)
@@ -22395,6 +23682,7 @@ def flimage_convolvea(pImage, p2, p3, p4):
             cty.c_int, cty.c_int],
             """int flimage_convolvea(FL_IMAGE * p1, int * p2, int p3, int p4)
             """)
+    check_if_initialized()
     keep_elem_refs(pImage, p2, p3, p4)
     retval = _flimage_convolvea(pImage, p2, p3, p4)
     return retval
@@ -22414,6 +23702,7 @@ def flimage_tint(pImage, p2, p3):
             cty.c_int, [cty.POINTER(xfc.FL_IMAGE), cty.c_uint, cty.c_double],
             """int flimage_tint(FL_IMAGE * p1, unsigned int p2, double p3)
             """)
+    check_if_initialized()
     keep_elem_refs(pImage, p2, p3)
     retval = _flimage_tint(pImage, p2, p3)
     return retval
@@ -22433,6 +23722,7 @@ def flimage_rotate(pImage, p2, p3):
             cty.c_int, [cty.POINTER(xfc.FL_IMAGE), cty.c_int, cty.c_int],
             """int flimage_rotate(FL_IMAGE * p1, int p2, int p3)
             """)
+    check_if_initialized()
     ip2 = convert_to_int(p2)
     ip3 = convert_to_int(p3)
     keep_elem_refs(pImage, p2, p3, ip2, ip3)
@@ -22454,6 +23744,7 @@ def flimage_flip(pImage, p2):
             cty.c_int, [cty.POINTER(xfc.FL_IMAGE), cty.c_int],
             """int flimage_flip(FL_IMAGE * p1, int p2)
             """)
+    check_if_initialized()
     ip2 = convert_to_int(p2)
     keep_elem_refs(pImage, p2, ip2)
     retval = _flimage_flip(pImage, ip2)
@@ -22475,6 +23766,7 @@ def flimage_scale(pImage, p2, p3, p4):
             cty.c_int],
             """int flimage_scale(FL_IMAGE * p1, int p2, int p3, int p4)
             """)
+    check_if_initialized()
     ip2 = convert_to_int(p2)
     ip3 = convert_to_int(p3)
     ip4 = convert_to_int(p4)
@@ -22499,6 +23791,7 @@ def flimage_warp(pImage, p2, p3, p4, p5):
             """int flimage_warp(FL_IMAGE * p1, float * p2, int p3, int p4,
                int p5)
             """)
+    check_if_initialized()
     ip3 = convert_to_int(p3)
     ip4 = convert_to_int(p4)
     ip5 = convert_to_int(p5)
@@ -22521,6 +23814,7 @@ def flimage_autocrop(pImage, p2):
             cty.c_int, [cty.POINTER(xfc.FL_IMAGE), cty.c_uint],
             """int flimage_autocrop(FL_IMAGE * p1, unsigned int p2)
             """)
+    check_if_initialized()
     uip2 = convert_to_uint(p2)
     keep_elem_refs(pImage, p2, uip2)
     retval = _flimage_autocrop(pImage, uip2)
@@ -22547,6 +23841,7 @@ def flimage_get_autocrop(pImage, bk):
             """int flimage_get_autocrop(FL_IMAGE * p1, unsigned int p2,
                int * p3, int * p4, int * p5, int * p6)
             """)
+    check_if_initialized()
     uibk = convert_to_uint(bk)
     xl, pxl = make_int_and_pointer()
     yt, pyt = make_int_and_pointer()
@@ -22554,7 +23849,7 @@ def flimage_get_autocrop(pImage, bk):
     yb, pyb = make_int_and_pointer()
     keep_elem_refs(pImage, bk, uibk, xl, pxl, yt, pyt, xr, pxr, yb, pyb)
     retval = _flimage_get_autocrop(pImage, uibk, pxl, pyt, pxr, pyb)
-    return retval, xl, yt, xr, yb
+    return retval, xl.value, yt.value, xr.value, yb.value
 
 
 def flimage_crop(pImage, p2, p3, p4, p5):
@@ -22573,6 +23868,7 @@ def flimage_crop(pImage, p2, p3, p4, p5):
             """int flimage_crop(FL_IMAGE * p1, int p2, int p3,
                int p4, int p5)
             """)
+    check_if_initialized()
     ip2 = convert_to_int(p2)
     ip3 = convert_to_int(p3)
     ip4 = convert_to_int(p4)
@@ -22597,6 +23893,7 @@ def flimage_replace_pixel(pImage, p2, p3):
             """int flimage_replace_pixel(FL_IMAGE * p1, unsigned int p2,
                unsigned int p3)
             """)
+    check_if_initialized()
     uip2 = convert_to_uint(p2)
     uip3 = convert_to_uint(p3)
     keep_elem_refs(pImage, p2, p3, uip2, uip3)
@@ -22620,6 +23917,7 @@ def flimage_transform_pixels(pImage, red, green, blue):
             """int flimage_transform_pixels(FL_IMAGE * p1, int * p2,
                int * p3, int * p4)
             """)
+    check_if_initialized()
     pred = cty.cast(red, cty.POINTER(cty.c_int))
     pgreen = cty.cast(green, cty.POINTER(cty.c_int))
     pblue = cty.cast(blue, cty.POINTER(cty.c_int))
@@ -22642,6 +23940,7 @@ def flimage_windowlevel(pImage, p2, p3):
             cty.c_int, [cty.POINTER(xfc.FL_IMAGE), cty.c_int, cty.c_int],
             """int flimage_windowlevel(FL_IMAGE * p1, int p2, int p3)
             """)
+    check_if_initialized()
     ip2 = convert_to_int(p2)
     ip3 = convert_to_int(p3)
     keep_elem_refs(pImage, p2, p3, ip2, ip3)
@@ -22663,6 +23962,7 @@ def flimage_enhance(pImage, p2):
             cty.c_int, [cty.POINTER(xfc.FL_IMAGE), cty.c_int],
             """int flimage_enhance(FL_IMAGE * p1, int p2)
             """)
+    check_if_initialized()
     ip2 = convert_to_int(p2)
     keep_elem_refs(pImage, p2, ip2)
     retval = _flimage_enhance(pImage, ip2)
@@ -22684,6 +23984,7 @@ def flimage_from_pixmap(pImage, pixmap):
             cty.c_int, [cty.POINTER(xfc.FL_IMAGE), xfc.Pixmap],
             """int flimage_from_pixmap(FL_IMAGE * p1, Pixmap p2)
             """)
+    check_if_initialized()
     ulpixmap = convert_to_Pixmap(pixmap)
     keep_elem_refs(pImage, pixmap, ulpixmap)
     retval = _flimage_from_pixmap(pImage, ulpixmap)
@@ -22705,6 +24006,7 @@ def flimage_to_pixmap(pImage, win):
             xfc.Pixmap, [cty.POINTER(xfc.FL_IMAGE), xfc.FL_WINDOW],
             """Pixmap flimage_to_pixmap(FL_IMAGE * p1, FL_WINDOW p2)
             """)
+    check_if_initialized()
     ulwin = convert_to_Window(win)
     keep_elem_refs(pImage, win, ulwin)
     retval = _flimage_to_pixmap(pImage, ulwin)
@@ -22725,6 +24027,7 @@ def flimage_dup(pImage):
             cty.POINTER(xfc.FL_IMAGE), [cty.POINTER(xfc.FL_IMAGE)],
             """FL_IMAGE * flimage_dup(FL_IMAGE * p1)
             """)
+    check_if_initialized()
     keep_elem_refs(pImage)
     retval = _flimage_dup(pImage)
     return retval
@@ -22746,6 +24049,7 @@ def fl_get_submatrix(inmtrx, rows, cols, r1, c1, rs, cs, esize):
             """void * fl_get_submatrix(void * p1, int p2, int p3, int p4,
                int p5, int p6, int p7, unsigned int p8)
             """)
+    check_if_initialized()
     pinmtrx = cty.cast(inmtrx, cty.c_void_p)
     irows = convert_to_int(rows)
     icols = convert_to_int(cols)
@@ -22779,6 +24083,7 @@ def fl_j2pass_quantize_packed(p1, p2, p3, p4, p5, p6, p7, p8, p9, pImage):
                int p3, int p4, short unsigned int * * p5, int * p6,
                int * p7, int * p8, int * p9, FL_IMAGE * p10)
             """)
+    check_if_initialized()
     ip2 = convert_to_int(p2)
     ip3 = convert_to_int(p3)
     ip4 = convert_to_int(p4)
@@ -22809,6 +24114,7 @@ def fl_j2pass_quantize_rgb(p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, pImage)
                int p6, short unsigned int * * p7, int * p8, int * p9,
                int * p10, int * p11, FL_IMAGE * p12)
             """)
+    check_if_initialized()
     ip4 = convert_to_int(p4)
     ip5 = convert_to_int(p5)
     ip6 = convert_to_int(p6)
@@ -22833,6 +24139,7 @@ def fl_make_submatrix(in_, rows, cols, r1, c1, rs, cs, esize):
             """void * fl_make_submatrix(void * p1, int p2, int p3, int p4,
                int p5, int p6, int p7, unsigned int p8)
             """)
+    check_if_initialized()
     irows = convert_to_int(rows)
     icols = convert_to_int(cols)
     ir1 = convert_to_int(r1)
@@ -22861,6 +24168,7 @@ def fl_pack_bits(p1, p2, p3):
             """void fl_pack_bits(unsigned char * p1, short unsigned int * p2,
                int p3)
             """)
+    check_if_initialized()
     ip3 = convert_to_int(p3)
     keep_elem_refs(p1, p2, p3, ip3)
     _fl_pack_bits(p1, p2, ip3)
@@ -22880,6 +24188,7 @@ def fl_unpack_bits(p1, p2, p3):
             """void fl_unpack_bits(short unsigned int * p1,
                unsigned char * p2, int p3)
             """)
+    check_if_initialized()
     ip3 = convert_to_int(p3)
     keep_elem_refs(p1, p2, p3, ip3)
     _fl_unpack_bits(p1, p2, ip3)
@@ -22899,6 +24208,7 @@ def fl_value_to_bits(val):
             cty.c_uint, [cty.c_uint],
             """unsigned int fl_value_to_bits(unsigned int p1)
             """)
+    check_if_initialized()
     uival = convert_to_uint(val)
     keep_elem_refs(val, uival)
     retval = _fl_value_to_bits(uival)
@@ -22920,6 +24230,7 @@ def flimage_add_comments(pImage, p2, p3):
             """void flimage_add_comments(FL_IMAGE * p1, const char * p2,
                int p3)
             """)
+    check_if_initialized()
     sp2 = convert_to_string(p2)
     ip3 = convert_to_int(p3)
     keep_elem_refs(pImage, p2, p3, sp2, ip3)
@@ -22942,6 +24253,7 @@ def flimage_color_to_pixel(pImage, p2, p3, p4, p5):
             """)long unsigned int flimage_color_to_pixel(FL_IMAGE * p1,
                int p2, int p3, int p4, int * p5)
             """)
+    check_if_initialized()
     ip2 = convert_to_int(p2)
     ip3 = convert_to_int(p3)
     ip4 = convert_to_int(p4)
@@ -22968,6 +24280,7 @@ def flimage_combine(pImage1, pImage2, alpha):
             """FL_IMAGE * flimage_combine(FL_IMAGE * p1, FL_IMAGE * p2,
                double p3)
             """)
+    check_if_initialized()
     falpha = convert_to_double(alpha)
     keep_elem_refs(pImage1, pImage2, alpha, falpha)
     retval = _flimage_combine(pImage1, pImage2, falpha)
@@ -22988,6 +24301,7 @@ def flimage_display_markers(pImage):
             None, [cty.POINTER(xfc.FL_IMAGE)],
             """void flimage_display_markers(FL_IMAGE * p1)
             """)
+    check_if_initialized()
     keep_elem_refs(pImage)
     _flimage_display_markers(pImage)
 
@@ -23006,6 +24320,7 @@ def flimage_dup_(pImage, p2):
             cty.POINTER(xfc.FL_IMAGE), [cty.POINTER(xfc.FL_IMAGE), cty.c_int],
             """FL_IMAGE * flimage_dup_(FL_IMAGE * p1, int p2)
             """)
+    check_if_initialized()
     ip2 = convert_to_int(p2)
     keep_elem_refs(pImage, p2, ip2)
     retval = _flimage_dup_(pImage, ip2)
@@ -23016,7 +24331,11 @@ def flimage_enable_bmp():
     """
         flimage_enable_bmp()
 
-        @status: Untested + NoDoc + NoDemo = NOT OK
+        Enables use of BMP (Windows/OS2 Bitmap) image format.
+
+        @example: flimage_enable_bmp()
+
+        @status: Tested + Doc + NoDemo = OK
     """
 
     _flimage_enable_bmp = cfuncproto(
@@ -23024,6 +24343,7 @@ def flimage_enable_bmp():
             None, [],
             """void flimage_enable_bmp()
             """)
+    check_if_initialized()
     _flimage_enable_bmp()
 
 
@@ -23031,7 +24351,11 @@ def flimage_enable_fits():
     """
         flimage_enable_fits()
 
-        @status: Untested + NoDoc + NoDemo = NOT OK
+        Enables use of NASA/NOTS standard FITS image format.
+
+        @example: flimage_enable_fits()
+
+        @status: Tested + Doc + NoDemo = OK
     """
 
     _flimage_enable_fits = cfuncproto(
@@ -23042,11 +24366,16 @@ def flimage_enable_fits():
     _flimage_enable_fits()
 
 
+# TODO: try to understand what kind of images are these ones.
 def flimage_enable_genesis():
     """
         flimage_enable_genesis()
 
-        @status: Untested + NoDoc + NoDemo = NOT OK
+        Enables use of Genesis image format.
+
+        @example: flimage_enable_genesis()
+
+        @status: Tested + Doc + NoDemo = OK
     """
 
     _flimage_enable_genesis = cfuncproto(
@@ -23054,14 +24383,19 @@ def flimage_enable_genesis():
             None, [],
             """void flimage_enable_genesis()
             """)
+    check_if_initialized()
     _flimage_enable_genesis()
 
 
 def flimage_enable_gif():
-    """
-        flimage_enable_gif()
+    """ flimage_enable_gif()
 
-        @status: Untested + NoDoc + NoDemo = NOT OK
+        Enables use of GIF (Compuserve Graphics Interchange format) image
+        format.
+
+        @example: flimage_enable_gif()
+
+        @status: Tested + Doc + NoDemo = OK
     """
 
     _flimage_enable_gif = cfuncproto(
@@ -23069,6 +24403,7 @@ def flimage_enable_gif():
             None, [],
             """void flimage_enable_gif()
             """)
+    check_if_initialized()
     _flimage_enable_gif()
 
 
@@ -23076,7 +24411,11 @@ def flimage_enable_gzip():
     """
         flimage_enable_gzip()
 
-        @status: Untested + NoDoc + NoDemo = NOT OK
+        Enables use of gzip compression filter for images.
+
+        @example: flimage_enable_gzip()
+
+        @status: Tested + Doc + NoDemo = OK
     """
 
     _flimage_enable_gzip = cfuncproto(
@@ -23084,6 +24423,7 @@ def flimage_enable_gzip():
             None, [],
             """void flimage_enable_gzip()
             """)
+    check_if_initialized()
     _flimage_enable_gzip()
 
 
@@ -23091,7 +24431,12 @@ def flimage_enable_jpeg():
     """
         flimage_enable_jpeg()
 
-        @status: Untested + NoDoc + NoDemo = NOT OK
+        Enables use of JPEG/JFIF (Joint Photographic Experts Group) image
+        format.
+
+        @example: flimage_enable_jpeg()
+
+        @status: Tested + Doc + NoDemo = OK
     """
 
     _flimage_enable_jpeg = cfuncproto(
@@ -23099,6 +24444,7 @@ def flimage_enable_jpeg():
             None, [],
             """void flimage_enable_jpeg()
             """)
+    check_if_initialized()
     _flimage_enable_jpeg()
 
 
@@ -23106,7 +24452,12 @@ def flimage_enable_png():
     """
         flimage_enable_png()
 
-        @status: Untested + NoDoc + NoDemo = NOT OK
+        Enables use of PNG (Portable Network Graphics) image format. It
+        requires netpbm library to be installed 
+
+        @example: flimage_enable_png()
+
+        @status: Tested + Doc + NoDemo = OK
     """
 
     _flimage_enable_png = cfuncproto(
@@ -23114,6 +24465,7 @@ def flimage_enable_png():
             None, [],
             """void flimage_enable_png()
             """)
+    check_if_initialized()
     _flimage_enable_png()
 
 
@@ -23121,7 +24473,12 @@ def flimage_enable_ps():
     """
         flimage_enable_ps()
 
-        @status: Untested + NoDoc + NoDemo = NOT OK
+        Enables use of PS (Adobe PostScript) image format. It needs gs
+        for reading.
+
+        @example: flimage_enable_ps()
+
+        @status: Tested + Doc + NoDemo = OK
     """
 
     _flimage_enable_ps = cfuncproto(
@@ -23129,6 +24486,7 @@ def flimage_enable_ps():
             None, [],
             """void flimage_enable_ps()
             """)
+    check_if_initialized()
     _flimage_enable_ps()
 
 
@@ -23136,7 +24494,12 @@ def flimage_enable_sgi():
     """
         flimage_enable_sgi()
 
-        @status: Untested + NoDoc + NoDemo = NOT OK
+        Enables use of SGI (Silicon Graphics-Iris) image format. It requires
+        pbmplus/netpbm library to be installed 
+
+        @example: flimage_enable_sgi()
+
+        @status: Tested + Doc + NoDemo = OK
     """
 
     _flimage_enable_sgi = cfuncproto(
@@ -23144,6 +24507,7 @@ def flimage_enable_sgi():
             None, [],
             """void flimage_enable_sgi()
             """)
+    check_if_initialized()
     _flimage_enable_sgi()
 
 
@@ -23151,7 +24515,12 @@ def flimage_enable_tiff():
     """
         flimage_enable_tiff()
 
-        @status: Untested + NoDoc + NoDemo = NOT OK
+        Enables use of TIFF (Tagged Image file, with no compression) image
+        format.
+
+        @example: flimage_enable_tiff()
+
+        @status: Tested + Doc + NoDemo = OK
     """
 
     _flimage_enable_tiff = cfuncproto(
@@ -23159,6 +24528,7 @@ def flimage_enable_tiff():
             None, [],
             """void flimage_enable_tiff()
             """)
+    check_if_initialized()
     _flimage_enable_tiff()
 
 
@@ -23166,7 +24536,11 @@ def flimage_enable_xbm():
     """
         flimage_enable_xbm()
 
-        @status: Untested + NoDoc + NoDemo = NOT OK
+        Enables use of XBM (X Window Bitmap) image format.
+
+        @example: flimage_enable_xbm()
+
+        @status: Tested + Doc + NoDemo = OK
     """
 
     _flimage_enable_xbm = cfuncproto(
@@ -23174,6 +24548,7 @@ def flimage_enable_xbm():
             None, [],
             """void flimage_enable_xbm()
             """)
+    check_if_initialized()
     _flimage_enable_xbm()
 
 
@@ -23181,7 +24556,11 @@ def flimage_enable_xpm():
     """
         flimage_enable_xpm()
 
-        @status: Untested + NoDoc + NoDemo = NOT OK
+        Enables use of XPM3 (X Window PixMap) image format.
+
+        @example: flimage_enable_xpm()
+
+        @status: Tested + Doc + NoDemo = OK
     """
 
     _flimage_enable_xpm = cfuncproto(
@@ -23189,6 +24568,7 @@ def flimage_enable_xpm():
             None, [],
             """void flimage_enable_xpm()
             """)
+    check_if_initialized()
     _flimage_enable_xpm()
 
 
@@ -23196,7 +24576,11 @@ def flimage_enable_xwd():
     """
         flimage_enable_xwd()
 
-        @status: Untested + NoDoc + NoDemo = NOT OK
+        Enables use of XWD (X Window Dump) image format.
+
+        @example: flimage_enable_xwd()
+
+        @status: Tested + Doc + NoDemo = OK
     """
 
     _flimage_enable_xwd = cfuncproto(
@@ -23204,6 +24588,7 @@ def flimage_enable_xwd():
             None, [],
             """void flimage_enable_xwd()
             """)
+    check_if_initialized()
     _flimage_enable_xwd()
 
 
@@ -23221,6 +24606,7 @@ def flimage_free_ci(pImage):
             None, [cty.POINTER(xfc.FL_IMAGE)],
             """void flimage_free_ci(FL_IMAGE * p1)
             """)
+    check_if_initialized()
     keep_elem_refs(pImage)
     _flimage_free_ci(pImage)
 
@@ -23229,7 +24615,8 @@ def flimage_free_gray(pImage):
     """
         flimage_free_gray(pImage)
 
-        @param pImage: pointer to image
+        @param pImage: image
+                       (<pointer to xfdata.FL_IMAGE>)
 
         @status: Untested + NoDoc + NoDemo = NOT OK
     """
@@ -23239,6 +24626,7 @@ def flimage_free_gray(pImage):
             None, [cty.POINTER(xfc.FL_IMAGE)],
             """void flimage_free_gray(FL_IMAGE * p1)
             """)
+    check_if_initialized()
     keep_elem_refs(pImage)
     _flimage_free_gray(pImage)
 
@@ -23247,7 +24635,8 @@ def flimage_free_linearlut(pImage):
     """
         flimage_free_linearlut(pImage)
 
-        @param pImage: pointer to image
+        @param pImage: image
+                       (<pointer to xfdata.FL_IMAGE>)
 
         @status: Untested + NoDoc + NoDemo = NOT OK
     """
@@ -23265,7 +24654,8 @@ def flimage_free_rgb(pImage):
     """
         flimage_free_rgb(pImage)
 
-        @param pImage: pointer to image
+        @param pImage: image
+                       (<pointer to xfdata.FL_IMAGE>)
 
         @status: Untested + NoDoc + NoDemo = NOT OK
     """
@@ -23275,6 +24665,7 @@ def flimage_free_rgb(pImage):
             None, [cty.POINTER(xfc.FL_IMAGE)],
             """void flimage_free_rgb(FL_IMAGE * p1)
             """)
+    check_if_initialized()
     keep_elem_refs(pImage)
     _flimage_free_rgb(pImage)
 
@@ -23283,7 +24674,8 @@ def flimage_freemem(pImage):
     """
         flimage_freemem(pImage)
 
-        @param pImage: pointer to image
+        @param pImage: image
+                       (<pointer to xfdata.FL_IMAGE>)
 
         @status: Untested + NoDoc + NoDemo = NOT OK
     """
@@ -23293,6 +24685,7 @@ def flimage_freemem(pImage):
             None, [cty.POINTER(xfc.FL_IMAGE)],
             """void flimage_freemem(FL_IMAGE * p1)
             """)
+    check_if_initialized()
     keep_elem_refs(pImage)
     _flimage_freemem(pImage)
 
@@ -23301,7 +24694,8 @@ def flimage_get_closest_color_from_map(pImage, p2):
     """
         flimage_get_closest_color_from_map(pImage, p2) -> num.
 
-        @param pImage: pointer to image
+        @param pImage: image
+                       (<pointer to xfdata.FL_IMAGE>)
 
         @status: Untested + NoDoc + NoDemo = NOT OK
     """
@@ -23312,6 +24706,7 @@ def flimage_get_closest_color_from_map(pImage, p2):
             """int flimage_get_closest_color_from_map(FL_IMAGE * p1,
                unsigned int p2)
             """)
+    check_if_initialized()
     uip2 = convert_to_uint(p2)
     keep_elem_refs(pImage, p2, uip2)
     retval = _flimage_get_closest_color_from_map(pImage, uip2)
@@ -23322,7 +24717,8 @@ def flimage_get_linearlut(pImage):
     """
         flimage_get_linearlut(pImage) -> num.
 
-        @param pImage: pointer to image
+        @param pImage: image
+                       (<pointer to xfdata.FL_IMAGE>)
 
         @status: Untested + NoDoc + NoDemo = NOT OK
     """
@@ -23332,6 +24728,7 @@ def flimage_get_linearlut(pImage):
             cty.c_int, [cty.POINTER(xfc.FL_IMAGE)],
             """int flimage_get_linearlut(FL_IMAGE * p1)
             """)
+    check_if_initialized()
     keep_elem_refs(pImage)
     retval = _flimage_get_linearlut(pImage)
     return retval
@@ -23341,7 +24738,8 @@ def flimage_invalidate_pixels(pImage):
     """
         flimage_invalidate_pixels(pImage)
 
-        @param pImage: pointer to image
+        @param pImage: image
+                       (<pointer to xfdata.FL_IMAGE>)
 
         @status: Untested + NoDoc + NoDemo = NOT OK
     """
@@ -23351,6 +24749,7 @@ def flimage_invalidate_pixels(pImage):
             None, [cty.POINTER(xfc.FL_IMAGE)],
             """void flimage_invalidate_pixels(FL_IMAGE * p1)
             """)
+    check_if_initialized()
     keep_elem_refs(pImage)
     _flimage_invalidate_pixels(pImage)
 
@@ -23361,6 +24760,9 @@ def flimage_open(filename):
 
         @param filename: name of file to open
 
+        @returns: image
+                  (<pointer to xfdata.FL_IMAGE>)
+
         @status: Untested + NoDoc + NoDemo = NOT OK
     """
 
@@ -23369,6 +24771,7 @@ def flimage_open(filename):
             cty.POINTER(xfc.FL_IMAGE), [xfc.STRING],
             """FL_IMAGE * flimage_open(const char * p1)
             """)
+    check_if_initialized()
     sfilename = convert_to_string(filename)
     keep_elem_refs(filename, sfilename)
     retval = _flimage_open(sfilename)
@@ -23389,6 +24792,7 @@ def flimage_read_annotation(pImage):
             cty.c_int, [cty.POINTER(xfc.FL_IMAGE)],
             """int flimage_read_annotation(FL_IMAGE * p1)
             """)
+    check_if_initialized()
     keep_elem_refs(pImage)
     retval = _flimage_read_annotation(pImage)
     return retval
@@ -23410,6 +24814,7 @@ def flimage_replace_image(pImage, w, h, r, g, b):
             """void flimage_replace_image(FL_IMAGE * p1, int p2, int p3,
                void * p4, void * p5, void * p6)
             """)
+    check_if_initialized()
     iw = convert_to_int(w)
     ih = convert_to_int(h)
     pr = cty.cast(r, cty.c_void_p)
@@ -23433,6 +24838,7 @@ def flimage_swapbuffer(pImage):
             cty.c_int, [cty.POINTER(xfc.FL_IMAGE)],
             """int flimage_swapbuffer(FL_IMAGE * p1)
             """)
+    check_if_initialized()
     keep_elem_refs(pImage)
     retval = _flimage_swapbuffer(pImage)
     return retval
@@ -23457,6 +24863,7 @@ def flimage_to_ximage(pImage, win, pXWindowAttributes):
             """int flimage_to_ximage(FL_IMAGE * p1, FL_WINDOW p2,
                XWindowAttributes * p3)
             """)
+    check_if_initialized()
     ulwin = convert_to_Window(win)
     keep_elem_refs(pImage, win, pXWindowAttributes, ulwin)
     retval = _flimage_to_ximage(pImage, ulwin, pXWindowAttributes)
@@ -23477,6 +24884,7 @@ def flimage_write_annotation(pImage):
             cty.c_int, [cty.POINTER(xfc.FL_IMAGE)],
             """int flimage_write_annotation(FL_IMAGE * p1)
             """)
+    check_if_initialized()
     keep_elem_refs(pImage)
     retval = _flimage_write_annotation(pImage)
     return retval
