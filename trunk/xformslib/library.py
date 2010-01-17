@@ -2,7 +2,6 @@
 # -*- coding: iso8859-1 -*-
 
 """
-
     ***** xforms-python *****
 
     Python wrapper for XForms (X11) GUI C toolkit library using ctypes
@@ -28,7 +27,6 @@
 
 
     @newfield example: Example, Example
-    @newfield values: Possible values, Possible values
 """
 
 
@@ -55,27 +53,41 @@ __vers_against_xforms__ = "1.0.93pre3"   # xforms version to be built against
 __version__ = __mainversion__ + "_" + __vers_against_xforms__
 
 
-header_filename = "/usr/include/forms.h"
+class XFormsLoadError(OSError):
+    """ Error in loading shared object library """
+    pass
 
+
+class XFormsTypeError(TypeError):
+    """ Generic error for type mismatch """
+    pass
+
+
+class XFormsInitError(OSError):
+    """ Error in initializing library, not using fl_initialize() before
+        functions who require it. """
+    pass
+
+
+header_filename = "/usr/include/forms.h"
 
 def get_xforms_version():
     """ Returns version string of installed XForms library/header """
-
     complete_xf_version = ""
     try:
-        formsh = open(header_filename, "r")
+        formshdr = open(header_filename, "r")
     except IOError:
         raise XFormsLoadError("XForms library toolkit header file is" \
                               " not installed properly")
     else:
         try:
             # a reasonable size to catch version values
-            fconten = formsh.read(2500)
+            fconten = formshdr.read(2500)
         except IOError:
             raise XFormsLoadError("XForms library toolkit header is" \
                                   "not installed properly")
         else:
-            formsh.close()
+            formshdr.close()
             listconten = fconten.split("\n")
             for singline in listconten:
                 idx_ver = singline.find("FL_VERSION")
@@ -103,7 +115,6 @@ def get_xforms_version():
 
 def verify_version_compatibility():
     """ verify compatibility between xforms-python and XForms versions """
-
     xforms_vers = get_xforms_version()
     if __vers_against_xforms__ != xforms_vers:      # no match
         warningmsg = "xforms-python is implemented against XForms version " \
@@ -114,28 +125,8 @@ def verify_version_compatibility():
         warnings.warn(warningmsg, UserWarning)
 
 
-class XFormsLoadError(OSError):
-    """ Error in loading shared object library """
-
-    pass
-
-
-class XFormsTypeError(TypeError):
-    """ Generic error for type mismatch """
-
-    pass
-
-
-class XFormsInitError(OSError):
-    """ Error in initializing library, not using fl_initialize() before
-        functions who require it. """
-
-    pass
-
-
 def func_notexisting_placeholder(cfunction):
     """ Print a warning if called function doesn't exist """
-
     warningmsg = "C function %s does NOT exist, hence it is not " \
                  "wrappable and callable in python and its call " \
                  "is ignored. Maybe removed or disabled?" % cfunction
@@ -149,17 +140,14 @@ _cfunc_refs = []
 # just in case, maintains elements used as parameters, too
 _elem_refs = []
 
-
 def keep_cfunc_refs(*cfunclist):
     """ Adds a reference for _cfunc_refs list of values """
-
     for singvalue in cfunclist:
         _cfunc_refs.append(singvalue)
 
 
 def keep_elem_refs(*elemlist):
     """ Adds a reference for _elem_refs list of values """
-
     for singvalue in elemlist:
         _elem_refs.append(singvalue)
 
@@ -170,7 +158,6 @@ loaded_xlibraries = {'libforms' : None, 'libflimage' : None, \
 
 def load_so_libforms():
     """ Load libforms.so else raise an error -> library instance """
-
     if loaded_xlibraries['libforms'] is None:
         libfbase = ctyutil.find_library("forms")
         if not libfbase:    # not installed
@@ -183,7 +170,6 @@ def load_so_libforms():
 
 def load_so_libflimage():
     """ Load libflimage.so else raise an error -> library instance """
-
     if loaded_xlibraries['libflimage'] is None:
         libfimg = ctyutil.find_library("flimage")
         if not libfimg:    # not installed
@@ -196,7 +182,6 @@ def load_so_libflimage():
 
 def load_so_libformsgl():
     """ Load libformsGL.so else raise an error -> library instance """
-
     if loaded_xlibraries['libformsgl'] is None:
         libfgl = ctyutil.find_library("formsGL")
         if not libfgl:    # not installed
@@ -210,7 +195,6 @@ def load_so_libformsgl():
 
 def load_so_libx11():
     """ Load libX11.so.6 else raise an error -> library instance """
-
     if loaded_xlibraries['libx11'] is None:
         libx11 = ctyutil.find_library("X11")
         if not libx11:    # not installed
@@ -223,7 +207,6 @@ def load_so_libx11():
 
 def cfuncproto(library, cfuncname, retval, arglist, doc=""):
     """ Prototype for C functions to be wrapped in python """
-
     loadedfunc = None
     try:
         loadedfunc = getattr(library, cfuncname)
@@ -243,9 +226,7 @@ flinitialized = False               # if fl_initialize() not called before
 def check_if_initialized():
     """ Check if fl_initialize() has been called before caller function.
         Needed for most functions, except those supposed to be used
-        *BEFORE* initialization.
-    """
-
+        *BEFORE* initialization. """
     if not flinitialized:       # fl_initialize() not called
         raise XFormsInitError("You must call fl_initialize() before using" \
                               " this function.")
@@ -256,7 +237,6 @@ def check_if_initialized():
 
 def convert_to_string(paramname):
     """ Converts paramname to python str and to ctypes c_char_p """
-
     try:
         retv0 = str(paramname)
     except ValueError:
@@ -268,7 +248,6 @@ def convert_to_string(paramname):
 
 def convert_to_int(paramname):
     """ Converts paramname to python int and to ctypes c_int """
-
     if not isinstance(paramname, cty.c_int):
         try:
             retv0 = int(paramname)
@@ -280,13 +259,11 @@ def convert_to_int(paramname):
     else:
         return paramname
 
-
 convert_to_FL_Coord = convert_to_int
 
 
 def convert_to_uint(paramname):
     """ Converts paramname to python int and to ctypes c_uint """
-
     if not isinstance(paramname, cty.c_int):
         try:
             retv0 = int(paramname)
@@ -302,7 +279,6 @@ def convert_to_uint(paramname):
 
 def convert_to_long(paramname):
     """ Converts paramname to python long and to ctypes c_long """
-
     if not isinstance(paramname, cty.c_long):
         try:
             retv0 = long(paramname)
@@ -318,7 +294,6 @@ def convert_to_long(paramname):
 
 def convert_to_ulong(paramname):
     """ Converts paramname to python long and to ctypes c_ulong """
-
     if not isinstance(paramname, cty.c_ulong):
         try:
             retv0 = long(paramname)
@@ -331,7 +306,6 @@ def convert_to_ulong(paramname):
     else:
         return paramname
 
-
 convert_to_FL_COLOR = convert_to_ulong
 convert_to_Window = convert_to_ulong
 convert_to_Pixmap = convert_to_ulong
@@ -339,7 +313,6 @@ convert_to_Pixmap = convert_to_ulong
 
 def convert_to_double(paramname):
     """ Converts paramname to python float and to ctypes c_double """
-
     if not isinstance(paramname, cty.c_double):
         try:
             retv0 = float(paramname)
@@ -356,7 +329,6 @@ def convert_to_double(paramname):
 
 def convert_to_float(paramname):
     """ Converts paramname to python float and to ctypes c_float """
-
     if not isinstance(paramname, cty.c_float):
         try:
             retv0 = float(paramname)
@@ -373,25 +345,21 @@ def convert_to_float(paramname):
 
 def convert_to_ubyte(paramname):
     """ Converts paramname to ctypes c_ubyte """
-
     retv = cty.c_ubyte(paramname)
     return retv
 
 
 def make_int_and_pointer():
     """ Makes a ctypes c_int and its pointer, and returns both """
-
     baseval = cty.c_int()
     ptrbaseval = cty.byref(baseval)
     return baseval, ptrbaseval
-
 
 make_FL_Coord_and_pointer = make_int_and_pointer
 
 
 def make_uint_and_pointer():
     """ Makes a ctypes c_uint and its pointer, and returns both """
-
     baseval = cty.c_uint()
     ptrbaseval = cty.byref(baseval)
     return baseval, ptrbaseval
@@ -399,7 +367,6 @@ def make_uint_and_pointer():
 
 def make_long_and_pointer():
     """ Makes a ctypes c_long and its pointer, and returns both """
-
     baseval = cty.c_long()
     ptrbaseval = cty.byref(baseval)
     return baseval, ptrbaseval
@@ -407,11 +374,9 @@ def make_long_and_pointer():
 
 def make_ulong_and_pointer():
     """ Makes a ctypes c_ulong and its pointer, and returns both """
-
     baseval = cty.c_ulong()
     ptrbaseval = cty.byref(baseval)
     return baseval, ptrbaseval
-
 
 make_Pixmap_and_pointer = make_ulong_and_pointer
 make_FL_COLOR_and_pointer = make_ulong_and_pointer
@@ -419,7 +384,6 @@ make_FL_COLOR_and_pointer = make_ulong_and_pointer
 
 def make_float_and_pointer():
     """ Makes a ctypes c_float and its pointer, and returns both """
-
     baseval = cty.c_float()
     ptrbaseval = cty.byref(baseval)
     return baseval, ptrbaseval
@@ -427,7 +391,6 @@ def make_float_and_pointer():
 
 def make_double_and_pointer():
     """ Makes a ctypes c_double and its pointer, and returns both """
-
     baseval = cty.c_double()
     ptrbaseval = cty.byref(baseval)
     return baseval, ptrbaseval
@@ -435,9 +398,7 @@ def make_double_and_pointer():
 
 def check_admitted_listvalues(paramname, *valueslist):
     """ Check if paramname value is valid in accordance to a list
-        of admissible values.
-    """
-
+        of admissible values."""
     if isinstance(valueslist, list):
         if paramname not in valueslist:
             raise XFormsTypeError("Parameter %s value must be included in " \
@@ -445,18 +406,14 @@ def check_admitted_listvalues(paramname, *valueslist):
 
 
 def check_if_FL_OBJECT_ptr(paramname):
-    """ Check if paramname value is a valid pointer to xfdata.FL_OBJECT.
-    """
-
+    """ Check if paramname value is a valid pointer to xfdata.FL_OBJECT."""
     if not isinstance(paramname, cty.POINTER(xfc.FL_OBJECT)):
         raise XFormsTypeError("Parameter value %s must be a pointer to " \
                               "xfdata.FL_OBJECT." % paramname)
 
 
 def check_if_FL_FORM_ptr(paramname):
-    """ Check if paramname value is a valid pointer to xfdata.FL_FORM.
-    """
-
+    """ Check if paramname value is a valid pointer to xfdata.FL_FORM."""
     if not isinstance(paramname, cty.POINTER(xfc.FL_FORM)):
         raise XFormsTypeError("Parameter value %s must be a pointer to " \
                               "xfdata.FL_FORM." % paramname)
@@ -464,9 +421,7 @@ def check_if_FL_FORM_ptr(paramname):
 
 def donothing_popupcb(pPopupReturn):
     """ It replaces a callback function not defined for class instances
-        as e.g. xfdata.FL_POPUP_ITEM    *temporary*
-    """
-
+        as e.g. xfdata.FL_POPUP_ITEM    *temporary* """
     return 0
 
 
@@ -475,9 +430,7 @@ def make_pPopupItem_from_dict(dictofpopupitems):
 
         Taking a python dict (for one dict item ONLY) with a structure similar
         to xfdata.FL_POPUP_ITEM prepares and returns a C-compatible pointer
-        to xfdata.FL_POPUP_ITEM.
-    """
-
+        to xfdata.FL_POPUP_ITEM. """
     if not isinstance(dictofpopupitems, dict):
         raise XFormsTypeError("Parameter must be a dict")
         return None, None
@@ -517,9 +470,7 @@ def make_pPopupItem_from_list(listofpopupitems):
 
         Taking a python single list/several lists of popup items, with
         elements in the same order as xfdata.FL_POPUP_ITEM prepares and
-        returns a C-compatible pointer to xfdata.FL_POPUP_ITEM.
-    """
-
+        returns a C-compatible pointer to xfdata.FL_POPUP_ITEM.""" 
     # hack to manage both single list and several lists passed as arguments
     try:
         tmpval = listofpopupitems[1][0]
@@ -587,8 +538,6 @@ def make_pPopupItem_from_list(listofpopupitems):
         keep_elem_refs(listofpopupitems, popupitem, ppopupitem)
         return ppopupitem
         # end of serie of lists
-
-
 
 
 # exported variables
@@ -691,14 +640,12 @@ def fl_add_io_callback(fd, mask, py_IoCallback, vdata):
 
     @status: Tested + Doc + NoDemo = OK
     """
-
     #FL_IO_CALLBACK = cty.CFUNCTYPE(None, cty.c_int, cty.c_void_p)
     _fl_add_io_callback = cfuncproto(
-            load_so_libforms(), "fl_add_io_callback", \
-            None, [cty.c_int, cty.c_uint, xfc.FL_IO_CALLBACK, cty.c_void_p],
-            """void fl_add_io_callback(int fd, unsigned int mask,
-               FL_IO_CALLBACK callback, void * data)
-            """)
+        load_so_libforms(), "fl_add_io_callback", \
+        None, [cty.c_int, cty.c_uint, xfc.FL_IO_CALLBACK, cty.c_void_p],
+        """void fl_add_io_callback(int fd, unsigned int mask,
+           FL_IO_CALLBACK callback, void * data) """)
     check_if_initialized()
     ifd = convert_to_int(fd)
     uimask = convert_to_uint(mask)
@@ -730,14 +677,12 @@ def fl_remove_io_callback(fd, mask, py_IoCallback):
 
     @status: Tested + Doc + NoDemo = OK
     """
-
     #FL_IO_CALLBACK = cty.CFUNCTYPE(None, cty.c_int, cty.c_void_p)
     _fl_remove_io_callback = cfuncproto(
-            load_so_libforms(), "fl_remove_io_callback", \
-            None, [cty.c_int, cty.c_uint, xfc.FL_IO_CALLBACK], \
-            """void fl_remove_io_callback(int fd, unsigned int mask,
-               FL_IO_CALLBACK cb)
-            """)
+        load_so_libforms(), "fl_remove_io_callback", \
+        None, [cty.c_int, cty.c_uint, xfc.FL_IO_CALLBACK], \
+        """void fl_remove_io_callback(int fd, unsigned int mask,
+           FL_IO_CALLBACK cb) """)
     check_if_initialized()
     check_admitted_listvalues(mask, xfc.ASYNCIO_list)
     ifd = convert_to_int(fd)
@@ -772,14 +717,12 @@ def fl_add_signal_callback(sglnum, py_SignalHandler, vdata):
 
     @status: Tested + Doc + NoDemo = OK
     """
-
     #FL_SIGNAL_HANDLER = cty.CFUNCTYPE(None, cty.c_int, cty.c_void_p)
     _fl_add_signal_callback = cfuncproto(
-            load_so_libforms(), "fl_add_signal_callback", \
-            None, [cty.c_int, xfc.FL_SIGNAL_HANDLER, cty.c_void_p], \
-            """void fl_add_signal_callback(int s, FL_SIGNAL_HANDLER cb,
-               void * data)
-            """)
+        load_so_libforms(), "fl_add_signal_callback", \
+        None, [cty.c_int, xfc.FL_SIGNAL_HANDLER, cty.c_void_p], \
+        """void fl_add_signal_callback(int s, FL_SIGNAL_HANDLER cb,
+           void * data) """)
     check_if_initialized()
     isglnum = convert_to_int(sglnum)
     c_SignalHandler = xfc.FL_SIGNAL_HANDLER(py_SignalHandler)
@@ -803,12 +746,10 @@ def fl_remove_signal_callback(sglnum):
 
     @status: Tested + Doc + NoDemo = OK
     """
-
     _fl_remove_signal_callback = cfuncproto(
-            load_so_libforms(), "fl_remove_signal_callback", \
-            None, [cty.c_int], \
-            """void fl_remove_signal_callback(int s)
-            """)
+        load_so_libforms(), "fl_remove_signal_callback", \
+        None, [cty.c_int], \
+        """void fl_remove_signal_callback(int s) """)
     check_if_initialized()
     isglnum = convert_to_int(sglnum)
     keep_elem_refs(sglnum, isglnum)
@@ -830,12 +771,10 @@ def fl_signal_caught(sglnum):
 
     @status: Tested + Doc + NoDemo = OK
     """
-
     _fl_signal_caught = cfuncproto(
-            load_so_libforms(), "fl_signal_caught", \
-            None, [cty.c_int], \
-            """void fl_signal_caught(int s)
-            """)
+        load_so_libforms(), "fl_signal_caught", \
+        None, [cty.c_int], \
+        """void fl_signal_caught(int s) """)
     check_if_initialized()
     isglnum = convert_to_int(sglnum)
     keep_elem_refs(sglnum, isglnum)
@@ -858,12 +797,10 @@ def fl_app_signal_direct(flag):
 
     @status: Tested + Doc + NoDemo = OK
     """
-
     _fl_app_signal_direct = cfuncproto(
-            load_so_libforms(), "fl_app_signal_direct", \
-            None, [cty.c_int], \
-            """void fl_app_signal_direct(int y)
-            """)
+        load_so_libforms(), "fl_app_signal_direct", \
+        None, [cty.c_int], \
+        """void fl_app_signal_direct(int y) """)
     check_if_initialized()
     iflag = convert_to_int(flag)
     keep_elem_refs(flag, iflag)
@@ -893,14 +830,12 @@ def fl_add_timeout(msec, py_TimeoutCallback, vdata):
 
     @status: Tested + Doc + Demo = OK
     """
-
     #FL_TIMEOUT_CALLBACK = cty.CFUNCTYPE(None, cty.c_int, cty.c_void_p)
     _fl_add_timeout = cfuncproto(
-            load_so_libforms(), "fl_add_timeout", \
-            cty.c_int, [cty.c_long, xfc.FL_TIMEOUT_CALLBACK, cty.c_void_p],
-            """int fl_add_timeout(long int msec,
-               FL_TIMEOUT_CALLBACK callback, void * data)
-            """)
+        load_so_libforms(), "fl_add_timeout", \
+        cty.c_int, [cty.c_long, xfc.FL_TIMEOUT_CALLBACK, cty.c_void_p],
+        """int fl_add_timeout(long int msec,
+           FL_TIMEOUT_CALLBACK callback, void * data) """)
     check_if_initialized()
     lmsec = convert_to_long(msec)
     pvdata = cty.cast(vdata, cty.c_void_p)
@@ -924,12 +859,10 @@ def fl_remove_timeout(idnum):
 
     @status: Tested + Doc + Demo = OK
     """
-
     _fl_remove_timeout = cfuncproto(
-            load_so_libforms(), "fl_remove_timeout", \
-            None, [cty.c_int], \
-            """void fl_remove_timeout(int id)
-            """)
+        load_so_libforms(), "fl_remove_timeout", \
+        None, [cty.c_int], \
+        """void fl_remove_timeout(int id) """)
     check_if_initialized()
     iidnum = convert_to_int(idnum)
     keep_elem_refs(idnum, iidnum)
@@ -954,12 +887,10 @@ def fl_library_version():
 
     @status: Tested + Doc + NoDemo = OK
     """
-
     _fl_library_version = cfuncproto(
-            load_so_libforms(), "fl_library_version", \
-            cty.c_int, [cty.POINTER(cty.c_int), cty.POINTER(cty.c_int)], \
-            """int fl_library_version(int * ver, int * rev)
-            """)
+        load_so_libforms(), "fl_library_version", \
+        cty.c_int, [cty.POINTER(cty.c_int), cty.POINTER(cty.c_int)], \
+        """int fl_library_version(int * ver, int * rev) """)
     check_if_initialized()
     ver, pver = make_int_and_pointer()
     rev, prev = make_int_and_pointer()
@@ -994,12 +925,10 @@ def fl_bgn_form(formtype, w, h):
 
     @status: Tested + Doc + Demo = OK
     """
-
     _fl_bgn_form = cfuncproto(
-            load_so_libforms(), "fl_bgn_form", \
-            cty.POINTER(xfc.FL_FORM), [cty.c_int, xfc.FL_Coord, xfc.FL_Coord],
-            """FL_FORM * fl_bgn_form(int type, FL_Coord w, FL_Coord h)
-            """)
+        load_so_libforms(), "fl_bgn_form", \
+        cty.POINTER(xfc.FL_FORM), [cty.c_int, xfc.FL_Coord, xfc.FL_Coord],
+        """FL_FORM * fl_bgn_form(int type, FL_Coord w, FL_Coord h) """)
     check_if_initialized()
     check_admitted_listvalues(formtype, xfc.BOXTYPE_list)
     iformtype = convert_to_int(formtype)
@@ -1021,12 +950,10 @@ def fl_end_form():
 
     @status: Tested + Doc + Demo = OK
     """
-
     _fl_end_form = cfuncproto(
-            load_so_libforms(), "fl_end_form", \
-            None, [], \
-            """void fl_end_form()
-            """)
+        load_so_libforms(), "fl_end_form", \
+        None, [], \
+        """void fl_end_form() """)
     check_if_initialized()
     _fl_end_form()
 
@@ -1040,17 +967,14 @@ def fl_do_forms():
 
     @return: object changed (<pointer to xfdata.FL_OBJECT>)
 
-    @example: while fl_do_forms():
-    @example: |->| pass
+    @example: while fl_do_forms(): pass
 
     @status: Tested + Doc + Demo = OK
     """
-
     _fl_do_forms = cfuncproto(
-            load_so_libforms(), "fl_do_forms", \
-            cty.POINTER(xfc.FL_OBJECT), [], \
-            """FL_OBJECT * fl_do_forms()
-            """)
+        load_so_libforms(), "fl_do_forms", \
+        cty.POINTER(xfc.FL_OBJECT), [], \
+        """FL_OBJECT * fl_do_forms() """)
     check_if_initialized()
     retval = _fl_do_forms()
     return retval
@@ -1069,12 +993,10 @@ def fl_check_forms():
 
     @status: Tested + Doc + Demo = OK
     """
-
     _fl_check_forms = cfuncproto(
-            load_so_libforms(), "fl_check_forms", \
-            cty.POINTER(xfc.FL_OBJECT), [], \
-            """FL_OBJECT * fl_check_forms()
-            """)
+        load_so_libforms(), "fl_check_forms", \
+        cty.POINTER(xfc.FL_OBJECT), [], \
+        """FL_OBJECT * fl_check_forms() """)
     check_if_initialized()
     retval = _fl_check_forms()
     return retval
@@ -1095,12 +1017,10 @@ def fl_do_only_forms():
 
     @status: Tested + Doc + NoDemo = OK
     """
-
     _fl_do_only_forms = cfuncproto(
-            load_so_libforms(), "fl_do_only_forms", \
-            cty.POINTER(xfc.FL_OBJECT), [], \
-            """FL_OBJECT * fl_do_only_forms()
-            """)
+        load_so_libforms(), "fl_do_only_forms", \
+        cty.POINTER(xfc.FL_OBJECT), [], \
+        """FL_OBJECT * fl_do_only_forms() """)
     check_if_initialized()
     retval = _fl_do_only_forms()
     return retval
@@ -1120,12 +1040,10 @@ def fl_check_only_forms():
 
     @status: Tested + Doc + NoDemo = OK
     """
-
     _fl_check_only_forms = cfuncproto(
-            load_so_libforms(), "fl_check_only_forms", \
-            cty.POINTER(xfc.FL_OBJECT), [], \
-            """FL_OBJECT * fl_check_only_forms()
-            """)
+        load_so_libforms(), "fl_check_only_forms", \
+        cty.POINTER(xfc.FL_OBJECT), [], \
+        """FL_OBJECT * fl_check_only_forms() """)
     check_if_initialized()
     retval = _fl_check_only_forms()
     return retval
@@ -1145,12 +1063,10 @@ def fl_freeze_form(pFlForm):
 
     @status: Tested + Doc + Demo = OK
     """
-
     _fl_freeze_form = cfuncproto(
-            load_so_libforms(), "fl_freeze_form", \
-            None, [cty.POINTER(xfc.FL_FORM)], \
-            """void fl_freeze_form(FL_FORM * form)
-            """)
+        load_so_libforms(), "fl_freeze_form", \
+        None, [cty.POINTER(xfc.FL_FORM)], \
+        """void fl_freeze_form(FL_FORM * form) """)
     check_if_initialized()
     keep_elem_refs(pFlForm)
     _fl_freeze_form(pFlForm)
@@ -1171,12 +1087,10 @@ def fl_set_focus_object(pFlForm, pFlObject):
 
     @status: Tested + Doc + NoDemo = OK
     """
-
     _fl_set_focus_object = cfuncproto(
-            load_so_libforms(), "fl_set_focus_object", \
-            None, [cty.POINTER(xfc.FL_FORM), cty.POINTER(xfc.FL_OBJECT)], \
-            """void fl_set_focus_object(FL_FORM * form, FL_OBJECT * obj)
-            """)
+        load_so_libforms(), "fl_set_focus_object", \
+        None, [cty.POINTER(xfc.FL_FORM), cty.POINTER(xfc.FL_OBJECT)], \
+        """void fl_set_focus_object(FL_FORM * form, FL_OBJECT * obj) """)
     check_if_initialized()
     check_if_FL_FORM_ptr(pFlForm)
     check_if_FL_OBJECT_ptr(pFlObject)
@@ -1202,12 +1116,10 @@ def fl_get_focus_object(pFlForm):
 
     @status: Tested + Doc + NoDemo = OK
     """
-
     _fl_get_focus_object = cfuncproto(
-            load_so_libforms(), "fl_get_focus_object", \
-            cty.POINTER(xfc.FL_OBJECT), [cty.POINTER(xfc.FL_FORM)], \
-            """FL_OBJECT * fl_get_focus_object(FL_FORM * form)
-            """)
+        load_so_libforms(), "fl_get_focus_object", \
+        cty.POINTER(xfc.FL_OBJECT), [cty.POINTER(xfc.FL_FORM)], \
+        """FL_OBJECT * fl_get_focus_object(FL_FORM * form) """)
     check_if_initialized()
     check_if_FL_FORM_ptr(pFlForm)
     keep_elem_refs(pFlForm)
@@ -1228,12 +1140,10 @@ def fl_reset_focus_object(pFlObject):
 
     @status: Tested + Doc + NoDemo = OK
     """
-
     _fl_reset_focus_object = cfuncproto(
-            load_so_libforms(), "fl_reset_focus_object", \
-            None, [cty.POINTER(xfc.FL_OBJECT)], \
-            """void fl_reset_focus_object(FL_OBJECT * ob)
-            """)
+        load_so_libforms(), "fl_reset_focus_object", \
+        None, [cty.POINTER(xfc.FL_OBJECT)], \
+        """void fl_reset_focus_object(FL_OBJECT * ob) """)
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     keep_elem_refs(pFlObject)
@@ -1263,16 +1173,14 @@ def fl_set_form_atclose(pFlForm, py_FormAtclose, vdata):
 
     @status: Tested + Doc + NoDemo = OK
     """
-
     # FL_FORM_ATCLOSE = cty.CFUNCTYPE(cty.c_int, cty.POINTER(xfc.FL_FORM), \
     #                                 cty.c_void_p)
     _fl_set_form_atclose = cfuncproto(
-            load_so_libforms(), "fl_set_form_atclose", \
-            xfc.FL_FORM_ATCLOSE, [cty.POINTER(xfc.FL_FORM), 
-            xfc.FL_FORM_ATCLOSE, cty.c_void_p], \
-            """FL_FORM_ATCLOSE fl_set_form_atclose(FL_FORM * form,
-               FL_FORM_ATCLOSE fmclose, void * data)
-            """)
+        load_so_libforms(), "fl_set_form_atclose", \
+        xfc.FL_FORM_ATCLOSE, [cty.POINTER(xfc.FL_FORM), xfc.FL_FORM_ATCLOSE,
+        cty.c_void_p], \
+        """FL_FORM_ATCLOSE fl_set_form_atclose(FL_FORM * form,
+           FL_FORM_ATCLOSE fmclose, void * data) """)
     check_if_initialized()
     check_if_FL_FORM_ptr(pFlForm)
     c_FormAtclose = xfc.FL_FORM_ATCLOSE(py_FormAtclose)
@@ -1304,15 +1212,13 @@ def fl_set_atclose(py_FormAtclose, vdata):
 
     @status: Tested + Doc + NoDemo = OK
     """
-
     # FL_FORM_ATCLOSE = cty.CFUNCTYPE(cty.c_int, cty.POINTER(xfc.FL_FORM), \
     #                                 cty.c_void_p)
     _fl_set_atclose = cfuncproto(
-            load_so_libforms(), "fl_set_atclose", \
-            xfc.FL_FORM_ATCLOSE, [xfc.FL_FORM_ATCLOSE, cty.c_void_p], \
-            """FL_FORM_ATCLOSE fl_set_atclose(FL_FORM_ATCLOSE fmclose,
-               void * data)
-            """)
+        load_so_libforms(), "fl_set_atclose", \
+        xfc.FL_FORM_ATCLOSE, [xfc.FL_FORM_ATCLOSE, cty.c_void_p], \
+        """FL_FORM_ATCLOSE fl_set_atclose(FL_FORM_ATCLOSE fmclose,
+           void * data) """)
     check_if_initialized()
     c_FormAtclose = xfc.FL_FORM_ATCLOSE(py_FormAtclose)
     pvdata = cty.cast(vdata, cty.c_void_p)
@@ -1344,16 +1250,14 @@ def fl_set_form_atactivate(pFlForm, py_FormAtactivate, vdata):
 
     @status: Tested + Doc + NoDemo = OK
     """
-
     #FL_FORM_ATACTIVATE = cty.CFUNCTYPE(None, cty.POINTER(xfc.FL_FORM), \
     #                                   cty.c_void_p)
     _fl_set_form_atactivate = cfuncproto(
-            load_so_libforms(), "fl_set_form_atactivate", \
-            xfc.FL_FORM_ATACTIVATE, [cty.POINTER(xfc.FL_FORM),
-            xfc.FL_FORM_ATACTIVATE, cty.c_void_p], \
-            """FL_FORM_ATACTIVATE fl_set_form_atactivate(FL_FORM * form,
-               FL_FORM_ATACTIVATE cb, void * data)
-            """)
+        load_so_libforms(), "fl_set_form_atactivate", \
+        xfc.FL_FORM_ATACTIVATE, [cty.POINTER(xfc.FL_FORM),
+        xfc.FL_FORM_ATACTIVATE, cty.c_void_p], \
+        """FL_FORM_ATACTIVATE fl_set_form_atactivate(FL_FORM * form,
+           FL_FORM_ATACTIVATE cb, void * data) """)
     check_if_initialized()
     check_if_FL_FORM_ptr(pFlForm)
     c_FormAtactivate = xfc.FL_FORM_ATACTIVATE(py_FormAtactivate)
@@ -1387,16 +1291,14 @@ def fl_set_form_atdeactivate(pFlForm, py_FormAtdeactivate, vdata):
 
     @status: Tested + Doc + NoDemo = OK
     """
-
     #FL_FORM_ATDEACTIVATE = cty.CFUNCTYPE(None, cty.POINTER(xfc.FL_FORM), \
     #                                     cty.c_void_p)
     _fl_set_form_atdeactivate = cfuncproto(
-            load_so_libforms(), "fl_set_form_atdeactivate", \
-            xfc.FL_FORM_ATDEACTIVATE, [cty.POINTER(xfc.FL_FORM),
-            xfc.FL_FORM_ATDEACTIVATE, cty.c_void_p], \
-            """FL_FORM_ATDEACTIVATE fl_set_form_atdeactivate(FL_FORM * form,
-               FL_FORM_ATDEACTIVATE cb, void * data)
-            """)
+        load_so_libforms(), "fl_set_form_atdeactivate", \
+        xfc.FL_FORM_ATDEACTIVATE, [cty.POINTER(xfc.FL_FORM),
+        xfc.FL_FORM_ATDEACTIVATE, cty.c_void_p], \
+        """FL_FORM_ATDEACTIVATE fl_set_form_atdeactivate(FL_FORM * form,
+           FL_FORM_ATDEACTIVATE cb, void * data) """)
     check_if_initialized()
     check_if_FL_FORM_ptr(pFlForm)
     c_FormAtdeactivate = xfc.FL_FORM_ATDEACTIVATE(py_FormAtdeactivate)
@@ -1421,12 +1323,10 @@ def fl_unfreeze_form(pFlForm):
 
     @status: Tested + Doc + Demo = OK
     """
-
     _fl_unfreeze_form = cfuncproto(
-            load_so_libforms(), "fl_unfreeze_form", \
-            None, [cty.POINTER(xfc.FL_FORM)], \
-            """void fl_unfreeze_form(FL_FORM * form)
-            """)
+        load_so_libforms(), "fl_unfreeze_form", \
+        None, [cty.POINTER(xfc.FL_FORM)], \
+        """void fl_unfreeze_form(FL_FORM * form) """)
     check_if_initialized()
     check_if_FL_FORM_ptr(pFlForm)
     keep_elem_refs(pFlForm)
@@ -1447,12 +1347,10 @@ def fl_deactivate_form(pFlForm):
 
     @status: Tested + Doc + Demo = OK
     """
-
     _fl_deactivate_form = cfuncproto(
-            load_so_libforms(), "fl_deactivate_form", \
-            None, [cty.POINTER(xfc.FL_FORM)], \
-            """void fl_deactivate_form(FL_FORM * form)
-            """)
+        load_so_libforms(), "fl_deactivate_form", \
+        None, [cty.POINTER(xfc.FL_FORM)], \
+        """void fl_deactivate_form(FL_FORM * form) """)
     check_if_initialized()
     check_if_FL_FORM_ptr(pFlForm)
     keep_elem_refs(pFlForm)
@@ -1473,12 +1371,10 @@ def fl_activate_form(pFlForm):
 
     @status: Tested + Doc + Demo = OK
     """
-
     _fl_activate_form = cfuncproto(
-            load_so_libforms(), "fl_activate_form", \
-            None, [cty.POINTER(xfc.FL_FORM)], \
-            """void fl_activate_form(FL_FORM * form)
-            """)
+        load_so_libforms(), "fl_activate_form", \
+        None, [cty.POINTER(xfc.FL_FORM)], \
+        """void fl_activate_form(FL_FORM * form) """)
     check_if_initialized()
     check_if_FL_FORM_ptr(pFlForm)
     keep_elem_refs(pFlForm)
@@ -1495,12 +1391,10 @@ def fl_deactivate_all_forms():
 
     @status: Tested + Doc + NoDemo = OK
     """
-
     _fl_deactivate_all_forms = cfuncproto(
-            load_so_libforms(), "fl_deactivate_all_forms", \
-            None, [], \
-            """void fl_deactivate_all_forms()
-            """)
+        load_so_libforms(), "fl_deactivate_all_forms", \
+        None, [], \
+        """void fl_deactivate_all_forms() """)
     check_if_initialized()
     _fl_deactivate_all_forms()
 
@@ -1514,12 +1408,10 @@ def fl_activate_all_forms():
 
         @status: Tested + Doc + NoDemo = OK
     """
-
     _fl_activate_all_forms = cfuncproto(
-            load_so_libforms(), "fl_activate_all_forms", \
-            None, [], \
-            """void fl_activate_all_forms()
-            """)
+        load_so_libforms(), "fl_activate_all_forms", \
+        None, [], \
+        """void fl_activate_all_forms() """)
     check_if_initialized()
     _fl_activate_all_forms()
 
@@ -1535,12 +1427,10 @@ def fl_freeze_all_forms():
 
     @status: Tested + Doc + NoDemo = OK
     """
-
     _fl_freeze_all_forms = cfuncproto(
-            load_so_libforms(), "fl_freeze_all_forms", \
-            None, [], \
-            """void fl_freeze_all_forms()
-            """)
+        load_so_libforms(), "fl_freeze_all_forms", \
+        None, [], \
+        """void fl_freeze_all_forms() """)
     check_if_initialized()
     _fl_freeze_all_forms()
 
@@ -1556,12 +1446,10 @@ def fl_unfreeze_all_forms():
 
     @status: Tested + Doc + NoDemo = OK
     """
-
     _fl_unfreeze_all_forms = cfuncproto(
-            load_so_libforms(), "fl_unfreeze_all_forms", \
-            None, [], \
-            """void fl_unfreeze_all_forms()
-            """)
+        load_so_libforms(), "fl_unfreeze_all_forms", \
+        None, [], \
+        """void fl_unfreeze_all_forms() """)
     check_if_initialized()
     _fl_unfreeze_all_forms()
 
@@ -1585,12 +1473,10 @@ def fl_scale_form(pFlForm, xsc, ysc):
 
     @status: Tested + Doc + Demo = OK
     """
-
     _fl_scale_form = cfuncproto(
-            load_so_libforms(), "fl_scale_form", \
-            None, [cty.POINTER(xfc.FL_FORM), cty.c_double, cty.c_double], \
-            """void fl_scale_form(FL_FORM * form, double xsc, double ysc)
-            """)
+        load_so_libforms(), "fl_scale_form", \
+        None, [cty.POINTER(xfc.FL_FORM), cty.c_double, cty.c_double], \
+        """void fl_scale_form(FL_FORM * form, double xsc, double ysc) """)
     check_if_initialized()
     check_if_FL_FORM_ptr(pFlForm)
     fxsc = convert_to_double(xsc)
@@ -1617,13 +1503,11 @@ def fl_set_form_position(pFlForm, x, y):
 
     @status: Tested + Doc + Demo = OK
     """
-
     _fl_set_form_position = cfuncproto(
-            load_so_libforms(), "fl_set_form_position", \
-            None, [cty.POINTER(xfc.FL_FORM), xfc.FL_Coord, xfc.FL_Coord], \
-            """void fl_set_form_position(FL_FORM * form, FL_Coord x,
-               FL_Coord y)
-            """)
+        load_so_libforms(), "fl_set_form_position", \
+        None, [cty.POINTER(xfc.FL_FORM), xfc.FL_Coord, xfc.FL_Coord], \
+        """void fl_set_form_position(FL_FORM * form, FL_Coord x,
+           FL_Coord y) """)
     check_if_initialized()
     check_if_FL_FORM_ptr(pFlForm)
     ix = convert_to_FL_Coord(x)
@@ -1641,18 +1525,16 @@ def fl_set_form_title(pFlForm, title):
     @param pFlForm: form whose title has to be changed
     @type pFlForm: pointer to xfdata.FL_FORM
     @param title: new title text for the form
-    @type title: string
+    @type title: str
 
     @example: fl_set_form_title(pform, "My great form")
 
     @status: Tested + Doc + NoDemo = OK
     """
-
     _fl_set_form_title = cfuncproto(
-            load_so_libforms(), "fl_set_form_title", \
-            None, [cty.POINTER(xfc.FL_FORM), xfc.STRING], \
-            """void fl_set_form_title(FL_FORM * form, const char * name)
-            """)
+        load_so_libforms(), "fl_set_form_title", \
+        None, [cty.POINTER(xfc.FL_FORM), xfc.STRING], \
+        """void fl_set_form_title(FL_FORM * form, const char * name) """)
     check_if_initialized()
     check_if_FL_FORM_ptr(pFlForm)
     stitle = convert_to_string(title)
@@ -1674,12 +1556,10 @@ def fl_set_app_mainform(pFlForm):
 
     @status: Tested + Doc + Demo = OK
     """
-
     _fl_set_app_mainform = cfuncproto(
-            load_so_libforms(), "fl_set_app_mainform",
-            None, [cty.POINTER(xfc.FL_FORM)], \
-            """void fl_set_app_mainform(FL_FORM * form)
-            """)
+        load_so_libforms(), "fl_set_app_mainform",
+        None, [cty.POINTER(xfc.FL_FORM)], \
+        """void fl_set_app_mainform(FL_FORM * form) """)
     check_if_initialized()
     check_if_FL_FORM_ptr(pFlForm)
     keep_elem_refs(pFlForm)
@@ -1698,12 +1578,10 @@ def fl_get_app_mainform():
 
     @status: Tested + Doc + NoDemo = OK
     """
-
     _fl_get_app_mainform = cfuncproto(
-            load_so_libforms(), "fl_get_app_mainform",
-            cty.POINTER(xfc.FL_FORM), [], \
-            """FL_FORM * fl_get_app_mainform()
-            """)
+        load_so_libforms(), "fl_get_app_mainform",
+        cty.POINTER(xfc.FL_FORM), [], \
+        """FL_FORM * fl_get_app_mainform() """)
     check_if_initialized()
     retval = _fl_get_app_mainform()
     return retval
@@ -1720,20 +1598,18 @@ def fl_set_app_nomainform(flag):
     workaround these, it can disable the designation of a main form (must be
     called before any full-bordered form is shown)
  
-    @param flag: flag to disable/enable mainform designation. Values i.e.
-        1 (to disable) or 0 (to enable)
+    @param flag: flag to disable/enable mainform designation. Values 1 (to
+        disable) or 0 (to enable)
     @type flag: int
 
     @example: fl_set_app_nomainform(1)
 
     @status: Tested + Doc + NoDemo = OK
     """
-
     _fl_set_app_nomainform = cfuncproto(
-            load_so_libforms(), "fl_set_app_nomainform",
-            None, [cty.c_int], \
-            """void fl_set_app_nomainform(int flag)
-            """)
+        load_so_libforms(), "fl_set_app_nomainform",
+        None, [cty.c_int], \
+        """void fl_set_app_nomainform(int flag) """)
     check_if_initialized()
     iflag = convert_to_int(flag)
     keep_elem_refs(flag, iflag)
@@ -1763,16 +1639,14 @@ def fl_set_form_callback(pFlForm, py_FormCallbackPtr, vdata):
 
     @status: Tested + Doc + Demo = OK
     """
-
     #FL_FORMCALLBACKPTR = cty.CFUNCTYPE(None, cty.POINTER(xfc.FL_OBJECT), \
     #                                   cty.c_void_p)
     _fl_set_form_callback = cfuncproto(
-            load_so_libforms(), "fl_set_form_callback", \
-            None, [cty.POINTER(xfc.FL_FORM), xfc.FL_FORMCALLBACKPTR, \
-            cty.c_void_p], \
-            """void fl_set_form_callback(FL_FORM * form,
-               FL_FORMCALLBACKPTR callback, void * d)
-            """)
+        load_so_libforms(), "fl_set_form_callback", \
+        None, [cty.POINTER(xfc.FL_FORM), xfc.FL_FORMCALLBACKPTR, \
+        cty.c_void_p], \
+        """void fl_set_form_callback(FL_FORM * form,
+           FL_FORMCALLBACKPTR callback, void * d) """)
     check_if_initialized()
     check_if_FL_FORM_ptr(pFlForm)
     c_FormCallbackPtr = xfc.FL_FORMCALLBACKPTR(py_FormCallbackPtr)
@@ -1802,12 +1676,10 @@ def fl_set_form_size(pFlForm, w, h):
 
     @status: Tested + Doc + Demo = OK
     """
-
     _fl_set_form_size = cfuncproto(
-            load_so_libforms(), "fl_set_form_size", \
-            None, [cty.POINTER(xfc.FL_FORM), xfc.FL_Coord, xfc.FL_Coord], \
-            """void fl_set_form_size(FL_FORM * form, FL_Coord w, FL_Coord h)
-            """)
+        load_so_libforms(), "fl_set_form_size", \
+        None, [cty.POINTER(xfc.FL_FORM), xfc.FL_Coord, xfc.FL_Coord], \
+        """void fl_set_form_size(FL_FORM * form, FL_Coord w, FL_Coord h) """)
     check_if_initialized()
     check_if_FL_FORM_ptr(pFlForm)
     iw = convert_to_FL_Coord(w)
@@ -1835,13 +1707,11 @@ def fl_set_form_hotspot(pFlForm, x, y):
 
     @status: Tested + Doc + NoDemo = OK
     """
-
     _fl_set_form_hotspot = cfuncproto(
-            load_so_libforms(), "fl_set_form_hotspot", \
-            None, [cty.POINTER(xfc.FL_FORM), xfc.FL_Coord, xfc.FL_Coord], \
-            """void fl_set_form_hotspot(FL_FORM * form, FL_Coord x,
-               FL_Coord y)
-            """)
+        load_so_libforms(), "fl_set_form_hotspot", \
+        None, [cty.POINTER(xfc.FL_FORM), xfc.FL_Coord, xfc.FL_Coord], \
+        """void fl_set_form_hotspot(FL_FORM * form, FL_Coord x,
+           FL_Coord y) """)
     check_if_initialized()
     check_if_FL_FORM_ptr(pFlForm)
     ix = convert_to_FL_Coord(x)
@@ -1867,12 +1737,10 @@ def fl_set_form_hotobject(pFlForm, pFlObject):
 
     @status: Tested + Doc + Demo = OK
     """
-
     _fl_set_form_hotobject = cfuncproto(
-            load_so_libforms(), "fl_set_form_hotobject", \
-            None, [cty.POINTER(xfc.FL_FORM), cty.POINTER(xfc.FL_OBJECT)], \
-            """void fl_set_form_hotobject(FL_FORM * form, FL_OBJECT * ob)
-            """)
+        load_so_libforms(), "fl_set_form_hotobject", \
+        None, [cty.POINTER(xfc.FL_FORM), cty.POINTER(xfc.FL_OBJECT)], \
+        """void fl_set_form_hotobject(FL_FORM * form, FL_OBJECT * ob) """)
     check_if_initialized()
     check_if_FL_FORM_ptr(pFlForm)
     check_if_FL_OBJECT_ptr(pFlObject)
@@ -1898,12 +1766,10 @@ def fl_set_form_minsize(pFlForm, w, h):
 
     @status: Tested + Doc + NoDemo = OK
     """
-
     _fl_set_form_minsize = cfuncproto(
-            load_so_libforms(), "fl_set_form_minsize", \
-            None, [cty.POINTER(xfc.FL_FORM), xfc.FL_Coord, xfc.FL_Coord], \
-            """void fl_set_form_minsize(FL_FORM * form, FL_Coord w, FL_Coord h)
-            """)
+        load_so_libforms(), "fl_set_form_minsize", \
+        None, [cty.POINTER(xfc.FL_FORM), xfc.FL_Coord, xfc.FL_Coord], \
+        """void fl_set_form_minsize(FL_FORM * form, FL_Coord w, FL_Coord h) """)
     check_if_initialized()
     check_if_FL_FORM_ptr(pFlForm)
     iw = convert_to_FL_Coord(w)
@@ -1930,13 +1796,11 @@ def fl_set_form_maxsize(pFlForm, w, h):
 
     @status: Tested + Doc + NoDemo = OK
     """
-
     _fl_set_form_maxsize = cfuncproto(
-            load_so_libforms(), "fl_set_form_maxsize", \
-            None, [cty.POINTER(xfc.FL_FORM), xfc.FL_Coord, xfc.FL_Coord], \
-            """void fl_set_form_maxsize(FL_FORM * form, FL_Coord w,
-               FL_Coord h)
-            """)
+        load_so_libforms(), "fl_set_form_maxsize", \
+        None, [cty.POINTER(xfc.FL_FORM), xfc.FL_Coord, xfc.FL_Coord], \
+        """void fl_set_form_maxsize(FL_FORM * form, FL_Coord w,
+           FL_Coord h) """)
     check_if_initialized()
     check_if_FL_FORM_ptr(pFlForm)
     iw = convert_to_FL_Coord(w)
@@ -1969,13 +1833,11 @@ def fl_set_form_event_cmask(pFlForm, cmask):
 
     @status: Tested + Doc + NoDemo = OK
     """
-
     _fl_set_form_event_cmask = cfuncproto(
-            load_so_libforms(), "fl_set_form_event_cmask", \
-            None, [cty.POINTER(xfc.FL_FORM), cty.c_ulong], \
-            """void fl_set_form_event_cmask(FL_FORM * form,
-               long unsigned int cmask)
-            """)
+        load_so_libforms(), "fl_set_form_event_cmask", \
+        None, [cty.POINTER(xfc.FL_FORM), cty.c_ulong], \
+        """void fl_set_form_event_cmask(FL_FORM * form,
+           long unsigned int cmask) """)
     check_if_initialized()
     check_if_FL_FORM_ptr(pFlForm)
     ulcmask = convert_to_ulong(cmask)
@@ -1998,12 +1860,10 @@ def fl_get_form_event_cmask(pFlForm):
 
     @status: Tested + Doc + NoDemo = OK
     """
-
     _fl_get_form_event_cmask = cfuncproto(
-            load_so_libforms(), "fl_get_form_event_cmask", \
-            cty.c_ulong, [cty.POINTER(xfc.FL_FORM)], \
-            """long unsigned int fl_get_form_event_cmask(FL_FORM * form)
-            """)
+        load_so_libforms(), "fl_get_form_event_cmask", \
+        cty.c_ulong, [cty.POINTER(xfc.FL_FORM)], \
+        """long unsigned int fl_get_form_event_cmask(FL_FORM * form) """)
     check_if_initialized()
     check_if_FL_FORM_ptr(pFlForm)
     keep_elem_refs(pFlForm)
@@ -2032,14 +1892,12 @@ def fl_set_form_geometry(pFlForm, x, y, w, h):
 
     @status: Tested + Doc + Demo = OK
     """
-
     _fl_set_form_geometry = cfuncproto(
-            load_so_libforms(), "fl_set_form_geometry", \
-            None, [cty.POINTER(xfc.FL_FORM), xfc.FL_Coord, xfc.FL_Coord,
-            xfc.FL_Coord, xfc.FL_Coord], \
-            """void fl_set_form_geometry(FL_FORM * form, FL_Coord x,
-               FL_Coord y, FL_Coord w, FL_Coord h)
-            """)
+        load_so_libforms(), "fl_set_form_geometry", \
+        None, [cty.POINTER(xfc.FL_FORM), xfc.FL_Coord, xfc.FL_Coord,
+        xfc.FL_Coord, xfc.FL_Coord], \
+        """void fl_set_form_geometry(FL_FORM * form, FL_Coord x,
+           FL_Coord y, FL_Coord w, FL_Coord h) """)
     check_if_initialized()
     check_if_FL_FORM_ptr(pFlForm)
     ix = convert_to_FL_Coord(x)
@@ -2071,7 +1929,7 @@ def fl_show_form(pFlForm, place, border, title):
         i.e. FL_FULLBORDER, FL_TRANSIENT, FL_NOBORDER
     @type border: int
     @param title: title of form
-    @type title: string
+    @type title: str
 
     @returns: window id (<long_pos>)
 
@@ -2080,14 +1938,12 @@ def fl_show_form(pFlForm, place, border, title):
 
     @status: Tested + Doc + Demo = OK
     """
-
     _fl_show_form = cfuncproto(
-            load_so_libforms(), "fl_show_form",
-            xfc.Window, [cty.POINTER(xfc.FL_FORM), cty.c_int, cty.c_int,
-            xfc.STRING], \
-            """Window fl_show_form(FL_FORM * form, int place, int border,
-               const char * name)
-            """)
+        load_so_libforms(), "fl_show_form",
+        xfc.Window, [cty.POINTER(xfc.FL_FORM), cty.c_int, cty.c_int,
+        xfc.STRING], \
+        """Window fl_show_form(FL_FORM * form, int place, int border,
+           const char * name) """)
     check_if_initialized()
     check_if_FL_FORM_ptr(pFlForm)
     check_admitted_listvalues(place, xfc.PLACE_list)
@@ -2113,12 +1969,10 @@ def fl_hide_form(pFlForm):
 
     @status: Tested + Doc + Demo = OK
     """
-
     _fl_hide_form = cfuncproto(
-            load_so_libforms(), "fl_hide_form",
-            None, [cty.POINTER(xfc.FL_FORM)], \
-            """void fl_hide_form(FL_FORM * form)
-            """)
+        load_so_libforms(), "fl_hide_form",
+        None, [cty.POINTER(xfc.FL_FORM)], \
+        """void fl_hide_form(FL_FORM * form) """)
     check_if_initialized()
     check_if_FL_FORM_ptr(pFlForm)
     keep_elem_refs(pFlForm)
@@ -2139,12 +1993,10 @@ def fl_free_form(pFlForm):
 
     @status: Tested + Doc + Demo = OK
     """
-
     _fl_free_form = cfuncproto(
-            load_so_libforms(), "fl_free_form",
-            None, [cty.POINTER(xfc.FL_FORM)], \
-            """void fl_free_form(FL_FORM * form)
-            """)
+        load_so_libforms(), "fl_free_form",
+        None, [cty.POINTER(xfc.FL_FORM)], \
+        """void fl_free_form(FL_FORM * form) """)
     check_if_initialized()
     check_if_FL_FORM_ptr(pFlForm)
     keep_elem_refs(pFlForm)
@@ -2164,12 +2016,10 @@ def fl_redraw_form(pFlForm):
 
     @status: Tested + Doc + Demo = OK
     """
-
     _fl_redraw_form = cfuncproto(
-            load_so_libforms(), "fl_redraw_form",
-            None, [cty.POINTER(xfc.FL_FORM)], \
-            """void fl_redraw_form(FL_FORM * form)
-            """)
+        load_so_libforms(), "fl_redraw_form",
+        None, [cty.POINTER(xfc.FL_FORM)], \
+        """void fl_redraw_form(FL_FORM * form) """)
     check_if_initialized()
     check_if_FL_FORM_ptr(pFlForm)
     keep_elem_refs(pFlForm)
@@ -2190,20 +2040,18 @@ def fl_set_form_dblbuffer(pFlForm, flag):
 
     @param pFlForm: form to set
     @type pFlForm: pointer to xfdata.FL_FORM
-    @param flag: flag to disable/enable doublebuffer. Values i.e. 0 (disabled)
-        or 1 (enabled)
+    @param flag: flag to disable/enable doublebuffer. Values 0 (disabled) or
+        1 (enabled)
     @type flag: int
 
     @example: fl_set_form_dblbuffer(1)
 
     @status: Tested + Doc + Demo = OK
     """
-
     _fl_set_form_dblbuffer = cfuncproto(
-            load_so_libforms(), "fl_set_form_dblbuffer", \
-            None, [cty.POINTER(xfc.FL_FORM), cty.c_int], \
-            """void fl_set_form_dblbuffer(FL_FORM * form, int y)
-            """)
+        load_so_libforms(), "fl_set_form_dblbuffer", \
+        None, [cty.POINTER(xfc.FL_FORM), cty.c_int], \
+        """void fl_set_form_dblbuffer(FL_FORM * form, int y) """)
     check_if_initialized()
     check_if_FL_FORM_ptr(pFlForm)
     iflag = convert_to_int(flag)
@@ -2230,8 +2078,8 @@ def fl_prepare_form_window(pFlForm, place, border, title):
     @param border: window manager decoration. Values (from xfdata module) i.e.
         FL_FULLBORDER, FL_TRANSIENT, FL_NOBORDER
     @type border: int
-    @param title: text title of form (<string>)
-    @type title: int
+    @param title: text title of form
+    @type title: str
 
     @returns: window id (<long_pos>)
 
@@ -2242,12 +2090,11 @@ def fl_prepare_form_window(pFlForm, place, border, title):
     """
 
     _fl_prepare_form_window = cfuncproto(
-            load_so_libforms(), "fl_prepare_form_window", \
-            xfc.Window, [cty.POINTER(xfc.FL_FORM), cty.c_int, cty.c_int,
-            xfc.STRING], \
-            """Window fl_prepare_form_window(FL_FORM * form, int place,
-               int border, const char * name)
-            """)
+        load_so_libforms(), "fl_prepare_form_window", \
+        xfc.Window, [cty.POINTER(xfc.FL_FORM), cty.c_int, cty.c_int,
+        xfc.STRING], \
+        """Window fl_prepare_form_window(FL_FORM * form, int place,
+           int border, const char * name) """)
     check_if_initialized()
     check_if_FL_FORM_ptr(pFlForm)
     check_admitted_listvalues(place, xfc.PLACE_list)
@@ -2267,8 +2114,8 @@ def fl_show_form_window(pFlForm):
     Maps (shows) a window of form that has been created before with
     fl_prepare_form_window().
 
-        @param pFlForm: form whose window has to be shown
-        @type pFlForm: pointer to xfdata.FL_FORM
+    @param pFlForm: form whose window has to be shown
+    @type pFlForm: pointer to xfdata.FL_FORM
 
     @returns: window id (<long_pos>)
 
@@ -2278,10 +2125,9 @@ def fl_show_form_window(pFlForm):
     """
 
     _fl_show_form_window = cfuncproto(
-            load_so_libforms(), "fl_show_form_window", \
-            xfc.Window, [cty.POINTER(xfc.FL_FORM)], \
-            """Window fl_show_form_window(FL_FORM * form)
-            """)
+        load_so_libforms(), "fl_show_form_window", \
+        xfc.Window, [cty.POINTER(xfc.FL_FORM)], \
+        """Window fl_show_form_window(FL_FORM * form) """)
     check_if_initialized()
     check_if_FL_FORM_ptr(pFlForm)
     keep_elem_refs(pFlForm)
@@ -2291,7 +2137,7 @@ def fl_show_form_window(pFlForm):
 
 def fl_adjust_form_size(pFlForm):
     """
-    fl_adjust_form_size(pFlForm) -> maxfact
+    fl_adjust_form_size(pFlForm) -> float
 
     Similar to fl_fit_object_label, but will do it for all objects and has a
     smaller threshold. Mainly intended for compensation for font size
@@ -2300,18 +2146,16 @@ def fl_adjust_form_size(pFlForm):
     @param pFlForm: form whose size has to be adjusted
     @type pFlForm: pointer to xfdata.FL_FORM
 
-    @returns: max factor id (<float>)
+    @returns: max factor id
 
     @example: mfactor = fl_adjust_form_size(pform)
 
     @status: Tested + Doc + Demo = OK
     """
-
     _fl_adjust_form_size = cfuncproto(
-            load_so_libforms(), "fl_adjust_form_size", \
-            cty.c_double, [cty.POINTER(xfc.FL_FORM)], \
-            """double fl_adjust_form_size(FL_FORM * form)
-            """)
+        load_so_libforms(), "fl_adjust_form_size", \
+        cty.c_double, [cty.POINTER(xfc.FL_FORM)], \
+        """double fl_adjust_form_size(FL_FORM * form) """)
     check_if_initialized()
     check_if_FL_FORM_ptr(pFlForm)
     keep_elem_refs(pFlForm)
@@ -2334,12 +2178,10 @@ def fl_form_is_visible(pFlForm):
 
     @status: Tested + Doc + NoDemo = OK
     """
-
     _fl_form_is_visible = cfuncproto(
-            load_so_libforms(), "fl_form_is_visible", \
-            cty.c_int, [cty.POINTER(xfc.FL_FORM)], \
-            """int fl_form_is_visible(FL_FORM * form)
-            """)
+        load_so_libforms(), "fl_form_is_visible", \
+        cty.c_int, [cty.POINTER(xfc.FL_FORM)], \
+        """int fl_form_is_visible(FL_FORM * form) """)
     check_if_initialized()
     check_if_FL_FORM_ptr(pFlForm)
     keep_elem_refs(pFlForm)
@@ -2356,18 +2198,16 @@ def fl_form_is_iconified(pFlForm):
     @param pFlForm: form to evaluate
     @type pFlForm: pointer to xfdata.FL_FORM
 
-    @returns: iconic state (0 not iconified, non-zero iconified) (<int>)
+    @returns: iconic state (0 not iconified, non-zero iconified)
 
     @example: iconif = fl_form_is_iconified(pform)
 
     @status: Tested + Doc + NoDemo = OK
     """
-
     _fl_form_is_iconified = cfuncproto(
-            load_so_libforms(), "fl_form_is_iconified", \
-            cty.c_int, [cty.POINTER(xfc.FL_FORM)], \
-            """int fl_form_is_iconified(FL_FORM * form)
-            """)
+        load_so_libforms(), "fl_form_is_iconified", \
+        cty.c_int, [cty.POINTER(xfc.FL_FORM)], \
+        """int fl_form_is_iconified(FL_FORM * form) """)
     check_if_initialized()
     check_if_FL_FORM_ptr(pFlForm)
     keep_elem_refs(pFlForm)
@@ -2403,16 +2243,14 @@ def fl_register_raw_callback(pFlForm, mask, py_RawCallback):
 
     @status: Tested + Doc + Demo = OK
     """
-
     #FL_RAW_CALLBACK = cty.CFUNCTYPE(cty.c_int, cty.POINTER(xfc.FL_FORM), \
     #                                 cty.POINTER(xfc.XEvent))
     _fl_register_raw_callback = cfuncproto(
-            load_so_libforms(), "fl_register_raw_callback", \
-            xfc.FL_RAW_CALLBACK, [cty.POINTER(xfc.FL_FORM), cty.c_ulong,
-            xfc.FL_RAW_CALLBACK], \
-            """FL_RAW_CALLBACK fl_register_raw_callback(FL_FORM * form,
-               long unsigned int mask, FL_RAW_CALLBACK rcb)
-            """)
+        load_so_libforms(), "fl_register_raw_callback", \
+        xfc.FL_RAW_CALLBACK, [cty.POINTER(xfc.FL_FORM), cty.c_ulong,
+        xfc.FL_RAW_CALLBACK], \
+        """FL_RAW_CALLBACK fl_register_raw_callback(FL_FORM * form,
+           long unsigned int mask, FL_RAW_CALLBACK rcb) """)
     check_if_initialized()
     check_if_FL_FORM_ptr(pFlForm)
     ulmask = convert_to_ulong(mask)
@@ -2440,12 +2278,10 @@ def fl_bgn_group():
 
     @status: Tested + Doc + Demo = OK
     """
-
     _fl_bgn_group = cfuncproto(
-            load_so_libforms(), "fl_bgn_group", \
-            cty.POINTER(xfc.FL_OBJECT), [], \
-            """FL_OBJECT * fl_bgn_group()
-            """)
+        load_so_libforms(), "fl_bgn_group", \
+        cty.POINTER(xfc.FL_OBJECT), [], \
+        """FL_OBJECT * fl_bgn_group() """)
     check_if_initialized()
     retval = _fl_bgn_group()
     return retval
@@ -2461,12 +2297,10 @@ def fl_end_group():
 
     @status: Tested + Doc + Demo = OK
     """
-
     _fl_end_group = cfuncproto(
-            load_so_libforms(), "fl_end_group", \
-            None, [], \
-            """void fl_end_group()
-            """)
+        load_so_libforms(), "fl_end_group", \
+        None, [], \
+        """void fl_end_group() """)
     check_if_initialized()
     _fl_end_group()
 
@@ -2486,12 +2320,10 @@ def fl_addto_group(pFlObject):
 
     @status: Tested + Doc + NoDemo = OK
     """
-
     _fl_addto_group = cfuncproto(
-            load_so_libforms(), "fl_addto_group", \
-            cty.POINTER(xfc.FL_OBJECT), [cty.POINTER(xfc.FL_OBJECT)], \
-            """FL_OBJECT * fl_addto_group(xfc.FL_OBJECT * group)
-            """)
+        load_so_libforms(), "fl_addto_group", \
+        cty.POINTER(xfc.FL_OBJECT), [cty.POINTER(xfc.FL_OBJECT)], \
+        """FL_OBJECT * fl_addto_group(xfc.FL_OBJECT * group) """)
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     keep_elem_refs(pFlObject)
@@ -2511,18 +2343,16 @@ def fl_get_object_objclass(pFlObject):
     @param pFlObject: object to evaluate
     @type pFlObject: pointer to xfdata.FL_OBJECT
 
-    @returns: objclass id (<int>) or -1 (on failure)
+    @returns: objclass id or -1 (on failure)
 
     @example: obcls = fl_get_object_objclass(pobj)
 
     @status: Tested + Doc + NoDemo = OK
     """
-
     _fl_get_object_objclass = cfuncproto(
-            load_so_libforms(), "fl_get_object_objclass", \
-            cty.c_int, [cty.POINTER(xfc.FL_OBJECT)], \
-            """int fl_get_object_objclass(xfc.FL_OBJECT * obj)
-            """)
+        load_so_libforms(), "fl_get_object_objclass", \
+        cty.c_int, [cty.POINTER(xfc.FL_OBJECT)], \
+        """int fl_get_object_objclass(xfc.FL_OBJECT * obj) """)
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     keep_elem_refs(pFlObject)
@@ -2540,18 +2370,16 @@ def fl_get_object_type(pFlObject):
     @param pFlObject: object to evaluate
     @type pFlObject: pointer to xfdata.FL_OBJECT
 
-    @returns: type id (<int>) or -1 (on failure)
+    @returns: type id or -1 (on failure)
 
     @example: obtype = fl_get_object_type(pobj)
 
     @status: Tested + Doc + NoDemo = OK
     """
-
     _fl_get_object_type = cfuncproto(
-            load_so_libforms(), "fl_get_object_type", \
-            cty.c_int, [cty.POINTER(xfc.FL_OBJECT)], \
-            """int fl_get_object_type(xfc.FL_OBJECT * obj)
-            """)
+        load_so_libforms(), "fl_get_object_type", \
+        cty.c_int, [cty.POINTER(xfc.FL_OBJECT)], \
+        """int fl_get_object_type(xfc.FL_OBJECT * obj) """)
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     keep_elem_refs(pFlObject)
@@ -2574,17 +2402,16 @@ def fl_set_object_boxtype(pFlObject, boxtype):
         FL_RFLAT_BOX, FL_RSHADOW_BOX, FL_OVAL_BOX, FL_ROUNDED3D_UPBOX,
         FL_ROUNDED3D_DOWNBOX, FL_OVAL3D_UPBOX, FL_OVAL3D_DOWNBOX,
         FL_OVAL3D_FRAMEBOX, FL_OVAL3D_EMBOSSEDBOX
+    @type boxtype: int
 
     @example: fl_set_object_boxtype(ptextobj, xfdata.FL_BORDER_BOX)
 
     @status: Tested + Doc + Demo = OK
     """
-
     _fl_set_object_boxtype = cfuncproto(
-            load_so_libforms(), "fl_set_object_boxtype", \
-            None, [cty.POINTER(xfc.FL_OBJECT), cty.c_int], \
-            """void fl_set_object_boxtype(xfc.FL_OBJECT * ob, int boxtype)
-            """)
+        load_so_libforms(), "fl_set_object_boxtype", \
+        None, [cty.POINTER(xfc.FL_OBJECT), cty.c_int], \
+        """void fl_set_object_boxtype(xfc.FL_OBJECT * ob, int boxtype) """)
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     check_admitted_listvalues(boxtype, xfc.BOXTYPE_list)
@@ -2595,7 +2422,7 @@ def fl_set_object_boxtype(pFlObject, boxtype):
 
 def fl_get_object_boxtype(pFlObject):
     """
-    fl_get_object_boxtype(pFlObject) -> boxtype id
+    fl_get_object_boxtype(pFlObject) -> int
 
     Returns the current boxtype of an object (e.g. no box, up box, shadow box,
     etc..).
@@ -2603,18 +2430,16 @@ def fl_get_object_boxtype(pFlObject):
     @param pFlObject: object to evaluate
     @type pFlObject: pointer to xfdata.FL_OBJECT
 
-    @returns: boxtype id (<int>) or -1 (on failure)
+    @returns: boxtype id or -1 (on failure)
 
     @example: boxtp = fl_get_object_boxtype(ptextobj)
 
     @status: Tested + Doc + NoDemo = OK
     """
-
     _fl_get_object_boxtype = cfuncproto(
-            load_so_libforms(), "fl_get_object_boxtype", \
-            cty.c_int, [cty.POINTER(xfc.FL_OBJECT)], \
-            """int fl_get_object_boxtype(xfc.FL_OBJECT * obj)
-            """)
+        load_so_libforms(), "fl_get_object_boxtype", \
+        cty.c_int, [cty.POINTER(xfc.FL_OBJECT)], \
+        """int fl_get_object_boxtype(xfc.FL_OBJECT * obj) """)
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     keep_elem_refs(pFlObject)
@@ -2639,12 +2464,10 @@ def fl_set_object_bw(pFlObject, bw):
 
     @status: Tested + Doc + Demo = OK
     """
-
     _fl_set_object_bw = cfuncproto(
-            load_so_libforms(), "fl_set_object_bw", \
-            None, [cty.POINTER(xfc.FL_OBJECT), cty.c_int], \
-            """void fl_set_object_bw(xfc.FL_OBJECT * ob, int bw)
-            """)
+        load_so_libforms(), "fl_set_object_bw", \
+        None, [cty.POINTER(xfc.FL_OBJECT), cty.c_int], \
+        """void fl_set_object_bw(xfc.FL_OBJECT * ob, int bw) """)
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     ibw = convert_to_int(bw)
@@ -2661,7 +2484,7 @@ def fl_get_object_bw(pFlObject):
     @param pFlObject: object to evaluate
     @type pFlObject: pointer to xfdata.FL_OBJECT
 
-    @returns: borderwidth (<int>)
+    @returns: borderwidth
 
     @example: currbw = fl_get_object_bw(pobj)
 
@@ -2672,10 +2495,9 @@ def fl_get_object_bw(pFlObject):
     """
 
     _fl_get_object_bw = cfuncproto(
-            load_so_libforms(), "fl_get_object_bw", \
-            None, [cty.POINTER(xfc.FL_OBJECT), cty.POINTER(cty.c_int)], \
-            """void fl_get_object_bw(xfc.FL_OBJECT * ob, int * bw)
-            """)
+        load_so_libforms(), "fl_get_object_bw", \
+        None, [cty.POINTER(xfc.FL_OBJECT), cty.POINTER(cty.c_int)], \
+        """void fl_get_object_bw(xfc.FL_OBJECT * ob, int * bw) """)
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     bw, pbw = make_int_and_pointer()
@@ -2700,12 +2522,10 @@ def fl_set_object_resize(pFlObject, what):
 
     @status: Tested + Doc + Demo = OK
     """
-
     _fl_set_object_resize = cfuncproto(
-            load_so_libforms(), "fl_set_object_resize", \
-            None, [cty.POINTER(xfc.FL_OBJECT), cty.c_uint], \
-            """void fl_set_object_resize(xfc.FL_OBJECT * ob, unsigned int what)
-            """)
+        load_so_libforms(), "fl_set_object_resize", \
+        None, [cty.POINTER(xfc.FL_OBJECT), cty.c_uint], \
+        """void fl_set_object_resize(xfc.FL_OBJECT * ob, unsigned int what) """)
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     check_admitted_listvalues(what, xfc.RESIZE_list)
@@ -2724,7 +2544,7 @@ def fl_get_object_resize(pFlObject):
     @param pFlObject: object to evaluate
     @type pFlObject: pointer to xfdata.FL_OBJECT
 
-    @returns: resize property (<int_pos>)
+    @returns: resize property
 
     @attention: API change from XForms - upstream was
         fl_get_object_resize(pFlObject, what)
@@ -2733,13 +2553,11 @@ def fl_get_object_resize(pFlObject):
 
     @status: Tested + Doc + NoDemo = OK
     """
-
     _fl_get_object_resize = cfuncproto(
-            load_so_libforms(), "fl_get_object_resize", \
-             None, [cty.POINTER(xfc.FL_OBJECT), cty.POINTER(cty.c_uint)], \
-            """void fl_get_object_resize(xfc.FL_OBJECT * ob,
-               unsigned int * what)
-            """)
+        load_so_libforms(), "fl_get_object_resize", \
+        None, [cty.POINTER(xfc.FL_OBJECT), cty.POINTER(cty.c_uint)], \
+        """void fl_get_object_resize(xfc.FL_OBJECT * ob,
+           unsigned int * what) """)
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     what, pwhat = make_uint_and_pointer()
@@ -2769,13 +2587,11 @@ def fl_set_object_gravity(pFlObject, nw, se):
 
     @status: Tested + Doc + Demo = OK
     """
-
     _fl_set_object_gravity = cfuncproto(
-            load_so_libforms(), "fl_set_object_gravity", \
-            None, [cty.POINTER(xfc.FL_OBJECT), cty.c_uint, cty.c_uint], \
-            """void fl_set_object_gravity(xfc.FL_OBJECT * ob, unsigned int nw,
-               unsigned int se)
-            """)
+        load_so_libforms(), "fl_set_object_gravity", \
+        None, [cty.POINTER(xfc.FL_OBJECT), cty.c_uint, cty.c_uint], \
+        """void fl_set_object_gravity(xfc.FL_OBJECT * ob, unsigned int nw,
+           unsigned int se) """)
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     check_admitted_listvalues(nw, xfc.GRAVITY_list)
@@ -2795,7 +2611,7 @@ def fl_get_object_gravity(pFlObject):
     @param pFlObject: object to set
     @type pFlObject: pointer to xfdata.FL_OBJECT
 
-    @returns: NorthWest and SouthEast gravity (<int_pos>, <int_pos>)
+    @returns: NorthWest and SouthEast gravity
 
     @attention: API change from XForms - upstream was
         fl_get_object_gravity(pFlObject, nw, se)
@@ -2804,14 +2620,12 @@ def fl_get_object_gravity(pFlObject):
 
     @status: Tested + Doc + NoDemo = OK
     """
-
     _fl_get_object_gravity = cfuncproto(
-            load_so_libforms(), "fl_get_object_gravity", \
-            None, [cty.POINTER(xfc.FL_OBJECT), cty.POINTER(cty.c_uint),
-            cty.POINTER(cty.c_uint)], \
-            """void fl_get_object_gravity(xfc.FL_OBJECT * ob,
-               unsigned int * nw, unsigned int * se)
-            """)
+        load_so_libforms(), "fl_get_object_gravity", \
+        None, [cty.POINTER(xfc.FL_OBJECT), cty.POINTER(cty.c_uint),
+        cty.POINTER(cty.c_uint)], \
+        """void fl_get_object_gravity(xfc.FL_OBJECT * ob,
+           unsigned int * nw, unsigned int * se) """)
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     nw, pnw = make_uint_and_pointer()
@@ -2838,12 +2652,10 @@ def fl_set_object_lsize(pFlObject, size):
 
     @status: Tested + Doc + Demo = OK
     """
-
     _fl_set_object_lsize = cfuncproto(
-            load_so_libforms(), "fl_set_object_lsize", \
-            None, [cty.POINTER(xfc.FL_OBJECT), cty.c_int], \
-            """void fl_set_object_lsize(xfc.FL_OBJECT * ob, int lsize)
-            """)
+        load_so_libforms(), "fl_set_object_lsize", \
+        None, [cty.POINTER(xfc.FL_OBJECT), cty.c_int], \
+        """void fl_set_object_lsize(xfc.FL_OBJECT * ob, int lsize) """)
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     check_admitted_listvalues(size, xfc.FONTSIZE_list)
@@ -2861,18 +2673,16 @@ def fl_get_object_lsize(pFlObject):
     @param pFlObject: object to evaluate
     @type pFlObject: pointer to xfdata.FL_OBJECT
 
-    @returns: label size (<int>)
+    @returns: label size
 
     @example: lsize = fl_get_object_lsize(pobj)
 
     @status: Tested + Doc + Demo = OK
     """
-
     _fl_get_object_lsize = cfuncproto(
-            load_so_libforms(), "fl_get_object_lsize", \
-            cty.c_int, [cty.POINTER(xfc.FL_OBJECT)], \
-            """int fl_get_object_lsize(xfc.FL_OBJECT * obj)
-            """)
+        load_so_libforms(), "fl_get_object_lsize", \
+        cty.c_int, [cty.POINTER(xfc.FL_OBJECT)], \
+        """int fl_get_object_lsize(xfc.FL_OBJECT * obj) """)
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     keep_elem_refs(pFlObject)
@@ -2886,7 +2696,7 @@ def fl_set_object_lstyle(pFlObject, style):
 
     Sets the label style of an object.
 
-    @param pFlObject: object ot be set
+    @param pFlObject: object to be set
     @type pFlObject: pointer to xfdata.FL_OBJECT
     @param style: label style. Values (from xfdata module) i.e.
         FL_NORMAL_STYLE, FL_BOLD_STYLE, FL_ITALIC_STYLE, FL_BOLDITALIC_STYLE,
@@ -2901,12 +2711,10 @@ def fl_set_object_lstyle(pFlObject, style):
 
     @status: Tested + Doc + Demo = OK
     """
-
     _fl_set_object_lstyle = cfuncproto(
-            load_so_libforms(), "fl_set_object_lstyle", \
-            None, [cty.POINTER(xfc.FL_OBJECT), cty.c_int], \
-            """void fl_set_object_lstyle(xfc.FL_OBJECT * ob, int lstyle)
-            """)
+        load_so_libforms(), "fl_set_object_lstyle", \
+        None, [cty.POINTER(xfc.FL_OBJECT), cty.c_int], \
+        """void fl_set_object_lstyle(xfc.FL_OBJECT * ob, int lstyle) """)
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     check_admitted_listvalues(style, xfc.TEXTSTYLE_list)
@@ -2925,18 +2733,16 @@ def fl_get_object_lstyle(pFlObject):
     @param pFlObject: object to evaluate
     @type pFlObject: pointer to xfdata.FL_OBJECT
 
-    @returns: label style (<int>)
+    @returns: label style
 
     @example: lstyle = fl_get_object_lstyle(pobj)
 
     @status: Tested + NoDoc + Demo = OK
     """
-
     _fl_get_object_lstyle = cfuncproto(
-            load_so_libforms(), "fl_get_object_lstyle", \
-            cty.c_int, [cty.POINTER(xfc.FL_OBJECT)], \
-            """int fl_get_object_lstyle(xfc.FL_OBJECT * obj)
-            """)
+        load_so_libforms(), "fl_get_object_lstyle", \
+        cty.c_int, [cty.POINTER(xfc.FL_OBJECT)], \
+        """int fl_get_object_lstyle(xfc.FL_OBJECT * obj) """)
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     keep_elem_refs(pFlObject)
@@ -2960,12 +2766,10 @@ def fl_set_object_lcol(pFlObject, colr):
 
     @status: Tested + Doc + Demo = OK
     """
-
     _fl_set_object_lcol = cfuncproto(
-            load_so_libforms(), "fl_set_object_lcol", \
-            None, [cty.POINTER(xfc.FL_OBJECT), xfc.FL_COLOR], \
-            """void fl_set_object_lcol(xfc.FL_OBJECT * ob, FL_COLOR lcol)
-            """)
+        load_so_libforms(), "fl_set_object_lcol", \
+        None, [cty.POINTER(xfc.FL_OBJECT), xfc.FL_COLOR], \
+        """void fl_set_object_lcol(xfc.FL_OBJECT * ob, FL_COLOR lcol) """)
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     check_admitted_listvalues(colr, xfc.COLOR_list)
@@ -2984,21 +2788,19 @@ def fl_get_object_lcol(pFlObject):
     Returns the label color of an object (e.g. xfdata.FL_WHITE,
     xfdata.FL_LIME, etc..).
 
-    @param pFlObject: object
+    @param pFlObject: object to evaluate
     @type pFlObject: pointer to xfdata.FL_OBJECT
 
-    @returns: color value (<long_pos>)
+    @returns: color value
 
     @example: obcolor = fl_get_object_lcol(pobj)
 
     @status: Tested + Doc + NoDemo = OK
     """
-
     _fl_get_object_lcol = cfuncproto(
-            load_so_libforms(), "fl_get_object_lcol", \
-            xfc.FL_COLOR, [cty.POINTER(xfc.FL_OBJECT)], \
-            """FL_COLOR fl_set_object_lcol(xfc.FL_OBJECT * obj)
-            """)
+        load_so_libforms(), "fl_get_object_lcol", \
+        xfc.FL_COLOR, [cty.POINTER(xfc.FL_OBJECT)], \
+        """FL_COLOR fl_set_object_lcol(xfc.FL_OBJECT * obj) """)
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     keep_elem_refs(pFlObject)
@@ -3025,7 +2827,7 @@ def fl_set_object_return(pFlObject, when):
         FL_RETURN_TRIGGERED, FL_RETURN_ALWAYS
     @type when: int_pos
 
-    @returns: return type id (<int>)
+    @returns: old return type id
 
     @example: fl_set_object_return(pobj, xfdata.FL_RETURN_CHANGED)
 
@@ -3033,10 +2835,9 @@ def fl_set_object_return(pFlObject, when):
     """
 
     _fl_set_object_return = cfuncproto(
-            load_so_libforms(), "fl_set_object_return", \
-            cty.c_int, [cty.POINTER(xfc.FL_OBJECT), cty.c_uint], \
-            """int fl_set_object_return(xfc.FL_OBJECT * ob, unsigned int when)
-            """)
+        load_so_libforms(), "fl_set_object_return", \
+        cty.c_int, [cty.POINTER(xfc.FL_OBJECT), cty.c_uint], \
+        """int fl_set_object_return(xfc.FL_OBJECT * ob, unsigned int when) """)
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     check_admitted_listvalues(when, xfc.RETURN_list)
@@ -3060,12 +2861,10 @@ def fl_notify_object(pFlObject, cause):
 
     @status: Tested + NoDoc + NoDemo = NOT OK (not clear purpose)
     """
-
     _fl_notify_object = cfuncproto(
-            load_so_libforms(), "fl_notify_object", \
-            None, [cty.POINTER(xfc.FL_OBJECT), cty.c_int], \
-            """void fl_notify_object(xfc.FL_OBJECT * obj, int cause)
-            """)
+        load_so_libforms(), "fl_notify_object", \
+        None, [cty.POINTER(xfc.FL_OBJECT), cty.c_int], \
+        """void fl_notify_object(xfc.FL_OBJECT * obj, int cause) """)
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     check_admitted_listvalues(cause, xfc.EVENTS_list)
@@ -3093,12 +2892,10 @@ def fl_set_object_lalign(pFlObject, align):
 
     @status: Tested + Doc + Demo = OK
     """
-
     _fl_set_object_lalign = cfuncproto(
-            load_so_libforms(), "fl_set_object_lalign", \
-            None, [cty.POINTER(xfc.FL_OBJECT), cty.c_int], \
-            """void fl_set_object_lalign(xfc.FL_OBJECT * ob, int align)
-            """)
+        load_so_libforms(), "fl_set_object_lalign", \
+        None, [cty.POINTER(xfc.FL_OBJECT), cty.c_int], \
+        """void fl_set_object_lalign(xfc.FL_OBJECT * ob, int align) """)
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     check_admitted_listvalues(align, xfc.ALIGN_list)
@@ -3121,12 +2918,10 @@ def fl_get_object_lalign(pFlObject):
 
     @status: Tested + Doc + Demo = OK
     """
-
     _fl_get_object_lalign = cfuncproto(
-            load_so_libforms(), "fl_get_object_lalign", \
-            cty.c_int, [cty.POINTER(xfc.FL_OBJECT)], \
-            """int fl_set_object_lalign(xfc.FL_OBJECT * ob)
-            """)
+        load_so_libforms(), "fl_get_object_lalign", \
+        cty.c_int, [cty.POINTER(xfc.FL_OBJECT)], \
+        """int fl_set_object_lalign(xfc.FL_OBJECT * ob) """)
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     keep_elem_refs(pFlObject)
@@ -3163,23 +2958,21 @@ def fl_set_object_shortcut(pFlObject, shctxt, showit):
     @param pFlObject: object
     @type pFlObject: pointer to xfdata.FL_OBJECT
     @param shctxt: shortcut text to be set
-    @type shctxt: string
+    @type shctxt: str
     @param showit: flag if shortcut letter has to be underlined or not if
         a match exists (only the 1st alphanumeric character is used). Values
-        i.e. 0 (underline not shown) or 1 (shown)
+        0 (underline not shown) or 1 (shown)
     @type showit: int
 
     @example: fl_set_object_shortcut(pobj6, "aA#A^A", 1)
 
     @status: Tested + Doc + NoDemo = OK
     """
-
     _fl_set_object_shortcut = cfuncproto(
-            load_so_libforms(), "fl_set_object_shortcut", \
-            None, [cty.POINTER(xfc.FL_OBJECT), xfc.STRING, cty.c_int], \
-            """void fl_set_object_shortcut(xfc.FL_OBJECT * obj,
-               const char * sstr, int showit)
-            """)
+        load_so_libforms(), "fl_set_object_shortcut", \
+        None, [cty.POINTER(xfc.FL_OBJECT), xfc.STRING, cty.c_int], \
+        """void fl_set_object_shortcut(xfc.FL_OBJECT * obj,
+           const char * sstr, int showit) """)
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     sshctxt = convert_to_string(shctxt)
@@ -3205,13 +2998,11 @@ def fl_set_object_shortcutkey(pFlObject, keysym):
 
     @status: Tested + Doc + NoDemo = OK
     """
-
     _fl_set_object_shortcutkey = cfuncproto(
-            load_so_libforms(), "fl_set_object_shortcutkey",
-            None, [cty.POINTER(xfc.FL_OBJECT), cty.c_uint], \
-            """void fl_set_object_shortcutkey(xfc.FL_OBJECT * obj,
-               unsigned int keysym)
-            """)
+        load_so_libforms(), "fl_set_object_shortcutkey",
+        None, [cty.POINTER(xfc.FL_OBJECT), cty.c_uint], \
+        """void fl_set_object_shortcutkey(xfc.FL_OBJECT * obj,
+           unsigned int keysym) """)
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     uikeysym = convert_to_uint(keysym)
@@ -3237,19 +3028,17 @@ def fl_set_object_dblbuffer(pFlObject, flag):
 
     @param pFlObject: object
     @type pFlObject: pointer to xfdata.FL_OBJECT
-    @param flag: flag to disable/enable double buffer. Values i.e. 0
-        (disabled) or 1 (enabled)
+    @param flag: flag to disable/enable double buffer. Values 0 (disabled) or
+        1 (enabled)
 
     @example: fl_set_object_dblbuffer(pobj7, 1)
 
     @status: Tested + Doc + Demo = OK
     """
-
     _fl_set_object_dblbuffer = cfuncproto(
-            load_so_libforms(), "fl_set_object_dblbuffer", \
-            None, [cty.POINTER(xfc.FL_OBJECT), cty.c_int], \
-            """void fl_set_object_dblbuffer(xfc.FL_OBJECT * ob, int y)
-            """)
+        load_so_libforms(), "fl_set_object_dblbuffer", \
+        None, [cty.POINTER(xfc.FL_OBJECT), cty.c_int], \
+        """void fl_set_object_dblbuffer(xfc.FL_OBJECT * ob, int y) """)
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     iflag = convert_to_int(flag)
@@ -3274,13 +3063,11 @@ def fl_set_object_color(pFlObject, fgcolr, bgcolr):
 
     @status: Tested + Doc + NoDemo = OK
     """
-
     _fl_set_object_color = cfuncproto(
-            load_so_libforms(), "fl_set_object_color", \
-            None, [cty.POINTER(xfc.FL_OBJECT), xfc.FL_COLOR, xfc.FL_COLOR], \
-            """void fl_set_object_color(xfc.FL_OBJECT * ob, FL_COLOR col1,
-               FL_COLOR col2)
-            """)
+        load_so_libforms(), "fl_set_object_color", \
+        None, [cty.POINTER(xfc.FL_OBJECT), xfc.FL_COLOR, xfc.FL_COLOR], \
+        """void fl_set_object_color(xfc.FL_OBJECT * ob, FL_COLOR col1,
+           FL_COLOR col2) """)
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     check_admitted_listvalues(fgcolr, xfc.COLOR_list)
@@ -3300,7 +3087,7 @@ def fl_get_object_color(pFlObject):
     @param pFlObject: object
     @type pFlObject: pointer to xfdata.FL_OBJECT
 
-    @returns: foreground and background color values (<long_pos>, <long_pos>)
+    @returns: foreground and background color values
 
     @example: primcol, secncol = fl_get_object_color(pobj)
 
@@ -3309,14 +3096,12 @@ def fl_get_object_color(pFlObject):
 
     @status: Tested + Doc + Demo = OK
     """
-
     _fl_get_object_color = cfuncproto(
-            load_so_libforms(), "fl_get_object_color", \
-            None, [cty.POINTER(xfc.FL_OBJECT), cty.POINTER(xfc.FL_COLOR), \
-            cty.POINTER(xfc.FL_COLOR)], \
-            """void fl_get_object_color(xfc.FL_OBJECT * ob, FL_COLOR * col1,
-               FL_COLOR * col2)
-            """)
+        load_so_libforms(), "fl_get_object_color", \
+        None, [cty.POINTER(xfc.FL_OBJECT), cty.POINTER(xfc.FL_COLOR), \
+        cty.POINTER(xfc.FL_COLOR)], \
+        """void fl_get_object_color(xfc.FL_OBJECT * ob, FL_COLOR * col1,
+           FL_COLOR * col2) """)
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     fgcolr, pfgcolr = make_FL_COLOR_and_pointer()
@@ -3336,7 +3121,7 @@ def fl_set_object_label(pFlObject, label):
     @type pFlObject: pointer to xfdata.FL_OBJECT
 
     @param label: text label of object
-    @type label: string
+    @type label: str
 
     @example: fl_set_object_label(pobj, "My New Label")
 
@@ -3344,10 +3129,9 @@ def fl_set_object_label(pFlObject, label):
     """
 
     _fl_set_object_label = cfuncproto(
-            load_so_libforms(), "fl_set_object_label", \
-            None, [cty.POINTER(xfc.FL_OBJECT), xfc.STRING], \
-            """void fl_set_object_label(xfc.FL_OBJECT * ob, const char * label)
-            """)
+        load_so_libforms(), "fl_set_object_label", \
+        None, [cty.POINTER(xfc.FL_OBJECT), xfc.STRING], \
+        """void fl_set_object_label(xfc.FL_OBJECT * ob, const char * label) """)
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     slabel = convert_to_string(label)
@@ -3364,7 +3148,7 @@ def fl_get_object_label(pFlObject):
     @param pFlObject: object
     @type pFlObject: pointer to xfdata.FL_OBJECT
 
-    @returns: text of label (<string>)
+    @returns: text of label
 
     @example: currlbl = fl_get_object_label(pobj)
 
@@ -3372,10 +3156,9 @@ def fl_get_object_label(pFlObject):
     """
 
     _fl_get_object_label = cfuncproto(
-            load_so_libforms(), "fl_get_object_label", \
-            xfc.STRING, [cty.POINTER(xfc.FL_OBJECT)], \
-            """const char * fl_set_object_label(xfc.FL_OBJECT * obj)
-            """)
+        load_so_libforms(), "fl_get_object_label", \
+        xfc.STRING, [cty.POINTER(xfc.FL_OBJECT)], \
+        """const char * fl_set_object_label(xfc.FL_OBJECT * obj) """)
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     keep_elem_refs(pFlObject)
@@ -3400,12 +3183,10 @@ def fl_set_object_helper(pFlObject, tip):
 
     @status: Tested + Doc + Demo = OK
     """
-
     _fl_set_object_helper = cfuncproto(
-            load_so_libforms(), "fl_set_object_helper", \
-            None, [cty.POINTER(xfc.FL_OBJECT), xfc.STRING], \
-            """void fl_set_object_helper(xfc.FL_OBJECT * ob, const char * tip)
-            """)
+        load_so_libforms(), "fl_set_object_helper", \
+        None, [cty.POINTER(xfc.FL_OBJECT), xfc.STRING], \
+        """void fl_set_object_helper(xfc.FL_OBJECT * ob, const char * tip)""")
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     stip = convert_to_string(tip)
@@ -3430,13 +3211,11 @@ def fl_set_object_position(pFlObject, x, y):
 
     @status: Tested + Doc + Demo = OK
     """
-
     _fl_set_object_position = cfuncproto(
-            load_so_libforms(), "fl_set_object_position", \
-            None, [cty.POINTER(xfc.FL_OBJECT), xfc.FL_Coord, xfc.FL_Coord], \
-            """void fl_set_object_position(xfc.FL_OBJECT * obj, FL_Coord x,
-               FL_Coord y)
-            """)
+        load_so_libforms(), "fl_set_object_position", \
+        None, [cty.POINTER(xfc.FL_OBJECT), xfc.FL_Coord, xfc.FL_Coord], \
+        """void fl_set_object_position(xfc.FL_OBJECT * obj, FL_Coord x,
+           FL_Coord y)""")
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     ix = convert_to_FL_Coord(x)
@@ -3454,7 +3233,7 @@ def fl_get_object_size(pFlObject):
     @param pFlObject: object to evaluate
     @type pFlObject: pointer to xfdata.FL_OBJECT
 
-    @returns: width and height in coord units (<int>, <int>)
+    @returns: width and height in coord units
 
     @example: wid, hei = fl_get_object_size(pobj)
 
@@ -3463,14 +3242,12 @@ def fl_get_object_size(pFlObject):
 
     @status: Tested + Doc + NoDemo = OK
     """
-
     _fl_get_object_size = cfuncproto(
-            load_so_libforms(), "fl_get_object_size", \
-            None, [cty.POINTER(xfc.FL_OBJECT), cty.POINTER(xfc.FL_Coord),
-            cty.POINTER(xfc.FL_Coord)], \
-            """void fl_get_object_size(xfc.FL_OBJECT * obj, FL_Coord * w,
-               FL_Coord * h)
-            """)
+        load_so_libforms(), "fl_get_object_size", \
+        None, [cty.POINTER(xfc.FL_OBJECT), cty.POINTER(xfc.FL_Coord),
+        cty.POINTER(xfc.FL_Coord)], \
+        """void fl_get_object_size(xfc.FL_OBJECT * obj, FL_Coord * w,
+           FL_Coord * h)""")
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     w, pw = make_FL_Coord_and_pointer()
@@ -3497,13 +3274,11 @@ def fl_set_object_size(pFlObject, w, h):
 
     @status: Tested + Doc + NoDemo = OK
     """
-
     _fl_set_object_size = cfuncproto(
-            load_so_libforms(), "fl_set_object_size", \
-            None, [cty.POINTER(xfc.FL_OBJECT), xfc.FL_Coord, xfc.FL_Coord], \
-            """void fl_set_object_size(xfc.FL_OBJECT * obj, FL_Coord w,
-               FL_Coord h)
-            """)
+        load_so_libforms(), "fl_set_object_size", \
+        None, [cty.POINTER(xfc.FL_OBJECT), xfc.FL_Coord, xfc.FL_Coord], \
+        """void fl_set_object_size(xfc.FL_OBJECT * obj, FL_Coord w,
+           FL_Coord h)""")
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     iw = convert_to_FL_Coord(w)
@@ -3513,26 +3288,28 @@ def fl_set_object_size(pFlObject, w, h):
 
 
 def fl_set_object_automatic(pFlObject, flag):
-    """ fl_set_object_automatic(pFlObject, flag)
-
-        Enables or disables an object to receive a xfdata.FL_STEP event.
-        This should not be used with built-in objects. An object is automatic
-        if it automatically (without user actions) has to change its contents.
-        Automatic objects get a FL_STEP event about every 50 msec.
-
-        @param pFlObject: object
-        @type pFlObject: pointer to xfdata.FL_OBJECT
-        @param flag: flag if automatic or not (<int>)
-        @type flag: 0 (not automatic) or 1 (automatic)
-
-        @status: Tested + Doc + NoDemo = OK
     """
+    fl_set_object_automatic(pFlObject, flag)
 
+    Enables or disables an object to receive a xfdata.FL_STEP event. This
+    should not be used with built-in objects. An object is automatic if it
+    automatically (without user actions) has to change its contents. Automatic
+    objects get a FL_STEP event about every 50 msec.
+
+    @param pFlObject: object
+    @type pFlObject: pointer to xfdata.FL_OBJECT
+    @param flag: flag if automatic or not. Values i.e. 0 (not automatic) or 1
+        (automatic)
+    @type flag: int
+
+    @example: fl_set_object_automatic(pMyobj, 1)
+
+    @status: Tested + Doc + NoDemo = OK
+    """
     _fl_set_object_automatic = cfuncproto(
-            load_so_libforms(), "fl_set_object_automatic",
-            None, [cty.POINTER(xfc.FL_OBJECT), cty.c_int], \
-            """void fl_set_object_automatic(xfc.FL_OBJECT * ob, int flag)
-            """)
+        load_so_libforms(), "fl_set_object_automatic",
+        None, [cty.POINTER(xfc.FL_OBJECT), cty.c_int], \
+        """void fl_set_object_automatic(xfc.FL_OBJECT * ob, int flag)""")
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     iflag = convert_to_int(flag)
@@ -3541,28 +3318,26 @@ def fl_set_object_automatic(pFlObject, flag):
 
 
 def fl_object_is_automatic(pFlObject):
-    """ fl_object_is_automatic(pFlObject) -> flag num.
-
-        Returns if an object receives xfdata.FL_STEP events. An object is
-        automatic if it automatically (without user actions) has to change
-        its contents. Automatic objects get a FL_STEP event about every 50
-        msec.
-
-        @param pFlObject: object to evaluate
-        @type pFlObject: pointer to xfdata.FL_OBJECT
-
-        @returns: flag if it's automatic (1) or not (0) (<int>)
-
-        @example: if xf.fl_object_is_automatic(pobj): ...
-
-        @status: Tested + Doc + NoDemo = OK
     """
+    fl_object_is_automatic(pFlObject) -> int
 
+    Returns if an object receives xfdata.FL_STEP events. An object is
+    automatic if it automatically (without user actions) has to change its
+    contents. Automatic objects get a FL_STEP event about every 50 msec.
+
+    @param pFlObject: object to evaluate
+    @type pFlObject: pointer to xfdata.FL_OBJECT
+
+    @returns: flag if it's automatic (1) or not (0)
+
+    @example: if xf.fl_object_is_automatic(pMyobj): ...
+
+    @status: Tested + Doc + NoDemo = OK
+    """
     _fl_object_is_automatic = cfuncproto(
-            load_so_libforms(), "fl_object_is_automatic",
-            cty.c_int, [cty.POINTER(xfc.FL_OBJECT)], \
-            """int fl_object_is_automatic(xfc.FL_OBJECT * obj)
-            """)
+        load_so_libforms(), "fl_object_is_automatic",
+        cty.c_int, [cty.POINTER(xfc.FL_OBJECT)], \
+        """int fl_object_is_automatic(xfc.FL_OBJECT * obj)""")
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     keep_elem_refs(pFlObject)
@@ -3571,24 +3346,23 @@ def fl_object_is_automatic(pFlObject):
 
 
 def fl_draw_object_label(pFlObject):
-    """ fl_draw_object_label(pFlObject)
-
-        Draws the label according to the alignment, which could be inside
-        or outside of the bounding box.
-
-        @param pFlObject: object
-        @type pFlObject: pointer to xfdata.FL_OBJECT
-
-        @example: fl_draw_object_label(pobj3)
-
-        @status: Tested + Doc + NoDemo = OK
     """
+    fl_draw_object_label(pFlObject)
 
+    Draws the label according to the alignment, which could be inside or
+    outside of the bounding box.
+
+    @param pFlObject: object
+    @type pFlObject: pointer to xfdata.FL_OBJECT
+
+    @example: fl_draw_object_label(pobj3)
+
+    @status: Tested + Doc + NoDemo = OK
+    """
     _fl_draw_object_label = cfuncproto(
-            load_so_libforms(), "fl_draw_object_label", \
-            None, [cty.POINTER(xfc.FL_OBJECT)], \
-            """void fl_draw_object_label(xfc.FL_OBJECT * ob)
-            """)
+        load_so_libforms(), "fl_draw_object_label", \
+        None, [cty.POINTER(xfc.FL_OBJECT)], \
+        """void fl_draw_object_label(xfc.FL_OBJECT * ob)""")
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     keep_elem_refs(pFlObject)
@@ -3596,23 +3370,22 @@ def fl_draw_object_label(pFlObject):
 
 
 def fl_draw_object_label_outside(pFlObject):
-    """ fl_draw_object_label_outside(pFlObject)
-
-        Draws the label outside of the bounding box.
-
-        @param pFlObject: object
-        @type pFlObject: pointer to xfdata.FL_OBJECT
-
-        @example: fl_draw_object_label_outside(pobj3)
-
-        @status: Tested + Doc + NoDemo = OK
     """
+    fl_draw_object_label_outside(pFlObject)
 
+    Draws the label outside of the bounding box.
+
+    @param pFlObject: object
+    @type pFlObject: pointer to xfdata.FL_OBJECT
+
+    @example: fl_draw_object_label_outside(pobj3)
+
+    @status: Tested + Doc + NoDemo = OK
+    """
     _fl_draw_object_label_outside = cfuncproto(
-            load_so_libforms(), "fl_draw_object_label_outside",
-            None, [cty.POINTER(xfc.FL_OBJECT)], \
-            """void fl_draw_object_label_outside(xfc.FL_OBJECT * ob)
-            """)
+        load_so_libforms(), "fl_draw_object_label_outside",
+        None, [cty.POINTER(xfc.FL_OBJECT)], \
+        """void fl_draw_object_label_outside(xfc.FL_OBJECT * ob)""")
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     keep_elem_refs(pFlObject)
@@ -3622,79 +3395,80 @@ def fl_draw_object_label_outside(pFlObject):
 fl_draw_object_outside_label = fl_draw_object_label_outside
 
 
-def fl_get_object_component(pFlObject, objclass, compontype, num):
-    """ fl_get_object_component(pFlObject, objclass, compontype, num) -> pFlObject
-
-        Returns the object that is a component of a composite object. E.g.
-        the scrollbar object is made of a slider and two scroll buttons.
-
-        @param pFlObject: composite object
-        @type pFlObject: pointer to xfdata.FL_OBJECT
-        @param objclass: component object's class id (<int>)
-        @param compontype: component object's type id (<int>)
-        @param num: the sequence number of the desired object in case the
-                    composite has more than one object of the same class and
-                    type. You cans use -1 to indicate any type of specified
-                    class (<int>)
-
-        @returns: component object found @type pFlObject: pointer to xfdata.FL_OBJECT or
-                  None (no object found)
-
-        @example: fl_get_object_component(browserobj, xfdata.FL_SCROLLBAR,
-                  xfdata.FL_HOR_THIN_SCROLLBAR, 0)
-
-        @status: Untested + Doc + NoDemo = NOT OK
+def fl_get_object_component(pFlObject, objclass, compontype, seqnum):
     """
+    fl_get_object_component(pFlObject, objclass, compontype, seqnum) -> pFlObject
 
+    Returns the object that is a component of a composite object. E.g. the
+    scrollbar object is made of a slider and two scroll buttons.
+
+    @param pFlObject: composite object
+    @type pFlObject: pointer to xfdata.FL_OBJECT
+    @param objclass: component object's class id
+    @type objclass: int
+    @param compontype: component object's type id 
+    @type compontype: int
+    @param seqnum: the sequence number of the desired object in case the
+        composite has more than one object of the same class and type. You
+        can use -1 to indicate any type of specified class
+    @type seqnum: int
+
+    @returns: component object (pointer to xfdata.FL_OBJECT) or None (no
+        object found)
+
+    @example: fl_get_object_component(browserobj, xfdata.FL_SCROLLBAR,
+        xfdata.FL_HOR_THIN_SCROLLBAR, 0)
+
+    @status: Untested + Doc + NoDemo = NOT OK
+    """
     _fl_get_object_component = cfuncproto(
-            load_so_libforms(), "fl_get_object_component",
-            cty.POINTER(xfc.FL_OBJECT), [cty.POINTER(xfc.FL_OBJECT), cty.c_int,
-            cty.c_int, cty.c_int], \
-            """FL_OBJECT * fl_get_object_component(xfc.FL_OBJECT * composite,
-               int objclass, int type, int numb)
-            """)
+        load_so_libforms(), "fl_get_object_component",
+        cty.POINTER(xfc.FL_OBJECT), [cty.POINTER(xfc.FL_OBJECT), cty.c_int,
+        cty.c_int, cty.c_int], \
+        """FL_OBJECT * fl_get_object_component(xfc.FL_OBJECT * composite,
+           int objclass, int type, int numb)""")
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     iobjclass = convert_to_int(objclass)
     icompontype = convert_to_int(compontype)
-    inum = convert_to_int(num)
+    iseqnum = convert_to_int(seqnum)
     keep_elem_refs(pFlObject, objclass, iobjclass, compontype, icompontype, \
-                   num, inum)
-    retval = _fl_get_object_component(pFlObject, iobjclass, icompontype, inum)
+                   seqnum, iseqnum)
+    retval = _fl_get_object_component(pFlObject, iobjclass, icompontype,
+                                      iseqnum)
     return retval
 
 
 def fl_for_all_objects(pFlForm, py_operatecb, vdata):
-    """ fl_for_all_objects(pFlForm, py_operatecb, vdata)
-
-        Serves as an iterator to change an attribute for all objects on a
-        particular form. Specified operating function is called for every
-        object of the form form unless it returns nonzero, which terminates
-        the iterator.
-
-        @param pFlForm: form
-                      @type pFlForm: pointer to xfdata.FL_FORM
-        @param py_operatecb: python callback function, returning value
-        @type py_operatecb: __ funcname (pFlObject, ptr_void) -> num __
-        @param vdata: user data to be passed (<pointer to void>)
-
-        @example: def operatecb(pobj, vdata):
-        @example: |->| ...
-        @example: |->| return 0; 
-        @example: fl_for_all_objects(pform5, operatecb, None)
-
-        @status: Untested + Doc + NoDemo = NOT OK
     """
+    fl_for_all_objects(pFlForm, py_operatecb, vdata)
 
+    Serves as an iterator to change an attribute for all objects on a
+    particular form. Specified operating function is called for every object
+    of the form form unless it returns nonzero, which terminates the iterator.
+
+    @param pFlForm: form
+    @type pFlForm: pointer to xfdata.FL_FORM
+    @param py_operatecb: python callback function, returning value
+    @type py_operatecb: __ funcname (pFlObject, ptr_void) -> num __
+    @param vdata: user data to be passed to function
+    @type vdata: pointer to void
+
+    @example: def operatecb(pobj, vdata):
+    @example: |->| ...
+    @example: |->| return 0
+    @example: fl_for_all_objects(pform5, operatecb, None)
+
+    @status: Untested + Doc + NoDemo = NOT OK
+    """
      # cfunc_int_pobject_pvoid = cty.CFUNCTYPE(cty.c_int, 
      #                  cty.POINTER(xfc.FL_OBJECT), cty.c_void_p)
     _fl_for_all_objects = cfuncproto(
-            load_so_libforms(), "fl_for_all_objects", \
-            None, [cty.POINTER(xfc.FL_FORM), xfc.cfunc_int_pobject_pvoid, \
-            cty.c_void_p], \
-            """void fl_for_all_objects(FL_FORM * form, int ( * cb ) \
-               ( FL_OBJECT *, void * ), void * v)
-            """)
+        load_so_libforms(), "fl_for_all_objects", \
+        None, [cty.POINTER(xfc.FL_FORM), xfc.cfunc_int_pobject_pvoid, \
+        cty.c_void_p], \
+        """void fl_for_all_objects(FL_FORM * form, int ( * cb ) \
+           ( FL_OBJECT *, void * ), void * v)""")
     check_if_initialized()
     check_if_FL_FORM_ptr(pFlForm)
     c_operatecb = xfc.cfunc_int_pobject_pvoid(py_operatecb)
@@ -3705,28 +3479,28 @@ def fl_for_all_objects(pFlForm, py_operatecb, vdata):
 
 
 def fl_set_object_dblclick(pFlObject, timeout):
-    """ fl_set_object_dblclick(pFlObject, timeout)
-
-        Sets double click timeout value of an object, enabling or disabling
-        it to receive the xfdata.FL_DBLCLICK event.
-
-        @param pFlObject: object
-        @type pFlObject: pointer to xfdata.FL_OBJECT
-        @param timeout: maximum time interval (in msec) between two clicks
-                        for them to be considered a double-click (using 0
-                        disables double-click detection) (<long_pos>)
-
-        @example: fl_set_object_dblclick(pobj, 750)
-
-        @status: Tested + Doc + NoDemo = OK
     """
+    fl_set_object_dblclick(pFlObject, timeout)
 
+    Sets double click timeout value of an object, enabling or disabling it to
+    receive the xfdata.FL_DBLCLICK event.
+
+    @param pFlObject: object
+    @type pFlObject: pointer to xfdata.FL_OBJECT
+    @param timeout: maximum time interval (in msec) between two clicks
+                        for them to be considered a double-click (using 0
+                        disables double-click detection)
+    @type timeout: long_pos
+
+    @example: fl_set_object_dblclick(pobj, 750)
+
+    @status: Tested + Doc + NoDemo = OK
+    """
     _fl_set_object_dblclick = cfuncproto(
-            load_so_libforms(), "fl_set_object_dblclick", \
-            None, [cty.POINTER(xfc.FL_OBJECT), cty.c_ulong], \
-            """void fl_set_object_dblclick(xfc.FL_OBJECT *obj, unsigned \
-               long timeout)
-            """)
+        load_so_libforms(), "fl_set_object_dblclick", \
+        None, [cty.POINTER(xfc.FL_OBJECT), cty.c_ulong], \
+        """void fl_set_object_dblclick(xfc.FL_OBJECT *obj, unsigned \
+           long timeout)""")
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     ultimeout = convert_to_ulong(timeout)
@@ -3735,25 +3509,24 @@ def fl_set_object_dblclick(pFlObject, timeout):
 
 
 def fl_get_object_dblclick(pFlObject):
-    """ fl_get_object_dblclick(pFlObject) -> timeout
-
-        Return double click timeout value of an object.
-
-        @param pFlObject: object to evaluate
-        @type pFlObject: pointer to xfdata.FL_OBJECT
-
-        @returns: timeout value (<long_pos>)
-
-        @example: dctim = fl_get_object_dblclick(pobj0)
-
-        @status: Tested + Doc + NoDemo = OK
     """
+    fl_get_object_dblclick(pFlObject) -> long_pos
 
+    Return double click timeout value of an object.
+
+    @param pFlObject: object to evaluate
+    @type pFlObject: pointer to xfdata.FL_OBJECT
+
+    @returns: timeout value
+
+    @example: dctim = fl_get_object_dblclick(pobj0)
+
+    @status: Tested + Doc + NoDemo = OK
+    """
     _fl_get_object_dblclick = cfuncproto(
-            load_so_libforms(), "fl_get_object_dblclick", \
-            cty.c_ulong, [cty.POINTER(xfc.FL_OBJECT)], \
-            """unsigned long fl_get_object_dblclick(xfc.FL_OBJECT *obj)
-            """)
+        load_so_libforms(), "fl_get_object_dblclick", \
+        cty.c_ulong, [cty.POINTER(xfc.FL_OBJECT)], \
+        """unsigned long fl_get_object_dblclick(xfc.FL_OBJECT *obj)""")
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     keep_elem_refs(pFlObject)
@@ -3762,29 +3535,32 @@ def fl_get_object_dblclick(pFlObject):
 
 
 def fl_set_object_geometry(pFlObject, x, y, w, h):
-    """ fl_set_object_geometry(pFlObject, x, y, w, h)
-
-        Sets the geometry (position and size) of an object.
-
-        @param pFlObject: object to modify
-        @type pFlObject: pointer to xfdata.FL_OBJECT
-        @param x: horizontal position (upper-left corner) (<int>)
-        @param y: vertical position (upper-left corner) (<int>)
-        @param w: width in coord units (<int>)
-        @param h: height in coord units (<int>)
-
-        @example: fl_set_object_geometry(pobj, 200, 250, 120, 25)
-
-        @status: Tested + Doc + Demo = OK
     """
+    fl_set_object_geometry(pFlObject, x, y, w, h)
 
+    Sets the geometry (position and size) of an object.
+
+    @param pFlObject: object to modify
+    @type pFlObject: pointer to xfdata.FL_OBJECT
+    @param x: horizontal position (upper-left corner)
+    @type x: int
+    @param y: vertical position (upper-left corner)
+    @type y: int
+    @param w: width in coord units
+    @type w: int
+    @param h: height in coord units
+    @type h: int
+
+    @example: fl_set_object_geometry(pobj, 200, 250, 120, 25)
+
+    @status: Tested + Doc + Demo = OK
+    """
     _fl_set_object_geometry = cfuncproto(
-            load_so_libforms(), "fl_set_object_geometry", \
-            None, [cty.POINTER(xfc.FL_OBJECT), xfc.FL_Coord, xfc.FL_Coord,
-            xfc.FL_Coord, xfc.FL_Coord], \
-            """void fl_set_object_geometry(FL_OBJECT * obj, FL_Coord x,
-            FL_Coord y, FL_Coord w, FL_Coord h)
-            """)
+        load_so_libforms(), "fl_set_object_geometry", \
+        None, [cty.POINTER(xfc.FL_OBJECT), xfc.FL_Coord, xfc.FL_Coord,
+        xfc.FL_Coord, xfc.FL_Coord], \
+        """void fl_set_object_geometry(FL_OBJECT * obj, FL_Coord x,
+        FL_Coord y, FL_Coord w, FL_Coord h)""")
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     ix = convert_to_FL_Coord(x)
@@ -3796,26 +3572,27 @@ def fl_set_object_geometry(pFlObject, x, y, w, h):
 
 
 def fl_move_object(pFlObject, x, y):
-    """ fl_move_object(pFlObject, x, y)
-
-        Moves an object to a new position.
-
-        @param pFlObject: object to be moved
-        @type pFlObject: pointer to xfdata.FL_OBJECT
-        @param x: new horizontal position (upper-left corner) (<int>)
-        @param y: new vertical position (upper-left corner) (<int>)
-
-        @example: fl_move_object(pobj0, 120, 380)
-
-        @status: Tested + Doc + NoDemo = OK
     """
+    fl_move_object(pFlObject, x, y)
 
+    Moves an object to a new position.
+
+    @param pFlObject: object to be moved
+    @type pFlObject: pointer to xfdata.FL_OBJECT
+    @param x: new horizontal position (upper-left corner)
+    @type x: int
+    @param y: new vertical position (upper-left corner)
+    @type y: int
+
+    @example: fl_move_object(pobj0, 120, 380)
+
+    @status: Tested + Doc + NoDemo = OK
+    """
     _fl_move_object = cfuncproto(
-            load_so_libforms(), "fl_move_object", \
-            None, [cty.POINTER(xfc.FL_OBJECT), xfc.FL_Coord, xfc.FL_Coord], \
-            """void fl_move_object(xfc.FL_OBJECT * obj, FL_Coord dx,
-               FL_Coord dy)
-            """)
+        load_so_libforms(), "fl_move_object", \
+        None, [cty.POINTER(xfc.FL_OBJECT), xfc.FL_Coord, xfc.FL_Coord], \
+        """void fl_move_object(xfc.FL_OBJECT * obj, FL_Coord dx,
+           FL_Coord dy)""")
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     ix = convert_to_int(x)
@@ -3825,27 +3602,29 @@ def fl_move_object(pFlObject, x, y):
 
 
 def fl_fit_object_label(pFlObject, xmargin, ymargin):
-    """ fl_fit_object_label(pFlObject, xmargin, ymargin)
-
-        Checks if the label of an object fits into it (after x- and
-        y-margin have been added). If not, all objects and the form
-        are enlarged by the necessary factor (but never by more than
-        a factor of 1.5).
-
-        @param pFlObject: object
-        @type pFlObject: pointer to xfdata.FL_OBJECT
-        @param xmargin: horizontal margin of label in coord units (<int>)
-        @param ymargin: vertical margin of label in coord units (<int>)
-
-        @status: Tested + Doc + NoDemo = OK
     """
+    fl_fit_object_label(pFlObject, xmargin, ymargin)
 
+    Checks if the label of an object fits into it (after x- and y-margin have
+    been added). If not, all objects and the form are enlarged by the necessary
+    factor (but never by more than a factor of 1.5).
+
+    @param pFlObject: object
+    @type pFlObject: pointer to xfdata.FL_OBJECT
+    @param xmargin: horizontal margin of label in coord units
+    @type xmargin: int
+    @param ymargin: vertical margin of label in coord units
+    @type ymargin: int
+
+    @example: fl_fit_object_label(pobj2, 10, 10)
+
+    @status: Tested + Doc + NoDemo = OK
+    """
     _fl_fit_object_label = cfuncproto(
-            load_so_libforms(), "fl_fit_object_label",\
-            None, [cty.POINTER(xfc.FL_OBJECT), xfc.FL_Coord, xfc.FL_Coord],\
-            """void fl_fit_object_label(xfc.FL_OBJECT * obj, FL_Coord xmargin,
-               FL_Coord ymargin)
-            """)
+        load_so_libforms(), "fl_fit_object_label",\
+        None, [cty.POINTER(xfc.FL_OBJECT), xfc.FL_Coord, xfc.FL_Coord],\
+        """void fl_fit_object_label(xfc.FL_OBJECT * obj, FL_Coord xmargin,
+           FL_Coord ymargin)""")
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     ixmargin = convert_to_int(xmargin)
@@ -3855,32 +3634,30 @@ def fl_fit_object_label(pFlObject, xmargin, ymargin):
 
 
 def fl_get_object_geometry(pFlObject):
-    """ fl_get_object_geometry(pFlObject) -> x, y, w, h
-
-        Returns the geometry (position and size) of an object.
-
-        @param pFlObject: object
-        @type pFlObject: pointer to xfdata.FL_OBJECT
-
-        @returns: horizontal, vertical position, width, height
-                  (<int>, <int>, <int>, <int>)
-
-        @example: xpos, ypos, wid, hei = fl_get_object_geometry(pobj1)
-
-        @attention: API change from XForms - upstream was
-                    fl_get_object_geometry(pFlObject, x, y, w, h)
-
-        @status: Tested + Doc + Demo = OK
     """
+    fl_get_object_geometry(pFlObject) -> int, int, int, int
 
+    Returns the geometry (position and size) of an object.
+
+    @param pFlObject: object
+    @type pFlObject: pointer to xfdata.FL_OBJECT
+
+    @returns: horizontal, vertical position, width, height (x, y, w, h)
+
+    @example: xpos, ypos, wid, hei = fl_get_object_geometry(pobj1)
+
+    @attention: API change from XForms - upstream was
+        fl_get_object_geometry(pFlObject, x, y, w, h)
+
+    @status: Tested + Doc + Demo = OK
+    """
     _fl_get_object_geometry = cfuncproto(
-            load_so_libforms(), "fl_get_object_geometry",\
+        load_so_libforms(), "fl_get_object_geometry",\
         None, [cty.POINTER(xfc.FL_OBJECT), cty.POINTER(xfc.FL_Coord),\
         cty.POINTER(xfc.FL_Coord), cty.POINTER(xfc.FL_Coord), \
         cty.POINTER(xfc.FL_Coord)],
         """void fl_get_object_geometry(xfc.FL_OBJECT * ob, FL_Coord * x,
-           FL_Coord * y, FL_Coord * w, FL_Coord * h)
-        """)
+           FL_Coord * y, FL_Coord * w, FL_Coord * h)""")
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     x, px = make_FL_Coord_and_pointer()
@@ -3893,30 +3670,29 @@ def fl_get_object_geometry(pFlObject):
 
 
 def fl_get_object_position(pFlObject):
-    """ fl_get_object_position(pFlObject) -> x, y
-
-        Returns the position of an object.
-
-        @param pFlObject: object to evaluate
-        @type pFlObject: pointer to xfdata.FL_OBJECT
-
-        @returns: horizontal and vertical position (<int>, <int>)
-
-        @example: xpos, ypos = fl_get_object_position(pobj2)
-
-        @attention: API change from XForms - upstream was
-                    fl_get_object_position(pFlObject, x, y)
-
-        @status: Tested + Doc + NoDemo = OK
     """
+    fl_get_object_position(pFlObject) -> int, int
 
+    Returns the position of an object.
+
+    @param pFlObject: object to evaluate
+    @type pFlObject: pointer to xfdata.FL_OBJECT
+
+    @returns: horizontal and vertical position (x, y)
+
+    @example: xpos, ypos = fl_get_object_position(pobj2)
+
+    @attention: API change from XForms - upstream was
+        fl_get_object_position(pFlObject, x, y)
+
+    @status: Tested + Doc + NoDemo = OK
+    """
     _fl_get_object_position = cfuncproto(
-            load_so_libforms(), "fl_get_object_position",\
-            None, [cty.POINTER(xfc.FL_OBJECT), cty.POINTER(xfc.FL_Coord),
-            cty.POINTER(xfc.FL_Coord)],\
-            """void fl_get_object_position(xfc.FL_OBJECT * ob, FL_Coord * x,
-               FL_Coord * y)
-            """)
+        load_so_libforms(), "fl_get_object_position",\
+        None, [cty.POINTER(xfc.FL_OBJECT), cty.POINTER(xfc.FL_Coord),
+        cty.POINTER(xfc.FL_Coord)],\
+        """void fl_get_object_position(xfc.FL_OBJECT * ob, FL_Coord * x,
+           FL_Coord * y)""")
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     x, px = make_FL_Coord_and_pointer()
@@ -3929,33 +3705,31 @@ def fl_get_object_position(pFlObject):
 # this one takes into account the label
 
 def fl_get_object_bbox(pFlObject):
-    """ fl_get_object_bbox(pFlObject) -> x, y, w, h
-
-        Returns the bounding box size that has the label, which could be
-        drawn outside of the object figured in.
-
-        @param pFlObject: object to evaluate
-        @type pFlObject: pointer to xfdata.FL_OBJECT
-
-        @returns: horizontal, vertical position, width, height
-                  (<int>, <int>, <int>, <int>)
-
-        @example: xpos, ypos, wid, hei = fl_get_object_bbox(pobj4)
-
-        @attention: API change from XForms - upstream was
-                    fl_get_object_bbox(pFlObject, x, y, w, h)
-
-        @status: Tested + Doc + NoDemo = OK
     """
+    fl_get_object_bbox(pFlObject) -> int, int, int, int
 
+    Returns the bounding box size that has the label, which could be drawn
+    outside of the object figured in.
+
+    @param pFlObject: object to evaluate
+    @type pFlObject: pointer to xfdata.FL_OBJECT
+
+    @returns: horizontal, vertical position, width, height (x, y, w, h)
+
+    @example: xpos, ypos, wid, hei = fl_get_object_bbox(pobj4)
+
+    @attention: API change from XForms - upstream was
+        fl_get_object_bbox(pFlObject, x, y, w, h)
+
+    @status: Tested + Doc + NoDemo = OK
+    """
     _fl_get_object_bbox = cfuncproto(
-            load_so_libforms(), "fl_get_object_bbox",\
-            None, [cty.POINTER(xfc.FL_OBJECT), cty.POINTER(xfc.FL_Coord),\
-            cty.POINTER(xfc.FL_Coord), cty.POINTER(xfc.FL_Coord),
-            cty.POINTER(xfc.FL_Coord)],\
-            """void fl_get_object_bbox(xfc.FL_OBJECT * obj, FL_Coord * x,
-               FL_Coord * y, FL_Coord * w, FL_Coord * h)
-            """)
+        load_so_libforms(), "fl_get_object_bbox",\
+        None, [cty.POINTER(xfc.FL_OBJECT), cty.POINTER(xfc.FL_Coord),\
+        cty.POINTER(xfc.FL_Coord), cty.POINTER(xfc.FL_Coord),
+        cty.POINTER(xfc.FL_Coord)],\
+        """void fl_get_object_bbox(xfc.FL_OBJECT * obj, FL_Coord * x,
+           FL_Coord * y, FL_Coord * w, FL_Coord * h)""")
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     x, px = make_FL_Coord_and_pointer()
@@ -3971,25 +3745,24 @@ fl_compute_object_geometry = fl_get_object_bbox
 
 
 def fl_call_object_callback(pFlObject):
-    """ fl_call_object_callback(pFlObject)
-
-        Invokes the callback manually (as opposed to invocation by the main
-        loop). If the object does not have a callback associated with it, this
-        call has not effect.
-
-        @param pFlObject: object
-        @type pFlObject: pointer to xfdata.FL_OBJECT
-
-        @example: fl_call_object_callback(pobj_with_cb)
-
-        @status: Tested + Doc + Demo = OK
     """
+    fl_call_object_callback(pFlObject)
 
+    Invokes the callback manually (as opposed to invocation by the main loop).
+    If the object does not have a callback associated with it, this call has
+    not effect.
+
+    @param pFlObject: object
+    @type pFlObject: pointer to xfdata.FL_OBJECT
+
+    @example: fl_call_object_callback(pobj_with_cb)
+
+    @status: Tested + Doc + Demo = OK
+    """
     _fl_call_object_callback = cfuncproto(
-            load_so_libforms(), "fl_call_object_callback",\
-            None, [cty.POINTER(xfc.FL_OBJECT)],\
-            """void fl_call_object_callback(xfc.FL_OBJECT * ob)
-            """)
+        load_so_libforms(), "fl_call_object_callback",\
+        None, [cty.POINTER(xfc.FL_OBJECT)],\
+        """void fl_call_object_callback(xfc.FL_OBJECT * ob)""")
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     keep_elem_refs(pFlObject)
@@ -3997,35 +3770,34 @@ def fl_call_object_callback(pFlObject):
 
 
 def fl_set_object_prehandler(pFlObject, py_HandlerPtr):
-    """ fl_set_object_prehandler(pFlObject, py_HandlerPtr) ->  pHandlerPtr
-
-        By-passes the internal event processing for a particular object.
-        The pre-handler will be called before the built-in object handler.
-        By electing to handle some of the events, a pre-handler can, in
-        effect, replace part of the built-in handler.
-
-        @param pFlObject: object
-        @type pFlObject: pointer to xfdata.FL_OBJECT
-        @param py_HandlerPtr: python callback function, returning value
-        @type py_HandlerPtr: __ funcname (pFlObject, num, coord, coord, num,
-                             ptr_void) -> num __
-
-        @example: def prehandlecb(pobj, num, crd, crd, num2, vdata):
-        @example: |->| ...
-        @example: |->| return 0
-        @example: fl_set_object_prehandler(pobj2, prehandlecb)
-
-        @status: Tested + Doc + Demo = OK
     """
+    fl_set_object_prehandler(pFlObject, py_HandlerPtr) ->  pHandlerPtr
 
+    By-passes the internal event processing for a particular object. The
+    pre-handler will be called before the built-in object handler. By electing
+    to handle some of the events, a pre-handler can, in effect, replace part
+    of the built-in handler.
+
+    @param pFlObject: object
+    @type pFlObject: pointer to xfdata.FL_OBJECT
+    @param py_HandlerPtr: python callback function, returning value
+    @type py_HandlerPtr: __ funcname (pFlObject, num, coord, coord, num,
+        ptr_void) -> num __
+
+    @example: def prehandlecb(pobj, num, crd, crd, num2, vdata):
+    @example: |->| ...
+    @example: |->| return 0
+    @example: fl_set_object_prehandler(pobj2, prehandlecb)
+
+    @status: Tested + Doc + Demo = OK
+    """
     #FL_HANDLEPTR = cty.CFUNCTYPE(cty.c_int, cty.POINTER(xfc.FL_OBJECT),
     #                cty.c_int, FL_Coord, FL_Coord, cty.c_int, cty.c_void_p)
     _fl_set_object_prehandler = cfuncproto(
-            load_so_libforms(), "fl_set_object_prehandler",
-            xfc.FL_HANDLEPTR, [cty.POINTER(xfc.FL_OBJECT), xfc.FL_HANDLEPTR],\
-            """FL_HANDLEPTR fl_set_object_prehandler(xfc.FL_OBJECT * ob,
-               FL_HANDLEPTR phandler)
-            """)
+        load_so_libforms(), "fl_set_object_prehandler",
+        xfc.FL_HANDLEPTR, [cty.POINTER(xfc.FL_OBJECT), xfc.FL_HANDLEPTR],\
+        """FL_HANDLEPTR fl_set_object_prehandler(xfc.FL_OBJECT * ob,
+           FL_HANDLEPTR phandler)""")
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     c_HandlerPtr = xfc.FL_HANDLEPTR(py_HandlerPtr)
@@ -4036,35 +3808,33 @@ def fl_set_object_prehandler(pFlObject, py_HandlerPtr):
 
 
 def fl_set_object_posthandler(pFlObject, py_HandlerPtr):
-    """ fl_set_object_posthandler(pFlObject, py_HandlerPtr) -> pHandlerPtr
-
-        By-passes the internal event processing for a particular object.
-        The post-handler will be invoked after the built-in handler finishes.
-        Whenever possible a post-handler should be used instead of a
-        pre-handler.
-
-        @param pFlObject: pointer to object
-        @type pFlObject: pointer to xfdata.FL_OBJECT
-        @param py_HandlerPtr: python callback function, returning value
-        @type py_HandlerPtr: __ funcname (pFlObject, num, coord, coord, num,
-                             ptr_void) -> num __
-
-        @example: def posthandlecb(pobj, num, crd, crd, num2, vdata):
-        @example: |->| ...
-        @example: |->| return 0
-        @example: fl_set_object_posthandler(pobj2, posthandlecb)
-
-        @status: Tested + Doc + Demo = OK
     """
+    fl_set_object_posthandler(pFlObject, py_HandlerPtr) -> pHandlerPtr
 
+    By-passes the internal event processing for a particular object. The
+    post-handler will be invoked after the built-in handler finishes. Whenever
+    possible a post-handler should be used instead of a pre-handler.
+
+    @param pFlObject: pointer to object
+    @type pFlObject: pointer to xfdata.FL_OBJECT
+    @param py_HandlerPtr: python callback function, returning value
+    @type py_HandlerPtr: __ funcname (pFlObject, num, coord, coord, num,
+        ptr_void) -> num __
+
+    @example: def posthandlecb(pobj, num, crd, crd, num2, vdata):
+    @example: |->| ...
+    @example: |->| return 0
+    @example: fl_set_object_posthandler(pobj2, posthandlecb)
+
+    @status: Tested + Doc + Demo = OK
+    """
     #FL_HANDLEPTR = cty.CFUNCTYPE(cty.c_int, cty.POINTER(xfc.FL_OBJECT),
     #                cty.c_int, FL_Coord, FL_Coord, cty.c_int, cty.c_void_p)
     _fl_set_object_posthandler = cfuncproto(
-            load_so_libforms(), "fl_set_object_posthandler",
-            xfc.FL_HANDLEPTR, [cty.POINTER(xfc.FL_OBJECT), xfc.FL_HANDLEPTR],\
-            """FL_HANDLEPTR fl_set_object_posthandler(xfc.FL_OBJECT * ob,
-               FL_HANDLEPTR post)
-            """)
+        load_so_libforms(), "fl_set_object_posthandler",
+        xfc.FL_HANDLEPTR, [cty.POINTER(xfc.FL_OBJECT), xfc.FL_HANDLEPTR],\
+        """FL_HANDLEPTR fl_set_object_posthandler(xfc.FL_OBJECT * ob,
+           FL_HANDLEPTR post)""")
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     c_HandlerPtr = xfc.FL_HANDLEPTR(py_HandlerPtr)
@@ -4075,35 +3845,35 @@ def fl_set_object_posthandler(pFlObject, py_HandlerPtr):
 
 
 def fl_set_object_callback(pFlObject, py_CallbackPtr, data):
-    """ fl_set_object_callback(pFlObject, py_CallbackPtr, data) -> c_callback func.
-
-        Calls a callback function bound to an object, if a condition is met.
-
-        @param pFlObject: object the callback is bound to
-        @type pFlObject: pointer to xfdata.FL_OBJECT
-        @param py_CallbackPtr: a python function with no () and no args to
-                               be used as callback, no return
-        @type py_CallbackPtr: __ funcname (pFlObject, longnum) __
-        @param data: argument being passed to function <long>
-        
-        @returns: old xfdata.FL_CALLBACKPTR function
-
-        @example: def myobcb(pobj, longdata):
-        @example: |->| ...
-        @example: oldcb = fl_set_object_callback(pobj3, myobjcb, 0)
-
-        @status: Tested + Doc + Demo = OK
     """
+    fl_set_object_callback(pFlObject, py_CallbackPtr, data) -> CallbackPtr
 
+    Calls a callback function bound to an object, if a condition is met.
+
+    @param pFlObject: object the callback is bound to
+    @type pFlObject: pointer to xfdata.FL_OBJECT
+    @param py_CallbackPtr: a python function with no () and no args to
+        be used as callback, no return
+    @type py_CallbackPtr: __ funcname (pFlObject, longnum) __
+    @param data: argument being passed to function
+    @type data: long
+
+    @returns: old xfdata.FL_CALLBACKPTR function
+
+    @example: def myobcb(pobj, longdata):
+    @example: |->| ...
+    @example: oldcb = fl_set_object_callback(pobj3, myobjcb, 0)
+
+    @status: Tested + Doc + Demo = OK
+    """
     #FL_CALLBACKPTR = cty.CFUNCTYPE(None, cty.POINTER(xfc.FL_OBJECT),
     #                               cty.c_long)
     _fl_set_object_callback = cfuncproto(
-            load_so_libforms(), "fl_set_object_callback",\
-            xfc.FL_CALLBACKPTR, [cty.POINTER(xfc.FL_OBJECT),
-            xfc.FL_CALLBACKPTR, cty.c_long],
-            """FL_CALLBACKPTR fl_set_object_callback(xfc.FL_OBJECT * obj,\
-               FL_CALLBACKPTR callback, long int argument)
-            """)
+        load_so_libforms(), "fl_set_object_callback",\
+        xfc.FL_CALLBACKPTR, [cty.POINTER(xfc.FL_OBJECT),
+        xfc.FL_CALLBACKPTR, cty.c_long],
+        """FL_CALLBACKPTR fl_set_object_callback(xfc.FL_OBJECT * obj,\
+           FL_CALLBACKPTR callback, long int argument)""")
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     ldata = convert_to_long(data)
@@ -4118,26 +3888,25 @@ fl_set_call_back = fl_set_object_callback
 
 
 def fl_redraw_object(pFlObject):
-    """ fl_redraw_object(pFlObject)
-
-        Redraws the particular object. If it is a group it redraws the
-        complete group. Normally you should never need this routine because
-        all library routines take care of redrawing objects when necessary,
-        but there might be situations in which an explicit redraw is required.
-
-        @param pFlObject: object to redraw
-        @type pFlObject: pointer to xfdata.FL_OBJECT
-
-        @example: fl_redraw_object(pobj)
-
-        @status: Tested + Doc + Demo = OK
     """
+    fl_redraw_object(pFlObject)
 
+    Redraws the particular object. If it is a group it redraws the complete
+    group. Normally you should never need this routine because all library
+    routines take care of redrawing objects when necessary, but there might be
+    situations in which an explicit redraw is required.
+
+    @param pFlObject: object to redraw
+    @type pFlObject: pointer to xfdata.FL_OBJECT
+
+    @example: fl_redraw_object(pobj)
+
+    @status: Tested + Doc + Demo = OK
+    """
     _fl_redraw_object = cfuncproto(
-            load_so_libforms(), "fl_redraw_object",\
-            None, [cty.POINTER(xfc.FL_OBJECT)],\
-            """void fl_redraw_object(FL_OBJECT * obj)
-            """)
+        load_so_libforms(), "fl_redraw_object",\
+        None, [cty.POINTER(xfc.FL_OBJECT)],\
+        """void fl_redraw_object(FL_OBJECT * obj)""")
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     keep_elem_refs(pFlObject)
@@ -4145,26 +3914,27 @@ def fl_redraw_object(pFlObject):
 
 
 def fl_scale_object(pFlObject, xs, ys):
-    """ fl_scale_object(pFlObject, xs, ys)
-
-        Scales (shrinking or enlarging) an object, indicating a scaling
-        factor in x- and y-direction (1.1 = 110 percent, 0.5 = 50, etc.)
-
-        @param pFlObject: object to be scaled
-        @type pFlObject: pointer to xfdata.FL_OBJECT
-        @param xs: new horizontal factor (<float>)
-        @param ys: new vertical factor (<float>)
-
-        @example: fl_scale_object(pobj, 0.8, 1.1)
-
-        @status: Tested + Doc + NoDemo = OK
     """
+    fl_scale_object(pFlObject, xs, ys)
 
+    Scales (shrinking or enlarging) an object, indicating a scaling factor in
+    x- and y-direction (1.1 = 110 percent, 0.5 = 50, etc.)
+
+    @param pFlObject: object to be scaled
+    @type pFlObject: pointer to xfdata.FL_OBJECT
+    @param xs: new horizontal factor
+    @type xs: float
+    @param ys: new vertical factor
+    @type ys: float
+
+    @example: fl_scale_object(pobj, 0.8, 1.1)
+
+    @status: Tested + Doc + NoDemo = OK
+    """
     _fl_scale_object = cfuncproto(
-            load_so_libforms(), "fl_scale_object",\
-            None, [cty.POINTER(xfc.FL_OBJECT), cty.c_double, cty.c_double],\
-            """void fl_scale_object(FL_OBJECT * ob, double xs, double ys)
-            """)
+        load_so_libforms(), "fl_scale_object",\
+        None, [cty.POINTER(xfc.FL_OBJECT), cty.c_double, cty.c_double],\
+        """void fl_scale_object(FL_OBJECT * ob, double xs, double ys)""")
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     fxs = convert_to_double(xs)
@@ -4174,23 +3944,22 @@ def fl_scale_object(pFlObject, xs, ys):
 
 
 def fl_show_object(pFlObject):
-    """ fl_show_object(pFlObject)
-
-        Shows an (hidden) object.
-
-        @param pFlObject: object to be shown
-        @type pFlObject: pointer to xfdata.FL_OBJECT
-
-        @example: fl_show_object(pobj8)
-
-        @status: Tested + Doc + Demo = OK
     """
+    fl_show_object(pFlObject)
 
+    Shows an (hidden) object.
+
+    @param pFlObject: object to be shown
+    @type pFlObject: pointer to xfdata.FL_OBJECT
+
+    @example: fl_show_object(pobj8)
+
+    @status: Tested + Doc + Demo = OK
+    """
     _fl_show_object = cfuncproto(
-            load_so_libforms(), "fl_show_object",\
-            None, [cty.POINTER(xfc.FL_OBJECT)],\
-            """void fl_show_object(FL_OBJECT * ob)
-            """)
+        load_so_libforms(), "fl_show_object",\
+        None, [cty.POINTER(xfc.FL_OBJECT)],\
+        """void fl_show_object(FL_OBJECT * ob)""")
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     keep_elem_refs(pFlObject)
@@ -4198,23 +3967,22 @@ def fl_show_object(pFlObject):
 
 
 def fl_hide_object(pFlObject):
-    """ fl_hide_object(pFlObject)
-
-        Hides a shown object.
-
-        @param pFlObject: object to be hidden
-        @type pFlObject: pointer to xfdata.FL_OBJECT
-
-        @example: fl_hide_object(pobj8)
-
-        @status: Tested + Doc + Demo = OK
     """
+    fl_hide_object(pFlObject)
 
+    Hides a shown object.
+
+    @param pFlObject: object to be hidden
+    @type pFlObject: pointer to xfdata.FL_OBJECT
+
+    @example: fl_hide_object(pobj8)
+
+    @status: Tested + Doc + Demo = OK
+    """
     _fl_hide_object = cfuncproto(
-            load_so_libforms(), "fl_hide_object",\
-            None, [cty.POINTER(xfc.FL_OBJECT)],\
-            """void fl_hide_object(FL_OBJECT * ob)
-            """)
+        load_so_libforms(), "fl_hide_object",\
+        None, [cty.POINTER(xfc.FL_OBJECT)],\
+        """void fl_hide_object(FL_OBJECT * ob)""")
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     keep_elem_refs(pFlObject)
@@ -4222,26 +3990,24 @@ def fl_hide_object(pFlObject):
 
 
 def fl_object_is_visible(pFlObject):
-    """ fl_object_is_visible(pFlObject) -> flag
-
-        Returns if an object is visible or not.
-
-        @param pFlObject: object to evaluate
-        @type pFlObject: pointer to xfdata.FL_OBJECT
-
-        @returns: flag 0 (invisible) or non-zero (visible) (<int>)
-
-        @example: if not fl_object_is_visible(pobj2):
-                  > ...
-
-        @status: Tested + Doc + Demo = OK
     """
+    fl_object_is_visible(pFlObject) -> int
 
+    Returns if an object is visible or not.
+
+    @param pFlObject: object to evaluate
+    @type pFlObject: pointer to xfdata.FL_OBJECT
+
+    @returns: flag 0 (invisible) or non-zero (visible)
+
+    @example: if not fl_object_is_visible(pobj2): ...
+
+    @status: Tested + Doc + Demo = OK
+    """
     _fl_object_is_visible = cfuncproto(
-            load_so_libforms(), "fl_object_is_visible",\
-            cty.c_int, [cty.POINTER(xfc.FL_OBJECT)],\
-            """int fl_object_is_visible(FL_OBJECT * obj)
-            """)
+        load_so_libforms(), "fl_object_is_visible",\
+        cty.c_int, [cty.POINTER(xfc.FL_OBJECT)],\
+        """int fl_object_is_visible(FL_OBJECT * obj)""")
     check_if_initialized()
     keep_elem_refs(pFlObject)
     retval = _fl_object_is_visible(pFlObject)
@@ -4249,48 +4015,46 @@ def fl_object_is_visible(pFlObject):
 
 
 def fl_free_object(pFlObject):
-    """ fl_free_object(pFlObject)
-
-        Frees the object and finally destroys it (if necessary deletes 
-        the object first).
-
-        @param pFlObject: object to free
-        @type pFlObject: pointer to xfdata.FL_OBJECT
-
-        @example: fl_free_object(pobj)
-
-        @status: Tested + Doc + NoDemo = OK
     """
+    fl_free_object(pFlObject)
 
+    Frees the object and finally destroys it (if necessary deletes  the object
+    first).
+
+    @param pFlObject: object to free
+    @type pFlObject: pointer to xfdata.FL_OBJECT
+
+    @example: fl_free_object(pobj)
+
+    @status: Tested + Doc + NoDemo = OK
+    """
     _fl_free_object = cfuncproto(
-            load_so_libforms(), "fl_free_object",\
-            None, [cty.POINTER(xfc.FL_OBJECT)],\
-            """void fl_free_object(FL_OBJECT * obj)
-            """)
+        load_so_libforms(), "fl_free_object",\
+        None, [cty.POINTER(xfc.FL_OBJECT)],\
+        """void fl_free_object(FL_OBJECT * obj)""")
     check_if_FL_OBJECT_ptr(pFlObject)
     keep_elem_refs(pFlObject)
     _fl_free_object(pFlObject)
 
 
 def fl_delete_object(pFlObject):
-    """ fl_delete_object(pFlObject)
-
-        Deletes an object, breaking its connection to the form, but not
-        destroying it.
-
-        @param pFlObject: object to delete
-        @type pFlObject: pointer to xfdata.FL_OBJECT
-
-        @example: fl_delete_object(pobj)
-
-        @status: Tested + Doc + NoDemo = OK
     """
+    fl_delete_object(pFlObject)
 
+    Deletes an object, breaking its connection to the form, but not destroying
+    it.
+
+    @param pFlObject: object to delete
+    @type pFlObject: pointer to xfdata.FL_OBJECT
+
+    @example: fl_delete_object(pobj)
+
+    @status: Tested + Doc + NoDemo = OK
+    """
     _fl_delete_object = cfuncproto(
-            load_so_libforms(), "fl_delete_object",\
-            None, [cty.POINTER(xfc.FL_OBJECT)],\
-            """void fl_delete_object(FL_OBJECT * obj)
-            """)
+        load_so_libforms(), "fl_delete_object",\
+        None, [cty.POINTER(xfc.FL_OBJECT)],\
+        """void fl_delete_object(FL_OBJECT * obj)""")
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     keep_elem_refs(pFlObject)
@@ -4298,27 +4062,26 @@ def fl_delete_object(pFlObject):
 
 
 def fl_get_object_return_state(pFlObject):
-    """ fl_get_object_return_state(pFlObject) -> ID num
-
-        Determines the reason an object was returned (or its callback
-        invoked) you. The returned value is logical OR of the conditions
-        that led to the object getting returned.
-
-        @param pFlObject: object to evaluate
-        @type pFlObject: pointer to xfdata.FL_OBJECT
-
-        @returns: current return state (<int>)
-
-        @example: currstate = fl_get_object_return_state(pobj5)
-
-        @status: Tested + Doc + NoDemo = OK
     """
+    fl_get_object_return_state(pFlObject) -> int
 
+    Determines the reason an object was returned (or its callback invoked) you.
+    The returned value is logical OR of the conditions that led to the object
+    getting returned.
+
+    @param pFlObject: object to evaluate
+    @type pFlObject: pointer to xfdata.FL_OBJECT
+
+    @returns: current return state
+
+    @example: currstate = fl_get_object_return_state(pobj5)
+
+    @status: Tested + Doc + NoDemo = OK
+    """
     _fl_get_object_return_state = cfuncproto(
-            load_so_libforms(), "fl_get_object_return_state",
-            cty.c_int, [cty.POINTER(xfc.FL_OBJECT)],\
-            """int fl_get_object_return_state(FL_OBJECT * obj)
-            """)
+        load_so_libforms(), "fl_get_object_return_state",
+        cty.c_int, [cty.POINTER(xfc.FL_OBJECT)],\
+        """int fl_get_object_return_state(FL_OBJECT * obj)""")
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     keep_elem_refs(pFlObject)
@@ -4327,28 +4090,26 @@ def fl_get_object_return_state(pFlObject):
 
 
 def fl_trigger_object(pFlObject):
-    """ fl_trigger_object(pFlObject)
-
-        Simulates the action of an object being triggered from within the
-        program. Calling this routine on an object obj results in the object
-        returned to the application program or its callback being called if
-        it exists. Note however, there is no visual feedback, i.e.
-        fl_trigger_object(button) will not make the button object named button
-        appearing to be pushed.
-
-        @param pFlObject: object to trigger
-        @type pFlObject: pointer to xfdata.FL_OBJECT
-
-        @example: fl_trigger_object(pobj
-
-        @status: Tested + Doc + NoDemo = OK
     """
+    fl_trigger_object(pFlObject)
 
+    Simulates the action of an object being triggered from within the program.
+    Calling this routine on an object obj results in the object returned to
+    the application program or its callback being called if it exists. Note
+    however, there is no visual feedback, i.e. fl_trigger_object(button) will
+    not make the button object named button appearing to be pushed.
+
+    @param pFlObject: object to trigger
+    @type pFlObject: pointer to xfdata.FL_OBJECT
+
+    @example: fl_trigger_object(pobj
+
+    @status: Tested + Doc + NoDemo = OK
+    """
     _fl_trigger_object = cfuncproto(
-            load_so_libforms(), "fl_trigger_object",\
-            None, [cty.POINTER(xfc.FL_OBJECT)],\
-            """void fl_trigger_object(FL_OBJECT * obj)
-            """)
+        load_so_libforms(), "fl_trigger_object",\
+        None, [cty.POINTER(xfc.FL_OBJECT)],\
+        """void fl_trigger_object(FL_OBJECT * obj)""")
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     keep_elem_refs(pFlObject)
@@ -4356,23 +4117,22 @@ def fl_trigger_object(pFlObject):
 
 
 def fl_activate_object(pFlObject):
-    """ fl_activate_object(pFlObject)
-
-        (Re)activates an object, (re)enabling user interaction.
-
-        @param pFlObject: object to activate
-        @type pFlObject: pointer to xfdata.FL_OBJECT
-
-        @example: fl_activate_object(pobj)
-
-        @status: Tested + Doc + Demo = OK
     """
+    fl_activate_object(pFlObject)
 
+    (Re)activates an object, (re)enabling user interaction.
+
+    @param pFlObject: object to activate
+    @type pFlObject: pointer to xfdata.FL_OBJECT
+
+    @example: fl_activate_object(pobj)
+
+    @status: Tested + Doc + Demo = OK
+    """
     _fl_activate_object = cfuncproto(
-            load_so_libforms(), "fl_activate_object",\
-            None, [cty.POINTER(xfc.FL_OBJECT)],\
-            """void fl_activate_object(FL_OBJECT * ob)
-            """)
+        load_so_libforms(), "fl_activate_object",\
+        None, [cty.POINTER(xfc.FL_OBJECT)],\
+        """void fl_activate_object(FL_OBJECT * ob)""")
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     keep_elem_refs(pFlObject)
@@ -4380,26 +4140,25 @@ def fl_activate_object(pFlObject):
 
 
 def fl_deactivate_object(pFlObject):
-    """ fl_deactivate_object(pFlObject)
-
-        Makes a particular object to be temporarily inactive, disabling
-        user interaction, e.g., you want to make it impossible for the user
-        to press a particular button or to type input in a particular field.
-        When object is a group, the whole group is deactivate.
-
-        @param pFlObject: object to deactivate
-        @type pFlObject: pointer to xfdata.FL_OBJECT
-
-        @example: fl_deactivate_object(pactobj)
-
-        @status: Tested + Doc + Demo = OK
     """
+    fl_deactivate_object(pFlObject)
 
+    Makes a particular object to be temporarily inactive, disabling user
+    interaction, e.g., you want to make it impossible for the user to press a
+    particular button or to type input in a particular field. When object is a
+    group, the whole group is deactivate.
+
+    @param pFlObject: object to deactivate
+    @type pFlObject: pointer to xfdata.FL_OBJECT
+
+    @example: fl_deactivate_object(pactobj)
+
+    @status: Tested + Doc + Demo = OK
+    """
     _fl_deactivate_object = cfuncproto(
-            load_so_libforms(), "fl_deactivate_object",\
-            None, [cty.POINTER(xfc.FL_OBJECT)],\
-            """void fl_deactivate_object(FL_OBJECT * ob)
-            """)
+        load_so_libforms(), "fl_deactivate_object",\
+        None, [cty.POINTER(xfc.FL_OBJECT)],\
+        """void fl_deactivate_object(FL_OBJECT * ob)""")
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     keep_elem_refs(pFlObject)
@@ -4407,26 +4166,24 @@ def fl_deactivate_object(pFlObject):
 
 
 def fl_object_is_active(pFlObject):
-    """ fl_object_is_active(pFlObject) -> flag
-
-        Returns if object is active and reacting to events, or not.
-
-        @param pFlObject: object to evaluate
-        @type pFlObject: pointer to xfdata.FL_OBJECT
-
-        @returns: flag 0 (not active) or non-zero (active) (<int>)
-
-        @example: if not fl_object_is_active(pobj):
-                  > ...
-
-        @status: Tested + Doc + Demo = OK
     """
+    fl_object_is_active(pFlObject) -> int
 
+    Returns if object is active and reacting to events, or not.
+
+    @param pFlObject: object to evaluate
+    @type pFlObject: pointer to xfdata.FL_OBJECT
+
+    @returns: flag 0 (not active) or non-zero (active)
+
+    @example: if not fl_object_is_active(pobj): ...
+
+    @status: Tested + Doc + Demo = OK
+    """
     _fl_object_is_active = cfuncproto(
-            load_so_libforms(), "fl_object_is_active",\
-            cty.c_int, [cty.POINTER(xfc.FL_OBJECT)],\
-            """int fl_object_is_active(FL_OBJECT * ob)
-            """)
+        load_so_libforms(), "fl_object_is_active",\
+        cty.c_int, [cty.POINTER(xfc.FL_OBJECT)],\
+        """int fl_object_is_active(FL_OBJECT * ob)""")
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     keep_elem_refs(pFlObject)
@@ -4435,31 +4192,30 @@ def fl_object_is_active(pFlObject):
 
 
 def fl_enumerate_fonts(py_output, shortform):
-    """ fl_enumerate_fonts(py_output, shortform) -> num
-
-        Lists built-in fonts.
-
-        @param py_output: python callback function - no return
-        @type py_output: __ funcname (string) __
-        @param shortform: flag to use short form or not (<int>)
-        @type shortform: 0 (long form used) or non-zero (short form used)
-
-        @returns: number of listed fonts (<int>)
-
-        @example: def pyoutput(strng):
-        @example: |->| print strng
-        @example: numfonts = fl_enumerate(pyoutput, 0)
-
-        @status: Tested + Doc + Demo = OK
     """
+    fl_enumerate_fonts(py_output, shortform) -> int
 
+    Lists built-in fonts.
+
+    @param py_output: python callback function, no return
+    @type py_output: __ funcname (string) __
+    @param shortform: flag to use short form or not (<int>)
+    @type shortform: 0 (long form used) or non-zero (short form used)
+
+    @returns: number of listed fonts (<int>)
+
+    @example: def pyoutput(strng):
+    @example: |->| print strng
+    @example: numfonts = fl_enumerate(pyoutput, 0)
+
+    @status: Tested + Doc + Demo = OK
+    """
     # cfunc_none_string = cty.CFUNCTYPE(None, xfc.STRING)
     _fl_enumerate_fonts = cfuncproto(
-            load_so_libforms(), "fl_enumerate_fonts",\
-            cty.c_int, [xfc.cfunc_none_string, cty.c_int],\
-            """int fl_enumerate_fonts(void ( * output )( const char *s ), \
-               int shortform)
-            """)
+        load_so_libforms(), "fl_enumerate_fonts",\
+        cty.c_int, [xfc.cfunc_none_string, cty.c_int],\
+        """int fl_enumerate_fonts(void ( * output )( const char *s ), \
+           int shortform)""")
     check_if_initialized()
     ishortform = convert_to_int(shortform)
     c_output = xfc.cfunc_none_string(py_output)
@@ -4470,29 +4226,29 @@ def fl_enumerate_fonts(py_output, shortform):
 
 
 def fl_set_font_name(fontnum, name):
-    """ fl_set_font_name(fontnum, name) -> ID num
-
-        Add a new font (indexed by n) or change an existing font.
-        Preferably the font name contains a '?' in the size position so
-        different sizes can be used. Redraw of all forms is required to
-        actually see the change for visible form.
-
-        @param fontnum: font number (<int>)
-        @type fontnum: value between 0 and xfdata.FL_MAXFONTS-1 
-        @param name: font name (<string>)
-
-        @returns: -1 (on errors) or 0 or 1 (<int>)
-
-        @example: fl_set_font_name(40, "symbol-medium-whatever")
-
-        @status: Tested + Doc + NoDemo = OK
     """
+    fl_set_font_name(fontnum, name) -> int
 
+    Add a new font (indexed by number) or change an existing font. Preferably
+    the font name contains a '?' in the size position so different sizes can
+    be used. Redraw of all forms is required to actually see the change for
+    visible form.
+
+    @param fontnum: font number. Values between 0 and xfdata.FL_MAXFONTS-1 
+    @type fontnum: int
+    @param name: font name
+    @type name: str
+
+    @returns: -1 (on errors) or 0 or 1
+
+    @example: fl_set_font_name(40, "symbol-medium-whatever") ?
+
+    @status: Tested + Doc + NoDemo = OK
+    """
     _fl_set_font_name = cfuncproto(
-            load_so_libforms(), "fl_set_font_name",\
-            cty.c_int, [cty.c_int, xfc.STRING],\
-            """int fl_set_font_name(int n, const char * name)
-            """)
+        load_so_libforms(), "fl_set_font_name",\
+        cty.c_int, [cty.c_int, xfc.STRING],\
+        """int fl_set_font_name(int n, const char * name)""")
     check_if_initialized()
     ifontnum = convert_to_int(fontnum)
     sname = convert_to_string(name)
@@ -4502,26 +4258,26 @@ def fl_set_font_name(fontnum, name):
 
 
 def fl_set_font(fontnum, size):
-    """ fl_set_font(fontnum, size)
-
-        Makes the font current.
-
-        @param fontnum: font number (<int>)
-        @param size: font size (<int>)
-        @type size: (from xfdata module) FL_TINY_SIZE, FL_SMALL_SIZE, 
-                    FL_NORMAL_SIZE, FL_MEDIUM_SIZE, FL_LARGE_SIZE,
-                    FL_HUGE_SIZE, FL_DEFAULT_SIZE
-
-        @example: fl_set_font(5, xfdata.FL_SMALL_SIZE)
-
-        @status: Tested + Doc + NoDemo = OK
     """
+    fl_set_font(fontnum, size)
 
+    Makes the font current.
+
+    @param fontnum: font number
+    @type fontnum: int
+    @param size: font size. Values (from xfdata module) i.e. FL_TINY_SIZE,
+        FL_SMALL_SIZE, FL_NORMAL_SIZE, FL_MEDIUM_SIZE, FL_LARGE_SIZE,
+        FL_HUGE_SIZE, FL_DEFAULT_SIZE
+    @type size: int
+
+    @example: fl_set_font(5, xfdata.FL_SMALL_SIZE)
+
+    @status: Tested + Doc + NoDemo = OK
+    """
     _fl_set_font = cfuncproto(
-            load_so_libforms(), "fl_set_font",\
-            None, [cty.c_int, cty.c_int],\
-            """void fl_set_font(int numb, int size)
-            """)
+        load_so_libforms(), "fl_set_font",\
+        None, [cty.c_int, cty.c_int],\
+        """void fl_set_font(int numb, int size)""")
     check_if_initialized()
     check_admitted_listvalues(size, xfc.FONTSIZE_list)
     ifontnum = convert_to_int(fontnum)
@@ -4533,43 +4289,41 @@ def fl_set_font(fontnum, size):
 # routines that facilitate free object
 
 def fl_get_char_height(style, size):
-    """ fl_get_char_height(style, size) -> h, asc, desc
-
-        Returns the maximum height of the used font and the height above and
-        below the baseline of the font.
-
-        @param style: font style (<int>)
-        @type style: (from xfdata module) FL_NORMAL_STYLE, FL_BOLD_STYLE,
-                     FL_ITALIC_STYLE, FL_BOLDITALIC_STYLE, FL_FIXED_STYLE,
-                     FL_FIXEDBOLD_STYLE, FL_FIXEDITALIC_STYLE,
-                     FL_FIXEDBOLDITALIC_STYLE, FL_TIMES_STYLE,
-                     FL_TIMESBOLD_STYLE, FL_TIMESITALIC_STYLE,
-                     FL_TIMESBOLDITALIC_STYLE, FL_MISC_STYLE,
-                     FL_MISCBOLD_STYLE, FL_MISCITALIC_STYLE, FL_SYMBOL_STYLE,
-                     FL_SHADOW_STYLE, FL_ENGRAVED_STYLE, FL_EMBOSSED_STYLE
-        @param size: font size (<int>)
-        @type size: (from xfdata module) FL_TINY_SIZE, FL_SMALL_SIZE, 
-                    FL_NORMAL_SIZE, FL_MEDIUM_SIZE, FL_LARGE_SIZE,
-                    FL_HUGE_SIZE, FL_DEFAULT_SIZE
-
-        @returns: height, ascendent and descendent (<int>, <int>, <int>)
-
-        @example: hei, asc, desc = fl_get_char_height(xfdata.FL_BOLD_STYLE,
-                  xfdata.FL_TINY_SIZE)
-
-        @attention: API change from XForms - upstream was
-                    fl_get_char_height(style, size, asc, desc)
-
-        @status: Tested + Doc + NoDemo = OK
     """
+    fl_get_char_height(style, size) -> int, int, int
 
+    Returns the maximum height of the used font and the height above and
+    below the baseline of the font.
+
+    @param style: font style. Values (from xfdata module) i.e. FL_NORMAL_STYLE,
+        FL_BOLD_STYLE, FL_ITALIC_STYLE, FL_BOLDITALIC_STYLE, FL_FIXED_STYLE,
+        FL_FIXEDBOLD_STYLE, FL_FIXEDITALIC_STYLE, FL_FIXEDBOLDITALIC_STYLE,
+        FL_TIMES_STYLE, FL_TIMESBOLD_STYLE, FL_TIMESITALIC_STYLE,
+        FL_TIMESBOLDITALIC_STYLE, FL_MISC_STYLE, FL_MISCBOLD_STYLE,
+        FL_MISCITALIC_STYLE, FL_SYMBOL_STYLE, FL_SHADOW_STYLE,
+        FL_ENGRAVED_STYLE, FL_EMBOSSED_STYLE
+    @type style: int
+    @param size: font size. Values (from xfdata module) i.e. FL_TINY_SIZE,
+        FL_SMALL_SIZE, FL_NORMAL_SIZE, FL_MEDIUM_SIZE, FL_LARGE_SIZE,
+        FL_HUGE_SIZE, FL_DEFAULT_SIZE
+    @type size: int
+
+    @returns: height, ascendent and descendent (h, asc, desc)
+
+    @example: hei, asc, desc = fl_get_char_height(xfdata.FL_BOLD_STYLE,
+        xfdata.FL_TINY_SIZE)
+
+    @attention: API change from XForms - upstream was
+        fl_get_char_height(style, size, asc, desc)
+
+    @status: Tested + Doc + NoDemo = OK
+    """
     _fl_get_char_height = cfuncproto(
-            load_so_libforms(), "fl_get_char_height",\
-            cty.c_int, [cty.c_int, cty.c_int, cty.POINTER(cty.c_int),
-            cty.POINTER(cty.c_int)],\
-            """int fl_get_char_height(int style, int size, int * asc,
-               int * desc)
-            """)
+        load_so_libforms(), "fl_get_char_height",\
+        cty.c_int, [cty.c_int, cty.c_int, cty.POINTER(cty.c_int),
+        cty.POINTER(cty.c_int)],\
+        """int fl_get_char_height(int style, int size, int * asc,
+           int * desc)""")
     check_if_initialized()
     check_admitted_listvalues(style, xfc.TEXTSTYLE_list)
     check_admitted_listvalues(size, xfc.FONTSIZE_list)
@@ -4583,37 +4337,35 @@ def fl_get_char_height(style, size):
 
 
 def fl_get_char_width(style, size):
-    """ fl_get_char_width(style, size) -> w
-
-        Returns the maximum width of the used font.
-
-        @param style: font style (<int>)
-        @type style: (from xfdata module) FL_NORMAL_STYLE, FL_BOLD_STYLE,
-                     FL_ITALIC_STYLE, FL_BOLDITALIC_STYLE, FL_FIXED_STYLE,
-                     FL_FIXEDBOLD_STYLE, FL_FIXEDITALIC_STYLE,
-                     FL_FIXEDBOLDITALIC_STYLE, FL_TIMES_STYLE,
-                     FL_TIMESBOLD_STYLE, FL_TIMESITALIC_STYLE,
-                     FL_TIMESBOLDITALIC_STYLE, FL_MISC_STYLE,
-                     FL_MISCBOLD_STYLE, FL_MISCITALIC_STYLE, FL_SYMBOL_STYLE,
-                     FL_SHADOW_STYLE, FL_ENGRAVED_STYLE, FL_EMBOSSED_STYLE
-        @param size: font size (<int>)
-        @type size: (from xfdata module) FL_TINY_SIZE, FL_SMALL_SIZE, 
-                    FL_NORMAL_SIZE, FL_MEDIUM_SIZE, FL_LARGE_SIZE,
-                    FL_HUGE_SIZE, FL_DEFAULT_SIZE
-
-        @returns: width (<int>)
-
-        @example: wid = fl_get_char_width(xfdata.FL_TIMES_STYLE,
-                  xfdata.FL_HUGE_SIZE)
-
-        @status: Tested + Doc + NoDemo = OK
     """
+    fl_get_char_width(style, size) -> int
 
+    Returns the maximum width of the used font.
+
+    @param style: font style. Values (from xfdata module) i.e. FL_NORMAL_STYLE,
+        FL_BOLD_STYLE, FL_ITALIC_STYLE, FL_BOLDITALIC_STYLE, FL_FIXED_STYLE,
+        FL_FIXEDBOLD_STYLE, FL_FIXEDITALIC_STYLE, FL_FIXEDBOLDITALIC_STYLE,
+        FL_TIMES_STYLE, FL_TIMESBOLD_STYLE, FL_TIMESITALIC_STYLE,
+        FL_TIMESBOLDITALIC_STYLE, FL_MISC_STYLE, FL_MISCBOLD_STYLE,
+        FL_MISCITALIC_STYLE, FL_SYMBOL_STYLE, FL_SHADOW_STYLE,
+        FL_ENGRAVED_STYLE, FL_EMBOSSED_STYLE
+    @type style: int
+    @param size: font size. Values (from xfdata module) i.e. FL_TINY_SIZE,
+        FL_SMALL_SIZE, FL_NORMAL_SIZE, FL_MEDIUM_SIZE, FL_LARGE_SIZE,
+        FL_HUGE_SIZE, FL_DEFAULT_SIZE
+    @type size: int
+
+    @returns: width (w)
+
+    @example: wid = fl_get_char_width(xfdata.FL_TIMES_STYLE,
+        xfdata.FL_HUGE_SIZE)
+
+    @status: Tested + Doc + NoDemo = OK
+    """
     _fl_get_char_width = cfuncproto(
-            load_so_libforms(), "fl_get_char_width",\
-            cty.c_int, [cty.c_int, cty.c_int],\
-            """int fl_get_char_width(int style, int size)
-            """)
+        load_so_libforms(), "fl_get_char_width",\
+        cty.c_int, [cty.c_int, cty.c_int],\
+        """int fl_get_char_width(int style, int size)""")
     check_if_initialized()
     check_admitted_listvalues(style, xfc.TEXTSTYLE_list)
     check_admitted_listvalues(size, xfc.FONTSIZE_list)
@@ -4624,212 +4376,209 @@ def fl_get_char_width(style, size):
     return retval
 
 
-def fl_get_string_height(style, size, strng, strglen):
-    """ fl_get_string_height(style, size, strng, strglen) -> h, asc, desc
-
-        Obtains the height information of a specific string and the height
-        above and below the font's baseline.
-
-        @param style: font style (<int>)
-        @type style: (from xfdata module) FL_NORMAL_STYLE, FL_BOLD_STYLE,
-                     FL_ITALIC_STYLE, FL_BOLDITALIC_STYLE, FL_FIXED_STYLE,
-                     FL_FIXEDBOLD_STYLE, FL_FIXEDITALIC_STYLE,
-                     FL_FIXEDBOLDITALIC_STYLE, FL_TIMES_STYLE,
-                     FL_TIMESBOLD_STYLE, FL_TIMESITALIC_STYLE,
-                     FL_TIMESBOLDITALIC_STYLE, FL_MISC_STYLE,
-                     FL_MISCBOLD_STYLE, FL_MISCITALIC_STYLE, FL_SYMBOL_STYLE,
-                     FL_SHADOW_STYLE, FL_ENGRAVED_STYLE, FL_EMBOSSED_STYLE
-        @param size: font size (<int>)
-        @type size: (from xfdata module) FL_TINY_SIZE, FL_SMALL_SIZE, 
-                    FL_NORMAL_SIZE, FL_MEDIUM_SIZE, FL_LARGE_SIZE,
-                    FL_HUGE_SIZE, FL_DEFAULT_SIZE
-        @param strng: text (<string>)
-        @param strglen: length of string (<int>)
-
-        @returns: height, ascendent and descendent (<int>, <int>, <int>)
-
-        @example: hei, asc, desc = fl_get_string_height(xfdata.FL_MISC_STYLE,
-                  xfdata.FL_MEDIUM_SIZE, "Mystring", 8)
-
-        @attention: API change from XForms - upstream was
-                    fl_get_string_height(style, size, strng, strglen,
-                    asc, desc)
-
-        @status: Tested + Doc + Demo = OK
+def fl_get_string_height(style, size, txtstr, strlng):
     """
+    fl_get_string_height(style, size, txtstr, strlng) -> int, int, int
 
+    Obtains the height information of a specific string and the height above
+    and below the font's baseline.
+
+    @param style: font style. Values (from xfdata module) i.e. FL_NORMAL_STYLE,
+        FL_BOLD_STYLE, FL_ITALIC_STYLE, FL_BOLDITALIC_STYLE, FL_FIXED_STYLE,
+        FL_FIXEDBOLD_STYLE, FL_FIXEDITALIC_STYLE, FL_FIXEDBOLDITALIC_STYLE,
+        FL_TIMES_STYLE, FL_TIMESBOLD_STYLE, FL_TIMESITALIC_STYLE,
+        FL_TIMESBOLDITALIC_STYLE, FL_MISC_STYLE, FL_MISCBOLD_STYLE,
+        FL_MISCITALIC_STYLE, FL_SYMBOL_STYLE, FL_SHADOW_STYLE,
+        FL_ENGRAVED_STYLE, FL_EMBOSSED_STYLE
+    @type style: int
+    @param size: font size. Values (from xfdata module) i.e. FL_TINY_SIZE,
+        FL_SMALL_SIZE, FL_NORMAL_SIZE, FL_MEDIUM_SIZE, FL_LARGE_SIZE,
+        FL_HUGE_SIZE, FL_DEFAULT_SIZE
+    @type size: int
+    @param txtstr: text
+    @type txtstr: str
+    @param strlng: length of text
+    @type strlng: int
+
+    @returns: height, ascendent and descendent (h, asc, desc)
+
+    @example: hei, asc, desc = fl_get_string_height(xfdata.FL_MISC_STYLE,
+        xfdata.FL_MEDIUM_SIZE, "Mystring", 8)
+
+    @attention: API change from XForms - upstream was
+        fl_get_string_height(style, size, strng, strglen, asc, desc)
+
+    @status: Tested + Doc + Demo = OK
+    """
     _fl_get_string_height = cfuncproto(
-            load_so_libforms(), "fl_get_string_height",\
-            cty.c_int, [cty.c_int, cty.c_int, xfc.STRING, cty.c_int,
-            cty.POINTER(cty.c_int), cty.POINTER(cty.c_int)],\
-            """int fl_get_string_height(int style, int size, const char * s,
-               int len, int * asc, int * desc)
-            """)
+        load_so_libforms(), "fl_get_string_height",\
+        cty.c_int, [cty.c_int, cty.c_int, xfc.STRING, cty.c_int,
+        cty.POINTER(cty.c_int), cty.POINTER(cty.c_int)],\
+        """int fl_get_string_height(int style, int size, const char * s,
+           int len, int * asc, int * desc)""")
     check_if_initialized()
     check_admitted_listvalues(style, xfc.TEXTSTYLE_list)
     check_admitted_listvalues(size, xfc.FONTSIZE_list)
     istyle = convert_to_int(style)
     isize = convert_to_int(size)
-    sstrng = convert_to_string(strng)
-    istrglen = convert_to_int(strglen)
+    stxtstr = convert_to_string(txtstr)
+    istrlng = convert_to_int(strlng)
     asc, pasc = make_int_and_pointer()
     desc, pdesc = make_int_and_pointer()
-    keep_elem_refs(style, istyle, size, isize, strng, sstrng, strglen,\
-                   istrglen, asc, desc, pasc, pdesc)
-    retval = _fl_get_string_height(istyle, isize, sstrng, istrglen,\
-                                   pasc, pdesc)
+    keep_elem_refs(style, istyle, size, isize, txtstr, stxtstr, strlng, \
+                   istrlng, asc, desc, pasc, pdesc)
+    retval = _fl_get_string_height(istyle, isize, stxtstr, istrlng, pasc,
+                                   pdesc)
     return retval, asc.value, desc.value
 
 
-def fl_get_string_width(style, size, strng, strglen):
-    """ fl_get_string_width(style, size, strng, strglen) -> w
-
-        Obtains the width information for a specific string.
-
-        @param style: font style (<int>)
-        @type style: (from xfdata module) FL_NORMAL_STYLE, FL_BOLD_STYLE,
-                     FL_ITALIC_STYLE, FL_BOLDITALIC_STYLE, FL_FIXED_STYLE,
-                     FL_FIXEDBOLD_STYLE, FL_FIXEDITALIC_STYLE,
-                     FL_FIXEDBOLDITALIC_STYLE, FL_TIMES_STYLE,
-                     FL_TIMESBOLD_STYLE, FL_TIMESITALIC_STYLE,
-                     FL_TIMESBOLDITALIC_STYLE, FL_MISC_STYLE,
-                     FL_MISCBOLD_STYLE, FL_MISCITALIC_STYLE, FL_SYMBOL_STYLE,
-                     FL_SHADOW_STYLE, FL_ENGRAVED_STYLE, FL_EMBOSSED_STYLE
-        @param size: font size (<int>)
-        @type size: (from xfdata module) FL_TINY_SIZE, FL_SMALL_SIZE, 
-                    FL_NORMAL_SIZE, FL_MEDIUM_SIZE, FL_LARGE_SIZE,
-                    FL_HUGE_SIZE, FL_DEFAULT_SIZE
-        @param strng: text (<string>)
-        @param strglen: length of string (<int>)
-
-        @returns: width (<int>)
-
-        @example: wid = fl_get_string_width(xfdata.FL_MISC_STYLE,
-                  xfdata.FL_MEDIUM_SIZE, "Mystring", 8)
-
-        @status: Tested + Doc + Demo = OK
+def fl_get_string_width(style, size, txtstr, strlng):
     """
+    fl_get_string_width(style, size, txtstr, strlng) -> int
 
+    Obtains the width information for a specific string.
+
+    @param style: font style. Values (from xfdata module) i.e. FL_NORMAL_STYLE,
+        FL_BOLD_STYLE, FL_ITALIC_STYLE, FL_BOLDITALIC_STYLE, FL_FIXED_STYLE,
+        FL_FIXEDBOLD_STYLE, FL_FIXEDITALIC_STYLE, FL_FIXEDBOLDITALIC_STYLE,
+        FL_TIMES_STYLE, FL_TIMESBOLD_STYLE, FL_TIMESITALIC_STYLE,
+        FL_TIMESBOLDITALIC_STYLE, FL_MISC_STYLE, FL_MISCBOLD_STYLE,
+        FL_MISCITALIC_STYLE, FL_SYMBOL_STYLE, FL_SHADOW_STYLE,
+        FL_ENGRAVED_STYLE, FL_EMBOSSED_STYLE
+    @type size: int
+    @param size: font size. Values (from xfdata module) i.e. FL_TINY_SIZE,
+        FL_SMALL_SIZE, FL_NORMAL_SIZE, FL_MEDIUM_SIZE, FL_LARGE_SIZE,
+        FL_HUGE_SIZE, FL_DEFAULT_SIZE
+    @type size: int
+    @param txtstr: text
+    @type txtstr: str
+    @param strlng: length of text
+    @type strlng: int
+
+    @returns: width (w)
+
+    @example: wid = fl_get_string_width(xfdata.FL_MISC_STYLE,
+        xfdata.FL_MEDIUM_SIZE, "Mystring", 8)
+
+    @status: Tested + Doc + Demo = OK
+    """
     _fl_get_string_width = cfuncproto(
-            load_so_libforms(), "fl_get_string_width",\
-            cty.c_int, [cty.c_int, cty.c_int, xfc.STRING, cty.c_int],\
-            """int fl_get_string_width(int style, int size, const char * s,
-               int len)
-            """)
+        load_so_libforms(), "fl_get_string_width",\
+        cty.c_int, [cty.c_int, cty.c_int, xfc.STRING, cty.c_int],\
+        """int fl_get_string_width(int style, int size, const char * s,
+           int len)""")
     check_if_initialized()
     check_admitted_listvalues(style, xfc.TEXTSTYLE_list)
     check_admitted_listvalues(size, xfc.FONTSIZE_list)
     istyle = convert_to_int(style)
     isize = convert_to_int(size)
-    sstrng = convert_to_string(strng)
-    istrglen = convert_to_int(strglen)
-    keep_elem_refs(style, istyle, size, isize, strng, sstrng, strglen,
-                   istrglen)
-    retval = _fl_get_string_width(istyle, isize, sstrng, istrglen)
+    stxtstr = convert_to_string(txtstr)
+    istrlng = convert_to_int(strlng)
+    keep_elem_refs(style, istyle, size, isize, txtstr, stxtstr, strlng,
+                   istrlng)
+    retval = _fl_get_string_width(istyle, isize, stxtstr, istrlng)
     return retval
 
 
-def fl_get_string_widthTAB(style, size, strng, strglen):
-    """ fl_get_string_widthTAB(style, size, strng, strglen) -> w
-
-        @param style: font style (<int>)
-        @type style: (from xfdata module) FL_NORMAL_STYLE, FL_BOLD_STYLE,
-                     FL_ITALIC_STYLE, FL_BOLDITALIC_STYLE, FL_FIXED_STYLE,
-                     FL_FIXEDBOLD_STYLE, FL_FIXEDITALIC_STYLE,
-                     FL_FIXEDBOLDITALIC_STYLE, FL_TIMES_STYLE,
-                     FL_TIMESBOLD_STYLE, FL_TIMESITALIC_STYLE,
-                     FL_TIMESBOLDITALIC_STYLE, FL_MISC_STYLE,
-                     FL_MISCBOLD_STYLE, FL_MISCITALIC_STYLE, FL_SYMBOL_STYLE,
-                     FL_SHADOW_STYLE, FL_ENGRAVED_STYLE, FL_EMBOSSED_STYLE
-        @param size: font size (<int>)
-        @type size: (from xfdata module) FL_TINY_SIZE, FL_SMALL_SIZE, 
-                    FL_NORMAL_SIZE, FL_MEDIUM_SIZE, FL_LARGE_SIZE,
-                    FL_HUGE_SIZE, FL_DEFAULT_SIZE
-        @param strng: text (<string>)
-        @param strglen: length of string (<int>)
-
-        @returns: width (<int>)
-
-        @example: wid = fl_get_string_width(xfdata.FL_MISC_STYLE,
-                  xfdata.FL_MEDIUM_SIZE, "Mystring", 8)
-
-        @status: Untested + NoDoc + NoDemo = NOT OK
+def fl_get_string_widthTAB(style, size, txtstr, strlng):
     """
+    fl_get_string_widthTAB(style, size, txtstr, strlng) -> int
 
+    @param style: font style. Values (from xfdata module) i.e. FL_NORMAL_STYLE,
+        FL_BOLD_STYLE, FL_ITALIC_STYLE, FL_BOLDITALIC_STYLE, FL_FIXED_STYLE,
+        FL_FIXEDBOLD_STYLE, FL_FIXEDITALIC_STYLE, FL_FIXEDBOLDITALIC_STYLE,
+        FL_TIMES_STYLE, FL_TIMESBOLD_STYLE, FL_TIMESITALIC_STYLE,
+        FL_TIMESBOLDITALIC_STYLE, FL_MISC_STYLE, FL_MISCBOLD_STYLE,
+        FL_MISCITALIC_STYLE, FL_SYMBOL_STYLE, FL_SHADOW_STYLE,
+        FL_ENGRAVED_STYLE, FL_EMBOSSED_STYLE
+    @type style: int
+    @param size: font size. Values (from xfdata module) i.e. FL_TINY_SIZE,
+        FL_SMALL_SIZE, FL_NORMAL_SIZE, FL_MEDIUM_SIZE, FL_LARGE_SIZE,
+        FL_HUGE_SIZE, FL_DEFAULT_SIZE
+    @param txtstr: text
+    @type txtstr: str
+    @param strlng: length of text
+    @type strlng: str
+
+    @returns: width (w)
+
+    @example: wid = fl_get_string_width(xfdata.FL_MISC_STYLE,
+        xfdata.FL_MEDIUM_SIZE, "Mystring", 8)
+
+    @status: Untested + NoDoc + NoDemo = NOT OK
+    """
     _fl_get_string_widthTAB = cfuncproto(
-            load_so_libforms(), "fl_get_string_widthTAB",\
-            cty.c_int, [cty.c_int, cty.c_int, xfc.STRING, cty.c_int],\
-            """int fl_get_string_widthTAB(int style, int size, const char * s,
-               int len)
-            """)
+        load_so_libforms(), "fl_get_string_widthTAB",\
+        cty.c_int, [cty.c_int, cty.c_int, xfc.STRING, cty.c_int],\
+        """int fl_get_string_widthTAB(int style, int size, const char * s,
+           int len)""")
     check_if_initialized()
     check_admitted_listvalues(style, xfc.TEXTSTYLE_list)
     check_admitted_listvalues(size, xfc.FONTSIZE_list)
     istyle = convert_to_int(style)
     isize = convert_to_int(size)
-    sstrng = convert_to_string(strng)
-    istrglen = convert_to_int(strglen)
-    keep_elem_refs(style, istyle, size, isize, strng, sstrng, strglen, 
-                   istrglen)
-    retval = _fl_get_string_widthTAB(istyle, isize, sstrng, istrglen)
+    stxtstr = convert_to_string(txtstr)
+    istrlng = convert_to_int(strlng)
+    keep_elem_refs(style, istyle, size, isize, txtstr, stxtstr, strlng, 
+                   istrlng)
+    retval = _fl_get_string_widthTAB(istyle, isize, stxtstr, istrlng)
     return retval
 
 
-def fl_get_string_dimension(style, size, strng, strglen):
-    """ fl_get_string_dimension(style, size, strng, strglen) -> w, h
-
-        Returns the width and height of a string in one call. In addition,
-        the string passed can contain embedded newline characters and the
-        routine will make proper adjustment so the values returned are (just)
-        large enough to contain the multiple lines of text.
-
-        @param style: font style (<int>)
-        @type style: (from xfdata module) FL_NORMAL_STYLE, FL_BOLD_STYLE,
-                     FL_ITALIC_STYLE, FL_BOLDITALIC_STYLE, FL_FIXED_STYLE,
-                     FL_FIXEDBOLD_STYLE, FL_FIXEDITALIC_STYLE,
-                     FL_FIXEDBOLDITALIC_STYLE, FL_TIMES_STYLE,
-                     FL_TIMESBOLD_STYLE, FL_TIMESITALIC_STYLE,
-                     FL_TIMESBOLDITALIC_STYLE, FL_MISC_STYLE,
-                     FL_MISCBOLD_STYLE, FL_MISCITALIC_STYLE, FL_SYMBOL_STYLE,
-                     FL_SHADOW_STYLE, FL_ENGRAVED_STYLE, FL_EMBOSSED_STYLE
-        @param size: font size (<int>)
-        @type size: (from xfdata module) FL_TINY_SIZE, FL_SMALL_SIZE, 
-                    FL_NORMAL_SIZE, FL_MEDIUM_SIZE, FL_LARGE_SIZE,
-                    FL_HUGE_SIZE, FL_DEFAULT_SIZE
-        @param strng: text (<string>)
-        @param strglen: length of string (<int>)
-
-        @returns: width and height (<int>, <int>)
-
-        @example: fl_get_string_dimension(xfdata.FL_ENGRAVED_STYLE,
-                  xfdata.FL_DEFAULT_SIZE, "CustomString", 12)
-
-        @attention: API change from upstream
-                    fl_get_string_dimension(fntstyle, fntsize, strng, strglen,
-                    w, h)
-
-        @status: Tested + Doc + NoDemo = OK
+def fl_get_string_dimension(style, size, txtstr, strlng):
     """
+    fl_get_string_dimension(style, size, txtstr, strlng) -> int, int
 
+    Returns the width and height of a string in one call. In addition, the
+    string passed can contain embedded newline characters and the routine will
+    make proper adjustment so the values returned are (just) large enough to
+    contain the multiple lines of text.
+
+    @param style: font style. Values (from xfdata module) i.e. FL_NORMAL_STYLE,
+        FL_BOLD_STYLE, FL_ITALIC_STYLE, FL_BOLDITALIC_STYLE, FL_FIXED_STYLE,
+        FL_FIXEDBOLD_STYLE, FL_FIXEDITALIC_STYLE, FL_FIXEDBOLDITALIC_STYLE,
+        FL_TIMES_STYLE, FL_TIMESBOLD_STYLE, FL_TIMESITALIC_STYLE,
+        FL_TIMESBOLDITALIC_STYLE, FL_MISC_STYLE, FL_MISCBOLD_STYLE,
+        FL_MISCITALIC_STYLE, FL_SYMBOL_STYLE, FL_SHADOW_STYLE,
+        FL_ENGRAVED_STYLE, FL_EMBOSSED_STYLE
+    @type style: int
+    @param size: font size. Values (from xfdata module) i.e. FL_TINY_SIZE,
+        FL_SMALL_SIZE, FL_NORMAL_SIZE, FL_MEDIUM_SIZE, FL_LARGE_SIZE,
+        FL_HUGE_SIZE, FL_DEFAULT_SIZE
+    @type size: int
+    @param txtstr: text
+    @type txtstr: str
+    @param strlng: length of text
+    @type strlng: int
+
+    @returns: width and height (w, h)
+
+    @example: fl_get_string_dimension(xfdata.FL_ENGRAVED_STYLE,
+        xfdata.FL_DEFAULT_SIZE, "CustomString", 12)
+
+    @attention: API change from upstream
+        fl_get_string_dimension(fntstyle, fntsize, strng, strglen, w, h)
+
+    @status: Tested + Doc + NoDemo = OK
+    """
     _fl_get_string_dimension = cfuncproto(
-            load_so_libforms(), "fl_get_string_dimension",\
-            None, [cty.c_int, cty.c_int, xfc.STRING, cty.c_int,
-            cty.POINTER(cty.c_int), cty.POINTER(cty.c_int)],\
-            """void fl_get_string_dimension(int fntstyle, int fntsize,
-               const char * s, int len, int * width, int * height)
-            """)
+        load_so_libforms(), "fl_get_string_dimension",\
+        None, [cty.c_int, cty.c_int, xfc.STRING, cty.c_int,
+        cty.POINTER(cty.c_int), cty.POINTER(cty.c_int)],\
+        """void fl_get_string_dimension(int fntstyle, int fntsize,
+           const char * s, int len, int * width, int * height)""")
     check_if_initialized()
     check_admitted_listvalues(style, xfc.TEXTSTYLE_list)
     check_admitted_listvalues(size, xfc.FONTSIZE_list)
     istyle = convert_to_int(style)
     isize = convert_to_int(size)
-    sstrng = convert_to_string(strng)
-    istrglen = convert_to_int(strglen)
+    stxtstr = convert_to_string(txtstr)
+    istrlng = convert_to_int(strlng)
     width, pwidth = make_int_and_pointer()
     height, pheight = make_int_and_pointer()
-    keep_elem_refs(style, istyle, size, isize, strng, sstrng,
-                   strglen, istrglen, width, height, pwidth, pheight)
-    _fl_get_string_dimension(istyle, isize, sstrng, istrglen, pwidth,
+    keep_elem_refs(style, istyle, size, isize, txtstr, stxtstr,
+                   strlng, istrlng, width, height, pwidth, pheight)
+    _fl_get_string_dimension(istyle, isize, stxtstr, istrlng, pwidth,
                              pheight)
     return width.value, height.value
 
@@ -4838,49 +4587,52 @@ fl_get_string_size = fl_get_string_dimension
 
 
 def fl_get_align_xy(align, x, y, w, h, xsize, ysize, xoff, yoff):
-    """ fl_get_align_xy(align, x, y, w, h, xsize, ysize, xmargin, ymargin) -> xx, yy
-
-        Obtains the position of where to draw it with a certain alignment
-        and including padding. It works regardless if the object is to be
-        drawn inside or outside of the bounding box 
-
-        @param align: alignment (<int>)
-        @type align: (from xfdata module) FL_ALIGN_CENTER, FL_ALIGN_TOP,
-                     FL_ALIGN_BOTTOM, FL_ALIGN_LEFT, FL_ALIGN_RIGHT,
-                     FL_ALIGN_LEFT_TOP, FL_ALIGN_RIGHT_TOP,
-                     FL_ALIGN_LEFT_BOTTOM, FL_ALIGN_RIGHT_BOTTOM,
-                     FL_ALIGN_INSIDE, FL_ALIGN_VERT
-        @param x: horizontal position of bounding box (upper-left corner)
-                  (<int>)
-        @param y: vertical position of bounding box (upper-left corner) (<int>)
-        @param w: width in coord units of bounding box (<int>)
-        @param h: height in coord units of bounding box (<int>)
-        @param xsize: width of the object to be drawn (<int>)
-        @param ysize: height of the object to be drawn (<int>)
-        @param xmargin: additional horizontal padding to use (<int>)
-        @param ymargin: additional vertical padding to use (<int>)
-
-        @returns: horizontal and vertical position used for drawing object
-                  (<int>, <int>)
-
-        @example: xpos, ypos = fl_get_align_xy(xfdata.FL_ALIGN_CENTER, 200,
-                  300, 110, 30, 120, 40, 15, 15)
-
-        @attention: API change from XForms - upstream was
-                    fl_get_align_xy(align, x, y, w, h, xsize, ysize, xoff,
-                    yoff, xx, yy)
-
-        @status: Tested + Doc + NoDemo = OK
     """
+    fl_get_align_xy(align, x, y, w, h, xsize, ysize, xmargin, ymargin) -> int, int
 
+    Obtains the position of where to draw the object with a certain alignment
+    and including padding. It works regardless if it is to be drawn inside or
+    outside of the bounding box 
+
+    @param align: alignment. Values (from xfdata module) i.e. FL_ALIGN_CENTER,
+        FL_ALIGN_TOP, FL_ALIGN_BOTTOM, FL_ALIGN_LEFT, FL_ALIGN_RIGHT,
+        FL_ALIGN_LEFT_TOP, FL_ALIGN_RIGHT_TOP, FL_ALIGN_LEFT_BOTTOM,
+        FL_ALIGN_RIGHT_BOTTOM, FL_ALIGN_INSIDE, FL_ALIGN_VERT
+    @type align: int
+    @param x: horizontal position of bounding box (upper-left corner)
+    @type x: int
+    @param y: vertical position of bounding box (upper-left corner)
+    @type y: int
+    @param w: width of bounding box in coord units
+    @type w: int
+    @param h: height of bounding box in coord units
+    @type h: int
+    @param xsize: width of the object to be drawn
+    @type xsize: int
+    @param ysize: height of the object to be drawn
+    @type ysize: int
+    @param xmargin: additional horizontal padding to use
+    @type xmargin: int
+    @param ymargin: additional vertical padding to use
+    @type ymargin: int
+
+    @returns: horizontal and vertical position used for drawing object (x, y)
+
+    @example: xpos, ypos = fl_get_align_xy(xfdata.FL_ALIGN_CENTER, 200, 300,
+        110, 30, 120, 40, 15, 15)
+
+    @attention: API change from XForms - upstream was
+        fl_get_align_xy(align, x, y, w, h, xsize, ysize, xoff, yoff, xx, yy)
+
+    @status: Tested + Doc + NoDemo = OK
+    """
     _fl_get_align_xy = cfuncproto(
-            load_so_libforms(), "fl_get_align_xy",\
-            None, [cty.c_int, cty.c_int, cty.c_int, cty.c_int, cty.c_int,\
-            cty.c_int, cty.c_int, cty.c_int, cty.c_int,
-            cty.POINTER(cty.c_int), cty.POINTER(cty.c_int)],\
-            """void fl_get_align_xy(int align, int x, int y, int w, int h,
-               int xsize, int ysize, int xoff, int yoff, int * xx, int * yy)
-            """)
+        load_so_libforms(), "fl_get_align_xy",\
+        None, [cty.c_int, cty.c_int, cty.c_int, cty.c_int, cty.c_int,\
+        cty.c_int, cty.c_int, cty.c_int, cty.c_int,
+        cty.POINTER(cty.c_int), cty.POINTER(cty.c_int)],\
+        """void fl_get_align_xy(int align, int x, int y, int w, int h,
+           int xsize, int ysize, int xoff, int yoff, int * xx, int * yy)""")
     check_if_initialized()
     check_admitted_listvalues(align, xfc.ALIGN_list)
     ialign = convert_to_int(align)
@@ -4902,55 +4654,59 @@ def fl_get_align_xy(align, x, y, w, h, xsize, ysize, xoff, yoff):
 
 
 def fl_drw_text(align, x, y, w, h, colr, style, size, txtstr):
-    """ fl_drw_text(align, x, y, w, h, colr, style, size, txtstr)
-
-        Draws the text inside the bounding box according to the alignment
-        requested. It puts a padding of 5 pixels in vertical direction and
-        4 in horizontal around the text. Thus the bounding box should be 10
-        pixels wider and 8 pixels higher than required for the text to be
-        drawn. It interprets a text string starting with the character @
-        differently in drawing some symbols instead.
-
-        @param align: alignment of text (<int>)
-        @type align: (from xfdata module) FL_ALIGN_CENTER, FL_ALIGN_TOP,
-                     FL_ALIGN_BOTTOM, FL_ALIGN_LEFT, FL_ALIGN_RIGHT,
-                     FL_ALIGN_LEFT_TOP, FL_ALIGN_RIGHT_TOP,
-                     FL_ALIGN_LEFT_BOTTOM, FL_ALIGN_RIGHT_BOTTOM,
-                     FL_ALIGN_INSIDE, FL_ALIGN_VERT
-        @param x: horizontal position (upper-left corner) (<int>)
-        @param y: vertical position (upper-left corner) (<int>)
-        @param w: width in coord units (<int>)
-        @param h: height in coord units (<int>)
-        @param colr: color value (<long_pos>)
-        @param style: font style (<int>)
-        @type style: (from xfdata module) FL_NORMAL_STYLE, FL_BOLD_STYLE,
-                     FL_ITALIC_STYLE, FL_BOLDITALIC_STYLE, FL_FIXED_STYLE,
-                     FL_FIXEDBOLD_STYLE, FL_FIXEDITALIC_STYLE,
-                     FL_FIXEDBOLDITALIC_STYLE, FL_TIMES_STYLE,
-                     FL_TIMESBOLD_STYLE, FL_TIMESITALIC_STYLE,
-                     FL_TIMESBOLDITALIC_STYLE, FL_MISC_STYLE,
-                     FL_MISCBOLD_STYLE, FL_MISCITALIC_STYLE, FL_SYMBOL_STYLE,
-                     FL_SHADOW_STYLE, FL_ENGRAVED_STYLE, FL_EMBOSSED_STYLE
-        @param size: font size (<int>)
-        @type size: (from xfdata module) FL_TINY_SIZE, FL_SMALL_SIZE, 
-                    FL_NORMAL_SIZE, FL_MEDIUM_SIZE, FL_LARGE_SIZE,
-                    FL_HUGE_SIZE, FL_DEFAULT_SIZE
-        @param txtstr: text to draw (<string>)
-
-        @example: fl_drw_text(xfdata.FL_ALIGN_BOTTOM, 400, 175, 150, 45,
-                  xfdata.FL_GREEN, xfdata.FL_ITALIC_STYLE, xfdata.FL_SMALL_SIZE,
-                  "A Good Old String")
-
-        @status: Tested + Doc + NoDemo = OK
     """
+    fl_drw_text(align, x, y, w, h, colr, style, size, txtstr)
 
+    Draws the text inside the bounding box according to the alignment
+    requested. It puts a padding of 5 pixels in vertical direction and 4 in
+    horizontal around the text. Thus the bounding box should be 10 pixels wider
+    and 8 pixels higher than required for the text to be drawn. It interprets
+    a text string starting with the character @ differently in drawing some
+    symbols instead.
+
+    @param align: alignment of text. Values (from xfdata module) i.e.
+        FL_ALIGN_CENTER, FL_ALIGN_TOP, FL_ALIGN_BOTTOM, FL_ALIGN_LEFT,
+        FL_ALIGN_RIGHT, FL_ALIGN_LEFT_TOP, FL_ALIGN_RIGHT_TOP,
+        FL_ALIGN_LEFT_BOTTOM, FL_ALIGN_RIGHT_BOTTOM, FL_ALIGN_INSIDE,
+        FL_ALIGN_VERT
+    @type align: int
+    @param x: horizontal position (upper-left corner)
+    @type x: int
+    @param y: vertical position (upper-left corner)
+    @type y: int
+    @param w: width in coord units
+    @type w: int
+    @param h: height in coord units
+    @type h: int
+    @param col: color value
+    @type colr: long_pos
+    @param style: font style. Values (from xfdata module) i.e. FL_NORMAL_STYLE,
+        FL_BOLD_STYLE, FL_ITALIC_STYLE, FL_BOLDITALIC_STYLE, FL_FIXED_STYLE,
+        FL_FIXEDBOLD_STYLE, FL_FIXEDITALIC_STYLE, FL_FIXEDBOLDITALIC_STYLE,
+        FL_TIMES_STYLE, FL_TIMESBOLD_STYLE, FL_TIMESITALIC_STYLE,
+        FL_TIMESBOLDITALIC_STYLE, FL_MISC_STYLE, FL_MISCBOLD_STYLE,
+        FL_MISCITALIC_STYLE, FL_SYMBOL_STYLE, FL_SHADOW_STYLE,
+        FL_ENGRAVED_STYLE, FL_EMBOSSED_STYLE
+    @type style: int
+    @param size: font size. Values (from xfdata module) i.e. FL_TINY_SIZE,
+        FL_SMALL_SIZE, FL_NORMAL_SIZE, FL_MEDIUM_SIZE, FL_LARGE_SIZE,
+        FL_HUGE_SIZE, FL_DEFAULT_SIZE
+    @type size: int
+    @param txtstr: text to draw
+    @type txtstr: str
+
+    @example: fl_drw_text(xfdata.FL_ALIGN_BOTTOM, 400, 175, 150, 45,
+        xfdata.FL_GREEN, xfdata.FL_ITALIC_STYLE, xfdata.FL_SMALL_SIZE,
+        "A Good Old String")
+
+    @status: Tested + Doc + NoDemo = OK
+    """
     _fl_drw_text = cfuncproto(
-            load_so_libforms(), "fl_drw_text",\
-            None, [cty.c_int, xfc.FL_Coord, xfc.FL_Coord, xfc.FL_Coord,
-            xfc.FL_Coord, xfc.FL_COLOR, cty.c_int, cty.c_int, xfc.STRING],
-            """void fl_drw_text(int align, FL_Coord x, FL_Coord y, FL_Coord w,
-               FL_Coord h, FL_COLOR c, int style, int size, const char * istr)
-            """)
+        load_so_libforms(), "fl_drw_text",\
+        None, [cty.c_int, xfc.FL_Coord, xfc.FL_Coord, xfc.FL_Coord,
+        xfc.FL_Coord, xfc.FL_COLOR, cty.c_int, cty.c_int, xfc.STRING],
+        """void fl_drw_text(int align, FL_Coord x, FL_Coord y, FL_Coord w,
+           FL_Coord h, FL_COLOR c, int style, int size, const char * istr)""")
     check_if_initialized()
     check_admitted_listvalues(align, xfc.ALIGN_list)
     check_admitted_listvalues(colr, xfc.COLOR_list)
@@ -4972,53 +4728,56 @@ def fl_drw_text(align, x, y, w, h, colr, style, size, txtstr):
 
 
 def fl_drw_text_beside(align, x, y, w, h, colr, style, size, txtstr):
-    """ fl_drw_text_beside(align, x, y, w, h, colr, style, size, txtstr)
-
-        Draws the text aligned outside of the box. It interprets a text
-        string starting with the character @ differently in drawing some
-        symbols instead.
-
-        @param align: alignment of text (<int>)
-        @type align: (from xfdata module) FL_ALIGN_CENTER, FL_ALIGN_TOP,
-                     FL_ALIGN_BOTTOM, FL_ALIGN_LEFT, FL_ALIGN_RIGHT,
-                     FL_ALIGN_LEFT_TOP, FL_ALIGN_RIGHT_TOP,
-                     FL_ALIGN_LEFT_BOTTOM, FL_ALIGN_RIGHT_BOTTOM,
-                     FL_ALIGN_INSIDE, FL_ALIGN_VERT
-        @param x: horizontal position (upper-left corner) (<int>)
-        @param y: vertical position (upper-left corner) (<int>)
-        @param w: width in coord units (<int>)
-        @param h: height in coord units (<int>)
-        @param colr: color value (<long_pos>)
-        @param style: font style (<int>)
-        @type style: (from xfdata module) FL_NORMAL_STYLE, FL_BOLD_STYLE,
-                     FL_ITALIC_STYLE, FL_BOLDITALIC_STYLE, FL_FIXED_STYLE,
-                     FL_FIXEDBOLD_STYLE, FL_FIXEDITALIC_STYLE,
-                     FL_FIXEDBOLDITALIC_STYLE, FL_TIMES_STYLE,
-                     FL_TIMESBOLD_STYLE, FL_TIMESITALIC_STYLE,
-                     FL_TIMESBOLDITALIC_STYLE, FL_MISC_STYLE,
-                     FL_MISCBOLD_STYLE, FL_MISCITALIC_STYLE, FL_SYMBOL_STYLE,
-                     FL_SHADOW_STYLE, FL_ENGRAVED_STYLE, FL_EMBOSSED_STYLE
-        @param size: font size (<int>)
-        @type size: (from xfdata module) FL_TINY_SIZE, FL_SMALL_SIZE, 
-                    FL_NORMAL_SIZE, FL_MEDIUM_SIZE, FL_LARGE_SIZE,
-                    FL_HUGE_SIZE, FL_DEFAULT_SIZE
-        @param txtstr: text to draw (<string>)
-
-        @example: fl_drw_text_beside(xfdata.FL_ALIGN_BOTTOM, 400, 175, 150, 45,
-                  xfdata.FL_GREEN, xfdata.FL_ITALIC_STYLE, xfdata.FL_SMALL_SIZE,
-                  "A Good Old String")
-
-        @status: Tested + Doc + NoDemo = OK
     """
+    fl_drw_text_beside(align, x, y, w, h, colr, style, size, txtstr)
 
+    Draws the text aligned outside of the box. It interprets a text string
+    starting with the character @ differently in drawing some symbols instead.
+
+    @param align: alignment of text. Values (from xfdata module) i.e.
+        FL_ALIGN_CENTER, FL_ALIGN_TOP, FL_ALIGN_BOTTOM, FL_ALIGN_LEFT,
+        FL_ALIGN_RIGHT, FL_ALIGN_LEFT_TOP, FL_ALIGN_RIGHT_TOP,
+        FL_ALIGN_LEFT_BOTTOM, FL_ALIGN_RIGHT_BOTTOM, FL_ALIGN_INSIDE,
+        FL_ALIGN_VERT
+    @type align: int
+    @param x: horizontal position (upper-left corner)
+    @type x: int
+    @param y: vertical position (upper-left corner)
+    @type y: int
+    @param w: width in coord units
+    @type w: int
+    @param h: height in coord units
+    @type h: int
+    @param colr: color value
+    @type h: long_pos
+    @param style: font style. Values (from xfdata module) i.e. FL_NORMAL_STYLE,
+        FL_BOLD_STYLE, FL_ITALIC_STYLE, FL_BOLDITALIC_STYLE, FL_FIXED_STYLE,
+        FL_FIXEDBOLD_STYLE, FL_FIXEDITALIC_STYLE, FL_FIXEDBOLDITALIC_STYLE,
+        FL_TIMES_STYLE, FL_TIMESBOLD_STYLE, FL_TIMESITALIC_STYLE,
+        FL_TIMESBOLDITALIC_STYLE, FL_MISC_STYLE, FL_MISCBOLD_STYLE,
+        FL_MISCITALIC_STYLE, FL_SYMBOL_STYLE, FL_SHADOW_STYLE,
+        FL_ENGRAVED_STYLE, FL_EMBOSSED_STYLE
+    @type style: int
+    @param size: font size. Values (from xfdata module) i.e. FL_TINY_SIZE,
+        FL_SMALL_SIZE, FL_NORMAL_SIZE, FL_MEDIUM_SIZE, FL_LARGE_SIZE,
+        FL_HUGE_SIZE, FL_DEFAULT_SIZE
+    @type size: int
+    @param txtstr: text to draw
+    @type txtstr: str
+
+    @example: fl_drw_text_beside(xfdata.FL_ALIGN_BOTTOM, 400, 175, 150, 45,
+        xfdata.FL_GREEN, xfdata.FL_ITALIC_STYLE, xfdata.FL_SMALL_SIZE,
+        "A Good Old String")
+
+    @status: Tested + Doc + NoDemo = OK
+    """
     _fl_drw_text_beside = cfuncproto(
-            load_so_libforms(), "fl_drw_text_beside",\
-            None, [cty.c_int, xfc.FL_Coord, xfc.FL_Coord, xfc.FL_Coord,
-            xfc.FL_Coord, xfc.FL_COLOR, cty.c_int, cty.c_int, xfc.STRING],
-            """void fl_drw_text_beside(int align, FL_Coord x, FL_Coord y,
-               FL_Coord w, FL_Coord h, FL_COLOR c, int style, int size,
-               const char * str)
-            """)
+        load_so_libforms(), "fl_drw_text_beside",\
+        None, [cty.c_int, xfc.FL_Coord, xfc.FL_Coord, xfc.FL_Coord,
+        xfc.FL_Coord, xfc.FL_COLOR, cty.c_int, cty.c_int, xfc.STRING],
+        """void fl_drw_text_beside(int align, FL_Coord x, FL_Coord y,
+           FL_Coord w, FL_Coord h, FL_COLOR c, int style, int size,
+           const char * str)""")
     check_if_initialized()
     check_admitted_listvalues(align, xfc.ALIGN_list)
     check_admitted_listvalues(align, xfc.COLOR_list)
@@ -5040,57 +4799,63 @@ def fl_drw_text_beside(align, x, y, w, h, colr, style, size, txtstr):
 
 
 def fl_drw_text_cursor(align, x, y, w, h, colr, style, size, txtstr, curscolr, pos):
-    """ fl_drw_text_cursor(align, x, y, w, h, colr, style, size, txtstr, curscolr, pos)
-
-        Draw text and, in addition, a cursor can optionally be drawn. It does
-        no interpretation of the special character @ nor does it add padding
-        around the text.
-
-        @param align: alignment (<int>)
-        @type align: (from xfdata module) FL_ALIGN_CENTER, FL_ALIGN_TOP,
-                     FL_ALIGN_BOTTOM, FL_ALIGN_LEFT, FL_ALIGN_RIGHT,
-                     FL_ALIGN_LEFT_TOP, FL_ALIGN_RIGHT_TOP,
-                     FL_ALIGN_LEFT_BOTTOM, FL_ALIGN_RIGHT_BOTTOM,
-                     FL_ALIGN_INSIDE, FL_ALIGN_VERT
-        @param x: horizontal position (upper-left corner) (<int>)
-        @param y: vertical position (upper-left corner) (<int>)
-        @param w: width in coord units (<int>)
-        @param h: height in coord units (<int>)
-        @param colr: color value (<long_pos>)
-        @param style: font style (<int>)
-        @type style: (from xfdata module) FL_NORMAL_STYLE, FL_BOLD_STYLE,
-                     FL_ITALIC_STYLE, FL_BOLDITALIC_STYLE, FL_FIXED_STYLE,
-                     FL_FIXEDBOLD_STYLE, FL_FIXEDITALIC_STYLE,
-                     FL_FIXEDBOLDITALIC_STYLE, FL_TIMES_STYLE,
-                     FL_TIMESBOLD_STYLE, FL_TIMESITALIC_STYLE,
-                     FL_TIMESBOLDITALIC_STYLE, FL_MISC_STYLE,
-                     FL_MISCBOLD_STYLE, FL_MISCITALIC_STYLE, FL_SYMBOL_STYLE,
-                     FL_SHADOW_STYLE, FL_ENGRAVED_STYLE, FL_EMBOSSED_STYLE
-        @param size: font size (<int>)
-        @type size: (from xfdata module) FL_TINY_SIZE, FL_SMALL_SIZE, 
-                    FL_NORMAL_SIZE, FL_MEDIUM_SIZE, FL_LARGE_SIZE,
-                    FL_HUGE_SIZE, FL_DEFAULT_SIZE
-        @param txtstr: text to draw (<string>)
-        @param curscolr: color of the cursor (<int>)
-        @param pos: position which indicates the index of the character
-               before which to draw the cursor (-1 for not showing it) (<int>)
-
-        @example: fl_drw_text_cursor(xfdata.FL_ALIGN_BOTTOM, 400, 175, 150, 45,
-                  xfdata.FL_GREEN, xfdata.FL_ITALIC_STYLE, xfdata.FL_SMALL_SIZE,
-                  "A Good Old String", xfdata.FL_YELLOW, 7)
-
-        @status: Tested + Doc + NoDemo = OK
     """
+    fl_drw_text_cursor(align, x, y, w, h, colr, style, size, txtstr, curscolr, pos)
 
+    Draw text and, in addition, a cursor can optionally be drawn. It does no
+    interpretation of the special character @ nor does it add padding around
+    the text.
+
+    @param align: alignment of text. Values (from xfdata module) i.e.
+        FL_ALIGN_CENTER, FL_ALIGN_TOP, FL_ALIGN_BOTTOM, FL_ALIGN_LEFT,
+        FL_ALIGN_RIGHT, FL_ALIGN_LEFT_TOP, FL_ALIGN_RIGHT_TOP,
+        FL_ALIGN_LEFT_BOTTOM, FL_ALIGN_RIGHT_BOTTOM, FL_ALIGN_INSIDE,
+        FL_ALIGN_VERT
+    @type align: int
+    @param x: horizontal position (upper-left corner)
+    @type x: int
+    @param y: vertical position (upper-left corner)
+    @type y: int
+    @param w: width in coord units
+    @type w: int
+    @param h: height in coord units
+    @type h: int
+    @param colr: color value
+    @type h: long_pos
+    @param style: font style. Values (from xfdata module) i.e. FL_NORMAL_STYLE,
+        FL_BOLD_STYLE, FL_ITALIC_STYLE, FL_BOLDITALIC_STYLE, FL_FIXED_STYLE,
+        FL_FIXEDBOLD_STYLE, FL_FIXEDITALIC_STYLE, FL_FIXEDBOLDITALIC_STYLE,
+        FL_TIMES_STYLE, FL_TIMESBOLD_STYLE, FL_TIMESITALIC_STYLE,
+        FL_TIMESBOLDITALIC_STYLE, FL_MISC_STYLE, FL_MISCBOLD_STYLE,
+        FL_MISCITALIC_STYLE, FL_SYMBOL_STYLE, FL_SHADOW_STYLE,
+        FL_ENGRAVED_STYLE, FL_EMBOSSED_STYLE
+    @type style: int
+    @param size: font size. Values (from xfdata module) i.e. FL_TINY_SIZE,
+        FL_SMALL_SIZE, FL_NORMAL_SIZE, FL_MEDIUM_SIZE, FL_LARGE_SIZE,
+        FL_HUGE_SIZE, FL_DEFAULT_SIZE
+    @type size: int
+    @param txtstr: text to draw (<string>)
+    @type txtstr: str
+    @param curscolr: color of the cursor
+    @type curscolr: int
+    @param pos: position which indicates the index of the character
+        before which to draw the cursor (-1 for not showing it)
+    @type pos: int
+
+    @example: fl_drw_text_cursor(xfdata.FL_ALIGN_BOTTOM, 400, 175, 150, 45,
+        xfdata.FL_GREEN, xfdata.FL_ITALIC_STYLE, xfdata.FL_SMALL_SIZE,
+        "A Good Old String", xfdata.FL_YELLOW, 7)
+
+    @status: Tested + Doc + NoDemo = OK
+    """
     _fl_drw_text_cursor = cfuncproto(
-            load_so_libforms(), "fl_drw_text_cursor",\
-            None, [cty.c_int, xfc.FL_Coord, xfc.FL_Coord, xfc.FL_Coord,
-            xfc.FL_Coord, xfc.FL_COLOR, cty.c_int, cty.c_int, xfc.STRING, 
-            cty.c_int, cty.c_int],
-            """void fl_drw_text_cursor(int align, FL_Coord x, FL_Coord y,
-               FL_Coord w, FL_Coord h, FL_COLOR c, int style, int size,
-               const char * str, int cc, int pos)
-            """)
+        load_so_libforms(), "fl_drw_text_cursor",\
+        None, [cty.c_int, xfc.FL_Coord, xfc.FL_Coord, xfc.FL_Coord,
+        xfc.FL_Coord, xfc.FL_COLOR, cty.c_int, cty.c_int, xfc.STRING, 
+        cty.c_int, cty.c_int],
+        """void fl_drw_text_cursor(int align, FL_Coord x, FL_Coord y,
+           FL_Coord w, FL_Coord h, FL_COLOR c, int style, int size,
+           const char * str, int cc, int pos)""")
     check_if_initialized()
     check_admitted_listvalues(align, xfc.ALIGN_list)
     check_admitted_listvalues(colr, xfc.COLOR_list)
@@ -5116,38 +4881,42 @@ def fl_drw_text_cursor(align, x, y, w, h, colr, style, size, txtstr, curscolr, p
 
 
 def fl_drw_box(boxtype, x, y, w, h, colr, bw):
-    """ fl_drw_box(boxtype, x, y, w, h, colr, bw)
-
-        Draws the bounding box of an object.
-
-        @param boxtype: type of box to draw (<int>)
-        @type boxtype: (from xfdata module) FL_NO_BOX, FL_UP_BOX, FL_DOWN_BOX,
-                       FL_BORDER_BOX, FL_SHADOW_BOX, FL_FRAME_BOX,
-                       FL_ROUNDED_BOX, FL_EMBOSSED_BOX, FL_FLAT_BOX,
-                       FL_RFLAT_BOX, FL_RSHADOW_BOX, FL_OVAL_BOX,
-                       FL_ROUNDED3D_UPBOX, FL_ROUNDED3D_DOWNBOX,
-                       FL_OVAL3D_UPBOX, FL_OVAL3D_DOWNBOX, FL_OVAL3D_FRAMEBOX,
-                       FL_OVAL3D_EMBOSSEDBOX
-        @param x: horizontal position (upper-left corner) (<int>)
-        @param y: vertical position (upper-left corner) (<int>)
-        @param w: width in coord units (<int>)
-        @param h: height in coord units (<int>)
-        @param colr: color value (<long_pos>)
-        @param bw: width of the boundary (<int>)
-
-        @example: fl_drw_box(xfdata.FL_DOWN_BOX, 700, 800, 600, 450,
-                  xfdata.FL_INDIGO, 3)
-
-        @status: Tested + Doc + NoDemo = OK
     """
+    fl_drw_box(boxtype, x, y, w, h, colr, bw)
 
+    Draws the bounding box of an object.
+
+    @param boxtype: type of box to draw. Values (from xfdata module) i.e.
+        FL_NO_BOX, FL_UP_BOX, FL_DOWN_BOX, FL_BORDER_BOX, FL_SHADOW_BOX,
+        FL_FRAME_BOX, FL_ROUNDED_BOX, FL_EMBOSSED_BOX, FL_FLAT_BOX,
+        FL_RFLAT_BOX, FL_RSHADOW_BOX, FL_OVAL_BOX, FL_ROUNDED3D_UPBOX,
+        FL_ROUNDED3D_DOWNBOX, FL_OVAL3D_UPBOX, FL_OVAL3D_DOWNBOX,
+        FL_OVAL3D_FRAMEBOX, FL_OVAL3D_EMBOSSEDBOX
+    @type boxtype: int
+    @param x: horizontal position (upper-left corner)
+    @type x: int
+    @param y: vertical position (upper-left corner)
+    @type y: int
+    @param w: width in coord units
+    @type w: int
+    @param h: height in coord units
+    @type h: int
+    @param colr: color value
+    @type colr: long_pos
+    @param bw: width of the boundary
+    @type bw: int
+
+    @example: fl_drw_box(xfdata.FL_DOWN_BOX, 700, 800, 600, 450,
+        xfdata.FL_INDIGO, 3)
+
+    @status: Tested + Doc + NoDemo = OK
+    """
     _fl_drw_box = cfuncproto(
-            load_so_libforms(), "fl_drw_box",\
-            None, [cty.c_int, xfc.FL_Coord, xfc.FL_Coord, xfc.FL_Coord,
-            xfc.FL_Coord, xfc.FL_COLOR, cty.c_int],\
-            """void fl_drw_box(int style, FL_Coord x, FL_Coord y, FL_Coord w,
-               FL_Coord h, FL_COLOR c, int bw_in)
-            """)
+        load_so_libforms(), "fl_drw_box",\
+        None, [cty.c_int, xfc.FL_Coord, xfc.FL_Coord, xfc.FL_Coord,
+        xfc.FL_Coord, xfc.FL_COLOR, cty.c_int],\
+        """void fl_drw_box(int style, FL_Coord x, FL_Coord y, FL_Coord w,
+           FL_Coord h, FL_COLOR c, int bw_in)""")
     check_if_initialized()
     check_admitted_listvalues(boxtype, xfc.BOXTYPE_list)
     check_admitted_listvalues(colr, xfc.COLOR_list)
@@ -5164,32 +4933,34 @@ def fl_drw_box(boxtype, x, y, w, h, colr, bw):
 
 
 def fl_add_symbol(symbname, py_DrawPtr, scalable):
-    """ fl_add_symbol(symbname, py_DrawPtr, scalable) -> num.
+    """
+    fl_add_symbol(symbname, py_DrawPtr, scalable) -> num.
 
-        Adds a customly drawn symbol to the system which it can then use to
-        display symbols on objects that are not provided by the library.
+    Adds a customly drawn symbol to the system which it can then use to
+    display symbols on objects that are not provided by the library.
 
-        @param symbname: name under which the symbol should be known (at most
-                         15 characters), without the leading @ (<string>)
-        @param py_DrawPtr: python function to draw symbol - no return
-        @type py_DrawPtr: __ funcname (coord, coord, coord, coord,
-                          angle_degree_rotation, colr) __
-        @param scalable: not used, a value of 0 will be fine (<int>)
+    @param symbname: name under which the symbol should be known (at most
+        15 characters), without the leading @
+    @type symbname: str
+    @param py_DrawPtr: python function to draw symbol, no return
+    @type py_DrawPtr: __ funcname (coord, coord, coord, coord,
+        angle_degree_rotation, colr) __
+    @param scalable: not used, a value of 0 will be fine
+    @type scalable: int
 
-        @example: def drawsymb(x, y, w, h, angle, col):
-        @example: |->| ...
-        @example: xf.fl_add_symbol("MySymbol", drawsymb, 0)
+    @example: def drawsymb(x, y, w, h, angle, col):
+    @example: |->| ...
+    @example: xf.fl_add_symbol("MySymbol", drawsymb, 0)
 
-        @status: Tested + Doc + NoDemo = OK
+    @status: Tested + Doc + NoDemo = OK
     """
     #FL_DRAWPTR = cty.CFUNCTYPE(None, xfc.FL_Coord, xfc.FL_Coord, xfc.FL_Coord,
     #                           xfc.FL_Coord, cty.c_int, xfc.FL_COLOR)
     _fl_add_symbol = cfuncproto(
-            load_so_libforms(), "fl_add_symbol",\
-            cty.c_int, [xfc.STRING, xfc.FL_DRAWPTR, cty.c_int],\
-            """int fl_add_symbol(const char * name, FL_DRAWPTR drawit,
-               int scalable)
-            """)
+        load_so_libforms(), "fl_add_symbol",\
+        cty.c_int, [xfc.STRING, xfc.FL_DRAWPTR, cty.c_int],\
+        """int fl_add_symbol(const char * name, FL_DRAWPTR drawit,
+           int scalable)""")
     check_if_initialized()
     ssymbname = convert_to_string(symbname)
     iscalable = convert_to_int(scalable)
@@ -5201,32 +4972,36 @@ def fl_add_symbol(symbname, py_DrawPtr, scalable):
 
 
 def fl_draw_symbol(symbname, x, y, w, h, colr):
-    """ fl_draw_symbol(symbname, x, y, w, h, colr) -> num.
-
-        Draws directly a symbol on the screen.
-
-        @param symbname: name given to the symbol (<string>)
-        @param x: horizontal position (upper-left corner) (<int>)
-        @param y: vertical position (upper-left corner) (<int>)
-        @param w: width in coord units (<int>)
-        @param h: height in coord units (<int>)
-        @param colr: color value (<long_pos>)
-
-        @returns: 1 (on success) or 0 (on failure) (<int>)
-
-        @example: fl_draw_symbol("willsym", 120, 120, 15, 20,
-                  xfdata.FL_LIGHTGRAY)
-
-        @status: Tested + Doc + NoDemo = OK
     """
+    fl_draw_symbol(symbname, x, y, w, h, colr) -> int
 
+    Draws directly a symbol on the screen.
+
+    @param symbname: name given to the symbol
+    @type symbname: str
+    @param x: horizontal position (upper-left corner)
+    @type x: int
+    @param y: vertical position (upper-left corner)
+    @type y: int
+    @param w: width in coord units
+    @type w: int
+    @param h: height in coord units
+    @type h: int
+    @param colr: color value
+    @type colr: long_pos
+
+    @returns: 1 (on success) or 0 (on failure)
+
+    @example: fl_draw_symbol("willsym", 120, 120, 15, 20, xfdata.FL_LIGHTGRAY)
+
+    @status: Tested + Doc + NoDemo = OK
+    """
     _fl_draw_symbol = cfuncproto(
-            load_so_libforms(), "fl_draw_symbol",\
-            cty.c_int, [xfc.STRING, xfc.FL_Coord, xfc.FL_Coord,
-            xfc.FL_Coord, xfc.FL_Coord, xfc.FL_COLOR],\
-            """int fl_draw_symbol(const char * label, FL_Coord x, FL_Coord y,
-               FL_Coord w, FL_Coord h, FL_COLOR col)
-            """)
+        load_so_libforms(), "fl_draw_symbol",\
+        cty.c_int, [xfc.STRING, xfc.FL_Coord, xfc.FL_Coord,
+        xfc.FL_Coord, xfc.FL_Coord, xfc.FL_COLOR],\
+        """int fl_draw_symbol(const char * label, FL_Coord x, FL_Coord y,
+           FL_Coord w, FL_Coord h, FL_COLOR col)""")
     check_if_initialized()
     check_admitted_listvalues(colr, xfc.COLOR_list)
     ssymbname = convert_to_string(symbname)
@@ -5242,33 +5017,36 @@ def fl_draw_symbol(symbname, x, y, w, h, colr):
 
 
 def fl_mapcolor(colr, r, g, b):
-    """ fl_mapcolor(colr, r, g, b) -> color
-
-        Changes the colormap and make a color index active so that it can be
-        used in various drawing routines after initialization. It maps a new
-        color using specific values for red, green and blue. In case a request
-        fails, we substitute the closest color. It is recommended that you use
-        an index larger than xfdata.FL_FREE_COL1 for your remap request to
-        avoid accidentally free the colors you have not explicitly allocated.
-        Indices larger than 224 are reserved and should not be used.
- 
-        @param colr: new color value to be mapped (<long_pos>)
-        @param r: value for red (<int>)
-        @param g: value for green (<int>)
-        @param b: value for blue (<int>)
-
-        @returns: color value (<long_pos>) or 0 (on failure)
-
-        @example: fl_mapcolor(xfdata.FL_FREE_COL1, 100, 200, 300)
-
-        @status: Tested + Doc + Demo = OK
     """
+    fl_mapcolor(colr, r, g, b) -> long_pos
 
+    Changes the colormap and make a color index active so that it can be used
+    in various drawing routines after initialization. It maps a new color
+    using specific values for red, green and blue. In case a request fails, we
+    substitute the closest color. It is recommended that you use an index
+    larger than xfdata.FL_FREE_COL1 for your remap request to avoid
+    accidentally free the colors you have not explicitly allocated. Indices
+    larger than 224 are reserved and should not be used.
+ 
+    @param colr: new color value to be mapped
+    @type colr: long_pos
+    @param r: value for red
+    @type r: int
+    @param g: value for green
+    @type g: int
+    @param b: value for blue
+    @type b: int
+
+    @returns: color value, or 0 (on failure)
+
+    @example: fl_mapcolor(xfdata.FL_FREE_COL1, 100, 200, 300)
+
+    @status: Tested + Doc + Demo = OK
+    """
     _fl_mapcolor = cfuncproto(
-            load_so_libforms(), "fl_mapcolor",\
-            cty.c_ulong, [xfc.FL_COLOR, cty.c_int, cty.c_int, cty.c_int],
-            """unsigned long fl_mapcolor(FL_COLOR col, int r, int g, int b)
-            """)
+        load_so_libforms(), "fl_mapcolor",\
+        cty.c_ulong, [xfc.FL_COLOR, cty.c_int, cty.c_int, cty.c_int],
+        """unsigned long fl_mapcolor(FL_COLOR col, int r, int g, int b)""")
     check_if_initialized()
     check_admitted_listvalues(colr, xfc.COLOR_list)
     ulcolr = convert_to_FL_COLOR(colr)
@@ -5281,28 +5059,29 @@ def fl_mapcolor(colr, r, g, b):
 
 
 def fl_mapcolorname(colr, rgbcolrname):
-    """ fl_mapcolorname(colr, rgbcolrname) -> num.
-
-        Sets the color in the colormap indexed by colr to the specified color
-        name. It associates an index with a color name, which may have been
-        obtained via resources.
-
-        @param colr: color value to be mapped (<long_pos>)
-        @param rgbcolrname: name of mapped color from the systems color
-                            database file "rgb.txt" (<string>)
-
-        @returns: color pixel value (<long>) or -1 (on failure)
-
-        @example: fl_mapcolorname(xfdata.FL_FREE_COL3, "PowderBlue")
-
-        @status: Tested + Doc + NoDemo = OK
     """
+    fl_mapcolorname(colr, rgbcolrname) -> long
 
+    Sets the color in the colormap indexed by colr to the specified color name.
+    It associates an index with a color name, which may have been obtained via
+    resources.
+
+    @param colr: color value to be mapped
+    @type colr: long_pos
+    @param rgbcolrname: name of mapped color from the systems color
+        database file "rgb.txt" (see that file for possible values)
+    @type rgbcolrname: str
+
+    @returns: color pixel value, or -1 (on failure)
+
+    @example: fl_mapcolorname(xfdata.FL_FREE_COL3, "PowderBlue")
+
+    @status: Tested + Doc + NoDemo = OK
+    """
     _fl_mapcolorname = cfuncproto(
-            load_so_libforms(), "fl_mapcolorname",\
-            cty.c_long, [xfc.FL_COLOR, xfc.STRING],\
-            """long int fl_mapcolorname(FL_COLOR col, const char * name)
-            """)
+        load_so_libforms(), "fl_mapcolorname",\
+        cty.c_long, [xfc.FL_COLOR, xfc.STRING],\
+        """long int fl_mapcolorname(FL_COLOR col, const char * name)""")
     check_if_initialized()
     check_admitted_listvalues(colr, xfc.COLOR_list)
     ulcolr = convert_to_FL_COLOR(colr)
@@ -5314,81 +5093,81 @@ def fl_mapcolorname(colr, rgbcolrname):
 
 fl_mapcolor_name = fl_mapcolorname
 
-# OK until here
 
-def fl_free_colors(colr, num):
-    """ fl_free_colors(colr, num)
-
-        Frees allocated array of colors from the default colormap, if index of
-        colors are known. You shouldn't do that for the reserved colors (i.e.
-        colors with indices below xfdata.FL_FREE_COL1).
-
-        @param colr: color value (<long_pos>)
-        @param num: number of colors stored in the array of colors (<int>)
-
-        @example:
-
-        @status: Untested + NoDoc + NoDemo = NOT OK
+def fl_free_colors(colr, numcolr):
     """
+    fl_free_colors(colr, numcolr)
 
+    Frees allocated array of colors from the default colormap, if index of
+    colors are known. You shouldn't do that for the reserved colors (i.e.
+    colors with indices below xfdata.FL_FREE_COL1).
+
+    @param colr: color value
+    @type colr: long_pos
+    @param numcolr: number of colors stored in the array of colors
+    @type numcolr: int
+
+    @example: ?
+
+    @status: Untested + NoDoc + NoDemo = NOT OK
+    """
     _fl_free_colors = cfuncproto(
-            load_so_libforms(), "fl_free_colors",\
-            None, [cty.POINTER(xfc.FL_COLOR), cty.c_int],\
-            """void fl_free_colors(FL_COLOR * c, int n)
-            """)
+        load_so_libforms(), "fl_free_colors",\
+        None, [cty.POINTER(xfc.FL_COLOR), cty.c_int],\
+        """void fl_free_colors(FL_COLOR * c, int n)""")
     check_if_initialized()
     pcolr = cty.cast(colr, cty.POINTER(xfc.FL_COLOR))
-    inum = convert_to_int(num)
-    keep_elem_refs(colr, pcolr, num, inum)
-    _fl_free_colors(pcolr, inum)
+    inumcolr = convert_to_int(numcolr)
+    keep_elem_refs(colr, pcolr, numcolr, inumcolr)
+    _fl_free_colors(pcolr, inumcolr)
 
 
-def fl_free_pixels(pix, num):
+def fl_free_pixels(pix, numcolr):
     """
-        fl_free_pixels(pix, num)
+    fl_free_pixels(pix, numcolr)
 
-        Frees allocated colors from the default colormap, if pixel values
-        are known. You shouldn't do that for the reserved colors (i.e.
-        colors with indices below xfdata.FL_FREE_COL1).
+    Frees allocated colors from the default colormap, if pixel values are
+    known. You shouldn't do that for the reserved colors (i.e. colors with
+    indices below xfdata.FL_FREE_COL1).
 
-        @param pix: pixel number (<long_pos>)
-        @param num: number of colors stored (<int>)
+    @param pix: pixel number
+    @type pix: long_pos
+    @param numcolr: number of colors stored
+    @type numcolr: int
 
-        @example:
+    @example: ?
 
-        @status: Untested + NoDoc + NoDemo = NOT OK
+    @status: Untested + NoDoc + NoDemo = NOT OK
     """
-
     _fl_free_pixels = cfuncproto(
-            load_so_libforms(), "fl_free_pixels",\
-            None, [cty.POINTER(cty.c_ulong), cty.c_int],\
-            """void fl_free_pixels(long unsigned int * pix, int n)
-            """)
+        load_so_libforms(), "fl_free_pixels",\
+        None, [cty.POINTER(cty.c_ulong), cty.c_int],\
+        """void fl_free_pixels(long unsigned int * pix, int n)""")
     check_if_initialized()
     ppix = cty.cast(pix, cty.POINTER(cty.c_ulong))
-    inum = convert_to_int(num)
-    keep_elem_refs(pix, ppix, num, inum)
-    _fl_free_pixels(ppix, inum)
+    inumcolr = convert_to_int(numcolr)
+    keep_elem_refs(pix, ppix, numcolr, inumcolr)
+    _fl_free_pixels(ppix, inumcolr)
 
 
+# TODO: figure out what is its purpose.
 def fl_set_color_leak(flag):
     """ fl_set_color_leak(flag)
 
-        Enables or disables the leakage of color.
+        Enables or disables the leakage of color. ?
 
-        @param flag: flag to enable/disable leakage of color (<int>)
-        @type flag: 0 (to disable) or 1 (to enable)
+        @param flag: flag to enable/disable leakage of color. Values 0 (to
+            disable) or 1 (to enable)
+        @type flag: int
 
         @example: fl_set_color_leak(1)
 
         @status: Tested + Doc + NoDemo = OK
     """
-
     _fl_set_color_leak = cfuncproto(
-            load_so_libforms(), "fl_set_color_leak",\
-            None, [cty.c_int],\
-            """void fl_set_color_leak(int y)
-            """)
+        load_so_libforms(), "fl_set_color_leak",\
+        None, [cty.c_int],\
+        """void fl_set_color_leak(int y)""")
     check_if_initialized()
     iflag = convert_to_int(flag)
     keep_elem_refs(flag, iflag)
@@ -5396,32 +5175,31 @@ def fl_set_color_leak(flag):
 
 
 def fl_getmcolor(colr):
-    """ fl_getmcolor(colr) -> num., r, g, b
-
-        Obtains the RGB values of an index, returning the pixel value as known
-        by the Xserver. If yu are interested in the internal colormap of XForms
-        fl_get_icm_color() is more efficent.
-
-        @param colr: color value (<long_pos>)
-
-        @returns: color pixel, red, green, blue (<long_pos>, <int>, <int>,
-                  <int>)
-
-        @example: pixl, red, green, blue = fl_getmcolor(xfdata.FL_VIOLET)
-
-        @attention: API change from XForms - upstream was
-                    fl_getmcolor(colr, r, g, b)
-
-        @status: Untested + NoDoc + NoDemo = NOT OK
     """
+    fl_getmcolor(colr) -> long_pos, int, int, int
 
+    Obtains the RGB values of an index, returning the pixel value as known by
+    the X server. If you are interested in the internal colormap of XForms
+    fl_get_icm_color() is more efficient.
+
+    @param colr: color value
+    @type colr: long_pos
+
+    @returns: color pixel, red, green, blue (colr, r, g, b)
+
+    @example: pixl, red, green, blue = fl_getmcolor(xfdata.FL_VIOLET)
+
+    @attention: API change from XForms - upstream was
+        fl_getmcolor(colr, r, g, b)
+
+    @status: Tested + Doc + NoDemo = OK
+    """
     _fl_getmcolor = cfuncproto(
-            load_so_libforms(), "fl_getmcolor",\
-            cty.c_ulong, [xfc.FL_COLOR, cty.POINTER(cty.c_int),\
-            cty.POINTER(cty.c_int), cty.POINTER(cty.c_int)],\
-            """long unsigned int fl_getmcolor(FL_COLOR i, int * r, int * g,
-               int * b)
-            """)
+        load_so_libforms(), "fl_getmcolor",\
+        cty.c_ulong, [xfc.FL_COLOR, cty.POINTER(cty.c_int),\
+        cty.POINTER(cty.c_int), cty.POINTER(cty.c_int)],\
+        """long unsigned int fl_getmcolor(FL_COLOR i, int * r, int * g,
+           int * b)""")
     check_if_initialized()
     check_admitted_listvalues(colr, xfc.COLOR_list)
     ulcolr = convert_to_FL_COLOR(colr)
@@ -5434,28 +5212,28 @@ def fl_getmcolor(colr):
 
 
 def fl_get_pixel(colr):
-    """ fl_get_pixel(colr) -> pixel num.
-
-        Obtains the actual pixel value the X server understands. XForms
-        library keeps an internal colormap, initialized to predefined colors.
-        The predefined colors do not correspond to pixel values the server
-        understands but are indexes into the colormap. Therefore, they can't
-        be used in any of the GC altering or Xlib routines.
-
-        @param colr: color value (<long_pos>)
-
-        @returns: pixel <long_pos>
-
-        @example: pixl = fl_get_pixel(xfdata.FL_PEACHPUFF)
-
-        @status: Tested + Doc + Demo = OK
     """
+    fl_get_pixel(colr) -> long_pos
 
+    Obtains the actual pixel value the X server understands. XForms library
+    keeps an internal colormap, initialized to predefined colors. The
+    predefined colors do not correspond to pixel values the server understands
+    but are indexes into the colormap. Therefore, they can't be used in any of
+    the Graphics Context (GC) altering or Xlib routines.
+
+    @param colr: color value
+    @type colr: long_pos
+
+    @returns: color pixel
+
+    @example: pixl = fl_get_pixel(xfdata.FL_PEACHPUFF)
+
+    @status: Tested + Doc + Demo = OK
+    """
     _fl_get_pixel = cfuncproto(
-            load_so_libforms(), "fl_get_pixel",\
-            cty.c_ulong, [xfc.FL_COLOR],\
-            """long unsigned int fl_get_pixel(FL_COLOR col)
-            """)
+        load_so_libforms(), "fl_get_pixel",\
+        cty.c_ulong, [xfc.FL_COLOR],\
+        """long unsigned int fl_get_pixel(FL_COLOR col)""")
     check_if_initialized()
     check_admitted_listvalues(colr, xfc.COLOR_list)
     ulcolr = convert_to_FL_COLOR(colr)
@@ -5468,32 +5246,32 @@ fl_get_flcolor = fl_get_pixel
 
 
 def fl_get_icm_color(colr):
-    """ fl_get_icm_color(colr) -> r, g, b
-
-        Queries the internal colormap handled by XForms, returning red,
-        green and blue values corresponding to color index. Note that it
-        does not communicate with the X server, it only return information
-        about the internal colormap, which is made known to the X server by
-        the initialization routine fl_initialize().
-
-        @param colr: color value (<long_pos>)
-
-        @returns: red, green, blue (<int>, <int>, <int>)
-
-        @example: red, green, blue = fl_get_icm_color(xfdata.FL_OLIVE)
-
-        @attention: API change from XForms - upstream was
-                    fl_get_icm_color(colr, r, g, b)
-
-        @status: Tested + Doc + NoDemo = OK
     """
+    fl_get_icm_color(colr) -> int, int, int
 
+    Queries the internal colormap handled by XForms, returning red, green and
+    blue values corresponding to color index. Note that it does not
+    communicate with the X server, it only return information about the
+    internal colormap, which is made known to the X server by the
+    initialization routine fl_initialize().
+
+    @param colr: color value
+    @type colr: long_pos
+
+    @returns: red, green, blue (r, g, b)
+
+    @example: red, green, blue = fl_get_icm_color(xfdata.FL_OLIVE)
+
+    @attention: API change from XForms - upstream was
+        fl_get_icm_color(colr, r, g, b)
+
+    @status: Tested + Doc + NoDemo = OK
+    """
     _fl_get_icm_color = cfuncproto(
-            load_so_libforms(), "fl_get_icm_color",\
-            None, [xfc.FL_COLOR, cty.POINTER(cty.c_int),
-            cty.POINTER(cty.c_int), cty.POINTER(cty.c_int)],\
-            """void fl_get_icm_color(FL_COLOR col, int * r, int * g, int * b)
-            """)
+        load_so_libforms(), "fl_get_icm_color",\
+        None, [xfc.FL_COLOR, cty.POINTER(cty.c_int),
+        cty.POINTER(cty.c_int), cty.POINTER(cty.c_int)],\
+        """void fl_get_icm_color(FL_COLOR col, int * r, int * g, int * b)""")
     check_if_initialized()
     check_admitted_listvalues(colr, xfc.COLOR_list)
     ulcolr = convert_to_FL_COLOR(colr)
@@ -5506,31 +5284,33 @@ def fl_get_icm_color(colr):
 
 
 def fl_set_icm_color(colr, r, g, b):
-    """ fl_set_icm_color(colr, r, g, b)
-
-        Changes the internal colormap handled by XForms, setting a color
-        index using a red, green and blue values' combination. You have to
-        call fl_set_icm_color() before fl_initialize() to change XForms's
-        default colormap. Note that it does not communicate with the X server,
-        it only populate the internal colormap, which is made known to the X
-        server by the initialization routine fl_initialize().
-
-        @param colr: color value (<long_pos>)
-        @param r: red value (<int>)
-        @param g: green value (<int>)
-        @param b: blue value (<int>)
-
-        @example: fl_set_icm_color(xfdata.FL_FREE_COL8, 75, 150, 225)
-
-        @status: Tested + Doc + NoDemo = OK
     """
+    fl_set_icm_color(colr, r, g, b)
 
+    Changes the internal colormap handled by XForms, setting a color index
+    using a red, green and blue values' combination. You have to call
+    fl_set_icm_color() before fl_initialize() to change XForms's default
+    colormap. Note that it does not communicate with the X server, it only
+    populate the internal colormap, which is made known to the X server by
+    the initialization routine fl_initialize().
+
+    @param colr: color value
+    @type colr: long_pos
+    @param r: value for red
+    @type r: int
+    @param g: value for green
+    @type g: int
+    @param b: value for blue
+    @type b: int
+
+    @example: fl_set_icm_color(xfdata.FL_FREE_COL8, 75, 150, 225)
+
+    @status: Tested + Doc + NoDemo = OK
+    """
     _fl_set_icm_color = cfuncproto(
-            load_so_libforms(), "fl_set_icm_color",\
-            None, [xfc.FL_COLOR, cty.c_int, cty.c_int, cty.c_int],\
-            """void fl_set_icm_color(FL_COLOR col, int r, int g, int b)
-            """)
-    check_if_initialized()
+        load_so_libforms(), "fl_set_icm_color",\
+        None, [xfc.FL_COLOR, cty.c_int, cty.c_int, cty.c_int],\
+        """void fl_set_icm_color(FL_COLOR col, int r, int g, int b)""")
     check_admitted_listvalues(colr, xfc.COLOR_list)
     ulcolr = convert_to_FL_COLOR(colr)
     ir = convert_to_int(r)
@@ -5541,22 +5321,23 @@ def fl_set_icm_color(colr, r, g, b):
 
 
 def fl_color(colr):
-    """ fl_color(colr)
-
-        Sets the foreground color in the XForms library's default GC (gc[0]).
-
-        @param colr: color value (<long_pos>)
-
-        @example: fl_color(xfdata.FL_ORANGE)
-
-        @status: Tested + Doc + NoDemo = OK
     """
+    fl_color(colr)
 
+    Sets the foreground color in the XForms library's default Graphics
+    Context (gc[0]).
+
+    @param colr: color value
+    @type colr: long_pos
+
+    @example: fl_color(xfdata.FL_ORANGE)
+
+    @status: Tested + Doc + NoDemo = OK
+    """
     _fl_color = cfuncproto(
-            load_so_libforms(), "fl_color",\
-            None, [xfc.FL_COLOR],\
-            """void fl_color(FL_COLOR col)
-            """)
+        load_so_libforms(), "fl_color",\
+        None, [xfc.FL_COLOR],\
+        """void fl_color(FL_COLOR col)""")
     check_if_initialized()
     check_admitted_listvalues(colr, xfc.COLOR_list)
     ulcolr = convert_to_FL_COLOR(colr)
@@ -5565,22 +5346,22 @@ def fl_color(colr):
 
 
 def fl_bk_color(colr):
-    """ fl_bk_color(colr)
-
-        Sets the background color in the default GC (gc[0]).
-
-        @param colr: color value (<long_pos>)
-
-        @example: fl_bk_color(xfdata.FL_MEDIUMORCHID)
-
-        @status: Tested + Doc + NoDemo = OK
     """
+    fl_bk_color(colr)
 
+    Sets the background color in the default Graphics Context (gc[0]).
+
+    @param colr: color value
+    @type colr: long_pos
+
+    @example: fl_bk_color(xfdata.FL_MEDIUMORCHID)
+
+    @status: Tested + Doc + NoDemo = OK
+    """
     _fl_bk_color = cfuncproto(
-            load_so_libforms(), "fl_bk_color",\
-            None, [xfc.FL_COLOR],\
-            """void fl_bk_color(FL_COLOR col)
-            """)
+        load_so_libforms(), "fl_bk_color",\
+        None, [xfc.FL_COLOR],\
+        """void fl_bk_color(FL_COLOR col)""")
     check_if_initialized()
     check_admitted_listvalues(colr, xfc.COLOR_list)
     ulcolr = convert_to_FL_COLOR(colr)
@@ -5589,20 +5370,20 @@ def fl_bk_color(colr):
 
 
 def fl_textcolor(colr):
-    """ fl_textcolor(colr)
-
-        @param colr: color value (<long_pos>)
-
-        @example: fl_textcolor(xfdata.FL_LIGHTCORAL)
-
-        @status: Untested + NoDoc + NoDemo = NOT OK
     """
+    fl_textcolor(colr)
 
+    @param colr: color value
+    @type colr: long_pos
+
+    @example: fl_textcolor(xfdata.FL_LIGHTCORAL)
+
+    @status: Untested + NoDoc + NoDemo = NOT OK
+    """
     _fl_textcolor = cfuncproto(
-            load_so_libforms(), "fl_textcolor",\
-            None, [xfc.FL_COLOR],\
-            """void fl_textcolor(FL_COLOR col)
-            """)
+        load_so_libforms(), "fl_textcolor",\
+        None, [xfc.FL_COLOR],\
+        """void fl_textcolor(FL_COLOR col)""")
     check_if_initialized()
     check_admitted_listvalues(colr, xfc.COLOR_list)
     ulcolr = convert_to_FL_COLOR(colr)
@@ -5611,20 +5392,20 @@ def fl_textcolor(colr):
 
 
 def fl_bk_textcolor(colr):
-    """ fl_bk_textcolor(colr)
-
-        @param colr: color value (<long_pos>)
-
-        @example: fl_bk_textcolor(xfdata.FL_IVORY)
-
-        @status: Untested + NoDoc + NoDemo = NOT OK
     """
+    fl_bk_textcolor(colr)
 
+    @param colr: color value
+    @type colr: long_pos
+
+    @example: fl_bk_textcolor(xfdata.FL_IVORY)
+
+    @status: Tested + NoDoc + NoDemo = NOT OK
+    """
     _fl_bk_textcolor = cfuncproto(
-            load_so_libforms(), "fl_bk_textcolor",\
-            None, [xfc.FL_COLOR],\
-            """void fl_bk_textcolor(FL_COLOR col)
-            """)
+        load_so_libforms(), "fl_bk_textcolor",\
+        None, [xfc.FL_COLOR],\
+        """void fl_bk_textcolor(FL_COLOR col)""")
     check_if_initialized()
     check_admitted_listvalues(colr, xfc.COLOR_list)
     ulcolr = convert_to_FL_COLOR(colr)
@@ -5633,26 +5414,28 @@ def fl_bk_textcolor(colr):
 
 
 def fl_set_gamma(r, g, b):
-    """ fl_set_gamma(r, g, b)
-
-        Adjusts the brightness of the builtin colors. Larger the value,
-        brighter the colors. The default gamma is 1. This has to be called
-        before fl_initialize().
-
-        @param r: gamma value for red (<float>)
-        @param g: gamma value for green (<float>)
-        @param b: gamma value for blue (<float>)
-
-        @example: fl_set_gamma(2.0, 2.0, 2.0)
-
-        @status: Tested + Doc + NoDemo = OK
     """
+    fl_set_gamma(r, g, b)
 
+    Adjusts the brightness of the builtin colors. Larger the value, brighter
+    the colors. The default gamma is 1. This has to be called before
+    fl_initialize().
+
+    @param r: gamma value for red
+    @type r: float
+    @param g: gamma value for green
+    @type g: float
+    @param b: gamma value for blue
+    @type b: float
+
+    @example: fl_set_gamma(2.0, 2.0, 2.0)
+
+    @status: Tested + Doc + NoDemo = OK
+    """
     _fl_set_gamma = cfuncproto(
-            load_so_libforms(), "fl_set_gamma",\
-            None, [cty.c_double, cty.c_double, cty.c_double],\
-            """void fl_set_gamma(double r, double g, double b)
-            """)
+        load_so_libforms(), "fl_set_gamma",\
+        None, [cty.c_double, cty.c_double, cty.c_double],\
+        """void fl_set_gamma(double r, double g, double b)""")
     fr = convert_to_double(r)
     fg = convert_to_double(g)
     fb = convert_to_double(b)
@@ -5712,29 +5495,28 @@ def FL_crnd(a):
 # utilities for new objects
 
 def fl_add_object(pFlForm, pFlObject):
-    """ fl_add_object(pFlForm, pFlObject)
-
-        The object remains available (except if it's an object that marks the
-        start or end of a group) and can be added again to the same or another
-        form later. Normally, this function is used in object classes to add a
-        newly created object to a form. It may not be used for objects
-        representing the start or end of a group.
-
-        @param pFlForm: form which an object will be added to
-                      @type pFlForm: pointer to xfdata.FL_FORM
-        @param pFlObject: object to be added
-        @type pFlObject: pointer to xfdata.FL_OBJECT
-
-        @example: fl_add_object(pform2, pobjnew2)
-
-        @status: Tested + Doc + NoDemo = OK
     """
+    fl_add_object(pFlForm, pFlObject)
 
+    The object remains available (except if it's an object that marks the start
+    or end of a group) and can be added again to the same or another form
+    later. Normally, this function is used in object classes to add a newly
+    created object to a form. It may not be used for objects representing the
+    start or end of a group.
+
+    @param pFlForm: form which an object will be added to
+    @type pFlForm: pointer to xfdata.FL_FORM
+    @param pFlObject: object to be added
+    @type pFlObject: pointer to xfdata.FL_OBJECT
+
+    @example: fl_add_object(pform2, pobjnew2)
+
+    @status: Tested + Doc + NoDemo = OK
+    """
     _fl_add_object = cfuncproto(
-            load_so_libforms(), "fl_add_object",\
-            None, [cty.POINTER(xfc.FL_FORM), cty.POINTER(xfc.FL_OBJECT)],
-            """void fl_add_object(FL_FORM * form, FL_OBJECT * obj)
-            """)
+        load_so_libforms(), "fl_add_object",\
+        None, [cty.POINTER(xfc.FL_FORM), cty.POINTER(xfc.FL_OBJECT)],
+        """void fl_add_object(FL_FORM * form, FL_OBJECT * obj)""")
     check_if_initialized()
     check_if_FL_FORM_ptr(pFlForm)
     check_if_FL_OBJECT_ptr(pFlObject)
@@ -5743,25 +5525,24 @@ def fl_add_object(pFlForm, pFlObject):
 
 
 def fl_addto_form(pFlForm):
-    """ fl_addto_form(pFlForm) -> pFlForm
-
-        Reopens a form (after fl_end_form) for adding further objects to it.
-
-        @param pFlForm: form
-                      @type pFlForm: pointer to xfdata.FL_FORM
-
-        @returns: form @type pFlForm: pointer to xfdata.FL_FORM or None (on failure)
-
-        @example: form = fl_addto_form(closedform)
-
-        @status: Tested + Doc + NoDemo = OK
     """
+    fl_addto_form(pFlForm) -> pFlForm
 
+    Reopens a form (after fl_end_form) for adding further objects to it.
+
+    @param pFlForm: form
+    @type pFlForm: pointer to xfdata.FL_FORM
+
+    @returns: form (pointer to xfdata.FL_FORM), or None (on failure)
+
+    @example: form = fl_addto_form(closedform)
+
+    @status: Tested + Doc + NoDemo = OK
+    """
     _fl_addto_form = cfuncproto(
-            load_so_libforms(), "fl_addto_form",
-            cty.POINTER(xfc.FL_FORM), [cty.POINTER(xfc.FL_FORM)],\
-            """FL_FORM * fl_addto_form(FL_FORM * form)
-            """)
+        load_so_libforms(), "fl_addto_form",
+        cty.POINTER(xfc.FL_FORM), [cty.POINTER(xfc.FL_FORM)],\
+        """FL_FORM * fl_addto_form(FL_FORM * form)""")
     check_if_initialized()
     check_if_FL_FORM_ptr(pFlForm)
     keep_elem_refs(pFlForm)
@@ -5770,43 +5551,48 @@ def fl_addto_form(pFlForm):
 
 
 def fl_make_object(objclass, objtype, x, y, w, h, label, py_HandlePtr):
-    """ fl_make_object(objclass, objtype, x, y, w, h, label, py_HandlePtr) -> pFlObject
-
-        Makes a custom object.
-
-        @param objclass: class type of object to be made (<int>)
-        @param objtype: type of the object to be made (<int>)
-        @param x: horizontal position of object (upper-left corner) (<int>)
-        @param y: vertical position of object (upper-left corner) (<int>)
-        @param w: width in coord units (<int>)
-        @param h: height coord units (<int>)
-        @param label: text label of object (<string>)
-        @param py_HandlePtr: python function for handling object, with
-                             returning value
-        @type py_HandlePtr: __ funcname (pFlObject, num, coord, coord, num,
-                            ptr_void) -> num __
-
-        @returns: object made @type pFlObject: pointer to xfdata.FL_OBJECT
-
-        @example: def handlecb(pobj, num, w, h, num, vdata):
-        @example: |->| ...
-        @example: |->| return 0
-        @example: fl_make_object(...)
-
-        @status: Untested + NoDoc + NoDemo = NOT OK
     """
+    fl_make_object(objclass, objtype, x, y, w, h, label, py_HandlePtr) -> pFlObject
 
+    Makes a custom object.
+
+    @param objclass: class type of object to be made
+    @type objclass: int
+    @param objtype: type of the object to be made
+    @type objtype: int
+    @param x: horizontal position of object (upper-left corner)
+    @type x: int
+    @param y: vertical position of object (upper-left corner)
+    @type y: int
+    @param w: width in coord units
+    @type w: int
+    @param h: height coord units
+    @type h: int
+    @param label: text label of object
+    @type label: str
+    @param py_HandlePtr: python function for handling object, returning value
+    @type py_HandlePtr: __ funcname (pFlObject, num, coord, coord, num,
+        ptr_void) -> num __
+
+    @returns: object made (pointer to xfdata.FL_OBJECT)
+
+    @example: def handlecb(pobj, num, w, h, num, vdata):
+    @example: |->| ...
+    @example: |->| return 0
+    @example: fl_make_object(...)
+
+    @status: Untested + Doc + NoDemo = NOT OK
+    """
     #FL_HANDLEPTR = cty.CFUNCTYPE(cty.c_int, cty.POINTER(xfc.FL_OBJECT),
     #                cty.c_int, FL_Coord, FL_Coord, cty.c_int, cty.c_void_p)
     _fl_make_object = cfuncproto(
-            load_so_libforms(), "fl_make_object",\
-            cty.POINTER(xfc.FL_OBJECT), [cty.c_int, cty.c_int, xfc.FL_Coord,
-            xfc.FL_Coord, xfc.FL_Coord, xfc.FL_Coord, xfc.STRING,
-            xfc.FL_HANDLEPTR],
-            """FL_OBJECT * fl_make_object(int objclass, int type, FL_Coord x,
-               FL_Coord y, FL_Coord w, FL_Coord h, const char * label,
-               FL_HANDLEPTR handle)
-            """)
+        load_so_libforms(), "fl_make_object",\
+        cty.POINTER(xfc.FL_OBJECT), [cty.c_int, cty.c_int, xfc.FL_Coord,
+        xfc.FL_Coord, xfc.FL_Coord, xfc.FL_Coord, xfc.STRING,
+        xfc.FL_HANDLEPTR],
+        """FL_OBJECT * fl_make_object(int objclass, int type, FL_Coord x,
+           FL_Coord y, FL_Coord w, FL_Coord h, const char * label,
+           FL_HANDLEPTR handle)""")
     check_if_initialized()
     check_admitted_listvalues(objclass, xfc.OBJCLASS_list)
     iobjclass = convert_to_int(objclass)
@@ -5826,23 +5612,22 @@ def fl_make_object(objclass, objtype, x, y, w, h, label, py_HandlePtr):
 
 
 def fl_add_child(pFlObject1, pFlObject2):
-    """ fl_add_child(pFlObject1, pFlObject2)
-
-        @param pFlObject1: father object
-         @type pFlObject: pointer to xfdata.FL_OBJECT
-        @param pFlObject2: child object to add
-         @type pFlObject: pointer to xfdata.FL_OBJECT
-
-        @example: 
-
-        @status: Untested + NoDoc + NoDemo = NOT OK
     """
+    fl_add_child(pFlObject1, pFlObject2)
 
+    @param pFlObject1: father object
+    @type pFlObject1: pointer to xfdata.FL_OBJECT
+    @param pFlObject2: child object to add
+    @type pFlObject2: pointer to xfdata.FL_OBJECT
+
+    @example: ?
+
+    @status: Untested + NoDoc + NoDemo = NOT OK
+    """
     _fl_add_child = cfuncproto(
-            load_so_libforms(), "fl_add_child",\
-            None, [cty.POINTER(xfc.FL_OBJECT), cty.POINTER(xfc.FL_OBJECT)],
-            """void fl_add_child(FL_OBJECT * p1, FL_OBJECT * p2)
-            """)
+        load_so_libforms(), "fl_add_child",\
+        None, [cty.POINTER(xfc.FL_OBJECT), cty.POINTER(xfc.FL_OBJECT)],
+        """void fl_add_child(FL_OBJECT * p1, FL_OBJECT * p2)""")
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject1)
     check_if_FL_OBJECT_ptr(pFlObject2)
@@ -5851,24 +5636,23 @@ def fl_add_child(pFlObject1, pFlObject2):
 
 
 def fl_set_coordunit(unit):
-    """ fl_set_coordunit(unit)
-
-        Sets the unit for screen coordinates, instead of default ones (pixels).
-
-        @param unit: coord unit type to set (<int>)
-        @type unit: (from xfdata module) FL_COORD_PIXEL, FL_COORD_MM,
-                    FL_COORD_POINT, FL_COORD_centiMM, FL_COORD_centiPOINT
-
-        @example: fl_set_coordunit(xfdata.FL_COORD_MM)
-
-        @status: Tested + Doc + Demo = OK
     """
+    fl_set_coordunit(unit)
 
+    Sets the unit for screen coordinates, instead of default ones (pixels).
+
+    @param unit: coord unit type to set. Values (from xfdata module)
+        FL_COORD_PIXEL, FL_COORD_MM, FL_COORD_POINT, FL_COORD_centiMM,
+        FL_COORD_centiPOINT
+
+    @example: fl_set_coordunit(xfdata.FL_COORD_MM)
+
+    @status: Tested + Doc + Demo = OK
+    """
     _fl_set_coordunit = cfuncproto(
-            load_so_libforms(), "fl_set_coordunit",\
-            None, [cty.c_int],\
-            """void fl_set_coordunit(int u)
-            """)
+        load_so_libforms(), "fl_set_coordunit",\
+        None, [cty.c_int],\
+        """void fl_set_coordunit(int u)""")
     check_if_initialized()
     check_admitted_listvalues(unit, xfc.COORDUNIT_list)
     iunit = convert_to_int(unit)
@@ -5877,52 +5661,50 @@ def fl_set_coordunit(unit):
 
 
 def fl_set_border_width(bw):
-    """ fl_set_border_width(bw)
-
-        Sets the width of the border.  If set to a negative number, all
-        objects appear to have a softer appearance.
-
-        @param bw: value of border width (<int>)
-
-        @example: fl_set_border_width(-3)
-
-        @status: Tested + Doc + Demo = OK
     """
+    fl_set_border_width(bw)
 
+    Sets the width of the border.  If set to a negative number, all objects
+    appear to have a softer appearance.
+
+    @param bw: value of border width
+    @type bw: int
+
+    @example: fl_set_border_width(-3)
+
+    @status: Tested + Doc + Demo = OK
+    """
     _fl_set_border_width = cfuncproto(
-            load_so_libforms(), "fl_set_border_width",\
-            None, [cty.c_int],\
-            """void fl_set_border_width(int bw)
-            """)
+        load_so_libforms(), "fl_set_border_width",\
+        None, [cty.c_int],\
+        """void fl_set_border_width(int bw)""")
     ibw = convert_to_int(bw)
     keep_elem_refs(bw, ibw)
     _fl_set_border_width(ibw)
 
 
 def fl_set_scrollbar_type(sbtype):
-    """ fl_set_scrollbar_type(sbtype)
-
-        Sets the type of a scrollbar.
-
-        @param sbtype: type of scrollbar (<int>)
-        @type sbtype: (from xfdata module) FL_VERT_SCROLLBAR,
-                      FL_HOR_SCROLLBAR, FL_VERT_THIN_SCROLLBAR,
-                      FL_HOR_THIN_SCROLLBAR, FL_VERT_NICE_SCROLLBAR,
-                      FL_HOR_NICE_SCROLLBAR, FL_VERT_PLAIN_SCROLLBAR,
-                      FL_HOR_PLAIN_SCROLLBAR, FL_HOR_BASIC_SCROLLBAR,
-                      FL_VERT_BASIC_SCROLLBAR, FL_NORMAL_SCROLLBAR,
-                      FL_THIN_SCROLLBAR, FL_NICE_SCROLLBAR, FL_PLAIN_SCROLLBAR
-
-        @example: fl_set_scrollbar_type(xfdata.FL_VERT_BASIC_SCROLLBAR)
-
-        @status: Tested + Doc + NoDemo = OK
     """
+    fl_set_scrollbar_type(sbtype)
 
+    Sets the type of a scrollbar.
+
+    @param sbtype: type of scrollbar. Values (from xfdata module)
+        FL_VERT_SCROLLBAR, FL_HOR_SCROLLBAR, FL_VERT_THIN_SCROLLBAR,
+        FL_HOR_THIN_SCROLLBAR, FL_VERT_NICE_SCROLLBAR, FL_HOR_NICE_SCROLLBAR,
+        FL_VERT_PLAIN_SCROLLBAR, FL_HOR_PLAIN_SCROLLBAR,
+        FL_HOR_BASIC_SCROLLBAR, FL_VERT_BASIC_SCROLLBAR, FL_NORMAL_SCROLLBAR,
+        FL_THIN_SCROLLBAR, FL_NICE_SCROLLBAR, FL_PLAIN_SCROLLBAR
+    @type sbtype: int
+
+    @example: fl_set_scrollbar_type(xfdata.FL_VERT_BASIC_SCROLLBAR)
+
+    @status: Tested + Doc + NoDemo = OK
+    """
     _fl_set_scrollbar_type = cfuncproto(
-            load_so_libforms(), "fl_set_scrollbar_type",\
-            None, [cty.c_int],\
-            """void fl_set_scrollbar_type(int t)
-            """)
+        load_so_libforms(), "fl_set_scrollbar_type",\
+        None, [cty.c_int],\
+        """void fl_set_scrollbar_type(int t)""")
     check_admitted_listvalues(sbtype, xfc.SCROLLTYPE_list)
     isbtype = convert_to_int(sbtype)
     keep_elem_refs(sbtype, isbtype)
@@ -5930,18 +5712,19 @@ def fl_set_scrollbar_type(sbtype):
 
 
 def fl_set_thinscrollbar(flag):
-    """ fl_set_thinscrollbar(flag)
-
-        Sets if scrollbar type is thin or normal.
-
-        @param flag: flag if thin scrollbar or not
-        @type flag: 1 (for thin) or 0 (for normal)
-
-        @example: fl_set_thinscrollbar(1)
-
-        @status: Tested + Doc + NoDemo = OK
     """
+    fl_set_thinscrollbar(flag)
 
+    Sets if scrollbar type is thin or normal.
+
+    @param flag: flag if thin scrollbar or not. Values 1 (for thin) or 0 (for
+        normal)
+    @type flag: int
+
+    @example: fl_set_thinscrollbar(1)
+
+    @status: Tested + Doc + NoDemo = OK
+    """
     if flag:
         sbtype = xfc.FL_THIN_SCROLLBAR
     else:
@@ -5950,63 +5733,60 @@ def fl_set_thinscrollbar(flag):
 
 
 def fl_flip_yorigin():
-    """ fl_flip_yorigin()
-
-        Sets the origin of XForms coordinates at the lower-left corner of the
-        form (instead of default upper-left corner). It has to be called
-        before fl_initialize().
-
-        @example: fl_flip_yorigin()
-
-        @status: Tested + Doc + Demo = OK
     """
+    fl_flip_yorigin()
 
+    Sets the origin of XForms coordinates at the lower-left corner of the form
+    (instead of default upper-left corner). It has to be called before
+    fl_initialize().
+
+    @example: fl_flip_yorigin()
+
+    @status: Tested + Doc + Demo = OK
+    """
     _fl_flip_yorigin = cfuncproto(
-            load_so_libforms(), "fl_flip_yorigin",\
-            None, [],\
-            """void fl_flip_yorigin()
-            """)
+        load_so_libforms(), "fl_flip_yorigin",\
+        None, [],\
+        """void fl_flip_yorigin()""")
     _fl_flip_yorigin()
 
 
 def fl_get_coordunit():
-    """ fl_get_coordunit() -> coord_unit num.
-
-        Returns the unit used for screen coordinates (e.g. xfdata.FL_COORD_MM,
-        xfdata.FL_COORD_centiPOINT, etc..).
-
-        @returns: current coordinate unit (<int>)
-
-        @example: cunit = fl_get_coordunit()
-
-        @status: Tested + Doc + Demo = OK
     """
+    fl_get_coordunit() -> int
 
+    Returns the unit used for screen coordinates (e.g. xfdata.FL_COORD_MM,
+    xfdata.FL_COORD_centiPOINT, etc..).
+
+    @returns: current coordinates unit
+
+    @example: cunit = fl_get_coordunit()
+
+    @status: Tested + Doc + Demo = OK
+    """
     _fl_get_coordunit = cfuncproto(
             load_so_libforms(), "fl_get_coordunit",\
             cty.c_int, [],\
-            """int fl_get_coordunit()
-            """)
+            """int fl_get_coordunit()""")
     check_if_initialized()
     retval = _fl_get_coordunit()
     return retval
 
 
 def fl_get_border_width():
-    """ fl_get_border_width() -> bw
-
-        Returns the width of border.
-
-        @returns: borderwidth (<int>)
-
-        @status: Tested + Doc + Demo = OK
     """
+    fl_get_border_width() -> int
 
+    Returns the width of border.
+
+    @returns: borderwidth (bw)
+
+    @status: Tested + Doc + Demo = OK
+    """
     _fl_get_border_width = cfuncproto(
-            load_so_libforms(), "fl_get_border_width",\
-            cty.c_int, [],\
-            """int fl_get_border_width()
-            """)
+        load_so_libforms(), "fl_get_border_width",\
+        cty.c_int, [],\
+        """int fl_get_border_width()""")
     check_if_initialized()
     retval = _fl_get_border_width()
     return retval
@@ -6015,24 +5795,24 @@ def fl_get_border_width():
 # misc. routines
 
 def fl_ringbell(percent):
-    """ fl_ringbell(percent)
-
-        Sounds the keyboard ringbell (if capable). Note that not all
-        keyboards support volume variations.
-
-        @param percent: volume value for the bell, min -100 (off), 
-                        max 100, 0 is default.
-
-        @example: fl_ringbell(50)
-
-        @status: Tested + Doc + NoDemo = OK
     """
+    fl_ringbell(percent)
 
+    Sounds the keyboard ringbell (if capable). Note that not all
+    keyboards support volume variations.
+
+    @param percent: volume value for the bell. Values from -100 (minimum, off),
+        to 100 (max), 0 is default.
+    @type percent: int
+
+    @example: fl_ringbell(50)
+
+    @status: Tested + Doc + NoDemo = OK
+    """
     _fl_ringbell = cfuncproto(
-            load_so_libforms(), "fl_ringbell",\
-            None, [cty.c_int],\
-            """void fl_ringbell(int percent)
-            """)
+        load_so_libforms(), "fl_ringbell",\
+        None, [cty.c_int],\
+        """void fl_ringbell(int percent)""")
     check_if_initialized()
     ipercent = convert_to_int(percent)
     keep_elem_refs(percent, ipercent)
@@ -6040,27 +5820,24 @@ def fl_ringbell(percent):
 
 
 def fl_gettime():
-    """ fl_gettime() -> sec, usec
-
-        Returns the current time, expressed in seconds and microseconds
-        since 1st January 1970, 00:00 GMT. It is most useful for computing
-        time differences.
-
-        @returns: seconds and microseconds (<long>, <long>)
-
-        @example: secs, usecs = fl_gettime()
-
-        @attention: API change from XForms - upstream was
-                    fl_gettime(sec, usec)
-
-        @status: Tested + Doc + Demo = OK
     """
+    fl_gettime() -> long, long
 
+    Returns the current time, expressed in seconds and microseconds since 1st
+    January 1970, 00:00 GMT. It is most useful for computing time differences.
+
+    @returns: seconds and microseconds (secs, msecs)
+
+    @example: secs, usecs = fl_gettime()
+
+    @attention: API change from XForms - upstream was fl_gettime(sec, usec)
+
+    @status: Tested + Doc + Demo = OK
+    """
     _fl_gettime = cfuncproto(
-            load_so_libforms(), "fl_gettime",\
-            None, [cty.POINTER(cty.c_long), cty.POINTER(cty.c_long)],\
-            """void fl_gettime(long int * sec, long int * usec)
-            """)
+        load_so_libforms(), "fl_gettime",\
+        None, [cty.POINTER(cty.c_long), cty.POINTER(cty.c_long)],\
+        """void fl_gettime(long int * sec, long int * usec)""")
     check_if_initialized()
     sec, psec = make_long_and_pointer()
     usec, pusec = make_long_and_pointer()
@@ -6070,78 +5847,74 @@ def fl_gettime():
 
 
 def fl_now():
-    """ fl_now() -> string
-
-        Returns a string form of the current date and time. The format of
-        the string is of the form "Wed Jun 30 21:49:08 1993"
-
-        @returns: current date and time (<string>)
-
-        @example: curdattim = fl_now()
-
-        @status: Tested + Doc + NoDemo = OK
     """
+    fl_now() -> str
 
+    Returns a string form of the current date and time. The format of the
+    string is of the form "Wed Jun 30 21:49:08 1993"
+
+    @returns: current date and time
+
+    @example: curdattim = fl_now()
+
+    @status: Tested + Doc + NoDemo = OK
+    """
     _fl_now = cfuncproto(
-            load_so_libforms(), "fl_now",\
-            xfc.STRING, [],\
-            """const char * fl_now()
-            """)
+        load_so_libforms(), "fl_now",\
+        xfc.STRING, [],\
+        """const char * fl_now()""")
     check_if_initialized()
     retval = _fl_now()
     return retval
 
 
 def fl_whoami():
-    """ fl_whoami() -> string
-
-        Returns the user name who is running the application.
-
-        @returns: text of username (<string>)
-
-        @example: usertxt = fl_whoami()
-
-        @status: Tested + Doc + NoDemo = OK
     """
+    fl_whoami() -> str
 
+    Returns the user name who is running the application.
+
+    @returns: text of username
+
+    @example: usertxt = fl_whoami()
+
+    @status: Tested + Doc + NoDemo = OK
+    """
     _fl_whoami = cfuncproto(
-            load_so_libforms(), "fl_whoami",\
-            xfc.STRING, [],\
-            """const char * fl_whoami()
-            """)
+        load_so_libforms(), "fl_whoami",\
+        xfc.STRING, [],\
+        """const char * fl_whoami()""")
     check_if_initialized()
     retval = _fl_whoami()
     return retval
 
 
 def fl_mouse_button():
-    """ fl_mouse_button() -> num.
-
-        Returns which mouse button was pushed or released (e.g.
-        xfdata.FL_RIGHT_MOUSE, xfdata.FL_MIDDLE_MOUSE, etc..). Sometimes an
-        application program might need to find out more information about
-        the event that triggered a callback, e.g., to implement mouse button
-        number sensitive functionalities. This function, if needed, should be
-        called from within a callback. If the callback is triggered by a
-        shortcut, the function returns the keysym (ascii value if ASCII) of
-        the key plus  FL_SHORTCUT. For example, if a button has a shortcut
-        <Ctrl>C (ASCII value is 3), the button number returned upon activation
-        of the shortcut would be xfdata.FL_SHORTCUT + 3. xfdata.FL_SHORTCUT
-        can be used to determine if the callback is triggered by a shortcut
-        or not.
-
-        @returns: which mouse button was pushed or released (<long>)
-
-        @example: mousebtn = fl_mouse_button()
-
-        @status: Tested + Doc + Demo = OK
     """
+    fl_mouse_button() -> long
 
+    Returns which mouse button was pushed or released (e.g.
+    xfdata.FL_RIGHT_MOUSE, xfdata.FL_MIDDLE_MOUSE, etc..). Sometimes an
+    application program might need to find out more information about the
+    event that triggered a callback, e.g., to implement mouse button number
+    sensitive functionalities. This function, if needed, should be called from
+    within a callback. If the callback is triggered by a shortcut, the function
+    returns the keysym (ascii value if ASCII) of the key plus FL_SHORTCUT. For
+    example, if a button has a shortcut <Ctrl>C (ASCII value is 3), the button
+    number returned upon activation of the shortcut would be xfdata.FL_SHORTCUT
+    + 3. You can use xfdata.FL_SHORTCUT to determine if the callback is
+    triggered by a shortcut or not.
+
+    @returns: which mouse button was pushed or released
+
+    @example: mousebtn = fl_mouse_button()
+
+    @status: Tested + Doc + Demo = OK
+    """
     _fl_mouse_button = cfuncproto(
-            load_so_libforms(), "fl_mouse_button",\
-            cty.c_long, [],\
-            """long int fl_mouse_button()
-            """)
+        load_so_libforms(), "fl_mouse_button",\
+        cty.c_long, [],\
+        """long int fl_mouse_button()""")
     check_if_initialized()
     retval = _fl_mouse_button()
     return retval
@@ -6154,23 +5927,24 @@ fl_mousebutton = fl_mouse_button
 
 
 def fl_set_err_logfp(pFile):
-    """ fl_set_err_logfp(pFile)
-
-        The default message handler logs the error to a file instead of 
-        printing to stderr.
-
-        @param pFile: opened file in "w" mode (<pointer to FILE>)
-
-        @example: fl_set_err_logfp(os.open("/dev/null", os.O_WRONLY)) ??
-
-        @status: Untested + NoDoc + NoDemo = NOT OK (find C-like open for fd)
     """
+    fl_set_err_logfp(pFile)
 
+    Makes the default message handler to log the error to a file instead of
+    printing to stderr.
+
+    @param pFile: file opened in "w" mode by fl_popen()
+    @type pFile: pointer to FILE
+
+    @example: pfile = fl_popen("myerrlog", "w")
+    @example: fl_set_err_logfp(pfile)
+
+    @status: Tested + Doc + NoDemo = OK
+    """
     _fl_set_err_logfp = cfuncproto(
-            load_so_libforms(), "fl_set_err_logfp",\
-            None, [cty.POINTER(xfc.FILE)],\
-            """void fl_set_err_logfp(FILE * fp)
-            """)
+        load_so_libforms(), "fl_set_err_logfp",\
+        None, [cty.POINTER(xfc.FILE)],\
+        """void fl_set_err_logfp(FILE * fp)""")
     check_if_initialized()
     keep_elem_refs(pFile)
     _fl_set_err_logfp(pFile)
@@ -6180,32 +5954,31 @@ def fl_set_err_logfp(pFile):
 
 
 def fl_set_error_handler(py_ErrorFunc):
-    """ fl_set_error_handler(py_ErrorFunc)
-
-        Normally the Forms Library reports errors to stderr. This can be
-        avoided or modified by registering an error handling function. The
-        library will call the user handler function with a string indicating
-        in which function an error occured and a formatting string, followed
-        by zero or more arguments. To restore the default handler, call the
-        function again with user handler set to None. You can call this
-        function anytime and as many times as you wish.
-
-        @param py_ErrorFunc: python function for handling error, no return
-        @type py_ErrorFunc: __ funcname (strng, strng) __
-
-        @example: def errhandler(funcnam, errmsg):
-        @example: |->| print "Error caught in %s: %s." % (funcnam, errmsg)
-        @example: fl_set_error_handler(errhandler)
-
-        @status: Tested + Doc + NoDemo = OK
     """
+    fl_set_error_handler(py_ErrorFunc)
 
+    Normally the Forms Library reports errors to stderr. This can be avoided
+    or modified by registering an error handling function. The library will
+    call the user handler function with a string indicating in which function
+    an error occured and a formatting string, followed by zero or more
+    arguments. To restore the default handler, call the function again with
+    user handler set to None. You can call this function anytime and as many
+    times as you wish.
+
+    @param py_ErrorFunc: python function for handling error, no return
+    @type py_ErrorFunc: __ funcname (strng, strng) __
+
+    @example: def errhandler(funcnam, errmsg):
+    @example: |->| print "Error caught in %s: %s." % (funcnam, errmsg)
+    @example: fl_set_error_handler(errhandler)
+
+    @status: Tested + Doc + NoDemo = OK
+    """
     #FL_ERROR_FUNC = cty.CFUNCTYPE(None, STRING, STRING)
     _fl_set_error_handler = cfuncproto(
-            load_so_libforms(), "fl_set_error_handler",\
-            None, [xfc.FL_ERROR_FUNC],\
-            """void fl_set_error_handler(FL_ERROR_FUNC user_func)
-            """)
+        load_so_libforms(), "fl_set_error_handler",\
+        None, [xfc.FL_ERROR_FUNC],\
+        """void fl_set_error_handler(FL_ERROR_FUNC user_func)""")
     check_if_initialized()
     c_ErrorFunc = xfc.FL_ERROR_FUNC(py_ErrorFunc)
     keep_cfunc_refs(c_ErrorFunc, py_ErrorFunc)
@@ -6213,20 +5986,20 @@ def fl_set_error_handler(py_ErrorFunc):
     return retval
 
 
+# maybe pointless as command line args are not supported in fl.initialize()
 def fl_get_cmdline_args(numargs):
     """ fl_get_cmdline_args(numargs) -> pointer to string
 
         @status: Untested + NoDoc + NoDemo = NOT OK
     """
-
     _fl_get_cmdline_args = cfuncproto(
-            load_so_libforms(), "fl_get_cmdline_args",\
-            cty.POINTER(xfc.STRING), [cty.POINTER(cty.c_int)],\
-            """)char * * fl_get_cmdline_args(int * p1)
-            """)
+        load_so_libforms(), "fl_get_cmdline_args",\
+        cty.POINTER(xfc.STRING), [cty.POINTER(cty.c_int)],\
+        """char * * fl_get_cmdline_args(int * p1)""")
     check_if_initialized()
-    keep_elem_refs(numargs)
-    retval = _fl_get_cmdline_args(numargs)
+    pnumargs = cty.cast(numargs, cty.POINTER(cty.c_int))
+    keep_elem_refs(numargs, pnumargs)
+    retval = _fl_get_cmdline_args(pnumargs)
     return retval
 
 
@@ -6237,25 +6010,25 @@ def fl_get_cmdline_args(numargs):
 
 
 def fl_msleep(msec):
-    """ fl_msleep(msec) -> num.
-
-        Waits for a number of milliseconds (with the best resolution
-        possible on your system)
-
-        @param msec: milliseconds to sleep
-
-        @returns: 0 (on success)
-
-        @example: fl_msleep(200)
-
-        @status: Tested + Doc + Demo = OK
     """
+    fl_msleep(msec) -> int
 
+    Waits for a number of milliseconds (with the best resolution possible on
+    your system)
+
+    @param msec: milliseconds to sleep
+    @type msec: long
+
+    @returns: 0 (on success)
+
+    @example: fl_msleep(200)
+
+    @status: Tested + Doc + Demo = OK
+    """
     _fl_msleep = cfuncproto(
-            load_so_libforms(), "fl_msleep",\
-            cty.c_int, [cty.c_ulong],\
-            """int fl_msleep(long unsigned int msec)
-            """)
+        load_so_libforms(), "fl_msleep",\
+        cty.c_int, [cty.c_ulong],\
+        """int fl_msleep(long unsigned int msec)""")
     check_if_initialized()
     ulmsec = convert_to_ulong(msec)
     keep_elem_refs(msec, ulmsec)
@@ -6264,26 +6037,25 @@ def fl_msleep(msec):
 
 
 def fl_is_same_object(pFlObject1, pFlObject2):
-    """ fl_is_same_object(pFlObject1, pFlObject2) -> num.
-
-        Does a comparison between two objects, if they are the same, or not.
-
-        @param pFlObject1: 1st object to compare
-         @type pFlObject: pointer to xfdata.FL_OBJECT
-        @param pFlObject2: 2nd object to compare
-         @type pFlObject: pointer to xfdata.FL_OBJECT
-
-        @returns: 0 (if they are not the same) or non-zero (if they are)
-
-        @status: Tested + Doc + Demo = OK
     """
+    fl_is_same_object(pFlObject1, pFlObject2) -> num.
 
+    Does a comparison between two objects, if they are the same, or not.
+
+    @param pFlObject1: 1st object to compare
+    @type pFlObject: pointer to xfdata.FL_OBJECT
+    @param pFlObject2: 2nd object to compare
+    @type pFlObject: pointer to xfdata.FL_OBJECT
+
+    @returns: 0 (if they are not the same) or non-zero (if they are)
+
+    @status: Tested + Doc + Demo = OK
+    """
     _fl_is_same_object = cfuncproto(
-            load_so_libforms(), "fl_is_same_object", \
-            cty.c_int, [cty.POINTER(xfc.FL_OBJECT),
-            cty.POINTER(xfc.FL_OBJECT)], \
-            """int fl_is_same_object(FL_OBJECT * obj1, FL_OBJECT * obj2)
-            """)
+        load_so_libforms(), "fl_is_same_object", \
+        cty.c_int, [cty.POINTER(xfc.FL_OBJECT),
+        cty.POINTER(xfc.FL_OBJECT)], \
+        """int fl_is_same_object(FL_OBJECT * obj1, FL_OBJECT * obj2)""")
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject1)
     check_if_FL_OBJECT_ptr(pFlObject2)
@@ -6326,30 +6098,29 @@ def fl_get_gc():
 
 
 def fl_mode_capable(mode, warn):
-    """ fl_mode_capable(mode, warn) -> flag
-
-        Return if the system is capable of displaying in the specified visual
-        class, or not.
-
-        @param mode: visual mode
-        @type mode: (from xfdata module) GrayScale, StaticGray, PseudoColor,
-                    StaticColor, DirectColor and TrueColor
-        @param warn: if set a warning is printed out in case the capability
-                     asked for isn't available
-        @type warn: 0 (don't print warning) or 1 (print warning)
-
-        @returns: 1 (if capable) or 0 otherwise (<int>)
-
-        @example: capable = fl_mode_capable(xfdata.GrayScale, 1)
-
-        @status: Tested + Doc + NoDemo = OK
     """
+    fl_mode_capable(mode, warn) -> int
 
+    Return if the system is capable of displaying in the specified visual
+    class, or not.
+
+    @param mode: visual mode. Values (from xfdata module) GrayScale,
+        StaticGray, PseudoColor, StaticColor, DirectColor and TrueColor
+    @type mode: int
+    @param warn: if set a warning is printed out in case the capability asked
+        for isn't available. Values 0 (don't print warning) or 1 (print warning)
+    @type warn: int
+
+    @returns: flag 1 (if capable) or 0 otherwise
+
+    @example: capable = fl_mode_capable(xfdata.GrayScale, 1)
+
+    @status: Tested + Doc + NoDemo = OK
+    """
     _fl_mode_capable = cfuncproto(
-            load_so_libforms(), "fl_mode_capable",\
-            cty.c_int, [cty.c_int, cty.c_int],\
-            """int fl_mode_capable(int mode, int warn)
-            """)
+        load_so_libforms(), "fl_mode_capable",\
+        cty.c_int, [cty.c_int, cty.c_int],\
+        """int fl_mode_capable(int mode, int warn)""")
     check_if_initialized()
     imode = convert_to_int(mode)
     iwarn = convert_to_int(warn)
@@ -6371,31 +6142,35 @@ def fl_default_window():
 # Rectangles
 
 def fl_rectangle(fill, x, y, w, h, colr):
-    """ fl_rectangle(fill, x, y, w, h, colr)
-
-        Draws a rectangle.
-
-        @param fill: flag if the rectangle has to be filled or just the
-                     outline is needed (<int>)
-        @type fill: 0 (the outline only) or 1 (filled) (<int>)
-        @param x: horizontal position (upper-left corner) (<int>)
-        @param y: vertical position (upper-left corner) (<int>)
-        @param w: width in coord units (<int>)
-        @param h: height in coord units (<int>)
-        @param colr: color value (<long_pos>)
-
-        @example: fl_rectangle(1, 100, 200, 300, 200, xfdata.FL_BEIGE)
-
-        @status: Tested + Doc + Demo = OK
     """
+    fl_rectangle(fill, x, y, w, h, colr)
 
+    Draws a rectangle.
+
+    @param fill: flag if the rectangle has to be filled or just the outline is
+        needed (<int>). Values 0 (the outline only) or 1 (filled)
+    @type fill: int
+    @param x: horizontal position (upper-left corner)
+    @type x: int
+    @param y: vertical position (upper-left corner)
+    @type y: int
+    @param w: width in coord units
+    @type w: int
+    @param h: height in coord units
+    @type h: int
+    @param colr: color value
+    @type colr: long_pos
+
+    @example: fl_rectangle(1, 100, 200, 300, 200, xfdata.FL_BEIGE)
+
+    @status: Tested + Doc + Demo = OK
+    """
     _fl_rectangle = cfuncproto(
-            load_so_libforms(), "fl_rectangle",\
-            None, [cty.c_int, xfc.FL_Coord, xfc.FL_Coord, xfc.FL_Coord,
-            xfc.FL_Coord, xfc.FL_COLOR],\
-            """void fl_rectangle(int fill, FL_Coord x, FL_Coord y,
-               FL_Coord w, FL_Coord h, FL_COLOR col)
-            """)
+        load_so_libforms(), "fl_rectangle",\
+        None, [cty.c_int, xfc.FL_Coord, xfc.FL_Coord, xfc.FL_Coord,
+        xfc.FL_Coord, xfc.FL_COLOR],\
+        """void fl_rectangle(int fill, FL_Coord x, FL_Coord y,
+           FL_Coord w, FL_Coord h, FL_COLOR col)""")
     check_if_initialized()
     check_admitted_listvalues(colr, xfc.COLOR_list)
     ifill = convert_to_int(fill)
@@ -6410,28 +6185,32 @@ def fl_rectangle(fill, x, y, w, h, colr):
 
 
 def fl_rectbound(x, y, w, h, colr):
-    """ fl_rectbound(x, y, w, h, colr)
-
-        Draws a filled rectangle with a black border.
-
-        @param x: horizontal position (upper-left corner) (<int>)
-        @param y: vertical position (upper-left corner) (<int>)
-        @param w: width in coord units (<int>)
-        @param h: height in coord units (<int>)
-        @param colr: color value (<long_pos>)
-
-        @example: fl_rectbound(100, 200, 300, 200, xfdata.FL_PINK)
-
-        @status: Tested + Doc + NoDemo = OK
     """
+    fl_rectbound(x, y, w, h, colr)
 
+    Draws a filled rectangle with a black border.
+
+    @param x: horizontal position (upper-left corner)
+    @type x: int
+    @param y: vertical position (upper-left corner)
+    @type y: int
+    @param w: width in coord units
+    @type w: int
+    @param h: height in coord units
+    @type h: int
+    @param colr: color value
+    @type colr: long_pos
+
+    @example: fl_rectbound(100, 200, 300, 200, xfdata.FL_PINK)
+
+    @status: Tested + Doc + NoDemo = OK
+    """
     _fl_rectbound = cfuncproto(
-            load_so_libforms(), "fl_rectbound",\
-            None, [xfc.FL_Coord, xfc.FL_Coord, xfc.FL_Coord, xfc.FL_Coord,
-            xfc.FL_COLOR],\
-            """void fl_rectbound(FL_Coord x, FL_Coord y, FL_Coord w,
-               FL_Coord h, FL_COLOR col)
-            """)
+        load_so_libforms(), "fl_rectbound",\
+        None, [xfc.FL_Coord, xfc.FL_Coord, xfc.FL_Coord, xfc.FL_Coord,
+        xfc.FL_COLOR],\
+        """void fl_rectbound(FL_Coord x, FL_Coord y, FL_Coord w,
+           FL_Coord h, FL_COLOR col)""")
     check_if_initialized()
     check_admitted_listvalues(colr, xfc.COLOR_list)
     ix = convert_to_FL_Coord(x)
@@ -6444,42 +6223,53 @@ def fl_rectbound(x, y, w, h, colr):
 
 
 def fl_rectf(x, y, w, h, colr):
-    """ fl_rectf(x, y, w, h, colr)
-
-        Draws a filled rectangle on the screen.
-
-        @param x: horizontal position (upper-left corner) (<int>)
-        @param y: vertical position (upper-left corner) (<int>)
-        @param w: width in coord units (<int>)
-        @param h: height in coord units (<int>)
-        @param colr: color value (<long_pos>)
-
-        @example: fl_rectf(150, 220, 300, 200, xfdata.FL_TOMATO)
-
-        @status: Tested + Doc + Demo = OK
     """
+    fl_rectf(x, y, w, h, colr)
 
+    Draws a filled rectangle on the screen.
+
+    @param x: horizontal position (upper-left corner)
+    @type x: int
+    @param y: vertical position (upper-left corner)
+    @type y: int
+    @param w: width in coord units
+    @type w: int
+    @param h: height in coord units
+    @type h: int
+    @param colr: color value
+    @type colr: long_pos
+
+    @example: fl_rectf(150, 220, 300, 200, xfdata.FL_TOMATO)
+
+    @status: Tested + Doc + Demo = OK
+    """
     fl_rectangle(1, x, y, w, h, colr)
 
 
 def fl_rect(x, y, w, h, colr):
-    """ fl_rect(x, y, w, h, colr)
-
-        Draws a rectangle's outline on the screen.
-
-        @param x: horizontal position (upper-left corner) (<int>)
-        @param y: vertical position (upper-left corner) (<int>)
-        @param w: width in coord units (<int>)
-        @param h: height in coord units (<int>)
-        @param colr: color value (<long_pos>)
-
-        @example: fl_rect(100, 200, 300, 200, xfdata.FL_SLATEBLUE)
-
-        @status: Tested + Doc + Demo = OK
     """
+    fl_rect(x, y, w, h, colr)
 
+    Draws a rectangle's outline on the screen.
+
+    @param x: horizontal position (upper-left corner)
+    @type x: int
+    @param y: vertical position (upper-left corner)
+    @type y: int
+    @param w: width in coord units
+    @type w: int
+    @param h: height in coord units
+    @type h: int
+    @param colr: color value
+    @type colr: int
+
+    @example: fl_rect(100, 200, 300, 200, xfdata.FL_SLATEBLUE)
+
+    @status: Tested + Doc + Demo = OK
+    """
     fl_rectangle(0, x, y, w, h, colr)
 
+# STOPPED HERE
 
 # Rectangle with rounded-corners
 
@@ -6508,7 +6298,7 @@ def fl_roundrectangle(fill, x, y, w, h, colr):
             xfc.FL_Coord, xfc.FL_COLOR],\
             """void fl_roundrectangle(int fill, FL_Coord x, FL_Coord y,
                FL_Coord w, FL_Coord h, FL_COLOR col)
-            """)
+""")
     check_if_initialized()
     check_admitted_listvalues(colr, xfc.COLOR_list)
     ifill = convert_to_int(fill)
@@ -6588,7 +6378,7 @@ def fl_polygon(fill, Point, numpt, colr):
             None, [cty.c_int, cty.POINTER(xfc.FL_POINT), cty.c_int,
             xfc.FL_COLOR],
             """void fl_polygon(int fill, FL_POINT * xp, int n, FL_COLOR col)
-            """)
+""")
     check_if_initialized()
     check_admitted_listvalues(colr, xfc.COLOR_list)
     ifill = convert_to_int(fill)
@@ -6685,7 +6475,7 @@ def fl_lines(Point, numpt, colr):
             load_so_libforms(), "fl_lines",\
             None, [cty.POINTER(xfc.FL_POINT), cty.c_int, xfc.FL_COLOR],\
             """void fl_lines(FL_POINT * xp, int n, FL_COLOR col)
-            """)
+""")
     check_if_initialized()
     check_admitted_listvalues(colr, xfc.COLOR_list)
     pPoint = cty.cast(Point, cty.POINTER(xfc.FL_POINT))
@@ -6717,7 +6507,7 @@ def fl_line(xi, yi, xf, yf, colr):
             xfc.FL_COLOR],\
             """void fl_line(FL_Coord xi, FL_Coord yi, FL_Coord xf,
                FL_Coord yf, FL_COLOR c)
-            """)
+""")
     check_if_initialized()
     check_admitted_listvalues(colr, xfc.COLOR_list)
     ixi = convert_to_int(xi)
@@ -6750,7 +6540,7 @@ def fl_point(x, y, colr):
             load_so_libforms(), "fl_point",\
             None, [xfc.FL_Coord, xfc.FL_Coord, xfc.FL_COLOR],\
             """void fl_point(FL_Coord x, FL_Coord y, FL_COLOR c)
-            """)
+""")
     check_if_initialized()
     check_admitted_listvalues(colr, xfc.COLOR_list)
     ix = convert_to_FL_Coord(x)
@@ -6782,7 +6572,7 @@ def fl_points(Point, numpt, colr):
             load_so_libforms(), "fl_points",\
             None, [cty.POINTER(xfc.FL_POINT), cty.c_int, xfc.FL_COLOR],
             """void fl_points(FL_POINT * p, int np, FL_COLOR c)
-            """)
+""")
     check_if_initialized()
     check_admitted_listvalues(colr, xfc.COLOR_list)
     pPoint = cty.cast(Point, cty.POINTER(xfc.FL_POINT))
@@ -6820,7 +6610,7 @@ def fl_dashedlinestyle(dash, ndash):
             load_so_libforms(), "fl_dashedlinestyle",\
             None, [xfc.STRING, cty.c_int],\
             """void fl_dashedlinestyle(const char * dash, int ndash)
-            """)
+""")
     check_if_initialized()
     sdash = convert_to_string(dash)
     indash = convert_to_int(ndash)
@@ -6854,7 +6644,7 @@ def fl_update_display(block):
             load_so_libforms(), "fl_update_display",\
             None, [cty.c_int],\
             """void fl_update_display(int block)
-            """)
+""")
     check_if_initialized()
     iblock = convert_to_int(block)
     keep_elem_refs(block, iblock)
@@ -6902,7 +6692,7 @@ def fl_linewidth(w):
             load_so_libforms(), "fl_linewidth",\
             None, [cty.c_int],\
             """void fl_linewidth(int n)
-            """)
+""")
     check_if_initialized()
     iw = convert_to_int(w)
     keep_elem_refs(w, iw)
@@ -6932,7 +6722,7 @@ def fl_linestyle(linestyle):
             load_so_libforms(), "fl_linestyle",\
             None, [cty.c_int],\
             """void fl_linestyle(int n)
-            """)
+""")
     check_if_initialized()
     check_admitted_listvalues(linestyle, xfc.LINESTYLE_list)
     ilinestyle = convert_to_int(linestyle)
@@ -6962,7 +6752,7 @@ def fl_drawmode(mode):
             load_so_libforms(), "fl_drawmode",\
             None, [cty.c_int],\
             """void fl_drawmode(int request)
-            """)
+""")
     check_if_initialized()
     imode = convert_to_int(mode)
     keep_elem_refs(mode, imode)
@@ -6985,7 +6775,7 @@ def fl_get_linewidth():
             load_so_libforms(), "fl_get_linewidth",\
             cty.c_int, [],\
             """int fl_get_linewidth()
-            """)
+""")
     retval = _fl_get_linewidth()
     return retval
 
@@ -7006,7 +6796,7 @@ def fl_get_linestyle():
             load_so_libforms(), "fl_get_linestyle",\
             cty.c_int, [],\
             """int fl_get_linestyle()
-            """)
+""")
     check_if_initialized()
     retval = _fl_get_linestyle()
     return retval
@@ -7029,7 +6819,7 @@ def fl_get_drawmode():
             load_so_libforms(), "fl_get_drawmode",\
             cty.c_int, [],\
             """int fl_get_drawmode()
-            """)
+""")
     check_if_initialized()
     retval = _fl_get_drawmode()
     return retval
@@ -7065,7 +6855,7 @@ def fl_oval(fill, x, y, w, h, colr):
             xfc.FL_Coord, xfc.FL_COLOR], \
             """void fl_oval(int fill, FL_Coord x, FL_Coord y, FL_Coord w,
                FL_Coord h, FL_COLOR col)
-            """)
+""")
     check_if_initialized()
     check_admitted_listvalues(colr, xfc.COLOR_list)
     ifill = convert_to_int(fill)
@@ -7101,7 +6891,7 @@ def fl_ovalbound(x, y, w, h, colr):
             xfc.FL_COLOR],\
             """void fl_ovalbound(FL_Coord x, FL_Coord y, FL_Coord w,
                FL_Coord h, FL_COLOR col)
-            """)
+""")
     check_if_initialized()
     check_admitted_listvalues(colr, xfc.COLOR_list)
     ix = convert_to_FL_Coord(x)
@@ -7144,7 +6934,7 @@ def fl_ovalarc(fill, x, y, w, h, stheta, dtheta, colr):
             xfc.FL_Coord, xfc.FL_Coord, cty.c_int, cty.c_int, xfc.FL_COLOR],
             """void fl_ovalarc(int fill, FL_Coord x, FL_Coord y, FL_Coord w,
                FL_Coord h, int t0, int dt, FL_COLOR col)
-            """)
+""")
     check_if_initialized()
     check_admitted_listvalues(colr, xfc.COLOR_list)
     ifill = convert_to_int(fill)
@@ -7267,7 +7057,7 @@ def fl_pieslice(fill, x, y, w, h, stheta, etheta, colr):
             xfc.FL_Coord, xfc.FL_Coord, cty.c_int, cty.c_int, xfc.FL_COLOR],
             """void fl_pieslice(int fill, FL_Coord x, FL_Coord y, FL_Coord w,
                FL_Coord h, int a1, int a2, FL_COLOR col)
-            """)
+""")
     check_if_initialized()
     check_admitted_listvalues(colr, xfc.COLOR_list)
     ifill = convert_to_int(fill)
@@ -7369,7 +7159,7 @@ def fl_drw_frame(boxtype, x, y, w, h, colr, bw):
             xfc.FL_Coord, xfc.FL_Coord, xfc.FL_COLOR, cty.c_int],
             """void fl_drw_frame(int style, FL_Coord x, FL_Coord y,
                FL_Coord w, FL_Coord h, FL_COLOR c, int bw)
-            """)
+""")
     check_if_initialized()
     check_admitted_listvalues(boxtype, xfc.BOXTYPE_list)
     check_admitted_listvalues(colr, xfc.COLOR_list)
@@ -7417,7 +7207,7 @@ def fl_drw_checkbox(boxtype, x, y, w, h, colr, bw):
             xfc.FL_Coord, xfc.FL_Coord, xfc.FL_COLOR, cty.c_int],
             """void fl_drw_checkbox(int type, FL_Coord x, FL_Coord y,
                FL_Coord w, FL_Coord h, FL_COLOR col, int bw)
-            """)
+""")
     check_if_initialized()
     check_admitted_listvalues(boxtype, xfc.BOXTYPE_list)
     check_admitted_listvalues(colr, xfc.COLOR_list)
@@ -7463,8 +7253,8 @@ def fl_get_fontstruct(style, size):
     _fl_get_fontstruct = cfuncproto(
             load_so_libforms(), "fl_get_fontstruct",\
             cty.POINTER(xfc.XFontStruct), [cty.c_int, cty.c_int],\
-            """)XFontStruct * fl_get_fontstruct(int style, int size)
-            """)
+""")XFontStruct * fl_get_fontstruct(int style, int size)
+""")
     check_if_initialized()
     check_admitted_listvalues(style, xfc.TEXTSTYLE_list)
     check_admitted_listvalues(size, xfc.FONTSIZE_list)
@@ -7502,7 +7292,7 @@ def fl_get_mouse():
             cty.POINTER(cty.c_uint)],\
             """Window fl_get_mouse(FL_Coord * x, FL_Coord * y,
               unsigned int * keymask)
-            """)
+""")
     check_if_initialized()
     x, px = make_FL_Coord_and_pointer()
     y, py = make_FL_Coord_and_pointer()
@@ -7531,7 +7321,7 @@ def fl_set_mouse(x, y):
             load_so_libforms(), "fl_set_mouse",\
             None, [xfc.FL_Coord, xfc.FL_Coord],\
             """void fl_set_mouse(FL_Coord mx, FL_Coord my)
-            """)
+""")
     check_if_initialized()
     ix = convert_to_FL_Coord(x)
     iy = convert_to_FL_Coord(y)
@@ -7564,7 +7354,7 @@ def fl_get_win_mouse(win):
             cty.POINTER(xfc.FL_Coord), cty.POINTER(cty.c_uint)],\
             """Window fl_get_win_mouse(Window win, FL_Coord * x, FL_Coord * y,
             unsigned int * keymask)
-            """)
+""")
     check_if_initialized()
     ulwin = convert_to_Window(win)
     x, px = make_FL_Coord_and_pointer()
@@ -7600,7 +7390,7 @@ def fl_get_form_mouse(pFlForm):
             cty.POINTER(xfc.FL_Coord), cty.POINTER(cty.c_uint)],\
             """Window fl_get_form_mouse(FL_FORM * fm, FL_Coord * x,
                FL_Coord * y, unsigned int * keymask)
-            """)
+""")
     check_if_initialized()
     check_if_FL_FORM_ptr(pFlForm)
     x, px = make_FL_Coord_and_pointer()
@@ -7629,7 +7419,7 @@ def fl_win_to_form(win):
             load_so_libforms(), "fl_win_to_form",
             cty.POINTER(xfc.FL_FORM), [xfc.Window],\
             """FL_FORM * fl_win_to_form(Window win)
-            """)
+""")
     check_if_initialized()
     ulwin = convert_to_Window(win)
     keep_elem_refs(win, ulwin)
@@ -7653,7 +7443,7 @@ def fl_set_form_icon(pFlForm, icon, mask):
             load_so_libforms(), "fl_set_form_icon",\
             None, [cty.POINTER(xfc.FL_FORM), xfc.Pixmap, xfc.Pixmap],\
             """void fl_set_form_icon(FL_FORM * form, Pixmap p, Pixmap m)
-            """)
+""")
     check_if_initialized()
     check_if_FL_FORM_ptr(pFlForm)
     ulicon = convert_to_Pixmap(icon)
@@ -7687,7 +7477,7 @@ def fl_get_decoration_sizes(pFlForm):
             cty.POINTER(cty.c_int)],\
             """int fl_get_decoration_sizes(FL_FORM * form, int * top,
                int * right, int * bottom, int * left)
-            """)
+""")
     check_if_initialized()
     check_if_FL_FORM_ptr(pFlForm)
     top, ptop = make_int_and_pointer()
@@ -7716,7 +7506,7 @@ def fl_raise_form(pFlForm):
             load_so_libforms(), "fl_raise_form",\
             None, [cty.POINTER(xfc.FL_FORM)],\
             """void fl_raise_form(FL_FORM * p1)
-            """)
+""")
     check_if_initialized()
     check_if_FL_FORM_ptr(pFlForm)
     keep_elem_refs(pFlForm)
@@ -7739,7 +7529,7 @@ def fl_lower_form(pFlForm):
             load_so_libforms(), "fl_lower_form",\
             None, [cty.POINTER(xfc.FL_FORM)],\
             """void fl_lower_form(FL_FORM * p1)
-            """)
+""")
     check_if_initialized()
     check_if_FL_FORM_ptr(pFlForm)
     keep_elem_refs(pFlForm)
@@ -7764,7 +7554,7 @@ def fl_set_foreground(gc, colr):
             load_so_libforms(), "fl_set_foreground",\
             None, [xfc.GC, xfc.FL_COLOR],\
             """void fl_set_foreground(GC gc, FL_COLOR col)
-            """)
+""")
     check_if_initialized()
     check_admitted_listvalues(colr, xfc.COLOR_list)
     ulcolr = convert_to_FL_COLOR(colr)
@@ -7790,7 +7580,7 @@ def fl_set_background(gc, colr):
             load_so_libforms(), "fl_set_background",\
             None, [xfc.GC, xfc.FL_COLOR],\
             """void fl_set_background(GC gc, FL_COLOR col)
-            """)
+""")
     check_if_initialized()
     check_admitted_listvalues(colr, xfc.COLOR_list)
     ulcolr = convert_to_FL_COLOR(colr)
@@ -7818,7 +7608,7 @@ def fl_wincreate(title):
             load_so_libforms(), "fl_wincreate",\
             xfc.Window, [xfc.STRING],\
             """Window fl_wincreate(const char * label)
-            """)
+""")
     check_if_initialized()
     stitle = convert_to_string(title)
     keep_elem_refs(title, stitle)
@@ -7844,7 +7634,7 @@ def fl_winshow(win):
             load_so_libforms(), "fl_winshow",\
             xfc.Window, [xfc.Window],\
             """Window fl_winshow(Window win)
-            """)
+""")
     check_if_initialized()
     ulwin = convert_to_Window(win)
     keep_elem_refs(win, ulwin)
@@ -7871,7 +7661,7 @@ def fl_winopen(title):
             load_so_libforms(), "fl_winopen", \
             xfc.Window, [xfc.STRING], \
             """Window fl_winopen(const char * label)
-            """)
+""")
     check_if_initialized()
     stitle = convert_to_string(title)
     keep_elem_refs(title, stitle)
@@ -7895,7 +7685,7 @@ def fl_winhide(win):
             load_so_libforms(), "fl_winhide", \
             None, [xfc.Window], \
             """void fl_winhide(Window win)
-            """)
+""")
     check_if_initialized()
     ulwin = convert_to_Window(win)
     keep_elem_refs(win, ulwin)
@@ -7918,7 +7708,7 @@ def fl_winclose(win):
             load_so_libforms(), "fl_winclose", \
             None, [xfc.Window], \
             """void fl_winclose(Window win)
-            """)
+""")
     check_if_initialized()
     ulwin = convert_to_Window(win)
     keep_elem_refs(win, ulwin)
@@ -7942,7 +7732,7 @@ def fl_winset(win):
             load_so_libforms(), "fl_winset", \
             None, [xfc.Window], \
             """void fl_winset(Window win)
-            """)
+""")
     check_if_initialized()
     ulwin = convert_to_Window(win)
     keep_elem_refs(win, ulwin)
@@ -7970,7 +7760,7 @@ def fl_winreparent(win, winnewparent):
             load_so_libforms(), "fl_winreparent", \
             cty.c_int, [xfc.Window, xfc.Window], \
             """int fl_winreparent(Window win, Window new_parent)
-            """)
+""")
     check_if_initialized()
     ulwin = convert_to_Window(win)
     ulwinnewparent = convert_to_Window(winnewparent)
@@ -7996,7 +7786,7 @@ def fl_winfocus(win):
             load_so_libforms(), "fl_winfocus", \
             None, [xfc.Window], \
             """void fl_winfocus(Window win)
-            """)
+""")
     check_if_initialized()
     ulwin = convert_to_Window(win)
     keep_elem_refs(win, ulwin)
@@ -8022,7 +7812,7 @@ def fl_winget():
             load_so_libforms(), "fl_winget", \
             xfc.Window, [], \
             """Window fl_winget()
-            """)
+""")
     check_if_initialized()
     retval = _fl_winget()
     return retval
@@ -8046,7 +7836,7 @@ def fl_iconify(win):
             load_so_libforms(), "fl_iconify", \
             cty.c_int, [xfc.Window], \
             """int fl_iconify(Window win)
-            """)
+""")
     check_if_initialized()
     ulwin = convert_to_Window(win)
     keep_elem_refs(win, ulwin)
@@ -8072,7 +7862,7 @@ def fl_winresize(win, w, h):
             load_so_libforms(), "fl_winresize", \
             None, [xfc.Window, xfc.FL_Coord, xfc.FL_Coord], \
             """void fl_winresize(Window win, FL_Coord neww, FL_Coord newh)
-            """)
+""")
     check_if_initialized()
     ulwin = convert_to_Window(win)
     iw = convert_to_int(w)
@@ -8099,7 +7889,7 @@ def fl_winmove(win, x, y):
             load_so_libforms(), "fl_winmove", \
             None, [xfc.Window, xfc.FL_Coord, xfc.FL_Coord], \
             """void fl_winmove(Window win, FL_Coord dx, FL_Coord dy)
-            """)
+""")
     check_if_initialized()
     ulwin = convert_to_Window(win)
     ix = convert_to_int(x)
@@ -8130,7 +7920,7 @@ def fl_winreshape(win, x, y, w, h):
             xfc.FL_Coord], \
             """void fl_winreshape(Window win, FL_Coord dx, FL_Coord dy,
                FL_Coord w, FL_Coord h)
-            """)
+""")
     check_if_initialized()
     ulwin = convert_to_Window(win)
     ix = convert_to_int(x)
@@ -8159,7 +7949,7 @@ def fl_winicon(win, icon, mask):
             load_so_libforms(), "fl_winicon", \
             None, [xfc.Window, xfc.Pixmap, xfc.Pixmap], \
             """void fl_winicon(Window win, Pixmap p, Pixmap m)
-            """)
+""")
     check_if_initialized()
     ulwin = convert_to_Window(win)
     ulicon = convert_to_Pixmap(icon)
@@ -8185,7 +7975,7 @@ def fl_winbackground(win, bkcolr):
             load_so_libforms(), "fl_winbackground", \
             None, [xfc.Window, xfc.FL_COLOR], \
             """void fl_winbackground(Window win, FL_COLOR bk)
-            """)
+""")
     check_if_initialized()
     check_admitted_listvalues(bkcolr, xfc.COLOR_list)
     ulwin = convert_to_Window(win)
@@ -8218,7 +8008,7 @@ def fl_winstepsize(win, xunit, yunit):
             load_so_libforms(), "fl_winstepsize", \
             None, [xfc.Window, xfc.FL_Coord, xfc.FL_Coord], \
             """void fl_winstepsize(Window win, FL_Coord dx, FL_Coord dy)
-            """)
+""")
     check_if_initialized()
     ulwin = convert_to_Window(win)
     ixunit = convert_to_int(xunit)
@@ -8251,7 +8041,7 @@ def fl_winisvalid(win):
             load_so_libforms(), "fl_winisvalid", \
             cty.c_int, [xfc.Window], \
             """int fl_winisvalid(Window win)
-            """)
+""")
     check_if_initialized()
     ulwin = convert_to_Window(win)
     keep_elem_refs(win, ulwin)
@@ -8276,7 +8066,7 @@ def fl_wintitle(win, title):
             load_so_libforms(), "fl_wintitle", \
             None, [xfc.Window, xfc.STRING], \
             """void fl_wintitle(Window win, const char * title)
-            """)
+""")
     check_if_initialized()
     ulwin = convert_to_Window(win)
     stitle = convert_to_string(title)
@@ -8301,7 +8091,7 @@ def fl_winicontitle(win, title):
             load_so_libforms(), "fl_winicontitle", \
             None, [xfc.Window, xfc.STRING], \
             """void fl_winicontitle(Window win, const char * title)
-            """)
+""")
     check_if_initialized()
     ulwin = convert_to_Window(win)
     stitle = convert_to_string(title)
@@ -8326,7 +8116,7 @@ def fl_winposition(x, y):
             load_so_libforms(), "fl_winposition",
             None, [xfc.FL_Coord, xfc.FL_Coord],
             """void fl_winposition(FL_Coord x, FL_Coord y)
-            """)
+""")
     check_if_initialized()
     ix = convert_to_FL_Coord(x)
     iy = convert_to_FL_Coord(y)
@@ -8356,7 +8146,7 @@ def fl_winminsize(win, w, h):
             load_so_libforms(), "fl_winminsize",
             None, [xfc.Window, xfc.FL_Coord, xfc.FL_Coord],
             """void fl_winminsize(Window win, FL_Coord w, FL_Coord h)
-            """)
+""")
     check_if_initialized()
     ulwin = convert_to_Window(win)
     iw = convert_to_FL_Coord(w)
@@ -8384,7 +8174,7 @@ def fl_winmaxsize(win, w, h):
             load_so_libforms(), "fl_winmaxsize",
             None, [xfc.Window, xfc.FL_Coord, xfc.FL_Coord],
             """void fl_winmaxsize(Window win, FL_Coord w, FL_Coord h)
-            """)
+""")
     check_if_initialized()
     ulwin = convert_to_Window(win)
     iw = convert_to_FL_Coord(w)
@@ -8411,7 +8201,7 @@ def fl_winaspect(win, x, y):
             load_so_libforms(), "fl_winaspect",
             None, [xfc.Window, xfc.FL_Coord, xfc.FL_Coord],
             """void fl_winaspect(Window win, FL_Coord x, FL_Coord y)
-            """)
+""")
     check_if_initialized()
     ulwin = convert_to_Window(win)
     ix = convert_to_FL_Coord(x)
@@ -8436,7 +8226,7 @@ def fl_reset_winconstraints(win):
             load_so_libforms(), "fl_reset_winconstraints",
             None, [xfc.Window],
             """void fl_reset_winconstraints(Window win)
-            """)
+""")
     check_if_initialized()
     ulwin = convert_to_Window(win)
     keep_elem_refs(win)
@@ -8461,7 +8251,7 @@ def fl_winsize(w, h):
             load_so_libforms(), "fl_winsize",
             None, [xfc.FL_Coord, xfc.FL_Coord],
             """void fl_winsize(FL_Coord w, FL_Coord h)
-            """)
+""")
     check_if_initialized()
     iw = convert_to_FL_Coord(w)
     ih = convert_to_FL_Coord(h)
@@ -8489,7 +8279,7 @@ def fl_initial_winsize(w, h):
             load_so_libforms(), "fl_initial_winsize",
             None, [xfc.FL_Coord, xfc.FL_Coord],
             """void fl_initial_winsize(FL_Coord w, FL_Coord h)
-            """)
+""")
     check_if_initialized()
     iw = convert_to_FL_Coord(w)
     ih = convert_to_FL_Coord(h)
@@ -8497,22 +8287,28 @@ def fl_initial_winsize(w, h):
     _fl_initial_winsize(iw, ih)
 
 
+# TODO: verify if it's supposed to be used in python
 def fl_initial_winstate(state):
     """ fl_initial_winstate(state)
 
-        Sets initial state of the window.
+        Sets initial state, normal or iconic, of the window.
 
-        @param state: window state to be set (<int>)
+        @param state: window state to be set. Values (from xfdata module) i.e.
+            NormalState, IconicState
+        @type state: int
 
-        @status: Untested + NoDoc + NoDemo = NOT OK
+        @example: fl_initial_winstate(xfdata.IconicState)
+
+        @status: Tested + Doc + NoDemo = OK
     """
 
     _fl_initial_winstate = cfuncproto(
             load_so_libforms(), "fl_initial_winstate",
             None, [cty.c_int],
             """void fl_initial_winstate(int state)
-            """)
+""")
     check_if_initialized()
+    check_admitted_listvalues(state, xfc.WINSTATE_list)
     istate = convert_to_int(state)
     keep_elem_refs(state, istate)
     _fl_initial_winstate(istate)
@@ -8524,12 +8320,16 @@ def fl_create_colormap(pXVisualInfo, nfill):
         Creates a colormap appropriate for a given visual to be used with a
         canvas.
 
-        @param pXVisualInfo: pointer to xfdata.XVisualInfo
+        @param pXVisualInfo: XVisualInfo class instance
+        @type  pXVisualInfo: pointer to xfdata.XVisualInfo
         @param nfill: how many colors in the newly created colormap should
                       be filled with XForms' default colors (to avoid
-                      flashing effects) (<int>)
+                      flashing effects)
+        @type nfill: int
 
-        @example: 
+        @returns: created colormap
+
+        @example: ??
 
         @status: Untested + NoDoc + NoDemo = NOT OK
     """
@@ -8538,7 +8338,7 @@ def fl_create_colormap(pXVisualInfo, nfill):
             load_so_libforms(), "fl_create_colormap",
             xfc.Colormap, [cty.POINTER(xfc.XVisualInfo), cty.c_int],
             """Colormap fl_create_colormap(XVisualInfo * xv, int nfill)
-            """)
+""")
     check_if_initialized()
     infill = convert_to_int(nfill)
     keep_elem_refs(pXVisualInfo, nfill, infill)
@@ -8552,10 +8352,14 @@ def fl_wingeometry(x, y, w, h):
         Sets the initial geometry (position and size) of the window to be
         opened; the window will not be resizable.
 
-        @param x: horizontal position (upper-left corner) (<int>)
-        @param y: vertical position (upper-left corner) (<int>)
-        @param w: width in coord units (<int>)
-        @param h: height in coord units (<int>)
+        @param x: horizontal position (upper-left corner)
+        @type x: int
+        @param y: vertical position (upper-left corner)
+        @type y: int
+        @param w: width in coord units
+        @type w: int
+        @param h: height in coord units
+        @type h: int
 
         @example: fl_wingeometry(192, 231, 450, 550)
 
@@ -8567,7 +8371,7 @@ def fl_wingeometry(x, y, w, h):
             None, [xfc.FL_Coord, xfc.FL_Coord, xfc.FL_Coord, xfc.FL_Coord],
             """void fl_wingeometry(FL_Coord x, FL_Coord y, FL_Coord w,
                FL_Coord h)
-            """)
+""")
     check_if_initialized()
     ix = convert_to_FL_Coord(x)
     iy = convert_to_FL_Coord(y)
@@ -8586,10 +8390,14 @@ def fl_initial_wingeometry(x, y, w, h):
         Sets the initial geometry (position and size) of the window to be
         opened.
 
-        @param x: horizontal position (upper-left corner) (<int>)
-        @param y: vertical position (upper-left corner) (<int>)
-        @param w: width in coord units (<int>)
-        @param h: height in coord units (<int>)
+        @param x: horizontal position (upper-left corner)
+        @type x: int
+        @param y: vertical position (upper-left corner)
+        @type y: int
+        @param w: width in coord units
+        @type w: int
+        @param h: height in coord units
+        @type h: int
 
         @example: fl_initial_wingeometry(192, 231, 450, 550)
 
@@ -8601,7 +8409,7 @@ def fl_initial_wingeometry(x, y, w, h):
             None, [xfc.FL_Coord, xfc.FL_Coord, xfc.FL_Coord, xfc.FL_Coord],
             """void fl_initial_wingeometry(FL_Coord x, FL_Coord y,
                FL_Coord w, FL_Coord h)
-            """)
+""")
     check_if_initialized()
     ix = convert_to_FL_Coord(x)
     iy = convert_to_FL_Coord(y)
@@ -8626,7 +8434,7 @@ def fl_noborder():
             load_so_libforms(), "fl_noborder",
             None, [],
             """void fl_noborder()
-            """)
+""")
     check_if_initialized()
     _fl_noborder()
 
@@ -8645,7 +8453,7 @@ def fl_transient():
             load_so_libforms(), "fl_transient",
             None, [], \
             """void fl_transient()
-            """)
+""")
     check_if_initialized()
     _fl_transient()
 
@@ -8672,7 +8480,7 @@ def fl_get_winsize(win):
             None, [xfc.Window, cty.POINTER(xfc.FL_Coord),
             cty.POINTER(xfc.FL_Coord)],
             """void fl_get_winsize(Window win, FL_Coord * w, FL_Coord * h)
-            """)
+""")
     check_if_initialized()
     ulwin = convert_to_Window(win)
     w, pw = make_int_and_pointer()
@@ -8704,7 +8512,7 @@ def fl_get_winorigin(win):
             None, [xfc.Window, cty.POINTER(xfc.FL_Coord),
             cty.POINTER(xfc.FL_Coord)],
             """void fl_get_winorigin(Window win, FL_Coord * x, FL_Coord * y)
-            """)
+""")
     check_if_initialized()
     ulwin = convert_to_Window(win)
     x, px = make_FL_Coord_and_pointer()
@@ -8739,7 +8547,7 @@ def fl_get_wingeometry(win):
             cty.POINTER(xfc.FL_Coord)],
             """void fl_get_wingeometry(Window win, FL_Coord * x,
                FL_Coord * y, FL_Coord * w, FL_Coord * h)
-            """)
+""")
     check_if_initialized()
     ulwin = convert_to_Window(win)
     x, px = make_FL_Coord_and_pointer()
@@ -8828,7 +8636,7 @@ def fl_get_real_object_window(pFlObject):
             load_so_libforms(), "fl_get_real_object_window",
             xfc.Window, [cty.POINTER(xfc.FL_OBJECT)],
             """Window fl_get_real_object_window(FL_OBJECT * ob)
-            """)
+""")
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     keep_elem_refs(pFlObject)
@@ -8853,7 +8661,7 @@ def fl_XNextEvent(pXEvent):
             load_so_libforms(), "fl_XNextEvent",
             cty.c_int, [cty.POINTER(xfc.XEvent)],
             """int fl_XNextEvent(XEvent * xev)
-            """)
+""")
     check_if_initialized()
     keep_elem_refs(pXEvent)
     retval = _fl_XNextEvent(pXEvent)
@@ -8872,7 +8680,7 @@ def fl_XPeekEvent(pXEvent):
             load_so_libforms(), "fl_XPeekEvent",
             cty.c_int, [cty.POINTER(xfc.XEvent)],
             """int fl_XPeekEvent(XEvent * xev)
-            """)
+""")
     check_if_initialized()
     keep_elem_refs(pXEvent)
     retval = _fl_XPeekEvent(pXEvent)
@@ -8889,7 +8697,7 @@ def fl_XEventsQueued(mode):
             load_so_libforms(), "fl_XEventsQueued",
             cty.c_int, [cty.c_int],
             """int fl_XEventsQueued(int mode)
-            """)
+""")
     check_if_initialized()
     imode = convert_to_int(mode)
     keep_elem_refs(mode, imode)
@@ -8909,7 +8717,7 @@ def fl_XPutBackEvent(pXEvent):
             load_so_libforms(), "fl_XPutBackEvent",
             None, [cty.POINTER(xfc.XEvent)],
             """void fl_XPutBackEvent(XEvent * xev)
-            """)
+""")
     check_if_initialized()
     keep_elem_refs(pXEvent)
     _fl_XPutBackEvent(pXEvent)
@@ -8925,7 +8733,7 @@ def fl_last_event():
             load_so_libforms(), "fl_last_event",
             cty.POINTER(xfc.XEvent), [],
             """const char * fl_last_event()
-            """)
+""")
     check_if_initialized()
     retval = _fl_last_event()
     return retval
@@ -8965,7 +8773,7 @@ def fl_set_event_callback(py_AppEventCb, vdata):
             xfc.FL_APPEVENT_CB, [xfc.FL_APPEVENT_CB, cty.c_void_p],
             """FL_APPEVENT_CB fl_set_event_callback(FL_APPEVENT_CB callback,
                void * user_data)
-            """)
+""")
     check_if_initialized()
     c_AppEventCb = xfc.FL_APPEVENT_CB(py_AppEventCb)
     pvdata = cty.cast(vdata, cty.c_void_p)
@@ -9011,7 +8819,7 @@ def fl_set_idle_callback(py_AppEventCb, vdata):
             xfc.FL_APPEVENT_CB, [xfc.FL_APPEVENT_CB, cty.c_void_p],
             """FL_APPEVENT_CB fl_set_idle_callback(FL_APPEVENT_CB callback,
                void * user_data)
-            """)
+""")
     check_if_initialized()
     c_AppEventCb = xfc.FL_APPEVENT_CB(py_AppEventCb)
     pvdata = cty.cast(vdata, cty.c_void_p)
@@ -9041,7 +8849,7 @@ def fl_addto_selected_xevent(win, mask):
             load_so_libforms(), "fl_addto_selected_xevent",
             cty.c_long, [xfc.Window, cty.c_long],
             """long int fl_addto_selected_xevent(Window win, long int mask)
-            """)
+""")
     check_if_initialized()
     ulwin = convert_to_Window(win)
     lmask = convert_to_long(mask)
@@ -9071,7 +8879,7 @@ def fl_remove_selected_xevent(win, mask):
             load_so_libforms(), "fl_remove_selected_xevent",
             cty.c_long, [xfc.Window, cty.c_long],
             """long int fl_remove_selected_xevent(Window win, long int mask)
-            """)
+""")
     check_if_initialized()
     ulwin = convert_to_Window(win)
     lmask = convert_to_long(mask)
@@ -9103,7 +8911,7 @@ def fl_set_idle_delta(msec):
             load_so_libforms(), "fl_set_idle_delta",
             None, [cty.c_long],
             """void fl_set_idle_delta(long int delta)
-            """)
+""")
     check_if_initialized()
     lmsec = convert_to_long(msec)
     keep_elem_refs(msec, lmsec)
@@ -9145,7 +8953,7 @@ def fl_add_event_callback(win, evttype, py_AppEventCb, vdata):
             cty.c_void_p],
             """FL_APPEVENT_CB fl_add_event_callback(Window win, int ev,
                FL_APPEVENT_CB wincb, void * user_data)
-            """)
+""")
     check_if_initialized()
     ulwin = convert_to_Window(win)
     ievttype = convert_to_int(evttype)
@@ -9176,7 +8984,7 @@ def fl_remove_event_callback(win, evttype):
             load_so_libforms(), "fl_remove_event_callback",
             None, [xfc.Window, cty.c_int],
             """void fl_remove_event_callback(Window win, int ev)
-            """)
+""")
     check_if_initialized()
     ulwin = convert_to_Window(win)
     ievttype = convert_to_int(evttype)
@@ -9204,7 +9012,7 @@ def fl_activate_event_callbacks(win):
             load_so_libforms(), "fl_activate_event_callbacks",
             None, [xfc.Window],
             """void fl_activate_event_callbacks(Window win)
-            """)
+""")
     check_if_initialized()
     ulwin = convert_to_Window(win)
     keep_elem_refs(win, ulwin)
@@ -9231,7 +9039,7 @@ def fl_print_xevent_name(where, pXEvent):
             cty.POINTER(xfc.XEvent), [xfc.STRING, cty.POINTER(xfc.XEvent)],
             """XEvent * fl_print_xevent_name(const char * where,
                const Xevent * xev)
-            """)
+""")
     check_if_initialized()
     swhere = convert_to_string(where)
     keep_elem_refs(where, pXEvent, swhere)
@@ -9253,7 +9061,7 @@ def fl_XFlush():
             load_so_libforms(), "fl_XFlush",
             None, [],
             """void fl_XFlush(void)
-            """)
+""")
     _fl_XFlush()
 
 
@@ -9313,7 +9121,7 @@ def fl_initialize(numargs, argslist, appname, appoptions, nappopts):
             cty.POINTER(xfc.FL_CMD_OPT), cty.c_int],
             """Display * fl_initialize(int * na, char * * arg,
                const char * appclass, FL_CMD_OPT * appopt, int nappopt)
-            """)
+""")
     verify_version_compatibility()      # verify if installed XForms
                                         # is compatible with this one
     global flinitialized
@@ -9348,7 +9156,7 @@ def fl_finish():
             load_so_libforms(), "fl_finish",
             None, [],
             """void fl_finish()
-            """)
+""")
     check_if_initialized()
     _fl_finish()
 
@@ -9383,7 +9191,7 @@ def fl_get_resource(rname, cname, dtype, defval, val, size):
             """const char * fl_get_resource(const char * rname,
                const char * cname, FL_RTYPE dtype, const char * defval,
                void * val, int size)
-            """)
+""")
     check_admitted_listvalues(dtype, xfc.RTYPE_list)
     srname = convert_to_string(rname)
     scname = convert_to_string(cname)
@@ -9412,7 +9220,7 @@ def fl_set_resource(resstr, val):
             load_so_libforms(), "fl_set_resource",
             None, [xfc.STRING, xfc.STRING],
             """void fl_set_resource(const char * str, const char * val)
-            """)
+""")
     sresstr = convert_to_string(resstr)
     sval = convert_to_string(val)
     keep_elem_refs(resstr, val, sresstr, sval)
@@ -9429,7 +9237,7 @@ def fl_get_app_resources(pResource, n):
             load_so_libforms(), "fl_get_app_resources",
             None, [cty.POINTER(xfc.FL_RESOURCE), cty.c_int],
             """void fl_get_app_resources(FL_RESOURCE * appresource, int n)
-            """)
+""")
     inum = convert_to_int(n)
     keep_elem_refs(pResource, n, inum)
     _fl_get_app_resources(pResource, inum)
@@ -9445,7 +9253,7 @@ def fl_set_graphics_mode(mode, doublebuf):
             load_so_libforms(), "fl_set_graphics_mode",
             None, [cty.c_int, cty.c_int],
             """void fl_set_graphics_mode(int mode, int doublebuf)
-            """)
+""")
     check_if_initialized()
     imode = convert_to_int(mode)
     idoublebuf = convert_to_int(doublebuf)
@@ -9463,7 +9271,7 @@ def fl_set_visualID(idnum):
             load_so_libforms(), "fl_set_visualID",
             None, [cty.c_long],
             """void fl_set_visualID(long int id)
-            """)
+""")
     lidnum = convert_to_long(idnum)
     keep_elem_refs(idnum, lidnum)
     _fl_set_visualID(lidnum)
@@ -9479,7 +9287,7 @@ def fl_keysym_pressed(keysym):
             load_so_libforms(), "fl_keysym_pressed",
             cty.c_int, [xfc.KeySym],
             """int fl_keysym_pressed(KeySym k)
-            """)
+""")
     check_if_initialized()
     ulkeysym = convert_to_ulong(keysym)
     keep_elem_refs(keysym, ulkeysym)
@@ -9502,7 +9310,7 @@ def fl_set_defaults(mask, pIopt):
             load_so_libforms(), "fl_set_defaults",
             None, [cty.c_ulong, cty.POINTER(xfc.FL_IOPT)],
             """void fl_set_defaults(long unsigned int mask, FL_IOPT * cntl):
-            """)
+""")
     ulmask = convert_to_ulong(mask)
     keep_elem_refs(mask, pIopt, ulmask)
     _fl_set_defaults(ulmask, pIopt)
@@ -9532,7 +9340,7 @@ def fl_set_tabstop(strng):
             load_so_libforms(), "fl_set_tabstop",
             None, [xfc.STRING],
             """void fl_set_tabstop(const char * s)
-            """)
+""")
     check_if_initialized()
     sstrng = convert_to_string(strng)
     keep_elem_refs(strng, sstrng)
@@ -9558,7 +9366,7 @@ def fl_get_defaults():
             load_so_libforms(), "fl_get_defaults",
             None, [cty.POINTER(xfc.FL_IOPT)],
             """void fl_get_defaults(FL_IOPT * cntl)
-            """)
+""")
     Iopt = xfc.FL_IOPT()
     pIopt = cty.byref(Iopt)
     keep_elem_refs(pIopt, Iopt)
@@ -9582,7 +9390,7 @@ def fl_get_visual_depth():
             load_so_libforms(), "fl_get_visual_depth",
             cty.c_int, [],
             """int fl_get_visual_depth()
-            """)
+""")
     check_if_initialized()
     retval = _fl_get_visual_depth()
     return retval
@@ -9598,7 +9406,7 @@ def fl_vclass_name(n):
             load_so_libforms(), "fl_vclass_name",
             xfc.STRING, [cty.c_int],
             """const char * fl_vclass_name(int n)
-            """)
+""")
     check_if_initialized()
     inum = convert_to_int(n)
     keep_elem_refs(n, inum)
@@ -9615,7 +9423,7 @@ def fl_vclass_val(val):
             load_so_libforms(), "fl_vclass_val",
             cty.c_int, [xfc.STRING],
             """int fl_vclass_val(const char * v)
-            """)
+""")
     check_if_initialized()
     sval = convert_to_string(val)
     keep_elem_refs(val, sval)
@@ -9633,7 +9441,7 @@ def fl_set_ul_property(prop, thickness):
             load_so_libforms(), "fl_set_ul_property",
             None, [cty.c_int, cty.c_int],
             """void fl_set_ul_property(int prop, int thickness)
-            """)
+""")
     iprop = convert_to_int(prop)
     ithickness = convert_to_int(thickness)
     keep_elem_refs(prop, thickness, iprop, ithickness)
@@ -9651,7 +9459,7 @@ def fl_set_clipping(x, y, w, h):
             None, [xfc.FL_Coord, xfc.FL_Coord, xfc.FL_Coord, xfc.FL_Coord],
             """void fl_set_clipping(FL_Coord x, FL_Coord y, FL_Coord w,
                FL_Coord h)
-            """)
+""")
     ix = convert_to_FL_Coord(x)
     iy = convert_to_FL_Coord(y)
     iw = convert_to_FL_Coord(w)
@@ -9672,7 +9480,7 @@ def fl_set_gc_clipping(gc, x, y, w, h):
             xfc.FL_Coord],
             """void fl_set_gc_clipping(GC gc, FL_Coord x, FL_Coord y,
                FL_Coord w, FL_Coord h)
-            """)
+""")
     ix = convert_to_FL_Coord(x)
     iy = convert_to_FL_Coord(y)
     iw = convert_to_FL_Coord(w)
@@ -9691,7 +9499,7 @@ def fl_unset_gc_clipping(gc):
             load_so_libforms(), "fl_unset_gc_clipping",
             None, [xfc.GC],
             """void fl_unset_gc_clipping(GC gc)
-            """)
+""")
     keep_elem_refs(gc)
     _fl_unset_gc_clipping(gc)
 
@@ -9706,7 +9514,7 @@ def fl_set_clippings(pRect, n):
             load_so_libforms(), "fl_set_clippings",
             None, [cty.POINTER(xfc.FL_RECT), cty.c_int],
             """void fl_set_clippings(FL_RECT * xrect, int n)
-            """)
+""")
     inum = convert_to_int(n)
     keep_elem_refs(pRect, n, inum)
     _fl_set_clippings(pRect, inum)
@@ -9722,7 +9530,7 @@ def fl_unset_clipping():
             load_so_libforms(), "fl_unset_clipping",
             None, [],
             """void fl_unset_clipping()
-            """)
+""")
     _fl_unset_clipping()
 
 
@@ -9737,7 +9545,7 @@ def fl_set_text_clipping(x, y, w, h):
             None, [xfc.FL_Coord, xfc.FL_Coord, xfc.FL_Coord, xfc.FL_Coord],
             """void fl_set_text_clipping(FL_Coord x, FL_Coord y, FL_Coord w,
                FL_Coord h)
-            """)
+""")
     ix = convert_to_FL_Coord(x)
     iy = convert_to_FL_Coord(y)
     iw = convert_to_FL_Coord(w)
@@ -9756,7 +9564,7 @@ def fl_unset_text_clipping():
             load_so_libforms(), "fl_unset_text_clipping",
             None, [],
             """void fl_unset_text_clipping()
-            """)
+""")
     _fl_unset_text_clipping()
 
 
@@ -9830,7 +9638,7 @@ def fl_popup_add(win, title):
             load_so_libforms(), "fl_popup_add",
             cty.POINTER(xfc.FL_POPUP), [xfc.Window, xfc.STRING],
             """FL_POPUP * fl_popup_add(Window p1, const char * p2)
-            """)
+""")
     check_if_initialized()
     ulwin = convert_to_Window(win)
     stitle = convert_to_string(title)
@@ -9850,7 +9658,7 @@ def fl_popup_add_entries(pPopup, entrytxt):
             cty.POINTER(xfc.FL_POPUP_ENTRY), [cty.POINTER(xfc.FL_POPUP), xfc.STRING],
             """FL_POPUP_ENTRY * fl_popup_add_entries(FL_POPUP * p1,
                const char * p2)
-            """)
+""")
     check_if_initialized()
     sentrytxt = convert_to_string(entrytxt)
     keep_elem_refs(pPopup, entrytxt, sentrytxt)
@@ -9870,7 +9678,7 @@ def fl_popup_insert_entries(pPopup, pPopupEntry, entrytxt):
             cty.POINTER(xfc.FL_POPUP_ENTRY), xfc.STRING],
             """FL_POPUP_ENTRY * fl_popup_insert_entries(FL_POPUP * p1,
                FL_POPUP_ENTRY * p2, const char * p3)
-            """)
+""")
     check_if_initialized()
     sentrytxt = convert_to_string(entrytxt)
     keep_elem_refs(pPopup, pPopupEntry, entrytxt, sentrytxt)
@@ -9890,7 +9698,7 @@ def fl_popup_create(win, text, pPopupItem):
                 cty.POINTER(xfc.FL_POPUP_ITEM)],
             """FL_POPUP * fl_popup_create(Window p1, const char * p2,
                FL_POPUP_ITEM * p3)
-            """)
+""")
     check_if_initialized()
     ulwin = convert_to_Window(win)
     stext = convert_to_string(text)
@@ -9911,7 +9719,7 @@ def fl_popup_add_items(pPopup, pPopupItem):
                 cty.POINTER(xfc.FL_POPUP_ITEM)],
             """FL_POPUP_ENTRY * fl_popup_add_items(FL_POPUP * p1,
                FL_POPUP_ITEM * p2)
-            """)
+""")
     check_if_initialized()
     keep_elem_refs(pPopup, pPopupItem)
     retval = _fl_popup_add_items(pPopup, pPopupItem)
@@ -9930,7 +9738,7 @@ def fl_popup_insert_items(pPopup, pPopupEntry, pPopupItem):
                 cty.POINTER(xfc.FL_POPUP_ENTRY), cty.POINTER(xfc.FL_POPUP_ITEM)],
             """FL_POPUP_ENTRY * fl_popup_insert_items(FL_POPUP * p1,
                FL_POPUP_ENTRY * p2, FL_POPUP_ITEM * p3)
-            """)
+""")
     check_if_initialized()
     keep_elem_refs(pPopup, pPopupEntry, pPopupItem)
     retval = _fl_popup_insert_items(pPopup, pPopupEntry, pPopupItem)
@@ -9947,7 +9755,7 @@ def fl_popup_delete(pPopup):
             load_so_libforms(), "fl_popup_delete",
             cty.c_int, [cty.POINTER(xfc.FL_POPUP)],
             """int fl_popup_delete(FL_POPUP * p1)
-            """)
+""")
     check_if_initialized()
     keep_elem_refs(pPopup)
     retval = _fl_popup_delete(pPopup)
@@ -9964,7 +9772,7 @@ def fl_popup_entry_delete(pPopupEntry):
             load_so_libforms(), "fl_popup_entry_delete",
             cty.c_int, [cty.POINTER(xfc.FL_POPUP_ENTRY)],
             """int fl_popup_entry_delete(FL_POPUP_ENTRY * p1)
-            """)
+""")
     check_if_initialized()
     keep_elem_refs(pPopupEntry)
     retval = _fl_popup_entry_delete(pPopupEntry)
@@ -9981,7 +9789,7 @@ def fl_popup_do(pPopup):
             load_so_libforms(), "fl_popup_do",
             cty.POINTER(xfc.FL_POPUP_RETURN), [cty.POINTER(xfc.FL_POPUP)],
             """FL_POPUP_RETURN * fl_popup_do(FL_POPUP * p1)
-            """)
+""")
     check_if_initialized()
     keep_elem_refs(pPopup)
     retval = _fl_popup_do(pPopup)
@@ -10005,7 +9813,7 @@ def fl_popup_set_position(pPopup, x, y):
             load_so_libforms(), "fl_popup_set_position",
             None, [cty.POINTER(xfc.FL_POPUP), cty.c_int, cty.c_int],
             """void fl_popup_set_position(FL_POPUP * p1, int p2, int p3)
-            """)
+""")
     check_if_initialized()
     ix = convert_to_int(x)
     iy = convert_to_int(y)
@@ -10025,7 +9833,7 @@ def fl_popup_get_policy(pPopup):
             load_so_libforms(), "fl_popup_get_policy",
             cty.c_int, [cty.POINTER(xfc.FL_POPUP)],
             """int fl_popup_get_policy(FL_POPUP * p1)
-            """)
+""")
     check_if_initialized()
     keep_elem_refs(pPopup)
     retval = _fl_popup_get_policy(pPopup)
@@ -10048,7 +9856,7 @@ def fl_popup_set_policy(pPopup, policy):
             load_so_libforms(), "fl_popup_set_policy",
             cty.c_int, [cty.POINTER(xfc.FL_POPUP), cty.c_int],
             """int fl_popup_set_policy(FL_POPUP * p1, int p2)
-            """)
+""")
     check_if_initialized()
     check_admitted_listvalues(policy, xfc.POPUPPOLICY_list)
     ipolicy = convert_to_int(policy)
@@ -10071,7 +9879,7 @@ def fl_popup_set_callback(pPopup, py_PopupCb):
             xfc.FL_POPUP_CB, [cty.POINTER(xfc.FL_POPUP), xfc.FL_POPUP_CB],
             """FL_POPUP_CB fl_popup_set_callback(FL_POPUP * p1,
                FL_POPUP_CB p2)
-            """)
+""")
     check_if_initialized()
     c_PopupCb = xfc.FL_POPUP_CB(py_PopupCb)
     keep_cfunc_refs(c_PopupCb, py_PopupCb)
@@ -10095,7 +9903,7 @@ def fl_popup_get_title_font(pPopup):
             cty.POINTER(cty.c_int)],
             """void fl_popup_get_title_font(FL_POPUP * p1, int * p2,
                int * p3)
-            """)
+""")
     check_if_initialized()
     style, pstyle = make_int_and_pointer()
     size, psize = make_int_and_pointer()
@@ -10114,7 +9922,7 @@ def fl_popup_set_title_font(pPopup, style, size):
             load_so_libforms(), "fl_popup_set_title_font",
             None, [cty.POINTER(xfc.FL_POPUP), cty.c_int, cty.c_int],
             """void fl_popup_set_title_font(FL_POPUP * p1, int p2, int p3)
-            """)
+""")
     check_if_initialized()
     istyle = convert_to_int(style)
     isize = convert_to_int(size)
@@ -10136,7 +9944,7 @@ def fl_popup_entry_get_font(pPopup):
             None, [cty.POINTER(xfc.FL_POPUP), cty.POINTER(cty.c_int),
             cty.POINTER(cty.c_int)],
             """void fl_popup_entry_get_font(FL_POPUP * p1, int * p2, int * p3)
-            """)
+""")
     check_if_initialized()
     style, pstyle = make_int_and_pointer()
     size, psize = make_int_and_pointer()
@@ -10161,7 +9969,7 @@ def fl_popup_entry_set_font(pPopup, style, size):
             load_so_libforms(), "fl_popup_entry_set_font",
             None, [cty.POINTER(xfc.FL_POPUP), cty.c_int, cty.c_int],
             """void fl_popup_entry_set_font(FL_POPUP * p1, int p2, int p3)
-            """)
+""")
     check_if_initialized()
     istyle = convert_to_int(style)
     isize = convert_to_int(size)
@@ -10183,7 +9991,7 @@ def fl_popup_get_bw(pPopup):
             load_so_libforms(), "fl_popup_get_bw",
             cty.c_int, [cty.POINTER(xfc.FL_POPUP)],
             """int fl_popup_get_bw(FL_POPUP * p1)
-            """)
+""")
     check_if_initialized()
     keep_elem_refs(pPopup)
     retval = _fl_popup_get_bw(pPopup)
@@ -10205,7 +10013,7 @@ def fl_popup_set_bw(pPopup, bw):
             load_so_libforms(), "fl_popup_set_bw",
             cty.c_int, [cty.POINTER(xfc.FL_POPUP), cty.c_int],
             """int fl_popup_set_bw(FL_POPUP * p1, int p2)
-            """)
+""")
     check_if_initialized()
     ibw = convert_to_int(bw)
     keep_elem_refs(pPopup, bw, ibw)
@@ -10228,7 +10036,7 @@ def fl_popup_get_color(pPopup, colrpos):
             load_so_libforms(), "fl_popup_get_color",
             xfc.FL_COLOR, [cty.POINTER(xfc.FL_POPUP), cty.c_int],
             """FL_COLOR fl_popup_get_color(FL_POPUP * p1, int p2)
-            """)
+""")
     check_if_initialized()
     check_admitted_listvalues(colrpos, xfc.POPUPCOLOR_list)
     icolrpos = convert_to_int(colrpos)
@@ -10254,7 +10062,7 @@ def fl_popup_set_color(pPopup, colrpos, colr):
             load_so_libforms(), "fl_popup_set_color",
             xfc.FL_COLOR, [cty.POINTER(xfc.FL_POPUP), cty.c_int, xfc.FL_COLOR],
             """FL_COLOR fl_popup_set_color(FL_POPUP * p1, int p2, FL_COLOR p3)
-            """)
+""")
     check_if_initialized()
     check_admitted_listvalues(colrpos, xfc.POPUPCOLOR_list)
     check_admitted_listvalues(colrpos, xfc.COLOR_list)
@@ -10280,7 +10088,7 @@ def fl_popup_set_cursor(pPopup, cursnum):
             load_so_libforms(), "fl_popup_set_cursor",
             None, [cty.POINTER(xfc.FL_POPUP), cty.c_int],
             """void fl_popup_set_cursor(FL_POPUP * p1, int p2)
-            """)
+""")
     icursnum = convert_to_int(cursnum)
     keep_elem_refs(pPopup, cursnum, icursnum)
     _fl_popup_set_cursor(pPopup, icursnum)
@@ -10300,7 +10108,7 @@ def fl_popup_get_title(pPopup):
             load_so_libforms(), "fl_popup_get_title",
             xfc.STRING, [cty.POINTER(xfc.FL_POPUP)],
             """const char * fl_popup_get_title(FL_POPUP * p1)
-            """)
+""")
     check_if_initialized()
     keep_elem_refs(pPopup)
     retval = _fl_popup_get_title(pPopup)
@@ -10322,7 +10130,7 @@ def fl_popup_set_title(pPopup, title):
             load_so_libforms(), "fl_popup_set_title",
             cty.POINTER(xfc.FL_POPUP), [cty.POINTER(xfc.FL_POPUP), xfc.STRING],
             """FL_POPUP * fl_popup_set_title(FL_POPUP * p1, const char * p2)
-            """)
+""")
     check_if_initialized()
     stitle = convert_to_string(title)
     keep_elem_refs(pPopup, title, stitle)
@@ -10342,7 +10150,7 @@ def fl_popup_entry_set_callback(pPopupEntry, py_PopupCb):
             xfc.FL_POPUP_CB],
             """FL_POPUP_CB fl_popup_entry_set_callback(FL_POPUP_ENTRY * p1,
                FL_POPUP_CB p2)
-            """)
+""")
     check_if_initialized()
     c_PopupCb = xfc.FL_POPUP_CB(py_PopupCb)
     keep_cfunc_refs(c_PopupCb, py_PopupCb)
@@ -10363,7 +10171,7 @@ def fl_popup_entry_set_enter_callback(pPopupEntry, py_PopupCb):
             xfc.FL_POPUP_CB],
             """FL_POPUP_CB fl_popup_entry_set_enter_callback(
                FL_POPUP_ENTRY * p1, FL_POPUP_CB p2)
-            """)
+""")
     check_if_initialized()
     c_PopupCb = xfc.FL_POPUP_CB(py_PopupCb)
     keep_cfunc_refs(c_PopupCb, py_PopupCb)
@@ -10384,7 +10192,7 @@ def fl_popup_entry_set_leave_callback(pPopupEntry, py_PopupCb):
             xfc.FL_POPUP_CB],
             """FL_POPUP_CB fl_popup_entry_set_leave_callback(
                FL_POPUP_ENTRY * p1, FL_POPUP_CB p2)
-            """)
+""")
     check_if_initialized()
     c_PopupCb = xfc.FL_POPUP_CB(py_PopupCb)
     keep_cfunc_refs(c_PopupCb, py_PopupCb)
@@ -10403,7 +10211,7 @@ def fl_popup_entry_get_state(pPopupEntry):
             load_so_libforms(), "fl_popup_entry_get_state",
             cty.c_uint, [cty.POINTER(xfc.FL_POPUP_ENTRY)],
             """unsigned int fl_popup_entry_get_state(FL_POPUP_ENTRY * p1)
-            """)
+""")
     check_if_initialized()
     keep_elem_refs(pPopupEntry)
     retval = _fl_popup_entry_get_state(pPopupEntry)
@@ -10421,7 +10229,7 @@ def fl_popup_entry_set_state(pPopupEntry, state):
             cty.c_uint, [cty.POINTER(xfc.FL_POPUP_ENTRY), cty.c_uint],
             """unsigned int fl_popup_entry_set_state(FL_POPUP_ENTRY * p1,
                unsigned int p2)
-            """)
+""")
     check_if_initialized()
     uistate = convert_to_uint(state)
     keep_elem_refs(pPopupEntry, state, uistate)
@@ -10440,7 +10248,7 @@ def fl_popup_entry_clear_state(pPopupEntry, state):
             cty.c_uint, [cty.POINTER(xfc.FL_POPUP_ENTRY), cty.c_uint],
             """unsigned int fl_popup_entry_clear_state(FL_POPUP_ENTRY * p1,
                unsigned int p2)
-            """)
+""")
     check_if_initialized()
     uistate = convert_to_uint(state)
     keep_elem_refs(pPopupEntry, state, uistate)
@@ -10459,7 +10267,7 @@ def fl_popup_entry_raise_state(pPopupEntry, state):
             cty.c_uint, [cty.POINTER(xfc.FL_POPUP_ENTRY), cty.c_uint],
             """unsigned int fl_popup_entry_raise_state(FL_POPUP_ENTRY * p1,
                unsigned int p2)
-            """)
+""")
     check_if_initialized()
     uistate = convert_to_uint(state)
     keep_elem_refs(pPopupEntry, state, uistate)
@@ -10478,7 +10286,7 @@ def fl_popup_entry_toggle_state(pPopupEntry, state):
             cty.c_uint, [cty.POINTER(xfc.FL_POPUP_ENTRY), cty.c_uint],
             """unsigned int fl_popup_entry_toggle_state(FL_POPUP_ENTRY * p1,
                unsigned int p2)
-            """)
+""")
     check_if_initialized()
     uistate = convert_to_uint(state)
     keep_elem_refs(pPopupEntry, state, uistate)
@@ -10497,7 +10305,7 @@ def fl_popup_entry_set_text(pPopupEntry, text):
             cty.c_int, [cty.POINTER(xfc.FL_POPUP_ENTRY), xfc.STRING],
             """int fl_popup_entry_set_text(FL_POPUP_ENTRY * p1,
                const char * p2)
-            """)
+""")
     check_if_initialized()
     stext = convert_to_string(text)
     keep_elem_refs(pPopupEntry, text, stext)
@@ -10516,7 +10324,7 @@ def fl_popup_entry_set_shortcut(pPopupEntry, textsc):
             None, [cty.POINTER(xfc.FL_POPUP_ENTRY), xfc.STRING],
             """void fl_popup_entry_set_shortcut(FL_POPUP_ENTRY * p1,
                const char * p2)
-            """)
+""")
     check_if_initialized()
     stextsc = convert_to_string(textsc)
     keep_elem_refs(pPopupEntry, textsc, stextsc)
@@ -10534,7 +10342,7 @@ def fl_popup_entry_set_value(pPopupEntry, val):
             cty.c_long, [cty.POINTER(xfc.FL_POPUP_ENTRY), cty.c_long],
             """long int fl_popup_entry_set_value(FL_POPUP_ENTRY * p1,
                long int p2)
-            """)
+""")
     check_if_initialized()
     lval = convert_to_long(val)
     keep_elem_refs(pPopupEntry, val, lval)
@@ -10553,7 +10361,7 @@ def fl_popup_entry_set_user_data(pPopupEntry, vdata):
             cty.c_void_p, [cty.POINTER(xfc.FL_POPUP_ENTRY), cty.c_void_p],
             """void * fl_popup_entry_set_user_data(FL_POPUP_ENTRY * p1,
                void * p2)
-            """)
+""")
     check_if_initialized()
     pvdata = cty.cast(vdata, cty.c_void_p)
     keep_elem_refs(pPopupEntry, vdata, pvdata)
@@ -10572,7 +10380,7 @@ def fl_popup_entry_get_by_position(pPopup, numpos):
             cty.POINTER(xfc.FL_POPUP_ENTRY), [cty.POINTER(xfc.FL_POPUP), cty.c_int],
             """FL_POPUP_ENTRY * fl_popup_entry_get_by_position(FL_POPUP * p1,
                int p2)
-            """)
+""")
     check_if_initialized()
     inumpos = convert_to_int(numpos)
     keep_elem_refs(pPopup, numpos, inumpos)
@@ -10591,7 +10399,7 @@ def fl_popup_entry_get_by_value(pPopup, val):
             cty.POINTER(xfc.FL_POPUP_ENTRY), [cty.POINTER(xfc.FL_POPUP), cty.c_long],
             """FL_POPUP_ENTRY * fl_popup_entry_get_by_value(FL_POPUP * p1,
                long int p2)
-            """)
+""")
     check_if_initialized()
     lval = convert_to_long(val)
     keep_elem_refs(pPopup, val, lval)
@@ -10610,7 +10418,7 @@ def fl_popup_entry_get_by_user_data(pPopup, vdata):
             cty.POINTER(xfc.FL_POPUP_ENTRY), [cty.POINTER(xfc.FL_POPUP), cty.c_void_p],
             """FL_POPUP_ENTRY * fl_popup_entry_get_by_user_data(FL_POPUP * p1,
                void * p2)
-            """)
+""")
     check_if_initialized()
     pvdata = cty.cast(vdata, cty.c_void_p)
     keep_elem_refs(pPopup, vdata, pvdata)
@@ -10630,7 +10438,7 @@ def fl_popup_entry_get_by_text(pPopup, text):
             xfc.STRING],
             """FL_POPUP_ENTRY * fl_popup_entry_get_by_text(FL_POPUP * p1,
                const char * p2)
-            """)
+""")
     check_if_initialized()
     stext = convert_to_string(text)
     keep_elem_refs(pPopup, text, stext)
@@ -10650,7 +10458,7 @@ def fl_popup_entry_get_by_label(pPopup, label):
             xfc.STRING],
             """FL_POPUP_ENTRY * fl_popup_entry_get_by_label(FL_POPUP * p1,
                const char * p2)
-            """)
+""")
     check_if_initialized()
     slabel = convert_to_string(label)
     keep_elem_refs(pPopup, label, slabel)
@@ -10668,7 +10476,7 @@ def fl_popup_entry_get_group(pPopupEntry):
             load_so_libforms(), "fl_popup_entry_get_group",
             cty.c_int, [cty.POINTER(xfc.FL_POPUP_ENTRY)],
             """int fl_popup_entry_get_group(FL_POPUP_ENTRY * p1)
-            """)
+""")
     check_if_initialized()
     keep_elem_refs(pPopupEntry)
     retval = _fl_popup_entry_get_group(pPopupEntry)
@@ -10685,7 +10493,7 @@ def fl_popup_entry_set_group(pPopupEntry, num):
             load_so_libforms(), "fl_popup_entry_set_group",
             cty.c_int, [cty.POINTER(xfc.FL_POPUP_ENTRY), cty.c_int],
             """int fl_popup_entry_set_group(FL_POPUP_ENTRY * p1, int p2)
-            """)
+""")
     check_if_initialized()
     inum = convert_to_int(num)
     keep_elem_refs(pPopupEntry, num, inum)
@@ -10703,7 +10511,7 @@ def fl_popup_entry_get_subpopup(pPopupEntry):
             load_so_libforms(), "fl_popup_entry_get_subpopup",
             cty.POINTER(xfc.FL_POPUP), [cty.POINTER(xfc.FL_POPUP_ENTRY)],
             """FL_POPUP * fl_popup_entry_get_subpopup(FL_POPUP_ENTRY * p1)
-            """)
+""")
     check_if_initialized()
     keep_elem_refs(pPopupEntry)
     retval = _fl_popup_entry_get_subpopup(pPopupEntry)
@@ -10722,7 +10530,7 @@ def fl_popup_entry_set_subpopup(pPopupEntry, pPopup):
             cty.POINTER(xfc.FL_POPUP)],
             """FL_POPUP * fl_popup_entry_set_subpopup(FL_POPUP_ENTRY * p1,
                FL_POPUP * p2)
-            """)
+""")
     check_if_initialized()
     keep_elem_refs(pPopupEntry, pPopup)
     retval = _fl_popup_entry_set_subpopup(pPopupEntry, pPopup)
@@ -10744,7 +10552,7 @@ def fl_popup_get_size(pPopup):
             cty.POINTER(cty.c_uint)],
             """int fl_popup_get_size(FL_POPUP * p1, unsigned int * p2,
                unsigned int * p3)
-            """)
+""")
     check_if_initialized()
     w, pw = make_uint_and_pointer()
     h, ph = make_uint_and_pointer()
@@ -10763,7 +10571,7 @@ def fl_popup_get_min_width(pPopup):
             load_so_libforms(), "fl_popup_get_min_width",
             cty.c_int, [cty.POINTER(xfc.FL_POPUP)],
             """int fl_popup_get_min_width(FL_POPUP * p1)
-            """)
+""")
     check_if_initialized()
     keep_elem_refs(pPopup)
     retval = _fl_popup_get_min_width(pPopup)
@@ -10780,7 +10588,7 @@ def fl_popup_set_min_width(pPopup, minwidth):
             load_so_libforms(), "fl_popup_set_min_width",
             cty.c_int, [cty.POINTER(xfc.FL_POPUP), cty.c_int],
             """int fl_popup_set_min_width(FL_POPUP * p1, int p2)
-            """)
+""")
     check_if_initialized()
     iminwidth = convert_to_int(minwidth)
     keep_elem_refs(pPopup, minwidth, iminwidth)
@@ -10822,7 +10630,7 @@ def fl_add_bitmap(bitmaptype, x, y, w, h, label):
             xfc.FL_Coord, xfc.FL_Coord, xfc.FL_Coord, xfc.STRING],
             """FL_OBJECT * fl_add_bitmap(int type, FL_Coord x, FL_Coord y,
                FL_Coord w, FL_Coord h, const char * label)
-            """)
+""")
     check_if_initialized()
     check_admitted_listvalues(bitmaptype, xfc.BITMAPTYPE_list)
     ibitmaptype = convert_to_int(bitmaptype)
@@ -10857,7 +10665,7 @@ def fl_set_bitmap_data(pFlObject, w, h, xbmcontents):
             cty.POINTER(cty.c_ubyte)],
             """void fl_set_bitmap_data(FL_OBJECT * ob, int w, int h,
                unsigned char * data)
-            """)
+""")
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     iw = convert_to_int(w)
@@ -10881,7 +10689,7 @@ def fl_set_bitmap_file(pFlObject, fname):
             load_so_libforms(), "fl_set_bitmap_file",
             None, [cty.POINTER(xfc.FL_OBJECT), xfc.STRING],
             """void fl_set_bitmap_file(FL_OBJECT * ob, const char * fname)
-            """)
+""")
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     sfname = convert_to_string(fname)
@@ -10908,7 +10716,7 @@ def fl_read_bitmapfile(win, filename, w, h, hotx, hoty):
             cty.POINTER(cty.c_int)],
             """Pixmap fl_read_bitmapfile(Window win, const char * file,
                unsigned int * w, unsigned int * h, int * hotx, int * hoty)
-            """)
+""")
     check_if_initialized()
     ulwin = convert_to_Window(win)
     sfilename = convert_to_string(filename)
@@ -10938,7 +10746,7 @@ def fl_create_from_bitmapdata(win, data, w, h):
             xfc.Pixmap, [xfc.Window, xfc.STRING, cty.c_int, cty.c_int],
             """Pixmap fl_create_from_bitmapdata(Window win, const
                char * data, int width, int height)
-            """)
+""")
     check_if_initialized()
     ulwin = convert_to_Window(win)
     sdata = convert_to_string(data)
@@ -10976,7 +10784,7 @@ def fl_add_pixmap(pixmaptype, x, y, w, h, label):
             xfc.FL_Coord, xfc.FL_Coord, xfc.STRING],
             """FL_OBJECT * fl_add_pixmap(int type, FL_Coord x, FL_Coord y,
                FL_Coord w, FL_Coord h, const char * label)
-            """)
+""")
     check_if_initialized()
     check_admitted_listvalues(pixmaptype, xfc.PIXMAPTYPE_list)
     ipixmaptype = convert_to_int(pixmaptype)
@@ -11005,7 +10813,7 @@ def fl_set_pixmap_data(pFlObject, bits):
             load_so_libforms(), "fl_set_pixmap_data",
             None, [cty.POINTER(xfc.FL_OBJECT), cty.POINTER(xfc.STRING)],
             """void fl_set_pixmap_data(FL_OBJECT * ob, char * * bits)
-            """)
+""")
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     print "bits", bits
@@ -11031,7 +10839,7 @@ def fl_set_pixmap_file(pFlObject, fname):
             load_so_libforms(), "fl_set_pixmap_file",
             None, [cty.POINTER(xfc.FL_OBJECT), xfc.STRING],
             """void fl_set_pixmap_file(FL_OBJECT * ob, const char * fname)
-            """)
+""")
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     sfname = convert_to_string(fname)
@@ -11064,7 +10872,7 @@ def fl_set_pixmap_align(pFlObject, align, xmargin, ymargin):
             cty.c_int],
             """void fl_set_pixmap_align(FL_OBJECT * ob, int align,
                int xmargin, int ymargin)
-            """)
+""")
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     check_admitted_listvalues(align, xfc.ALIGN_list)
@@ -11093,7 +10901,7 @@ def fl_set_pixmap_pixmap(pFlObject, idnum, mask):
             None, [cty.POINTER(xfc.FL_OBJECT), xfc.Pixmap, xfc.Pixmap],
             """void fl_set_pixmap_pixmap(FL_OBJECT * ob, Pixmap id,
                Pixmap mask)
-            """)
+""")
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     ulidnum = convert_to_ulong(idnum)
@@ -11115,7 +10923,7 @@ def fl_set_pixmap_colorcloseness(red, green, blue):
             load_so_libforms(), "fl_set_pixmap_colorcloseness",
             None, [cty.c_int, cty.c_int, cty.c_int],
             """void fl_set_pixmap_colorcloseness(int red, int green, int blue)
-            """)
+""")
     check_if_initialized()
     ired = convert_to_int(red)
     igreen = convert_to_int(green)
@@ -11137,7 +10945,7 @@ def fl_free_pixmap_pixmap(pFlObject):
             load_so_libforms(), "fl_free_pixmap_pixmap",
             None, [cty.POINTER(xfc.FL_OBJECT)],
             """void fl_free_pixmap_pixmap(FL_OBJECT * ob)
-            """)
+""")
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     keep_elem_refs(pFlObject)
@@ -11165,7 +10973,7 @@ def fl_get_pixmap_pixmap(pFlObject):
             cty.POINTER(xfc.Pixmap)],
             """Pixmap fl_get_pixmap_pixmap(FL_OBJECT * ob, Pixmap * p,
                Pixmap * m)
-            """)
+""")
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     p, pp = make_ulong_and_pointer()
@@ -11196,7 +11004,7 @@ def fl_read_pixmapfile(win, filename, tran):
             """Pixmap fl_read_pixmapfile(Window win, const char * file,
                unsigned int * w, unsigned int * h, Pixmap * shape_mask,
                int * hotx, int * hoty, FL_COLOR tran)
-            """)
+""")
     check_if_initialized()
     check_admitted_listvalues(tran, xfc.COLOR_list)
     ulwin = convert_to_Window(win)
@@ -11229,7 +11037,7 @@ def fl_create_from_pixmapdata(win, data, w, h, sm, hotx, hoty, tran):
             """Pixmap fl_create_from_pixmapdata(Window win, char * * data,
             unsigned int * w, unsigned int * h, Pixmap * sm, int * hotx,
             int * hoty, FL_COLOR tran)
-            """)
+""")
     check_if_initialized()
     check_admitted_listvalues(tran, xfc.COLOR_list)
     ulwin = convert_to_Window(win)
@@ -11252,7 +11060,7 @@ def fl_free_pixmap(idnum):
             load_so_libforms(), "fl_free_pixmap",
             None, [xfc.Pixmap],
             """void fl_free_pixmap(Pixmap id)
-            """)
+""")
     check_if_initialized()
     ulidnum = convert_to_Pixmap(idnum)
     keep_elem_refs(idnum, ulidnum)
@@ -11295,7 +11103,7 @@ def fl_add_box(boxtype, x, y, w, h, label):
             xfc.FL_Coord, xfc.FL_Coord, xfc.FL_Coord, xfc.STRING],
             """FL_OBJECT * fl_add_box(int type, FL_Coord x, FL_Coord y,
                FL_Coord w, FL_Coord h, const char * label)
-            """)
+""")
     check_if_initialized()
     check_admitted_listvalues(boxtype, xfc.BOXTYPE_list)
     iboxtype = convert_to_int(boxtype)
@@ -11345,7 +11153,7 @@ def fl_add_browser(browsertype, x, y, w, h, label):
             xfc.FL_Coord, xfc.FL_Coord, xfc.FL_Coord, xfc.STRING],
             """FL_OBJECT * fl_add_browser(int type, FL_Coord x, FL_Coord y,
                FL_Coord w, FL_Coord h, const char * label)
-            """)
+""")
     check_if_initialized()
     check_admitted_listvalues(browsertype, xfc.BROWSERTYPE_list)
     ibrowsertype = convert_to_int(browsertype)
@@ -11375,7 +11183,7 @@ def fl_clear_browser(pFlObject):
             load_so_libforms(), "fl_clear_browser",
             None, [cty.POINTER(xfc.FL_OBJECT)],
             """void fl_clear_browser(FL_OBJECT * ob)
-            """)
+""")
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     keep_elem_refs(pFlObject)
@@ -11383,22 +11191,24 @@ def fl_clear_browser(pFlObject):
 
 
 def fl_add_browser_line(pFlObject, newtext):
-    """ fl_add_browser_line(pFlObject, newtext)
+    """
+    fl_add_browser_line(pFlObject, newtext)
 
-        Add a line to a browser object.
+    Add a line to a browser object.
 
-        @param pFlObject: pointer to browser object
-@type pFlObject: pointer to xfdata.FL_OBJECT
-        @param newtext: line of text to be added
+    @param pFlObject: browser object
+    @type pFlObject: pointer to xfdata.FL_OBJECT
+    @param newtext: line of text to be added
+    @type newtext: str
 
-        @status: Tested + NoDoc + Demo = OK
+    @status: Tested + NoDoc + Demo = OK
     """
 
     _fl_add_browser_line = cfuncproto(
             load_so_libforms(), "fl_add_browser_line",
             None, [cty.POINTER(xfc.FL_OBJECT), xfc.STRING],
             """void fl_add_browser_line(FL_OBJECT * ob, const char * newtext)
-            """)
+""")
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     snewtext = convert_to_string(newtext)
@@ -11407,19 +11217,22 @@ def fl_add_browser_line(pFlObject, newtext):
 
 
 def fl_addto_browser(pFlObject, newtext):
-    """ fl_addto_browser(pFlObject, newtext)
+    """
+    fl_addto_browser(pFlObject, newtext)
 
-        @param pFlObject: pointer to object
-@type pFlObject: pointer to xfdata.FL_OBJECT
+    @param pFlObject: browser object
+    @type pFlObject: pointer to xfdata.FL_OBJECT
+    @param newtext: text to be added
+    @type newtext: str
 
-        @status: Tested + NoDoc + Demo = OK
+    @status: Tested + NoDoc + Demo = OK
     """
 
     _fl_addto_browser = cfuncproto(
             load_so_libforms(), "fl_addto_browser",
             None, [cty.POINTER(xfc.FL_OBJECT), xfc.STRING],
             """void fl_addto_browser(FL_OBJECT * ob, const char * newtext)
-            """)
+""")
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     snewtext = convert_to_string(newtext)
@@ -11427,34 +11240,45 @@ def fl_addto_browser(pFlObject, newtext):
     _fl_addto_browser(pFlObject, snewtext)
 
 
-def fl_addto_browser_chars(pFlObject, browsertext):
-    """ fl_addto_browser_chars(pFlObject, browsertext)
+def fl_addto_browser_chars(pFlObject, addedtext):
+    """
+    fl_addto_browser_chars(pFlObject, addedtext)
 
-        @status: Untested + NoDoc + NoDemo = NOT OK
+    @param pFlObject: browser object
+    @type pFlObject: pointer to xfdata.FL_OBJECT
+    @param addedtext: text to be added
+    @type addedtext: str
+
+    @status: Untested + NoDoc + NoDemo = NOT OK
     """
 
     _fl_addto_browser_chars = cfuncproto(
             load_so_libforms(), "fl_addto_browser_chars",
             None, [cty.POINTER(xfc.FL_OBJECT), xfc.STRING],
             """void fl_addto_browser_chars(FL_OBJECT * ob, const char * str)
-            """)
+""")
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
-    sbrowsertext = convert_to_string(browsertext)
-    keep_elem_refs(pFlObject, browsertext, sbrowsertext)
-    _fl_addto_browser_chars(pFlObject, sbrowsertext)
+    saddedtext = convert_to_string(addedtext)
+    keep_elem_refs(pFlObject, addedtext, saddedtext)
+    _fl_addto_browser_chars(pFlObject, saddedtext)
 
 
 fl_append_browser = fl_addto_browser_chars
 
 
 def fl_insert_browser_line(pFlObject, linenum, newtext):
-    """ fl_insert_browser_line(pFlObject, linenum, newtext)
+    """
+    fl_insert_browser_line(pFlObject, linenum, newtext)
 
-        @param pFlObject: pointer to object
-@type pFlObject: pointer to xfdata.FL_OBJECT
+    @param pFlObject: browser object
+    @type pFlObject: pointer to xfdata.FL_OBJECT
+    @param linenum: line number after which insert it
+    @type linenum: int
+    @param newtext: text to be inserted
+    @type netext: str
 
-        @status: Tested + NoDoc + Demo = OK
+    @status: Tested + NoDoc + Demo = OK
     """
 
     _fl_insert_browser_line = cfuncproto(
@@ -11462,7 +11286,7 @@ def fl_insert_browser_line(pFlObject, linenum, newtext):
             None, [cty.POINTER(xfc.FL_OBJECT), cty.c_int, xfc.STRING],
             """void fl_insert_browser_line(FL_OBJECT * ob, int linenumb,
                const char * newtext)
-            """)
+""")
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     ilinenum = convert_to_int(linenum)
@@ -11472,20 +11296,22 @@ def fl_insert_browser_line(pFlObject, linenum, newtext):
 
 
 def fl_delete_browser_line(pFlObject, linenum):
-    """ fl_delete_browser_line(pFlObject, linenum)
+    """
+    fl_delete_browser_line(pFlObject, linenum)
 
-        @param pFlObject: pointer to browser object
-@type pFlObject: pointer to xfdata.FL_OBJECT
-        @param linenum: line number to delete
+    @param pFlObject: browser object
+    @type pFlObject: pointer to xfdata.FL_OBJECT
+    @param linenum: line number to delete
+    @type linenum: int
 
-        @status: Tested + NoDoc + Demo = OK
+    @status: Tested + NoDoc + Demo = OK
     """
 
     _fl_delete_browser_line = cfuncproto(
             load_so_libforms(), "fl_delete_browser_line",
             None, [cty.POINTER(xfc.FL_OBJECT), cty.c_int],
             """void fl_delete_browser_line(FL_OBJECT * ob, int linenumb)
-            """)
+""")
     check_if_FL_OBJECT_ptr(pFlObject)
     ilinenum = convert_to_int(linenum)
     keep_elem_refs(pFlObject, linenum, ilinenum)
@@ -11493,14 +11319,17 @@ def fl_delete_browser_line(pFlObject, linenum):
 
 
 def fl_replace_browser_line(pFlObject, linenum, newtext):
-    """ fl_replace_browser_line(pFlObject, linenum, newtext)
+    """
+    fl_replace_browser_line(pFlObject, linenum, newtext)
 
-        @param pFlObject: pointer to browser object
-@type pFlObject: pointer to xfdata.FL_OBJECT
-        @param linenum: line number to replace
-        @param newtext: text line used as replacement
+    @param pFlObject: browser object
+    @type pFlObject: pointer to xfdata.FL_OBJECT
+    @param linenum: line number to replace
+    @type linenum: int
+    @param newtext: text line used as replacement
+    @type newtext: str
 
-        @status: Tested + NoDoc + Demo = OK
+    @status: Tested + NoDoc + Demo = OK
     """
 
     _fl_replace_browser_line = cfuncproto(
@@ -11508,7 +11337,7 @@ def fl_replace_browser_line(pFlObject, linenum, newtext):
             None, [cty.POINTER(xfc.FL_OBJECT), cty.c_int, xfc.STRING],
             """void fl_replace_browser_line(FL_OBJECT * ob, int linenumb,
                const char * newtext)
-            """)
+""")
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     ilinenum = convert_to_int(linenum)
@@ -11521,7 +11350,7 @@ def fl_get_browser_line(pFlObject, linenum):
     """
     fl_get_browser_line(pFlObject, linenum) -> str
 
-    @param pFlObject: pointer to browser object
+    @param pFlObject: browser object
     @type pFlObject: pointer to xfdata.FL_OBJECT
     @param linenum: line number to return
     @type linenum: int
@@ -11535,7 +11364,7 @@ def fl_get_browser_line(pFlObject, linenum):
             load_so_libforms(), "fl_get_browser_line",
             xfc.STRING, [cty.POINTER(xfc.FL_OBJECT), cty.c_int],
             """const char * fl_get_browser_line(FL_OBJECT * ob, int linenumb)
-            """)
+""")
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     ilinenum = convert_to_int(linenum)
@@ -11548,7 +11377,7 @@ def fl_load_browser(pFlObject, filename):
     """
     fl_load_browser(pFlObject, filename) -> int
 
-    @param pFlObject: pointer to object
+    @param pFlObject: browser object
     @type pFlObject: pointer to xfdata.FL_OBJECT
     @param filename: name of the file
     @type filename: str
@@ -11562,7 +11391,7 @@ def fl_load_browser(pFlObject, filename):
             load_so_libforms(), "fl_load_browser",
             cty.c_int, [cty.POINTER(xfc.FL_OBJECT), xfc.STRING],
             """int fl_load_browser(FL_OBJECT * ob, const char * filename)
-            """)
+""")
     check_if_FL_OBJECT_ptr(pFlObject)
     sfilename = convert_to_string(filename)
     keep_elem_refs(pFlObject, filename, sfilename)
@@ -11570,14 +11399,14 @@ def fl_load_browser(pFlObject, filename):
     return retval
 
 
-def fl_select_browser_line(pFlObject, line):
+def fl_select_browser_line(pFlObject, linenum):
     """
-    fl_select_browser_line(pFlObject, line)
+    fl_select_browser_line(pFlObject, linenum)
 
     @param pFlObject: pointer to object
     @type pFlObject: pointer to xfdata.FL_OBJECT
-    @param line: ?
-    @type line: int
+    @param linenum: line number to select
+    @type linenum: int
 
     @status: Untested + NoDoc + NoDemo = NOT OK
     """
@@ -11586,22 +11415,22 @@ def fl_select_browser_line(pFlObject, line):
             load_so_libforms(), "fl_select_browser_line",
             None, [cty.POINTER(xfc.FL_OBJECT), cty.c_int],
             """void fl_select_browser_line(FL_OBJECT * ob, int line)
-            """)
+""")
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
-    iline = convert_to_int(line)
-    keep_elem_refs(pFlObject, line, iline)
-    _fl_select_browser_line(pFlObject, iline)
+    ilinenum = convert_to_int(linenum)
+    keep_elem_refs(pFlObject, linenum, ilinenum)
+    _fl_select_browser_line(pFlObject, ilinenum)
 
 
-def fl_deselect_browser_line(pFlObject, line):
+def fl_deselect_browser_line(pFlObject, linenum):
     """
-    fl_deselect_browser_line(pFlObject, line)
+    fl_deselect_browser_line(pFlObject, linenum)
 
     @param pFlObject: pointer to object
     @type pFlObject: pointer to xfdata.FL_OBJECT
-    @param line: ?
-    @type line: int
+    @param linenum: line id to deselect
+    @type linenum: int
 
     @status: Tested + NoDoc + Demo = OK
     """
@@ -11610,19 +11439,19 @@ def fl_deselect_browser_line(pFlObject, line):
             load_so_libforms(), "fl_deselect_browser_line",
             None, [cty.POINTER(xfc.FL_OBJECT), cty.c_int],
             """void fl_deselect_browser_line(FL_OBJECT * ob, int line)
-            """)
+""")
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
-    iline = convert_to_int(line)
-    keep_elem_refs(pFlObject, line, iline)
-    _fl_deselect_browser_line(pFlObject, iline)
+    ilinenum = convert_to_int(linenum)
+    keep_elem_refs(pFlObject, linenum, ilinenum)
+    _fl_deselect_browser_line(pFlObject, ilinenum)
 
 
 def fl_deselect_browser(pFlObject):
     """
     fl_deselect_browser(pFlObject)
 
-    @param pFlObject: pointer to browser object
+    @param pFlObject: browser object
     @type pFlObject: pointer to xfdata.FL_OBJECT
 
     @status: Tested + NoDoc + Demo = OK
@@ -11632,21 +11461,21 @@ def fl_deselect_browser(pFlObject):
             load_so_libforms(), "fl_deselect_browser",
             None, [cty.POINTER(xfc.FL_OBJECT)],
             """void fl_deselect_browser(FL_OBJECT * ob)
-            """)
+""")
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     keep_elem_refs(pFlObject)
     _fl_deselect_browser(pFlObject)
 
 
-def fl_isselected_browser_line(pFlObject, line):
+def fl_isselected_browser_line(pFlObject, linenum):
     """
-    fl_isselected_browser_line(pFlObject, line) -> int
+    fl_isselected_browser_line(pFlObject, linenum) -> int
 
-    @param pFlObject: pointer to object
+    @param pFlObject: browser object
     @type pFlObject: pointer to xfdata.FL_OBJECT
-    @param line: ?
-    @type line: int
+    @param linenum: line id to evaluate
+    @type linenum: int
 
     @status: Untested + NoDoc + NoDemo = NOT OK
     """
@@ -11655,12 +11484,12 @@ def fl_isselected_browser_line(pFlObject, line):
             load_so_libforms(), "fl_isselected_browser_line",
             cty.c_int, [cty.POINTER(xfc.FL_OBJECT), cty.c_int],
             """int fl_isselected_browser_line(FL_OBJECT * ob, int line)
-            """)
+""")
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
-    iline = convert_to_int(line)
-    keep_elem_refs(pFlObject, line, iline)
-    retval = _fl_isselected_browser_line(pFlObject, iline)
+    ilinenum = convert_to_int(linenum)
+    keep_elem_refs(pFlObject, linenum, ilinenum)
+    retval = _fl_isselected_browser_line(pFlObject, ilinenum)
     return retval
 
 
@@ -11671,7 +11500,7 @@ def fl_get_browser_topline(pFlObject):
     @param pFlObject: pointer to object
     @type pFlObject: pointer to xfdata.FL_OBJECT
 
-    @returns: line number
+    @returns: line id number
 
     @status: Untested + NoDoc + NoDemo = NOT OK
     """
@@ -11680,7 +11509,7 @@ def fl_get_browser_topline(pFlObject):
             load_so_libforms(), "fl_get_browser_topline",
             cty.c_int, [cty.POINTER(xfc.FL_OBJECT)],
             """int fl_get_browser_topline(FL_OBJECT * ob)
-            """)
+""")
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     keep_elem_refs(pFlObject)
@@ -11689,19 +11518,22 @@ def fl_get_browser_topline(pFlObject):
 
 
 def fl_get_browser(pFlObject):
-    """ fl_get_browser(pFlObject) -> num.
+    """
+    fl_get_browser(pFlObject) -> int
 
-        @param pFlObject: pointer to browser object
-@type pFlObject: pointer to xfdata.FL_OBJECT
+    @param pFlObject: browser object
+    @type pFlObject: pointer to xfdata.FL_OBJECT
 
-        @status: Tested + NoDoc + Demo = OK
+    @returns: num.
+
+    @status: Tested + NoDoc + Demo = OK
     """
 
     _fl_get_browser = cfuncproto(
             load_so_libforms(), "fl_get_browser",
             cty.c_int, [cty.POINTER(xfc.FL_OBJECT)],
             """int fl_get_browser(FL_OBJECT * ob)
-            """)
+""")
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     keep_elem_refs(pFlObject)
@@ -11713,7 +11545,7 @@ def fl_get_browser_maxline(pFlObject):
     """
     fl_get_browser_maxline(pFlObject) -> int
 
-    @param pFlObject: pointer to object
+    @param pFlObject: browser object
     @type pFlObject: pointer to xfdata.FL_OBJECT
 
     @returns: line num.
@@ -11725,7 +11557,7 @@ def fl_get_browser_maxline(pFlObject):
             load_so_libforms(), "fl_get_browser_maxline",
             cty.c_int, [cty.POINTER(xfc.FL_OBJECT)],
             """int fl_get_browser_maxline(FL_OBJECT * ob)
-            """)
+""")
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     keep_elem_refs(pFlObject)
@@ -11739,19 +11571,19 @@ def fl_get_browser_screenlines(pFlObject):
 
     Returns an approximation of the number of lines shown in the browser.
 
-    @param pFlObject: pointer to browser object
+    @param pFlObject: browser object
     @type pFlObject: pointer to xfdata.FL_OBJECT
 
     @returns: number of lines
 
-    @status: Untested + NoDoc + NoDemo = NOT OK
+    @status: Untested + Doc + NoDemo = NOT OK
     """
 
     _fl_get_browser_screenlines = cfuncproto(
             load_so_libforms(), "fl_get_browser_screenlines",
             cty.c_int, [cty.POINTER(xfc.FL_OBJECT)],
             """int fl_get_browser_screenlines(FL_OBJECT * ob)
-            """)
+""")
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     keep_elem_refs(pFlObject)
@@ -11759,42 +11591,42 @@ def fl_get_browser_screenlines(pFlObject):
     return retval
 
 
-def fl_set_browser_topline(pFlObject, line):
+def fl_set_browser_topline(pFlObject, linenum):
     """
-    fl_set_browser_topline(pFlObject, line)
+    fl_set_browser_topline(pFlObject, linenum)
 
-    Moves a line to the top of the browser.
+    Moves a text line to the top of the browser.
 
-    @param pFlObject: pointer to browser object
+    @param pFlObject: browser object
     @type pFlObject: pointer to xfdata.FL_OBJECT
-    @param line: text line number to be moved to top
-    @type line: int
+    @param linenum: line id to be moved to top
+    @type linenum: int
 
-    @status: Untested + NoDoc + NoDemo = NOT OK
+    @status: Untested + Doc + NoDemo = NOT OK
     """
 
     _fl_set_browser_topline = cfuncproto(
             load_so_libforms(), "fl_set_browser_topline",
             None, [cty.POINTER(xfc.FL_OBJECT), cty.c_int],
             """void fl_set_browser_topline(FL_OBJECT * ob, int line)
-            """)
+""")
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
-    iline = convert_to_int(line)
-    keep_elem_refs(pFlObject, line, iline)
-    _fl_set_browser_topline(pFlObject, iline)
+    ilinenum = convert_to_int(linenum)
+    keep_elem_refs(pFlObject, linenum, ilinenum)
+    _fl_set_browser_topline(pFlObject, ilinenum)
 
 
-def fl_set_browser_bottomline(pFlObject, line):
+def fl_set_browser_bottomline(pFlObject, linenum):
     """
-    fl_set_browser_bottomline(pFlObject, line)
+    fl_set_browser_bottomline(pFlObject, linenum)
 
-    Moves a line to the bottom of the browser.
+    Moves a text line to the bottom of the browser.
 
-    @param pFlObject: pointer to browser object
+    @param pFlObject: browser object
     @type pFlObject: pointer to xfdata.FL_OBJECT
-    @param line: text line number to be moved to bottom
-    @type line: int
+    @param linenum: line id to be moved to bottom
+    @type linenum: int
 
     @status: Untested + NoDoc + NoDemo = NOT OK
     """
@@ -11803,12 +11635,12 @@ def fl_set_browser_bottomline(pFlObject, line):
             load_so_libforms(), "fl_set_browser_bottomline",
             None, [cty.POINTER(xfc.FL_OBJECT), cty.c_int],
             """void fl_set_browser_bottomline(FL_OBJECT * ob, int line)
-            """)
+""")
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
-    iline = convert_to_int(line)
-    keep_elem_refs(pFlObject, line, iline)
-    _fl_set_browser_bottomline(pFlObject, iline)
+    ilinenum = convert_to_int(linenum)
+    keep_elem_refs(pFlObject, linenum, ilinenum)
+    _fl_set_browser_bottomline(pFlObject, ilinenum)
 
 
 def fl_set_browser_fontsize(pFlObject, size):
@@ -11817,7 +11649,7 @@ def fl_set_browser_fontsize(pFlObject, size):
 
     Sets the font size of a browser object.
 
-    @param pFlObject: pointer to browser object
+    @param pFlObject: browser object
     @type pFlObject: pointer to xfdata.FL_OBJECT
     @param size: font size to be set
     @type size: int
@@ -11829,7 +11661,7 @@ def fl_set_browser_fontsize(pFlObject, size):
             load_so_libforms(), "fl_set_browser_fontsize",
             None, [cty.POINTER(xfc.FL_OBJECT), cty.c_int],
             """void fl_set_browser_fontsize(FL_OBJECT * ob, int size)
-            """)
+""")
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     isize = convert_to_int(size)
@@ -11855,7 +11687,7 @@ def fl_set_browser_fontstyle(pFlObject, style):
             load_so_libforms(), "fl_set_browser_fontstyle",
             None, [cty.POINTER(xfc.FL_OBJECT), cty.c_int],
             """void fl_set_browser_fontstyle(FL_OBJECT * ob, int style)
-            """)
+""")
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     istyle = convert_to_int(style)
@@ -11881,7 +11713,7 @@ def fl_set_browser_specialkey(pFlObject, specialkey):
             load_so_libforms(), "fl_set_browser_specialkey",
             None, [cty.POINTER(xfc.FL_OBJECT), cty.c_int],
             """void fl_set_browser_specialkey(FL_OBJECT * ob, int specialkey)
-            """)
+""")
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     ispecialkey = convert_to_int(specialkey)
@@ -11889,62 +11721,70 @@ def fl_set_browser_specialkey(pFlObject, specialkey):
     _fl_set_browser_specialkey(pFlObject, ispecialkey)
 
 
-def fl_set_browser_vscrollbar(pFlObject, on):
+def fl_set_browser_vscrollbar(pFlObject, how):
     """
-    fl_set_browser_vscrollbar(pFlObject, on)
+    fl_set_browser_vscrollbar(pFlObject, how)
+
+    Turns the vertical scrollbar on or off.
 
     @param pFlObject: pointer to object
     @type pFlObject: pointer to xfdata.FL_OBJECT
-    @param on: ?
-    @type on: int
+    @param how: how bar is turned. Values (from xfdata module) i.e. FL_ON,
+        FL_OFF, FL_AUTO (default)
+    @type how: int
 
-    @status: Tested + NoDoc + Demo = OK
+    @status: Tested + Doc + Demo = OK
     """
 
     _fl_set_browser_vscrollbar = cfuncproto(
             load_so_libforms(), "fl_set_browser_vscrollbar",
             None, [cty.POINTER(xfc.FL_OBJECT), cty.c_int],
             """void fl_set_browser_vscrollbar(FL_OBJECT * ob, int on)
-            """)
+""")
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
-    ion = convert_to_int(on)
-    keep_elem_refs(pFlObject, on, ion)
-    _fl_set_browser_vscrollbar(pFlObject, ion)
+    check_admitted_listvalues(how, xfc.SCROLLBARVAL_list)
+    ihow = convert_to_int(how)
+    keep_elem_refs(pFlObject, how, ihow)
+    _fl_set_browser_vscrollbar(pFlObject, ihow)
 
 
-def fl_set_browser_hscrollbar(pFlObject, on):
+def fl_set_browser_hscrollbar(pFlObject, how):
     """
-    fl_set_browser_hscrollbar(pFlObject, on)
+    fl_set_browser_hscrollbar(pFlObject, how)
+
+    Turns the horizontal scrollbar on or off.
 
     @param pFlObject: pointer to object
     @type pFlObject: pointer to xfdata.FL_OBJECT
-    @param on: ?
-    @type on: int
+    @param how: how bar is turned. Values (from xfdata module) i.e. FL_ON,
+        FL_OFF, FL_AUTO (default)
+    @type how: int
 
-    @status: Untested + NoDoc + NoDemo = NOT OK
+    @status: Untested + Doc + NoDemo = NOT OK
     """
 
     _fl_set_browser_hscrollbar = cfuncproto(
             load_so_libforms(), "fl_set_browser_hscrollbar",
             None, [cty.POINTER(xfc.FL_OBJECT), cty.c_int],
             """void fl_set_browser_hscrollbar(FL_OBJECT * ob, int on)
-            """)
+""")
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
-    ion = convert_to_int(on)
-    keep_elem_refs(pFlObject, on, ion)
-    _fl_set_browser_hscrollbar(pFlObject, ion)
+    check_admitted_listvalues(how, xfc.SCROLLBARVAL_list)
+    ihow = convert_to_int(how)
+    keep_elem_refs(pFlObject, how, ihow)
+    _fl_set_browser_hscrollbar(pFlObject, ihow)
 
 
-def fl_set_browser_line_selectable(pFlObject, line, flag):
+def fl_set_browser_line_selectable(pFlObject, linenum, flag):
     """
-    fl_set_browser_line_selectable(pFlObject, line, flag)
+    fl_set_browser_line_selectable(pFlObject, linenum, flag)
 
     @param pFlObject: pointer to object
     @type pFlObject: pointer to xfdata.FL_OBJECT
-    @param line: ?
-    @type line: int
+    @param linenum: line id to set
+    @type linenum: int
     @param flag: ?
     @type flag: int
 
@@ -11956,13 +11796,13 @@ def fl_set_browser_line_selectable(pFlObject, line, flag):
             None, [cty.POINTER(xfc.FL_OBJECT), cty.c_int, cty.c_int],
             """void fl_set_browser_line_selectable(FL_OBJECT * ob, int line,
                int flag)
-            """)
+""")
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
-    iline = convert_to_int(line)
+    ilinenum = convert_to_int(linenum)
     iflag = convert_to_int(flag)
-    keep_elem_refs(pFlObject, line, flag, iline, iflag)
-    _fl_set_browser_line_selectable(pFlObject, iline, iflag)
+    keep_elem_refs(pFlObject, linenum, flag, ilinenum, iflag)
+    _fl_set_browser_line_selectable(pFlObject, ilinenum, iflag)
 
 
 def fl_get_browser_dimension(pFlObject):
@@ -11989,7 +11829,7 @@ def fl_get_browser_dimension(pFlObject):
             cty.POINTER(xfc.FL_Coord)],
             """void fl_get_browser_dimension(FL_OBJECT * ob, FL_Coord * x,
                FL_Coord * y, FL_Coord * w, FL_Coord * h)
-            """)
+""")
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     x, px = make_FL_Coord_and_pointer()
@@ -12020,7 +11860,7 @@ def fl_set_browser_dblclick_callback(pFlObject, py_CallbackPtr, data):
             None, [cty.POINTER(xfc.FL_OBJECT), xfc.FL_CALLBACKPTR, cty.c_long],
             """void fl_set_browser_dblclick_callback(FL_OBJECT * ob,
                FL_CALLBACKPTR cb, long int a)
-            """)
+""")
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     ldata = convert_to_long(data)
@@ -12046,7 +11886,7 @@ def fl_get_browser_xoffset(pFlObject):
             load_so_libforms(), "fl_get_browser_xoffset",
             xfc.FL_Coord, [cty.POINTER(xfc.FL_OBJECT)],
             """FL_Coord fl_get_browser_xoffset(FL_OBJECT * ob)
-            """)
+""")
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     keep_elem_refs(pFlObject)
@@ -12070,7 +11910,7 @@ def fl_get_browser_rel_xoffset(pFlObject):
             load_so_libforms(), "fl_get_browser_rel_xoffset",
             cty.c_double, [cty.POINTER(xfc.FL_OBJECT)],
             """double fl_get_browser_rel_xoffset(FL_OBJECT * ob)
-            """)
+""")
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     keep_elem_refs(pFlObject)
@@ -12094,7 +11934,7 @@ def fl_set_browser_xoffset(pFlObject, npixels):
             load_so_libforms(), "fl_set_browser_xoffset",
             None, [cty.POINTER(xfc.FL_OBJECT), xfc.FL_Coord],
             """void fl_set_browser_xoffset(FL_OBJECT * ob, FL_Coord npixels)
-            """)
+""")
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     inpixels = convert_to_FL_Coord(npixels)
@@ -12118,7 +11958,7 @@ def fl_set_browser_rel_xoffset(pFlObject, val):
             load_so_libforms(), "fl_set_browser_rel_xoffset",
             None, [cty.POINTER(xfc.FL_OBJECT), cty.c_double],
             """void fl_set_browser_rel_xoffset(FL_OBJECT * ob, double val)
-            """)
+""")
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     fval = convert_to_double(val)
@@ -12142,7 +11982,7 @@ def fl_get_browser_yoffset(pFlObject):
             load_so_libforms(), "fl_get_browser_yoffset",
             xfc.FL_Coord, [cty.POINTER(xfc.FL_OBJECT)],
             """FL_Coord fl_get_browser_yoffset(FL_OBJECT * ob)
-            """)
+""")
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     keep_elem_refs(pFlObject)
@@ -12166,7 +12006,7 @@ def fl_get_browser_rel_yoffset(pFlObject):
             load_so_libforms(), "fl_get_browser_rel_yoffset",
             cty.c_double, [cty.POINTER(xfc.FL_OBJECT)],
             """double fl_get_browser_rel_yoffset(FL_OBJECT * ob)
-            """)
+""")
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     keep_elem_refs(pFlObject)
@@ -12190,7 +12030,7 @@ def fl_set_browser_yoffset(pFlObject, npixels):
             load_so_libforms(), "fl_set_browser_yoffset",
             None, [cty.POINTER(xfc.FL_OBJECT), xfc.FL_Coord],
             """void fl_set_browser_yoffset(FL_OBJECT * ob, FL_Coord npixels)
-            """)
+""")
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     inpixels = convert_to_FL_Coord(npixels)
@@ -12214,7 +12054,7 @@ def fl_set_browser_rel_yoffset(pFlObject, val):
             load_so_libforms(), "fl_set_browser_rel_yoffset",
             None, [cty.POINTER(xfc.FL_OBJECT), cty.c_double],
             """void fl_set_browser_rel_yoffset(FL_OBJECT * ob, double val)
-            """)
+""")
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     fval = convert_to_double(val)
@@ -12241,7 +12081,7 @@ def fl_set_browser_scrollbarsize(pFlObject, hh, vw):
             None, [cty.POINTER(xfc.FL_OBJECT), cty.c_int, cty.c_int],
             """void fl_set_browser_scrollbarsize(FL_OBJECT * ob,
                int hh, int vw)
-            """)
+""")
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     ihh = convert_to_int(hh)
@@ -12268,7 +12108,7 @@ def fl_show_browser_line(pFlObject, line):
             load_so_libforms(), "fl_show_browser_line",
             None, [cty.POINTER(xfc.FL_OBJECT), cty.c_int],
             """void fl_show_browser_line(FL_OBJECT * ob, int j)
-            """)
+""")
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     iline = convert_to_int(line)
@@ -12302,7 +12142,7 @@ def fl_set_browser_hscroll_callback(pFlObject, py_BrowserScrollCallback, vdata):
             cty.c_void_p],
             """void fl_set_browser_hscroll_callback(FL_OBJECT * ob,
                FL_BROWSER_SCROLL_CALLBACK cb, void * data)
-            """)
+""")
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     c_BrowserScrollCallback = FL_BROWSER_SCROLL_CALLBACK( \
@@ -12333,7 +12173,7 @@ def fl_set_browser_vscroll_callback(pFlObject, py_BrowserScrollCallback, vdata):
             cty.c_void_p],
             """void fl_set_browser_vscroll_callback(FL_OBJECT * ob,
                FL_BROWSER_SCROLL_CALLBACK cb, void * data)
-            """)
+""")
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     c_BrowserScrollCallback = FL_BROWSER_SCROLL_CALLBACK( \
@@ -12360,7 +12200,7 @@ def fl_get_browser_line_yoffset(pFlObject, line):
             load_so_libforms(), "fl_get_browser_line_yoffset",
             cty.c_int, [cty.POINTER(xfc.FL_OBJECT), cty.c_int],
             """int fl_get_browser_line_yoffset(FL_OBJECT * obj, int line)
-            """)
+""")
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     iline = convert_to_int(line)
@@ -12384,7 +12224,7 @@ def fl_get_browser_hscroll_callback(pFlObject):
             FL_BROWSER_SCROLL_CALLBACK, [cty.POINTER(xfc.FL_OBJECT)],
             """FL_BROWSER_SCROLL_CALLBACK fl_get_browser_hscroll_callback(
                FL_OBJECT * ob)
-            """)
+""")
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     keep_elem_refs(pFlObject)
@@ -12407,7 +12247,7 @@ def fl_get_browser_vscroll_callback(pFlObject):
             FL_BROWSER_SCROLL_CALLBACK, [cty.POINTER(xfc.FL_OBJECT)],
             """FL_BROWSER_SCROLL_CALLBACK fl_get_browser_vscroll_callback(
                FL_OBJECT * ob)
-            """)
+""")
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     keep_elem_refs(pFlObject)
@@ -12465,7 +12305,7 @@ def fl_add_roundbutton(buttontype, x, y, w, h, label):
             xfc.FL_Coord, xfc.FL_Coord, xfc.STRING],
             """FL_OBJECT * fl_add_roundbutton(int type, FL_Coord x,
                FL_Coord y, FL_Coord w, FL_Coord h, const char * label)
-            """)
+""")
     check_if_initialized()
     check_admitted_listvalues(buttontype, xfc.BUTTONTYPE_list)
     ibuttontype = convert_to_int(buttontype)
@@ -12511,7 +12351,7 @@ def fl_add_round3dbutton(buttontype, x, y, w, h, label):
             xfc.FL_Coord, xfc.FL_Coord, xfc.STRING],
             """FL_OBJECT * fl_add_round3dbutton(int type, FL_Coord x,
                FL_Coord y, FL_Coord w, FL_Coord h, const char * label)
-            """)
+""")
     check_if_initialized()
     check_admitted_listvalues(buttontype, xfc.BUTTONTYPE_list)
     ibuttontype = convert_to_int(buttontype)
@@ -12557,7 +12397,7 @@ def fl_add_lightbutton(buttontype, x, y, w, h, label):
             xfc.FL_Coord, xfc.FL_Coord, xfc.STRING],
             """FL_OBJECT * fl_add_lightbutton(int type, FL_Coord x, FL_Coord y,
                FL_Coord w, FL_Coord h, const char * label)
-            """)
+""")
     check_if_initialized()
     check_admitted_listvalues(buttontype, xfc.BUTTONTYPE_list)
     ibuttontype = convert_to_int(buttontype)
@@ -12603,7 +12443,7 @@ def fl_add_checkbutton(buttontype, x, y, w, h, label):
             xfc.FL_Coord, xfc.FL_Coord, xfc.STRING],
             """FL_OBJECT * fl_add_checkbutton(int type, FL_Coord x, FL_Coord y,
                FL_Coord w, FL_Coord h, const char * label)
-            """)
+""")
     check_if_initialized()
     check_admitted_listvalues(buttontype, xfc.BUTTONTYPE_list)
     ibuttontype = convert_to_int(buttontype)
@@ -12649,7 +12489,7 @@ def fl_add_button(buttontype, x, y, w, h, label):
             xfc.FL_Coord, xfc.FL_Coord, xfc.STRING],
             """FL_OBJECT * fl_add_button(int type, FL_Coord x, FL_Coord y,
                FL_Coord w, FL_Coord h, const char * label)
-            """)
+""")
     check_if_initialized()
     check_admitted_listvalues(buttontype, xfc.BUTTONTYPE_list)
     ibuttontype = convert_to_int(buttontype)
@@ -12695,7 +12535,7 @@ def fl_add_bitmapbutton(buttontype, x, y, w, h, label):
             xfc.FL_Coord, xfc.STRING],
             """FL_OBJECT * fl_add_bitmapbutton(int type, FL_Coord x,
                FL_Coord y, FL_Coord w, FL_Coord h, const char * label)
-            """)
+""")
     check_if_initialized()
     check_admitted_listvalues(buttontype, xfc.BUTTONTYPE_list)
     ibuttontype = convert_to_int(buttontype)
@@ -12741,7 +12581,7 @@ def fl_add_scrollbutton(buttontype, x, y, w, h, label):
             xfc.FL_Coord, xfc.STRING],
             """FL_OBJECT * fl_add_scrollbutton(int type, FL_Coord x,
                FL_Coord y, FL_Coord w, FL_Coord h, const char * label)
-            """)
+""")
     check_if_initialized()
     check_admitted_listvalues(buttontype, xfc.BUTTONTYPE_list)
     ibuttontype = convert_to_int(buttontype)
@@ -12787,7 +12627,7 @@ def fl_add_labelbutton(buttontype, x, y, w, h, label):
             xfc.FL_Coord, xfc.STRING],
             """FL_OBJECT * fl_add_labelbutton(int type, FL_Coord x,
                FL_Coord y, FL_Coord w, FL_Coord h, const char * label)
-            """)
+""")
     check_if_initialized()
     check_admitted_listvalues(buttontype, xfc.BUTTONTYPE_list)
     ibuttontype = convert_to_int(buttontype)
@@ -12824,7 +12664,7 @@ def fl_set_bitmapbutton_data(pFlObject, w, h, bits):
             cty.POINTER(cty.c_ubyte)],
             """void fl_set_bitmapbutton_data(FL_OBJECT * ob, int w, int h,
                unsigned char * bits)
-            """)
+""")
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     iw = convert_to_int(w)
@@ -12865,7 +12705,7 @@ def fl_add_pixmapbutton(buttontype, x, y, w, h, label):
             xfc.FL_Coord, xfc.FL_Coord, xfc.STRING],
             """FL_OBJECT * fl_add_pixmapbutton(int type, FL_Coord x,
                FL_Coord y, FL_Coord w, FL_Coord h, const char * label)
-            """)
+""")
     check_if_initialized()
     check_admitted_listvalues(buttontype, xfc.BUTTONTYPE_list)
     ibuttontype = convert_to_int(buttontype)
@@ -12894,7 +12734,7 @@ def fl_set_pixmapbutton_focus_outline(pFlObject, yes):
             load_so_libforms(), "fl_set_pixmapbutton_focus_outline",
             None, [cty.POINTER(xfc.FL_OBJECT), cty.c_int],
             """void fl_set_pixmapbutton_focus_outline(FL_OBJECT * ob, int yes)
-            """)
+""")
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     iyes = convert_to_int(yes)
@@ -12924,7 +12764,7 @@ def fl_set_pixmapbutton_focus_data(pFlObject, bits):
             None, [cty.POINTER(xfc.FL_OBJECT), cty.POINTER(xfc.STRING)],
             """void fl_set_pixmapbutton_focus_data(FL_OBJECT * ob,
                char * * bits)
-            """)
+""")
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     pbits = cty.cast(bits, cty.POINTER(xfc.STRING))
@@ -12949,7 +12789,7 @@ def fl_set_pixmapbutton_focus_file(pFlObject, fname):
             None, [cty.POINTER(xfc.FL_OBJECT), xfc.STRING],
             """void fl_set_pixmapbutton_focus_file(FL_OBJECT * ob,
                const char * fname)
-            """)
+""")
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     sfname = convert_to_string(fname)
@@ -12976,7 +12816,7 @@ def fl_set_pixmapbutton_focus_pixmap(pFlObject, pix, mask):
             None, [cty.POINTER(xfc.FL_OBJECT), xfc.Pixmap, xfc.Pixmap],
             """void fl_set_pixmapbutton_focus_pixmap(FL_OBJECT * ob,
                Pixmap id, Pixmap mask)
-            """)
+""")
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     ulpix = convert_to_ulong(pix)
@@ -13003,7 +12843,7 @@ def fl_get_button(pFlObject):
             load_so_libforms(), "fl_get_button",
             cty.c_int, [cty.POINTER(xfc.FL_OBJECT)],
             """int fl_get_button(FL_OBJECT * ob)
-            """)
+""")
     check_if_FL_OBJECT_ptr(pFlObject)
     keep_elem_refs(pFlObject)
     retval = _fl_get_button(pFlObject)
@@ -13029,7 +12869,7 @@ def fl_set_button(pFlObject, pushed):
             load_so_libforms(), "fl_set_button",
             None, [cty.POINTER(xfc.FL_OBJECT), cty.c_int],
             """void fl_set_button(FL_OBJECT * ob, int pushed)
-            """)
+""")
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     ipushed = convert_to_int(pushed)
@@ -13056,7 +12896,7 @@ def fl_get_button_numb(pFlObject):
             load_so_libforms(), "fl_get_button_numb",
             cty.c_int, [cty.POINTER(xfc.FL_OBJECT)],
             """int fl_get_button_numb(FL_OBJECT * ob)
-            """)
+""")
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     keep_elem_refs(pFlObject)
@@ -13101,7 +12941,7 @@ def fl_create_generic_button(btnclass, buttontype, x, y, w, h, label):
             """FL_OBJECT * fl_create_generic_button(int objclass, int type,
                FL_Coord x, FL_Coord y, FL_Coord w, FL_Coord h,
                const char * label)
-            """)
+""")
     check_if_initialized()
     check_admitted_listvalues(buttontype, xfc.BUTTONTYPE_list)
     ibtnclass = convert_to_int(btnclass)
@@ -13145,7 +12985,7 @@ def fl_add_button_class(btnclass, py_DrawButton, py_CleanupButton):
             None, [cty.c_int, FL_DrawButton, FL_CleanupButton],
             """void fl_add_button_class(int bclass, FL_DrawButton drawit,
                FL_CleanupButton cleanup)
-            """)
+""")
     check_if_initialized()
     ibtnclass = convert_to_int(btnclass)
     c_DrawButton = FL_DrawButton(py_DrawButton)
@@ -13176,7 +13016,7 @@ def fl_set_button_mouse_buttons(pFlObject, buttons):
             None, [cty.POINTER(xfc.FL_OBJECT), cty.c_uint],
             """void fl_set_button_mouse_buttons(FL_OBJECT * ob,
                unsigned int buttons)
-            """)
+""")
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     ibuttons = convert_to_int(buttons)
@@ -13207,7 +13047,7 @@ def fl_get_button_mouse_buttons(pFlObject):
             None, [cty.POINTER(xfc.FL_OBJECT), cty.POINTER(cty.c_uint)],
             """void fl_get_button_mouse_buttons(FL_OBJECT * ob,
                unsigned int * buttons)
-            """)
+""")
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     buttons, pbuttons = make_uint_and_pointer()
@@ -13255,7 +13095,7 @@ def fl_create_generic_canvas(canvasclass, canvastype, x, y, w, h, label):
             """FL_OBJECT * fl_create_generic_canvas(int canvas_class,
                int type, FL_Coord x, FL_Coord y, FL_Coord w, FL_Coord h,
                const char * label)
-            """)
+""")
     check_if_initialized()
     check_admitted_listvalues(canvastype, xfc.CANVASTYPE_list)
     icanvasclass = convert_to_int(canvasclass)
@@ -13303,7 +13143,7 @@ def fl_add_canvas(canvastype, x, y, w, h, label):
             xfc.FL_Coord, xfc.STRING],
             """FL_OBJECT * fl_add_canvas(int type, FL_Coord x, FL_Coord y,
                FL_Coord w, FL_Coord h, const char * label)
-            """)
+""")
     check_if_initialized()
     check_admitted_listvalues(canvastype, xfc.CANVASTYPE_list)
     icanvastype = convert_to_int(canvastype)
@@ -13339,7 +13179,7 @@ def fl_set_canvas_colormap(pFlObject, colormap):
             load_so_libforms(), "fl_set_canvas_colormap",
             None, [cty.POINTER(xfc.FL_OBJECT), xfc.Colormap],
             """void fl_set_canvas_colormap(FL_OBJECT * ob, Colormap colormap)
-            """)
+""")
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     ulcolormap = convert_to_ulong(colormap)
@@ -13361,7 +13201,7 @@ def fl_set_canvas_visual(pFlObject, pVisual):
             load_so_libforms(), "fl_set_canvas_visual",
             None, [cty.POINTER(xfc.FL_OBJECT), cty.POINTER(xfc.Visual)],
             """void fl_set_canvas_visual(FL_OBJECT * obj, Visual * vi)
-            """)
+""")
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     keep_elem_refs(pFlObject, pVisual)
@@ -13384,7 +13224,7 @@ def fl_set_canvas_depth(pFlObject, depth):
             load_so_libforms(), "fl_set_canvas_depth",
             None, [cty.POINTER(xfc.FL_OBJECT), cty.c_int],
             """void fl_set_canvas_depth(FL_OBJECT * obj, int depth)
-            """)
+""")
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     idepth = convert_to_int(depth)
@@ -13411,7 +13251,7 @@ def fl_set_canvas_attributes(pFlObject, mask, pXSetWindowAttributes):
             cty.POINTER(xfc.XSetWindowAttributes)],
             """void fl_set_canvas_attributes(FL_OBJECT * ob,
                unsigned int mask, XSetWindowAttributes * xswa)
-            """)
+""")
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     uimask = convert_to_uint(mask)
@@ -13444,7 +13284,7 @@ def fl_add_canvas_handler(pFlObject, ev, py_HandleCanvas, udata):
             FL_HANDLE_CANVAS, cty.c_void_p],
             """FL_HANDLE_CANVAS fl_add_canvas_handler(FL_OBJECT * ob, int ev,
                FL_HANDLE_CANVAS h, void * udata)
-            """)
+""")
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     iev = convert_to_int(ev)
@@ -13472,7 +13312,7 @@ def fl_get_canvas_id(pFlObject):
             load_so_libforms(), "fl_get_canvas_id",
             xfc.Window, [cty.POINTER(xfc.FL_OBJECT)],
             """Window fl_get_canvas_id(FL_OBJECT * ob)
-            """)
+""")
     check_if_FL_OBJECT_ptr(pFlObject)
     keep_elem_refs(pFlObject)
     retval = _fl_get_canvas_id(pFlObject)
@@ -13495,7 +13335,7 @@ def fl_get_canvas_colormap(pFlObject):
             load_so_libforms(), "fl_get_canvas_colormap",
             xfc.Colormap, [cty.POINTER(xfc.FL_OBJECT)],
             """Colormap fl_get_canvas_colormap(FL_OBJECT * ob)
-            """)
+""")
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     keep_elem_refs(pFlObject)
@@ -13521,7 +13361,7 @@ def fl_get_canvas_depth(pFlObject):
             load_so_libforms(), "fl_get_canvas_depth",
             cty.c_int, [cty.POINTER(xfc.FL_OBJECT)],
             """int fl_get_canvas_depth(FL_OBJECT * obj)
-            """)
+""")
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     keep_elem_refs(pFlObject)
@@ -13552,7 +13392,7 @@ def fl_remove_canvas_handler(pFlObject, ev, py_HandleCanvas):
             None, [cty.POINTER(xfc.FL_OBJECT), cty.c_int, FL_HANDLE_CANVAS],
             """void fl_remove_canvas_handler(FL_OBJECT * ob, int ev,
                FL_HANDLE_CANVAS h)
-            """)
+""")
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     iev = convert_to_int(ev)
@@ -13578,7 +13418,7 @@ def fl_hide_canvas(pFlObject):
             load_so_libforms(), "fl_hide_canvas",
             None, [cty.POINTER(xfc.FL_OBJECT)],
             """void fl_hide_canvas(FL_OBJECT * ob)
-            """)
+""")
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     keep_elem_refs(pFlObject)
@@ -13599,7 +13439,7 @@ def fl_share_canvas_colormap(pFlObject, colormap):
             load_so_libforms(), "fl_share_canvas_colormap",
             None, [cty.POINTER(xfc.FL_OBJECT), xfc.Colormap],
             """void fl_share_canvas_colormap(FL_OBJECT * ob, Colormap colormap)
-            """)
+""")
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     ulcolormap = convert_to_ulong(colormap)
@@ -13624,7 +13464,7 @@ def fl_clear_canvas(pFlObject):
             load_so_libforms(), "fl_clear_canvas",
             None, [cty.POINTER(xfc.FL_OBJECT)],
             """void fl_clear_canvas(FL_OBJECT * ob)
-            """)
+""")
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     keep_elem_refs(pFlObject)
@@ -13660,7 +13500,7 @@ def fl_modify_canvas_prop(pFlObject, py_initModifyCanvasProp,
             """void fl_modify_canvas_prop(FL_OBJECT * obj,
                FL_MODIFY_CANVAS_PROP init, FL_MODIFY_CANVAS_PROP activate,
                FL_MODIFY_CANVAS_PROP cleanup)
-            """)
+""")
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     c_initModifyCanvasProp = FL_MODIFY_CANVAS_PROP(py_initModifyCanvasProp)
@@ -13694,7 +13534,7 @@ def fl_canvas_yield_to_shortcut(pFlObject, yes):
             load_so_libforms(), "fl_canvas_yield_to_shortcut",
             None, [cty.POINTER(xfc.FL_OBJECT), cty.c_int],
             """void fl_canvas_yield_to_shortcut(FL_OBJECT * ob, int yes)
-            """)
+""")
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     iyes = convert_to_int(yes)
@@ -13745,7 +13585,7 @@ def fl_add_glcanvas(canvastype, x, y, w, h, label):
             xfc.FL_Coord, xfc.FL_Coord, xfc.FL_Coord, xfc.STRING],
             """FL_OBJECT * fl_add_glcanvas(int type, FL_Coord x, FL_Coord y,
                FL_Coord w, FL_Coord h, const char * label)
-            """)
+""")
     check_if_initialized()
     check_admitted_listvalues(canvastype, xfc.CANVASTYPE_list)
     icanvastype = convert_to_int(canvastype)
@@ -13776,7 +13616,7 @@ def fl_set_glcanvas_defaults(config):
             load_so_libformsgl(), "fl_set_glcanvas_defaults",
             None, [cty.POINTER(cty.c_int)],
             """void fl_set_glcanvas_defaults(const int * config):
-            """)
+""")
     pconfig = cty.cast(config, cty.POINTER(cty.c_int))
     keep_elem_refs(config, pconfig)
     _fl_set_glcanvas_defaults(pconfig)
@@ -13799,7 +13639,7 @@ def fl_get_glcanvas_defaults():
             load_so_libformsgl(), "fl_get_glcanvas_defaults",
             None, [cty.POINTER(cty.c_int)],
             """void fl_get_glcanvas_defaults(int config[ ]):
-            """)
+""")
     config, pconfig = make_int_and_pointer()
     keep_elem_refs(config, pconfig)
     _fl_get_glcanvas_defaults(pconfig)
@@ -13824,7 +13664,7 @@ def fl_set_glcanvas_attributes(pFlObject, config):
             None, [cty.POINTER(xfc.FL_OBJECT), cty.POINTER(cty.c_int)],
             """void fl_set_glcanvas_attributes(FL_OBJECT * ob,
                const int * config)
-            """)
+""")
     check_if_FL_OBJECT_ptr(pFlObject)
     pconfig = cty.cast(config, cty.POINTER(cty.c_int))
     keep_elem_refs(pFlObject, config, pconfig)
@@ -13848,7 +13688,7 @@ def fl_get_glcanvas_attributes(pFlObject):
             None, [cty.POINTER(xfc.FL_OBJECT), cty.POINTER(cty.c_int)],
             """void fl_get_glcanvas_attributes(FL_OBJECT * ob,
                int * attributes)
-            """)
+""")
     check_if_FL_OBJECT_ptr(pFlObject)
     attributes, pattributes = make_int_and_pointer()
     keep_elem_refs(pFlObject, attributes, pattributes)
@@ -13869,7 +13709,7 @@ def fl_set_glcanvas_direct(pFlObject, direct):
             load_so_libformsgl(), "fl_set_glcanvas_direct",
             None, [cty.POINTER(xfc.FL_OBJECT), cty.c_int],
             """void fl_set_glcanvas_direct(FL_OBJECT * ob, int direct)
-            """)
+""")
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     idirect = convert_to_int(direct)
@@ -13892,7 +13732,7 @@ def fl_activate_glcanvas(pFlObject):
             load_so_libformsgl(), "fl_activate_glcanvas",
             None, [cty.POINTER(xfc.FL_OBJECT)],
             """void fl_activate_glcanvas(FL_OBJECT * ob)
-            """)
+""")
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     keep_elem_refs(pFlObject)
@@ -13914,7 +13754,7 @@ def fl_get_glcanvas_xvisualinfo(pFlObject):
             load_so_libformsgl(), "fl_get_glcanvas_xvisualinfo",
             cty.POINTER(xfc.XVisualInfo), [cty.POINTER(xfc.FL_OBJECT)],
             """XVisualInfo * fl_get_glcanvas_xvisualinfo(FL_OBJECT * ob)
-            """)
+""")
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     keep_elem_refs(pFlObject)
@@ -13935,7 +13775,7 @@ def fl_get_glcanvas_context(pFlObject):
             load_so_libformsgl(), "fl_get_glcanvas_context",
             xfc.GLXContext, [cty.POINTER(xfc.FL_OBJECT)],
             """GLXContext fl_get_glcanvas_context(FL_OBJECT * ob)
-            """)
+""")
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     keep_elem_refs(pFlObject)
@@ -13955,7 +13795,7 @@ def fl_glwincreate(config, glxcontext, w, h):
             cty.c_int, cty.c_int],
             """Window fl_glwincreate(int * config, GLXContext * context,
                int w, int h)
-            """)
+""")
     pGLXContext = cty.cast(glxcontext, cty.POINTER(xfc.GLXContext))
     iw = convert_to_int(w)
     ih = convert_to_int(h)
@@ -13976,7 +13816,7 @@ def fl_glwinopen(config, glxcontext, w, h):
             cty.c_int, cty.c_int],
             """Window fl_glwinopen(int * config, GLXContext * context,
                int w, int h
-            """)
+""")
     check_if_initialized()
     pGLXContext = cty.cast(glxcontext, cty.POINTER(xfc.GLXContext))
     iw = convert_to_int(w)
@@ -14021,7 +13861,7 @@ def fl_add_chart(charttype, x, y, w, h, label):
             xfc.FL_Coord, xfc.FL_Coord, xfc.FL_Coord, xfc.STRING],
             """FL_OBJECT * fl_add_chart(int type, FL_Coord x, FL_Coord y,
                FL_Coord w, FL_Coord h, const char * label)
-            """)
+""")
     check_if_initialized()
     check_admitted_listvalues(charttype, xfc.CHARTTYPE_list)
     icharttype = convert_to_int(charttype)
@@ -14051,7 +13891,7 @@ def fl_clear_chart(pFlObject):
             load_so_libforms(), "fl_clear_chart",
             None, [cty.POINTER(xfc.FL_OBJECT)],
             """void fl_clear_chart(FL_OBJECT * ob)
-            """)
+""")
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     keep_elem_refs(pFlObject)
@@ -14078,7 +13918,7 @@ def fl_add_chart_value(pFlObject, val, label, colr):
             xfc.FL_COLOR],
             """void fl_add_chart_value(FL_OBJECT * ob, double val,
                const char * str, FL_COLOR col)
-            """)
+""")
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     fval = convert_to_double(val)
@@ -14109,7 +13949,7 @@ def fl_insert_chart_value(pFlObject, indx, val, label, colr):
             xfc.STRING, xfc.FL_COLOR],
             """void fl_insert_chart_value(FL_OBJECT * ob, int indx,
                double val, const char * str, FL_COLOR col)
-            """)
+""")
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     iindx = convert_to_int(indx)
@@ -14142,7 +13982,7 @@ def fl_replace_chart_value(pFlObject, indx, val, label, colr):
             xfc.STRING, xfc.FL_COLOR],
             """void fl_replace_chart_value(FL_OBJECT * ob, int indx,
                double val, const char * str, FL_COLOR col)
-            """)
+""")
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     iindx = convert_to_int(indx)
@@ -14172,7 +14012,7 @@ def fl_set_chart_bounds(pFlObject, minbound, maxbound):
             None, [cty.POINTER(xfc.FL_OBJECT), cty.c_double, cty.c_double],
             """void fl_set_chart_bounds(FL_OBJECT * ob, double min,
                double max)
-            """)
+""")
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     fminbound = convert_to_double(minbound)
@@ -14201,7 +14041,7 @@ def fl_get_chart_bounds(pFlObject):
             cty.POINTER(cty.c_double)],
             """void fl_get_chart_bounds(FL_OBJECT * ob, double * min,
                double * max)
-            """)
+""")
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     minbound, pminbound = make_double_and_pointer()
@@ -14227,7 +14067,7 @@ def fl_set_chart_maxnumb(pFlObject, maxnum):
             load_so_libforms(), "fl_set_chart_maxnumb",
             None, [cty.POINTER(xfc.FL_OBJECT), cty.c_int],
             """void fl_set_chart_maxnumb(FL_OBJECT * ob, int maxnumb)
-            """)
+""")
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     imaxnum = convert_to_int(maxnum)
@@ -14251,7 +14091,7 @@ def fl_set_chart_autosize(pFlObject, autosize):
             load_so_libforms(), "fl_set_chart_autosize",
             None, [cty.POINTER(xfc.FL_OBJECT), cty.c_int],
             """void fl_set_chart_autosize(FL_OBJECT * ob, int autosize)
-            """)
+""")
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     iautosize = convert_to_int(autosize)
@@ -14272,7 +14112,7 @@ def fl_set_chart_lstyle(pFlObject, lstyle):
             load_so_libforms(), "fl_set_chart_lstyle",
             None, [cty.POINTER(xfc.FL_OBJECT), cty.c_int],
             """void fl_set_chart_lstyle(FL_OBJECT * ob, int lstyle)
-            """)
+""")
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     ilstyle = convert_to_int(lstyle)
@@ -14293,7 +14133,7 @@ def fl_set_chart_lsize(pFlObject, lsize):
             load_so_libforms(), "fl_set_chart_lsize",
             None, [cty.POINTER(xfc.FL_OBJECT), cty.c_int],
             """void fl_set_chart_lsize(FL_OBJECT * ob, int lsize)
-            """)
+""")
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     ilsize = convert_to_int(lsize)
@@ -14315,7 +14155,7 @@ def fl_set_chart_lcolor(pFlObject, colr):
             load_so_libforms(), "fl_set_chart_lcolor",
             None, [cty.POINTER(xfc.FL_OBJECT), xfc.FL_COLOR],
             """void fl_set_chart_lcolor(FL_OBJECT * ob, FL_COLOR lcol)
-            """)
+""")
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     check_admitted_listvalues(colr, xfc.COLOR_list)
@@ -14337,7 +14177,7 @@ def fl_set_chart_baseline(pFlObject, yesno):
             load_so_libforms(), "fl_set_chart_baseline",
             None, [cty.POINTER(xfc.FL_OBJECT), cty.c_int],
             """void fl_set_chart_baseline(FL_OBJECT * ob, int iYesNo)
-            """)
+""")
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     iyesno = convert_to_int(yesno)
@@ -14405,7 +14245,7 @@ def fl_stuff_clipboard(pFlObject, clipbdtype, data, size, py_LoseSelectionCb):
             """int fl_stuff_clipboard(FL_OBJECT * ob, long int type,
                const char * data, long int size,
                FL_LOSE_SELECTION_CB lose_callback)
-            """)
+""")
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     lclipbdtype = convert_to_long(clipbdtype)
@@ -14442,7 +14282,7 @@ def fl_request_clipboard(pFlObject, clipbdtype, py_SelectionCb):
             FL_SELECTION_CB],
             """int fl_request_clipboard(FL_OBJECT * ob, long int type,
                FL_SELECTION_CB got_it_callback)
-            """)
+""")
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     lclipbdtype = convert_to_long(clipbdtype)
@@ -14484,7 +14324,7 @@ def fl_add_clock(clocktype, x, y, w, h, label):
             xfc. FL_Coord, xfc.FL_Coord, xfc.FL_Coord, xfc.STRING],
             """FL_OBJECT * fl_add_clock(int type, FL_Coord x, FL_Coord y,
                FL_Coord w, FL_Coord h, const char * s)
-            """)
+""")
     check_if_initialized()
     check_admitted_listvalues(clocktype, xfc.CLOCKTYPE_list)
     iclocktype = convert_to_int(clocktype)
@@ -14518,7 +14358,7 @@ def fl_get_clock(pFlObject):
             None, [cty.POINTER(xfc.FL_OBJECT), cty.POINTER(cty.c_int),
             cty.POINTER(cty.c_int), cty.POINTER(cty.c_int)],
             """void fl_get_clock(FL_OBJECT * ob, int * h, int * m, int * s)
-            """)
+""")
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     hr, phr = make_int_and_pointer()
@@ -14543,7 +14383,7 @@ def fl_set_clock_adjustment(pFlObject, offset):
             cty.c_long, [cty.POINTER(xfc.FL_OBJECT), cty.c_long],
             """long int fl_set_clock_adjustment(FL_OBJECT * ob,
                long int offset)
-            """)
+""")
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     loffset = convert_to_long(offset)
@@ -14565,7 +14405,7 @@ def fl_set_clock_ampm(pFlObject, y):
             load_so_libforms(), "fl_set_clock_ampm",
             None, [cty.POINTER(xfc.FL_OBJECT), cty.c_int],
             """void fl_set_clock_ampm(FL_OBJECT * ob, int y)
-            """)
+""")
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     iy = convert_to_int(y)
@@ -14606,7 +14446,7 @@ def fl_add_counter(countertype, x, y, w, h, label):
             xfc.FL_Coord, xfc.FL_Coord, xfc.FL_Coord, xfc.STRING],
             """FL_OBJECT * fl_add_counter(int type, FL_Coord x, FL_Coord y,
                FL_Coord w, FL_Coord h, const char * label)
-            """)
+""")
     check_if_initialized()
     check_admitted_listvalues(countertype, xfc.COUNTERTYPE_list)
     icountertype = convert_to_int(countertype)
@@ -14634,7 +14474,7 @@ def fl_set_counter_value(pFlObject, val):
             load_so_libforms(), "fl_set_counter_value",
             None, [cty.POINTER(xfc.FL_OBJECT), cty.c_double],
             """void fl_set_counter_value(FL_OBJECT * ob, double val)
-            """)
+""")
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     fval = convert_to_double(val)
@@ -14656,7 +14496,7 @@ def fl_set_counter_bounds(pFlObject, minbound, maxbound):
             None, [cty.POINTER(xfc.FL_OBJECT), cty.c_double, cty.c_double],
             """void fl_set_counter_bounds(FL_OBJECT * ob, double min,
                double max)
-            """)
+""")
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     fminbound = convert_to_double(minbound)
@@ -14678,7 +14518,7 @@ def fl_set_counter_step(pFlObject, s, l):
             load_so_libforms(), "fl_set_counter_step",
             None, [cty.POINTER(xfc.FL_OBJECT), cty.c_double, cty.c_double],
             """void fl_set_counter_step(FL_OBJECT * ob, double s, double l)
-            """)
+""")
     check_if_FL_OBJECT_ptr(pFlObject)
     fs = convert_to_double(s)
     fl = convert_to_double(l)
@@ -14699,7 +14539,7 @@ def fl_set_counter_precision(pFlObject, prec):
             load_so_libforms(), "fl_set_counter_precision",
             None, [cty.POINTER(xfc.FL_OBJECT), cty.c_int],
             """void fl_set_counter_precision(FL_OBJECT * ob, int prec)
-            """)
+""")
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     iprec = convert_to_int(prec)
@@ -14720,7 +14560,7 @@ def fl_get_counter_precision(pFlObject):
             load_so_libforms(), "fl_get_counter_precision",
             cty.c_int, [cty.POINTER(xfc.FL_OBJECT)],
             """int fl_get_counter_precision(FL_OBJECT * ob)
-            """)
+""")
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     keep_elem_refs(pFlObject)
@@ -14744,7 +14584,7 @@ def fl_get_counter_value(pFlObject):
             load_so_libforms(), "fl_get_counter_value",
             cty.c_double, [cty.POINTER(xfc.FL_OBJECT)],
             """double fl_get_counter_value(FL_OBJECT * ob)
-            """)
+""")
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     keep_elem_refs(pFlObject)
@@ -14770,7 +14610,7 @@ def fl_get_counter_bounds(pFlObject):
             cty.POINTER(cty.c_double)],
             """void fl_get_counter_bounds(FL_OBJECT * ob, double * min,
                double * max)
-            """)
+""")
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     minbound, pminbound = make_double_and_pointer()
@@ -14798,7 +14638,7 @@ def fl_get_counter_step(pFlObject):
             cty.POINTER(cty.c_double)],
             """void fl_get_counter_step(FL_OBJECT * ob, double * s,
                double * l)
-            """)
+""")
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     s, ps = make_double_and_pointer()
@@ -14825,7 +14665,7 @@ def fl_set_counter_filter(pFlObject, py_ValFilter):
             None, [cty.POINTER(xfc.FL_OBJECT), FL_VAL_FILTER],
             """void fl_set_counter_filter(FL_OBJECT * ob,
                FL_VAL_FILTER filter)
-            """)
+""")
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     c_ValFilter = FL_VAL_FILTER(py_ValFilter)
@@ -14850,7 +14690,7 @@ def fl_get_counter_repeat(pFlObject):
             load_so_libforms(), "fl_get_counter_repeat",
             cty.c_int, [cty.POINTER(xfc.FL_OBJECT)],
             """int fl_get_counter_repeat(FL_OBJECT * ob)
-            """)
+""")
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     keep_elem_refs(pFlObject)
@@ -14871,7 +14711,7 @@ def fl_set_counter_repeat(pFlObject, msec):
             load_so_libforms(), "fl_set_counter_repeat",
             None, [cty.POINTER(xfc.FL_OBJECT), cty.c_int],
             """void fl_set_counter_repeat(FL_OBJECT * ob, int millisec)
-            """)
+""")
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     imsec = convert_to_int(msec)
@@ -14892,7 +14732,7 @@ def fl_get_counter_min_repeat(pFlObject):
             load_so_libforms(), "fl_get_counter_min_repeat",
             cty.c_int, [cty.POINTER(xfc.FL_OBJECT)],
             """int fl_get_counter_min_repeat(FL_OBJECT * ob)
-            """)
+""")
     check_if_FL_OBJECT_ptr(pFlObject)
     keep_elem_refs(pFlObject)
     retval = _fl_get_counter_min_repeat(pFlObject)
@@ -14912,7 +14752,7 @@ def fl_set_counter_min_repeat(pFlObject, msec):
             load_so_libforms(), "fl_set_counter_min_repeat",
             None, [cty.POINTER(xfc.FL_OBJECT), cty.c_int],
             """void fl_set_counter_min_repeat(FL_OBJECT * ob, int millisec)
-            """)
+""")
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     imsec = convert_to_int(msec)
@@ -14933,7 +14773,7 @@ def fl_get_counter_speedjump(pFlObject):
             load_so_libforms(), "fl_get_counter_speedjump",
             cty.c_int, [cty.POINTER(xfc.FL_OBJECT)],
             """int fl_get_counter_speedjump(FL_OBJECT * ob)
-            """)
+""")
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     keep_elem_refs(pFlObject)
@@ -14954,7 +14794,7 @@ def fl_set_counter_speedjump(pFlObject, yesno):
             load_so_libforms(), "fl_set_counter_speedjump",
             None, [cty.POINTER(xfc.FL_OBJECT), cty.c_int],
             """void fl_set_counter_speedjump(FL_OBJECT * ob, int yes_no)
-            """)
+""")
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     iyesno = convert_to_int(yesno)
@@ -14984,7 +14824,7 @@ def fl_set_cursor(win, cursnum):
             load_so_libforms(), "fl_set_cursor",
             None, [xfc.Window, cty.c_int],
             """void fl_set_cursor(Window win, int name)
-            """)
+""")
     check_if_initialized()
     ulwin = convert_to_Window(win)
     icursnum = convert_to_int(cursnum)
@@ -15008,7 +14848,7 @@ def fl_set_cursor_color(cursnum, fgcolr, bgcolr):
             load_so_libforms(), "fl_set_cursor_color",
             None, [cty.c_int, xfc.FL_COLOR, xfc.FL_COLOR],
             """void fl_set_cursor_color(int name, FL_COLOR fg, FL_COLOR bg)
-            """)
+""")
     check_if_initialized()
     check_admitted_listvalues(fgcolr, xfc.COLOR_list)
     check_admitted_listvalues(bgcolr, xfc.COLOR_list)
@@ -15031,7 +14871,7 @@ def fl_create_bitmap_cursor(source, maskstr, w, h, hotx, hoty):
             cty.c_int],
             """int fl_create_bitmap_cursor(const char * source,
                const char * mask, int w, int h, int hotx, int hoty)
-            """)
+""")
     check_if_initialized()
     ssource = convert_to_string(source)
     smaskstr = convert_to_string(maskstr)
@@ -15055,7 +14895,7 @@ def fl_create_animated_cursor(curnums, timeout):
             load_so_libforms(), "fl_create_animated_cursor",
             cty.c_int, [cty.POINTER(cty.c_int), cty.c_int],
             """int fl_create_animated_cursor(int * cur_names, int timeout)
-            """)
+""")
     check_if_initialized()
     pcurnums = cty.cast(curnums, cty.POINTER(cty.c_int))
     #print "pcurnums", pcurnums
@@ -15079,7 +14919,7 @@ def fl_get_cursor_byname(cursnum):
             load_so_libforms(), "fl_get_cursor_byname",
             xfc.Cursor, [cty.c_int],
             """Cursor fl_get_cursor_byname(int name)
-            """)
+""")
     check_if_initialized()
     icursnum = convert_to_int(cursnum)
     keep_elem_refs(cursnum, icursnum)
@@ -15131,7 +14971,7 @@ def fl_add_dial(dialtype, x, y, w, h, label):
             xfc.FL_Coord, xfc.FL_Coord, xfc.FL_Coord, xfc.STRING],
             """FL_OBJECT * fl_add_dial(int type, FL_Coord x, FL_Coord y,
                FL_Coord w, FL_Coord h, const char * label)
-            """)
+""")
     check_if_initialized()
     check_admitted_listvalues(dialtype, xfc.DIALTYPE_list)
     idialtype = convert_to_int(dialtype)
@@ -15159,7 +14999,7 @@ def fl_set_dial_value(pFlObject, val):
             load_so_libforms(), "fl_set_dial_value",
             None, [cty.POINTER(xfc.FL_OBJECT), cty.c_double],
             """void fl_set_dial_value(FL_OBJECT * ob, double val)
-            """)
+""")
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     fval = convert_to_double(val)
@@ -15180,7 +15020,7 @@ def fl_get_dial_value(pFlObject):
             load_so_libforms(), "fl_get_dial_value",
             cty.c_double, [cty.POINTER(xfc.FL_OBJECT)],
             """double fl_get_dial_value(FL_OBJECT * ob)
-            """)
+""")
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     keep_elem_refs(pFlObject)
@@ -15202,7 +15042,7 @@ def fl_set_dial_bounds(pFlObject, minbound, maxbound):
             None, [cty.POINTER(xfc.FL_OBJECT), cty.c_double, cty.c_double],
             """void fl_set_dial_bounds(FL_OBJECT * ob, double min,
                double max)
-            """)
+""")
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     fminbound = convert_to_double(minbound)
@@ -15229,7 +15069,7 @@ def fl_get_dial_bounds(pFlObject):
             cty.POINTER(cty.c_double)],
             """void fl_get_dial_bounds(FL_OBJECT * ob, double * min,
                double * max)
-            """)
+""")
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     minbound, pminbound = make_double_and_pointer()
@@ -15252,7 +15092,7 @@ def fl_set_dial_step(pFlObject, value):
             load_so_libforms(), "fl_set_dial_step",
             None, [cty.POINTER(xfc.FL_OBJECT), cty.c_double],
             """void fl_set_dial_step(FL_OBJECT * ob, double value)
-            """)
+""")
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     fvalue = convert_to_double(value)
@@ -15274,7 +15114,7 @@ def fl_set_dial_return(pFlObject, value):
             None, [cty.POINTER(xfc.FL_OBJECT), cty.c_uint],
             """void fl_set_dial_return(FL_OBJECT * ob, unsigned
                int value)
-            """)
+""")
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     uivalue = convert_to_uint(value)
@@ -15296,7 +15136,7 @@ def fl_set_dial_angles(pFlObject, angmin, angmax):
             None, [cty.POINTER(xfc.FL_OBJECT), cty.c_double, cty.c_double],
             """void fl_set_dial_angles(FL_OBJECT * ob, double amin,
                double amax)
-            """)
+""")
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     fangmin = convert_to_double(angmin)
@@ -15319,7 +15159,7 @@ def fl_set_dial_cross(pFlObject, flag):
             load_so_libforms(), "fl_set_dial_cross",
             None, [cty.POINTER(xfc.FL_OBJECT), cty.c_int],
             """void fl_set_dial_cross(FL_OBJECT * ob, int flag)
-            """)
+""")
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     iflag = convert_to_int(flag)
@@ -15344,7 +15184,7 @@ def fl_set_dial_direction(pFlObject, directn):
             load_so_libforms(), "fl_set_dial_direction",
             None, [cty.POINTER(xfc.FL_OBJECT), cty.c_int],
             """void fl_set_dial_direction(FL_OBJECT * ob, int dir)
-            """)
+""")
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     idirectn = convert_to_int(directn)
@@ -15377,7 +15217,7 @@ def fl_get_dirlist(directory, pattern, rescan):
             cty.POINTER(cty.c_int), cty.c_int],
             """const char * fl_get_dirlist(const char * dir,
                const char * pattern, int * n, int rescan)
-            """)
+""")
     check_if_initialized()
     sdirectory = convert_to_string(directory)
     spattern = convert_to_string(pattern)
@@ -15403,7 +15243,7 @@ def fl_set_dirlist_filter(py_DirFilter):
             FL_DIRLIST_FILTER, [FL_DIRLIST_FILTER],
             """FL_DIRLIST_FILTER fl_set_dirlist_filter( \
                FL_DIRLIST_FILTER filter)
-            """)
+""")
     check_if_initialized()
     c_DirFilter = FL_DIRLIST_FILTER(py_DirFilter)
     keep_cfunc_refs(c_DirFilter, py_DirFilter)
@@ -15422,7 +15262,7 @@ def fl_set_dirlist_sort(method):
             load_so_libforms(), "fl_set_dirlist_sort",
             cty.c_int, [cty.c_int],
             """int fl_set_dirlist_sort(int method)
-            """)
+""")
     check_if_initialized()
     imethod = convert_to_int(method)
     keep_elem_refs(method, imethod)
@@ -15441,7 +15281,7 @@ def fl_set_dirlist_filterdir(yes):
             load_so_libforms(), "fl_set_dirlist_filterdir",
             cty.c_int, [cty.c_int],
             """int fl_set_dirlist_filterdir(int yes)
-            """)
+""")
     check_if_initialized()
     iyes = convert_to_int(yes)
     keep_elem_refs(yes, iyes)
@@ -15460,7 +15300,7 @@ def fl_free_dirlist(pDirList):
             load_so_libforms(), "fl_free_dirlist",
             None, [cty.POINTER(xfc.FL_Dirlist)],
             """void fl_free_dirlist(FL_Dirlist * dl)
-            """)
+""")
     check_if_initialized()
     keep_elem_refs(pDirList)
     _fl_free_dirlist(pDirList)
@@ -15479,7 +15319,7 @@ def fl_free_all_dirlist():
             load_so_libforms(), "fl_free_all_dirlist",
             None, [],
             """void fl_free_all_dirlist()
-            """)
+""")
     check_if_initialized()
     _fl_free_all_dirlist()
 
@@ -15495,7 +15335,7 @@ def fl_is_valid_dir(name):
             load_so_libforms(), "fl_is_valid_dir",
             cty.c_int, [xfc.STRING],
             """int fl_is_valid_dir(const char * name)
-            """)
+""")
     check_if_initialized()
     sname = convert_to_string(name)
     keep_elem_refs(name, sname)
@@ -15514,7 +15354,7 @@ def fl_fmtime(timestr):
             load_so_libforms(), "fl_fmtime",
             cty.c_ulong, [xfc.STRING],
             """long unsigned int fl_fmtime(const char * s)
-            """)
+""")
     check_if_initialized()
     stimestr = convert_to_string(timestr)
     keep_elem_refs(timestr, stimestr)
@@ -15533,7 +15373,7 @@ def fl_fix_dirname(directory):
             load_so_libforms(), "fl_fix_dirname",
             xfc.STRING, [xfc.STRING],
             """char * fl_fix_dirname(char * dir)
-            """)
+""")
     check_if_initialized()
     sdirectory = convert_to_string(directory)
     keep_elem_refs(directory, sdirectory)
@@ -15560,7 +15400,7 @@ def flps_init():
             load_so_libflimage(), "flps_init",
             cty.POINTER(xfc.FLPS_CONTROL), [],
             """FLPS_CONTROL * flps_init()
-            """)
+""")
     check_if_initialized()
     retval = _flps_init()
     return retval
@@ -15580,7 +15420,7 @@ def fl_object_ps_dump(pFlObject, fname):
             load_so_libflimage(), "fl_object_ps_dump",
             cty.c_int, [cty.POINTER(xfc.FL_OBJECT), xfc.STRING],
             """int fl_object_ps_dump(FL_OBJECT * ob, const char * fname)
-            """)
+""")
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     sfname = convert_to_string(fname)
@@ -15608,7 +15448,7 @@ def fl_addto_formbrowser(pFlObject, pFlForm):
             load_so_libforms(), "fl_addto_formbrowser",
             cty.c_int, [cty.POINTER(xfc.FL_OBJECT), cty.POINTER(xfc.FL_FORM)],
             """int fl_addto_formbrowser(FL_OBJECT * ob, FL_FORM * form)
-            """)
+""")
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     keep_elem_refs(pFlObject, pFlForm)
@@ -15631,7 +15471,7 @@ def fl_delete_formbrowser_bynumber(pFlObject, num):
             cty.POINTER(xfc.FL_FORM), [cty.POINTER(xfc.FL_OBJECT), cty.c_int],
             """FL_FORM * fl_delete_formbrowser_bynumber(FL_OBJECT * ob,
                int num)
-            """)
+""")
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     inum = convert_to_int(num)
@@ -15657,7 +15497,7 @@ def fl_delete_formbrowser(pFlObject, pFlForm):
             cty.c_int, [cty.POINTER(xfc.FL_OBJECT), cty.POINTER(xfc.FL_FORM)],
             """int fl_delete_formbrowser(FL_OBJECT * ob,
                FL_FORM * candidate_form)
-            """)
+""")
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     check_if_FL_FORM_ptr(pFlForm)
@@ -15685,7 +15525,7 @@ def fl_replace_formbrowser(pFlObject, num, pFlForm):
             cty.POINTER(xfc.FL_FORM)],
             """FL_FORM * fl_replace_formbrowser(FL_OBJECT * ob, int num,
                FL_FORM * form)
-            """)
+""")
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     inum = convert_to_int(num)
@@ -15713,7 +15553,7 @@ def fl_insert_formbrowser(pFlObject, line, pFlForm):
             cty.POINTER(xfc.FL_FORM)],
             """int fl_insert_formbrowser(FL_OBJECT * ob, int line,
                FL_FORM * new_form)
-            """)
+""")
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     iline = convert_to_int(line)
@@ -15742,7 +15582,7 @@ def fl_get_formbrowser_area(pFlObject):
             cty.POINTER(cty.c_int)],
             """int fl_get_formbrowser_area(FL_OBJECT * ob, int * x, int * y,
                int * w, int * h)
-            """)
+""")
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     x, px = make_int_and_pointer()
@@ -15769,7 +15609,7 @@ def fl_set_formbrowser_scroll(pFlObject, how):
             load_so_libforms(), "fl_set_formbrowser_scroll",
             None, [cty.POINTER(xfc.FL_OBJECT), cty.c_int],
             """void fl_set_formbrowser_scroll(FL_OBJECT * ob, int how)
-            """)
+""")
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     ihow = convert_to_int(how)
@@ -15792,7 +15632,7 @@ def fl_set_formbrowser_hscrollbar(pFlObject, how):
             load_so_libforms(), "fl_set_formbrowser_hscrollbar",
             None, [cty.POINTER(xfc.FL_OBJECT), cty.c_int],
             """void fl_set_formbrowser_hscrollbar(FL_OBJECT * ob, int how)
-            """)
+""")
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     ihow = convert_to_int(how)
@@ -15815,7 +15655,7 @@ def fl_set_formbrowser_vscrollbar(pFlObject, how):
             load_so_libforms(), "fl_set_formbrowser_vscrollbar",
             None, [cty.POINTER(xfc.FL_OBJECT), cty.c_int],
             """void fl_set_formbrowser_vscrollbar(FL_OBJECT * ob, int how)
-            """)
+""")
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     ihow = convert_to_int(how)
@@ -15837,7 +15677,7 @@ def fl_get_formbrowser_topform(pFlObject):
             load_so_libforms(), "fl_get_formbrowser_topform",
             cty.POINTER(xfc.FL_FORM), [cty.POINTER(xfc.FL_OBJECT)],
             """FL_FORM * fl_get_formbrowser_topform(FL_OBJECT * ob)
-            """)
+""")
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     keep_elem_refs(pFlObject)
@@ -15861,7 +15701,7 @@ def fl_set_formbrowser_topform(pFlObject, pFlForm):
             load_so_libforms(), "fl_set_formbrowser_topform",
             cty.c_int, [cty.POINTER(xfc.FL_OBJECT), cty.POINTER(xfc.FL_FORM)],
             """int fl_set_formbrowser_topform(FL_OBJECT * ob, FL_FORM * form)
-            """)
+""")
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     check_if_FL_FORM_ptr(pFlForm)
@@ -15886,7 +15726,7 @@ def fl_set_formbrowser_topform_bynumber(pFlObject, num):
             cty.POINTER(xfc.FL_FORM), [cty.POINTER(xfc.FL_OBJECT), cty.c_int],
             """FL_FORM * fl_set_formbrowser_topform_bynumber( \
                FL_OBJECT * ob, int n)
-            """)
+""")
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     inum = convert_to_int(num)
@@ -15913,7 +15753,7 @@ def fl_set_formbrowser_xoffset(pFlObject, offset):
             load_so_libforms(), "fl_set_formbrowser_xoffset",
             cty.c_int, [cty.POINTER(xfc.FL_OBJECT), cty.c_int],
             """int fl_set_formbrowser_xoffset(FL_OBJECT * ob, int offset)
-            """)
+""")
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     ioffset = convert_to_int(offset)
@@ -15940,7 +15780,7 @@ def fl_set_formbrowser_yoffset(pFlObject, offset):
             load_so_libforms(), "fl_set_formbrowser_yoffset",
             cty.c_int, [cty.POINTER(xfc.FL_OBJECT), cty.c_int],
             """int fl_set_formbrowser_yoffset(FL_OBJECT * ob, int offset)
-            """)
+""")
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     ioffset = convert_to_int(offset)
@@ -15966,7 +15806,7 @@ def fl_get_formbrowser_xoffset(pFlObject):
             load_so_libforms(), "fl_get_formbrowser_xoffset",
             cty.c_int, [cty.POINTER(xfc.FL_OBJECT)],
             """int fl_get_formbrowser_xoffset(FL_OBJECT * ob)
-            """)
+""")
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     keep_elem_refs(pFlObject)
@@ -15991,7 +15831,7 @@ def fl_get_formbrowser_yoffset(pFlObject):
             load_so_libforms(), "fl_get_formbrowser_yoffset",
             cty.c_int, [cty.POINTER(xfc.FL_OBJECT)],
             """int fl_get_formbrowser_yoffset(FL_OBJECT * ob)
-            """)
+""")
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     keep_elem_refs(pFlObject)
@@ -16015,7 +15855,7 @@ def fl_find_formbrowser_form_number(pFlObject, pFlForm):
             cty.c_int, [cty.POINTER(xfc.FL_OBJECT), cty.POINTER(xfc.FL_FORM)],
             """int fl_find_formbrowser_form_number(FL_OBJECT * ob,
                FL_FORM * candidate_form)
-            """)
+""")
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     check_if_FL_FORM_ptr(pFlForm)
@@ -16047,7 +15887,7 @@ def fl_add_formbrowser(frmbrwstype, x, y, w, h, label):
             xfc.FL_Coord, xfc.FL_Coord, xfc.FL_Coord, xfc.STRING],
             """FL_OBJECT * fl_add_formbrowser(int type, FL_Coord x,
                FL_Coord y, FL_Coord w, FL_Coord h, const char * label)
-            """)
+""")
     check_if_initialized()
     check_admitted_listvalues(frmbrwstype, xfc.FORMBRWSTYPE_list)
     ifrmbrwstype = convert_to_int(frmbrwstype)
@@ -16079,7 +15919,7 @@ def fl_get_formbrowser_numforms(pFlObject):
             load_so_libforms(), "fl_get_formbrowser_numforms",
             cty.c_int, [cty.POINTER(xfc.FL_OBJECT)],
             """int fl_get_formbrowser_numforms(FL_OBJECT * ob)
-            """)
+""")
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     keep_elem_refs(pFlObject)
@@ -16101,7 +15941,7 @@ def fl_get_formbrowser_form(pFlObject, num):
             load_so_libforms(), "fl_get_formbrowser_form",
             cty.POINTER(xfc.FL_FORM), [cty.POINTER(xfc.FL_OBJECT), cty.c_int],
             """FL_FORM * fl_get_formbrowser_form(FL_OBJECT * ob, int n)
-            """)
+""")
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     inum = convert_to_int(num)
@@ -16144,7 +15984,7 @@ def fl_add_frame(frametype, x, y, w, h, label):
             xfc.FL_Coord, xfc.FL_Coord, xfc.FL_Coord, xfc.STRING],
             """FL_OBJECT * fl_add_frame(int type, FL_Coord x, FL_Coord y,
                FL_Coord w, FL_Coord h, const char * label)
-            """)
+""")
     check_if_initialized()
     check_admitted_listvalues(frametype, xfc.FRAMETYPE_list)
     iframetype = convert_to_int(frametype)
@@ -16190,7 +16030,7 @@ def fl_add_labelframe(frametype, x, y, w, h, label):
             xfc.FL_Coord, xfc.FL_Coord, xfc.FL_Coord, xfc.STRING],
             """FL_OBJECT * fl_add_labelframe(int type, FL_Coord x, FL_Coord y,
                FL_Coord w, FL_Coord h, const char * label)
-            """)
+""")
     check_if_initialized()
     check_admitted_listvalues(frametype, xfc.FRAMETYPE_list)
     iframetype = convert_to_int(frametype)
@@ -16241,7 +16081,7 @@ def fl_add_free(freetype, x, y, w, h, label, py_HandlePtr):
             """FL_OBJECT * fl_add_free(int type, FL_Coord x, FL_Coord y,
                FL_Coord w, FL_Coord h, const char * label,
                FL_HANDLEPTR handle)
-            """)
+""")
     check_if_initialized()
     check_admitted_listvalues(freetype, xfc.FREETYPE_list)
     ifreetype = convert_to_int(freetype)
@@ -16276,7 +16116,7 @@ def fl_set_goodies_font(style, size):
             load_so_libforms(), "fl_set_goodies_font",
             None, [cty.c_int, cty.c_int],
             """void fl_set_goodies_font(int style, int size)
-            """)
+""")
     check_if_initialized()
     istyle = convert_to_int(style)
     isize = convert_to_int(size)
@@ -16304,7 +16144,7 @@ def fl_show_message(msgtxt1, msgtxt2, msgtxt3):
             None, [xfc.STRING, xfc.STRING, xfc.STRING],
             """void fl_show_message(const char * p1, const char * p2,
                const char * p3)
-            """)
+""")
     check_if_initialized()
     smsgtxt1 = convert_to_string(msgtxt1)
     smsgtxt2 = convert_to_string(msgtxt2)
@@ -16324,7 +16164,7 @@ def fl_show_messages(p1):
             load_so_libforms(), "fl_show_messages",
             None, [xfc.STRING],
             """void fl_show_messages(const char * p1)
-            """)
+""")
     check_if_initialized()
     sp1 = convert_to_string(p1)
     keep_elem_refs(p1, sp1)
@@ -16347,7 +16187,7 @@ def fl_show_msg(fmttxt):
             load_so_libforms(), "fl_show_msg",
             None, [xfc.STRING],
             """void fl_show_msg(const char * p1)
-            """)
+""")
     check_if_initialized()
     sfmttxt = convert_to_string(fmttxt)
     keep_elem_refs(fmttxt, sfmttxt)
@@ -16367,7 +16207,7 @@ def fl_hide_message():
             load_so_libforms(), "fl_hide_message",
             None, [],
             """void fl_hide_message()
-            """)
+""")
     check_if_initialized()
     _fl_hide_message()
 
@@ -16392,7 +16232,7 @@ def fl_show_question(questmsg, p2):
             load_so_libforms(), "fl_show_question",
             cty.c_int, [xfc.STRING, cty.c_int],
             """int fl_show_question(const char * p1, int p2)
-            """)
+""")
     check_if_initialized()
     squestmsg = convert_to_string(questmsg)
     ip2 = convert_to_int(p2)
@@ -16414,7 +16254,7 @@ def fl_hide_question():
             load_so_libforms(), "fl_hide_question",
             None, [],
             """void fl_hide_question()
-            """)
+""")
     check_if_initialized()
     _fl_hide_question()
 
@@ -16438,7 +16278,7 @@ def fl_show_alert(title, msg1, msg2, centered):
             None, [xfc.STRING, xfc.STRING, xfc.STRING, cty.c_int],
             """void fl_show_alert(const char * p1, const char * p2,
                const char * p3, int p4)
-            """)
+""")
     check_if_initialized()
     stitle = convert_to_string(title)
     smsg1 = convert_to_string(msg1)
@@ -16465,7 +16305,7 @@ def fl_show_alert2(centered, fmt):
             load_so_libforms(), "fl_show_alert2",
             None, [cty.c_int, xfc.STRING],
             """void fl_show_alert2(int c, const char * fmt)
-            """)
+""")
     check_if_initialized()
     icentered = convert_to_int(centered)
     sfmt = convert_to_string(fmt)
@@ -16486,7 +16326,7 @@ def fl_hide_alert():
             load_so_libforms(), "fl_hide_alert",
             None, [],
             """void fl_hide_alert()
-            """)
+""")
     check_if_initialized()
     _fl_hide_alert()
 
@@ -16508,7 +16348,7 @@ def fl_show_input(msgtxt, defstr):
             load_so_libforms(), "fl_show_input",
             xfc.STRING, [xfc.STRING, xfc.STRING],
             """const char * fl_show_input(const char * p1, const char * p2)
-            """)
+""")
     check_if_initialized()
     smsgtxt = convert_to_string(msgtxt)
     sdefstr = convert_to_string(defstr)
@@ -16530,7 +16370,7 @@ def fl_hide_input():
             load_so_libforms(), "fl_hide_input",
             None, [],
             """void fl_hide_input()
-            """)
+""")
     check_if_initialized()
     _fl_hide_input()
 
@@ -16555,7 +16395,7 @@ def fl_show_simple_input(msgtxt, defstr):
             xfc.STRING, [xfc.STRING, xfc.STRING],
             """const char * fl_show_simple_input(const char * p1,
                const char * p2)
-            """)
+""")
     check_if_initialized()
     smsgtxt = convert_to_string(msgtxt)
     sdefstr = convert_to_string(defstr)
@@ -16581,7 +16421,7 @@ def fl_show_colormap(oldcolr):
             load_so_libforms(), "fl_show_colormap",
             cty.c_int, [cty.c_int],
             """int fl_show_colormap(int p1)
-            """)
+""")
     check_if_initialized()
     ioldcolr = convert_to_int(oldcolr)
     keep_elem_refs(oldcolr, ioldcolr)
@@ -16604,7 +16444,7 @@ def fl_show_choices(msgtxt, p2, p3, p4, p5, p6):
             xfc.STRING, cty.c_int],
             """int fl_show_choices(const char * p1, int p2,
                const char * p3, const char * p4, const char * p5, int p6)
-            """)
+""")
     check_if_initialized()
     smsgtxt = convert_to_string(msgtxt)
     ip2 = convert_to_int(p2)
@@ -16631,7 +16471,7 @@ def fl_show_choice(p1, p2, p3, p4, p5, p6, p7, p8):
             """int fl_show_choice(const char * p1, const char * p2,
                const char * p3, int p4, const char * p5, const char * p6,
                const char * p7, int p8)
-            """)
+""")
     check_if_initialized()
     sp1 = convert_to_string(p1)
     sp2 = convert_to_string(p2)
@@ -16657,7 +16497,7 @@ def fl_hide_choice():
             load_so_libforms(), "fl_hide_choice",
             None, [],
             """void fl_hide_choice()
-            """)
+""")
     check_if_initialized()
     _fl_hide_choice()
 
@@ -16674,7 +16514,7 @@ def fl_set_choices_shortcut(p1, p2, p3):
             None, [xfc.STRING, xfc.STRING, xfc.STRING],
             """void fl_set_choices_shortcut(const char * p1, const char * p2,
                const char * p3)
-            """)
+""")
     check_if_initialized()
     sp1 = convert_to_string(p1)
     sp2 = convert_to_string(p2)
@@ -16700,7 +16540,7 @@ def fl_show_oneliner(p1, p2, p3):
             None, [xfc.STRING, xfc.FL_Coord, xfc.FL_Coord],
             """void fl_show_oneliner(const char * p1, FL_Coord p2,
                FL_Coord p3)
-            """)
+""")
     check_if_initialized()
     sp1 = convert_to_string(p1)
     ip2 = convert_to_FL_Coord(p2)
@@ -16720,7 +16560,7 @@ def fl_hide_oneliner():
             load_so_libforms(), "fl_hide_oneliner",
             None, [],
             """void fl_hide_oneliner()
-            """)
+""")
     check_if_initialized()
     _fl_hide_oneliner()
 
@@ -16750,7 +16590,7 @@ def fl_set_oneliner_font(style, size):
             load_so_libforms(), "fl_set_oneliner_font",
             None, [cty.c_int, cty.c_int],
             """void fl_set_oneliner_font(int p1, int p2)
-            """)
+""")
     check_if_initialized()
     check_admitted_listvalues(style, xfc.TEXTSTYLE_list)
     check_admitted_listvalues(size, xfc.FONTSIZE_list)
@@ -16771,7 +16611,7 @@ def fl_set_oneliner_color(fgcolr, bgcolr):
             load_so_libforms(), "fl_set_oneliner_color",
             None, [xfc.FL_COLOR, xfc.FL_COLOR],
             """void fl_set_oneliner_color(FL_COLOR p1, FL_COLOR p2)
-            """)
+""")
     check_if_initialized()
     check_admitted_listvalues(fgcolr, xfc.COLOR_list)
     check_admitted_listvalues(bgcolr, xfc.COLOR_list)
@@ -16806,7 +16646,7 @@ def fl_set_tooltip_font(style, size):
             load_so_libforms(), "fl_set_tooltip_font",
             None, [cty.c_int, cty.c_int],
             """void fl_set_tooltip_font(int p1, int p2)
-            """)
+""")
     check_if_initialized()
     check_admitted_listvalues(style, xfc.TEXTSTYLE_list)
     check_admitted_listvalues(size, xfc.FONTSIZE_list)
@@ -16827,7 +16667,7 @@ def fl_set_tooltip_color(fgcolr, bgcolr):
             load_so_libforms(), "fl_set_tooltip_color",
             None, [xfc.FL_COLOR, xfc.FL_COLOR],
             """void fl_set_tooltip_color(FL_COLOR p1, FL_COLOR p2)
-            """)
+""")
     check_if_initialized()
     check_admitted_listvalues(fgcolr, xfc.COLOR_list)
     check_admitted_listvalues(bgcolr, xfc.COLOR_list)
@@ -16857,7 +16697,7 @@ def fl_set_tooltip_boxtype(boxtype):
             load_so_libforms(), "fl_set_tooltip_boxtype",
             None, [cty.c_int],
             """void fl_set_tooltip_boxtype(int p1)
-            """)
+""")
     check_if_initialized()
     check_admitted_listvalues(boxtype, xfc.BOXTYPE_list)
     iboxtype = convert_to_int(boxtype)
@@ -16883,7 +16723,7 @@ def fl_set_tooltip_lalign(align):
             load_so_libforms(), "fl_set_tooltip_lalign",
             None, [cty.c_int],
             """void fl_set_tooltip_lalign(int p1)
-            """)
+""")
     check_if_initialized()
     check_admitted_listvalues(align, xfc.ALIGN_list)
     ialign = convert_to_int(align)
@@ -16909,7 +16749,7 @@ def fl_exe_command(command, block):
             load_so_libforms(), "fl_exe_command",
             cty.c_long, [xfc.STRING, cty.c_int],
             """long int fl_exe_command(const char * p1, int p2)
-            """)
+""")
     check_if_initialized()
     scommand = convert_to_string(command)
     iblock = convert_to_int(block)
@@ -16938,7 +16778,7 @@ def fl_end_command(pid):
             load_so_libforms(), "fl_end_command",
             cty.c_int, [cty.c_long],
             """int fl_end_command(long int p1)
-            """)
+""")
     check_if_initialized()
     lpid = convert_to_long(pid)
     keep_elem_refs(pid, lpid)
@@ -16966,7 +16806,7 @@ def fl_check_command(pid):
             load_so_libforms(), "fl_check_command",
             cty.c_int, [cty.c_long],
             """int fl_check_command(long int p1)
-            """)
+""")
     check_if_initialized()
     lpid = convert_to_long(pid)
     keep_elem_refs(pid, lpid)
@@ -16976,27 +16816,27 @@ def fl_check_command(pid):
 
 def fl_popen(command, otype):
     """
-        fl_popen(command, otype) -> pFile
+    fl_popen(command, otype) -> pFile
 
-        Executes the command in a child process, and logs the stderr messages
-        into the command log. If type is "w", stdout will also be logged into
-        the command browser.
+    Executes the command in a child process, and logs the stderr messages into
+    the command log. If otype is "w", stdout will also be logged into the
+    command browser.
 
-        @param command: filename to execute (<string>)
-        @values: existing filename
-        @param otype: type of opening (e.g. w, r ..) (<string>)
-        @values: letter between 'w', 'r', etc..
+    @param command: existing filename to execute
+    @type command: str
+    @param otype: type of opening (e.g. letter between w, r ..)
+    @type otype: str
 
-        @returns: file opened (<pointer to FILE>)
+    @returns: file opened (<pointer to FILE>)
 
-        @status: Untested + NoDoc + NoDemo = NOT OK
+    @status: Untested + NoDoc + NoDemo = NOT OK
     """
 
     _fl_popen = cfuncproto(
             load_so_libforms(), "fl_popen",
             cty.POINTER(xfc.FILE), [xfc.STRING, xfc.STRING],
             """FILE * fl_popen(const char * p1, const char * p2)
-            """)
+""")
     check_if_initialized()
     scommand = convert_to_string(command)
     sotype = convert_to_string(otype)
@@ -17007,26 +16847,24 @@ def fl_popen(command, otype):
 
 def fl_pclose(pFile):
     """
-        fl_pclose(pFile) -> num.
+    fl_pclose(pFile) -> int
 
-        Cleans up the child process executed.
+    Cleans up the child process executed.
 
-        @param pFile: opened file stream returned by fl_popen()
-                      (<pointer to FILE>)
+    @param pFile: opened file stream returned by fl_popen()
+    @type pFile: pointer to FILE
 
-        @returns: non-zero (<int>) or -1 (on failure)
+    @returns: non-zero, or -1 (on failure)
 
-        @example: if fl_pclose(pfile) == -1:
-        @example: ...
+    @example: if fl_pclose(pfile) == -1: ...
 
-        @status: Tested + Doc + NoDemo = OK
+    @status: Tested + Doc + NoDemo = OK
     """
-
     _fl_pclose = cfuncproto(
             load_so_libforms(), "fl_pclose",
             cty.c_int, [cty.POINTER(xfc.FILE)],
             """int fl_pclose(FILE * p1)
-            """)
+""")
     check_if_initialized()
     keep_elem_refs(pFile)
     retval = _fl_pclose(pFile)
@@ -17035,43 +16873,39 @@ def fl_pclose(pFile):
 
 def fl_end_all_command():
     """
-        fl_end_all_command() -> exit status
+    fl_end_all_command() -> exit status
 
-        Wait for all the child processes initiated by fl_exe_command()
-        to complete. Returns the status of the last child process.
+    Wait for all the child processes initiated by fl_exe_command() to
+    complete. Returns the status of the last child process.
 
-        @status: Untested + NoDoc + NoDemo = NOT OK
+    @status: Untested + NoDoc + NoDemo = NOT OK
     """
-
     _fl_end_all_command = cfuncproto(
             load_so_libforms(), "fl_end_all_command",
             cty.c_int, [],
             """int fl_end_all_command()
-            """)
+""")
     retval = _fl_end_all_command()
     return retval
 
 
 def fl_show_command_log(border):
     """
-        fl_show_command_log(border)
+    fl_show_command_log(border)
 
-        Shows the log of the command output.
+    Shows the log of the command output.
 
-        @param border: window manager decoration (<int>)
-        @values: (from xfdata module) L{FL_FULLBORDER}, L{FL_TRANSIENT},
-                      L{FL_NOBORDER}
-        @type border: (from xfdata module) L{FL_FULLBORDER}, L{FL_TRANSIENT},
-                      L{FL_NOBORDER}
+    @param border: window manager decoration. Values (from xfdata module) i.e.
+        FL_FULLBORDER, FL_TRANSIENT, FL_NOBORDER
+    @type border: int
 
-        @status: Untested + NoDoc + NoDemo = NOT OK
+    @status: Untested + NoDoc + NoDemo = NOT OK
     """
-
     _fl_show_command_log = cfuncproto(
             load_so_libforms(), "fl_show_command_log",
             None, [cty.c_int],
             """void fl_show_command_log(int p1)
-            """)
+""")
     check_if_initialized()
     check_admitted_listvalues(border, xfc.DECORATION_list)
     iborder = convert_to_int(border)
@@ -17081,56 +16915,55 @@ def fl_show_command_log(border):
 
 def fl_hide_command_log():
     """
-        fl_hide_command_log()
+    fl_hide_command_log()
 
-        Hides the log of the command output.
+    Hides the log of the command output.
 
-        @status: Untested + NoDoc + NoDemo = NOT OK
+    @status: Untested + NoDoc + NoDemo = NOT OK
     """
-
     _fl_hide_command_log = cfuncproto(
             load_so_libforms(), "fl_hide_command_log",
             None, [],
             """void fl_hide_command_log()
-            """)
+""")
     check_if_initialized()
     _fl_hide_command_log()
 
 
 def fl_clear_command_log():
     """
-        fl_clear_command_log()
+    fl_clear_command_log()
 
-        Clears the browser and the logging output displayed within it.
+    Clears the browser and the logging output displayed within it.
 
-        @status: Untested + NoDoc + NoDemo = NOT OK
+    @status: Untested + NoDoc + NoDemo = NOT OK
     """
 
     _fl_clear_command_log = cfuncproto(
             load_so_libforms(), "fl_clear_command_log",
             None, [],
             """void fl_clear_command_log()
-            """)
+""")
     check_if_initialized()
     _fl_clear_command_log()
 
 
 def fl_addto_command_log(txtstr):
     """
-        fl_addto_command_log(txtstr)
+    fl_addto_command_log(txtstr)
 
-        Adds arbitrary text to the command browser 
+    Adds arbitrary text to the command browser 
 
-        @param txtstr: text line to be added <string>
+    @param txtstr: text line to be added <string>
 
-        @status: Untested + NoDoc + NoDemo = NOT OK
+    @status: Untested + NoDoc + NoDemo = NOT OK
     """
 
     _fl_addto_command_log = cfuncproto(
             load_so_libforms(), "fl_addto_command_log",
             None, [xfc.STRING],
             """void fl_addto_command_log(const char * p1)
-            """)
+""")
     check_if_initialized()
     stxtstr = convert_to_string(txtstr)
     keep_elem_refs(txtstr, stxtstr)
@@ -17139,21 +16972,23 @@ def fl_addto_command_log(txtstr):
 
 def fl_set_command_log_position(x, y):
     """
-        fl_set_command_log_position(x, y)
+    fl_set_command_log_position(x, y)
 
-        Changes the default placement of the command log.
+    Changes the default placement of the command log.
 
-        @param x: horizontal position (upper-left corner)
-        @param y: vertical position (upper-left corner)
+    @param x: horizontal position (upper-left corner)
+    @type x: int
+    @param y: vertical position (upper-left corner)
+    @type y: int
 
-        @status: Untested + NoDoc + NoDemo = NOT OK
+    @status: Untested + NoDoc + NoDemo = NOT OK
     """
 
     _fl_set_command_log_position = cfuncproto(
             load_so_libforms(), "fl_set_command_log_position",
             None, [cty.c_int, cty.c_int],
             """void fl_set_command_log_position(int p1, int p2)
-            """)
+""")
     check_if_initialized()
     ix = convert_to_int(x)
     iy = convert_to_int(y)
@@ -17163,16 +16998,16 @@ def fl_set_command_log_position(x, y):
 
 def fl_get_command_log_fdstruct():
     """
-        fl_get_command_log_fdstruct() -> pCmdlog
+    fl_get_command_log_fdstruct() -> pCmdlog
 
-        @status: Untested + NoDoc + NoDemo = NOT OK
+    @status: Untested + NoDoc + NoDemo = NOT OK
     """
 
     _fl_get_command_log_fdstruct = cfuncproto(
             load_so_libforms(), "fl_get_command_log_fdstruct",
             cty.POINTER(xfc.FD_CMDLOG), [],
-            """)FD_CMDLOG * fl_get_command_log_fdstruct()
-            """)
+""")FD_CMDLOG * fl_get_command_log_fdstruct()
+""")
     check_if_initialized()
     retval = _fl_get_command_log_fdstruct()
     return retval
@@ -17182,19 +17017,20 @@ def fl_get_command_log_fdstruct():
 
 def fl_use_fselector(num):
     """
-        fl_use_fselector(num) -> num.
+    fl_use_fselector(num) -> num.
 
-        @param num: fselector number to use (<int>)
-        @type num: between 0 and xfdata.FL_MAX_FSELECTOR - 1
+    @param num: fselector number to use. Values between 0 and
+        xfdata.FL_MAX_FSELECTOR - 1
+    @type num: int
 
-        @status: Untested + NoDoc + NoDemo = NOT OK
+    @status: Untested + NoDoc + NoDemo = NOT OK
     """
 
     _fl_use_fselector = cfuncproto(
             load_so_libforms(), "fl_use_fselector",
             cty.c_int, [cty.c_int],
             """int fl_use_fselector(int p1)
-            """)
+""")
     check_if_initialized()
     inum = convert_to_int(num)
     keep_elem_refs(num, inum)
@@ -17204,13 +17040,16 @@ def fl_use_fselector(num):
 
 def fl_show_fselector(msgtxt, p2, p3, p4):
     """
-        fl_show_fselector(msgtxt, p2, p3, p4) -> fselector string
+    fl_show_fselector(msgtxt, p2, p3, p4) -> fselector string
 
-        @param msgtxt: (<string>)
-        @param p2: (<string>)
-        @param p3: (<string>)
+    @param msgtxt: message text
+    @type msgtxt: str
+    @param p2: ?
+    @type p2: str
+    @param p3: ?
+    @type p3: str
 
-        @status: Tested + NoDoc + Demo = OK
+    @status: Tested + NoDoc + Demo = OK
     """
 
     _fl_show_fselector = cfuncproto(
@@ -17218,7 +17057,7 @@ def fl_show_fselector(msgtxt, p2, p3, p4):
             xfc.STRING, [xfc.STRING, xfc.STRING, xfc.STRING, xfc.STRING],
             """const char * fl_show_fselector(const char * p1,
                const char * p2, const char * p3, const char * p4)
-            """)
+""")
     check_if_initialized()
     smsgtxt = convert_to_string(msgtxt)
     sp2 = convert_to_string(p2)
@@ -17234,21 +17073,19 @@ fl_show_file_selector = fl_show_fselector
 
 def fl_set_fselector_fontsize(size):
     """
-        fl_set_fselector_fontsize(size)
+    fl_set_fselector_fontsize(size)
 
-        @param size: label size [<int>]
-        @type size: (from xfdata module) FL_TINY_SIZE, FL_SMALL_SIZE, 
-                    FL_NORMAL_SIZE, FL_MEDIUM_SIZE, FL_LARGE_SIZE,
-                    FL_HUGE_SIZE, FL_DEFAULT_SIZE
+    @param size: label size. Values (from xfdata module) i.e. FL_TINY_SIZE,
+        FL_SMALL_SIZE, FL_NORMAL_SIZE, FL_MEDIUM_SIZE, FL_LARGE_SIZE,
+        FL_HUGE_SIZE, FL_DEFAULT_SIZE
 
-        @status: Untested + NoDoc + NoDemo = NOT OK
+    @status: Untested + NoDoc + NoDemo = NOT OK
     """
-
     _fl_set_fselector_fontsize = cfuncproto(
             load_so_libforms(), "fl_set_fselector_fontsize",
             None, [cty.c_int],
             """void fl_set_fselector_fontsize(int p1)
-            """)
+""")
     check_if_initialized()
     check_admitted_listvalues(size, xfc.FONTSIZE_list)
     isize = convert_to_int(size)
@@ -17258,26 +17095,24 @@ def fl_set_fselector_fontsize(size):
 
 def fl_set_fselector_fontstyle(style):
     """
-        fl_set_fselector_fontstyle(style)
+    fl_set_fselector_fontstyle(style)
 
-        @param style: label style (<int>)
-        @type style: (from xfdata module) FL_NORMAL_STYLE, FL_BOLD_STYLE,
-                     FL_ITALIC_STYLE, FL_BOLDITALIC_STYLE, FL_FIXED_STYLE,
-                     FL_FIXEDBOLD_STYLE, FL_FIXEDITALIC_STYLE,
-                     FL_FIXEDBOLDITALIC_STYLE, FL_TIMES_STYLE,
-                     FL_TIMESBOLD_STYLE, FL_TIMESITALIC_STYLE,
-                     FL_TIMESBOLDITALIC_STYLE, FL_MISC_STYLE,
-                     FL_MISCBOLD_STYLE, FL_MISCITALIC_STYLE, FL_SYMBOL_STYLE,
-                     FL_SHADOW_STYLE, FL_ENGRAVED_STYLE, FL_EMBOSSED_STYLE
+    @param style: label style. Values (from xfdata module) i.e. FL_NORMAL_STYLE,
+        FL_BOLD_STYLE, FL_ITALIC_STYLE, FL_BOLDITALIC_STYLE, FL_FIXED_STYLE,
+        FL_FIXEDBOLD_STYLE, FL_FIXEDITALIC_STYLE, FL_FIXEDBOLDITALIC_STYLE,
+        FL_TIMES_STYLE, FL_TIMESBOLD_STYLE, FL_TIMESITALIC_STYLE,
+        FL_TIMESBOLDITALIC_STYLE, FL_MISC_STYLE, FL_MISCBOLD_STYLE,
+        FL_MISCITALIC_STYLE, FL_SYMBOL_STYLE, FL_SHADOW_STYLE,
+        FL_ENGRAVED_STYLE, FL_EMBOSSED_STYLE
+    @type place: int
 
-        @status: Untested + NoDoc + NoDemo = NOT OK
+    @status: Untested + NoDoc + NoDemo = NOT OK
     """
-
     _fl_set_fselector_fontstyle = cfuncproto(
             load_so_libforms(), "fl_set_fselector_fontstyle",
             None, [cty.c_int],
             """void fl_set_fselector_fontstyle(int p1)
-            """)
+""")
     check_if_initialized()
     check_admitted_listvalues(style, xfc.TEXTSTYLE_list)
     istyle = convert_to_int(style)
@@ -17287,23 +17122,22 @@ def fl_set_fselector_fontstyle(style):
 
 def fl_set_fselector_placement(place):
     """
-        fl_set_fselector_placement(place)
+    fl_set_fselector_placement(place)
 
-        @param place: where to place it (<int>)
-        @type place: (from xfdata module) FL_PLACE_FREE, FL_PLACE_MOUSE,
-                     FL_PLACE_CENTER, FL_PLACE_POSITION, FL_PLACE_SIZE,
-                     FL_PLACE_GEOMETRY, FL_PLACE_ASPECT, FL_PLACE_FULLSCREEN,
-                     FL_PLACE_HOTSPOT, FL_PLACE_ICONIC, FL_FREE_SIZE,
-                     FL_PLACE_FREE_CENTER, FL_PLACE_CENTERFREE
+    @param place: where to place it. Values (from xfdata module) i.e.
+        FL_PLACE_FREE, FL_PLACE_MOUSE, FL_PLACE_CENTER, FL_PLACE_POSITION,
+        FL_PLACE_SIZE, FL_PLACE_GEOMETRY, FL_PLACE_ASPECT, FL_PLACE_FULLSCREEN,
+        FL_PLACE_HOTSPOT, FL_PLACE_ICONIC, FL_FREE_SIZE, FL_PLACE_FREE_CENTER,
+        FL_PLACE_CENTERFREE
+    @type place: int
 
-        @status: Tested + NoDoc + Demo = OK
+    @status: Tested + NoDoc + Demo = OK
     """
-
     _fl_set_fselector_placement = cfuncproto(
             load_so_libforms(), "fl_set_fselector_placement",
             None, [cty.c_int],
             """void fl_set_fselector_placement(int p1)
-            """)
+""")
     check_if_initialized()
     check_admitted_listvalues(place, xfc.PLACE_list)
     iplace = convert_to_int(place)
@@ -17313,20 +17147,19 @@ def fl_set_fselector_placement(place):
 
 def fl_set_fselector_border(border):
     """
-        fl_set_fselector_border(border)
+    fl_set_fselector_border(border)
 
-        @param border: window manager decoration (<int>)
-        @type border: (from xfdata module) FL_FULLBORDER, FL_TRANSIENT,
-                      FL_NOBORDER
+    @param border: window manager decoration. Values (from xfdata module) i.e.
+        FL_FULLBORDER, FL_TRANSIENT, FL_NOBORDER
+    @type border: int
 
-        @status: Untested + NoDoc + NoDemo = NOT OK
+    @status: Untested + NoDoc + NoDemo = NOT OK
     """
-
     _fl_set_fselector_border = cfuncproto(
             load_so_libforms(), "fl_set_fselector_border",
             None, [cty.c_int],
             """void fl_set_fselector_border(int p1)
-            """)
+""")
     check_if_initialized()
     check_admitted_listvalues(border, xfc.DECORATION_list)
     iborder = convert_to_int(border)
@@ -17336,14 +17169,14 @@ def fl_set_fselector_border(border):
 
 def fl_set_fselector_transient(flag):
     """
-        fl_set_fselector_transient(flag)
+    fl_set_fselector_transient(flag)
 
-        @param flag: flag if transient or not (<int>)
-        @type flag: 1 (transient) or 0 (not transient)
+    @param flag: flag if transient or not. Values 1 (transient) or 0 (not
+        transient)
+    @type flag: int
 
-        @status: Untested + NoDoc + NoDemo = NOT OK
+    @status: Untested + NoDoc + NoDemo = NOT OK
     """
-
     if flag:
         argval = xfc.FL_TRANSIENT
     else:
@@ -17355,20 +17188,21 @@ FL_FSCB = cty.CFUNCTYPE(cty.c_int, xfc.STRING, cty.c_void_p)
 
 def fl_set_fselector_callback(py_FSCB, vdata):
     """
-        fl_set_fselector_callback(py_FSCB, vdata)
+    fl_set_fselector_callback(py_FSCB, vdata)
 
-        @param py_FSCB: python function callback, returning value
-        @type py_FSCB: __ funcname (string, ptr_void) -> num __
-        @param vdata: user data to be passed to function (<pointer to void>)
+    @param py_FSCB: python function callback, returning value
+    @type py_FSCB: __ funcname (string, ptr_void) -> num __
+    @param vdata: user data to be passed to function
+    @type vdata: pointer to void
 
-        @status: Tested + NoDoc + Demo = OK
+    @status: Tested + NoDoc + Demo = OK
     """
 
     _fl_set_fselector_callback = cfuncproto(
             load_so_libforms(), "fl_set_fselector_callback",
             None, [FL_FSCB, cty.c_void_p],
             """void fl_set_fselector_callback(FL_FSCB p1, void * p2)
-            """)
+""")
     check_if_initialized()
     c_FSCB = FL_FSCB(py_FSCB)
     pvdata = cty.cast(vdata, cty.c_void_p)
@@ -17382,18 +17216,17 @@ fl_set_fselector_cb = fl_set_fselector_callback
 
 def fl_get_filename():
     """
-        fl_get_filename() -> fname
+    fl_get_filename() -> str
 
-        @returns: name of file (<string>)
+    @returns: name of file (fname)
 
-        @status: Untested + NoDoc + NoDemo = NOT OK
+    @status: Untested + NoDoc + NoDemo = NOT OK
     """
-
     _fl_get_filename = cfuncproto(
             load_so_libforms(), "fl_get_filename",
             xfc.STRING, [],
             """const char * fl_get_filename()
-            """)
+""")
     check_if_initialized()
     retval = _fl_get_filename()
     return retval
@@ -17401,36 +17234,34 @@ def fl_get_filename():
 
 def fl_get_directory():
     """
-        fl_get_directory() -> dirname
+    fl_get_directory() -> str
 
-        @returns: name of directory (<string>)
+    @returns: name of directory (dirname)
 
-        @status: Untested + NoDoc + NoDemo = NOT OK
+    @status: Untested + NoDoc + NoDemo = NOT OK
     """
-
     _fl_get_directory = cfuncproto(
             load_so_libforms(), "fl_get_directory",
             xfc.STRING, [],
             """const char * fl_get_directory()
-            """)
+""")
     retval = _fl_get_directory()
     return retval
 
 
 def fl_get_pattern():
     """
-        fl_get_pattern() -> pattern
+    fl_get_pattern() -> str
 
-        @returns: pattern text (<string>)
+    @returns: pattern text
 
-        @status: Untested + NoDoc + NoDemo = NOT OK
+    @status: Untested + NoDoc + NoDemo = NOT OK
     """
-
     _fl_get_pattern = cfuncproto(
             load_so_libforms(), "fl_get_pattern",
             xfc.STRING, [],
             """const char * fl_get_pattern()
-            """)
+""")
     check_if_initialized()
     retval = _fl_get_pattern()
     return retval
@@ -17438,18 +17269,18 @@ def fl_get_pattern():
 
 def fl_set_directory(dirname):
     """
-        fl_set_directory(dirname) -> num.
+    fl_set_directory(dirname) -> int
 
-        @param dirname: name of directory to be set (<string>)
+    @param dirname: name of directory to be set
+    @type dirname: str
 
-        @status: Untested + NoDoc + NoDemo = NOT OK
+    @status: Untested + NoDoc + NoDemo = NOT OK
     """
-
     _fl_set_directory = cfuncproto(
             load_so_libforms(), "fl_set_directory",
             cty.c_int, [xfc.STRING],
             """int fl_set_directory(const char * p1)
-            """)
+""")
     check_if_initialized()
     sdirname = convert_to_string(dirname)
     keep_elem_refs(dirname, sdirname)
@@ -17459,18 +17290,18 @@ def fl_set_directory(dirname):
 
 def fl_set_pattern(pattern):
     """
-        fl_set_pattern(pattern)
+    fl_set_pattern(pattern)
 
-        @param pattern: text of pattern (<string>)
+    @param pattern: text of pattern
+    @type pattern: str
 
-        @status: Untested + NoDoc + NoDemo = NOT OK
+    @status: Untested + NoDoc + NoDemo = NOT OK
     """
-
     _fl_set_pattern = cfuncproto(
             load_so_libforms(), "fl_set_pattern",
             None, [xfc.STRING],
             """void fl_set_pattern(const char * p1)
-            """)
+""")
     check_if_initialized()
     spattern = convert_to_string(pattern)
     keep_elem_refs(pattern, spattern)
@@ -17479,16 +17310,16 @@ def fl_set_pattern(pattern):
 
 def fl_refresh_fselector():
     """
-        fl_refresh_fselector()
+    fl_refresh_fselector()
 
-        @status: Untested + NoDoc + NoDemo = NOT OK
+    @status: Untested + NoDoc + NoDemo = NOT OK
     """
 
     _fl_refresh_fselector = cfuncproto(
             load_so_libforms(), "fl_refresh_fselector",
             None, [],
             """void fl_refresh_fselector()
-            """)
+""")
     check_if_initialized()
     _fl_refresh_fselector()
 
@@ -17498,22 +17329,23 @@ cfunc_none_voidp = cty.CFUNCTYPE(None, cty.c_void_p)
 
 def fl_add_fselector_appbutton(label, py_fn, vdata):
     """
-        fl_add_fselector_appbutton(label, py_fn, vdata)
+    fl_add_fselector_appbutton(label, py_fn, vdata)
 
-        @param label: text of label (<string>)
-        @param py_fn: python function callback - no return
-        @type py_fn: __ funcname (ptr_void) __
-        @param vdata: user data to be passed to function (<pointer to void>)
+    @param label: text of label
+    @type label: str
+    @param py_fn: python function callback, no return
+    @type py_fn: __ funcname (ptr_void) __
+    @param vdata: user data to be passed to function
+    @type vdata: pointer to void
 
-        @status: Untested + NoDoc + NoDemo = NOT OK
+    @status: Untested + NoDoc + NoDemo = NOT OK
     """
-
     _fl_add_fselector_appbutton = cfuncproto(
             load_so_libforms(), "fl_add_fselector_appbutton",
             None, [xfc.STRING, cfunc_none_voidp, cty.c_void_p],
             """void fl_add_fselector_appbutton(const char * p1,
                const char * p2, void * p3)
-            """)
+""")
     check_if_initialized()
     slabel = convert_to_string(label)
     c_fn = cfunc_none_voidp(py_fn)
@@ -17525,18 +17357,19 @@ def fl_add_fselector_appbutton(label, py_fn, vdata):
 
 def fl_remove_fselector_appbutton(label):
     """
-        fl_remove_fselector_appbutton(label)
+    fl_remove_fselector_appbutton(label)
 
-        @param label: text of label (<string>)
+    @param label: text of label
+    @type label: str
 
-        @status: Untested + NoDoc + NoDemo = NOT OK
+    @status: Untested + NoDoc + NoDemo = NOT OK
     """
 
     _fl_remove_fselector_appbutton = cfuncproto(
             load_so_libforms(), "fl_remove_fselector_appbutton",
             None, [xfc.STRING],
             """void fl_remove_fselector_appbutton(const char * p1)
-            """)
+""")
     check_if_initialized()
     slabel = convert_to_string(label)
     keep_elem_refs(label, slabel)
@@ -17545,17 +17378,18 @@ def fl_remove_fselector_appbutton(label):
 
 def fl_disable_fselector_cache(yes):
     """
-        fl_disable_fselector_cache(yes)
+    fl_disable_fselector_cache(yes)
 
-        @param yes: (<int>)
-        @status: Untested + NoDoc + NoDemo = NOT OK
+    @param yes: ?
+    @type yes: int
+
+    @status: Untested + NoDoc + NoDemo = NOT OK
     """
-
     _fl_disable_fselector_cache = cfuncproto(
             load_so_libforms(), "fl_disable_fselector_cache",
             None, [cty.c_int],
             """void fl_disable_fselector_cache(int p1)
-            """)
+""")
     check_if_initialized()
     iyes = convert_to_int(yes)
     keep_elem_refs(yes, iyes)
@@ -17564,32 +17398,30 @@ def fl_disable_fselector_cache(yes):
 
 def fl_invalidate_fselector_cache():
     """
-        fl_invalidate_fselector_cache()
+    fl_invalidate_fselector_cache()
 
-        @status: Untested + NoDoc + NoDemo = NOT OK
+    @status: Untested + NoDoc + NoDemo = NOT OK
     """
-
     _fl_invalidate_fselector_cache = cfuncproto(
             load_so_libforms(), "fl_invalidate_fselector_cache",
             None, [],
             """void fl_invalidate_fselector_cache()
-            """)
+""")
     check_if_initialized()
     _fl_invalidate_fselector_cache()
 
 
 def fl_get_fselector_form():
     """
-        fl_get_fselector_form() -> pFlForm
+    fl_get_fselector_form() -> pFlForm
 
-        @status: Untested + NoDoc + NoDemo = NOT OK
+    @status: Untested + NoDoc + NoDemo = NOT OK
     """
-
     _fl_get_fselector_form = cfuncproto(
             load_so_libforms(), "fl_get_fselector_form",
             cty.POINTER(xfc.FL_FORM), [],
             """FL_FORM * fl_get_fselector_form()
-            """)
+""")
     check_if_initialized()
     retval = _fl_get_fselector_form()
     return retval
@@ -17597,18 +17429,17 @@ def fl_get_fselector_form():
 
 def fl_get_fselector_fdstruct():
     """
-        fl_get_fselector_fdstruct() -> fselector_cls
+    fl_get_fselector_fdstruct() -> fselector_cls
 
-        @returns: pointer to xfdata.FD_FSELECTOR
+    @returns: pointer to xfdata.FD_FSELECTOR
 
-        @status: Untested + NoDoc + NoDemo = NOT OK
+    @status: Untested + NoDoc + NoDemo = NOT OK
     """
-
     _fl_get_fselector_fdstruct = cfuncproto(
             load_so_libforms(), "fl_get_fselector_fdstruct",
             cty.POINTER(xfc.FD_FSELECTOR), [],
             """FD_FSELECTOR * fl_get_fselector_fdstruct()
-            """)
+""")
     check_if_initialized()
     retval = _fl_get_fselector_fdstruct()
     return retval
@@ -17616,16 +17447,15 @@ def fl_get_fselector_fdstruct():
 
 def fl_hide_fselector():
     """
-        fl_hide_fselector()
+    fl_hide_fselector()
 
-        @status: Untested + NoDoc + NoDemo = NOT OK
+    @status: Untested + NoDoc + NoDemo = NOT OK
     """
-
     _fl_hide_fselector = cfuncproto(
             load_so_libforms(), "fl_hide_fselector",
             None, [],
             """void fl_hide_fselector()
-            """)
+""")
     check_if_initialized()
     _fl_hide_fselector()
 
@@ -17635,13 +17465,12 @@ def fl_set_fselector_filetype_marker(p1, p2, p3, p4, p5):
 
         @status: Untested + NoDoc + NoDemo = NOT OK
     """
-
     _fl_set_fselector_filetype_marker = cfuncproto(
             load_so_libforms(), "fl_set_fselector_filetype_marker",
             None, [cty.c_int, cty.c_int, cty.c_int, cty.c_int, cty.c_int],
             """void fl_set_fselector_filetype_marker(int p1, int p2, int p3,
                int p4, int p5)
-            """)
+""")
     check_if_initialized()
     ip1 = convert_to_int(p1)
     ip2 = convert_to_int(p2)
@@ -17653,13 +17482,14 @@ def fl_set_fselector_filetype_marker(p1, p2, p3, p4, p5):
 
 
 def fl_set_fselector_title(title):
-    """ fl_set_fselector_title(title)
-
-        @param title: title to be set (<string>)
-
-        @status: Untested + NoDoc + NoDemo = NOT OK
     """
+    fl_set_fselector_title(title)
 
+    @param title: title to be set
+    @type title: string
+
+    @status: Untested + NoDoc + NoDemo = NOT OK
+    """
     fl_set_form_title(fl_get_fselector_form(), title)
 
 
@@ -17674,12 +17504,11 @@ def fl_goodies_atclose(pFlForm, vdata):
 
     @status: Untested + NoDoc + NoDemo = NOT OK
     """
-
     _fl_goodies_atclose = cfuncproto(
             load_so_libforms(), "fl_goodies_atclose",
             cty.c_int, [cty.POINTER(xfc.FL_FORM), cty.c_void_p],
             """int fl_goodies_atclose(FL_FORM * p1, void * p2)
-            """)
+""")
     check_if_initialized()
     pvdata = cty.cast(vdata, cty.c_void_p)
     keep_elem_refs(pFlForm, vdata, pvdata)
@@ -17699,32 +17528,36 @@ def fl_goodies_atclose(pFlForm, vdata):
 
 def fl_add_input(inputtype, x, y, w, h, label):
     """
-        fl_add_input(inputtype, x, y, w, h, label) -> pFlObject
+    fl_add_input(inputtype, x, y, w, h, label) -> pFlObject
 
-        Adds an input object.
+    Adds an input object.
 
-        @param inputtype: type of input to be added (<int>)
-        @type inputtype: (from xfdata module) FL_NORMAL_INPUT, FL_FLOAT_INPUT,
-                         FL_INT_INPUT, FL_DATE_INPUT, FL_MULTILINE_INPUT,
-                         FL_HIDDEN_INPUT, FL_SECRET_INPUT
-        @param x: horizontal position (upper-left corner) (<int>)
-        @param x: vertical position (upper-left corner) (<int>)
-        @param w: width in coord units (<int>)
-        @param h: height in coord units (<int>)
-        @param label: text label of input (<string>)
+    @param inputtype: type of input to be added. Values (from xfdata module)
+        FL_NORMAL_INPUT, FL_FLOAT_INPUT, FL_INT_INPUT, FL_DATE_INPUT,
+        FL_MULTILINE_INPUT, FL_HIDDEN_INPUT, FL_SECRET_INPUT
+    @type inputtype: int
+    @param x: horizontal position (upper-left corner)
+    @type x: int
+    @param y: vertical position (upper-left corner)
+    @type y: int
+    @param w: width in coord units
+    @type w: int
+    @param h: height in coord units
+    @type h: int
+    @param label: text label of input
+    @type label: str
 
-        @returns: object created @type pFlObject: pointer to xfdata.FL_OBJECT
+    @returns: object created (pointer to xfdata.FL_OBJECT)
 
-        @status: Tested + Doc + Demo = OK
+    @status: Tested + Doc + Demo = OK
     """
-
     _fl_add_input = cfuncproto(
             load_so_libforms(), "fl_add_input",
             cty.POINTER(xfc.FL_OBJECT), [cty.c_int, xfc.FL_Coord,
             xfc.FL_Coord, xfc.FL_Coord, xfc.FL_Coord, xfc.STRING],
             """FL_OBJECT * fl_add_input(int type, FL_Coord x, FL_Coord y,
                FL_Coord w, FL_Coord h, const char * label)
-            """)
+""")
     check_if_initialized()
     check_admitted_listvalues(inputtype, xfc.INPUTTYPE_list)
     iinputtype = convert_to_int(inputtype)
@@ -17757,7 +17590,7 @@ def fl_set_input(pFlObject, text):
             load_so_libforms(), "fl_set_input",
             None, [cty.POINTER(xfc.FL_OBJECT), xfc.STRING],
             """void fl_set_input(FL_OBJECT * ob, const char * str)
-            """)
+""")
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     stext = convert_to_string(text)
@@ -17785,7 +17618,7 @@ def fl_set_input_color(pFlObject, txtcolr, curscolr):
             None, [cty.POINTER(xfc.FL_OBJECT), xfc.FL_COLOR, xfc.FL_COLOR],
             """void fl_set_input_color(FL_OBJECT * ob, FL_COLOR textcol,
                FL_COLOR curscol)
-            """)
+""")
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     check_admitted_listvalues(txtcolr, xfc.COLOR_list)
@@ -17818,7 +17651,7 @@ def fl_get_input_color(pFlObject):
             cty.POINTER(xfc.FL_COLOR)],
             """void fl_get_input_color(FL_OBJECT * ob, FL_COLOR * textcol,
                FL_COLOR * curscol)
-            """)
+""")
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     txtcolr, ptxtcolr = make_FL_COLOR_and_pointer()
@@ -17843,7 +17676,7 @@ def fl_set_input_scroll(pFlObject, yes):
             load_so_libforms(), "fl_set_input_scroll",
             None, [cty.POINTER(xfc.FL_OBJECT), cty.c_int],
             """void fl_set_input_scroll(FL_OBJECT * ob, int yes)
-            """)
+""")
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     iyes = convert_to_int(yes)
@@ -17869,7 +17702,7 @@ def fl_set_input_cursorpos(pFlObject, xpos, ypos):
             load_so_libforms(), "fl_set_input_cursorpos",
             None, [cty.POINTER(xfc.FL_OBJECT), cty.c_int, cty.c_int],
             """void fl_set_input_cursorpos(FL_OBJECT * ob, int xpos, int ypos)
-            """)
+""")
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     ixpos = convert_to_int(xpos)
@@ -17897,7 +17730,7 @@ def fl_set_input_selected(pFlObject, flag):
             load_so_libforms(), "fl_set_input_selected",
             None, [cty.POINTER(xfc.FL_OBJECT), cty.c_int],
             """void fl_set_input_selected(FL_OBJECT * ob, int yes)
-            """)
+""")
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     iflag = convert_to_int(flag)
@@ -17926,7 +17759,7 @@ def fl_set_input_selected_range(pFlObject, begin, end):
             None, [cty.POINTER(xfc.FL_OBJECT), cty.c_int, cty.c_int],
             """void fl_set_input_selected_range(FL_OBJECT * ob,
                int begin, int end)
-            """)
+""")
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     ibegin = convert_to_int(begin)
@@ -17960,7 +17793,7 @@ def fl_get_input_selected_range(pFlObject):
             cty.POINTER(cty.c_int)],
             """const char * fl_get_input_selected_range(FL_OBJECT * ob,
                int * begin, int * end)
-            """)
+""")
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     begin, pbegin = make_int_and_pointer()
@@ -17991,7 +17824,7 @@ def fl_set_input_maxchars(pFlObject, maxchars):
             load_so_libforms(), "fl_set_input_maxchars",
             None, [cty.POINTER(xfc.FL_OBJECT), cty.c_int],
             """void fl_set_input_maxchars(FL_OBJECT * ob, int maxchars)
-            """)
+""")
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     imaxchars = convert_to_int(maxchars)
@@ -18018,7 +17851,7 @@ def fl_set_input_format(pFlObject, fmt, sep):
             load_so_libforms(), "fl_set_input_format",
             None, [cty.POINTER(xfc.FL_OBJECT), cty.c_int, cty.c_int],
             """void fl_set_input_format(FL_OBJECT * ob, int fmt, int sep)
-            """)
+""")
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     check_admitted_listvalues(fmt, xfc.DATEFMT_list)
@@ -18048,7 +17881,7 @@ def fl_set_input_hscrollbar(pFlObject, pref):
             load_so_libforms(), "fl_set_input_hscrollbar",
             None, [cty.POINTER(xfc.FL_OBJECT), cty.c_int],
             """void fl_set_input_hscrollbar(FL_OBJECT * ob, int pref)
-            """)
+""")
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     check_admitted_listvalues(pref, xfc.SCROLLBARVAL_list)
@@ -18073,7 +17906,7 @@ def fl_set_input_vscrollbar(pFlObject, pref):
             load_so_libforms(), "fl_set_input_vscrollbar",
             None, [cty.POINTER(xfc.FL_OBJECT), cty.c_int],
             """void fl_set_input_vscrollbar(FL_OBJECT * ob, int pref)
-            """)
+""")
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     check_admitted_listvalues(pref, xfc.SCROLLBARVAL_list)
@@ -18097,7 +17930,7 @@ def fl_set_input_topline(pFlObject, top):
             load_so_libforms(), "fl_set_input_topline",
             None, [cty.POINTER(xfc.FL_OBJECT), cty.c_int],
             """void fl_set_input_topline(FL_OBJECT * ob, int top)
-            """)
+""")
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     itop = convert_to_int(top)
@@ -18119,7 +17952,7 @@ def fl_set_input_scrollbarsize(pFlObject, hh, vw):
             load_so_libforms(), "fl_set_input_scrollbarsize",
             None, [cty.POINTER(xfc.FL_OBJECT), cty.c_int, cty.c_int],
             """void fl_set_input_scrollbarsize(FL_OBJECT * ob, int hh, int vw)
-            """)
+""")
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     ihh = convert_to_int(hh)
@@ -18145,7 +17978,7 @@ def fl_get_input_scrollbarsize(pFlObject):
             cty.POINTER(cty.c_int)],
             """void fl_get_input_scrollbarsize(FL_OBJECT * ob,
                int * hh, int * vw)
-            """)
+""")
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     hh, phh = make_int_and_pointer()
@@ -18169,7 +18002,7 @@ def fl_set_input_xoffset(pFlObject, xoff):
             load_so_libforms(), "fl_set_input_xoffset",
             None, [cty.POINTER(xfc.FL_OBJECT), cty.c_int],
             """void fl_set_input_xoffset(FL_OBJECT * ob, int xoff)
-            """)
+""")
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     ixoff = convert_to_int(xoff)
@@ -18191,7 +18024,7 @@ def fl_get_input_xoffset(pFlObject):
             load_so_libforms(), "fl_get_input_xoffset",
             cty.c_int, [cty.POINTER(xfc.FL_OBJECT)],
             """int fl_get_input_xoffset(FL_OBJECT * ob)
-            """)
+""")
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     keep_elem_refs(pFlObject)
@@ -18213,7 +18046,7 @@ def fl_set_input_fieldchar(pFlObject, fldchar):
             load_so_libforms(), "fl_set_input_fieldchar",
             cty.c_int, [cty.POINTER(xfc.FL_OBJECT), cty.c_int],
             """int fl_set_input_fieldchar(FL_OBJECT * ob, int fchar)
-            """)
+""")
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     ifldchar = convert_to_int(fldchar)
@@ -18236,7 +18069,7 @@ def fl_get_input_topline(pFlObject):
             load_so_libforms(), "fl_get_input_topline",
             cty.c_int, [cty.POINTER(xfc.FL_OBJECT)],
             """int fl_get_input_topline(FL_OBJECT * ob)
-            """)
+""")
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     keep_elem_refs(pFlObject)
@@ -18258,7 +18091,7 @@ def fl_get_input_screenlines(pFlObject):
             load_so_libforms(), "fl_get_input_screenlines",
             cty.c_int, [cty.POINTER(xfc.FL_OBJECT)],
             """int fl_get_input_screenlines(FL_OBJECT * ob)
-            """)
+""")
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     keep_elem_refs(pFlObject)
@@ -18284,7 +18117,7 @@ def fl_get_input_cursorpos(pFlObject):
             cty.c_int, [cty.POINTER(xfc.FL_OBJECT), cty.POINTER(cty.c_int),
             cty.POINTER(cty.c_int)],
             """int fl_get_input_cursorpos(FL_OBJECT * ob, int * x, int * y)
-            """)
+""")
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     x, px = make_int_and_pointer()
@@ -18308,7 +18141,7 @@ def fl_set_input_cursor_visible(pFlObject, visible):
             load_so_libforms(), "fl_set_input_cursor_visible",
             None, [cty.POINTER(xfc.FL_OBJECT), cty.c_int],
             """void fl_set_input_cursor_visible(FL_OBJECT * ob, int visible)
-            """)
+""")
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     ivisible = convert_to_int(visible)
@@ -18330,7 +18163,7 @@ def fl_get_input_numberoflines(pFlObject):
             load_so_libforms(), "fl_get_input_numberoflines",
             cty.c_int, [cty.POINTER(xfc.FL_OBJECT)],
             """int fl_get_input_numberoflines(FL_OBJECT * ob)
-            """)
+""")
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     keep_elem_refs(pFlObject)
@@ -18356,7 +18189,7 @@ def fl_get_input_format(pFlObject):
             None, [cty.POINTER(xfc.FL_OBJECT), cty.POINTER(cty.c_int),
             cty.POINTER(cty.c_int)],
             """void fl_get_input_format(FL_OBJECT * ob, int * fmt, int * sep)
-            """)
+""")
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     fmt, pfmt = make_int_and_pointer()
@@ -18380,7 +18213,7 @@ def fl_get_input(pFlObject):
             load_so_libforms(), "fl_get_input",
             xfc.STRING, [cty.POINTER(xfc.FL_OBJECT)],
             """const char * fl_get_input(FL_OBJECT * ob)
-            """)
+""")
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     keep_elem_refs(pFlObject)
@@ -18406,7 +18239,7 @@ def fl_set_input_filter(pFlObject, py_InputValidator):
             FL_INPUTVALIDATOR, [cty.POINTER(xfc.FL_OBJECT), FL_INPUTVALIDATOR],
             """FL_INPUTVALIDATOR fl_set_input_filter(FL_OBJECT * ob,
                FL_INPUTVALIDATOR validate)
-            """)
+""")
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     c_InputValidator = FL_INPUTVALIDATOR(py_InputValidator)
@@ -18436,7 +18269,7 @@ def fl_validate_input(pFlObject):
             load_so_libforms(), "fl_validate_input",
             cty.c_int, [cty.POINTER(xfc.FL_OBJECT)],
             """int fl_validate_input(FL_OBJECT * obj)
-            """)
+""")
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     keep_elem_refs(pFlObject)
@@ -18463,7 +18296,7 @@ def fl_set_input_editkeymap(pEditKeymap):
             load_so_libforms(), "fl_set_input_editkeymap",
             None, [cty.POINTER(xfc.FL_EditKeymap)],
             """void fl_set_input_editkeymap(const char * keymap)
-            """)
+""")
     check_if_initialized()
     keep_elem_refs(pEditKeymap)
     _fl_set_input_editkeymap(pEditKeymap)
@@ -18531,7 +18364,7 @@ def fl_add_nmenu(nmenutype, x, y, w, h, label):
             xfc.FL_Coord, xfc.FL_Coord, xfc.FL_Coord, xfc.STRING],
             """FL_OBJECT * fl_add_nmenu(int p1, FL_Coord p2, FL_Coord p3,
                FL_Coord p4, FL_Coord p5, const char * p6)
-            """)
+""")
     check_if_initialized()
     check_admitted_listvalues(nmenutype, xfc.NMENUTYPE_list)
     inmenutype = convert_to_int(nmenutype)
@@ -18558,7 +18391,7 @@ def fl_clear_nmenu(pFlObject):
             load_so_libforms(), "fl_clear_nmenu",
             cty.c_int, [cty.POINTER(xfc.FL_OBJECT)],
             """int fl_clear_nmenu(FL_OBJECT * p1)
-            """)
+""")
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     keep_elem_refs(pFlObject)
@@ -18582,7 +18415,7 @@ def fl_add_nmenu_items(pFlObject, itemstr):
             xfc.STRING],
             """FL_POPUP_ENTRY * fl_add_nmenu_items(FL_OBJECT * p1,
                const char * p2)
-            """)
+""")
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     sitemstr = convert_to_string(itemstr)
@@ -18609,7 +18442,7 @@ def fl_insert_nmenu_items(pFlObject, pPopupEntry, itemstr):
             cty.POINTER(xfc.FL_POPUP_ENTRY), xfc.STRING],
             """FL_POPUP_ENTRY * fl_insert_nmenu_items(FL_OBJECT * p1,
                FL_POPUP_ENTRY * p2, const char * p3)
-            """)
+""")
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     sitemstr = convert_to_string(itemstr)
@@ -18634,7 +18467,7 @@ def fl_replace_nmenu_item(pFlObject, pPopupEntry, itemstr):
             cty.POINTER(xfc.FL_POPUP_ENTRY), xfc.STRING],
             """FL_POPUP_ENTRY * fl_replace_nmenu_item(FL_OBJECT * p1,
                FL_POPUP_ENTRY * p2, const char * p3)
-            """)
+""")
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     sitemstr = convert_to_string(itemstr)
@@ -18656,7 +18489,7 @@ def fl_delete_nmenu_item(pFlObject, pPopupEntry):
             cty.c_int, [cty.POINTER(xfc.FL_OBJECT),
             cty.POINTER(xfc.FL_POPUP_ENTRY)],
             """int fl_delete_nmenu_item(FL_OBJECT * p1, FL_POPUP_ENTRY * p2)
-            """)
+""")
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     keep_elem_refs(pFlObject, pPopupEntry)
@@ -18678,7 +18511,7 @@ def fl_set_nmenu_items(pFlObject, pPopupItem):
             cty.POINTER(xfc.FL_POPUP_ITEM)],
             """FL_POPUP_ENTRY * fl_set_nmenu_items(FL_OBJECT * p1,
                FL_POPUP_ITEM * p2)
-            """)
+""")
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     keep_elem_refs(pFlObject, pPopupItem)
@@ -18706,7 +18539,7 @@ def fl_add_nmenu_items2(pFlObject, pPopupItem):
             cty.POINTER(xfc.FL_POPUP_ITEM)],
             """FL_POPUP_ENTRY * fl_add_nmenu_items2(FL_OBJECT * obj,
                FL_POPUP_ITEM * p2)
-            """)
+""")
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     keep_elem_refs(pFlObject, pPopupItem)
@@ -18734,7 +18567,7 @@ def fl_insert_nmenu_items2(pFlObject, pPopupEntry, pPopupItem):
             cty.POINTER(xfc.FL_POPUP_ENTRY), cty.POINTER(xfc.FL_POPUP_ITEM)],
             """FL_POPUP_ENTRY * fl_insert_nmenu_items2(FL_OBJECT * obj,
                FL_POPUP_ITEM * p2, FL_POPUP_ITEM * p3)
-            """)
+""")
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     keep_elem_refs(pFlObject, pPopupEntry, pPopupItem)
@@ -18762,7 +18595,7 @@ def fl_replace_nmenu_items2(pFlObject, pPopupEntry, pPopupItem):
             cty.POINTER(xfc.FL_POPUP_ENTRY), cty.POINTER(xfc.FL_POPUP_ITEM)],
             """FL_POPUP_ENTRY * fl_replace_nmenu_items2(FL_OBJECT * obj,
                FL_POPUP_ENTRY * p2, FL_POPUP_ITEM * p3)
-            """)
+""")
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     keep_elem_refs(pFlObject, pPopupEntry, pPopupItem)
@@ -18784,7 +18617,7 @@ def fl_get_nmenu_popup(pFlObject):
             load_so_libforms(), "fl_get_nmenu_popup",
             cty.POINTER(xfc.FL_POPUP), [cty.POINTER(xfc.FL_OBJECT)],
             """FL_POPUP * fl_get_nmenu_popup(FL_OBJECT * p1)
-            """)
+""")
     check_if_FL_OBJECT_ptr(pFlObject)
     keep_elem_refs(pFlObject)
     retval = _fl_get_nmenu_popup(pFlObject)
@@ -18805,7 +18638,7 @@ def fl_set_nmenu_popup(pFlObject, pPopup):
             load_so_libforms(), "fl_set_nmenu_popup",
             cty.c_int, [cty.POINTER(xfc.FL_OBJECT), cty.POINTER(xfc.FL_POPUP)],
             """int fl_set_nmenu_popup(FL_OBJECT * p1, FL_POPUP * p2)
-            """)
+""")
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     keep_elem_refs(pFlObject, pPopup)
@@ -18827,7 +18660,7 @@ def fl_get_nmenu_item(pFlObject):
             load_so_libforms(), "fl_get_nmenu_item",
             cty.POINTER(xfc.FL_POPUP_RETURN), [cty.POINTER(xfc.FL_OBJECT)],
             """FL_POPUP_RETURN * fl_get_nmenu_item(FL_OBJECT * p1)
-            """)
+""")
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     keep_elem_refs(pFlObject)
@@ -18850,7 +18683,7 @@ def fl_get_nmenu_item_by_value(pFlObject, value):
             cty.POINTER(xfc.FL_POPUP_ENTRY), [cty.POINTER(xfc.FL_OBJECT), cty.c_long],
             """FL_POPUP_ENTRY * fl_get_nmenu_item_by_value(FL_OBJECT * p1,
                long int p2)
-            """)
+""")
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     lvalue = convert_to_long(value)
@@ -18874,7 +18707,7 @@ def fl_get_nmenu_item_by_label(pFlObject, label):
             cty.POINTER(xfc.FL_POPUP_ENTRY), [cty.POINTER(xfc.FL_OBJECT), xfc.STRING],
             """FL_POPUP_ENTRY * fl_get_nmenu_item_by_label(FL_OBJECT * p1,
                const char * p2)
-            """)
+""")
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     slabel = convert_to_string(label)
@@ -18898,7 +18731,7 @@ def fl_get_nmenu_item_by_text(pFlObject, text):
             cty.POINTER(xfc.FL_POPUP_ENTRY), [cty.POINTER(xfc.FL_OBJECT), xfc.STRING],
             """FL_POPUP_ENTRY * fl_get_nmenu_item_by_text(FL_OBJECT * p1,
                const char * p2)
-            """)
+""")
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     stext = convert_to_string(text)
@@ -18921,7 +18754,7 @@ def fl_set_nmenu_policy(pFlObject, num):
             load_so_libforms(), "fl_set_nmenu_policy",
             cty.c_int, [cty.POINTER(xfc.FL_OBJECT), cty.c_int],
             """int fl_set_nmenu_policy(FL_OBJECT * p1, int p2)
-            """)
+""")
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     inum = convert_to_int(num)
@@ -18945,7 +18778,7 @@ def fl_set_nmenu_hl_text_color(pFlObject, colr):
             xfc.FL_COLOR, [cty.POINTER(xfc.FL_OBJECT), xfc.FL_COLOR],
             """FL_COLOR fl_set_nmenu_hl_text_color(FL_OBJECT * p1,
                FL_COLOR p2)
-            """)
+""")
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     check_admitted_listvalues(colr, xfc.COLOR_list)
@@ -18987,7 +18820,7 @@ def fl_add_positioner(postype, x, y, w, h, label):
             xfc.FL_Coord, xfc.FL_Coord, xfc.FL_Coord, xfc.STRING],
             """FL_OBJECT * fl_add_positioner(int type, FL_Coord x, FL_Coord y,
                FL_Coord w, FL_Coord h, const char * label)
-            """)
+""")
     check_if_initialized()
     check_admitted_listvalues(postype, xfc.POSITIONERTYPE_list)
     ipostype = convert_to_int(postype)
@@ -19016,7 +18849,7 @@ def fl_set_positioner_xvalue(pFlObject, val):
             load_so_libforms(), "fl_set_positioner_xvalue",
             None, [cty.POINTER(xfc.FL_OBJECT), cty.c_double],
             """void fl_set_positioner_xvalue(FL_OBJECT * ob, double val)
-            """)
+""")
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     fval = convert_to_double(val)
@@ -19038,7 +18871,7 @@ def fl_get_positioner_xvalue(pFlObject):
             load_so_libforms(), "fl_get_positioner_xvalue",
             cty.c_double, [cty.POINTER(xfc.FL_OBJECT)],
             """double fl_get_positioner_xvalue(FL_OBJECT * ob)
-            """)
+""")
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     keep_elem_refs(pFlObject)
@@ -19061,7 +18894,7 @@ def fl_set_positioner_xbounds(pFlObject, minbound, maxbound):
             None, [cty.POINTER(xfc.FL_OBJECT), cty.c_double, cty.c_double],
             """void fl_set_positioner_xbounds(FL_OBJECT * ob, double min,
                double max)
-            """)
+""")
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     fminbound = convert_to_double(minbound)
@@ -19089,7 +18922,7 @@ def fl_get_positioner_xbounds(pFlObject):
             cty.POINTER(cty.c_double)],
             """void fl_get_positioner_xbounds(FL_OBJECT * ob, double * min,
             double * max)
-            """)
+""")
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     minbound, pminbound = make_double_and_pointer()
@@ -19113,7 +18946,7 @@ def fl_set_positioner_yvalue(pFlObject, val):
             load_so_libforms(), "fl_set_positioner_yvalue",
             None, [cty.POINTER(xfc.FL_OBJECT), cty.c_double],
             """void fl_set_positioner_yvalue(FL_OBJECT * ob, double val)
-            """)
+""")
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     fval = convert_to_double(val)
@@ -19135,7 +18968,7 @@ def fl_get_positioner_yvalue(pFlObject):
             load_so_libforms(), "fl_get_positioner_yvalue",
             cty.c_double, [cty.POINTER(xfc.FL_OBJECT)],
             """double fl_get_positioner_yvalue(FL_OBJECT * ob)
-            """)
+""")
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     keep_elem_refs(pFlObject)
@@ -19158,7 +18991,7 @@ def fl_set_positioner_ybounds(pFlObject, minbound, maxbound):
             None, [cty.POINTER(xfc.FL_OBJECT), cty.c_double, cty.c_double],
             """void fl_set_positioner_ybounds(FL_OBJECT * ob, double min,
                double max)
-            """)
+""")
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     fminbound = convert_to_double(minbound)
@@ -19186,7 +19019,7 @@ def fl_get_positioner_ybounds(pFlObject):
             cty.POINTER(cty.c_double)],
             """void fl_get_positioner_ybounds(FL_OBJECT * ob, double * min,
                double * max)
-            """)
+""")
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     minbound, pminbound = make_double_and_pointer()
@@ -19210,7 +19043,7 @@ def fl_set_positioner_xstep(pFlObject, value):
             load_so_libforms(), "fl_set_positioner_xstep",
             None, [cty.POINTER(xfc.FL_OBJECT), cty.c_double],
             """void fl_set_positioner_xstep(FL_OBJECT * ob, double value)
-            """)
+""")
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     fvalue = convert_to_double(value)
@@ -19232,7 +19065,7 @@ def fl_set_positioner_ystep(pFlObject, value):
             load_so_libforms(), "fl_set_positioner_ystep",
             None, [cty.POINTER(xfc.FL_OBJECT), cty.c_double],
             """void fl_set_positioner_ystep(FL_OBJECT * ob, double value)
-            """)
+""")
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     fvalue = convert_to_double(value)
@@ -19257,7 +19090,7 @@ def fl_set_positioner_return(pFlObject, when):
             None, [cty.POINTER(xfc.FL_OBJECT), cty.c_uint],
             """void fl_set_positioner_return(FL_OBJECT * ob, unsigned
                int value)
-            """)
+""")
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     uiwhen = convert_to_uint(when)
@@ -19296,7 +19129,7 @@ def fl_add_scrollbar(scrolltype, x, y, w, h, label):
             xfc.FL_Coord, xfc.FL_Coord, xfc.FL_Coord, xfc.STRING],
             """FL_OBJECT * fl_add_scrollbar(int type, FL_Coord x, FL_Coord y,
                FL_Coord w, FL_Coord h, const char * label)
-            """)
+""")
     check_if_initialized()
     check_admitted_listvalues(scrolltype, xfc.SCROLLTYPE_list)
     iscrolltype = convert_to_int(scrolltype)
@@ -19326,7 +19159,7 @@ def fl_get_scrollbar_value(pFlObject):
             load_so_libforms(), "fl_get_scrollbar_value",
             cty.c_double, [cty.POINTER(xfc.FL_OBJECT)],
             """double fl_get_scrollbar_value(FL_OBJECT * ob)
-            """)
+""")
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     keep_elem_refs(pFlObject)
@@ -19350,7 +19183,7 @@ def fl_set_scrollbar_value(pFlObject, val):
             load_so_libforms(), "fl_set_scrollbar_value",
             None, [cty.POINTER(xfc.FL_OBJECT), cty.c_double],
             """void fl_set_scrollbar_value(FL_OBJECT * ob, double val)
-            """)
+""")
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     fval = convert_to_double(val)
@@ -19369,7 +19202,7 @@ def fl_set_scrollbar_size(pFlObject, val):
             load_so_libforms(), "fl_set_scrollbar_size",
             None, [cty.POINTER(xfc.FL_OBJECT), cty.c_double],
             """void fl_set_scrollbar_size(FL_OBJECT * ob, double val)
-            """)
+""")
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     fval = convert_to_double(val)
@@ -19397,7 +19230,7 @@ def fl_set_scrollbar_increment(pFlObject, leftbtnval, midlbtnval):
             None, [cty.POINTER(xfc.FL_OBJECT), cty.c_double, cty.c_double],
             """void fl_set_scrollbar_increment(FL_OBJECT * ob, double l,
                double r)
-            """)
+""")
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     fleftbtnval = convert_to_double(leftbtnval)
@@ -19429,7 +19262,7 @@ def fl_get_scrollbar_increment(pFlObject):
             cty.POINTER(cty.c_double)],
             """void fl_get_scrollbar_increment(FL_OBJECT * ob, double * a,
                double * b)
-            """)
+""")
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     leftbtnval, pleftbtnval = make_double_and_pointer()
@@ -19456,7 +19289,7 @@ def fl_set_scrollbar_bounds(pFlObject, minbound, maxbound):
             load_so_libforms(), "fl_set_scrollbar_bounds",
             None, [cty.POINTER(xfc.FL_OBJECT), cty.c_double, cty.c_double],
             """void fl_set_scrollbar_bounds(FL_OBJECT * ob, double b1, double b2)
-            """)
+""")
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     fminbound = convert_to_double(minbound)
@@ -19483,7 +19316,7 @@ def fl_get_scrollbar_bounds(pFlObject):
             cty.POINTER(cty.c_double)],
             """void fl_get_scrollbar_bounds(FL_OBJECT * ob, double * b1,
                double * b2)
-            """)
+""")
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     minbound, pminbound = make_double_and_pointer()
@@ -19507,7 +19340,7 @@ def fl_set_scrollbar_step(pFlObject, step):
             load_so_libforms(), "fl_set_scrollbar_step",
             None, [cty.POINTER(xfc.FL_OBJECT), cty.c_double],
             """void fl_set_scrollbar_step(FL_OBJECT * ob, double step)
-            """)
+""")
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     fstep = convert_to_double(step)
@@ -19547,7 +19380,7 @@ def fl_add_select(selecttype, x, y, w, h, label):
             xfc.FL_Coord, xfc.FL_Coord, xfc.FL_Coord, xfc.STRING],
             """FL_OBJECT * fl_add_select(int p1, FL_Coord p2, FL_Coord p3,
                FL_Coord p4, FL_Coord p5, const char * p6)
-            """)
+""")
     check_if_initialized()
     check_admitted_listvalues(selecttype, xfc.SELECTTYPE_list)
     iselecttype = convert_to_int(selecttype)
@@ -19575,7 +19408,7 @@ def fl_clear_select(pFlObject):
             load_so_libforms(), "fl_clear_select",
             cty.c_int, [cty.POINTER(xfc.FL_OBJECT)],
             """int fl_clear_select(FL_OBJECT * p1)
-            """)
+""")
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     keep_elem_refs(pFlObject)
@@ -19595,7 +19428,7 @@ def fl_add_select_items(pFlObject, itemstr):
             xfc.STRING],
             """FL_POPUP_ENTRY * fl_add_select_items(FL_OBJECT * p1,
                const char * p2)
-            """)
+""")
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     sitemstr = convert_to_string(itemstr)
@@ -19620,7 +19453,7 @@ def fl_insert_select_items(pFlObject, pPopupEntry, itemstr):
             cty.POINTER(xfc.FL_POPUP_ENTRY), xfc.STRING],
             """FL_POPUP_ENTRY * fl_insert_select_items(FL_OBJECT * p1,
                FL_POPUP_ENTRY * p2, const char * p3)
-            """)
+""")
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     sitemstr = convert_to_string(itemstr)
@@ -19642,7 +19475,7 @@ def fl_replace_select_item(pFlObject, pPopupEntry, itemstr):
             cty.POINTER(xfc.FL_POPUP_ENTRY), xfc.STRING],
             """FL_POPUP_ENTRY * fl_replace_select_item(FL_OBJECT * p1,
                FL_POPUP_ENTRY * p2, const char * p3)
-            """)
+""")
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     sitemstr = convert_to_string(itemstr)
@@ -19662,7 +19495,7 @@ def fl_delete_select_item(pFlObject, pPopupEntry):
             load_so_libforms(), "fl_delete_select_item",
             cty.c_int, [cty.POINTER(xfc.FL_OBJECT), cty.POINTER(xfc.FL_POPUP_ENTRY)],
             """int fl_delete_select_item(FL_OBJECT * p1, FL_POPUP_ENTRY * p2)
-            """)
+""")
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     keep_elem_refs(pFlObject, pPopupEntry)
@@ -19687,7 +19520,7 @@ def fl_set_select_items(pFlObject, pPopupItem):
             cty.c_long, [cty.POINTER(xfc.FL_OBJECT), cty.POINTER(xfc.FL_POPUP_ITEM)],
             """long int fl_set_select_items(FL_OBJECT * p1,
                FL_POPUP_ITEM * p2)
-            """)
+""")
 
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
@@ -19707,7 +19540,7 @@ def fl_get_select_popup(pFlObject):
             load_so_libforms(), "fl_get_select_popup",
             cty.POINTER(xfc.FL_POPUP), [cty.POINTER(xfc.FL_OBJECT)],
             """FL_POPUP * fl_get_select_popup(FL_OBJECT * p1)
-            """)
+""")
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     keep_elem_refs(pFlObject)
@@ -19726,7 +19559,7 @@ def fl_set_select_popup(pFlObject, pPopup):
             load_so_libforms(), "fl_set_select_popup",
             cty.c_int, [cty.POINTER(xfc.FL_OBJECT), cty.POINTER(xfc.FL_POPUP)],
             """int fl_set_select_popup(FL_OBJECT * p1, FL_POPUP * p2)
-            """)
+""")
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     keep_elem_refs(pFlObject, pPopup)
@@ -19745,7 +19578,7 @@ def fl_get_select_item(pFlObject):
             load_so_libforms(), "fl_get_select_item",
             cty.POINTER(xfc.FL_POPUP_RETURN), [cty.POINTER(xfc.FL_OBJECT)],
             """FL_POPUP_RETURN * fl_get_select_item(FL_OBJECT * p1)
-            """)
+""")
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     keep_elem_refs(pFlObject)
@@ -19771,7 +19604,7 @@ def fl_set_select_item(pFlObject, pPopupEntry):
             cty.POINTER(xfc.FL_POPUP_ENTRY)],
             """FL_POPUP_RETURN * fl_set_select_item(FL_OBJECT * p1,
                FL_POPUP_ENTRY * p2)
-            """)
+""")
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     keep_elem_refs(pFlObject, pPopupEntry)
@@ -19792,7 +19625,7 @@ def fl_get_select_item_by_value(pFlObject, value):
             cty.c_long],
             """FL_POPUP_ENTRY * fl_get_select_item_by_value(FL_OBJECT * p1,
                long int p2)
-            """)
+""")
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     lvalue = convert_to_long(value)
@@ -19814,7 +19647,7 @@ def fl_get_select_item_by_label(pFlObject, label):
             xfc.STRING],
             """FL_POPUP_ENTRY * fl_get_select_item_by_label(FL_OBJECT * p1,
                const char * p2)
-            """)
+""")
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     slabel = convert_to_string(label)
@@ -19836,7 +19669,7 @@ def fl_get_select_item_by_text(pFlObject, txtstr):
             xfc.STRING],
             """FL_POPUP_ENTRY * fl_get_select_item_by_text(FL_OBJECT * p1,
                const char * p2)
-            """)
+""")
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     stxtstr = convert_to_string(txtstr)
@@ -19856,7 +19689,7 @@ def fl_get_select_text_color(pFlObject):
             load_so_libforms(), "fl_get_select_text_color",
             xfc.FL_COLOR, [cty.POINTER(xfc.FL_OBJECT)],
             """FL_COLOR fl_get_select_text_color(FL_OBJECT * p1)
-            """)
+""")
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     keep_elem_refs(pFlObject)
@@ -19875,7 +19708,7 @@ def fl_set_select_text_color(pFlObject, colr):
             load_so_libforms(), "fl_set_select_text_color",
             xfc.FL_COLOR, [cty.POINTER(xfc.FL_OBJECT), xfc.FL_COLOR],
             """FL_COLOR fl_set_select_text_color(FL_OBJECT * p1, FL_COLOR p2)
-            """)
+""")
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     check_admitted_listvalues(colr, xfc.COLOR_list)
@@ -19900,7 +19733,7 @@ def fl_get_select_text_font(pFlObject):
             cty.c_int, [cty.POINTER(xfc.FL_OBJECT), cty.POINTER(cty.c_int),
             cty.POINTER(cty.c_int)],
             """int fl_get_select_text_font(FL_OBJECT * p1, int * p2, int * p3)
-            """)
+""")
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     num1, pnum1 = make_int_and_pointer()
@@ -19921,7 +19754,7 @@ def fl_set_select_text_font(pFlObject, p2, p3):
             load_so_libforms(), "fl_set_select_text_font",
             cty.c_int, [cty.POINTER(xfc.FL_OBJECT), cty.c_int, cty.c_int],
             """int fl_set_select_text_font(FL_OBJECT * p1, int p2, int p3)
-            """)
+""")
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     ip2 = convert_to_int(p2)
@@ -19942,7 +19775,7 @@ def fl_get_select_text_align(pFlObject):
             load_so_libforms(), "fl_get_select_text_align",
             cty.c_int, [cty.POINTER(xfc.FL_OBJECT)],
             """int fl_get_select_text_align(FL_OBJECT * p1)
-            """)
+""")
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     keep_elem_refs(pFlObject)
@@ -19961,7 +19794,7 @@ def fl_set_select_text_align(pFlObject, p2):
             load_so_libforms(), "fl_set_select_text_align",
             cty.c_int, [cty.POINTER(xfc.FL_OBJECT), cty.c_int],
             """int fl_set_select_text_align(FL_OBJECT * p1, int p2)
-            """)
+""")
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     ip2 = convert_to_int(p2)
@@ -19981,7 +19814,7 @@ def fl_set_select_policy(pFlObject, num):
             load_so_libforms(), "fl_set_select_policy",
             cty.c_int, [cty.POINTER(xfc.FL_OBJECT), cty.c_int],
             """int fl_set_select_policy(FL_OBJECT * p1, int p2)
-            """)
+""")
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     inum = convert_to_int(num)
@@ -20033,7 +19866,7 @@ def fl_add_slider(slidertype, x, y, w, h, label):
             xfc.FL_Coord, xfc.FL_Coord, xfc.FL_Coord, xfc.STRING],
             """FL_OBJECT * fl_add_slider(int type, FL_Coord x, FL_Coord y,
                FL_Coord w, FL_Coord h, const char * label)
-            """)
+""")
     check_if_initialized()
     check_admitted_listvalues(slidertype, xfc.SLIDERTYPE_list)
     islidertype = convert_to_int(slidertype)
@@ -20084,7 +19917,7 @@ def fl_add_valslider(slidertype, x, y, w, h, label):
             xfc.FL_Coord, xfc.FL_Coord, xfc.FL_Coord, xfc.STRING],
             """FL_OBJECT * fl_add_valslider(int type, FL_Coord x, FL_Coord y,
                FL_Coord w, FL_Coord h, const char * label)
-            """)
+""")
     check_if_initialized()
     check_admitted_listvalues(slidertype, xfc.SLIDERTYPE_list)
     islidertype = convert_to_int(slidertype)
@@ -20115,7 +19948,7 @@ def fl_set_slider_value(pFlObject, val):
             load_so_libforms(), "fl_set_slider_value",
             None, [cty.POINTER(xfc.FL_OBJECT), cty.c_double],
             """void fl_set_slider_value(FL_OBJECT * ob, double val)
-            """)
+""")
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     fval = convert_to_double(val)
@@ -20138,7 +19971,7 @@ def fl_get_slider_value(pFlObject):
             load_so_libforms(), "fl_get_slider_value",
             cty.c_double, [cty.POINTER(xfc.FL_OBJECT)],
             """double fl_get_slider_value(FL_OBJECT * ob)
-            """)
+""")
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     keep_elem_refs(pFlObject)
@@ -20164,7 +19997,7 @@ def fl_set_slider_bounds(pFlObject, minbound, maxbound):
             None, [cty.POINTER(xfc.FL_OBJECT), cty.c_double, cty.c_double],
             """void fl_set_slider_bounds(FL_OBJECT * ob, double min,
                double max)
-            """)
+""")
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     fminbound = convert_to_double(minbound)
@@ -20193,7 +20026,7 @@ def fl_get_slider_bounds(pFlObject):
             cty.POINTER(cty.c_double)],
             """void fl_get_slider_bounds(FL_OBJECT * ob, double * min,
                double * max)
-            """)
+""")
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     minbound, pminbound = make_double_and_pointer()
@@ -20217,7 +20050,7 @@ def fl_set_slider_step(pFlObject, value):
             load_so_libforms(), "fl_set_slider_step",
             None, [cty.POINTER(xfc.FL_OBJECT), cty.c_double],
             """void fl_set_slider_step(FL_OBJECT * ob, double value)
-            """)
+""")
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     fvalue = convert_to_double(value)
@@ -20237,7 +20070,7 @@ def fl_set_slider_increment(pFlObject, leftbtnval, midlbtnval):
             None, [cty.POINTER(xfc.FL_OBJECT), cty.c_double, cty.c_double],
             """void fl_set_slider_increment(FL_OBJECT * ob, double l,
                double r)
-            """)
+""")
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     fleftbtnval = convert_to_double(leftbtnval)
@@ -20261,7 +20094,7 @@ def fl_get_slider_increment(pFlObject):
             cty.POINTER(cty.c_double)], \
             """void fl_get_slider_increment(FL_OBJECT * ob, double * l,
                double * r)
-            """)
+""")
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     leftbtnval, pleftbtnval = make_double_and_pointer()
@@ -20287,7 +20120,7 @@ def fl_set_slider_size(pFlObject, size):
             load_so_libforms(), "fl_set_slider_size",
             None, [cty.POINTER(xfc.FL_OBJECT), cty.c_double],
             """void fl_set_slider_size(FL_OBJECT * ob, double size)
-            """)
+""")
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     fsize = convert_to_double(size)
@@ -20311,7 +20144,7 @@ def fl_set_slider_precision(pFlObject, precnum):
             load_so_libforms(), "fl_set_slider_precision",
             None, [cty.POINTER(xfc.FL_OBJECT), cty.c_int],
             """void fl_set_slider_precision(FL_OBJECT * ob, int prec)
-            """)
+""")
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     iprecnum = convert_to_int(precnum)
@@ -20337,7 +20170,7 @@ def fl_set_slider_filter(pFlObject, py_ValFilter):
             load_so_libforms(), "fl_set_slider_filter",
             None, [cty.POINTER(xfc.FL_OBJECT), FL_VAL_FILTER],
             """void fl_set_slider_filter(FL_OBJECT * ob, FL_VAL_FILTER filter)
-            """)
+""")
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     c_ValFilter = FL_VAL_FILTER(py_ValFilter)
@@ -20373,7 +20206,7 @@ def fl_add_spinner(spinnertype, x, y, w, h, label):
             xfc.FL_Coord, xfc.FL_Coord, xfc.FL_Coord, xfc.STRING],
             """FL_OBJECT * fl_add_spinner(int type, FL_Coord x, FL_Coord y,
             FL_Coord w, FL_Coord h, const char * label)
-            """)
+""")
     check_if_initialized()
     check_admitted_listvalues(spinnertype, xfc.SPINNERTYPE_list)
     ispinnertype = convert_to_int(spinnertype)
@@ -20399,7 +20232,7 @@ def fl_get_spinner_value(pFlObject):
             load_so_libforms(), "fl_get_spinner_value",
             cty.c_double, [cty.POINTER(xfc.FL_OBJECT)],
             """double fl_get_spinner_value(FL_OBJECT * obj)
-            """)
+""")
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     keep_elem_refs(pFlObject)
@@ -20418,7 +20251,7 @@ def fl_set_spinner_value(pFlObject, val):
             load_so_libforms(), "fl_set_spinner_value",
             cty.c_double, [cty.POINTER(xfc.FL_OBJECT), cty.c_double],
             """double fl_set_spinner_value(FL_OBJECT * obj, double val)
-            """)
+""")
     check_if_FL_OBJECT_ptr(pFlObject)
     fval = convert_to_double(val)
     keep_elem_refs(pFlObject, val, fval)
@@ -20437,7 +20270,7 @@ def fl_set_spinner_bounds(pFlObject, minbound, maxbound):
             None, [cty.POINTER(xfc.FL_OBJECT), cty.c_double, cty.c_double],
             """void fl_set_spinner_bounds(FL_OBJECT * obj, double min,
                double max)
-            """)
+""")
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     fminbound = convert_to_double(minbound)
@@ -20462,7 +20295,7 @@ def fl_get_spinner_bounds(pFlObject):
             cty.POINTER(cty.c_double)], \
             """void fl_get_spinner_bounds(FL_OBJECT * obj, double * min,
                double * max)
-            """)
+""")
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     minbound, pminbound = make_double_and_pointer()
@@ -20483,7 +20316,7 @@ def fl_set_spinner_step(pFlObject, step):
             load_so_libforms(), "fl_set_spinner_step",
             None, [cty.POINTER(xfc.FL_OBJECT), cty.c_double],
             """void fl_set_spinner_step(FL_OBJECT * obj, double step)
-            """)
+""")
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     fstep = convert_to_double(step)
@@ -20502,7 +20335,7 @@ def fl_get_spinner_step(pFlObject):
             load_so_libforms(), "fl_get_spinner_step",
             cty.c_double, [cty.POINTER(xfc.FL_OBJECT)],
             """double fl_get_spinner_step(FL_OBJECT * obj)
-            """)
+""")
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     keep_elem_refs(pFlObject)
@@ -20521,7 +20354,7 @@ def fl_set_spinner_precision(pFlObject, precnum):
             load_so_libforms(), "fl_set_spinner_precision",
             None, [cty.POINTER(xfc.FL_OBJECT), cty.c_int],
             """void fl_set_spinner_precision(FL_OBJECT * obj, int prec)
-            """)
+""")
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     iprecnum = convert_to_int(precnum)
@@ -20540,7 +20373,7 @@ def fl_get_spinner_precision(pFlObject):
             load_so_libforms(), "fl_get_spinner_precision",
             cty.c_int, [cty.POINTER(xfc.FL_OBJECT)],
             """int fl_get_spinner_precision(FL_OBJECT * obj)
-            """)
+""")
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     keep_elem_refs(pFlObject)
@@ -20559,7 +20392,7 @@ def fl_get_spinner_input(pFlObject):
             load_so_libforms(), "fl_get_spinner_input",
             cty.POINTER(xfc.FL_OBJECT), [cty.POINTER(xfc.FL_OBJECT)],
             """FL_OBJECT * fl_get_spinner_input(FL_OBJECT * obj)
-            """)
+""")
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     keep_elem_refs(pFlObject)
@@ -20578,7 +20411,7 @@ def fl_get_spinner_up_button(pFlObject):
             load_so_libforms(), "fl_get_spinner_up_button",
             cty.POINTER(xfc.FL_OBJECT), [cty.POINTER(xfc.FL_OBJECT)],
             """FL_OBJECT * fl_get_spinner_up_button(FL_OBJECT * obj)
-            """)
+""")
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     keep_elem_refs(pFlObject)
@@ -20597,7 +20430,7 @@ def fl_get_spinner_down_button(pFlObject):
             load_so_libforms(), "fl_get_spinner_down_button",
             cty.POINTER(xfc.FL_OBJECT), [cty.POINTER(xfc.FL_OBJECT)],
             """FL_OBJECT * fl_get_spinner_down_button(FL_OBJECT * obj)
-            """)
+""")
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     keep_elem_refs(pFlObject)
@@ -20635,7 +20468,7 @@ def fl_add_tabfolder(foldertype, x, y, w, h, label):
             xfc.FL_Coord, xfc.FL_Coord, xfc.FL_Coord, xfc.STRING],
             """FL_OBJECT * fl_add_tabfolder(int type, FL_Coord x, FL_Coord y,
                FL_Coord w, FL_Coord h, const char * label)
-            """)
+""")
     check_if_initialized()
     check_admitted_listvalues(foldertype, xfc.TABFOLDERTYPE_list)
     ifoldertype = convert_to_int(foldertype)
@@ -20663,7 +20496,7 @@ def fl_addto_tabfolder(pFlObject, title, pFlForm):
             xfc.STRING, cty.POINTER(xfc.FL_FORM)],
             """FL_OBJECT * fl_addto_tabfolder(FL_OBJECT * ob,
                const char * title, FL_FORM * form)
-            """)
+""")
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     stitle = convert_to_string(title)
@@ -20684,7 +20517,7 @@ def fl_get_tabfolder_folder_bynumber(pFlObject, num):
             cty.POINTER(xfc.FL_FORM), [cty.POINTER(xfc.FL_OBJECT), cty.c_int],
             """FL_FORM * fl_get_tabfolder_folder_bynumber(FL_OBJECT * ob,
                int num)
-            """)
+""")
     check_if_FL_OBJECT_ptr(pFlObject)
     inum = convert_to_int(num)
     keep_elem_refs(pFlObject, num, inum)
@@ -20704,7 +20537,7 @@ def fl_get_tabfolder_folder_byname(pFlObject, name):
             cty.POINTER(xfc.FL_FORM), [cty.POINTER(xfc.FL_OBJECT), xfc.STRING],
             """FL_FORM * fl_get_tabfolder_folder_byname(FL_OBJECT * ob,
                const char * name)
-            """)
+""")
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     sname = convert_to_string(name)
@@ -20724,7 +20557,7 @@ def fl_delete_folder(pFlObject, pFlForm):
             load_so_libforms(), "fl_delete_folder",
             None, [cty.POINTER(xfc.FL_OBJECT), cty.POINTER(xfc.FL_FORM)],
             """void fl_delete_folder(FL_OBJECT * ob, FL_FORM * form)
-            """)
+""")
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     keep_elem_refs(pFlObject, pFlForm)
@@ -20742,7 +20575,7 @@ def fl_delete_folder_bynumber(pFlObject, num):
             load_so_libforms(), "fl_delete_folder_bynumber",
             None, [cty.POINTER(xfc.FL_OBJECT), cty.c_int],
             """void fl_delete_folder_bynumber(FL_OBJECT * ob, int num)
-            """)
+""")
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     inum = convert_to_int(num)
@@ -20761,7 +20594,7 @@ def fl_delete_folder_byname(pFlObject, name):
             load_so_libforms(), "fl_delete_folder_byname",
             None, [cty.POINTER(xfc.FL_OBJECT), xfc.STRING],
             """void fl_delete_folder_byname(FL_OBJECT * ob, const char * name)
-            """)
+""")
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     sname = convert_to_string(name)
@@ -20779,7 +20612,7 @@ def fl_set_folder(pFlObject, pFlForm):
             load_so_libforms(), "fl_set_folder",
             None, [cty.POINTER(xfc.FL_OBJECT), cty.POINTER(xfc.FL_FORM)],
             """void fl_set_folder(FL_OBJECT * ob, FL_FORM * form)
-            """)
+""")
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     check_if_FL_FORM_ptr(pFlForm)
@@ -20797,7 +20630,7 @@ def fl_set_folder_byname(pFlObject, name):
             load_so_libforms(), "fl_set_folder_byname",
             None, [cty.POINTER(xfc.FL_OBJECT), xfc.STRING],
             """void fl_set_folder_byname(FL_OBJECT * ob, const char * name)
-            """)
+""")
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     sname = convert_to_string(name)
@@ -20816,7 +20649,7 @@ def fl_set_folder_bynumber(pFlObject, num):
             load_so_libforms(), "fl_set_folder_bynumber",
             None, [cty.POINTER(xfc.FL_OBJECT), cty.c_int],
             """void fl_set_folder_bynumber(FL_OBJECT * ob, int num)
-            """)
+""")
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     inum = convert_to_int(num)
@@ -20837,7 +20670,7 @@ def fl_get_folder(pFlObject):
             load_so_libforms(), "fl_get_folder",
             cty.POINTER(xfc.FL_FORM), [cty.POINTER(xfc.FL_OBJECT)],
             """FL_FORM * fl_get_folder(FL_OBJECT * ob)
-            """)
+""")
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     keep_elem_refs(pFlObject)
@@ -20858,7 +20691,7 @@ def fl_get_folder_number(pFlObject):
             load_so_libforms(), "fl_get_folder_number",
             cty.c_int, [cty.POINTER(xfc.FL_OBJECT)],
             """int fl_get_folder_number(FL_OBJECT * ob)
-            """)
+""")
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     keep_elem_refs(pFlObject)
@@ -20879,7 +20712,7 @@ def fl_get_folder_name(pFlObject):
             load_so_libforms(), "fl_get_folder_name",
             xfc.STRING, [cty.POINTER(xfc.FL_OBJECT)],
             """const char * fl_get_folder_name(FL_OBJECT * ob)
-            """)
+""")
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     keep_elem_refs(pFlObject)
@@ -20900,7 +20733,7 @@ def fl_get_tabfolder_numfolders(pFlObject):
             load_so_libforms(), "fl_get_tabfolder_numfolders",
             cty.c_int, [cty.POINTER(xfc.FL_OBJECT)],
             """int fl_get_tabfolder_numfolders(FL_OBJECT * ob)
-            """)
+""")
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     keep_elem_refs(pFlObject)
@@ -20921,7 +20754,7 @@ def fl_get_active_folder(pFlObject):
             load_so_libforms(), "fl_get_active_folder",
             cty.POINTER(xfc.FL_FORM), [cty.POINTER(xfc.FL_OBJECT)],
             """FL_FORM * fl_get_active_folder(FL_OBJECT * ob)
-            """)
+""")
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     keep_elem_refs(pFlObject)
@@ -20942,7 +20775,7 @@ def fl_get_active_folder_number(pFlObject):
             load_so_libforms(), "fl_get_active_folder_number",
             cty.c_int, [cty.POINTER(xfc.FL_OBJECT)],
             """int fl_get_active_folder_number(FL_OBJECT * ob)
-            """)
+""")
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     keep_elem_refs(pFlObject)
@@ -20963,7 +20796,7 @@ def fl_get_active_folder_name(pFlObject):
             load_so_libforms(), "fl_get_active_folder_name",
             xfc.STRING, [cty.POINTER(xfc.FL_OBJECT)],
             """const char * fl_get_active_folder_name(FL_OBJECT * ob)
-            """)
+""")
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     keep_elem_refs(pFlObject)
@@ -20990,7 +20823,7 @@ def fl_get_folder_area(pFlObject):
             cty.POINTER(xfc.FL_Coord)],
             """void fl_get_folder_area(FL_OBJECT * ob, FL_Coord * x,
                FL_Coord * y, FL_Coord * w, FL_Coord * h)
-            """)
+""")
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     x, px = make_int_and_pointer()
@@ -21016,7 +20849,7 @@ def fl_replace_folder_bynumber(pFlObject, num, pFlForm):
             None, [cty.POINTER(xfc.FL_OBJECT), cty.c_int, cty.POINTER(xfc.FL_FORM)],
             """void fl_replace_folder_bynumber(FL_OBJECT * ob, int num,
                FL_FORM * form)
-            """)
+""")
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     inum = convert_to_int(num)
@@ -21037,7 +20870,7 @@ def fl_set_tabfolder_autofit(pFlObject, num):
             load_so_libforms(), "fl_set_tabfolder_autofit",
             cty.c_int, [cty.POINTER(xfc.FL_OBJECT), cty.c_int],
             """int fl_set_tabfolder_autofit(FL_OBJECT * ob, int y)
-            """)
+""")
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     inum = convert_to_int(num)
@@ -21061,7 +20894,7 @@ def fl_set_default_tabfolder_corner(npixels):
             load_so_libforms(), "fl_set_default_tabfolder_corner",
             cty.c_int, [cty.c_int],
             """int fl_set_default_tabfolder_corner(int n):
-            """)
+""")
     check_if_initialized()
     ipixels = convert_to_int(npixels)
     keep_elem_refs(npixels, ipixels)
@@ -21082,7 +20915,7 @@ def fl_set_tabfolder_offset(pFlObject, offset):
             load_so_libforms(), "fl_set_tabfolder_offset",
             cty.c_int, [cty.POINTER(xfc.FL_OBJECT), cty.c_int],
             """int fl_set_tabfolder_offset(FL_OBJECT * ob, int offset)
-            """)
+""")
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     ioffset = convert_to_int(offset)
@@ -21122,7 +20955,7 @@ def fl_add_text(texttype, x, y, w, h, label):
             xfc.FL_Coord, xfc.FL_Coord, xfc.FL_Coord, xfc.STRING],
             """FL_OBJECT * fl_add_text(int type, FL_Coord x, FL_Coord y,
                FL_Coord w, FL_Coord h, const char * label)
-            """)
+""")
     check_if_initialized()
     check_admitted_listvalues(texttype, xfc.TEXTTYPE_list)
     itexttype = convert_to_int(texttype)
@@ -21155,7 +20988,7 @@ def fl_get_thumbwheel_value(pFlObject):
             load_so_libforms(), "fl_get_thumbwheel_value",
             cty.c_double, [cty.POINTER(xfc.FL_OBJECT)],
             """double fl_get_thumbwheel_value(FL_OBJECT * ob)
-            """)
+""")
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     keep_elem_refs(pFlObject)
@@ -21174,7 +21007,7 @@ def fl_set_thumbwheel_value(pFlObject, value):
             load_so_libforms(), "fl_set_thumbwheel_value",
             cty.c_double, [cty.POINTER(xfc.FL_OBJECT), cty.c_double],
             """double fl_set_thumbwheel_value(FL_OBJECT * ob, double value)
-            """)
+""")
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     fvalue = convert_to_double(value)
@@ -21196,7 +21029,7 @@ def fl_get_thumbwheel_step(pFlObject):
             load_so_libforms(), "fl_get_thumbwheel_step",
             cty.c_double, [cty.POINTER(xfc.FL_OBJECT)],
             """double fl_get_thumbwheel_step(FL_OBJECT * ob)
-            """)
+""")
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     keep_elem_refs(pFlObject)
@@ -21217,7 +21050,7 @@ def fl_set_thumbwheel_step(pFlObject, step):
             load_so_libforms(), "fl_set_thumbwheel_step",
             cty.c_double, [cty.POINTER(xfc.FL_OBJECT), cty.c_double],
             """double fl_set_thumbwheel_step(FL_OBJECT * ob, double step)
-            """)
+""")
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     fstep = convert_to_double(step)
@@ -21245,7 +21078,7 @@ def fl_set_thumbwheel_return(pFlObject, when):
             cty.c_int, [cty.POINTER(xfc.FL_OBJECT), cty.c_uint],
             """int fl_set_thumbwheel_return(FL_OBJECT * ob, unsigned
                int how)
-            """)
+""")
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     check_admitted_listvalues(when, xfc.RETURN_list)
@@ -21268,7 +21101,7 @@ def fl_set_thumbwheel_crossover(pFlObject, flag):
             load_so_libforms(), "fl_set_thumbwheel_crossover",
             cty.c_int, [cty.POINTER(xfc.FL_OBJECT), cty.c_int],
             """int fl_set_thumbwheel_crossover(FL_OBJECT * ob, int flag)
-            """)
+""")
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     iflag = convert_to_int(flag)
@@ -21291,7 +21124,7 @@ def fl_set_thumbwheel_bounds(pFlObject, minbound, maxbound):
             None, [cty.POINTER(xfc.FL_OBJECT), cty.c_double, cty.c_double],
             """void fl_set_thumbwheel_bounds(FL_OBJECT * ob, double min,
                double max)
-            """)
+""")
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     fminbound = convert_to_double(minbound)
@@ -21317,7 +21150,7 @@ def fl_get_thumbwheel_bounds(pFlObject):
             cty.POINTER(cty.c_double)],
             """void fl_get_thumbwheel_bounds(FL_OBJECT * ob, double * min,
                double * max)
-            """)
+""")
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     minbound, pminbound = make_double_and_pointer()
@@ -21352,7 +21185,7 @@ def fl_add_thumbwheel(wheeltype, x, y, w, h, label):
             xfc.FL_Coord, xfc.STRING],
             """FL_OBJECT * fl_add_thumbwheel(int type, FL_Coord x, FL_Coord y,
                FL_Coord w, FL_Coord h, const char * label)
-            """)
+""")
     check_if_initialized()
     check_admitted_listvalues(wheeltype, xfc.THUMBWHEELTYPE_list)
     iwheeltype = convert_to_int(wheeltype)
@@ -21400,7 +21233,7 @@ def fl_add_timer(timertype, x, y, w, h, label):
             xfc.FL_Coord, xfc.FL_Coord, xfc.STRING],
             """FL_OBJECT * fl_add_timer(int type, FL_Coord x, FL_Coord y,
             FL_Coord w, FL_Coord h, const char * label)
-            """)
+""")
     check_if_initialized()
     check_admitted_listvalues(timertype, xfc.TIMERTYPE_list)
     itimertype = convert_to_int(timertype)
@@ -21428,7 +21261,7 @@ def fl_set_timer(pFlObject, total):
             load_so_libforms(), "fl_set_timer",
             None, [cty.POINTER(xfc.FL_OBJECT), cty.c_double],
             """void fl_set_timer(FL_OBJECT * ob, double total)
-            """)
+""")
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     ftotal = convert_to_double(total)
@@ -21449,7 +21282,7 @@ def fl_get_timer(pFlObject):
             load_so_libforms(), "fl_get_timer",
             cty.c_double, [cty.POINTER(xfc.FL_OBJECT)],
             """double fl_get_timer(FL_OBJECT * ob)
-            """)
+""")
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     keep_elem_refs(pFlObject)
@@ -21470,7 +21303,7 @@ def fl_set_timer_countup(pFlObject, yes):
             load_so_libforms(), "fl_set_timer_countup",
             None, [cty.POINTER(xfc.FL_OBJECT), cty.c_int],
             """void fl_set_timer_countup(FL_OBJECT * ob, int yes)
-            """)
+""")
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     iyes = convert_to_int(yes)
@@ -21497,7 +21330,7 @@ def fl_set_timer_filter(pFlObject, py_TimerFilter):
             FL_TIMER_FILTER, [cty.POINTER(xfc.FL_OBJECT), FL_TIMER_FILTER],
             """FL_TIMER_FILTER fl_set_timer_filter(FL_OBJECT * ob,
                FL_TIMER_FILTER filter)
-            """)
+""")
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     c_TimerFilter = FL_TIMER_FILTER(py_TimerFilter)
@@ -21520,7 +21353,7 @@ def fl_suspend_timer(pFlObject):
             load_so_libforms(), "fl_suspend_timer",
             None, [cty.POINTER(xfc.FL_OBJECT)],
             """void fl_suspend_timer(FL_OBJECT * ob)
-            """)
+""")
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     keep_elem_refs(pFlObject)
@@ -21542,7 +21375,7 @@ def fl_resume_timer(pFlObject):
             load_so_libforms(), "fl_resume_timer",
             None, [cty.POINTER(xfc.FL_OBJECT)],
             """void fl_resume_timer(FL_OBJECT * ob)
-            """)
+""")
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     keep_elem_refs(pFlObject)
@@ -21631,7 +21464,7 @@ def fl_add_xyplot(plottype, x, y, w, h, label):
             xfc.FL_Coord, xfc.FL_Coord, xfc.FL_Coord, xfc.STRING],
             """FL_OBJECT * fl_add_xyplot(int t, FL_Coord x, FL_Coord y,
                FL_Coord w, FL_Coord h, const char * label)
-            """)
+""")
     check_if_initialized()
     check_admitted_listvalues(plottype, xfc.XYPLOTTYPE_list)
     iplottype = convert_to_int(plottype)
@@ -21663,7 +21496,7 @@ def fl_set_xyplot_data(pFlObject, xlist, ylist, n, title, xlabel, ylabel):
             """void fl_set_xyplot_data(FL_OBJECT * ob, float * x, float * y,
                int n, const char * title, const char * xlabel,
                const char * ylabel)
-            """)
+""")
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     #px = cty.cast(x, cty.POINTER(cty.c_float))
@@ -21705,7 +21538,7 @@ def fl_set_xyplot_data_double(pFlObject, x, y, n, title, xlabel, ylabel):
             """void fl_set_xyplot_data_double(FL_OBJECT * ob, double * x,
                double * y, int n, const char * title, const char * xlabel,
                const char * ylabel)
-            """)
+""")
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     px = cty.cast(x, cty.POINTER(cty.c_double))
@@ -21736,7 +21569,7 @@ def fl_set_xyplot_file(pFlObject, fname, title, xl, yl):
             xfc.STRING, xfc.STRING],
             """int fl_set_xyplot_file(FL_OBJECT * ob, const char * f,
                const char * title, const char * xl, const char * yl)
-            """)
+""")
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     sfname = convert_to_string(fname)
@@ -21763,7 +21596,7 @@ def fl_insert_xyplot_data(pFlObject, idnum, n, valx, valy):
             cty.c_double, cty.c_double],
             """void fl_insert_xyplot_data(FL_OBJECT * ob, int id, int n,
                double x, double y)
-            """)
+""")
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     iidnum = convert_to_int(idnum)
@@ -21789,7 +21622,7 @@ def fl_add_xyplot_text(pFlObject, valx, valy, text, al, colr):
             xfc.STRING, cty.c_int, xfc.FL_COLOR],
             """void fl_add_xyplot_text(FL_OBJECT * ob, double x, double y,
                const char * text, int al, FL_COLOR col)
-            """)
+""")
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     check_admitted_listvalues(colr, xfc.COLOR_list)
@@ -21816,7 +21649,7 @@ def fl_delete_xyplot_text(pFlObject, text):
             load_so_libforms(), "fl_delete_xyplot_text",
             None, [cty.POINTER(xfc.FL_OBJECT), xfc.STRING],
             """void fl_delete_xyplot_text(FL_OBJECT * ob, const char * text)
-            """)
+""")
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     stext = convert_to_string(text)
@@ -21837,7 +21670,7 @@ def fl_set_xyplot_maxoverlays(pFlObject, maxover):
             load_so_libforms(), "fl_set_xyplot_maxoverlays",
             cty.c_int, [cty.POINTER(xfc.FL_OBJECT), cty.c_int],
             """int fl_set_xyplot_maxoverlays(FL_OBJECT * ob, int maxover)
-            """)
+""")
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     imaxover = convert_to_int(maxover)
@@ -21862,7 +21695,7 @@ def fl_add_xyplot_overlay(pFlObject, idnum, x, y, n, colr):
             xfc.FL_COLOR],
             """void fl_add_xyplot_overlay(FL_OBJECT * ob, int id, float * x,
                float * y, int n, FL_COLOR col)
-            """)
+""")
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     check_admitted_listvalues(colr, xfc.COLOR_list)
@@ -21891,7 +21724,7 @@ def fl_add_xyplot_overlay_file(pFlObject, idnum, fname, colr):
             xfc.FL_COLOR],
             """int fl_add_xyplot_overlay_file(FL_OBJECT * ob, int id,
             const char * f, FL_COLOR c)
-            """)
+""")
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     check_admitted_listvalues(colr, xfc.COLOR_list)
@@ -21918,7 +21751,7 @@ def fl_set_xyplot_return(pFlObject, when):
             None, [cty.POINTER(xfc.FL_OBJECT), cty.c_uint],
             """void fl_set_xyplot_return(FL_OBJECT * ob, unsigned
                int when)
-            """)
+""")
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     uiwhen = convert_to_uint(when)
@@ -21939,7 +21772,7 @@ def fl_set_xyplot_xtics(pFlObject, major, minor):
             load_so_libforms(), "fl_set_xyplot_xtics",
             None, [cty.POINTER(xfc.FL_OBJECT), cty.c_int, cty.c_int],
             """void fl_set_xyplot_xtics(FL_OBJECT * ob, int major, int minor)
-            """)
+""")
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     imajor = convert_to_int(major)
@@ -21961,7 +21794,7 @@ def fl_set_xyplot_ytics(pFlObject, major, minor):
             load_so_libforms(), "fl_set_xyplot_ytics",
             None, [cty.POINTER(xfc.FL_OBJECT), cty.c_int, cty.c_int],
             """void fl_set_xyplot_ytics(FL_OBJECT * ob, int major, int minor)
-            """)
+""")
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     imajor = convert_to_int(major)
@@ -21984,7 +21817,7 @@ def fl_set_xyplot_xbounds(pFlObject, minbound, maxbound):
             None, [cty.POINTER(xfc.FL_OBJECT), cty.c_double, cty.c_double],
             """void fl_set_xyplot_xbounds(FL_OBJECT * ob, double xmin,
                double xmax)
-            """)
+""")
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     fminbound = convert_to_double(minbound)
@@ -22007,7 +21840,7 @@ def fl_set_xyplot_ybounds(pFlObject, minbound, maxbound):
             None, [cty.POINTER(xfc.FL_OBJECT), cty.c_double, cty.c_double],
             """void fl_set_xyplot_ybounds(FL_OBJECT * ob, double ymin,
                double ymax)
-            """)
+""")
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     fminbound = convert_to_double(minbound)
@@ -22034,7 +21867,7 @@ def fl_get_xyplot_xbounds(pFlObject):
             cty.POINTER(cty.c_float)],
             """void fl_get_xyplot_xbounds(FL_OBJECT * ob, float * xmin,
                float * xmax)
-            """)
+""")
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     minbound, pminbound = make_float_and_pointer()
@@ -22062,7 +21895,7 @@ def fl_get_xyplot_ybounds(pFlObject):
             cty.POINTER(cty.c_float)],
             """void fl_get_xyplot_ybounds(FL_OBJECT * ob, float * ymin,
                float * ymax)
-            """)
+""")
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     minbound, pminbound = make_float_and_pointer()
@@ -22090,7 +21923,7 @@ def fl_get_xyplot(pFlObject):
             cty.POINTER(cty.c_float), cty.POINTER(cty.c_int)],
             """void fl_get_xyplot(FL_OBJECT * ob, float * x, float * y,
                int * i)
-            """)
+""")
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     x, px = make_float_and_pointer()
@@ -22119,7 +21952,7 @@ def fl_get_xyplot_data(pFlObject):
             cty.POINTER(cty.c_float), cty.POINTER(cty.c_int)],
             """void fl_get_xyplot_data(FL_OBJECT * ob, float * x, float * y,
                int * n)
-            """)
+""")
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     x, px = make_float_and_pointer()
@@ -22149,7 +21982,7 @@ def fl_get_xyplot_data_pointer(pFlObject, idnum):
             cty.POINTER(cty.POINTER(cty.c_float)), cty.POINTER(cty.c_int)],
             """void fl_get_xyplot_data_cty.POINTER(xfc.FL_OBJECT * ob, int id,
                float * * x, float * * y, int * n)
-            """)
+""")
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     iidnum = convert_to_int(idnum)
@@ -22179,7 +22012,7 @@ def fl_get_xyplot_overlay_data(pFlObject, idnum):
             cty.POINTER(cty.c_float), cty.POINTER(cty.c_int)],
             """void fl_get_xyplot_overlay_data(FL_OBJECT * ob, int id,
                float * x, float * y, int * n)
-            """)
+""")
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     iidnum = convert_to_int(idnum)
@@ -22205,7 +22038,7 @@ def fl_set_xyplot_overlay_type(pFlObject, idnum, plottype):
             None, [cty.POINTER(xfc.FL_OBJECT), cty.c_int, cty.c_int],
             """void fl_set_xyplot_overlay_type(FL_OBJECT * ob, int id,
                int type)
-            """)
+""")
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     iidnum = convert_to_int(idnum)
@@ -22227,7 +22060,7 @@ def fl_delete_xyplot_overlay(pFlObject, idnum):
             load_so_libforms(), "fl_delete_xyplot_overlay",
             None, [cty.POINTER(xfc.FL_OBJECT), cty.c_int],
             """void fl_delete_xyplot_overlay(FL_OBJECT * ob, int id)
-            """)
+""")
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     iidnum = convert_to_int(idnum)
@@ -22250,7 +22083,7 @@ def fl_set_xyplot_interpolate(pFlObject, idnum, deg, grid):
             cty.c_double],
             """void fl_set_xyplot_interpolate(FL_OBJECT * ob, int id,
                int deg, double grid)
-            """)
+""")
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     iidnum = convert_to_int(idnum)
@@ -22273,7 +22106,7 @@ def fl_set_xyplot_inspect(pFlObject, yes):
             load_so_libforms(), "fl_set_xyplot_inspect",
             None, [cty.POINTER(xfc.FL_OBJECT), cty.c_int],
             """void fl_set_xyplot_inspect(FL_OBJECT * ob, int yes)
-            """)
+""")
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     iyes = convert_to_int(yes)
@@ -22294,7 +22127,7 @@ def fl_set_xyplot_symbolsize(pFlObject, n):
             load_so_libforms(), "fl_set_xyplot_symbolsize",
             None, [cty.POINTER(xfc.FL_OBJECT), cty.c_int],
             """void fl_set_xyplot_symbolsize(FL_OBJECT * ob, int n)
-            """)
+""")
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     inum = convert_to_int(n)
@@ -22317,7 +22150,7 @@ def fl_replace_xyplot_point(pFlObject, i, valx, valy):
             cty.c_double],
             """void fl_replace_xyplot_point(FL_OBJECT * ob, int i,
                double x, double y)
-            """)
+""")
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     ii = convert_to_int(i)
@@ -22347,7 +22180,7 @@ def fl_replace_xyplot_point_in_overlay(pFlObject, i, setID, valx, valy):
             cty.c_double, cty.c_double],
             """void fl_replace_xyplot_point_in_overlay(FL_OBJECT * ob,
                int i, int setID, double x, double y)
-            """)
+""")
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     ii = convert_to_int(i)
@@ -22376,7 +22209,7 @@ def fl_get_xyplot_xmapping(pFlObject):
             cty.POINTER(cty.c_float)],
             """void fl_get_xyplot_xmapping(FL_OBJECT * ob, float * a,
                float * b)
-            """)
+""")
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     a, pa = make_float_and_pointer()
@@ -22404,7 +22237,7 @@ def fl_get_xyplot_ymapping(pFlObject):
             cty.POINTER(cty.c_float)],
             """void fl_get_xyplot_ymapping(FL_OBJECT * ob, float * a,
                float * b)
-            """)
+""")
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     a, pa = make_float_and_pointer()
@@ -22429,7 +22262,7 @@ def fl_set_xyplot_keys(pFlObject, keys, valx, valy, align):
             cty.c_float, cty.c_int],
             """void fl_set_xyplot_keys(FL_OBJECT * ob, char * * keys, float x,
                float y, int align)
-            """)
+""")
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     fvalx = convert_to_float(valx)
@@ -22453,7 +22286,7 @@ def fl_set_xyplot_key(pFlObject, idnum, keytxt):
             None, [cty.POINTER(xfc.FL_OBJECT), cty.c_int, xfc.STRING],
             """void fl_set_xyplot_key(FL_OBJECT * ob, int id,
                const char * key)
-            """)
+""")
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     iidnum = convert_to_int(idnum)
@@ -22477,7 +22310,7 @@ def fl_set_xyplot_key_position(pFlObject, valx, valy, align):
             cty.c_int],
             """void fl_set_xyplot_key_position(FL_OBJECT * ob, float x,
                float y, int align)
-            """)
+""")
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     fvalx = convert_to_float(valx)
@@ -22501,7 +22334,7 @@ def fl_set_xyplot_key_font(pFlObject, style, size):
             None, [cty.POINTER(xfc.FL_OBJECT), cty.c_int, cty.c_int],
             """void fl_set_xyplot_key_font(FL_OBJECT * ob, int style,
                int size)
-            """)
+""")
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     istyle = convert_to_int(style)
@@ -22523,7 +22356,7 @@ def fl_get_xyplot_numdata(pFlObject, idnum):
             load_so_libforms(), "fl_get_xyplot_numdata",
             cty.c_int, [cty.POINTER(xfc.FL_OBJECT), cty.c_int],
             """int fl_get_xyplot_numdata(FL_OBJECT * ob, int id)
-            """)
+""")
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     iidnum = convert_to_int(idnum)
@@ -22551,7 +22384,7 @@ def fl_xyplot_s2w(pFlObject, sx, sy, wx, wy):
             cty.POINTER(cty.c_float), cty.POINTER(cty.c_float)],
             """void fl_xyplot_s2w(FL_OBJECT * ob, double sx, double sy,
                float * wx, float * wy)
-            """)
+""")
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     fsx = convert_to_double(sx)
@@ -22575,7 +22408,7 @@ def fl_xyplot_w2s(pFlObject, wx, wy, sx, sy):
             cty.POINTER(cty.c_float), cty.POINTER(cty.c_float)],
             """void fl_xyplot_w2s(FL_OBJECT * ob, double wx, double wy,
                float * sx, float * sy)
-            """)
+""")
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     fwx = convert_to_double(wx)
@@ -22598,7 +22431,7 @@ def fl_set_xyplot_xscale(pFlObject, scale, base):
             None, [cty.POINTER(xfc.FL_OBJECT), cty.c_int, cty.c_double],
             """void fl_set_xyplot_xscale(FL_OBJECT * ob, int scale,
                double base)
-            """)
+""")
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     iscale = convert_to_int(scale)
@@ -22621,7 +22454,7 @@ def fl_set_xyplot_yscale(pFlObject, scale, base):
             None, [cty.POINTER(xfc.FL_OBJECT), cty.c_int, cty.c_double],
             """void fl_set_xyplot_yscale(FL_OBJECT * ob, int scale,
                double base)
-            """)
+""")
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     iscale = convert_to_int(scale)
@@ -22643,7 +22476,7 @@ def fl_clear_xyplot(pFlObject):
             load_so_libforms(), "fl_clear_xyplot",
             None, [cty.POINTER(xfc.FL_OBJECT)],
             """void fl_clear_xyplot(FL_OBJECT * ob)
-            """)
+""")
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     keep_elem_refs(pFlObject)
@@ -22663,7 +22496,7 @@ def fl_set_xyplot_linewidth(pFlObject, idnum, lw):
             load_so_libforms(), "fl_set_xyplot_linewidth",
             None, [cty.POINTER(xfc.FL_OBJECT), cty.c_int, cty.c_int],
             """void fl_set_xyplot_linewidth(FL_OBJECT * ob, int id, int lw)
-            """)
+""")
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     iidnum = convert_to_int(idnum)
@@ -22685,7 +22518,7 @@ def fl_set_xyplot_xgrid(pFlObject, xgrid):
             load_so_libforms(), "fl_set_xyplot_xgrid",
             None, [cty.POINTER(xfc.FL_OBJECT), cty.c_int],
             """void fl_set_xyplot_xgrid(FL_OBJECT * ob, int xgrid)
-            """)
+""")
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     ixgrid = convert_to_int(xgrid)
@@ -22706,7 +22539,7 @@ def fl_set_xyplot_ygrid(pFlObject, ygrid):
             load_so_libforms(), "fl_set_xyplot_ygrid",
             None, [cty.POINTER(xfc.FL_OBJECT), cty.c_int],
             """void fl_set_xyplot_ygrid(FL_OBJECT * ob, int ygrid)
-            """)
+""")
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     iygrid = convert_to_int(ygrid)
@@ -22731,7 +22564,7 @@ def fl_set_xyplot_grid_linestyle(pFlObject, linestyle):
             load_so_libforms(), "fl_set_xyplot_grid_linestyle",
             cty.c_int, [cty.POINTER(xfc.FL_OBJECT), cty.c_int],
             """int fl_set_xyplot_grid_linestyle(FL_OBJECT * ob, int style)
-            """)
+""")
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     ilinestyle = convert_to_int(linestyle)
@@ -22754,7 +22587,7 @@ def fl_set_xyplot_alphaxtics(pFlObject, m, s):
             None, [cty.POINTER(xfc.FL_OBJECT), xfc.STRING, xfc.STRING],
             """void fl_set_xyplot_alphaxtics(FL_OBJECT * ob, const char * m,
                const char * s)
-            """)
+""")
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     sm = convert_to_string(m)
@@ -22777,7 +22610,7 @@ def fl_set_xyplot_alphaytics(pFlObject, m, s):
             None, [cty.POINTER(xfc.FL_OBJECT), xfc.STRING, xfc.STRING],
             """void fl_set_xyplot_alphaytics(FL_OBJECT * ob, const char * m,
                const char * s)
-            """)
+""")
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     sm = convert_to_string(m)
@@ -22800,7 +22633,7 @@ def fl_set_xyplot_fixed_xaxis(pFlObject, lm, rm):
             None, [cty.POINTER(xfc.FL_OBJECT), xfc.STRING, xfc.STRING],
             """void fl_set_xyplot_fixed_xaxis(FL_OBJECT * ob, const char * lm,
                const char * rm)
-            """)
+""")
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     slm = convert_to_string(lm)
@@ -22823,7 +22656,7 @@ def fl_set_xyplot_fixed_yaxis(pFlObject, bm, tm):
             None, [cty.POINTER(xfc.FL_OBJECT), xfc.STRING, xfc.STRING],
             """void fl_set_xyplot_fixed_yaxis(FL_OBJECT * ob, const char * bm,
                const char * tm)
-            """)
+""")
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     sbm = convert_to_string(bm)
@@ -22846,7 +22679,7 @@ def fl_interpolate(wx, wy, nin, x, y, grid, ndeg):
             cty.c_double, cty.c_int],
             """int fl_interpolate(const char * wx, const char * wy, int nin,
                float * x, float * y, double grid, int ndeg)
-            """)
+""")
     check_if_initialized()
     inin = convert_to_int(nin)
     fgrid = convert_to_double(grid)
@@ -22870,7 +22703,7 @@ def fl_spline_interpolate(wx, wy, nin, x, y, grid):
             cty.c_double],
             """int fl_spline_interpolate(const char * wx, const char * wy,
                int nin, float * x, float * y, double grid)
-            """)
+""")
     check_if_initialized()
     inin = convert_to_int(nin)
     fgrid = convert_to_double(grid)
@@ -22897,7 +22730,7 @@ def fl_set_xyplot_symbol(pFlObject, idnum, py_XyPlotSymbol):
             FL_XYPLOT_SYMBOL],
             """FL_XYPLOT_SYMBOL fl_set_xyplot_symbol(FL_OBJECT * ob, int id,
                FL_XYPLOT_SYMBOL symbol)
-            """)
+""")
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     iidnum = convert_to_int(idnum)
@@ -22921,7 +22754,7 @@ def fl_set_xyplot_mark_active(pFlObject, y):
             load_so_libforms(), "fl_set_xyplot_mark_active",
             cty.c_int, [cty.POINTER(xfc.FL_OBJECT), cty.c_int],
             """int fl_set_xyplot_mark_active(FL_OBJECT * ob, int y)
-            """)
+""")
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     iy = convert_to_int(y)
@@ -22945,7 +22778,7 @@ def fl_gc_():
             load_so_libforms(), "fl_gc_",
             xfc.GC, [],
             """GC fl_gc_()
-            """)
+""")
     check_if_initialized()
     retval = _fl_gc_()
     return retval
@@ -22966,7 +22799,7 @@ def fl_textgc_():
             load_so_libforms(), "fl_textgc_",
             xfc.GC, [],
             """GC fl_textgc_()
-            """)
+""")
     check_if_initialized()
     retval = _fl_textgc_()
     return retval
@@ -22987,7 +22820,7 @@ def fl_fheight_():
             load_so_libforms(), "fl_fheight_",
             cty.c_int, [],
             """int fl_fheight_()
-            """)
+""")
     check_if_initialized()
     retval = _fl_fheight_()
     return retval
@@ -23008,7 +22841,7 @@ def fl_fdesc_():
             load_so_libforms(), "fl_fdesc_",
             cty.c_int, [],
             """int fl_fdesc_()
-            """)
+""")
     check_if_initialized()
     retval = _fl_fdesc_()
     return retval
@@ -23029,7 +22862,7 @@ def fl_cur_win_():
             load_so_libforms(), "fl_cur_win_",
             xfc.Window, [],
             """Window fl_cur_win_()
-            """)
+""")
     check_if_initialized()
     retval = _fl_cur_win_()
     return retval
@@ -23048,7 +22881,7 @@ def fl_cur_fs_():
             load_so_libforms(), "fl_cur_fs_",
             cty.POINTER(xfc.XFontStruct), [],
             """XFontStruct * fl_cur_fs_()
-            """)
+""")
     check_if_initialized()
     retval = _fl_cur_fs_()
     return retval
@@ -23069,7 +22902,7 @@ def fl_display_():
             load_so_libforms(), "fl_display_",
             cty.POINTER(xfc.Display), [],
             """Display * fl_display_()
-            """)
+""")
     check_if_initialized()
     retval = _fl_display_()
     return retval
@@ -23111,7 +22944,7 @@ def flimage_setup(pImageSetup):
             load_so_libflimage(), "flimage_setup",
             None, [cty.POINTER(xfc.FLIMAGE_SETUP)],
             """void flimage_setup(FLIMAGE_SETUP * setup)
-            """)
+""")
     check_if_initialized()
     keep_elem_refs(pImageSetup)
     _flimage_setup(pImageSetup)
@@ -23132,7 +22965,7 @@ def flimage_load(filename):
             load_so_libflimage(), "flimage_load",
             cty.POINTER(xfc.FL_IMAGE), [xfc.STRING],
             """FL_IMAGE * flimage_load(const char * file)
-            """)
+""")
     check_if_initialized()
     sfilename = convert_to_string(filename)
     keep_elem_refs(filename, sfilename)
@@ -23153,7 +22986,7 @@ def flimage_read(pImage):
             load_so_libflimage(), "flimage_read",
             cty.POINTER(xfc.FL_IMAGE), [cty.POINTER(xfc.FL_IMAGE)],
             """FL_IMAGE * flimage_read(FL_IMAGE * im)
-            """)
+""")
     check_if_initialized()
     keep_elem_refs(pImage)
     retval = _flimage_read(pImage)
@@ -23174,7 +23007,7 @@ def flimage_dump(pImage, p2, p3):
             cty.c_int, [cty.POINTER(xfc.FL_IMAGE), xfc.STRING, xfc.STRING],
             """int flimage_dump(FL_IMAGE * p1, const char * p2,
                const char * p3)
-            """)
+""")
     check_if_initialized()
     sp2 = convert_to_string(p2)
     sp3 = convert_to_string(p3)
@@ -23196,7 +23029,7 @@ def flimage_close(pImage):
             load_so_libflimage(), "flimage_close",
             cty.c_int, [cty.POINTER(xfc.FL_IMAGE)],
             """int flimage_close(FL_IMAGE * p1)
-            """)
+""")
     check_if_initialized()
     keep_elem_refs(pImage)
     retval = _flimage_close(pImage)
@@ -23214,7 +23047,7 @@ def flimage_alloc():
             load_so_libflimage(), "flimage_alloc",
             cty.POINTER(xfc.FL_IMAGE), [],
             """FL_IMAGE * flimage_alloc()
-            """)
+""")
     check_if_initialized()
     retval = _flimage_alloc()
     return retval
@@ -23233,7 +23066,7 @@ def flimage_getmem(pImage):
             load_so_libflimage(), "flimage_getmem",
             cty.c_int, [cty.POINTER(xfc.FL_IMAGE)],
             """int flimage_getmem(FL_IMAGE * p1)
-            """)
+""")
     check_if_initialized()
     keep_elem_refs(pImage)
     retval = _flimage_getmem(pImage)
@@ -23253,7 +23086,7 @@ def flimage_is_supported(fname):
             load_so_libflimage(), "flimage_is_supported",
             cty.c_int, [xfc.STRING],
             """int flimage_is_supported(const char * p1)
-            """)
+""")
     check_if_initialized()
     sfname = convert_to_string(fname)
     keep_elem_refs(fname, sfname)
@@ -23276,7 +23109,7 @@ def flimage_description_via_filter(pImage, p2, p3, p4):
             xfc.STRING, cty.c_int],
             """int flimage_description_via_filter(FL_IMAGE * p1,
                const char * p2, const char * p3, int p4)
-            """)
+""")
     check_if_initialized()
     sp3 = convert_to_string(p3)
     ip4 = convert_to_string(p4)
@@ -23300,7 +23133,7 @@ def flimage_write_via_filter(pImage, p2, p3, p4):
             cty.POINTER(xfc.STRING), cty.c_int],
             """int flimage_write_via_filter(FL_IMAGE * p1, const char * p2,
                const char * p3, int p4)
-            """)
+""")
     check_if_initialized()
     ip4 = convert_to_int(p4)
     keep_elem_refs(pImage, p2, p3, p4, ip4)
@@ -23321,7 +23154,7 @@ def flimage_free(pImage):
             load_so_libflimage(), "flimage_free",
             cty.c_int, [cty.POINTER(xfc.FL_IMAGE)],
             """int flimage_free(FL_IMAGE * p1)
-            """)
+""")
     check_if_initialized()
     keep_elem_refs(pImage)
     retval = _flimage_free(pImage)
@@ -23342,7 +23175,7 @@ def flimage_display(pImage, win):
             load_so_libflimage(), "flimage_display",
             cty.c_int, [cty.POINTER(xfc.FL_IMAGE), xfc.Window],
             """int flimage_display(FL_IMAGE * p1, Window p2)
-            """)
+""")
     check_if_initialized()
     ulwin = convert_to_Window(win)
     keep_elem_refs(pImage, win, ulwin)
@@ -23364,7 +23197,7 @@ def flimage_sdisplay(pImage, win):
             load_so_libflimage(), "flimage_sdisplay",
             cty.c_int, [cty.POINTER(xfc.FL_IMAGE), xfc.Window],
             """int flimage_sdisplay(FL_IMAGE * p1, Window p2)
-            """)
+""")
     check_if_initialized()
     ulwin = convert_to_Window(win)
     keep_elem_refs(pImage, win, ulwin)
@@ -23389,7 +23222,7 @@ def flimage_convert(pImage, newtype, ncolors):
             load_so_libflimage(), "flimage_convert",
             cty.c_int, [cty.POINTER(xfc.FL_IMAGE), cty.c_int, cty.c_int],
             """int flimage_convert(FL_IMAGE * p1, int p2, int p3)
-            """)
+""")
     check_if_initialized()
     inewtype = convert_to_int(newtype)
     incolors = convert_to_int(ncolors)
@@ -23411,7 +23244,7 @@ def flimage_type_name(flimagetype):
             load_so_libflimage(), "flimage_type_name",
             xfc.STRING, [cty.c_int],
             """const char * flimage_type_name(int type)
-            """)
+""")
     check_if_initialized()
     check_admitted_listvalues(flimagetype, xfc.FLIMAGETYPE_list)
     iflimagetype = convert_to_int(flimagetype)
@@ -23437,7 +23270,7 @@ def flimage_add_text(pImage, text, length, style, size, txtcolr, bgcolr, tran, t
             """int flimage_add_text(FL_IMAGE * im, const char * str, int len,
                int style, int size, unsigned int tcol, unsigned int bcol,
                int tran, double tx, double ty, int rot)
-            """)
+""")
     check_if_initialized()
     stext = convert_to_string(text)
     ilength = convert_to_int(length)
@@ -23471,7 +23304,7 @@ def flimage_add_text_struct(pImage, pImageText):
             cty.c_int, [cty.POINTER(xfc.FL_IMAGE),
             cty.POINTER(xfc.FLIMAGE_TEXT)],
             """int flimage_add_text_struct(FL_IMAGE * p1, const char * p2)
-            """)
+""")
     check_if_initialized()
     keep_elem_refs(pImage, pImageText)
     retval = _flimage_add_text_struct(pImage, pImageText)
@@ -23491,7 +23324,7 @@ def flimage_delete_all_text(pImage):
             load_so_libflimage(), "flimage_delete_all_text",
             None, [cty.POINTER(xfc.FL_IMAGE)],
             """void flimage_delete_all_text(FL_IMAGE * p1)
-            """)
+""")
     check_if_initialized()
     keep_elem_refs(pImage)
     _flimage_delete_all_text(pImage)
@@ -23514,7 +23347,7 @@ def flimage_add_marker(pImage, text, p3, p4, p5, p6, p7, p8, p9, colr, bcolr):
             """int flimage_add_marker(FL_IMAGE * p1, const char * p2,
                double p3, double p4, double p5, double p6, int p7,
                int p8, int p9, FL_COLOR p10, FL_COLOR p11)
-            """)
+""")
     check_if_initialized()
     stext = convert_to_string(text)
     fp3 = convert_to_double(p3)
@@ -23546,7 +23379,7 @@ def flimage_add_marker_struct(pImage, pImageMarker):
             load_so_libflimage(), "flimage_add_marker_struct",
             cty.c_int, [cty.POINTER(xfc.FL_IMAGE), cty.POINTER(xfc.FLIMAGE_MARKER)],
             """int flimage_add_marker_struct(FL_IMAGE * p1, const char * p2)
-            """)
+""")
     check_if_initialized()
     keep_elem_refs(pImage, pImageMarker)
     retval = _flimage_add_marker_struct(pImage, pImageMarker)
@@ -23565,7 +23398,7 @@ def flimage_define_marker(text1, pImageMarker, text2):
             cty.c_int, [xfc.STRING, cty.POINTER(xfc.FLIMAGE_MARKER), xfc.STRING],
             """int flimage_define_marker(const char *, void ( * )
                (FLIMAGE_MARKER *), const char *)
-            """)
+""")
     stext1 = convert_to_string(text1)
     stext2 = convert_to_string(text2)
     keep_elem_refs(text1, pImageMarker, text2, stext1, stext2)
@@ -23586,7 +23419,7 @@ def flimage_delete_all_markers(pImage):
             load_so_libflimage(), "flimage_delete_all_markers",
             None, [cty.POINTER(xfc.FL_IMAGE)],
             """void flimage_delete_all_markers(FL_IMAGE * p1)
-            """)
+""")
     check_if_initialized()
     keep_elem_refs(pImage)
     _flimage_delete_all_markers(pImage)
@@ -23606,7 +23439,7 @@ def flimage_render_annotation(pImage, win):
             load_so_libflimage(), "flimage_render_annotation",
             cty.c_int, [cty.POINTER(xfc.FL_IMAGE), xfc.FL_WINDOW],
             """int flimage_render_annotation(FL_IMAGE * p1, FL_WINDOW p2)
-            """)
+""")
     check_if_initialized()
     ulwin = convert_to_Window(win)
     keep_elem_refs(pImage, win, ulwin)
@@ -23627,7 +23460,7 @@ def flimage_error(pImage, text):
             load_so_libflimage(), "flimage_error",
             None, [cty.POINTER(xfc.FL_IMAGE), xfc.STRING],
             """void flimage_error(FL_IMAGE * p1, const char * p2)
-            """)
+""")
     check_if_initialized()
     stext = convert_to_Window(text)
     keep_elem_refs(pImage, text, stext)
@@ -23651,7 +23484,7 @@ def flimage_enable_pnm():
             load_so_libflimage(), "flimage_enable_pnm",
             None, [],
             """void flimage_enable_pnm()
-            """)
+""")
     check_if_initialized()
     _flimage_enable_pnm()
 
@@ -23667,7 +23500,7 @@ def flimage_set_fits_bits(p1):
             load_so_libflimage(), "flimage_set_fits_bits",
             cty.c_int, [cty.c_int],
             """int flimage_set_fits_bits(int p1)
-            """)
+""")
     check_if_initialized()
     ip1 = convert_to_int(p1)
     keep_elem_refs(p1, ip1)
@@ -23686,7 +23519,7 @@ def flimage_jpeg_output_options(pImageJpegOption):
             load_so_libflimage(), "flimage_jpeg_output_options",
             None, [cty.POINTER(xfc.FLIMAGE_JPEG_OPTION)],
             """void flimage_jpeg_output_options(FLIMAGE_JPEG_OPTION * p1)
-            """)
+""")
     check_if_initialized()
     keep_elem_refs(pImageJpegOption)
     _flimage_jpeg_output_options(pImageJpegOption)
@@ -23703,7 +23536,7 @@ def flimage_pnm_output_options(p1):
             load_so_libflimage(), "flimage_pnm_output_options",
             None, [cty.c_int],
             """void flimage_pnm_output_options(int p1)
-            """)
+""")
     check_if_initialized()
     ip1 = convert_to_int(p1)
     keep_elem_refs(p1, ip1)
@@ -23721,7 +23554,7 @@ def flimage_gif_output_options(p1):
             load_so_libflimage(), "flimage_gif_output_options",
             None, [cty.c_int],
             """void flimage_gif_output_options(int p1)
-            """)
+""")
     check_if_initialized()
     ip1 = convert_to_int(p1)
     keep_elem_refs(p1, ip1)
@@ -23739,7 +23572,7 @@ def flimage_ps_options():
             load_so_libflimage(), "flimage_ps_options",
             cty.POINTER(xfc.FLPS_CONTROL), [],
             """FLPS_CONTROL * flimage_ps_options()
-            """)
+""")
     check_if_initialized()
     retval = _flimage_ps_options()
     return retval
@@ -23761,7 +23594,7 @@ def flimage_get_number_of_formats():
             load_so_libflimage(), "flimage_get_number_of_formats",
             cty.c_int, [],
             """int flimage_get_number_of_formats()
-            """)
+""")
     check_if_initialized()
     retval = _flimage_get_number_of_formats()
     return retval
@@ -23778,7 +23611,7 @@ def flimage_get_format_info(p1):
             load_so_libflimage(), "flimage_get_format_info",
             cty.POINTER(xfc.FLIMAGE_FORMAT_INFO), [cty.c_int],
             """const char * flimage_get_format_info(int p1)
-            """)
+""")
     check_if_initialized()
     ip1 = convert_to_int(p1)
     keep_elem_refs(p1, ip1)
@@ -23801,7 +23634,7 @@ def fl_get_matrix(nrows, ncols, esize):
             load_so_libflimage(), "fl_get_matrix",
             cty.c_void_p, [cty.c_int, cty.c_int, cty.c_uint],
             """void * fl_get_matrix(int p1, int p2, unsigned int p3)
-            """)
+""")
     check_if_initialized()
     inrows = convert_to_int(nrows)
     incols = convert_to_int(ncols)
@@ -23830,7 +23663,7 @@ def fl_make_matrix(nrows, ncols, esize, mem):
             cty.c_void_p, [cty.c_int, cty.c_int, cty.c_uint, cty.c_void_p],
             """void * fl_make_matrix(int p1, int p2, unsigned int p3,
                void * p4)
-            """)
+""")
     check_if_initialized()
     inrows = convert_to_int(nrows)
     incols = convert_to_int(ncols)
@@ -23852,7 +23685,7 @@ def fl_free_matrix(mtrx):
             load_so_libflimage(), "fl_free_matrix",
             None, [cty.c_void_p],
             """void fl_free_matrix(void * p1)
-            """)
+""")
     check_if_initialized()
     pmtrx = cty.cast(mtrx, cty.c_void_p)
     keep_elem_refs(mtrx, pmtrx)
@@ -23875,7 +23708,7 @@ def fl_lookup_RGBcolor(text, p2, p3, p4):
             cty.POINTER(cty.c_int), cty.POINTER(cty.c_int)],
             """int fl_lookup_RGBcolor(const char * p1, int * p2,
                int * p3, int * p4)
-            """)
+""")
     check_if_initialized()
     stext = convert_to_string(text)
     keep_elem_refs(text, p2, p3, p4)
@@ -23908,7 +23741,7 @@ def flimage_add_format(formalname, shortname, extension, flimagetype, \
                const char * p3, int p4, FLIMAGE_Identify p5,
                FLIMAGE_Description p6, FLIMAGE_Read_Pixels p7,
                FLIMAGE_Write_Image p8)
-            """)
+""")
     check_if_initialized()
     check_admitted_listvalues(flimagetype, xfc.FLIMAGETYPE_list)
     sformalname = convert_to_string(formalname)
@@ -23941,7 +23774,7 @@ def flimage_set_annotation_support(p1, p2):
             load_so_libflimage(), "flimage_set_annotation_support",
             None, [cty.c_int, cty.c_int],
             """void flimage_set_annotation_support(int p1, int p2)
-            """)
+""")
     check_if_initialized()
     ip1 = convert_to_int(p1)
     ip2 = convert_to_int(p2)
@@ -23962,7 +23795,7 @@ def flimage_getcolormap(pImage):
             load_so_libflimage(), "flimage_getcolormap",
             cty.c_int, [cty.POINTER(xfc.FL_IMAGE)],
             """int flimage_getcolormap(FL_IMAGE * p1)
-            """)
+""")
     check_if_initialized()
     keep_elem_refs(pImage)
     retval = _flimage_getcolormap(pImage)
@@ -23980,7 +23813,7 @@ def fl_select_mediancut_quantizer():
             load_so_libflimage(), "fl_select_mediancut_quantizer",
             None, [],
             """void fl_select_mediancut_quantizer()
-            """)
+""")
     check_if_initialized()
     _fl_select_mediancut_quantizer()
 
@@ -24002,7 +23835,7 @@ def flimage_convolve(pImage, p2, p3, p4):
             cty.POINTER(cty.POINTER(cty.c_int)), cty.c_int, cty.c_int],
             """int flimage_convolve(FL_IMAGE * p1, int * * p2, int p3,
                int p4)
-            """)
+""")
     check_if_initialized()
     ip3 = convert_to_int(p3)
     ip4 = convert_to_int(p4)
@@ -24025,7 +23858,7 @@ def flimage_convolvea(pImage, p2, p3, p4):
             cty.c_int, [cty.POINTER(xfc.FL_IMAGE), cty.POINTER(cty.c_int),
             cty.c_int, cty.c_int],
             """int flimage_convolvea(FL_IMAGE * p1, int * p2, int p3, int p4)
-            """)
+""")
     check_if_initialized()
     keep_elem_refs(pImage, p2, p3, p4)
     retval = _flimage_convolvea(pImage, p2, p3, p4)
@@ -24045,7 +23878,7 @@ def flimage_tint(pImage, p2, p3):
             load_so_libflimage(), "flimage_tint",
             cty.c_int, [cty.POINTER(xfc.FL_IMAGE), cty.c_uint, cty.c_double],
             """int flimage_tint(FL_IMAGE * p1, unsigned int p2, double p3)
-            """)
+""")
     check_if_initialized()
     keep_elem_refs(pImage, p2, p3)
     retval = _flimage_tint(pImage, p2, p3)
@@ -24065,7 +23898,7 @@ def flimage_rotate(pImage, p2, p3):
             load_so_libflimage(), "flimage_rotate",
             cty.c_int, [cty.POINTER(xfc.FL_IMAGE), cty.c_int, cty.c_int],
             """int flimage_rotate(FL_IMAGE * p1, int p2, int p3)
-            """)
+""")
     check_if_initialized()
     ip2 = convert_to_int(p2)
     ip3 = convert_to_int(p3)
@@ -24087,7 +23920,7 @@ def flimage_flip(pImage, p2):
             load_so_libflimage(), "flimage_flip",
             cty.c_int, [cty.POINTER(xfc.FL_IMAGE), cty.c_int],
             """int flimage_flip(FL_IMAGE * p1, int p2)
-            """)
+""")
     check_if_initialized()
     ip2 = convert_to_int(p2)
     keep_elem_refs(pImage, p2, ip2)
@@ -24109,7 +23942,7 @@ def flimage_scale(pImage, p2, p3, p4):
             cty.c_int, [cty.POINTER(xfc.FL_IMAGE), cty.c_int, cty.c_int,
             cty.c_int],
             """int flimage_scale(FL_IMAGE * p1, int p2, int p3, int p4)
-            """)
+""")
     check_if_initialized()
     ip2 = convert_to_int(p2)
     ip3 = convert_to_int(p3)
@@ -24134,7 +23967,7 @@ def flimage_warp(pImage, p2, p3, p4, p5):
             cty.c_int, cty.c_int, cty.c_int],
             """int flimage_warp(FL_IMAGE * p1, float * p2, int p3, int p4,
                int p5)
-            """)
+""")
     check_if_initialized()
     ip3 = convert_to_int(p3)
     ip4 = convert_to_int(p4)
@@ -24157,7 +23990,7 @@ def flimage_autocrop(pImage, p2):
             load_so_libflimage(), "flimage_autocrop",
             cty.c_int, [cty.POINTER(xfc.FL_IMAGE), cty.c_uint],
             """int flimage_autocrop(FL_IMAGE * p1, unsigned int p2)
-            """)
+""")
     check_if_initialized()
     uip2 = convert_to_uint(p2)
     keep_elem_refs(pImage, p2, uip2)
@@ -24184,7 +24017,7 @@ def flimage_get_autocrop(pImage, bk):
             cty.POINTER(cty.c_int), cty.POINTER(cty.c_int)],
             """int flimage_get_autocrop(FL_IMAGE * p1, unsigned int p2,
                int * p3, int * p4, int * p5, int * p6)
-            """)
+""")
     check_if_initialized()
     uibk = convert_to_uint(bk)
     xl, pxl = make_int_and_pointer()
@@ -24211,7 +24044,7 @@ def flimage_crop(pImage, p2, p3, p4, p5):
             cty.c_int, cty.c_int],
             """int flimage_crop(FL_IMAGE * p1, int p2, int p3,
                int p4, int p5)
-            """)
+""")
     check_if_initialized()
     ip2 = convert_to_int(p2)
     ip3 = convert_to_int(p3)
@@ -24236,7 +24069,7 @@ def flimage_replace_pixel(pImage, p2, p3):
             cty.c_int, [cty.POINTER(xfc.FL_IMAGE), cty.c_uint, cty.c_uint],
             """int flimage_replace_pixel(FL_IMAGE * p1, unsigned int p2,
                unsigned int p3)
-            """)
+""")
     check_if_initialized()
     uip2 = convert_to_uint(p2)
     uip3 = convert_to_uint(p3)
@@ -24260,7 +24093,7 @@ def flimage_transform_pixels(pImage, red, green, blue):
             cty.POINTER(cty.c_int), cty.POINTER(cty.c_int)],
             """int flimage_transform_pixels(FL_IMAGE * p1, int * p2,
                int * p3, int * p4)
-            """)
+""")
     check_if_initialized()
     pred = cty.cast(red, cty.POINTER(cty.c_int))
     pgreen = cty.cast(green, cty.POINTER(cty.c_int))
@@ -24283,7 +24116,7 @@ def flimage_windowlevel(pImage, p2, p3):
             load_so_libflimage(), "flimage_windowlevel",
             cty.c_int, [cty.POINTER(xfc.FL_IMAGE), cty.c_int, cty.c_int],
             """int flimage_windowlevel(FL_IMAGE * p1, int p2, int p3)
-            """)
+""")
     check_if_initialized()
     ip2 = convert_to_int(p2)
     ip3 = convert_to_int(p3)
@@ -24305,7 +24138,7 @@ def flimage_enhance(pImage, p2):
             load_so_libflimage(), "flimage_enhance",
             cty.c_int, [cty.POINTER(xfc.FL_IMAGE), cty.c_int],
             """int flimage_enhance(FL_IMAGE * p1, int p2)
-            """)
+""")
     check_if_initialized()
     ip2 = convert_to_int(p2)
     keep_elem_refs(pImage, p2, ip2)
@@ -24327,7 +24160,7 @@ def flimage_from_pixmap(pImage, pixmap):
             load_so_libflimage(), "flimage_from_pixmap",
             cty.c_int, [cty.POINTER(xfc.FL_IMAGE), xfc.Pixmap],
             """int flimage_from_pixmap(FL_IMAGE * p1, Pixmap p2)
-            """)
+""")
     check_if_initialized()
     ulpixmap = convert_to_Pixmap(pixmap)
     keep_elem_refs(pImage, pixmap, ulpixmap)
@@ -24349,7 +24182,7 @@ def flimage_to_pixmap(pImage, win):
             load_so_libflimage(), "flimage_to_pixmap",
             xfc.Pixmap, [cty.POINTER(xfc.FL_IMAGE), xfc.FL_WINDOW],
             """Pixmap flimage_to_pixmap(FL_IMAGE * p1, FL_WINDOW p2)
-            """)
+""")
     check_if_initialized()
     ulwin = convert_to_Window(win)
     keep_elem_refs(pImage, win, ulwin)
@@ -24370,7 +24203,7 @@ def flimage_dup(pImage):
             load_so_libflimage(), "flimage_dup",
             cty.POINTER(xfc.FL_IMAGE), [cty.POINTER(xfc.FL_IMAGE)],
             """FL_IMAGE * flimage_dup(FL_IMAGE * p1)
-            """)
+""")
     check_if_initialized()
     keep_elem_refs(pImage)
     retval = _flimage_dup(pImage)
@@ -24392,7 +24225,7 @@ def fl_get_submatrix(inmtrx, rows, cols, r1, c1, rs, cs, esize):
             cty.c_int, cty.c_int, cty.c_int, cty.c_uint],
             """void * fl_get_submatrix(void * p1, int p2, int p3, int p4,
                int p5, int p6, int p7, unsigned int p8)
-            """)
+""")
     check_if_initialized()
     pinmtrx = cty.cast(inmtrx, cty.c_void_p)
     irows = convert_to_int(rows)
@@ -24426,7 +24259,7 @@ def fl_j2pass_quantize_packed(p1, p2, p3, p4, p5, p6, p7, p8, p9, pImage):
             """int fl_j2pass_quantize_packed(unsigned int * * p1, int p2,
                int p3, int p4, short unsigned int * * p5, int * p6,
                int * p7, int * p8, int * p9, FL_IMAGE * p10)
-            """)
+""")
     check_if_initialized()
     ip2 = convert_to_int(p2)
     ip3 = convert_to_int(p3)
@@ -24457,7 +24290,7 @@ def fl_j2pass_quantize_rgb(p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, pImage)
                unsigned char * * p2, unsigned char * * p3, int p4, int p5,
                int p6, short unsigned int * * p7, int * p8, int * p9,
                int * p10, int * p11, FL_IMAGE * p12)
-            """)
+""")
     check_if_initialized()
     ip4 = convert_to_int(p4)
     ip5 = convert_to_int(p5)
@@ -24482,7 +24315,7 @@ def fl_make_submatrix(in_, rows, cols, r1, c1, rs, cs, esize):
             cty.c_int, cty.c_int, cty.c_int, cty.c_uint],
             """void * fl_make_submatrix(void * p1, int p2, int p3, int p4,
                int p5, int p6, int p7, unsigned int p8)
-            """)
+""")
     check_if_initialized()
     irows = convert_to_int(rows)
     icols = convert_to_int(cols)
@@ -24511,7 +24344,7 @@ def fl_pack_bits(p1, p2, p3):
             cty.c_int],
             """void fl_pack_bits(unsigned char * p1, short unsigned int * p2,
                int p3)
-            """)
+""")
     check_if_initialized()
     ip3 = convert_to_int(p3)
     keep_elem_refs(p1, p2, p3, ip3)
@@ -24531,7 +24364,7 @@ def fl_unpack_bits(p1, p2, p3):
             cty.c_int],
             """void fl_unpack_bits(short unsigned int * p1,
                unsigned char * p2, int p3)
-            """)
+""")
     check_if_initialized()
     ip3 = convert_to_int(p3)
     keep_elem_refs(p1, p2, p3, ip3)
@@ -24551,7 +24384,7 @@ def fl_value_to_bits(val):
             load_so_libflimage(), "fl_value_to_bits",
             cty.c_uint, [cty.c_uint],
             """unsigned int fl_value_to_bits(unsigned int p1)
-            """)
+""")
     check_if_initialized()
     uival = convert_to_uint(val)
     keep_elem_refs(val, uival)
@@ -24573,7 +24406,7 @@ def flimage_add_comments(pImage, p2, p3):
             None, [cty.POINTER(xfc.FL_IMAGE), xfc.STRING, cty.c_int],
             """void flimage_add_comments(FL_IMAGE * p1, const char * p2,
                int p3)
-            """)
+""")
     check_if_initialized()
     sp2 = convert_to_string(p2)
     ip3 = convert_to_int(p3)
@@ -24594,9 +24427,9 @@ def flimage_color_to_pixel(pImage, p2, p3, p4, p5):
             load_so_libflimage(), "flimage_color_to_pixel",
             cty.c_ulong, [cty.POINTER(xfc.FL_IMAGE), cty.c_int, cty.c_int,
             cty.c_int, cty.POINTER(cty.c_int)],
-            """)long unsigned int flimage_color_to_pixel(FL_IMAGE * p1,
+""")long unsigned int flimage_color_to_pixel(FL_IMAGE * p1,
                int p2, int p3, int p4, int * p5)
-            """)
+""")
     check_if_initialized()
     ip2 = convert_to_int(p2)
     ip3 = convert_to_int(p3)
@@ -24623,7 +24456,7 @@ def flimage_combine(pImage1, pImage2, alpha):
             cty.POINTER(xfc.FL_IMAGE), cty.c_double],
             """FL_IMAGE * flimage_combine(FL_IMAGE * p1, FL_IMAGE * p2,
                double p3)
-            """)
+""")
     check_if_initialized()
     falpha = convert_to_double(alpha)
     keep_elem_refs(pImage1, pImage2, alpha, falpha)
@@ -24644,7 +24477,7 @@ def flimage_display_markers(pImage):
             load_so_libflimage(), "flimage_display_markers",
             None, [cty.POINTER(xfc.FL_IMAGE)],
             """void flimage_display_markers(FL_IMAGE * p1)
-            """)
+""")
     check_if_initialized()
     keep_elem_refs(pImage)
     _flimage_display_markers(pImage)
@@ -24663,7 +24496,7 @@ def flimage_dup_(pImage, p2):
             load_so_libflimage(), "flimage_dup_",
             cty.POINTER(xfc.FL_IMAGE), [cty.POINTER(xfc.FL_IMAGE), cty.c_int],
             """FL_IMAGE * flimage_dup_(FL_IMAGE * p1, int p2)
-            """)
+""")
     check_if_initialized()
     ip2 = convert_to_int(p2)
     keep_elem_refs(pImage, p2, ip2)
@@ -24686,7 +24519,7 @@ def flimage_enable_bmp():
             load_so_libflimage(), "flimage_enable_bmp",
             None, [],
             """void flimage_enable_bmp()
-            """)
+""")
     check_if_initialized()
     _flimage_enable_bmp()
 
@@ -24706,7 +24539,7 @@ def flimage_enable_fits():
             load_so_libflimage(), "flimage_enable_fits",
             None, [],
             """void flimage_enable_fits()
-            """)
+""")
     _flimage_enable_fits()
 
 
@@ -24726,7 +24559,7 @@ def flimage_enable_genesis():
             load_so_libflimage(), "flimage_enable_genesis",
             None, [],
             """void flimage_enable_genesis()
-            """)
+""")
     check_if_initialized()
     _flimage_enable_genesis()
 
@@ -24746,7 +24579,7 @@ def flimage_enable_gif():
             load_so_libflimage(), "flimage_enable_gif",
             None, [],
             """void flimage_enable_gif()
-            """)
+""")
     check_if_initialized()
     _flimage_enable_gif()
 
@@ -24766,7 +24599,7 @@ def flimage_enable_gzip():
             load_so_libflimage(), "flimage_enable_gzip",
             None, [],
             """void flimage_enable_gzip()
-            """)
+""")
     check_if_initialized()
     _flimage_enable_gzip()
 
@@ -24787,7 +24620,7 @@ def flimage_enable_jpeg():
             load_so_libflimage(), "flimage_enable_jpeg",
             None, [],
             """void flimage_enable_jpeg()
-            """)
+""")
     check_if_initialized()
     _flimage_enable_jpeg()
 
@@ -24808,7 +24641,7 @@ def flimage_enable_png():
             load_so_libflimage(), "flimage_enable_png",
             None, [],
             """void flimage_enable_png()
-            """)
+""")
     check_if_initialized()
     _flimage_enable_png()
 
@@ -24829,7 +24662,7 @@ def flimage_enable_ps():
             load_so_libflimage(), "flimage_enable_ps",
             None, [],
             """void flimage_enable_ps()
-            """)
+""")
     check_if_initialized()
     _flimage_enable_ps()
 
@@ -24850,7 +24683,7 @@ def flimage_enable_sgi():
             load_so_libflimage(), "flimage_enable_sgi",
             None, [],
             """void flimage_enable_sgi()
-            """)
+""")
     check_if_initialized()
     _flimage_enable_sgi()
 
@@ -24871,7 +24704,7 @@ def flimage_enable_tiff():
             load_so_libflimage(), "flimage_enable_tiff",
             None, [],
             """void flimage_enable_tiff()
-            """)
+""")
     check_if_initialized()
     _flimage_enable_tiff()
 
@@ -24891,7 +24724,7 @@ def flimage_enable_xbm():
             load_so_libflimage(), "flimage_enable_xbm",
             None, [],
             """void flimage_enable_xbm()
-            """)
+""")
     check_if_initialized()
     _flimage_enable_xbm()
 
@@ -24911,7 +24744,7 @@ def flimage_enable_xpm():
             load_so_libflimage(), "flimage_enable_xpm",
             None, [],
             """void flimage_enable_xpm()
-            """)
+""")
     check_if_initialized()
     _flimage_enable_xpm()
 
@@ -24931,7 +24764,7 @@ def flimage_enable_xwd():
             load_so_libflimage(), "flimage_enable_xwd",
             None, [],
             """void flimage_enable_xwd()
-            """)
+""")
     check_if_initialized()
     _flimage_enable_xwd()
 
@@ -24949,7 +24782,7 @@ def flimage_free_ci(pImage):
             load_so_libflimage(), "flimage_free_ci",
             None, [cty.POINTER(xfc.FL_IMAGE)],
             """void flimage_free_ci(FL_IMAGE * p1)
-            """)
+""")
     check_if_initialized()
     keep_elem_refs(pImage)
     _flimage_free_ci(pImage)
@@ -24969,7 +24802,7 @@ def flimage_free_gray(pImage):
             load_so_libflimage(), "flimage_free_gray",
             None, [cty.POINTER(xfc.FL_IMAGE)],
             """void flimage_free_gray(FL_IMAGE * p1)
-            """)
+""")
     check_if_initialized()
     keep_elem_refs(pImage)
     _flimage_free_gray(pImage)
@@ -24989,7 +24822,7 @@ def flimage_free_linearlut(pImage):
             load_so_libflimage(), "flimage_free_linearlut",
             None, [cty.POINTER(xfc.FL_IMAGE)],
             """void flimage_free_linearlut(FL_IMAGE * p1)
-            """)
+""")
     keep_elem_refs(pImage)
     _flimage_free_linearlut(pImage)
 
@@ -25008,7 +24841,7 @@ def flimage_free_rgb(pImage):
             load_so_libflimage(), "flimage_free_rgb",
             None, [cty.POINTER(xfc.FL_IMAGE)],
             """void flimage_free_rgb(FL_IMAGE * p1)
-            """)
+""")
     check_if_initialized()
     keep_elem_refs(pImage)
     _flimage_free_rgb(pImage)
@@ -25028,7 +24861,7 @@ def flimage_freemem(pImage):
             load_so_libflimage(), "flimage_freemem",
             None, [cty.POINTER(xfc.FL_IMAGE)],
             """void flimage_freemem(FL_IMAGE * p1)
-            """)
+""")
     check_if_initialized()
     keep_elem_refs(pImage)
     _flimage_freemem(pImage)
@@ -25049,7 +24882,7 @@ def flimage_get_closest_color_from_map(pImage, p2):
             cty.c_int, [cty.POINTER(xfc.FL_IMAGE), cty.c_uint],
             """int flimage_get_closest_color_from_map(FL_IMAGE * p1,
                unsigned int p2)
-            """)
+""")
     check_if_initialized()
     uip2 = convert_to_uint(p2)
     keep_elem_refs(pImage, p2, uip2)
@@ -25071,7 +24904,7 @@ def flimage_get_linearlut(pImage):
             load_so_libflimage(), "flimage_get_linearlut",
             cty.c_int, [cty.POINTER(xfc.FL_IMAGE)],
             """int flimage_get_linearlut(FL_IMAGE * p1)
-            """)
+""")
     check_if_initialized()
     keep_elem_refs(pImage)
     retval = _flimage_get_linearlut(pImage)
@@ -25092,7 +24925,7 @@ def flimage_invalidate_pixels(pImage):
             load_so_libflimage(), "flimage_invalidate_pixels",
             None, [cty.POINTER(xfc.FL_IMAGE)],
             """void flimage_invalidate_pixels(FL_IMAGE * p1)
-            """)
+""")
     check_if_initialized()
     keep_elem_refs(pImage)
     _flimage_invalidate_pixels(pImage)
@@ -25114,7 +24947,7 @@ def flimage_open(filename):
             load_so_libflimage(), "flimage_open",
             cty.POINTER(xfc.FL_IMAGE), [xfc.STRING],
             """FL_IMAGE * flimage_open(const char * p1)
-            """)
+""")
     check_if_initialized()
     sfilename = convert_to_string(filename)
     keep_elem_refs(filename, sfilename)
@@ -25135,7 +24968,7 @@ def flimage_read_annotation(pImage):
             load_so_libflimage(), "flimage_read_annotation",
             cty.c_int, [cty.POINTER(xfc.FL_IMAGE)],
             """int flimage_read_annotation(FL_IMAGE * p1)
-            """)
+""")
     check_if_initialized()
     keep_elem_refs(pImage)
     retval = _flimage_read_annotation(pImage)
@@ -25157,7 +24990,7 @@ def flimage_replace_image(pImage, w, h, r, g, b):
             cty.c_void_p, cty.c_void_p],
             """void flimage_replace_image(FL_IMAGE * p1, int p2, int p3,
                void * p4, void * p5, void * p6)
-            """)
+""")
     check_if_initialized()
     iw = convert_to_int(w)
     ih = convert_to_int(h)
@@ -25176,12 +25009,10 @@ def flimage_swapbuffer(pImage):
 
         @status: Untested + NoDoc + NoDemo = NOT OK
     """
-
     _flimage_swapbuffer = cfuncproto(
-            load_so_libflimage(), "flimage_swapbuffer",
-            cty.c_int, [cty.POINTER(xfc.FL_IMAGE)],
-            """int flimage_swapbuffer(FL_IMAGE * p1)
-            """)
+        load_so_libflimage(), "flimage_swapbuffer",
+        cty.c_int, [cty.POINTER(xfc.FL_IMAGE)],
+        """int flimage_swapbuffer(FL_IMAGE * p1) """)
     check_if_initialized()
     keep_elem_refs(pImage)
     retval = _flimage_swapbuffer(pImage)
@@ -25199,14 +25030,12 @@ def flimage_to_ximage(pImage, win, pXWindowAttributes):
 
         @status: Untested + NoDoc + NoDemo = NOT OK
     """
-
     _flimage_to_ximage = cfuncproto(
-            load_so_libflimage(), "flimage_to_ximage",
-            cty.c_int, [cty.POINTER(xfc.FL_IMAGE), xfc.FL_WINDOW,
-            cty.POINTER(xfc.XWindowAttributes)],
-            """int flimage_to_ximage(FL_IMAGE * p1, FL_WINDOW p2,
-               XWindowAttributes * p3)
-            """)
+        load_so_libflimage(), "flimage_to_ximage",
+        cty.c_int, [cty.POINTER(xfc.FL_IMAGE), xfc.FL_WINDOW,
+        cty.POINTER(xfc.XWindowAttributes)],
+        """int flimage_to_ximage(FL_IMAGE * p1, FL_WINDOW p2,
+           XWindowAttributes * p3) """)
     check_if_initialized()
     ulwin = convert_to_Window(win)
     keep_elem_refs(pImage, win, pXWindowAttributes, ulwin)
@@ -25216,18 +25045,16 @@ def flimage_to_ximage(pImage, win, pXWindowAttributes):
 
 def flimage_write_annotation(pImage):
     """
-        flimage_write_annotation(pImage) -> num.
+    flimage_write_annotation(pImage) -> num.
 
-        @param pImage: pointer to image
+    @param pImage: pointer to image
 
-        @status: Untested + NoDoc + NoDemo = NOT OK
+    @status: Untested + NoDoc + NoDemo = NOT OK
     """
-
     _flimage_write_annotation = cfuncproto(
-            load_so_libflimage(), "flimage_write_annotation",
-            cty.c_int, [cty.POINTER(xfc.FL_IMAGE)],
-            """int flimage_write_annotation(FL_IMAGE * p1)
-            """)
+        load_so_libflimage(), "flimage_write_annotation",
+        cty.c_int, [cty.POINTER(xfc.FL_IMAGE)],
+        """int flimage_write_annotation(FL_IMAGE * p1) """)
     check_if_initialized()
     keep_elem_refs(pImage)
     retval = _flimage_write_annotation(pImage)

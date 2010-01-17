@@ -5120,4 +5120,13 @@ XK_Hyper_R = 0xffee             # Right hyper
 # *** end - from /usr/include/X11/keysymdef.h ***
 
 
+# *** start - from /usr/include/X11/Xutil.h 139 ***
+# definitions for initial window state
+#WithdrawnState = 0      # for windows that are not mapped
+NormalState = 1         # most applications want to start this way
+IconicState = 3         # application wants to start as an icon
+# *** end - from /usr/include/X11/Xutil.h ***
+
+# my add - list of possible values --LK
+WINSTATE_list = [NormalState, IconicState]
 

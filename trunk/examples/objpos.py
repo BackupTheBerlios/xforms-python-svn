@@ -25,10 +25,10 @@ def move_cb(pobj, data):
 
     x, y, w, h = xf.fl_get_object_geometry(pbut)
 
-    xlimitup = x.value + w.value + dx
-    xlimitdown = x.value + dx
-    ylimitup = y.value + h.value + dy
-    ylimitdown = y.value + dy
+    xlimitup = x + w + dx
+    xlimitdown = x + dx
+    ylimitup = y + h + dy
+    ylimitdown = y + dy
     if (xlimitdown < 0):
         dx = -dx
     if (xlimitup >= pbut.contents.form.contents.w):
@@ -37,12 +37,10 @@ def move_cb(pobj, data):
         dy = -dy
     if (ylimitup >= pbut.contents.form.contents.h):
         dy = -(dy*16)
-    x.value += dx
-    y.value += dy
+    x += dx
+    y += dy
 
-    xf.fl_set_object_position(pbut, x.value, y.value)
-    #xf.fl_set_object_position(pbut, x, y)
-
+    xf.fl_set_object_position(pbut, x, y)
 
 
 

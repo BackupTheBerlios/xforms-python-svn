@@ -38,7 +38,7 @@ def done_cb(pobj, data):
 
 def input_cb(pobj, data):
     unused, cx, cy = xf.fl_get_input_cursorpos(pobj)
-    buf = "x=%d y=%d" % (cx.value, cy.value)
+    buf = "x=%d y=%d" % (cx, cy)
     xf.fl_set_object_label(fd_input.report, buf)
 
 

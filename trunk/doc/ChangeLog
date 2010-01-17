@@ -1,10 +1,10 @@
 
 
 SVN
-
+    * some examples adapted to getter functions's .value modification.
     * pObject and pForm as parameters renamed to pFlObject and pFlForm, to
     avoid confusion with python "object" type.
-    * start restructuring of docstrings, to re-introduce @type for all
+    * start restructuring of docstrings, to introduce @type again for all
     parameters. Bugfixes and typos corrections.
     * new checks for pointer to FL_OBJECT/FL_FORM existence, and for
     required initialization.

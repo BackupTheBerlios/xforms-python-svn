@@ -67,8 +67,8 @@ def hide_show_cb(pobj, data):
 
 
 def reshow_cb(pobj, data):
-    xf.fl_hide_form(pobj.contents.form.contents)
-    xf.fl_show_form(pobj.contents.form.contents, xfc.FL_PLACE_POSITION, \
+    xf.fl_hide_form(pobj.contents.form)
+    xf.fl_show_form(pobj.contents.form, xfc.FL_PLACE_POSITION, \
                     xfc.FL_FULLBORDER, "TabFolder")
 
 

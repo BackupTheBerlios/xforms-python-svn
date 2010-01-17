@@ -184,21 +184,21 @@ def drawit(stobj):
                    stobj.g, stobj.b)
 
     if stobj.type == 1:
-        xf.fl_rectf(stobj.x.value - stobj.size, \
-                    stobj.y.value - stobj.size, 2 * stobj.size, \
+        xf.fl_rectf(stobj.x - stobj.size, \
+                    stobj.y - stobj.size, 2 * stobj.size, \
                     2 * stobj.size, xfc.FL_FREE_COL1)
     elif stobj.type == 2:
-        xf.fl_circf(stobj.x.value, stobj.y.value, stobj.size, \
+        xf.fl_circf(stobj.x, stobj.y, stobj.size, \
                     xfc.FL_FREE_COL1)
     elif stobj.type == 3:
         point = (xfc.FL_POINT * 3)()          # point[ 3 ]
 
-        point[0].x = stobj.x.value - stobj.size
-        point[0].y = stobj.y.value + stobj.size
-        point[1].x = stobj.x.value + stobj.size
-        point[1].y = stobj.y.value + stobj.size
-        point[2].x = stobj.x.value
-        point[2].y = stobj.y.value - stobj.size
+        point[0].x = stobj.x - stobj.size
+        point[0].y = stobj.y + stobj.size
+        point[1].x = stobj.x + stobj.size
+        point[1].y = stobj.y + stobj.size
+        point[2].x = stobj.x
+        point[2].y = stobj.y - stobj.size
         xf.fl_polyf(point, 3, xfc.FL_FREE_COL1)
 
 

@@ -44,7 +44,7 @@ def timer_cb(idt, data):
 
     end_sec, end_usec = xf.fl_gettime()
 
-    df = end_sec.value - start_sec.value + 1.0e-6 * (end_usec.value - start_usec.value)
+    df = end_sec - start_sec + 1.0e-6 * (end_usec - start_usec)
 
     buf = "Timeout: %.3f  Actual: %.3f  DeltaE: %.3f" % \
           (timerval, df, df - timerval)
