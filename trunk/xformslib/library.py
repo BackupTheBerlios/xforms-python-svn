@@ -617,10 +617,7 @@ def fl_object_returned(pFlObject):
 
 # TODO: verify what function can open file
 def fl_add_io_callback(fd, mask, py_IoCallback, vdata):
-    """
-    fl_add_io_callback(fd, mask, py_IoCallback, vdata)
-
-    Registers an input callback function when input is available from fd.
+    """Registers an input callback function when input is available from fd.
 
     @param fd: a valid file descriptor in a unix system
     @type fd: int
@@ -657,16 +654,14 @@ def fl_add_io_callback(fd, mask, py_IoCallback, vdata):
 
 
 def fl_remove_io_callback(fd, mask, py_IoCallback):
-    """
-    fl_remove_io_callback(fd, mask, py_IoCallback)
-
-    Removes the registered callback function when input is available from fd.
+    """Removes the registered callback function when input is available from
+    fd.
 
     @param fd: a valid file descriptor in a unix system
     @type fd: int
     @param mask: under what circumstance the input callback should be removed.
         Values (from xfdata module) i.e. FL_READ, FL_WRITE, FL_EXCEPT
-    @type fd: int
+    @type mask: int
     @param py_IoCallback: python function to be removed, no return
     @type py_IoCallback: __ funcname (num, ptr_void) __
 
@@ -696,10 +691,7 @@ def fl_remove_io_callback(fd, mask, py_IoCallback):
 # signals
 
 def fl_add_signal_callback(sglnum, py_SignalHandler, vdata):
-    """
-    fl_add_signal_callback(sglnum, py_SignalHandler, vdata)
-
-    Handles the receipt of a signal by registering a callback function that
+    """Handles the receipt of a signal by registering a callback function that
     gets called when a signal is caught (only 1 function per signal).
 
     @param sglnum: signal number. Values (from signal module) e.g. SIGALRM,
@@ -733,10 +725,7 @@ def fl_add_signal_callback(sglnum, py_SignalHandler, vdata):
 
 
 def fl_remove_signal_callback(sglnum):
-    """
-    fl_remove_signal_callback(sglnum)
-
-    Removes a previously registered callback function related to a signal.
+    """Removes a previously registered callback function related to a signal.
 
     @param sglnum: signal number. Values (from signal module) e.g. SIGALRM,
         SIGINT, ...
@@ -757,11 +746,8 @@ def fl_remove_signal_callback(sglnum):
 
 
 def fl_signal_caught(sglnum):
-    """
-    fl_signal_caught(sglnum)
-
-    Informs the main loop of the delivery of the particular signal. The signal
-    is received by the application program.
+    """Informs the main loop of the delivery of the particular signal. The
+    signal is received by the application program.
 
     @param sglnum: signal number. Values (from signal module) e.g. SIGALRM,
         SIGINT, ...
@@ -782,15 +768,12 @@ def fl_signal_caught(sglnum):
 
 
 def fl_app_signal_direct(flag):
-    """ 
-    fl_app_signal_direct(flag)
-
-    Changes the default behavior of the built-in signal facilities (to be
+    """Changes the default behavior of the built-in signal facilities (to be
     called with a true value for flag prior to any use of
     fl_add_signal_callback)
 
-    @param flag: flag to disable/enable signal. Values i.e. 0 (disabled) or
-        1 (enabled)
+    @param flag: flag to disable/enable signal. Values 0 (disabled) or 1
+        (enabled)
     @type flag: int
 
     @example: fl_app_signal_direct(1)
@@ -810,10 +793,7 @@ def fl_app_signal_direct(flag):
 # timeouts
 
 def fl_add_timeout(msec, py_TimeoutCallback, vdata):
-    """
-    fl_add_timeout(msec, py_TimeoutCallback, vdata) -> int
-
-    Adds a timeout callback after a specified elapsed time.
+    """Adds a timeout callback after a specified elapsed time.
 
     @param msec: time elapsed in milliseconds
     @type msec: long
@@ -823,6 +803,7 @@ def fl_add_timeout(msec, py_TimeoutCallback, vdata):
     @type vdata: pointer to void
 
     @return: timer number id
+    @rtype: int
 
     @example: def timeoutcb(num, vdata):
     @example: |->| ...
@@ -847,10 +828,7 @@ def fl_add_timeout(msec, py_TimeoutCallback, vdata):
 
 
 def fl_remove_timeout(idnum):
-    """
-    fl_remove_timeout(idnum)
-
-    Removes a timeout callback function (created with fl_add_timeout).
+    """Removes a timeout callback function (created with fl_add_timeout).
 
     @param idnum: timeout number id
     @type idnum: int
@@ -872,13 +850,11 @@ def fl_remove_timeout(idnum):
 # Basic public routine prototypes
 
 def fl_library_version():
-    """
-    fl_library_version() -> int, int, int
-
-    Returns consolidated, major and minor version informations.
+    """Returns consolidated, major and minor version informations.
 
     @return: version_rev (computed as 1000 * version + revision), version
         (e.g. 1 in 1.x.yy), revision (e.g. 0 in x.0.yy)
+    @rtype: int, int, int
 
     @example: compver, ver, rev = fl_library_version()
 
@@ -902,13 +878,10 @@ def fl_library_version():
 # Generic routines that deal with FORMS
 
 def fl_bgn_form(formtype, w, h):
-    """
-    fl_bgn_form(formtype, w, h) -> pFlForm
-
-    Starts the definition of a form call.
+    """Starts the definition of a form call.
 
     @param formtype: type of box that is used as a background. Values (from
-        xfdata module) i.e. FL_NO_BOX, FL_UP_BOX, FL_DOWN_BOX, FL_BORDER_BOX,
+        xfdata module) FL_NO_BOX, FL_UP_BOX, FL_DOWN_BOX, FL_BORDER_BOX,
         FL_SHADOW_BOX, FL_FRAME_BOX, FL_ROUNDED_BOX, FL_EMBOSSED_BOX,
         FL_FLAT_BOX, FL_RFLAT_BOX, FL_RSHADOW_BOX, FL_OVAL_BOX,
         FL_ROUNDED3D_UPBOX, FL_ROUNDED3D_DOWNBOX, FL_OVAL3D_UPBOX,
@@ -919,7 +892,8 @@ def fl_bgn_form(formtype, w, h):
     @param h: height of the new form in coord units
     @type h: int
 
-    @return: form to define (<pointer to xfdata.FL_FORM>)
+    @return: form to define (pFlForm)
+    @rtype: pointer to xfdata.FL_FORM
 
     @example: pform = fl_bgn_form(xfdata.FL_UP_BOX, 400, 500)
 
@@ -940,11 +914,8 @@ def fl_bgn_form(formtype, w, h):
 
 
 def fl_end_form():
-    """
-    fl_end_form()
-
-    Ends the definition for a form call, after all required objects have been
-    added to a form call.
+    """Ends the definition for a form call, after all required objects have
+    been added to a form call.
 
     @example: fl_end_form()
 
@@ -959,13 +930,11 @@ def fl_end_form():
 
 
 def fl_do_forms():
-    """
-    fl_do_forms() -> pFlObject
+    """Starts the main loop of the program and returns only when the state of
+    a xfdata.FL_OBJECT (that has no callback bound to it) changes.
 
-    Starts the main loop of the program and returns only when the state of a
-    xfdata.FL_OBJECT (that has no callback bound to it) changes.
-
-    @return: object changed (<pointer to xfdata.FL_OBJECT>)
+    @return: object changed (pFlObject)
+    @rtype: pointer to xfdata.FL_OBJECT
 
     @example: while fl_do_forms(): pass
 
@@ -981,13 +950,11 @@ def fl_do_forms():
 
 
 def fl_check_forms():
-    """
-    fl_check_forms() -> pFlObject
-
-    Returns None immediately unless the state of one of xfdata.FL_OBJECT
+    """Returns None immediately unless the state of one of xfdata.FL_OBJECT
     (without a callback bound to it) changed.
 
-    @return: object changed (<pointer to xfdata.FL_OBJECT>)
+    @return: object changed (pFlObject)
+    @rtype: pointer to xfdata.FL_OBJECT
 
     @example: pobj = fl_check_forms()
 
@@ -1779,11 +1746,8 @@ def fl_set_form_minsize(pFlForm, w, h):
 
 
 def fl_set_form_maxsize(pFlForm, w, h):
-    """
-    fl_set_form_maxsize(pFlForm, w, h)
-
-    Sets the maximum size a form can have, if interactive resizing is allowed
-    (e.g. by showing the form with xfdata.FL_PLACE_POSITION).
+    """Sets the maximum size a form can have, if interactive resizing is
+    allowed (e.g. by showing the form with xfdata.FL_PLACE_POSITION).
 
     @param pFlForm: form whose size has to be set
     @type pFlForm: pointer to xdata.FL_FORM
@@ -1811,10 +1775,7 @@ def fl_set_form_maxsize(pFlForm, w, h):
 
 # TODO: find if key mask have to be included
 def fl_set_form_event_cmask(pFlForm, cmask):
-    """
-    fl_set_form_event_cmask(pFlForm, cmask)
-
-    Sets the event compress mask a form can react to.
+    """Sets the event compress mask a form can react to.
 
     @param pFlForm: form
     @type pFlForm: pointer to xfdata.FL_FORM
@@ -1846,15 +1807,13 @@ def fl_set_form_event_cmask(pFlForm, cmask):
 
 
 def fl_get_form_event_cmask(pFlForm):
-    """
-    fl_get_form_event_cmask(pFlForm) -> long_pos
+    """Returns event compress mask a form can react to.
 
-    Returns event compress mask a form can react to.
-
-    @param pFlForm: pointer to form
+    @param pFlForm: form
     @type pFlForm: pointer to xfdata.FL_FORM
 
     @return: event compress mask id
+    @rtype: long_pos
 
     @example: cmaskid = fl_get_form_event_cmask(pform)
 
@@ -1872,19 +1831,16 @@ def fl_get_form_event_cmask(pFlForm):
 
 
 def fl_set_form_geometry(pFlForm, x, y, w, h):
-    """
-    fl_set_form_geometry(pFlForm, x, y, w, h)
-
-    Sets the geometry (position and size) of a form.
+    """Sets the geometry (position and size) of a form.
 
     @param pFlForm: pointer to form to be set
     @type pFlForm: pointer to xfdata.FL_FORM
     @param x: horizontal position (upper-left corner)
-    @type h: int
+    @type x: int
     @param y: vertical position (upper-left corner)
-    @type h: int
+    @type y: int
     @param w: width of form in coord units
-    @type h: int
+    @type w: int
     @param h: height of form in coord units
     @type h: int
 
@@ -1912,26 +1868,24 @@ fl_set_initial_placement = fl_set_form_geometry
 
 
 def fl_show_form(pFlForm, place, border, title):
-    """
-    fl_show_form(pFlForm, place, border, title) -> win
-
-    Shows the form.
+    """Shows the form.
 
     @param pFlForm: form to be shown
     @type pFlForm: pointer to xfdata.FL_FORM
-    @param place: where form has to be placed. Values (from xfdata module) i.e.
+    @param place: where form has to be placed. Values (from xfdata module)
         FL_PLACE_FREE, FL_PLACE_MOUSE, FL_PLACE_CENTER, FL_PLACE_POSITION,
         FL_PLACE_SIZE, FL_PLACE_GEOMETRY, FL_PLACE_ASPECT, FL_PLACE_FULLSCREEN,
         FL_PLACE_HOTSPOT, FL_PLACE_ICONIC, FL_FREE_SIZE, FL_PLACE_FREE_CENTER,
         FL_PLACE_CENTERFREE
     @type place: int
     @param border: window manager decoration. Values (from xfdata module)
-        i.e. FL_FULLBORDER, FL_TRANSIENT, FL_NOBORDER
+        FL_FULLBORDER, FL_TRANSIENT, FL_NOBORDER
     @type border: int
     @param title: title of form
     @type title: str
 
-    @returns: window id (<long_pos>)
+    @returns: window id (win)
+    @rtype: long_pos
 
     @example: wind = fl_show_form(pform0, FL_PLACE_FREE, FL_FULLBORDER,
         "MyForm")
@@ -1957,10 +1911,7 @@ def fl_show_form(pFlForm, place, border, title):
 
 
 def fl_hide_form(pFlForm):
-    """
-    fl_hide_form(pFlForm)
-
-    Hides the form.
+    """Hides the form.
 
     @param pFlForm: form to be hidden
     @type pFlForm: pointer to xfdata.FL_FORM
@@ -2004,10 +1955,7 @@ def fl_free_form(pFlForm):
 
 
 def fl_redraw_form(pFlForm):
-    """
-    fl_redraw_form(pFlForm)
-
-    (Re)draws an entire form.
+    """(Re)draws an entire form.
 
     @param pFlForm: form to redraw
     @type pFlForm: pointer to xfdata.FL_FORM
@@ -2027,10 +1975,7 @@ def fl_redraw_form(pFlForm):
 
 
 def fl_set_form_dblbuffer(pFlForm, flag):
-    """
-    fl_set_form_dblbuffer(pFlForm, flag)
-
-    Uses double buffering on a per-form basis. Since Xlib doesn't support
+    """Uses double buffering on a per-form basis. Since Xlib doesn't support
     double buffering, XForms library simulates this functionality with pixmap
     bit-bliting. In practice, the effect is hardly distinguishable from double
     buffering and performance is on par with multi-buffering extensions (it is
@@ -2060,28 +2005,26 @@ def fl_set_form_dblbuffer(pFlForm, flag):
 
 
 def fl_prepare_form_window(pFlForm, place, border, title):
-    """
-    fl_prepare_form_window(pFlForm, place, border, title) -> win
-
-    Creates a window that obeys any and all constraints just as fl_show_form()
-    does but remains unmapped (not shown), returning its window handle. You
-    after need fl_show_form_window() to show it.
+    """Creates a window that obeys any and all constraints just as
+    fl_show_form() does but remains unmapped (not shown), returning its
+    window handle. You need fl_show_form_window() after to show it.
 
     @param pFlForm: form to display
     @type pFlForm: pointer to xfdata.FL_FORM
-    @param place: where has to be placed. Values (from xfdata module) i.e.
+    @param place: where has to be placed. Values (from xfdata module)
         FL_PLACE_FREE, FL_PLACE_MOUSE, FL_PLACE_CENTER, FL_PLACE_POSITION,
         FL_PLACE_SIZE, FL_PLACE_GEOMETRY, FL_PLACE_ASPECT, FL_PLACE_FULLSCREEN,
         FL_PLACE_HOTSPOT, FL_PLACE_ICONIC, FL_FREE_SIZE, FL_PLACE_FREE_CENTER,
         FL_PLACE_CENTERFREE
     @type place: int
-    @param border: window manager decoration. Values (from xfdata module) i.e.
+    @param border: window manager decoration. Values (from xfdata module)
         FL_FULLBORDER, FL_TRANSIENT, FL_NOBORDER
     @type border: int
     @param title: text title of form
     @type title: str
 
-    @returns: window id (<long_pos>)
+    @returns: window id (win)
+    @rtype: long_pos
 
     @example: wind = fl_prepare_form_window(pform2, FL_PLACE_FREE,
         FL_FULLBORDER, "MyForm")
@@ -2108,22 +2051,19 @@ def fl_prepare_form_window(pFlForm, place, border, title):
 
 
 def fl_show_form_window(pFlForm):
-    """
-    fl_show_form_window(pFlForm) -> win
-
-    Maps (shows) a window of form that has been created before with
+    """Maps (shows) a window of form that has been created before with
     fl_prepare_form_window().
 
     @param pFlForm: form whose window has to be shown
     @type pFlForm: pointer to xfdata.FL_FORM
 
-    @returns: window id (<long_pos>)
+    @returns: window id (win)
+    @rtype: long_pos
 
     @example: win1 = fl_show_form_window(pform2)
 
     @status: Tested + Doc + Demo = OK
     """
-
     _fl_show_form_window = cfuncproto(
         load_so_libforms(), "fl_show_form_window", \
         xfc.Window, [cty.POINTER(xfc.FL_FORM)], \
@@ -2136,17 +2076,15 @@ def fl_show_form_window(pFlForm):
 
 
 def fl_adjust_form_size(pFlForm):
-    """
-    fl_adjust_form_size(pFlForm) -> float
-
-    Similar to fl_fit_object_label, but will do it for all objects and has a
-    smaller threshold. Mainly intended for compensation for font size
+    """Similar to fl_fit_object_label, but will do it for all objects and
+    has a smaller threshold. Mainly intended for compensation for font size
     variations.
 
     @param pFlForm: form whose size has to be adjusted
     @type pFlForm: pointer to xfdata.FL_FORM
 
     @returns: max factor id
+    @rtype: float
 
     @example: mfactor = fl_adjust_form_size(pform)
 
@@ -2164,15 +2102,13 @@ def fl_adjust_form_size(pFlForm):
 
 
 def fl_form_is_visible(pFlForm):
-    """
-    fl_form_is_visible(pFlForm) -> int
-
-    Returns if form is visible or not.
+    """Returns if form is visible or not.
 
     @param pFlForm: form to evaluate
     @type pFlForm: pointer to xfdata.FL_FORM
 
-    @returns: visibility state (0 invisible, non-zero visible) (<int>)
+    @returns: visibility state (0 invisible, non-zero visible)
+    @rtype: int
 
     @example: visib = fl_form_is_visible(pform)
 
@@ -2190,15 +2126,13 @@ def fl_form_is_visible(pFlForm):
 
 
 def fl_form_is_iconified(pFlForm):
-    """
-    fl_form_is_iconified(pFlForm) ->  int
-
-    Returns if a form's window is in iconified state or not.
+    """Returns if a form's window is in iconified state or not.
 
     @param pFlForm: form to evaluate
     @type pFlForm: pointer to xfdata.FL_FORM
 
     @returns: iconic state (0 not iconified, non-zero iconified)
+    @rtype: int
 
     @example: iconif = fl_form_is_iconified(pform)
 
@@ -2216,11 +2150,8 @@ def fl_form_is_iconified(pFlForm):
 
 
 def fl_register_raw_callback(pFlForm, mask, py_RawCallback):
-    """
-    fl_register_raw_callback(pFlForm, mask, py_RawCallback) -> old raw_callback func.
-
-    Register pre-emptive event handlers. Only one handler is allowed for each
-    event pair.
+    """Register pre-emptive event handlers. Only one handler is allowed
+    for each event pair.
 
     @param pFlForm: form
     @type pFlForm: pointer to xfdata.FL_FORM
@@ -2265,14 +2196,12 @@ fl_register_call_back = fl_register_raw_callback
 
 
 def fl_bgn_group():
-    """
-    fl_bgn_group() -> pFlObject
-
-    Starts a group of objects definition. It purpose can be e.g. to define a
-    series of objects to be hidden or deactivated or to define a series of
+    """Starts a group of objects definition. It purpose can be e.g. to define
+    a series of objects to be hidden or deactivated or to define a series of
     radio buttons.
 
-    @returns: group started (<pointer to xfdata.FL_OBJECT>)
+    @returns: group started (pFlObject)
+    @rtype: pointer to xfdata.FL_OBJECT
 
     @example: group0 = fl_bgn_group()
 
@@ -2288,10 +2217,7 @@ def fl_bgn_group():
 
 
 def fl_end_group():
-    """
-    fl_end_group()
-
-    Ends a group definition.
+    """Ends a group definition.
 
     @example: fl_end_group()
 
@@ -2306,15 +2232,14 @@ def fl_end_group():
 
 
 def fl_addto_group(pFlObject):
-    """
-    fl_addto_group(pFlObject) -> pFlForm
-
-    Reopens a group (after fl_end_group) to allow addition of further objects.
+    """Reopens a group (after fl_end_group) to allow addition of further
+    objects.
 
     @param pFlObject: group object to reopen
     @type pFlObject: pointer to xfdata.FL_OBJECT
 
-    @returns: form (<pointer to xfdata.FL_FORM>) or None (on failure)
+    @returns: form (pFlForm) or None (on failure)
+    @rtype: pointer to xfdata.FL_FORM
 
     @example: group1 = fl_addto_group(closedgroup)
 
@@ -2334,16 +2259,14 @@ def fl_addto_group(pFlObject):
 # Routines that deal with FL_OBJECTS
 
 def fl_get_object_objclass(pFlObject):
-    """
-    fl_get_object_objclass(pFlObject) -> int
-
-    Return the object class of an object. (e.g. button, lightbutton, box,
+    """Return the object class of an object. (e.g. button, lightbutton, box,
     nmenu, counter, etc.) 
 
     @param pFlObject: object to evaluate
     @type pFlObject: pointer to xfdata.FL_OBJECT
 
     @returns: objclass id or -1 (on failure)
+    @rtype: int
 
     @example: obcls = fl_get_object_objclass(pobj)
 
@@ -2361,16 +2284,14 @@ def fl_get_object_objclass(pFlObject):
 
 
 def fl_get_object_type(pFlObject):
-    """
-    fl_get_object_type(pFlObject) -> int
-
-    Return the type of an object (e.g. radio button, multiline input, normal
-    browser, etc..).
+    """Return the type of an object (e.g. radio button, multiline input,
+    normal browser, etc..).
 
     @param pFlObject: object to evaluate
     @type pFlObject: pointer to xfdata.FL_OBJECT
 
     @returns: type id or -1 (on failure)
+    @rtype: int
 
     @example: obtype = fl_get_object_type(pobj)
 
@@ -2388,16 +2309,13 @@ def fl_get_object_type(pFlObject):
 
 
 def fl_set_object_boxtype(pFlObject, boxtype):
-    """
-    fl_set_object_boxtype(pFlObject, boxtype)
-
-    Sets the shape of box of an object. Not all possible boxtypes are suitable
-    for all types of objects.
+    """Sets the shape of box of an object. Not all possible boxtypes are
+    suitable for all types of objects.
 
     @param pFlObject: object whose boxtype has to be set
     @type pFlObject: pointer to xfdata.FL_OBJECT
     @param boxtype: type of the box to be set. Values (from xfdata module)
-        i.e. FL_NO_BOX, FL_UP_BOX, FL_DOWN_BOX, FL_BORDER_BOX, FL_SHADOW_BOX,
+        FL_NO_BOX, FL_UP_BOX, FL_DOWN_BOX, FL_BORDER_BOX, FL_SHADOW_BOX,
         FL_FRAME_BOX, FL_ROUNDED_BOX, FL_EMBOSSED_BOX, FL_FLAT_BOX,
         FL_RFLAT_BOX, FL_RSHADOW_BOX, FL_OVAL_BOX, FL_ROUNDED3D_UPBOX,
         FL_ROUNDED3D_DOWNBOX, FL_OVAL3D_UPBOX, FL_OVAL3D_DOWNBOX,
@@ -2421,16 +2339,14 @@ def fl_set_object_boxtype(pFlObject, boxtype):
 
 
 def fl_get_object_boxtype(pFlObject):
-    """
-    fl_get_object_boxtype(pFlObject) -> int
-
-    Returns the current boxtype of an object (e.g. no box, up box, shadow box,
-    etc..).
+    """Returns the current boxtype of an object (e.g. no box, up box, shadow
+    box, etc..).
 
     @param pFlObject: object to evaluate
     @type pFlObject: pointer to xfdata.FL_OBJECT
 
     @returns: boxtype id or -1 (on failure)
+    @rtype: int
 
     @example: boxtp = fl_get_object_boxtype(ptextobj)
 
@@ -2448,10 +2364,7 @@ def fl_get_object_boxtype(pFlObject):
 
 
 def fl_set_object_bw(pFlObject, bw):
-    """
-    fl_set_object_bw(pFlObject, bw)
-
-    Sets the borderwidth of an object. If requested borderwidth is 0, -1 is
+    """Sets the borderwidth of an object. If requested borderwidth is 0, -1 is
     used. If set to a negative number, all objects appear to have a softer
     appearance.
 
@@ -2476,15 +2389,13 @@ def fl_set_object_bw(pFlObject, bw):
 
 
 def fl_get_object_bw(pFlObject):
-    """
-    fl_get_object_bw(pFlObject) -> int
-
-    Returns the borderwidth of an object.
+    """Returns the borderwidth of an object.
 
     @param pFlObject: object to evaluate
     @type pFlObject: pointer to xfdata.FL_OBJECT
 
-    @returns: borderwidth
+    @returns: borderwidth (bw)
+    @rtype: int
 
     @example: currbw = fl_get_object_bw(pobj)
 
@@ -2493,7 +2404,6 @@ def fl_get_object_bw(pFlObject):
 
     @status: Tested + Doc + NoDemo = OK
     """
-
     _fl_get_object_bw = cfuncproto(
         load_so_libforms(), "fl_get_object_bw", \
         None, [cty.POINTER(xfc.FL_OBJECT), cty.POINTER(cty.c_int)], \
@@ -2507,10 +2417,7 @@ def fl_get_object_bw(pFlObject):
 
 
 def fl_set_object_resize(pFlObject, what):
-    """
-    fl_set_object_resize(pFlObject, what)
-
-    Sets the resize property of an object.
+    """Sets the resize property of an object.
 
     @param pFlObject: object to set
     @type pFlObject: pointer to xfdata.FL_OBJECT
@@ -2535,16 +2442,14 @@ def fl_set_object_resize(pFlObject, what):
 
 
 def fl_get_object_resize(pFlObject):
-    """
-    fl_get_object_resize(pFlObject) -> int_pos
-
-    Returns the resize property of an object (e.g. resize all, resize none,
+    """Returns the resize property of an object (e.g. resize all, resize none,
     etc..).
 
     @param pFlObject: object to evaluate
     @type pFlObject: pointer to xfdata.FL_OBJECT
 
     @returns: resize property
+    @rtype: int_pos
 
     @attention: API change from XForms - upstream was
         fl_get_object_resize(pFlObject, what)
@@ -2567,18 +2472,15 @@ def fl_get_object_resize(pFlObject):
 
 
 def fl_set_object_gravity(pFlObject, nw, se):
-    """
-    fl_set_object_gravity(pFlObject, nw, se)
-
-    Sets the gravity properties of an object.
+    """Sets the gravity properties of an object.
 
     @param pFlObject: object to be set
     @type pFlObject: pointer to xfdata.FL_OBJECT
-    @param nw: gravity property for NorthWest. Values (from xfdata module) i.e.
+    @param nw: gravity property for NorthWest. Values (from xfdata module)
         FL_North, FL_NorthEast, FL_NorthWest, FL_South, FL_SouthEast,
         FL_SouthWest, FL_East, FL_West, FL_NoGravity, FL_ForgetGravity
     @type nw: int_pos
-    @param se: gravity property for SouthEast. Values (from xfdata module) i.e.
+    @param se: gravity property for SouthEast. Values (from xfdata module)
         FL_North, FL_NorthEast, FL_NorthWest, FL_South, FL_SouthEast,
         FL_SouthWest, FL_East, FL_West, FL_NoGravity, FL_ForgetGravity
     @type se: int_pos
@@ -2603,15 +2505,14 @@ def fl_set_object_gravity(pFlObject, nw, se):
 
 
 def fl_get_object_gravity(pFlObject):
-    """
-    fl_get_object_gravity(pFlObject) -> int_pos, int_pos
-
-    Returns the gravity properties of an object (e.g. North, SouthWest, etc..).
+    """Returns the gravity properties of an object (e.g. North, SouthWest,
+    etc..).
 
     @param pFlObject: object to set
     @type pFlObject: pointer to xfdata.FL_OBJECT
 
     @returns: NorthWest and SouthEast gravity
+    @rtype: int_pos, int_pos
 
     @attention: API change from XForms - upstream was
         fl_get_object_gravity(pFlObject, nw, se)
@@ -2636,14 +2537,11 @@ def fl_get_object_gravity(pFlObject):
 
 
 def fl_set_object_lsize(pFlObject, size):
-    """
-    fl_set_object_lsize(pFlObject, size)
-
-    Sets the label size of an object.
+    """Sets the label size of an object.
 
     @param pFlObject: object to be set
     @type pFlObject: pointer to xfdata.FL_OBJECT
-    @param size: label size. Values (from xfdata module) i.e. FL_TINY_SIZE,
+    @param size: label size. Values (from xfdata module) FL_TINY_SIZE,
         FL_SMALL_SIZE, FL_NORMAL_SIZE, FL_MEDIUM_SIZE, FL_LARGE_SIZE,
         FL_HUGE_SIZE, FL_DEFAULT_SIZE
     @type size: int
@@ -2665,15 +2563,13 @@ def fl_set_object_lsize(pFlObject, size):
 
 
 def fl_get_object_lsize(pFlObject):
-    """
-    fl_get_object_lsize(pFlObject) -> int
-
-    Returns the label size of an object.
+    """Returns the label size of an object.
 
     @param pFlObject: object to evaluate
     @type pFlObject: pointer to xfdata.FL_OBJECT
 
     @returns: label size
+    @rtype: int
 
     @example: lsize = fl_get_object_lsize(pobj)
 
@@ -2691,20 +2587,17 @@ def fl_get_object_lsize(pFlObject):
 
 
 def fl_set_object_lstyle(pFlObject, style):
-    """
-    fl_set_object_lstyle(pFlObject, style)
-
-    Sets the label style of an object.
+    """Sets the label style of an object.
 
     @param pFlObject: object to be set
     @type pFlObject: pointer to xfdata.FL_OBJECT
-    @param style: label style. Values (from xfdata module) i.e.
-        FL_NORMAL_STYLE, FL_BOLD_STYLE, FL_ITALIC_STYLE, FL_BOLDITALIC_STYLE,
-        FL_FIXED_STYLE, FL_FIXEDBOLD_STYLE, FL_FIXEDITALIC_STYLE,
-        FL_FIXEDBOLDITALIC_STYLE, FL_TIMES_STYLE, FL_TIMESBOLD_STYLE,
-        FL_TIMESITALIC_STYLE, FL_TIMESBOLDITALIC_STYLE, FL_MISC_STYLE,
-        FL_MISCBOLD_STYLE, FL_MISCITALIC_STYLE, FL_SYMBOL_STYLE,
-        FL_SHADOW_STYLE, FL_ENGRAVED_STYLE, FL_EMBOSSED_STYLE
+    @param style: label style. Values (from xfdata module) FL_NORMAL_STYLE,
+        FL_BOLD_STYLE, FL_ITALIC_STYLE, FL_BOLDITALIC_STYLE, FL_FIXED_STYLE,
+        FL_FIXEDBOLD_STYLE, FL_FIXEDITALIC_STYLE, FL_FIXEDBOLDITALIC_STYLE,
+        FL_TIMES_STYLE, FL_TIMESBOLD_STYLE, FL_TIMESITALIC_STYLE,
+        FL_TIMESBOLDITALIC_STYLE, FL_MISC_STYLE, FL_MISCBOLD_STYLE,
+        FL_MISCITALIC_STYLE, FL_SYMBOL_STYLE, FL_SHADOW_STYLE,
+        FL_ENGRAVED_STYLE, FL_EMBOSSED_STYLE
     @type style: int
 
     @example: fl_set_object_lstyle(pobj, xfdata.FL_TIMESITALIC_STYLE)
@@ -2724,16 +2617,14 @@ def fl_set_object_lstyle(pFlObject, style):
 
 
 def fl_get_object_lstyle(pFlObject):
-    """
-    fl_get_object_lstyle(pFlObject) -> int
-
-    Returns the label style of an object (e.g. xfdata.FL_BOLD_STYLE,
+    """Returns the label style of an object (e.g. xfdata.FL_BOLD_STYLE,
     xfdata.FL_NORMAL_STYLE, etc..).
 
     @param pFlObject: object to evaluate
     @type pFlObject: pointer to xfdata.FL_OBJECT
 
     @returns: label style
+    @rtype: int
 
     @example: lstyle = fl_get_object_lstyle(pobj)
 
@@ -2751,10 +2642,7 @@ def fl_get_object_lstyle(pFlObject):
 
 
 def fl_set_object_lcol(pFlObject, colr):
-    """
-    fl_set_object_lcol(pFlObject, colr)
-
-    Sets the label color of an object.
+    """Sets the label color of an object.
 
     @param pFlObject: object to be set
     @type pFlObject: pointer to xfdata.FL_OBJECT
@@ -2782,16 +2670,14 @@ fl_set_object_lcolor = fl_set_object_lcol
 
 
 def fl_get_object_lcol(pFlObject):
-    """
-    fl_get_object_lcol(pFlObject) -> long_pos
-
-    Returns the label color of an object (e.g. xfdata.FL_WHITE,
-    xfdata.FL_LIME, etc..).
+    """Returns the label color of an object (from xfdata, e.g. FL_WHITE,
+    FL_LIME, etc..).
 
     @param pFlObject: object to evaluate
     @type pFlObject: pointer to xfdata.FL_OBJECT
 
     @returns: color value
+    @rtype: long_pos
 
     @example: obcolor = fl_get_object_lcol(pobj)
 
@@ -2809,10 +2695,7 @@ def fl_get_object_lcol(pFlObject):
 
 
 def fl_set_object_return(pFlObject, when):
-    """
-    fl_set_object_return(pFlObject, when) -> int
-
-    Sets the conditions under which an object gets returned (or its callback
+    """Sets the conditions under which an object gets returned (or its callback
     invoked). If the object has to do additional work on setting te condition
     (e.g. it has child objects that also need to be set) it has to set up it's
     own function that then will called in the end. This should only be called
@@ -2822,12 +2705,13 @@ def fl_set_object_return(pFlObject, when):
     @param pFlObject: object
     @type pFlObject: pointer to xfdata.FL_OBJECT
     @param when: return type (when it returns). Values (from xfdata module)
-        i.e. FL_RETURN_NONE, FL_RETURN_CHANGED, FL_RETURN_END,
+        FL_RETURN_NONE, FL_RETURN_CHANGED, FL_RETURN_END,
         FL_RETURN_END_CHANGED, FL_RETURN_SELECTION, FL_RETURN_DESELECTION,
         FL_RETURN_TRIGGERED, FL_RETURN_ALWAYS
     @type when: int_pos
 
     @returns: old return type id
+    @rtype: int
 
     @example: fl_set_object_return(pobj, xfdata.FL_RETURN_CHANGED)
 
@@ -2849,11 +2733,10 @@ def fl_set_object_return(pFlObject, when):
 
 def fl_notify_object(pFlObject, cause):
     """
-    fl_notify_object(pFlObject, cause)
 
     @param pFlObject: pointer to object
     @type pFlObject: pointer to xfdata.FL_OBJECT
-    @param cause: cause for notification. Values (from xfdata module) i.e.
+    @param cause: cause for notification. Values (from xfdata module)
         FL_ATTRIB, FL_RESIZED, FL_MOVEORIGIN
     @type cause: int
 
@@ -2874,14 +2757,11 @@ def fl_notify_object(pFlObject, cause):
 
 
 def fl_set_object_lalign(pFlObject, align):
-    """
-    fl_set_object_lalign(pFlObject, align)
-
-    Sets alignment of an object's label.
+    """Sets alignment of an object's label.
 
     @param pFlObject: object to be set
     @type pFlObject: pointer to xfdata.FL_OBJECT
-    @param align: alignment of label. Values (from xfdata module) i.e.
+    @param align: alignment of label. Values (from xfdata module)
         FL_ALIGN_CENTER, FL_ALIGN_TOP, FL_ALIGN_BOTTOM, FL_ALIGN_LEFT,
         FL_ALIGN_RIGHT, FL_ALIGN_LEFT_TOP, FL_ALIGN_RIGHT_TOP,
         FL_ALIGN_LEFT_BOTTOM, FL_ALIGN_RIGHT_BOTTOM, FL_ALIGN_INSIDE,
@@ -2905,14 +2785,14 @@ def fl_set_object_lalign(pFlObject, align):
 
 
 def fl_get_object_lalign(pFlObject):
-    """
-    fl_get_object_lalign(pFlObject) -> align num.
-
-    Returns alignment of an object's label (e.g. xfdata.FL_ALIGN_LEFT,
-    xfdata.FL_ALIGN_RIGHT_TOP, etc..).
+    """Returns alignment of an object's label (from xfdata, e.g. FL_ALIGN_LEFT,
+    FL_ALIGN_RIGHT_TOP, etc..).
 
     @param pFlObject: object to be set
     @type pFlObject: pointer to xfdata.FL_OBJECT
+
+    @returns: align num.
+    @rtype: int
 
     @example: obalign = fl_get_object_lalign(pobj8)
 
@@ -2933,14 +2813,11 @@ fl_set_object_align = fl_set_object_lalign
 
 
 def fl_set_object_shortcut(pFlObject, shctxt, showit):
-    """
-    fl_set_object_shortcut(pFlObject, shctxt, showit)
-
-    Sets a shortcut, binding a key or a series of keys to an object. It resets
-    any previous defined shortcuts for the object. Using e.g. "acE#d^h" the
-    keys 'a', 'c', 'E', <Alt>d and <Ctrl>h are associated with the object. The
-    precise format is as follows: any character in the string is considered as
-    a shortcut, except '^' and '#', which stand for combinations with the
+    """Sets a shortcut, binding a key or a series of keys to an object. It
+    resets any previous defined shortcuts for the object. Using e.g. "acE#d^h"
+    the keys 'a', 'c', 'E', <Alt>d and <Ctrl>h are associated with the object.
+    The precise format is as follows: any character in the string is considered
+    as a shortcut, except '^' and '#', which stand for combinations with the
     <Ctrl> and <Alt> keys; the case of the key following '#' or '^' is not
     important, i.e. no distinction is made between e.g. "^C" and "^c", both
     encode the key combination <Ctrl>C as well as <Ctrl>C.) The key '^' itself
@@ -2982,11 +2859,8 @@ def fl_set_object_shortcut(pFlObject, shctxt, showit):
 
 
 def fl_set_object_shortcutkey(pFlObject, keysym):
-    """
-    fl_set_object_shortcutkey(pFlObject, keysym)
-
-    Uses a special key as a shortcut. It always appends the specified key to
-    the current shortcuts. Special keys can't be underlined.
+    """Uses a special key as a shortcut. It always appends the specified key
+    to the current shortcuts. Special keys can't be underlined.
 
     @param pFlObject: object
     @type pFlObject: pointer to xfdata.FL_OBJECT
@@ -3011,10 +2885,7 @@ def fl_set_object_shortcutkey(pFlObject, keysym):
 
 
 def fl_set_object_dblbuffer(pFlObject, flag):
-    """
-    fl_set_object_dblbuffer(pFlObject, flag)
-
-    Uses double buffering on a per-object basis. Currently double buffering
+    """ Uses double buffering on a per-object basis. Currently double buffering
     for objects having a non-rectangular box might not work well. A
     nonrectangular box means that there are regions within the bounding box
     that should not be painted, which is not easily done without complex and
@@ -3047,10 +2918,7 @@ def fl_set_object_dblbuffer(pFlObject, flag):
 
 
 def fl_set_object_color(pFlObject, fgcolr, bgcolr):
-    """
-    fl_set_object_color(pFlObject, fgcolr, bgcolr)
-
-    Sets the color of an object.
+    """Sets the color of an object.
 
     @param pFlObject: object
     @type pFlObject: pointer to xfdata.FL_OBJECT
@@ -3079,15 +2947,13 @@ def fl_set_object_color(pFlObject, fgcolr, bgcolr):
 
 
 def fl_get_object_color(pFlObject):
-    """
-    fl_get_object_color(pFlObject) -> long_pos, long_pos
-
-    Returns the foreground and background colors of an object.
+    """Returns the foreground and background colors of an object.
 
     @param pFlObject: object
     @type pFlObject: pointer to xfdata.FL_OBJECT
 
     @returns: foreground and background color values
+    @rtype: long_pos, long_pos
 
     @example: primcol, secncol = fl_get_object_color(pobj)
 
@@ -3101,7 +2967,7 @@ def fl_get_object_color(pFlObject):
         None, [cty.POINTER(xfc.FL_OBJECT), cty.POINTER(xfc.FL_COLOR), \
         cty.POINTER(xfc.FL_COLOR)], \
         """void fl_get_object_color(xfc.FL_OBJECT * ob, FL_COLOR * col1,
-           FL_COLOR * col2) """)
+           FL_COLOR * col2)""")
     check_if_initialized()
     check_if_FL_OBJECT_ptr(pFlObject)
     fgcolr, pfgcolr = make_FL_COLOR_and_pointer()
@@ -3112,10 +2978,7 @@ def fl_get_object_color(pFlObject):
 
 
 def fl_set_object_label(pFlObject, label):
-    """
-    fl_set_object_label(pFlObject, label)
-
-    Sets the label of an object.
+    """Sets the label of an object.
 
     @param pFlObject: object
     @type pFlObject: pointer to xfdata.FL_OBJECT
@@ -3127,7 +2990,6 @@ def fl_set_object_label(pFlObject, label):
 
     @status: Tested + Doc + NoDemo = OK
     """
-
     _fl_set_object_label = cfuncproto(
         load_so_libforms(), "fl_set_object_label", \
         None, [cty.POINTER(xfc.FL_OBJECT), xfc.STRING], \
@@ -3140,21 +3002,18 @@ def fl_set_object_label(pFlObject, label):
 
 
 def fl_get_object_label(pFlObject):
-    """
-    fl_get_object_label(pFlObject) -> str
-
-    Returns the label of an object.
+    """Returns the label of an object.
 
     @param pFlObject: object
     @type pFlObject: pointer to xfdata.FL_OBJECT
 
     @returns: text of label
+    @rtype: str
 
     @example: currlbl = fl_get_object_label(pobj)
 
     @status: Tested + Doc + Demo = OK
     """
-
     _fl_get_object_label = cfuncproto(
         load_so_libforms(), "fl_get_object_label", \
         xfc.STRING, [cty.POINTER(xfc.FL_OBJECT)], \
@@ -3167,12 +3026,9 @@ def fl_get_object_label(pFlObject):
 
 
 def fl_set_object_helper(pFlObject, tip):
-    """
-    fl_set_object_helper(pFlObject, tip)
-
-    Sets the tooltip of an object (with possible embedded newlines in it) that
-    will be shown when the mouse hovers over the object for more than about
-    600 msec.
+    """Sets the tooltip of an object (with possible embedded newlines in it)
+    that will be shown when the mouse hovers over the object for more than
+    about 600 msec.
 
     @param pFlObject: object
     @type pFlObject: pointer to xfdata.FL_OBJECT
@@ -3195,10 +3051,7 @@ def fl_set_object_helper(pFlObject, tip):
 
 
 def fl_set_object_position(pFlObject, x, y):
-    """
-    fl_set_object_position(pFlObject, x, y)
-
-    Sets position of an object.
+    """Sets position of an object.
 
     @param pFlObject: object
     @type pFlObject: pointer to xfdata.FL_OBJECT
@@ -3225,15 +3078,13 @@ def fl_set_object_position(pFlObject, x, y):
 
 
 def fl_get_object_size(pFlObject):
-    """
-    fl_get_object_size(pFlObject) -> int, int
-
-    Returns the size of an object.
+    """Returns the size of an object.
 
     @param pFlObject: object to evaluate
     @type pFlObject: pointer to xfdata.FL_OBJECT
 
-    @returns: width and height in coord units
+    @returns: width (w) and height (h) in coord units
+    @rtype: int, int
 
     @example: wid, hei = fl_get_object_size(pobj)
 
@@ -3258,10 +3109,7 @@ def fl_get_object_size(pFlObject):
 
 
 def fl_set_object_size(pFlObject, w, h):
-    """
-    fl_set_object_size(pFlObject, w, h)
-
-    Sets the size of an object.
+    """Sets the size of an object.
 
     @param pFlObject: object
     @type pFlObject: pointer to xfdata.FL_OBJECT
@@ -3288,17 +3136,14 @@ def fl_set_object_size(pFlObject, w, h):
 
 
 def fl_set_object_automatic(pFlObject, flag):
-    """
-    fl_set_object_automatic(pFlObject, flag)
-
-    Enables or disables an object to receive a xfdata.FL_STEP event. This
+    """Enables or disables an object to receive a xfdata.FL_STEP event. This
     should not be used with built-in objects. An object is automatic if it
     automatically (without user actions) has to change its contents. Automatic
     objects get a FL_STEP event about every 50 msec.
 
     @param pFlObject: object
     @type pFlObject: pointer to xfdata.FL_OBJECT
-    @param flag: flag if automatic or not. Values i.e. 0 (not automatic) or 1
+    @param flag: flag if automatic or not. Values 0 (not automatic) or 1
         (automatic)
     @type flag: int
 
@@ -3318,10 +3163,7 @@ def fl_set_object_automatic(pFlObject, flag):
 
 
 def fl_object_is_automatic(pFlObject):
-    """
-    fl_object_is_automatic(pFlObject) -> int
-
-    Returns if an object receives xfdata.FL_STEP events. An object is
+    """Returns if an object receives xfdata.FL_STEP events. An object is
     automatic if it automatically (without user actions) has to change its
     contents. Automatic objects get a FL_STEP event about every 50 msec.
 
@@ -3329,6 +3171,7 @@ def fl_object_is_automatic(pFlObject):
     @type pFlObject: pointer to xfdata.FL_OBJECT
 
     @returns: flag if it's automatic (1) or not (0)
+    @rtype: int
 
     @example: if xf.fl_object_is_automatic(pMyobj): ...
 
@@ -3346,10 +3189,7 @@ def fl_object_is_automatic(pFlObject):
 
 
 def fl_draw_object_label(pFlObject):
-    """
-    fl_draw_object_label(pFlObject)
-
-    Draws the label according to the alignment, which could be inside or
+    """Draws the label according to the alignment, which could be inside or
     outside of the bounding box.
 
     @param pFlObject: object
@@ -3370,10 +3210,7 @@ def fl_draw_object_label(pFlObject):
 
 
 def fl_draw_object_label_outside(pFlObject):
-    """
-    fl_draw_object_label_outside(pFlObject)
-
-    Draws the label outside of the bounding box.
+    """Draws the label outside of the bounding box.
 
     @param pFlObject: object
     @type pFlObject: pointer to xfdata.FL_OBJECT
@@ -3396,10 +3233,7 @@ fl_draw_object_outside_label = fl_draw_object_label_outside
 
 
 def fl_get_object_component(pFlObject, objclass, compontype, seqnum):
-    """
-    fl_get_object_component(pFlObject, objclass, compontype, seqnum) -> pFlObject
-
-    Returns the object that is a component of a composite object. E.g. the
+    """Returns the object that is a component of a composite object. E.g. the
     scrollbar object is made of a slider and two scroll buttons.
 
     @param pFlObject: composite object
@@ -3413,8 +3247,8 @@ def fl_get_object_component(pFlObject, objclass, compontype, seqnum):
         can use -1 to indicate any type of specified class
     @type seqnum: int
 
-    @returns: component object (pointer to xfdata.FL_OBJECT) or None (no
-        object found)
+    @returns: component object (pFlObject) or None (no object found)
+    @rtype: pointer to xfdata.FL_OBJECT
 
     @example: fl_get_object_component(browserobj, xfdata.FL_SCROLLBAR,
         xfdata.FL_HOR_THIN_SCROLLBAR, 0)
@@ -3440,10 +3274,7 @@ def fl_get_object_component(pFlObject, objclass, compontype, seqnum):
 
 
 def fl_for_all_objects(pFlForm, py_operatecb, vdata):
-    """
-    fl_for_all_objects(pFlForm, py_operatecb, vdata)
-
-    Serves as an iterator to change an attribute for all objects on a
+    """Serves as an iterator to change an attribute for all objects on a
     particular form. Specified operating function is called for every object
     of the form form unless it returns nonzero, which terminates the iterator.
 
@@ -3461,8 +3292,8 @@ def fl_for_all_objects(pFlForm, py_operatecb, vdata):
 
     @status: Untested + Doc + NoDemo = NOT OK
     """
-     # cfunc_int_pobject_pvoid = cty.CFUNCTYPE(cty.c_int, 
-     #                  cty.POINTER(xfc.FL_OBJECT), cty.c_void_p)
+    # cfunc_int_pobject_pvoid = cty.CFUNCTYPE(cty.c_int, 
+    #                  cty.POINTER(xfc.FL_OBJECT), cty.c_void_p)
     _fl_for_all_objects = cfuncproto(
         load_so_libforms(), "fl_for_all_objects", \
         None, [cty.POINTER(xfc.FL_FORM), xfc.cfunc_int_pobject_pvoid, \
@@ -3479,17 +3310,14 @@ def fl_for_all_objects(pFlForm, py_operatecb, vdata):
 
 
 def fl_set_object_dblclick(pFlObject, timeout):
-    """
-    fl_set_object_dblclick(pFlObject, timeout)
-
-    Sets double click timeout value of an object, enabling or disabling it to
-    receive the xfdata.FL_DBLCLICK event.
+    """Sets double click timeout value of an object, enabling or disabling it
+    to receive the xfdata.FL_DBLCLICK event.
 
     @param pFlObject: object
     @type pFlObject: pointer to xfdata.FL_OBJECT
-    @param timeout: maximum time interval (in msec) between two clicks
-                        for them to be considered a double-click (using 0
-                        disables double-click detection)
+    @param timeout: maximum time interval (in msec) between two clicks for
+        them to be considered a double-click (using 0 disables double-click
+        detection)
     @type timeout: long_pos
 
     @example: fl_set_object_dblclick(pobj, 750)
@@ -3509,15 +3337,13 @@ def fl_set_object_dblclick(pFlObject, timeout):
 
 
 def fl_get_object_dblclick(pFlObject):
-    """
-    fl_get_object_dblclick(pFlObject) -> long_pos
-
-    Return double click timeout value of an object.
+    """Return double click timeout value of an object.
 
     @param pFlObject: object to evaluate
     @type pFlObject: pointer to xfdata.FL_OBJECT
 
     @returns: timeout value
+    @rtype: long_pos
 
     @example: dctim = fl_get_object_dblclick(pobj0)
 
@@ -3535,10 +3361,7 @@ def fl_get_object_dblclick(pFlObject):
 
 
 def fl_set_object_geometry(pFlObject, x, y, w, h):
-    """
-    fl_set_object_geometry(pFlObject, x, y, w, h)
-
-    Sets the geometry (position and size) of an object.
+    """Sets the geometry (position and size) of an object.
 
     @param pFlObject: object to modify
     @type pFlObject: pointer to xfdata.FL_OBJECT
@@ -3572,10 +3395,7 @@ def fl_set_object_geometry(pFlObject, x, y, w, h):
 
 
 def fl_move_object(pFlObject, x, y):
-    """
-    fl_move_object(pFlObject, x, y)
-
-    Moves an object to a new position.
+    """Moves an object to a new position.
 
     @param pFlObject: object to be moved
     @type pFlObject: pointer to xfdata.FL_OBJECT
@@ -3602,12 +3422,9 @@ def fl_move_object(pFlObject, x, y):
 
 
 def fl_fit_object_label(pFlObject, xmargin, ymargin):
-    """
-    fl_fit_object_label(pFlObject, xmargin, ymargin)
-
-    Checks if the label of an object fits into it (after x- and y-margin have
-    been added). If not, all objects and the form are enlarged by the necessary
-    factor (but never by more than a factor of 1.5).
+    """Checks if the label of an object fits into it (after x- and y-margin
+    have been added). If not, all objects and the form are enlarged by the
+    necessary factor (but never by more than a factor of 1.5).
 
     @param pFlObject: object
     @type pFlObject: pointer to xfdata.FL_OBJECT
@@ -3634,15 +3451,13 @@ def fl_fit_object_label(pFlObject, xmargin, ymargin):
 
 
 def fl_get_object_geometry(pFlObject):
-    """
-    fl_get_object_geometry(pFlObject) -> int, int, int, int
-
-    Returns the geometry (position and size) of an object.
+    """Returns the geometry (position and size) of an object.
 
     @param pFlObject: object
     @type pFlObject: pointer to xfdata.FL_OBJECT
 
-    @returns: horizontal, vertical position, width, height (x, y, w, h)
+    @returns: horizontal (x), vertical position (y), width (w), height (h)
+    @rtype: int, int, int, int
 
     @example: xpos, ypos, wid, hei = fl_get_object_geometry(pobj1)
 
@@ -3670,15 +3485,13 @@ def fl_get_object_geometry(pFlObject):
 
 
 def fl_get_object_position(pFlObject):
-    """
-    fl_get_object_position(pFlObject) -> int, int
-
-    Returns the position of an object.
+    """Returns the position of an object.
 
     @param pFlObject: object to evaluate
     @type pFlObject: pointer to xfdata.FL_OBJECT
 
-    @returns: horizontal and vertical position (x, y)
+    @returns: horizontal (x) and vertical position (y)
+    @rtype: int, int
 
     @example: xpos, ypos = fl_get_object_position(pobj2)
 
@@ -3705,16 +3518,14 @@ def fl_get_object_position(pFlObject):
 # this one takes into account the label
 
 def fl_get_object_bbox(pFlObject):
-    """
-    fl_get_object_bbox(pFlObject) -> int, int, int, int
-
-    Returns the bounding box size that has the label, which could be drawn
+    """Returns the bounding box size that has the label, which could be drawn
     outside of the object figured in.
 
     @param pFlObject: object to evaluate
     @type pFlObject: pointer to xfdata.FL_OBJECT
 
-    @returns: horizontal, vertical position, width, height (x, y, w, h)
+    @returns: horizontal (x), vertical position (y), width (w), height (h)
+    @rtype: int, int, int, int
 
     @example: xpos, ypos, wid, hei = fl_get_object_bbox(pobj4)
 
@@ -3745,12 +3556,9 @@ fl_compute_object_geometry = fl_get_object_bbox
 
 
 def fl_call_object_callback(pFlObject):
-    """
-    fl_call_object_callback(pFlObject)
-
-    Invokes the callback manually (as opposed to invocation by the main loop).
-    If the object does not have a callback associated with it, this call has
-    not effect.
+    """Invokes the callback manually (as opposed to invocation by the main
+    loop). If the object does not have a callback associated with it, this
+    call has not effect.
 
     @param pFlObject: object
     @type pFlObject: pointer to xfdata.FL_OBJECT
@@ -3770,10 +3578,7 @@ def fl_call_object_callback(pFlObject):
 
 
 def fl_set_object_prehandler(pFlObject, py_HandlerPtr):
-    """
-    fl_set_object_prehandler(pFlObject, py_HandlerPtr) ->  pHandlerPtr
-
-    By-passes the internal event processing for a particular object. The
+    """By-passes the internal event processing for a particular object. The
     pre-handler will be called before the built-in object handler. By electing
     to handle some of the events, a pre-handler can, in effect, replace part
     of the built-in handler.
@@ -3783,6 +3588,8 @@ def fl_set_object_prehandler(pFlObject, py_HandlerPtr):
     @param py_HandlerPtr: python callback function, returning value
     @type py_HandlerPtr: __ funcname (pFlObject, num, coord, coord, num,
         ptr_void) -> num __
+
+    @returns: old xfdata.FL_HANDLEPTR function
 
     @example: def prehandlecb(pobj, num, crd, crd, num2, vdata):
     @example: |->| ...
@@ -3808,10 +3615,7 @@ def fl_set_object_prehandler(pFlObject, py_HandlerPtr):
 
 
 def fl_set_object_posthandler(pFlObject, py_HandlerPtr):
-    """
-    fl_set_object_posthandler(pFlObject, py_HandlerPtr) -> pHandlerPtr
-
-    By-passes the internal event processing for a particular object. The
+    """By-passes the internal event processing for a particular object. The
     post-handler will be invoked after the built-in handler finishes. Whenever
     possible a post-handler should be used instead of a pre-handler.
 
@@ -3820,6 +3624,8 @@ def fl_set_object_posthandler(pFlObject, py_HandlerPtr):
     @param py_HandlerPtr: python callback function, returning value
     @type py_HandlerPtr: __ funcname (pFlObject, num, coord, coord, num,
         ptr_void) -> num __
+
+    @returns: old xfdata.FL_HANDLEPTR function
 
     @example: def posthandlecb(pobj, num, crd, crd, num2, vdata):
     @example: |->| ...
@@ -3845,10 +3651,7 @@ def fl_set_object_posthandler(pFlObject, py_HandlerPtr):
 
 
 def fl_set_object_callback(pFlObject, py_CallbackPtr, data):
-    """
-    fl_set_object_callback(pFlObject, py_CallbackPtr, data) -> CallbackPtr
-
-    Calls a callback function bound to an object, if a condition is met.
+    """Calls a callback function bound to an object, if a condition is met.
 
     @param pFlObject: object the callback is bound to
     @type pFlObject: pointer to xfdata.FL_OBJECT
@@ -3888,10 +3691,7 @@ fl_set_call_back = fl_set_object_callback
 
 
 def fl_redraw_object(pFlObject):
-    """
-    fl_redraw_object(pFlObject)
-
-    Redraws the particular object. If it is a group it redraws the complete
+    """Redraws the particular object. If it is a group it redraws the complete
     group. Normally you should never need this routine because all library
     routines take care of redrawing objects when necessary, but there might be
     situations in which an explicit redraw is required.
@@ -3914,11 +3714,8 @@ def fl_redraw_object(pFlObject):
 
 
 def fl_scale_object(pFlObject, xs, ys):
-    """
-    fl_scale_object(pFlObject, xs, ys)
-
-    Scales (shrinking or enlarging) an object, indicating a scaling factor in
-    x- and y-direction (1.1 = 110 percent, 0.5 = 50, etc.)
+    """Scales (shrinking or enlarging) an object, indicating a scaling factor
+    in x- and y-direction (1.1 = 110 percent, 0.5 = 50, etc.)
 
     @param pFlObject: object to be scaled
     @type pFlObject: pointer to xfdata.FL_OBJECT
@@ -3944,10 +3741,7 @@ def fl_scale_object(pFlObject, xs, ys):
 
 
 def fl_show_object(pFlObject):
-    """
-    fl_show_object(pFlObject)
-
-    Shows an (hidden) object.
+    """Shows an (hidden) object.
 
     @param pFlObject: object to be shown
     @type pFlObject: pointer to xfdata.FL_OBJECT
@@ -3967,10 +3761,7 @@ def fl_show_object(pFlObject):
 
 
 def fl_hide_object(pFlObject):
-    """
-    fl_hide_object(pFlObject)
-
-    Hides a shown object.
+    """Hides a shown object.
 
     @param pFlObject: object to be hidden
     @type pFlObject: pointer to xfdata.FL_OBJECT
@@ -3990,15 +3781,13 @@ def fl_hide_object(pFlObject):
 
 
 def fl_object_is_visible(pFlObject):
-    """
-    fl_object_is_visible(pFlObject) -> int
-
-    Returns if an object is visible or not.
+    """Returns if an object is visible or not.
 
     @param pFlObject: object to evaluate
     @type pFlObject: pointer to xfdata.FL_OBJECT
 
     @returns: flag 0 (invisible) or non-zero (visible)
+    @rtype: int
 
     @example: if not fl_object_is_visible(pobj2): ...
 
@@ -4015,11 +3804,8 @@ def fl_object_is_visible(pFlObject):
 
 
 def fl_free_object(pFlObject):
-    """
-    fl_free_object(pFlObject)
-
-    Frees the object and finally destroys it (if necessary deletes  the object
-    first).
+    """Frees the object and finally destroys it (if necessary deletes the
+    object first).
 
     @param pFlObject: object to free
     @type pFlObject: pointer to xfdata.FL_OBJECT
@@ -4038,11 +3824,8 @@ def fl_free_object(pFlObject):
 
 
 def fl_delete_object(pFlObject):
-    """
-    fl_delete_object(pFlObject)
-
-    Deletes an object, breaking its connection to the form, but not destroying
-    it.
+    """Deletes an object, breaking its connection to the form, but not
+    destroying it.
 
     @param pFlObject: object to delete
     @type pFlObject: pointer to xfdata.FL_OBJECT
@@ -4062,17 +3845,15 @@ def fl_delete_object(pFlObject):
 
 
 def fl_get_object_return_state(pFlObject):
-    """
-    fl_get_object_return_state(pFlObject) -> int
-
-    Determines the reason an object was returned (or its callback invoked) you.
-    The returned value is logical OR of the conditions that led to the object
-    getting returned.
+    """Determines the reason an object was returned (or its callback invoked)
+    you. The returned value is logical OR of the conditions that led to the
+    object getting returned.
 
     @param pFlObject: object to evaluate
     @type pFlObject: pointer to xfdata.FL_OBJECT
 
     @returns: current return state
+    @rtype: int
 
     @example: currstate = fl_get_object_return_state(pobj5)
 
@@ -4090,14 +3871,12 @@ def fl_get_object_return_state(pFlObject):
 
 
 def fl_trigger_object(pFlObject):
-    """
-    fl_trigger_object(pFlObject)
-
-    Simulates the action of an object being triggered from within the program.
-    Calling this routine on an object obj results in the object returned to
-    the application program or its callback being called if it exists. Note
-    however, there is no visual feedback, i.e. fl_trigger_object(button) will
-    not make the button object named button appearing to be pushed.
+    """Simulates the action of an object being triggered from within the
+    program. Calling this routine on an object obj results in the object
+    returned to the application program or its callback being called if it
+    exists. Note however, there is no visual feedback, i.e.
+    fl_trigger_object(button) will not make the button object named button
+    appearing to be pushed.
 
     @param pFlObject: object to trigger
     @type pFlObject: pointer to xfdata.FL_OBJECT
@@ -4117,10 +3896,7 @@ def fl_trigger_object(pFlObject):
 
 
 def fl_activate_object(pFlObject):
-    """
-    fl_activate_object(pFlObject)
-
-    (Re)activates an object, (re)enabling user interaction.
+    """(Re)activates an object, (re)enabling user interaction.
 
     @param pFlObject: object to activate
     @type pFlObject: pointer to xfdata.FL_OBJECT
@@ -4140,10 +3916,7 @@ def fl_activate_object(pFlObject):
 
 
 def fl_deactivate_object(pFlObject):
-    """
-    fl_deactivate_object(pFlObject)
-
-    Makes a particular object to be temporarily inactive, disabling user
+    """Makes a particular object to be temporarily inactive, disabling user
     interaction, e.g., you want to make it impossible for the user to press a
     particular button or to type input in a particular field. When object is a
     group, the whole group is deactivate.
@@ -4166,15 +3939,13 @@ def fl_deactivate_object(pFlObject):
 
 
 def fl_object_is_active(pFlObject):
-    """
-    fl_object_is_active(pFlObject) -> int
-
-    Returns if object is active and reacting to events, or not.
+    """Returns if object is active and reacting to events, or not.
 
     @param pFlObject: object to evaluate
     @type pFlObject: pointer to xfdata.FL_OBJECT
 
     @returns: flag 0 (not active) or non-zero (active)
+    @rtype: int
 
     @example: if not fl_object_is_active(pobj): ...
 
@@ -4192,17 +3963,15 @@ def fl_object_is_active(pFlObject):
 
 
 def fl_enumerate_fonts(py_output, shortform):
-    """
-    fl_enumerate_fonts(py_output, shortform) -> int
-
-    Lists built-in fonts.
+    """Lists built-in fonts.
 
     @param py_output: python callback function, no return
     @type py_output: __ funcname (string) __
     @param shortform: flag to use short form or not (<int>)
     @type shortform: 0 (long form used) or non-zero (short form used)
 
-    @returns: number of listed fonts (<int>)
+    @returns: number of listed fonts
+    @rtype: int
 
     @example: def pyoutput(strng):
     @example: |->| print strng
@@ -4224,15 +3993,12 @@ def fl_enumerate_fonts(py_output, shortform):
     retval = _fl_enumerate_fonts(c_output, ishortform)
     return retval
 
-
+# TODO: verify if name must conform to other font name
 def fl_set_font_name(fontnum, name):
-    """
-    fl_set_font_name(fontnum, name) -> int
-
-    Add a new font (indexed by number) or change an existing font. Preferably
-    the font name contains a '?' in the size position so different sizes can
-    be used. Redraw of all forms is required to actually see the change for
-    visible form.
+    """Add a new font (indexed by number) or change an existing font.
+    Preferably the font name contains a '?' in the size position so different
+    sizes can be used. Redraw of all forms is required to actually see the
+    change for visible form.
 
     @param fontnum: font number. Values between 0 and xfdata.FL_MAXFONTS-1 
     @type fontnum: int
@@ -4240,6 +4006,7 @@ def fl_set_font_name(fontnum, name):
     @type name: str
 
     @returns: -1 (on errors) or 0 or 1
+    @rtype: int
 
     @example: fl_set_font_name(40, "symbol-medium-whatever") ?
 
@@ -4258,14 +4025,11 @@ def fl_set_font_name(fontnum, name):
 
 
 def fl_set_font(fontnum, size):
-    """
-    fl_set_font(fontnum, size)
-
-    Makes the font current.
+    """Makes the font current.
 
     @param fontnum: font number
     @type fontnum: int
-    @param size: font size. Values (from xfdata module) i.e. FL_TINY_SIZE,
+    @param size: font size. Values (from xfdata module) FL_TINY_SIZE,
         FL_SMALL_SIZE, FL_NORMAL_SIZE, FL_MEDIUM_SIZE, FL_LARGE_SIZE,
         FL_HUGE_SIZE, FL_DEFAULT_SIZE
     @type size: int
@@ -4289,13 +4053,10 @@ def fl_set_font(fontnum, size):
 # routines that facilitate free object
 
 def fl_get_char_height(style, size):
-    """
-    fl_get_char_height(style, size) -> int, int, int
-
-    Returns the maximum height of the used font and the height above and
+    """Returns the maximum height of the used font and the height above and
     below the baseline of the font.
 
-    @param style: font style. Values (from xfdata module) i.e. FL_NORMAL_STYLE,
+    @param style: font style. Values (from xfdata module) FL_NORMAL_STYLE,
         FL_BOLD_STYLE, FL_ITALIC_STYLE, FL_BOLDITALIC_STYLE, FL_FIXED_STYLE,
         FL_FIXEDBOLD_STYLE, FL_FIXEDITALIC_STYLE, FL_FIXEDBOLDITALIC_STYLE,
         FL_TIMES_STYLE, FL_TIMESBOLD_STYLE, FL_TIMESITALIC_STYLE,
@@ -4303,12 +4064,13 @@ def fl_get_char_height(style, size):
         FL_MISCITALIC_STYLE, FL_SYMBOL_STYLE, FL_SHADOW_STYLE,
         FL_ENGRAVED_STYLE, FL_EMBOSSED_STYLE
     @type style: int
-    @param size: font size. Values (from xfdata module) i.e. FL_TINY_SIZE,
+    @param size: font size. Values (from xfdata module) FL_TINY_SIZE,
         FL_SMALL_SIZE, FL_NORMAL_SIZE, FL_MEDIUM_SIZE, FL_LARGE_SIZE,
         FL_HUGE_SIZE, FL_DEFAULT_SIZE
     @type size: int
 
-    @returns: height, ascendent and descendent (h, asc, desc)
+    @returns: height (h), ascendent (asc) and descendent (desc)
+    @rtype: int, int, int
 
     @example: hei, asc, desc = fl_get_char_height(xfdata.FL_BOLD_STYLE,
         xfdata.FL_TINY_SIZE)
@@ -4337,12 +4099,9 @@ def fl_get_char_height(style, size):
 
 
 def fl_get_char_width(style, size):
-    """
-    fl_get_char_width(style, size) -> int
+    """Returns the maximum width of the used font.
 
-    Returns the maximum width of the used font.
-
-    @param style: font style. Values (from xfdata module) i.e. FL_NORMAL_STYLE,
+    @param style: font style. Values (from xfdata module) FL_NORMAL_STYLE,
         FL_BOLD_STYLE, FL_ITALIC_STYLE, FL_BOLDITALIC_STYLE, FL_FIXED_STYLE,
         FL_FIXEDBOLD_STYLE, FL_FIXEDITALIC_STYLE, FL_FIXEDBOLDITALIC_STYLE,
         FL_TIMES_STYLE, FL_TIMESBOLD_STYLE, FL_TIMESITALIC_STYLE,
@@ -4350,12 +4109,13 @@ def fl_get_char_width(style, size):
         FL_MISCITALIC_STYLE, FL_SYMBOL_STYLE, FL_SHADOW_STYLE,
         FL_ENGRAVED_STYLE, FL_EMBOSSED_STYLE
     @type style: int
-    @param size: font size. Values (from xfdata module) i.e. FL_TINY_SIZE,
+    @param size: font size. Values (from xfdata module) FL_TINY_SIZE,
         FL_SMALL_SIZE, FL_NORMAL_SIZE, FL_MEDIUM_SIZE, FL_LARGE_SIZE,
         FL_HUGE_SIZE, FL_DEFAULT_SIZE
     @type size: int
 
     @returns: width (w)
+    @rtype: int
 
     @example: wid = fl_get_char_width(xfdata.FL_TIMES_STYLE,
         xfdata.FL_HUGE_SIZE)
@@ -4377,13 +4137,10 @@ def fl_get_char_width(style, size):
 
 
 def fl_get_string_height(style, size, txtstr, strlng):
-    """
-    fl_get_string_height(style, size, txtstr, strlng) -> int, int, int
+    """Obtains the height information of a specific string and the height
+    above and below the font's baseline.
 
-    Obtains the height information of a specific string and the height above
-    and below the font's baseline.
-
-    @param style: font style. Values (from xfdata module) i.e. FL_NORMAL_STYLE,
+    @param style: font style. Values (from xfdata module) FL_NORMAL_STYLE,
         FL_BOLD_STYLE, FL_ITALIC_STYLE, FL_BOLDITALIC_STYLE, FL_FIXED_STYLE,
         FL_FIXEDBOLD_STYLE, FL_FIXEDITALIC_STYLE, FL_FIXEDBOLDITALIC_STYLE,
         FL_TIMES_STYLE, FL_TIMESBOLD_STYLE, FL_TIMESITALIC_STYLE,
@@ -4400,7 +4157,8 @@ def fl_get_string_height(style, size, txtstr, strlng):
     @param strlng: length of text
     @type strlng: int
 
-    @returns: height, ascendent and descendent (h, asc, desc)
+    @returns: height (h), ascendent (asc) and descendent (desc)
+    @rtype: int, int, int
 
     @example: hei, asc, desc = fl_get_string_height(xfdata.FL_MISC_STYLE,
         xfdata.FL_MEDIUM_SIZE, "Mystring", 8)
@@ -4433,20 +4191,17 @@ def fl_get_string_height(style, size, txtstr, strlng):
 
 
 def fl_get_string_width(style, size, txtstr, strlng):
-    """
-    fl_get_string_width(style, size, txtstr, strlng) -> int
+    """Obtains the width information for a specific string.
 
-    Obtains the width information for a specific string.
-
-    @param style: font style. Values (from xfdata module) i.e. FL_NORMAL_STYLE,
+    @param style: font style. Values (from xfdata module) FL_NORMAL_STYLE,
         FL_BOLD_STYLE, FL_ITALIC_STYLE, FL_BOLDITALIC_STYLE, FL_FIXED_STYLE,
         FL_FIXEDBOLD_STYLE, FL_FIXEDITALIC_STYLE, FL_FIXEDBOLDITALIC_STYLE,
         FL_TIMES_STYLE, FL_TIMESBOLD_STYLE, FL_TIMESITALIC_STYLE,
         FL_TIMESBOLDITALIC_STYLE, FL_MISC_STYLE, FL_MISCBOLD_STYLE,
         FL_MISCITALIC_STYLE, FL_SYMBOL_STYLE, FL_SHADOW_STYLE,
         FL_ENGRAVED_STYLE, FL_EMBOSSED_STYLE
-    @type size: int
-    @param size: font size. Values (from xfdata module) i.e. FL_TINY_SIZE,
+    @type style: int
+    @param size: font size. Values (from xfdata module) FL_TINY_SIZE,
         FL_SMALL_SIZE, FL_NORMAL_SIZE, FL_MEDIUM_SIZE, FL_LARGE_SIZE,
         FL_HUGE_SIZE, FL_DEFAULT_SIZE
     @type size: int
@@ -4456,6 +4211,7 @@ def fl_get_string_width(style, size, txtstr, strlng):
     @type strlng: int
 
     @returns: width (w)
+    @rtype: int
 
     @example: wid = fl_get_string_width(xfdata.FL_MISC_STYLE,
         xfdata.FL_MEDIUM_SIZE, "Mystring", 8)
@@ -4482,7 +4238,6 @@ def fl_get_string_width(style, size, txtstr, strlng):
 
 def fl_get_string_widthTAB(style, size, txtstr, strlng):
     """
-    fl_get_string_widthTAB(style, size, txtstr, strlng) -> int
 
     @param style: font style. Values (from xfdata module) i.e. FL_NORMAL_STYLE,
         FL_BOLD_STYLE, FL_ITALIC_STYLE, FL_BOLDITALIC_STYLE, FL_FIXED_STYLE,
@@ -4501,6 +4256,7 @@ def fl_get_string_widthTAB(style, size, txtstr, strlng):
     @type strlng: str
 
     @returns: width (w)
+    @rtype: int
 
     @example: wid = fl_get_string_width(xfdata.FL_MISC_STYLE,
         xfdata.FL_MEDIUM_SIZE, "Mystring", 8)
@@ -4526,15 +4282,12 @@ def fl_get_string_widthTAB(style, size, txtstr, strlng):
 
 
 def fl_get_string_dimension(style, size, txtstr, strlng):
-    """
-    fl_get_string_dimension(style, size, txtstr, strlng) -> int, int
-
-    Returns the width and height of a string in one call. In addition, the
+    """Returns the width and height of a string in one call. In addition, the
     string passed can contain embedded newline characters and the routine will
     make proper adjustment so the values returned are (just) large enough to
     contain the multiple lines of text.
 
-    @param style: font style. Values (from xfdata module) i.e. FL_NORMAL_STYLE,
+    @param style: font style. Values (from xfdata module) FL_NORMAL_STYLE,
         FL_BOLD_STYLE, FL_ITALIC_STYLE, FL_BOLDITALIC_STYLE, FL_FIXED_STYLE,
         FL_FIXEDBOLD_STYLE, FL_FIXEDITALIC_STYLE, FL_FIXEDBOLDITALIC_STYLE,
         FL_TIMES_STYLE, FL_TIMESBOLD_STYLE, FL_TIMESITALIC_STYLE,
@@ -4542,7 +4295,7 @@ def fl_get_string_dimension(style, size, txtstr, strlng):
         FL_MISCITALIC_STYLE, FL_SYMBOL_STYLE, FL_SHADOW_STYLE,
         FL_ENGRAVED_STYLE, FL_EMBOSSED_STYLE
     @type style: int
-    @param size: font size. Values (from xfdata module) i.e. FL_TINY_SIZE,
+    @param size: font size. Values (from xfdata module) FL_TINY_SIZE,
         FL_SMALL_SIZE, FL_NORMAL_SIZE, FL_MEDIUM_SIZE, FL_LARGE_SIZE,
         FL_HUGE_SIZE, FL_DEFAULT_SIZE
     @type size: int
@@ -4551,7 +4304,8 @@ def fl_get_string_dimension(style, size, txtstr, strlng):
     @param strlng: length of text
     @type strlng: int
 
-    @returns: width and height (w, h)
+    @returns: width (w) and height (h)
+    @rtype: int, int
 
     @example: fl_get_string_dimension(xfdata.FL_ENGRAVED_STYLE,
         xfdata.FL_DEFAULT_SIZE, "CustomString", 12)
@@ -4587,14 +4341,11 @@ fl_get_string_size = fl_get_string_dimension
 
 
 def fl_get_align_xy(align, x, y, w, h, xsize, ysize, xoff, yoff):
-    """
-    fl_get_align_xy(align, x, y, w, h, xsize, ysize, xmargin, ymargin) -> int, int
+    """Obtains the position of where to draw the object with a certain
+    alignment and including padding. It works regardless if it is to be drawn
+    inside or outside of the bounding box 
 
-    Obtains the position of where to draw the object with a certain alignment
-    and including padding. It works regardless if it is to be drawn inside or
-    outside of the bounding box 
-
-    @param align: alignment. Values (from xfdata module) i.e. FL_ALIGN_CENTER,
+    @param align: alignment. Values (from xfdata module) FL_ALIGN_CENTER,
         FL_ALIGN_TOP, FL_ALIGN_BOTTOM, FL_ALIGN_LEFT, FL_ALIGN_RIGHT,
         FL_ALIGN_LEFT_TOP, FL_ALIGN_RIGHT_TOP, FL_ALIGN_LEFT_BOTTOM,
         FL_ALIGN_RIGHT_BOTTOM, FL_ALIGN_INSIDE, FL_ALIGN_VERT
@@ -4611,12 +4362,13 @@ def fl_get_align_xy(align, x, y, w, h, xsize, ysize, xoff, yoff):
     @type xsize: int
     @param ysize: height of the object to be drawn
     @type ysize: int
-    @param xmargin: additional horizontal padding to use
+    @param xoff: additional horizontal padding to use
     @type xmargin: int
-    @param ymargin: additional vertical padding to use
+    @param yoff: additional vertical padding to use
     @type ymargin: int
 
-    @returns: horizontal and vertical position used for drawing object (x, y)
+    @returns: horizontal (x) and vertical position (y) used for drawing object
+    @rtype: int, int
 
     @example: xpos, ypos = fl_get_align_xy(xfdata.FL_ALIGN_CENTER, 200, 300,
         110, 30, 120, 40, 15, 15)
@@ -4654,17 +4406,14 @@ def fl_get_align_xy(align, x, y, w, h, xsize, ysize, xoff, yoff):
 
 
 def fl_drw_text(align, x, y, w, h, colr, style, size, txtstr):
-    """
-    fl_drw_text(align, x, y, w, h, colr, style, size, txtstr)
-
-    Draws the text inside the bounding box according to the alignment
+    """Draws the text inside the bounding box according to the alignment
     requested. It puts a padding of 5 pixels in vertical direction and 4 in
     horizontal around the text. Thus the bounding box should be 10 pixels wider
     and 8 pixels higher than required for the text to be drawn. It interprets
     a text string starting with the character @ differently in drawing some
     symbols instead.
 
-    @param align: alignment of text. Values (from xfdata module) i.e.
+    @param align: alignment of text. Values (from xfdata module)
         FL_ALIGN_CENTER, FL_ALIGN_TOP, FL_ALIGN_BOTTOM, FL_ALIGN_LEFT,
         FL_ALIGN_RIGHT, FL_ALIGN_LEFT_TOP, FL_ALIGN_RIGHT_TOP,
         FL_ALIGN_LEFT_BOTTOM, FL_ALIGN_RIGHT_BOTTOM, FL_ALIGN_INSIDE,
@@ -4678,9 +4427,9 @@ def fl_drw_text(align, x, y, w, h, colr, style, size, txtstr):
     @type w: int
     @param h: height in coord units
     @type h: int
-    @param col: color value
+    @param colr: color value
     @type colr: long_pos
-    @param style: font style. Values (from xfdata module) i.e. FL_NORMAL_STYLE,
+    @param style: font style. Values (from xfdata module) FL_NORMAL_STYLE,
         FL_BOLD_STYLE, FL_ITALIC_STYLE, FL_BOLDITALIC_STYLE, FL_FIXED_STYLE,
         FL_FIXEDBOLD_STYLE, FL_FIXEDITALIC_STYLE, FL_FIXEDBOLDITALIC_STYLE,
         FL_TIMES_STYLE, FL_TIMESBOLD_STYLE, FL_TIMESITALIC_STYLE,
@@ -4688,7 +4437,7 @@ def fl_drw_text(align, x, y, w, h, colr, style, size, txtstr):
         FL_MISCITALIC_STYLE, FL_SYMBOL_STYLE, FL_SHADOW_STYLE,
         FL_ENGRAVED_STYLE, FL_EMBOSSED_STYLE
     @type style: int
-    @param size: font size. Values (from xfdata module) i.e. FL_TINY_SIZE,
+    @param size: font size. Values (from xfdata module) FL_TINY_SIZE,
         FL_SMALL_SIZE, FL_NORMAL_SIZE, FL_MEDIUM_SIZE, FL_LARGE_SIZE,
         FL_HUGE_SIZE, FL_DEFAULT_SIZE
     @type size: int
@@ -4728,13 +4477,10 @@ def fl_drw_text(align, x, y, w, h, colr, style, size, txtstr):
 
 
 def fl_drw_text_beside(align, x, y, w, h, colr, style, size, txtstr):
-    """
-    fl_drw_text_beside(align, x, y, w, h, colr, style, size, txtstr)
-
-    Draws the text aligned outside of the box. It interprets a text string
+    """Draws the text aligned outside of the box. It interprets a text string
     starting with the character @ differently in drawing some symbols instead.
 
-    @param align: alignment of text. Values (from xfdata module) i.e.
+    @param align: alignment of text. Values (from xfdata module)
         FL_ALIGN_CENTER, FL_ALIGN_TOP, FL_ALIGN_BOTTOM, FL_ALIGN_LEFT,
         FL_ALIGN_RIGHT, FL_ALIGN_LEFT_TOP, FL_ALIGN_RIGHT_TOP,
         FL_ALIGN_LEFT_BOTTOM, FL_ALIGN_RIGHT_BOTTOM, FL_ALIGN_INSIDE,
@@ -4749,8 +4495,8 @@ def fl_drw_text_beside(align, x, y, w, h, colr, style, size, txtstr):
     @param h: height in coord units
     @type h: int
     @param colr: color value
-    @type h: long_pos
-    @param style: font style. Values (from xfdata module) i.e. FL_NORMAL_STYLE,
+    @type colr: long_pos
+    @param style: font style. Values (from xfdata module) FL_NORMAL_STYLE,
         FL_BOLD_STYLE, FL_ITALIC_STYLE, FL_BOLDITALIC_STYLE, FL_FIXED_STYLE,
         FL_FIXEDBOLD_STYLE, FL_FIXEDITALIC_STYLE, FL_FIXEDBOLDITALIC_STYLE,
         FL_TIMES_STYLE, FL_TIMESBOLD_STYLE, FL_TIMESITALIC_STYLE,
@@ -4758,7 +4504,7 @@ def fl_drw_text_beside(align, x, y, w, h, colr, style, size, txtstr):
         FL_MISCITALIC_STYLE, FL_SYMBOL_STYLE, FL_SHADOW_STYLE,
         FL_ENGRAVED_STYLE, FL_EMBOSSED_STYLE
     @type style: int
-    @param size: font size. Values (from xfdata module) i.e. FL_TINY_SIZE,
+    @param size: font size. Values (from xfdata module) FL_TINY_SIZE,
         FL_SMALL_SIZE, FL_NORMAL_SIZE, FL_MEDIUM_SIZE, FL_LARGE_SIZE,
         FL_HUGE_SIZE, FL_DEFAULT_SIZE
     @type size: int
@@ -4799,14 +4545,11 @@ def fl_drw_text_beside(align, x, y, w, h, colr, style, size, txtstr):
 
 
 def fl_drw_text_cursor(align, x, y, w, h, colr, style, size, txtstr, curscolr, pos):
-    """
-    fl_drw_text_cursor(align, x, y, w, h, colr, style, size, txtstr, curscolr, pos)
-
-    Draw text and, in addition, a cursor can optionally be drawn. It does no
+    """Draw text and, in addition, a cursor can optionally be drawn. It does no
     interpretation of the special character @ nor does it add padding around
     the text.
 
-    @param align: alignment of text. Values (from xfdata module) i.e.
+    @param align: alignment of text. Values (from xfdata module)
         FL_ALIGN_CENTER, FL_ALIGN_TOP, FL_ALIGN_BOTTOM, FL_ALIGN_LEFT,
         FL_ALIGN_RIGHT, FL_ALIGN_LEFT_TOP, FL_ALIGN_RIGHT_TOP,
         FL_ALIGN_LEFT_BOTTOM, FL_ALIGN_RIGHT_BOTTOM, FL_ALIGN_INSIDE,
@@ -4821,8 +4564,8 @@ def fl_drw_text_cursor(align, x, y, w, h, colr, style, size, txtstr, curscolr, p
     @param h: height in coord units
     @type h: int
     @param colr: color value
-    @type h: long_pos
-    @param style: font style. Values (from xfdata module) i.e. FL_NORMAL_STYLE,
+    @type colr: long_pos
+    @param style: font style. Values (from xfdata module) FL_NORMAL_STYLE,
         FL_BOLD_STYLE, FL_ITALIC_STYLE, FL_BOLDITALIC_STYLE, FL_FIXED_STYLE,
         FL_FIXEDBOLD_STYLE, FL_FIXEDITALIC_STYLE, FL_FIXEDBOLDITALIC_STYLE,
         FL_TIMES_STYLE, FL_TIMESBOLD_STYLE, FL_TIMESITALIC_STYLE,
@@ -4834,7 +4577,7 @@ def fl_drw_text_cursor(align, x, y, w, h, colr, style, size, txtstr, curscolr, p
         FL_SMALL_SIZE, FL_NORMAL_SIZE, FL_MEDIUM_SIZE, FL_LARGE_SIZE,
         FL_HUGE_SIZE, FL_DEFAULT_SIZE
     @type size: int
-    @param txtstr: text to draw (<string>)
+    @param txtstr: text to draw
     @type txtstr: str
     @param curscolr: color of the cursor
     @type curscolr: int
@@ -4881,12 +4624,9 @@ def fl_drw_text_cursor(align, x, y, w, h, colr, style, size, txtstr, curscolr, p
 
 
 def fl_drw_box(boxtype, x, y, w, h, colr, bw):
-    """
-    fl_drw_box(boxtype, x, y, w, h, colr, bw)
+    """Draws the bounding box of an object.
 
-    Draws the bounding box of an object.
-
-    @param boxtype: type of box to draw. Values (from xfdata module) i.e.
+    @param boxtype: type of box to draw. Values (from xfdata module)
         FL_NO_BOX, FL_UP_BOX, FL_DOWN_BOX, FL_BORDER_BOX, FL_SHADOW_BOX,
         FL_FRAME_BOX, FL_ROUNDED_BOX, FL_EMBOSSED_BOX, FL_FLAT_BOX,
         FL_RFLAT_BOX, FL_RSHADOW_BOX, FL_OVAL_BOX, FL_ROUNDED3D_UPBOX,
@@ -4933,10 +4673,7 @@ def fl_drw_box(boxtype, x, y, w, h, colr, bw):
 
 
 def fl_add_symbol(symbname, py_DrawPtr, scalable):
-    """
-    fl_add_symbol(symbname, py_DrawPtr, scalable) -> num.
-
-    Adds a customly drawn symbol to the system which it can then use to
+    """Adds a customly drawn symbol to the system which it can then use to
     display symbols on objects that are not provided by the library.
 
     @param symbname: name under which the symbol should be known (at most
@@ -4947,6 +4684,9 @@ def fl_add_symbol(symbname, py_DrawPtr, scalable):
         angle_degree_rotation, colr) __
     @param scalable: not used, a value of 0 will be fine
     @type scalable: int
+
+    @returns: num.
+    @rtype: int
 
     @example: def drawsymb(x, y, w, h, angle, col):
     @example: |->| ...
@@ -4972,10 +4712,7 @@ def fl_add_symbol(symbname, py_DrawPtr, scalable):
 
 
 def fl_draw_symbol(symbname, x, y, w, h, colr):
-    """
-    fl_draw_symbol(symbname, x, y, w, h, colr) -> int
-
-    Draws directly a symbol on the screen.
+    """Draws directly a symbol on the screen.
 
     @param symbname: name given to the symbol
     @type symbname: str
@@ -4991,6 +4728,7 @@ def fl_draw_symbol(symbname, x, y, w, h, colr):
     @type colr: long_pos
 
     @returns: 1 (on success) or 0 (on failure)
+    @rtype: int
 
     @example: fl_draw_symbol("willsym", 120, 120, 15, 20, xfdata.FL_LIGHTGRAY)
 
@@ -5017,11 +4755,8 @@ def fl_draw_symbol(symbname, x, y, w, h, colr):
 
 
 def fl_mapcolor(colr, r, g, b):
-    """
-    fl_mapcolor(colr, r, g, b) -> long_pos
-
-    Changes the colormap and make a color index active so that it can be used
-    in various drawing routines after initialization. It maps a new color
+    """Changes the colormap and make a color index active so that it can be
+    used in various drawing routines after initialization. It maps a new color
     using specific values for red, green and blue. In case a request fails, we
     substitute the closest color. It is recommended that you use an index
     larger than xfdata.FL_FREE_COL1 for your remap request to avoid
@@ -5038,6 +4773,7 @@ def fl_mapcolor(colr, r, g, b):
     @type b: int
 
     @returns: color value, or 0 (on failure)
+    @rtype: long_pos
 
     @example: fl_mapcolor(xfdata.FL_FREE_COL1, 100, 200, 300)
 
@@ -5059,12 +4795,9 @@ def fl_mapcolor(colr, r, g, b):
 
 
 def fl_mapcolorname(colr, rgbcolrname):
-    """
-    fl_mapcolorname(colr, rgbcolrname) -> long
-
-    Sets the color in the colormap indexed by colr to the specified color name.
-    It associates an index with a color name, which may have been obtained via
-    resources.
+    """Sets the color in the colormap indexed by colr to the specified color
+    name. It associates an index with a color name, which may have been
+    obtained via resources.
 
     @param colr: color value to be mapped
     @type colr: long_pos
@@ -5073,6 +4806,7 @@ def fl_mapcolorname(colr, rgbcolrname):
     @type rgbcolrname: str
 
     @returns: color pixel value, or -1 (on failure)
+    @rtype: long
 
     @example: fl_mapcolorname(xfdata.FL_FREE_COL3, "PowderBlue")
 
@@ -5095,10 +4829,7 @@ fl_mapcolor_name = fl_mapcolorname
 
 
 def fl_free_colors(colr, numcolr):
-    """
-    fl_free_colors(colr, numcolr)
-
-    Frees allocated array of colors from the default colormap, if index of
+    """Frees allocated array of colors from the default colormap, if index of
     colors are known. You shouldn't do that for the reserved colors (i.e.
     colors with indices below xfdata.FL_FREE_COL1).
 
@@ -5123,10 +4854,7 @@ def fl_free_colors(colr, numcolr):
 
 
 def fl_free_pixels(pix, numcolr):
-    """
-    fl_free_pixels(pix, numcolr)
-
-    Frees allocated colors from the default colormap, if pixel values are
+    """Frees allocated colors from the default colormap, if pixel values are
     known. You shouldn't do that for the reserved colors (i.e. colors with
     indices below xfdata.FL_FREE_COL1).
 
@@ -5152,17 +4880,15 @@ def fl_free_pixels(pix, numcolr):
 
 # TODO: figure out what is its purpose.
 def fl_set_color_leak(flag):
-    """ fl_set_color_leak(flag)
+    """ Enables or disables the leakage of color. ?
 
-        Enables or disables the leakage of color. ?
+    @param flag: flag to enable/disable leakage of color. Values 0 (to
+        disable) or 1 (to enable)
+    @type flag: int
 
-        @param flag: flag to enable/disable leakage of color. Values 0 (to
-            disable) or 1 (to enable)
-        @type flag: int
+    @example: fl_set_color_leak(1)
 
-        @example: fl_set_color_leak(1)
-
-        @status: Tested + Doc + NoDemo = OK
+    @status: Tested + Doc + NoDemo = OK
     """
     _fl_set_color_leak = cfuncproto(
         load_so_libforms(), "fl_set_color_leak",\
@@ -5175,17 +4901,15 @@ def fl_set_color_leak(flag):
 
 
 def fl_getmcolor(colr):
-    """
-    fl_getmcolor(colr) -> long_pos, int, int, int
-
-    Obtains the RGB values of an index, returning the pixel value as known by
-    the X server. If you are interested in the internal colormap of XForms
+    """Obtains the RGB values of an index, returning the pixel value as known
+    by the X server. If you are interested in the internal colormap of XForms
     fl_get_icm_color() is more efficient.
 
     @param colr: color value
     @type colr: long_pos
 
-    @returns: color pixel, red, green, blue (colr, r, g, b)
+    @returns: color pixel, red (r), green (r), blue (b)
+    @rtype: long_pos, int, int, int
 
     @example: pixl, red, green, blue = fl_getmcolor(xfdata.FL_VIOLET)
 
@@ -5212,10 +4936,7 @@ def fl_getmcolor(colr):
 
 
 def fl_get_pixel(colr):
-    """
-    fl_get_pixel(colr) -> long_pos
-
-    Obtains the actual pixel value the X server understands. XForms library
+    """Obtains the actual pixel value the X server understands. XForms library
     keeps an internal colormap, initialized to predefined colors. The
     predefined colors do not correspond to pixel values the server understands
     but are indexes into the colormap. Therefore, they can't be used in any of
@@ -5225,6 +4946,7 @@ def fl_get_pixel(colr):
     @type colr: long_pos
 
     @returns: color pixel
+    @rtype: long_pos
 
     @example: pixl = fl_get_pixel(xfdata.FL_PEACHPUFF)
 
@@ -5246,11 +4968,8 @@ fl_get_flcolor = fl_get_pixel
 
 
 def fl_get_icm_color(colr):
-    """
-    fl_get_icm_color(colr) -> int, int, int
-
-    Queries the internal colormap handled by XForms, returning red, green and
-    blue values corresponding to color index. Note that it does not
+    """Queries the internal colormap handled by XForms, returning red, green
+    and blue values corresponding to color index. Note that it does not
     communicate with the X server, it only return information about the
     internal colormap, which is made known to the X server by the
     initialization routine fl_initialize().
@@ -5258,7 +4977,8 @@ def fl_get_icm_color(colr):
     @param colr: color value
     @type colr: long_pos
 
-    @returns: red, green, blue (r, g, b)
+    @returns: red (r), green (g), blue (b)
+    @rtype: int, int, int
 
     @example: red, green, blue = fl_get_icm_color(xfdata.FL_OLIVE)
 
@@ -5284,10 +5004,7 @@ def fl_get_icm_color(colr):
 
 
 def fl_set_icm_color(colr, r, g, b):
-    """
-    fl_set_icm_color(colr, r, g, b)
-
-    Changes the internal colormap handled by XForms, setting a color index
+    """Changes the internal colormap handled by XForms, setting a color index
     using a red, green and blue values' combination. You have to call
     fl_set_icm_color() before fl_initialize() to change XForms's default
     colormap. Note that it does not communicate with the X server, it only
@@ -5321,10 +5038,7 @@ def fl_set_icm_color(colr, r, g, b):
 
 
 def fl_color(colr):
-    """
-    fl_color(colr)
-
-    Sets the foreground color in the XForms library's default Graphics
+    """Sets the foreground color in the XForms library's default Graphics
     Context (gc[0]).
 
     @param colr: color value
@@ -5346,10 +5060,7 @@ def fl_color(colr):
 
 
 def fl_bk_color(colr):
-    """
-    fl_bk_color(colr)
-
-    Sets the background color in the default Graphics Context (gc[0]).
+    """Sets the background color in the default Graphics Context (gc[0]).
 
     @param colr: color value
     @type colr: long_pos
@@ -5371,7 +5082,6 @@ def fl_bk_color(colr):
 
 def fl_textcolor(colr):
     """
-    fl_textcolor(colr)
 
     @param colr: color value
     @type colr: long_pos
@@ -5393,7 +5103,6 @@ def fl_textcolor(colr):
 
 def fl_bk_textcolor(colr):
     """
-    fl_bk_textcolor(colr)
 
     @param colr: color value
     @type colr: long_pos
@@ -5414,11 +5123,8 @@ def fl_bk_textcolor(colr):
 
 
 def fl_set_gamma(r, g, b):
-    """
-    fl_set_gamma(r, g, b)
-
-    Adjusts the brightness of the builtin colors. Larger the value, brighter
-    the colors. The default gamma is 1. This has to be called before
+    """Adjusts the brightness of the builtin colors. Larger the value,
+    brighter the colors. The default gamma is 1. This has to be called before
     fl_initialize().
 
     @param r: gamma value for red
@@ -5495,11 +5201,8 @@ def FL_crnd(a):
 # utilities for new objects
 
 def fl_add_object(pFlForm, pFlObject):
-    """
-    fl_add_object(pFlForm, pFlObject)
-
-    The object remains available (except if it's an object that marks the start
-    or end of a group) and can be added again to the same or another form
+    """The object remains available (except if it's an object that marks the
+    start or end of a group) and can be added again to the same or another form
     later. Normally, this function is used in object classes to add a newly
     created object to a form. It may not be used for objects representing the
     start or end of a group.
@@ -5525,15 +5228,13 @@ def fl_add_object(pFlForm, pFlObject):
 
 
 def fl_addto_form(pFlForm):
-    """
-    fl_addto_form(pFlForm) -> pFlForm
-
-    Reopens a form (after fl_end_form) for adding further objects to it.
+    """Reopens a form (after fl_end_form) for adding further objects to it.
 
     @param pFlForm: form
     @type pFlForm: pointer to xfdata.FL_FORM
 
-    @returns: form (pointer to xfdata.FL_FORM), or None (on failure)
+    @returns: form (pFlForm), or None (on failure)
+    @rtype: pointer to xfdata.FL_FORM
 
     @example: form = fl_addto_form(closedform)
 
@@ -5551,10 +5252,7 @@ def fl_addto_form(pFlForm):
 
 
 def fl_make_object(objclass, objtype, x, y, w, h, label, py_HandlePtr):
-    """
-    fl_make_object(objclass, objtype, x, y, w, h, label, py_HandlePtr) -> pFlObject
-
-    Makes a custom object.
+    """Makes a custom object.
 
     @param objclass: class type of object to be made
     @type objclass: int
@@ -5574,7 +5272,8 @@ def fl_make_object(objclass, objtype, x, y, w, h, label, py_HandlePtr):
     @type py_HandlePtr: __ funcname (pFlObject, num, coord, coord, num,
         ptr_void) -> num __
 
-    @returns: object made (pointer to xfdata.FL_OBJECT)
+    @returns: object made (pFlObject)
+    @rtype: pointer to xfdata.FL_OBJECT
 
     @example: def handlecb(pobj, num, w, h, num, vdata):
     @example: |->| ...
@@ -5612,17 +5311,18 @@ def fl_make_object(objclass, objtype, x, y, w, h, label, py_HandlePtr):
 
 
 def fl_add_child(pFlObject1, pFlObject2):
-    """
-    fl_add_child(pFlObject1, pFlObject2)
+    """Makes an object a child of another object. An example is the scrollbar
+    object. It has three child objects, a slider and two buttons, which all
+    three are childs of the scrollbar object.
 
     @param pFlObject1: father object
     @type pFlObject1: pointer to xfdata.FL_OBJECT
     @param pFlObject2: child object to add
     @type pFlObject2: pointer to xfdata.FL_OBJECT
 
-    @example: ?
+    @example: fl_add_child(pobjf, pobjs)
 
-    @status: Untested + NoDoc + NoDemo = NOT OK
+    @status: Tested + Doc + NoDemo = OK
     """
     _fl_add_child = cfuncproto(
         load_so_libforms(), "fl_add_child",\
@@ -5636,10 +5336,7 @@ def fl_add_child(pFlObject1, pFlObject2):
 
 
 def fl_set_coordunit(unit):
-    """
-    fl_set_coordunit(unit)
-
-    Sets the unit for screen coordinates, instead of default ones (pixels).
+    """Sets the unit for screen coordinates, instead of default ones (pixels).
 
     @param unit: coord unit type to set. Values (from xfdata module)
         FL_COORD_PIXEL, FL_COORD_MM, FL_COORD_POINT, FL_COORD_centiMM,
@@ -5661,10 +5358,7 @@ def fl_set_coordunit(unit):
 
 
 def fl_set_border_width(bw):
-    """
-    fl_set_border_width(bw)
-
-    Sets the width of the border.  If set to a negative number, all objects
+    """Sets the width of the border.  If set to a negative number, all objects
     appear to have a softer appearance.
 
     @param bw: value of border width
@@ -5684,10 +5378,7 @@ def fl_set_border_width(bw):
 
 
 def fl_set_scrollbar_type(sbtype):
-    """
-    fl_set_scrollbar_type(sbtype)
-
-    Sets the type of a scrollbar.
+    """Sets the type of a scrollbar.
 
     @param sbtype: type of scrollbar. Values (from xfdata module)
         FL_VERT_SCROLLBAR, FL_HOR_SCROLLBAR, FL_VERT_THIN_SCROLLBAR,
@@ -5712,10 +5403,7 @@ def fl_set_scrollbar_type(sbtype):
 
 
 def fl_set_thinscrollbar(flag):
-    """
-    fl_set_thinscrollbar(flag)
-
-    Sets if scrollbar type is thin or normal.
+    """Sets if scrollbar type is thin or normal.
 
     @param flag: flag if thin scrollbar or not. Values 1 (for thin) or 0 (for
         normal)
@@ -5733,11 +5421,8 @@ def fl_set_thinscrollbar(flag):
 
 
 def fl_flip_yorigin():
-    """
-    fl_flip_yorigin()
-
-    Sets the origin of XForms coordinates at the lower-left corner of the form
-    (instead of default upper-left corner). It has to be called before
+    """Sets the origin of XForms coordinates at the lower-left corner of the
+    form (instead of default upper-left corner). It has to be called before
     fl_initialize().
 
     @example: fl_flip_yorigin()
@@ -5752,13 +5437,11 @@ def fl_flip_yorigin():
 
 
 def fl_get_coordunit():
-    """
-    fl_get_coordunit() -> int
-
-    Returns the unit used for screen coordinates (e.g. xfdata.FL_COORD_MM,
+    """Returns the unit used for screen coordinates (e.g. xfdata.FL_COORD_MM,
     xfdata.FL_COORD_centiPOINT, etc..).
 
     @returns: current coordinates unit
+    @rtype: int
 
     @example: cunit = fl_get_coordunit()
 
@@ -5774,12 +5457,10 @@ def fl_get_coordunit():
 
 
 def fl_get_border_width():
-    """
-    fl_get_border_width() -> int
-
-    Returns the width of border.
+    """Returns the width of border.
 
     @returns: borderwidth (bw)
+    @rtype: int
 
     @status: Tested + Doc + Demo = OK
     """
@@ -5795,10 +5476,7 @@ def fl_get_border_width():
 # misc. routines
 
 def fl_ringbell(percent):
-    """
-    fl_ringbell(percent)
-
-    Sounds the keyboard ringbell (if capable). Note that not all
+    """Sounds the keyboard ringbell (if capable). Note that not all
     keyboards support volume variations.
 
     @param percent: volume value for the bell. Values from -100 (minimum, off),
@@ -5820,13 +5498,12 @@ def fl_ringbell(percent):
 
 
 def fl_gettime():
-    """
-    fl_gettime() -> long, long
-
-    Returns the current time, expressed in seconds and microseconds since 1st
-    January 1970, 00:00 GMT. It is most useful for computing time differences.
+    """Returns the current time, expressed in seconds and microseconds since
+    1st January 1970, 00:00 GMT. It is most useful for computing time
+    differences.
 
     @returns: seconds and microseconds (secs, msecs)
+    @rtype: long, long
 
     @example: secs, usecs = fl_gettime()
 
@@ -5847,13 +5524,11 @@ def fl_gettime():
 
 
 def fl_now():
-    """
-    fl_now() -> str
-
-    Returns a string form of the current date and time. The format of the
+    """Returns a string form of the current date and time. The format of the
     string is of the form "Wed Jun 30 21:49:08 1993"
 
     @returns: current date and time
+    @rtype: str
 
     @example: curdattim = fl_now()
 
@@ -5869,12 +5544,10 @@ def fl_now():
 
 
 def fl_whoami():
-    """
-    fl_whoami() -> str
-
-    Returns the user name who is running the application.
+    """Returns the user name who is running the application.
 
     @returns: text of username
+    @rtype: str
 
     @example: usertxt = fl_whoami()
 
@@ -5890,22 +5563,20 @@ def fl_whoami():
 
 
 def fl_mouse_button():
-    """
-    fl_mouse_button() -> long
-
-    Returns which mouse button was pushed or released (e.g.
-    xfdata.FL_RIGHT_MOUSE, xfdata.FL_MIDDLE_MOUSE, etc..). Sometimes an
-    application program might need to find out more information about the
-    event that triggered a callback, e.g., to implement mouse button number
-    sensitive functionalities. This function, if needed, should be called from
-    within a callback. If the callback is triggered by a shortcut, the function
-    returns the keysym (ascii value if ASCII) of the key plus FL_SHORTCUT. For
-    example, if a button has a shortcut <Ctrl>C (ASCII value is 3), the button
-    number returned upon activation of the shortcut would be xfdata.FL_SHORTCUT
-    + 3. You can use xfdata.FL_SHORTCUT to determine if the callback is
-    triggered by a shortcut or not.
+    """Returns which mouse button was pushed or released (from xfdata, e.g.
+    FL_RIGHT_MOUSE, FL_MIDDLE_MOUSE, etc..). Sometimes an application program
+    might need to find out more information about the event that triggered a
+    callback, e.g., to implement mouse button number sensitive functionalities.
+    This function, if needed, should be called from within a callback. If the
+    callback is triggered by a shortcut, the function returns the keysym
+    (ascii value if ASCII) of the key plus FL_SHORTCUT. For example, if a
+    button has a shortcut <Ctrl>C (ASCII value is 3), the button number
+    returned upon activation of the shortcut would be xfdata.FL_SHORTCUT + 3.
+    You can use xfdata.FL_SHORTCUT to determine if the callback is triggered
+    by a shortcut or not.
 
     @returns: which mouse button was pushed or released
+    @rtype: long
 
     @example: mousebtn = fl_mouse_button()
 
@@ -5927,10 +5598,7 @@ fl_mousebutton = fl_mouse_button
 
 
 def fl_set_err_logfp(pFile):
-    """
-    fl_set_err_logfp(pFile)
-
-    Makes the default message handler to log the error to a file instead of
+    """Makes the default message handler to log the error to a file instead of
     printing to stderr.
 
     @param pFile: file opened in "w" mode by fl_popen()
@@ -5954,10 +5622,7 @@ def fl_set_err_logfp(pFile):
 
 
 def fl_set_error_handler(py_ErrorFunc):
-    """
-    fl_set_error_handler(py_ErrorFunc)
-
-    Normally the Forms Library reports errors to stderr. This can be avoided
+    """Normally the Forms Library reports errors to stderr. This can be avoided
     or modified by registering an error handling function. The library will
     call the user handler function with a string indicating in which function
     an error occured and a formatting string, followed by zero or more
@@ -5988,9 +5653,17 @@ def fl_set_error_handler(py_ErrorFunc):
 
 # maybe pointless as command line args are not supported in fl.initialize()
 def fl_get_cmdline_args(numargs):
-    """ fl_get_cmdline_args(numargs) -> pointer to string
+    """
 
-        @status: Untested + NoDoc + NoDemo = NOT OK
+    @param argnum: argument number
+    @type: argnum: int
+
+    @returns: argument
+    @rtype: pointer to str
+
+    @example: ?
+
+    @status: Untested + NoDoc + NoDemo = NOT OK
     """
     _fl_get_cmdline_args = cfuncproto(
         load_so_libforms(), "fl_get_cmdline_args",\
@@ -6010,16 +5683,14 @@ def fl_get_cmdline_args(numargs):
 
 
 def fl_msleep(msec):
-    """
-    fl_msleep(msec) -> int
-
-    Waits for a number of milliseconds (with the best resolution possible on
-    your system)
+    """Waits for a number of milliseconds (with the best resolution possible on
+    your system).
 
     @param msec: milliseconds to sleep
     @type msec: long
 
     @returns: 0 (on success)
+    @rtype: int
 
     @example: fl_msleep(200)
 
@@ -6037,17 +5708,17 @@ def fl_msleep(msec):
 
 
 def fl_is_same_object(pFlObject1, pFlObject2):
-    """
-    fl_is_same_object(pFlObject1, pFlObject2) -> num.
-
-    Does a comparison between two objects, if they are the same, or not.
+    """Does a comparison between two objects, if they are the same, or not.
 
     @param pFlObject1: 1st object to compare
-    @type pFlObject: pointer to xfdata.FL_OBJECT
+    @type pFlObject1: pointer to xfdata.FL_OBJECT
     @param pFlObject2: 2nd object to compare
-    @type pFlObject: pointer to xfdata.FL_OBJECT
+    @type pFlObject2: pointer to xfdata.FL_OBJECT
 
     @returns: 0 (if they are not the same) or non-zero (if they are)
+    @rtype: int
+
+    @example: if fl_is_same_object(pobj, pexitobj): ...
 
     @status: Tested + Doc + Demo = OK
     """
@@ -6098,10 +5769,7 @@ def fl_get_gc():
 
 
 def fl_mode_capable(mode, warn):
-    """
-    fl_mode_capable(mode, warn) -> int
-
-    Return if the system is capable of displaying in the specified visual
+    """Return if the system is capable of displaying in the specified visual
     class, or not.
 
     @param mode: visual mode. Values (from xfdata module) GrayScale,
@@ -6112,6 +5780,7 @@ def fl_mode_capable(mode, warn):
     @type warn: int
 
     @returns: flag 1 (if capable) or 0 otherwise
+    @rtype: int
 
     @example: capable = fl_mode_capable(xfdata.GrayScale, 1)
 
@@ -6142,13 +5811,10 @@ def fl_default_window():
 # Rectangles
 
 def fl_rectangle(fill, x, y, w, h, colr):
-    """
-    fl_rectangle(fill, x, y, w, h, colr)
-
-    Draws a rectangle.
+    """Draws a rectangle.
 
     @param fill: flag if the rectangle has to be filled or just the outline is
-        needed (<int>). Values 0 (the outline only) or 1 (filled)
+        needed. Values 0 (the outline only) or 1 (filled)
     @type fill: int
     @param x: horizontal position (upper-left corner)
     @type x: int
@@ -6185,10 +5851,7 @@ def fl_rectangle(fill, x, y, w, h, colr):
 
 
 def fl_rectbound(x, y, w, h, colr):
-    """
-    fl_rectbound(x, y, w, h, colr)
-
-    Draws a filled rectangle with a black border.
+    """Draws a filled rectangle with a black border.
 
     @param x: horizontal position (upper-left corner)
     @type x: int
@@ -6223,10 +5886,7 @@ def fl_rectbound(x, y, w, h, colr):
 
 
 def fl_rectf(x, y, w, h, colr):
-    """
-    fl_rectf(x, y, w, h, colr)
-
-    Draws a filled rectangle on the screen.
+    """Draws a filled rectangle on the screen.
 
     @param x: horizontal position (upper-left corner)
     @type x: int
@@ -6247,10 +5907,7 @@ def fl_rectf(x, y, w, h, colr):
 
 
 def fl_rect(x, y, w, h, colr):
-    """
-    fl_rect(x, y, w, h, colr)
-
-    Draws a rectangle's outline on the screen.
+    """Draws a rectangle's outline on the screen.
 
     @param x: horizontal position (upper-left corner)
     @type x: int
@@ -6269,36 +5926,36 @@ def fl_rect(x, y, w, h, colr):
     """
     fl_rectangle(0, x, y, w, h, colr)
 
-# STOPPED HERE
 
 # Rectangle with rounded-corners
 
 def fl_roundrectangle(fill, x, y, w, h, colr):
-    """ fl_roundrectangle(fill, x, y, w, h, colr)
+    """Draws a rectangle with rounded corners (filled or just the outline).
 
-        Draws a rectangle with rounded corners (filled or just the outline).
+    @param fill: flag if the rectangle has to be filled or just the outline is
+        needed. Values 0 (the outline only) or 1 (filled)
+    @type fill: int
+    @param x: horizontal position (upper-left corner)
+    @type x: int
+    @param y: vertical position (upper-left corner)
+    @type y: int
+    @param w: width in coord units
+    @type w: int
+    @param h: height in coord units
+    @type h: int
+    @param colr: color value
+    @type colr: long_pos
 
-        @param fill: flag if the rectangle has to be filled or just the
-                     outline is needed (<int>)
-        @type fill: 0 (the outline only) or 1 (filled) (<int>)
-        @param x: horizontal position (upper-left corner) (<int>)
-        @param y: vertical position (upper-left corner) (<int>)
-        @param w: width in coord units (<int>)
-        @param h: height in coord units (<int>)
-        @param colr: color value (<long_pos>)
+    @example: fl_roundrectangle(1, 100, 200, 300, 200, xfdata.FL_MAGENTA)
 
-        @example: fl_roundrectangle(1, 100, 200, 300, 200, xfdata.FL_MAGENTA)
-
-        @status: Tested + Doc + NoDemo = OK
+    @status: Tested + Doc + NoDemo = OK
     """
-
     _fl_roundrectangle = cfuncproto(
-            load_so_libforms(), "fl_roundrectangle",\
-            None, [cty.c_int, xfc.FL_Coord, xfc.FL_Coord, xfc.FL_Coord,
-            xfc.FL_Coord, xfc.FL_COLOR],\
-            """void fl_roundrectangle(int fill, FL_Coord x, FL_Coord y,
-               FL_Coord w, FL_Coord h, FL_COLOR col)
-""")
+        load_so_libforms(), "fl_roundrectangle",\
+        None, [cty.c_int, xfc.FL_Coord, xfc.FL_Coord, xfc.FL_Coord,
+        xfc.FL_Coord, xfc.FL_COLOR],\
+        """void fl_roundrectangle(int fill, FL_Coord x, FL_Coord y,
+           FL_Coord w, FL_Coord h, FL_COLOR col)""")
     check_if_initialized()
     check_admitted_listvalues(colr, xfc.COLOR_list)
     ifill = convert_to_int(fill)
@@ -6313,72 +5970,75 @@ def fl_roundrectangle(fill, x, y, w, h, colr):
 
 
 def fl_roundrectf(x, y, w, h, colr):
-    """ fl_roundrectf(x, y, w, h, colr)
+    """Draws a filled rectangle with rounded corners.
 
-        Draws a filled rectangle with rounded corners.
+    @param x: horizontal position (upper-left corner)
+    @type x: int
+    @param y: vertical position (upper-left corner)
+    @type y: int
+    @param w: width in coord units
+    @type w: int
+    @param h: height in coord units
+    @type h: int
+    @param colr: color value
+    @type colr: long_pos
 
-        @param x: horizontal position (upper-left corner) (<int>)
-        @param y: vertical position (upper-left corner) (<int>)
-        @param w: width in coord units (<int>)
-        @param h: height in coord units (<int>)
-        @param colr: color value (<long_pos>)
+    @example: fl_roundrectf(100, 200, 300, 200, xfdata.FL_CYAN)
 
-        @example: fl_roundrectf(100, 200, 300, 200, xfdata.FL_CYAN)
-
-        @status: Tested + Doc + NoDemo = OK
+    @status: Tested + Doc + NoDemo = OK
     """
-
     fl_roundrectangle(1, x, y, w, h, colr)
 
 
 def fl_roundrect(x, y, w, h, colr):
-    """ fl_roundrect(x, y, w, h, colr)
+    """Draws a rectangle's outline with rounded corners.
 
-        Draws a rectangle's outline with rounded corners.
+    @param x: horizontal position (upper-left corner)
+    @type x: int
+    @param y: vertical position (upper-left corner)
+    @type y: int
+    @param w: width in coord units
+    @type w: int
+    @param h: height in coord units
+    @type h: int
+    @param colr: color value
+    @type colr: long_pos
 
-        @param x: horizontal position (upper-left corner) (<int>)
-        @param y: vertical position (upper-left corner) (<int>)
-        @param w: width in coord units (<int>)
-        @param h: height in coord units (<int>)
-        @param colr: color value (<long_pos>)
+    @example: fl_roundrect(100, 200, 300, 200, xfdata.Fl_INDIANRED)
 
-        @example: fl_roundrect(100, 200, 300, 200, xfdata.Fl_INDIANRED)
-
-        @status: Tested + Doc + NoDemo = OK
+    @status: Tested + Doc + NoDemo = OK
     """
-
     fl_roundrectangle(0, x, y, w, h, colr)
 
 
 # General polygon and polylines
 
 def fl_polygon(fill, Point, numpt, colr):
-    """ fl_polygon(fill, Point, numpt, colr)
+    """Draws a generic polygon on the screen (filled or just an outline).
 
-        Draws a generic polygon on the screen (filled or just an outline).
+    @param fill: if polygon has to be filled or just an outline is needed.
+        Values 1 (if filled) or 0 (an outline only)
+    @type fill: int
+    @param Point: an array of xfc.FL_POINT class instance
+    @type Point: array of class instances
+    @param numpt: number of points
+    @type numpt: int
+    @param colr: value of color to be set
+    @type colr: long_pos
 
-        @param fill: if polygon has to be filled or just an outline is needed
-                     (<int>)
-        @type fill: 1 (if filled) or 0 (an outline only)
-        @param Point: an array of xfc.FL_POINT class instance
-        @param numpt: number of points (<int>)
-        @param colr: value of color to be set (<long_pos>)
+    @example: pointmap = (xfdata.FL_POINT * 4)()
+    @example: pointmap[0].x = 12 ; pointmap[0].y = 32
+    @example: pointmap[1].x = 24 ; pointmap[1].y = 100
+    @example: pointmap[2].x = 87 ; pointmap[0].y = 132
+    @example: fl_polygon(1, pointmap, 3, xfdata.FL_PALEGREEN)
 
-        @example: pointmap = (xfdata.FL_POINT * 4)() ; 
-                  pointmap[0].x = 12 ; pointmap[0].y = 32 ;
-                  pointmap[1].x = 24 ; pointmap[1].y = 100 ;
-                  pointmap[2].x = 87 ; pointmap[0].y = 132 ;
-                  fl_polygon(1, pointmap, 3, xfdata.FL_PALEGREEN)
-
-        @status: Tested + Doc + Demo = OK
+    @status: Tested + Doc + Demo = OK
     """
-
     _fl_polygon = cfuncproto(
-            load_so_libforms(), "fl_polygon",\
-            None, [cty.c_int, cty.POINTER(xfc.FL_POINT), cty.c_int,
-            xfc.FL_COLOR],
-            """void fl_polygon(int fill, FL_POINT * xp, int n, FL_COLOR col)
-""")
+        load_so_libforms(), "fl_polygon",\
+        None, [cty.c_int, cty.POINTER(xfc.FL_POINT), cty.c_int,
+        xfc.FL_COLOR],
+        """void fl_polygon(int fill, FL_POINT * xp, int n, FL_COLOR col)""")
     check_if_initialized()
     check_admitted_listvalues(colr, xfc.COLOR_list)
     ifill = convert_to_int(fill)
@@ -6390,92 +6050,91 @@ def fl_polygon(fill, Point, numpt, colr):
 
 
 def fl_polyf(Point, numpt, colr):
-    """ fl_polyf(Point, numpt, colr)
+    """Draws a generic filled polygon on the screen.
 
-        Draws a generic filled polygon on the screen.
+    @param Point: an array of xfc.FL_POINT class instance
+    @type Point: array of class instances
+    @param numpt: number of points
+    @type numpt: int
+    @param colr: value of color to be set
+    @type colr: long_pos
 
-        @param Point: an array of xfc.FL_POINT class instance
-        @param numpt: number of points
-        @param colr: value of color to be set
+    @example: pointmap = (xfdata.FL_POINT * 4)() ; 
+    @example: pointmap[0].x = 12 ; pointmap[0].y = 32 ;
+    @example: pointmap[1].x = 24 ; pointmap[1].y = 100 ;
+    @example: pointmap[2].x = 87 ; pointmap[0].y = 132 ;
+    @example: fl_polyf(pointmap, 3, xfdata.FL_PALEGREEN)
 
-        @example: pointmap = (xfdata.FL_POINT * 4)() ; 
-                  pointmap[0].x = 12 ; pointmap[0].y = 32 ;
-                  pointmap[1].x = 24 ; pointmap[1].y = 100 ;
-                  pointmap[2].x = 87 ; pointmap[0].y = 132 ;
-                  fl_polyf(pointmap, 3, xfdata.FL_PALEGREEN)
-
-        @status: Tested + Doc + Demo = OK
+    @status: Tested + Doc + Demo = OK
     """
-
     fl_polygon(1, Point, numpt, colr)
 
 
 def fl_polyl(Point, numpt, colr):
-    """ fl_polyl(Point, numpt, colr)
+    """Draws a generic polygon's outline on the screen.
 
-        Draws a generic polygon's outline on the screen.
+    @param Point: an array of xfc.FL_POINT class instance
+    @type Point: array of class instances
+    @param numpt: number of points
+    @type numpt: int
+    @param colr: value of color to be set
+    @type colr: long_pos
 
-        @param Point: an array of xfc.FL_POINT class instance
-        @param numpt: number of points
-        @param colr: value of color to be set
+    @example: pointmap = (xfdata.FL_POINT * 4)() ; 
+    @example: pointmap[0].x = 12 ; pointmap[0].y = 32 ;
+    @example: pointmap[1].x = 24 ; pointmap[1].y = 100 ;
+    @example: pointmap[2].x = 87 ; pointmap[0].y = 132 ;
+    @example: fl_polyl(pointmap, 3, xfdata.Fl_ORCHID)
 
-        @example: pointmap = (xfdata.FL_POINT * 4)() ; 
-                  pointmap[0].x = 12 ; pointmap[0].y = 32 ;
-                  pointmap[1].x = 24 ; pointmap[1].y = 100 ;
-                  pointmap[2].x = 87 ; pointmap[0].y = 132 ;
-                  fl_polyl(pointmap, 3, xfdata.Fl_ORCHID)
-
-        @status: Tested + Doc + NoDemo = OK
+    @status: Tested + Doc + NoDemo = OK
     """
-
     fl_polygon(0, Point, numpt, colr)
 
 
 def fl_polybound(Point, numpt, colr):
-    """ fl_polyl(Point, numpt, colr)
+    """Draws a generic filled polygon with a black border in the screen.
 
-        Draws a generic filled polygon with a black border in the screen.
+    @param Point: an array of xfc.FL_POINT class instance
+    @type Point: array of class instances
+    @param numpt: number of points
+    @type numpt: int
+    @param colr: value of color to be set
+    @type colr: long_pos
 
-        @param Point: an array of xfc.FL_POINT class instance
-        @param numpt: number of points
-        @param colr: value of color to be set
+    @example: pointmap = (xfdata.FL_POINT * 4)() ; 
+    @example: pointmap[0].x = 12 ; pointmap[0].y = 32 ;
+    @example: pointmap[1].x = 24 ; pointmap[1].y = 100 ;
+    @example: pointmap[2].x = 87 ; pointmap[0].y = 132 ;
+    @example: fl_polybound(pointmap, 3, xfdata.FL_DARKGOLD)
 
-        @example: pointmap = (xfdata.FL_POINT * 4)() ; 
-                  pointmap[0].x = 12 ; pointmap[0].y = 32 ;
-                  pointmap[1].x = 24 ; pointmap[1].y = 100 ;
-                  pointmap[2].x = 87 ; pointmap[0].y = 132 ;
-                  fl_polybound(pointmap, 3, xfdata.FL_DARKGOLD)
-
-        @status: Tested + Doc + NoDemo = OK
+    @status: Tested + Doc + NoDemo = OK
     """
-
     fl_polygon(1, Point, numpt, colr)
     fl_polygon(0, Point, numpt, xfc.FL_BLACK)
 
 
 def fl_lines(Point, numpt, colr):
-    """ fl_lines(Point, numpt, colr)
+    """Draws connected line segments between a number of points 
 
-        Draws connected line segments between a number of points 
+    @param Point: an array of xfc.FL_POINT class instance
+    @type Point: array of class instances
+    @param numpt: number of points
+    @type numpt: int
+    @param colr: value of color to be set
+    @type colr: long_pos
 
-        @param Point: an array of xfc.FL_POINT class instance
-        @param numpt: number of points
-        @param colr: value of color to be set
+    @example: pointmap = (xfdata.FL_POINT * 4)() ; 
+    @example: pointmap[0].x = 23 ; pointmap[0].y = 12 ;
+    @example: pointmap[1].x = 56 ; pointmap[1].y = 34 ;
+    @example: pointmap[2].x = 102 ; pointmap[0].y = 250 ;
+    @example: fl_lines(pointmap, 3, xfdata.FL_DODGERBLUE)
 
-        @example: pointmap = (xfdata.FL_POINT * 4)() ; 
-                  pointmap[0].x = 23 ; pointmap[0].y = 12 ;
-                  pointmap[1].x = 56 ; pointmap[1].y = 34 ;
-                  pointmap[2].x = 102 ; pointmap[0].y = 250 ;
-                  fl_lines(pointmap, 3, xfdata.FL_DODGERBLUE)
-
-        @status: Tested + Doc + NoDemo = OK
+    @status: Tested + Doc + NoDemo = OK
     """
-
     _fl_lines = cfuncproto(
-            load_so_libforms(), "fl_lines",\
-            None, [cty.POINTER(xfc.FL_POINT), cty.c_int, xfc.FL_COLOR],\
-            """void fl_lines(FL_POINT * xp, int n, FL_COLOR col)
-""")
+        load_so_libforms(), "fl_lines",\
+        None, [cty.POINTER(xfc.FL_POINT), cty.c_int, xfc.FL_COLOR],\
+        """void fl_lines(FL_POINT * xp, int n, FL_COLOR col)""")
     check_if_initialized()
     check_admitted_listvalues(colr, xfc.COLOR_list)
     pPoint = cty.cast(Point, cty.POINTER(xfc.FL_POINT))
@@ -6486,28 +6145,29 @@ def fl_lines(Point, numpt, colr):
 
 
 def fl_line(xi, yi, xf, yf, colr):
-    """ fl_line(xi, yi, xf, yf, colr)
+    """Connects two points with a straight line.
 
-        Connects two points with a straight line.
+    @param xi: initial horizontal position (upper-left corner)
+    @type xi: int
+    @param yi: initial vertical position (upper-left corner)
+    @type yi: int
+    @param xf: final horizontal position (upper-left corner)
+    @type xf: int
+    @param yf: final vertical position (upper-left corner)
+    @type yf: int
+    @param colr: color value
+    @type colr: long_pos
 
-        @param xi: initial horizontal position (upper-left corner) (<int>)
-        @param yi: initial vertical position (upper-left corner) (<int>)
-        @param xf: final horizontal position (upper-left corner) (<int>)
-        @param yf: final vertical position (upper-left corner) (<int>)
-        @param colr: color value (<long_pos>)
+    @example: fl_line(100, 100, 200, 200, xfdata.FL_ANTIQUEWHITE)
 
-        @example: fl_line(100, 100, 200, 200, xfdata.FL_ANTIQUEWHITE)
-
-        @status: Tested + Doc + NoDemo = OK
+    @status: Tested + Doc + NoDemo = OK
     """
-
     _fl_line = cfuncproto(
-            load_so_libforms(), "fl_line",\
-            None, [xfc.FL_Coord, xfc.FL_Coord, xfc.FL_Coord, xfc.FL_Coord,
-            xfc.FL_COLOR],\
-            """void fl_line(FL_Coord xi, FL_Coord yi, FL_Coord xf,
-               FL_Coord yf, FL_COLOR c)
-""")
+        load_so_libforms(), "fl_line",\
+        None, [xfc.FL_Coord, xfc.FL_Coord, xfc.FL_Coord, xfc.FL_Coord,
+        xfc.FL_COLOR],\
+        """void fl_line(FL_Coord xi, FL_Coord yi, FL_Coord xf,
+           FL_Coord yf, FL_COLOR c)""")
     check_if_initialized()
     check_admitted_listvalues(colr, xfc.COLOR_list)
     ixi = convert_to_int(xi)
@@ -6523,24 +6183,23 @@ fl_simple_line = fl_line
 
 
 def fl_point(x, y, colr):
-    """ fl_point(x, y, colr)
+    """Draws one point on the screen.
 
-        Draws one point on the screen.
+    @param x: horizontal position (upper-left corner)
+    @type x: int
+    @param y: vertical position (upper-left corner)
+    @type y: int
+    @param colr: color value
+    @type colr: long_pos
 
-        @param x: horizontal position (upper-left corner) (<int>)
-        @param y: vertical position (upper-left corner) (<int>)
-        @param colr: color value (<long_pos>)
+    @example: fl_point(75, 452, xfdata.FL_CHARTREUSE)
 
-        @example: fl_point(75, 452, xfdata.FL_CHARTREUSE)
-
-        @status: Tested + Doc + NoDemo = OK
+    @status: Tested + Doc + NoDemo = OK
     """
-
     _fl_point = cfuncproto(
-            load_so_libforms(), "fl_point",\
-            None, [xfc.FL_Coord, xfc.FL_Coord, xfc.FL_COLOR],\
-            """void fl_point(FL_Coord x, FL_Coord y, FL_COLOR c)
-""")
+        load_so_libforms(), "fl_point",\
+        None, [xfc.FL_Coord, xfc.FL_Coord, xfc.FL_COLOR],\
+        """void fl_point(FL_Coord x, FL_Coord y, FL_COLOR c)""")
     check_if_initialized()
     check_admitted_listvalues(colr, xfc.COLOR_list)
     ix = convert_to_FL_Coord(x)
@@ -6551,28 +6210,27 @@ def fl_point(x, y, colr):
 
 
 def fl_points(Point, numpt, colr):
-    """ fl_points(Point, numpt, colr)
+    """Draws more than one points.
 
-        Draws more than one points.
+    @param Point: an array of xfc.FL_POINT class instance
+    @type Point: array of class instances
+    @param numpt: number of points
+    @type numpt: int
+    @param colr: value of color to be set
+    @type colr: long_pos
 
-        @param Point: an array of xfc.FL_POINT class instance
-        @param numpt: number of points (<int>)
-        @param colr: value of color to be set (<long_pos>)
+    @example: pointmap = (xfdata.FL_POINT * 3)() ; 
+    @example: pointmap[0].x = 23 ; pointmap[0].y = 12 ;
+    @example: pointmap[1].x = 56 ; pointmap[1].y = 34 ;
+    @example: pointmap[2].x = 102 ; pointmap[0].y = 250 ;
+    @example: fl_points(pointmap, 3, xfdata.FL_AZURE)
 
-        @example: pointmap = (xfdata.FL_POINT * 3)() ; 
-                  pointmap[0].x = 23 ; pointmap[0].y = 12 ;
-                  pointmap[1].x = 56 ; pointmap[1].y = 34 ;
-                  pointmap[2].x = 102 ; pointmap[0].y = 250 ;
-                  fl_points(pointmap, 3, xfdata.FL_AZURE)
-
-        @status: Tested + Doc + NoDemo = OK
+    @status: Tested + Doc + NoDemo = OK
     """
-
     _fl_points = cfuncproto(
-            load_so_libforms(), "fl_points",\
-            None, [cty.POINTER(xfc.FL_POINT), cty.c_int, xfc.FL_COLOR],
-            """void fl_points(FL_POINT * p, int np, FL_COLOR c)
-""")
+        load_so_libforms(), "fl_points",\
+        None, [cty.POINTER(xfc.FL_POINT), cty.c_int, xfc.FL_COLOR],
+        """void fl_points(FL_POINT * p, int np, FL_COLOR c)""")
     check_if_initialized()
     check_admitted_listvalues(colr, xfc.COLOR_list)
     pPoint = cty.cast(Point, cty.POINTER(xfc.FL_POINT))
@@ -6583,34 +6241,30 @@ def fl_points(Point, numpt, colr):
 
 
 def fl_dashedlinestyle(dash, ndash):
-    """ fl_dashedlinestyle(dash, ndash)
+    """Changes the dash pattern for xfdata.FL_USERDASH and
+    xfdata.FL USERDOUBLEDASH. Each element of the array dash is the length of a segment of the pattern in pixels. Dashed lines are drawn
+    as alternating segments, each with the length of an element in dash. Thus
+    the overall length of the dash pattern, in pixels, is the sum of all
+    elements of dash. When the pattern is used up but the line to draw is
+    longer it used from the start again. You have to call this one whenever
+    xfdata.FL_USERDASH is used to set the dash pattern, otherwise whatever the
+    last pattern was, it will be used. After the sequence, the pattern repeats.
 
-        Changes the dash pattern for xfdata.FL_USERDASH and
-        xfdata.FL USERDOUBLEDASH. Each element of the array dash is the
-        length of a segment of the pattern in pixels. Dashed lines are drawn
-        as alternating segments, each with the length of an element in dash.
-        Thus the overall length of the dash pattern, in pixels, is the sum of
-        all elements of dash. When the pattern is used up but the line to
-        draw is longer it used from the start again. You have to call this one
-        whenever xfdata.FL_USERDASH is used to set the dash pattern, otherwise
-        whatever the last pattern was, it will be used. After the sequence,
-        the pattern repeats.
+    @param dash: sequence list of dashes to use. Use None as default dash
+        pattern
+    @type dash: list_of_int
+    @param ndash: length of dashes list
+    @type ndash: int
 
-        @param dash: sequence list of dashes to use. Use None as default dash
-                     pattern (<list_of_int>)
-        @param ndash: length of dashes list (<int>)
+    @example: dashlist = [9, 3, 2, 3]
+    @example: fl_dashedlinestyle(dashlist, 4)
 
-        @example: dashlist = [9, 3, 2, 3]
-                  fl_dashedlinestyle(dashlist, 4)
-
-        @status: Tested + Doc + NoDemo = OK
+    @status: Tested + Doc + NoDemo = OK
     """
-
     _fl_dashedlinestyle = cfuncproto(
-            load_so_libforms(), "fl_dashedlinestyle",\
-            None, [xfc.STRING, cty.c_int],\
-            """void fl_dashedlinestyle(const char * dash, int ndash)
-""")
+        load_so_libforms(), "fl_dashedlinestyle",\
+        None, [xfc.STRING, cty.c_int],\
+        """void fl_dashedlinestyle(const char * dash, int ndash)""")
     check_if_initialized()
     sdash = convert_to_string(dash)
     indash = convert_to_int(ndash)
@@ -6619,32 +6273,28 @@ def fl_dashedlinestyle(dash, ndash):
 
 
 def fl_update_display(block):
-    """ fl_update_display(block)
+    """Flushes properly the output buffer. It resolves the problem of the form
+    being only partially redrawn, due to the two way buffering mechanism of
+    Xlib, if fl_show_form() is followed by something that blocks (e.g.,
+    waiting for a device other than X devices to come online). To be used
+    after fl_show_form(). For typical programs that use fl_do_forms() or
+    fl_check_forms() after fl_show_form(), flushing is not necessary as the
+    output buffer is flushed automatically. Excessive call to
+    fl_update_display() degrades performance.
 
-        Flushes properly the output buffer. It resolves the problem of the form
-        being only partially redrawn, due to the two way buffering mechanism
-        of Xlib, if fl_show_form() is followed by something that blocks
-        (e.g., waiting for a device other than X devices to come online). To be
-        used after fl_show_form(). For typical programs that use fl_do_forms()
-        or fl_check_forms() after fl_show_form(), flushing is not necessary as
-        the output buffer is flushed automatically. Excessive call to
-        fl_update_display() degrades performance.
+    @param block: mode of X buffer flushing. Values 0 (it's flushed so the
+        drawing requests are on their way to the server) or 1 (it's flushed and
+        waits until all the events are received and processed by the server)
+    @type block: int
 
-        @param block: mode of X buffer flushing (<int>)
-        @type block: 0 (it's flushed so the drawing requests are on their
-                     way to the server) or 1 (it's flushed and waits until
-                     all the events are received and processed by the server)
+    @example: fl_update_display()
 
-        @example: fl_update_display()
-
-        @status: Tested + Doc + NoDemo = OK
+    @status: Tested + Doc + NoDemo = OK
     """
-
     _fl_update_display = cfuncproto(
-            load_so_libforms(), "fl_update_display",\
-            None, [cty.c_int],\
-            """void fl_update_display(int block)
-""")
+        load_so_libforms(), "fl_update_display",\
+        None, [cty.c_int],\
+        """void fl_update_display(int block)""")
     check_if_initialized()
     iblock = convert_to_int(block)
     keep_elem_refs(block, iblock)
@@ -6652,77 +6302,68 @@ def fl_update_display(block):
 
 
 def fl_diagline(x, y, w, h, colr):
+    """Draws a line along the diagonal of a box (to draw a horizontal line
+    set h to 1, not to 0).
+
+    @param x: horizontal position (upper-left corner)
+    @type x: int
+    @param y: vertical position (upper-left corner)
+    @type y: int
+    @param w: width in coord units
+    @type w: int
+    @param h: height in coord units
+    @type h: int
+    @param colr: color value
+    @type colr: long_pos
+
+    @example: fl_diagline(180, 90, 5, 2, xfdata.FL_BISQUE)
+
+    @status: Tested + Doc + NoDemo = OK
     """
-        fl_diagline(x, y, w, h, colr)
-
-        Draws a line along the diagonal of a box (to draw a horizontal line
-        set h to 1, not to 0).
-
-        @param x: horizontal position (upper-left corner) (<int>)
-        @param y: vertical position (upper-left corner) (<int>)
-        @param w: width in coord units (<int>)
-        @param h: height in coord units (<int>)
-        @param colr: color value (<long_pos>)
-
-        @example: fl_diagline(180, 90, 5, 2, xfdata.FL_BISQUE)
-
-        @status: Tested + Doc + NoDemo = OK
-    """
-
     fl_line(x, y, (x) + (w) - 1, (y) + (h) - 1, colr)
 
 
 # Line attributes
 
-def fl_linewidth(w):
+def fl_linewidth(lw):
+    """Changes the line width.
+
+    @param lw: width of line in coord units. 0 to reset to the server's default
+    @type lw: int
+
+    @example: fl_linewidth(2)
+
+    @status: Tested + Doc + NoDemo = OK
     """
-        fl_linewidth(w)
-
-        Changes the line width.
-
-        @param w: width of line in coord units. 0 to reset to the 
-                  server's default (<int>)
-
-        @example: fl_linewidth(2)
-
-        @status: Tested + Doc + NoDemo = OK
-    """
-
     _fl_linewidth = cfuncproto(
-            load_so_libforms(), "fl_linewidth",\
-            None, [cty.c_int],\
-            """void fl_linewidth(int n)
-""")
+        load_so_libforms(), "fl_linewidth",\
+        None, [cty.c_int],\
+        """void fl_linewidth(int n)""")
     check_if_initialized()
-    iw = convert_to_int(w)
-    keep_elem_refs(w, iw)
-    _fl_linewidth(iw)
+    ilw = convert_to_int(lw)
+    keep_elem_refs(lw, ilw)
+    _fl_linewidth(ilw)
 
 
 fl_set_linewidth = fl_linewidth
 
 
 def fl_linestyle(linestyle):
+    """Changes the line style.
+
+    @param linestyle: style of the line to draw. Values (from xfdata module)
+        FL_SOLID, FL_USERDASH, FL_USERDOUBLEDASH, FL_DOT, FL_DOTDASH, FL_DASH,
+        FL_LONGDASH
+    @type linestyle: int
+
+    @example: fl_linestyle(xfdata.FL_DOT)
+
+    @status: Tested + Doc + NoDemo = OK
     """
-        fl_linestyle(linestyle)
-
-        Changes the line style.
-
-        @param linestyle: style of the line to draw (<int>)
-        @type linestyle: (from xfdata module) FL_SOLID, FL_USERDASH,
-                         FL_USERDOUBLEDASH, FL_DOT, FL_DOTDASH, FL_DASH,
-                         FL_LONGDASH
-
-        @example: fl_linestyle(xfdata.FL_DOT)
-
-        @status: Tested + Doc + NoDemo = OK
-    """
-
     _fl_linestyle = cfuncproto(
-            load_so_libforms(), "fl_linestyle",\
-            None, [cty.c_int],\
-            """void fl_linestyle(int n)
-""")
+        load_so_libforms(), "fl_linestyle",\
+        None, [cty.c_int],\
+        """void fl_linestyle(int n)""")
     check_if_initialized()
     check_admitted_listvalues(linestyle, xfc.LINESTYLE_list)
     ilinestyle = convert_to_int(linestyle)
@@ -6734,25 +6375,22 @@ fl_set_linestyle = fl_linestyle
 
 
 def fl_drawmode(mode):
-    """ fl_drawmode(mode)
+    """Changes the drawing mode so the destination pixel values play a role
+    in the final pixel value. By default, all lines are drawn so they
+    overwrite the destination pixel values.
 
-        Changes the drawing mode so the destination pixel values play a role
-        in the final pixel value. By default, all lines are drawn so they
-        overwrite the destination pixel values.
+    @param mode: requested mode setting. Values (from xfdata module) FL_XOR,
+        FL_COPY, FL_AND
+    @type mode: int
 
-        @param mode: requested mode setting (<int>)
-        @type mode: (from xfdata module) FL_XOR, FL_COPY, FL_AND
+    @example: fl_drawmode(xfdata.FL_AND)
 
-        @example: fl_drawmode(xfdata.FL_AND)
-
-        @status: Tested + Doc + NoDemo = OK
+    @status: Tested + Doc + NoDemo = OK
     """
-
     _fl_drawmode = cfuncproto(
-            load_so_libforms(), "fl_drawmode",\
-            None, [cty.c_int],\
-            """void fl_drawmode(int request)
-""")
+        load_so_libforms(), "fl_drawmode",\
+        None, [cty.c_int],\
+        """void fl_drawmode(int request)""")
     check_if_initialized()
     imode = convert_to_int(mode)
     keep_elem_refs(mode, imode)
@@ -6760,66 +6398,58 @@ def fl_drawmode(mode):
 
 
 def fl_get_linewidth():
-    """ fl_get_linewidth() -> w
+    """Returns the width of line.
 
-        Returns the width of line.
+    @returns: line width (lw)
+    @rtype: int
 
-        @returns: line width (<int>)
+    @example: wid = fl_get_linewidth()
 
-        @example: wid = fl_get_linewidth()
-
-        @status: Tested + Doc + NoDemo = OK
+    @status: Tested + Doc + NoDemo = OK
     """
-
     _fl_get_linewidth = cfuncproto(
-            load_so_libforms(), "fl_get_linewidth",\
-            cty.c_int, [],\
-            """int fl_get_linewidth()
-""")
+        load_so_libforms(), "fl_get_linewidth",\
+        cty.c_int, [],\
+        """int fl_get_linewidth()""")
+    check_if_initialized()
     retval = _fl_get_linewidth()
     return retval
 
 
 def fl_get_linestyle():
-    """ fl_get_linestyle() -> style
+    """Returns the style of line (e.g. xfdata.FL_SOLID, xfdata.FL_DOT, etc..).
 
-        Returns the style of line (e.g. xfdata.FL_SOLID, xfdata.FL_DOT, etc..).
+    @returns: line style
+    @rtype: int
 
-        @returns: line style (<int>)
+    @example: currstl = fl_get_linestyle()
 
-        @example: currstl = fl_get_linestyle()
-
-        @status: Tested + Doc + NoDemo = OK
+    @status: Tested + Doc + NoDemo = OK
     """
-
     _fl_get_linestyle = cfuncproto(
-            load_so_libforms(), "fl_get_linestyle",\
-            cty.c_int, [],\
-            """int fl_get_linestyle()
-""")
+        load_so_libforms(), "fl_get_linestyle",\
+        cty.c_int, [],\
+        """int fl_get_linestyle()""")
     check_if_initialized()
     retval = _fl_get_linestyle()
     return retval
 
 
 def fl_get_drawmode():
-    """ fl_get_drawmode() -> mode
+    """Returns the drawing mode of lines (from xfdata, e.g. xfdata.FL_AND,
+    FL_XOR etc..).
 
-        Returns the drawing mode of lines (e.g. xfdata.FL_AND,
-        xfdata.FL_XOR etc..).
+    @returns: drawing mode
+    @rtype: int
 
-        @returns: drawing mode (<int>)
+    @example: currdrw = fl_get_draw_mode()
 
-        @example: currdrw = fl_get_draw_mode()
-
-        @status: Tested + Doc + NoDemo = OK
+    @status: Tested + Doc + NoDemo = OK
     """
-
     _fl_get_drawmode = cfuncproto(
-            load_so_libforms(), "fl_get_drawmode",\
-            cty.c_int, [],\
-            """int fl_get_drawmode()
-""")
+        load_so_libforms(), "fl_get_drawmode",\
+        cty.c_int, [],\
+        """int fl_get_drawmode()""")
     check_if_initialized()
     retval = _fl_get_drawmode()
     return retval
@@ -6831,31 +6461,33 @@ fl_set_drawmode = fl_drawmode
 # Ellipses
 
 def fl_oval(fill, x, y, w, h, colr):
-    """ fl_oval(fill, x, y, w, h, colr)
+    """Draws an ellipse, either filled or open. Use w equal to h to get a
+    circle.
 
-        Draws an ellipse, either filled or open. Use w equal to h to get a
-        circle.
+    @param fill: flag if filled or open ellipse. Values 1 (if filled ellipse)
+        or 0 (if open)
+    @type fill: int
+    @param x: horizontal position (upper-left corner)
+    @type x: int
+    @param y: vertical position (upper-left corner)
+    @type y: int
+    @param w: width in coord units
+    @type w: int
+    @param h: height in coord units
+    @type h: int
+    @param colr: color value
+    @type colr: long_pos
 
-        @param fill: flag if filled or open ellipse (<int>)
-        @type fill: 1 (if filled ellipse) or 0 (if open)
-        @param x: horizontal position (upper-left corner) (<int>)
-        @param y: vertical position (upper-left corner) (<int>)
-        @param w: width in coord units (<int>)
-        @param h: height in coord units (<int>)
-        @param colr: color value (<long_pos>)
+    @example: fl_oval(1, 125, 256, 145, 320, xfdata.FL_BURLYWOOD)
 
-        @example: fl_oval(1, 125, 256, 145, 320, xfdata.FL_BURLYWOOD)
-
-        @status: Tested + Doc + NoDemo = OK
+    @status: Tested + Doc + NoDemo = OK
     """
-
     _fl_oval = cfuncproto(
-            load_so_libforms(), "fl_oval",\
-            None, [cty.c_int, xfc.FL_Coord, xfc.FL_Coord, xfc.FL_Coord,
-            xfc.FL_Coord, xfc.FL_COLOR], \
-            """void fl_oval(int fill, FL_Coord x, FL_Coord y, FL_Coord w,
-               FL_Coord h, FL_COLOR col)
-""")
+        load_so_libforms(), "fl_oval",\
+        None, [cty.c_int, xfc.FL_Coord, xfc.FL_Coord, xfc.FL_Coord,
+        xfc.FL_Coord, xfc.FL_COLOR], \
+        """void fl_oval(int fill, FL_Coord x, FL_Coord y, FL_Coord w,
+           FL_Coord h, FL_COLOR col)""")
     check_if_initialized()
     check_admitted_listvalues(colr, xfc.COLOR_list)
     ifill = convert_to_int(fill)
@@ -6869,29 +6501,30 @@ def fl_oval(fill, x, y, w, h, colr):
 
 
 def fl_ovalbound(x, y, w, h, colr):
-    """ fl_ovalbound(x, y, w, h, colr)
+    """Draws a filled ellipse with a black outline. Use w equal to h to get a
+    circle.
 
-        Draws a filled ellipse with a black outline. Use w equal to h to get a
-        circle.
+    @param x: horizontal position (upper-left corner)
+    @type x: int
+    @param y: vertical position (upper-left corner)
+    @type y: int
+    @param w: width in coord units
+    @type w: int
+    @param h: height in coord units
+    @type h: int
+    @param colr: color value
+    @type colr: long_pos
 
-        @param x: horizontal position (upper-left corner) (<int>)
-        @param y: vertical position (upper-left corner) (<int>)
-        @param w: width in coord units (<int>)
-        @param h: height in coord units (<int>)
-        @param colr: color value (<long_pos>)
+    @example: fl_ovalbound(1, 125, 256, 145, 320, xfdata.FL_BLANCHEDALMOND)
 
-        @example: fl_ovalbound(1, 125, 256, 145, 320, xfdata.FL_BLANCHEDALMOND)
-
-        @status: Tested + Doc + NoDemo = OK
+    @status: Tested + Doc + NoDemo = OK
     """
-
     _fl_ovalbound = cfuncproto(
-            load_so_libforms(), "fl_ovalbound",\
-            None, [xfc.FL_Coord, xfc.FL_Coord, xfc.FL_Coord, xfc.FL_Coord,
-            xfc.FL_COLOR],\
-            """void fl_ovalbound(FL_Coord x, FL_Coord y, FL_Coord w,
-               FL_Coord h, FL_COLOR col)
-""")
+        load_so_libforms(), "fl_ovalbound",\
+        None, [xfc.FL_Coord, xfc.FL_Coord, xfc.FL_Coord, xfc.FL_Coord,
+        xfc.FL_COLOR],\
+        """void fl_ovalbound(FL_Coord x, FL_Coord y, FL_Coord w,
+           FL_Coord h, FL_COLOR col)""")
     check_if_initialized()
     check_admitted_listvalues(colr, xfc.COLOR_list)
     ix = convert_to_FL_Coord(x)
@@ -6904,37 +6537,39 @@ def fl_ovalbound(x, y, w, h, colr):
 
 
 def fl_ovalarc(fill, x, y, w, h, stheta, dtheta, colr):
-    """ fl_ovalarc(fill, x, y, w, h, stheta, dtheta, colr)
+    """Draws an elliptical arc, either filled or open.
 
-        Draws an elliptical arc, either filled or open.
+    @param fill: flag if filled or open. Values 1 (if filled) or 0 (if open)
+    @type fill: int
+    @param x: horizontal position (upper-left corner) (<int>)
+    @type x: int
+    @param y: vertical position (upper-left corner)
+    @type y: int
+    @param w: width in coord units
+    @type w: int
+    @param h: height in coord units
+    @type h: int
+    @param stheta: starting angle, measured in tenth of a degree and with
+        0 at 3 o'clock position
+    @type stheta: int
+    @param dtheta: the directione and the extent of the arc. If positive the
+        arc is drawn in counter-clockwise direction from the starting point,
+        otherwise in clockwise direction. If it is larger than 3600 it is
+        truncated to 3600.
+    @type dtheta: int
+    @param colr: color value
+    @type colr: long_pos
 
-        @param fill: flag if filled or open (<int>)
-        @type fill: 1 (if filled) or 0 (if open)
-        @param x: horizontal position (upper-left corner) (<int>)
-        @param y: vertical position (upper-left corner) (<int>)
-        @param w: width in coord units (<int>)
-        @param h: height in coord units (<int>)
-        @param stheta: starting angle, measured in tenth of a degree and with
-                       0 at 3 o'clock position (<int>)
-        @param dtheta: the directione and the extent of the arc. If positive
-                       the arc is drawn in counter-clockwise direction from
-                       the starting point, otherwise in clockwise direction.
-                       If it is larger than 3600 it is truncated to 3600.
-        @param colr: color value (<long_pos>)
+    @example: fl_ovalarc(1, 275, 256, 145, 320, 200, 900, xfdata.FL_DARKSALMON)
 
-        @example: fl_ovalarc(1, 275, 256, 145, 320, 200, 900,
-                  xfdata.FL_DARKSALMON)
-
-        @status: Tested + Doc + NoDemo = OK
+    @status: Tested + Doc + NoDemo = OK
     """
-
     _fl_ovalarc = cfuncproto(
-            load_so_libforms(), "fl_ovalarc",\
-            None, [cty.c_int, xfc.FL_Coord, xfc.FL_Coord,
-            xfc.FL_Coord, xfc.FL_Coord, cty.c_int, cty.c_int, xfc.FL_COLOR],
-            """void fl_ovalarc(int fill, FL_Coord x, FL_Coord y, FL_Coord w,
-               FL_Coord h, int t0, int dt, FL_COLOR col)
-""")
+        load_so_libforms(), "fl_ovalarc",\
+        None, [cty.c_int, xfc.FL_Coord, xfc.FL_Coord,
+        xfc.FL_Coord, xfc.FL_Coord, cty.c_int, cty.c_int, xfc.FL_COLOR],
+        """void fl_ovalarc(int fill, FL_Coord x, FL_Coord y, FL_Coord w,
+           FL_Coord h, int t0, int dt, FL_COLOR col)""")
     check_if_initialized()
     check_admitted_listvalues(colr, xfc.COLOR_list)
     ifill = convert_to_int(fill)
@@ -6951,40 +6586,44 @@ def fl_ovalarc(fill, x, y, w, h, stheta, dtheta, colr):
 
 
 def fl_ovalf(x, y, w, h, colr):
-    """ fl_ovalf(x, y, w, h, colr)
+    """Draws a filled ellipse. Use w equal to h to get a circle.
 
-        Draws a filled ellipse. Use w equal to h to get a circle.
+    @param x: horizontal position (upper-left corner)
+    @type x: int
+    @param y: vertical position (upper-left corner)
+    @type y: int
+    @param w: width in coord units
+    @type w: int
+    @param h: height in coord units
+    @type h: int
+    @param colr: color value
+    @type colr: long_pos
 
-        @param x: horizontal position (upper-left corner) (<int>)
-        @param y: vertical position (upper-left corner) (<int>)
-        @param w: width in coord units (<int>)
-        @param h: height in coord units (<int>)
-        @param colr: color value (<long_pos>)
+    @example: fl_ovalf(125, 256, 145, 320, xfdata.FL_CORNFLOWERBLUE)
 
-        @example: fl_ovalf(125, 256, 145, 320, xfdata.FL_CORNFLOWERBLUE)
-
-        @status: Tested + Doc + NoDemo = OK
+    @status: Tested + Doc + NoDemo = OK
     """
-
     fl_oval(1, x, y, w, h, colr)
 
 
 def fl_ovall(x, y, w, h, colr):
-    """ fl_ovall(x, y, w, h, colr)
+    """Draws an open ellipse. Use w equal to h to get a circle.
 
-        Draws an open ellipse. Use w equal to h to get a circle.
+    @param x: horizontal position (upper-left corner)
+    @type x: int
+    @param y: vertical position (upper-left corner)
+    @type y: int
+    @param w: width in coord units
+    @type w: int
+    @param h: height in coord units
+    @type h: int
+    @param colr: color value
+    @type colr: long_pos
 
-        @param x: horizontal position (upper-left corner) (<int>)
-        @param y: vertical position (upper-left corner) (<int>)
-        @param w: width in coord units (<int>)
-        @param h: height in coord units (<int>)
-        @param colr: color value (<long_pos>)
+    @example: fl_ovall(125, 256, 145, 320, xfdata.FL_DARKERED)
 
-        @example: fl_ovall(125, 256, 145, 320, xfdata.FL_DARKERED)
-
-        @status: Tested + Doc + NoDemo = OK
+    @status: Tested + Doc + NoDemo = OK
     """
-
     fl_oval(0, x, y, w, h, colr)
 
 
@@ -6992,72 +6631,76 @@ fl_oval_bound = fl_ovalbound
 
 
 def fl_circf(x, y, r, colr):
-    """ fl_circf(x, y, r, colr)
+    """Draws a filled circle.
 
-        Draws a filled circle.
+    @param x: horizontal position of the center of the arc
+    @type x: int
+    @param y: vertical position of the center of the arc
+    @type y: int
+    @param r: radius of the arc
+    @type r: int
 
-        @param x: horizontal position of the center of the arc (<int>)
-        @param y: vertical position of the center of the arc (<int>)
-        @param r: radius of the arc (<int>)
+    @example: fl_circf(200, 250, 69, xfdata.FL_FUCHSIA)
 
-        @example: fl_circf(200, 250, 69, xfdata.FL_FUCHSIA)
-
-        @status: Tested + NoDoc + Demo = OK
+    @status: Tested + NoDoc + Demo = OK
     """
-
     fl_oval(1, (x) - (r), (y) - (r), 2 * (r), 2 * (r), colr)
 
 
 def fl_circ(x, y, r, colr):
-    """ fl_circ(x, y, r, colr)
+    """Draws an open circle.
 
-        Draws an open circle.
+    @param x: horizontal position of the center of the arc
+    @type x: int
+    @param y: vertical position of the center of the arc
+    @type y: int
+    @param r: radius of the arc
+    @type r: int
 
-        @param x: horizontal position of the center of the arc (<int>)
-        @param y: vertical position of the center of the arc (<int>)
-        @param r: radius of the arc (<int>)
+    @example: fl_circ(200, 250, 69, xfdata.FL_GAINSBORO)
 
-        @example: fl_circ(200, 250, 69, xfdata.FL_GAINSBORO)
-
-        @status: Tested + Doc + NoDemo = OK
+    @status: Tested + Doc + NoDemo = OK
     """
-
     fl_oval(0, (x) - (r), (y) - (r), 2 * (r), 2 * (r), colr)
 
 
 # Arcs
 
 def fl_pieslice(fill, x, y, w, h, stheta, etheta, colr):
-    """ fl_pieslice(fill, x, y, w, h, sthetam etheta, colr)
+    """Draws an elliptical arc, either filled or open.
 
-        Draws an elliptical arc, either filled or open.
+    @param fill: if the arc is filled or open. Values 1 (if filled) or 0
+        (if open)
+    @type fill: int
+    @param x: horizontal position of the bounding box
+    @type x: int
+    @param y: vertical position of the bounding box
+    @type y: int
+    @param h: horizontal axe of the ellipse
+    @type h: int
+    @param w: vertical axe of the ellipse
+    @type w: int
+    @param stheta: starting angle of the arc in units of tenths of a degree
+        (where 0 stands for a direction of 3 o'clock, i.e. the right-most point
+        of a circle)
+    @type stheta: int
+    @param etheta: ending angle of the arc in units of tenths of a degree
+        (where 0 stands for a direction of 3 o'clock, i.e. the right-most point
+        of a circle)
+    @type etheta: int
+    @param colr: color value
+    @type colr: long_pos
 
-        @param fill: if the arc is filled or open (<int>)
-        @type fill: 1 (if filled) or 0 (if open)
-        @param x: horizontal position of the bounding box (<int>)
-        @param y: vertical position of the bounding box (<int>)
-        @param h: horizontal axe of the ellipse (<int>)
-        @param w: vertical axe of the ellipse (<int>)
-        @param stheta: starting angle of the arc in units of tenths of a
-                       degree (where 0 stands for a direction of 3 o'clock,
-                       i.e. the right-most point of a circle) (<int>)
-        @param etheta: ending angle of the arc in units of tenths of a
-                       degree (where 0 stands for a direction of 3 o'clock,
-                       i.e. the right-most point of a circle) (<int>)
-        @param colr: color value (<long_pos>)
+    @example: fl_pieslice(1, 120, 253, 400, 100, 60, 70, xfdata.FL_GOLD)
 
-        @example: fl_pieslice(1, 120, 253, 400, 100, 60, 70, xfdata.FL_GOLD)
-
-        @status: Tested + Doc + NoDemo = OK
+    @status: Tested + Doc + NoDemo = OK
     """
-
     _fl_pieslice = cfuncproto(
-            load_so_libforms(), "fl_pieslice",\
-            None, [cty.c_int, xfc.FL_Coord, xfc.FL_Coord,
-            xfc.FL_Coord, xfc.FL_Coord, cty.c_int, cty.c_int, xfc.FL_COLOR],
-            """void fl_pieslice(int fill, FL_Coord x, FL_Coord y, FL_Coord w,
-               FL_Coord h, int a1, int a2, FL_COLOR col)
-""")
+        load_so_libforms(), "fl_pieslice",\
+        None, [cty.c_int, xfc.FL_Coord, xfc.FL_Coord,
+        xfc.FL_Coord, xfc.FL_Coord, cty.c_int, cty.c_int, xfc.FL_COLOR],
+        """void fl_pieslice(int fill, FL_Coord x, FL_Coord y, FL_Coord w,
+           FL_Coord h, int a1, int a2, FL_COLOR col)""")
     check_if_initialized()
     check_admitted_listvalues(colr, xfc.COLOR_list)
     ifill = convert_to_int(fill)
@@ -7074,92 +6717,99 @@ def fl_pieslice(fill, x, y, w, h, stheta, etheta, colr):
 
 
 def fl_arcf(x, y, r, stheta, etheta, colr):
-    """ fl_arcf(x, y, r, stheta, etheta, colr)
+    """Draws a filled circular arc. If the difference between theta end and
+    theta start is larger than 3600 (360 degrees), drawing is truncated to
+    360 degrees.
 
-        Draws a filled circular arc. If the difference between theta end
-        and theta start is larger than 3600 (360 degrees), drawing is
-        truncated to 360 degrees.
+    @param x: horizontal position of the center of the arc
+    @type x: int
+    @param y: vertical position of the center of the arc
+    @type y: int
+    @param r: radius of the arc
+    @type r: int
+    @param stheta: starting angle of the arc in units of tenths of a degree
+        (where 0 stands for a direction of 3 o'clock, i.e. the right-most
+        point of a circle)
+    @type stheta: int
+    @param etheta: ending angle of the arc in units of tenths of a degree
+        (where 0 stands for a direction of 3 o'clock, i.e. the right-most
+        point of a circle)
+    @type etheta: int
+    @param colr: color value
+    @type colr: long_pos
 
-        @param x: horizontal position of the center of the arc (<int>)
-        @param y: vertical position of the center of the arc (<int>)
-        @param r: radius of the arc (<int>)
-        @param stheta: starting angle of the arc in units of tenths of a
-                       degree (where 0 stands for a direction of 3 o'clock,
-                       i.e. the right-most point of a circle) (<int>)
-        @param etheta: ending angle of the arc in units of tenths of a
-                       degree (where 0 stands for a direction of 3 o'clock,
-                       i.e. the right-most point of a circle) (<int>)
-        @param colr: color value (<long_pos>)
+    @example: fl_arcf(120, 253, 40, 10, 60, xfdata.FL_FIREBRICK)
 
-        @example: fl_arcf(120, 253, 40, 10, 60, xfdata.FL_FIREBRICK)
-
-        @status: Tested + Doc + NoDemo = OK
+    @status: Tested + Doc + NoDemo = OK
     """
-
     fl_pieslice(1, (x - r), (y - r), (2 * r), (2 * r), stheta, etheta, colr)
 
 
 def fl_arc(x, y, r, stheta, etheta, colr):
-    """ fl_arc(x, y, r, stheta, etheta, colr)
+    """Draws an open circular arc. If the difference between theta end and
+    theta start is larger than 3600 (360 degrees), drawing is truncated to
+    360 degrees.
 
-        Draws an open circular arc. If the difference between theta end
-        and theta start is larger than 3600 (360 degrees), drawing is
-        truncated to 360 degrees.
+    @param x: horizontal position of the center of the arc
+    @type x: int
+    @param y: vertical position of the center of the arc
+    @type y: int
+    @param r: radius of the arc
+    @type r: int
+    @param stheta: starting angle of the arc in units of tenths of a degree
+        (where 0 stands for a direction of 3 o'clock, i.e. the right-most
+        point of a circle)
+    @type stheta: int
+    @param etheta: ending angle of the arc in units of tenths of a degree
+        (where 0 stands for a direction of 3 o'clock, i.e. the right-most
+        point of a circle)
+    @type etheta: int
+    @param colr: color value
+    @type colr: long_pos
 
-        @param x: horizontal position of the center of the arc (<int>)
-        @param y: vertical position of the center of the arc (<int>)
-        @param r: radius of the arc (<int>)
-        @param stheta: starting angle of the arc in units of tenths of a
-                       degree (where 0 stands for a direction of 3 o'clock,
-                       i.e. the right-most point of a circle) (<int>)
-        @param etheta: ending angle of the arc in units of tenths of a
-                       degree (where 0 stands for a direction of 3 o'clock,
-                       i.e. the right-most point of a circle) (<int>)
-        @param colr: color value (<long_pos>)
+    @example: fl_arc(120, 253, 40, 10, 60, xfdata.FL_FORESTGREEN)
 
-        @example: fl_arc(120, 253, 40, 10, 60, xfdata.FL_FORESTGREEN)
-
-        @status: Tested + Doc + NoDemo = OK
+    @status: Tested + Doc + NoDemo = OK
     """
-
     fl_pieslice(0, (x - r), (y - r), (2 * r), (2 * r), stheta, etheta, colr)
 
 
 # High level drawing routines
 
 def fl_drw_frame(boxtype, x, y, w, h, colr, bw):
-    """ fl_drw_frame(boxtype, x, y, w, h, colr, bw)
+    """Draws a frame outside of the bounding box specified.
 
-        Draws a frame outside of the bounding box specified.
+    @param boxtype: type of frame box. Values (from xfdata module) FL_NO_BOX,
+        FL_UP_BOX, FL_DOWN_BOX, FL_BORDER_BOX, FL_SHADOW_BOX, FL_FRAME_BOX,
+        FL_ROUNDED_BOX, FL_EMBOSSED_BOX, FL_FLAT_BOX, FL_RFLAT_BOX,
+        FL_RSHADOW_BOX, FL_OVAL_BOX, FL_ROUNDED3D_UPBOX, FL_ROUNDED3D_DOWNBOX,
+        FL_OVAL3D_UPBOX, FL_OVAL3D_DOWNBOX, FL_OVAL3D_FRAMEBOX,
+        FL_OVAL3D_EMBOSSEDBOX
+    @type boxtype: int
+    @param x: horizontal position (upper-left corner)
+    @type x: int
+    @param y: vertical position (upper-left corner)
+    @type y: int
+    @param w: width in coord units
+    @type w: int
+    @param h: height in coord units
+    @type h: int
+    @param colr: color value
+    @type colr: long_pos
+    @param bw: width of boundary
+    @type bw: int
 
-        @param boxtype: type of frame box (<int>)
-        @type boxtype: (from xfdata module) FL_NO_BOX, FL_UP_BOX, FL_DOWN_BOX,
-                       FL_BORDER_BOX, FL_SHADOW_BOX, FL_FRAME_BOX,
-                       FL_ROUNDED_BOX, FL_EMBOSSED_BOX, FL_FLAT_BOX,
-                       FL_RFLAT_BOX, FL_RSHADOW_BOX, FL_OVAL_BOX,
-                       FL_ROUNDED3D_UPBOX, FL_ROUNDED3D_DOWNBOX,
-                       FL_OVAL3D_UPBOX, FL_OVAL3D_DOWNBOX, FL_OVAL3D_FRAMEBOX,
-                       FL_OVAL3D_EMBOSSEDBOX
-        @param x: horizontal position (upper-left corner) (<int>)
-        @param y: vertical position (upper-left corner) (<int>)
-        @param w: width in coord units (<int>)
-        @param h: height in coord units (<int>)
-        @param colr: color value (<long_pos>)
-        @param bw: width of boundary (<int>)
+    @example: fl_drw_frame(xfdata.FL_UP_BOX, 470, 560, 170, 280,
+        xfdata.FL_DIMGRAY, 2)
 
-        @example: fl_drw_frame(xfdata.FL_UP_BOX, 470, 560, 170, 280,
-                  xfdata.FL_DIMGRAY, 2)
-
-        @status: Tested + Doc + NoDemo = OK
+    @status: Tested + Doc + NoDemo = OK
     """
-
     _fl_drw_frame = cfuncproto(
-            load_so_libforms(), "fl_drw_frame",\
-            None, [cty.c_int, xfc.FL_Coord, xfc.FL_Coord,
-            xfc.FL_Coord, xfc.FL_Coord, xfc.FL_COLOR, cty.c_int],
-            """void fl_drw_frame(int style, FL_Coord x, FL_Coord y,
-               FL_Coord w, FL_Coord h, FL_COLOR c, int bw)
-""")
+        load_so_libforms(), "fl_drw_frame",\
+        None, [cty.c_int, xfc.FL_Coord, xfc.FL_Coord,
+        xfc.FL_Coord, xfc.FL_Coord, xfc.FL_COLOR, cty.c_int],
+        """void fl_drw_frame(int style, FL_Coord x, FL_Coord y,
+           FL_Coord w, FL_Coord h, FL_COLOR c, int bw)""")
     check_if_initialized()
     check_admitted_listvalues(boxtype, xfc.BOXTYPE_list)
     check_admitted_listvalues(colr, xfc.COLOR_list)
@@ -7176,38 +6826,39 @@ def fl_drw_frame(boxtype, x, y, w, h, colr, bw):
 
 
 def fl_drw_checkbox(boxtype, x, y, w, h, colr, bw):
-    """ fl_drw_checkbox(boxtype, x, y, w, h, colr, bw)
+    """Draws a box retated 45 degrees.
 
-        Draws a box retated 45 degrees.
+    @param boxtype: type of checkbox to draw. Values (from xfdata module)
+        FL_NO_BOX, FL_UP_BOX, FL_DOWN_BOX, FL_BORDER_BOX, FL_SHADOW_BOX,
+        FL_FRAME_BOX, FL_ROUNDED_BOX, FL_EMBOSSED_BOX, FL_FLAT_BOX,
+        FL_RFLAT_BOX, FL_RSHADOW_BOX, FL_OVAL_BOX, FL_ROUNDED3D_UPBOX,
+        FL_ROUNDED3D_DOWNBOX, FL_OVAL3D_UPBOX, FL_OVAL3D_DOWNBOX,
+        FL_OVAL3D_FRAMEBOX, FL_OVAL3D_EMBOSSEDBOX
+    @type boxtype: int
+    @param x: horizontal position (upper-left corner)
+    @type x: int
+    @param y: vertical position (upper-left corner)
+    @type y: int
+    @param w: width in coord units
+    @type w: int
+    @param h: height in coord units
+    @type h: int
+    @param colr: color value
+    @type colr: long_pos
+    @param bw: width of boundary
+    @type bw: int
 
-        @param boxtype: type of checkbox to draw (<int>)
-        @type boxtype: (from xfdata module) FL_NO_BOX, FL_UP_BOX, FL_DOWN_BOX,
-                       FL_BORDER_BOX, FL_SHADOW_BOX, FL_FRAME_BOX,
-                       FL_ROUNDED_BOX, FL_EMBOSSED_BOX, FL_FLAT_BOX,
-                       FL_RFLAT_BOX, FL_RSHADOW_BOX, FL_OVAL_BOX,
-                       FL_ROUNDED3D_UPBOX, FL_ROUNDED3D_DOWNBOX,
-                       FL_OVAL3D_UPBOX, FL_OVAL3D_DOWNBOX, FL_OVAL3D_FRAMEBOX,
-                       FL_OVAL3D_EMBOSSEDBOX
-        @param x: horizontal position (upper-left corner) (<int>)
-        @param y: vertical position (upper-left corner) (<int>)
-        @param w: width in coord units (<int>)
-        @param h: height in coord units (<int>)
-        @param colr: color value (<long_pos>)
-        @param bw: width of boundary (<int>)
+    @example: fl_drw_checkbox(xfdata.FL_ROUNDED3D_UPBOX, 470, 560, 170,
+        280, xfdata.FL_LEMONCHIFFON, -2)
 
-        @example: fl_drw_checkbox(xfdata.FL_ROUNDED3D_UPBOX, 470, 560, 170,
-                  280, xfdata.FL_LEMONCHIFFON, -2)
-
-        @status: Tested + Doc + NoDemo = OK
+    @status: Tested + Doc + NoDemo = OK
     """
-
     _fl_drw_checkbox = cfuncproto(
-            load_so_libforms(), "fl_drw_checkbox",\
-            None, [cty.c_int, xfc.FL_Coord, xfc.FL_Coord,
-            xfc.FL_Coord, xfc.FL_Coord, xfc.FL_COLOR, cty.c_int],
-            """void fl_drw_checkbox(int type, FL_Coord x, FL_Coord y,
-               FL_Coord w, FL_Coord h, FL_COLOR col, int bw)
-""")
+        load_so_libforms(), "fl_drw_checkbox",\
+        None, [cty.c_int, xfc.FL_Coord, xfc.FL_Coord,
+        xfc.FL_Coord, xfc.FL_Coord, xfc.FL_COLOR, cty.c_int],
+        """void fl_drw_checkbox(int type, FL_Coord x, FL_Coord y,
+           FL_Coord w, FL_Coord h, FL_COLOR col, int bw)""")
     check_if_initialized()
     check_admitted_listvalues(boxtype, xfc.BOXTYPE_list)
     check_admitted_listvalues(colr, xfc.COLOR_list)
@@ -7226,35 +6877,33 @@ def fl_drw_checkbox(boxtype, x, y, w, h, colr, bw):
 # Interfaces
 
 def fl_get_fontstruct(style, size):
-    """ fl_get_fontstruct(style, size) -> XFontStruct class
+    """Returns the X font structure for a particular size and style as used
+    in XForms Library.
 
-        Returns the X font structure for a particular size and style as
-        used in XForms Library.
+    @param style: font style. Values (from xfdata module) FL_NORMAL_STYLE,
+        FL_BOLD_STYLE, FL_ITALIC_STYLE, FL_BOLDITALIC_STYLE, FL_FIXED_STYLE,
+        FL_FIXEDBOLD_STYLE, FL_FIXEDITALIC_STYLE, FL_FIXEDBOLDITALIC_STYLE,
+        FL_TIMES_STYLE, FL_TIMESBOLD_STYLE, FL_TIMESITALIC_STYLE,
+        FL_TIMESBOLDITALIC_STYLE, FL_MISC_STYLE, FL_MISCBOLD_STYLE,
+        FL_MISCITALIC_STYLE, FL_SYMBOL_STYLE, FL_SHADOW_STYLE,
+        FL_ENGRAVED_STYLE, FL_EMBOSSED_STYLE
+    @type style: int
+    @param size: font size. Values (from xfdata module) FL_TINY_SIZE,
+        FL_SMALL_SIZE, FL_NORMAL_SIZE, FL_MEDIUM_SIZE, FL_LARGE_SIZE,
+        FL_HUGE_SIZE, FL_DEFAULT_SIZE
+    @type size: int
 
-        @param style: font style (<int>)
-        @type style: (from xfdata module) FL_NORMAL_STYLE, FL_BOLD_STYLE,
-                     FL_ITALIC_STYLE, FL_BOLDITALIC_STYLE, FL_FIXED_STYLE,
-                     FL_FIXEDBOLD_STYLE, FL_FIXEDITALIC_STYLE,
-                     FL_FIXEDBOLDITALIC_STYLE, FL_TIMES_STYLE,
-                     FL_TIMESBOLD_STYLE, FL_TIMESITALIC_STYLE,
-                     FL_TIMESBOLDITALIC_STYLE, FL_MISC_STYLE,
-                     FL_MISCBOLD_STYLE, FL_MISCITALIC_STYLE, FL_SYMBOL_STYLE,
-                     FL_SHADOW_STYLE, FL_ENGRAVED_STYLE, FL_EMBOSSED_STYLE
-        @param size: font size (<int>)
-        @type size: (from xfdata module) FL_TINY_SIZE, FL_SMALL_SIZE, 
-                    FL_NORMAL_SIZE, FL_MEDIUM_SIZE, FL_LARGE_SIZE,
-                    FL_HUGE_SIZE, FL_DEFAULT_SIZE
+    @returns: XFontStruct class instance
+    @rtype: pointer to xfdata.XFontStruct
 
-        @returns: pointer to xfdata.XFontStruct
+    @example: ?
 
-        @status: Tested + Doc + NoDemo = OK
+    @status: Tested + Doc + NoDemo = OK
     """
-
     _fl_get_fontstruct = cfuncproto(
-            load_so_libforms(), "fl_get_fontstruct",\
-            cty.POINTER(xfc.XFontStruct), [cty.c_int, cty.c_int],\
-""")XFontStruct * fl_get_fontstruct(int style, int size)
-""")
+        load_so_libforms(), "fl_get_fontstruct",\
+        cty.POINTER(xfc.XFontStruct), [cty.c_int, cty.c_int],\
+        """XFontStruct * fl_get_fontstruct(int style, int size)""")
     check_if_initialized()
     check_admitted_listvalues(style, xfc.TEXTSTYLE_list)
     check_admitted_listvalues(size, xfc.FONTSIZE_list)
@@ -7270,29 +6919,26 @@ fl_get_fntstruct = fl_get_font_struct
 
 
 def fl_get_mouse():
-    """ fl_get_mouse() -> win, x, y, keymask
+    """Obtains the current mouse position relative to the root window, and
+    the current state of the modifier keys and pointer buttons.
 
-        Obtains the current mouse position relative to the root window, and
-        the current state of the modifier keys and pointer buttons.
+    @returns: window the mouse is in (win), horizontal (x) and vertical
+        position (y), keymask
+    @rtype: long_pos, int, int, int_pos
 
-        @returns: window the mouse is in, horizontal and vertical position,
-                  keymask (<long_pos>, <int>, <int>, <int_pos>)
+    @example: win, x, y, kmsk = fl_get_mouse()
 
-        @example: win, x, y, keym = fl_get_mouse()
+    @attention: API change from XForms - upstream was
+        fl_get_mouse(x, y, keymask)
 
-        @attention: API change from XForms - upstream was
-                    fl_get_mouse(x, y, keymask)
-
-        @status: Tested + Doc + NoDemo = OK
+    @status: Tested + Doc + NoDemo = OK
     """
-
     _fl_get_mouse = cfuncproto(
-            load_so_libforms(), "fl_get_mouse",\
-            xfc.Window, [cty.POINTER(xfc.FL_Coord), cty.POINTER(xfc.FL_Coord),
-            cty.POINTER(cty.c_uint)],\
-            """Window fl_get_mouse(FL_Coord * x, FL_Coord * y,
-              unsigned int * keymask)
-""")
+        load_so_libforms(), "fl_get_mouse",\
+        xfc.Window, [cty.POINTER(xfc.FL_Coord), cty.POINTER(xfc.FL_Coord),
+        cty.POINTER(cty.c_uint)],\
+        """Window fl_get_mouse(FL_Coord * x, FL_Coord * y,
+          unsigned int * keymask)""")
     check_if_initialized()
     x, px = make_FL_Coord_and_pointer()
     y, py = make_FL_Coord_and_pointer()
@@ -7303,25 +6949,23 @@ def fl_get_mouse():
 
 
 def fl_set_mouse(x, y):
-    """ fl_set_mouse(x, y)
+    """Moves the mouse to a specific location relative to the root window.
+    Use this function sparingly, it can be extremely annoying for the user if
+    the mouse position is changed by a program.
 
-        Moves the mouse to a specific location relative to the root window.
-        Use this function sparingly, it can be extremely annoying for the user
-        if the mouse position is changed by a program.
+    @param x: horizontal position
+    @type x: int
+    @param y: vertical position
+    @type y: int
 
-        @param x: horizontal position (<int>)
-        @param y: vertical position (<int>)
+    @example: fl_set_mouse(200, 120)
 
-        @example: fl_set_mouse(200, 120)
-
-        @status: Tested + Doc + NoDemo = OK
+    @status: Tested + Doc + NoDemo = OK
     """
-
     _fl_set_mouse = cfuncproto(
-            load_so_libforms(), "fl_set_mouse",\
-            None, [xfc.FL_Coord, xfc.FL_Coord],\
-            """void fl_set_mouse(FL_Coord mx, FL_Coord my)
-""")
+        load_so_libforms(), "fl_set_mouse",\
+        None, [xfc.FL_Coord, xfc.FL_Coord],\
+        """void fl_set_mouse(FL_Coord mx, FL_Coord my)""")
     check_if_initialized()
     ix = convert_to_FL_Coord(x)
     iy = convert_to_FL_Coord(y)
@@ -7330,31 +6974,29 @@ def fl_set_mouse(x, y):
 
 
 def fl_get_win_mouse(win):
-    """ fl_get_win_mouse(win) -> win, x, y, keymask
+    """Obtains the position of the mouse relative to a certain window, and
+    the current state of the modifier keys and pointer buttons.
 
-        Obtains the position of the mouse relative to a certain window, and
-        the current state of the modifier keys and pointer buttons.
+    @param win: window id
+    @type win: long_pos
 
-        @param win: window id (<long_pos>)
+    @returns: window the mouse is in (win), horizontal (x) and vertical
+        position (y), keymask
+    @rtype: long_pos, int, int, int_pos
 
-        @returns: window the mouse is in, horizontal and vertical position,
-                  keymask (<long_pos>, <int>, <int>, <int_pos>)
+    @example: win, x, y, keym = fl_get_win_mouse()
 
-        @example: win, x, y, keym = fl_get_win_mouse()
+    @attention: API change from XForms - upstream was
+        fl_get_win_mouse(win, x, y, keymask)
 
-        @attention: API change from XForms - upstream was
-                    fl_get_win_mouse(win, x, y, keymask)
-
-        @status: Tested + NoDoc + Demo = OK
+    @status: Tested + NoDoc + Demo = OK
     """
-
     _fl_get_win_mouse = cfuncproto(
-            load_so_libforms(), "fl_get_win_mouse",\
-            xfc.Window, [xfc.Window, cty.POINTER(xfc.FL_Coord),
-            cty.POINTER(xfc.FL_Coord), cty.POINTER(cty.c_uint)],\
-            """Window fl_get_win_mouse(Window win, FL_Coord * x, FL_Coord * y,
-            unsigned int * keymask)
-""")
+        load_so_libforms(), "fl_get_win_mouse",\
+        xfc.Window, [xfc.Window, cty.POINTER(xfc.FL_Coord),
+        cty.POINTER(xfc.FL_Coord), cty.POINTER(cty.c_uint)],\
+        """Window fl_get_win_mouse(Window win, FL_Coord * x, FL_Coord * y,
+        unsigned int * keymask)""")
     check_if_initialized()
     ulwin = convert_to_Window(win)
     x, px = make_FL_Coord_and_pointer()
@@ -7366,31 +7008,29 @@ def fl_get_win_mouse(win):
 
 
 def fl_get_form_mouse(pFlForm):
-    """ fl_get_form_mouse(pFlForm) -> win, x, y, keymask
+    """Obtains the position of the mouse relative to a certain form, and
+    the current state of the modifier keys and pointer buttons.
 
-        Obtains the position of the mouse relative to a certain form, and
-        the current state of the modifier keys and pointer buttons.
+    @param pFlForm: form
+    @type pFlForm: pointer to xfdata.FL_FORM
 
-        @param pFlForm: form @type pFlForm: pointer to xfdata.FL_FORM
+    @returns: window the mouse is in (win), horizontal (x) and vertical
+        position (y), keymask
+    @rtype: long_pos, int, int, int_pos
 
-        @returns: window the mouse is in, horizontal and vertical position,
-                  keymask (<long_pos>, <int>, <int>, <int_pos>)
+    @example: win, x, y, keym = fl_get_form_mouse()
 
-        @example: win, x, y, keym = fl_get_form_mouse()
+    @attention: API change from XForms - upstream was
+        fl_get_form_mouse(fm, x, y, keymask)
 
-        @attention: API change from XForms - upstream was
-                    fl_get_form_mouse(fm, x, y, keymask)
-
-        @status: Tested + Doc + NoDemo = OK
+    @status: Tested + Doc + NoDemo = OK
     """
-
     _fl_get_form_mouse = cfuncproto(
-            load_so_libforms(), "fl_get_form_mouse",\
-            xfc.Window, [cty.POINTER(xfc.FL_FORM), cty.POINTER(xfc.FL_Coord),
-            cty.POINTER(xfc.FL_Coord), cty.POINTER(cty.c_uint)],\
-            """Window fl_get_form_mouse(FL_FORM * fm, FL_Coord * x,
-               FL_Coord * y, unsigned int * keymask)
-""")
+        load_so_libforms(), "fl_get_form_mouse",\
+        xfc.Window, [cty.POINTER(xfc.FL_FORM), cty.POINTER(xfc.FL_Coord),
+        cty.POINTER(xfc.FL_Coord), cty.POINTER(cty.c_uint)],\
+        """Window fl_get_form_mouse(FL_FORM * fm, FL_Coord * x,
+           FL_Coord * y, unsigned int * keymask)""")
     check_if_initialized()
     check_if_FL_FORM_ptr(pFlForm)
     x, px = make_FL_Coord_and_pointer()
@@ -7402,24 +7042,22 @@ def fl_get_form_mouse(pFlForm):
 
 
 def fl_win_to_form(win):
-    """ fl_win_to_form(win) -> pFlForm
+    """Returns the form the specified window belongs to.
 
-        Returns the form the specified window belongs to.
+    @param win : window id
+    @type win: long_pos
 
-        @param win : window id (<long_pos>)
+    @returns: form (pFlForm) or None (on failure)
+    @rtype: pointer to xfdata.FL_FORM
 
-        @returns: form @type pFlForm: pointer to xfdata.FL_FORM or None (on failure)
+    @example: pform2 = fl_win_to_form(win1)
 
-        @example: pform2 = fl_win_to_form(win1)
-
-        @status: Tested + Doc + NoDemo = OK
+    @status: Tested + Doc + NoDemo = OK
     """
-
     _fl_win_to_form = cfuncproto(
-            load_so_libforms(), "fl_win_to_form",
-            cty.POINTER(xfc.FL_FORM), [xfc.Window],\
-            """FL_FORM * fl_win_to_form(Window win)
-""")
+        load_so_libforms(), "fl_win_to_form",
+        cty.POINTER(xfc.FL_FORM), [xfc.Window],\
+        """FL_FORM * fl_win_to_form(Window win)""")
     check_if_initialized()
     ulwin = convert_to_Window(win)
     keep_elem_refs(win, ulwin)
@@ -7428,22 +7066,23 @@ def fl_win_to_form(win):
 
 
 def fl_set_form_icon(pFlForm, icon, mask):
-    """ fl_set_form_icon(pFlForm, icon, mask)
+    """Sets or changes the icon shown when a form is iconified.
 
-        Sets or changes the icon shown when a form is iconified.
+    @param pFlForm: form (pFlForm)
+    @type pFlForm: pointer to xfdata.FL_FORM
+    @param icon: icon pixmap id
+    @type icon: long_pos
+    @param mask: mask pixmap id
+    @type mask: long_pos
 
-        @param pFlForm: form @type pFlForm: pointer to xfdata.FL_FORM
-        @param icon: icon pixmap id (<long_pos>)
-        @param mask: mask pixmap id (<long_pos>)
+    @example: ?
 
-        @status: Tested + Doc + Demo = OK
+    @status: Tested + Doc + Demo = OK
     """
-
     _fl_set_form_icon = cfuncproto(
-            load_so_libforms(), "fl_set_form_icon",\
-            None, [cty.POINTER(xfc.FL_FORM), xfc.Pixmap, xfc.Pixmap],\
-            """void fl_set_form_icon(FL_FORM * form, Pixmap p, Pixmap m)
-""")
+        load_so_libforms(), "fl_set_form_icon",\
+        None, [cty.POINTER(xfc.FL_FORM), xfc.Pixmap, xfc.Pixmap],\
+        """void fl_set_form_icon(FL_FORM * form, Pixmap p, Pixmap m)""")
     check_if_initialized()
     check_if_FL_FORM_ptr(pFlForm)
     ulicon = convert_to_Pixmap(icon)
@@ -7453,31 +7092,28 @@ def fl_set_form_icon(pFlForm, icon, mask):
 
 
 def fl_get_decoration_sizes(pFlForm):
-    """ fl_get_decoration_sizes(pFlForm) -> num., top, right, bottom, left
+    """Returns the sizes of the "decorations" the window manager puts around
+    a form's window. Returns 0 on success and 1 if the form isn't visible or
+    it's a form embedded into another form.
 
-        Returns the sizes of the "decorations" the window manager puts around
-        a form's window. Returns 0 on success and 1 if the form isn't visible
-        or it's a form embedded into another form.
+    @param pFlForm: form
+    @type pFlForm: pointer to xfdata.FL_FORM
 
-        @param pFlForm: form @type pFlForm: pointer to xfdata.FL_FORM
+    @returns: num. (0 or 1), top size, right size, bottom size, left size
+    @rtype: int, int, int, int
 
-        @returns: num. (0 or 1), top size, right size, bottom size, left size
-                  (<int>, <int>, <int>, <int>)
+    @attention: API change from XForms - upstream was
+        fl_get_decoration_sizes(pFlForm, top, right, bottom, left)
 
-        @attention: API change from XForms - upstream was
-                    fl_get_decoration_sizes(pFlForm, top, right, bottom, left)
-
-        @status: Tested + Doc + NoDemo = OK
+    @status: Tested + Doc + NoDemo = OK
     """
-
     _fl_get_decoration_sizes = cfuncproto(
-            load_so_libforms(), "fl_get_decoration_sizes",
-            cty.c_int, [cty.POINTER(xfc.FL_FORM), cty.POINTER(cty.c_int),\
-            cty.POINTER(cty.c_int), cty.POINTER(cty.c_int),
-            cty.POINTER(cty.c_int)],\
-            """int fl_get_decoration_sizes(FL_FORM * form, int * top,
-               int * right, int * bottom, int * left)
-""")
+        load_so_libforms(), "fl_get_decoration_sizes",
+        cty.c_int, [cty.POINTER(xfc.FL_FORM), cty.POINTER(cty.c_int),\
+        cty.POINTER(cty.c_int), cty.POINTER(cty.c_int),
+        cty.POINTER(cty.c_int)],\
+        """int fl_get_decoration_sizes(FL_FORM * form, int * top,
+           int * right, int * bottom, int * left)""")
     check_if_initialized()
     check_if_FL_FORM_ptr(pFlForm)
     top, ptop = make_int_and_pointer()
@@ -7491,22 +7127,19 @@ def fl_get_decoration_sizes(pFlForm):
 
 
 def fl_raise_form(pFlForm):
-    """ fl_raise_form(pFlForm)
+    """Raises a form to the top of the screen so no other forms obscure it.
 
-        Raises a form to the top of the screen so no other forms obscure it.
+    @param pFlForm: form to be raised
+    @type pFlForm: pointer to xfdata.FL_FORM
 
-        @param pFlForm: form to be raised @type pFlForm: pointer to xfdata.FL_FORM
+    @example: fl_raise_form(pform2)
 
-        @example: fl_raise_form(pform2)
-
-        @status: Tested + Doc + NoDemo = OK
+    @status: Tested + Doc + NoDemo = OK
     """
-
     _fl_raise_form = cfuncproto(
-            load_so_libforms(), "fl_raise_form",\
-            None, [cty.POINTER(xfc.FL_FORM)],\
-            """void fl_raise_form(FL_FORM * p1)
-""")
+        load_so_libforms(), "fl_raise_form",\
+        None, [cty.POINTER(xfc.FL_FORM)],\
+        """void fl_raise_form(FL_FORM * p1)""")
     check_if_initialized()
     check_if_FL_FORM_ptr(pFlForm)
     keep_elem_refs(pFlForm)
@@ -7514,22 +7147,19 @@ def fl_raise_form(pFlForm):
 
 
 def fl_lower_form(pFlForm):
-    """ fl_lower_form(pFlForm)
+    """Lowers a form to the bottom of the stack.
 
-        Lowers a form to the bottom of the stack.
+    @param pFlForm: form to be lowered
+    @type pFlForm: pointer to xfdata.FL_FORM
 
-        @param pFlForm: form to be lowered @type pFlForm: pointer to xfdata.FL_FORM
+    @example: fl_lower_form(pform2)
 
-        @example: fl_lower_form(pform2)
-
-        @status: Tested + Doc + NoDemo = OK
+    @status: Tested + Doc + NoDemo = OK
     """
-
     _fl_lower_form = cfuncproto(
-            load_so_libforms(), "fl_lower_form",\
-            None, [cty.POINTER(xfc.FL_FORM)],\
-            """void fl_lower_form(FL_FORM * p1)
-""")
+        load_so_libforms(), "fl_lower_form",\
+        None, [cty.POINTER(xfc.FL_FORM)],\
+        """void fl_lower_form(FL_FORM * p1)""")
     check_if_initialized()
     check_if_FL_FORM_ptr(pFlForm)
     keep_elem_refs(pFlForm)
@@ -7537,24 +7167,23 @@ def fl_lower_form(pFlForm):
 
 
 def fl_set_foreground(gc, colr):
-    """ fl_set_foreground(gc, colr)
+    """Sets foreground color in Graphics Contexts (GCs) other than the XForms
+    library's default.
 
-        Sets foreground color in GCs other than the XForms library's default.
+    @param gc: Graphics context number
+    @type gc: ?
+    @param colr: color value to be set as foreground
+    @type colr: long_pos
 
-        @param gc: Graphics context number
-        @param colr: color value to be set as foreground (<long_pos>)
+    @example: gc = fl_state[fl_get_vclass()].gc[0] ?? 
+        fl_set_foreground(gc, xfdata.FL_LAWNGREEN)
 
-        @example: gc = fl_state[fl_get_vclass()].gc[0] ?? 
-                  fl_set_foreground(gc, xfdata.FL_LAWNGREEN)
-
-        @status: Untested + NoDoc + NoDemo = NOT OK (NULL pointer access)
+    @status: Untested + NoDoc + NoDemo = NOT OK (NULL pointer access)
     """
-
     _fl_set_foreground = cfuncproto(
-            load_so_libforms(), "fl_set_foreground",\
-            None, [xfc.GC, xfc.FL_COLOR],\
-            """void fl_set_foreground(GC gc, FL_COLOR col)
-""")
+        load_so_libforms(), "fl_set_foreground",\
+        None, [xfc.GC, xfc.FL_COLOR],\
+        """void fl_set_foreground(GC gc, FL_COLOR col)""")
     check_if_initialized()
     check_admitted_listvalues(colr, xfc.COLOR_list)
     ulcolr = convert_to_FL_COLOR(colr)
@@ -7563,24 +7192,23 @@ def fl_set_foreground(gc, colr):
 
 
 def fl_set_background(gc, colr):
-    """ fl_set_background(gc, colr)
+    """Sets background color in Graphics contexts (GCs) other than the XForms
+    library's default.
 
-        Sets background color in GCs other than the XForms library's default.
+    @param gc: Graphics context number
+    @type gc: ?
+    @param colr: color value to be set as background
+    @type colr: long_pos
 
-        @param gc: Graphics context number
-        @param colr: color value to be set as background (<long_pos>)
+    @example: gc = fl_state[fl_get_vclass()].gc[0] ?? 
+        fl_set_foreground(gc, xfdata.FL_HONEYDEW)
 
-        @example: gc = fl_state[fl_get_vclass()].gc[0] ?? 
-                  fl_set_foreground(gc, xfdata.FL_HONEYDEW)
-
-        @status: Untested + NoDoc + NoDemo = NOT OK (NULL pointer access)
+    @status: Untested + NoDoc + NoDemo = NOT OK (NULL pointer access)
     """
-
     _fl_set_background = cfuncproto(
-            load_so_libforms(), "fl_set_background",\
-            None, [xfc.GC, xfc.FL_COLOR],\
-            """void fl_set_background(GC gc, FL_COLOR col)
-""")
+        load_so_libforms(), "fl_set_background",\
+        None, [xfc.GC, xfc.FL_COLOR],\
+        """void fl_set_background(GC gc, FL_COLOR col)""")
     check_if_initialized()
     check_admitted_listvalues(colr, xfc.COLOR_list)
     ulcolr = convert_to_FL_COLOR(colr)
@@ -7591,24 +7219,22 @@ def fl_set_background(gc, colr):
 # General windowing support
 
 def fl_wincreate(title):
-    """ fl_wincreate(title) -> win
+    """Creates a window with a specified title.
 
-        Creates a window with a specified title.
+    @param title: title of the window
+    @type title: str
 
-        @param title: title of the window (<string>)
+    @returns: created window id (win)
+    @rtype: long_pos
 
-        @returns: created window id (<long_pos>)
+    @example: win2 = fl_wincreate("My long title")
 
-        @example: win2 = fl_wincreate("My long title")
-
-        @status: Tested + Doc + NoDemo = OK
+    @status: Tested + Doc + NoDemo = OK
     """
-
     _fl_wincreate = cfuncproto(
-            load_so_libforms(), "fl_wincreate",\
-            xfc.Window, [xfc.STRING],\
-            """Window fl_wincreate(const char * label)
-""")
+        load_so_libforms(), "fl_wincreate",\
+        xfc.Window, [xfc.STRING],\
+        """Window fl_wincreate(const char * label)""")
     check_if_initialized()
     stitle = convert_to_string(title)
     keep_elem_refs(title, stitle)
@@ -7617,24 +7243,22 @@ def fl_wincreate(title):
 
 
 def fl_winshow(win):
-    """ fl_winshow(win) -> win
+    """Shows the window (created with fl_wincreate).
 
-        Shows the window (created with fl_wincreate).
+    @param win: window id to show
+    @type win: long_pos
 
-        @param win: window id to show (<long_pos>)
+    @returns: window id shown (win)
+    @rtype: long_pos
 
-        @returns: window id shown (<long_pos>)
+    @example: winw = fl_winshow(win2)
 
-        @example: winw = fl_winshow(win2)
-
-        @status: Tested + Doc + NoDemo = OK
+    @status: Tested + Doc + NoDemo = OK
     """
-
     _fl_winshow = cfuncproto(
-            load_so_libforms(), "fl_winshow",\
-            xfc.Window, [xfc.Window],\
-            """Window fl_winshow(Window win)
-""")
+        load_so_libforms(), "fl_winshow",\
+        xfc.Window, [xfc.Window],\
+        """Window fl_winshow(Window win)""")
     check_if_initialized()
     ulwin = convert_to_Window(win)
     keep_elem_refs(win, ulwin)
@@ -7643,25 +7267,22 @@ def fl_winshow(win):
 
 
 def fl_winopen(title):
-    """ fl_winopen(title) -> window
+    """Opens (creates and shows) a toplevel window with the specified title.
 
-        Opens (creates and shows) a toplevel window with the specified
-        title.
+    @param title: title of the window
+    @type title: str
 
-        @param title: title of the window (<string>)
+    @returns: created window id (win)
+    @rtype: long_pos
 
-        @returns: created window id (<long_pos>)
+    @example: win2 = fl_winopen("My long title")
 
-        @example: win2 = fl_winopen("My long title")
-
-        @status: Tested + Doc + Demo = OK
+    @status: Tested + Doc + Demo = OK
     """
-
     _fl_winopen = cfuncproto(
-            load_so_libforms(), "fl_winopen", \
-            xfc.Window, [xfc.STRING], \
-            """Window fl_winopen(const char * label)
-""")
+        load_so_libforms(), "fl_winopen", \
+        xfc.Window, [xfc.STRING], \
+        """Window fl_winopen(const char * label)""")
     check_if_initialized()
     stitle = convert_to_string(title)
     keep_elem_refs(title, stitle)
@@ -7670,22 +7291,18 @@ def fl_winopen(title):
 
 
 def fl_winhide(win):
-    """ fl_winhide(win)
+    """Hides a shown window.
 
-        Hides a shown window.
+    @param win: window id to hide (win)
 
-        @param win: window id to hide (<long_pos>)
+    @example: fl_winhide(win2)
 
-        @example: fl_winhide(win2)
-
-        @status: Tested + Doc + Demo = OK
+    @status: Tested + Doc + Demo = OK
     """
-
     _fl_winhide = cfuncproto(
-            load_so_libforms(), "fl_winhide", \
-            None, [xfc.Window], \
-            """void fl_winhide(Window win)
-""")
+        load_so_libforms(), "fl_winhide", \
+        None, [xfc.Window], \
+        """void fl_winhide(Window win)""")
     check_if_initialized()
     ulwin = convert_to_Window(win)
     keep_elem_refs(win, ulwin)
@@ -7693,22 +7310,19 @@ def fl_winhide(win):
 
 
 def fl_winclose(win):
-    """ fl_winclose(win)
+    """Closes (hides and destroys) the specified window.
 
-        Closes (hides and destroys) the specified window.
+    @param win: window id to close
+    @type win: long_pos
 
-        @param win: window id to close (<long_pos>)
+    @example: fl_winclose(win2)
 
-        @example: fl_winclose(win2)
-
-        @status: Tested + Doc + NoDemo = OK
+    @status: Tested + Doc + NoDemo = OK
     """
-
     _fl_winclose = cfuncproto(
-            load_so_libforms(), "fl_winclose", \
-            None, [xfc.Window], \
-            """void fl_winclose(Window win)
-""")
+        load_so_libforms(), "fl_winclose", \
+        None, [xfc.Window], \
+        """void fl_winclose(Window win)""")
     check_if_initialized()
     ulwin = convert_to_Window(win)
     keep_elem_refs(win, ulwin)
@@ -7716,23 +7330,20 @@ def fl_winclose(win):
 
 
 def fl_winset(win):
-    """ fl_winset(win)
+    """Sets the "current window", defined as the window the object that uses
+    the drawing routine belongs to.
 
-        Sets the "current window", defined as the window the object that uses
-        the drawing routine belongs to.
+    @param win: window id to set as current
+    @type win: long_pos
 
-        @param win: window id to set as current (<long_pos>)
+    @example: fl_winset(win3)
 
-        @example: fl_winset(win3)
-
-        @status: Tested + Doc + Demo = OK
+    @status: Tested + Doc + Demo = OK
     """
-
     _fl_winset = cfuncproto(
-            load_so_libforms(), "fl_winset", \
-            None, [xfc.Window], \
-            """void fl_winset(Window win)
-""")
+        load_so_libforms(), "fl_winset", \
+        None, [xfc.Window], \
+        """void fl_winset(Window win)""")
     check_if_initialized()
     ulwin = convert_to_Window(win)
     keep_elem_refs(win, ulwin)
@@ -7740,27 +7351,25 @@ def fl_winset(win):
 
 
 def fl_winreparent(win, winnewparent):
-    """ fl_winreparent(win, winnewparent) -> num.
+    """Makes a toplevel window a subwindow of another (new parent) window;
+    both the window and the parent window must be valid ones.
 
-        Makes a toplevel window a subwindow of another (new parent) window;
-        both the window and the parent window must be valid ones.
+    @param win: window id to be made a subwindow
+    @type win: long_pos
+    @param winnewparent: window id to become its new parent window 
+    @type winnewparent: long_pos
 
-        @param win: window id to be made a subwindow  (<long_pos>)
-        @param winnewparent: window id to become its new parent window 
-                             (<long_pos>)
+    @returns: num., or -1 (on failure)
+    @rtype: int
 
-        @returns: num. (<int>) or -1 (on failure)
+    @example: exitval = fl_winreparent(win1, win3)
 
-        @example: exitval = fl_winreparent(win1, win3)
-
-        @status: Tested + Doc + NoDemo = OK
+    @status: Tested + Doc + NoDemo = OK
     """
-
     _fl_winreparent = cfuncproto(
-            load_so_libforms(), "fl_winreparent", \
-            cty.c_int, [xfc.Window, xfc.Window], \
-            """int fl_winreparent(Window win, Window new_parent)
-""")
+        load_so_libforms(), "fl_winreparent", \
+        cty.c_int, [xfc.Window, xfc.Window], \
+        """int fl_winreparent(Window win, Window new_parent)""")
     check_if_initialized()
     ulwin = convert_to_Window(win)
     ulwinnewparent = convert_to_Window(winnewparent)
@@ -7770,23 +7379,20 @@ def fl_winreparent(win, winnewparent):
 
 
 def fl_winfocus(win):
-    """ fl_winfocus(win)
+    """Keyboard input is directed to the specified window, overriding the
+    keyboard focus assignment.
 
-        Keyboard input is directed to the specified window, overriding the
-        keyboard focus assignment.
+    @param win: window id
+    @type win: long_pos
 
-        @param win: window id (<long_pos>)
+    @example: fl_winfocus(win3)
 
-        @example: fl_winfocus(win3)
-
-        @status: Tested + Doc + NoDemo = OK
+    @status: Tested + Doc + NoDemo = OK
     """
-
     _fl_winfocus = cfuncproto(
-            load_so_libforms(), "fl_winfocus", \
-            None, [xfc.Window], \
-            """void fl_winfocus(Window win)
-""")
+        load_so_libforms(), "fl_winfocus", \
+        None, [xfc.Window], \
+        """void fl_winfocus(Window win)""")
     check_if_initialized()
     ulwin = convert_to_Window(win)
     keep_elem_refs(win, ulwin)
@@ -7794,49 +7400,44 @@ def fl_winfocus(win):
 
 
 def fl_winget():
-    """ fl_winget() -> win
+    """Queries the current window. One caveat about fl_winget() is that it
+    can return None if called outside of an object's event handler, depending
+    on where the mouse is. Thus, the return value of this function should be
+    checked when called outside of an object handler.
 
-        Queries the current window. One caveat about fl_winget() is that it
-        can return None if called outside of an object's event handler,
-        depending on where the mouse is. Thus, the return value of this
-        function should be checked when called outside of an object handler.
+    @returns: window id (win)
+    @rtype: long_pos
 
-        @returns: window id (<long_pos>)
+    @example: currwin = fl_winget()
 
-        @example: currwin = fl_winget()
-
-        @status: Tested + Doc + NoDemo = OK
+    @status: Tested + Doc + NoDemo = OK
     """
-
     _fl_winget = cfuncproto(
-            load_so_libforms(), "fl_winget", \
-            xfc.Window, [], \
-            """Window fl_winget()
-""")
+        load_so_libforms(), "fl_winget", \
+        xfc.Window, [], \
+        """Window fl_winget()""")
     check_if_initialized()
     retval = _fl_winget()
     return retval
 
 
 def fl_iconify(win):
-    """ fl_iconify(win) -> num.
+    """Iconifies the specified window.
 
-        Iconifies the specified window.
+    @param win: window id
+    @type win: long_pos
 
-        @param win: window id (<long_pos>)
+    @returns: num.
+    @rtype: int
 
-        @returns: num. (<int>)
+    @example: fl_iconify(win2)
 
-        @example: fl_iconify(win2)
-
-        @status: Tested + Doc + NoDemo = OK
+    @status: Tested + Doc + NoDemo = OK
     """
-
     _fl_iconify = cfuncproto(
-            load_so_libforms(), "fl_iconify", \
-            cty.c_int, [xfc.Window], \
-            """int fl_iconify(Window win)
-""")
+        load_so_libforms(), "fl_iconify", \
+        cty.c_int, [xfc.Window], \
+        """int fl_iconify(Window win)""")
     check_if_initialized()
     ulwin = convert_to_Window(win)
     keep_elem_refs(win, ulwin)
@@ -7845,24 +7446,23 @@ def fl_iconify(win):
 
 
 def fl_winresize(win, w, h):
-    """ fl_winresize(win, w, h)
+    """Resizes a window.
 
-        Resizes a window.
+    @param win: window id to resize
+    @type win: long_pos
+    @param w: new width in coord units
+    @type w: int
+    @param h: new height in coord units
+    @type h: int
 
-        @param win: window id to resize (<long_pos>)
-        @param w: new width in coord units (<int>)
-        @param h: new height in coord units (<int>)
+    @example: fl_winresize(win6, 547, 624)
 
-        @example: fl_winresize(win6, 547, 624)
-
-        @status: Tested + Doc + NoDemo = OK
+    @status: Tested + Doc + NoDemo = OK
     """
-
     _fl_winresize = cfuncproto(
-            load_so_libforms(), "fl_winresize", \
-            None, [xfc.Window, xfc.FL_Coord, xfc.FL_Coord], \
-            """void fl_winresize(Window win, FL_Coord neww, FL_Coord newh)
-""")
+        load_so_libforms(), "fl_winresize", \
+        None, [xfc.Window, xfc.FL_Coord, xfc.FL_Coord], \
+        """void fl_winresize(Window win, FL_Coord neww, FL_Coord newh)""")
     check_if_initialized()
     ulwin = convert_to_Window(win)
     iw = convert_to_int(w)
@@ -7872,24 +7472,23 @@ def fl_winresize(win, w, h):
 
 
 def fl_winmove(win, x, y):
-    """ fl_winmove(win, x, y)
+    """Moves the specified window to a new position.
 
-        Moves the specified window to a new position.
+    @param win: window id to move to a new position
+    @type win: long_pos
+    @param x: new horizontal position (upper-left corner)
+    @type x: int
+    @param y: new vertical position (upper-left corner)
+    @type y: int
 
-        @param win: window id to move to a new position (<long_pos>)
-        @param x: new horizontal position (upper-left corner) (<int>)
-        @param y: new vertical position (upper-left corner) (<int>)
+    @example: fl_winmove(win5, 116, 331)
 
-        @example: fl_winmove(win5, 116, 331)
-
-        @status: Tested + Doc + NoDemo = OK
+    @status: Tested + Doc + NoDemo = OK
     """
-
     _fl_winmove = cfuncproto(
-            load_so_libforms(), "fl_winmove", \
-            None, [xfc.Window, xfc.FL_Coord, xfc.FL_Coord], \
-            """void fl_winmove(Window win, FL_Coord dx, FL_Coord dy)
-""")
+        load_so_libforms(), "fl_winmove", \
+        None, [xfc.Window, xfc.FL_Coord, xfc.FL_Coord], \
+        """void fl_winmove(Window win, FL_Coord dx, FL_Coord dy)""")
     check_if_initialized()
     ulwin = convert_to_Window(win)
     ix = convert_to_int(x)
@@ -7899,28 +7498,29 @@ def fl_winmove(win, x, y):
 
 
 def fl_winreshape(win, x, y, w, h):
-    """ fl_winreshape(win, x, y, w, h)
+    """Reshapes (resizes and moves) a window.
 
-        Reshapes (resizes and moves) a window.
+    @param win: window id to reshape
+    @type win: long_pos
+    @param x: new horizontal position (upper-left corner)
+    @type x: int
+    @param y: new vertical position (upper-left corner)
+    @type y: int
+    @param w: width in coord units
+    @type w: int
+    @param h: height in coord units
+    @type h: int
 
-        @param win: window id to reshape (<long_pos>)
-        @param x: new horizontal position (upper-left corner) (<int>)
-        @param y: new vertical position (upper-left corner) (<int>)
-        @param w: width in coord units (<int>)
-        @param h: height in coord units (<int>)
+    @example: fl_winreshape(win5, 116, 331, 144, 182)
 
-        @example: fl_winreshape(win5, 116, 331, 144, 182)
-
-        @status: Tested + Doc + NoDemo = OK
+    @status: Tested + Doc + NoDemo = OK
     """
-
     _fl_winreshape = cfuncproto(
-            load_so_libforms(), "fl_winreshape", \
-            None, [xfc.Window, xfc.FL_Coord, xfc.FL_Coord, xfc.FL_Coord,
-            xfc.FL_Coord], \
-            """void fl_winreshape(Window win, FL_Coord dx, FL_Coord dy,
-               FL_Coord w, FL_Coord h)
-""")
+        load_so_libforms(), "fl_winreshape", \
+        None, [xfc.Window, xfc.FL_Coord, xfc.FL_Coord, xfc.FL_Coord,
+        xfc.FL_Coord], \
+        """void fl_winreshape(Window win, FL_Coord dx, FL_Coord dy,
+           FL_Coord w, FL_Coord h)""")
     check_if_initialized()
     ulwin = convert_to_Window(win)
     ix = convert_to_int(x)
@@ -7932,24 +7532,23 @@ def fl_winreshape(win, x, y, w, h):
 
 
 def fl_winicon(win, icon, mask):
-    """ fl_winicon(win, icon, mask)
+    """Installs an icon for the window.
 
-        Installs an icon for the window.
+    @param win: window id
+    @type win: long_pos
+    @param icon: pixmap icon id to be installed in window
+    @type icon: long_pos
+    @param mask: pixmap mask id
+    @type mask: long_pos
 
-        @param win: window id (<long_pos>)
-        @param icon: pixmap icon id to be installed in window (<long_pos>)
-        @param mask: pixmap mask id (<long_pos>)
+    @example: fl_winicon(win0, ...) ?
 
-        @example: fl_winicon(win0, ...)
-
-        @status: Untested + NoDoc + NoDemo = NOT OK
+    @status: Untested + NoDoc + NoDemo = NOT OK
     """
-
     _fl_winicon = cfuncproto(
-            load_so_libforms(), "fl_winicon", \
-            None, [xfc.Window, xfc.Pixmap, xfc.Pixmap], \
-            """void fl_winicon(Window win, Pixmap p, Pixmap m)
-""")
+        load_so_libforms(), "fl_winicon", \
+        None, [xfc.Window, xfc.Pixmap, xfc.Pixmap], \
+        """void fl_winicon(Window win, Pixmap p, Pixmap m)""")
     check_if_initialized()
     ulwin = convert_to_Window(win)
     ulicon = convert_to_Pixmap(icon)
@@ -7959,23 +7558,21 @@ def fl_winicon(win, icon, mask):
 
 
 def fl_winbackground(win, bkcolr):
-    """ fl_winbackground(win, bkcolr)
+    """Sets the background of window to a certain color.
 
-        Sets the background of window to a certain color.
+    @param win: window id
+    @type win: long_pos
+    @param bkcolr: background color to be set
+    @type bkcolr: long_pos
 
-        @param win: window id (<long_pos>)
-        @param bkcolr: background color to be set (<long_pos>)
+    @example: fl_winbackground(win1, xfdata.FL_GHOSTWHITE)
 
-        @example: fl_winbackground(win1, xfdata.FL_GHOSTWHITE)
-
-        @status: Tested + NoDoc + Demo = OK
+    @status: Tested + NoDoc + Demo = OK
     """
-
     _fl_winbackground = cfuncproto(
-            load_so_libforms(), "fl_winbackground", \
-            None, [xfc.Window, xfc.FL_COLOR], \
-            """void fl_winbackground(Window win, FL_COLOR bk)
-""")
+        load_so_libforms(), "fl_winbackground", \
+        None, [xfc.Window, xfc.FL_COLOR], \
+        """void fl_winbackground(Window win, FL_COLOR bk)""")
     check_if_initialized()
     check_admitted_listvalues(bkcolr, xfc.COLOR_list)
     ulwin = convert_to_Window(win)
@@ -7986,6 +7583,8 @@ def fl_winbackground(win, bkcolr):
 
 fl_win_background = fl_winbackground
 
+
+# STOPPED HERE
 
 def fl_winstepsize(win, xunit, yunit):
     """ fl_winstepsize(win, xunit, yunit)
