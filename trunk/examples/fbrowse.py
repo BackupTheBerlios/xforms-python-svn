@@ -12,115 +12,119 @@
 #
 
 import sys
-from xformslib import library as xf
-from xformslib import xfdata as xfc
+from xformslib.flbasic import *
+from xformslib.flxbasic import *
+from xformslib.flgoodies import *
+from xformslib.flbrowser import *
+from xformslib.flbutton import *
+from xformslib.flmisc import *
+from xformslib.xfdata import *
 
 
 
-def load_file(pobj, arg):
-    fname = xf.fl_show_file_selector("File To Load", "", "*", "")
-    if fname:
-        if not xf.fl_load_browser(pbr, fname):
-            xf.fl_add_browser_line(pbr,"NO SUCH FILE!")
+class Flfbrowse(object):
 
+    def __init__(self, lsysarg, sysargv):
 
-def set_size(pobj, arg):
-    xf.fl_set_browser_fontsize(pbr, arg)
+        fl_initialize(lsysarg, sysargv, "FormDemo", 0, 0)
+        fdnew = self.create_form()
 
+        fl_clear_browser(self.pbr)
+        fl_add_browser_line(self.pbr, "LOAD A FILE.")
+        fl_set_browser_fontstyle(self.pbr, FL_FIXED_STYLE)
 
-def exit_program(pobj, data):
-    xf.fl_finish()
-    sys.exit(0)
-
-
-def hide_show(pobj, data):
-    if xf.fl_object_is_visible(pbr):
-        xf.fl_hide_object(pbr)
-    else:
-        xf.fl_show_object(pbr)
-
-
-def create_form():
-    global pbr
-
-    x = 20
-    dx = 80
-    dy = 28
-
-    pform = xf.fl_bgn_form(xfc.FL_NO_BOX, 590, 610)
-    pobj1 = xf.fl_add_box(xfc.FL_UP_BOX, 0, 0, 590, 610, "")
-
-    pbr = xf.fl_add_browser(xfc.FL_NORMAL_BROWSER, 20, 20, 550, 530, "")
-    xf.fl_set_object_boxtype(pbr, xfc.FL_EMBOSSED_BOX)
-
-    pobj1 = xf.fl_add_button(xfc.FL_NORMAL_BUTTON, x, 565, dx-5, dy, "Load")
-    xf.fl_set_object_callback(pobj1, load_file, 0)
-    x += dx
-
-    pobj2 = xf.fl_add_lightbutton(xfc.FL_RADIO_BUTTON, x, 565, dx, dy, "Tiny")
-    xf.fl_set_object_callback(pobj2, set_size, xfc.FL_TINY_SIZE)
-    x += dx
-
-    pobj3 = xf.fl_add_lightbutton(xfc.FL_RADIO_BUTTON, x , 565, dx, dy, "Small")
-    xf.fl_set_object_callback(pobj3, set_size, xfc.FL_SMALL_SIZE)
-    xf.fl_set_button(pobj3, xfc.FL_SMALL_SIZE == xfc.FL_BROWSER_FONTSIZE)
-    x += dx
-
-    pobj4 = xf.fl_add_lightbutton(xfc.FL_RADIO_BUTTON, x , 565, dx, dy, "Normal")
-    xf.fl_set_object_callback(pobj4, set_size, xfc.FL_NORMAL_SIZE)
-    xf.fl_set_button(pobj4, xfc.FL_NORMAL_SIZE == xfc.FL_BROWSER_FONTSIZE)
-    x += dx
-
-    pobj5 = xf.fl_add_lightbutton(xfc.FL_RADIO_BUTTON, x , 565, dx, dy, "Large")
-    xf.fl_set_object_callback(pobj5, set_size, xfc.FL_LARGE_SIZE)
-    x += dx
-
-    pobj6 = xf.fl_add_button(xfc.FL_NORMAL_BUTTON, x, 565, dx, dy, "Hide/Show")
-    xf.fl_set_object_callback(pobj6, hide_show, 0)
-    x += dx
-
-    pobj7 = xf.fl_add_button(xfc.FL_NORMAL_BUTTON, x, 565, dx, dy, "Exit")       #60->dx
-    xf.fl_set_object_callback(pobj7, exit_program, 0)
-
-    xf.fl_end_form()
-
-    xf.fl_adjust_form_size(pform)
-
-    return pform
-
-
-
-def main(lsysarg, sysargv):
-
-    global fdnew
-
-    xf.fl_initialize(lsysarg, sysargv, "FormDemo", 0, 0)
-    fdnew = create_form()
-
-    xf.fl_clear_browser(pbr)
-    xf.fl_add_browser_line(pbr, "LOAD A FILE.")
-    xf.fl_set_browser_fontstyle(pbr, xfc.FL_FIXED_STYLE)
-
-    xf.fl_show_form(fdnew, xfc.FL_PLACE_FREE, xfc.FL_FULLBORDER, \
+        fl_show_form(fdnew, FL_PLACE_FREE, FL_FULLBORDER, \
                     "Browser")
 
-    poret = xf.fl_do_forms()
+        poret = fl_do_forms()
 
-    if poret.contents.label:
-        prndata = poret.contents.label
-    else:
-        prndata = ""
-    print "%p %d %s\n" % poret.contents, poret.contents.objclass, prndata
+        if poret.contents.label:
+            prndata = poret.contents.label
+        else:
+            prndata = ""
+        print "%p %d %s\n" % poret.contents, poret.contents.objclass, prndata
 
-    xf.fl_hide_form(fdnew)
-    xf.fl_free_form(fdnew)
+        fl_hide_form(fdnew)
+        fl_free_form(fdnew)
 
-    xf.fl_finish()
-    return 0
+        fl_finish()
+
+
+    def load_file(self, pobj, arg):
+        fname = fl_show_file_selector("File To Load", "", "*", "")
+        if fname:
+            if not fl_load_browser(self.pbr, fname):
+                fl_add_browser_line(self.pbr,"NO SUCH FILE!")
+
+
+    def set_size(self, pobj, arg):
+        fl_set_browser_fontsize(self.pbr, arg)
+
+
+    def exit_program(self, pobj, data):
+        fl_finish()
+        sys.exit(0)
+
+
+    def hide_show(self, pobj, data):
+        if fl_object_is_visible(self.pbr):
+            fl_hide_object(self.pbr)
+        else:
+            fl_show_object(self.pbr)
+
+
+    def create_form(self):
+
+        x = 20
+        dx = 80
+        dy = 28
+
+        pform = fl_bgn_form(FL_NO_BOX, 590, 610)
+        pobj1 = fl_add_box(FL_UP_BOX, 0, 0, 590, 610, "")
+
+        self.pbr = fl_add_browser(FL_NORMAL_BROWSER, 20, 20, 550, 530, "")
+        fl_set_object_boxtype(self.pbr, FL_EMBOSSED_BOX)
+
+        pobj1 = fl_add_button(FL_NORMAL_BUTTON, x, 565, dx-5, dy, "Load")
+        fl_set_object_callback(pobj1, self.load_file, 0)
+        x += dx
+
+        pobj2 = fl_add_lightbutton(FL_RADIO_BUTTON, x, 565, dx, dy, "Tiny")
+        fl_set_object_callback(pobj2, self.set_size, FL_TINY_SIZE)
+        x += dx
+
+        pobj3 = fl_add_lightbutton(FL_RADIO_BUTTON, x , 565, dx, dy, "Small")
+        fl_set_object_callback(pobj3, self.set_size, FL_SMALL_SIZE)
+        fl_set_button(pobj3, FL_SMALL_SIZE == FL_BROWSER_FONTSIZE)
+        x += dx
+
+        pobj4 = fl_add_lightbutton(FL_RADIO_BUTTON, x , 565, dx, dy, "Normal")
+        fl_set_object_callback(pobj4, self.set_size, FL_NORMAL_SIZE)
+        fl_set_button(pobj4, FL_NORMAL_SIZE == FL_BROWSER_FONTSIZE)
+        x += dx
+
+        pobj5 = fl_add_lightbutton(FL_RADIO_BUTTON, x , 565, dx, dy, "Large")
+        fl_set_object_callback(pobj5, self.set_size, FL_LARGE_SIZE)
+        x += dx
+
+        pobj6 = fl_add_button(FL_NORMAL_BUTTON, x, 565, dx, dy, "Hide/Show")
+        fl_set_object_callback(pobj6, self.hide_show, 0)
+        x += dx
+
+        pobj7 = fl_add_button(FL_NORMAL_BUTTON, x, 565, dx, dy, "Exit")       #60->dx
+        fl_set_object_callback(pobj7, self.exit_program, 0)
+
+        fl_end_form()
+
+        fl_adjust_form_size(pform)
+
+        return pform
+
+
 
 
 
 
 if __name__ == '__main__':
-    main(len(sys.argv), sys.argv)
+    Flfbrowse(len(sys.argv), sys.argv)
 

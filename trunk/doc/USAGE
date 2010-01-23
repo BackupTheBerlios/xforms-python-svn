@@ -1,0 +1,62 @@
+To use xforms-python you have to import its modules. You can do that
+in two preferred ways:
+
+
+1) importing code/data from needed module(s) implicitly (recommended if you
+use functions from several modules):
+
+from xformslib.basicfn import *         from xformslib.bitmapfn import *
+from xformslib.browserfn import *       from xformslib.buttonfn import *
+from xformslib.canvasfn import *        from xformslib.chartfn import *
+from xformslib.clockfn import *         from xformslib.counterfn import *
+from xformslib.cursorfn import *        from xformslib.dialfn import *
+from xformslib.filesysfn import *       from xformslib.flimagefn import *
+from xformslib.formbrowserfn import *   from xformslib.glcanvasfn import *
+from xformslib.goodiesfn import *       from xformslib.inputfn import *
+from xformslib.library import *         from xformslib.nmenufn import *
+from xformslib.otherfn import *         from xformslib.popupfn import *
+from xformslib.positionerfn import *    from xformslib.scrollbarfn import *
+from xformslib.selectfn import *        from xformslib.sliderfn import *
+from xformslib.spinnerfn import *       from xformslib.tabfolderfn import *
+from xformslib.thumbwheelfn import *    from xformslib.timerfn import *
+from xformslib.xbasicfn import *        from xformslib.xfdata import *
+from xformslib.xyplotfn import *
+
+You can then call xforms-python functions and use constants directly
+without any prefix, e.g. fl_initialize(...)
+
+
+2) importing needed module(s) explicitly (if you don't want pollute
+namespace and you need to use only few modules), one of more in a bunch:
+
+from xformslib import basicfn           from xformslib import bitmapfn
+from xformslib import browserfn         from xformslib import buttonfn
+from xformslib import canvasfn          from xformslib import chartfn
+from xformslib import clockfn           from xformslib import counterfn
+from xformslib import cursorfn          from xformslib import dialfn
+from xformslib import filesysfn         from xformslib import flimagefn
+from xformslib import formbrowserfn     from xformslib import glcanvasfn
+from xformslib import goodiesfn         from xformslib import inputfn
+from xformslib import library           from xformslib import nmenufn
+from xformslib import otherfn           from xformslib import popupfn
+from xformslib import positionerfn      from xformslib import scrollbarfn
+from xformslib import selectfn          from xformslib import sliderfn
+from xformslib import spinnerfn         from xformslib import tabfolderfn
+from xformslib import thumbwheelfn      from xformslib import timerfn
+from xformslib import xbasicfn          from xformslib import xfdata
+from xformslib import xyplotfn
+
+You then need to call xforms-python functions and use constants, prefixing
+them with the module name, e.g. xbasicfn.fl_initialize(...).
+
+
+
+NOTE) As I discourage its use, if you need any function/constant from
+deprecated module, you need to import it explicitly:
+
+from xformslib import deprecated
+
+then use deprecated.whateverfunc, deprecated.CONSTANT, etc...
+
+Remember that everything in deprecated module is likely to be removed anytime.
+

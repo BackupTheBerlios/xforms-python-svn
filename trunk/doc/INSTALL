@@ -3,27 +3,27 @@ with the most recent ctypes). It doesn't support Python 3.x yet.
 
 It requires:
 - python standard library modules (including ctypes), and
-- XForms library,
+- XForms (X11) library.
 
 
 To install this package (including python modules and documentation),
 simply run the following with root's privileges:
-        python ./setup.py build install
+   python ./setup.py build install
 
-Documentation files (API docs excepted) are installed in
+Documentation files (except API docs) are installed in
 "/usr/doc/xforms-python-$VERSION/", by default.
 If your operating system/distribution uses another directory for doc
-files, you may use:
-e.g.	python ./setup.py build install --install-data=/usr/share
+files, you may use, e.g.:
+   python ./setup.py build install --install-data=/usr/share
 (to install in "/usr/share/doc/xforms-python-$VERSION/")
 
 
 To install example files you can use:
-	python ./install_examples.py
+   python ./install_examples.py
 (to install in "/usr/share/xforms-python-$VERSION/")
 If your operating system/distribution use another directory for them, 
 you may use:
-	python ./install_examples.py --datadir=<otherdir>
+   python ./install_examples.py --datadir=<otherdir>
 (to install in "<otherdir>")
 
 

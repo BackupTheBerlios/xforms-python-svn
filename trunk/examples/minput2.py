@@ -11,8 +11,12 @@
 
 import sys
 #sys.path.append("..")
-from xformslib import library as xf
-from xformslib import xfdata as xfc
+from xformslib.flbasic import *
+from xformslib.flxbasic import *
+from xformslib.flinput import *
+from xformslib.flbutton import *
+from xformslib.flmisc import *
+from xformslib.xfdata import *
 
 
 
@@ -30,83 +34,78 @@ class FD_inputform(object):
 
 
 
-def peek_event(form, xev):
+class Flminput2(object):
 
-    if xev.contents.type == xfc.KeyPress:
-        xf.fl_set_object_label(ui.status, "keyboard input")
-        xf.fl_XFlush()          # necessary to show the label
-        xf.fl_msleep(50)
+    def __init__(self, lsysargv, sysargv):
 
-    return 0
+        fl_initialize(lsysargv, sysargv, "FormDemo", 0, 0)
+        self.ui = self.create_form_inputform()
+        fl_register_raw_callback(self.ui.inputform, KeyPressMask, \
+                                    self.peek_event)
 
+        fl_show_form(self.ui.inputform, FL_PLACE_CENTER, \
+                        FL_TRANSIENT, "Input")
 
-
-def main(lsysargv, sysargv):
-    global ui
-
-    xf.fl_initialize(lsysargv, sysargv, "FormDemo", 0, 0)
-    ui = create_form_inputform()
-    xf.fl_register_raw_callback(ui.inputform, xfc.KeyPressMask, peek_event)
-
-    xf.fl_show_form(ui.inputform, xfc.FL_PLACE_CENTER, xfc.FL_TRANSIENT, \
-                    "Input")
-
-    xf.fl_do_forms()
-    xf.fl_finish()
-
-    return 0
+        fl_do_forms()
+        fl_finish()
 
 
+    def peek_event(self, form, xev):
 
-def input_callback(pobj, data):
-
-    buf = "Input%ld returned" % data
-    xf.fl_set_object_label(ui.status, buf)
-    xf.fl_XFlush()
-    xf.fl_msleep(50)
-
-
-
-def howreturn_callback(pobj, data):
-    xf.fl_set_object_return(ui.input1, xf.fl_get_button(pobj))
-    xf.fl_set_object_return(ui.input2, xf.fl_get_button(pobj))
+        if xev.contents.type == KeyPress:
+            fl_set_object_label(self.ui.status, "keyboard input")
+            fl_XFlush()          # necessary to show the label
+            fl_msleep(50)
+        return 0
 
 
+    def input_callback(self, pobj, data):
 
-def create_form_inputform():
+        buf = "Input%ld returned" % data
+        fl_set_object_label(self.ui.status, buf)
+        fl_XFlush()
+        fl_msleep(50)
 
-    fdui = FD_inputform()
 
-    fdui.inputform = xf.fl_bgn_form(xfc.FL_NO_BOX, 475, 485)
+    def howreturn_callback(self, pobj, data):
+        fl_set_object_return(self.ui.input1, fl_get_button(pobj))
+        fl_set_object_return(self.ui.input2, fl_get_button(pobj))
 
-    pobj = xf.fl_add_box(xfc.FL_UP_BOX, 0, 0, 475, 485, "")
-    fdui.input1 = xf.fl_add_input(xfc.FL_MULTILINE_INPUT, 15, 275, 350, 180,
+
+    def create_form_inputform(self):
+
+        fdui = FD_inputform()
+
+        fdui.inputform = fl_bgn_form(FL_NO_BOX, 475, 485)
+
+        pobj = fl_add_box(FL_UP_BOX, 0, 0, 475, 485, "")
+        fdui.input1 = fl_add_input(FL_MULTILINE_INPUT, 15, 275, 350, 180,
                                   "")
-    xf.fl_set_object_lalign(fdui.input1, xfc.FL_ALIGN_TOP)
-    xf.fl_set_object_callback(fdui.input1, input_callback, 1)
+        fl_set_object_lalign(fdui.input1, FL_ALIGN_TOP)
+        fl_set_object_callback(fdui.input1, self.input_callback, 1)
 
-    fdui.howreturn = xf.fl_add_checkbutton(xfc.FL_PUSH_BUTTON,
-                                           375, 435, 80, 35, "always\nreturn")
-    xf.fl_set_object_color(fdui.howreturn, xfc.FL_COL1, xfc.FL_BLUE)
-    xf.fl_set_object_callback(fdui.howreturn, howreturn_callback, 0)
+        fdui.howreturn = fl_add_checkbutton(FL_PUSH_BUTTON,
+                                   375, 435, 80, 35, "always\nreturn")
+        fl_set_object_color(fdui.howreturn, FL_COL1, FL_BLUE)
+        fl_set_object_callback(fdui.howreturn, self.howreturn_callback, 0)
 
-    fdui.status = xf.fl_add_text(xfc.FL_NORMAL_TEXT, 20, 15, 270, 30, "")
-    xf.fl_set_object_boxtype(fdui.status, xfc.FL_FRAME_BOX)
+        fdui.status = fl_add_text(FL_NORMAL_TEXT, 20, 15, 270, 30, "")
+        fl_set_object_boxtype(fdui.status, FL_FRAME_BOX)
 
-    xf.fl_add_button(xfc.FL_NORMAL_BUTTON, 375, 15, 80, 35, "Done")
+        fl_add_button(FL_NORMAL_BUTTON, 375, 15, 80, 35, "Done")
 
-    fdui.input2 = xf.fl_add_input(xfc.FL_MULTILINE_INPUT, 15, 60, 349, 185,
+        fdui.input2 = fl_add_input(FL_MULTILINE_INPUT, 15, 60, 349, 185,
                                   "")
-    xf.fl_set_object_lalign(fdui.input2, xfc.FL_ALIGN_TOP)
-    xf.fl_set_object_callback(fdui.input2, input_callback, 2)
+        fl_set_object_lalign(fdui.input2, FL_ALIGN_TOP)
+        fl_set_object_callback(fdui.input2, self.input_callback, 2)
 
-    xf.fl_end_form()
+        fl_end_form()
 
-    return fdui
+        return fdui
 
 
 
 
 if __name__ == '__main__':
-    main(len(sys.argv), sys.argv)
+    Flminput2(len(sys.argv), sys.argv)
 

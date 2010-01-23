@@ -11,21 +11,24 @@
 
 
 import sys
-from xformslib import library as xf
-from xformslib import xfdata as xfc
+from xformslib.flbasic import *
+from xformslib.flxbasic import *
+from xformslib.flgoodies import *
+from xformslib.xfdata import *
+
 
 
 def main(lsysargv, sysargv):
 
     i = 0
-    xf.fl_initialize(lsysargv, sysargv, "FormDemo", 0, 0 )
+    fl_initialize(lsysargv, sysargv, "FormDemo", 0, 0 )
 
     print "Click one of trasparent colors to exit"
     while True:
-        i = xf.fl_show_colormap(i)
-        if i > xfc.FL_YELLOWGREEN:
+        i = fl_show_colormap(i)
+        if i > FL_YELLOWGREEN:
             break
-    return 0
+    fl_finish()
 
 
 if __name__ == '__main__':

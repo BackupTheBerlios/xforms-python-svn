@@ -15,145 +15,12 @@
 
 import sys
 #sys.path.append("..")
-from xformslib import library as xf
-from xformslib import xfdata as xfc
-
-
-pcolorform = None    # placeholder
-
-# Color Part
-r = 128
-g = 128
-b = 128
-
-
-# color form callback routine
-
-def color_callback(pobj, d):
-    global r, g, b
-    r = int(255 * xf.fl_get_slider_value(predsl))
-    g = int(255 * xf.fl_get_slider_value(pgreensl))
-    b = int(255 * xf.fl_get_slider_value(pbluesl))
-    xf.fl_mapcolor(xfc.FL_FREE_COL1, r, g, b)
-    xf.fl_redraw_object(pcolorobj)
-
-
-
-def create_colorform():
-    global pcolorform, pcolorobj, pbluesl, predsl, pgreensl
-
-    if pcolorform:
-        return
-
-    pcolorform = xf.fl_bgn_form(xfc.FL_NO_BOX, 315, 190)
-
-    pobj = xf.fl_add_box(xfc.FL_UP_BOX, 0, 0, 315, 190, "")
-
-    pbluesl = xf.fl_add_slider(xfc.FL_HOR_SLIDER, 20, 25, 220, 35, "")
-    xf.fl_set_object_color(pbluesl, xfc.FL_COL1, xfc.FL_BLUE)
-
-    predsl = xf.fl_add_slider(xfc.FL_HOR_SLIDER, 20, 135, 220, 35, "")
-    xf.fl_set_object_color(predsl, xfc.FL_COL1, xfc.FL_RED)
-
-    pgreensl = xf.fl_add_slider(xfc.FL_HOR_SLIDER, 20, 80, 220, 35, "")
-    xf.fl_set_object_color(pgreensl, xfc.FL_COL1, xfc.FL_GREEN)
-
-    pcolorobj = xf.fl_add_box(xfc.FL_BORDER_BOX, 250, 25, 50, 145, "")
-    xf.fl_set_object_color(pcolorobj, xfc.FL_FREE_COL1, xfc.FL_FREE_COL1)
-
-    xf.fl_end_form()
-
-
-
-# initializes the color part
-
-def init_colorpart():
-    global pcolorform
-
-    create_colorform()
-    xf.fl_set_form_callback(pcolorform, color_callback, 0)
-    xf.fl_set_form_position(pcolorform, 20, -300 - pcolorform.contents.h)
-    xf.fl_show_form(pcolorform, xfc.FL_PLACE_GEOMETRY, xfc.FL_TRANSIENT, \
-                    "Color")
-    xf.fl_mapcolor(xfc.FL_FREE_COL1, r, g, b)
-    xf.fl_redraw_object(pcolorobj)
-
-
-
-# Control Part
-
-curobj = 1
-cursize = 20
-
-
-
-def select_object(pobj, which):
-    global curobj
-    curobj = which
-
-
-
-# control form callback routine
-
-def control_callback(pobj, d):
-    global cursize
-
-    if xf.fl_is_same_object(pobj, psizeobj):
-        cursize = int(40 * xf.fl_get_slider_value(psizeobj))
-    elif xf.fl_is_same_object(pobj, pexitobj):
-        xf.fl_finish()
-        sys.exit(0)
-
-
-
-def create_controlform():
-    global pcontrolform, psquareobj, pexitobj, psizeobj
-
-    pcontrolform = xf.fl_bgn_form(xfc.FL_UP_BOX, 260, 230)
-
-    xf.fl_bgn_group()
-
-    psquareobj = xf.fl_add_button(xfc.FL_RADIO_BUTTON, 20, 150, 60, 60,
-                                 "@square")
-    xf.fl_set_object_lcol(psquareobj, xfc.FL_YELLOW)
-    xf.fl_set_object_callback(psquareobj, select_object, 1)
-
-    pobj = xf.fl_add_button(xfc.FL_RADIO_BUTTON, 20, 90, 60, 60,
-                            "@circle")
-    xf.fl_set_object_lcol(pobj, xfc.FL_YELLOW)
-    xf.fl_set_object_callback(pobj, select_object, 2)
-
-    pobj = xf.fl_add_button(xfc.FL_RADIO_BUTTON, 20, 30, 60, 60, 
-                            "@8>")
-    xf.fl_set_object_lcol(pobj, xfc.FL_YELLOW)
-    xf.fl_set_object_callback(pobj, select_object, 3)
-
-    xf.fl_end_group()
-
-    pexitobj = xf.fl_add_button(xfc.FL_NORMAL_BUTTON, 160, 30, 80, 30, "Exit")
-
-    pobj = xf.fl_add_button(xfc.FL_NORMAL_BUTTON, 160, 180, 80, 30, "Clear")
-    xf.fl_set_object_callback(pobj, clearit, 0)
-
-    psizeobj = xf.fl_add_slider(xfc.FL_VERT_SLIDER, 100, 30, 40, 180, "size")
-    xf.fl_set_slider_bounds(psizeobj, 0.025, 1.0)
-
-    xf.fl_end_form()
-
-
-
-# initializes the control part
-
-def init_controlpart():
-
-    create_controlform()
-    xf.fl_set_form_callback(pcontrolform, control_callback, 0)
-    xf.fl_set_button(psquareobj, 1)
-    xf.fl_set_form_geometry(pcontrolform, 20, -pcontrolform.contents.h - 40,
-                            pcontrolform.contents.w, pcontrolform.contents.h)
-    xf.fl_show_form(pcontrolform, xfc.FL_PLACE_SIZE, xfc.FL_TRANSIENT, \
-                    "Control")
-
+from xformslib.flbasic import *
+from xformslib.flxbasic import *
+from xformslib.flslider import *
+from xformslib.flbutton import *
+from xformslib.flmisc import *
+from xformslib.xfdata import *
 
 
 # Main part
@@ -168,117 +35,197 @@ class OBJ(object):
     size = 0
 
 
-global structob
-structob = []
-for a in range(0, 10000):
-    structob.append(OBJ())              # ob[ 10000 ]
 
-global onumb
-onumb = 0
+class Demo27(object):
+    def __init__(self, lsysargv, sysargv):
+
+        self.pcolorform = None    # placeholder
+        # Color Part
+        self.r = 128
+        self.g = 128
+        self.b = 128
+        # Control Part
+        self.curobj = 1
+        self.cursize = 20
+
+        self.structob = []
+        for a in range(0, 10000):
+            self.structob.append(OBJ())              # ob[ 10000 ]
+
+        self.onumb = 0
+
+        fl_initialize(lsysargv, sysargv, "FormDemo", 0, 0)
+        self.init_colorpart()
+        self.init_controlpart()
+        self.init_mainpart()
+        self.color_callback(self.pcolorobj, 0)
+
+        while fl_do_forms():
+            pass
+        fl_finish()
 
 
-def drawit(stobj):
+    # color form callback routine
+    def color_callback(self, pobj, d):
+        self.r = int(255 * fl_get_slider_value(self.predsl))
+        self.g = int(255 * fl_get_slider_value(self.pgreensl))
+        self.b = int(255 * fl_get_slider_value(self.pbluesl))
+        fl_mapcolor(FL_FREE_COL1, self.r, self.g, self.b)
+        fl_redraw_object(self.pcolorobj)
 
-    xf.fl_winset(main_win)
-    xf.fl_mapcolor(xfc.FL_FREE_COL1, stobj.r, \
-                   stobj.g, stobj.b)
 
-    if stobj.type == 1:
-        xf.fl_rectf(stobj.x - stobj.size, \
+    def create_colorform(self):
+        if self.pcolorform:
+            return
+
+        self.pcolorform = fl_bgn_form(FL_NO_BOX, 315, 190)
+        pobj = fl_add_box(FL_UP_BOX, 0, 0, 315, 190, "")
+        self.pbluesl = fl_add_slider(FL_HOR_SLIDER, 20, 25, 220, 35, "")
+        fl_set_object_color(self.pbluesl, FL_COL1, FL_BLUE)
+        self.predsl = fl_add_slider(FL_HOR_SLIDER, 20, 135, 220, 35, "")
+        fl_set_object_color(self.predsl, FL_COL1, FL_RED)
+        self.pgreensl = fl_add_slider(FL_HOR_SLIDER, 20, 80, 220, 35, "")
+        fl_set_object_color(self.pgreensl, FL_COL1, FL_GREEN)
+        self.pcolorobj = fl_add_box(FL_BORDER_BOX, 250, 25, 50, 145, "")
+        fl_set_object_color(self.pcolorobj, FL_FREE_COL1, FL_FREE_COL1)
+        fl_end_form()
+
+
+    # initializes the color part
+    def init_colorpart(self):
+        self.create_colorform()
+        fl_set_form_callback(self.pcolorform, self.color_callback, 0)
+        fl_set_form_position(self.pcolorform, 20, -300 - self.pcolorform.contents.h)
+        fl_show_form(self.pcolorform, FL_PLACE_GEOMETRY, FL_TRANSIENT, \
+                     "Color")
+        fl_mapcolor(FL_FREE_COL1, self.r, self.g, self.b)
+        fl_redraw_object(self.pcolorobj)
+
+
+    def select_object(self, pobj, which):
+        self.curobj = which
+
+
+    # control form callback routine
+    def control_callback(self, pobj, d):
+        if fl_is_same_object(pobj, self.psizeobj):
+            self.cursize = int(40 * fl_get_slider_value(self.psizeobj))
+        elif fl_is_same_object(pobj, self.pexitobj):
+            fl_finish()
+            sys.exit(0)
+
+
+    def create_controlform(self):
+        self.pcontrolform = fl_bgn_form(FL_UP_BOX, 260, 230)
+
+        fl_bgn_group()
+        self.psquareobj = fl_add_button(FL_RADIO_BUTTON, 20, 150, 60, 60,
+                                 "@square")
+        fl_set_object_lcol(self.psquareobj, FL_YELLOW)
+        fl_set_object_callback(self.psquareobj, self.select_object, 1)
+        pobj = fl_add_button(FL_RADIO_BUTTON, 20, 90, 60, 60,
+                            "@circle")
+        fl_set_object_lcol(pobj, FL_YELLOW)
+        fl_set_object_callback(pobj, self.select_object, 2)
+        pobj = fl_add_button(FL_RADIO_BUTTON, 20, 30, 60, 60, 
+                            "@8>")
+        fl_set_object_lcol(pobj, FL_YELLOW)
+        fl_set_object_callback(pobj, self.select_object, 3)
+        fl_end_group()
+
+        self.pexitobj = fl_add_button(FL_NORMAL_BUTTON, 160, 30, 80, 30, "Exit")
+
+        pobj = fl_add_button(FL_NORMAL_BUTTON, 160, 180, 80, 30, "Clear")
+        fl_set_object_callback(pobj, self.clearit, 0)
+
+        self.psizeobj = fl_add_slider(FL_VERT_SLIDER, 100, 30, 40, 180, "size")
+        fl_set_slider_bounds(self.psizeobj, 0.025, 1.0)
+
+        fl_end_form()
+
+
+    # initializes the control part
+    def init_controlpart(self):
+        self.create_controlform()
+        fl_set_form_callback(self.pcontrolform, self.control_callback, 0)
+        fl_set_button(self.psquareobj, 1)
+        fl_set_form_geometry(self.pcontrolform, 20, -self.pcontrolform.contents.h - 40,
+                             self.pcontrolform.contents.w, self.pcontrolform.contents.h)
+        fl_show_form(self.pcontrolform, FL_PLACE_SIZE, FL_TRANSIENT, \
+                    "Control")
+
+
+    def drawit(self, stobj):
+
+        fl_winset(self.main_win)
+        fl_mapcolor(FL_FREE_COL1, stobj.r, \
+                    stobj.g, stobj.b)
+
+        if stobj.type == 1:
+            fl_rectf(stobj.x - stobj.size, \
                     stobj.y - stobj.size, 2 * stobj.size, \
-                    2 * stobj.size, xfc.FL_FREE_COL1)
-    elif stobj.type == 2:
-        xf.fl_circf(stobj.x, stobj.y, stobj.size, \
-                    xfc.FL_FREE_COL1)
-    elif stobj.type == 3:
-        point = (xfc.FL_POINT * 3)()          # point[ 3 ]
-
-        point[0].x = stobj.x - stobj.size
-        point[0].y = stobj.y + stobj.size
-        point[1].x = stobj.x + stobj.size
-        point[1].y = stobj.y + stobj.size
-        point[2].x = stobj.x
-        point[2].y = stobj.y - stobj.size
-        xf.fl_polyf(point, 3, xfc.FL_FREE_COL1)
-
+                    2 * stobj.size, FL_FREE_COL1)
+        elif stobj.type == 2:
+            fl_circf(stobj.x, stobj.y, stobj.size, \
+                    FL_FREE_COL1)
+        elif stobj.type == 3:
+            point = (FL_POINT * 3)()          # point[ 3 ]
+            point[0].x = stobj.x - stobj.size
+            point[0].y = stobj.y + stobj.size
+            point[1].x = stobj.x + stobj.size
+            point[1].y = stobj.y + stobj.size
+            point[2].x = stobj.x
+            point[2].y = stobj.y - stobj.size
+            fl_polyf(point, 3, FL_FREE_COL1)
 
 
-#draws a particular object
-
-def drawobject():
-    global onumb, structob
-
-    cur_obj = structob[onumb]                # OBJ *
-    win_notused, x0, y0, km = xf.fl_get_win_mouse(main_win)
-    cur_obj.x = x0
-    cur_obj.y = y0
-    cur_obj.r = r
-    cur_obj.g = g
-    cur_obj.b = b
-    cur_obj.type = curobj
-    cur_obj.size = cursize
-    drawit(cur_obj)
-    onumb += onumb
+    # draws a particular object
+    def drawobject(self):
+        cur_obj = self.structob[self.onumb]                # OBJ *
+        win_notused, x0, y0, km = fl_get_win_mouse(self.main_win)
+        cur_obj.x = x0
+        cur_obj.y = y0
+        cur_obj.r = self.r
+        cur_obj.g = self.g
+        cur_obj.b = self.b
+        cur_obj.type = self.curobj
+        cur_obj.size = self.cursize
+        self.drawit(cur_obj)
+        self.onumb += self.onumb
 
 
-
-def redrawit():
-
-    #xf.XClearWindow(xfc.fl_display, main_win)
-    xf.fl_redraw_form(pcontrolform)
-    for i in range(0, onumb):
-        drawit(structob + i)
+    def redrawit(self):
+        fl_redraw_form(self.pcontrolform)
+        for i in range(0, self.onumb):
+            self.drawit(self.structob + i)
 
 
+    def clearit(self, pobj, data):
+        self.onumb = 0
+        fl_winbackground(self.main_win, fl_get_flcolor(FL_COL1))
+        self.redrawit()
 
 
-def clearit(pobj, data):
-    onumb = 0
-    xf.fl_winbackground(main_win, xf.fl_get_flcolor(xfc.FL_COL1))
-    redrawit()
+    # Event callback routine
+    def main_callback(self, pxev, p):
+        fl_winset(self.main_win)
+        if pxev.contents.type == Expose:
+            self.redrawit()
+        elif pxev.contents.type == ButtonPress:
+            self.drawobject()
+        return 0
 
 
+    def init_mainpart(self):
+        fl_pref_wingeometry(400, 300, 400, 400)
+        fl_pref_winsize(400, 400)
+        fl_winbackground(0, fl_get_flcolor(FL_COL1))
+        self.main_win = fl_winopen("Drawing")
+        fl_set_event_callback(self.main_callback, 0)
 
-# Event callback routine
-
-def main_callback(pxev, p):
-
-    xf.fl_winset(main_win)
-
-    if pxev.contents.type == xfc.Expose:
-        redrawit()
-    elif pxev.contents.type == xfc.ButtonPress:
-        drawobject()
-    return 0
-
-
-
-def init_mainpart():
-    global main_win
-
-    xf.fl_pref_wingeometry(400, 300, 400, 400)
-    xf.fl_pref_winsize(400, 400)
-    xf.fl_winbackground(0, xf.fl_get_flcolor(xfc.FL_COL1))
-    main_win = xf.fl_winopen("Drawing")
-    xf.fl_set_event_callback(main_callback, 0)
-
-
-
-def main(lsysargv, sysargv):
-
-    xf.fl_initialize(lsysargv, sysargv, "FormDemo", 0, 0)
-    init_colorpart()
-    init_controlpart()
-    init_mainpart()
-    color_callback(pcolorobj, 0)
-
-    while xf.fl_do_forms():
-        pass
-
-    return 0
 
 
 
 if __name__ == '__main__':
-    main(len(sys.argv), sys.argv)
+    appl = Demo27(len(sys.argv), sys.argv)
 

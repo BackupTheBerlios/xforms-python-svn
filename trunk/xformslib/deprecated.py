@@ -2,10 +2,11 @@
 # -*- coding: iso8859-1 -*-
 
 """
-    xforms-python
-    Python wrapper for XForms (X11) GUI C toolkit library using ctypes
+    xforms-python - Python wrapper for XForms (X11) GUI C toolkit library
+    using ctypes
 
-    Copyright (C) 2009  Luca Lazzaroni "LukenShiro"  <lukenshiro@ngi.it>
+    Copyright (C) 2009, 2010  Luca Lazzaroni "LukenShiro"
+        <lukenshiro@ngi.it>
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU Lesser General Public License as
@@ -30,8 +31,10 @@
 import ctypes as cty
 import sys
 import warnings
-import xfdata as xfc       # data types and constants from XForms
-from library import *
+from xformslib import library
+from xformslib import xfdata
+
+
 
 
 def warn_deprecated_function(altfunc=""):
@@ -48,7 +51,6 @@ def warn_deprecated_function(altfunc=""):
     warningmsg = "Function %s is deprecated and might be removed in future" \
                  " releases. %s" % (funcname, newaltfunc)
     warnings.warn(warningmsg, DeprecationWarning, 3)
-
 
 
 
@@ -101,10 +103,10 @@ FL_PUP_CB = cty.CFUNCTYPE(cty.c_int, cty.c_int)   # callback prototype
 class FL_PUP_ENTRY(cty.Structure):
     pass
 FL_PUP_ENTRY._fields_ = [
-    ('text', xfc.STRING),               # label of a popup/menu item 
-    ('callback', FL_PUP_CB),        # the callback function 
-    ('shortcut', xfc.STRING),           # hotkeys 
-    ('mode', cty.c_int),            # FL_PUP_GRAY, FL_PUP_CHECK, etc. 
+    ('text', xfdata.STRING),        # label of a popup/menu item 
+    ('callback', FL_PUP_CB),       # the callback function 
+    ('shortcut', xfdata.STRING),    # hotkeys 
+    ('mode', cty.c_int),           # FL_PUP_GRAY, FL_PUP_CHECK, etc. 
 ]
 
 FL_MENU_ENTRY = FL_PUP_ENTRY
@@ -129,18 +131,18 @@ MENUTYPE_list = [FL_TOUCH_MENU, FL_PUSH_MENU, FL_PULLDOWN_MENU]
 
 
 # Defaults 
-FL_MENU_BOXTYPE = xfc.FL_BORDER_BOX
-FL_MENU_COL1 = xfc.FL_COL1
-FL_MENU_COL2 = xfc.FL_MCOL
-FL_MENU_LCOL = xfc.FL_LCOL
-FL_MENU_ALIGN = xfc.FL_ALIGN_CENTER
+FL_MENU_BOXTYPE = xfdata.FL_BORDER_BOX
+FL_MENU_COL1 = xfdata.FL_COL1
+FL_MENU_COL2 = xfdata.FL_MCOL
+FL_MENU_LCOL = xfdata.FL_LCOL
+FL_MENU_ALIGN = xfdata.FL_ALIGN_CENTER
 
 # Others 
 FL_MENU_MAXITEMS = 128
 
 
 ############################### 
-# forms.h (xpopup.h) 
+# forms.h (xpopupfn.h) 
 # Prototypes for xpop-up menus 
 ############################### 
 
@@ -171,19 +173,25 @@ CHOICETYPE_list = [FL_NORMAL_CHOICE, FL_NORMAL_CHOICE2, FL_DROPLIST_CHOICE, \
                    FL_BROWSER_CHOICE, FL_SIMPLE_CHOICE]
 
 # Defaults
-FL_CHOICE_BOXTYPE = xfc.FL_ROUNDED_BOX
-FL_CHOICE_COL1 = xfc.FL_COL1
-FL_CHOICE_COL2 = xfc.FL_LCOL
-FL_CHOICE_LCOL = xfc.FL_LCOL
-FL_CHOICE_ALIGN = xfc.FL_ALIGN_LEFT
+FL_CHOICE_BOXTYPE = xfdata.FL_ROUNDED_BOX
+FL_CHOICE_COL1 = xfdata.FL_COL1
+FL_CHOICE_COL2 = xfdata.FL_LCOL
+FL_CHOICE_LCOL = xfdata.FL_LCOL
+FL_CHOICE_ALIGN = xfdata.FL_ALIGN_LEFT
 
 # Others 
-FL_CHOICE_MCOL = xfc.FL_MCOL
+FL_CHOICE_MCOL = xfdata.FL_MCOL
 FL_CHOICE_MAXITEMS = 128
 
 
+FL_PUP_ENTERCB = cty.CFUNCTYPE(None, cty.c_int, cty.c_void_p)
 
-##################################################
+
+FL_PUP_LEAVECB = cty.CFUNCTYPE(None, cty.c_int, cty.c_void_p)
+
+
+
+#################################################
 # Old functions (deprecated from XForms upstream)
 ##################################################
 
@@ -205,14 +213,14 @@ def fl_set_default_browser_maxlinelength(num):
         @deprecated: do not use! 
     """ 
  
-    _fl_set_default_browser_maxlinelength = cfuncproto( 
-            load_so_libforms(), "fl_set_default_browser_maxlinelength", 
+    _fl_set_default_browser_maxlinelength = library.cfuncproto( 
+            library.load_so_libforms(), "fl_set_default_browser_maxlinelength", 
             cty.c_int, [cty.c_int], 
             """int fl_set_default_browser_maxlinelength(int n): 
             """) 
     warn_deprecated_function() 
-    inum = convert_to_int(num) 
-    keep_elem_refs(num, inum) 
+    inum = library.convert_to_int(num) 
+    library.keep_elem_refs(num, inum) 
     retval = _fl_set_default_browser_maxlinelength(inum) 
     return retval 
 
@@ -243,22 +251,22 @@ def fl_add_choice(choicetype, x, y, w, h, label):
     """ 
 
 
-    _fl_add_choice = cfuncproto( 
-            load_so_libforms(), "fl_add_choice", 
-            cty.POINTER(xfc.FL_OBJECT), [cty.c_int, xfc.FL_Coord, 
-            xfc.FL_Coord, xfc.FL_Coord, xfc.FL_Coord, xfc.STRING], 
+    _fl_add_choice = library.cfuncproto( 
+            library.load_so_libforms(), "fl_add_choice", 
+            cty.POINTER(xfdata.FL_OBJECT), [cty.c_int, xfdata.FL_Coord, 
+            xfdata.FL_Coord, xfdata.FL_Coord, xfdata.FL_Coord, xfdata.STRING], 
             """FL_OBJECT * fl_add_choice(int type, FL_Coord x, FL_Coord y, 
                FL_Coord w, FL_Coord h, const char * label) 
             """) 
     warn_deprecated_function("fl_*select*") 
-    check_admitted_listvalues(choicetype, CHOICETYPE_list) 
-    ichoicetype = convert_to_int(choicetype) 
-    ix = convert_to_FL_Coord(x) 
-    iy = convert_to_FL_Coord(y) 
-    iw = convert_to_FL_Coord(w) 
-    ih = convert_to_FL_Coord(h) 
-    slabel = convert_to_string(label) 
-    keep_elem_refs(choicetype, x, y, w, h, label, ichoicetype, ix, iy, 
+    library.check_admitted_listvalues(choicetype, CHOICETYPE_list) 
+    ichoicetype = library.convert_to_int(choicetype) 
+    ix = library.convert_to_FL_Coord(x) 
+    iy = library.convert_to_FL_Coord(y) 
+    iw = library.convert_to_FL_Coord(w) 
+    ih = library.convert_to_FL_Coord(h) 
+    slabel = library.convert_to_string(label) 
+    library.keep_elem_refs(choicetype, x, y, w, h, label, ichoicetype, ix, iy, 
                    iw, ih, slabel) 
     retval = _fl_add_choice(ichoicetype, ix, iy, iw, ih, slabel) 
     return retval 
@@ -275,13 +283,13 @@ def fl_clear_choice(pObject):
         @deprecated: Use corresponding fl_*select* function 
     """ 
  
-    _fl_clear_choice = cfuncproto( 
-            load_so_libforms(), "fl_clear_choice", 
-            None, [cty.POINTER(xfc.FL_OBJECT)], 
+    _fl_clear_choice = library.cfuncproto( 
+            library.load_so_libforms(), "fl_clear_choice", 
+            None, [cty.POINTER(xfdata.FL_OBJECT)], 
             """void fl_clear_choice(FL_OBJECT * ob) 
             """) 
     warn_deprecated_function("fl_*select*") 
-    keep_elem_refs(pObject) 
+    library.keep_elem_refs(pObject) 
     _fl_clear_choice(pObject)
 
 
@@ -297,14 +305,14 @@ def fl_addto_choice(pObject, choicetxt):
         @deprecated: Use corresponding fl_*select* function 
     """ 
  
-    _fl_addto_choice = cfuncproto( 
-            load_so_libforms(), "fl_addto_choice", 
-            cty.c_int, [cty.POINTER(xfc.FL_OBJECT), xfc.STRING], 
+    _fl_addto_choice = library.cfuncproto( 
+            library.load_so_libforms(), "fl_addto_choice", 
+            cty.c_int, [cty.POINTER(xfdata.FL_OBJECT), xfdata.STRING], 
             """int fl_addto_choice(FL_OBJECT * ob, const char * str) 
             """) 
     warn_deprecated_function("fl_*select*") 
-    schoicetxt = convert_to_string(choicetxt) 
-    keep_elem_refs(pObject, choicetxt, schoicetxt) 
+    schoicetxt = library.convert_to_string(choicetxt) 
+    library.keep_elem_refs(pObject, choicetxt, schoicetxt) 
     retval = _fl_addto_choice(pObject, schoicetxt) 
     return retval 
 
@@ -322,16 +330,16 @@ def fl_replace_choice(pObject, itemnum, choicetxt):
         @deprecated: Use corresponding fl_*select* function 
     """ 
  
-    _fl_replace_choice = cfuncproto( 
-            load_so_libforms(), "fl_replace_choice", 
-            None, [cty.POINTER(xfc.FL_OBJECT), cty.c_int, xfc.STRING], 
+    _fl_replace_choice = library.cfuncproto( 
+            library.load_so_libforms(), "fl_replace_choice", 
+            None, [cty.POINTER(xfdata.FL_OBJECT), cty.c_int, xfdata.STRING], 
             """void fl_replace_choice(FL_OBJECT * ob, int numb, 
                const char * str) 
             """) 
     warn_deprecated_function("fl_*select*") 
-    iitemnum = convert_to_int(itemnum) 
-    schoicetxt = convert_to_string(choicetxt) 
-    keep_elem_refs(pObject, itemnum, choicetxt, iitemnum, schoicetxt) 
+    iitemnum = library.convert_to_int(itemnum) 
+    schoicetxt = library.convert_to_string(choicetxt) 
+    library.keep_elem_refs(pObject, itemnum, choicetxt, iitemnum, schoicetxt) 
     _fl_replace_choice(pObject, iitemnum, schoicetxt) 
 
 
@@ -347,14 +355,14 @@ def fl_delete_choice(pObject, itemnum):
         @deprecated: Use corresponding fl_*select* function 
     """ 
  
-    _fl_delete_choice = cfuncproto( 
-            load_so_libforms(), "fl_delete_choice", 
-            None, [cty.POINTER(xfc.FL_OBJECT), cty.c_int], 
+    _fl_delete_choice = library.cfuncproto( 
+            library.load_so_libforms(), "fl_delete_choice", 
+            None, [cty.POINTER(xfdata.FL_OBJECT), cty.c_int], 
             """void fl_delete_choice(FL_OBJECT * ob, int numb) 
             """) 
     warn_deprecated_function("fl_*select*") 
-    iitemnum = convert_to_int(itemnum) 
-    keep_elem_refs(pObject, itemnum, iitemnum) 
+    iitemnum = library.convert_to_int(itemnum) 
+    library.keep_elem_refs(pObject, itemnum, iitemnum) 
     _fl_delete_choice(pObject, iitemnum) 
 
 
@@ -370,14 +378,14 @@ def fl_set_choice(pObject, choice):
         @deprecated: Use corresponding fl_*select* function 
     """ 
  
-    _fl_set_choice = cfuncproto( 
-            load_so_libforms(), "fl_set_choice", 
-            None, [cty.POINTER(xfc.FL_OBJECT), cty.c_int], 
+    _fl_set_choice = library.cfuncproto( 
+            library.load_so_libforms(), "fl_set_choice", 
+            None, [cty.POINTER(xfdata.FL_OBJECT), cty.c_int], 
             """void fl_set_choice(FL_OBJECT * ob, int choice) 
             """) 
     warn_deprecated_function("fl_*select*") 
-    ichoice = convert_to_int(choice) 
-    keep_elem_refs(pObject, choice, ichoice) 
+    ichoice = library.convert_to_int(choice) 
+    library.keep_elem_refs(pObject, choice, ichoice) 
     _fl_set_choice(pObject, ichoice) 
 
 
@@ -393,14 +401,14 @@ def fl_set_choice_text(pObject, choicetxt):
         @deprecated: Use corresponding fl_*select* function 
     """ 
  
-    _fl_set_choice_text = cfuncproto( 
-            load_so_libforms(), "fl_set_choice_text", 
-            None, [cty.POINTER(xfc.FL_OBJECT), xfc.STRING], 
+    _fl_set_choice_text = library.cfuncproto( 
+            library.load_so_libforms(), "fl_set_choice_text", 
+            None, [cty.POINTER(xfdata.FL_OBJECT), xfdata.STRING], 
             """void fl_set_choice_text(FL_OBJECT * ob, const char * txt) 
             """) 
     warn_deprecated_function("fl_*select*") 
-    schoicetxt = convert_to_string(choicetxt) 
-    keep_elem_refs(pObject, choicetxt, schoicetxt) 
+    schoicetxt = library.convert_to_string(choicetxt) 
+    library.keep_elem_refs(pObject, choicetxt, schoicetxt) 
     _fl_set_choice_text(pObject, schoicetxt) 
 
 
@@ -415,13 +423,13 @@ def fl_get_choice(pObject):
         @deprecated: Use corresponding fl_*select* function 
     """ 
  
-    _fl_get_choice = cfuncproto( 
-            load_so_libforms(), "fl_get_choice", 
-            cty.c_int, [cty.POINTER(xfc.FL_OBJECT)], 
+    _fl_get_choice = library.cfuncproto( 
+            library.load_so_libforms(), "fl_get_choice", 
+            cty.c_int, [cty.POINTER(xfdata.FL_OBJECT)], 
             """int fl_get_choice(FL_OBJECT * ob) 
             """) 
     warn_deprecated_function("fl_*select*") 
-    keep_elem_refs(pObject) 
+    library.keep_elem_refs(pObject) 
     retval = _fl_get_choice(pObject) 
     return retval 
 
@@ -433,14 +441,14 @@ def fl_get_choice_item_text(pObject, itemnum):
         @deprecated: Use corresponding fl_*select* function 
     """ 
  
-    _fl_get_choice_item_text = cfuncproto( 
-            load_so_libforms(), "fl_get_choice_item_text", 
-            xfc.STRING, [cty.POINTER(xfc.FL_OBJECT), cty.c_int], 
+    _fl_get_choice_item_text = library.cfuncproto( 
+            library.load_so_libforms(), "fl_get_choice_item_text", 
+            xfdata.STRING, [cty.POINTER(xfdata.FL_OBJECT), cty.c_int], 
             """const char * fl_get_choice_item_text(FL_OBJECT * ob, int n) 
             """) 
     warn_deprecated_function("fl_*select*") 
-    iitemnum = convert_to_int(itemnum) 
-    keep_elem_refs(pObject, itemnum, iitemnum) 
+    iitemnum = library.convert_to_int(itemnum) 
+    library.keep_elem_refs(pObject, itemnum, iitemnum) 
     retval = _fl_get_choice_item_text(pObject, iitemnum) 
     return retval 
 
@@ -452,13 +460,13 @@ def fl_get_choice_maxitems(pObject):
         @deprecated: Use corresponding fl_*select* function 
     """ 
  
-    _fl_get_choice_maxitems = cfuncproto( 
-            load_so_libforms(), "fl_get_choice_maxitems", 
-            cty.c_int, [cty.POINTER(xfc.FL_OBJECT)], 
+    _fl_get_choice_maxitems = library.cfuncproto( 
+            library.load_so_libforms(), "fl_get_choice_maxitems", 
+            cty.c_int, [cty.POINTER(xfdata.FL_OBJECT)], 
             """int fl_get_choice_maxitems(FL_OBJECT * ob) 
             """) 
     warn_deprecated_function("fl_*select*") 
-    keep_elem_refs(pObject) 
+    library.keep_elem_refs(pObject) 
     retval = _fl_get_choice_maxitems(pObject) 
     return retval 
 
@@ -474,13 +482,13 @@ def fl_get_choice_text(pObject):
         @deprecated: Use corresponding fl_*select* function 
     """ 
  
-    _fl_get_choice_text = cfuncproto( 
-            load_so_libforms(), "fl_get_choice_text", 
-            xfc.STRING, [cty.POINTER(xfc.FL_OBJECT)], 
+    _fl_get_choice_text = library.cfuncproto( 
+            library.load_so_libforms(), "fl_get_choice_text", 
+            xfdata.STRING, [cty.POINTER(xfdata.FL_OBJECT)], 
             """const char * fl_get_choice_text(FL_OBJECT * ob) 
             """) 
     warn_deprecated_function("fl_*select*") 
-    keep_elem_refs(pObject) 
+    library.keep_elem_refs(pObject) 
     retval = _fl_get_choice_text(pObject) 
     return retval 
 
@@ -497,14 +505,14 @@ def fl_set_choice_fontsize(pObject, size):
         @deprecated: Use corresponding fl_*select* function 
     """ 
  
-    _fl_set_choice_fontsize = cfuncproto( 
-            load_so_libforms(), "fl_set_choice_fontsize", 
-            None, [cty.POINTER(xfc.FL_OBJECT), cty.c_int], 
+    _fl_set_choice_fontsize = library.cfuncproto( 
+            library.load_so_libforms(), "fl_set_choice_fontsize", 
+            None, [cty.POINTER(xfdata.FL_OBJECT), cty.c_int], 
             """void fl_set_choice_fontsize(FL_OBJECT * ob, int size) 
             """) 
     warn_deprecated_function("fl_*select*") 
-    isize = convert_to_int(size) 
-    keep_elem_refs(pObject, size, isize) 
+    isize = library.convert_to_int(size) 
+    library.keep_elem_refs(pObject, size, isize) 
     _fl_set_choice_fontsize(pObject, isize) 
 
 
@@ -520,14 +528,14 @@ def fl_set_choice_fontstyle(pObject, style):
         @deprecated: Use corresponding fl_*select* function 
     """ 
  
-    _fl_set_choice_fontstyle = cfuncproto( 
-            load_so_libforms(), "fl_set_choice_fontstyle", 
-            None, [cty.POINTER(xfc.FL_OBJECT), cty.c_int], 
+    _fl_set_choice_fontstyle = library.cfuncproto( 
+            library.load_so_libforms(), "fl_set_choice_fontstyle", 
+            None, [cty.POINTER(xfdata.FL_OBJECT), cty.c_int], 
             """void fl_set_choice_fontstyle(FL_OBJECT * ob, int style) 
             """) 
     warn_deprecated_function("fl_*select*") 
-    istyle = convert_to_int(style) 
-    keep_elem_refs(pObject, style, istyle) 
+    istyle = library.convert_to_int(style) 
+    library.keep_elem_refs(pObject, style, istyle) 
     _fl_set_choice_fontstyle(pObject, istyle) 
 
 
@@ -543,15 +551,15 @@ def fl_set_choice_align(pObject, align):
         @deprecated: Use corresponding fl_*select* function 
     """ 
  
-    _fl_set_choice_align = cfuncproto( 
-            load_so_libforms(), "fl_set_choice_align", 
-            None, [cty.POINTER(xfc.FL_OBJECT), cty.c_int], 
+    _fl_set_choice_align = library.cfuncproto( 
+            library.load_so_libforms(), "fl_set_choice_align", 
+            None, [cty.POINTER(xfdata.FL_OBJECT), cty.c_int], 
             """void fl_set_choice_align(FL_OBJECT * ob, int align) 
             """) 
     warn_deprecated_function("fl_*select*") 
-    check_admitted_listvalues(align, xfc.ALIGN_list) 
-    ialign = convert_to_int(align) 
-    keep_elem_refs(pObject, align, ialign) 
+    library.check_admitted_listvalues(align, xfdata.ALIGN_list) 
+    ialign = library.convert_to_int(align) 
+    library.keep_elem_refs(pObject, align, ialign) 
     _fl_set_choice_align(pObject, ialign) 
 
 
@@ -562,14 +570,14 @@ def fl_get_choice_item_mode(pObject, itemnum):
         @deprecated: Use corresponding fl_*select* function 
     """ 
  
-    _fl_get_choice_item_mode = cfuncproto( 
-            load_so_libforms(), "fl_get_choice_item_mode", 
-            cty.c_int, [cty.POINTER(xfc.FL_OBJECT), cty.c_int], 
+    _fl_get_choice_item_mode = library.cfuncproto( 
+            library.load_so_libforms(), "fl_get_choice_item_mode", 
+            cty.c_int, [cty.POINTER(xfdata.FL_OBJECT), cty.c_int], 
             """int fl_get_choice_item_mode(FL_OBJECT * ob, int item) 
             """) 
     warn_deprecated_function("fl_*select*") 
-    iitemnum = convert_to_int(itemnum) 
-    keep_elem_refs(pObject, itemnum, iitemnum) 
+    iitemnum = library.convert_to_int(itemnum) 
+    library.keep_elem_refs(pObject, itemnum, iitemnum) 
     retval = _fl_get_choice_item_mode(pObject, iitemnum) 
     return retval 
 
@@ -587,16 +595,16 @@ def fl_set_choice_item_mode(pObject, itemnum, mode):
         @deprecated: Use corresponding fl_*select* function 
     """ 
  
-    _fl_set_choice_item_mode = cfuncproto(
-            load_so_libforms(), "fl_set_choice_item_mode",
-            None, [cty.POINTER(xfc.FL_OBJECT), cty.c_int, cty.c_uint],
+    _fl_set_choice_item_mode = library.cfuncproto(
+            library.load_so_libforms(), "fl_set_choice_item_mode",
+            None, [cty.POINTER(xfdata.FL_OBJECT), cty.c_int, cty.c_uint],
             """void fl_set_choice_item_mode(FL_OBJECT * ob, int item,
                unsigned int mode)
             """)
     warn_deprecated_function("fl_*select*") 
-    iitemnum = convert_to_int(itemnum) 
-    uimode = convert_to_uint(mode) 
-    keep_elem_refs(pObject, itemnum, mode, iitemnum, uimode) 
+    iitemnum = library.convert_to_int(itemnum) 
+    uimode = library.convert_to_uint(mode) 
+    library.keep_elem_refs(pObject, itemnum, mode, iitemnum, uimode) 
     _fl_set_choice_item_mode(pObject, iitemnum, uimode) 
 
 
@@ -607,35 +615,35 @@ def fl_set_choice_item_shortcut(pObject, itemnum, sctext):
         @deprecated 
     """ 
  
-    _fl_set_choice_item_shortcut = cfuncproto( 
-            load_so_libforms(), "fl_set_choice_item_shortcut", 
-            None, [cty.POINTER(xfc.FL_OBJECT), cty.c_int, xfc.STRING], 
+    _fl_set_choice_item_shortcut = library.cfuncproto( 
+            library.load_so_libforms(), "fl_set_choice_item_shortcut", 
+            None, [cty.POINTER(xfdata.FL_OBJECT), cty.c_int, xfdata.STRING], 
             """void fl_set_choice_item_shortcut(FL_OBJECT * ob, int item, 
                const char * sc) 
             """) 
     warn_deprecated_function("fl_*select*") 
-    iitemnum = convert_to_int(itemnum) 
-    ssctext = convert_to_string(sctext) 
-    keep_elem_refs(pObject, itemnum, sctext, iitemnum, ssctext) 
+    iitemnum = library.convert_to_int(itemnum) 
+    ssctext = library.convert_to_string(sctext) 
+    library.keep_elem_refs(pObject, itemnum, sctext, iitemnum, ssctext) 
     _fl_set_choice_item_shortcut(pObject, iitemnum, ssctext) 
 
 
-def fl_set_choice_entries(pObject, pPopupEntry):
-    """ fl_set_choice_entries(pObject, pPopupEntry) -> num. 
+def fl_set_choice_entries(pObject, pPupEntry):
+    """ fl_set_choice_entries(pObject, pPupEntry) -> num. 
  
         @status: Untested + NoDoc + NoExample = NOT OK 
         @deprecated: Use corresponding fl_*select* function 
     """ 
  
-    _fl_set_choice_entries = cfuncproto( 
-            load_so_libforms(), "fl_set_choice_entries", 
-            cty.c_int, [cty.POINTER(xfc.FL_OBJECT),
-            cty.POINTER(xfc.FL_PUP_ENTRY)],
+    _fl_set_choice_entries = library.cfuncproto( 
+            library.load_so_libforms(), "fl_set_choice_entries", 
+            cty.c_int, [cty.POINTER(xfdata.FL_OBJECT),
+            cty.POINTER(FL_PUP_ENTRY)],
             """int fl_set_choice_entries(FL_OBJECT * ob, FL_PUP_ENTRY * ent)
             """)
     warn_deprecated_function("fl_*select*") 
-    keep_elem_refs(pObject, pPopupEntry) 
-    retval = _fl_set_choice_entries(pObject, pPopupEntry) 
+    library.keep_elem_refs(pObject, pPupEntry) 
+    retval = _fl_set_choice_entries(pObject, pPupEntry) 
     return retval 
 
 
@@ -646,20 +654,20 @@ def fl_set_choice_notitle(pObject, num):
         @deprecated: Use corresponding fl_*select* function 
     """ 
  
-    _fl_set_choice_notitle = cfuncproto( 
-            load_so_libforms(), "fl_set_choice_notitle", 
-            cty.c_int, [cty.POINTER(xfc.FL_OBJECT), cty.c_int], 
+    _fl_set_choice_notitle = library.cfuncproto( 
+            library.load_so_libforms(), "fl_set_choice_notitle", 
+            cty.c_int, [cty.POINTER(xfdata.FL_OBJECT), cty.c_int], 
             """int fl_set_choice_notitle(FL_OBJECT * ob, int n) 
             """) 
     warn_deprecated_function("fl_*select*") 
-    inum = convert_to_int(num) 
-    keep_elem_refs(pObject, num, inum) 
+    inum = library.convert_to_int(num) 
+    library.keep_elem_refs(pObject, num, inum) 
     retval = _fl_set_choice_notitle(pObject, inum) 
     return retval 
 
 
 ###################### 
-# forms.h (counter.h) 
+# forms.h (countervar.h) 
 ###################### 
 
 
@@ -671,16 +679,15 @@ def fl_set_counter_return(pObject, when):
         @status: Tested + NoDoc + Example = OK 
         @deprecated: Use fl_set_object_return function 
     """ 
- 
-    _fl_set_counter_return = cfuncproto( 
-            load_so_libforms(), "fl_set_counter_return", 
-            None, [cty.POINTER(xfc.FL_OBJECT), cty.c_uint], 
-            """void fl_set_counter_return(FL_OBJECT * ob, unsigned 
-               int how) 
-            """) 
-    warn_deprecated_function("fl_set_object_return") 
-    uiwhen = convert_to_uint(when) 
-    keep_elem_refs(pObject, when, uiwhen) 
+    _fl_set_counter_return = library.cfuncproto( 
+        library.load_so_libforms(), "fl_set_counter_return", 
+        None, [cty.POINTER(xfdata.FL_OBJECT), cty.c_uint], 
+        """void fl_set_counter_return(FL_OBJECT * ob, unsigned 
+           int how)""") 
+    warn_deprecated_function("fl_set_object_return")
+    library.check_admitted_listvalues(when, xfdata.RETURN_list)
+    uiwhen = library.convert_to_uint(when) 
+    library.keep_elem_refs(pObject, when, uiwhen) 
     _fl_set_counter_return(pObject, uiwhen) 
 
 
@@ -705,23 +712,21 @@ def fl_add_menu(menutype, x, y, w, h, label):
         @status: Tested + NoDoc + Example = OK 
         @deprecated: Use corresponding fl_*nmenu* function 
     """ 
- 
-    _fl_add_menu = cfuncproto( 
-            load_so_libforms(), "fl_add_menu", 
-            cty.POINTER(xfc.FL_OBJECT), [cty.c_int, xfc.FL_Coord, 
-            xfc.FL_Coord, xfc.FL_Coord, xfc.FL_Coord, xfc.STRING], 
-            """FL_OBJECT * fl_add_menu(int type, FL_Coord x, FL_Coord y, 
-               FL_Coord w, FL_Coord h, const char * label) 
-            """) 
+    _fl_add_menu = library.cfuncproto( 
+        library.load_so_libforms(), "fl_add_menu", 
+        cty.POINTER(xfdata.FL_OBJECT), [cty.c_int, xfdata.FL_Coord, 
+        xfdata.FL_Coord, xfdata.FL_Coord, xfdata.FL_Coord, xfdata.STRING], 
+        """FL_OBJECT * fl_add_menu(int type, FL_Coord x, FL_Coord y, 
+           FL_Coord w, FL_Coord h, const char * label) """) 
     warn_deprecated_function("fl_*nmenu*") 
-    check_admitted_listvalues(menutype, MENUTYPE_list) 
-    imenutype = convert_to_int(menutype) 
-    ix = convert_to_FL_Coord(x) 
-    iy = convert_to_FL_Coord(y) 
-    iw = convert_to_FL_Coord(w) 
-    ih = convert_to_FL_Coord(h) 
-    slabel = convert_to_string(label) 
-    keep_elem_refs(menutype, x, y, w, h, label, imenutype, ix, iy, 
+    library.check_admitted_listvalues(menutype, MENUTYPE_list) 
+    imenutype = library.convert_to_int(menutype) 
+    ix = library.convert_to_FL_Coord(x) 
+    iy = library.convert_to_FL_Coord(y) 
+    iw = library.convert_to_FL_Coord(w) 
+    ih = library.convert_to_FL_Coord(h) 
+    slabel = library.convert_to_string(label) 
+    library.keep_elem_refs(menutype, x, y, w, h, label, imenutype, ix, iy, 
                    iw, ih, slabel) 
     retval = _fl_add_menu(imenutype, ix, iy, iw, ih, slabel) 
     return retval 
@@ -732,16 +737,15 @@ def fl_clear_menu(pObject):
         fl_clear_menu(pObject) 
  
         @status: Untested + NoDoc + NoExample = NOT OK 
+
         @deprecated: Use corresponding fl_*nmenu* function 
     """ 
- 
-    _fl_clear_menu = cfuncproto( 
-            load_so_libforms(), "fl_clear_menu", 
-            None, [cty.POINTER(xfc.FL_OBJECT)], 
-            """void fl_clear_menu(FL_OBJECT * ob) 
-            """) 
+    _fl_clear_menu = library.cfuncproto( 
+        library.load_so_libforms(), "fl_clear_menu", 
+        None, [cty.POINTER(xfdata.FL_OBJECT)], 
+        """void fl_clear_menu(FL_OBJECT * ob) """)
     warn_deprecated_function("fl_*nmenu*") 
-    keep_elem_refs(pObject) 
+    library.keep_elem_refs(pObject) 
     _fl_clear_menu(pObject) 
 
 
@@ -757,15 +761,13 @@ def fl_set_menu(pObject, menustr):
         @status: Untested + NoDoc + NoExample = NOT OK 
         @deprecated: Use corresponding fl_*nmenu* function 
     """ 
- 
-    _fl_set_menu = cfuncproto( 
-            load_so_libforms(), "fl_set_menu", 
-            None, [cty.POINTER(xfc.FL_OBJECT), xfc.STRING], 
-            """void fl_set_menu(FL_OBJECT * ob, const char * menustr) 
-            """) 
+    _fl_set_menu = library.cfuncproto( 
+        library.load_so_libforms(), "fl_set_menu", 
+        None, [cty.POINTER(xfdata.FL_OBJECT), xfdata.STRING], 
+        """void fl_set_menu(FL_OBJECT * ob, const char * menustr) """) 
     warn_deprecated_function("fl_*nmenu*") 
-    smenustr = convert_to_string(menustr) 
-    keep_elem_refs(pObject, menustr, smenustr) 
+    smenustr = library.convert_to_string(menustr) 
+    library.keep_elem_refs(pObject, menustr, smenustr) 
     _fl_set_menu(pObject, smenustr) 
 
 
@@ -776,15 +778,13 @@ def fl_addto_menu(pObject, menustr):
         @status: HalfTested + NoDoc + Example = NOT OK (sequence param.) 
         @deprecated: Use corresponding fl_*nmenu* function 
     """ 
- 
-    _fl_addto_menu = cfuncproto( 
-            load_so_libforms(), "fl_addto_menu", 
-            cty.c_int, [cty.POINTER(xfc.FL_OBJECT), xfc.STRING], 
-            """int fl_addto_menu(FL_OBJECT * ob, const char * menustr) 
-            """) 
+    _fl_addto_menu = library.cfuncproto( 
+        library.load_so_libforms(), "fl_addto_menu", 
+        cty.c_int, [cty.POINTER(xfdata.FL_OBJECT), xfdata.STRING], 
+        """int fl_addto_menu(FL_OBJECT * ob, const char * menustr) """) 
     warn_deprecated_function("fl_*nmenu*") 
-    smenustr = convert_to_string(menustr) 
-    keep_elem_refs(pObject, menustr, smenustr) 
+    smenustr = library.convert_to_string(menustr) 
+    library.keep_elem_refs(pObject, menustr, smenustr) 
     retval = _fl_addto_menu(pObject, smenustr) 
     return retval 
 
@@ -796,17 +796,15 @@ def fl_replace_menu_item(pObject, itemnum, itemstr):
         @status: Untested + NoDoc + NoExample = NOT OK 
         @deprecated: Use corresponding fl_*nmenu* function 
     """ 
- 
-    _fl_replace_menu_item = cfuncproto( 
-            load_so_libforms(), "fl_replace_menu_item", 
-            None, [cty.POINTER(xfc.FL_OBJECT), cty.c_int, xfc.STRING], 
-            """void fl_replace_menu_item(FL_OBJECT * ob, int numb, 
-               const char * str) 
-            """) 
+    _fl_replace_menu_item = library.cfuncproto( 
+        library.load_so_libforms(), "fl_replace_menu_item", 
+        None, [cty.POINTER(xfdata.FL_OBJECT), cty.c_int, xfdata.STRING],
+        """void fl_replace_menu_item(FL_OBJECT * ob, int numb,
+           const char * str) """) 
     warn_deprecated_function("fl_*nmenu*") 
-    iitemnum = convert_to_int(itemnum) 
-    sitemstr = convert_to_string(itemstr) 
-    keep_elem_refs(pObject, itemnum, itemstr, iitemnum, sitemstr) 
+    iitemnum = library.convert_to_int(itemnum) 
+    sitemstr = library.convert_to_string(itemstr) 
+    library.keep_elem_refs(pObject, itemnum, itemstr, iitemnum, sitemstr) 
     _fl_replace_menu_item(pObject, iitemnum, sitemstr) 
 
 
@@ -817,15 +815,13 @@ def fl_delete_menu_item(pObject, itemnum):
         @status: Untested + NoDoc + NoExample = NOT OK 
         @deprecated: Use corresponding fl_*nmenu* function 
     """ 
- 
-    _fl_delete_menu_item = cfuncproto( 
-            load_so_libforms(), "fl_delete_menu_item", 
-            None, [cty.POINTER(xfc.FL_OBJECT), cty.c_int], 
-            """void fl_delete_menu_item(FL_OBJECT * ob, int numb) 
-            """) 
+    _fl_delete_menu_item = library.cfuncproto( 
+        library.load_so_libforms(), "fl_delete_menu_item", 
+        None, [cty.POINTER(xfdata.FL_OBJECT), cty.c_int], 
+        """void fl_delete_menu_item(FL_OBJECT * ob, int numb) """) 
     warn_deprecated_function("fl_*nmenu*") 
-    iitemnum = convert_to_int(itemnum) 
-    keep_elem_refs(pObject, itemnum, iitemnum) 
+    iitemnum = library.convert_to_int(itemnum) 
+    library.keep_elem_refs(pObject, itemnum, iitemnum) 
     _fl_delete_menu_item(pObject, iitemnum) 
 
 
@@ -836,19 +832,17 @@ def fl_set_menu_item_callback(pObject, itemnum, py_PupCb):
         @status: Untested + NoDoc + NoExample = NOT OK 
         @deprecated: Use corresponding fl_*nmenu* function 
     """ 
- 
-    _fl_set_menu_item_callback = cfuncproto( 
-            load_so_libforms(), "fl_set_menu_item_callback", 
-            FL_PUP_CB, [cty.POINTER(xfc.FL_OBJECT), cty.c_int,
-            FL_PUP_CB], 
-            """FL_PUP_CB fl_set_menu_item_callback(FL_OBJECT * ob, int numb, 
-               FL_PUP_CB cb) 
-            """) 
+    _fl_set_menu_item_callback = library.cfuncproto( 
+        library.load_so_libforms(), "fl_set_menu_item_callback", 
+        FL_PUP_CB, [cty.POINTER(xfdata.FL_OBJECT), cty.c_int,
+        FL_PUP_CB], 
+        """FL_PUP_CB fl_set_menu_item_callback(FL_OBJECT * ob, int numb,
+           FL_PUP_CB cb)""") 
     warn_deprecated_function("fl_*nmenu*") 
-    iitemnum = convert_to_int(itemnum) 
+    iitemnum = library.convert_to_int(itemnum) 
     c_PupCb = FL_PUP_CB(py_PupCb) 
-    keep_cfunc_refs(c_PupCb, py_PupCb) 
-    keep_elem_refs(pObject, itemnum, iitemnum) 
+    library.keep_cfunc_refs(c_PupCb, py_PupCb) 
+    library.keep_elem_refs(pObject, itemnum, iitemnum) 
     retval = _fl_set_menu_item_callback(pObject, iitemnum, c_PupCb) 
     return retval 
 
@@ -866,17 +860,15 @@ def fl_set_menu_item_shortcut(pObject, itemnum, textsc):
         @status: Untested + NoDoc + NoExample = NOT OK 
         @deprecated: Use corresponding fl_*nmenu* function 
     """ 
- 
-    _fl_set_menu_item_shortcut = cfuncproto( 
-            load_so_libforms(), "fl_set_menu_item_shortcut", 
-            None, [cty.POINTER(xfc.FL_OBJECT), cty.c_int, xfc.STRING], 
-            """void fl_set_menu_item_shortcut(FL_OBJECT * ob, int numb, 
-               const char * str) 
-            """) 
+    _fl_set_menu_item_shortcut = library.cfuncproto( 
+        library.load_so_libforms(), "fl_set_menu_item_shortcut", 
+        None, [cty.POINTER(xfdata.FL_OBJECT), cty.c_int, xfdata.STRING], 
+        """void fl_set_menu_item_shortcut(FL_OBJECT * ob, int numb, 
+           const char * str) """) 
     warn_deprecated_function("fl_*nmenu*") 
-    iitemnum = convert_to_int(itemnum) 
-    stextsc = convert_to_string(textsc) 
-    keep_elem_refs(pObject, itemnum, stextsc, iitemnum, stextsc) 
+    iitemnum = library.convert_to_int(itemnum) 
+    stextsc = library.convert_to_string(textsc) 
+    library.keep_elem_refs(pObject, itemnum, stextsc, iitemnum, stextsc) 
     _fl_set_menu_item_shortcut(pObject, iitemnum, stextsc) 
 
 
@@ -893,17 +885,15 @@ def fl_set_menu_item_mode(pObject, itemnum, mode):
         @status: Untested + NoDoc + NoExample = NOT OK 
         @deprecated: Use corresponding fl_*nmenu* function 
     """ 
- 
-    _fl_set_menu_item_mode = cfuncproto( 
-            load_so_libforms(), "fl_set_menu_item_mode", 
-            None, [cty.POINTER(xfc.FL_OBJECT), cty.c_int, cty.c_uint], 
-            """void fl_set_menu_item_mode(FL_OBJECT * ob, int numb, 
-               unsigned int mode) 
-            """) 
+    _fl_set_menu_item_mode = library.cfuncproto( 
+        library.load_so_libforms(), "fl_set_menu_item_mode", 
+        None, [cty.POINTER(xfdata.FL_OBJECT), cty.c_int, cty.c_uint], 
+        """void fl_set_menu_item_mode(FL_OBJECT * ob, int numb, 
+           unsigned int mode)""") 
     warn_deprecated_function("fl_*nmenu*") 
-    iitemnum = convert_to_int(itemnum) 
-    uimode = convert_to_uint(mode) 
-    keep_elem_refs(pObject, itemnum, mode, iitemnum, uimode) 
+    iitemnum = library.convert_to_int(itemnum) 
+    uimode = library.convert_to_uint(mode) 
+    library.keep_elem_refs(pObject, itemnum, mode, iitemnum, uimode) 
     _fl_set_menu_item_mode(pObject, iitemnum, uimode) 
 
 
@@ -919,15 +909,13 @@ def fl_show_menu_symbol(pObject, flag):
         @status: Untested + NoDoc + NoExample = NOT OK 
         @deprecated: Use corresponding fl_*nmenu* function 
     """ 
- 
-    _fl_show_menu_symbol = cfuncproto( 
-            load_so_libforms(), "fl_show_menu_symbol", 
-            None, [cty.POINTER(xfc.FL_OBJECT), cty.c_int], 
-            """void fl_show_menu_symbol(FL_OBJECT * ob, int show) 
-            """) 
+    _fl_show_menu_symbol = library.cfuncproto( 
+        library.load_so_libforms(), "fl_show_menu_symbol", 
+        None, [cty.POINTER(xfdata.FL_OBJECT), cty.c_int], 
+        """void fl_show_menu_symbol(FL_OBJECT * ob, int show) """) 
     warn_deprecated_function("fl_*nmenu*") 
-    iflag = convert_to_int(flag) 
-    keep_elem_refs(pObject, flag, iflag) 
+    iflag = library.convert_to_int(flag) 
+    library.keep_elem_refs(pObject, flag, iflag) 
     _fl_show_menu_symbol(pObject, iflag) 
 
 
@@ -938,15 +926,13 @@ def fl_set_menu_popup(pObject, pup):
         @status: Untested + NoDoc + NoExample = NOT OK 
         @deprecated: Use corresponding fl_*nmenu* function 
     """ 
- 
-    _fl_set_menu_popup = cfuncproto( 
-            load_so_libforms(), "fl_set_menu_popup", 
-            None, [cty.POINTER(xfc.FL_OBJECT), cty.c_int], 
-            """void fl_set_menu_popup(FL_OBJECT * ob, int pup) 
-            """) 
+    _fl_set_menu_popup = library.cfuncproto( 
+        library.load_so_libforms(), "fl_set_menu_popup", 
+        None, [cty.POINTER(xfdata.FL_OBJECT), cty.c_int], 
+        """void fl_set_menu_popup(FL_OBJECT * ob, int pup)""") 
     warn_deprecated_function("fl_*nmenu*") 
-    ipup = convert_to_int(pup) 
-    keep_elem_refs(pObject, pup, ipup) 
+    ipup = library.convert_to_int(pup) 
+    library.keep_elem_refs(pObject, pup, ipup) 
     _fl_set_menu_popup(pObject, ipup) 
 
 
@@ -957,14 +943,12 @@ def fl_get_menu_popup(pObject):
         @status: Untested + NoDoc + NoExample = NOT OK 
         @deprecated: Use corresponding fl_*nmenu* function 
     """ 
- 
-    _fl_get_menu_popup = cfuncproto( 
-            load_so_libforms(), "fl_get_menu_popup", 
-            cty.c_int, [cty.POINTER(xfc.FL_OBJECT)], 
-            """int fl_get_menu_popup(FL_OBJECT * ob) 
-            """) 
+    _fl_get_menu_popup = library.cfuncproto( 
+        library.load_so_libforms(), "fl_get_menu_popup", 
+        cty.c_int, [cty.POINTER(xfdata.FL_OBJECT)], 
+        """int fl_get_menu_popup(FL_OBJECT * ob) """) 
     warn_deprecated_function("fl_*nmenu*") 
-    keep_elem_refs(pObject) 
+    library.keep_elem_refs(pObject) 
     retval = _fl_get_menu_popup(pObject) 
     return retval 
 
@@ -976,14 +960,12 @@ def fl_get_menu(pObject):
         @status: Untested + NoDoc + NoExample = NOT OK 
         @deprecated: Use corresponding fl_*nmenu* function 
     """ 
- 
-    _fl_get_menu = cfuncproto( 
-            load_so_libforms(), "fl_get_menu", 
-            cty.c_int, [cty.POINTER(xfc.FL_OBJECT)], 
-            """int fl_get_menu(FL_OBJECT * ob) 
-            """) 
+    _fl_get_menu = library.cfuncproto( 
+        library.load_so_libforms(), "fl_get_menu", 
+        cty.c_int, [cty.POINTER(xfdata.FL_OBJECT)], 
+        """int fl_get_menu(FL_OBJECT * ob) """) 
     warn_deprecated_function("fl_*nmenu*") 
-    keep_elem_refs(pObject) 
+    library.keep_elem_refs(pObject) 
     retval = _fl_get_menu(pObject) 
     return retval 
 
@@ -995,15 +977,13 @@ def fl_get_menu_item_text(pObject, numb):
         @status: Untested + NoDoc + NoExample = NOT OK 
         @deprecated: Use corresponding fl_*nmenu* function 
     """ 
- 
-    _fl_get_menu_item_text = cfuncproto( 
-            load_so_libforms(), "fl_get_menu_item_text", 
-            xfc.STRING, [cty.POINTER(xfc.FL_OBJECT), cty.c_int], 
-            """const char * fl_get_menu_item_text(FL_OBJECT * ob, int numb) 
-            """) 
+    _fl_get_menu_item_text = library.cfuncproto( 
+        library.load_so_libforms(), "fl_get_menu_item_text", 
+        xfdata.STRING, [cty.POINTER(xfdata.FL_OBJECT), cty.c_int], 
+        """const char * fl_get_menu_item_text(FL_OBJECT * ob, int numb) """) 
     warn_deprecated_function("fl_*nmenu*") 
-    inumb = convert_to_int(numb) 
-    keep_elem_refs(pObject, numb, inumb) 
+    inumb = library.convert_to_int(numb) 
+    library.keep_elem_refs(pObject, numb, inumb) 
     retval = _fl_get_menu_item_text(pObject, inumb) 
     return retval 
 
@@ -1015,14 +995,12 @@ def fl_get_menu_maxitems(pObject):
         @status: Untested + NoDoc + NoExample = NOT OK 
         @deprecated: Use corresponding fl_*nmenu* function 
     """ 
- 
-    _fl_get_menu_maxitems = cfuncproto( 
-            load_so_libforms(), "fl_get_menu_maxitems", 
-            cty.c_int, [cty.POINTER(xfc.FL_OBJECT)], 
-            """int fl_get_menu_maxitems(FL_OBJECT * ob) 
-            """) 
+    _fl_get_menu_maxitems = library.cfuncproto( 
+        library.load_so_libforms(), "fl_get_menu_maxitems", 
+        cty.c_int, [cty.POINTER(xfdata.FL_OBJECT)], 
+        """int fl_get_menu_maxitems(FL_OBJECT * ob) """) 
     warn_deprecated_function("fl_*nmenu*") 
-    keep_elem_refs(pObject) 
+    library.keep_elem_refs(pObject) 
     retval = _fl_get_menu_maxitems(pObject) 
     return retval 
 
@@ -1034,15 +1012,13 @@ def fl_get_menu_item_mode(pObject, itemnum):
         @status: Untested + NoDoc + NoExample = NOT OK 
         @deprecated: Use corresponding fl_*nmenu* function 
     """ 
- 
-    _fl_get_menu_item_mode = cfuncproto( 
-            load_so_libforms(), "fl_get_menu_item_mode", 
-            cty.c_uint, [cty.POINTER(xfc.FL_OBJECT), cty.c_int], 
-            """unsigned int fl_get_menu_item_mode(FL_OBJECT * ob, int numb) 
-            """) 
+    _fl_get_menu_item_mode = library.cfuncproto( 
+        library.load_so_libforms(), "fl_get_menu_item_mode", 
+        cty.c_uint, [cty.POINTER(xfdata.FL_OBJECT), cty.c_int], 
+        """unsigned int fl_get_menu_item_mode(FL_OBJECT * ob, int numb) """) 
     warn_deprecated_function("fl_*nmenu*") 
-    iitemnum = convert_to_int(itemnum) 
-    keep_elem_refs(pObject, itemnum, iitemnum) 
+    iitemnum = library.convert_to_int(itemnum) 
+    library.keep_elem_refs(pObject, itemnum, iitemnum) 
     retval = _fl_get_menu_item_mode(pObject, iitemnum) 
     return retval 
 
@@ -1054,35 +1030,31 @@ def fl_get_menu_text(pObject):
         @status: Untested + NoDoc + NoExample = NOT OK 
         @deprecated: Use corresponding fl_*nmenu* function 
     """ 
- 
-    _fl_get_menu_text = cfuncproto( 
-            load_so_libforms(), "fl_get_menu_text", 
-            xfc.STRING, [cty.POINTER(xfc.FL_OBJECT)], 
-            """const char * fl_get_menu_text(FL_OBJECT * ob) 
-            """) 
+    _fl_get_menu_text = library.cfuncproto( 
+        library.load_so_libforms(), "fl_get_menu_text", 
+        xfdata.STRING, [cty.POINTER(xfdata.FL_OBJECT)], 
+        """const char * fl_get_menu_text(FL_OBJECT * ob) """) 
     warn_deprecated_function("fl_*nmenu*") 
-    keep_elem_refs(pObject) 
+    library.keep_elem_refs(pObject) 
     retval = _fl_get_menu_text(pObject) 
     return retval 
 
 
-def fl_set_menu_entries(pObject, pPopupEntry):
+def fl_set_menu_entries(pObject, pPupEntry):
     """ 
-        fl_set_menu_entries(pObject, pPopupEntry) -> num. 
+        fl_set_menu_entries(pObject, pPupEntry) -> num. 
  
         @status: Untested + NoDoc + NoExample = NOT OK 
         @deprecated: Use corresponding fl_*nmenu* function 
     """ 
- 
-    _fl_set_menu_entries = cfuncproto( 
-            load_so_libforms(), "fl_set_menu_entries", 
-            cty.c_int, [cty.POINTER(xfc.FL_OBJECT),
-            cty.POINTER(xfc.FL_PUP_ENTRY)],
-            """int fl_set_menu_entries(FL_OBJECT * ob, FL_PUP_ENTRY * ent) 
-            """) 
+    _fl_set_menu_entries = library.cfuncproto( 
+        library.load_so_libforms(), "fl_set_menu_entries", 
+        cty.c_int, [cty.POINTER(xfdata.FL_OBJECT),
+        cty.POINTER(FL_PUP_ENTRY)],
+        """int fl_set_menu_entries(FL_OBJECT * ob, FL_PUP_ENTRY * ent) """) 
     warn_deprecated_function("fl_*nmenu*") 
-    keep_elem_refs(pObject, pPopupEntry) 
-    retval = _fl_set_menu_entries(pObject, pPopupEntry) 
+    library.keep_elem_refs(pObject, pPupEntry) 
+    retval = _fl_set_menu_entries(pObject, pPupEntry) 
     return retval 
 
 
@@ -1093,15 +1065,13 @@ def fl_set_menu_notitle(pObject, off):
         @status: Untested + NoDoc + NoExample = NOT OK 
         @deprecated: Use corresponding fl_*nmenu* function 
     """ 
- 
-    _fl_set_menu_notitle = cfuncproto( 
-            load_so_libforms(), "fl_set_menu_notitle", 
-            cty.c_int, [cty.POINTER(xfc.FL_OBJECT), cty.c_int], 
-            """int fl_set_menu_notitle(FL_OBJECT * ob, int off) 
-            """) 
+    _fl_set_menu_notitle = library.cfuncproto( 
+        library.load_so_libforms(), "fl_set_menu_notitle", 
+        cty.c_int, [cty.POINTER(xfdata.FL_OBJECT), cty.c_int], 
+        """int fl_set_menu_notitle(FL_OBJECT * ob, int off) """) 
     warn_deprecated_function("fl_*nmenu*") 
-    ioff = convert_to_int(off) 
-    keep_elem_refs(pObject, off, ioff) 
+    ioff = library.convert_to_int(off) 
+    library.keep_elem_refs(pObject, off, ioff) 
     retval = _fl_set_menu_notitle(pObject, ioff) 
     return retval 
 
@@ -1113,22 +1083,20 @@ def fl_set_menu_item_id(pObject, itemnum, idnum):
         @status: Untested + NoDoc + NoExample = NOT OK 
         @deprecated: Use corresponding fl_*nmenu* function 
     """ 
- 
-    _fl_set_menu_item_id = cfuncproto( 
-            load_so_libforms(), "fl_set_menu_item_id", 
-            cty.c_int, [cty.POINTER(xfc.FL_OBJECT), cty.c_int, cty.c_int], 
-            """int fl_set_menu_item_id(FL_OBJECT * ob, int item, int id) 
-            """) 
+    _fl_set_menu_item_id = library.cfuncproto( 
+        library.load_so_libforms(), "fl_set_menu_item_id", 
+        cty.c_int, [cty.POINTER(xfdata.FL_OBJECT), cty.c_int, cty.c_int], 
+        """int fl_set_menu_item_id(FL_OBJECT * ob, int item, int id) """) 
     warn_deprecated_function("fl_*nmenu*") 
-    iitemnum = convert_to_int(itemnum) 
-    iidnum = convert_to_int(idnum) 
-    keep_elem_refs(pObject, itemnum, idnum, iitemnum, iidnum) 
+    iitemnum = library.convert_to_int(itemnum) 
+    iidnum = library.convert_to_int(idnum) 
+    library.keep_elem_refs(pObject, itemnum, idnum, iitemnum, iidnum) 
     retval = _fl_set_menu_item_id(pObject, iitemnum, iidnum) 
     return retval 
 
 
 ############################### 
-# forms.h (xpopup.h) 
+# forms.h (xpopupfn.h) 
 # Prototypes for xpop-up menus 
 ############################### 
 
@@ -1139,15 +1107,13 @@ def fl_setpup_entries(popupid, pPupEntry):
         @status: Untested + NoDoc + NoExample = NOT OK 
         @deprecated: Use corresponding fl_*popup* function 
     """ 
- 
-    _fl_setpup_entries = cfuncproto( 
-            load_so_libforms(), "fl_setpup_entries", 
-            cty.c_int, [cty.c_int, cty.POINTER(FL_PUP_ENTRY)], 
-            """int fl_setpup_entries(int nm, FL_PUP_ENTRY * entries) 
-            """) 
+    _fl_setpup_entries = library.cfuncproto( 
+        library.load_so_libforms(), "fl_setpup_entries", 
+        cty.c_int, [cty.c_int, cty.POINTER(FL_PUP_ENTRY)], 
+        """int fl_setpup_entries(int nm, FL_PUP_ENTRY * entries) """) 
     warn_deprecated_function("fl_*popup*") 
-    ipopupid = convert_to_int(popupid) 
-    keep_elem_refs(popupid, pPupEntry, ipopupid) 
+    ipopupid = library.convert_to_int(popupid) 
+    library.keep_elem_refs(popupid, pPupEntry, ipopupid) 
     retval = _fl_setpup_entries(ipopupid, pPupEntry) 
     return retval 
 
@@ -1159,15 +1125,13 @@ def fl_newpup(win):
         @status: Untested + NoDoc + NoExample = NOT OK 
         @deprecated: Use corresponding fl_*popup* function 
     """ 
- 
-    _fl_newpup = cfuncproto( 
-            load_so_libforms(), "fl_newpup", 
-            cty.c_int, [xfc.Window], 
-            """int fl_newpup(Window win) 
-            """) 
+    _fl_newpup = library.cfuncproto( 
+        library.load_so_libforms(), "fl_newpup", 
+        cty.c_int, [xfdata.Window], 
+        """int fl_newpup(Window win) """) 
     warn_deprecated_function("fl_*popup*") 
-    ulwin = convert_to_Window(win) 
-    keep_elem_refs(win, ulwin) 
+    ulwin = library.convert_to_Window(win) 
+    library.keep_elem_refs(win, ulwin) 
     retval = _fl_newpup(ulwin) 
     return retval 
 
@@ -1179,16 +1143,14 @@ def fl_defpup(win, pupstr):
         @status: Untested + NoDoc + NoExample = NOT OK 
         @deprecated: Use corresponding fl_*popup* function 
     """ 
- 
-    _fl_defpup = cfuncproto( 
-            load_so_libforms(), "fl_defpup", 
-            cty.c_int, [xfc.Window, xfc.STRING], 
-            """int fl_defpup(Window win, const char * str): 
-            """) 
+    _fl_defpup = library.cfuncproto( 
+        library.load_so_libforms(), "fl_defpup", 
+        cty.c_int, [xfdata.Window, xfdata.STRING], 
+        """int fl_defpup(Window win, const char * str)""") 
     warn_deprecated_function("fl_*popup*") 
-    ulwin = convert_to_Window(win) 
-    spupstr = convert_to_string(pupstr) 
-    keep_elem_refs(win, pupstr, ulwin, spupstr) 
+    ulwin = library.convert_to_Window(win) 
+    spupstr = library.convert_to_string(pupstr) 
+    library.keep_elem_refs(win, pupstr, ulwin, spupstr) 
     retval = _fl_defpup(ulwin, spupstr) 
     return retval 
 
@@ -1200,16 +1162,14 @@ def fl_addtopup(popupid, pupstr):
         @status: Untested + NoDoc + NoExample = NOT OK 
         @deprecated: Use corresponding fl_*popup* function 
     """ 
- 
-    _fl_addtopup = cfuncproto( 
-            load_so_libforms(), "fl_addtopup", 
-            cty.c_int, [cty.c_int, xfc.STRING], 
-            """int fl_addtopup(int n, const char * str) 
-            """) 
+    _fl_addtopup = library.cfuncproto( 
+        library.load_so_libforms(), "fl_addtopup", 
+        cty.c_int, [cty.c_int, xfdata.STRING], 
+        """int fl_addtopup(int n, const char * str)""") 
     warn_deprecated_function("fl_*popup*") 
-    ipopupid = convert_to_int(popupid) 
-    spupstr = convert_to_string(pupstr) 
-    keep_elem_refs(popupid, pupstr, ipopupid, spupstr) 
+    ipopupid = library.convert_to_int(popupid) 
+    spupstr = library.convert_to_string(pupstr) 
+    library.keep_elem_refs(popupid, pupstr, ipopupid, spupstr) 
     retval = _fl_addtopup(ipopupid, spupstr) 
     return retval 
 
@@ -1221,17 +1181,15 @@ def fl_setpup_mode(popupid, itemval, mode):
         @status: Untested + NoDoc + NoExample = NOT OK 
         @deprecated: Use corresponding fl_*popup* function 
     """ 
- 
-    _fl_setpup_mode = cfuncproto( 
-            load_so_libforms(), "fl_setpup_mode", 
-            cty.c_int, [cty.c_int, cty.c_int, cty.c_uint], 
-            """int fl_setpup_mode(int nm, int ni, unsigned int mode) 
-            """) 
+    _fl_setpup_mode = library.cfuncproto( 
+        library.load_so_libforms(), "fl_setpup_mode", 
+        cty.c_int, [cty.c_int, cty.c_int, cty.c_uint], 
+        """int fl_setpup_mode(int nm, int ni, unsigned int mode)""") 
     warn_deprecated_function("fl_*popup*") 
-    ipopupid = convert_to_int(popupid) 
-    iitemval = convert_to_int(itemval) 
-    uimode = convert_to_uint(mode) 
-    keep_elem_refs(popupid, itemval, mode, ipopupid, iitemval, uimode) 
+    ipopupid = library.convert_to_int(popupid) 
+    iitemval = library.convert_to_int(itemval) 
+    uimode = library.convert_to_uint(mode) 
+    library.keep_elem_refs(popupid, itemval, mode, ipopupid, iitemval, uimode) 
     retval = _fl_setpup_mode(ipopupid, iitemval, uimode) 
     return retval 
 
@@ -1243,15 +1201,13 @@ def fl_freepup(popupid):
         @status: Untested + NoDoc + NoExample = NOT OK 
         @deprecated: Use corresponding fl_*popup* function 
     """ 
- 
-    _fl_freepup = cfuncproto( 
-            load_so_libforms(), "fl_freepup", 
-            None, [cty.c_int], 
-            """void fl_freepup(int n) 
-            """) 
+    _fl_freepup = library.cfuncproto( 
+        library.load_so_libforms(), "fl_freepup", 
+        None, [cty.c_int], 
+        """void fl_freepup(int n)""") 
     warn_deprecated_function("fl_*popup*") 
-    ipopupid = convert_to_int(popupid) 
-    keep_elem_refs(popupid, ipopupid) 
+    ipopupid = library.convert_to_int(popupid) 
+    library.keep_elem_refs(popupid, ipopupid) 
     _fl_freepup(ipopupid) 
 
 
@@ -1262,15 +1218,13 @@ def fl_dopup(popupid):
         @status: Untested + NoDoc + NoExample = NOT OK 
         @deprecated: Use corresponding fl_*popup* function 
     """ 
- 
-    _fl_dopup = cfuncproto( 
-            load_so_libforms(), "fl_dopup", 
-            cty.c_int, [cty.c_int], 
-            """int fl_dopup(int n) 
-            """) 
+    _fl_dopup = library.cfuncproto( 
+        library.load_so_libforms(), "fl_dopup", 
+        cty.c_int, [cty.c_int], 
+        """int fl_dopup(int n) """) 
     warn_deprecated_function("fl_*popup*") 
-    ipopupid = convert_to_int(popupid) 
-    keep_elem_refs(popupid, ipopupid) 
+    ipopupid = library.convert_to_int(popupid) 
+    library.keep_elem_refs(popupid, ipopupid) 
     retval = _fl_dopup(ipopupid) 
     return retval 
 
@@ -1282,15 +1236,13 @@ def fl_setpup_default_cursor(cursor):
         @status: Untested + NoDoc + NoExample = NOT OK 
         @deprecated: Use corresponding fl_*popup* function 
     """ 
- 
-    _fl_setpup_default_cursor = cfuncproto( 
-            load_so_libforms(), "fl_setpup_default_cursor", 
-            xfc.Cursor, [cty.c_int], 
-            """Cursor fl_setpup_default_cursor(int cursor): 
-            """) 
+    _fl_setpup_default_cursor = library.cfuncproto( 
+        library.load_so_libforms(), "fl_setpup_default_cursor", 
+        cursor.Cursor, [cty.c_int], 
+        """Cursor fl_setpup_default_cursor(int cursor)""") 
     warn_deprecated_function("fl_*popup*") 
-    icursor = convert_to_int(cursor) 
-    keep_elem_refs(cursor, icursor) 
+    icursor = library.convert_to_int(cursor) 
+    library.keep_elem_refs(cursor, icursor) 
     retval = _fl_setpup_default_cursor(icursor) 
     return retval 
 
@@ -1303,37 +1255,35 @@ def fl_setpup_default_color(fgcolr, bgcolr):
         @deprecated: Use corresponding fl_*popup* function 
     """ 
  
-    _fl_setpup_default_color = cfuncproto( 
-            load_so_libforms(), "fl_setpup_default_color", 
-            None, [xfc.FL_COLOR, xfc.FL_COLOR], 
+    _fl_setpup_default_color = library.cfuncproto( 
+            library.load_so_libforms(), "fl_setpup_default_color", 
+            None, [xfdata.FL_COLOR, xfdata.FL_COLOR], 
             """void fl_setpup_default_color(FL_COLOR fg, FL_COLOR bg) 
             """) 
     warn_deprecated_function("fl_*popup*") 
-    check_admitted_listvalues(fgcolr, xfc.COLOR_list) 
-    check_admitted_listvalues(bgcolr, xfc.COLOR_list) 
-    ulfgcolr = convert_to_FL_COLOR(fgcolr) 
-    ulbgcolr = convert_to_FL_COLOR(bgcolr) 
-    keep_elem_refs(fgcolr, bgcolr, ulfgcolr, ulbgcolr) 
+    library.check_admitted_listvalues(fgcolr, xfdata.COLOR_list) 
+    library.check_admitted_listvalues(bgcolr, xfdata.COLOR_list) 
+    ulfgcolr = library.convert_to_FL_COLOR(fgcolr) 
+    ulbgcolr = library.convert_to_FL_COLOR(bgcolr) 
+    library.keep_elem_refs(fgcolr, bgcolr, ulfgcolr, ulbgcolr) 
     _fl_setpup_default_color(ulfgcolr, ulbgcolr) 
 
 
 def fl_setpup_default_pup_checked_color(colr):
     """ 
         fl_setpup_default_pup_checked_color(colr): 
- 
+
         @status: Untested + NoDoc + NoExample = NOT OK 
         @deprecated: Use corresponding fl_*popup* function 
     """ 
- 
-    _fl_setpup_default_pup_checked_color = cfuncproto( 
-            load_so_libforms(), "fl_setpup_default_pup_checked_color", 
-            None, [xfc.FL_COLOR], 
-            """void fl_setpup_default_pup_checked_color(FL_COLOR col) 
-            """) 
+    _fl_setpup_default_pup_checked_color = library.cfuncproto( 
+        library.load_so_libforms(), "fl_setpup_default_pup_checked_color", 
+        None, [xfdata.FL_COLOR], 
+        """void fl_setpup_default_pup_checked_color(FL_COLOR col)""") 
     warn_deprecated_function("fl_*popup*") 
-    check_admitted_listvalues(colr, xfc.COLOR_list) 
-    ulcolr = convert_to_FL_COLOR(colr) 
-    keep_elem_refs(colr, ulcolr) 
+    library.check_admitted_listvalues(colr, xfdata.COLOR_list) 
+    ulcolr = library.convert_to_FL_COLOR(colr) 
+    library.keep_elem_refs(colr, ulcolr) 
     _fl_setpup_default_pup_checked_color(ulcolr) 
 
 
@@ -1344,15 +1294,13 @@ def fl_setpup_default_fontsize(size):
         @status: Untested + NoDoc + NoExample = NOT OK 
         @deprecated: Use corresponding fl_*popup* function 
     """ 
- 
-    _fl_setpup_default_fontsize = cfuncproto( 
-            load_so_libforms(), "fl_setpup_default_fontsize", 
-            cty.c_int, [cty.c_int], 
-            """int fl_setpup_default_fontsize(int size) 
-            """) 
+    _fl_setpup_default_fontsize = library.cfuncproto( 
+        library.load_so_libforms(), "fl_setpup_default_fontsize", 
+        cty.c_int, [cty.c_int], 
+        """int fl_setpup_default_fontsize(int size)""") 
     warn_deprecated_function("fl_*popup*") 
-    isize = convert_to_int(size) 
-    keep_elem_refs(size, isize) 
+    isize = library.convert_to_int(size) 
+    library.keep_elem_refs(size, isize) 
     retval = _fl_setpup_default_fontsize(isize) 
     return retval 
 
@@ -1364,15 +1312,13 @@ def fl_setpup_default_fontstyle(style):
         @status: Untested + NoDoc + NoExample = NOT OK 
         @deprecated: Use corresponding fl_*popup* function 
     """ 
- 
-    _fl_setpup_default_fontstyle = cfuncproto( 
-            load_so_libforms(), "fl_setpup_default_fontstyle", 
-            cty.c_int, [cty.c_int], 
-            """int fl_setpup_default_fontstyle(int style) 
-            """) 
+    _fl_setpup_default_fontstyle = library.cfuncproto( 
+        library.load_so_libforms(), "fl_setpup_default_fontstyle", 
+        cty.c_int, [cty.c_int], 
+        """int fl_setpup_default_fontstyle(int style)""") 
     warn_deprecated_function("fl_*popup*") 
-    istyle = convert_to_int(style) 
-    keep_elem_refs(style, istyle) 
+    istyle = library.convert_to_int(style) 
+    library.keep_elem_refs(style, istyle) 
     retval = _fl_setpup_default_fontstyle(istyle) 
     return retval 
 
@@ -1391,15 +1337,13 @@ def fl_setpup_default_bw(bw):
         @status: Untested + NoDoc + NoExample = NOT OK 
         @deprecated: Use corresponding fl_*popup* function 
     """ 
- 
-    _fl_setpup_default_bw = cfuncproto( 
-            load_so_libforms(), "fl_setpup_default_bw", 
-            cty.c_int, [cty.c_int], 
-            """int fl_setpup_default_bw(int bw): 
-            """) 
+    _fl_setpup_default_bw = library.cfuncproto( 
+        library.load_so_libforms(), "fl_setpup_default_bw", 
+        cty.c_int, [cty.c_int], 
+        """int fl_setpup_default_bw(int bw)""") 
     warn_deprecated_function("fl_*popup*") 
-    ibw = convert_to_int(bw) 
-    keep_elem_refs(bw, ibw) 
+    ibw = library.convert_to_int(bw) 
+    library.keep_elem_refs(bw, ibw) 
     retval = _fl_setpup_default_bw(ibw) 
     return retval 
 
@@ -1411,17 +1355,15 @@ def fl_setpup_shortcut(popupid, itemval, hotkeystxt):
         @status: Untested + NoDoc + NoExample = NOT OK 
         @deprecated: Use corresponding fl_*popup* function 
     """ 
- 
-    _fl_setpup_shortcut = cfuncproto( 
-            load_so_libforms(), "fl_setpup_shortcut", 
-            None, [cty.c_int, cty.c_int, xfc.STRING], 
-            """void fl_setpup_shortcut(int nm, int ni, const char * sc) 
-            """) 
+    _fl_setpup_shortcut = library.cfuncproto( 
+        library.load_so_libforms(), "fl_setpup_shortcut", 
+        None, [cty.c_int, cty.c_int, xfdata.STRING], 
+        """void fl_setpup_shortcut(int nm, int ni, const char * sc)""") 
     warn_deprecated_function("fl_*popup*") 
-    ipopupid = convert_to_int(popupid) 
-    iitemval = convert_to_int(itemval) 
-    shotkeystxt = convert_to_string(hotkeystxt) 
-    keep_elem_refs(popupid, itemval, hotkeystxt, ipopupid, iitemval, \
+    ipopupid = library.convert_to_int(popupid) 
+    iitemval = library.convert_to_int(itemval) 
+    shotkeystxt = library.convert_to_string(hotkeystxt) 
+    library.keep_elem_refs(popupid, itemval, hotkeystxt, ipopupid, iitemval, \
                    shotkeystxt) 
     _fl_setpup_shortcut(ipopupid, iitemval, shotkeystxt) 
 
@@ -1434,16 +1376,14 @@ def fl_setpup_position(x, y):
         @status: Untested + NoDoc + NoExample = NOT OK 
         @deprecated: Use corresponding fl_*popup* function 
     """ 
- 
-    _fl_setpup_position = cfuncproto( 
-            load_so_libforms(), "fl_setpup_position", 
-            None, [cty.c_int, cty.c_int], 
-            """void fl_setpup_position(int x, int y) 
-            """) 
+    _fl_setpup_position = library.cfuncproto( 
+        library.load_so_libforms(), "fl_setpup_position", 
+        None, [cty.c_int, cty.c_int], 
+        """void fl_setpup_position(int x, int y)""") 
     warn_deprecated_function("fl_*popup*") 
-    ix = convert_to_int(x) 
-    iy = convert_to_int(y) 
-    keep_elem_refs(x, y, ix, iy) 
+    ix = library.convert_to_int(x) 
+    iy = library.convert_to_int(y) 
+    library.keep_elem_refs(x, y, ix, iy) 
     _fl_setpup_position(ix, iy) 
 
 
@@ -1455,15 +1395,15 @@ def fl_setpup_selection(popupid, itemval):
         @deprecated: Use corresponding fl_*popup* function 
     """ 
  
-    _fl_setpup_selection = cfuncproto( 
-            load_so_libforms(), "fl_setpup_selection", 
+    _fl_setpup_selection = library.cfuncproto( 
+            library.load_so_libforms(), "fl_setpup_selection", 
             None, [cty.c_int, cty.c_int], 
             """void fl_setpup_selection(int nm, int ni) 
             """) 
     warn_deprecated_function("fl_*popup*") 
-    ipopupid = convert_to_int(popupid) 
-    iitemval = convert_to_int(itemval) 
-    keep_elem_refs(popupid, itemval, ipopupid, iitemval) 
+    ipopupid = library.convert_to_int(popupid) 
+    iitemval = library.convert_to_int(itemval) 
+    library.keep_elem_refs(popupid, itemval, ipopupid, iitemval) 
     _fl_setpup_selection(ipopupid, iitemval) 
 
 
@@ -1474,16 +1414,14 @@ def fl_setpup_shadow(popupid, flag):
         @status: Untested + NoDoc + NoExample = NOT OK 
         @deprecated: Use corresponding fl_*popup* function 
     """ 
- 
-    _fl_setpup_shadow = cfuncproto( 
-            load_so_libforms(), "fl_setpup_shadow", 
-            None, [cty.c_int, cty.c_int], 
-            """void fl_setpup_shadow(int n, int y) 
-            """) 
+    _fl_setpup_shadow = library.cfuncproto( 
+        library.load_so_libforms(), "fl_setpup_shadow", 
+        None, [cty.c_int, cty.c_int], 
+        """void fl_setpup_shadow(int n, int y)""") 
     warn_deprecated_function("fl_*popup*") 
-    ipopupid = convert_to_int(popupid) 
-    iflag = convert_to_int(flag) 
-    keep_elem_refs(popupid, flag, ipopupid, iflag) 
+    ipopupid = library.convert_to_int(popupid) 
+    iflag = library.convert_to_int(flag) 
+    library.keep_elem_refs(popupid, flag, ipopupid, iflag) 
     _fl_setpup_shadow(ipopupid, iflag) 
 
 
@@ -1494,16 +1432,14 @@ def fl_setpup_softedge(popupid, flag):
         @status: Untested + NoDoc + NoExample = NOT OK 
         @deprecated: Use corresponding fl_*popup* function 
     """ 
- 
-    _fl_setpup_softedge = cfuncproto( 
-            load_so_libforms(), "fl_setpup_softedge", 
-            None, [cty.c_int, cty.c_int], 
-            """void fl_setpup_softedge(int n, int y) 
-            """) 
+    _fl_setpup_softedge = library.cfuncproto( 
+        library.load_so_libforms(), "fl_setpup_softedge", 
+        None, [cty.c_int, cty.c_int], 
+        """void fl_setpup_softedge(int n, int y)""") 
     warn_deprecated_function("fl_*popup*") 
-    ipopupid = convert_to_int(popupid) 
-    iflag = convert_to_int(flag) 
-    keep_elem_refs(popupid, flag, ipopupid, iflag) 
+    ipopupid = library.convert_to_int(popupid) 
+    iflag = library.convert_to_int(flag) 
+    library.keep_elem_refs(popupid, flag, ipopupid, iflag) 
     _fl_setpup_softedge(ipopupid, iflag) 
 
 
@@ -1514,16 +1450,14 @@ def fl_setpup_bw(popupid, bw):
         @status: Untested + NoDoc + NoExample = NOT OK 
         @deprecated: Use corresponding fl_*popup* function 
     """ 
- 
-    _fl_setpup_bw = cfuncproto( 
-            load_so_libforms(), "fl_setpup_bw", 
-            None, [cty.c_int, cty.c_int], 
-            """void fl_setpup_bw(int n, int bw) 
-            """) 
+    _fl_setpup_bw = library.cfuncproto( 
+        library.load_so_libforms(), "fl_setpup_bw", 
+        None, [cty.c_int, cty.c_int], 
+        """void fl_setpup_bw(int n, int bw)""") 
     warn_deprecated_function("fl_*popup*") 
-    ipopupid = convert_to_int(popupid) 
-    ibw = convert_to_int(bw) 
-    keep_elem_refs(popupid, bw, ipopupid, ibw) 
+    ipopupid = library.convert_to_int(popupid) 
+    ibw = library.convert_to_int(bw) 
+    library.keep_elem_refs(popupid, bw, ipopupid, ibw) 
     _fl_setpup_bw(ipopupid, ibw) 
 
 
@@ -1534,20 +1468,16 @@ def fl_setpup_title(popupid, title):
         @status: Untested + NoDoc + NoExample = NOT OK 
         @deprecated: Use corresponding fl_*popup* function 
     """ 
- 
-    _fl_setpup_title = cfuncproto( 
-            load_so_libforms(), "fl_setpup_title", 
-            None, [cty.c_int, xfc.STRING], 
-            """void fl_setpup_title(int nm, const char * title) 
-            """) 
+    _fl_setpup_title = library.cfuncproto( 
+        library.load_so_libforms(), "fl_setpup_title", 
+        None, [cty.c_int, xfdata.STRING], 
+        """void fl_setpup_title(int nm, const char * title)""") 
     warn_deprecated_function("fl_*popup*") 
-    ipopupid = convert_to_int(popupid) 
-    stitle = convert_to_string(title) 
-    keep_elem_refs(popupid, title, ipopupid, stitle) 
+    ipopupid = library.convert_to_int(popupid) 
+    stitle = library.convert_to_string(title) 
+    library.keep_elem_refs(popupid, title, ipopupid, stitle) 
     _fl_setpup_title(ipopupid, stitle) 
 
-
-FL_PUP_ENTERCB = cty.CFUNCTYPE(None, cty.c_int, cty.c_void_p) 
 
 def fl_setpup_entercb(popupid, py_PupEnterCb, vdata):
     """ 
@@ -1556,24 +1486,22 @@ def fl_setpup_entercb(popupid, py_PupEnterCb, vdata):
         @status: Untested + NoDoc + NoExample = NOT OK 
         @deprecated: Use corresponding fl_*popup* function 
     """ 
- 
-    _fl_setpup_entercb = cfuncproto( 
-            load_so_libforms(), "fl_setpup_entercb", 
+    #FL_PUP_ENTERCB = cty.CFUNCTYPE(None, cty.c_int, cty.c_void_p) 
+    _fl_setpup_entercb = library.cfuncproto( 
+            library.load_so_libforms(), "fl_setpup_entercb", 
             FL_PUP_ENTERCB, [cty.c_int, FL_PUP_ENTERCB, cty.c_void_p], 
             """FL_PUP_ENTERCB fl_setpup_entercb(int nm, FL_PUP_ENTERCB cb, 
                void * data) 
             """) 
     warn_deprecated_function("fl_*popup*") 
-    ipopupid = convert_to_int(popupid) 
+    ipopupid = library.convert_to_int(popupid) 
     c_PupEnterCb = FL_PUP_ENTERCB(py_PupEnterCb) 
     pvdata = cty.cast(vdata, cty.c_void_p) 
-    keep_cfunc_refs(c_PupEnterCb, py_PupEnterCb) 
-    keep_elem_refs(popupid, vdata, ipopupid, pvdata) 
+    library.keep_cfunc_refs(c_PupEnterCb, py_PupEnterCb) 
+    library.keep_elem_refs(popupid, vdata, ipopupid, pvdata) 
     retval = _fl_setpup_entercb(ipopupid, c_PupEnterCb, pvdata) 
     return retval 
 
-
-FL_PUP_LEAVECB = cty.CFUNCTYPE(None, cty.c_int, cty.c_void_p) 
 
 def fl_setpup_leavecb(popupid, py_LeaveCb, data):
     """ 
@@ -1582,19 +1510,18 @@ def fl_setpup_leavecb(popupid, py_LeaveCb, data):
         @status: Untested + NoDoc + NoExample = NOT OK 
         @deprecated: Use corresponding fl_*popup* function 
     """ 
- 
-    _fl_setpup_leavecb = cfuncproto( 
-            load_so_libforms(), "fl_setpup_leavecb", 
-            FL_PUP_LEAVECB, [cty.c_int, FL_PUP_LEAVECB, cty.c_void_p], 
-            """FL_PUP_LEAVECB fl_setpup_leavecb(int nm, FL_PUP_LEAVECB cb, 
-               void * data) 
-            """) 
+    #FL_PUP_LEAVECB = cty.CFUNCTYPE(None, cty.c_int, cty.c_void_p) 
+    _fl_setpup_leavecb = library.cfuncproto( 
+        library.load_so_libforms(), "fl_setpup_leavecb", 
+        FL_PUP_LEAVECB, [cty.c_int, FL_PUP_LEAVECB, cty.c_void_p], 
+        """FL_PUP_LEAVECB fl_setpup_leavecb(int nm, FL_PUP_LEAVECB cb, 
+           void * data)""") 
     warn_deprecated_function("fl_*popup*") 
-    ipopupid = convert_to_int(popupid) 
+    ipopupid = library.convert_to_int(popupid) 
     c_LeaveCb = FL_PUP_LEAVECB(py_LeaveCb) 
     pdata = cty.cast(data, cty.c_void_p) 
-    keep_cfunc_refs(c_LeaveCb, py_LeaveCb) 
-    keep_elem_refs(popupid, data, ipopupid, pdata) 
+    library.keep_cfunc_refs(c_LeaveCb, py_LeaveCb) 
+    library.keep_elem_refs(popupid, data, ipopupid, pdata) 
     retval = _fl_setpup_leavecb(ipopupid, c_LeaveCb, pdata) 
     return retval 
 
@@ -1606,17 +1533,15 @@ def fl_setpup_pad(popupid, padw, padh):
         @status: Untested + NoDoc + NoExample = NOT OK 
         @deprecated: Use corresponding fl_*popup* function 
     """ 
- 
-    _fl_setpup_pad = cfuncproto( 
-            load_so_libforms(), "fl_setpup_pad", 
-            None, [cty.c_int, cty.c_int, cty.c_int], 
-            """void fl_setpup_pad(int n, int padw, int padh) 
-            """) 
+    _fl_setpup_pad = library.cfuncproto( 
+        library.load_so_libforms(), "fl_setpup_pad", 
+        None, [cty.c_int, cty.c_int, cty.c_int], 
+        """void fl_setpup_pad(int n, int padw, int padh)""") 
     warn_deprecated_function("fl_*popup*") 
-    ipopupid = convert_to_int(popupid) 
-    ipadw = convert_to_int(padw) 
-    ipadh = convert_to_int(padh) 
-    keep_elem_refs(popupid, padw, padh, ipopupid, ipadw, ipadh) 
+    ipopupid = library.convert_to_int(popupid) 
+    ipadw = library.convert_to_int(padw) 
+    ipadh = library.convert_to_int(padh) 
+    library.keep_elem_refs(popupid, padw, padh, ipopupid, ipadw, ipadh) 
     _fl_setpup_pad(ipopupid, ipadw, ipadh) 
 
 
@@ -1627,16 +1552,14 @@ def fl_setpup_cursor(popupid, cursor):
         @status: Untested + NoDoc + NoExample = NOT OK 
         @deprecated: Use corresponding fl_*popup* function 
     """ 
- 
-    _fl_setpup_cursor = cfuncproto( 
-            load_so_libforms(), "fl_setpup_cursor", 
-            xfc.Cursor, [cty.c_int, cty.c_int], 
-            """Cursor fl_setpup_cursor(int nm, int cursor) 
-            """) 
+    _fl_setpup_cursor = library.cfuncproto( 
+        library.load_so_libforms(), "fl_setpup_cursor", 
+        cursor.Cursor, [cty.c_int, cty.c_int], 
+        """Cursor fl_setpup_cursor(int nm, int cursor)""") 
     warn_deprecated_function("fl_*popup*") 
-    ipopupid = convert_to_int(popupid) 
-    icursor = convert_to_int(cursor) 
-    keep_elem_refs(popupid, cursor, ipopupid, icursor) 
+    ipopupid = library.convert_to_int(popupid) 
+    icursor = library.convert_to_int(cursor) 
+    library.keep_elem_refs(popupid, cursor, ipopupid, icursor) 
     retval = _fl_setpup_cursor(ipopupid, icursor) 
     return retval 
 
@@ -1648,15 +1571,13 @@ def fl_setpup_maxpup(newmaxnum):
         @status: Untested + NoDoc + NoExample = NOT OK 
         @deprecated: Use corresponding fl_*popup* function 
     """ 
- 
-    _fl_setpup_maxpup = cfuncproto( 
-            load_so_libforms(), "fl_setpup_maxpup", 
-            cty.c_int, [cty.c_int], 
-            """int fl_setpup_maxpup(int n) 
-            """) 
+    _fl_setpup_maxpup = library.cfuncproto( 
+        library.load_so_libforms(), "fl_setpup_maxpup", 
+        cty.c_int, [cty.c_int], 
+        """int fl_setpup_maxpup(int n)""") 
     warn_deprecated_function("fl_*popup*") 
-    inewmaxnum = convert_to_int(newmaxnum) 
-    keep_elem_refs(newmaxnum, inewmaxnum) 
+    inewmaxnum = library.convert_to_int(newmaxnum) 
+    library.keep_elem_refs(newmaxnum, inewmaxnum) 
     retval = _fl_setpup_maxpup(inewmaxnum) 
     return retval 
 
@@ -1668,16 +1589,14 @@ def fl_getpup_mode(popupid, itemval):
         @status: Untested + NoDoc + NoExample = NOT OK 
         @deprecated: Use corresponding fl_*popup* function 
     """ 
- 
-    _fl_getpup_mode = cfuncproto( 
-            load_so_libforms(), "fl_getpup_mode", 
-            cty.c_uint, [cty.c_int, cty.c_int], 
-            """unsigned int fl_getpup_mode(int nm, int ni) 
-            """) 
+    _fl_getpup_mode = library.cfuncproto( 
+        library.load_so_libforms(), "fl_getpup_mode", 
+        cty.c_uint, [cty.c_int, cty.c_int], 
+        """unsigned int fl_getpup_mode(int nm, int ni)""") 
     warn_deprecated_function("fl_*popup*") 
-    ipopupid = convert_to_int(popupid) 
-    iitemval = convert_to_int(itemval) 
-    keep_elem_refs(popupid, itemval, ipopupid, iitemval) 
+    ipopupid = library.convert_to_int(popupid) 
+    iitemval = library.convert_to_int(itemval) 
+    library.keep_elem_refs(popupid, itemval, ipopupid, iitemval) 
     retval = _fl_getpup_mode(ipopupid, iitemval) 
     return retval 
 
@@ -1689,16 +1608,14 @@ def fl_getpup_text(popupid, itemval):
         @status: Untested + NoDoc + NoExample = NOT OK 
         @deprecated: Use corresponding fl_*popup* function 
     """ 
- 
-    _fl_getpup_text = cfuncproto( 
-            load_so_libforms(), "fl_getpup_text", 
-            xfc.STRING, [cty.c_int, cty.c_int], 
-            """const char * fl_getpup_text(int nm, int ni) 
-            """) 
+    _fl_getpup_text = library.cfuncproto( 
+        library.load_so_libforms(), "fl_getpup_text", 
+        xfdata.STRING, [cty.c_int, cty.c_int], 
+        """const char * fl_getpup_text(int nm, int ni)""") 
     warn_deprecated_function("fl_*popup*") 
-    ipopupid = convert_to_int(popupid) 
-    iitemval = convert_to_int(itemval) 
-    keep_elem_refs(popupid, itemval, ipopupid, iitemval) 
+    ipopupid = library.convert_to_int(popupid) 
+    iitemval = library.convert_to_int(itemval) 
+    library.keep_elem_refs(popupid, itemval, ipopupid, iitemval) 
     retval = _fl_getpup_text(ipopupid, iitemval) 
     return retval 
 
@@ -1710,15 +1627,13 @@ def fl_showpup(popupid):
         @status: Untested + NoDoc + NoExample = NOT OK 
         @deprecated: Use corresponding fl_*popup* function 
     """ 
- 
-    _fl_showpup = cfuncproto( 
-            load_so_libforms(), "fl_showpup", 
-            None, [cty.c_int], 
-            """void fl_showpup(int n) 
-            """) 
+    _fl_showpup = library.cfuncproto( 
+        library.load_so_libforms(), "fl_showpup", 
+        None, [cty.c_int], 
+        """void fl_showpup(int n)""") 
     warn_deprecated_function("fl_*popup*") 
-    ipopupid = convert_to_int(popupid) 
-    keep_elem_refs(popupid, ipopupid) 
+    ipopupid = library.convert_to_int(popupid) 
+    library.keep_elem_refs(popupid, ipopupid) 
     _fl_showpup(ipopupid) 
 
 
@@ -1729,15 +1644,13 @@ def fl_hidepup(popupid):
         @status: Untested + NoDoc + NoExample = NOT OK 
         @deprecated: Use corresponding fl_*popup* function 
     """ 
- 
-    _fl_hidepup = cfuncproto( 
-            load_so_libforms(), "fl_hidepup", 
-            None, [cty.c_int], 
-            """void fl_hidepup(int n) 
-            """) 
+    _fl_hidepup = library.cfuncproto( 
+        library.load_so_libforms(), "fl_hidepup", 
+        None, [cty.c_int], 
+        """void fl_hidepup(int n)""") 
     warn_deprecated_function("fl_*popup*") 
-    ipopupid = convert_to_int(popupid) 
-    keep_elem_refs(popupid, ipopupid) 
+    ipopupid = library.convert_to_int(popupid) 
+    library.keep_elem_refs(popupid, ipopupid) 
     _fl_hidepup(ipopupid) 
 
 
@@ -1748,15 +1661,13 @@ def fl_getpup_items(popupid):
         @status: Untested + NoDoc + NoExample = NOT OK 
         @deprecated: Use corresponding fl_*popup* function 
     """ 
- 
-    _fl_getpup_items = cfuncproto( 
-            load_so_libforms(), "fl_getpup_items", 
-            cty.c_int, [cty.c_int], 
-            """int fl_getpup_items(int n) 
-            """) 
+    _fl_getpup_items = library.cfuncproto( 
+        library.load_so_libforms(), "fl_getpup_items", 
+        cty.c_int, [cty.c_int], 
+        """int fl_getpup_items(int n)""") 
     warn_deprecated_function("fl_*popup*") 
-    ipopupid = convert_to_int(popupid) 
-    keep_elem_refs(popupid, ipopupid) 
+    ipopupid = library.convert_to_int(popupid) 
+    library.keep_elem_refs(popupid, ipopupid) 
     retval = _fl_getpup_items(ipopupid) 
     return retval 
 
@@ -1768,8 +1679,8 @@ def fl_current_pup():
         @deprecated: Use corresponding fl_*popup* function 
     """ 
  
-    _fl_current_pup = cfuncproto( 
-            load_so_libforms(), "fl_current_pup", 
+    _fl_current_pup = library.cfuncproto( 
+            library.load_so_libforms(), "fl_current_pup", 
             cty.c_int, [], 
             """int fl_current_pup() 
             """) 
@@ -1786,17 +1697,17 @@ def fl_setpup_itemcb(popupid, itemval, py_PupCb):
         @deprecated: Use corresponding fl_*popup* function 
     """ 
  
-    _fl_setpup_itemcb = cfuncproto( 
-            load_so_libforms(), "fl_setpup_itemcb", 
+    _fl_setpup_itemcb = library.cfuncproto( 
+            library.load_so_libforms(), "fl_setpup_itemcb", 
             FL_PUP_CB, [cty.c_int, cty.c_int, FL_PUP_CB], 
             """FL_PUP_CB fl_setpup_itemcb(int nm, int ni, FL_PUP_CB cb) 
             """) 
     warn_deprecated_function("fl_*popup*") 
-    ipopupid = convert_to_int(popupid) 
-    iitemval = convert_to_int(itemval) 
+    ipopupid = library.convert_to_int(popupid) 
+    iitemval = library.convert_to_int(itemval) 
     c_PupCb = FL_PUP_CB(py_PupCb) 
-    keep_cfunc_refs(c_PupCb, py_PupCb) 
-    keep_elem_refs(popupid, itemval, ipopupid, iitemval) 
+    library.keep_cfunc_refs(c_PupCb, py_PupCb) 
+    library.keep_elem_refs(popupid, itemval, ipopupid, iitemval) 
     retval = _fl_setpup_itemcb(ipopupid, iitemval, c_PupCb) 
     return retval 
 
@@ -1809,16 +1720,16 @@ def fl_setpup_menucb(popupid, py_PupCb):
         @deprecated: Use corresponding fl_*popup* function 
     """ 
  
-    _fl_setpup_menucb = cfuncproto( 
-            load_so_libforms(), "fl_setpup_menucb", 
+    _fl_setpup_menucb = library.cfuncproto( 
+            library.load_so_libforms(), "fl_setpup_menucb", 
             FL_PUP_CB, [cty.c_int, FL_PUP_CB], 
             """FL_PUP_CB fl_setpup_menucb(int nm, FL_PUP_CB cb) 
             """) 
     warn_deprecated_function("fl_*popup*") 
-    ipopupid = convert_to_int(popupid) 
+    ipopupid = library.convert_to_int(popupid) 
     c_PupCb = FL_PUP_CB(py_PupCb) 
-    keep_cfunc_refs(c_PupCb, py_PupCb) 
-    keep_elem_refs(popupid, ipopupid) 
+    library.keep_cfunc_refs(c_PupCb, py_PupCb) 
+    library.keep_elem_refs(popupid, ipopupid) 
     retval = _fl_setpup_menucb(ipopupid, c_PupCb) 
     return retval 
 
@@ -1831,16 +1742,16 @@ def fl_setpup_submenu(popupid, itemval, subpopupid):
         @deprecated: Use corresponding fl_*popup* function 
     """ 
  
-    _fl_setpup_submenu = cfuncproto( 
-            load_so_libforms(), "fl_setpup_submenu", 
+    _fl_setpup_submenu = library.cfuncproto( 
+            library.load_so_libforms(), "fl_setpup_submenu", 
             None, [cty.c_int, cty.c_int, cty.c_int], 
             """void fl_setpup_submenu(int m, int i, int subm) 
             """) 
     warn_deprecated_function("fl_*popup*") 
-    ipopupid = convert_to_int(popupid) 
-    iitemval = convert_to_int(itemval) 
-    isubpopupid = convert_to_int(subpopupid) 
-    keep_elem_refs(popupid, itemval, subpopupid, ipopupid, iitemval, \
+    ipopupid = library.convert_to_int(popupid) 
+    iitemval = library.convert_to_int(itemval) 
+    isubpopupid = library.convert_to_int(subpopupid) 
+    library.keep_elem_refs(popupid, itemval, subpopupid, ipopupid, iitemval, \
                    isubpopupid) 
     _fl_setpup_submenu(ipopupid, iitemval, isubpopupid) 
 
@@ -1866,14 +1777,14 @@ def fl_set_xyplot_fontsize(pObject, size):
         @deprecated: Use fl_set_object_lsize function 
     """ 
  
-    _fl_set_xyplot_fontsize = cfuncproto( 
-            load_so_libforms(), "fl_set_xyplot_fontsize", 
-            None, [cty.POINTER(xfc.FL_OBJECT), cty.c_int], 
+    _fl_set_xyplot_fontsize = library.cfuncproto( 
+            library.load_so_libforms(), "fl_set_xyplot_fontsize", 
+            None, [cty.POINTER(xfdata.FL_OBJECT), cty.c_int], 
             """void fl_set_xyplot_fontsize(FL_OBJECT * ob, int size) 
             """) 
     warn_deprecated_function("fl_set_object_lsize") 
-    isize = convert_to_int(size) 
-    keep_elem_refs(pObject, size, isize) 
+    isize = library.convert_to_int(size) 
+    library.keep_elem_refs(pObject, size, isize) 
     _fl_set_xyplot_fontsize(pObject, isize) 
 
 
@@ -1887,14 +1798,14 @@ def fl_set_xyplot_fontstyle(pObject, style):
         @deprecated: Use fl_set_object_lstyle function 
     """ 
  
-    _fl_set_xyplot_fontstyle = cfuncproto( 
-            load_so_libforms(), "fl_set_xyplot_fontstyle", 
-            None, [cty.POINTER(xfc.FL_OBJECT), cty.c_int], 
+    _fl_set_xyplot_fontstyle = library.cfuncproto( 
+            library.load_so_libforms(), "fl_set_xyplot_fontstyle", 
+            None, [cty.POINTER(xfdata.FL_OBJECT), cty.c_int], 
             """void fl_set_xyplot_fontstyle(FL_OBJECT * ob, int style) 
             """) 
     warn_deprecated_function("fl_set_object_lstyle") 
-    istyle = convert_to_int(style) 
-    keep_elem_refs(pObject, style, istyle) 
+    istyle = library.convert_to_int(style) 
+    library.keep_elem_refs(pObject, style, istyle) 
     _fl_set_xyplot_fontstyle(pObject, istyle)
 
 
@@ -1914,16 +1825,15 @@ def fl_set_slider_return(pObject, when):
         @status: Tested + NoDoc + Example = OK 
         @deprecated: Use fl_set_object_return function 
     """ 
- 
-    _fl_set_slider_return = cfuncproto( 
-            load_so_libforms(), "fl_set_slider_return", 
-            None, [cty.POINTER(xfc.FL_OBJECT), cty.c_uint], 
-            """void fl_set_slider_return(FL_OBJECT * ob, unsigned 
-               int value) 
-            """) 
+    _fl_set_slider_return = library.cfuncproto( 
+        library.load_so_libforms(), "fl_set_slider_return", 
+        None, [cty.POINTER(xfdata.FL_OBJECT), cty.c_uint], 
+        """void fl_set_slider_return(FL_OBJECT * ob, unsigned 
+           int value)""") 
     warn_deprecated_function("fl_set_object_return") 
-    check_admitted_listvalues(when, xfc.RETURN_list) 
-    uiwhen = convert_to_uint(when) 
-    keep_elem_refs(pObject, when, uiwhen) 
+    library.check_admitted_listvalues(when, xfdata.RETURN_list) 
+    uiwhen = library.convert_to_uint(when) 
+    library.keep_elem_refs(pObject, when, uiwhen) 
     _fl_set_slider_return(pObject, uiwhen) 
+
 

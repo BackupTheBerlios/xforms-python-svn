@@ -12,95 +12,93 @@
 
 import sys
 #sys.path.append("..")
-from xformslib import library as xf
-from xformslib import xfdata as xfc
+from xformslib.flbasic import *
+from xformslib.flxbasic import *
+from xformslib.flchart import *
+from xformslib.flbutton import *
+from xformslib.flmisc import *
+from xformslib.xfdata import *
 
 
 
-def fill_in(pobj):
+class ChartAll(object):
 
-    c = xfc.FL_BLACK + 1
-    xf.fl_add_chart_value(pobj, 15.0, "item 1", c)
-    c += 1
-    xf.fl_add_chart_value(pobj, 5.0, "item 2", c)
-    c += 1
-    xf.fl_add_chart_value(pobj, 0.0, "item 3", c)
-    c += 1
-    xf.fl_add_chart_value(pobj, -10., "item 4", c)
-    c += 1
-    xf.fl_add_chart_value(pobj, 25.0, "item 5", c)
-    c += 1
-    xf.fl_add_chart_value(pobj, 12.0, "item 6", c)
+    def __init__(self, lsysargv, sysargv):
 
+        fl_initialize(lsysargv, sysargv, "FormDemo", 0, 0)
 
+        self.create_form_form()
+        self.fill_in(self.pbarchart)
+        self.fill_in(self.phorbarchart)
+        self.fill_in(self.plinechart)
+        fl_set_object_helper(self.plinechart, "A LineChart")
+        self.fill_in(self.pfillchart)
+        self.fill_in(self.pspikechart)
+        self.fill_in(self.ppiechart)
+        self.fill_in(self.pspecialpiechart)
 
-def main(lsysargv, sysargv):
-
-   xf.fl_initialize(lsysargv, sysargv, "FormDemo", 0, 0)
-
-   create_form_form()
-   fill_in(pbarchart)
-   fill_in(phorbarchart)
-   fill_in(plinechart)
-   xf.fl_set_object_helper(plinechart, "A LineChart")
-   fill_in(pfillchart)
-   fill_in(pspikechart)
-   fill_in(ppiechart)
-   fill_in(pspecialpiechart)
-
-   xf.fl_show_form(pform, xfc.FL_PLACE_CENTER, xfc.FL_TRANSIENT, \
-                   "Charts")
-
-   xf.fl_do_forms()
-
-   return 0
+        fl_show_form(self.pform, FL_PLACE_CENTER, FL_TRANSIENT, \
+                     "Charts")
+        fl_do_forms()
 
 
+    def fill_in(self, pobj):
 
-def create_form_form():
-    global pform, pbarchart, phorbarchart, plinechart, pfillchart
-    global pspikechart, ppiechart, pspecialpiechart
+        c = FL_BLACK + 1
+        fl_add_chart_value(pobj, 15.0, "item 1", c)
+        c += 1
+        fl_add_chart_value(pobj, 5.0, "item 2", c)
+        c += 1
+        fl_add_chart_value(pobj, 0.0, "item 3", c)
+        c += 1
+        fl_add_chart_value(pobj, -10., "item 4", c)
+        c += 1
+        fl_add_chart_value(pobj, 25.0, "item 5", c)
+        c += 1
+        fl_add_chart_value(pobj, 12.0, "item 6", c)
 
-    pform = xf.fl_bgn_form(xfc.FL_NO_BOX, 940, 360)
 
-    pobj = xf.fl_add_box(xfc.FL_UP_BOX, 0, 0, 940, 360, "")
+    def create_form_form(self):
 
-    pbarchart = xf.fl_add_chart(xfc.FL_BAR_CHART, 20, 20, 210, 140,
+        self.pform = fl_bgn_form(FL_NO_BOX, 940, 360)
+
+        pobj = fl_add_box(FL_UP_BOX, 0, 0, 940, 360, "")
+
+        self.pbarchart = fl_add_chart(FL_BAR_CHART, 20, 20, 210, 140,
                                 "BAR_CHART")
-    xf.fl_set_object_boxtype(pbarchart, xfc.FL_RSHADOW_BOX)
+        fl_set_object_boxtype(self.pbarchart, FL_RSHADOW_BOX)
 
-    plinechart = xf.fl_add_chart(xfc.FL_LINE_CHART, 250, 20, 210, 140,
+        self.plinechart = fl_add_chart(FL_LINE_CHART, 250, 20, 210, 140,
                                  "LINE_CHART")
-    xf.fl_set_object_boxtype(plinechart, xfc.FL_RSHADOW_BOX)
+        fl_set_object_boxtype(self.plinechart, FL_RSHADOW_BOX)
 
-    pfillchart = xf.fl_add_chart(xfc.FL_FILL_CHART, 250, 190, 210, 140,
+        self.pfillchart = fl_add_chart(FL_FILL_CHART, 250, 190, 210, 140,
                                    "FILL_CHART")
-    xf.fl_set_object_boxtype(pfillchart, xfc.FL_RSHADOW_BOX)
+        fl_set_object_boxtype(self.pfillchart, FL_RSHADOW_BOX)
 
-    ppiechart = xf.fl_add_chart(xfc.FL_PIE_CHART, 480, 190, 210, 140,
+        self.ppiechart = fl_add_chart(FL_PIE_CHART, 480, 190, 210, 140,
                                 "PIE_CHART")
-    xf.fl_set_object_boxtype(ppiechart, xfc.FL_RSHADOW_BOX)
+        fl_set_object_boxtype(self.ppiechart, FL_RSHADOW_BOX)
 
-    pspecialpiechart = xf.fl_add_chart(xfc.FL_SPECIALPIE_CHART,
+        self.pspecialpiechart = fl_add_chart(FL_SPECIALPIE_CHART,
                                        710, 20, 210, 140, "SPECIALPIE_CHART")
-    xf.fl_set_object_boxtype(pspecialpiechart, xfc.FL_RSHADOW_BOX)
+        fl_set_object_boxtype(self.pspecialpiechart, FL_RSHADOW_BOX)
 
-    phorbarchart = xf.fl_add_chart(xfc.FL_HORBAR_CHART, 20, 190, 210, 140,
+        self.phorbarchart = fl_add_chart(FL_HORBAR_CHART, 20, 190, 210, 140,
                                    "HORBAR_CHART")
-    xf.fl_set_object_boxtype(phorbarchart, xfc.FL_RSHADOW_BOX)
+        fl_set_object_boxtype(self.phorbarchart, FL_RSHADOW_BOX)
 
-    pspikechart = xf.fl_add_chart(xfc.FL_SPIKE_CHART, 480, 20, 210, 140,
+        self.pspikechart = fl_add_chart(FL_SPIKE_CHART, 480, 20, 210, 140,
                                   "SPIKE_CHART")
-    xf.fl_set_object_boxtype(pspikechart, xfc.FL_RSHADOW_BOX)
+        fl_set_object_boxtype(self.pspikechart, FL_RSHADOW_BOX)
 
-    pexitbut = xf.fl_add_button(xfc.FL_NORMAL_BUTTON, 750, 260, 140, 30, \
+        self.pexitbut = fl_add_button(FL_NORMAL_BUTTON, 750, 260, 140, 30, \
                                 "Exit")
 
-    xf.fl_end_form()
-
+        fl_end_form()
 
 
 
 if __name__ == '__main__':
-    main(len(sys.argv), sys.argv)
+    appl = ChartAll(len(sys.argv), sys.argv)
 

@@ -1,6 +1,28 @@
 
 
 SVN
+    * most examples are being re-adapted to new modules' structure and
+    get rid of global variables in them (using python class when
+    necessary).
+    * flclock example renamed to clock.py to avoid duplication.
+    * choice_new and folder_new (replacing deprecated functions) added.
+    * massive code reorganization. Its purpose is to realign my code
+    distribution with files' structure already used by XForms upstream.
+    So I will create and modify some files, to be used from now on:
+    - flbasic.py, flbitmap.py, flbrowser.py, flbutton.py, flcanvas.py,
+    flchart.py, flclock.py, flcounter.py, flcursor.py, fldial.py,
+    flfilesys.py, flformbrowser.py, flglcanvas.py, flgoodies.py,
+    flinput.py, flnmenu.py, flpopup.py, flpositioner.py, flscrollbar.py,
+    flselect.py, flslider.py, flspinner.py, fltabfolder.py,
+    flthumbwheel.py, fltimer.py, flxbasic.py, flxyplot.py, flflimage.py;
+    - flmisc.py, for upstream corresponding files that have only one or two
+    viable functions each (box, clipbd, frame, free, AAA, zzz, etc..);
+    - vers.py, containg version information only;
+    - oldfunc.py renamed to deprecated.py, and maintained for deprecated
+    functions and variables;
+    - library.py will contain only support/not public functions;
+    - xfdata.py will be maintained, reordered.
+    Not all demos in examples/ directory are adapted yet.
     * some examples adapted to getter functions's .value modification.
     * pObject and pForm as parameters renamed to pFlObject and pFlForm, to
     avoid confusion with python "object" type.
@@ -60,7 +82,7 @@ SVN
     variables.
     * introduce some new functions for nmenus and popups
     (realigning with upstream XForms).
-    * library prepared to be able to give status of testing, 
+    * library prepared to be able to give status of testing,
     documentation, example presence, and working state.
     * Get rid of API-diversion.txt, insert API change state in
     docstrings (more easily keeping update)
@@ -76,7 +98,7 @@ SVN
     * FL_POINT argument better handled in functions who used it
     as parameter.
     * Re-sync with upstream XForms adjustments.
-    * Porting of iconify example (partiually, as some segfault 
+    * Porting of iconify example (partiually, as some segfault
     problems prevent a complete porting).
     * some docstrings and bugfixes
     * Porting of grav example.
@@ -120,7 +142,7 @@ SVN
     * bugfixes.
     * Changing some other param names and restructure
     other getter functions.
-    * Add a documentation initial draft using python 
+    * Add a documentation initial draft using python
     docstrings with epydoc.
     * Documented API differences between upstream XForms
     library and xforms-python API.
@@ -211,13 +233,13 @@ SVN
     * Raw conversion's product needed to be reworked, as
     there were some problems:
     - parts related to c standard library and X development
-    library are present (I've yet to understand if they are 
+    library are present (I've yet to understand if they are
     necessary to be included and if they have to be loaded
     explicitly by ctypes);
     - some types are uncorrectly recognized as "unknown *"
     (they have to be replaced with another coherent type);
     - constants definitions are not ordered according to
-    the same order of original c header (I'm willing to 
+    the same order of original c header (I'm willing to
     maintain same order, so future adaptation is easier);
     - some blocks of code are not converted and are simply
     missing (lack of functionality to comply with, seriously)

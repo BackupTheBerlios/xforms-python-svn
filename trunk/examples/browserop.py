@@ -12,92 +12,90 @@
 
 import sys
 #sys.path.append("..")
-from xformslib import library as xf
-from xformslib import xfdata as xfc
+from xformslib import flbasic, flxbasic, flbrowser, flbutton, flinput, xfdata
 
 
 
 
-def addit(pobj, data):
-    # append and show the last line. Don't use this if you just want
-    # to add some lines. use xf.fl_add_browser_line
-    xf.fl_addto_browser(pbrowserobj, xf.fl_get_input(pinputobj))
+class BrowserOp(object):
+
+    def __init__(self, lsysargv, sysargv):
+
+        flxbasic.fl_initialize(lsysargv, sysargv, "FormDemo", 0, 0)
+        self.create_form()
+        flbasic.fl_show_form(self.pform, xfdata.FL_PLACE_CENTER, xfdata.FL_TRANSIENT, "Browser Op")
+
+        while flbasic.fl_do_forms():
+            pass
+
+        flbasic.fl_hide_form(self.pform)
+        return 0
 
 
-def insertit(pobj, arg):
-    xf.fl_insert_browser_line(pbrowserobj, xf.fl_get_browser(pbrowserobj), \
-                              xf.fl_get_input(pinputobj))
+    def addit(self, pobj, data):
+        # append and show the last line. Don't use this if you just want
+        # to add some lines. use fl_add_browser_line
+        browserfn.fl_addto_browser(self.pbrowserobj, inputfn.fl_get_input(self.pinputobj))
 
 
-def replaceit(pobj, arg):
-
-    n = xf.fl_get_browser(pbrowserobj)
-    if n:
-        xf.fl_replace_browser_line(pbrowserobj, n, xf.fl_get_input(pinputobj))
+    def insertit(self, pobj, arg):
+        browserfn.fl_insert_browser_line(self.pbrowserobj, browserfn.fl_get_browser(self.pbrowserobj), \
+                                         inputfn.fl_get_input(self.pinputobj))
 
 
-def deleteit(pobj, arg):
-
-    n = xf.fl_get_browser(pbrowserobj)
-    if n:
-        xf.fl_delete_browser_line(pbrowserobj, n)
-
-
-def clearit(pobj, arg):
-    xf.fl_clear_browser(pbrowserobj)
+    def replaceit(self, pobj, arg):
+        n = browserfn.fl_get_browser(self.pbrowserobj)
+        if n:
+            browserfn.fl_replace_browser_line(self.pbrowserobj, n, inputfn.fl_get_input(self.pinputobj))
 
 
-def exitcb(pobj, arg):
-    xf.fl_finish()
-    sys.exit(0)
+    def deleteit(self, pobj, arg):
+        n = browserfn.fl_get_browser(self.pbrowserobj)
+        if n:
+            browserfn.fl_delete_browser_line(self.pbrowserobj, n)
 
 
-def create_form():
-    global pform, pbrowserobj, pinputobj, pexitobj
-
-    pform = xf.fl_bgn_form(xfc.FL_UP_BOX, 390, 420)
-
-    pbrowserobj = xf.fl_add_browser(xfc.FL_HOLD_BROWSER, 20, 20, 210, 330, "")
-    xf.fl_set_object_dblbuffer(pbrowserobj, 1)
-
-    pinputobj = xf.fl_add_input(xfc.FL_NORMAL_INPUT, 20, 370, 210, 30, "")
-
-    pobj = xf.fl_add_button(xfc.FL_NORMAL_BUTTON, 250, 20, 120, 30, "Add")
-    xf.fl_set_object_callback(pobj, addit, 0)
-
-    pobj = xf.fl_add_button(xfc.FL_NORMAL_BUTTON, 250, 60, 120, 30, "Insert")
-    xf.fl_set_object_callback(pobj, insertit, 0)
-
-    pobj = xf.fl_add_button(xfc.FL_NORMAL_BUTTON, 250, 100, 120, 30, "Replace")
-    xf.fl_set_object_callback(pobj, replaceit, 0)
-
-    pobj = xf.fl_add_button(xfc.FL_NORMAL_BUTTON, 250, 160, 120, 30, "Delete")
-    xf.fl_set_object_callback(pobj, deleteit, 0)
-
-    pobj = xf.fl_add_button(xfc.FL_NORMAL_BUTTON, 250, 200, 120, 30, "Clear")
-    xf.fl_set_object_callback(pobj, clearit, 0)
-
-    pexitobj = xf.fl_add_button(xfc.FL_NORMAL_BUTTON, 250, 370, 120, 30, "Exit")
-    xf.fl_set_object_callback(pexitobj, exitcb, 0)
-
-    xf.fl_end_form()
+    def clearit(self, pobj, arg):
+        browserfn.fl_clear_browser(self.pbrowserobj)
 
 
+    def exitcb(self, pobj, arg):
+        flxbasic.fl_finish()
+        sys.exit(0)
 
-def main(lsysargv, sysargv):
 
-    xf.fl_initialize(lsysargv, sysargv, "FormDemo", 0, 0)
-    create_form()
-    xf.fl_show_form(pform, xfc.FL_PLACE_CENTER, xfc.FL_TRANSIENT, "Browser Op")
+    def create_form(self):
+        #global pform, pbrowserobj, pinputobj, pexitobj
 
-    while xf.fl_do_forms():
-        pass
+        self.pform = flbasic.fl_bgn_form(xfdata.FL_UP_BOX, 390, 420)
 
-    xf.fl_hide_form(pform)
-    return 0
+        self.pbrowserobj = browserfn.fl_add_browser(xfdata.FL_HOLD_BROWSER, 20, 20, 210, 330, "")
+        flbasic.fl_set_object_dblbuffer(self.pbrowserobj, 1)
+
+        self.pinputobj = inputfn.fl_add_input(xfdata.FL_NORMAL_INPUT, 20, 370, 210, 30, "")
+
+        self.pobj = flbutton.fl_add_button(xfdata.FL_NORMAL_BUTTON, 250, 20, 120, 30, "Add")
+        flbasic.fl_set_object_callback(self.pobj, self.addit, 0)
+
+        self.pobj = flbutton.fl_add_button(xfdata.FL_NORMAL_BUTTON, 250, 60, 120, 30, "Insert")
+        flbasic.fl_set_object_callback(self.pobj, self.insertit, 0)
+
+        self.pobj = flbutton.fl_add_button(xfdata.FL_NORMAL_BUTTON, 250, 100, 120, 30, "Replace")
+        flbasic.fl_set_object_callback(self.pobj, self.replaceit, 0)
+
+        self.pobj = flbutton.fl_add_button(xfdata.FL_NORMAL_BUTTON, 250, 160, 120, 30, "Delete")
+        flbasic.fl_set_object_callback(self.pobj, self.deleteit, 0)
+
+        self.pobj = flbutton.fl_add_button(xfdata.FL_NORMAL_BUTTON, 250, 200, 120, 30, "Clear")
+        flbasic.fl_set_object_callback(self.pobj, self.clearit, 0)
+
+        self.pexitobj = flbutton.fl_add_button(xfdata.FL_NORMAL_BUTTON, 250, 370, 120, 30, "Exit")
+        flbasic.fl_set_object_callback(self.pexitobj, self.exitcb, 0)
+
+        flbasic.fl_end_form()
 
 
 
 if __name__ == '__main__':
-    main(len(sys.argv), sys.argv)
+    appl = BrowserOp(len(sys.argv), sys.argv)
 

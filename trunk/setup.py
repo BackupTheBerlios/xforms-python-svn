@@ -1,8 +1,7 @@
 #!/usr/bin/env python
 
 from distutils.core import setup
-import os, sys
-from xformslib.library import __version__
+from xformslib.vers import __version__
 
 name = 'xforms-python'
 version = __version__

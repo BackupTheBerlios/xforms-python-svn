@@ -11,87 +11,87 @@
 #
 
 import sys
-from xformslib import library as xf
-from xformslib import xfdata as xfc
+from xformslib.flbasic import *
+from xformslib.flxbasic import *
+from xformslib.flbutton import *
+from xformslib.flmisc import *
+from xformslib.xfdata import *
 
 
 
-# The call back routine
+class Flfree1(object):
 
-def handle_free1(pobj, event, mx, my, key, ev):
+    def __init__(self, lsysargv, sysargv):
 
-    global dcol, on
+        self.dcol = 1
+        self.on = 1
 
-    if event == xfc.FL_DRAW:
-        xf.fl_rectf(pobj.contents.x, pobj.contents.y, pobj.contents.w, \
-                    pobj.contents.h, pobj.contents.u_ldata)
-    elif event == xfc.FL_RELEASE:
-        on = not on
-    elif event == xfc.FL_STEP:
-        if on:
-            if pobj.contents.u_ldata >= cole:
-                dcol = -1
-            elif pobj.contents.u_ldata <= xfc.FL_FREE_COL1:
-                dcol = 1
-            pobj.contents.u_ldata += dcol
-            xf.fl_redraw_object(pobj)
+        fl_initialize(lsysargv, sysargv, "FormDemo", 0, 0)
 
-    return 0
-
-
-def done(pobj, data):
-    xf.fl_finish()
-    sys.exit(0)
-
-
-
-
-def main(lsysargv, sysargv):
-    global cole
-    global on, dcol
-    dcol = on = 1
-
-    xf.fl_initialize(lsysargv, sysargv, "FormDemo", 0, 0)
-
-    pform = xf.fl_bgn_form(xfc.FL_UP_BOX, 400, 400)
-    pobj1 = xf.fl_add_button(xfc.FL_NORMAL_BUTTON, 320, 20, 40, 30, \
+        pform = fl_bgn_form(FL_UP_BOX, 400, 400)
+        pobj1 = fl_add_button(FL_NORMAL_BUTTON, 320, 20, 40, 30, \
                             "Exit")
-    xf.fl_set_object_callback(pobj1, done, 0)
+        fl_set_object_callback(pobj1, self.done, 0)
 
-    pobj2 = xf.fl_add_free(xfc.FL_CONTINUOUS_FREE, 40, 80, 320, 280, \
-                          "", handle_free1)
-    xf.fl_end_form()
+        pobj2 = fl_add_free(FL_CONTINUOUS_FREE, 40, 80, 320, 280, \
+                          "", self.handle_free1)
+        fl_end_form()
 
-    depth  = xf.fl_get_visual_depth()
+        depth  = fl_get_visual_depth()
 
-    # Can't do it if less than 4 bit deep...
-    if depth < 4:
-        print "This Demo requires a depth of at least 4 bits\n"
-        xf.fl_finish()
-        sys.exit(1)
-    # ...but too large a depth also won't do
-    elif depth > 7:
-        depth = 7
+        # Can't do it if less than 4 bit deep...
+        if depth < 4:
+            print "This Demo requires a depth of at least 4 bits\n"
+            fl_finish()
+            sys.exit(1)
+        # ...but too large a depth also won't do
+        elif depth > 7:
+            depth = 7
 
-    cole = (1 << depth) - 1
-    if cole > 64:
-        cole = 64
+        self.cole = (1 << depth) - 1
+        if self.cole > 64:
+            self.cole = 64
 
-    pobj2.contents.u_ldata = col = xfc.FL_FREE_COL1
-    cole += col
+        pobj2.contents.u_ldata = col = FL_FREE_COL1
+        self.cole += col
 
-    for i in range(col, cole + 1):
-        j =  255 * (i - col) / (cole - col)
-        xf.fl_mapcolor(i, j, j, j)
+        for i in range(col, self.cole + 1):
+            j =  255 * (i - col) / (self.cole - col)
+            fl_mapcolor(i, j, j, j)
 
-    xf.fl_show_form(pform, xfc.FL_PLACE_CENTER, xfc.FL_NOBORDER, \
+        fl_show_form(pform, FL_PLACE_CENTER, FL_NOBORDER, \
                     "Free Object")
-    xf.fl_do_forms()
+        fl_do_forms()
 
-    return 0
+
+    # The call back routine
+
+    def handle_free1(self, pobj, event, mx, my, key, ev):
+
+        if event == FL_DRAW:
+            fl_rectf(pobj.contents.x, pobj.contents.y, pobj.contents.w, \
+                     pobj.contents.h, pobj.contents.u_ldata)
+        elif event == FL_RELEASE:
+            self.on = not self.on
+        elif event == FL_STEP:
+            if self.on:
+                if pobj.contents.u_ldata >= self.cole:
+                    self.dcol = -1
+                elif pobj.contents.u_ldata <= FL_FREE_COL1:
+                    self.dcol = 1
+                pobj.contents.u_ldata += self.dcol
+                fl_redraw_object(pobj)
+        return 0
+
+
+    def done(self, pobj, data):
+        fl_finish()
+        sys.exit(0)
+
+
 
 
 
 if __name__ == '__main__':
-    main(len(sys.argv), sys.argv)
+    Flfree1(len(sys.argv), sys.argv)
 

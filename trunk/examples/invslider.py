@@ -12,8 +12,12 @@
 
 import sys
 #sys.path.append("..")
-from xformslib import library as xf
-from xformslib import xfdata as xfc
+from xformslib.flbasic import *
+from xformslib.flxbasic import *
+from xformslib.flmisc import *
+from xformslib.flbutton import *
+from xformslib.flslider import *
+from xformslib.xfdata import *
 
 
 
@@ -26,72 +30,65 @@ class FD_inv(object):
     done = None
 
 
-def invert_it(pobj, data):
 
-    if xf.fl_get_button(pobj):
-        xf.fl_set_slider_bounds(ui.sl[0], 1.0, 0.0)
-        xf.fl_set_slider_bounds(ui.sl[1], 1.0, 0.0)
-        xf.fl_set_slider_bounds(ui.sl[2], 1.0, 0.0)
-    else:
-        xf.fl_set_slider_bounds(ui.sl[0], 0.0, 1.0)
-        xf.fl_set_slider_bounds(ui.sl[1], 0.0, 1.0)
-        xf.fl_set_slider_bounds(ui.sl[2], 0.0, 1.0)
+class Flinvslider(object):
 
-
-def exitcb(pobj, data):
-    xf.fl_finish()
-    sys.exit(0)
+    def __init__(self, lsysargv, sysargv):
+        fl_initialize(lsysargv, sysargv, "FormDemo", 0, 0)
+        self.ui = self.create_form_inv()
+        fl_show_form(self.ui.inv, FL_PLACE_CENTER | FL_FREE_SIZE, \
+                     FL_TRANSIENT, "inv")
+        while fl_do_forms():
+            pass            # empty
 
 
-def main(lsysargv, sysargv):
-    global ui
+    def invert_it(self, pobj, data):
 
-    xf.fl_initialize(lsysargv, sysargv, "FormDemo", 0, 0)
-    ui = create_form_inv()
-
-    # fill-in form initialization code
-
-    xf.fl_show_form(ui.inv, xfc.FL_PLACE_CENTER | xfc.FL_FREE_SIZE, \
-                    xfc.FL_TRANSIENT, "inv")
-
-    while xf.fl_do_forms():
-        pass            # empty
+        if fl_get_button(pobj):
+            fl_set_slider_bounds(self.ui.sl[0], 1.0, 0.0)
+            fl_set_slider_bounds(self.ui.sl[1], 1.0, 0.0)
+            fl_set_slider_bounds(self.ui.sl[2], 1.0, 0.0)
+        else:
+            fl_set_slider_bounds(self.ui.sl[0], 0.0, 1.0)
+            fl_set_slider_bounds(self.ui.sl[1], 0.0, 1.0)
+            fl_set_slider_bounds(self.ui.sl[2], 0.0, 1.0)
 
 
-    return 0
+    def exitcb(self, pobj, data):
+        fl_finish()
+        sys.exit(0)
 
 
-# Form definition
+    # Form definition
+    def create_form_inv(self):
 
-def create_form_inv():
+        fdui = FD_inv()
 
-    fdui = FD_inv()
+        fdui.inv = fl_bgn_form(FL_NO_BOX, 245, 280)
 
-    fdui.inv = xf.fl_bgn_form(xfc.FL_NO_BOX, 245, 280)
+        fl_add_box(FL_UP_BOX, 0, 0, 245, 280, "")
 
-    xf.fl_add_box(xfc.FL_UP_BOX, 0, 0, 245, 280, "")
+        fdui.sl[0] = fl_add_valslider(FL_VERT_SLIDER, 20, 30, 35, 230, "")
 
-    fdui.sl[0] = xf.fl_add_valslider(xfc.FL_VERT_SLIDER, 20, 30, 35, 230, "")
+        fdui.sl[1] = fl_add_valslider(FL_VERT_FILL_SLIDER, 65, 30, 35, 230, "")
 
-    fdui.sl[1] = xf.fl_add_valslider(xfc.FL_VERT_FILL_SLIDER, 65, 30, 35, 230, "")
+        fdui.sl[2] = fl_add_valslider(FL_VERT_NICE_SLIDER, 115, 30, 35, 230, "")
+        fl_set_object_boxtype(fdui.sl[2], FL_FLAT_BOX)
+        fl_set_object_color(fdui.sl[2], FL_COL1, FL_BLUE)
 
-    fdui.sl[2] = xf.fl_add_valslider(xfc.FL_VERT_NICE_SLIDER, 115, 30, 35, 230, "")
-    xf.fl_set_object_boxtype(fdui.sl[2], xfc.FL_FLAT_BOX)
-    xf.fl_set_object_color(fdui.sl[2], xfc.FL_COL1, xfc.FL_BLUE)
+        fdui.done = fl_add_button(FL_RETURN_BUTTON, 160, 235, 75, 30, "Exit")
+        fl_set_object_callback(fdui.done, self.exitcb, 0)
 
-    fdui.done = xf.fl_add_button(xfc.FL_RETURN_BUTTON, 160, 235, 75, 30, "Exit")
-    xf.fl_set_object_callback(fdui.done, exitcb, 0)
+        pobj = fl_add_checkbutton(FL_PUSH_BUTTON, 165, 30, 75, 35, "Invert")
+        fl_set_object_callback(pobj, self.invert_it, 0)
 
-    pobj = xf.fl_add_checkbutton(xfc.FL_PUSH_BUTTON, 165, 30, 75, 35, "Invert")
-    xf.fl_set_object_callback(pobj, invert_it, 0)
+        fl_end_form()
 
-    xf.fl_end_form()
-
-    return fdui
+        return fdui
 
 
 
 
 if __name__ == '__main__':
-    main(len(sys.argv), sys.argv)
+    Flinvslider(len(sys.argv), sys.argv)
 

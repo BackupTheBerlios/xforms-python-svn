@@ -11,121 +11,119 @@
 
 import sys
 #sys.path.append("..")
-from xformslib import library as xf
-from xformslib import xfdata as xfc
+from xformslib.flbasic import *
+from xformslib.flxbasic import *
+from xformslib.flbutton import *
+from xformslib.flmisc import *
+from xformslib.xfdata import *
 
 
 
-def exit_cb(pobj, data):
-    xf.fl_finish()
-    sys.exit(0)
+
+class Flobjinactive(object):
+
+    def __init__(self, lsysargv, sysargv):
+
+        fl_initialize(lsysargv, sysargv, "FormDemo", 0, 0)
+        self.create_form()
+
+        fl_set_button(self.pfirstbut, 1)
+
+        fl_show_form(self.pform, FL_PLACE_CENTER, FL_NOBORDER, None)
+
+        while fl_do_forms():
+            pass            # empty
 
 
-def setit(pobj, val):
-
-    if val:
-        xf.fl_set_object_lcol(pobj, xfc.FL_BLACK)
-        xf.fl_activate_object(pobj)
-    else:
-        xf.fl_set_object_lcol(pobj, xfc.FL_INACTIVE)
-        xf.fl_deactivate_object(pobj)
+    def exit_cb(self, pobj, data):
+        fl_finish()
+        sys.exit(0)
 
 
-def doit(b1, b2, b3, b4):
-
-    setit(pbutton1, b1)
-    setit(pbutton2, b2)
-    setit(pbutton3, b3)
-    setit(pbutton4, b4)
-
-
-
-def set_active(pobj, arg):
-
-    if arg == 0:
-        doit(1, 1, 1, 1)
-    elif arg == 1:
-        doit(0, 0, 0, 0)
-    elif arg == 2:
-        doit(0, 1, 0, 1)
-    elif arg == 3:
-        doit(1, 0, 1, 0)
+    def setit(self, pobj, val):
+        if val:
+            fl_set_object_lcol(pobj, FL_BLACK)
+            fl_activate_object(pobj)
+        else:
+            fl_set_object_lcol(pobj, FL_INACTIVE)
+            fl_deactivate_object(pobj)
 
 
+    def doit(self, b1, b2, b3, b4):
 
-def create_form():
-    global pfirstbut, pform, pbutton1, pbutton2, pbutton3, pbutton4
+        self.setit(self.pbutton1, b1)
+        self.setit(self.pbutton2, b2)
+        self.setit(self.pbutton3, b3)
+        self.setit(self.pbutton4, b4)
 
-    pform = xf.fl_bgn_form(xfc.FL_NO_BOX, 420, 230)
 
-    pobj = xf.fl_add_box(xfc.FL_UP_BOX, 0, 0, 420, 230, "")
-    xf.fl_set_object_color(pobj, xfc.FL_SLATEBLUE, xfc.FL_COL1)
+    def set_active(self, pobj, arg):
+        if arg == 0:
+            self.doit(1, 1, 1, 1)
+        elif arg == 1:
+            self.doit(0, 0, 0, 0)
+        elif arg == 2:
+            self.doit(0, 1, 0, 1)
+        elif arg == 3:
+            self.doit(1, 0, 1, 0)
 
-    pbutton1 = xf.fl_add_button(xfc.FL_NORMAL_BUTTON, 20, 170, 150, 40,
+
+    def create_form(self):
+
+        self.pform = fl_bgn_form(FL_NO_BOX, 420, 230)
+
+        pobj = fl_add_box(FL_UP_BOX, 0, 0, 420, 230, "")
+        fl_set_object_color(pobj, FL_SLATEBLUE, FL_COL1)
+
+        self.pbutton1 = fl_add_button(FL_NORMAL_BUTTON, 20, 170, 150, 40,
                                      "Button 1")
-    xf.fl_set_object_lsize(pbutton1 ,xfc.FL_LARGE_SIZE)
-    xf.fl_set_button_shortcut(pbutton1, "1", 1)
+        fl_set_object_lsize(self.pbutton1 ,FL_LARGE_SIZE)
+        fl_set_button_shortcut(self.pbutton1, "1", 1)
 
-    pbutton2 = xf.fl_add_button(xfc.FL_NORMAL_BUTTON, 20, 120, 150, 40,
-                               "Button 2")
-    xf.fl_set_object_lsize(pbutton2, xfc.FL_LARGE_SIZE)
-    xf.fl_set_button_shortcut(pbutton2, "2", 1)
+        self.pbutton2 = fl_add_button(FL_NORMAL_BUTTON, 20, 120, 150, 40,
+                                      "Button 2")
+        fl_set_object_lsize(self.pbutton2, FL_LARGE_SIZE)
+        fl_set_button_shortcut(self.pbutton2, "2", 1)
 
-    pbutton3 = xf.fl_add_button(xfc.FL_NORMAL_BUTTON, 20, 70, 150, 40,
-                               "Button 3")
-    xf.fl_set_object_lsize(pbutton3, xfc.FL_LARGE_SIZE)
-    xf.fl_set_button_shortcut(pbutton3, "3", 1)
+        self.pbutton3 = fl_add_button(FL_NORMAL_BUTTON, 20, 70, 150, 40,
+                                      "Button 3")
+        fl_set_object_lsize(self.pbutton3, FL_LARGE_SIZE)
+        fl_set_button_shortcut(self.pbutton3, "3", 1)
 
-    pbutton4 = xf.fl_add_button(xfc.FL_NORMAL_BUTTON, 20, 20, 150, 40,
-                               "Button 4")
-    xf.fl_set_button_shortcut(pbutton4, "4", 1)
-    xf.fl_set_object_lsize(pbutton4,xfc.FL_LARGE_SIZE)
+        self.pbutton4 = fl_add_button(FL_NORMAL_BUTTON, 20, 20, 150, 40,
+                                      "Button 4")
+        fl_set_button_shortcut(self.pbutton4, "4", 1)
+        fl_set_object_lsize(self.pbutton4,FL_LARGE_SIZE)
 
-    pgroup = xf.fl_bgn_group()
+        pgroup = fl_bgn_group()
 
-    pfirstbut = xf.fl_add_lightbutton(xfc.FL_RADIO_BUTTON, 260, 180, 140, 30,
-                                     "All active")
-    xf.fl_set_object_callback(pfirstbut, set_active, 0)
+        self.pfirstbut = fl_add_lightbutton(FL_RADIO_BUTTON, 260, 180, 140, 30,
+                                            "All active")
+        fl_set_object_callback(self.pfirstbut, self.set_active, 0)
 
-    pobj = xf.fl_add_lightbutton(xfc.FL_RADIO_BUTTON, 260, 150, 140, 30,
-                                "Non active")
-    xf.fl_set_object_callback(pobj, set_active, 1)
+        pobj = fl_add_lightbutton(FL_RADIO_BUTTON, 260, 150, 140, 30,
+                                  "Non active")
+        fl_set_object_callback(pobj, self.set_active, 1)
 
-    pobj = xf.fl_add_lightbutton(xfc.FL_RADIO_BUTTON, 260, 120, 140 ,30,
-                                "Even active")
-    xf.fl_set_object_callback(pobj, set_active, 2)
+        pobj = fl_add_lightbutton(FL_RADIO_BUTTON, 260, 120, 140 ,30,
+                                  "Even active")
+        fl_set_object_callback(pobj, self.set_active, 2)
 
-    pobj = xf.fl_add_lightbutton(xfc.FL_RADIO_BUTTON, 260, 90, 140, 30, \
-                                "Odd active")
-    xf.fl_set_object_callback(pobj, set_active, 3)
+        pobj = fl_add_lightbutton(FL_RADIO_BUTTON, 260, 90, 140, 30, \
+                                  "Odd active")
+        fl_set_object_callback(pobj, self.set_active, 3)
 
-    xf.fl_end_group()
+        fl_end_group()
 
-    pobj = xf.fl_add_button(xfc.FL_NORMAL_BUTTON, 270, 20, 130, 30, "Quit")
-    xf.fl_set_object_callback(pobj, exit_cb, 0)
+        pobj = fl_add_button(FL_NORMAL_BUTTON, 270, 20, 130, 30, "Quit")
+        fl_set_object_callback(pobj, self.exit_cb, 0)
 
-    xf.fl_end_form()
+        fl_end_form()
 
-
-
-
-def main(lsysargv, sysargv):
-
-    xf.fl_initialize(lsysargv, sysargv, "FormDemo", 0, 0)
-    create_form()
-
-    xf.fl_set_button(pfirstbut, 1)
-
-    xf.fl_show_form(pform, xfc.FL_PLACE_CENTER, xfc.FL_NOBORDER, None)
-
-    while xf.fl_do_forms():
-        pass            # empty
-
-    return 0
 
 
 
 
 if __name__ == '__main__':
-    main(len(sys.argv), sys.argv)
+    Flobjinactive(len(sys.argv), sys.argv)
 

@@ -11,8 +11,12 @@
 
 import sys
 #sys.path.append("..")
-from xformslib import library as xf
-from xformslib import xfdata as xfc
+from xformslib.flbasic import *
+from xformslib.flxbasic import *
+from xformslib.flbutton import *
+from xformslib.flmisc import *
+from xformslib.xfdata import *
+
 
 
 
@@ -39,37 +43,39 @@ label3 = "And now back to the first one:\n\n" \
 
 def main(lsysargv, sysargv):
 
-    xf.fl_initialize(lsysargv, sysargv, "FormDemo", 0, 0)
+    fl_initialize(lsysargv, sysargv, "FormDemo", 0, 0)
 
-    pform = xf.fl_bgn_form(xfc.FL_UP_BOX, 400, 300)
+    pform = fl_bgn_form(FL_UP_BOX, 400, 300)
 
-    pstrobj = xf.fl_add_box(xfc.FL_DOWN_BOX, 10, 10, 380, 240, "Press Next")
-    xf.fl_set_object_lsize(pstrobj, xfc.FL_NORMAL_SIZE)
+    pstrobj = fl_add_box(FL_DOWN_BOX, 10, 10, 380, 240, "Press Next")
+    fl_set_object_lsize(pstrobj, FL_NORMAL_SIZE)
 
-    pbut = xf.fl_add_button(xfc.FL_NORMAL_BUTTON, 160, 260, 80, 30, "Next")
+    pbut = fl_add_button(FL_NORMAL_BUTTON, 160, 260, 80, 30, "Next")
 
-    xf.fl_end_form()
+    fl_end_form()
 
-    xf.fl_set_form_hotobject(pform, pbut)
+    fl_set_form_hotobject(pform, pbut)
 
-    xf.fl_show_form(pform, xfc.FL_PLACE_HOTSPOT, xfc.FL_TRANSIENT, "longlabel")
-    xf.fl_do_forms()
+    fl_show_form(pform, FL_PLACE_HOTSPOT, FL_TRANSIENT, "longlabel")
+    fl_do_forms()
 
-    xf.fl_set_object_label(pstrobj, label1)
-    xf.fl_do_forms()
+    fl_set_object_label(pstrobj, label1)
+    fl_do_forms()
 
-    xf.fl_set_object_label(pstrobj, label2)
-    xf.fl_do_forms()
+    fl_set_object_label(pstrobj, label2)
+    fl_do_forms()
 
-    xf.fl_set_object_label(pstrobj, "Now we turn to a short label")
-    xf.fl_do_forms()
+    fl_set_object_label(pstrobj, "Now we turn to a short label")
+    fl_do_forms()
 
-    xf.fl_set_object_label(pstrobj, label3)
-    xf.fl_set_object_label(pbut, "Quit")
-    xf.fl_do_forms()
+    fl_set_object_label(pstrobj, label3)
+    fl_set_object_label(pbut, "Quit")
+    fl_do_forms()
 
-    xf.fl_finish()
+    fl_finish()
     return 0
+
+
 
 
 if __name__ == '__main__':

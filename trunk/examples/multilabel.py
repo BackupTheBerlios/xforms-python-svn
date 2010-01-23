@@ -11,75 +11,78 @@
 
 import sys
 #sys.path.append("..")
-from xformslib import library as xf
-from xformslib import xfdata as xfc
+from xformslib.flbasic import *
+from xformslib.flxbasic import *
+from xformslib.flmisc import *
+from xformslib.flbutton import *
+from xformslib.xfdata import *
 
 
 
-def create_form_0():
-    global pform, preadyobj
 
-    pform = xf.fl_bgn_form(xfc.FL_NO_BOX, 400, 470)
+class Flmultilabel(object):
 
-    pobj = xf.fl_add_box(xfc.FL_UP_BOX, 0, 0, 400, 470, "")
-    xf.fl_set_object_color(pobj, xfc.FL_SLATEBLUE, xfc.FL_COL1)
+    def __init__(self, lsysargv, sysargv):
 
-    pobj = xf.fl_add_text(xfc.FL_NORMAL_TEXT, 140, 40, 120, 120,
-                          "This is\na multi-line\nlabelT")
-    xf.fl_set_object_boxtype(pobj, xfc.FL_BORDER_BOX)
-    xf.fl_set_object_lalign(pobj, xfc.FL_ALIGN_TOP)
+        fl_initialize(lsysargv, sysargv, "FormDemo", 0, 0)
+        self.create_form_0()
 
-    pobj = xf.fl_add_text(xfc.FL_NORMAL_TEXT, 140, 160, 120, 120,
+        fl_show_form(self.pform, FL_PLACE_CENTER, FL_NOBORDER, \
+                     "Labels")
+
+        while True:
+            pobj = fl_do_forms()
+            if fl_is_same_object(pobj, self.preadyobj):
+                break
+
+        fl_hide_form(self.pform)
+        fl_finish()
+
+
+    def create_form_0(self):
+
+        self.pform = fl_bgn_form(FL_NO_BOX, 400, 470)
+
+        pobj = fl_add_box(FL_UP_BOX, 0, 0, 400, 470, "")
+        fl_set_object_color(pobj, FL_SLATEBLUE, FL_COL1)
+
+        pobj = fl_add_text(FL_NORMAL_TEXT, 140, 40, 120, 120,
+                           "This is\na multi-line\nlabelT")
+        fl_set_object_boxtype(pobj, FL_BORDER_BOX)
+        fl_set_object_lalign(pobj, FL_ALIGN_TOP)
+
+        pobj = fl_add_text(FL_NORMAL_TEXT, 140, 160, 120, 120,
                           "This is\na multi-line\nlabelC")
-    xf.fl_set_object_boxtype(pobj, xfc.FL_BORDER_BOX)
-    xf.fl_set_object_color(pobj, xfc.FL_PALEGREEN, xfc.FL_COL1)
-    xf.fl_set_object_lsize(pobj, xfc.FL_LARGE_SIZE)
-    xf.fl_set_object_lalign(pobj, xfc.FL_ALIGN_CENTER)
+        fl_set_object_boxtype(pobj, FL_BORDER_BOX)
+        fl_set_object_color(pobj, FL_PALEGREEN, FL_COL1)
+        fl_set_object_lsize(pobj, FL_LARGE_SIZE)
+        fl_set_object_lalign(pobj, FL_ALIGN_CENTER)
 
-    preadyobj = xf.fl_add_button(xfc.FL_NORMAL_BUTTON, 280, 400, \
-                                 100, 50, "I am sure\nthat I am\nReady")
-    xf.fl_set_object_lsize(preadyobj, xfc.FL_SMALL_SIZE)
+        self.preadyobj = fl_add_button(FL_NORMAL_BUTTON, 280, 400, \
+                                       100, 50, "I am sure\nthat I am\nReady")
+        fl_set_object_lsize(self.preadyobj, FL_SMALL_SIZE)
 
-    pobj = xf.fl_add_text(xfc.FL_NORMAL_TEXT, 260, 160, 120, 120,
-                          "This is\na multi-line\nlabelR")
-    xf.fl_set_object_boxtype(pobj, xfc.FL_BORDER_BOX)
-    xf.fl_set_object_lalign(pobj, xfc.FL_ALIGN_RIGHT)
+        pobj = fl_add_text(FL_NORMAL_TEXT, 260, 160, 120, 120,
+                           "This is\na multi-line\nlabelR")
+        fl_set_object_boxtype(pobj, FL_BORDER_BOX)
+        fl_set_object_lalign(pobj, FL_ALIGN_RIGHT)
 
-    pobj = xf.fl_add_text(xfc.FL_NORMAL_TEXT, 140, 280, 120, 120,
+        pobj = fl_add_text(FL_NORMAL_TEXT, 140, 280, 120, 120,
                           "This is\na multi-line\nlabelB")
-    xf.fl_set_object_boxtype(pobj, xfc.FL_BORDER_BOX)
-    xf.fl_set_object_lalign(pobj, xfc.FL_ALIGN_BOTTOM)
+        fl_set_object_boxtype(pobj, FL_BORDER_BOX)
+        fl_set_object_lalign(pobj, FL_ALIGN_BOTTOM)
 
-    pobj = xf.fl_add_text(xfc.FL_NORMAL_TEXT, 20, 160, 120, 120,
+        pobj = fl_add_text(FL_NORMAL_TEXT, 20, 160, 120, 120,
                           "This is\na multi-line\nlabelL")
-    xf.fl_set_object_boxtype(pobj, xfc.FL_BORDER_BOX)
-    #xf.fl_set_object_lalign(pobj, xfc.FL_ALIGN_LEFT)
+        fl_set_object_boxtype(pobj, FL_BORDER_BOX)
+        #fl_set_object_lalign(pobj, FL_ALIGN_LEFT)
 
-    xf.fl_end_form()
+        fl_end_form()
 
-
-
-def main(lsysargv, sysargv):
-
-    xf.fl_initialize(lsysargv, sysargv, "FormDemo", 0, 0)
-    create_form_0()
-
-    xf.fl_show_form(pform, xfc.FL_PLACE_CENTER, xfc.FL_NOBORDER, \
-                    "Labels")
-
-    while True:
-        pobj = xf.fl_do_forms()
-        if xf.fl_is_same_object(pobj, preadyobj):
-            break
-
-    xf.fl_hide_form(pform)
-    xf.fl_finish()
-
-    return 0
 
 
 
 
 if __name__ == '__main__':
-    main(len(sys.argv), sys.argv)
+    Flmultilabel(len(sys.argv), sys.argv)
 

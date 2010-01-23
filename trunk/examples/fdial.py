@@ -13,106 +13,108 @@
 
 import sys
 #sys.path.append("..")
-from xformslib import library as xf
-from xformslib import xfdata as xfc
+from xformslib.flbasic import *
+from xformslib.flxbasic import *
+from xformslib.fldial import *
+from xformslib.flbutton import *
+from xformslib.flmisc import *
+from xformslib.xfdata import *
 
 
 
-def exit_cb(pobj, data):
-    xf.fl_hide_form(pform)
-    sys.exit(0)
 
 
-def makeform():
-    global pform, pbutton, pred, predtext, pgreen, pgreentext
-    global pblue, pbluetext, presult
+class Flfdial(object):
 
-    pform = xf.fl_bgn_form(xfc.FL_UP_BOX, 300, 330)
+    def __init__(self, lsysargv, sysargv):
+        strng = ""
 
-    pbutton = xf.fl_add_button(xfc.FL_NORMAL_BUTTON, 45, 15, 210, 45,
-                              "A Color Editor")
-    xf.fl_set_object_lsize(pbutton, xfc.FL_LARGE_SIZE)
-    xf.fl_set_object_callback(pbutton, exit_cb, 0)
+        fl_initialize(lsysargv, sysargv, "FormDemo", 0, 0)
+        self.makeform()
 
-    pred = xf.fl_add_dial(xfc.FL_FILL_DIAL, 30, 240, 60, 60, "Red")
-    xf.fl_set_dial_bounds(pred, 0.0, 255.0)
-    xf.fl_set_dial_value(pred, 128.0)
-    xf.fl_set_object_color(pred, xfc.FL_DIAL_COL1, xfc.FL_RED)
-    xf.fl_set_object_return(pred, xfc.FL_RETURN_CHANGED)
+        fl_show_form(self.pform, FL_PLACE_MOUSE, FL_TRANSIENT, "A Form")
 
-    predtext = xf.fl_add_box(xfc.FL_DOWN_BOX, 105, 255, 50, 25, "")
+        r = fl_get_dial_value(self.pred)       # + 0.001
+        g = fl_get_dial_value(self.pgreen)     # + 0.001
+        b = fl_get_dial_value(self.pblue)      # + 0.001
 
-    pgreen = xf.fl_add_dial(xfc.FL_FILL_DIAL, 30, 155, 60, 60, "Green")
-    xf.fl_set_dial_bounds(pgreen, 0.0, 255.0)
-    xf.fl_set_dial_value(pgreen, 128.0)
-    xf.fl_set_dial_angles(pgreen, 45.0, 360 - 45.0)
-    xf.fl_set_object_color(pgreen, xfc.FL_DIAL_COL1, xfc.FL_GREEN)
-    xf.fl_set_object_return(pgreen, xfc.FL_RETURN_CHANGED)
-
-    pgreentext = xf.fl_add_box(xfc.FL_DOWN_BOX, 105, 170, 50, 25,"")
-
-    pblue = xf.fl_add_dial(xfc.FL_FILL_DIAL, 30, 70, 60, 60, "Blue")
-    xf.fl_set_dial_bounds(pblue, 0.0, 255.0)
-    xf.fl_set_dial_value(pblue, 128.0)
-    xf.fl_set_object_color(pblue, xfc.FL_DIAL_COL1, xfc.FL_BLUE)
-    xf.fl_set_dial_direction(pblue, xfc.FL_DIAL_CCW)
-    xf.fl_set_object_return(pblue, xfc.FL_RETURN_CHANGED)
-
-    pbluetext = xf.fl_add_box(xfc.FL_DOWN_BOX, 105, 90, 50, 25, "")
-
-    presult = xf.fl_add_box(xfc.FL_DOWN_BOX, 180, 70, 90, 245, "")
-    xf.fl_set_object_color(presult, xfc.FL_FREE_COL1, xfc.FL_FREE_COL1)
-    xf.fl_set_object_dblbuffer(presult, 1)
-
-    xf.fl_end_form()
-
-
-
-def main(lsysargv, sysargv):
-    strng = ""
-
-    xf.fl_initialize(lsysargv, sysargv, "FormDemo", 0, 0)
-    makeform()
-
-    xf.fl_show_form(pform, xfc.FL_PLACE_MOUSE, xfc.FL_TRANSIENT, "A Form")
-
-    r = xf.fl_get_dial_value(pred)       # + 0.001
-    g = xf.fl_get_dial_value(pgreen)     # + 0.001
-    b = xf.fl_get_dial_value(pblue)      # + 0.001
-
-    xf.fl_mapcolor(xfc.FL_FREE_COL1, r, g, b)
-    xf.fl_redraw_object(presult)
-
-    strng = "%d" % r
-    xf.fl_set_object_label(predtext, strng)
-    strng = "%d" % g
-    xf.fl_set_object_label(pgreentext, strng)
-    strng = "%d" % b
-    xf.fl_set_object_label(pbluetext, strng)
-
-    while xf.fl_do_forms():
-        r = xf.fl_get_dial_value(pred) + 0.001
-        g = xf.fl_get_dial_value(pgreen) + 0.001
-        b = xf.fl_get_dial_value(pblue) + 0.001
-
-        xf.fl_mapcolor(xfc.FL_FREE_COL1, r, g, b)
-        xf.fl_redraw_object(presult)
+        fl_mapcolor(FL_FREE_COL1, r, g, b)
+        fl_redraw_object(self.presult)
 
         strng = "%d" % r
-        xf.fl_set_object_label(predtext, strng)
+        fl_set_object_label(self.predtext, strng)
         strng = "%d" % g
-        xf.fl_set_object_label(pgreentext, strng)
+        fl_set_object_label(self.pgreentext, strng)
         strng = "%d" % b
-        xf.fl_set_object_label(pbluetext, strng)
+        fl_set_object_label(self.pbluetext, strng)
+
+        while fl_do_forms():
+            r = fl_get_dial_value(self.pred) + 0.001
+            g = fl_get_dial_value(self.pgreen) + 0.001
+            b = fl_get_dial_value(self.pblue) + 0.001
+
+            fl_mapcolor(FL_FREE_COL1, r, g, b)
+            fl_redraw_object(self.presult)
+
+            strng = "%d" % r
+            fl_set_object_label(self.predtext, strng)
+            strng = "%d" % g
+            fl_set_object_label(self.pgreentext, strng)
+            strng = "%d" % b
+            fl_set_object_label(self.pbluetext, strng)
+
+        fl_finish()
 
 
-    xf.fl_finish()
+    def exit_cb(self, pobj, data):
+        fl_hide_form(self.pform)
+        sys.exit(0)
 
-    return 0
+
+    def makeform(self):
+
+        self.pform = fl_bgn_form(FL_UP_BOX, 300, 330)
+
+        self.pbutton = fl_add_button(FL_NORMAL_BUTTON, 45, 15, 210, 45,
+                              "A Color Editor")
+        fl_set_object_lsize(self.pbutton, FL_LARGE_SIZE)
+        fl_set_object_callback(self.pbutton, self.exit_cb, 0)
+
+        self.pred = fl_add_dial(FL_FILL_DIAL, 30, 240, 60, 60, "Red")
+        fl_set_dial_bounds(self.pred, 0.0, 255.0)
+        fl_set_dial_value(self.pred, 128.0)
+        fl_set_object_color(self.pred, FL_DIAL_COL1, FL_RED)
+        fl_set_object_return(self.pred, FL_RETURN_CHANGED)
+
+        self.predtext = fl_add_box(FL_DOWN_BOX, 105, 255, 50, 25, "")
+
+        self.pgreen = fl_add_dial(FL_FILL_DIAL, 30, 155, 60, 60, "Green")
+        fl_set_dial_bounds(self.pgreen, 0.0, 255.0)
+        fl_set_dial_value(self.pgreen, 128.0)
+        fl_set_dial_angles(self.pgreen, 45.0, 360 - 45.0)
+        fl_set_object_color(self.pgreen, FL_DIAL_COL1, FL_GREEN)
+        fl_set_object_return(self.pgreen, FL_RETURN_CHANGED)
+
+        self.pgreentext = fl_add_box(FL_DOWN_BOX, 105, 170, 50, 25,"")
+
+        self.pblue = fl_add_dial(FL_FILL_DIAL, 30, 70, 60, 60, "Blue")
+        fl_set_dial_bounds(self.pblue, 0.0, 255.0)
+        fl_set_dial_value(self.pblue, 128.0)
+        fl_set_object_color(self.pblue, FL_DIAL_COL1, FL_BLUE)
+        fl_set_dial_direction(self.pblue, FL_DIAL_CCW)
+        fl_set_object_return(self.pblue, FL_RETURN_CHANGED)
+
+        self.pbluetext = fl_add_box(FL_DOWN_BOX, 105, 90, 50, 25, "")
+
+        self.presult = fl_add_box(FL_DOWN_BOX, 180, 70, 90, 245, "")
+        fl_set_object_color(self.presult, FL_FREE_COL1, FL_FREE_COL1)
+        fl_set_object_dblbuffer(self.presult, 1)
+
+        fl_end_form()
 
 
 
 
 if __name__ == '__main__':
-    main(len(sys.argv), sys.argv)
+    Flfdial(len(sys.argv), sys.argv)
 
