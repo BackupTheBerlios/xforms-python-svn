@@ -7,23 +7,25 @@
 #  file for xforms-python license and copyright attribution.
 #
 
-
 import sys
-from xformslib import library as xf
-from xformslib import xfdata as xfc
+from xformslib.flbasic import *
+from xformslib.flxbasic import *
+from xformslib.flbutton import *
+from xformslib.xfdata import *
+
 
 
 def main(lsysargv, sysargv):
 
-    xf.fl_initialize(lsysargv, sysargv, "FormDemo", 0, 0)
-    psimpleform = xf.fl_bgn_form(xfc.FL_UP_BOX, 230, 160)
-    xf.fl_add_button(xfc.FL_NORMAL_BUTTON, 40, 50, 150, 60, "Push Me")
-    xf.fl_end_form()
+    fl_initialize(lsysargv, sysargv, "FormDemo", 0, 0)
+    psimpleform = fl_bgn_form(FL_UP_BOX, 230, 160)
+    fl_add_button(FL_NORMAL_BUTTON, 40, 50, 150, 60, "Push Me")
+    fl_end_form()
 
-    xf.fl_show_form(psimpleform, xfc.FL_PLACE_MOUSE, xfc.FL_NOBORDER, "PushMe")
+    fl_show_form(psimpleform, FL_PLACE_MOUSE, FL_NOBORDER, "PushMe")
 
-    xf.fl_do_forms()
-    xf.fl_hide_form(psimpleform)
+    fl_do_forms()
+    fl_hide_form(psimpleform)
     return 0
 
 

@@ -14,8 +14,17 @@
 
 import sys
 #sys.path.append("..")
-from xformslib import library as xf
-from xformslib import xfdata as xfc
+from xformslib.flbasic import *
+from xformslib.flxbasic import *
+from xformslib.flbrowser import *
+from xformslib.flpopup import *
+from xformslib.flinput import *
+from xformslib.flselect import *
+from xformslib.flslider import *
+from xformslib.flcounter import *
+from xformslib.flbutton import *
+from xformslib.flmisc import *
+from xformslib.xfdata import *
 
 
 
@@ -31,115 +40,108 @@ class FD_form0(object):
 
 
 
-# callbacks for form form0
+class Flobjreturn(object):
+    def __init__(self, lsysargv, sysargv):
 
-mess = ["slider returned", "counter returned", \
-        "input 1 returned", "input 2 returned"]
+        self.mess = ["slider returned", "counter returned", \
+                "input 1 returned", "input 2 returned"]
 
+        fl_set_border_width(-2)
 
-def return_cb(pobj, data):
-    xf.fl_addto_browser(fd_form0.br, mess[data])
+        fl_initialize(lsysargv, sysargv, "FormDemo", 0, 0)
+        self.fd_form0 = self.create_form_form0()
 
+        # fill-in form initialization code
+        self.set_when(0)
+        fl_set_object_dblbuffer(self.fd_form0.br, 1)
 
+        pitem1st = fl_add_select_items(self.fd_form0.when, "RETURN_NONE")
+        fl_popup_entry_set_shortcut(pitem1st, FL_RETURN_NONE)
 
-def set_when(n):
-    xf.fl_set_object_return(fd_form0.pobj[0], n)
-    xf.fl_set_object_return(fd_form0.pobj[1], n)
-    xf.fl_set_object_return(fd_form0.pobj[2], n)
-    xf.fl_set_object_return(fd_form0.pobj[3], n)
-
-
-
-def when_cb(pobj, data):
-    set_when(xf.fl_get_select_item(pobj).contents.val)
-
-
-
-def resetlog_cb(pobj, data):
-    xf.fl_clear_browser(fd_form0.br)
-
-
-
-def main(lsysargv, sysargv):
-    global fd_form0
-
-    xf.fl_set_border_width(-2)
-
-    xf.fl_initialize(lsysargv, sysargv, "FormDemo", 0, 0)
-    fd_form0 = create_form_form0()
-
-    # fill-in form initialization code
-    set_when(0)
-    xf.fl_set_object_dblbuffer(fd_form0.br, 1)
-
-    pitem1st = xf.fl_add_select_items(fd_form0.when, "RETURN_NONE")
-    xf.fl_popup_entry_set_shortcut(pitem1st, xfc.FL_RETURN_NONE)
-
-    pitem2nd = xf.fl_insert_select_items(fd_form0.when, pitem1st, \
+        pitem2nd = fl_insert_select_items(self.fd_form0.when, pitem1st, \
                                          "RETURN_CHANGED")
-    xf.fl_popup_entry_set_shortcut(pitem2nd, xfc.FL_RETURN_CHANGED)
+        fl_popup_entry_set_shortcut(pitem2nd, FL_RETURN_CHANGED)
 
-    pitem3rd = xf.fl_insert_select_items(fd_form0.when, pitem2nd, \
+        pitem3rd = fl_insert_select_items(self.fd_form0.when, pitem2nd, \
                                          "RETURN_END")
-    xf.fl_popup_entry_set_shortcut(pitem3rd,  xfc.FL_RETURN_END)
-    pitem4th = xf.fl_insert_select_items(fd_form0.when, pitem3rd, \
+        fl_popup_entry_set_shortcut(pitem3rd, FL_RETURN_END)
+        pitem4th = fl_insert_select_items(self.fd_form0.when, pitem3rd, \
                                          "RETURN_END_CHANGED")
-    xf.fl_popup_entry_set_shortcut(pitem4th, xfc.FL_RETURN_END_CHANGED)
-    pitem5th = xf.fl_insert_select_items(fd_form0.when, pitem4th, \
+        fl_popup_entry_set_shortcut(pitem4th, FL_RETURN_END_CHANGED)
+        pitem5th = fl_insert_select_items(self.fd_form0.when, pitem4th, \
                                          "RETURN_ALWAYS")
-    xf.fl_popup_entry_set_shortcut(pitem5th, xfc.FL_RETURN_ALWAYS)
+        fl_popup_entry_set_shortcut(pitem5th, FL_RETURN_ALWAYS)
 
-    # show the first form
-    xf.fl_show_form(fd_form0.form0, xfc.FL_PLACE_CENTER, xfc.FL_FULLBORDER, \
-                    "form0")
+        # show the first form
+        fl_show_form(self.fd_form0.form0, FL_PLACE_CENTER, FL_FULLBORDER, \
+                     "form0")
 
-    xf.fl_do_forms()
-
-    return 0
+        fl_do_forms()
 
 
+    # callbacks for form form0
 
-def create_form_form0():
+    def return_cb(self, pobj, data):
+        fl_addto_browser(self.fd_form0.br, self.mess[data])
 
-    fdui = FD_form0()
 
-    fdui.form0 = xf.fl_bgn_form(xfc.FL_NO_BOX, 321, 276)
+    def set_when(self, n):
+        fl_set_object_return(self.fd_form0.pobj[0], n)
+        fl_set_object_return(self.fd_form0.pobj[1], n)
+        fl_set_object_return(self.fd_form0.pobj[2], n)
+        fl_set_object_return(self.fd_form0.pobj[3], n)
 
-    pobj = xf.fl_add_box(xfc.FL_UP_BOX, 0, 0, 321, 276, "")
 
-    fdui.pobj[0] = xf.fl_add_valslider(xfc.FL_HOR_SLIDER, 12, 55, 138, 22, "")
-    xf.fl_set_object_lalign(fdui.pobj[0] ,xfc.FL_ALIGN_BOTTOM| xfc.FL_ALIGN_INSIDE)
-    xf.fl_set_object_callback(fdui.pobj[0], return_cb, 0)
-    xf.fl_set_object_return(fdui.pobj[0], xfc.FL_RETURN_CHANGED)
+    def when_cb(self, pobj, data):
+        self.set_when(fl_get_select_item(pobj).contents.val)
 
-    fdui.pobj[1] = xf.fl_add_counter(xfc.FL_NORMAL_COUNTER, 12, 85, 138, 22, "")
-    xf.fl_set_object_lalign(fdui.pobj[1], xfc.FL_ALIGN_BOTTOM | xfc.FL_ALIGN_INSIDE)
-    xf.fl_set_object_callback(fdui.pobj[1], return_cb, 1)
 
-    fdui.pobj[2] = xf.fl_add_input(xfc.FL_NORMAL_INPUT, 12, 150, 138, 25, "")
-    xf.fl_set_object_callback(fdui.pobj[2], return_cb, 2)
+    def resetlog_cb(self, pobj, data):
+        fl_clear_browser(self.fd_form0.br)
 
-    fdui.br = xf.fl_add_browser(xfc.FL_NORMAL_BROWSER, 170, 55, 140, 160, "")
 
-    fdui.pobj[3] = xf.fl_add_input(xfc.FL_INT_INPUT, 12, 187, 138, 25, "")
-    xf.fl_set_object_lalign(fdui.pobj[3], xfc.FL_ALIGN_LEFT | xfc.FL_ALIGN_INSIDE)
-    xf.fl_set_object_callback(fdui.pobj[3], return_cb, 3)
+    def create_form_form0(self):
 
-    fdui.when = xf.fl_add_select(xfc.FL_NORMAL_SELECT, 40, 12, 240, 27, "")
-    xf.fl_set_object_callback(fdui.when, when_cb, 0)
+        fdui = FD_form0()
 
-    pobj = xf.fl_add_button(xfc.FL_NORMAL_BUTTON, 170, 239, 80, 25, "Done")
+        fdui.form0 = fl_bgn_form(FL_NO_BOX, 321, 276)
 
-    pobj = xf.fl_add_button(xfc.FL_NORMAL_BUTTON, 70, 239, 80, 25, "ResetLog")
-    xf.fl_set_object_callback(pobj, resetlog_cb, 0)
+        pobj = fl_add_box(FL_UP_BOX, 0, 0, 321, 276, "")
 
-    xf.fl_end_form()
+        fdui.pobj[0] = fl_add_valslider(FL_HOR_SLIDER, 12, 55, 138, 22, "")
+        fl_set_object_lalign(fdui.pobj[0] ,FL_ALIGN_BOTTOM| FL_ALIGN_INSIDE)
+        fl_set_object_callback(fdui.pobj[0], self.return_cb, 0)
+        fl_set_object_return(fdui.pobj[0], FL_RETURN_CHANGED)
 
-    return fdui
+        fdui.pobj[1] = fl_add_counter(FL_NORMAL_COUNTER, 12, 85, 138, 22, "")
+        fl_set_object_lalign(fdui.pobj[1], FL_ALIGN_BOTTOM | FL_ALIGN_INSIDE)
+        fl_set_object_callback(fdui.pobj[1], self.return_cb, 1)
+
+        fdui.pobj[2] = fl_add_input(FL_NORMAL_INPUT, 12, 150, 138, 25, "")
+        fl_set_object_callback(fdui.pobj[2], self.return_cb, 2)
+
+        fdui.br = fl_add_browser(FL_NORMAL_BROWSER, 170, 55, 140, 160, "")
+
+        fdui.pobj[3] = fl_add_input(FL_INT_INPUT, 12, 187, 138, 25, "")
+        fl_set_object_lalign(fdui.pobj[3], FL_ALIGN_LEFT | FL_ALIGN_INSIDE)
+        fl_set_object_callback(fdui.pobj[3], self.return_cb, 3)
+
+        fdui.when = fl_add_select(FL_NORMAL_SELECT, 40, 12, 240, 27, "")
+        fl_set_object_callback(fdui.when, self.when_cb, 0)
+
+        pobj = fl_add_button(FL_NORMAL_BUTTON, 170, 239, 80, 25, "Done")
+
+        pobj = fl_add_button(FL_NORMAL_BUTTON, 70, 239, 80, 25, "ResetLog")
+        fl_set_object_callback(pobj, self.resetlog_cb, 0)
+
+        fl_end_form()
+
+        return fdui
+
 
 
 
 
 if __name__ == '__main__':
-    main(len(sys.argv), sys.argv)
+    Flobjreturn(len(sys.argv), sys.argv)
 

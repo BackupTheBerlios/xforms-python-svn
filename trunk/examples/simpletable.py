@@ -10,8 +10,12 @@
 
 import sys
 #sys.path.append("..")
-from xformslib import library as xf
-from xformslib import xfdata as xfc
+from xformslib.flbasic import *
+from xformslib.flxbasic import *
+from xformslib.flbutton import *
+from xformslib.flmisc import *
+from xformslib.xfdata import *
+
 
 
 initx = inity = 0
@@ -56,101 +60,96 @@ for c in range(0, len(coln_headers)):
 
 
 
-def fill_values_in_table():
+class Flsimpletable(object):
+    def __init__(self, lsysargv, sysargv):
 
-    firstcellposx = initx + wcell
-    firstcellposy = inity + hcell
-    fontsize = xfc.FL_NORMAL_SIZE
-    for row in range (0, len(row_headers)):
+        fl_initialize(lsysargv, sysargv, "TableDemo", 0, 0)
+
+        self.pform = fl_bgn_form(FL_UP_BOX, \
+                                   (len(coln_headers)+1) * wcell, \
+                                   (len(row_headers)+1) * hcell)
+        pvertex = fl_add_button(FL_NORMAL_BUTTON, initx, inity, \
+                                   wcell, hcell, "")
+        fl_set_object_resize(pvertex, FL_RESIZE_ALL)
+
+        self.set_column_headers()
+        self.set_row_headers()
+        self.fill_values_in_table()
+
+        fl_end_form()
+
+        fl_show_form(self.pform, FL_PLACE_ASPECT, FL_FULLBORDER, \
+                        "SimpleTable")
+
+        while fl_do_forms():
+            pass                    # empty
+
+
+    def fill_values_in_table(self):
+
+        firstcellposx = initx + wcell
+        firstcellposy = inity + hcell
+        fontsize = FL_NORMAL_SIZE
+        for row in range (0, len(row_headers)):
+            for coln in range(0, len(coln_headers)):
+                # set the size to fit text in
+                cellvalue = table_values[row][coln]
+                rightwidth = len(cellvalue)*10
+                if rightwidth < wcell:          #mincellwidth[coln]
+                    cellwidth[coln] = wcell     #mincellwidth[coln]
+                    fontsize = FL_NORMAL_SIZE
+                elif rightwidth >= wcell:       #mincellwidth[coln]
+                    cellwidth[coln] = rightwidth
+                    fontsize = FL_TINY_SIZE
+                # fill cell with text
+                ptxtcell = fl_add_text(FL_NORMAL_TEXT, \
+                             (wcell*coln) + firstcellposx, \
+                             (hcell*row) + firstcellposy, \
+                             cellwidth[coln], hcell, cellvalue)
+                #ptxtcell = fl_add_text(FL_NORMAL_TEXT, \
+                #             table_relpos[row][coln][0] + firstcellposx, \
+                #             table_relpos[row][coln][1] + firstcellposy, \
+                #             cellwidth[coln], 25, table_values[row][coln])
+                fl_set_object_lcol(ptxtcell, FL_GREENYELLOW)
+                fl_set_object_lstyle(ptxtcell, FL_FIXED_STYLE)
+                fl_set_object_lsize(ptxtcell, fontsize)
+                fl_set_object_resize(ptxtcell, FL_RESIZE_ALL)
+                if cellvalue.isdigit():
+                    fl_set_object_lalign(ptxtcell, FL_ALIGN_RIGHT)
+                else:
+                    fl_set_object_lalign(ptxtcell, FL_ALIGN_LEFT)
+
+        fl_adjust_form_size(self.pform)
+        fl_redraw_form(self.pform)
+
+
+    def set_column_headers(self):
+        ch_dynx = initx
+        ch_dyny = inity
         for coln in range(0, len(coln_headers)):
-            # set the size to fit text in
-            cellvalue = table_values[row][coln]
-            rightwidth = len(cellvalue)*10
-            if rightwidth < wcell:          #mincellwidth[coln]
-                cellwidth[coln] = wcell     #mincellwidth[coln]
-                fontsize = xfc.FL_NORMAL_SIZE
-            elif rightwidth >= wcell:       #mincellwidth[coln]
-                cellwidth[coln] = rightwidth
-                fontsize = xfc.FL_TINY_SIZE
-            # fill cell with text
-            ptxtcell = xf.fl_add_text(xfc.FL_NORMAL_TEXT, \
-                         (wcell*coln) + firstcellposx, \
-                         (hcell*row) + firstcellposy, \
-                         cellwidth[coln], hcell, cellvalue)
-            #ptxtcell = xf.fl_add_text(xfc.FL_NORMAL_TEXT, \
-            #             table_relpos[row][coln][0] + firstcellposx, \
-            #             table_relpos[row][coln][1] + firstcellposy, \
-            #             cellwidth[coln], 25, table_values[row][coln])
-            xf.fl_set_object_lcol(ptxtcell, xfc.FL_GREENYELLOW)
-            xf.fl_set_object_lstyle(ptxtcell, xfc.FL_FIXED_STYLE)
-            xf.fl_set_object_lsize(ptxtcell, fontsize)
-            xf.fl_set_object_resize(ptxtcell, xfc.FL_RESIZE_ALL)
-            if cellvalue.isdigit():
-                xf.fl_set_object_lalign(ptxtcell, xfc.FL_ALIGN_RIGHT)
-            else:
-                xf.fl_set_object_lalign(ptxtcell, xfc.FL_ALIGN_LEFT)
-
-    xf.fl_adjust_form_size(pform)
-    xf.fl_redraw_form(pform)
+            ch_dynx += wcell
+            pbtncol[coln] = fl_add_button(FL_NORMAL_BUTTON, ch_dynx, \
+                                ch_dyny, wcell, hcell, coln_headers[coln])
+            fl_set_object_lcol(pbtncol[coln], FL_YELLOW)
+            fl_set_object_lstyle(pbtncol[coln], FL_BOLD_STYLE)
+            fl_set_object_resize(pbtncol[coln], FL_RESIZE_ALL)
+            fl_set_object_lalign(pbtncol[coln], FL_ALIGN_CENTER)
 
 
+    def set_row_headers(self):
+        rh_dynx = initx
+        rh_dyny = inity
+        for row in range(0, len(row_headers)):
+            rh_dyny += hcell
+            pbtnrow[row] = fl_add_button(FL_NORMAL_BUTTON, rh_dynx, \
+                            rh_dyny, wcell, hcell, row_headers[row])
+            fl_set_object_lcol(pbtnrow[row], FL_LAVENDER)
+            fl_set_object_lstyle(pbtnrow[row], FL_BOLD_STYLE)
+            fl_set_object_resize(pbtnrow[row], FL_RESIZE_ALL)
 
-def set_column_headers():
-
-    ch_dynx = initx
-    ch_dyny = inity
-    for coln in range(0, len(coln_headers)):
-        ch_dynx += wcell
-        pbtncol[coln] = xf.fl_add_button(xfc.FL_NORMAL_BUTTON, ch_dynx, ch_dyny, \
-                                        wcell, hcell, coln_headers[coln])
-        xf.fl_set_object_lcol(pbtncol[coln], xfc.FL_YELLOW)
-        xf.fl_set_object_lstyle(pbtncol[coln], xfc.FL_BOLD_STYLE)
-        xf.fl_set_object_resize(pbtncol[coln], xfc.FL_RESIZE_ALL)
-        xf.fl_set_object_lalign(pbtncol[coln], xfc.FL_ALIGN_CENTER)
-
-
-def set_row_headers():
-
-    rh_dynx = initx
-    rh_dyny = inity
-    for row in range(0, len(row_headers)):
-        rh_dyny += hcell
-        pbtnrow[row] = xf.fl_add_button(xfc.FL_NORMAL_BUTTON, rh_dynx, rh_dyny, \
-                                       wcell, hcell, row_headers[row])
-        xf.fl_set_object_lcol(pbtnrow[row], xfc.FL_LAVENDER)
-        xf.fl_set_object_lstyle(pbtnrow[row], xfc.FL_BOLD_STYLE)
-        xf.fl_set_object_resize(pbtnrow[row], xfc.FL_RESIZE_ALL)
-
-
-
-def main(lsysargv, sysargv):
-    global pform
-
-    xf.fl_initialize(lsysargv, sysargv, "TableDemo", 0, 0)
-
-    pform = xf.fl_bgn_form(xfc.FL_UP_BOX, \
-                           (len(coln_headers)+1) * wcell, \
-                           (len(row_headers)+1) * hcell)
-
-    pvertex = xf.fl_add_button(xfc.FL_NORMAL_BUTTON, initx, inity, \
-                               wcell, hcell, "")
-    xf.fl_set_object_resize(pvertex, xfc.FL_RESIZE_ALL)
-
-    set_column_headers()
-    set_row_headers()
-
-    fill_values_in_table()
-
-    xf.fl_end_form()
-
-    xf.fl_show_form(pform, xfc.FL_PLACE_ASPECT, xfc.FL_FULLBORDER, \
-                    "SimpleTable")
-
-    while xf.fl_do_forms():
-        pass                    # empty
 
 
 
 if __name__ == '__main__':
-    main(len(sys.argv), sys.argv)
+    Flsimpletable(len(sys.argv), sys.argv)
 

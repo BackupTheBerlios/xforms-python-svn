@@ -24,9 +24,6 @@
     ctypes and other developers.
 
     *****************************************************************
-
-
-    @newfield example: Example, Example
 """
 
 
@@ -1297,13 +1294,13 @@ FL_SIGNAL_HANDLER = cty.CFUNCTYPE(None, cty.c_int, cty.c_void_p)
     no return
 """
 
+
 FL_TIMEOUT_CALLBACK = cty.CFUNCTYPE(None, cty.c_int, cty.c_void_p)
 """ FL_TIMEOUT_CALLBACK(num, ptr_void)
 
     prototype for handling timeout callback (used by fl_add_timeout),
     no return
  """
-
 
 
 # at close (WM menu delete/close etc.)

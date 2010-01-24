@@ -11,8 +11,12 @@
 
 import sys
 #sys.path.append("..")
-from xformslib import library as xf
-from xformslib import xfdata as xfc
+from xformslib.flbasic import *
+from xformslib.flxbasic import *
+from xformslib.flmisc import *
+from xformslib.flbutton import *
+from xformslib.flinput import *
+from xformslib.xfdata import *
 
 
 
@@ -30,56 +34,47 @@ def create_form_form():
 
     fdui = FD_form()
 
-    fdui.pform = xf.fl_bgn_form(xfc.FL_NO_BOX, 470, 370)
+    fdui.pform = fl_bgn_form(FL_NO_BOX, 470, 370)
+    pobj = fl_add_box(FL_UP_BOX, 0, 0, 470, 370, "")
+    pobj = fl_add_box(FL_SHADOW_BOX, 30, 30, 410, 70, "Scaling Forms")
+    fl_set_object_color(pobj, 9, 47)
+    fl_set_object_lsize(pobj, 16)
 
-    pobj = xf.fl_add_box(xfc.FL_UP_BOX, 0, 0, 470, 370, "")
-
-    pobj = xf.fl_add_box(xfc.FL_SHADOW_BOX, 30, 30, 410, 70, "Scaling Forms")
-    xf.fl_set_object_color(pobj, 9, 47)
-    xf.fl_set_object_lsize(pobj, 16)
-
-    fdui.psmallerobj = xf.fl_add_button(xfc.FL_NORMAL_BUTTON, 30, 220, 130, 40,
+    fdui.psmallerobj = fl_add_button(FL_NORMAL_BUTTON, 30, 220, 130, 40,
                                        "Smaller")
-
-    fdui.plargerobj = xf.fl_add_button(xfc.FL_NORMAL_BUTTON, 310, 220, 130, 40,
+    fdui.plargerobj = fl_add_button(FL_NORMAL_BUTTON, 310, 220, 130, 40,
                                       "Larger")
-
-    fdui.pscaleobj = xf.fl_add_input(xfc.FL_FLOAT_INPUT, 170, 140, 270, 40,
+    fdui.pscaleobj = fl_add_input(FL_FLOAT_INPUT, 170, 140, 270, 40,
                                     "Scale:")
-
-    fdui.pexitobj = xf.fl_add_button(xfc.FL_NORMAL_BUTTON, 310, 300, 130, 40,
+    fdui.pexitobj = fl_add_button(FL_NORMAL_BUTTON, 310, 300, 130, 40,
                                     "Exit")
-
-    xf.fl_end_form()
-
+    fl_end_form()
     return fdui
 
 
-
 def main(lsysargv, sysargv):
-    global sc, ui
     sc = 1.0
 
-    xf.fl_initialize(lsysargv, sysargv, "FormDemo", 0, 0)
+    fl_initialize(lsysargv, sysargv, "FormDemo", 0, 0)
     ui = create_form_form()
     strng = "%.2f" % sc
-    xf.fl_set_input(ui.pscaleobj, strng)
+    fl_set_input(ui.pscaleobj, strng)
 
-    xf.fl_show_form(ui.pform, xfc.FL_PLACE_CENTER | xfc.FL_FREE_SIZE,
-                    xfc.FL_FULLBORDER, "Scaling")
+    fl_show_form(ui.pform, FL_PLACE_CENTER | FL_FREE_SIZE,
+                    FL_FULLBORDER, "Scaling")
 
     while True:
         oldsc = sc
-        pobj = xf.fl_do_forms()
+        pobj = fl_do_forms()
 
-        if xf.fl_is_same_object(pobj, ui.pexitobj):
+        if fl_is_same_object(pobj, ui.pexitobj):
             sys.exit(0)
-        elif xf.fl_is_same_object(pobj, ui.psmallerobj):
+        elif fl_is_same_object(pobj, ui.psmallerobj):
             sc = sc * 0.8
-        elif xf.fl_is_same_object(pobj, ui.plargerobj):
+        elif fl_is_same_object(pobj, ui.plargerobj):
             sc = sc / 0.8
-        elif xf.fl_is_same_object(pobj, ui.pscaleobj):
-            sc = float(xf.fl_get_input(ui.pscaleobj))
+        elif fl_is_same_object(pobj, ui.pscaleobj):
+            sc = float(fl_get_input(ui.pscaleobj))
 
         if sc < 0.50:
             sc = 0.50
@@ -87,10 +82,12 @@ def main(lsysargv, sysargv):
             sc = 3
 
         if sc != oldsc:
-            xf.fl_scale_form(ui.pform, sc/oldsc, sc/oldsc)
-            xf.fl_redraw_form(ui.pform)          # to avoid garbage on screen
+            fl_scale_form(ui.pform, sc/oldsc, sc/oldsc)
+            fl_redraw_form(ui.pform)      # to avoid garbage on screen
             strng = "%.2f" % sc
-            xf.fl_set_input(ui.pscaleobj, strng)
+            fl_set_input(ui.pscaleobj, strng)
+
+
 
 
 

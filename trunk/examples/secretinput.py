@@ -11,45 +11,48 @@
 
 import sys
 #sys.path.append("..")
-from xformslib import library as xf
-from xformslib import xfdata as xfc
+from xformslib.flbasic import *
+from xformslib.flxbasic import *
+from xformslib.flinput import *
+from xformslib.flbutton import *
+from xformslib.flmisc import *
+from xformslib.xfdata import *
 
 
-def exitcb(pobj, data):
-    xf.fl_hide_form(pform)
-    xf.fl_finish()
-    sys.exit(0)
+
+class Flsecrinp(object):
+    def __init__(self, lsysargv, sysargv):
+
+        fl_initialize(lsysargv, sysargv, "FormDemo", 0, 0)
+
+        self.pform = fl_bgn_form(FL_UP_BOX, 400, 300)
+        ppassword1 = fl_add_input(FL_SECRET_INPUT, 140, 40, \
+                                     160, 40, "Password 1:")
+        ppassword2 = fl_add_input(FL_SECRET_INPUT, 140, 100, \
+                                     160, 40, "Password 2:")
+        pinfo = fl_add_box(FL_SHADOW_BOX, 20, 160, 360, 40, "")
+        pbut = fl_add_button(FL_NORMAL_BUTTON, 280, 240, \
+                                100, 40, "Quit")
+        fl_set_object_callback(pbut, self.exitcb, 0)
+
+        fl_end_form()
+
+        fl_show_form(self.pform, FL_PLACE_MOUSE, FL_NOBORDER, 0)
+
+        while fl_do_forms():
+            strng = "Password 1 is: %s , Password 2 is: %s" % \
+                    (fl_get_input(ppassword1), fl_get_input(ppassword2))
+            fl_set_object_label(pinfo, strng)
 
 
-def main(lsysargv, sysargv):
-    global pform
+    def exitcb(self, pobj, data):
+        fl_hide_form(self.pform)
+        fl_finish()
+        sys.exit(0)
 
-    xf.fl_initialize(lsysargv, sysargv, "FormDemo", 0, 0)
-
-    pform = xf.fl_bgn_form(xfc.FL_UP_BOX, 400, 300)
-    ppassword1 = xf.fl_add_input(xfc.FL_SECRET_INPUT, 140, 40, \
-                                 160, 40, "Password 1:")
-    ppassword2 = xf.fl_add_input(xfc.FL_SECRET_INPUT, 140, 100, \
-                                 160, 40, "Password 2:")
-    pinfo = xf.fl_add_box(xfc.FL_SHADOW_BOX, 20, 160, 360, 40, "")
-    pbut = xf.fl_add_button(xfc.FL_NORMAL_BUTTON, 280, 240, \
-                            100, 40, "Quit")
-    xf.fl_set_object_callback(pbut, exitcb, 0)
-
-    xf.fl_end_form()
-
-    xf.fl_show_form(pform, xfc.FL_PLACE_MOUSE, xfc.FL_NOBORDER, 0)
-
-    while xf.fl_do_forms():
-        strng = "Password 1 is: %s , Password 2 is: %s" % \
-                (xf.fl_get_input(ppassword1), xf.fl_get_input(ppassword2))
-        xf.fl_set_object_label(pinfo, strng)
-
-
-    return 0
 
 
 
 if __name__ == '__main__':
-    main(len(sys.argv), sys.argv)
+    Flsecrinp(len(sys.argv), sys.argv)
 

@@ -22,11 +22,6 @@
 
     See CREDITS file to read acknowledgements and thanks to XForms,
     ctypes and other developers.
-
-    *****************************************************************
-
-
-    @newfield example: Example, Example
 """
 
 

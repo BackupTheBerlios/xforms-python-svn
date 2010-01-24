@@ -9,92 +9,95 @@
 
 import sys
 #sys.path.append("..")
-from xformslib import library as xf
-from xformslib import xfdata as xfc
+from xformslib.flbasic import *
+from xformslib.flxbasic import *
+from xformslib.flinput import *
+from xformslib.flbutton import *
+from xformslib.flpopup import *
+from xformslib.flselect import *
+from xformslib.flmisc import *
+from xformslib.xfdata import *
 
 
 
-def exitcb(pobj, data):
-    xf.fl_hide_form(pform)
-    xf.fl_finish()
-    sys.exit()
+
+class Flselect(object):
+    def __init__(self, lsysargv, sysargv):
+
+        fl_flip_yorigin()
+        fl_initialize(lsysargv, sysargv, "FormDemo", 0, 0)
+
+        self.create_form()
+
+        fl_show_form(self.pform, FL_PLACE_CENTER | FL_FREE_SIZE, \
+                        FL_TRANSIENT, "Select Object Demo")
+        while True:
+            pobj = fl_do_forms()
+            if fl_is_same_object(pobj, self.preadyobj):
+                break
 
 
-def cb(pr):
-    print ("CallBack: %s\n" % pr.contents.label)
-    return 0
+    def exitcb(self, pobj, data):
+        fl_hide_form(self.pform)
+        fl_finish()
+        sys.exit()
 
 
-def create_form():
-
-    global pform, preadyobj
-
-    pform = xf.fl_bgn_form(xfc.FL_NO_BOX, 420, 360)
-
-    xf.fl_add_box(xfc.FL_UP_BOX, 0, 0, 420, 360, "")
-
-    xf.fl_add_input(xfc.FL_NORMAL_INPUT, 70, 300, 320, 30, "Name")
-    xf.fl_add_input(xfc.FL_NORMAL_INPUT, 70, 260, 320, 30, "Address")
-    xf.fl_add_input(xfc.FL_NORMAL_INPUT, 70, 220, 320, 30, "City")
-    xf.fl_add_input(xfc.FL_NORMAL_INPUT, 70, 180, 320, 30, "Country")
-
-    psexobj = xf.fl_add_select(xfc.FL_NORMAL_SELECT, 70, 130, 110, 30, "Sex")
-
-    pmaleent = xf.fl_add_select_items(psexobj, "Male%SM")
-    xf.fl_popup_entry_set_callback(pmaleent, cb)
-    xf.fl_popup_entry_set_state(pmaleent, xfc.FL_POPUP_NONE)            # 0
-    xf.fl_popup_entry_set_shortcut(pmaleent, "M")
-
-    pfemaleent = xf.fl_add_select_items(psexobj, "Female%SF")
-    xf.fl_popup_entry_set_callback(pfemaleent, cb)
-    xf.fl_popup_entry_set_state(pfemaleent, xfc.FL_POPUP_NONE)          # 0
-    xf.fl_popup_entry_set_shortcut(pfemaleent, "F")
-
-    xf.fl_set_object_shortcut(psexobj, "S", 1)
-
-    pchildobj = xf.fl_add_select(xfc.FL_MENU_SELECT, 280, 130, 110, 30,
-                                "Children")
-    xf.fl_add_select_items(pchildobj, "Zero|One|Two|Three|Four|Many")
-    xf.fl_set_object_shortcut(pchildobj, "C", 1)
-    xf.fl_popup_set_title(xf.fl_get_select_popup(pchildobj), "Kids")
-
-    plicenceobj = xf.fl_add_select(xfc.FL_NORMAL_SELECT, 280, 80, 110, 30, \
-                                   "Licence")
-    xf.fl_add_select_items(plicenceobj, "Yes|No")
-    xf.fl_set_select_policy(plicenceobj, xfc.FL_POPUP_DRAG_SELECT)
-
-    pmarriedobj = xf.fl_add_select(xfc.FL_DROPLIST_SELECT, 70, 80, 110, 27,
-                                   "Married")
-    xf.fl_add_select_items(pmarriedobj, "Yes|No")
-
-    preadyobj = xf.fl_add_button(xfc.FL_NORMAL_BUTTON, 150, 20, 140, 30, \
-                                "Quit")
-    xf.fl_set_object_callback(preadyobj, exitcb, 0)
-
-    xf.fl_end_form()
+    def cb(self, pr):
+        print ("CallBack: %s\n" % pr.contents.label)
+        return 0
 
 
+    def create_form(self):
 
-def main(lsysargv, sysargv):
+        self.pform = fl_bgn_form(FL_NO_BOX, 420, 360)
 
+        fl_add_box(FL_UP_BOX, 0, 0, 420, 360, "")
 
-    xf.fl_flip_yorigin()
-    xf.fl_initialize(lsysargv, sysargv, "FormDemo", 0, 0)
+        fl_add_input(FL_NORMAL_INPUT, 70, 300, 320, 30, "Name")
+        fl_add_input(FL_NORMAL_INPUT, 70, 260, 320, 30, "Address")
+        fl_add_input(FL_NORMAL_INPUT, 70, 220, 320, 30, "City")
+        fl_add_input(FL_NORMAL_INPUT, 70, 180, 320, 30, "Country")
 
-    create_form()
+        psexobj = fl_add_select(FL_NORMAL_SELECT, 70, 130, \
+                                   110, 30, "Sex")
 
-    xf.fl_show_form(pform, xfc.FL_PLACE_CENTER | xfc.FL_FREE_SIZE, \
-                    xfc.FL_TRANSIENT, "Select Object Demo")
+        pmaleent = fl_add_select_items(psexobj, "Male%SM")
+        fl_popup_entry_set_callback(pmaleent, self.cb)
+        fl_popup_entry_set_state(pmaleent, FL_POPUP_NONE)        # 0
+        fl_popup_entry_set_shortcut(pmaleent, "M")
 
-    while True:
-        pobj = xf.fl_do_forms()
-        if xf.fl_is_same_object(pobj, preadyobj):
-            break
+        pfemaleent = fl_add_select_items(psexobj, "Female%SF")
+        fl_popup_entry_set_callback(pfemaleent, self.cb)
+        fl_popup_entry_set_state(pfemaleent, FL_POPUP_NONE)      # 0
+        fl_popup_entry_set_shortcut(pfemaleent, "F")
 
-    return 0
+        fl_set_object_shortcut(psexobj, "S", 1)
+
+        pchildobj = fl_add_select(FL_MENU_SELECT, 280, 130, 110, 30,
+                                    "Children")
+        fl_add_select_items(pchildobj, "Zero|One|Two|Three|Four|Many")
+        fl_set_object_shortcut(pchildobj, "C", 1)
+        fl_popup_set_title(fl_get_select_popup(pchildobj), "Kids")
+
+        plicenceobj = fl_add_select(FL_NORMAL_SELECT, 280, 80, \
+                                       110, 30, "Licence")
+        fl_add_select_items(plicenceobj, "Yes|No")
+        fl_set_select_policy(plicenceobj, FL_POPUP_DRAG_SELECT)
+
+        pmarriedobj = fl_add_select(FL_DROPLIST_SELECT, 70, 80, \
+                                       110, 27, "Married")
+        fl_add_select_items(pmarriedobj, "Yes|No")
+
+        self.preadyobj = fl_add_button(FL_NORMAL_BUTTON, 150, 20, \
+                                          140, 30, "Quit")
+        fl_set_object_callback(self.preadyobj, self.exitcb, 0)
+
+        fl_end_form()
+
 
 
 
 if __name__ == '__main__':
-    main(len(sys.argv), sys.argv)
+    Flselect(len(sys.argv), sys.argv)
 

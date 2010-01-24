@@ -11,59 +11,60 @@
 
 import sys
 #sys.path.append("..")
-from xformslib import library as xf
-from xformslib import xfdata as xfc
+from xformslib.flbasic import *
+from xformslib.flxbasic import *
+from xformslib.flpositioner import *
+from xformslib.flbutton import *
+from xformslib.flmisc import *
+from xformslib.xfdata import *
 
 
 
-# callback routine
 
-def positioner_cb(pobj, q):
+class Flpositioner(object):
+    def __init__(self, lsysargv, sysargv):
 
-    strng = "%f" % xf.fl_get_positioner_xvalue(pobj)
-    xf.fl_set_object_label(pxval, strng)
-    strng = "%f" % xf.fl_get_positioner_yvalue(pobj)
-    xf.fl_set_object_label(pyval, strng)
+        fl_initialize(lsysargv, sysargv, "FormDemo", 0, 0)
+
+        pform = fl_bgn_form(FL_UP_BOX, 400, 280)
+
+        ppos = fl_add_positioner(FL_NORMAL_POSITIONER, 40, 40, \
+                                    200, 200, "")
+        fl_set_positioner_xbounds(ppos, 0, 1)
+        fl_set_positioner_ybounds(ppos, 0, 1)
+        fl_set_object_callback(ppos, self.positioner_cb, 0)
+
+        self.pxval = fl_add_box(FL_DOWN_BOX, 270, 40, 100, 30, "")
+        fl_set_object_color(self.pxval, FL_COL1, FL_COL1)
+
+        self.pyval = fl_add_box(FL_DOWN_BOX, 270, 90, 100, 30, "")
+        fl_set_object_color(self.pyval, FL_COL1, FL_COL1)
+
+        fl_add_button(FL_NORMAL_BUTTON, 270, 210, 100, 30, \
+                         "Exit")
+        fl_end_form()
+        fl_show_form(pform, FL_PLACE_CENTER, FL_NOBORDER, \
+                        "positioner")
+
+        self.positioner_cb(ppos, 0)
+
+        fl_do_forms()
+        fl_hide_form(pform)
+        fl_finish()
 
 
+    # callback routine
+    def positioner_cb(self, pobj, q):
 
-def main(lsysargv, sysargv):
-    global pxval, pyval
+        strng = "%f" % fl_get_positioner_xvalue(pobj)
+        fl_set_object_label(self.pxval, strng)
+        strng = "%f" % fl_get_positioner_yvalue(pobj)
+        fl_set_object_label(self.pyval, strng)
 
-    xf.fl_initialize(lsysargv, sysargv, "FormDemo", 0, 0)
 
-    pform = xf.fl_bgn_form(xfc.FL_UP_BOX, 400, 280)
-
-    ppos = xf.fl_add_positioner(xfc.FL_NORMAL_POSITIONER, 40, 40, \
-                               200, 200, "")
-    xf.fl_set_positioner_xbounds(ppos, 0, 1)
-    xf.fl_set_positioner_ybounds(ppos, 0, 1)
-    xf.fl_set_object_callback(ppos, positioner_cb, 0)
-
-    pxval = xf.fl_add_box(xfc.FL_DOWN_BOX, 270, 40, 100, 30, "")
-    xf.fl_set_object_color(pxval, xfc.FL_COL1, xfc.FL_COL1)
-
-    pyval = xf.fl_add_box(xfc.FL_DOWN_BOX, 270, 90, 100, 30, "")
-    xf.fl_set_object_color(pyval, xfc.FL_COL1, xfc.FL_COL1)
-
-    xf.fl_add_button(xfc.FL_NORMAL_BUTTON, 270, 210, 100, 30, \
-                     "Exit")
-
-    xf.fl_end_form()
-
-    xf.fl_show_form(pform, xfc.FL_PLACE_CENTER, xfc.FL_NOBORDER, \
-                    "positioner")
-
-    positioner_cb(ppos, 0)
-
-    xf.fl_do_forms()
-    xf.fl_hide_form(pform)
-    xf.fl_finish()
-
-    return 0
 
 
 
 if __name__ == '__main__':
-    main(len(sys.argv), sys.argv)
+    Flpositioner(len(sys.argv), sys.argv)
 

@@ -22,11 +22,6 @@
 
     See CREDITS file to read acknowledgements and thanks to XForms,
     ctypes and other developers.
-
-    *****************************************************************
-
-
-    @newfield example: Example, Example
 """
 
 
@@ -284,15 +279,16 @@ def fl_app_signal_direct(flag):
 
 # timeouts
 
-def fl_add_timeout(msec, py_TimeoutCallback, vdata):
+#def fl_add_timeout(msec, py_TimeoutCallback, vdata):
+def fl_add_timeout(msec, py_TimeoutCallback, pobjdata):
     """Adds a timeout callback after a specified elapsed time.
 
     @param msec: time elapsed in milliseconds
     @type msec: long
-    @param py_TimeoutCallback: python function to be invoked - no return
+    @param py_TimeoutCallback: python function to be invoked, no return
     @type py_TimeoutCallback: __ funcname (num, ptr_void) __
-    @param vdata: user data to be passed to function
-    @type vdata: pointer to void
+    @param pobjdata: user data to be passed to function (pObject or None)
+    @type pobjdata: pointer to xfdata.FL_OBJECT or None
 
     @return: timer number id
     @rtype: int
@@ -311,10 +307,16 @@ def fl_add_timeout(msec, py_TimeoutCallback, vdata):
            FL_TIMEOUT_CALLBACK callback, void * data) """)
     library.check_if_initialized()
     lmsec = library.convert_to_long(msec)
-    pvdata = cty.cast(vdata, cty.c_void_p)
+    if not pobjdata:            # None passed
+        pvdata = cty.cast(pobjdata, cty.c_void_p)
+    elif isinstance(pobjdata, cty.POINTER(xfdata.FL_OBJECT)):  # pObject passed
+        pvdata = pobjdata
+    elif isinstance(pobjdata, int) or isinstance(pobjdata, long):  # num passed
+        vdata = library.convert_to_long(pobjdata)
+        pvdata = cty.cast(pObject, cty.POINTER(cty.c_long))
     c_TimeoutCallback = xfdata.FL_TIMEOUT_CALLBACK(py_TimeoutCallback)
     library.keep_cfunc_refs(c_TimeoutCallback, py_TimeoutCallback)
-    library.keep_elem_refs(msec, lmsec, vdata, pvdata)
+    library.keep_elem_refs(msec, lmsec, pobjdata, pvdata)
     retval = _fl_add_timeout(lmsec, c_TimeoutCallback, pvdata)
     return retval
 

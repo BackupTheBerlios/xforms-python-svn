@@ -22,11 +22,6 @@
 
     See CREDITS file to read acknowledgements and thanks to XForms,
     ctypes and other developers.
-
-    *****************************************************************
-
-
-    @newfield example: Example, Example
 """
 
 
@@ -480,62 +475,68 @@ fl_set_choice_shortcut = fl_set_choices_shortcut
 
 # one liner
 
-def fl_show_oneliner(p1, p2, p3):
-    """
-        fl_show_oneliner(p1, p2, p3)
+def fl_show_oneliner(text, x, y):
+    """ Shows a one-line message that can only be removed programmatically.
+    Multi-line message is possible by embedding the newline character in text.
 
-        @status: Tested + NoDoc + Demo = OK
-    """
+    @param text: oneliner message text
+    @type text: str
+    @param x: horizontal position (relative to root window)
+    @type x: int
+    @param y: vertical position (relative to root window)
+    @type y: int
 
+    @example:  fl_show_oneliner("Button to close window", 134, 155)
+
+    @status: Tested + Doc + Demo = OK
+    """
     _fl_show_oneliner = library.cfuncproto(
-            library.load_so_libforms(), "fl_show_oneliner",
-            None, [xfdata.STRING, xfdata.FL_Coord, xfdata.FL_Coord],
-            """void fl_show_oneliner(const char * p1, FL_Coord p2,
-               FL_Coord p3)
-""")
+        library.load_so_libforms(), "fl_show_oneliner",
+        None, [xfdata.STRING, xfdata.FL_Coord, xfdata.FL_Coord],
+        """void fl_show_oneliner(const char * p1, FL_Coord p2,
+           FL_Coord p3)""")
     library.check_if_initialized()
-    sp1 = library.convert_to_string(p1)
-    ip2 = library.convert_to_FL_Coord(p2)
-    ip3 = library.convert_to_FL_Coord(p3)
-    library.keep_elem_refs(p1, p2, p3, sp1, ip2, ip3)
-    _fl_show_oneliner(sp1, ip2, ip3)
+    stext = library.convert_to_string(text)
+    ix = library.convert_to_FL_Coord(x)
+    iy = library.convert_to_FL_Coord(y)
+    library.keep_elem_refs(text, stext, x, ix, y, iy)
+    _fl_show_oneliner(stext, ix, iy)
 
 
 def fl_hide_oneliner():
-    """
-        fl_hide_oneliner()
+    """ Hides the oneliner message previously shown.
 
-        @status: Tested + NoDoc + Demo = OK
-    """
+    @example: fl_hide_oneliner()
 
+    @status: Tested + Doc + Demo = OK
+    """
     _fl_hide_oneliner = library.cfuncproto(
-            library.load_so_libforms(), "fl_hide_oneliner",
-            None, [],
-            """void fl_hide_oneliner()
-""")
+        library.load_so_libforms(), "fl_hide_oneliner",
+        None, [],
+        """void fl_hide_oneliner()""")
     library.check_if_initialized()
     _fl_hide_oneliner()
 
 
 def fl_set_oneliner_font(style, size):
-    """
-        fl_set_oneliner_font(style, size)
+    """ Sets font style and size to use in a oneliner message. 
 
-        @param style: label style (<int>)
-        @type style: (from xfdata module) FL_NORMAL_STYLE, FL_BOLD_STYLE,
-                     FL_ITALIC_STYLE, FL_BOLDITALIC_STYLE, FL_FIXED_STYLE,
-                     FL_FIXEDBOLD_STYLE, FL_FIXEDITALIC_STYLE,
-                     FL_FIXEDBOLDITALIC_STYLE, FL_TIMES_STYLE,
-                     FL_TIMESBOLD_STYLE, FL_TIMESITALIC_STYLE,
-                     FL_TIMESBOLDITALIC_STYLE, FL_MISC_STYLE,
-                     FL_MISCBOLD_STYLE, FL_MISCITALIC_STYLE, FL_SYMBOL_STYLE,
-                     FL_SHADOW_STYLE, FL_ENGRAVED_STYLE, FL_EMBOSSED_STYLE
-        @param size: label size (<int>)
-        @type size: (from xfdata module) FL_TINY_SIZE, FL_SMALL_SIZE,
-                    FL_NORMAL_SIZE, FL_MEDIUM_SIZE, FL_LARGE_SIZE,
-                    FL_HUGE_SIZE, FL_DEFAULT_SIZE
+    @param style: label style. Values (from xfdata module)
+        FL_NORMAL_STYLE, FL_BOLD_STYLE, FL_ITALIC_STYLE, FL_BOLDITALIC_STYLE,
+        FL_FIXED_STYLE, FL_FIXEDBOLD_STYLE, FL_FIXEDITALIC_STYLE,
+        FL_FIXEDBOLDITALIC_STYLE, FL_TIMES_STYLE, FL_TIMESBOLD_STYLE,
+        FL_TIMESITALIC_STYLE, FL_TIMESBOLDITALIC_STYLE, FL_MISC_STYLE,
+        FL_MISCBOLD_STYLE, FL_MISCITALIC_STYLE, FL_SYMBOL_STYLE,
+        FL_SHADOW_STYLE, FL_ENGRAVED_STYLE, FL_EMBOSSED_STYLE
+    @type style: int
+    @param size: label size. Values (from xfdata module) FL_TINY_SIZE,
+        FL_SMALL_SIZE, FL_NORMAL_SIZE, FL_MEDIUM_SIZE, FL_LARGE_SIZE,
+        FL_HUGE_SIZE, FL_DEFAULT_SIZE
+    @type size: int 
 
-        @status: Untested + NoDoc + NoDemo = NOT OK
+    @example: fl_set_oneliner_font(FL_BOLD_STYLE, FL_NORMAL_SIZE)
+
+    @status: Tested + Doc + NoDemo = OK
     """
     _fl_set_oneliner_font = library.cfuncproto(
         library.load_so_libforms(), "fl_set_oneliner_font",
@@ -551,10 +552,17 @@ def fl_set_oneliner_font(style, size):
 
 
 def fl_set_oneliner_color(fgcolr, bgcolr):
-    """
-         fl_set_oneliner_color(fgcolr, bgcolr)
+    """ Sets color to use with oneliner message. By default, the background
+    of the message is yellow and the text black.
 
-        @status: Untested + NoDoc + NoDemo = NOT OK
+    @param fgcolr: color value for oneliner foreground
+    @type fgcolr: long_pos
+    @param bgcolr: color value for oneliner background
+    @type bgcolr: long_pos
+
+    @example: fl_set_oneliner_color(fgcolr, bgcolr)
+
+    @status: Tested + Doc + NoDemo = OK
     """
     _fl_set_oneliner_color = library.cfuncproto(
         library.load_so_libforms(), "fl_set_oneliner_color",

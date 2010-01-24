@@ -1,10 +1,11 @@
 
 
 SVN
+    * another bunch of adapted examples. Some more docstrings.
     * most examples are being re-adapted to new modules' structure and
     get rid of global variables in them (using python class when
     necessary).
-    * flclock example renamed to clock.py to avoid duplication.
+    * flclock example renamed to clock.py to avoid confusion with module.
     * choice_new and folder_new (replacing deprecated functions) added.
     * massive code reorganization. Its purpose is to realign my code
     distribution with files' structure already used by XForms upstream.

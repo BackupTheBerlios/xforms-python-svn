@@ -1,6 +1,12 @@
 #!/bin/env python
 # -*- coding: iso8859-1 -*-
 
+"""
+    @newfield example: Example, Example
+"""
+# for epydoc
+
+
 #raise ImportError("This file is not meant to be imported directly.")
 
 __all__ = ["flbasic", "flbitmap", "flbrowser", "flbutton", "flcanvas", \
