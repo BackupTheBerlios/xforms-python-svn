@@ -63,7 +63,6 @@ class FLCursor(object):
         fl_show_form(self.fd_cursor.cursor, FL_PLACE_CENTER, FL_FULLBORDER, \
                     "cursor")
         fl_do_forms()
-        return 0
 
 
     # callbacks for form cursor
@@ -130,5 +129,5 @@ class FLCursor(object):
 
 
 if __name__ == '__main__':
-    appl = FLCursor(len(sys.argv), sys.argv)
+    FLCursor(len(sys.argv), sys.argv)
 

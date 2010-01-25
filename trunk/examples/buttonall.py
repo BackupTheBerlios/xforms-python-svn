@@ -50,7 +50,7 @@ class ButtonAll(object):
         fl_set_pixmapbutton_file(self.fd_buttform.pbutt, "crab45.xpm")
         fl_set_bitmapbutton_file(self.fd_buttform.bbutt, "bm1.xbm")
         deprecated.fl_addto_choice(self.fd_buttform.bw_obj,
-                               " -4 | -3 | -2 | -1 |  1|  2|  3|  4")
+                                   " -4 | -3 | -2 | -1 |  1|  2|  3|  4")
         deprecated.fl_set_choice(self.fd_buttform.bw_obj, 5)
 
         # show the first form
@@ -58,8 +58,6 @@ class ButtonAll(object):
                      FL_FULLBORDER, "buttform")
         while fl_do_forms():
             pass    # empty
-
-        return 0
 
 
     # callbacks for form buttform
@@ -166,5 +164,5 @@ class ButtonAll(object):
 
 
 if __name__ == '__main__':
-    appl = ButtonAll(len(sys.argv), sys.argv)
+    ButtonAll(len(sys.argv), sys.argv)
 

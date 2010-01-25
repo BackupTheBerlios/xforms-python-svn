@@ -11,46 +11,47 @@
 
 
 import sys
-from xformslib import library as xf
-from xformslib import xfdata as xfc
+from xformslib.flbasic import *
+from xformslib.flxbasic import *
+from xformslib.flbutton import *
+from xformslib.flmisc import *
+from xformslib.xfdata import *
+
+
 
 
 def yes_push(pobj, data):
     print "Yes is pushed\n"
-    sys.exit(1)
+    sys.exit(0)
 
 
 def no_push(pobj, data):
     print "No is pushed\n"
 
 
-
-
 def main(lsysargv, sysargv):
 
-    xf.fl_initialize(lsysargv, sysargv, "FormDemo", 0, 0)
+    fl_initialize(lsysargv, sysargv, "FormDemo", 0, 0)
 
-    pform = xf.fl_bgn_form(xfc.FL_UP_BOX, 320, 120)
+    pform = fl_bgn_form(FL_UP_BOX, 320, 120)
 
-    xf.fl_add_box(xfc.FL_NO_BOX, 80, 20, 160, 40, "Do you want to Quit?")
+    fl_add_box(FL_NO_BOX, 80, 20, 160, 40, "Do you want to Quit?")
 
-    pobj = xf.fl_add_button(xfc.FL_NORMAL_BUTTON, 40, 70, 80, 30, "Yes")
-    xf.fl_set_object_callback(pobj, yes_push, 0)
+    pobj = fl_add_button(FL_NORMAL_BUTTON, 40, 70, 80, 30, "Yes")
+    fl_set_object_callback(pobj, yes_push, 0)
 
-    pobj = xf.fl_add_button(xfc.FL_NORMAL_BUTTON, 200, 70, 80, 30, "No")
-    xf.fl_set_object_callback(pobj, no_push, 0)
+    pobj = fl_add_button(FL_NORMAL_BUTTON, 200, 70, 80, 30, "No")
+    fl_set_object_callback(pobj, no_push, 0)
 
-    xf.fl_end_form()
+    fl_end_form()
 
-    xf.fl_show_form(pform, xfc.FL_PLACE_MOUSE, xfc.FL_TRANSIENT, "Question")
+    fl_show_form(pform, FL_PLACE_MOUSE, FL_TRANSIENT, "Question")
 
-    xf.fl_do_forms()
+    fl_do_forms()
 
-    xf.fl_hide_form(pform)
-    xf.fl_finish()
-
+    fl_hide_form(pform)
+    fl_finish()
     return 0
-
 
 
 if __name__ == '__main__':

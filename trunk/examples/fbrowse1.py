@@ -63,8 +63,6 @@ class Flfbrowse1(object):
         fl_hide_form(pform)
         fl_finish()
 
-        return 0
-
 
     def load_file(self, pobj, arg):
         if not fl_load_browser(self.pbr, \

@@ -51,8 +51,6 @@ class Flinputall(object):
         while fl_do_forms():
             pass    # empty
 
-        return 0
-
 
     # callbacks for form input
 

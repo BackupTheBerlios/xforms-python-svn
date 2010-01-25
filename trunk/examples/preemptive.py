@@ -82,7 +82,6 @@ class Flpreempt(object):
 
     # use the post handler as a tipper
     def post_handler(self, pobj, event, mx, my, key, xev):
-        print "post_handler", pobj
         if not pobj.contents.u_cdata:
             return 0
         if event == FL_ENTER:
@@ -142,14 +141,13 @@ class Flpreempt(object):
 
 
     def do_tips(self, id_, pobj):
-        print "do_tips = id / pobj", pobj
         onetext = ""
-        if fl_is_same_object(pobj, self.fd_form0.done):
-            onetext = "Want to quit ?\nPress me"
-        elif fl_is_same_object(pobj, self.fd_form0.peek):
-            onetext = "Turn preempting off"
-        elif fl_is_same_object(pobj, self.fd_form0.override):
-            onetext = "Turn preempting on"
+        #if fl_is_same_object(pobj, self.fd_form0.done):
+        #    onetext = "Want to quit ?\nPress me"
+        #elif fl_is_same_object(pobj, self.fd_form0.peek):
+        #    onetext = "Turn preempting off"
+        #elif fl_is_same_object(pobj, self.fd_form0.override):
+        #    onetext = "Turn preempting on"
         fl_show_oneliner(onetext, pobj.contents.form.x + \
                          pobj.contents.x, pobj.contents.form.y + \
                          pobj.contents.y + pobj.contents.h + 1)

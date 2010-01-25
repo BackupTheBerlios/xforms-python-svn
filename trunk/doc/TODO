@@ -1,14 +1,17 @@
 *** Limitations ***
 
-- Encouraged way to see if an object event has happened is
-using "fl_set_object_callback" only, instead of using a
-'while fl_do_forms' and 'if obj == someobj'
+- Some parameters in functions are not correctly handled yet
+(e.g. void *), as ctypes is somehow rigid and a free cast
+on-the-fly equivalent to C's is not so viable.
+- To compare two FL-objects you can use fl_is_same_object(..),
+instead of using 'if obj == someobj'
 - For some functions who use some parameters as an address
 value (e.g. in c: &a) that is modified by the function
 itself, there has been a change in API so these arguments
 represent multiple return values.
 - First two parameters of fl_initialize (len(sys.argv) and
-sys.argv) are ignored, to prevent an unexplicable segfault
+sys.argv) are ignored, to prevent an unexplicable segfault:
+so command line arguments are not usable.
 - public functions are not guaranteed to remain stable and
 consistent, until version 1.0.0 will be released. So library
 name and directory layout might change in order to achieve
