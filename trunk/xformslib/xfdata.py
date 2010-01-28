@@ -3154,7 +3154,7 @@ FL_HOLD_BROWSER = 2
 """Same to FL_SELECT_BROWSER but the selection remains visible until
 the next selection."""
 FL_MULTI_BROWSER = 3
-"""Multiple selections can be made and remain visible till de-selected."""
+"""Multiple selections can be made and remains visible till de-selected."""
 
 # my add - list of possible values --LK
 BROWSERTYPE_list = [FL_NORMAL_BROWSER, FL_SELECT_BROWSER, FL_HOLD_BROWSER, \
