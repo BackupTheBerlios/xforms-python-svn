@@ -6,7 +6,7 @@
     using ctypes
 
     Copyright (C) 2009, 2010  Luca Lazzaroni "LukenShiro"
-        <lukenshiro@ngi.it>
+    e-mail: <lukenshiro@ngi.it>
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU Lesser General Public License as

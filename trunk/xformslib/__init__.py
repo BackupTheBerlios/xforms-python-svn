@@ -2,9 +2,10 @@
 # -*- coding: iso8859-1 -*-
 
 """
-    @newfield example: Example, Example
+@newfield example: Example, Example
 """
 # for epydoc
+__docformat__ = "epytext en"    # to be used with epydoc doc
 
 
 #raise ImportError("This file is not meant to be imported directly.")
