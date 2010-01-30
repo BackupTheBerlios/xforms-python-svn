@@ -84,15 +84,18 @@ FL_COLOR = cty.c_ulong
 # values for enumeration 'FL_COORD_UNIT'
 FL_COORD_UNIT = cty.c_int  # enum
 FL_COORD_PIXEL = 0      # default, Pixel
-"""Screen coordinate units in pixel"""
+"""(coord.units) Screen coordinate units in pixel"""
 FL_COORD_MM = 1         # milli-meter
-"""Screen coordinate units in millimeters"""
+"""(coord.units) Screen coordinate units in millimeters"""
 FL_COORD_POINT = 2      # point
-"""Screen coordinate units in points (1/72 inch)"""
+"""(coord.units) Screen coordinate units in points
+(1/72 inch)"""
 FL_COORD_centiMM = 3    # one hundredth of a mm
-"""Screen coordinate units in centi-millimeters"""
+"""(coord.units) Screen coordinate units in
+centi-millimeters"""
 FL_COORD_centiPOINT = 4    # one hundredth of a point
-"""Screen coordinate units in centi-points, i.e., 1/100 of a point"""
+"""(coord.units) Screen coordinate units in centi-points,
+i.e., 1/100 of a point"""
 
 # my add, list of possible values --LK
 COORDUNIT_list = [FL_COORD_PIXEL, FL_COORD_MM, FL_COORD_POINT,
@@ -219,49 +222,49 @@ FL_MAX_BW = 10
 # values for enumeration 'FL_PLACE'
 FL_PLACE = cty.c_int # enum
 FL_PLACE_FREE = 0       # size remain resizable
-"""Both the position and size are completely free. The initial size used
-is the designed size. Initial position, if set via fl_set_form_position(),
-will be used otherwise interactive positioning may be possible if the window
-manager allows it."""
+"""(place) Both the position and size are completely free. The
+initial size used is the designed size. Initial position, if set via
+fl_set_form_position(), will be used otherwise interactive positioning may be
+possible if the window manager allows it."""
 FL_PLACE_MOUSE = 1      # mouse centered on form
-"""The form is placed centered below the mouse. Interactive resizing will
+"""(place) The form is placed centered below the mouse. Interactive resizing will
 not be allowed unless this option is accompanied by FL_FREE_SIZE as in
 FL_PLACE_MOUSE | FL_FREE_SIZE"""
 FL_PLACE_CENTER = 2     # center of the screen
-"""The form is placed in the center of the screen. If FL_FREE_SIZE
+"""(place) The form is placed in the center of the screen. If FL_FREE_SIZE
 is also specified, interactive resizing will be allowed."""
 
 FL_PLACE_POSITION = 4   # specific size
-"""Initial position used will be the one set via fl_set_form_position().
+"""(place) Initial position used will be the one set via fl_set_form_position().
 Interactive resizing is possible."""
 FL_PLACE_SIZE = 8       # specific size
-"""The user can control the position but the size is fixed. Interactive
+"""(place) The user can control the position but the size is fixed. Interactive
 resizing is not allowed once the form becomes visible."""
 FL_PLACE_GEOMETRY = 16  # specific position
-"""Place at the latest position and size (see also below) or the geometry
+"""(place) Place at the latest position and size (see also below) or the geometry
 set via fl_set_form_geometry() etc. A form so shown will have a fixed size
 and interactive resizing is not allowed."""
 FL_PLACE_ASPECT =  32   # keep aspect ratio
-"""Allows interactive resizing but any new size will have the aspect ratio
+"""(place) Allows interactive resizing but any new size will have the aspect ratio
 as that of the initial size."""
 FL_PLACE_FULLSCREEN = 64        # scale to fit screen
-"""The form is scaled to cover the full screen. If FL_FREE_SIZE is also
+"""(place) The form is scaled to cover the full screen. If FL_FREE_SIZE is also
  specified, interative resizing will be allowed."""
 FL_PLACE_HOTSPOT = 128          # so mouse fall on (x,y)
-"""The form is so placed that mouse is on the "hotspot". If FL_FREE_SIZE
+"""(place) The form is so placed that mouse is on the "hotspot". If FL_FREE_SIZE
 is also specified, interactive resizing will be allowed."""
 FL_PLACE_ICONIC = 256
-"""The form is shown initially iconified. The size and location used are
+"""(place) The form is shown initially iconified. The size and location used are
 the window manager's default."""
 # modifiers
 FL_FREE_SIZE = 16384          #(1<<14)
-"""Allows resizing."""
+"""(place) Allows resizing."""
 
 FL_PLACE_FREE_CENTER = (FL_PLACE_CENTER | FL_FREE_SIZE)
-"""Same as FL_PLACE_CENTER | FL_FREE_SIZE, i.e., place the form at the
+"""(place) Same as FL_PLACE_CENTER | FL_FREE_SIZE, i.e., place the form at the
 center of the screen and allow resizing."""
 FL_PLACE_CENTERFREE = (FL_PLACE_CENTER | FL_FREE_SIZE)
-"""Same as FL_PLACE_CENTER | FL_FREE_SIZE, i.e., place the form at the
+"""(place) Same as FL_PLACE_CENTER | FL_FREE_SIZE, i.e., place the form at the
 center of the screen and allow resizing."""
 
 # my add, list of possible values --LK

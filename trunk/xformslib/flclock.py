@@ -48,27 +48,37 @@ from xformslib import xfdata
 
 
 def fl_add_clock(clocktype, x, y, w, h, label):
-    """ fl_add_clock(clocktype, x, y, w, h, label) -> pFlObject
+    """Adds a clock object.
 
-        Adds a clock object.
+    @param clocktype: type of clock to be added. Values (from xfdata
+        module) FL_ANALOG_CLOCK, FL_DIGITAL_CLOCK
+    @type clocktype: int
+    @param x: horizontal position (upper-left corner)
+    @type x: int
+    @param y: vertical position (upper-left corner)
+    @type y: int
+    @param w: width in coord units
+    @type w: int
+    @param h: height in coord units
+    @type h: int
+    @param label: text label of clock
+    @type label: str
 
-        @param clocktype: type of clock to be added
-        @type clocktype: [num./int] from xfdata module FL_ANALOG_CLOCK,
-                         FL_DIGITAL_CLOCK
-        @param x: horizontal position (upper-left corner)
-        @param x: vertical position (upper-left corner)
-        @param w: width in coord units
-        @param h: height in coord units
-        @param label: text label of clock
+    @returns: clock object added (pFlObject)
+    @rtype: pointer to xfdata.FL_OBJECT
 
-        @status: Tested + NoDoc + Demo = OK
+    @example: clkobj = fl_add_clock(xfdata.FL_ANALOG_CLOCK, 150, 210,
+        220, 200, "My great clock")
+
+    @status: Tested + Doc + Demo = OK
+
     """
     _fl_add_clock = library.cfuncproto(
-            library.load_so_libforms(), "fl_add_clock",
-            cty.POINTER(xfdata.FL_OBJECT), [cty.c_int, xfdata.FL_Coord,
-            xfdata.FL_Coord, xfdata.FL_Coord, xfdata.FL_Coord, xfdata.STRING],
-            """FL_OBJECT * fl_add_clock(int type, FL_Coord x, FL_Coord y,
-               FL_Coord w, FL_Coord h, const char * s)""")
+        library.load_so_libforms(), "fl_add_clock",
+        cty.POINTER(xfdata.FL_OBJECT), [cty.c_int, xfdata.FL_Coord,
+        xfdata.FL_Coord, xfdata.FL_Coord, xfdata.FL_Coord, xfdata.STRING],
+        """FL_OBJECT * fl_add_clock(int type, FL_Coord x, FL_Coord y,
+           FL_Coord w, FL_Coord h, const char * s)""")
     library.check_if_initialized()
     library.check_admitted_listvalues(clocktype, xfdata.CLOCKTYPE_list)
     iclocktype = library.convert_to_int(clocktype)
@@ -84,25 +94,28 @@ def fl_add_clock(clocktype, x, y, w, h, label):
 
 
 def fl_get_clock(pFlObject):
-    """ fl_get_clock(pFlObject) -> hr, mn, sec
+    """Returns time values from a clock object, with hours in 0-23, minutes in
+    0-59 and seconds in 0-59.
 
-        Returns time values from a clock object.
+    @param pFlObject: clock object
+    @type pFlObject: pointer to xfdata.FL_OBJECT
 
-        @param pFlObject: pointer to clock object
-@type pFlObject: pointer to xfdata.FL_OBJECT
+    @returns: hours, minutes and seconds
+    @rtype: int, int, int
 
-        @attention: API change from XForms - upstream was
-                    fl_get_clock(pFlObject, hr, mn, sec)
+    @example: hou, mnu, sec = fl_get_clock(clkobj)
 
-        @status: Untested + NoDoc + NoDemo = NOT OK
+    @attention: API change from XForms - upstream was
+        fl_get_clock(pFlObject, hr, mn, sec)
+
+    @status: Tested + Doc + NoDemo = OK
+
     """
-
     _fl_get_clock = library.cfuncproto(
-            library.load_so_libforms(), "fl_get_clock",
-            None, [cty.POINTER(xfdata.FL_OBJECT), cty.POINTER(cty.c_int),
-            cty.POINTER(cty.c_int), cty.POINTER(cty.c_int)],
-            """void fl_get_clock(FL_OBJECT * ob, int * h, int * m, int * s)
-""")
+        library.load_so_libforms(), "fl_get_clock",
+        None, [cty.POINTER(xfdata.FL_OBJECT), cty.POINTER(cty.c_int),
+        cty.POINTER(cty.c_int), cty.POINTER(cty.c_int)],
+        """void fl_get_clock(FL_OBJECT * ob, int * h, int * m, int * s)""")
     library.check_if_initialized()
     library.check_if_FL_OBJECT_ptr(pFlObject)
     hr, phr = library.make_int_and_pointer()
@@ -114,20 +127,26 @@ def fl_get_clock(pFlObject):
 
 
 def fl_set_clock_adjustment(pFlObject, offset):
-    """ fl_set_clock_adjustment(pFlObject, offset) -> num.
+    """Adjusts the clock to display a time other than local time.
 
-        @param pFlObject: pointer to object
-@type pFlObject: pointer to xfdata.FL_OBJECT
+    @param pFlObject: clock object
+    @type pFlObject: pointer to xfdata.FL_OBJECT
+    @param offset: adjustment value in seconds
+    @type offset: long
 
-        @status: Untested + NoDoc + NoDemo = NOT OK
+    @returns: old adjustment value
+    @rtype: long
+
+    @example: oldadj = fl_set_clock_adjustment(clkobj, 3600)
+
+    @status: Tested + Doc + NoDemo = OK
+
     """
-
     _fl_set_clock_adjustment = library.cfuncproto(
-            library.load_so_libforms(), "fl_set_clock_adjustment",
-            cty.c_long, [cty.POINTER(xfdata.FL_OBJECT), cty.c_long],
-            """long int fl_set_clock_adjustment(FL_OBJECT * ob,
-               long int offset)
-""")
+        library.load_so_libforms(), "fl_set_clock_adjustment",
+        cty.c_long, [cty.POINTER(xfdata.FL_OBJECT), cty.c_long],
+        """long int fl_set_clock_adjustment(FL_OBJECT * ob,
+           long int offset)""")
     library.check_if_initialized()
     library.check_if_FL_OBJECT_ptr(pFlObject)
     loffset = library.convert_to_long(offset)
@@ -136,24 +155,28 @@ def fl_set_clock_adjustment(pFlObject, offset):
     return retval
 
 
-def fl_set_clock_ampm(pFlObject, y):
-    """ fl_set_clock_ampm(pFlObject, y)
+def fl_set_clock_ampm(pFlObject, yn):
+    """Switches the display to 12hr system (am-pm). By default, the digital
+    clock uses 24hr system.
 
-        @param pFlObject: pointer to object
-@type pFlObject: pointer to xfdata.FL_OBJECT
+    @param pFlObject: clock object
+    @type pFlObject: pointer to xfdata.FL_OBJECT
+    @param yn: flag. Values 1 (to use 12hr system) or 0 (to use 24hr system)
+    @type yn: int
 
-        @status: Untested + NoDoc + NoDemo = NOT OK
+    @example: fl_set_clock_ampm(clkobj, 1)
+
+    @status: Tested + Doc + NoDemo = OK
+
     """
-
     _fl_set_clock_ampm = library.cfuncproto(
-            library.load_so_libforms(), "fl_set_clock_ampm",
-            None, [cty.POINTER(xfdata.FL_OBJECT), cty.c_int],
-            """void fl_set_clock_ampm(FL_OBJECT * ob, int y)
-""")
+        library.load_so_libforms(), "fl_set_clock_ampm",
+        None, [cty.POINTER(xfdata.FL_OBJECT), cty.c_int],
+        """void fl_set_clock_ampm(FL_OBJECT * ob, int y)""")
     library.check_if_initialized()
     library.check_if_FL_OBJECT_ptr(pFlObject)
-    iy = library.convert_to_int(y)
-    library.keep_elem_refs(pFlObject, y, iy)
-    _fl_set_clock_ampm(pFlObject, iy)
+    iyn = library.convert_to_int(yn)
+    library.keep_elem_refs(pFlObject, yn, iyn)
+    _fl_set_clock_ampm(pFlObject, iyn)
 
 

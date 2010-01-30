@@ -3933,7 +3933,7 @@ def fl_get_string_dimension(style, size, txtstr, strlng):
 fl_get_string_size = fl_get_string_dimension
 
 
-def fl_get_align_xy(align, x, y, w, h, xsize, ysize, xoff, yoff):
+def fl_get_align_xy(align, x, y, w, h, xsize, ysize, xmargin, ymargin):
     """Obtains the position of where to draw the object with a certain
     alignment and including padding. It works regardless if it is to be drawn
     inside or outside of the bounding box
@@ -3955,9 +3955,9 @@ def fl_get_align_xy(align, x, y, w, h, xsize, ysize, xoff, yoff):
     @type xsize: int
     @param ysize: height of the object to be drawn
     @type ysize: int
-    @param xoff: additional horizontal padding to use
+    @param xmargin: additional horizontal padding to use
     @type xmargin: int
-    @param yoff: additional vertical padding to use
+    @param ymargin: additional vertical padding to use
     @type ymargin: int
 
     @returns: horizontal (x) and vertical position (y) used for drawing object
@@ -3988,14 +3988,15 @@ def fl_get_align_xy(align, x, y, w, h, xsize, ysize, xoff, yoff):
     ih = library.convert_to_int(h)
     ixsize = library.convert_to_int(xsize)
     iysize = library.convert_to_int(ysize)
-    ixoff = library.convert_to_int(xoff)
-    iyoff = library.convert_to_int(yoff)
+    ixmargin = library.convert_to_int(xmargin)
+    iymargin = library.convert_to_int(ymargin)
     xx, pxx = library.make_int_and_pointer()
     yy, pyy = library.make_int_and_pointer()
-    library.keep_elem_refs(align, ialign, x, ix, y, iy, w, iw, h, ih, xsize, ixsize,
-                   ysize, iysize, xoff, ixoff, yoff, iyoff, xx, yy, pxx, pyy)
-    _fl_get_align_xy(ialign, ix, iy, iw, ih, ixsize, iysize, ixoff,
-                     iyoff, pxx, pyy)
+    library.keep_elem_refs(align, ialign, x, ix, y, iy, w, iw, h, ih, xsize, \
+        ixsize, ysize, iysize, xmargin, ixmargin, ymargin, iymargin, xx, yy, \
+        pxx, pyy)
+    _fl_get_align_xy(ialign, ix, iy, iw, ih, ixsize, iysize, ixmargin,
+                     iymargin, pxx, pyy)
     return xx.value, yy.value
 
 

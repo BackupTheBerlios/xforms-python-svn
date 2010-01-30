@@ -470,7 +470,7 @@ fl_free_pixmapbutton_pixmap = fl_free_pixmap_pixmap
 
 
 def fl_get_pixmap_pixmap(pFlObject):
-    """ fl_get_pixmap_pixmap(pFlObject) -> pixmap, Pixmap, Pixmap_mask
+    """
 
     @param pFlObject: pixmap object
     @type pFlObject: pointer to xfdata.FL_OBJECT

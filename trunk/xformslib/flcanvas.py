@@ -332,7 +332,7 @@ def fl_get_canvas_depth(pFlObject):
     @returns: depth num.
     @rtype: int
 
-    @example canvdph = fl_get_canvas_depth(canvobj)
+    @example: canvdph = fl_get_canvas_depth(canvobj)
 
     @status: Tested + Doc + NoDemo = OK
 

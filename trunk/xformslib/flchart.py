@@ -104,7 +104,7 @@ def fl_clear_chart(pFlObject):
 
     @example:  fl_clear_chart(chrtobj)
 
-    @status: Untested + NoDoc + NoDemo = NOT OK
+    @status: Tested + Doc + NoDemo = OK
 
     """
     _fl_clear_chart = library.cfuncproto(
@@ -150,20 +150,24 @@ def fl_add_chart_value(pFlObject, val, label, colr):
 
 
 def fl_insert_chart_value(pFlObject, indx, val, label, colr):
-    """ fl_insert_chart_value(pFlObject, indx, val, label, colr)
-
-    Inserts an item before indx to the chart.
+    """Inserts a new value at a particular place in a chart object.
 
     @param pFlObject: chart object
     @type pFlObject: pointer to xfdata.FL_OBJECT
-    @param indx: index position of previous item
+    @param indx: index before which the new item should be inserted. The first
+        item is number 1
+    @type indx: int
     @param val: value of chart item
+    @type val: float
     @param label: text label of chart
+    @type label: str
     @param colr: color value
+    @type colr: long_pos
 
-    @example: ?
+    @example: fl_insert_chart_value(chrtobj, 2, 123.0, "new value", 
+        xfdata.FL_DEEPSKYBLUE)
 
-    @status: Untested + NoDoc + NoDemo = NOT OK
+    @status: Tested + Doc + NoDemo = OK
 
     """
     _fl_insert_chart_value = library.cfuncproto(
@@ -184,20 +188,23 @@ def fl_insert_chart_value(pFlObject, indx, val, label, colr):
 
 
 def fl_replace_chart_value(pFlObject, indx, val, label, colr):
-    """ fl_replace_chart_value(pFlObject, indx, val, label, colr)
-
-    Replaces value in the chart.
+    """Replaces value of an item in the chart object.
 
     @param pFlObject: chart object
     @type pFlObject: pointer to xfdata.FL_OBJECT
     @param indx: index position of item to be replaced
+    @type indx: int
     @param val: value of chart item
+    @type val: float
     @param label: text label of chart
+    @type label: str
     @param colr: color value
+    @type colr: long_pos
 
-    @example: ?
+    @example: fl_replace_chart_value(chrtobj, 3, 142.0, "replaced item",
+        xfdata.FL_FIREBRICK)
 
-    @status: Untested + NoDoc + NoDemo = NOT OK
+    @status: Tested + Doc + NoDemo = OK
 
     """
     _fl_replace_chart_value = library.cfuncproto(
@@ -218,7 +225,9 @@ def fl_replace_chart_value(pFlObject, indx, val, label, colr):
 
 
 def fl_set_chart_bounds(pFlObject, minbound, maxbound):
-    """Sets the boundaries/limits for values of a chart object.
+    """Sets the boundaries/limits for values of a chart object. Normally,
+    bar-charts and line-charts are automatically scaled in the vertical
+    direction such that all values can be displayed.
 
     @param pFlObject: chart object
     @type pFlObject: pointer to xfdata.FL_OBJECT
@@ -278,7 +287,8 @@ def fl_get_chart_bounds(pFlObject):
 
 
 def fl_set_chart_maxnumb(pFlObject, maxnum):
-    """Sets the maximum number of values displayed in the chart.
+    """Sets the maximum number of values displayed in the chart. Defaults
+    is xfdata.FL_CHART_MAX; maximum set cannot be exceeded it.
 
     @param pFlObject: chart object
     @type pFlObject: pointer to xfdata.FL_OBJECT
@@ -302,7 +312,10 @@ def fl_set_chart_maxnumb(pFlObject, maxnum):
 
 
 def fl_set_chart_autosize(pFlObject, autosize):
-    """Sets whether the chart should autosize along the x-axis.
+    """Sets whether the chart should autosize along the x-axis. If autosize
+    being set to false (0) the width of the bars will be such that the maximum
+    number of items fits in the box. Normally width of the bars and distance
+    between the points in a line-chart are normally scaled.
 
     @param pFlObject: chart object
     @type pFlObject: pointer to xfdata.FL_OBJECT
@@ -325,15 +338,24 @@ def fl_set_chart_autosize(pFlObject, autosize):
     _fl_set_chart_autosize(pFlObject, iautosize)
 
 
-def fl_set_chart_lstyle(pFlObject, lstyle):
-    """ fl_set_chart_lstyle(pFlObject, lstyle)
+def fl_set_chart_lstyle(pFlObject, style):
+    """Changes the font style of a chart's label. By default the label is
+    drawn in a tiny font.
 
     @param pFlObject: chart object
     @type pFlObject: pointer to xfdata.FL_OBJECT
+    @param style: label style. Values (from xfdata module) FL_NORMAL_STYLE,
+        FL_BOLD_STYLE, FL_ITALIC_STYLE, FL_BOLDITALIC_STYLE, FL_FIXED_STYLE,
+        FL_FIXEDBOLD_STYLE, FL_FIXEDITALIC_STYLE, FL_FIXEDBOLDITALIC_STYLE,
+        FL_TIMES_STYLE, FL_TIMESBOLD_STYLE, FL_TIMESITALIC_STYLE,
+        FL_TIMESBOLDITALIC_STYLE, FL_MISC_STYLE, FL_MISCBOLD_STYLE,
+        FL_MISCITALIC_STYLE, FL_SYMBOL_STYLE, FL_SHADOW_STYLE,
+        FL_ENGRAVED_STYLE, FL_EMBOSSED_STYLE
+    @type style: int
 
-    @example: ?
+    @example: fl_set_chart_lstyle(chrtobj, xfdata.FL_TIMESBOLD_STYLE)
 
-    @status: Untested + NoDoc + NoDemo = NOT OK
+    @status: Tested + Doc + NoDemo = OK
 
     """
     _fl_set_chart_lstyle = library.cfuncproto(
@@ -342,20 +364,26 @@ def fl_set_chart_lstyle(pFlObject, lstyle):
         """void fl_set_chart_lstyle(FL_OBJECT * ob, int lstyle)""")
     library.check_if_initialized()
     library.check_if_FL_OBJECT_ptr(pFlObject)
-    ilstyle = library.convert_to_int(lstyle)
-    library.keep_elem_refs(pFlObject, lstyle, ilstyle)
-    _fl_set_chart_lstyle(pFlObject, ilstyle)
+    check_admitted_listvalues(style, xfdata.TEXTSTYLE_list)
+    istyle = library.convert_to_int(style)
+    library.keep_elem_refs(pFlObject, style, istyle)
+    _fl_set_chart_lstyle(pFlObject, istyle)
 
 
-def fl_set_chart_lsize(pFlObject, lsize):
-    """ fl_set_chart_lsize(pFlObject, lsize)
+def fl_set_chart_lsize(pFlObject, size):
+    """Changes the font size of chart's label. By default, the label is
+    drawn in a tiny font.
 
     @param pFlObject: chart object
     @type pFlObject: pointer to xfdata.FL_OBJECT
+    @param size: label size. Values (from xfdata module) FL_TINY_SIZE,
+        FL_SMALL_SIZE, FL_NORMAL_SIZE, FL_MEDIUM_SIZE, FL_LARGE_SIZE,
+        FL_HUGE_SIZE, FL_DEFAULT_SIZE
+    @type size: int
 
-    @example: ?
+    @example: fl_set_chart_lsize(chrtobj, xfdata.FL_SMALL_SIZE)
 
-    @status: Untested + NoDoc + NoDemo = NOT OK
+    @status: Tested + Doc + NoDemo = OK
 
     """
     _fl_set_chart_lsize = library.cfuncproto(
@@ -364,21 +392,24 @@ def fl_set_chart_lsize(pFlObject, lsize):
         """void fl_set_chart_lsize(FL_OBJECT * ob, int lsize)""")
     library.check_if_initialized()
     library.check_if_FL_OBJECT_ptr(pFlObject)
-    ilsize = library.convert_to_int(lsize)
-    library.keep_elem_refs(pFlObject, lsize, ilsize)
-    _fl_set_chart_lsize(pFlObject, ilsize)
+    check_admitted_listvalues(size, xfdata.FONTSIZE_list)
+    isize = library.convert_to_int(size)
+    library.keep_elem_refs(pFlObject, size, isize)
+    _fl_set_chart_lsize(pFlObject, isize)
 
 
 def fl_set_chart_lcolor(pFlObject, colr):
-    """ fl_set_chart_lcolor(pFlObject, colr)
+    """Changes the color of chart's label. By default, the label is
+    drawn in black.
 
-    @param pFlObject: pointer to chart object
+    @param pFlObject: chart object
     @type pFlObject: pointer to xfdata.FL_OBJECT
     @param colr: color value
+    @type colr: long_pos
 
-    @example: ?
+    @example: fl_set_chart_lcolor(chrtobj, xfdata.FL_FORESTGREEN)
 
-    @status: Untested + NoDoc + NoDemo = NOT OK
+    @status: Tested + Doc + NoDemo = OK
 
     """
     _fl_set_chart_lcolor = library.cfuncproto(
@@ -394,14 +425,16 @@ def fl_set_chart_lcolor(pFlObject, colr):
 
 
 def fl_set_chart_baseline(pFlObject, yesno):
-    """ fl_set_chart_baseline(pFlObject, yesno)
+    """Turn on or off the chart's baseline.
 
     @param pFlObject: chart object
     @type pFlObject: pointer to xfdata.FL_OBJECT
+    @param yesno: flag. Values 0 (if disabled) or 1 (if enabled)
+    @type yesno: int
 
-    @example: ?
+    @example: fl_set_chart_baseline(chrtobj, 1)
 
-    @status: Untested + NoDoc + NoDemo = NOT OK
+    @status: Tested + Doc + NoDemo = OK
 
     """
     _fl_set_chart_baseline = library.cfuncproto(

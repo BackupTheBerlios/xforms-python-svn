@@ -3,7 +3,7 @@
 
 """
     xforms-python - Python wrapper for XForms (X11) GUI C toolkit library
-        using ctypes
+    using ctypes
 
     Copyright (C) 2009, 2010  Luca Lazzaroni "LukenShiro"
     e-mail:  <lukenshiro@ngi.it>
@@ -175,7 +175,7 @@ def fl_addto_browser(pFlObject, newtext):
     @param newtext: text to be added
     @type newtext: str
 
-    @example: fl_addto_browser(brobj, "blablablabla\nblublublu")
+    @example: fl_addto_browser(brobj, "blablablablablublublu")
 
     @status: Tested + Doc + Demo = OK
 

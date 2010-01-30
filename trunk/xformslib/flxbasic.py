@@ -2703,7 +2703,7 @@ def fl_last_event():
     """
 
     @returns: XEvent class instance (pXEvent)
-    @rtype pXEvent: pointer to XEvent
+    @rtype: pointer to xfdata.XEvent
 
     @example: ??
 
@@ -3141,7 +3141,7 @@ def fl_finish():
 
 
 def fl_get_resource(rname, cname, dtype, defval, val, size):
-    """ fl_get_resource(rname, cname, dtype, defval, val, size) -> string
+    """
 
     @param rname: complete resource name specification (minus the
         application name) and should not contain wildcards of any kind
@@ -3192,7 +3192,7 @@ def fl_set_resource(resstr, txtval):
 
     @param resstr: resource name
     @type resstr: str
-    @param val: new string value for resource
+    @param txtval: new string value for resource
     @type txtval: str
 
     @example: ??
@@ -3390,7 +3390,7 @@ def fl_get_visual_depth():
 
 
 def fl_vclass_name(n):
-    """ fl_vclass_name(n) -> name string
+    """
 
     @param n: ?
     @type n: int
@@ -3414,7 +3414,7 @@ def fl_vclass_name(n):
 
 
 def fl_vclass_val(val):
-    """ fl_vclass_val(val) -> num.
+    """
 
     @param val: ?
     @type val: str

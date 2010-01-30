@@ -18,6 +18,6 @@ epydoc -v --latex xformslib/flbasic.py xformslib/flbitmap.py xformslib/flbrowser
  xformslib/flpopup.py xformslib/flpositioner.py xformslib/flscrollbar.py \
  xformslib/flselect.py xformslib/flslider.py xformslib/flspinner.py \
  xformslib/fltabfolder.py xformslib/flthumbwheel.py xformslib/fltimer.py \
- xformslib/vers.py xformslib/flxbasic.py xformslib/flxyplot.py \
+ xformslib/vers.py xformslib/flxbasic.py xformslib/flxyplot.py xformslib/xfdata.py \
  -o doc/tex --url http://xforms-python.berlios.de
 
