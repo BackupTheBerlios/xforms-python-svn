@@ -3594,8 +3594,6 @@ CURSORS_list = [FL_INVISIBLE_CURSOR, FL_DEFAULT_CURSOR, FL_BUSY_CURSOR, \
 
 
 
-
-
 ###################
 # forms.h (dial.h)
 ###################
@@ -3603,11 +3601,11 @@ CURSORS_list = [FL_INVISIBLE_CURSOR, FL_DEFAULT_CURSOR, FL_BUSY_CURSOR, \
 # values for enumeration 'FL_DIAL_TYPE'
 FL_DIAL_TYPE = cty.c_int # enum
 FL_NORMAL_DIAL = 0
-"""A dial with a knob indicating the position."""
+"""(dial) A dial with a knob indicating the position."""
 FL_LINE_DIAL = 1
-"""A dial with a line indicating the position."""
+"""(dial) A dial with a line indicating the position."""
 FL_FILL_DIAL = 2
-"""The area between initial and current is filled."""
+"""(dial) The area between initial and current is filled."""
 
 # list of possible values - my add --LK
 DIALTYPE_list = [FL_NORMAL_DIAL, FL_LINE_DIAL, FL_FILL_DIAL]
@@ -3615,9 +3613,13 @@ DIALTYPE_list = [FL_NORMAL_DIAL, FL_LINE_DIAL, FL_FILL_DIAL]
 
 # values for unnamed enumeration
 FL_DIAL_CW = 0
-"""Clockwise rotation."""
+"""(dial) Clockwise rotation."""
 FL_DIAL_CCW = 1
-"""Counter-clockwise rotation."""
+"""(dial) Counter-clockwise rotation."""
+
+# list of possible values - my add --LK
+DIALROTN_list = [FL_DIAL_CW, FL_DIAL_CCW]
+
 
 # Defaults
 FL_DIAL_BOXTYPE = FL_FLAT_BOX

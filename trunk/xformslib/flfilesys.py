@@ -48,14 +48,30 @@ from xformslib import xfdata
 # read dir with pattern filtering. All dirs read might be cached.
 # must not change dirlist in anyway.
 
-def fl_get_dirlist(directory, pattern, rescan):
-    """
-        fl_get_dirlist(directory, pattern, rescan) -> pDirList, n
+def fl_get_dirlist(dirname, pattern, rescan):
+    """Gets a listing of specified directory.
 
-        @attention: API change from XForms - upstream was
-           fl_get_dirlist(directory, pattern, n, rescan)
+    @param dirname: name of directory
+    @type dirname: str
+    @param pattern: regular expression that is used to filter the directory
+        entries
+    @type pattern: str
+    @param rescan: flag to request a re-read or not. Values 0 (no re-read)
+        or non-zero (does a re-read)
 
-        @status: Untested + NoDoc + NoDemo = NOT OK
+    @returns: an array of DirList class instances (pDirList) and number of
+        files (total number of entries in directory dirname that match the
+        pattern specified by pattern)
+    @rtype: pointer to FL_DIRLIST, int
+
+    @example: pdirlist, nfiles = dirlistfl_get_dirlist("/home", "*.*", 1)
+    @example: print pdirlist[1].name
+
+    @attention: API change from XForms - upstream was
+       fl_get_dirlist(directory, pattern, n, rescan)
+
+    @status: Tested + Doc + NoDemo = OK
+
     """
     _fl_get_dirlist = library.cfuncproto(
         library.load_so_libforms(), "fl_get_dirlist",
@@ -64,29 +80,46 @@ def fl_get_dirlist(directory, pattern, rescan):
         """const char * fl_get_dirlist(const char * dir,
            const char * pattern, int * n, int rescan)""")
     library.check_if_initialized()
-    sdirectory = library.convert_to_string(directory)
+    sdirname = library.convert_to_string(dirname)
     spattern = library.convert_to_string(pattern)
     n, pn = library.make_int_and_pointer()
     irescan = library.convert_to_int(rescan)
-    library.keep_elem_refs(directory, pattern, n, rescan, sdirectory, spattern,
+    library.keep_elem_refs(dirname, pattern, n, rescan, sdirname, spattern,
                    pn, irescan)
-    retval = _fl_get_dirlist(sdirectory, spattern, pn, irescan)
+    retval = _fl_get_dirlist(sdirname, spattern, pn, irescan)
     return retval, n.value
 
 
 def fl_set_dirlist_filter(py_DirFilter):
-    """
-        fl_set_dirlist_filter(py_DirFilter) -> dirlist_filter func.
+    """Changes the default filter by which file types are returned.
+    By default not all types of files are returned (only directories,
+    normal files and link files).
 
-        @status: Untested + NoDoc + NoDemo = NOT OK
+    @param py_DirFilter: python function used to filter types, returning
+        value (non-zero if is to be included, 0 otherwise)
+    @type py_DirFilter: __ funcname (strname, inttype) -> num. __
+
+    @returns: old dirlist filter function
+    @rtype: instance of xfdata.FL_DIRLIST_FILTER
+
+    @example: def dirfilter(fname, ftype)
+    @example: |->| return type == xfdata.FT_DIR || return type == \
+    @example: |->| xfdata.FT_FILE || return type == xfdata.FT_SOCK || \
+    @example: |->| return type == xfdata.FT_FIFO || return type == \
+    @example: |->| xfdata.FT_LINK || return type == xfdata.FT_BLK || \
+    @example: |->| return type == xfdata.FT_CHR || return type == \
+    @example: |->| xfdata.FT_OTHER
+    @example: olddirfiltfunc = fl_set_dirlist_filter(dirfilter)
+
+    @status: Tested + Doc + NoDemo = OK
+
     """
     #FL_DIRLIST_FILTER = cty.CFUNCTYPE(cty.c_int, xfdata.STRING, cty.c_int)
     _fl_set_dirlist_filter = library.cfuncproto(
-            library.load_so_libforms(), "fl_set_dirlist_filter",
-            xfdata.FL_DIRLIST_FILTER, [xfdata.FL_DIRLIST_FILTER],
-            """FL_DIRLIST_FILTER fl_set_dirlist_filter( \
-               FL_DIRLIST_FILTER filter)
-""")
+        library.load_so_libforms(), "fl_set_dirlist_filter",
+        xfdata.FL_DIRLIST_FILTER, [xfdata.FL_DIRLIST_FILTER],
+        """FL_DIRLIST_FILTER fl_set_dirlist_filter( \
+           FL_DIRLIST_FILTER filter)""")
     library.check_if_initialized()
     c_DirFilter = xfdata.FL_DIRLIST_FILTER(py_DirFilter)
     library.keep_cfunc_refs(c_DirFilter, py_DirFilter)
@@ -95,17 +128,26 @@ def fl_set_dirlist_filter(py_DirFilter):
 
 
 def fl_set_dirlist_sort(method):
-    """
-        fl_set_dirlist_sort(method) -> num.
+    """Changes the default sorting of files in directory. By default the
+    files returned are sorted alphabetically.
 
-        @status: Untested + NoDoc + NoDemo = NOT OK
-    """
+    @param method: method of sorting. Values (from xfdata module) FL_NONE
+        FL_ALPHASORT, FL_RALPHASORT, FL_MTIMESORT, FL_RMTIMESORT, 
+        FL_SIZESORT, FL_RSIZESORT, FL_CASEALPHASORT, FL_RCASEALPHASORT
+    @type method: int
 
+    @returns: old sort method
+    @rtype: int
+
+    @example: num = fl_set_dirlist_sort(xfdata.FL_CASEALPHASORT)
+
+    @status: Tested + Doc + NoDemo = OK
+
+    """
     _fl_set_dirlist_sort = library.cfuncproto(
-            library.load_so_libforms(), "fl_set_dirlist_sort",
-            cty.c_int, [cty.c_int],
-            """int fl_set_dirlist_sort(int method)
-""")
+        library.load_so_libforms(), "fl_set_dirlist_sort",
+        cty.c_int, [cty.c_int],
+        """int fl_set_dirlist_sort(int method)""")
     library.check_if_initialized()
     imethod = library.convert_to_int(method)
     library.keep_elem_refs(method, imethod)
@@ -113,37 +155,48 @@ def fl_set_dirlist_sort(method):
     return retval
 
 
-def fl_set_dirlist_filterdir(yes):
-    """
-        fl_set_dirlist_filterdir(yes) -> num.
+def fl_set_dirlist_filterdir(yesno):
+    """Change the filter to include the directories. By default directories
+     are not subject to filtering.
 
-        @status: Untested + NoDoc + NoDemo = NOT OK
-    """
+    @param yesno: flag to anable/disable directory filter. Values 1 (enabled)
+        or 0 (disabled)
+    @type yesno: int
 
+    @returns: old filter setting
+    @rtype: int
+
+    @example: olddirfilt = fl_set_dirlist_filterdir(1)
+
+    @status: Tested + Doc + NoDemo = OK
+
+    """
     _fl_set_dirlist_filterdir = library.cfuncproto(
-            library.load_so_libforms(), "fl_set_dirlist_filterdir",
-            cty.c_int, [cty.c_int],
-            """int fl_set_dirlist_filterdir(int yes)
-""")
+        library.load_so_libforms(), "fl_set_dirlist_filterdir",
+        cty.c_int, [cty.c_int],
+        """int fl_set_dirlist_filterdir(int yes)""")
     library.check_if_initialized()
-    iyes = library.convert_to_int(yes)
-    library.keep_elem_refs(yes, iyes)
-    retval = _fl_set_dirlist_filterdir(iyes)
+    iyesno = library.convert_to_int(yesno)
+    library.keep_elem_refs(yesno, iyesno)
+    retval = _fl_set_dirlist_filterdir(iyesno)
     return retval
 
 
 def fl_free_dirlist(pDirList):
-    """
-        fl_free_dirlist(pDirList)
+    """Frees the list cache returned by fl_get_dirlist().
 
-        @status: Untested + NoDoc + NoDemo = NOT OK
-    """
+    @param pDirList: instance of DirList class
+    @type pDirList: pointer to xfdata.FL_DirList
 
+    @example: fl_free_dirlist(pdirlist)
+
+    @status: Tested + Doc + NoDemo = OK
+
+    """
     _fl_free_dirlist = library.cfuncproto(
-            library.load_so_libforms(), "fl_free_dirlist",
-            None, [cty.POINTER(xfdata.FL_Dirlist)],
-            """void fl_free_dirlist(FL_Dirlist * dl)
-""")
+        library.load_so_libforms(), "fl_free_dirlist",
+        None, [cty.POINTER(xfdata.FL_Dirlist)],
+        """void fl_free_dirlist(FL_Dirlist * dl)""")
     library.check_if_initialized()
     library.keep_elem_refs(pDirList)
     _fl_free_dirlist(pDirList)
@@ -152,71 +205,93 @@ def fl_free_dirlist(pDirList):
 # Free all directory caches
 
 def fl_free_all_dirlist():
-    """
-        fl_free_all_dirlist()
+    """Frees all the list caches returned by fl_get_dirlist().
 
-        @status: Untested + NoDoc + NoDemo = NOT OK
-    """
+    @example: fl_free_all_dirlist()
 
+    @status: Tested + Doc + NoDemo = OK
+
+    """
     _fl_free_all_dirlist = library.cfuncproto(
-            library.load_so_libforms(), "fl_free_all_dirlist",
-            None, [],
-            """void fl_free_all_dirlist()
-""")
+        library.load_so_libforms(), "fl_free_all_dirlist",
+        None, [],
+        """void fl_free_all_dirlist()""")
     library.check_if_initialized()
     _fl_free_all_dirlist()
 
 
-def fl_is_valid_dir(name):
-    """
-        fl_is_valid_dir(name) -> num.
+def fl_is_valid_dir(dirname):
+    """Checks if dirname is a valid name of a directory.
 
-        @status: Untested + NoDoc + NoDemo = NOT OK
-    """
+    @param dirname: name of the directory to evaluate
+    @type dirname: str
 
+    @returns: 1 (if valid) or 0 (if invalid)
+    @rtype: int
+
+    @example: fl_is_valid_dir(name) -> num.
+
+    @status: Tested + Doc + NoDemo = OK
+
+    """
     _fl_is_valid_dir = library.cfuncproto(
-            library.load_so_libforms(), "fl_is_valid_dir",
-            cty.c_int, [xfdata.STRING],
-            """int fl_is_valid_dir(const char * name)
-""")
+        library.load_so_libforms(), "fl_is_valid_dir",
+        cty.c_int, [xfdata.STRING],
+        """int fl_is_valid_dir(const char * name)""")
     library.check_if_initialized()
-    sname = library.convert_to_string(name)
-    library.keep_elem_refs(name, sname)
-    retval = _fl_is_valid_dir(sname)
+    sdirname = library.convert_to_string(dirname)
+    library.keep_elem_refs(dirname, sdirname)
+    retval = _fl_is_valid_dir(sdirname)
     return retval
 
 
-def fl_fmtime(timestr):
-    """
-        fl_fmtime(timestr) -> num.
+def fl_fmtime(fname):
+    """Returns the modification time of a specified file.
 
-        @status: Untested + NoDoc + NoDemo = NOT OK
+    @param fname: name of the file
+    @type fname: str
+
+    @returns: file modification time
+    @rtype: long_pos
+
+    @example: fmtime = fl_fmtime("/home/user/somefile")
+
+    @status: Tested + Doc + NoDemo = OK
+
     """
     _fl_fmtime = library.cfuncproto(
         library.load_so_libforms(), "fl_fmtime",
         cty.c_ulong, [xfdata.STRING],
         """long unsigned int fl_fmtime(const char * s)""")
     library.check_if_initialized()
-    stimestr = library.convert_to_string(timestr)
-    library.keep_elem_refs(timestr, stimestr)
-    retval = _fl_fmtime(stimestr)
+    sfname = library.convert_to_string(fname)
+    library.keep_elem_refs(fname, sfname)
+    retval = _fl_fmtime(sfname)
     return retval
 
 
-def fl_fix_dirname(directory):
-    """
-        fl_fix_dirname(directory) -> dirname string
+def fl_fix_dirname(dirname):
+    """Fixes the name of a directory that has a relative path ("..") in it.
 
-        @status: Untested + NoDoc + NoDemo = NOT OK
+    @param dirname: name of the directory to evaluate
+    @type dirname: str
+
+    @returns: fixed directory name
+    @rtype: str
+
+    @example: newdirnam = fl_fix_dirname("../mydir/")
+
+    @status: Tested + Doc + NoDemo = OK
+
     """
     _fl_fix_dirname = library.cfuncproto(
         library.load_so_libforms(), "fl_fix_dirname",
         xfdata.STRING, [xfdata.STRING],
         """char * fl_fix_dirname(char * dir)""")
     library.check_if_initialized()
-    sdirectory = library.convert_to_string(directory)
-    library.keep_elem_refs(directory, sdirectory)
-    retval = _fl_fix_dirname(sdirectory)
+    sdirname = library.convert_to_string(dirname)
+    library.keep_elem_refs(dirname, sdirname)
+    retval = _fl_fix_dirname(sdirname)
     return retval
 
 

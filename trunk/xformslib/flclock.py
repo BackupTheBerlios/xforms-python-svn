@@ -155,14 +155,14 @@ def fl_set_clock_adjustment(pFlObject, offset):
     return retval
 
 
-def fl_set_clock_ampm(pFlObject, yn):
+def fl_set_clock_ampm(pFlObject, yesno):
     """Switches the display to 12hr system (am-pm). By default, the digital
     clock uses 24hr system.
 
     @param pFlObject: clock object
     @type pFlObject: pointer to xfdata.FL_OBJECT
-    @param yn: flag. Values 1 (to use 12hr system) or 0 (to use 24hr system)
-    @type yn: int
+    @param yesno: flag. Values 1 (12hr system used) or 0 (24hr system used)
+    @type yesno: int
 
     @example: fl_set_clock_ampm(clkobj, 1)
 
@@ -175,8 +175,8 @@ def fl_set_clock_ampm(pFlObject, yn):
         """void fl_set_clock_ampm(FL_OBJECT * ob, int y)""")
     library.check_if_initialized()
     library.check_if_FL_OBJECT_ptr(pFlObject)
-    iyn = library.convert_to_int(yn)
-    library.keep_elem_refs(pFlObject, yn, iyn)
-    _fl_set_clock_ampm(pFlObject, iyn)
+    iyesno = library.convert_to_int(yesno)
+    library.keep_elem_refs(pFlObject, yesno, iyesno)
+    _fl_set_clock_ampm(pFlObject, iyesno)
 
 

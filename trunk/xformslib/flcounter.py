@@ -478,7 +478,7 @@ def fl_get_counter_speedjump(pFlObject):
     return retval
 
 
-def fl_set_counter_speedjump(pFlObject, yn):
+def fl_set_counter_speedjump(pFlObject, yesno):
     """Makes only the first change of the counter has a different delay
     from all the following ones. The delay for the first change of the
     counter value will then be the one set by fl_set_counter_repeat()
@@ -487,8 +487,8 @@ def fl_set_counter_speedjump(pFlObject, yn):
 
     @param pFlObject: counter object
     @type pFlObject: pointer to xfdata.FL_OBJECT
-    @param yn: flag. Values 1 (to set speedjump) or 0 (to unset speedjump)
-    @type yn: int
+    @param yesno: flag. Values 1 (to set speedjump) or 0 (to unset speedjump)
+    @type yesno: int
 
     @example: fl_set_counter_speedjump(ctrobj, 1)
 

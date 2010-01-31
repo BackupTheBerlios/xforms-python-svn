@@ -651,14 +651,14 @@ def fl_get_button(pFlObject):
     return retval
 
 
-def fl_set_button(pFlObject, yn):
+def fl_set_button(pFlObject, yesno):
     """Sets the button state (not pushed/pushed).
 
     @param pFlObject: button object
     @type pFlObject: pointer to xfdata.FL_OBJECT
-    @param yn: state of button to be set. Values 0 (if not pushed) or
+    @param yesno: state of button to be set. Values 0 (if not pushed) or
         1 (if pushed)
-    @type yn: int
+    @type yesno: int
 
     @example: fl_set_button(btnobj, 1)
 
@@ -671,9 +671,9 @@ def fl_set_button(pFlObject, yn):
         """void fl_set_button(FL_OBJECT * ob, int pushed)""")
     library.check_if_initialized()
     library.check_if_FL_OBJECT_ptr(pFlObject)
-    iyn = library.convert_to_int(yn)
-    library.keep_elem_refs(pFlObject, yn, iyn)
-    _fl_set_button(pFlObject, yn)
+    iyesno = library.convert_to_int(yesno)
+    library.keep_elem_refs(pFlObject, yesno, iyesno)
+    _fl_set_button(pFlObject, yesno)
 
 
 def fl_get_button_numb(pFlObject):
