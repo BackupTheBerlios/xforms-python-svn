@@ -3714,6 +3714,9 @@ FL_SMOOTH_SCROLL = 0
 FL_JUMP_SCROLL = 1
 """Scrolls in form increments."""
 
+# list of possible values - my add --LK
+FORMBRWSSCROLL_list = [FL_SMOOTH_SCROLL, FL_JUMP_SCROLL]
+
 # defaults?
 FL_FORMBROWSER_BOXTYPE = FL_DOWN_BOX
 FL_FORMBROWSER_COL1 = FL_COL1
@@ -3731,6 +3734,76 @@ class GLXContext (cty.Structure):
     pass
 GLXContext._fields_ = []
 
+
+# values for GL configuration attributes - my add --LK
+# *** start - from /usr/include/GL/glx.h:70
+GLX_USE_GL = 1
+"""Ignored. Only visuals that can be rendered with GLX are considered."""
+GLX_BUFFER_SIZE = 2
+"""Must be followed by a nonnegative integer that indicates the desired color
+index buffer size. The smallest index buffer of at least the specified size
+is preferred. Ignored if GLX_RGBA is asserted."""
+GLX_LEVEL = 3
+"""Must be followed by an integer buffer-level specification. This
+specification is honored exactly. Buffer level zero corresponds to the main
+frame buffer of the display. Buffer level one is the first overlay frame
+buffer, level two the second overlay frame buffer, and so on. Negative
+buffer levels correspond to underlay frame buffers."""
+GLX_RGBA = 4
+"""If present, only TrueColor and DirectColor visuals are considered.
+Otherwise, only PseudoColor and StaticColor visuals are considered."""
+GLX_DOUBLEBUFFER = 5
+"""If present, only double-buffered visuals are considered. Otherwise,
+only single-buffered visuals are considered."""
+GLX_STEREO = 6
+"""If present, only stereo visuals are considered. Otherwise, only
+monoscopic visuals are considered."""
+GLX_AUX_BUFFERS = 7
+"""Must be followed by a nonnegative integer that indicates the desired
+number of auxiliary buffers. Visuals with the smallest number of
+auxiliary buffers that meets or exceeds the specified number are preferred."""
+GLX_RED_SIZE = 8
+"""Must be followed by a nonnegative minimum size specification. If this
+value is zero, the smallest available red buffer is preferred. Otherwise,
+the largest available red buffer of at least the minimum size is preferred."""
+GLX_GREEN_SIZE = 9
+"""Must be followed by a nonnegative minimum size specification. If this value
+is zero, the smallest available green buffer is preferred. Otherwise, the
+largest available green buffer of at least the minimum size is preferred."""
+GLX_BLUE_SIZE = 10
+"""Must be followed by a nonnegative minimum size specification. If this value
+is zero, the smallest available blue buffer is preferred. Otherwise, the
+largest available blue buffer of at least the minimum size is preferred."""
+GLX_ALPHA_SIZE = 11
+"""Must be followed by a nonnegative minimum size specification. If this value
+is zero, the smallest available alpha buffer is preferred. Otherwise, the
+largest available alpha buffer of at least the minimum size is preferred."""
+GLX_DEPTH_SIZE = 12
+"""Must be followed by a nonnegative minimum size specification. If this value is
+zero, visuals with no depth buffer are preferred. Otherwise, the largest available
+depth buffer of at least the minimum size is preferred."""
+GLX_STENCIL_SIZE = 13
+"""Must be followed by a nonnegative integer that indicates the desired number of
+stencil bitplanes. The smallest stencil buffer of at least the specified size is
+preferred. If the desired value is zero, visuals with no stencil buffer are preferred."""
+GLX_ACCUM_RED_SIZE = 14
+"""Must be followed by a nonnegative minimum size specification. If this value is
+zero, visuals with no red accumulation buffer are preferred. Otherwise, the
+largest possible red accumulation buffer of at least the minimum size is preferred."""
+GLX_ACCUM_GREEN_SIZE = 15
+"""Must be followed by a nonnegative minimum size specification. If this value is
+zero, visuals with no green accumulation buffer are preferred. Otherwise, the
+largest possible green accumulation buffer of at least the minimum size is preferred."""
+GLX_ACCUM_BLUE_SIZE = 16
+"""Must be followed by a nonnegative minimum size specification. If this value
+is zero, visuals with no blue accumulation buffer are preferred. Otherwise, the
+largest possible blue accumulation buffer of at least the minimum size is preferred."""
+GLX_ACCUM_ALPHA_SIZE = 17
+"""Must be followed by a nonnegative minimum size specification. If this value
+is zero, visuals with no alpha accumulation buffer are preferred. Otherwise,
+the largest possible alpha accumulation buffer of at least the minimum size
+is preferred."""
+# *** end - from /usr/include/GL/glx.h
 
 
 
@@ -4668,9 +4741,6 @@ FL_TIMER_BLINKRATE = 0.2
 
 FL_TIMER_FILTER = cty.CFUNCTYPE(STRING, cty.POINTER(FL_OBJECT),
                                 cty.c_double)
-
-
-
 
 
 
