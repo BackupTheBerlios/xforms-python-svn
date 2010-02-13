@@ -50,18 +50,33 @@ from xformslib import flbasic
 # Resources and misc. goodie routines
 
 def fl_set_goodies_font(style, size):
-    """
-        fl_set_goodies_font(style, size)
+    """Changes the font used in all messages.
 
-        @status: Tested + NoDoc + Demo = OK
-    """
+    @param style: goodies style. Values (from xfdata module) FL_NORMAL_STYLE,
+        FL_BOLD_STYLE, FL_ITALIC_STYLE, FL_BOLDITALIC_STYLE, FL_FIXED_STYLE,
+        FL_FIXEDBOLD_STYLE, FL_FIXEDITALIC_STYLE, FL_FIXEDBOLDITALIC_STYLE,
+        FL_TIMES_STYLE, FL_TIMESBOLD_STYLE, FL_TIMESITALIC_STYLE,
+        FL_TIMESBOLDITALIC_STYLE, FL_MISC_STYLE, FL_MISCBOLD_STYLE,
+        FL_MISCITALIC_STYLE, FL_SYMBOL_STYLE, FL_SHADOW_STYLE,
+        FL_ENGRAVED_STYLE, FL_EMBOSSED_STYLE
+    @type style: int
+    @param size: goodies size. Values (from xfdata module) FL_TINY_SIZE,
+        FL_SMALL_SIZE, FL_NORMAL_SIZE, FL_MEDIUM_SIZE, FL_LARGE_SIZE,
+        FL_HUGE_SIZE, FL_DEFAULT_SIZE
+    @type size: int
 
+    @example: fl_set_goodies_font(xfdata.FL_BOLD_STYLE, xfdata.FL_MEDIUM_SIZE)
+
+    @status: Tested + Doc + Demo = OK
+
+    """
     _fl_set_goodies_font = library.cfuncproto(
-            library.load_so_libforms(), "fl_set_goodies_font",
-            None, [cty.c_int, cty.c_int],
-            """void fl_set_goodies_font(int style, int size)
-""")
+        library.load_so_libforms(), "fl_set_goodies_font",
+        None, [cty.c_int, cty.c_int],
+        """void fl_set_goodies_font(int style, int size)""")
     library.check_if_initialized()
+    library.check_admitted_listvalues(style, xfdata.TEXTSTYLE_list)
+    library.check_admitted_listvalues(size, xfdata.FONTSIZE_list)
     istyle = library.convert_to_int(style)
     isize = library.convert_to_int(size)
     library.keep_elem_refs(style, size, istyle, isize)
@@ -71,67 +86,85 @@ def fl_set_goodies_font(style, size):
 # messages and questions
 
 def fl_show_message(msgtxt1, msgtxt2, msgtxt3):
+    """Shows a simple form with three lines of text and a button labeled
+    OK on it. The mouse pointer is on the button.
+
+    @param msgtxt1: first message to show
+    @type msgtxt1: str
+    @param msgtxt2: second message to show
+    @type msgtxt2: str
+    @param msgtxt3: third message to show
+    @type msgtxt3: str
+
+    @example: fl_show_message("first message", "second message", 
+        "third message")
+
+    @status: Tested + Doc + Demo = OK
+
     """
-        fl_show_message(msgtxt1, msgtxt2, msgtxt3)
-
-        Shows a message.
-
-        @param msgtxt1: first message to show
-        @param msgtxt2: second message to show
-        @param msgtxt3: third message to show
-
-        @status: Tested + NoDoc + Demo = OK
-    """
-
     _fl_show_message = library.cfuncproto(
-            library.load_so_libforms(), "fl_show_message",
-            None, [xfdata.STRING, xfdata.STRING, xfdata.STRING],
-            """void fl_show_message(const char * p1, const char * p2,
-               const char * p3)
-""")
+        library.load_so_libforms(), "fl_show_message",
+        None, [xfdata.STRING, xfdata.STRING, xfdata.STRING],
+        """void fl_show_message(const char * p1, const char * p2,
+           const char * p3)""")
     library.check_if_initialized()
     smsgtxt1 = library.convert_to_string(msgtxt1)
     smsgtxt2 = library.convert_to_string(msgtxt2)
     smsgtxt3 = library.convert_to_string(msgtxt3)
-    library.keep_elem_refs(msgtxt1, msgtxt2, msgtxt3, smsgtxt1, smsgtxt2, smsgtxt3)
+    library.keep_elem_refs(msgtxt1, msgtxt2, msgtxt3, smsgtxt1, smsgtxt2, \
+                           smsgtxt3)
     _fl_show_message(smsgtxt1, smsgtxt2, smsgtxt3)
 
 
-def fl_show_messages(p1):
-    """
-        fl_show_messages(p1)
+def fl_show_messages(msgtxt):
+    """Shows a message. You can use it with a single line or when you
+    know the message in advance. To get multi-line messages use embedded
+    newlines. It blocks execution and does not return immediately (but idle
+    callback and asynchronous IO continue being run and checked). Execution
+    continues when the OK button is pressed or <Return> is hit or when the
+    message form is removed from the screen by fl_hide_message().
 
-        @status: Tested + NoDoc + Demo = OK
-    """
+    @param msgtxt: message to show
+    @type msgtxt: str
 
+    @example: fl_show_messages("Some messages")
+
+    @status: Tested + Doc + Demo = OK
+
+    """
     _fl_show_messages = library.cfuncproto(
-            library.load_so_libforms(), "fl_show_messages",
-            None, [xfdata.STRING],
-            """void fl_show_messages(const char * p1)
-""")
+        library.load_so_libforms(), "fl_show_messages",
+        None, [xfdata.STRING],
+        """void fl_show_messages(const char * p1)""")
     library.check_if_initialized()
-    sp1 = library.convert_to_string(p1)
-    library.keep_elem_refs(p1, sp1)
-    _fl_show_messages(sp1)
+    smsgtxt = library.convert_to_string(msgtxt)
+    library.keep_elem_refs(msgtxt, smsgtxt)
+    _fl_show_messages(smsgtxt)
 
 
 def fl_show_msg(fmttxt):
+    """Shows a formatted text message. The string resulting from expansion
+    of the format string using the remaining arguments can have arbitrary
+    length and embedded newline characters, producing line breaks. The size
+    of the message box gets set in a way that the whole text fits into it.
+    It blocks execution and does not return immediately (but idle callback
+    and asynchronous IO continue being run and checked). Execution continues
+    when the OK button is pressed or <Return> is hit or when the message
+    form is removed from the screen by fl_hide_message()
+
+    @param fmttxt: text message to show (with format parameters, e.g.
+        %s, %d, %f etc..)
+    @type fmttxt: str
+
+    @example: fl_show_msg("formatted text %s %d" % (mystr, myval))
+
+    @status: Tested + Doc + NoDemo = OK
+
     """
-        fl_show_msg(fmttxt)
-
-        Shows a formatted text message.
-
-        @param fmttxt: text message to show (with format parameters, e.g.
-           %s, %d, %f etc..)
-
-        @status: Untested + NoDoc + NoDemo = NOT OK
-    """
-
     _fl_show_msg = library.cfuncproto(
-            library.load_so_libforms(), "fl_show_msg",
-            None, [xfdata.STRING],
-            """void fl_show_msg(const char * p1)
-""")
+        library.load_so_libforms(), "fl_show_msg",
+        None, [xfdata.STRING],
+        """void fl_show_msg(const char * p1)""")
     library.check_if_initialized()
     sfmttxt = library.convert_to_string(fmttxt)
     library.keep_elem_refs(fmttxt, sfmttxt)
@@ -139,19 +172,17 @@ def fl_show_msg(fmttxt):
 
 
 def fl_hide_message():
+    """Hides a text message already shown.
+
+    @example: fl_hide_message()
+
+    @status: Tested + Doc + NoDemo = OK
+
     """
-        fl_hide_message()
-
-        Hides a text message already shown.
-
-        @status: Untested + NoDoc + NoDemo = NOT OK
-    """
-
     _fl_hide_message = library.cfuncproto(
-            library.load_so_libforms(), "fl_hide_message",
-            None, [],
-            """void fl_hide_message()
-""")
+        library.load_so_libforms(), "fl_hide_message",
+        None, [],
+        """void fl_hide_message()""")
     library.check_if_initialized()
     _fl_hide_message()
 
@@ -160,139 +191,154 @@ fl_hide_msg = fl_hide_message
 fl_hide_messages = fl_hide_message
 
 
-def fl_show_question(questmsg, p2):
+def fl_show_question(questmsg, defbtn):
+    """Shows a message (with possible embedded newlines in it) with a Yes
+    and a No button. It returns whether the user pushed the Yes button. The
+    user can also press the <Y> key to mean Yes and the <N> key to mean No.
+
+    @param questmsg: text of question message to show
+    @type questmsg: str
+    @param defbtn: which button the mouse pointer should be on. Values 1 
+        (for Yes) or 0 (for No) and any other value causes the form to be
+        shown so the mouse pointer is at the center of the form.
+    @type defbtn: int
+
+    @returns: 1 (if Yes button pushed) or 0 otherwise
+    @rtype: int
+
+    @example: qresp = fl_show_question("My question?", )
+
+    @status: Tested + Doc + Demo = OK
+
     """
-        fl_show_question(questmsg, p2) -> num.
-
-        Shows a question message.
-
-        @param questmsg: text of question message to show
-        @param p2: ?
-
-        @status: Tested + NoDoc + Demo = OK
-    """
-
     _fl_show_question = library.cfuncproto(
-            library.load_so_libforms(), "fl_show_question",
-            cty.c_int, [xfdata.STRING, cty.c_int],
-            """int fl_show_question(const char * p1, int p2)
-""")
+        library.load_so_libforms(), "fl_show_question",
+        cty.c_int, [xfdata.STRING, cty.c_int],
+        """int fl_show_question(const char * p1, int p2)""")
     library.check_if_initialized()
     squestmsg = library.convert_to_string(questmsg)
-    ip2 = library.convert_to_int(p2)
-    library.keep_elem_refs(questmsg, p2, squestmsg, ip2)
-    retval = _fl_show_question(squestmsg, ip2)
+    idefbtn = library.convert_to_int(defbtn)
+    library.keep_elem_refs(questmsg, defbtn, squestmsg, idefbtn)
+    retval = _fl_show_question(squestmsg, idefbtn)
     return retval
 
 
 def fl_hide_question():
+    """Hides a question message already shown.
+
+    @example: fl_hide_question()
+
+    @status: Tested + Doc + NoDemo = OK
+
     """
-        fl_hide_question()
-
-        Hides a question message already shown.
-
-        @status: Untested + NoDoc + NoDemo = NOT OK
-    """
-
     _fl_hide_question = library.cfuncproto(
-            library.load_so_libforms(), "fl_hide_question",
-            None, [],
-            """void fl_hide_question()
-""")
+        library.load_so_libforms(), "fl_hide_question",
+        None, [],
+        """void fl_hide_question()""")
     library.check_if_initialized()
     _fl_hide_question()
 
 
 def fl_show_alert(title, msg1, msg2, centered):
+    """Shows an alert message, with an alert icon (!) is added and the
+    first string is shown bold-faced.
+
+    @param title: title of alert
+    @type title: str
+    @param msg1: first message text
+    @type msg1: str
+    @param msg2: other message text
+    @type msg2: str
+    @param centered: if alert has to be displayed centered on the screen
+        or not. Values 1 (if centered) or 0 (not centered)
+    @type centered: int
+
+    @example: fl_show_alert("My title", "first text", "second text", 1)
+
+    @status: Tested + Doc + Demo = OK
+
     """
-        fl_show_alert(title, msg1, msg2, centered)
-
-        Shows an alert message.
-
-        @param title: title of alert
-        @param msg1: first message text
-        @param msg2: other message text
-        @param centered: if alert has to be displayed centered or not
-
-        @status: Tested + NoDoc + Demo = OK
-    """
-
     _fl_show_alert = library.cfuncproto(
-            library.load_so_libforms(), "fl_show_alert",
-            None, [xfdata.STRING, xfdata.STRING, xfdata.STRING, cty.c_int],
-            """void fl_show_alert(const char * p1, const char * p2,
-               const char * p3, int p4)
-""")
+        library.load_so_libforms(), "fl_show_alert",
+        None, [xfdata.STRING, xfdata.STRING, xfdata.STRING, cty.c_int],
+        """void fl_show_alert(const char * p1, const char * p2,
+           const char * p3, int p4)""")
     library.check_if_initialized()
     stitle = library.convert_to_string(title)
     smsg1 = library.convert_to_string(msg1)
     smsg2 = library.convert_to_string(msg2)
     icentered = library.convert_to_int(centered)
-    library.keep_elem_refs(title, msg1, msg2, centered, stitle, smsg1, smsg2,
-                   icentered)
+    library.keep_elem_refs(title, msg1, msg2, centered, stitle, smsg1,
+                           smsg2, icentered)
     _fl_show_alert(stitle, smsg1, smsg2, icentered)
 
 
-def fl_show_alert2(centered, fmt):
+def fl_show_alert2(centered, fmttxt):
+    """Shows a formatted alert message. The string resulting from expansion
+    of the format string using the rest of the arguments can have arbitrary
+    length and the first embedded form-feed character (backslash-f) is used
+    as the separator between the title string and the message of the alert
+    box. Embedded newline characters produce lines break.
+
+    @param centered: if alert has to be displayed centered on the screen
+        or not. Values 1 (if centered) or 0 (not centered)
+    @type centered: int
+    @param fmttxt: formatted message text
+    @type fmttxt: str
+
+    @example: fl_show_alert2(1, "formatted text %s %d" % (mystr, myval))
+
+    @status: Tested + Doc + NoDemo = OK
+
     """
-        fl_show_alert2(centered, fmt)
-
-        Shows a formatted alert message.
-
-        @param fmt: formatted message text
-        @param centered: if alert has to be displayed centered or not
-
-        @status: Untested + NoDoc + NoDemo = NOT OK
-    """
-
     _fl_show_alert2 = library.cfuncproto(
-            library.load_so_libforms(), "fl_show_alert2",
-            None, [cty.c_int, xfdata.STRING],
-            """void fl_show_alert2(int c, const char * fmt)
-""")
+        library.load_so_libforms(), "fl_show_alert2",
+        None, [cty.c_int, xfdata.STRING],
+        """void fl_show_alert2(int c, const char * fmt)""")
     library.check_if_initialized()
     icentered = library.convert_to_int(centered)
-    sfmt = library.convert_to_string(fmt)
-    library.keep_elem_refs(centered, fmt, icentered, sfmt)
-    _fl_show_alert2(icentered, sfmt)
+    sfmttxt = library.convert_to_string(fmttxt)
+    library.keep_elem_refs(centered, fmttxt, icentered, sfmttxt)
+    _fl_show_alert2(icentered, sfmttxt)
 
 
 def fl_hide_alert():
+    """Hides a previously shown alert message.
+
+    @example: fl_hide_alert()
+
+    @status: Tested + Doc + Demo = OK
+
     """
-        fl_hide_alert()
-
-        Hides a previously shown alert message.
-
-        @status: Tested + NoDoc + Demo = OK
-    """
-
     _fl_hide_alert = library.cfuncproto(
-            library.load_so_libforms(), "fl_hide_alert",
-            None, [],
-            """void fl_hide_alert()
-""")
+        library.load_so_libforms(), "fl_hide_alert",
+        None, [],
+        """void fl_hide_alert()""")
     library.check_if_initialized()
     _fl_hide_alert()
 
 
 def fl_show_input(msgtxt, defstr):
+    """Obtains some text from user, showing a default text. It has OK and
+    Cancel buttons.
+
+    @param msgtxt: text used to ask for input
+    @type msgtxt: str
+    @param defstr: default user answer to show
+    @type defstr: str
+
+    @returns: text inserted by user
+    @rtype: str
+
+    @example: inpstr = fl_show_input("Insert number of eggs: ", "None")
+
+    @status: Tested + Doc + Demo = OK
+
     """
-        fl_show_input(msgtxt, defstr) -> input string
-
-        Obtains some text from user, showing a default text. It has OK and
-        Cancel buttons.
-
-        @param msgtxt: text used to ask for input
-        @param defstr: default user answer to show
-
-        @status: Tested + NoDoc + Demo = OK
-    """
-
     _fl_show_input = library.cfuncproto(
-            library.load_so_libforms(), "fl_show_input",
-            xfdata.STRING, [xfdata.STRING, xfdata.STRING],
-            """const char * fl_show_input(const char * p1, const char * p2)
-""")
+        library.load_so_libforms(), "fl_show_input",
+        xfdata.STRING, [xfdata.STRING, xfdata.STRING],
+        """const char * fl_show_input(const char * p1, const char * p2)""")
     library.check_if_initialized()
     smsgtxt = library.convert_to_string(msgtxt)
     sdefstr = library.convert_to_string(defstr)
@@ -302,44 +348,44 @@ def fl_show_input(msgtxt, defstr):
 
 
 def fl_hide_input():
+    """Hides a previously shown input object.
+
+    @example: fl_hide_input()
+
+    @status: Tested + Doc + NoDemo = OK
+
     """
-        fl_hide_input()
-
-        Hides a previously shown input object.
-
-        @status: Untested + NoDoc + NoDemo = NOT OK
-    """
-
     _fl_hide_input = library.cfuncproto(
-            library.load_so_libforms(), "fl_hide_input",
-            None, [],
-            """void fl_hide_input()
-""")
+        library.load_so_libforms(), "fl_hide_input",
+        None, [],
+        """void fl_hide_input()""")
     library.check_if_initialized()
     _fl_hide_input()
 
 
 def fl_show_simple_input(msgtxt, defstr):
-    """
-        fl_show_simple_input(msgtxt, defstr) -> input string
+    """Asks the user for textual input. It has an OK button only.
 
-        Asks the user for textual input. It has an OK button only.
+    @param msgtxt: message used to ask for input
+    @type msgtxt: str
+    @param defstr: default user answer in input
+    @type defstr: str
 
-        @param msgtxt: message used to ask for input
-        @param defstr: default user answer in input
+    @returns: text inserted by user
+    @rtype: str
 
-        @example: inpstr = fl_show_simple_input("Insert name and surname:",
-            "John Doe")
+    @example: inpstr = fl_show_simple_input("Insert name and surname:",
+        "John Doe")
 
-        @status: Tested + Doc + NoDemo = OK
+    @status: Tested + Doc + NoDemo = OK
+
     """
 
     _fl_show_simple_input = library.cfuncproto(
-            library.load_so_libforms(), "fl_show_simple_input",
-            xfdata.STRING, [xfdata.STRING, xfdata.STRING],
-            """const char * fl_show_simple_input(const char * p1,
-               const char * p2)
-""")
+        library.load_so_libforms(), "fl_show_simple_input",
+        xfdata.STRING, [xfdata.STRING, xfdata.STRING],
+        """const char * fl_show_simple_input(const char * p1,
+           const char * p2)""")
     library.check_if_initialized()
     smsgtxt = library.convert_to_string(msgtxt)
     sdefstr = library.convert_to_string(defstr)
@@ -349,23 +395,30 @@ def fl_show_simple_input(msgtxt, defstr):
 
 
 def fl_show_colormap(oldcolr):
+    """Shows a colormap color selector from which the user can select a
+    color. The user can decide not to change this color by pressing the
+    Cancel button in the form. In a number of applications the user has
+    to select a color from the colormap. For this a goody has been created.
+    It shows the first 64 entries of the colormap. The user can scroll
+    through the colormap to see more entries. Once the user presses the
+    mouse one of the entries the corresponding index is returned and the
+    colormap is removed from the screen.
+
+    @param oldcolr: current or default color num. (Not FL_COLOR)
+    @type oldcolr: int
+
+    @returns: index of the color selected (or the index of the old color)
+    @rtype: int
+
+    @example: colridx = fl_show_colormap(xfdata.Fl_YELLOWGREEN)
+
+    @status: Tested + Doc + Demo = OK
+
     """
-        fl_show_colormap(oldcolr) -> colormap num.
-
-        Shows a colormap color selector from which the user can select a
-        color.
-
-        @param oldcolr: color num. (Not FL_COLOR)
-        @type oldcolr: num./int
-
-        @status: Tested + NoDoc + Demo = OK
-    """
-
     _fl_show_colormap = library.cfuncproto(
-            library.load_so_libforms(), "fl_show_colormap",
-            cty.c_int, [cty.c_int],
-            """int fl_show_colormap(int p1)
-""")
+        library.load_so_libforms(), "fl_show_colormap",
+        cty.c_int, [cty.c_int],
+        """int fl_show_colormap(int p1)""")
     library.check_if_initialized()
     ioldcolr = library.convert_to_int(oldcolr)
     library.keep_elem_refs(oldcolr, ioldcolr)
@@ -375,47 +428,68 @@ def fl_show_colormap(oldcolr):
 
 # choices
 
-def fl_show_choices(msgtxt, p2, p3, p4, p5, p6):
-    """
-        fl_show_choices(msgtxt, p2, p3, p4, p5, p6) -> num.
+def fl_show_choices(msgtxt, numb, btn1txt, btn2txt, btn3txt, defcho):
+    """Shows a message, as a single string with possible embedded newlines,
+    with one, two or three buttons. The user can also press the <1>, <2> or
+    <3> key to indicate the first, second, or third button.
 
-        @status: Tested + NoDoc + Demo = OK
-    """
+    @param msgtxt: message text
+    @type msgtxt: str
+    @param numb: number of buttons
+    @type numb: int
+    @param btn1txt: label of first button from the left
+    @type btn1txt: str
+    @param btn2txt: label of second button from the left
+    @type btn2txt: str
+    @param btn3txt: label of first button from the right
+    @type btn3txt: str
+    @param defcho: default choice (1, 2 or 3)
+    @type defcho: int
 
+    @returns: number of the button pressed (1, 2 or 3)
+    @rtype: int
+
+    @example: pressbtn = fl_show_choices("some message", 3, "1st", "2nd",
+        "3rd", 1)
+
+    @status: Tested + Doc + Demo = OK
+
+    """
     _fl_show_choices = library.cfuncproto(
-            library.load_so_libforms(), "fl_show_choices",
-            cty.c_int, [xfdata.STRING, cty.c_int, xfdata.STRING, xfdata.STRING,
-            xfdata.STRING, cty.c_int],
-            """int fl_show_choices(const char * p1, int p2,
-               const char * p3, const char * p4, const char * p5, int p6)
-""")
+        library.load_so_libforms(), "fl_show_choices",
+        cty.c_int, [xfdata.STRING, cty.c_int, xfdata.STRING, xfdata.STRING,
+        xfdata.STRING, cty.c_int],
+        """int fl_show_choices(const char * p1, int p2,
+           const char * p3, const char * p4, const char * p5, int p6)""")
     library.check_if_initialized()
     smsgtxt = library.convert_to_string(msgtxt)
-    ip2 = library.convert_to_int(p2)
-    sp3 = library.convert_to_string(p3)
-    sp4 = library.convert_to_string(p4)
-    sp5 = library.convert_to_string(p5)
-    ip6 = library.convert_to_int(p6)
-    library.keep_elem_refs(msgtxt, p2, p3, p4, p5, p6, smsgtxt, ip2, sp3, sp4, sp5, ip6)
-    retval = _fl_show_choices(smsgtxt, ip2, sp3, sp4, sp5, ip6)
+    inumb = library.convert_to_int(numb)
+    sbtn1txt = library.convert_to_string(btn1txt)
+    sbtn2txt = library.convert_to_string(btn2txt)
+    sbtn3txt = library.convert_to_string(btn3txt)
+    idefcho = library.convert_to_int(defcho)
+    library.keep_elem_refs(msgtxt, numb, btn1txt, btn2txt, btn3txt, defcho, \
+            smsgtxt, inumb, sbtn1txt, sbtn2txt, sbtn3txt, idefcho)
+    retval = _fl_show_choices(smsgtxt, inumb, sbtn1txt, sbtn2txt, sbtn3txt, \
+                              idefcho)
     return retval
 
 
 def fl_show_choice(p1, p2, p3, p4, p5, p6, p7, p8):
     """
-        fl_show_choice(p1, p2, p3, p4, p5, p6, p7, p8) -> num.
+    fl_show_choice(p1, p2, p3, p4, p5, p6, p7, p8) -> num.
 
-        @status: Untested + NoDoc + NoDemo = NOT OK
+    @status: Untested + NoDoc + NoDemo = NOT OK
+
     """
 
     _fl_show_choice = library.cfuncproto(
-            library.load_so_libforms(), "fl_show_choice",
-            cty.c_int, [xfdata.STRING, xfdata.STRING, xfdata.STRING, cty.c_int,
-            xfdata.STRING, xfdata.STRING, xfdata.STRING, cty.c_int],
-            """int fl_show_choice(const char * p1, const char * p2,
-               const char * p3, int p4, const char * p5, const char * p6,
-               const char * p7, int p8)
-""")
+        library.load_so_libforms(), "fl_show_choice",
+        cty.c_int, [xfdata.STRING, xfdata.STRING, xfdata.STRING, cty.c_int,
+        xfdata.STRING, xfdata.STRING, xfdata.STRING, cty.c_int],
+        """int fl_show_choice(const char * p1, const char * p2,
+           const char * p3, int p4, const char * p5, const char * p6,
+           const char * p7, int p8)""")
     library.check_if_initialized()
     sp1 = library.convert_to_string(p1)
     sp2 = library.convert_to_string(p2)
@@ -431,17 +505,17 @@ def fl_show_choice(p1, p2, p3, p4, p5, p6, p7, p8):
 
 
 def fl_hide_choice():
-    """
-        fl_hide_choice()
+    """Hides the choice message.
 
-        @status: Untested + NoDoc + NoDemo = NOT OK
-    """
+    @example: fl_hide_choice()
 
+    @status: Tested + Doc + NoDemo = OK
+
+    """
     _fl_hide_choice = library.cfuncproto(
-            library.load_so_libforms(), "fl_hide_choice",
-            None, [],
-            """void fl_hide_choice()
-""")
+        library.load_so_libforms(), "fl_hide_choice",
+        None, [],
+        """void fl_hide_choice()""")
     library.check_if_initialized()
     _fl_hide_choice()
 
@@ -506,6 +580,7 @@ def fl_hide_oneliner():
     @example: fl_hide_oneliner()
 
     @status: Tested + Doc + Demo = OK
+
     """
     _fl_hide_oneliner = library.cfuncproto(
         library.load_so_libforms(), "fl_hide_oneliner",
@@ -516,7 +591,7 @@ def fl_hide_oneliner():
 
 
 def fl_set_oneliner_font(style, size):
-    """ Sets font style and size to use in a oneliner message. 
+    """Sets font style and size to use in a oneliner message.
 
     @param style: label style. Values (from xfdata module)
         FL_NORMAL_STYLE, FL_BOLD_STYLE, FL_ITALIC_STYLE, FL_BOLDITALIC_STYLE,
@@ -534,6 +609,7 @@ def fl_set_oneliner_font(style, size):
     @example: fl_set_oneliner_font(FL_BOLD_STYLE, FL_NORMAL_SIZE)
 
     @status: Tested + Doc + NoDemo = OK
+
     """
     _fl_set_oneliner_font = library.cfuncproto(
         library.load_so_libforms(), "fl_set_oneliner_font",
@@ -549,7 +625,7 @@ def fl_set_oneliner_font(style, size):
 
 
 def fl_set_oneliner_color(fgcolr, bgcolr):
-    """ Sets color to use with oneliner message. By default, the background
+    """Sets color to use with oneliner message. By default, the background
     of the message is yellow and the text black.
 
     @param fgcolr: color value for oneliner foreground
@@ -560,6 +636,7 @@ def fl_set_oneliner_color(fgcolr, bgcolr):
     @example: fl_set_oneliner_color(fgcolr, bgcolr)
 
     @status: Tested + Doc + NoDemo = OK
+
     """
     _fl_set_oneliner_color = library.cfuncproto(
         library.load_so_libforms(), "fl_set_oneliner_color",
@@ -575,24 +652,26 @@ def fl_set_oneliner_color(fgcolr, bgcolr):
 
 
 def fl_set_tooltip_font(style, size):
-    """
-        fl_set_tooltip_font(style, size)
+    """Sets the font style and size of the tooltip.
 
-        @param style: label style (<int>)
-        @type style: (from xfdata module) FL_NORMAL_STYLE, FL_BOLD_STYLE,
-                     FL_ITALIC_STYLE, FL_BOLDITALIC_STYLE, FL_FIXED_STYLE,
-                     FL_FIXEDBOLD_STYLE, FL_FIXEDITALIC_STYLE,
-                     FL_FIXEDBOLDITALIC_STYLE, FL_TIMES_STYLE,
-                     FL_TIMESBOLD_STYLE, FL_TIMESITALIC_STYLE,
-                     FL_TIMESBOLDITALIC_STYLE, FL_MISC_STYLE,
-                     FL_MISCBOLD_STYLE, FL_MISCITALIC_STYLE, FL_SYMBOL_STYLE,
-                     FL_SHADOW_STYLE, FL_ENGRAVED_STYLE, FL_EMBOSSED_STYLE
-        @param size: label size (<int>)
-        @type size: (from xfdata module) FL_TINY_SIZE, FL_SMALL_SIZE,
-                    FL_NORMAL_SIZE, FL_MEDIUM_SIZE, FL_LARGE_SIZE,
-                    FL_HUGE_SIZE, FL_DEFAULT_SIZE
+    @param style: label style. Values (from xfdata module) FL_NORMAL_STYLE,
+        FL_BOLD_STYLE, FL_ITALIC_STYLE, FL_BOLDITALIC_STYLE, FL_FIXED_STYLE,
+        FL_FIXEDBOLD_STYLE, FL_FIXEDITALIC_STYLE, FL_FIXEDBOLDITALIC_STYLE,
+        FL_TIMES_STYLE, FL_TIMESBOLD_STYLE, FL_TIMESITALIC_STYLE,
+        FL_TIMESBOLDITALIC_STYLE, FL_MISC_STYLE, FL_MISCBOLD_STYLE,
+        FL_MISCITALIC_STYLE, FL_SYMBOL_STYLE, FL_SHADOW_STYLE,
+        FL_ENGRAVED_STYLE, FL_EMBOSSED_STYLE
+    @type style: int
+    @param size: label size. Values (from xfdata module) FL_TINY_SIZE,
+        FL_SMALL_SIZE, FL_NORMAL_SIZE, FL_MEDIUM_SIZE, FL_LARGE_SIZE,
+        FL_HUGE_SIZE, FL_DEFAULT_SIZE
+    @type size: int
 
-        @status: Untested + NoDoc + NoDemo = NOT OK
+    @example: fl_set_tooltip_font(xfdata.FL_SHADOW_STYLE,
+        xfdata.FL_DEFAULT_SIZE)
+
+    @status: Tested + Doc + NoDemo = OK
+
     """
     _fl_set_tooltip_font = library.cfuncproto(
         library.load_so_libforms(), "fl_set_tooltip_font",
@@ -608,10 +687,17 @@ def fl_set_tooltip_font(style, size):
 
 
 def fl_set_tooltip_color(fgcolr, bgcolr):
-    """
-        fl_set_tooltip_color(fgcolr, bgcolr)
+    """Sets the foreground and the background colors of the tooltip.
 
-        @status: Untested + NoDoc + NoDemo = NOT OK
+    @param fgcolr: foreground color value
+    @type fgcolr: long_pos
+    @param bgcolr: background color value
+    @type bgcolr: long_pos
+
+    @example: fl_set_tooltip_color(xfdata.FL_BLUE, xfdata.FL_VIOLET)
+
+    @status: Tested + Doc + NoDemo = OK
+
     """
     _fl_set_tooltip_color = library.cfuncproto(
         library.load_so_libforms(), "fl_set_tooltip_color",
@@ -627,19 +713,20 @@ def fl_set_tooltip_color(fgcolr, bgcolr):
 
 
 def fl_set_tooltip_boxtype(boxtype):
-    """
-        fl_set_tooltip_boxtype(boxtype)
+    """Sets the boxtype of the tooltip.
 
-        @param boxtype: type of the box to be added (<int>)
-        @type boxtype: (from xfdata module) FL_NO_BOX, FL_UP_BOX, FL_DOWN_BOX,
-                       FL_BORDER_BOX, FL_SHADOW_BOX, FL_FRAME_BOX,
-                       FL_ROUNDED_BOX, FL_EMBOSSED_BOX, FL_FLAT_BOX,
-                       FL_RFLAT_BOX, FL_RSHADOW_BOX, FL_OVAL_BOX,
-                       FL_ROUNDED3D_UPBOX, FL_ROUNDED3D_DOWNBOX,
-                       FL_OVAL3D_UPBOX, FL_OVAL3D_DOWNBOX, FL_OVAL3D_FRAMEBOX,
-                       FL_OVAL3D_EMBOSSEDBOX
+    @param boxtype: type of the box to be added. Values (from xfdata module)
+        FL_NO_BOX, FL_UP_BOX, FL_DOWN_BOX, FL_BORDER_BOX, FL_SHADOW_BOX,
+        FL_FRAME_BOX, FL_ROUNDED_BOX, FL_EMBOSSED_BOX, FL_FLAT_BOX,
+        FL_RFLAT_BOX, FL_RSHADOW_BOX, FL_OVAL_BOX, FL_ROUNDED3D_UPBOX,
+        FL_ROUNDED3D_DOWNBOX, FL_OVAL3D_UPBOX, FL_OVAL3D_DOWNBOX,
+        FL_OVAL3D_FRAMEBOX, FL_OVAL3D_EMBOSSEDBOX
+    @type boxtype: int
 
-        @status: Untested + NoDoc + NoDemo = NOT OK
+    @example: fl_set_tooltip_boxtype(xfdata.FL_OVAL3D_DOWNBOX)
+
+    @status: Tested + Doc + NoDemo = OK
+
     """
     _fl_set_tooltip_boxtype = library.cfuncproto(
         library.load_so_libforms(), "fl_set_tooltip_boxtype",
@@ -653,17 +740,19 @@ def fl_set_tooltip_boxtype(boxtype):
 
 
 def fl_set_tooltip_lalign(align):
-    """
-        fl_set_tooltip_lalign(align)
+    """Sets the alignment of the tooltip.
 
-        @param align: alignment of tooltip (<int>)
-        @type align: (from xfdata module) FL_ALIGN_CENTER, FL_ALIGN_TOP,
-                     FL_ALIGN_BOTTOM, FL_ALIGN_LEFT, FL_ALIGN_RIGHT,
-                     FL_ALIGN_LEFT_TOP, FL_ALIGN_RIGHT_TOP,
-                     FL_ALIGN_LEFT_BOTTOM, FL_ALIGN_RIGHT_BOTTOM,
-                     FL_ALIGN_INSIDE, FL_ALIGN_VERT
+    @param align: alignment of tooltip. Values (from xfdata module)
+        FL_ALIGN_CENTER, FL_ALIGN_TOP, FL_ALIGN_BOTTOM, FL_ALIGN_LEFT,
+        FL_ALIGN_RIGHT, FL_ALIGN_LEFT_TOP, FL_ALIGN_RIGHT_TOP,
+        FL_ALIGN_LEFT_BOTTOM, FL_ALIGN_RIGHT_BOTTOM, FL_ALIGN_INSIDE,
+        FL_ALIGN_VERT
+    @type align: int 
 
-        @status: Untested + NoDoc + NoDemo = NOT OK
+    @example: fl_set_tooltip_lalign(xfdata.FL_ALIGN_VERT)
+
+    @status: Tested + Doc + NoDemo = OK
+
     """
     _fl_set_tooltip_lalign = library.cfuncproto(
         library.load_so_libforms(), "fl_set_tooltip_lalign",

@@ -12,55 +12,58 @@
 
 import sys
 #sys.path.append("..")
-from xformslib import flbasic, flxbasic, flbutton, xfdata
+from xformslib import flbasic as flba
+from xformslib import flxbasic as flxb
+from xformslib import flbutton as flbt
+from xformslib import xfdata as xfc
 
 
 
 def exit_cb(pobj, data):
-    flxbasic.fl_finish()
+    flxb.fl_finish()
     sys.exit(1)
 
 def main(lsysargv, sysargv):
 
-    flxbasic.fl_initialize(lsysargv, sysargv, "FormDemo", 0, 0)
+    flxb.fl_initialize(lsysargv, sysargv, "FormDemo", 0, 0)
 
-    pform = flbasic.fl_bgn_form(xfdata.FL_UP_BOX, 400, 400)
+    pform = flba.fl_bgn_form(xfc.FL_UP_BOX, 400, 400)
 
-    pobj1 = flbutton.fl_add_button(xfdata.FL_NORMAL_BUTTON, 50, 250, 100, 100, "@1")
-    flbasic.fl_set_object_lcol(pobj1, xfdata.FL_BLUE)
+    pobj1 = flbt.fl_add_button(xfc.FL_NORMAL_BUTTON, 50, 250, 100, 100, "@1")
+    flba.fl_set_object_lcol(pobj1, xfc.FL_BLUE)
 
-    pobj2 = flbutton.fl_add_button(xfdata.FL_NORMAL_BUTTON, 150, 250, 100, 100, "@2")
-    flbasic.fl_set_object_lcol(pobj2, xfdata.FL_BLUE)
+    pobj2 = flbt.fl_add_button(xfc.FL_NORMAL_BUTTON, 150, 250, 100, 100, "@2")
+    flba.fl_set_object_lcol(pobj2, xfc.FL_BLUE)
 
-    pobj3 = flbutton.fl_add_button(xfdata.FL_NORMAL_BUTTON, 250, 250, 100, 100, "@3")
-    flbasic.fl_set_object_lcol(pobj3, xfdata.FL_BLUE)
+    pobj3 = flbt.fl_add_button(xfc.FL_NORMAL_BUTTON, 250, 250, 100, 100, "@3")
+    flba.fl_set_object_lcol(pobj3, xfc.FL_BLUE)
 
-    pobj4 = flbutton.fl_add_button(xfdata.FL_NORMAL_BUTTON, 50, 150, 100, 100, "@4")
-    flbasic.fl_set_object_lcol(pobj4, xfdata.FL_BLUE)
+    pobj4 = flbt.fl_add_button(xfc.FL_NORMAL_BUTTON, 50, 150, 100, 100, "@4")
+    flba.fl_set_object_lcol(pobj4, xfc.FL_BLUE)
 
-    pobj5 = flbutton.fl_add_button(xfdata.FL_NORMAL_BUTTON, 250, 150, 100, 100, "@6")
-    flbasic.fl_set_object_lcol(pobj5, xfdata.FL_BLUE)
+    pobj5 = flbt.fl_add_button(xfc.FL_NORMAL_BUTTON, 250, 150, 100, 100, "@6")
+    flba.fl_set_object_lcol(pobj5, xfc.FL_BLUE)
 
-    pobj6 = flbutton.fl_add_button(xfdata.FL_NORMAL_BUTTON, 50, 50, 100, 100, "@7")
-    flbasic.fl_set_object_lcol(pobj6, xfdata.FL_BLUE)
+    pobj6 = flbt.fl_add_button(xfc.FL_NORMAL_BUTTON, 50, 50, 100, 100, "@7")
+    flba.fl_set_object_lcol(pobj6, xfc.FL_BLUE)
 
-    pobj7 = flbutton.fl_add_button(xfdata.FL_NORMAL_BUTTON, 150, 50, 100, 100, "@8")
-    flbasic.fl_set_object_lcol(pobj7, xfdata.FL_BLUE)
+    pobj7 = flbt.fl_add_button(xfc.FL_NORMAL_BUTTON, 150, 50, 100, 100, "@8")
+    flba.fl_set_object_lcol(pobj7, xfc.FL_BLUE)
 
-    pobj8 = flbutton.fl_add_button(xfdata.FL_NORMAL_BUTTON, 250, 50, 100, 100, "@9")
-    flbasic.fl_set_object_lcol(pobj8, xfdata.FL_BLUE)
+    pobj8 = flbt.fl_add_button(xfc.FL_NORMAL_BUTTON, 250, 50, 100, 100, "@9")
+    flba.fl_set_object_lcol(pobj8, xfc.FL_BLUE)
 
-    pobjexit = flbutton.fl_add_button(xfdata.FL_NORMAL_BUTTON, 150, 150, 100, 100, "@square")
-    flbasic.fl_set_object_lcol(pobjexit, xfdata.FL_GREEN)
-    flbasic.fl_set_object_color(pobjexit, xfdata.FL_MAGENTA, xfdata.FL_RED)
+    pobjexit = flbt.fl_add_button(xfc.FL_NORMAL_BUTTON, 150, 150, 100, 100, "@square")
+    flba.fl_set_object_lcol(pobjexit, xfc.FL_GREEN)
+    flba.fl_set_object_color(pobjexit, xfc.FL_MAGENTA, xfc.FL_RED)
 
-    flbasic.fl_set_object_callback(pobjexit, exit_cb, 0)
+    flba.fl_set_object_callback(pobjexit, exit_cb, 0)
 
-    flbasic.fl_end_form()
+    flba.fl_end_form()
 
-    flbasic.fl_show_form(pform, xfdata.FL_PLACE_ASPECT, xfdata.FL_TRANSIENT, "Buttons")
+    flba.fl_show_form(pform, xfc.FL_PLACE_ASPECT, xfc.FL_TRANSIENT, "Buttons")
 
-    while flbasic.fl_do_forms():
+    while flba.fl_do_forms():
         pass                    # empty
 
 
