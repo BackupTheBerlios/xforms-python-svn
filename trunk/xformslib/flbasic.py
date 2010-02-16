@@ -88,15 +88,6 @@ def special_style(style):
         return False
 
 
-
-# Macro for getting at the object handlers return value
-
-def fl_object_returned(pFlObject):
-    library.check_if_initialized()
-    library.check_if_FL_OBJECT_ptr(pFlObject)
-    return pFlObject.contents.returned
-
-
 # IO other than XEvent Q
 
 # TODO: verify what function can open file
