@@ -40,9 +40,6 @@ from xformslib import flbasic
 
 
 
-
-
-
 ######################
 # forms.h (goodies.h)
 ######################
@@ -206,7 +203,7 @@ def fl_show_question(questmsg, defbtn):
     @returns: 1 (if Yes button pushed) or 0 otherwise
     @rtype: int
 
-    @example: qresp = fl_show_question("My question?", )
+    @example: qresp = fl_show_question("My question?", 1)
 
     @status: Tested + Doc + Demo = OK
 
@@ -319,8 +316,8 @@ def fl_hide_alert():
 
 
 def fl_show_input(msgtxt, defstr):
-    """Obtains some text from user, showing a default text. It has OK and
-    Cancel buttons.
+    """Obtains some text from user, showing a default text. It has OK
+    and Cancel buttons.
 
     @param msgtxt: text used to ask for input
     @type msgtxt: str
@@ -380,7 +377,6 @@ def fl_show_simple_input(msgtxt, defstr):
     @status: Tested + Doc + NoDemo = OK
 
     """
-
     _fl_show_simple_input = library.cfuncproto(
         library.load_so_libforms(), "fl_show_simple_input",
         xfdata.STRING, [xfdata.STRING, xfdata.STRING],
@@ -475,14 +471,37 @@ def fl_show_choices(msgtxt, numb, btn1txt, btn2txt, btn3txt, defcho):
     return retval
 
 
-def fl_show_choice(p1, p2, p3, p4, p5, p6, p7, p8):
+def fl_show_choice(msg1txt, msg2txt, msg3txt, numb, btn1txt, btn2txt, btn3txt, defcho):
+    """Shows a message, up to three lines, with one, two or three buttons.
+    The user can also press the <1>, <2> or <3> key to indicate the first,
+    second, or third button.
+
+    @param msg1txt: first message text
+    @type msg1txt: str
+    @param msg2txt: second message text
+    @type msg2txt: str
+    @param msg3txt: third message text
+    @type msg3txt: str
+    @param numb: number of buttons
+    @type numb: int
+    @param btn1txt: label of first button from the left
+    @type btn1txt: str
+    @param btn2txt: label of second button from the left
+    @type btn2txt: str
+    @param btn3txt: label of first button from the right
+    @type btn3txt: str
+    @param defcho: default choice (1, 2 or 3)
+    @type defcho: int
+
+    @returns: number of the button pressed (1, 2 or 3)
+    @rtype: int
+
+    @example: pressbtn = fl_show_choices("some message", "some other",
+        "the end", 3, "1st", "2nd", "3rd", 1)
+
+    @status: Tested + Doc + Demo = OK
+
     """
-    fl_show_choice(p1, p2, p3, p4, p5, p6, p7, p8) -> num.
-
-    @status: Untested + NoDoc + NoDemo = NOT OK
-
-    """
-
     _fl_show_choice = library.cfuncproto(
         library.load_so_libforms(), "fl_show_choice",
         cty.c_int, [xfdata.STRING, xfdata.STRING, xfdata.STRING, cty.c_int,
@@ -491,16 +510,19 @@ def fl_show_choice(p1, p2, p3, p4, p5, p6, p7, p8):
            const char * p3, int p4, const char * p5, const char * p6,
            const char * p7, int p8)""")
     library.check_if_initialized()
-    sp1 = library.convert_to_string(p1)
-    sp2 = library.convert_to_string(p2)
-    sp3 = library.convert_to_string(p3)
-    ip4 = library.convert_to_int(p4)
-    sp5 = library.convert_to_string(p5)
-    sp6 = library.convert_to_string(p6)
-    sp7 = library.convert_to_string(p7)
-    ip8 = library.convert_to_int(p8)
-    library.keep_elem_refs(sp1, sp2, sp3, ip4, sp5, sp6, sp7, ip8)
-    retval = _fl_show_choice(sp1, sp2, sp3, ip4, sp5, sp6, sp7, ip8)
+    smsg1txt = library.convert_to_string(msg1txt)
+    smsg2txt = library.convert_to_string(msg2txt)
+    smsg3txt = library.convert_to_string(msg3txt)
+    inumb = library.convert_to_int(numb)
+    sbtn1txt = library.convert_to_string(btn1txt)
+    sbtn2txt = library.convert_to_string(btn2txt)
+    sbtn3txt = library.convert_to_string(btn3txt)
+    idefcho = library.convert_to_int(defcho)
+    library.keep_elem_refs(msg1txt, msg2txt, msg3txt, numb, btn1txt,
+        btn2txt, btn3txt, defcho, smsg1txt, smsg2txt, smsg3txt, inumb,
+        sbtn1txt, sbtn2txt, sbtn3txt, idefcho)
+    retval = _fl_show_choice(smsg1txt, smsg2txt, smsg3txt, inumb, sbtn1txt,
+        sbtn2txt, sbtn3txt, idefcho)
     return retval
 
 
@@ -520,25 +542,33 @@ def fl_hide_choice():
     _fl_hide_choice()
 
 
-def fl_set_choices_shortcut(p1, p2, p3):
-    """
-        fl_set_choices_shortcut(p1, p2, p3)
+def fl_set_choices_shortcut(shc1txt, shc2txt, shc3txt):
+    """Defines more mnemonic hotkeys as shortcut text for choices.
 
-        @status: Untested + NoDoc + NoDemo = NOT OK
-    """
+    @param shc1txt: shortcut to bind to first button
+    @type shc1txt: str
+    @param shc2txt: shortcut to bind to second button
+    @type shc2txt: str
+    @param shc3txt: shortcut to bind to third button
+    @type shc3txt: str
 
+    @example: fl_set_choices_shortcut("a", "B", "^C")
+
+    @status: Tested + Doc + NoDemo = OK
+
+    """
     _fl_set_choices_shortcut = library.cfuncproto(
-            library.load_so_libforms(), "fl_set_choices_shortcut",
-            None, [xfdata.STRING, xfdata.STRING, xfdata.STRING],
-            """void fl_set_choices_shortcut(const char * p1, const char * p2,
-               const char * p3)
-""")
+        library.load_so_libforms(), "fl_set_choices_shortcut",
+        None, [xfdata.STRING, xfdata.STRING, xfdata.STRING],
+        """void fl_set_choices_shortcut(const char * p1, const char * p2,
+           const char * p3)""")
     library.check_if_initialized()
-    sp1 = library.convert_to_string(p1)
-    sp2 = library.convert_to_string(p2)
-    sp3 = library.convert_to_string(p3)
-    library.keep_elem_refs(p1, p2, p3, sp1, sp2, sp3)
-    _fl_set_choices_shortcut(sp1, sp2, sp3)
+    sshc1txt = library.convert_to_string(shc1txt)
+    sshc2txt = library.convert_to_string(shc2txt)
+    sshc3txt = library.convert_to_string(shc3txt)
+    library.keep_elem_refs(shc1txt, shc2txt, shc3txt, sshc1txt, sshc2txt,
+        sshc3txt)
+    _fl_set_choices_shortcut(sshc1txt, sshc2txt, sshc3txt)
 
 
 fl_set_choice_shortcut = fl_set_choices_shortcut
@@ -547,7 +577,7 @@ fl_set_choice_shortcut = fl_set_choices_shortcut
 # one liner
 
 def fl_show_oneliner(text, x, y):
-    """ Shows a one-line message that can only be removed programmatically.
+    """Shows a one-line message that can only be removed programmatically.
     Multi-line message is possible by embedding the newline character in text.
 
     @param text: oneliner message text
@@ -557,9 +587,10 @@ def fl_show_oneliner(text, x, y):
     @param y: vertical position (relative to root window)
     @type y: int
 
-    @example:  fl_show_oneliner("Button to close window", 134, 155)
+    @example: fl_show_oneliner("Button to close window", 134, 155)
 
     @status: Tested + Doc + Demo = OK
+
     """
     _fl_show_oneliner = library.cfuncproto(
         library.load_so_libforms(), "fl_show_oneliner",
@@ -575,7 +606,7 @@ def fl_show_oneliner(text, x, y):
 
 
 def fl_hide_oneliner():
-    """ Hides the oneliner message previously shown.
+    """Hides the oneliner message previously shown.
 
     @example: fl_hide_oneliner()
 
@@ -593,13 +624,13 @@ def fl_hide_oneliner():
 def fl_set_oneliner_font(style, size):
     """Sets font style and size to use in a oneliner message.
 
-    @param style: label style. Values (from xfdata module)
-        FL_NORMAL_STYLE, FL_BOLD_STYLE, FL_ITALIC_STYLE, FL_BOLDITALIC_STYLE,
-        FL_FIXED_STYLE, FL_FIXEDBOLD_STYLE, FL_FIXEDITALIC_STYLE,
-        FL_FIXEDBOLDITALIC_STYLE, FL_TIMES_STYLE, FL_TIMESBOLD_STYLE,
-        FL_TIMESITALIC_STYLE, FL_TIMESBOLDITALIC_STYLE, FL_MISC_STYLE,
-        FL_MISCBOLD_STYLE, FL_MISCITALIC_STYLE, FL_SYMBOL_STYLE,
-        FL_SHADOW_STYLE, FL_ENGRAVED_STYLE, FL_EMBOSSED_STYLE
+    @param style: label style. Values (from xfdata module) FL_NORMAL_STYLE,
+        FL_BOLD_STYLE, FL_ITALIC_STYLE, FL_BOLDITALIC_STYLE, FL_FIXED_STYLE,
+        FL_FIXEDBOLD_STYLE, FL_FIXEDITALIC_STYLE, FL_FIXEDBOLDITALIC_STYLE,
+        FL_TIMES_STYLE, FL_TIMESBOLD_STYLE, FL_TIMESITALIC_STYLE,
+        FL_TIMESBOLDITALIC_STYLE, FL_MISC_STYLE, FL_MISCBOLD_STYLE,
+        FL_MISCITALIC_STYLE, FL_SYMBOL_STYLE, FL_SHADOW_STYLE,
+        FL_ENGRAVED_STYLE, FL_EMBOSSED_STYLE
     @type style: int
     @param size: label size. Values (from xfdata module) FL_TINY_SIZE,
         FL_SMALL_SIZE, FL_NORMAL_SIZE, FL_MEDIUM_SIZE, FL_LARGE_SIZE,
@@ -765,28 +796,33 @@ def fl_set_tooltip_lalign(align):
     _fl_set_tooltip_lalign(ialign)
 
 
-def fl_exe_command(command, block):
-    """
-        fl_exe_command(command, block) -> exit status
+def fl_exe_command(cmdtxt, block):
+    """Forks a new process that runs specified command.
 
-        Forks a new process that runs specified command
+    @param cmdtxt: a shell command line
+    @type cmdtxt: str
+    @param block: blocking flag indicating if the function should
+        wait for the child process to finish or not. Values non-zero
+        (for waiting) or 0 (don't wait).
+    @type block: int
 
-        @param command: a shell command line
-        @param block: blocking flag indicating if the function should
-                      wait for the child process to finish or not (<int>)
-        @type block: non-zero (for waiting) or 0 (don't wait).
+    @returns: exit status
+    @rtype: long
 
-        @status: Untested + NoDoc + NoDemo = NOT OK
+    @example: ?
+
+    @status: Untested + NoDoc + NoDemo = NOT OK
+
     """
     _fl_exe_command = library.cfuncproto(
         library.load_so_libforms(), "fl_exe_command",
         cty.c_long, [xfdata.STRING, cty.c_int],
         """long int fl_exe_command(const char * p1, int p2)""")
     library.check_if_initialized()
-    scommand = library.convert_to_string(command)
+    scmdtxt = library.convert_to_string(cmdtxt)
     iblock = library.convert_to_int(block)
-    library.keep_elem_refs(command, block, scommand, iblock)
-    retval = _fl_exe_command(scommand, iblock)
+    library.keep_elem_refs(cmdtxt, block, scmdtxt, iblock)
+    retval = _fl_exe_command(scmdtxt, iblock)
     return retval
 
 
@@ -794,16 +830,19 @@ fl_open_command = fl_exe_command
 
 
 def fl_end_command(pid):
-    """
-        fl_end_command(pid) -> exit status
+    """Suspends the current process and waits until the child process is
+    completed.
 
-        Suspends the current process and waits until the child process is
-        completed, then it returns the exit status of the child process or
-        -1 if an error has occurred.
+    @param pid: process id returned by fl_exe_command()
+    @type pid: long
 
-        @param pid: process id returned by fl_exe_command()
+    @returns: exit status of child process, or -1 (if an error has occurred)
+    @rtype: long
 
-        @status: Untested + NoDoc + NoDemo = NOT OK
+    @example: fl_end_command(1488)
+
+    @status: Tested + Doc + NoDemo = OK
+
     """
     _fl_end_command = library.cfuncproto(
         library.load_so_libforms(), "fl_end_command",
@@ -820,16 +859,20 @@ fl_close_command = fl_end_command
 
 
 def fl_check_command(pid):
-    """
-        fl_check_command(pid) -> exit status
+    """Polls the status of a child process.
 
-        Polls the status of a child process. Returns 0 if the child process is
-        finished; 1 if the child process still exists (running or stopped) and
-        -1 if an error has occurred inside the function.
+    @param pid: process id returned by fl_exe_command()
+    @type pid: long
 
-        @param pid: process id returned by fl_exe_command()
+    @returns: 0 if the child process is finished, or 1 if the child process
+        still exists (running or stopped), or -1 if an error has occurred
+        inside the function
+    @rtype: int
 
-        @status: Untested + NoDoc + NoDemo = NOT OK
+    @example: fl_check_command(1488)
+
+    @status: Tested + Doc + NoDemo = OK
+
     """
     _fl_check_command = library.cfuncproto(
         library.load_so_libforms(), "fl_check_command",
@@ -842,49 +885,49 @@ def fl_check_command(pid):
     return retval
 
 
-def fl_popen(command, otype):
-    """
-    fl_popen(command, otype) -> pFile
+def fl_popen(cmdtxt, otype):
+    """Executes the command in a child process, and logs the stderr messages
+    into the command log. If otype is "w", stdout will also be logged into
+    the command browser.
 
-    Executes the command in a child process, and logs the stderr messages into
-    the command log. If otype is "w", stdout will also be logged into the
-    command browser.
-
-    @param command: existing filename to execute
-    @type command: str
+    @param cmdtxt: existing filename to execute
+    @type cmdtxt: str
     @param otype: type of opening (e.g. letter between w, r ..)
     @type otype: str
 
-    @returns: file opened (<pointer to FILE>)
+    @returns: file opened (pFile)
+    @rtype: pointer to xfdata.FILE
 
-    @status: Untested + NoDoc + NoDemo = NOT OK
+    @example: pfile = fl_popen("/usr/bin/somecommand", "r")
+
+    @status: Tested + Doc + NoDemo = OK
+
     """
     _fl_popen = library.cfuncproto(
         library.load_so_libforms(), "fl_popen",
         cty.POINTER(xfdata.FILE), [xfdata.STRING, xfdata.STRING],
         """FILE * fl_popen(const char * p1, const char * p2)""")
     library.check_if_initialized()
-    scommand = library.convert_to_string(command)
+    scmdtxt = library.convert_to_string(cmdtxt)
     sotype = library.convert_to_string(otype)
-    library.keep_elem_refs(command, otype, scommand, sotype)
-    retval = _fl_popen(scommand, sotype)
+    library.keep_elem_refs(cmdtxt, otype, scmdtxt, sotype)
+    retval = _fl_popen(scmdtxt, sotype)
     return retval
 
 
 def fl_pclose(pFile):
-    """
-    fl_pclose(pFile) -> int
-
-    Cleans up the child process executed.
+    """Cleans up the child process executed.
 
     @param pFile: opened file stream returned by fl_popen()
-    @type pFile: pointer to FILE
+    @type pFile: pointer to xfdata.FILE
 
     @returns: non-zero, or -1 (on failure)
+    @rtype: int
 
     @example: if fl_pclose(pfile) == -1: ...
 
     @status: Tested + Doc + NoDemo = OK
+
     """
     _fl_pclose = library.cfuncproto(
         library.load_so_libforms(), "fl_pclose",
@@ -897,13 +940,16 @@ def fl_pclose(pFile):
 
 
 def fl_end_all_command():
-    """
-    fl_end_all_command() -> exit status
+    """Waits for all the child processes initiated by fl_exe_command()
+    to complete.
 
-    Wait for all the child processes initiated by fl_exe_command() to
-    complete. Returns the status of the last child process.
+    @returns: exit status of the last child process
+    @rtype: int
 
-    @status: Untested + NoDoc + NoDemo = NOT OK
+    @example: fl_end_all_command()
+
+    @status: Tested + Doc + NoDemo = OK
+
     """
     _fl_end_all_command = library.cfuncproto(
         library.load_so_libforms(), "fl_end_all_command",
@@ -914,16 +960,16 @@ def fl_end_all_command():
 
 
 def fl_show_command_log(border):
-    """
-    fl_show_command_log(border)
+    """Shows the log of the command output.
 
-    Shows the log of the command output.
-
-    @param border: window manager decoration. Values (from xfdata module) i.e.
-        FL_FULLBORDER, FL_TRANSIENT, FL_NOBORDER
+    @param border: window manager decoration. Values (from xfdata
+        module) FL_FULLBORDER, FL_TRANSIENT, FL_NOBORDER
     @type border: int
 
+    @example: ?
+
     @status: Untested + NoDoc + NoDemo = NOT OK
+
     """
     _fl_show_command_log = library.cfuncproto(
         library.load_so_libforms(), "fl_show_command_log",
@@ -937,12 +983,12 @@ def fl_show_command_log(border):
 
 
 def fl_hide_command_log():
-    """
-    fl_hide_command_log()
+    """Hides the log of the command output.
 
-    Hides the log of the command output.
+    @example: fl_hide_command_log()
 
-    @status: Untested + NoDoc + NoDemo = NOT OK
+    @status: Tested + Doc + NoDemo = OK
+
     """
     _fl_hide_command_log = library.cfuncproto(
         library.load_so_libforms(), "fl_hide_command_log",
@@ -953,14 +999,13 @@ def fl_hide_command_log():
 
 
 def fl_clear_command_log():
+    """Clears the browser and the logging output displayed within it.
+
+    @example: fl_clear_command_log()
+
+    @status: Tested + Doc + NoDemo = OK
+
     """
-    fl_clear_command_log()
-
-    Clears the browser and the logging output displayed within it.
-
-    @status: Untested + NoDoc + NoDemo = NOT OK
-    """
-
     _fl_clear_command_log = library.cfuncproto(
         library.load_so_libforms(), "fl_clear_command_log",
         None, [],
@@ -970,21 +1015,20 @@ def fl_clear_command_log():
 
 
 def fl_addto_command_log(txtstr):
+    """Adds arbitrary text to the command browser.
+
+    @param txtstr: text line to be added (with possible embedded newlines)
+    @type txtstr: str
+
+    @example: fl_addto_command_log("Another line to add to CmdLog")
+
+    @status: Tested + Doc + NoDemo = OK
+
     """
-    fl_addto_command_log(txtstr)
-
-    Adds arbitrary text to the command browser
-
-    @param txtstr: text line to be added <string>
-
-    @status: Untested + NoDoc + NoDemo = NOT OK
-    """
-
     _fl_addto_command_log = library.cfuncproto(
-            library.load_so_libforms(), "fl_addto_command_log",
-            None, [xfdata.STRING],
-            """void fl_addto_command_log(const char * p1)
-""")
+        library.load_so_libforms(), "fl_addto_command_log",
+        None, [xfdata.STRING],
+        """void fl_addto_command_log(const char * p1)""")
     library.check_if_initialized()
     stxtstr = library.convert_to_string(txtstr)
     library.keep_elem_refs(txtstr, stxtstr)
@@ -992,24 +1036,22 @@ def fl_addto_command_log(txtstr):
 
 
 def fl_set_command_log_position(x, y):
-    """
-    fl_set_command_log_position(x, y)
-
-    Changes the default placement of the command log.
+    """Changes the default placement of the command log.
 
     @param x: horizontal position (upper-left corner)
     @type x: int
     @param y: vertical position (upper-left corner)
     @type y: int
 
-    @status: Untested + NoDoc + NoDemo = NOT OK
-    """
+    @example: fl_set_command_log_position(174, 288)
 
+    @status: Tested + Doc + NoDemo = OK
+
+    """
     _fl_set_command_log_position = library.cfuncproto(
-            library.load_so_libforms(), "fl_set_command_log_position",
-            None, [cty.c_int, cty.c_int],
-            """void fl_set_command_log_position(int p1, int p2)
-""")
+        library.load_so_libforms(), "fl_set_command_log_position",
+        None, [cty.c_int, cty.c_int],
+        """void fl_set_command_log_position(int p1, int p2)""")
     library.check_if_initialized()
     ix = library.convert_to_int(x)
     iy = library.convert_to_int(y)
@@ -1018,10 +1060,18 @@ def fl_set_command_log_position(x, y):
 
 
 def fl_get_command_log_fdstruct():
-    """
-    fl_get_command_log_fdstruct() -> pCmdlog
+    """Obtains the GUI structure of the command browser. From the information
+    returned, the application program can change various attributes of the
+    command browser and its associated objects. Note however, that you should
+    not hide/show the form or free any member of the returned structure.
 
-    @status: Untested + NoDoc + NoDemo = NOT OK
+    @returns: command log browser class instance (pCmdlog)
+    @rtype: pointer to xfdata.FD_CMDLOG
+
+    @example: pcmdlogbr = fl_get_command_log_fdstruct()
+
+    @status: Tested + Doc + NoDemo = OK
+
     """
     _fl_get_command_log_fdstruct = library.cfuncproto(
         library.load_so_libforms(), "fl_get_command_log_fdstruct",
@@ -1035,14 +1085,19 @@ def fl_get_command_log_fdstruct():
 # file selector
 
 def fl_use_fselector(num):
-    """
-    fl_use_fselector(num) -> num.
+    """Sets the currently active file selector.
 
     @param num: fselector number to use. Values between 0 and
         xfdata.FL_MAX_FSELECTOR - 1
     @type num: int
 
-    @status: Untested + NoDoc + NoDemo = NOT OK
+    @returns: old file selector
+    @rtype: int
+
+    @example: oldfsel = fl_use_fselector(1)
+
+    @status: Tested + Doc + NoDemo = OK
+
     """
     _fl_use_fselector = library.cfuncproto(
         library.load_so_libforms(), "fl_use_fselector",
@@ -1055,31 +1110,44 @@ def fl_use_fselector(num):
     return retval
 
 
-def fl_show_fselector(msgtxt, p2, p3, p4):
-    """
-    fl_show_fselector(msgtxt, p2, p3, p4) -> fselector string
+def fl_show_fselector(msgtxt, dirname, pattern, deftxt):
+    """Show a file selector, providing an easy and interactive way to let
+    the user select files.
 
     @param msgtxt: message text
     @type msgtxt: str
-    @param p2: ?
-    @type p2: str
-    @param p3: ?
-    @type p3: str
+    @param dirname: directory name
+    @type dirname: str
+    @param pattern: any kind of regular expression, e.g. "[a-f]*c" which
+        would list all files starting with a letter between a and f and
+        ending with .c.
+    @type pattern: str
+    @param deftxt: default file name
+    @type deftxt: str
 
-    @status: Tested + NoDoc + Demo = OK
+    @returns: fselector text, or None (if the Cancel button is pressed)
+    @rtype: str
+
+    @example: fstxt = fl_show_fselector("Choose file:", "/home/user", "*.*",
+        "")
+
+    @status: Tested + Doc + Demo = OK
+
     """
     _fl_show_fselector = library.cfuncproto(
         library.load_so_libforms(), "fl_show_fselector",
-        xfdata.STRING, [xfdata.STRING, xfdata.STRING, xfdata.STRING, xfdata.STRING],
+        xfdata.STRING, [xfdata.STRING, xfdata.STRING, xfdata.STRING,
+        xfdata.STRING],
         """const char * fl_show_fselector(const char * p1,
            const char * p2, const char * p3, const char * p4)""")
     library.check_if_initialized()
     smsgtxt = library.convert_to_string(msgtxt)
-    sp2 = library.convert_to_string(p2)
-    sp3 = library.convert_to_string(p3)
-    sp4 = library.convert_to_string(p4)
-    library.keep_elem_refs(msgtxt, p2, p3, p4, smsgtxt, sp2, sp3, sp4)
-    retval = _fl_show_fselector(smsgtxt, sp2, sp3, sp4)
+    sdirname = library.convert_to_string(dirname)
+    spattern = library.convert_to_string(pattern)
+    sdeftxt = library.convert_to_string(deftxt)
+    library.keep_elem_refs(msgtxt, dirname, pattern, deftxt, smsgtxt,
+        sdirname, spattern, sdeftxt)
+    retval = _fl_show_fselector(smsgtxt, sdirname, spattern, sdeftxt)
     return retval
 
 
@@ -1087,14 +1155,17 @@ fl_show_file_selector = fl_show_fselector
 
 
 def fl_set_fselector_fontsize(size):
-    """
-    fl_set_fselector_fontsize(size)
+    """Changes the font size of a file selector.
 
-    @param size: label size. Values (from xfdata module) i.e. FL_TINY_SIZE,
+    @param size: label size. Values (from xfdata module) FL_TINY_SIZE,
         FL_SMALL_SIZE, FL_NORMAL_SIZE, FL_MEDIUM_SIZE, FL_LARGE_SIZE,
         FL_HUGE_SIZE, FL_DEFAULT_SIZE
+    @type size: int
 
-    @status: Untested + NoDoc + NoDemo = NOT OK
+    @example: fl_set_fselector_fontsize(xfdata.TINY_SIZE)
+
+    @status: Tested + Doc + NoDemo = OK
+
     """
     _fl_set_fselector_fontsize = library.cfuncproto(
         library.load_so_libforms(), "fl_set_fselector_fontsize",
@@ -1108,10 +1179,9 @@ def fl_set_fselector_fontsize(size):
 
 
 def fl_set_fselector_fontstyle(style):
-    """
-    fl_set_fselector_fontstyle(style)
+    """Changes the font style of a file selector.
 
-    @param style: label style. Values (from xfdata module) i.e. FL_NORMAL_STYLE,
+    @param style: label style. Values (from xfdata module) FL_NORMAL_STYLE,
         FL_BOLD_STYLE, FL_ITALIC_STYLE, FL_BOLDITALIC_STYLE, FL_FIXED_STYLE,
         FL_FIXEDBOLD_STYLE, FL_FIXEDITALIC_STYLE, FL_FIXEDBOLDITALIC_STYLE,
         FL_TIMES_STYLE, FL_TIMESBOLD_STYLE, FL_TIMESITALIC_STYLE,
@@ -1120,7 +1190,10 @@ def fl_set_fselector_fontstyle(style):
         FL_ENGRAVED_STYLE, FL_EMBOSSED_STYLE
     @type place: int
 
-    @status: Untested + NoDoc + NoDemo = NOT OK
+    @example: fl_set_fselector_fontstyle(xfdata.FL_SHADOW_STYLE)
+
+    @status: Tested + Doc + NoDemo = OK
+
     """
     _fl_set_fselector_fontstyle = library.cfuncproto(
         library.load_so_libforms(), "fl_set_fselector_fontstyle",
@@ -1134,17 +1207,20 @@ def fl_set_fselector_fontstyle(style):
 
 
 def fl_set_fselector_placement(place):
-    """
-    fl_set_fselector_placement(place)
+    """Sets the placement of the file selector. By default it is centered
+    on the screen (FL_PLACE_CENTER | FL_FREE_SIZE).
 
-    @param place: where to place it. Values (from xfdata module) i.e.
-        FL_PLACE_FREE, FL_PLACE_MOUSE, FL_PLACE_CENTER, FL_PLACE_POSITION,
-        FL_PLACE_SIZE, FL_PLACE_GEOMETRY, FL_PLACE_ASPECT, FL_PLACE_FULLSCREEN,
+    @param place: where to place it. Values (from xfdata module) FL_PLACE_FREE,
+        FL_PLACE_MOUSE, FL_PLACE_CENTER, FL_PLACE_POSITION, FL_PLACE_SIZE,
+        FL_PLACE_GEOMETRY, FL_PLACE_ASPECT, FL_PLACE_FULLSCREEN,
         FL_PLACE_HOTSPOT, FL_PLACE_ICONIC, FL_FREE_SIZE, FL_PLACE_FREE_CENTER,
         FL_PLACE_CENTERFREE
     @type place: int
 
-    @status: Tested + NoDoc + Demo = OK
+    @example: fl_set_fselector_placement(xfdata.FL_PLACE_HOTSPOT)
+
+    @status: Tested + Doc + Demo = OK
+
     """
     _fl_set_fselector_placement = library.cfuncproto(
         library.load_so_libforms(), "fl_set_fselector_placement",
@@ -1158,14 +1234,17 @@ def fl_set_fselector_placement(place):
 
 
 def fl_set_fselector_border(border):
-    """
-    fl_set_fselector_border(border)
+    """Changes the border of file selector. By default it is displayed with
+    transient property set (FL_NOBORDER is ignored).
 
-    @param border: window manager decoration. Values (from xfdata module) i.e.
+    @param border: window manager decoration. Values (from xfdata module)
         FL_FULLBORDER, FL_TRANSIENT, FL_NOBORDER
     @type border: int
 
-    @status: Untested + NoDoc + NoDemo = NOT OK
+    @example: fl_set_fselector_border(xfdata.FL_FULLBORDER)
+
+    @status: Tested + Doc + NoDemo = OK
+
     """
     _fl_set_fselector_border = library.cfuncproto(
         library.load_so_libforms(), "fl_set_fselector_border",
@@ -1179,14 +1258,16 @@ def fl_set_fselector_border(border):
 
 
 def fl_set_fselector_transient(flag):
-    """
-    fl_set_fselector_transient(flag)
+    """Set the property of file selector as transient or fullborder.
 
-    @param flag: flag if transient or not. Values 1 (transient) or 0 (not
-        transient)
+    @param flag: flag if transient or not. Values 1 (transient) or 0
+        (not transient)
     @type flag: int
 
-    @status: Untested + NoDoc + NoDemo = NOT OK
+    @example: fl_set_fselector_transient(0)
+
+    @status: Tested + Doc + NoDemo = OK
+
     """
     if flag:
         argval = xfdata.FL_TRANSIENT
@@ -1196,15 +1277,26 @@ def fl_set_fselector_transient(flag):
 
 
 def fl_set_fselector_callback(py_FSCB, vdata):
-    """
-    fl_set_fselector_callback(py_FSCB, vdata)
+    """Sets a callback routine so that whenever the user double clicks on a
+    filename, instead of returning the filename, this routine is invoked with
+    the filename as the argument. The behavior of the file selector is
+    slightly different when a callback is present. Without the callback, a
+    file selector is always modal. Please note that when a file selector has
+    a callback installed the field for manually entering a file name isn't
+    shown.
 
-    @param py_FSCB: python function callback, returning value
+    @param py_FSCB: python function callback, returning (unused) value
     @type py_FSCB: __ funcname (string, ptr_void) -> num __
     @param vdata: user data to be passed to function
     @type vdata: pointer to void
 
-    @status: Tested + NoDoc + Demo = OK
+    @example: def fsel_cb(fname, cvoidp):
+    @example: |->| ...
+    @example: |->| return UnusedVal
+    @example: fl_set_fselector_callback(fsel_cb, None)
+
+    @status: Tested + Doc + Demo = OK
+
     """
     #FL_FSCB = cty.CFUNCTYPE(cty.c_int, xfdata.STRING, cty.c_void_p)
     _fl_set_fselector_callback = library.cfuncproto(
@@ -1223,12 +1315,15 @@ fl_set_fselector_cb = fl_set_fselector_callback
 
 
 def fl_get_filename():
-    """
-    fl_get_filename() -> str
+    """Obtains the file name (without the path) after the user changed it.
 
     @returns: name of file (fname)
+    @rtype: str
 
-    @status: Untested + NoDoc + NoDemo = NOT OK
+    @example: newfname = fl_get_filename()
+
+    @status: Tested + Doc + NoDemo = OK
+
     """
     _fl_get_filename = library.cfuncproto(
         library.load_so_libforms(), "fl_get_filename",
@@ -1240,12 +1335,15 @@ def fl_get_filename():
 
 
 def fl_get_directory():
-    """
-    fl_get_directory() -> str
+    """Obtains the directory name after the user changed it.
 
     @returns: name of directory (dirname)
+    @rtype: str
 
-    @status: Untested + NoDoc + NoDemo = NOT OK
+    @example: newdname = fl_get_directory()
+
+    @status: Tested + Doc + NoDemo = OK
+
     """
     _fl_get_directory = library.cfuncproto(
         library.load_so_libforms(), "fl_get_directory",
@@ -1256,12 +1354,13 @@ def fl_get_directory():
 
 
 def fl_get_pattern():
-    """
-    fl_get_pattern() -> str
+    """Obtains the pattern after the user changed it.
 
     @returns: pattern text
+    @rtype: str
 
-    @status: Untested + NoDoc + NoDemo = NOT OK
+    @status: Tested + Doc + NoDemo = OK
+
     """
     _fl_get_pattern = library.cfuncproto(
         library.load_so_libforms(), "fl_get_pattern",
@@ -1273,13 +1372,18 @@ def fl_get_pattern():
 
 
 def fl_set_directory(dirname):
-    """
-    fl_set_directory(dirname) -> int
+    """Sets programmatically new value for the default directory.
 
     @param dirname: name of directory to be set
     @type dirname: str
 
-    @status: Untested + NoDoc + NoDemo = NOT OK
+    @returns: 0 on success, or 1 (on failure)
+    @rtype: int
+
+    @example: sth = fl_set_directory("/home/user/blabla")
+
+    @status: Tested + Doc + NoDemo = OK
+
     """
     _fl_set_directory = library.cfuncproto(
         library.load_so_libforms(), "fl_set_directory",
@@ -1293,13 +1397,15 @@ def fl_set_directory(dirname):
 
 
 def fl_set_pattern(pattern):
-    """
-    fl_set_pattern(pattern)
+    """Sets programmatically new value for the default pattern.
 
-    @param pattern: text of pattern
+    @param pattern: text to be used for pattern
     @type pattern: str
 
-    @status: Untested + NoDoc + NoDemo = NOT OK
+    @example: fl_set_pattern("*.txt")
+
+    @status: Tested + Doc + NoDemo = OK
+
     """
     _fl_set_pattern = library.cfuncproto(
         library.load_so_libforms(), "fl_set_pattern",
@@ -1312,10 +1418,13 @@ def fl_set_pattern(pattern):
 
 
 def fl_refresh_fselector():
-    """
-    fl_refresh_fselector()
+    """Refreshes the file selector, re-scanning the current directory and
+    listing all entries in it.
 
-    @status: Untested + NoDoc + NoDemo = NOT OK
+    @example: fl_refresh_fselector()
+
+    @status: Tested + Doc + NoDemo = OK
+
     """
     _fl_refresh_fselector = library.cfuncproto(
         library.load_so_libforms(), "fl_refresh_fselector",
@@ -1326,8 +1435,8 @@ def fl_refresh_fselector():
 
 
 def fl_add_fselector_appbutton(label, py_fn, vdata):
-    """
-    fl_add_fselector_appbutton(label, py_fn, vdata)
+    """Adds an application specific button from file selector and a callback
+    routine for it.
 
     @param label: text of label
     @type label: str
@@ -1336,14 +1445,19 @@ def fl_add_fselector_appbutton(label, py_fn, vdata):
     @param vdata: user data to be passed to function
     @type vdata: pointer to void
 
-    @status: Untested + NoDoc + NoDemo = NOT OK
+    @example: def fsbtn_cb(cvoidp):
+    @example: |->| ...
+    @example: fl_add_fselector_appbutton("SomeButton", fsbtn_cb, None)
+
+    @status: Tested + Doc + NoDemo = OK
+
     """
     #cfunc_none_voidp = cty.CFUNCTYPE(None, cty.c_void_p)
     _fl_add_fselector_appbutton = library.cfuncproto(
-            library.load_so_libforms(), "fl_add_fselector_appbutton",
-            None, [xfdata.STRING, xfdata.cfunc_none_voidp, cty.c_void_p],
-            """void fl_add_fselector_appbutton(const char * p1,
-               const char * p2, void * p3)""")
+        library.load_so_libforms(), "fl_add_fselector_appbutton",
+        None, [xfdata.STRING, xfdata.cfunc_none_voidp, cty.c_void_p],
+        """void fl_add_fselector_appbutton(const char * p1,
+           const char * p2, void * p3)""")
     library.check_if_initialized()
     slabel = library.convert_to_string(label)
     c_fn = xfdata.cfunc_none_voidp(py_fn)
@@ -1354,163 +1468,216 @@ def fl_add_fselector_appbutton(label, py_fn, vdata):
 
 
 def fl_remove_fselector_appbutton(label):
-    """
-    fl_remove_fselector_appbutton(label)
+    """Removes an application specific button from file selector.
 
     @param label: text of label
     @type label: str
 
-    @status: Untested + NoDoc + NoDemo = NOT OK
-    """
+    @example: fl_remoe_selector_appbutton("SomeButton")
 
-    _fl_remove_fselector_appbutton = library.cfuncproto(
-            library.load_so_libforms(), "fl_remove_fselector_appbutton",
-            None, [xfdata.STRING],
-            """void fl_remove_fselector_appbutton(const char * p1)
-""")
+    @status: Tested + Doc + NoDemo = OK
+
+    """
+     _fl_remove_fselector_appbutton = library.cfuncproto(
+        library.load_so_libforms(), "fl_remove_fselector_appbutton",
+        None, [xfdata.STRING],
+        """void fl_remove_fselector_appbutton(const char * p1)""")
     library.check_if_initialized()
     slabel = library.convert_to_string(label)
     library.keep_elem_refs(label, slabel)
     _fl_remove_fselector_appbutton(slabel)
 
 
-def fl_disable_fselector_cache(yes):
-    """
-    fl_disable_fselector_cache(yes)
+def fl_disable_fselector_cache(yesno):
+    """Disable file selector caching.
 
-    @param yes: ?
-    @type yes: int
+    @param yesno: flag. Values 0 (to enable cache) or 1 (to disable cache)
+    @type yesno: int
 
-    @status: Untested + NoDoc + NoDemo = NOT OK
+    @example: fl_disable_fselector_cache(1)
+
+    @status: Tested + Doc + NoDemo = OK
+
     """
     _fl_disable_fselector_cache = library.cfuncproto(
-            library.load_so_libforms(), "fl_disable_fselector_cache",
-            None, [cty.c_int],
-            """void fl_disable_fselector_cache(int p1)
-""")
+        library.load_so_libforms(), "fl_disable_fselector_cache",
+        None, [cty.c_int],
+        """void fl_disable_fselector_cache(int p1)""")
     library.check_if_initialized()
-    iyes = library.convert_to_int(yes)
-    library.keep_elem_refs(yes, iyes)
-    _fl_disable_fselector_cache(iyes)
+    iyesno = library.convert_to_int(yesno)
+    library.keep_elem_refs(yesno, iyesno)
+    _fl_disable_fselector_cache(iyesno)
 
 
 def fl_invalidate_fselector_cache():
-    """
-    fl_invalidate_fselector_cache()
+    """Forces an update of file selector caching programmatically. It forces
+    it only once, and on the directory that is to be browsed.
 
-    @status: Untested + NoDoc + NoDemo = NOT OK
+    @example: fl_invalidate_fselector_cache()
+
+    @status: Tested + Doc + NoDemo = OK
+
     """
     _fl_invalidate_fselector_cache = library.cfuncproto(
-            library.load_so_libforms(), "fl_invalidate_fselector_cache",
-            None, [],
-            """void fl_invalidate_fselector_cache()
-""")
+        library.load_so_libforms(), "fl_invalidate_fselector_cache",
+        None, [],
+        """void fl_invalidate_fselector_cache()""")
     library.check_if_initialized()
     _fl_invalidate_fselector_cache()
 
 
 def fl_get_fselector_form():
-    """
-    fl_get_fselector_form() -> pFlForm
+    """Obtains the form of file selector.
 
-    @status: Untested + NoDoc + NoDemo = NOT OK
+    @example: pform = fl_get_fselector_form()
+
+    @status: Tested + Doc + NoDemo = OK
+
     """
     _fl_get_fselector_form = library.cfuncproto(
-            library.load_so_libforms(), "fl_get_fselector_form",
-            cty.POINTER(xfdata.FL_FORM), [],
-            """FL_FORM * fl_get_fselector_form()
-""")
+        library.load_so_libforms(), "fl_get_fselector_form",
+        cty.POINTER(xfdata.FL_FORM), [],
+        """FL_FORM * fl_get_fselector_form()""")
     library.check_if_initialized()
     retval = _fl_get_fselector_form()
     return retval
 
 
 def fl_get_fselector_fdstruct():
-    """
-    fl_get_fselector_fdstruct() -> fselector_cls
+    """Obtains a FD_FSELECTOR class instance, allowing direct access to the
+    individual objects of a file selector.
 
-    @returns: pointer to xfdata.FD_FSELECTOR
+    @returns: file selector class instance
+    @rtype: pointer to xfdata.FD_FSELECTOR
 
-    @status: Untested + NoDoc + NoDemo = NOT OK
+    @example: fdfsel = fl_get_fselector_fdstruct()
+
+    @status: Tested + Doc + NoDemo = OK
+
     """
     _fl_get_fselector_fdstruct = library.cfuncproto(
-            library.load_so_libforms(), "fl_get_fselector_fdstruct",
-            cty.POINTER(xfdata.FD_FSELECTOR), [],
-            """FD_FSELECTOR * fl_get_fselector_fdstruct()
-""")
+        library.load_so_libforms(), "fl_get_fselector_fdstruct",
+        cty.POINTER(xfdata.FD_FSELECTOR), [],
+        """FD_FSELECTOR * fl_get_fselector_fdstruct()""")
     library.check_if_initialized()
     retval = _fl_get_fselector_fdstruct()
     return retval
 
 
 def fl_hide_fselector():
-    """
-    fl_hide_fselector()
+    """Hides a file selector.
 
-    @status: Untested + NoDoc + NoDemo = NOT OK
+    @example: fl_hide_fselector()
+
+    @status: Tested + Doc + NoDemo = OK
+
     """
     _fl_hide_fselector = library.cfuncproto(
-            library.load_so_libforms(), "fl_hide_fselector",
-            None, [],
-            """void fl_hide_fselector()
-""")
+        library.load_so_libforms(), "fl_hide_fselector",
+        None, [],
+        """void fl_hide_fselector()""")
     library.check_if_initialized()
     _fl_hide_fselector()
 
 
-def fl_set_fselector_filetype_marker(p1, p2, p3, p4, p5):
-    """ fl_set_fselector_filetype_marker(p1, p2, p3, p4, p5)
+def fl_set_fselector_filetype_marker(dirmk, fifomk, sockmk, cdevmk, bdevmk):
+    """Changes the prefix by which the listing of files in a directory special
+    files are marked with in browser. By default D is used for directories, p
+    for pipes etc.)
 
-        @status: Untested + NoDoc + NoDemo = NOT OK
+    @param dirmk: marker character for directories
+    @type dirmk: int or char
+    @param fifomk: marker for pipes and FIFOs
+    @type fifomk: int or char
+    @param sockmk: marker for sockets
+    @type sockmk: int or char
+    @param cdevmk: marker for character device files
+    @type cdevmk: int or char
+    @param bdevmk: marker character for block device files
+    @type bdevmk: int or char
+
+    @example: fl_set_fselector_filetype_marker('d', 'P', 'S', 'V', 'b')
+
+    @status: Tested + Doc + NoDemo = OK
+
     """
     _fl_set_fselector_filetype_marker = library.cfuncproto(
-            library.load_so_libforms(), "fl_set_fselector_filetype_marker",
-            None, [cty.c_int, cty.c_int, cty.c_int, cty.c_int, cty.c_int],
-            """void fl_set_fselector_filetype_marker(int p1, int p2, int p3,
-               int p4, int p5)
-""")
+        library.load_so_libforms(), "fl_set_fselector_filetype_marker",
+        None, [cty.c_int, cty.c_int, cty.c_int, cty.c_int, cty.c_int],
+        """void fl_set_fselector_filetype_marker(int p1, int p2, int p3,
+           int p4, int p5)""")
     library.check_if_initialized()
-    ip1 = library.convert_to_int(p1)
-    ip2 = library.convert_to_int(p2)
-    ip3 = library.convert_to_int(p3)
-    ip4 = library.convert_to_int(p4)
-    ip5 = library.convert_to_int(p5)
-    library.keep_elem_refs(p1, p2, p3, p4, p5, ip1, ip2, ip3, ip4, ip5)
-    _fl_set_fselector_filetype_marker(ip1, ip2, ip3, ip4, ip5)
+    if isinstance(dirmk, str):
+    # workaround to let a character as int argument
+        odirmk = ord(dirmk)
+    else:
+        odirmk = dirmk
+    idirmk = library.convert_to_int(odirmk)
+    if isinstance(fifomk, str):
+    # workaround to let a character as int argument
+        ofifomk = ord(fifomk)
+    else:
+        ofifomk = fifomk
+    ififomk = library.convert_to_int(ofifomk)
+    if isinstance(sockmk, str):
+    # workaround to let a character as int argument
+        osockmk = ord(sockmk)
+    else:
+        osockmk = sockmk
+    isockmk = library.convert_to_int(osockmk)
+    if isinstance(cdevmk, str):
+    # workaround to let a character as int argument
+        ocdevmk = ord(cdevmk)
+    else:
+        ocdevmk = cdevmk
+    icdevmk = library.convert_to_int(ocdevmk)
+    if isinstance(bdevmk, str):
+    # workaround to let a character as int argument
+        obdevmk = ord(bdevmk)
+    else:
+        obdevmk = bdevmk
+    ibdevmk = library.convert_to_int(obdevmk)
+    library.keep_elem_refs(dirmk, fifomk, sockmk, cdevmk, bdevmk, idirmk,
+        ififomk, isockmk, icdevmk, ibdevmk)
+    _fl_set_fselector_filetype_marker(idirmk, ififomk, isockmk, icdevmk,
+        ibdevmk)
 
 
 def fl_set_fselector_title(title):
-    """
-    fl_set_fselector_title(title)
+    """Sets the title of a file selector.
 
     @param title: title to be set
-    @type title: string
+    @type title: str
 
-    @status: Untested + NoDoc + NoDemo = NOT OK
+    @example: fl_set_fselector_title("My own title of F.S.)
+
+    @status: Tested + Doc + NoDemo = OK
+
     """
     flbasic.fl_set_form_title(fl_get_fselector_form(), title)
 
 
 def fl_goodies_atclose(pFlForm, vdata):
     """
-    fl_goodies_atclose(pFlForm, vdata) -> int
 
     @param pFlForm: form
     @type pFlForm: pointer to xfdata.FL_FORM
 
-    @returns: num.
+    @returns: unused value (xfdata.FL_IGNORE)
+    @rtype: int
 
-    @status: Untested + NoDoc + NoDemo = NOT OK
+    @example: ?
+
+    @status: Tested + NoDoc + NoDemo = OK
+
     """
     _fl_goodies_atclose = library.cfuncproto(
-            library.load_so_libforms(), "fl_goodies_atclose",
-            cty.c_int, [cty.POINTER(xfdata.FL_FORM), cty.c_void_p],
-            """int fl_goodies_atclose(FL_FORM * p1, void * p2)
-""")
+        library.load_so_libforms(), "fl_goodies_atclose",
+        cty.c_int, [cty.POINTER(xfdata.FL_FORM), cty.c_void_p],
+        """int fl_goodies_atclose(FL_FORM * p1, void * p2)""")
     library.check_if_initialized()
     pvdata = cty.cast(vdata, cty.c_void_p)
     library.keep_elem_refs(pFlForm, vdata, pvdata)
     retval = _fl_goodies_atclose(pFlForm, pvdata)
     return retval
-
 
