@@ -1478,7 +1478,7 @@ def fl_remove_fselector_appbutton(label):
     @status: Tested + Doc + NoDemo = OK
 
     """
-     _fl_remove_fselector_appbutton = library.cfuncproto(
+    _fl_remove_fselector_appbutton = library.cfuncproto(
         library.load_so_libforms(), "fl_remove_fselector_appbutton",
         None, [xfdata.STRING],
         """void fl_remove_fselector_appbutton(const char * p1)""")
