@@ -1414,7 +1414,6 @@ FL_FORM_._fields_ = [
     ('y', FL_Coord),
     ('w', FL_Coord),
     ('h', FL_Coord),
-    ('in_redraw', cty.c_int),             # set while form is drawn
     ('handle_dec_x', cty.c_int),
     ('handle_dec_y', cty.c_int),
     ('hotx', FL_Coord),                 # hot-spot of the form
