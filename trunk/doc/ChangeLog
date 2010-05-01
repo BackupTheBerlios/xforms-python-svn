@@ -1,6 +1,8 @@
 
 
 SVN
+    * docstrings in __init__.py, flbasic.py and flbitmap.py switched to
+    reStructuredText.
     * Realign to upstream XForms code (fl_object_returned function removed).
     * All examples have been adapted. Nonetheless preemptive demo is
     partially broken.

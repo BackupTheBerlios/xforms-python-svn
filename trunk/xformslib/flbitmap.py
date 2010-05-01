@@ -1,9 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: iso8859-1 -*-
 
-"""
-    xforms-python - Python wrapper for XForms (X11) GUI C toolkit library
-    using ctypes
+""" flbitmap.py - Functions to manage bitmap objects.
 
     Copyright (C) 2009, 2010  Luca Lazzaroni "LukenShiro"
     e-mail: <lukenshiro@ngi.it>
@@ -34,9 +32,8 @@
 
 
 import ctypes as cty
-from xformslib import library
+from xformslib import library as libr
 from xformslib import xfdata
-
 
 
 #######################
@@ -53,44 +50,44 @@ from xformslib import xfdata
 def fl_add_bitmap(bitmaptype, x, y, w, h, label):
     """Adds a bitmap object.
 
-    @param bitmaptype: type of bitmap to be added. Values (from xfdata)
-        module) FL_NORMAL_BITMAP
-    @type bitmaptype: int
-    @param x: horizontal position (upper-left corner)
-    @type x: int
-    @param y: vertical position of bitmap (upper-left corner)
-    @type y: int
-    @param w: width in coord units
-    @type w: int
-    @param h: height in coord units
-    @type h: int
-    @param label: text label of bitmap
-    @type label: str
+    :Parameters:
+      `bitmaptype` : int
+        type of bitmap to be added. Values (from xfdata.py) FL_NORMAL_BITMAP
+      `x` : int
+        horizontal position (upper-left corner)
+      `y` : int
+        vertical position of bitmap (upper-left corner)
+      `w` : int
+        width in coord units
+      `h` : int
+        height in coord units
+      `label` : str
+        text label of bitmap
 
-    @returns: object created (pFlObject)
-    @rtype: pointer to xfdata.FL_OBJECT
+    :returns: object created
+    :rtype: pointer to xfdata.FL_OBJECT (pFlObject)
 
-    @example: fl_add_bitmap(xfdata.FL_NORMAL_BITMAP, 320, 200, 100, 100, \
-        "MyBitmap")
+    :note: e.g. fl_add_bitmap(xfdata.FL_NORMAL_BITMAP, 320, 200, 100, 100, \
+      "MyBitmap")
 
-    @status: Tested + NoDoc + Demo = OK
+    :status: Tested + NoDoc + Demo = OK
 
     """
-    _fl_add_bitmap = library.cfuncproto(
-        library.load_so_libforms(), "fl_add_bitmap",
+    _fl_add_bitmap = libr.cfuncproto(
+        libr.load_so_libforms(), "fl_add_bitmap",
         cty.POINTER(xfdata.FL_OBJECT), [cty.c_int, xfdata.FL_Coord,
         xfdata.FL_Coord, xfdata.FL_Coord, xfdata.FL_Coord, xfdata.STRING],
         """FL_OBJECT * fl_add_bitmap(int type, FL_Coord x, FL_Coord y,
            FL_Coord w, FL_Coord h, const char * label)""")
-    library.check_if_initialized()
-    library.check_admitted_listvalues(bitmaptype, xfdata.BITMAPTYPE_list)
-    ibitmaptype = library.convert_to_int(bitmaptype)
-    ix = library.convert_to_FL_Coord(x)
-    iy = library.convert_to_FL_Coord(y)
-    iw = library.convert_to_FL_Coord(w)
-    ih = library.convert_to_FL_Coord(h)
-    slabel = library.convert_to_string(label)
-    library.keep_elem_refs(bitmaptype, x, y, w, h, label, ibitmaptype, ix, \
+    libr.check_if_initialized()
+    libr.check_admitted_listvalues(bitmaptype, xfdata.BITMAPTYPE_list)
+    ibitmaptype = libr.convert_to_int(bitmaptype)
+    ix = libr.convert_to_FL_Coord(x)
+    iy = libr.convert_to_FL_Coord(y)
+    iw = libr.convert_to_FL_Coord(w)
+    ih = libr.convert_to_FL_Coord(h)
+    slabel = libr.convert_to_string(label)
+    libr.keep_elem_refs(bitmaptype, x, y, w, h, label, ibitmaptype, ix, \
                            iy, iw, ih, slabel)
     retval = _fl_add_bitmap(ibitmaptype, ix, iy, iw, ih, slabel)
     return retval
@@ -101,32 +98,33 @@ def fl_set_bitmap_data(pFlObject, w, h, xbmcontents):
     number of bitmaps can be found in '/usr/include/X11/bitmaps' or similar
     places. The X program 'bitmap' can be used to create bitmaps.
 
-    @param pFlObject: pointer to object
-    @type pFlObject: pointer to xfdata.FL_OBJECT
-    @param w: width of bitmap in cood units
-    @type w: int
-    @param h: height of bitmap in coord units
-    @type h: int
-    @param xbmcontents: bitmap data used for contents
-    @type xbmcontents: str of ubytes characters
+    :Parameters:
+      `pFlObject` : pointer to xfdata.FL_OBJECT
+        bitmap object
+      `w` : int
+        width of bitmap in cood units
+      `h` : int
+        height of bitmap in coord units
+      `xbmcontents` : str of ubytes characters
+        bitmap data used for contents
 
-    @example: ??
+    :note: e.g. *todo*
 
-    @status: Untested + Doc + NoDemo = NOT OK
+    :status: Untested + Doc + NoDemo = NOT OK
 
     """
-    _fl_set_bitmap_data = library.cfuncproto(
-        library.load_so_libforms(), "fl_set_bitmap_data",
+    _fl_set_bitmap_data = libr.cfuncproto(
+        libr.load_so_libforms(), "fl_set_bitmap_data",
         None, [cty.POINTER(xfdata.FL_OBJECT), cty.c_int, cty.c_int,
         cty.POINTER(cty.c_ubyte)],
         """void fl_set_bitmap_data(FL_OBJECT * ob, int w, int h,
            unsigned char * data)""")
-    library.check_if_initialized()
-    library.check_if_FL_OBJECT_ptr(pFlObject)
-    iw = library.convert_to_int(w)
-    ih = library.convert_to_int(h)
+    libr.check_if_initialized()
+    libr.check_if_FL_OBJECT_ptr(pFlObject)
+    iw = libr.convert_to_int(w)
+    ih = libr.convert_to_int(h)
     pxbmcontents = cty.cast(xbmcontents, cty.POINTER(cty.c_ubyte))
-    library.keep_elem_refs(pFlObject, w, h, xbmcontents, iw, ih, pxbmcontents)
+    libr.keep_elem_refs(pFlObject, w, h, xbmcontents, iw, ih, pxbmcontents)
     _fl_set_bitmap_data(pFlObject, iw, ih, pxbmcontents)
 
 
@@ -135,25 +133,25 @@ def fl_set_bitmap_file(pFlObject, fname):
     number of bitmaps can be found in '/usr/include/X11/bitmaps' or similar
     places. The X program 'bitmap' can be used to create bitmaps.
 
-    @param pFlObject: bitmap object
-    @type pFlObject: pointer to xfdata.FL_OBJECT
-    @param fname: name (path included if necessary) of bitmap (.xbm
-        format) file
-    @type fname: str
+    :Parameters:
+      `pFlObject` : pointer to xfdata.FL_OBJECT
+        bitmap object
+      `fname` : str
+        name (path included if necessary) of bitmap (.xbm format) file
 
-    @example: fl_set_bitmap_file(xbmobj, "mybitmapfile.xbm")
+    :note: e.g. fl_set_bitmap_file(xbmobj, "mybitmapfile.xbm")
 
-    @status: Tested + Doc + Demo = OK
+    :status: Tested + Doc + Demo = OK
 
     """
-    _fl_set_bitmap_file = library.cfuncproto(
-        library.load_so_libforms(), "fl_set_bitmap_file",
+    _fl_set_bitmap_file = libr.cfuncproto(
+        libr.load_so_libforms(), "fl_set_bitmap_file",
         None, [cty.POINTER(xfdata.FL_OBJECT), xfdata.STRING],
         """void fl_set_bitmap_file(FL_OBJECT * ob, const char * fname)""")
-    library.check_if_initialized()
-    library.check_if_FL_OBJECT_ptr(pFlObject)
-    sfname = library.convert_to_string(fname)
-    library.keep_elem_refs(pFlObject, fname, sfname)
+    libr.check_if_initialized()
+    libr.check_if_FL_OBJECT_ptr(pFlObject)
+    sfname = libr.convert_to_string(fname)
+    libr.keep_elem_refs(pFlObject, fname, sfname)
     _fl_set_bitmap_file(pFlObject, sfname)
 
 
@@ -163,76 +161,79 @@ fl_set_bitmapbutton_datafile = fl_set_bitmapbutton_file
 # fl_set_bitmap_datafile placeholder (backwards)
 
 
-def fl_read_bitmapfile(win, filename):
+def fl_read_bitmapfile(win, fname):
     """Makes a bitmap from a bitmap file.
 
-    @param win: window id
-    @type win: long_pos
-    @param filename: name of bitmap (.xbm format) file
-    @type filename: str
+    :Parameters:
+      `win` : long_pos
+        window id
+      `fname` : str
+        name of bitmap (.xbm format) file
 
-    @returns: pixmap, w, h, hotx, hoty
-    @rtype: long_pos, int_pos, int_pos, int, int
+    :returns: pixmap id, w, h, hotx, hoty
+    :rtype: long_pos, int_pos, int_pos, int, int
 
-    @example: pmap, w, h, hotx, hoty = fl_read_bitmapfile(win0, "xbmfile.xbm")
-
-    @attention: API change from XForms - upstream was
+    :attention: API change from XForms - upstream was
         fl_read_bitmapfile(win, filename, w, h, hotx, hoty)
 
-    @status: Tested + Doc + NoDemo = OK
+    :note: e.g. pmap, w, h, hotx, hoty = fl_read_bitmapfile(win0, \
+        "xbmfile.xbm")
+
+    :status: Tested + Doc + NoDemo = OK
 
     """
-    _fl_read_bitmapfile = library.cfuncproto(
-        library.load_so_libforms(), "fl_read_bitmapfile",
+    _fl_read_bitmapfile = libr.cfuncproto(
+        libr.load_so_libforms(), "fl_read_bitmapfile",
         xfdata.Pixmap, [xfdata.Window, xfdata.STRING, cty.POINTER(cty.c_uint),
         cty.POINTER(cty.c_uint), cty.POINTER(cty.c_int),
         cty.POINTER(cty.c_int)],
         """Pixmap fl_read_bitmapfile(Window win, const char * file,
            unsigned int * w, unsigned int * h, int * hotx, int * hoty)""")
-    library.check_if_initialized()
-    ulwin = library.convert_to_Window(win)
-    sfilename = library.convert_to_string(filename)
-    w, pw = library.make_uint_and_pointer()
-    h, ph = library.make_uint_and_pointer()
-    hotx, photx = library.make_int_and_pointer()
-    hoty, photy = library.make_int_and_pointer()
-    library.keep_elem_refs(win, filename, w, h, hotx, hoty, ulwin, sfilename,
+    libr.check_if_initialized()
+    ulwin = libr.convert_to_Window(win)
+    sfname = libr.convert_to_string(fname)
+    w, pw = libr.make_uint_and_pointer()
+    h, ph = libr.make_uint_and_pointer()
+    hotx, photx = libr.make_int_and_pointer()
+    hoty, photy = libr.make_int_and_pointer()
+    libr.keep_elem_refs(win, fname, w, h, hotx, hoty, ulwin, sfname,
                            pw, ph, photx, photy)
-    retval = _fl_read_bitmapfile(ulwin, sfilename, pw, ph, photx, photy)
+    retval = _fl_read_bitmapfile(ulwin, sfname, pw, ph, photx, photy)
     return retval, w.value, h.value, hotx.value, hoty.value
 
 
 def fl_create_from_bitmapdata(win, data, w, h):
     """Makes a bitmap from bitmap contents data.
 
-    @param win: window
-    @type win: long_pos
-    @param data: bitmap contents data
-    @type data: str of ubyte
-    @param w: width of bitmap in coord units
-    @type w: int_pos
-    @param h: height of bitmap in coord units
-    @type h: int_pos
+    :Parameters:
+      `win` : long_pos
+        window id
+      `data` : str of ubyte
+        bitmap contents data
+      `w` : int_pos
+        width of bitmap in coord units
+      `h` : int_pos
+        height of bitmap in coord units
 
-    @returns: pixmap created
-    @rtype: long_pos
+    :returns: pixmap created
+    :rtype: long_pos
 
-    @example: ??
+    :note: e.g. *todo*
 
-    @status: Untested + Doc + NoDemo = NOT OK
+    :status: Untested + Doc + NoDemo = NOT OK
 
     """
-    _fl_create_from_bitmapdata = library.cfuncproto(
-        library.load_so_libforms(), "fl_create_from_bitmapdata",
+    _fl_create_from_bitmapdata = libr.cfuncproto(
+        libr.load_so_libforms(), "fl_create_from_bitmapdata",
         xfdata.Pixmap, [xfdata.Window, xfdata.STRING, cty.c_int, cty.c_int],
         """Pixmap fl_create_from_bitmapdata(Window win, const
            char * data, int width, int height)""")
-    library.check_if_initialized()
-    ulwin = library.convert_to_Window(win)
-    sdata = library.convert_to_string(data)
-    iw = library.convert_to_int(w)
-    ih = library.convert_to_int(h)
-    library.keep_elem_refs(win, data, w, h, ulwin, sdata, iw, ih)
+    libr.check_if_initialized()
+    ulwin = libr.convert_to_Window(win)
+    sdata = libr.convert_to_string(data)
+    iw = libr.convert_to_int(w)
+    ih = libr.convert_to_int(h)
+    libr.keep_elem_refs(win, data, w, h, ulwin, sdata, iw, ih)
     retval = _fl_create_from_bitmapdata(ulwin, sdata, iw, ih)
     return retval
 
@@ -245,44 +246,44 @@ def fl_create_from_bitmapdata(win, data, w, h):
 def fl_add_pixmap(pixmaptype, x, y, w, h, label):
     """Adds a pixmap object.
 
-    @param pixmaptype: type of pixmap to be added. Values (from xfdata
-        module) FL_NORMAL_PIXMAP
-    @type pixmaptype: int
-    @param x: horizontal position (upper-left corner)
-    @type x int
-    @param y: vertical position of bitmap (upper-left corner)
-    @type y int
-    @param w: width in coord units
-    @type w int
-    @param h: height in coord units
-    @type h int
-    @param label: text label of pixmap
-    @type label: str
+    :Parameters:
+      `pixmaptype` : int
+        type of pixmap to be added. Values (from xfdata.py) FL_NORMAL_PIXMAP
+      `x` : int
+        horizontal position (upper-left corner)
+      `y` : int
+        vertical position of bitmap (upper-left corner)
+      `w` : int
+        width in coord units
+      `h` : int
+        height in coord units
+      `label` : str
+        text label of pixmap
 
-    @returns: object created (pFlObject)
-    @rtype: pointer to xfdata.FL_OBJECT
+    :returns: object created (pFlObject)
+    :rtype: pointer to xfdata.FL_OBJECT
 
-    @example: fl_add_pixmap(xfdata.FL_NORMAL_PIXMAP, 320, 200, 100, 100, \
-        "MyPixmap")
+    :note: e.g. fl_add_pixmap(xfdata.FL_NORMAL_PIXMAP, 320, 200, 100, 100, \
+      "MyPixmap")
 
-    @status: Tested + Doc + NoDemo = OK
+    :status: Tested + Doc + NoDemo = OK
 
     """
-    _fl_add_pixmap = library.cfuncproto(
-        library.load_so_libforms(), "fl_add_pixmap",
+    _fl_add_pixmap = libr.cfuncproto(
+        libr.load_so_libforms(), "fl_add_pixmap",
         cty.POINTER(xfdata.FL_OBJECT), [cty.c_int, xfdata.FL_Coord, xfdata.FL_Coord,
         xfdata.FL_Coord, xfdata.FL_Coord, xfdata.STRING],
         """FL_OBJECT * fl_add_pixmap(int type, FL_Coord x, FL_Coord y,
            FL_Coord w, FL_Coord h, const char * label)""")
-    library.check_if_initialized()
-    library.check_admitted_listvalues(pixmaptype, xfdata.PIXMAPTYPE_list)
-    ipixmaptype = library.convert_to_int(pixmaptype)
-    ix = library.convert_to_FL_Coord(x)
-    iy = library.convert_to_FL_Coord(y)
-    iw = library.convert_to_FL_Coord(w)
-    ih = library.convert_to_FL_Coord(h)
-    slabel = library.convert_to_string(label)
-    library.keep_elem_refs(pixmaptype, x, y, w, h, label, ipixmaptype, ix, \
+    libr.check_if_initialized()
+    libr.check_admitted_listvalues(pixmaptype, xfdata.PIXMAPTYPE_list)
+    ipixmaptype = libr.convert_to_int(pixmaptype)
+    ix = libr.convert_to_FL_Coord(x)
+    iy = libr.convert_to_FL_Coord(y)
+    iw = libr.convert_to_FL_Coord(w)
+    ih = libr.convert_to_FL_Coord(h)
+    slabel = libr.convert_to_string(label)
+    libr.keep_elem_refs(pixmaptype, x, y, w, h, label, ipixmaptype, ix, \
                            iy, iw, ih, slabel)
     retval = _fl_add_pixmap(ipixmaptype, ix, iy, iw, ih, slabel)
     return retval
@@ -293,28 +294,29 @@ def fl_set_pixmap_data(pFlObject, bits):
     number of pixmaps can be found in '/usr/include/X11/pixmaps' or similar
     places.
 
-    @param pFlObject: pixmap object
-    @type pFlObject: pointer to xfdata.FL_OBJECT
-    @param bits: bits contents of pixmap
-    @type bits: str of ubyte
+    :Parameters:
+      `pFlObject` : pointer to xfdata.FL_OBJECT
+         pixmap object
+      `bits` : str of ubytes
+        bits contents of pixmap
 
-    @example: ??
+    :note: e.g. *todo*
 
-    @status: Untested + Doc + NoDemo = NOT OK
+    :status: Untested + Doc + NoDemo = NOT OK
 
     """
-    _fl_set_pixmap_data = library.cfuncproto(
-        library.load_so_libforms(), "fl_set_pixmap_data",
+    _fl_set_pixmap_data = libr.cfuncproto(
+        libr.load_so_libforms(), "fl_set_pixmap_data",
         None, [cty.POINTER(xfdata.FL_OBJECT), cty.POINTER(xfdata.STRING)],
         """void fl_set_pixmap_data(FL_OBJECT * ob, char * * bits)""")
-    library.check_if_initialized()
-    library.check_if_FL_OBJECT_ptr(pFlObject)
+    libr.check_if_initialized()
+    libr.check_if_FL_OBJECT_ptr(pFlObject)
     print "bits", bits
-    sbits = library.convert_to_string(bits)
+    sbits = libr.convert_to_string(bits)
     print "sbits", sbits
     pbits = cty.pointer(sbits)     #cty.cast(bits, cty.POINTER(xfdata.STRING))
     print "pbits", pbits
-    library.keep_elem_refs(pFlObject, bits, sbits, pbits)
+    libr.keep_elem_refs(pFlObject, bits, sbits, pbits)
     _fl_set_pixmap_data(pFlObject, pbits)
 
 
@@ -323,25 +325,25 @@ def fl_set_pixmap_file(pFlObject, fname):
     number of pixmaps can be found in '/usr/include/X11/pixmaps' or similar
     places.
 
-    @param pFlObject: pixmap object
-    @type pFlObject: pointer to xfdata.FL_OBJECT
-    @param fname: name (path included if necessary) of pixmap (.xpm
-        format) file
-    @type fname: str
+    :Parameters:
+      `pFlObject` : pointer to xfdata.FL_OBJECT
+        pixmap object
+      `fname` : str
+        name (path included if necessary) of pixmap (.xpm format) file
 
-    @example: fl_set_pixmap_file(xpmobj, "mypixmapfile.xpm")
+    :note: e.g. fl_set_pixmap_file(xpmobj, "mypixmapfile.xpm")
 
-    @status: Tested + Doc + Demo = OK
+    :status: Tested + Doc + Demo = OK
 
     """
-    _fl_set_pixmap_file = library.cfuncproto(
-        library.load_so_libforms(), "fl_set_pixmap_file",
+    _fl_set_pixmap_file = libr.cfuncproto(
+        libr.load_so_libforms(), "fl_set_pixmap_file",
         None, [cty.POINTER(xfdata.FL_OBJECT), xfdata.STRING],
         """void fl_set_pixmap_file(FL_OBJECT * ob, const char * fname)""")
-    library.check_if_initialized()
-    library.check_if_FL_OBJECT_ptr(pFlObject)
-    sfname = library.convert_to_string(fname)
-    library.keep_elem_refs(pFlObject, fname, sfname)
+    libr.check_if_initialized()
+    libr.check_if_FL_OBJECT_ptr(pFlObject)
+    sfname = libr.convert_to_string(fname)
+    libr.keep_elem_refs(pFlObject, fname, sfname)
     _fl_set_pixmap_file(pFlObject, sfname)
 
 
@@ -353,33 +355,33 @@ def fl_set_pixmap_align(pFlObject, align, xmargin, ymargin):
     """Changes alignment of a pixmap. By default it is displayed centered
     inside the bounding box.
 
-    @param pFlObject: pixmap object
-    @type pFlObject: pointer to xfdata.FL_OBJECT
-    @param align: alignment of pixmap. Values (from xfdata module)
-        FL_ALIGN_CENTER, FL_ALIGN_TOP, FL_ALIGN_BOTTOM, FL_ALIGN_LEFT,
-        FL_ALIGN_RIGHT, FL_ALIGN_LEFT_TOP, FL_ALIGN_RIGHT_TOP,
-        FL_ALIGN_LEFT_BOTTOM, FL_ALIGN_RIGHT_BOTTOM, FL_ALIGN_INSIDE,
-        FL_ALIGN_VERT
-    @type align: int
+    :Parameters:
+      `pFlObject` : pointer to xfdata.FL_OBJECT
+        pixmap object
+      `align` : int
+        alignment of pixmap. Values (from xfdata.py) FL_ALIGN_CENTER,
+        FL_ALIGN_TOP, FL_ALIGN_BOTTOM, FL_ALIGN_LEFT, FL_ALIGN_RIGHT,
+        FL_ALIGN_LEFT_TOP, FL_ALIGN_RIGHT_TOP, FL_ALIGN_LEFT_BOTTOM,
+        FL_ALIGN_RIGHT_BOTTOM, FL_ALIGN_INSIDE, FL_ALIGN_VERT
 
-    @example: fl_set_pixmap_align(xpmobj, xfdata.FL_ALIGN_CENTER, 10, 10)
+    :note: e.g. fl_set_pixmap_align(xpmobj, xfdata.FL_ALIGN_CENTER, 10, 10)
 
-    @status: Tested + Doc + Demo = OK
+    :status: Tested + Doc + Demo = OK
 
     """
-    _fl_set_pixmap_align = library.cfuncproto(
-        library.load_so_libforms(), "fl_set_pixmap_align",
+    _fl_set_pixmap_align = libr.cfuncproto(
+        libr.load_so_libforms(), "fl_set_pixmap_align",
         None, [cty.POINTER(xfdata.FL_OBJECT), cty.c_int, cty.c_int,
         cty.c_int],
         """void fl_set_pixmap_align(FL_OBJECT * ob, int align,
            int xmargin, int ymargin)""")
-    library.check_if_initialized()
-    library.check_if_FL_OBJECT_ptr(pFlObject)
-    library.check_admitted_listvalues(align, xfdata.ALIGN_list)
-    ialign = library.convert_to_int(align)
-    ixmargin = library.convert_to_int(xmargin)
-    iymargin = library.convert_to_int(ymargin)
-    library.keep_elem_refs(pFlObject, align, xmargin, ymargin, ialign, ixmargin,
+    libr.check_if_initialized()
+    libr.check_if_FL_OBJECT_ptr(pFlObject)
+    libr.check_admitted_listvalues(align, xfdata.ALIGN_list)
+    ialign = libr.convert_to_int(align)
+    ixmargin = libr.convert_to_int(xmargin)
+    iymargin = libr.convert_to_int(ymargin)
+    libr.keep_elem_refs(pFlObject, align, xmargin, ymargin, ialign, ixmargin,
                    iymargin)
     _fl_set_pixmap_align(pFlObject, ialign, ixmargin, iymargin)
 
@@ -388,30 +390,34 @@ fl_set_pixmapbutton_align = fl_set_pixmap_align
 
 
 def fl_set_pixmap_pixmap(pFlObject, idnum, mask):
-    """ fl_set_pixmap_pixmap(pFlObject, idnum, mask)
+    """Change the pixmap for the object with a pixmap resource id you already
+    may have. It does not free the pixmap ID nor the mask already associated
+    with the object.
 
-    @param pFlObject: pixmap object
-    @type pFlObject: pointer to xfdata.FL_OBJECT
-    @param idnum: ?
-    @type idnum: long_pos
-    @param mask: ?
-    @type mask: long_pos
+    :Parameters:
+      `pFlObject` : pointer to xfdata.FL_OBJECT
+        pixmap object
+      `idnum` : long_pos
+        pixmap resource id to be used
+      `mask` : long_pos
+        mask used for transparency. 0 if no special clipping attributes are
+        desired.
 
-    @example: ??
+    :note: e.g. *todo*
 
-    @status: Untested + NoDoc + NoDemo = NOT OK
+    :status: Untested + Doc + NoDemo = NOT OK
 
     """
-    _fl_set_pixmap_pixmap = library.cfuncproto(
-        library.load_so_libforms(), "fl_set_pixmap_pixmap",
+    _fl_set_pixmap_pixmap = libr.cfuncproto(
+        libr.load_so_libforms(), "fl_set_pixmap_pixmap",
         None, [cty.POINTER(xfdata.FL_OBJECT), xfdata.Pixmap, xfdata.Pixmap],
         """void fl_set_pixmap_pixmap(FL_OBJECT * ob, Pixmap id,
            Pixmap mask)""")
-    library.check_if_initialized()
-    library.check_if_FL_OBJECT_ptr(pFlObject)
-    ulidnum = library.convert_to_ulong(idnum)
-    ulmask = library.convert_to_ulong(mask)
-    library.keep_elem_refs(pFlObject, idnum, mask, ulidnum, ulmask)
+    libr.check_if_initialized()
+    libr.check_if_FL_OBJECT_ptr(pFlObject)
+    ulidnum = libr.convert_to_ulong(idnum)
+    ulmask = libr.convert_to_ulong(mask)
+    libr.keep_elem_refs(pFlObject, idnum, mask, ulidnum, ulmask)
     _fl_set_pixmap_pixmap(pFlObject, ulidnum, ulmask)
 
 
@@ -419,50 +425,57 @@ fl_set_pixmapbutton_pixmap = fl_set_pixmap_pixmap
 
 
 def fl_set_pixmap_colorcloseness(red, green, blue):
-    """ fl_set_pixmap_colorcloseness(red, green, blue)
+    """Changes difference between the requested color and the color found
+    being smaller than some pre-set threshold values between 0 and 65535 (0
+    means exact match), if a pixmap has more colors than that available in
+    the colormap. The library will use substitute colors that are judged
+    "close enough".
 
-    @param red: ?
-    @type red: int
-    @param green: ?
-    @type green: int
-    @param blue: ?
-    @type blue: int
+    :Parameters:
+      `red` : int
+        difference for red color. By default, closeness is 40000.
+      `green` : int
+        difference for green color. By default, closeness is 30000.
+      `blue` : int
+        difference for blue color. By default, closeness is 50000.
 
-    @example: ?
+    :note: e.g. *todo*
 
-    @status: Untested + NoDoc + NoDemo = NOT OK
+    :status: Untested + Doc + NoDemo = NOT OK
 
     """
-    _fl_set_pixmap_colorcloseness = library.cfuncproto(
-        library.load_so_libforms(), "fl_set_pixmap_colorcloseness",
+    _fl_set_pixmap_colorcloseness = libr.cfuncproto(
+        libr.load_so_libforms(), "fl_set_pixmap_colorcloseness",
         None, [cty.c_int, cty.c_int, cty.c_int],
         """void fl_set_pixmap_colorcloseness(int red, int green, int blue)""")
-    library.check_if_initialized()
-    ired = library.convert_to_int(red)
-    igreen = library.convert_to_int(green)
-    iblue = library.convert_to_int(blue)
-    library.keep_elem_refs(red, green, blue, ired, igreen, iblue)
+    libr.check_if_initialized()
+    ired = libr.convert_to_int(red)
+    igreen = libr.convert_to_int(green)
+    iblue = libr.convert_to_int(blue)
+    libr.keep_elem_refs(red, green, blue, ired, igreen, iblue)
     _fl_set_pixmap_colorcloseness(ired, igreen, iblue)
 
 
 def fl_free_pixmap_pixmap(pFlObject):
-    """fl_free_pixmap_pixmap(pFlObject)
+    """Frees th old pixmap associated to object, the mask, and the colors the
+    pixmap allocated.
 
-    @param pFlObject: pixmap object
-    @type pFlObject: pointer to xfdata.FL_OBJECT
+    :Parameters:
+      `pFlObject` : pointer to xfdata.FL_OBJECT
+        pixmap object
 
-    @example: ??
+    :note: e.g. *todo*
 
-    @status: Tested + NoDoc + Demo = OK
+    :status: Tested + Doc + Demo = OK
 
     """
-    _fl_free_pixmap_pixmap = library.cfuncproto(
-        library.load_so_libforms(), "fl_free_pixmap_pixmap",
+    _fl_free_pixmap_pixmap = libr.cfuncproto(
+        libr.load_so_libforms(), "fl_free_pixmap_pixmap",
         None, [cty.POINTER(xfdata.FL_OBJECT)],
         """void fl_free_pixmap_pixmap(FL_OBJECT * ob)""")
-    library.check_if_initialized()
-    library.check_if_FL_OBJECT_ptr(pFlObject)
-    library.keep_elem_refs(pFlObject)
+    libr.check_if_initialized()
+    libr.check_if_FL_OBJECT_ptr(pFlObject)
+    libr.keep_elem_refs(pFlObject)
     _fl_free_pixmap_pixmap(pFlObject)
 
 
@@ -470,33 +483,34 @@ fl_free_pixmapbutton_pixmap = fl_free_pixmap_pixmap
 
 
 def fl_get_pixmap_pixmap(pFlObject):
-    """
+    """Obtains the pixmap ID currently being displayed.
 
-    @param pFlObject: pixmap object
-    @type pFlObject: pointer to xfdata.FL_OBJECT
+    :Parameters:
+      `pFlObject` : pointer to xfdata.FL_OBJECT
+        pixmap object
 
-    @returns: pixmap id, pixmap id, pixmap mask
-    @rtype: long_pos, long_pos, long_pos
+    :returns: pixmap id, pixmap id, pixmap mask
+    :rtype: long_pos, long_pos, long_pos
 
-    @example: ??
+    :note: e.g. *todo*
 
-    @attention: API change from XForms - upstream was
+    :attention: API change from XForms - upstream was
         fl_get_pixmap_pixmap(pFlObject, p, m)
 
-    @status: Untested + NoDoc + NoDemo = NOT OK
+    :status: Untested + Doc + NoDemo = NOT OK
 
     """
-    _fl_get_pixmap_pixmap = library.cfuncproto(
-        library.load_so_libforms(), "fl_get_pixmap_pixmap",
+    _fl_get_pixmap_pixmap = libr.cfuncproto(
+        libr.load_so_libforms(), "fl_get_pixmap_pixmap",
         xfdata.Pixmap, [cty.POINTER(xfdata.FL_OBJECT),
         cty.POINTER(xfdata.Pixmap), cty.POINTER(xfdata.Pixmap)],
         """Pixmap fl_get_pixmap_pixmap(FL_OBJECT * ob, Pixmap * p,
            Pixmap * m)""")
-    library.check_if_initialized()
-    library.check_if_FL_OBJECT_ptr(pFlObject)
-    p, pp = library.make_ulong_and_pointer()
-    m, pm = library.make_ulong_and_pointer()
-    library.keep_elem_refs(pFlObject, p, m, pp, pm)
+    libr.check_if_initialized()
+    libr.check_if_FL_OBJECT_ptr(pFlObject)
+    p, pp = libr.make_ulong_and_pointer()
+    m, pm = libr.make_ulong_and_pointer()
+    libr.keep_elem_refs(pFlObject, p, m, pp, pm)
     retval = _fl_get_pixmap_pixmap(pFlObject, pp, pm)
     return retval, p.value, m.value
 
@@ -504,49 +518,49 @@ def fl_get_pixmap_pixmap(pFlObject):
 fl_get_pixmapbutton_pixmap = fl_get_pixmap_pixmap
 
 
-def fl_read_pixmapfile(win, filename, tran):
+def fl_read_pixmapfile(win, fname, tran):
     """Makes a pixmap from a pixmap file.
 
-    @param win: window id
-    @type win: long_pos
-    @param filename: name of pixmap (.xpm format) file
-    @type filename: str
-    @param tran: color value
-    @type tran: long_pos
+    :Parameters:
+      `win` : long_pos
+        window id
+      `fname` : str
+        name of pixmap (.xpm format) file
+      `tran` : long_pos
+        color value
 
-    @returns: pixmap, w, h, shapemask, hotx, hoty
-    @rtype: long_pos, int_pos, int_pos, long_pos, int, int
+    :returns: pixmap, w, h, shapemask, hotx, hoty
+    :rtype: long_pos, int_pos, int_pos, long_pos, int, int
 
-    @example: pmap, w, h, shapmsk, hotx, hoty = fl_read_pixmapfile(win0, \
+    :note: e.g. pmap, w, h, shapmsk, hotx, hoty = fl_read_pixmapfile(win0, \
         "xpmfile.xpm", xfdata.FL_WHITE)
 
-    @attention: API change from XForms - upstream was
+    :attention: API change from XForms - upstream was
         fl_read_pixmapfile(win, filename, w, h, shape_mask, hotx, hoty, tran)
 
-    @status: Tested + Doc + Demo = OK
-
+    :status: Tested + Doc + Demo = OK
     """
-    _fl_read_pixmapfile = library.cfuncproto(
-        library.load_so_libforms(), "fl_read_pixmapfile",
+    _fl_read_pixmapfile = libr.cfuncproto(
+        libr.load_so_libforms(), "fl_read_pixmapfile",
         xfdata.Pixmap, [xfdata.Window, xfdata.STRING, cty.POINTER(cty.c_uint),
         cty.POINTER(cty.c_uint), cty.POINTER(xfdata.Pixmap),
         cty.POINTER(cty.c_int), cty.POINTER(cty.c_int), xfdata.FL_COLOR],
         """Pixmap fl_read_pixmapfile(Window win, const char * file,
            unsigned int * w, unsigned int * h, Pixmap * shape_mask,
            int * hotx, int * hoty, FL_COLOR tran)""")
-    library.check_if_initialized()
-    library.check_admitted_listvalues(tran, xfdata.COLOR_list)
-    ulwin = library.convert_to_Window(win)
-    sfilename = library.convert_to_string(filename)
-    ultran = library.convert_to_FL_COLOR(tran)
-    w, pw = library.make_uint_and_pointer()
-    h, ph = library.make_uint_and_pointer()
-    shapemask, pshapemask = library.make_ulong_and_pointer()
-    hotx, photx = library.make_int_and_pointer()
-    hoty, photy = library.make_int_and_pointer()
-    library.keep_elem_refs(win, filename, w, h, shapemask, hotx, hoty, tran, ulwin,
-                   sfilename, ultran, pw, ph, pshapemask, photx, photy)
-    retval = _fl_read_pixmapfile(ulwin, sfilename, pw, ph, pshapemask, \
+    libr.check_if_initialized()
+    libr.check_admitted_listvalues(tran, xfdata.COLOR_list)
+    ulwin = libr.convert_to_Window(win)
+    sfname = libr.convert_to_string(fname)
+    ultran = libr.convert_to_FL_COLOR(tran)
+    w, pw = libr.make_uint_and_pointer()
+    h, ph = libr.make_uint_and_pointer()
+    shapemask, pshapemask = libr.make_ulong_and_pointer()
+    hotx, photx = libr.make_int_and_pointer()
+    hoty, photy = libr.make_int_and_pointer()
+    libr.keep_elem_refs(win, fname, w, h, shapemask, hotx, hoty, tran, ulwin,
+                   sfname, ultran, pw, ph, pshapemask, photx, photy)
+    retval = _fl_read_pixmapfile(ulwin, sfname, pw, ph, pshapemask, \
                                  photx, photy, ultran)
     return retval, w.value, h.value, shapemask.value, hotx.value, hoty.value
 
@@ -554,33 +568,37 @@ def fl_read_pixmapfile(win, filename, tran):
 def fl_create_from_pixmapdata(win, data, w, h, sm, hotx, hoty, tran):
     """Makes a pixmap from pixmap contents data.
 
-    @param win: window
-    @type win: long_pos
-    @param data: bitmap contents data
-    @type data: str of ubyte
-    @param w: width of bitmap in coord units
-    @type w: int_pos
-    @param h: height of bitmap in coord units
-    @type h: int_pos
-    @param sm: shape mask
-    @type sm: long_pos
-    @param hotx: ?
-    @type hotx: int
-    @param hoty: ?
-    @type hoty: int
-    @param tran: color value
-    @type tran: long_pos
+    :Parameters:
+      `win` : long_pos
+        window id
+      `data` : str of ubytes
+        pixmap contents data
+      `w` : int_pos
+        width of pixmap in coord units
+      `h` : int_pos
+        height of pixmap in coord units
+      `sm` : long_pos
+        shape mask (of an existing pixmap) used as a clipping mask to
+        achieve transparency, 0 for no transparency.
+      `hotx` : int
+        horizontal position of center of the pixmap (useful if the pixmap is
+        to be used as a cursor)
+      `hoty` : int
+        vertical position of center of the pixmap (useful if the pixmap is
+        to be used as a cursor)
+      `tran` : long_pos
+        color value (currently not used)
 
-    @returns: pixmap created
-    @rtype: long_pos
+    :returns: pixmap id created
+    :rtype: long_pos
 
-    @example: ??
+    :note: e.g. *todo*
 
-    @status: Untested + Doc + NoDemo = NOT OK
+    :status: Untested + Doc + NoDemo = NOT OK
 
     """
-    _fl_create_from_pixmapdata = library.cfuncproto(
-        library.load_so_libforms(), "fl_create_from_pixmapdata",
+    _fl_create_from_pixmapdata = libr.cfuncproto(
+        libr.load_so_libforms(), "fl_create_from_pixmapdata",
         xfdata.Pixmap, [xfdata.Window, cty.POINTER(xfdata.STRING),
         cty.POINTER(cty.c_uint), cty.POINTER(cty.c_uint),
         cty.POINTER(xfdata.Pixmap), cty.POINTER(cty.c_int),
@@ -588,11 +606,11 @@ def fl_create_from_pixmapdata(win, data, w, h, sm, hotx, hoty, tran):
         """Pixmap fl_create_from_pixmapdata(Window win, char * * data,
         unsigned int * w, unsigned int * h, Pixmap * sm, int * hotx,
         int * hoty, FL_COLOR tran)""")
-    library.check_if_initialized()
-    library.check_admitted_listvalues(tran, xfdata.COLOR_list)
-    ulwin = library.convert_to_Window(win)
-    ultran = library.convert_to_FL_COLOR(tran)
-    library.keep_elem_refs(win, data, w, h, sm, hotx, hoty, tran, ulwin, ultran)
+    libr.check_if_initialized()
+    libr.check_admitted_listvalues(tran, xfdata.COLOR_list)
+    ulwin = libr.convert_to_Window(win)
+    ultran = libr.convert_to_FL_COLOR(tran)
+    libr.keep_elem_refs(win, data, w, h, sm, hotx, hoty, tran, ulwin, ultran)
     retval = _fl_create_from_pixmapdata(ulwin, data, w, h, sm, hotx, hoty,
                                         ultran)
     return retval
@@ -601,21 +619,22 @@ def fl_create_from_pixmapdata(win, data, w, h, sm, hotx, hoty, tran):
 def fl_free_pixmap(idnum):
     """Frees the pixmap.
 
-    @param idnum: Pixmap id to be freed
-    @type idnum: long_pos
+    :Parameters:
+      `idnum` : long_pos
+        Pixmap id to be freed
 
-    @example: fl_free_pixmap(pmap)
+    :note: e.g. fl_free_pixmap(pmap)
 
-    @status: Untested + Doc + NoDemo = NOT OK
+    :status: Untested + Doc + NoDemo = NOT OK
 
     """
-    _fl_free_pixmap = library.cfuncproto(
-        library.load_so_libforms(), "fl_free_pixmap",
+    _fl_free_pixmap = libr.cfuncproto(
+        libr.load_so_libforms(), "fl_free_pixmap",
         None, [xfdata.Pixmap],
         """void fl_free_pixmap(Pixmap id)""")
-    library.check_if_initialized()
-    ulidnum = library.convert_to_Pixmap(idnum)
-    library.keep_elem_refs(idnum, ulidnum)
+    libr.check_if_initialized()
+    ulidnum = libr.convert_to_Pixmap(idnum)
+    libr.keep_elem_refs(idnum, ulidnum)
     _fl_free_pixmap(ulidnum)
 
 
