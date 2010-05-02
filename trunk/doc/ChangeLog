@@ -1,8 +1,9 @@
 
 
 SVN
-    * docstrings in _flbutton.py switched to reStructuredText.
-    * docstrings in _flbrowser.py switched to reStructuredText.
+    * docstrings in flcanvas.py switched to reStructuredText.
+    * docstrings in flbutton.py switched to reStructuredText.
+    * docstrings in flbrowser.py switched to reStructuredText.
     * docstrings in __init__.py, flbasic.py and flbitmap.py switched to
     reStructuredText.
     * Realign to upstream XForms code (fl_object_returned function removed).

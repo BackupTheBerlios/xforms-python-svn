@@ -2,8 +2,7 @@
 # -*- coding: iso8859-1 -*-
 
 """
-    xforms-python - Python wrapper for XForms (X11) GUI C toolkit library
-    using ctypes
+    flcanvas.py - functions to manage canvases.
 
     Copyright (C) 2009, 2010  Luca Lazzaroni "LukenShiro"
     e-mail: <lukenshiro@ngi.it>
@@ -34,9 +33,8 @@
 
 
 import ctypes as cty
-from xformslib import library
+from xformslib import library as libr
 from xformslib import xfdata
-
 
 
 #######################
@@ -49,47 +47,48 @@ from xformslib import xfdata
 def fl_create_generic_canvas(canvasclass, canvastype, x, y, w, h, label):
     """Creates a generic canvas object.
 
-    @param canvasclass: value of a new canvas class
-    @type canvasclass: int
-    @param canvastype: type of canvas to be created. Values (from xfdata
-        module) i.e. FL_NORMAL_CANVAS, FL_SCROLLED_CANVAS (not enabled)
-    @type canvastype: int
-    @param x: horizontal position (upper-left corner)
-    @type x: int
-    @param y: vertical position (upper-left corner)
-    @type y: int
-    @param w: width in coord units
-    @type w: int
-    @param h: height in coord units
-    @type h: int
-    @param label: text label of canvas
-    @type label: str
+    :Parameters:
+      `canvasclass` : int
+        value of a new canvas class
+      `canvastype` : int
+        type of canvas to be created. Values (from xfdata.py) FL_NORMAL_CANVAS,
+        FL_SCROLLED_CANVAS (not enabled)
+      `x` : int
+        horizontal position (upper-left corner)
+      `y` : int
+        vertical position (upper-left corner)
+      `w` : int
+        width in coord units
+      `h` : int
+        height in coord units
+      `label` : str
+        text label of canvas
 
-    @returns: canvas object created (pFlObject)
-    @rtype: pointer to xfdata.FL_OBJECT
+    :return: canvas object created (pFlObject)
+    :rtype: pointer to xfdata.FL_OBJECT
 
-    @example: ??
+    :note: e.g. *todo*
 
-    @status: Untested + Doc + NoDemo = NOT OK
+    :status: Untested + Doc + NoDemo = NOT OK
 
     """
-    _fl_create_generic_canvas = library.cfuncproto(
-        library.load_so_libforms(), "fl_create_generic_canvas",
+    _fl_create_generic_canvas = libr.cfuncproto(
+        libr.load_so_libforms(), "fl_create_generic_canvas",
         cty.POINTER(xfdata.FL_OBJECT), [cty.c_int, cty.c_int, xfdata.FL_Coord,
         xfdata.FL_Coord, xfdata.FL_Coord, xfdata.FL_Coord, xfdata.STRING],
         """FL_OBJECT * fl_create_generic_canvas(int canvas_class,
            int type, FL_Coord x, FL_Coord y, FL_Coord w, FL_Coord h,
            const char * label)""")
-    library.check_if_initialized()
-    library.check_admitted_listvalues(canvastype, xfdata.CANVASTYPE_list)
-    icanvasclass = library.convert_to_int(canvasclass)
-    icanvastype = library.convert_to_int(canvastype)
-    ix = library.convert_to_FL_Coord(x)
-    iy = library.convert_to_FL_Coord(y)
-    iw = library.convert_to_FL_Coord(w)
-    ih = library.convert_to_FL_Coord(h)
-    slabel = library.convert_to_string(label)
-    library.keep_elem_refs(canvasclass, canvastype, x, y, w, h, label, \
+    libr.check_if_initialized()
+    libr.check_admitted_listvalues(canvastype, xfdata.CANVASTYPE_list)
+    icanvasclass = libr.convert_to_int(canvasclass)
+    icanvastype = libr.convert_to_int(canvastype)
+    ix = libr.convert_to_FL_Coord(x)
+    iy = libr.convert_to_FL_Coord(y)
+    iw = libr.convert_to_FL_Coord(w)
+    ih = libr.convert_to_FL_Coord(h)
+    slabel = libr.convert_to_string(label)
+    libr.keep_elem_refs(canvasclass, canvastype, x, y, w, h, label, \
                            icanvasclass, icanvastype, ix, iy, iw, ih, slabel)
     retval = _fl_create_generic_canvas(icanvasclass, icanvastype, ix, iy, \
                                        iw, ih, slabel)
@@ -99,328 +98,367 @@ def fl_create_generic_canvas(canvasclass, canvastype, x, y, w, h, label):
 def fl_add_canvas(canvastype, x, y, w, h, label):
     """Adds a canvas object.
 
-    @param canvastype: type of canvas to be added. Values (from xfdata
-        modules) FL_NORMAL_CANVAS, FL_SCROLLED_CANVAS (not enabled)
-    @type canvastype: int
-    @param x: horizontal position (upper-left corner)
-    @type x: int
-    @param y: vertical position (upper-left corner)
-    @type y: int
-    @param w: width in coord units
-    @type w: int
-    @param h: height in coord units
-    @type h: int
-    @param label: text label of canvas
-    @type label: str
+    :Parameters:
+      `canvastype` : int
+        type of canvas to be added. Values (from xfdata.py) FL_NORMAL_CANVAS,
+        FL_SCROLLED_CANVAS (not enabled)
+      `x` : int
+        horizontal position (upper-left corner)
+      `y` : int
+        vertical position (upper-left corner)
+      `w` : int
+        width in coord units
+      `h` : int
+        height in coord units
+      `label` : str
+        text label of canvas
 
-    @returns: canvas object added (pFlObject)
-    @rtype: pointer to xfdata.FL_OBJECT
+    :return: canvas object added (pFlObject)
+    :rtype: pointer to xfdata.FL_OBJECT
 
-    @example: canvobj = fl_add_canvas(xfdata.FL_NORMAL_CANVAS, 150, 210, \
+    :note: e.g. canvobj = fl_add_canvas(xfdata.FL_NORMAL_CANVAS, 150, 210, 
         320, 200, "My Canvas")
 
-    @status: Tested + Doc + NoDemo = OK
+    :status: Tested + Doc + NoDemo = OK
 
     """
-    _fl_add_canvas = library.cfuncproto(
-        library.load_so_libforms(), "fl_add_canvas",
+    _fl_add_canvas = libr.cfuncproto(
+        libr.load_so_libforms(), "fl_add_canvas",
         cty.POINTER(xfdata.FL_OBJECT), [cty.c_int, xfdata.FL_Coord, 
         xfdata.FL_Coord, xfdata.FL_Coord, xfdata.FL_Coord, xfdata.STRING],
         """FL_OBJECT * fl_add_canvas(int type, FL_Coord x, FL_Coord y,
            FL_Coord w, FL_Coord h, const char * label)""")
-    library.check_if_initialized()
-    library.check_admitted_listvalues(canvastype, xfdata.CANVASTYPE_list)
-    icanvastype = library.convert_to_int(canvastype)
-    ix = library.convert_to_FL_Coord(x)
-    iy = library.convert_to_FL_Coord(y)
-    iw = library.convert_to_FL_Coord(w)
-    ih = library.convert_to_FL_Coord(h)
-    slabel = library.convert_to_string(label)
-    library.keep_elem_refs(canvastype, x, y, w, h, label, icanvastype, ix, iy,
+    libr.check_if_initialized()
+    libr.check_admitted_listvalues(canvastype, xfdata.CANVASTYPE_list)
+    icanvastype = libr.convert_to_int(canvastype)
+    ix = libr.convert_to_FL_Coord(x)
+    iy = libr.convert_to_FL_Coord(y)
+    iw = libr.convert_to_FL_Coord(w)
+    ih = libr.convert_to_FL_Coord(h)
+    slabel = libr.convert_to_string(label)
+    libr.keep_elem_refs(canvastype, x, y, w, h, label, icanvastype, ix, iy,
                            iw, ih, slabel)
     retval = _fl_add_canvas(icanvastype, ix, iy, iw, ih, slabel)
     return retval
 
 
 # fl_create_canvas function placeholder (internal)
-
 # fl_set_canvas_decoration placeholder (backwards)
 
 
 def fl_set_canvas_colormap(pFlObject, colormap):
+    """Sets the color property of canvas. Caution: when the canvas window goes
+    away, e.g. as a result of a call of fl_hide_form(), the colormap associated
+    with the canvas is freed (destroyed); this likely will cause problems if a
+    single colormap is used for multiple canvases as each canvas will attempt
+    to free the same colormap, resulting in an X error.
+
+    :Parameters:
+      `pFlObject` : pointer to xfdata.FL_OBJECT
+        canvas object
+      `colormap` : long_pos
+        colormap of canvas
+
+    :note: e.g. *todo*
+
+    :status: Untested + Doc + NoDemo = NOT OK
+
     """
-    fl_set_canvas_colormap(pFlObject, colormap)
-
-    @param pFlObject: canvas object
-    @type pFlObject: pointer to xfdata.FL_OBJECT
-    @param colormap: colormap of canvas
-    @type colormap: long_pos
-
-    @example: ??
-
-    @status: Untested + NoDoc + NoDemo = NOT OK
-
-    """
-    _fl_set_canvas_colormap = library.cfuncproto(
-        library.load_so_libforms(), "fl_set_canvas_colormap",
+    _fl_set_canvas_colormap = libr.cfuncproto(
+        libr.load_so_libforms(), "fl_set_canvas_colormap",
         None, [cty.POINTER(xfdata.FL_OBJECT), xfdata.Colormap],
         """void fl_set_canvas_colormap(FL_OBJECT * ob, Colormap colormap)""")
-    library.check_if_initialized()
-    library.check_if_FL_OBJECT_ptr(pFlObject)
-    ulcolormap = library.convert_to_ulong(colormap)
-    library.keep_elem_refs(pFlObject, colormap, ulcolormap)
+    libr.check_if_initialized()
+    libr.check_if_FL_OBJECT_ptr(pFlObject)
+    ulcolormap = libr.convert_to_ulong(colormap)
+    libr.keep_elem_refs(pFlObject, colormap, ulcolormap)
     _fl_set_canvas_colormap(pFlObject, ulcolormap)
 
 
 def fl_set_canvas_visual(pFlObject, pVisual):
-    """ fl_set_canvas_visual(pFlObject, pVisual)
+    """Sets visual property of canvas. Changing visual does not generally make
+     sense once the canvas window is created (which happens when the parent
+     form is shown). Also, typically if you change the canvas visual, you
+     probably should also change the canvas depth to match the visual.
 
-        @param pFlObject: canvas object
-        @type pFlObject: pointer to xfdata.FL_OBJECT
-        @param pVisual: pointer to Visual class instance
+    :Parameters:
+      `pFlObject` : pointer to xfdata.FL_OBJECT
+        canvas object
+      `pVisual` : pointer to xfdata.Visual
+        class instance
 
-        @status: Untested + NoDoc + NoDemo = NOT OK
+    :note: e.g. *todo*
+
+    :status: Untested + Doc + NoDemo = NOT OK
+
     """
-    _fl_set_canvas_visual = library.cfuncproto(
-            library.load_so_libforms(), "fl_set_canvas_visual",
+    _fl_set_canvas_visual = libr.cfuncproto(
+            libr.load_so_libforms(), "fl_set_canvas_visual",
             None, [cty.POINTER(xfdata.FL_OBJECT), cty.POINTER(xfdata.Visual)],
             """void fl_set_canvas_visual(FL_OBJECT * obj, Visual * vi)""")
-    library.check_if_initialized()
-    library.check_if_FL_OBJECT_ptr(pFlObject)
-    library.keep_elem_refs(pFlObject, pVisual)
+    libr.check_if_initialized()
+    libr.check_if_FL_OBJECT_ptr(pFlObject)
+    libr.keep_elem_refs(pFlObject, pVisual)
     _fl_set_canvas_visual(pFlObject, pVisual)
 
 
 def fl_set_canvas_depth(pFlObject, depth):
-    """Sets the depth of canvas object.
+    """Sets the depth of canvas object. Changing depth does not generally make
+    sense once the canvas window is created (which happens when the parent
+    form is shown).
 
-    @param pFlObject: canvas object
-    @type pFlObject: pointer to xfdata.FL_OBJECT
-    @param depth: depth value of canvas. Values (from xfdata module) e.g.
-        8, 16, 24?, 32, ...
-    @type depth: int
+    :Parameters:
+      `pFlObject` : pointer to xfdata.FL_OBJECT
+        canvas object
+      `depth` : int
+        depth value of canvas. Values (from xfdata.py) e.g. 8, 16, 24?, 32, ...
 
-    @example: fl_set_canvas_depth(canvobj, 32)
+    :note: e.g. fl_set_canvas_depth(canvobj, 32)
 
-    @status: Tested + Doc + NoDemo = OK
+    :status: Tested + Doc + NoDemo = OK
 
     """
-    _fl_set_canvas_depth = library.cfuncproto(
-        library.load_so_libforms(), "fl_set_canvas_depth",
+    _fl_set_canvas_depth = libr.cfuncproto(
+        libr.load_so_libforms(), "fl_set_canvas_depth",
         None, [cty.POINTER(xfdata.FL_OBJECT), cty.c_int],
         """void fl_set_canvas_depth(FL_OBJECT * obj, int depth)""")
-    library.check_if_initialized()
-    library.check_if_FL_OBJECT_ptr(pFlObject)
-    idepth = library.convert_to_int(depth)
-    library.keep_elem_refs(pFlObject, depth, idepth)
+    libr.check_if_initialized()
+    libr.check_if_FL_OBJECT_ptr(pFlObject)
+    idepth = libr.convert_to_int(depth)
+    libr.keep_elem_refs(pFlObject, depth, idepth)
     _fl_set_canvas_depth(pFlObject, idepth)
 
 
 def fl_set_canvas_attributes(pFlObject, mask, pXSetWindowAttributes):
-    """
-    fl_set_canvas_attributes(pFlObject, mask, pXSetWindowAttributes)
+    """Modifies attributes of a canvas object (e.g. visual, depth and
+     colormap etc.). By default, upon canvas creation, all its window related
+     attributes are inherited from its parent (i.e. the window of the form the
+     canvas belongs to). You should not use this function to modify events.
 
-    @param pFlObject: canvas object
-    @type pFlObject: pointer to xfdata.FL_OBJECT
-    @param mask: mask num.
-    @type mask: int_pos
-    @param pXSetWindowAttributes: pointer to XSetWindowAttributes
+    :Parameters:
+      `pFlObject` : pointer to xfdata.FL_OBJECT
+        canvas object
+      `mask` : int_pos
+        mask num.
+      `pXSetWindowAttributes` : pointer to xfdata.XSetWindowAttributes
+        class instance
 
-    @status: Untested + NoDoc + NoDemo = NOT OK
+    :note: e.g. *todo*
+
+    :status: Untested + Doc + NoDemo = NOT OK
+
     """
-    _fl_set_canvas_attributes = library.cfuncproto(
-            library.load_so_libforms(), "fl_set_canvas_attributes",
+    _fl_set_canvas_attributes = libr.cfuncproto(
+            libr.load_so_libforms(), "fl_set_canvas_attributes",
             None, [cty.POINTER(xfdata.FL_OBJECT), cty.c_uint,
             cty.POINTER(xfdata.XSetWindowAttributes)],
             """void fl_set_canvas_attributes(FL_OBJECT * ob,
                unsigned int mask, XSetWindowAttributes * xswa)""")
-    library.check_if_initialized()
-    library.check_if_FL_OBJECT_ptr(pFlObject)
-    uimask = library.convert_to_uint(mask)
-    library.keep_elem_refs(pFlObject, mask, pXSetWindowAttributes, uimask)
+    libr.check_if_initialized()
+    libr.check_if_FL_OBJECT_ptr(pFlObject)
+    uimask = libr.convert_to_uint(mask)
+    libr.keep_elem_refs(pFlObject, mask, pXSetWindowAttributes, uimask)
     _fl_set_canvas_attributes(pFlObject, uimask, pXSetWindowAttributes)
 
 
+# TODO: take note in xfdata.py which X events belong here.
+def fl_add_canvas_handler(pFlObject, xev, py_HandleCanvas, udata):
+    """Sets a callback to be invoked for a specific X event.
 
-def fl_add_canvas_handler(pFlObject, ev, py_HandleCanvas, udata):
-    """
-    fl_add_canvas_handler(pFlObject, ev, py_HandleCanvas, udata) -> canvas handler
+    :Parameters:
+      `pFlObject` : pointer to xfdata.FL_OBJECT
+        canvas object
+      `xev` : int
+        X event number. Values (from X11): Expose, etc.. ??
+      `py_HandleCanvas` : python function to handle canvas
+        name referring to function(pFlObject, win, num, num, pXEvent, 
+        ptr_void) -> num
 
-    @param pFlObject: canvas object
-    @type pFlObject: pointer to xfdata.FL_OBJECT
-    @param ev: event number
-    @type ev: int
-    @param py_HandleCanvas: python function to handle canvas
-    @type py_HandleCanvas: __ funcname (pFlObject, win, num, num, pXEvent,
-        ptr_void) -> num __
+    :return: old xfdata.FL_HANDLE_CANVAS handler function
 
-    @status: Untested + NoDoc + NoDemo = NOT OK
+    :note: e.g. *todo*
+
+    :status: Untested + Doc + NoDemo = NOT OK
+
     """
     #FL_HANDLE_CANVAS = cty.CFUNCTYPE(cty.c_int, cty.POINTER(xfdata.FL_OBJECT),
     #                             xfdata.Window, cty.c_int, cty.c_int,
     #                             cty.POINTER(xfdata.XEvent), cty.c_void_p)
-    _fl_add_canvas_handler = library.cfuncproto(
-            library.load_so_libforms(), "fl_add_canvas_handler",
-            xfdata.FL_HANDLE_CANVAS, [cty.POINTER(xfdata.FL_OBJECT), cty.c_int,
-            xfdata.FL_HANDLE_CANVAS, cty.c_void_p],
-            """FL_HANDLE_CANVAS fl_add_canvas_handler(FL_OBJECT * ob, int ev,
-               FL_HANDLE_CANVAS h, void * udata)""")
-    library.check_if_initialized()
-    library.check_if_FL_OBJECT_ptr(pFlObject)
-    iev = library.convert_to_int(ev)
+    _fl_add_canvas_handler = libr.cfuncproto(
+        libr.load_so_libforms(), "fl_add_canvas_handler",
+        xfdata.FL_HANDLE_CANVAS, [cty.POINTER(xfdata.FL_OBJECT), cty.c_int,
+        xfdata.FL_HANDLE_CANVAS, cty.c_void_p],
+        """FL_HANDLE_CANVAS fl_add_canvas_handler(FL_OBJECT * ob, int ev,
+           FL_HANDLE_CANVAS h, void * udata)""")
+    libr.check_if_initialized()
+    libr.check_if_FL_OBJECT_ptr(pFlObject)
+    ixev = libr.convert_to_int(xev)
     c_HandleCanvas = xfdata.FL_HANDLE_CANVAS(py_HandleCanvas)
     pudata = cty.cast(udata, cty.c_void_p)
-    library.keep_cfunc_refs(c_HandleCanvas, py_HandleCanvas)
-    library.keep_elem_refs(pFlObject, ev, udata, iev, pudata)
-    retval = _fl_add_canvas_handler(pFlObject, iev, c_HandleCanvas, pudata)
+    libr.keep_cfunc_refs(c_HandleCanvas, py_HandleCanvas)
+    libr.keep_elem_refs(pFlObject, xev, udata, ixev, pudata)
+    retval = _fl_add_canvas_handler(pFlObject, ixev, c_HandleCanvas, pudata)
     return retval
 
 
 def fl_get_canvas_id(pFlObject):
     """Returns the window id of the canvas object.
 
-    @param pFlObject: canvas object
-    @type pFlObject: pointer to xfdata.FL_OBJECT
+    :Parameters:
+      `pFlObject` : pointer to xfdata.FL_OBJECT
+        canvas object
 
-    @returns: window id (win)
-    @rtype: long_pos
+    :return: window id (win)
+    :rtype: long_pos
 
-    @example: canvwin = fl_get_canvas_id(pobj)
+    :note: e.g. canvwin = fl_get_canvas_id(pobj)
 
-    @status: Tested + Doc + NoDemo = OK
+    :status: Tested + Doc + NoDemo = OK
 
     """
-    _fl_get_canvas_id = library.cfuncproto(
-        library.load_so_libforms(), "fl_get_canvas_id",
+    _fl_get_canvas_id = libr.cfuncproto(
+        libr.load_so_libforms(), "fl_get_canvas_id",
         xfdata.Window, [cty.POINTER(xfdata.FL_OBJECT)],
         """Window fl_get_canvas_id(FL_OBJECT * ob)""")
-    library.check_if_FL_OBJECT_ptr(pFlObject)
-    library.keep_elem_refs(pFlObject)
+    libr.check_if_FL_OBJECT_ptr(pFlObject)
+    libr.keep_elem_refs(pFlObject)
     retval = _fl_get_canvas_id(pFlObject)
     return retval
 
 
 def fl_get_canvas_colormap(pFlObject):
+    """Obtains the colormap of a canvas object.
+
+    :Parameters:
+      `pFlObject` : pointer to xfdata.FL_OBJECT
+        canvas object
+
+    :return: colormap
+    :rtype: long_pos
+
+    :note: e.g. *todo*
+
+    :status: Untested + Doc + NoDemo = NOT OK
+
     """
-    fl_get_canvas_colormap(pFlObject) -> colormap
-
-    Returns the colormap of a canas object
-
-    @param pFlObject: canvas object
-    @type pFlObject: pointer to xfdata.FL_OBJECT
-
-    @status: Untested + NoDoc + NoDemo = NOT OK
-
-    """
-    _fl_get_canvas_colormap = library.cfuncproto(
-        library.load_so_libforms(), "fl_get_canvas_colormap",
+    _fl_get_canvas_colormap = libr.cfuncproto(
+        libr.load_so_libforms(), "fl_get_canvas_colormap",
         xfdata.Colormap, [cty.POINTER(xfdata.FL_OBJECT)],
         """Colormap fl_get_canvas_colormap(FL_OBJECT * ob)""")
-    library.check_if_initialized()
-    library.check_if_FL_OBJECT_ptr(pFlObject)
-    library.keep_elem_refs(pFlObject)
+    libr.check_if_initialized()
+    libr.check_if_FL_OBJECT_ptr(pFlObject)
+    libr.keep_elem_refs(pFlObject)
     retval = _fl_get_canvas_colormap(pFlObject)
     return retval
 
 
 def fl_get_canvas_depth(pFlObject):
-    """Returns the depth of a canvas object (e.g. 8, 16, 24? 32 ..)
+    """Obtains the depth of a canvas object (e.g. 8, 16, 24?, 32 ..).
 
-    @param pFlObject: canvas object
-    @type pFlObject: pointer to xfdata.FL_OBJECT
+    :Parameters:
+      `pFlObject` : pointer to xfdata.FL_OBJECT
+        canvas object
 
-    @returns: depth num.
-    @rtype: int
+    :return: depth num.
+    :rtype: int
 
-    @example: canvdph = fl_get_canvas_depth(canvobj)
+    :note: e.g. canvdph = fl_get_canvas_depth(canvobj)
 
-    @status: Tested + Doc + NoDemo = OK
+    :status: Tested + Doc + NoDemo = OK
 
     """
-    _fl_get_canvas_depth = library.cfuncproto(
-        library.load_so_libforms(), "fl_get_canvas_depth",
+    _fl_get_canvas_depth = libr.cfuncproto(
+        libr.load_so_libforms(), "fl_get_canvas_depth",
         cty.c_int, [cty.POINTER(xfdata.FL_OBJECT)],
         """int fl_get_canvas_depth(FL_OBJECT * obj)""")
-    library.check_if_initialized()
-    library.check_if_FL_OBJECT_ptr(pFlObject)
-    library.keep_elem_refs(pFlObject)
+    libr.check_if_initialized()
+    libr.check_if_FL_OBJECT_ptr(pFlObject)
+    libr.keep_elem_refs(pFlObject)
     retval = _fl_get_canvas_depth(pFlObject)
     return retval
 
 
-def fl_remove_canvas_handler(pFlObject, ev, py_HandleCanvas):
-    """
-    fl_remove_canvas_handler(pFlObject, ev, py_HandleCanvas)
+def fl_remove_canvas_handler(pFlObject, xev, py_HandleCanvas):
+    """Removes a particular handler for a specified X event.
 
-    Remove a particular handler for event ev. If ev is invalid, removes all
-    handlers and their corresponding event mask.
-
-    @param pFlObject: canvas object
-    @type pFlObject: pointer to xfdata.FL_OBJECT
-    @param ev: event number
-    @type ev: int
-    @param py_HandleCanvas: python function to handle canvas
-    @type py_HandleCanvas: __ funcname (pFlObject, win, num, num, pXEvent,
+    :Parameters:
+      `pFlObject` : pointer to xfdata.FL_OBJECT
+        canvas object
+      `xev` : int
+        X event number. If it is invalid, removes all handlers and their
+        corresponding event mask.
+      `py_HandleCanvas` : python function to handle canvas
+        name referring to  function(pFlObject, win, num, num, pXEvent,
         ptr_void) -> num
 
-    @status: Untested + NoDoc + NoDemo = NOT OK
+    :note: e.g. *todo*
+
+    :status: Untested + Doc + NoDemo = NOT OK
+
     """
     #FL_HANDLE_CANVAS = cty.CFUNCTYPE(cty.c_int, cty.POINTER(xfdata.FL_OBJECT),
     #                             xfdata.Window, cty.c_int, cty.c_int,
     #                             cty.POINTER(xfdata.XEvent), cty.c_void_p)
-    _fl_remove_canvas_handler = library.cfuncproto(
-            library.load_so_libforms(), "fl_remove_canvas_handler",
-            None, [cty.POINTER(xfdata.FL_OBJECT), cty.c_int, xfdata.FL_HANDLE_CANVAS],
-            """void fl_remove_canvas_handler(FL_OBJECT * ob, int ev,
-               FL_HANDLE_CANVAS h)""")
-    library.check_if_initialized()
-    library.check_if_FL_OBJECT_ptr(pFlObject)
-    iev = library.convert_to_int(ev)
+    _fl_remove_canvas_handler = libr.cfuncproto(
+        libr.load_so_libforms(), "fl_remove_canvas_handler",
+        None, [cty.POINTER(xfdata.FL_OBJECT), cty.c_int, 
+        xfdata.FL_HANDLE_CANVAS],
+        """void fl_remove_canvas_handler(FL_OBJECT * ob, int ev,
+           FL_HANDLE_CANVAS h)""")
+    libr.check_if_initialized()
+    libr.check_if_FL_OBJECT_ptr(pFlObject)
+    ixev = libr.convert_to_int(xev)
     c_HandleCanvas = xfdata.FL_HANDLE_CANVAS(py_HandleCanvas)
-    library.keep_cfunc_refs(c_HandleCanvas, py_HandleCanvas)
-    library.keep_elem_refs(pFlObject, ev, iev)
-    _fl_remove_canvas_handler(pFlObject, iev, c_HandleCanvas)
+    libr.keep_cfunc_refs(c_HandleCanvas, py_HandleCanvas)
+    libr.keep_elem_refs(pFlObject, xev, ixev)
+    _fl_remove_canvas_handler(pFlObject, ixev, c_HandleCanvas)
 
 
 def fl_hide_canvas(pFlObject):
     """Hides a canvas object.
 
-    @param pFlObject: canvas object
-    @type pFlObject: pointer to xfdata.FL_OBJECT
+    :Parameters:
+      `pFlObject` : pointer to xfdata.FL_OBJECT
+        canvas object
 
-    @example: fl_hide_canvas(canvobj)
+    :note: e.g. fl_hide_canvas(canvobj)
 
-    @status: Tested + Doc + NoDemo = OK
+    :status: Tested + Doc + NoDemo = OK
 
     """
-    _fl_hide_canvas = library.cfuncproto(
-        library.load_so_libforms(), "fl_hide_canvas",
+    _fl_hide_canvas = libr.cfuncproto(
+        libr.load_so_libforms(), "fl_hide_canvas",
         None, [cty.POINTER(xfdata.FL_OBJECT)],
         """void fl_hide_canvas(FL_OBJECT * ob)""")
-    library.check_if_initialized()
-    library.check_if_FL_OBJECT_ptr(pFlObject)
-    library.keep_elem_refs(pFlObject)
+    libr.check_if_initialized()
+    libr.check_if_FL_OBJECT_ptr(pFlObject)
+    libr.keep_elem_refs(pFlObject)
     _fl_hide_canvas(pFlObject)
 
 
 def fl_share_canvas_colormap(pFlObject, colormap):
+    """Sets the color property of canvas. It also sets a intenal flag so the
+    colormap isn't freed when the canvas goes away.
+
+    :Parameters:
+      `pFlObject` : pointer to xfdata.FL_OBJECT
+        canvas object
+      `colormap` : long_pos
+        color map
+
+    :note: e.g. *todo*
+
+    :status: Untested + Doc + NoDemo = NOT OK
+
     """
-    fl_share_canvas_colormap(pFlObject, colormap)
-
-    @param pFlObject: canvas object
-    @type pFlObject: pointer to xfdata.FL_OBJECT
-
-    @status: Untested + NoDoc + NoDemo = NOT OK
-
-    """
-    _fl_share_canvas_colormap = library.cfuncproto(
-        library.load_so_libforms(), "fl_share_canvas_colormap",
+    _fl_share_canvas_colormap = libr.cfuncproto(
+        libr.load_so_libforms(), "fl_share_canvas_colormap",
         None, [cty.POINTER(xfdata.FL_OBJECT), xfdata.Colormap],
         """void fl_share_canvas_colormap(FL_OBJECT * ob, Colormap colormap)""")
-    library.check_if_initialized()
-    library.check_if_FL_OBJECT_ptr(pFlObject)
-    ulcolormap = library.convert_to_ulong(colormap)
-    library.keep_elem_refs(pFlObject, colormap, ulcolormap)
+    libr.check_if_initialized()
+    libr.check_if_FL_OBJECT_ptr(pFlObject)
+    ulcolormap = libr.convert_to_ulong(colormap)
+    libr.keep_elem_refs(pFlObject, colormap, ulcolormap)
     _fl_share_canvas_colormap(pFlObject, ulcolormap)
 
 
@@ -428,89 +466,93 @@ def fl_clear_canvas(pFlObject):
     """Clears the canvas to the background color. If no background is
     defined uses black.
 
-    @param pFlObject: canvas object
-    @type pFlObject: pointer to xfdata.FL_OBJECT
+    :Parameters:
+      `pFlObject` : pointer to xfdata.FL_OBJECT
+        canvas object
 
-    @example: fl_clear_canvas(canvobj)
+    :note: e.g. fl_clear_canvas(canvobj)
 
-    @status: Tested + Doc + NoDemo = OK
+    :status: Tested + Doc + NoDemo = OK
 
     """
-    _fl_clear_canvas = library.cfuncproto(
-        library.load_so_libforms(), "fl_clear_canvas",
+    _fl_clear_canvas = libr.cfuncproto(
+        libr.load_so_libforms(), "fl_clear_canvas",
         None, [cty.POINTER(xfdata.FL_OBJECT)],
         """void fl_clear_canvas(FL_OBJECT * ob)""")
-    library.check_if_initialized()
-    library.check_if_FL_OBJECT_ptr(pFlObject)
-    library.keep_elem_refs(pFlObject)
+    libr.check_if_initialized()
+    libr.check_if_FL_OBJECT_ptr(pFlObject)
+    libr.keep_elem_refs(pFlObject)
     _fl_clear_canvas(pFlObject)
 
 
+# TODO: figure out what is its purpose.
 def fl_modify_canvas_prop(pFlObject, py_initModifyCanvasProp,
      py_activateModifyCanvasProp, py_cleanupModifyCanvasProp):
+    """Modifies init, activate and cleanup handler property of a canvas object.
+
+    :Parameters:
+      `pFlObject` : pointer to xfdata.FL_OBJECT
+        canvas object
+      `py_initModifyCanvasProp` : python function callback, returned value
+        name referring to function(pFlObject) -> num.
+      `py_activateModifyCanvasProp` : python function callback, returned value
+        name referring to function(pFlObject) -> num.
+      `py_cleanupModifyCanvasProp` : python function callback, returned value
+        name referring to function(pFlObject) -> num.
+
+    :note: e.g. *todo*
+
+    :status: Untested + Doc + NoDemo = NOT OK
+
     """
-    fl_modify_canvas_prop(pFlObject, py_initModifyCanvasProp,
-     py_activateModifyCanvasProp, py_cleanupModifyCanvasProp)
-
-    @param pFlObject: canvas object
-    @type pFlObject: pointer to xfdata.FL_OBJECT
-    @param py_initModifyCanvasProp: python function callback, returning value
-    @param py_initModifyCanvasProp: __ funcname (pFlObject) -> num. __
-    @param py_activateModifyCanvasProp: python function callback, returning
-        value
-    @param py_activateModifyCanvasProp: __ funcname (pFlObject) -> num. __
-    @param py_cleanupModifyCanvasProp: python function callback, returning
-        value
-    @param py_cleanupModifyCanvasProp: __ funcname (pFlObject) -> num. __
-
-    @status: Untested + NoDoc + NoDemo = NOT OK
-
-    """
-    #FL_MODIFY_CANVAS_PROP = cty.CFUNCTYPE(cty.c_int, cty.POINTER(xfdata.FL_OBJECT))
-    _fl_modify_canvas_prop = library.cfuncproto(
-        library.load_so_libforms(), "fl_modify_canvas_prop",
+    #FL_MODIFY_CANVAS_PROP = cty.CFUNCTYPE(cty.c_int,
+    #                              cty.POINTER(xfdata.FL_OBJECT))
+    _fl_modify_canvas_prop = libr.cfuncproto(
+        libr.load_so_libforms(), "fl_modify_canvas_prop",
         None, [cty.POINTER(xfdata.FL_OBJECT), xfdata.FL_MODIFY_CANVAS_PROP,
         xfdata.FL_MODIFY_CANVAS_PROP, xfdata.FL_MODIFY_CANVAS_PROP],
         """void fl_modify_canvas_prop(FL_OBJECT * obj,
            FL_MODIFY_CANVAS_PROP init, FL_MODIFY_CANVAS_PROP activate,
            FL_MODIFY_CANVAS_PROP cleanup)""")
-    library.check_if_initialized()
-    library.check_if_FL_OBJECT_ptr(pFlObject)
-    c_initModifyCanvasProp = xfdata.FL_MODIFY_CANVAS_PROP(py_initModifyCanvasProp)
+    libr.check_if_initialized()
+    libr.check_if_FL_OBJECT_ptr(pFlObject)
+    c_initModifyCanvasProp = xfdata.FL_MODIFY_CANVAS_PROP( \
+            py_initModifyCanvasProp)
     c_activateModifyCanvasProp = xfdata.FL_MODIFY_CANVAS_PROP( \
                 py_activateModifyCanvasProp)
     c_cleanupModifyCanvasProp = xfdata.FL_MODIFY_CANVAS_PROP( \
                 py_cleanupModifyCanvasProp)
-    library.keep_cfunc_refs(c_initModifyCanvasProp, py_initModifyCanvasProp, \
+    libr.keep_cfunc_refs(c_initModifyCanvasProp, py_initModifyCanvasProp, \
                 c_activateModifyCanvasProp, py_activateModifyCanvasProp, \
                 c_cleanupModifyCanvasProp, py_cleanupModifyCanvasProp)
-    library.keep_elem_refs(pFlObject)
+    libr.keep_elem_refs(pFlObject)
     _fl_modify_canvas_prop(pFlObject, c_initModifyCanvasProp,
                     c_activateModifyCanvasProp, c_cleanupModifyCanvasProp)
 
 
-def fl_canvas_yield_to_shortcut(pFlObject, yes):
+def fl_canvas_yield_to_shortcut(pFlObject, yesno):
+    """Enables or disables keyboard inputs stealing by canvas. By default,
+    objects with shortcuts appearing on the same form as the canvas will
+    "steal" keyboard inputs if they match the shortcuts.
+
+    :Parameters:
+      `pFlObject` : pointer to xfdata.FL_OBJECT
+        canvas object
+      `yesno` : int
+        flag to enable (1) or disable (0) keyboard inputs stealing by canvas
+
+    :note: e.g. *todo*
+
+    :status: Untested + Doc + NoDemo = NOT OK
+
     """
-    fl_canvas_yield_to_shortcut(pFlObject, yes)
-
-    @param pFlObject: pointer to object
-    @type pFlObject: pointer to xfdata.FL_OBJECT
-    @param yes: ?
-    @type yes: int
-
-    @example:
-
-    @status: Untested + NoDoc + NoDemo = NOT OK
-
-    """
-    _fl_canvas_yield_to_shortcut = library.cfuncproto(
-        library.load_so_libforms(), "fl_canvas_yield_to_shortcut",
+    _fl_canvas_yield_to_shortcut = libr.cfuncproto(
+        libr.load_so_libforms(), "fl_canvas_yield_to_shortcut",
         None, [cty.POINTER(xfdata.FL_OBJECT), cty.c_int],
         """void fl_canvas_yield_to_shortcut(FL_OBJECT * ob, int yes)""")
-    library.check_if_initialized()
-    library.check_if_FL_OBJECT_ptr(pFlObject)
-    iyes = library.convert_to_int(yes)
-    library.keep_elem_refs(pFlObject, yes, iyes)
-    _fl_canvas_yield_to_shortcut(pFlObject, iyes)
-
+    libr.check_if_initialized()
+    libr.check_if_FL_OBJECT_ptr(pFlObject)
+    iyesno = libr.convert_to_int(yesno)
+    libr.keep_elem_refs(pFlObject, yesno, iyesno)
+    _fl_canvas_yield_to_shortcut(pFlObject, iyesno)
 
