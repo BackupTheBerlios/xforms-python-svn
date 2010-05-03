@@ -59,18 +59,18 @@ def fl_get_dirlist(dirname, pattern, rescan):
     @param rescan: flag to request a re-read or not. Values 0 (no re-read)
         or non-zero (does a re-read)
 
-    @returns: an array of DirList class instances (pDirList) and number of
+    :return: an array of DirList class instances (pDirList) and number of
         files (total number of entries in directory dirname that match the
         pattern specified by pattern)
-    @rtype: pointer to FL_DIRLIST, int
+    :rtype: pointer to FL_DIRLIST, int
 
-    @example: pdirlist, nfiles = dirlistfl_get_dirlist("/home", "*.*", 1)
-    @example: print pdirlist[1].name
+    :note: e.g. pdirlist, nfiles = dirlistfl_get_dirlist("/home", "*.*", 1)
+    :note: e.g. print pdirlist[1].name
 
-    @attention: API change from XForms - upstream was
+    :attention: API change from XForms - upstream was
        fl_get_dirlist(directory, pattern, n, rescan)
 
-    @status: Tested + Doc + NoDemo = OK
+    :status: Tested + Doc + NoDemo = OK
 
     """
     _fl_get_dirlist = library.cfuncproto(
@@ -99,19 +99,19 @@ def fl_set_dirlist_filter(py_DirFilter):
         value (non-zero if is to be included, 0 otherwise)
     @type py_DirFilter: __ funcname (strname, inttype) -> num. __
 
-    @returns: old dirlist filter function
-    @rtype: instance of xfdata.FL_DIRLIST_FILTER
+    :return: old dirlist filter function
+    :rtype: instance of xfdata.FL_DIRLIST_FILTER
 
-    @example: def dirfilter(fname, ftype)
-    @example: |->| return type == xfdata.FT_DIR || return type == \
-    @example: |->| xfdata.FT_FILE || return type == xfdata.FT_SOCK || \
-    @example: |->| return type == xfdata.FT_FIFO || return type == \
-    @example: |->| xfdata.FT_LINK || return type == xfdata.FT_BLK || \
-    @example: |->| return type == xfdata.FT_CHR || return type == \
-    @example: |->| xfdata.FT_OTHER
-    @example: olddirfiltfunc = fl_set_dirlist_filter(dirfilter)
+    :note: e.g. def dirfilter(fname, ftype)
+    :note: e.g. |->| return type == xfdata.FT_DIR || return type == \
+    :note: e.g. |->| xfdata.FT_FILE || return type == xfdata.FT_SOCK || \
+    :note: e.g. |->| return type == xfdata.FT_FIFO || return type == \
+    :note: e.g. |->| xfdata.FT_LINK || return type == xfdata.FT_BLK || \
+    :note: e.g. |->| return type == xfdata.FT_CHR || return type == \
+    :note: e.g. |->| xfdata.FT_OTHER
+    :note: e.g. olddirfiltfunc = fl_set_dirlist_filter(dirfilter)
 
-    @status: Tested + Doc + NoDemo = OK
+    :status: Tested + Doc + NoDemo = OK
 
     """
     #FL_DIRLIST_FILTER = cty.CFUNCTYPE(cty.c_int, xfdata.STRING, cty.c_int)
@@ -136,12 +136,12 @@ def fl_set_dirlist_sort(method):
         FL_SIZESORT, FL_RSIZESORT, FL_CASEALPHASORT, FL_RCASEALPHASORT
     @type method: int
 
-    @returns: old sort method
-    @rtype: int
+    :return: old sort method
+    :rtype: int
 
-    @example: num = fl_set_dirlist_sort(xfdata.FL_CASEALPHASORT)
+    :note: e.g. num = fl_set_dirlist_sort(xfdata.FL_CASEALPHASORT)
 
-    @status: Tested + Doc + NoDemo = OK
+    :status: Tested + Doc + NoDemo = OK
 
     """
     _fl_set_dirlist_sort = library.cfuncproto(
@@ -163,12 +163,12 @@ def fl_set_dirlist_filterdir(yesno):
         or 0 (disabled)
     @type yesno: int
 
-    @returns: old filter setting
-    @rtype: int
+    :return: old filter setting
+    :rtype: int
 
-    @example: olddirfilt = fl_set_dirlist_filterdir(1)
+    :note: e.g. olddirfilt = fl_set_dirlist_filterdir(1)
 
-    @status: Tested + Doc + NoDemo = OK
+    :status: Tested + Doc + NoDemo = OK
 
     """
     _fl_set_dirlist_filterdir = library.cfuncproto(
@@ -188,9 +188,9 @@ def fl_free_dirlist(pDirList):
     @param pDirList: instance of DirList class
     @type pDirList: pointer to xfdata.FL_DirList
 
-    @example: fl_free_dirlist(pdirlist)
+    :note: e.g. fl_free_dirlist(pdirlist)
 
-    @status: Tested + Doc + NoDemo = OK
+    :status: Tested + Doc + NoDemo = OK
 
     """
     _fl_free_dirlist = library.cfuncproto(
@@ -207,9 +207,9 @@ def fl_free_dirlist(pDirList):
 def fl_free_all_dirlist():
     """Frees all the list caches returned by fl_get_dirlist().
 
-    @example: fl_free_all_dirlist()
+    :note: e.g. fl_free_all_dirlist()
 
-    @status: Tested + Doc + NoDemo = OK
+    :status: Tested + Doc + NoDemo = OK
 
     """
     _fl_free_all_dirlist = library.cfuncproto(
@@ -226,12 +226,12 @@ def fl_is_valid_dir(dirname):
     @param dirname: name of the directory to evaluate
     @type dirname: str
 
-    @returns: 1 (if valid) or 0 (if invalid)
-    @rtype: int
+    :return: 1 (if valid) or 0 (if invalid)
+    :rtype: int
 
-    @example: fl_is_valid_dir(name) -> num.
+    :note: e.g. fl_is_valid_dir(name) -> num.
 
-    @status: Tested + Doc + NoDemo = OK
+    :status: Tested + Doc + NoDemo = OK
 
     """
     _fl_is_valid_dir = library.cfuncproto(
@@ -251,12 +251,12 @@ def fl_fmtime(fname):
     @param fname: name of the file
     @type fname: str
 
-    @returns: file modification time
-    @rtype: long_pos
+    :return: file modification time
+    :rtype: long_pos
 
-    @example: fmtime = fl_fmtime("/home/user/somefile")
+    :note: e.g. fmtime = fl_fmtime("/home/user/somefile")
 
-    @status: Tested + Doc + NoDemo = OK
+    :status: Tested + Doc + NoDemo = OK
 
     """
     _fl_fmtime = library.cfuncproto(
@@ -276,12 +276,12 @@ def fl_fix_dirname(dirname):
     @param dirname: name of the directory to evaluate
     @type dirname: str
 
-    @returns: fixed directory name
-    @rtype: str
+    :return: fixed directory name
+    :rtype: str
 
-    @example: newdirnam = fl_fix_dirname("../mydir/")
+    :note: e.g. newdirnam = fl_fix_dirname("../mydir/")
 
-    @status: Tested + Doc + NoDemo = OK
+    :status: Tested + Doc + NoDemo = OK
 
     """
     _fl_fix_dirname = library.cfuncproto(

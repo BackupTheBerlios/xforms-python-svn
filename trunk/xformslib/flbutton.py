@@ -2,7 +2,7 @@
 # -*- coding: iso8859-1 -*-
 
 """
-    flbutton.py - functions to manage buttons.
+    flbutton.py - Functions to manage button objects.
 
     Copyright (C) 2009, 2010  Luca Lazzaroni "LukenShiro"
     e-mail: <lukenshiro@ngi.it>
@@ -61,6 +61,8 @@ from xformslib import flbitmap
 def fl_add_roundbutton(buttontype, x, y, w, h, label):
     """Adds a roundbutton object.
 
+    --
+
     :Parameters:
       `buttontype` : int
         type of button object to be added. Values (from xfdata.py)
@@ -109,6 +111,8 @@ def fl_add_roundbutton(buttontype, x, y, w, h, label):
 
 def fl_add_round3dbutton(buttontype, x, y, w, h, label):
     """Adds a 3D roundbutton object.
+
+    --
 
     :Parameters:
       `buttontype` : int
@@ -159,6 +163,8 @@ def fl_add_round3dbutton(buttontype, x, y, w, h, label):
 def fl_add_lightbutton(buttontype, x, y, w, h, label):
     """Adds a lightbutton object (with an on/off light switch).
 
+    --
+
     :Parameters:
       `buttontype` : int
         type of button to be added. Values (from xfdata.py) FL_NORMAL_BUTTON,
@@ -207,6 +213,8 @@ def fl_add_lightbutton(buttontype, x, y, w, h, label):
 
 def fl_add_checkbutton(buttontype, x, y, w, h, label):
     """Adds a checkbutton object.
+
+    --
 
     :Parameters:
       `buttontype` : int
@@ -257,6 +265,8 @@ def fl_add_checkbutton(buttontype, x, y, w, h, label):
 def fl_add_button(buttontype, x, y, w, h, label):
     """Adds a button object to the current form.
 
+    --
+
     :Parameters:
       `buttontype` : int
         type of button to be added. Values (from xfdata.py) FL_NORMAL_BUTTON,
@@ -305,6 +315,8 @@ def fl_add_button(buttontype, x, y, w, h, label):
 
 def fl_add_bitmapbutton(buttontype, x, y, w, h, label):
     """Adds a bitmapbutton object.
+
+    --
 
     :Parameters:
       `buttontype` : int
@@ -355,6 +367,8 @@ def fl_add_bitmapbutton(buttontype, x, y, w, h, label):
 def fl_add_scrollbutton(buttontype, x, y, w, h, label):
     """Adds a scrollbutton object.
 
+    --
+
     :Parameters:
       `buttontype` : int
         type of button to be added. Values (from xfdata.py) FL_NORMAL_BUTTON,
@@ -403,6 +417,8 @@ def fl_add_scrollbutton(buttontype, x, y, w, h, label):
 
 def fl_add_labelbutton(buttontype, x, y, w, h, label):
     """Adds a labelbutton object.
+
+    --
 
     :Parameters:
       `buttontype` : int
@@ -453,6 +469,8 @@ def fl_add_labelbutton(buttontype, x, y, w, h, label):
 def fl_set_bitmapbutton_data(pFlObject, w, h, bits):
     """Sets the bitmap to use for a bitmap button, using some data.
 
+    --
+
     :Parameters:
       `pFlObject` : pointer to xfdata.FL_OBJECT
         button object
@@ -485,6 +503,8 @@ def fl_set_bitmapbutton_data(pFlObject, w, h, bits):
 
 def fl_add_pixmapbutton(buttontype, x, y, w, h, label):
     """Adds a pixmapbutton object.
+
+    --
 
     :Parameters:
       `buttontype` : int
@@ -535,6 +555,8 @@ def fl_add_pixmapbutton(buttontype, x, y, w, h, label):
 def fl_set_pixmapbutton_focus_outline(pFlObject, yesno):
     """Enables or disables the focus outline of the pixmap button.
 
+    --
+
     :Parameters:
       `pFlObject` : pointer to xfdata.FL_OBJECT
         button object
@@ -565,6 +587,8 @@ def fl_set_pixmapbutton_focus_data(pFlObject, bits):
     """Sets a different pixmap to show, using data, when the mouse enters
     a pixmap button, instead of an outline of the button.
 
+    --
+
     :Parameters:
       `pFlObject` : pointer to xfdata.FL_OBJECT
         button object
@@ -590,6 +614,8 @@ def fl_set_pixmapbutton_focus_file(pFlObject, fname):
     """Sets a different pixmap to show, using a file, when the mouse enters
     a pixmap button, instead of an outline of the button.
 
+    --
+
     :Parameters:
       `pFlObject` : pointer to xfdata.FL_OBJECT
         button object
@@ -614,6 +640,8 @@ def fl_set_pixmapbutton_focus_file(pFlObject, fname):
 def fl_set_pixmapbutton_focus_pixmap(pFlObject, pix, mask):
     """Sets a different pixmap to show, using pixmap id, when the mouse enters
     a pixmap button, instead of an outline of the button.
+
+    --
 
     :Parameters:
       `pFlObject` : pointer to xfdata.FL_OBJECT
@@ -644,6 +672,8 @@ def fl_set_pixmapbutton_focus_pixmap(pFlObject, pix, mask):
 def fl_get_button(pFlObject):
     """Returns the state value of the button.
 
+    --
+
     :Parameters:
       `pFlObject` : pointer to xfdata.FL_OBJECT
         button object
@@ -668,6 +698,8 @@ def fl_get_button(pFlObject):
 
 def fl_set_button(pFlObject, yesno):
     """Sets the button state (not pushed/pushed).
+
+    --
 
     :Parameters:
       `pFlObject` : pointer to xfdata.FL_OBJECT
@@ -694,6 +726,8 @@ def fl_set_button(pFlObject, yesno):
 def fl_get_button_numb(pFlObject):
     """Returns the number of the last used mouse button. fl_mouse_button()
     function will also return the mouse number.
+
+    --
 
     :Parameters:
       `pFlObject` : pointer to xfdata.FL_OBJECT
@@ -723,6 +757,8 @@ fl_set_button_shortcut = flbasic.fl_set_object_shortcut
 
 def fl_create_generic_button(btnclass, buttontype, x, y, w, h, label):
     """Creates a generic button object.
+
+    --
 
     :Parameters:
       `btnclass` : int
@@ -778,6 +814,8 @@ def fl_create_generic_button(btnclass, buttontype, x, y, w, h, label):
 def fl_add_button_class(btnclass, py_DrawButton, py_CleanupButton):
     """Associates a button class with a drawing function.
 
+    --
+
     :Parameters:
       `btnclass` : int
         value of a new button class
@@ -813,6 +851,8 @@ def fl_add_button_class(btnclass, py_DrawButton, py_CleanupButton):
 def fl_set_button_mouse_buttons(pFlObject, buttons):
     """Sets up to which mouse buttons the button object will react.
 
+    --
+
     :Parameters:
       `pFlObject` : pointer to xfdata.FL_OBJECT
         button object
@@ -844,6 +884,8 @@ def fl_get_button_mouse_buttons(pFlObject):
     react to (bitwise OR of the numbers 1 for the left mouse button, 2 for
     the middle, 4 for the right mouse button, 8 for moving the scroll wheel
     up "button" and 16 for scrolling down "button").
+
+    --
 
     :Parameters:
       `pFlObject` : pointer to xfdata.FL_OBJECT

@@ -70,9 +70,9 @@ def fl_add_input(inputtype, x, y, w, h, label):
     @param label: text label of input
     @type label: str
 
-    @returns: object created (pointer to xfdata.FL_OBJECT)
+    :return: object created (pointer to xfdata.FL_OBJECT)
 
-    @status: Tested + Doc + Demo = OK
+    :status: Tested + Doc + Demo = OK
     """
     _fl_add_input = library.cfuncproto(
         library.load_so_libforms(), "fl_add_input",
@@ -105,7 +105,7 @@ def fl_set_input(pFlObject, text):
         @type pFlObject: pointer to xfdata.FL_OBJECT
         @param text: input text (<string>)
 
-        @status: Tested + Doc + Demo = OK
+        :status: Tested + Doc + Demo = OK
     """
     _fl_set_input = library.cfuncproto(
         library.load_so_libforms(), "fl_set_input",
@@ -130,7 +130,7 @@ def fl_set_input_color(pFlObject, txtcolr, curscolr):
         @param txtcolr: color value for text <long(pos)>
         @param curscolr: color value for cursor <long(pos)>
 
-        @status: Untested + NoDoc + NoDemo = NOT OK
+        :status: Untested + NoDoc + NoDemo = NOT OK
     """
     _fl_set_input_color = library.cfuncproto(
         library.load_so_libforms(), "fl_set_input_color",
@@ -154,13 +154,13 @@ def fl_get_input_color(pFlObject):
         @param pFlObject: input object
         @type pFlObject: pointer to xfdata.FL_OBJECT
 
-        @returns: color value for text, color value for cursor
+        :return: color value for text, color value for cursor
                   <long(pos), long(pos)>
 
-        @attention: API change from XForms - upstream was
+        :attention: API change from XForms - upstream was
                     fl_get_input_color(pFlObject, textcolr, curscolr)
 
-        @status: Untested + NoDoc + NoDemo = NOT OK
+        :status: Untested + NoDoc + NoDemo = NOT OK
     """
     _fl_get_input_color = library.cfuncproto(
         library.load_so_libforms(), "fl_get_input_color",
@@ -185,7 +185,7 @@ def fl_set_input_scroll(pFlObject, yes):
         @type pFlObject: pointer to xfdata.FL_OBJECT
         @param yes: (<int>)
 
-        @status: Untested + NoDoc + NoDemo = NOT OK
+        :status: Untested + NoDoc + NoDemo = NOT OK
     """
     _fl_set_input_scroll = library.cfuncproto(
         library.load_so_libforms(), "fl_set_input_scroll",
@@ -209,7 +209,7 @@ def fl_set_input_cursorpos(pFlObject, xpos, ypos):
         @param xpos: horizontal cursor position in characters (<int>)
         @param ypos: vertical cursor position in lines (<int>)
 
-        @status: Untested + Doc + NoDemo = NOT OK
+        :status: Untested + Doc + NoDemo = NOT OK
     """
     _fl_set_input_cursorpos = library.cfuncproto(
         library.load_so_libforms(), "fl_set_input_cursorpos",
@@ -233,7 +233,7 @@ def fl_set_input_selected(pFlObject, flag):
         (selected)
     @type flag: int
 
-    @status: Untested + NoDoc + NoDemo = NOT OK
+    :status: Untested + NoDoc + NoDemo = NOT OK
     """
     _fl_set_input_selected = library.cfuncproto(
         library.load_so_libforms(), "fl_set_input_selected",
@@ -259,7 +259,7 @@ def fl_set_input_selected_range(pFlObject, begin, end):
         @param begin: starting value in characters (<int>)
         @param end: ending value in characters (<int>)
 
-        @status: Untested + Doc + NoDemo = NOT OK
+        :status: Untested + Doc + NoDemo = NOT OK
     """
     _fl_set_input_selected_range = library.cfuncproto(
         library.load_so_libforms(), "fl_set_input_selected_range",
@@ -284,13 +284,13 @@ def fl_get_input_selected_range(pFlObject):
         @param pFlObject: input object
         @type pFlObject: pointer to xfdata.FL_OBJECT
 
-        @returns: selected string, starting and ending values of selection
+        :return: selected string, starting and ending values of selection
                   in characters [string, int_num, int_num]
 
-        @attention: API change from XForms - upstream was
+        :attention: API change from XForms - upstream was
                     fl_get_input_selected_range(pFlObject, begin, end)
 
-        @status: Untested + Doc + NoDemo = NOT OK
+        :status: Untested + Doc + NoDemo = NOT OK
     """
     _fl_get_input_selected_range = library.cfuncproto(
         library.load_so_libforms(), "fl_get_input_selected_range",
@@ -321,7 +321,7 @@ def fl_set_input_maxchars(pFlObject, maxchars):
         @type pFlObject: pointer to xfdata.FL_OBJECT
         @param maxchars: maximum characters to be set (<int>)
 
-        @status: Untested + Doc + NoDemo = NOT OK
+        :status: Untested + Doc + NoDemo = NOT OK
     """
     _fl_set_input_maxchars = library.cfuncproto(
         library.load_so_libforms(), "fl_set_input_maxchars",
@@ -346,7 +346,7 @@ def fl_set_input_format(pFlObject, fmt, sep):
         @param sep: printable single character used as separator
                     <int or char>
 
-        @status: Untested + Doc + NoDemo = NOT OK
+        :status: Untested + Doc + NoDemo = NOT OK
     """
     _fl_set_input_format = library.cfuncproto(
         library.load_so_libforms(), "fl_set_input_format",
@@ -375,7 +375,7 @@ def fl_set_input_hscrollbar(pFlObject, pref):
         @param pref: horizontal scrollbar flag (<int>)
         @type pref: (from xfdata module) FL_AUTO, FL_ON, FL_OFF
 
-        @status: Untested + NoDoc + NoDemo = NOT OK
+        :status: Untested + NoDoc + NoDemo = NOT OK
     """
     _fl_set_input_hscrollbar = library.cfuncproto(
         library.load_so_libforms(), "fl_set_input_hscrollbar",
@@ -398,7 +398,7 @@ def fl_set_input_vscrollbar(pFlObject, pref):
         @param pref: vertical scrollbar flag (<int>)
         @type pref: (from xfdata module) FL_AUTO, FL_ON, FL_OFF
 
-        @status: Untested + NoDoc + NoDemo = NOT OK
+        :status: Untested + NoDoc + NoDemo = NOT OK
     """
     _fl_set_input_vscrollbar = library.cfuncproto(
         library.load_so_libforms(), "fl_set_input_vscrollbar",
@@ -420,7 +420,7 @@ def fl_set_input_topline(pFlObject, top):
         @type pFlObject: pointer to xfdata.FL_OBJECT
         @param top: ? (<int>)
 
-        @status: Untested + NoDoc + NoDemo = NOT OK
+        :status: Untested + NoDoc + NoDemo = NOT OK
     """
     _fl_set_input_topline = library.cfuncproto(
         library.load_so_libforms(), "fl_set_input_topline",
@@ -440,7 +440,7 @@ def fl_set_input_scrollbarsize(pFlObject, hh, vw):
         @param pFlObject: input object
         @type pFlObject: pointer to xfdata.FL_OBJECT
 
-        @status: Untested + NoDoc + NoDemo = NOT OK
+        :status: Untested + NoDoc + NoDemo = NOT OK
     """
 
     _fl_set_input_scrollbarsize = library.cfuncproto(
@@ -461,10 +461,10 @@ def fl_get_input_scrollbarsize(pFlObject):
         fl_get_input_scrollbarsize(pFlObject) -> hh, vw
 
 
-        @attention: API change from XForms - upstream was
+        :attention: API change from XForms - upstream was
                     fl_get_input_scrollbarsize(pFlObject, hh, vw)
 
-        @status: Untested + NoDoc + NoDemo = NOT OK
+        :status: Untested + NoDoc + NoDemo = NOT OK
     """
 
     _fl_get_input_scrollbarsize = library.cfuncproto(
@@ -490,7 +490,7 @@ def fl_set_input_xoffset(pFlObject, xoff):
         @param pFlObject: input object
         @type pFlObject: pointer to xfdata.FL_OBJECT
 
-        @status: Untested + NoDoc + NoDemo = NOT OK
+        :status: Untested + NoDoc + NoDemo = NOT OK
     """
 
     _fl_set_input_xoffset = library.cfuncproto(
@@ -512,7 +512,7 @@ def fl_get_input_xoffset(pFlObject):
         @param pFlObject: input object
         @type pFlObject: pointer to xfdata.FL_OBJECT
 
-        @status: Untested + NoDoc + NoDemo = NOT OK
+        :status: Untested + NoDoc + NoDemo = NOT OK
     """
 
     _fl_get_input_xoffset = library.cfuncproto(
@@ -534,7 +534,7 @@ def fl_set_input_fieldchar(pFlObject, fldchar):
         @param pFlObject: input object
         @type pFlObject: pointer to xfdata.FL_OBJECT
 
-        @status: Untested + NoDoc + NoDemo = NOT OK
+        :status: Untested + NoDoc + NoDemo = NOT OK
     """
 
     _fl_set_input_fieldchar = library.cfuncproto(
@@ -557,7 +557,7 @@ def fl_get_input_topline(pFlObject):
         @param pFlObject: input object
         @type pFlObject: pointer to xfdata.FL_OBJECT
 
-        @status: Untested + NoDoc + NoDemo = NOT OK
+        :status: Untested + NoDoc + NoDemo = NOT OK
     """
 
     _fl_get_input_topline = library.cfuncproto(
@@ -579,7 +579,7 @@ def fl_get_input_screenlines(pFlObject):
         @param pFlObject: input object
         @type pFlObject: pointer to xfdata.FL_OBJECT
 
-        @status: Untested + NoDoc + NoDemo = NOT OK
+        :status: Untested + NoDoc + NoDemo = NOT OK
     """
 
     _fl_get_input_screenlines = library.cfuncproto(
@@ -601,10 +601,10 @@ def fl_get_input_cursorpos(pFlObject):
         @param pFlObject: input object
         @type pFlObject: pointer to xfdata.FL_OBJECT
 
-        @attention: API change from XForms - upstream was
+        :attention: API change from XForms - upstream was
                     fl_get_input_cursorpos(pFlObject, x, y)
 
-        @status: Tested + NoDoc + Demo = OK
+        :status: Tested + NoDoc + Demo = OK
     """
     _fl_get_input_cursorpos = library.cfuncproto(
         library.load_so_libforms(), "fl_get_input_cursorpos",
@@ -627,7 +627,7 @@ def fl_set_input_cursor_visible(pFlObject, visible):
         @param pFlObject: input object
         @type pFlObject: pointer to xfdata.FL_OBJECT
 
-        @status: Untested + NoDoc + NoDemo = NOT OK
+        :status: Untested + NoDoc + NoDemo = NOT OK
     """
     _fl_set_input_cursor_visible = library.cfuncproto(
         library.load_so_libforms(), "fl_set_input_cursor_visible",
@@ -647,7 +647,7 @@ def fl_get_input_numberoflines(pFlObject):
         @param pFlObject: input object
         @type pFlObject: pointer to xfdata.FL_OBJECT
 
-        @status: Untested + NoDoc + NoDemo = NOT OK
+        :status: Untested + NoDoc + NoDemo = NOT OK
     """
     _fl_get_input_numberoflines = library.cfuncproto(
         library.load_so_libforms(), "fl_get_input_numberoflines",
@@ -667,10 +667,10 @@ def fl_get_input_format(pFlObject):
         @param pFlObject: input object
         @type pFlObject: pointer to xfdata.FL_OBJECT
 
-        @attention: API change from XForms - upstream was
+        :attention: API change from XForms - upstream was
                     fl_get_input_format(pFlObject, fmt, sep)
 
-        @status: Untested + NoDoc + NoDemo = NOT OK
+        :status: Untested + NoDoc + NoDemo = NOT OK
     """
     _fl_get_input_format = library.cfuncproto(
         library.load_so_libforms(), "fl_get_input_format",
@@ -693,7 +693,7 @@ def fl_get_input(pFlObject):
         @param pFlObject: input object
         @type pFlObject: pointer to xfdata.FL_OBJECT
 
-        @status: Tested + NoDoc + Demo = OK
+        :status: Tested + NoDoc + Demo = OK
     """
     _fl_get_input = library.cfuncproto(
         library.load_so_libforms(), "fl_get_input",
@@ -713,7 +713,7 @@ def fl_set_input_filter(pFlObject, py_InputValidator):
         @param pFlObject: input object
         @type pFlObject: pointer to xfdata.FL_OBJECT
 
-        @status: Untested + NoDoc + NoDemo = NOT OK
+        :status: Untested + NoDoc + NoDemo = NOT OK
     """
     #FL_INPUTVALIDATOR = cty.CFUNCTYPE(cty.c_int, cty.POINTER(xfdata.FL_OBJECT),
     #                                  xfdata.STRING, xfdata.STRING, cty.c_int)
@@ -742,9 +742,9 @@ def fl_validate_input(pFlObject):
         @param pFlObject: input object
         @type pFlObject: pointer to xfdata.FL_OBJECT
 
-        @returns: (from xfdata module) FL_VALID or FL_INVALID (<int>)
+        :return: (from xfdata module) FL_VALID or FL_INVALID (<int>)
 
-        @status: Untested + Doc + NoDemo = NOT OK
+        :status: Untested + Doc + NoDemo = NOT OK
     """
     _fl_validate_input = library.cfuncproto(
             library.load_so_libforms(), "fl_validate_input",
@@ -769,7 +769,7 @@ def fl_set_input_editkeymap(pEditKeymap):
     @param pEditKeymap: EditKeyMap class
     @type pEditKeymap: pointer to xfdata.FL_EditKeymap
 
-    @status: Untested + NoDoc + NoDemo = NOT OK
+    :status: Untested + NoDoc + NoDemo = NOT OK
     """
     _fl_set_input_editkeymap = library.cfuncproto(
         library.load_so_libforms(), "fl_set_input_editkeymap",

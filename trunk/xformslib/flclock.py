@@ -2,7 +2,7 @@
 # -*- coding: iso8859-1 -*-
 
 """
-    flclock.py - functions to manage clocks.
+    flclock.py - Functions to manage clock objects.
 
     Copyright (C) 2009, 2010  Luca Lazzaroni "LukenShiro" 
     e-mail: <lukenshiro@ngi.it>
@@ -46,6 +46,8 @@ from xformslib import xfdata
 
 def fl_add_clock(clocktype, x, y, w, h, label):
     """Adds a clock object.
+
+    --
 
     :Parameters:
       `clocktype` : int
@@ -92,14 +94,16 @@ def fl_add_clock(clocktype, x, y, w, h, label):
 
 
 def fl_get_clock(pFlObject):
-    """Returns time values from a clock object, with hours in 0-23, minutes in
-    0-59 and seconds in 0-59.
+    """Returns time values from a clock object, with hours in 0-23, minutes
+    in 0-59 and seconds in 0-59.
+
+    --
 
     :Parameters:
       `pFlObject` : pointer to xfdata.FL_OBJECT
         clock object
 
-    :return: hours, minutes and seconds
+    :return: hours, minutes, seconds
     :rtype: int, int, int
 
     :note: e.g. hou, mnu, sec = fl_get_clock(clkobj)
@@ -127,6 +131,8 @@ def fl_get_clock(pFlObject):
 
 def fl_set_clock_adjustment(pFlObject, offset):
     """Adjusts the clock to display a time other than local time.
+
+    --
 
     :Parameters:
       `pFlObject` : pointer to xfdata.FL_OBJECT
@@ -156,8 +162,10 @@ def fl_set_clock_adjustment(pFlObject, offset):
 
 
 def fl_set_clock_ampm(pFlObject, yesno):
-    """Switches the display to 12hr system (am-pm). By default, the digital
-    clock uses 24hr system.
+    """Switches the display to 12hr system (am-pm). By default, the
+    digital clock uses 24hr system.
+
+    --
 
     :Parameters:
       `pFlObject` : pointer to xfdata.FL_OBJECT

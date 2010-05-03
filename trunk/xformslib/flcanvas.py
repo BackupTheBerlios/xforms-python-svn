@@ -2,7 +2,7 @@
 # -*- coding: iso8859-1 -*-
 
 """
-    flcanvas.py - functions to manage canvases.
+    flcanvas.py - Functions to manage canvas objects.
 
     Copyright (C) 2009, 2010  Luca Lazzaroni "LukenShiro"
     e-mail: <lukenshiro@ngi.it>
@@ -46,6 +46,8 @@ from xformslib import xfdata
 
 def fl_create_generic_canvas(canvasclass, canvastype, x, y, w, h, label):
     """Creates a generic canvas object.
+
+    --
 
     :Parameters:
       `canvasclass` : int
@@ -97,6 +99,8 @@ def fl_create_generic_canvas(canvasclass, canvastype, x, y, w, h, label):
 
 def fl_add_canvas(canvastype, x, y, w, h, label):
     """Adds a canvas object.
+
+    --
 
     :Parameters:
       `canvastype` : int
@@ -153,6 +157,8 @@ def fl_set_canvas_colormap(pFlObject, colormap):
     single colormap is used for multiple canvases as each canvas will attempt
     to free the same colormap, resulting in an X error.
 
+    --
+
     :Parameters:
       `pFlObject` : pointer to xfdata.FL_OBJECT
         canvas object
@@ -181,6 +187,8 @@ def fl_set_canvas_visual(pFlObject, pVisual):
      form is shown). Also, typically if you change the canvas visual, you
      probably should also change the canvas depth to match the visual.
 
+    --
+
     :Parameters:
       `pFlObject` : pointer to xfdata.FL_OBJECT
         canvas object
@@ -206,6 +214,8 @@ def fl_set_canvas_depth(pFlObject, depth):
     """Sets the depth of canvas object. Changing depth does not generally make
     sense once the canvas window is created (which happens when the parent
     form is shown).
+
+    --
 
     :Parameters:
       `pFlObject` : pointer to xfdata.FL_OBJECT
@@ -234,6 +244,8 @@ def fl_set_canvas_attributes(pFlObject, mask, pXSetWindowAttributes):
      colormap etc.). By default, upon canvas creation, all its window related
      attributes are inherited from its parent (i.e. the window of the form the
      canvas belongs to). You should not use this function to modify events.
+
+    --
 
     :Parameters:
       `pFlObject` : pointer to xfdata.FL_OBJECT
@@ -264,6 +276,8 @@ def fl_set_canvas_attributes(pFlObject, mask, pXSetWindowAttributes):
 # TODO: take note in xfdata.py which X events belong here.
 def fl_add_canvas_handler(pFlObject, xev, py_HandleCanvas, udata):
     """Sets a callback to be invoked for a specific X event.
+
+    --
 
     :Parameters:
       `pFlObject` : pointer to xfdata.FL_OBJECT
@@ -304,6 +318,8 @@ def fl_add_canvas_handler(pFlObject, xev, py_HandleCanvas, udata):
 def fl_get_canvas_id(pFlObject):
     """Returns the window id of the canvas object.
 
+    --
+
     :Parameters:
       `pFlObject` : pointer to xfdata.FL_OBJECT
         canvas object
@@ -328,6 +344,8 @@ def fl_get_canvas_id(pFlObject):
 
 def fl_get_canvas_colormap(pFlObject):
     """Obtains the colormap of a canvas object.
+
+    --
 
     :Parameters:
       `pFlObject` : pointer to xfdata.FL_OBJECT
@@ -355,6 +373,8 @@ def fl_get_canvas_colormap(pFlObject):
 def fl_get_canvas_depth(pFlObject):
     """Obtains the depth of a canvas object (e.g. 8, 16, 24?, 32 ..).
 
+    --
+
     :Parameters:
       `pFlObject` : pointer to xfdata.FL_OBJECT
         canvas object
@@ -380,6 +400,8 @@ def fl_get_canvas_depth(pFlObject):
 
 def fl_remove_canvas_handler(pFlObject, xev, py_HandleCanvas):
     """Removes a particular handler for a specified X event.
+
+    --
 
     :Parameters:
       `pFlObject` : pointer to xfdata.FL_OBJECT
@@ -417,6 +439,8 @@ def fl_remove_canvas_handler(pFlObject, xev, py_HandleCanvas):
 def fl_hide_canvas(pFlObject):
     """Hides a canvas object.
 
+    --
+
     :Parameters:
       `pFlObject` : pointer to xfdata.FL_OBJECT
         canvas object
@@ -439,6 +463,8 @@ def fl_hide_canvas(pFlObject):
 def fl_share_canvas_colormap(pFlObject, colormap):
     """Sets the color property of canvas. It also sets a intenal flag so the
     colormap isn't freed when the canvas goes away.
+
+    --
 
     :Parameters:
       `pFlObject` : pointer to xfdata.FL_OBJECT
@@ -466,6 +492,8 @@ def fl_clear_canvas(pFlObject):
     """Clears the canvas to the background color. If no background is
     defined uses black.
 
+    --
+
     :Parameters:
       `pFlObject` : pointer to xfdata.FL_OBJECT
         canvas object
@@ -489,6 +517,8 @@ def fl_clear_canvas(pFlObject):
 def fl_modify_canvas_prop(pFlObject, py_initModifyCanvasProp,
      py_activateModifyCanvasProp, py_cleanupModifyCanvasProp):
     """Modifies init, activate and cleanup handler property of a canvas object.
+
+    --
 
     :Parameters:
       `pFlObject` : pointer to xfdata.FL_OBJECT
@@ -535,11 +565,14 @@ def fl_canvas_yield_to_shortcut(pFlObject, yesno):
     objects with shortcuts appearing on the same form as the canvas will
     "steal" keyboard inputs if they match the shortcuts.
 
+    --
+
     :Parameters:
       `pFlObject` : pointer to xfdata.FL_OBJECT
         canvas object
       `yesno` : int
-        flag to enable (1) or disable (0) keyboard inputs stealing by canvas
+        flag to enable/disable keyboard inputs stealing by canvas. Values 0
+        (to disable) or 1 (to enable)
 
     :note: e.g. *todo*
 

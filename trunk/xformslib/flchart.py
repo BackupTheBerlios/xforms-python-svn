@@ -2,7 +2,7 @@
 # -*- coding: iso8859-1 -*-
 
 """
-    flchart.py - functions to manage charts.
+    flchart.py - Functions to manage chart objects.
 
     Copyright (C) 2009, 2010  Luca Lazzaroni "LukenShiro"
     e-mail:  <lukenshiro@ngi.it>
@@ -49,6 +49,8 @@ from xformslib import xfdata
 
 def fl_add_chart(charttype, x, y, w, h, label):
     """Adds a chart object.
+
+    --
 
     :Parameters:
       `charttype` : int
@@ -98,6 +100,8 @@ def fl_add_chart(charttype, x, y, w, h, label):
 def fl_clear_chart(pFlObject):
     """Clears the contents of a chart.
 
+    --
+
     :Parameters:
       `pFlObject` : pointer to xfdata.FL_OBJECT
         chart object
@@ -119,6 +123,8 @@ def fl_clear_chart(pFlObject):
 
 def fl_add_chart_value(pFlObject, val, label, colr):
     """Adds an item to the chart object.
+
+    --
 
     :Parameters:
       `pFlObject` : pointer to xfdata.FL_OBJECT
@@ -152,6 +158,8 @@ def fl_add_chart_value(pFlObject, val, label, colr):
 
 def fl_insert_chart_value(pFlObject, indx, val, label, colr):
     """Inserts a new value at a particular place in a chart object.
+
+    --
 
     :Parameters:
       `pFlObject` : pointer to xfdata.FL_OBJECT
@@ -191,6 +199,8 @@ def fl_insert_chart_value(pFlObject, indx, val, label, colr):
 
 def fl_replace_chart_value(pFlObject, indx, val, label, colr):
     """Replaces value of an item in the chart object.
+
+    --
 
     :Parameters:
       `pFlObject` : pointer to xfdata.FL_OBJECT
@@ -232,6 +242,8 @@ def fl_set_chart_bounds(pFlObject, minbound, maxbound):
     bar-charts and line-charts are automatically scaled in the vertical
     direction such that all values can be displayed.
 
+    --
+
     :Parameters:
       `pFlObject` : pointer to xfdata.FL_OBJECT
         chart object
@@ -260,6 +272,8 @@ def fl_set_chart_bounds(pFlObject, minbound, maxbound):
 
 def fl_get_chart_bounds(pFlObject):
     """Returns the boundaries/limits set for values of a chart object.
+
+    --
 
     :Parameters:
       `pFlObject` : pointer to xfdata.FL_OBJECT
@@ -293,7 +307,9 @@ def fl_get_chart_bounds(pFlObject):
 
 def fl_set_chart_maxnumb(pFlObject, maxnum):
     """Sets the maximum number of values displayed in the chart. Defaults
-    is xfdata.FL_CHART_MAX; maximum set cannot be exceeded it.
+    is xfdata.FL_CHART_MAX; maximum set cannot be more than that.
+
+    --
 
     :Parameters:
       `pFlObject` : pointer to xfdata.FL_OBJECT
@@ -323,6 +339,8 @@ def fl_set_chart_autosize(pFlObject, autosize):
     number of items fits in the box. Normally width of the bars and distance
     between the points in a line-chart are normally scaled.
 
+    --
+
     :Parameters:
       `pFlObject` : pointer to xfdata.FL_OBJECT
         chart object
@@ -348,6 +366,8 @@ def fl_set_chart_autosize(pFlObject, autosize):
 def fl_set_chart_lstyle(pFlObject, style):
     """Changes the font style of a chart's label. By default the label is
     drawn in a tiny font.
+
+    --
 
     :Parameters:
       `pFlObject` : pointer to xfdata.FL_OBJECT
@@ -382,6 +402,8 @@ def fl_set_chart_lsize(pFlObject, size):
     """Changes the font size of chart's label. By default, the label is
     drawn in a tiny font.
 
+    --
+
     :Parameters:
       `pFlObject` : pointer to xfdata.FL_OBJECT
         chart object
@@ -411,6 +433,8 @@ def fl_set_chart_lcolor(pFlObject, colr):
     """Changes the color of chart's label. By default, the label is
     drawn in black.
 
+    --
+
     :Parameters:
       `pFlObject` : pointer to xfdata.FL_OBJECT
         chart object
@@ -436,6 +460,8 @@ def fl_set_chart_lcolor(pFlObject, colr):
 
 def fl_set_chart_baseline(pFlObject, yesno):
     """Turn on or off the chart's baseline.
+
+    --
 
     :Parameters:
       `pFlObject` : pointer to xfdata.FL_OBJECT

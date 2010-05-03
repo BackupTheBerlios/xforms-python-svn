@@ -62,7 +62,8 @@ def fl_add_select(selecttype, x, y, w, h, label):
         @param h: height in coord units
         @param label: text label of select
 
-        @status: Tested + NoDoc + Demo = OK
+        :status: Tested + NoDoc + Demo = OK
+
     """
     _fl_add_select = library.cfuncproto(
         library.load_so_libforms(), "fl_add_select",
@@ -90,14 +91,13 @@ def fl_clear_select(pFlObject):
 
         @param pFlObject: pointer to select object
 
-        @status: Untested + NoDoc + NoDemo = NOT OK
-    """
+        :status: Untested + NoDoc + NoDemo = NOT OK
 
+    """
     _fl_clear_select = library.cfuncproto(
-            library.load_so_libforms(), "fl_clear_select",
-            cty.c_int, [cty.POINTER(xfdata.FL_OBJECT)],
-            """int fl_clear_select(FL_OBJECT * p1)
-""")
+        library.load_so_libforms(), "fl_clear_select",
+        cty.c_int, [cty.POINTER(xfdata.FL_OBJECT)],
+        """int fl_clear_select(FL_OBJECT * p1)""")
     library.check_if_initialized()
     library.check_if_FL_OBJECT_ptr(pFlObject)
     library.keep_elem_refs(pFlObject)
@@ -108,16 +108,15 @@ def fl_add_select_items(pFlObject, itemstr):
     """
         fl_add_select_items(pFlObject, itemstr) -> pPopupEntry
 
-        @status: HalfTested + NoDoc + Demo = NOT OK (sequence param.)
-    """
+        :status: HalfTested + NoDoc + Demo = NOT OK (sequence param.)
 
+    """
     _fl_add_select_items = library.cfuncproto(
-            library.load_so_libforms(), "fl_add_select_items",
-            cty.POINTER(xfdata.FL_POPUP_ENTRY), [cty.POINTER(xfdata.FL_OBJECT),
-            xfdata.STRING],
-            """FL_POPUP_ENTRY * fl_add_select_items(FL_OBJECT * p1,
-               const char * p2)
-""")
+        library.load_so_libforms(), "fl_add_select_items",
+        cty.POINTER(xfdata.FL_POPUP_ENTRY), [cty.POINTER(xfdata.FL_OBJECT),
+        xfdata.STRING],
+        """FL_POPUP_ENTRY * fl_add_select_items(FL_OBJECT * p1,
+           const char * p2)""")
     library.check_if_initialized()
     library.check_if_FL_OBJECT_ptr(pFlObject)
     sitemstr = library.convert_to_string(itemstr)
@@ -131,18 +130,17 @@ def fl_insert_select_items(pFlObject, pPopupEntry, itemstr):
         fl_insert_select_items(pFlObject, pPopupEntry, itemstr) -> pPopupEntry
 
         @param itemstr: text of the item (among special sequences only %S is
-           supported
+           supported)
 
-        @status: HalfTested + NoDoc + Demo = NOT OK (special sequence)
+        :status: HalfTested + NoDoc + Demo = NOT OK (special sequence)
+
     """
-
     _fl_insert_select_items = library.cfuncproto(
-            library.load_so_libforms(), "fl_insert_select_items",
-            cty.POINTER(xfdata.FL_POPUP_ENTRY), [cty.POINTER(xfdata.FL_OBJECT),
-            cty.POINTER(xfdata.FL_POPUP_ENTRY), xfdata.STRING],
-            """FL_POPUP_ENTRY * fl_insert_select_items(FL_OBJECT * p1,
-               FL_POPUP_ENTRY * p2, const char * p3)
-""")
+        library.load_so_libforms(), "fl_insert_select_items",
+        cty.POINTER(xfdata.FL_POPUP_ENTRY), [cty.POINTER(xfdata.FL_OBJECT),
+        cty.POINTER(xfdata.FL_POPUP_ENTRY), xfdata.STRING],
+        """FL_POPUP_ENTRY * fl_insert_select_items(FL_OBJECT * p1,
+           FL_POPUP_ENTRY * p2, const char * p3)""")
     library.check_if_initialized()
     library.check_if_FL_OBJECT_ptr(pFlObject)
     sitemstr = library.convert_to_string(itemstr)
@@ -155,16 +153,14 @@ def fl_replace_select_item(pFlObject, pPopupEntry, itemstr):
     """
         fl_replace_select_item(pFlObject, pPopupEntry, itemstr) -> pPopupEntry
 
-        @status: Untested + NoDoc + NoDemo = NOT OK
+        :status: Untested + NoDoc + NoDemo = NOT OK
     """
-
     _fl_replace_select_item = library.cfuncproto(
-            library.load_so_libforms(), "fl_replace_select_item",
-            cty.POINTER(xfdata.FL_POPUP_ENTRY), [cty.POINTER(xfdata.FL_OBJECT),
-            cty.POINTER(xfdata.FL_POPUP_ENTRY), xfdata.STRING],
-            """FL_POPUP_ENTRY * fl_replace_select_item(FL_OBJECT * p1,
-               FL_POPUP_ENTRY * p2, const char * p3)
-""")
+        library.load_so_libforms(), "fl_replace_select_item",
+        cty.POINTER(xfdata.FL_POPUP_ENTRY), [cty.POINTER(xfdata.FL_OBJECT),
+        cty.POINTER(xfdata.FL_POPUP_ENTRY), xfdata.STRING],
+        """FL_POPUP_ENTRY * fl_replace_select_item(FL_OBJECT * p1,
+            FL_POPUP_ENTRY * p2, const char * p3)""")
     library.check_if_initialized()
     library.check_if_FL_OBJECT_ptr(pFlObject)
     sitemstr = library.convert_to_string(itemstr)
@@ -177,9 +173,8 @@ def fl_delete_select_item(pFlObject, pPopupEntry):
     """
         fl_delete_select_item(pFlObject, pPopupEntry) -> num.
 
-        @status: Untested + NoDoc + NoDemo = NOT OK
+        :status: Untested + NoDoc + NoDemo = NOT OK
     """
-
     _fl_delete_select_item = library.cfuncproto(
             library.load_so_libforms(), "fl_delete_select_item",
             cty.c_int, [cty.POINTER(xfdata.FL_OBJECT), cty.POINTER(xfdata.FL_POPUP_ENTRY)],
@@ -201,7 +196,7 @@ def fl_set_select_items(pFlObject, pPopupItem):
         @param pFlObject: pointer to select object
         @param pPopupItem: pointer to FL_POPUP_ITEM class instance (array of it)
 
-        @status: Untested + NoDoc + NoDemo = NOT OK
+        :status: Untested + NoDoc + NoDemo = NOT OK
     """
     _fl_set_select_items = library.cfuncproto(
         library.load_so_libforms(), "fl_set_select_items",
@@ -219,7 +214,7 @@ def fl_get_select_popup(pFlObject):
     """
         fl_get_select_popup(pFlObject) -> pPopup
 
-        @status: Tested + NoDoc + Demo = OK
+        :status: Tested + NoDoc + Demo = OK
     """
     _fl_get_select_popup = library.cfuncproto(
         library.load_so_libforms(), "fl_get_select_popup",
@@ -236,7 +231,7 @@ def fl_set_select_popup(pFlObject, pPopup):
     """
         fl_set_select_popup(pFlObject, pPopup) -> num.
 
-        @status: Untested + NoDoc + NoDemo = NOT OK
+        :status: Untested + NoDoc + NoDemo = NOT OK
     """
     _fl_set_select_popup = library.cfuncproto(
         library.load_so_libforms(), "fl_set_select_popup",
@@ -253,7 +248,7 @@ def fl_get_select_item(pFlObject):
     """
         fl_get_select_item(pFlObject) -> pPopupReturn
 
-        @status: Tested + NoDoc + Demo = OK
+        :status: Tested + NoDoc + Demo = OK
     """
     _fl_get_select_item = library.cfuncproto(
         library.load_so_libforms(), "fl_get_select_item",
@@ -275,7 +270,7 @@ def fl_set_select_item(pFlObject, pPopupEntry):
         @param pFlObject: pointer to select object
         @param pPopupEntry: pointer to FL_POPUP_ENTRY class instance
 
-        @status: HalfTested + NoDoc + Demo = NOT OK (FL_POPUP_ENTRY not prepared)
+        :status: HalfTested + NoDoc + Demo = NOT OK (FL_POPUP_ENTRY not prepared)
     """
     _fl_set_select_item = library.cfuncproto(
         library.load_so_libforms(), "fl_set_select_item",
@@ -294,7 +289,7 @@ def fl_get_select_item_by_value(pFlObject, value):
     """
         fl_get_select_item_by_value(pFlObject, value) -> pPopupEntry
 
-        @status: Untested + NoDoc + NoDemo = NOT OK
+        :status: Untested + NoDoc + NoDemo = NOT OK
     """
     _fl_get_select_item_by_value = library.cfuncproto(
         library.load_so_libforms(), "fl_get_select_item_by_value",
@@ -314,7 +309,7 @@ def fl_get_select_item_by_label(pFlObject, label):
     """
         fl_get_select_item_by_label(pFlObject, label) -> pPopupEntry
 
-        @status: Tested + NoDoc + Demo = OK
+        :status: Tested + NoDoc + Demo = OK
     """
     _fl_get_select_item_by_label = library.cfuncproto(
         library.load_so_libforms(), "fl_get_select_item_by_label",
@@ -334,7 +329,7 @@ def fl_get_select_item_by_text(pFlObject, txtstr):
     """
         fl_get_select_item_by_text(pFlObject, txtstr) -> pPopupEntry
 
-        @status: Untested + NoDoc + NoDemo = NOT OK
+        :status: Untested + NoDoc + NoDemo = NOT OK
     """
     _fl_get_select_item_by_text = library.cfuncproto(
         library.load_so_libforms(), "fl_get_select_item_by_text",
@@ -354,7 +349,7 @@ def fl_get_select_text_color(pFlObject):
     """
         fl_get_select_text_color(pFlObject) -> color
 
-        @status: Untested + NoDoc + NoDemo = NOT OK
+        :status: Untested + NoDoc + NoDemo = NOT OK
     """
     _fl_get_select_text_color = library.cfuncproto(
         library.load_so_libforms(), "fl_get_select_text_color",
@@ -371,7 +366,7 @@ def fl_set_select_text_color(pFlObject, colr):
     """
         fl_set_select_text_color(pFlObject, colr) -> color
 
-        @status: Untested + NoDoc + NoDemo = NOT OK
+        :status: Untested + NoDoc + NoDemo = NOT OK
     """
     _fl_set_select_text_color = library.cfuncproto(
         library.load_so_libforms(), "fl_set_select_text_color",
@@ -390,10 +385,10 @@ def fl_get_select_text_font(pFlObject):
     """
         fl_get_select_text_font(pFlObject) -> num, num1, num2
 
-        @attention: API change from XForms - upstream was
+        :attention: API change from XForms - upstream was
            fl_get_select_text_font(pFlObject, p2, p3)
 
-        @status: Untested + NoDoc + NoDemo = NOT OK
+        :status: Untested + NoDoc + NoDemo = NOT OK
     """
 
     _fl_get_select_text_font = library.cfuncproto(
@@ -415,7 +410,7 @@ def fl_set_select_text_font(pFlObject, p2, p3):
     """
         fl_set_select_text_font(pFlObject, p2, p3) -> font num.
 
-        @status: Untested + NoDoc + NoDemo = NOT OK
+        :status: Untested + NoDoc + NoDemo = NOT OK
     """
 
     _fl_set_select_text_font = library.cfuncproto(
@@ -436,7 +431,7 @@ def fl_get_select_text_align(pFlObject):
     """
         fl_get_select_text_align(pFlObject) -> num.
 
-        @status: Untested + NoDoc + NoDemo = NOT OK
+        :status: Untested + NoDoc + NoDemo = NOT OK
     """
 
     _fl_get_select_text_align = library.cfuncproto(
@@ -455,7 +450,7 @@ def fl_set_select_text_align(pFlObject, p2):
     """
         fl_set_select_text_align(pFlObject, p2) -> num.
 
-        @status: Untested + NoDoc + NoDemo = NOT OK
+        :status: Untested + NoDoc + NoDemo = NOT OK
     """
 
     _fl_set_select_text_align = library.cfuncproto(
@@ -475,7 +470,7 @@ def fl_set_select_policy(pFlObject, num):
     """
         fl_set_select_policy(pFlObject, num) -> num.
 
-        @status: Tested + NoDoc + Demo = OK
+        :status: Tested + NoDoc + Demo = OK
     """
 
     _fl_set_select_policy = library.cfuncproto(

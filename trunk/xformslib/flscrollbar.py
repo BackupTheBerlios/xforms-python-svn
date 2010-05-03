@@ -65,7 +65,7 @@ def fl_add_scrollbar(scrolltype, x, y, w, h, label):
     @param label: label text of scrollbar
     @type label: string
 
-    @status: Tested + NoDoc + Demo = OK
+    :status: Tested + NoDoc + Demo = OK
     """
     _fl_add_scrollbar = library.cfuncproto(
         library.load_so_libforms(), "fl_add_scrollbar",
@@ -95,7 +95,7 @@ def fl_get_scrollbar_value(pFlObject):
 
         @param pFlObject: pointer to object
 
-        @status: Untested + NoDoc + NoDemo = NOT OK
+        :status: Untested + NoDoc + NoDemo = NOT OK
     """
     _fl_get_scrollbar_value = library.cfuncproto(
         library.load_so_libforms(), "fl_get_scrollbar_value",
@@ -117,7 +117,7 @@ def fl_set_scrollbar_value(pFlObject, val):
         @param pFlObject: pointer to object
         @param val: value of the scrollbar to be set
 
-        @status: Tested + NoDoc + Demo = OK
+        :status: Tested + NoDoc + Demo = OK
     """
     _fl_set_scrollbar_value = library.cfuncproto(
         library.load_so_libforms(), "fl_set_scrollbar_value",
@@ -134,7 +134,7 @@ def fl_set_scrollbar_size(pFlObject, val):
     """
         fl_set_scrollbar_size(pFlObject, val)
 
-        @status: Tested + NoDoc + Demo = OK
+        :status: Tested + NoDoc + Demo = OK
     """
     _fl_set_scrollbar_size = library.cfuncproto(
         library.load_so_libforms(), "fl_set_scrollbar_size",
@@ -159,7 +159,7 @@ def fl_set_scrollbar_increment(pFlObject, leftbtnval, midlbtnval):
         @param midlbtnval: value to increment if the middle mouse button is
            pressed
 
-        @status: Untested + NoDoc + NoDemo = NOT OK
+        :status: Untested + NoDoc + NoDemo = NOT OK
     """
     _fl_set_scrollbar_increment = library.cfuncproto(
         library.load_so_libforms(), "fl_set_scrollbar_increment",
@@ -184,11 +184,11 @@ def fl_get_scrollbar_increment(pFlObject):
 
         @param pFlObject: pointer to object
 
-        @attention: API change from XForms - upstream was
+        :attention: API change from XForms - upstream was
                     fl_get_scrollbar_increment(pFlObject, leftbtnval,
                     valmidlbtnval)
 
-        @status: Untested + NoDoc + NoDemo = NOT OK
+        :status: Untested + NoDoc + NoDemo = NOT OK
     """
     _fl_get_scrollbar_increment = library.cfuncproto(
         library.load_so_libforms(), "fl_get_scrollbar_increment",
@@ -215,7 +215,7 @@ def fl_set_scrollbar_bounds(pFlObject, minbound, maxbound):
         @param minbound: minimum bound of scrollbar
         @param maxbound: maximum bound of scrollbar
 
-        @status: Untested + NoDoc + NoDemo = NOT OK
+        :status: Untested + NoDoc + NoDemo = NOT OK
     """
     _fl_set_scrollbar_bounds = library.cfuncproto(
         library.load_so_libforms(), "fl_set_scrollbar_bounds",
@@ -237,7 +237,7 @@ def fl_get_scrollbar_bounds(pFlObject):
 
         @param pFlObject: pointer to scrollbar object
 
-        @attention: API change from XForms - upstream was
+        :attention: API change from XForms - upstream was
            fl_get_scrollbar_bounds(pFlObject, b1, b2)
     """
     _fl_get_scrollbar_bounds = library.cfuncproto(
@@ -262,7 +262,7 @@ def fl_set_scrollbar_step(pFlObject, step):
     """
         fl_set_scrollbar_step(pFlObject, step)
 
-        @status: Untested + NoDoc + NoDemo = NOT OK
+        :status: Untested + NoDoc + NoDemo = NOT OK
     """
     _fl_set_scrollbar_step = library.cfuncproto(
         library.load_so_libforms(), "fl_set_scrollbar_step",

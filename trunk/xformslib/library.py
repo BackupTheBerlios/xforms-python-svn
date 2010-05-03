@@ -39,7 +39,6 @@ from xformslib import xfdata
 
 
 
-
 class XFormsLoadError(OSError):
     """ Error in loading shared object library """
     pass
@@ -521,7 +520,7 @@ def make_pPopupItem_from_list(listofpopupitems):
 
             keep_cfunc_refs(listofpopupitems[indx][1], c_picallback)
             keep_elem_refs(popupitem[indx], spitext, spishortcut,
-                       ipitype, ipistate)
+                           ipitype, ipistate)
             curitem = indx
 
         curitem += 1

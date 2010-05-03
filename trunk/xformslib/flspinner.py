@@ -62,7 +62,7 @@ def fl_add_spinner(spinnertype, x, y, w, h, label):
         @param h: height in coord units
         @param label: text label of spinner
 
-        @status: Untested + NoDoc + NoDemo = NOT OK
+        :status: Untested + NoDoc + NoDemo = NOT OK
     """
     _fl_add_spinner = library.cfuncproto(
         library.load_so_libforms(), "fl_add_spinner",
@@ -88,7 +88,7 @@ def fl_get_spinner_value(pFlObject):
     """
         fl_get_spinner_value(pFlObject) -> floatval
 
-        @status: Untested + NoDoc + NoDemo = NOT OK
+        :status: Untested + NoDoc + NoDemo = NOT OK
     """
     _fl_get_spinner_value = library.cfuncproto(
         library.load_so_libforms(), "fl_get_spinner_value",
@@ -105,7 +105,7 @@ def fl_set_spinner_value(pFlObject, val):
     """
         fl_set_spinner_value(pFlObject, val) -> num.
 
-        @status: Untested + NoDoc + NoDemo = NOT OK
+        :status: Untested + NoDoc + NoDemo = NOT OK
     """
     _fl_set_spinner_value = library.cfuncproto(
         library.load_so_libforms(), "fl_set_spinner_value",
@@ -121,7 +121,7 @@ def fl_set_spinner_bounds(pFlObject, minbound, maxbound):
     """
         fl_set_spinner_bounds(pFlObject, minbound, maxbound)
 
-        @status: Untested + NoDoc + NoDemo = NOT OK
+        :status: Untested + NoDoc + NoDemo = NOT OK
     """
     _fl_set_spinner_bounds = library.cfuncproto(
         library.load_so_libforms(), "fl_set_spinner_bounds",
@@ -140,10 +140,10 @@ def fl_get_spinner_bounds(pFlObject):
     """
         fl_get_spinner_bounds(pFlObject) -> minbound, maxbound
 
-        @attention: API change from XForms - upstream was
+        :attention: API change from XForms - upstream was
                     fl_get_spinner_bounds(pFlObject, minbound, maxbound)
 
-        @status: Untested + NoDoc + NoDemo = NOT OK
+        :status: Untested + NoDoc + NoDemo = NOT OK
     """
     _fl_get_spinner_bounds = library.cfuncproto(
         library.load_so_libforms(), "fl_get_spinner_bounds",
@@ -164,7 +164,7 @@ def fl_set_spinner_step(pFlObject, step):
     """
         fl_set_spinner_step(pFlObject, step)
 
-        @status: Untested + NoDoc + NoDemo = NOT OK
+        :status: Untested + NoDoc + NoDemo = NOT OK
     """
     _fl_set_spinner_step = library.cfuncproto(
         library.load_so_libforms(), "fl_set_spinner_step",
@@ -181,7 +181,7 @@ def fl_get_spinner_step(pFlObject):
     """
         fl_get_spinner_step(pFlObject) -> num.
 
-        @status: Untested + NoDoc + NoDemo = NOT OK
+        :status: Untested + NoDoc + NoDemo = NOT OK
     """
     _fl_get_spinner_step = library.cfuncproto(
         library.load_so_libforms(), "fl_get_spinner_step",
@@ -198,7 +198,7 @@ def fl_set_spinner_precision(pFlObject, precnum):
     """
         fl_set_spinner_precision(pFlObject, precnum)
 
-        @status: Untested + NoDoc + NoDemo = NOT OK
+        :status: Untested + NoDoc + NoDemo = NOT OK
     """
     _fl_set_spinner_precision = library.cfuncproto(
         library.load_so_libforms(), "fl_set_spinner_precision",
@@ -215,7 +215,7 @@ def fl_get_spinner_precision(pFlObject):
     """
         fl_get_spinner_precision(pFlObject) -> num.
 
-        @status: Untested + NoDoc + NoDemo = NOT OK
+        :status: Untested + NoDoc + NoDemo = NOT OK
     """
     _fl_get_spinner_precision = library.cfuncproto(
         library.load_so_libforms(), "fl_get_spinner_precision",
@@ -232,7 +232,7 @@ def fl_get_spinner_input(pFlObject):
     """
         fl_get_spinner_input(pFlObject) -> pFlObject
 
-        @status: Untested + NoDoc + NoDemo = NOT OK
+        :status: Untested + NoDoc + NoDemo = NOT OK
     """
     _fl_get_spinner_input = library.cfuncproto(
         library.load_so_libforms(), "fl_get_spinner_input",
@@ -249,7 +249,7 @@ def fl_get_spinner_up_button(pFlObject):
     """
         fl_get_spinner_up_button(pFlObject) -> pFlObject
 
-        @status: Untested + NoDoc + NoDemo = NOT OK
+        :status: Untested + NoDoc + NoDemo = NOT OK
     """
     _fl_get_spinner_up_button = library.cfuncproto(
         library.load_so_libforms(), "fl_get_spinner_up_button",
@@ -266,7 +266,7 @@ def fl_get_spinner_down_button(pFlObject):
     """
         fl_get_spinner_down_button(pFlObject) -> pFlObject
 
-        @status: Untested + NoDoc + NoDemo = NOT OK
+        :status: Untested + NoDoc + NoDemo = NOT OK
     """
     _fl_get_spinner_down_button = library.cfuncproto(
         library.load_so_libforms(), "fl_get_spinner_down_button",

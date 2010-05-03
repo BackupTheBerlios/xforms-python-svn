@@ -60,9 +60,9 @@ def fl_set_goodies_font(style, size):
         FL_HUGE_SIZE, FL_DEFAULT_SIZE
     @type size: int
 
-    @example: fl_set_goodies_font(xfdata.FL_BOLD_STYLE, xfdata.FL_MEDIUM_SIZE)
+    :note: e.g. fl_set_goodies_font(xfdata.FL_BOLD_STYLE, xfdata.FL_MEDIUM_SIZE)
 
-    @status: Tested + Doc + Demo = OK
+    :status: Tested + Doc + Demo = OK
 
     """
     _fl_set_goodies_font = library.cfuncproto(
@@ -91,10 +91,10 @@ def fl_show_message(msgtxt1, msgtxt2, msgtxt3):
     @param msgtxt3: third message to show
     @type msgtxt3: str
 
-    @example: fl_show_message("first message", "second message", 
+    :note: e.g. fl_show_message("first message", "second message", 
         "third message")
 
-    @status: Tested + Doc + Demo = OK
+    :status: Tested + Doc + Demo = OK
 
     """
     _fl_show_message = library.cfuncproto(
@@ -122,9 +122,9 @@ def fl_show_messages(msgtxt):
     @param msgtxt: message to show
     @type msgtxt: str
 
-    @example: fl_show_messages("Some messages")
+    :note: e.g. fl_show_messages("Some messages")
 
-    @status: Tested + Doc + Demo = OK
+    :status: Tested + Doc + Demo = OK
 
     """
     _fl_show_messages = library.cfuncproto(
@@ -151,9 +151,9 @@ def fl_show_msg(fmttxt):
         %s, %d, %f etc..)
     @type fmttxt: str
 
-    @example: fl_show_msg("formatted text %s %d" % (mystr, myval))
+    :note: e.g. fl_show_msg("formatted text %s %d" % (mystr, myval))
 
-    @status: Tested + Doc + NoDemo = OK
+    :status: Tested + Doc + NoDemo = OK
 
     """
     _fl_show_msg = library.cfuncproto(
@@ -169,9 +169,9 @@ def fl_show_msg(fmttxt):
 def fl_hide_message():
     """Hides a text message already shown.
 
-    @example: fl_hide_message()
+    :note: e.g. fl_hide_message()
 
-    @status: Tested + Doc + NoDemo = OK
+    :status: Tested + Doc + NoDemo = OK
 
     """
     _fl_hide_message = library.cfuncproto(
@@ -198,12 +198,12 @@ def fl_show_question(questmsg, defbtn):
         shown so the mouse pointer is at the center of the form.
     @type defbtn: int
 
-    @returns: 1 (if Yes button pushed) or 0 otherwise
-    @rtype: int
+    :return: 1 (if Yes button pushed) or 0 otherwise
+    :rtype: int
 
-    @example: qresp = fl_show_question("My question?", 1)
+    :note: e.g. qresp = fl_show_question("My question?", 1)
 
-    @status: Tested + Doc + Demo = OK
+    :status: Tested + Doc + Demo = OK
 
     """
     _fl_show_question = library.cfuncproto(
@@ -221,9 +221,9 @@ def fl_show_question(questmsg, defbtn):
 def fl_hide_question():
     """Hides a question message already shown.
 
-    @example: fl_hide_question()
+    :note: e.g. fl_hide_question()
 
-    @status: Tested + Doc + NoDemo = OK
+    :status: Tested + Doc + NoDemo = OK
 
     """
     _fl_hide_question = library.cfuncproto(
@@ -248,9 +248,9 @@ def fl_show_alert(title, msg1, msg2, centered):
         or not. Values 1 (if centered) or 0 (not centered)
     @type centered: int
 
-    @example: fl_show_alert("My title", "first text", "second text", 1)
+    :note: e.g. fl_show_alert("My title", "first text", "second text", 1)
 
-    @status: Tested + Doc + Demo = OK
+    :status: Tested + Doc + Demo = OK
 
     """
     _fl_show_alert = library.cfuncproto(
@@ -281,9 +281,9 @@ def fl_show_alert2(centered, fmttxt):
     @param fmttxt: formatted message text
     @type fmttxt: str
 
-    @example: fl_show_alert2(1, "formatted text %s %d" % (mystr, myval))
+    :note: e.g. fl_show_alert2(1, "formatted text %s %d" % (mystr, myval))
 
-    @status: Tested + Doc + NoDemo = OK
+    :status: Tested + Doc + NoDemo = OK
 
     """
     _fl_show_alert2 = library.cfuncproto(
@@ -300,9 +300,9 @@ def fl_show_alert2(centered, fmttxt):
 def fl_hide_alert():
     """Hides a previously shown alert message.
 
-    @example: fl_hide_alert()
+    :note: e.g. fl_hide_alert()
 
-    @status: Tested + Doc + Demo = OK
+    :status: Tested + Doc + Demo = OK
 
     """
     _fl_hide_alert = library.cfuncproto(
@@ -322,12 +322,12 @@ def fl_show_input(msgtxt, defstr):
     @param defstr: default user answer to show
     @type defstr: str
 
-    @returns: text inserted by user
-    @rtype: str
+    :return: text inserted by user
+    :rtype: str
 
-    @example: inpstr = fl_show_input("Insert number of eggs: ", "None")
+    :note: e.g. inpstr = fl_show_input("Insert number of eggs: ", "None")
 
-    @status: Tested + Doc + Demo = OK
+    :status: Tested + Doc + Demo = OK
 
     """
     _fl_show_input = library.cfuncproto(
@@ -345,9 +345,9 @@ def fl_show_input(msgtxt, defstr):
 def fl_hide_input():
     """Hides a previously shown input object.
 
-    @example: fl_hide_input()
+    :note: e.g. fl_hide_input()
 
-    @status: Tested + Doc + NoDemo = OK
+    :status: Tested + Doc + NoDemo = OK
 
     """
     _fl_hide_input = library.cfuncproto(
@@ -366,13 +366,13 @@ def fl_show_simple_input(msgtxt, defstr):
     @param defstr: default user answer in input
     @type defstr: str
 
-    @returns: text inserted by user
-    @rtype: str
+    :return: text inserted by user
+    :rtype: str
 
-    @example: inpstr = fl_show_simple_input("Insert name and surname:",
+    :note: e.g. inpstr = fl_show_simple_input("Insert name and surname:",
         "John Doe")
 
-    @status: Tested + Doc + NoDemo = OK
+    :status: Tested + Doc + NoDemo = OK
 
     """
     _fl_show_simple_input = library.cfuncproto(
@@ -401,12 +401,12 @@ def fl_show_colormap(oldcolr):
     @param oldcolr: current or default color num. (Not FL_COLOR)
     @type oldcolr: int
 
-    @returns: index of the color selected (or the index of the old color)
-    @rtype: int
+    :return: index of the color selected (or the index of the old color)
+    :rtype: int
 
-    @example: colridx = fl_show_colormap(xfdata.Fl_YELLOWGREEN)
+    :note: e.g. colridx = fl_show_colormap(xfdata.Fl_YELLOWGREEN)
 
-    @status: Tested + Doc + Demo = OK
+    :status: Tested + Doc + Demo = OK
 
     """
     _fl_show_colormap = library.cfuncproto(
@@ -440,13 +440,13 @@ def fl_show_choices(msgtxt, numb, btn1txt, btn2txt, btn3txt, defcho):
     @param defcho: default choice (1, 2 or 3)
     @type defcho: int
 
-    @returns: number of the button pressed (1, 2 or 3)
-    @rtype: int
+    :return: number of the button pressed (1, 2 or 3)
+    :rtype: int
 
-    @example: pressbtn = fl_show_choices("some message", 3, "1st", "2nd",
+    :note: e.g. pressbtn = fl_show_choices("some message", 3, "1st", "2nd",
         "3rd", 1)
 
-    @status: Tested + Doc + Demo = OK
+    :status: Tested + Doc + Demo = OK
 
     """
     _fl_show_choices = library.cfuncproto(
@@ -491,13 +491,13 @@ def fl_show_choice(msg1txt, msg2txt, msg3txt, numb, btn1txt, btn2txt, btn3txt, d
     @param defcho: default choice (1, 2 or 3)
     @type defcho: int
 
-    @returns: number of the button pressed (1, 2 or 3)
-    @rtype: int
+    :return: number of the button pressed (1, 2 or 3)
+    :rtype: int
 
-    @example: pressbtn = fl_show_choices("some message", "some other",
+    :note: e.g. pressbtn = fl_show_choices("some message", "some other",
         "the end", 3, "1st", "2nd", "3rd", 1)
 
-    @status: Tested + Doc + Demo = OK
+    :status: Tested + Doc + Demo = OK
 
     """
     _fl_show_choice = library.cfuncproto(
@@ -527,9 +527,9 @@ def fl_show_choice(msg1txt, msg2txt, msg3txt, numb, btn1txt, btn2txt, btn3txt, d
 def fl_hide_choice():
     """Hides the choice message.
 
-    @example: fl_hide_choice()
+    :note: e.g. fl_hide_choice()
 
-    @status: Tested + Doc + NoDemo = OK
+    :status: Tested + Doc + NoDemo = OK
 
     """
     _fl_hide_choice = library.cfuncproto(
@@ -550,9 +550,9 @@ def fl_set_choices_shortcut(shc1txt, shc2txt, shc3txt):
     @param shc3txt: shortcut to bind to third button
     @type shc3txt: str
 
-    @example: fl_set_choices_shortcut("a", "B", "^C")
+    :note: e.g. fl_set_choices_shortcut("a", "B", "^C")
 
-    @status: Tested + Doc + NoDemo = OK
+    :status: Tested + Doc + NoDemo = OK
 
     """
     _fl_set_choices_shortcut = library.cfuncproto(
@@ -585,9 +585,9 @@ def fl_show_oneliner(text, x, y):
     @param y: vertical position (relative to root window)
     @type y: int
 
-    @example: fl_show_oneliner("Button to close window", 134, 155)
+    :note: e.g. fl_show_oneliner("Button to close window", 134, 155)
 
-    @status: Tested + Doc + Demo = OK
+    :status: Tested + Doc + Demo = OK
 
     """
     _fl_show_oneliner = library.cfuncproto(
@@ -606,9 +606,9 @@ def fl_show_oneliner(text, x, y):
 def fl_hide_oneliner():
     """Hides the oneliner message previously shown.
 
-    @example: fl_hide_oneliner()
+    :note: e.g. fl_hide_oneliner()
 
-    @status: Tested + Doc + Demo = OK
+    :status: Tested + Doc + Demo = OK
 
     """
     _fl_hide_oneliner = library.cfuncproto(
@@ -635,9 +635,9 @@ def fl_set_oneliner_font(style, size):
         FL_HUGE_SIZE, FL_DEFAULT_SIZE
     @type size: int 
 
-    @example: fl_set_oneliner_font(FL_BOLD_STYLE, FL_NORMAL_SIZE)
+    :note: e.g. fl_set_oneliner_font(FL_BOLD_STYLE, FL_NORMAL_SIZE)
 
-    @status: Tested + Doc + NoDemo = OK
+    :status: Tested + Doc + NoDemo = OK
 
     """
     _fl_set_oneliner_font = library.cfuncproto(
@@ -662,9 +662,9 @@ def fl_set_oneliner_color(fgcolr, bgcolr):
     @param bgcolr: color value for oneliner background
     @type bgcolr: long_pos
 
-    @example: fl_set_oneliner_color(fgcolr, bgcolr)
+    :note: e.g. fl_set_oneliner_color(fgcolr, bgcolr)
 
-    @status: Tested + Doc + NoDemo = OK
+    :status: Tested + Doc + NoDemo = OK
 
     """
     _fl_set_oneliner_color = library.cfuncproto(
@@ -696,10 +696,10 @@ def fl_set_tooltip_font(style, size):
         FL_HUGE_SIZE, FL_DEFAULT_SIZE
     @type size: int
 
-    @example: fl_set_tooltip_font(xfdata.FL_SHADOW_STYLE,
+    :note: e.g. fl_set_tooltip_font(xfdata.FL_SHADOW_STYLE,
         xfdata.FL_DEFAULT_SIZE)
 
-    @status: Tested + Doc + NoDemo = OK
+    :status: Tested + Doc + NoDemo = OK
 
     """
     _fl_set_tooltip_font = library.cfuncproto(
@@ -723,9 +723,9 @@ def fl_set_tooltip_color(fgcolr, bgcolr):
     @param bgcolr: background color value
     @type bgcolr: long_pos
 
-    @example: fl_set_tooltip_color(xfdata.FL_BLUE, xfdata.FL_VIOLET)
+    :note: e.g. fl_set_tooltip_color(xfdata.FL_BLUE, xfdata.FL_VIOLET)
 
-    @status: Tested + Doc + NoDemo = OK
+    :status: Tested + Doc + NoDemo = OK
 
     """
     _fl_set_tooltip_color = library.cfuncproto(
@@ -752,9 +752,9 @@ def fl_set_tooltip_boxtype(boxtype):
         FL_OVAL3D_FRAMEBOX, FL_OVAL3D_EMBOSSEDBOX
     @type boxtype: int
 
-    @example: fl_set_tooltip_boxtype(xfdata.FL_OVAL3D_DOWNBOX)
+    :note: e.g. fl_set_tooltip_boxtype(xfdata.FL_OVAL3D_DOWNBOX)
 
-    @status: Tested + Doc + NoDemo = OK
+    :status: Tested + Doc + NoDemo = OK
 
     """
     _fl_set_tooltip_boxtype = library.cfuncproto(
@@ -778,9 +778,9 @@ def fl_set_tooltip_lalign(align):
         FL_ALIGN_VERT
     @type align: int 
 
-    @example: fl_set_tooltip_lalign(xfdata.FL_ALIGN_VERT)
+    :note: e.g. fl_set_tooltip_lalign(xfdata.FL_ALIGN_VERT)
 
-    @status: Tested + Doc + NoDemo = OK
+    :status: Tested + Doc + NoDemo = OK
 
     """
     _fl_set_tooltip_lalign = library.cfuncproto(
@@ -804,12 +804,12 @@ def fl_exe_command(cmdtxt, block):
         (for waiting) or 0 (don't wait).
     @type block: int
 
-    @returns: exit status
-    @rtype: long
+    :return: exit status
+    :rtype: long
 
-    @example: ?
+    :note: e.g. ?
 
-    @status: Untested + NoDoc + NoDemo = NOT OK
+    :status: Untested + NoDoc + NoDemo = NOT OK
 
     """
     _fl_exe_command = library.cfuncproto(
@@ -834,12 +834,12 @@ def fl_end_command(pid):
     @param pid: process id returned by fl_exe_command()
     @type pid: long
 
-    @returns: exit status of child process, or -1 (if an error has occurred)
-    @rtype: long
+    :return: exit status of child process, or -1 (if an error has occurred)
+    :rtype: long
 
-    @example: fl_end_command(1488)
+    :note: e.g. fl_end_command(1488)
 
-    @status: Tested + Doc + NoDemo = OK
+    :status: Tested + Doc + NoDemo = OK
 
     """
     _fl_end_command = library.cfuncproto(
@@ -862,14 +862,14 @@ def fl_check_command(pid):
     @param pid: process id returned by fl_exe_command()
     @type pid: long
 
-    @returns: 0 if the child process is finished, or 1 if the child process
+    :return: 0 if the child process is finished, or 1 if the child process
         still exists (running or stopped), or -1 if an error has occurred
         inside the function
-    @rtype: int
+    :rtype: int
 
-    @example: fl_check_command(1488)
+    :note: e.g. fl_check_command(1488)
 
-    @status: Tested + Doc + NoDemo = OK
+    :status: Tested + Doc + NoDemo = OK
 
     """
     _fl_check_command = library.cfuncproto(
@@ -893,12 +893,12 @@ def fl_popen(cmdtxt, otype):
     @param otype: type of opening (e.g. letter between w, r ..)
     @type otype: str
 
-    @returns: file opened (pFile)
-    @rtype: pointer to xfdata.FILE
+    :return: file opened (pFile)
+    :rtype: pointer to xfdata.FILE
 
-    @example: pfile = fl_popen("/usr/bin/somecommand", "r")
+    :note: e.g. pfile = fl_popen("/usr/bin/somecommand", "r")
 
-    @status: Tested + Doc + NoDemo = OK
+    :status: Tested + Doc + NoDemo = OK
 
     """
     _fl_popen = library.cfuncproto(
@@ -919,12 +919,12 @@ def fl_pclose(pFile):
     @param pFile: opened file stream returned by fl_popen()
     @type pFile: pointer to xfdata.FILE
 
-    @returns: non-zero, or -1 (on failure)
-    @rtype: int
+    :return: non-zero, or -1 (on failure)
+    :rtype: int
 
-    @example: if fl_pclose(pfile) == -1: ...
+    :note: e.g. if fl_pclose(pfile) == -1: ...
 
-    @status: Tested + Doc + NoDemo = OK
+    :status: Tested + Doc + NoDemo = OK
 
     """
     _fl_pclose = library.cfuncproto(
@@ -941,12 +941,12 @@ def fl_end_all_command():
     """Waits for all the child processes initiated by fl_exe_command()
     to complete.
 
-    @returns: exit status of the last child process
-    @rtype: int
+    :return: exit status of the last child process
+    :rtype: int
 
-    @example: fl_end_all_command()
+    :note: e.g. fl_end_all_command()
 
-    @status: Tested + Doc + NoDemo = OK
+    :status: Tested + Doc + NoDemo = OK
 
     """
     _fl_end_all_command = library.cfuncproto(
@@ -964,9 +964,9 @@ def fl_show_command_log(border):
         module) FL_FULLBORDER, FL_TRANSIENT, FL_NOBORDER
     @type border: int
 
-    @example: ?
+    :note: e.g. ?
 
-    @status: Untested + NoDoc + NoDemo = NOT OK
+    :status: Untested + NoDoc + NoDemo = NOT OK
 
     """
     _fl_show_command_log = library.cfuncproto(
@@ -983,9 +983,9 @@ def fl_show_command_log(border):
 def fl_hide_command_log():
     """Hides the log of the command output.
 
-    @example: fl_hide_command_log()
+    :note: e.g. fl_hide_command_log()
 
-    @status: Tested + Doc + NoDemo = OK
+    :status: Tested + Doc + NoDemo = OK
 
     """
     _fl_hide_command_log = library.cfuncproto(
@@ -999,9 +999,9 @@ def fl_hide_command_log():
 def fl_clear_command_log():
     """Clears the browser and the logging output displayed within it.
 
-    @example: fl_clear_command_log()
+    :note: e.g. fl_clear_command_log()
 
-    @status: Tested + Doc + NoDemo = OK
+    :status: Tested + Doc + NoDemo = OK
 
     """
     _fl_clear_command_log = library.cfuncproto(
@@ -1018,9 +1018,9 @@ def fl_addto_command_log(txtstr):
     @param txtstr: text line to be added (with possible embedded newlines)
     @type txtstr: str
 
-    @example: fl_addto_command_log("Another line to add to CmdLog")
+    :note: e.g. fl_addto_command_log("Another line to add to CmdLog")
 
-    @status: Tested + Doc + NoDemo = OK
+    :status: Tested + Doc + NoDemo = OK
 
     """
     _fl_addto_command_log = library.cfuncproto(
@@ -1041,9 +1041,9 @@ def fl_set_command_log_position(x, y):
     @param y: vertical position (upper-left corner)
     @type y: int
 
-    @example: fl_set_command_log_position(174, 288)
+    :note: e.g. fl_set_command_log_position(174, 288)
 
-    @status: Tested + Doc + NoDemo = OK
+    :status: Tested + Doc + NoDemo = OK
 
     """
     _fl_set_command_log_position = library.cfuncproto(
@@ -1063,12 +1063,12 @@ def fl_get_command_log_fdstruct():
     command browser and its associated objects. Note however, that you should
     not hide/show the form or free any member of the returned structure.
 
-    @returns: command log browser class instance (pCmdlog)
-    @rtype: pointer to xfdata.FD_CMDLOG
+    :return: command log browser class instance (pCmdlog)
+    :rtype: pointer to xfdata.FD_CMDLOG
 
-    @example: pcmdlogbr = fl_get_command_log_fdstruct()
+    :note: e.g. pcmdlogbr = fl_get_command_log_fdstruct()
 
-    @status: Tested + Doc + NoDemo = OK
+    :status: Tested + Doc + NoDemo = OK
 
     """
     _fl_get_command_log_fdstruct = library.cfuncproto(
@@ -1089,12 +1089,12 @@ def fl_use_fselector(num):
         xfdata.FL_MAX_FSELECTOR - 1
     @type num: int
 
-    @returns: old file selector
-    @rtype: int
+    :return: old file selector
+    :rtype: int
 
-    @example: oldfsel = fl_use_fselector(1)
+    :note: e.g. oldfsel = fl_use_fselector(1)
 
-    @status: Tested + Doc + NoDemo = OK
+    :status: Tested + Doc + NoDemo = OK
 
     """
     _fl_use_fselector = library.cfuncproto(
@@ -1123,13 +1123,13 @@ def fl_show_fselector(msgtxt, dirname, pattern, deftxt):
     @param deftxt: default file name
     @type deftxt: str
 
-    @returns: fselector text, or None (if the Cancel button is pressed)
-    @rtype: str
+    :return: fselector text, or None (if the Cancel button is pressed)
+    :rtype: str
 
-    @example: fstxt = fl_show_fselector("Choose file:", "/home/user", "*.*",
+    :note: e.g. fstxt = fl_show_fselector("Choose file:", "/home/user", "*.*",
         "")
 
-    @status: Tested + Doc + Demo = OK
+    :status: Tested + Doc + Demo = OK
 
     """
     _fl_show_fselector = library.cfuncproto(
@@ -1160,9 +1160,9 @@ def fl_set_fselector_fontsize(size):
         FL_HUGE_SIZE, FL_DEFAULT_SIZE
     @type size: int
 
-    @example: fl_set_fselector_fontsize(xfdata.TINY_SIZE)
+    :note: e.g. fl_set_fselector_fontsize(xfdata.TINY_SIZE)
 
-    @status: Tested + Doc + NoDemo = OK
+    :status: Tested + Doc + NoDemo = OK
 
     """
     _fl_set_fselector_fontsize = library.cfuncproto(
@@ -1188,9 +1188,9 @@ def fl_set_fselector_fontstyle(style):
         FL_ENGRAVED_STYLE, FL_EMBOSSED_STYLE
     @type place: int
 
-    @example: fl_set_fselector_fontstyle(xfdata.FL_SHADOW_STYLE)
+    :note: e.g. fl_set_fselector_fontstyle(xfdata.FL_SHADOW_STYLE)
 
-    @status: Tested + Doc + NoDemo = OK
+    :status: Tested + Doc + NoDemo = OK
 
     """
     _fl_set_fselector_fontstyle = library.cfuncproto(
@@ -1215,9 +1215,9 @@ def fl_set_fselector_placement(place):
         FL_PLACE_CENTERFREE
     @type place: int
 
-    @example: fl_set_fselector_placement(xfdata.FL_PLACE_HOTSPOT)
+    :note: e.g. fl_set_fselector_placement(xfdata.FL_PLACE_HOTSPOT)
 
-    @status: Tested + Doc + Demo = OK
+    :status: Tested + Doc + Demo = OK
 
     """
     _fl_set_fselector_placement = library.cfuncproto(
@@ -1239,9 +1239,9 @@ def fl_set_fselector_border(border):
         FL_FULLBORDER, FL_TRANSIENT, FL_NOBORDER
     @type border: int
 
-    @example: fl_set_fselector_border(xfdata.FL_FULLBORDER)
+    :note: e.g. fl_set_fselector_border(xfdata.FL_FULLBORDER)
 
-    @status: Tested + Doc + NoDemo = OK
+    :status: Tested + Doc + NoDemo = OK
 
     """
     _fl_set_fselector_border = library.cfuncproto(
@@ -1262,9 +1262,9 @@ def fl_set_fselector_transient(flag):
         (not transient)
     @type flag: int
 
-    @example: fl_set_fselector_transient(0)
+    :note: e.g. fl_set_fselector_transient(0)
 
-    @status: Tested + Doc + NoDemo = OK
+    :status: Tested + Doc + NoDemo = OK
 
     """
     if flag:
@@ -1288,12 +1288,12 @@ def fl_set_fselector_callback(py_FSCB, vdata):
     @param vdata: user data to be passed to function
     @type vdata: pointer to void
 
-    @example: def fsel_cb(fname, cvoidp):
-    @example: |->| ...
-    @example: |->| return UnusedVal
-    @example: fl_set_fselector_callback(fsel_cb, None)
+    :note: e.g. def fsel_cb(fname, cvoidp):
+    :note: e.g. |->| ...
+    :note: e.g. |->| return UnusedVal
+    :note: e.g. fl_set_fselector_callback(fsel_cb, None)
 
-    @status: Tested + Doc + Demo = OK
+    :status: Tested + Doc + Demo = OK
 
     """
     #FL_FSCB = cty.CFUNCTYPE(cty.c_int, xfdata.STRING, cty.c_void_p)
@@ -1315,12 +1315,12 @@ fl_set_fselector_cb = fl_set_fselector_callback
 def fl_get_filename():
     """Obtains the file name (without the path) after the user changed it.
 
-    @returns: name of file (fname)
-    @rtype: str
+    :return: name of file (fname)
+    :rtype: str
 
-    @example: newfname = fl_get_filename()
+    :note: e.g. newfname = fl_get_filename()
 
-    @status: Tested + Doc + NoDemo = OK
+    :status: Tested + Doc + NoDemo = OK
 
     """
     _fl_get_filename = library.cfuncproto(
@@ -1335,12 +1335,12 @@ def fl_get_filename():
 def fl_get_directory():
     """Obtains the directory name after the user changed it.
 
-    @returns: name of directory (dirname)
-    @rtype: str
+    :return: name of directory (dirname)
+    :rtype: str
 
-    @example: newdname = fl_get_directory()
+    :note: e.g. newdname = fl_get_directory()
 
-    @status: Tested + Doc + NoDemo = OK
+    :status: Tested + Doc + NoDemo = OK
 
     """
     _fl_get_directory = library.cfuncproto(
@@ -1354,10 +1354,10 @@ def fl_get_directory():
 def fl_get_pattern():
     """Obtains the pattern after the user changed it.
 
-    @returns: pattern text
-    @rtype: str
+    :return: pattern text
+    :rtype: str
 
-    @status: Tested + Doc + NoDemo = OK
+    :status: Tested + Doc + NoDemo = OK
 
     """
     _fl_get_pattern = library.cfuncproto(
@@ -1375,12 +1375,12 @@ def fl_set_directory(dirname):
     @param dirname: name of directory to be set
     @type dirname: str
 
-    @returns: 0 on success, or 1 (on failure)
-    @rtype: int
+    :return: 0 on success, or 1 (on failure)
+    :rtype: int
 
-    @example: sth = fl_set_directory("/home/user/blabla")
+    :note: e.g. sth = fl_set_directory("/home/user/blabla")
 
-    @status: Tested + Doc + NoDemo = OK
+    :status: Tested + Doc + NoDemo = OK
 
     """
     _fl_set_directory = library.cfuncproto(
@@ -1400,9 +1400,9 @@ def fl_set_pattern(pattern):
     @param pattern: text to be used for pattern
     @type pattern: str
 
-    @example: fl_set_pattern("*.txt")
+    :note: e.g. fl_set_pattern("*.txt")
 
-    @status: Tested + Doc + NoDemo = OK
+    :status: Tested + Doc + NoDemo = OK
 
     """
     _fl_set_pattern = library.cfuncproto(
@@ -1419,9 +1419,9 @@ def fl_refresh_fselector():
     """Refreshes the file selector, re-scanning the current directory and
     listing all entries in it.
 
-    @example: fl_refresh_fselector()
+    :note: e.g. fl_refresh_fselector()
 
-    @status: Tested + Doc + NoDemo = OK
+    :status: Tested + Doc + NoDemo = OK
 
     """
     _fl_refresh_fselector = library.cfuncproto(
@@ -1443,11 +1443,11 @@ def fl_add_fselector_appbutton(label, py_fn, vdata):
     @param vdata: user data to be passed to function
     @type vdata: pointer to void
 
-    @example: def fsbtn_cb(cvoidp):
-    @example: |->| ...
-    @example: fl_add_fselector_appbutton("SomeButton", fsbtn_cb, None)
+    :note: e.g. def fsbtn_cb(cvoidp):
+    :note: e.g. |->| ...
+    :note: e.g. fl_add_fselector_appbutton("SomeButton", fsbtn_cb, None)
 
-    @status: Tested + Doc + NoDemo = OK
+    :status: Tested + Doc + NoDemo = OK
 
     """
     #cfunc_none_voidp = cty.CFUNCTYPE(None, cty.c_void_p)
@@ -1471,9 +1471,9 @@ def fl_remove_fselector_appbutton(label):
     @param label: text of label
     @type label: str
 
-    @example: fl_remoe_selector_appbutton("SomeButton")
+    :note: e.g. fl_remoe_selector_appbutton("SomeButton")
 
-    @status: Tested + Doc + NoDemo = OK
+    :status: Tested + Doc + NoDemo = OK
 
     """
     _fl_remove_fselector_appbutton = library.cfuncproto(
@@ -1492,9 +1492,9 @@ def fl_disable_fselector_cache(yesno):
     @param yesno: flag. Values 0 (to enable cache) or 1 (to disable cache)
     @type yesno: int
 
-    @example: fl_disable_fselector_cache(1)
+    :note: e.g. fl_disable_fselector_cache(1)
 
-    @status: Tested + Doc + NoDemo = OK
+    :status: Tested + Doc + NoDemo = OK
 
     """
     _fl_disable_fselector_cache = library.cfuncproto(
@@ -1511,9 +1511,9 @@ def fl_invalidate_fselector_cache():
     """Forces an update of file selector caching programmatically. It forces
     it only once, and on the directory that is to be browsed.
 
-    @example: fl_invalidate_fselector_cache()
+    :note: e.g. fl_invalidate_fselector_cache()
 
-    @status: Tested + Doc + NoDemo = OK
+    :status: Tested + Doc + NoDemo = OK
 
     """
     _fl_invalidate_fselector_cache = library.cfuncproto(
@@ -1527,9 +1527,9 @@ def fl_invalidate_fselector_cache():
 def fl_get_fselector_form():
     """Obtains the form of file selector.
 
-    @example: pform = fl_get_fselector_form()
+    :note: e.g. pform = fl_get_fselector_form()
 
-    @status: Tested + Doc + NoDemo = OK
+    :status: Tested + Doc + NoDemo = OK
 
     """
     _fl_get_fselector_form = library.cfuncproto(
@@ -1545,12 +1545,12 @@ def fl_get_fselector_fdstruct():
     """Obtains a FD_FSELECTOR class instance, allowing direct access to the
     individual objects of a file selector.
 
-    @returns: file selector class instance
-    @rtype: pointer to xfdata.FD_FSELECTOR
+    :return: file selector class instance
+    :rtype: pointer to xfdata.FD_FSELECTOR
 
-    @example: fdfsel = fl_get_fselector_fdstruct()
+    :note: e.g. fdfsel = fl_get_fselector_fdstruct()
 
-    @status: Tested + Doc + NoDemo = OK
+    :status: Tested + Doc + NoDemo = OK
 
     """
     _fl_get_fselector_fdstruct = library.cfuncproto(
@@ -1565,9 +1565,9 @@ def fl_get_fselector_fdstruct():
 def fl_hide_fselector():
     """Hides a file selector.
 
-    @example: fl_hide_fselector()
+    :note: e.g. fl_hide_fselector()
 
-    @status: Tested + Doc + NoDemo = OK
+    :status: Tested + Doc + NoDemo = OK
 
     """
     _fl_hide_fselector = library.cfuncproto(
@@ -1594,9 +1594,9 @@ def fl_set_fselector_filetype_marker(dirmk, fifomk, sockmk, cdevmk, bdevmk):
     @param bdevmk: marker character for block device files
     @type bdevmk: int or char
 
-    @example: fl_set_fselector_filetype_marker('d', 'P', 'S', 'V', 'b')
+    :note: e.g. fl_set_fselector_filetype_marker('d', 'P', 'S', 'V', 'b')
 
-    @status: Tested + Doc + NoDemo = OK
+    :status: Tested + Doc + NoDemo = OK
 
     """
     _fl_set_fselector_filetype_marker = library.cfuncproto(
@@ -1647,9 +1647,9 @@ def fl_set_fselector_title(title):
     @param title: title to be set
     @type title: str
 
-    @example: fl_set_fselector_title("My own title of F.S.)
+    :note: e.g. fl_set_fselector_title("My own title of F.S.)
 
-    @status: Tested + Doc + NoDemo = OK
+    :status: Tested + Doc + NoDemo = OK
 
     """
     flbasic.fl_set_form_title(fl_get_fselector_form(), title)
@@ -1661,12 +1661,12 @@ def fl_goodies_atclose(pFlForm, vdata):
     @param pFlForm: form
     @type pFlForm: pointer to xfdata.FL_FORM
 
-    @returns: unused value (xfdata.FL_IGNORE)
-    @rtype: int
+    :return: unused value (xfdata.FL_IGNORE)
+    :rtype: int
 
-    @example: ?
+    :note: e.g. ?
 
-    @status: Tested + NoDoc + NoDemo = OK
+    :status: Tested + NoDoc + NoDemo = OK
 
     """
     _fl_goodies_atclose = library.cfuncproto(

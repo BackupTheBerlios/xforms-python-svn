@@ -55,12 +55,12 @@ def fl_addto_formbrowser(pFlObject, pFlForm):
     @param pFlForm: form
     @type pFlForm: pointer to xfdata.FL_FORM
 
-    @returns: total number of forms in the formbrowser
-    @rtype: int
+    :return: total number of forms in the formbrowser
+    :rtype: int
 
-    @example: ntotfrms = fl_addto_formbrowser(frmbrobj, newform)
+    :note: e.g. ntotfrms = fl_addto_formbrowser(frmbrobj, newform)
 
-    @status: Tested + Doc + NoDemo = OK
+    :status: Tested + Doc + NoDemo = OK
 
     """
     _fl_addto_formbrowser = library.cfuncproto(
@@ -87,12 +87,12 @@ def fl_delete_formbrowser_bynumber(pFlObject, seqnum):
     @param seqnum: sequence number of form to be removed
     @type seqnum: int
 
-    @returns: removed form (pFlForm) or None (on failure)
-    @rtype: pointer to xfdata.FL_FORM
+    :return: removed form (pFlForm) or None (on failure)
+    :rtype: pointer to xfdata.FL_FORM
 
-    @example: delfrm = fl_delete_formbrowser_bynumber(frmbrobj, 2)
+    :note: e.g. delfrm = fl_delete_formbrowser_bynumber(frmbrobj, 2)
 
-    @status: Tested + Doc + NoDemo = OK
+    :status: Tested + Doc + NoDemo = OK
 
     """
     _fl_delete_formbrowser_bynumber = library.cfuncproto(
@@ -117,13 +117,13 @@ def fl_delete_formbrowser(pFlObject, pFlForm):
     @param pFlForm: form candidate to deletion
     @type pFlForm: pointer to xfdata.FL_FORM
 
-    @returns: current (after deletion) number of forms in the formbrowser
+    :return: current (after deletion) number of forms in the formbrowser
         or -1 (on failure)
-    @rtype: int
+    :rtype: int
 
-    @example: num = fl_delete_formbrowser(frmbrobj, p2ndform)
+    :note: e.g. num = fl_delete_formbrowser(frmbrobj, p2ndform)
 
-    @status: Tested + Doc + NoDemo = OK
+    :status: Tested + Doc + NoDemo = OK
 
     """
     _fl_delete_formbrowser = library.cfuncproto(
@@ -150,12 +150,12 @@ def fl_replace_formbrowser(pFlObject, seqnum, pFlForm):
     @param pFlForm: form used as replacement
     @type pFlForm: pointer to xfdata.FL_FORM
 
-    @returns: form that has been replaced (pFlForm), or None (on failure)
-    @rtype: pointer to xfdata.FL_FORM
+    :return: form that has been replaced (pFlForm), or None (on failure)
+    :rtype: pointer to xfdata.FL_FORM
 
-    @example: replfrm = fl_replace_formbrowser(frmbrobj, 4, newreplfrm)
+    :note: e.g. replfrm = fl_replace_formbrowser(frmbrobj, 4, newreplfrm)
 
-    @status: Tested + Doc + NoDemo = OK
+    :status: Tested + Doc + NoDemo = OK
 
     """
     _fl_replace_formbrowser = library.cfuncproto(
@@ -183,12 +183,12 @@ def fl_insert_formbrowser(pFlObject, seqnum, pFlForm):
     @param pFlForm: new form to insert
     @type pFlForm: pointer to xfdata.FL_FORM
 
-    @returns: number of forms in the formbrowser, or -1 (on failure)
-    @rtype: int
+    :return: number of forms in the formbrowser, or -1 (on failure)
+    :rtype: int
 
-    @example: frmsnum = fl_insert_formbrowser(frmbrobj, 5, pform)
+    :note: e.g. frmsnum = fl_insert_formbrowser(frmbrobj, 5, pform)
 
-    @status: Tested + Doc + NoDemo = OK
+    :status: Tested + Doc + NoDemo = OK
 
     """
     _fl_insert_formbrowser = library.cfuncproto(
@@ -212,16 +212,16 @@ def fl_get_formbrowser_area(pFlObject):
     @param pFlObject: formbrowser object
     @type pFlObject: pointer to xfdata.FL_OBJECT
 
-    @returns: 1 or 0 (on failure), horizontal (x), vertical position (y),
+    :return: 1 or 0 (on failure), horizontal (x), vertical position (y),
         width (w) and height (h)
-    @rtype: int, int, int, int
+    :rtype: int, int, int, int
 
-    @example: exval, x, y, w, h = fl_get_formbrowser_area(frmbrobj)
+    :note: e.g. exval, x, y, w, h = fl_get_formbrowser_area(frmbrobj)
 
-    @attention: API change from XForms - upstream was
+    :attention: API change from XForms - upstream was
         fl_get_formbrowser_area(pFlObject, x, y, w, h)
 
-    @status: Tested + Doc + NoDemo = OK
+    :status: Tested + Doc + NoDemo = OK
 
     """
     _fl_get_formbrowser_area = library.cfuncproto(
@@ -252,9 +252,9 @@ def fl_set_formbrowser_scroll(pFlObject, how):
         (default) or FL_JUMP_SCROLL
     @type how: int
 
-    @example: fl_set_formbrowser_scroll(frmbrobj, xfdata.FL_JUMP_SCROLL)
+    :note: e.g. fl_set_formbrowser_scroll(frmbrobj, xfdata.FL_JUMP_SCROLL)
 
-    @status: Tested + Doc + NoDemo = OK
+    :status: Tested + Doc + NoDemo = OK
 
     """
     _fl_set_formbrowser_scroll = library.cfuncproto(
@@ -280,9 +280,9 @@ def fl_set_formbrowser_hscrollbar(pFlObject, how):
         FL_OFF, FL_AUTO
     @type how: int
 
-    @example: fl_set_formbrowser_hscrollbar(frmbrobj, FL_OFF)
+    :note: e.g. fl_set_formbrowser_hscrollbar(frmbrobj, FL_OFF)
 
-    @status: Tested + Doc + NoDemo = OK
+    :status: Tested + Doc + NoDemo = OK
 
     """
     _fl_set_formbrowser_hscrollbar = library.cfuncproto(
@@ -308,9 +308,9 @@ def fl_set_formbrowser_vscrollbar(pFlObject, how):
         FL_OFF, FL_AUTO
     @type how: int
 
-    @example: fl_set_formbrowser_vscrollbar(frmbrobj, FL_OFF)
+    :note: e.g. fl_set_formbrowser_vscrollbar(frmbrobj, FL_OFF)
 
-    @status: Tested + Doc + NoDemo = OK
+    :status: Tested + Doc + NoDemo = OK
 
     """
     _fl_set_formbrowser_vscrollbar = library.cfuncproto(
@@ -332,12 +332,12 @@ def fl_get_formbrowser_topform(pFlObject):
     @param pFlObject: formbrowser object
     @type pFlObject: pointer to xfdata.FL_OBJECT
 
-    @returns: first visible form (pFlForm)
-    @rtype: pointer to xfdata.FL_FORM
+    :return: first visible form (pFlForm)
+    :rtype: pointer to xfdata.FL_FORM
 
-    @example: pform = fl_get_formbrowser_topform(frmbrobj)
+    :note: e.g. pform = fl_get_formbrowser_topform(frmbrobj)
 
-    @status: Tested + Doc + NoDemo = OK
+    :status: Tested + Doc + NoDemo = OK
 
     """
     _fl_get_formbrowser_topform = library.cfuncproto(
@@ -359,12 +359,12 @@ def fl_set_formbrowser_topform(pFlObject, pFlForm):
     @param pFlForm: form
     @type pFlForm: pointer to xfdata.FL_FORM
 
-    @returns: sequence number of the form (seqnum)
-    @rtype: int
+    :return: sequence number of the form (seqnum)
+    :rtype: int
 
-    @example: frmid = fl_set_formbrowser_topform(frmbrobj, pform)
+    :note: e.g. frmid = fl_set_formbrowser_topform(frmbrobj, pform)
 
-    @status: Tested + Doc + NoDemo = OK
+    :status: Tested + Doc + NoDemo = OK
 
     """
     _fl_set_formbrowser_topform = library.cfuncproto(
@@ -388,12 +388,12 @@ def fl_set_formbrowser_topform_bynumber(pFlObject, seqnum):
     @param seqnum: sequence number of form
     @type seqnum: int
 
-    @returns: new top form (pFlForm)
-    @rtype: pointer to xfdata.FL_FORM
+    :return: new top form (pFlForm)
+    :rtype: pointer to xfdata.FL_FORM
 
-    @example: pform = fl_set_formbrowser_topform_bynumber(frmbrobj, 2)
+    :note: e.g. pform = fl_set_formbrowser_topform_bynumber(frmbrobj, 2)
 
-    @status: Tested + Doc + NoDemo = OK
+    :status: Tested + Doc + NoDemo = OK
 
     """
     _fl_set_formbrowser_topform_bynumber = library.cfuncproto(
@@ -419,12 +419,12 @@ def fl_set_formbrowser_xoffset(pFlObject, offset):
         the natural position of the content within the formbrowser
     @type offset: int
 
-    @returns: num.
-    @rtype: int
+    :return: num.
+    :rtype: int
 
-    @example: num = fl_set_formbrowser_xoffset(frmbrobj, 15)
+    :note: e.g. num = fl_set_formbrowser_xoffset(frmbrobj, 15)
 
-    @status: Tested + Doc + NoDemo = OK
+    :status: Tested + Doc + NoDemo = OK
 
     """
     _fl_set_formbrowser_xoffset = library.cfuncproto(
@@ -449,12 +449,12 @@ def fl_set_formbrowser_yoffset(pFlObject, offset):
         the natural position of the content within the formbrowser
     @type offset: int
 
-    @returns: num.
-    @rtype: int
+    :return: num.
+    :rtype: int
 
-    @example: num = fl_set_formbrowser_yoffset(frmbrobj, 15)
+    :note: e.g. num = fl_set_formbrowser_yoffset(frmbrobj, 15)
 
-    @status: Tested + Doc + NoDemo = OK
+    :status: Tested + Doc + NoDemo = OK
 
     """
     _fl_set_formbrowser_yoffset = library.cfuncproto(
@@ -476,12 +476,12 @@ def fl_get_formbrowser_xoffset(pFlObject):
     @param pFlObject: formbrowser object
     @type pFlObject: pointer to xfdata.FL_OBJECT
 
-    @returns: horizontal offset
-    @rtype: int
+    :return: horizontal offset
+    :rtype: int
 
-    @example: xoffset = fl_get_formbrowser_xoffset(frmbrobj)
+    :note: e.g. xoffset = fl_get_formbrowser_xoffset(frmbrobj)
 
-    @status: Tested + Doc + NoDemo = OK
+    :status: Tested + Doc + NoDemo = OK
 
     """
     _fl_get_formbrowser_xoffset = library.cfuncproto(
@@ -502,12 +502,12 @@ def fl_get_formbrowser_yoffset(pFlObject):
     @param pFlObject: formbrowser object
     @type pFlObject: pointer to xfdata.FL_OBJECT
 
-    @returns: vertical offset
-    @rtype: int
+    :return: vertical offset
+    :rtype: int
 
-    @example: yoffset = fl_get_formbrowser_yoffset(frmbrobj)
+    :note: e.g. yoffset = fl_get_formbrowser_yoffset(frmbrobj)
 
-    @status: Tested + Doc + NoDemo = OK
+    :status: Tested + Doc + NoDemo = OK
 
     """
     _fl_get_formbrowser_yoffset = library.cfuncproto(
@@ -529,12 +529,12 @@ def fl_find_formbrowser_form_number(pFlObject, pFlForm):
     @param pFlForm: form candidate to be found
     @type pFlForm: pointer to xfdata.FL_FORM
 
-    @returns: sequence number of form (seqnum)
-    @rtype: int
+    :return: sequence number of form (seqnum)
+    :rtype: int
 
-    @example: frmid = fl_find_formbrowser_form_number(frmbrobj, pform)
+    :note: e.g. frmid = fl_find_formbrowser_form_number(frmbrobj, pform)
 
-    @status: Tested + Doc + NoDemo = OK
+    :status: Tested + Doc + NoDemo = OK
 
     """
     _fl_find_formbrowser_form_number = library.cfuncproto(
@@ -567,12 +567,12 @@ def fl_add_formbrowser(frmbrwstype, x, y, w, h, label):
     @param label: text label of formbrowser
     @type label: str
 
-    @returns: formbrowser object added
+    :return: formbrowser object added
 
-    @example: frmbrobj = fl_add_formbrowser(xfdata.FL_NORMAL_FORMBROWSER, 
+    :note: e.g. frmbrobj = fl_add_formbrowser(xfdata.FL_NORMAL_FORMBROWSER, 
         110, 60, 550, 750, "My Formbrowser)
 
-    @status: Tested + Doc + NoDemo = OK
+    :status: Tested + Doc + NoDemo = OK
 
     """
     _fl_add_formbrowser = library.cfuncproto(
@@ -604,12 +604,12 @@ def fl_get_formbrowser_numforms(pFlObject):
     @param pFlObject: formbrowser object
     @type pFlObject: pointer to xfdata.FL_OBJECT
 
-    @returns: number of forms in formbrowser
-    @rtype: int
+    :return: number of forms in formbrowser
+    :rtype: int
 
-    @example: frmsnum = fl_get_formbrowser_numforms(frmbrobj)
+    :note: e.g. frmsnum = fl_get_formbrowser_numforms(frmbrobj)
 
-    @status: Tested + Doc + NoDemo = OK
+    :status: Tested + Doc + NoDemo = OK
 
     """
     _fl_get_formbrowser_numforms = library.cfuncproto(
@@ -631,12 +631,12 @@ def fl_get_formbrowser_form(pFlObject, seqnum):
     @param seqnum: sequence number of the form
     @type seqnum: int
 
-    @returns: form (pFlForm)
-    @rtype: pointer to xfdata.FL_FORM
+    :return: form (pFlForm)
+    :rtype: pointer to xfdata.FL_FORM
 
-    @example: pform = fl_get_formbrowser_form(frmbrobj, 2)
+    :note: e.g. pform = fl_get_formbrowser_form(frmbrobj, 2)
 
-    @status: Tested + Doc + NoDemo = OK
+    :status: Tested + Doc + NoDemo = OK
 
     """
     _fl_get_formbrowser_form = library.cfuncproto(

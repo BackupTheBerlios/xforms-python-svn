@@ -209,7 +209,7 @@ def fl_set_default_browser_maxlinelength(num):
  
         @param num: unused parameter 
  
-        @status: Untested + NoDoc + NoExample = NOT OK 
+        :status: Untested + NoDoc + NoExample = NOT OK 
         @deprecated: do not use! 
     """ 
  
@@ -246,7 +246,7 @@ def fl_add_choice(choicetype, x, y, w, h, label):
         @param h: height in coord units 
         @param label: text label of choice 
  
-        @status: Tested + NoDoc + Example = OK 
+        :status: Tested + NoDoc + Example = OK 
         @deprecated: Use corresponding fl_*select* function 
     """ 
 
@@ -279,7 +279,7 @@ def fl_clear_choice(pObject):
  
         @param pObject: pointer to chioce object 
  
-        @status: Untested + NoDoc + NoExample = NOT OK 
+        :status: Untested + NoDoc + NoExample = NOT OK 
         @deprecated: Use corresponding fl_*select* function 
     """ 
  
@@ -301,7 +301,7 @@ def fl_addto_choice(pObject, choicetxt):
         @param pObject: pointer to choice object 
         @param choicetxt: text of item(s) to be added 
  
-        @status: HalfTested + NoDoc + Example = NOT OK (sequence param.) 
+        :status: HalfTested + NoDoc + Example = NOT OK (sequence param.) 
         @deprecated: Use corresponding fl_*select* function 
     """ 
  
@@ -326,7 +326,7 @@ def fl_replace_choice(pObject, itemnum, choicetxt):
         @param itemnum: item number to be replaced 
         @param choicetxt: text of item to replace 
  
-        @status: Untested + NoDoc + NoExample = NOT OK 
+        :status: Untested + NoDoc + NoExample = NOT OK 
         @deprecated: Use corresponding fl_*select* function 
     """ 
  
@@ -351,7 +351,7 @@ def fl_delete_choice(pObject, itemnum):
         @param pObject: pointer to choice object 
         @param itemnum: item number 
  
-        @status: Untested + NoDoc + NoExample = NOT OK 
+        :status: Untested + NoDoc + NoExample = NOT OK 
         @deprecated: Use corresponding fl_*select* function 
     """ 
  
@@ -374,7 +374,7 @@ def fl_set_choice(pObject, choice):
         @param pObject: pointer to choice object 
         @param choice: choice number 
  
-        @status: Tested + NoDoc + Example = OK 
+        :status: Tested + NoDoc + Example = OK 
         @deprecated: Use corresponding fl_*select* function 
     """ 
  
@@ -397,7 +397,7 @@ def fl_set_choice_text(pObject, choicetxt):
         @param pObject: pointer to choice object 
         @param choicetxt: text of choice 
  
-        @status: Untested + NoDoc + NoExample = NOT OK 
+        :status: Untested + NoDoc + NoExample = NOT OK 
         @deprecated: Use corresponding fl_*select* function 
     """ 
  
@@ -419,7 +419,7 @@ def fl_get_choice(pObject):
  
         @param pObject: pointer to choice object 
  
-        @status: Tested + NoDoc + Example = OK 
+        :status: Tested + NoDoc + Example = OK 
         @deprecated: Use corresponding fl_*select* function 
     """ 
  
@@ -437,7 +437,7 @@ def fl_get_choice(pObject):
 def fl_get_choice_item_text(pObject, itemnum):
     """ fl_get_choice_item_text(pObject, itemnum) -> text string 
  
-        @status: Untested + NoDoc + NoExample = NOT OK 
+        :status: Untested + NoDoc + NoExample = NOT OK 
         @deprecated: Use corresponding fl_*select* function 
     """ 
  
@@ -456,7 +456,7 @@ def fl_get_choice_item_text(pObject, itemnum):
 def fl_get_choice_maxitems(pObject):
     """ fl_get_choice_maxitems(pObject) -> items num. 
  
-        @status: Untested + NoDoc + NoExample = NOT OK 
+        :status: Untested + NoDoc + NoExample = NOT OK 
         @deprecated: Use corresponding fl_*select* function 
     """ 
  
@@ -478,7 +478,7 @@ def fl_get_choice_text(pObject):
  
         @param pObject: pointer to choice object 
  
-        @status: Untested + NoDoc + NoExample = NOT OK 
+        :status: Untested + NoDoc + NoExample = NOT OK 
         @deprecated: Use corresponding fl_*select* function 
     """ 
  
@@ -501,7 +501,7 @@ def fl_set_choice_fontsize(pObject, size):
         @param pObject: pointer to choice object 
         @param size: font size of choice to be set 
  
-        @status: Untested + NoDoc + NoExample = NOT OK 
+        :status: Untested + NoDoc + NoExample = NOT OK 
         @deprecated: Use corresponding fl_*select* function 
     """ 
  
@@ -524,7 +524,7 @@ def fl_set_choice_fontstyle(pObject, style):
         @param pObject: pointer to choice object 
         @param style: font style of choice to be set 
  
-        @status: Untested + NoDoc + NoExample = NOT OK 
+        :status: Untested + NoDoc + NoExample = NOT OK 
         @deprecated: Use corresponding fl_*select* function 
     """ 
  
@@ -547,7 +547,7 @@ def fl_set_choice_align(pObject, align):
         @param pObject: pointer to choice object 
         @param align: alignment of choice text to be set 
  
-        @status: Untested + NoDoc + NoExample = NOT OK 
+        :status: Untested + NoDoc + NoExample = NOT OK 
         @deprecated: Use corresponding fl_*select* function 
     """ 
  
@@ -566,7 +566,7 @@ def fl_set_choice_align(pObject, align):
 def fl_get_choice_item_mode(pObject, itemnum):
     """ fl_get_choice_item_mode(pObject, itemnum) -> mode num. 
  
-        @status: Untested + NoDoc + NoExample = NOT OK 
+        :status: Untested + NoDoc + NoExample = NOT OK 
         @deprecated: Use corresponding fl_*select* function 
     """ 
  
@@ -591,7 +591,7 @@ def fl_set_choice_item_mode(pObject, itemnum, mode):
         @param itemnum: item number whose mode is to be set 
         @param mode: mode of item 
  
-        @status: Tested + NoDoc + Example = OK 
+        :status: Tested + NoDoc + Example = OK 
         @deprecated: Use corresponding fl_*select* function 
     """ 
  
@@ -611,7 +611,7 @@ def fl_set_choice_item_mode(pObject, itemnum, mode):
 def fl_set_choice_item_shortcut(pObject, itemnum, sctext):
     """ fl_set_choice_item_shortcut(pObject, itemnum, sstext) 
  
-        @status: Untested + NoDoc + NoExample = NOT OK 
+        :status: Untested + NoDoc + NoExample = NOT OK 
         @deprecated 
     """ 
  
@@ -631,7 +631,7 @@ def fl_set_choice_item_shortcut(pObject, itemnum, sctext):
 def fl_set_choice_entries(pObject, pPupEntry):
     """ fl_set_choice_entries(pObject, pPupEntry) -> num. 
  
-        @status: Untested + NoDoc + NoExample = NOT OK 
+        :status: Untested + NoDoc + NoExample = NOT OK 
         @deprecated: Use corresponding fl_*select* function 
     """ 
  
@@ -650,7 +650,7 @@ def fl_set_choice_entries(pObject, pPupEntry):
 def fl_set_choice_notitle(pObject, num):
     """ fl_set_choice_notitle(pObject, num) -> num. 
  
-        @status: Tested + NoDoc + Example = OK 
+        :status: Tested + NoDoc + Example = OK 
         @deprecated: Use corresponding fl_*select* function 
     """ 
  
@@ -676,7 +676,7 @@ def fl_set_counter_return(pObject, when):
  
         @param when: return type (when it returns) 
  
-        @status: Tested + NoDoc + Example = OK 
+        :status: Tested + NoDoc + Example = OK 
         @deprecated: Use fl_set_object_return function 
     """ 
     _fl_set_counter_return = library.cfuncproto( 
@@ -709,7 +709,7 @@ def fl_add_menu(menutype, x, y, w, h, label):
         @param h: height in coord units 
         @param label: text label of menu 
  
-        @status: Tested + NoDoc + Example = OK 
+        :status: Tested + NoDoc + Example = OK 
         @deprecated: Use corresponding fl_*nmenu* function 
     """ 
     _fl_add_menu = library.cfuncproto( 
@@ -736,7 +736,7 @@ def fl_clear_menu(pObject):
     """ 
         fl_clear_menu(pObject) 
  
-        @status: Untested + NoDoc + NoExample = NOT OK 
+        :status: Untested + NoDoc + NoExample = NOT OK 
 
         @deprecated: Use corresponding fl_*nmenu* function 
     """ 
@@ -758,7 +758,7 @@ def fl_set_menu(pObject, menustr):
         @param pObject: pointer to menu object 
         @param menustr: text string of menu 
  
-        @status: Untested + NoDoc + NoExample = NOT OK 
+        :status: Untested + NoDoc + NoExample = NOT OK 
         @deprecated: Use corresponding fl_*nmenu* function 
     """ 
     _fl_set_menu = library.cfuncproto( 
@@ -775,7 +775,7 @@ def fl_addto_menu(pObject, menustr):
     """ 
         fl_addto_menu(pObject, menustr) -> num. 
  
-        @status: HalfTested + NoDoc + Example = NOT OK (sequence param.) 
+        :status: HalfTested + NoDoc + Example = NOT OK (sequence param.) 
         @deprecated: Use corresponding fl_*nmenu* function 
     """ 
     _fl_addto_menu = library.cfuncproto( 
@@ -793,7 +793,7 @@ def fl_replace_menu_item(pObject, itemnum, itemstr):
     """ 
         fl_replace_menu_item(pObject, itemnum, itemstr) 
  
-        @status: Untested + NoDoc + NoExample = NOT OK 
+        :status: Untested + NoDoc + NoExample = NOT OK 
         @deprecated: Use corresponding fl_*nmenu* function 
     """ 
     _fl_replace_menu_item = library.cfuncproto( 
@@ -812,7 +812,7 @@ def fl_delete_menu_item(pObject, itemnum):
     """ 
         fl_delete_menu_item(pObject, itemnum) 
  
-        @status: Untested + NoDoc + NoExample = NOT OK 
+        :status: Untested + NoDoc + NoExample = NOT OK 
         @deprecated: Use corresponding fl_*nmenu* function 
     """ 
     _fl_delete_menu_item = library.cfuncproto( 
@@ -829,7 +829,7 @@ def fl_set_menu_item_callback(pObject, itemnum, py_PupCb):
     """ 
         fl_set_menu_item_callback(pObject, itemnum, py_PupCb) -> callback 
  
-        @status: Untested + NoDoc + NoExample = NOT OK 
+        :status: Untested + NoDoc + NoExample = NOT OK 
         @deprecated: Use corresponding fl_*nmenu* function 
     """ 
     _fl_set_menu_item_callback = library.cfuncproto( 
@@ -857,7 +857,7 @@ def fl_set_menu_item_shortcut(pObject, itemnum, textsc):
         @param itemnum: item number to be operated on 
         @param textsc: text of shortcut to be set 
  
-        @status: Untested + NoDoc + NoExample = NOT OK 
+        :status: Untested + NoDoc + NoExample = NOT OK 
         @deprecated: Use corresponding fl_*nmenu* function 
     """ 
     _fl_set_menu_item_shortcut = library.cfuncproto( 
@@ -882,7 +882,7 @@ def fl_set_menu_item_mode(pObject, itemnum, mode):
         @param itemnum: id of an item to be operated on 
         @param mode: mode to be set 
  
-        @status: Untested + NoDoc + NoExample = NOT OK 
+        :status: Untested + NoDoc + NoExample = NOT OK 
         @deprecated: Use corresponding fl_*nmenu* function 
     """ 
     _fl_set_menu_item_mode = library.cfuncproto( 
@@ -906,7 +906,7 @@ def fl_show_menu_symbol(pObject, flag):
         @param pObject: pointer to menu object 
         @param flag: flag to show menu or not (1|0) 
  
-        @status: Untested + NoDoc + NoExample = NOT OK 
+        :status: Untested + NoDoc + NoExample = NOT OK 
         @deprecated: Use corresponding fl_*nmenu* function 
     """ 
     _fl_show_menu_symbol = library.cfuncproto( 
@@ -923,7 +923,7 @@ def fl_set_menu_popup(pObject, pup):
     """ 
         fl_set_menu_popup(pObject, pup) 
  
-        @status: Untested + NoDoc + NoExample = NOT OK 
+        :status: Untested + NoDoc + NoExample = NOT OK 
         @deprecated: Use corresponding fl_*nmenu* function 
     """ 
     _fl_set_menu_popup = library.cfuncproto( 
@@ -940,7 +940,7 @@ def fl_get_menu_popup(pObject):
     """ 
         fl_get_menu_popup(pObject) -> num. 
  
-        @status: Untested + NoDoc + NoExample = NOT OK 
+        :status: Untested + NoDoc + NoExample = NOT OK 
         @deprecated: Use corresponding fl_*nmenu* function 
     """ 
     _fl_get_menu_popup = library.cfuncproto( 
@@ -957,7 +957,7 @@ def fl_get_menu(pObject):
     """ 
         fl_get_menu(pObject) -> num. 
  
-        @status: Untested + NoDoc + NoExample = NOT OK 
+        :status: Untested + NoDoc + NoExample = NOT OK 
         @deprecated: Use corresponding fl_*nmenu* function 
     """ 
     _fl_get_menu = library.cfuncproto( 
@@ -974,7 +974,7 @@ def fl_get_menu_item_text(pObject, numb):
     """ 
         fl_get_menu_item_text(pObject, numb) -> text string 
  
-        @status: Untested + NoDoc + NoExample = NOT OK 
+        :status: Untested + NoDoc + NoExample = NOT OK 
         @deprecated: Use corresponding fl_*nmenu* function 
     """ 
     _fl_get_menu_item_text = library.cfuncproto( 
@@ -992,7 +992,7 @@ def fl_get_menu_maxitems(pObject):
     """ 
         fl_get_menu_maxitems(pObject) -> items num. 
  
-        @status: Untested + NoDoc + NoExample = NOT OK 
+        :status: Untested + NoDoc + NoExample = NOT OK 
         @deprecated: Use corresponding fl_*nmenu* function 
     """ 
     _fl_get_menu_maxitems = library.cfuncproto( 
@@ -1009,7 +1009,7 @@ def fl_get_menu_item_mode(pObject, itemnum):
     """ 
         fl_get_menu_item_mode(pObject, itemnum) -> mode num. 
  
-        @status: Untested + NoDoc + NoExample = NOT OK 
+        :status: Untested + NoDoc + NoExample = NOT OK 
         @deprecated: Use corresponding fl_*nmenu* function 
     """ 
     _fl_get_menu_item_mode = library.cfuncproto( 
@@ -1027,7 +1027,7 @@ def fl_get_menu_text(pObject):
     """ 
         fl_get_menu_text(pObject) -> text string 
  
-        @status: Untested + NoDoc + NoExample = NOT OK 
+        :status: Untested + NoDoc + NoExample = NOT OK 
         @deprecated: Use corresponding fl_*nmenu* function 
     """ 
     _fl_get_menu_text = library.cfuncproto( 
@@ -1044,7 +1044,7 @@ def fl_set_menu_entries(pObject, pPupEntry):
     """ 
         fl_set_menu_entries(pObject, pPupEntry) -> num. 
  
-        @status: Untested + NoDoc + NoExample = NOT OK 
+        :status: Untested + NoDoc + NoExample = NOT OK 
         @deprecated: Use corresponding fl_*nmenu* function 
     """ 
     _fl_set_menu_entries = library.cfuncproto( 
@@ -1062,7 +1062,7 @@ def fl_set_menu_notitle(pObject, off):
     """ 
         fl_set_menu_notitle(pObject, off) -> num. 
  
-        @status: Untested + NoDoc + NoExample = NOT OK 
+        :status: Untested + NoDoc + NoExample = NOT OK 
         @deprecated: Use corresponding fl_*nmenu* function 
     """ 
     _fl_set_menu_notitle = library.cfuncproto( 
@@ -1080,7 +1080,7 @@ def fl_set_menu_item_id(pObject, itemnum, idnum):
     """ 
         fl_set_menu_item_id(pObject, itemnum, idnum) -> num. 
  
-        @status: Untested + NoDoc + NoExample = NOT OK 
+        :status: Untested + NoDoc + NoExample = NOT OK 
         @deprecated: Use corresponding fl_*nmenu* function 
     """ 
     _fl_set_menu_item_id = library.cfuncproto( 
@@ -1104,7 +1104,7 @@ def fl_setpup_entries(popupid, pPupEntry):
     """ 
         fl_setpup_entries(popupid, pPupEntry) -> num. 
  
-        @status: Untested + NoDoc + NoExample = NOT OK 
+        :status: Untested + NoDoc + NoExample = NOT OK 
         @deprecated: Use corresponding fl_*popup* function 
     """ 
     _fl_setpup_entries = library.cfuncproto( 
@@ -1122,7 +1122,7 @@ def fl_newpup(win):
     """ 
         fl_newpup(win) -> num. 
  
-        @status: Untested + NoDoc + NoExample = NOT OK 
+        :status: Untested + NoDoc + NoExample = NOT OK 
         @deprecated: Use corresponding fl_*popup* function 
     """ 
     _fl_newpup = library.cfuncproto( 
@@ -1140,7 +1140,7 @@ def fl_defpup(win, pupstr):
     """ 
         fl_defpup(win, pupstr) -> num. 
  
-        @status: Untested + NoDoc + NoExample = NOT OK 
+        :status: Untested + NoDoc + NoExample = NOT OK 
         @deprecated: Use corresponding fl_*popup* function 
     """ 
     _fl_defpup = library.cfuncproto( 
@@ -1159,7 +1159,7 @@ def fl_addtopup(popupid, pupstr):
     """ 
         fl_addtopup(popupid, pupstr) -> num. 
  
-        @status: Untested + NoDoc + NoExample = NOT OK 
+        :status: Untested + NoDoc + NoExample = NOT OK 
         @deprecated: Use corresponding fl_*popup* function 
     """ 
     _fl_addtopup = library.cfuncproto( 
@@ -1178,7 +1178,7 @@ def fl_setpup_mode(popupid, itemval, mode):
     """ 
         fl_setpup_mode(popupid, itemval, mode) -> num. 
  
-        @status: Untested + NoDoc + NoExample = NOT OK 
+        :status: Untested + NoDoc + NoExample = NOT OK 
         @deprecated: Use corresponding fl_*popup* function 
     """ 
     _fl_setpup_mode = library.cfuncproto( 
@@ -1198,7 +1198,7 @@ def fl_freepup(popupid):
     """ 
         fl_freepup(popupid) 
  
-        @status: Untested + NoDoc + NoExample = NOT OK 
+        :status: Untested + NoDoc + NoExample = NOT OK 
         @deprecated: Use corresponding fl_*popup* function 
     """ 
     _fl_freepup = library.cfuncproto( 
@@ -1215,7 +1215,7 @@ def fl_dopup(popupid):
     """ 
         fl_dopup(popupid) -> num. 
  
-        @status: Untested + NoDoc + NoExample = NOT OK 
+        :status: Untested + NoDoc + NoExample = NOT OK 
         @deprecated: Use corresponding fl_*popup* function 
     """ 
     _fl_dopup = library.cfuncproto( 
@@ -1233,7 +1233,7 @@ def fl_setpup_default_cursor(cursor):
     """ 
         fl_setpup_default_cursor(cursor) -> cursor 
  
-        @status: Untested + NoDoc + NoExample = NOT OK 
+        :status: Untested + NoDoc + NoExample = NOT OK 
         @deprecated: Use corresponding fl_*popup* function 
     """ 
     _fl_setpup_default_cursor = library.cfuncproto( 
@@ -1251,7 +1251,7 @@ def fl_setpup_default_color(fgcolr, bgcolr):
     """ 
         fl_setpup_default_color(fgcolr, bgcolr) 
  
-        @status: Untested + NoDoc + NoExample = NOT OK 
+        :status: Untested + NoDoc + NoExample = NOT OK 
         @deprecated: Use corresponding fl_*popup* function 
     """ 
  
@@ -1273,7 +1273,7 @@ def fl_setpup_default_pup_checked_color(colr):
     """ 
         fl_setpup_default_pup_checked_color(colr): 
 
-        @status: Untested + NoDoc + NoExample = NOT OK 
+        :status: Untested + NoDoc + NoExample = NOT OK 
         @deprecated: Use corresponding fl_*popup* function 
     """ 
     _fl_setpup_default_pup_checked_color = library.cfuncproto( 
@@ -1291,7 +1291,7 @@ def fl_setpup_default_fontsize(size):
     """ 
         fl_setpup_default_fontsize(size) -> num. 
  
-        @status: Untested + NoDoc + NoExample = NOT OK 
+        :status: Untested + NoDoc + NoExample = NOT OK 
         @deprecated: Use corresponding fl_*popup* function 
     """ 
     _fl_setpup_default_fontsize = library.cfuncproto( 
@@ -1309,7 +1309,7 @@ def fl_setpup_default_fontstyle(style):
     """ 
         fl_setpup_default_fontstyle(style) -> num. 
  
-        @status: Untested + NoDoc + NoExample = NOT OK 
+        :status: Untested + NoDoc + NoExample = NOT OK 
         @deprecated: Use corresponding fl_*popup* function 
     """ 
     _fl_setpup_default_fontstyle = library.cfuncproto( 
@@ -1334,7 +1334,7 @@ def fl_setpup_default_bw(bw):
     """ 
         fl_setpup_default_bw(bw) -> num. 
  
-        @status: Untested + NoDoc + NoExample = NOT OK 
+        :status: Untested + NoDoc + NoExample = NOT OK 
         @deprecated: Use corresponding fl_*popup* function 
     """ 
     _fl_setpup_default_bw = library.cfuncproto( 
@@ -1352,7 +1352,7 @@ def fl_setpup_shortcut(popupid, itemval, hotkeystxt):
     """ 
         fl_setpup_shortcut(popupid, itemval, hotkeystxt) 
  
-        @status: Untested + NoDoc + NoExample = NOT OK 
+        :status: Untested + NoDoc + NoExample = NOT OK 
         @deprecated: Use corresponding fl_*popup* function 
     """ 
     _fl_setpup_shortcut = library.cfuncproto( 
@@ -1371,9 +1371,9 @@ def fl_setpup_shortcut(popupid, itemval, hotkeystxt):
 def fl_setpup_position(x, y):
     """ fl_setpup_position(x, y) 
  
-        @status: Untested + NoDoc + NoExample = NOT OK 
+        :status: Untested + NoDoc + NoExample = NOT OK 
  
-        @status: Untested + NoDoc + NoExample = NOT OK 
+        :status: Untested + NoDoc + NoExample = NOT OK 
         @deprecated: Use corresponding fl_*popup* function 
     """ 
     _fl_setpup_position = library.cfuncproto( 
@@ -1391,7 +1391,7 @@ def fl_setpup_selection(popupid, itemval):
     """ 
         fl_setpup_selection(popupid, itemval) 
  
-        @status: Untested + NoDoc + NoExample = NOT OK 
+        :status: Untested + NoDoc + NoExample = NOT OK 
         @deprecated: Use corresponding fl_*popup* function 
     """ 
  
@@ -1411,7 +1411,7 @@ def fl_setpup_shadow(popupid, flag):
     """ 
         fl_setpup_shadow(popupid, flag) 
  
-        @status: Untested + NoDoc + NoExample = NOT OK 
+        :status: Untested + NoDoc + NoExample = NOT OK 
         @deprecated: Use corresponding fl_*popup* function 
     """ 
     _fl_setpup_shadow = library.cfuncproto( 
@@ -1429,7 +1429,7 @@ def fl_setpup_softedge(popupid, flag):
     """ 
         fl_setpup_softedge(popupid, flag) 
  
-        @status: Untested + NoDoc + NoExample = NOT OK 
+        :status: Untested + NoDoc + NoExample = NOT OK 
         @deprecated: Use corresponding fl_*popup* function 
     """ 
     _fl_setpup_softedge = library.cfuncproto( 
@@ -1447,7 +1447,7 @@ def fl_setpup_bw(popupid, bw):
     """ 
         fl_setpup_bw(popupid, bw) 
  
-        @status: Untested + NoDoc + NoExample = NOT OK 
+        :status: Untested + NoDoc + NoExample = NOT OK 
         @deprecated: Use corresponding fl_*popup* function 
     """ 
     _fl_setpup_bw = library.cfuncproto( 
@@ -1465,7 +1465,7 @@ def fl_setpup_title(popupid, title):
     """ 
         fl_setpup_title(popupid, title) 
  
-        @status: Untested + NoDoc + NoExample = NOT OK 
+        :status: Untested + NoDoc + NoExample = NOT OK 
         @deprecated: Use corresponding fl_*popup* function 
     """ 
     _fl_setpup_title = library.cfuncproto( 
@@ -1483,7 +1483,7 @@ def fl_setpup_entercb(popupid, py_PupEnterCb, vdata):
     """ 
         fl_setpup_entercb(popupid, py_PupEnterCb, vdata) -> pup_entercb 
  
-        @status: Untested + NoDoc + NoExample = NOT OK 
+        :status: Untested + NoDoc + NoExample = NOT OK 
         @deprecated: Use corresponding fl_*popup* function 
     """ 
     #FL_PUP_ENTERCB = cty.CFUNCTYPE(None, cty.c_int, cty.c_void_p) 
@@ -1507,7 +1507,7 @@ def fl_setpup_leavecb(popupid, py_LeaveCb, data):
     """ 
         fl_setpup_leavecb(popupid, py_LeaveCb, data) -> pup_leavecb 
  
-        @status: Untested + NoDoc + NoExample = NOT OK 
+        :status: Untested + NoDoc + NoExample = NOT OK 
         @deprecated: Use corresponding fl_*popup* function 
     """ 
     #FL_PUP_LEAVECB = cty.CFUNCTYPE(None, cty.c_int, cty.c_void_p) 
@@ -1530,7 +1530,7 @@ def fl_setpup_pad(popupid, padw, padh):
     """ 
         fl_setpup_pad(popupid, padw, padh) 
  
-        @status: Untested + NoDoc + NoExample = NOT OK 
+        :status: Untested + NoDoc + NoExample = NOT OK 
         @deprecated: Use corresponding fl_*popup* function 
     """ 
     _fl_setpup_pad = library.cfuncproto( 
@@ -1549,7 +1549,7 @@ def fl_setpup_cursor(popupid, cursor):
     """ 
         fl_setpup_cursor(popupid, cursor) -> cursor 
  
-        @status: Untested + NoDoc + NoExample = NOT OK 
+        :status: Untested + NoDoc + NoExample = NOT OK 
         @deprecated: Use corresponding fl_*popup* function 
     """ 
     _fl_setpup_cursor = library.cfuncproto( 
@@ -1568,7 +1568,7 @@ def fl_setpup_maxpup(newmaxnum):
     """ 
         fl_setpup_maxpup(newmaxnum) -> num. 
  
-        @status: Untested + NoDoc + NoExample = NOT OK 
+        :status: Untested + NoDoc + NoExample = NOT OK 
         @deprecated: Use corresponding fl_*popup* function 
     """ 
     _fl_setpup_maxpup = library.cfuncproto( 
@@ -1586,7 +1586,7 @@ def fl_getpup_mode(popupid, itemval):
     """ 
         fl_getpup_mode(popupid, itemval) -> num. 
  
-        @status: Untested + NoDoc + NoExample = NOT OK 
+        :status: Untested + NoDoc + NoExample = NOT OK 
         @deprecated: Use corresponding fl_*popup* function 
     """ 
     _fl_getpup_mode = library.cfuncproto( 
@@ -1605,7 +1605,7 @@ def fl_getpup_text(popupid, itemval):
     """ 
         fl_getpup_text(popupid, itemval) -> text string 
  
-        @status: Untested + NoDoc + NoExample = NOT OK 
+        :status: Untested + NoDoc + NoExample = NOT OK 
         @deprecated: Use corresponding fl_*popup* function 
     """ 
     _fl_getpup_text = library.cfuncproto( 
@@ -1624,7 +1624,7 @@ def fl_showpup(popupid):
     """ 
         fl_showpup(popupid) 
  
-        @status: Untested + NoDoc + NoExample = NOT OK 
+        :status: Untested + NoDoc + NoExample = NOT OK 
         @deprecated: Use corresponding fl_*popup* function 
     """ 
     _fl_showpup = library.cfuncproto( 
@@ -1641,7 +1641,7 @@ def fl_hidepup(popupid):
     """ 
         fl_hidepup(popupid) 
  
-        @status: Untested + NoDoc + NoExample = NOT OK 
+        :status: Untested + NoDoc + NoExample = NOT OK 
         @deprecated: Use corresponding fl_*popup* function 
     """ 
     _fl_hidepup = library.cfuncproto( 
@@ -1658,7 +1658,7 @@ def fl_getpup_items(popupid):
     """ 
         fl_getpup_items(popupid) -> num. 
  
-        @status: Untested + NoDoc + NoExample = NOT OK 
+        :status: Untested + NoDoc + NoExample = NOT OK 
         @deprecated: Use corresponding fl_*popup* function 
     """ 
     _fl_getpup_items = library.cfuncproto( 
@@ -1675,7 +1675,7 @@ def fl_current_pup():
     """ 
         fl_current_pup() -> num. 
  
-        @status: Untested + NoDoc + NoExample = NOT OK 
+        :status: Untested + NoDoc + NoExample = NOT OK 
         @deprecated: Use corresponding fl_*popup* function 
     """ 
  
@@ -1693,7 +1693,7 @@ def fl_setpup_itemcb(popupid, itemval, py_PupCb):
     """ 
         fl_setpup_itemcb(popupid, itemval, py_PupCb) -> pup_cb 
  
-        @status: Untested + NoDoc + NoExample = NOT OK 
+        :status: Untested + NoDoc + NoExample = NOT OK 
         @deprecated: Use corresponding fl_*popup* function 
     """ 
  
@@ -1716,7 +1716,7 @@ def fl_setpup_menucb(popupid, py_PupCb):
     """ 
         fl_setpup_menucb(popupid, py_PupCb) -> pup_cb func. 
  
-        @status: Untested + NoDoc + NoExample = NOT OK 
+        :status: Untested + NoDoc + NoExample = NOT OK 
         @deprecated: Use corresponding fl_*popup* function 
     """ 
  
@@ -1738,7 +1738,7 @@ def fl_setpup_submenu(popupid, itemval, subpopupid):
     """ 
         fl_setpup_submenu(popupid, itemval, subpopupid) 
  
-        @status: Untested + NoDoc + NoExample = NOT OK 
+        :status: Untested + NoDoc + NoExample = NOT OK 
         @deprecated: Use corresponding fl_*popup* function 
     """ 
  
@@ -1773,7 +1773,7 @@ def fl_set_xyplot_fontsize(pObject, size):
  
         @param pObject: pointer to object 
  
-        @status: Untested + NoDoc + NoExample = NOT OK 
+        :status: Untested + NoDoc + NoExample = NOT OK 
         @deprecated: Use fl_set_object_lsize function 
     """ 
  
@@ -1794,7 +1794,7 @@ def fl_set_xyplot_fontstyle(pObject, style):
  
         @param pObject: pointer to object 
  
-        @status: Untested + NoDoc + NoExample = NOT OK 
+        :status: Untested + NoDoc + NoExample = NOT OK 
         @deprecated: Use fl_set_object_lstyle function 
     """ 
  
@@ -1822,7 +1822,7 @@ def fl_set_slider_return(pObject, when):
         @param pObject: pointer to object 
         @param when: return type (when it returns) 
  
-        @status: Tested + NoDoc + Example = OK 
+        :status: Tested + NoDoc + Example = OK 
         @deprecated: Use fl_set_object_return function 
     """ 
     _fl_set_slider_return = library.cfuncproto( 

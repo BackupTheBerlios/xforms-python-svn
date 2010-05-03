@@ -2,8 +2,7 @@
 # -*- coding: iso8859-1 -*-
 
 """
-    xforms-python - Python wrapper for XForms (X11) GUI C toolkit library
-    using ctypes
+    flcursor.py - Functions to manage cursor objects.
 
     Copyright (C) 2009, 2010  Luca Lazzaroni "LukenShiro"
     e-mail: <lukenshiro@ngi.it>
@@ -47,16 +46,18 @@ from xformslib import xfdata
 
 def fl_set_cursor(win, cursnum):
     """Set cursor for window to provided cursor number, that is
-    either the standard XC_ or Form defined.
 
-    @param win: window
-    @type win: long_pos
-    @param cursnum: cursor number
-    @type cursnum: int
+    --
 
-    @example: fl_set_cursor(win0, xfdata.FL_CROSSHAIR_CURSOR)
+    :Parameters:
+      `win` : long _pos
+        window
+      `cursnum` : int
+        cursor id (either the standard XC_ or Form defined)
 
-    @status: Tested + Doc + Demo = OK
+    :note: e.g. fl_set_cursor(win0, xfdata.FL_CROSSHAIR_CURSOR)
+
+    :status: Tested + Doc + Demo = OK
 
     """
     _fl_set_cursor = library.cfuncproto(
@@ -73,17 +74,20 @@ def fl_set_cursor(win, cursnum):
 def fl_set_cursor_color(cursnum, fgcolr, bgcolr):
     """Sets foreground and background colors of a cursor.
 
-    @param cursnum: cursor number
-    @type cursnum: int
-    @param fgcolr: foreground color to be set
-    @type fgcolr: long_pos
-    @param bgcolr: background color to be set
-    @type bgcolr: long_pos
+    --
 
-    @example: fl_set_cursor_color(FL_CROSSHAIR_CURSOR, xfdata.Fl_WHITE,
+    :Parameters:
+      `cursnum` : int
+        cursor id
+      `fgcolr` : long_pos
+        foreground color to be set
+      `bgcolr` : long_pos
+        background color to be set
+
+    :note: e.g. fl_set_cursor_color(FL_CROSSHAIR_CURSOR, xfdata.FL_WHITE,
         xfdata.FL_ORANGE)
 
-    @status: Tested + Doc + Demo = OK
+    :status: Tested + Doc + Demo = OK
 
     """
     _fl_set_cursor_color = library.cfuncproto(
@@ -102,24 +106,33 @@ def fl_set_cursor_color(cursnum, fgcolr, bgcolr):
 
 
 def fl_create_bitmap_cursor(source, maskstr, w, h, hotx, hoty):
-    """ fl_create_bitmap_cursor(source, maskstr, w, h, hotx, hoty) -> num.
+    """Creates a bitmap cursor, using cursors other than those defined by
+    the standard cursor font.
 
-    @param source: ?
-    @type source: str
-    @param maskstr: ?
-    @type maskstr: str
-    @param w: width of cursor
-    @type w: int
-    @param h: height of cursor
-    @type h: int
-    @param hotx: ?
-    @type hotx: int
-    @param hoty: ?
-    @type hoty: int
+    --
 
-    @example: ?
+    :Parameters:
+      `source` : str?
+        bitmap to be used as cursor.
+      `maskstr` : str?
+        bitmap defining the shape of the cursor. The pixels set to 1 in the
+        mask define which source pixels are displayed. If mask is None all
+        bits in source are displayed.
+      `w` : int
+        width of cursor
+      `h` : int
+        height of cursor
+      `hotx` : int
+        horizontal hotspot of the cursor (relative to the source's origin)
+      `hoty` : int
+        vertical hotspot of the cursor (relative to the source's origin)
 
-    @status: HalfTested + NoDoc + Demo = NOT OK (bitmap after animated problematic)
+    :return: cursor id
+    :rtype: int
+
+    :note: e.g. *todo*
+
+    :status: Tested + Doc + Demo = OK
 
     """
     _fl_create_bitmap_cursor = library.cfuncproto(
@@ -141,21 +154,30 @@ def fl_create_bitmap_cursor(source, maskstr, w, h, hotx, hoty):
     return retval
 
 
-def fl_create_animated_cursor(curnums, timeout):
+def fl_create_animated_cursor(curseries, timeout):
     """Creates an animated series of cursors, that change after timeout
-    is expired.
+    is expired (several cursors are displayed one after another). Internally
+    animated cursor works by utilizing the timeout callback, this means that
+    if the application blocks (thus the main loop has no chance of servicing
+    the timeouts), the animation will stop.
 
-    @param curnums: ?
-    @type curnums: str of ubytes
-    @param timeout:time after which the cursor is changed
-    @type timeout: int
+    --
 
-    @returns: num.
-    @rtype: int
+    :Parameters:
+      `curseries: str of ubytes
+        array of cursor names (either X standard cursors or cursor names
+        returned by fl_create_bitmap_cursor()), terminated by -1.
+      `timeout` : int
+        time after which the cursor is changed, replacing by the next in
+        the array. An interval about 150 msec is a good value for typical
+        uses.
 
-    @example: ?
+    :return: cursor id
+    :rtype: int
 
-    @status: HalfTested + NoDoc + Demo = NOT OK (curnums data problematic)
+    :note: e.g. *todo*
+
+    :status: HalfTested + Doc + Demo = NOT OK (curnums data problematic)
 
     """
     _fl_create_animated_cursor = library.cfuncproto(
@@ -163,24 +185,29 @@ def fl_create_animated_cursor(curnums, timeout):
         cty.c_int, [cty.POINTER(cty.c_int), cty.c_int],
         """int fl_create_animated_cursor(int * cur_names, int timeout)""")
     library.check_if_initialized()
-    pcurnums = cty.cast(curnums, cty.POINTER(cty.c_int))
+    pcurseries = cty.cast(curseries, cty.POINTER(cty.c_int))
     #print "pcurnums", pcurnums
     itimeout = library.convert_to_int(timeout)
-    library.keep_elem_refs(curnums, timeout, pcurnums, itimeout)
-    retval = _fl_create_animated_cursor(pcurnums, itimeout)
+    library.keep_elem_refs(curseries, timeout, pcurseries, itimeout)
+    retval = _fl_create_animated_cursor(pcurseries, itimeout)
     return retval
 
 
 def fl_get_cursor_byname(cursnum):
-    """Returns cursor corresponding to number.
+    """Returns cursor corresponding to its number (cursor id).
 
-    @param cursnum: cursor number
-    @type cursnum: int
+    --
 
-    @returns: cursor
-    @rtype: long_pos
+    :Parameters:
+      `cursnum` : int
+        cursor id
 
-    @status: Tested + Doc + NoDemo = OK
+    :return: cursor
+    :rtype: long_pos
+
+    :note: e.g. *todo*
+
+    :status: Tested + Doc + NoDemo = OK
 
     """
     _fl_get_cursor_byname = library.cfuncproto(
@@ -197,11 +224,15 @@ def fl_get_cursor_byname(cursnum):
 def fl_reset_cursor(win):
     """Reset used cursor, reverting to default one.
 
-    @param win: window
+    --
 
-    @example: fl_reset_cursor(win0)
+    :Parameters:
+      `win` : long_pos
+        window
 
-    @status: Tested + Doc + Demo = OK
+    :note: e.g. fl_reset_cursor(win0)
+
+    :status: Tested + Doc + Demo = OK
 
     """
     fl_set_cursor(win, xfdata.FL_DEFAULT_CURSOR)

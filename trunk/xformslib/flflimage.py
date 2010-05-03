@@ -69,7 +69,7 @@ def flimage_setup(pImageSetup):
 
         @param pImageSetup: pointer to imagesetup struct
 
-        @status: Untested + NoDoc + NoDemo = NOT OK
+        :status: Untested + NoDoc + NoDemo = NOT OK
     """
     _flimage_setup = library.cfuncproto(
         library.load_so_libflimage(), "flimage_setup",
@@ -88,7 +88,7 @@ def flimage_load(filename):
 
         @param filename: name of file to load
 
-        @status: Untested + NoDoc + NoDemo = NOT OK
+        :status: Untested + NoDoc + NoDemo = NOT OK
     """
     _flimage_load = library.cfuncproto(
         library.load_so_libflimage(), "flimage_load",
@@ -107,7 +107,7 @@ def flimage_read(pImage):
 
         @param pImage: pointer to image
 
-        @status: Untested + NoDoc + NoDemo = NOT OK
+        :status: Untested + NoDoc + NoDemo = NOT OK
     """
     _flimage_read = library.cfuncproto(
         library.load_so_libflimage(), "flimage_read",
@@ -125,7 +125,7 @@ def flimage_dump(pImage, p2, p3):
 
         @param pImage: pointer to image
 
-        @status: Untested + NoDoc + NoDemo = NOT OK
+        :status: Untested + NoDoc + NoDemo = NOT OK
     """
     _flimage_dump = library.cfuncproto(
         library.load_so_libflimage(), "flimage_dump",
@@ -146,7 +146,7 @@ def flimage_close(pImage):
 
         @param pImage: pointer to image
 
-        @status: Untested + NoDoc + NoDemo = NOT OK
+        :status: Untested + NoDoc + NoDemo = NOT OK
     """
     _flimage_close = library.cfuncproto(
         library.load_so_libflimage(), "flimage_close",
@@ -162,7 +162,7 @@ def flimage_alloc():
     """
         flimage_alloc() -> pImage
 
-        @status: Untested + NoDoc + NoDemo = NOT OK
+        :status: Untested + NoDoc + NoDemo = NOT OK
     """
     _flimage_alloc = library.cfuncproto(
         library.load_so_libflimage(), "flimage_alloc",
@@ -179,7 +179,7 @@ def flimage_getmem(pImage):
 
         @param pImage: pointer to image
 
-        @status: Untested + NoDoc + NoDemo = NOT OK
+        :status: Untested + NoDoc + NoDemo = NOT OK
     """
     _flimage_getmem = library.cfuncproto(
         library.load_so_libflimage(), "flimage_getmem",
@@ -197,7 +197,7 @@ def flimage_is_supported(fname):
 
         @param fname: filename
 
-        @status: Untested + NoDoc + NoDemo = NOT OK
+        :status: Untested + NoDoc + NoDemo = NOT OK
     """
     _flimage_is_supported = library.cfuncproto(
         library.load_so_libflimage(), "flimage_is_supported",
@@ -216,7 +216,7 @@ def flimage_description_via_filter(pImage, p2, p3, p4):
 
         @param pImage: pointer to image
 
-        @status: Untested + NoDoc + NoDemo = NOT OK
+        :status: Untested + NoDoc + NoDemo = NOT OK
     """
     _flimage_description_via_filter = library.cfuncproto(
         library.load_so_libflimage(), "flimage_description_via_filter",
@@ -238,7 +238,7 @@ def flimage_write_via_filter(pImage, p2, p3, p4):
 
         @param pImage: pointer to image
 
-        @status: Untested + NoDoc + NoDemo = NOT OK
+        :status: Untested + NoDoc + NoDemo = NOT OK
     """
     _flimage_write_via_filter = library.cfuncproto(
         library.load_so_libflimage(), "flimage_write_via_filter",
@@ -259,7 +259,7 @@ def flimage_free(pImage):
 
         @param pImage: pointer to image
 
-        @status: Untested + NoDoc + NoDemo = NOT OK
+        :status: Untested + NoDoc + NoDemo = NOT OK
     """
     _flimage_free = library.cfuncproto(
         library.load_so_libflimage(), "flimage_free",
@@ -278,7 +278,7 @@ def flimage_display(pImage, win):
         @param pImage: pointer to image
         @param win: window
 
-        @status: Untested + NoDoc + NoDemo = NOT OK
+        :status: Untested + NoDoc + NoDemo = NOT OK
     """
     _flimage_display = library.cfuncproto(
         library.load_so_libflimage(), "flimage_display",
@@ -298,7 +298,7 @@ def flimage_sdisplay(pImage, win):
         @param pImage: pointer to image
         @param win: window
 
-        @status: Untested + NoDoc + NoDemo = NOT OK
+        :status: Untested + NoDoc + NoDemo = NOT OK
     """
     _flimage_sdisplay = library.cfuncproto(
         library.load_so_libflimage(), "flimage_sdisplay",
@@ -321,7 +321,7 @@ def flimage_convert(pImage, newtype, ncolors):
         @param newtype: new type of flimage to convert to
         @param ncolors: number of colors
 
-        @status: Untested + NoDoc + NoDemo = NOT OK
+        :status: Untested + NoDoc + NoDemo = NOT OK
     """
     _flimage_convert = library.cfuncproto(
         library.load_so_libflimage(), "flimage_convert",
@@ -341,7 +341,7 @@ def flimage_type_name(flimagetype):
 
         @param flimagetype: type of flimage
 
-        @status: Untested + NoDoc + NoDemo = NOT OK
+        :status: Untested + NoDoc + NoDemo = NOT OK
     """
     _flimage_type_name = library.cfuncproto(
         library.load_so_libflimage(), "flimage_type_name",
@@ -361,7 +361,7 @@ def flimage_add_text(pImage, text, length, style, size, txtcolr, bgcolr, tran, t
 
         @param pImage: pointer to image
 
-        @status: Untested + NoDoc + NoDemo = NOT OK
+        :status: Untested + NoDoc + NoDemo = NOT OK
     """
     _flimage_add_text = library.cfuncproto(
         library.load_so_libflimage(), "flimage_add_text",
@@ -396,7 +396,7 @@ def flimage_add_text_struct(pImage, pImageText):
 
         @param pImage: pointer to image
 
-        @status: Untested + NoDoc + NoDemo = NOT OK
+        :status: Untested + NoDoc + NoDemo = NOT OK
     """
     _flimage_add_text_struct = library.cfuncproto(
         library.load_so_libflimage(), "flimage_add_text_struct",
@@ -415,7 +415,7 @@ def flimage_delete_all_text(pImage):
 
         @param pImage: pointer to image
 
-        @status: Untested + NoDoc + NoDemo = NOT OK
+        :status: Untested + NoDoc + NoDemo = NOT OK
     """
     _flimage_delete_all_text = library.cfuncproto(
         library.load_so_libflimage(), "flimage_delete_all_text",
@@ -432,7 +432,7 @@ def flimage_add_marker(pImage, text, p3, p4, p5, p6, p7, p8, p9, colr, bcolr):
 
         @param pImage: pointer to image
 
-        @status: Untested + NoDoc + NoDemo = NOT OK
+        :status: Untested + NoDoc + NoDemo = NOT OK
     """
     _flimage_add_marker = library.cfuncproto(
         library.load_so_libflimage(), "flimage_add_marker",
@@ -466,7 +466,7 @@ def flimage_add_marker_struct(pImage, pImageMarker):
 
         @param pImage: pointer to image
 
-        @status: Untested + NoDoc + NoDemo = NOT OK
+        :status: Untested + NoDoc + NoDemo = NOT OK
     """
     _flimage_add_marker_struct = library.cfuncproto(
         library.load_so_libflimage(), "flimage_add_marker_struct",
@@ -482,7 +482,7 @@ def flimage_define_marker(text1, pImageMarker, text2):
     """
         flimage_define_marker(text1, pImageMarker, text2) -> num.
 
-        @status: Untested + NoDoc + NoDemo = NOT OK
+        :status: Untested + NoDoc + NoDemo = NOT OK
     """
     _flimage_define_marker = library.cfuncproto(
         library.load_so_libflimage(), "flimage_define_marker",
@@ -502,7 +502,7 @@ def flimage_delete_all_markers(pImage):
 
         @param pImage: pointer to image
 
-        @status: Untested + NoDoc + NoDemo = NOT OK
+        :status: Untested + NoDoc + NoDemo = NOT OK
     """
     _flimage_delete_all_markers = library.cfuncproto(
         library.load_so_libflimage(), "flimage_delete_all_markers",
@@ -520,7 +520,7 @@ def flimage_render_annotation(pImage, win):
         @param pImage: pointer to image
         @param win: window
 
-        @status: Untested + NoDoc + NoDemo = NOT OK
+        :status: Untested + NoDoc + NoDemo = NOT OK
     """
     _flimage_render_annotation = library.cfuncproto(
         library.load_so_libflimage(), "flimage_render_annotation",
@@ -539,7 +539,7 @@ def flimage_error(pImage, text):
 
         @param pImage: pointer to image
 
-        @status: Untested + NoDoc + NoDemo = NOT OK
+        :status: Untested + NoDoc + NoDemo = NOT OK
     """
     _flimage_error = library.cfuncproto(
         library.load_so_libflimage(), "flimage_error",
@@ -559,9 +559,9 @@ def flimage_enable_pnm():
 
     Enables use of PNM (Portable anymap) image format
 
-    @example: flimage_enable_pnm()
+    :note: e.g. flimage_enable_pnm()
 
-    @status: Tested + Doc + NoDemo = OK
+    :status: Tested + Doc + NoDemo = OK
     """
 
     _flimage_enable_pnm = library.cfuncproto(
@@ -577,7 +577,7 @@ def flimage_set_fits_bits(p1):
     """
         flimage_set_fits_bits(p1) -> num.
 
-        @status: Untested + NoDoc + NoDemo = NOT OK
+        :status: Untested + NoDoc + NoDemo = NOT OK
     """
     _flimage_set_fits_bits = library.cfuncproto(
         library.load_so_libflimage(), "flimage_set_fits_bits",
@@ -594,7 +594,7 @@ def flimage_jpeg_output_options(pImageJpegOption):
     """
         flimage_jpeg_output_options(pImageJpegOption)
 
-        @status: Untested + NoDoc + NoDemo = NOT OK
+        :status: Untested + NoDoc + NoDemo = NOT OK
     """
     _flimage_jpeg_output_options = library.cfuncproto(
         library.load_so_libflimage(), "flimage_jpeg_output_options",
@@ -609,7 +609,7 @@ def flimage_pnm_output_options(p1):
     """
         flimage_pnm_output_options(p1)
 
-        @status: Untested + NoDoc + NoDemo = NOT OK
+        :status: Untested + NoDoc + NoDemo = NOT OK
     """
 
     _flimage_pnm_output_options = library.cfuncproto(
@@ -627,7 +627,7 @@ def flimage_gif_output_options(p1):
     """
         flimage_gif_output_options(p1)
 
-        @status: Untested + NoDoc + NoDemo = NOT OK
+        :status: Untested + NoDoc + NoDemo = NOT OK
     """
     _flimage_gif_output_options = library.cfuncproto(
         library.load_so_libflimage(), "flimage_gif_output_options",
@@ -643,7 +643,7 @@ def flimage_ps_options():
     """
         flimage_ps_options() -> pFlpsControl
 
-        @status: Untested + NoDoc + NoDemo = NOT OK
+        :status: Untested + NoDoc + NoDemo = NOT OK
     """
     _flimage_ps_options = library.cfuncproto(
         library.load_so_libflimage(), "flimage_ps_options",
@@ -663,7 +663,7 @@ def flimage_get_number_of_formats():
     """
         flimage_get_number_of_formats() -> num.
 
-        @status: Untested + NoDoc + NoDemo = NOT OK
+        :status: Untested + NoDoc + NoDemo = NOT OK
     """
 
     _flimage_get_number_of_formats = library.cfuncproto(
@@ -680,7 +680,7 @@ def flimage_get_format_info(p1):
     """
         flimage_get_format_info(p1) -> ImageFormatInfo class instance
 
-        @status: Untested + NoDoc + NoDemo = NOT OK
+        :status: Untested + NoDoc + NoDemo = NOT OK
     """
 
     _flimage_get_format_info = library.cfuncproto(
@@ -703,7 +703,7 @@ def fl_get_matrix(nrows, ncols, esize):
         @param ncols: number of columns
         @param esize: size of matrix
 
-        @status: Untested + NoDoc + NoDemo = NOT OK
+        :status: Untested + NoDoc + NoDemo = NOT OK
     """
 
     _fl_get_matrix = library.cfuncproto(
@@ -731,7 +731,7 @@ def fl_make_matrix(nrows, ncols, esize, mem):
         @param esize: size of matrix
         @param mem: memory
 
-        @status: Untested + NoDoc + NoDemo = NOT OK
+        :status: Untested + NoDoc + NoDemo = NOT OK
     """
 
     _fl_make_matrix = library.cfuncproto(
@@ -754,7 +754,7 @@ def fl_free_matrix(mtrx):
     """
         fl_free_matrix(mtrx)
 
-        @status: Untested + NoDoc + NoDemo = NOT OK
+        :status: Untested + NoDoc + NoDemo = NOT OK
     """
     _fl_free_matrix = library.cfuncproto(
         library.load_so_libflimage(), "fl_free_matrix",
@@ -773,7 +773,7 @@ def fl_lookup_RGBcolor(text, p2, p3, p4):
     """
         fl_lookup_RGBcolor(text, p2, p3, p4) -> num.
 
-        @status: Untested + NoDoc + NoDemo = NOT OK
+        :status: Untested + NoDoc + NoDemo = NOT OK
     """
 
     _fl_lookup_RGBcolor = library.cfuncproto(
@@ -798,7 +798,7 @@ def flimage_add_format(formalname, shortname, extension, flimagetype, \
         py_ImageIdentify, py_ImageDescription, py_ImageReadPixels,
         py_ImageWriteImage) -> num.
 
-        @status: Untested + NoDoc + NoDemo = NOT OK
+        :status: Untested + NoDoc + NoDemo = NOT OK
     """
     #FLIMAGE_Identify = cty.CFUNCTYPE(cty.c_int, cty.POINTER(xfdata.FILE))
     #FLIMAGE_Description = cty.CFUNCTYPE(cty.c_int, cty.POINTER(xfdata.FL_IMAGE))
@@ -839,7 +839,7 @@ def flimage_set_annotation_support(p1, p2):
     """
         flimage_set_annotation_support(p1, p2)
 
-        @status: Untested + NoDoc + NoDemo = NOT OK
+        :status: Untested + NoDoc + NoDemo = NOT OK
     """
 
     _flimage_set_annotation_support = library.cfuncproto(
@@ -860,7 +860,7 @@ def flimage_getcolormap(pImage):
 
         @param pImage: pointer to image
 
-        @status: Untested + NoDoc + NoDemo = NOT OK
+        :status: Untested + NoDoc + NoDemo = NOT OK
     """
 
     _flimage_getcolormap = library.cfuncproto(
@@ -878,7 +878,7 @@ def fl_select_mediancut_quantizer():
     """
         fl_select_mediancut_quantizer()
 
-        @status: Untested + NoDoc + NoDemo = NOT OK
+        :status: Untested + NoDoc + NoDemo = NOT OK
     """
 
     _fl_select_mediancut_quantizer = library.cfuncproto(
@@ -898,7 +898,7 @@ def flimage_convolve(pImage, p2, p3, p4):
 
         @param pImage: pointer to image
 
-        @status: Untested + NoDoc + NoDemo = NOT OK
+        :status: Untested + NoDoc + NoDemo = NOT OK
     """
 
     _flimage_convolve = library.cfuncproto(
@@ -922,7 +922,7 @@ def flimage_convolvea(pImage, p2, p3, p4):
 
         @param pImage: pointer to image
 
-        @status: Untested + NoDoc + NoDemo = NOT OK
+        :status: Untested + NoDoc + NoDemo = NOT OK
     """
 
     _flimage_convolvea = library.cfuncproto(
@@ -943,7 +943,7 @@ def flimage_tint(pImage, p2, p3):
 
         @param pImage: pointer to image
 
-        @status: Untested + NoDoc + NoDemo = NOT OK
+        :status: Untested + NoDoc + NoDemo = NOT OK
     """
 
     _flimage_tint = library.cfuncproto(
@@ -963,7 +963,7 @@ def flimage_rotate(pImage, p2, p3):
 
         @param pImage: pointer to image
 
-        @status: Untested + NoDoc + NoDemo = NOT OK
+        :status: Untested + NoDoc + NoDemo = NOT OK
     """
 
     _flimage_rotate = library.cfuncproto(
@@ -985,7 +985,7 @@ def flimage_flip(pImage, p2):
 
         @param pImage: pointer to image
 
-        @status: Untested + NoDoc + NoDemo = NOT OK
+        :status: Untested + NoDoc + NoDemo = NOT OK
     """
 
     _flimage_flip = library.cfuncproto(
@@ -1006,7 +1006,7 @@ def flimage_scale(pImage, p2, p3, p4):
 
         @param pImage: pointer to image
 
-        @status: Untested + NoDoc + NoDemo = NOT OK
+        :status: Untested + NoDoc + NoDemo = NOT OK
     """
 
     _flimage_scale = library.cfuncproto(
@@ -1030,7 +1030,7 @@ def flimage_warp(pImage, p2, p3, p4, p5):
 
         @param pImage: pointer to image
 
-        @status: Untested + NoDoc + NoDemo = NOT OK
+        :status: Untested + NoDoc + NoDemo = NOT OK
     """
 
     _flimage_warp = library.cfuncproto(
@@ -1055,7 +1055,7 @@ def flimage_autocrop(pImage, p2):
 
         @param pImage: pointer to image
 
-        @status: Untested + NoDoc + NoDemo = NOT OK
+        :status: Untested + NoDoc + NoDemo = NOT OK
     """
 
     _flimage_autocrop = library.cfuncproto(
@@ -1076,10 +1076,10 @@ def flimage_get_autocrop(pImage, bk):
 
         @param pImage: pointer to image
 
-        @attention: API change from XForms - upstream was
+        :attention: API change from XForms - upstream was
            flimage_get_autocrop(pImage, bk, xl, yt, xr, yb)
 
-        @status: Untested + NoDoc + NoDemo = NOT OK
+        :status: Untested + NoDoc + NoDemo = NOT OK
     """
 
     _flimage_get_autocrop = library.cfuncproto(
@@ -1107,7 +1107,7 @@ def flimage_crop(pImage, p2, p3, p4, p5):
 
         @param pImage: pointer to image
 
-        @status: Untested + NoDoc + NoDemo = NOT OK
+        :status: Untested + NoDoc + NoDemo = NOT OK
     """
 
     _flimage_crop = library.cfuncproto(
@@ -1133,7 +1133,7 @@ def flimage_replace_pixel(pImage, p2, p3):
 
         @param pImage: pointer to image
 
-        @status: Untested + NoDoc + NoDemo = NOT OK
+        :status: Untested + NoDoc + NoDemo = NOT OK
     """
 
     _flimage_replace_pixel = library.cfuncproto(
@@ -1156,7 +1156,7 @@ def flimage_transform_pixels(pImage, red, green, blue):
 
         @param pImage: pointer to image
 
-        @status: Untested + NoDoc + NoDemo = NOT OK
+        :status: Untested + NoDoc + NoDemo = NOT OK
     """
 
     _flimage_transform_pixels = library.cfuncproto(
@@ -1181,7 +1181,7 @@ def flimage_windowlevel(pImage, p2, p3):
 
         @param pImage: pointer to image
 
-        @status: Untested + NoDoc + NoDemo = NOT OK
+        :status: Untested + NoDoc + NoDemo = NOT OK
     """
 
     _flimage_windowlevel = library.cfuncproto(
@@ -1203,7 +1203,7 @@ def flimage_enhance(pImage, p2):
 
         @param pImage: pointer to image
 
-        @status: Untested + NoDoc + NoDemo = NOT OK
+        :status: Untested + NoDoc + NoDemo = NOT OK
     """
 
     _flimage_enhance = library.cfuncproto(
@@ -1225,7 +1225,7 @@ def flimage_from_pixmap(pImage, pixmap):
         @param pImage: pointer to image
         @param pixmap: pixmap value
 
-        @status: Untested + NoDoc + NoDemo = NOT OK
+        :status: Untested + NoDoc + NoDemo = NOT OK
     """
 
     _flimage_from_pixmap = library.cfuncproto(
@@ -1247,7 +1247,7 @@ def flimage_to_pixmap(pImage, win):
         @param pImage: pointer to image
         @param win: window id
 
-        @status: Untested + NoDoc + NoDemo = NOT OK
+        :status: Untested + NoDoc + NoDemo = NOT OK
     """
 
     _flimage_to_pixmap = library.cfuncproto(
@@ -1268,7 +1268,7 @@ def flimage_dup(pImage):
 
         @param pImage: pointer to image
 
-        @status: Untested + NoDoc + NoDemo = NOT OK
+        :status: Untested + NoDoc + NoDemo = NOT OK
     """
 
     _flimage_dup = library.cfuncproto(
@@ -1288,7 +1288,7 @@ def fl_get_submatrix(inmtrx, rows, cols, r1, c1, rs, cs, esize):
     """
         fl_get_submatrix(inmtrx, rows, cols, r1, c1, rs, cs, esize) -> ?
 
-        @status: Untested + NoDoc + NoDemo = NOT OK
+        :status: Untested + NoDoc + NoDemo = NOT OK
     """
 
     _fl_get_submatrix = library.cfuncproto(
@@ -1318,7 +1318,7 @@ def fl_j2pass_quantize_packed(p1, p2, p3, p4, p5, p6, p7, p8, p9, pImage):
     """
         fl_j2pass_quantize_packed(p1, p2, p3, p4, p5, p6, p7, p8, p9, pImage) -> num.
 
-        @status: Untested + NoDoc + NoDemo = NOT OK
+        :status: Untested + NoDoc + NoDemo = NOT OK
     """
 
     _fl_j2pass_quantize_packed = library.cfuncproto(
@@ -1346,7 +1346,7 @@ def fl_j2pass_quantize_rgb(p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, pImage)
     """
         fl_j2pass_quantize_rgb(p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, pImage) -> num.
 
-        @status: Untested + NoDoc + NoDemo = NOT OK
+        :status: Untested + NoDoc + NoDemo = NOT OK
     """
 
     _fl_j2pass_quantize_rgb = library.cfuncproto(
@@ -1378,7 +1378,7 @@ def fl_make_submatrix(in_, rows, cols, r1, c1, rs, cs, esize):
     """
         fl_make_submatrix(in_, rows, cols, r1, c1, rs, cs, esize) -> ?
 
-        @status: Untested + NoDoc + NoDemo = NOT OK
+        :status: Untested + NoDoc + NoDemo = NOT OK
     """
 
     _fl_make_submatrix = library.cfuncproto(
@@ -1407,7 +1407,7 @@ def fl_pack_bits(p1, p2, p3):
     """
         fl_pack_bits(p1, p2, p3)
 
-        @status: Untested + NoDoc + NoDemo = NOT OK
+        :status: Untested + NoDoc + NoDemo = NOT OK
     """
 
     _fl_pack_bits = library.cfuncproto(
@@ -1427,7 +1427,7 @@ def fl_unpack_bits(p1, p2, p3):
     """
         fl_unpack_bits(p1, p2, p3)
 
-        @status: Untested + NoDoc + NoDemo = NOT OK
+        :status: Untested + NoDoc + NoDemo = NOT OK
     """
 
     _fl_unpack_bits = library.cfuncproto(
@@ -1449,7 +1449,7 @@ def fl_value_to_bits(val):
 
         @param val: value to convert to bits
 
-        @status: Untested + NoDoc + NoDemo = NOT OK
+        :status: Untested + NoDoc + NoDemo = NOT OK
     """
 
     _fl_value_to_bits = library.cfuncproto(
@@ -1470,7 +1470,7 @@ def flimage_add_comments(pImage, p2, p3):
 
         @param pImage: pointer to image
 
-        @status: Untested + NoDoc + NoDemo = NOT OK
+        :status: Untested + NoDoc + NoDemo = NOT OK
     """
 
     _flimage_add_comments = library.cfuncproto(
@@ -1492,7 +1492,7 @@ def flimage_color_to_pixel(pImage, p2, p3, p4, p5):
 
         @param pImage: pointer to image
 
-        @status: Untested + NoDoc + NoDemo = NOT OK
+        :status: Untested + NoDoc + NoDemo = NOT OK
     """
 
     _flimage_color_to_pixel = library.cfuncproto(
@@ -1519,7 +1519,7 @@ def flimage_combine(pImage1, pImage2, alpha):
         @param pImage2: pointer to second image to combine
         @param alpha: alpha level?
 
-        @status: Untested + NoDoc + NoDemo = NOT OK
+        :status: Untested + NoDoc + NoDemo = NOT OK
     """
 
     _flimage_combine = library.cfuncproto(
@@ -1542,7 +1542,7 @@ def flimage_display_markers(pImage):
 
         @param pImage: pointer to image
 
-        @status: Untested + NoDoc + NoDemo = NOT OK
+        :status: Untested + NoDoc + NoDemo = NOT OK
     """
 
     _flimage_display_markers = library.cfuncproto(
@@ -1561,7 +1561,7 @@ def flimage_dup_(pImage, p2):
 
         @param pImage: pointer to image
 
-        @status: Untested + NoDoc + NoDemo = NOT OK
+        :status: Untested + NoDoc + NoDemo = NOT OK
     """
 
     _flimage_dup_ = library.cfuncproto(
@@ -1582,9 +1582,9 @@ def flimage_enable_bmp():
 
         Enables use of BMP (Windows/OS2 Bitmap) image format.
 
-        @example: flimage_enable_bmp()
+        :note: e.g. flimage_enable_bmp()
 
-        @status: Tested + Doc + NoDemo = OK
+        :status: Tested + Doc + NoDemo = OK
     """
 
     _flimage_enable_bmp = library.cfuncproto(
@@ -1602,9 +1602,9 @@ def flimage_enable_fits():
 
         Enables use of NASA/NOTS standard FITS image format.
 
-        @example: flimage_enable_fits()
+        :note: e.g. flimage_enable_fits()
 
-        @status: Tested + Doc + NoDemo = OK
+        :status: Tested + Doc + NoDemo = OK
     """
 
     _flimage_enable_fits = library.cfuncproto(
@@ -1622,9 +1622,9 @@ def flimage_enable_genesis():
 
         Enables use of Genesis image format.
 
-        @example: flimage_enable_genesis()
+        :note: e.g. flimage_enable_genesis()
 
-        @status: Tested + Doc + NoDemo = OK
+        :status: Tested + Doc + NoDemo = OK
     """
 
     _flimage_enable_genesis = library.cfuncproto(
@@ -1642,9 +1642,9 @@ def flimage_enable_gif():
         Enables use of GIF (Compuserve Graphics Interchange format) image
         format.
 
-        @example: flimage_enable_gif()
+        :note: e.g. flimage_enable_gif()
 
-        @status: Tested + Doc + NoDemo = OK
+        :status: Tested + Doc + NoDemo = OK
     """
 
     _flimage_enable_gif = library.cfuncproto(
@@ -1662,9 +1662,9 @@ def flimage_enable_gzip():
 
         Enables use of gzip compression filter for images.
 
-        @example: flimage_enable_gzip()
+        :note: e.g. flimage_enable_gzip()
 
-        @status: Tested + Doc + NoDemo = OK
+        :status: Tested + Doc + NoDemo = OK
     """
 
     _flimage_enable_gzip = library.cfuncproto(
@@ -1683,9 +1683,9 @@ def flimage_enable_jpeg():
         Enables use of JPEG/JFIF (Joint Photographic Experts Group) image
         format.
 
-        @example: flimage_enable_jpeg()
+        :note: e.g. flimage_enable_jpeg()
 
-        @status: Tested + Doc + NoDemo = OK
+        :status: Tested + Doc + NoDemo = OK
     """
 
     _flimage_enable_jpeg = library.cfuncproto(
@@ -1704,9 +1704,9 @@ def flimage_enable_png():
         Enables use of PNG (Portable Network Graphics) image format. It
         requires netpbm library to be installed
 
-        @example: flimage_enable_png()
+        :note: e.g. flimage_enable_png()
 
-        @status: Tested + Doc + NoDemo = OK
+        :status: Tested + Doc + NoDemo = OK
     """
 
     _flimage_enable_png = library.cfuncproto(
@@ -1725,9 +1725,9 @@ def flimage_enable_ps():
         Enables use of PS (Adobe PostScript) image format. It needs gs
         for reading.
 
-        @example: flimage_enable_ps()
+        :note: e.g. flimage_enable_ps()
 
-        @status: Tested + Doc + NoDemo = OK
+        :status: Tested + Doc + NoDemo = OK
     """
 
     _flimage_enable_ps = library.cfuncproto(
@@ -1746,9 +1746,9 @@ def flimage_enable_sgi():
         Enables use of SGI (Silicon Graphics-Iris) image format. It requires
         pbmplus/netpbm library to be installed
 
-        @example: flimage_enable_sgi()
+        :note: e.g. flimage_enable_sgi()
 
-        @status: Tested + Doc + NoDemo = OK
+        :status: Tested + Doc + NoDemo = OK
     """
 
     _flimage_enable_sgi = library.cfuncproto(
@@ -1767,9 +1767,9 @@ def flimage_enable_tiff():
         Enables use of TIFF (Tagged Image file, with no compression) image
         format.
 
-        @example: flimage_enable_tiff()
+        :note: e.g. flimage_enable_tiff()
 
-        @status: Tested + Doc + NoDemo = OK
+        :status: Tested + Doc + NoDemo = OK
     """
 
     _flimage_enable_tiff = library.cfuncproto(
@@ -1787,9 +1787,9 @@ def flimage_enable_xbm():
 
         Enables use of XBM (X Window Bitmap) image format.
 
-        @example: flimage_enable_xbm()
+        :note: e.g. flimage_enable_xbm()
 
-        @status: Tested + Doc + NoDemo = OK
+        :status: Tested + Doc + NoDemo = OK
     """
 
     _flimage_enable_xbm = library.cfuncproto(
@@ -1807,9 +1807,9 @@ def flimage_enable_xpm():
 
         Enables use of XPM3 (X Window PixMap) image format.
 
-        @example: flimage_enable_xpm()
+        :note: e.g. flimage_enable_xpm()
 
-        @status: Tested + Doc + NoDemo = OK
+        :status: Tested + Doc + NoDemo = OK
     """
 
     _flimage_enable_xpm = library.cfuncproto(
@@ -1827,9 +1827,9 @@ def flimage_enable_xwd():
 
         Enables use of XWD (X Window Dump) image format.
 
-        @example: flimage_enable_xwd()
+        :note: e.g. flimage_enable_xwd()
 
-        @status: Tested + Doc + NoDemo = OK
+        :status: Tested + Doc + NoDemo = OK
     """
 
     _flimage_enable_xwd = library.cfuncproto(
@@ -1847,7 +1847,7 @@ def flimage_free_ci(pImage):
 
         @param pImage: pointer to image
 
-        @status: Untested + NoDoc + NoDemo = NOT OK
+        :status: Untested + NoDoc + NoDemo = NOT OK
     """
 
     _flimage_free_ci = library.cfuncproto(
@@ -1867,7 +1867,7 @@ def flimage_free_gray(pImage):
         @param pImage: image
                        (<pointer to xfdata.FL_IMAGE>)
 
-        @status: Untested + NoDoc + NoDemo = NOT OK
+        :status: Untested + NoDoc + NoDemo = NOT OK
     """
 
     _flimage_free_gray = library.cfuncproto(
@@ -1887,7 +1887,7 @@ def flimage_free_linearlut(pImage):
         @param pImage: image
                        (<pointer to xfdata.FL_IMAGE>)
 
-        @status: Untested + NoDoc + NoDemo = NOT OK
+        :status: Untested + NoDoc + NoDemo = NOT OK
     """
 
     _flimage_free_linearlut = library.cfuncproto(
@@ -1906,7 +1906,7 @@ def flimage_free_rgb(pImage):
         @param pImage: image
                        (<pointer to xfdata.FL_IMAGE>)
 
-        @status: Untested + NoDoc + NoDemo = NOT OK
+        :status: Untested + NoDoc + NoDemo = NOT OK
     """
 
     _flimage_free_rgb = library.cfuncproto(
@@ -1926,7 +1926,7 @@ def flimage_freemem(pImage):
         @param pImage: image
                        (<pointer to xfdata.FL_IMAGE>)
 
-        @status: Untested + NoDoc + NoDemo = NOT OK
+        :status: Untested + NoDoc + NoDemo = NOT OK
     """
 
     _flimage_freemem = library.cfuncproto(
@@ -1946,7 +1946,7 @@ def flimage_get_closest_color_from_map(pImage, p2):
         @param pImage: image
                        (<pointer to xfdata.FL_IMAGE>)
 
-        @status: Untested + NoDoc + NoDemo = NOT OK
+        :status: Untested + NoDoc + NoDemo = NOT OK
     """
 
     _flimage_get_closest_color_from_map = library.cfuncproto(
@@ -1969,7 +1969,7 @@ def flimage_get_linearlut(pImage):
         @param pImage: image
                        (<pointer to xfdata.FL_IMAGE>)
 
-        @status: Untested + NoDoc + NoDemo = NOT OK
+        :status: Untested + NoDoc + NoDemo = NOT OK
     """
 
     _flimage_get_linearlut = library.cfuncproto(
@@ -1990,7 +1990,7 @@ def flimage_invalidate_pixels(pImage):
         @param pImage: image
                        (<pointer to xfdata.FL_IMAGE>)
 
-        @status: Untested + NoDoc + NoDemo = NOT OK
+        :status: Untested + NoDoc + NoDemo = NOT OK
     """
 
     _flimage_invalidate_pixels = library.cfuncproto(
@@ -2009,10 +2009,10 @@ def flimage_open(filename):
 
         @param filename: name of file to open
 
-        @returns: image
+        :return: image
                   (<pointer to xfdata.FL_IMAGE>)
 
-        @status: Untested + NoDoc + NoDemo = NOT OK
+        :status: Untested + NoDoc + NoDemo = NOT OK
     """
 
     _flimage_open = library.cfuncproto(
@@ -2033,7 +2033,7 @@ def flimage_read_annotation(pImage):
 
         @param pImage: pointer to image
 
-        @status: Untested + NoDoc + NoDemo = NOT OK
+        :status: Untested + NoDoc + NoDemo = NOT OK
     """
 
     _flimage_read_annotation = library.cfuncproto(
@@ -2053,7 +2053,7 @@ def flimage_replace_image(pImage, w, h, r, g, b):
 
         @param pImage: pointer to image
 
-        @status: Untested + NoDoc + NoDemo = NOT OK
+        :status: Untested + NoDoc + NoDemo = NOT OK
     """
 
     _flimage_replace_image = library.cfuncproto(
@@ -2079,7 +2079,7 @@ def flimage_swapbuffer(pImage):
 
         @param pImage: pointer to image
 
-        @status: Untested + NoDoc + NoDemo = NOT OK
+        :status: Untested + NoDoc + NoDemo = NOT OK
     """
     _flimage_swapbuffer = library.cfuncproto(
         library.load_so_libflimage(), "flimage_swapbuffer",
@@ -2100,7 +2100,7 @@ def flimage_to_ximage(pImage, win, pXWindowAttributes):
         @param pXWindowAttributes: pointer to XWindowAttributes
            class instance
 
-        @status: Untested + NoDoc + NoDemo = NOT OK
+        :status: Untested + NoDoc + NoDemo = NOT OK
     """
     _flimage_to_ximage = library.cfuncproto(
         library.load_so_libflimage(), "flimage_to_ximage",
@@ -2121,7 +2121,7 @@ def flimage_write_annotation(pImage):
 
     @param pImage: pointer to image
 
-    @status: Untested + NoDoc + NoDemo = NOT OK
+    :status: Untested + NoDoc + NoDemo = NOT OK
     """
     _flimage_write_annotation = library.cfuncproto(
         library.load_so_libflimage(), "flimage_write_annotation",

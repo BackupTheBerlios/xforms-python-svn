@@ -50,6 +50,8 @@ from xformslib import xfdata
 def fl_add_bitmap(bitmaptype, x, y, w, h, label):
     """Adds a bitmap object.
 
+    --
+
     :Parameters:
       `bitmaptype` : int
         type of bitmap to be added. Values (from xfdata.py) FL_NORMAL_BITMAP
@@ -98,6 +100,8 @@ def fl_set_bitmap_data(pFlObject, w, h, xbmcontents):
     number of bitmaps can be found in '/usr/include/X11/bitmaps' or similar
     places. The X program 'bitmap' can be used to create bitmaps.
 
+    --
+
     :Parameters:
       `pFlObject` : pointer to xfdata.FL_OBJECT
         bitmap object
@@ -133,6 +137,8 @@ def fl_set_bitmap_file(pFlObject, fname):
     number of bitmaps can be found in '/usr/include/X11/bitmaps' or similar
     places. The X program 'bitmap' can be used to create bitmaps.
 
+    --
+
     :Parameters:
       `pFlObject` : pointer to xfdata.FL_OBJECT
         bitmap object
@@ -163,6 +169,8 @@ fl_set_bitmapbutton_datafile = fl_set_bitmapbutton_file
 
 def fl_read_bitmapfile(win, fname):
     """Makes a bitmap from a bitmap file.
+
+    --
 
     :Parameters:
       `win` : long_pos
@@ -205,6 +213,8 @@ def fl_read_bitmapfile(win, fname):
 def fl_create_from_bitmapdata(win, data, w, h):
     """Makes a bitmap from bitmap contents data.
 
+    --
+
     :Parameters:
       `win` : long_pos
         window id
@@ -245,6 +255,8 @@ def fl_create_from_bitmapdata(win, data, w, h):
 
 def fl_add_pixmap(pixmaptype, x, y, w, h, label):
     """Adds a pixmap object.
+
+    --
 
     :Parameters:
       `pixmaptype` : int
@@ -294,6 +306,8 @@ def fl_set_pixmap_data(pFlObject, bits):
     number of pixmaps can be found in '/usr/include/X11/pixmaps' or similar
     places.
 
+    --
+
     :Parameters:
       `pFlObject` : pointer to xfdata.FL_OBJECT
          pixmap object
@@ -325,6 +339,8 @@ def fl_set_pixmap_file(pFlObject, fname):
     number of pixmaps can be found in '/usr/include/X11/pixmaps' or similar
     places.
 
+    --
+
     :Parameters:
       `pFlObject` : pointer to xfdata.FL_OBJECT
         pixmap object
@@ -354,6 +370,8 @@ fl_set_pixmapbutton_datafile = fl_set_pixmapbutton_file
 def fl_set_pixmap_align(pFlObject, align, xmargin, ymargin):
     """Changes alignment of a pixmap. By default it is displayed centered
     inside the bounding box.
+
+    --
 
     :Parameters:
       `pFlObject` : pointer to xfdata.FL_OBJECT
@@ -394,6 +412,8 @@ def fl_set_pixmap_pixmap(pFlObject, idnum, mask):
     may have. It does not free the pixmap ID nor the mask already associated
     with the object.
 
+    --
+
     :Parameters:
       `pFlObject` : pointer to xfdata.FL_OBJECT
         pixmap object
@@ -431,6 +451,8 @@ def fl_set_pixmap_colorcloseness(red, green, blue):
     the colormap. The library will use substitute colors that are judged
     "close enough".
 
+    --
+
     :Parameters:
       `red` : int
         difference for red color. By default, closeness is 40000.
@@ -457,8 +479,10 @@ def fl_set_pixmap_colorcloseness(red, green, blue):
 
 
 def fl_free_pixmap_pixmap(pFlObject):
-    """Frees th old pixmap associated to object, the mask, and the colors the
+    """Frees the old pixmap associated to object, the mask, and the colors the
     pixmap allocated.
+
+    --
 
     :Parameters:
       `pFlObject` : pointer to xfdata.FL_OBJECT
@@ -484,6 +508,8 @@ fl_free_pixmapbutton_pixmap = fl_free_pixmap_pixmap
 
 def fl_get_pixmap_pixmap(pFlObject):
     """Obtains the pixmap ID currently being displayed.
+
+    --
 
     :Parameters:
       `pFlObject` : pointer to xfdata.FL_OBJECT
@@ -521,6 +547,8 @@ fl_get_pixmapbutton_pixmap = fl_get_pixmap_pixmap
 def fl_read_pixmapfile(win, fname, tran):
     """Makes a pixmap from a pixmap file.
 
+    --
+
     :Parameters:
       `win` : long_pos
         window id
@@ -539,6 +567,7 @@ def fl_read_pixmapfile(win, fname, tran):
         fl_read_pixmapfile(win, filename, w, h, shape_mask, hotx, hoty, tran)
 
     :status: Tested + Doc + Demo = OK
+
     """
     _fl_read_pixmapfile = libr.cfuncproto(
         libr.load_so_libforms(), "fl_read_pixmapfile",
@@ -567,6 +596,8 @@ def fl_read_pixmapfile(win, fname, tran):
 
 def fl_create_from_pixmapdata(win, data, w, h, sm, hotx, hoty, tran):
     """Makes a pixmap from pixmap contents data.
+
+    --
 
     :Parameters:
       `win` : long_pos
@@ -618,6 +649,8 @@ def fl_create_from_pixmapdata(win, data, w, h, sm, hotx, hoty, tran):
 
 def fl_free_pixmap(idnum):
     """Frees the pixmap.
+
+    --
 
     :Parameters:
       `idnum` : long_pos

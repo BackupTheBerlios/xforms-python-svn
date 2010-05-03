@@ -69,13 +69,13 @@ def fl_add_glcanvas(canvastype, x, y, w, h, label):
     @param label: text label of glcanvas
     @type label: str
 
-    @returns: glcanvas object added (pFlObject)
-    @rtype: pointer to xfdata.FL_OBJECT
+    :return: glcanvas object added (pFlObject)
+    :rtype: pointer to xfdata.FL_OBJECT
 
-    @example: fl_add_glcanvas(xfdata.FL_NORMAL_CANVAS, 14, 21, 654, 457,
+    :note: e.g. fl_add_glcanvas(xfdata.FL_NORMAL_CANVAS, 14, 21, 654, 457,
         "My Gl Canvas")
 
-    @status: Tested + Doc + NoDemo = OK
+    :status: Tested + Doc + NoDemo = OK
 
     """
     _fl_add_glcanvas = library.cfuncproto(
@@ -105,9 +105,9 @@ def fl_set_glcanvas_defaults(config):
     @param config: configuration settings
     @type config: int
 
-    @example: fl_set_glcanvas_defaults(?)
+    :note: e.g. fl_set_glcanvas_defaults(?)
 
-    @status: Untested + NoDoc + NoDemo = NOT OK
+    :status: Untested + NoDoc + NoDemo = NOT OK
 
     """
     _fl_set_glcanvas_defaults = library.cfuncproto(
@@ -122,15 +122,15 @@ def fl_set_glcanvas_defaults(config):
 def fl_get_glcanvas_defaults():
     """Returns the global defaults for glcanvas.
 
-    @returns: configuration settings
-    @rtype: int
+    :return: configuration settings
+    :rtype: int
 
-    @example: cnfset = fl_get_glcanvas_defaults()
+    :note: e.g. cnfset = fl_get_glcanvas_defaults()
 
-    @attention: API change from XForms - upstream was
+    :attention: API change from XForms - upstream was
         fl_get_glcanvas_defaults(config)
 
-    @status: Tested + Doc + NoDemo = OK
+    :status: Tested + Doc + NoDemo = OK
 
     """
     _fl_get_glcanvas_defaults = library.cfuncproto(
@@ -153,9 +153,9 @@ def fl_set_glcanvas_attributes(pFlObject, config):
     @param config: configuration settings to be set
     @type config: int
 
-    @example: fl_set_glcanvas_attributes(glcanobj, ?)
+    :note: e.g. fl_set_glcanvas_attributes(glcanobj, ?)
 
-    @status: Untested + Doc + NoDemo = NOT OK
+    :status: Untested + Doc + NoDemo = NOT OK
 
     """
     _fl_set_glcanvas_attributes = library.cfuncproto(
@@ -175,15 +175,15 @@ def fl_get_glcanvas_attributes(pFlObject):
     @param pFlObject: glcanvas object
     @type pFlObject: pointer to xfdata.FL_OBJECT
 
-    @returns: glcanvas attributes
-    @rtype: int
+    :return: glcanvas attributes
+    :rtype: int
 
-    @example: fl_get_glcanvas_attributes(glcanobj)
+    :note: e.g. fl_get_glcanvas_attributes(glcanobj)
 
-    @attention: API change from XForms - upstream was
+    :attention: API change from XForms - upstream was
         fl_get_glcanvas_attributes(pFlObject, attributes)
 
-    @status: Tested + Doc + NoDemo = OK
+    :status: Tested + Doc + NoDemo = OK
 
     """
     _fl_get_glcanvas_attributes = library.cfuncproto(
@@ -208,9 +208,9 @@ def fl_set_glcanvas_direct(pFlObject, yesno):
         (to use Xserver rendering) or 1 (to use direct rendering)
     @type yesno: int
 
-    @example: fl_set_glcanvas_direct(glcanobj, 0)
+    :note: e.g. fl_set_glcanvas_direct(glcanobj, 0)
 
-    @status: Tested + Doc + NoDemo = OK
+    :status: Tested + Doc + NoDemo = OK
 
     """
     _fl_set_glcanvas_direct = library.cfuncproto(
@@ -236,9 +236,9 @@ def fl_activate_glcanvas(pFlObject):
     @param pFlObject: glcanvas object
     @type pFlObject: pointer to xfdata.FL_OBJECT
 
-    @example: fl_activate_glcanvas(glcanobj)
+    :note: e.g. fl_activate_glcanvas(glcanobj)
 
-    @status: Tested + Doc + NoDemo = OK
+    :status: Tested + Doc + NoDemo = OK
 
     """
     _fl_activate_glcanvas = library.cfuncproto(
@@ -258,12 +258,12 @@ def fl_get_glcanvas_xvisualinfo(pFlObject):
     @param pFlObject: glcanvas object
     @type pFlObject: pointer to xfdata.FL_OBJECT
 
-    @returns: XVisualInfo instance class
-    @rtype: pointer to xfdata.XVisualInfo
+    :return: XVisualInfo instance class
+    :rtype: pointer to xfdata.XVisualInfo
 
-    @example: pxviscls = fl_get_glcanvas_xvisualinfo(glcanobj)
+    :note: e.g. pxviscls = fl_get_glcanvas_xvisualinfo(glcanobj)
 
-    @status: Tested + Doc + NoDemo = OK
+    :status: Tested + Doc + NoDemo = OK
 
     """
     _fl_get_glcanvas_xvisualinfo = library.cfuncproto(
@@ -283,12 +283,12 @@ def fl_get_glcanvas_context(pFlObject):
     @param pFlObject: glcanvas object
     @type pFlObject: pointer to xfdata.FL_OBJECT
 
-    @returns: glxcontext instance class
-    @rtype: pointer to xfdata.GLXContext
+    :return: glxcontext instance class
+    :rtype: pointer to xfdata.GLXContext
 
-    @example: glxcont = fl_get_glcanvas_context(glcanobj)
+    :note: e.g. glxcont = fl_get_glcanvas_context(glcanobj)
 
-    @status: Tested + Doc + NoDemo = OK
+    :status: Tested + Doc + NoDemo = OK
 
     """
     _fl_get_glcanvas_context = library.cfuncproto(
@@ -314,12 +314,12 @@ def fl_glwincreate(config, glxcontext, w, h):
     @param h: height of GL window in coord units
     @type h: int
 
-    @returns: window created (win)
-    @rtype: long_pos
+    :return: window created (win)
+    :rtype: long_pos
 
-    @example: gwin0 = fl_glwincreate(?, ?, 650, 560)
+    :note: e.g. gwin0 = fl_glwincreate(?, ?, 650, 560)
 
-    @status: Tested + Doc + NoDemo = OK
+    :status: Tested + Doc + NoDemo = OK
 
     """
     _fl_glwincreate = library.cfuncproto(
@@ -348,12 +348,12 @@ def fl_glwinopen(config, glxcontext, w, h):
     @param h: height of GL window in coord units
     @type h: int
 
-    @returns: window opened (win)
-    @rtype: long_pos
+    :return: window opened (win)
+    :rtype: long_pos
 
-    @example: gwin0 = fl_glwinopen(?, ?, 650, 560)
+    :note: e.g. gwin0 = fl_glwinopen(?, ?, 650, 560)
 
-    @status: Untested + NoDoc + NoDemo = NOT OK
+    :status: Untested + NoDoc + NoDemo = NOT OK
 
     """
     _fl_glwinopen = library.cfuncproto(

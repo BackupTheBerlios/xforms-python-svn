@@ -60,7 +60,7 @@ def fl_add_tabfolder(foldertype, x, y, w, h, label):
         @param h: height in coord units
         @param label: text label of tabfolder
 
-        @status: Untested + NoDoc + NoDemo = NOT OK
+        :status: Untested + NoDoc + NoDemo = NOT OK
     """
     _fl_add_tabfolder = library.cfuncproto(
         library.load_so_libforms(), "fl_add_tabfolder",
@@ -86,7 +86,7 @@ def fl_addto_tabfolder(pFlObject, title, pFlForm):
     """
         fl_addto_tabfolder(pFlObject, title, pFlForm) -> pFlObject
 
-        @status: Tested + NoDoc + Demo = OK
+        :status: Tested + NoDoc + Demo = OK
     """
     _fl_addto_tabfolder = library.cfuncproto(
         library.load_so_libforms(), "fl_addto_tabfolder",
@@ -106,7 +106,7 @@ def fl_get_tabfolder_folder_bynumber(pFlObject, num):
     """
         fl_get_tabfolder_folder_bynumber(pFlObject, num) -> pFlForm
 
-        @status: Untested + NoDoc + NoDemo = NOT OK
+        :status: Untested + NoDoc + NoDemo = NOT OK
     """
     _fl_get_tabfolder_folder_bynumber = library.cfuncproto(
         library.load_so_libforms(), "fl_get_tabfolder_folder_bynumber",
@@ -124,7 +124,7 @@ def fl_get_tabfolder_folder_byname(pFlObject, name):
     """
         fl_get_tabfolder_folder_byname(pFlObject, name) -> pFlForm
 
-        @status: Untested + NoDoc + NoDemo = NOT OK
+        :status: Untested + NoDoc + NoDemo = NOT OK
     """
     _fl_get_tabfolder_folder_byname = library.cfuncproto(
         library.load_so_libforms(), "fl_get_tabfolder_folder_byname",
@@ -143,7 +143,7 @@ def fl_delete_folder(pFlObject, pFlForm):
     """
         fl_delete_folder(pFlObject, pFlForm)
 
-        @status: Untested + NoDoc + NoDemo = NOT OK
+        :status: Untested + NoDoc + NoDemo = NOT OK
     """
     _fl_delete_folder = library.cfuncproto(
         library.load_so_libforms(), "fl_delete_folder",
@@ -159,7 +159,7 @@ def fl_delete_folder_bynumber(pFlObject, num):
     """
         fl_delete_folder_bynumber(pFlObject, num)
 
-        @status: Untested + NoDoc + NoDemo = NOT OK
+        :status: Untested + NoDoc + NoDemo = NOT OK
     """
     _fl_delete_folder_bynumber = library.cfuncproto(
         library.load_so_libforms(), "fl_delete_folder_bynumber",
@@ -176,7 +176,7 @@ def fl_delete_folder_byname(pFlObject, name):
     """
         fl_delete_folder_byname(pFlObject, name)
 
-        @status: Untested + NoDoc + NoDemo = NOT OK
+        :status: Untested + NoDoc + NoDemo = NOT OK
     """
     _fl_delete_folder_byname = library.cfuncproto(
         library.load_so_libforms(), "fl_delete_folder_byname",
@@ -192,7 +192,7 @@ def fl_delete_folder_byname(pFlObject, name):
 def fl_set_folder(pFlObject, pFlForm):
     """ fl_set_folder(pFlObject, pFlForm)
 
-        @status: Untested + NoDoc + NoDemo = NOT OK
+        :status: Untested + NoDoc + NoDemo = NOT OK
     """
     _fl_set_folder = library.cfuncproto(
         library.load_so_libforms(), "fl_set_folder",
@@ -208,7 +208,7 @@ def fl_set_folder(pFlObject, pFlForm):
 def fl_set_folder_byname(pFlObject, name):
     """ fl_set_folder_byname(pFlObject, name)
 
-        @status: Untested + NoDoc + NoDemo = NOT OK
+        :status: Untested + NoDoc + NoDemo = NOT OK
     """
     _fl_set_folder_byname = library.cfuncproto(
         library.load_so_libforms(), "fl_set_folder_byname",
@@ -225,7 +225,7 @@ def fl_set_folder_bynumber(pFlObject, num):
     """
         fl_set_folder_bynumber(pFlObject, num)
 
-        @status: Tested + NoDoc + Demo = OK
+        :status: Tested + NoDoc + Demo = OK
     """
     _fl_set_folder_bynumber = library.cfuncproto(
         library.load_so_libforms(), "fl_set_folder_bynumber",
@@ -244,7 +244,7 @@ def fl_get_folder(pFlObject):
 
         @param pFlObject: pointer to object
 
-        @status: Untested + NoDoc + NoDemo = NOT OK
+        :status: Untested + NoDoc + NoDemo = NOT OK
     """
     _fl_get_folder = library.cfuncproto(
         library.load_so_libforms(), "fl_get_folder",
@@ -263,7 +263,7 @@ def fl_get_folder_number(pFlObject):
 
         @param pFlObject: pointer to object
 
-        @status: Untested + NoDoc + NoDemo = NOT OK
+        :status: Untested + NoDoc + NoDemo = NOT OK
     """
     _fl_get_folder_number = library.cfuncproto(
         library.load_so_libforms(), "fl_get_folder_number",
@@ -282,7 +282,7 @@ def fl_get_folder_name(pFlObject):
 
         @param pFlObject: pointer to object
 
-        @status: Untested + NoDoc + NoDemo = NOT OK
+        :status: Untested + NoDoc + NoDemo = NOT OK
     """
     _fl_get_folder_name = library.cfuncproto(
         library.load_so_libforms(), "fl_get_folder_name",
@@ -301,7 +301,7 @@ def fl_get_tabfolder_numfolders(pFlObject):
 
         @param pFlObject: pointer to object
 
-        @status: Untested + NoDoc + NoDemo = NOT OK
+        :status: Untested + NoDoc + NoDemo = NOT OK
     """
     _fl_get_tabfolder_numfolders = library.cfuncproto(
         library.load_so_libforms(), "fl_get_tabfolder_numfolders",
@@ -320,7 +320,7 @@ def fl_get_active_folder(pFlObject):
 
         @param pFlObject: pointer to object
 
-        @status: Tested + NoDoc + Demo = OK
+        :status: Tested + NoDoc + Demo = OK
     """
     _fl_get_active_folder = library.cfuncproto(
         library.load_so_libforms(), "fl_get_active_folder",
@@ -339,7 +339,7 @@ def fl_get_active_folder_number(pFlObject):
 
         @param pFlObject: pointer to object
 
-        @status: Untested + NoDoc + NoDemo = NOT OK
+        :status: Untested + NoDoc + NoDemo = NOT OK
     """
     _fl_get_active_folder_number = library.cfuncproto(
         library.load_so_libforms(), "fl_get_active_folder_number",
@@ -358,7 +358,7 @@ def fl_get_active_folder_name(pFlObject):
 
         @param pFlObject: pointer to object
 
-        @status: Untested + NoDoc + NoDemo = NOT OK
+        :status: Untested + NoDoc + NoDemo = NOT OK
     """
     _fl_get_active_folder_name = library.cfuncproto(
         library.load_so_libforms(), "fl_get_active_folder_name",
@@ -377,10 +377,10 @@ def fl_get_folder_area(pFlObject):
 
         @param pFlObject: pointer to object
 
-        @attention: API change from XForms - upstream was
+        :attention: API change from XForms - upstream was
                     fl_get_folder_area(pFlObject, x, y, w, h)
 
-        @status: Untested + NoDoc + NoDemo = NOT OK
+        :status: Untested + NoDoc + NoDemo = NOT OK
     """
     _fl_get_folder_area = library.cfuncproto(
         library.load_so_libforms(), "fl_get_folder_area",
@@ -406,7 +406,7 @@ def fl_replace_folder_bynumber(pFlObject, num, pFlForm):
 
         @param pFlObject: pointer to object
 
-        @status: Untested + NoDoc + NoDemo = NOT OK
+        :status: Untested + NoDoc + NoDemo = NOT OK
     """
     _fl_replace_folder_bynumber = library.cfuncproto(
         library.load_so_libforms(), "fl_replace_folder_bynumber",
@@ -426,7 +426,7 @@ def fl_set_tabfolder_autofit(pFlObject, num):
 
         @param pFlObject: pointer to object
 
-        @status: Untested + NoDoc + NoDemo = NOT OK
+        :status: Untested + NoDoc + NoDemo = NOT OK
     """
     _fl_set_tabfolder_autofit = library.cfuncproto(
         library.load_so_libforms(), "fl_set_tabfolder_autofit",
@@ -448,7 +448,7 @@ def fl_set_default_tabfolder_corner(npixels):
 
         @param npixels: number of corner pixels (default 3)
 
-        @status: Untested + NoDoc + NoDemo = NOT OK
+        :status: Untested + NoDoc + NoDemo = NOT OK
     """
     _fl_set_default_tabfolder_corner = library.cfuncproto(
         library.load_so_libforms(), "fl_set_default_tabfolder_corner",
@@ -467,7 +467,7 @@ def fl_set_tabfolder_offset(pFlObject, offset):
 
         @param pFlObject: pointer to tabfolder object
 
-        @status: Untested + NoDoc + NoDemo = NOT OK
+        :status: Untested + NoDoc + NoDemo = NOT OK
     """
     _fl_set_tabfolder_offset = library.cfuncproto(
         library.load_so_libforms(), "fl_set_tabfolder_offset",

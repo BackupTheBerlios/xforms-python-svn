@@ -52,7 +52,7 @@ def fl_popup_add(win, title):
         @param title: text of title shown at the top of the popup
                       in a framed box
 
-        @status: Untested + NoDoc + NoDemo = NOT OK
+        :status: Untested + NoDoc + NoDemo = NOT OK
     """
     _fl_popup_add = library.cfuncproto(
         library.load_so_libforms(), "fl_popup_add",
@@ -69,7 +69,7 @@ def fl_popup_add(win, title):
 def fl_popup_add_entries(pPopup, entrytxt):
     """ fl_popup_add_entries(pPopup, entrytxt) -> pPopupEntry
 
-        @status: Untested + NoDoc + NoDemo = NOT OK
+        :status: Untested + NoDoc + NoDemo = NOT OK
     """
     _fl_popup_add_entries = library.cfuncproto(
         library.load_so_libforms(), "fl_popup_add_entries",
@@ -86,7 +86,7 @@ def fl_popup_add_entries(pPopup, entrytxt):
 def fl_popup_insert_entries(pPopup, pPopupEntry, entrytxt):
     """ fl_popup_insert_entries(pPopup, pPopupEntry, entrytxt) -> pPopupEntry
 
-        @status: Untested + NoDoc + NoDemo = NOT OK
+        :status: Untested + NoDoc + NoDemo = NOT OK
     """
 
     _fl_popup_insert_entries = library.cfuncproto(
@@ -105,7 +105,7 @@ def fl_popup_insert_entries(pPopup, pPopupEntry, entrytxt):
 def fl_popup_create(win, text, pPopupItem):
     """ fl_popup_create(win, text, pPopupItem) -> pPopup
 
-        @status: Untested + NoDoc + NoDemo = NOT OK
+        :status: Untested + NoDoc + NoDemo = NOT OK
     """
 
     _fl_popup_create = library.cfuncproto(
@@ -125,7 +125,7 @@ def fl_popup_create(win, text, pPopupItem):
 def fl_popup_add_items(pPopup, pPopupItem):
     """ fl_popup_add_items(pPopup, pPopupItem) -> pPopupEntry
 
-        @status: Untested + NoDoc + NoDemo = NOT OK
+        :status: Untested + NoDoc + NoDemo = NOT OK
     """
 
     _fl_popup_add_items = library.cfuncproto(
@@ -144,7 +144,7 @@ def fl_popup_add_items(pPopup, pPopupItem):
 def fl_popup_insert_items(pPopup, pPopupEntry, pPopupItem):
     """ fl_popup_insert_items(pPopup, pPopupEntry, pPopupItem) -> pPopupEntry
 
-        @status: Untested + NoDoc + NoDemo = NOT OK
+        :status: Untested + NoDoc + NoDemo = NOT OK
     """
     _fl_popup_insert_items = library.cfuncproto(
         library.load_so_libforms(), "fl_popup_insert_items",
@@ -161,7 +161,7 @@ def fl_popup_insert_items(pPopup, pPopupEntry, pPopupItem):
 def fl_popup_delete(pPopup):
     """ fl_popup_delete(pPopup) -> num.
 
-        @status: Untested + NoDoc + NoDemo = NOT OK
+        :status: Untested + NoDoc + NoDemo = NOT OK
     """
     _fl_popup_delete = library.cfuncproto(
         library.load_so_libforms(), "fl_popup_delete",
@@ -176,7 +176,7 @@ def fl_popup_delete(pPopup):
 def fl_popup_entry_delete(pPopupEntry):
     """ fl_popup_entry_delete(pPopupEntry) -> num.
 
-        @status: Untested + NoDoc + NoDemo = NOT OK
+        :status: Untested + NoDoc + NoDemo = NOT OK
     """
     _fl_popup_entry_delete = library.cfuncproto(
         library.load_so_libforms(), "fl_popup_entry_delete",
@@ -191,7 +191,7 @@ def fl_popup_entry_delete(pPopupEntry):
 def fl_popup_do(pPopup):
     """ fl_popup_do(pPopup) -> pPopupReturn
 
-        @status: Untested + NoDoc + NoDemo = NOT OK
+        :status: Untested + NoDoc + NoDemo = NOT OK
     """
     _fl_popup_do = library.cfuncproto(
         library.load_so_libforms(), "fl_popup_do",
@@ -213,7 +213,7 @@ def fl_popup_set_position(pPopup, x, y):
         @param x: horizontal position (upper-left corner)
         @param y: vertical position (upper-left corner)
 
-        @status: Untested + NoDoc + NoDemo = NOT OK
+        :status: Untested + NoDoc + NoDemo = NOT OK
     """
     _fl_popup_set_position = library.cfuncproto(
         library.load_so_libforms(), "fl_popup_set_position",
@@ -231,7 +231,7 @@ def fl_popup_get_policy(pPopup):
 
         @param pPopup: pointer to Popup
 
-        @status: Untested + NoDoc + NoDemo = NOT OK
+        :status: Untested + NoDoc + NoDemo = NOT OK
     """
     _fl_popup_get_policy = library.cfuncproto(
         library.load_so_libforms(), "fl_popup_get_policy",
@@ -252,7 +252,7 @@ def fl_popup_set_policy(pPopup, policy):
         @param pPopup: pointer to Popup
         @param policy: policy to be set
 
-        @status: Untested + NoDoc + NoDemo = NOT OK
+        :status: Untested + NoDoc + NoDemo = NOT OK
     """
     _fl_popup_set_policy = library.cfuncproto(
         library.load_so_libforms(), "fl_popup_set_policy",
@@ -271,7 +271,7 @@ def fl_popup_set_policy(pPopup, policy):
 def fl_popup_set_callback(pPopup, py_PopupCb):
     """ fl_popup_set_callback(pPopup, py_PopupCb) -> popup callback func.
 
-        @status: Untested + NoDoc + NoDemo = NOT OK
+        :status: Untested + NoDoc + NoDemo = NOT OK
     """
     #FL_POPUP_CB = cty.CFUNCTYPE(cty.c_int, cty.POINTER(xfdata.FL_POPUP_RETURN))
     _fl_popup_set_callback = library.cfuncproto(
@@ -290,10 +290,10 @@ def fl_popup_set_callback(pPopup, py_PopupCb):
 def fl_popup_get_title_font(pPopup):
     """ fl_popup_get_title_font(pPopup) -> style, size
 
-        @attention: API change from XForms - upstream was
+        :attention: API change from XForms - upstream was
                     fl_popup_get_title_font(pPopup, style, size)
 
-        @status: Untested + NoDoc + NoDemo = NOT OK
+        :status: Untested + NoDoc + NoDemo = NOT OK
     """
     _fl_popup_get_title_font = library.cfuncproto(
             library.load_so_libforms(), "fl_popup_get_title_font",
@@ -312,7 +312,7 @@ def fl_popup_get_title_font(pPopup):
 def fl_popup_set_title_font(pPopup, style, size):
     """ fl_popup_set_title_font(pPopup, style, size)
 
-        @status: Tested + NoDoc + Demo = OK
+        :status: Tested + NoDoc + Demo = OK
     """
     _fl_popup_set_title_font = library.cfuncproto(
         library.load_so_libforms(), "fl_popup_set_title_font",
@@ -328,10 +328,10 @@ def fl_popup_set_title_font(pPopup, style, size):
 def fl_popup_entry_get_font(pPopup):
     """ fl_popup_entry_get_font(pPopup) -> style, size
 
-        @attention: API change from XForms - upstream was
+        :attention: API change from XForms - upstream was
                     fl_popup_entry_get_font(pPopup, style, size)
 
-        @status: Untested + NoDoc + NoDemo = NOT OK
+        :status: Untested + NoDoc + NoDemo = NOT OK
     """
     _fl_popup_entry_get_font = library.cfuncproto(
         library.load_so_libforms(), "fl_popup_entry_get_font",
@@ -355,7 +355,7 @@ def fl_popup_entry_set_font(pPopup, style, size):
         @param style: style of the popup entry
         @param size: size of the popup entry
 
-        @status: Untested + NoDoc + NoDemo = NOT OK
+        :status: Untested + NoDoc + NoDemo = NOT OK
     """
 
     _fl_popup_entry_set_font = library.cfuncproto(
@@ -377,7 +377,7 @@ def fl_popup_get_bw(pPopup):
 
         @param pPopup: pointer to popup
 
-        @status: Untested + NoDoc + NoDemo = NOT OK
+        :status: Untested + NoDoc + NoDemo = NOT OK
     """
 
     _fl_popup_get_bw = library.cfuncproto(
@@ -399,7 +399,7 @@ def fl_popup_set_bw(pPopup, bw):
         @param pPopup: pointer to popup
         @param bw: border width value to be set
 
-        @status: Tested + NoDoc + Demo = OK
+        :status: Tested + NoDoc + Demo = OK
     """
 
     _fl_popup_set_bw = library.cfuncproto(
@@ -422,7 +422,7 @@ def fl_popup_get_color(pPopup, colrpos):
                        FL_POPUP_TEXT_COLOR, FL_POPUP_HIGHLIGHT_TEXT_COLOR,
                        FL_POPUP_DISABLED_TEXT_COLOR, FL_POPUP_RADIO_COLOR
 
-        @status: Untested + NoDoc + NoDemo = NOT OK
+        :status: Untested + NoDoc + NoDemo = NOT OK
     """
     _fl_popup_get_color = library.cfuncproto(
         library.load_so_libforms(), "fl_popup_get_color",
@@ -446,7 +446,7 @@ def fl_popup_set_color(pPopup, colrpos, colr):
                        FL_POPUP_DISABLED_TEXT_COLOR, FL_POPUP_RADIO_COLOR
         @param colr: color value to be set
 
-        @status: Untested + NoDoc + NoDemo = NOT OK
+        :status: Untested + NoDoc + NoDemo = NOT OK
     """
     _fl_popup_set_color = library.cfuncproto(
         library.load_so_libforms(), "fl_popup_set_color",
@@ -470,7 +470,7 @@ def fl_popup_set_cursor(pPopup, cursnum):
         @param pPopup: pointer to FL_POPUP
         @param cursnum: id of a symbolic cursor shapes' names
 
-        @status: Untested + NoDoc + NoDemo = NOT OK
+        :status: Untested + NoDoc + NoDemo = NOT OK
     """
     _fl_popup_set_cursor = library.cfuncproto(
         library.load_so_libforms(), "fl_popup_set_cursor",
@@ -488,7 +488,7 @@ def fl_popup_get_title(pPopup):
 
         @param pPopup: pointer to popup
 
-        @status: Untested + NoDoc + NoDemo = NOT OK
+        :status: Untested + NoDoc + NoDemo = NOT OK
     """
     _fl_popup_get_title = library.cfuncproto(
         library.load_so_libforms(), "fl_popup_get_title",
@@ -508,7 +508,7 @@ def fl_popup_set_title(pPopup, title):
         @param pPopup: pointer to popup
         @param title: title of the popup
 
-        @status: Untested + NoDoc + NoDemo = NOT OK
+        :status: Untested + NoDoc + NoDemo = NOT OK
     """
     _fl_popup_set_title = library.cfuncproto(
             library.load_so_libforms(), "fl_popup_set_title",
@@ -524,7 +524,7 @@ def fl_popup_set_title(pPopup, title):
 def fl_popup_entry_set_callback(pPopupEntry, py_PopupCb):
     """ fl_popup_entry_set_callback(pPopupEntry, py_PopupCb) -> popup_callback
 
-        @status: Tested + NoDoc + Demo = OK
+        :status: Tested + NoDoc + Demo = OK
     """
     _fl_popup_entry_set_callback = library.cfuncproto(
         library.load_so_libforms(), "fl_popup_entry_set_callback",
@@ -543,7 +543,7 @@ def fl_popup_entry_set_callback(pPopupEntry, py_PopupCb):
 def fl_popup_entry_set_enter_callback(pPopupEntry, py_PopupCb):
     """ fl_popup_entry_set_enter_callback(pPopupEntry, py_PopupCb) -> popup_callback
 
-        @status: Untested + NoDoc + NoDemo = NOT OK
+        :status: Untested + NoDoc + NoDemo = NOT OK
     """
     _fl_popup_entry_set_enter_callback = library.cfuncproto(
         library.load_so_libforms(), "fl_popup_entry_set_enter_callback",
@@ -562,7 +562,7 @@ def fl_popup_entry_set_enter_callback(pPopupEntry, py_PopupCb):
 def fl_popup_entry_set_leave_callback(pPopupEntry, py_PopupCb):
     """ fl_popup_entry_set_leave_callback(pPopupEntry, py_PopupCb) -> popup_callback
 
-        @status: Untested + NoDoc + NoDemo = NOT OK
+        :status: Untested + NoDoc + NoDemo = NOT OK
     """
     _fl_popup_entry_set_leave_callback = library.cfuncproto(
         library.load_so_libforms(), "fl_popup_entry_set_leave_callback",
@@ -581,7 +581,7 @@ def fl_popup_entry_set_leave_callback(pPopupEntry, py_PopupCb):
 def fl_popup_entry_get_state(pPopupEntry):
     """ fl_popup_entry_get_state(pPopupEntry) -> state num.
 
-        @status: Untested + NoDoc + NoDemo = NOT OK
+        :status: Untested + NoDoc + NoDemo = NOT OK
     """
     _fl_popup_entry_get_state = library.cfuncproto(
         library.load_so_libforms(), "fl_popup_entry_get_state",
@@ -596,7 +596,7 @@ def fl_popup_entry_get_state(pPopupEntry):
 def fl_popup_entry_set_state(pPopupEntry, state):
     """ fl_popup_entry_set_state(pPopupEntry, state) -> state num.
 
-        @status: Tested + NoDoc + Demo = OK
+        :status: Tested + NoDoc + Demo = OK
     """
     _fl_popup_entry_set_state = library.cfuncproto(
         library.load_so_libforms(), "fl_popup_entry_set_state",
@@ -613,7 +613,7 @@ def fl_popup_entry_set_state(pPopupEntry, state):
 def fl_popup_entry_clear_state(pPopupEntry, state):
     """ fl_popup_entry_clear_state(pPopupEntry, state) -> state num.
 
-        @status: Untested + NoDoc + NoDemo = NOT OK
+        :status: Untested + NoDoc + NoDemo = NOT OK
     """
     _fl_popup_entry_clear_state = library.cfuncproto(
         library.load_so_libforms(), "fl_popup_entry_clear_state",
@@ -630,7 +630,7 @@ def fl_popup_entry_clear_state(pPopupEntry, state):
 def fl_popup_entry_raise_state(pPopupEntry, state):
     """ fl_popup_entry_raise_state(pPopupEntry, state) -> state num.
 
-        @status: Untested + NoDoc + NoDemo = NOT OK
+        :status: Untested + NoDoc + NoDemo = NOT OK
     """
     _fl_popup_entry_raise_state = library.cfuncproto(
         library.load_so_libforms(), "fl_popup_entry_raise_state",
@@ -647,7 +647,7 @@ def fl_popup_entry_raise_state(pPopupEntry, state):
 def fl_popup_entry_toggle_state(pPopupEntry, state):
     """ fl_popup_entry_toggle_state(pPopupEntry, state) -> num.
 
-        @status: Untested + NoDoc + NoDemo = NOT OK
+        :status: Untested + NoDoc + NoDemo = NOT OK
     """
     _fl_popup_entry_toggle_state = library.cfuncproto(
         library.load_so_libforms(), "fl_popup_entry_toggle_state",
@@ -664,7 +664,7 @@ def fl_popup_entry_toggle_state(pPopupEntry, state):
 def fl_popup_entry_set_text(pPopupEntry, text):
     """ fl_popup_entry_set_text(p1, txtstr) -> num.
 
-        @status: Untested + NoDoc + NoDemo = NOT OK
+        :status: Untested + NoDoc + NoDemo = NOT OK
     """
     _fl_popup_entry_set_text = library.cfuncproto(
         library.load_so_libforms(), "fl_popup_entry_set_text",
@@ -681,7 +681,7 @@ def fl_popup_entry_set_text(pPopupEntry, text):
 def fl_popup_entry_set_shortcut(pPopupEntry, textsc):
     """ fl_popup_entry_set_shortcut(pPopupEntry, textsc)
 
-        @status: Tested + NoDoc + Demo = OK
+        :status: Tested + NoDoc + Demo = OK
     """
     _fl_popup_entry_set_shortcut = library.cfuncproto(
         library.load_so_libforms(), "fl_popup_entry_set_shortcut",
@@ -697,7 +697,7 @@ def fl_popup_entry_set_shortcut(pPopupEntry, textsc):
 def fl_popup_entry_set_value(pPopupEntry, val):
     """ fl_popup_entry_set_value(pPopupEntry, p2) -> num.
 
-        @status: Untested + NoDoc + NoDemo = NOT OK
+        :status: Untested + NoDoc + NoDemo = NOT OK
     """
     _fl_popup_entry_set_value = library.cfuncproto(
         library.load_so_libforms(), "fl_popup_entry_set_value",
@@ -714,7 +714,7 @@ def fl_popup_entry_set_value(pPopupEntry, val):
 def fl_popup_entry_set_user_data(pPopupEntry, vdata):
     """ fl_popup_entry_set_user_data(pPopupEntry, vdata) -> ??
 
-        @status: Untested + NoDoc + NoDemo = NOT OK
+        :status: Untested + NoDoc + NoDemo = NOT OK
     """
     _fl_popup_entry_set_user_data = library.cfuncproto(
         library.load_so_libforms(), "fl_popup_entry_set_user_data",
@@ -731,7 +731,7 @@ def fl_popup_entry_set_user_data(pPopupEntry, vdata):
 def fl_popup_entry_get_by_position(pPopup, numpos):
     """ fl_popup_entry_get_by_position(pPopup, numpos) -> pPopupEntry
 
-        @status: Untested + NoDoc + NoDemo = NOT OK
+        :status: Untested + NoDoc + NoDemo = NOT OK
     """
     _fl_popup_entry_get_by_position = library.cfuncproto(
         library.load_so_libforms(), "fl_popup_entry_get_by_position",
@@ -748,7 +748,7 @@ def fl_popup_entry_get_by_position(pPopup, numpos):
 def fl_popup_entry_get_by_value(pPopup, val):
     """ fl_popup_entry_get_by_value(pPopup, val) -> pPopupEntry
 
-        @status: Untested + NoDoc + NoDemo = NOT OK
+        :status: Untested + NoDoc + NoDemo = NOT OK
     """
     _fl_popup_entry_get_by_value = library.cfuncproto(
         library.load_so_libforms(), "fl_popup_entry_get_by_value",
@@ -765,7 +765,7 @@ def fl_popup_entry_get_by_value(pPopup, val):
 def fl_popup_entry_get_by_user_data(pPopup, vdata):
     """ fl_popup_entry_get_by_user_data(pPopup, vdata) -> pPopupEntry
 
-        @status: Untested + NoDoc + NoDemo = NOT OK
+        :status: Untested + NoDoc + NoDemo = NOT OK
     """
     _fl_popup_entry_get_by_user_data = library.cfuncproto(
         library.load_so_libforms(), "fl_popup_entry_get_by_user_data",
@@ -782,7 +782,7 @@ def fl_popup_entry_get_by_user_data(pPopup, vdata):
 def fl_popup_entry_get_by_text(pPopup, text):
     """ fl_popup_entry_get_by_text(pPopup, text) -> pPopupEntry
 
-        @status: Untested + NoDoc + NoDemo = NOT OK
+        :status: Untested + NoDoc + NoDemo = NOT OK
     """
     _fl_popup_entry_get_by_text = library.cfuncproto(
         library.load_so_libforms(), "fl_popup_entry_get_by_text",
@@ -800,7 +800,7 @@ def fl_popup_entry_get_by_text(pPopup, text):
 def fl_popup_entry_get_by_label(pPopup, label):
     """ fl_popup_entry_get_by_label(pPopup, label) -> pPopupEntry
 
-        @status: Untested + NoDoc + NoDemo = NOT OK
+        :status: Untested + NoDoc + NoDemo = NOT OK
     """
     _fl_popup_entry_get_by_label = library.cfuncproto(
         library.load_so_libforms(), "fl_popup_entry_get_by_label",
@@ -818,7 +818,7 @@ def fl_popup_entry_get_by_label(pPopup, label):
 def fl_popup_entry_get_group(pPopupEntry):
     """ fl_popup_entry_get_group(pPopupEntry) -> num.
 
-        @status: Untested + NoDoc + NoDemo = NOT OK
+        :status: Untested + NoDoc + NoDemo = NOT OK
     """
     _fl_popup_entry_get_group = library.cfuncproto(
         library.load_so_libforms(), "fl_popup_entry_get_group",
@@ -833,7 +833,7 @@ def fl_popup_entry_get_group(pPopupEntry):
 def fl_popup_entry_set_group(pPopupEntry, num):
     """ fl_popup_entry_set_group(pPopupEntry, num) -> num.
 
-        @status: Untested + NoDoc + NoDemo = NOT OK
+        :status: Untested + NoDoc + NoDemo = NOT OK
     """
     _fl_popup_entry_set_group = library.cfuncproto(
         library.load_so_libforms(), "fl_popup_entry_set_group",
@@ -849,7 +849,7 @@ def fl_popup_entry_set_group(pPopupEntry, num):
 def fl_popup_entry_get_subpopup(pPopupEntry):
     """ fl_popup_entry_get_subpopup(pPopupEntry) -> pPopup
 
-        @status: Untested + NoDoc + NoDemo = NOT OK
+        :status: Untested + NoDoc + NoDemo = NOT OK
     """
     _fl_popup_entry_get_subpopup = library.cfuncproto(
         library.load_so_libforms(), "fl_popup_entry_get_subpopup",
@@ -864,7 +864,7 @@ def fl_popup_entry_get_subpopup(pPopupEntry):
 def fl_popup_entry_set_subpopup(pPopupEntry, pPopup):
     """ fl_popup_entry_set_subpopup(pPopupEntry, pPopup) -> pPopup
 
-        @status: Untested + NoDoc + NoDemo = NOT OK
+        :status: Untested + NoDoc + NoDemo = NOT OK
     """
     _fl_popup_entry_set_subpopup = library.cfuncproto(
         library.load_so_libforms(), "fl_popup_entry_set_subpopup",
@@ -881,10 +881,10 @@ def fl_popup_entry_set_subpopup(pPopupEntry, pPopup):
 def fl_popup_get_size(pPopup):
     """ fl_popup_get_size(pPopup) -> size num., width, height
 
-        @attention: API change from XForms - upstream was
+        :attention: API change from XForms - upstream was
                     fl_popup_get_size(pPopup, w, h)
 
-        @status: Untested + NoDoc + NoDemo = NOT OK
+        :status: Untested + NoDoc + NoDemo = NOT OK
     """
     _fl_popup_get_size = library.cfuncproto(
         library.load_so_libforms(), "fl_popup_get_size",
@@ -903,7 +903,7 @@ def fl_popup_get_size(pPopup):
 def fl_popup_get_min_width(pPopup):
     """ fl_popup_get_min_width(pPopup) -> width num.
 
-        @status: Untested + NoDoc + NoDemo = NOT OK
+        :status: Untested + NoDoc + NoDemo = NOT OK
     """
     _fl_popup_get_min_width = library.cfuncproto(
         library.load_so_libforms(), "fl_popup_get_min_width",
@@ -918,7 +918,7 @@ def fl_popup_get_min_width(pPopup):
 def fl_popup_set_min_width(pPopup, minwidth):
     """ fl_popup_set_min_width(pPopup, minwidth) -> width num.
 
-        @status: Untested + NoDoc + NoDemo = NOT OK
+        :status: Untested + NoDoc + NoDemo = NOT OK
     """
     _fl_popup_set_min_width = library.cfuncproto(
         library.load_so_libforms(), "fl_popup_set_min_width",

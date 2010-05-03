@@ -64,7 +64,7 @@ def fl_add_box(boxtype, x, y, w, h, label):
         @param h: height in coord units
         @param label: text label of box
 
-        @status: Tested + NoDoc + Demo = OK
+        :status: Tested + NoDoc + Demo = OK
     """
     _fl_add_box = library.cfuncproto(
         library.load_so_libforms(), "fl_add_box",
@@ -129,7 +129,7 @@ def fl_stuff_clipboard(pFlObject, clipbdtype, data, size, py_LoseSelectionCb):
     @param py_LoseSelectionCb: python function callback, returning value
     @type py_LoseSelectionCb: func(pFlObject, longnum) -> num.
 
-    @status: Untested + NoDoc + NoDemo = NOT OK
+    :status: Untested + NoDoc + NoDemo = NOT OK
     """
     #FL_LOSE_SELECTION_CB = cty.CFUNCTYPE(cty.c_int, cty.POINTER(xfdata.FL_OBJECT),
     #                                     cty.c_long)
@@ -163,7 +163,7 @@ def fl_request_clipboard(pFlObject, clipbdtype, py_SelectionCb):
     @type py_SelectionCb: func(pFlObject, longnum, ptr_void,
                               longnum) -> num.
 
-    @status: Untested + NoDoc + NoDemo = NOT OK
+    :status: Untested + NoDoc + NoDemo = NOT OK
     """
     #FL_SELECTION_CB = cty.CFUNCTYPE(cty.c_int, cty.POINTER(xfdata.FL_OBJECT),
     #                                cty.c_long, cty.c_void_p, cty.c_long)
@@ -197,7 +197,7 @@ def flps_init():
     """
     flps_init() -> flps_control class
 
-    @status: Untested + NoDoc + NoDemo = NOT OK
+    :status: Untested + NoDoc + NoDemo = NOT OK
     """
     _flps_init = library.cfuncproto(
         library.load_so_libflimage(), "flps_init",
@@ -214,7 +214,7 @@ def fl_object_ps_dump(pFlObject, fname):
     @param pFlObject: pointer to object
     @type pFlObject: pointer to xfdata.FL_OBJECT
 
-    @status: Untested + NoDoc + NoDemo = NOT OK
+    :status: Untested + NoDoc + NoDemo = NOT OK
     """
     _fl_object_ps_dump = library.cfuncproto(
         library.load_so_libflimage(), "fl_object_ps_dump",
@@ -252,7 +252,7 @@ def fl_add_frame(frametype, x, y, w, h, label):
         @param h: height in coord units
         @param label: text label of frame
 
-        @status: Tested + NoDoc + Demo = OK
+        :status: Tested + NoDoc + Demo = OK
     """
     _fl_add_frame = library.cfuncproto(
         library.load_so_libforms(), "fl_add_frame",
@@ -296,7 +296,7 @@ def fl_add_labelframe(frametype, x, y, w, h, label):
         @param h: height in coord units
         @param label: text label of labelframe
 
-        @status: Tested + NoDoc + Demo = OK
+        :status: Tested + NoDoc + Demo = OK
     """
     _fl_add_labelframe = library.cfuncproto(
         library.load_so_libforms(), "fl_add_labelframe",
@@ -343,7 +343,7 @@ def fl_add_free(freetype, x, y, w, h, label, py_HandlePtr):
         @param h: height in coord units
         @param label: text label of free
 
-        @status: Tested + NoDoc + Demo = OK
+        :status: Tested + NoDoc + Demo = OK
     """
     _fl_add_free = library.cfuncproto(
         library.load_so_libforms(), "fl_add_free",
@@ -418,7 +418,7 @@ def fl_add_text(texttype, x, y, w, h, label):
         @param h: height in coord units
         @param label: text label of text
 
-        @status: Tested + NoDoc + Demo = OK
+        :status: Tested + NoDoc + Demo = OK
     """
     _fl_add_text = library.cfuncproto(
         library.load_so_libforms(), "fl_add_text",
@@ -497,7 +497,7 @@ def fl_gc_():
     """
     fl_gc_() -> gc
 
-    @status: Untested + NoDoc + NoDemo = NOT OK
+    :status: Untested + NoDoc + NoDemo = NOT OK
     """
     _fl_gc_ = library.cfuncproto(
         library.load_so_libforms(), "fl_gc_",
@@ -515,7 +515,7 @@ def fl_textgc_():
     """
     fl_textgc_() -> gc
 
-    @status: Untested + NoDoc + NoDemo = NOT OK
+    :status: Untested + NoDoc + NoDemo = NOT OK
     """
     _fl_textgc_ = library.cfuncproto(
         library.load_so_libforms(), "fl_textgc_",
@@ -533,7 +533,7 @@ def fl_fheight_():
     """
     fl_fheight_() -> num.
 
-    @status: Untested + NoDoc + NoDemo = NOT OK
+    :status: Untested + NoDoc + NoDemo = NOT OK
     """
     _fl_fheight_ = library.cfuncproto(
         library.load_so_libforms(), "fl_fheight_",
@@ -552,7 +552,7 @@ def fl_fdesc_():
     """
     fl_fdesc_() -> num.
 
-    @status: Untested + NoDoc + NoDemo = NOT OK
+    :status: Untested + NoDoc + NoDemo = NOT OK
     """
     _fl_fdesc_ = library.cfuncproto(
         library.load_so_libforms(), "fl_fdesc_",
@@ -570,7 +570,7 @@ def fl_cur_win_():
     """
     fl_cur_win_() -> window
 
-    @status: Untested + NoDoc + NoDemo = NOT OK
+    :status: Untested + NoDoc + NoDemo = NOT OK
     """
     _fl_cur_win_ = library.cfuncproto(
         library.load_so_libforms(), "fl_cur_win_",
@@ -588,7 +588,7 @@ def fl_cur_fs_():
     """
     fl_cur_fs_() -> XFontStruct class
 
-    @status: Untested + NoDoc + NoDemo = NOT OK
+    :status: Untested + NoDoc + NoDemo = NOT OK
     """
     _fl_cur_fs_ = library.cfuncproto(
         library.load_so_libforms(), "fl_cur_fs_",
@@ -607,7 +607,7 @@ def fl_display_():
     """
     fl_display_() -> pDisplay
 
-    @status: Untested + NoDoc + NoDemo = NOT OK
+    :status: Untested + NoDoc + NoDemo = NOT OK
     """
     _fl_display_ = library.cfuncproto(
         library.load_so_libforms(), "fl_display_",

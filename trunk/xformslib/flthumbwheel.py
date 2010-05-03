@@ -50,7 +50,7 @@ def fl_get_thumbwheel_value(pFlObject):
 
         @param pFlObject: pointer to object
 
-        @status: Tested + NoDoc + Demo = OK
+        :status: Tested + NoDoc + Demo = OK
     """
     _fl_get_thumbwheel_value = library.cfuncproto(
         library.load_so_libforms(), "fl_get_thumbwheel_value",
@@ -87,7 +87,7 @@ def fl_get_thumbwheel_step(pFlObject):
 
         @param pFlObject: pointer to object
 
-        @status: Untested + NoDoc + NoDemo = NOT OK
+        :status: Untested + NoDoc + NoDemo = NOT OK
     """
     _fl_get_thumbwheel_step = library.cfuncproto(
         library.load_so_libforms(), "fl_get_thumbwheel_step",
@@ -106,7 +106,7 @@ def fl_set_thumbwheel_step(pFlObject, step):
 
         @param pFlObject: pointer to object
 
-        @status: Tested + NoDoc + Demo = OK
+        :status: Tested + NoDoc + Demo = OK
     """
     _fl_set_thumbwheel_step = library.cfuncproto(
         library.load_so_libforms(), "fl_set_thumbwheel_step",
@@ -131,7 +131,7 @@ def fl_set_thumbwheel_return(pFlObject, when):
                     FL_RETURN_SELECTION, FL_RETURN_DESELECTION,
                     FL_RETURN_TRIGGERED, FL_RETURN_ALWAYS
 
-        @status: Tested + NoDoc + Demo = OK
+        :status: Tested + NoDoc + Demo = OK
     """
     _fl_set_thumbwheel_return = library.cfuncproto(
         library.load_so_libforms(), "fl_set_thumbwheel_return",
@@ -153,7 +153,7 @@ def fl_set_thumbwheel_crossover(pFlObject, flag):
 
         @param pFlObject: pointer to object
 
-        @status: Untested + NoDoc + NoDemo = NOT OK
+        :status: Untested + NoDoc + NoDemo = NOT OK
     """
     _fl_set_thumbwheel_crossover = library.cfuncproto(
         library.load_so_libforms(), "fl_set_thumbwheel_crossover",
@@ -173,7 +173,7 @@ def fl_set_thumbwheel_bounds(pFlObject, minbound, maxbound):
 
         @param pFlObject: pointer to object
 
-        @status: Untested + NoDoc + NoDemo = NOT OK
+        :status: Untested + NoDoc + NoDemo = NOT OK
     """
     _fl_set_thumbwheel_bounds = library.cfuncproto(
         library.load_so_libforms(), "fl_set_thumbwheel_bounds",
@@ -193,10 +193,10 @@ def fl_get_thumbwheel_bounds(pFlObject):
 
         @param pFlObject: pointer to thumbwheel object
 
-        @attention: API change from XForms - upstream was
+        :attention: API change from XForms - upstream was
                     fl_get_thumbwheel_bounds(pFlObject, minbound, maxbound)
 
-        @status: Untested + NoDoc + NoDemo = NOT OK
+        :status: Untested + NoDoc + NoDemo = NOT OK
     """
     _fl_get_thumbwheel_bounds = library.cfuncproto(
         library.load_so_libforms(), "fl_get_thumbwheel_bounds",
@@ -229,7 +229,7 @@ def fl_add_thumbwheel(wheeltype, x, y, w, h, label):
         @param h: height in coord units
         @param label: text label of thumbwheel
 
-        @status: Tested + NoDoc + Demo = OK
+        :status: Tested + NoDoc + Demo = OK
     """
     _fl_add_thumbwheel = library.cfuncproto(
         library.load_so_libforms(), "fl_add_thumbwheel",

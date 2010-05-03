@@ -2,7 +2,7 @@
 # -*- coding: iso8859-1 -*-
 
 """
-    flbrowser.py - functions to manage browser layout.
+    flbrowser.py - Functions to manage browser objects.
 
     Copyright (C) 2009, 2010  Luca Lazzaroni "LukenShiro"
     e-mail:  <lukenshiro@ngi.it>
@@ -51,6 +51,8 @@ from xformslib import xfdata
 def fl_add_browser(browsertype, x, y, w, h, label):
     """Adds a browser object. The label is placed below the box by default.
 
+    --
+
     :Parameters:
       `browsertype` : int
         type of the browser to be added. Values (from xfdata.py)
@@ -69,7 +71,7 @@ def fl_add_browser(browsertype, x, y, w, h, label):
     :return: browser object created (pFlObject)
     :rtype: pointer to xfdata.FL_OBJECT
 
-    :note: e.g. brobj = fl_add_browser(FL_SELECT_BROWSER, 200, 250, 200, 200, \
+    :note: e.g. brobj = fl_add_browser(FL_SELECT_BROWSER, 200, 250, 200, 200, 
         "BrowserList")
 
     :status: Tested + Doc + Demo = OK
@@ -97,6 +99,8 @@ def fl_add_browser(browsertype, x, y, w, h, label):
 
 def fl_clear_browser(pFlObject):
     """Clears contents of a browser object.
+
+    --
 
     :Parameters:
       `pFlObject` : pointer to xfdata.FL_OBJECT
@@ -143,6 +147,8 @@ def fl_add_browser_line(pFlObject, newtext):
     font while "@b@i@f" gives you a (plain) fixed font. Depending on the font
     size and style lines may have different heights.
 
+    --
+
     :Parameters:
       `pFlObject` : pointer to xfdata.FL_OBJECT
         browser object
@@ -170,6 +176,8 @@ def fl_addto_browser(pFlObject, newtext):
     appended line is visible. This is useful when e.g. using the browser to
     display messages. The text may contain embedded newline characters. See
     fl_add_browser_line() for appearance change.
+
+    --
 
     :Parameters:
       `pFlObject` : pointer to xfdata.FL_OBJECT
@@ -200,6 +208,8 @@ def fl_addto_browser_chars(pFlObject, addedtext):
     line, and everything aferwards is put onto new lines. As in the case of
     fl_addto_browser() the last added line will be visible in the browser.
     See fl_add_browser_line() for appearance change.
+
+    --
 
     :Parameters:
       `pFlObject` : pointer to xfdata.FL_OBJECT
@@ -235,6 +245,8 @@ def fl_insert_browser_line(pFlObject, linenum, newtext):
     line, then this function works exactly as if you had called
     fl_add_browser_line(). See fl_add_browser_line() for appearance change.
 
+    --
+
     :Parameters:
       `pFlObject` : pointer to xfdata.FL_OBJECT
         browser object
@@ -264,6 +276,8 @@ def fl_insert_browser_line(pFlObject, linenum, newtext):
 def fl_delete_browser_line(pFlObject, linenum):
     """Deletes a line (shifting the following lines) 
 
+    --
+
     :Parameters:
       `pFlObject` : pointer to xfdata.FL_OBJECT
         browser object
@@ -291,6 +305,8 @@ def fl_replace_browser_line(pFlObject, linenum, newtext):
     text don't have any special meaning, i.e. they don't result in replacement
     of more than a single line. See fl_add_browser_line() for appearance
     change.
+
+    --
 
     :Parameters:
       `pFlObject` : pointer to xfdata.FL_OBJECT
@@ -320,6 +336,8 @@ def fl_replace_browser_line(pFlObject, linenum, newtext):
 
 def fl_get_browser_line(pFlObject, linenum):
     """Obtains the contents of a particular line in the browser.
+
+    --
 
     :Parameters:
       `pFlObject` : pointer to xfdata.FL_OBJECT
@@ -354,6 +372,8 @@ def fl_load_browser(pFlObject, filename):
     facility. You can create different help files and load the needed one
     depending on context.
 
+    --
+
     :Parameters:
       `pFlObject` : pointer to xfdata.FL_OBJECT
         browser object
@@ -382,6 +402,8 @@ def fl_load_browser(pFlObject, filename):
 def fl_select_browser_line(pFlObject, linenum):
     """Selects a line in the browser.
 
+    --
+
     :Parameters:
       `pFlObject` : pointer to xfdata.FL_OBJECT
         browser object
@@ -406,6 +428,8 @@ def fl_select_browser_line(pFlObject, linenum):
 
 def fl_deselect_browser_line(pFlObject, linenum):
     """Deselects a line in the browser.
+
+    --
 
     :Parameters:
       `pFlObject` : pointer to xfdata.FL_OBJECT
@@ -432,6 +456,8 @@ def fl_deselect_browser_line(pFlObject, linenum):
 def fl_deselect_browser(pFlObject):
     """Deselects all lines in the browser.
 
+    --
+
     :Parameters:
       `pFlObject` : pointer to xfdata.FL_OBJECT
         browser object
@@ -453,6 +479,8 @@ def fl_deselect_browser(pFlObject):
 
 def fl_isselected_browser_line(pFlObject, linenum):
     """Checks whether a line is selected or not.
+
+    --
 
     :Parameters:
       `pFlObject` : pointer to xfdata.FL_OBJECT
@@ -484,6 +512,8 @@ def fl_get_browser_topline(pFlObject):
     """Finds out the (un-obscured) line that is currently shown at the top
     of the browser. The index of the top line is 1, not 0.
 
+    --
+
     :Parameters:
       `pFlObject` : pointer to xfdata.FL_OBJECT
         browser object
@@ -510,6 +540,8 @@ def fl_get_browser_topline(pFlObject):
 def fl_get_browser(pFlObject):
     """Obtains the last selection made by the user, e.g. when the browser is
     returned.
+
+    --
 
     :Parameters:
       `pFlObject` : pointer to xfdata.FL_OBJECT
@@ -539,6 +571,8 @@ def fl_get_browser(pFlObject):
 def fl_get_browser_maxline(pFlObject):
     """Returns the number of lines in the browser.
 
+    --
+
     :Parameters:
       `pFlObject` : pointer to xfdata.FL_OBJECT
         browser object
@@ -567,6 +601,8 @@ def fl_get_browser_screenlines(pFlObject):
     This count only includes lines that are shown completely in the browser,
     partially obscured ones aren't counted in.
 
+    --
+
     :Parameters:
       `pFlObject` : pointer to xfdata.FL_OBJECT
         browser object
@@ -592,6 +628,8 @@ def fl_get_browser_screenlines(pFlObject):
 
 def fl_set_browser_topline(pFlObject, linenum):
     """Moves a text line to the top of the browser. Line numbers start with 1.
+
+    --
 
     :Parameters:
       `pFlObject` : pointer to xfdata.FL_OBJECT
@@ -619,6 +657,8 @@ def fl_set_browser_bottomline(pFlObject, linenum):
     """Moves a text line to the bottom of the browser. Line numbers start with
     1.
 
+    --
+
     :Parameters:
       `pFlObject` : pointer to xfdata.FL_OBJECT
         browser object
@@ -644,7 +684,7 @@ def fl_set_browser_bottomline(pFlObject, linenum):
 def fl_set_browser_fontsize(pFlObject, size):
     """Sets the font size used inside the browser.
 
-    Sets the font size of a browser object.
+    --
 
     :Parameters:
       `pFlObject` : pointer to xfdata.FL_OBJECT
@@ -673,6 +713,8 @@ def fl_set_browser_fontsize(pFlObject, size):
 
 def fl_set_browser_fontstyle(pFlObject, style):
     """Sets the font style of a browser object.
+
+    --
 
     :Parameters:
       `pFlObject` : pointer to xfdata.FL_OBJECT
@@ -710,6 +752,8 @@ def fl_set_browser_specialkey(pFlObject, specialkey):
     without introducing the special meaning mentioned above. In this case you
     can use "@@".
 
+    --
+
     :Parameters:
       `pFlObject` : pointer to xfdata.FL_OBJECT
         browser object
@@ -742,6 +786,8 @@ def fl_set_browser_vscrollbar(pFlObject, how):
     off the text can't be scrolled by the user anymore at all (i.e. also not
     using methods that don't use scrollbars, e.g. using the cursor keys).
 
+    --
+
     :Parameters:
       `pFlObject` : pointer to xfdata.FL_OBJECT
         browser object
@@ -772,6 +818,8 @@ def fl_set_browser_hscrollbar(pFlObject, how):
     also not using methods that don't use scrollbars, e.g. using the cursor
     keys).
 
+    --
+
     :Parameters:
       `pFlObject` : pointer to xfdata.FL_OBJECT
         browser object
@@ -796,16 +844,18 @@ def fl_set_browser_hscrollbar(pFlObject, how):
     _fl_set_browser_hscrollbar(pFlObject, ihow)
 
 
-def fl_set_browser_line_selectable(pFlObject, linenum, flag):
+def fl_set_browser_line_selectable(pFlObject, linenum, yesno):
     """Sets if a line of browser object is selectable or not.
+
+    --
 
     :Parameters:
       `pFlObject` : pointer to xfdata.FL_OBJECT
         browser object
       `linenum` : int
         line id to set
-      `flag` : int
-        state if it is selectable (1) or not selectable (0)
+      `yesno` : int
+        selectable state. Values 1 (selectable) or 0 (not selectable)
 
     :status: Untested + NoDoc + NoDemo = NOT OK
 
@@ -818,13 +868,15 @@ def fl_set_browser_line_selectable(pFlObject, linenum, flag):
     libr.check_if_initialized()
     libr.check_if_FL_OBJECT_ptr(pFlObject)
     ilinenum = libr.convert_to_int(linenum)
-    iflag = libr.convert_to_int(flag)
-    libr.keep_elem_refs(pFlObject, linenum, flag, ilinenum, iflag)
-    _fl_set_browser_line_selectable(pFlObject, ilinenum, iflag)
+    iyesno = libr.convert_to_int(yesno)
+    libr.keep_elem_refs(pFlObject, linenum, yesno, ilinenum, iyesno)
+    _fl_set_browser_line_selectable(pFlObject, ilinenum, iyesno)
 
 
 def fl_get_browser_dimension(pFlObject):
     """Obtains the browser size in pixels for the text area.
+
+    --
 
     :Parameters:
       `pFlObject` : pointer to xfdata.FL_OBJECT
@@ -864,6 +916,8 @@ def fl_set_browser_dblclick_callback(pFlObject, py_CallbackPtr, data):
     double-clicked on. Double-click callbacks make most sense for
     xfdata.FL_HOLD_BROWSERs.
 
+    --
+
     :Parameters:
       `pFlObject` : pointer to xfdata.FL_OBJECT
         browser object
@@ -898,6 +952,8 @@ def fl_set_browser_dblclick_callback(pFlObject, py_CallbackPtr, data):
 def fl_get_browser_xoffset(pFlObject):
     """Obtains the amount of text that is scrolled in horizontal direction.
 
+    --
+
     :Parameters:
       `pFlObject` : pointer to xfdata.FL_OBJECT
         browser object
@@ -925,6 +981,8 @@ def fl_get_browser_rel_xoffset(pFlObject):
     """Obtains the relative amount of text that is scrolled in horizontal
     direction.
 
+    --
+
     :Parameters:
       `pFlObject` : pointer to xfdata.FL_OBJECT
         browser object
@@ -950,6 +1008,8 @@ def fl_get_browser_rel_xoffset(pFlObject):
 
 def fl_set_browser_xoffset(pFlObject, npixels):
     """Sets the amount of text that is scrolled in horizontal direction.
+
+    --
 
     :Parameters:
       `pFlObject` : pointer to xfdata.FL_OBJECT
@@ -977,6 +1037,8 @@ def fl_set_browser_rel_xoffset(pFlObject, val):
     """Sets the relative amount of text that is scrolled in horizontal
     direction.
 
+    --
+
     :Parameters:
       `pFlObject` : pointer to xfdata.FL_OBJECT
         browser object
@@ -1001,6 +1063,8 @@ def fl_set_browser_rel_xoffset(pFlObject, val):
 
 def fl_get_browser_yoffset(pFlObject):
     """Obtains the amount of text that is scrolled in horizontal direction.
+
+    --
 
     :Parameters:
       `pFlObject` : pointer to xfdata.FL_OBJECT
@@ -1029,6 +1093,8 @@ def fl_get_browser_rel_yoffset(pFlObject):
     """Obtains the relative amount of text that is scrolled in horizontal
     direction.
 
+    --
+
     :Parameters:
       `pFlObject` : pointer to xfdata.FL_OBJECT
         browser object
@@ -1054,6 +1120,8 @@ def fl_get_browser_rel_yoffset(pFlObject):
 
 def fl_set_browser_yoffset(pFlObject, npixels):
     """Sets the amount of text that is scrolled in horizontal direction.
+
+    --
 
     :Parameters:
       `pFlObject` : pointer to xfdata.FL_OBJECT
@@ -1081,6 +1149,8 @@ def fl_set_browser_rel_yoffset(pFlObject, val):
     """Sets the relative amount of text that is scrolled in horizontal
     direction.
 
+    --
+
     :Parameters:
       `pFlObject` : pointer to xfdata.FL_OBJECT
         browser object
@@ -1107,6 +1177,8 @@ def fl_set_browser_scrollbarsize(pFlObject, hh, vw):
     """Sets the scrollbar size of the browser. By default, the scrollbar size
     is based on the relation between the size of the browser and the size of
     the text.
+
+    --
 
     :Parameters:
       `pFlObject` : pointer to xfdata.FL_OBJECT
@@ -1137,6 +1209,8 @@ def fl_set_browser_scrollbarsize(pFlObject, hh, vw):
 def fl_show_browser_line(pFlObject, line):
     """Brings a browser line into view.
 
+    --
+
     :Parameters:
       `pFlObject` : pointer to xfdata.FL_OBJECT
         browser object
@@ -1165,6 +1239,8 @@ def fl_show_browser_line(pFlObject, line):
 def fl_set_browser_hscroll_callback(pFlObject, py_BrowserScrollCallback, vdata):
     """Sets the callback function to be invoked whenever the horizontal
     scrollbar changes position.
+
+    --
 
     :Parameters:
       `pFlObject` : pointer to xfdata.FL_OBJECT
@@ -1201,6 +1277,8 @@ def fl_set_browser_vscroll_callback(pFlObject, py_BrowserScrollCallback, vdata):
     """Sets the callback function to be invoked whenever the vertical
     scrollbar changes position.
 
+    --
+
     :Parameters:
       `pFlObject` : pointer to xfdata.FL_OBJECT
         browser object
@@ -1233,6 +1311,8 @@ def fl_set_browser_vscroll_callback(pFlObject, py_BrowserScrollCallback, vdata):
 def fl_get_browser_line_yoffset(pFlObject, line):
     """Returns the y-offset for a line.
 
+    --
+
     :Parameters:
       `pFlObject` : pointer to xfdata.FL_OBJECT
         browser object
@@ -1261,6 +1341,8 @@ def fl_get_browser_hscroll_callback(pFlObject):
     """Obtains the callback function created for horizontal scrollbar position
     change.
 
+    --
+
     :Parameters:
       `pFlObject` : pointer to xfdata.FL_OBJECT
         browser object
@@ -1287,6 +1369,8 @@ def fl_get_browser_hscroll_callback(pFlObject):
 def fl_get_browser_vscroll_callback(pFlObject):
     """Obtains the callback function created for horizontal scrollbar position
     change.
+
+    --
 
     :Parameters:
       `pFlObject` : pointer to xfdata.FL_OBJECT

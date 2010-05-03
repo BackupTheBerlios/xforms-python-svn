@@ -61,7 +61,7 @@ def fl_add_nmenu(nmenutype, x, y, w, h, label):
         @param h: height in coord units
         @param label: text label of nmenu object
 
-        @status: Tested + NoDoc + Demo = OK
+        :status: Tested + NoDoc + Demo = OK
     """
     _fl_add_nmenu = library.cfuncproto(
         library.load_so_libforms(), "fl_add_nmenu",
@@ -88,7 +88,7 @@ def fl_clear_nmenu(pFlObject):
         fl_clear_nmenu(pFlObject) -> num.
 
 
-        @status: Untested + NoDoc + NoDemo = NOT OK
+        :status: Untested + NoDoc + NoDemo = NOT OK
     """
     _fl_clear_nmenu = library.cfuncproto(
         library.load_so_libforms(), "fl_clear_nmenu",
@@ -108,7 +108,7 @@ def fl_add_nmenu_items(pFlObject, itemstr):
         @param pFlObject: nmenu object
         @type pFlObject: pointer to xfdata.FL_OBJECT
 
-        @status: HalfTested + NoDoc + Demo = NOT OK (sequence param.)
+        :status: HalfTested + NoDoc + Demo = NOT OK (sequence param.)
     """
     _fl_add_nmenu_items = library.cfuncproto(
         library.load_so_libforms(), "fl_add_nmenu_items",
@@ -133,7 +133,7 @@ def fl_insert_nmenu_items(pFlObject, pPopupEntry, itemstr):
         @param itemstr: text of the item (among special sequences only %S is
                         supported)
 
-        @status: HalfTested + NoDoc + Demo = NOT OK (special sequences)
+        :status: HalfTested + NoDoc + Demo = NOT OK (special sequences)
     """
     _fl_insert_nmenu_items = library.cfuncproto(
         library.load_so_libforms(), "fl_insert_nmenu_items",
@@ -156,7 +156,7 @@ def fl_replace_nmenu_item(pFlObject, pPopupEntry, itemstr):
         @param pFlObject: nmenu object
         @type pFlObject: pointer to xfdata.FL_OBJECT
 
-        @status: Untested + NoDoc + NoDemo = NOT OK
+        :status: Untested + NoDoc + NoDemo = NOT OK
     """
     _fl_replace_nmenu_item = library.cfuncproto(
         library.load_so_libforms(), "fl_replace_nmenu_item",
@@ -177,7 +177,7 @@ def fl_delete_nmenu_item(pFlObject, pPopupEntry):
         fl_delete_nmenu_item(pFlObject, pPopupEntry) -> num.
 
 
-        @status: Untested + NoDoc + NoDemo = NOT OK
+        :status: Untested + NoDoc + NoDemo = NOT OK
     """
     _fl_delete_nmenu_item = library.cfuncproto(
         library.load_so_libforms(), "fl_delete_nmenu_item",
@@ -196,7 +196,7 @@ def fl_set_nmenu_items(pFlObject, pPopupItem):
         fl_set_nmenu_items(pFlObject, pPopupItem) -> pPopupEntry
 
 
-        @status: Untested + NoDoc + NoDemo = NOT OK
+        :status: Untested + NoDoc + NoDemo = NOT OK
     """
     _fl_set_nmenu_items = library.cfuncproto(
         library.load_so_libforms(), "fl_set_nmenu_items",
@@ -222,7 +222,7 @@ def fl_add_nmenu_items2(pFlObject, pPopupItem):
            for single or multiple lists, or with library.make_pPopupItem_from_dict(..)
            for a single dict.
 
-        @status: Tested + NoDoc + Demo = OK
+        :status: Tested + NoDoc + Demo = OK
     """
     _fl_add_nmenu_items2 = library.cfuncproto(
         library.load_so_libforms(), "fl_add_nmenu_items2",
@@ -248,7 +248,7 @@ def fl_insert_nmenu_items2(pFlObject, pPopupEntry, pPopupItem):
            for single or multiple lists, or with library.make_pPopupItem_from_dict(..)
            for a single dict.
 
-        @status: Tested + NoDoc + Demo = OK
+        :status: Tested + NoDoc + Demo = OK
     """
     _fl_insert_nmenu_items2 = library.cfuncproto(
         library.load_so_libforms(), "fl_insert_nmenu_items2",
@@ -274,7 +274,7 @@ def fl_replace_nmenu_items2(pFlObject, pPopupEntry, pPopupItem):
            for single or multiple lists, or with library.make_pPopupItem_from_dict(..)
            for a single dict.
 
-        @status: Tested + NoDoc + Demo = OK
+        :status: Tested + NoDoc + Demo = OK
     """
     _fl_replace_nmenu_items2 = library.cfuncproto(
         library.load_so_libforms(), "fl_replace_nmenu_items2",
@@ -296,7 +296,7 @@ def fl_get_nmenu_popup(pFlObject):
         @param pFlObject: nmenu object
         @type pFlObject: pointer to xfdata.FL_OBJECT
 
-        @status: Untested + NoDoc + NoDemo = NOT OK
+        :status: Untested + NoDoc + NoDemo = NOT OK
     """
     _fl_get_nmenu_popup = library.cfuncproto(
         library.load_so_libforms(), "fl_get_nmenu_popup",
@@ -315,7 +315,7 @@ def fl_set_nmenu_popup(pFlObject, pPopup):
         @param pFlObject: nmenu object
         @type pFlObject: pointer to xfdata.FL_OBJECT
 
-        @status: Untested + NoDoc + NoDemo = NOT OK
+        :status: Untested + NoDoc + NoDemo = NOT OK
     """
     _fl_set_nmenu_popup = library.cfuncproto(
         library.load_so_libforms(), "fl_set_nmenu_popup",
@@ -335,7 +335,7 @@ def fl_get_nmenu_item(pFlObject):
         @param pFlObject: nmenu object
         @type pFlObject: pointer to xfdata.FL_OBJECT
 
-        @status: Tested + NoDoc + Demo = OK
+        :status: Tested + NoDoc + Demo = OK
     """
     _fl_get_nmenu_item = library.cfuncproto(
         library.load_so_libforms(), "fl_get_nmenu_item",
@@ -355,7 +355,7 @@ def fl_get_nmenu_item_by_value(pFlObject, value):
         @param pFlObject: nmenu object
         @type pFlObject: pointer to xfdata.FL_OBJECT
 
-        @status: Tested + NoDoc + Demo = OK
+        :status: Tested + NoDoc + Demo = OK
     """
     _fl_get_nmenu_item_by_value = library.cfuncproto(
         library.load_so_libforms(), "fl_get_nmenu_item_by_value",
@@ -377,7 +377,7 @@ def fl_get_nmenu_item_by_label(pFlObject, label):
         @param pFlObject: nmenu object
         @type pFlObject: pointer to xfdata.FL_OBJECT
 
-        @status: Untested + NoDoc + NoDemo = NOT OK
+        :status: Untested + NoDoc + NoDemo = NOT OK
     """
     _fl_get_nmenu_item_by_label = library.cfuncproto(
         library.load_so_libforms(), "fl_get_nmenu_item_by_label",
@@ -399,7 +399,7 @@ def fl_get_nmenu_item_by_text(pFlObject, text):
         @param pFlObject: nmenu object
         @type pFlObject: pointer to xfdata.FL_OBJECT
 
-        @status: Untested + NoDoc + NoDemo = NOT OK
+        :status: Untested + NoDoc + NoDemo = NOT OK
     """
     _fl_get_nmenu_item_by_text = library.cfuncproto(
         library.load_so_libforms(), "fl_get_nmenu_item_by_text",
@@ -421,7 +421,7 @@ def fl_set_nmenu_policy(pFlObject, num):
         @param pFlObject: nmenu object
         @type pFlObject: pointer to xfdata.FL_OBJECT
 
-        @status: Untested + NoDoc + NoDemo = NOT OK
+        :status: Untested + NoDoc + NoDemo = NOT OK
     """
     _fl_set_nmenu_policy = library.cfuncproto(
         library.load_so_libforms(), "fl_set_nmenu_policy",
@@ -442,7 +442,7 @@ def fl_set_nmenu_hl_text_color(pFlObject, colr):
         @param pFlObject: nmenu object
         @type pFlObject: pointer to xfdata.FL_OBJECT
 
-        @status: Untested + NoDoc + NoDemo = NOT OK
+        :status: Untested + NoDoc + NoDemo = NOT OK
     """
     _fl_set_nmenu_hl_text_color = library.cfuncproto(
         library.load_so_libforms(), "fl_set_nmenu_hl_text_color",

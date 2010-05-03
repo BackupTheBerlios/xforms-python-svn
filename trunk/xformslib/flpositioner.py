@@ -61,7 +61,7 @@ def fl_add_positioner(postype, x, y, w, h, label):
         @param h: height in coord units
         @param label: text label of positioner
 
-        @status: Tested + NoDoc + Demo = OK
+        :status: Tested + NoDoc + Demo = OK
     """
     _fl_add_positioner = library.cfuncproto(
         library.load_so_libforms(), "fl_add_positioner",
@@ -90,7 +90,7 @@ def fl_set_positioner_xvalue(pFlObject, val):
         @param pFlObject: positioner object
         @type pFlObject: pointer to xfdata.FL_OBJECT
 
-        @status: Tested + NoDoc + Demo = OK
+        :status: Tested + NoDoc + Demo = OK
     """
     _fl_set_positioner_xvalue = library.cfuncproto(
         library.load_so_libforms(), "fl_set_positioner_xvalue",
@@ -110,7 +110,7 @@ def fl_get_positioner_xvalue(pFlObject):
         @param pFlObject: positioner object
         @type pFlObject: pointer to xfdata.FL_OBJECT
 
-        @status: Tested + NoDoc + Demo = OK
+        :status: Tested + NoDoc + Demo = OK
     """
 
     _fl_get_positioner_xvalue = library.cfuncproto(
@@ -132,7 +132,7 @@ def fl_set_positioner_xbounds(pFlObject, minbound, maxbound):
         @param pFlObject: positioner object
         @type pFlObject: pointer to xfdata.FL_OBJECT
 
-        @status: Tested + NoDoc + Demo = OK
+        :status: Tested + NoDoc + Demo = OK
     """
 
     _fl_set_positioner_xbounds = library.cfuncproto(
@@ -156,10 +156,10 @@ def fl_get_positioner_xbounds(pFlObject):
         @param pFlObject: positioner object
         @type pFlObject: pointer to xfdata.FL_OBJECT
 
-        @attention: API change from XForms - upstream was
+        :attention: API change from XForms - upstream was
                     fl_get_positioner_xbounds(pFlObject, minbound, maxbound)
 
-        @status: Untested + NoDoc + NoDemo = NOT OK
+        :status: Untested + NoDoc + NoDemo = NOT OK
     """
 
     _fl_get_positioner_xbounds = library.cfuncproto(
@@ -185,7 +185,7 @@ def fl_set_positioner_yvalue(pFlObject, val):
         @param pFlObject: positioner object
         @type pFlObject: pointer to xfdata.FL_OBJECT
 
-        @status: Tested + NoDoc + Demo = OK
+        :status: Tested + NoDoc + Demo = OK
     """
 
     _fl_set_positioner_yvalue = library.cfuncproto(
@@ -207,7 +207,7 @@ def fl_get_positioner_yvalue(pFlObject):
         @param pFlObject: positioner object
         @type pFlObject: pointer to xfdata.FL_OBJECT
 
-        @status: Untested + NoDoc + NoDemo = NOT OK
+        :status: Untested + NoDoc + NoDemo = NOT OK
     """
 
     _fl_get_positioner_yvalue = library.cfuncproto(
@@ -229,7 +229,7 @@ def fl_set_positioner_ybounds(pFlObject, minbound, maxbound):
         @param pFlObject: positioner object
         @type pFlObject: pointer to xfdata.FL_OBJECT
 
-        @status: Tested + NoDoc + Demo = OK
+        :status: Tested + NoDoc + Demo = OK
     """
 
     _fl_set_positioner_ybounds = library.cfuncproto(
@@ -253,10 +253,10 @@ def fl_get_positioner_ybounds(pFlObject):
         @param pFlObject: positioner object
         @type pFlObject: pointer to xfdata.FL_OBJECT
 
-        @attention: API change from XForms - upstream was
+        :attention: API change from XForms - upstream was
                     fl_get_positioner_ybounds(pFlObject, minbound, maxbound)
 
-        @status: Untested + NoDoc + NoDemo = NOT OK
+        :status: Untested + NoDoc + NoDemo = NOT OK
     """
     _fl_get_positioner_ybounds = library.cfuncproto(
         library.load_so_libforms(), "fl_get_positioner_ybounds",
@@ -280,7 +280,7 @@ def fl_set_positioner_xstep(pFlObject, value):
     @param pFlObject: positioner object
     @type pFlObject: pointer to xfdata.FL_OBJECT
 
-    @status: Untested + NoDoc + NoDemo = NOT OK
+    :status: Untested + NoDoc + NoDemo = NOT OK
     """
     _fl_set_positioner_xstep = library.cfuncproto(
         library.load_so_libforms(), "fl_set_positioner_xstep",
@@ -300,7 +300,7 @@ def fl_set_positioner_ystep(pFlObject, value):
     @param pFlObject: positioner object
     @type pFlObject: pointer to xfdata.FL_OBJECT
 
-    @status: Untested + NoDoc + NoDemo = NOT OK
+    :status: Untested + NoDoc + NoDemo = NOT OK
     """
     _fl_set_positioner_ystep = library.cfuncproto(
         library.load_so_libforms(), "fl_set_positioner_ystep",
@@ -322,7 +322,7 @@ def fl_set_positioner_return(pFlObject, when):
     @param when: return type (when it returns)
     @type when: int_pos
 
-    @status: Untested + NoDoc + NoDemo = NOT OK
+    :status: Untested + NoDoc + NoDemo = NOT OK
     """
     _fl_set_positioner_return = library.cfuncproto(
         library.load_so_libforms(), "fl_set_positioner_return",

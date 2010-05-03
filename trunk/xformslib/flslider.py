@@ -72,7 +72,7 @@ def fl_add_slider(slidertype, x, y, w, h, label):
         @param h: height in coord units
         @param label: label of the slider (placed below it by default)
 
-        @status: Tested + NoDoc + Demo = OK
+        :status: Tested + NoDoc + Demo = OK
     """
     _fl_add_slider = library.cfuncproto(
         library.load_so_libforms(), "fl_add_slider",
@@ -121,7 +121,7 @@ def fl_add_valslider(slidertype, x, y, w, h, label):
         @param h: height in coord units
         @param label: text label of slider
 
-        @status: Tested + NoDoc + Demo = OK
+        :status: Tested + NoDoc + Demo = OK
     """
     _fl_add_valslider = library.cfuncproto(
         library.load_so_libforms(), "fl_add_valslider",
@@ -152,7 +152,7 @@ def fl_set_slider_value(pFlObject, val):
         @param pFlObject: pointer to object
         @param val: new value of slider
 
-        @status: Tested + NoDoc + Demo = OK
+        :status: Tested + NoDoc + Demo = OK
     """
     _fl_set_slider_value = library.cfuncproto(
         library.load_so_libforms(), "fl_set_slider_value",
@@ -173,7 +173,7 @@ def fl_get_slider_value(pFlObject):
 
         @param pFlObject: pointer to object
 
-        @status: Tested + NoDoc + Demo = OK
+        :status: Tested + NoDoc + Demo = OK
     """
     _fl_get_slider_value = library.cfuncproto(
         library.load_so_libforms(), "fl_get_slider_value",
@@ -196,7 +196,7 @@ def fl_set_slider_bounds(pFlObject, minbound, maxbound):
         @param minbound: minimum bound of slider
         @param maxbound: maximum bound of slider
 
-        @status: Tested + NoDoc + Demo = OK
+        :status: Tested + NoDoc + Demo = OK
     """
     _fl_set_slider_bounds = library.cfuncproto(
         library.load_so_libforms(), "fl_set_slider_bounds",
@@ -219,10 +219,10 @@ def fl_get_slider_bounds(pFlObject):
 
         @param pFlObject: pointer to object
 
-        @attention: API change from XForms - upstream was
+        :attention: API change from XForms - upstream was
            fl_get_slider_bounds(pFlObject, minbound, maxbound)
 
-        @status: Untested + NoDoc + NoDemo = NOT OK
+        :status: Untested + NoDoc + NoDemo = NOT OK
     """
     _fl_get_slider_bounds = library.cfuncproto(
         library.load_so_libforms(), "fl_get_slider_bounds",
@@ -246,7 +246,7 @@ def fl_set_slider_step(pFlObject, value):
     """
         fl_set_slider_step(pFlObject, value)
 
-        @status: Untested + NoDoc + NoDemo = NOT OK
+        :status: Untested + NoDoc + NoDemo = NOT OK
     """
     _fl_set_slider_step = library.cfuncproto(
         library.load_so_libforms(), "fl_set_slider_step",
@@ -263,7 +263,7 @@ def fl_set_slider_increment(pFlObject, leftbtnval, midlbtnval):
     """
         fl_set_slider_increment(pFlObject, leftbtnval, midlbtnval)
 
-        @status: Untested + NoDoc + NoDemo = NOT OK
+        :status: Untested + NoDoc + NoDemo = NOT OK
     """
     _fl_set_slider_increment = library.cfuncproto(
         library.load_so_libforms(), "fl_set_slider_increment",
@@ -281,10 +281,10 @@ def fl_set_slider_increment(pFlObject, leftbtnval, midlbtnval):
 def fl_get_slider_increment(pFlObject):
     """ fl_get_slider_increment(pFlObject) -> leftbtnval, midlbtnval
 
-        @attention: API change from XForms - upstream was
+        :attention: API change from XForms - upstream was
                     fl_get_slider_increment(pFlObject, leftbtnval, midlbtnval)
 
-        @status: Untested + NoDoc + NoDemo = NOT OK
+        :status: Untested + NoDoc + NoDemo = NOT OK
     """
     _fl_get_slider_increment = library.cfuncproto(
         library.load_so_libforms(), "fl_get_slider_increment",
@@ -310,7 +310,7 @@ def fl_set_slider_size(pFlObject, size):
         @param pFlObject: pointer to object
         @param size: value of size of the slider
 
-        @status: Tested + NoDoc + Demo = OK
+        :status: Tested + NoDoc + Demo = OK
     """
     _fl_set_slider_size = library.cfuncproto(
         library.load_so_libforms(), "fl_set_slider_size",
@@ -332,7 +332,7 @@ def fl_set_slider_precision(pFlObject, precnum):
         @param pFlObject: pointer to object
         @param precnum: precision of shown value
 
-        @status: Untested + NoDoc + NoDemo = NOT OK
+        :status: Untested + NoDoc + NoDemo = NOT OK
     """
     _fl_set_slider_precision = library.cfuncproto(
         library.load_so_libforms(), "fl_set_slider_precision",
@@ -356,7 +356,7 @@ def fl_set_slider_filter(pFlObject, py_ValFilter):
         @param py_ValFilter: python function, fn(pFlObject, valfloat,
            intprecis) -> string
 
-        @status: Untested + NoDoc + NoDemo = NOT OK
+        :status: Untested + NoDoc + NoDemo = NOT OK
     """
     _fl_set_slider_filter = library.cfuncproto(
         library.load_so_libforms(), "fl_set_slider_filter",

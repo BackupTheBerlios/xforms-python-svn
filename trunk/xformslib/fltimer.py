@@ -62,7 +62,7 @@ def fl_add_timer(timertype, x, y, w, h, label):
         @param h: height in coord units
         @param label: text label of timer
 
-        @status: Tested + NoDoc + Demo = OK
+        :status: Tested + NoDoc + Demo = OK
     """
     _fl_add_timer = library.cfuncproto(
         library.load_so_libforms(), "fl_add_timer",
@@ -90,7 +90,7 @@ def fl_set_timer(pFlObject, total):
 
         @param pFlObject: pointer to object
 
-        @status: Tested + NoDoc + Demo = OK
+        :status: Tested + NoDoc + Demo = OK
     """
     _fl_set_timer = library.cfuncproto(
         library.load_so_libforms(), "fl_set_timer",
@@ -109,7 +109,7 @@ def fl_get_timer(pFlObject):
 
         @param pFlObject: pointer to object
 
-        @status: Untested + NoDoc + NoDemo = NOT OK
+        :status: Untested + NoDoc + NoDemo = NOT OK
     """
     _fl_get_timer = library.cfuncproto(
         library.load_so_libforms(), "fl_get_timer",
@@ -128,7 +128,7 @@ def fl_set_timer_countup(pFlObject, yes):
 
         @param pFlObject: pointer to object
 
-        @status: Tested + NoDoc + Demo = OK
+        :status: Tested + NoDoc + Demo = OK
     """
     _fl_set_timer_countup = library.cfuncproto(
         library.load_so_libforms(), "fl_set_timer_countup",
@@ -151,9 +151,9 @@ def fl_set_timer_filter(pFlObject, py_TimerFilter):
         @param py_TimerFilter: python callback function, returning value
         @type py_TimerFilter: __ fn(pFlObject, float) -> str __
 
-        @example: ?
+        :note: e.g. ?
 
-        @status: Untested + NoDoc + NoDemo = NOT OK
+        :status: Untested + NoDoc + NoDemo = NOT OK
     """
     #FL_TIMER_FILTER = cty.CFUNCTYPE(xfdata.STRING, cty.POINTER(xfdata.FL_OBJECT),
     #                                cty.c_double)
@@ -177,9 +177,9 @@ def fl_suspend_timer(pFlObject):
     @param pFlObject: timer object
     @type pFlObject: pointer to xfdata.FL_OBJECT
 
-    @example: fl_suspend_timer(timerobj)
+    :note: e.g. fl_suspend_timer(timerobj)
 
-    @status: Tested + Doc + Demo = OK
+    :status: Tested + Doc + Demo = OK
     """
     _fl_suspend_timer = library.cfuncproto(
         library.load_so_libforms(), "fl_suspend_timer",
@@ -197,9 +197,9 @@ def fl_resume_timer(pFlObject):
     @param pFlObject: timer object
     @type pFlObject: pointer to xfdata.FL_OBJECT
 
-    @example: fl_resume_timer(timerobj)
+    :note: e.g. fl_resume_timer(timerobj)
 
-    @status: Tested + Doc + Demo = OK
+    :status: Tested + Doc + Demo = OK
     """
     _fl_resume_timer = library.cfuncproto(
         library.load_so_libforms(), "fl_resume_timer",
