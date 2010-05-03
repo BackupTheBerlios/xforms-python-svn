@@ -68,3 +68,11 @@ functions call in xforms-python are only slightly modified.
 - find some way to get rid of all direct X11/Xlib functions,
 depending only on XForms library functions (hopefully).
 
+- Porting code from Python 2.x to 3.x (while keeping 2.x
+compatibility).
+
+- Adopting RestructuredText format (rst) in functions' docstrings,
+replacing epytext format.
+
+- Porting xforms-python to object-oriented/classes (maybe for version 2.x).
+

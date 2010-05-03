@@ -1,6 +1,9 @@
 
 
 SVN
+    * docstrings in flcounter.py, flcursor.py and fldial.py switched to
+    reStructuredText. Some corrections in docstrings format. Corrected
+    cursor.py example.
     * docstrings in flclock.py switched to reStructuredText.
     * docstrings in flchart.py switched to reStructuredText.
     * docstrings in flcanvas.py switched to reStructuredText.

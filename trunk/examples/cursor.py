@@ -34,6 +34,14 @@ bm2_bits = "\x00\x00\x00\x57\x7c\x72\xfc\x52\xfc\x00\x7c\x01" \
            "\x7c\x1f\xfc\x22\x40\x42\x40\x44\x40\x43\xc0\x40" \
            "\x70\x40\x8c\x20\x00\x1f\x00\x00"
 
+#curs = "\x01\x02\x03\x04\x05\x06\x07\x08\x09\x0a\x0b\x0c\x0d\xff"
+curslist = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13]
+#curs = "".join([chr(x) for x in curslist])
+curs = ""
+for x in curslist:
+    curs += chr(x)
+curs += hex(-1)         #"\xffffffff"
+
 
 
 class FD_cursor(object):
@@ -46,11 +54,6 @@ class FD_cursor(object):
 
 class FLCursor(object):
     def __init__(self, lsysargv, sysarg):
-
-        #curs = "\x01\x02\x03\x04\x05\x06\x07\x08\x09\x0a\x0b\x0c\x0d\xff"
-        curslist = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13]
-        curs = "".join([chr(x) for x in curslist])
-
         fl_set_border_width(-2)
         fl_initialize(lsysargv, sysarg, "FormDemo", 0, 0)
         self.fd_cursor = self.create_form_cursor()
@@ -58,7 +61,7 @@ class FLCursor(object):
         # fill-in form initialization code
         fl_set_cursor_color(FL_BUSY_CURSOR, FL_BLACK, FL_RED)
 
-        self.panimated = fl_create_animated_cursor(curs, 200)
+        self.create_other_cursors()
 
         fl_show_form(self.fd_cursor.cursor, FL_PLACE_CENTER, FL_FULLBORDER, \
                     "cursor")
@@ -73,19 +76,24 @@ class FLCursor(object):
 
     def setbitmapcursor_cb(self, pobj, data):
         fl_reset_cursor(FL_ObjWin(pobj))      # back to default
-        pbitmapcur = fl_create_bitmap_cursor(bm1_bits, bm2_bits, \
-                    bm1_width, bm1_height, bm1_width / 2, bm1_height / 2)
-        fl_set_cursor(FL_ObjWin(pobj), pbitmapcur)
+        fl_set_cursor(FL_ObjWin(pobj), self.pbitmapcur)
         fl_redraw_form(self.fd_cursor.cursor)
 
 
     def setanimatedcursor_cb(self, pobj, data):
+        fl_reset_cursor(FL_ObjWin(pobj))      # back to default
         fl_set_cursor(FL_ObjWin(pobj), self.panimated)
 
 
     def done_cb(self, pobj, data):
         fl_finish()
         sys.exit(0)
+
+
+    def create_other_cursors(self):
+        self.pbitmapcur = fl_create_bitmap_cursor(bm1_bits, bm2_bits, \
+                    bm1_width, bm1_height, bm1_width / 2, bm1_height / 2)
+        self.panimated = fl_create_animated_cursor(curs, 150)
 
 
     def create_form_cursor(self):
