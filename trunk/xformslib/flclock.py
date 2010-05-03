@@ -2,8 +2,7 @@
 # -*- coding: iso8859-1 -*-
 
 """
-    xforms-python - Python wrapper for XForms (X11) GUI C toolkit library
-    using ctypes
+    flclock.py - functions to manage clocks.
 
     Copyright (C) 2009, 2010  Luca Lazzaroni "LukenShiro" 
     e-mail: <lukenshiro@ngi.it>
@@ -34,10 +33,8 @@
 
 
 import ctypes as cty
-from xformslib import library
+from xformslib import library as libr
 from xformslib import xfdata
-
-
 
 
 #################################
@@ -50,27 +47,28 @@ from xformslib import xfdata
 def fl_add_clock(clocktype, x, y, w, h, label):
     """Adds a clock object.
 
-    @param clocktype: type of clock to be added. Values (from xfdata
-        module) FL_ANALOG_CLOCK, FL_DIGITAL_CLOCK
-    @type clocktype: int
-    @param x: horizontal position (upper-left corner)
-    @type x: int
-    @param y: vertical position (upper-left corner)
-    @type y: int
-    @param w: width in coord units
-    @type w: int
-    @param h: height in coord units
-    @type h: int
-    @param label: text label of clock
-    @type label: str
+    :Parameters:
+      `clocktype` : int
+        type of clock to be added. Values (from xfdata.py) FL_ANALOG_CLOCK,
+        FL_DIGITAL_CLOCK
+      `x` : int
+        horizontal position (upper-left corner)
+      `y` : int
+        vertical position (upper-left corner)
+      `w` : int
+        width in coord units
+      `h` : int
+        height in coord units
+      `label` : str
+        text label of clock
 
-    @returns: clock object added (pFlObject)
-    @rtype: pointer to xfdata.FL_OBJECT
+    :return: clock object added (pFlObject)
+    :rtype: pointer to xfdata.FL_OBJECT
 
-    @example: clkobj = fl_add_clock(xfdata.FL_ANALOG_CLOCK, 150, 210,
+    :note: e.g. clkobj = fl_add_clock(xfdata.FL_ANALOG_CLOCK, 150, 210,
         220, 200, "My great clock")
 
-    @status: Tested + Doc + Demo = OK
+    :status: Tested + Doc + Demo = OK
 
     """
     _fl_add_clock = library.cfuncproto(
@@ -97,18 +95,19 @@ def fl_get_clock(pFlObject):
     """Returns time values from a clock object, with hours in 0-23, minutes in
     0-59 and seconds in 0-59.
 
-    @param pFlObject: clock object
-    @type pFlObject: pointer to xfdata.FL_OBJECT
+    :Parameters:
+      `pFlObject` : pointer to xfdata.FL_OBJECT
+        clock object
 
-    @returns: hours, minutes and seconds
-    @rtype: int, int, int
+    :return: hours, minutes and seconds
+    :rtype: int, int, int
 
-    @example: hou, mnu, sec = fl_get_clock(clkobj)
+    :note: e.g. hou, mnu, sec = fl_get_clock(clkobj)
 
-    @attention: API change from XForms - upstream was
+    :attention: API change from XForms - upstream was
         fl_get_clock(pFlObject, hr, mn, sec)
 
-    @status: Tested + Doc + NoDemo = OK
+    :status: Tested + Doc + NoDemo = OK
 
     """
     _fl_get_clock = library.cfuncproto(
@@ -129,17 +128,18 @@ def fl_get_clock(pFlObject):
 def fl_set_clock_adjustment(pFlObject, offset):
     """Adjusts the clock to display a time other than local time.
 
-    @param pFlObject: clock object
-    @type pFlObject: pointer to xfdata.FL_OBJECT
-    @param offset: adjustment value in seconds
-    @type offset: long
+    :Parameters:
+      `pFlObject` : pointer to xfdata.FL_OBJECT
+        clock object
+      `offset` : long
+        adjustment value in seconds
 
-    @returns: old adjustment value
-    @rtype: long
+    :return: old adjustment value
+    :rtype: long
 
-    @example: oldadj = fl_set_clock_adjustment(clkobj, 3600)
+    :note: e.g. oldadj = fl_set_clock_adjustment(clkobj, 3600)
 
-    @status: Tested + Doc + NoDemo = OK
+    :status: Tested + Doc + NoDemo = OK
 
     """
     _fl_set_clock_adjustment = library.cfuncproto(
@@ -159,14 +159,15 @@ def fl_set_clock_ampm(pFlObject, yesno):
     """Switches the display to 12hr system (am-pm). By default, the digital
     clock uses 24hr system.
 
-    @param pFlObject: clock object
-    @type pFlObject: pointer to xfdata.FL_OBJECT
-    @param yesno: flag. Values 1 (12hr system used) or 0 (24hr system used)
-    @type yesno: int
+    :Parameters:
+      `pFlObject` : pointer to xfdata.FL_OBJECT
+        clock object
+      `yesno` : int
+        flag. Values 1 (12hr system used) or 0 (24hr system used)
 
-    @example: fl_set_clock_ampm(clkobj, 1)
+    :note: e.g. fl_set_clock_ampm(clkobj, 1)
 
-    @status: Tested + Doc + NoDemo = OK
+    :status: Tested + Doc + NoDemo = OK
 
     """
     _fl_set_clock_ampm = library.cfuncproto(
@@ -178,5 +179,4 @@ def fl_set_clock_ampm(pFlObject, yesno):
     iyesno = library.convert_to_int(yesno)
     library.keep_elem_refs(pFlObject, yesno, iyesno)
     _fl_set_clock_ampm(pFlObject, iyesno)
-
 

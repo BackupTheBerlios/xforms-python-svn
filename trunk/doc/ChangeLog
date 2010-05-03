@@ -1,6 +1,7 @@
 
 
 SVN
+    * docstrings in flclock.py switched to reStructuredText.
     * docstrings in flchart.py switched to reStructuredText.
     * docstrings in flcanvas.py switched to reStructuredText.
     * docstrings in flbutton.py switched to reStructuredText.
