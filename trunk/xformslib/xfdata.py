@@ -2,8 +2,8 @@
 # -*- coding: iso8859-1 -*-
 
 """
-    xforms-python - Python wrapper for XForms (X11) GUI C toolkit library
-    using ctypes
+    xfdata.py - Data, constants and variables to be used with Python wrapper
+    for XForms (X11) GUI C toolkit library
 
     Copyright (C) 2009, 2010  Luca Lazzaroni "LukenShiro"
     e-mail: <lukenshiro@ngi.it>
@@ -1333,7 +1333,6 @@ FL_FORMCALLBACKPTR = cty.CFUNCTYPE(None, cty.POINTER(FL_OBJECT), cty.c_void_p)
     prototype for handling a callback for the entire form (used by
     fl_set_form_callback) - no return value
 """
-
 
 
 
@@ -3089,6 +3088,15 @@ SelectionRequest = 30
 SelectionNotify = 31
 # *** end - from /usr/include/X11/X.h ***
 
+# my add - list of possible values --LK
+XEVENTNAMES_list = [KeyPress, KeyRelease, ButtonPress, ButtonRelease,
+            MotionNotify, EnterNotify, LeaveNotify, FocusIn, FocusOut,
+            KeymapNotify, Expose, GraphicsExpose, NoExpose, VisibilityNotify,
+            CreateNotify, DestroyNotify, UnmapNotify, MapNotify, MapRequest,
+            ReparentNotify, ConfigureNotify, ConfigureRequest, GravityNotify,
+            ResizeRequest, CirculateNotify, CirculateRequest, PropertyNotify,
+            SelectionClear, SelectionRequest, SelectionNotify]
+
 
 # *** start - from /usr/include/X11/Xutil.h 139 ***
 # definitions for initial window state
@@ -3877,7 +3885,7 @@ FD_FSELECTOR._fields_ = [
 
 FL_FSCB = cty.CFUNCTYPE(cty.c_int, STRING, cty.c_void_p)
 
-# c function prototype for _fl_add_fselector_appbutton 
+# c function prototype for _fl_add_fselector_appbutton
 cfunc_none_voidp = cty.CFUNCTYPE(None, cty.c_void_p)
 
 

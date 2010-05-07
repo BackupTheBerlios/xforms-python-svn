@@ -2,8 +2,7 @@
 # -*- coding: iso8859-1 -*-
 
 """
-    xforms-python - Python wrapper for XForms (X11) GUI C toolkit library
-    using ctypes
+    flmisc.py - Function to manage miscellaneous objects.
 
     Copyright (C) 2009, 2010  Luca Lazzaroni "LukenShiro"
     e-mail: <lukenshiro@ngi.it>
@@ -33,7 +32,7 @@
 # ############################################# #
 
 import ctypes as cty
-from xformslib import library
+from xformslib import library as libr
 from xformslib import xfdata
 
 
@@ -46,42 +45,53 @@ from xformslib import xfdata
 
 
 def fl_add_box(boxtype, x, y, w, h, label):
-    """ fl_add_box(boxtype, x, y, w, h, label) -> pFlObject
+    """Adds a box object.
 
-        Adds a box object.
+    --
 
-        @param boxtype: type of the box to be added (<int>)
-        @type boxtype: (from xfdata module) FL_NO_BOX, FL_UP_BOX, FL_DOWN_BOX,
-                       FL_BORDER_BOX, FL_SHADOW_BOX, FL_FRAME_BOX,
-                       FL_ROUNDED_BOX, FL_EMBOSSED_BOX, FL_FLAT_BOX,
-                       FL_RFLAT_BOX, FL_RSHADOW_BOX, FL_OVAL_BOX,
-                       FL_ROUNDED3D_UPBOX, FL_ROUNDED3D_DOWNBOX,
-                       FL_OVAL3D_UPBOX, FL_OVAL3D_DOWNBOX, FL_OVAL3D_FRAMEBOX,
-                       FL_OVAL3D_EMBOSSEDBOX
-        @param x: horizontal position (upper-left corner)
-        @param y: vertical position (upper-left corner)
-        @param w: width in coord units
-        @param h: height in coord units
-        @param label: text label of box
+    :Parameters:
+      `boxtype` : int
+        type of the box to be added. Values (from xfdata.py) FL_NO_BOX,
+        FL_UP_BOX, FL_DOWN_BOX, FL_BORDER_BOX, FL_SHADOW_BOX, FL_FRAME_BOX,
+        FL_ROUNDED_BOX, FL_EMBOSSED_BOX, FL_FLAT_BOX, FL_RFLAT_BOX,
+        FL_RSHADOW_BOX, FL_OVAL_BOX, FL_ROUNDED3D_UPBOX, FL_ROUNDED3D_DOWNBOX,
+        FL_OVAL3D_UPBOX, FL_OVAL3D_DOWNBOX, FL_OVAL3D_FRAMEBOX,
+        FL_OVAL3D_EMBOSSEDBOX
+      `x` : int
+        horizontal position (upper-left corner)
+      `y` : int
+        vertical position (upper-left corner)
+      `w`: int
+        width in coord units
+      `h` : int
+        height in coord units
+      `label` : str
+        text label of box
 
-        :status: Tested + NoDoc + Demo = OK
+    :return: box object added (pFlObject)
+    :rtype: pointer to xfdata.FL_OBJECT
+
+    :note: e.g. *todo*
+
+    :status: Tested + NoDoc + Demo = OK
+
     """
-    _fl_add_box = library.cfuncproto(
-        library.load_so_libforms(), "fl_add_box",
+    _fl_add_box = libr.cfuncproto(
+        libr.load_so_libforms(), "fl_add_box",
         cty.POINTER(xfdata.FL_OBJECT), [cty.c_int, xfdata.FL_Coord,
         xfdata.FL_Coord, xfdata.FL_Coord, xfdata.FL_Coord, xfdata.STRING],
         """FL_OBJECT * fl_add_box(int type, FL_Coord x, FL_Coord y,
            FL_Coord w, FL_Coord h, const char * label)""")
-    library.check_if_initialized()
-    library.check_admitted_listvalues(boxtype, xfdata.BOXTYPE_list)
-    iboxtype = library.convert_to_int(boxtype)
-    ix = library.convert_to_FL_Coord(x)
-    iy = library.convert_to_FL_Coord(y)
-    iw = library.convert_to_FL_Coord(w)
-    ih = library.convert_to_FL_Coord(h)
-    slabel = library.convert_to_string(label)
-    library.keep_elem_refs(boxtype, x, y, w, h, label, iboxtype, ix, iy, iw,
-                   ih, slabel)
+    libr.check_if_initialized()
+    libr.check_admitted_listvalues(boxtype, xfdata.BOXTYPE_list)
+    iboxtype = libr.convert_to_int(boxtype)
+    ix = libr.convert_to_FL_Coord(x)
+    iy = libr.convert_to_FL_Coord(y)
+    iw = libr.convert_to_FL_Coord(w)
+    ih = libr.convert_to_FL_Coord(h)
+    slabel = libr.convert_to_string(label)
+    libr.keep_elem_refs(boxtype, x, y, w, h, label, iboxtype, ix, iy, iw,
+                        ih, slabel)
     retval = _fl_add_box(iboxtype, ix, iy, iw, ih, slabel)
     return retval
 
@@ -120,68 +130,91 @@ def fl_add_box(boxtype, x, y, w, h, label):
 
 
 def fl_stuff_clipboard(pFlObject, clipbdtype, data, size, py_LoseSelectionCb):
-    """ fl_stuff_clipboard(pFlObject, clipbdtype, data, size, py_LoseSelectionCb) -> num.
+    """Stores data in clipboard?
 
-    @param pFlObject: pointer to clipboard object
-    @type pFlObject: pointer to xfdata.FL_OBJECT
-    @param clipbdtype: type of clipboard (not used)
-    @type clipbdtype: num./long
-    @param py_LoseSelectionCb: python function callback, returning value
-    @type py_LoseSelectionCb: func(pFlObject, longnum) -> num.
+    --
+
+    :Parameters:
+      `pFlObject` : pointer to xfdata.FL_OBJECT
+        clipboard object
+      `clipbdtype` : long
+        type of clipboard (not used)
+      `data` : *todo*
+        *todo*
+      `size` : long
+        *todo*
+      `py_LoseSelectionCb: python function callback, returning value
+        name referring to function(pFlObject, longnum) -> num.
+
+    :return: num.
+    :rtype: int
+
+    :note: e.g. *todo*
 
     :status: Untested + NoDoc + NoDemo = NOT OK
+
     """
-    #FL_LOSE_SELECTION_CB = cty.CFUNCTYPE(cty.c_int, cty.POINTER(xfdata.FL_OBJECT),
-    #                                     cty.c_long)
-    _fl_stuff_clipboard = library.cfuncproto(
-            library.load_so_libforms(), "fl_stuff_clipboard",
-            cty.c_int, [cty.POINTER(xfdata.FL_OBJECT), cty.c_long, cty.c_void_p,
-            cty.c_long, xfdata.FL_LOSE_SELECTION_CB],
-            """int fl_stuff_clipboard(FL_OBJECT * ob, long int type,
-               const char * data, long int size,
-               FL_LOSE_SELECTION_CB lose_callback)""")
-    library.check_if_initialized()
-    library.check_if_FL_OBJECT_ptr(pFlObject)
-    lclipbdtype = library.convert_to_long(clipbdtype)
+    #FL_LOSE_SELECTION_CB = cty.CFUNCTYPE(cty.c_int, cty.POINTER( \
+    #                       xfdata.FL_OBJECT), cty.c_long)
+    _fl_stuff_clipboard = libr.cfuncproto(
+        libr.load_so_libforms(), "fl_stuff_clipboard",
+        cty.c_int, [cty.POINTER(xfdata.FL_OBJECT), cty.c_long, cty.c_void_p,
+        cty.c_long, xfdata.FL_LOSE_SELECTION_CB],
+        """int fl_stuff_clipboard(FL_OBJECT * ob, long int type,
+           const char * data, long int size,
+           FL_LOSE_SELECTION_CB lose_callback)""")
+    libr.check_if_initialized()
+    libr.check_if_FL_OBJECT_ptr(pFlObject)
+    lclipbdtype = libr.convert_to_long(clipbdtype)
     pdata = cty.cast(data, cty.c_void_p)
-    lsize = library.convert_to_long(size)
+    lsize = libr.convert_to_long(size)
     c_LoseSelectionCb = xfdata.FL_LOSE_SELECTION_CB(py_LoseSelectionCb)
-    library.keep_cfunc_refs(c_LoseSelectionCb, py_LoseSelectionCb)
-    library.keep_elem_refs(pFlObject, clipbdtype, data, size, lclipbdtype, pdata, lsize)
+    libr.keep_cfunc_refs(c_LoseSelectionCb, py_LoseSelectionCb)
+    libr.keep_elem_refs(pFlObject, clipbdtype, data, size, lclipbdtype, pdata,
+                        lsize)
     retval = _fl_stuff_clipboard(pFlObject, lclipbdtype, pdata, lsize,
                                  c_LoseSelectionCb)
     return retval
 
 
 def fl_request_clipboard(pFlObject, clipbdtype, py_SelectionCb):
-    """ fl_request_clipboard(pFlObject, clipbdtype, py_SelectionCb) -> num.
+    """Retrieves data from clipboard?
 
-    @param pFlObject: pointer to clipboard object
-    @type pFlObject: pointer to xfdata.FL_OBJECT
-    @param clipbdtype: type of clipboard (not used)
-    @param py_SelectionCb: python function callback, returning value
-    @type py_SelectionCb: func(pFlObject, longnum, ptr_void,
-                              longnum) -> num.
+    --
+
+    :Parameters:
+      `pFlObject` : pointer to xfdata.FL_OBJECT
+        clipboard object
+      `clipbdtype` : long
+        type of clipboard (not used)
+      `py_SelectionCb: python function callback, returning value
+        name referring to function(pFlObject, longnum, ptr_void, longnum)
+        -> num.
+
+    :return: 0, or -1 (if it's on different window?)
+    :rtype: int
+
+    :note: e.g. *todo*
 
     :status: Untested + NoDoc + NoDemo = NOT OK
+
     """
     #FL_SELECTION_CB = cty.CFUNCTYPE(cty.c_int, cty.POINTER(xfdata.FL_OBJECT),
     #                                cty.c_long, cty.c_void_p, cty.c_long)
-    _fl_request_clipboard = library.cfuncproto(
-        library.load_so_libforms(), "fl_request_clipboard",
+    _fl_request_clipboard = libr.cfuncproto(
+        libr.load_so_libforms(), "fl_request_clipboard",
         cty.c_int, [cty.POINTER(xfdata.FL_OBJECT), cty.c_long,
         xfdata.FL_SELECTION_CB],
         """int fl_request_clipboard(FL_OBJECT * ob, long int type,
            FL_SELECTION_CB got_it_callback)""")
-    library.check_if_initialized()
-    library.check_if_FL_OBJECT_ptr(pFlObject)
-    lclipbdtype = library.convert_to_long(clipbdtype)
+    libr.check_if_initialized()
+    libr.check_if_FL_OBJECT_ptr(pFlObject)
+    lclipbdtype = libr.convert_to_long(clipbdtype)
     c_SelectionCb = xfdata.FL_SELECTION_CB(py_SelectionCb)
-    library.keep_cfunc_refs(c_SelectionCb, py_SelectionCb)
-    library.keep_elem_refs(pFlObject, clipbdtype, lclipbdtype)
+    libr.keep_cfunc_refs(c_SelectionCb, py_SelectionCb)
+    libr.keep_elem_refs(pFlObject, clipbdtype, lclipbdtype)
     retval = _fl_request_clipboard(pFlObject, lclipbdtype, c_SelectionCb)
     return retval
-
 
 
 
@@ -194,36 +227,66 @@ def fl_request_clipboard(pFlObject, clipbdtype, py_SelectionCb):
 
 
 def flps_init():
-    """
-    flps_init() -> flps_control class
+    """Customizes the output by changing the PostScript output control
+    parameters.
+
+    --
+
+    :return: class instance
+    :rtype: pointer to xfdata.FLPS_CONTROL
+
+    :note: e.g. *todo*
 
     :status: Untested + NoDoc + NoDemo = NOT OK
+
     """
-    _flps_init = library.cfuncproto(
-        library.load_so_libflimage(), "flps_init",
+    _flps_init = libr.cfuncproto(
+        libr.load_so_libflimage(), "flps_init",
         cty.POINTER(xfdata.FLPS_CONTROL), [],
         """FLPS_CONTROL * flps_init()""")
-    library.check_if_initialized()
+    libr.check_if_initialized()
     retval = _flps_init()
     return retval
 
 
 def fl_object_ps_dump(pFlObject, fname):
-    """fl_object_ps_dump(pFlObject, fname) -> num.
+    """Obtains hardcopies of some objects in a what-you-see-is-what-you-get
+    (WYSIWYG) way, especially those that are dynamic and of vector-graphics
+    in nature. It outputs the specified object in PostScript. The object must
+    be visible at the time of the function call. The hardcopy should mostly
+    be WYSIWYG and centered on the printed page. The orientation is determined
+    such that a balanced margin results, i.e., if the width of the object is
+    larger than the height, landscape mode will be used. Further, if the
+    object is too big to fit on the printed page, a scale factor will be
+    applied so the object fits. The box underneath the object is by default
+    not drawn and in the default black&white mode, all curves are drawn in
+    black.
 
-    @param pFlObject: pointer to object
-    @type pFlObject: pointer to xfdata.FL_OBJECT
+    --
+
+    :Parameters:
+      `pFlObject` : pointer to xfdata.FL_OBJECT
+        object. Only the xfdata.FL_XYPLOT object is supported.
+      `fname` : str
+        name of output file. If NULL, a fselector will be shown to ask the
+        user for a file name.
+
+    :return: non-negative num., or negative num. (on failure)
+    :rtype: int
+
+    :note: e.g. *todo*
 
     :status: Untested + NoDoc + NoDemo = NOT OK
+
     """
-    _fl_object_ps_dump = library.cfuncproto(
-        library.load_so_libflimage(), "fl_object_ps_dump",
+    _fl_object_ps_dump = libr.cfuncproto(
+        libr.load_so_libflimage(), "fl_object_ps_dump",
         cty.c_int, [cty.POINTER(xfdata.FL_OBJECT), xfdata.STRING],
         """int fl_object_ps_dump(FL_OBJECT * ob, const char * fname)""")
-    library.check_if_initialized()
-    library.check_if_FL_OBJECT_ptr(pFlObject)
-    sfname = library.convert_to_string(fname)
-    library.keep_elem_refs(pFlObject, fname, sfname)
+    libr.check_if_initialized()
+    libr.check_if_FL_OBJECT_ptr(pFlObject)
+    sfname = libr.convert_to_string(fname)
+    libr.keep_elem_refs(pFlObject, fname, sfname)
     retval = _fl_object_ps_dump(pFlObject, sfname)
     return retval
 
@@ -236,39 +299,49 @@ def fl_object_ps_dump(pFlObject, fname):
 
 
 def fl_add_frame(frametype, x, y, w, h, label):
+    """Adds a frame object.
+
+    --
+
+    :Parameters:
+      `frametype` : int
+        type of frame to be added. Values (from xfdata.py) FL_NO_FRAME,
+        FL_UP_FRAME, FL_DOWN_FRAME, FL_BORDER_FRAME, FL_SHADOW_FRAME,
+        FL_ENGRAVED_FRAME, FL_ROUNDED_FRAME, FL_EMBOSSED_FRAME, FL_OVAL_FRAME
+      `x` : int
+        horizontal position (upper-left corner)
+      `y` : int
+        vertical position (upper-left corner)
+      `w` : int
+        width in coord units
+      `h` : int
+        height in coord units
+      `label` : str
+        text label of frame
+
+    :return: frame object added (pFlObject)
+    :rtype: pointer to xfdata.FL_OBJECT
+
+    :note: e.g. *todo*
+
+    :status: Tested + NoDoc + Demo = OK
+
     """
-        fl_add_frame(frametype, x, y, w, h, label) -> pFlObject
-
-        Adds a frame object.
-
-        @param frametype: type of frame to be added
-        @param frametype: [num./int] from xfdata module FL_NO_FRAME,
-                          FL_UP_FRAME, FL_DOWN_FRAME, FL_BORDER_FRAME,
-                          FL_SHADOW_FRAME, FL_ENGRAVED_FRAME, FL_ROUNDED_FRAME,
-                          FL_EMBOSSED_FRAME, FL_OVAL_FRAME
-        @param x: horizontal position (upper-left corner)
-        @param x: vertical position (upper-left corner)
-        @param w: width in coord units
-        @param h: height in coord units
-        @param label: text label of frame
-
-        :status: Tested + NoDoc + Demo = OK
-    """
-    _fl_add_frame = library.cfuncproto(
-        library.load_so_libforms(), "fl_add_frame",
+    _fl_add_frame = libr.cfuncproto(
+        libr.load_so_libforms(), "fl_add_frame",
         cty.POINTER(xfdata.FL_OBJECT), [cty.c_int, xfdata.FL_Coord,
         xfdata.FL_Coord, xfdata.FL_Coord, xfdata.FL_Coord, xfdata.STRING],
         """FL_OBJECT * fl_add_frame(int type, FL_Coord x, FL_Coord y,
            FL_Coord w, FL_Coord h, const char * label)""")
-    library.check_if_initialized()
-    library.check_admitted_listvalues(frametype, xfdata.FRAMETYPE_list)
-    iframetype = library.convert_to_int(frametype)
-    ix = library.convert_to_FL_Coord(x)
-    iy = library.convert_to_FL_Coord(y)
-    iw = library.convert_to_FL_Coord(w)
-    ih = library.convert_to_FL_Coord(h)
-    slabel = library.convert_to_string(label)
-    library.keep_elem_refs(frametype, x, y, w, h, label, iframetype, ix, iy,
+    libr.check_if_initialized()
+    libr.check_admitted_listvalues(frametype, xfdata.FRAMETYPE_list)
+    iframetype = libr.convert_to_int(frametype)
+    ix = libr.convert_to_FL_Coord(x)
+    iy = libr.convert_to_FL_Coord(y)
+    iw = libr.convert_to_FL_Coord(w)
+    ih = libr.convert_to_FL_Coord(h)
+    slabel = libr.convert_to_string(label)
+    libr.keep_elem_refs(frametype, x, y, w, h, label, iframetype, ix, iy,
                    iw, ih, slabel)
     retval = _fl_add_frame(iframetype, ix, iy, iw, ih, slabel)
     return retval
@@ -280,39 +353,49 @@ def fl_add_frame(frametype, x, y, w, h, label):
 
 
 def fl_add_labelframe(frametype, x, y, w, h, label):
+    """Adds a labelframe object.
+
+    --
+
+    :Parameters:
+      `frametype` : int
+        type of labelframe to be added. Values (from xfdata.py) FL_NO_FRAME,
+        FL_UP_FRAME, FL_DOWN_FRAME, FL_BORDER_FRAME, FL_SHADOW_FRAME,
+        FL_ENGRAVED_FRAME, FL_ROUNDED_FRAME, FL_EMBOSSED_FRAME, FL_OVAL_FRAME
+      `x` : int
+        horizontal position (upper-left corner)
+      `y` : int
+        vertical position (upper-left corner)
+      `w` : int
+        width in coord units
+      `h` : int
+        height in coord units
+      `label` : str
+        text label of labelframe
+
+    :return: labelframe object added (pFlObject)
+    :rtype: pointer to xfdata.FL_OBJECT
+
+    :note: e.g. *todo*
+
+    :status: Tested + NoDoc + Demo = OK
+
     """
-        fl_add_labelframe(frametype, x, y, w, h, label) -> pFlObject
-
-        Adds a labelframe object.
-
-        @param frametype: type of labelframe to be added
-        @param frametype: [num./int] from xfdata module FL_NO_FRAME,
-                          FL_UP_FRAME, FL_DOWN_FRAME, FL_BORDER_FRAME,
-                          FL_SHADOW_FRAME, FL_ENGRAVED_FRAME, FL_ROUNDED_FRAME,
-                          FL_EMBOSSED_FRAME, FL_OVAL_FRAME
-        @param x: horizontal position (upper-left corner)
-        @param x: vertical position (upper-left corner)
-        @param w: width in coord units
-        @param h: height in coord units
-        @param label: text label of labelframe
-
-        :status: Tested + NoDoc + Demo = OK
-    """
-    _fl_add_labelframe = library.cfuncproto(
-        library.load_so_libforms(), "fl_add_labelframe",
+    _fl_add_labelframe = libr.cfuncproto(
+        libr.load_so_libforms(), "fl_add_labelframe",
         cty.POINTER(xfdata.FL_OBJECT), [cty.c_int, xfdata.FL_Coord,
         xfdata.FL_Coord, xfdata.FL_Coord, xfdata.FL_Coord, xfdata.STRING],
         """FL_OBJECT * fl_add_labelframe(int type, FL_Coord x, FL_Coord y,
            FL_Coord w, FL_Coord h, const char * label)""")
-    library.check_if_initialized()
-    library.check_admitted_listvalues(frametype, xfdata.FRAMETYPE_list)
-    iframetype = library.convert_to_int(frametype)
-    ix = library.convert_to_FL_Coord(x)
-    iy = library.convert_to_FL_Coord(y)
-    iw = library.convert_to_FL_Coord(w)
-    ih = library.convert_to_FL_Coord(h)
-    slabel = library.convert_to_string(label)
-    library.keep_elem_refs(frametype, x, y, w, h, label, iframetype, ix, iy,
+    libr.check_if_initialized()
+    libr.check_admitted_listvalues(frametype, xfdata.FRAMETYPE_list)
+    iframetype = libr.convert_to_int(frametype)
+    ix = libr.convert_to_FL_Coord(x)
+    iy = libr.convert_to_FL_Coord(y)
+    iw = libr.convert_to_FL_Coord(w)
+    ih = libr.convert_to_FL_Coord(h)
+    slabel = libr.convert_to_string(label)
+    libr.keep_elem_refs(frametype, x, y, w, h, label, iframetype, ix, iy,
                    iw, ih, slabel)
     retval = _fl_add_labelframe(iframetype, ix, iy, iw, ih, slabel)
     return retval
@@ -328,42 +411,58 @@ def fl_add_labelframe(frametype, x, y, w, h, label):
 
 
 def fl_add_free(freetype, x, y, w, h, label, py_HandlePtr):
+    """Adds a free object.
+
+    --
+
+    :Parameters:
+      `freetype` : int
+        type of free to be added. Value (from xfdata.py) FL_NORMAL_FREE,
+        FL_INACTIVE_FREE, FL_INPUT_FREE, FL_CONTINUOUS_FREE, FL_ALL_FREE,
+        FL_SLEEPING_FREE
+      `x` : int
+        horizontal position (upper-left corner)
+      `y` : int
+        vertical position (upper-left corner)
+      `w` : int
+        width in coord units
+      `h` : int
+        height in coord units
+      `label`: str
+        text label of free
+      `py_HandlePtr` : python function to handle free object, returning value
+        name referring to function(int, pFlObject, int, coord, coord, int,
+        voidp) -> num.
+
+    :return: free object added (pFlObject)
+    :rtype: pointer to xfdata.FL_OBJECT
+
+    :note: e.g. *todo*
+
+    :status: Tested + NoDoc + Demo = OK
+
     """
-        fl_add_free(freetype, x, y, w, h, label, py_HandlePtr) -> pFlObject
-
-        Adds a free object.
-
-        @param freetype: type of free to be added
-        @type freetype: [num./int] from xfdata module FL_NORMAL_FREE,
-                        FL_INACTIVE_FREE, FL_INPUT_FREE, FL_CONTINUOUS_FREE,
-                        FL_ALL_FREE, FL_SLEEPING_FREE
-        @param x: horizontal position (upper-left corner)
-        @param x: vertical position (upper-left corner)
-        @param w: width in coord units
-        @param h: height in coord units
-        @param label: text label of free
-
-        :status: Tested + NoDoc + Demo = OK
-    """
-    _fl_add_free = library.cfuncproto(
-        library.load_so_libforms(), "fl_add_free",
+    #FL_HANDLEPTR = cty.CFUNCTYPE(cty.c_int, cty.POINTER(FL_OBJECT), \
+    #   cty.c_int, FL_Coord, FL_Coord, cty.c_int, cty.c_void_p)
+    _fl_add_free = libr.cfuncproto(
+        libr.load_so_libforms(), "fl_add_free",
         cty.POINTER(xfdata.FL_OBJECT), [cty.c_int, xfdata.FL_Coord,
         xfdata.FL_Coord, xfdata.FL_Coord, xfdata.FL_Coord, xfdata.STRING,
         xfdata.FL_HANDLEPTR],
         """FL_OBJECT * fl_add_free(int type, FL_Coord x, FL_Coord y,
            FL_Coord w, FL_Coord h, const char * label, FL_HANDLEPTR handle)""")
-    library.check_if_initialized()
-    library.check_admitted_listvalues(freetype, xfdata.FREETYPE_list)
-    ifreetype = library.convert_to_int(freetype)
-    ix = library.convert_to_FL_Coord(x)
-    iy = library.convert_to_FL_Coord(y)
-    iw = library.convert_to_FL_Coord(w)
-    ih = library.convert_to_FL_Coord(h)
-    slabel = library.convert_to_string(label)
+    libr.check_if_initialized()
+    libr.check_admitted_listvalues(freetype, xfdata.FREETYPE_list)
+    ifreetype = libr.convert_to_int(freetype)
+    ix = libr.convert_to_FL_Coord(x)
+    iy = libr.convert_to_FL_Coord(y)
+    iw = libr.convert_to_FL_Coord(w)
+    ih = libr.convert_to_FL_Coord(h)
+    slabel = libr.convert_to_string(label)
     c_HandlePtr = xfdata.FL_HANDLEPTR(py_HandlePtr)
-    library.keep_cfunc_refs(c_HandlePtr, py_HandlePtr)
-    library.keep_elem_refs(freetype, x, y, w, h, label, ifreetype, ix, iy, iw, ih,
-                   slabel)
+    libr.keep_cfunc_refs(c_HandlePtr, py_HandlePtr)
+    libr.keep_elem_refs(freetype, x, y, w, h, label, ifreetype, ix, iy, iw,
+                        ih, slabel)
     retval = _fl_add_free(ifreetype, ix, iy, iw, ih, slabel, c_HandlePtr)
     return retval
 
@@ -405,36 +504,47 @@ def fl_add_free(freetype, x, y, w, h, label, py_HandlePtr):
 
 
 def fl_add_text(texttype, x, y, w, h, label):
+    """Adds a text object.
+
+    --
+
+    :Parameters:
+      `texttype` : int
+        type of text to be added. Values FL_NORMAL_TEXT
+      `x` : int
+        horizontal position (upper-left corner)
+      `x` : int
+        vertical position (upper-left corner)
+      `w` : int
+        width in coord units
+      `h` : int
+        height in coord units
+      `label` : str
+        text label of text
+
+    :return: text object added
+    :rtype: pointer to xfdata.FL_OBJECT
+
+    :note: e.g. *todo*
+
+    :status: Tested + NoDoc + Demo = OK
+
     """
-        fl_add_text(texttype, x, y, w, h, label) -> pFlObject
-
-        Adds a text object.
-
-        @param texttype: type of text to be added. Values FL_NORMAL_TEXT
-        @type texttype: int
-        @param x: horizontal position (upper-left corner)
-        @param x: vertical position (upper-left corner)
-        @param w: width in coord units
-        @param h: height in coord units
-        @param label: text label of text
-
-        :status: Tested + NoDoc + Demo = OK
-    """
-    _fl_add_text = library.cfuncproto(
-        library.load_so_libforms(), "fl_add_text",
+    _fl_add_text = libr.cfuncproto(
+        libr.load_so_libforms(), "fl_add_text",
         cty.POINTER(xfdata.FL_OBJECT), [cty.c_int, xfdata.FL_Coord,
         xfdata.FL_Coord, xfdata.FL_Coord, xfdata.FL_Coord, xfdata.STRING],
         """FL_OBJECT * fl_add_text(int type, FL_Coord x, FL_Coord y,
             FL_Coord w, FL_Coord h, const char * label)""")
-    library.check_if_initialized()
-    library.check_admitted_listvalues(texttype, xfdata.TEXTTYPE_list)
-    itexttype = library.convert_to_int(texttype)
-    ix = library.convert_to_FL_Coord(x)
-    iy = library.convert_to_FL_Coord(y)
-    iw = library.convert_to_FL_Coord(w)
-    ih = library.convert_to_FL_Coord(h)
-    slabel = library.convert_to_string(label)
-    library.keep_elem_refs(texttype, x, y, w, h, label, itexttype, ix, iy,
+    libr.check_if_initialized()
+    libr.check_admitted_listvalues(texttype, xfdata.TEXTTYPE_list)
+    itexttype = libr.convert_to_int(texttype)
+    ix = libr.convert_to_FL_Coord(x)
+    iy = libr.convert_to_FL_Coord(y)
+    iw = libr.convert_to_FL_Coord(w)
+    ih = libr.convert_to_FL_Coord(h)
+    slabel = libr.convert_to_string(label)
+    libr.keep_elem_refs(texttype, x, y, w, h, label, itexttype, ix, iy,
                    iw, ih, slabel)
     retval = _fl_add_text(itexttype, ix, iy, iw, ih, slabel)
     return retval
@@ -494,16 +604,23 @@ def fl_add_text(texttype, x, y, w, h, label):
 # were using them. Put them back in 10/22/00
 
 def fl_gc_():
-    """
-    fl_gc_() -> gc
+    """*todo*
+
+    --
+
+    :return: graphics context id
+    :rtype: xfdata.GC
+
+    :note: e.g. *todo*
 
     :status: Untested + NoDoc + NoDemo = NOT OK
+
     """
-    _fl_gc_ = library.cfuncproto(
-        library.load_so_libforms(), "fl_gc_",
+    _fl_gc_ = libr.cfuncproto(
+        libr.load_so_libforms(), "fl_gc_",
         xfdata.GC, [],
         """GC fl_gc_()""")
-    library.check_if_initialized()
+    libr.check_if_initialized()
     retval = _fl_gc_()
     return retval
 
@@ -512,16 +629,23 @@ fl_gc = fl_gc_
 
 
 def fl_textgc_():
-    """
-    fl_textgc_() -> gc
+    """*todo*
+
+    --
+
+    :return: graphics context id
+    :rtype: xfdata.GC
+
+    :note: e.g. *todo*
 
     :status: Untested + NoDoc + NoDemo = NOT OK
+
     """
-    _fl_textgc_ = library.cfuncproto(
-        library.load_so_libforms(), "fl_textgc_",
+    _fl_textgc_ = libr.cfuncproto(
+        libr.load_so_libforms(), "fl_textgc_",
         xfdata.GC, [],
         """GC fl_textgc_()""")
-    library.check_if_initialized()
+    libr.check_if_initialized()
     retval = _fl_textgc_()
     return retval
 
@@ -530,16 +654,23 @@ fl_textgc = fl_textgc_
 
 
 def fl_fheight_():
-    """
-    fl_fheight_() -> num.
+    """*todo*
+
+    --
+
+    :return: num.
+    :rtype: int
+
+    :note: e.g. *todo*
 
     :status: Untested + NoDoc + NoDemo = NOT OK
+
     """
-    _fl_fheight_ = library.cfuncproto(
-        library.load_so_libforms(), "fl_fheight_",
+    _fl_fheight_ = libr.cfuncproto(
+        libr.load_so_libforms(), "fl_fheight_",
         cty.c_int, [],
         """int fl_fheight_()""")
-    library.check_if_initialized()
+    libr.check_if_initialized()
     retval = _fl_fheight_()
     return retval
 
@@ -549,16 +680,24 @@ fl_fheight = fl_fheight_
 
 
 def fl_fdesc_():
-    """
-    fl_fdesc_() -> num.
+    """*todo*
+
+    --
+
+
+    :return: num.
+    :rtype: int
+
+    :note: e.g. *todo*
 
     :status: Untested + NoDoc + NoDemo = NOT OK
+
     """
-    _fl_fdesc_ = library.cfuncproto(
-        library.load_so_libforms(), "fl_fdesc_",
+    _fl_fdesc_ = libr.cfuncproto(
+        libr.load_so_libforms(), "fl_fdesc_",
         cty.c_int, [],
         """int fl_fdesc_()""")
-    library.check_if_initialized()
+    libr.check_if_initialized()
     retval = _fl_fdesc_()
     return retval
 
@@ -567,16 +706,23 @@ fl_fdesc = fl_fdesc_
 
 
 def fl_cur_win_():
-    """
-    fl_cur_win_() -> window
+    """*todo*
+
+    --
+
+    :return: window id
+    :rtype: long_pos
+
+    :note: e.g. *todo*
 
     :status: Untested + NoDoc + NoDemo = NOT OK
+
     """
-    _fl_cur_win_ = library.cfuncproto(
-        library.load_so_libforms(), "fl_cur_win_",
+    _fl_cur_win_ = libr.cfuncproto(
+        libr.load_so_libforms(), "fl_cur_win_",
         xfdata.Window, [],
         """Window fl_cur_win_()""")
-    library.check_if_initialized()
+    libr.check_if_initialized()
     retval = _fl_cur_win_()
     return retval
 
@@ -585,16 +731,23 @@ fl_cur_win = fl_cur_win_
 
 
 def fl_cur_fs_():
-    """
-    fl_cur_fs_() -> XFontStruct class
+    """*todo*
+
+    --
+
+    :return: font structure class instance
+    :rtype: pointer to xfdata.XFontStruct
+
+    :note: e.g. *todo*
 
     :status: Untested + NoDoc + NoDemo = NOT OK
+
     """
-    _fl_cur_fs_ = library.cfuncproto(
-        library.load_so_libforms(), "fl_cur_fs_",
+    _fl_cur_fs_ = libr.cfuncproto(
+        libr.load_so_libforms(), "fl_cur_fs_",
         cty.POINTER(xfdata.XFontStruct), [],
         """XFontStruct * fl_cur_fs_()""")
-    library.check_if_initialized()
+    libr.check_if_initialized()
     retval = _fl_cur_fs_()
     return retval
 
@@ -604,16 +757,23 @@ fl_cur_fs = fl_cur_fs_
 
 
 def fl_display_():
-    """
-    fl_display_() -> pDisplay
+    """*todo*
+
+    --
+
+    :return: current display? (pDisplay)
+    :rtype: pointer to xfdata.Display
+
+    :note: e.g. *todo*
 
     :status: Untested + NoDoc + NoDemo = NOT OK
+
     """
-    _fl_display_ = library.cfuncproto(
-        library.load_so_libforms(), "fl_display_",
+    _fl_display_ = libr.cfuncproto(
+        libr.load_so_libforms(), "fl_display_",
         cty.POINTER(xfdata.Display), [],
         """Display * fl_display_()""")
-    library.check_if_initialized()
+    libr.check_if_initialized()
     retval = _fl_display_()
     return retval
 
