@@ -36,7 +36,7 @@ from xformslib import library as libr
 from xformslib import xfdata
 
 
-# exported variable 
+# exported variable
 FL_EVENT = (cty.POINTER(xfdata.FL_OBJECT)).in_dll(libr.load_so_libforms(), \
     'FL_EVENT')
 
@@ -1476,7 +1476,7 @@ def fl_show_form(pFlForm, place, border, title):
         form to be shown
       `place` : int
         where form has to be placed. Values (from xfdata.py) FL_PLACE_FREE,
-        FL_PLACE_MOUSE, FL_PLACE_CENTER, FL_PLACE_POSITION, FL_PLACE_SIZE, 
+        FL_PLACE_MOUSE, FL_PLACE_CENTER, FL_PLACE_POSITION, FL_PLACE_SIZE,
         FL_PLACE_GEOMETRY, FL_PLACE_ASPECT, FL_PLACE_FULLSCREEN,
         FL_PLACE_HOTSPOT, FL_PLACE_ICONIC, FL_FREE_SIZE, FL_PLACE_FREE_CENTER,
         FL_PLACE_CENTERFREE

@@ -387,6 +387,20 @@ def make_double_and_pointer():
     return baseval, ptrbaseval
 
 
+def make_ubyte_and_pointer():
+    """ Makes a ctypes c_ubyte and its pointer, and returns both """
+    baseval = cty.c_ubyte()
+    ptrbaseval = cty.byref(baseval)
+    return baseval, ptrbaseval
+
+
+def make_ushort_and_pointer():
+    """ Makes a ctypes c_ushort and its pointer, and returns both """
+    baseval = cty.c_ushort()
+    ptrbaseval = cty.byref(baseval)
+    return baseval, ptrbaseval
+
+
 def check_admitted_listvalues(paramname, *valueslist):
     """ Check if paramname value is valid in accordance to a list
         of admissible values."""
@@ -408,6 +422,21 @@ def check_if_FL_FORM_ptr(paramname):
     if not isinstance(paramname, cty.POINTER(xfdata.FL_FORM)):
         raise XFormsTypeError("Parameter value %s must be a pointer to " \
                               "xfdata.FL_FORM." % paramname)
+
+
+def check_if_FL_IMAGE_ptr(paramname):
+    """ Check if paramname value is a valid pointer to xfdata.FL_IMAGE."""
+    if not isinstance(paramname, cty.POINTER(xfdata.FL_IMAGE)):
+        raise XFormsTypeError("Parameter value %s must be a pointer to " \
+                              "xfdata.FL_IMAGE." % paramname)
+
+
+def check_if_structure_class_ptr(paramname, pstructinst):
+    """ Check if paramname value is a valid pointer to a provided 'Structure'
+    class instance, different from previously class."""
+    if not isinstance(paramname, pstructinst):
+        raise XFormsTypeError("Parameter value %s must be a pointer to " \
+              "%s 'Structure' class instance." % (paramname, pstructinst))
 
 
 def donothing_popupcb(pPopupReturn):

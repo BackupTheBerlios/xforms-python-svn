@@ -4812,7 +4812,6 @@ FL_XYPLOT_SYMBOL = cty.CFUNCTYPE(None, cty.POINTER(FL_OBJECT), cty.c_int,
 
 
 
-
 #########################
 # flimage.h
 # Image related routines
@@ -4821,20 +4820,20 @@ FL_XYPLOT_SYMBOL = cty.CFUNCTYPE(None, cty.POINTER(FL_OBJECT), cty.c_int,
 # values for unnamed enumeration
 FL_IMAGE_NONE = 0
 """"""
-FL_IMAGE_MONO = 1           # b&w. 1bit. 0=white 1=black
-""""""
-FL_IMAGE_GRAY = 2           # 8 bit gray image
-""""""
-FL_IMAGE_CI = 4             # colormmaped image
-""""""
-FL_IMAGE_RGB = 8            # RGBA image. 8bit each
-""""""
-FL_IMAGE_PACKED = 16        # RGBA packed into an int
-""""""
-FL_IMAGE_GRAY16 = 32        # 12bit gray scale image
-""""""
-FL_IMAGE_RGB16 = 64         # 36bits color image
-""""""
+FL_IMAGE_MONO = 1
+"""b&w. 1bit bitmaps. 0=white 1=black"""
+FL_IMAGE_GRAY = 2
+"""gray-scale image (8 bit)"""
+FL_IMAGE_CI = 4
+"""generic colormmaped index image"""
+FL_IMAGE_RGB = 8
+"""24 bit RGB(A) image (8bit each)"""
+FL_IMAGE_PACKED = 16
+"""24 bit RGB(A) packed into an int"""
+FL_IMAGE_GRAY16 = 32
+"""gray-scale image (9 to 16 bit)"""
+FL_IMAGE_RGB16 = 64
+"""36bits color image"""
 FL_IMAGE_FLEX = 1023        # all formats
 """"""
 # aliases
@@ -5160,9 +5159,9 @@ FL_SHARPEN = FLIMAGE_SHARPEN
 
 # values for unnamed enumeration
 FLIMAGE_NOSUBPIXEL = 0      # scale with no subpixel sampling
-""""""
-FLIMAGE_SUBPIXEL = 1        # scale with  subpixel sampling
-""""""
+"""scale with no subpixel sampling"""
+FLIMAGE_SUBPIXEL = 1        # scale with subpixel sampling
+"""scale with subpixel sampling"""
 FLIMAGE_CENTER = 2          # center warped image. default
 """"""
 FLIMAGE_RIGHT = 8           # flush right the warped image
@@ -5171,6 +5170,10 @@ FLIMAGE_ASPECT = 32         # fit the size
 """"""
 FLIMAGE_NOCENTER = FL_ALIGN_LEFT_TOP
 """"""
+
+# my add --LK - list of possible values for subpixel in
+# flflimage.flimage_rotate()
+FLIMAGESUBPIXROT_list = [FLIMAGE_NOSUBPIXEL, FLIMAGE_SUBPIXEL]
 
 
 # /usr/include/X11/Xlib.h 345
@@ -5371,5 +5374,7 @@ FLIMAGE_Identify = cty.CFUNCTYPE(cty.c_int, cty.POINTER(FILE))
 FLIMAGE_Description = cty.CFUNCTYPE(cty.c_int, cty.POINTER(FL_IMAGE))
 FLIMAGE_Read_Pixels = cty.CFUNCTYPE(cty.c_int, cty.POINTER(FL_IMAGE))
 FLIMAGE_Write_Image = cty.CFUNCTYPE(cty.c_int, cty.POINTER(FL_IMAGE))
+
+cfunc_none_flimagemarker = cty.CFUNCTYPE(None, cty.POINTER(FLIMAGE_MARKER))
 
 

@@ -2,8 +2,7 @@
 # -*- coding: iso8859-1 -*-
 
 """
-    xforms-python - Python wrapper for XForms (X11) GUI C toolkit library
-    using ctypes
+    flglcanvas.py - Functions to manage GLcanvas object
 
     Copyright (C) 2009, 2010  Luca Lazzaroni "LukenShiro"
     e-mail: <lukenshiro@ngi.it>
@@ -34,9 +33,8 @@
 
 
 import ctypes as cty
-from xformslib import library
+from xformslib import library as libr
 from xformslib import xfdata
-
 
 
 #############
@@ -55,19 +53,22 @@ from xformslib import xfdata
 def fl_add_glcanvas(canvastype, x, y, w, h, label):
     """Adds a glcanvas object to the form.
 
-    @param canvastype: type of glcanvas to be added. Values (from xfdata
-        module) i.e. FL_NORMAL_CANVAS, FL_SCROLLED_CANVAS (not enabled)
-    @type canvastype: int
-    @param x: horizontal position (upper-left corner)
-    @type x: int
-    @param y: vertical position (upper-left corner)
-    @type y: int
-    @param w: width in coord units
-    @type w: int
-    @param h: height in coord units
-    @type h: int
-    @param label: text label of glcanvas
-    @type label: str
+    --
+
+    :Parameters:
+      `canvastype` : int
+        type of glcanvas to be added. Values (from xfdata.py) FL_NORMAL_CANVAS,
+        FL_SCROLLED_CANVAS (not enabled)
+      `x` : int
+        horizontal position (upper-left corner)
+      `y` : int
+        vertical position (upper-left corner)
+      `w` : int
+        width in coord units
+      `h` : int
+        height in coord units
+      `label` : str
+        text label of glcanvas
 
     :return: glcanvas object added (pFlObject)
     :rtype: pointer to xfdata.FL_OBJECT
@@ -78,49 +79,55 @@ def fl_add_glcanvas(canvastype, x, y, w, h, label):
     :status: Tested + Doc + NoDemo = OK
 
     """
-    _fl_add_glcanvas = library.cfuncproto(
-        library.load_so_libformsgl(), "fl_add_glcanvas",
+    _fl_add_glcanvas = libr.cfuncproto(
+        libr.load_so_libformsgl(), "fl_add_glcanvas",
         cty.POINTER(xfdata.FL_OBJECT), [cty.c_int, xfdata.FL_Coord,
         xfdata.FL_Coord, xfdata.FL_Coord, xfdata.FL_Coord, xfdata.STRING],
         """FL_OBJECT * fl_add_glcanvas(int type, FL_Coord x, FL_Coord y,
            FL_Coord w, FL_Coord h, const char * label)""")
-    library.check_if_initialized()
-    library.check_admitted_listvalues(canvastype, xfdata.CANVASTYPE_list)
-    icanvastype = library.convert_to_int(canvastype)
-    ix = library.convert_to_FL_Coord(x)
-    iy = library.convert_to_FL_Coord(y)
-    iw = library.convert_to_FL_Coord(w)
-    ih = library.convert_to_FL_Coord(h)
-    slabel = library.convert_to_string(label)
-    library.keep_elem_refs(canvastype, x, y, w, h, label, icanvastype, ix, iy,
+    libr.check_if_initialized()
+    libr.check_admitted_listvalues(canvastype, xfdata.CANVASTYPE_list)
+    icanvastype = libr.convert_to_int(canvastype)
+    ix = libr.convert_to_FL_Coord(x)
+    iy = libr.convert_to_FL_Coord(y)
+    iw = libr.convert_to_FL_Coord(w)
+    ih = libr.convert_to_FL_Coord(h)
+    slabel = libr.convert_to_string(label)
+    libr.keep_elem_refs(canvastype, x, y, w, h, label, icanvastype, ix, iy,
                    iw, ih, slabel)
     retval = _fl_add_glcanvas(icanvastype, ix, iy, iw, ih, slabel)
     return retval
 
 
 def fl_set_glcanvas_defaults(config):
-    """Modifies the global defaults for glcanvas, before the creation of
-    glcanvases.
+    """Modifies the global default attributes for glcanvas, before the
+    creation of glcanvases.
 
-    @param config: configuration settings
-    @type config: int
+    --
+
+    :Parameters:
+      `config` : int
+        configuration settings. Attributes are those defined in OpenGL 
+        glXChooseVisual() function *todo*
 
     :note: e.g. fl_set_glcanvas_defaults(?)
 
     :status: Untested + NoDoc + NoDemo = NOT OK
 
     """
-    _fl_set_glcanvas_defaults = library.cfuncproto(
-        library.load_so_libformsgl(), "fl_set_glcanvas_defaults",
+    _fl_set_glcanvas_defaults = libr.cfuncproto(
+        libr.load_so_libformsgl(), "fl_set_glcanvas_defaults",
         None, [cty.POINTER(cty.c_int)],
         """void fl_set_glcanvas_defaults(const int * config)""")
     pconfig = cty.cast(config, cty.POINTER(cty.c_int))
-    library.keep_elem_refs(config, pconfig)
+    libr.keep_elem_refs(config, pconfig)
     _fl_set_glcanvas_defaults(pconfig)
 
 
 def fl_get_glcanvas_defaults():
-    """Returns the global defaults for glcanvas.
+    """Returns the global defaults attributes for glcanvas.
+
+    --
 
     :return: configuration settings
     :rtype: int
@@ -133,12 +140,12 @@ def fl_get_glcanvas_defaults():
     :status: Tested + Doc + NoDemo = OK
 
     """
-    _fl_get_glcanvas_defaults = library.cfuncproto(
-        library.load_so_libformsgl(), "fl_get_glcanvas_defaults",
+    _fl_get_glcanvas_defaults = libr.cfuncproto(
+        libr.load_so_libformsgl(), "fl_get_glcanvas_defaults",
         None, [cty.POINTER(cty.c_int)],
-        """void fl_get_glcanvas_defaults(int config[ ]):""")
-    config, pconfig = library.make_int_and_pointer()
-    library.keep_elem_refs(config, pconfig)
+        """void fl_get_glcanvas_defaults(int config[ ])""")
+    config, pconfig = libr.make_int_and_pointer()
+    libr.keep_elem_refs(config, pconfig)
     _fl_get_glcanvas_defaults(pconfig)
     return config.value
 
@@ -148,32 +155,39 @@ def fl_set_glcanvas_attributes(pFlObject, config):
     object. You can change a glcanvas attribute on the fly even if
     the canvas is already visible and active.
 
-    @param pFlObject: glcanvas object
-    @type pFlObject: pointer to xfdata.FL_OBJECT
-    @param config: configuration settings to be set
-    @type config: int
+    --
+
+    :Parameters:
+      `pFlObject` : pointer to xfdata.FL_OBJECT
+        glcanvas object
+      `config` : int
+        configuration settings to be set. Attributes are those defined in
+        OpenGL glXChooseVisual() function *todo*
 
     :note: e.g. fl_set_glcanvas_attributes(glcanobj, ?)
 
-    :status: Untested + Doc + NoDemo = NOT OK
+    :status: Untested + NoDoc + NoDemo = NOT OK
 
     """
-    _fl_set_glcanvas_attributes = library.cfuncproto(
-        library.load_so_libformsgl(), "fl_set_glcanvas_attributes",
+    _fl_set_glcanvas_attributes = libr.cfuncproto(
+        libr.load_so_libformsgl(), "fl_set_glcanvas_attributes",
         None, [cty.POINTER(xfdata.FL_OBJECT), cty.POINTER(cty.c_int)],
         """void fl_set_glcanvas_attributes(FL_OBJECT * ob,
            const int * config)""")
-    library.check_if_FL_OBJECT_ptr(pFlObject)
+    libr.check_if_FL_OBJECT_ptr(pFlObject)
     pconfig = cty.cast(config, cty.POINTER(cty.c_int))
-    library.keep_elem_refs(pFlObject, config, pconfig)
+    libr.keep_elem_refs(pFlObject, config, pconfig)
     _fl_set_glcanvas_attributes(pFlObject, pconfig)
 
 
 def fl_get_glcanvas_attributes(pFlObject):
     """Returns the attributes of a glcanvas object.
 
-    @param pFlObject: glcanvas object
-    @type pFlObject: pointer to xfdata.FL_OBJECT
+    --
+
+    :Parameters:
+      `pFlObject` : pointer to xfdata.FL_OBJECT
+        glcanvas object
 
     :return: glcanvas attributes
     :rtype: int
@@ -186,14 +200,14 @@ def fl_get_glcanvas_attributes(pFlObject):
     :status: Tested + Doc + NoDemo = OK
 
     """
-    _fl_get_glcanvas_attributes = library.cfuncproto(
-        library.load_so_libformsgl(), "fl_get_glcanvas_attributes",
+    _fl_get_glcanvas_attributes = libr.cfuncproto(
+        libr.load_so_libformsgl(), "fl_get_glcanvas_attributes",
         None, [cty.POINTER(xfdata.FL_OBJECT), cty.POINTER(cty.c_int)],
         """void fl_get_glcanvas_attributes(FL_OBJECT * ob,
            int * attributes)""")
-    library.check_if_FL_OBJECT_ptr(pFlObject)
-    attributes, pattributes = library.make_int_and_pointer()
-    library.keep_elem_refs(pFlObject, attributes, pattributes)
+    libr.check_if_FL_OBJECT_ptr(pFlObject)
+    attributes, pattributes = libr.make_int_and_pointer()
+    libr.keep_elem_refs(pFlObject, attributes, pattributes)
     _fl_get_glcanvas_attributes(pFlObject, pattributes)
     return attributes.value
 
@@ -202,25 +216,28 @@ def fl_set_glcanvas_direct(pFlObject, yesno):
     """Changes the rendering context created by a glcanvas. By default it
     uses direct rendering (i.e. by-passing the Xserver).
 
-    @param pFlObject: glcanvas object
-    @type pFlObject: pointer to xfdata.FL_OBJECT
-    @param direct: flag to use direct or through-Xserver rendering. Values 0
-        (to use Xserver rendering) or 1 (to use direct rendering)
-    @type yesno: int
+    --
+
+    :Parameters:
+      `pFlObject` : pointer to xfdata.FL_OBJECT
+        glcanvas object
+      `yesno` : int
+        flag to use direct or through-Xserver rendering. Values 0 (to use
+        Xserver rendering) or 1 (to use direct rendering)
 
     :note: e.g. fl_set_glcanvas_direct(glcanobj, 0)
 
     :status: Tested + Doc + NoDemo = OK
 
     """
-    _fl_set_glcanvas_direct = library.cfuncproto(
-        library.load_so_libformsgl(), "fl_set_glcanvas_direct",
+    _fl_set_glcanvas_direct = libr.cfuncproto(
+        libr.load_so_libformsgl(), "fl_set_glcanvas_direct",
         None, [cty.POINTER(xfdata.FL_OBJECT), cty.c_int],
         """void fl_set_glcanvas_direct(FL_OBJECT * ob, int direct)""")
-    library.check_if_initialized()
-    library.check_if_FL_OBJECT_ptr(pFlObject)
-    iyesno = library.convert_to_int(yesno)
-    library.keep_elem_refs(pFlObject, yesno, iyesno)
+    libr.check_if_initialized()
+    libr.check_if_FL_OBJECT_ptr(pFlObject)
+    iyesno = libr.convert_to_int(yesno)
+    libr.keep_elem_refs(pFlObject, yesno, iyesno)
     _fl_set_glcanvas_direct(pFlObject, iyesno)
 
 
@@ -233,21 +250,24 @@ def fl_activate_glcanvas(pFlObject):
     application may want to draw into canvases actively. In this case, use this
     function for explicit drawing context switching.
 
-    @param pFlObject: glcanvas object
-    @type pFlObject: pointer to xfdata.FL_OBJECT
+    --
+
+    :Parameters:
+      `pFlObject` : pointer to xfdata.FL_OBJECT
+        glcanvas object
 
     :note: e.g. fl_activate_glcanvas(glcanobj)
 
     :status: Tested + Doc + NoDemo = OK
 
     """
-    _fl_activate_glcanvas = library.cfuncproto(
-        library.load_so_libformsgl(), "fl_activate_glcanvas",
+    _fl_activate_glcanvas = libr.cfuncproto(
+        libr.load_so_libformsgl(), "fl_activate_glcanvas",
         None, [cty.POINTER(xfdata.FL_OBJECT)],
         """void fl_activate_glcanvas(FL_OBJECT * ob)""")
-    library.check_if_initialized()
-    library.check_if_FL_OBJECT_ptr(pFlObject)
-    library.keep_elem_refs(pFlObject)
+    libr.check_if_initialized()
+    libr.check_if_FL_OBJECT_ptr(pFlObject)
+    libr.keep_elem_refs(pFlObject)
     _fl_activate_glcanvas(pFlObject)
 
 
@@ -255,8 +275,11 @@ def fl_get_glcanvas_xvisualinfo(pFlObject):
     """Obtains the XVisual information that is used to create the context of
     a glcanvas object.
 
-    @param pFlObject: glcanvas object
-    @type pFlObject: pointer to xfdata.FL_OBJECT
+    --
+
+    :Parameters:
+      `pFlObject` : pointer to xfdata.FL_OBJECT
+        glcanvas object
 
     :return: XVisualInfo instance class
     :rtype: pointer to xfdata.XVisualInfo
@@ -266,13 +289,13 @@ def fl_get_glcanvas_xvisualinfo(pFlObject):
     :status: Tested + Doc + NoDemo = OK
 
     """
-    _fl_get_glcanvas_xvisualinfo = library.cfuncproto(
-        library.load_so_libformsgl(), "fl_get_glcanvas_xvisualinfo",
+    _fl_get_glcanvas_xvisualinfo = libr.cfuncproto(
+        libr.load_so_libformsgl(), "fl_get_glcanvas_xvisualinfo",
         cty.POINTER(xfdata.XVisualInfo), [cty.POINTER(xfdata.FL_OBJECT)],
         """XVisualInfo * fl_get_glcanvas_xvisualinfo(FL_OBJECT * ob)""")
-    library.check_if_initialized()
-    library.check_if_FL_OBJECT_ptr(pFlObject)
-    library.keep_elem_refs(pFlObject)
+    libr.check_if_initialized()
+    libr.check_if_FL_OBJECT_ptr(pFlObject)
+    libr.keep_elem_refs(pFlObject)
     retval = _fl_get_glcanvas_xvisualinfo(pFlObject)
     return retval
 
@@ -280,10 +303,13 @@ def fl_get_glcanvas_xvisualinfo(pFlObject):
 def fl_get_glcanvas_context(pFlObject):
     """Returns GLXContext of a glcanvas object.
 
-    @param pFlObject: glcanvas object
-    @type pFlObject: pointer to xfdata.FL_OBJECT
+    --
 
-    :return: glxcontext instance class
+    :Parameters:
+      `pFlObject` : pointer to xfdata.FL_OBJECT
+        glcanvas object
+
+    :return: glxcontext class instance
     :rtype: pointer to xfdata.GLXContext
 
     :note: e.g. glxcont = fl_get_glcanvas_context(glcanobj)
@@ -291,13 +317,13 @@ def fl_get_glcanvas_context(pFlObject):
     :status: Tested + Doc + NoDemo = OK
 
     """
-    _fl_get_glcanvas_context = library.cfuncproto(
-        library.load_so_libformsgl(), "fl_get_glcanvas_context",
+    _fl_get_glcanvas_context = libr.cfuncproto(
+        libr.load_so_libformsgl(), "fl_get_glcanvas_context",
         xfdata.GLXContext, [cty.POINTER(xfdata.FL_OBJECT)],
         """GLXContext fl_get_glcanvas_context(FL_OBJECT * ob)""")
-    library.check_if_initialized()
-    library.check_if_FL_OBJECT_ptr(pFlObject)
-    library.keep_elem_refs(pFlObject)
+    libr.check_if_initialized()
+    libr.check_if_FL_OBJECT_ptr(pFlObject)
+    libr.keep_elem_refs(pFlObject)
     retval = _fl_get_glcanvas_context(pFlObject)
     return retval
 
@@ -305,14 +331,17 @@ def fl_get_glcanvas_context(pFlObject):
 def fl_glwincreate(config, glxcontext, w, h):
     """Creates a toplevel OpenGl window.
 
-    @param config: GL configuration settings
-    @type config: int
-    @param glxcontext: glxcontext class instance
-    @type glxcontext: instance of xfdata.GLXContext
-    @param w: width of GL window in coord units
-    @type w: int
-    @param h: height of GL window in coord units
-    @type h: int
+    --
+
+    :Parameters:
+      `config` : int
+        GL configuration settings
+      `glxcontext` : xfdata.GLXContext instance
+        glxcontext class instance
+      `w` : int
+        width of GL window in coord units
+      `h` : int
+        height of GL window in coord units
 
     :return: window created (win)
     :rtype: long_pos
@@ -322,16 +351,16 @@ def fl_glwincreate(config, glxcontext, w, h):
     :status: Tested + Doc + NoDemo = OK
 
     """
-    _fl_glwincreate = library.cfuncproto(
-        library.load_so_libformsgl(), "fl_glwincreate",
+    _fl_glwincreate = libr.cfuncproto(
+        libr.load_so_libformsgl(), "fl_glwincreate",
         xfdata.Window, [cty.POINTER(cty.c_int), cty.POINTER(xfdata.GLXContext),
         cty.c_int, cty.c_int],
         """Window fl_glwincreate(int * config, GLXContext * context,
            int w, int h)""")
     pGLXContext = cty.cast(glxcontext, cty.POINTER(xfdata.GLXContext))
-    iw = library.convert_to_int(w)
-    ih = library.convert_to_int(h)
-    library.keep_elem_refs(config, pGLXContext, w, h, iw, ih)
+    iw = libr.convert_to_int(w)
+    ih = libr.convert_to_int(h)
+    libr.keep_elem_refs(config, pGLXContext, w, h, iw, ih)
     retval = _fl_glwincreate(config, pGLXContext, iw, ih)
     return retval
 
@@ -339,34 +368,37 @@ def fl_glwincreate(config, glxcontext, w, h):
 def fl_glwinopen(config, glxcontext, w, h):
     """Opens a toplevel OpenGL window.
 
-    @param config: GL configuration settings
-    @type config: int
-    @param glxcontext: glxcontext class instance
-    @type glxcontext: instance of xfdata.GLXContext
-    @param w: width of GL window in coord units
-    @type w: int
-    @param h: height of GL window in coord units
-    @type h: int
+    --
+
+    :Parameters:
+      `config` : int
+        GL configuration settings
+      `glxcontext` : pointer to xfdata.GLXContext
+        glxcontext class instance
+      `w` : int
+        width of GL window in coord units
+      `h` : int
+        height of GL window in coord units
 
     :return: window opened (win)
     :rtype: long_pos
 
     :note: e.g. gwin0 = fl_glwinopen(?, ?, 650, 560)
 
-    :status: Untested + NoDoc + NoDemo = NOT OK
+    :status: Untested + Doc + NoDemo = NOT OK
 
     """
-    _fl_glwinopen = library.cfuncproto(
-        library.load_so_libformsgl(), "fl_glwinopen",
+    _fl_glwinopen = libr.cfuncproto(
+        libr.load_so_libformsgl(), "fl_glwinopen",
         xfdata.Window, [cty.POINTER(cty.c_int), cty.POINTER(xfdata.GLXContext),
         cty.c_int, cty.c_int],
         """Window fl_glwinopen(int * config, GLXContext * context,
            int w, int h""")
-    library.check_if_initialized()
+    libr.check_if_initialized()
     pGLXContext = cty.cast(glxcontext, cty.POINTER(xfdata.GLXContext))
-    iw = library.convert_to_int(w)
-    ih = library.convert_to_int(h)
-    library.keep_elem_refs(config, pGLXContext, w, h, iw, ih)
+    iw = libr.convert_to_int(w)
+    ih = libr.convert_to_int(h)
+    libr.keep_elem_refs(config, pGLXContext, w, h, iw, ih)
     retval = _fl_glwinopen(config, pGLXContext, iw, ih)
     return retval
 

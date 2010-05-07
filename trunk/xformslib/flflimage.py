@@ -2,8 +2,7 @@
 # -*- coding: iso8859-1 -*-
 
 """
-    xforms-python - Python wrapper for XForms (X11) GUI C toolkit library
-    using ctypes
+    flflimage.py - Functions to manage image objects.
 
     Copyright (C) 2009, 2010  Luca Lazzaroni "LukenShiro"
     e-mail: <lukenshiro@ngi.it>
@@ -34,10 +33,8 @@
 
 
 import ctypes as cty
-from xformslib import library
+from xformslib import library as libr
 from xformslib import xfdata
-
-
 
 
 
@@ -64,592 +61,973 @@ def FL_IsPacked(pImage):
 
 
 def flimage_setup(pImageSetup):
-    """
-        flimage_setup(pImageSetup)
+    """Sets up and configures image objects support and initializes
+    xfdata.FLIMAGE_SETUP class instance.
 
-        @param pImageSetup: pointer to imagesetup struct
+    --
 
-        :status: Untested + NoDoc + NoDemo = NOT OK
+    :Parameters:
+      `pImageSetup` : pointer to xfdata.FLIMAGE_SETUP
+        imagesetup class instance
+
+
+    :status: Untested + Doc + NoDemo = NOT OK
+
     """
-    _flimage_setup = library.cfuncproto(
-        library.load_so_libflimage(), "flimage_setup",
+    _flimage_setup = libr.cfuncproto(
+        libr.load_so_libflimage(), "flimage_setup",
         None, [cty.POINTER(xfdata.FLIMAGE_SETUP)],
         """void flimage_setup(FLIMAGE_SETUP * setup)""")
-    library.check_if_initialized()
-    library.keep_elem_refs(pImageSetup)
+    libr.check_if_initialized()
+    libr.keep_elem_refs(pImageSetup)
     _flimage_setup(pImageSetup)
 
 
 # basic IO routines
 
-def flimage_load(filename):
-    """
-        flimage_load(filename) -> pImage
+def flimage_load(fname):
+    """Reads an image file.
 
-        @param filename: name of file to load
+    --
 
-        :status: Untested + NoDoc + NoDemo = NOT OK
+    :Parameters:
+        `fname` : str
+          name of image file to load
+
+    :return: an image class instance (pImage), or None (on failure)
+    :rtype: pointer to xfdata.FL_IMAGE
+
+    :note: e.g. *todo*
+
+    :status: Untested + Doc + NoDemo = NOT OK
+
     """
-    _flimage_load = library.cfuncproto(
-        library.load_so_libflimage(), "flimage_load",
+    _flimage_load = libr.cfuncproto(
+        libr.load_so_libflimage(), "flimage_load",
         cty.POINTER(xfdata.FL_IMAGE), [xfdata.STRING],
         """FL_IMAGE * flimage_load(const char * file)""")
-    library.check_if_initialized()
-    sfilename = library.convert_to_string(filename)
-    library.keep_elem_refs(filename, sfilename)
-    retval = _flimage_load(sfilename)
+    libr.check_if_initialized()
+    sfname = libr.convert_to_string(fname)
+    libr.keep_elem_refs(fname, sfname)
+    retval = _flimage_load(sfname)
     return retval
 
 
 def flimage_read(pImage):
-    """
-        flimage_read(pImage) -> pImage
+    """Takes a xfdata.FL_IMAGE class instance returned by flimage_open() and
+    fills the image structure.
 
-        @param pImage: pointer to image
+    --
 
-        :status: Untested + NoDoc + NoDemo = NOT OK
+    :Parameters:
+      `pImage` : pointer to xfdata.FL_IMAGE
+        image class instance
+
+    :return: an image class instance (pImage), or None (on failure)
+    :rtype: pointer to xfdata.FL_IMAGE
+
+    :note: e.g. *todo*
+
+    :status: Untested + Doc + NoDemo = NOT OK
+
     """
-    _flimage_read = library.cfuncproto(
-        library.load_so_libflimage(), "flimage_read",
+    _flimage_read = libr.cfuncproto(
+        libr.load_so_libflimage(), "flimage_read",
         cty.POINTER(xfdata.FL_IMAGE), [cty.POINTER(xfdata.FL_IMAGE)],
         """FL_IMAGE * flimage_read(FL_IMAGE * im)""")
-    library.check_if_initialized()
-    library.keep_elem_refs(pImage)
+    libr.check_if_initialized()
+    libr.keep_elem_refs(pImage)
     retval = _flimage_read(pImage)
     return retval
 
 
-def flimage_dump(pImage, p2, p3):
-    """
-        flimage_dump(pImage, p2, p3) -> num.
+def flimage_dump(pImage, fname, fmt):
+    """Takes an image, either returned by flimage_load() (possibly after some
+    processing) or created on the fly by the application, attempts to create
+     a file to store the image.
 
-        @param pImage: pointer to image
+    --
 
-        :status: Untested + NoDoc + NoDemo = NOT OK
+    :Parameters:
+      `pImage` : pointer to xfdata.FL_IMAGE
+        image class instance
+      `fname` : str
+        name of file to be saved
+      `fmt` : str
+        formal name or short name of a supported image format. Values: jpeg,
+        ppm, gif, bmp, etc... or some other formats the application knows
+        how to write. If it is None, the original format the image was in is
+        used.
+
+    :return: non-negative, or negative num. (on failure)
+    :rtype: int
+
+    :note: e.g. *todo*
+
+    :status: Untested + Doc + NoDemo = NOT OK
+
     """
-    _flimage_dump = library.cfuncproto(
-        library.load_so_libflimage(), "flimage_dump",
+    _flimage_dump = libr.cfuncproto(
+        libr.load_so_libflimage(), "flimage_dump",
         cty.c_int, [cty.POINTER(xfdata.FL_IMAGE), xfdata.STRING, xfdata.STRING],
         """int flimage_dump(FL_IMAGE * p1, const char * p2,
            const char * p3)""")
-    library.check_if_initialized()
-    sp2 = library.convert_to_string(p2)
-    sp3 = library.convert_to_string(p3)
-    library.keep_elem_refs(pImage, p2, p3, sp2, sp3)
-    retval = _flimage_dump(pImage, sp2, sp3)
+    libr.check_if_initialized()
+    sfname = libr.convert_to_string(fname)
+    sfmt = libr.convert_to_string(fmt)
+    libr.keep_elem_refs(pImage, fname, fmt, sfname, sfmt)
+    retval = _flimage_dump(pImage, sfname, sfmt)
     return retval
 
 
 def flimage_close(pImage):
-    """
-        flimage_close(pImage) -> num.
+    """Closes all file streams used to create the image.
 
-        @param pImage: pointer to image
+    --
 
-        :status: Untested + NoDoc + NoDemo = NOT OK
+    :Parameters:
+      `pImage`: pointer to xfdata.FL_IMAGE
+         image to be closed
+
+    :return: 0?, or -1 (on failure)
+    :rtype: int
+
+    :note: e.g. flimage_close(pimg)
+
+    :status: Untested + Doc + NoDemo = NOT OK
+
     """
-    _flimage_close = library.cfuncproto(
-        library.load_so_libflimage(), "flimage_close",
+    _flimage_close = libr.cfuncproto(
+        libr.load_so_libflimage(), "flimage_close",
         cty.c_int, [cty.POINTER(xfdata.FL_IMAGE)],
         """int flimage_close(FL_IMAGE * p1)""")
-    library.check_if_initialized()
-    library.keep_elem_refs(pImage)
+    libr.check_if_initialized()
+    libr.keep_elem_refs(pImage)
     retval = _flimage_close(pImage)
     return retval
 
 
+# TODO: not sure if it's necessary in python, low-level only?
 def flimage_alloc():
-    """
-        flimage_alloc() -> pImage
+    """Creates an image structure whose dynamically allocated memory is
+    properly initialized, and returning it.
 
-        :status: Untested + NoDoc + NoDemo = NOT OK
+    --
+
+    :return: image class instance (pImage)
+    :rtype: pointer to xfdata.FL_IMAGE
+
+    :note: e.g. *todo*
+
+    :status: Untested + Doc + NoDemo = NOT OK
+
     """
-    _flimage_alloc = library.cfuncproto(
-        library.load_so_libflimage(), "flimage_alloc",
+    _flimage_alloc = libr.cfuncproto(
+        libr.load_so_libflimage(), "flimage_alloc",
         cty.POINTER(xfdata.FL_IMAGE), [],
         """FL_IMAGE * flimage_alloc()""")
-    library.check_if_initialized()
+    libr.check_if_initialized()
     retval = _flimage_alloc()
     return retval
 
 
 def flimage_getmem(pImage):
-    """
-        flimage_getmem(pImage) -> num.
+    """Allocates the proper amount of memory appropriate for the image type,
+    including colormaps when needed.
 
-        @param pImage: pointer to image
+    --
 
-        :status: Untested + NoDoc + NoDemo = NOT OK
+    :Parameters:
+      `pImage` : pointer to xfdata.FL_IMAGE
+        image
+
+    :return: num.
+    :rtype: int
+
+    :note: e.g. *todo*
+
+    :status: Untested + Doc + NoDemo = NOT OK
+
     """
-    _flimage_getmem = library.cfuncproto(
-        library.load_so_libflimage(), "flimage_getmem",
+    _flimage_getmem = libr.cfuncproto(
+        libr.load_so_libflimage(), "flimage_getmem",
         cty.c_int, [cty.POINTER(xfdata.FL_IMAGE)],
         """int flimage_getmem(FL_IMAGE * p1)""")
-    library.check_if_initialized()
-    library.keep_elem_refs(pImage)
+    libr.check_if_initialized()
+    libr.keep_elem_refs(pImage)
     retval = _flimage_getmem(pImage)
     return retval
 
 
 def flimage_is_supported(fname):
-    """
-        flimage_is_supported(fname) -> num.
+    """Finds out if a specific file is a known image file or not.
 
-        @param fname: filename
+    --
 
-        :status: Untested + NoDoc + NoDemo = NOT OK
+    :Parameters:
+      `fname` : str
+        name of file to be evaluated
+
+    :return: 1 (if it's a known image file), or 0 (on failure)
+    :rtype: int
+
+    :note: e.g. *todo*
+
+    :status: Untested + Doc + NoDemo = NOT OK
+
     """
-    _flimage_is_supported = library.cfuncproto(
-        library.load_so_libflimage(), "flimage_is_supported",
+    _flimage_is_supported = libr.cfuncproto(
+        libr.load_so_libflimage(), "flimage_is_supported",
         cty.c_int, [xfdata.STRING],
         """int flimage_is_supported(const char * p1)""")
-    library.check_if_initialized()
-    sfname = library.convert_to_string(fname)
-    library.keep_elem_refs(fname, sfname)
+    libr.check_if_initialized()
+    sfname = libr.convert_to_string(fname)
+    libr.keep_elem_refs(fname, sfname)
     retval = _flimage_is_supported(sfname)
     return retval
 
 
-def flimage_description_via_filter(pImage, p2, p3, p4):
-    """
-        flimage_description_via_filter(pImage, p2, p3, p4) -> num.
+def flimage_description_via_filter(pImage, cmds, what, verbose):
+    """Adds a description to be used with flimage_add_format() to add image
+    formats via an external filter's command.
 
-        @param pImage: pointer to image
+    --
 
-        :status: Untested + NoDoc + NoDemo = NOT OK
+    :Parameters:
+      `pImage` : pointer to xfdata.FL_IMAGE
+        image
+      `cmds` : str?
+        a list of shell commands (filters) that convert the format in
+        question into one of the supported formats.
+      `what` : str
+        text for reporting purpose
+      `verbose` : int
+        controls if some information and error messages should be printed
+        (mainly for debugging purpose). Values 0 (to disable) or 1 (to enable)
+
+    :return: num.
+    :rtype: int
+
+    :note: e.g. *todo*
+
+    :status: Untested + Doc + NoDemo = NOT OK
+
     """
-    _flimage_description_via_filter = library.cfuncproto(
-        library.load_so_libflimage(), "flimage_description_via_filter",
+    _flimage_description_via_filter = libr.cfuncproto(
+        libr.load_so_libflimage(), "flimage_description_via_filter",
         cty.c_int, [cty.POINTER(xfdata.FL_IMAGE), cty.POINTER(xfdata.STRING),
         xfdata.STRING, cty.c_int],
-        """int flimage_description_via_filter(FL_IMAGE * p1,
-           const char * p2, const char * p3, int p4)""")
-    library.check_if_initialized()
-    sp3 = library.convert_to_string(p3)
-    ip4 = library.convert_to_string(p4)
-    library.keep_elem_refs(pImage, p2, p3, p4, sp3, ip4)
-    retval = _flimage_description_via_filter(pImage, p2, sp3, ip4)
+        """int flimage_description_via_filter(FL_IMAGE * im, char *const
+           *cmds, const char *what, int verbose)""")
+    libr.check_if_initialized()
+    scmds = libr.convert_to_string(cmds)                # to be verified
+    swhat = libr.convert_to_string(what)
+    iverbose = libr.convert_to_int(verbose)
+    libr.keep_elem_refs(pImage, cmds, swhat, verbose, scmds, swhat, iverbose)
+    retval = _flimage_description_via_filter(pImage, scmds, swhat, iverbose)
     return retval
 
 
-def flimage_write_via_filter(pImage, p2, p3, p4):
-    """
-        flimage_write_via_filter(pImage, p2, p3, p4) -> num.
+def flimage_write_via_filter(pImage, cmds, formats, verbose):
+    """Uses external filters to add image formats, in order to convert
+    an unsupported format into one that is. pbmplus or netpbm are excellent
+    packages for this purpose.
 
-        @param pImage: pointer to image
+    --
 
-        :status: Untested + NoDoc + NoDemo = NOT OK
+    :Parameters:
+      `pImage` : pointer to xfdata.FL_IMAGE
+        image
+      `cmds` : str?
+        a list of shell commands (filters) that convert the format in
+        question into one of the supported formats.
+      `formats` : str?
+        list of strings. Values ppm, pgm, pbm, .. etc..
+      `verbose` : int
+        controls if some information and error messages should be printed
+        (mainly for debugging purpose). Values 0 (to disable) or 1 (to enable)
+
+    :return: num.
+    :rtype: int
+
+    :note: e.g. *todo*
+
+    :status: Untested + Doc + NoDemo = NOT OK
+
     """
-    _flimage_write_via_filter = library.cfuncproto(
-        library.load_so_libflimage(), "flimage_write_via_filter",
+    _flimage_write_via_filter = libr.cfuncproto(
+        libr.load_so_libflimage(), "flimage_write_via_filter",
         cty.c_int, [cty.POINTER(xfdata.FL_IMAGE), cty.POINTER(xfdata.STRING),
         cty.POINTER(xfdata.STRING), cty.c_int],
-        """int flimage_write_via_filter(FL_IMAGE * p1, const char * p2,
-           const char * p3, int p4)""")
-    library.check_if_initialized()
-    ip4 = library.convert_to_int(p4)
-    library.keep_elem_refs(pImage, p2, p3, p4, ip4)
-    retval = _flimage_write_via_filter(pImage, p2, p3, ip4)
+        """int flimage_write_via_filter(FL_IMAGE * p1, const * char * cmds,
+           const char * formats[], int verbose)""")
+    libr.check_if_initialized()
+    # cmds to be handled
+    sformats = libr.convert_to_string(formats)
+    iverbose = libr.convert_to_int(verbose)
+    libr.keep_elem_refs(pImage, cmds, formats, sformats, verbose, iverbose)
+    retval = _flimage_write_via_filter(pImage, cmds, sformats, iverbose)
     return retval
 
 
 def flimage_free(pImage):
-    """
-        flimage_free(pImage) -> num.
+    """ Frees all memory allocated for the image, then the image structure
+    itself. After the function returns, the image should not be referenced.
 
-        @param pImage: pointer to image
+    --
 
-        :status: Untested + NoDoc + NoDemo = NOT OK
+    :Parameters:
+      `pImage` : pointer to xfdata.FL_IMAGE
+        image
+
+    :note: e.g. *todo*
+
+    :status: Untested + Doc + NoDemo = NOT OK
+
     """
-    _flimage_free = library.cfuncproto(
-        library.load_so_libflimage(), "flimage_free",
-        cty.c_int, [cty.POINTER(xfdata.FL_IMAGE)],
-        """int flimage_free(FL_IMAGE * p1)""")
-    library.check_if_initialized()
-    library.keep_elem_refs(pImage)
-    retval = _flimage_free(pImage)
-    return retval
+    _flimage_free = libr.cfuncproto(
+        libr.load_so_libflimage(), "flimage_free",
+        None, [cty.POINTER(xfdata.FL_IMAGE)],
+        """void flimage_free(FL_IMAGE * p1)""")
+    libr.check_if_initialized()
+    libr.keep_elem_refs(pImage)
+    _flimage_free(pImage)
 
 
 def flimage_display(pImage, win):
-    """
-        flimage_display(pImage, win) -> num.
+    """Displays a single or multiple images in a window.
 
-        @param pImage: pointer to image
-        @param win: window
+    --
 
-        :status: Untested + NoDoc + NoDemo = NOT OK
+    :Parameters:
+      `pImage` : pointer to xfdata.FL_IMAGE
+        image
+      `win`: long_pos
+        window
+
+    :return: non-negative num., or negative num. (on failure)
+    :rtype: int
+
+    :note: e.g. *todo*
+
+    :status: Untested + Doc + NoDemo = NOT OK
+
     """
-    _flimage_display = library.cfuncproto(
-        library.load_so_libflimage(), "flimage_display",
+    _flimage_display = libr.cfuncproto(
+        libr.load_so_libflimage(), "flimage_display",
         cty.c_int, [cty.POINTER(xfdata.FL_IMAGE), xfdata.Window],
         """int flimage_display(FL_IMAGE * p1, Window p2)""")
-    library.check_if_initialized()
-    ulwin = library.convert_to_Window(win)
-    library.keep_elem_refs(pImage, win, ulwin)
+    libr.check_if_initialized()
+    ulwin = libr.convert_to_Window(win)
+    libr.keep_elem_refs(pImage, win, ulwin)
     retval = _flimage_display(pImage, ulwin)
     return retval
 
 
 def flimage_sdisplay(pImage, win):
-    """
-        flimage_sdisplay(pImage, win) -> num.
+    """Displays a single image in a window.
 
-        @param pImage: pointer to image
-        @param win: window
+    --
 
-        :status: Untested + NoDoc + NoDemo = NOT OK
+    :Parameters:
+      `pImage` : pointer to xfdata.FL_IMAGE
+        image
+      `win`: long_pos
+        window
+
+    :return: non-negative num., or negative num. (on failure)
+    :rtype: int
+
+    :note: e.g. *todo*
+
+    :status: Untested + Doc + NoDemo = NOT OK
+
     """
-    _flimage_sdisplay = library.cfuncproto(
-        library.load_so_libflimage(), "flimage_sdisplay",
+    _flimage_sdisplay = libr.cfuncproto(
+        libr.load_so_libflimage(), "flimage_sdisplay",
         cty.c_int, [cty.POINTER(xfdata.FL_IMAGE), xfdata.Window],
         """int flimage_sdisplay(FL_IMAGE * p1, Window p2)""")
-    library.check_if_initialized()
-    ulwin = library.convert_to_Window(win)
-    library.keep_elem_refs(pImage, win, ulwin)
+    libr.check_if_initialized()
+    ulwin = libr.convert_to_Window(win)
+    libr.keep_elem_refs(pImage, win, ulwin)
     retval = _flimage_sdisplay(pImage, ulwin)
     return retval
 
 
 def flimage_convert(pImage, newtype, ncolors):
+    """Convert an image to a new type. Depending on which quantization
+    function is used, the number of quantized colors may not be more than 256.
+
+    --
+
+    :Parameters:
+      `pImage` : pointer to xfdata.FL_IMAGE
+        image
+      `newtype` : int
+        one of supported image type to convert to. Values (from xfdata.py)
+        FL_IMAGE_NONE, FL_IMAGE_MONO, FL_IMAGE_GRAY, FL_IMAGE_CI, FL_IMAGE_RGB,
+        FL_IMAGE_PACKED, FL_IMAGE_GRAY16, FL_IMAGE_RGB16, FL_IMAGE_FLEX
+      `ncolors` : int
+        number of colors to generate. It makes sense only when newtype is
+        xfdata.FL_IMAGE_CI.
+
+    :return: non-negative num., or negative num. (on failure)
+    :rtype: int
+
+    :note: e.g. *todo*
+
+    :status: Untested + Doc + NoDemo = NOT OK
+
     """
-        flimage_convert(pImage, newtype, ncolors) -> num.
-
-        Convert an image to a new type.
-
-        @param pImage: pointer to image
-        @param newtype: new type of flimage to convert to
-        @param ncolors: number of colors
-
-        :status: Untested + NoDoc + NoDemo = NOT OK
-    """
-    _flimage_convert = library.cfuncproto(
-        library.load_so_libflimage(), "flimage_convert",
+    _flimage_convert = libr.cfuncproto(
+        libr.load_so_libflimage(), "flimage_convert",
         cty.c_int, [cty.POINTER(xfdata.FL_IMAGE), cty.c_int, cty.c_int],
         """int flimage_convert(FL_IMAGE * p1, int p2, int p3)""")
-    library.check_if_initialized()
-    inewtype = library.convert_to_int(newtype)
-    incolors = library.convert_to_int(ncolors)
-    library.keep_elem_refs(pImage, newtype, ncolors, inewtype, incolors)
+    libr.check_if_initialized()
+    libr.check_admitted_listvalues(newtype, xfdata.FLIMAGETYPE_list)
+    inewtype = libr.convert_to_int(newtype)
+    incolors = libr.convert_to_int(ncolors)
+    libr.keep_elem_refs(pImage, newtype, ncolors, inewtype, incolors)
     retval = _flimage_convert(pImage, inewtype, incolors)
     return retval
 
 
-def flimage_type_name(flimagetype):
-    """
-        flimage_type_name(flimagetype) -> name string
+def flimage_type_name(imagetype):
+    """Obtains the image type name in string format, e.g., for reporting
+    purposes.
 
-        @param flimagetype: type of flimage
+    --
 
-        :status: Untested + NoDoc + NoDemo = NOT OK
+    :Parameters:
+      `imagetype` : int
+        type of image
+
+    :return: name string
+    :rtype: str
+
+    :note: e.g. *todo*
+
+    :status: Untested + Doc + NoDemo = NOT OK
+
     """
-    _flimage_type_name = library.cfuncproto(
-        library.load_so_libflimage(), "flimage_type_name",
+    _flimage_type_name = libr.cfuncproto(
+        libr.load_so_libflimage(), "flimage_type_name",
         xfdata.STRING, [cty.c_int],
         """const char * flimage_type_name(int type)""")
-    library.check_if_initialized()
-    library.check_admitted_listvalues(flimagetype, xfdata.FLIMAGETYPE_list)
-    iflimagetype = library.convert_to_int(flimagetype)
-    library.keep_elem_refs(flimagetype, iflimagetype)
-    retval = _flimage_type_name(iflimagetype)
+    libr.check_if_initialized()
+    libr.check_admitted_listvalues(imagetype, xfdata.FLIMAGETYPE_list)
+    iimagetype = libr.convert_to_int(imagetype)
+    libr.keep_elem_refs(imagetype, iimagetype)
+    retval = _flimage_type_name(iimagetype)
     return retval
 
 
-def flimage_add_text(pImage, text, length, style, size, txtcolr, bgcolr, tran, tx, ty, rot):
-    """
-        flimage_add_text(pImage, text, length, style, size, txtcolr, bgcolr, tran, tx, ty, rot) -> num.
+def flimage_add_text(pImage, text, length, style, size, txtcolr, bgcolr,
+                     nobk, tx, ty, rot):
+    """Place text into the image, passing parameters individually. If text
+    starts with character '@' a symbol is drawn.
 
-        @param pImage: pointer to image
+    --
 
-        :status: Untested + NoDoc + NoDemo = NOT OK
+    :Parameters:
+      `pImage` : pointer to xfdata.FL_IMAGE
+        image
+      `text` : str
+        text string to be placed in image
+      `length` : int
+        length of text
+      `style` : int
+        label style. Values (from xfdata.py) FL_NORMAL_STYLE, FL_BOLD_STYLE,
+        FL_ITALIC_STYLE, FL_BOLDITALIC_STYLE, FL_FIXED_STYLE,
+        FL_FIXEDBOLD_STYLE, FL_FIXEDITALIC_STYLE, FL_FIXEDBOLDITALIC_STYLE,
+        FL_TIMES_STYLE, FL_TIMESBOLD_STYLE, FL_TIMESITALIC_STYLE,
+        FL_TIMESBOLDITALIC_STYLE, FL_MISC_STYLE, FL_MISCBOLD_STYLE,
+        FL_MISCITALIC_STYLE, FL_SYMBOL_STYLE, FL_SHADOW_STYLE,
+        FL_ENGRAVED_STYLE, FL_EMBOSSED_STYLE
+      `size` : int
+        label size. Values (from xfdata.py) FL_TINY_SIZE, FL_SMALL_SIZE,
+        FL_NORMAL_SIZE, FL_MEDIUM_SIZE, FL_LARGE_SIZE, FL_HUGE_SIZE,
+        FL_DEFAULT_SIZE
+      `txtcolr : int_pos
+        color to use for text
+      `bgcolr : int_pos
+        color to use for background (only if nobk is 0)
+      `nobk : int
+        flag to enable/disable background. Values 0 (drawn with background)
+        or 1 (text is drawn without a background)
+      `tx : float
+        horizontal location of the text relative to the image origin. The
+        location specified is the lower-right corner of the text.
+      `ty` : float
+        vertical location of the text relative to the image origin. The
+        location specified is the lower-right corner of the text.
+      `rot` : int
+        rotation
+
+    :return: current number of strings for the image
+    :rtype: int
+
+    :note: e.g. *todo*
+
+    :status: Untested + Doc + NoDemo = NOT OK
+
     """
-    _flimage_add_text = library.cfuncproto(
-        library.load_so_libflimage(), "flimage_add_text",
+    _flimage_add_text = libr.cfuncproto(
+        libr.load_so_libflimage(), "flimage_add_text",
         cty.c_int, [cty.POINTER(xfdata.FL_IMAGE), xfdata.STRING, cty.c_int,
         cty.c_int, cty.c_int, cty.c_uint, cty.c_uint, cty.c_int,
         cty.c_double, cty.c_double, cty.c_int],
         """int flimage_add_text(FL_IMAGE * im, const char * str, int len,
            int style, int size, unsigned int tcol, unsigned int bcol,
            int tran, double tx, double ty, int rot)""")
-    library.check_if_initialized()
-    stext = library.convert_to_string(text)
-    ilength = library.convert_to_int(length)
-    istyle = library.convert_to_int(style)
-    isize = library.convert_to_int(size)
-    uitxtcolr = library.convert_to_uint(txtcolr)
-    uibgcolr = library.convert_to_uint(bgcolr)
-    itran = library.convert_to_int(tran)
-    ftx = library.convert_to_double(tx)
-    fty = library.convert_to_double(ty)
-    irot = library.convert_to_int(rot)
-    library.keep_elem_refs(pImage, text, length, style, size, txtcolr, bgcolr, tran, \
-                   tx, ty, rot, stext, ilength, istyle, isize, uitxtcolr, \
-                   uibgcolr, itran, ftx, fty, irot)
+    libr.check_if_initialized()
+    libr.checkif_admitted_listvalues(style, xfdata.TEXTSTYLE_list)
+    libr.checkif_admitted_listvalues(size, xfdata.FONTSIZE_list)
+    stext = libr.convert_to_string(text)
+    ilength = libr.convert_to_int(length)
+    istyle = libr.convert_to_int(style)
+    isize = libr.convert_to_int(size)
+    uitxtcolr = libr.convert_to_uint(txtcolr)
+    uibgcolr = libr.convert_to_uint(bgcolr)
+    inobk = libr.convert_to_int(nobk)
+    ftx = libr.convert_to_double(tx)
+    fty = libr.convert_to_double(ty)
+    irot = libr.convert_to_int(rot)
+    libr.keep_elem_refs(pImage, text, length, style, size, txtcolr, bgcolr,
+                nobk, tx, ty, rot, stext, ilength, istyle, isize, uitxtcolr,
+                uibgcolr, inobk, ftx, fty, irot)
     retval = _flimage_add_text(pImage, stext, ilength, istyle, isize, uitxtcolr, \
-                               uibgcolr, itran, ftx, fty, irot)
+                               uibgcolr, inobk, ftx, fty, irot)
     return retval
 
 
 def flimage_add_text_struct(pImage, pImageText):
-    """
-        flimage_add_text_struct(pImage, pImageText) -> num.
+    """Places text into the image, using xfdata.FLIMAGE_TEXT class instance.
+    If text starts with character '@' a symbol is drawn.
+    --
 
-        @param pImage: pointer to image
+    :Parameters:
+      `pImage` : pointer to xfdata.FL_IMAGE
+        image
+      `pImageText` : pointer to xfdata.FLIMAGE_TEXT
+        flimagetext class instance
 
-        :status: Untested + NoDoc + NoDemo = NOT OK
+    :return: current number of strings for the image
+    :rtype: int
+
+    :note: e.g. *todo*
+
+    :status: Untested + Doc + NoDemo = NOT OK
+
     """
-    _flimage_add_text_struct = library.cfuncproto(
-        library.load_so_libflimage(), "flimage_add_text_struct",
+    _flimage_add_text_struct = libr.cfuncproto(
+        libr.load_so_libflimage(), "flimage_add_text_struct",
         cty.c_int, [cty.POINTER(xfdata.FL_IMAGE),
         cty.POINTER(xfdata.FLIMAGE_TEXT)],
         """int flimage_add_text_struct(FL_IMAGE * p1, const char * p2)""")
-    library.check_if_initialized()
-    library.keep_elem_refs(pImage, pImageText)
+    libr.check_if_initialized()
+    libr.keep_elem_refs(pImage, pImageText)
     retval = _flimage_add_text_struct(pImage, pImageText)
     return retval
 
 
 def flimage_delete_all_text(pImage):
-    """
-        flimage_delete_all_text(pImage)
+    """Deletes all the texts you added to an image.
 
-        @param pImage: pointer to image
+    --
 
-        :status: Untested + NoDoc + NoDemo = NOT OK
+    :Parameters:
+    `pImage` : pointer to xfdata.FL_IMAGE
+      image
+
+    :note: e.g. *todo*
+
+    :status: Untested + Doc + NoDemo = NOT OK
+
     """
-    _flimage_delete_all_text = library.cfuncproto(
-        library.load_so_libflimage(), "flimage_delete_all_text",
+    _flimage_delete_all_text = libr.cfuncproto(
+        libr.load_so_libflimage(), "flimage_delete_all_text",
         None, [cty.POINTER(xfdata.FL_IMAGE)],
         """void flimage_delete_all_text(FL_IMAGE * p1)""")
-    library.check_if_initialized()
-    library.keep_elem_refs(pImage)
+    libr.check_if_initialized()
+    libr.keep_elem_refs(pImage)
     _flimage_delete_all_text(pImage)
 
 
-def flimage_add_marker(pImage, text, p3, p4, p5, p6, p7, p8, p9, colr, bcolr):
-    """
-        flimage_add_marker(pImage, text, p3, p4, p5, p6, p7, p8, p9, colr, bcolr) -> num.
+def flimage_add_marker(pImage, name, x, y, w, h, style, fill, rot, colr, bcolr):
+    """Adds simple markers (arrows, circles etc) to an image, passing
+    parameters individually.
 
-        @param pImage: pointer to image
+    --
 
-        :status: Untested + NoDoc + NoDemo = NOT OK
+    :Parameters:
+      `pImage` : pointer to xfdata.FL_IMAGE
+        image
+      `name` : str
+        marker name *todo*
+      `x` : float
+        horizontal position of the center of the marker in physical
+        coordinates relative to the origin of the image
+      `y` : float
+        vertical position of the center of the marker in physical
+        coordinates relative to the origin of the image
+      `w` : float
+        width of the bounding box of the marker in phisical coordinates
+      `h` : float
+        height of the bounding box of the marker in physical coordinates
+      `style` : int
+        style of the line to draw. Values (from xfdata.py) FL_SOLID,
+        FL_USERDASH, FL_USERDOUBLEDASH, FL_DOT, FL_DOTDASH, FL_DASH,
+        FL_LONGDASH
+      `fill` : int
+        flag if the marker should be filled or not. Values 1 (filled) or 0
+        (not filled)
+      `rot` : int
+        angle of rotation in tenth of degree
+      `colr` : long_pos
+        color of the marker (in packed RGB format)
+      `bcolr` : currently unused
+
+    :return: num.
+    :rtype: int
+
+    :note: e.g. *todo*
+
+    :status: Untested + NoDoc + NoDemo = NOT OK
+
     """
-    _flimage_add_marker = library.cfuncproto(
-        library.load_so_libflimage(), "flimage_add_marker",
+    _flimage_add_marker = libr.cfuncproto(
+        libr.load_so_libflimage(), "flimage_add_marker",
         cty.c_int, [cty.POINTER(xfdata.FL_IMAGE), xfdata.STRING, cty.c_double,
         cty.c_double, cty.c_double, cty.c_double, cty.c_int, cty.c_int,
         cty.c_int, xfdata.FL_COLOR, xfdata.FL_COLOR],
         """int flimage_add_marker(FL_IMAGE * p1, const char * p2,
            double p3, double p4, double p5, double p6, int p7,
            int p8, int p9, FL_COLOR p10, FL_COLOR p11)""")
-    library.check_if_initialized()
-    stext = library.convert_to_string(text)
-    fp3 = library.convert_to_double(p3)
-    fp4 = library.convert_to_double(p4)
-    fp5 = library.convert_to_double(p5)
-    fp6 = library.convert_to_double(p6)
-    ip7 = library.convert_to_int(p7)
-    ip8 = library.convert_to_int(p8)
-    ip9 = library.convert_to_int(p9)
-    ulcolr = library.convert_to_FL_COLOR(colr)
-    ulbcolr = library.convert_to_FL_COLOR(bcolr)
-    library.keep_elem_refs(pImage, text, p3, p4, p5, p6, p7, p8, p9, ulcolr, ulbcolr,
-                   stext, fp3, fp4, fp5, fp6, ip7, ip8, ip9, ulcolr, ulbcolr)
-    retval = _flimage_add_marker(pImage, stext, fp3, fp4, fp5, fp6, ip7,
-                                 ip8, ip9, ulcolr, ulbcolr)
+    libr.check_if_initialized()
+    libr.check_if_admitted_listvalues(style, xfdata.LINESTYLE_list)
+    sname = libr.convert_to_string(name)
+    fx = libr.convert_to_double(x)
+    fy = libr.convert_to_double(y)
+    fw = libr.convert_to_double(w)
+    fh = libr.convert_to_double(h)
+    istyle = libr.convert_to_int(style)
+    ifill = libr.convert_to_int(fill)
+    irot = libr.convert_to_int(rot)
+    ulcolr = libr.convert_to_FL_COLOR(colr)
+    ulbcolr = libr.convert_to_FL_COLOR(bcolr)
+    libr.keep_elem_refs(pImage, name, x, y, w, h, style, fill, rot, ulcolr,
+            ulbcolr, sname, fx, fy, fw, fh, istyle, ifill, irot, ulcolr,
+            ulbcolr)
+    retval = _flimage_add_marker(pImage, sname, fx, fy, fw, fh, istyle,
+                                 ifill, irot, ulcolr, ulbcolr)
     return retval
 
 
 def flimage_add_marker_struct(pImage, pImageMarker):
-    """
-        flimage_add_marker_struct(pImage, pImageMarker) -> num.
+    """Adds simple markers (arrows, circles etc) to an image, using
+    xfdata.FLIMAGE_MARKER class instance
 
-        @param pImage: pointer to image
+    --
 
-        :status: Untested + NoDoc + NoDemo = NOT OK
+    :Parameters:
+    `pImage` : pointer to xfdata.FL_IMAGE
+      image
+    `pImageMarker` : pointer to xfdata.FLIMAGE_MARKER
+      flimagemarker class instance
+
+    :return: num.
+    :rtype: int
+
+    :note: e.g. *todo*
+
+    :status: Untested + Doc + NoDemo = NOT OK
+
     """
-    _flimage_add_marker_struct = library.cfuncproto(
-        library.load_so_libflimage(), "flimage_add_marker_struct",
-        cty.c_int, [cty.POINTER(xfdata.FL_IMAGE), cty.POINTER(xfdata.FLIMAGE_MARKER)],
+    _flimage_add_marker_struct = libr.cfuncproto(
+        libr.load_so_libflimage(), "flimage_add_marker_struct",
+        cty.c_int, [cty.POINTER(xfdata.FL_IMAGE), cty.POINTER( \
+        xfdata.FLIMAGE_MARKER)],
         """int flimage_add_marker_struct(FL_IMAGE * p1, const char * p2)""")
-    library.check_if_initialized()
-    library.keep_elem_refs(pImage, pImageMarker)
+    libr.check_if_initialized()
+    libr.keep_elem_refs(pImage, pImageMarker)
     retval = _flimage_add_marker_struct(pImage, pImageMarker)
     return retval
 
 
-def flimage_define_marker(text1, pImageMarker, text2):
-    """
-        flimage_define_marker(text1, pImageMarker, text2) -> num.
+def flimage_define_marker(mkname, py_FlimageMarkerDraw, psdraw):
+    """Defines a custom marker, using a specific function for drawing it.
 
-        :status: Untested + NoDoc + NoDemo = NOT OK
+    --
+
+    :Parameters:
+      `mkname` : str
+        name of the marker *todo*
+      `py_FlimagemarkerDraw` : python function to draw marker, no return?
+        name referring to function(pImageMarker)
+      `psdraw` : str
+        string that draws a marker in a square with the corner coordinates
+        (-1, -1), (-1, 1), (1, 1) and (1, -1) in PostScript. e.g. the rectangle
+        marker has the following psdraw string: "-1 -1 moveto -1  1 lineto
+        1  1 lineto  1 -1 lineto  closepath"
+
+    :return: num.
+    :rtype: int
+
+    :note: e.g. *todo*
+
+    :status: Untested + Doc + NoDemo = NOT OK
+
     """
-    _flimage_define_marker = library.cfuncproto(
-        library.load_so_libflimage(), "flimage_define_marker",
-        cty.c_int, [xfdata.STRING, cty.POINTER(xfdata.FLIMAGE_MARKER), xfdata.STRING],
+    # cfunc_none_flimagemarker = cty.CFUNCTYPE(None, cty.POINTER( \
+    #   xfdata.FLIMAGE_MARKER))
+    _flimage_define_marker = libr.cfuncproto(
+        libr.load_so_libflimage(), "flimage_define_marker",
+        cty.c_int, [xfdata.STRING, xfdata.cfunc_none_flimagemarker,
+        xfdata.STRING],
         """int flimage_define_marker(const char *, void ( * )
            (FLIMAGE_MARKER *), const char *)""")
-    stext1 = library.convert_to_string(text1)
-    stext2 = library.convert_to_string(text2)
-    library.keep_elem_refs(text1, pImageMarker, text2, stext1, stext2)
-    retval = _flimage_define_marker(stext1, pImageMarker, stext2)
+    smkname = libr.convert_to_string(mkname)
+    spsdraw = libr.convert_to_string(psdraw)
+    c_FlimageMarkerDraw = xfdata.cfunc_none_flimagemarker(py_FlimageMarkerDraw)
+    libr.keep_elem_refs(mkname, psdraw, smkname, spsdraw)
+    libr.keep_cfunc_refs(c_FlimageMarkerDraw, py_FlimageMarkerDraw)
+    retval = _flimage_define_marker(smkname, c_FlimageMarkerDraw, spsdraw)
     return retval
 
 
 def flimage_delete_all_markers(pImage):
-    """
-        flimage_delete_all_markers(pImage)
+    """Deletes all markers added to an image
 
-        @param pImage: pointer to image
+    --
 
-        :status: Untested + NoDoc + NoDemo = NOT OK
+    :Parameters:
+      `pImage` : pointer to xfdata.FL_IMAGE
+        image
+
+    :note: e.g. *todo*
+
+    :status: Untested + Doc + NoDemo = NOT OK
+
     """
-    _flimage_delete_all_markers = library.cfuncproto(
-        library.load_so_libflimage(), "flimage_delete_all_markers",
+    _flimage_delete_all_markers = libr.cfuncproto(
+        libr.load_so_libflimage(), "flimage_delete_all_markers",
         None, [cty.POINTER(xfdata.FL_IMAGE)],
         """void flimage_delete_all_markers(FL_IMAGE * p1)""")
-    library.check_if_initialized()
-    library.keep_elem_refs(pImage)
+    libr.check_if_initialized()
+    libr.keep_elem_refs(pImage)
     _flimage_delete_all_markers(pImage)
 
 
 def flimage_render_annotation(pImage, win):
-    """
-        flimage_render_annotation(pImage, win) -> num.
+    """Makes the annotations a part of the image pixel. By default annotations
+    placed on the image are kept seperate from the image pixels themselves, as
+    keeping the annotation seperate makes it possible to later edit the
+    annotations, and typically the screen has a lower resolutions than other
+    output devices (by keeping the annotations separate from the pixels makes
+    it possible to obtain better image qualities when the annotations are
+    rendered on higher-resolution devices, e.g. a PostScript printer). Note
+    that during rendering the image type may change depending on the
+    capabilities of win. Annotations that were kept separately are deleted.
+    The image must have been displayed at least once prior to calling this
+    function for it to work correctly.
 
-        @param pImage: pointer to image
-        @param win: window
+    --
 
-        :status: Untested + NoDoc + NoDemo = NOT OK
+    :Parameters:
+      `pImage` : pointer to xfdata.FL_IMAGE
+        image
+      `win` : long_pos
+        window
+
+    :return: num., or -1 (on failure)
+    :rtype: int
+
+    :note: e.g. *todo*
+
+    :status: Untested + Doc + NoDemo = NOT OK
+
     """
-    _flimage_render_annotation = library.cfuncproto(
-        library.load_so_libflimage(), "flimage_render_annotation",
+    _flimage_render_annotation = libr.cfuncproto(
+        libr.load_so_libflimage(), "flimage_render_annotation",
         cty.c_int, [cty.POINTER(xfdata.FL_IMAGE), xfdata.FL_WINDOW],
         """int flimage_render_annotation(FL_IMAGE * p1, FL_WINDOW p2)""")
-    library.check_if_initialized()
-    ulwin = library.convert_to_Window(win)
-    library.keep_elem_refs(pImage, win, ulwin)
+    libr.check_if_initialized()
+    ulwin = libr.convert_to_Window(win)
+    libr.keep_elem_refs(pImage, win, ulwin)
     retval = _flimage_render_annotation(pImage, ulwin)
     return retval
 
 
 def flimage_error(pImage, text):
-    """
-        flimage_error(pImage, text)
+    """Calls the error message handler for an image.
 
-        @param pImage: pointer to image
+    --
 
-        :status: Untested + NoDoc + NoDemo = NOT OK
+    :Parameters:
+      `pImage`: pointer to xfdata.FL_IMAGE
+        image to be worked on
+      `text` : str
+        a brief message, such as "memory allocation failed" etc..
+
+    :note: e.g. *todo*
+
+    :status: Untested + Doc + NoDemo = NOT OK
+
     """
-    _flimage_error = library.cfuncproto(
-        library.load_so_libflimage(), "flimage_error",
+    _flimage_error = libr.cfuncproto(
+        libr.load_so_libflimage(), "flimage_error",
         None, [cty.POINTER(xfdata.FL_IMAGE), xfdata.STRING],
         """void flimage_error(FL_IMAGE * p1, const char * p2)""")
-    library.check_if_initialized()
-    stext = library.convert_to_Window(text)
-    library.keep_elem_refs(pImage, text, stext)
+    libr.check_if_initialized()
+    stext = libr.convert_to_Window(text)
+    libr.keep_elem_refs(pImage, text, stext)
     _flimage_error(pImage, stext)
 
 
 # built-in format supports
 
 def flimage_enable_pnm():
-    """
-    flimage_enable_pnm()
+    """Enables use of PNM (Portable anymap) image format
 
-    Enables use of PNM (Portable anymap) image format
+    --
 
     :note: e.g. flimage_enable_pnm()
 
     :status: Tested + Doc + NoDemo = OK
-    """
 
-    _flimage_enable_pnm = library.cfuncproto(
-            library.load_so_libflimage(), "flimage_enable_pnm",
-            None, [],
-            """void flimage_enable_pnm()
-""")
-    library.check_if_initialized()
+    """
+    _flimage_enable_pnm = libr.cfuncproto(
+        libr.load_so_libflimage(), "flimage_enable_pnm",
+        None, [],
+        """void flimage_enable_pnm()""")
+    libr.check_if_initialized()
     _flimage_enable_pnm()
 
 
-def flimage_set_fits_bits(p1):
-    """
-        flimage_set_fits_bits(p1) -> num.
+def flimage_set_fits_bits(nbits):
+    """Sets the number of bit of a FITS image.
 
-        :status: Untested + NoDoc + NoDemo = NOT OK
+    --
+
+    :Parameters:
+      `nbits` : int
+        number of bit to be set
+
+    :return: old number of bit, or negative number (on failure)
+    :rtype: int
+
+    :note: e.g. flimage_set_fits_bits(16)
+
+    :status: Tested + Doc + NoDemo = OK
+
     """
-    _flimage_set_fits_bits = library.cfuncproto(
-        library.load_so_libflimage(), "flimage_set_fits_bits",
+    _flimage_set_fits_bits = libr.cfuncproto(
+        libr.load_so_libflimage(), "flimage_set_fits_bits",
         cty.c_int, [cty.c_int],
         """int flimage_set_fits_bits(int p1)""")
-    library.check_if_initialized()
-    ip1 = library.convert_to_int(p1)
-    library.keep_elem_refs(p1, ip1)
-    retval = _flimage_set_fits_bits(ip1)
+    libr.check_if_initialized()
+    inbits = libr.convert_to_int(nbits)
+    libr.keep_elem_refs(nbits, inbits)
+    retval = _flimage_set_fits_bits(inbits)
     return retval
 
 
 def flimage_jpeg_output_options(pImageJpegOption):
-    """
-        flimage_jpeg_output_options(pImageJpegOption)
+    """Sets quality and smoothing options of a JPEG image, using
+    xfdata.FLIMAGE_JPEG_OPTION. The default quality factor for JPEG output
+    is 75. In general, the higher the quality factor rhe better the image
+    is, but the file size gets larger. The default smoothing factor is 0.
 
-        :status: Untested + NoDoc + NoDemo = NOT OK
+    --
+
+    :Parameters:
+      `pImageJpegOption` : pointer to xfdata.FLIMAGE_JPEG_OPTION
+        flimage jpeg option class instance
+
+    :note: e.g. *todo*
+
+    :status: Untested + Doc + NoDemo = NOT OK
+
     """
-    _flimage_jpeg_output_options = library.cfuncproto(
-        library.load_so_libflimage(), "flimage_jpeg_output_options",
+    _flimage_jpeg_output_options = libr.cfuncproto(
+        libr.load_so_libflimage(), "flimage_jpeg_output_options",
         None, [cty.POINTER(xfdata.FLIMAGE_JPEG_OPTION)],
         """void flimage_jpeg_output_options(FLIMAGE_JPEG_OPTION * p1)""")
-    library.check_if_initialized()
-    library.keep_elem_refs(pImageJpegOption)
+    libr.check_if_initialized()
+    libr.keep_elem_refs(pImageJpegOption)
     _flimage_jpeg_output_options(pImageJpegOption)
 
 
-def flimage_pnm_output_options(p1):
+def flimage_pnm_output_options(rawformat):
+    """Sets variant options for PNM (ppm, pgm and pbm) images.
+
+    --
+
+    :Parameters:
+      `rawformat` : int
+        flag of supported variants. Values 1 (binary raw format, default)
+        or 0 (ASCII format). If the output image is of type
+        xfdata.FL_IMAGE_GRAY16, it is always ASCII format
+
+    :note: e.g. *todo*
+
+    :status: Untested + Doc + NoDemo = NOT OK
+
     """
-        flimage_pnm_output_options(p1)
+    _flimage_pnm_output_options = libr.cfuncproto(
+        libr.load_so_libflimage(), "flimage_pnm_output_options",
+        None, [cty.c_int],
+        """void flimage_pnm_output_options(int p1)""")
+    libr.check_if_initialized()
+    irawformat = libr.convert_to_int(rawformat)
+    libr.keep_elem_refs(rawformat, irawformat)
+    _flimage_pnm_output_options(irawformat)
 
-        :status: Untested + NoDoc + NoDemo = NOT OK
+
+def flimage_gif_output_options(interlace):
+    """Sets options of GIF images.
+
+    --
+
+    :Parameters:
+      `interlace` : int
+        flag if interlace is enabled/disabled. Values 1 (interlaced) or 0
+        (not interlaced).
+
+    :note: e.g. *todo*
+
+    :status: Untested + Doc + NoDemo = NOT OK
+
     """
-
-    _flimage_pnm_output_options = library.cfuncproto(
-            library.load_so_libflimage(), "flimage_pnm_output_options",
-            None, [cty.c_int],
-            """void flimage_pnm_output_options(int p1)
-""")
-    library.check_if_initialized()
-    ip1 = library.convert_to_int(p1)
-    library.keep_elem_refs(p1, ip1)
-    _flimage_pnm_output_options(ip1)
-
-
-def flimage_gif_output_options(p1):
-    """
-        flimage_gif_output_options(p1)
-
-        :status: Untested + NoDoc + NoDemo = NOT OK
-    """
-    _flimage_gif_output_options = library.cfuncproto(
-        library.load_so_libflimage(), "flimage_gif_output_options",
+    _flimage_gif_output_options = libr.cfuncproto(
+        libr.load_so_libflimage(), "flimage_gif_output_options",
         None, [cty.c_int],
         """void flimage_gif_output_options(int p1)""")
-    library.check_if_initialized()
-    ip1 = library.convert_to_int(p1)
-    library.keep_elem_refs(p1, ip1)
-    _flimage_gif_output_options(ip1)
+    libr.check_if_initialized()
+    iinterlace = libr.convert_to_int(interlace)
+    libr.keep_elem_refs(interlace, iinterlace)
+    _flimage_gif_output_options(iinterlace)
 
 
 def flimage_ps_options():
-    """
-        flimage_ps_options() -> pFlpsControl
+    """Sets reading and writing options for PostScript.
 
-        :status: Untested + NoDoc + NoDemo = NOT OK
+    --
+
+    :return: flpscontrol class instance (pFlpsControl)
+    :rtype: pointer to xfdata.FLPS_CONTROL
+
+    :note: e.g. *todo*
+
+    :status: Untested + Doc + NoDemo = NOT OK
+
     """
-    _flimage_ps_options = library.cfuncproto(
-        library.load_so_libflimage(), "flimage_ps_options",
+    _flimage_ps_options = libr.cfuncproto(
+        libr.load_so_libflimage(), "flimage_ps_options",
         cty.POINTER(xfdata.FLPS_CONTROL), [],
         """FLPS_CONTROL * flimage_ps_options()""")
-    library.check_if_initialized()
+    libr.check_if_initialized()
     retval = _flimage_ps_options()
     return retval
 
@@ -660,1476 +1038,2151 @@ flimage_gif_options = flimage_gif_output_options
 
 
 def flimage_get_number_of_formats():
-    """
-        flimage_get_number_of_formats() -> num.
+    """Obtains the number of currently supported image format.
 
-        :status: Untested + NoDoc + NoDemo = NOT OK
-    """
+    --
 
-    _flimage_get_number_of_formats = library.cfuncproto(
-            library.load_so_libflimage(), "flimage_get_number_of_formats",
-            cty.c_int, [],
-            """int flimage_get_number_of_formats()
-""")
-    library.check_if_initialized()
+    :return: number of formats supported, for reading or writing or both
+    :rtype: int
+
+    :note: e.g. *todo*
+
+    :status: Untested + Doc + NoDemo = NOT OK
+
+    """
+    _flimage_get_number_of_formats = libr.cfuncproto(
+        libr.load_so_libflimage(), "flimage_get_number_of_formats",
+        cty.c_int, [],
+        """int flimage_get_number_of_formats()""")
+    libr.check_if_initialized()
     retval = _flimage_get_number_of_formats()
     return retval
 
 
-def flimage_get_format_info(p1):
-    """
-        flimage_get_format_info(p1) -> ImageFormatInfo class instance
+def flimage_get_format_info(nformat):
+    """Obtains detailed information for each image format.
 
-        :status: Untested + NoDoc + NoDemo = NOT OK
-    """
+    --
 
-    _flimage_get_format_info = library.cfuncproto(
-            library.load_so_libflimage(), "flimage_get_format_info",
-            cty.POINTER(xfdata.FLIMAGE_FORMAT_INFO), [cty.c_int],
-            """const char * flimage_get_format_info(int p1)
-""")
-    library.check_if_initialized()
-    ip1 = library.convert_to_int(p1)
-    library.keep_elem_refs(p1, ip1)
-    retval = _flimage_get_format_info(ip1)
+    :Parameters:
+      `nformat` : int
+        number between 1 and the return value of
+        flimage_get_number_of_formats()
+
+    :return: ImageFormatInfo class instance
+    :rtype: pointer to xfdata.FLIMAGE_FORMAT_INFO
+
+    :note: e.g. *todo*
+
+    :status: Untested + Doc + NoDemo = NOT OK
+
+    """
+    _flimage_get_format_info = libr.cfuncproto(
+        libr.load_so_libflimage(), "flimage_get_format_info",
+        cty.POINTER(xfdata.FLIMAGE_FORMAT_INFO), [cty.c_int],
+        """const char * flimage_get_format_info(int p1)""")
+    libr.check_if_initialized()
+    informat = libr.convert_to_int(nformat)
+    libr.keep_elem_refs(nformat, informat)
+    retval = _flimage_get_format_info(informat)
     return retval
 
 
-def fl_get_matrix(nrows, ncols, esize):
+def fl_get_matrix(nrows, ncols, elemsize):
+    """Creates a 2-dimensional array of entities of size elemsize. The array
+    is of nrows by ncols in size.
+
+    --
+
+    :Parameters:
+      `nrows` : int
+        number of rows
+      `ncols` : int
+        number of columns
+      `elemsize` : int_pos
+        size of matrix in bytes
+
+    :return: a matrix?
+    :rtype: *todo*
+
+    :note: e.g. *todo*
+
+    :status: Untested + NoDoc + NoDemo = NOT OK
+
     """
-        fl_get_matrix(nrows, ncols, esize) -> ?
-
-        @param nrows: number of rows
-        @param ncols: number of columns
-        @param esize: size of matrix
-
-        :status: Untested + NoDoc + NoDemo = NOT OK
-    """
-
-    _fl_get_matrix = library.cfuncproto(
-            library.load_so_libflimage(), "fl_get_matrix",
-            cty.c_void_p, [cty.c_int, cty.c_int, cty.c_uint],
-            """void * fl_get_matrix(int p1, int p2, unsigned int p3)
-""")
-    library.check_if_initialized()
-    inrows = library.convert_to_int(nrows)
-    incols = library.convert_to_int(ncols)
-    uiesize = library.convert_to_uint(esize)
-    library.keep_elem_refs(nrows, ncols, esize, inrows, incols, uiesize)
-    retval = _fl_get_matrix(inrows, incols, uiesize)
+    _fl_get_matrix = libr.cfuncproto(
+        libr.load_so_libflimage(), "fl_get_matrix",
+        cty.c_void_p, [cty.c_int, cty.c_int, cty.c_uint],
+        """void * fl_get_matrix(int p1, int p2, unsigned int p3)""")
+    libr.check_if_initialized()
+    inrows = libr.convert_to_int(nrows)
+    incols = libr.convert_to_int(ncols)
+    uielemsize = libr.convert_to_uint(elemsize)
+    libr.keep_elem_refs(nrows, ncols, elemsize, inrows, incols, uielemsize)
+    retval = _fl_get_matrix(inrows, incols, uielemsize)
     return retval
 
 
-def fl_make_matrix(nrows, ncols, esize, mem):
+def fl_make_matrix(nrows, ncols, elemsize, mem):
+    """Makes a matrix out of a given piece of memory.
+
+    --
+
+    :Parameters:
+      `nrows` : int
+        number of rows
+      `ncols` : int
+        number of columns
+      `elemsize` : int_pos
+        size of matrix in bytes
+      `mem` : *todo*
+        memory
+
+    :return: *todo*
+    :rtype: *todo*
+
+    :note: e.g. *todo*
+
+    :status: Untested + NoDoc + NoDemo = NOT OK
+
     """
-        fl_make_matrix(nrows, ncols, esize, mem) -> ?
-
-        Makes a matrix out of a given piece of memory.
-
-        @param nrows: number of rows
-        @param ncols: number of columns
-        @param esize: size of matrix
-        @param mem: memory
-
-        :status: Untested + NoDoc + NoDemo = NOT OK
-    """
-
-    _fl_make_matrix = library.cfuncproto(
-            library.load_so_libflimage(), "fl_make_matrix",
-            cty.c_void_p, [cty.c_int, cty.c_int, cty.c_uint, cty.c_void_p],
-            """void * fl_make_matrix(int p1, int p2, unsigned int p3,
-               void * p4)
-""")
-    library.check_if_initialized()
-    inrows = library.convert_to_int(nrows)
-    incols = library.convert_to_int(ncols)
-    uiesize = library.convert_to_uint(esize)
+    _fl_make_matrix = libr.cfuncproto(
+        libr.load_so_libflimage(), "fl_make_matrix",
+        cty.c_void_p, [cty.c_int, cty.c_int, cty.c_uint, cty.c_void_p],
+        """void * fl_make_matrix(int p1, int p2, unsigned int p3,
+           void * p4)""")
+    libr.check_if_initialized()
+    inrows = libr.convert_to_int(nrows)
+    incols = libr.convert_to_int(ncols)
+    uielemsize = libr.convert_to_uint(elemsize)
     pmem = cty.cast(mem, cty.c_void_p)
-    library.keep_elem_refs(nrows, ncols, esize, mem, inrows, incols, uiesize, pmem)
-    retval = _fl_make_matrix(inrows, incols, uiesize, pmem)
+    libr.keep_elem_refs(nrows, ncols, elemsize, mem, inrows, incols,
+                        uielemsize, pmem)
+    retval = _fl_make_matrix(inrows, incols, uielemsize, pmem)
     return retval
 
 
 def fl_free_matrix(mtrx):
-    """
-        fl_free_matrix(mtrx)
+    """free a matrix allocated using fl_get_matrix() or fl_make_matrix().
 
-        :status: Untested + NoDoc + NoDemo = NOT OK
+    --
+
+    :Parameters:
+      `mtrx` : *todo*
+
+    :note: e.g. *todo*
+
+    :status: Untested + NoDoc + NoDemo = NOT OK
+
     """
-    _fl_free_matrix = library.cfuncproto(
-        library.load_so_libflimage(), "fl_free_matrix",
+    _fl_free_matrix = libr.cfuncproto(
+        libr.load_so_libflimage(), "fl_free_matrix",
         None, [cty.c_void_p],
         """void fl_free_matrix(void * p1)""")
-    library.check_if_initialized()
+    libr.check_if_initialized()
     pmtrx = cty.cast(mtrx, cty.c_void_p)
-    library.keep_elem_refs(mtrx, pmtrx)
+    libr.keep_elem_refs(mtrx, pmtrx)
     _fl_free_matrix(pmtrx)
 
 
 # fl_init_RGBdatabase(text) function prototype (deprecated)
 
 
-def fl_lookup_RGBcolor(text, p2, p3, p4):
+def fl_lookup_RGBcolor(colrname):
+    """ *todo*
+
+    --
+
+    :Parameters:
+      `colrname` : str
+         text of color name
+
+    :return: o or -1 (on failure), red value, green value, blue value
+    :rtype: int, int, int, int
+
+    :note: e.g. *todo*
+
+    :attention: API change from XForms - upstream was
+        fl_lookup_RGBcolor(text, r, g, b)
+
+    :status: Untested + NoDoc + NoDemo = NOT OK
+
     """
-        fl_lookup_RGBcolor(text, p2, p3, p4) -> num.
-
-        :status: Untested + NoDoc + NoDemo = NOT OK
-    """
-
-    _fl_lookup_RGBcolor = library.cfuncproto(
-            library.load_so_libflimage(), "fl_lookup_RGBcolor",
-            cty.c_int, [xfdata.STRING, cty.POINTER(cty.c_int), \
-            cty.POINTER(cty.c_int), cty.POINTER(cty.c_int)],
-            """int fl_lookup_RGBcolor(const char * p1, int * p2,
-               int * p3, int * p4)
-""")
-    library.check_if_initialized()
-    stext = library.convert_to_string(text)
-    library.keep_elem_refs(text, p2, p3, p4)
-    retval = _fl_lookup_RGBcolor(stext, p2, p3, p4)
-    return retval
+    _fl_lookup_RGBcolor = libr.cfuncproto(
+        libr.load_so_libflimage(), "fl_lookup_RGBcolor",
+        cty.c_int, [xfdata.STRING, cty.POINTER(cty.c_int), \
+        cty.POINTER(cty.c_int), cty.POINTER(cty.c_int)],
+        """int fl_lookup_RGBcolor(const char * p1, int * p2,
+           int * p3, int * p4)""")
+    libr.check_if_initialized()
+    scolrname = libr.convert_to_string(colrname)
+    r, pr = libr.make_int_and_pointer()
+    g, pg = libr.make_int_and_pointer()
+    b, pb = libr.make_int_and_pointer()
+    libr.keep_elem_refs(colrname, r, g, b, colrname, pr, pg, pb)
+    retval = _fl_lookup_RGBcolor(scolrname, pr, pg, pb)
+    return retval, r.value, g.value, b.value
 
 
-def flimage_add_format(formalname, shortname, extension, flimagetype, \
-                       py_ImageIdentify, py_ImageDescription, \
-                       py_ImageReadPixels, py_ImageWriteImage):
-    """
-        flimage_add_format(formalname, shortname, extension, flimagetype,
+def flimage_add_format(formalname, shortname, extension, imagetype,
         py_ImageIdentify, py_ImageDescription, py_ImageReadPixels,
-        py_ImageWriteImage) -> num.
+        py_ImageWriteImage):
+    """Adds the newly specified image format to a recognized image format
+    pool in the library.
 
-        :status: Untested + NoDoc + NoDemo = NOT OK
+    --
+
+    :Parameters:
+      `formalname` : str
+        the formal name of image format
+      `shortname` : str
+        an abbreviated name for the image format
+      `extension` : str
+        file extension. If it is None, shortname will be substituted
+      `imagetype` : int
+        The image type, generally one of the supported image types (e.g.
+        xfdata.FL_IMAGE_RGB), but it does not have to. For image file formats
+        that are capable of holding more than one type of images, this field
+        can be set to indicate this by ORing the supported types together
+        (e.g., xfdata.FL_IMAGE_RGB|FL_IMAGE_GRAY). However, when description
+        returns, the image type should be set to the actual type in the file.
+      `py_ImageIdentify` : function to identify format, returning value
+        name referring to function(pFile) -> num.
+        This function should return 1 if the file pointed to by the file
+        pointer passed in is the expected image format (e.g by checking
+        signature). It should return a negative number if the file is not
+        recognized. The decision if the file pointer should be rewound or not
+        is between this function and the description function.
+      `py_ImageDescription` : function to set description, returning value
+        name referring to function(pImage) -> num.
+        This function in general should set the image dimension and type
+        fields (and colormap length for color index images) if successful, so
+        the driver can allocate the necessary memory for read pixel. Of
+        course, if read_pixels elects to allocate memory itself, the
+        description function does not have to set any fields. However, if
+        reading should continue, the function should return 1 otherwise a
+        negative number.
+      `py_ImageReadPixels` : python function to read pixels, returning value
+        name referring to function(pImage) -> num.
+        This function reads the pixels from the file and fills one of the
+        pixel matrix in the image structure depending on the type. If reading
+        is successful, a non-negative number should be returned otherwise a
+        negative number should be returned. Upon entry,
+        pImage.contents.completed is set to zero. The function should not
+        close the file.
+      `py_ImageWriteImage` : python function to write image, returning value
+        name referring to function(pImage) -> num.
+        This function takes an image structure and should write the image out
+        in a format it knows. Prior to calling this routine, the driver will
+        have already converted the image type to the type it wants. The
+        function should return 1 on success and a negative number otherwise.
+        If only reading of the image format is supported this parameter can
+        be set to None. The function should write to file stream
+        pImage.contents.fpout.
+
+    :return: num.
+    :rtype: int
+
+    :note: e.g. *todo*
+
+    :status: Untested + NoDoc + NoDemo = NOT OK
+
     """
     #FLIMAGE_Identify = cty.CFUNCTYPE(cty.c_int, cty.POINTER(xfdata.FILE))
-    #FLIMAGE_Description = cty.CFUNCTYPE(cty.c_int, cty.POINTER(xfdata.FL_IMAGE))
-    #FLIMAGE_Read_Pixels = cty.CFUNCTYPE(cty.c_int, cty.POINTER(xfdata.FL_IMAGE))
-    #FLIMAGE_Write_Image = cty.CFUNCTYPE(cty.c_int, cty.POINTER(xfdata.FL_IMAGE))
-    _flimage_add_format = library.cfuncproto(
-            library.load_so_libflimage(), "flimage_add_format",
-            cty.c_int, [xfdata.STRING, xfdata.STRING, xfdata.STRING, cty.c_int,
-            xfdata.FLIMAGE_Identify, xfdata.FLIMAGE_Description, xfdata.FLIMAGE_Read_Pixels,
-            xfdata.FLIMAGE_Write_Image],
-            """int flimage_add_format(const char * p1, const char * p2,
-               const char * p3, int p4, FLIMAGE_Identify p5,
-               FLIMAGE_Description p6, FLIMAGE_Read_Pixels p7,
-               FLIMAGE_Write_Image p8)
-""")
-    library.check_if_initialized()
-    library.check_admitted_listvalues(flimagetype, xfdata.FLIMAGETYPE_list)
-    sformalname = library.convert_to_string(formalname)
-    sshortname = library.convert_to_string(shortname)
-    sextension = library.convert_to_string(extension)
-    iflimagetype = library.convert_to_int(flimagetype)
+    #FLIMAGE_Description = cty.CFUNCTYPE(cty.c_int, cty.POINTER( \
+    #    xfdata.FL_IMAGE))
+    #FLIMAGE_Read_Pixels = cty.CFUNCTYPE(cty.c_int, cty.POINTER( \
+    #    xfdata.FL_IMAGE))
+    #FLIMAGE_Write_Image = cty.CFUNCTYPE(cty.c_int, cty.POINTER( \
+    #    xfdata.FL_IMAGE))
+    _flimage_add_format = libr.cfuncproto(
+        libr.load_so_libflimage(), "flimage_add_format",
+        cty.c_int, [xfdata.STRING, xfdata.STRING, xfdata.STRING, cty.c_int,
+        xfdata.FLIMAGE_Identify, xfdata.FLIMAGE_Description,
+        xfdata.FLIMAGE_Read_Pixels, xfdata.FLIMAGE_Write_Image],
+        """int flimage_add_format(const char * p1, const char * p2,
+           const char * p3, int p4, FLIMAGE_Identify p5,
+           FLIMAGE_Description p6, FLIMAGE_Read_Pixels p7,
+           FLIMAGE_Write_Image p8)""")
+    libr.check_if_initialized()
+    libr.check_admitted_listvalues(imagetype, xfdata.FLIMAGETYPE_list)
+    sformalname = libr.convert_to_string(formalname)
+    sshortname = libr.convert_to_string(shortname)
+    sextension = libr.convert_to_string(extension)
+    iimagetype = libr.convert_to_int(imagetype)
     c_ImageIdentify = xfdata.FLIMAGE_Identify(py_ImageIdentify)
     c_ImageDescription = xfdata.FLIMAGE_Description(py_ImageDescription)
     c_ImageReadPixels = xfdata.FLIMAGE_Read_Pixels(py_ImageReadPixels)
     c_ImageWriteImage = xfdata.FLIMAGE_Write_Image(py_ImageWriteImage)
-    library.keep_cfunc_refs(c_ImageIdentify, py_ImageIdentify, c_ImageDescription, \
+    libr.keep_cfunc_refs(c_ImageIdentify, py_ImageIdentify, c_ImageDescription, \
                     py_ImageDescription, c_ImageReadPixels, py_ImageReadPixels,
                     c_ImageWriteImage, py_ImageWriteImage)
-    library.keep_elem_refs(formalname, shortname, extension, flimagetype, \
-                   sformalname, sshortname, sextension, iflimagetype)
+    libr.keep_elem_refs(formalname, shortname, extension, imagetype, \
+                   sformalname, sshortname, sextension, iimagetype)
     retval = _flimage_add_format(sformalname, sshortname, sextension, \
-                    flimagetype, c_ImageIdentify, c_ImageDescription, \
+                    iimagetype, c_ImageIdentify, c_ImageDescription, \
                     c_ImageReadPixels, c_ImageWriteImage)
     return retval
 
 
-def flimage_set_annotation_support(p1, p2):
-    """
-        flimage_set_annotation_support(p1, p2)
+def flimage_set_annotation_support(in_, yesno):
+    """Set support for annotations.
 
-        :status: Untested + NoDoc + NoDemo = NOT OK
-    """
+    --
 
-    _flimage_set_annotation_support = library.cfuncproto(
-            library.load_so_libflimage(), "flimage_set_annotation_support",
-            None, [cty.c_int, cty.c_int],
-            """void flimage_set_annotation_support(int p1, int p2)
-""")
-    library.check_if_initialized()
-    ip1 = library.convert_to_int(p1)
-    ip2 = library.convert_to_int(p2)
-    library.keep_elem_refs(p1, p2, ip1, ip2)
-    _flimage_set_annotation_support(ip1, ip2)
+    :Parameters:
+      `in_` : int
+        image number?. Values between 0 and number of images?
+      `yesno` : int
+       flag to enable/disable support. Values 1 (to enable) or 0 (to disable)
+
+    :note: e.g. *todo*
+
+    :status: Untested + NoDoc + NoDemo = NOT OK
+
+    """
+    _flimage_set_annotation_support = libr.cfuncproto(
+        libr.load_so_libflimage(), "flimage_set_annotation_support",
+        None, [cty.c_int, cty.c_int],
+        """void flimage_set_annotation_support(int p1, int p2)""")
+    libr.check_if_initialized()
+    iin_ = libr.convert_to_int(in_)
+    iyesno = libr.convert_to_int(yesno)
+    libr.keep_elem_refs(in_, yesno, iin_, iyesno)
+    _flimage_set_annotation_support(iin_, iyesno)
 
 
 def flimage_getcolormap(pImage):
+    """Obtains color map for an image
+
+    --
+
+    :Parameters:
+      `pImage` : pointer to xfdata.FL_IMAGE
+        image
+
+    :return: 0, or -1 (on failure)
+    :rtype: int
+
+    :note: e.g. *todo*
+
+    :status: Untested + NoDoc + NoDemo = NOT OK
+
     """
-        flimage_getcolormap(pImage) -> num.
-
-        @param pImage: pointer to image
-
-        :status: Untested + NoDoc + NoDemo = NOT OK
-    """
-
-    _flimage_getcolormap = library.cfuncproto(
-            library.load_so_libflimage(), "flimage_getcolormap",
-            cty.c_int, [cty.POINTER(xfdata.FL_IMAGE)],
-            """int flimage_getcolormap(FL_IMAGE * p1)
-""")
-    library.check_if_initialized()
-    library.keep_elem_refs(pImage)
+    _flimage_getcolormap = libr.cfuncproto(
+        libr.load_so_libflimage(), "flimage_getcolormap",
+        cty.c_int, [cty.POINTER(xfdata.FL_IMAGE)],
+        """int flimage_getcolormap(FL_IMAGE * p1)""")
+    libr.check_if_initialized()
+    libr.keep_elem_refs(pImage)
     retval = _flimage_getcolormap(pImage)
     return retval
 
 
 def fl_select_mediancut_quantizer():
-    """
-        fl_select_mediancut_quantizer()
+    """Selects median cut quantizer, who uses Heckbert's median cut algorithm
+    followed by Floyd-Steinberg dithering after which the pixels are mapped
+    to the colors selected. This tends to give better images because of the
+    dithering step. However, in this particular implementation, the number
+    of quantized colors is limited to 256. Color quantization is one way of
+    reduce the number of colors in the original image to display a RGB image
+    on a color-mapped device of limited depth.
 
-        :status: Untested + NoDoc + NoDemo = NOT OK
-    """
+    --
 
-    _fl_select_mediancut_quantizer = library.cfuncproto(
-            library.load_so_libflimage(), "fl_select_mediancut_quantizer",
-            None, [],
-            """void fl_select_mediancut_quantizer()
-""")
-    library.check_if_initialized()
+    :note: e.g. flimage_select_mediancut_quantizer()
+
+    :status: Tested + Doc + NoDemo = NOT OK
+
+    """
+    _fl_select_mediancut_quantizer = libr.cfuncproto(
+        libr.load_so_libflimage(), "fl_select_mediancut_quantizer",
+        None, [],
+        """void fl_select_mediancut_quantizer()""")
+    libr.check_if_initialized()
     _fl_select_mediancut_quantizer()
 
 
 # simple image processing routines
 
-def flimage_convolve(pImage, p2, p3, p4):
+def flimage_convolve(pImage, kernel, krows, kcols):
+    """Takes a convolution kernel of krows by kcols and convolves it with
+    the image. The result replaces the input image.
+
+    --
+
+    :Parameters:
+      `pImage` : pointer to xfdata.FL_IMAGE
+        image
+      `kernel` : *todo*
+        The kernel size should be odd, and should be allocated by
+        fl_get_matrix(). *todo*
+      `krows` : int
+        number of kernel rows
+      `kcols` : int
+        number of kernel cols
+
+    :return: positive num., or negative num (on failure)
+    :rtype: int
+
+    :note: e.g. *todo*
+
+    :status: Untested + NoDoc + NoDemo = NOT OK
+
     """
-        flimage_convolve(pImage, p2, p3, p4) -> num.
-
-        @param pImage: pointer to image
-
-        :status: Untested + NoDoc + NoDemo = NOT OK
-    """
-
-    _flimage_convolve = library.cfuncproto(
-            library.load_so_libflimage(), "flimage_convolve",
-            cty.c_int, [cty.POINTER(xfdata.FL_IMAGE),
-            cty.POINTER(cty.POINTER(cty.c_int)), cty.c_int, cty.c_int],
-            """int flimage_convolve(FL_IMAGE * p1, int * * p2, int p3,
-               int p4)
-""")
-    library.check_if_initialized()
-    ip3 = library.convert_to_int(p3)
-    ip4 = library.convert_to_int(p4)
-    library.keep_elem_refs(pImage, p2, p3, p4, ip3, ip4)
-    retval = _flimage_convolve(pImage, p2, ip3, ip4)
+    _flimage_convolve = libr.cfuncproto(
+        libr.load_so_libflimage(), "flimage_convolve",
+        cty.c_int, [cty.POINTER(xfdata.FL_IMAGE),
+        cty.POINTER(cty.POINTER(cty.c_int)), cty.c_int, cty.c_int],
+        """int flimage_convolve(FL_IMAGE * p1, int * * p2, int p3,
+           int p4)""")
+    libr.check_if_initialized()
+    ikrows = libr.convert_to_int(krows)
+    ikcols = libr.convert_to_int(kcols)
+    libr.keep_elem_refs(pImage, kernel, krows, kcols, ikrows, ikcols)
+    retval = _flimage_convolve(pImage, kernel, ikrows, ikcols)
     return retval
 
 
-def flimage_convolvea(pImage, p2, p3, p4):
+def flimage_convolvea(pImage, kernel, krow, kcol):
+    """Takes a convolution kernel of krow by kcol and convolves it with
+    the image. The result replaces the input image. It uses a kernel that's a
+    C 2-dimensional array (cast to a pointer to int).
+
+    --
+
+    :Parameters:
+      `pImage` : pointer to xfdata.FL_IMAGE
+        image
+      `kernel` : *todo*
+        C 2-dimensional array *todo*
+      `krow` : int
+        number of kernel rows
+      `kcol` : int
+        number of kernel columns
+
+    :return: positive num., or negative num (on failure)
+    :rtype: int
+
+    :note: e.g. *todo*
+
+    :status: Untested + NoDoc + NoDemo = NOT OK
+
     """
-        flimage_convolvea(pImage, p2, p3, p4) -> num.
-
-        @param pImage: pointer to image
-
-        :status: Untested + NoDoc + NoDemo = NOT OK
-    """
-
-    _flimage_convolvea = library.cfuncproto(
-            library.load_so_libflimage(), "flimage_convolvea",
-            cty.c_int, [cty.POINTER(xfdata.FL_IMAGE), cty.POINTER(cty.c_int),
-            cty.c_int, cty.c_int],
-            """int flimage_convolvea(FL_IMAGE * p1, int * p2, int p3, int p4)
-""")
-    library.check_if_initialized()
-    library.keep_elem_refs(pImage, p2, p3, p4)
-    retval = _flimage_convolvea(pImage, p2, p3, p4)
+    _flimage_convolvea = libr.cfuncproto(
+        libr.load_so_libflimage(), "flimage_convolvea",
+        cty.c_int, [cty.POINTER(xfdata.FL_IMAGE), cty.POINTER(cty.c_int),
+        cty.c_int, cty.c_int],
+        """int flimage_convolvea(FL_IMAGE * p1, int * p2, int p3, int p4)""")
+    libr.check_if_initialized()
+    pkernel = cty.cast(kernel, cty.POINTER(cty.c_int))
+    ikrow = libr.convert_to_int(krow)
+    ikcol = libr.convert_to_int(kcol)
+    libr.keep_elem_refs(pImage, kernel, krow, kcol, pkernel, ikrow, ikcol)
+    retval = _flimage_convolvea(pImage, pkernel, krow, kcol)
     return retval
 
 
-def flimage_tint(pImage, p2, p3):
+def flimage_tint(pImage, packed, opacity):
+    """Emulates the effect of looking at an image through a piece of colored
+    glass. Tint is most useful in cases where you want to put some annotations
+    on the image, but do not want to use a uniform and opaque background that
+    completely obscures the image behind. By using tint, you can have a
+    background that provides some contrast to the text, yet not obscures the
+    image beneath completely. Tint operation uses the subimage settings.
+
+    --
+
+    :Parameters:
+      `pImage` : pointer to xfdata.FL_IMAGE
+        image
+      `packed` : int_pos
+        packed RGB color, specifying the color of the glass.
+      `opacity` : float
+        how much the color of the image is absorbed by the glass. Values
+        between 0 (the glass is totally transparent, i.e. the glass has no
+        effect) and 1.0 (total opaqueness, i.e. all you see is the color of
+        the glass. Any value between these two extremes results in a color
+        that is a combination of the pixel color and the glass color.
+
+    :return: num.
+    :rtype: int
+
+    :note: e.g. pkdcolr = flxbasic.FL_PACK3(20, 30, 40)
+    :note: e.g. exval = flimage_tint(pimg, pkdcolr, 0.5)
+
+    :status: Tested + Doc + NoDemo = OK
+
     """
-        flimage_tint(pImage, p2, p3) -> num.
-
-        @param pImage: pointer to image
-
-        :status: Untested + NoDoc + NoDemo = NOT OK
-    """
-
-    _flimage_tint = library.cfuncproto(
-            library.load_so_libflimage(), "flimage_tint",
-            cty.c_int, [cty.POINTER(xfdata.FL_IMAGE), cty.c_uint, cty.c_double],
-            """int flimage_tint(FL_IMAGE * p1, unsigned int p2, double p3)
-""")
-    library.check_if_initialized()
-    library.keep_elem_refs(pImage, p2, p3)
-    retval = _flimage_tint(pImage, p2, p3)
+    _flimage_tint = libr.cfuncproto(
+        libr.load_so_libflimage(), "flimage_tint",
+        cty.c_int, [cty.POINTER(xfdata.FL_IMAGE), cty.c_uint, cty.c_double],
+        """int flimage_tint(FL_IMAGE * p1, unsigned int p2, double p3)""")
+    libr.check_if_initialized()
+    uipacked = libr.convert_to_uint(packed)
+    fopacity = libr.convert_to_float(opacity)
+    libr.keep_elem_refs(pImage, packed, opacity, uipacked, fopacity)
+    retval = _flimage_tint(pImage, uipacked, fopacity)
     return retval
 
 
-def flimage_rotate(pImage, p2, p3):
+def flimage_rotate(pImage, angle, subpixel):
+    """Does an image rotation. Repeated rotations should be avoided if
+    possible. If you have to call it more than once it's a good idea to crop
+    after rotations in order to get rid of the regions that contain only fill
+    color.
+
+    --
+
+    :Parameters:
+      `pImage` : pointer to xfdata.FL_IMAGE
+        image
+      `angle` : int
+        the angle in one-tenth of a degree (i.e., a 45 degree rotation should
+        be specified as 450) with a positive sign for counter-clock rotation.
+      `subpixel` : int
+        if subpixel sampling should be enabled. Values (from xfdata.py)
+        FLIMAGE_NOSUBPIXEL or FLIMAGE_SUBPIXEL. If enabled, the resulting image
+        pixels are interpolated from the original pixels; this usually has an
+        "anti-aliasing" effect that leads to less severe jagged edges and
+        similar artifacts commonly encountered in rotations. However, it also
+        means that a color indexed image gets converted to a RGB image. If
+        preserving the pixel value is important, you should not turn subpixel
+        sampling on.
+
+    :return: num., or negative num. (on failure)
+    :rtype: int
+
+    :note: e.g. *todo*
+
+    :status: Untested + Doc + NoDemo = NOT OK
+
     """
-        flimage_rotate(pImage, p2, p3) -> num.
-
-        @param pImage: pointer to image
-
-        :status: Untested + NoDoc + NoDemo = NOT OK
-    """
-
-    _flimage_rotate = library.cfuncproto(
-            library.load_so_libflimage(), "flimage_rotate",
-            cty.c_int, [cty.POINTER(xfdata.FL_IMAGE), cty.c_int, cty.c_int],
-            """int flimage_rotate(FL_IMAGE * p1, int p2, int p3)
-""")
-    library.check_if_initialized()
-    ip2 = library.convert_to_int(p2)
-    ip3 = library.convert_to_int(p3)
-    library.keep_elem_refs(pImage, p2, p3, ip2, ip3)
-    retval = _flimage_rotate(pImage, ip2, ip3)
+    _flimage_rotate = libr.cfuncproto(
+        libr.load_so_libflimage(), "flimage_rotate",
+        cty.c_int, [cty.POINTER(xfdata.FL_IMAGE), cty.c_int, cty.c_int],
+        """int flimage_rotate(FL_IMAGE * p1, int p2, int p3)""")
+    libr.check_if_initialized()
+    libr.check_if_admitted_listvalues(subpixel, xfdata.FLIMAGESUBPIXROT_list)
+    iangle = libr.convert_to_int(angle)
+    isubpixel = libr.convert_to_int(subpixel)
+    libr.keep_elem_refs(pImage, angle, subpixel, iangle, isubpixel)
+    retval = _flimage_rotate(pImage, iangle, isubpixel)
     return retval
 
 
-def flimage_flip(pImage, p2):
+def flimage_flip(pImage, what):
+    """Does the mirror operation in x- or y-direction at the center. For
+    example, to flip the columns of an image, the left and right of the
+    image are flipped (just like having a vertical mirror in the center of
+    the image) thus the first pixel on any given row becomes the last, and
+    the last pixel becomes the first etc.
+
+    --
+
+    :Parameters:
+      `pImage: pointer to xfdata.FL_IMAGE
+        image
+      `what` : int or char
+        desired direction of flipping. Values 'c' (column, horizontal flipping)
+        or 'r' (row, vertical flipping)
+
+    :return: num.
+    :rtype: int
+
+    :note: e.g. *todo*
+
+    :status: Untested + NoDoc + NoDemo = NOT OK
+
     """
-        flimage_flip(pImage, p2) -> num.
-
-        @param pImage: pointer to image
-
-        :status: Untested + NoDoc + NoDemo = NOT OK
-    """
-
-    _flimage_flip = library.cfuncproto(
-            library.load_so_libflimage(), "flimage_flip",
-            cty.c_int, [cty.POINTER(xfdata.FL_IMAGE), cty.c_int],
-            """int flimage_flip(FL_IMAGE * p1, int p2)
-""")
-    library.check_if_initialized()
-    ip2 = library.convert_to_int(p2)
-    library.keep_elem_refs(pImage, p2, ip2)
-    retval = _flimage_flip(pImage, ip2)
+    _flimage_flip = libr.cfuncproto(
+        libr.load_so_libflimage(), "flimage_flip",
+        cty.c_int, [cty.POINTER(xfdata.FL_IMAGE), cty.c_int],
+        """int flimage_flip(FL_IMAGE * p1, int p2)""")
+    libr.check_if_initialized()
+    if isinstance(what, str):
+        # workaround to let a character as int argument
+        ordwhat = ord(what)
+    else:
+        ordwhat = what
+    iwhat = libr.convert_to_int(ordwhat)
+    libr.keep_elem_refs(pImage, what, ordwhat, iwhat)
+    retval = _flimage_flip(pImage, iwhat)
     return retval
 
 
-def flimage_scale(pImage, p2, p3, p4):
+def flimage_scale(pImage, newwidth, newheight, option):
+    """Scales an image to any desired size with or without subpixel sampling.
+    Without subpixel sampling simple pixel replication is used, otherwise a
+    box average algorithm is employed that yields an anti-aliased image with
+    much less artifacts.
+
+    --
+
+    :Parameters:
+      `pImage: pointer to xfdata.FL_IMAGE
+        image
+      `newwidth` : int
+        desired image width
+      `newheight` : int
+        desired image height
+      `option` : int
+        option to scale the image to the desired size but keeping the aspect
+        ratio of the image the same by filling the part of the image that
+        would otherwise be empty. Values (from xfdata.py) FLIMAGE_NOSUBPIXEL,
+        FLIMAGE_SUBPIXEL, FLIMAGE_ASPECT, FLIMAGE_CENTER, FLIMAGE_NOCENTER.
+        Any value can be single or bitwise-ORed.
+
+    :return: num.
+    :rtype: int
+
+    :note: e.g. *todo*
+
+    :status: Untested + Doc + NoDemo = NOT OK
+
     """
-        flimage_scale(pImage, p2, p3, p4) -> num.
-
-        @param pImage: pointer to image
-
-        :status: Untested + NoDoc + NoDemo = NOT OK
-    """
-
-    _flimage_scale = library.cfuncproto(
-            library.load_so_libflimage(), "flimage_scale",
-            cty.c_int, [cty.POINTER(xfdata.FL_IMAGE), cty.c_int, cty.c_int,
-            cty.c_int],
-            """int flimage_scale(FL_IMAGE * p1, int p2, int p3, int p4)
-""")
-    library.check_if_initialized()
-    ip2 = library.convert_to_int(p2)
-    ip3 = library.convert_to_int(p3)
-    ip4 = library.convert_to_int(p4)
-    library.keep_elem_refs(pImage, p2, p3, p4, ip2, ip3, ip4)
-    retval = _flimage_scale(pImage, ip2, ip3, ip4)
+    _flimage_scale = libr.cfuncproto(
+        libr.load_so_libflimage(), "flimage_scale",
+        cty.c_int, [cty.POINTER(xfdata.FL_IMAGE), cty.c_int, cty.c_int,
+        cty.c_int],
+        """int flimage_scale(FL_IMAGE * p1, int p2, int p3, int p4)""")
+    libr.check_if_initialized()
+    inewwidth = libr.convert_to_int(newwidth)
+    inewheight = libr.convert_to_int(newheight)
+    ioption = libr.convert_to_int(option)
+    libr.keep_elem_refs(pImage, newwidth, newwidth, option, inewwidth,
+                        inewwidth, ioption)
+    retval = _flimage_scale(pImage, inewwidth, inewwidth, ioption)
     return retval
 
 
-def flimage_warp(pImage, p2, p3, p4, p5):
+def flimage_warp(pImage, mtrx, newwidth, newheight, subpixel):
+    """Does transformation of pixel coordinates. Rotation, scaling, shearing
+    etc. are examples of (linear and non-perspective) image warping. User can
+    specify whatever size he/she wants and the warp function will fill the
+    empty grid location with the fill color. This is how the aspect ratio
+    preserving scaling is implemented. The image is transformed in place.
+
+    --
+
+    :Parameters:
+      `pImage`: pointer to xfdata.FL_IMAGE
+        image
+      `mtrx` : *todo*
+        the warp matrix
+      `newwidth` : int
+        desired image width
+      `newheight` : int
+        desired image height
+      `subpixel` : int
+        if subpixel sampling should be used. Although subpixel sampling adds
+        processing time, it generally improves image quality significantly.
+        Values (from xfdata.py) any logical OR of FLIMAGE_NOSUBPIXEL,
+        FLIMAGE_SUBPIXEL and FLIMAGE_NOCENTER (only useful if you specify an
+        image dimension that is larger than the warped image, and in that
+        case the warped image is flushed top-left within the image grid,
+        otherwise it is centered).
+
+    :return: num.
+    :rtype: int
+
+    :note: e.g. *todo*
+
+    :status: Untested + NoDoc + NoDemo = NOT OK
+
     """
-        flimage_warp(pImage, p2, p3, p4, p5) -> num.
-
-        @param pImage: pointer to image
-
-        :status: Untested + NoDoc + NoDemo = NOT OK
-    """
-
-    _flimage_warp = library.cfuncproto(
-            library.load_so_libflimage(), "flimage_warp",
-            cty.c_int, [cty.POINTER(xfdata.FL_IMAGE), cty.POINTER(cty.c_float * 2),
-            cty.c_int, cty.c_int, cty.c_int],
-            """int flimage_warp(FL_IMAGE * p1, float * p2, int p3, int p4,
-               int p5)
-""")
-    library.check_if_initialized()
-    ip3 = library.convert_to_int(p3)
-    ip4 = library.convert_to_int(p4)
-    ip5 = library.convert_to_int(p5)
-    library.keep_elem_refs(pImage, p2, p3, p4, p5, ip3, ip4, ip5)
-    retval = _flimage_warp(pImage, p2, ip3, ip4, ip5)
+    _flimage_warp = libr.cfuncproto(
+        libr.load_so_libflimage(), "flimage_warp",
+        cty.c_int, [cty.POINTER(xfdata.FL_IMAGE), cty.POINTER(cty.c_float * 2),
+        cty.c_int, cty.c_int, cty.c_int],
+        """int flimage_warp(FL_IMAGE * p1, float * p2, int p3, int p4,
+           int p5)""")
+    libr.check_if_initialized()
+    # mtrx to be handled
+    inewwidth = libr.convert_to_int(newwidth)
+    inewheight = libr.convert_to_int(newheight)
+    isubpixel = libr.convert_to_int(subpixel)
+    libr.keep_elem_refs(pImage, mtrx, newwidth, newheight, subpixel,
+                        inewwidth, inewheight, isubpixel)
+    retval = _flimage_warp(pImage, mtrx, inewwidth, inewheight, isubpixel)
     return retval
 
 
-def flimage_autocrop(pImage, p2):
+def flimage_autocrop(pImage, bgcolr):
+    """Automatically crops an image using the background as the color to crop,
+    by searching the image from all four sides and removing all contiguous
+    regions of the uniform background from the sides. The image is modified in
+    place.
+
+    --
+
+    :Parameters:
+      `pImage: pointer to xfdat.FL_IMAGE
+        image
+      `bgcolr` : int_pos
+        background color to crop. If it is xfdata.FLIMAGE_AUTOCOLOR, the
+        background is chosen as the first pixel of the image.
+
+    :return: non-negative num., or -1 (on failure)
+    :rtype: int
+
+    :note: e.g. *todo*
+
+    :status: Untested + Doc + NoDemo = NOT OK
+
     """
-        flimage_autocrop(pImage, p2) -> num.
-
-        @param pImage: pointer to image
-
-        :status: Untested + NoDoc + NoDemo = NOT OK
-    """
-
-    _flimage_autocrop = library.cfuncproto(
-            library.load_so_libflimage(), "flimage_autocrop",
-            cty.c_int, [cty.POINTER(xfdata.FL_IMAGE), cty.c_uint],
-            """int flimage_autocrop(FL_IMAGE * p1, unsigned int p2)
-""")
-    library.check_if_initialized()
-    uip2 = library.convert_to_uint(p2)
-    library.keep_elem_refs(pImage, p2, uip2)
-    retval = _flimage_autocrop(pImage, uip2)
+    _flimage_autocrop = libr.cfuncproto(
+        libr.load_so_libflimage(), "flimage_autocrop",
+        cty.c_int, [cty.POINTER(xfdata.FL_IMAGE), cty.c_uint],
+        """int flimage_autocrop(FL_IMAGE * p1, unsigned int p2)""")
+    libr.check_if_initialized()
+    uibgcolr = libr.convert_to_uint(bgcolr)
+    libr.keep_elem_refs(pImage, bgcolr, uibgcolr)
+    retval = _flimage_autocrop(pImage, uibgcolr)
     return retval
 
 
-def flimage_get_autocrop(pImage, bk):
+def flimage_get_autocrop(pImage, bgcolr):
+    """Obtains the auto-cropping offsets (from left, right, top and bottom
+    sides) of an image.
+
+    --
+
+    :Parameters:
+      `pImage` : pointer to xfdata.FL_IMAGE
+        image
+      `bgcolr` : int_pos
+        background color to crop. If it is xfdata.FLIMAGE_AUTOCOLOR, the
+        background is chosen as the first pixel of the image.
+
+    :return: num., from left side (xl), from top side (yt), from right side
+        (xr), from bottom side (yb) offsets
+    :rtype: int, int, int, int, int
+
+    :note: e.g. *todo*
+
+    :attention: API change from XForms - upstream was
+        flimage_get_autocrop(pImage, bk, xl, yt, xr, yb)
+
+    :status: Untested + Doc + NoDemo = NOT OK
+
     """
-        flimage_get_autocrop(pImage, bk) -> num., xl, yt, xr, yb
-
-        @param pImage: pointer to image
-
-        :attention: API change from XForms - upstream was
-           flimage_get_autocrop(pImage, bk, xl, yt, xr, yb)
-
-        :status: Untested + NoDoc + NoDemo = NOT OK
-    """
-
-    _flimage_get_autocrop = library.cfuncproto(
-            library.load_so_libflimage(), "flimage_get_autocrop",
-            cty.c_int, [cty.POINTER(xfdata.FL_IMAGE), cty.c_uint,
-            cty.POINTER(cty.c_int), cty.POINTER(cty.c_int),
-            cty.POINTER(cty.c_int), cty.POINTER(cty.c_int)],
-            """int flimage_get_autocrop(FL_IMAGE * p1, unsigned int p2,
-               int * p3, int * p4, int * p5, int * p6)
-""")
-    library.check_if_initialized()
-    uibk = library.convert_to_uint(bk)
-    xl, pxl = library.make_int_and_pointer()
-    yt, pyt = library.make_int_and_pointer()
-    xr, pxr = library.make_int_and_pointer()
-    yb, pyb = library.make_int_and_pointer()
-    library.keep_elem_refs(pImage, bk, uibk, xl, pxl, yt, pyt, xr, pxr, yb, pyb)
-    retval = _flimage_get_autocrop(pImage, uibk, pxl, pyt, pxr, pyb)
+    _flimage_get_autocrop = libr.cfuncproto(
+        libr.load_so_libflimage(), "flimage_get_autocrop",
+        cty.c_int, [cty.POINTER(xfdata.FL_IMAGE), cty.c_uint,
+        cty.POINTER(cty.c_int), cty.POINTER(cty.c_int),
+        cty.POINTER(cty.c_int), cty.POINTER(cty.c_int)],
+        """int flimage_get_autocrop(FL_IMAGE * p1, unsigned int p2,
+           int * p3, int * p4, int * p5, int * p6)""")
+    libr.check_if_initialized()
+    uibgcolr = libr.convert_to_uint(bgcolr)
+    xl, pxl = libr.make_int_and_pointer()
+    yt, pyt = libr.make_int_and_pointer()
+    xr, pxr = libr.make_int_and_pointer()
+    yb, pyb = libr.make_int_and_pointer()
+    libr.keep_elem_refs(pImage, bgcolr, uibgcolr, xl, pxl, yt, pyt, xr, pxr,
+                        yb, pyb)
+    retval = _flimage_get_autocrop(pImage, uibgcolr, pxl, pyt, pxr, pyb)
     return retval, xl.value, yt.value, xr.value, yb.value
 
 
-def flimage_crop(pImage, p2, p3, p4, p5):
+def flimage_crop(pImage, xl, yt, xr, yb):
+    """Crops an image, using offsets supplied by the user.
+
+    --
+
+    :Parameters:
+      `pImage` : pointer to xfdata.FL_IMAGE
+        image
+      `xl` : int
+        offset from left side. If it is negative, it indicates enlargement of
+        the image. (e.g. if it is 1 the cropping removes the first column from
+        the image).
+      `yt` : int
+        offset from top side. If it is negative, it indicates enlargement of
+        the image. (e.g. if it is 1 the cropping removes the first row from
+        the image).
+      `xr` : int
+        offset from right side. If it is negative, it indicates enlargement
+        of the image. (e.g. if it is 1 the cropping removes the last column
+        from the image).
+      `yb` : int
+        offset from bottom side. If it is negative, it indicates enlargement
+        of the image. (e.g. if it is 1 the cropping removes the last row from
+        the image).
+
+    :return: num.
+    :rtype: int
+
+    :note: e.g. *todo*
+
+    :status: Untested + NoDoc + NoDemo = NOT OK
     """
-        flimage_crop(pImage, p2, p3, p4, p5) -> num.
 
-        @param pImage: pointer to image
-
-        :status: Untested + NoDoc + NoDemo = NOT OK
-    """
-
-    _flimage_crop = library.cfuncproto(
-            library.load_so_libflimage(), "flimage_crop",
-            cty.c_int, [cty.POINTER(xfdata.FL_IMAGE), cty.c_int, cty.c_int,
-            cty.c_int, cty.c_int],
-            """int flimage_crop(FL_IMAGE * p1, int p2, int p3,
-               int p4, int p5)
-""")
-    library.check_if_initialized()
-    ip2 = library.convert_to_int(p2)
-    ip3 = library.convert_to_int(p3)
-    ip4 = library.convert_to_int(p4)
-    ip5 = library.convert_to_int(p5)
-    library.keep_elem_refs(pImage, p2, p3, p4, p5, ip2, ip3, ip4, ip5)
-    retval = _flimage_crop(pImage, ip2, ip3, ip4, ip5)
+    _flimage_crop = libr.cfuncproto(
+        libr.load_so_libflimage(), "flimage_crop",
+        cty.c_int, [cty.POINTER(xfdata.FL_IMAGE), cty.c_int, cty.c_int,
+        cty.c_int, cty.c_int],
+        """int flimage_crop(FL_IMAGE * p1, int p2, int p3,
+           int p4, int p5)""")
+    libr.check_if_initialized()
+    ixl = libr.convert_to_int(xl)
+    iyt = libr.convert_to_int(yt)
+    ixr = libr.convert_to_int(xr)
+    iyb = libr.convert_to_int(yb)
+    libr.keep_elem_refs(pImage, xl, yt, xr, yb, ixl, iyt, ixr, iyb)
+    retval = _flimage_crop(pImage, ixl, iyt, ixr, iyb)
     return retval
 
 
-def flimage_replace_pixel(pImage, p2, p3):
+def flimage_replace_pixel(pImage, targetcolr, newcolr):
+    """Replaces all color targetcolr with the new desired color.
+
+    --
+
+    :Parameters:
+      `pImage: pointer to xfdata.FL_IMAGE
+        image
+      `targetcolr` : int_pos
+        color to be replaced
+      `newcolr` : int_pos
+        new color to be used
+
+    :return: 0, or -1 (on failure)
+    :rtype: int
+
+    :note: e.g. *todo*
+
+    :status: Untested + Doc + NoDemo = NOT OK
+
     """
-        flimage_replace_pixel(pImage, p2, p3) -> num.
-
-        @param pImage: pointer to image
-
-        :status: Untested + NoDoc + NoDemo = NOT OK
-    """
-
-    _flimage_replace_pixel = library.cfuncproto(
-            library.load_so_libflimage(), "flimage_replace_pixel",
-            cty.c_int, [cty.POINTER(xfdata.FL_IMAGE), cty.c_uint, cty.c_uint],
-            """int flimage_replace_pixel(FL_IMAGE * p1, unsigned int p2,
-               unsigned int p3)
-""")
-    library.check_if_initialized()
-    uip2 = library.convert_to_uint(p2)
-    uip3 = library.convert_to_uint(p3)
-    library.keep_elem_refs(pImage, p2, p3, uip2, uip3)
-    retval = _flimage_replace_pixel(pImage, uip2, uip3)
+    _flimage_replace_pixel = libr.cfuncproto(
+        libr.load_so_libflimage(), "flimage_replace_pixel",
+        cty.c_int, [cty.POINTER(xfdata.FL_IMAGE), cty.c_uint, cty.c_uint],
+        """int flimage_replace_pixel(FL_IMAGE * p1, unsigned int p2,
+           unsigned int p3)""")
+    libr.check_if_initialized()
+    uitargetcolr = libr.convert_to_uint(targetcolr)
+    uinewcolr = libr.convert_to_uint(newcolr)
+    libr.keep_elem_refs(pImage, targetcolr, newcolr, uitargetcolr, uinewcolr)
+    retval = _flimage_replace_pixel(pImage, uitargetcolr, uinewcolr)
     return retval
 
 
 def flimage_transform_pixels(pImage, red, green, blue):
+    """Processes an image in place with RGB transformation and replaces it.
+
+    --
+
+    :Parameters:
+      `pImage: pointer to xfdata.FL_IMAGE
+        image
+      `red` : int
+        lookup tables for red color of a length of at least FL_PCMAX + 1 (256).
+      `green` : int
+        lookup tables for green color of a length of at least FL_PCMAX + 1
+        (256).
+      `blue` : int
+        lookup tables for blue color of a length of at least FL_PCMAX + 1
+        (256).
+
+    :return: positive num., or -1 (on failure)
+    :rtype: int
+
+    :note: e.g. *todo*
+
+    :status: Untested + NoDoc + NoDemo = NOT OK
+
     """
-        flimage_transform_pixels(pImage, red, green, blue) -> num.
-
-        @param pImage: pointer to image
-
-        :status: Untested + NoDoc + NoDemo = NOT OK
-    """
-
-    _flimage_transform_pixels = library.cfuncproto(
-            library.load_so_libflimage(), "flimage_transform_pixels",
-            cty.c_int, [cty.POINTER(xfdata.FL_IMAGE), cty.POINTER(cty.c_int),
-            cty.POINTER(cty.c_int), cty.POINTER(cty.c_int)],
-            """int flimage_transform_pixels(FL_IMAGE * p1, int * p2,
-               int * p3, int * p4)
-""")
-    library.check_if_initialized()
+    _flimage_transform_pixels = libr.cfuncproto(
+        libr.load_so_libflimage(), "flimage_transform_pixels",
+        cty.c_int, [cty.POINTER(xfdata.FL_IMAGE), cty.POINTER(cty.c_int),
+        cty.POINTER(cty.c_int), cty.POINTER(cty.c_int)],
+        """int flimage_transform_pixels(FL_IMAGE * p1, int * p2,
+           int * p3, int * p4)""")
+    libr.check_if_initialized()
     pred = cty.cast(red, cty.POINTER(cty.c_int))
     pgreen = cty.cast(green, cty.POINTER(cty.c_int))
     pblue = cty.cast(blue, cty.POINTER(cty.c_int))
-    library.keep_elem_refs(pImage, red, green, blue, pred, pgreen, pblue)
+    libr.keep_elem_refs(pImage, red, green, blue, pred, pgreen, pblue)
     retval = _flimage_transform_pixels(pImage, pred, pgreen, pblue)
     return retval
 
 
-def flimage_windowlevel(pImage, p2, p3):
+def flimage_windowlevel(pImage, winlvl, width):
+    """Sets the window level for an image. It it points to a multiple image,
+    window level parameters are changed for all images.
+
+    --
+
+    :Parameters:
+      `pImage` : pointer to xfdata.FL_IMAGE
+        image
+      `winlvl` : int
+        new level of window
+      `width` : int
+        width. If zero disables window leveling.
+
+    :return: 1 (if window level parameters are modified), otherwise 0 is
+        returned.
+    :rtype: int
+
+    :note: e.g. *todo*
+
+    :status: Untested + NoDoc + NoDemo = NOT OK
+
     """
-        flimage_windowlevel(pImage, p2, p3) -> num.
-
-        @param pImage: pointer to image
-
-        :status: Untested + NoDoc + NoDemo = NOT OK
-    """
-
-    _flimage_windowlevel = library.cfuncproto(
-            library.load_so_libflimage(), "flimage_windowlevel",
-            cty.c_int, [cty.POINTER(xfdata.FL_IMAGE), cty.c_int, cty.c_int],
-            """int flimage_windowlevel(FL_IMAGE * p1, int p2, int p3)
-""")
-    library.check_if_initialized()
-    ip2 = library.convert_to_int(p2)
-    ip3 = library.convert_to_int(p3)
-    library.keep_elem_refs(pImage, p2, p3, ip2, ip3)
-    retval = _flimage_windowlevel(pImage, ip2, ip3)
+    _flimage_windowlevel = libr.cfuncproto(
+        libr.load_so_libflimage(), "flimage_windowlevel",
+        cty.c_int, [cty.POINTER(xfdata.FL_IMAGE), cty.c_int, cty.c_int],
+        """int flimage_windowlevel(FL_IMAGE * p1, int p2, int p3)""")
+    libr.check_if_initialized()
+    iwinlvl = libr.convert_to_int(winlvl)
+    iwidth = libr.convert_to_int(width)
+    libr.keep_elem_refs(pImage, winlvl, width, iwinlvl, iwidth)
+    retval = _flimage_windowlevel(pImage, iwinlvl, iwidth)
     return retval
 
 
-def flimage_enhance(pImage, p2):
+def flimage_enhance(pImage, delta):
+    """*todo*
+
+    --
+
+    :Parameters:
+      `pImage: pointer to image
+      `delta` : int
+        unused.
+
+    :return: 0
+    :rtype: int
+
+    :note: e.g. *todo*
+
+    :status: Untested + NoDoc + NoDemo = NOT OK
+
     """
-        flimage_enhance(pImage, p2) -> num.
-
-        @param pImage: pointer to image
-
-        :status: Untested + NoDoc + NoDemo = NOT OK
-    """
-
-    _flimage_enhance = library.cfuncproto(
-            library.load_so_libflimage(), "flimage_enhance",
-            cty.c_int, [cty.POINTER(xfdata.FL_IMAGE), cty.c_int],
-            """int flimage_enhance(FL_IMAGE * p1, int p2)
-""")
-    library.check_if_initialized()
-    ip2 = library.convert_to_int(p2)
-    library.keep_elem_refs(pImage, p2, ip2)
-    retval = _flimage_enhance(pImage, ip2)
+    _flimage_enhance = libr.cfuncproto(
+        libr.load_so_libflimage(), "flimage_enhance",
+        cty.c_int, [cty.POINTER(xfdata.FL_IMAGE), cty.c_int],
+        """int flimage_enhance(FL_IMAGE * p1, int p2)""")
+    libr.check_if_initialized()
+    idelta = libr.convert_to_int(delta)     # unused
+    libr.keep_elem_refs(pImage, delta, idelta)
+    retval = _flimage_enhance(pImage, idelta)
     return retval
 
 
 def flimage_from_pixmap(pImage, pixmap):
+    """Converts a Pixmap to an image. *todo*
+
+    --
+
+    :Parameters:
+      `pImage`: pointer to xfdata.FL_IMAGE
+        image
+      `pixmap`: long_pos
+        pixmap id
+
+    :return: num.
+    :rtype: int
+
+    :note: e.g. *todo*
+
+    :status: Untested + NoDoc + NoDemo = NOT OK
+
     """
-        flimage_from_pixmap(pImage, pixmap) -> num.
-
-        @param pImage: pointer to image
-        @param pixmap: pixmap value
-
-        :status: Untested + NoDoc + NoDemo = NOT OK
-    """
-
-    _flimage_from_pixmap = library.cfuncproto(
-            library.load_so_libflimage(), "flimage_from_pixmap",
-            cty.c_int, [cty.POINTER(xfdata.FL_IMAGE), xfdata.Pixmap],
-            """int flimage_from_pixmap(FL_IMAGE * p1, Pixmap p2)
-""")
-    library.check_if_initialized()
-    ulpixmap = library.convert_to_Pixmap(pixmap)
-    library.keep_elem_refs(pImage, pixmap, ulpixmap)
+    _flimage_from_pixmap = libr.cfuncproto(
+        libr.load_so_libflimage(), "flimage_from_pixmap",
+        cty.c_int, [cty.POINTER(xfdata.FL_IMAGE), xfdata.Pixmap],
+        """int flimage_from_pixmap(FL_IMAGE * p1, Pixmap p2)""")
+    libr.check_if_initialized()
+    ulpixmap = libr.convert_to_Pixmap(pixmap)
+    libr.keep_elem_refs(pImage, pixmap, ulpixmap)
     retval = _flimage_from_pixmap(pImage, ulpixmap)
     return retval
 
 
 def flimage_to_pixmap(pImage, win):
+    """Converts an image into a Pixmap (a server side resource) that can be
+    used in the pixmap object.
+
+    --
+
+    :Parameters:
+      `pImage`: pointer to xfdata.FL_IMAGE
+        image
+      `win`: long_pos
+        window id
+
+    :return: pixmap id
+    :rtype: long_pos
+
+    :note: e.g. *todo*
+
+    :status: Untested + Doc + NoDemo = NOT OK
+
     """
-        flimage_to_pixmap(pImage, win) -> pixmap
-
-        @param pImage: pointer to image
-        @param win: window id
-
-        :status: Untested + NoDoc + NoDemo = NOT OK
-    """
-
-    _flimage_to_pixmap = library.cfuncproto(
-            library.load_so_libflimage(), "flimage_to_pixmap",
-            xfdata.Pixmap, [cty.POINTER(xfdata.FL_IMAGE), xfdata.FL_WINDOW],
-            """Pixmap flimage_to_pixmap(FL_IMAGE * p1, FL_WINDOW p2)
-""")
-    library.check_if_initialized()
-    ulwin = library.convert_to_Window(win)
-    library.keep_elem_refs(pImage, win, ulwin)
+    _flimage_to_pixmap = libr.cfuncproto(
+        libr.load_so_libflimage(), "flimage_to_pixmap",
+        xfdata.Pixmap, [cty.POINTER(xfdata.FL_IMAGE), xfdata.FL_WINDOW],
+        """Pixmap flimage_to_pixmap(FL_IMAGE * p1, FL_WINDOW p2)""")
+    libr.check_if_initialized()
+    ulwin = libr.convert_to_Window(win)
+    libr.keep_elem_refs(pImage, win, ulwin)
     retval = _flimage_to_pixmap(pImage, ulwin)
     return retval
 
 
 def flimage_dup(pImage):
+    """Duplicates an image and returns the duplicated image. At the moment,
+    only the first image is duplicated even if the input image has multiple
+    frames. Furthermore, markers and annotations are not duplicated.
+
+    --
+
+    :Parameters:
+      `pImage` : pointer to xfdata.FL_IMAGE
+        image to be duplicated
+
+    :return: duplicated image class instance
+    :rtype: pointer to xfdata.FL_IMAGE
+
+    :note: e.g. pimg2 = flimage_dup(pimg1)
+
+    :status: Untested + Doc + NoDemo = NOT OK
+
     """
-        flimage_dup(pImage) -> pImage
-
-        @param pImage: pointer to image
-
-        :status: Untested + NoDoc + NoDemo = NOT OK
-    """
-
-    _flimage_dup = library.cfuncproto(
-            library.load_so_libflimage(), "flimage_dup",
-            cty.POINTER(xfdata.FL_IMAGE), [cty.POINTER(xfdata.FL_IMAGE)],
-            """FL_IMAGE * flimage_dup(FL_IMAGE * p1)
-""")
-    library.check_if_initialized()
-    library.keep_elem_refs(pImage)
+    _flimage_dup = libr.cfuncproto(
+        libr.load_so_libflimage(), "flimage_dup",
+        cty.POINTER(xfdata.FL_IMAGE), [cty.POINTER(xfdata.FL_IMAGE)],
+        """FL_IMAGE * flimage_dup(FL_IMAGE * p1)""")
+    libr.check_if_initialized()
+    libr.keep_elem_refs(pImage)
     retval = _flimage_dup(pImage)
     return retval
 
 
 # Miscellaneous prototypes
 
-def fl_get_submatrix(inmtrx, rows, cols, r1, c1, rs, cs, esize):
-    """
-        fl_get_submatrix(inmtrx, rows, cols, r1, c1, rs, cs, esize) -> ?
+def fl_get_submatrix(inmtrx, nrows, ncols, r1, c1, rs, cs, elemsize):
+    """Grabs a piece of an image matrix. The piece is of nrows by ncols in
+    size.
 
-        :status: Untested + NoDoc + NoDemo = NOT OK
-    """
+    --
 
-    _fl_get_submatrix = library.cfuncproto(
-            library.load_so_libflimage(), "fl_get_submatrix",
-            cty.c_void_p, [cty.c_void_p, cty.c_int, cty.c_int, cty.c_int,
-            cty.c_int, cty.c_int, cty.c_int, cty.c_uint],
-            """void * fl_get_submatrix(void * p1, int p2, int p3, int p4,
-               int p5, int p6, int p7, unsigned int p8)
-""")
-    library.check_if_initialized()
+    :Parameters:
+      `inmtrx` : *todo*
+        image matrix
+      `nrows` : int
+        number of rows
+      `ncols` : int
+        number of columns
+      `r1` : int
+        initial row?
+      `c1` : int
+        initial column?
+      `rs` : int
+        final row?
+      `cs` : int
+        final column?
+      `elemsize` : int_pos
+        size of matrix in bytes
+
+    :return: matrix?
+    :rtype: *todo*
+
+    :note: e.g. *todo*
+
+    :status: Untested + NoDoc + NoDemo = NOT OK
+
+    """
+    _fl_get_submatrix = libr.cfuncproto(
+        libr.load_so_libflimage(), "fl_get_submatrix",
+        cty.c_void_p, [cty.c_void_p, cty.c_int, cty.c_int, cty.c_int,
+        cty.c_int, cty.c_int, cty.c_int, cty.c_uint],
+        """void * fl_get_submatrix(void * p1, int p2, int p3, int p4,
+           int p5, int p6, int p7, unsigned int p8)""")
+    libr.check_if_initialized()
     pinmtrx = cty.cast(inmtrx, cty.c_void_p)
-    irows = library.convert_to_int(rows)
-    icols = library.convert_to_int(cols)
-    ir1 = library.convert_to_int(r1)
-    ic1 = library.convert_to_int(c1)
-    irs = library.convert_to_int(rs)
-    ics = library.convert_to_int(cs)
-    uiesize = library.convert_to_uint(esize)
-    library.keep_elem_refs(inmtrx, rows, cols, r1, c1, rs, cs, esize, pinmtrx, \
-                   irows, icols, ir1, ic1, irs, ics, uiesize)
-    retval = _fl_get_submatrix(pinmtrx, irows, icols, ir1, ic1, irs, ics, \
-                               uiesize)
+    inrows = libr.convert_to_int(nrows)
+    incols = libr.convert_to_int(ncols)
+    ir1 = libr.convert_to_int(r1)
+    ic1 = libr.convert_to_int(c1)
+    irs = libr.convert_to_int(rs)
+    ics = libr.convert_to_int(cs)
+    uielemsize = libr.convert_to_uint(elemsize)
+    libr.keep_elem_refs(inmtrx, nrows, ncols, r1, c1, rs, cs, elemsize,
+                    pinmtrx, inrows, incols, ir1, ic1, irs, ics, uielemsize)
+    retval = _fl_get_submatrix(pinmtrx, inrows, incols, ir1, ic1, irs, ics, \
+                               uielemsize)
     return retval
 
 
-def fl_j2pass_quantize_packed(p1, p2, p3, p4, p5, p6, p7, p8, p9, pImage):
-    """
-        fl_j2pass_quantize_packed(p1, p2, p3, p4, p5, p6, p7, p8, p9, pImage) -> num.
+def fl_j2pass_quantize_packed(packed, w, h, maxcolr, ci, actualcolr, redlut,
+                              greenlut, bluelut, pImage):
+    """*todo*
 
-        :status: Untested + NoDoc + NoDemo = NOT OK
-    """
+    --
 
-    _fl_j2pass_quantize_packed = library.cfuncproto(
-            library.load_so_libflimage(), "fl_j2pass_quantize_packed",
-            cty.c_int, [cty.POINTER(cty.POINTER(cty.c_uint)), cty.c_int,
-            cty.c_int, cty.c_int, cty.POINTER(cty.POINTER(cty.c_ushort)),
-            cty.POINTER(cty.c_int), cty.POINTER(cty.c_int),
-            cty.POINTER(cty.c_int), cty.POINTER(cty.c_int),
-            cty.POINTER(xfdata.FL_IMAGE)],
-            """int fl_j2pass_quantize_packed(unsigned int * * p1, int p2,
-               int p3, int p4, short unsigned int * * p5, int * p6,
-               int * p7, int * p8, int * p9, FL_IMAGE * p10)
-""")
-    library.check_if_initialized()
-    ip2 = library.convert_to_int(p2)
-    ip3 = library.convert_to_int(p3)
-    ip4 = library.convert_to_int(p4)
-    library.keep_elem_refs(p1, p2, p3, p4, p5, p6, p7, p8, p9, pImage, ip2, ip3, ip4)
-    retval = _fl_j2pass_quantize_packed(p1, ip2, ip3, ip4, p5, p6, p7, p8, \
-                                        p9, pImage)
+    :Parameters:
+      `packed` : *todo*
+        *todo*
+      `w` : int
+        *todo*
+      `h` : int
+        *todo*
+      `maxcolr` : int
+        *todo*
+      `ci` : *todo*
+        *todo*
+      `actualcolr` : int
+        *todo*
+      `redlut` : int
+        *todo*
+      `greenlut` : int
+        *todo*
+      `bluelut` : int
+        *todo*
+      `pImage` : pointer to xfdata.FL_IMAGE
+        image
+
+    :return: num.
+    :rtype: int
+
+    :note: e.g. *todo*
+
+    :status: Untested + NoDoc + NoDemo = NOT OK
+
+    """
+    _fl_j2pass_quantize_packed = libr.cfuncproto(
+        libr.load_so_libflimage(), "fl_j2pass_quantize_packed",
+        cty.c_int, [cty.POINTER(cty.POINTER(cty.c_uint)), cty.c_int,
+        cty.c_int, cty.c_int, cty.POINTER(cty.POINTER(cty.c_ushort)),
+        cty.POINTER(cty.c_int), cty.POINTER(cty.c_int),
+        cty.POINTER(cty.c_int), cty.POINTER(cty.c_int),
+        cty.POINTER(xfdata.FL_IMAGE)],
+        """int fl_j2pass_quantize_packed(unsigned int * * p1, int p2,
+           int p3, int p4, short unsigned int * * p5, int * p6,
+           int * p7, int * p8, int * p9, FL_IMAGE * p10)""")
+    libr.check_if_initialized()
+    # packed to be handled
+    iw = libr.convert_to_int(w)
+    ih = libr.convert_to_int(h)
+    imaxcolr = libr.convert_to_int(maxcolr)
+    # ci to be handled
+    iactualcolr = libr.convert_to_int(actualcolr)
+    predlut = cty.cast(redlut, cty.POINTER(cty.c_int))
+    pgreenlut = cty.cast(greenlut, cty.POINTER(cty.c_int))
+    pbluelut = cty.cast(bluelut, cty.POINTER(cty.c_int))
+    libr.keep_elem_refs(packed, w, h, maxcolr, ci, actualcolr, redlut,
+            greenlut, bluelut, pImage, iw, ih, imaxcolr, iactualcolr, predlut,
+            pgreenlut, pbluelut)
+    retval = _fl_j2pass_quantize_packed(packed, iw, iw, imaxcolr, ci,
+                iactualcolr, predlut, pgreenlut, pbluelut, pImage)
     return retval
 
 
-def fl_j2pass_quantize_rgb(p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, pImage):
-    """
-        fl_j2pass_quantize_rgb(p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, pImage) -> num.
+def fl_j2pass_quantize_rgb(red, green, blue, w, h, maxcolr, ci, actualcolr,
+                        redlut, greenlut, bluelut, pImage):
+    """*todo*
 
-        :status: Untested + NoDoc + NoDemo = NOT OK
-    """
+    --
 
-    _fl_j2pass_quantize_rgb = library.cfuncproto(
-            library.load_so_libflimage(), "fl_j2pass_quantize_rgb",
-            cty.c_int, [cty.POINTER(cty.POINTER(cty.c_ubyte)),
-            cty.POINTER(cty.POINTER(cty.c_ubyte)),
-            cty.POINTER(cty.POINTER(cty.c_ubyte)), cty.c_int, cty.c_int,
-            cty.c_int, cty.POINTER(cty.POINTER(cty.c_ushort)),
-            cty.POINTER(cty.c_int), cty.POINTER(cty.c_int),
-            cty.POINTER(cty.c_int), cty.POINTER(cty.c_int),
-            cty.POINTER(xfdata.FL_IMAGE)],
-            """int fl_j2pass_quantize_rgb(unsigned char * * p1,
-               unsigned char * * p2, unsigned char * * p3, int p4, int p5,
-               int p6, short unsigned int * * p7, int * p8, int * p9,
-               int * p10, int * p11, FL_IMAGE * p12)
-""")
-    library.check_if_initialized()
-    ip4 = library.convert_to_int(p4)
-    ip5 = library.convert_to_int(p5)
-    ip6 = library.convert_to_int(p6)
-    library.keep_elem_refs(p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, pImage,
-                   ip4, ip5, ip6)
-    retval = _fl_j2pass_quantize_rgb(p1, p2, p3, ip4, ip5, ip6, p7, p8, p9, \
-                                     p10, p11, pImage)
+    :Parameters:
+      `red` : *todo*
+        *todo*
+      `green` : *todo*
+        *todo*
+      `blue` : *todo*
+        *todo*
+      `w` : int
+        *todo*
+      `h` : int
+        *todo*
+      `maxcolr` : int
+        *todo*
+      `ci` : *todo*
+        *todo*
+      `actualcolr` : int
+        *todo*
+      `redlut` : int
+        *todo*
+      `greenlut` : int
+        *todo*
+      `bluelut` : int
+        *todo*
+      `pImage` : pointer to xfdata.FL_IMAGE
+        image
+
+    :return: num.
+    :rtype: int
+
+    :note: e.g. *todo*
+
+    :status: Untested + NoDoc + NoDemo = NOT OK
+
+    """
+    _fl_j2pass_quantize_rgb = libr.cfuncproto(
+        libr.load_so_libflimage(), "fl_j2pass_quantize_rgb",
+        cty.c_int, [cty.POINTER(cty.POINTER(cty.c_ubyte)),
+        cty.POINTER(cty.POINTER(cty.c_ubyte)),
+        cty.POINTER(cty.POINTER(cty.c_ubyte)), cty.c_int, cty.c_int,
+        cty.c_int, cty.POINTER(cty.POINTER(cty.c_ushort)),
+        cty.POINTER(cty.c_int), cty.POINTER(cty.c_int),
+        cty.POINTER(cty.c_int), cty.POINTER(cty.c_int),
+        cty.POINTER(xfdata.FL_IMAGE)],
+        """int fl_j2pass_quantize_rgb(unsigned char * * p1,
+           unsigned char * * p2, unsigned char * * p3, int p4, int p5,
+           int p6, short unsigned int * * p7, int * p8, int * p9,
+           int * p10, int * p11, FL_IMAGE * p12)""")
+    libr.check_if_initialized()
+    # red to be handled
+    # green to be handled
+    # blue to be handled
+    iw = libr.convert_to_int(w)
+    ih = libr.convert_to_int(h)
+    imaxcolr = libr.convert_to_int(maxcolr)
+    # ci to be handled
+    iactualcolr = libr.convert_to_int(actualcolr)
+    predlut = cty.cast(redlut, cty.POINTER(cty.c_int))
+    pgreenlut = cty.cast(greenlut, cty.POINTER(cty.c_int))
+    pbluelut = cty.cast(bluelut, cty.POINTER(cty.c_int))
+    libr.keep_elem_refs(red, green, blue, w, h, maxcolr, ci, actualcolr,
+                redlut, greenlut, bluelut, pImage, iw, ih, imaxcolr,
+                iactualcolr, predlut, pgreenlut, pbluelut)
+    retval = _fl_j2pass_quantize_rgb(red, green, blue, iw, iw, imaxcolr, ci,
+                        iactualcolr, predlut, pgreenlut, pbluelut, pImage)
     return retval
 
 
-def fl_make_submatrix(in_, rows, cols, r1, c1, rs, cs, esize):
-    """
-        fl_make_submatrix(in_, rows, cols, r1, c1, rs, cs, esize) -> ?
+def fl_make_submatrix(inmtrx, nrows, ncols, r1, c1, rs, cs, elemsize):
+    """*todo*
 
-        :status: Untested + NoDoc + NoDemo = NOT OK
-    """
+    --
 
-    _fl_make_submatrix = library.cfuncproto(
-            library.load_so_libflimage(), "fl_make_submatrix",
-            cty.c_void_p, [cty.c_void_p, cty.c_int, cty.c_int, cty.c_int,
-            cty.c_int, cty.c_int, cty.c_int, cty.c_uint],
-            """void * fl_make_submatrix(void * p1, int p2, int p3, int p4,
-               int p5, int p6, int p7, unsigned int p8)
-""")
-    library.check_if_initialized()
-    irows = library.convert_to_int(rows)
-    icols = library.convert_to_int(cols)
-    ir1 = library.convert_to_int(r1)
-    ic1 = library.convert_to_int(c1)
-    irs = library.convert_to_int(rs)
-    ics = library.convert_to_int(cs)
-    uiesize = library.convert_to_uint(esize)
-    library.keep_elem_refs(in_, rows, cols, r1, c1, rs, cs, esize, irows, icols, \
-               ir1, ic1, irs, ics, uiesize)
-    retval = _fl_make_submatrix(in_, irows, icols, ir1, ic1, irs, ics, \
-                                uiesize)
+    :Parameters:
+      `inmtrx` : *todo*
+        image matrix
+      `nrows` : int
+        number of rows
+      `ncols` : int
+        number of columns
+      `r1` : int
+        initial row?
+      `c1` : int
+        initial column?
+      `rs` : int
+        final row?
+      `cs` : int
+        final column?
+      `elemsize` : int_pos
+        size of matrix in bytes
+
+    :return: matrix?
+    :rtype: *todo*
+
+    :note: e.g. *todo*
+
+    :status: Untested + NoDoc + NoDemo = NOT OK
+
+    """
+    _fl_make_submatrix = libr.cfuncproto(
+        libr.load_so_libflimage(), "fl_make_submatrix",
+        cty.c_void_p, [cty.c_void_p, cty.c_int, cty.c_int, cty.c_int,
+        cty.c_int, cty.c_int, cty.c_int, cty.c_uint],
+        """void * fl_make_submatrix(void * p1, int p2, int p3, int p4,
+           int p5, int p6, int p7, unsigned int p8)""")
+    libr.check_if_initialized()
+    # inmtrx ha to be handled
+    inrows = libr.convert_to_int(nrows)
+    incols = libr.convert_to_int(ncols)
+    ir1 = libr.convert_to_int(r1)
+    ic1 = libr.convert_to_int(c1)
+    irs = libr.convert_to_int(rs)
+    ics = libr.convert_to_int(cs)
+    uielemsize = libr.convert_to_uint(elemsize)
+    libr.keep_elem_refs(inmtrx, nrows, ncols, r1, c1, rs, cs, elemsize,
+            inrows, incols, ir1, ic1, irs, ics, uielemsize)
+    retval = _fl_make_submatrix(inmtrx, inrows, incols, ir1, ic1, irs, ics, \
+                                uielemsize)
     return retval
 
 
-def fl_pack_bits(p1, p2, p3):
+def fl_pack_bits(inval, lng):
+    """Packs color index (0 or 1) into bytes.
+
+    --
+
+    :Parameters:
+      `inval` : short_pos
+        input value to be packed
+      `lng` : int
+        number of indexes
+
+    :return: output value after packing (outval)
+    :rtype: byte_pos
+
+    :note: e.g. *todo*
+
+    :attention: API changed from XForms - upstream was:
+        fl_pack_bits(outval, inval, lng)
+
+    :status: Untested + Doc + NoDemo = NOT OK
+
     """
-        fl_pack_bits(p1, p2, p3)
+    _fl_pack_bits = libr.cfuncproto(
+        libr.load_so_libflimage(), "fl_pack_bits",
+        None, [cty.POINTER(cty.c_ubyte), cty.POINTER(cty.c_ushort), cty.c_int],
+        """void fl_pack_bits(unsigned char * p1, short unsigned int * p2,
+           int p3)""")
+    libr.check_if_initialized()
+    uboutval, poutval = libr.make_ubyte_and_pointer()
+    uiinval = libr.convert_to_uint(inval)
+    puiinval = cty.cast(uiinval, cty.POINTER(cty.c_uint))
+    ilng = libr.convert_to_int(lng)
+    libr.keep_elem_refs(uboutval, poutval, inval, uiinval, puiinval, lng, ilng)
+    _fl_pack_bits(poutval, puiinval, ilng)
+    return uboutval.value
 
-        :status: Untested + NoDoc + NoDemo = NOT OK
+
+def fl_unpack_bits(inval, lng):
+    """Unpacks packed bits into color indexes (0 or 1).
+
+    --
+
+    :Parameters:
+      `inval` : byte_pos
+        input value to be unpacked
+      `lng` : int
+        length of packed bytes.
+
+    :return: output value after unpacking (outval)
+    :rtype: short_pos
+
+    :note: e.g. *todo*
+
+    :attention: API changed from XForms - upstream was:
+        fl_unpack_bits(outval, inval, lng)
+
+    :status: Untested + Doc + NoDemo = NOT OK
+
     """
-
-    _fl_pack_bits = library.cfuncproto(
-            library.load_so_libflimage(), "fl_pack_bits",
-            None, [cty.POINTER(cty.c_ubyte), cty.POINTER(cty.c_ushort),
-            cty.c_int],
-            """void fl_pack_bits(unsigned char * p1, short unsigned int * p2,
-               int p3)
-""")
-    library.check_if_initialized()
-    ip3 = library.convert_to_int(p3)
-    library.keep_elem_refs(p1, p2, p3, ip3)
-    _fl_pack_bits(p1, p2, ip3)
-
-
-def fl_unpack_bits(p1, p2, p3):
-    """
-        fl_unpack_bits(p1, p2, p3)
-
-        :status: Untested + NoDoc + NoDemo = NOT OK
-    """
-
-    _fl_unpack_bits = library.cfuncproto(
-            library.load_so_libflimage(), "fl_unpack_bits",
-            None, [cty.POINTER(cty.c_ushort), cty.POINTER(cty.c_ubyte),
-            cty.c_int],
-            """void fl_unpack_bits(short unsigned int * p1,
-               unsigned char * p2, int p3)
-""")
-    library.check_if_initialized()
-    ip3 = library.convert_to_int(p3)
-    library.keep_elem_refs(p1, p2, p3, ip3)
-    _fl_unpack_bits(p1, p2, ip3)
+    _fl_unpack_bits = libr.cfuncproto(
+        libr.load_so_libflimage(), "fl_unpack_bits",
+        None, [cty.POINTER(cty.c_ushort), cty.POINTER(cty.c_ubyte),
+        cty.c_int],
+        """void fl_unpack_bits(short unsigned int * p1,
+           unsigned char * p2, int p3)""")
+    libr.check_if_initialized()
+    usoutval, poutval = libr.make_ushort_and_pointer()
+    ubinval = libr.convert_to_ubyte(inval)
+    pubinval = cty.cast(ubinval, cty.POINTER(cty.c_ubyte))
+    ilng = libr.convert_to_int(lng)
+    libr.keep_elem_refs(usoutval, poutval, inval, ubinval, pubinval, lng, ilng)
+    _fl_unpack_bits(poutval, pubinval, ilng)
+    return usoutval.value
 
 
 def fl_value_to_bits(val):
+    """*todo*
+
+    --
+
+    :Parameters:
+      `val`: int_pos
+        value to convert to bits
+
+    :return: num.
+    :rtype: int_pos
+
+    :note: e.g. *todo*
+
+    :status: Untested + NoDoc + NoDemo = NOT OK
+
     """
-        fl_value_to_bits(val) -> num.
-
-        @param val: value to convert to bits
-
-        :status: Untested + NoDoc + NoDemo = NOT OK
-    """
-
-    _fl_value_to_bits = library.cfuncproto(
-            library.load_so_libflimage(), "fl_value_to_bits",
-            cty.c_uint, [cty.c_uint],
-            """unsigned int fl_value_to_bits(unsigned int p1)
-""")
-    library.check_if_initialized()
-    uival = library.convert_to_uint(val)
-    library.keep_elem_refs(val, uival)
+    _fl_value_to_bits = libr.cfuncproto(
+        libr.load_so_libflimage(), "fl_value_to_bits",
+        cty.c_uint, [cty.c_uint],
+        """unsigned int fl_value_to_bits(unsigned int p1)""")
+    libr.check_if_initialized()
+    uival = libr.convert_to_uint(val)
+    libr.keep_elem_refs(val, uival)
     retval = _fl_value_to_bits(uival)
     return retval
 
 
-def flimage_add_comments(pImage, p2, p3):
+def flimage_add_comments(pImage, text, lng):
+    """Adds a comment to an image.
+
+    --
+
+    :Parameters:
+      `pImage` : pointer to xfdata.FL_IMAGE
+        image
+      `text` : str
+        comment to be added
+      `lng` : int
+      length of comment
+
+    :note: e.g. *todo*
+
+    :status: Untested + Doc + NoDemo = NOT OK
+
     """
-        flimage_add_comments(pImage, p2, p3)
+    _flimage_add_comments = libr.cfuncproto(
+        libr.load_so_libflimage(), "flimage_add_comments",
+        None, [cty.POINTER(xfdata.FL_IMAGE), xfdata.STRING, cty.c_int],
+        """void flimage_add_comments(FL_IMAGE * p1, const char * p2,
+           int p3)""")
+    libr.check_if_initialized()
+    stext = libr.convert_to_string(text)
+    ilng = libr.convert_to_int(lng)
+    libr.keep_elem_refs(pImage, text, lng, stext, ilng)
+    _flimage_add_comments(pImage, stext, ilng)
 
-        @param pImage: pointer to image
 
-        :status: Untested + NoDoc + NoDemo = NOT OK
+def flimage_color_to_pixel(pImage, r, g, b):
+    """Convert an RGB triple to a pixel.
+
+    --
+
+    :Parameters:
+      `pImage` : pointer to xfdata.FL_IMAGE
+        image
+      `r` : int
+        value for red color
+      `g` : int
+        value for green color
+      `b` : int
+        value for blue color
+
+    :return: pixel id, new pixel
+    :rtype: long_pos, int
+
+    :note: e.g. *todo*
+
+    :attention: API changed from XForms - upstream was:
+        flimage_color_to_pixel(pImage, r, g, b, newpix)
+
+    :status: Untested + Doc + NoDemo = NOT OK
+
     """
-
-    _flimage_add_comments = library.cfuncproto(
-            library.load_so_libflimage(), "flimage_add_comments",
-            None, [cty.POINTER(xfdata.FL_IMAGE), xfdata.STRING, cty.c_int],
-            """void flimage_add_comments(FL_IMAGE * p1, const char * p2,
-               int p3)
-""")
-    library.check_if_initialized()
-    sp2 = library.convert_to_string(p2)
-    ip3 = library.convert_to_int(p3)
-    library.keep_elem_refs(pImage, p2, p3, sp2, ip3)
-    _flimage_add_comments(pImage, sp2, ip3)
-
-
-def flimage_color_to_pixel(pImage, p2, p3, p4, p5):
-    """
-        flimage_color_to_pixel(pImage, p2, p3, p4, p5) -> num.
-
-        @param pImage: pointer to image
-
-        :status: Untested + NoDoc + NoDemo = NOT OK
-    """
-
-    _flimage_color_to_pixel = library.cfuncproto(
-            library.load_so_libflimage(), "flimage_color_to_pixel",
-            cty.c_ulong, [cty.POINTER(xfdata.FL_IMAGE), cty.c_int, cty.c_int,
-            cty.c_int, cty.POINTER(cty.c_int)],
-""")long unsigned int flimage_color_to_pixel(FL_IMAGE * p1,
-               int p2, int p3, int p4, int * p5)
-""")
-    library.check_if_initialized()
-    ip2 = library.convert_to_int(p2)
-    ip3 = library.convert_to_int(p3)
-    ip4 = library.convert_to_int(p4)
-    library.keep_elem_refs(pImage, p2, p3, p4, p5, ip2, ip3, ip4)
-    retval = _flimage_color_to_pixel(pImage, ip2, ip3, ip4, p5)
-    return retval
+    _flimage_color_to_pixel = libr.cfuncproto(
+        libr.load_so_libflimage(), "flimage_color_to_pixel",
+        cty.c_ulong, [cty.POINTER(xfdata.FL_IMAGE), cty.c_int, cty.c_int,
+        cty.c_int, cty.POINTER(cty.c_int)],
+        """long unsigned int flimage_color_to_pixel(FL_IMAGE * p1,
+               int p2, int p3, int p4, int * p5)""")
+    libr.check_if_initialized()
+    ir = libr.convert_to_int(r)
+    ig = libr.convert_to_int(g)
+    ib = libr.convert_to_int(b)
+    inewpix, pnewpix = libr.make_int_and_pointer()
+    libr.keep_elem_refs(pImage, r, g, b, ir, ig, ib, inewpix, pnewpix)
+    retval = _flimage_color_to_pixel(pImage, ir, ig, ib, pnewpix)
+    return retval, inewpix.value
 
 
 def flimage_combine(pImage1, pImage2, alpha):
+    """Combines two images with alpha level?, returning a new image.
+
+    --
+
+    :Parameters:
+      `pImage1` : pointer to xfdata.FL_IMAGE
+        first image to combine
+      `pImage2` : pointer to xfdata.FL_IMAGE
+        second image to combine
+      `alpha` : float
+        alpha level?
+
+    :return: image class instance
+    :rtype: pointer to xfdata.FL_IMAGE
+
+    :note: e.g. *todo*
+
+    :status: Untested + NoDoc + NoDemo = NOT OK
+
     """
-        flimage_combine(pImage1, pImage2, alpha) -> pImage
-
-        @param pImage1: pointer to first image to combine
-        @param pImage2: pointer to second image to combine
-        @param alpha: alpha level?
-
-        :status: Untested + NoDoc + NoDemo = NOT OK
-    """
-
-    _flimage_combine = library.cfuncproto(
-            library.load_so_libflimage(), "flimage_combine",
-            cty.POINTER(xfdata.FL_IMAGE), [cty.POINTER(xfdata.FL_IMAGE),
-            cty.POINTER(xfdata.FL_IMAGE), cty.c_double],
-            """FL_IMAGE * flimage_combine(FL_IMAGE * p1, FL_IMAGE * p2,
-               double p3)
-""")
-    library.check_if_initialized()
-    falpha = library.convert_to_double(alpha)
-    library.keep_elem_refs(pImage1, pImage2, alpha, falpha)
+    _flimage_combine = libr.cfuncproto(
+        libr.load_so_libflimage(), "flimage_combine",
+        cty.POINTER(xfdata.FL_IMAGE), [cty.POINTER(xfdata.FL_IMAGE),
+        cty.POINTER(xfdata.FL_IMAGE), cty.c_double],
+        """FL_IMAGE * flimage_combine(FL_IMAGE * p1, FL_IMAGE * p2,
+           double p3)""")
+    libr.check_if_initialized()
+    falpha = libr.convert_to_double(alpha)
+    libr.keep_elem_refs(pImage1, pImage2, alpha, falpha)
     retval = _flimage_combine(pImage1, pImage2, falpha)
     return retval
 
 
 def flimage_display_markers(pImage):
+    """Displays markers added to an image.
+
+    --
+
+    :Parameters:
+      `pImage` : pointer to xfdata.FL_IMAGE
+        image
+
+    :note: e.g. flimage_display_markers(pimg)
+
+    :status: Untested + Doc + NoDemo = NOT OK
+
     """
-        flimage_display_markers(pImage)
-
-        @param pImage: pointer to image
-
-        :status: Untested + NoDoc + NoDemo = NOT OK
-    """
-
-    _flimage_display_markers = library.cfuncproto(
-            library.load_so_libflimage(), "flimage_display_markers",
-            None, [cty.POINTER(xfdata.FL_IMAGE)],
-            """void flimage_display_markers(FL_IMAGE * p1)
-""")
-    library.check_if_initialized()
-    library.keep_elem_refs(pImage)
+    _flimage_display_markers = libr.cfuncproto(
+        libr.load_so_libflimage(), "flimage_display_markers",
+        None, [cty.POINTER(xfdata.FL_IMAGE)],
+        """void flimage_display_markers(FL_IMAGE * p1)""")
+    libr.check_if_initialized()
+    libr.keep_elem_refs(pImage)
     _flimage_display_markers(pImage)
 
 
-def flimage_dup_(pImage, p2):
+def flimage_dup_(pImage, pix):
+    """Duplicates an image, with or without the pixels
+
+    --
+
+    :Parameters:
+      `pImage` : pointer to xfdata.FL_IMAGE
+        image
+      `pix` : int
+        pixel
+
+    :return: image class instance
+    :rtype: pointer to xfdata.FL_IMAGE
+
+    :note: e.g. *todo*
+
+    :status: Untested + NoDoc + NoDemo = NOT OK
+
     """
-        flimage_dup_(pImage, p2) -> pImage
-
-        @param pImage: pointer to image
-
-        :status: Untested + NoDoc + NoDemo = NOT OK
-    """
-
-    _flimage_dup_ = library.cfuncproto(
-            library.load_so_libflimage(), "flimage_dup_",
-            cty.POINTER(xfdata.FL_IMAGE), [cty.POINTER(xfdata.FL_IMAGE), cty.c_int],
-            """FL_IMAGE * flimage_dup_(FL_IMAGE * p1, int p2)
-""")
-    library.check_if_initialized()
-    ip2 = library.convert_to_int(p2)
-    library.keep_elem_refs(pImage, p2, ip2)
-    retval = _flimage_dup_(pImage, ip2)
+    _flimage_dup_ = libr.cfuncproto(
+        libr.load_so_libflimage(), "flimage_dup_",
+        cty.POINTER(xfdata.FL_IMAGE), [cty.POINTER(xfdata.FL_IMAGE), cty.c_int],
+        """FL_IMAGE * flimage_dup_(FL_IMAGE * p1, int p2)""")
+    libr.check_if_initialized()
+    ipix = libr.convert_to_int(pix)
+    libr.keep_elem_refs(pImage, pix, ipix)
+    retval = _flimage_dup_(pImage, ipix)
     return retval
 
 
 def flimage_enable_bmp():
+    """Enables use of BMP (Windows/OS2 Bitmap) image format.
+
+    --
+
+    :note: e.g. flimage_enable_bmp()
+
+    :status: Tested + Doc + NoDemo = OK
+
     """
-        flimage_enable_bmp()
-
-        Enables use of BMP (Windows/OS2 Bitmap) image format.
-
-        :note: e.g. flimage_enable_bmp()
-
-        :status: Tested + Doc + NoDemo = OK
-    """
-
-    _flimage_enable_bmp = library.cfuncproto(
-            library.load_so_libflimage(), "flimage_enable_bmp",
-            None, [],
-            """void flimage_enable_bmp()
-""")
-    library.check_if_initialized()
+    _flimage_enable_bmp = libr.cfuncproto(
+        libr.load_so_libflimage(), "flimage_enable_bmp",
+        None, [],
+        """void flimage_enable_bmp()""")
+    libr.check_if_initialized()
     _flimage_enable_bmp()
 
 
 def flimage_enable_fits():
+    """Enables use of NASA/NOTS standard FITS image format.
+
+    --
+
+    :note: e.g. flimage_enable_fits()
+
+    :status: Tested + Doc + NoDemo = OK
+
     """
-        flimage_enable_fits()
-
-        Enables use of NASA/NOTS standard FITS image format.
-
-        :note: e.g. flimage_enable_fits()
-
-        :status: Tested + Doc + NoDemo = OK
-    """
-
-    _flimage_enable_fits = library.cfuncproto(
-            library.load_so_libflimage(), "flimage_enable_fits",
-            None, [],
-            """void flimage_enable_fits()
-""")
+    _flimage_enable_fits = libr.cfuncproto(
+        libr.load_so_libflimage(), "flimage_enable_fits",
+        None, [],
+        """void flimage_enable_fits()""")
     _flimage_enable_fits()
 
 
 # TODO: try to understand what kind of images are these ones.
 def flimage_enable_genesis():
+    """Enables use of Genesis image format.
+
+    --
+
+    :note: e.g. flimage_enable_genesis()
+
+    :status: Tested + Doc + NoDemo = OK
+
     """
-        flimage_enable_genesis()
-
-        Enables use of Genesis image format.
-
-        :note: e.g. flimage_enable_genesis()
-
-        :status: Tested + Doc + NoDemo = OK
-    """
-
-    _flimage_enable_genesis = library.cfuncproto(
-            library.load_so_libflimage(), "flimage_enable_genesis",
-            None, [],
-            """void flimage_enable_genesis()
-""")
-    library.check_if_initialized()
+    _flimage_enable_genesis = libr.cfuncproto(
+        libr.load_so_libflimage(), "flimage_enable_genesis",
+        None, [],
+        """void flimage_enable_genesis()""")
+    libr.check_if_initialized()
     _flimage_enable_genesis()
 
 
 def flimage_enable_gif():
-    """ flimage_enable_gif()
+    """Enables use of GIF (Compuserve Graphics Interchange format) image
+    format.
 
-        Enables use of GIF (Compuserve Graphics Interchange format) image
-        format.
+    --
 
-        :note: e.g. flimage_enable_gif()
+    :note: e.g. flimage_enable_gif()
 
-        :status: Tested + Doc + NoDemo = OK
+    :status: Tested + Doc + NoDemo = OK
+
     """
-
-    _flimage_enable_gif = library.cfuncproto(
-            library.load_so_libflimage(), "flimage_enable_gif",
-            None, [],
-            """void flimage_enable_gif()
-""")
-    library.check_if_initialized()
+    _flimage_enable_gif = libr.cfuncproto(
+        libr.load_so_libflimage(), "flimage_enable_gif",
+        None, [],
+        """void flimage_enable_gif()""")
+    libr.check_if_initialized()
     _flimage_enable_gif()
 
 
 def flimage_enable_gzip():
+    """Enables use of gzip compression filter for images.
+
+    --
+
+    :note: e.g. flimage_enable_gzip()
+
+    :status: Tested + Doc + NoDemo = OK
+
     """
-        flimage_enable_gzip()
-
-        Enables use of gzip compression filter for images.
-
-        :note: e.g. flimage_enable_gzip()
-
-        :status: Tested + Doc + NoDemo = OK
-    """
-
-    _flimage_enable_gzip = library.cfuncproto(
-            library.load_so_libflimage(), "flimage_enable_gzip",
-            None, [],
-            """void flimage_enable_gzip()
-""")
-    library.check_if_initialized()
+    _flimage_enable_gzip = libr.cfuncproto(
+        libr.load_so_libflimage(), "flimage_enable_gzip",
+        None, [],
+        """void flimage_enable_gzip()""")
+    libr.check_if_initialized()
     _flimage_enable_gzip()
 
 
 def flimage_enable_jpeg():
+    """Enables use of JPEG/JFIF (Joint Photographic Experts Group) image
+    format.
+
+    --
+
+    :note: e.g. flimage_enable_jpeg()
+
+    :status: Tested + Doc + NoDemo = OK
+
     """
-        flimage_enable_jpeg()
-
-        Enables use of JPEG/JFIF (Joint Photographic Experts Group) image
-        format.
-
-        :note: e.g. flimage_enable_jpeg()
-
-        :status: Tested + Doc + NoDemo = OK
-    """
-
-    _flimage_enable_jpeg = library.cfuncproto(
-            library.load_so_libflimage(), "flimage_enable_jpeg",
-            None, [],
-            """void flimage_enable_jpeg()
-""")
-    library.check_if_initialized()
+    _flimage_enable_jpeg = libr.cfuncproto(
+        libr.load_so_libflimage(), "flimage_enable_jpeg",
+        None, [],
+        """void flimage_enable_jpeg()""")
+    libr.check_if_initialized()
     _flimage_enable_jpeg()
 
 
 def flimage_enable_png():
+    """Enables use of PNG (Portable Network Graphics) image format. It
+    requires netpbm library to be installed.
+
+    --
+
+    :note: e.g. flimage_enable_png()
+
+    :status: Tested + Doc + NoDemo = OK
+
     """
-        flimage_enable_png()
-
-        Enables use of PNG (Portable Network Graphics) image format. It
-        requires netpbm library to be installed
-
-        :note: e.g. flimage_enable_png()
-
-        :status: Tested + Doc + NoDemo = OK
-    """
-
-    _flimage_enable_png = library.cfuncproto(
-            library.load_so_libflimage(), "flimage_enable_png",
-            None, [],
-            """void flimage_enable_png()
-""")
-    library.check_if_initialized()
+    _flimage_enable_png = libr.cfuncproto(
+        libr.load_so_libflimage(), "flimage_enable_png",
+        None, [],
+        """void flimage_enable_png()""")
+    libr.check_if_initialized()
     _flimage_enable_png()
 
 
 def flimage_enable_ps():
+    """Enables use of PS (Adobe PostScript) image format. It needs gs
+    (ghostscript) for reading.
+
+    --
+
+    :note: e.g. flimage_enable_ps()
+
+    :status: Tested + Doc + NoDemo = OK
+
     """
-        flimage_enable_ps()
-
-        Enables use of PS (Adobe PostScript) image format. It needs gs
-        for reading.
-
-        :note: e.g. flimage_enable_ps()
-
-        :status: Tested + Doc + NoDemo = OK
-    """
-
-    _flimage_enable_ps = library.cfuncproto(
-            library.load_so_libflimage(), "flimage_enable_ps",
-            None, [],
-            """void flimage_enable_ps()
-""")
-    library.check_if_initialized()
+    _flimage_enable_ps = libr.cfuncproto(
+        libr.load_so_libflimage(), "flimage_enable_ps",
+        None, [],
+        """void flimage_enable_ps()""")
+    libr.check_if_initialized()
     _flimage_enable_ps()
 
 
 def flimage_enable_sgi():
+    """Enables use of SGI (Silicon Graphics-Iris) image format. It requires
+    pbmplus/netpbm library to be installed.
+
+    --
+
+    :note: e.g. flimage_enable_sgi()
+
+    :status: Tested + Doc + NoDemo = OK
+
     """
-        flimage_enable_sgi()
-
-        Enables use of SGI (Silicon Graphics-Iris) image format. It requires
-        pbmplus/netpbm library to be installed
-
-        :note: e.g. flimage_enable_sgi()
-
-        :status: Tested + Doc + NoDemo = OK
-    """
-
-    _flimage_enable_sgi = library.cfuncproto(
-            library.load_so_libflimage(), "flimage_enable_sgi",
-            None, [],
-            """void flimage_enable_sgi()
-""")
-    library.check_if_initialized()
+    _flimage_enable_sgi = libr.cfuncproto(
+        libr.load_so_libflimage(), "flimage_enable_sgi",
+        None, [],
+        """void flimage_enable_sgi()""")
+    libr.check_if_initialized()
     _flimage_enable_sgi()
 
 
 def flimage_enable_tiff():
+    """Enables use of TIFF (Tagged Image file, with no compression) image
+    format.
+
+    --
+
+    :note: e.g. flimage_enable_tiff()
+
+    :status: Tested + Doc + NoDemo = OK
+
     """
-        flimage_enable_tiff()
-
-        Enables use of TIFF (Tagged Image file, with no compression) image
-        format.
-
-        :note: e.g. flimage_enable_tiff()
-
-        :status: Tested + Doc + NoDemo = OK
-    """
-
-    _flimage_enable_tiff = library.cfuncproto(
-            library.load_so_libflimage(), "flimage_enable_tiff",
-            None, [],
-            """void flimage_enable_tiff()
-""")
-    library.check_if_initialized()
+    _flimage_enable_tiff = libr.cfuncproto(
+        libr.load_so_libflimage(), "flimage_enable_tiff",
+        None, [],
+        """void flimage_enable_tiff()""")
+    libr.check_if_initialized()
     _flimage_enable_tiff()
 
 
 def flimage_enable_xbm():
+    """Enables use of XBM (X Window Bitmap) image format.
+
+    --
+
+    :note: e.g. flimage_enable_xbm()
+
+    :status: Tested + Doc + NoDemo = OK
+
     """
-        flimage_enable_xbm()
-
-        Enables use of XBM (X Window Bitmap) image format.
-
-        :note: e.g. flimage_enable_xbm()
-
-        :status: Tested + Doc + NoDemo = OK
-    """
-
-    _flimage_enable_xbm = library.cfuncproto(
-            library.load_so_libflimage(), "flimage_enable_xbm",
-            None, [],
-            """void flimage_enable_xbm()
-""")
-    library.check_if_initialized()
+    _flimage_enable_xbm = libr.cfuncproto(
+        libr.load_so_libflimage(), "flimage_enable_xbm",
+        None, [],
+        """void flimage_enable_xbm()""")
+    libr.check_if_initialized()
     _flimage_enable_xbm()
 
 
 def flimage_enable_xpm():
+    """Enables use of XPM3 (X Window PixMap) image format.
+
+    --
+
+    :note: e.g. flimage_enable_xpm()
+
+    :status: Tested + Doc + NoDemo = OK
+
     """
-        flimage_enable_xpm()
-
-        Enables use of XPM3 (X Window PixMap) image format.
-
-        :note: e.g. flimage_enable_xpm()
-
-        :status: Tested + Doc + NoDemo = OK
-    """
-
-    _flimage_enable_xpm = library.cfuncproto(
-            library.load_so_libflimage(), "flimage_enable_xpm",
-            None, [],
-            """void flimage_enable_xpm()
-""")
-    library.check_if_initialized()
+    _flimage_enable_xpm = libr.cfuncproto(
+        libr.load_so_libflimage(), "flimage_enable_xpm",
+        None, [],
+        """void flimage_enable_xpm()""")
+    libr.check_if_initialized()
     _flimage_enable_xpm()
 
 
 def flimage_enable_xwd():
+    """Enables use of XWD (X Window Dump) image format.
+
+    --
+
+    :note: e.g. flimage_enable_xwd()
+
+    :status: Tested + Doc + NoDemo = OK
+
     """
-        flimage_enable_xwd()
-
-        Enables use of XWD (X Window Dump) image format.
-
-        :note: e.g. flimage_enable_xwd()
-
-        :status: Tested + Doc + NoDemo = OK
-    """
-
-    _flimage_enable_xwd = library.cfuncproto(
-            library.load_so_libflimage(), "flimage_enable_xwd",
-            None, [],
-            """void flimage_enable_xwd()
-""")
-    library.check_if_initialized()
+    _flimage_enable_xwd = libr.cfuncproto(
+        libr.load_so_libflimage(), "flimage_enable_xwd",
+        None, [],
+        """void flimage_enable_xwd()""")
+    libr.check_if_initialized()
     _flimage_enable_xwd()
 
 
 def flimage_free_ci(pImage):
+    """Frees an image of type xfdata.FL_IMAGE_CI?
+
+    --
+
+    :Parameters:
+      `pImage` : pointer to xfdata.FL_IMAGE
+        image
+
+    :note: e.g. *todo*
+
+    :status: Untested + NoDoc + NoDemo = NOT OK
+
     """
-        flimage_free_ci(pImage)
-
-        @param pImage: pointer to image
-
-        :status: Untested + NoDoc + NoDemo = NOT OK
-    """
-
-    _flimage_free_ci = library.cfuncproto(
-            library.load_so_libflimage(), "flimage_free_ci",
-            None, [cty.POINTER(xfdata.FL_IMAGE)],
-            """void flimage_free_ci(FL_IMAGE * p1)
-""")
-    library.check_if_initialized()
-    library.keep_elem_refs(pImage)
+    _flimage_free_ci = libr.cfuncproto(
+        libr.load_so_libflimage(), "flimage_free_ci",
+        None, [cty.POINTER(xfdata.FL_IMAGE)],
+        """void flimage_free_ci(FL_IMAGE * p1)""")
+    libr.check_if_initialized()
+    libr.keep_elem_refs(pImage)
     _flimage_free_ci(pImage)
 
 
 def flimage_free_gray(pImage):
+    """Frees an image of type xfdata.FL_IMAGE_GRAY?.
+
+    --
+
+    :Parameters:
+      `pImage` : pointer to xfdata.FL_IMAGE
+        image
+
+    :note: e.g. *todo*
+
+    :status: Untested + NoDoc + NoDemo = NOT OK
+
     """
-        flimage_free_gray(pImage)
-
-        @param pImage: image
-                       (<pointer to xfdata.FL_IMAGE>)
-
-        :status: Untested + NoDoc + NoDemo = NOT OK
-    """
-
-    _flimage_free_gray = library.cfuncproto(
-            library.load_so_libflimage(), "flimage_free_gray",
-            None, [cty.POINTER(xfdata.FL_IMAGE)],
-            """void flimage_free_gray(FL_IMAGE * p1)
-""")
-    library.check_if_initialized()
-    library.keep_elem_refs(pImage)
+    _flimage_free_gray = libr.cfuncproto(
+        libr.load_so_libflimage(), "flimage_free_gray",
+        None, [cty.POINTER(xfdata.FL_IMAGE)],
+        """void flimage_free_gray(FL_IMAGE * p1)""")
+    libr.check_if_initialized()
+    libr.keep_elem_refs(pImage)
     _flimage_free_gray(pImage)
 
 
 def flimage_free_linearlut(pImage):
+    """*todo*
+
+    --
+
+    :Parameters:
+      `pImage` : pointer to xfdata.FL_IMAGE
+        image
+
+    :note: e.g. *todo*
+
+    :status: Untested + NoDoc + NoDemo = NOT OK
+
     """
-        flimage_free_linearlut(pImage)
-
-        @param pImage: image
-                       (<pointer to xfdata.FL_IMAGE>)
-
-        :status: Untested + NoDoc + NoDemo = NOT OK
-    """
-
-    _flimage_free_linearlut = library.cfuncproto(
-            library.load_so_libflimage(), "flimage_free_linearlut",
-            None, [cty.POINTER(xfdata.FL_IMAGE)],
-            """void flimage_free_linearlut(FL_IMAGE * p1)
-""")
-    library.keep_elem_refs(pImage)
+    _flimage_free_linearlut = libr.cfuncproto(
+        libr.load_so_libflimage(), "flimage_free_linearlut",
+        None, [cty.POINTER(xfdata.FL_IMAGE)],
+        """void flimage_free_linearlut(FL_IMAGE * p1)""")
+    libr.keep_elem_refs(pImage)
     _flimage_free_linearlut(pImage)
 
 
 def flimage_free_rgb(pImage):
+    """Frees an image of type xfdata.FL_IMAGE_RGB?.
+
+    --
+
+    :Parameters:
+      `pImage` : pointer to xfdata.FL_IMAGE
+        image
+
+    :note: e.g. *todo*
+
+    :status: Untested + NoDoc + NoDemo = NOT OK
+
     """
-        flimage_free_rgb(pImage)
-
-        @param pImage: image
-                       (<pointer to xfdata.FL_IMAGE>)
-
-        :status: Untested + NoDoc + NoDemo = NOT OK
-    """
-
-    _flimage_free_rgb = library.cfuncproto(
-            library.load_so_libflimage(), "flimage_free_rgb",
-            None, [cty.POINTER(xfdata.FL_IMAGE)],
-            """void flimage_free_rgb(FL_IMAGE * p1)
-""")
-    library.check_if_initialized()
-    library.keep_elem_refs(pImage)
+    _flimage_free_rgb = libr.cfuncproto(
+        libr.load_so_libflimage(), "flimage_free_rgb",
+        None, [cty.POINTER(xfdata.FL_IMAGE)],
+        """void flimage_free_rgb(FL_IMAGE * p1)""")
+    libr.check_if_initialized()
+    libr.keep_elem_refs(pImage)
     _flimage_free_rgb(pImage)
 
 
 def flimage_freemem(pImage):
+    """Frees all allocated memory associated with the image.
+
+    --
+
+    :Parameters:
+      `pImage` : pointer to xfdata.FL_IMAGE
+        image
+
+    :note: e.g. *todo*
+
+    :status: Untested + Doc + NoDemo = NOT OK
+
     """
-        flimage_freemem(pImage)
-
-        @param pImage: image
-                       (<pointer to xfdata.FL_IMAGE>)
-
-        :status: Untested + NoDoc + NoDemo = NOT OK
-    """
-
-    _flimage_freemem = library.cfuncproto(
-            library.load_so_libflimage(), "flimage_freemem",
-            None, [cty.POINTER(xfdata.FL_IMAGE)],
-            """void flimage_freemem(FL_IMAGE * p1)
-""")
-    library.check_if_initialized()
-    library.keep_elem_refs(pImage)
+    _flimage_freemem = libr.cfuncproto(
+        libr.load_so_libflimage(), "flimage_freemem",
+        None, [cty.POINTER(xfdata.FL_IMAGE)],
+        """void flimage_freemem(FL_IMAGE * p1)""")
+    libr.check_if_initialized()
+    libr.keep_elem_refs(pImage)
     _flimage_freemem(pImage)
 
 
-def flimage_get_closest_color_from_map(pImage, p2):
+def flimage_get_closest_color_from_map(pImage, colr):
+    """Gets closest color from color map?
+
+    --
+
+    :Parameters:
+      `pImage` : pointer to xfdata.FL_IMAGE
+        image
+      `colr` : int_pos
+        color to evaluate
+
+    :return: color that is close?
+    :rtype: int
+
+    :note: e.g. *todo*
+
+    :status: Untested + NoDoc + NoDemo = NOT OK
+
     """
-        flimage_get_closest_color_from_map(pImage, p2) -> num.
-
-        @param pImage: image
-                       (<pointer to xfdata.FL_IMAGE>)
-
-        :status: Untested + NoDoc + NoDemo = NOT OK
-    """
-
-    _flimage_get_closest_color_from_map = library.cfuncproto(
-            library.load_so_libflimage(), "flimage_get_closest_color_from_map",
-            cty.c_int, [cty.POINTER(xfdata.FL_IMAGE), cty.c_uint],
-            """int flimage_get_closest_color_from_map(FL_IMAGE * p1,
-               unsigned int p2)
-""")
-    library.check_if_initialized()
-    uip2 = library.convert_to_uint(p2)
-    library.keep_elem_refs(pImage, p2, uip2)
-    retval = _flimage_get_closest_color_from_map(pImage, uip2)
+    _flimage_get_closest_color_from_map = libr.cfuncproto(
+        libr.load_so_libflimage(), "flimage_get_closest_color_from_map",
+        cty.c_int, [cty.POINTER(xfdata.FL_IMAGE), cty.c_uint],
+        """int flimage_get_closest_color_from_map(FL_IMAGE * p1,
+           unsigned int p2)""")
+    libr.check_if_initialized()
+    uicolr = libr.convert_to_uint(colr)
+    libr.keep_elem_refs(pImage, colr, uicolr)
+    retval = _flimage_get_closest_color_from_map(pImage, uicolr)
     return retval
 
 
 def flimage_get_linearlut(pImage):
+    """*todo*
+
+    --
+
+    :Parameters:
+      `pImage` : pointer to xfdata.FL_IMAGE
+        image
+
+    :return: *, or -1 (on failure?)
+    :rtype: int
+
+    :note: e.g. *todo*
+
+    :status: Untested + NoDoc + NoDemo = NOT OK
+
     """
-        flimage_get_linearlut(pImage) -> num.
-
-        @param pImage: image
-                       (<pointer to xfdata.FL_IMAGE>)
-
-        :status: Untested + NoDoc + NoDemo = NOT OK
-    """
-
-    _flimage_get_linearlut = library.cfuncproto(
-            library.load_so_libflimage(), "flimage_get_linearlut",
-            cty.c_int, [cty.POINTER(xfdata.FL_IMAGE)],
-            """int flimage_get_linearlut(FL_IMAGE * p1)
-""")
-    library.check_if_initialized()
-    library.keep_elem_refs(pImage)
+    _flimage_get_linearlut = libr.cfuncproto(
+        libr.load_so_libflimage(), "flimage_get_linearlut",
+        cty.c_int, [cty.POINTER(xfdata.FL_IMAGE)],
+        """int flimage_get_linearlut(FL_IMAGE * p1)""")
+    libr.check_if_initialized()
+    libr.keep_elem_refs(pImage)
     retval = _flimage_get_linearlut(pImage)
     return retval
 
 
 def flimage_invalidate_pixels(pImage):
+    """Invalidates/frees all other types of image, before we modify the
+    current image.
+
+    --
+
+    :Parameters:
+      `pImage` : pointer to xfdata.FL_IMAGE
+        image
+
+    :note: e.g. *todo*
+
+    :status: Untested + NoDoc + NoDemo = NOT OK
+
     """
-        flimage_invalidate_pixels(pImage)
-
-        @param pImage: image
-                       (<pointer to xfdata.FL_IMAGE>)
-
-        :status: Untested + NoDoc + NoDemo = NOT OK
-    """
-
-    _flimage_invalidate_pixels = library.cfuncproto(
-            library.load_so_libflimage(), "flimage_invalidate_pixels",
-            None, [cty.POINTER(xfdata.FL_IMAGE)],
-            """void flimage_invalidate_pixels(FL_IMAGE * p1)
-""")
-    library.check_if_initialized()
-    library.keep_elem_refs(pImage)
+    _flimage_invalidate_pixels = libr.cfuncproto(
+        libr.load_so_libflimage(), "flimage_invalidate_pixels",
+        None, [cty.POINTER(xfdata.FL_IMAGE)],
+        """void flimage_invalidate_pixels(FL_IMAGE * p1)""")
+    libr.check_if_initialized()
+    libr.keep_elem_refs(pImage)
     _flimage_invalidate_pixels(pImage)
 
 
-def flimage_open(filename):
+def flimage_open(fname):
+    """Opens an image file.
+
+    --
+
+    :Parameters:
+      `fname` : str
+        name of file to open
+
+    :return: image class instance opened, or None (on failure)
+    :rtype: pointer to xfdata.FL_IMAGE
+
+    :note: e.g. pmig = flimage_open("something.ppm")
+
+    :status: Untested + Doc + NoDemo = NOT OK
+
     """
-        flimage_open(filename) -> pImage
-
-        @param filename: name of file to open
-
-        :return: image
-                  (<pointer to xfdata.FL_IMAGE>)
-
-        :status: Untested + NoDoc + NoDemo = NOT OK
-    """
-
-    _flimage_open = library.cfuncproto(
-            library.load_so_libflimage(), "flimage_open",
-            cty.POINTER(xfdata.FL_IMAGE), [xfdata.STRING],
-            """FL_IMAGE * flimage_open(const char * p1)
-""")
-    library.check_if_initialized()
-    sfilename = library.convert_to_string(filename)
-    library.keep_elem_refs(filename, sfilename)
-    retval = _flimage_open(sfilename)
+    _flimage_open = libr.cfuncproto(
+        libr.load_so_libflimage(), "flimage_open",
+        cty.POINTER(xfdata.FL_IMAGE), [xfdata.STRING],
+        """FL_IMAGE * flimage_open(const char * p1)""")
+    libr.check_if_initialized()
+    sfname = libr.convert_to_string(fname)
+    libr.keep_elem_refs(fname, sfname)
+    retval = _flimage_open(sfname)
     return retval
 
 
 def flimage_read_annotation(pImage):
+    """Reads annotation in the image?
+
+    --
+
+    :Parameters:
+      `pImage` : pointer to xfdata.FL_IMAGE
+        image
+
+    :return: 0, or -1 (on failure)
+    :rtype: int
+
+    :note: e.g. *todo*
+
+    :status: Untested + NoDoc + NoDemo = NOT OK
+
     """
-        flimage_read_annotation(pImage) -> num.
-
-        @param pImage: pointer to image
-
-        :status: Untested + NoDoc + NoDemo = NOT OK
-    """
-
-    _flimage_read_annotation = library.cfuncproto(
-            library.load_so_libflimage(), "flimage_read_annotation",
-            cty.c_int, [cty.POINTER(xfdata.FL_IMAGE)],
-            """int flimage_read_annotation(FL_IMAGE * p1)
-""")
-    library.check_if_initialized()
-    library.keep_elem_refs(pImage)
+    _flimage_read_annotation = libr.cfuncproto(
+        libr.load_so_libflimage(), "flimage_read_annotation",
+        cty.c_int, [cty.POINTER(xfdata.FL_IMAGE)],
+        """int flimage_read_annotation(FL_IMAGE * p1)""")
+    libr.check_if_initialized()
+    libr.keep_elem_refs(pImage)
     retval = _flimage_read_annotation(pImage)
     return retval
 
 
 def flimage_replace_image(pImage, w, h, r, g, b):
+    """Replace an image?
+
+    --
+
+    :Parameters:
+      `pImage` : pointer to xfdata.FL_IMAGE
+        image
+      `w` : int
+        width
+      `h` : int
+          heigth
+      `r` : int
+        value for red color
+      `g` : int
+        value for green color
+      `b` : int
+        value for blue color
+
+    :note: e.g. *todo*
+
+    :status: Untested + NoDoc + NoDemo = NOT OK
+
     """
-        flimage_replace_image(pImage, w, h, r, g, b)
-
-        @param pImage: pointer to image
-
-        :status: Untested + NoDoc + NoDemo = NOT OK
-    """
-
-    _flimage_replace_image = library.cfuncproto(
-            library.load_so_libflimage(), "flimage_replace_image",
-            None, [cty.POINTER(xfdata.FL_IMAGE), cty.c_int, cty.c_int, cty.c_void_p,
-            cty.c_void_p, cty.c_void_p],
-            """void flimage_replace_image(FL_IMAGE * p1, int p2, int p3,
-               void * p4, void * p5, void * p6)
-""")
-    library.check_if_initialized()
-    iw = library.convert_to_int(w)
-    ih = library.convert_to_int(h)
+    _flimage_replace_image = libr.cfuncproto(
+        libr.load_so_libflimage(), "flimage_replace_image",
+        None, [cty.POINTER(xfdata.FL_IMAGE), cty.c_int, cty.c_int,
+        cty.c_void_p, cty.c_void_p, cty.c_void_p],
+        """void flimage_replace_image(FL_IMAGE * p1, int p2, int p3,
+           void * p4, void * p5, void * p6)""")
+    libr.check_if_initialized()
+    iw = libr.convert_to_int(w)
+    ih = libr.convert_to_int(h)
     pr = cty.cast(r, cty.c_void_p)
     pg = cty.cast(g, cty.c_void_p)
     pb = cty.cast(b, cty.c_void_p)
-    library.keep_elem_refs(pImage, w, h, r, g, b, iw, ih, pr, pg, pb)
+    libr.keep_elem_refs(pImage, w, h, r, g, b, iw, ih, pr, pg, pb)
     _flimage_replace_image(pImage, iw, ih, pr, pg, pb)
 
 
 def flimage_swapbuffer(pImage):
-    """
-        flimage_swapbuffer(pImage) -> num.
+    """Swaps buffer of an image?
 
-        @param pImage: pointer to image
+    --
 
-        :status: Untested + NoDoc + NoDemo = NOT OK
+    :Parameters:
+      `pImage` : pointer to xfdata.FL_IMAGE
+        image
+
+    :return: 0
+    :rtype: int
+
+    :note: e.g. *todo*
+
+    :status: Untested + NoDoc + NoDemo = NOT OK
+
     """
-    _flimage_swapbuffer = library.cfuncproto(
-        library.load_so_libflimage(), "flimage_swapbuffer",
+    _flimage_swapbuffer = libr.cfuncproto(
+        libr.load_so_libflimage(), "flimage_swapbuffer",
         cty.c_int, [cty.POINTER(xfdata.FL_IMAGE)],
         """int flimage_swapbuffer(FL_IMAGE * p1) """)
-    library.check_if_initialized()
-    library.keep_elem_refs(pImage)
+    libr.check_if_initialized()
+    libr.keep_elem_refs(pImage)
     retval = _flimage_swapbuffer(pImage)
     return retval
 
 
 def flimage_to_ximage(pImage, win, pXWindowAttributes):
-    """
-        flimage_to_ximage(pImage, win, pXWindowAttributes) -> num.
+    """Converts an FL_IMAGE into an XImage.
 
-        @param pImage: pointer to image
-        @param win: window id
-        @param pXWindowAttributes: pointer to XWindowAttributes
-           class instance
+    --
 
-        :status: Untested + NoDoc + NoDemo = NOT OK
+    :Parameters:
+      `pImage` : pointer to xfdata.FL_IMAGE
+        image
+      `win` : window id
+        long_pos
+      `pXWindowAttributes` : pointer to xfdata.XWindowAttributes
+        class instance
+
+    :note: e.g. *todo*
+
+    :status: Untested + Doc + NoDemo = NOT OK
+
     """
-    _flimage_to_ximage = library.cfuncproto(
-        library.load_so_libflimage(), "flimage_to_ximage",
+    _flimage_to_ximage = libr.cfuncproto(
+        libr.load_so_libflimage(), "flimage_to_ximage",
         cty.c_int, [cty.POINTER(xfdata.FL_IMAGE), xfdata.FL_WINDOW,
         cty.POINTER(xfdata.XWindowAttributes)],
         """int flimage_to_ximage(FL_IMAGE * p1, FL_WINDOW p2,
            XWindowAttributes * p3) """)
-    library.check_if_initialized()
-    ulwin = library.convert_to_Window(win)
-    library.keep_elem_refs(pImage, win, pXWindowAttributes, ulwin)
+    libr.check_if_initialized()
+    ulwin = libr.convert_to_Window(win)
+    libr.keep_elem_refs(pImage, win, pXWindowAttributes, ulwin)
     retval = _flimage_to_ximage(pImage, ulwin, pXWindowAttributes)
     return retval
 
 
 def flimage_write_annotation(pImage):
-    """
-    flimage_write_annotation(pImage) -> num.
+    """Writes annotation in the image?
 
-    @param pImage: pointer to image
+    --
+
+    :Parameters:
+      `pImage` : pointer to xfdata.FL_IMAGE
+        image
+
+    :return: 0, or -1 (on failure)
+    :rtype: int
+
+    :note: e.g. *todo*
 
     :status: Untested + NoDoc + NoDemo = NOT OK
+
     """
-    _flimage_write_annotation = library.cfuncproto(
-        library.load_so_libflimage(), "flimage_write_annotation",
+    _flimage_write_annotation = libr.cfuncproto(
+        libr.load_so_libflimage(), "flimage_write_annotation",
         cty.c_int, [cty.POINTER(xfdata.FL_IMAGE)],
         """int flimage_write_annotation(FL_IMAGE * p1) """)
-    library.check_if_initialized()
-    library.keep_elem_refs(pImage)
+    libr.check_if_initialized()
+    libr.keep_elem_refs(pImage)
     retval = _flimage_write_annotation(pImage)
     return retval
-
 

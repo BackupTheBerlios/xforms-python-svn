@@ -3658,41 +3658,32 @@ def FL_PCCLAMP(a):
 def FL_GETR(packed):
     return ((packed >> xfdata.FL_RSHIFT) & xfdata.FL_RMASK)
 
-# maybe unused in python?
 def FL_GETG(packed):
     return ((packed) >> xfdata.FL_GSHIFT) & xfdata.FL_PCMAX
 
-# maybe unused in python?
 def FL_GETB(packed):
     return ((packed) >> xfdata.FL_BSHIFT) & xfdata.FL_PCMAX
 
-# maybe unused in python?
 def FL_GETA(packed):
     return ((packed) >> xfdata.FL_ASHIFT) & xfdata.FL_PCMAX
 
-# maybe unused in python?
 def FL_PACK3(r, g, b ):
     return (r << xfdata.FL_RSHIFT) | (g << xfdata.FL_GSHIFT) | \
         (b << xfdata.FL_BSHIFT)
 
-# maybe unused in python?
 FL_PACK = FL_PACK3
 
-# maybe unused in python?
 def FL_PACK4(r, g, b, a):
     return (FL_PACK3(r, g, b) | (a << xfdata.FL_ASHIFT))
 
-# maybe unused in python?
-def FL_UNPACK(p, r, g, b):
-    r = FL_GETR(p)
-    g = FL_GETG(p)
-    b = FL_GETB(p)
+def FL_UNPACK(packed):
+    r = FL_GETR(packed)
+    g = FL_GETG(packed)
+    b = FL_GETB(packed)
     return r, g, b
 
-# maybe unused in python?
 FL_UNPACK3 = FL_UNPACK
 
-# maybe unused in python?
 def FL_UNPACK4(p, r, g, b, a):
     r, g, b = FL_UNPACK3(p, r, g, b)
     a = FL_GETA(p)
