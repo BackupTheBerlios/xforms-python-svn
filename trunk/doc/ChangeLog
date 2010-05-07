@@ -1,6 +1,13 @@
 
 
 SVN
+    * docstrings in flnmenu.py switched to reStructuredText.
+    * docstrings in flflinput.py and flmisc.py, switched to reStructuredText.
+    * new convenience functions in library.py for checking complex object
+    instances.
+    * docstrings in flfilesys.py, flflimage.py, flformbrowser.py,
+    flglcanvas.py, flgoodies.py switched to reStructuredText. Realign to
+    upstream XForms code (flimage_free not returning).
     * docstrings in flcounter.py, flcursor.py and fldial.py switched to
     reStructuredText. Some corrections in docstrings format. Corrected
     cursor.py example.
