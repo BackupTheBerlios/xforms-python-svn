@@ -1,6 +1,8 @@
 
 
 SVN
+    * docstrings in flpositioner.py and flscrollbar.pty switched to
+    reStructuredText.
     * docstrings in flnmenu.py switched to reStructuredText.
     * docstrings in flflinput.py and flmisc.py, switched to reStructuredText.
     * new convenience functions in library.py for checking complex object

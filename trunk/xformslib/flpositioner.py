@@ -2,8 +2,7 @@
 # -*- coding: iso8859-1 -*-
 
 """
-    xforms-python - Python wrapper for XForms (X11) GUI C toolkit library
-    using ctypes
+    flpositioner.py - Functions to manage positioner objects.
 
     Copyright (C) 2009, 2010  Luca Lazzaroni "LukenShiro"
     e-mail: <lukenshiro@ngi.it>
@@ -34,7 +33,7 @@
 
 
 import ctypes as cty
-from xformslib import library
+from xformslib import library as libr
 from xformslib import xfdata
 
 
@@ -49,291 +48,355 @@ from xformslib import xfdata
 
 
 def fl_add_positioner(postype, x, y, w, h, label):
+    """Adds a positioner object. The label is placed below the box by default.
+
+    --
+
+    :Parameters:
+      `postype` : int
+        type of positioner to be added. Values (from xfdata.py)
+        FL_NORMAL_POSITIONER, FL_OVERLAY_POSITIONER, FL_INVISIBLE_POSITIONER
+      `x` : int
+        horizontal position (upper-left corner)
+      `y` : int
+        vertical position (upper-left corner)
+      `w` : int
+        width in coord units
+      `h` : int
+        height in coord units
+      `label` : str
+        text label of positioner
+
+    :return: positioner object added (pFlObject).
+    :rtype: pointer to xfdata.FL_OBJECT
+
+    :note: e.g. *todo*
+
+    :status: Tested + NoDoc + Demo = OK
+
     """
-        fl_add_positioner(postype, x, y, w, h, label) -> pFlObject
-
-        Adds a positioner object.
-
-        @param postype: type of positioner to be added
-        @param x: horizontal position (upper-left corner)
-        @param y: vertical position (upper-left corner)
-        @param w: width in coord units
-        @param h: height in coord units
-        @param label: text label of positioner
-
-        :status: Tested + NoDoc + Demo = OK
-    """
-    _fl_add_positioner = library.cfuncproto(
-        library.load_so_libforms(), "fl_add_positioner",
+    _fl_add_positioner = libr.cfuncproto(
+        libr.load_so_libforms(), "fl_add_positioner",
         cty.POINTER(xfdata.FL_OBJECT), [cty.c_int, xfdata.FL_Coord,
         xfdata.FL_Coord, xfdata.FL_Coord, xfdata.FL_Coord, xfdata.STRING],
         """FL_OBJECT * fl_add_positioner(int type, FL_Coord x, FL_Coord y,
            FL_Coord w, FL_Coord h, const char * label)""")
-    library.check_if_initialized()
-    library.check_admitted_listvalues(postype, xfdata.POSITIONERTYPE_list)
-    ipostype = library.convert_to_int(postype)
-    ix = library.convert_to_FL_Coord(x)
-    iy = library.convert_to_FL_Coord(y)
-    iw = library.convert_to_FL_Coord(w)
-    ih = library.convert_to_FL_Coord(h)
-    slabel = library.convert_to_string(label)
-    library.keep_elem_refs(postype, x, y, w, h, label, ipostype, ix, iy,
+    libr.check_if_initialized()
+    libr.check_admitted_listvalues(postype, xfdata.POSITIONERTYPE_list)
+    ipostype = libr.convert_to_int(postype)
+    ix = libr.convert_to_FL_Coord(x)
+    iy = libr.convert_to_FL_Coord(y)
+    iw = libr.convert_to_FL_Coord(w)
+    ih = libr.convert_to_FL_Coord(h)
+    slabel = libr.convert_to_string(label)
+    libr.keep_elem_refs(postype, x, y, w, h, label, ipostype, ix, iy,
                    iw, ih, slabel)
     retval = _fl_add_positioner(ipostype, ix, iy, iw, ih, slabel)
     return retval
 
 
 def fl_set_positioner_xvalue(pFlObject, val):
-    """
-        fl_set_positioner_xvalue(pFlObject, val)
+    """Sets the actual value of positioner object in horizontal direction.
 
-        @param pFlObject: positioner object
-        @type pFlObject: pointer to xfdata.FL_OBJECT
+    --
 
-        :status: Tested + NoDoc + Demo = OK
+    :Parameters:
+      `pFlObject`: pointer to xfdata.FL_OBJECT
+        positioner object
+      `val` : float
+        value to be set. By default it is 0.5.
+
+    :note: e.g. *todo*
+
+    :status: Tested + NoDoc + Demo = OK
+
     """
-    _fl_set_positioner_xvalue = library.cfuncproto(
-        library.load_so_libforms(), "fl_set_positioner_xvalue",
+    _fl_set_positioner_xvalue = libr.cfuncproto(
+        libr.load_so_libforms(), "fl_set_positioner_xvalue",
         None, [cty.POINTER(xfdata.FL_OBJECT), cty.c_double],
         """void fl_set_positioner_xvalue(FL_OBJECT * ob, double val)""")
-    library.check_if_initialized()
-    library.check_if_FL_OBJECT_ptr(pFlObject)
-    fval = library.convert_to_double(val)
-    library.keep_elem_refs(pFlObject, val, fval)
+    libr.check_if_initialized()
+    libr.check_if_FL_OBJECT_ptr(pFlObject)
+    fval = libr.convert_to_double(val)
+    libr.keep_elem_refs(pFlObject, val, fval)
     _fl_set_positioner_xvalue(pFlObject, fval)
 
 
 def fl_get_positioner_xvalue(pFlObject):
+    """Obtains value of positioner object in horizontal direction.
+
+    --
+
+    :Parameters:
+      `pFlObject` : pointer to xfdata.FL_OBJECT
+        positioner object
+
+    :return: value in horizontal direction
+    :rtype: float
+
+    :note: e.g. *todo*
+
+    :status: Tested + NoDoc + Demo = OK
+
     """
-        fl_get_positioner_xvalue(pFlObject) -> floatnum
-
-        @param pFlObject: positioner object
-        @type pFlObject: pointer to xfdata.FL_OBJECT
-
-        :status: Tested + NoDoc + Demo = OK
-    """
-
-    _fl_get_positioner_xvalue = library.cfuncproto(
-            library.load_so_libforms(), "fl_get_positioner_xvalue",
-            cty.c_double, [cty.POINTER(xfdata.FL_OBJECT)],
-            """double fl_get_positioner_xvalue(FL_OBJECT * ob)
-""")
-    library.check_if_initialized()
-    library.check_if_FL_OBJECT_ptr(pFlObject)
-    library.keep_elem_refs(pFlObject)
+    _fl_get_positioner_xvalue = libr.cfuncproto(
+        libr.load_so_libforms(), "fl_get_positioner_xvalue",
+        cty.c_double, [cty.POINTER(xfdata.FL_OBJECT)],
+        """double fl_get_positioner_xvalue(FL_OBJECT * ob)""")
+    libr.check_if_initialized()
+    libr.check_if_FL_OBJECT_ptr(pFlObject)
+    libr.keep_elem_refs(pFlObject)
     retval = _fl_get_positioner_xvalue(pFlObject)
     return retval
 
 
 def fl_set_positioner_xbounds(pFlObject, minbound, maxbound):
+    """Sets minimum and maximum bounds/limits of a positioner in horizontal
+    direction.
+
+    --
+
+    :Parameters:
+      `pFlObject` : pointer to xfdata.FL_OBJECT
+        positioner object
+      `minbound` : float
+        minimum bound to be set. By default the minimum value is 0.0.
+      `maxbound` : float
+        maximum bound to be set. By default the the maximum value is 1.0.
+
+    :note: e.g. *todo*
+
+    :status: Tested + NoDoc + Demo = OK
+
     """
-        fl_set_positioner_xbounds(pFlObject, minbound, maxbound)
-
-        @param pFlObject: positioner object
-        @type pFlObject: pointer to xfdata.FL_OBJECT
-
-        :status: Tested + NoDoc + Demo = OK
-    """
-
-    _fl_set_positioner_xbounds = library.cfuncproto(
-            library.load_so_libforms(), "fl_set_positioner_xbounds",
-            None, [cty.POINTER(xfdata.FL_OBJECT), cty.c_double, cty.c_double],
-            """void fl_set_positioner_xbounds(FL_OBJECT * ob, double min,
-               double max)
-""")
-    library.check_if_initialized()
-    library.check_if_FL_OBJECT_ptr(pFlObject)
-    fminbound = library.convert_to_double(minbound)
-    fmaxbound = library.convert_to_double(maxbound)
-    library.keep_elem_refs(pFlObject, minbound, maxbound, fminbound, fmaxbound)
+    _fl_set_positioner_xbounds = libr.cfuncproto(
+        libr.load_so_libforms(), "fl_set_positioner_xbounds",
+        None, [cty.POINTER(xfdata.FL_OBJECT), cty.c_double, cty.c_double],
+        """void fl_set_positioner_xbounds(FL_OBJECT * ob, double min,
+            double max)""")
+    libr.check_if_initialized()
+    libr.check_if_FL_OBJECT_ptr(pFlObject)
+    fminbound = libr.convert_to_double(minbound)
+    fmaxbound = libr.convert_to_double(maxbound)
+    libr.keep_elem_refs(pFlObject, minbound, maxbound, fminbound, fmaxbound)
     _fl_set_positioner_xbounds(pFlObject, fminbound, fmaxbound)
 
 
 def fl_get_positioner_xbounds(pFlObject):
+    """Obtain minumum and maximum bounds/limits of a positioner in horizontal
+    direction.
+
+    --
+
+    :Parameters:
+
+      `pFlObject` : pointer to xfdata.FL_OBJECT
+        positioner object
+
+    :return: minimum  bound, maximum bound
+    :rtype: float, float
+
+    :note: e.g. *todo*
+
+    :attention: API change from XForms - upstream was
+        fl_get_positioner_xbounds(pFlObject, minbound, maxbound)
+
+    :status: Untested + NoDoc + NoDemo = NOT OK
+
     """
-        fl_get_positioner_xbounds(pFlObject) -> minbound, maxbound
-
-        @param pFlObject: positioner object
-        @type pFlObject: pointer to xfdata.FL_OBJECT
-
-        :attention: API change from XForms - upstream was
-                    fl_get_positioner_xbounds(pFlObject, minbound, maxbound)
-
-        :status: Untested + NoDoc + NoDemo = NOT OK
-    """
-
-    _fl_get_positioner_xbounds = library.cfuncproto(
-            library.load_so_libforms(), "fl_get_positioner_xbounds",
-            None, [cty.POINTER(xfdata.FL_OBJECT), cty.POINTER(cty.c_double),
-            cty.POINTER(cty.c_double)],
-            """void fl_get_positioner_xbounds(FL_OBJECT * ob, double * min,
-            double * max)
-""")
-    library.check_if_initialized()
-    library.check_if_FL_OBJECT_ptr(pFlObject)
-    minbound, pminbound = library.make_double_and_pointer()
-    maxbound, pmaxbound = library.make_double_and_pointer()
-    library.keep_elem_refs(pFlObject, minbound, maxbound, pminbound, pmaxbound)
+    _fl_get_positioner_xbounds = libr.cfuncproto(
+        libr.load_so_libforms(), "fl_get_positioner_xbounds",
+        None, [cty.POINTER(xfdata.FL_OBJECT), cty.POINTER(cty.c_double),
+        cty.POINTER(cty.c_double)],
+        """void fl_get_positioner_xbounds(FL_OBJECT * ob, double * min,
+        double * max)""")
+    libr.check_if_initialized()
+    libr.check_if_FL_OBJECT_ptr(pFlObject)
+    minbound, pminbound = libr.make_double_and_pointer()
+    maxbound, pmaxbound = libr.make_double_and_pointer()
+    libr.keep_elem_refs(pFlObject, minbound, maxbound, pminbound,
+                        pmaxbound)
     _fl_get_positioner_xbounds(pFlObject, pminbound, pmaxbound)
     return minbound.value, maxbound.value
 
 
 def fl_set_positioner_yvalue(pFlObject, val):
+    """Sets the actual value of positioner object in vertical direction.
+
+    --
+
+    :Parameters:
+      `pFlObject` : pointer to xfdata.FL_OBJECT
+        positioner object
+      `val` : float
+        value to be set. By default it is 0.5.
+
+    :note: e.g. *todo*
+
+    :status: Tested + NoDoc + Demo = OK
+
     """
-        fl_set_positioner_yvalue(pFlObject, val)
-
-        @param pFlObject: positioner object
-        @type pFlObject: pointer to xfdata.FL_OBJECT
-
-        :status: Tested + NoDoc + Demo = OK
-    """
-
-    _fl_set_positioner_yvalue = library.cfuncproto(
-            library.load_so_libforms(), "fl_set_positioner_yvalue",
-            None, [cty.POINTER(xfdata.FL_OBJECT), cty.c_double],
-            """void fl_set_positioner_yvalue(FL_OBJECT * ob, double val)
-""")
-    library.check_if_initialized()
-    library.check_if_FL_OBJECT_ptr(pFlObject)
-    fval = library.convert_to_double(val)
-    library.keep_elem_refs(pFlObject, val, fval)
+    _fl_set_positioner_yvalue = libr.cfuncproto(
+        libr.load_so_libforms(), "fl_set_positioner_yvalue",
+        None, [cty.POINTER(xfdata.FL_OBJECT), cty.c_double],
+        """void fl_set_positioner_yvalue(FL_OBJECT * ob, double val)""")
+    libr.check_if_initialized()
+    libr.check_if_FL_OBJECT_ptr(pFlObject)
+    fval = libr.convert_to_double(val)
+    libr.keep_elem_refs(pFlObject, val, fval)
     _fl_set_positioner_yvalue(pFlObject, fval)
 
 
 def fl_get_positioner_yvalue(pFlObject):
+    """Obtains value of positioner object in vertical direction.
+
+    --
+
+    :Parameters:
+      `pFlObject` : pointer to xfdata.FL_OBJECT
+        positioner object
+
+    :return: value in vertical direction
+    :rtype: float
+
+    :note: e.g. *todo*
+
+    :status: Untested + NoDoc + NoDemo = NOT OK
+
     """
-        fl_get_positioner_yvalue(pFlObject) -> floatnum
-
-        @param pFlObject: positioner object
-        @type pFlObject: pointer to xfdata.FL_OBJECT
-
-        :status: Untested + NoDoc + NoDemo = NOT OK
-    """
-
-    _fl_get_positioner_yvalue = library.cfuncproto(
-            library.load_so_libforms(), "fl_get_positioner_yvalue",
-            cty.c_double, [cty.POINTER(xfdata.FL_OBJECT)],
-            """double fl_get_positioner_yvalue(FL_OBJECT * ob)
-""")
-    library.check_if_initialized()
-    library.check_if_FL_OBJECT_ptr(pFlObject)
-    library.keep_elem_refs(pFlObject)
+    _fl_get_positioner_yvalue = libr.cfuncproto(
+        libr.load_so_libforms(), "fl_get_positioner_yvalue",
+        cty.c_double, [cty.POINTER(xfdata.FL_OBJECT)],
+        """double fl_get_positioner_yvalue(FL_OBJECT * ob)""")
+    libr.check_if_initialized()
+    libr.check_if_FL_OBJECT_ptr(pFlObject)
+    libr.keep_elem_refs(pFlObject)
     retval = _fl_get_positioner_yvalue(pFlObject)
     return retval
 
 
 def fl_set_positioner_ybounds(pFlObject, minbound, maxbound):
+    """Sets minimum and maximum bounds/limits of a positioner in vertical
+    direction.
+
+    --
+
+    :Parameters:
+      `pFlObject` : pointer to xfdata.FL_OBJECT
+        positioner object
+      `minbound` : float
+        minimum bound to be set. By default the minimum value is 0.0.
+      `maxbound` : float
+        maximum bound to be set. By default the the maximum value is 1.0.
+
+    :note: e.g. *todo*
+
+    :status: Tested + NoDoc + Demo = OK
+
     """
-        fl_set_positioner_ybounds(pFlObject, minbound, maxbound)
-
-        @param pFlObject: positioner object
-        @type pFlObject: pointer to xfdata.FL_OBJECT
-
-        :status: Tested + NoDoc + Demo = OK
-    """
-
-    _fl_set_positioner_ybounds = library.cfuncproto(
-            library.load_so_libforms(), "fl_set_positioner_ybounds",
-            None, [cty.POINTER(xfdata.FL_OBJECT), cty.c_double, cty.c_double],
-            """void fl_set_positioner_ybounds(FL_OBJECT * ob, double min,
-               double max)
-""")
-    library.check_if_initialized()
-    library.check_if_FL_OBJECT_ptr(pFlObject)
-    fminbound = library.convert_to_double(minbound)
-    fmaxbound = library.convert_to_double(maxbound)
-    library.keep_elem_refs(pFlObject, minbound, maxbound, fminbound, fmaxbound)
+    _fl_set_positioner_ybounds = libr.cfuncproto(
+        libr.load_so_libforms(), "fl_set_positioner_ybounds",
+        None, [cty.POINTER(xfdata.FL_OBJECT), cty.c_double, cty.c_double],
+        """void fl_set_positioner_ybounds(FL_OBJECT * ob, double min,
+           double max)""")
+    libr.check_if_initialized()
+    libr.check_if_FL_OBJECT_ptr(pFlObject)
+    fminbound = libr.convert_to_double(minbound)
+    fmaxbound = libr.convert_to_double(maxbound)
+    libr.keep_elem_refs(pFlObject, minbound, maxbound, fminbound,
+                           fmaxbound)
     _fl_set_positioner_ybounds(pFlObject, fminbound, fmaxbound)
 
 
 def fl_get_positioner_ybounds(pFlObject):
+    """Obtain minumum and maximum bounds/limits of a positioner in vertical
+    direction.
+
+    --
+
+    :Parameters:
+    `pFlObject` : pointer to xfdata.FL_OBJECT
+        positioner object
+
+    :return: minimum  bound, maximum bound
+    :rtype: float, float
+
+    :note: e.g. *todo*
+
+    :attention: API change from XForms - upstream was
+        fl_get_positioner_ybounds(pFlObject, minbound, maxbound)
+
+    :status: Untested + NoDoc + NoDemo = NOT OK
+
     """
-        fl_get_positioner_ybounds(pFlObject) -> minbound, maxbound
-
-        @param pFlObject: positioner object
-        @type pFlObject: pointer to xfdata.FL_OBJECT
-
-        :attention: API change from XForms - upstream was
-                    fl_get_positioner_ybounds(pFlObject, minbound, maxbound)
-
-        :status: Untested + NoDoc + NoDemo = NOT OK
-    """
-    _fl_get_positioner_ybounds = library.cfuncproto(
-        library.load_so_libforms(), "fl_get_positioner_ybounds",
+    _fl_get_positioner_ybounds = libr.cfuncproto(
+        libr.load_so_libforms(), "fl_get_positioner_ybounds",
         None, [cty.POINTER(xfdata.FL_OBJECT), cty.POINTER(cty.c_double),
         cty.POINTER(cty.c_double)],
         """void fl_get_positioner_ybounds(FL_OBJECT * ob, double * min,
            double * max)""")
-    library.check_if_initialized()
-    library.check_if_FL_OBJECT_ptr(pFlObject)
-    minbound, pminbound = library.make_double_and_pointer()
-    maxbound, pmaxbound = library.make_double_and_pointer()
-    library.keep_elem_refs(pFlObject, minbound, maxbound, pminbound, pmaxbound)
+    libr.check_if_initialized()
+    libr.check_if_FL_OBJECT_ptr(pFlObject)
+    minbound, pminbound = libr.make_double_and_pointer()
+    maxbound, pmaxbound = libr.make_double_and_pointer()
+    libr.keep_elem_refs(pFlObject, minbound, maxbound, pminbound, pmaxbound)
     _fl_get_positioner_ybounds(pFlObject, pminbound, pmaxbound)
     return minbound.value, maxbound.value
 
 
-def fl_set_positioner_xstep(pFlObject, value):
-    """
-    fl_set_positioner_xstep(pFlObject, value)
+def fl_set_positioner_xstep(pFlObject, step):
+    """Handles positioner values in horizontal direction to be rounded to some
+    values (multiples of step), e.g. to integer values.
 
-    @param pFlObject: positioner object
-    @type pFlObject: pointer to xfdata.FL_OBJECT
+    --
+
+    :Parameters:
+      `pFlObject` : pointer to xfdata.FL_OBJECT
+        positioner object
+      `step` :
+        rounded value. If it's 0.0, switches off rounding.
+
+    :note: e.g. *todo*
 
     :status: Untested + NoDoc + NoDemo = NOT OK
     """
-    _fl_set_positioner_xstep = library.cfuncproto(
-        library.load_so_libforms(), "fl_set_positioner_xstep",
+    _fl_set_positioner_xstep = libr.cfuncproto(
+        libr.load_so_libforms(), "fl_set_positioner_xstep",
         None, [cty.POINTER(xfdata.FL_OBJECT), cty.c_double],
         """void fl_set_positioner_xstep(FL_OBJECT * ob, double value)""")
-    library.check_if_initialized()
-    library.check_if_FL_OBJECT_ptr(pFlObject)
-    fvalue = library.convert_to_double(value)
-    library.keep_elem_refs(pFlObject, value, fvalue)
-    _fl_set_positioner_xstep(pFlObject, fvalue)
+    libr.check_if_initialized()
+    libr.check_if_FL_OBJECT_ptr(pFlObject)
+    fstep = libr.convert_to_double(step)
+    libr.keep_elem_refs(pFlObject, step, fstep)
+    _fl_set_positioner_xstep(pFlObject, fstep)
 
 
-def fl_set_positioner_ystep(pFlObject, value):
-    """
-    fl_set_positioner_ystep(pFlObject, value)
+def fl_set_positioner_ystep(pFlObject, step):
+    """Handles positioner values in vertical direction to be rounded to some
+    values (multiples of step), e.g. to integer values.
 
-    @param pFlObject: positioner object
-    @type pFlObject: pointer to xfdata.FL_OBJECT
+    --
+
+    :Parameters:
+      `pFlObject` : pointer to xfdata.FL_OBJECT
+        positioner object
+      `step` :
+        rounded value. If it's 0.0, switches off rounding.
+
+    :note: e.g. *todo*
 
     :status: Untested + NoDoc + NoDemo = NOT OK
+
     """
-    _fl_set_positioner_ystep = library.cfuncproto(
-        library.load_so_libforms(), "fl_set_positioner_ystep",
+    _fl_set_positioner_ystep = libr.cfuncproto(
+        libr.load_so_libforms(), "fl_set_positioner_ystep",
         None, [cty.POINTER(xfdata.FL_OBJECT), cty.c_double],
         """void fl_set_positioner_ystep(FL_OBJECT * ob, double value)""")
-    library.check_if_initialized()
-    library.check_if_FL_OBJECT_ptr(pFlObject)
-    fvalue = library.convert_to_double(value)
-    library.keep_elem_refs(pFlObject, value, fvalue)
-    _fl_set_positioner_ystep(pFlObject, fvalue)
+    libr.check_if_initialized()
+    libr.check_if_FL_OBJECT_ptr(pFlObject)
+    fstep = libr.convert_to_double(step)
+    libr.keep_elem_refs(pFlObject, step, fstep)
+    _fl_set_positioner_ystep(pFlObject, fstep)
 
-
-def fl_set_positioner_return(pFlObject, when):
-    """
-    fl_set_positioner_return(pFlObject, when)
-
-    @param pFlObject: positioner object
-    @type pFlObject: pointer to xfdata.FL_OBJECT
-    @param when: return type (when it returns)
-    @type when: int_pos
-
-    :status: Untested + NoDoc + NoDemo = NOT OK
-    """
-    _fl_set_positioner_return = library.cfuncproto(
-        library.load_so_libforms(), "fl_set_positioner_return",
-        None, [cty.POINTER(xfdata.FL_OBJECT), cty.c_uint],
-        """void fl_set_positioner_return(FL_OBJECT * ob, unsigned
-           int value)""")
-    library.check_if_initialized()
-    library.check_if_FL_OBJECT_ptr(pFlObject)
-    library.check_admitted_listvalues(when, xfdata.RETURN_list)
-    uiwhen = library.convert_to_uint(when)
-    library.keep_elem_refs(pFlObject, when, uiwhen)
-    _fl_set_positioner_return(pFlObject, uiwhen)
-
+# fl_set_positioner_return function placeholder (deprecated)
 
