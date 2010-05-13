@@ -1,6 +1,12 @@
 
 
 SVN
+    * performing a check for all complex structures (e.g. FL_OBJECT, FL_FORM
+    ..) in needed fl_* functions, in order to verify if their type complies
+    with XForms expectations. Some renaming in library's convenience functions.
+    Some bugfixes in functions' initialization and docstrings. Remaining files
+    switched to reStructuredText. Some descriptions in functions' docstrings
+    are not complete yet.
     * docstrings in flpositioner.py and flscrollbar.pty switched to
     reStructuredText.
     * docstrings in flnmenu.py switched to reStructuredText.
