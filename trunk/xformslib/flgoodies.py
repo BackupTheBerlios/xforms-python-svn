@@ -2,7 +2,7 @@
 # -*- coding: iso8859-1 -*-
 
 """
-    flgoodies.py - Functions to manage goodies objects.
+    flgoodies.py - xforms-python's functions to manage goodies objects.
 
     Copyright (C) 2009, 2010  Luca Lazzaroni "LukenShiro"
     e-mail: <lukenshiro@ngi.it>
@@ -62,7 +62,8 @@ def fl_set_goodies_font(style, size):
         FL_NORMAL_SIZE, FL_MEDIUM_SIZE, FL_LARGE_SIZE, FL_HUGE_SIZE,
         FL_DEFAULT_SIZE
 
-    :note: e.g. fl_set_goodies_font(xfdata.FL_BOLD_STYLE, xfdata.FL_MEDIUM_SIZE)
+    :note: e.g. fl_set_goodies_font(xfdata.FL_BOLD_STYLE, \
+        xfdata.FL_MEDIUM_SIZE)
 
     :status: Tested + Doc + Demo = OK
 
@@ -72,8 +73,8 @@ def fl_set_goodies_font(style, size):
         None, [cty.c_int, cty.c_int],
         """void fl_set_goodies_font(int style, int size)""")
     libr.check_if_initialized()
-    libr.check_admitted_listvalues(style, xfdata.TEXTSTYLE_list)
-    libr.check_admitted_listvalues(size, xfdata.FONTSIZE_list)
+    libr.check_admitted_value_in_list(style, xfdata.TEXTSTYLE_list)
+    libr.check_admitted_value_in_list(size, xfdata.FONTSIZE_list)
     istyle = libr.convert_to_int(style)
     isize = libr.convert_to_int(size)
     libr.keep_elem_refs(style, size, istyle, isize)
@@ -96,7 +97,7 @@ def fl_show_message(msgtxt1, msgtxt2, msgtxt3):
       `msgtxt3` : str
         third message to show
 
-    :note: e.g. fl_show_message("first message", "second message", 
+    :note: e.g. fl_show_message("first message", "second message",
         "third message")
 
     :status: Tested + Doc + Demo = OK
@@ -699,8 +700,8 @@ def fl_set_oneliner_font(style, size):
         None, [cty.c_int, cty.c_int],
         """void fl_set_oneliner_font(int p1, int p2)""")
     libr.check_if_initialized()
-    libr.check_admitted_listvalues(style, xfdata.TEXTSTYLE_list)
-    libr.check_admitted_listvalues(size, xfdata.FONTSIZE_list)
+    libr.check_admitted_value_in_list(style, xfdata.TEXTSTYLE_list)
+    libr.check_admitted_value_in_list(size, xfdata.FONTSIZE_list)
     istyle = libr.convert_to_int(style)
     isize = libr.convert_to_int(size)
     libr.keep_elem_refs(style, size, istyle, isize)
@@ -729,8 +730,8 @@ def fl_set_oneliner_color(fgcolr, bgcolr):
         None, [xfdata.FL_COLOR, xfdata.FL_COLOR],
         """void fl_set_oneliner_color(FL_COLOR p1, FL_COLOR p2)""")
     libr.check_if_initialized()
-    libr.check_admitted_listvalues(fgcolr, xfdata.COLOR_list)
-    libr.check_admitted_listvalues(bgcolr, xfdata.COLOR_list)
+    libr.check_admitted_value_in_list(fgcolr, xfdata.COLOR_list)
+    libr.check_admitted_value_in_list(bgcolr, xfdata.COLOR_list)
     ulfgcolr = libr.convert_to_FL_COLOR(fgcolr)
     ulbgcolr = libr.convert_to_FL_COLOR(bgcolr)
     libr.keep_elem_refs(fgcolr, bgcolr, ulfgcolr, ulbgcolr)
@@ -767,8 +768,8 @@ def fl_set_tooltip_font(style, size):
         None, [cty.c_int, cty.c_int],
         """void fl_set_tooltip_font(int p1, int p2)""")
     libr.check_if_initialized()
-    libr.check_admitted_listvalues(style, xfdata.TEXTSTYLE_list)
-    libr.check_admitted_listvalues(size, xfdata.FONTSIZE_list)
+    libr.check_admitted_value_in_list(style, xfdata.TEXTSTYLE_list)
+    libr.check_admitted_value_in_list(size, xfdata.FONTSIZE_list)
     istyle = libr.convert_to_int(style)
     isize = libr.convert_to_int(size)
     libr.keep_elem_refs(style, size, istyle, isize)
@@ -796,8 +797,8 @@ def fl_set_tooltip_color(fgcolr, bgcolr):
         None, [xfdata.FL_COLOR, xfdata.FL_COLOR],
         """void fl_set_tooltip_color(FL_COLOR p1, FL_COLOR p2)""")
     libr.check_if_initialized()
-    libr.check_admitted_listvalues(fgcolr, xfdata.COLOR_list)
-    libr.check_admitted_listvalues(bgcolr, xfdata.COLOR_list)
+    libr.check_admitted_value_in_list(fgcolr, xfdata.COLOR_list)
+    libr.check_admitted_value_in_list(bgcolr, xfdata.COLOR_list)
     ulfgcolr = libr.convert_to_FL_COLOR(fgcolr)
     ulbgcolr = libr.convert_to_FL_COLOR(bgcolr)
     libr.keep_elem_refs(fgcolr, bgcolr, ulfgcolr, ulbgcolr)
@@ -828,7 +829,7 @@ def fl_set_tooltip_boxtype(boxtype):
         None, [cty.c_int],
         """void fl_set_tooltip_boxtype(int p1)""")
     libr.check_if_initialized()
-    libr.check_admitted_listvalues(boxtype, xfdata.BOXTYPE_list)
+    libr.check_admitted_value_in_list(boxtype, xfdata.BOXTYPE_list)
     iboxtype = libr.convert_to_int(boxtype)
     libr.keep_elem_refs(boxtype, iboxtype)
     _fl_set_tooltip_boxtype(iboxtype)
@@ -856,7 +857,7 @@ def fl_set_tooltip_lalign(align):
         None, [cty.c_int],
         """void fl_set_tooltip_lalign(int p1)""")
     libr.check_if_initialized()
-    libr.check_admitted_listvalues(align, xfdata.ALIGN_list)
+    libr.check_admitted_value_in_list(align, xfdata.ALIGN_list)
     ialign = libr.convert_to_int(align)
     libr.keep_elem_refs(align, ialign)
     _fl_set_tooltip_lalign(ialign)
@@ -1015,6 +1016,7 @@ def fl_pclose(pFile):
         cty.c_int, [cty.POINTER(xfdata.FILE)],
         """int fl_pclose(FILE * p1)""")
     libr.check_if_initialized()
+    libr.verify_otherclassptr_type(pFile, cty.POINTER(xfdata.FILE))
     libr.keep_elem_refs(pFile)
     retval = _fl_pclose(pFile)
     return retval
@@ -1062,7 +1064,7 @@ def fl_show_command_log(border):
         None, [cty.c_int],
         """void fl_show_command_log(int p1)""")
     libr.check_if_initialized()
-    libr.check_admitted_listvalues(border, xfdata.DECORATION_list)
+    libr.check_admitted_value_in_list(border, xfdata.DECORATION_list)
     iborder = libr.convert_to_int(border)
     libr.keep_elem_refs(border, iborder)
     _fl_show_command_log(iborder)
@@ -1278,7 +1280,7 @@ def fl_set_fselector_fontsize(size):
         None, [cty.c_int],
         """void fl_set_fselector_fontsize(int p1)""")
     libr.check_if_initialized()
-    libr.check_admitted_listvalues(size, xfdata.FONTSIZE_list)
+    libr.check_admitted_value_in_list(size, xfdata.FONTSIZE_list)
     isize = libr.convert_to_int(size)
     libr.keep_elem_refs(size, isize)
     _fl_set_fselector_fontsize(isize)
@@ -1309,7 +1311,7 @@ def fl_set_fselector_fontstyle(style):
         None, [cty.c_int],
         """void fl_set_fselector_fontstyle(int p1)""")
     libr.check_if_initialized()
-    libr.check_admitted_listvalues(style, xfdata.TEXTSTYLE_list)
+    libr.check_admitted_value_in_list(style, xfdata.TEXTSTYLE_list)
     istyle = libr.convert_to_int(style)
     libr.keep_elem_refs(style, istyle)
     _fl_set_fselector_fontstyle(istyle)
@@ -1339,7 +1341,7 @@ def fl_set_fselector_placement(place):
         None, [cty.c_int],
         """void fl_set_fselector_placement(int p1)""")
     libr.check_if_initialized()
-    libr.check_admitted_listvalues(place, xfdata.PLACE_list)
+    libr.check_admitted_value_in_list(place, xfdata.PLACE_list)
     iplace = libr.convert_to_int(place)
     libr.keep_elem_refs(place, iplace)
     _fl_set_fselector_placement(iplace)
@@ -1366,7 +1368,7 @@ def fl_set_fselector_border(border):
         None, [cty.c_int],
         """void fl_set_fselector_border(int p1)""")
     libr.check_if_initialized()
-    libr.check_admitted_listvalues(border, xfdata.DECORATION_list)
+    libr.check_admitted_value_in_list(border, xfdata.DECORATION_list)
     iborder = libr.convert_to_int(border)
     libr.keep_elem_refs(border, iborder)
     _fl_set_fselector_border(iborder)
@@ -1820,7 +1822,7 @@ def fl_goodies_atclose(pFlForm, vdata):
       `pFlForm` : pointer to xfdata.FL_FORM
         form
       `vdata` : pointer to void?
-        user data
+        user data?
 
     :return: unused value (xfdata.FL_IGNORE)
     :rtype: int
@@ -1835,6 +1837,7 @@ def fl_goodies_atclose(pFlForm, vdata):
         cty.c_int, [cty.POINTER(xfdata.FL_FORM), cty.c_void_p],
         """int fl_goodies_atclose(FL_FORM * p1, void * p2)""")
     libr.check_if_initialized()
+    libr.check_if_FL_FORM_ptr(pFlForm)
     pvdata = cty.cast(vdata, cty.c_void_p)
     libr.keep_elem_refs(pFlForm, vdata, pvdata)
     retval = _fl_goodies_atclose(pFlForm, pvdata)

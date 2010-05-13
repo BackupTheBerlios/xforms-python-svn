@@ -2,8 +2,7 @@
 # -*- coding: iso8859-1 -*-
 
 """
-    xfdata.py - Data, constants and variables to be used with Python wrapper
-    for XForms (X11) GUI C toolkit library
+    xfdata.py - Data, constants and variables to be used with xforms-python.
 
     Copyright (C) 2009, 2010  Luca Lazzaroni "LukenShiro"
     e-mail: <lukenshiro@ngi.it>
@@ -2123,10 +2122,10 @@ class FL_RESOURCE(cty.Structure):
 FL_RESOURCE._fields_ = [
     ('res_name', STRING),           # resource name
     ('res_class', STRING),          # resource class
-    ('type', FL_RTYPE),             # FL_INT, FL_FLOAT, FL_BOOL, FL_STRING
-    ('var', cty.c_void_p),            # address for the variable
+    ('type', FL_RTYPE),             # FL_INT, FL_FLOAT, FL_BOOL, etc..
+    ('var', cty.c_void_p),          # address for the variable
     ('defval', STRING),             # default setting in string form
-    ('nbytes', cty.c_int),            # used only for strings
+    ('nbytes', cty.c_int),          # used only for strings
 ]
 
 
@@ -4788,7 +4787,7 @@ FL_LINEPOINTS_XYPLOT = 12   # line & points
 # list of possible values - my add --LK
 XYPLOTTYPE_list = [FL_NORMAL_XYPLOT, FL_SQUARE_XYPLOT, FL_CIRCLE_XYPLOT, \
                    FL_FILL_XYPLOT, FL_POINTS_XYPLOT, FL_DASHED_XYPLOT, \
-                   FL_IMPULSE_XYPLOT, FL_ACTIVE_XYPLOT, FL_EMPTY_XYPLOT , \
+                   FL_IMPULSE_XYPLOT, FL_ACTIVE_XYPLOT, FL_EMPTY_XYPLOT, \
                    FL_DOTTED_XYPLOT, FL_DOTDASHED_XYPLOT, \
                    FL_LONGDASHED_XYPLOT, FL_LINEPOINTS_XYPLOT]
 

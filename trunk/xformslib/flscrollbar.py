@@ -2,7 +2,7 @@
 # -*- coding: iso8859-1 -*-
 
 """
-    flscrollbar.py - Functions to manage scrollbar objects.
+    flscrollbar.py - xforms-python's functions to manage scrollbar objects.
 
     Copyright (C) 2009, 2010  Luca Lazzaroni "LukenShiro"
     e-mail: <lukenshiro@ngi.it>
@@ -67,7 +67,7 @@ def fl_add_scrollbar(scrolltype, x, y, w, h, label):
     :return: scrollbar object added (pFlObject)
     :rtype: pointer to xfdata.FL_OBJECT
 
-    :note: e.g. *todo
+    :note: e.g. *todo*
 
     :status: Tested + NoDoc + Demo = OK
 
@@ -79,7 +79,7 @@ def fl_add_scrollbar(scrolltype, x, y, w, h, label):
         """FL_OBJECT * fl_add_scrollbar(int type, FL_Coord x, FL_Coord y,
             FL_Coord w, FL_Coord h, const char * label)""")
     libr.check_if_initialized()
-    libr.check_admitted_listvalues(scrolltype, xfdata.SCROLLTYPE_list)
+    libr.check_admitted_value_in_list(scrolltype, xfdata.SCROLLTYPE_list)
     iscrolltype = libr.convert_to_int(scrolltype)
     ix = libr.convert_to_FL_Coord(x)
     iy = libr.convert_to_FL_Coord(y)
@@ -93,7 +93,7 @@ def fl_add_scrollbar(scrolltype, x, y, w, h, label):
 
 
 def fl_get_scrollbar_value(pFlObject):
-    """Returns the value of a scrollbar object.
+    """Obtains the current value of a scrollbar object.
 
     --
 
@@ -104,7 +104,7 @@ def fl_get_scrollbar_value(pFlObject):
     :return: scrollbar value
     :rtype: float
 
-    :note: e.g. *todo
+    :note: e.g. *todo*
 
     :status: Untested + NoDoc + NoDemo = NOT OK
 
@@ -114,7 +114,7 @@ def fl_get_scrollbar_value(pFlObject):
         cty.c_double, [cty.POINTER(xfdata.FL_OBJECT)],
         """double fl_get_scrollbar_value(FL_OBJECT * ob)""")
     libr.check_if_initialized()
-    libr.check_if_FL_OBJECT_ptr(pFlObject)
+    libr.verify_flobjectptr_type(pFlObject)
     libr.keep_elem_refs(pFlObject)
     retval = _fl_get_scrollbar_value(pFlObject)
     return retval
@@ -127,11 +127,11 @@ def fl_set_scrollbar_value(pFlObject, val):
 
     :Parameters:
       `pFlObject` : pointer to xfdata.FL_OBJECT
-            scrollbar object
+        scrollbar object
       `val` : float
         value of the scrollbar to be set. By default it's 0.5.
 
-    :note: e.g. *todo
+    :note: e.g. *todo*
 
     :status: Tested + NoDoc + Demo = OK
 
@@ -141,15 +141,15 @@ def fl_set_scrollbar_value(pFlObject, val):
         None, [cty.POINTER(xfdata.FL_OBJECT), cty.c_double],
         """void fl_set_scrollbar_value(FL_OBJECT * ob, double val)""")
     libr.check_if_initialized()
-    libr.check_if_FL_OBJECT_ptr(pFlObject)
+    libr.verify_flobjectptr_type(pFlObject)
     fval = libr.convert_to_double(val)
     libr.keep_elem_refs(pFlObject, val, fval)
     _fl_set_scrollbar_value(pFlObject, fval)
 
 
 def fl_set_scrollbar_size(pFlObject, val):
-    """Controls the size of the sliding bar inside the box. This function does
-    nothing if applied to scrollbars of type xfdata.FL_NICE_SCROLLBAR.
+    """Controls the size of the sliding bar inside the box. This function
+    does nothing if applied to scrollbars of type xfdata.FL_NICE_SCROLLBAR.
 
     --
 
@@ -161,7 +161,7 @@ def fl_set_scrollbar_size(pFlObject, val):
         xfdata.FL_SLIDER_WIDTH (which is 0.15 for all scrollbars). If it's 1.0,
         the scrollbar covers the box completely and can no longer be moved.
 
-    :note: e.g. *todo
+    :note: e.g. *todo*
 
     :status: Tested + NoDoc + Demo = OK
 
@@ -171,7 +171,7 @@ def fl_set_scrollbar_size(pFlObject, val):
         None, [cty.POINTER(xfdata.FL_OBJECT), cty.c_double],
         """void fl_set_scrollbar_size(FL_OBJECT * ob, double val)""")
     libr.check_if_initialized()
-    libr.check_if_FL_OBJECT_ptr(pFlObject)
+    libr.verify_flobjectptr_type(pFlObject)
     fval = libr.convert_to_double(val)
     libr.keep_elem_refs(pFlObject, val, fval)
     _fl_set_scrollbar_size(pFlObject, fval)
@@ -189,10 +189,10 @@ def fl_set_scrollbar_increment(pFlObject, leftbtnval, midlbtnval):
         scrollbar object
       `leftbtnval` : float
         value to increment if the left mouse button is pressed
-      `midlbtnval : float
+      `midlbtnval` : float
         value to increment if the middle mouse button is pressed
 
-    :note: e.g. *todo
+    :note: e.g. *todo*
 
     :status: Untested + NoDoc + NoDemo = NOT OK
 
@@ -203,7 +203,7 @@ def fl_set_scrollbar_increment(pFlObject, leftbtnval, midlbtnval):
         """void fl_set_scrollbar_increment(FL_OBJECT * ob, double l,
            double r)""")
     libr.check_if_initialized()
-    libr.check_if_FL_OBJECT_ptr(pFlObject)
+    libr.verify_flobjectptr_type(pFlObject)
     fleftbtnval = libr.convert_to_double(leftbtnval)
     fmidlbtnval = libr.convert_to_double(midlbtnval)
     libr.keep_elem_refs(pFlObject, leftbtnval, midlbtnval, fleftbtnval, \
@@ -212,7 +212,7 @@ def fl_set_scrollbar_increment(pFlObject, leftbtnval, midlbtnval):
 
 
 def fl_get_scrollbar_increment(pFlObject):
-    """Returns the increment of size of a scrollbar for left and middle mouse
+    """Obtains the increment of size of a scrollbar for left and middle mouse
     buttons.
 
     --
@@ -224,7 +224,7 @@ def fl_get_scrollbar_increment(pFlObject):
     :return: left button increment, middle button increment
     :rtype: float, float
 
-    :note: e.g. *todo
+    :note: e.g. *todo*
 
     :attention: API change from XForms - upstream was
         fl_get_scrollbar_increment(pFlObject, leftbtnval, valmidlbtnval)
@@ -239,7 +239,7 @@ def fl_get_scrollbar_increment(pFlObject):
         """void fl_get_scrollbar_increment(FL_OBJECT * ob, double * a,
            double * b)""")
     libr.check_if_initialized()
-    libr.check_if_FL_OBJECT_ptr(pFlObject)
+    libr.verify_flobjectptr_type(pFlObject)
     leftbtnval, pleftbtnval = libr.make_double_and_pointer()
     midlbtnval, pmidlbtnval = libr.make_double_and_pointer()
     libr.keep_elem_refs(pFlObject, leftbtnval, midlbtnval, pleftbtnval,
@@ -254,7 +254,7 @@ def fl_set_scrollbar_bounds(pFlObject, minbound, maxbound):
     for horizontal sliders at the top of the slider. By setting min to a
     larger value than max in a call of fl_set_scrollbar_bounds() this can be
     reversed. When this function is called, if the actual value of a scrollbar
-    isn?t within the range of the new bounds, its value gets adjusted to the
+    isn't within the range of the new bounds, its value gets adjusted to the
     nearest limit.
 
     --
@@ -269,7 +269,7 @@ def fl_set_scrollbar_bounds(pFlObject, minbound, maxbound):
         maximum bound of scrollbar. By default, the maximum value
         for a slider is 1.0.
 
-    :note: e.g. *todo
+    :note: e.g. *todo*
 
     :status: Untested + NoDoc + NoDemo = NOT OK
 
@@ -280,7 +280,7 @@ def fl_set_scrollbar_bounds(pFlObject, minbound, maxbound):
         """void fl_set_scrollbar_bounds(FL_OBJECT * ob, double b1, double
            b2)""")
     libr.check_if_initialized()
-    libr.check_if_FL_OBJECT_ptr(pFlObject)
+    libr.verify_flobjectptr_type(pFlObject)
     fminbound = libr.convert_to_double(minbound)
     fmaxbound = libr.convert_to_double(maxbound)
     libr.keep_elem_refs(pFlObject, minbound, maxbound, fminbound, fmaxbound)
@@ -299,7 +299,7 @@ def fl_get_scrollbar_bounds(pFlObject):
     :return: minimum bound, maximum bound
     :rtype: float, float
 
-    :note: e.g. *todo
+    :note: e.g. *todo*
 
     :attention: API change from XForms - upstream was
         fl_get_scrollbar_bounds(pFlObject, b1, b2)
@@ -314,7 +314,7 @@ def fl_get_scrollbar_bounds(pFlObject):
         """void fl_get_scrollbar_bounds(FL_OBJECT * ob, double * b1,
            double * b2)""")
     libr.check_if_initialized()
-    libr.check_if_FL_OBJECT_ptr(pFlObject)
+    libr.verify_flobjectptr_type(pFlObject)
     minbound, pminbound = libr.make_double_and_pointer()
     maxbound, pmaxbound = libr.make_double_and_pointer()
     libr.keep_elem_refs(pFlObject, minbound, pminbound, maxbound, pmaxbound)
@@ -331,12 +331,12 @@ def fl_set_scrollbar_step(pFlObject, step):
     --
 
     :Parameters:
-      `pFlObject: pointer to xfdata.FL_OBJECT
+      `pFlObject` : pointer to xfdata.FL_OBJECT
         scrollbar object
       `step` : float
         rounded value.
 
-    :note: e.g. *todo
+    :note: e.g. *todo*
 
     :status: Untested + NoDoc + NoDemo = NOT OK
 
@@ -346,7 +346,7 @@ def fl_set_scrollbar_step(pFlObject, step):
         None, [cty.POINTER(xfdata.FL_OBJECT), cty.c_double],
         """void fl_set_scrollbar_step(FL_OBJECT * ob, double step)""")
     libr.check_if_initialized()
-    libr.check_if_FL_OBJECT_ptr(pFlObject)
+    libr.verify_flobjectptr_type(pFlObject)
     fstep = libr.convert_to_double(step)
     libr.keep_elem_refs(pFlObject, step, fstep)
     _fl_set_scrollbar_step(pFlObject, fstep)

@@ -2,7 +2,7 @@
 # -*- coding: iso8859-1 -*-
 
 """
-    flfilesys.py - Functions to manage files and directories.
+    flfilesys.py - xforms-python's functions to manage files and directories.
 
     Copyright (C) 2009, 2010  Luca Lazzaroni "LukenShiro"
     e-mail: <lukenshiro@ngi.it>
@@ -107,12 +107,12 @@ def fl_set_dirlist_filter(py_DirFilter):
     :rtype: xfdata.FL_DIRLIST_FILTER class instance
 
     :note: e.g. def dirfilter(fname, ftype)
-    :note: e.g. |->| return type == xfdata.FT_DIR || return type == \
-    :note: e.g. |->| xfdata.FT_FILE || return type == xfdata.FT_SOCK || \
-    :note: e.g. |->| return type == xfdata.FT_FIFO || return type == \
-    :note: e.g. |->| xfdata.FT_LINK || return type == xfdata.FT_BLK || \
-    :note: e.g. |->| return type == xfdata.FT_CHR || return type == \
-    :note: e.g. |->| xfdata.FT_OTHER
+    :note: e.g. > return type == xfdata.FT_DIR || return type == \
+    :note: e.g. > xfdata.FT_FILE || return type == xfdata.FT_SOCK || \
+    :note: e.g. > return type == xfdata.FT_FIFO || return type == \
+    :note: e.g. > xfdata.FT_LINK || return type == xfdata.FT_BLK || \
+    :note: e.g. > return type == xfdata.FT_CHR || return type == \
+    :note: e.g. > xfdata.FT_OTHER
     :note: e.g. olddirfiltfunc = fl_set_dirlist_filter(dirfilter)
 
     :status: Tested + Doc + NoDemo = OK
@@ -211,6 +211,8 @@ def fl_free_dirlist(pDirList):
         None, [cty.POINTER(xfdata.FL_Dirlist)],
         """void fl_free_dirlist(FL_Dirlist * dl)""")
     libr.check_if_initialized()
+    libr.verify_otherclassptr_type(pDirList, cty.POINTER( \
+                                           xfdata.FL_Dirlist))
     libr.keep_elem_refs(pDirList)
     _fl_free_dirlist(pDirList)
 

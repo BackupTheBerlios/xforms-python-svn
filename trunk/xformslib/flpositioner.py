@@ -2,7 +2,7 @@
 # -*- coding: iso8859-1 -*-
 
 """
-    flpositioner.py - Functions to manage positioner objects.
+    flpositioner.py - xforms-python's functions to manage positioner objects.
 
     Copyright (C) 2009, 2010  Luca Lazzaroni "LukenShiro"
     e-mail: <lukenshiro@ngi.it>
@@ -48,7 +48,7 @@ from xformslib import xfdata
 
 
 def fl_add_positioner(postype, x, y, w, h, label):
-    """Adds a positioner object. The label is placed below the box by default.
+    """Adds a positioner object.
 
     --
 
@@ -65,7 +65,7 @@ def fl_add_positioner(postype, x, y, w, h, label):
       `h` : int
         height in coord units
       `label` : str
-        text label of positioner
+        text label of positioner. By default the label is placed below the box.
 
     :return: positioner object added (pFlObject).
     :rtype: pointer to xfdata.FL_OBJECT
@@ -82,7 +82,7 @@ def fl_add_positioner(postype, x, y, w, h, label):
         """FL_OBJECT * fl_add_positioner(int type, FL_Coord x, FL_Coord y,
            FL_Coord w, FL_Coord h, const char * label)""")
     libr.check_if_initialized()
-    libr.check_admitted_listvalues(postype, xfdata.POSITIONERTYPE_list)
+    libr.check_admitted_value_in_list(postype, xfdata.POSITIONERTYPE_list)
     ipostype = libr.convert_to_int(postype)
     ix = libr.convert_to_FL_Coord(x)
     iy = libr.convert_to_FL_Coord(y)
@@ -90,7 +90,7 @@ def fl_add_positioner(postype, x, y, w, h, label):
     ih = libr.convert_to_FL_Coord(h)
     slabel = libr.convert_to_string(label)
     libr.keep_elem_refs(postype, x, y, w, h, label, ipostype, ix, iy,
-                   iw, ih, slabel)
+                        iw, ih, slabel)
     retval = _fl_add_positioner(ipostype, ix, iy, iw, ih, slabel)
     return retval
 
@@ -116,7 +116,7 @@ def fl_set_positioner_xvalue(pFlObject, val):
         None, [cty.POINTER(xfdata.FL_OBJECT), cty.c_double],
         """void fl_set_positioner_xvalue(FL_OBJECT * ob, double val)""")
     libr.check_if_initialized()
-    libr.check_if_FL_OBJECT_ptr(pFlObject)
+    libr.verify_flobjectptr_type(pFlObject)
     fval = libr.convert_to_double(val)
     libr.keep_elem_refs(pFlObject, val, fval)
     _fl_set_positioner_xvalue(pFlObject, fval)
@@ -144,7 +144,7 @@ def fl_get_positioner_xvalue(pFlObject):
         cty.c_double, [cty.POINTER(xfdata.FL_OBJECT)],
         """double fl_get_positioner_xvalue(FL_OBJECT * ob)""")
     libr.check_if_initialized()
-    libr.check_if_FL_OBJECT_ptr(pFlObject)
+    libr.verify_flobjectptr_type(pFlObject)
     libr.keep_elem_refs(pFlObject)
     retval = _fl_get_positioner_xvalue(pFlObject)
     return retval
@@ -175,7 +175,7 @@ def fl_set_positioner_xbounds(pFlObject, minbound, maxbound):
         """void fl_set_positioner_xbounds(FL_OBJECT * ob, double min,
             double max)""")
     libr.check_if_initialized()
-    libr.check_if_FL_OBJECT_ptr(pFlObject)
+    libr.verify_flobjectptr_type(pFlObject)
     fminbound = libr.convert_to_double(minbound)
     fmaxbound = libr.convert_to_double(maxbound)
     libr.keep_elem_refs(pFlObject, minbound, maxbound, fminbound, fmaxbound)
@@ -211,7 +211,7 @@ def fl_get_positioner_xbounds(pFlObject):
         """void fl_get_positioner_xbounds(FL_OBJECT * ob, double * min,
         double * max)""")
     libr.check_if_initialized()
-    libr.check_if_FL_OBJECT_ptr(pFlObject)
+    libr.verify_flobjectptr_type(pFlObject)
     minbound, pminbound = libr.make_double_and_pointer()
     maxbound, pmaxbound = libr.make_double_and_pointer()
     libr.keep_elem_refs(pFlObject, minbound, maxbound, pminbound,
@@ -241,7 +241,7 @@ def fl_set_positioner_yvalue(pFlObject, val):
         None, [cty.POINTER(xfdata.FL_OBJECT), cty.c_double],
         """void fl_set_positioner_yvalue(FL_OBJECT * ob, double val)""")
     libr.check_if_initialized()
-    libr.check_if_FL_OBJECT_ptr(pFlObject)
+    libr.verify_flobjectptr_type(pFlObject)
     fval = libr.convert_to_double(val)
     libr.keep_elem_refs(pFlObject, val, fval)
     _fl_set_positioner_yvalue(pFlObject, fval)
@@ -269,7 +269,7 @@ def fl_get_positioner_yvalue(pFlObject):
         cty.c_double, [cty.POINTER(xfdata.FL_OBJECT)],
         """double fl_get_positioner_yvalue(FL_OBJECT * ob)""")
     libr.check_if_initialized()
-    libr.check_if_FL_OBJECT_ptr(pFlObject)
+    libr.verify_flobjectptr_type(pFlObject)
     libr.keep_elem_refs(pFlObject)
     retval = _fl_get_positioner_yvalue(pFlObject)
     return retval
@@ -300,22 +300,22 @@ def fl_set_positioner_ybounds(pFlObject, minbound, maxbound):
         """void fl_set_positioner_ybounds(FL_OBJECT * ob, double min,
            double max)""")
     libr.check_if_initialized()
-    libr.check_if_FL_OBJECT_ptr(pFlObject)
+    libr.verify_flobjectptr_type(pFlObject)
     fminbound = libr.convert_to_double(minbound)
     fmaxbound = libr.convert_to_double(maxbound)
     libr.keep_elem_refs(pFlObject, minbound, maxbound, fminbound,
-                           fmaxbound)
+                        fmaxbound)
     _fl_set_positioner_ybounds(pFlObject, fminbound, fmaxbound)
 
 
 def fl_get_positioner_ybounds(pFlObject):
-    """Obtain minumum and maximum bounds/limits of a positioner in vertical
+    """Obtain minimum and maximum bounds/limits of a positioner in vertical
     direction.
 
     --
 
     :Parameters:
-    `pFlObject` : pointer to xfdata.FL_OBJECT
+      `pFlObject` : pointer to xfdata.FL_OBJECT
         positioner object
 
     :return: minimum  bound, maximum bound
@@ -336,7 +336,7 @@ def fl_get_positioner_ybounds(pFlObject):
         """void fl_get_positioner_ybounds(FL_OBJECT * ob, double * min,
            double * max)""")
     libr.check_if_initialized()
-    libr.check_if_FL_OBJECT_ptr(pFlObject)
+    libr.verify_flobjectptr_type(pFlObject)
     minbound, pminbound = libr.make_double_and_pointer()
     maxbound, pmaxbound = libr.make_double_and_pointer()
     libr.keep_elem_refs(pFlObject, minbound, maxbound, pminbound, pmaxbound)
@@ -365,7 +365,7 @@ def fl_set_positioner_xstep(pFlObject, step):
         None, [cty.POINTER(xfdata.FL_OBJECT), cty.c_double],
         """void fl_set_positioner_xstep(FL_OBJECT * ob, double value)""")
     libr.check_if_initialized()
-    libr.check_if_FL_OBJECT_ptr(pFlObject)
+    libr.verify_flobjectptr_type(pFlObject)
     fstep = libr.convert_to_double(step)
     libr.keep_elem_refs(pFlObject, step, fstep)
     _fl_set_positioner_xstep(pFlObject, fstep)
@@ -393,7 +393,7 @@ def fl_set_positioner_ystep(pFlObject, step):
         None, [cty.POINTER(xfdata.FL_OBJECT), cty.c_double],
         """void fl_set_positioner_ystep(FL_OBJECT * ob, double value)""")
     libr.check_if_initialized()
-    libr.check_if_FL_OBJECT_ptr(pFlObject)
+    libr.verify_flobjectptr_type(pFlObject)
     fstep = libr.convert_to_double(step)
     libr.keep_elem_refs(pFlObject, step, fstep)
     _fl_set_positioner_ystep(pFlObject, fstep)

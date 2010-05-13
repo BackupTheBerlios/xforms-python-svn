@@ -2,7 +2,7 @@
 # -*- coding: iso8859-1 -*-
 
 """
-    fldial.py - Functions to manage dial objects.
+    fldial.py - xforms-python's functions to manage dial objects.
 
     Copyright (C) 2009, 2010  Luca Lazzaroni "LukenShiro"
     e-mail: <lukenshiro@ngi.it>
@@ -82,7 +82,7 @@ def fl_add_dial(dialtype, x, y, w, h, label):
         """FL_OBJECT * fl_add_dial(int type, FL_Coord x, FL_Coord y,
            FL_Coord w, FL_Coord h, const char * label)""")
     libr.check_if_initialized()
-    libr.check_admitted_listvalues(dialtype, xfdata.DIALTYPE_list)
+    libr.check_admitted_value_in_list(dialtype, xfdata.DIALTYPE_list)
     idialtype = libr.convert_to_int(dialtype)
     ix = libr.convert_to_FL_Coord(x)
     iy = libr.convert_to_FL_Coord(y)
@@ -116,7 +116,7 @@ def fl_set_dial_value(pFlObject, val):
         None, [cty.POINTER(xfdata.FL_OBJECT), cty.c_double],
         """void fl_set_dial_value(FL_OBJECT * ob, double val)""")
     libr.check_if_initialized()
-    libr.check_if_FL_OBJECT_ptr(pFlObject)
+    libr.verify_flobjectptr_type(pFlObject)
     fval = libr.convert_to_double(val)
     libr.keep_elem_refs(pFlObject, val, fval)
     _fl_set_dial_value(pFlObject, fval)
@@ -144,15 +144,14 @@ def fl_get_dial_value(pFlObject):
         cty.c_double, [cty.POINTER(xfdata.FL_OBJECT)],
         """double fl_get_dial_value(FL_OBJECT * ob)""")
     libr.check_if_initialized()
-    libr.check_if_FL_OBJECT_ptr(pFlObject)
+    libr.verify_flobjectptr_type(pFlObject)
     libr.keep_elem_refs(pFlObject)
     retval = _fl_get_dial_value(pFlObject)
     return retval
 
 
 def fl_set_dial_bounds(pFlObject, minbound, maxbound):
-    """Sets the minimum and the maximum values of a dial object. By default,
-    the minimum value is 0.0, the maximum is 1.0.
+    """Sets the minimum and the maximum values of a dial object.
 
     --
 
@@ -160,9 +159,9 @@ def fl_set_dial_bounds(pFlObject, minbound, maxbound):
       `pFlObject` : pointer to xfdata.FL_OBJECT
         dial object
       `minbound` : float
-        minimum value of dial
+        minimum value of dial. By default it is 0.0.
       `maxbound` : float
-        maximum value of dial
+        maximum value of dial. By default it is 1.0.
 
     :note: e.g. fl_set_dial_bounds(dialobj, 0, 200)
 
@@ -175,7 +174,7 @@ def fl_set_dial_bounds(pFlObject, minbound, maxbound):
         """void fl_set_dial_bounds(FL_OBJECT * ob, double min,
            double max)""")
     libr.check_if_initialized()
-    libr.check_if_FL_OBJECT_ptr(pFlObject)
+    libr.verify_flobjectptr_type(pFlObject)
     fminbound = libr.convert_to_double(minbound)
     fmaxbound = libr.convert_to_double(maxbound)
     libr.keep_elem_refs(pFlObject, minbound, maxbound, fminbound, fmaxbound)
@@ -209,7 +208,7 @@ def fl_get_dial_bounds(pFlObject):
         """void fl_get_dial_bounds(FL_OBJECT * ob, double * min,
            double * max)""")
     libr.check_if_initialized()
-    libr.check_if_FL_OBJECT_ptr(pFlObject)
+    libr.verify_flobjectptr_type(pFlObject)
     minbound, pminbound = libr.make_double_and_pointer()
     maxbound, pmaxbound = libr.make_double_and_pointer()
     libr.keep_elem_refs(pFlObject, minbound, maxbound, pminbound, pmaxbound)
@@ -239,7 +238,7 @@ def fl_set_dial_step(pFlObject, step):
         None, [cty.POINTER(xfdata.FL_OBJECT), cty.c_double],
         """void fl_set_dial_step(FL_OBJECT * ob, double value)""")
     libr.check_if_initialized()
-    libr.check_if_FL_OBJECT_ptr(pFlObject)
+    libr.verify_flobjectptr_type(pFlObject)
     fstep = libr.convert_to_double(step)
     libr.keep_elem_refs(pFlObject, step, fstep)
     _fl_set_dial_step(pFlObject, fstep)
@@ -271,8 +270,8 @@ def fl_set_dial_return(pFlObject, when):
         """void fl_set_dial_return(FL_OBJECT * ob, unsigned
            int value)""")
     libr.check_if_initialized()
-    libr.check_if_FL_OBJECT_ptr(pFlObject)
-    libr.check_admitted_listvalues(when, xfdata.RETURN_list)
+    libr.verify_flobjectptr_type(pFlObject)
+    libr.check_admitted_value_in_list(when, xfdata.RETURN_list)
     uiwhen = libr.convert_to_uint(when)
     libr.keep_elem_refs(pFlObject, when, uiwhen)
     _fl_set_dial_return(pFlObject, uiwhen)
@@ -282,8 +281,7 @@ def fl_set_dial_angles(pFlObject, angmin, angmax):
     """Limits the angular range a dial can take or choose an angle other
     than 0 to represent the minimum value. The angles are relative to the
     origin of the dial, which is by default at 6 o'clock and rotates
-    clock-wise. By default, the minimum angle is 0 and the maximum angle
-    is 360.
+    clock-wise.
 
     --
 
@@ -291,9 +289,9 @@ def fl_set_dial_angles(pFlObject, angmin, angmax):
       `pFlObject` : pointer to xfdata.FL_OBJECT
         dial object
       `angmin` : float
-        minimum value of angle
+        minimum value of angle. By default it is 0.
       `angmax` : float
-        maximum value of angle
+        maximum value of angle. By default it is 360.
 
     :note: e.g. fl_set_dial_angles(dialobj, 45, 180)
 
@@ -306,7 +304,7 @@ def fl_set_dial_angles(pFlObject, angmin, angmax):
         """void fl_set_dial_angles(FL_OBJECT * ob, double amin,
            double amax)""")
     libr.check_if_initialized()
-    libr.check_if_FL_OBJECT_ptr(pFlObject)
+    libr.verify_flobjectptr_type(pFlObject)
     fangmin = libr.convert_to_double(angmin)
     fangmax = libr.convert_to_double(angmax)
     libr.keep_elem_refs(pFlObject, angmin, angmax, fangmin, fangmax)
@@ -335,7 +333,7 @@ def fl_set_dial_cross(pFlObject, yesno):
         None, [cty.POINTER(xfdata.FL_OBJECT), cty.c_int],
         """void fl_set_dial_cross(FL_OBJECT * ob, int flag)""")
     libr.check_if_initialized()
-    libr.check_if_FL_OBJECT_ptr(pFlObject)
+    libr.verify_flobjectptr_type(pFlObject)
     iyesno = libr.convert_to_int(yesno)
     libr.keep_elem_refs(pFlObject, yesno, iyesno)
     _fl_set_dial_cross(pFlObject, iyesno)
@@ -367,8 +365,8 @@ def fl_set_dial_direction(pFlObject, directn):
         None, [cty.POINTER(xfdata.FL_OBJECT), cty.c_int],
         """void fl_set_dial_direction(FL_OBJECT * ob, int dir)""")
     libr.check_if_initialized()
-    libr.check_if_FL_OBJECT_ptr(pFlObject)
-    libr.check_admitted_listvalues(directn, xfdata.DIALROTN_list)
+    libr.verify_flobjectptr_type(pFlObject)
+    libr.check_admitted_value_in_list(directn, xfdata.DIALROTN_list)
     idirectn = libr.convert_to_int(directn)
     libr.keep_elem_refs(pFlObject, directn, idirectn)
     _fl_set_dial_direction(pFlObject, idirectn)

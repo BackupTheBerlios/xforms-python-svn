@@ -2,7 +2,7 @@
 # -*- coding: iso8859-1 -*-
 
 """
-    flflimage.py - Functions to manage image objects.
+    flflimage.py - xforms-python's functions to manage image objects.
 
     Copyright (C) 2009, 2010  Luca Lazzaroni "LukenShiro"
     e-mail: <lukenshiro@ngi.it>
@@ -47,16 +47,21 @@ from xformslib import xfdata
 
 
 def FL_RGB2GRAY(r, g, b):
-    return cty.c_uint((78 * (r) + 150 * (g) + 28 * (b)) >> 8)
+    uir = libr.convert_to_uint(r)
+    uig = libr.convert_to_uint(g)
+    uib = libr.convert_to_uint(b)
+    return ((78 * (uir) + 150 * (uig) + 28 * (uib)) >> 8)   # cty.c_uint
 
 
 # if PCBITS is not 8, we need to apply the RGBmask
 
 def FL_IsRGB(pImage):
+    libr.verify_flflimageptr_type(pImage)
     return (pImage.contents.type == xfdata.FL_IMAGE_RGB)
 
 
 def FL_IsPacked(pImage):
+    libr.verify_flflimageptr_type(pImage)
     return (pImage.contents.type == xfdata.FL_IMAGE_PACKED)
 
 
@@ -79,6 +84,8 @@ def flimage_setup(pImageSetup):
         None, [cty.POINTER(xfdata.FLIMAGE_SETUP)],
         """void flimage_setup(FLIMAGE_SETUP * setup)""")
     libr.check_if_initialized()
+    libr.verify_otherclassptr_type(pImageSetup, cty.POINTER( \
+                                     xfdata.FLIMAGE_SETUP))
     libr.keep_elem_refs(pImageSetup)
     _flimage_setup(pImageSetup)
 
@@ -136,6 +143,7 @@ def flimage_read(pImage):
         cty.POINTER(xfdata.FL_IMAGE), [cty.POINTER(xfdata.FL_IMAGE)],
         """FL_IMAGE * flimage_read(FL_IMAGE * im)""")
     libr.check_if_initialized()
+    libr.verify_flflimageptr_type(pImage)
     libr.keep_elem_refs(pImage)
     retval = _flimage_read(pImage)
     return retval
@@ -173,6 +181,7 @@ def flimage_dump(pImage, fname, fmt):
         """int flimage_dump(FL_IMAGE * p1, const char * p2,
            const char * p3)""")
     libr.check_if_initialized()
+    libr.verify_flflimageptr_type(pImage)
     sfname = libr.convert_to_string(fname)
     sfmt = libr.convert_to_string(fmt)
     libr.keep_elem_refs(pImage, fname, fmt, sfname, sfmt)
@@ -202,6 +211,7 @@ def flimage_close(pImage):
         cty.c_int, [cty.POINTER(xfdata.FL_IMAGE)],
         """int flimage_close(FL_IMAGE * p1)""")
     libr.check_if_initialized()
+    libr.verify_flflimageptr_type(pImage)
     libr.keep_elem_refs(pImage)
     retval = _flimage_close(pImage)
     return retval
@@ -254,6 +264,7 @@ def flimage_getmem(pImage):
         cty.c_int, [cty.POINTER(xfdata.FL_IMAGE)],
         """int flimage_getmem(FL_IMAGE * p1)""")
     libr.check_if_initialized()
+    libr.verify_flflimageptr_type(pImage)
     libr.keep_elem_refs(pImage)
     retval = _flimage_getmem(pImage)
     return retval
@@ -320,6 +331,7 @@ def flimage_description_via_filter(pImage, cmds, what, verbose):
         """int flimage_description_via_filter(FL_IMAGE * im, char *const
            *cmds, const char *what, int verbose)""")
     libr.check_if_initialized()
+    libr.verify_flflimageptr_type(pImage)
     scmds = libr.convert_to_string(cmds)                # to be verified
     swhat = libr.convert_to_string(what)
     iverbose = libr.convert_to_int(verbose)
@@ -362,6 +374,7 @@ def flimage_write_via_filter(pImage, cmds, formats, verbose):
         """int flimage_write_via_filter(FL_IMAGE * p1, const * char * cmds,
            const char * formats[], int verbose)""")
     libr.check_if_initialized()
+    libr.verify_flflimageptr_type(pImage)
     # cmds to be handled
     sformats = libr.convert_to_string(formats)
     iverbose = libr.convert_to_int(verbose)
@@ -390,6 +403,7 @@ def flimage_free(pImage):
         None, [cty.POINTER(xfdata.FL_IMAGE)],
         """void flimage_free(FL_IMAGE * p1)""")
     libr.check_if_initialized()
+    libr.verify_flflimageptr_type(pImage)
     libr.keep_elem_refs(pImage)
     _flimage_free(pImage)
 
@@ -418,6 +432,7 @@ def flimage_display(pImage, win):
         cty.c_int, [cty.POINTER(xfdata.FL_IMAGE), xfdata.Window],
         """int flimage_display(FL_IMAGE * p1, Window p2)""")
     libr.check_if_initialized()
+    libr.verify_flflimageptr_type(pImage)
     ulwin = libr.convert_to_Window(win)
     libr.keep_elem_refs(pImage, win, ulwin)
     retval = _flimage_display(pImage, ulwin)
@@ -448,6 +463,7 @@ def flimage_sdisplay(pImage, win):
         cty.c_int, [cty.POINTER(xfdata.FL_IMAGE), xfdata.Window],
         """int flimage_sdisplay(FL_IMAGE * p1, Window p2)""")
     libr.check_if_initialized()
+    libr.verify_flflimageptr_type(pImage)
     ulwin = libr.convert_to_Window(win)
     libr.keep_elem_refs(pImage, win, ulwin)
     retval = _flimage_sdisplay(pImage, ulwin)
@@ -484,7 +500,8 @@ def flimage_convert(pImage, newtype, ncolors):
         cty.c_int, [cty.POINTER(xfdata.FL_IMAGE), cty.c_int, cty.c_int],
         """int flimage_convert(FL_IMAGE * p1, int p2, int p3)""")
     libr.check_if_initialized()
-    libr.check_admitted_listvalues(newtype, xfdata.FLIMAGETYPE_list)
+    libr.verify_flflimageptr_type(pImage)
+    libr.check_admitted_value_in_list(newtype, xfdata.FLIMAGETYPE_list)
     inewtype = libr.convert_to_int(newtype)
     incolors = libr.convert_to_int(ncolors)
     libr.keep_elem_refs(pImage, newtype, ncolors, inewtype, incolors)
@@ -515,7 +532,7 @@ def flimage_type_name(imagetype):
         xfdata.STRING, [cty.c_int],
         """const char * flimage_type_name(int type)""")
     libr.check_if_initialized()
-    libr.check_admitted_listvalues(imagetype, xfdata.FLIMAGETYPE_list)
+    libr.check_admitted_value_in_list(imagetype, xfdata.FLIMAGETYPE_list)
     iimagetype = libr.convert_to_int(imagetype)
     libr.keep_elem_refs(imagetype, iimagetype)
     retval = _flimage_type_name(iimagetype)
@@ -581,8 +598,9 @@ def flimage_add_text(pImage, text, length, style, size, txtcolr, bgcolr,
            int style, int size, unsigned int tcol, unsigned int bcol,
            int tran, double tx, double ty, int rot)""")
     libr.check_if_initialized()
-    libr.checkif_admitted_listvalues(style, xfdata.TEXTSTYLE_list)
-    libr.checkif_admitted_listvalues(size, xfdata.FONTSIZE_list)
+    libr.verify_flflimageptr_type(pImage)
+    libr.check_admitted_value_in_list(style, xfdata.TEXTSTYLE_list)
+    libr.check_admitted_value_in_list(size, xfdata.FONTSIZE_list)
     stext = libr.convert_to_string(text)
     ilength = libr.convert_to_int(length)
     istyle = libr.convert_to_int(style)
@@ -626,6 +644,9 @@ def flimage_add_text_struct(pImage, pImageText):
         cty.POINTER(xfdata.FLIMAGE_TEXT)],
         """int flimage_add_text_struct(FL_IMAGE * p1, const char * p2)""")
     libr.check_if_initialized()
+    libr.verify_flflimageptr_type(pImage)
+    libr.verify_otherclassptr_type(pImageText, cty.POINTER( \
+                                   xfdata.FLIMAGE_TEXT))
     libr.keep_elem_refs(pImage, pImageText)
     retval = _flimage_add_text_struct(pImage, pImageText)
     return retval
@@ -705,7 +726,8 @@ def flimage_add_marker(pImage, name, x, y, w, h, style, fill, rot, colr, bcolr):
            double p3, double p4, double p5, double p6, int p7,
            int p8, int p9, FL_COLOR p10, FL_COLOR p11)""")
     libr.check_if_initialized()
-    libr.check_if_admitted_listvalues(style, xfdata.LINESTYLE_list)
+    libr.verify_flflimageptr_type(pImage)
+    libr.check_admitted_value_in_list(style, xfdata.LINESTYLE_list)
     sname = libr.convert_to_string(name)
     fx = libr.convert_to_double(x)
     fy = libr.convert_to_double(y)
@@ -750,6 +772,9 @@ def flimage_add_marker_struct(pImage, pImageMarker):
         xfdata.FLIMAGE_MARKER)],
         """int flimage_add_marker_struct(FL_IMAGE * p1, const char * p2)""")
     libr.check_if_initialized()
+    libr.verify_flflimageptr_type(pImage)
+    libr.verify_otherclassptr_type(pImageMarker, cty.POINTER( \
+                                            xfdata.FL_IMAGE))
     libr.keep_elem_refs(pImage, pImageMarker)
     retval = _flimage_add_marker_struct(pImage, pImageMarker)
     return retval
@@ -815,6 +840,7 @@ def flimage_delete_all_markers(pImage):
         None, [cty.POINTER(xfdata.FL_IMAGE)],
         """void flimage_delete_all_markers(FL_IMAGE * p1)""")
     libr.check_if_initialized()
+    libr.verify_flflimageptr_type(pImage)
     libr.keep_elem_refs(pImage)
     _flimage_delete_all_markers(pImage)
 
@@ -853,6 +879,7 @@ def flimage_render_annotation(pImage, win):
         cty.c_int, [cty.POINTER(xfdata.FL_IMAGE), xfdata.FL_WINDOW],
         """int flimage_render_annotation(FL_IMAGE * p1, FL_WINDOW p2)""")
     libr.check_if_initialized()
+    libr.verify_flflimageptr_type(pImage)
     ulwin = libr.convert_to_Window(win)
     libr.keep_elem_refs(pImage, win, ulwin)
     retval = _flimage_render_annotation(pImage, ulwin)
@@ -880,6 +907,7 @@ def flimage_error(pImage, text):
         None, [cty.POINTER(xfdata.FL_IMAGE), xfdata.STRING],
         """void flimage_error(FL_IMAGE * p1, const char * p2)""")
     libr.check_if_initialized()
+    libr.verify_flflimageptr_type(pImage)
     stext = libr.convert_to_Window(text)
     libr.keep_elem_refs(pImage, text, stext)
     _flimage_error(pImage, stext)
@@ -955,6 +983,8 @@ def flimage_jpeg_output_options(pImageJpegOption):
         None, [cty.POINTER(xfdata.FLIMAGE_JPEG_OPTION)],
         """void flimage_jpeg_output_options(FLIMAGE_JPEG_OPTION * p1)""")
     libr.check_if_initialized()
+    libr.verify_otherclassptr_type(pImageJpegOption, cty.POINTER( \
+                                    xfdata.FLIMAGE_JPEG_OPTION))
     libr.keep_elem_refs(pImageJpegOption)
     _flimage_jpeg_output_options(pImageJpegOption)
 
@@ -1080,7 +1110,7 @@ def flimage_get_format_info(nformat):
     _flimage_get_format_info = libr.cfuncproto(
         libr.load_so_libflimage(), "flimage_get_format_info",
         cty.POINTER(xfdata.FLIMAGE_FORMAT_INFO), [cty.c_int],
-        """const char * flimage_get_format_info(int p1)""")
+        """const FLIMAGE_FORMAT_INFO * flimage_get_format_info(int p1)""")
     libr.check_if_initialized()
     informat = libr.convert_to_int(nformat)
     libr.keep_elem_refs(nformat, informat)
@@ -1305,7 +1335,7 @@ def flimage_add_format(formalname, shortname, extension, imagetype,
            FLIMAGE_Description p6, FLIMAGE_Read_Pixels p7,
            FLIMAGE_Write_Image p8)""")
     libr.check_if_initialized()
-    libr.check_admitted_listvalues(imagetype, xfdata.FLIMAGETYPE_list)
+    libr.check_admitted_value_in_list(imagetype, xfdata.FLIMAGETYPE_list)
     sformalname = libr.convert_to_string(formalname)
     sshortname = libr.convert_to_string(shortname)
     sextension = libr.convert_to_string(extension)
@@ -1374,6 +1404,7 @@ def flimage_getcolormap(pImage):
         cty.c_int, [cty.POINTER(xfdata.FL_IMAGE)],
         """int flimage_getcolormap(FL_IMAGE * p1)""")
     libr.check_if_initialized()
+    libr.verify_flflimageptr_type(pImage)
     libr.keep_elem_refs(pImage)
     retval = _flimage_getcolormap(pImage)
     return retval
@@ -1437,6 +1468,7 @@ def flimage_convolve(pImage, kernel, krows, kcols):
         """int flimage_convolve(FL_IMAGE * p1, int * * p2, int p3,
            int p4)""")
     libr.check_if_initialized()
+    libr.verify_flflimageptr_type(pImage)
     ikrows = libr.convert_to_int(krows)
     ikcols = libr.convert_to_int(kcols)
     libr.keep_elem_refs(pImage, kernel, krows, kcols, ikrows, ikcols)
@@ -1475,6 +1507,7 @@ def flimage_convolvea(pImage, kernel, krow, kcol):
         cty.c_int, cty.c_int],
         """int flimage_convolvea(FL_IMAGE * p1, int * p2, int p3, int p4)""")
     libr.check_if_initialized()
+    libr.verify_flflimageptr_type(pImage)
     pkernel = cty.cast(kernel, cty.POINTER(cty.c_int))
     ikrow = libr.convert_to_int(krow)
     ikcol = libr.convert_to_int(kcol)
@@ -1519,6 +1552,7 @@ def flimage_tint(pImage, packed, opacity):
         cty.c_int, [cty.POINTER(xfdata.FL_IMAGE), cty.c_uint, cty.c_double],
         """int flimage_tint(FL_IMAGE * p1, unsigned int p2, double p3)""")
     libr.check_if_initialized()
+    libr.verify_flflimageptr_type(pImage)
     uipacked = libr.convert_to_uint(packed)
     fopacity = libr.convert_to_float(opacity)
     libr.keep_elem_refs(pImage, packed, opacity, uipacked, fopacity)
@@ -1563,7 +1597,8 @@ def flimage_rotate(pImage, angle, subpixel):
         cty.c_int, [cty.POINTER(xfdata.FL_IMAGE), cty.c_int, cty.c_int],
         """int flimage_rotate(FL_IMAGE * p1, int p2, int p3)""")
     libr.check_if_initialized()
-    libr.check_if_admitted_listvalues(subpixel, xfdata.FLIMAGESUBPIXROT_list)
+    libr.verify_flflimageptr_type(pImage)
+    libr.check_admitted_value_in_list(subpixel, xfdata.FLIMAGESUBPIXROT_list)
     iangle = libr.convert_to_int(angle)
     isubpixel = libr.convert_to_int(subpixel)
     libr.keep_elem_refs(pImage, angle, subpixel, iangle, isubpixel)
@@ -1600,6 +1635,7 @@ def flimage_flip(pImage, what):
         cty.c_int, [cty.POINTER(xfdata.FL_IMAGE), cty.c_int],
         """int flimage_flip(FL_IMAGE * p1, int p2)""")
     libr.check_if_initialized()
+    libr.verify_flflimageptr_type(pImage)
     if isinstance(what, str):
         # workaround to let a character as int argument
         ordwhat = ord(what)
@@ -1647,6 +1683,7 @@ def flimage_scale(pImage, newwidth, newheight, option):
         cty.c_int],
         """int flimage_scale(FL_IMAGE * p1, int p2, int p3, int p4)""")
     libr.check_if_initialized()
+    libr.verify_flflimageptr_type(pImage)
     inewwidth = libr.convert_to_int(newwidth)
     inewheight = libr.convert_to_int(newheight)
     ioption = libr.convert_to_int(option)
@@ -1698,6 +1735,7 @@ def flimage_warp(pImage, mtrx, newwidth, newheight, subpixel):
         """int flimage_warp(FL_IMAGE * p1, float * p2, int p3, int p4,
            int p5)""")
     libr.check_if_initialized()
+    libr.verify_flflimageptr_type(pImage)
     # mtrx to be handled
     inewwidth = libr.convert_to_int(newwidth)
     inewheight = libr.convert_to_int(newheight)
@@ -1720,7 +1758,7 @@ def flimage_autocrop(pImage, bgcolr):
       `pImage: pointer to xfdat.FL_IMAGE
         image
       `bgcolr` : int_pos
-        background color to crop. If it is xfdata.FLIMAGE_AUTOCOLOR, the
+        background color to crop. If it's xfdata.FLIMAGE_AUTOCOLOR, the
         background is chosen as the first pixel of the image.
 
     :return: non-negative num., or -1 (on failure)
@@ -1736,6 +1774,7 @@ def flimage_autocrop(pImage, bgcolr):
         cty.c_int, [cty.POINTER(xfdata.FL_IMAGE), cty.c_uint],
         """int flimage_autocrop(FL_IMAGE * p1, unsigned int p2)""")
     libr.check_if_initialized()
+    libr.verify_flflimageptr_type(pImage)
     uibgcolr = libr.convert_to_uint(bgcolr)
     libr.keep_elem_refs(pImage, bgcolr, uibgcolr)
     retval = _flimage_autocrop(pImage, uibgcolr)
@@ -1752,7 +1791,7 @@ def flimage_get_autocrop(pImage, bgcolr):
       `pImage` : pointer to xfdata.FL_IMAGE
         image
       `bgcolr` : int_pos
-        background color to crop. If it is xfdata.FLIMAGE_AUTOCOLOR, the
+        background color to crop. If it's xfdata.FLIMAGE_AUTOCOLOR, the
         background is chosen as the first pixel of the image.
 
     :return: num., from left side (xl), from top side (yt), from right side
@@ -1775,6 +1814,7 @@ def flimage_get_autocrop(pImage, bgcolr):
         """int flimage_get_autocrop(FL_IMAGE * p1, unsigned int p2,
            int * p3, int * p4, int * p5, int * p6)""")
     libr.check_if_initialized()
+    libr.verify_flflimageptr_type(pImage)
     uibgcolr = libr.convert_to_uint(bgcolr)
     xl, pxl = libr.make_int_and_pointer()
     yt, pyt = libr.make_int_and_pointer()
@@ -1826,6 +1866,7 @@ def flimage_crop(pImage, xl, yt, xr, yb):
         """int flimage_crop(FL_IMAGE * p1, int p2, int p3,
            int p4, int p5)""")
     libr.check_if_initialized()
+    libr.verify_flflimageptr_type(pImage)
     ixl = libr.convert_to_int(xl)
     iyt = libr.convert_to_int(yt)
     ixr = libr.convert_to_int(xr)
@@ -1862,6 +1903,7 @@ def flimage_replace_pixel(pImage, targetcolr, newcolr):
         """int flimage_replace_pixel(FL_IMAGE * p1, unsigned int p2,
            unsigned int p3)""")
     libr.check_if_initialized()
+    libr.verify_flflimageptr_type(pImage)
     uitargetcolr = libr.convert_to_uint(targetcolr)
     uinewcolr = libr.convert_to_uint(newcolr)
     libr.keep_elem_refs(pImage, targetcolr, newcolr, uitargetcolr, uinewcolr)
@@ -1901,6 +1943,7 @@ def flimage_transform_pixels(pImage, red, green, blue):
         """int flimage_transform_pixels(FL_IMAGE * p1, int * p2,
            int * p3, int * p4)""")
     libr.check_if_initialized()
+    libr.verify_flflimageptr_type(pImage)
     pred = cty.cast(red, cty.POINTER(cty.c_int))
     pgreen = cty.cast(green, cty.POINTER(cty.c_int))
     pblue = cty.cast(blue, cty.POINTER(cty.c_int))
@@ -1937,6 +1980,7 @@ def flimage_windowlevel(pImage, winlvl, width):
         cty.c_int, [cty.POINTER(xfdata.FL_IMAGE), cty.c_int, cty.c_int],
         """int flimage_windowlevel(FL_IMAGE * p1, int p2, int p3)""")
     libr.check_if_initialized()
+    libr.verify_flflimageptr_type(pImage)
     iwinlvl = libr.convert_to_int(winlvl)
     iwidth = libr.convert_to_int(width)
     libr.keep_elem_refs(pImage, winlvl, width, iwinlvl, iwidth)
@@ -1967,6 +2011,7 @@ def flimage_enhance(pImage, delta):
         cty.c_int, [cty.POINTER(xfdata.FL_IMAGE), cty.c_int],
         """int flimage_enhance(FL_IMAGE * p1, int p2)""")
     libr.check_if_initialized()
+    libr.verify_flflimageptr_type(pImage)
     idelta = libr.convert_to_int(delta)     # unused
     libr.keep_elem_refs(pImage, delta, idelta)
     retval = _flimage_enhance(pImage, idelta)
@@ -1997,6 +2042,7 @@ def flimage_from_pixmap(pImage, pixmap):
         cty.c_int, [cty.POINTER(xfdata.FL_IMAGE), xfdata.Pixmap],
         """int flimage_from_pixmap(FL_IMAGE * p1, Pixmap p2)""")
     libr.check_if_initialized()
+    libr.verify_flflimageptr_type(pImage)
     ulpixmap = libr.convert_to_Pixmap(pixmap)
     libr.keep_elem_refs(pImage, pixmap, ulpixmap)
     retval = _flimage_from_pixmap(pImage, ulpixmap)
@@ -2028,6 +2074,7 @@ def flimage_to_pixmap(pImage, win):
         xfdata.Pixmap, [cty.POINTER(xfdata.FL_IMAGE), xfdata.FL_WINDOW],
         """Pixmap flimage_to_pixmap(FL_IMAGE * p1, FL_WINDOW p2)""")
     libr.check_if_initialized()
+    libr.verify_flflimageptr_type(pImage)
     ulwin = libr.convert_to_Window(win)
     libr.keep_elem_refs(pImage, win, ulwin)
     retval = _flimage_to_pixmap(pImage, ulwin)
@@ -2058,6 +2105,7 @@ def flimage_dup(pImage):
         cty.POINTER(xfdata.FL_IMAGE), [cty.POINTER(xfdata.FL_IMAGE)],
         """FL_IMAGE * flimage_dup(FL_IMAGE * p1)""")
     libr.check_if_initialized()
+    libr.verify_flflimageptr_type(pImage)
     libr.keep_elem_refs(pImage)
     retval = _flimage_dup(pImage)
     return retval
@@ -2175,6 +2223,7 @@ def fl_j2pass_quantize_packed(packed, w, h, maxcolr, ci, actualcolr, redlut,
     predlut = cty.cast(redlut, cty.POINTER(cty.c_int))
     pgreenlut = cty.cast(greenlut, cty.POINTER(cty.c_int))
     pbluelut = cty.cast(bluelut, cty.POINTER(cty.c_int))
+    libr.verify_flflimageptr_type(pImage)
     libr.keep_elem_refs(packed, w, h, maxcolr, ci, actualcolr, redlut,
             greenlut, bluelut, pImage, iw, ih, imaxcolr, iactualcolr, predlut,
             pgreenlut, pbluelut)
@@ -2248,6 +2297,7 @@ def fl_j2pass_quantize_rgb(red, green, blue, w, h, maxcolr, ci, actualcolr,
     predlut = cty.cast(redlut, cty.POINTER(cty.c_int))
     pgreenlut = cty.cast(greenlut, cty.POINTER(cty.c_int))
     pbluelut = cty.cast(bluelut, cty.POINTER(cty.c_int))
+    libr.verify_flflimageptr_type(pImage)
     libr.keep_elem_refs(red, green, blue, w, h, maxcolr, ci, actualcolr,
                 redlut, greenlut, bluelut, pImage, iw, ih, imaxcolr,
                 iactualcolr, predlut, pgreenlut, pbluelut)
@@ -2294,7 +2344,7 @@ def fl_make_submatrix(inmtrx, nrows, ncols, r1, c1, rs, cs, elemsize):
         """void * fl_make_submatrix(void * p1, int p2, int p3, int p4,
            int p5, int p6, int p7, unsigned int p8)""")
     libr.check_if_initialized()
-    # inmtrx ha to be handled
+    # inmtrx has to be handled
     inrows = libr.convert_to_int(nrows)
     incols = libr.convert_to_int(ncols)
     ir1 = libr.convert_to_int(r1)
@@ -2436,6 +2486,7 @@ def flimage_add_comments(pImage, text, lng):
         """void flimage_add_comments(FL_IMAGE * p1, const char * p2,
            int p3)""")
     libr.check_if_initialized()
+    libr.verify_flflimageptr_type(pImage)
     stext = libr.convert_to_string(text)
     ilng = libr.convert_to_int(lng)
     libr.keep_elem_refs(pImage, text, lng, stext, ilng)
@@ -2475,6 +2526,7 @@ def flimage_color_to_pixel(pImage, r, g, b):
         """long unsigned int flimage_color_to_pixel(FL_IMAGE * p1,
                int p2, int p3, int p4, int * p5)""")
     libr.check_if_initialized()
+    libr.verify_flflimageptr_type(pImage)
     ir = libr.convert_to_int(r)
     ig = libr.convert_to_int(g)
     ib = libr.convert_to_int(b)
@@ -2512,6 +2564,8 @@ def flimage_combine(pImage1, pImage2, alpha):
         """FL_IMAGE * flimage_combine(FL_IMAGE * p1, FL_IMAGE * p2,
            double p3)""")
     libr.check_if_initialized()
+    libr.verify_flflimageptr_type(pImage1)
+    libr.verify_flflimageptr_type(pImage2)
     falpha = libr.convert_to_double(alpha)
     libr.keep_elem_refs(pImage1, pImage2, alpha, falpha)
     retval = _flimage_combine(pImage1, pImage2, falpha)
@@ -2537,6 +2591,7 @@ def flimage_display_markers(pImage):
         None, [cty.POINTER(xfdata.FL_IMAGE)],
         """void flimage_display_markers(FL_IMAGE * p1)""")
     libr.check_if_initialized()
+    libr.verify_flflimageptr_type(pImage)
     libr.keep_elem_refs(pImage)
     _flimage_display_markers(pImage)
 
@@ -2562,9 +2617,11 @@ def flimage_dup_(pImage, pix):
     """
     _flimage_dup_ = libr.cfuncproto(
         libr.load_so_libflimage(), "flimage_dup_",
-        cty.POINTER(xfdata.FL_IMAGE), [cty.POINTER(xfdata.FL_IMAGE), cty.c_int],
+        cty.POINTER(xfdata.FL_IMAGE), [cty.POINTER(xfdata.FL_IMAGE),
+        cty.c_int],
         """FL_IMAGE * flimage_dup_(FL_IMAGE * p1, int p2)""")
     libr.check_if_initialized()
+    libr.verify_flflimageptr_type(pImage)
     ipix = libr.convert_to_int(pix)
     libr.keep_elem_refs(pImage, pix, ipix)
     retval = _flimage_dup_(pImage, ipix)
@@ -2606,7 +2663,7 @@ def flimage_enable_fits():
     _flimage_enable_fits()
 
 
-# TODO: try to understand what kind of images are these ones.
+# TODO: try to understand what kind of images is this one.
 def flimage_enable_genesis():
     """Enables use of Genesis image format.
 
@@ -2830,6 +2887,7 @@ def flimage_free_ci(pImage):
         None, [cty.POINTER(xfdata.FL_IMAGE)],
         """void flimage_free_ci(FL_IMAGE * p1)""")
     libr.check_if_initialized()
+    libr.verify_flflimageptr_type(pImage)
     libr.keep_elem_refs(pImage)
     _flimage_free_ci(pImage)
 
@@ -2853,6 +2911,7 @@ def flimage_free_gray(pImage):
         None, [cty.POINTER(xfdata.FL_IMAGE)],
         """void flimage_free_gray(FL_IMAGE * p1)""")
     libr.check_if_initialized()
+    libr.verify_flflimageptr_type(pImage)
     libr.keep_elem_refs(pImage)
     _flimage_free_gray(pImage)
 
@@ -2875,6 +2934,8 @@ def flimage_free_linearlut(pImage):
         libr.load_so_libflimage(), "flimage_free_linearlut",
         None, [cty.POINTER(xfdata.FL_IMAGE)],
         """void flimage_free_linearlut(FL_IMAGE * p1)""")
+    libr.check_if_initialized()
+    libr.verify_flflimageptr_type(pImage)
     libr.keep_elem_refs(pImage)
     _flimage_free_linearlut(pImage)
 
@@ -2898,6 +2959,7 @@ def flimage_free_rgb(pImage):
         None, [cty.POINTER(xfdata.FL_IMAGE)],
         """void flimage_free_rgb(FL_IMAGE * p1)""")
     libr.check_if_initialized()
+    libr.verify_flflimageptr_type(pImage)
     libr.keep_elem_refs(pImage)
     _flimage_free_rgb(pImage)
 
@@ -2921,6 +2983,7 @@ def flimage_freemem(pImage):
         None, [cty.POINTER(xfdata.FL_IMAGE)],
         """void flimage_freemem(FL_IMAGE * p1)""")
     libr.check_if_initialized()
+    libr.verify_flflimageptr_type(pImage)
     libr.keep_elem_refs(pImage)
     _flimage_freemem(pImage)
 
@@ -2950,6 +3013,7 @@ def flimage_get_closest_color_from_map(pImage, colr):
         """int flimage_get_closest_color_from_map(FL_IMAGE * p1,
            unsigned int p2)""")
     libr.check_if_initialized()
+    libr.verify_flflimageptr_type(pImage)
     uicolr = libr.convert_to_uint(colr)
     libr.keep_elem_refs(pImage, colr, uicolr)
     retval = _flimage_get_closest_color_from_map(pImage, uicolr)
@@ -2978,6 +3042,7 @@ def flimage_get_linearlut(pImage):
         cty.c_int, [cty.POINTER(xfdata.FL_IMAGE)],
         """int flimage_get_linearlut(FL_IMAGE * p1)""")
     libr.check_if_initialized()
+    libr.verify_flflimageptr_type(pImage)
     libr.keep_elem_refs(pImage)
     retval = _flimage_get_linearlut(pImage)
     return retval
@@ -3003,6 +3068,7 @@ def flimage_invalidate_pixels(pImage):
         None, [cty.POINTER(xfdata.FL_IMAGE)],
         """void flimage_invalidate_pixels(FL_IMAGE * p1)""")
     libr.check_if_initialized()
+    libr.verify_flflimageptr_type(pImage)
     libr.keep_elem_refs(pImage)
     _flimage_invalidate_pixels(pImage)
 
@@ -3019,7 +3085,7 @@ def flimage_open(fname):
     :return: image class instance opened, or None (on failure)
     :rtype: pointer to xfdata.FL_IMAGE
 
-    :note: e.g. pmig = flimage_open("something.ppm")
+    :note: e.g. pimg = flimage_open("something.ppm")
 
     :status: Untested + Doc + NoDemo = NOT OK
 
@@ -3057,6 +3123,7 @@ def flimage_read_annotation(pImage):
         cty.c_int, [cty.POINTER(xfdata.FL_IMAGE)],
         """int flimage_read_annotation(FL_IMAGE * p1)""")
     libr.check_if_initialized()
+    libr.verify_flflimageptr_type(pImage)
     libr.keep_elem_refs(pImage)
     retval = _flimage_read_annotation(pImage)
     return retval
@@ -3124,6 +3191,7 @@ def flimage_swapbuffer(pImage):
         cty.c_int, [cty.POINTER(xfdata.FL_IMAGE)],
         """int flimage_swapbuffer(FL_IMAGE * p1) """)
     libr.check_if_initialized()
+    libr.verify_flflimageptr_type(pImage)
     libr.keep_elem_refs(pImage)
     retval = _flimage_swapbuffer(pImage)
     return retval
@@ -3142,6 +3210,9 @@ def flimage_to_ximage(pImage, win, pXWindowAttributes):
       `pXWindowAttributes` : pointer to xfdata.XWindowAttributes
         class instance
 
+    :return: num.
+    :rtype: int
+
     :note: e.g. *todo*
 
     :status: Untested + Doc + NoDemo = NOT OK
@@ -3154,7 +3225,10 @@ def flimage_to_ximage(pImage, win, pXWindowAttributes):
         """int flimage_to_ximage(FL_IMAGE * p1, FL_WINDOW p2,
            XWindowAttributes * p3) """)
     libr.check_if_initialized()
+    libr.verify_flflimageptr_type(pImage)
     ulwin = libr.convert_to_Window(win)
+    libr.verify_otherclassptr_type(pXWindowAttributes, cty.POINTER( \
+                            xfdata.XWindowAttributes))
     libr.keep_elem_refs(pImage, win, pXWindowAttributes, ulwin)
     retval = _flimage_to_ximage(pImage, ulwin, pXWindowAttributes)
     return retval
@@ -3182,6 +3256,7 @@ def flimage_write_annotation(pImage):
         cty.c_int, [cty.POINTER(xfdata.FL_IMAGE)],
         """int flimage_write_annotation(FL_IMAGE * p1) """)
     libr.check_if_initialized()
+    libr.verify_flflimageptr_type(pImage)
     libr.keep_elem_refs(pImage)
     retval = _flimage_write_annotation(pImage)
     return retval

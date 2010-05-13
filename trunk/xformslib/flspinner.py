@@ -2,8 +2,7 @@
 # -*- coding: iso8859-1 -*-
 
 """
-    xforms-python - Python wrapper for XForms (X11) GUI C toolkit library
-    using ctypes
+    flspinner.py - xforms-python's functions to manage spinner objects.
 
     Copyright (C) 2009, 2010  Luca Lazzaroni "LukenShiro"
     e-mail: <lukenshiro@ngi.it>
@@ -34,7 +33,7 @@
 
 
 import ctypes as cty
-from xformslib import library
+from xformslib import library as libr
 from xformslib import xfdata
 
 
@@ -48,233 +47,365 @@ from xformslib import xfdata
 
 
 def fl_add_spinner(spinnertype, x, y, w, h, label):
+    """Adds a spinner object.
+
+    --
+
+    :Parameters:
+      `spinnertype` : int
+        type of spinner to be added. Values (from xfdata.py) FL_INT_SPINNER,
+        FL_FLOAT_SPINNER
+      `x` : int
+        horizontal position (upper-left corner)
+      `y` : int
+        vertical position (upper-left corner)
+      `w` : int
+        width in coord units
+      `h` : int
+        height in coord units
+      `label` : str
+        text label of spinner
+
+    :return: spinner object added (pFlObject)
+    :rtype: pointer to xfdata.FL_OBJECT
+
+    :note: e.g. *todo*
+
+    :status: Untested + NoDoc + NoDemo = NOT OK
+
     """
-        fl_add_spinner(spinnertype, x, y, w, h, label) -> pFlObject
-
-        Adds a spinner object.
-
-        @param spinnertype: type of spinner to be added
-        @type spinnertype: [num./int] from xfdata module FL_INT_SPINNER,
-                           FL_FLOAT_SPINNER
-        @param x: horizontal position (upper-left corner)
-        @param x: vertical position (upper-left corner)
-        @param w: width in coord units
-        @param h: height in coord units
-        @param label: text label of spinner
-
-        :status: Untested + NoDoc + NoDemo = NOT OK
-    """
-    _fl_add_spinner = library.cfuncproto(
-        library.load_so_libforms(), "fl_add_spinner",
+    _fl_add_spinner = libr.cfuncproto(
+        libr.load_so_libforms(), "fl_add_spinner",
         cty.POINTER(xfdata.FL_OBJECT), [cty.c_int, xfdata.FL_Coord,
         xfdata.FL_Coord, xfdata.FL_Coord, xfdata.FL_Coord, xfdata.STRING],
         """FL_OBJECT * fl_add_spinner(int type, FL_Coord x, FL_Coord y,
         FL_Coord w, FL_Coord h, const char * label)""")
-    library.check_if_initialized()
-    library.check_admitted_listvalues(spinnertype, xfdata.SPINNERTYPE_list)
-    ispinnertype = library.convert_to_int(spinnertype)
-    ix = library.convert_to_FL_Coord(x)
-    iy = library.convert_to_FL_Coord(y)
-    iw = library.convert_to_FL_Coord(w)
-    ih = library.convert_to_FL_Coord(h)
-    slabel = library.convert_to_string(label)
-    library.keep_elem_refs(spinnertype, x, y, w, h, label, ispinnertype, ix, iy,
-                   iw, ih, slabel)
+    libr.check_if_initialized()
+    libr.check_admitted_value_in_list(spinnertype, xfdata.SPINNERTYPE_list)
+    ispinnertype = libr.convert_to_int(spinnertype)
+    ix = libr.convert_to_FL_Coord(x)
+    iy = libr.convert_to_FL_Coord(y)
+    iw = libr.convert_to_FL_Coord(w)
+    ih = libr.convert_to_FL_Coord(h)
+    slabel = libr.convert_to_string(label)
+    libr.keep_elem_refs(spinnertype, x, y, w, h, label, ispinnertype, ix,
+                        iy, iw, ih, slabel)
     retval = _fl_add_spinner(ispinnertype, ix, iy, iw, ih, slabel)
     return retval
 
 
 def fl_get_spinner_value(pFlObject):
-    """
-        fl_get_spinner_value(pFlObject) -> floatval
+    """*todo*
 
-        :status: Untested + NoDoc + NoDemo = NOT OK
+    --
+
+    :Parameters:
+      `pFlObject` : pointer to xfdata.FL_OBJECT
+        spinner object
+
+    :return: value
+    :rtype: float
+
+    :note: e.g. *todo*
+
+    :status: Untested + NoDoc + NoDemo = NOT OK
+
     """
-    _fl_get_spinner_value = library.cfuncproto(
-        library.load_so_libforms(), "fl_get_spinner_value",
+    _fl_get_spinner_value = libr.cfuncproto(
+        libr.load_so_libforms(), "fl_get_spinner_value",
         cty.c_double, [cty.POINTER(xfdata.FL_OBJECT)],
         """double fl_get_spinner_value(FL_OBJECT * obj)""")
-    library.check_if_initialized()
-    library.check_if_FL_OBJECT_ptr(pFlObject)
-    library.keep_elem_refs(pFlObject)
+    libr.check_if_initialized()
+    libr.verify_flobjectptr_type(pFlObject)
+    libr.keep_elem_refs(pFlObject)
     retval = _fl_get_spinner_value(pFlObject)
     return retval
 
 
 def fl_set_spinner_value(pFlObject, val):
-    """
-        fl_set_spinner_value(pFlObject, val) -> num.
+    """*todo*
 
-        :status: Untested + NoDoc + NoDemo = NOT OK
+    --
+
+    :Parameters:
+      `pFlObject` : pointer to xfdata.FL_OBJECT
+        spinner object
+      `val` : float
+        value?
+
+    :return: old value?
+    :rtype: float
+
+    :note: e.g. *todo*
+
+    :status: Untested + NoDoc + NoDemo = NOT OK
+
     """
-    _fl_set_spinner_value = library.cfuncproto(
-        library.load_so_libforms(), "fl_set_spinner_value",
+    _fl_set_spinner_value = libr.cfuncproto(
+        libr.load_so_libforms(), "fl_set_spinner_value",
         cty.c_double, [cty.POINTER(xfdata.FL_OBJECT), cty.c_double],
         """double fl_set_spinner_value(FL_OBJECT * obj, double val)""")
-    library.check_if_FL_OBJECT_ptr(pFlObject)
-    fval = library.convert_to_double(val)
-    library.keep_elem_refs(pFlObject, val, fval)
+    libr.verify_flobjectptr_type(pFlObject)
+    fval = libr.convert_to_double(val)
+    libr.keep_elem_refs(pFlObject, val, fval)
     _fl_set_spinner_value(pFlObject, fval)
 
 
 def fl_set_spinner_bounds(pFlObject, minbound, maxbound):
-    """
-        fl_set_spinner_bounds(pFlObject, minbound, maxbound)
+    """Sets minimum and maximum bounds/limits of a spinner object.
 
-        :status: Untested + NoDoc + NoDemo = NOT OK
+    --
+
+    :Parameters:
+      `pFlObject` : pointer to xfdata.FL_OBJECT
+        spinner object
+      `minbound` : float
+        minimum bound to be set
+      `maxbound` : float
+        maximum bound to be set
+
+    :note: e.g. *todo*
+
+    :status: Untested + NoDoc + NoDemo = NOT OK
+
     """
-    _fl_set_spinner_bounds = library.cfuncproto(
-        library.load_so_libforms(), "fl_set_spinner_bounds",
+    _fl_set_spinner_bounds = libr.cfuncproto(
+        libr.load_so_libforms(), "fl_set_spinner_bounds",
         None, [cty.POINTER(xfdata.FL_OBJECT), cty.c_double, cty.c_double],
         """void fl_set_spinner_bounds(FL_OBJECT * obj, double min,
            double max)""")
-    library.check_if_initialized()
-    library.check_if_FL_OBJECT_ptr(pFlObject)
-    fminbound = library.convert_to_double(minbound)
-    fmaxbound = library.convert_to_double(maxbound)
-    library.keep_elem_refs(pFlObject, minbound, maxbound, fminbound, fmaxbound)
+    libr.check_if_initialized()
+    libr.verify_flobjectptr_type(pFlObject)
+    fminbound = libr.convert_to_double(minbound)
+    fmaxbound = libr.convert_to_double(maxbound)
+    libr.keep_elem_refs(pFlObject, minbound, maxbound, fminbound, fmaxbound)
     _fl_set_spinner_bounds(pFlObject, fminbound, fmaxbound)
 
 
 def fl_get_spinner_bounds(pFlObject):
-    """
-        fl_get_spinner_bounds(pFlObject) -> minbound, maxbound
+    """Obtains minimum and maximum bounds/limits of a spinner.
 
-        :attention: API change from XForms - upstream was
-                    fl_get_spinner_bounds(pFlObject, minbound, maxbound)
+    --
 
-        :status: Untested + NoDoc + NoDemo = NOT OK
+    :Parameters:
+      `pFlObject` : pointer to xfdata.FL_OBJECT
+        spinner object
+
+    :return: minimum bound, maximum bound
+    :rtype: float, float
+
+    :note: e.g. *todo*
+
+    :attention: API change from XForms - upstream was
+        fl_get_spinner_bounds(pFlObject, minbound, maxbound)
+
+    :status: Untested + NoDoc + NoDemo = NOT OK
+
     """
-    _fl_get_spinner_bounds = library.cfuncproto(
-        library.load_so_libforms(), "fl_get_spinner_bounds",
+    _fl_get_spinner_bounds = libr.cfuncproto(
+        libr.load_so_libforms(), "fl_get_spinner_bounds",
         None, [cty.POINTER(xfdata.FL_OBJECT), cty.POINTER(cty.c_double),
         cty.POINTER(cty.c_double)], \
         """void fl_get_spinner_bounds(FL_OBJECT * obj, double * min,
            double * max)""")
-    library.check_if_initialized()
-    library.check_if_FL_OBJECT_ptr(pFlObject)
-    minbound, pminbound = library.make_double_and_pointer()
-    maxbound, pmaxbound = library.make_double_and_pointer()
-    library.keep_elem_refs(pFlObject, minbound, maxbound, pminbound, pmaxbound)
+    libr.check_if_initialized()
+    libr.verify_flobjectptr_type(pFlObject)
+    minbound, pminbound = libr.make_double_and_pointer()
+    maxbound, pmaxbound = libr.make_double_and_pointer()
+    libr.keep_elem_refs(pFlObject, minbound, maxbound, pminbound, pmaxbound)
     _fl_get_spinner_bounds(pFlObject, pminbound, pmaxbound)
     return minbound.value, maxbound.value
 
 
 def fl_set_spinner_step(pFlObject, step):
-    """
-        fl_set_spinner_step(pFlObject, step)
+    """*todo*
 
-        :status: Untested + NoDoc + NoDemo = NOT OK
+    --
+
+    :Parameters:
+      `pFlObject` : pointer to xfdata.FL_OBJECT
+        spinner object
+      `step` : float
+        step value?
+
+    :note: e.g. *todo*
+
+    :status: Untested + NoDoc + NoDemo = NOT OK
+
     """
-    _fl_set_spinner_step = library.cfuncproto(
-        library.load_so_libforms(), "fl_set_spinner_step",
+    _fl_set_spinner_step = libr.cfuncproto(
+        libr.load_so_libforms(), "fl_set_spinner_step",
         None, [cty.POINTER(xfdata.FL_OBJECT), cty.c_double],
         """void fl_set_spinner_step(FL_OBJECT * obj, double step)""")
-    library.check_if_initialized()
-    library.check_if_FL_OBJECT_ptr(pFlObject)
-    fstep = library.convert_to_double(step)
-    library.keep_elem_refs(pFlObject, step, fstep)
+    libr.check_if_initialized()
+    libr.verify_flobjectptr_type(pFlObject)
+    fstep = libr.convert_to_double(step)
+    libr.keep_elem_refs(pFlObject, step, fstep)
     _fl_set_spinner_step(pFlObject, fstep)
 
 
 def fl_get_spinner_step(pFlObject):
-    """
-        fl_get_spinner_step(pFlObject) -> num.
+    """*todo*
 
-        :status: Untested + NoDoc + NoDemo = NOT OK
+    --
+
+    :Parameters:
+      `pFlObject` : pointer to xfdata.FL_OBJECT
+        spinner object
+
+    :return: step value
+    :rtype: float
+
+    :note: e.g. *todo*
+
+    :status: Untested + NoDoc + NoDemo = NOT OK
+
     """
-    _fl_get_spinner_step = library.cfuncproto(
-        library.load_so_libforms(), "fl_get_spinner_step",
+    _fl_get_spinner_step = libr.cfuncproto(
+        libr.load_so_libforms(), "fl_get_spinner_step",
         cty.c_double, [cty.POINTER(xfdata.FL_OBJECT)],
         """double fl_get_spinner_step(FL_OBJECT * obj)""")
-    library.check_if_initialized()
-    library.check_if_FL_OBJECT_ptr(pFlObject)
-    library.keep_elem_refs(pFlObject)
+    libr.check_if_initialized()
+    libr.verify_flobjectptr_type(pFlObject)
+    libr.keep_elem_refs(pFlObject)
     retval = _fl_get_spinner_step(pFlObject)
     return retval
 
 
 def fl_set_spinner_precision(pFlObject, precnum):
-    """
-        fl_set_spinner_precision(pFlObject, precnum)
+    """*todo*
 
-        :status: Untested + NoDoc + NoDemo = NOT OK
+    --
+
+    :Parameters:
+      `pFlObject` : pointer to xfdata.FL_OBJECT
+        spinner object
+      `precnum` : int
+        precision value to be set
+
+    :note: e.g. *todo*
+
+    :status: Untested + NoDoc + NoDemo = NOT OK
+
     """
-    _fl_set_spinner_precision = library.cfuncproto(
-        library.load_so_libforms(), "fl_set_spinner_precision",
+    _fl_set_spinner_precision = libr.cfuncproto(
+        libr.load_so_libforms(), "fl_set_spinner_precision",
         None, [cty.POINTER(xfdata.FL_OBJECT), cty.c_int],
         """void fl_set_spinner_precision(FL_OBJECT * obj, int prec)""")
-    library.check_if_initialized()
-    library.check_if_FL_OBJECT_ptr(pFlObject)
-    iprecnum = library.convert_to_int(precnum)
-    library.keep_elem_refs(pFlObject, precnum, iprecnum)
+    libr.check_if_initialized()
+    libr.verify_flobjectptr_type(pFlObject)
+    iprecnum = libr.convert_to_int(precnum)
+    libr.keep_elem_refs(pFlObject, precnum, iprecnum)
     _fl_set_spinner_precision(pFlObject, iprecnum)
 
 
 def fl_get_spinner_precision(pFlObject):
-    """
-        fl_get_spinner_precision(pFlObject) -> num.
+    """*todo*
 
-        :status: Untested + NoDoc + NoDemo = NOT OK
+    --
+
+    :Parameters:
+      `pFlObject` : pointer to xfdata.FL_OBJECT
+        spinner object
+
+    :return: precision
+    :rtype: int
+
+    :note: e.g. *todo*
+
+    :status: Untested + NoDoc + NoDemo = NOT OK
     """
-    _fl_get_spinner_precision = library.cfuncproto(
-        library.load_so_libforms(), "fl_get_spinner_precision",
+    _fl_get_spinner_precision = libr.cfuncproto(
+        libr.load_so_libforms(), "fl_get_spinner_precision",
         cty.c_int, [cty.POINTER(xfdata.FL_OBJECT)],
         """int fl_get_spinner_precision(FL_OBJECT * obj)""")
-    library.check_if_initialized()
-    library.check_if_FL_OBJECT_ptr(pFlObject)
-    library.keep_elem_refs(pFlObject)
+    libr.check_if_initialized()
+    libr.verify_flobjectptr_type(pFlObject)
+    libr.keep_elem_refs(pFlObject)
     retval = _fl_get_spinner_precision(pFlObject)
     return retval
 
 
 def fl_get_spinner_input(pFlObject):
-    """
-        fl_get_spinner_input(pFlObject) -> pFlObject
+    """*todo*
 
-        :status: Untested + NoDoc + NoDemo = NOT OK
+    --
+
+    :Parameters:
+      `pFlObject` : pointer to xfdata.FL_OBJECT
+        spinner object
+
+    :return: spinner object
+    :rtype: pointer to xfdata.FL_OBJECT
+
+    :note: e.g. *todo*
+
+    :status: Untested + NoDoc + NoDemo = NOT OK
+
     """
-    _fl_get_spinner_input = library.cfuncproto(
-        library.load_so_libforms(), "fl_get_spinner_input",
+    _fl_get_spinner_input = libr.cfuncproto(
+        libr.load_so_libforms(), "fl_get_spinner_input",
         cty.POINTER(xfdata.FL_OBJECT), [cty.POINTER(xfdata.FL_OBJECT)],
         """FL_OBJECT * fl_get_spinner_input(FL_OBJECT * obj)""")
-    library.check_if_initialized()
-    library.check_if_FL_OBJECT_ptr(pFlObject)
-    library.keep_elem_refs(pFlObject)
+    libr.check_if_initialized()
+    libr.verify_flobjectptr_type(pFlObject)
+    libr.keep_elem_refs(pFlObject)
     retval = _fl_get_spinner_input(pFlObject)
     return retval
 
 
 def fl_get_spinner_up_button(pFlObject):
-    """
-        fl_get_spinner_up_button(pFlObject) -> pFlObject
+    """*todo*
 
-        :status: Untested + NoDoc + NoDemo = NOT OK
+    --
+
+    :Parameters:
+      `pFlObject` : pointer to xfdata.FL_OBJECT
+        spinner object
+
+    :return: spinner object
+    :rtype: pointer to xfdata.FL_OBJECT
+
+    :note: e.g. *todo*
+
+    :status: Untested + NoDoc + NoDemo = NOT OK
+
     """
-    _fl_get_spinner_up_button = library.cfuncproto(
-        library.load_so_libforms(), "fl_get_spinner_up_button",
+    _fl_get_spinner_up_button = libr.cfuncproto(
+        libr.load_so_libforms(), "fl_get_spinner_up_button",
         cty.POINTER(xfdata.FL_OBJECT), [cty.POINTER(xfdata.FL_OBJECT)],
         """FL_OBJECT * fl_get_spinner_up_button(FL_OBJECT * obj)""")
-    library.check_if_initialized()
-    library.check_if_FL_OBJECT_ptr(pFlObject)
-    library.keep_elem_refs(pFlObject)
+    libr.check_if_initialized()
+    libr.verify_flobjectptr_type(pFlObject)
+    libr.keep_elem_refs(pFlObject)
     retval = _fl_get_spinner_up_button(pFlObject)
     return retval
 
 
 def fl_get_spinner_down_button(pFlObject):
-    """
-        fl_get_spinner_down_button(pFlObject) -> pFlObject
+    """*todo*
 
-        :status: Untested + NoDoc + NoDemo = NOT OK
+    --
+
+    :Parameters:
+      `pFlObject` : pointer to xfdata.FL_OBJECT
+        spinner object
+
+    :return: spinner object
+    :rtype: pointer to xfdata.FL_OBJECT
+
+    :note: e.g. *todo*
+
+    :status: Untested + NoDoc + NoDemo = NOT OK
+
     """
-    _fl_get_spinner_down_button = library.cfuncproto(
-        library.load_so_libforms(), "fl_get_spinner_down_button",
+    _fl_get_spinner_down_button = libr.cfuncproto(
+        libr.load_so_libforms(), "fl_get_spinner_down_button",
         cty.POINTER(xfdata.FL_OBJECT), [cty.POINTER(xfdata.FL_OBJECT)],
         """FL_OBJECT * fl_get_spinner_down_button(FL_OBJECT * obj)""")
-    library.check_if_initialized()
-    library.check_if_FL_OBJECT_ptr(pFlObject)
-    library.keep_elem_refs(pFlObject)
+    libr.check_if_initialized()
+    libr.verify_flobjectptr_type(pFlObject)
+    libr.keep_elem_refs(pFlObject)
     retval = _fl_get_spinner_down_button(pFlObject)
     return retval
 

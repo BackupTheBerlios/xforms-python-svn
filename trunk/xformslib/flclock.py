@@ -2,9 +2,9 @@
 # -*- coding: iso8859-1 -*-
 
 """
-    flclock.py - Functions to manage clock objects.
+    flclock.py - xforms-python's functions to manage clock objects.
 
-    Copyright (C) 2009, 2010  Luca Lazzaroni "LukenShiro" 
+    Copyright (C) 2009, 2010  Luca Lazzaroni "LukenShiro"
     e-mail: <lukenshiro@ngi.it>
 
     This program is free software: you can redistribute it and/or modify
@@ -73,28 +73,28 @@ def fl_add_clock(clocktype, x, y, w, h, label):
     :status: Tested + Doc + Demo = OK
 
     """
-    _fl_add_clock = library.cfuncproto(
-        library.load_so_libforms(), "fl_add_clock",
+    _fl_add_clock = libr.cfuncproto(
+        libr.load_so_libforms(), "fl_add_clock",
         cty.POINTER(xfdata.FL_OBJECT), [cty.c_int, xfdata.FL_Coord,
         xfdata.FL_Coord, xfdata.FL_Coord, xfdata.FL_Coord, xfdata.STRING],
         """FL_OBJECT * fl_add_clock(int type, FL_Coord x, FL_Coord y,
            FL_Coord w, FL_Coord h, const char * s)""")
-    library.check_if_initialized()
-    library.check_admitted_listvalues(clocktype, xfdata.CLOCKTYPE_list)
-    iclocktype = library.convert_to_int(clocktype)
-    ix = library.convert_to_FL_Coord(x)
-    iy = library.convert_to_FL_Coord(y)
-    iw = library.convert_to_FL_Coord(w)
-    ih = library.convert_to_FL_Coord(h)
-    slabel = library.convert_to_string(label)
-    library.keep_elem_refs(clocktype, x, y, w, h, label, iclocktype, ix, iy,
-                   iw, ih, slabel)
+    libr.check_if_initialized()
+    libr.check_admitted_value_in_list(clocktype, xfdata.CLOCKTYPE_list)
+    iclocktype = libr.convert_to_int(clocktype)
+    ix = libr.convert_to_FL_Coord(x)
+    iy = libr.convert_to_FL_Coord(y)
+    iw = libr.convert_to_FL_Coord(w)
+    ih = libr.convert_to_FL_Coord(h)
+    slabel = libr.convert_to_string(label)
+    libr.keep_elem_refs(clocktype, x, y, w, h, label, iclocktype, ix, iy,
+                           iw, ih, slabel)
     retval = _fl_add_clock(iclocktype, ix, iy, iw, ih, slabel)
     return retval
 
 
 def fl_get_clock(pFlObject):
-    """Returns time values from a clock object, with hours in 0-23, minutes
+    """Obtains time values from a clock object, with hours in 0-23, minutes
     in 0-59 and seconds in 0-59.
 
     --
@@ -114,17 +114,17 @@ def fl_get_clock(pFlObject):
     :status: Tested + Doc + NoDemo = OK
 
     """
-    _fl_get_clock = library.cfuncproto(
-        library.load_so_libforms(), "fl_get_clock",
+    _fl_get_clock = libr.cfuncproto(
+        libr.load_so_libforms(), "fl_get_clock",
         None, [cty.POINTER(xfdata.FL_OBJECT), cty.POINTER(cty.c_int),
         cty.POINTER(cty.c_int), cty.POINTER(cty.c_int)],
         """void fl_get_clock(FL_OBJECT * ob, int * h, int * m, int * s)""")
-    library.check_if_initialized()
-    library.check_if_FL_OBJECT_ptr(pFlObject)
-    hr, phr = library.make_int_and_pointer()
-    mn, pmn = library.make_int_and_pointer()
-    sec, psec = library.make_int_and_pointer()
-    library.keep_elem_refs(pFlObject, hr, mn, sec, phr, pmn, psec)
+    libr.check_if_initialized()
+    libr.verify_flobjectptr_type(pFlObject)
+    hr, phr = libr.make_int_and_pointer()
+    mn, pmn = libr.make_int_and_pointer()
+    sec, psec = libr.make_int_and_pointer()
+    libr.keep_elem_refs(pFlObject, hr, mn, sec, phr, pmn, psec)
     _fl_get_clock(pFlObject, phr, pmn, psec)
     return hr.value, mn.value, sec.value
 
@@ -148,15 +148,15 @@ def fl_set_clock_adjustment(pFlObject, offset):
     :status: Tested + Doc + NoDemo = OK
 
     """
-    _fl_set_clock_adjustment = library.cfuncproto(
-        library.load_so_libforms(), "fl_set_clock_adjustment",
+    _fl_set_clock_adjustment = libr.cfuncproto(
+        libr.load_so_libforms(), "fl_set_clock_adjustment",
         cty.c_long, [cty.POINTER(xfdata.FL_OBJECT), cty.c_long],
         """long int fl_set_clock_adjustment(FL_OBJECT * ob,
            long int offset)""")
-    library.check_if_initialized()
-    library.check_if_FL_OBJECT_ptr(pFlObject)
-    loffset = library.convert_to_long(offset)
-    library.keep_elem_refs(pFlObject, offset, loffset)
+    libr.check_if_initialized()
+    libr.verify_flobjectptr_type(pFlObject)
+    loffset = libr.convert_to_long(offset)
+    libr.keep_elem_refs(pFlObject, offset, loffset)
     retval = _fl_set_clock_adjustment(pFlObject, loffset)
     return retval
 
@@ -178,13 +178,13 @@ def fl_set_clock_ampm(pFlObject, yesno):
     :status: Tested + Doc + NoDemo = OK
 
     """
-    _fl_set_clock_ampm = library.cfuncproto(
-        library.load_so_libforms(), "fl_set_clock_ampm",
+    _fl_set_clock_ampm = libr.cfuncproto(
+        libr.load_so_libforms(), "fl_set_clock_ampm",
         None, [cty.POINTER(xfdata.FL_OBJECT), cty.c_int],
         """void fl_set_clock_ampm(FL_OBJECT * ob, int y)""")
-    library.check_if_initialized()
-    library.check_if_FL_OBJECT_ptr(pFlObject)
-    iyesno = library.convert_to_int(yesno)
-    library.keep_elem_refs(pFlObject, yesno, iyesno)
+    libr.check_if_initialized()
+    libr.verify_flobjectptr_type(pFlObject)
+    iyesno = libr.convert_to_int(yesno)
+    libr.keep_elem_refs(pFlObject, yesno, iyesno)
     _fl_set_clock_ampm(pFlObject, iyesno)
 

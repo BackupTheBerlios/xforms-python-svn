@@ -2,7 +2,7 @@
 # -*- coding: iso8859-1 -*-
 
 """
-    flglcanvas.py - Functions to manage GLcanvas object
+    flglcanvas.py - xforms-python's functions to manage GLcanvas objects.
 
     Copyright (C) 2009, 2010  Luca Lazzaroni "LukenShiro"
     e-mail: <lukenshiro@ngi.it>
@@ -40,10 +40,6 @@ from xformslib import xfdata
 #############
 # glcanvas.h
 #############
-
-# This is an attempt to maintain some sort of backwards compatibility
-# with old code whilst also getting rid of the old, system-specific
-# hack.
 
 # OpenGL canvases
 
@@ -86,7 +82,7 @@ def fl_add_glcanvas(canvastype, x, y, w, h, label):
         """FL_OBJECT * fl_add_glcanvas(int type, FL_Coord x, FL_Coord y,
            FL_Coord w, FL_Coord h, const char * label)""")
     libr.check_if_initialized()
-    libr.check_admitted_listvalues(canvastype, xfdata.CANVASTYPE_list)
+    libr.check_admitted_value_in_list(canvastype, xfdata.CANVASTYPE_list)
     icanvastype = libr.convert_to_int(canvastype)
     ix = libr.convert_to_FL_Coord(x)
     iy = libr.convert_to_FL_Coord(y)
@@ -107,7 +103,7 @@ def fl_set_glcanvas_defaults(config):
 
     :Parameters:
       `config` : int
-        configuration settings. Attributes are those defined in OpenGL 
+        configuration settings. Attributes are those defined in OpenGL
         glXChooseVisual() function *todo*
 
     :note: e.g. fl_set_glcanvas_defaults(?)
@@ -119,6 +115,7 @@ def fl_set_glcanvas_defaults(config):
         libr.load_so_libformsgl(), "fl_set_glcanvas_defaults",
         None, [cty.POINTER(cty.c_int)],
         """void fl_set_glcanvas_defaults(const int * config)""")
+    libr.check_if_initialized()     # unsure
     pconfig = cty.cast(config, cty.POINTER(cty.c_int))
     libr.keep_elem_refs(config, pconfig)
     _fl_set_glcanvas_defaults(pconfig)
@@ -144,6 +141,7 @@ def fl_get_glcanvas_defaults():
         libr.load_so_libformsgl(), "fl_get_glcanvas_defaults",
         None, [cty.POINTER(cty.c_int)],
         """void fl_get_glcanvas_defaults(int config[ ])""")
+    libr.check_if_initialized()     # unsure
     config, pconfig = libr.make_int_and_pointer()
     libr.keep_elem_refs(config, pconfig)
     _fl_get_glcanvas_defaults(pconfig)
@@ -174,7 +172,8 @@ def fl_set_glcanvas_attributes(pFlObject, config):
         None, [cty.POINTER(xfdata.FL_OBJECT), cty.POINTER(cty.c_int)],
         """void fl_set_glcanvas_attributes(FL_OBJECT * ob,
            const int * config)""")
-    libr.check_if_FL_OBJECT_ptr(pFlObject)
+    libr.check_if_initialized()     # unsure
+    libr.verify_flobjectptr_type(pFlObject)
     pconfig = cty.cast(config, cty.POINTER(cty.c_int))
     libr.keep_elem_refs(pFlObject, config, pconfig)
     _fl_set_glcanvas_attributes(pFlObject, pconfig)
@@ -205,7 +204,8 @@ def fl_get_glcanvas_attributes(pFlObject):
         None, [cty.POINTER(xfdata.FL_OBJECT), cty.POINTER(cty.c_int)],
         """void fl_get_glcanvas_attributes(FL_OBJECT * ob,
            int * attributes)""")
-    libr.check_if_FL_OBJECT_ptr(pFlObject)
+    libr.check_if_initialized()     # unsure
+    libr.verify_flobjectptr_type(pFlObject)
     attributes, pattributes = libr.make_int_and_pointer()
     libr.keep_elem_refs(pFlObject, attributes, pattributes)
     _fl_get_glcanvas_attributes(pFlObject, pattributes)
@@ -235,7 +235,7 @@ def fl_set_glcanvas_direct(pFlObject, yesno):
         None, [cty.POINTER(xfdata.FL_OBJECT), cty.c_int],
         """void fl_set_glcanvas_direct(FL_OBJECT * ob, int direct)""")
     libr.check_if_initialized()
-    libr.check_if_FL_OBJECT_ptr(pFlObject)
+    libr.verify_flobjectptr_type(pFlObject)
     iyesno = libr.convert_to_int(yesno)
     libr.keep_elem_refs(pFlObject, yesno, iyesno)
     _fl_set_glcanvas_direct(pFlObject, iyesno)
@@ -247,8 +247,8 @@ def fl_activate_glcanvas(pFlObject):
     to. For application with a single canvas, this is not a problem. In case
     of multiple canvases, the canvas driver takes care of setting the proper
     context before invoking the expose handler. In some cases, the
-    application may want to draw into canvases actively. In this case, use this
-    function for explicit drawing context switching.
+    application may want to draw into canvases actively. In this case, use
+    this function for explicit drawing context switching.
 
     --
 
@@ -266,7 +266,7 @@ def fl_activate_glcanvas(pFlObject):
         None, [cty.POINTER(xfdata.FL_OBJECT)],
         """void fl_activate_glcanvas(FL_OBJECT * ob)""")
     libr.check_if_initialized()
-    libr.check_if_FL_OBJECT_ptr(pFlObject)
+    libr.verify_flobjectptr_type(pFlObject)
     libr.keep_elem_refs(pFlObject)
     _fl_activate_glcanvas(pFlObject)
 
@@ -294,7 +294,7 @@ def fl_get_glcanvas_xvisualinfo(pFlObject):
         cty.POINTER(xfdata.XVisualInfo), [cty.POINTER(xfdata.FL_OBJECT)],
         """XVisualInfo * fl_get_glcanvas_xvisualinfo(FL_OBJECT * ob)""")
     libr.check_if_initialized()
-    libr.check_if_FL_OBJECT_ptr(pFlObject)
+    libr.verify_flobjectptr_type(pFlObject)
     libr.keep_elem_refs(pFlObject)
     retval = _fl_get_glcanvas_xvisualinfo(pFlObject)
     return retval
@@ -322,7 +322,7 @@ def fl_get_glcanvas_context(pFlObject):
         xfdata.GLXContext, [cty.POINTER(xfdata.FL_OBJECT)],
         """GLXContext fl_get_glcanvas_context(FL_OBJECT * ob)""")
     libr.check_if_initialized()
-    libr.check_if_FL_OBJECT_ptr(pFlObject)
+    libr.verify_flobjectptr_type(pFlObject)
     libr.keep_elem_refs(pFlObject)
     retval = _fl_get_glcanvas_context(pFlObject)
     return retval

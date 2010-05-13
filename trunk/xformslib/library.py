@@ -2,8 +2,8 @@
 # -*- coding: iso8859-1 -*-
 
 """
-    xforms-python - Python wrapper for XForms (X11) GUI C toolkit library
-    using ctypes
+    library.py - Convenience functions to deal with xforms-python wrapper's
+    functions.
 
     Copyright (C) 2009, 2010  Luca Lazzaroni "LukenShiro"
     e-mail: <lukenshiro@ngi.it>
@@ -64,14 +64,15 @@ def get_xforms_version():
         formshdr = open(header_filename, "r")
     except IOError:
         raise XFormsLoadError("XForms library toolkit header file is" \
-                              " not installed properly")
+                              " not installed properly: not existent?")
     else:
         try:
             # a reasonable size to catch version values
             fconten = formshdr.read(2500)
         except IOError:
             raise XFormsLoadError("XForms library toolkit header is" \
-                                  "not installed properly")
+                                  "not installed properly: corrupted or " \
+                                  "incomplete?")
         else:
             formshdr.close()
             listconten = fconten.split("\n")
@@ -401,42 +402,84 @@ def make_ushort_and_pointer():
     return baseval, ptrbaseval
 
 
-def check_admitted_listvalues(paramname, *valueslist):
-    """ Check if paramname value is valid in accordance to a list
-        of admissible values."""
+def check_admitted_value_in_list(paramname, *valueslist):
+    """Check if paramname value is valid in accordance to a list of
+        admissible values."""
     if isinstance(valueslist, list):
         if paramname not in valueslist:
-            raise XFormsTypeError("Parameter %s value must be included in " \
-                                  "list %s." % (paramname, valueslist))
+            raise XFormsTypeError("Parameter %s value must be one of those" \
+                        " included in list %s." % (paramname, valueslist))
+
+def verify_tuplelist_type(paramname):
+    """Check if paramname is a valid list or tuple."""
+    if not isinstance(paramname, list) and not isinstance(paramname, tuple):
+        raise XFormsTypeError("Parameter %s must be a list or a tuple. " \
+                        "Instead it is %s" % (paramname, type(paramname)))
 
 
-def check_if_FL_OBJECT_ptr(paramname):
-    """ Check if paramname value is a valid pointer to xfdata.FL_OBJECT."""
+def verify_flobjectptr_type(paramname):
+    """Check if paramname is a valid pointer to xfdata.FL_OBJECT."""
     if not isinstance(paramname, cty.POINTER(xfdata.FL_OBJECT)):
-        raise XFormsTypeError("Parameter value %s must be a pointer to " \
-                              "xfdata.FL_OBJECT." % paramname)
+        raise XFormsTypeError("Parameter %s must be a pointer to " \
+                        "xfdata.FL_OBJECT. Instead it is %s" % \
+                        (paramname, type(paramname)))
 
 
-def check_if_FL_FORM_ptr(paramname):
-    """ Check if paramname value is a valid pointer to xfdata.FL_FORM."""
+def verify_flformptr_type(paramname):
+    """Check if paramname is a valid pointer to xfdata.FL_FORM."""
     if not isinstance(paramname, cty.POINTER(xfdata.FL_FORM)):
-        raise XFormsTypeError("Parameter value %s must be a pointer to " \
-                              "xfdata.FL_FORM." % paramname)
+        raise XFormsTypeError("Parameter %s must be a pointer to " \
+                        "xfdata.FL_FORM. Instead it is %s" % \
+                        (paramname, type(paramname)))
 
 
-def check_if_FL_IMAGE_ptr(paramname):
-    """ Check if paramname value is a valid pointer to xfdata.FL_IMAGE."""
+def verify_flflimageptr_type(paramname):
+    """Check if paramname is a valid pointer to xfdata.FL_IMAGE."""
     if not isinstance(paramname, cty.POINTER(xfdata.FL_IMAGE)):
-        raise XFormsTypeError("Parameter value %s must be a pointer to " \
-                              "xfdata.FL_IMAGE." % paramname)
+        raise XFormsTypeError("Parameter %s must be a pointer to " \
+                        "xfdata.FL_IMAGE. Instead it is %s" % \
+                        (paramname, type(paramname)))
 
 
-def check_if_structure_class_ptr(paramname, pstructinst):
+def verify_flflpopupptr_type(paramname):
+    """Check if paramname is a valid pointer to xfdata.FL_POPUP."""
+    if not isinstance(paramname, cty.POINTER(xfdata.FL_POPUP)):
+        raise XFormsTypeError("Parameter %s must be a pointer to " \
+                        "xfdata.FL_POPUP. Instead it is %s" % \
+                        (paramname, type(paramname)))
+
+
+def verify_flpopupentryptr_type(paramname):
+    """Check if paramname is a valid pointer to xfdata.FL_POPUP_ENTRY."""
+    if not isinstance(paramname, cty.POINTER(xfdata.FL_POPUP_ENTRY)):
+        raise XFormsTypeError("Parameter %s must be a pointer to " \
+                        "xfdata.FL_POPUP_ENTRY. Instead it is %s" % \
+                        (paramname, type(paramname)))
+
+
+def verify_flpopupreturnptr_type(paramname):
+    """Check if paramname is a valid pointer to xfdata.FL_POPUP_RETURN."""
+    if not isinstance(paramname, cty.POINTER(xfdata.FL_POPUP_RETURN)):
+        raise XFormsTypeError("Parameter %s must be a pointer to " \
+                        "xfdata.FL_POPUP_RETURN. Instead it is %s" % \
+                        (paramname, type(paramname)))
+
+
+def verify_flpopupitemptr_type(paramname):
+    """Check if paramname is a valid pointer to xfdata.FL_POPUP_ITEM."""
+    if not isinstance(paramname, cty.POINTER(xfdata.FL_POPUP_ITEM)):
+        raise XFormsTypeError("Parameter %s must be a pointer to " \
+                        "xfdata.FL_POPUP_ITEM. Instead it is %s" % \
+                        (paramname, type(paramname)))
+
+
+def verify_otherclassptr_type(paramname, pstructinst):
     """ Check if paramname value is a valid pointer to a provided 'Structure'
-    class instance, different from previously class."""
+    class instance, different from previous classes."""
     if not isinstance(paramname, pstructinst):
-        raise XFormsTypeError("Parameter value %s must be a pointer to " \
-              "%s 'Structure' class instance." % (paramname, pstructinst))
+        raise XFormsTypeError("Parameter %s must be a pointer to " \
+                        "%s 'Structure' class instance. Instead it is %s" % \
+                        (paramname, pstructinst, type(paramname)))
 
 
 def donothing_popupcb(pPopupReturn):
@@ -462,10 +505,10 @@ def make_pPopupItem_from_dict(dictofpopupitems):
     pyclsshortcut = dictofpopupitems['shortcut']
     spishortcut = convert_to_string(pyclsshortcut)
     pyclstype = dictofpopupitems['type']
-    check_admitted_listvalues(pyclstype, xfdata.POPUPTYPE_list)
+    check_admitted_value_in_list(pyclstype, xfdata.POPUPTYPE_list)
     ipitype = convert_to_int(pyclstype)
     pyclsstate = dictofpopupitems['state']
-    check_admitted_listvalues(pyclstype, xfdata.POPUPSTATE_list)
+    check_admitted_value_in_list(pyclstype, xfdata.POPUPSTATE_list)
     ipistate = convert_to_int(pyclsstate)
 
     popupitem = (xfdata.FL_POPUP_ITEM * 2)()
@@ -506,10 +549,10 @@ def make_pPopupItem_from_list(listofpopupitems):
         popupitem[0].callback = c_picallback
         spishortcut = convert_to_string(listofpopupitems[2])
         popupitem[0].shortcut = spishortcut
-        check_admitted_listvalues(listofpopupitems[3], xfdata.POPUPTYPE_list)
+        check_admitted_value_in_list(listofpopupitems[3], xfdata.POPUPTYPE_list)
         ipitype = convert_to_int(listofpopupitems[3])
         popupitem[0].type = ipitype
-        check_admitted_listvalues(listofpopupitems[4], xfdata.POPUPSTATE_list)
+        check_admitted_value_in_list(listofpopupitems[4], xfdata.POPUPSTATE_list)
         ipistate = convert_to_int(listofpopupitems[4])
         popupitem[0].state = ipistate
 
@@ -538,11 +581,11 @@ def make_pPopupItem_from_list(listofpopupitems):
             popupitem[indx].callback = c_picallback
             spishortcut = convert_to_string(listofpopupitems[indx][2])
             popupitem[indx].shortcut = spishortcut
-            check_admitted_listvalues(listofpopupitems[indx][3], \
+            check_admitted_value_in_list(listofpopupitems[indx][3], \
                                       xfdata.POPUPTYPE_list)
             ipitype = convert_to_int(listofpopupitems[indx][3])
             popupitem[indx].type = ipitype
-            check_admitted_listvalues(listofpopupitems[indx][4], \
+            check_admitted_value_in_list(listofpopupitems[indx][4], \
                                       xfdata.POPUPSTATE_list)
             ipistate = convert_to_int(listofpopupitems[indx][4])
             popupitem[indx].state = ipistate

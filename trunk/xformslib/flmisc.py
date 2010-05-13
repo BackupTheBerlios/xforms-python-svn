@@ -2,7 +2,7 @@
 # -*- coding: iso8859-1 -*-
 
 """
-    flmisc.py - Function to manage miscellaneous objects.
+    flmisc.py - xforms-python's functions to manage miscellaneous objects.
 
     Copyright (C) 2009, 2010  Luca Lazzaroni "LukenShiro"
     e-mail: <lukenshiro@ngi.it>
@@ -83,7 +83,7 @@ def fl_add_box(boxtype, x, y, w, h, label):
         """FL_OBJECT * fl_add_box(int type, FL_Coord x, FL_Coord y,
            FL_Coord w, FL_Coord h, const char * label)""")
     libr.check_if_initialized()
-    libr.check_admitted_listvalues(boxtype, xfdata.BOXTYPE_list)
+    libr.check_admitted_value_in_list(boxtype, xfdata.BOXTYPE_list)
     iboxtype = libr.convert_to_int(boxtype)
     ix = libr.convert_to_FL_Coord(x)
     iy = libr.convert_to_FL_Coord(y)
@@ -164,7 +164,7 @@ def fl_stuff_clipboard(pFlObject, clipbdtype, data, size, py_LoseSelectionCb):
            const char * data, long int size,
            FL_LOSE_SELECTION_CB lose_callback)""")
     libr.check_if_initialized()
-    libr.check_if_FL_OBJECT_ptr(pFlObject)
+    libr.verify_flobjectptr_type(pFlObject)
     lclipbdtype = libr.convert_to_long(clipbdtype)
     pdata = cty.cast(data, cty.c_void_p)
     lsize = libr.convert_to_long(size)
@@ -208,7 +208,7 @@ def fl_request_clipboard(pFlObject, clipbdtype, py_SelectionCb):
         """int fl_request_clipboard(FL_OBJECT * ob, long int type,
            FL_SELECTION_CB got_it_callback)""")
     libr.check_if_initialized()
-    libr.check_if_FL_OBJECT_ptr(pFlObject)
+    libr.verify_flobjectptr_type(pFlObject)
     lclipbdtype = libr.convert_to_long(clipbdtype)
     c_SelectionCb = xfdata.FL_SELECTION_CB(py_SelectionCb)
     libr.keep_cfunc_refs(c_SelectionCb, py_SelectionCb)
@@ -284,7 +284,7 @@ def fl_object_ps_dump(pFlObject, fname):
         cty.c_int, [cty.POINTER(xfdata.FL_OBJECT), xfdata.STRING],
         """int fl_object_ps_dump(FL_OBJECT * ob, const char * fname)""")
     libr.check_if_initialized()
-    libr.check_if_FL_OBJECT_ptr(pFlObject)
+    libr.verify_flobjectptr_type(pFlObject)
     sfname = libr.convert_to_string(fname)
     libr.keep_elem_refs(pFlObject, fname, sfname)
     retval = _fl_object_ps_dump(pFlObject, sfname)
@@ -334,7 +334,7 @@ def fl_add_frame(frametype, x, y, w, h, label):
         """FL_OBJECT * fl_add_frame(int type, FL_Coord x, FL_Coord y,
            FL_Coord w, FL_Coord h, const char * label)""")
     libr.check_if_initialized()
-    libr.check_admitted_listvalues(frametype, xfdata.FRAMETYPE_list)
+    libr.check_admitted_value_in_list(frametype, xfdata.FRAMETYPE_list)
     iframetype = libr.convert_to_int(frametype)
     ix = libr.convert_to_FL_Coord(x)
     iy = libr.convert_to_FL_Coord(y)
@@ -388,7 +388,7 @@ def fl_add_labelframe(frametype, x, y, w, h, label):
         """FL_OBJECT * fl_add_labelframe(int type, FL_Coord x, FL_Coord y,
            FL_Coord w, FL_Coord h, const char * label)""")
     libr.check_if_initialized()
-    libr.check_admitted_listvalues(frametype, xfdata.FRAMETYPE_list)
+    libr.check_admitted_value_in_list(frametype, xfdata.FRAMETYPE_list)
     iframetype = libr.convert_to_int(frametype)
     ix = libr.convert_to_FL_Coord(x)
     iy = libr.convert_to_FL_Coord(y)
@@ -452,7 +452,7 @@ def fl_add_free(freetype, x, y, w, h, label, py_HandlePtr):
         """FL_OBJECT * fl_add_free(int type, FL_Coord x, FL_Coord y,
            FL_Coord w, FL_Coord h, const char * label, FL_HANDLEPTR handle)""")
     libr.check_if_initialized()
-    libr.check_admitted_listvalues(freetype, xfdata.FREETYPE_list)
+    libr.check_admitted_value_in_list(freetype, xfdata.FREETYPE_list)
     ifreetype = libr.convert_to_int(freetype)
     ix = libr.convert_to_FL_Coord(x)
     iy = libr.convert_to_FL_Coord(y)
@@ -537,7 +537,7 @@ def fl_add_text(texttype, x, y, w, h, label):
         """FL_OBJECT * fl_add_text(int type, FL_Coord x, FL_Coord y,
             FL_Coord w, FL_Coord h, const char * label)""")
     libr.check_if_initialized()
-    libr.check_admitted_listvalues(texttype, xfdata.TEXTTYPE_list)
+    libr.check_admitted_value_in_list(texttype, xfdata.TEXTTYPE_list)
     itexttype = libr.convert_to_int(texttype)
     ix = libr.convert_to_FL_Coord(x)
     iy = libr.convert_to_FL_Coord(y)
@@ -551,7 +551,7 @@ def fl_add_text(texttype, x, y, w, h, label):
 
 
 ###############################
-# forms.h (xpopupfn.h)
+# forms.h (xpopup.h)
 # Prototypes for xpop-up menus
 ###############################
 

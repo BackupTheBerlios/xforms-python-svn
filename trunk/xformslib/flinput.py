@@ -2,7 +2,7 @@
 # -*- coding: iso8859-1 -*-
 
 """
-    flinput.py - Functions to manage input objects.
+    flinput.py - xforms-python's functions to manage input objects.
 
     Copyright (C) 2009, 2010  Luca Lazzaroni "LukenShiro"
     e-mail: <lukenshiro@ngi.it>
@@ -84,7 +84,7 @@ def fl_add_input(inputtype, x, y, w, h, label):
         """FL_OBJECT * fl_add_input(int type, FL_Coord x, FL_Coord y,
            FL_Coord w, FL_Coord h, const char * label)""")
     libr.check_if_initialized()
-    libr.check_admitted_listvalues(inputtype, xfdata.INPUTTYPE_list)
+    libr.check_admitted_value_in_list(inputtype, xfdata.INPUTTYPE_list)
     iinputtype = libr.convert_to_int(inputtype)
     ix = libr.convert_to_FL_Coord(x)
     iy = libr.convert_to_FL_Coord(y)
@@ -119,7 +119,7 @@ def fl_set_input(pFlObject, text):
         None, [cty.POINTER(xfdata.FL_OBJECT), xfdata.STRING],
         """void fl_set_input(FL_OBJECT * ob, const char * str)""")
     libr.check_if_initialized()
-    libr.check_if_FL_OBJECT_ptr(pFlObject)
+    libr.verify_flobjectptr_type(pFlObject)
     stext = libr.convert_to_string(text)
     libr.keep_elem_refs(pFlObject, text, stext)
     _fl_set_input(pFlObject, stext)
@@ -153,9 +153,9 @@ def fl_set_input_color(pFlObject, txtcolr, curscolr):
         """void fl_set_input_color(FL_OBJECT * ob, FL_COLOR textcol,
            FL_COLOR curscol)""")
     libr.check_if_initialized()
-    libr.check_if_FL_OBJECT_ptr(pFlObject)
-    libr.check_admitted_listvalues(txtcolr, xfdata.COLOR_list)
-    libr.check_admitted_listvalues(curscolr, xfdata.COLOR_list)
+    libr.verify_flobjectptr_type(pFlObject)
+    libr.check_admitted_value_in_list(txtcolr, xfdata.COLOR_list)
+    libr.check_admitted_value_in_list(curscolr, xfdata.COLOR_list)
     ultxtcolr = libr.convert_to_FL_COLOR(txtcolr)
     ulcurscolr = libr.convert_to_FL_COLOR(curscolr)
     libr.keep_elem_refs(pFlObject, txtcolr, curscolr, ultxtcolr, ulcurscolr)
@@ -189,7 +189,7 @@ def fl_get_input_color(pFlObject):
         """void fl_get_input_color(FL_OBJECT * ob, FL_COLOR * textcol,
            FL_COLOR * curscol)""")
     libr.check_if_initialized()
-    libr.check_if_FL_OBJECT_ptr(pFlObject)
+    libr.verify_flobjectptr_type(pFlObject)
     txtcolr, ptxtcolr = libr.make_FL_COLOR_and_pointer()
     curscolr, pcurscolr = libr.make_FL_COLOR_and_pointer()
     libr.keep_elem_refs(pFlObject, txtcolr, curscolr)
@@ -220,7 +220,7 @@ def fl_set_input_scroll(pFlObject, yesno):
         None, [cty.POINTER(xfdata.FL_OBJECT), cty.c_int],
         """void fl_set_input_scroll(FL_OBJECT * ob, int yes)""")
     libr.check_if_initialized()
-    libr.check_if_FL_OBJECT_ptr(pFlObject)
+    libr.verify_flobjectptr_type(pFlObject)
     iyesno = libr.convert_to_int(yesno)
     libr.keep_elem_refs(pFlObject, yesno, iyesno)
     _fl_set_input_scroll(pFlObject, iyesno)
@@ -250,7 +250,7 @@ def fl_set_input_cursorpos(pFlObject, xpos, ypos):
         None, [cty.POINTER(xfdata.FL_OBJECT), cty.c_int, cty.c_int],
         """void fl_set_input_cursorpos(FL_OBJECT * ob, int xpos, int ypos)""")
     libr.check_if_initialized()
-    libr.check_if_FL_OBJECT_ptr(pFlObject)
+    libr.verify_flobjectptr_type(pFlObject)
     ixpos = libr.convert_to_int(xpos)
     iypos = libr.convert_to_int(ypos)
     libr.keep_elem_refs(pFlObject, xpos, ypos, ixpos, iypos)
@@ -279,7 +279,7 @@ def fl_set_input_selected(pFlObject, yesno):
         None, [cty.POINTER(xfdata.FL_OBJECT), cty.c_int],
         """void fl_set_input_selected(FL_OBJECT * ob, int yes)""")
     libr.check_if_initialized()
-    libr.check_if_FL_OBJECT_ptr(pFlObject)
+    libr.verify_flobjectptr_type(pFlObject)
     iyesno = libr.convert_to_int(yesno)
     libr.keep_elem_refs(pFlObject, yesno, iyesno)
     _fl_set_input_selected(pFlObject, iyesno)
@@ -311,7 +311,7 @@ def fl_set_input_selected_range(pFlObject, begin, end):
         """void fl_set_input_selected_range(FL_OBJECT * ob,
            int begin, int end)""")
     libr.check_if_initialized()
-    libr.check_if_FL_OBJECT_ptr(pFlObject)
+    libr.verify_flobjectptr_type(pFlObject)
     ibegin = libr.convert_to_int(begin)
     iend = libr.convert_to_int(end)
     libr.keep_elem_refs(pFlObject, begin, end, ibegin, iend)
@@ -347,7 +347,7 @@ def fl_get_input_selected_range(pFlObject):
         """const char * fl_get_input_selected_range(FL_OBJECT * ob,
            int * begin, int * end)""")
     libr.check_if_initialized()
-    libr.check_if_FL_OBJECT_ptr(pFlObject)
+    libr.verify_flobjectptr_type(pFlObject)
     begin, pbegin = libr.make_int_and_pointer()
     end, pend = libr.make_int_and_pointer()
     libr.keep_elem_refs(pFlObject, begin, end, pbegin, pend)
@@ -367,7 +367,7 @@ def fl_set_input_maxchars(pFlObject, maxchars):
       `pFlObject` : pointer to xfdata.FL_OBJECT
         input object
       `maxchars` : int
-        maximum characters to be set. If 0, limit is reset to infinite.
+        maximum characters to be set. If it's 0, limit is reset to infinite.
 
     :note: e.g. *todo*
 
@@ -379,7 +379,7 @@ def fl_set_input_maxchars(pFlObject, maxchars):
         None, [cty.POINTER(xfdata.FL_OBJECT), cty.c_int],
         """void fl_set_input_maxchars(FL_OBJECT * ob, int maxchars)""")
     libr.check_if_initialized()
-    libr.check_if_FL_OBJECT_ptr(pFlObject)
+    libr.verify_flobjectptr_type(pFlObject)
     imaxchars = libr.convert_to_int(maxchars)
     libr.keep_elem_refs(pFlObject, maxchars, imaxchars)
     _fl_set_input_maxchars(pFlObject, imaxchars)
@@ -408,8 +408,8 @@ def fl_set_input_format(pFlObject, fmt, sep):
         None, [cty.POINTER(xfdata.FL_OBJECT), cty.c_int, cty.c_int],
         """void fl_set_input_format(FL_OBJECT * ob, int fmt, int sep)""")
     libr.check_if_initialized()
-    libr.check_if_FL_OBJECT_ptr(pFlObject)
-    libr.check_admitted_listvalues(fmt, xfdata.DATEFMT_list)
+    libr.verify_flobjectptr_type(pFlObject)
+    libr.check_admitted_value_in_list(fmt, xfdata.DATEFMT_list)
     if isinstance(sep, str):
         # workaround to let a character as int argument
         ordsep = ord(sep)
@@ -447,8 +447,8 @@ def fl_set_input_hscrollbar(pFlObject, pref):
         None, [cty.POINTER(xfdata.FL_OBJECT), cty.c_int],
         """void fl_set_input_hscrollbar(FL_OBJECT * ob, int pref)""")
     libr.check_if_initialized()
-    libr.check_if_FL_OBJECT_ptr(pFlObject)
-    libr.check_admitted_listvalues(pref, xfdata.SCROLLBARVAL_list)
+    libr.verify_flobjectptr_type(pFlObject)
+    libr.check_admitted_value_in_list(pref, xfdata.SCROLLBARVAL_list)
     ipref = libr.convert_to_int(pref)
     libr.keep_elem_refs(pFlObject, pref, ipref)
     _fl_set_input_hscrollbar(pFlObject, ipref)
@@ -480,8 +480,8 @@ def fl_set_input_vscrollbar(pFlObject, pref):
         None, [cty.POINTER(xfdata.FL_OBJECT), cty.c_int],
         """void fl_set_input_vscrollbar(FL_OBJECT * ob, int pref)""")
     libr.check_if_initialized()
-    libr.check_if_FL_OBJECT_ptr(pFlObject)
-    libr.check_admitted_listvalues(pref, xfdata.SCROLLBARVAL_list)
+    libr.verify_flobjectptr_type(pFlObject)
+    libr.check_admitted_value_in_list(pref, xfdata.SCROLLBARVAL_list)
     ipref = libr.convert_to_int(pref)
     libr.keep_elem_refs(pFlObject, pref, ipref)
     _fl_set_input_vscrollbar(pFlObject, ipref)
@@ -510,7 +510,7 @@ def fl_set_input_topline(pFlObject, linenum):
         None, [cty.POINTER(xfdata.FL_OBJECT), cty.c_int],
         """void fl_set_input_topline(FL_OBJECT * ob, int top)""")
     libr.check_if_initialized()
-    libr.check_if_FL_OBJECT_ptr(pFlObject)
+    libr.verify_flobjectptr_type(pFlObject)
     ilinenum = libr.convert_to_int(linenum)
     libr.keep_elem_refs(pFlObject, linenum, ilinenum)
     _fl_set_input_topline(pFlObject, ilinenum)
@@ -540,7 +540,7 @@ def fl_set_input_scrollbarsize(pFlObject, hh, vw):
         None, [cty.POINTER(xfdata.FL_OBJECT), cty.c_int, cty.c_int],
         """void fl_set_input_scrollbarsize(FL_OBJECT * ob, int hh, int vw)""")
     libr.check_if_initialized()
-    libr.check_if_FL_OBJECT_ptr(pFlObject)
+    libr.verify_flobjectptr_type(pFlObject)
     ihh = libr.convert_to_int(hh)
     ivw = libr.convert_to_int(vw)
     libr.keep_elem_refs(pFlObject, hh, vw, ihh, ivw)
@@ -575,7 +575,7 @@ def fl_get_input_scrollbarsize(pFlObject):
         """void fl_get_input_scrollbarsize(FL_OBJECT * ob, int * hh,
            int * vw)""")
     libr.check_if_initialized()
-    libr.check_if_FL_OBJECT_ptr(pFlObject)
+    libr.verify_flobjectptr_type(pFlObject)
     hh, phh = libr.make_int_and_pointer()
     vw, pvw = libr.make_int_and_pointer()
     libr.keep_elem_refs(pFlObject, hh, vw)
@@ -605,7 +605,7 @@ def fl_set_input_xoffset(pFlObject, offset):
         None, [cty.POINTER(xfdata.FL_OBJECT), cty.c_int],
         """void fl_set_input_xoffset(FL_OBJECT * ob, int xoff)""")
     libr.check_if_initialized()
-    libr.check_if_FL_OBJECT_ptr(pFlObject)
+    libr.verify_flobjectptr_type(pFlObject)
     ioffset = libr.convert_to_int(offset)
     libr.keep_elem_refs(pFlObject, offset, ioffset)
     _fl_set_input_xoffset(pFlObject, ioffset)
@@ -633,7 +633,7 @@ def fl_get_input_xoffset(pFlObject):
         cty.c_int, [cty.POINTER(xfdata.FL_OBJECT)],
         """int fl_get_input_xoffset(FL_OBJECT * ob)""")
     libr.check_if_initialized()
-    libr.check_if_FL_OBJECT_ptr(pFlObject)
+    libr.verify_flobjectptr_type(pFlObject)
     libr.keep_elem_refs(pFlObject)
     retval = _fl_get_input_xoffset(pFlObject)
     return retval
@@ -664,7 +664,7 @@ def fl_set_input_fieldchar(pFlObject, fldchar):
         cty.c_int, [cty.POINTER(xfdata.FL_OBJECT), cty.c_int],
         """int fl_set_input_fieldchar(FL_OBJECT * ob, int fchar)""")
     libr.check_if_initialized()
-    libr.check_if_FL_OBJECT_ptr(pFlObject)
+    libr.verify_flobjectptr_type(pFlObject)
     if isinstance(fldchar, str):
         # workaround to let a character as int argument
         ordfldc = ord(fldchar)
@@ -698,7 +698,7 @@ def fl_get_input_topline(pFlObject):
         cty.c_int, [cty.POINTER(xfdata.FL_OBJECT)],
         """int fl_get_input_topline(FL_OBJECT * ob)""")
     libr.check_if_initialized()
-    libr.check_if_FL_OBJECT_ptr(pFlObject)
+    libr.verify_flobjectptr_type(pFlObject)
     libr.keep_elem_refs(pFlObject)
     retval = _fl_get_input_topline(pFlObject)
     return retval
@@ -726,7 +726,7 @@ def fl_get_input_screenlines(pFlObject):
         cty.c_int, [cty.POINTER(xfdata.FL_OBJECT)],
         """int fl_get_input_screenlines(FL_OBJECT * ob)""")
     libr.check_if_initialized()
-    libr.check_if_FL_OBJECT_ptr(pFlObject)
+    libr.verify_flobjectptr_type(pFlObject)
     libr.keep_elem_refs(pFlObject)
     retval = _fl_get_input_screenlines(pFlObject)
     return retval
@@ -761,7 +761,7 @@ def fl_get_input_cursorpos(pFlObject):
         cty.POINTER(cty.c_int)],
         """int fl_get_input_cursorpos(FL_OBJECT * ob, int * x, int * y)""")
     libr.check_if_initialized()
-    libr.check_if_FL_OBJECT_ptr(pFlObject)
+    libr.verify_flobjectptr_type(pFlObject)
     x, px = libr.make_int_and_pointer()
     y, py = libr.make_int_and_pointer()
     libr.keep_elem_refs(pFlObject, x, y)
@@ -791,7 +791,7 @@ def fl_set_input_cursor_visible(pFlObject, yesno):
         None, [cty.POINTER(xfdata.FL_OBJECT), cty.c_int],
         """void fl_set_input_cursor_visible(FL_OBJECT * ob, int visible)""")
     libr.check_if_initialized()
-    libr.check_if_FL_OBJECT_ptr(pFlObject)
+    libr.verify_flobjectptr_type(pFlObject)
     iyesno = libr.convert_to_int(yesno)
     libr.keep_elem_refs(pFlObject, yesno, iyesno)
     _fl_set_input_cursor_visible(pFlObject, iyesno)
@@ -819,7 +819,7 @@ def fl_get_input_numberoflines(pFlObject):
         cty.c_int, [cty.POINTER(xfdata.FL_OBJECT)],
         """int fl_get_input_numberoflines(FL_OBJECT * ob)""")
     libr.check_if_initialized()
-    libr.check_if_FL_OBJECT_ptr(pFlObject)
+    libr.verify_flobjectptr_type(pFlObject)
     libr.keep_elem_refs(pFlObject)
     retval = _fl_get_input_numberoflines(pFlObject)
     return retval
@@ -852,7 +852,7 @@ def fl_get_input_format(pFlObject):
         cty.POINTER(cty.c_int)],
         """void fl_get_input_format(FL_OBJECT * ob, int * fmt, int * sep)""")
     libr.check_if_initialized()
-    libr.check_if_FL_OBJECT_ptr(pFlObject)
+    libr.verify_flobjectptr_type(pFlObject)
     fmt, pfmt = libr.make_int_and_pointer()
     sep, psep = libr.make_int_and_pointer()
     libr.keep_elem_refs(pFlObject, fmt, sep, pfmt, psep)
@@ -882,7 +882,7 @@ def fl_get_input(pFlObject):
         xfdata.STRING, [cty.POINTER(xfdata.FL_OBJECT)],
         """const char * fl_get_input(FL_OBJECT * ob)""")
     libr.check_if_initialized()
-    libr.check_if_FL_OBJECT_ptr(pFlObject)
+    libr.verify_flobjectptr_type(pFlObject)
     libr.keep_elem_refs(pFlObject)
     retval = _fl_get_input(pFlObject)
     return retval
@@ -937,7 +937,7 @@ def fl_set_input_filter(pFlObject, py_InputValidator):
         """FL_INPUTVALIDATOR fl_set_input_filter(FL_OBJECT * ob,
             FL_INPUTVALIDATOR validate)""")
     libr.check_if_initialized()
-    libr.check_if_FL_OBJECT_ptr(pFlObject)
+    libr.verify_flobjectptr_type(pFlObject)
     c_InputValidator = xfdata.FL_INPUTVALIDATOR(py_InputValidator)
     libr.keep_cfunc_refs(c_InputValidator, py_InputValidator)
     libr.keep_elem_refs(pFlObject)
@@ -969,7 +969,7 @@ def fl_validate_input(pFlObject):
         cty.c_int, [cty.POINTER(xfdata.FL_OBJECT)],
         """int fl_validate_input(FL_OBJECT * obj)""")
     libr.check_if_initialized()
-    libr.check_if_FL_OBJECT_ptr(pFlObject)
+    libr.verify_flobjectptr_type(pFlObject)
     libr.keep_elem_refs(pFlObject)
     retval = _fl_validate_input(pFlObject)
     return retval
@@ -989,7 +989,9 @@ def fl_set_input_editkeymap(pEditKeymap):
     keymap structure, ASCII characters (i.e. characters with values below 128,
     including the control characters with values below 32) should be specified
     by their ASCII codes (<Ctrl> C is 3 etc.), while all others by their
-    Keysyms (XK_F1 etc.). Control and special character combinations can be obtained by adding   FL_CONTROL_MASK to the Keysym. To specify Meta add   FL_ALT_MASK to the key value.
+    Keysyms (XK_F1 etc.). Control and special character combinations can be
+    obtained by adding xfdata.FL_CONTROL_MASK to the Keysym. To specify Meta
+    add xfdata.FL_ALT_MASK to the key value.
     --
 
     :Parameters:
@@ -1007,6 +1009,11 @@ def fl_set_input_editkeymap(pEditKeymap):
         None, [cty.POINTER(xfdata.FL_EditKeymap)],
         """void fl_set_input_editkeymap(const char * keymap)""")
     libr.check_if_initialized()
+    if not pEditKeymap:         # it's None
+        pass
+    else:
+        libr.verify_otherclassptr_type(pEditKeymap, cty.POINTER( \
+            xfdata.FL_EditKeymap))
     libr.keep_elem_refs(pEditKeymap)
     _fl_set_input_editkeymap(pEditKeymap)
 

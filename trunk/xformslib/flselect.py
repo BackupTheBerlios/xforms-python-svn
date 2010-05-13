@@ -2,8 +2,7 @@
 # -*- coding: iso8859-1 -*-
 
 """
-    xforms-python - Python wrapper for XForms (X11) GUI C toolkit library
-    using ctypes
+    flselect.py - xforms-python's functions to manage select objects.
 
     Copyright (C) 2009, 2010  Luca Lazzaroni "LukenShiro"
     e-mail: <lukenshiro@ngi.it>
@@ -34,9 +33,8 @@
 
 
 import ctypes as cty
-from xformslib import library
+from xformslib import library as libr
 from xformslib import xfdata
-
 
 
 
@@ -50,57 +48,77 @@ from xformslib import xfdata
 
 
 def fl_add_select(selecttype, x, y, w, h, label):
+    """Adds a select (new generation choice) object to the form.
+
+    --
+
+    :Parameters:
+      `selecttype` : int
+        type of select to be added. Values (from xfdata.py) FL_NORMAL_SELECT,
+        FL_MENU_SELECT, FL_DROPLIST_SELECT
+      `x` : int
+        horizontal position (upper-left corner)
+      `y` : int
+        vertical position (upper-left corner)
+      `w` : int
+        width in coord units
+      `h` : int
+        height in coord units
+      `label` : str
+        text label of select
+
+    :return: select object added (pFlObject)
+    :rtype: pointer to xfdata.FL_OBJECT
+
+    :note: e.g. *todo*
+
+    :status: Tested + NoDoc + Demo = OK
+
     """
-        fl_add_select(selecttype, x, y, w, h, label) -> pFlObject
-
-        Adds a select object.
-
-        @param selecttype: type of select to be added
-        @param x: horizontal position (upper-left corner)
-        @param x: vertical position (upper-left corner)
-        @param w: width in coord units
-        @param h: height in coord units
-        @param label: text label of select
-
-        :status: Tested + NoDoc + Demo = OK
-
-    """
-    _fl_add_select = library.cfuncproto(
-        library.load_so_libforms(), "fl_add_select",
+    _fl_add_select = libr.cfuncproto(
+        libr.load_so_libforms(), "fl_add_select",
         cty.POINTER(xfdata.FL_OBJECT), [cty.c_int, xfdata.FL_Coord,
         xfdata.FL_Coord, xfdata.FL_Coord, xfdata.FL_Coord, xfdata.STRING],
         """FL_OBJECT * fl_add_select(int p1, FL_Coord p2, FL_Coord p3,
            FL_Coord p4, FL_Coord p5, const char * p6)""")
-    library.check_if_initialized()
-    library.check_admitted_listvalues(selecttype, xfdata.SELECTTYPE_list)
-    iselecttype = library.convert_to_int(selecttype)
-    ix = library.convert_to_FL_Coord(x)
-    iy = library.convert_to_FL_Coord(y)
-    iw = library.convert_to_FL_Coord(w)
-    ih = library.convert_to_FL_Coord(h)
-    slabel = library.convert_to_string(label)
-    library.keep_elem_refs(selecttype, x, y, w, h, label, iselecttype, ix, iy,
+    libr.check_if_initialized()
+    libr.check_admitted_value_in_list(selecttype, xfdata.SELECTTYPE_list)
+    iselecttype = libr.convert_to_int(selecttype)
+    ix = libr.convert_to_FL_Coord(x)
+    iy = libr.convert_to_FL_Coord(y)
+    iw = libr.convert_to_FL_Coord(w)
+    ih = libr.convert_to_FL_Coord(h)
+    slabel = libr.convert_to_string(label)
+    libr.keep_elem_refs(selecttype, x, y, w, h, label, iselecttype, ix, iy,
                    iw, ih, slabel)
     retval = _fl_add_select(iselecttype, ix, iy, iw, ih, slabel)
     return retval
 
 
 def fl_clear_select(pFlObject):
+    """*todo*
+
+    --
+
+    :Parameters:
+      `pFlObject` : pointer to xfdata.FL_OBJECT
+        select object
+
+    :return: num.
+    :rtype: int
+
+    :note: e.g. *todo*
+
+    :status: Untested + NoDoc + NoDemo = NOT OK
+
     """
-        fl_clear_select(pFlObject)
-
-        @param pFlObject: pointer to select object
-
-        :status: Untested + NoDoc + NoDemo = NOT OK
-
-    """
-    _fl_clear_select = library.cfuncproto(
-        library.load_so_libforms(), "fl_clear_select",
+    _fl_clear_select = libr.cfuncproto(
+        libr.load_so_libforms(), "fl_clear_select",
         cty.c_int, [cty.POINTER(xfdata.FL_OBJECT)],
         """int fl_clear_select(FL_OBJECT * p1)""")
-    library.check_if_initialized()
-    library.check_if_FL_OBJECT_ptr(pFlObject)
-    library.keep_elem_refs(pFlObject)
+    libr.check_if_initialized()
+    libr.verify_flobjectptr_type(pFlObject)
+    libr.keep_elem_refs(pFlObject)
     _fl_clear_select(pFlObject)
 
 
@@ -108,381 +126,620 @@ def fl_add_select_items(pFlObject, itemstr):
     """
         fl_add_select_items(pFlObject, itemstr) -> pPopupEntry
 
-        :status: HalfTested + NoDoc + Demo = NOT OK (sequence param.)
+    --
+
+    :Parameters:
+      `pFlObject` : pointer to xfdata.FL_OBJECT
+        select object
+      `itemstr` : str
+        text for the item.
+
+    :return: popup entry
+    :rtype: pointer to xfdata.FL_POPUP_ENTRY
+
+    :note: e.g. *todo*
+
+    :status: HalfTested + NoDoc + Demo = NOT OK (sequence param.)
 
     """
-    _fl_add_select_items = library.cfuncproto(
-        library.load_so_libforms(), "fl_add_select_items",
+    _fl_add_select_items = libr.cfuncproto(
+        libr.load_so_libforms(), "fl_add_select_items",
         cty.POINTER(xfdata.FL_POPUP_ENTRY), [cty.POINTER(xfdata.FL_OBJECT),
         xfdata.STRING],
         """FL_POPUP_ENTRY * fl_add_select_items(FL_OBJECT * p1,
            const char * p2)""")
-    library.check_if_initialized()
-    library.check_if_FL_OBJECT_ptr(pFlObject)
-    sitemstr = library.convert_to_string(itemstr)
-    library.keep_elem_refs(pFlObject, itemstr, sitemstr)
+    libr.check_if_initialized()
+    libr.verify_flobjectptr_type(pFlObject)
+    sitemstr = libr.convert_to_string(itemstr)
+    libr.keep_elem_refs(pFlObject, itemstr, sitemstr)
     retval = _fl_add_select_items(pFlObject, sitemstr)
     return retval
 
 
 def fl_insert_select_items(pFlObject, pPopupEntry, itemstr):
+    """*todo*
+
+    --
+
+    :Parameters:
+      `pFlObject` : pointer to xfdata.FL_OBJECT
+        select object
+      `pPopupEntry` : pointer to xfdata.FL_POPUP_ENTRY
+        popup entry
+      `itemstr` : str
+        text of the item (among special sequences only %S is supported)
+
+    :return: popup entry
+    :rtype: pointer to xfdata.FL_POPUP_ENTRY
+
+    :note: e.g. *todo*
+
+    :status: HalfTested + NoDoc + Demo = NOT OK (special sequence)
+
     """
-        fl_insert_select_items(pFlObject, pPopupEntry, itemstr) -> pPopupEntry
-
-        @param itemstr: text of the item (among special sequences only %S is
-           supported)
-
-        :status: HalfTested + NoDoc + Demo = NOT OK (special sequence)
-
-    """
-    _fl_insert_select_items = library.cfuncproto(
-        library.load_so_libforms(), "fl_insert_select_items",
+    _fl_insert_select_items = libr.cfuncproto(
+        libr.load_so_libforms(), "fl_insert_select_items",
         cty.POINTER(xfdata.FL_POPUP_ENTRY), [cty.POINTER(xfdata.FL_OBJECT),
         cty.POINTER(xfdata.FL_POPUP_ENTRY), xfdata.STRING],
         """FL_POPUP_ENTRY * fl_insert_select_items(FL_OBJECT * p1,
            FL_POPUP_ENTRY * p2, const char * p3)""")
-    library.check_if_initialized()
-    library.check_if_FL_OBJECT_ptr(pFlObject)
-    sitemstr = library.convert_to_string(itemstr)
-    library.keep_elem_refs(pFlObject, pPopupEntry, itemstr, sitemstr)
+    libr.check_if_initialized()
+    libr.verify_flobjectptr_type(pFlObject)
+    sitemstr = libr.convert_to_string(itemstr)
+    libr.keep_elem_refs(pFlObject, pPopupEntry, itemstr, sitemstr)
     retval = _fl_insert_select_items(pFlObject, pPopupEntry, sitemstr)
     return retval
 
 
 def fl_replace_select_item(pFlObject, pPopupEntry, itemstr):
-    """
-        fl_replace_select_item(pFlObject, pPopupEntry, itemstr) -> pPopupEntry
+    """*todo*
 
-        :status: Untested + NoDoc + NoDemo = NOT OK
+    --
+
+    :Parameters:
+      `pFlObject` : pointer to xfdata.FL_OBJECT
+        select object
+      `pPopupEntry` : pointer to xfdata.FL_POPUP_ENTRY
+        popup entry
+      `itemstr` : str
+        text of the item (among special sequences only %S is supported)
+
+    :return: popup entry
+    :rtype: pointer to xfdata.FL_POPUP_ENTRY
+
+    :note: e.g. *todo*
+
+    :status: Untested + NoDoc + NoDemo = NOT OK
+
     """
-    _fl_replace_select_item = library.cfuncproto(
-        library.load_so_libforms(), "fl_replace_select_item",
+    _fl_replace_select_item = libr.cfuncproto(
+        libr.load_so_libforms(), "fl_replace_select_item",
         cty.POINTER(xfdata.FL_POPUP_ENTRY), [cty.POINTER(xfdata.FL_OBJECT),
         cty.POINTER(xfdata.FL_POPUP_ENTRY), xfdata.STRING],
         """FL_POPUP_ENTRY * fl_replace_select_item(FL_OBJECT * p1,
             FL_POPUP_ENTRY * p2, const char * p3)""")
-    library.check_if_initialized()
-    library.check_if_FL_OBJECT_ptr(pFlObject)
-    sitemstr = library.convert_to_string(itemstr)
-    library.keep_elem_refs(pFlObject, pPopupEntry, itemstr, sitemstr)
+    libr.check_if_initialized()
+    libr.verify_flobjectptr_type(pFlObject)
+    sitemstr = libr.convert_to_string(itemstr)
+    libr.keep_elem_refs(pFlObject, pPopupEntry, itemstr, sitemstr)
     retval = _fl_replace_select_item(pFlObject, pPopupEntry, sitemstr)
     return retval
 
 
 def fl_delete_select_item(pFlObject, pPopupEntry):
-    """
-        fl_delete_select_item(pFlObject, pPopupEntry) -> num.
+    """*todo*
 
-        :status: Untested + NoDoc + NoDemo = NOT OK
+    --
+
+    :Parameters:
+      `pFlObject` : pointer to xfdata.FL_OBJECT
+        select object
+      `pPopupEntry` : pointer to xfdata.FL_POPUP_ENTRY
+        popup entry
+
+    :return: num.
+    :rtype: int
+
+    :note: e.g. *todo*
+
+    :status: Untested + NoDoc + NoDemo = NOT OK
+
     """
-    _fl_delete_select_item = library.cfuncproto(
-            library.load_so_libforms(), "fl_delete_select_item",
-            cty.c_int, [cty.POINTER(xfdata.FL_OBJECT), cty.POINTER(xfdata.FL_POPUP_ENTRY)],
-            """int fl_delete_select_item(FL_OBJECT * p1, FL_POPUP_ENTRY * p2)
-""")
-    library.check_if_initialized()
-    library.check_if_FL_OBJECT_ptr(pFlObject)
-    library.keep_elem_refs(pFlObject, pPopupEntry)
+    _fl_delete_select_item = libr.cfuncproto(
+        libr.load_so_libforms(), "fl_delete_select_item",
+        cty.c_int, [cty.POINTER(xfdata.FL_OBJECT),
+        cty.POINTER(xfdata.FL_POPUP_ENTRY)],
+        """int fl_delete_select_item(FL_OBJECT * p1, FL_POPUP_ENTRY * p2)""")
+    libr.check_if_initialized()
+    libr.verify_flobjectptr_type(pFlObject)
+    libr.keep_elem_refs(pFlObject, pPopupEntry)
     retval = _fl_delete_select_item(pFlObject, pPopupEntry)
     return retval
 
 
 def fl_set_select_items(pFlObject, pPopupItem):
+    """(Re)populates a select object.
+
+    --
+
+    :Parameters:
+      `pFlObject` : pointer to xfdata.FL_OBJECT
+        select object
+      `pPopupItem` : pointer to xfdata.FL_POPUP_ITEM
+        popup item class instance (array of it)
+
+    :return: num.
+    :rtype: int
+
+    :note: e.g. *todo*
+
+    :status: Untested + NoDoc + NoDemo = NOT OK
+
     """
-        fl_set_select_items(pFlObject, pPopupItem) -> num.
-
-        (Re)populates a select object xfdata.
-
-        @param pFlObject: pointer to select object
-        @param pPopupItem: pointer to FL_POPUP_ITEM class instance (array of it)
-
-        :status: Untested + NoDoc + NoDemo = NOT OK
-    """
-    _fl_set_select_items = library.cfuncproto(
-        library.load_so_libforms(), "fl_set_select_items",
-        cty.c_long, [cty.POINTER(xfdata.FL_OBJECT), cty.POINTER(xfdata.FL_POPUP_ITEM)],
+    _fl_set_select_items = libr.cfuncproto(
+        libr.load_so_libforms(), "fl_set_select_items",
+        cty.c_long, [cty.POINTER(xfdata.FL_OBJECT),
+        cty.POINTER(xfdata.FL_POPUP_ITEM)],
         """long int fl_set_select_items(FL_OBJECT * p1,
            FL_POPUP_ITEM * p2)""")
-    library.check_if_initialized()
-    library.check_if_FL_OBJECT_ptr(pFlObject)
-    library.keep_elem_refs(pFlObject, pPopupItem)
+    libr.check_if_initialized()
+    libr.verify_flobjectptr_type(pFlObject)
+    libr.verify_flpopupitemptr_type(pPopupItem)
+    libr.keep_elem_refs(pFlObject, pPopupItem)
     retval = _fl_set_select_items(pFlObject, pPopupItem)
     return retval
 
 
 def fl_get_select_popup(pFlObject):
-    """
-        fl_get_select_popup(pFlObject) -> pPopup
+    """*todo*
 
-        :status: Tested + NoDoc + Demo = OK
+    --
+
+    :Parameters:
+      `pFlObject` : pointer to xfdata.FL_OBJECT
+        select object
+
+    :return: popup class instance
+    :rtype: pointer to xfdata.FL_POPUP
+
+    :note: e.g. *todo*
+
+    :status: Tested + NoDoc + Demo = OK
+
     """
-    _fl_get_select_popup = library.cfuncproto(
-        library.load_so_libforms(), "fl_get_select_popup",
+    _fl_get_select_popup = libr.cfuncproto(
+        libr.load_so_libforms(), "fl_get_select_popup",
         cty.POINTER(xfdata.FL_POPUP), [cty.POINTER(xfdata.FL_OBJECT)],
         """FL_POPUP * fl_get_select_popup(FL_OBJECT * p1)""")
-    library.check_if_initialized()
-    library.check_if_FL_OBJECT_ptr(pFlObject)
-    library.keep_elem_refs(pFlObject)
+    libr.check_if_initialized()
+    libr.verify_flobjectptr_type(pFlObject)
+    libr.keep_elem_refs(pFlObject)
     retval = _fl_get_select_popup(pFlObject)
     return retval
 
 
 def fl_set_select_popup(pFlObject, pPopup):
-    """
-        fl_set_select_popup(pFlObject, pPopup) -> num.
+    """*todo*
 
-        :status: Untested + NoDoc + NoDemo = NOT OK
+    --
+
+    :Parameters:
+      `pFlObject` : pointer to xfdata.FL_OBJECT
+        select object
+      `pPopup` : pointer to xfdata.FL_POPUP
+        popup class instance
+
+    :return: num.
+    :rtype: int
+
+    :note: e.g. *todo*
+
+    :status: Untested + NoDoc + NoDemo = NOT OK
+
     """
-    _fl_set_select_popup = library.cfuncproto(
-        library.load_so_libforms(), "fl_set_select_popup",
-        cty.c_int, [cty.POINTER(xfdata.FL_OBJECT), cty.POINTER(xfdata.FL_POPUP)],
+    _fl_set_select_popup = libr.cfuncproto(
+        libr.load_so_libforms(), "fl_set_select_popup",
+        cty.c_int, [cty.POINTER(xfdata.FL_OBJECT),
+        cty.POINTER(xfdata.FL_POPUP)],
         """int fl_set_select_popup(FL_OBJECT * p1, FL_POPUP * p2)""")
-    library.check_if_initialized()
-    library.check_if_FL_OBJECT_ptr(pFlObject)
-    library.keep_elem_refs(pFlObject, pPopup)
+    libr.check_if_initialized()
+    libr.verify_flobjectptr_type(pFlObject)
+    libr.verify_flflpopupptr_type(pPopup)
+    libr.keep_elem_refs(pFlObject, pPopup)
     retval = _fl_set_select_popup(pFlObject, pPopup)
     return retval
 
 
 def fl_get_select_item(pFlObject):
-    """
-        fl_get_select_item(pFlObject) -> pPopupReturn
+    """*todo*
 
-        :status: Tested + NoDoc + Demo = OK
+    --
+
+    :Parameters:
+      `pFlObject` : pointer to xfdata.FL_OBJECT
+        select object
+
+    :return: popup return
+    :rtype: pointer to xfdata.FL_POPUP_RETURN
+
+    :note: e.g. *todo*
+
+    :status: Tested + NoDoc + Demo = OK
+
     """
-    _fl_get_select_item = library.cfuncproto(
-        library.load_so_libforms(), "fl_get_select_item",
+    _fl_get_select_item = libr.cfuncproto(
+        libr.load_so_libforms(), "fl_get_select_item",
         cty.POINTER(xfdata.FL_POPUP_RETURN), [cty.POINTER(xfdata.FL_OBJECT)],
         """FL_POPUP_RETURN * fl_get_select_item(FL_OBJECT * p1)""")
-    library.check_if_initialized()
-    library.check_if_FL_OBJECT_ptr(pFlObject)
-    library.keep_elem_refs(pFlObject)
+    libr.check_if_initialized()
+    libr.verify_flobjectptr_type(pFlObject)
+    libr.keep_elem_refs(pFlObject)
     retval = _fl_get_select_item(pFlObject)
     return retval
 
 
 def fl_set_select_item(pFlObject, pPopupEntry):
+    """Sets a new item of a select object.
+
+    --
+
+    :Parameters:
+      `pFlObject` : pointer to xfdata.FL_OBJECT
+        select object
+      `pPopupEntry` : pointer to xfdata.FL_POPUP_ENTRY
+        popup entry class instance
+
+    :return: popup return
+    :rtype: pointer to xfdata.FL_POPUP_RETURN
+
+    :note: e.g. *todo*
+
+    :status: HalfTested + NoDoc + Demo = NOT OK (FL_POPUP_ENTRY not prepared)
+
     """
-        fl_set_select_item(pFlObject, pPopupEntry) -> pPopupReturn
-
-        Set a new item as currently selected.
-
-        @param pFlObject: pointer to select object
-        @param pPopupEntry: pointer to FL_POPUP_ENTRY class instance
-
-        :status: HalfTested + NoDoc + Demo = NOT OK (FL_POPUP_ENTRY not prepared)
-    """
-    _fl_set_select_item = library.cfuncproto(
-        library.load_so_libforms(), "fl_set_select_item",
+    _fl_set_select_item = libr.cfuncproto(
+        libr.load_so_libforms(), "fl_set_select_item",
         cty.POINTER(xfdata.FL_POPUP_RETURN), [cty.POINTER(xfdata.FL_OBJECT),
         cty.POINTER(xfdata.FL_POPUP_ENTRY)],
         """FL_POPUP_RETURN * fl_set_select_item(FL_OBJECT * p1,
            FL_POPUP_ENTRY * p2)""")
-    library.check_if_initialized()
-    library.check_if_FL_OBJECT_ptr(pFlObject)
-    library.keep_elem_refs(pFlObject, pPopupEntry)
+    libr.check_if_initialized()
+    libr.verify_flobjectptr_type(pFlObject)
+    libr.verify_flpopupentryptr_type(pPopupEntry)
+    libr.keep_elem_refs(pFlObject, pPopupEntry)
     retval = _fl_set_select_item(pFlObject, pPopupEntry)
     return retval
 
 
 def fl_get_select_item_by_value(pFlObject, value):
-    """
-        fl_get_select_item_by_value(pFlObject, value) -> pPopupEntry
+    """*todo*
 
-        :status: Untested + NoDoc + NoDemo = NOT OK
+    --
+
+    :Parameters:
+      `pFlObject` : pointer to xfdata.FL_OBJECT
+        select object
+      `value` : long
+        value?
+
+    :return: popup entry class instance
+    :rtype: pointer to xfdata.FL_POPUP_ENTRY
+
+    :note: e.g. *todo*
+
+    :status: Untested + NoDoc + NoDemo = NOT OK
+
     """
-    _fl_get_select_item_by_value = library.cfuncproto(
-        library.load_so_libforms(), "fl_get_select_item_by_value",
+    _fl_get_select_item_by_value = libr.cfuncproto(
+        libr.load_so_libforms(), "fl_get_select_item_by_value",
         cty.POINTER(xfdata.FL_POPUP_ENTRY), [cty.POINTER(xfdata.FL_OBJECT),
         cty.c_long],
         """FL_POPUP_ENTRY * fl_get_select_item_by_value(FL_OBJECT * p1,
            long int p2)""")
-    library.check_if_initialized()
-    library.check_if_FL_OBJECT_ptr(pFlObject)
-    lvalue = library.convert_to_long(value)
-    library.keep_elem_refs(pFlObject, value, lvalue)
+    libr.check_if_initialized()
+    libr.verify_flobjectptr_type(pFlObject)
+    lvalue = libr.convert_to_long(value)
+    libr.keep_elem_refs(pFlObject, value, lvalue)
     retval = _fl_get_select_item_by_value(pFlObject, lvalue)
     return retval
 
 
 def fl_get_select_item_by_label(pFlObject, label):
-    """
-        fl_get_select_item_by_label(pFlObject, label) -> pPopupEntry
+    """*todo*
 
-        :status: Tested + NoDoc + Demo = OK
+    --
+
+    :Parameters:
+      `pFlObject` : pointer to xfdata.FL_OBJECT
+        select object
+      `label` : str
+        label?
+
+    :return: popup entry class instance
+    :rtype: pointer to xfdata.FL_POPUP_ENTRY
+
+    :note: e.g. *todo*
+
+    :status: Tested + NoDoc + Demo = OK
+
     """
-    _fl_get_select_item_by_label = library.cfuncproto(
-        library.load_so_libforms(), "fl_get_select_item_by_label",
+    _fl_get_select_item_by_label = libr.cfuncproto(
+        libr.load_so_libforms(), "fl_get_select_item_by_label",
         cty.POINTER(xfdata.FL_POPUP_ENTRY), [cty.POINTER(xfdata.FL_OBJECT),
         xfdata.STRING],
         """FL_POPUP_ENTRY * fl_get_select_item_by_label(FL_OBJECT * p1,
            const char * p2)""")
-    library.check_if_initialized()
-    library.check_if_FL_OBJECT_ptr(pFlObject)
-    slabel = library.convert_to_string(label)
-    library.keep_elem_refs(pFlObject, label, slabel)
+    libr.check_if_initialized()
+    libr.verify_flobjectptr_type(pFlObject)
+    slabel = libr.convert_to_string(label)
+    libr.keep_elem_refs(pFlObject, label, slabel)
     retval = _fl_get_select_item_by_label(pFlObject, slabel)
     return retval
 
 
 def fl_get_select_item_by_text(pFlObject, txtstr):
-    """
-        fl_get_select_item_by_text(pFlObject, txtstr) -> pPopupEntry
+    """*todo*
 
-        :status: Untested + NoDoc + NoDemo = NOT OK
+    --
+
+    :Parameters:
+      `pFlObject` : pointer to xfdata.FL_OBJECT
+        select object
+      `txtstr` : str
+        text?
+
+    :return: popup entry class instance
+    :rtype: pointer to xfdata.FL_POPUP_ENTRY
+
+    :note: e.g. *todo*
+
+    :status: Untested + NoDoc + NoDemo = NOT OK
+
     """
-    _fl_get_select_item_by_text = library.cfuncproto(
-        library.load_so_libforms(), "fl_get_select_item_by_text",
+    _fl_get_select_item_by_text = libr.cfuncproto(
+        libr.load_so_libforms(), "fl_get_select_item_by_text",
         cty.POINTER(xfdata.FL_POPUP_ENTRY), [cty.POINTER(xfdata.FL_OBJECT),
         xfdata.STRING],
         """FL_POPUP_ENTRY * fl_get_select_item_by_text(FL_OBJECT * p1,
            const char * p2)""")
-    library.check_if_initialized()
-    library.check_if_FL_OBJECT_ptr(pFlObject)
-    stxtstr = library.convert_to_string(txtstr)
-    library.keep_elem_refs(pFlObject, txtstr, stxtstr)
+    libr.check_if_initialized()
+    libr.verify_flobjectptr_type(pFlObject)
+    stxtstr = libr.convert_to_string(txtstr)
+    libr.keep_elem_refs(pFlObject, txtstr, stxtstr)
     retval = _fl_get_select_item_by_text(pFlObject, stxtstr)
     return retval
 
 
 def fl_get_select_text_color(pFlObject):
-    """
-        fl_get_select_text_color(pFlObject) -> color
+    """*todo*
 
-        :status: Untested + NoDoc + NoDemo = NOT OK
+    --
+
+    :Parameters:
+      `pFlObject` : pointer to xfdata.FL_OBJECT
+        select object
+
+    :return: color
+    :rtype: long_pos
+
+    :note: e.g. *todo*
+
+    :status: Untested + NoDoc + NoDemo = NOT OK
+
     """
-    _fl_get_select_text_color = library.cfuncproto(
-        library.load_so_libforms(), "fl_get_select_text_color",
+    _fl_get_select_text_color = libr.cfuncproto(
+        libr.load_so_libforms(), "fl_get_select_text_color",
         xfdata.FL_COLOR, [cty.POINTER(xfdata.FL_OBJECT)],
         """FL_COLOR fl_get_select_text_color(FL_OBJECT * p1)""")
-    library.check_if_initialized()
-    library.check_if_FL_OBJECT_ptr(pFlObject)
-    library.keep_elem_refs(pFlObject)
+    libr.check_if_initialized()
+    libr.verify_flobjectptr_type(pFlObject)
+    libr.keep_elem_refs(pFlObject)
     retval = _fl_get_select_text_color(pFlObject)
     return retval
 
 
 def fl_set_select_text_color(pFlObject, colr):
-    """
-        fl_set_select_text_color(pFlObject, colr) -> color
+    """*todo*
 
-        :status: Untested + NoDoc + NoDemo = NOT OK
+    --
+
+    :Parameters:
+      `pFlObject` : pointer to xfdata.FL_OBJECT
+        select object
+      `colr` : long_pos
+        color value
+
+    :return: old color?
+    :rtype: long_pos
+
+    :note: e.g. *todo*
+
+    :status: Untested + NoDoc + NoDemo = NOT OK
+
     """
-    _fl_set_select_text_color = library.cfuncproto(
-        library.load_so_libforms(), "fl_set_select_text_color",
+    _fl_set_select_text_color = libr.cfuncproto(
+        libr.load_so_libforms(), "fl_set_select_text_color",
         xfdata.FL_COLOR, [cty.POINTER(xfdata.FL_OBJECT), xfdata.FL_COLOR],
         """FL_COLOR fl_set_select_text_color(FL_OBJECT * p1, FL_COLOR p2)""")
-    library.check_if_initialized()
-    library.check_if_FL_OBJECT_ptr(pFlObject)
-    library.check_admitted_listvalues(colr, xfdata.COLOR_list)
-    ulcolr = library.convert_to_FL_COLOR(colr)
-    library.keep_elem_refs(pFlObject, colr, ulcolr)
+    libr.check_if_initialized()
+    libr.verify_flobjectptr_type(pFlObject)
+    libr.check_admitted_value_in_list(colr, xfdata.COLOR_list)
+    ulcolr = libr.convert_to_FL_COLOR(colr)
+    libr.keep_elem_refs(pFlObject, colr, ulcolr)
     retval = _fl_set_select_text_color(pFlObject, ulcolr)
     return retval
 
 
 def fl_get_select_text_font(pFlObject):
-    """
-        fl_get_select_text_font(pFlObject) -> num, num1, num2
+    """*todo*
 
-        :attention: API change from XForms - upstream was
-           fl_get_select_text_font(pFlObject, p2, p3)
+    --
+
+    :Parameters:
+      `pFlObject` : pointer to xfdata.FL_OBJECT
+        select object
+
+    :return: 0 or -1 (on failure), style, size
+    :rtype: int, int, int
+
+    :note: e.g. *todo*
+
+    :attention: API change from XForms - upstream was
+        fl_get_select_text_font(pFlObject, p2, p3)
+
+    :status: Untested + NoDoc + NoDemo = NOT OK
+
+    """
+    _fl_get_select_text_font = libr.cfuncproto(
+        libr.load_so_libforms(), "fl_get_select_text_font",
+        cty.c_int, [cty.POINTER(xfdata.FL_OBJECT), cty.POINTER(cty.c_int),
+        cty.POINTER(cty.c_int)],
+        """int fl_get_select_text_font(FL_OBJECT * p1, int * p2, int * p3)""")
+    libr.check_if_initialized()
+    libr.verify_flobjectptr_type(pFlObject)
+    style, pstyle = libr.make_int_and_pointer()
+    size, psize = libr.make_int_and_pointer()
+    libr.keep_elem_refs(pFlObject, style, pstyle, size, psize)
+    retval = _fl_get_select_text_font(pFlObject, pstyle, psize)
+    return retval, style.value, size.value
+
+
+def fl_set_select_text_font(pFlObject, style, size):
+    """*todo*
+
+    --
+
+    :Parameters:
+      `pFlObject` : pointer to xfdata.FL_OBJECT
+        select object
+      `style` : int
+        text style. Values (from xfdata.py) FL_NORMAL_STYLE,
+        FL_BOLD_STYLE, FL_ITALIC_STYLE, FL_BOLDITALIC_STYLE, FL_FIXED_STYLE,
+        FL_FIXEDBOLD_STYLE, FL_FIXEDITALIC_STYLE, FL_FIXEDBOLDITALIC_STYLE,
+        FL_TIMES_STYLE, FL_TIMESBOLD_STYLE, FL_TIMESITALIC_STYLE,
+        FL_TIMESBOLDITALIC_STYLE, FL_MISC_STYLE, FL_MISCBOLD_STYLE,
+        FL_MISCITALIC_STYLE, FL_SYMBOL_STYLE, FL_SHADOW_STYLE,
+        FL_ENGRAVED_STYLE, FL_EMBOSSED_STYLE
+      `size` : int
+        text size. Values (from xfdata.py) FL_TINY_SIZE, FL_SMALL_SIZE,
+        FL_NORMAL_SIZE, FL_MEDIUM_SIZE, FL_LARGE_SIZE, FL_HUGE_SIZE,
+        FL_DEFAULT_SIZE
+
+        :return: font num.
+        :rtype: int
+
+        :note: e.g. *todo*
 
         :status: Untested + NoDoc + NoDemo = NOT OK
+
     """
-
-    _fl_get_select_text_font = library.cfuncproto(
-            library.load_so_libforms(), "fl_get_select_text_font",
-            cty.c_int, [cty.POINTER(xfdata.FL_OBJECT), cty.POINTER(cty.c_int),
-            cty.POINTER(cty.c_int)],
-            """int fl_get_select_text_font(FL_OBJECT * p1, int * p2, int * p3)
-""")
-    library.check_if_initialized()
-    library.check_if_FL_OBJECT_ptr(pFlObject)
-    num1, pnum1 = library.make_int_and_pointer()
-    num2, pnum2 = library.make_int_and_pointer()
-    library.keep_elem_refs(pFlObject, num1, num2, pnum1, pnum2)
-    retval = _fl_get_select_text_font(pFlObject, pnum2, pnum2)
-    return retval, num1.value, num2.value
-
-
-def fl_set_select_text_font(pFlObject, p2, p3):
-    """
-        fl_set_select_text_font(pFlObject, p2, p3) -> font num.
-
-        :status: Untested + NoDoc + NoDemo = NOT OK
-    """
-
-    _fl_set_select_text_font = library.cfuncproto(
-            library.load_so_libforms(), "fl_set_select_text_font",
-            cty.c_int, [cty.POINTER(xfdata.FL_OBJECT), cty.c_int, cty.c_int],
-            """int fl_set_select_text_font(FL_OBJECT * p1, int p2, int p3)
-""")
-    library.check_if_initialized()
-    library.check_if_FL_OBJECT_ptr(pFlObject)
-    ip2 = library.convert_to_int(p2)
-    ip3 = library.convert_to_int(p3)
-    library.keep_elem_refs(pFlObject, p2, p3, ip2, ip3)
-    retval = _fl_set_select_text_font(pFlObject, ip2, ip3)
+    _fl_set_select_text_font = libr.cfuncproto(
+        libr.load_so_libforms(), "fl_set_select_text_font",
+        cty.c_int, [cty.POINTER(xfdata.FL_OBJECT), cty.c_int, cty.c_int],
+        """int fl_set_select_text_font(FL_OBJECT * p1, int p2, int p3)""")
+    libr.check_if_initialized()
+    libr.verify_flobjectptr_type(pFlObject)
+    libr.check_admitted_value_in_list(style, xfdata.TEXTSTYLE_list)
+    libr.check_admitted_value_in_list(size, xfdata.FONTSIZE_list)
+    istyle = libr.convert_to_int(style)
+    isize = libr.convert_to_int(size)
+    libr.keep_elem_refs(pFlObject, style, size, istyle, isize)
+    retval = _fl_set_select_text_font(pFlObject, istyle, isize)
     return retval
 
 
 def fl_get_select_text_align(pFlObject):
-    """
-        fl_get_select_text_align(pFlObject) -> num.
+    """*todo*
 
-        :status: Untested + NoDoc + NoDemo = NOT OK
-    """
+    --
 
-    _fl_get_select_text_align = library.cfuncproto(
-            library.load_so_libforms(), "fl_get_select_text_align",
-            cty.c_int, [cty.POINTER(xfdata.FL_OBJECT)],
-            """int fl_get_select_text_align(FL_OBJECT * p1)
-""")
-    library.check_if_initialized()
-    library.check_if_FL_OBJECT_ptr(pFlObject)
-    library.keep_elem_refs(pFlObject)
+    :Parameters:
+      `pFlObject` : pointer to xfdata.FL_OBJECT
+        select object
+
+    :return: num.
+    :rtype: int
+
+    :note: e.g. *todo*
+
+    :status: Untested + NoDoc + NoDemo = NOT OK
+
+    """
+    _fl_get_select_text_align = libr.cfuncproto(
+        libr.load_so_libforms(), "fl_get_select_text_align",
+        cty.c_int, [cty.POINTER(xfdata.FL_OBJECT)],
+        """int fl_get_select_text_align(FL_OBJECT * p1)""")
+    libr.check_if_initialized()
+    libr.verify_flobjectptr_type(pFlObject)
+    libr.keep_elem_refs(pFlObject)
     retval = _fl_get_select_text_align(pFlObject)
     return retval
 
 
-def fl_set_select_text_align(pFlObject, p2):
-    """
-        fl_set_select_text_align(pFlObject, p2) -> num.
+def fl_set_select_text_align(pFlObject, align):
+    """*todo*
 
-        :status: Untested + NoDoc + NoDemo = NOT OK
-    """
+    --
 
-    _fl_set_select_text_align = library.cfuncproto(
-            library.load_so_libforms(), "fl_set_select_text_align",
-            cty.c_int, [cty.POINTER(xfdata.FL_OBJECT), cty.c_int],
-            """int fl_set_select_text_align(FL_OBJECT * p1, int p2)
-""")
-    library.check_if_initialized()
-    library.check_if_FL_OBJECT_ptr(pFlObject)
-    ip2 = library.convert_to_int(p2)
-    library.keep_elem_refs(pFlObject, p2, ip2)
-    retval = _fl_set_select_text_align(pFlObject, ip2)
+    :Parameters:
+      `pFlObject` : pointer to xfdata.FL_OBJECT
+        select object
+      `align` : int
+        alignment of text. Values (from xfdata.py) FL_ALIGN_CENTER,
+        FL_ALIGN_TOP, FL_ALIGN_BOTTOM, FL_ALIGN_LEFT, FL_ALIGN_RIGHT,
+        FL_ALIGN_LEFT_TOP, FL_ALIGN_RIGHT_TOP, FL_ALIGN_LEFT_BOTTOM,
+        FL_ALIGN_RIGHT_BOTTOM, FL_ALIGN_INSIDE, FL_ALIGN_VERT
+
+    :return: num.
+    :rtype: int
+
+    :note: e.g. *todo*
+
+    :status: Untested + NoDoc + NoDemo = NOT OK
+
+    """
+    _fl_set_select_text_align = libr.cfuncproto(
+        libr.load_so_libforms(), "fl_set_select_text_align",
+        cty.c_int, [cty.POINTER(xfdata.FL_OBJECT), cty.c_int],
+        """int fl_set_select_text_align(FL_OBJECT * p1, int p2)""")
+    libr.check_if_initialized()
+    libr.check_admitted_value_in_list(align, xfdata.ALIGN_list)
+    libr.verify_flobjectptr_type(pFlObject)
+    ialign = libr.convert_to_int(align)
+    libr.keep_elem_refs(pFlObject, align, ialign)
+    retval = _fl_set_select_text_align(pFlObject, ialign)
     return retval
 
 
-def fl_set_select_policy(pFlObject, num):
-    """
-        fl_set_select_policy(pFlObject, num) -> num.
+def fl_set_select_policy(pFlObject, policy):
+    """*todo*
 
-        :status: Tested + NoDoc + Demo = OK
-    """
+    --
 
-    _fl_set_select_policy = library.cfuncproto(
-            library.load_so_libforms(), "fl_set_select_policy",
-            cty.c_int, [cty.POINTER(xfdata.FL_OBJECT), cty.c_int],
-            """int fl_set_select_policy(FL_OBJECT * p1, int p2)
-""")
-    library.check_if_initialized()
-    library.check_if_FL_OBJECT_ptr(pFlObject)
-    inum = library.convert_to_int(num)
-    library.keep_elem_refs(pFlObject, num, inum)
-    retval = _fl_set_select_policy(pFlObject, inum)
+    :Parameters:
+      `pFlObject` : pointer to xfdata.FL_OBJECT
+        select object
+      `policy` : int
+        popup policy to be set. Values (from xfdata.py) FL_POPUP_NORMAL_SELECT,
+        FL_POPUP_DRAG_SELECT.
+
+    :return: num.
+    :rtype: int
+
+    :note: e.g. *todo*
+
+    :status: Tested + NoDoc + Demo = OK
+
+    """
+    _fl_set_select_policy = libr.cfuncproto(
+        libr.load_so_libforms(), "fl_set_select_policy",
+        cty.c_int, [cty.POINTER(xfdata.FL_OBJECT), cty.c_int],
+        """int fl_set_select_policy(FL_OBJECT * p1, int p2)""")
+    libr.check_if_initialized()
+    libr.check_admitted_value_in_list(policy, xfdata.POPUPPOLICY_list)
+    libr.verify_flobjectptr_type(pFlObject)
+    ipolicy = libr.convert_to_int(policy)
+    libr.keep_elem_refs(pFlObject, policy, ipolicy)
+    retval = _fl_set_select_policy(pFlObject, ipolicy)
     return retval
-
 

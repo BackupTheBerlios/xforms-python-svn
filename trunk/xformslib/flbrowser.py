@@ -2,7 +2,7 @@
 # -*- coding: iso8859-1 -*-
 
 """
-    flbrowser.py - Functions to manage browser objects.
+    flbrowser.py - xforms-python's functions to manage browser objects.
 
     Copyright (C) 2009, 2010  Luca Lazzaroni "LukenShiro"
     e-mail:  <lukenshiro@ngi.it>
@@ -71,7 +71,7 @@ def fl_add_browser(browsertype, x, y, w, h, label):
     :return: browser object created (pFlObject)
     :rtype: pointer to xfdata.FL_OBJECT
 
-    :note: e.g. brobj = fl_add_browser(FL_SELECT_BROWSER, 200, 250, 200, 200, 
+    :note: e.g. brobj = fl_add_browser(FL_SELECT_BROWSER, 200, 250, 200, 200,
         "BrowserList")
 
     :status: Tested + Doc + Demo = OK
@@ -84,7 +84,8 @@ def fl_add_browser(browsertype, x, y, w, h, label):
         """FL_OBJECT * fl_add_browser(int type, FL_Coord x, FL_Coord y,
            FL_Coord w, FL_Coord h, const char * label)""")
     libr.check_if_initialized()
-    libr.check_admitted_listvalues(browsertype, xfdata.BROWSERTYPE_list)
+    libr.check_admitted_value_in_list(browsertype,
+        xfdata.BROWSERTYPE_list)
     ibrowsertype = libr.convert_to_int(browsertype)
     ix = libr.convert_to_FL_Coord(x)
     iy = libr.convert_to_FL_Coord(y)
@@ -116,7 +117,7 @@ def fl_clear_browser(pFlObject):
         None, [cty.POINTER(xfdata.FL_OBJECT)],
         """void fl_clear_browser(FL_OBJECT * ob)""")
     libr.check_if_initialized()
-    libr.check_if_FL_OBJECT_ptr(pFlObject)
+    libr.verify_flobjectptr_type(pFlObject)
     libr.keep_elem_refs(pFlObject)
     _fl_clear_browser(pFlObject)
 
@@ -132,7 +133,7 @@ def fl_add_browser_line(pFlObject, newtext):
     font), b (Boldface modifier), i (Italics modifier), l (Large, new size is
     xfdata.FL_LARGE_SIZE), m (Medium, new size is xfdata.FL_MEDIUM_SIZE),
     s (Small, new size is xfdata.FL_SMALL_SIZE), L (Large, new size = current
-    size + 6), M (Medium, new size = current size + 4), S (Small, new size = 
+    size + 6), M (Medium, new size = current size + 4), S (Small, new size =
     current size - 2), c (Centered), r (Right aligned), _ (Draw underlined
     text, - (An engraved separator. Text following '-' is ignored), C (The
     next number indicates the color index for this line).,N (Non-selectable
@@ -165,7 +166,7 @@ def fl_add_browser_line(pFlObject, newtext):
         None, [cty.POINTER(xfdata.FL_OBJECT), xfdata.STRING],
         """void fl_add_browser_line(FL_OBJECT * ob, const char * newtext)""")
     libr.check_if_initialized()
-    libr.check_if_FL_OBJECT_ptr(pFlObject)
+    libr.verify_flobjectptr_type(pFlObject)
     snewtext = libr.convert_to_string(newtext)
     libr.keep_elem_refs(pFlObject, newtext, snewtext)
     _fl_add_browser_line(pFlObject, snewtext)
@@ -195,7 +196,7 @@ def fl_addto_browser(pFlObject, newtext):
         None, [cty.POINTER(xfdata.FL_OBJECT), xfdata.STRING],
         """void fl_addto_browser(FL_OBJECT * ob, const char * newtext)""")
     libr.check_if_initialized()
-    libr.check_if_FL_OBJECT_ptr(pFlObject)
+    libr.verify_flobjectptr_type(pFlObject)
     snewtext = libr.convert_to_string(newtext)
     libr.keep_elem_refs(pFlObject, newtext, snewtext)
     _fl_addto_browser(pFlObject, snewtext)
@@ -227,7 +228,7 @@ def fl_addto_browser_chars(pFlObject, addedtext):
         None, [cty.POINTER(xfdata.FL_OBJECT), xfdata.STRING],
         """void fl_addto_browser_chars(FL_OBJECT * ob, const char * str)""")
     libr.check_if_initialized()
-    libr.check_if_FL_OBJECT_ptr(pFlObject)
+    libr.verify_flobjectptr_type(pFlObject)
     saddedtext = libr.convert_to_string(addedtext)
     libr.keep_elem_refs(pFlObject, addedtext, saddedtext)
     _fl_addto_browser_chars(pFlObject, saddedtext)
@@ -266,7 +267,7 @@ def fl_insert_browser_line(pFlObject, linenum, newtext):
         """void fl_insert_browser_line(FL_OBJECT * ob, int linenumb,
            const char * newtext)""")
     libr.check_if_initialized()
-    libr.check_if_FL_OBJECT_ptr(pFlObject)
+    libr.verify_flobjectptr_type(pFlObject)
     ilinenum = libr.convert_to_int(linenum)
     snewtext = libr.convert_to_string(newtext)
     libr.keep_elem_refs(pFlObject, linenum, newtext, ilinenum, snewtext)
@@ -274,7 +275,7 @@ def fl_insert_browser_line(pFlObject, linenum, newtext):
 
 
 def fl_delete_browser_line(pFlObject, linenum):
-    """Deletes a line (shifting the following lines) 
+    """Deletes a line (shifting the following lines)
 
     --
 
@@ -293,7 +294,7 @@ def fl_delete_browser_line(pFlObject, linenum):
         libr.load_so_libforms(), "fl_delete_browser_line",
         None, [cty.POINTER(xfdata.FL_OBJECT), cty.c_int],
         """void fl_delete_browser_line(FL_OBJECT * ob, int linenumb)""")
-    libr.check_if_FL_OBJECT_ptr(pFlObject)
+    libr.verify_flobjectptr_type(pFlObject)
     ilinenum = libr.convert_to_int(linenum)
     libr.keep_elem_refs(pFlObject, linenum, ilinenum)
     _fl_delete_browser_line(pFlObject, ilinenum)
@@ -327,7 +328,7 @@ def fl_replace_browser_line(pFlObject, linenum, newtext):
         """void fl_replace_browser_line(FL_OBJECT * ob, int linenumb,
            const char * newtext)""")
     libr.check_if_initialized()
-    libr.check_if_FL_OBJECT_ptr(pFlObject)
+    libr.verify_flobjectptr_type(pFlObject)
     ilinenum = libr.convert_to_int(linenum)
     snewtext = libr.convert_to_string(newtext)
     libr.keep_elem_refs(pFlObject, linenum, newtext, ilinenum, snewtext)
@@ -358,7 +359,7 @@ def fl_get_browser_line(pFlObject, linenum):
         xfdata.STRING, [cty.POINTER(xfdata.FL_OBJECT), cty.c_int],
         """const char * fl_get_browser_line(FL_OBJECT * ob, int linenumb)""")
     libr.check_if_initialized()
-    libr.check_if_FL_OBJECT_ptr(pFlObject)
+    libr.verify_flobjectptr_type(pFlObject)
     ilinenum = libr.convert_to_int(linenum)
     libr.keep_elem_refs(pFlObject, linenum, ilinenum)
     retval = _fl_get_browser_line(pFlObject, ilinenum)
@@ -378,7 +379,7 @@ def fl_load_browser(pFlObject, filename):
       `pFlObject` : pointer to xfdata.FL_OBJECT
         browser object
       `filename` : str
-        name of the file 
+        name of the file
 
     :return: 1 (if file is successfully loaded), otherwise 0
     :rtype: int
@@ -392,7 +393,7 @@ def fl_load_browser(pFlObject, filename):
         libr.load_so_libforms(), "fl_load_browser",
         cty.c_int, [cty.POINTER(xfdata.FL_OBJECT), xfdata.STRING],
         """int fl_load_browser(FL_OBJECT * ob, const char * filename)""")
-    libr.check_if_FL_OBJECT_ptr(pFlObject)
+    libr.verify_flobjectptr_type(pFlObject)
     sfilename = libr.convert_to_string(filename)
     libr.keep_elem_refs(pFlObject, filename, sfilename)
     retval = _fl_load_browser(pFlObject, sfilename)
@@ -420,7 +421,7 @@ def fl_select_browser_line(pFlObject, linenum):
         None, [cty.POINTER(xfdata.FL_OBJECT), cty.c_int],
         """void fl_select_browser_line(FL_OBJECT * ob, int line)""")
     libr.check_if_initialized()
-    libr.check_if_FL_OBJECT_ptr(pFlObject)
+    libr.verify_flobjectptr_type(pFlObject)
     ilinenum = libr.convert_to_int(linenum)
     libr.keep_elem_refs(pFlObject, linenum, ilinenum)
     _fl_select_browser_line(pFlObject, ilinenum)
@@ -447,7 +448,7 @@ def fl_deselect_browser_line(pFlObject, linenum):
         None, [cty.POINTER(xfdata.FL_OBJECT), cty.c_int],
         """void fl_deselect_browser_line(FL_OBJECT * ob, int line)""")
     libr.check_if_initialized()
-    libr.check_if_FL_OBJECT_ptr(pFlObject)
+    libr.verify_flobjectptr_type(pFlObject)
     ilinenum = libr.convert_to_int(linenum)
     libr.keep_elem_refs(pFlObject, linenum, ilinenum)
     _fl_deselect_browser_line(pFlObject, ilinenum)
@@ -472,7 +473,7 @@ def fl_deselect_browser(pFlObject):
         None, [cty.POINTER(xfdata.FL_OBJECT)],
         """void fl_deselect_browser(FL_OBJECT * ob)""")
     libr.check_if_initialized()
-    libr.check_if_FL_OBJECT_ptr(pFlObject)
+    libr.verify_flobjectptr_type(pFlObject)
     libr.keep_elem_refs(pFlObject)
     _fl_deselect_browser(pFlObject)
 
@@ -501,7 +502,7 @@ def fl_isselected_browser_line(pFlObject, linenum):
         cty.c_int, [cty.POINTER(xfdata.FL_OBJECT), cty.c_int],
         """int fl_isselected_browser_line(FL_OBJECT * ob, int line)""")
     libr.check_if_initialized()
-    libr.check_if_FL_OBJECT_ptr(pFlObject)
+    libr.verify_flobjectptr_type(pFlObject)
     ilinenum = libr.convert_to_int(linenum)
     libr.keep_elem_refs(pFlObject, linenum, ilinenum)
     retval = _fl_isselected_browser_line(pFlObject, ilinenum)
@@ -531,7 +532,7 @@ def fl_get_browser_topline(pFlObject):
         cty.c_int, [cty.POINTER(xfdata.FL_OBJECT)],
         """int fl_get_browser_topline(FL_OBJECT * ob)""")
     libr.check_if_initialized()
-    libr.check_if_FL_OBJECT_ptr(pFlObject)
+    libr.verify_flobjectptr_type(pFlObject)
     libr.keep_elem_refs(pFlObject)
     retval = _fl_get_browser_topline(pFlObject)
     return retval
@@ -562,7 +563,7 @@ def fl_get_browser(pFlObject):
         cty.c_int, [cty.POINTER(xfdata.FL_OBJECT)],
         """int fl_get_browser(FL_OBJECT * ob)""")
     libr.check_if_initialized()
-    libr.check_if_FL_OBJECT_ptr(pFlObject)
+    libr.verify_flobjectptr_type(pFlObject)
     libr.keep_elem_refs(pFlObject)
     retval = _fl_get_browser(pFlObject)
     return retval
@@ -590,7 +591,7 @@ def fl_get_browser_maxline(pFlObject):
         cty.c_int, [cty.POINTER(xfdata.FL_OBJECT)],
         """int fl_get_browser_maxline(FL_OBJECT * ob)""")
     libr.check_if_initialized()
-    libr.check_if_FL_OBJECT_ptr(pFlObject)
+    libr.verify_flobjectptr_type(pFlObject)
     libr.keep_elem_refs(pFlObject)
     retval = _fl_get_browser_maxline(pFlObject)
     return retval
@@ -620,7 +621,7 @@ def fl_get_browser_screenlines(pFlObject):
         cty.c_int, [cty.POINTER(xfdata.FL_OBJECT)],
         """int fl_get_browser_screenlines(FL_OBJECT * ob)""")
     libr.check_if_initialized()
-    libr.check_if_FL_OBJECT_ptr(pFlObject)
+    libr.verify_flobjectptr_type(pFlObject)
     libr.keep_elem_refs(pFlObject)
     retval = _fl_get_browser_screenlines(pFlObject)
     return retval
@@ -647,7 +648,7 @@ def fl_set_browser_topline(pFlObject, linenum):
         None, [cty.POINTER(xfdata.FL_OBJECT), cty.c_int],
         """void fl_set_browser_topline(FL_OBJECT * ob, int line)""")
     libr.check_if_initialized()
-    libr.check_if_FL_OBJECT_ptr(pFlObject)
+    libr.verify_flobjectptr_type(pFlObject)
     ilinenum = libr.convert_to_int(linenum)
     libr.keep_elem_refs(pFlObject, linenum, ilinenum)
     _fl_set_browser_topline(pFlObject, ilinenum)
@@ -675,7 +676,7 @@ def fl_set_browser_bottomline(pFlObject, linenum):
         None, [cty.POINTER(xfdata.FL_OBJECT), cty.c_int],
         """void fl_set_browser_bottomline(FL_OBJECT * ob, int line)""")
     libr.check_if_initialized()
-    libr.check_if_FL_OBJECT_ptr(pFlObject)
+    libr.verify_flobjectptr_type(pFlObject)
     ilinenum = libr.convert_to_int(linenum)
     libr.keep_elem_refs(pFlObject, linenum, ilinenum)
     _fl_set_browser_bottomline(pFlObject, ilinenum)
@@ -704,8 +705,8 @@ def fl_set_browser_fontsize(pFlObject, size):
         None, [cty.POINTER(xfdata.FL_OBJECT), cty.c_int],
         """void fl_set_browser_fontsize(FL_OBJECT * ob, int size)""")
     libr.check_if_initialized()
-    libr.check_if_FL_OBJECT_ptr(pFlObject)
-    libr.check_admitted_listvalues(size, xfdata.FONTSIZE_list)
+    libr.verify_flobjectptr_type(pFlObject)
+    libr.check_admitted_value_in_list(size, xfdata.FONTSIZE_list)
     isize = libr.convert_to_int(size)
     libr.keep_elem_refs(pFlObject, size, isize)
     _fl_set_browser_fontsize(pFlObject, isize)
@@ -738,8 +739,8 @@ def fl_set_browser_fontstyle(pFlObject, style):
         None, [cty.POINTER(xfdata.FL_OBJECT), cty.c_int],
         """void fl_set_browser_fontstyle(FL_OBJECT * ob, int style)""")
     libr.check_if_initialized()
-    libr.check_if_FL_OBJECT_ptr(pFlObject)
-    libr.check_admitted_listvalues(style, xfdata.TEXTSTYLE_list)
+    libr.verify_flobjectptr_type(pFlObject)
+    libr.check_admitted_value_in_list(style, xfdata.TEXTSTYLE_list)
     istyle = libr.convert_to_int(style)
     libr.keep_elem_refs(pFlObject, style, istyle)
     _fl_set_browser_fontstyle(pFlObject, istyle)
@@ -770,7 +771,7 @@ def fl_set_browser_specialkey(pFlObject, specialkey):
         None, [cty.POINTER(xfdata.FL_OBJECT), cty.c_int],
         """void fl_set_browser_specialkey(FL_OBJECT * ob, int specialkey)""")
     libr.check_if_initialized()
-    libr.check_if_FL_OBJECT_ptr(pFlObject)
+    libr.verify_flobjectptr_type(pFlObject)
     if isinstance(specialkey, str):
         # workaround to let a character as int argument
         ordspkey = ord(specialkey)
@@ -805,8 +806,8 @@ def fl_set_browser_vscrollbar(pFlObject, how):
         None, [cty.POINTER(xfdata.FL_OBJECT), cty.c_int],
         """void fl_set_browser_vscrollbar(FL_OBJECT * ob, int on)""")
     libr.check_if_initialized()
-    libr.check_if_FL_OBJECT_ptr(pFlObject)
-    libr.check_admitted_listvalues(how, xfdata.SCROLLBARVAL_list)
+    libr.verify_flobjectptr_type(pFlObject)
+    libr.check_admitted_value_in_list(how, xfdata.SCROLLBARVAL_list)
     ihow = libr.convert_to_int(how)
     libr.keep_elem_refs(pFlObject, how, ihow)
     _fl_set_browser_vscrollbar(pFlObject, ihow)
@@ -837,8 +838,8 @@ def fl_set_browser_hscrollbar(pFlObject, how):
         None, [cty.POINTER(xfdata.FL_OBJECT), cty.c_int],
         """void fl_set_browser_hscrollbar(FL_OBJECT * ob, int on)""")
     libr.check_if_initialized()
-    libr.check_if_FL_OBJECT_ptr(pFlObject)
-    libr.check_admitted_listvalues(how, xfdata.SCROLLBARVAL_list)
+    libr.verify_flobjectptr_type(pFlObject)
+    libr.check_admitted_value_in_list(how, xfdata.SCROLLBARVAL_list)
     ihow = libr.convert_to_int(how)
     libr.keep_elem_refs(pFlObject, how, ihow)
     _fl_set_browser_hscrollbar(pFlObject, ihow)
@@ -866,7 +867,7 @@ def fl_set_browser_line_selectable(pFlObject, linenum, yesno):
         """void fl_set_browser_line_selectable(FL_OBJECT * ob, int line,
            int flag)""")
     libr.check_if_initialized()
-    libr.check_if_FL_OBJECT_ptr(pFlObject)
+    libr.verify_flobjectptr_type(pFlObject)
     ilinenum = libr.convert_to_int(linenum)
     iyesno = libr.convert_to_int(yesno)
     libr.keep_elem_refs(pFlObject, linenum, yesno, ilinenum, iyesno)
@@ -901,7 +902,7 @@ def fl_get_browser_dimension(pFlObject):
         """void fl_get_browser_dimension(FL_OBJECT * ob, FL_Coord * x,
            FL_Coord * y, FL_Coord * w, FL_Coord * h)""")
     libr.check_if_initialized()
-    libr.check_if_FL_OBJECT_ptr(pFlObject)
+    libr.verify_flobjectptr_type(pFlObject)
     x, px = libr.make_FL_Coord_and_pointer()
     y, py = libr.make_FL_Coord_and_pointer()
     w, pw = libr.make_FL_Coord_and_pointer()
@@ -941,7 +942,7 @@ def fl_set_browser_dblclick_callback(pFlObject, py_CallbackPtr, data):
         """void fl_set_browser_dblclick_callback(FL_OBJECT * ob,
            FL_CALLBACKPTR cb, long int a)""")
     libr.check_if_initialized()
-    libr.check_if_FL_OBJECT_ptr(pFlObject)
+    libr.verify_flobjectptr_type(pFlObject)
     ldata = libr.convert_to_long(data)
     c_CallbackPtr = xfdata.FL_CALLBACKPTR(py_CallbackPtr)
     libr.keep_cfunc_refs(c_CallbackPtr, py_CallbackPtr)
@@ -971,7 +972,7 @@ def fl_get_browser_xoffset(pFlObject):
         xfdata.FL_Coord, [cty.POINTER(xfdata.FL_OBJECT)],
         """FL_Coord fl_get_browser_xoffset(FL_OBJECT * ob)""")
     libr.check_if_initialized()
-    libr.check_if_FL_OBJECT_ptr(pFlObject)
+    libr.verify_flobjectptr_type(pFlObject)
     libr.keep_elem_refs(pFlObject)
     retval = _fl_get_browser_xoffset(pFlObject)
     return retval
@@ -1000,7 +1001,7 @@ def fl_get_browser_rel_xoffset(pFlObject):
         cty.c_double, [cty.POINTER(xfdata.FL_OBJECT)],
         """double fl_get_browser_rel_xoffset(FL_OBJECT * ob)""")
     libr.check_if_initialized()
-    libr.check_if_FL_OBJECT_ptr(pFlObject)
+    libr.verify_flobjectptr_type(pFlObject)
     libr.keep_elem_refs(pFlObject)
     retval = _fl_get_browser_rel_xoffset(pFlObject)
     return retval
@@ -1027,7 +1028,7 @@ def fl_set_browser_xoffset(pFlObject, npixels):
         None, [cty.POINTER(xfdata.FL_OBJECT), xfdata.FL_Coord],
         """void fl_set_browser_xoffset(FL_OBJECT * ob, FL_Coord npixels)""")
     libr.check_if_initialized()
-    libr.check_if_FL_OBJECT_ptr(pFlObject)
+    libr.verify_flobjectptr_type(pFlObject)
     inpixels = libr.convert_to_FL_Coord(npixels)
     libr.keep_elem_refs(pFlObject, npixels, inpixels)
     _fl_set_browser_xoffset(pFlObject, inpixels)
@@ -1055,7 +1056,7 @@ def fl_set_browser_rel_xoffset(pFlObject, val):
         None, [cty.POINTER(xfdata.FL_OBJECT), cty.c_double],
         """void fl_set_browser_rel_xoffset(FL_OBJECT * ob, double val)""")
     libr.check_if_initialized()
-    libr.check_if_FL_OBJECT_ptr(pFlObject)
+    libr.verify_flobjectptr_type(pFlObject)
     fval = libr.convert_to_double(val)
     libr.keep_elem_refs(pFlObject, val, fval)
     _fl_set_browser_rel_xoffset(pFlObject, fval)
@@ -1083,7 +1084,7 @@ def fl_get_browser_yoffset(pFlObject):
         xfdata.FL_Coord, [cty.POINTER(xfdata.FL_OBJECT)],
         """FL_Coord fl_get_browser_yoffset(FL_OBJECT * ob)""")
     libr.check_if_initialized()
-    libr.check_if_FL_OBJECT_ptr(pFlObject)
+    libr.verify_flobjectptr_type(pFlObject)
     libr.keep_elem_refs(pFlObject)
     retval = _fl_get_browser_yoffset(pFlObject)
     return retval
@@ -1112,7 +1113,7 @@ def fl_get_browser_rel_yoffset(pFlObject):
         cty.c_double, [cty.POINTER(xfdata.FL_OBJECT)],
         """double fl_get_browser_rel_yoffset(FL_OBJECT * ob)""")
     libr.check_if_initialized()
-    libr.check_if_FL_OBJECT_ptr(pFlObject)
+    libr.verify_flobjectptr_type(pFlObject)
     libr.keep_elem_refs(pFlObject)
     retval = _fl_get_browser_rel_yoffset(pFlObject)
     return retval
@@ -1127,7 +1128,7 @@ def fl_set_browser_yoffset(pFlObject, npixels):
       `pFlObject` : pointer to xfdata.FL_OBJECT
         browser object
       `npixels` : int
-        amount of text to be scrolled 
+        amount of text to be scrolled
 
     :note: e.g. *todo*
 
@@ -1139,7 +1140,7 @@ def fl_set_browser_yoffset(pFlObject, npixels):
         None, [cty.POINTER(xfdata.FL_OBJECT), xfdata.FL_Coord],
         """void fl_set_browser_yoffset(FL_OBJECT * ob, FL_Coord npixels)""")
     libr.check_if_initialized()
-    libr.check_if_FL_OBJECT_ptr(pFlObject)
+    libr.verify_flobjectptr_type(pFlObject)
     inpixels = libr.convert_to_FL_Coord(npixels)
     libr.keep_elem_refs(pFlObject, npixels, inpixels)
     _fl_set_browser_yoffset(pFlObject, inpixels)
@@ -1167,7 +1168,7 @@ def fl_set_browser_rel_yoffset(pFlObject, val):
         None, [cty.POINTER(xfdata.FL_OBJECT), cty.c_double],
         """void fl_set_browser_rel_yoffset(FL_OBJECT * ob, double val)""")
     libr.check_if_initialized()
-    libr.check_if_FL_OBJECT_ptr(pFlObject)
+    libr.verify_flobjectptr_type(pFlObject)
     fval = libr.convert_to_double(val)
     libr.keep_elem_refs(pFlObject, val, fval)
     _fl_set_browser_rel_yoffset(pFlObject, fval)
@@ -1199,7 +1200,7 @@ def fl_set_browser_scrollbarsize(pFlObject, hh, vw):
         """void fl_set_browser_scrollbarsize(FL_OBJECT * ob,
            int hh, int vw)""")
     libr.check_if_initialized()
-    libr.check_if_FL_OBJECT_ptr(pFlObject)
+    libr.verify_flobjectptr_type(pFlObject)
     ihh = libr.convert_to_int(hh)
     ivw = libr.convert_to_int(vw)
     libr.keep_elem_refs(pFlObject, hh, vw, ihh, ivw)
@@ -1227,7 +1228,7 @@ def fl_show_browser_line(pFlObject, line):
         None, [cty.POINTER(xfdata.FL_OBJECT), cty.c_int],
         """void fl_show_browser_line(FL_OBJECT * ob, int j)""")
     libr.check_if_initialized()
-    libr.check_if_FL_OBJECT_ptr(pFlObject)
+    libr.verify_flobjectptr_type(pFlObject)
     iline = libr.convert_to_int(line)
     libr.keep_elem_refs(pFlObject, line, iline)
     _fl_show_browser_line(pFlObject, iline)
@@ -1236,7 +1237,8 @@ def fl_show_browser_line(pFlObject, line):
 # fl_set_default_browser_maxlinelength function placeholder (deprecated)
 
 
-def fl_set_browser_hscroll_callback(pFlObject, py_BrowserScrollCallback, vdata):
+def fl_set_browser_hscroll_callback(pFlObject, py_BrowserScrollCallback,
+                                    vdata):
     """Sets the callback function to be invoked whenever the horizontal
     scrollbar changes position.
 
@@ -1255,7 +1257,7 @@ def fl_set_browser_hscroll_callback(pFlObject, py_BrowserScrollCallback, vdata):
     :status: Untested + Doc + NoDemo = NOT OK
 
     """
-    #FL_BROWSER_SCROLL_CALLBACK = cty.CFUNCTYPE(None, 
+    #FL_BROWSER_SCROLL_CALLBACK = cty.CFUNCTYPE(None,
     #            cty.POINTER(xfdata.FL_OBJECT), cty.c_int, cty.c_void_p)
     _fl_set_browser_hscroll_callback = libr.cfuncproto(
         libr.load_so_libforms(), "fl_set_browser_hscroll_callback",
@@ -1264,16 +1266,18 @@ def fl_set_browser_hscroll_callback(pFlObject, py_BrowserScrollCallback, vdata):
         """void fl_set_browser_hscroll_callback(FL_OBJECT * ob,
            FL_BROWSER_SCROLL_CALLBACK cb, void * data)""")
     libr.check_if_initialized()
-    libr.check_if_FL_OBJECT_ptr(pFlObject)
+    libr.verify_flobjectptr_type(pFlObject)
     c_BrowserScrollCallback = xfdata.FL_BROWSER_SCROLL_CALLBACK( \
                                 py_BrowserScrollCallback)
     pvdata = cty.cast(vdata, cty.c_void_p)
     libr.keep_cfunc_refs(c_BrowserScrollCallback, py_BrowserScrollCallback)
     libr.keep_elem_refs(pFlObject, vdata, pvdata)
-    _fl_set_browser_hscroll_callback(pFlObject, c_BrowserScrollCallback, pvdata)
+    _fl_set_browser_hscroll_callback(pFlObject, c_BrowserScrollCallback,
+                                     pvdata)
 
 
-def fl_set_browser_vscroll_callback(pFlObject, py_BrowserScrollCallback, vdata):
+def fl_set_browser_vscroll_callback(pFlObject, py_BrowserScrollCallback,
+                                    vdata):
     """Sets the callback function to be invoked whenever the vertical
     scrollbar changes position.
 
@@ -1294,18 +1298,19 @@ def fl_set_browser_vscroll_callback(pFlObject, py_BrowserScrollCallback, vdata):
     """
     _fl_set_browser_vscroll_callback = libr.cfuncproto(
         libr.load_so_libforms(), "fl_set_browser_vscroll_callback",
-        None, [cty.POINTER(xfdata.FL_OBJECT), xfdata.FL_BROWSER_SCROLL_CALLBACK,
-        cty.c_void_p],
+        None, [cty.POINTER(xfdata.FL_OBJECT),
+        xfdata.FL_BROWSER_SCROLL_CALLBACK, cty.c_void_p],
         """void fl_set_browser_vscroll_callback(FL_OBJECT * ob,
            FL_BROWSER_SCROLL_CALLBACK cb, void * data)""")
     libr.check_if_initialized()
-    libr.check_if_FL_OBJECT_ptr(pFlObject)
+    libr.verify_flobjectptr_type(pFlObject)
     c_BrowserScrollCallback = xfdata.FL_BROWSER_SCROLL_CALLBACK( \
                                 py_BrowserScrollCallback)
     pvdata = cty.cast(vdata, cty.c_void_p)
     libr.keep_cfunc_refs(c_BrowserScrollCallback, py_BrowserScrollCallback)
     libr.keep_elem_refs(pFlObject, vdata, pvdata)
-    _fl_set_browser_vscroll_callback(pFlObject, c_BrowserScrollCallback, pvdata)
+    _fl_set_browser_vscroll_callback(pFlObject, c_BrowserScrollCallback,
+                                    pvdata)
 
 
 def fl_get_browser_line_yoffset(pFlObject, line):
@@ -1330,7 +1335,7 @@ def fl_get_browser_line_yoffset(pFlObject, line):
         cty.c_int, [cty.POINTER(xfdata.FL_OBJECT), cty.c_int],
         """int fl_get_browser_line_yoffset(FL_OBJECT * obj, int line)""")
     libr.check_if_initialized()
-    libr.check_if_FL_OBJECT_ptr(pFlObject)
+    libr.verify_flobjectptr_type(pFlObject)
     iline = libr.convert_to_int(line)
     libr.keep_elem_refs(pFlObject, line, iline)
     retval = _fl_get_browser_line_yoffset(pFlObject, iline)
@@ -1360,7 +1365,7 @@ def fl_get_browser_hscroll_callback(pFlObject):
         """FL_BROWSER_SCROLL_CALLBACK fl_get_browser_hscroll_callback(
            FL_OBJECT * ob)""")
     libr.check_if_initialized()
-    libr.check_if_FL_OBJECT_ptr(pFlObject)
+    libr.verify_flobjectptr_type(pFlObject)
     libr.keep_elem_refs(pFlObject)
     retval = _fl_get_browser_hscroll_callback(pFlObject)
     return retval
@@ -1389,7 +1394,7 @@ def fl_get_browser_vscroll_callback(pFlObject):
         """FL_BROWSER_SCROLL_CALLBACK fl_get_browser_vscroll_callback(
            FL_OBJECT * ob)""")
     libr.check_if_initialized()
-    libr.check_if_FL_OBJECT_ptr(pFlObject)
+    libr.verify_flobjectptr_type(pFlObject)
     libr.keep_elem_refs(pFlObject)
     retval = _fl_get_browser_vscroll_callback(pFlObject)
     return retval

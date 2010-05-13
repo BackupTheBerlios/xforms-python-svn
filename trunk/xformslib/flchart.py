@@ -2,7 +2,7 @@
 # -*- coding: iso8859-1 -*-
 
 """
-    flchart.py - Functions to manage chart objects.
+    flchart.py - xforms-python's functions to manage chart objects.
 
     Copyright (C) 2009, 2010  Luca Lazzaroni "LukenShiro"
     e-mail:  <lukenshiro@ngi.it>
@@ -71,7 +71,7 @@ def fl_add_chart(charttype, x, y, w, h, label):
     :return: chart object added (pFlObject)
     :rtype: pointer to xfdata.FL_OBJECT
 
-    :note: e.g. chrtobj = fl_add_chart(xfdata.FL_SPIKE_CHART, 147, 168, 
+    :note: e.g. chrtobj = fl_add_chart(xfdata.FL_SPIKE_CHART, 147, 168,
         250, 492, "My Chart")
 
     :status: Tested + Doc + Demo = OK
@@ -84,7 +84,7 @@ def fl_add_chart(charttype, x, y, w, h, label):
         """FL_OBJECT * fl_add_chart(int type, FL_Coord x, FL_Coord y,
            FL_Coord w, FL_Coord h, const char * label)""")
     libr.check_if_initialized()
-    libr.check_admitted_listvalues(charttype, xfdata.CHARTTYPE_list)
+    libr.check_admitted_value_in_list(charttype, xfdata.CHARTTYPE_list)
     icharttype = libr.convert_to_int(charttype)
     ix = libr.convert_to_FL_Coord(x)
     iy = libr.convert_to_FL_Coord(y)
@@ -116,7 +116,7 @@ def fl_clear_chart(pFlObject):
         None, [cty.POINTER(xfdata.FL_OBJECT)],
         """void fl_clear_chart(FL_OBJECT * ob)""")
     libr.check_if_initialized()
-    libr.check_if_FL_OBJECT_ptr(pFlObject)
+    libr.verify_flobjectptr_type(pFlObject)
     libr.keep_elem_refs(pFlObject)
     _fl_clear_chart(pFlObject)
 
@@ -148,7 +148,7 @@ def fl_add_chart_value(pFlObject, val, label, colr):
         """void fl_add_chart_value(FL_OBJECT * ob, double val,
            const char * str, FL_COLOR col)""")
     libr.check_if_initialized()
-    libr.check_if_FL_OBJECT_ptr(pFlObject)
+    libr.verify_flobjectptr_type(pFlObject)
     fval = libr.convert_to_double(val)
     slabel = libr.convert_to_string(label)
     ulcolr = libr.convert_to_FL_COLOR(colr)
@@ -168,13 +168,13 @@ def fl_insert_chart_value(pFlObject, indx, val, label, colr):
         index before which the new item should be inserted. The first item is
         number 1
       `val` : float
-        value of chart item
+        value of new chart item
       `label` : str
         text label of chart
       `colr` : long_pos
         color value
 
-    :note: e.g. fl_insert_chart_value(chrtobj, 2, 123.0, "new value", 
+    :note: e.g. fl_insert_chart_value(chrtobj, 2, 123.0, "new value",
         xfdata.FL_DEEPSKYBLUE)
 
     :status: Tested + Doc + NoDemo = OK
@@ -187,7 +187,7 @@ def fl_insert_chart_value(pFlObject, indx, val, label, colr):
         """void fl_insert_chart_value(FL_OBJECT * ob, int indx,
            double val, const char * str, FL_COLOR col)""")
     libr.check_if_initialized()
-    libr.check_if_FL_OBJECT_ptr(pFlObject)
+    libr.verify_flobjectptr_type(pFlObject)
     iindx = libr.convert_to_int(indx)
     fval = libr.convert_to_double(val)
     slabel = libr.convert_to_string(label)
@@ -227,7 +227,7 @@ def fl_replace_chart_value(pFlObject, indx, val, label, colr):
         """void fl_replace_chart_value(FL_OBJECT * ob, int indx,
            double val, const char * str, FL_COLOR col)""")
     libr.check_if_initialized()
-    libr.check_if_FL_OBJECT_ptr(pFlObject)
+    libr.verify_flobjectptr_type(pFlObject)
     iindx = libr.convert_to_int(indx)
     fval = libr.convert_to_double(val)
     slabel = libr.convert_to_string(label)
@@ -263,7 +263,7 @@ def fl_set_chart_bounds(pFlObject, minbound, maxbound):
         """void fl_set_chart_bounds(FL_OBJECT * ob, double min,
            double max)""")
     libr.check_if_initialized()
-    libr.check_if_FL_OBJECT_ptr(pFlObject)
+    libr.verify_flobjectptr_type(pFlObject)
     fminbound = libr.convert_to_double(minbound)
     fmaxbound = libr.convert_to_double(maxbound)
     libr.keep_elem_refs(pFlObject, minbound, maxbound, fminbound, fmaxbound)
@@ -297,7 +297,7 @@ def fl_get_chart_bounds(pFlObject):
         """void fl_get_chart_bounds(FL_OBJECT * ob, double * min,
            double * max)""")
     libr.check_if_initialized()
-    libr.check_if_FL_OBJECT_ptr(pFlObject)
+    libr.verify_flobjectptr_type(pFlObject)
     minbound, pminbound = libr.make_double_and_pointer()
     maxbound, pmaxbound = libr.make_double_and_pointer()
     libr.keep_elem_refs(pFlObject, minbound, maxbound, pminbound, pmaxbound)
@@ -327,13 +327,13 @@ def fl_set_chart_maxnumb(pFlObject, maxnum):
         None, [cty.POINTER(xfdata.FL_OBJECT), cty.c_int],
         """void fl_set_chart_maxnumb(FL_OBJECT * ob, int maxnumb)""")
     libr.check_if_initialized()
-    libr.check_if_FL_OBJECT_ptr(pFlObject)
+    libr.verify_flobjectptr_type(pFlObject)
     imaxnum = libr.convert_to_int(maxnum)
     libr.keep_elem_refs(pFlObject, maxnum, imaxnum)
     _fl_set_chart_maxnumb(pFlObject, imaxnum)
 
 
-def fl_set_chart_autosize(pFlObject, autosize):
+def fl_set_chart_autosize(pFlObject, yesno):
     """Sets whether the chart should autosize along the x-axis. If autosize
     being set to false (0) the width of the bars will be such that the maximum
     number of items fits in the box. Normally width of the bars and distance
@@ -344,7 +344,7 @@ def fl_set_chart_autosize(pFlObject, autosize):
     :Parameters:
       `pFlObject` : pointer to xfdata.FL_OBJECT
         chart object
-      `autosize` : int
+      `yesno` : int
         autosize flag. Values 1 (if enabled) or 0 (if disabled)
 
     :note: e.g. fl_set_chart_autosize(chrtobj, 1)
@@ -357,10 +357,10 @@ def fl_set_chart_autosize(pFlObject, autosize):
         None, [cty.POINTER(xfdata.FL_OBJECT), cty.c_int],
         """void fl_set_chart_autosize(FL_OBJECT * ob, int autosize)""")
     libr.check_if_initialized()
-    libr.check_if_FL_OBJECT_ptr(pFlObject)
-    iautosize = libr.convert_to_int(autosize)
-    libr.keep_elem_refs(pFlObject, autosize, iautosize)
-    _fl_set_chart_autosize(pFlObject, iautosize)
+    libr.verify_flobjectptr_type(pFlObject)
+    iyesno = libr.convert_to_int(yesno)
+    libr.keep_elem_refs(pFlObject, yesno, iyesno)
+    _fl_set_chart_autosize(pFlObject, iyesno)
 
 
 def fl_set_chart_lstyle(pFlObject, style):
@@ -391,8 +391,8 @@ def fl_set_chart_lstyle(pFlObject, style):
         None, [cty.POINTER(xfdata.FL_OBJECT), cty.c_int],
         """void fl_set_chart_lstyle(FL_OBJECT * ob, int lstyle)""")
     libr.check_if_initialized()
-    libr.check_if_FL_OBJECT_ptr(pFlObject)
-    libr.check_admitted_listvalues(style, xfdata.TEXTSTYLE_list)
+    libr.verify_flobjectptr_type(pFlObject)
+    libr.check_admitted_value_in_list(style, xfdata.TEXTSTYLE_list)
     istyle = libr.convert_to_int(style)
     libr.keep_elem_refs(pFlObject, style, istyle)
     _fl_set_chart_lstyle(pFlObject, istyle)
@@ -422,8 +422,8 @@ def fl_set_chart_lsize(pFlObject, size):
         None, [cty.POINTER(xfdata.FL_OBJECT), cty.c_int],
         """void fl_set_chart_lsize(FL_OBJECT * ob, int lsize)""")
     libr.check_if_initialized()
-    libr.check_if_FL_OBJECT_ptr(pFlObject)
-    libr.check_admitted_listvalues(size, xfdata.FONTSIZE_list)
+    libr.verify_flobjectptr_type(pFlObject)
+    libr.check_admitted_value_in_list(size, xfdata.FONTSIZE_list)
     isize = libr.convert_to_int(size)
     libr.keep_elem_refs(pFlObject, size, isize)
     _fl_set_chart_lsize(pFlObject, isize)
@@ -451,11 +451,13 @@ def fl_set_chart_lcolor(pFlObject, colr):
         None, [cty.POINTER(xfdata.FL_OBJECT), xfdata.FL_COLOR],
         """void fl_set_chart_lcolor(FL_OBJECT * ob, FL_COLOR lcol)""")
     libr.check_if_initialized()
-    libr.check_if_FL_OBJECT_ptr(pFlObject)
-    libr.check_admitted_listvalues(colr, xfdata.COLOR_list)
+    libr.verify_flobjectptr_type(pFlObject)
+    libr.check_admitted_value_in_list(colr, xfdata.COLOR_list)
     ulcolr = libr.convert_to_FL_COLOR(colr)
     libr.keep_elem_refs(pFlObject, colr, ulcolr)
     _fl_set_chart_lcolor(pFlObject, ulcolr)
+
+fl_set_chart_lcol = fl_set_chart_lcolor
 
 
 def fl_set_chart_baseline(pFlObject, yesno):
@@ -479,11 +481,9 @@ def fl_set_chart_baseline(pFlObject, yesno):
         None, [cty.POINTER(xfdata.FL_OBJECT), cty.c_int],
         """void fl_set_chart_baseline(FL_OBJECT * ob, int iYesNo)""")
     libr.check_if_initialized()
-    libr.check_if_FL_OBJECT_ptr(pFlObject)
+    libr.verify_flobjectptr_type(pFlObject)
     iyesno = libr.convert_to_int(yesno)
     libr.keep_elem_refs(pFlObject, yesno, iyesno)
     _fl_set_chart_baseline(pFlObject, iyesno)
 
-
-fl_set_chart_lcol = fl_set_chart_lcolor
 

@@ -2,7 +2,7 @@
 # -*- coding: iso8859-1 -*-
 
 """
-    flnmenu.py - Functions to manage nmenu objects.
+    flnmenu.py - xforms-python's functions to manage nmenu objects.
 
     Copyright (C) 2009, 2010  Luca Lazzaroni "LukenShiro"
     e-mail: <lukenshiro@ngi.it>
@@ -82,7 +82,7 @@ def fl_add_nmenu(nmenutype, x, y, w, h, label):
         """FL_OBJECT * fl_add_nmenu(int p1, FL_Coord p2, FL_Coord p3,
            FL_Coord p4, FL_Coord p5, const char * p6)""")
     libr.check_if_initialized()
-    libr.check_admitted_listvalues(nmenutype, xfdata.NMENUTYPE_list)
+    libr.check_admitted_value_in_list(nmenutype, xfdata.NMENUTYPE_list)
     inmenutype = libr.convert_to_int(nmenutype)
     ix = libr.convert_to_FL_Coord(x)
     iy = libr.convert_to_FL_Coord(y)
@@ -117,7 +117,7 @@ def fl_clear_nmenu(pFlObject):
         cty.c_int, [cty.POINTER(xfdata.FL_OBJECT)],
         """int fl_clear_nmenu(FL_OBJECT * p1)""")
     libr.check_if_initialized()
-    libr.check_if_FL_OBJECT_ptr(pFlObject)
+    libr.verify_flobjectptr_type(pFlObject)
     libr.keep_elem_refs(pFlObject)
     retval = _fl_clear_nmenu(pFlObject)
     return retval
@@ -149,7 +149,7 @@ def fl_add_nmenu_items(pFlObject, itemstr):
         """FL_POPUP_ENTRY * fl_add_nmenu_items(FL_OBJECT * p1,
            const char * p2)""")
     libr.check_if_initialized()
-    libr.check_if_FL_OBJECT_ptr(pFlObject)
+    libr.verify_flobjectptr_type(pFlObject)
     sitemstr = libr.convert_to_string(itemstr)
     libr.keep_elem_refs(pFlObject, itemstr, sitemstr)
     retval = _fl_add_nmenu_items(pFlObject, sitemstr)
@@ -166,7 +166,7 @@ def fl_insert_nmenu_items(pFlObject, pPopupEntry, itemstr):
         nmenu object
       `pPopupEntry` : pointer to xfdata.FL_POPUP_ENTRY
         existing popup entry, after which the new items are to be inserted.
-        If it is None, it inserts items at the very start.
+        If it's 'None', it inserts items at the very start.
       `itemstr: str
         text of the item (among special sequences only %S is supported)
 
@@ -185,7 +185,7 @@ def fl_insert_nmenu_items(pFlObject, pPopupEntry, itemstr):
         """FL_POPUP_ENTRY * fl_insert_nmenu_items(FL_OBJECT * p1,
            FL_POPUP_ENTRY * p2, const char * p3)""")
     libr.check_if_initialized()
-    libr.check_if_FL_OBJECT_ptr(pFlObject)
+    libr.verify_flobjectptr_type(pFlObject)
     sitemstr = libr.convert_to_string(itemstr)
     libr.keep_elem_refs(pFlObject, pPopupEntry, itemstr, sitemstr)
     retval = _fl_insert_nmenu_items(pFlObject, pPopupEntry, sitemstr)
@@ -220,7 +220,8 @@ def fl_replace_nmenu_item(pFlObject, pPopupEntry, itemstr):
         """FL_POPUP_ENTRY * fl_replace_nmenu_item(FL_OBJECT * p1,
            FL_POPUP_ENTRY * p2, const char * p3)""")
     libr.check_if_initialized()
-    libr.check_if_FL_OBJECT_ptr(pFlObject)
+    libr.verify_flobjectptr_type(pFlObject)
+    libr.verify_flpopupentryptr_type(pPopupEntry)
     sitemstr = libr.convert_to_string(itemstr)
     libr.keep_elem_refs(pFlObject, pPopupEntry, itemstr, sitemstr)
     retval = _fl_replace_nmenu_item(pFlObject, pPopupEntry, sitemstr)
@@ -252,7 +253,8 @@ def fl_delete_nmenu_item(pFlObject, pPopupEntry):
         cty.POINTER(xfdata.FL_POPUP_ENTRY)],
         """int fl_delete_nmenu_item(FL_OBJECT * p1, FL_POPUP_ENTRY * p2)""")
     libr.check_if_initialized()
-    libr.check_if_FL_OBJECT_ptr(pFlObject)
+    libr.verify_flobjectptr_type(pFlObject)
+    libr.verify_flpopupentryptr_type(pPopupEntry)
     libr.keep_elem_refs(pFlObject, pPopupEntry)
     retval = _fl_delete_nmenu_item(pFlObject, pPopupEntry)
     return retval
@@ -284,7 +286,8 @@ def fl_set_nmenu_items(pFlObject, pPopupItem):
         """FL_POPUP_ENTRY * fl_set_nmenu_items(FL_OBJECT * p1,
            FL_POPUP_ITEM * p2)""")
     libr.check_if_initialized()
-    libr.check_if_FL_OBJECT_ptr(pFlObject)
+    libr.verify_flobjectptr_type(pFlObject)
+    libr.verify_flpopupitemptr_type(pPopupItem)
     libr.keep_elem_refs(pFlObject, pPopupItem)
     retval = _fl_set_nmenu_items(pFlObject, pPopupItem)
     return retval
@@ -318,7 +321,8 @@ def fl_add_nmenu_items2(pFlObject, pPopupItem):
         """FL_POPUP_ENTRY * fl_add_nmenu_items2(FL_OBJECT * obj,
            FL_POPUP_ITEM * p2)""")
     libr.check_if_initialized()
-    libr.check_if_FL_OBJECT_ptr(pFlObject)
+    libr.verify_flobjectptr_type(pFlObject)
+    libr.verify_flpopupitemptr_type(pPopupItem)
     libr.keep_elem_refs(pFlObject, pPopupItem)
     retval = _fl_add_nmenu_items2(pFlObject, pPopupItem)
     return retval
@@ -355,7 +359,9 @@ def fl_insert_nmenu_items2(pFlObject, pPopupEntry, pPopupItem):
         """FL_POPUP_ENTRY * fl_insert_nmenu_items2(FL_OBJECT * obj,
            FL_POPUP_ITEM * p2, FL_POPUP_ITEM * p3)""")
     libr.check_if_initialized()
-    libr.check_if_FL_OBJECT_ptr(pFlObject)
+    libr.verify_flobjectptr_type(pFlObject)
+    libr.verify_flpopupentryptr_type(pPopupEntry)
+    libr.verify_flpopupitemptr_type(pPopupItem)
     libr.keep_elem_refs(pFlObject, pPopupEntry, pPopupItem)
     retval = _fl_insert_nmenu_items2(pFlObject, pPopupEntry, pPopupItem)
     return retval
@@ -391,7 +397,9 @@ def fl_replace_nmenu_items2(pFlObject, pPopupEntry, pPopupItem):
         """FL_POPUP_ENTRY * fl_replace_nmenu_items2(FL_OBJECT * obj,
            FL_POPUP_ENTRY * p2, FL_POPUP_ITEM * p3)""")
     libr.check_if_initialized()
-    libr.check_if_FL_OBJECT_ptr(pFlObject)
+    libr.verify_flobjectptr_type(pFlObject)
+    libr.verify_flpopupentryptr_type(pPopupEntry)
+    libr.verify_flpopupitemptr_type(pPopupItem)
     libr.keep_elem_refs(pFlObject, pPopupEntry, pPopupItem)
     retval = _fl_replace_nmenu_items2(pFlObject, pPopupEntry, pPopupItem)
     return retval
@@ -419,15 +427,15 @@ def fl_get_nmenu_popup(pFlObject):
         libr.load_so_libforms(), "fl_get_nmenu_popup",
         cty.POINTER(xfdata.FL_POPUP), [cty.POINTER(xfdata.FL_OBJECT)],
         """FL_POPUP * fl_get_nmenu_popup(FL_OBJECT * p1)""")
-    libr.check_if_FL_OBJECT_ptr(pFlObject)
+    libr.verify_flobjectptr_type(pFlObject)
     libr.keep_elem_refs(pFlObject)
     retval = _fl_get_nmenu_popup(pFlObject)
     return retval
 
 
 def fl_set_nmenu_popup(pFlObject, pPopup):
-    """Sets an existing popup as the nmenu?s popup. The popup you associate
-    with the nmenu object in this way can?t be a sub-popup.
+    """Sets an existing popup as the nmenu's popup. The popup you associate
+    with the nmenu object in this way can't be a sub-popup.
 
     --
 
@@ -449,7 +457,8 @@ def fl_set_nmenu_popup(pFlObject, pPopup):
         cty.POINTER(xfdata.FL_POPUP)],
         """int fl_set_nmenu_popup(FL_OBJECT * p1, FL_POPUP * p2)""")
     libr.check_if_initialized()
-    libr.check_if_FL_OBJECT_ptr(pFlObject)
+    libr.verify_flobjectptr_type(pFlObject)
+    libr.verify_flflpopupptr_type(pPopup)
     libr.keep_elem_refs(pFlObject, pPopup)
     retval = _fl_set_nmenu_popup(pFlObject, pPopup)
     return retval
@@ -479,7 +488,7 @@ def fl_get_nmenu_item(pFlObject):
         cty.POINTER(xfdata.FL_POPUP_RETURN), [cty.POINTER(xfdata.FL_OBJECT)],
         """FL_POPUP_RETURN * fl_get_nmenu_item(FL_OBJECT * p1)""")
     libr.check_if_initialized()
-    libr.check_if_FL_OBJECT_ptr(pFlObject)
+    libr.verify_flobjectptr_type(pFlObject)
     libr.keep_elem_refs(pFlObject)
     retval = _fl_get_nmenu_item(pFlObject)
     return retval
@@ -512,7 +521,7 @@ def fl_get_nmenu_item_by_value(pFlObject, value):
         """FL_POPUP_ENTRY * fl_get_nmenu_item_by_value(FL_OBJECT * p1,
            long int p2)""")
     libr.check_if_initialized()
-    libr.check_if_FL_OBJECT_ptr(pFlObject)
+    libr.verify_flobjectptr_type(pFlObject)
     lvalue = libr.convert_to_long(value)
     libr.keep_elem_refs(pFlObject, value, lvalue)
     retval = _fl_get_nmenu_item_by_value(pFlObject, lvalue)
@@ -546,7 +555,7 @@ def fl_get_nmenu_item_by_label(pFlObject, label):
         """FL_POPUP_ENTRY * fl_get_nmenu_item_by_label(FL_OBJECT * p1,
            const char * p2)""")
     libr.check_if_initialized()
-    libr.check_if_FL_OBJECT_ptr(pFlObject)
+    libr.verify_flobjectptr_type(pFlObject)
     slabel = libr.convert_to_string(label)
     libr.keep_elem_refs(pFlObject, label, slabel)
     retval = _fl_get_nmenu_item_by_label(pFlObject, slabel)
@@ -580,7 +589,7 @@ def fl_get_nmenu_item_by_text(pFlObject, text):
         """FL_POPUP_ENTRY * fl_get_nmenu_item_by_text(FL_OBJECT * p1,
            const char * p2)""")
     libr.check_if_initialized()
-    libr.check_if_FL_OBJECT_ptr(pFlObject)
+    libr.verify_flobjectptr_type(pFlObject)
     stext = libr.convert_to_string(text)
     libr.keep_elem_refs(pFlObject, text, stext)
     retval = _fl_get_nmenu_item_by_text(pFlObject, stext)
@@ -600,7 +609,7 @@ def fl_set_nmenu_policy(pFlObject, policy):
       `pFlObject` : pointer to xfdata.FL_OBJECT
         nmenu object
       `policy` : int
-        under which conditions the nmenu?s popup gets closed. Values (from
+        under which conditions the nmenu's popup gets closed. Values (from
         xfdata.py) FL_POPUP_NORMAL_SELECT (default) or FL_POPUP_DRAG_SELECT
 
     :return: old policy settings, or -1 (on failure)
@@ -616,8 +625,8 @@ def fl_set_nmenu_policy(pFlObject, policy):
         cty.c_int, [cty.POINTER(xfdata.FL_OBJECT), cty.c_int],
         """int fl_set_nmenu_policy(FL_OBJECT * p1, int p2)""")
     libr.check_if_initialized()
-    libr.check_if_FL_OBJECT_ptr(pFlObject)
-    libr.check_admitted_listvalues(policy, xfdata.POPUPPOLICY_list)
+    libr.verify_flobjectptr_type(pFlObject)
+    libr.check_admitted_value_in_list(policy, xfdata.POPUPPOLICY_list)
     ipolicy = libr.convert_to_int(policy)
     libr.keep_elem_refs(pFlObject, policy, ipolicy)
     retval = _fl_set_nmenu_policy(pFlObject, ipolicy)
@@ -626,7 +635,7 @@ def fl_set_nmenu_policy(pFlObject, policy):
 
 def fl_set_nmenu_hl_text_color(pFlObject, colr):
     """Sets the color of label when it is in "active" state (i.e. while the
-    popup is shown). In "incatie state this is set by fl_set_object_lcol(). By
+    popup is shown). In "inactive" state this is set by fl_set_object_lcol(). By
     default, this color is xfdata.FL_BLACK for nmenus that are shown as a
     button while being "active", while for normal nmenus it?s the same color
     that is used items in the popup when the mouse is hovering over them.
@@ -653,8 +662,8 @@ def fl_set_nmenu_hl_text_color(pFlObject, colr):
         """FL_COLOR fl_set_nmenu_hl_text_color(FL_OBJECT * p1,
            FL_COLOR p2)""")
     libr.check_if_initialized()
-    libr.check_if_FL_OBJECT_ptr(pFlObject)
-    libr.check_admitted_listvalues(colr, xfdata.COLOR_list)
+    libr.verify_flobjectptr_type(pFlObject)
+    libr.check_admitted_value_in_list(colr, xfdata.COLOR_list)
     ulcolr = libr.convert_to_FL_COLOR(colr)
     libr.keep_elem_refs(pFlObject, colr, ulcolr)
     retval = _fl_set_nmenu_hl_text_color(pFlObject, ulcolr)

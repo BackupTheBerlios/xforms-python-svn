@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: iso8859-1 -*-
 
-""" flbitmap.py - Functions to manage bitmap objects.
+""" flbitmap.py - xforms-python's functions to manage bitmap objects.
 
     Copyright (C) 2009, 2010  Luca Lazzaroni "LukenShiro"
     e-mail: <lukenshiro@ngi.it>
@@ -82,7 +82,7 @@ def fl_add_bitmap(bitmaptype, x, y, w, h, label):
         """FL_OBJECT * fl_add_bitmap(int type, FL_Coord x, FL_Coord y,
            FL_Coord w, FL_Coord h, const char * label)""")
     libr.check_if_initialized()
-    libr.check_admitted_listvalues(bitmaptype, xfdata.BITMAPTYPE_list)
+    libr.check_admitted_value_in_list(bitmaptype, xfdata.BITMAPTYPE_list)
     ibitmaptype = libr.convert_to_int(bitmaptype)
     ix = libr.convert_to_FL_Coord(x)
     iy = libr.convert_to_FL_Coord(y)
@@ -90,7 +90,7 @@ def fl_add_bitmap(bitmaptype, x, y, w, h, label):
     ih = libr.convert_to_FL_Coord(h)
     slabel = libr.convert_to_string(label)
     libr.keep_elem_refs(bitmaptype, x, y, w, h, label, ibitmaptype, ix, \
-                           iy, iw, ih, slabel)
+                        iy, iw, ih, slabel)
     retval = _fl_add_bitmap(ibitmaptype, ix, iy, iw, ih, slabel)
     return retval
 
@@ -124,7 +124,7 @@ def fl_set_bitmap_data(pFlObject, w, h, xbmcontents):
         """void fl_set_bitmap_data(FL_OBJECT * ob, int w, int h,
            unsigned char * data)""")
     libr.check_if_initialized()
-    libr.check_if_FL_OBJECT_ptr(pFlObject)
+    libr.verify_flobjectptr_type(pFlObject)
     iw = libr.convert_to_int(w)
     ih = libr.convert_to_int(h)
     pxbmcontents = cty.cast(xbmcontents, cty.POINTER(cty.c_ubyte))
@@ -155,7 +155,7 @@ def fl_set_bitmap_file(pFlObject, fname):
         None, [cty.POINTER(xfdata.FL_OBJECT), xfdata.STRING],
         """void fl_set_bitmap_file(FL_OBJECT * ob, const char * fname)""")
     libr.check_if_initialized()
-    libr.check_if_FL_OBJECT_ptr(pFlObject)
+    libr.verify_flobjectptr_type(pFlObject)
     sfname = libr.convert_to_string(fname)
     libr.keep_elem_refs(pFlObject, fname, sfname)
     _fl_set_bitmap_file(pFlObject, sfname)
@@ -283,12 +283,12 @@ def fl_add_pixmap(pixmaptype, x, y, w, h, label):
     """
     _fl_add_pixmap = libr.cfuncproto(
         libr.load_so_libforms(), "fl_add_pixmap",
-        cty.POINTER(xfdata.FL_OBJECT), [cty.c_int, xfdata.FL_Coord, xfdata.FL_Coord,
-        xfdata.FL_Coord, xfdata.FL_Coord, xfdata.STRING],
+        cty.POINTER(xfdata.FL_OBJECT), [cty.c_int, xfdata.FL_Coord,
+        xfdata.FL_Coord, xfdata.FL_Coord, xfdata.FL_Coord, xfdata.STRING],
         """FL_OBJECT * fl_add_pixmap(int type, FL_Coord x, FL_Coord y,
            FL_Coord w, FL_Coord h, const char * label)""")
     libr.check_if_initialized()
-    libr.check_admitted_listvalues(pixmaptype, xfdata.PIXMAPTYPE_list)
+    libr.check_admitted_value_in_list(pixmaptype, xfdata.PIXMAPTYPE_list)
     ipixmaptype = libr.convert_to_int(pixmaptype)
     ix = libr.convert_to_FL_Coord(x)
     iy = libr.convert_to_FL_Coord(y)
@@ -324,7 +324,7 @@ def fl_set_pixmap_data(pFlObject, bits):
         None, [cty.POINTER(xfdata.FL_OBJECT), cty.POINTER(xfdata.STRING)],
         """void fl_set_pixmap_data(FL_OBJECT * ob, char * * bits)""")
     libr.check_if_initialized()
-    libr.check_if_FL_OBJECT_ptr(pFlObject)
+    libr.verify_flobjectptr_type(pFlObject)
     print "bits", bits
     sbits = libr.convert_to_string(bits)
     print "sbits", sbits
@@ -357,7 +357,7 @@ def fl_set_pixmap_file(pFlObject, fname):
         None, [cty.POINTER(xfdata.FL_OBJECT), xfdata.STRING],
         """void fl_set_pixmap_file(FL_OBJECT * ob, const char * fname)""")
     libr.check_if_initialized()
-    libr.check_if_FL_OBJECT_ptr(pFlObject)
+    libr.verify_flobjectptr_type(pFlObject)
     sfname = libr.convert_to_string(fname)
     libr.keep_elem_refs(pFlObject, fname, sfname)
     _fl_set_pixmap_file(pFlObject, sfname)
@@ -394,8 +394,8 @@ def fl_set_pixmap_align(pFlObject, align, xmargin, ymargin):
         """void fl_set_pixmap_align(FL_OBJECT * ob, int align,
            int xmargin, int ymargin)""")
     libr.check_if_initialized()
-    libr.check_if_FL_OBJECT_ptr(pFlObject)
-    libr.check_admitted_listvalues(align, xfdata.ALIGN_list)
+    libr.verify_flobjectptr_type(pFlObject)
+    libr.check_admitted_value_in_list(align, xfdata.ALIGN_list)
     ialign = libr.convert_to_int(align)
     ixmargin = libr.convert_to_int(xmargin)
     iymargin = libr.convert_to_int(ymargin)
@@ -434,7 +434,7 @@ def fl_set_pixmap_pixmap(pFlObject, idnum, mask):
         """void fl_set_pixmap_pixmap(FL_OBJECT * ob, Pixmap id,
            Pixmap mask)""")
     libr.check_if_initialized()
-    libr.check_if_FL_OBJECT_ptr(pFlObject)
+    libr.verify_flobjectptr_type(pFlObject)
     ulidnum = libr.convert_to_ulong(idnum)
     ulmask = libr.convert_to_ulong(mask)
     libr.keep_elem_refs(pFlObject, idnum, mask, ulidnum, ulmask)
@@ -498,7 +498,7 @@ def fl_free_pixmap_pixmap(pFlObject):
         None, [cty.POINTER(xfdata.FL_OBJECT)],
         """void fl_free_pixmap_pixmap(FL_OBJECT * ob)""")
     libr.check_if_initialized()
-    libr.check_if_FL_OBJECT_ptr(pFlObject)
+    libr.verify_flobjectptr_type(pFlObject)
     libr.keep_elem_refs(pFlObject)
     _fl_free_pixmap_pixmap(pFlObject)
 
@@ -533,7 +533,7 @@ def fl_get_pixmap_pixmap(pFlObject):
         """Pixmap fl_get_pixmap_pixmap(FL_OBJECT * ob, Pixmap * p,
            Pixmap * m)""")
     libr.check_if_initialized()
-    libr.check_if_FL_OBJECT_ptr(pFlObject)
+    libr.verify_flobjectptr_type(pFlObject)
     p, pp = libr.make_ulong_and_pointer()
     m, pm = libr.make_ulong_and_pointer()
     libr.keep_elem_refs(pFlObject, p, m, pp, pm)
@@ -578,7 +578,7 @@ def fl_read_pixmapfile(win, fname, tran):
            unsigned int * w, unsigned int * h, Pixmap * shape_mask,
            int * hotx, int * hoty, FL_COLOR tran)""")
     libr.check_if_initialized()
-    libr.check_admitted_listvalues(tran, xfdata.COLOR_list)
+    libr.check_admitted_value_in_list(tran, xfdata.COLOR_list)
     ulwin = libr.convert_to_Window(win)
     sfname = libr.convert_to_string(fname)
     ultran = libr.convert_to_FL_COLOR(tran)
@@ -638,7 +638,7 @@ def fl_create_from_pixmapdata(win, data, w, h, sm, hotx, hoty, tran):
         unsigned int * w, unsigned int * h, Pixmap * sm, int * hotx,
         int * hoty, FL_COLOR tran)""")
     libr.check_if_initialized()
-    libr.check_admitted_listvalues(tran, xfdata.COLOR_list)
+    libr.check_admitted_value_in_list(tran, xfdata.COLOR_list)
     ulwin = libr.convert_to_Window(win)
     ultran = libr.convert_to_FL_COLOR(tran)
     libr.keep_elem_refs(win, data, w, h, sm, hotx, hoty, tran, ulwin, ultran)

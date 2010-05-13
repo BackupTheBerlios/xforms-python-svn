@@ -2,8 +2,7 @@
 # -*- coding: iso8859-1 -*-
 
 """
-    xforms-python - Python wrapper for XForms (X11) GUI C toolkit library
-    using ctypes
+    flpopup.py - xforms-python's functions to manage popups.
 
     Copyright (C) 2009, 2010  Luca Lazzaroni "LukenShiro"
     e-mail: <lukenshiro@ngi.it>
@@ -34,10 +33,9 @@
 
 
 import ctypes as cty
-from xformslib import library
+from xformslib import library as libr
+from xformslib import flxbasic
 from xformslib import xfdata
-
-
 
 
 
@@ -46,222 +44,415 @@ from xformslib import xfdata
 ####################
 
 def fl_popup_add(win, title):
-    """ fl_popup_add(win, title) -> pPopup
+    """Defines a new popup. There is no built-in limit to the number
+    of popups that can be created.
 
-        @param win: window
-        @param title: text of title shown at the top of the popup
-                      in a framed box
+    --
 
-        :status: Untested + NoDoc + NoDemo = NOT OK
+    :Parameters:
+      `win` : long_pos
+        window of a parent object; use flxbasic.FL_ObjWin() to find out about
+        it. You can also use either 'fl_root' or 'None' for the root window.
+      `title` : str
+        text of title that gets shown at the top of the popup in a frame. If
+        not wanted, pass an empty string or 'None'. It may contain embedded
+        newline characters, this allows to create titles that span more than
+        one line.
+
+    :return: new popup, or None (on failure)
+    :rtype: pointer to xfdata.FL_POPUP
+
+    :note: e.g. *todo*
+
+    :status: Untested + NoDoc + NoDemo = NOT OK
+
     """
-    _fl_popup_add = library.cfuncproto(
-        library.load_so_libforms(), "fl_popup_add",
+    _fl_popup_add = libr.cfuncproto(
+        libr.load_so_libforms(), "fl_popup_add",
         cty.POINTER(xfdata.FL_POPUP), [xfdata.Window, xfdata.STRING],
         """FL_POPUP * fl_popup_add(Window p1, const char * p2)""")
-    library.check_if_initialized()
-    ulwin = library.convert_to_Window(win)
-    stitle = library.convert_to_string(title)
-    library.keep_elem_refs(win, title, ulwin, stitle)
+    libr.check_if_initialized()
+    if not win:         # if it's None
+        win = flxbasic.fl_root
+    ulwin = libr.convert_to_Window(win)
+    if not title:       # if it's None
+        title = ""
+    stitle = libr.convert_to_string(title)
+    libr.keep_elem_refs(win, title, ulwin, stitle)
     retval = _fl_popup_add(ulwin, stitle)
     return retval
 
 
 def fl_popup_add_entries(pPopup, entrytxt):
-    """ fl_popup_add_entries(pPopup, entrytxt) -> pPopupEntry
+    """Adds one or more entries to a popup.
 
-        :status: Untested + NoDoc + NoDemo = NOT OK
+    --
+
+    :Parameters:
+      `pPopup` : pointer to xfdata.FL_POPUP
+        popup class instance
+      `extrytxt` : str
+        text of the entry to be added. It may contain newline characters which
+        allows to create entries that span more than a single line (among
+        special sequences only %S is supported)
+
+    :return: popup entry, or None (on failure)
+    :rtype: pointer to xfdata.FL_POPUP
+
+    :note: e.g. *todo*
+
+    :status: Untested + NoDoc + NoDemo = NOT OK
+
     """
-    _fl_popup_add_entries = library.cfuncproto(
-        library.load_so_libforms(), "fl_popup_add_entries",
-        cty.POINTER(xfdata.FL_POPUP_ENTRY), [cty.POINTER(xfdata.FL_POPUP), xfdata.STRING],
+    _fl_popup_add_entries = libr.cfuncproto(
+        libr.load_so_libforms(), "fl_popup_add_entries",
+        cty.POINTER(xfdata.FL_POPUP_ENTRY), [cty.POINTER(xfdata.FL_POPUP),
+        xfdata.STRING],
         """FL_POPUP_ENTRY * fl_popup_add_entries(FL_POPUP * p1,
            const char * p2)""")
-    library.check_if_initialized()
-    sentrytxt = library.convert_to_string(entrytxt)
-    library.keep_elem_refs(pPopup, entrytxt, sentrytxt)
+    libr.check_if_initialized()
+    libr.verify_flflpopupptr_type(pPopup)
+    sentrytxt = libr.convert_to_string(entrytxt)
+    libr.keep_elem_refs(pPopup, entrytxt, sentrytxt)
     retval = _fl_popup_add_entries(pPopup, sentrytxt)
     return retval
 
 
 def fl_popup_insert_entries(pPopup, pPopupEntry, entrytxt):
-    """ fl_popup_insert_entries(pPopup, pPopupEntry, entrytxt) -> pPopupEntry
+    """Inserts one or more entries into a popup.
 
-        :status: Untested + NoDoc + NoDemo = NOT OK
+    --
+
+    :Parameters:
+      `pPopup` : pointer to xfdata.FL_POPUP
+        popup class instance
+      `pPopupEntry` : pointer to xfdata.FL_POPUP_ENTRY
+        popup entry after which entry is inserted. If it's 'None', it inserts
+        items at the very start.
+      `extrytxt` : str
+        text of the entry to be added. It may contain newline characters which
+        allows to create entries that span more than a single line (among
+        special sequences only %S is supported)
+
+    :return: popup entry inserted, or None (on failure)
+    :rtype: pointer to xfdata.FL_POPUP_ENTRY
+
+    :note: e.g. *todo*
+
+    :status: Untested + NoDoc + NoDemo = NOT OK
+
     """
-
-    _fl_popup_insert_entries = library.cfuncproto(
-            library.load_so_libforms(), "fl_popup_insert_entries",
-            cty.POINTER(xfdata.FL_POPUP_ENTRY), [cty.POINTER(xfdata.FL_POPUP),
-            cty.POINTER(xfdata.FL_POPUP_ENTRY), xfdata.STRING],
-            """FL_POPUP_ENTRY * fl_popup_insert_entries(FL_POPUP * p1,
-               FL_POPUP_ENTRY * p2, const char * p3)""")
-    library.check_if_initialized()
-    sentrytxt = library.convert_to_string(entrytxt)
-    library.keep_elem_refs(pPopup, pPopupEntry, entrytxt, sentrytxt)
+    _fl_popup_insert_entries = libr.cfuncproto(
+        libr.load_so_libforms(), "fl_popup_insert_entries",
+        cty.POINTER(xfdata.FL_POPUP_ENTRY), [cty.POINTER(xfdata.FL_POPUP),
+        cty.POINTER(xfdata.FL_POPUP_ENTRY), xfdata.STRING],
+        """FL_POPUP_ENTRY * fl_popup_insert_entries(FL_POPUP * p1,
+           FL_POPUP_ENTRY * p2, const char * p3)""")
+    libr.check_if_initialized()
+    libr.verify_flflpopupptr_type(pPopup)
+    libr.verify_flpopupentryptr_type(pPopupEntry)
+    sentrytxt = libr.convert_to_string(entrytxt)
+    libr.keep_elem_refs(pPopup, pPopupEntry, entrytxt, sentrytxt)
     retval = _fl_popup_insert_entries(pPopup, pPopupEntry, sentrytxt)
     return retval
 
 
-def fl_popup_create(win, text, pPopupItem):
-    """ fl_popup_create(win, text, pPopupItem) -> pPopup
+def fl_popup_create(win, title, pPopupItem):
+    """Creates a popup. It doesn't allow to associate values or pointers to
+    user data to individual entries, set titles for sub-popups, have radio
+    entries belong to different groups or set enter or leave callback
+    functions.
 
-        :status: Untested + NoDoc + NoDemo = NOT OK
+    --
+
+    :Parameters:
+      `win` : long_pos
+        window of a parent object (use flxbasic.FL_ObjWin() to find out about
+        it). You can also use either 'fl_root' or 'None' for the root window.
+      `title` : str
+        text of title that gets shown at the top of the popup in a frame. If
+        not wanted, pass an empty string or 'None'. It may contain embedded
+        newline characters, this allows to create titles that span more than
+        one line.
+      `pPopupItem` : pointer to xfdata.FL_POPUP_ITEM
+        popup item
+
+    :return: popup created, or None (on failure)
+    :rtype: pointer to xfdata.FL_POPUP
+
+    :note: e.g. *todo*
+
+    :status: Untested + NoDoc + NoDemo = NOT OK
+
     """
-
-    _fl_popup_create = library.cfuncproto(
-            library.load_so_libforms(), "fl_popup_create",
-                cty.POINTER(xfdata.FL_POPUP), [xfdata.Window, xfdata.STRING,
-                cty.POINTER(xfdata.FL_POPUP_ITEM)],
-            """FL_POPUP * fl_popup_create(Window p1, const char * p2,
-               FL_POPUP_ITEM * p3)""")
-    library.check_if_initialized()
-    ulwin = library.convert_to_Window(win)
-    stext = library.convert_to_string(text)
-    library.keep_elem_refs(win, text, pPopupItem, ulwin, stext)
-    retval = _fl_popup_create(ulwin, stext, pPopupItem)
+    _fl_popup_create = libr.cfuncproto(
+        libr.load_so_libforms(), "fl_popup_create",
+        cty.POINTER(xfdata.FL_POPUP), [xfdata.Window, xfdata.STRING,
+        cty.POINTER(xfdata.FL_POPUP_ITEM)],
+        """FL_POPUP * fl_popup_create(Window p1, const char * p2,
+           FL_POPUP_ITEM * p3)""")
+    libr.check_if_initialized()
+    if not win:         # if it's None
+        win = flxbasic.fl_root
+    ulwin = libr.convert_to_Window(win)
+    if not title:       # if it's None
+        title = ""
+    stitle = libr.convert_to_string(title)
+    libr.verify_flpopupitemptr_type(pPopupItem)
+    libr.keep_elem_refs(win, title, pPopupItem, ulwin, stitle)
+    retval = _fl_popup_create(ulwin, stitle, pPopupItem)
     return retval
 
 
 def fl_popup_add_items(pPopup, pPopupItem):
-    """ fl_popup_add_items(pPopup, pPopupItem) -> pPopupEntry
+    """Adds one or more items to a popup.
 
-        :status: Untested + NoDoc + NoDemo = NOT OK
+    --
+
+    :Parameters:
+      `pPopup` : pointer to xfdata.FL_POPUP
+        popup class instance
+      `pPopupItem` : pointer to xfdata.FL_POPUP_ITEM
+        popup item
+
+    :return: popup entry, or None
+    :rtype: pointer to xfdata.FL_POPUP_ENTRY
+
+    :note: e.g. *todo*
+
+    :status: Untested + NoDoc + NoDemo = NOT OK
+
     """
-
-    _fl_popup_add_items = library.cfuncproto(
-            library.load_so_libforms(), "fl_popup_add_items",
-                cty.POINTER(xfdata.FL_POPUP_ENTRY), [cty.POINTER(xfdata.FL_POPUP),
-                cty.POINTER(xfdata.FL_POPUP_ITEM)],
-            """FL_POPUP_ENTRY * fl_popup_add_items(FL_POPUP * p1,
-               FL_POPUP_ITEM * p2)
-""")
-    library.check_if_initialized()
-    library.keep_elem_refs(pPopup, pPopupItem)
+    _fl_popup_add_items = libr.cfuncproto(
+        libr.load_so_libforms(), "fl_popup_add_items",
+        cty.POINTER(xfdata.FL_POPUP_ENTRY), [cty.POINTER(xfdata.FL_POPUP),
+        cty.POINTER(xfdata.FL_POPUP_ITEM)],
+        """FL_POPUP_ENTRY * fl_popup_add_items(FL_POPUP * p1,
+           FL_POPUP_ITEM * p2)""")
+    libr.check_if_initialized()
+    libr.verify_flflpopupptr_type(pPopup)
+    libr.verify_flpopupitemptr_type(pPopupItem)
+    libr.keep_elem_refs(pPopup, pPopupItem)
     retval = _fl_popup_add_items(pPopup, pPopupItem)
     return retval
 
 
 def fl_popup_insert_items(pPopup, pPopupEntry, pPopupItem):
-    """ fl_popup_insert_items(pPopup, pPopupEntry, pPopupItem) -> pPopupEntry
+    """Inserts entries into a popup.
 
-        :status: Untested + NoDoc + NoDemo = NOT OK
+    --
+
+    :Parameters:
+      `pPopup` : pointer to xfdata.FL_POPUP
+        popup class instance
+      `pPopupEntry` : pointer to xfdata.FL_POPUP_ENTRY
+        popup entry after which items are inserted. If it's 'None', items are
+        inserted at the very start.
+      `pPopupItem` : pointer to xfdata.FL_POPUP_ITEM
+        popup item
+
+    :return: popup entry
+    :rtype: pointer to xfdata.FL_POPUP_ENTRY
+
+    :note: e.g. *todo*
+
+    :status: Untested + NoDoc + NoDemo = NOT OK
+
     """
-    _fl_popup_insert_items = library.cfuncproto(
-        library.load_so_libforms(), "fl_popup_insert_items",
+    _fl_popup_insert_items = libr.cfuncproto(
+        libr.load_so_libforms(), "fl_popup_insert_items",
         cty.POINTER(xfdata.FL_POPUP_ENTRY), [cty.POINTER(xfdata.FL_POPUP),
         cty.POINTER(xfdata.FL_POPUP_ENTRY), cty.POINTER(xfdata.FL_POPUP_ITEM)],
         """FL_POPUP_ENTRY * fl_popup_insert_items(FL_POPUP * p1,
            FL_POPUP_ENTRY * p2, FL_POPUP_ITEM * p3)""")
-    library.check_if_initialized()
-    library.keep_elem_refs(pPopup, pPopupEntry, pPopupItem)
+    libr.check_if_initialized()
+    libr.verify_flflpopupptr_type(pPopup)
+    libr.verify_flpopupentryptr_type(pPopupEntry)
+    libr.verify_flpopupitemptr_type(pPopupItem)
+    libr.keep_elem_refs(pPopup, pPopupEntry, pPopupItem)
     retval = _fl_popup_insert_items(pPopup, pPopupEntry, pPopupItem)
     return retval
 
 
 def fl_popup_delete(pPopup):
-    """ fl_popup_delete(pPopup) -> num.
+    """Deletes a popup. It?s not possible to call the function while the
+    popup is still visible on the screen. Calling it from any callback
+    function is problematic unless you know for sure that the popup to be
+    deleted (and sub-popups of it) won't be used later and thus normally
+    should be avoided.
 
-        :status: Untested + NoDoc + NoDemo = NOT OK
+    --
+
+    :Parameters:
+      `pPopup` : pointer to xfdata.FL_POPUP
+        popup class instance
+
+    :return: 0, or -1 (on failure)
+    :rtype: int
+
+    :note: e.g. *todo*
+
+    :status: Untested + NoDoc + NoDemo = NOT OK
+
     """
-    _fl_popup_delete = library.cfuncproto(
-        library.load_so_libforms(), "fl_popup_delete",
+    _fl_popup_delete = libr.cfuncproto(
+        libr.load_so_libforms(), "fl_popup_delete",
         cty.c_int, [cty.POINTER(xfdata.FL_POPUP)],
         """int fl_popup_delete(FL_POPUP * p1)""")
-    library.check_if_initialized()
-    library.keep_elem_refs(pPopup)
+    libr.check_if_initialized()
+    libr.verify_flflpopupptr_type(pPopup)
+    libr.keep_elem_refs(pPopup)
     retval = _fl_popup_delete(pPopup)
     return retval
 
 
 def fl_popup_entry_delete(pPopupEntry):
-    """ fl_popup_entry_delete(pPopupEntry) -> num.
+    """Removes an existing popup entry.
 
-        :status: Untested + NoDoc + NoDemo = NOT OK
+    --
+
+    :Parameters:
+      `pPopupEntry` : pointer to xfdata.FL_POPUP_ENTRY
+        popup entry to be removed.
+
+    :return: 0, or -1 (on failure)
+    :rtype: int
+
+    :note: e.g. *todo*
+
+    :status: Untested + NoDoc + NoDemo = NOT OK
+
     """
-    _fl_popup_entry_delete = library.cfuncproto(
-        library.load_so_libforms(), "fl_popup_entry_delete",
+    _fl_popup_entry_delete = libr.cfuncproto(
+        libr.load_so_libforms(), "fl_popup_entry_delete",
         cty.c_int, [cty.POINTER(xfdata.FL_POPUP_ENTRY)],
         """int fl_popup_entry_delete(FL_POPUP_ENTRY * p1)""")
-    library.check_if_initialized()
-    library.keep_elem_refs(pPopupEntry)
+    libr.check_if_initialized()
+    libr.verify_flpopupentryptr_type(pPopupEntry)
+    libr.keep_elem_refs(pPopupEntry)
     retval = _fl_popup_entry_delete(pPopupEntry)
     return retval
 
 
 def fl_popup_do(pPopup):
-    """ fl_popup_do(pPopup) -> pPopupReturn
+    """Shows the created popup and returns when the the user is done with the
+    popup and it has been removed from the screen. Only idle callbacks and
+    timers etc. are executed in the background while a popup is being shown.
 
-        :status: Untested + NoDoc + NoDemo = NOT OK
+    --
+
+    :Parameters:
+      `pPopup` : pointer to xfdata.FL_POPUP
+        popup class instance
+
+    :return: popup return class instance
+    :rtype: pointer to xfdata.FL_POPUP_RETURN
+
+    :note: e.g. *todo*
+
+    :status: Untested + NoDoc + NoDemo = NOT OK
+
     """
-    _fl_popup_do = library.cfuncproto(
-        library.load_so_libforms(), "fl_popup_do",
+    _fl_popup_do = libr.cfuncproto(
+        libr.load_so_libforms(), "fl_popup_do",
         cty.POINTER(xfdata.FL_POPUP_RETURN), [cty.POINTER(xfdata.FL_POPUP)],
         """FL_POPUP_RETURN * fl_popup_do(FL_POPUP * p1)""")
-    library.check_if_initialized()
-    library.keep_elem_refs(pPopup)
+    libr.check_if_initialized()
+    libr.verify_flflpopupptr_type(pPopup)
+    libr.keep_elem_refs(pPopup)
     retval = _fl_popup_do(pPopup)
     return retval
 
 
 def fl_popup_set_position(pPopup, x, y):
-    """ fl_popup_set_position(pPopup, x, y)
+    """Sets position where the popup is supposed to appear (if never called,
+    the popup appears at the mouse position).
 
-        Sets position where the popup is supposed to appear (if never called
-        the popup appears at the mouse position)
+    --
 
-        @param pPopup: pointer to Popup
-        @param x: horizontal position (upper-left corner)
-        @param y: vertical position (upper-left corner)
+    :Parameters:
+      `pPopup` : pointer to xfdata.FL_POPUP
+        popup class instance
+      `x` : int
+        horizontal position (upper-left corner)
+      `y` : int
+        vertical position (upper-left corner)
 
-        :status: Untested + NoDoc + NoDemo = NOT OK
+    :note: e.g. *todo*
+
+    :status: Untested + NoDoc + NoDemo = NOT OK
+
     """
-    _fl_popup_set_position = library.cfuncproto(
-        library.load_so_libforms(), "fl_popup_set_position",
+    _fl_popup_set_position = libr.cfuncproto(
+        libr.load_so_libforms(), "fl_popup_set_position",
         None, [cty.POINTER(xfdata.FL_POPUP), cty.c_int, cty.c_int],
         """void fl_popup_set_position(FL_POPUP * p1, int p2, int p3)""")
-    library.check_if_initialized()
-    ix = library.convert_to_int(x)
-    iy = library.convert_to_int(y)
-    library.keep_elem_refs(pPopup, x, y, ix, iy)
+    libr.check_if_initialized()
+    libr.verify_flflpopupptr_type(pPopup)
+    ix = libr.convert_to_int(x)
+    iy = libr.convert_to_int(y)
+    libr.keep_elem_refs(pPopup, x, y, ix, iy)
     _fl_popup_set_position(pPopup, ix, iy)
 
 
 def fl_popup_get_policy(pPopup):
-    """ fl_popup_get_policy(pPopup) -> num.
+    """*todo*
 
-        @param pPopup: pointer to Popup
+    --
 
-        :status: Untested + NoDoc + NoDemo = NOT OK
+    :Parameters:
+      `pPopup` : pointer to xfdata.FL_POPUP
+        popup class instance
+
+    :return: num.
+    :rtype: int
+
+    :note: e.g. *todo*
+
+    :status: Untested + NoDoc + NoDemo = NOT OK
+
     """
-    _fl_popup_get_policy = library.cfuncproto(
-        library.load_so_libforms(), "fl_popup_get_policy",
+    _fl_popup_get_policy = libr.cfuncproto(
+        libr.load_so_libforms(), "fl_popup_get_policy",
         cty.c_int, [cty.POINTER(xfdata.FL_POPUP)],
         """int fl_popup_get_policy(FL_POPUP * p1)""")
-    library.check_if_initialized()
-    library.keep_elem_refs(pPopup)
+    libr.check_if_initialized()
+    libr.verify_flflpopupptr_type(pPopup)
+    libr.keep_elem_refs(pPopup)
     retval = _fl_popup_get_policy(pPopup)
     return retval
 
 
 def fl_popup_set_policy(pPopup, policy):
-    """ fl_popup_set_policy(pPopup, policy) -> num.
+    """Sets policy for handling the popup (i.e. does it get closed when the
+    user releases the mouse button outside an active entry or not?).
 
-        Sets policy of handling the popup (i.e. does it get closed when the
-        user releases the mouse button outside an active entry or not?)
+    --
 
-        @param pPopup: pointer to Popup
-        @param policy: policy to be set
+    :Parameters:
+      `pPopup` : pointer to xfdata.FL_POPUP
+        popup class instance
+      `policy` : int
+        policy to be set. Values (from xfdata.py) FL_POPUP_NORMAL_SELECT,
+        FL_POPUP_DRAG_SELECT
 
-        :status: Untested + NoDoc + NoDemo = NOT OK
+    :return: num.
+    :rtype: int
+
+    :note: e.g. *todo*
+
+    :status: Untested + NoDoc + NoDemo = NOT OK
+
     """
-    _fl_popup_set_policy = library.cfuncproto(
-        library.load_so_libforms(), "fl_popup_set_policy",
+    _fl_popup_set_policy = libr.cfuncproto(
+        libr.load_so_libforms(), "fl_popup_set_policy",
         cty.c_int, [cty.POINTER(xfdata.FL_POPUP), cty.c_int],
         """int fl_popup_set_policy(FL_POPUP * p1, int p2)""")
-    library.check_if_initialized()
-    library.check_admitted_listvalues(policy, xfdata.POPUPPOLICY_list)
-    ipolicy = library.convert_to_int(policy)
-    library.keep_elem_refs(pPopup, policy, ipolicy)
+    libr.check_if_initialized()
+    libr.verify_flflpopupptr_type(pPopup)
+    libr.check_admitted_value_in_list(policy, xfdata.POPUPPOLICY_list)
+    ipolicy = libr.convert_to_int(policy)
+    libr.keep_elem_refs(pPopup, policy, ipolicy)
     retval = _fl_popup_set_policy(pPopup, ipolicy)
     return retval
 
@@ -271,663 +462,1146 @@ def fl_popup_set_policy(pPopup, policy):
 def fl_popup_set_callback(pPopup, py_PopupCb):
     """ fl_popup_set_callback(pPopup, py_PopupCb) -> popup callback func.
 
-        :status: Untested + NoDoc + NoDemo = NOT OK
+    --
+
+    :Parameters:
+      `pPopup` : pointer to xfdata.FL_POPUP
+        popup class instance
+
+    :return: old popup callback
+    :rtype: pointer ot xfdata.FL_POPUP_CB
+
+    :note: e.g. *todo*
+
+    :status: Untested + NoDoc + NoDemo = NOT OK
+
     """
     #FL_POPUP_CB = cty.CFUNCTYPE(cty.c_int, cty.POINTER(xfdata.FL_POPUP_RETURN))
-    _fl_popup_set_callback = library.cfuncproto(
-        library.load_so_libforms(), "fl_popup_set_callback",
+    _fl_popup_set_callback = libr.cfuncproto(
+        libr.load_so_libforms(), "fl_popup_set_callback",
         xfdata.FL_POPUP_CB, [cty.POINTER(xfdata.FL_POPUP), xfdata.FL_POPUP_CB],
         """FL_POPUP_CB fl_popup_set_callback(FL_POPUP * p1,
            FL_POPUP_CB p2)""")
-    library.check_if_initialized()
+    libr.check_if_initialized()
+    libr.verify_flflpopupptr_type(pPopup)
     c_PopupCb = xfdata.FL_POPUP_CB(py_PopupCb)
-    library.keep_cfunc_refs(c_PopupCb, py_PopupCb)
-    library.keep_elem_refs(pPopup)
+    libr.keep_cfunc_refs(c_PopupCb, py_PopupCb)
+    libr.keep_elem_refs(pPopup)
     retval = _fl_popup_set_callback(pPopup, c_PopupCb)
     return retval
 
 
 def fl_popup_get_title_font(pPopup):
-    """ fl_popup_get_title_font(pPopup) -> style, size
+    """*todo*
 
-        :attention: API change from XForms - upstream was
-                    fl_popup_get_title_font(pPopup, style, size)
+    --
 
-        :status: Untested + NoDoc + NoDemo = NOT OK
+    :Parameters:
+      `pPopup` : pointer to xfdata.FL_POPUP
+        popup class instance
+
+    :return: style, size
+    :rtype: int, int
+
+    :note: e.g. *todo*
+
+    :attention: API change from XForms - upstream was
+        fl_popup_get_title_font(pPopup, style, size)
+
+    :status: Untested + NoDoc + NoDemo = NOT OK
+
     """
-    _fl_popup_get_title_font = library.cfuncproto(
-            library.load_so_libforms(), "fl_popup_get_title_font",
-            None, [cty.POINTER(xfdata.FL_POPUP), cty.POINTER(cty.c_int),
-            cty.POINTER(cty.c_int)],
-            """void fl_popup_get_title_font(FL_POPUP * p1, int * p2,
-               int * p3)""")
-    library.check_if_initialized()
-    style, pstyle = library.make_int_and_pointer()
-    size, psize = library.make_int_and_pointer()
-    library.keep_elem_refs(pPopup, style, size, pstyle, psize)
+    _fl_popup_get_title_font = libr.cfuncproto(
+        libr.load_so_libforms(), "fl_popup_get_title_font",
+        None, [cty.POINTER(xfdata.FL_POPUP), cty.POINTER(cty.c_int),
+        cty.POINTER(cty.c_int)],
+        """void fl_popup_get_title_font(FL_POPUP * p1, int * p2,
+           int * p3)""")
+    libr.check_if_initialized()
+    libr.verify_flflpopupptr_type(pPopup)
+    style, pstyle = libr.make_int_and_pointer()
+    size, psize = libr.make_int_and_pointer()
+    libr.keep_elem_refs(pPopup, style, size, pstyle, psize)
     _fl_popup_get_title_font(pPopup, pstyle, psize)
     return style.value, size.value
 
 
 def fl_popup_set_title_font(pPopup, style, size):
-    """ fl_popup_set_title_font(pPopup, style, size)
+    """*todo*
 
-        :status: Tested + NoDoc + Demo = OK
+    --
+
+    :Parameters:
+      `pPopup` : pointer to xfdata.FL_POPUP
+        popup class instance
+      `style` : int
+        *todo*
+      `size` : int
+        *todo*
+
+    :note: e.g. *todo*
+
+    :status: Tested + NoDoc + Demo = OK
+
     """
-    _fl_popup_set_title_font = library.cfuncproto(
-        library.load_so_libforms(), "fl_popup_set_title_font",
+    _fl_popup_set_title_font = libr.cfuncproto(
+        libr.load_so_libforms(), "fl_popup_set_title_font",
         None, [cty.POINTER(xfdata.FL_POPUP), cty.c_int, cty.c_int],
         """void fl_popup_set_title_font(FL_POPUP * p1, int p2, int p3)""")
-    library.check_if_initialized()
-    istyle = library.convert_to_int(style)
-    isize = library.convert_to_int(size)
-    library.keep_elem_refs(pPopup, style, size, istyle, isize)
+    libr.check_if_initialized()
+    libr.verify_flflpopupptr_type(pPopup)
+    # TODO: check admitted values in style, size
+    istyle = libr.convert_to_int(style)
+    isize = libr.convert_to_int(size)
+    libr.keep_elem_refs(pPopup, style, size, istyle, isize)
     _fl_popup_set_title_font(pPopup, istyle, isize)
 
 
 def fl_popup_entry_get_font(pPopup):
-    """ fl_popup_entry_get_font(pPopup) -> style, size
+    """*todo*
 
-        :attention: API change from XForms - upstream was
-                    fl_popup_entry_get_font(pPopup, style, size)
+    --
 
-        :status: Untested + NoDoc + NoDemo = NOT OK
+    :Parameters:
+      `pPopup` : pointer to xfdata.FL_POPUP
+        popup class instance
+
+    :return: style, size
+    :rtype: int, int
+
+    :note: e.g. *todo*
+
+    :attention: API change from XForms - upstream was
+        fl_popup_entry_get_font(pPopup, style, size)
+
+    :status: Untested + NoDoc + NoDemo = NOT OK
+
     """
-    _fl_popup_entry_get_font = library.cfuncproto(
-        library.load_so_libforms(), "fl_popup_entry_get_font",
+    _fl_popup_entry_get_font = libr.cfuncproto(
+        libr.load_so_libforms(), "fl_popup_entry_get_font",
         None, [cty.POINTER(xfdata.FL_POPUP), cty.POINTER(cty.c_int),
         cty.POINTER(cty.c_int)],
         """void fl_popup_entry_get_font(FL_POPUP * p1, int * p2, int * p3)""")
-    library.check_if_initialized()
-    style, pstyle = library.make_int_and_pointer()
-    size, psize = library.make_int_and_pointer()
-    library.keep_elem_refs(pPopup, style, size, pstyle, psize)
+    libr.check_if_initialized()
+    libr.verify_flflpopupptr_type(pPopup)
+    style, pstyle = libr.make_int_and_pointer()
+    size, psize = libr.make_int_and_pointer()
+    libr.keep_elem_refs(pPopup, style, size, pstyle, psize)
     _fl_popup_entry_get_font(pPopup, pstyle, psize)
     return style.value, size.value
 
 
 def fl_popup_entry_set_font(pPopup, style, size):
-    """ fl_popup_entry_set_font(pPopup, style, size)
+    """Sets the font style and size of a popup entry.
 
-        Sets the font of a popup entry.
+    --
 
-        @param pPopup: pointer to Popup
-        @param style: style of the popup entry
-        @param size: size of the popup entry
+    :Parameters:
+      `pPopup` : pointer to xfdata.FL_POPUP
+        popup class instance
+      `style` : int
+        style of the popup entry *todo*
+      `size` : int
+        size of the popup entry *todo*
 
-        :status: Untested + NoDoc + NoDemo = NOT OK
+    :note: e.g. *todo*
+
+    :status: Untested + NoDoc + NoDemo = NOT OK
+
     """
-
-    _fl_popup_entry_set_font = library.cfuncproto(
-            library.load_so_libforms(), "fl_popup_entry_set_font",
-            None, [cty.POINTER(xfdata.FL_POPUP), cty.c_int, cty.c_int],
-            """void fl_popup_entry_set_font(FL_POPUP * p1, int p2, int p3)
-""")
-    library.check_if_initialized()
-    istyle = library.convert_to_int(style)
-    isize = library.convert_to_int(size)
-    library.keep_elem_refs(pPopup, style, size, istyle, isize)
+    _fl_popup_entry_set_font = libr.cfuncproto(
+        libr.load_so_libforms(), "fl_popup_entry_set_font",
+        None, [cty.POINTER(xfdata.FL_POPUP), cty.c_int, cty.c_int],
+        """void fl_popup_entry_set_font(FL_POPUP * p1, int p2, int p3)""")
+    libr.check_if_initialized()
+    libr.verify_flflpopupptr_type(pPopup)
+    # TODO: check admitted values in style, size
+    istyle = libr.convert_to_int(style)
+    isize = libr.convert_to_int(size)
+    libr.keep_elem_refs(pPopup, style, size, istyle, isize)
     _fl_popup_entry_set_font(pPopup, istyle, isize)
 
 
 def fl_popup_get_bw(pPopup):
-    """ fl_popup_get_bw(pPopup) -> borderwidth
+    """Returns the border width of a popup.
 
-        Returns the border width of a popupfn.
+    --
 
-        @param pPopup: pointer to popup
+    :Parameters:
+      `pPopup` : pointer to xfdata.FL_POPUP
+        popup class instance
 
-        :status: Untested + NoDoc + NoDemo = NOT OK
+    :return: borderwidth (bw)
+    :rtype:
+
+    :note: e.g. *todo*
+
+    :status: Untested + NoDoc + NoDemo = NOT OK
+
     """
-
-    _fl_popup_get_bw = library.cfuncproto(
-            library.load_so_libforms(), "fl_popup_get_bw",
-            cty.c_int, [cty.POINTER(xfdata.FL_POPUP)],
-            """int fl_popup_get_bw(FL_POPUP * p1)
-""")
-    library.check_if_initialized()
-    library.keep_elem_refs(pPopup)
+    _fl_popup_get_bw = libr.cfuncproto(
+        libr.load_so_libforms(), "fl_popup_get_bw",
+        cty.c_int, [cty.POINTER(xfdata.FL_POPUP)],
+        """int fl_popup_get_bw(FL_POPUP * p1)""")
+    libr.check_if_initialized()
+    libr.verify_flflpopupptr_type(pPopup)
+    libr.keep_elem_refs(pPopup)
     retval = _fl_popup_get_bw(pPopup)
     return retval
 
 
 def fl_popup_set_bw(pPopup, bw):
-    """ fl_popup_set_bw(pPopup, bw) -> num.
+    """Sets the border width of a popup.
 
-        Sets the border width of a popupfn.
+    --
 
-        @param pPopup: pointer to popup
-        @param bw: border width value to be set
+    :Parameters:
+      `pPopup` : pointer to xfdata.FL_POPUP
+        popup class instance
+      `bw` : int
+        border width value to be set
 
-        :status: Tested + NoDoc + Demo = OK
+    :return: num.
+    :rtype: int
+
+    :note: e.g. *todo*
+
+    :status: Tested + NoDoc + Demo = OK
+
     """
-
-    _fl_popup_set_bw = library.cfuncproto(
-            library.load_so_libforms(), "fl_popup_set_bw",
-            cty.c_int, [cty.POINTER(xfdata.FL_POPUP), cty.c_int],
-            """int fl_popup_set_bw(FL_POPUP * p1, int p2)
-""")
-    library.check_if_initialized()
-    ibw = library.convert_to_int(bw)
-    library.keep_elem_refs(pPopup, bw, ibw)
+    _fl_popup_set_bw = libr.cfuncproto(
+        libr.load_so_libforms(), "fl_popup_set_bw",
+        cty.c_int, [cty.POINTER(xfdata.FL_POPUP), cty.c_int],
+        """int fl_popup_set_bw(FL_POPUP * p1, int p2)""")
+    libr.check_if_initialized()
+    libr.verify_flflpopupptr_type(pPopup)
+    ibw = libr.convert_to_int(bw)
+    libr.keep_elem_refs(pPopup, bw, ibw)
     retval = _fl_popup_set_bw(pPopup, ibw)
     return retval
 
 
 def fl_popup_get_color(pPopup, colrpos):
-    """ fl_popup_get_color(pPopup, colrpos) -> color
+    """*todo*
 
-        @type colrpos: [num./int] from xfdata module FL_POPUP_BACKGROUND_COLOR,
-                       FL_POPUP_HIGHLIGHT_COLOR, FL_POPUP_TITLE_COLOR,
-                       FL_POPUP_TEXT_COLOR, FL_POPUP_HIGHLIGHT_TEXT_COLOR,
-                       FL_POPUP_DISABLED_TEXT_COLOR, FL_POPUP_RADIO_COLOR
+    --
 
-        :status: Untested + NoDoc + NoDemo = NOT OK
+    :Parameters:
+      `pPopup` : pointer to xfdata.FL_POPUP
+        popup class instance
+      `colrpos` : int
+        color type position. Values (from xfdata.py) FL_POPUP_BACKGROUND_COLOR,
+        FL_POPUP_HIGHLIGHT_COLOR, FL_POPUP_TITLE_COLOR, FL_POPUP_TEXT_COLOR,
+        FL_POPUP_HIGHLIGHT_TEXT_COLOR, FL_POPUP_DISABLED_TEXT_COLOR,
+        FL_POPUP_RADIO_COLOR
+
+    :return: color
+    :rtype: long_pos
+
+    :note: e.g. *todo*
+
+    :status: Untested + NoDoc + NoDemo = NOT OK
+
     """
-    _fl_popup_get_color = library.cfuncproto(
-        library.load_so_libforms(), "fl_popup_get_color",
+    _fl_popup_get_color = libr.cfuncproto(
+        libr.load_so_libforms(), "fl_popup_get_color",
         xfdata.FL_COLOR, [cty.POINTER(xfdata.FL_POPUP), cty.c_int],
         """FL_COLOR fl_popup_get_color(FL_POPUP * p1, int p2)""")
-    library.check_if_initialized()
-    library.check_admitted_listvalues(colrpos, xfdata.POPUPCOLOR_list)
-    icolrpos = library.convert_to_int(colrpos)
-    library.keep_elem_refs(pPopup, colrpos, icolrpos)
+    libr.check_if_initialized()
+    libr.verify_flflpopupptr_type(pPopup)
+    libr.check_admitted_value_in_list(colrpos, xfdata.POPUPCOLOR_list)
+    icolrpos = libr.convert_to_int(colrpos)
+    libr.keep_elem_refs(pPopup, colrpos, icolrpos)
     retval = _fl_popup_get_color(pPopup, icolrpos)
     return retval
 
 
 def fl_popup_set_color(pPopup, colrpos, colr):
-    """ fl_popup_set_color(pPopup, colrpos, colr) -> color
+    """*todo*
 
-        @param colrpos: popup color type
-        @type colrpos: [num./int] from xfdata module FL_POPUP_BACKGROUND_COLOR,
-                       FL_POPUP_HIGHLIGHT_COLOR, FL_POPUP_TITLE_COLOR,
-                       FL_POPUP_TEXT_COLOR, FL_POPUP_HIGHLIGHT_TEXT_COLOR,
-                       FL_POPUP_DISABLED_TEXT_COLOR, FL_POPUP_RADIO_COLOR
-        @param colr: color value to be set
+    --
 
-        :status: Untested + NoDoc + NoDemo = NOT OK
+    :Parameters:
+      `pPopup` : pointer to xfdata.FL_POPUP
+        popup class instance
+      `colrpos` : int
+        color type position. Values (from xfdata.py) FL_POPUP_BACKGROUND_COLOR,
+        FL_POPUP_HIGHLIGHT_COLOR, FL_POPUP_TITLE_COLOR, FL_POPUP_TEXT_COLOR,
+        FL_POPUP_HIGHLIGHT_TEXT_COLOR, FL_POPUP_DISABLED_TEXT_COLOR,
+        FL_POPUP_RADIO_COLOR
+      `colr` : long_pos
+        color value to be set
+
+    :return: color
+    :rtype: long_pos
+
+    :note: e.g. *todo*
+
+    :status: Untested + NoDoc + NoDemo = NOT OK
+
     """
-    _fl_popup_set_color = library.cfuncproto(
-        library.load_so_libforms(), "fl_popup_set_color",
-        xfdata.FL_COLOR, [cty.POINTER(xfdata.FL_POPUP), cty.c_int, xfdata.FL_COLOR],
+    _fl_popup_set_color = libr.cfuncproto(
+        libr.load_so_libforms(), "fl_popup_set_color",
+        xfdata.FL_COLOR, [cty.POINTER(xfdata.FL_POPUP), cty.c_int,
+        xfdata.FL_COLOR],
         """FL_COLOR fl_popup_set_color(FL_POPUP * p1, int p2, FL_COLOR p3)""")
-    library.check_if_initialized()
-    library.check_admitted_listvalues(colrpos, xfdata.POPUPCOLOR_list)
-    library.check_admitted_listvalues(colrpos, xfdata.COLOR_list)
-    icolrpos = library.convert_to_int(colrpos)
-    ulcolr = library.convert_to_FL_COLOR(colr)
-    library.keep_elem_refs(pPopup, colrpos, colr, icolrpos, ulcolr)
+    libr.check_if_initialized()
+    libr.verify_flflpopupptr_type(pPopup)
+    libr.check_admitted_value_in_list(colrpos, xfdata.POPUPCOLOR_list)
+    libr.check_admitted_value_in_list(colrpos, xfdata.COLOR_list)
+    icolrpos = libr.convert_to_int(colrpos)
+    ulcolr = libr.convert_to_FL_COLOR(colr)
+    libr.keep_elem_refs(pPopup, colrpos, colr, icolrpos, ulcolr)
     retval = _fl_popup_set_color(pPopup, icolrpos, ulcolr)
     return retval
 
 
 def fl_popup_set_cursor(pPopup, cursnum):
-    """ fl_popup_set_cursor(pPopup, cursnum)
+    """Changes the cursor displayed when a popup is shown.
 
-        Changes the cursor displayed when a popup is shown.
+    --
 
-        @param pPopup: pointer to FL_POPUP
-        @param cursnum: id of a symbolic cursor shapes' names
+    :Parameters:
+      `pPopup` : pointer to xfdata.FL_POPUP
+        popup class instance
+      `cursnum` : int
+        id of a symbolic cursor shape's name
 
-        :status: Untested + NoDoc + NoDemo = NOT OK
+    :note: e.g. *todo*
+
+    :status: Untested + NoDoc + NoDemo = NOT OK
+
     """
-    _fl_popup_set_cursor = library.cfuncproto(
-        library.load_so_libforms(), "fl_popup_set_cursor",
+    _fl_popup_set_cursor = libr.cfuncproto(
+        libr.load_so_libforms(), "fl_popup_set_cursor",
         None, [cty.POINTER(xfdata.FL_POPUP), cty.c_int],
         """void fl_popup_set_cursor(FL_POPUP * p1, int p2)""")
-    icursnum = library.convert_to_int(cursnum)
-    library.keep_elem_refs(pPopup, cursnum, icursnum)
+    libr.check_if_initialized()
+    libr.verify_flflpopupptr_type(pPopup)
+    icursnum = libr.convert_to_int(cursnum)
+    libr.keep_elem_refs(pPopup, cursnum, icursnum)
     _fl_popup_set_cursor(pPopup, icursnum)
 
 
 def fl_popup_get_title(pPopup):
-    """ fl_popup_get_title(pPopup) -> title string
+    """Obtains the title of a popup.
 
-        Returns the title of a popupfn.
+    --
 
-        @param pPopup: pointer to popup
+    :Parameters:
+      `pPopup` : pointer to xfdata.FL_POPUP
+        popup class instance
 
-        :status: Untested + NoDoc + NoDemo = NOT OK
+    :return: title string
+    :rtype: str
+
+    :note: e.g. *todo*
+
+    :status: Untested + NoDoc + NoDemo = NOT OK
+
     """
-    _fl_popup_get_title = library.cfuncproto(
-        library.load_so_libforms(), "fl_popup_get_title",
+    _fl_popup_get_title = libr.cfuncproto(
+        libr.load_so_libforms(), "fl_popup_get_title",
         xfdata.STRING, [cty.POINTER(xfdata.FL_POPUP)],
         """const char * fl_popup_get_title(FL_POPUP * p1)""")
-    library.check_if_initialized()
-    library.keep_elem_refs(pPopup)
+    libr.check_if_initialized()
+    libr.verify_flflpopupptr_type(pPopup)
+    libr.keep_elem_refs(pPopup)
     retval = _fl_popup_get_title(pPopup)
     return retval
 
 
 def fl_popup_set_title(pPopup, title):
-    """ fl_popup_set_title(pPopup, title) -> popup
+    """Sets the title of a popup.
 
-        Sets the title of a popupfn.
+    --
 
-        @param pPopup: pointer to popup
-        @param title: title of the popup
+    :Parameters:
+      `pPopup` : pointer to xfdata.FL_POPUP
+        popup class instance
+      `title` : str
+        title of the popup
 
-        :status: Untested + NoDoc + NoDemo = NOT OK
+    :return: popup class instance
+    :rtype: pointer to xfdata.FL_POPUP
+
+    :note: e.g. *todo*
+
+    :status: Untested + NoDoc + NoDemo = NOT OK
+
     """
-    _fl_popup_set_title = library.cfuncproto(
-            library.load_so_libforms(), "fl_popup_set_title",
-            cty.POINTER(xfdata.FL_POPUP), [cty.POINTER(xfdata.FL_POPUP), xfdata.STRING],
-            """FL_POPUP * fl_popup_set_title(FL_POPUP * p1, const char * p2)""")
-    library.check_if_initialized()
-    stitle = library.convert_to_string(title)
-    library.keep_elem_refs(pPopup, title, stitle)
+    _fl_popup_set_title = libr.cfuncproto(
+        libr.load_so_libforms(), "fl_popup_set_title",
+        cty.POINTER(xfdata.FL_POPUP), [cty.POINTER(xfdata.FL_POPUP),
+        xfdata.STRING],
+        """FL_POPUP * fl_popup_set_title(FL_POPUP * p1, const char * p2)""")
+    libr.check_if_initialized()
+    libr.verify_flflpopupptr_type(pPopup)
+    stitle = libr.convert_to_string(title)
+    libr.keep_elem_refs(pPopup, title, stitle)
     retval = _fl_popup_set_title(pPopup, stitle)
     return retval
 
 
 def fl_popup_entry_set_callback(pPopupEntry, py_PopupCb):
-    """ fl_popup_entry_set_callback(pPopupEntry, py_PopupCb) -> popup_callback
+    """*todo*
 
-        :status: Tested + NoDoc + Demo = OK
+    --
+
+    :Parameters:
+      `pPopupEntry` : pointer to xfdata.FL_POPUP_ENTRY
+        popup entry
+      `py_PopupCb` : python callback function, returning value
+        name referring to function(pPopupReturn) -> num.
+
+    :return: old popup callback
+    :rtype: pointer to xfdata.FL_POPUP_CB
+
+    :note: e.g. *todo*
+
+    :status: Tested + NoDoc + Demo = OK
+
     """
-    _fl_popup_entry_set_callback = library.cfuncproto(
-        library.load_so_libforms(), "fl_popup_entry_set_callback",
+    # FL_POPUP_CB = cty.CFUNCTYPE(cty.c_int, cty.POINTER(FL_POPUP_RETURN))
+    _fl_popup_entry_set_callback = libr.cfuncproto(
+        libr.load_so_libforms(), "fl_popup_entry_set_callback",
         xfdata.FL_POPUP_CB, [cty.POINTER(xfdata.FL_POPUP_ENTRY),
         xfdata.FL_POPUP_CB],
         """FL_POPUP_CB fl_popup_entry_set_callback(FL_POPUP_ENTRY * p1,
            FL_POPUP_CB p2)""")
-    library.check_if_initialized()
+    libr.check_if_initialized()
+    libr.verify_flpopupentryptr_type(pPopupEntry)
     c_PopupCb = xfdata.FL_POPUP_CB(py_PopupCb)
-    library.keep_cfunc_refs(c_PopupCb, py_PopupCb)
-    library.keep_elem_refs(pPopupEntry)
+    libr.keep_cfunc_refs(c_PopupCb, py_PopupCb)
+    libr.keep_elem_refs(pPopupEntry)
     retval = _fl_popup_entry_set_callback(pPopupEntry, c_PopupCb)
     return retval
 
 
 def fl_popup_entry_set_enter_callback(pPopupEntry, py_PopupCb):
-    """ fl_popup_entry_set_enter_callback(pPopupEntry, py_PopupCb) -> popup_callback
+    """*todo*
 
-        :status: Untested + NoDoc + NoDemo = NOT OK
+    --
+
+    :Parameters:
+      `pPopupEntry` : pointer to xfdata.FL_POPUP_ENTRY
+        popup entry
+      `py_PopupCb` : python callback function, returning value
+        name referring to function(pPopupReturn) -> num.
+
+    :return: old popup callback
+    :rtype: pointer to xfdata.FL_POPUP_CB
+
+    :note: e.g. *todo*
+    :status: Untested + NoDoc + NoDemo = NOT OK
+
     """
-    _fl_popup_entry_set_enter_callback = library.cfuncproto(
-        library.load_so_libforms(), "fl_popup_entry_set_enter_callback",
+    # FL_POPUP_CB = cty.CFUNCTYPE(cty.c_int, cty.POINTER(FL_POPUP_RETURN))
+    _fl_popup_entry_set_enter_callback = libr.cfuncproto(
+        libr.load_so_libforms(), "fl_popup_entry_set_enter_callback",
         xfdata.FL_POPUP_CB, [cty.POINTER(xfdata.FL_POPUP_ENTRY),
         xfdata.FL_POPUP_CB],
         """FL_POPUP_CB fl_popup_entry_set_enter_callback(
            FL_POPUP_ENTRY * p1, FL_POPUP_CB p2)""")
-    library.check_if_initialized()
+    libr.check_if_initialized()
+    libr.verify_flpopupentryptr_type(pPopupEntry)
     c_PopupCb = xfdata.FL_POPUP_CB(py_PopupCb)
-    library.keep_cfunc_refs(c_PopupCb, py_PopupCb)
-    library.keep_elem_refs(pPopupEntry)
+    libr.keep_cfunc_refs(c_PopupCb, py_PopupCb)
+    libr.keep_elem_refs(pPopupEntry)
     retval = _fl_popup_entry_set_enter_callback(pPopupEntry, c_PopupCb)
     return retval
 
 
 def fl_popup_entry_set_leave_callback(pPopupEntry, py_PopupCb):
-    """ fl_popup_entry_set_leave_callback(pPopupEntry, py_PopupCb) -> popup_callback
+    """*todo*
 
-        :status: Untested + NoDoc + NoDemo = NOT OK
+    --
+
+    :Parameters:
+      `pPopupEntry` : pointer to xfdata.FL_POPUP_ENTRY
+        popup entry
+      `py_PopupCb` : python callback function, returning value
+        name referring to function(pPopupReturn) -> num.
+
+    :return: old popup callback
+    :rtype: pointer to xfdata.FL_POPUP_CB
+
+    :note: e.g. *todo*
+
+    :status: Untested + NoDoc + NoDemo = NOT OK
+
     """
-    _fl_popup_entry_set_leave_callback = library.cfuncproto(
-        library.load_so_libforms(), "fl_popup_entry_set_leave_callback",
+    _fl_popup_entry_set_leave_callback = libr.cfuncproto(
+        libr.load_so_libforms(), "fl_popup_entry_set_leave_callback",
         xfdata.FL_POPUP_CB, [cty.POINTER(xfdata.FL_POPUP_ENTRY),
         xfdata.FL_POPUP_CB],
         """FL_POPUP_CB fl_popup_entry_set_leave_callback(
            FL_POPUP_ENTRY * p1, FL_POPUP_CB p2)""")
-    library.check_if_initialized()
+    libr.check_if_initialized()
+    libr.verify_flpopupentryptr_type(pPopupEntry)
     c_PopupCb = xfdata.FL_POPUP_CB(py_PopupCb)
-    library.keep_cfunc_refs(c_PopupCb, py_PopupCb)
-    library.keep_elem_refs(pPopupEntry)
+    libr.keep_cfunc_refs(c_PopupCb, py_PopupCb)
+    libr.keep_elem_refs(pPopupEntry)
     retval = _fl_popup_entry_set_leave_callback(pPopupEntry, c_PopupCb)
     return retval
 
 
 def fl_popup_entry_get_state(pPopupEntry):
-    """ fl_popup_entry_get_state(pPopupEntry) -> state num.
+    """*todo*
 
-        :status: Untested + NoDoc + NoDemo = NOT OK
+    --
+
+    :Parameters:
+      `pPopupEntry` : pointer to xfdata.FL_POPUP_ENTRY
+        popup entry
+
+    :return: state
+    :rtype: int_pos
+
+    :note: e.g. *todo*
+
+    :status: Untested + NoDoc + NoDemo = NOT OK
+
     """
-    _fl_popup_entry_get_state = library.cfuncproto(
-        library.load_so_libforms(), "fl_popup_entry_get_state",
+    _fl_popup_entry_get_state = libr.cfuncproto(
+        libr.load_so_libforms(), "fl_popup_entry_get_state",
         cty.c_uint, [cty.POINTER(xfdata.FL_POPUP_ENTRY)],
         """unsigned int fl_popup_entry_get_state(FL_POPUP_ENTRY * p1)""")
-    library.check_if_initialized()
-    library.keep_elem_refs(pPopupEntry)
+    libr.check_if_initialized()
+    libr.verify_flpopupentryptr_type(pPopupEntry)
+    libr.keep_elem_refs(pPopupEntry)
     retval = _fl_popup_entry_get_state(pPopupEntry)
     return retval
 
 
 def fl_popup_entry_set_state(pPopupEntry, state):
-    """ fl_popup_entry_set_state(pPopupEntry, state) -> state num.
+    """*todo*
 
-        :status: Tested + NoDoc + Demo = OK
+    --
+
+    :Parameters:
+      `pPopupEntry` : pointer to xfdata.FL_POPUP_ENTRY
+        popup entry
+      `state` : int_pos
+        state to be set. *todo*
+
+    :return: old state
+    :rtype: int_pos
+
+    :note: e.g. *todo*
+
+    :status: Tested + NoDoc + Demo = OK
+
     """
-    _fl_popup_entry_set_state = library.cfuncproto(
-        library.load_so_libforms(), "fl_popup_entry_set_state",
+    _fl_popup_entry_set_state = libr.cfuncproto(
+        libr.load_so_libforms(), "fl_popup_entry_set_state",
         cty.c_uint, [cty.POINTER(xfdata.FL_POPUP_ENTRY), cty.c_uint],
         """unsigned int fl_popup_entry_set_state(FL_POPUP_ENTRY * p1,
            unsigned int p2)""")
-    library.check_if_initialized()
-    uistate = library.convert_to_uint(state)
-    library.keep_elem_refs(pPopupEntry, state, uistate)
+    libr.check_if_initialized()
+    libr.verify_flpopupentryptr_type(pPopupEntry)
+    uistate = libr.convert_to_uint(state)
+    libr.keep_elem_refs(pPopupEntry, state, uistate)
     retval = _fl_popup_entry_set_state(pPopupEntry, uistate)
     return retval
 
 
 def fl_popup_entry_clear_state(pPopupEntry, state):
-    """ fl_popup_entry_clear_state(pPopupEntry, state) -> state num.
+    """*todo*
 
-        :status: Untested + NoDoc + NoDemo = NOT OK
+    --
+
+    :Parameters:
+      `pPopupEntry` : pointer to xfdata.FL_POPUP_ENTRY
+        popup entry
+      `state` : int_pos
+        state to be *todo*
+
+    :return: state?
+    :rtype: int_pos
+
+    :note: e.g. *todo*
+
+    :status: Untested + NoDoc + NoDemo = NOT OK
+
     """
-    _fl_popup_entry_clear_state = library.cfuncproto(
-        library.load_so_libforms(), "fl_popup_entry_clear_state",
+    _fl_popup_entry_clear_state = libr.cfuncproto(
+        libr.load_so_libforms(), "fl_popup_entry_clear_state",
         cty.c_uint, [cty.POINTER(xfdata.FL_POPUP_ENTRY), cty.c_uint],
         """unsigned int fl_popup_entry_clear_state(FL_POPUP_ENTRY * p1,
            unsigned int p2)""")
-    library.check_if_initialized()
-    uistate = library.convert_to_uint(state)
-    library.keep_elem_refs(pPopupEntry, state, uistate)
+    libr.check_if_initialized()
+    libr.verify_flpopupentryptr_type(pPopupEntry)
+    uistate = libr.convert_to_uint(state)
+    libr.keep_elem_refs(pPopupEntry, state, uistate)
     retval = _fl_popup_entry_clear_state(pPopupEntry, uistate)
     return retval
 
 
 def fl_popup_entry_raise_state(pPopupEntry, state):
-    """ fl_popup_entry_raise_state(pPopupEntry, state) -> state num.
+    """*todo*
 
-        :status: Untested + NoDoc + NoDemo = NOT OK
+    --
+
+    :Parameters:
+      `pPopupEntry` : pointer to xfdata.FL_POPUP_ENTRY
+        popup entry
+      `state` : int_pos
+        state to be *todo*
+
+    :return: state?
+    :rtype: int_pos
+
+    :note: e.g. *todo*
+
+    :status: Untested + NoDoc + NoDemo = NOT OK
+
     """
-    _fl_popup_entry_raise_state = library.cfuncproto(
-        library.load_so_libforms(), "fl_popup_entry_raise_state",
+    _fl_popup_entry_raise_state = libr.cfuncproto(
+        libr.load_so_libforms(), "fl_popup_entry_raise_state",
         cty.c_uint, [cty.POINTER(xfdata.FL_POPUP_ENTRY), cty.c_uint],
         """unsigned int fl_popup_entry_raise_state(FL_POPUP_ENTRY * p1,
            unsigned int p2)""")
-    library.check_if_initialized()
-    uistate = library.convert_to_uint(state)
-    library.keep_elem_refs(pPopupEntry, state, uistate)
+    libr.check_if_initialized()
+    libr.verify_flpopupentryptr_type(pPopupEntry)
+    uistate = libr.convert_to_uint(state)
+    libr.keep_elem_refs(pPopupEntry, state, uistate)
     retval = _fl_popup_entry_raise_state(pPopupEntry, uistate)
     return retval
 
 
 def fl_popup_entry_toggle_state(pPopupEntry, state):
-    """ fl_popup_entry_toggle_state(pPopupEntry, state) -> num.
+    """*todo*
 
-        :status: Untested + NoDoc + NoDemo = NOT OK
+    --
+
+    :Parameters:
+      `pPopupEntry` : pointer to xfdata.FL_POPUP_ENTRY
+        popup entry
+      `state` : int_pos
+        state to be *todo*
+
+    :return: state?
+    :rtype: int_pos
+
+    :note: e.g. *todo*
+
+    :status: Untested + NoDoc + NoDemo = NOT OK
+
     """
-    _fl_popup_entry_toggle_state = library.cfuncproto(
-        library.load_so_libforms(), "fl_popup_entry_toggle_state",
+    _fl_popup_entry_toggle_state = libr.cfuncproto(
+        libr.load_so_libforms(), "fl_popup_entry_toggle_state",
         cty.c_uint, [cty.POINTER(xfdata.FL_POPUP_ENTRY), cty.c_uint],
         """unsigned int fl_popup_entry_toggle_state(FL_POPUP_ENTRY * p1,
            unsigned int p2)""")
-    library.check_if_initialized()
-    uistate = library.convert_to_uint(state)
-    library.keep_elem_refs(pPopupEntry, state, uistate)
+    libr.check_if_initialized()
+    libr.verify_flpopupentryptr_type(pPopupEntry)
+    uistate = libr.convert_to_uint(state)
+    libr.keep_elem_refs(pPopupEntry, state, uistate)
     retval = _fl_popup_entry_toggle_state(pPopupEntry, uistate)
     return retval
 
 
 def fl_popup_entry_set_text(pPopupEntry, text):
-    """ fl_popup_entry_set_text(p1, txtstr) -> num.
+    """*todo*
 
-        :status: Untested + NoDoc + NoDemo = NOT OK
+    --
+
+    :Parameters:
+      `pPopupEntry` : pointer to xfdata.FL_POPUP_ENTRY
+        popup entry
+      `txtstr` : str
+        text for the entry
+
+    :return: num.
+    :rtype: int
+
+    :note: e.g. *todo*
+
+    :status: Untested + NoDoc + NoDemo = NOT OK
+
     """
-    _fl_popup_entry_set_text = library.cfuncproto(
-        library.load_so_libforms(), "fl_popup_entry_set_text",
+    _fl_popup_entry_set_text = libr.cfuncproto(
+        libr.load_so_libforms(), "fl_popup_entry_set_text",
         cty.c_int, [cty.POINTER(xfdata.FL_POPUP_ENTRY), xfdata.STRING],
         """int fl_popup_entry_set_text(FL_POPUP_ENTRY * p1,
            const char * p2)""")
-    library.check_if_initialized()
-    stext = library.convert_to_string(text)
-    library.keep_elem_refs(pPopupEntry, text, stext)
+    libr.check_if_initialized()
+    libr.verify_flpopupentryptr_type(pPopupEntry)
+    stext = libr.convert_to_string(text)
+    libr.keep_elem_refs(pPopupEntry, text, stext)
     retval = _fl_popup_entry_set_text(pPopupEntry, stext)
     return retval
 
 
 def fl_popup_entry_set_shortcut(pPopupEntry, textsc):
-    """ fl_popup_entry_set_shortcut(pPopupEntry, textsc)
+    """*todo*
 
-        :status: Tested + NoDoc + Demo = OK
+    --
+
+    :Parameters:
+      `pPopupEntry` : pointer to xfdata.FL_POPUP_ENTRY
+        popup entry
+      `textsc` : str
+        text for the shortcut
+
+    :note: e.g. *todo*
+
+    :status: Tested + NoDoc + Demo = OK
+
     """
-    _fl_popup_entry_set_shortcut = library.cfuncproto(
-        library.load_so_libforms(), "fl_popup_entry_set_shortcut",
+    _fl_popup_entry_set_shortcut = libr.cfuncproto(
+        libr.load_so_libforms(), "fl_popup_entry_set_shortcut",
         None, [cty.POINTER(xfdata.FL_POPUP_ENTRY), xfdata.STRING],
         """void fl_popup_entry_set_shortcut(FL_POPUP_ENTRY * p1,
            const char * p2)""")
-    library.check_if_initialized()
-    stextsc = library.convert_to_string(textsc)
-    library.keep_elem_refs(pPopupEntry, textsc, stextsc)
+    libr.check_if_initialized()
+    libr.verify_flpopupentryptr_type(pPopupEntry)
+    stextsc = libr.convert_to_string(textsc)
+    libr.keep_elem_refs(pPopupEntry, textsc, stextsc)
     _fl_popup_entry_set_shortcut(pPopupEntry, stextsc)
 
 
 def fl_popup_entry_set_value(pPopupEntry, val):
-    """ fl_popup_entry_set_value(pPopupEntry, p2) -> num.
+    """*todo*
 
-        :status: Untested + NoDoc + NoDemo = NOT OK
+    --
+
+    :Parameters:
+      `pPopupEntry` : pointer to xfdata.FL_POPUP_ENTRY
+        popup entry
+      `val` : long
+        value?
+
+    :return: num.
+    :rtype: int
+
+    :note: e.g. *todo*
+
+    :status: Untested + NoDoc + NoDemo = NOT OK
+
     """
-    _fl_popup_entry_set_value = library.cfuncproto(
-        library.load_so_libforms(), "fl_popup_entry_set_value",
+    _fl_popup_entry_set_value = libr.cfuncproto(
+        libr.load_so_libforms(), "fl_popup_entry_set_value",
         cty.c_long, [cty.POINTER(xfdata.FL_POPUP_ENTRY), cty.c_long],
         """long int fl_popup_entry_set_value(FL_POPUP_ENTRY * p1,
            long int p2)""")
-    library.check_if_initialized()
-    lval = library.convert_to_long(val)
-    library.keep_elem_refs(pPopupEntry, val, lval)
+    libr.check_if_initialized()
+    libr.verify_flpopupentryptr_type(pPopupEntry)
+    lval = libr.convert_to_long(val)
+    libr.keep_elem_refs(pPopupEntry, val, lval)
     retval = _fl_popup_entry_set_value(pPopupEntry, lval)
     return retval
 
 
 def fl_popup_entry_set_user_data(pPopupEntry, vdata):
-    """ fl_popup_entry_set_user_data(pPopupEntry, vdata) -> ??
+    """*todo*
 
-        :status: Untested + NoDoc + NoDemo = NOT OK
+    --
+
+    :Parameters:
+      `pPopupEntry` : pointer to xfdata.FL_POPUP_ENTRY
+        popup entry
+      `vdata` : pointer to void?
+        user data
+
+    :return: *todo*
+    :rtype: pointer to void?
+
+    :note: e.g. *todo*
+
+    :status: Untested + NoDoc + NoDemo = NOT OK
+
     """
-    _fl_popup_entry_set_user_data = library.cfuncproto(
-        library.load_so_libforms(), "fl_popup_entry_set_user_data",
+    _fl_popup_entry_set_user_data = libr.cfuncproto(
+        libr.load_so_libforms(), "fl_popup_entry_set_user_data",
         cty.c_void_p, [cty.POINTER(xfdata.FL_POPUP_ENTRY), cty.c_void_p],
         """void * fl_popup_entry_set_user_data(FL_POPUP_ENTRY * p1,
            void * p2)""")
-    library.check_if_initialized()
+    libr.check_if_initialized()
+    libr.verify_flpopupentryptr_type(pPopupEntry)
     pvdata = cty.cast(vdata, cty.c_void_p)
-    library.keep_elem_refs(pPopupEntry, vdata, pvdata)
+    libr.keep_elem_refs(pPopupEntry, vdata, pvdata)
     retval = _fl_popup_entry_set_user_data(pPopupEntry, pvdata)
     return retval
 
 
 def fl_popup_entry_get_by_position(pPopup, numpos):
-    """ fl_popup_entry_get_by_position(pPopup, numpos) -> pPopupEntry
+    """*todo*
 
-        :status: Untested + NoDoc + NoDemo = NOT OK
+    --
+
+    :Parameters:
+      `pPopup` : pointer to xfdata.FL_POPUP
+        popup class instance
+      `numpos` : int
+        position number?
+
+    :return: popup entry
+    :rtype: pointer to xfdata.FL_POPUP_ENTRY
+
+    :note: e.g. *todo*
+
+    :status: Untested + NoDoc + NoDemo = NOT OK
+
     """
-    _fl_popup_entry_get_by_position = library.cfuncproto(
-        library.load_so_libforms(), "fl_popup_entry_get_by_position",
-        cty.POINTER(xfdata.FL_POPUP_ENTRY), [cty.POINTER(xfdata.FL_POPUP), cty.c_int],
+    _fl_popup_entry_get_by_position = libr.cfuncproto(
+        libr.load_so_libforms(), "fl_popup_entry_get_by_position",
+        cty.POINTER(xfdata.FL_POPUP_ENTRY), [cty.POINTER(xfdata.FL_POPUP),
+        cty.c_int],
         """FL_POPUP_ENTRY * fl_popup_entry_get_by_position(FL_POPUP * p1,
            int p2)""")
-    library.check_if_initialized()
-    inumpos = library.convert_to_int(numpos)
-    library.keep_elem_refs(pPopup, numpos, inumpos)
+    libr.check_if_initialized()
+    libr.verify_flflpopupptr_type(pPopup)
+    inumpos = libr.convert_to_int(numpos)
+    libr.keep_elem_refs(pPopup, numpos, inumpos)
     retval = _fl_popup_entry_get_by_position(pPopup, inumpos)
     return retval
 
 
 def fl_popup_entry_get_by_value(pPopup, val):
-    """ fl_popup_entry_get_by_value(pPopup, val) -> pPopupEntry
+    """*todo*
 
-        :status: Untested + NoDoc + NoDemo = NOT OK
+    --
+
+    :Parameters:
+      `pPopup` : pointer to xfdata.FL_POPUP
+        popup class instance
+      `val` : long
+        value?
+
+    :return: popup entry
+    :rtype: pointer to xfdata.FL_POPUP_ENTRY
+
+    :note: e.g. *todo*
+
+    :status: Untested + NoDoc + NoDemo = NOT OK
+
     """
-    _fl_popup_entry_get_by_value = library.cfuncproto(
-        library.load_so_libforms(), "fl_popup_entry_get_by_value",
-        cty.POINTER(xfdata.FL_POPUP_ENTRY), [cty.POINTER(xfdata.FL_POPUP), cty.c_long],
+    _fl_popup_entry_get_by_value = libr.cfuncproto(
+        libr.load_so_libforms(), "fl_popup_entry_get_by_value",
+        cty.POINTER(xfdata.FL_POPUP_ENTRY), [cty.POINTER(xfdata.FL_POPUP),
+        cty.c_long],
         """FL_POPUP_ENTRY * fl_popup_entry_get_by_value(FL_POPUP * p1,
            long int p2)""")
-    library.check_if_initialized()
-    lval = library.convert_to_long(val)
-    library.keep_elem_refs(pPopup, val, lval)
+    libr.check_if_initialized()
+    libr.verify_flflpopupptr_type(pPopup)
+    lval = libr.convert_to_long(val)
+    libr.keep_elem_refs(pPopup, val, lval)
     retval = _fl_popup_entry_get_by_value(pPopup, lval)
     return retval
 
 
 def fl_popup_entry_get_by_user_data(pPopup, vdata):
-    """ fl_popup_entry_get_by_user_data(pPopup, vdata) -> pPopupEntry
+    """*todo*
 
-        :status: Untested + NoDoc + NoDemo = NOT OK
+    --
+
+    :Parameters:
+      `pPopup` : pointer to xfdata.FL_POPUP
+        popup class instance
+      `vdata` : pointer to void?
+        user data
+
+    :return: popup entry
+    :rtype: pointer to xfdata.FL_POPUP_ENTRY
+
+    :note: e.g. *todo*
+
+    :status: Untested + NoDoc + NoDemo = NOT OK
+
     """
-    _fl_popup_entry_get_by_user_data = library.cfuncproto(
-        library.load_so_libforms(), "fl_popup_entry_get_by_user_data",
-        cty.POINTER(xfdata.FL_POPUP_ENTRY), [cty.POINTER(xfdata.FL_POPUP), cty.c_void_p],
+    _fl_popup_entry_get_by_user_data = libr.cfuncproto(
+        libr.load_so_libforms(), "fl_popup_entry_get_by_user_data",
+        cty.POINTER(xfdata.FL_POPUP_ENTRY), [cty.POINTER(xfdata.FL_POPUP),
+        cty.c_void_p],
         """FL_POPUP_ENTRY * fl_popup_entry_get_by_user_data(FL_POPUP * p1,
            void * p2)""")
-    library.check_if_initialized()
+    libr.check_if_initialized()
+    libr.verify_flflpopupptr_type(pPopup)
     pvdata = cty.cast(vdata, cty.c_void_p)
-    library.keep_elem_refs(pPopup, vdata, pvdata)
+    libr.keep_elem_refs(pPopup, vdata, pvdata)
     retval = _fl_popup_entry_get_by_user_data(pPopup, pvdata)
     return retval
 
 
 def fl_popup_entry_get_by_text(pPopup, text):
-    """ fl_popup_entry_get_by_text(pPopup, text) -> pPopupEntry
+    """*todo*
 
-        :status: Untested + NoDoc + NoDemo = NOT OK
+    --
+
+    :Parameters:
+      `pPopup` : pointer to xfdata.FL_POPUP
+        popup class instance
+      `text` : str
+        text
+
+    :return: popup entry
+    :rtype: pointer to xfdata.FL_POPUP_ENTRY
+
+    :note: e.g. *todo*
+
+    :status: Untested + NoDoc + NoDemo = NOT OK
+
     """
-    _fl_popup_entry_get_by_text = library.cfuncproto(
-        library.load_so_libforms(), "fl_popup_entry_get_by_text",
+    _fl_popup_entry_get_by_text = libr.cfuncproto(
+        libr.load_so_libforms(), "fl_popup_entry_get_by_text",
         cty.POINTER(xfdata.FL_POPUP_ENTRY), [cty.POINTER(xfdata.FL_POPUP),
         xfdata.STRING],
         """FL_POPUP_ENTRY * fl_popup_entry_get_by_text(FL_POPUP * p1,
            const char * p2)""")
-    library.check_if_initialized()
-    stext = library.convert_to_string(text)
-    library.keep_elem_refs(pPopup, text, stext)
+    libr.check_if_initialized()
+    libr.verify_flflpopupptr_type(pPopup)
+    stext = libr.convert_to_string(text)
+    libr.keep_elem_refs(pPopup, text, stext)
     retval = _fl_popup_entry_get_by_text(pPopup, stext)
     return retval
 
 
 def fl_popup_entry_get_by_label(pPopup, label):
-    """ fl_popup_entry_get_by_label(pPopup, label) -> pPopupEntry
+    """*todo*
 
-        :status: Untested + NoDoc + NoDemo = NOT OK
+    --
+
+    :Parameters:
+      `pPopup` : pointer to xfdata.FL_POPUP
+        popup class instance
+      `label` : str
+        label
+
+    :return: popup entry
+    :rtype: pointer to xfdata.FL_POPUP_ENTRY
+
+    :note: e.g. *todo*
+
+    :status: Untested + NoDoc + NoDemo = NOT OK
+
     """
-    _fl_popup_entry_get_by_label = library.cfuncproto(
-        library.load_so_libforms(), "fl_popup_entry_get_by_label",
+    _fl_popup_entry_get_by_label = libr.cfuncproto(
+        libr.load_so_libforms(), "fl_popup_entry_get_by_label",
         cty.POINTER(xfdata.FL_POPUP_ENTRY), [cty.POINTER(xfdata.FL_POPUP),
         xfdata.STRING],
         """FL_POPUP_ENTRY * fl_popup_entry_get_by_label(FL_POPUP * p1,
            const char * p2)""")
-    library.check_if_initialized()
-    slabel = library.convert_to_string(label)
-    library.keep_elem_refs(pPopup, label, slabel)
+    libr.check_if_initialized()
+    libr.verify_flflpopupptr_type(pPopup)
+    slabel = libr.convert_to_string(label)
+    libr.keep_elem_refs(pPopup, label, slabel)
     retval = _fl_popup_entry_get_by_label(pPopup, slabel)
     return retval
 
 
 def fl_popup_entry_get_group(pPopupEntry):
-    """ fl_popup_entry_get_group(pPopupEntry) -> num.
+    """*todo*
 
-        :status: Untested + NoDoc + NoDemo = NOT OK
+    --
+
+    :Parameters:
+      `pPopupEntry` : pointer to xfdata.FL_POPUP_ENTRY
+        popup entry
+
+    :return: num.
+    :rtype: int
+
+    :note: e.g. *todo*
+
+    :status: Untested + NoDoc + NoDemo = NOT OK
+
     """
-    _fl_popup_entry_get_group = library.cfuncproto(
-        library.load_so_libforms(), "fl_popup_entry_get_group",
+    _fl_popup_entry_get_group = libr.cfuncproto(
+        libr.load_so_libforms(), "fl_popup_entry_get_group",
         cty.c_int, [cty.POINTER(xfdata.FL_POPUP_ENTRY)],
         """int fl_popup_entry_get_group(FL_POPUP_ENTRY * p1)""")
-    library.check_if_initialized()
-    library.keep_elem_refs(pPopupEntry)
+    libr.check_if_initialized()
+    libr.verify_flpopupentryptr_type(pPopupEntry)
+    libr.keep_elem_refs(pPopupEntry)
     retval = _fl_popup_entry_get_group(pPopupEntry)
     return retval
 
 
 def fl_popup_entry_set_group(pPopupEntry, num):
-    """ fl_popup_entry_set_group(pPopupEntry, num) -> num.
+    """*todo*
 
-        :status: Untested + NoDoc + NoDemo = NOT OK
+    --
+
+    :Parameters:
+      `pPopupEntry` : pointer to xfdata.FL_POPUP_ENTRY
+        popup entry
+      `num` : int
+        *todo*
+
+    :return: num.
+    :rtype: int
+
+    :note: e.g. *todo*
+
+    :status: Untested + NoDoc + NoDemo = NOT OK
+
     """
-    _fl_popup_entry_set_group = library.cfuncproto(
-        library.load_so_libforms(), "fl_popup_entry_set_group",
+    _fl_popup_entry_set_group = libr.cfuncproto(
+        libr.load_so_libforms(), "fl_popup_entry_set_group",
         cty.c_int, [cty.POINTER(xfdata.FL_POPUP_ENTRY), cty.c_int],
         """int fl_popup_entry_set_group(FL_POPUP_ENTRY * p1, int p2)""")
-    library.check_if_initialized()
-    inum = library.convert_to_int(num)
-    library.keep_elem_refs(pPopupEntry, num, inum)
+    libr.check_if_initialized()
+    libr.verify_flpopupentryptr_type(pPopupEntry)
+    inum = libr.convert_to_int(num)
+    libr.keep_elem_refs(pPopupEntry, num, inum)
     retval = _fl_popup_entry_set_group(pPopupEntry, inum)
     return retval
 
 
 def fl_popup_entry_get_subpopup(pPopupEntry):
-    """ fl_popup_entry_get_subpopup(pPopupEntry) -> pPopup
+    """*todo*
 
-        :status: Untested + NoDoc + NoDemo = NOT OK
+    --
+
+    :Parameters:
+      `pPopupEntry` : pointer to xfdata.FL_POPUP_ENTRY
+        popup entry
+
+    :return: popup class instance
+    :rtype: pointer to xfdata.FL_POPUP
+
+    :note: e.g. *todo*
+
+    :status: Untested + NoDoc + NoDemo = NOT OK
+
     """
-    _fl_popup_entry_get_subpopup = library.cfuncproto(
-        library.load_so_libforms(), "fl_popup_entry_get_subpopup",
+    _fl_popup_entry_get_subpopup = libr.cfuncproto(
+        libr.load_so_libforms(), "fl_popup_entry_get_subpopup",
         cty.POINTER(xfdata.FL_POPUP), [cty.POINTER(xfdata.FL_POPUP_ENTRY)],
         """FL_POPUP * fl_popup_entry_get_subpopup(FL_POPUP_ENTRY * p1)""")
-    library.check_if_initialized()
-    library.keep_elem_refs(pPopupEntry)
+    libr.check_if_initialized()
+    libr.verify_flpopupentryptr_type(pPopupEntry)
+    libr.keep_elem_refs(pPopupEntry)
     retval = _fl_popup_entry_get_subpopup(pPopupEntry)
     return retval
 
 
 def fl_popup_entry_set_subpopup(pPopupEntry, pPopup):
-    """ fl_popup_entry_set_subpopup(pPopupEntry, pPopup) -> pPopup
+    """*todo*
 
-        :status: Untested + NoDoc + NoDemo = NOT OK
+    --
+
+    :Parameters:
+      `pPopupEntry` : pointer to xfdata.FL_POPUP_ENTRY
+        popup entry
+      `pPopup` : pointer to xfdata.FL_POPUP
+        popup class instance
+
+    :return: popup class instance
+    :rtype: pointer to xfdata.FL_POPUP
+
+    :note: e.g. *todo*
+
+    :status: Untested + NoDoc + NoDemo = NOT OK
+
     """
-    _fl_popup_entry_set_subpopup = library.cfuncproto(
-        library.load_so_libforms(), "fl_popup_entry_set_subpopup",
+    _fl_popup_entry_set_subpopup = libr.cfuncproto(
+        libr.load_so_libforms(), "fl_popup_entry_set_subpopup",
         cty.POINTER(xfdata.FL_POPUP), [cty.POINTER(xfdata.FL_POPUP_ENTRY),
         cty.POINTER(xfdata.FL_POPUP)],
         """FL_POPUP * fl_popup_entry_set_subpopup(FL_POPUP_ENTRY * p1,
            FL_POPUP * p2)""")
-    library.check_if_initialized()
-    library.keep_elem_refs(pPopupEntry, pPopup)
+    libr.check_if_initialized()
+    libr.verify_flpopupentryptr_type(pPopupEntry)
+    libr.verify_flflpopupptr_type(pPopup)
+    libr.keep_elem_refs(pPopupEntry, pPopup)
     retval = _fl_popup_entry_set_subpopup(pPopupEntry, pPopup)
     return retval
 
 
 def fl_popup_get_size(pPopup):
-    """ fl_popup_get_size(pPopup) -> size num., width, height
+    """*todo*
 
-        :attention: API change from XForms - upstream was
-                    fl_popup_get_size(pPopup, w, h)
+    --
 
-        :status: Untested + NoDoc + NoDemo = NOT OK
+    :Parameters:
+      `pPopup` : pointer to xfdata.FL_POPUP
+        popup class instance
+
+    :return: num., width (w), height (h)
+    :rtype: int, int_pos, int_pos
+
+    :note: e.g. *todo*
+
+    :attention: API change from XForms - upstream was
+        fl_popup_get_size(pPopup, w, h)
+
+    :status: Untested + NoDoc + NoDemo = NOT OK
+
     """
-    _fl_popup_get_size = library.cfuncproto(
-        library.load_so_libforms(), "fl_popup_get_size",
+    _fl_popup_get_size = libr.cfuncproto(
+        libr.load_so_libforms(), "fl_popup_get_size",
         cty.c_int, [cty.POINTER(xfdata.FL_POPUP), cty.POINTER(cty.c_uint),
         cty.POINTER(cty.c_uint)],
         """int fl_popup_get_size(FL_POPUP * p1, unsigned int * p2,
            unsigned int * p3)""")
-    library.check_if_initialized()
-    w, pw = library.make_uint_and_pointer()
-    h, ph = library.make_uint_and_pointer()
-    library.keep_elem_refs(pPopup, w, h, pw, ph)
+    libr.check_if_initialized()
+    libr.verify_flflpopupptr_type(pPopup)
+    w, pw = libr.make_uint_and_pointer()
+    h, ph = libr.make_uint_and_pointer()
+    libr.keep_elem_refs(pPopup, w, h, pw, ph)
     retval = _fl_popup_get_size(pPopup, pw, ph)
     return retval, w.value, h.value
 
 
 def fl_popup_get_min_width(pPopup):
-    """ fl_popup_get_min_width(pPopup) -> width num.
+    """*todo*
 
-        :status: Untested + NoDoc + NoDemo = NOT OK
+    --
+
+    :Parameters:
+      `pPopup` : pointer to xfdata.FL_POPUP
+        popup class instance
+
+    :return: width (w)
+    :rtype: int
+
+    :note: e.g. *todo*
+
+    :status: Untested + NoDoc + NoDemo = NOT OK
+
     """
-    _fl_popup_get_min_width = library.cfuncproto(
-        library.load_so_libforms(), "fl_popup_get_min_width",
+    _fl_popup_get_min_width = libr.cfuncproto(
+        libr.load_so_libforms(), "fl_popup_get_min_width",
         cty.c_int, [cty.POINTER(xfdata.FL_POPUP)],
         """int fl_popup_get_min_width(FL_POPUP * p1)""")
-    library.check_if_initialized()
-    library.keep_elem_refs(pPopup)
+    libr.check_if_initialized()
+    libr.verify_flflpopupptr_type(pPopup)
+    libr.keep_elem_refs(pPopup)
     retval = _fl_popup_get_min_width(pPopup)
     return retval
 
 
-def fl_popup_set_min_width(pPopup, minwidth):
-    """ fl_popup_set_min_width(pPopup, minwidth) -> width num.
+def fl_popup_set_min_width(pPopup, width):
+    """*todo*
 
-        :status: Untested + NoDoc + NoDemo = NOT OK
+    --
+
+    :Parameters:
+      `pPopup` : pointer to xfdata.FL_POPUP
+        popup class instance
+      `width` : int
+        minimum width to be set
+
+    :return: old width (w) ?
+    :rtype: int
+
+    :note: e.g. *todo*
+
+    :status: Untested + NoDoc + NoDemo = NOT OK
+
     """
-    _fl_popup_set_min_width = library.cfuncproto(
-        library.load_so_libforms(), "fl_popup_set_min_width",
+    _fl_popup_set_min_width = libr.cfuncproto(
+        libr.load_so_libforms(), "fl_popup_set_min_width",
         cty.c_int, [cty.POINTER(xfdata.FL_POPUP), cty.c_int],
         """int fl_popup_set_min_width(FL_POPUP * p1, int p2)""")
-    library.check_if_initialized()
-    iminwidth = library.convert_to_int(minwidth)
-    library.keep_elem_refs(pPopup, minwidth, iminwidth)
-    retval = _fl_popup_set_min_width(pPopup, iminwidth)
+    libr.check_if_initialized()
+    libr.verify_flflpopupptr_type(pPopup)
+    iwidth = libr.convert_to_int(width)
+    libr.keep_elem_refs(pPopup, width, iwidth)
+    retval = _fl_popup_set_min_width(pPopup, iwidth)
     return retval
 
 

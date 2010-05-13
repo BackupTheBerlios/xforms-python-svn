@@ -2,7 +2,7 @@
 # -*- coding: iso8859-1 -*-
 
 """
-    flbutton.py - Functions to manage button objects.
+    flbutton.py - xforms-python's functions to manage button objects.
 
     Copyright (C) 2009, 2010  Luca Lazzaroni "LukenShiro"
     e-mail: <lukenshiro@ngi.it>
@@ -96,7 +96,7 @@ def fl_add_roundbutton(buttontype, x, y, w, h, label):
         """FL_OBJECT * fl_add_roundbutton(int type, FL_Coord x,
            FL_Coord y, FL_Coord w, FL_Coord h, const char * label)""")
     libr.check_if_initialized()
-    libr.check_admitted_listvalues(buttontype, xfdata.BUTTONTYPE_list)
+    libr.check_admitted_value_in_list(buttontype, xfdata.BUTTONTYPE_list)
     ibuttontype = libr.convert_to_int(buttontype)
     ix = libr.convert_to_FL_Coord(x)
     iy = libr.convert_to_FL_Coord(y)
@@ -147,7 +147,7 @@ def fl_add_round3dbutton(buttontype, x, y, w, h, label):
         """FL_OBJECT * fl_add_round3dbutton(int type, FL_Coord x,
            FL_Coord y, FL_Coord w, FL_Coord h, const char * label)""")
     libr.check_if_initialized()
-    libr.check_admitted_listvalues(buttontype, xfdata.BUTTONTYPE_list)
+    libr.check_admitted_value_in_list(buttontype, xfdata.BUTTONTYPE_list)
     ibuttontype = libr.convert_to_int(buttontype)
     ix = libr.convert_to_FL_Coord(x)
     iy = libr.convert_to_FL_Coord(y)
@@ -198,7 +198,7 @@ def fl_add_lightbutton(buttontype, x, y, w, h, label):
         """FL_OBJECT * fl_add_lightbutton(int type, FL_Coord x, FL_Coord y,
            FL_Coord w, FL_Coord h, const char * label)""")
     libr.check_if_initialized()
-    libr.check_admitted_listvalues(buttontype, xfdata.BUTTONTYPE_list)
+    libr.check_admitted_value_in_list(buttontype, xfdata.BUTTONTYPE_list)
     ibuttontype = libr.convert_to_int(buttontype)
     ix = libr.convert_to_FL_Coord(x)
     iy = libr.convert_to_FL_Coord(y)
@@ -206,7 +206,7 @@ def fl_add_lightbutton(buttontype, x, y, w, h, label):
     ih = libr.convert_to_FL_Coord(h)
     slabel = libr.convert_to_string(label)
     libr.keep_elem_refs(buttontype, x, y, w, h, label, ibuttontype, ix, \
-                           iy, iw, ih, slabel)
+                        iy, iw, ih, slabel)
     retval = _fl_add_lightbutton(ibuttontype, ix, iy, iw, ih, slabel)
     return retval
 
@@ -218,7 +218,7 @@ def fl_add_checkbutton(buttontype, x, y, w, h, label):
 
     :Parameters:
       `buttontype` : int
-        type of button object to be added. Values (from xfdata.py) 
+        type of button object to be added. Values (from xfdata.py)
         FL_NORMAL_BUTTON, FL_PUSH_BUTTON, FL_RADIO_BUTTON, FL_HIDDEN_BUTTON,
         FL_TOUCH_BUTTON, FL_INOUT_BUTTON, FL_RETURN_BUTTON,
         FL_HIDDEN_RET_BUTTON, FL_MENU_BUTTON, FL_TOGGLE_BUTTON
@@ -249,7 +249,7 @@ def fl_add_checkbutton(buttontype, x, y, w, h, label):
         """FL_OBJECT * fl_add_checkbutton(int type, FL_Coord x, FL_Coord y,
            FL_Coord w, FL_Coord h, const char * label)""")
     libr.check_if_initialized()
-    libr.check_admitted_listvalues(buttontype, xfdata.BUTTONTYPE_list)
+    libr.check_admitted_value_in_list(buttontype, xfdata.BUTTONTYPE_list)
     ibuttontype = libr.convert_to_int(buttontype)
     ix = libr.convert_to_FL_Coord(x)
     iy = libr.convert_to_FL_Coord(y)
@@ -300,7 +300,7 @@ def fl_add_button(buttontype, x, y, w, h, label):
         """FL_OBJECT * fl_add_button(int type, FL_Coord x, FL_Coord y,
            FL_Coord w, FL_Coord h, const char * label)""")
     libr.check_if_initialized()
-    libr.check_admitted_listvalues(buttontype, xfdata.BUTTONTYPE_list)
+    libr.check_admitted_value_in_list(buttontype, xfdata.BUTTONTYPE_list)
     ibuttontype = libr.convert_to_int(buttontype)
     ix = libr.convert_to_FL_Coord(x)
     iy = libr.convert_to_FL_Coord(y)
@@ -351,7 +351,7 @@ def fl_add_bitmapbutton(buttontype, x, y, w, h, label):
         """FL_OBJECT * fl_add_bitmapbutton(int type, FL_Coord x,
            FL_Coord y, FL_Coord w, FL_Coord h, const char * label)""")
     libr.check_if_initialized()
-    libr.check_admitted_listvalues(buttontype, xfdata.BUTTONTYPE_list)
+    libr.check_admitted_value_in_list(buttontype, xfdata.BUTTONTYPE_list)
     ibuttontype = libr.convert_to_int(buttontype)
     ix = libr.convert_to_FL_Coord(x)
     iy = libr.convert_to_FL_Coord(y)
@@ -402,7 +402,7 @@ def fl_add_scrollbutton(buttontype, x, y, w, h, label):
         """FL_OBJECT * fl_add_scrollbutton(int type, FL_Coord x,
            FL_Coord y, FL_Coord w, FL_Coord h, const char * label)""")
     libr.check_if_initialized()
-    libr.check_admitted_listvalues(buttontype, xfdata.BUTTONTYPE_list)
+    libr.check_admitted_value_in_list(buttontype, xfdata.BUTTONTYPE_list)
     ibuttontype = libr.convert_to_int(buttontype)
     ix = libr.convert_to_FL_Coord(x)
     iy = libr.convert_to_FL_Coord(y)
@@ -453,7 +453,7 @@ def fl_add_labelbutton(buttontype, x, y, w, h, label):
         """FL_OBJECT * fl_add_labelbutton(int type, FL_Coord x,
            FL_Coord y, FL_Coord w, FL_Coord h, const char * label)""")
     libr.check_if_initialized()
-    libr.check_admitted_listvalues(buttontype, xfdata.BUTTONTYPE_list)
+    libr.check_admitted_value_in_list(buttontype, xfdata.BUTTONTYPE_list)
     ibuttontype = libr.convert_to_int(buttontype)
     ix = libr.convert_to_FL_Coord(x)
     iy = libr.convert_to_FL_Coord(y)
@@ -493,7 +493,7 @@ def fl_set_bitmapbutton_data(pFlObject, w, h, bits):
         """void fl_set_bitmapbutton_data(FL_OBJECT * ob, int w, int h,
            unsigned char * bits)""")
     libr.check_if_initialized()
-    libr.check_if_FL_OBJECT_ptr(pFlObject)
+    libr.verify_flobjectptr_type(pFlObject)
     iw = libr.convert_to_int(w)
     ih = libr.convert_to_int(h)
     pbits = cty.cast(bits, cty.POINTER(cty.c_ubyte))
@@ -539,7 +539,7 @@ def fl_add_pixmapbutton(buttontype, x, y, w, h, label):
         """FL_OBJECT * fl_add_pixmapbutton(int type, FL_Coord x,
            FL_Coord y, FL_Coord w, FL_Coord h, const char * label)""")
     libr.check_if_initialized()
-    libr.check_admitted_listvalues(buttontype, xfdata.BUTTONTYPE_list)
+    libr.check_admitted_value_in_list(buttontype, xfdata.BUTTONTYPE_list)
     ibuttontype = libr.convert_to_int(buttontype)
     ix = libr.convert_to_FL_Coord(x)
     iy = libr.convert_to_FL_Coord(y)
@@ -573,7 +573,7 @@ def fl_set_pixmapbutton_focus_outline(pFlObject, yesno):
         None, [cty.POINTER(xfdata.FL_OBJECT), cty.c_int],
         """void fl_set_pixmapbutton_focus_outline(FL_OBJECT * ob, int yes)""")
     libr.check_if_initialized()
-    libr.check_if_FL_OBJECT_ptr(pFlObject)
+    libr.verify_flobjectptr_type(pFlObject)
     iyesno = libr.convert_to_int(yesno)
     libr.keep_elem_refs(pFlObject, yesno, iyesno)
     _fl_set_pixmapbutton_focus_outline(pFlObject, iyesno)
@@ -604,7 +604,7 @@ def fl_set_pixmapbutton_focus_data(pFlObject, bits):
         """void fl_set_pixmapbutton_focus_data(FL_OBJECT * ob,
            char * * bits)""")
     libr.check_if_initialized()
-    libr.check_if_FL_OBJECT_ptr(pFlObject)
+    libr.verify_flobjectptr_type(pFlObject)
     pbits = cty.cast(bits, cty.POINTER(xfdata.STRING))
     libr.keep_elem_refs(pFlObject, bits, pbits)
     _fl_set_pixmapbutton_focus_data(pFlObject, pbits)
@@ -631,15 +631,15 @@ def fl_set_pixmapbutton_focus_file(pFlObject, fname):
         """void fl_set_pixmapbutton_focus_file(FL_OBJECT * ob,
            const char * fname)""")
     libr.check_if_initialized()
-    libr.check_if_FL_OBJECT_ptr(pFlObject)
+    libr.verify_flobjectptr_type(pFlObject)
     sfname = libr.convert_to_string(fname)
     libr.keep_elem_refs(pFlObject, fname, sfname)
     _fl_set_pixmapbutton_focus_file(pFlObject, sfname)
 
 
 def fl_set_pixmapbutton_focus_pixmap(pFlObject, pix, mask):
-    """Sets a different pixmap to show, using pixmap id, when the mouse enters
-    a pixmap button, instead of an outline of the button.
+    """Sets a different pixmap to show, using pixmap id, when the mouse
+    enters a pixmap button, instead of an outline of the button.
 
     --
 
@@ -662,9 +662,9 @@ def fl_set_pixmapbutton_focus_pixmap(pFlObject, pix, mask):
         """void fl_set_pixmapbutton_focus_pixmap(FL_OBJECT * ob,
            Pixmap id, Pixmap mask)""")
     libr.check_if_initialized()
-    libr.check_if_FL_OBJECT_ptr(pFlObject)
-    ulpix = libr.convert_to_ulong(pix)
-    ulmask = libr.convert_to_ulong(mask)
+    libr.verify_flobjectptr_type(pFlObject)
+    ulpix = libr.convert_to_Pixmap(pix)
+    ulmask = libr.convert_to_Pixmap(mask)
     libr.keep_elem_refs(pFlObject, pix, mask, ulpix, ulmask)
     _fl_set_pixmapbutton_focus_pixmap(pFlObject, ulpix, ulmask)
 
@@ -690,7 +690,8 @@ def fl_get_button(pFlObject):
         libr.load_so_libforms(), "fl_get_button",
         cty.c_int, [cty.POINTER(xfdata.FL_OBJECT)],
         """int fl_get_button(FL_OBJECT * ob)""")
-    libr.check_if_FL_OBJECT_ptr(pFlObject)
+    libr.check_if_initialized()
+    libr.verify_flobjectptr_type(pFlObject)
     libr.keep_elem_refs(pFlObject)
     retval = _fl_get_button(pFlObject)
     return retval
@@ -717,7 +718,7 @@ def fl_set_button(pFlObject, yesno):
         None, [cty.POINTER(xfdata.FL_OBJECT), cty.c_int],
         """void fl_set_button(FL_OBJECT * ob, int pushed)""")
     libr.check_if_initialized()
-    libr.check_if_FL_OBJECT_ptr(pFlObject)
+    libr.verify_flobjectptr_type(pFlObject)
     iyesno = libr.convert_to_int(yesno)
     libr.keep_elem_refs(pFlObject, yesno, iyesno)
     _fl_set_button(pFlObject, yesno)
@@ -746,7 +747,7 @@ def fl_get_button_numb(pFlObject):
         cty.c_int, [cty.POINTER(xfdata.FL_OBJECT)],
         """int fl_get_button_numb(FL_OBJECT * ob)""")
     libr.check_if_initialized()
-    libr.check_if_FL_OBJECT_ptr(pFlObject)
+    libr.verify_flobjectptr_type(pFlObject)
     libr.keep_elem_refs(pFlObject)
     retval = _fl_get_button_numb(pFlObject)
     return retval
@@ -796,7 +797,7 @@ def fl_create_generic_button(btnclass, buttontype, x, y, w, h, label):
            FL_Coord x, FL_Coord y, FL_Coord w, FL_Coord h,
            const char * label)""")
     libr.check_if_initialized()
-    libr.check_admitted_listvalues(buttontype, xfdata.BUTTONTYPE_list)
+    libr.check_admitted_value_in_list(buttontype, xfdata.BUTTONTYPE_list)
     ibtnclass = libr.convert_to_int(btnclass)
     ibuttontype = libr.convert_to_int(buttontype)
     ix = libr.convert_to_FL_Coord(x)
@@ -857,10 +858,10 @@ def fl_set_button_mouse_buttons(pFlObject, buttons):
       `pFlObject` : pointer to xfdata.FL_OBJECT
         button object
       `buttons` : int_pos
-        value of mouse buttons to be set (bitwise OR of the numbers 1 for the
-        left mouse button, 2 for the middle, 4 for the right mouse button, 8
-        for moving the scroll wheel up "button" and 16 for scrolling down
-        "button").
+        value of mouse buttons to be set. Values bitwise OR of the numbers 1
+        for the left mouse button, 2 for the middle, 4 for the right mouse
+        button, 8 for moving the scroll wheel up "button" and 16 for scrolling
+        down "button".
 
     :note: e.g. fl_set_button_mouse_buttons(pobj, 8|16)
 
@@ -873,7 +874,7 @@ def fl_set_button_mouse_buttons(pFlObject, buttons):
         """void fl_set_button_mouse_buttons(FL_OBJECT * ob,
            unsigned int buttons)""")
     libr.check_if_initialized()
-    libr.check_if_FL_OBJECT_ptr(pFlObject)
+    libr.verify_flobjectptr_type(pFlObject)
     ibuttons = libr.convert_to_int(buttons)
     libr.keep_elem_refs(pFlObject, buttons, ibuttons)
     _fl_set_button_mouse_buttons(pFlObject, ibuttons)
@@ -908,7 +909,7 @@ def fl_get_button_mouse_buttons(pFlObject):
         """void fl_get_button_mouse_buttons(FL_OBJECT * ob,
            unsigned int * buttons)""")
     libr.check_if_initialized()
-    libr.check_if_FL_OBJECT_ptr(pFlObject)
+    libr.verify_flobjectptr_type(pFlObject)
     buttons, pbuttons = libr.make_uint_and_pointer()
     libr.keep_elem_refs(pFlObject, buttons, pbuttons)
     _fl_get_button_mouse_buttons(pFlObject, pbuttons)

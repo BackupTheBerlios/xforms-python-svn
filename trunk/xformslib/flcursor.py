@@ -2,7 +2,7 @@
 # -*- coding: iso8859-1 -*-
 
 """
-    flcursor.py - Functions to manage cursor objects.
+    flcursor.py - xforms-python's functions to manage cursor objects.
 
     Copyright (C) 2009, 2010  Luca Lazzaroni "LukenShiro"
     e-mail: <lukenshiro@ngi.it>
@@ -45,12 +45,12 @@ from xformslib import xfdata
 
 
 def fl_set_cursor(win, cursnum):
-    """Set cursor for window to provided cursor number, that is
+    """Set cursor for window to a spacific cursor number.
 
     --
 
     :Parameters:
-      `win` : long _pos
+      `win` : long_pos
         window
       `cursnum` : int
         cursor id (either the standard XC_ or Form defined)
@@ -95,8 +95,8 @@ def fl_set_cursor_color(cursnum, fgcolr, bgcolr):
         None, [cty.c_int, xfdata.FL_COLOR, xfdata.FL_COLOR],
         """void fl_set_cursor_color(int name, FL_COLOR fg, FL_COLOR bg)""")
     library.check_if_initialized()
-    library.check_admitted_listvalues(fgcolr, xfdata.COLOR_list)
-    library.check_admitted_listvalues(bgcolr, xfdata.COLOR_list)
+    library.check_admitted_value_in_list(fgcolr, xfdata.COLOR_list)
+    library.check_admitted_value_in_list(bgcolr, xfdata.COLOR_list)
     icursnum = library.convert_to_int(cursnum)
     ulfgcolr = library.convert_to_FL_COLOR(fgcolr)
     ulbgcolr = library.convert_to_FL_COLOR(bgcolr)
