@@ -123,8 +123,7 @@ def fl_clear_select(pFlObject):
 
 
 def fl_add_select_items(pFlObject, itemstr):
-    """
-        fl_add_select_items(pFlObject, itemstr) -> pPopupEntry
+    """*todo*
 
     --
 
@@ -134,7 +133,7 @@ def fl_add_select_items(pFlObject, itemstr):
       `itemstr` : str
         text for the item.
 
-    :return: popup entry
+    :return: popup entry (pPopupEntry)
     :rtype: pointer to xfdata.FL_POPUP_ENTRY
 
     :note: e.g. *todo*

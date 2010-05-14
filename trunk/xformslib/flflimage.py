@@ -152,7 +152,7 @@ def flimage_read(pImage):
 def flimage_dump(pImage, fname, fmt):
     """Takes an image, either returned by flimage_load() (possibly after some
     processing) or created on the fly by the application, attempts to create
-     a file to store the image.
+    a file to store the image.
 
     --
 
@@ -164,8 +164,8 @@ def flimage_dump(pImage, fname, fmt):
       `fmt` : str
         formal name or short name of a supported image format. Values: jpeg,
         ppm, gif, bmp, etc... or some other formats the application knows
-        how to write. If it is None, the original format the image was in is
-        used.
+        how to write. If it is 'None', the original format the image was in
+        is used.
 
     :return: non-negative, or negative num. (on failure)
     :rtype: int
@@ -195,7 +195,7 @@ def flimage_close(pImage):
     --
 
     :Parameters:
-      `pImage`: pointer to xfdata.FL_IMAGE
+      `pImage` : pointer to xfdata.FL_IMAGE
          image to be closed
 
     :return: 0?, or -1 (on failure)
@@ -416,7 +416,7 @@ def flimage_display(pImage, win):
     :Parameters:
       `pImage` : pointer to xfdata.FL_IMAGE
         image
-      `win`: long_pos
+      `win` : long_pos
         window
 
     :return: non-negative num., or negative num. (on failure)
@@ -447,7 +447,7 @@ def flimage_sdisplay(pImage, win):
     :Parameters:
       `pImage` : pointer to xfdata.FL_IMAGE
         image
-      `win`: long_pos
+      `win` : long_pos
         window
 
     :return: non-negative num., or negative num. (on failure)
@@ -565,14 +565,14 @@ def flimage_add_text(pImage, text, length, style, size, txtcolr, bgcolr,
         label size. Values (from xfdata.py) FL_TINY_SIZE, FL_SMALL_SIZE,
         FL_NORMAL_SIZE, FL_MEDIUM_SIZE, FL_LARGE_SIZE, FL_HUGE_SIZE,
         FL_DEFAULT_SIZE
-      `txtcolr : int_pos
+      `txtcolr` : int_pos
         color to use for text
-      `bgcolr : int_pos
+      `bgcolr` : int_pos
         color to use for background (only if nobk is 0)
-      `nobk : int
+      `nobk` : int
         flag to enable/disable background. Values 0 (drawn with background)
         or 1 (text is drawn without a background)
-      `tx : float
+      `tx` : float
         horizontal location of the text relative to the image origin. The
         location specified is the lower-right corner of the text.
       `ty` : float
@@ -658,8 +658,8 @@ def flimage_delete_all_text(pImage):
     --
 
     :Parameters:
-    `pImage` : pointer to xfdata.FL_IMAGE
-      image
+      `pImage` : pointer to xfdata.FL_IMAGE
+        image
 
     :note: e.g. *todo*
 
@@ -693,7 +693,7 @@ def flimage_add_marker(pImage, name, x, y, w, h, style, fill, rot, colr, bcolr):
         vertical position of the center of the marker in physical
         coordinates relative to the origin of the image
       `w` : float
-        width of the bounding box of the marker in phisical coordinates
+        width of the bounding box of the marker in physical coordinates
       `h` : float
         height of the bounding box of the marker in physical coordinates
       `style` : int
@@ -707,7 +707,8 @@ def flimage_add_marker(pImage, name, x, y, w, h, style, fill, rot, colr, bcolr):
         angle of rotation in tenth of degree
       `colr` : long_pos
         color of the marker (in packed RGB format)
-      `bcolr` : currently unused
+      `bcolr` : long_pos
+        currently unused
 
     :return: num.
     :rtype: int
@@ -748,15 +749,15 @@ def flimage_add_marker(pImage, name, x, y, w, h, style, fill, rot, colr, bcolr):
 
 def flimage_add_marker_struct(pImage, pImageMarker):
     """Adds simple markers (arrows, circles etc) to an image, using
-    xfdata.FLIMAGE_MARKER class instance
+    xfdata.FLIMAGE_MARKER class instance.
 
     --
 
     :Parameters:
-    `pImage` : pointer to xfdata.FL_IMAGE
-      image
-    `pImageMarker` : pointer to xfdata.FLIMAGE_MARKER
-      flimagemarker class instance
+      `pImage` : pointer to xfdata.FL_IMAGE
+        image
+      `pImageMarker` : pointer to xfdata.FLIMAGE_MARKER
+        flimagemarker class instance
 
     :return: num.
     :rtype: int
@@ -788,7 +789,7 @@ def flimage_define_marker(mkname, py_FlimageMarkerDraw, psdraw):
     :Parameters:
       `mkname` : str
         name of the marker *todo*
-      `py_FlimagemarkerDraw` : python function to draw marker, no return?
+      `py_FlimageMarkerDraw` : python function to draw marker, no return?
         name referring to function(pImageMarker)
       `psdraw` : str
         string that draws a marker in a square with the corner coordinates
@@ -892,7 +893,7 @@ def flimage_error(pImage, text):
     --
 
     :Parameters:
-      `pImage`: pointer to xfdata.FL_IMAGE
+      `pImage` : pointer to xfdata.FL_IMAGE
         image to be worked on
       `text` : str
         a brief message, such as "memory allocation failed" etc..
@@ -1193,12 +1194,13 @@ def fl_make_matrix(nrows, ncols, elemsize, mem):
 
 
 def fl_free_matrix(mtrx):
-    """free a matrix allocated using fl_get_matrix() or fl_make_matrix().
+    """Frees a matrix allocated using fl_get_matrix() or fl_make_matrix().
 
     --
 
     :Parameters:
       `mtrx` : *todo*
+        *todo*
 
     :note: e.g. *todo*
 
@@ -1616,7 +1618,7 @@ def flimage_flip(pImage, what):
     --
 
     :Parameters:
-      `pImage: pointer to xfdata.FL_IMAGE
+      `pImage` : pointer to xfdata.FL_IMAGE
         image
       `what` : int or char
         desired direction of flipping. Values 'c' (column, horizontal flipping)
@@ -1656,7 +1658,7 @@ def flimage_scale(pImage, newwidth, newheight, option):
     --
 
     :Parameters:
-      `pImage: pointer to xfdata.FL_IMAGE
+      `pImage` : pointer to xfdata.FL_IMAGE
         image
       `newwidth` : int
         desired image width
@@ -1689,7 +1691,7 @@ def flimage_scale(pImage, newwidth, newheight, option):
     ioption = libr.convert_to_int(option)
     libr.keep_elem_refs(pImage, newwidth, newwidth, option, inewwidth,
                         inewwidth, ioption)
-    retval = _flimage_scale(pImage, inewwidth, inewwidth, ioption)
+    retval = _flimage_scale(pImage, inewwidth, inewheight, ioption)
     return retval
 
 
@@ -1703,7 +1705,7 @@ def flimage_warp(pImage, mtrx, newwidth, newheight, subpixel):
     --
 
     :Parameters:
-      `pImage`: pointer to xfdata.FL_IMAGE
+      `pImage` : pointer to xfdata.FL_IMAGE
         image
       `mtrx` : *todo*
         the warp matrix
@@ -1755,7 +1757,7 @@ def flimage_autocrop(pImage, bgcolr):
     --
 
     :Parameters:
-      `pImage: pointer to xfdat.FL_IMAGE
+      `pImage` : pointer to xfdata.FL_IMAGE
         image
       `bgcolr` : int_pos
         background color to crop. If it's xfdata.FLIMAGE_AUTOCOLOR, the
@@ -1882,7 +1884,7 @@ def flimage_replace_pixel(pImage, targetcolr, newcolr):
     --
 
     :Parameters:
-      `pImage: pointer to xfdata.FL_IMAGE
+      `pImage` : pointer to xfdata.FL_IMAGE
         image
       `targetcolr` : int_pos
         color to be replaced
@@ -1917,7 +1919,7 @@ def flimage_transform_pixels(pImage, red, green, blue):
     --
 
     :Parameters:
-      `pImage: pointer to xfdata.FL_IMAGE
+      `pImage` : pointer to xfdata.FL_IMAGE
         image
       `red` : int
         lookup tables for red color of a length of at least FL_PCMAX + 1 (256).
@@ -1994,7 +1996,8 @@ def flimage_enhance(pImage, delta):
     --
 
     :Parameters:
-      `pImage: pointer to image
+      `pImage` : pointer to xfdata.FL_IMAGE
+        image
       `delta` : int
         unused.
 
@@ -2024,9 +2027,9 @@ def flimage_from_pixmap(pImage, pixmap):
     --
 
     :Parameters:
-      `pImage`: pointer to xfdata.FL_IMAGE
+      `pImage` : pointer to xfdata.FL_IMAGE
         image
-      `pixmap`: long_pos
+      `pixmap` : long_pos
         pixmap id
 
     :return: num.
@@ -2056,9 +2059,9 @@ def flimage_to_pixmap(pImage, win):
     --
 
     :Parameters:
-      `pImage`: pointer to xfdata.FL_IMAGE
+      `pImage` : pointer to xfdata.FL_IMAGE
         image
-      `win`: long_pos
+      `win` : long_pos
         window id
 
     :return: pixmap id
@@ -2375,7 +2378,7 @@ def fl_pack_bits(inval, lng):
 
     :note: e.g. *todo*
 
-    :attention: API changed from XForms - upstream was:
+    :attention: API change from XForms - upstream was
         fl_pack_bits(outval, inval, lng)
 
     :status: Untested + Doc + NoDemo = NOT OK
@@ -2412,7 +2415,7 @@ def fl_unpack_bits(inval, lng):
 
     :note: e.g. *todo*
 
-    :attention: API changed from XForms - upstream was:
+    :attention: API change from XForms - upstream was
         fl_unpack_bits(outval, inval, lng)
 
     :status: Untested + Doc + NoDemo = NOT OK
@@ -2440,7 +2443,7 @@ def fl_value_to_bits(val):
     --
 
     :Parameters:
-      `val`: int_pos
+      `val` : int_pos
         value to convert to bits
 
     :return: num.
@@ -2473,7 +2476,7 @@ def flimage_add_comments(pImage, text, lng):
       `text` : str
         comment to be added
       `lng` : int
-      length of comment
+        length of comment
 
     :note: e.g. *todo*
 
@@ -2513,7 +2516,7 @@ def flimage_color_to_pixel(pImage, r, g, b):
 
     :note: e.g. *todo*
 
-    :attention: API changed from XForms - upstream was:
+    :attention: API change from XForms - upstream was
         flimage_color_to_pixel(pImage, r, g, b, newpix)
 
     :status: Untested + Doc + NoDemo = NOT OK
@@ -3029,7 +3032,7 @@ def flimage_get_linearlut(pImage):
       `pImage` : pointer to xfdata.FL_IMAGE
         image
 
-    :return: *, or -1 (on failure?)
+    :return: num., or -1 (on failure?)
     :rtype: int
 
     :note: e.g. *todo*

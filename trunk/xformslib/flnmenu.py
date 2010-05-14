@@ -53,7 +53,7 @@ def fl_add_nmenu(nmenutype, x, y, w, h, label):
     --
 
     :Parameters:
-      `nmenutype`: type of nmenu to be. Values (from xfdata.py)
+      `nmenutype` : type of nmenu to be. Values (from xfdata.py)
         FL_NORMAL_NMENU, FL_NORMAL_TOUCH_NMENU, FL_BUTTON_NMENU,
         FL_BUTTON_TOUCH_NMENU
       `x` : int
@@ -131,7 +131,7 @@ def fl_add_nmenu_items(pFlObject, itemstr):
     :Parameters:
       `pFlObject` : pointer to xfdata.FL_OBJECT
         nmenu object
-    `itemstr` : str
+      `itemstr` : str
         text of the item (among special sequences only %S is supported)
 
     :return: popup entry
@@ -167,7 +167,7 @@ def fl_insert_nmenu_items(pFlObject, pPopupEntry, itemstr):
       `pPopupEntry` : pointer to xfdata.FL_POPUP_ENTRY
         existing popup entry, after which the new items are to be inserted.
         If it's 'None', it inserts items at the very start.
-      `itemstr: str
+      `itemstr` : str
         text of the item (among special sequences only %S is supported)
 
     :return: popup entry
@@ -202,7 +202,7 @@ def fl_replace_nmenu_item(pFlObject, pPopupEntry, itemstr):
         nmenu object
       `pPopupEntry` : pointer to xfdata.FL_POPUP_ENTRY
         old popup entry to be replaced
-      `itemstr: str
+      `itemstr` : str
         text of the item (among special sequences only %S is supported)
 
     :return: popup entry
@@ -336,7 +336,7 @@ def fl_insert_nmenu_items2(pFlObject, pPopupEntry, pPopupItem):
     :Parameters:
       `pFlObject` : pointer to xfdata.FL_OBJECT
         nmenu object
-      `pPopupEntry`: pointer to xfdata.FL_POPUP_ENTRY
+      `pPopupEntry` : pointer to xfdata.FL_POPUP_ENTRY
         existing popup entry, after which the new items are to be inserted.
         If it is None, it inserts items at the very start.
       `pPopupItem` : pointer to xfdata.FL_POPUP_ITEM
@@ -382,7 +382,7 @@ def fl_replace_nmenu_items2(pFlObject, pPopupEntry, pPopupItem):
         libr.make_pPopupItem_from_list(..) function for single or multiple
         lists, or with libr.make_pPopupItem_from_dict(..) for a single dict.
 
-    :return: :return: first nmenu item, or None (on failure)
+    :return: first nmenu item, or None (on failure)
     :rtype: pointer to xfdata.FL_POPUP_ENTRY
 
     :note: e.g. *todo*

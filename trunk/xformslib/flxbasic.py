@@ -1195,7 +1195,7 @@ def fl_arcf(x, y, r, stheta, etheta, colr):
         horizontal position of the center of the arc
       `y` : int
         vertical position of the center of the arc
-      `r`: int
+      `r` : int
         radius of the arc
       `stheta` : int
         starting angle of the arc in units of tenths of a degree (where 0
@@ -1255,7 +1255,7 @@ def fl_drw_frame(boxtype, x, y, w, h, colr, bw):
     --
 
     :Parameters:
-      `boxtype`: int
+      `boxtype` : int
         type of frame box. Values (from xfdata.py) FL_NO_BOX, FL_UP_BOX,
         FL_DOWN_BOX, FL_BORDER_BOX, FL_SHADOW_BOX, FL_FRAME_BOX,
         FL_ROUNDED_BOX, FL_EMBOSSED_BOX, FL_FLAT_BOX, FL_RFLAT_BOX,
@@ -1309,7 +1309,7 @@ def fl_drw_checkbox(boxtype, x, y, w, h, colr, bw):
 
     :Parameters:
       `boxtype` : int
-      type of checkbox to draw. Values (from xfdata.py) FL_NO_BOX,
+        type of checkbox to draw. Values (from xfdata.py) FL_NO_BOX,
         FL_UP_BOX, FL_DOWN_BOX, FL_BORDER_BOX, FL_SHADOW_BOX, FL_FRAME_BOX,
         FL_ROUNDED_BOX, FL_EMBOSSED_BOX, FL_FLAT_BOX, FL_RFLAT_BOX,
         FL_RSHADOW_BOX, FL_OVAL_BOX, FL_ROUNDED3D_UPBOX,
@@ -2896,7 +2896,7 @@ def fl_XNextEvent(pXEvent):
         cty.c_int, [cty.POINTER(xfdata.XEvent)],
         """int fl_XNextEvent(XEvent * xev)""")
     libr.check_if_initialized()
-    libr.verify_otherclassptr(pXEvent, cty.POINTER(xfdata.XEvent))
+    libr.verify_otherclassptr_type(pXEvent, cty.POINTER(xfdata.XEvent))
     libr.keep_elem_refs(pXEvent)
     retval = _fl_XNextEvent(pXEvent)
     return retval
@@ -2924,7 +2924,7 @@ def fl_XPeekEvent(pXEvent):
         cty.c_int, [cty.POINTER(xfdata.XEvent)],
         """int fl_XPeekEvent(XEvent * xev)""")
     libr.check_if_initialized()
-    libr.verify_otherclassptr(pXEvent, cty.POINTER(xfdata.XEvent))
+    libr.verify_otherclassptr_type(pXEvent, cty.POINTER(xfdata.XEvent))
     libr.keep_elem_refs(pXEvent)
     retval = _fl_XPeekEvent(pXEvent)
     return retval
@@ -2977,7 +2977,7 @@ def fl_XPutBackEvent(pXEvent):
         None, [cty.POINTER(xfdata.XEvent)],
         """void fl_XPutBackEvent(XEvent * xev)""")
     libr.check_if_initialized()
-    libr.verify_otherclassptr(pXEvent, cty.POINTER(xfdata.XEvent))
+    libr.verify_otherclassptr_type(pXEvent, cty.POINTER(xfdata.XEvent))
     libr.keep_elem_refs(pXEvent)
     _fl_XPutBackEvent(pXEvent)
 
@@ -3148,7 +3148,7 @@ def fl_remove_selected_xevent(win, mask):
     :Parameters:
       `win` : long_pos
         window id
-      `mask : long
+      `mask` : long
         event mask
 
     :return: num.
@@ -3388,8 +3388,7 @@ def button_down(mask):
 
 # Resources
 
-def fl_initialize(numargs=len(sys.argv), argslist=sys.argv, appname="",
-                  appoptions=0, nappopts=0):
+def fl_initialize(numargs, argslist, appname="", appoptions=0, nappopts=0):
     """Initializes XForms libr. It should always be called before any
     other calls to the XForms Library (except fl_set_defaults() and a few
     other functions that alter some of the defaults of the library.

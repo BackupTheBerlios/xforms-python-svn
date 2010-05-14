@@ -91,7 +91,7 @@ def fl_popup_add_entries(pPopup, entrytxt):
     :Parameters:
       `pPopup` : pointer to xfdata.FL_POPUP
         popup class instance
-      `extrytxt` : str
+      `entrytxt` : str
         text of the entry to be added. It may contain newline characters which
         allows to create entries that span more than a single line (among
         special sequences only %S is supported)
@@ -129,7 +129,7 @@ def fl_popup_insert_entries(pPopup, pPopupEntry, entrytxt):
       `pPopupEntry` : pointer to xfdata.FL_POPUP_ENTRY
         popup entry after which entry is inserted. If it's 'None', it inserts
         items at the very start.
-      `extrytxt` : str
+      `entrytxt` : str
         text of the entry to be added. It may contain newline characters which
         allows to create entries that span more than a single line (among
         special sequences only %S is supported)
@@ -460,13 +460,15 @@ def fl_popup_set_policy(pPopup, policy):
 # already defined in xfdata
 
 def fl_popup_set_callback(pPopup, py_PopupCb):
-    """ fl_popup_set_callback(pPopup, py_PopupCb) -> popup callback func.
+    """*todo*
 
     --
 
     :Parameters:
       `pPopup` : pointer to xfdata.FL_POPUP
         popup class instance
+      `py_PopupCb` : python function callback, returning value
+        name referring to function(pPopupReturn) -> num.
 
     :return: old popup callback
     :rtype: pointer ot xfdata.FL_POPUP_CB
@@ -1110,7 +1112,7 @@ def fl_popup_entry_set_text(pPopupEntry, text):
     :Parameters:
       `pPopupEntry` : pointer to xfdata.FL_POPUP_ENTRY
         popup entry
-      `txtstr` : str
+      `text` : str
         text for the entry
 
     :return: num.

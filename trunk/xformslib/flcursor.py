@@ -45,7 +45,7 @@ from xformslib import xfdata
 
 
 def fl_set_cursor(win, cursnum):
-    """Set cursor for window to a spacific cursor number.
+    """Set cursor for window to a specific cursor number.
 
     --
 
@@ -53,7 +53,7 @@ def fl_set_cursor(win, cursnum):
       `win` : long_pos
         window
       `cursnum` : int
-        cursor id (either the standard XC_ or Form defined)
+        cursor id (either the standard XC_* or Form defined)
 
     :note: e.g. fl_set_cursor(win0, xfdata.FL_CROSSHAIR_CURSOR)
 
@@ -164,7 +164,7 @@ def fl_create_animated_cursor(curseries, timeout):
     --
 
     :Parameters:
-      `curseries: str of ubytes
+      `curseries` : str of ubytes
         array of cursor names (either X standard cursors or cursor names
         returned by fl_create_bitmap_cursor()), terminated by -1.
       `timeout` : int

@@ -111,7 +111,6 @@ def fl_set_xyplot_data(pFlObject, xlist, ylist, n, title, xlabel, ylabel):
         list of horizontal values?
       `ylist` : list_of_float
         list of vertical values?
-        *todo*
       `n` : int
         *todo*
       `title` : str
@@ -138,27 +137,29 @@ def fl_set_xyplot_data(pFlObject, xlist, ylist, n, title, xlabel, ylabel):
     libr.verify_flobjectptr_type(pFlObject)
     #px = cty.cast(x, cty.POINTER(cty.c_float))
     print xlist, xlist[0]
-    fx = []
+    fxlist = []
     for a in range(xlist):
-        fx[a] = libr.convert_to_float(xlist[a])
-    px = cty.pointer(fx)
-    print "x, fx, px", xlist, fx, px
+        fxlist[a] = libr.convert_to_float(xlist[a])
+    pxlist = cty.pointer(fxlist)
+    print "xlist, fxlist, pxlist", xlist, fxlist, pxlist
     #py = cty.cast(y, cty.POINTER(cty.c_float))
-    fy = []
+    fylist = []
     for a in range(ylist):
-        fy[a] = libr.convert_to_float(ylist[a])
-    py = cty.pointer(fy)
-    print "y, fy, py", ylist, fy, py
+        fylist[a] = libr.convert_to_float(ylist[a])
+    pylist = cty.pointer(fylist)
+    print "ylist, fylist, pylist", ylist, fylist, pylist
     inum = libr.convert_to_int(n)
     stitle = libr.convert_to_string(title)
     sxlabel = libr.convert_to_string(xlabel)
     sylabel = libr.convert_to_string(ylabel)
-    libr.keep_elem_refs(pFlObject, xlist, ylist, n, fx, fy, px, py, title, \
-                   xlabel, ylabel, inum, stitle, sxlabel, sylabel)
-    _fl_set_xyplot_data(pFlObject, px, py, inum, stitle, sxlabel, sylabel)
+    libr.keep_elem_refs(pFlObject, xlist, ylist, n, fxlist, fylist, pxlist,
+             pylist, title, xlabel, ylabel, inum, stitle, sxlabel, sylabel)
+    _fl_set_xyplot_data(pFlObject, pxlist, pylist, inum, stitle, sxlabel,
+                        sylabel)
 
 
-def fl_set_xyplot_data_double(pFlObject, x, y, n, title, xlabel, ylabel):
+def fl_set_xyplot_data_double(pFlObject, xlist, ylist, n, title, xlabel,
+                              ylabel):
     """*todo*
 
     --
@@ -170,7 +171,6 @@ def fl_set_xyplot_data_double(pFlObject, x, y, n, title, xlabel, ylabel):
         list of horizontal values?
       `ylist` : list_of_float
         list of vertical values?
-        *todo*
       `n` : int
         *todo*
       `title` : str
@@ -195,15 +195,15 @@ def fl_set_xyplot_data_double(pFlObject, x, y, n, title, xlabel, ylabel):
            const char * ylabel)""")
     libr.check_if_initialized()
     libr.verify_flobjectptr_type(pFlObject)
-    px = cty.cast(x, cty.POINTER(cty.c_double))
-    py = cty.cast(y, cty.POINTER(cty.c_double))
+    pxlist = cty.cast(xlist, cty.POINTER(cty.c_double))
+    pylist = cty.cast(ylist, cty.POINTER(cty.c_double))
     inum = libr.convert_to_int(n)
     stitle = libr.convert_to_string(title)
     sxlabel = libr.convert_to_string(xlabel)
     sylabel = libr.convert_to_string(ylabel)
-    libr.keep_elem_refs(pFlObject, x, y, n, title, xlabel, ylabel, px, py, inum, \
-                   stitle, sxlabel, sylabel)
-    _fl_set_xyplot_data_double(pFlObject, px, py, n, title, \
+    libr.keep_elem_refs(pFlObject, xlist, ylist, n, title, xlabel, ylabel,
+                    pxlist, pylist, inum, stitle, sxlabel, sylabel)
+    _fl_set_xyplot_data_double(pFlObject, pxlist, pylist, n, title, \
                                         xlabel, ylabel, inum, stitle, \
                                         sxlabel, sylabel)
 
@@ -254,29 +254,31 @@ def fl_set_xyplot_file(pFlObject, fname, title, xlabel, ylabel):
 def fl_insert_xyplot_data(pFlObject, idnum, n, valx, valy):
     """Inserts a point after n position in a xyplot object.
 
-        --
+    --
 
-        :Parameters:
+    :Parameters:
       `pFlObject` : pointer to xfdata.FL_OBJECT
         xyplot object
+      `idnum` : int
+        *todo*
+      `n` : int
+        *todo*
+      `valx` : float
+        *todo*
+      `valy` : float
+        *todo*
 
-        fl_insert_xyplot_data(pFlObject, idnum, n, valx, valy)
+    :note: e.g. *todo*
 
-        :return:
-        :rtype:
+    :status: Untested + NoDoc + NoDemo = NOT OK
 
-        :note: e.g. *todo*
-
-        :status: Untested + NoDoc + NoDemo = NOT OK
     """
-
     _fl_insert_xyplot_data = libr.cfuncproto(
-            libr.load_so_libforms(), "fl_insert_xyplot_data",
-            None, [cty.POINTER(xfdata.FL_OBJECT), cty.c_int, cty.c_int,
-            cty.c_double, cty.c_double],
-            """void fl_insert_xyplot_data(FL_OBJECT * ob, int id, int n,
-               double x, double y)
-""")
+        libr.load_so_libforms(), "fl_insert_xyplot_data",
+        None, [cty.POINTER(xfdata.FL_OBJECT), cty.c_int, cty.c_int,
+        cty.c_double, cty.c_double],
+        """void fl_insert_xyplot_data(FL_OBJECT * ob, int id, int n,
+           double x, double y)""")
     libr.check_if_initialized()
     libr.verify_flobjectptr_type(pFlObject)
     iidnum = libr.convert_to_int(idnum)
@@ -288,30 +290,35 @@ def fl_insert_xyplot_data(pFlObject, idnum, n, valx, valy):
 
 
 def fl_add_xyplot_text(pFlObject, valx, valy, text, al, colr):
-    """
-        fl_add_xyplot_text(pFlObject, valx, valy, text, al, colr)
+    """*todo*
 
-        --
+    --
 
-        :Parameters:
+    :Parameters:
       `pFlObject` : pointer to xfdata.FL_OBJECT
         xyplot object
+      `valx` : float
+        *todo*
+      `valy` : float
+        *todo*
+      `text` : str
+        text to be added to xyplot
+      `al` : int
+        *todo*
+      `colr` : long_pos
+        color value
 
-        :return:
-        :rtype:
+    :note: e.g. *todo*
 
-        :note: e.g. *todo*
+    :status: Untested + NoDoc + NoDemo = NOT OK
 
-        :status: Untested + NoDoc + NoDemo = NOT OK
     """
-
     _fl_add_xyplot_text = libr.cfuncproto(
-            libr.load_so_libforms(), "fl_add_xyplot_text",
-            None, [cty.POINTER(xfdata.FL_OBJECT), cty.c_double, cty.c_double,
-            xfdata.STRING, cty.c_int, xfdata.FL_COLOR],
-            """void fl_add_xyplot_text(FL_OBJECT * ob, double x, double y,
-               const char * text, int al, FL_COLOR col)
-""")
+        libr.load_so_libforms(), "fl_add_xyplot_text",
+        None, [cty.POINTER(xfdata.FL_OBJECT), cty.c_double, cty.c_double,
+        xfdata.STRING, cty.c_int, xfdata.FL_COLOR],
+        """void fl_add_xyplot_text(FL_OBJECT * ob, double x, double y,
+           const char * text, int al, FL_COLOR col)""")
     libr.check_if_initialized()
     libr.verify_flobjectptr_type(pFlObject)
     libr.check_admitted_value_in_list(colr, xfdata.COLOR_list)
@@ -326,28 +333,25 @@ def fl_add_xyplot_text(pFlObject, valx, valy, text, al, colr):
 
 
 def fl_delete_xyplot_text(pFlObject, text):
-    """
-        fl_delete_xyplot_text(pFlObject, text)
+    """*todo*
 
-        --
+    --
 
-        :Parameters:
+    :Parameters:
       `pFlObject` : pointer to xfdata.FL_OBJECT
         xyplot object
+      `text` : str
+        text to be deleted from xyplot
 
-        :return:
-        :rtype:
+    :note: e.g. *todo*
 
-        :note: e.g. *todo*
+    :status: Untested + NoDoc + NoDemo = NOT OK
 
-        :status: Untested + NoDoc + NoDemo = NOT OK
     """
-
     _fl_delete_xyplot_text = libr.cfuncproto(
-            libr.load_so_libforms(), "fl_delete_xyplot_text",
-            None, [cty.POINTER(xfdata.FL_OBJECT), xfdata.STRING],
-            """void fl_delete_xyplot_text(FL_OBJECT * ob, const char * text)
-""")
+        libr.load_so_libforms(), "fl_delete_xyplot_text",
+        None, [cty.POINTER(xfdata.FL_OBJECT), xfdata.STRING],
+        """void fl_delete_xyplot_text(FL_OBJECT * ob, const char * text)""")
     libr.check_if_initialized()
     libr.verify_flobjectptr_type(pFlObject)
     stext = libr.convert_to_string(text)
@@ -356,21 +360,23 @@ def fl_delete_xyplot_text(pFlObject, text):
 
 
 def fl_set_xyplot_maxoverlays(pFlObject, maxover):
-    """
-        fl_set_xyplot_maxoverlays(pFlObject, maxover) -> num.
+    """*todo*
 
-        --
+    --
 
-        :Parameters:
+    :Parameters:
       `pFlObject` : pointer to xfdata.FL_OBJECT
         xyplot object
+      `maxover` : int
+        *todo*
 
-        :return:
-        :rtype:
+    :return: num.
+    :rtype: int
 
-        :note: e.g. *todo*
+    :note: e.g. *todo*
 
-        :status: Untested + NoDoc + NoDemo = NOT OK
+    :status: Untested + NoDoc + NoDemo = NOT OK
+
     """
     _fl_set_xyplot_maxoverlays = libr.cfuncproto(
         libr.load_so_libforms(), "fl_set_xyplot_maxoverlays",
@@ -385,21 +391,28 @@ def fl_set_xyplot_maxoverlays(pFlObject, maxover):
 
 
 def fl_add_xyplot_overlay(pFlObject, idnum, x, y, n, colr):
-    """
-        fl_add_xyplot_overlay(pFlObject, idnum, x, y, n, colr)
+    """*todo*
 
-        --
+    --
 
-        :Parameters:
+    :Parameters:
       `pFlObject` : pointer to xfdata.FL_OBJECT
         xyplot object
+      `idnum` : int
+        *todo*
+      `x` : float
+        *todo*
+      `y` : float
+        *todo*
+      `n` : int
+        *todo*
+      `colr` : long_pos
+        color value
 
-        :return:
-        :rtype:
+    :note: e.g. *todo*
 
-        :note: e.g. *todo*
+    :status: Untested + NoDoc + NoDemo = NOT OK
 
-        :status: Untested + NoDoc + NoDemo = NOT OK
     """
     _fl_add_xyplot_overlay = libr.cfuncproto(
         libr.load_so_libforms(), "fl_add_xyplot_overlay",
@@ -422,21 +435,27 @@ def fl_add_xyplot_overlay(pFlObject, idnum, x, y, n, colr):
 
 
 def fl_add_xyplot_overlay_file(pFlObject, idnum, fname, colr):
-    """
-        fl_add_xyplot_overlay_file(pFlObject, idnum, fname, colr) -> num.
+    """*todo*
 
-        --
+    --
 
-        :Parameters:
+    :Parameters:
       `pFlObject` : pointer to xfdata.FL_OBJECT
         xyplot object
+      `idnum` : int
+        *todo*
+      `fname` : str
+        name of file
+      `colr` : long_pos
+        color value
 
-        :return:
-        :rtype:
+    :return: num.
+    :rtype: int
 
-        :note: e.g. *todo*
+    :note: e.g. *todo*
 
-        :status: Untested + NoDoc + NoDemo = NOT OK
+    :status: Untested + NoDoc + NoDemo = NOT OK
+
     """
     _fl_add_xyplot_overlay_file = libr.cfuncproto(
         libr.load_so_libforms(), "fl_add_xyplot_overlay_file",
@@ -456,22 +475,23 @@ def fl_add_xyplot_overlay_file(pFlObject, idnum, fname, colr):
 
 
 def fl_set_xyplot_return(pFlObject, when):
-    """
-        fl_set_xyplot_return(pFlObject, when)
+    """*todo*
 
-        --
+    --
 
-        :Parameters:
+    :Parameters:
       `pFlObject` : pointer to xfdata.FL_OBJECT
         xyplot object
-          `when: return type
+      `when` : int_pos
+        return type. Values (from xfdata.py) FL_RETURN_NONE,
+        FL_RETURN_CHANGED, FL_RETURN_END, FL_RETURN_END_CHANGED,
+        FL_RETURN_SELECTION, FL_RETURN_DESELECTION,
+        FL_RETURN_TRIGGERED, FL_RETURN_ALWAYS
 
-        :return:
-        :rtype:
+    :note: e.g. *todo*
 
-        :note: e.g. *todo*
+    :status: Untested + NoDoc + NoDemo = NOT OK
 
-        :status: Untested + NoDoc + NoDemo = NOT OK
     """
     _fl_set_xyplot_return = libr.cfuncproto(
         libr.load_so_libforms(), "fl_set_xyplot_return",
@@ -480,27 +500,29 @@ def fl_set_xyplot_return(pFlObject, when):
            int when)""")
     libr.check_if_initialized()
     libr.verify_flobjectptr_type(pFlObject)
+    libr.check_admitted_value_in_list(when, xfdata.RETURN_list)
     uiwhen = libr.convert_to_uint(when)
     libr.keep_elem_refs(pFlObject, when, uiwhen)
     _fl_set_xyplot_return(pFlObject, uiwhen)
 
 
 def fl_set_xyplot_xtics(pFlObject, major, minor):
-    """
-        fl_set_xyplot_xtics(pFlObject, major, minor)
+    """*todo*
 
-        --
+    --
 
-        :Parameters:
+    :Parameters:
       `pFlObject` : pointer to xfdata.FL_OBJECT
         xyplot object
+      `major` : int
+        *todo*
+      `minor` : int
+        *todo*
 
-        :return:
-        :rtype:
+    :note: e.g. *todo*
 
-        :note: e.g. *todo*
+    :status: Untested + NoDoc + NoDemo = NOT OK
 
-        :status: Untested + NoDoc + NoDemo = NOT OK
     """
     _fl_set_xyplot_xtics = libr.cfuncproto(
         libr.load_so_libforms(), "fl_set_xyplot_xtics",
@@ -515,21 +537,22 @@ def fl_set_xyplot_xtics(pFlObject, major, minor):
 
 
 def fl_set_xyplot_ytics(pFlObject, major, minor):
-    """
-        fl_set_xyplot_ytics(pFlObject, major, minor)
+    """*todo*
 
-        --
+    --
 
-        :Parameters:
+    :Parameters:
       `pFlObject` : pointer to xfdata.FL_OBJECT
         xyplot object
+      `major` : int
+        *todo*
+      `minor` : int
+        *todo*
 
-        :return:
-        :rtype:
+    :note: e.g. *todo*
 
-        :note: e.g. *todo*
+    :status: Untested + NoDoc + NoDemo = NOT OK
 
-        :status: Untested + NoDoc + NoDemo = NOT OK
     """
     _fl_set_xyplot_ytics = libr.cfuncproto(
         libr.load_so_libforms(), "fl_set_xyplot_ytics",
@@ -544,21 +567,22 @@ def fl_set_xyplot_ytics(pFlObject, major, minor):
 
 
 def fl_set_xyplot_xbounds(pFlObject, minbound, maxbound):
-    """
-        fl_set_xyplot_xbounds(pFlObject, minbound, maxbound)
+    """*todo*
 
-        --
+    --
 
-        :Parameters:
+    :Parameters:
       `pFlObject` : pointer to xfdata.FL_OBJECT
         xyplot object
+      `minbound` : float
+        minimum bound to set
+      `maxbound` : float
+        maximum bound to set
 
-        :return:
-        :rtype:
+    :note: e.g. *todo*
 
-        :note: e.g. *todo*
+    :status: Untested + NoDoc + NoDemo = NOT OK
 
-        :status: Untested + NoDoc + NoDemo = NOT OK
     """
     _fl_set_xyplot_xbounds = libr.cfuncproto(
         libr.load_so_libforms(), "fl_set_xyplot_xbounds",
@@ -574,21 +598,22 @@ def fl_set_xyplot_xbounds(pFlObject, minbound, maxbound):
 
 
 def fl_set_xyplot_ybounds(pFlObject, minbound, maxbound):
-    """
-        fl_set_xyplot_ybounds(pFlObject, minbound, maxbound)
+    """*todo*
 
-        --
+    --
 
-        :Parameters:
+    :Parameters:
       `pFlObject` : pointer to xfdata.FL_OBJECT
         xyplot object
+      `minbound` : float
+        minimum bound to set
+      `maxbound` : float
+        maximum bound to set
 
-        :return:
-        :rtype:
+    :note: e.g. *todo*
 
-        :note: e.g. *todo*
+    :status: Untested + NoDoc + NoDemo = NOT OK
 
-        :status: Untested + NoDoc + NoDemo = NOT OK
     """
     _fl_set_xyplot_ybounds = libr.cfuncproto(
         libr.load_so_libforms(), "fl_set_xyplot_ybounds",
@@ -604,24 +629,24 @@ def fl_set_xyplot_ybounds(pFlObject, minbound, maxbound):
 
 
 def fl_get_xyplot_xbounds(pFlObject):
-    """
-        fl_get_xyplot_xbounds(pFlObject) -> minbound, maxbound
+    """*todo*
 
-        --
+    --
 
-        :Parameters:
+    :Parameters:
       `pFlObject` : pointer to xfdata.FL_OBJECT
         xyplot object
 
-        :return:
-        :rtype:
+    :return: minimum bound, maximum bound
+    :rtype: float, float
 
-        :note: e.g. *todo*
+    :note: e.g. *todo*
 
-        :attention: API change from XForms - upstream was
-           fl_get_xyplot_xbounds(pFlObject, minbound, maxbound)
+    :attention: API change from XForms - upstream was
+        fl_get_xyplot_xbounds(pFlObject, minbound, maxbound)
 
-        :status: Untested + NoDoc + NoDemo = NOT OK
+    :status: Untested + NoDoc + NoDemo = NOT OK
+
     """
     _fl_get_xyplot_xbounds = libr.cfuncproto(
         libr.load_so_libforms(), "fl_get_xyplot_xbounds",
@@ -639,24 +664,24 @@ def fl_get_xyplot_xbounds(pFlObject):
 
 
 def fl_get_xyplot_ybounds(pFlObject):
-    """
-        fl_get_xyplot_ybounds(pFlObject) -> minbound, maxbound
+    """*todo*
 
-        --
+    --
 
-        :Parameters:
+    :Parameters:
       `pFlObject` : pointer to xfdata.FL_OBJECT
         xyplot object
 
-        :return:
-        :rtype:
+    :return: minimum bound, maximum bound
+    :rtype: float, float
 
-        :note: e.g. *todo*
+    :note: e.g. *todo*
 
-        :attention: API change from XForms - upstream was
-           fl_get_xyplot_ybounds(pFlObject, minbound, maxbound)
+    :attention: API change from XForms - upstream was
+        fl_get_xyplot_ybounds(pFlObject, minbound, maxbound)
 
-        :status: Untested + NoDoc + NoDemo = NOT OK
+    :status: Untested + NoDoc + NoDemo = NOT OK
+
     """
     _fl_get_xyplot_ybounds = libr.cfuncproto(
         libr.load_so_libforms(), "fl_get_xyplot_ybounds",
@@ -674,24 +699,24 @@ def fl_get_xyplot_ybounds(pFlObject):
 
 
 def fl_get_xyplot(pFlObject):
-    """
-        fl_get_xyplot(pFlObject) -> x, y, i
+    """*todo*
 
-        --
+    --
 
-        :Parameters:
+    :Parameters:
       `pFlObject` : pointer to xfdata.FL_OBJECT
         xyplot object
 
-        :return:
-        :rtype:
+    :return: *todo*
+    :rtype: float, float, int
 
-        :note: e.g. *todo*
+    :note: e.g. *todo*
 
-        :attention: API change from XForms - upstream was
-                    fl_get_xyplot(pFlObject, x, y, i)
+    :attention: API change from XForms - upstream was
+        fl_get_xyplot(pFlObject, x, y, i)
 
-        :status: Untested + NoDoc + NoDemo = NOT OK
+    :status: Untested + NoDoc + NoDemo = NOT OK
+
     """
     _fl_get_xyplot = libr.cfuncproto(
         libr.load_so_libforms(), "fl_get_xyplot",
@@ -710,24 +735,24 @@ def fl_get_xyplot(pFlObject):
 
 
 def fl_get_xyplot_data(pFlObject):
-    """
-        fl_get_xyplot_data(pFlObject) -> x, y, n
+    """*todo*
 
-        --
+    --
 
-        :Parameters:
+    :Parameters:
       `pFlObject` : pointer to xfdata.FL_OBJECT
         xyplot object
 
-        :return:
-        :rtype:
+    :return: *todo*
+    :rtype: float, float, int
 
-        :note: e.g. *todo*
+    :note: e.g. *todo*
 
-        :attention: API change from XForms - upstream was
-                    fl_get_xyplot_data(pFlObject, x, y, n)
+    :attention: API change from XForms - upstream was
+        fl_get_xyplot_data(pFlObject, x, y, n)
 
-        :status: Untested + NoDoc + NoDemo = NOT OK
+    :status: Untested + NoDoc + NoDemo = NOT OK
+
     """
     _fl_get_xyplot_data = libr.cfuncproto(
         libr.load_so_libforms(), "fl_get_xyplot_data",
@@ -746,24 +771,26 @@ def fl_get_xyplot_data(pFlObject):
 
 
 def fl_get_xyplot_data_pointer(pFlObject, idnum):
-    """
-        fl_get_xyplot_data_pointer(pFlObject, idnum) -> x, y, n
+    """*todo*
 
-        --
+    --
 
-        :Parameters:
+    :Parameters:
       `pFlObject` : pointer to xfdata.FL_OBJECT
         xyplot object
+      `idnum` : int
+        *todo*
 
-        :return:
-        :rtype:
+    :return: *todo*
+    :rtype: float, float, int
 
-        :note: e.g. *todo*
+    :note: e.g. *todo*
 
-        :attention: API change from XForms - upstream was
-           fl_get_xyplot_data_pointer(pFlObject, idnum, x, y, n)
+    :attention: API change from XForms - upstream was
+        fl_get_xyplot_data_pointer(pFlObject, idnum, x, y, n)
 
-        :status: Untested + NoDoc + NoDemo = NOT OK
+    :status: Untested + NoDoc + NoDemo = NOT OK
+
     """
     _fl_get_xyplot_data_pointer = libr.cfuncproto(
         libr.load_so_libforms(), "fl_get_xyplot_data_pointer",
@@ -784,24 +811,26 @@ def fl_get_xyplot_data_pointer(pFlObject, idnum):
 
 
 def fl_get_xyplot_overlay_data(pFlObject, idnum):
-    """
-        fl_get_xyplot_overlay_data(pFlObject, idnum) -> x, y, n
+    """*todo*
 
-        --
+    --
 
-        :Parameters:
+    :Parameters:
       `pFlObject` : pointer to xfdata.FL_OBJECT
         xyplot object
+      `idnum` : int
+        *todo*
 
-        :return:
-        :rtype:
+    :return: *todo*
+    :rtype: float, float, int
 
-        :note: e.g. *todo*
+    :note: e.g. *todo*
 
-        :attention: API change from XForms - upstream was
-           fl_get_xyplot_overlay_data(pFlObject, idnum, x, y, n)
+    :attention: API change from XForms - upstream was
+        fl_get_xyplot_overlay_data(pFlObject, idnum, x, y, n)
 
-        :status: Untested + NoDoc + NoDemo = NOT OK
+    :status: Untested + NoDoc + NoDemo = NOT OK
+
     """
     _fl_get_xyplot_overlay_data = libr.cfuncproto(
         libr.load_so_libforms(), "fl_get_xyplot_overlay_data",
@@ -821,21 +850,26 @@ def fl_get_xyplot_overlay_data(pFlObject, idnum):
 
 
 def fl_set_xyplot_overlay_type(pFlObject, idnum, plottype):
-    """
-        fl_set_xyplot_overlay_type(pFlObject, idnum, plottype)
+    """*todo*
 
-        --
+    --
 
-        :Parameters:
+    :Parameters:
       `pFlObject` : pointer to xfdata.FL_OBJECT
         xyplot object
+      `idnum` : int
+        *todo*
+      `plottype` : int
+        type of xyplot.  Values (from xfdata.py) FL_NORMAL_XYPLOT,
+        FL_SQUARE_XYPLOT, FL_CIRCLE_XYPLOT, FL_FILL_XYPLOT,
+        FL_POINTS_XYPLOT, FL_DASHED_XYPLOT, FL_IMPULSE_XYPLOT,
+        FL_ACTIVE_XYPLOT, FL_EMPTY_XYPLOT, FL_DOTTED_XYPLOT,
+        FL_DOTDASHED_XYPLOT, FL_LONGDASHED_XYPLOT, FL_LINEPOINTS_XYPLOT
 
-        :return:
-        :rtype:
+    :note: e.g. *todo*
 
-        :note: e.g. *todo*
+    :status: Untested + NoDoc + NoDemo = NOT OK
 
-        :status: Untested + NoDoc + NoDemo = NOT OK
     """
     _fl_set_xyplot_overlay_type = libr.cfuncproto(
         libr.load_so_libforms(), "fl_set_xyplot_overlay_type",
@@ -845,27 +879,27 @@ def fl_set_xyplot_overlay_type(pFlObject, idnum, plottype):
     libr.check_if_initialized()
     libr.verify_flobjectptr_type(pFlObject)
     iidnum = libr.convert_to_int(idnum)
+    libr.check_admitted_value_in_list(plottype, xfdata.XYPLOTTYPE_list)
     iplottype = libr.convert_to_int(plottype)
     libr.keep_elem_refs(pFlObject, idnum, plottype, iidnum, iplottype)
     _fl_set_xyplot_overlay_type(pFlObject, iidnum, iplottype)
 
 
 def fl_delete_xyplot_overlay(pFlObject, idnum):
-    """
-        fl_delete_xyplot_overlay(pFlObject, idnum)
+    """*todo*
 
-        --
+    --
 
-        :Parameters:
+    :Parameters:
       `pFlObject` : pointer to xfdata.FL_OBJECT
         xyplot object
+      `idnum` : int
+        *todo*
 
-        :return:
-        :rtype:
+    :note: e.g. *todo*
 
-        :note: e.g. *todo*
+    :status: Untested + NoDoc + NoDemo = NOT OK
 
-        :status: Untested + NoDoc + NoDemo = NOT OK
     """
     _fl_delete_xyplot_overlay = libr.cfuncproto(
         libr.load_so_libforms(), "fl_delete_xyplot_overlay",
@@ -879,21 +913,24 @@ def fl_delete_xyplot_overlay(pFlObject, idnum):
 
 
 def fl_set_xyplot_interpolate(pFlObject, idnum, deg, grid):
-    """
-        fl_set_xyplot_interpolate(pFlObject, idnum, deg, grid)
+    """*todo*
 
-        --
+    --
 
-        :Parameters:
+    :Parameters:
       `pFlObject` : pointer to xfdata.FL_OBJECT
         xyplot object
+      `idnum` : int
+        *todo*
+      `deg` : int
+        *todo*
+      `grid` : float
+        *todo*
 
-        :return:
-        :rtype:
+    :note: e.g. *todo*
 
-        :note: e.g. *todo*
+    :status: Untested + NoDoc + NoDemo = NOT OK
 
-        :status: Untested + NoDoc + NoDemo = NOT OK
     """
     _fl_set_xyplot_interpolate = libr.cfuncproto(
         libr.load_so_libforms(), "fl_set_xyplot_interpolate",
@@ -911,21 +948,20 @@ def fl_set_xyplot_interpolate(pFlObject, idnum, deg, grid):
 
 
 def fl_set_xyplot_inspect(pFlObject, yes):
-    """
-        fl_set_xyplot_inspect(pFlObject, yes)
+    """*todo*
 
-        --
+    --
 
-        :Parameters:
+    :Parameters:
       `pFlObject` : pointer to xfdata.FL_OBJECT
         xyplot object
+      `yes` : int
+        *todo*
 
-        :return:
-        :rtype:
+    :note: e.g. *todo*
 
-        :note: e.g. *todo*
+    :status: Untested + NoDoc + NoDemo = NOT OK
 
-        :status: Untested + NoDoc + NoDemo = NOT OK
     """
     _fl_set_xyplot_inspect = libr.cfuncproto(
         libr.load_so_libforms(), "fl_set_xyplot_inspect",
@@ -939,21 +975,20 @@ def fl_set_xyplot_inspect(pFlObject, yes):
 
 
 def fl_set_xyplot_symbolsize(pFlObject, n):
-    """
-        fl_set_xyplot_symbolsize(pFlObject, n)
+    """*todo*
 
-        --
+    --
 
-        :Parameters:
+    :Parameters:
       `pFlObject` : pointer to xfdata.FL_OBJECT
         xyplot object
+      `n` : int
+        *todo*
 
-        :return:
-        :rtype:
+    :note: e.g. *todo*
 
-        :note: e.g. *todo*
+    :status: Untested + NoDoc + NoDemo = NOT OK
 
-        :status: Untested + NoDoc + NoDemo = NOT OK
     """
     _fl_set_xyplot_symbolsize = libr.cfuncproto(
         libr.load_so_libforms(), "fl_set_xyplot_symbolsize",
@@ -967,21 +1002,24 @@ def fl_set_xyplot_symbolsize(pFlObject, n):
 
 
 def fl_replace_xyplot_point(pFlObject, i, valx, valy):
-    """
-        fl_replace_xyplot_point(pFlObject, i, valx, valy)
+    """*todo*
 
-        --
+    --
 
-        :Parameters:
+    :Parameters:
       `pFlObject` : pointer to xfdata.FL_OBJECT
         xyplot object
+      `i` : int
+        *todo*
+      `valx` : float
+        *todo*
+      `valy` : float
+        *todo*
 
-        :return:
-        :rtype:
+    :note: e.g. *todo*
 
-        :note: e.g. *todo*
+    :status: Untested + NoDoc + NoDemo = NOT OK
 
-        :status: Untested + NoDoc + NoDemo = NOT OK
     """
     _fl_replace_xyplot_point = libr.cfuncproto(
         libr.load_so_libforms(), "fl_replace_xyplot_point",
@@ -1004,21 +1042,26 @@ def fl_replace_xyplot_point(pFlObject, i, valx, valy):
 # which acts on the first dataset only.
 
 def fl_replace_xyplot_point_in_overlay(pFlObject, i, setID, valx, valy):
-    """
-        fl_replace_xyplot_point_in_overlay(pFlObject, i, setID, valx, valy)
+    """*todo*
 
-        --
+    --
 
-        :Parameters:
+    :Parameters:
       `pFlObject` : pointer to xfdata.FL_OBJECT
         xyplot object
+      `i` : int
+        *todo*
+      `setID` : int
+        *todo*
+      `valx` : float
+        *todo*
+      `valy` : float
+        *todo*
 
-        :return:
-        :rtype:
+    :note: e.g. *todo*
 
-        :note: e.g. *todo*
+    :status: Untested + NoDoc + NoDemo = NOT OK
 
-        :status: Untested + NoDoc + NoDemo = NOT OK
     """
     _fl_replace_xyplot_point_in_overlay = libr.cfuncproto(
         libr.load_so_libforms(), "fl_replace_xyplot_point_in_overlay",
@@ -1037,24 +1080,24 @@ def fl_replace_xyplot_point_in_overlay(pFlObject, i, setID, valx, valy):
 
 
 def fl_get_xyplot_xmapping(pFlObject):
-    """
-        fl_get_xyplot_xmapping(pFlObject) -> a, b
+    """*todo*
 
-        --
+    --
 
-        :Parameters:
+    :Parameters:
       `pFlObject` : pointer to xfdata.FL_OBJECT
         xyplot object
 
-        :return:
-        :rtype:
+    :return: *todo*
+    :rtype: float, float
 
-        :note: e.g. *todo*
+    :note: e.g. *todo*
 
-        :attention: API change from XForms - upstream was
-           fl_get_xyplot_xmapping(pFlObject, a, b)
+    :attention: API change from XForms - upstream was
+        fl_get_xyplot_xmapping(pFlObject, a, b)
 
-        :status: Untested + NoDoc + NoDemo = NOT OK
+    :status: Untested + NoDoc + NoDemo = NOT OK
+
     """
     _fl_get_xyplot_xmapping = libr.cfuncproto(
         libr.load_so_libforms(), "fl_get_xyplot_xmapping",
@@ -1072,33 +1115,31 @@ def fl_get_xyplot_xmapping(pFlObject):
 
 
 def fl_get_xyplot_ymapping(pFlObject):
-    """
-        fl_get_xyplot_ymapping(pFlObject) -> a, b
+    """*todo*
 
-        --
+    --
 
-        :Parameters:
+    :Parameters:
       `pFlObject` : pointer to xfdata.FL_OBJECT
         xyplot object
 
-        :return:
-        :rtype:
+    :return: *todo*
+    :rtype: float, float
 
-        :note: e.g. *todo*
+    :note: e.g. *todo*
 
-        :attention: API change from XForms - upstream was
-           fl_get_xyplot_ymapping(pFlObject, a, b)
+    :attention: API change from XForms - upstream was
+        fl_get_xyplot_ymapping(pFlObject, a, b)
 
-        :status: Untested + NoDoc + NoDemo = NOT OK
+    :status: Untested + NoDoc + NoDemo = NOT OK
+
     """
-
     _fl_get_xyplot_ymapping = libr.cfuncproto(
-            libr.load_so_libforms(), "fl_get_xyplot_ymapping",
-            None, [cty.POINTER(xfdata.FL_OBJECT), cty.POINTER(cty.c_float),
-            cty.POINTER(cty.c_float)],
-            """void fl_get_xyplot_ymapping(FL_OBJECT * ob, float * a,
-               float * b)
-""")
+        libr.load_so_libforms(), "fl_get_xyplot_ymapping",
+        None, [cty.POINTER(xfdata.FL_OBJECT), cty.POINTER(cty.c_float),
+        cty.POINTER(cty.c_float)],
+        """void fl_get_xyplot_ymapping(FL_OBJECT * ob, float * a,
+           float * b)""")
     libr.check_if_initialized()
     libr.verify_flobjectptr_type(pFlObject)
     a, pa = libr.make_float_and_pointer()
@@ -1109,61 +1150,68 @@ def fl_get_xyplot_ymapping(pFlObject):
 
 
 def fl_set_xyplot_keys(pFlObject, keys, valx, valy, align):
-    """
-        fl_set_xyplot_keys(pFlObject, keys, valx, valy, align)
+    """*todo*
 
-        --
+    --
 
-        :Parameters:
+    :Parameters:
       `pFlObject` : pointer to xfdata.FL_OBJECT
         xyplot object
+      `keys` : str
+        *todo*
+      `valx` : float
+        *todo*
+      `valy` : float
+        *todo*
+      `align` : int
+        alignment of xyplot keys. Values (from xfdata.py) FL_ALIGN_CENTER,
+        FL_ALIGN_TOP, FL_ALIGN_BOTTOM, FL_ALIGN_LEFT, FL_ALIGN_RIGHT,
+        FL_ALIGN_LEFT_TOP, FL_ALIGN_RIGHT_TOP, FL_ALIGN_LEFT_BOTTOM,
+        FL_ALIGN_RIGHT_BOTTOM, FL_ALIGN_INSIDE, FL_ALIGN_VERT
 
-        :return:
-        :rtype:
+    :note: e.g. *todo*
 
-        :note: e.g. *todo*
-
-        :status: Untested + NoDoc + NoDemo = NOT OK
+    :status: Untested + NoDoc + NoDemo = NOT OK
     """
     _fl_set_xyplot_keys = libr.cfuncproto(
         libr.load_so_libforms(), "fl_set_xyplot_keys",
-        None, [cty.POINTER(xfdata.FL_OBJECT), cty.POINTER(xfdata.STRING), cty.c_float,
-        cty.c_float, cty.c_int],
+        None, [cty.POINTER(xfdata.FL_OBJECT), cty.POINTER(xfdata.STRING),
+        cty.c_float, cty.c_float, cty.c_int],
         """void fl_set_xyplot_keys(FL_OBJECT * ob, char * * keys, float x,
            float y, int align)""")
     libr.check_if_initialized()
     libr.verify_flobjectptr_type(pFlObject)
     fvalx = libr.convert_to_float(valx)
     fvaly = libr.convert_to_float(valy)
+    libr.check_admitted_value_in_list(align, xfdata.ALIGN_list)
     ialign = libr.convert_to_int(align)
     libr.keep_elem_refs(pFlObject, keys, valx, valy, align, fvalx, fvaly, ialign)
     _fl_set_xyplot_keys(pFlObject, keys, fvalx, fvaly, ialign)
 
 
 def fl_set_xyplot_key(pFlObject, idnum, keytxt):
-    """
-        fl_set_xyplot_key(pFlObject, idnum, keytxt)
+    """*todo*
 
-        --
+    --
 
-        :Parameters:
+    :Parameters:
       `pFlObject` : pointer to xfdata.FL_OBJECT
         xyplot object
+      `idnum` : int
+        *todo*
+      `keytxt` : str
+        *todo*
 
-        :return:
-        :rtype:
+    :note: e.g. *todo*
 
-        :note: e.g. *todo*
+    :status: Untested + NoDoc + NoDemo = NOT OK
 
-        :status: Untested + NoDoc + NoDemo = NOT OK
     """
-
     _fl_set_xyplot_key = libr.cfuncproto(
-            libr.load_so_libforms(), "fl_set_xyplot_key",
-            None, [cty.POINTER(xfdata.FL_OBJECT), cty.c_int, xfdata.STRING],
-            """void fl_set_xyplot_key(FL_OBJECT * ob, int id,
-               const char * key)
-""")
+        libr.load_so_libforms(), "fl_set_xyplot_key",
+        None, [cty.POINTER(xfdata.FL_OBJECT), cty.c_int, xfdata.STRING],
+        """void fl_set_xyplot_key(FL_OBJECT * ob, int id,
+           const char * key)""")
     libr.check_if_initialized()
     libr.verify_flobjectptr_type(pFlObject)
     iidnum = libr.convert_to_int(idnum)
@@ -1173,94 +1221,108 @@ def fl_set_xyplot_key(pFlObject, idnum, keytxt):
 
 
 def fl_set_xyplot_key_position(pFlObject, valx, valy, align):
-    """
-        fl_set_xyplot_key_position(pFlObject, valx, valy, align)
+    """*todo*
 
-        --
+    --
 
-        :Parameters:
+    :Parameters:
       `pFlObject` : pointer to xfdata.FL_OBJECT
         xyplot object
+      `valx` : float
+        *todo*
+      `valy` : float
+        *todo*
+      `align` : int
+        alignment of xyplot keys. Values (from xfdata.py) FL_ALIGN_CENTER,
+        FL_ALIGN_TOP, FL_ALIGN_BOTTOM, FL_ALIGN_LEFT, FL_ALIGN_RIGHT,
+        FL_ALIGN_LEFT_TOP, FL_ALIGN_RIGHT_TOP, FL_ALIGN_LEFT_BOTTOM,
+        FL_ALIGN_RIGHT_BOTTOM, FL_ALIGN_INSIDE, FL_ALIGN_VERT
 
-        :return:
-        :rtype:
+    :note: e.g. *todo*
 
-        :note: e.g. *todo*
+    :status: Untested + NoDoc + NoDemo = NOT OK
 
-        :status: Untested + NoDoc + NoDemo = NOT OK
     """
-
     _fl_set_xyplot_key_position = libr.cfuncproto(
-            libr.load_so_libforms(), "fl_set_xyplot_key_position",
-            None, [cty.POINTER(xfdata.FL_OBJECT), cty.c_float, cty.c_float,
-            cty.c_int],
-            """void fl_set_xyplot_key_position(FL_OBJECT * ob, float x,
-               float y, int align)
-""")
+        libr.load_so_libforms(), "fl_set_xyplot_key_position",
+        None, [cty.POINTER(xfdata.FL_OBJECT), cty.c_float, cty.c_float,
+        cty.c_int],
+        """void fl_set_xyplot_key_position(FL_OBJECT * ob, float x,
+           float y, int align)""")
     libr.check_if_initialized()
     libr.verify_flobjectptr_type(pFlObject)
     fvalx = libr.convert_to_float(valx)
     fvaly = libr.convert_to_float(valy)
+    libr.check_admitted_value_in_list(align, xfdata.ALIGN_list)
     ialign = libr.convert_to_int(align)
     libr.keep_elem_refs(pFlObject, valx, valy, align, fvalx, fvaly, ialign)
     _fl_set_xyplot_key_position(pFlObject, fvalx, fvaly, ialign)
 
 
 def fl_set_xyplot_key_font(pFlObject, style, size):
-    """
-        fl_set_xyplot_key_font(pFlObject, style, size)
+    """*todo*
 
-        --
+    --
 
-        :Parameters:
+    :Parameters:
       `pFlObject` : pointer to xfdata.FL_OBJECT
         xyplot object
+      `style` : int
+        label style. Values (from xfdata.py) FL_NORMAL_STYLE,
+        FL_BOLD_STYLE, FL_ITALIC_STYLE, FL_BOLDITALIC_STYLE, FL_FIXED_STYLE,
+        FL_FIXEDBOLD_STYLE, FL_FIXEDITALIC_STYLE, FL_FIXEDBOLDITALIC_STYLE,
+        FL_TIMES_STYLE, FL_TIMESBOLD_STYLE, FL_TIMESITALIC_STYLE,
+        FL_TIMESBOLDITALIC_STYLE, FL_MISC_STYLE, FL_MISCBOLD_STYLE,
+        FL_MISCITALIC_STYLE, FL_SYMBOL_STYLE, FL_SHADOW_STYLE,
+        FL_ENGRAVED_STYLE, FL_EMBOSSED_STYLE
+      `size` : int
+        label size. Values (from xfdata.py) FL_TINY_SIZE, FL_SMALL_SIZE,
+        FL_NORMAL_SIZE, FL_MEDIUM_SIZE, FL_LARGE_SIZE, FL_HUGE_SIZE,
+        FL_DEFAULT_SIZE
 
-        :return:
-        :rtype:
+    :note: e.g. *todo*
 
-        :note: e.g. *todo*
+    :status: Untested + NoDoc + NoDemo = NOT OK
 
-        :status: Untested + NoDoc + NoDemo = NOT OK
     """
-
     _fl_set_xyplot_key_font = libr.cfuncproto(
-            libr.load_so_libforms(), "fl_set_xyplot_key_font",
-            None, [cty.POINTER(xfdata.FL_OBJECT), cty.c_int, cty.c_int],
-            """void fl_set_xyplot_key_font(FL_OBJECT * ob, int style,
-               int size)
-""")
+        libr.load_so_libforms(), "fl_set_xyplot_key_font",
+        None, [cty.POINTER(xfdata.FL_OBJECT), cty.c_int, cty.c_int],
+        """void fl_set_xyplot_key_font(FL_OBJECT * ob, int style,
+           int size)""")
     libr.check_if_initialized()
     libr.verify_flobjectptr_type(pFlObject)
+    libr.check_admitted_value_in_list(style, xfdata.TEXTSTYLE_list)
     istyle = libr.convert_to_int(style)
+    libr.check_admitted_value_in_list(size, xfdata.FONTSIZE_list)
     isize = libr.convert_to_int(size)
     libr.keep_elem_refs(pFlObject, style, size, istyle, isize)
     _fl_set_xyplot_key_font(pFlObject, istyle, isize)
 
 
 def fl_get_xyplot_numdata(pFlObject, idnum):
-    """
-        fl_get_xyplot_numdata(pFlObject, idnum) -> num.
+    """*todo*
 
-        --
+    --
 
-        :Parameters:
+    :Parameters:
       `pFlObject` : pointer to xfdata.FL_OBJECT
         xyplot object
+      `idnum` : int
+        *todo*
 
-        :return:
-        :rtype:
+    :return: num.
+    :rtype: int
 
-        :note: e.g. *todo*
+    :note: e.g. *todo*
 
-        :status: Untested + NoDoc + NoDemo = NOT OK
+    :status: Untested + NoDoc + NoDemo = NOT OK
+
     """
-
     _fl_get_xyplot_numdata = libr.cfuncproto(
-            libr.load_so_libforms(), "fl_get_xyplot_numdata",
-            cty.c_int, [cty.POINTER(xfdata.FL_OBJECT), cty.c_int],
-            """int fl_get_xyplot_numdata(FL_OBJECT * ob, int id)
-""")
+        libr.load_so_libforms(), "fl_get_xyplot_numdata",
+        cty.c_int, [cty.POINTER(xfdata.FL_OBJECT), cty.c_int],
+        """int fl_get_xyplot_numdata(FL_OBJECT * ob, int id)""")
     libr.check_if_initialized()
     libr.verify_flobjectptr_type(pFlObject)
     iidnum = libr.convert_to_int(idnum)
@@ -1273,96 +1335,111 @@ def fl_get_xyplot_numdata(pFlObject, idnum):
 # fl_set_xyplot_fontstyle function placeholder (deprecated)
 
 
-def fl_xyplot_s2w(pFlObject, sx, sy, wx, wy):
-    """
-        fl_xyplot_s2w(pFlObject, sx, sy, wx, wy)
+def fl_xyplot_s2w(pFlObject, sx, sy):
+    """*todo*
 
-        --
+    --
 
-        :Parameters:
+    :Parameters:
       `pFlObject` : pointer to xfdata.FL_OBJECT
         xyplot object
+      `sx` : float
+        *todo*
+      `sy` : float
+        *todo*
 
-        :return:
-        :rtype:
+    :return: wx, wy *todo*
+    :rtype: float, float
 
-        :note: e.g. *todo*
+    :note: e.g. *todo*
 
-        :status: Untested + NoDoc + NoDemo = NOT OK
+    :attention: API change from XForms - upstream was
+        fl_xyplot_s2w(pFlObject, sx, sy, wx, wy)
+
+    :status: Untested + NoDoc + NoDemo = NOT OK
+
     """
-
     _fl_xyplot_s2w = libr.cfuncproto(
-            libr.load_so_libforms(), "fl_xyplot_s2w",
-            None, [cty.POINTER(xfdata.FL_OBJECT), cty.c_double, cty.c_double,
-            cty.POINTER(cty.c_float), cty.POINTER(cty.c_float)],
-            """void fl_xyplot_s2w(FL_OBJECT * ob, double sx, double sy,
-               float * wx, float * wy)
-""")
+        libr.load_so_libforms(), "fl_xyplot_s2w",
+        None, [cty.POINTER(xfdata.FL_OBJECT), cty.c_double, cty.c_double,
+        cty.POINTER(cty.c_float), cty.POINTER(cty.c_float)],
+        """void fl_xyplot_s2w(FL_OBJECT * ob, double sx, double sy,
+           float * wx, float * wy)""")
     libr.check_if_initialized()
     libr.verify_flobjectptr_type(pFlObject)
     fsx = libr.convert_to_double(sx)
     fsy = libr.convert_to_double(sy)
-    libr.keep_elem_refs(pFlObject, sx, sy, wx, wy, fsx, fsy)
-    _fl_xyplot_s2w(pFlObject, fsx, fsy, wx, wy)
+    wx, pwx = libr.make_float_and_pointer()
+    wy, pwy = libr.make_float_and_pointer()
+    libr.keep_elem_refs(pFlObject, sx, sy, wx, pwx, wy, pwy, fsx, fsy)
+    _fl_xyplot_s2w(pFlObject, fsx, fsy, pwx, pwy)
+    return wx.value, wy.value
 
 
-def fl_xyplot_w2s(pFlObject, wx, wy, sx, sy):
-    """
-        fl_xyplot_w2s(pFlObject, wx, wy, sx, sy)
+def fl_xyplot_w2s(pFlObject, wx, wy):
+    """*todo*
 
-        --
+    --
 
-        :Parameters:
+    :Parameters:
       `pFlObject` : pointer to xfdata.FL_OBJECT
         xyplot object
+      `wx` : float
+        *todo*
+      `wy` : float
+        *todo*
 
-        :return:
-        :rtype:
+    :return: sx, sy *todo*
+    :rtype: float, float
 
-        :note: e.g. *todo*
+    :note: e.g. *todo*
 
-        :status: Untested + NoDoc + NoDemo = NOT OK
+    :attention: API change from XForms - upstream was
+        fl_xyplot_w2s(pFlObject, wx, wy)
+
+    :status: Untested + NoDoc + NoDemo = NOT OK
+
     """
-
     _fl_xyplot_w2s = libr.cfuncproto(
-            libr.load_so_libforms(), "fl_xyplot_w2s",
-            None, [cty.POINTER(xfdata.FL_OBJECT), cty.c_double, cty.c_double,
-            cty.POINTER(cty.c_float), cty.POINTER(cty.c_float)],
-            """void fl_xyplot_w2s(FL_OBJECT * ob, double wx, double wy,
-               float * sx, float * sy)
-""")
+        libr.load_so_libforms(), "fl_xyplot_w2s",
+        None, [cty.POINTER(xfdata.FL_OBJECT), cty.c_double, cty.c_double,
+        cty.POINTER(cty.c_float), cty.POINTER(cty.c_float)],
+        """void fl_xyplot_w2s(FL_OBJECT * ob, double wx, double wy,
+           float * sx, float * sy)""")
     libr.check_if_initialized()
     libr.verify_flobjectptr_type(pFlObject)
     fwx = libr.convert_to_double(wx)
     fwy = libr.convert_to_double(wy)
-    libr.keep_elem_refs(pFlObject, wx, wy, sx, sy, fwx, fwy)
-    _fl_xyplot_w2s(pFlObject, fwx, fwy, sx, sy)
+    sx, psx = libr.make_float_and_pointer()
+    sy, psy = libr.make_float_and_pointer()
+    libr.keep_elem_refs(pFlObject, wx, wy, sx, psx, sy, psy, fwx, fwy)
+    _fl_xyplot_w2s(pFlObject, fwx, fwy, psx, psy)
+    return sx.value, sy.value
 
 
 def fl_set_xyplot_xscale(pFlObject, scale, base):
-    """
-        fl_set_xyplot_xscale(pFlObject, scale, base)
+    """*todo*
 
-        --
+    --
 
-        :Parameters:
+    :Parameters:
       `pFlObject` : pointer to xfdata.FL_OBJECT
         xyplot object
+      `scale` : int
+        *todo*
+      `base` : float
+        *todo*
 
-        :return:
-        :rtype:
+    :note: e.g. *todo*
 
-        :note: e.g. *todo*
+    :status: Untested + NoDoc + NoDemo = NOT OK
 
-        :status: Untested + NoDoc + NoDemo = NOT OK
     """
-
     _fl_set_xyplot_xscale = libr.cfuncproto(
-            libr.load_so_libforms(), "fl_set_xyplot_xscale",
-            None, [cty.POINTER(xfdata.FL_OBJECT), cty.c_int, cty.c_double],
-            """void fl_set_xyplot_xscale(FL_OBJECT * ob, int scale,
-               double base)
-""")
+        libr.load_so_libforms(), "fl_set_xyplot_xscale",
+        None, [cty.POINTER(xfdata.FL_OBJECT), cty.c_int, cty.c_double],
+        """void fl_set_xyplot_xscale(FL_OBJECT * ob, int scale,
+           double base)""")
     libr.check_if_initialized()
     libr.verify_flobjectptr_type(pFlObject)
     iscale = libr.convert_to_int(scale)
@@ -1372,29 +1449,28 @@ def fl_set_xyplot_xscale(pFlObject, scale, base):
 
 
 def fl_set_xyplot_yscale(pFlObject, scale, base):
-    """
-        fl_set_xyplot_yscale(pFlObject, scale, base)
+    """*todo*
 
-        --
+    --
 
-        :Parameters:
+    :Parameters:
       `pFlObject` : pointer to xfdata.FL_OBJECT
         xyplot object
+      `scale` : int
+        *todo*
+      `base` : float
+        *todo*
 
-        :return:
-        :rtype:
+    :note: e.g. *todo*
 
-        :note: e.g. *todo*
+    :status: Untested + NoDoc + NoDemo = NOT OK
 
-        :status: Untested + NoDoc + NoDemo = NOT OK
     """
-
     _fl_set_xyplot_yscale = libr.cfuncproto(
-            libr.load_so_libforms(), "fl_set_xyplot_yscale",
-            None, [cty.POINTER(xfdata.FL_OBJECT), cty.c_int, cty.c_double],
-            """void fl_set_xyplot_yscale(FL_OBJECT * ob, int scale,
-               double base)
-""")
+        libr.load_so_libforms(), "fl_set_xyplot_yscale",
+        None, [cty.POINTER(xfdata.FL_OBJECT), cty.c_int, cty.c_double],
+        """void fl_set_xyplot_yscale(FL_OBJECT * ob, int scale,
+           double base)""")
     libr.check_if_initialized()
     libr.verify_flobjectptr_type(pFlObject)
     iscale = libr.convert_to_int(scale)
@@ -1404,28 +1480,23 @@ def fl_set_xyplot_yscale(pFlObject, scale, base):
 
 
 def fl_clear_xyplot(pFlObject):
-    """
-        fl_clear_xyplot(pFlObject)
+    """*todo*
 
-        --
+    --
 
-        :Parameters:
+    :Parameters:
       `pFlObject` : pointer to xfdata.FL_OBJECT
         xyplot object
 
-        :return:
-        :rtype:
+    :note: e.g. *todo*
 
-        :note: e.g. *todo*
+    :status: Untested + NoDoc + NoDemo = NOT OK
 
-        :status: Untested + NoDoc + NoDemo = NOT OK
     """
-
     _fl_clear_xyplot = libr.cfuncproto(
-            libr.load_so_libforms(), "fl_clear_xyplot",
-            None, [cty.POINTER(xfdata.FL_OBJECT)],
-            """void fl_clear_xyplot(FL_OBJECT * ob)
-""")
+        libr.load_so_libforms(), "fl_clear_xyplot",
+        None, [cty.POINTER(xfdata.FL_OBJECT)],
+        """void fl_clear_xyplot(FL_OBJECT * ob)""")
     libr.check_if_initialized()
     libr.verify_flobjectptr_type(pFlObject)
     libr.keep_elem_refs(pFlObject)
@@ -1435,7 +1506,7 @@ def fl_clear_xyplot(pFlObject):
 def fl_set_xyplot_linewidth(pFlObject, idnum, lw):
     """*todo*
 
-        --
+    --
 
     :Parameters:
       `pFlObject` : pointer to xfdata.FL_OBJECT
@@ -1521,7 +1592,7 @@ def fl_set_xyplot_ygrid(pFlObject, ygrid):
 def fl_set_xyplot_grid_linestyle(pFlObject, linestyle):
     """*todo*
 
-        --
+    --
 
     :Parameters:
       `pFlObject` : pointer to xfdata.FL_OBJECT
@@ -1545,6 +1616,7 @@ def fl_set_xyplot_grid_linestyle(pFlObject, linestyle):
         """int fl_set_xyplot_grid_linestyle(FL_OBJECT * ob, int style)""")
     libr.check_if_initialized()
     libr.verify_flobjectptr_type(pFlObject)
+    libr.check_admitted_value_in_list(linestyle, xfdata.LINESTYLE_list)
     ilinestyle = libr.convert_to_int(linestyle)
     libr.keep_elem_refs(pFlObject, linestyle, ilinestyle)
     retval = _fl_set_xyplot_grid_linestyle(pFlObject, ilinestyle)
@@ -1562,7 +1634,7 @@ def fl_set_xyplot_alphaxtics(pFlObject, m, s):
       `m` : str
         *todo*
       `s` : str
-        *todo*
+        unused *todo*
 
     :note: e.g. *todo*
 
@@ -1593,7 +1665,7 @@ def fl_set_xyplot_alphaytics(pFlObject, m, s):
       `m` : str
         *todo*
       `s` : str
-        *todo*
+        unused *todo*
 
     :note: e.g. *todo*
 

@@ -54,18 +54,18 @@ def fl_add_timer(timertype, x, y, w, h, label):
     --
 
     :Parameters:
-      `timertype: int
+      `timertype` : int
         type of timer to be added. Values (from xfdata.py) FL_NORMAL_TIMER,
         FL_VALUE_TIMER, FL_HIDDEN_TIMER
-      `x: int
+      `x` : int
         horizontal position (upper-left corner)
-      `y: int
+      `y` : int
         vertical position (upper-left corner)
-      `w: int
+      `w` : int
         width in coord units
-      `h: int
+      `h` : int
         height in coord units
-      `label: str
+      `label` : str
         text label of timer
 
     :return: timer object added (pFlObject)
@@ -105,8 +105,7 @@ def fl_set_timer(pFlObject, total):
       `pFlObject` : pointer to xfdata.FL_OBJECT
         timer object
       `total` : float
-        total?
-        
+        *todo*
 
     :note: e.g. *todo*
 

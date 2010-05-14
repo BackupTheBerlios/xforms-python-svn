@@ -191,7 +191,7 @@ def fl_get_slider_value(pFlObject):
     --
 
     :Parameters:
-      `pFlObject: pointer to xfdata.FL_OBJECT
+      `pFlObject` : pointer to xfdata.FL_OBJECT
         slider object
 
     :return: value
@@ -250,7 +250,7 @@ def fl_get_slider_bounds(pFlObject):
     --
 
     :Parameters:
-      `pFlObject: pointer to xfdata.FL_OBJECT
+      `pFlObject` : pointer to xfdata.FL_OBJECT
         slider object
 
     :return: minimum bound, maximum bound

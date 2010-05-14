@@ -101,7 +101,7 @@ def fl_set_positioner_xvalue(pFlObject, val):
     --
 
     :Parameters:
-      `pFlObject`: pointer to xfdata.FL_OBJECT
+      `pFlObject` : pointer to xfdata.FL_OBJECT
         positioner object
       `val` : float
         value to be set. By default it is 0.5.
@@ -318,7 +318,7 @@ def fl_get_positioner_ybounds(pFlObject):
       `pFlObject` : pointer to xfdata.FL_OBJECT
         positioner object
 
-    :return: minimum  bound, maximum bound
+    :return: minimum bound, maximum bound
     :rtype: float, float
 
     :note: e.g. *todo*
@@ -353,12 +353,13 @@ def fl_set_positioner_xstep(pFlObject, step):
     :Parameters:
       `pFlObject` : pointer to xfdata.FL_OBJECT
         positioner object
-      `step` :
-        rounded value. If it's 0.0, switches off rounding.
+      `step` : float
+        rounded value. If it's 0.0, switch off rounding.
 
     :note: e.g. *todo*
 
     :status: Untested + NoDoc + NoDemo = NOT OK
+
     """
     _fl_set_positioner_xstep = libr.cfuncproto(
         libr.load_so_libforms(), "fl_set_positioner_xstep",
@@ -380,8 +381,8 @@ def fl_set_positioner_ystep(pFlObject, step):
     :Parameters:
       `pFlObject` : pointer to xfdata.FL_OBJECT
         positioner object
-      `step` :
-        rounded value. If it's 0.0, switches off rounding.
+      `step` : float
+        rounded value. If it's 0.0, switch off rounding.
 
     :note: e.g. *todo*
 

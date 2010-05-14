@@ -54,9 +54,8 @@ def fl_get_dirlist(dirname, pattern, rescan):
     :Parameters:
       `dirname` : str
         name of directory
-      `pattern` : regular expression that is used to filter the directory
-        entries
-    @type pattern: str
+      `pattern` : str
+        regular expression that is used to filter the directory entries
       `rescan` : flag to request a re-read or not. Values 0 (no re-read)
         or non-zero (does a re-read)
 
@@ -138,7 +137,7 @@ def fl_set_dirlist_sort(method):
     --
 
     :Parameters:
-      `method ` : int
+      `method` : int
         method of sorting. Values (from xfdata.py) FL_NONE, FL_ALPHASORT,
         FL_RALPHASORT, FL_MTIMESORT, FL_RMTIMESORT,  FL_SIZESORT, FL_RSIZESORT,
         FL_CASEALPHASORT, FL_RCASEALPHASORT
@@ -199,7 +198,7 @@ def fl_free_dirlist(pDirList):
 
     :Parameters:
       `pDirList` : pointer to xfdata.FL_DirList
-      instance of DirList class
+        instance of DirList class
 
     :note: e.g. fl_free_dirlist(pdirlist)
 
@@ -212,7 +211,7 @@ def fl_free_dirlist(pDirList):
         """void fl_free_dirlist(FL_Dirlist * dl)""")
     libr.check_if_initialized()
     libr.verify_otherclassptr_type(pDirList, cty.POINTER( \
-                                           xfdata.FL_Dirlist))
+                                xfdata.FL_Dirlist))
     libr.keep_elem_refs(pDirList)
     _fl_free_dirlist(pDirList)
 

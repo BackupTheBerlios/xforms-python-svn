@@ -2,7 +2,8 @@
 # -*- coding: iso8859-1 -*-
 
 """
-    flformbrowser.py - xforms-python's functions to manage formbrowser objects.
+    flformbrowser.py - xforms-python's functions to manage formbrowser
+    objects.
 
     Copyright (C) 2009, 2010  Luca Lazzaroni "LukenShiro"
     e-mail: <lukenshiro@ngi.it>
@@ -53,7 +54,7 @@ def fl_addto_formbrowser(pFlObject, pFlForm):
     :Parameters:
       `pFlObject` : pointer to xfdata.FL_OBJECT
         formbrowser object
-      `pFlForm: pointer to xfdata.FL_FORM
+      `pFlForm` : pointer to xfdata.FL_FORM
         form
 
     :return: total number of forms in the formbrowser

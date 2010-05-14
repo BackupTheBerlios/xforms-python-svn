@@ -43,20 +43,21 @@ from xformslib import xfdata
 #########################
 
 def fl_get_thumbwheel_value(pFlObject):
-    """
-        fl_get_thumbwheel_value(pFlObject) -> num.
+    """*todo*
 
-        --
+    --
 
-        :Parameters:
-          `pFlObject: pointer to object
+    :Parameters:
+      `pFlObject` : pointer to xfdata.FL_OBJECT
+        thumbwheel object
 
-        :return:
-        :rtype:
+    :return: num.
+    :rtype: int
 
-        :note: e.g. *todo*
+    :note: e.g. *todo*
 
-        :status: Tested + NoDoc + Demo = OK
+    :status: Tested + NoDoc + Demo = OK
+
     """
     _fl_get_thumbwheel_value = libr.cfuncproto(
         libr.load_so_libforms(), "fl_get_thumbwheel_value",
@@ -70,18 +71,23 @@ def fl_get_thumbwheel_value(pFlObject):
 
 
 def fl_set_thumbwheel_value(pFlObject, value):
-    """
-        fl_set_thumbwheel_value(pFlObject, value)
+    """*todo*
 
-        --
+    --
 
-        :Parameters:
-        :return:
-        :rtype:
+    :Parameters:
+      `pFlObject` : pointer to xfdata.FL_OBJECT
+        thumbwheel object
+      `value` : float
+        value to be set
 
-        :note: e.g. *todo*
+    :return: num.
+    :rtype: float
 
-          `pFlObject: pointer to object
+    :note: e.g. *todo*
+
+    :status: Untested + NoDoc + NoDemo = NOT OK
+
     """
     _fl_set_thumbwheel_value = libr.cfuncproto(
         libr.load_so_libforms(), "fl_set_thumbwheel_value",
@@ -96,21 +102,21 @@ def fl_set_thumbwheel_value(pFlObject, value):
 
 
 def fl_get_thumbwheel_step(pFlObject):
-    """
-        fl_get_thumbwheel_step(pFlObject) -> num.
+    """*todo*
 
-        --
+    --
 
-        :Parameters:
+    :Parameters:
+      `pFlObject` : pointer to xfdata.FL_OBJECT
+        thumbwheel object
 
-          `pFlObject: pointer to object
+    :return: step value
+    :rtype: double
 
-        :return:
-        :rtype:
+    :note: e.g. *todo*
 
-        :note: e.g. *todo*
+    :status: Untested + NoDoc + NoDemo = NOT OK
 
-        :status: Untested + NoDoc + NoDemo = NOT OK
     """
     _fl_get_thumbwheel_step = libr.cfuncproto(
         libr.load_so_libforms(), "fl_get_thumbwheel_step",
@@ -124,20 +130,23 @@ def fl_get_thumbwheel_step(pFlObject):
 
 
 def fl_set_thumbwheel_step(pFlObject, step):
-    """
-        fl_set_thumbwheel_step(pFlObject, step) -> num.
+    """*todo*
 
-        --
+    --
 
-        :Parameters:
-          `pFlObject: pointer to object
+    :Parameters:
+      `pFlObject` : pointer to xfdata.FL_OBJECT
+        thumbwheel object
+      `step` : float
+        step value to be set
 
-        :return:
-        :rtype:
+    :return: num.
+    :rtype: float
 
-        :note: e.g. *todo*
+    :note: e.g. *todo*
 
-        :status: Tested + NoDoc + Demo = OK
+    :status: Tested + NoDoc + Demo = OK
+
     """
     _fl_set_thumbwheel_step = libr.cfuncproto(
         libr.load_so_libforms(), "fl_set_thumbwheel_step",
@@ -152,25 +161,26 @@ def fl_set_thumbwheel_step(pFlObject, step):
 
 
 def fl_set_thumbwheel_return(pFlObject, when):
-    """
-        fl_set_thumbwheel_return(pFlObject, when) -> num.
+    """*todo*
 
-        --
+    --
 
-        :Parameters:
-          `pFlObject: pointer to object
-          `when: return type (when it returns)
-        @type when: [num./int] FL_RETURN_NONE, FL_RETURN_CHANGED,
-                    FL_RETURN_END, FL_RETURN_END_CHANGED,
-                    FL_RETURN_SELECTION, FL_RETURN_DESELECTION,
-                    FL_RETURN_TRIGGERED, FL_RETURN_ALWAYS
+    :Parameters:
+      `pFlObject` : pointer to xfdata.FL_OBJECT
+        thumbwheel object
+      `when` : int
+        return type (when it returns). Values (from xfdata.py) FL_RETURN_NONE,
+        FL_RETURN_CHANGED, FL_RETURN_END, FL_RETURN_END_CHANGED,
+        FL_RETURN_SELECTION, FL_RETURN_DESELECTION, FL_RETURN_TRIGGERED,
+        FL_RETURN_ALWAYS
 
-        :return:
-        :rtype:
+    :return: num.
+    :rtype: int
 
-        :note: e.g. *todo*
+    :note: e.g. *todo*
 
-        :status: Tested + NoDoc + Demo = OK
+    :status: Tested + NoDoc + Demo = OK
+
     """
     _fl_set_thumbwheel_return = libr.cfuncproto(
         libr.load_so_libforms(), "fl_set_thumbwheel_return",
@@ -187,20 +197,23 @@ def fl_set_thumbwheel_return(pFlObject, when):
 
 
 def fl_set_thumbwheel_crossover(pFlObject, flag):
-    """
-        fl_set_thumbwheel_crossover(pFlObject, flag) -> num.
+    """*todo*
 
-        --
+    --
 
-        :Parameters:
-          `pFlObject: pointer to object
+    :Parameters:
+      `pFlObject` : pointer to xfdata.FL_OBJECT
+        thumbwheel object
+      `flag` : int
+        *todo*
 
-        :return:
-        :rtype:
+    :return: num.
+    :rtype: int
 
-        :note: e.g. *todo*
+    :note: e.g. *todo*
 
-        :status: Untested + NoDoc + NoDemo = NOT OK
+    :status: Untested + NoDoc + NoDemo = NOT OK
+
     """
     _fl_set_thumbwheel_crossover = libr.cfuncproto(
         libr.load_so_libforms(), "fl_set_thumbwheel_crossover",
@@ -215,20 +228,22 @@ def fl_set_thumbwheel_crossover(pFlObject, flag):
 
 
 def fl_set_thumbwheel_bounds(pFlObject, minbound, maxbound):
-    """
-        fl_set_thumbwheel_bounds(pFlObject, minbound, maxbound)
+    """*todo*
 
-        --
+    --
 
-        :Parameters:
-          `pFlObject: pointer to object
+    :Parameters:
+      `pFlObject` : pointer to xfdata.FL_OBJECT
+        thumbwheel object
+      `minbound` : float
+        minimum bound of slider
+      `maxbound` : float
+        maximum bound of slider
 
-        :return:
-        :rtype:
+    :note: e.g. *todo*
 
-        :note: e.g. *todo*
+    :status: Untested + NoDoc + NoDemo = NOT OK
 
-        :status: Untested + NoDoc + NoDemo = NOT OK
     """
     _fl_set_thumbwheel_bounds = libr.cfuncproto(
         libr.load_so_libforms(), "fl_set_thumbwheel_bounds",
@@ -244,22 +259,24 @@ def fl_set_thumbwheel_bounds(pFlObject, minbound, maxbound):
 
 
 def fl_get_thumbwheel_bounds(pFlObject):
-    """ fl_get_thumbwheel_bounds(pFlObject) -> minbound, maxbound
+    """*todo*
 
-        --
+    --
 
-        :Parameters:
-          `pFlObject: pointer to thumbwheel object
+    :Parameters:
+      `pFlObject` : pointer to xfdata.FL_OBJECT
+        thumbwheel object
 
-        :return:
-        :rtype:
+    :return: minimum bound, maximum bound
+    :rtype: float, float
 
-        :note: e.g. *todo*
+    :note: e.g. *todo*
 
-        :attention: API change from XForms - upstream was
-                    fl_get_thumbwheel_bounds(pFlObject, minbound, maxbound)
+    :attention: API change from XForms - upstream was
+        fl_get_thumbwheel_bounds(pFlObject, minbound, maxbound)
 
-        :status: Untested + NoDoc + NoDemo = NOT OK
+    :status: Untested + NoDoc + NoDemo = NOT OK
+
     """
     _fl_get_thumbwheel_bounds = libr.cfuncproto(
         libr.load_so_libforms(), "fl_get_thumbwheel_bounds",
@@ -280,27 +297,32 @@ def fl_get_thumbwheel_bounds(pFlObject):
 
 
 def fl_add_thumbwheel(wheeltype, x, y, w, h, label):
-    """
-        fl_add_thumbwheel(wheeltype, x, y, w, h, label) -> pFlObject
+    """Adds a thumbwheel object.
 
-        Adds a thumbwheel object.
+    --
 
-        --
+    :Parameters:
+      `wheeltype` : int
+        type of thumbwheel to be added. Values (from xfdata.py)
+        FL_VERT_THUMBWHEEL, FL_HOR_THUMBWHEEL
+      `x` : int
+        horizontal position (upper-left corner)
+      `y` : int
+        vertical position (upper-left corner)
+      `w` : int
+        width in coord units
+      `h` : int
+        height in coord units
+      `label` : str
+        text label of thumbwheel
 
-        :Parameters:
-          `wheeltype: type of thumbwheel to be added
-          `x: horizontal position (upper-left corner)
-          `x: vertical position (upper-left corner)
-          `w: width in coord units
-          `h: height in coord units
-          `label: text label of thumbwheel
+    :return: thumbwheel object added (pFlObject)
+    :rtype: pointer to xfdata.FL_OBJECT
 
-        :return:
-        :rtype:
+    :note: e.g. *todo*
 
-        :note: e.g. *todo*
+    :status: Tested + NoDoc + Demo = OK
 
-        :status: Tested + NoDoc + Demo = OK
     """
     _fl_add_thumbwheel = libr.cfuncproto(
         libr.load_so_libforms(), "fl_add_thumbwheel",

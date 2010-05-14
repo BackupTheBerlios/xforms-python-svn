@@ -1,6 +1,8 @@
 
 
 SVN
+    * some bugfixes in code (most of warnings fixed using pylint, pychecker and
+    pyflakes) and docstrings finally compliant to epydoc reStructuredText.
     * performing a check for all complex structures (e.g. FL_OBJECT, FL_FORM
     ..) in needed fl_* functions, in order to verify if their type complies
     with XForms expectations. Some renaming in library's convenience functions.

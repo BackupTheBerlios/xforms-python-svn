@@ -209,7 +209,6 @@ def fl_show_question(questmsg, defbtn):
     :Parameters:
       `questmsg` : str
         text of question message to show
-    @type questmsg: str
       `defbtn` : int
         which button the mouse pointer should be on. Values 1  (for Yes) or 0
         (for No) and any other value causes the form to be shown so the mouse
@@ -1534,7 +1533,7 @@ def fl_set_pattern(pattern):
       `pattern` : str
         text to be used for pattern
 
-    :note: e.g. fl_set_pattern("*.txt")
+    :note: e.g. fl_set_pattern("\*.txt")
 
     :status: Tested + Doc + NoDemo = OK
 
@@ -1837,7 +1836,7 @@ def fl_goodies_atclose(pFlForm, vdata):
         cty.c_int, [cty.POINTER(xfdata.FL_FORM), cty.c_void_p],
         """int fl_goodies_atclose(FL_FORM * p1, void * p2)""")
     libr.check_if_initialized()
-    libr.check_if_FL_FORM_ptr(pFlForm)
+    libr.verify_flformptr_type(pFlForm)
     pvdata = cty.cast(vdata, cty.c_void_p)
     libr.keep_elem_refs(pFlForm, vdata, pvdata)
     retval = _fl_goodies_atclose(pFlForm, pvdata)

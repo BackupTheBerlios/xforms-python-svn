@@ -61,7 +61,7 @@ def fl_add_box(boxtype, x, y, w, h, label):
         horizontal position (upper-left corner)
       `y` : int
         vertical position (upper-left corner)
-      `w`: int
+      `w` : int
         width in coord units
       `h` : int
         height in coord units
@@ -143,7 +143,7 @@ def fl_stuff_clipboard(pFlObject, clipbdtype, data, size, py_LoseSelectionCb):
         *todo*
       `size` : long
         *todo*
-      `py_LoseSelectionCb: python function callback, returning value
+      `py_LoseSelectionCb` : python function callback, returning value
         name referring to function(pFlObject, longnum) -> num.
 
     :return: num.
@@ -187,7 +187,7 @@ def fl_request_clipboard(pFlObject, clipbdtype, py_SelectionCb):
         clipboard object
       `clipbdtype` : long
         type of clipboard (not used)
-      `py_SelectionCb: python function callback, returning value
+      `py_SelectionCb` : python function callback, returning value
         name referring to function(pFlObject, longnum, ptr_void, longnum)
         -> num.
 
@@ -428,7 +428,7 @@ def fl_add_free(freetype, x, y, w, h, label, py_HandlePtr):
         width in coord units
       `h` : int
         height in coord units
-      `label`: str
+      `label` : str
         text label of free
       `py_HandlePtr` : python function to handle free object, returning value
         name referring to function(int, pFlObject, int, coord, coord, int,
@@ -513,7 +513,7 @@ def fl_add_text(texttype, x, y, w, h, label):
         type of text to be added. Values FL_NORMAL_TEXT
       `x` : int
         horizontal position (upper-left corner)
-      `x` : int
+      `y` : int
         vertical position (upper-left corner)
       `w` : int
         width in coord units

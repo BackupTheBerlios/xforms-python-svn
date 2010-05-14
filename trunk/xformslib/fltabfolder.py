@@ -687,7 +687,7 @@ def fl_set_tabfolder_offset(pFlObject, offset):
     --
 
     :Parameters:
-      `pFlObject: pointer to xfdata.FL_OBJECT
+      `pFlObject` : pointer to xfdata.FL_OBJECT
         tabfolder object
       `offset` : int
         *todo*

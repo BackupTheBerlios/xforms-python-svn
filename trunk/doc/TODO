@@ -2,13 +2,14 @@
 
 - Some parameters in functions are not correctly handled yet
 (e.g. void *), as ctypes is somehow rigid and a free cast
-on-the-fly equivalent to C's is not so viable.
+on-the-fly equivalent to C's is not so viable. So some functions
+here use a 3-types approach when possible: None, long, or FL_OBJECT.
 - To compare two FL-objects you can use fl_is_same_object(..),
 instead of using 'if obj == someobj'
 - For some functions who use some parameters as an address
 value (e.g. in c: &a) that is modified by the function
 itself, there has been a change in API so these arguments
-represent multiple return values.
+represent multiple return values here.
 - First two parameters of fl_initialize (len(sys.argv) and
 sys.argv) are ignored, to prevent an unexplicable segfault:
 so command line arguments are not usable.
@@ -69,10 +70,20 @@ functions call in xforms-python are only slightly modified.
 depending only on XForms library functions (hopefully).
 
 - Porting code from Python 2.x to 3.x (while keeping 2.x
-compatibility).
+compatibility). Main problem, I guess, is Unicode strings
+that are not supported yet in XForms (this should not be a problem
+for most of strings used in functions, but is *is* surely a problem
+in 1 byte-characters used for keys, shortcut etc...)
 
 - Adopting RestructuredText format (rst) in functions' docstrings,
-replacing epytext format.
+replacing epytext format (WIP).
 
-- Porting xforms-python to object-oriented/classes (maybe for version 2.x).
+- Module deprecated.py will be removed (as I don't see a reason to
+support it, as it contains functions and variables already deprecated
+by XForms developers). Before removing it is necessary to get rid
+of examples that are based on that module's functions and port them
+to alternative functions.
+
+- Porting xforms-python to object-oriented/classes (maybe for version 2.x,
+lowest priority).
 

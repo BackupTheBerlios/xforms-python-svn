@@ -293,7 +293,7 @@ def fl_get_scrollbar_bounds(pFlObject):
     --
 
     :Parameters:
-      `pFlObject: pointer to xfdata.FL_OBJECT
+      `pFlObject` : pointer to xfdata.FL_OBJECT
         scrollbar object
 
     :return: minimum bound, maximum bound

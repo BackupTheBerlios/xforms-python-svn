@@ -136,9 +136,9 @@ def fl_set_input_color(pFlObject, txtcolr, curscolr):
     :Parameters:
       `pFlObject` : pointer to xfdata.FL_OBJECT
         input object
-      txtcolr` : long_pos
+      `txtcolr` : long_pos
         color value for text
-      curscolr` : long_pos
+      `curscolr` : long_pos
         color value for cursor
 
     :note: e.g. *todo*
