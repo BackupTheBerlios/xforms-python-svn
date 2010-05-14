@@ -1,6 +1,10 @@
 
 
 SVN
+    * introduced support of strings in c_void_p parameters in flbasic. New
+    support function in library.py to check if a function is correctly passed
+    as parameter (e.g. in callback making functions). Fixed a bug in
+    library.py's check_admitted_value_in_list.
     * some bugfixes in code (most of warnings fixed using pylint, pychecker and
     pyflakes) and docstrings finally compliant to epydoc reStructuredText.
     * performing a check for all complex structures (e.g. FL_OBJECT, FL_FORM

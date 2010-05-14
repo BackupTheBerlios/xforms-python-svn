@@ -89,7 +89,6 @@ def special_style(style):
 
 # IO other than XEvent Q
 
-# TODO: verify what function can open file
 def fl_add_io_callback(fd, mask, py_IoCallback, vdata):
     """Registers an input callback function when input is available from fd.
 
@@ -97,17 +96,17 @@ def fl_add_io_callback(fd, mask, py_IoCallback, vdata):
 
     :Parameters:
       `fd` : int
-        a valid file descriptor in a unix system
+        a valid file descriptor in a unix system from an opened file
       `mask` : int
         under what circumstance the input callback should be invoked. Values
         (from xfdata.py) FL_READ, FL_WRITE, FL_EXCEPT
       `py_IoCallback` : python function to be invoked, no return
         name referring to function(num, ptr_void)
-      `vdata` : None or long or pointer to xfdata.FL_OBJECT
+      `vdata` : one of those 'None'|long|str|pointer to xfdata.FL_OBJECT
         user data argument to be passed to function
 
     :note: e.g. def iocb(num, vdata): > ...
-    :note: fdesc = some_function_to_open_file
+    :note: fdesc = os.open(myfile, os.RD_ONLY)
     :note: fl_add_io_callback(fdesc, xfdata.FL_READ, iocb, None)
 
     :status: Tested + Doc + NoDemo = OK
@@ -121,13 +120,18 @@ def fl_add_io_callback(fd, mask, py_IoCallback, vdata):
            FL_IO_CALLBACK callback, void * data) """)
     libr.check_if_initialized()
     ifd = libr.convert_to_int(fd)
+    libr.check_admitted_value_in_list(mask, xfdata.ASYNCIO_list)
     uimask = libr.convert_to_uint(mask)
+    libr.verify_function_type(py_IoCallback)
     c_IoCallback = xfdata.FL_IO_CALLBACK(py_IoCallback)
     if vdata is None:
         pvdata = cty.cast(vdata, cty.c_void_p)
     elif isinstance(vdata, long):
         ldata = libr.convert_to_long(vdata)
         pvdata = cty.cast(ldata, cty.POINTER(cty.c_long))
+    elif isinstance(vdata, str):
+        ldata = libr.convert_to_string(vdata)
+        pvdata = cty.cast(ldata, cty.POINTER(xfdata.STRING))
     else:
         pvdata = vdata          # it is pFlObject
     libr.keep_cfunc_refs(c_IoCallback, py_IoCallback)
@@ -2674,7 +2678,8 @@ def fl_set_object_color(pFlObject, fgcolr, bgcolr):
     """
     _fl_set_object_color = libr.cfuncproto(
         libr.load_so_libforms(), "fl_set_object_color", \
-        None, [cty.POINTER(xfdata.FL_OBJECT), xfdata.FL_COLOR, xfdata.FL_COLOR], \
+        None, [cty.POINTER(xfdata.FL_OBJECT), xfdata.FL_COLOR,
+        xfdata.FL_COLOR],
         """void fl_set_object_color(FL_OBJECT * ob, FL_COLOR col1,
            FL_COLOR col2) """)
     libr.check_if_initialized()
@@ -5735,7 +5740,8 @@ def fl_set_error_handler(py_ErrorFunc):
     return retval
 
 
-# maybe pointless as command line args are not supported in python's fl_initialize()
+# maybe pointless as command line args are not supported in python's
+# fl_initialize()
 # commented as it gives a SegFault
 #def fl_get_cmdline_args(numargs):
 #    """Returns command line arguments.

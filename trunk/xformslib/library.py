@@ -402,13 +402,13 @@ def make_ushort_and_pointer():
     return baseval, ptrbaseval
 
 
-def check_admitted_value_in_list(paramname, *valueslist):
-    """Check if paramname value is valid in accordance to a list of
-        admissible values."""
-    if isinstance(valueslist, list):
+def check_admitted_value_in_list(paramname, valueslist):
+    """ Check if paramname value is valid in accordance to a list or tuple
+        of admissible values."""
+    if isinstance(valueslist, list) or isinstance(valueslist, tuple):
         if paramname not in valueslist:
             raise XFormsTypeError("Parameter %s value must be one of those" \
-                        " included in list %s." % (paramname, valueslist))
+                    " included in list/tuple %s." % (paramname, valueslist))
 
 def verify_tuplelist_type(paramname):
     """Check if paramname is a valid list or tuple."""
@@ -471,6 +471,14 @@ def verify_flpopupitemptr_type(paramname):
         raise XFormsTypeError("Parameter %s must be a pointer to " \
                         "xfdata.FL_POPUP_ITEM. Instead it is %s" % \
                         (paramname, type(paramname)))
+
+
+def verify_function_type(paramname):
+    """ Check if paramname value is a valid python function to be passed as
+    e.g. callback in a public function."""
+    if not hasattr(paramname, '__call__'):
+        raise XFormsTypeError("Parameter %s must be a python function. " \
+                        "Instead it is %s" % (paramname, type(paramname)))
 
 
 def verify_otherclassptr_type(paramname, pstructinst):
