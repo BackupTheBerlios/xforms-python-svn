@@ -1,8 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: iso8859-1 -*-
 
-"""
-    fltimer.py - xforms-python's functions to manage timer objects.
+""" xforms-python's functions to manage timer objects.
 
     Copyright (C) 2009, 2010  Luca Lazzaroni "LukenShiro"
     e-mail: <lukenshiro@ngi.it>

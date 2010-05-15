@@ -1,8 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: iso8859-1 -*-
 
-"""
-    flclock.py - xforms-python's functions to manage clock objects.
+""" xforms-python's functions to manage clock objects.
 
     Copyright (C) 2009, 2010  Luca Lazzaroni "LukenShiro"
     e-mail: <lukenshiro@ngi.it>

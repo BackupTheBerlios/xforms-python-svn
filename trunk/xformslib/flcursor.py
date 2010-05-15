@@ -1,8 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: iso8859-1 -*-
 
-"""
-    flcursor.py - xforms-python's functions to manage cursor objects.
+""" xforms-python's functions to manage cursor objects.
 
     Copyright (C) 2009, 2010  Luca Lazzaroni "LukenShiro"
     e-mail: <lukenshiro@ngi.it>

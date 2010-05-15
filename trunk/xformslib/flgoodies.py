@@ -1,8 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: iso8859-1 -*-
 
-"""
-    flgoodies.py - xforms-python's functions to manage goodies objects.
+""" xforms-python's functions to manage goodies objects.
 
     Copyright (C) 2009, 2010  Luca Lazzaroni "LukenShiro"
     e-mail: <lukenshiro@ngi.it>
@@ -844,9 +843,10 @@ def fl_set_tooltip_lalign(align):
         alignment of tooltip. Values (from xfdata.py) FL_ALIGN_CENTER,
         FL_ALIGN_TOP, FL_ALIGN_BOTTOM, FL_ALIGN_LEFT, FL_ALIGN_RIGHT,
         FL_ALIGN_LEFT_TOP, FL_ALIGN_RIGHT_TOP, FL_ALIGN_LEFT_BOTTOM,
-        FL_ALIGN_RIGHT_BOTTOM, FL_ALIGN_INSIDE, FL_ALIGN_VERT
+        FL_ALIGN_RIGHT_BOTTOM, FL_ALIGN_INSIDE, FL_ALIGN_VERT.
+        Bitwise OR with FL_ALIGN_INSIDE is allowed.
 
-    :note: e.g. fl_set_tooltip_lalign(xfdata.FL_ALIGN_VERT)
+    :note: e.g. fl_set_tooltip_lalign(xfdata.FL_ALIGN_RIGHT_TOP)
 
     :status: Tested + Doc + NoDemo = OK
 

@@ -1,8 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: iso8859-1 -*-
 
-"""
-    flcounters.py - xforms-python's functions to manage counters.
+""" xforms-python's functions to manage counters.
 
     Copyright (C) 2009, 2010  Luca Lazzaroni "LukenShiro"
     e-mail: <lukenshiro@ngi.it>

@@ -1,9 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: iso8859-1 -*-
 
-"""
-    flformbrowser.py - xforms-python's functions to manage formbrowser
-    objects.
+""" xforms-python's functions to manage formbrowser objects.
 
     Copyright (C) 2009, 2010  Luca Lazzaroni "LukenShiro"
     e-mail: <lukenshiro@ngi.it>

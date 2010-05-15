@@ -1,9 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: iso8859-1 -*-
 
-"""
-    library.py - Convenience functions to deal with xforms-python wrapper's
-    functions.
+""" Convenience functions to deal with xforms-python wrapper's functions.
 
     Copyright (C) 2009, 2010  Luca Lazzaroni "LukenShiro"
     e-mail: <lukenshiro@ngi.it>

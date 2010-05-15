@@ -1,8 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: iso8859-1 -*-
 
-"""
-    flbasic.py - xforms-python's functions to manage basic generic objects.
+""" xforms-python's functions to manage basic generic objects.
 
     Copyright (C) 2009, 2010  Luca Lazzaroni "LukenShiro"
     e-mail: <lukenshiro@ngi.it>
@@ -2490,7 +2489,8 @@ def fl_set_object_lalign(pFlObject, align):
         alignment of label. Values (from xfdata.py) FL_ALIGN_CENTER,
         FL_ALIGN_TOP, FL_ALIGN_BOTTOM, FL_ALIGN_LEFT, FL_ALIGN_RIGHT,
         FL_ALIGN_LEFT_TOP, FL_ALIGN_RIGHT_TOP, FL_ALIGN_LEFT_BOTTOM,
-        FL_ALIGN_RIGHT_BOTTOM, FL_ALIGN_INSIDE, FL_ALIGN_VERT
+        FL_ALIGN_RIGHT_BOTTOM, FL_ALIGN_INSIDE, FL_ALIGN_VERT.
+        Bitwise OR with FL_ALIGN_INSIDE is allowed.
 
     :note: e.g. fl_set_object_lalign(pobj8, xfdata.FL_ALIGN_RIGHT)
 
@@ -4290,6 +4290,7 @@ def fl_get_align_xy(align, x, y, w, h, xsize, ysize, xmargin, ymargin):
         FL_ALIGN_BOTTOM, FL_ALIGN_LEFT, FL_ALIGN_RIGHT, FL_ALIGN_LEFT_TOP,
         FL_ALIGN_RIGHT_TOP, FL_ALIGN_LEFT_BOTTOM, FL_ALIGN_RIGHT_BOTTOM,
         FL_ALIGN_INSIDE, FL_ALIGN_VERT
+        Bitwise OR with FL_ALIGN_INSIDE is allowed.
       `x` : int
         horizontal position of bounding box (upper-left corner)
       `y` : int
@@ -4363,6 +4364,7 @@ def fl_drw_text(align, x, y, w, h, colr, style, size, txtstr):
         FL_ALIGN_TOP, FL_ALIGN_BOTTOM, FL_ALIGN_LEFT, FL_ALIGN_RIGHT,
         FL_ALIGN_LEFT_TOP, FL_ALIGN_RIGHT_TOP, FL_ALIGN_LEFT_BOTTOM,
         FL_ALIGN_RIGHT_BOTTOM, FL_ALIGN_INSIDE, FL_ALIGN_VERT
+        Bitwise OR with FL_ALIGN_INSIDE is allowed.
       `x` : int
         horizontal position (upper-left corner)
       `y` : int
@@ -4433,6 +4435,7 @@ def fl_drw_text_beside(align, x, y, w, h, colr, style, size, txtstr):
         FL_ALIGN_TOP, FL_ALIGN_BOTTOM, FL_ALIGN_LEFT, FL_ALIGN_RIGHT,
         FL_ALIGN_LEFT_TOP, FL_ALIGN_RIGHT_TOP, FL_ALIGN_LEFT_BOTTOM,
         FL_ALIGN_RIGHT_BOTTOM, FL_ALIGN_INSIDE, FL_ALIGN_VERT
+        Bitwise OR with FL_ALIGN_INSIDE is allowed.
       `x` : int
         horizontal position (upper-left corner)
       `y` : int
@@ -4505,6 +4508,7 @@ def fl_drw_text_cursor(align, x, y, w, h, colr, style, size, txtstr, curscolr,
         FL_ALIGN_TOP, FL_ALIGN_BOTTOM, FL_ALIGN_LEFT, FL_ALIGN_RIGHT,
         FL_ALIGN_LEFT_TOP, FL_ALIGN_RIGHT_TOP, FL_ALIGN_LEFT_BOTTOM,
         FL_ALIGN_RIGHT_BOTTOM, FL_ALIGN_INSIDE, FL_ALIGN_VERT
+        Bitwise OR with FL_ALIGN_INSIDE is allowed.
       `x` : int
         horizontal position (upper-left corner)
       `y` : int

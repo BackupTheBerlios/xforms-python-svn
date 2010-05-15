@@ -1,8 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: iso8859-1 -*-
 
-"""
-    flselect.py - xforms-python's functions to manage select objects.
+""" xforms-python's functions to manage select objects.
 
     Copyright (C) 2009, 2010  Luca Lazzaroni "LukenShiro"
     e-mail: <lukenshiro@ngi.it>
@@ -687,7 +686,8 @@ def fl_set_select_text_align(pFlObject, align):
         alignment of text. Values (from xfdata.py) FL_ALIGN_CENTER,
         FL_ALIGN_TOP, FL_ALIGN_BOTTOM, FL_ALIGN_LEFT, FL_ALIGN_RIGHT,
         FL_ALIGN_LEFT_TOP, FL_ALIGN_RIGHT_TOP, FL_ALIGN_LEFT_BOTTOM,
-        FL_ALIGN_RIGHT_BOTTOM, FL_ALIGN_INSIDE, FL_ALIGN_VERT
+        FL_ALIGN_RIGHT_BOTTOM, FL_ALIGN_INSIDE, FL_ALIGN_VERT.
+        Bitwise OR with FL_ALIGN_INSIDE is allowed.
 
     :return: num.
     :rtype: int
