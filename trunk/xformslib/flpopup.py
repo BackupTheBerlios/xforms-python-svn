@@ -37,7 +37,6 @@ from xformslib import flxbasic
 from xformslib import xfdata
 
 
-
 ####################
 # forms.h (popupfn.h)
 ####################
@@ -477,10 +476,12 @@ def fl_popup_set_callback(pPopup, py_PopupCb):
     :status: Untested + NoDoc + NoDemo = NOT OK
 
     """
-    #FL_POPUP_CB = cty.CFUNCTYPE(cty.c_int, cty.POINTER(xfdata.FL_POPUP_RETURN))
+    #FL_POPUP_CB = cty.CFUNCTYPE(cty.c_int, \
+    #            cty.POINTER(xfdata.FL_POPUP_RETURN))
     _fl_popup_set_callback = libr.cfuncproto(
         libr.load_so_libforms(), "fl_popup_set_callback",
-        xfdata.FL_POPUP_CB, [cty.POINTER(xfdata.FL_POPUP), xfdata.FL_POPUP_CB],
+        xfdata.FL_POPUP_CB, [cty.POINTER(xfdata.FL_POPUP),
+        xfdata.FL_POPUP_CB],
         """FL_POPUP_CB fl_popup_set_callback(FL_POPUP * p1,
            FL_POPUP_CB p2)""")
     libr.check_if_initialized()
@@ -1604,5 +1605,3 @@ def fl_popup_set_min_width(pPopup, width):
     libr.keep_elem_refs(pPopup, width, iwidth)
     retval = _fl_popup_set_min_width(pPopup, iwidth)
     return retval
-
-

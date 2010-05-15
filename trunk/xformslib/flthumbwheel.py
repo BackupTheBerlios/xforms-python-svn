@@ -36,7 +36,6 @@ from xformslib import library as libr
 from xformslib import xfdata
 
 
-
 #########################
 # forms.h (thumbwheel.h)
 #########################
@@ -341,5 +340,3 @@ def fl_add_thumbwheel(wheeltype, x, y, w, h, label):
                    iw, ih, slabel)
     retval = _fl_add_thumbwheel(iwheeltype, ix, iy, iw, ih, slabel)
     return retval
-
-

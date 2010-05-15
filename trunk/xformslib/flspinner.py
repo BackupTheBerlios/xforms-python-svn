@@ -36,7 +36,6 @@ from xformslib import library as libr
 from xformslib import xfdata
 
 
-
 ######################
 # forms.h (spinner.h)
 ######################
@@ -407,5 +406,3 @@ def fl_get_spinner_down_button(pFlObject):
     libr.keep_elem_refs(pFlObject)
     retval = _fl_get_spinner_down_button(pFlObject)
     return retval
-
-

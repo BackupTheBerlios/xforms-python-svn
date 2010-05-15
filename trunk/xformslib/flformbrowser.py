@@ -591,7 +591,8 @@ def fl_find_formbrowser_form_number(pFlObject, pFlForm):
     """
     _fl_find_formbrowser_form_number = libr.cfuncproto(
         libr.load_so_libforms(), "fl_find_formbrowser_form_number",
-        cty.c_int, [cty.POINTER(xfdata.FL_OBJECT), cty.POINTER(xfdata.FL_FORM)],
+        cty.c_int, [cty.POINTER(xfdata.FL_OBJECT),
+        cty.POINTER(xfdata.FL_FORM)],
         """int fl_find_formbrowser_form_number(FL_OBJECT * ob,
            FL_FORM * candidate_form)""")
     libr.check_if_initialized()
@@ -703,7 +704,8 @@ def fl_get_formbrowser_form(pFlObject, seqnum):
     """
     _fl_get_formbrowser_form = libr.cfuncproto(
         libr.load_so_libforms(), "fl_get_formbrowser_form",
-        cty.POINTER(xfdata.FL_FORM), [cty.POINTER(xfdata.FL_OBJECT), cty.c_int],
+        cty.POINTER(xfdata.FL_FORM), [cty.POINTER(xfdata.FL_OBJECT),
+        cty.c_int],
         """FL_FORM * fl_get_formbrowser_form(FL_OBJECT * ob, int n)""")
     libr.check_if_initialized()
     libr.verify_flobjectptr_type(pFlObject)
@@ -711,5 +713,3 @@ def fl_get_formbrowser_form(pFlObject, seqnum):
     libr.keep_elem_refs(pFlObject, seqnum, iseqnum)
     retval = _fl_get_formbrowser_form(pFlObject, iseqnum)
     return retval
-
-

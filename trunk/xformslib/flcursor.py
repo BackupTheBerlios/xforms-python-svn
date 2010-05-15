@@ -36,7 +36,6 @@ from xformslib import library
 from xformslib import xfdata
 
 
-
 #############################
 # forms.h (cursor.h)
 # Cursor defs and prototypes
@@ -235,4 +234,3 @@ def fl_reset_cursor(win):
 
     """
     fl_set_cursor(win, xfdata.FL_DEFAULT_CURSOR)
-

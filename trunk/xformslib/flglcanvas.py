@@ -389,8 +389,8 @@ def fl_glwinopen(config, glxcontext, w, h):
     """
     _fl_glwinopen = libr.cfuncproto(
         libr.load_so_libformsgl(), "fl_glwinopen",
-        xfdata.Window, [cty.POINTER(cty.c_int), cty.POINTER(xfdata.GLXContext),
-        cty.c_int, cty.c_int],
+        xfdata.Window, [cty.POINTER(cty.c_int),
+        cty.POINTER(xfdata.GLXContext), cty.c_int, cty.c_int],
         """Window fl_glwinopen(int * config, GLXContext * context,
            int w, int h""")
     libr.check_if_initialized()
@@ -400,5 +400,3 @@ def fl_glwinopen(config, glxcontext, w, h):
     libr.keep_elem_refs(config, pGLXContext, w, h, iw, ih)
     retval = _fl_glwinopen(config, pGLXContext, iw, ih)
     return retval
-
-

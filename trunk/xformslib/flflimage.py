@@ -36,7 +36,6 @@ from xformslib import library as libr
 from xformslib import xfdata
 
 
-
 #########################
 # flimage.h
 # Image related routines
@@ -176,7 +175,8 @@ def flimage_dump(pImage, fname, fmt):
     """
     _flimage_dump = libr.cfuncproto(
         libr.load_so_libflimage(), "flimage_dump",
-        cty.c_int, [cty.POINTER(xfdata.FL_IMAGE), xfdata.STRING, xfdata.STRING],
+        cty.c_int, [cty.POINTER(xfdata.FL_IMAGE), xfdata.STRING,
+        xfdata.STRING],
         """int flimage_dump(FL_IMAGE * p1, const char * p2,
            const char * p3)""")
     libr.check_if_initialized()
@@ -613,8 +613,8 @@ def flimage_add_text(pImage, text, length, style, size, txtcolr, bgcolr,
     libr.keep_elem_refs(pImage, text, length, style, size, txtcolr, bgcolr,
                 nobk, tx, ty, rot, stext, ilength, istyle, isize, uitxtcolr,
                 uibgcolr, inobk, ftx, fty, irot)
-    retval = _flimage_add_text(pImage, stext, ilength, istyle, isize, uitxtcolr, \
-                               uibgcolr, inobk, ftx, fty, irot)
+    retval = _flimage_add_text(pImage, stext, ilength, istyle, isize,
+                uitxtcolr, uibgcolr, inobk, ftx, fty, irot)
     return retval
 
 
@@ -674,7 +674,8 @@ def flimage_delete_all_text(pImage):
     _flimage_delete_all_text(pImage)
 
 
-def flimage_add_marker(pImage, name, x, y, w, h, style, fill, rot, colr, bcolr):
+def flimage_add_marker(pImage, name, x, y, w, h, style, fill, rot, \
+                       colr, bcolr):
     """Adds simple markers (arrows, circles etc) to an image, passing
     parameters individually.
 
@@ -1345,9 +1346,9 @@ def flimage_add_format(formalname, shortname, extension, imagetype,
     c_ImageDescription = xfdata.FLIMAGE_Description(py_ImageDescription)
     c_ImageReadPixels = xfdata.FLIMAGE_Read_Pixels(py_ImageReadPixels)
     c_ImageWriteImage = xfdata.FLIMAGE_Write_Image(py_ImageWriteImage)
-    libr.keep_cfunc_refs(c_ImageIdentify, py_ImageIdentify, c_ImageDescription, \
-                    py_ImageDescription, c_ImageReadPixels, py_ImageReadPixels,
-                    c_ImageWriteImage, py_ImageWriteImage)
+    libr.keep_cfunc_refs(c_ImageIdentify, py_ImageIdentify,
+            c_ImageDescription, py_ImageDescription, c_ImageReadPixels,
+            py_ImageReadPixels, c_ImageWriteImage, py_ImageWriteImage)
     libr.keep_elem_refs(formalname, shortname, extension, imagetype, \
                    sformalname, sshortname, sextension, iimagetype)
     retval = _flimage_add_format(sformalname, sshortname, sextension, \
@@ -3262,4 +3263,3 @@ def flimage_write_annotation(pImage):
     libr.keep_elem_refs(pImage)
     retval = _flimage_write_annotation(pImage)
     return retval
-

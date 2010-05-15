@@ -35,7 +35,6 @@ from xformslib import library as libr
 from xformslib import xfdata
 
 
-
 ##################
 # forms.h (box.h)
 ##################
@@ -128,7 +127,8 @@ def fl_add_box(boxtype, x, y, w, h, label):
 #################################
 
 
-def fl_stuff_clipboard(pFlObject, clipbdtype, data, size, py_LoseSelectionCb):
+def fl_stuff_clipboard(pFlObject, clipbdtype, data, size, \
+                       py_LoseSelectionCb):
     """Stores data in clipboard?
 
     --
@@ -700,7 +700,7 @@ def fl_fdesc_():
     retval = _fl_fdesc_()
     return retval
 
-#fl_fdesc = fl_fdesc_()         # commented to prevent a SegmentationFault --LK
+#fl_fdesc = fl_fdesc_()   # commented to prevent a SegmentationFault --LK
 fl_fdesc = fl_fdesc_
 
 
@@ -725,7 +725,7 @@ def fl_cur_win_():
     retval = _fl_cur_win_()
     return retval
 
-#fl_cur_win = fl_cur_win_()     # commented to prevent a SegmentationFault--LK
+#fl_cur_win = fl_cur_win_()  # commented to prevent a SegmentationFault--LK
 fl_cur_win = fl_cur_win_
 
 
@@ -751,7 +751,7 @@ def fl_cur_fs_():
     return retval
 
 
-#fl_cur_fs = fl_cur_fs_()       # commented to prevent a SegmentationFault --LK
+#fl_cur_fs = fl_cur_fs_()  # commented to prevent a SegmentationFault --LK
 fl_cur_fs = fl_cur_fs_
 
 
@@ -783,13 +783,17 @@ def fl_display_():
 # flps_circ(fill, x, y, r, colr) function placeholder (internal)
 # flps_color(colr) function placeholder (internal)
 # flps_draw_box(style, x, y, w, h, colr, bwIn) function placeholder (internal)
-# flps_draw_checkbox(boxtype, x, y, w, h, colr, bw) function placeholder (internal)
+# flps_draw_checkbox(boxtype, x, y, w, h, colr, bw)
+#  function placeholder (internal)
 # flps_draw_frame(style, x, y, w, h, colr, bw) function placeholder (internal)
 # flps_draw_symbol(label, x, y, w, h, colr) function placeholder (internal)
 # flps_draw_tbox(style, x, y, w, h, colr, bw) function placeholder (internal)
-# flps_draw_text(align, x, y, w, h, colr, style, size, text) function placeholder (internal)
-# flps_draw_text_beside(align, x, y, w, h, colr, style, size, text) function placeholder (internal)
-# flps_emit_header(title, npages, xi, yi, xf, yf) function placeholder (internal)
+# flps_draw_text(align, x, y, w, h, colr, style, size, text)
+#  function placeholder (internal)
+# flps_draw_text_beside(align, x, y, w, h, colr, style, size, text)
+#  function placeholder (internal)
+# flps_emit_header(title, npages, xi, yi, xf, yf)
+#  function placeholder (internal)
 # flps_emit_prolog() function placeholder (internal)
 # flps_get_gray255(colr) function placeholder (internal)
 # flps_get_linestyle() function placeholder (internal)
@@ -806,7 +810,8 @@ def fl_display_():
 # flps_log(text) function placeholder (internal)
 # flps_output(fmt) function placeholder (internal)
 # flps_oval(fill, x, y, w, h, colr) function placeholder (internal)
-# flps_pieslice(fill, x, y, w, h, t1, t2, colr) function placeholder (internal)
+# flps_pieslice(fill, x, y, w, h, t1, t2, colr)
+# function placeholder (internal)
 # flps_poly(fill, Point, numpt, colr) function placeholder (internal)
 # flps_rectangle(fill, x, y, w, h, colr) function placeholder (internal)
 # flps_reset_cache() function placeholder (internal)
@@ -817,4 +822,3 @@ def fl_display_():
 # flps_set_clipping(x, y, w, h) function placeholder (internal)
 # flps_set_font(style, size) function placeholder (internal)
 # flps_unset_clipping() function placeholder (internal)
-

@@ -1,7 +1,8 @@
 
 
 SVN
-    * corrected list of admitted values for align, as library's
+    * polished code to comply (mostly) with PEP8.
+    * corrected list of admitted values for align and place, as library's
      check_admitted_value_in_list function didn't recognized bitwise OR-ed
      values. Corrected XForms corresponding version.
     * introduced support of strings in c_void_p parameters in flbasic. New

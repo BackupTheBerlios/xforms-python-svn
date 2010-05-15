@@ -36,7 +36,6 @@ from xformslib import library as libr
 from xformslib import xfdata
 
 
-
 #######################
 # forms.h (browser.h)
 # Object class Browser
@@ -1397,4 +1396,3 @@ def fl_get_browser_vscroll_callback(pFlObject):
     libr.keep_elem_refs(pFlObject)
     retval = _fl_get_browser_vscroll_callback(pFlObject)
     return retval
-

@@ -36,7 +36,6 @@ from xformslib import library as libr
 from xformslib import xfdata
 
 
-
 #####################
 # forms.h (nmenu.h)
 #####################
@@ -634,8 +633,8 @@ def fl_set_nmenu_policy(pFlObject, policy):
 
 def fl_set_nmenu_hl_text_color(pFlObject, colr):
     """Sets the color of label when it is in "active" state (i.e. while the
-    popup is shown). In "inactive" state this is set by fl_set_object_lcol(). By
-    default, this color is xfdata.FL_BLACK for nmenus that are shown as a
+    popup is shown). In "inactive" state this is set by fl_set_object_lcol().
+    By default, this color is xfdata.FL_BLACK for nmenus that are shown as a
     button while being "active", while for normal nmenus it?s the same color
     that is used items in the popup when the mouse is hovering over them.
 
@@ -667,5 +666,3 @@ def fl_set_nmenu_hl_text_color(pFlObject, colr):
     libr.keep_elem_refs(pFlObject, colr, ulcolr)
     retval = _fl_set_nmenu_hl_text_color(pFlObject, ulcolr)
     return retval
-
-

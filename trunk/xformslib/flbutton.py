@@ -38,7 +38,6 @@ from xformslib import flbasic
 from xformslib import flbitmap
 
 
-
 #############################################################
 # forms.h (button.h)
 # All Buttons: regular button, light button and round button
@@ -913,4 +912,3 @@ def fl_get_button_mouse_buttons(pFlObject):
     libr.keep_elem_refs(pFlObject, buttons, pbuttons)
     _fl_get_button_mouse_buttons(pFlObject, pbuttons)
     return buttons.value
-

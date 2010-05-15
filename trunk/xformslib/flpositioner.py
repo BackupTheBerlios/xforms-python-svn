@@ -36,7 +36,6 @@ from xformslib import library as libr
 from xformslib import xfdata
 
 
-
 #########################
 # forms.h (positioner.h)
 #########################
@@ -399,4 +398,3 @@ def fl_set_positioner_ystep(pFlObject, step):
     _fl_set_positioner_ystep(pFlObject, fstep)
 
 # fl_set_positioner_return function placeholder (deprecated)
-

@@ -33,13 +33,11 @@
 import ctypes as cty
 
 
-
 # /usr/include/X11/Xdefs.h
 XID = cty.c_ulong
 Window = XID    # cty.c_ulong
 Pixmap = XID    # cty.c_ulong
-Cursor = XID        # cty.c_ulong
-
+Cursor = XID    # cty.c_ulong
 
 
 ########################################
@@ -55,7 +53,7 @@ FL_OK = 1
 FL_VALID = 1
 FL_PREEMPT = 1
 FL_AUTO = 2
-FL_WHEN_NEEDED = FL_AUTO        #2
+FL_WHEN_NEEDED = FL_AUTO    # 2
 FL_OFF = 0
 FL_CANCEL = 0
 FL_INVALID = 0
@@ -218,20 +216,19 @@ FL_MAX_BW = 10
 
 # how to display a form onto screen
 # values for enumeration 'FL_PLACE'
-FL_PLACE = cty.c_int # enum
+FL_PLACE = cty.c_int    # enum
 FL_PLACE_FREE = 0       # size remain resizable
 """(place) Both the position and size are completely free. The
 initial size used is the designed size. Initial position, if set via
 fl_set_form_position(), will be used otherwise interactive positioning may be
 possible if the window manager allows it."""
 FL_PLACE_MOUSE = 1      # mouse centered on form
-"""(place) The form is placed centered below the mouse. Interactive resizing will
-not be allowed unless this option is accompanied by FL_FREE_SIZE as in
-FL_PLACE_MOUSE | FL_FREE_SIZE"""
+"""(place) The form is placed centered below the mouse. Interactive resizing
+will not be allowed unless this option is accompanied by FL_FREE_SIZE as in
+FL_PLACE_MOUSE|FL_FREE_SIZE"""
 FL_PLACE_CENTER = 2     # center of the screen
 """(place) The form is placed in the center of the screen. If FL_FREE_SIZE
 is also specified, interactive resizing will be allowed."""
-
 FL_PLACE_POSITION = 4   # specific size
 """(place) Initial position used will be the one set via fl_set_form_position().
 Interactive resizing is possible."""
@@ -255,7 +252,7 @@ FL_PLACE_ICONIC = 256
 """(place) The form is shown initially iconified. The size and location used are
 the window manager's default."""
 # modifiers
-FL_FREE_SIZE = 16384          #(1<<14)
+FL_FREE_SIZE = 16384          # (1<<14)
 """(place) Allows resizing."""
 
 FL_PLACE_FREE_CENTER = (FL_PLACE_CENTER | FL_FREE_SIZE)
@@ -266,11 +263,13 @@ FL_PLACE_CENTERFREE = (FL_PLACE_CENTER | FL_FREE_SIZE)
 center of the screen and allow resizing."""
 
 # my add, list of possible values --LK
+# single values, or bitwise OR-ed with FL_FREE_SIZE (only if it makes sense)
 PLACE_list = [FL_PLACE_FREE, FL_PLACE_MOUSE, FL_PLACE_CENTER,
-              FL_PLACE_POSITION, FL_PLACE_SIZE, FL_PLACE_GEOMETRY,
-              FL_PLACE_ASPECT, FL_PLACE_FULLSCREEN, FL_PLACE_HOTSPOT,
-              FL_PLACE_ICONIC, FL_FREE_SIZE, FL_PLACE_FREE_CENTER,
-              FL_PLACE_CENTERFREE]
+        FL_PLACE_POSITION, FL_PLACE_SIZE, FL_PLACE_GEOMETRY,
+        FL_PLACE_ASPECT, FL_PLACE_FULLSCREEN, FL_PLACE_HOTSPOT,
+        FL_PLACE_ICONIC, FL_FREE_SIZE, FL_PLACE_FREE_CENTER,
+        FL_PLACE_CENTERFREE, FL_PLACE_MOUSE | FL_FREE_SIZE,
+        FL_PLACE_FULLSCREEN | FL_FREE_SIZE, FL_PLACE_HOTSPOT | FL_FREE_SIZE]
 
 
 # Window manager decoration request and forms attributes
@@ -290,7 +289,7 @@ DECORATION_list = [FL_FULLBORDER, FL_TRANSIENT, FL_NOBORDER]
 
 # All box types
 # values for enumeration 'FL_BOX_TYPE'
-FL_BOX_TYPE = cty.c_int  # enum
+FL_BOX_TYPE = cty.c_int         # enum
 FL_NO_BOX = 0
 """No box at all (it's transparent), just a label"""
 FL_UP_BOX = 1
@@ -329,10 +328,10 @@ FL_OVAL3D_FRAMEBOX = 16
 """"""
 FL_OVAL3D_EMBOSSEDBOX = 17
 """"""
-#FL_TOPTAB_UPBOX placeholder (internal)
-#FL_SELECTED_TOPTAB_UPBOX placeholder (internal)
-#FL_BOTTOMTAB_UPBOX placeholder (internal)
-#FL_SELECTED_BOTTOMTAB_UPBOX placeholder (internal)
+# FL_TOPTAB_UPBOX placeholder (internal)
+# FL_SELECTED_TOPTAB_UPBOX placeholder (internal)
+# FL_BOTTOMTAB_UPBOX placeholder (internal)
+# FL_SELECTED_BOTTOMTAB_UPBOX placeholder (internal)
 
 FL_MAX_BOX_STYLES = 23                # sentinel
 
@@ -347,7 +346,7 @@ BOXTYPE_list = [FL_NO_BOX, FL_UP_BOX, FL_DOWN_BOX, FL_BORDER_BOX, \
 
 # How to place text relative to a box
 # values for enumeration 'FL_ALIGN'
-FL_ALIGN = cty.c_int  # enum
+FL_ALIGN = cty.c_int            # enum
 FL_ALIGN_CENTER = 0
 """In the middle of the box (inside it)"""
 FL_ALIGN_TOP = 1
@@ -370,10 +369,10 @@ FL_ALIGN_INSIDE = 8192      # (1<<13)
 """places the text inside the box"""
 FL_ALIGN_VERT = 16384       # (1<<14)  not functional yet
 """"""
-#FL_ALIGN_TOP_LEFT placeholder (backwards)
-#FL_ALIGN_TOP_RIGHT placeholder (backwards)
-#FL_ALIGN_BOTTOM_LEFT placeholder (backwards)
-#FL_ALIGN_BOTTOM_RIGHT placeholder (backwards)
+# FL_ALIGN_TOP_LEFT placeholder (backwards)
+# FL_ALIGN_TOP_RIGHT placeholder (backwards)
+# FL_ALIGN_BOTTOM_LEFT placeholder (backwards)
+# FL_ALIGN_BOTTOM_RIGHT placeholder (backwards)
 
 # my add, list of possible values --LK
 # single values, and bitwise OR-ed with FL_ALIGN_INSIDE
@@ -474,7 +473,7 @@ INT_MAX = 2147483647L
 # It does not matter  what the value of each enum is,
 # but it must start from 0 and be consecutive.
 # values for enumeration 'FL_PD_COL'
-FL_PD_COL = cty.c_int  # enum
+FL_PD_COL = cty.c_int           # enum
 FL_BLACK = 0
 """RGB triple (0,0,0)"""
 FL_RED = 1
@@ -848,56 +847,52 @@ FL_LCOL = FL_BLACK
 FL_NoColor = FL_NOCOLOR
 """RGB triple (,,)"""
 
-#FL_DOGERBLUE placeholder (backwards)
+# FL_DOGERBLUE placeholder (backwards)
 
 # my add, list of possible values --LK
 COLOR_list = [FL_BLACK, FL_RED, FL_GREEN, FL_YELLOW, FL_BLUE, FL_MAGENTA,
-              FL_CYAN, FL_WHITE, FL_TOMATO, FL_INDIANRED, FL_SLATEBLUE,
-              FL_COL1, FL_RIGHT_BCOL, FL_BOTTOM_BCOL, FL_TOP_BCOL,
-              FL_LEFT_BCOL, FL_MCOL, FL_INACTIVE, FL_PALEGREEN, FL_DARKGOLD,
-              FL_ORCHID, FL_DARKCYAN, FL_DARKTOMATO, FL_WHEAT, FL_DARKORANGE,
-              FL_DEEPPINK, FL_CHARTREUSE, FL_DARKVIOLET, FL_SPRINGGREEN,
-              FL_DODGERBLUE, FL_LIGHTER_COL1, FL_DARKER_COL1, FL_ALICEBLUE,
-              FL_ANTIQUEWHITE, FL_AQUA, FL_AQUAMARINE, FL_AZURE, FL_BEIGE,
-              FL_BISQUE, FL_BLANCHEDALMOND, FL_BLUEVIOLET, FL_BROWN,
-              FL_BURLYWOOD, FL_CADETBLUE, FL_CHOCOLATE, FL_CORAL,
-              FL_CORNFLOWERBLUE, FL_CORNSILK, FL_CRIMSON, FL_DARKBLUE,
-              FL_DARKGOLDENROD, FL_DARKGRAY, FL_DARKGREEN, FL_DARKGREY,
-              FL_DARKKHAKI, FL_DARKMAGENTA, FL_DARKOLIVEGREEN, FL_DARKORCHID,
-              FL_DARKRED, FL_DARKSALMON, FL_DARKSEAGREEN, FL_DARKSLATEBLUE,
-              FL_DARKSLATEGRAY, FL_DARKSLATEGREY, FL_DARKTURQUOISE,
-              FL_DEEPSKYBLUE, FL_DIMGRAY, FL_DIMGREY, FL_FIREBRICK,
-              FL_FLORALWHITE, FL_FORESTGREEN, FL_FUCHSIA, FL_GAINSBORO,
-              FL_GHOSTWHITE, FL_GOLD, FL_GOLDENROD, FL_GRAY, FL_GREENYELLOW,
-              FL_GREY, FL_HONEYDEW, FL_HOTPINK, FL_INDIGO, FL_IVORY,
-              FL_KHAKI, FL_LAVENDER, FL_LAVENDERBLUSH, FL_LAWNGREEN,
-              FL_LEMONCHIFFON, FL_LIGHTBLUE, FL_LIGHTCORAL, FL_LIGHTCYAN,
-              FL_LIGHTGOLDENRODYELLOW, FL_LIGHTGRAY, FL_LIGHTGREEN,
-              FL_LIGHTGREY, FL_LIGHTPINK, FL_LIGHTSALMON, FL_LIGHTSEAGREEN,
-              FL_LIGHTSKYBLUE, FL_LIGHTSLATEGRAY, FL_LIGHTSLATEGREY,
-              FL_LIGHTSTEELBLUE, FL_LIGHTYELLOW, FL_LIME, FL_LIMEGREEN,
-              FL_LINEN, FL_MAROON, FL_MEDIUMAQUAMARINE, FL_MEDIUMBLUE,
-              FL_MEDIUMORCHID, FL_MEDIUMPURPLE, FL_MEDIUMSEAGREEN,
-              FL_MEDIUMSLATEBLUE, FL_MEDIUMSPRINGGREEN, FL_MEDIUMTURQUOISE,
-              FL_MEDIUMVIOLETRED, FL_MIDNIGHTBLUE, FL_MINTCREAM, FL_MISTYROSE,
-              FL_MOCCASIN, FL_NAVAJOWHITE, FL_NAVY, FL_OLDLACE, FL_OLIVE,
-              FL_OLIVEDRAB, FL_ORANGE, FL_ORANGERED, FL_PALEGOLDENROD,
-              FL_PALETURQUOISE, FL_PALEVIOLETRED, FL_PAPAYAWHIP, FL_PEACHPUFF,
-              FL_PERU, FL_PINK, FL_PLUM, FL_POWDERBLUE, FL_PURPLE,
-              FL_ROSYBROWN, FL_ROYALBLUE, FL_SADDLEBROWN, FL_SALMON,
-              FL_SANDYBROWN, FL_SEAGREEN, FL_SEASHELL, FL_SIENNA, FL_SILVER,
-              FL_SKYBLUE, FL_SLATEGRAY, FL_SLATEGREY, FL_SNOW, FL_STEELBLUE,
-              FL_TAN, FL_TEAL, FL_THISTLE, FL_TURQUOISE, FL_VIOLET,
-              FL_WHITESMOKE, FL_YELLOWGREEN, FL_FREE_COL1, FL_FREE_COL2,
-              FL_FREE_COL3, FL_FREE_COL4, FL_FREE_COL5, FL_FREE_COL6,
-              FL_FREE_COL7, FL_FREE_COL8, FL_FREE_COL9, FL_FREE_COL10,
-              FL_FREE_COL11, FL_FREE_COL12, FL_FREE_COL13, FL_FREE_COL14,
-              FL_FREE_COL15, FL_FREE_COL16, FL_NOCOLOR, FL_INACTIVE_COL]
+        FL_CYAN, FL_WHITE, FL_TOMATO, FL_INDIANRED, FL_SLATEBLUE, FL_COL1,
+        FL_RIGHT_BCOL, FL_BOTTOM_BCOL, FL_TOP_BCOL, FL_LEFT_BCOL, FL_MCOL,
+        FL_INACTIVE, FL_PALEGREEN, FL_DARKGOLD, FL_ORCHID, FL_DARKCYAN,
+        FL_DARKTOMATO, FL_WHEAT, FL_DARKORANGE, FL_DEEPPINK, FL_CHARTREUSE,
+        FL_DARKVIOLET, FL_SPRINGGREEN, FL_DODGERBLUE, FL_LIGHTER_COL1,
+        FL_DARKER_COL1, FL_ALICEBLUE, FL_ANTIQUEWHITE, FL_AQUA, FL_AQUAMARINE,
+        FL_AZURE, FL_BEIGE, FL_BISQUE, FL_BLANCHEDALMOND, FL_BLUEVIOLET,
+        FL_BROWN, FL_BURLYWOOD, FL_CADETBLUE, FL_CHOCOLATE, FL_CORAL,
+        FL_CORNFLOWERBLUE, FL_CORNSILK, FL_CRIMSON, FL_DARKBLUE,
+        FL_DARKGOLDENROD, FL_DARKGRAY, FL_DARKGREEN, FL_DARKGREY,
+        FL_DARKKHAKI, FL_DARKMAGENTA, FL_DARKOLIVEGREEN, FL_DARKORCHID,
+        FL_DARKRED, FL_DARKSALMON, FL_DARKSEAGREEN, FL_DARKSLATEBLUE,
+        FL_DARKSLATEGRAY, FL_DARKSLATEGREY, FL_DARKTURQUOISE, FL_DEEPSKYBLUE,
+        FL_DIMGRAY, FL_DIMGREY, FL_FIREBRICK, FL_FLORALWHITE, FL_FORESTGREEN,
+        FL_FUCHSIA, FL_GAINSBORO, FL_GHOSTWHITE, FL_GOLD, FL_GOLDENROD,
+        FL_GRAY, FL_GREENYELLOW, FL_GREY, FL_HONEYDEW, FL_HOTPINK, FL_INDIGO,
+        FL_IVORY, FL_KHAKI, FL_LAVENDER, FL_LAVENDERBLUSH, FL_LAWNGREEN,
+        FL_LEMONCHIFFON, FL_LIGHTBLUE, FL_LIGHTCORAL, FL_LIGHTCYAN,
+        FL_LIGHTGOLDENRODYELLOW, FL_LIGHTGRAY, FL_LIGHTGREEN, FL_LIGHTGREY,
+        FL_LIGHTPINK, FL_LIGHTSALMON, FL_LIGHTSEAGREEN, FL_LIGHTSKYBLUE,
+        FL_LIGHTSLATEGRAY, FL_LIGHTSLATEGREY, FL_LIGHTSTEELBLUE,
+        FL_LIGHTYELLOW, FL_LIME, FL_LIMEGREEN, FL_LINEN, FL_MAROON,
+        FL_MEDIUMAQUAMARINE, FL_MEDIUMBLUE, FL_MEDIUMORCHID, FL_MEDIUMPURPLE,
+        FL_MEDIUMSEAGREEN, FL_MEDIUMSLATEBLUE, FL_MEDIUMSPRINGGREEN,
+        FL_MEDIUMTURQUOISE, FL_MEDIUMVIOLETRED, FL_MIDNIGHTBLUE, FL_MINTCREAM,
+        FL_MISTYROSE, FL_MOCCASIN, FL_NAVAJOWHITE, FL_NAVY, FL_OLDLACE,
+        FL_OLIVE, FL_OLIVEDRAB, FL_ORANGE, FL_ORANGERED, FL_PALEGOLDENROD,
+        FL_PALETURQUOISE, FL_PALEVIOLETRED, FL_PAPAYAWHIP, FL_PEACHPUFF,
+        FL_PERU, FL_PINK, FL_PLUM, FL_POWDERBLUE, FL_PURPLE, FL_ROSYBROWN,
+        FL_ROYALBLUE, FL_SADDLEBROWN, FL_SALMON, FL_SANDYBROWN, FL_SEAGREEN,
+        FL_SEASHELL, FL_SIENNA, FL_SILVER, FL_SKYBLUE, FL_SLATEGRAY,
+        FL_SLATEGREY, FL_SNOW, FL_STEELBLUE, FL_TAN, FL_TEAL, FL_THISTLE,
+        FL_TURQUOISE, FL_VIOLET, FL_WHITESMOKE, FL_YELLOWGREEN, FL_FREE_COL1,
+        FL_FREE_COL2, FL_FREE_COL3, FL_FREE_COL4, FL_FREE_COL5, FL_FREE_COL6,
+        FL_FREE_COL7, FL_FREE_COL8, FL_FREE_COL9, FL_FREE_COL10,
+        FL_FREE_COL11, FL_FREE_COL12, FL_FREE_COL13, FL_FREE_COL14,
+        FL_FREE_COL15, FL_FREE_COL16, FL_NOCOLOR, FL_INACTIVE_COL]
 
 
 # Events that a form reacts to.
 # values for enumeration 'FL_EVENTS'
-FL_EVENTS = cty.c_int # enum
+FL_EVENTS = cty.c_int           # enum
 FL_NOEVENT = 0
 """"""
 FL_DRAW = 1
@@ -995,7 +990,7 @@ parameter key. See below for more on shortcuts."""
 FL_FREEMEM = 13
 """This event is sent when the object is to be freed. All memory
 allocated for the object must be freed when this event is received"""
-FL_OTHER = 14   # property, selection etc.
+FL_OTHER = 14           # property, selection etc.
 """Events other than the above. These events currently include
 ClientMessage, Selection and possibly other window manager events. All
 information about the event is contained in 'xev' parameter and 'mx',
@@ -1011,15 +1006,15 @@ FL_DBLCLICK = 16        # double click
 after two FL_PUSH, FL_RELEASE sequence. Note that FL_DBLCLICK is only
 generated for objects that have non-zero pObject.contents.click timeout
 fields and it will not be generated for events from the scroll wheel."""
-FL_TRPLCLICK = 17               # triple click
+FL_TRPLCLICK = 17       # triple click
 """The user has pushed a mouse button three times within a certain time
 window. This event is sent after a FL_DBLCLICK, FL_PUSH, FL_RELEASE
 sequence. Set click timeout to none-zero to activate FL_TRPLCLICK"""
-FL_ATTRIB = 18      # attribute change
+FL_ATTRIB = 18          # attribute change
 """"""
 FL_KEYRELEASE = 19
 """"""
-FL_PS = 20          # dump a form into EPS
+FL_PS = 20              # dump a form into EPS
 """"""
 FL_MOVEORIGIN = 21  # dragging the form across the screen changes its
 """"""
@@ -1031,10 +1026,11 @@ FL_RESIZED = 22     # the object has been resized by scale_form
 # the object has been resized by scale_form. Tell it that this has happened
 # so that it can resize any FL_FORMs that it contains.
 
-#FL_MOVE placeholder (backwards)
-#FL_KEYBOARD placeholder (backwards)
-#FL_MOUSE placeholder (backwards)
+# FL_MOVE placeholder (backwards)
+# FL_KEYBOARD placeholder (backwards)
+# FL_MOUSE placeholder (backwards)
 
+# TODO: verify if bitwise OR-ed makes sense here.
 # my add - list of possible values --LK
 # single values, or ?
 EVENTS_list = [FL_DRAW, FL_PUSH, FL_RELEASE, FL_ENTER, FL_LEAVE,
@@ -1046,7 +1042,7 @@ EVENTS_list = [FL_DRAW, FL_PUSH, FL_RELEASE, FL_ENTER, FL_LEAVE,
 
 # Resize policies
 # values for enumeration 'FL_RESIZE_T'
-FL_RESIZE_T = cty.c_int  # enum
+FL_RESIZE_T = cty.c_int         # enum
 FL_RESIZE_NONE = 0
 """Can't be rescaled/resized"""
 FL_RESIZE_X = 1
@@ -1062,7 +1058,7 @@ RESIZE_list = [FL_RESIZE_NONE, FL_RESIZE_X, FL_RESIZE_Y, FL_RESIZE_ALL]
 
 # Keyboard focus control
 # values for enumeration 'FL_KEY'
-FL_KEY = cty.c_int  # enum
+FL_KEY = cty.c_int      # enum
 FL_KEY_NORMAL  = 1     # normal keys(0-255) - tab +left/right
 """The object receives left and right cursor, <Home> and <End> keys plus
 all normal keys (0-255) except <Tab> <Return> (default)."""
@@ -1082,26 +1078,27 @@ FL_CONTROL_MASK = (1L<<26)
 FL_SHIFT_MASK = (1L<<27)
 """SHIFT combination with a key (value added to a KeySym)"""
 
-#FL_ALT_VAL placeholder (backwards)
+# FL_ALT_VAL placeholder (backwards)
 
 MAX_SHORTCUTS = 8
 
 
+# TODO: verify if bitwise OR-ed makes sense here.
 # my add, list of possible values --LK
 KEY_list = [FL_KEY_NORMAL, FL_KEY_TAB, FL_KEY_SPECIAL, FL_KEY_ALL,
             FL_ALT_MASK, FL_CONTROL_MASK, FL_SHIFT_MASK]
 
 
 # FL_PUP_NONE placeholder (deprecated)
-#FL_PUP_GREY placeholder (deprecated)
-#FL_PUP_BOX placeholder (deprecated)
-#FL_PUP_CHECK placeholder (deprecated)
-#FL_PUP_RADIO placeholder (deprecated)
-#FL_PUP_GRAY placeholder (deprecated)
-#FL_PUP_TOGGLE placeholder (backwards and deprecated)
-#FL_PUP_INACTIVE placeholder (deprecated)
+# FL_PUP_GREY placeholder (deprecated)
+# FL_PUP_BOX placeholder (deprecated)
+# FL_PUP_CHECK placeholder (deprecated)
+# FL_PUP_RADIO placeholder (deprecated)
+# FL_PUP_GRAY placeholder (deprecated)
+# FL_PUP_TOGGLE placeholder (backwards and deprecated)
+# FL_PUP_INACTIVE placeholder (deprecated)
 # my add, list of possible values --LK
-#PUP_list placeholder (deprecated)
+# PUP_list placeholder (deprecated)
 
 # FL_PUP_CB placeholder (deprecated)
 
@@ -1109,7 +1106,7 @@ STRING = cty.c_char_p
 WSTRING = cty.c_wchar_p
 
 # class FL_PUP_ENTRY placeholder (deprecated)
-#FL_MENU_ENTRY placeholder (deprecated)
+# FL_MENU_ENTRY placeholder (deprecated)
 
 
 # ***** FONTS *****
@@ -1117,7 +1114,7 @@ WSTRING = cty.c_wchar_p
 FL_MAXFONTS = 48        # max number of fonts
 
 # values for enumeration 'FL_TEXT_STYLE'
-FL_TEXT_STYLE = cty.c_int # enum
+FL_TEXT_STYLE = cty.c_int       # enum
 FL_INVALID_STYLE = -1
 """"""
 FL_NORMAL_STYLE = 0
@@ -1194,15 +1191,15 @@ FL_DEFAULT_SIZE = FL_SMALL_SIZE
 FONTSIZE_list = [FL_TINY_SIZE, FL_SMALL_SIZE, FL_NORMAL_SIZE, FL_MEDIUM_SIZE,
                  FL_LARGE_SIZE, FL_HUGE_SIZE, FL_DEFAULT_SIZE]
 
-#FL_TINY_FONT placeholder (backwards)
-#FL_SMALL_FONT placeholder (backwards)
-#FL_NORMAL_FONT placeholder (backwards)
-#FL_MEDIUM_FONT placeholder (backwards)
-#FL_LARGE_FONT placeholder (backwards)
-#FL_HUGE_FONT placeholder (backwards)
-#FL_NORMAL_FONT1 placeholder (backwards)
-#FL_NORMAL_FONT2 placeholder (backwards)
-#FL_DEFAULT_FONT placeholder (backwards)
+# FL_TINY_FONT placeholder (backwards)
+# FL_SMALL_FONT placeholder (backwards)
+# FL_NORMAL_FONT placeholder (backwards)
+# FL_MEDIUM_FONT placeholder (backwards)
+# FL_LARGE_FONT placeholder (backwards)
+# FL_HUGE_FONT placeholder (backwards)
+# FL_NORMAL_FONT1 placeholder (backwards)
+# FL_NORMAL_FONT2 placeholder (backwards)
+# FL_DEFAULT_FONT placeholder (backwards)
 
 
 FL_BOUND_WIDTH = 1     # Border width of boxes, FL_Coord(1)
@@ -1224,10 +1221,8 @@ class FL_OBJECT_(cty.Structure):
 FL_OBJECT = FL_OBJECT_
 
 
-
-
 # from /usr/include/X11/Xlib.h ***
-XPointer = STRING    # cty.c_char_p
+XPointer = STRING       # cty.c_char_p
 
 
 # /usr/include/X11/Xlib.h 159
@@ -1262,7 +1257,6 @@ Visual._fields_ = [
 class FL_pixmap_(cty.Structure):
     pass
 FL_pixmap = FL_pixmap_
-
 
 
 # All pixmaps used by FL_OBJECT to simulate double buffering have the
@@ -1340,8 +1334,6 @@ FL_FORMCALLBACKPTR = cty.CFUNCTYPE(None, cty.POINTER(FL_OBJECT), cty.c_void_p)
 """
 
 
-
-
 # cfunction for _fl_for_all_objects
 cfunc_int_pobject_pvoid = cty.CFUNCTYPE(cty.c_int, cty.POINTER(FL_OBJECT), \
                                         cty.c_void_p)
@@ -1364,8 +1356,9 @@ XEvent = _XEvent
 
 
 # preemptive callback function - pXEvent is necessary as type cast is not
-# handled
-#FL_RAW_CALLBACK = cty.CFUNCTYPE(cty.c_int, cty.POINTER(FL_FORM), cty.c_void_p)
+# handled here in xforms-python
+# FL_RAW_CALLBACK = cty.CFUNCTYPE(cty.c_int, cty.POINTER(FL_FORM), \
+#                       cty.c_void_p)
 FL_RAW_CALLBACK = cty.CFUNCTYPE(cty.c_int, cty.POINTER(FL_FORM), \
                                 cty.POINTER(XEvent))
 """ FL_RAW_CALLBACK(pForm, pXEvent) -> num.
@@ -1384,7 +1377,6 @@ FL_CALLBACKPTR = cty.CFUNCTYPE(None, cty.POINTER(FL_OBJECT), cty.c_long)
 """
 
 
-
 # cfunction for _fl_enumerate_fonts
 cfunc_none_string = cty.CFUNCTYPE(None, STRING)
 
@@ -1397,7 +1389,6 @@ FL_DRAWPTR = cty.CFUNCTYPE(None, FL_Coord, FL_Coord, FL_Coord, FL_Coord,
 """
 
 
-
 # error callback
 FL_ERROR_FUNC = cty.CFUNCTYPE(None, STRING, STRING)
 """ FL_ERROR_FUNC(function_name, error_message)
@@ -1408,10 +1399,10 @@ FL_ERROR_FUNC = cty.CFUNCTYPE(None, STRING, STRING)
 
 FL_FORM_._pack_ = 4
 FL_FORM_._fields_ = [
-    ('fdui', cty.c_void_p),               # for fdesign
-    ('u_vdata', cty.c_void_p),            # for application
+    ('fdui', cty.c_void_p),             # for fdesign
+    ('u_vdata', cty.c_void_p),          # for application
     ('u_cdata', STRING),                # for application
-    ('u_ldata', cty.c_long),              # for application
+    ('u_ldata', cty.c_long),            # for application
     ('label', STRING),                  # window title
     ('window', Window),                 # X resource ID for window
     ('x', FL_Coord),                    # current geometry info
@@ -1422,8 +1413,8 @@ FL_FORM_._fields_ = [
     ('handle_dec_y', cty.c_int),
     ('hotx', FL_Coord),                 # hot-spot of the form
     ('hoty', FL_Coord),
-    ('w_hr', cty.c_double),               # high resolution width and height
-    ('h_hr', cty.c_double),               # (needed for precise scaling)
+    ('w_hr', cty.c_double),             # high resolution width and height
+    ('h_hr', cty.c_double),             # (needed for precise scaling)
     ('first', cty.POINTER(FL_OBJECT)),
     ('last', cty.POINTER(FL_OBJECT)),
     ('focusobj', cty.POINTER(FL_OBJECT)),
@@ -1443,7 +1434,7 @@ FL_FORM_._fields_ = [
     # WM_DELETE_WINDOW message handler
     ('close_callback', FL_FORM_ATCLOSE),
     ('close_data', cty.c_void_p),
-    ('flpixmap', cty.POINTER(FL_pixmap)),     # back buffer
+    ('flpixmap', cty.POINTER(FL_pixmap)),       # back buffer
     ('icon_pixmap', Pixmap),
     ('icon_mask', Pixmap),
     # interaction and other flags
@@ -1492,7 +1483,7 @@ FL_OBJECT_._fields_ = [
     ('label', STRING),                  # object label
     ('lcol', FL_COLOR),                 # label color
     ('align', cty.c_int),
-    ('lsize', cty.c_int),                 # label size and style
+    ('lsize', cty.c_int),               # label size and style
     ('lstyle', cty.c_int),
     ('shortcut', cty.POINTER(cty.c_long)),
     ('handle', cty.CFUNCTYPE(cty.c_int, cty.POINTER(FL_OBJECT), cty.c_int, \
@@ -1515,7 +1506,7 @@ FL_OBJECT_._fields_ = [
     ('parent', cty.POINTER(FL_OBJECT)),
     ('child', cty.POINTER(FL_OBJECT)),
     ('nc', cty.POINTER(FL_OBJECT)),     # next child
-    ('flpixmap', cty.POINTER(FL_pixmap)), # pixmap double buffering stateinfo
+    ('flpixmap', cty.POINTER(FL_pixmap)),  # pixmap doublebuffering stateinfo
     ('use_pixmap', cty.c_int),          # true to use pixmap double buffering
     # some interaction flags
     ('returned', cty.c_int),            # what last interaction returned
@@ -1571,7 +1562,6 @@ FD_Any._fields_ = [
     ('cdata', STRING),
     ('ldata', cty.c_long),
 ]
-
 
 
 # Async IO stuff
@@ -1756,18 +1746,14 @@ XK_Hyper_R = 0xffee             # Right hyper
 # *** end - from /usr/include/X11/keysymdef.h ***
 
 
-
 class _IO_FILE(cty.Structure):
     pass
 FILE = _IO_FILE
 
 
-
-
 ########################
 # forms.h (xbasic.h)
 ########################
-
 
 
 # /usr/include/X11/Xutil.h 296
@@ -1793,8 +1779,6 @@ Window = XID    # cty.c_ulong
 Pixmap = XID    # cty.c_ulong
 
 
-
-
 FL_APPEVENT_CB = cty.CFUNCTYPE(cty.c_int, cty.POINTER(XEvent),
                                cty.c_void_p)
 """ FL_APPEVENT_CB(pXEvent, ptr_void) -> num.
@@ -1802,7 +1786,6 @@ FL_APPEVENT_CB = cty.CFUNCTYPE(cty.c_int, cty.POINTER(XEvent),
     prototype for handling event callback (used by fl_set_event_callback,
     fl_set_idle_callback, fl_add_event_callback), returning value.
 """
-
 
 
 # Draw mode
@@ -1823,14 +1806,14 @@ DRAWMODE_list = [FL_XOR, FL_COPY, FL_AND]
 FL_MINDEPTH = 1
 
 
-#FL_IllegalVisual placeholder (backwards)
-#FL_StaticGray placeholder (backwards)
-#FL_GrayScale placeholder (backwards)
-#FL_StaticColor placeholder (backwards)
-#FL_PseudoColor placeholder (backwards)
-#FL_TrueColor placeholder (backwards)
-#FL_DirectColor placeholder (backwards)
-#FL_DefaultVisual placeholder (backwards)
+# FL_IllegalVisual placeholder (backwards)
+# FL_StaticGray placeholder (backwards)
+# FL_GrayScale placeholder (backwards)
+# FL_StaticColor placeholder (backwards)
+# FL_PseudoColor placeholder (backwards)
+# FL_TrueColor placeholder (backwards)
+# FL_DirectColor placeholder (backwards)
+# FL_DefaultVisual placeholder (backwards)
 
 # values for unnamed enumeration
 IllegalVisual = -1
@@ -1882,8 +1865,7 @@ FL_ForgetGravity = FL_NoGravity         #ForgetGravity
 
 # my add, list of possible values --LK
 GRAVITY_list = [FL_North, FL_NorthEast, FL_NorthWest, FL_South, FL_SouthEast,
-                FL_SouthWest, FL_East, FL_West, FL_NoGravity, FL_ForgetGravity]
-
+            FL_SouthWest, FL_East, FL_West, FL_NoGravity, FL_ForgetGravity]
 
 
 # Internal colormap size. Not really very meaningful as fl_mapcolor
@@ -1977,9 +1959,7 @@ FL_State._fields_ = [
     ('bbits', cty.c_uint),
 ]
 
-#FL_STATE placeholder (backwards)
-
-
+# FL_STATE placeholder (backwards)
 
 
 # Global variables
@@ -1989,7 +1969,6 @@ class _XDisplay(cty.Structure):
 _XDisplay._fields_ = []
 
 Display = _XDisplay
-
 
 
 # Fonts related
@@ -2016,7 +1995,6 @@ class XRectangle(cty.Structure):
 FL_RECT = XRectangle
 
 
-
 # Line attributes
 
 # values for unnamed enumeration
@@ -2037,7 +2015,7 @@ FL_DOTDASH = 4
 FL_DASH = 5
 """Dashed line [----]"""
 FL_LONGDASH = 6
-"""Long dashed line [------]"""
+"""Long dashed line [--------]"""
 
 # my add, list of possible values --LK
 LINESTYLE_list = [FL_SOLID, FL_USERDASH, FL_USERDOUBLEDASH, FL_DOT,
@@ -2072,8 +2050,8 @@ SubstructureRedirectMask = (1 << 20)     # 1048576
 FocusChangeMask = (1 << 21)              # 2097152
 ColormapChangeMask = (1 << 23)           # 4194304
 OwnerGrabButtonMask = (1 << 24)          # 8388608
-# Key masks. Used as modifiers to GrabButton and GrabKey, results of QueryPointer,
-# state in various key-, mouse-, and button-related events.
+# Key masks. Used as modifiers to GrabButton and GrabKey, results of
+# QueryPointer, state in various key-, mouse-, and button-related events.
 ShiftMask = (1 << 0)
 LockMask = (1 << 1)
 ControlMask = (1 << 2)
@@ -2094,10 +2072,9 @@ AnyModifier = (1 << 15)       # used in GrabButton, GrabKey
 
 
 # All registerable events, including Client Message
-FL_ALL_EVENT = (KeyPressMask | KeyReleaseMask \
-                    | ButtonPressMask | ButtonReleaseMask \
-                    | EnterWindowMask | LeaveWindowMask \
-                    | ButtonMotionMask | PointerMotionMask )
+FL_ALL_EVENT = (KeyPressMask | KeyReleaseMask | \
+        ButtonPressMask | ButtonReleaseMask | EnterWindowMask | \
+        LeaveWindowMask | ButtonMotionMask | PointerMotionMask)
 
 
 # Resources
@@ -2135,9 +2112,8 @@ FL_RESOURCE._fields_ = [
 ]
 
 
-
 # values for enumeration 'XrmOptionKind'
-XrmOptionKind = cty.c_int # enum
+XrmOptionKind = cty.c_int       # enum
 XrmoptionNoArg = 0      # Value is specified in OptionDescRec.value
 XrmoptionIsArg = 1      # Value is the option string itself
 XrmoptionStickyArg = 2  # Value is characters immediately following option
@@ -2145,7 +2121,7 @@ XrmoptionSepArg = 3     # Value is next argument in argv
 XrmoptionResArg = 4     # Resource and value in next argument in argv
 XrmoptionSkipArg = 5    # Ignore this option and the next argument in argv
 XrmoptionSkipLine = 6   # Ignore this option and the rest of argv
-XrmoptionSkipNArgs = 7  # Ignore this option and the next
+XrmoptionSkipNArgs = 7          # Ignore this option and the next
                         # OptionDescRes.value arguments in argv
 
 
@@ -2212,54 +2188,54 @@ inputLabelSize = FL_IOPT.inputFontSize
 # Program default masks
 
 # values for unnamed enumeration
-FL_PDDepth = 2                      #(1<<1)
+FL_PDDepth = 2                      # (1<<1)
 """Preferred visual depth (depth)"""
-FL_PDClass = 4                      #(1<<2)
+FL_PDClass = 4                      # (1<<2)
 """ """
-FL_PDDouble = 8                     #(1<<3)
+FL_PDDouble = 8                     # (1<<3)
 """Simulate double buffering (doubleBuffer)"""
-FL_PDSync = 16                      #(1<<4)
+FL_PDSync = 16                      # (1<<4)
 """ """
-FL_PDPrivateMap = 32                #(1<<5)
+FL_PDPrivateMap = 32                # (1<<5)
 """Select private colormap if appropriate (privateColormap)"""
-FL_PDScrollbarType = 64             #(1<<6)
+FL_PDScrollbarType = 64             # (1<<6)
 """Scrollbar type to use for browser and input (scrollbarType)"""
-FL_PDPupFontSize = 128              #(1<<7)
+FL_PDPupFontSize = 128              # (1<<7)
 """Font size for pop-ups (PupFontSize)"""
-FL_PDButtonFontSize = 256           #(1<<8)
+FL_PDButtonFontSize = 256           # (1<<8)
 """Default button label font size (buttonFontSize)"""
-FL_PDInputFontSize = 512            #(1<<9)
+FL_PDInputFontSize = 512            # (1<<9)
 """Input label and text font size (menuFontSize)"""
-FL_PDSliderFontSize  = 1024         #(1<<10)
+FL_PDSliderFontSize  = 1024         # (1<<10)
 """ """
-FL_PDVisual = 2048                  #(1<<11)
+FL_PDVisual = 2048                  # (1<<11)
 """Preferred visual (e.g. TrueColor ..) (vclass)"""
-FL_PDULThickness = 4096             #(1<<12)
+FL_PDULThickness = 4096             # (1<<12)
 """Underline thickness (ulThickness)"""
-FL_PDULPropWidth = 8192             #(1<<13)
+FL_PDULPropWidth = 8192             # (1<<13)
 """Underline width, 0 for constant width fonts (ulPropWidth)"""
-FL_PDBS = 16384                     #(1<<14)
+FL_PDBS = 16384                     # (1<<14)
 """Turn BackingStore on or off (backingStore)"""
-FL_PDCoordUnit = 32768              #(1<<15)
+FL_PDCoordUnit = 32768              # (1<<15)
 """Unit of measure for screen coordinates (pixel, mm, point, etc..)
 (coordUnit)"""
-FL_PDDebug = 65536                  #(1<<16)
+FL_PDDebug = 65536                  # (1<<16)
 """Debug level (0-5) (debug)"""
-FL_PDSharedMap = 131072             #(1<<17)
+FL_PDSharedMap = 131072             # (1<<17)
 """Force use of shared colormap (sharedColormap)"""
-FL_PDStandardMap = 262144           #(1<<18)
+FL_PDStandardMap = 262144           # (1<<18)
 """Force use of standard colormap (standardColormap)"""
-FL_PDBorderWidth = 524288           #(1<<19)
+FL_PDBorderWidth = 524288           # (1<<19)
 """Default border width (borderWidth)"""
-FL_PDSafe = 1048576                 #(1<<20)
+FL_PDSafe = 1048576                 # (1<<20)
 """ """
-FL_PDMenuFontSize = 2097152         #(1<<21)
+FL_PDMenuFontSize = 2097152         # (1<<21)
 """Menu label font size (menuFontSize)"""
-FL_PDBrowserFontSize = 4194304      #(1<<22)
+FL_PDBrowserFontSize = 4194304      # (1<<22)
 """Browser label and text font size (browserFontSize)"""
-FL_PDChoiceFontSize = 8388608       #(1<<23)
+FL_PDChoiceFontSize = 8388608       # (1<<23)
 """Choice label and choice text font size (choiceFontSize)"""
-FL_PDLabelFontSize = 16777216       #(1<<24)
+FL_PDLabelFontSize = 16777216       # (1<<24)
 """Label font size for all other objects (box, pixmap etc.) (labelFontSize)"""
 
 FL_PDButtonLabelSize = FL_PDButtonFontSize
@@ -2327,12 +2303,10 @@ FL_RGB2PIXEL_._fields_ = [
 FL_RGB2PIXEL = FL_RGB2PIXEL_
 
 
-
 Mask = cty.c_ulong
 Time = cty.c_ulong
-GContext = XID    # cty.c_ulong
+GContext = XID          # cty.c_ulong
 KeyCode = cty.c_ubyte
-
 
 
 # /usr/include/X11/Xlib.h 416
@@ -2392,7 +2366,6 @@ XRectangle._fields_ = [
 class XArc(cty.Structure):
     pass
 XArc._fields_ = [
-    # /usr/include/X11/Xlib.h 450
     ('x', cty.c_short),
     ('y', cty.c_short),
     ('width',  cty.c_ushort),
@@ -3056,7 +3029,6 @@ _XEvent._fields_ = [
 ]
 
 
-
 # *** start - from /usr/include/X11/X.h ***
 # Event names.  Used in "type" field in XEvent structures.  Not to be
 # confused with event masks above.  They start from 2 because 0 and 1
@@ -3114,10 +3086,6 @@ IconicState = 3         # application wants to start as an icon
 WINSTATE_list = [NormalState, IconicState]
 
 
-
-
-
-
 #######################
 # forms.h (bitmap.h)
 # Bitmap object class
@@ -3138,7 +3106,6 @@ FL_BITMAP_LCOL = FL_LCOL            # foreground of bitmap
 FL_BITMAP_ALIGN = FL_ALIGN_BOTTOM
 
 
-
 # PIXMAP stuff
 
 FL_NORMAL_PIXMAP = 0
@@ -3148,14 +3115,13 @@ FL_NORMAL_PIXMAP = 0
 PIXMAPTYPE_list = [FL_NORMAL_PIXMAP, ]
 
 
-
 #######################
 # forms.h (browser.h)
 # Object class Browser
 #######################
 
 # values for enumeration 'FL_BROWSER_TYPE'
-FL_BROWSER_TYPE = cty.c_int # enum
+FL_BROWSER_TYPE = cty.c_int     # enum
 FL_NORMAL_BROWSER = 0
 """A browser in which no selections can be made."""
 FL_SELECT_BROWSER = 1
@@ -3167,8 +3133,8 @@ FL_MULTI_BROWSER = 3
 """Multiple selections can be made and remains visible till de-selected."""
 
 # my add - list of possible values --LK
-BROWSERTYPE_list = [FL_NORMAL_BROWSER, FL_SELECT_BROWSER, FL_HOLD_BROWSER, \
-                    FL_MULTI_BROWSER]
+BROWSERTYPE_list = [FL_NORMAL_BROWSER, FL_SELECT_BROWSER,
+                    FL_HOLD_BROWSER, FL_MULTI_BROWSER]
 
 
 # Defaults
@@ -3189,14 +3155,13 @@ FL_BROWSER_SCROLL_CALLBACK = cty.CFUNCTYPE(None, cty.POINTER(FL_OBJECT),
                 cty.c_int, cty.c_void_p)
 
 
-
 #############################################################
 # forms.h (button.h)
 # All Buttons, regular button, light button and round button
 #############################################################
 
 # values for enumeration 'FL_BUTTON_TYPE'
-FL_BUTTON_TYPE = cty.c_int # enum
+FL_BUTTON_TYPE = cty.c_int      # enum
 FL_NORMAL_BUTTON = 0
 """Returns value when released."""
 FL_PUSH_BUTTON = 1
@@ -3239,8 +3204,8 @@ FL_BUTTON_SPEC._fields_ = [
     ('event', cty.c_int),             # what event triggers redraw
     ('is_pushed', cty.c_int),         # set while drawn as pushed down
     ('react_to', cty.c_int * 5),      # mouse buttons button reacts to
-    ('cspecl', cty.c_long),           # reserved for class specfic stuff
-    ('cspecv', cty.c_void_p),         # miscty. things
+    ('cspecl', cty.c_long),           # reserved for class specific stuff
+    ('cspecv', cty.c_void_p),         # misc. things
     ('filename', STRING),
     ('focus_pixmap', Pixmap),
     ('focus_mask', Pixmap),
@@ -3322,14 +3287,13 @@ FL_DRAWBUTTON = FL_DrawButton
 FL_CLEANUPBUTTON = FL_CleanupButton
 
 
-
 #######################
 # forms.h (canvas.h)
 # Header for FL_CANVAS
 #######################
 
 # values for enumeration 'FL_CANVAS_TYPE'
-FL_CANVAS_TYPE = cty.c_int # enum
+FL_CANVAS_TYPE = cty.c_int      # enum
 FL_NORMAL_CANVAS = 0
 """"""
 FL_SCROLLED_CANVAS = 1
@@ -3367,12 +3331,10 @@ XSetWindowAttributes._fields_ = [
 
 
 FL_HANDLE_CANVAS = cty.CFUNCTYPE(cty.c_int, cty.POINTER(FL_OBJECT),
-                        Window, cty.c_int, cty.c_int,
-                        cty.POINTER(XEvent), cty.c_void_p)
+        Window, cty.c_int, cty.c_int, cty.POINTER(XEvent), cty.c_void_p)
 
 
 FL_MODIFY_CANVAS_PROP = cty.CFUNCTYPE(cty.c_int, cty.POINTER(FL_OBJECT))
-
 
 
 #############################
@@ -3381,7 +3343,7 @@ FL_MODIFY_CANVAS_PROP = cty.CFUNCTYPE(cty.c_int, cty.POINTER(FL_OBJECT))
 #############################
 
 # values for enumeration 'FL_CHART_TYPE'
-FL_CHART_TYPE = cty.c_int # enum
+FL_CHART_TYPE = cty.c_int       # enum
 FL_BAR_CHART = 0
 """A bar-chart (vertical)"""
 FL_HORBAR_CHART = 1
@@ -3397,7 +3359,7 @@ FL_PIE_CHART = 5
 FL_SPECIALPIE_CHART = 6
 """A pie-chart with displaced first item."""
 
-#FL_FILLED_CHART placeholder (backwards)
+# FL_FILLED_CHART placeholder (backwards)
 
 # list of possible values - my add --LK
 CHARTTYPE_list = [FL_BAR_CHART, FL_HORBAR_CHART, FL_LINE_CHART, \
@@ -3413,8 +3375,6 @@ FL_CHART_ALIGN = FL_ALIGN_BOTTOM
 
 # Others
 FL_CHART_MAX = 2048
-
-
 
 
 #################################
@@ -3440,14 +3400,12 @@ FL_CLOCK_ALIGN = FL_ALIGN_BOTTOM
 FL_CLOCK_TOPCOL = FL_COL1
 
 
-
-
-######################
+##########################
 # forms.h (counter_var.h)
-######################
+##########################
 
 # values for enumeration 'FL_COUNTER_TYPE'
-FL_COUNTER_TYPE = cty.c_int # enum
+FL_COUNTER_TYPE = cty.c_int     # enum
 FL_NORMAL_COUNTER = 0
 """A counter with two buttons on each side."""
 FL_SIMPLE_COUNTER = 1
@@ -3470,8 +3428,6 @@ FL_COUNTER_BW = FL_BOUND_WIDTH - 1
 
 FL_VAL_FILTER = cty.CFUNCTYPE(STRING, cty.POINTER(FL_OBJECT),
                               cty.c_double, cty.c_int)
-
-
 
 
 #############################
@@ -3584,26 +3540,24 @@ FL_INVISIBLE_CURSOR = -2
 """"""
 FL_DEFAULT_CURSOR = -1
 """"""
-FL_BUSY_CURSOR = XC_watch               #150
+FL_BUSY_CURSOR = XC_watch               # 150
 """"""
-FL_CROSSHAIR_CURSOR = XC_tcross         #130
+FL_CROSSHAIR_CURSOR = XC_tcross         # 130
 """"""
-FL_KILL_CURSOR = XC_pirate              #88
+FL_KILL_CURSOR = XC_pirate              # 88
 """"""
-FL_NWARROW_CURSOR = XC_top_left_arrow   #132
+FL_NWARROW_CURSOR = XC_top_left_arrow   # 132
 """"""
-FL_NEARROW_CURSOR = XC_arrow            #2
+FL_NEARROW_CURSOR = XC_arrow            # 2
 """"""
 
 XC_invisible = FL_INVISIBLE_CURSOR
 
 
 # list of possible values, my add --LK
-CURSORS_list = [FL_INVISIBLE_CURSOR, FL_DEFAULT_CURSOR, FL_BUSY_CURSOR, \
-                FL_CROSSHAIR_CURSOR, FL_KILL_CURSOR, FL_NWARROW_CURSOR, \
-                FL_NEARROW_CURSOR]
-
-
+CURSORS_list = [FL_INVISIBLE_CURSOR, FL_DEFAULT_CURSOR, FL_BUSY_CURSOR,
+        FL_CROSSHAIR_CURSOR, FL_KILL_CURSOR, FL_NWARROW_CURSOR,
+        FL_NEARROW_CURSOR]
 
 
 ###################
@@ -3611,7 +3565,7 @@ CURSORS_list = [FL_INVISIBLE_CURSOR, FL_DEFAULT_CURSOR, FL_BUSY_CURSOR, \
 ###################
 
 # values for enumeration 'FL_DIAL_TYPE'
-FL_DIAL_TYPE = cty.c_int # enum
+FL_DIAL_TYPE = cty.c_int        # enum
 FL_NORMAL_DIAL = 0
 """(dial) A dial with a knob indicating the position."""
 FL_LINE_DIAL = 1
@@ -3642,9 +3596,6 @@ FL_DIAL_ALIGN = FL_ALIGN_BOTTOM
 
 # Others
 FL_DIAL_TOPCOL = FL_COL1
-
-
-
 
 
 ############################################
@@ -3692,7 +3643,8 @@ FL_RALPHASORT = 2           # sort in reverse alphabetic order
 FL_MTIMESORT = 3            # sort according to modification time
 """Sort the entries according to the modification time"""
 FL_RMTIMESORT = 4           # sort in reverse modification time
-"""Sort the entries according to the modification time, but reverse the order, i.e., latest first"""
+"""Sort the entries according to the modification time, but reverse the
+order, i.e., latest first"""
 FL_SIZESORT = 5             # sort in increasing size order
 """Sort the entries in increasing size order"""
 FL_RSIZESORT = 6            # sort in decreasing size order
@@ -3704,8 +3656,6 @@ FL_RCASEALPHASORT = 8       # sort case insensitive
 
 
 FL_DIRLIST_FILTER = cty.CFUNCTYPE(cty.c_int, STRING, cty.c_int)
-
-
 
 
 #########################
@@ -3735,8 +3685,6 @@ FL_FORMBROWSER_COL1 = FL_COL1
 FL_FORMBROWSER_ALIGN = FL_ALIGN_TOP
 
 
-
-
 #############
 # glcanvas.h
 #############
@@ -3752,9 +3700,9 @@ GLXContext._fields_ = []
 GLX_USE_GL = 1
 """Ignored. Only visuals that can be rendered with GLX are considered."""
 GLX_BUFFER_SIZE = 2
-"""Must be followed by a nonnegative integer that indicates the desired color
-index buffer size. The smallest index buffer of at least the specified size
-is preferred. Ignored if GLX_RGBA is asserted."""
+"""Must be followed by a nonnegative integer that indicates the desired
+color index buffer size. The smallest index buffer of at least the
+specified size is preferred. Ignored if GLX_RGBA is asserted."""
 GLX_LEVEL = 3
 """Must be followed by an integer buffer-level specification. This
 specification is honored exactly. Buffer level zero corresponds to the main
@@ -3816,7 +3764,6 @@ is zero, visuals with no alpha accumulation buffer are preferred. Otherwise,
 the largest possible alpha accumulation buffer of at least the minimum size
 is preferred."""
 # *** end - from /usr/include/GL/glx.h
-
 
 
 ######################
@@ -3894,10 +3841,6 @@ FL_FSCB = cty.CFUNCTYPE(cty.c_int, STRING, cty.c_void_p)
 cfunc_none_voidp = cty.CFUNCTYPE(None, cty.c_void_p)
 
 
-
-
-
-
 ####################
 # forms.h (input.h)
 ####################
@@ -3912,19 +3855,19 @@ FL_FLOAT_INPUT = 1
 FL_INT_INPUT = 2
 """Only an integer value can be typed in (e.g. -86)"""
 FL_DATE_INPUT = 3
-"""Only a date (MM/DD/YY or DD/MM/YY) can be typed in (and limited per
-default to 10 characters)"""
+"""Only a date (MM/DD/YY or DD/MM/YY) can be typed in (and limited
+per default to 10 characters)"""
 FL_MULTILINE_INPUT = 4
 """An input field allowing for multiple lines"""
 FL_HIDDEN_INPUT = 5
 """A normal input field but invisible"""
 FL_SECRET_INPUT = 6
-"""A normal input field that does not show the text (and limited per
-default to a maximum length of 16 characters)"""
+"""A normal input field that does not show the text (and limited
+per default to a maximum length of 16 characters)"""
 
 # my add - list of possible values --LK
-INPUTTYPE_list = [FL_NORMAL_INPUT, FL_FLOAT_INPUT, FL_INT_INPUT, \
-                  FL_DATE_INPUT, FL_MULTILINE_INPUT, FL_HIDDEN_INPUT, \
+INPUTTYPE_list = [FL_NORMAL_INPUT, FL_FLOAT_INPUT, FL_INT_INPUT,
+                  FL_DATE_INPUT, FL_MULTILINE_INPUT, FL_HIDDEN_INPUT,
                   FL_SECRET_INPUT]
 
 
@@ -3952,7 +3895,6 @@ FL_INPUT_CCOL = FL_BLUE
 
 FL_RINGBELL = (1 << 4)
 """"""
-
 
 
 # edit keys
@@ -3992,7 +3934,6 @@ FL_INPUTVALIDATOR = cty.CFUNCTYPE(cty.c_int, cty.POINTER(FL_OBJECT),
                                   STRING, STRING, cty.c_int)
 
 
-
 #####################
 # forms.h (nmenu.h)
 #####################
@@ -4000,8 +3941,8 @@ FL_INPUTVALIDATOR = cty.CFUNCTYPE(cty.c_int, cty.POINTER(FL_OBJECT),
 # Nmenu object types
 # values for unnamed enumeration
 FL_NORMAL_NMENU = 0
-"""Probably the most often used type: shown as text on a borderless background,
-popup gets opened when clicked on."""
+"""Probably the most often used type: shown as text on a borderless
+background, popup gets opened when clicked on."""
 FL_NORMAL_TOUCH_NMENU = 1
 """Also shown as text on a borderless background, but popup gets opened when
 the mouse is moved on top of it without any further user action required."""
@@ -4018,14 +3959,13 @@ NMENUTYPE_list = [FL_NORMAL_NMENU, FL_NORMAL_TOUCH_NMENU, FL_BUTTON_NMENU, \
                   FL_BUTTON_TOUCH_NMENU]
 
 
-
-
-FL_VERSION = 1
-"""The major version number"""
-FL_REVISION = 0
-"""Revision number"""
-FL_FIXLEVEL = "93pre2"
-FL_INCLUDE_VERSION = (FL_VERSION * 1000 + FL_REVISION)
+# pointless as per library's get_xforms_version()
+#FL_VERSION = 1
+#"""The major version number"""
+#FL_REVISION = 0
+#"""Revision number"""
+#FL_FIXLEVEL = "93pre2"
+#FL_INCLUDE_VERSION = (FL_VERSION * 1000 + FL_REVISION)
 
 
 FL_FALSE = 0
@@ -4038,22 +3978,21 @@ FL_TRUE = (not FL_FALSE)
 # forms.h (choice.h)
 #####################
 
-#FL_CHOICE_TYPE placeholder (deprecated)
-#FL_NORMAL_CHOICE placeholder (deprecated)
-#FL_NORMAL_CHOICE2 placeholder (deprecated)
-#FL_DROPLIST_CHOICE placeholder (deprecated)
-#FL_BROWSER_CHOICE placeholder (deprecated)
-#FL_SIMPLE_CHOICE placeholder (deprecated)
+# FL_CHOICE_TYPE placeholder (deprecated)
+# FL_NORMAL_CHOICE placeholder (deprecated)
+# FL_NORMAL_CHOICE2 placeholder (deprecated)
+# FL_DROPLIST_CHOICE placeholder (deprecated)
+# FL_BROWSER_CHOICE placeholder (deprecated)
+# FL_SIMPLE_CHOICE placeholder (deprecated)
 # list of possible values - my add --LK
-#CHOICETYPE_list placeholder (deprecated)
-#FL_CHOICE_BOXTYPE placeholder (deprecated)
-#FL_CHOICE_COL1 placeholder (deprecated)
-#FL_CHOICE_COL2 placeholder (deprecated)
-#FL_CHOICE_LCOL placeholder (deprecated)
-#FL_CHOICE_ALIGN placeholder (deprecated)
-#FL_CHOICE_MCOL placeholder (deprecated)
-#FL_CHOICE_MAXITEMS placeholder (deprecated)
-
+# CHOICETYPE_list placeholder (deprecated)
+# FL_CHOICE_BOXTYPE placeholder (deprecated)
+# FL_CHOICE_COL1 placeholder (deprecated)
+# FL_CHOICE_COL2 placeholder (deprecated)
+# FL_CHOICE_LCOL placeholder (deprecated)
+# FL_CHOICE_ALIGN placeholder (deprecated)
+# FL_CHOICE_MCOL placeholder (deprecated)
+# FL_CHOICE_MAXITEMS placeholder (deprecated)
 
 
 #################################
@@ -4139,9 +4078,9 @@ FL_OVAL_FRAME = 8
 """An elliptic box."""
 
 # list of possible values - my add --LK
-FRAMETYPE_list = [FL_NO_FRAME, FL_UP_FRAME, FL_DOWN_FRAME, FL_BORDER_FRAME,
-                  FL_SHADOW_FRAME, FL_ENGRAVED_FRAME, FL_ROUNDED_FRAME,
-                  FL_EMBOSSED_FRAME, FL_OVAL_FRAME]
+FRAMETYPE_list = [FL_NO_FRAME, FL_UP_FRAME, FL_DOWN_FRAME,
+        FL_BORDER_FRAME, FL_SHADOW_FRAME, FL_ENGRAVED_FRAME,
+        FL_ROUNDED_FRAME, FL_EMBOSSED_FRAME, FL_OVAL_FRAME]
 
 
 # defaults?
@@ -4150,27 +4089,26 @@ FL_FRAME_COL2 = FL_COL1         # label background
 FL_FRAME_LCOL = FL_BLACK        # label color
 
 
-
 #####################
 # forms.h (free.h)
 # Free object class
 #####################
 
 # values for enumeration 'FL_FREE_TYPE'
-FL_FREE_TYPE = cty.c_int # enum
+FL_FREE_TYPE = cty.c_int        # enum
 FL_NORMAL_FREE = 0
-"""The object will receive the events FL_DRAW, FL_ENTER, FL_LEAVE, FL_MOTION,
-FL_PUSH, FL_RELEASE and FL_MOUSE."""
+"""The object will receive the events FL_DRAW, FL_ENTER, FL_LEAVE,
+FL_MOTION, FL_PUSH, FL_RELEASE and FL_MOUSE."""
 FL_INACTIVE_FREE = 1
-"""The object only receives FL_DRAW events. This should be used for objects
-without interaction (e.g. a picture)"""
+"""The object only receives FL_DRAW events. This should be used for
+objects without interaction (e.g. a picture)"""
 FL_INPUT_FREE = 2
-"""Same as FL_NORMAL_FREE but the object also receives FL_FOCUS, FL_UNFOCUS
-and FL_KEYBOARD events. The obj->wantkey is by default set to FL_KEY_NORMAL,
-i.e., the free object will receive all normal keys (0-255) except <Tab> and
-<Return> key. If you're interested in <Tab> or <Return> key, you need to
-change obj->wantkey to FL_KEY_TAB or FL_KEY_ALL. See section Events, for
-details."""
+"""Same as FL_NORMAL_FREE but the object also receives FL_FOCUS,
+FL_UNFOCUS and FL_KEYBOARD events. The obj->wantkey is by default set to
+FL_KEY_NORMAL, i.e., the free object will receive all normal keys (0-255)
+except <Tab> and <Return> key. If you're interested in <Tab> or <Return>
+key, you need to change obj->wantkey to FL_KEY_TAB or FL_KEY_ALL. See
+section Events, for details."""
 FL_CONTINUOUS_FREE = 3
 """Same as FL_NORMAL_FREE but the object also receives FL_STEP events.
 This should be used for objects that change themselves continuously."""
@@ -4184,8 +4122,6 @@ without interaction (e.g. a picture)"""
 # list of possible values - my add --LK
 FREETYPE_list = [FL_NORMAL_FREE, FL_INACTIVE_FREE, FL_INPUT_FREE,
                  FL_CONTINUOUS_FREE, FL_ALL_FREE, FL_SLEEPING_FREE]
-
-
 
 
 #####################
@@ -4205,7 +4141,6 @@ FREETYPE_list = [FL_NORMAL_FREE, FL_INACTIVE_FREE, FL_INPUT_FREE,
 # FL_MENU_LCOL placeholder (deprecated)
 # FL_MENU_ALIGN placeholder (deprecated)
 # FL_MENU_MAXITEMS placeholder (deprecated)
-
 
 
 ###################
@@ -4228,13 +4163,12 @@ FL_TEXT_ALIGN = FL_ALIGN_LEFT
 
 
 ###############################
-# forms.h (xpopupfn.h)
+# forms.h (xpopup.h)
 # Prototypes for xpop-up menus
 ###############################
 
 # FL_MAXPUPI placeholder (deprecated)
 # FL_PUP_PADH placeholder (deprecated)
-
 
 
 #################################
@@ -4250,8 +4184,6 @@ FL_LOSE_SELECTION_CALLBACK = FL_LOSE_SELECTION_CB
 FL_SELECTION_CB = cty.CFUNCTYPE(cty.c_int, cty.POINTER(FL_OBJECT),
                                 cty.c_long, cty.c_void_p, cty.c_long)
 FL_SELECTION_CALLBACK = FL_SELECTION_CB
-
-
 
 
 #############################
@@ -4454,8 +4386,6 @@ POPUPCOLOR_list = [FL_POPUP_BACKGROUND_COLOR, FL_POPUP_HIGHLIGHT_COLOR,
                    FL_POPUP_DISABLED_TEXT_COLOR, FL_POPUP_RADIO_COLOR]
 
 
-
-
 #########################
 # forms.h (positioner.h)
 #########################
@@ -4482,12 +4412,9 @@ FL_POSITIONER_LCOL = FL_LCOL
 FL_POSITIONER_ALIGN = FL_ALIGN_BOTTOM
 
 
-
-
 #############################
 # forms.h (scrollbar.h)
 #############################
-
 
 # values for unnamed enumeration
 FL_VERT_SCROLLBAR = 0
@@ -4532,7 +4459,6 @@ SCROLLTYPE_list = [FL_VERT_SCROLLBAR, FL_HOR_SCROLLBAR, \
                   FL_NICE_SCROLLBAR, FL_PLAIN_SCROLLBAR]
 
 
-
 #####################
 # forms.h (select.h)
 #####################
@@ -4561,8 +4487,6 @@ FL_SELECT_COL1 = FL_COL1
 FL_SELECT_COL2 = FL_MCOL
 FL_SELECT_LCOL = FL_LCOL
 FL_SELECT_ALIGN = FL_ALIGN_LEFT
-
-
 
 
 #######################
@@ -4646,15 +4570,12 @@ FL_SLIDER_FINE = 0.25
 FL_SLIDER_WIDTH = 0.10
 
 
-
-
 ##########################
 # forms.h (spinner.h)
 ##########################
 
-
 # values for enumeration 'FL_SPINNER_TYPE'
-FL_SPINNER_TYPE = cty.c_int # enum
+FL_SPINNER_TYPE = cty.c_int     # enum
 FL_INT_SPINNER = 0
 """"""
 FL_FLOAT_SPINNER = 1
@@ -4662,8 +4583,6 @@ FL_FLOAT_SPINNER = 1
 
 # list of possible values - my add --LK
 SPINNERTYPE_list = [FL_INT_SPINNER, FL_FLOAT_SPINNER]
-
-
 
 
 ########################
@@ -4683,8 +4602,8 @@ FL_NORMAL_TABFOLDER = FL_TOP_TABFOLDER
 """"""
 
 # list of possible values - my add --LK
-TABFOLDERTYPE_list = [FL_TOP_TABFOLDER, FL_BOTTOM_TABFOLDER, FL_LEFT_TABFOLDER, \
-                  FL_RIGHT_TABFOLDER, FL_NORMAL_TABFOLDER]
+TABFOLDERTYPE_list = [FL_TOP_TABFOLDER, FL_BOTTOM_TABFOLDER,
+        FL_LEFT_TABFOLDER, FL_RIGHT_TABFOLDER, FL_NORMAL_TABFOLDER]
 
 
 # values for unnamed enumeration
@@ -4694,7 +4613,6 @@ FL_FIT = 1
 """"""
 FL_ENLARGE_ONLY = 2
 """"""
-
 
 
 #########################
@@ -4719,8 +4637,6 @@ FL_THUMBWHEEL_BOXTYPE = FL_BORDER_BOX
 FL_THUMBWHEEL_ALIGN = FL_ALIGN_BOTTOM
 
 
-
-
 ######################
 # forms.h (timer.h)
 # Timer object class
@@ -4729,7 +4645,7 @@ FL_THUMBWHEEL_ALIGN = FL_ALIGN_BOTTOM
 # values for enumeration 'FL_TIMER_TYPE'
 FL_TIMER_TYPE = cty.c_int # enum
 FL_NORMAL_TIMER = 0
-"""Visible, Shows a label in a box which blinks when the timer expires."""
+"""Visible, showing a label in a box which blinks when the timer expires."""
 FL_VALUE_TIMER = 1
 """Visible, showing the time left or the elapsed time. Blinks if the
 timer expires."""
@@ -4755,14 +4671,12 @@ FL_TIMER_FILTER = cty.CFUNCTYPE(STRING, cty.POINTER(FL_OBJECT),
                                 cty.c_double)
 
 
-
-
 ###############################
 # forms.h (xyplot.h)
 ###############################
 
 # values for enumeration 'FL_XYPLOT_TYPE'
-FL_XYPLOT_TYPE = cty.c_int # enum
+FL_XYPLOT_TYPE = cty.c_int      # enum
 FL_NORMAL_XYPLOT = 0    # solid line
 """"""
 FL_SQUARE_XYPLOT = 1    # with added square
@@ -4791,10 +4705,10 @@ FL_LINEPOINTS_XYPLOT = 12   # line & points
 """"""
 
 # list of possible values - my add --LK
-XYPLOTTYPE_list = [FL_NORMAL_XYPLOT, FL_SQUARE_XYPLOT, FL_CIRCLE_XYPLOT, \
-                   FL_FILL_XYPLOT, FL_POINTS_XYPLOT, FL_DASHED_XYPLOT, \
-                   FL_IMPULSE_XYPLOT, FL_ACTIVE_XYPLOT, FL_EMPTY_XYPLOT, \
-                   FL_DOTTED_XYPLOT, FL_DOTDASHED_XYPLOT, \
+XYPLOTTYPE_list = [FL_NORMAL_XYPLOT, FL_SQUARE_XYPLOT, FL_CIRCLE_XYPLOT,
+                   FL_FILL_XYPLOT, FL_POINTS_XYPLOT, FL_DASHED_XYPLOT,
+                   FL_IMPULSE_XYPLOT, FL_ACTIVE_XYPLOT, FL_EMPTY_XYPLOT,
+                   FL_DOTTED_XYPLOT, FL_DOTDASHED_XYPLOT,
                    FL_LONGDASHED_XYPLOT, FL_LINEPOINTS_XYPLOT]
 
 
@@ -4822,7 +4736,6 @@ FL_MAX_XYPLOTOVERLAY = 32
 
 FL_XYPLOT_SYMBOL = cty.CFUNCTYPE(None, cty.POINTER(FL_OBJECT), cty.c_int,
             cty.POINTER(FL_POINT), cty.c_int, cty.c_int, cty.c_int)
-
 
 
 #########################
@@ -5389,5 +5302,3 @@ FLIMAGE_Read_Pixels = cty.CFUNCTYPE(cty.c_int, cty.POINTER(FL_IMAGE))
 FLIMAGE_Write_Image = cty.CFUNCTYPE(cty.c_int, cty.POINTER(FL_IMAGE))
 
 cfunc_none_flimagemarker = cty.CFUNCTYPE(None, cty.POINTER(FLIMAGE_MARKER))
-
-

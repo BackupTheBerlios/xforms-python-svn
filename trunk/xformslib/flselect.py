@@ -36,7 +36,6 @@ from xformslib import library as libr
 from xformslib import xfdata
 
 
-
 #####################
 # forms.h (select.h)
 #####################
@@ -741,4 +740,3 @@ def fl_set_select_policy(pFlObject, policy):
     libr.keep_elem_refs(pFlObject, policy, ipolicy)
     retval = _fl_set_select_policy(pFlObject, ipolicy)
     return retval
-

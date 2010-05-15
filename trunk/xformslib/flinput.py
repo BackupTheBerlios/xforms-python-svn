@@ -37,7 +37,6 @@ from xformslib import xfdata
 from xformslib import flbasic
 
 
-
 ####################
 # forms.h (input.h)
 ####################
@@ -1015,4 +1014,3 @@ def fl_set_input_editkeymap(pEditKeymap):
             xfdata.FL_EditKeymap))
     libr.keep_elem_refs(pEditKeymap)
     _fl_set_input_editkeymap(pEditKeymap)
-

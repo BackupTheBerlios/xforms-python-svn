@@ -328,7 +328,7 @@ def fl_set_pixmap_data(pFlObject, bits):
     print "bits", bits
     sbits = libr.convert_to_string(bits)
     print "sbits", sbits
-    pbits = cty.pointer(sbits)     #cty.cast(bits, cty.POINTER(xfdata.STRING))
+    pbits = cty.pointer(sbits)   # cty.cast(bits, cty.POINTER(xfdata.STRING))
     print "pbits", pbits
     libr.keep_elem_refs(pFlObject, bits, sbits, pbits)
     _fl_set_pixmap_data(pFlObject, pbits)
@@ -670,5 +670,3 @@ def fl_free_pixmap(idnum):
     ulidnum = libr.convert_to_Pixmap(idnum)
     libr.keep_elem_refs(idnum, ulidnum)
     _fl_free_pixmap(ulidnum)
-
-

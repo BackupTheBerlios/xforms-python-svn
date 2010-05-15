@@ -36,7 +36,6 @@ from xformslib import library as libr
 from xformslib import xfdata
 
 
-
 ########################
 # forms.h (tabfolder.h)
 ########################
@@ -709,5 +708,3 @@ def fl_set_tabfolder_offset(pFlObject, offset):
     libr.keep_elem_refs(pFlObject, offset, ioffset)
     retval = _fl_set_tabfolder_offset(pFlObject, ioffset)
     return retval
-
-

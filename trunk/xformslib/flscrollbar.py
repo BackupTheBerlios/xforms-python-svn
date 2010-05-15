@@ -36,7 +36,6 @@ from xformslib import library as libr
 from xformslib import xfdata
 
 
-
 ########################
 # forms.h (xfdata.h)
 ########################
@@ -349,5 +348,3 @@ def fl_set_scrollbar_step(pFlObject, step):
     fstep = libr.convert_to_double(step)
     libr.keep_elem_refs(pFlObject, step, fstep)
     _fl_set_scrollbar_step(pFlObject, fstep)
-
-

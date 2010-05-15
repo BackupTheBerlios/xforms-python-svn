@@ -36,7 +36,6 @@ from xformslib import library as libr
 from xformslib import xfdata
 
 
-
 ###################
 # forms.h (dial.h)
 ###################
@@ -369,4 +368,3 @@ def fl_set_dial_direction(pFlObject, directn):
     idirectn = libr.convert_to_int(directn)
     libr.keep_elem_refs(pFlObject, directn, idirectn)
     _fl_set_dial_direction(pFlObject, idirectn)
-

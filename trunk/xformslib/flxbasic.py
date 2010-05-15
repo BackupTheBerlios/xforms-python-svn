@@ -38,7 +38,6 @@ from xformslib import flbasic
 from xformslib import flcanvas
 
 
-
 fl_current_form = (cty.POINTER(xfdata.FL_FORM)).in_dll( \
                    libr.load_so_libforms(), 'fl_current_form')
 fl_display = (cty.POINTER(xfdata.Display)).in_dll(libr.load_so_libforms(),
@@ -56,7 +55,6 @@ fl_state = (cty.POINTER(xfdata.FL_State)).in_dll(libr.load_so_libforms(),
             'fl_state')
 fl_ul_magic_char = (xfdata.STRING).in_dll(libr.load_so_libforms(),
                     'fl_state')
-
 
 
 ###########################
@@ -545,8 +543,8 @@ def fl_line(xi, yi, xf, yf, colr):
     """
     _fl_line = libr.cfuncproto(
         libr.load_so_libforms(), "fl_line",\
-        None, [xfdata.FL_Coord, xfdata.FL_Coord, xfdata.FL_Coord, xfdata.FL_Coord,
-        xfdata.FL_COLOR],\
+        None, [xfdata.FL_Coord, xfdata.FL_Coord, xfdata.FL_Coord,
+        xfdata.FL_Coord, xfdata.FL_COLOR],\
         """void fl_line(FL_Coord xi, FL_Coord yi, FL_Coord xf,
            FL_Coord yf, FL_COLOR c)""")
     libr.check_if_initialized()
@@ -4066,25 +4064,31 @@ def FL_PCCLAMP(a):
 # If PCBITS is not 8, we need to apply the RGBmask
 
 def FL_GETR(packed):
-    return ((packed >> xfdata.FL_RSHIFT) & xfdata.FL_RMASK)
+    return (packed >> xfdata.FL_RSHIFT) & xfdata.FL_RMASK
+
 
 def FL_GETG(packed):
-    return ((packed) >> xfdata.FL_GSHIFT) & xfdata.FL_PCMAX
+    return (packed >> xfdata.FL_GSHIFT) & xfdata.FL_PCMAX
+
 
 def FL_GETB(packed):
-    return ((packed) >> xfdata.FL_BSHIFT) & xfdata.FL_PCMAX
+    return (packed >> xfdata.FL_BSHIFT) & xfdata.FL_PCMAX
+
 
 def FL_GETA(packed):
-    return ((packed) >> xfdata.FL_ASHIFT) & xfdata.FL_PCMAX
+    return (packed >> xfdata.FL_ASHIFT) & xfdata.FL_PCMAX
 
-def FL_PACK3(r, g, b ):
+
+def FL_PACK3(r, g, b):
     return (r << xfdata.FL_RSHIFT) | (g << xfdata.FL_GSHIFT) | \
         (b << xfdata.FL_BSHIFT)
 
 FL_PACK = FL_PACK3
 
+
 def FL_PACK4(r, g, b, a):
     return (FL_PACK3(r, g, b) | (a << xfdata.FL_ASHIFT))
+
 
 def FL_UNPACK(packed):
     r = FL_GETR(packed)
@@ -4094,8 +4098,8 @@ def FL_UNPACK(packed):
 
 FL_UNPACK3 = FL_UNPACK
 
+
 def FL_UNPACK4(p, r, g, b, a):
     r, g, b = FL_UNPACK3(p, r, g, b)
     a = FL_GETA(p)
     return r, g, b, a
-

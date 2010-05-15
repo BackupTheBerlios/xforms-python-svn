@@ -36,7 +36,6 @@ from xformslib import library as libr
 from xformslib import xfdata
 
 
-
 ######################
 # forms.h (timer.h)
 # Object Class: Timer
@@ -197,8 +196,8 @@ def fl_set_timer_filter(pFlObject, py_TimerFilter):
     :status: Untested + NoDoc + NoDemo = NOT OK
 
     """
-    #FL_TIMER_FILTER = cty.CFUNCTYPE(xfdata.STRING, cty.POINTER(xfdata.FL_OBJECT),
-    #                                cty.c_double)
+    #FL_TIMER_FILTER = cty.CFUNCTYPE(xfdata.STRING,
+    #           cty.POINTER(xfdata.FL_OBJECT), cty.c_double)
     _fl_set_timer_filter = libr.cfuncproto(
         libr.load_so_libforms(), "fl_set_timer_filter",
         xfdata.FL_TIMER_FILTER, [cty.POINTER(xfdata.FL_OBJECT),
@@ -260,5 +259,3 @@ def fl_resume_timer(pFlObject):
     libr.verify_flobjectptr_type(pFlObject)
     libr.keep_elem_refs(pFlObject)
     _fl_resume_timer(pFlObject)
-
-

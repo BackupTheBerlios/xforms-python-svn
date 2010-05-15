@@ -36,7 +36,6 @@ from xformslib import library as libr
 from xformslib import xfdata
 
 
-
 #######################
 # forms.h (slider.h)
 # Object Class: Slider
@@ -459,5 +458,3 @@ def fl_set_slider_filter(pFlObject, py_ValFilter):
     libr.keep_cfunc_refs(c_ValFilter, py_ValFilter)
     libr.keep_elem_refs(pFlObject)
     _fl_set_slider_filter(pFlObject, c_ValFilter)
-
-

@@ -1318,7 +1318,7 @@ def fl_set_fselector_fontstyle(style):
 
 def fl_set_fselector_placement(place):
     """Sets the placement of the file selector. By default it is centered
-    on the screen (FL_PLACE_CENTER | FL_FREE_SIZE).
+    on the screen (FL_PLACE_CENTER|FL_FREE_SIZE).
 
     --
 
@@ -1328,7 +1328,8 @@ def fl_set_fselector_placement(place):
         FL_PLACE_MOUSE, FL_PLACE_CENTER, FL_PLACE_POSITION, FL_PLACE_SIZE,
         FL_PLACE_GEOMETRY, FL_PLACE_ASPECT, FL_PLACE_FULLSCREEN,
         FL_PLACE_HOTSPOT, FL_PLACE_ICONIC, FL_FREE_SIZE, FL_PLACE_FREE_CENTER,
-        FL_PLACE_CENTERFREE
+        FL_PLACE_CENTERFREE, FL_PLACE_MOUSE|FL_FREE_SIZE,
+        FL_PLACE_FULLSCREEN|FL_FREE_SIZE, FL_PLACE_HOTSPOT|FL_FREE_SIZE
 
     :note: e.g. fl_set_fselector_placement(xfdata.FL_PLACE_HOTSPOT)
 
@@ -1841,4 +1842,3 @@ def fl_goodies_atclose(pFlForm, vdata):
     libr.keep_elem_refs(pFlForm, vdata, pvdata)
     retval = _fl_goodies_atclose(pFlForm, pvdata)
     return retval
-

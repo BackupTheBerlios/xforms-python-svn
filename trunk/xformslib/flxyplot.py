@@ -36,7 +36,6 @@ from xformslib import library as libr
 from xformslib import xfdata
 
 
-
 #####################
 # forms.h (xyplot.h)
 #####################
@@ -284,7 +283,8 @@ def fl_insert_xyplot_data(pFlObject, idnum, n, valx, valy):
     inum = libr.convert_to_int(n)
     fvalx = libr.convert_to_double(valx)
     fvaly = libr.convert_to_double(valy)
-    libr.keep_elem_refs(pFlObject, idnum, n, valx, valy, iidnum, inum, fvalx, fvaly)
+    libr.keep_elem_refs(pFlObject, idnum, n, valx, valy, iidnum, inum, \
+                        fvalx, fvaly)
     _fl_insert_xyplot_data(pFlObject, iidnum, inum, fvalx, fvaly)
 
 
@@ -428,8 +428,8 @@ def fl_add_xyplot_overlay(pFlObject, idnum, x, y, n, colr):
     py = cty.cast(y, cty.POINTER(cty.c_float))
     inum = libr.convert_to_int(n)
     ulcolr = libr.convert_to_FL_COLOR(colr)
-    libr.keep_elem_refs(pFlObject, idnum, x, y, n, colr, iidnum, px, py, inum, \
-                   ulcolr)
+    libr.keep_elem_refs(pFlObject, idnum, x, y, n, colr, iidnum, px, py, \
+                        inum, ulcolr)
     _fl_add_xyplot_overlay(pFlObject, iidnum, px, py, inum, ulcolr)
 
 
@@ -833,8 +833,9 @@ def fl_get_xyplot_overlay_data(pFlObject, idnum):
     """
     _fl_get_xyplot_overlay_data = libr.cfuncproto(
         libr.load_so_libforms(), "fl_get_xyplot_overlay_data",
-        None, [cty.POINTER(xfdata.FL_OBJECT), cty.c_int, cty.POINTER(cty.c_float),
-        cty.POINTER(cty.c_float), cty.POINTER(cty.c_int)],
+        None, [cty.POINTER(xfdata.FL_OBJECT), cty.c_int,
+        cty.POINTER(cty.c_float), cty.POINTER(cty.c_float),
+        cty.POINTER(cty.c_int)],
         """void fl_get_xyplot_overlay_data(FL_OBJECT * ob, int id,
            float * x, float * y, int * n)""")
     libr.check_if_initialized()
@@ -1074,7 +1075,8 @@ def fl_replace_xyplot_point_in_overlay(pFlObject, i, setID, valx, valy):
     isetID = libr.convert_to_int(setID)
     fvalx = libr.convert_to_double(valx)
     fvaly = libr.convert_to_double(valy)
-    libr.keep_elem_refs(pFlObject, i, setID, valx, valy, ii, isetID, fvalx, fvaly)
+    libr.keep_elem_refs(pFlObject, i, setID, valx, valy, ii, isetID, \
+                        fvalx, fvaly)
     _fl_replace_xyplot_point_in_overlay(pFlObject, ii, isetID, fvalx, fvaly)
 
 
@@ -1186,7 +1188,8 @@ def fl_set_xyplot_keys(pFlObject, keys, valx, valy, align):
     fvaly = libr.convert_to_float(valy)
     libr.check_admitted_value_in_list(align, xfdata.ALIGN_list)
     ialign = libr.convert_to_int(align)
-    libr.keep_elem_refs(pFlObject, keys, valx, valy, align, fvalx, fvaly, ialign)
+    libr.keep_elem_refs(pFlObject, keys, valx, valy, align, fvalx, fvaly, \
+                        ialign)
     _fl_set_xyplot_keys(pFlObject, keys, fvalx, fvaly, ialign)
 
 
@@ -1905,5 +1908,3 @@ def fl_set_xyplot_mark_active(pFlObject, y):
     libr.keep_elem_refs(pFlObject, y, iy)
     retval = _fl_set_xyplot_mark_active(pFlObject, iy)
     return retval
-
-

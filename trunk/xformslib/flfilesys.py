@@ -36,7 +36,6 @@ from xformslib import library as libr
 from xformslib import xfdata
 
 
-
 ############################################
 # forms.h (filesys.h)
 # Convenience functions to read a directory
@@ -317,5 +316,3 @@ def fl_fix_dirname(dirname):
     libr.keep_elem_refs(dirname, sdirname)
     retval = _fl_fix_dirname(sdirname)
     return retval
-
-

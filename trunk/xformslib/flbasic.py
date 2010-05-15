@@ -154,7 +154,7 @@ def fl_remove_io_callback(fd, mask, py_IoCallback):
         name referring to function(num, ptr_void)
 
     :note: def iocb(num, vdata): > ...
-    :note: fdesc = some_function_to_open_file
+    :note: fdesc = os.open(myfile, os.RD_ONLY)
     :note: fl_remove_io_callback(fdesc, xfdata.FL_READ, iocb)
 
     :status: Tested + Doc + NoDemo = OK
@@ -170,6 +170,7 @@ def fl_remove_io_callback(fd, mask, py_IoCallback):
     libr.check_admitted_value_in_list(mask, xfdata.ASYNCIO_list)
     ifd = libr.convert_to_int(fd)
     uimask = libr.convert_to_uint(mask)
+    libr.verify_function_type(py_IoCallback)
     c_IoCallback = xfdata.FL_IO_CALLBACK(py_IoCallback)
     libr.keep_cfunc_refs(c_IoCallback, py_IoCallback)
     libr.keep_elem_refs(fd, ifd, mask, uimask)
@@ -187,7 +188,7 @@ def fl_add_signal_callback(sglnum, py_SignalHandler, vdata):
     :Parameters:
       `sglnum` : int
         signal number. Values (from signal module) SIGALRM, SIGINT, ...
-      `py_SignalHandler` : python callback to be invoked after catching signal, no return
+      `py_SignalHandler` : callback invoked after catching signal, no return
         name referring to function(num, ptr_void)
       `vdata` : None or long or pointer to xfdata.FL_OBJECT
         argument to be passed to function
@@ -1322,8 +1323,10 @@ def fl_set_form_minsize(pFlForm, w, h):
     """
     _fl_set_form_minsize = libr.cfuncproto(
         libr.load_so_libforms(), "fl_set_form_minsize", \
-        None, [cty.POINTER(xfdata.FL_FORM), xfdata.FL_Coord, xfdata.FL_Coord], \
-        """void fl_set_form_minsize(FL_FORM * form, FL_Coord w, FL_Coord h) """)
+        None, [cty.POINTER(xfdata.FL_FORM), xfdata.FL_Coord,
+        xfdata.FL_Coord],
+        """void fl_set_form_minsize(FL_FORM * form, FL_Coord w,
+           FL_Coord h) """)
     libr.check_if_initialized()
     libr.verify_flformptr_type(pFlForm)
     iw = libr.convert_to_FL_Coord(w)
@@ -1484,7 +1487,9 @@ def fl_show_form(pFlForm, place, border, title):
         FL_PLACE_MOUSE, FL_PLACE_CENTER, FL_PLACE_POSITION, FL_PLACE_SIZE,
         FL_PLACE_GEOMETRY, FL_PLACE_ASPECT, FL_PLACE_FULLSCREEN,
         FL_PLACE_HOTSPOT, FL_PLACE_ICONIC, FL_FREE_SIZE, FL_PLACE_FREE_CENTER,
-        FL_PLACE_CENTERFREE
+        FL_PLACE_CENTERFREE, FL_PLACE_MOUSE|FL_FREE_SIZE,
+        FL_PLACE_FULLSCREEN|FL_FREE_SIZE, FL_PLACE_HOTSPOT|FL_FREE_SIZE
+
       `border` : int
         window manager decoration. Values (from xfdata.py) FL_FULLBORDER,
         FL_TRANSIENT, FL_NOBORDER
@@ -1640,7 +1645,8 @@ def fl_prepare_form_window(pFlForm, place, border, title):
         FL_PLACE_MOUSE, FL_PLACE_CENTER, FL_PLACE_POSITION, FL_PLACE_SIZE,
         FL_PLACE_GEOMETRY, FL_PLACE_ASPECT, FL_PLACE_FULLSCREEN,
         FL_PLACE_HOTSPOT, FL_PLACE_ICONIC, FL_FREE_SIZE, FL_PLACE_FREE_CENTER,
-        FL_PLACE_CENTERFREE
+        FL_PLACE_CENTERFREE, FL_PLACE_MOUSE|FL_FREE_SIZE,
+        FL_PLACE_FULLSCREEN|FL_FREE_SIZE, FL_PLACE_HOTSPOT|FL_FREE_SIZE
       `border` : int
         window manager decoration. Values (from xfdata.py) FL_FULLBORDER,
         FL_TRANSIENT, FL_NOBORDER
@@ -4448,11 +4454,12 @@ def fl_drw_text_beside(align, x, y, w, h, colr, style, size, txtstr):
         color value
       `style` : int
         font style. Values (from xfdata.py) FL_NORMAL_STYLE, FL_BOLD_STYLE,
-        FL_ITALIC_STYLE, FL_BOLDITALIC_STYLE, FL_FIXED_STYLE, FL_FIXEDBOLD_STYLE,
-        FL_FIXEDITALIC_STYLE, FL_FIXEDBOLDITALIC_STYLE, FL_TIMES_STYLE,
-        FL_TIMESBOLD_STYLE, FL_TIMESITALIC_STYLE, FL_TIMESBOLDITALIC_STYLE,
-        FL_MISC_STYLE, FL_MISCBOLD_STYLE, FL_MISCITALIC_STYLE, FL_SYMBOL_STYLE,
-        FL_SHADOW_STYLE, FL_ENGRAVED_STYLE, FL_EMBOSSED_STYLE
+        FL_ITALIC_STYLE, FL_BOLDITALIC_STYLE, FL_FIXED_STYLE,
+        FL_FIXEDBOLD_STYLE, FL_FIXEDITALIC_STYLE, FL_FIXEDBOLDITALIC_STYLE,
+        FL_TIMES_STYLE, FL_TIMESBOLD_STYLE, FL_TIMESITALIC_STYLE,
+        FL_TIMESBOLDITALIC_STYLE, FL_MISC_STYLE, FL_MISCBOLD_STYLE,
+        FL_MISCITALIC_STYLE, FL_SYMBOL_STYLE, FL_SHADOW_STYLE,
+        FL_ENGRAVED_STYLE, FL_EMBOSSED_STYLE
       `size` : int
         font size. Values (from xfdata.py) FL_TINY_SIZE, FL_SMALL_SIZE,
         FL_NORMAL_SIZE, FL_MEDIUM_SIZE, FL_LARGE_SIZE, FL_HUGE_SIZE,
@@ -5840,4 +5847,3 @@ def fl_is_same_object(pFlObject1, pFlObject2):
     libr.keep_elem_refs(pFlObject1, pFlObject2)
     retval = _fl_is_same_object(pFlObject1, pFlObject2)
     return retval
-

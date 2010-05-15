@@ -484,5 +484,3 @@ def fl_set_chart_baseline(pFlObject, yesno):
     iyesno = libr.convert_to_int(yesno)
     libr.keep_elem_refs(pFlObject, yesno, iyesno)
     _fl_set_chart_baseline(pFlObject, iyesno)
-
-

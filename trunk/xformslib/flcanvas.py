@@ -592,4 +592,3 @@ def fl_canvas_yield_to_shortcut(pFlObject, yesno):
     iyesno = libr.convert_to_int(yesno)
     libr.keep_elem_refs(pFlObject, yesno, iyesno)
     _fl_canvas_yield_to_shortcut(pFlObject, iyesno)
-
