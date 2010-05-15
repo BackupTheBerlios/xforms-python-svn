@@ -206,6 +206,7 @@ def fl_set_timer_filter(pFlObject, py_TimerFilter):
            FL_TIMER_FILTER filter)""")
     libr.check_if_initialized()
     libr.verify_flobjectptr_type(pFlObject)
+    libr.verify_function_type(py_TimerFilter)
     c_TimerFilter = xfdata.FL_TIMER_FILTER(py_TimerFilter)
     libr.keep_cfunc_refs(c_TimerFilter, py_TimerFilter)
     libr.keep_elem_refs(pFlObject)

@@ -122,6 +122,7 @@ def fl_set_dirlist_filter(py_DirFilter):
         """FL_DIRLIST_FILTER fl_set_dirlist_filter( \
            FL_DIRLIST_FILTER filter)""")
     libr.check_if_initialized()
+    libr.verify_function_type(py_DirFilter)
     c_DirFilter = xfdata.FL_DIRLIST_FILTER(py_DirFilter)
     libr.keep_cfunc_refs(c_DirFilter, py_DirFilter)
     retval = _fl_set_dirlist_filter(c_DirFilter)

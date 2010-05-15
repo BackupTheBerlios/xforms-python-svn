@@ -167,10 +167,11 @@ def fl_stuff_clipboard(pFlObject, clipbdtype, data, size, \
     lclipbdtype = libr.convert_to_long(clipbdtype)
     pdata = cty.cast(data, cty.c_void_p)
     lsize = libr.convert_to_long(size)
+    libr.verify_function_type(py_LoseSelectionCb)
     c_LoseSelectionCb = xfdata.FL_LOSE_SELECTION_CB(py_LoseSelectionCb)
     libr.keep_cfunc_refs(c_LoseSelectionCb, py_LoseSelectionCb)
-    libr.keep_elem_refs(pFlObject, clipbdtype, data, size, lclipbdtype, pdata,
-                        lsize)
+    libr.keep_elem_refs(pFlObject, clipbdtype, data, size, lclipbdtype,
+                        pdata, lsize)
     retval = _fl_stuff_clipboard(pFlObject, lclipbdtype, pdata, lsize,
                                  c_LoseSelectionCb)
     return retval
@@ -187,7 +188,7 @@ def fl_request_clipboard(pFlObject, clipbdtype, py_SelectionCb):
       `clipbdtype` : long
         type of clipboard (not used)
       `py_SelectionCb` : python function callback, returning value
-        name referring to function(pFlObject, longnum, ptr_void, longnum)
+        name referring to function(pFlObject, longnum, vdata, longnum)
         -> num.
 
     :return: 0, or -1 (if it's on different window?)
@@ -209,6 +210,7 @@ def fl_request_clipboard(pFlObject, clipbdtype, py_SelectionCb):
     libr.check_if_initialized()
     libr.verify_flobjectptr_type(pFlObject)
     lclipbdtype = libr.convert_to_long(clipbdtype)
+    libr.verify_function_type(py_SelectionCb)
     c_SelectionCb = xfdata.FL_SELECTION_CB(py_SelectionCb)
     libr.keep_cfunc_refs(c_SelectionCb, py_SelectionCb)
     libr.keep_elem_refs(pFlObject, clipbdtype, lclipbdtype)
@@ -458,6 +460,7 @@ def fl_add_free(freetype, x, y, w, h, label, py_HandlePtr):
     iw = libr.convert_to_FL_Coord(w)
     ih = libr.convert_to_FL_Coord(h)
     slabel = libr.convert_to_string(label)
+    libr.verify_function_type(py_HandlePtr)
     c_HandlePtr = xfdata.FL_HANDLEPTR(py_HandlePtr)
     libr.keep_cfunc_refs(c_HandlePtr, py_HandlePtr)
     libr.keep_elem_refs(freetype, x, y, w, h, label, ifreetype, ix, iy, iw,

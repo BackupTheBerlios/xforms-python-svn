@@ -936,6 +936,7 @@ def fl_set_input_filter(pFlObject, py_InputValidator):
             FL_INPUTVALIDATOR validate)""")
     libr.check_if_initialized()
     libr.verify_flobjectptr_type(pFlObject)
+    libr.verify_function_type(py_InputValidator)
     c_InputValidator = xfdata.FL_INPUTVALIDATOR(py_InputValidator)
     libr.keep_cfunc_refs(c_InputValidator, py_InputValidator)
     libr.keep_elem_refs(pFlObject)

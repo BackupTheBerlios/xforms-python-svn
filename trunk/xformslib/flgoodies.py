@@ -1193,7 +1193,7 @@ def fl_use_fselector(num):
         fselector number to use. Values between 0 and
         xfdata.FL_MAX_FSELECTOR - 1
 
-    :return: old file selector
+    :return: old file selector number
     :rtype: int
 
     :note: e.g. oldfsel = fl_use_fselector(1)
@@ -1232,8 +1232,8 @@ def fl_show_fselector(msgtxt, dirname, pattern, deftxt):
     :return: fselector text, or None (if the Cancel button is pressed)
     :rtype: str
 
-    :note: e.g. fstxt = fl_show_fselector("Choose file:", "/home/user", "*.*",
-        "")
+    :note: e.g. fstxt = fl_show_fselector("Choose file:", "/home/user",
+        "*.*", "")
 
     :status: Tested + Doc + Demo = OK
 
@@ -1408,8 +1408,8 @@ def fl_set_fselector_callback(py_FSCB, vdata):
 
     :Parameters:
       `py_FSCB` : python function callback, returning (unused) value
-        name referring to function(string, ptr_void) -> num
-      `vdata` : pointer to void
+        name referring to function(string, vdata) -> num
+      `vdata` : any type (e.g. 'None', int, str, etc..)
         user data to be passed to function
 
     :note: e.g. def fsel_cb(fname, cvoidp): > ... ; return UnusedVal
@@ -1424,10 +1424,23 @@ def fl_set_fselector_callback(py_FSCB, vdata):
         None, [xfdata.FL_FSCB, cty.c_void_p],
         """void fl_set_fselector_callback(FL_FSCB p1, void * p2)""")
     libr.check_if_initialized()
+    libr.verify_function_type(py_FSCB)
     c_FSCB = xfdata.FL_FSCB(py_FSCB)
-    pvdata = cty.cast(vdata, cty.c_void_p)
+    if vdata is None:
+        zdata = vdata
+        pvdata = cty.cast(zdata, cty.c_void_p)
+    elif isinstance(vdata, int):
+        zdata = libr.convert_to_int(vdata)
+        pvdata = zdata
+    elif isinstance(vdata, str):
+        zdata = libr.convert_to_string(vdata)
+        pvdata = cty.cast(zdata, cty.POINTER(xfdata.STRING))
+    else:
+        zdata = vdata
+        pvdata = vdata          # it is pFlObject
+        libr.verify_flobjectptr_type(pvdata)
     libr.keep_cfunc_refs(c_FSCB, py_FSCB)
-    libr.keep_elem_refs(vdata, pvdata)
+    libr.keep_elem_refs(vdata, zdata, pvdata)
     _fl_set_fselector_callback(c_FSCB, pvdata)
 
 
@@ -1578,9 +1591,10 @@ def fl_add_fselector_appbutton(label, py_fn, vdata):
       `label` : str
         text of label
       `py_fn` : python function callback, no return
-        name referring to function(ptr_void)
-      `vdata` : pointer to void
-        user data to be passed to function
+        name referring to function(vdata)
+      `vdata` : any type (e.g. 'None', int, str, etc..)
+        user data to be passed to function; callback has to take care of
+        type check
 
     :note: e.g. def fsbtn_cb(cvoidp): > ...
     :note: e.g. fl_add_fselector_appbutton("SomeButton", fsbtn_cb, None)
@@ -1596,6 +1610,7 @@ def fl_add_fselector_appbutton(label, py_fn, vdata):
            const char * p2, void * p3)""")
     libr.check_if_initialized()
     slabel = libr.convert_to_string(label)
+    libr.verify_function_type(py_fn)
     c_fn = xfdata.cfunc_none_voidp(py_fn)
     pvdata = cty.cast(vdata, cty.c_void_p)
     libr.keep_cfunc_refs(c_fn, py_fn)
@@ -1761,31 +1776,31 @@ def fl_set_fselector_filetype_marker(dirmk, fifomk, sockmk, cdevmk, bdevmk):
            int p4, int p5)""")
     libr.check_if_initialized()
     if isinstance(dirmk, str):
-    # workaround to let a character as int argument
+        # workaround to let a character as int argument
         odirmk = ord(dirmk)
     else:
         odirmk = dirmk
     idirmk = libr.convert_to_int(odirmk)
     if isinstance(fifomk, str):
-    # workaround to let a character as int argument
+        # workaround to let a character as int argument
         ofifomk = ord(fifomk)
     else:
         ofifomk = fifomk
     ififomk = libr.convert_to_int(ofifomk)
     if isinstance(sockmk, str):
-    # workaround to let a character as int argument
+        # workaround to let a character as int argument
         osockmk = ord(sockmk)
     else:
         osockmk = sockmk
     isockmk = libr.convert_to_int(osockmk)
     if isinstance(cdevmk, str):
-    # workaround to let a character as int argument
+        # workaround to let a character as int argument
         ocdevmk = ord(cdevmk)
     else:
         ocdevmk = cdevmk
     icdevmk = libr.convert_to_int(ocdevmk)
     if isinstance(bdevmk, str):
-    # workaround to let a character as int argument
+        # workaround to let a character as int argument
         obdevmk = ord(bdevmk)
     else:
         obdevmk = bdevmk
@@ -1821,8 +1836,9 @@ def fl_goodies_atclose(pFlForm, vdata):
     :Parameters:
       `pFlForm` : pointer to xfdata.FL_FORM
         form
-      `vdata` : pointer to void?
-        user data?
+      `vdata` : any type (e.g. 'None', int, str, etc..)
+        user data to be passed to function; callback has to take care of
+        type check
 
     :return: unused value (xfdata.FL_IGNORE)
     :rtype: int

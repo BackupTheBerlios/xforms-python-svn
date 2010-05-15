@@ -486,6 +486,7 @@ def fl_popup_set_callback(pPopup, py_PopupCb):
            FL_POPUP_CB p2)""")
     libr.check_if_initialized()
     libr.verify_flflpopupptr_type(pPopup)
+    libr.verify_function_type(py_PopupCb)
     c_PopupCb = xfdata.FL_POPUP_CB(py_PopupCb)
     libr.keep_cfunc_refs(c_PopupCb, py_PopupCb)
     libr.keep_elem_refs(pPopup)
@@ -873,6 +874,7 @@ def fl_popup_entry_set_callback(pPopupEntry, py_PopupCb):
            FL_POPUP_CB p2)""")
     libr.check_if_initialized()
     libr.verify_flpopupentryptr_type(pPopupEntry)
+    libr.verify_function_type(py_PopupCb)
     c_PopupCb = xfdata.FL_POPUP_CB(py_PopupCb)
     libr.keep_cfunc_refs(c_PopupCb, py_PopupCb)
     libr.keep_elem_refs(pPopupEntry)
@@ -907,6 +909,7 @@ def fl_popup_entry_set_enter_callback(pPopupEntry, py_PopupCb):
            FL_POPUP_ENTRY * p1, FL_POPUP_CB p2)""")
     libr.check_if_initialized()
     libr.verify_flpopupentryptr_type(pPopupEntry)
+    libr.verify_function_type(py_PopupCb)
     c_PopupCb = xfdata.FL_POPUP_CB(py_PopupCb)
     libr.keep_cfunc_refs(c_PopupCb, py_PopupCb)
     libr.keep_elem_refs(pPopupEntry)
@@ -941,6 +944,7 @@ def fl_popup_entry_set_leave_callback(pPopupEntry, py_PopupCb):
            FL_POPUP_ENTRY * p1, FL_POPUP_CB p2)""")
     libr.check_if_initialized()
     libr.verify_flpopupentryptr_type(pPopupEntry)
+    libr.verify_function_type(py_PopupCb)
     c_PopupCb = xfdata.FL_POPUP_CB(py_PopupCb)
     libr.keep_cfunc_refs(c_PopupCb, py_PopupCb)
     libr.keep_elem_refs(pPopupEntry)
@@ -1204,8 +1208,9 @@ def fl_popup_entry_set_user_data(pPopupEntry, vdata):
     :Parameters:
       `pPopupEntry` : pointer to xfdata.FL_POPUP_ENTRY
         popup entry
-      `vdata` : pointer to void?
-        user data
+      `vdata` : any type (e.g. 'None', int, str, etc..)
+        user data to be passed to function; callback has to take care of
+        type check
 
     :return: *todo*
     :rtype: pointer to void?
@@ -1302,8 +1307,9 @@ def fl_popup_entry_get_by_user_data(pPopup, vdata):
     :Parameters:
       `pPopup` : pointer to xfdata.FL_POPUP
         popup class instance
-      `vdata` : pointer to void?
-        user data
+      `vdata` : any type (e.g. 'None', int, str, etc..)
+        user data to be passed to function; callback has to take care of
+        type check
 
     :return: popup entry
     :rtype: pointer to xfdata.FL_POPUP_ENTRY

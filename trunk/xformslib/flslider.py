@@ -454,6 +454,7 @@ def fl_set_slider_filter(pFlObject, py_ValFilter):
         """void fl_set_slider_filter(FL_OBJECT * ob, FL_VAL_FILTER filter)""")
     libr.check_if_initialized()
     libr.verify_flobjectptr_type(pFlObject)
+    libr.verify_function_type(py_ValFilter)
     c_ValFilter = xfdata.FL_VAL_FILTER(py_ValFilter)
     libr.keep_cfunc_refs(c_ValFilter, py_ValFilter)
     libr.keep_elem_refs(pFlObject)

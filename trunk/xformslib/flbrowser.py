@@ -942,6 +942,7 @@ def fl_set_browser_dblclick_callback(pFlObject, py_CallbackPtr, data):
     libr.check_if_initialized()
     libr.verify_flobjectptr_type(pFlObject)
     ldata = libr.convert_to_long(data)
+    libr.verify_function_type(py_CallbackPtr)
     c_CallbackPtr = xfdata.FL_CALLBACKPTR(py_CallbackPtr)
     libr.keep_cfunc_refs(c_CallbackPtr, py_CallbackPtr)
     libr.keep_elem_refs(pFlObject, data, ldata)
@@ -1247,8 +1248,9 @@ def fl_set_browser_hscroll_callback(pFlObject, py_BrowserScrollCallback,
         browser object
       `py_BrowserScrollCallback` : python function callback, no return
         name referring to function(pFlObject, num, vdata)
-      `vdata` : pointer to void
-        user data to be passed to function
+      `vdata` : any type (e.g. 'None', int, str, etc..)
+        user data to be passed to function; callback has to take care of
+        type check
 
     :note: e.g. *todo*
 
@@ -1265,6 +1267,7 @@ def fl_set_browser_hscroll_callback(pFlObject, py_BrowserScrollCallback,
            FL_BROWSER_SCROLL_CALLBACK cb, void * data)""")
     libr.check_if_initialized()
     libr.verify_flobjectptr_type(pFlObject)
+    libr.verify_function_type(py_BrowserScrollCallback)
     c_BrowserScrollCallback = xfdata.FL_BROWSER_SCROLL_CALLBACK( \
                                 py_BrowserScrollCallback)
     pvdata = cty.cast(vdata, cty.c_void_p)
@@ -1286,8 +1289,9 @@ def fl_set_browser_vscroll_callback(pFlObject, py_BrowserScrollCallback,
         browser object
       `py_BrowserScrollCallback` : python function callback, no return
         name referring to function(pFlObject, num, vdata)
-      `vdata` : pointer to void
-        user data to be passed to function
+      `vdata` : any type (e.g. 'None', int, str, etc..)
+        user data to be passed to function; callback has to take care of
+        type check
 
     :note: e.g. *todo*
 
@@ -1302,6 +1306,7 @@ def fl_set_browser_vscroll_callback(pFlObject, py_BrowserScrollCallback,
            FL_BROWSER_SCROLL_CALLBACK cb, void * data)""")
     libr.check_if_initialized()
     libr.verify_flobjectptr_type(pFlObject)
+    libr.verify_function_type(py_BrowserScrollCallback)
     c_BrowserScrollCallback = xfdata.FL_BROWSER_SCROLL_CALLBACK( \
                                 py_BrowserScrollCallback)
     pvdata = cty.cast(vdata, cty.c_void_p)

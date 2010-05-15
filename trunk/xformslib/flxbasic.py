@@ -3015,12 +3015,13 @@ def fl_set_event_callback(py_AppEventCb, vdata):
 
     :Parameters:
       `py_AppEventCb` : python function callback, returning value
-        name referring to function(pXEvent, ptr_void) -> num.
-      `vdata` : None or long or pointer to xfdata.FL_OBJECT
-        user data to be passed to function
+        name referring to function(pXEvent, vdata) -> num.
+      `vdata` : any type (e.g. 'None', int, str, etc..)
+        user data to be passed to function; callback has to take care of
+        type check
 
     :return: old event callback
-    :rtype: pointer to xfdata.FL_APPEVENT_CB
+    :rtype: xfdata.FL_APPEVENT_CB
 
     :note: e.g. def eventcb(pxev, vdata): > ... ; return 0
     :note: e.g. fl_set_event_callback(eventcb, None)
@@ -3036,15 +3037,9 @@ def fl_set_event_callback(py_AppEventCb, vdata):
         """FL_APPEVENT_CB fl_set_event_callback(FL_APPEVENT_CB callback,
            void * user_data)""")
     libr.check_if_initialized()
+    libr.verify_function_type(py_AppEventCb)
     c_AppEventCb = xfdata.FL_APPEVENT_CB(py_AppEventCb)
-    if vdata is None:
-        pvdata = cty.cast(vdata, cty.c_void_p)
-    elif isinstance(vdata, long):
-        ldata = libr.convert_to_long(vdata)
-        pvdata = cty.cast(ldata, cty.POINTER(cty.c_long))
-    else:
-        pvdata = vdata          # it is pFlObject
-        libr.verify_flobjectptr_type(pvdata)
+    pvdata = cty.cast(vdata, cty.c_void_p)
     libr.keep_cfunc_refs(c_AppEventCb, py_AppEventCb)
     libr.keep_elem_refs(vdata, pvdata)
     retval = _fl_set_event_callback(c_AppEventCb, pvdata)
@@ -3066,12 +3061,13 @@ def fl_set_idle_callback(py_AppEventCb, vdata):
 
     :Parameters:
       `py_AppEventCb` : python function callback, returning unused value
-        name referring to function(pXEvent, ptr_void) -> num.
-      `vdata` : None or long or pointer to xfdata.FL_OBJECT
-        user data to be passed to function
+        name referring to function(pXEvent, vdata) -> num.
+      `vdata` : any type (e.g. 'None', int, str, etc..)
+        user data to be passed to function; callback has to take care of
+        type check
 
     :return: old event callback function
-    :rtype: pointer to xfdata.FL_APPEVENT_CB
+    :rtype: xfdata.FL_APPEVENT_CB
 
     :note: e.g. def idlecb(xev, userdata): > ... ; return 0
     :note: e.g. appevtcb = fl_set_idle_callback(idlecb, None)
@@ -3089,15 +3085,9 @@ def fl_set_idle_callback(py_AppEventCb, vdata):
         """FL_APPEVENT_CB fl_set_idle_callback(FL_APPEVENT_CB callback,
            void * user_data)""")
     libr.check_if_initialized()
+    libr.verify_function_type(py_AppEventCb)
     c_AppEventCb = xfdata.FL_APPEVENT_CB(py_AppEventCb)
-    if vdata is None:
-        pvdata = cty.cast(vdata, cty.c_void_p)
-    elif isinstance(vdata, long):
-        ldata = libr.convert_to_long(vdata)
-        pvdata = cty.cast(ldata, cty.POINTER(cty.c_long))
-    else:
-        pvdata = vdata          # it is pFlObject
-        libr.verify_flobjectptr_type(pvdata)
+    pvdata = cty.cast(vdata, cty.c_void_p)
     libr.keep_cfunc_refs(c_AppEventCb, py_AppEventCb)
     libr.keep_elem_refs(vdata, pvdata)
     retval = _fl_set_idle_callback(c_AppEventCb, pvdata)
@@ -3119,7 +3109,8 @@ def fl_addto_selected_xevent(win, mask):
     :return: num.
     :rtype: long
 
-    :note: e.g. lnum = fl_addto_selected_xevent(win7, xfdata.ButtonMotionMask)
+    :note: e.g. lnum = fl_addto_selected_xevent(win7, \
+        xfdata.ButtonMotionMask)
 
     :status: Tested + Doc + NoDemo = OK
 
@@ -3151,7 +3142,8 @@ def fl_remove_selected_xevent(win, mask):
     :return: num.
     :rtype: long
 
-    :note: e.g. lnum = fl_remove_selected_xevent(win7, xfdata.ButtonMotionMask)
+    :note: e.g. lnum = fl_remove_selected_xevent(win7, \
+        xfdata.ButtonMotionMask)
 
     :status: Tested + Doc + NoDemo = OK
 
@@ -3216,9 +3208,10 @@ def fl_add_event_callback(win, evttype, py_AppEventCb, vdata):
         event type number. If it's 0, the callback is for all events for the
         window
       `py_AppEventCb` : python function callback, returning value
-        name referring function(pXEvent, ptr_void) -> num.
-      `vdata` : None or long or pointer to xfdata.FL_OBJECT
-        user data to be passed to function
+        name referring function(pXEvent, vdata) -> num.
+      `vdata` : any type (e.g. 'None', int, str, etc..)
+        user data to be passed to function; callback has to take care of
+        type check
 
     :return: old event callback
     :rtype: pointer to xfdata.FL_APPEVENT_CB
@@ -3240,15 +3233,9 @@ def fl_add_event_callback(win, evttype, py_AppEventCb, vdata):
     libr.check_if_initialized()
     ulwin = libr.convert_to_Window(win)
     ievttype = libr.convert_to_int(evttype)
+    libr.verify_function_type(py_AppEventCb)
     c_AppEventCb = xfdata.FL_APPEVENT_CB(py_AppEventCb)
-    if vdata is None:
-        pvdata = cty.cast(vdata, cty.c_void_p)
-    elif isinstance(vdata, long):
-        ldata = libr.convert_to_long(vdata)
-        pvdata = cty.cast(ldata, cty.POINTER(cty.c_long))
-    else:
-        pvdata = vdata          # it is pFlObject
-        libr.verify_flobjectptr_type(pvdata)
+    pvdata = cty.cast(vdata, cty.c_void_p)
     libr.keep_cfunc_refs(c_AppEventCb, py_AppEventCb)
     libr.keep_elem_refs(win, evttype, vdata, ulwin, ievttype, pvdata)
     retval = _fl_add_event_callback(ulwin, ievttype, c_AppEventCb, pvdata)

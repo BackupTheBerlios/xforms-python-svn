@@ -1277,7 +1277,7 @@ FL_pixmap_._fields_ = [
 
 
 FL_IO_CALLBACK = cty.CFUNCTYPE(None, cty.c_int, cty.c_void_p)
-""" FL_IO_CALLBACK(num, ptr_void)
+""" FL_IO_CALLBACK(num, vdata)
 
     prototype for handling IO callback (used by fl_add_io_callback,
     fl_remove_io_callback), no return
@@ -1285,7 +1285,7 @@ FL_IO_CALLBACK = cty.CFUNCTYPE(None, cty.c_int, cty.c_void_p)
 
 
 FL_SIGNAL_HANDLER = cty.CFUNCTYPE(None, cty.c_int, cty.c_void_p)
-""" FL_SIGNAL_HANDLER(num, ptr_void)
+""" FL_SIGNAL_HANDLER(num, vdata)
 
     prototype for handling signal callback (used by fl_add_signal_callback),
     no return
@@ -1293,7 +1293,7 @@ FL_SIGNAL_HANDLER = cty.CFUNCTYPE(None, cty.c_int, cty.c_void_p)
 
 
 FL_TIMEOUT_CALLBACK = cty.CFUNCTYPE(None, cty.c_int, cty.c_void_p)
-""" FL_TIMEOUT_CALLBACK(num, ptr_void)
+""" FL_TIMEOUT_CALLBACK(num, vdata)
 
     prototype for handling timeout callback (used by fl_add_timeout),
     no return
@@ -1303,7 +1303,7 @@ FL_TIMEOUT_CALLBACK = cty.CFUNCTYPE(None, cty.c_int, cty.c_void_p)
 # at close (WM menu delete/close etc.)
 FL_FORM_ATCLOSE = cty.CFUNCTYPE(cty.c_int, cty.POINTER(FL_FORM), \
                                 cty.c_void_p)
-""" FL_FORM_ATCLOSE(pForm, ptr_void) -> num
+""" FL_FORM_ATCLOSE(pForm, vdata) -> num
 
     prototype when a form is closed (used by fl_set_form_atclose,
     fl_set_atclose), returning value
@@ -1311,14 +1311,14 @@ FL_FORM_ATCLOSE = cty.CFUNCTYPE(cty.c_int, cty.POINTER(FL_FORM), \
 
 # deactivate/activate callbacks
 FL_FORM_ATACTIVATE = cty.CFUNCTYPE(None, cty.POINTER(FL_FORM), cty.c_void_p)
-""" FL_FORM_ATACTIVATE(pForm, ptr_void)
+""" FL_FORM_ATACTIVATE(pForm, vdata)
 
     prototype when a form is activated (used by fl_set_form_atactivate),
     no return value
 """
 
 FL_FORM_ATDEACTIVATE = cty.CFUNCTYPE(None, cty.POINTER(FL_FORM), cty.c_void_p)
-""" FL_FORM_DEATACTIVATE(pForm, ptr_void)
+""" FL_FORM_DEATACTIVATE(pForm, vdata)
 
     prototype when a form is deactivated (used by fl_set_form_atdeactivate),
     no return value
@@ -1327,7 +1327,7 @@ FL_FORM_ATDEACTIVATE = cty.CFUNCTYPE(None, cty.POINTER(FL_FORM), cty.c_void_p)
 
 # callback function for an entire form
 FL_FORMCALLBACKPTR = cty.CFUNCTYPE(None, cty.POINTER(FL_OBJECT), cty.c_void_p)
-""" FL_FORMCALLBACKPTR(pObject, ptr_void)
+""" FL_FORMCALLBACKPTR(pObject, vdata)
 
     prototype for handling a callback for the entire form (used by
     fl_set_form_callback) - no return value
@@ -1341,7 +1341,7 @@ cfunc_int_pobject_pvoid = cty.CFUNCTYPE(cty.c_int, cty.POINTER(FL_OBJECT), \
 
 FL_HANDLEPTR = cty.CFUNCTYPE(cty.c_int, cty.POINTER(FL_OBJECT), cty.c_int, \
                 FL_Coord, FL_Coord, cty.c_int, cty.c_void_p)
-""" FL_HANDLEPTR(pObject, num, coord, coord, num, ptr_void) -> num
+""" FL_HANDLEPTR(pObject, num, coord, coord, num, vdata) -> num
 
     prototype for registering a pre- or post- handler for an object,
     returning value (used by fl_set_object_prehandler,
@@ -1781,7 +1781,7 @@ Pixmap = XID    # cty.c_ulong
 
 FL_APPEVENT_CB = cty.CFUNCTYPE(cty.c_int, cty.POINTER(XEvent),
                                cty.c_void_p)
-""" FL_APPEVENT_CB(pXEvent, ptr_void) -> num.
+""" FL_APPEVENT_CB(pXEvent, vdata) -> num.
 
     prototype for handling event callback (used by fl_set_event_callback,
     fl_set_idle_callback, fl_add_event_callback), returning value.

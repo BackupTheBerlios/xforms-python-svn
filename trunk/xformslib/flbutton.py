@@ -839,10 +839,12 @@ def fl_add_button_class(btnclass, py_DrawButton, py_CleanupButton):
            FL_CleanupButton cleanup)""")
     libr.check_if_initialized()
     ibtnclass = libr.convert_to_int(btnclass)
+    libr.verify_function_type(py_DrawButton)
     c_DrawButton = xfdata.FL_DrawButton(py_DrawButton)
+    libr.verify_function_type(py_CleanupButton)
     c_CleanupButton = xfdata.FL_CleanupButton(py_CleanupButton)
     libr.keep_cfunc_refs(c_DrawButton, py_DrawButton, c_CleanupButton,
-                            py_CleanupButton)
+                        py_CleanupButton)
     libr.keep_elem_refs(btnclass, ibtnclass)
     _fl_add_button_class(ibtnclass, c_DrawButton, c_CleanupButton)
 

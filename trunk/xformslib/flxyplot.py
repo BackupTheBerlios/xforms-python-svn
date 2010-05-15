@@ -1853,7 +1853,7 @@ def fl_set_xyplot_symbol(pFlObject, idnum, py_XyPlotSymbol):
         name referring to function(pFlObject, int, pPoint, int, int, int)
 
     :return: old xyplotsymbol function
-    :rtype: pointer to xfdata.FL_XYPLOT_SYMBOL
+    :rtype: xfdata.FL_XYPLOT_SYMBOL
 
     :note: e.g. *todo*
 
@@ -1872,6 +1872,7 @@ def fl_set_xyplot_symbol(pFlObject, idnum, py_XyPlotSymbol):
     libr.check_if_initialized()
     libr.verify_flobjectptr_type(pFlObject)
     iidnum = libr.convert_to_int(idnum)
+    libr.verify_function_type(py_XyPlotSymbol)
     c_XyPlotSymbol = xfdata.FL_XYPLOT_SYMBOL(py_XyPlotSymbol)
     libr.keep_cfunc_refs(c_XyPlotSymbol, py_XyPlotSymbol)
     libr.keep_elem_refs(pFlObject, idnum, iidnum)

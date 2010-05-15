@@ -100,9 +100,10 @@ def fl_add_io_callback(fd, mask, py_IoCallback, vdata):
         under what circumstance the input callback should be invoked. Values
         (from xfdata.py) FL_READ, FL_WRITE, FL_EXCEPT
       `py_IoCallback` : python function to be invoked, no return
-        name referring to function(num, ptr_void)
-      `vdata` : one of those 'None'|long|str|pointer to xfdata.FL_OBJECT
-        user data argument to be passed to function
+        name referring to function(num, vdata)
+      `vdata` : any type (e.g. 'None', int, str, etc..)
+        user data to be passed to function; callback has to take care of
+        type check.
 
     :note: e.g. def iocb(num, vdata): > ...
     :note: fdesc = os.open(myfile, os.RD_ONLY)
@@ -123,16 +124,7 @@ def fl_add_io_callback(fd, mask, py_IoCallback, vdata):
     uimask = libr.convert_to_uint(mask)
     libr.verify_function_type(py_IoCallback)
     c_IoCallback = xfdata.FL_IO_CALLBACK(py_IoCallback)
-    if vdata is None:
-        pvdata = cty.cast(vdata, cty.c_void_p)
-    elif isinstance(vdata, long):
-        ldata = libr.convert_to_long(vdata)
-        pvdata = cty.cast(ldata, cty.POINTER(cty.c_long))
-    elif isinstance(vdata, str):
-        ldata = libr.convert_to_string(vdata)
-        pvdata = cty.cast(ldata, cty.POINTER(xfdata.STRING))
-    else:
-        pvdata = vdata          # it is pFlObject
+    pvdata = cty.cast(vdata, cty.c_void_p)
     libr.keep_cfunc_refs(c_IoCallback, py_IoCallback)
     libr.keep_elem_refs(fd, ifd, mask, uimask, vdata, pvdata)
     _fl_add_io_callback(ifd, uimask, c_IoCallback, pvdata)
@@ -151,7 +143,7 @@ def fl_remove_io_callback(fd, mask, py_IoCallback):
         under what circumstance the input callback should be removed. Values
         (from xfdata.py) FL_READ, FL_WRITE, FL_EXCEPT
       `py_IoCallback` : python function to be removed, no return
-        name referring to function(num, ptr_void)
+        name referring to function(num, vdata)
 
     :note: def iocb(num, vdata): > ...
     :note: fdesc = os.open(myfile, os.RD_ONLY)
@@ -189,9 +181,10 @@ def fl_add_signal_callback(sglnum, py_SignalHandler, vdata):
       `sglnum` : int
         signal number. Values (from signal module) SIGALRM, SIGINT, ...
       `py_SignalHandler` : callback invoked after catching signal, no return
-        name referring to function(num, ptr_void)
-      `vdata` : None or long or pointer to xfdata.FL_OBJECT
-        argument to be passed to function
+        name referring to function(num, vdata)
+      `vdata` : any type (e.g. 'None', int, str, etc..)
+        user data to be passed to function; callback has to take care of
+        type check.
 
     :note: def sglhandl(numsgl, vdata): > ...
     :note: fl_add_signal_callback(signal.SIGALRM, sglhandl, None)
@@ -207,14 +200,9 @@ def fl_add_signal_callback(sglnum, py_SignalHandler, vdata):
            void * data) """)
     libr.check_if_initialized()
     isglnum = libr.convert_to_int(sglnum)
+    libr.verify_function_type(py_SignalHandler)
     c_SignalHandler = xfdata.FL_SIGNAL_HANDLER(py_SignalHandler)
-    if vdata is None:
-        pvdata = cty.cast(vdata, cty.c_void_p)
-    elif isinstance(vdata, long):
-        ldata = libr.convert_to_long(vdata)
-        pvdata = cty.cast(ldata, cty.POINTER(cty.c_long))
-    else:
-        pvdata = vdata          # it is pFlObject
+    pvdata = cty.cast(vdata, cty.c_void_p)
     libr.keep_cfunc_refs(c_SignalHandler, py_SignalHandler)
     libr.keep_elem_refs(sglnum, isglnum, vdata, pvdata)
     _fl_add_signal_callback(isglnum, c_SignalHandler, pvdata)
@@ -306,9 +294,10 @@ def fl_add_timeout(msec, py_TimeoutCallback, vdata):
       `msec` : long
         time elapsed in milliseconds
       `py_TimeoutCallback` : python function to be invoked, no return
-        name referring to function(num, ptr_void)
-      `vdata` : None or long or pointer to xfdata.FL_OBJECT
-        user data to be passed to function
+        name referring to function(num, vdata)
+      `vdata` : any type (e.g. 'None', int, str, etc..)
+        user data to be passed to function; callback has to take care of
+        type check.
 
     :return: timer number id
     :rtype: int
@@ -327,13 +316,8 @@ def fl_add_timeout(msec, py_TimeoutCallback, vdata):
            FL_TIMEOUT_CALLBACK callback, void * data) """)
     libr.check_if_initialized()
     lmsec = libr.convert_to_long(msec)
-    if vdata is None:
-        pvdata = cty.cast(vdata, cty.c_void_p)
-    elif isinstance(vdata, long):
-        ldata = libr.convert_to_long(vdata)
-        pvdata = cty.cast(ldata, cty.POINTER(cty.c_long))
-    else:
-        pvdata = vdata          # it is pFlObject
+    pvdata = cty.cast(vdata, cty.c_void_p)
+    libr.verify_function_type(py_TimeoutCallback)
     c_TimeoutCallback = xfdata.FL_TIMEOUT_CALLBACK(py_TimeoutCallback)
     libr.keep_cfunc_refs(c_TimeoutCallback, py_TimeoutCallback)
     libr.keep_elem_refs(msec, lmsec, vdata, pvdata)
@@ -670,11 +654,13 @@ def fl_set_form_atclose(pFlForm, py_FormAtclose, vdata):
       `pFlForm` : pointer to xfdata.FL_FORM
         form that receives the message
       `py_FormAtclose` : python callback to be called, with returning value
-        name referring to function(pFlForm, ptr_void) -> num
-      `vdata` : None or long or pointer to xfdata.FL_OBJECT
-        user data to be passed to function
+        name referring to function(pFlForm, vdata) -> num
+      `vdata` : any type (e.g. 'None', int, str, etc..)
+        user data to be passed to function; callback has to take care of
+        type check.
 
-    :return: old FL_FORM_ATCLOSE function
+    :return: old form atclose function
+    :rtype: xfdata.FL_FORM_ATCLOSE
 
     :note: e.g. def atcolsecb(pform, vdata): > ... ; return 0
     :note: e.g. oldatclosecb = fl_set_form_atclose(pform1, None)
@@ -692,14 +678,9 @@ def fl_set_form_atclose(pFlForm, py_FormAtclose, vdata):
            FL_FORM_ATCLOSE fmclose, void * data) """)
     libr.check_if_initialized()
     libr.verify_flformptr_type(pFlForm)
+    libr.verify_function_type(py_FormAtclose)
     c_FormAtclose = xfdata.FL_FORM_ATCLOSE(py_FormAtclose)
-    if vdata is None:
-        pvdata = cty.cast(vdata, cty.c_void_p)
-    elif isinstance(vdata, long):
-        ldata = libr.convert_to_long(vdata)
-        pvdata = cty.cast(ldata, cty.POINTER(cty.c_long))
-    else:
-        pvdata = vdata          # it is pFlObject
+    pvdata = cty.cast(vdata, cty.c_void_p)
     libr.keep_cfunc_refs(c_FormAtclose, py_FormAtclose)
     libr.keep_elem_refs(pFlForm, vdata, pvdata)
     retval = _fl_set_form_atclose(pFlForm, c_FormAtclose, pvdata)
@@ -713,11 +694,13 @@ def fl_set_atclose(py_FormAtclose, vdata):
 
     :Parameters:
       `py_FormAtclose` : python callback to be called, with returning value
-        name referring to function(pFlForm, ptr_void) -> num
-      `vdata` : None or long or pointer to xfdata.FL_OBJECT
-        user data to be passed to function
+        name referring to function(pFlForm, vdata) -> num
+      `vdata` : any type (e.g. 'None', int, str, etc..)
+        user data to be passed to function; callback has to take care of
+        type check.
 
-    :return: old FL_FORM_ATCLOSE function
+    :return: old form atclose function
+    :rtype: xfdata.FL_FORM_ATCLOSE
 
     :note: e.g. def atclose(pform, vdata): > ... ; return 0
     :note: e.g. oldatclosefunc = fl_set_atclose(atclose, None)
@@ -733,14 +716,9 @@ def fl_set_atclose(py_FormAtclose, vdata):
         """FL_FORM_ATCLOSE fl_set_atclose(FL_FORM_ATCLOSE fmclose,
            void * data) """)
     libr.check_if_initialized()
+    libr.verify_function_type(py_FormAtclose)
     c_FormAtclose = xfdata.FL_FORM_ATCLOSE(py_FormAtclose)
-    if vdata is None:
-        pvdata = cty.cast(vdata, cty.c_void_p)
-    elif isinstance(vdata, long):
-        ldata = libr.convert_to_long(vdata)
-        pvdata = cty.cast(ldata, cty.POINTER(cty.c_long))
-    else:
-        pvdata = vdata          # it is pFlObject
+    pvdata = cty.cast(vdata, cty.c_void_p)
     libr.keep_cfunc_refs(c_FormAtclose, py_FormAtclose)
     libr.keep_elem_refs(vdata, pvdata)
     retval = _fl_set_atclose(c_FormAtclose, pvdata)
@@ -757,11 +735,13 @@ def fl_set_form_atactivate(pFlForm, py_FormAtactivate, vdata):
       `pFlForm` : pointer to xfdata.FL_FORM
         activated form
       `py_FormAtactivate` : python callback function called, no return
-        name referring to function(pFlForm, ptr_void)
-      `vdata` : None or long or pointer to xfdata.FL_OBJECT
-        user data to be passed to function
+        name referring to function(pFlForm, vdata)
+      `vdata` : any type (e.g. 'None', int, str, etc..)
+        user data to be passed to function; callback has to take care of
+        type check.
 
-    :return: old FL_FORM_ATACTIVATE function
+    :return: old form atactivate function
+    :rtype: xfdata.FL_FORM_ATACTIVATE
 
     :note: e.g. def atactcb(pform, vdata): > ...
     :note: e.g. oldactfunc = fl_set_form_atdeactivate(pform, atactcb, None)
@@ -779,14 +759,9 @@ def fl_set_form_atactivate(pFlForm, py_FormAtactivate, vdata):
            FL_FORM_ATACTIVATE cb, void * data) """)
     libr.check_if_initialized()
     libr.verify_flformptr_type(pFlForm)
+    libr.verify_function_type(py_FormAtactivate)
     c_FormAtactivate = xfdata.FL_FORM_ATACTIVATE(py_FormAtactivate)
-    if vdata is None:
-        pvdata = cty.cast(vdata, cty.c_void_p)
-    elif isinstance(vdata, long):
-        ldata = libr.convert_to_long(vdata)
-        pvdata = cty.cast(ldata, cty.POINTER(cty.c_long))
-    else:
-        pvdata = vdata          # it is pFlObject
+    pvdata = cty.cast(vdata, cty.c_void_p)
     libr.keep_cfunc_refs(c_FormAtactivate, py_FormAtactivate)
     libr.keep_elem_refs(pFlForm, vdata, pvdata)
     retval = _fl_set_form_atactivate(pFlForm, c_FormAtactivate, pvdata)
@@ -803,9 +778,10 @@ def fl_set_form_atdeactivate(pFlForm, py_FormAtdeactivate, vdata):
       `pFlForm` : pointer to xfdata.FL_FORM
         de-activated form
       `py_FormAtdeactivate` : python callback function called, no return
-        name referring to function(pFlForm, ptr_void)
-      `vdata` : None or long or pointer to xfdata.FL_OBJECT
-        user data to be passed to function
+        name referring to function(pFlForm, vdata)
+      `vdata` : any type (e.g. 'None', int, str, etc..)
+        user data to be passed to function; callback has to take care of
+        type check.
 
     :return: old FL_FORM_ATDEACTIVATE function
 
@@ -817,7 +793,7 @@ def fl_set_form_atdeactivate(pFlForm, py_FormAtdeactivate, vdata):
 
     """
     #FL_FORM_ATDEACTIVATE = cty.CFUNCTYPE(None, cty.POINTER(xfdata.FL_FORM), \
-    #                                     cty.c_void_p)
+    #                         cty.c_void_p)
     _fl_set_form_atdeactivate = libr.cfuncproto(
         libr.load_so_libforms(), "fl_set_form_atdeactivate", \
         xfdata.FL_FORM_ATDEACTIVATE, [cty.POINTER(xfdata.FL_FORM),
@@ -826,14 +802,9 @@ def fl_set_form_atdeactivate(pFlForm, py_FormAtdeactivate, vdata):
            FL_FORM_ATDEACTIVATE cb, void * data) """)
     libr.check_if_initialized()
     libr.verify_flformptr_type(pFlForm)
+    libr.verify_function_type(py_FormAtdeactivate)
     c_FormAtdeactivate = xfdata.FL_FORM_ATDEACTIVATE(py_FormAtdeactivate)
-    if vdata is None:
-        pvdata = cty.cast(vdata, cty.c_void_p)
-    elif isinstance(vdata, long):
-        ldata = libr.convert_to_long(vdata)
-        pvdata = cty.cast(ldata, cty.POINTER(cty.c_long))
-    else:
-        pvdata = vdata          # it is pFlObject
+    pvdata = cty.cast(vdata, cty.c_void_p)
     libr.keep_cfunc_refs(c_FormAtdeactivate, py_FormAtdeactivate)
     libr.keep_elem_refs(pFlForm, vdata, pvdata)
     retval = _fl_set_form_atdeactivate(pFlForm, c_FormAtdeactivate, pvdata)
@@ -1171,9 +1142,10 @@ def fl_set_form_callback(pFlForm, py_FormCallbackPtr, vdata):
       `pFlForm` : pointer to xfdata.FL_FORM
         form whose callback has to be set
       `py_FormCallbackPtr` : python callback to be set, no return
-        name referring to function(pFlObject, ptr_void)
-      `vdata` : None or long or pointer to xfdata.FL_OBJECT
-        user data to be passed to function
+        name referring to function(pFlObject, vdata)
+      `vdata` : any type (e.g. 'None', int, str, etc..)
+        user data to be passed to function; callback has to take care of
+        type check
 
     :note: e.g. def formcb(pobj, vdata): > ...
 
@@ -1192,14 +1164,9 @@ def fl_set_form_callback(pFlForm, py_FormCallbackPtr, vdata):
            FL_FORMCALLBACKPTR callback, void * d) """)
     libr.check_if_initialized()
     libr.verify_flformptr_type(pFlForm)
+    libr.verify_function_type(py_FormCallbackPtr)
     c_FormCallbackPtr = xfdata.FL_FORMCALLBACKPTR(py_FormCallbackPtr)
-    if vdata is None:
-        pvdata = cty.cast(vdata, cty.c_void_p)
-    elif isinstance(vdata, long):
-        ldata = libr.convert_to_long(vdata)
-        pvdata = cty.cast(ldata, cty.POINTER(cty.c_long))
-    else:
-        pvdata = vdata          # it is pFlObject
+    pvdata = cty.cast(vdata, cty.c_void_p)
     libr.keep_cfunc_refs(c_FormCallbackPtr, py_FormCallbackPtr)
     libr.keep_elem_refs(pFlForm, vdata, pvdata)
     _fl_set_form_callback(pFlForm, c_FormCallbackPtr, pvdata)
@@ -1832,6 +1799,7 @@ def fl_register_raw_callback(pFlForm, mask, py_RawCallback):
     libr.check_if_initialized()
     libr.verify_flformptr_type(pFlForm)
     ulmask = libr.convert_to_ulong(mask)
+    libr.verify_function_type(py_RawCallback)
     c_RawCallback = xfdata.FL_RAW_CALLBACK(py_RawCallback)
     libr.keep_cfunc_refs(c_RawCallback, py_RawCallback)
     libr.keep_elem_refs(pFlForm, mask, ulmask)
@@ -3084,9 +3052,10 @@ def fl_for_all_objects(pFlForm, py_operatecb, vdata):
       `pFlForm` : pointer to xfdata.FL_FORM
         form
       `py_operatecb` : python callback function, returning value
-        name referring to function(pFlObject, ptr_void) -> num
-      `vdata` : None or long or pointer to xfdata.FL_OBJECT
-        user data to be passed to function
+        name referring to function(pFlObject, vdata) -> num
+      `vdata` : any type (e.g. 'None', int, str, etc..)
+        user data to be passed to function; callback has to take care of
+        type check
 
     :note: e.g. def operatecb(pobj, vdata): > ... ; return 0
     :note: e.g. fl_for_all_objects(pform5, operatecb, None)
@@ -3104,14 +3073,9 @@ def fl_for_all_objects(pFlForm, py_operatecb, vdata):
            ( FL_OBJECT *, void * ), void * v)""")
     libr.check_if_initialized()
     libr.verify_flformptr_type(pFlForm)
+    libr.verify_function_type(py_operatecb)
     c_operatecb = xfdata.cfunc_int_pobject_pvoid(py_operatecb)
-    if vdata is None:
-        pvdata = cty.cast(vdata, cty.c_void_p)
-    elif isinstance(vdata, long):
-        ldata = libr.convert_to_long(vdata)
-        pvdata = cty.cast(ldata, cty.POINTER(cty.c_long))
-    else:
-        pvdata = vdata          # it is pFlObject
+    pvdata = cty.cast(vdata, cty.c_void_p)
     libr.keep_cfunc_refs(c_operatecb, py_operatecb)
     libr.keep_elem_refs(pFlForm, vdata, pvdata)
     _fl_for_all_objects(pFlForm, c_operatecb, pvdata)
@@ -3422,7 +3386,7 @@ def fl_call_object_callback(pFlObject):
     _fl_call_object_callback(pFlObject)
 
 
-def fl_set_object_prehandler(pFlObject, py_HandlerPtr):
+def fl_set_object_prehandler(pFlObject, py_HandlePtr):
     """By-passes the internal event processing for a particular object. The
     pre-handler will be called before the built-in object handler. By electing
     to handle some of the events, a pre-handler can, in effect, replace part
@@ -3433,11 +3397,12 @@ def fl_set_object_prehandler(pFlObject, py_HandlerPtr):
     :Parameters:
       `pFlObject` : pointer to xfdata.FL_OBJECT
         object
-      `py_HandlerPtr` : python callback function, returning value
+      `py_HandlePtr` : python callback function, returning value
         name referring to function(pFlObject, num, coord, coord, num,
-        ptr_void) -> num
+        vdata) -> num
 
-    :return: old xfdata.FL_HANDLEPTR function
+    :return: old object prehandler function
+    :rtype: xfdata.FL_HANDLEPTR
 
     :note: e.g. def prehandlecb(pobj, num, crd, crd, num2, vdata): > ...
     :note: e.g. > return 0
@@ -3456,14 +3421,15 @@ def fl_set_object_prehandler(pFlObject, py_HandlerPtr):
            FL_HANDLEPTR phandler)""")
     libr.check_if_initialized()
     libr.verify_flobjectptr_type(pFlObject)
-    c_HandlerPtr = xfdata.FL_HANDLEPTR(py_HandlerPtr)
-    libr.keep_cfunc_refs(c_HandlerPtr, py_HandlerPtr)
+    libr.verify_function_type(py_HandlePtr)
+    c_HandlePtr = xfdata.FL_HANDLEPTR(py_HandlePtr)
+    libr.keep_cfunc_refs(c_HandlePtr, py_HandlePtr)
     libr.keep_elem_refs(pFlObject)
-    retval = _fl_set_object_prehandler(pFlObject, c_HandlerPtr)
+    retval = _fl_set_object_prehandler(pFlObject, c_HandlePtr)
     return retval
 
 
-def fl_set_object_posthandler(pFlObject, py_HandlerPtr):
+def fl_set_object_posthandler(pFlObject, py_HandlePtr):
     """By-passes the internal event processing for a particular object. The
     post-handler will be invoked after the built-in handler finishes. Whenever
     possible a post-handler should be used instead of a pre-handler.
@@ -3473,11 +3439,12 @@ def fl_set_object_posthandler(pFlObject, py_HandlerPtr):
     :Parameters:
       `pFlObject` : pointer to xfdata.FL_OBJECT
         object
-      `py_HandlerPtr` : python callback function, returning value
+      `py_HandlePtr` : python callback function, returning value
         name referring function(pFlObject, num, coord, coord, num,
-        ptr_void) -> num
+        vdata) -> num
 
-    :return: old xfdata.FL_HANDLEPTR function
+    :return: old object posthandler function
+    :rtype: xfdata.FL_HANDLEPTR
 
     :note: e.g. def posthandlecb(pobj, num, crd, crd, num2, vdata): > ...
     :note: e.g. > return 0
@@ -3496,10 +3463,11 @@ def fl_set_object_posthandler(pFlObject, py_HandlerPtr):
            FL_HANDLEPTR post)""")
     libr.check_if_initialized()
     libr.verify_flobjectptr_type(pFlObject)
-    c_HandlerPtr = xfdata.FL_HANDLEPTR(py_HandlerPtr)
-    libr.keep_cfunc_refs(c_HandlerPtr, py_HandlerPtr)
+    libr.verify_function_type(py_HandlePtr)
+    c_HandlePtr = xfdata.FL_HANDLEPTR(py_HandlePtr)
+    libr.keep_cfunc_refs(c_HandlePtr, py_HandlePtr)
     libr.keep_elem_refs(pFlObject)
-    retval = _fl_set_object_posthandler(pFlObject, c_HandlerPtr)
+    retval = _fl_set_object_posthandler(pFlObject, c_HandlePtr)
     return retval
 
 
@@ -3536,6 +3504,7 @@ def fl_set_object_callback(pFlObject, py_CallbackPtr, data):
     libr.check_if_initialized()
     libr.verify_flobjectptr_type(pFlObject)
     ldata = libr.convert_to_long(data)
+    libr.verify_function_type(py_CallbackPtr)
     c_CallbackPtr = xfdata.FL_CALLBACKPTR(py_CallbackPtr)
     libr.keep_cfunc_refs(c_CallbackPtr, py_CallbackPtr)
     libr.keep_elem_refs(pFlObject, data, ldata)
@@ -3894,8 +3863,9 @@ def fl_enumerate_fonts(py_output, shortform):
         """int fl_enumerate_fonts(void ( * output )( const char *s ), \
            int shortform)""")
     libr.check_if_initialized()
-    ishortform = libr.convert_to_int(shortform)
+    libr.verify_function_type(py_output)
     c_output = xfdata.cfunc_none_string(py_output)
+    ishortform = libr.convert_to_int(shortform)
     libr.keep_cfunc_refs(c_output, py_output)
     libr.keep_elem_refs(shortform, ishortform)
     retval = _fl_enumerate_fonts(c_output, ishortform)
@@ -4673,6 +4643,7 @@ def fl_add_symbol(symbname, py_DrawPtr, scalable):
     libr.check_if_initialized()
     ssymbname = libr.convert_to_string(symbname)
     iscalable = libr.convert_to_int(scalable)
+    libr.verify_function_type(py_DrawPtr)
     c_DrawPtr = xfdata.FL_DRAWPTR(py_DrawPtr)
     libr.keep_cfunc_refs(c_DrawPtr, py_DrawPtr)
     libr.keep_elem_refs(symbname, ssymbname, scalable, iscalable)
@@ -5318,7 +5289,7 @@ def fl_make_object(objclass, objtype, x, y, w, h, label, py_HandlePtr):
       `label` : str
         text label of object
       `py_HandlePtr` : python function for handling object, returning value
-        referring to fn(pFlObject, num, coord, coord, num, ptr_void) -> num
+        referring to fn(pFlObject, num, coord, coord, num, vdata) -> num
 
     :return: object made (pFlObject)
     :rtype: pointer to xfdata.FL_OBJECT
@@ -5348,6 +5319,7 @@ def fl_make_object(objclass, objtype, x, y, w, h, label, py_HandlePtr):
     iw = libr.convert_to_FL_Coord(w)
     ih = libr.convert_to_FL_Coord(h)
     slabel = libr.convert_to_string(label)
+    libr.verify_function_type(py_HandlePtr)
     c_HandlePtr = xfdata.FL_HANDLEPTR(py_HandlePtr)
     libr.keep_cfunc_refs(c_HandlePtr, py_HandlePtr)
     libr.keep_elem_refs(objclass, objtype, x, y, w, h, label, iobjclass,
@@ -5745,6 +5717,7 @@ def fl_set_error_handler(py_ErrorFunc):
         None, [xfdata.FL_ERROR_FUNC],\
         """void fl_set_error_handler(FL_ERROR_FUNC user_func)""")
     libr.check_if_initialized()
+    libr.verify_function_type(py_ErrorFunc)
     c_ErrorFunc = xfdata.FL_ERROR_FUNC(py_ErrorFunc)
     libr.keep_cfunc_refs(c_ErrorFunc, py_ErrorFunc)
     retval = _fl_set_error_handler(c_ErrorFunc)

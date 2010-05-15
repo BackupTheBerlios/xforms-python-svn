@@ -815,6 +815,7 @@ def flimage_define_marker(mkname, py_FlimageMarkerDraw, psdraw):
            (FLIMAGE_MARKER *), const char *)""")
     smkname = libr.convert_to_string(mkname)
     spsdraw = libr.convert_to_string(psdraw)
+    libr.verify_function_type(py_FlimageMarkerDraw)
     c_FlimageMarkerDraw = xfdata.cfunc_none_flimagemarker(py_FlimageMarkerDraw)
     libr.keep_elem_refs(mkname, psdraw, smkname, spsdraw)
     libr.keep_cfunc_refs(c_FlimageMarkerDraw, py_FlimageMarkerDraw)
@@ -1342,9 +1343,13 @@ def flimage_add_format(formalname, shortname, extension, imagetype,
     sshortname = libr.convert_to_string(shortname)
     sextension = libr.convert_to_string(extension)
     iimagetype = libr.convert_to_int(imagetype)
+    libr.verify_function_type(py_ImageIdentify)
     c_ImageIdentify = xfdata.FLIMAGE_Identify(py_ImageIdentify)
+    libr.verify_function_type(py_ImageDescription)
     c_ImageDescription = xfdata.FLIMAGE_Description(py_ImageDescription)
+    libr.verify_function_type(py_ImageReadPixels)
     c_ImageReadPixels = xfdata.FLIMAGE_Read_Pixels(py_ImageReadPixels)
+    libr.verify_function_type(py_ImageWriteImage)
     c_ImageWriteImage = xfdata.FLIMAGE_Write_Image(py_ImageWriteImage)
     libr.keep_cfunc_refs(c_ImageIdentify, py_ImageIdentify,
             c_ImageDescription, py_ImageDescription, c_ImageReadPixels,

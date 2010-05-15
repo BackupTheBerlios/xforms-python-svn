@@ -287,11 +287,12 @@ def fl_add_canvas_handler(pFlObject, xev, py_HandleCanvas, udata):
         canvas object
       `xev` : int
         X event number. Values (from X11): Expose, etc.. ??
-      `py_HandleCanvas` : python function to handle canvas
+      `py_HandleCanvas` : python function to handle canvas, returning value
         name referring to function(pFlObject, win, num, num, pXEvent,
-        ptr_void) -> num
+        vdata) -> num
 
-    :return: old xfdata.FL_HANDLE_CANVAS handler function
+    :return: old canvas handler function
+    :rtype: xfdata.FL_HANDLE_CANVAS
 
     :note: e.g. *todo*
 
@@ -299,8 +300,8 @@ def fl_add_canvas_handler(pFlObject, xev, py_HandleCanvas, udata):
 
     """
     #FL_HANDLE_CANVAS = cty.CFUNCTYPE(cty.c_int, cty.POINTER(xfdata.FL_OBJECT),
-    #                             xfdata.Window, cty.c_int, cty.c_int,
-    #                             cty.POINTER(xfdata.XEvent), cty.c_void_p)
+    #       xfdata.Window, cty.c_int, cty.c_int, cty.POINTER(xfdata.XEvent),
+    #       cty.c_void_p)
     _fl_add_canvas_handler = libr.cfuncproto(
         libr.load_so_libforms(), "fl_add_canvas_handler",
         xfdata.FL_HANDLE_CANVAS, [cty.POINTER(xfdata.FL_OBJECT), cty.c_int,
@@ -310,6 +311,7 @@ def fl_add_canvas_handler(pFlObject, xev, py_HandleCanvas, udata):
     libr.check_if_initialized()
     libr.verify_flobjectptr_type(pFlObject)
     ixev = libr.convert_to_int(xev)
+    libr.verify_function_type(py_HandleCanvas)
     c_HandleCanvas = xfdata.FL_HANDLE_CANVAS(py_HandleCanvas)
     pudata = cty.cast(udata, cty.c_void_p)
     libr.keep_cfunc_refs(c_HandleCanvas, py_HandleCanvas)
@@ -414,7 +416,7 @@ def fl_remove_canvas_handler(pFlObject, xev, py_HandleCanvas):
         corresponding event mask.
       `py_HandleCanvas` : python function to handle canvas
         name referring to  function(pFlObject, win, num, num, pXEvent,
-        ptr_void) -> num
+        vdata) -> num
 
     :note: e.g. *todo*
 
@@ -433,6 +435,7 @@ def fl_remove_canvas_handler(pFlObject, xev, py_HandleCanvas):
     libr.check_if_initialized()
     libr.verify_flobjectptr_type(pFlObject)
     ixev = libr.convert_to_int(xev)
+    libr.verify_function_type(py_HandleCanvas)
     c_HandleCanvas = xfdata.FL_HANDLE_CANVAS(py_HandleCanvas)
     libr.keep_cfunc_refs(c_HandleCanvas, py_HandleCanvas)
     libr.keep_elem_refs(pFlObject, xev, ixev)
@@ -550,10 +553,13 @@ def fl_modify_canvas_prop(pFlObject, py_initModifyCanvasProp,
            FL_MODIFY_CANVAS_PROP cleanup)""")
     libr.check_if_initialized()
     libr.verify_flobjectptr_type(pFlObject)
+    libr.verify_function_type(py_initModifyCanvasProp)
     c_initModifyCanvasProp = xfdata.FL_MODIFY_CANVAS_PROP( \
             py_initModifyCanvasProp)
+    libr.verify_function_type(py_activateModifyCanvasProp)
     c_activateModifyCanvasProp = xfdata.FL_MODIFY_CANVAS_PROP( \
                 py_activateModifyCanvasProp)
+    libr.verify_function_type(py_cleanupModifyCanvasProp)
     c_cleanupModifyCanvasProp = xfdata.FL_MODIFY_CANVAS_PROP( \
                 py_cleanupModifyCanvasProp)
     libr.keep_cfunc_refs(c_initModifyCanvasProp, py_initModifyCanvasProp, \
@@ -565,7 +571,7 @@ def fl_modify_canvas_prop(pFlObject, py_initModifyCanvasProp,
 
 
 def fl_canvas_yield_to_shortcut(pFlObject, yesno):
-    """Enables or disables keyboard inputs stealing by canvas. By default,
+    """Enables or disables keyboard input's stealing by canvas. By default,
     objects with shortcuts appearing on the same form as the canvas will
     "steal" keyboard inputs if they match the shortcuts.
 
