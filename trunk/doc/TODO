@@ -93,6 +93,13 @@ for a failing/not working and not checked/not managed solution (it
 should display original XForms error messages and so relies on XForms
 upstream library error handling).
 
+- Creating a python tool to parse/convert .fd (XForms's fdesign files)
+to python.
+
+- Figuring out which values in xfdata.py can be used as single values
+ or bitwise OR-ed with each other, so check_admitted_value_in_list
+ function doesn't forbid such a resulting value incorrectly.
+
 - Porting xforms-python to object-oriented/classes (maybe for version 2.x,
 lowest priority).
 

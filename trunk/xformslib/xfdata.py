@@ -377,10 +377,16 @@ FL_ALIGN_VERT = 16384       # (1<<14)  not functional yet
 #FL_ALIGN_BOTTOM_RIGHT placeholder (backwards)
 
 # my add, list of possible values --LK
+# single values, and bitwise OR-ed with FL_ALIGN_INSIDE
 ALIGN_list = [FL_ALIGN_CENTER, FL_ALIGN_TOP, FL_ALIGN_BOTTOM, FL_ALIGN_LEFT,
-              FL_ALIGN_RIGHT, FL_ALIGN_LEFT_TOP, FL_ALIGN_RIGHT_TOP,
-              FL_ALIGN_LEFT_BOTTOM, FL_ALIGN_RIGHT_BOTTOM, FL_ALIGN_INSIDE,
-              FL_ALIGN_VERT]
+        FL_ALIGN_RIGHT, FL_ALIGN_LEFT_TOP, FL_ALIGN_RIGHT_TOP,
+        FL_ALIGN_LEFT_BOTTOM, FL_ALIGN_RIGHT_BOTTOM, FL_ALIGN_INSIDE,
+        FL_ALIGN_VERT, FL_ALIGN_TOP|FL_ALIGN_INSIDE,
+        FL_ALIGN_BOTTOM|FL_ALIGN_INSIDE, FL_ALIGN_LEFT|FL_ALIGN_INSIDE,
+        FL_ALIGN_RIGHT|FL_ALIGN_INSIDE, FL_ALIGN_LEFT_TOP|FL_ALIGN_INSIDE,
+        FL_ALIGN_RIGHT_TOP|FL_ALIGN_INSIDE,
+        FL_ALIGN_LEFT_BOTTOM|FL_ALIGN_INSIDE,
+        FL_ALIGN_RIGHT_BOTTOM|FL_ALIGN_INSIDE]
 
 
 # Mouse buttons. Don't have to be consecutive
@@ -1031,6 +1037,7 @@ FL_RESIZED = 22     # the object has been resized by scale_form
 #FL_MOUSE placeholder (backwards)
 
 # my add - list of possible values --LK
+# single values, or ?
 EVENTS_list = [FL_DRAW, FL_PUSH, FL_RELEASE, FL_ENTER, FL_LEAVE,
                FL_MOTION, FL_FOCUS, FL_UNFOCUS, FL_KEYPRESS, FL_UPDATE,
                FL_STEP, FL_SHORTCUT, FL_FREEMEM, FL_OTHER, FL_DRAWLABEL,
@@ -2034,8 +2041,8 @@ FL_LONGDASH = 6
 """Long dashed line [------]"""
 
 # my add, list of possible values --LK
-LINESTYLE_list = [FL_SOLID, FL_USERDASH, FL_USERDOUBLEDASH, FL_DOT, FL_DOTDASH,
-                 FL_DASH, FL_LONGDASH]
+LINESTYLE_list = [FL_SOLID, FL_USERDASH, FL_USERDOUBLEDASH, FL_DOT,
+                  FL_DOTDASH, FL_DASH, FL_LONGDASH]
 
 
 # *** start - from /usr/include/X11/X.h ***
