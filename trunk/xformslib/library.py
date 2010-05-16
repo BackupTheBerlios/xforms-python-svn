@@ -36,20 +36,21 @@ from xformslib import vers
 from xformslib import xfdata
 
 
+class XFormsInitError(OSError):
+    """ Error in initializing library, not using fl_initialize() before
+        functions who require it. """
+    pass
 
 class XFormsLoadError(OSError):
     """ Error in loading shared object library """
     pass
 
-
 class XFormsTypeError(TypeError):
     """ Generic error for type mismatch """
     pass
 
-
-class XFormsInitError(OSError):
-    """ Error in initializing library, not using fl_initialize() before
-        functions who require it. """
+class XFormsValueError(ValueError):
+    """ Generic error for unexpected value"""
     pass
 
 
@@ -230,8 +231,9 @@ def convert_to_string(paramname):
     try:
         retv0 = str(paramname)
     except ValueError:
-        raise XFormsTypeError("Parameter %s cannot be converted into" \
-                              " 'str'/'c_char_p'" % paramname)
+        raise XFormsTypeError("Parameter '%s' is of type %s and cannot" \
+                              " be converted into 'str'/'c_char_p'" % \
+                              (paramname, type(paramname)))
     retv = cty.c_char_p(retv0)
     return retv
 
@@ -242,8 +244,9 @@ def convert_to_int(paramname):
         try:
             retv0 = int(paramname)
         except ValueError:
-            raise XFormsTypeError("Parameter %s cannot be converted into" \
-                                  " 'int'/'c_int'" % paramname)
+            raise XFormsTypeError("Parameter '%s' is of type %s and cannot" \
+                              " be converted into 'int'/'c_int'" % \
+                              (paramname, type(paramname)))
         retv = cty.c_int(retv0)
         return retv
     else:
@@ -258,8 +261,9 @@ def convert_to_uint(paramname):
         try:
             retv0 = int(paramname)
         except ValueError:
-            raise XFormsTypeError("Parameter %s cannot be converted into" \
-                                  " 'int'/'c_uint'" % paramname)
+            raise XFormsTypeError("Parameter '%s' is of type %s and cannot" \
+                              " be converted into 'int'/'c_uint'" % \
+                              (paramname, type(paramname)))
         else:
             retv = cty.c_uint(retv0)
             return retv
@@ -273,8 +277,9 @@ def convert_to_long(paramname):
         try:
             retv0 = long(paramname)
         except ValueError:
-            raise XFormsTypeError("Parameter %s cannot be converted into" \
-                                  " 'long'/'c_long'" % paramname)
+            raise XFormsTypeError("Parameter '%s' is of type %s and cannot" \
+                              " be converted into 'long'/'c_long'" % \
+                              (paramname, type(paramname)))
         else:
             retv = cty.c_long(retv0)
             return retv
@@ -288,8 +293,9 @@ def convert_to_ulong(paramname):
         try:
             retv0 = long(paramname)
         except ValueError:
-            raise XFormsTypeError("Parameter %s cannot be converted into" \
-                                  " 'long'/'c_ulong'" % paramname)
+            raise XFormsTypeError("Parameter '%s' is of type %s and cannot" \
+                              " be converted into 'long'/'c_ulong'" % \
+                              (paramname, type(paramname)))
         else:
             retv = cty.c_ulong(retv0)
             return retv
@@ -307,8 +313,9 @@ def convert_to_double(paramname):
         try:
             retv0 = float(paramname)
         except ValueError:
-            raise XFormsTypeError("Parameter %s cannot be converted into" \
-                                  " 'float'/'c_double'" % paramname)
+            raise XFormsTypeError("Parameter '%s' is of type %s and cannot" \
+                              " be converted into 'float'/'c_double'" % \
+                              (paramname, type(paramname)))
         else:
             retv = cty.c_double(retv0)
             #print "double", paramname, retv0, retv
@@ -323,8 +330,9 @@ def convert_to_float(paramname):
         try:
             retv0 = float(paramname)
         except ValueError:
-            raise XFormsTypeError("Parameter %s cannot be converted into" \
-                                  " 'float'/'c_float'" % paramname)
+            raise XFormsTypeError("Parameter '%s' is of type %s and cannot" \
+                              " be converted into 'float'/'c_float'" % \
+                              (paramname, type(paramname)))
         else:
             retv = cty.c_float(retv0)
             #print "float", paramname, retv0, retv
@@ -405,69 +413,70 @@ def check_admitted_value_in_list(paramname, valueslist):
         of admissible values."""
     if isinstance(valueslist, list) or isinstance(valueslist, tuple):
         if paramname not in valueslist:
-            raise XFormsTypeError("Parameter %s value must be one of those" \
-                    " included in list/tuple %s." % (paramname, valueslist))
+            raise XFormsValueError("Parameter %s value of type %s must be " \
+                    "one of those included in list/tuple %s." % \
+                    (paramname, type(paramname), valueslist))
 
 def verify_tuplelist_type(paramname):
     """Check if paramname is a valid list or tuple."""
     if not isinstance(paramname, list) and not isinstance(paramname, tuple):
-        raise XFormsTypeError("Parameter %s must be a list or a tuple. " \
-                        "Instead it is %s" % (paramname, type(paramname)))
+        raise XFormsTypeError("Parameter %s of type %s must be a " \
+                        "list or a tuple." % (paramname, type(paramname)))
 
 
 def verify_flobjectptr_type(paramname):
     """Check if paramname is a valid pointer to xfdata.FL_OBJECT."""
     if not isinstance(paramname, cty.POINTER(xfdata.FL_OBJECT)):
-        raise XFormsTypeError("Parameter %s must be a pointer to " \
-                        "xfdata.FL_OBJECT. Instead it is %s" % \
+        raise XFormsTypeError("Parameter %s of type %s must be a " \
+                        "pointer to xfdata.FL_OBJECT." % \
                         (paramname, type(paramname)))
 
 
 def verify_flformptr_type(paramname):
     """Check if paramname is a valid pointer to xfdata.FL_FORM."""
     if not isinstance(paramname, cty.POINTER(xfdata.FL_FORM)):
-        raise XFormsTypeError("Parameter %s must be a pointer to " \
-                        "xfdata.FL_FORM. Instead it is %s" % \
+        raise XFormsTypeError("Parameter %s of type %s must be a " \
+                        "pointer to xfdata.FL_FORM." % \
                         (paramname, type(paramname)))
 
 
 def verify_flflimageptr_type(paramname):
     """Check if paramname is a valid pointer to xfdata.FL_IMAGE."""
     if not isinstance(paramname, cty.POINTER(xfdata.FL_IMAGE)):
-        raise XFormsTypeError("Parameter %s must be a pointer to " \
-                        "xfdata.FL_IMAGE. Instead it is %s" % \
+        raise XFormsTypeError("Parameter %s of type %s must be a " \
+                        "pointer to xfdata.FL_IMAGE." % \
                         (paramname, type(paramname)))
 
 
 def verify_flflpopupptr_type(paramname):
     """Check if paramname is a valid pointer to xfdata.FL_POPUP."""
     if not isinstance(paramname, cty.POINTER(xfdata.FL_POPUP)):
-        raise XFormsTypeError("Parameter %s must be a pointer to " \
-                        "xfdata.FL_POPUP. Instead it is %s" % \
+        raise XFormsTypeError("Parameter %s of type %s must be a " \
+                        "pointer to xfdata.FL_POPUP." % \
                         (paramname, type(paramname)))
 
 
 def verify_flpopupentryptr_type(paramname):
     """Check if paramname is a valid pointer to xfdata.FL_POPUP_ENTRY."""
     if not isinstance(paramname, cty.POINTER(xfdata.FL_POPUP_ENTRY)):
-        raise XFormsTypeError("Parameter %s must be a pointer to " \
-                        "xfdata.FL_POPUP_ENTRY. Instead it is %s" % \
+        raise XFormsTypeError("Parameter %s of type %s must be a " \
+                        "pointer to xfdata.FL_POPUP_ENTRY." % \
                         (paramname, type(paramname)))
 
 
 def verify_flpopupreturnptr_type(paramname):
     """Check if paramname is a valid pointer to xfdata.FL_POPUP_RETURN."""
     if not isinstance(paramname, cty.POINTER(xfdata.FL_POPUP_RETURN)):
-        raise XFormsTypeError("Parameter %s must be a pointer to " \
-                        "xfdata.FL_POPUP_RETURN. Instead it is %s" % \
+        raise XFormsTypeError("Parameter %s of type %s must be a " \
+                        "pointer to xfdata.FL_POPUP_RETURN." % \
                         (paramname, type(paramname)))
 
 
 def verify_flpopupitemptr_type(paramname):
     """Check if paramname is a valid pointer to xfdata.FL_POPUP_ITEM."""
     if not isinstance(paramname, cty.POINTER(xfdata.FL_POPUP_ITEM)):
-        raise XFormsTypeError("Parameter %s must be a pointer to " \
-                        "xfdata.FL_POPUP_ITEM. Instead it is %s" % \
+        raise XFormsTypeError("Parameter %s of type %s must be a " \
+                        "pointer to xfdata.FL_POPUP_ITEM." % \
                         (paramname, type(paramname)))
 
 
@@ -475,17 +484,17 @@ def verify_function_type(paramname):
     """ Check if paramname value is a valid python function to be passed as
     e.g. callback in a public function."""
     if not hasattr(paramname, '__call__'):
-        raise XFormsTypeError("Parameter %s must be a python function. " \
-                        "Instead it is %s" % (paramname, type(paramname)))
+        raise XFormsTypeError("Parameter %s of type %s must be a " \
+                        "python function." % (paramname, type(paramname)))
 
 
 def verify_otherclassptr_type(paramname, pstructinst):
     """ Check if paramname value is a valid pointer to a provided 'Structure'
     class instance, different from previous classes."""
     if not isinstance(paramname, pstructinst):
-        raise XFormsTypeError("Parameter %s must be a pointer to " \
-                        "%s 'Structure' class instance. Instead it is %s" % \
-                        (paramname, pstructinst, type(paramname)))
+        raise XFormsTypeError("Parameter %s of type %s must be a " \
+                        "pointer to %s 'Structure' class instance." % \
+                        (paramname, type(paramname), pstructinst))
 
 
 def donothing_popupcb(pPopupReturn):
@@ -523,7 +532,7 @@ def make_pPopupItem_from_dict(dictofpopupitems):
     popupitem[0].shortcut = spishortcut
     popupitem[0].type = ipitype
     popupitem[0].state = ipistate
-    popupitem[1].text = None        # this ends the array, preventing SegFault
+    popupitem[1].text = None        # this ends array, preventing SegFault
 
     ppopupitem = cty.pointer(popupitem[0])
     keep_cfunc_refs(pyclscallback, c_picallback)
@@ -555,14 +564,16 @@ def make_pPopupItem_from_list(listofpopupitems):
         popupitem[0].callback = c_picallback
         spishortcut = convert_to_string(listofpopupitems[2])
         popupitem[0].shortcut = spishortcut
-        check_admitted_value_in_list(listofpopupitems[3], xfdata.POPUPTYPE_list)
+        check_admitted_value_in_list(listofpopupitems[3], \
+            xfdata.POPUPTYPE_list)
         ipitype = convert_to_int(listofpopupitems[3])
         popupitem[0].type = ipitype
-        check_admitted_value_in_list(listofpopupitems[4], xfdata.POPUPSTATE_list)
+        check_admitted_value_in_list(listofpopupitems[4], \
+            xfdata.POPUPSTATE_list)
         ipistate = convert_to_int(listofpopupitems[4])
         popupitem[0].state = ipistate
 
-        popupitem[1].text = None       # ends the array, preventing SegFault
+        popupitem[1].text = None      # ends array, preventing SegFault
 
         keep_cfunc_refs(listofpopupitems[1], c_picallback)
         keep_elem_refs(popupitem, spitext, spishortcut,
@@ -574,7 +585,7 @@ def make_pPopupItem_from_list(listofpopupitems):
         # end of 1 list
 
     else:
-        # serie of lists passed (array of n+1 members)
+        # series of lists passed (array of n+1 members)
         numarray = len(listofpopupitems)
         lngarray = numarray + 1         # consider final None
         popupitem = (xfdata.FL_POPUP_ITEM * lngarray)()
@@ -602,9 +613,8 @@ def make_pPopupItem_from_list(listofpopupitems):
             curitem = indx
 
         curitem += 1
-        popupitem[curitem].text = None       # ends the array, preventing SegFault
+        popupitem[curitem].text = None    # ends array, preventing SegFault
         ppopupitem = cty.pointer(popupitem[0])
         keep_elem_refs(listofpopupitems, popupitem, ppopupitem)
         return ppopupitem
-        # end of serie of lists
-
+        # end of series of lists

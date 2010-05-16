@@ -85,13 +85,13 @@ of examples that are based on that module's functions and port them
 to alternative functions.
 
 - Covering all (public) functions with a proper unit-test (or a sort
-of). My intention is to have at least 3 use cases for each : 1st for
+of). My intention is to have at least 2 use cases for each : 1st for
 a surely working solution (i.e. parameters of correct type and values
 range), 2nd for a failing/not working but error-checked and managed
-solution (xforms-python catches incorrect types and/or values), 3rd
-for a failing/not working and not checked/not managed solution (it
-should display original XForms error messages and so relies on XForms
-upstream library error handling).
+solution (xforms-python catches incorrect types and/or values). It
+would be ideal if I could a known failing solution who is not
+checked/not managed solution (it should display original XForms error
+messages and so relies on XForms upstream library error handling).
 
 - Creating a python tool to parse/convert .fd (XForms's fdesign files)
 to python.

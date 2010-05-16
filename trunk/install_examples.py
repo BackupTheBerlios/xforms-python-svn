@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import os, sys, getopt, shutil, glob
-from xformslib.library import __version__
+from xformslib.vers import __version__
 
 name = 'xforms-python'
 version = __version__
@@ -36,6 +36,7 @@ def main():
 	    os.mkdir(datadir)
     except OSError:
 	print "Problem creating datadir %s." % datadir
+	print "Do you have root privileges and/or permissions?"
     else:
 	for example in exampleslist:
     	    if example.endswith('.py') or example.endswith('.xbm') or \
@@ -44,9 +45,8 @@ def main():
     		    shutil.copy(example, datadir)
     		except OSError:
 		    print "Problem copying examples in datadir: %s" % example
-
+		    print "Do you have root privileges and/or permissions?"
 
 
 if __name__ == '__main__':
     main()
-

@@ -1,11 +1,13 @@
 
 
 SVN
+    * better error handling (error message more complete). First unit-test
+    (fbasic.py fl_add_io_callback's function).
     * polished code to comply (mostly) with PEP8. Clarify use of pointer
     to void 'vdata' parameter as any type, remove vdata type checking.
     * corrected list of admitted values for align and place, as library's
-     check_admitted_value_in_list function didn't recognized bitwise OR-ed
-     values. Corrected XForms corresponding version.
+     check_admitted_value_in_list function didn't recognize bitwise OR-ed
+     values. Corrected XForms' corresponding version.
     * introduced support of strings in c_void_p parameters in flbasic. New
     support function in library.py to check if a function is correctly passed
     as parameter (e.g. in callback making functions). Fixed a bug in
