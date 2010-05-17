@@ -1,7 +1,8 @@
 #!/usr/bin/env python
 
-#  This file is part of xforms-python, and it has been ported from
-#  thumbwheel.c XForms demo, with some adaptations.
+#  This file is part of xforms-python, and it is a variation of
+#  thumbwheel.c XForms demo, not using deprecated functions, with some
+#  adaptations.
 #
 #  See CREDITS file for XForms copyright attribution, and LICENSE
 #  file for xforms-python license and copyright attribution.
@@ -15,10 +16,8 @@ from xformslib.flxbasic import *
 from xformslib.flthumbwheel import *
 from xformslib.flbutton import *
 from xformslib.flmisc import *
+from xformslib.flselect import *
 from xformslib.xfdata import *
-from xformslib import deprecated
-
-
 
 
 class Flthumbwheel(object):
@@ -39,7 +38,7 @@ class Flthumbwheel(object):
 
 
     def returnchange_cb(self, pobj, data):
-        n = deprecated.fl_get_choice(pobj)
+        n = fl_get_select_item(pobj).contents.val
         if n == 1:
             n = FL_RETURN_END_CHANGED
         elif n == 2:
@@ -74,23 +73,15 @@ class Flthumbwheel(object):
         fl_set_object_lalign(self.preport, FL_ALIGN_CENTER | \
                              FL_ALIGN_INSIDE)
 
-        preturnsetting = deprecated.fl_add_choice(deprecated.FL_NORMAL_CHOICE2, \
-                                                  35, 20, 160, 30, "")
+        preturnsetting = fl_add_select(FL_NORMAL_SELECT, \
+                                    35, 20, 160, 30, "")
         fl_set_object_boxtype(preturnsetting, FL_EMBOSSED_BOX)
         fl_set_object_callback(preturnsetting, self.returnchange_cb, 0)
-        deprecated.fl_addto_choice(preturnsetting, "End & Changed")
-        deprecated.fl_set_choice_item_mode(preturnsetting, 1, \
-                                           deprecated.FL_PUP_NONE)
-        deprecated.fl_addto_choice(preturnsetting, "Whenever Changed")
-        deprecated.fl_set_choice_item_mode(preturnsetting, 2, \
-                                           deprecated.FL_PUP_NONE)
-        deprecated.fl_addto_choice(preturnsetting, "Always At End")
-        deprecated.fl_set_choice_item_mode(preturnsetting, 3, \
-                                           deprecated.FL_PUP_NONE)
-        deprecated.fl_addto_choice(preturnsetting, "Always")
-        deprecated.fl_set_choice_item_mode(preturnsetting, 4, \
-                                           deprecated.FL_PUP_NONE)
-        deprecated.fl_set_choice(preturnsetting, 2)
+
+        fl_add_select_items(preturnsetting, "End & Changed")
+        fl_add_select_items(preturnsetting, "Whenever Changed")
+        fl_add_select_items(preturnsetting, "Always At End")
+        fl_add_select_items(preturnsetting, "Always")
 
         pobj = fl_add_button(FL_NORMAL_BUTTON, 120, 215, \
                              80, 30, "Enough")
@@ -100,8 +91,5 @@ class Flthumbwheel(object):
         return twheelform
 
 
-
-
 if __name__ == '__main__':
     Flthumbwheel(len(sys.argv), sys.argv)
-

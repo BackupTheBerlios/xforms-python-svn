@@ -121,7 +121,7 @@ def fl_clear_select(pFlObject):
 
 
 def fl_add_select_items(pFlObject, itemstr):
-    """*todo*
+    """Adds one or more items to a select object.
 
     --
 
@@ -129,7 +129,17 @@ def fl_add_select_items(pFlObject, itemstr):
       `pFlObject` : pointer to xfdata.FL_OBJECT
         select object
       `itemstr` : str
-        text for the item.
+        text for the items to add, separated by the | character. Some special
+        sequences are allowed just after the item ('%d' marks the item as
+        disabled, i.e. it can't be selected and its text is per default drawn
+        in a different color / '%h' marks the item as hidden, i.e. it is not
+        shown while in this state / '%S' can split the items text into two
+        parts, the first one (before it) being drawn flushed left and the
+        second part flushed right, anyway you still need to set a shortcut key
+        / '%s' sets one or more shortcut keys for an item, it requires a
+        string with the shortcuts in the argument following the items string;
+        the character in the label identical to the shortcut character is only
+        shown as underlined if %S isn't used.
 
     :return: popup entry (pPopupEntry)
     :rtype: pointer to xfdata.FL_POPUP_ENTRY
@@ -348,7 +358,7 @@ def fl_set_select_popup(pFlObject, pPopup):
 
 
 def fl_get_select_item(pFlObject):
-    """*todo*
+    """Obtains currently selected item of a select object.
 
     --
 
@@ -376,7 +386,7 @@ def fl_get_select_item(pFlObject):
 
 
 def fl_set_select_item(pFlObject, pPopupEntry):
-    """Sets a new item of a select object.
+    """Sets a new item of a select object as currently selected.
 
     --
 

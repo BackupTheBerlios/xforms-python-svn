@@ -229,31 +229,34 @@ FL_PLACE_MOUSE|FL_FREE_SIZE"""
 FL_PLACE_CENTER = 2     # center of the screen
 """(place) The form is placed in the center of the screen. If FL_FREE_SIZE
 is also specified, interactive resizing will be allowed."""
-FL_PLACE_POSITION = 4   # specific size
+FL_PLACE_POSITION = 4   # specific position
 """(place) Initial position used will be the one set via fl_set_form_position().
 Interactive resizing is possible."""
 FL_PLACE_SIZE = 8       # specific size
 """(place) The user can control the position but the size is fixed. Interactive
 resizing is not allowed once the form becomes visible."""
-FL_PLACE_GEOMETRY = 16  # specific position
+FL_PLACE_GEOMETRY = 16  # specific size and position
 """(place) Place at the latest position and size (see also below) or the geometry
 set via fl_set_form_geometry() etc. A form so shown will have a fixed size
 and interactive resizing is not allowed."""
 FL_PLACE_ASPECT =  32   # keep aspect ratio
 """(place) Allows interactive resizing but any new size will have the aspect ratio
 as that of the initial size."""
-FL_PLACE_FULLSCREEN = 64        # scale to fit screen
+FL_PLACE_FULLSCREEN = 64        # scale to fit to screen
 """(place) The form is scaled to cover the full screen. If FL_FREE_SIZE is also
  specified, interative resizing will be allowed."""
 FL_PLACE_HOTSPOT = 128          # so mouse fall on (x,y)
 """(place) The form is so placed that mouse is on the "hotspot". If FL_FREE_SIZE
 is also specified, interactive resizing will be allowed."""
-FL_PLACE_ICONIC = 256
+FL_PLACE_ICONIC = 256           # start in iconified form
 """(place) The form is shown initially iconified. The size and location used are
 the window manager's default."""
 # modifiers
-FL_FREE_SIZE = 16384          # (1<<14)
+FL_FREE_SIZE = (1<<14)          # 16384
 """(place) Allows resizing."""
+# TODO: verify it it can still be used now
+FL_FIX_SIZE  = (1<<15)          # seems to be useless, but some programs
+                                # seem to rely on it...
 
 FL_PLACE_FREE_CENTER = (FL_PLACE_CENTER | FL_FREE_SIZE)
 """(place) Same as FL_PLACE_CENTER | FL_FREE_SIZE, i.e., place the form at the
@@ -1574,6 +1577,30 @@ FL_EXCEPT = 4
 
 # my add, list of possible values --LK
 ASYNCIO_list = [FL_READ, FL_WRITE, FL_EXCEPT]
+
+
+# values for unnamed enumeration
+FL_INPUT_END_EVENT_CLASSIC = 0
+"""Use old behavior in handling return of end event for input. An "end of
+edit" event was not reported back to the program when the user clicked on
+a non-input object, i.e. changed to a different input object. This let to
+some problems when the interaction with the clicked-on non-input object
+depended on the new content of the input object, just having been edited,
+but which hadn't been been reported back to the caller."""
+FL_INPUT_END_EVENT_ALWAYS  = 1
+"""Use new (default) behavior in handling return of end event for input. It
+means that the users either hits the <Tab> or the <Return> key (except for
+multi-line inputs) or that she clicks onto some other object that in
+principle allows user interaction. These events are interpreted as an
+indication the user is done editing the input field and thus are reported
+back to the program, either by returning the input object or invoking its
+callback. But unless the user goes to a different input object the input
+field edited retains the focus."""
+
+# my add, list of possible values --LK
+INPUTENDRETNEVENT_list = [FL_INPUT_END_EVENT_CLASSIC, \
+    FL_INPUT_END_EVENT_ALWAYS]
+
 
 FL_MAX_MENU_CHOICE_ITEMS = 128
 

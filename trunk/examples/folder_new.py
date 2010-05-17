@@ -1,7 +1,8 @@
 #!/usr/bin/env python
 
-#  This file is part of xforms-python, and it has been ported from
-#  folder.c XForms demo, with some adaptation.
+#  This file is part of xforms-python, and it is a variation of
+#  folder.c XForms demo, not using deprecated functions, with some
+#  adaptations.
 #
 #  folder.c was written by M. Overmars and T.C. Zhao
 #  See CREDITS file for XForms copyright attribution, and LICENSE

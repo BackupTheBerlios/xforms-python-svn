@@ -257,7 +257,7 @@ def fl_signal_caught(sglnum):
     _fl_signal_caught(isglnum)
 
 
-def fl_app_signal_direct(flag):
+def fl_app_signal_direct(yesno):
     """Changes the default behavior of the built-in signal facilities (to
     be called with a true value for flag prior to any use of
     fl_add_signal_callback)
@@ -265,7 +265,7 @@ def fl_app_signal_direct(flag):
     --
 
     :Parameters:
-      `flag` : int
+      `yesno` : int
         flag to disable/enable signal. Values 0 (disabled) or 1 (enabled)
 
     :note: e.g. fl_app_signal_direct(1)
@@ -278,9 +278,41 @@ def fl_app_signal_direct(flag):
         None, [cty.c_int], \
         """void fl_app_signal_direct(int y) """)
     libr.check_if_initialized()
-    iflag = libr.convert_to_int(flag)
-    libr.keep_elem_refs(flag, iflag)
-    _fl_app_signal_direct(iflag)
+    iyesno = libr.convert_to_int(yesno)
+    libr.keep_elem_refs(yesno, iyesno)
+    _fl_app_signal_direct(iyesno)
+
+
+def fl_input_end_return_handling(endtype):
+    """Sets type of handling return of end events for input objects.
+
+    --
+
+    :Parameters:
+      `endtype` : int
+        how end return event for input is handled. Values (from xfdata.py)
+        FL_INPUT_END_EVENT_ALWAYS (default) or FL_INPUT_END_EVENT_CLASSIC
+        (old behavior)
+
+    :return: previous setting
+    :rtype: int
+
+    :note: e.g. fl_input_end_return_handling( \
+        xfdata.FL_INPUT_END_EVENT_CLASSIC)
+
+    :status: Untested + Doc + NoDemo = OK
+
+    """
+    _fl_input_end_return_handling = libr.cfuncproto(
+        libr.load_so_libforms(), "fl_input_end_return_handling", \
+        cty.c_int, [cty.c_int], \
+        """int fl_input_end_return_handling(int type)""")
+    libr.check_if_initialized()
+    libr.check_admitted_value_in_list(endtype, xfdata.INPUTENDRETNEVENT_list)
+    iendtype = libr.convert_to_int(endtype)
+    libr.keep_elem_refs(endtype, iendtype)
+    retval = _fl_input_end_return_handling(endtype)
+    return retval
 
 
 # timeouts

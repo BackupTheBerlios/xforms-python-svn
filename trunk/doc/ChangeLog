@@ -1,6 +1,9 @@
 
 
 SVN
+    * Finally deprecate.py module is gone. Remaining examples who used
+    deprecated functions are removed and replaced by: buttonall_new.py, 
+    thumbwheel_new.py
     * better error handling (error message more complete). First unit-test
     (fbasic.py fl_add_io_callback's function).
     * polished code to comply (mostly) with PEP8. Clarify use of pointer
@@ -20,7 +23,7 @@ SVN
     Some bugfixes in functions' initialization and docstrings. Remaining files
     switched to reStructuredText. Some descriptions in functions' docstrings
     are not complete yet.
-    * docstrings in flpositioner.py and flscrollbar.pty switched to
+    * docstrings in flpositioner.py and flscrollbar.py switched to
     reStructuredText.
     * docstrings in flnmenu.py switched to reStructuredText.
     * docstrings in flflinput.py and flmisc.py, switched to reStructuredText.

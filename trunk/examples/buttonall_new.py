@@ -1,7 +1,8 @@
 #!/usr/bin/env python
 
-#  This file is part of xforms-python, and it has been ported from
-#  buttonall.c XForms demo, with some adaptations.
+#  This file is part of xforms-python, and it is a variation of
+#  buttonall.c XForms demo, not using deprecated functions, with some
+#  adaptations.
 #
 #  buttonall.c was written by M. Overmars and T.C. Zhao (1997),
 #  See CREDITS file for XForms copyright attribution, and LICENSE
@@ -18,9 +19,8 @@ from xformslib.flxbasic import *
 from xformslib.flbutton import *
 from xformslib.flbitmap import *
 from xformslib.flmisc import *
+from xformslib.flselect import *
 from xformslib.xfdata import *
-from xformslib import deprecated
-
 
 
 # Forms and Objects
@@ -49,16 +49,15 @@ class ButtonAll(object):
 
         fl_set_pixmapbutton_file(self.fd_buttform.pbutt, "crab45.xpm")
         fl_set_bitmapbutton_file(self.fd_buttform.bbutt, "bm1.xbm")
-        deprecated.fl_addto_choice(self.fd_buttform.bw_obj,
-                                   " -4 | -3 | -2 | -1 |  1|  2|  3|  4")
-        deprecated.fl_set_choice(self.fd_buttform.bw_obj, 5)
+        fl_add_select_items(self.fd_buttform.bw_obj,
+                                   " -4| -3 | -2| -1|  1|  2|  3|  4")
+        #fl_set_select(self.fd_buttform.bw_obj, 5)
 
         # show the first form
         fl_show_form(self.fd_buttform.buttform, FL_PLACE_CENTER, \
                      FL_FULLBORDER, "buttform")
         while fl_do_forms():
             pass    # empty
-
 
     # callbacks for form buttform
 
@@ -70,7 +69,7 @@ class ButtonAll(object):
     def bw_cb(self, pobj, data):
 
         bws = [-4, -3, -2, -1, 1, 2, 3, 4]
-        n = deprecated.fl_get_choice(pobj) - 1
+        n = fl_get_select_item(pobj).contents.val - 1        # xfdata.FL_POPUP_RETURN
 
         fl_freeze_form(pobj.contents.form)
         fl_set_object_bw(self.fd_buttform.backface, bws[n])
@@ -90,7 +89,8 @@ class ButtonAll(object):
 
         fdui.backface = fl_add_box(FL_UP_BOX, 0, 0, 290, 260, "")
 
-        fdui.done = fl_add_button(FL_NORMAL_BUTTON, 185, 215, 90, 30, "Done")
+        fdui.done = fl_add_button(FL_NORMAL_BUTTON, 185, 215, 90, 30, \
+                                  "Done")
         fl_set_object_lalign(fdui.done, FL_ALIGN_CENTER)
         fl_set_object_callback(fdui.done, self.done_cb, 0)
 
@@ -146,8 +146,8 @@ class ButtonAll(object):
         fl_set_object_boxtype(pobj, FL_ROUNDED3D_UPBOX)
         fl_set_object_lalign(pobj, FL_ALIGN_CENTER)
 
-        fdui.bw_obj = deprecated.fl_add_choice(deprecated.FL_NORMAL_CHOICE2, \
-                                               105, 135, 80, 30, "BW")
+        fdui.bw_obj = fl_add_select(FL_NORMAL_SELECT, 105, 135, \
+                                          80, 30, "BW")
         fl_set_object_callback(fdui.bw_obj, self.bw_cb, 0)
 
         pobj = fl_add_labelframe(FL_ENGRAVED_FRAME, 190, 25, 85, 100, \
@@ -162,7 +162,5 @@ class ButtonAll(object):
         return fdui
 
 
-
 if __name__ == '__main__':
     ButtonAll(len(sys.argv), sys.argv)
-
