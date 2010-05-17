@@ -17,6 +17,10 @@ Copyright owners and original authors:
 Past and current maintainers:
 Jean-Marc Lasgouttes, Angus Leeming, Jens Thoms Toerring
 
+Same acknowlegement applies to documentation as I've used
+plenty of it for function and variables docstrings and .tex
+files.
+
 I would particularly mention Jens Thoms Toerring for his
 dedication, helpfulness and patience with problems I've found
 while implementing this python port. A special commendation
@@ -38,5 +42,5 @@ Copyright owner and author:
 
 I wish thank also:
 - Python author and maintainers and
-- X11 Window System developers
+- Xorg X11 Window System developers
 
