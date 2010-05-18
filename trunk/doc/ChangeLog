@@ -1,6 +1,7 @@
 
 
 SVN
+    * some bugfixes. Realign to upstream XForms. RGB color triples documented.
     * Finally deprecate.py module is gone. Remaining examples who used
     deprecated functions are removed and replaced by: buttonall_new.py, 
     thumbwheel_new.py

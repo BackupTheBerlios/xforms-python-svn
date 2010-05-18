@@ -336,7 +336,7 @@ def fl_insert_nmenu_items2(pFlObject, pPopupEntry, pPopupItem):
         nmenu object
       `pPopupEntry` : pointer to xfdata.FL_POPUP_ENTRY
         existing popup entry, after which the new items are to be inserted.
-        If it is None, it inserts items at the very start.
+        If it is 'None', it inserts items at the very start.
       `pPopupItem` : pointer to xfdata.FL_POPUP_ITEM
         popup item to be set. It needs to be prepared beforehand with
         libr.make_pPopupItem_from_list(..) function for single or multiple
@@ -358,7 +358,10 @@ def fl_insert_nmenu_items2(pFlObject, pPopupEntry, pPopupItem):
            FL_POPUP_ITEM * p2, FL_POPUP_ITEM * p3)""")
     libr.check_if_initialized()
     libr.verify_flobjectptr_type(pFlObject)
-    libr.verify_flpopupentryptr_type(pPopupEntry)
+    if not pPopupEntry:         # it's None
+        cty.cast(pPopupEntry, cty.POINTER(cty.c_void_p))
+    else:                       # real FL_POPUP_ENTRY pointer
+        libr.verify_flpopupentryptr_type(pPopupEntry)
     libr.verify_flpopupitemptr_type(pPopupItem)
     libr.keep_elem_refs(pFlObject, pPopupEntry, pPopupItem)
     retval = _fl_insert_nmenu_items2(pFlObject, pPopupEntry, pPopupItem)
