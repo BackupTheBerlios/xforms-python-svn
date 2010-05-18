@@ -1,6 +1,11 @@
 
 
 SVN
+    * restored correctness of all examples.
+    * introduce a new convenience function for checking admittable values
+    with non-fatal consequences (checknonfatal_allowed_value_in_list), as
+    some function can use different values than pre-defined ones).
+    check_admitted_value_in_list renamed to checkfatal_allowed_value_in_list.
     * some bugfixes. Realign to upstream XForms. RGB color triples documented.
     * Finally deprecate.py module is gone. Remaining examples who used
     deprecated functions are removed and replaced by: buttonall_new.py, 

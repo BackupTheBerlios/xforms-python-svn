@@ -187,7 +187,7 @@ def fl_set_thumbwheel_return(pFlObject, when):
            int how)""")
     libr.check_if_initialized()
     libr.verify_flobjectptr_type(pFlObject)
-    libr.check_admitted_value_in_list(when, xfdata.RETURN_list)
+    libr.checkfatal_allowed_value_in_list(when, xfdata.RETURN_list)
     uiwhen = libr.convert_to_uint(when)
     libr.keep_elem_refs(pFlObject, when, uiwhen)
     retval = _fl_set_thumbwheel_return(pFlObject, uiwhen)
@@ -329,7 +329,7 @@ def fl_add_thumbwheel(wheeltype, x, y, w, h, label):
         """FL_OBJECT * fl_add_thumbwheel(int type, FL_Coord x, FL_Coord y,
            FL_Coord w, FL_Coord h, const char * label)""")
     libr.check_if_initialized()
-    libr.check_admitted_value_in_list(wheeltype, xfdata.THUMBWHEELTYPE_list)
+    libr.checkfatal_allowed_value_in_list(wheeltype, xfdata.THUMBWHEELTYPE_list)
     iwheeltype = libr.convert_to_int(wheeltype)
     ix = libr.convert_to_FL_Coord(x)
     iy = libr.convert_to_FL_Coord(y)

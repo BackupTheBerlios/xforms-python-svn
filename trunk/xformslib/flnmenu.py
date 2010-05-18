@@ -80,7 +80,7 @@ def fl_add_nmenu(nmenutype, x, y, w, h, label):
         """FL_OBJECT * fl_add_nmenu(int p1, FL_Coord p2, FL_Coord p3,
            FL_Coord p4, FL_Coord p5, const char * p6)""")
     libr.check_if_initialized()
-    libr.check_admitted_value_in_list(nmenutype, xfdata.NMENUTYPE_list)
+    libr.checkfatal_allowed_value_in_list(nmenutype, xfdata.NMENUTYPE_list)
     inmenutype = libr.convert_to_int(nmenutype)
     ix = libr.convert_to_FL_Coord(x)
     iy = libr.convert_to_FL_Coord(y)
@@ -301,8 +301,8 @@ def fl_add_nmenu_items2(pFlObject, pPopupItem):
         nmenu object
       `pPopupItem` : pointer to xfdata.FL_POPUP_ITEM
         popup item to be set. It needs to be prepared beforehand with
-        libr.make_pPopupItem_from_list(..) function for single or multiple
-        lists, or with libr.make_pPopupItem_from_dict(..) for a single dict.
+        libr.create_pPopupItem_from_list(..) function for single or multiple
+        lists, or with libr.create_pPopupItem_from_dict(..) for a single dict.
 
     :return: first nmenu item, or None (on failure)
     :rtype: pointer to xfdata.FL_POPUP_ENTRY
@@ -339,8 +339,8 @@ def fl_insert_nmenu_items2(pFlObject, pPopupEntry, pPopupItem):
         If it is 'None', it inserts items at the very start.
       `pPopupItem` : pointer to xfdata.FL_POPUP_ITEM
         popup item to be set. It needs to be prepared beforehand with
-        libr.make_pPopupItem_from_list(..) function for single or multiple
-        lists, or with libr.make_pPopupItem_from_dict(..) for a single dict.
+        libr.create_pPopupItem_from_list(..) function for single or multiple
+        lists, or with libr.create_pPopupItem_from_dict(..) for a single dict.
 
     :return: first nmenu item, or None (on failure)
     :rtype: pointer to xfdata.FL_POPUP_ENTRY
@@ -380,8 +380,8 @@ def fl_replace_nmenu_items2(pFlObject, pPopupEntry, pPopupItem):
         old popup entry to be replaced
       `pPopupItem` : pointer to xfdata.FL_POPUP_ITEM
         new popup item. It needs to be prepared beforehand with
-        libr.make_pPopupItem_from_list(..) function for single or multiple
-        lists, or with libr.make_pPopupItem_from_dict(..) for a single dict.
+        libr.create_pPopupItem_from_list(..) function for single or multiple
+        lists, or with libr.create_pPopupItem_from_dict(..) for a single dict.
 
     :return: first nmenu item, or None (on failure)
     :rtype: pointer to xfdata.FL_POPUP_ENTRY
@@ -627,7 +627,7 @@ def fl_set_nmenu_policy(pFlObject, policy):
         """int fl_set_nmenu_policy(FL_OBJECT * p1, int p2)""")
     libr.check_if_initialized()
     libr.verify_flobjectptr_type(pFlObject)
-    libr.check_admitted_value_in_list(policy, xfdata.POPUPPOLICY_list)
+    libr.checkfatal_allowed_value_in_list(policy, xfdata.POPUPPOLICY_list)
     ipolicy = libr.convert_to_int(policy)
     libr.keep_elem_refs(pFlObject, policy, ipolicy)
     retval = _fl_set_nmenu_policy(pFlObject, ipolicy)
@@ -664,7 +664,7 @@ def fl_set_nmenu_hl_text_color(pFlObject, colr):
            FL_COLOR p2)""")
     libr.check_if_initialized()
     libr.verify_flobjectptr_type(pFlObject)
-    libr.check_admitted_value_in_list(colr, xfdata.COLOR_list)
+    libr.checknonfatal_allowed_value_in_list(colr, xfdata.COLOR_list)
     ulcolr = libr.convert_to_FL_COLOR(colr)
     libr.keep_elem_refs(pFlObject, colr, ulcolr)
     retval = _fl_set_nmenu_hl_text_color(pFlObject, ulcolr)

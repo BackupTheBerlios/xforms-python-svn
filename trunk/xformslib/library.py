@@ -36,21 +36,25 @@ from xformslib import vers
 from xformslib import xfdata
 
 
-class XFormsInitError(OSError):
-    """ Error in initializing library, not using fl_initialize() before
-        functions who require it. """
+class XFormsLoadError(OSError):
+    """ Fatal error in loading shared object library """
     pass
 
-class XFormsLoadError(OSError):
-    """ Error in loading shared object library """
+class XFormsInitError(OSError):
+    """ Fatal error in initializing library, not using fl_initialize()
+        before functions who require it. """
     pass
 
 class XFormsTypeError(TypeError):
-    """ Generic error for type mismatch """
+    """ Fatal generic error for type mismatch """
     pass
 
 class XFormsValueError(ValueError):
-    """ Generic error for unexpected value"""
+    """ Fatal generic error for unexpected value"""
+    pass
+
+class XFormsWarning(Warning):
+    """ Generic warning for non fatal errors"""
     pass
 
 
@@ -108,7 +112,7 @@ def verify_version_compatibility():
                     " Some compatibility problems may arise if XForms" \
                     " public interface has been modified." % \
                     (vers.__vers_against_xforms__, xforms_vers)
-        warnings.warn(warningmsg, UserWarning)
+        warnings.warn(warningmsg, XFormsWarning)
 
 
 def func_notexisting_placeholder(cfunction):
@@ -408,14 +412,25 @@ def make_ushort_and_pointer():
     return baseval, ptrbaseval
 
 
-def check_admitted_value_in_list(paramname, valueslist):
+def checkfatal_allowed_value_in_list(paramname, valueslist):
     """ Check if paramname value is valid in accordance to a list or tuple
-        of admissible values."""
+        of admissible values, otherwise raise a fatal error."""
     if isinstance(valueslist, list) or isinstance(valueslist, tuple):
         if paramname not in valueslist:
             raise XFormsValueError("Parameter %s value (whose type is %s) must be " \
                     "one of those included in list/tuple %s." % \
                     (paramname, type(paramname), valueslist))
+
+def checknonfatal_allowed_value_in_list(paramname, valueslist):
+    """ Check if paramname value is valid in accordance to a list or tuple
+        of admissible values, otherwise issues a warning."""
+    if isinstance(valueslist, list) or isinstance(valueslist, tuple):
+        if paramname not in valueslist:
+            nonfatalwarnmsg = "Parameter %s value (whose type is %s) is" \
+                    " not one of those included in list/tuple %s." % \
+                    (paramname, type(paramname), valueslist)
+            warnings.warn(nonfatalwarnmsg, XFormsWarning, 3)
+
 
 def verify_tuplelist_type(paramname):
     """Check if paramname is a valid list or tuple."""
@@ -521,10 +536,10 @@ def create_pPopupItem_from_dict(dictofpopupitems):
     pyclsshortcut = dictofpopupitems['shortcut']
     spishortcut = convert_to_string(pyclsshortcut)
     pyclstype = dictofpopupitems['type']
-    check_admitted_value_in_list(pyclstype, xfdata.POPUPTYPE_list)
+    checkfatal_allowed_value_in_list(pyclstype, xfdata.POPUPTYPE_list)
     ipitype = convert_to_int(pyclstype)
     pyclsstate = dictofpopupitems['state']
-    check_admitted_value_in_list(pyclstype, xfdata.POPUPSTATE_list)
+    checkfatal_allowed_value_in_list(pyclstype, xfdata.POPUPSTATE_list)
     ipistate = convert_to_int(pyclsstate)
 
     popupitem = (xfdata.FL_POPUP_ITEM * 2)()
@@ -565,11 +580,11 @@ def create_pPopupItem_from_list(listofpopupitems):
         popupitem[0].callback = c_picallback
         spishortcut = convert_to_string(listofpopupitems[2])
         popupitem[0].shortcut = spishortcut
-        check_admitted_value_in_list(listofpopupitems[3], \
+        checkfatal_allowed_value_in_list(listofpopupitems[3], \
             xfdata.POPUPTYPE_list)
         ipitype = convert_to_int(listofpopupitems[3])
         popupitem[0].type = ipitype
-        check_admitted_value_in_list(listofpopupitems[4], \
+        checkfatal_allowed_value_in_list(listofpopupitems[4], \
             xfdata.POPUPSTATE_list)
         ipistate = convert_to_int(listofpopupitems[4])
         popupitem[0].state = ipistate
@@ -599,11 +614,11 @@ def create_pPopupItem_from_list(listofpopupitems):
             popupitem[indx].callback = c_picallback
             spishortcut = convert_to_string(listofpopupitems[indx][2])
             popupitem[indx].shortcut = spishortcut
-            check_admitted_value_in_list(listofpopupitems[indx][3], \
+            checkfatal_allowed_value_in_list(listofpopupitems[indx][3], \
                                       xfdata.POPUPTYPE_list)
             ipitype = convert_to_int(listofpopupitems[indx][3])
             popupitem[indx].type = ipitype
-            check_admitted_value_in_list(listofpopupitems[indx][4], \
+            checkfatal_allowed_value_in_list(listofpopupitems[indx][4], \
                                       xfdata.POPUPSTATE_list)
             ipistate = convert_to_int(listofpopupitems[indx][4])
             popupitem[indx].state = ipistate

@@ -72,8 +72,8 @@ def fl_set_goodies_font(style, size):
         None, [cty.c_int, cty.c_int],
         """void fl_set_goodies_font(int style, int size)""")
     libr.check_if_initialized()
-    libr.check_admitted_value_in_list(style, xfdata.TEXTSTYLE_list)
-    libr.check_admitted_value_in_list(size, xfdata.FONTSIZE_list)
+    libr.checkfatal_allowed_value_in_list(style, xfdata.TEXTSTYLE_list)
+    libr.checknonfatal_allowed_value_in_list(size, xfdata.FONTSIZE_list)
     istyle = libr.convert_to_int(style)
     isize = libr.convert_to_int(size)
     libr.keep_elem_refs(style, size, istyle, isize)
@@ -698,8 +698,8 @@ def fl_set_oneliner_font(style, size):
         None, [cty.c_int, cty.c_int],
         """void fl_set_oneliner_font(int p1, int p2)""")
     libr.check_if_initialized()
-    libr.check_admitted_value_in_list(style, xfdata.TEXTSTYLE_list)
-    libr.check_admitted_value_in_list(size, xfdata.FONTSIZE_list)
+    libr.checkfatal_allowed_value_in_list(style, xfdata.TEXTSTYLE_list)
+    libr.checknonfatal_allowed_value_in_list(size, xfdata.FONTSIZE_list)
     istyle = libr.convert_to_int(style)
     isize = libr.convert_to_int(size)
     libr.keep_elem_refs(style, size, istyle, isize)
@@ -728,8 +728,8 @@ def fl_set_oneliner_color(fgcolr, bgcolr):
         None, [xfdata.FL_COLOR, xfdata.FL_COLOR],
         """void fl_set_oneliner_color(FL_COLOR p1, FL_COLOR p2)""")
     libr.check_if_initialized()
-    libr.check_admitted_value_in_list(fgcolr, xfdata.COLOR_list)
-    libr.check_admitted_value_in_list(bgcolr, xfdata.COLOR_list)
+    libr.checknonfatal_allowed_value_in_list(fgcolr, xfdata.COLOR_list)
+    libr.checknonfatal_allowed_value_in_list(bgcolr, xfdata.COLOR_list)
     ulfgcolr = libr.convert_to_FL_COLOR(fgcolr)
     ulbgcolr = libr.convert_to_FL_COLOR(bgcolr)
     libr.keep_elem_refs(fgcolr, bgcolr, ulfgcolr, ulbgcolr)
@@ -766,8 +766,8 @@ def fl_set_tooltip_font(style, size):
         None, [cty.c_int, cty.c_int],
         """void fl_set_tooltip_font(int p1, int p2)""")
     libr.check_if_initialized()
-    libr.check_admitted_value_in_list(style, xfdata.TEXTSTYLE_list)
-    libr.check_admitted_value_in_list(size, xfdata.FONTSIZE_list)
+    libr.checkfatal_allowed_value_in_list(style, xfdata.TEXTSTYLE_list)
+    libr.checknonfatal_allowed_value_in_list(size, xfdata.FONTSIZE_list)
     istyle = libr.convert_to_int(style)
     isize = libr.convert_to_int(size)
     libr.keep_elem_refs(style, size, istyle, isize)
@@ -795,8 +795,8 @@ def fl_set_tooltip_color(fgcolr, bgcolr):
         None, [xfdata.FL_COLOR, xfdata.FL_COLOR],
         """void fl_set_tooltip_color(FL_COLOR p1, FL_COLOR p2)""")
     libr.check_if_initialized()
-    libr.check_admitted_value_in_list(fgcolr, xfdata.COLOR_list)
-    libr.check_admitted_value_in_list(bgcolr, xfdata.COLOR_list)
+    libr.checknonfatal_allowed_value_in_list(fgcolr, xfdata.COLOR_list)
+    libr.checknonfatal_allowed_value_in_list(bgcolr, xfdata.COLOR_list)
     ulfgcolr = libr.convert_to_FL_COLOR(fgcolr)
     ulbgcolr = libr.convert_to_FL_COLOR(bgcolr)
     libr.keep_elem_refs(fgcolr, bgcolr, ulfgcolr, ulbgcolr)
@@ -827,7 +827,7 @@ def fl_set_tooltip_boxtype(boxtype):
         None, [cty.c_int],
         """void fl_set_tooltip_boxtype(int p1)""")
     libr.check_if_initialized()
-    libr.check_admitted_value_in_list(boxtype, xfdata.BOXTYPE_list)
+    libr.checkfatal_allowed_value_in_list(boxtype, xfdata.BOXTYPE_list)
     iboxtype = libr.convert_to_int(boxtype)
     libr.keep_elem_refs(boxtype, iboxtype)
     _fl_set_tooltip_boxtype(iboxtype)
@@ -856,7 +856,7 @@ def fl_set_tooltip_lalign(align):
         None, [cty.c_int],
         """void fl_set_tooltip_lalign(int p1)""")
     libr.check_if_initialized()
-    libr.check_admitted_value_in_list(align, xfdata.ALIGN_list)
+    libr.checkfatal_allowed_value_in_list(align, xfdata.ALIGN_list)
     ialign = libr.convert_to_int(align)
     libr.keep_elem_refs(align, ialign)
     _fl_set_tooltip_lalign(ialign)
@@ -1063,7 +1063,7 @@ def fl_show_command_log(border):
         None, [cty.c_int],
         """void fl_show_command_log(int p1)""")
     libr.check_if_initialized()
-    libr.check_admitted_value_in_list(border, xfdata.DECORATION_list)
+    libr.checkfatal_allowed_value_in_list(border, xfdata.DECORATION_list)
     iborder = libr.convert_to_int(border)
     libr.keep_elem_refs(border, iborder)
     _fl_show_command_log(iborder)
@@ -1279,7 +1279,7 @@ def fl_set_fselector_fontsize(size):
         None, [cty.c_int],
         """void fl_set_fselector_fontsize(int p1)""")
     libr.check_if_initialized()
-    libr.check_admitted_value_in_list(size, xfdata.FONTSIZE_list)
+    libr.checknonfatal_allowed_value_in_list(size, xfdata.FONTSIZE_list)
     isize = libr.convert_to_int(size)
     libr.keep_elem_refs(size, isize)
     _fl_set_fselector_fontsize(isize)
@@ -1310,7 +1310,7 @@ def fl_set_fselector_fontstyle(style):
         None, [cty.c_int],
         """void fl_set_fselector_fontstyle(int p1)""")
     libr.check_if_initialized()
-    libr.check_admitted_value_in_list(style, xfdata.TEXTSTYLE_list)
+    libr.checkfatal_allowed_value_in_list(style, xfdata.TEXTSTYLE_list)
     istyle = libr.convert_to_int(style)
     libr.keep_elem_refs(style, istyle)
     _fl_set_fselector_fontstyle(istyle)
@@ -1341,7 +1341,7 @@ def fl_set_fselector_placement(place):
         None, [cty.c_int],
         """void fl_set_fselector_placement(int p1)""")
     libr.check_if_initialized()
-    libr.check_admitted_value_in_list(place, xfdata.PLACE_list)
+    libr.checkfatal_allowed_value_in_list(place, xfdata.PLACE_list)
     iplace = libr.convert_to_int(place)
     libr.keep_elem_refs(place, iplace)
     _fl_set_fselector_placement(iplace)
@@ -1368,7 +1368,7 @@ def fl_set_fselector_border(border):
         None, [cty.c_int],
         """void fl_set_fselector_border(int p1)""")
     libr.check_if_initialized()
-    libr.check_admitted_value_in_list(border, xfdata.DECORATION_list)
+    libr.checkfatal_allowed_value_in_list(border, xfdata.DECORATION_list)
     iborder = libr.convert_to_int(border)
     libr.keep_elem_refs(border, iborder)
     _fl_set_fselector_border(iborder)
@@ -1410,7 +1410,8 @@ def fl_set_fselector_callback(py_FSCB, vdata):
       `py_FSCB` : python function callback, returning (unused) value
         name referring to function(string, vdata) -> num
       `vdata` : any type (e.g. 'None', int, str, etc..)
-        user data to be passed to function
+        user data to be passed to function; callback has to take care of
+        type check.
 
     :note: e.g. def fsel_cb(fname, cvoidp): > ... ; return UnusedVal
     :note: e.g. fl_set_fselector_callback(fsel_cb, None)
@@ -1426,21 +1427,9 @@ def fl_set_fselector_callback(py_FSCB, vdata):
     libr.check_if_initialized()
     libr.verify_function_type(py_FSCB)
     c_FSCB = xfdata.FL_FSCB(py_FSCB)
-    if vdata is None:
-        zdata = vdata
-        pvdata = cty.cast(zdata, cty.c_void_p)
-    elif isinstance(vdata, int):
-        zdata = libr.convert_to_int(vdata)
-        pvdata = zdata
-    elif isinstance(vdata, str):
-        zdata = libr.convert_to_string(vdata)
-        pvdata = cty.cast(zdata, cty.POINTER(xfdata.STRING))
-    else:
-        zdata = vdata
-        pvdata = vdata          # it is pFlObject
-        libr.verify_flobjectptr_type(pvdata)
+    pvdata = cty.cast(vdata, cty.c_void_p)
     libr.keep_cfunc_refs(c_FSCB, py_FSCB)
-    libr.keep_elem_refs(vdata, zdata, pvdata)
+    libr.keep_elem_refs(vdata, pvdata)
     _fl_set_fselector_callback(c_FSCB, pvdata)
 
 

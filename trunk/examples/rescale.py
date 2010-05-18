@@ -37,7 +37,7 @@ def create_form_form():
     fdui.pform = fl_bgn_form(FL_NO_BOX, 470, 370)
     pobj = fl_add_box(FL_UP_BOX, 0, 0, 470, 370, "")
     pobj = fl_add_box(FL_SHADOW_BOX, 30, 30, 410, 70, "Scaling Forms")
-    fl_set_object_color(pobj, 9, 47)
+    fl_set_object_color(pobj, FL_INDIANRED, FL_CORNSILK)
     fl_set_object_lsize(pobj, 16)
 
     fdui.psmallerobj = fl_add_button(FL_NORMAL_BUTTON, 30, 220, 130, 40,

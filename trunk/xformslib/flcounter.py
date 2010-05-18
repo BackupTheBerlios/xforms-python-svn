@@ -81,7 +81,7 @@ def fl_add_counter(countertype, x, y, w, h, label):
         """FL_OBJECT * fl_add_counter(int type, FL_Coord x, FL_Coord y,
            FL_Coord w, FL_Coord h, const char * label)""")
     libr.check_if_initialized()
-    libr.check_admitted_value_in_list(countertype, xfdata.COUNTERTYPE_list)
+    libr.checkfatal_allowed_value_in_list(countertype, xfdata.COUNTERTYPE_list)
     icountertype = libr.convert_to_int(countertype)
     ix = libr.convert_to_FL_Coord(x)
     iy = libr.convert_to_FL_Coord(y)

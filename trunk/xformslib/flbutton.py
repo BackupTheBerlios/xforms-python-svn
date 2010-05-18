@@ -94,7 +94,7 @@ def fl_add_roundbutton(buttontype, x, y, w, h, label):
         """FL_OBJECT * fl_add_roundbutton(int type, FL_Coord x,
            FL_Coord y, FL_Coord w, FL_Coord h, const char * label)""")
     libr.check_if_initialized()
-    libr.check_admitted_value_in_list(buttontype, xfdata.BUTTONTYPE_list)
+    libr.checkfatal_allowed_value_in_list(buttontype, xfdata.BUTTONTYPE_list)
     ibuttontype = libr.convert_to_int(buttontype)
     ix = libr.convert_to_FL_Coord(x)
     iy = libr.convert_to_FL_Coord(y)
@@ -145,7 +145,7 @@ def fl_add_round3dbutton(buttontype, x, y, w, h, label):
         """FL_OBJECT * fl_add_round3dbutton(int type, FL_Coord x,
            FL_Coord y, FL_Coord w, FL_Coord h, const char * label)""")
     libr.check_if_initialized()
-    libr.check_admitted_value_in_list(buttontype, xfdata.BUTTONTYPE_list)
+    libr.checkfatal_allowed_value_in_list(buttontype, xfdata.BUTTONTYPE_list)
     ibuttontype = libr.convert_to_int(buttontype)
     ix = libr.convert_to_FL_Coord(x)
     iy = libr.convert_to_FL_Coord(y)
@@ -196,7 +196,7 @@ def fl_add_lightbutton(buttontype, x, y, w, h, label):
         """FL_OBJECT * fl_add_lightbutton(int type, FL_Coord x, FL_Coord y,
            FL_Coord w, FL_Coord h, const char * label)""")
     libr.check_if_initialized()
-    libr.check_admitted_value_in_list(buttontype, xfdata.BUTTONTYPE_list)
+    libr.checkfatal_allowed_value_in_list(buttontype, xfdata.BUTTONTYPE_list)
     ibuttontype = libr.convert_to_int(buttontype)
     ix = libr.convert_to_FL_Coord(x)
     iy = libr.convert_to_FL_Coord(y)
@@ -247,7 +247,7 @@ def fl_add_checkbutton(buttontype, x, y, w, h, label):
         """FL_OBJECT * fl_add_checkbutton(int type, FL_Coord x, FL_Coord y,
            FL_Coord w, FL_Coord h, const char * label)""")
     libr.check_if_initialized()
-    libr.check_admitted_value_in_list(buttontype, xfdata.BUTTONTYPE_list)
+    libr.checkfatal_allowed_value_in_list(buttontype, xfdata.BUTTONTYPE_list)
     ibuttontype = libr.convert_to_int(buttontype)
     ix = libr.convert_to_FL_Coord(x)
     iy = libr.convert_to_FL_Coord(y)
@@ -298,7 +298,7 @@ def fl_add_button(buttontype, x, y, w, h, label):
         """FL_OBJECT * fl_add_button(int type, FL_Coord x, FL_Coord y,
            FL_Coord w, FL_Coord h, const char * label)""")
     libr.check_if_initialized()
-    libr.check_admitted_value_in_list(buttontype, xfdata.BUTTONTYPE_list)
+    libr.checkfatal_allowed_value_in_list(buttontype, xfdata.BUTTONTYPE_list)
     ibuttontype = libr.convert_to_int(buttontype)
     ix = libr.convert_to_FL_Coord(x)
     iy = libr.convert_to_FL_Coord(y)
@@ -349,7 +349,7 @@ def fl_add_bitmapbutton(buttontype, x, y, w, h, label):
         """FL_OBJECT * fl_add_bitmapbutton(int type, FL_Coord x,
            FL_Coord y, FL_Coord w, FL_Coord h, const char * label)""")
     libr.check_if_initialized()
-    libr.check_admitted_value_in_list(buttontype, xfdata.BUTTONTYPE_list)
+    libr.checkfatal_allowed_value_in_list(buttontype, xfdata.BUTTONTYPE_list)
     ibuttontype = libr.convert_to_int(buttontype)
     ix = libr.convert_to_FL_Coord(x)
     iy = libr.convert_to_FL_Coord(y)
@@ -400,7 +400,7 @@ def fl_add_scrollbutton(buttontype, x, y, w, h, label):
         """FL_OBJECT * fl_add_scrollbutton(int type, FL_Coord x,
            FL_Coord y, FL_Coord w, FL_Coord h, const char * label)""")
     libr.check_if_initialized()
-    libr.check_admitted_value_in_list(buttontype, xfdata.BUTTONTYPE_list)
+    libr.checkfatal_allowed_value_in_list(buttontype, xfdata.BUTTONTYPE_list)
     ibuttontype = libr.convert_to_int(buttontype)
     ix = libr.convert_to_FL_Coord(x)
     iy = libr.convert_to_FL_Coord(y)
@@ -451,7 +451,7 @@ def fl_add_labelbutton(buttontype, x, y, w, h, label):
         """FL_OBJECT * fl_add_labelbutton(int type, FL_Coord x,
            FL_Coord y, FL_Coord w, FL_Coord h, const char * label)""")
     libr.check_if_initialized()
-    libr.check_admitted_value_in_list(buttontype, xfdata.BUTTONTYPE_list)
+    libr.checkfatal_allowed_value_in_list(buttontype, xfdata.BUTTONTYPE_list)
     ibuttontype = libr.convert_to_int(buttontype)
     ix = libr.convert_to_FL_Coord(x)
     iy = libr.convert_to_FL_Coord(y)
@@ -537,7 +537,7 @@ def fl_add_pixmapbutton(buttontype, x, y, w, h, label):
         """FL_OBJECT * fl_add_pixmapbutton(int type, FL_Coord x,
            FL_Coord y, FL_Coord w, FL_Coord h, const char * label)""")
     libr.check_if_initialized()
-    libr.check_admitted_value_in_list(buttontype, xfdata.BUTTONTYPE_list)
+    libr.checkfatal_allowed_value_in_list(buttontype, xfdata.BUTTONTYPE_list)
     ibuttontype = libr.convert_to_int(buttontype)
     ix = libr.convert_to_FL_Coord(x)
     iy = libr.convert_to_FL_Coord(y)
@@ -795,7 +795,7 @@ def fl_create_generic_button(btnclass, buttontype, x, y, w, h, label):
            FL_Coord x, FL_Coord y, FL_Coord w, FL_Coord h,
            const char * label)""")
     libr.check_if_initialized()
-    libr.check_admitted_value_in_list(buttontype, xfdata.BUTTONTYPE_list)
+    libr.checkfatal_allowed_value_in_list(buttontype, xfdata.BUTTONTYPE_list)
     ibtnclass = libr.convert_to_int(btnclass)
     ibuttontype = libr.convert_to_int(buttontype)
     ix = libr.convert_to_FL_Coord(x)

@@ -79,7 +79,7 @@ def fl_add_spinner(spinnertype, x, y, w, h, label):
         """FL_OBJECT * fl_add_spinner(int type, FL_Coord x, FL_Coord y,
         FL_Coord w, FL_Coord h, const char * label)""")
     libr.check_if_initialized()
-    libr.check_admitted_value_in_list(spinnertype, xfdata.SPINNERTYPE_list)
+    libr.checkfatal_allowed_value_in_list(spinnertype, xfdata.SPINNERTYPE_list)
     ispinnertype = libr.convert_to_int(spinnertype)
     ix = libr.convert_to_FL_Coord(x)
     iy = libr.convert_to_FL_Coord(y)

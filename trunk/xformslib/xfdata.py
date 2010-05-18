@@ -852,7 +852,7 @@ FL_NoColor = FL_NOCOLOR
 
 # FL_DOGERBLUE placeholder (backwards)
 
-# my add, list of possible values --LK
+# my add, list of (some of) possible values --LK
 COLOR_list = [FL_BLACK, FL_RED, FL_GREEN, FL_YELLOW, FL_BLUE, FL_MAGENTA,
         FL_CYAN, FL_WHITE, FL_TOMATO, FL_INDIANRED, FL_SLATEBLUE, FL_COL1,
         FL_RIGHT_BCOL, FL_BOTTOM_BCOL, FL_TOP_BCOL, FL_LEFT_BCOL, FL_MCOL,
@@ -1190,7 +1190,7 @@ FL_HUGE_SIZE = 24
 FL_DEFAULT_SIZE = FL_SMALL_SIZE
 """10 points font size"""
 
-# my add, list of possible values --LK
+# my add, list of (some of) possible values --LK
 FONTSIZE_list = [FL_TINY_SIZE, FL_SMALL_SIZE, FL_NORMAL_SIZE, FL_MEDIUM_SIZE,
                  FL_LARGE_SIZE, FL_HUGE_SIZE, FL_DEFAULT_SIZE]
 

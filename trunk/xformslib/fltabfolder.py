@@ -79,7 +79,7 @@ def fl_add_tabfolder(foldertype, x, y, w, h, label):
         """FL_OBJECT * fl_add_tabfolder(int type, FL_Coord x, FL_Coord y,
            FL_Coord w, FL_Coord h, const char * label)""")
     libr.check_if_initialized()
-    libr.check_admitted_value_in_list(foldertype, xfdata.TABFOLDERTYPE_list)
+    libr.checkfatal_allowed_value_in_list(foldertype, xfdata.TABFOLDERTYPE_list)
     ifoldertype = libr.convert_to_int(foldertype)
     ix = libr.convert_to_FL_Coord(x)
     iy = libr.convert_to_FL_Coord(y)

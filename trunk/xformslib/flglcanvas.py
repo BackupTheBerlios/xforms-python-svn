@@ -81,7 +81,7 @@ def fl_add_glcanvas(canvastype, x, y, w, h, label):
         """FL_OBJECT * fl_add_glcanvas(int type, FL_Coord x, FL_Coord y,
            FL_Coord w, FL_Coord h, const char * label)""")
     libr.check_if_initialized()
-    libr.check_admitted_value_in_list(canvastype, xfdata.CANVASTYPE_list)
+    libr.checkfatal_allowed_value_in_list(canvastype, xfdata.CANVASTYPE_list)
     icanvastype = libr.convert_to_int(canvastype)
     ix = libr.convert_to_FL_Coord(x)
     iy = libr.convert_to_FL_Coord(y)

@@ -116,7 +116,7 @@ def fl_mode_capable(mode, warn):
         cty.c_int, [cty.c_int, cty.c_int],\
         """int fl_mode_capable(int mode, int warn)""")
     libr.check_if_initialized()
-    libr.check_admitted_value_in_list(mode, xfdata.VISUALMODE_list)
+    libr.checkfatal_allowed_value_in_list(mode, xfdata.VISUALMODE_list)
     imode = libr.convert_to_int(mode)
     iwarn = libr.convert_to_int(warn)
     libr.keep_elem_refs(mode, warn, imode, iwarn)
@@ -168,7 +168,7 @@ def fl_rectangle(fill, x, y, w, h, colr):
         """void fl_rectangle(int fill, FL_Coord x, FL_Coord y,
            FL_Coord w, FL_Coord h, FL_COLOR col)""")
     libr.check_if_initialized()
-    libr.check_admitted_value_in_list(colr, xfdata.COLOR_list)
+    libr.checknonfatal_allowed_value_in_list(colr, xfdata.COLOR_list)
     ifill = libr.convert_to_int(fill)
     ix = libr.convert_to_FL_Coord(x)
     iy = libr.convert_to_FL_Coord(y)
@@ -209,7 +209,7 @@ def fl_rectbound(x, y, w, h, colr):
         """void fl_rectbound(FL_Coord x, FL_Coord y, FL_Coord w,
            FL_Coord h, FL_COLOR col)""")
     libr.check_if_initialized()
-    libr.check_admitted_value_in_list(colr, xfdata.COLOR_list)
+    libr.checknonfatal_allowed_value_in_list(colr, xfdata.COLOR_list)
     ix = libr.convert_to_FL_Coord(x)
     iy = libr.convert_to_FL_Coord(y)
     iw = libr.convert_to_FL_Coord(w)
@@ -303,7 +303,7 @@ def fl_roundrectangle(fill, x, y, w, h, colr):
         """void fl_roundrectangle(int fill, FL_Coord x, FL_Coord y,
            FL_Coord w, FL_Coord h, FL_COLOR col)""")
     libr.check_if_initialized()
-    libr.check_admitted_value_in_list(colr, xfdata.COLOR_list)
+    libr.checknonfatal_allowed_value_in_list(colr, xfdata.COLOR_list)
     ifill = libr.convert_to_int(fill)
     ix = libr.convert_to_FL_Coord(x)
     iy = libr.convert_to_FL_Coord(y)
@@ -398,7 +398,7 @@ def fl_polygon(fill, Point, numpt, colr):
         xfdata.FL_COLOR],
         """void fl_polygon(int fill, FL_POINT * xp, int n, FL_COLOR col)""")
     libr.check_if_initialized()
-    libr.check_admitted_value_in_list(colr, xfdata.COLOR_list)
+    libr.checknonfatal_allowed_value_in_list(colr, xfdata.COLOR_list)
     ifill = libr.convert_to_int(fill)
     pPoint = cty.cast(Point, cty.POINTER(xfdata.FL_POINT))
     inumpt = libr.convert_to_int(numpt)
@@ -511,7 +511,7 @@ def fl_lines(Point, numpt, colr):
         None, [cty.POINTER(xfdata.FL_POINT), cty.c_int, xfdata.FL_COLOR],\
         """void fl_lines(FL_POINT * xp, int n, FL_COLOR col)""")
     libr.check_if_initialized()
-    libr.check_admitted_value_in_list(colr, xfdata.COLOR_list)
+    libr.checknonfatal_allowed_value_in_list(colr, xfdata.COLOR_list)
     pPoint = cty.cast(Point, cty.POINTER(xfdata.FL_POINT))
     inumpt = libr.convert_to_int(numpt)
     ulcolr = libr.convert_to_FL_COLOR(colr)
@@ -548,7 +548,7 @@ def fl_line(xi, yi, xf, yf, colr):
         """void fl_line(FL_Coord xi, FL_Coord yi, FL_Coord xf,
            FL_Coord yf, FL_COLOR c)""")
     libr.check_if_initialized()
-    libr.check_admitted_value_in_list(colr, xfdata.COLOR_list)
+    libr.checknonfatal_allowed_value_in_list(colr, xfdata.COLOR_list)
     ixi = libr.convert_to_int(xi)
     iyi = libr.convert_to_int(yi)
     ixf = libr.convert_to_int(xf)
@@ -584,7 +584,7 @@ def fl_point(x, y, colr):
         None, [xfdata.FL_Coord, xfdata.FL_Coord, xfdata.FL_COLOR],\
         """void fl_point(FL_Coord x, FL_Coord y, FL_COLOR c)""")
     libr.check_if_initialized()
-    libr.check_admitted_value_in_list(colr, xfdata.COLOR_list)
+    libr.checknonfatal_allowed_value_in_list(colr, xfdata.COLOR_list)
     ix = libr.convert_to_FL_Coord(x)
     iy = libr.convert_to_FL_Coord(y)
     ulcolr = libr.convert_to_FL_COLOR(colr)
@@ -619,7 +619,7 @@ def fl_points(Point, numpt, colr):
         None, [cty.POINTER(xfdata.FL_POINT), cty.c_int, xfdata.FL_COLOR],
         """void fl_points(FL_POINT * p, int np, FL_COLOR c)""")
     libr.check_if_initialized()
-    libr.check_admitted_value_in_list(colr, xfdata.COLOR_list)
+    libr.checknonfatal_allowed_value_in_list(colr, xfdata.COLOR_list)
     pPoint = cty.cast(Point, cty.POINTER(xfdata.FL_POINT))
     inumpt = libr.convert_to_int(numpt)
     ulcolr = libr.convert_to_FL_COLOR(colr)
@@ -777,7 +777,7 @@ def fl_linestyle(linestyle):
         None, [cty.c_int],\
         """void fl_linestyle(int n)""")
     libr.check_if_initialized()
-    libr.check_admitted_value_in_list(linestyle, xfdata.LINESTYLE_list)
+    libr.checkfatal_allowed_value_in_list(linestyle, xfdata.LINESTYLE_list)
     ilinestyle = libr.convert_to_int(linestyle)
     libr.keep_elem_refs(linestyle, ilinestyle)
     _fl_linestyle(ilinestyle)
@@ -808,7 +808,7 @@ def fl_drawmode(mode):
         None, [cty.c_int],\
         """void fl_drawmode(int request)""")
     libr.check_if_initialized()
-    libr.check_admitted_value_in_list(mode, xfdata.DRAWMODE_list)
+    libr.checkfatal_allowed_value_in_list(mode, xfdata.DRAWMODE_list)
     imode = libr.convert_to_int(mode)
     libr.keep_elem_refs(mode, imode)
     _fl_drawmode(imode)
@@ -920,7 +920,7 @@ def fl_oval(fill, x, y, w, h, colr):
         """void fl_oval(int fill, FL_Coord x, FL_Coord y, FL_Coord w,
            FL_Coord h, FL_COLOR col)""")
     libr.check_if_initialized()
-    libr.check_admitted_value_in_list(colr, xfdata.COLOR_list)
+    libr.checknonfatal_allowed_value_in_list(colr, xfdata.COLOR_list)
     ifill = libr.convert_to_int(fill)
     ix = libr.convert_to_FL_Coord(x)
     iy = libr.convert_to_FL_Coord(y)
@@ -962,7 +962,7 @@ def fl_ovalbound(x, y, w, h, colr):
         """void fl_ovalbound(FL_Coord x, FL_Coord y, FL_Coord w,
            FL_Coord h, FL_COLOR col)""")
     libr.check_if_initialized()
-    libr.check_admitted_value_in_list(colr, xfdata.COLOR_list)
+    libr.checknonfatal_allowed_value_in_list(colr, xfdata.COLOR_list)
     ix = libr.convert_to_FL_Coord(x)
     iy = libr.convert_to_FL_Coord(y)
     iw = libr.convert_to_FL_Coord(w)
@@ -1013,7 +1013,7 @@ def fl_ovalarc(fill, x, y, w, h, stheta, dtheta, colr):
         """void fl_ovalarc(int fill, FL_Coord x, FL_Coord y, FL_Coord w,
            FL_Coord h, int t0, int dt, FL_COLOR col)""")
     libr.check_if_initialized()
-    libr.check_admitted_value_in_list(colr, xfdata.COLOR_list)
+    libr.checknonfatal_allowed_value_in_list(colr, xfdata.COLOR_list)
     ifill = libr.convert_to_int(fill)
     ix = libr.convert_to_FL_Coord(x)
     iy = libr.convert_to_FL_Coord(y)
@@ -1166,7 +1166,7 @@ def fl_pieslice(fill, x, y, w, h, stheta, etheta, colr):
         """void fl_pieslice(int fill, FL_Coord x, FL_Coord y, FL_Coord w,
            FL_Coord h, int a1, int a2, FL_COLOR col)""")
     libr.check_if_initialized()
-    libr.check_admitted_value_in_list(colr, xfdata.COLOR_list)
+    libr.checknonfatal_allowed_value_in_list(colr, xfdata.COLOR_list)
     ifill = libr.convert_to_int(fill)
     ix = libr.convert_to_FL_Coord(x)
     iy = libr.convert_to_FL_Coord(y)
@@ -1285,8 +1285,8 @@ def fl_drw_frame(boxtype, x, y, w, h, colr, bw):
         """void fl_drw_frame(int style, FL_Coord x, FL_Coord y,
            FL_Coord w, FL_Coord h, FL_COLOR c, int bw)""")
     libr.check_if_initialized()
-    libr.check_admitted_value_in_list(boxtype, xfdata.BOXTYPE_list)
-    libr.check_admitted_value_in_list(colr, xfdata.COLOR_list)
+    libr.checkfatal_allowed_value_in_list(boxtype, xfdata.BOXTYPE_list)
+    libr.checknonfatal_allowed_value_in_list(colr, xfdata.COLOR_list)
     iboxtype = libr.convert_to_int(boxtype)
     ix = libr.convert_to_FL_Coord(x)
     iy = libr.convert_to_FL_Coord(y)
@@ -1338,8 +1338,8 @@ def fl_drw_checkbox(boxtype, x, y, w, h, colr, bw):
         """void fl_drw_checkbox(int type, FL_Coord x, FL_Coord y,
            FL_Coord w, FL_Coord h, FL_COLOR col, int bw)""")
     libr.check_if_initialized()
-    libr.check_admitted_value_in_list(boxtype, xfdata.BOXTYPE_list)
-    libr.check_admitted_value_in_list(colr, xfdata.COLOR_list)
+    libr.checkfatal_allowed_value_in_list(boxtype, xfdata.BOXTYPE_list)
+    libr.checknonfatal_allowed_value_in_list(colr, xfdata.COLOR_list)
     iboxtype = libr.convert_to_int(boxtype)
     ix = libr.convert_to_FL_Coord(x)
     iy = libr.convert_to_FL_Coord(y)
@@ -1387,8 +1387,8 @@ def fl_get_fontstruct(style, size):
         cty.POINTER(xfdata.XFontStruct), [cty.c_int, cty.c_int],\
         """XFontStruct * fl_get_fontstruct(int style, int size)""")
     libr.check_if_initialized()
-    libr.check_admitted_value_in_list(style, xfdata.TEXTSTYLE_list)
-    libr.check_admitted_value_in_list(size, xfdata.FONTSIZE_list)
+    libr.checkfatal_allowed_value_in_list(style, xfdata.TEXTSTYLE_list)
+    libr.checknonfatal_allowed_value_in_list(size, xfdata.FONTSIZE_list)
     istyle = libr.convert_to_int(style)
     isize = libr.convert_to_int(size)
     libr.keep_elem_refs(style, size, istyle, isize)
@@ -1712,7 +1712,7 @@ def fl_set_foreground(gc, colr):
         """void fl_set_foreground(GC gc, FL_COLOR col)""")
     libr.check_if_initialized()
     libr.verify_otherclassptr_type(gc, xfdata.GC)
-    libr.check_admitted_value_in_list(colr, xfdata.COLOR_list)
+    libr.checknonfatal_allowed_value_in_list(colr, xfdata.COLOR_list)
     ulcolr = libr.convert_to_FL_COLOR(colr)
     libr.keep_elem_refs(gc, colr, ulcolr)
     _fl_set_foreground(gc, ulcolr)
@@ -1743,7 +1743,7 @@ def fl_set_background(gc, colr):
         """void fl_set_background(GC gc, FL_COLOR col)""")
     libr.check_if_initialized()
     libr.verify_otherclassptr_type(gc, xfdata.GC)
-    libr.check_admitted_value_in_list(colr, xfdata.COLOR_list)
+    libr.checknonfatal_allowed_value_in_list(colr, xfdata.COLOR_list)
     ulcolr = libr.convert_to_FL_COLOR(colr)
     libr.keep_elem_refs(gc, colr, ulcolr)
     _fl_set_background(gc, ulcolr)
@@ -2146,7 +2146,7 @@ def fl_winicon(win, icon, mask):
     _fl_winicon(ulwin, ulicon, ulmask)
 
 
-def fl_winbackground(win, bkcolr):
+def fl_winbackground(win, bgcolr):
     """Sets the background of window to a certain color.
 
     --
@@ -2154,7 +2154,7 @@ def fl_winbackground(win, bkcolr):
     :Parameters:
       `win` : long_pos
         window id
-      `bkcolr` : long_pos
+      `bgcolr` : long_pos
         background color to be set
 
     :note: e.g. fl_winbackground(win1, xfdata.FL_GHOSTWHITE)
@@ -2167,11 +2167,11 @@ def fl_winbackground(win, bkcolr):
         None, [xfdata.Window, xfdata.FL_COLOR], \
         """void fl_winbackground(Window win, FL_COLOR bk)""")
     libr.check_if_initialized()
-    libr.check_admitted_value_in_list(bkcolr, xfdata.COLOR_list)
+    libr.checknonfatal_allowed_value_in_list(bgcolr, xfdata.COLOR_list)
     ulwin = libr.convert_to_Window(win)
-    ulbkcolr = libr.convert_to_FL_COLOR(bkcolr)
-    libr.keep_elem_refs(win, bkcolr, ulwin, ulbkcolr)
-    _fl_winbackground(ulwin, ulbkcolr)
+    ulbgcolr = libr.convert_to_FL_COLOR(bgcolr)
+    libr.keep_elem_refs(win, bgcolr, ulwin, ulbgcolr)
+    _fl_winbackground(ulwin, ulbgcolr)
 
 
 fl_win_background = fl_winbackground
@@ -2522,7 +2522,7 @@ def fl_initial_winstate(state):
         None, [cty.c_int],
         """void fl_initial_winstate(int state)""")
     libr.check_if_initialized()
-    libr.check_admitted_value_in_list(state, xfdata.WINSTATE_list)
+    libr.checkfatal_allowed_value_in_list(state, xfdata.WINSTATE_list)
     istate = libr.convert_to_int(state)
     libr.keep_elem_refs(state, istate)
     _fl_initial_winstate(istate)
@@ -3483,7 +3483,7 @@ def fl_get_resource(rname, cname, dtype, defval, val, size):
         """const char * fl_get_resource(const char * rname,
            const char * cname, FL_RTYPE dtype, const char * defval,
            void * val, int size)""")
-    libr.check_admitted_value_in_list(dtype, xfdata.RTYPE_list)
+    libr.checkfatal_allowed_value_in_list(dtype, xfdata.RTYPE_list)
     srname = libr.convert_to_string(rname)
     scname = libr.convert_to_string(cname)
     idtype = libr.convert_to_int(dtype)
@@ -3600,7 +3600,7 @@ def fl_set_visualID(idnum):
         libr.load_so_libforms(), "fl_set_visualID",
         None, [cty.c_long],
         """void fl_set_visualID(long int id)""")
-    libr.check_admitted_value_in_list(idnum, xfdata.VISUALMODE_list)
+    libr.checkfatal_allowed_value_in_list(idnum, xfdata.VISUALMODE_list)
     lidnum = libr.convert_to_long(idnum)
     libr.keep_elem_refs(idnum, lidnum)
     _fl_set_visualID(lidnum)
@@ -3667,7 +3667,7 @@ def fl_set_defaults(mask, pIopt):
         libr.load_so_libforms(), "fl_set_defaults",
         None, [cty.c_ulong, cty.POINTER(xfdata.FL_IOPT)],
         """void fl_set_defaults(long unsigned int mask, FL_IOPT * cntl)""")
-    libr.check_admitted_value_in_list(mask, xfdata.PRGDEFAULTS_list)
+    libr.checkfatal_allowed_value_in_list(mask, xfdata.PRGDEFAULTS_list)
     ulmask = libr.convert_to_ulong(mask)
     libr.keep_elem_refs(mask, pIopt, ulmask)
     _fl_set_defaults(ulmask, pIopt)

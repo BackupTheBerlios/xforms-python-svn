@@ -82,7 +82,7 @@ def fl_add_bitmap(bitmaptype, x, y, w, h, label):
         """FL_OBJECT * fl_add_bitmap(int type, FL_Coord x, FL_Coord y,
            FL_Coord w, FL_Coord h, const char * label)""")
     libr.check_if_initialized()
-    libr.check_admitted_value_in_list(bitmaptype, xfdata.BITMAPTYPE_list)
+    libr.checkfatal_allowed_value_in_list(bitmaptype, xfdata.BITMAPTYPE_list)
     ibitmaptype = libr.convert_to_int(bitmaptype)
     ix = libr.convert_to_FL_Coord(x)
     iy = libr.convert_to_FL_Coord(y)
@@ -288,7 +288,7 @@ def fl_add_pixmap(pixmaptype, x, y, w, h, label):
         """FL_OBJECT * fl_add_pixmap(int type, FL_Coord x, FL_Coord y,
            FL_Coord w, FL_Coord h, const char * label)""")
     libr.check_if_initialized()
-    libr.check_admitted_value_in_list(pixmaptype, xfdata.PIXMAPTYPE_list)
+    libr.checkfatal_allowed_value_in_list(pixmaptype, xfdata.PIXMAPTYPE_list)
     ipixmaptype = libr.convert_to_int(pixmaptype)
     ix = libr.convert_to_FL_Coord(x)
     iy = libr.convert_to_FL_Coord(y)
@@ -396,7 +396,7 @@ def fl_set_pixmap_align(pFlObject, align, xmargin, ymargin):
            int xmargin, int ymargin)""")
     libr.check_if_initialized()
     libr.verify_flobjectptr_type(pFlObject)
-    libr.check_admitted_value_in_list(align, xfdata.ALIGN_list)
+    libr.checkfatal_allowed_value_in_list(align, xfdata.ALIGN_list)
     ialign = libr.convert_to_int(align)
     ixmargin = libr.convert_to_int(xmargin)
     iymargin = libr.convert_to_int(ymargin)
@@ -579,7 +579,7 @@ def fl_read_pixmapfile(win, fname, tran):
            unsigned int * w, unsigned int * h, Pixmap * shape_mask,
            int * hotx, int * hoty, FL_COLOR tran)""")
     libr.check_if_initialized()
-    libr.check_admitted_value_in_list(tran, xfdata.COLOR_list)
+    libr.checknonfatal_allowed_value_in_list(tran, xfdata.COLOR_list)
     ulwin = libr.convert_to_Window(win)
     sfname = libr.convert_to_string(fname)
     ultran = libr.convert_to_FL_COLOR(tran)
@@ -639,7 +639,7 @@ def fl_create_from_pixmapdata(win, data, w, h, sm, hotx, hoty, tran):
         unsigned int * w, unsigned int * h, Pixmap * sm, int * hotx,
         int * hoty, FL_COLOR tran)""")
     libr.check_if_initialized()
-    libr.check_admitted_value_in_list(tran, xfdata.COLOR_list)
+    libr.checknonfatal_allowed_value_in_list(tran, xfdata.COLOR_list)
     ulwin = libr.convert_to_Window(win)
     ultran = libr.convert_to_FL_COLOR(tran)
     libr.keep_elem_refs(win, data, w, h, sm, hotx, hoty, tran, ulwin, ultran)

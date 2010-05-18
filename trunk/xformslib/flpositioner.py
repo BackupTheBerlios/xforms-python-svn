@@ -80,7 +80,7 @@ def fl_add_positioner(postype, x, y, w, h, label):
         """FL_OBJECT * fl_add_positioner(int type, FL_Coord x, FL_Coord y,
            FL_Coord w, FL_Coord h, const char * label)""")
     libr.check_if_initialized()
-    libr.check_admitted_value_in_list(postype, xfdata.POSITIONERTYPE_list)
+    libr.checkfatal_allowed_value_in_list(postype, xfdata.POSITIONERTYPE_list)
     ipostype = libr.convert_to_int(postype)
     ix = libr.convert_to_FL_Coord(x)
     iy = libr.convert_to_FL_Coord(y)

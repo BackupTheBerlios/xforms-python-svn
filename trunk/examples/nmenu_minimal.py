@@ -30,42 +30,42 @@ class Flnmenumin(object):
         MypopupitemA = ["First item ADD", self.item1_cb, "F", FL_POPUP_NORMAL, FL_POPUP_NONE], \
                         ["Second item ADD", self.item2_cb, "E", FL_POPUP_NORMAL, FL_POPUP_NONE]
 
-        ppopmenu1 = library.make_pPopupItem_from_list(MypopupitemA)
+        ppopmenu1 = library.create_pPopupItem_from_list(MypopupitemA)
         entry12 = fl_add_nmenu_items2(self.pmenu1, ppopmenu1)
 
         MypopupitemB = ["Third item INS", self.item3_cb, "T", FL_POPUP_NORMAL, FL_POPUP_NONE], \
                         ["Fourth menu INS", self.item4_cb, "O", FL_POPUP_NORMAL, FL_POPUP_NONE]
 
-        ppopmenu2 = library.make_pPopupItem_from_list(MypopupitemB)
+        ppopmenu2 = library.create_pPopupItem_from_list(MypopupitemB)
         entry34 = fl_insert_nmenu_items2(self.pmenu1, None, ppopmenu2)
 
         MypopupitemC = ["Fifth item ADD", self.item5_cb, "I", FL_POPUP_NORMAL, FL_POPUP_NONE]
 
-        ppopmenu3 = library.make_pPopupItem_from_list(MypopupitemC)
+        ppopmenu3 = library.create_pPopupItem_from_list(MypopupitemC)
         entry5 = fl_add_nmenu_items2(self.pmenu1, ppopmenu3)
 
         MypopupitemD = ["Sixth item REPL", self.item6_cb, "S", FL_POPUP_NORMAL, FL_POPUP_NONE], \
                         ["Seventh menu REPL", self.item7_cb, "V", FL_POPUP_NORMAL, FL_POPUP_NONE]
 
-        ppopmenu4 = library.make_pPopupItem_from_list(MypopupitemD)
+        ppopmenu4 = library.create_pPopupItem_from_list(MypopupitemD)
         entry67 = fl_replace_nmenu_items2(self.pmenu1, entry12, ppopmenu4)
 
         MypopupitemE = ["Exit ADD", self.done_cb, "X", FL_POPUP_NORMAL, FL_POPUP_NONE]
 
-        ppopmenu5 = library.make_pPopupItem_from_list(MypopupitemE)
+        ppopmenu5 = library.create_pPopupItem_from_list(MypopupitemE)
         entry8 = fl_add_nmenu_items2(self.pmenu1, ppopmenu5)
 
         MypopupitemF = ["Ninth item ADD", self.item1_cb, "F", FL_POPUP_NORMAL, FL_POPUP_NONE], \
                         ["Tenth item ADD", self.item2_cb, "E", FL_POPUP_NORMAL, FL_POPUP_NONE]
 
-        ppopmenu6 = library.make_pPopupItem_from_list(MypopupitemF)
+        ppopmenu6 = library.create_pPopupItem_from_list(MypopupitemF)
         entry910 = fl_add_nmenu_items2(self.pmenu2, ppopmenu6)
 
         # currently dict is *only* for 1 item
         MypopupitemG = {'text' : "Eleventh item INS", 'callback' : self.item3_cb, 'shortcut' : "T", \
                         'type' : FL_POPUP_NORMAL, 'state' : FL_POPUP_NONE}
 
-        ppopmenu7 = library.make_pPopupItem_from_dict(MypopupitemG)
+        ppopmenu7 = library.create_pPopupItem_from_dict(MypopupitemG)
         entry910 = fl_insert_nmenu_items2(self.pmenu2, entry910, ppopmenu7)
 
         fl_show_form(pform, FL_PLACE_CENTER, FL_TRANSIENT, "Nmenu")
