@@ -4359,8 +4359,11 @@ FL_POPUP_CHECKED  = 4       # toggle/radio item is in on state
 """Only relevant for toggle or radio items, marks it as in "on" state."""
 
 # list of possible values, my add --LK
+# single values and bitwise OR-ed of them
 POPUPSTATE_list = [FL_POPUP_NONE, FL_POPUP_DISABLED, FL_POPUP_HIDDEN,
-                   FL_POPUP_CHECKED]
+                FL_POPUP_CHECKED, FL_POPUP_DISABLED|FL_POPUP_HIDDEN,
+                FL_POPUP_DISABLED|FL_POPUP_CHECKED,
+                FL_POPUP_HIDDEN|FL_POPUP_CHECKED]
 
 
 # Popup entry types

@@ -1,6 +1,7 @@
 
 
 SVN
+    * some docstrings improved.
     * restored correctness of all examples.
     * introduce a new convenience function for checking admittable values
     with non-fatal consequences (checknonfatal_allowed_value_in_list), as

@@ -148,10 +148,15 @@ def fl_popup_insert_entries(pPopup, pPopupEntry, entrytxt):
            FL_POPUP_ENTRY * p2, const char * p3)""")
     libr.check_if_initialized()
     libr.verify_flflpopupptr_type(pPopup)
-    libr.verify_flpopupentryptr_type(pPopupEntry)
+    if not pPopupEntry:         # it's None
+        pPopupEntry_alt = cty.cast(pPopupEntry, cty.POINTER(cty.c_void_p))
+    else:                       # real FL_POPUP_ENTRY pointer
+        pPopupEntry_alt = pPopupEntry
+        libr.verify_flpopupentryptr_type(pPopupEntry_alt)
     sentrytxt = libr.convert_to_string(entrytxt)
-    libr.keep_elem_refs(pPopup, pPopupEntry, entrytxt, sentrytxt)
-    retval = _fl_popup_insert_entries(pPopup, pPopupEntry, sentrytxt)
+    libr.keep_elem_refs(pPopup, pPopupEntry, pPopupEntry_alt, entrytxt,
+                        sentrytxt)
+    retval = _fl_popup_insert_entries(pPopup, pPopupEntry_alt, sentrytxt)
     return retval
 
 
@@ -394,15 +399,18 @@ def fl_popup_set_position(pPopup, x, y):
 
 
 def fl_popup_get_policy(pPopup):
-    """*todo*
+    """Obtains current policy setting for handling the popups, or changes
+    the default setting for new popup to be created.
 
     --
 
     :Parameters:
       `pPopup` : pointer to xfdata.FL_POPUP
-        popup class instance
+        popup class instance. If it's 'None', gives the default setting for
+        the popups created afterwards
 
-    :return: num.
+    :return: policy for supplied popup, or default policy used in creating
+        new popups is returned (if Nono is supplied), or -1 (on errors).
     :rtype: int
 
     :note: e.g. *todo*
@@ -415,26 +423,32 @@ def fl_popup_get_policy(pPopup):
         cty.c_int, [cty.POINTER(xfdata.FL_POPUP)],
         """int fl_popup_get_policy(FL_POPUP * p1)""")
     libr.check_if_initialized()
-    libr.verify_flflpopupptr_type(pPopup)
-    libr.keep_elem_refs(pPopup)
-    retval = _fl_popup_get_policy(pPopup)
+    if not pPopup:         # it's None
+        pPopup_alt = cty.cast(pPopup, cty.POINTER(cty.c_void_p))
+    else:                  # real FL_POPUP pointer
+        pPopup_alt = pPopup
+        libr.verify_flpopupptr_type(pPopup_alt)
+    libr.keep_elem_refs(pPopup, pPopup_alt)
+    retval = _fl_popup_get_policy(pPopup_alt)
     return retval
 
 
 def fl_popup_set_policy(pPopup, policy):
     """Sets policy for handling the popup (i.e. does it get closed when the
-    user releases the mouse button outside an active entry or not?).
+    user releases the mouse button outside an active entry or not?) or changes
+    the default setting of the policy, used in the creation of new popups.
 
     --
 
     :Parameters:
       `pPopup` : pointer to xfdata.FL_POPUP
-        popup class instance
+        popup class instance. If it's 'None', changes the default setting of
+        the policy, used in the creation of new popups.
       `policy` : int
         policy to be set. Values (from xfdata.py) FL_POPUP_NORMAL_SELECT,
         FL_POPUP_DRAG_SELECT
 
-    :return: num.
+    :return: previous policy value, or -1 (on errors).
     :rtype: int
 
     :note: e.g. *todo*
@@ -447,15 +461,17 @@ def fl_popup_set_policy(pPopup, policy):
         cty.c_int, [cty.POINTER(xfdata.FL_POPUP), cty.c_int],
         """int fl_popup_set_policy(FL_POPUP * p1, int p2)""")
     libr.check_if_initialized()
-    libr.verify_flflpopupptr_type(pPopup)
+    if not pPopup:         # it's None
+        pPopup_alt = cty.cast(pPopup, cty.POINTER(cty.c_void_p))
+    else:                  # real FL_POPUP pointer
+        pPopup_alt = pPopup
+        libr.verify_flpopupptr_type(pPopup_alt)
     libr.checkfatal_allowed_value_in_list(policy, xfdata.POPUPPOLICY_list)
     ipolicy = libr.convert_to_int(policy)
-    libr.keep_elem_refs(pPopup, policy, ipolicy)
-    retval = _fl_popup_set_policy(pPopup, ipolicy)
+    libr.keep_elem_refs(pPopup, pPopup_alt, policy, ipolicy)
+    retval = _fl_popup_set_policy(pPopup_alt, ipolicy)
     return retval
 
-
-# already defined in xfdata
 
 def fl_popup_set_callback(pPopup, py_PopupCb):
     """*todo*
@@ -815,7 +831,8 @@ def fl_popup_get_title(pPopup):
 
 
 def fl_popup_set_title(pPopup, title):
-    """Sets the title of a popup.
+    """Sets the title of a popup. By default, the popup of a select object
+    does not have a title drawn on top of it.
 
     --
 
@@ -847,7 +864,7 @@ def fl_popup_set_title(pPopup, title):
 
 
 def fl_popup_entry_set_callback(pPopupEntry, py_PopupCb):
-    """*todo*
+    """Sets the callback invoked when the entry of a popup is selected.
 
     --
 
@@ -857,7 +874,8 @@ def fl_popup_entry_set_callback(pPopupEntry, py_PopupCb):
       `py_PopupCb` : python callback function, returning value
         name referring to function(pPopupReturn) -> num.
 
-    :return: old popup callback
+    :return: old popup callback, or None (when none was set or an error
+        occured).
     :rtype: pointer to xfdata.FL_POPUP_CB
 
     :note: e.g. *todo*
@@ -883,7 +901,8 @@ def fl_popup_entry_set_callback(pPopupEntry, py_PopupCb):
 
 
 def fl_popup_entry_set_enter_callback(pPopupEntry, py_PopupCb):
-    """*todo*
+    """Sets the callback invoked when the mouse enters the area of the popup
+    entry.
 
     --
 
@@ -893,10 +912,12 @@ def fl_popup_entry_set_enter_callback(pPopupEntry, py_PopupCb):
       `py_PopupCb` : python callback function, returning value
         name referring to function(pPopupReturn) -> num.
 
-    :return: old popup callback
+    :return: old popup callback, or None (when none was set or an error
+        occured).
     :rtype: pointer to xfdata.FL_POPUP_CB
 
     :note: e.g. *todo*
+
     :status: Untested + NoDoc + NoDemo = NOT OK
 
     """
@@ -918,7 +939,7 @@ def fl_popup_entry_set_enter_callback(pPopupEntry, py_PopupCb):
 
 
 def fl_popup_entry_set_leave_callback(pPopupEntry, py_PopupCb):
-    """*todo*
+    """Sets the callback invoked when leaves the area of the popup entry.
 
     --
 
@@ -928,7 +949,8 @@ def fl_popup_entry_set_leave_callback(pPopupEntry, py_PopupCb):
       `py_PopupCb` : python callback function, returning value
         name referring to function(pPopupReturn) -> num.
 
-    :return: old popup callback
+    :return: old popup callback, or None (when none was set or an error
+        occured).
     :rtype: pointer to xfdata.FL_POPUP_CB
 
     :note: e.g. *todo*
@@ -953,7 +975,8 @@ def fl_popup_entry_set_leave_callback(pPopupEntry, py_PopupCb):
 
 
 def fl_popup_entry_get_state(pPopupEntry):
-    """*todo*
+    """Obtains the state of a popup entry (e.g. from xfdata.py
+    FL_POPUP_DISABLED, FL_POPUP_HIDDEN and FL_POPUP_CHECKED).
 
     --
 
@@ -961,7 +984,7 @@ def fl_popup_entry_get_state(pPopupEntry):
       `pPopupEntry` : pointer to xfdata.FL_POPUP_ENTRY
         popup entry
 
-    :return: state
+    :return: current state
     :rtype: int_pos
 
     :note: e.g. *todo*
@@ -981,7 +1004,7 @@ def fl_popup_entry_get_state(pPopupEntry):
 
 
 def fl_popup_entry_set_state(pPopupEntry, state):
-    """*todo*
+    """Sets the state of a popup entry.
 
     --
 
@@ -989,9 +1012,10 @@ def fl_popup_entry_set_state(pPopupEntry, state):
       `pPopupEntry` : pointer to xfdata.FL_POPUP_ENTRY
         popup entry
       `state` : int_pos
-        state to be set. *todo*
+        state to be set. Values (from xfdata.py) FL_POPUP_DISABLED,
+        FL_POPUP_HIDDEN or FL_POPUP_CHECKED
 
-    :return: old state
+    :return: old state, or UINT_MAX? (on errors)
     :rtype: int_pos
 
     :note: e.g. *todo*
@@ -1006,6 +1030,7 @@ def fl_popup_entry_set_state(pPopupEntry, state):
            unsigned int p2)""")
     libr.check_if_initialized()
     libr.verify_flpopupentryptr_type(pPopupEntry)
+    libr.checkfatal_allowed_value_in_list(state, xfdata.POPUPSTATE_list)
     uistate = libr.convert_to_uint(state)
     libr.keep_elem_refs(pPopupEntry, state, uistate)
     retval = _fl_popup_entry_set_state(pPopupEntry, uistate)
@@ -1013,7 +1038,7 @@ def fl_popup_entry_set_state(pPopupEntry, state):
 
 
 def fl_popup_entry_clear_state(pPopupEntry, state):
-    """*todo*
+    """Clears state bits of a popup entry.
 
     --
 
@@ -1021,9 +1046,10 @@ def fl_popup_entry_clear_state(pPopupEntry, state):
       `pPopupEntry` : pointer to xfdata.FL_POPUP_ENTRY
         popup entry
       `state` : int_pos
-        state to be *todo*
+        state to be cleared. Values (from xfdata.py) FL_POPUP_DISABLED,
+        FL_POPUP_HIDDEN or FL_POPUP_CHECKED. Or a bitwise OR of them.
 
-    :return: state?
+    :return: original value of the state
     :rtype: int_pos
 
     :note: e.g. *todo*
@@ -1038,6 +1064,7 @@ def fl_popup_entry_clear_state(pPopupEntry, state):
            unsigned int p2)""")
     libr.check_if_initialized()
     libr.verify_flpopupentryptr_type(pPopupEntry)
+    libr.checkfatal_allowed_value_in_list(state, xfdata.POPUPSTATE_list)
     uistate = libr.convert_to_uint(state)
     libr.keep_elem_refs(pPopupEntry, state, uistate)
     retval = _fl_popup_entry_clear_state(pPopupEntry, uistate)
@@ -1045,17 +1072,18 @@ def fl_popup_entry_clear_state(pPopupEntry, state):
 
 
 def fl_popup_entry_raise_state(pPopupEntry, state):
-    """*todo*
+    """Sets the state bits of a popup entry.
 
     --
 
     :Parameters:
       `pPopupEntry` : pointer to xfdata.FL_POPUP_ENTRY
         popup entry
-      `state` : int_pos
-        state to be *todo*
+    `state` : int_pos
+        state to be set. Values (from xfdata.py) FL_POPUP_DISABLED,
+        FL_POPUP_HIDDEN or FL_POPUP_CHECKED. Or a bitwise OR of them.
 
-    :return: state?
+    :return: original value of the state
     :rtype: int_pos
 
     :note: e.g. *todo*
@@ -1070,6 +1098,7 @@ def fl_popup_entry_raise_state(pPopupEntry, state):
            unsigned int p2)""")
     libr.check_if_initialized()
     libr.verify_flpopupentryptr_type(pPopupEntry)
+    libr.checkfatal_allowed_value_in_list(state, xfdata.POPUPSTATE_list)
     uistate = libr.convert_to_uint(state)
     libr.keep_elem_refs(pPopupEntry, state, uistate)
     retval = _fl_popup_entry_raise_state(pPopupEntry, uistate)
@@ -1077,17 +1106,18 @@ def fl_popup_entry_raise_state(pPopupEntry, state):
 
 
 def fl_popup_entry_toggle_state(pPopupEntry, state):
-    """*todo*
+    """Toggles the state bits of a popup entry.
 
     --
 
     :Parameters:
       `pPopupEntry` : pointer to xfdata.FL_POPUP_ENTRY
         popup entry
-      `state` : int_pos
-        state to be *todo*
+    `state` : int_pos
+        state to be toggled. Values (from xfdata.py) FL_POPUP_DISABLED,
+        FL_POPUP_HIDDEN or FL_POPUP_CHECKED. Or a bitwise OR of them.
 
-    :return: state?
+    :return: original value of the state
     :rtype: int_pos
 
     :note: e.g. *todo*
@@ -1102,6 +1132,7 @@ def fl_popup_entry_toggle_state(pPopupEntry, state):
            unsigned int p2)""")
     libr.check_if_initialized()
     libr.verify_flpopupentryptr_type(pPopupEntry)
+    libr.checkfatal_allowed_value_in_list(state, xfdata.POPUPSTATE_list)
     uistate = libr.convert_to_uint(state)
     libr.keep_elem_refs(pPopupEntry, state, uistate)
     retval = _fl_popup_entry_toggle_state(pPopupEntry, uistate)
@@ -1109,7 +1140,7 @@ def fl_popup_entry_toggle_state(pPopupEntry, state):
 
 
 def fl_popup_entry_set_text(pPopupEntry, text):
-    """*todo*
+    """Changes the text of a popup entry.
 
     --
 
@@ -1117,7 +1148,9 @@ def fl_popup_entry_set_text(pPopupEntry, text):
       `pPopupEntry` : pointer to xfdata.FL_POPUP_ENTRY
         popup entry
       `text` : str
-        text for the entry
+        text for the entry. No special sequence except "%S" (at which
+        place the text is split to make up the left- and right-flushed
+        part of the label drawn) is recognized.
 
     :return: num.
     :rtype: int
@@ -1141,7 +1174,7 @@ def fl_popup_entry_set_text(pPopupEntry, text):
 
 
 def fl_popup_entry_set_shortcut(pPopupEntry, textsc):
-    """*todo*
+    """Changes the shortcut keys for a popup label.
 
     --
 
@@ -1169,7 +1202,7 @@ def fl_popup_entry_set_shortcut(pPopupEntry, textsc):
 
 
 def fl_popup_entry_set_value(pPopupEntry, val):
-    """*todo*
+    """Changes the value assigned to a popup entry.
 
     --
 
@@ -1177,9 +1210,9 @@ def fl_popup_entry_set_value(pPopupEntry, val):
       `pPopupEntry` : pointer to xfdata.FL_POPUP_ENTRY
         popup entry
       `val` : long
-        value?
+        value to be assigned
 
-    :return: num.
+    :return: previous value
     :rtype: int
 
     :note: e.g. *todo*
@@ -1201,7 +1234,7 @@ def fl_popup_entry_set_value(pPopupEntry, val):
 
 
 def fl_popup_entry_set_user_data(pPopupEntry, vdata):
-    """*todo*
+    """Modifies user data associated with a popup entry.
 
     --
 
@@ -1212,7 +1245,7 @@ def fl_popup_entry_set_user_data(pPopupEntry, vdata):
         user data to be passed to function; callback has to take care of
         type check
 
-    :return: *todo*
+    :return: previous user data settings
     :rtype: pointer to void?
 
     :note: e.g. *todo*
@@ -1233,16 +1266,20 @@ def fl_popup_entry_set_user_data(pPopupEntry, vdata):
     return retval
 
 
-def fl_popup_entry_get_by_position(pPopup, numpos):
-    """*todo*
+def fl_popup_entry_get_by_position(pPopup, posnum):
+    """Finds an entry by its current position in the popup. Sub-popups aren?t
+    taken into consideration.
 
     --
 
     :Parameters:
       `pPopup` : pointer to xfdata.FL_POPUP
         popup class instance
-      `numpos` : int
-        position number?
+      `posnum` : int
+        position number starting with 0 (e.g. when called with 0 the first
+        entry will be returned, when called with 1 you get the second entry
+        etc. Separator lines aren?t counted but entries currently being hidden
+        are.
 
     :return: popup entry
     :rtype: pointer to xfdata.FL_POPUP_ENTRY
@@ -1260,14 +1297,14 @@ def fl_popup_entry_get_by_position(pPopup, numpos):
            int p2)""")
     libr.check_if_initialized()
     libr.verify_flflpopupptr_type(pPopup)
-    inumpos = libr.convert_to_int(numpos)
-    libr.keep_elem_refs(pPopup, numpos, inumpos)
-    retval = _fl_popup_entry_get_by_position(pPopup, inumpos)
+    iposnum = libr.convert_to_int(posnum)
+    libr.keep_elem_refs(pPopup, posnum, iposnum)
+    retval = _fl_popup_entry_get_by_position(pPopup, iposnum)
     return retval
 
 
 def fl_popup_entry_get_by_value(pPopup, val):
-    """*todo*
+    """Finds a popup entry by its assigned value.
 
     --
 
@@ -1275,7 +1312,7 @@ def fl_popup_entry_get_by_value(pPopup, val):
       `pPopup` : pointer to xfdata.FL_POPUP
         popup class instance
       `val` : long
-        value?
+        value assigned to the entry
 
     :return: popup entry
     :rtype: pointer to xfdata.FL_POPUP_ENTRY
@@ -1300,7 +1337,7 @@ def fl_popup_entry_get_by_value(pPopup, val):
 
 
 def fl_popup_entry_get_by_user_data(pPopup, vdata):
-    """*todo*
+    """Finds a popup entry by its assigned user data.
 
     --
 
@@ -1308,7 +1345,7 @@ def fl_popup_entry_get_by_user_data(pPopup, vdata):
       `pPopup` : pointer to xfdata.FL_POPUP
         popup class instance
       `vdata` : any type (e.g. 'None', int, str, etc..)
-        user data to be passed to function; callback has to take care of
+        user data assigned to the popup entry; callback has to take care of
         type check
 
     :return: popup entry
@@ -1334,7 +1371,8 @@ def fl_popup_entry_get_by_user_data(pPopup, vdata):
 
 
 def fl_popup_entry_get_by_text(pPopup, text):
-    """*todo*
+    """Finds a popup entry that had been created with a certain text,
+    including all the special sequences.
 
     --
 
@@ -1342,9 +1380,10 @@ def fl_popup_entry_get_by_text(pPopup, text):
       `pPopup` : pointer to xfdata.FL_POPUP
         popup class instance
       `text` : str
-        text
+        text of the popup entry to be found.
 
-    :return: popup entry
+    :return: popup entry, or None (on failure, because either no entry
+        with this text was found or the popup doesn?t exist)
     :rtype: pointer to xfdata.FL_POPUP_ENTRY
 
     :note: e.g. *todo*
@@ -1367,7 +1406,11 @@ def fl_popup_entry_get_by_text(pPopup, text):
 
 
 def fl_popup_entry_get_by_label(pPopup, label):
-    """*todo*
+    """Finds a popup entry by its left-flushed label parts of the entry as
+    shown on the screen (note that tab characters '\t' originally embedded
+    in the text used when creating the label have been replaced by single
+    spaces and backspace characters '\b' were removed as well as all special
+    sequences).
 
     --
 
@@ -1375,7 +1418,7 @@ def fl_popup_entry_get_by_label(pPopup, label):
       `pPopup` : pointer to xfdata.FL_POPUP
         popup class instance
       `label` : str
-        label
+        label of the popup entry.
 
     :return: popup entry
     :rtype: pointer to xfdata.FL_POPUP_ENTRY
@@ -1400,7 +1443,8 @@ def fl_popup_entry_get_by_label(pPopup, label):
 
 
 def fl_popup_entry_get_group(pPopupEntry):
-    """*todo*
+    """Obtains which group a radio popup entry belongs. It makes much
+    sense when applied to radio entries.
 
     --
 
@@ -1408,7 +1452,7 @@ def fl_popup_entry_get_group(pPopupEntry):
       `pPopupEntry` : pointer to xfdata.FL_POPUP_ENTRY
         popup entry
 
-    :return: num.
+    :return: group number (on success), or xfdata.INT_MAX (on failure)
     :rtype: int
 
     :note: e.g. *todo*
@@ -1427,18 +1471,20 @@ def fl_popup_entry_get_group(pPopupEntry):
     return retval
 
 
-def fl_popup_entry_set_group(pPopupEntry, num):
-    """*todo*
+def fl_popup_entry_set_group(pPopupEntry, groupnum):
+    """Assigns a radio entry to a different group. It makes much sense when
+    applied to radio entries. If one of the entries of the new group was in
+    "on" state the entries state will be reset to "off" if necessary.
 
     --
 
     :Parameters:
       `pPopupEntry` : pointer to xfdata.FL_POPUP_ENTRY
         popup entry
-      `num` : int
-        *todo*
+      `groupnum` : int
+        group number to be assigned.
 
-    :return: num.
+    :return: previous group number, or xfdata.INT_MAX (on failure)
     :rtype: int
 
     :note: e.g. *todo*
@@ -1452,14 +1498,15 @@ def fl_popup_entry_set_group(pPopupEntry, num):
         """int fl_popup_entry_set_group(FL_POPUP_ENTRY * p1, int p2)""")
     libr.check_if_initialized()
     libr.verify_flpopupentryptr_type(pPopupEntry)
-    inum = libr.convert_to_int(num)
-    libr.keep_elem_refs(pPopupEntry, num, inum)
-    retval = _fl_popup_entry_set_group(pPopupEntry, inum)
+    igroupnum = libr.convert_to_int(groupnum)
+    libr.keep_elem_refs(pPopupEntry, groupnum, igroupnum)
+    retval = _fl_popup_entry_set_group(pPopupEntry, igroupnum)
     return retval
 
 
 def fl_popup_entry_get_subpopup(pPopupEntry):
-    """*todo*
+    """Obtains the sub-popup associated with a sub-popup-entry. It only
+    makes sense for sub-popup entries.
 
     --
 
@@ -1487,7 +1534,8 @@ def fl_popup_entry_get_subpopup(pPopupEntry):
 
 
 def fl_popup_entry_set_subpopup(pPopupEntry, pPopup):
-    """*todo*
+    """Sets the sub-popup associated with a sub-popup-entry. It only makes
+    sense for sub-popup entries.
 
     --
 
@@ -1520,7 +1568,9 @@ def fl_popup_entry_set_subpopup(pPopupEntry, pPopup):
 
 
 def fl_popup_get_size(pPopup):
-    """*todo*
+    """Obtains the exact sizes of its window. The reported values are
+    only valid until the popup is changed, e.g. by adding, deleting or
+    changing entries or changing the appearance of the popup.
 
     --
 
@@ -1528,7 +1578,8 @@ def fl_popup_get_size(pPopup):
       `pPopup` : pointer to xfdata.FL_POPUP
         popup class instance
 
-    :return: num., width (w), height (h)
+    :return: 0 or -1 on error (in case the supplied popup argument isn?t
+        valid), width (w), height (h)
     :rtype: int, int_pos, int_pos
 
     :note: e.g. *todo*
@@ -1555,7 +1606,7 @@ def fl_popup_get_size(pPopup):
 
 
 def fl_popup_get_min_width(pPopup):
-    """*todo*
+    """Obtains the currently set minimum width.
 
     --
 
@@ -1563,7 +1614,7 @@ def fl_popup_get_min_width(pPopup):
       `pPopup` : pointer to xfdata.FL_POPUP
         popup class instance
 
-    :return: width (w)
+    :return: width (w), or negative number (on errors)
     :rtype: int
 
     :note: e.g. *todo*
@@ -1583,7 +1634,8 @@ def fl_popup_get_min_width(pPopup):
 
 
 def fl_popup_set_min_width(pPopup, width):
-    """*todo*
+    """Sets a new minimum width of a popup. By default the width of a popup
+    is calculated using the widths of the title and the entries.
 
     --
 
@@ -1591,9 +1643,10 @@ def fl_popup_set_min_width(pPopup, width):
       `pPopup` : pointer to xfdata.FL_POPUP
         popup class instance
       `width` : int
-        minimum width to be set
+        minimum width to be set. If it's 0 or negative switches the use of
+        the minimum width off.
 
-    :return: old width (w) ?
+    :return: previous width (w), or negative num. (on errors)
     :rtype: int
 
     :note: e.g. *todo*

@@ -46,7 +46,8 @@ from xformslib import xfdata
 
 
 def fl_add_nmenu(nmenutype, x, y, w, h, label):
-    """Adds a new generation menu (nmenu) object.
+    """Adds a new generation menu (nmenu) object. It heavily depends on
+    popups.
 
     --
 
@@ -359,12 +360,13 @@ def fl_insert_nmenu_items2(pFlObject, pPopupEntry, pPopupItem):
     libr.check_if_initialized()
     libr.verify_flobjectptr_type(pFlObject)
     if not pPopupEntry:         # it's None
-        cty.cast(pPopupEntry, cty.POINTER(cty.c_void_p))
+        pPopupEntry_alt = cty.cast(pPopupEntry, cty.POINTER(cty.c_void_p))
     else:                       # real FL_POPUP_ENTRY pointer
-        libr.verify_flpopupentryptr_type(pPopupEntry)
+        pPopupEntry_alt = pPopupEntry
+        libr.verify_flpopupentryptr_type(pPopupEntry_alt)
     libr.verify_flpopupitemptr_type(pPopupItem)
-    libr.keep_elem_refs(pFlObject, pPopupEntry, pPopupItem)
-    retval = _fl_insert_nmenu_items2(pFlObject, pPopupEntry, pPopupItem)
+    libr.keep_elem_refs(pFlObject, pPopupEntry, pPopupEntry_alt, pPopupItem)
+    retval = _fl_insert_nmenu_items2(pFlObject, pPopupEntry_alt, pPopupItem)
     return retval
 
 
@@ -408,7 +410,6 @@ def fl_replace_nmenu_items2(pFlObject, pPopupEntry, pPopupItem):
 
 def fl_get_nmenu_popup(pFlObject):
     """Determines which popup is associated with the nmenu object.
-        fl_get_nmenu_popup(pFlObject) -> pPopup
 
     --
 
@@ -416,7 +417,7 @@ def fl_get_nmenu_popup(pFlObject):
      `pFlObject` : pointer to xfdata.FL_OBJECT
         nmenu object
 
-    :return: popup class instance
+    :return: popup class instance (pPopup)
     :rtype: pointer to xfdata.FL_POPUP
 
     :note: e.g. *todo*
@@ -443,6 +444,8 @@ def fl_set_nmenu_popup(pFlObject, pPopup):
     :Parameters:
       `pFlObject` : pointer to xfdata.FL_OBJECT
         nmenu object
+      `pPopup` : pointer to xfdata.FL_POPUP
+        popup class instance
 
     :return: popup class instance
     :rtype: pointer to xfdata.FL_POPUP
@@ -467,7 +470,6 @@ def fl_set_nmenu_popup(pFlObject, pPopup):
 
 def fl_get_nmenu_item(pFlObject):
     """Finds out which item of a nmenu object was selected.
-        fl_get_nmenu_item(pFlObject) -> pPopupReturn
 
     --
 
@@ -475,8 +477,8 @@ def fl_get_nmenu_item(pFlObject):
       `pFlObject` : pointer to xfdata.FL_OBJECT
         nmenu object
 
-    :return: popup return class instance, or None (if no selection was made
-        the last time the nmenu object was used)
+    :return: popup return class instance (pPopupReturn)), or None (if no
+        selection was made the last time the nmenu object was used)
     :rtype: pointer to xfdata.FL_POPUP_RETURN
 
     :note: e.g. *todo*

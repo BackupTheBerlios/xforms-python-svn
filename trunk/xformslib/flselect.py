@@ -46,7 +46,11 @@ from xformslib import xfdata
 
 
 def fl_add_select(selecttype, x, y, w, h, label):
-    """Adds a select (new generation choice) object to the form.
+    """Adds a select (new generation choice) object to the form. It is a
+    rather simple object that allows the user to pick alternatives from a
+    linear list that pops up when he clicks on the object. It remembers the
+    last selected item, which is also shown on top of the select object. It
+    internally uses a popup.
 
     --
 
@@ -94,7 +98,11 @@ def fl_add_select(selecttype, x, y, w, h, label):
 
 
 def fl_clear_select(pFlObject):
-    """*todo*
+    """Removes all items from a select object. If you used
+    fl_set_select_popup() to set a popup for the select object then that
+    popup gets deleted automatically on calling fl_clear_select(). The
+    values automatically associated with items when calling
+    fl_add_select_items() will start at 0 again.
 
     --
 
@@ -164,7 +172,8 @@ def fl_add_select_items(pFlObject, itemstr):
 
 
 def fl_insert_select_items(pFlObject, pPopupEntry, itemstr):
-    """*todo*
+    """Inserts new items somewhere in the middle of a list of already existing
+    items.
 
     --
 
@@ -172,9 +181,19 @@ def fl_insert_select_items(pFlObject, pPopupEntry, itemstr):
       `pFlObject` : pointer to xfdata.FL_OBJECT
         select object
       `pPopupEntry` : pointer to xfdata.FL_POPUP_ENTRY
-        popup entry
+        popup entry. If it's 'None' new items are inserted at the very start.
       `itemstr` : str
-        text of the item (among special sequences only %S is supported)
+        text for the items to insert, separated by the | character. Some
+        special sequences are allowed just after the item ('%d' marks the item
+        as disabled, i.e. it can't be selected and its text is per default
+        drawn in a different color / '%h' marks the item as hidden, i.e. it
+        is not shown while in this state / '%S' can split the items text into
+        two parts, the first one (before it) being drawn flushed left and the
+        second part flushed right, anyway you still need to set a shortcut key
+        / '%s' sets one or more shortcut keys for an item, it requires a
+        string with the shortcuts in the argument following the items string;
+        the character in the label identical to the shortcut character is only
+        shown as underlined if %S isn't used.
 
     :return: popup entry
     :rtype: pointer to xfdata.FL_POPUP_ENTRY
@@ -209,7 +228,17 @@ def fl_replace_select_item(pFlObject, pPopupEntry, itemstr):
       `pPopupEntry` : pointer to xfdata.FL_POPUP_ENTRY
         popup entry
       `itemstr` : str
-        text of the item (among special sequences only %S is supported)
+        text for the items to replace, separated by the | character. Some
+        special sequences are allowed just after the item ('%d' marks the item
+        as disabled, i.e. it can't be selected and its text is per default
+        drawn in a different color / '%h' marks the item as hidden, i.e. it
+        is not shown while in this state / '%S' can split the items text into
+        two parts, the first one (before it) being drawn flushed left and the
+        second part flushed right, anyway you still need to set a shortcut key
+        / '%s' sets one or more shortcut keys for an item, it requires a
+        string with the shortcuts in the argument following the items string;
+        the character in the label identical to the shortcut character is only
+        shown as underlined if %S isn't used.
 
     :return: popup entry
     :rtype: pointer to xfdata.FL_POPUP_ENTRY
@@ -234,7 +263,8 @@ def fl_replace_select_item(pFlObject, pPopupEntry, itemstr):
 
 
 def fl_delete_select_item(pFlObject, pPopupEntry):
-    """*todo*
+    """Deletes an item of a select object. The values associated with items
+    will not change due to removing an item.
 
     --
 
@@ -298,7 +328,7 @@ def fl_set_select_items(pFlObject, pPopupItem):
 
 
 def fl_get_select_popup(pFlObject):
-    """*todo*
+    """Finds out which item of a select object is currently selected.
 
     --
 
@@ -326,7 +356,10 @@ def fl_get_select_popup(pFlObject):
 
 
 def fl_set_select_popup(pFlObject, pPopup):
-    """*todo*
+    """Creates a popup directly and then associates it with the select object.
+    Supplied popup may not contain any entries other than those of type
+    xfdata.FL_POPUP_NORMAL (and, of course, the popup can?t be a sub-popup
+    of another popup)
 
     --
 
@@ -419,7 +452,8 @@ def fl_set_select_item(pFlObject, pPopupEntry):
 
 
 def fl_get_select_item_by_value(pFlObject, value):
-    """*todo*
+    """Finds the first item of select object with the value associated with
+    the item.
 
     --
 
@@ -427,9 +461,9 @@ def fl_get_select_item_by_value(pFlObject, value):
       `pFlObject` : pointer to xfdata.FL_OBJECT
         select object
       `value` : long
-        value?
+        value of the select item.
 
-    :return: popup entry class instance
+    :return: popup entry class instance, or None (on failure)
     :rtype: pointer to xfdata.FL_POPUP_ENTRY
 
     :note: e.g. *todo*
@@ -452,7 +486,8 @@ def fl_get_select_item_by_value(pFlObject, value):
 
 
 def fl_get_select_item_by_label(pFlObject, label):
-    """*todo*
+    """Finds out an item of select object who has a certain label as
+    displayed for the item in the popup.
 
     --
 
@@ -460,7 +495,7 @@ def fl_get_select_item_by_label(pFlObject, label):
       `pFlObject` : pointer to xfdata.FL_OBJECT
         select object
       `label` : str
-        label?
+        label of the item.
 
     :return: popup entry class instance
     :rtype: pointer to xfdata.FL_POPUP_ENTRY
@@ -485,7 +520,8 @@ def fl_get_select_item_by_label(pFlObject, label):
 
 
 def fl_get_select_item_by_text(pFlObject, txtstr):
-    """*todo*
+    """Finds out an item of select object who has supplied text (that might
+    be the same as the label text in simple cases).
 
     --
 
@@ -493,7 +529,7 @@ def fl_get_select_item_by_text(pFlObject, txtstr):
       `pFlObject` : pointer to xfdata.FL_OBJECT
         select object
       `txtstr` : str
-        text?
+        text of the item.
 
     :return: popup entry class instance
     :rtype: pointer to xfdata.FL_POPUP_ENTRY
@@ -518,7 +554,8 @@ def fl_get_select_item_by_text(pFlObject, txtstr):
 
 
 def fl_get_select_text_color(pFlObject):
-    """*todo*
+    """Obtains the color of the text of the currenty selected item on top of
+    the object.
 
     --
 
@@ -546,7 +583,8 @@ def fl_get_select_text_color(pFlObject):
 
 
 def fl_set_select_text_color(pFlObject, colr):
-    """*todo*
+    """Sets the color of the text of the currenty selected item on top of
+    the object.
 
     --
 
@@ -556,7 +594,7 @@ def fl_set_select_text_color(pFlObject, colr):
       `colr` : long_pos
         color value
 
-    :return: old color?
+    :return: previous color
     :rtype: long_pos
 
     :note: e.g. *todo*
@@ -578,7 +616,7 @@ def fl_set_select_text_color(pFlObject, colr):
 
 
 def fl_get_select_text_font(pFlObject):
-    """*todo*
+    """Obtains the font style and size used for the text of a select object.
 
     --
 
@@ -612,7 +650,7 @@ def fl_get_select_text_font(pFlObject):
 
 
 def fl_set_select_text_font(pFlObject, style, size):
-    """*todo*
+    """Sets the font style and size used for the text of a select object.
 
     --
 
@@ -632,12 +670,12 @@ def fl_set_select_text_font(pFlObject, style, size):
         FL_NORMAL_SIZE, FL_MEDIUM_SIZE, FL_LARGE_SIZE, FL_HUGE_SIZE,
         FL_DEFAULT_SIZE
 
-        :return: font num.
-        :rtype: int
+    :return: 0, or -1 (on failure)
+    :rtype: int
 
-        :note: e.g. *todo*
+    :note: e.g. *todo*
 
-        :status: Untested + NoDoc + NoDemo = NOT OK
+    :status: Untested + NoDoc + NoDemo = NOT OK
 
     """
     _fl_set_select_text_font = libr.cfuncproto(
@@ -656,7 +694,8 @@ def fl_set_select_text_font(pFlObject, style, size):
 
 
 def fl_get_select_text_align(pFlObject):
-    """*todo*
+    """Obtains the alignment of the text with the currently selected item
+    on top of the select object.
 
     --
 
@@ -664,7 +703,7 @@ def fl_get_select_text_align(pFlObject):
       `pFlObject` : pointer to xfdata.FL_OBJECT
         select object
 
-    :return: num.
+    :return: alignment
     :rtype: int
 
     :note: e.g. *todo*
@@ -684,7 +723,10 @@ def fl_get_select_text_align(pFlObject):
 
 
 def fl_set_select_text_align(pFlObject, align):
-    """*todo*
+    """Sets the alignment of the text with the currently selected item on
+    top of the select object. The xfdata.FL_ALIGN_INSIDE flag should be set
+    with align since the text always will be drawn withing the boundaries of
+    the object.
 
     --
 
@@ -698,7 +740,7 @@ def fl_set_select_text_align(pFlObject, align):
         FL_ALIGN_RIGHT_BOTTOM, FL_ALIGN_INSIDE, FL_ALIGN_VERT.
         Bitwise OR with FL_ALIGN_INSIDE is allowed.
 
-    :return: num.
+    :return: old setting of alignment, or -1 (on errors)
     :rtype: int
 
     :note: e.g. *todo*
@@ -720,7 +762,11 @@ def fl_set_select_text_align(pFlObject, align):
 
 
 def fl_set_select_policy(pFlObject, policy):
-    """*todo*
+    """Sets a policy of a select object. By default, the popup of a select
+    objects remains shown when the user releases the mouse somewhere outside
+    the popup window (or on its title area). The alternative is to close the
+    popup immediately when the user releases the mouse, independent of where
+    it is.
 
     --
 
@@ -731,7 +777,7 @@ def fl_set_select_policy(pFlObject, policy):
         popup policy to be set. Values (from xfdata.py) FL_POPUP_NORMAL_SELECT,
         FL_POPUP_DRAG_SELECT.
 
-    :return: num.
+    :return: previous policy setting, or -1 (on error)
     :rtype: int
 
     :note: e.g. *todo*
