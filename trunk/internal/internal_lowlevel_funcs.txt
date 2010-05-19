@@ -7,1543 +7,1578 @@
 
 
 
-# backwards data dismissed --LK 
-# This function was called 'fl_set_error_logfp/' in XForms 0.89. 
-#fl_set_error_logfp = fl_set_err_logfp 
-#end backwards 
+# backwards data dismissed --LK
+# This function was called 'fl_set_error_logfp/' in XForms 0.89.
+#fl_set_error_logfp = fl_set_err_logfp
+#end backwards
 
 
 
-# these give more flexibility for future changes. Also application 
-# can re-assign these pointers to whatever function it wants, e.g., 
-# to a shared memory pool allocator. 
- 
- # low-level function maybe unused in python 
+# these give more flexibility for future changes. Also application
+# can re-assign these pointers to whatever function it wants, e.g.,
+# to a shared memory pool allocator.
+
+ # low-level function maybe unused in python
  ##fl_free = (cty.CFUNCTYPE(None, cty.c_void_p)).in_dll(load_so_libforms(), 'fl_f
- #def fl_free(p1): 
- #    """ 
- #        fl_free(p1) 
- #    """ 
- # 
- #    _fl_free = cfuncproto( 
- #            load_so_libforms(), "fl_free",\ 
- #            None, [cty.c_void_p], 
- #            """void ( * fl_free )( void *) 
- #            """) 
- #    keep_elem_refs(p1) 
- #    _fl_free(p1) 
+ #def fl_free(p1):
+ #    """
+ #        fl_free(p1)
+ #    """
+ #
+ #    _fl_free = cfuncproto(
+ #            load_so_libforms(), "fl_free",\
+ #            None, [cty.c_void_p],
+ #            """void ( * fl_free )( void *)
+ #            """)
+ #    keep_elem_refs(p1)
+ #    _fl_free(p1)
 
 
-# cfunction for _fl_malloc 
+# cfunction for _fl_malloc
 cfunc_none_sizet = cty.CFUNCTYPE(cty.c_void_p, xfc.size_t)
 
-# cfunction for _fl_calloc 
+# cfunction for _fl_calloc
 cfunc_none_sizet_sizet = cty.CFUNCTYPE(cty.c_void_p, xfc.size_t, xfc.size_t)
 
-# cfunction for _fl_realloc 
+# cfunction for _fl_realloc
 cfunc_voidp_voidp_sizet = cty.CFUNCTYPE(cty.c_void_p, cty.c_void_p, xfc.size_t)
 
 
-# low-level function maybe unused in python 
+# low-level function maybe unused in python
 ##fl_malloc = (cty.CFUNCTYPE(cty.c_void_p, xfc.size_t)).in_dll(load_so_libforms(
-#             'fl_malloc') 
-#def fl_malloc(size): 
-#    """ fl_malloc(size) -> pointer 
-#    """# 
-#   _fl_malloc = cfuncproto( 
-#           load_so_libforms(), "fl_malloc",\ 
-#           cty.c_void_p, [xfc.size_t], 
-#           """void * ( * fl_malloc )( size_t) 
-#           """) 
-#    uisize = convert_to_uint(size) 
-#    keep_elem_refs(size, uisize) 
-#    retval = _fl_malloc(uisize) 
-#    return retval 
+#             'fl_malloc')
+#def fl_malloc(size):
+#    """ fl_malloc(size) -> pointer
+#    """#
+#   _fl_malloc = cfuncproto(
+#           load_so_libforms(), "fl_malloc",\
+#           cty.c_void_p, [xfc.size_t],
+#           """void * ( * fl_malloc )( size_t)
+#           """)
+#    uisize = convert_to_uint(size)
+#    keep_elem_refs(size, uisize)
+#    retval = _fl_malloc(uisize)
+#    return retval
 
 
-# low-level function maybe unused in python 
-##fl_calloc = (cty.CFUNCTYPE(cty.c_void_p, xfc.size_t, xfc.size_t)).in_dll(\ 
-#             load_so_libforms(), 'fl_calloc') 
-#def fl_calloc(size): 
-#    """ fl_calloc(size) -> pointer 
-#    """ 
-#   _fl_calloc = cfuncproto( 
-#        load_so_libforms(), "fl_malloc",\ 
-#        cty.c_void_p, [xfc.size_t, xfc.size_t], 
-#        """void * ( * fl_calloc )( size_t) 
-#        """) 
-#    uisize = convert_to_uint(size) 
-#    keep_elem_refs(size, uisize) 
-#    retval = _fl_calloc(uisize) 
-#    return retval 
+# low-level function maybe unused in python
+##fl_calloc = (cty.CFUNCTYPE(cty.c_void_p, xfc.size_t, xfc.size_t)).in_dll(\
+#             load_so_libforms(), 'fl_calloc')
+#def fl_calloc(size):
+#    """ fl_calloc(size) -> pointer
+#    """
+#   _fl_calloc = cfuncproto(
+#        load_so_libforms(), "fl_malloc",\
+#        cty.c_void_p, [xfc.size_t, xfc.size_t],
+#        """void * ( * fl_calloc )( size_t)
+#        """)
+#    uisize = convert_to_uint(size)
+#    keep_elem_refs(size, uisize)
+#    retval = _fl_calloc(uisize)
+#    return retval
 
 
-#low-level function maybe unused in python 
+#low-level function maybe unused in python
  ##fl_realloc = (cty.CFUNCTYPE(cty.c_void_p, cty.c_void_p, xfc.size_t)).in_dll(\
- #               load_so_libforms(), 'fl_realloc') 
- #def fl_realloc(py_p1, size): 
- #    """ fl_realloc(py_p1, size) -> pointer 
- #    """# 
- #    _fl_realloc = cfuncproto( 
- #        load_so_libforms(), "fl_realloc",\ 
- #        cty.c_void_p, [cty.c_void_p, xfc.size_t], 
- #        """void * ( * fl_realloc )( void* 
- #        """) 
- #    uisize = convert_to_uint(size) 
- #    c_p1 = cfunc_voidp_voidp_sizet(py_p1) 
- #    keep_cfunc_refs(c_p1) 
- #    keep_elem_refs(size, uisize) 
- #    retval = _fl_realloc(c_p1, uisize) 
- #    return retval 
- 
+ #               load_so_libforms(), 'fl_realloc')
+ #def fl_realloc(py_p1, size):
+ #    """ fl_realloc(py_p1, size) -> pointer
+ #    """#
+ #    _fl_realloc = cfuncproto(
+ #        load_so_libforms(), "fl_realloc",\
+ #        cty.c_void_p, [cty.c_void_p, xfc.size_t],
+ #        """void * ( * fl_realloc )( void*
+ #        """)
+ #    uisize = convert_to_uint(size)
+ #    c_p1 = cfunc_voidp_voidp_sizet(py_p1)
+ #    keep_cfunc_refs(c_p1)
+ #    keep_elem_refs(size, uisize)
+ #    retval = _fl_realloc(c_p1, uisize)
+ #    return retval
 
-# backward data maybe dismissed --LK 
-# For compatibility 
-#fl_get_win_size = fl_get_winsize 
-#fl_get_win_origin = fl_get_winorigin 
-#fl_get_win_geometry = fl_get_wingeometry 
-#fl_initial_winposition = fl_pref_winposition 
-#end backwards --LK 
- 
 
-#def fl_create_bitmap(bitmaptype, x, y, w, h, label): 
-#    """ 
-#        fl_create_bitmap(bitmaptype, x, y, w, h, label) -> pObject 
-# 
-#        Creates a bitmap object. 
-# 
-#        @param bitmaptype : type of bitmap to be created 
-#        @param x : horizontal position (upper-left corner) 
-#        @param y : vertical position (upper-left corner) 
-#        @param w : width in coord units 
-#        @param h : height in coord units 
-#        @param label : text label of bitmap 
-# 
-#        @status: Untested + NoDoc + NoExample = NOT OK 
-#    """ 
-# 
-#    _fl_create_bitmap = cfuncproto( 
-#            load_so_libforms(), "fl_create_bitmap", 
+# backward data maybe dismissed --LK
+# For compatibility
+#fl_get_win_size = fl_get_winsize
+#fl_get_win_origin = fl_get_winorigin
+#fl_get_win_geometry = fl_get_wingeometry
+#fl_initial_winposition = fl_pref_winposition
+#end backwards --LK
+
+
+#def fl_create_bitmap(bitmaptype, x, y, w, h, label):
+#    """
+#        fl_create_bitmap(bitmaptype, x, y, w, h, label) -> pObject
+#
+#        Creates a bitmap object.
+#
+#        @param bitmaptype : type of bitmap to be created
+#        @param x : horizontal position (upper-left corner)
+#        @param y : vertical position (upper-left corner)
+#        @param w : width in coord units
+#        @param h : height in coord units
+#        @param label : text label of bitmap
+#
+#        @status: Untested + NoDoc + NoExample = NOT OK
+#    """
+#
+#    _fl_create_bitmap = cfuncproto(
+#            load_so_libforms(), "fl_create_bitmap",
 #            cty.POINTER(xfc.FL_OBJECT), [cty.c_int, xfc.FL_Coord, xfc.FL_Coord,
-#            xfc.FL_Coord, xfc.FL_Coord, xfc.STRING], 
-#            """FL_OBJECT * fl_create_bitmap(int type, FL_Coord x, FL_Coord y, 
-#               FL_Coord w, FL_Coord h, const char * label) 
-#            """) 
-#    check_admitted_listvalues(bitmaptype, xfc.BITMAPTYPE_list) 
-#    ibitmaptype = convert_to_int(bitmaptype) 
-#    ix = convert_to_FL_Coord(x) 
-#    iy = convert_to_FL_Coord(y) 
-#    iw = convert_to_FL_Coord(w) 
-#    ih = convert_to_FL_Coord(h) 
-#    slabel = convert_to_int(label) 
-#    keep_elem_refs(bitmaptype, x, y, w, h, label, ibitmaptype, ix, iy, 
-#                   iw, ih, slabel) 
-#    retval = _fl_create_bitmap(ibitmaptype, ix, iy, iw, ih, slabel) 
-#    return retval 
+#            xfc.FL_Coord, xfc.FL_Coord, xfc.STRING],
+#            """FL_OBJECT * fl_create_bitmap(int type, FL_Coord x, FL_Coord y,
+#               FL_Coord w, FL_Coord h, const char * label)
+#            """)
+#    check_admitted_listvalues(bitmaptype, xfc.BITMAPTYPE_list)
+#    ibitmaptype = convert_to_int(bitmaptype)
+#    ix = convert_to_FL_Coord(x)
+#    iy = convert_to_FL_Coord(y)
+#    iw = convert_to_FL_Coord(w)
+#    ih = convert_to_FL_Coord(h)
+#    slabel = convert_to_int(label)
+#    keep_elem_refs(bitmaptype, x, y, w, h, label, ibitmaptype, ix, iy,
+#                   iw, ih, slabel)
+#    retval = _fl_create_bitmap(ibitmaptype, ix, iy, iw, ih, slabel)
+#    return retval
 
 
-# backward data dismissed --LK 
-# for compatibility 
-#fl_set_bitmap_datafile = fl_set_bitmap_file 
-#end backwards 
+# backward data dismissed --LK
+# for compatibility
+#fl_set_bitmap_datafile = fl_set_bitmap_file
+#end backwards
 
 
-#def fl_create_pixmap(pixmaptype, x, y, w, h, label): 
-#    """ 
-#        fl_create_pixmap(pixmaptype, x, y, w, h, label) -> pObject 
-# 
-#        Creates a pixmap object. 
-# 
-#        @param pixmaptype : type of pixmap to be created 
-#        @param x : horizontal position (upper-left corner) 
-#        @param y : vertical position of bitmap (upper-left corner) 
-#        @param w : width in coord units 
-#        @param h : height in coord units 
-#        @param label : text label of pixmap 
-# 
-#        @status: Untested + NoDoc + NoExample = NOT OK 
-#    """ 
-# 
-#    _fl_create_pixmap = cfuncproto( 
-#            load_so_libforms(), "fl_create_pixmap", 
-#            cty.POINTER(xfc.FL_OBJECT), [cty.c_int, xfc.FL_Coord, 
-#            xfc.FL_Coord, xfc.FL_Coord, xfc.FL_Coord, xfc.STRING], 
-#            """FL_OBJECT * fl_create_pixmap(int type, FL_Coord x, FL_Coord y, 
-#               FL_Coord w, FL_Coord h, const char * label) 
-#            """) 
-#    check_admitted_listvalues(pixmaptype, xfc.PIXMAPTYPE_list) 
-#    ipixmaptype = convert_to_int(pixmaptype) 
-#    ix = convert_to_FL_Coord(x) 
-#    iy = convert_to_FL_Coord(y) 
-#    iw = convert_to_FL_Coord(w) 
-#    ih = convert_to_FL_Coord(h) 
-#    slabel = convert_to_string(label) 
-#    keep_elem_refs(pixmaptype, x, y, w, h, label, ipixmaptype, ix, iy, iw, 
-#                   ih, slabel) 
-#    retval = _fl_create_pixmap(ipixmaptype, ix, iy, iw, ih, slabel) 
-#    return retval 
+#def fl_create_pixmap(pixmaptype, x, y, w, h, label):
+#    """
+#        fl_create_pixmap(pixmaptype, x, y, w, h, label) -> pObject
+#
+#        Creates a pixmap object.
+#
+#        @param pixmaptype : type of pixmap to be created
+#        @param x : horizontal position (upper-left corner)
+#        @param y : vertical position of bitmap (upper-left corner)
+#        @param w : width in coord units
+#        @param h : height in coord units
+#        @param label : text label of pixmap
+#
+#        @status: Untested + NoDoc + NoExample = NOT OK
+#    """
+#
+#    _fl_create_pixmap = cfuncproto(
+#            load_so_libforms(), "fl_create_pixmap",
+#            cty.POINTER(xfc.FL_OBJECT), [cty.c_int, xfc.FL_Coord,
+#            xfc.FL_Coord, xfc.FL_Coord, xfc.FL_Coord, xfc.STRING],
+#            """FL_OBJECT * fl_create_pixmap(int type, FL_Coord x, FL_Coord y,
+#               FL_Coord w, FL_Coord h, const char * label)
+#            """)
+#    check_admitted_listvalues(pixmaptype, xfc.PIXMAPTYPE_list)
+#    ipixmaptype = convert_to_int(pixmaptype)
+#    ix = convert_to_FL_Coord(x)
+#    iy = convert_to_FL_Coord(y)
+#    iw = convert_to_FL_Coord(w)
+#    ih = convert_to_FL_Coord(h)
+#    slabel = convert_to_string(label)
+#    keep_elem_refs(pixmaptype, x, y, w, h, label, ipixmaptype, ix, iy, iw,
+#                   ih, slabel)
+#    retval = _fl_create_pixmap(ipixmaptype, ix, iy, iw, ih, slabel)
+#    return retval
 
 
-#def fl_create_box(boxtype, x, y, w, h, label): 
-#    """ 
-#        fl_create_box(boxtype, x, y, w, h, label) -> pObject 
-# 
-#        Creates a box object. 
-# 
-#        @param boxtype : type of the box to be created 
-#        @param x : horizontal position (upper-left corner) 
-#        @param y : vertical position (upper-left corner) 
-#        @param w : width in coord units 
-#        @param h : height in coord units 
-#        @param label : text label of box 
-# 
-#        @status: Untested + NoDoc + NoExample = NOT OK 
-#    """ 
-# 
-#    _fl_create_box = cfuncproto( 
-#            load_so_libforms(), "fl_create_box", 
-#            cty.POINTER(xfc.FL_OBJECT), [cty.c_int, xfc.FL_Coord, 
-#            xfc.FL_Coord, xfc.FL_Coord, xfc.FL_Coord, xfc.STRING], 
-#            """FL_OBJECT * fl_create_box(int type, FL_Coord x, FL_Coord y, 
-#               FL_Coord w, FL_Coord h, const char * label) 
-#            """) 
-#    check_admitted_listvalues(boxtype, xfc.BOXTYPE_list) 
-#    iboxtype = convert_to_int(boxtype) 
-#    ix = convert_to_FL_Coord(x) 
-#    iy = convert_to_FL_Coord(y) 
-#    iw = convert_to_FL_Coord(w) 
-#    ih = convert_to_FL_Coord(h) 
-#    slabel = convert_to_string(label) 
-#    keep_elem_refs(boxtype, x, y, w, h, label, iboxtype, ix, iy, iw, 
-#                   ih, slabel) 
-#    retval = _fl_create_box(iboxtype, ix, iy, iw, ih, slabel) 
-#    return retval 
+#def fl_create_box(boxtype, x, y, w, h, label):
+#    """
+#        fl_create_box(boxtype, x, y, w, h, label) -> pObject
+#
+#        Creates a box object.
+#
+#        @param boxtype : type of the box to be created
+#        @param x : horizontal position (upper-left corner)
+#        @param y : vertical position (upper-left corner)
+#        @param w : width in coord units
+#        @param h : height in coord units
+#        @param label : text label of box
+#
+#        @status: Untested + NoDoc + NoExample = NOT OK
+#    """
+#
+#    _fl_create_box = cfuncproto(
+#            load_so_libforms(), "fl_create_box",
+#            cty.POINTER(xfc.FL_OBJECT), [cty.c_int, xfc.FL_Coord,
+#            xfc.FL_Coord, xfc.FL_Coord, xfc.FL_Coord, xfc.STRING],
+#            """FL_OBJECT * fl_create_box(int type, FL_Coord x, FL_Coord y,
+#               FL_Coord w, FL_Coord h, const char * label)
+#            """)
+#    check_admitted_listvalues(boxtype, xfc.BOXTYPE_list)
+#    iboxtype = convert_to_int(boxtype)
+#    ix = convert_to_FL_Coord(x)
+#    iy = convert_to_FL_Coord(y)
+#    iw = convert_to_FL_Coord(w)
+#    ih = convert_to_FL_Coord(h)
+#    slabel = convert_to_string(label)
+#    keep_elem_refs(boxtype, x, y, w, h, label, iboxtype, ix, iy, iw,
+#                   ih, slabel)
+#    retval = _fl_create_box(iboxtype, ix, iy, iw, ih, slabel)
+#    return retval
 
 
-#def fl_create_browser(browsertype, x, y, w, h, label): 
-#    """ 
-#        fl_create_browser(browsertype, x, y, w, h, label) -> pObject 
-# 
-#        Creates a browser object. 
-# 
-#        @param browsertype : type of the browser to be created 
-#        @param x : horizontal position (upper-left corner) 
-#        @param y : vertical position (upper-left corner) 
-#        @param w : width in coord units 
-#        @param h : height in coord units 
-#        @param label : text label of browser 
-# 
-#        @status: Untested + NoDoc + NoExample = NOT OK 
-#    """ 
-# 
-#    _fl_create_browser = cfuncproto( 
-#            load_so_libforms(), "fl_create_browser", 
-#            cty.POINTER(xfc.FL_OBJECT), [cty.c_int, xfc.FL_Coord, 
-#             xfc.FL_Coord, xfc.FL_Coord, xfc.FL_Coord, xfc.STRING], 
+#def fl_create_browser(browsertype, x, y, w, h, label):
+#    """
+#        fl_create_browser(browsertype, x, y, w, h, label) -> pObject
+#
+#        Creates a browser object.
+#
+#        @param browsertype : type of the browser to be created
+#        @param x : horizontal position (upper-left corner)
+#        @param y : vertical position (upper-left corner)
+#        @param w : width in coord units
+#        @param h : height in coord units
+#        @param label : text label of browser
+#
+#        @status: Untested + NoDoc + NoExample = NOT OK
+#    """
+#
+#    _fl_create_browser = cfuncproto(
+#            load_so_libforms(), "fl_create_browser",
+#            cty.POINTER(xfc.FL_OBJECT), [cty.c_int, xfc.FL_Coord,
+#             xfc.FL_Coord, xfc.FL_Coord, xfc.FL_Coord, xfc.STRING],
 #            """FL_OBJECT * fl_create_browser(int type, FL_Coord x, FL_Coord y,
-#               FL_Coord w, FL_Coord h, const char * label) 
-#            """) 
-#    check_admitted_listvalues(browsertype, xfc.BROWSERTYPE_list) 
-#    ibrowsertype = convert_to_int(browsertype) 
-#    ix = convert_to_FL_Coord(x) 
-#    iy = convert_to_FL_Coord(y) 
-#    iw = convert_to_FL_Coord(w) 
-#    ih = convert_to_FL_Coord(h) 
-#    slabel = convert_to_string(label) 
-#    keep_elem_refs(browsertype, x, y, w, h, label, ibrowsertype, ix, iy, iw, 
-#                   ih, slabel) 
-#    retval = _fl_create_browser(ibrowsertype, ix, iy, iw, ih, slabel) 
-#    return retval 
+#               FL_Coord w, FL_Coord h, const char * label)
+#            """)
+#    check_admitted_listvalues(browsertype, xfc.BROWSERTYPE_list)
+#    ibrowsertype = convert_to_int(browsertype)
+#    ix = convert_to_FL_Coord(x)
+#    iy = convert_to_FL_Coord(y)
+#    iw = convert_to_FL_Coord(w)
+#    ih = convert_to_FL_Coord(h)
+#    slabel = convert_to_string(label)
+#    keep_elem_refs(browsertype, x, y, w, h, label, ibrowsertype, ix, iy, iw,
+#                   ih, slabel)
+#    retval = _fl_create_browser(ibrowsertype, ix, iy, iw, ih, slabel)
+#    return retval
 
 
-#def fl_create_button(buttontype, x, y, w, h, label): 
-#    """ 
-#        fl_create_button(buttontype, x, y, w, h, label) -> pObject 
-# 
-#        Creates a button object. 
-# 
-#        @param buttontype : type of button object to be created 
-#        @param x : horizontal position (upper-left corner) 
-#        @param x : vertical position (upper-left corner) 
-#        @param w : width in coord units 
-#        @param h : height in coord units 
-#        @param label : text label of button 
-# 
-#        @status: Untested + NoDoc + NoExample = NOT OK 
-#    """ 
-# 
-#    _fl_create_button = cfuncproto( 
-#            load_so_libforms(), "fl_create_button", 
+#def fl_create_button(buttontype, x, y, w, h, label):
+#    """
+#        fl_create_button(buttontype, x, y, w, h, label) -> pObject
+#
+#        Creates a button object.
+#
+#        @param buttontype : type of button object to be created
+#        @param x : horizontal position (upper-left corner)
+#        @param x : vertical position (upper-left corner)
+#        @param w : width in coord units
+#        @param h : height in coord units
+#        @param label : text label of button
+#
+#        @status: Untested + NoDoc + NoExample = NOT OK
+#    """
+#
+#    _fl_create_button = cfuncproto(
+#            load_so_libforms(), "fl_create_button",
 #            cty.POINTER(xfc.FL_OBJECT), [cty.c_int, xfc.FL_Coord, xfc.FL_Coord,
-#            xfc.FL_Coord, xfc.STRING], 
-#            """FL_OBJECT * fl_create_button(int type, FL_Coord x, FL_Coord y, 
-#               FL_Coord w, FL_Coord h, const char * label) 
-#            """) 
-#    check_admitted_listvalues(buttontype, xfc.BUTTONTYPE_list) 
-#    ibuttontype = convert_to_int(buttontype) 
-#    ix = convert_to_FL_Coord(x) 
-#    iy = convert_to_FL_Coord(y) 
-#    iw = convert_to_FL_Coord(w) 
-#    ih = convert_to_FL_Coord(h) 
-#    slabel = convert_to_string(label) 
-#    keep_elem_refs(buttontype, x, y, w, h, label, ibuttontype, ix, iy, iw, 
-#                   ih, slabel) 
-#    retval = _fl_create_button(ibuttontype, ix, iy, iw, ih, slabel) 
-#    return retval 
+#            xfc.FL_Coord, xfc.STRING],
+#            """FL_OBJECT * fl_create_button(int type, FL_Coord x, FL_Coord y,
+#               FL_Coord w, FL_Coord h, const char * label)
+#            """)
+#    check_admitted_listvalues(buttontype, xfc.BUTTONTYPE_list)
+#    ibuttontype = convert_to_int(buttontype)
+#    ix = convert_to_FL_Coord(x)
+#    iy = convert_to_FL_Coord(y)
+#    iw = convert_to_FL_Coord(w)
+#    ih = convert_to_FL_Coord(h)
+#    slabel = convert_to_string(label)
+#    keep_elem_refs(buttontype, x, y, w, h, label, ibuttontype, ix, iy, iw,
+#                   ih, slabel)
+#    retval = _fl_create_button(ibuttontype, ix, iy, iw, ih, slabel)
+#    return retval
 
 
-#def fl_create_roundbutton(buttontype, x, y, w, h, label): 
-#    """ 
-#        fl_create_roundbutton(buttontype, x, y, w, h, label) -> pObject 
-# 
-#        Creates a roundbutton object. 
-# 
-#        @param buttontype : type of button object to be created 
-#        @param x : horizontal position (upper-left corner) 
-#        @param x : vertical position (upper-left corner) 
-#        @param w : width in coord units 
-#        @param h : height in coord units 
-#        @param label : text label of button 
-# 
-#        @status: Untested + NoDoc + NoExample = NOT OK 
-#    """ 
-# 
-#    _fl_create_roundbutton = cfuncproto( 
-#            load_so_libforms(), "fl_create_roundbutton", 
+#def fl_create_roundbutton(buttontype, x, y, w, h, label):
+#    """
+#        fl_create_roundbutton(buttontype, x, y, w, h, label) -> pObject
+#
+#        Creates a roundbutton object.
+#
+#        @param buttontype : type of button object to be created
+#        @param x : horizontal position (upper-left corner)
+#        @param x : vertical position (upper-left corner)
+#        @param w : width in coord units
+#        @param h : height in coord units
+#        @param label : text label of button
+#
+#        @status: Untested + NoDoc + NoExample = NOT OK
+#    """
+#
+#    _fl_create_roundbutton = cfuncproto(
+#            load_so_libforms(), "fl_create_roundbutton",
 #            cty.POINTER(xfc.FL_OBJECT), [cty.c_int, xfc.FL_Coord, xfc.FL_Coord,
-#            xfc.FL_Coord, xfc.STRING], 
-#            """FL_OBJECT * fl_create_roundbutton(int type, FL_Coord x, 
-#               FL_Coord y, FL_Coord w, FL_Coord h, const char * label) 
-#            """) 
-#    check_admitted_listvalues(buttontype, xfc.BUTTONTYPE_list) 
-#    ibuttontype = convert_to_int(buttontype) 
-#    ix = convert_to_FL_Coord(x) 
-#    iy = convert_to_FL_Coord(y) 
-#    iw = convert_to_FL_Coord(w) 
-#    ih = convert_to_FL_Coord(h) 
-#    slabel = convert_to_string(label) 
-#    keep_elem_refs(buttontype, x, y, w, h, label, ibuttontype, ix, iy, iw, 
-#                   ih, slabel) 
-#    retval = _fl_create_roundbutton(ibuttontype, ix, iy, iw, ih, slabel) 
-#    return retval 
+#            xfc.FL_Coord, xfc.STRING],
+#            """FL_OBJECT * fl_create_roundbutton(int type, FL_Coord x,
+#               FL_Coord y, FL_Coord w, FL_Coord h, const char * label)
+#            """)
+#    check_admitted_listvalues(buttontype, xfc.BUTTONTYPE_list)
+#    ibuttontype = convert_to_int(buttontype)
+#    ix = convert_to_FL_Coord(x)
+#    iy = convert_to_FL_Coord(y)
+#    iw = convert_to_FL_Coord(w)
+#    ih = convert_to_FL_Coord(h)
+#    slabel = convert_to_string(label)
+#    keep_elem_refs(buttontype, x, y, w, h, label, ibuttontype, ix, iy, iw,
+#                   ih, slabel)
+#    retval = _fl_create_roundbutton(ibuttontype, ix, iy, iw, ih, slabel)
+#    return retval
 
 
-#def fl_create_round3dbutton(buttontype, x, y, w, h, label): 
-#    """ 
-#        fl_create_round3dbutton(buttontype, x, y, w, h, label) -> pObject 
-# 
-#        Creates a 3D roundbutton object. 
-# 
-#        @param buttontype : type of button object to be created 
-#        @param x : horizontal position (upper-left corner) 
-#        @param x : vertical position (upper-left corner) 
-#        @param w : width in coord units 
-#        @param h : height in coord units 
-#        @param label : text label of button 
-# 
-#        @status: Untested + NoDoc + NoExample = NOT OK 
-#    """ 
-# 
-#    _fl_create_round3dbutton = cfuncproto( 
-#            load_so_libforms(), "fl_create_round3dbutton", 
+#def fl_create_round3dbutton(buttontype, x, y, w, h, label):
+#    """
+#        fl_create_round3dbutton(buttontype, x, y, w, h, label) -> pObject
+#
+#        Creates a 3D roundbutton object.
+#
+#        @param buttontype : type of button object to be created
+#        @param x : horizontal position (upper-left corner)
+#        @param x : vertical position (upper-left corner)
+#        @param w : width in coord units
+#        @param h : height in coord units
+#        @param label : text label of button
+#
+#        @status: Untested + NoDoc + NoExample = NOT OK
+#    """
+#
+#    _fl_create_round3dbutton = cfuncproto(
+#            load_so_libforms(), "fl_create_round3dbutton",
 #            cty.POINTER(xfc.FL_OBJECT), [cty.c_int, xfc.FL_Coord, xfc.FL_Coord,
-#            xfc.FL_Coord, xfc.STRING], 
-#            """FL_OBJECT * fl_create_round3dbutton(int type, FL_Coord x, 
-#               FL_Coord y, FL_Coord w, FL_Coord h, const char * label) 
-#            """) 
-#    check_admitted_listvalues(buttontype, xfc.BUTTONTYPE_list) 
-#    ibuttontype = convert_to_int(buttontype) 
-#    ix = convert_to_FL_Coord(x) 
-#    iy = convert_to_FL_Coord(y) 
-#    iw = convert_to_FL_Coord(w) 
-#    ih = convert_to_FL_Coord(h) 
-#    slabel = convert_to_string(label) 
-#    keep_elem_refs(buttontype, x, y, w, h, label, ibuttontype, ix, iy, iw, 
-#                   ih, slabel) 
-#    retval = _fl_create_round3dbutton(ibuttontype, ix, iy, iw, ih, slabel) 
-#    return retval 
+#            xfc.FL_Coord, xfc.STRING],
+#            """FL_OBJECT * fl_create_round3dbutton(int type, FL_Coord x,
+#               FL_Coord y, FL_Coord w, FL_Coord h, const char * label)
+#            """)
+#    check_admitted_listvalues(buttontype, xfc.BUTTONTYPE_list)
+#    ibuttontype = convert_to_int(buttontype)
+#    ix = convert_to_FL_Coord(x)
+#    iy = convert_to_FL_Coord(y)
+#    iw = convert_to_FL_Coord(w)
+#    ih = convert_to_FL_Coord(h)
+#    slabel = convert_to_string(label)
+#    keep_elem_refs(buttontype, x, y, w, h, label, ibuttontype, ix, iy, iw,
+#                   ih, slabel)
+#    retval = _fl_create_round3dbutton(ibuttontype, ix, iy, iw, ih, slabel)
+#    return retval
 
 
-#def fl_create_lightbutton(buttontype, x, y, w, h, label): 
-#    """ 
-#        fl_create_lightbutton(buttontype, x, y, w, h, label) -> pObject 
-# 
-#        Creates a lightbutton object  (with an on/off light switch). 
-# 
-#        @param buttontype : type of button to be created 
-#        @param x : horizontal position (upper-left corner) 
-#        @param x : vertical position (upper-left corner) 
-#        @param w : width in coord units 
-#        @param h : height in coord units 
-#        @param label : text label of button 
-# 
-#        @status: Untested + NoDoc + NoExample = NOT OK 
-#    """ 
-# 
-#    _fl_create_lightbutton = cfuncproto( 
-#            load_so_libforms(), "fl_create_lightbutton", 
+#def fl_create_lightbutton(buttontype, x, y, w, h, label):
+#    """
+#        fl_create_lightbutton(buttontype, x, y, w, h, label) -> pObject
+#
+#        Creates a lightbutton object  (with an on/off light switch).
+#
+#        @param buttontype : type of button to be created
+#        @param x : horizontal position (upper-left corner)
+#        @param x : vertical position (upper-left corner)
+#        @param w : width in coord units
+#        @param h : height in coord units
+#        @param label : text label of button
+#
+#        @status: Untested + NoDoc + NoExample = NOT OK
+#    """
+#
+#    _fl_create_lightbutton = cfuncproto(
+#            load_so_libforms(), "fl_create_lightbutton",
 #            cty.POINTER(xfc.FL_OBJECT), [cty.c_int, xfc.FL_Coord, xfc.FL_Coord,
-#            xfc.FL_Coord, xfc.STRING], 
-#            """FL_OBJECT * fl_create_lightbutton(int type, FL_Coord x, 
-#               FL_Coord y, FL_Coord w, FL_Coord h, const char * label) 
-#            """) 
-#    check_admitted_listvalues(buttontype, xfc.BUTTONTYPE_list) 
-#    ibuttontype = convert_to_int(buttontype) 
-#    ix = convert_to_FL_Coord(x) 
-#    iy = convert_to_FL_Coord(y) 
-#    iw = convert_to_FL_Coord(w) 
-#    ih = convert_to_FL_Coord(h) 
-#    slabel = convert_to_string(label) 
-#    keep_elem_refs(buttontype, x, y, w, h, label, ibuttontype, ix, iy, iw, 
-#                   ih, slabel) 
-#    retval = _fl_create_lightbutton(ibuttontype, ix, iy, iw, ih, slabel) 
-#    return retval 
+#            xfc.FL_Coord, xfc.STRING],
+#            """FL_OBJECT * fl_create_lightbutton(int type, FL_Coord x,
+#               FL_Coord y, FL_Coord w, FL_Coord h, const char * label)
+#            """)
+#    check_admitted_listvalues(buttontype, xfc.BUTTONTYPE_list)
+#    ibuttontype = convert_to_int(buttontype)
+#    ix = convert_to_FL_Coord(x)
+#    iy = convert_to_FL_Coord(y)
+#    iw = convert_to_FL_Coord(w)
+#    ih = convert_to_FL_Coord(h)
+#    slabel = convert_to_string(label)
+#    keep_elem_refs(buttontype, x, y, w, h, label, ibuttontype, ix, iy, iw,
+#                   ih, slabel)
+#    retval = _fl_create_lightbutton(ibuttontype, ix, iy, iw, ih, slabel)
+#    return retval
 
 
-#def fl_create_checkbutton(buttontype, x, y, w, h, label): 
-#    """ 
-#        fl_create_checkbutton(buttontype, x, y, w, h, label) -> pObject 
-# 
-#        Creates a checkbutton object. 
-# 
-#        @param buttontype : type of button object to be created 
-#        @param x : horizontal position (upper-left corner) 
-#        @param x : vertical position (upper-left corner) 
-#        @param w : width in coord units 
-#        @param h : height in coord units 
-#        @param label : text label of button 
-# 
-#        @status: Untested + NoDoc + NoExample = NOT OK 
-#    """ 
-# 
-#    _fl_create_checkbutton = cfuncproto( 
-#            load_so_libforms(), "fl_create_checkbutton", 
+#def fl_create_checkbutton(buttontype, x, y, w, h, label):
+#    """
+#        fl_create_checkbutton(buttontype, x, y, w, h, label) -> pObject
+#
+#        Creates a checkbutton object.
+#
+#        @param buttontype : type of button object to be created
+#        @param x : horizontal position (upper-left corner)
+#        @param x : vertical position (upper-left corner)
+#        @param w : width in coord units
+#        @param h : height in coord units
+#        @param label : text label of button
+#
+#        @status: Untested + NoDoc + NoExample = NOT OK
+#    """
+#
+#    _fl_create_checkbutton = cfuncproto(
+#            load_so_libforms(), "fl_create_checkbutton",
 #            cty.POINTER(xfc.FL_OBJECT), [cty.c_int, xfc.FL_Coord, xfc.FL_Coord,
-#            xfc.FL_Coord, xfc.STRING], 
-#            """FL_OBJECT * fl_create_checkbutton(int type, FL_Coord x, 
-#               FL_Coord y, FL_Coord w, FL_Coord h, const char * label) 
-#            """) 
-#    check_admitted_listvalues(buttontype, xfc.BUTTONTYPE_list) 
-#    ibuttontype = convert_to_int(buttontype) 
-#    ix = convert_to_FL_Coord(x) 
-#    iy = convert_to_FL_Coord(y) 
-#    iw = convert_to_FL_Coord(w) 
-#    ih = convert_to_FL_Coord(h) 
-#    slabel = convert_to_string(label) 
-#    keep_elem_refs(buttontype, x, y, w, h, label, ibuttontype, ix, iy, iw, 
-#                   ih, slabel) 
-#    retval = _fl_create_checkbutton(ibuttontype, ix, iy, iw, ih, slabel) 
-#    return retval 
+#            xfc.FL_Coord, xfc.STRING],
+#            """FL_OBJECT * fl_create_checkbutton(int type, FL_Coord x,
+#               FL_Coord y, FL_Coord w, FL_Coord h, const char * label)
+#            """)
+#    check_admitted_listvalues(buttontype, xfc.BUTTONTYPE_list)
+#    ibuttontype = convert_to_int(buttontype)
+#    ix = convert_to_FL_Coord(x)
+#    iy = convert_to_FL_Coord(y)
+#    iw = convert_to_FL_Coord(w)
+#    ih = convert_to_FL_Coord(h)
+#    slabel = convert_to_string(label)
+#    keep_elem_refs(buttontype, x, y, w, h, label, ibuttontype, ix, iy, iw,
+#                   ih, slabel)
+#    retval = _fl_create_checkbutton(ibuttontype, ix, iy, iw, ih, slabel)
+#    return retval
 
 
-#def fl_create_bitmapbutton(buttontype, x, y, w, h, label): 
-#    """ 
-#        fl_create_bitmapbutton(buttontype, x, y, w, h, label) -> pObject 
-# 
-#        Creates a bitmapbutton object. 
-# 
-#        @param buttontype : type of button object to be created 
-#        @param x : horizontal position (upper-left corner) 
-#        @param x : vertical position (upper-left corner) 
-#        @param w : width in coord units 
-#        @param h : height in coord units 
-#        @param label : text label of button 
-# 
-#        @status: Untested + NoDoc + NoExample = NOT OK 
-#    """ 
-# 
-#    _fl_create_bitmapbutton = cfuncproto( 
-#            load_so_libforms(), "fl_create_bitmapbutton", 
+#def fl_create_bitmapbutton(buttontype, x, y, w, h, label):
+#    """
+#        fl_create_bitmapbutton(buttontype, x, y, w, h, label) -> pObject
+#
+#        Creates a bitmapbutton object.
+#
+#        @param buttontype : type of button object to be created
+#        @param x : horizontal position (upper-left corner)
+#        @param x : vertical position (upper-left corner)
+#        @param w : width in coord units
+#        @param h : height in coord units
+#        @param label : text label of button
+#
+#        @status: Untested + NoDoc + NoExample = NOT OK
+#    """
+#
+#    _fl_create_bitmapbutton = cfuncproto(
+#            load_so_libforms(), "fl_create_bitmapbutton",
 #            cty.POINTER(xfc.FL_OBJECT), [cty.c_int, xfc.FL_Coord, xfc.FL_Coord,
-#            xfc.FL_Coord, xfc.STRING], 
-#            """FL_OBJECT * fl_create_bitmapbutton(int type, FL_Coord x, 
-#               FL_Coord y, FL_Coord w, FL_Coord h, const char * label) 
-#            """) 
-#    check_admitted_listvalues(buttontype, xfc.BUTTONTYPE_list) 
-#    ibuttontype = convert_to_int(buttontype) 
-#    ix = convert_to_FL_Coord(x) 
-#    iy = convert_to_FL_Coord(y) 
-#    iw = convert_to_FL_Coord(w) 
-#    ih = convert_to_FL_Coord(h) 
-#    slabel = convert_to_string(label) 
-#    keep_elem_refs(buttontype, x, y, w, h, label, ibuttontype, ix, iy, iw, 
-#                   ih, slabel) 
-#    retval = _fl_create_bitmapbutton(ibuttontype, ix, iy, iw, ih, slabel) 
-#    return retval 
+#            xfc.FL_Coord, xfc.STRING],
+#            """FL_OBJECT * fl_create_bitmapbutton(int type, FL_Coord x,
+#               FL_Coord y, FL_Coord w, FL_Coord h, const char * label)
+#            """)
+#    check_admitted_listvalues(buttontype, xfc.BUTTONTYPE_list)
+#    ibuttontype = convert_to_int(buttontype)
+#    ix = convert_to_FL_Coord(x)
+#    iy = convert_to_FL_Coord(y)
+#    iw = convert_to_FL_Coord(w)
+#    ih = convert_to_FL_Coord(h)
+#    slabel = convert_to_string(label)
+#    keep_elem_refs(buttontype, x, y, w, h, label, ibuttontype, ix, iy, iw,
+#                   ih, slabel)
+#    retval = _fl_create_bitmapbutton(ibuttontype, ix, iy, iw, ih, slabel)
+#    return retval
 
 
-#def fl_create_pixmapbutton(buttontype, x, y, w, h, label): 
-#    """ 
-#        fl_create_pixmapbutton(buttontype, x, y, w, h, label) -> pObject 
-# 
-#        Creates a pixmapbutton object. 
-# 
-#        @param buttontype : type of button object to be created 
-#        @param x : horizontal position (upper-left corner) 
-#        @param x : vertical position (upper-left corner) 
-#        @param w : width in coord units 
-#        @param h : height in coord units 
-#        @param label : text label of button 
-# 
-#        @status: Untested + NoDoc + NoExample = NOT OK 
-#    """ 
-# 
-#    _fl_create_pixmapbutton = cfuncproto( 
-#            load_so_libforms(), "fl_create_pixmapbutton", 
+#def fl_create_pixmapbutton(buttontype, x, y, w, h, label):
+#    """
+#        fl_create_pixmapbutton(buttontype, x, y, w, h, label) -> pObject
+#
+#        Creates a pixmapbutton object.
+#
+#        @param buttontype : type of button object to be created
+#        @param x : horizontal position (upper-left corner)
+#        @param x : vertical position (upper-left corner)
+#        @param w : width in coord units
+#        @param h : height in coord units
+#        @param label : text label of button
+#
+#        @status: Untested + NoDoc + NoExample = NOT OK
+#    """
+#
+#    _fl_create_pixmapbutton = cfuncproto(
+#            load_so_libforms(), "fl_create_pixmapbutton",
 #            cty.POINTER(xfc.FL_OBJECT), [cty.c_int, xfc.FL_Coord, xfc.FL_Coord,
-#            xfc.FL_Coord, xfc.STRING], 
-#            """FL_OBJECT * fl_create_pixmapbutton(int type, FL_Coord x, 
-#               FL_Coord y, FL_Coord w, FL_Coord h, const char * label) 
-#            """) 
-#    check_admitted_listvalues(buttontype, xfc.BUTTONTYPE_list) 
-#    ibuttontype = convert_to_int(buttontype) 
-#    ix = convert_to_FL_Coord(x) 
-#    iy = convert_to_FL_Coord(y) 
-#    iw = convert_to_FL_Coord(w) 
-#    ih = convert_to_FL_Coord(h) 
-#    slabel = convert_to_string(label) 
-#    keep_elem_refs(buttontype, x, y, w, h, label, ibuttontype, ix, iy, iw, 
-#                   ih, slabel) 
-#    retval = _fl_create_pixmapbutton(ibuttontype, ix, iy, iw, ih, slabel) 
-#    return retval 
+#            xfc.FL_Coord, xfc.STRING],
+#            """FL_OBJECT * fl_create_pixmapbutton(int type, FL_Coord x,
+#               FL_Coord y, FL_Coord w, FL_Coord h, const char * label)
+#            """)
+#    check_admitted_listvalues(buttontype, xfc.BUTTONTYPE_list)
+#    ibuttontype = convert_to_int(buttontype)
+#    ix = convert_to_FL_Coord(x)
+#    iy = convert_to_FL_Coord(y)
+#    iw = convert_to_FL_Coord(w)
+#    ih = convert_to_FL_Coord(h)
+#    slabel = convert_to_string(label)
+#    keep_elem_refs(buttontype, x, y, w, h, label, ibuttontype, ix, iy, iw,
+#                   ih, slabel)
+#    retval = _fl_create_pixmapbutton(ibuttontype, ix, iy, iw, ih, slabel)
+#    return retval
 
 
-#def fl_create_scrollbutton(buttontype, x, y, w, h, label): 
-#    """ 
-#        fl_create_scrollbutton(buttontype, x, y, w, h, label) -> pObject 
-# 
-#        Creates a scrollbutton object. 
-# 
-#        @param buttontype : type of button object to be created 
-#        @param x : horizontal position (upper-left corner) 
-#        @param x : vertical position (upper-left corner) 
-#        @param w : width in coord units 
-#        @param h : height in coord units 
-#        @param label : text label of button 
-# 
-#        @status: Untested + NoDoc + NoExample = NOT OK 
-#    """ 
-# 
-#    _fl_create_scrollbutton = cfuncproto( 
-#            load_so_libforms(), "fl_create_scrollbutton", 
+#def fl_create_scrollbutton(buttontype, x, y, w, h, label):
+#    """
+#        fl_create_scrollbutton(buttontype, x, y, w, h, label) -> pObject
+#
+#        Creates a scrollbutton object.
+#
+#        @param buttontype : type of button object to be created
+#        @param x : horizontal position (upper-left corner)
+#        @param x : vertical position (upper-left corner)
+#        @param w : width in coord units
+#        @param h : height in coord units
+#        @param label : text label of button
+#
+#        @status: Untested + NoDoc + NoExample = NOT OK
+#    """
+#
+#    _fl_create_scrollbutton = cfuncproto(
+#            load_so_libforms(), "fl_create_scrollbutton",
 #            cty.POINTER(xfc.FL_OBJECT), [cty.c_int, xfc.FL_Coord, xfc.FL_Coord,
-#            xfc.FL_Coord, xfc.STRING], 
-#            """FL_OBJECT * fl_create_scrollbutton(int type, FL_Coord x, 
-#               FL_Coord y, FL_Coord w, FL_Coord h, const char * label) 
-#            """) 
-#    check_admitted_listvalues(buttontype, xfc.BUTTONTYPE_list) 
-#    ibuttontype = convert_to_int(buttontype) 
-#    ix = convert_to_FL_Coord(x) 
-#    iy = convert_to_FL_Coord(y) 
-#    iw = convert_to_FL_Coord(w) 
-#    ih = convert_to_FL_Coord(h) 
-#    slabel = convert_to_string(label) 
-#    keep_elem_refs(buttontype, x, y, w, h, label, ibuttontype, ix, iy, iw, 
-#                   ih, slabel) 
-#    retval = _fl_create_scrollbutton(ibuttontype, ix, iy, iw, ih, slabel) 
-#    return retval 
+#            xfc.FL_Coord, xfc.STRING],
+#            """FL_OBJECT * fl_create_scrollbutton(int type, FL_Coord x,
+#               FL_Coord y, FL_Coord w, FL_Coord h, const char * label)
+#            """)
+#    check_admitted_listvalues(buttontype, xfc.BUTTONTYPE_list)
+#    ibuttontype = convert_to_int(buttontype)
+#    ix = convert_to_FL_Coord(x)
+#    iy = convert_to_FL_Coord(y)
+#    iw = convert_to_FL_Coord(w)
+#    ih = convert_to_FL_Coord(h)
+#    slabel = convert_to_string(label)
+#    keep_elem_refs(buttontype, x, y, w, h, label, ibuttontype, ix, iy, iw,
+#                   ih, slabel)
+#    retval = _fl_create_scrollbutton(ibuttontype, ix, iy, iw, ih, slabel)
+#    return retval
 
 
-#def fl_create_labelbutton(buttontype, x, y, w, h, label): 
-#    """ 
-#        fl_create_labelbutton(buttontype, x, y, w, h, label) -> pObject 
-# 
-#        Creates a labelbutton object. 
-# 
-#        @param buttontype : type of button object to be created 
-#        @param x : horizontal position (upper-left corner) 
-#        @param x : vertical position (upper-left corner) 
-#        @param w : width in coord units 
-#        @param h : height in coord units 
-#        @param label : text label of button 
-# 
-#        @status: Untested + NoDoc + NoExample = NOT OK 
-#    """ 
-# 
-#    _fl_create_labelbutton = cfuncproto( 
-#            load_so_libforms(), "fl_create_labelbutton", 
+#def fl_create_labelbutton(buttontype, x, y, w, h, label):
+#    """
+#        fl_create_labelbutton(buttontype, x, y, w, h, label) -> pObject
+#
+#        Creates a labelbutton object.
+#
+#        @param buttontype : type of button object to be created
+#        @param x : horizontal position (upper-left corner)
+#        @param x : vertical position (upper-left corner)
+#        @param w : width in coord units
+#        @param h : height in coord units
+#        @param label : text label of button
+#
+#        @status: Untested + NoDoc + NoExample = NOT OK
+#    """
+#
+#    _fl_create_labelbutton = cfuncproto(
+#            load_so_libforms(), "fl_create_labelbutton",
 #            cty.POINTER(xfc.FL_OBJECT), [cty.c_int, xfc.FL_Coord, xfc.FL_Coord,
-#            xfc.FL_Coord, xfc.STRING], 
-#            """FL_OBJECT * fl_create_labelbutton(int type, FL_Coord x, 
-#               FL_Coord y, FL_Coord w, FL_Coord h, const char * label) 
-#            """) 
-#    check_admitted_listvalues(buttontype, xfc.BUTTONTYPE_list) 
-#    ibuttontype = convert_to_int(buttontype) 
-#    ix = convert_to_FL_Coord(x) 
-#    iy = convert_to_FL_Coord(y) 
-#    iw = convert_to_FL_Coord(w) 
-#    ih = convert_to_FL_Coord(h) 
-#    slabel = convert_to_string(label) 
-#    keep_elem_refs(buttontype, x, y, w, h, label, ibuttontype, ix, iy, iw, 
-#                   ih, slabel) 
-#    retval = _fl_create_labelbutton(ibuttontype, ix, iy, iw, ih, slabel) 
-#    return retval 
+#            xfc.FL_Coord, xfc.STRING],
+#            """FL_OBJECT * fl_create_labelbutton(int type, FL_Coord x,
+#               FL_Coord y, FL_Coord w, FL_Coord h, const char * label)
+#            """)
+#    check_admitted_listvalues(buttontype, xfc.BUTTONTYPE_list)
+#    ibuttontype = convert_to_int(buttontype)
+#    ix = convert_to_FL_Coord(x)
+#    iy = convert_to_FL_Coord(y)
+#    iw = convert_to_FL_Coord(w)
+#    ih = convert_to_FL_Coord(h)
+#    slabel = convert_to_string(label)
+#    keep_elem_refs(buttontype, x, y, w, h, label, ibuttontype, ix, iy, iw,
+#                   ih, slabel)
+#    retval = _fl_create_labelbutton(ibuttontype, ix, iy, iw, ih, slabel)
+#    return retval
 
 
-#def fl_create_canvas(canvastype, x, y, w, h, label): 
-#    """ 
-#        fl_create_canvas(canvastype, x, y, w, h, label) -> pObject 
-# 
-#        Creates a canvas object. 
-# 
-#        @param canvastype : type of canvas to be created 
-#        @param x : horizontal position (upper-left corner) 
-#        @param x : vertical position (upper-left corner) 
-#        @param w : width in coord units 
-#        @param h : height in coord units 
-#        @param label : text label of canvas 
-# 
-#        @status: Untested + NoDoc + NoExample = NOT OK 
-#    """ 
-# 
-#    _fl_create_canvas = cfuncproto( 
-#            load_so_libforms(), "fl_create_canvas", 
-#            cty.POINTER(xfc.FL_OBJECT), [cty.c_int, xfc.FL_Coord, 
-#            xfc.FL_Coord, xfc.FL_Coord, xfc.FL_Coord, xfc.STRING], 
-#            """FL_OBJECT * fl_create_canvas(int type, FL_Coord x, FL_Coord y, 
-#               FL_Coord w, FL_Coord h, const char * label) 
-#            """) 
-#    check_admitted_listvalues(canvastype, xfc.CANVASTYPE_list) 
-#    icanvastype = convert_to_int(canvastype) 
-#    ix = convert_to_FL_Coord(x) 
-#    iy = convert_to_FL_Coord(y) 
-#    iw = convert_to_FL_Coord(w) 
-#    ih = convert_to_FL_Coord(h) 
-#    slabel = convert_to_string(label) 
-#    keep_elem_refs(canvastype, x, y, w, h, label, icanvastype, ix, iy, 
-#                   iw, ih, slabel) 
-#    retval = _fl_create_canvas(icanvastype, ix, iy, iw, ih, slabel) 
-#    return retval 
+#def fl_create_canvas(canvastype, x, y, w, h, label):
+#    """
+#        fl_create_canvas(canvastype, x, y, w, h, label) -> pObject
+#
+#        Creates a canvas object.
+#
+#        @param canvastype : type of canvas to be created
+#        @param x : horizontal position (upper-left corner)
+#        @param x : vertical position (upper-left corner)
+#        @param w : width in coord units
+#        @param h : height in coord units
+#        @param label : text label of canvas
+#
+#        @status: Untested + NoDoc + NoExample = NOT OK
+#    """
+#
+#    _fl_create_canvas = cfuncproto(
+#            load_so_libforms(), "fl_create_canvas",
+#            cty.POINTER(xfc.FL_OBJECT), [cty.c_int, xfc.FL_Coord,
+#            xfc.FL_Coord, xfc.FL_Coord, xfc.FL_Coord, xfc.STRING],
+#            """FL_OBJECT * fl_create_canvas(int type, FL_Coord x, FL_Coord y,
+#               FL_Coord w, FL_Coord h, const char * label)
+#            """)
+#    check_admitted_listvalues(canvastype, xfc.CANVASTYPE_list)
+#    icanvastype = convert_to_int(canvastype)
+#    ix = convert_to_FL_Coord(x)
+#    iy = convert_to_FL_Coord(y)
+#    iw = convert_to_FL_Coord(w)
+#    ih = convert_to_FL_Coord(h)
+#    slabel = convert_to_string(label)
+#    keep_elem_refs(canvastype, x, y, w, h, label, icanvastype, ix, iy,
+#                   iw, ih, slabel)
+#    retval = _fl_create_canvas(icanvastype, ix, iy, iw, ih, slabel)
+#    return retval
 
 
-# backward data dismissed --LK 
-# backward compatibility 
-#fl_set_canvas_decoration = fl_set_object_boxtype 
-#end backwards --LK 
+# backward data dismissed --LK
+# backward compatibility
+#fl_set_canvas_decoration = fl_set_object_boxtype
+#end backwards --LK
 
 
-#def fl_create_glcanvas(canvastype, x, y, w, h, label): 
-#    """ 
-#        fl_create_glcanvas(canvastype, x, y, w, h, label) -> pObject 
-# 
-#        Creates a glcanvas object. 
-# 
-#        @param canvastype : type of glcanvas to be created 
-#        @param x : horizontal position (upper-left corner) 
-#        @param x : vertical position (upper-left corner) 
-#        @param w : width in coord units 
-#        @param h : height in coord units 
-#        @param label : text label of glcanvas 
-# 
-#        @status: Untested + NoDoc + NoExample = NOT OK 
-#    """ 
-# 
-#    _fl_create_glcanvas = cfuncproto( 
-#            load_so_libformsgl(), "fl_create_glcanvas", 
-#            cty.POINTER(xfc.FL_OBJECT), [cty.c_int, xfc.FL_Coord, 
-#            xfc.FL_Coord, xfc.FL_Coord, xfc.FL_Coord, xfc.STRING], 
+#def fl_create_glcanvas(canvastype, x, y, w, h, label):
+#    """
+#        fl_create_glcanvas(canvastype, x, y, w, h, label) -> pObject
+#
+#        Creates a glcanvas object.
+#
+#        @param canvastype : type of glcanvas to be created
+#        @param x : horizontal position (upper-left corner)
+#        @param x : vertical position (upper-left corner)
+#        @param w : width in coord units
+#        @param h : height in coord units
+#        @param label : text label of glcanvas
+#
+#        @status: Untested + NoDoc + NoExample = NOT OK
+#    """
+#
+#    _fl_create_glcanvas = cfuncproto(
+#            load_so_libformsgl(), "fl_create_glcanvas",
+#            cty.POINTER(xfc.FL_OBJECT), [cty.c_int, xfc.FL_Coord,
+#            xfc.FL_Coord, xfc.FL_Coord, xfc.FL_Coord, xfc.STRING],
 #            """FL_OBJECT * fl_create_glcanvas(int type, FL_Coord x, FL_Coord y,
-#               FL_Coord w, FL_Coord h, const char * label) 
-#            """) 
-#    check_admitted_listvalues(canvastype, xfc.CANVASTYPE_list) 
-#    icanvastype = convert_to_int(canvastype) 
-#    ix = convert_to_FL_Coord(x) 
-#    iy = convert_to_FL_Coord(y) 
-#    iw = convert_to_FL_Coord(w) 
-#    ih = convert_to_FL_Coord(h) 
-#    slabel = convert_to_string(label) 
-#    keep_elem_refs(canvastype, x, y, w, h, label, icanvastype, ix, iy, 
-#                   iw, ih, slabel) 
-#    retval = _fl_create_glcanvas(icanvastype, ix, iy, iw, ih, slabel) 
-#    return retval 
+#               FL_Coord w, FL_Coord h, const char * label)
+#            """)
+#    check_admitted_listvalues(canvastype, xfc.CANVASTYPE_list)
+#    icanvastype = convert_to_int(canvastype)
+#    ix = convert_to_FL_Coord(x)
+#    iy = convert_to_FL_Coord(y)
+#    iw = convert_to_FL_Coord(w)
+#    ih = convert_to_FL_Coord(h)
+#    slabel = convert_to_string(label)
+#    keep_elem_refs(canvastype, x, y, w, h, label, icanvastype, ix, iy,
+#                   iw, ih, slabel)
+#    retval = _fl_create_glcanvas(icanvastype, ix, iy, iw, ih, slabel)
+#    return retval
 
 
-#def fl_create_chart(charttype, x, y, w, h, label): 
-#    """ 
-#        fl_create_chart(charttype, x, y, w, h, label) -> pObject 
-# 
-#        Creates a chart object. 
-# 
-#        @param charttype : type of chart to be created 
-#        @param x : horizontal position (upper-left corner) 
-#        @param x : vertical position (upper-left corner) 
-#        @param w : width in coord units 
-#        @param h : height in coord units 
-#        @param label : text label of chart 
-# 
-#        @status: Untested + NoDoc + NoExample = NOT OK 
-#    """ 
-# 
-#    _fl_create_chart = cfuncproto( 
-#            load_so_libforms(), "fl_create_chart", 
-#            cty.POINTER(xfc.FL_OBJECT), [cty.c_int, xfc.FL_Coord, 
-#            xfc.FL_Coord, xfc.FL_Coord, xfc.FL_Coord, xfc.STRING], 
-#            """FL_OBJECT * fl_create_chart(int type, FL_Coord x, FL_Coord y, 
-#               FL_Coord w, FL_Coord h, const char * label) 
-#            """) 
-#    check_admitted_listvalues(charttype, xfc.CHARTTYPE_list) 
-#    icharttype = convert_to_int(charttype) 
-#    ix = convert_to_FL_Coord(x) 
-#    iy = convert_to_FL_Coord(y) 
-#    iw = convert_to_FL_Coord(w) 
-#    ih = convert_to_FL_Coord(h) 
-#    slabel = convert_to_string(label) 
-#    keep_elem_refs(charttype, x, y, w, h, label, icharttype, ix, iy, 
-#                   iw, ih, slabel) 
-#    retval = _fl_create_chart(icharttype, ix, iy, iw, ih, slabel) 
-#    return retval 
+#def fl_create_chart(charttype, x, y, w, h, label):
+#    """
+#        fl_create_chart(charttype, x, y, w, h, label) -> pObject
+#
+#        Creates a chart object.
+#
+#        @param charttype : type of chart to be created
+#        @param x : horizontal position (upper-left corner)
+#        @param x : vertical position (upper-left corner)
+#        @param w : width in coord units
+#        @param h : height in coord units
+#        @param label : text label of chart
+#
+#        @status: Untested + NoDoc + NoExample = NOT OK
+#    """
+#
+#    _fl_create_chart = cfuncproto(
+#            load_so_libforms(), "fl_create_chart",
+#            cty.POINTER(xfc.FL_OBJECT), [cty.c_int, xfc.FL_Coord,
+#            xfc.FL_Coord, xfc.FL_Coord, xfc.FL_Coord, xfc.STRING],
+#            """FL_OBJECT * fl_create_chart(int type, FL_Coord x, FL_Coord y,
+#               FL_Coord w, FL_Coord h, const char * label)
+#            """)
+#    check_admitted_listvalues(charttype, xfc.CHARTTYPE_list)
+#    icharttype = convert_to_int(charttype)
+#    ix = convert_to_FL_Coord(x)
+#    iy = convert_to_FL_Coord(y)
+#    iw = convert_to_FL_Coord(w)
+#    ih = convert_to_FL_Coord(h)
+#    slabel = convert_to_string(label)
+#    keep_elem_refs(charttype, x, y, w, h, label, icharttype, ix, iy,
+#                   iw, ih, slabel)
+#    retval = _fl_create_chart(icharttype, ix, iy, iw, ih, slabel)
+#    return retval
 
 
-#def fl_create_choice(choicetype, x, y, w, h, label): 
-#    """ 
-#        fl_create_choice(choicetype, x, y, w, h, label) -> pObject 
-# 
-#        Creates a choice object. 
-# 
-#        @param choicetype : type of choice to be created 
-#        @param x : horizontal position (upper-left corner) 
-#        @param x : vertical position (upper-left corner) 
-#        @param w : width in coord units 
-#        @param h : height in coord units 
-#        @param label : text label of choice 
-# 
-#        @status: Untested + NoDoc + NoExample = NOT OK 
-#        @deprecated: Use corresponding fl_*select* function 
-#    """ 
-# 
-#    _fl_create_choice = cfuncproto( 
-#            load_so_libforms(), "fl_create_choice", 
-#            cty.POINTER(xfc.FL_OBJECT), [cty.c_int, xfc.FL_Coord, 
-#            xfc.FL_Coord, xfc.FL_Coord, xfc.FL_Coord, xfc.STRING], 
-#            """FL_OBJECT * fl_create_choice(int type, FL_Coord x, FL_Coord y, 
-#               FL_Coord w, FL_Coord h, const char * label) 
-#            """) 
-#    warn_deprecated_function("fl_*select*") 
-#    check_admitted_listvalues(choicetype, xfc.CHOICETYPE_list) 
-#    ichoicetype = convert_to_int(choicetype) 
-#    ix = convert_to_FL_Coord(x) 
-#    iy = convert_to_FL_Coord(y) 
-#    iw = convert_to_FL_Coord(w) 
-#    ih = convert_to_FL_Coord(h) 
-#    slabel = convert_to_string(label) 
-#    keep_elem_refs(choicetype, x, y, w, h, label, ichoicetype, ix, iy, 
-#                   iw, ih, slabel) 
-#    retval = _fl_create_choice(ichoicetype, ix, iy, iw, ih, slabel) 
-#    return retval 
+#def fl_create_choice(choicetype, x, y, w, h, label):
+#    """
+#        fl_create_choice(choicetype, x, y, w, h, label) -> pObject
+#
+#        Creates a choice object.
+#
+#        @param choicetype : type of choice to be created
+#        @param x : horizontal position (upper-left corner)
+#        @param x : vertical position (upper-left corner)
+#        @param w : width in coord units
+#        @param h : height in coord units
+#        @param label : text label of choice
+#
+#        @status: Untested + NoDoc + NoExample = NOT OK
+#        @deprecated: Use corresponding fl_*select* function
+#    """
+#
+#    _fl_create_choice = cfuncproto(
+#            load_so_libforms(), "fl_create_choice",
+#            cty.POINTER(xfc.FL_OBJECT), [cty.c_int, xfc.FL_Coord,
+#            xfc.FL_Coord, xfc.FL_Coord, xfc.FL_Coord, xfc.STRING],
+#            """FL_OBJECT * fl_create_choice(int type, FL_Coord x, FL_Coord y,
+#               FL_Coord w, FL_Coord h, const char * label)
+#            """)
+#    warn_deprecated_function("fl_*select*")
+#    check_admitted_listvalues(choicetype, xfc.CHOICETYPE_list)
+#    ichoicetype = convert_to_int(choicetype)
+#    ix = convert_to_FL_Coord(x)
+#    iy = convert_to_FL_Coord(y)
+#    iw = convert_to_FL_Coord(w)
+#    ih = convert_to_FL_Coord(h)
+#    slabel = convert_to_string(label)
+#    keep_elem_refs(choicetype, x, y, w, h, label, ichoicetype, ix, iy,
+#                   iw, ih, slabel)
+#    retval = _fl_create_choice(ichoicetype, ix, iy, iw, ih, slabel)
+#    return retval
 
 
-#def fl_create_clock(clocktype, x, y, w, h, label): 
-#    """ 
-#        fl_create_clock(clocktype, x, y, w, h, label) -> pObject 
-# 
-#        Creates a clock object. 
-# 
-#        @param clocktype : type of clock to be created 
-#        @param x : horizontal position (upper-left corner) 
-#        @param x : vertical position (upper-left corner) 
-#        @param w : width in coord units 
-#        @param h : height in coord units 
-#        @param label : text label of clock 
-# 
-#        @status: Untested + NoDoc + NoExample = NOT OK 
-#    """ 
-# 
-#    _fl_create_clock = cfuncproto( 
-#            load_so_libforms(), "fl_create_clock", 
-#            cty.POINTER(xfc.FL_OBJECT), [cty.c_int, xfc.FL_Coord, 
-#            xfc.FL_Coord, xfc.FL_Coord, xfc.FL_Coord, xfc.STRING], 
-#            """FL_OBJECT * fl_create_clock(int type, FL_Coord x, FL_Coord y, 
-#               FL_Coord w, FL_Coord h, const char * s) 
-#            """) 
-#    check_admitted_listvalues(clocktype, xfc.CLOCKTYPE_list) 
-#    iclocktype = convert_to_int(clocktype) 
-#    ix = convert_to_FL_Coord(x) 
-#    iy = convert_to_FL_Coord(y) 
-#    iw = convert_to_FL_Coord(w) 
-#    ih = convert_to_FL_Coord(h) 
-#    slabel = convert_to_string(label) 
-#    keep_elem_refs(clocktype, x, y, w, h, label, iclocktype, ix, iy, 
-#                   iw, ih, slabel) 
-#    retval = _fl_create_clock(iclocktype, ix, iy, iw, ih, slabel) 
-#    return retval 
+#def fl_create_clock(clocktype, x, y, w, h, label):
+#    """
+#        fl_create_clock(clocktype, x, y, w, h, label) -> pObject
+#
+#        Creates a clock object.
+#
+#        @param clocktype : type of clock to be created
+#        @param x : horizontal position (upper-left corner)
+#        @param x : vertical position (upper-left corner)
+#        @param w : width in coord units
+#        @param h : height in coord units
+#        @param label : text label of clock
+#
+#        @status: Untested + NoDoc + NoExample = NOT OK
+#    """
+#
+#    _fl_create_clock = cfuncproto(
+#            load_so_libforms(), "fl_create_clock",
+#            cty.POINTER(xfc.FL_OBJECT), [cty.c_int, xfc.FL_Coord,
+#            xfc.FL_Coord, xfc.FL_Coord, xfc.FL_Coord, xfc.STRING],
+#            """FL_OBJECT * fl_create_clock(int type, FL_Coord x, FL_Coord y,
+#               FL_Coord w, FL_Coord h, const char * s)
+#            """)
+#    check_admitted_listvalues(clocktype, xfc.CLOCKTYPE_list)
+#    iclocktype = convert_to_int(clocktype)
+#    ix = convert_to_FL_Coord(x)
+#    iy = convert_to_FL_Coord(y)
+#    iw = convert_to_FL_Coord(w)
+#    ih = convert_to_FL_Coord(h)
+#    slabel = convert_to_string(label)
+#    keep_elem_refs(clocktype, x, y, w, h, label, iclocktype, ix, iy,
+#                   iw, ih, slabel)
+#    retval = _fl_create_clock(iclocktype, ix, iy, iw, ih, slabel)
+#    return retval
 
 
-#def fl_create_counter(countertype, x, y, w, h, label): 
-#    """ 
-#        fl_create_counter(countertype, x, y, w, h, label) -> pObject 
-# 
-#        Creates a counter object. 
-# 
-#        @param countertype : type of counter to be created 
-#        @param x : horizontal position (upper-left corner) 
-#        @param x : vertical position (upper-left corner) 
-#        @param w : width in coord units 
-#        @param h : height in coord units 
-#        @param label : text label of counter 
-# 
-#        @status: Untested + NoDoc + NoExample = NOT OK 
-#    """ 
-# 
-#    _fl_create_counter = cfuncproto( 
-#            load_so_libforms(), "fl_create_counter", 
-#            cty.POINTER(xfc.FL_OBJECT), [cty.c_int, xfc.FL_Coord, 
-#            xfc.FL_Coord, xfc.FL_Coord, xfc.FL_Coord, xfc.STRING], 
+#def fl_create_counter(countertype, x, y, w, h, label):
+#    """
+#        fl_create_counter(countertype, x, y, w, h, label) -> pObject
+#
+#        Creates a counter object.
+#
+#        @param countertype : type of counter to be created
+#        @param x : horizontal position (upper-left corner)
+#        @param x : vertical position (upper-left corner)
+#        @param w : width in coord units
+#        @param h : height in coord units
+#        @param label : text label of counter
+#
+#        @status: Untested + NoDoc + NoExample = NOT OK
+#    """
+#
+#    _fl_create_counter = cfuncproto(
+#            load_so_libforms(), "fl_create_counter",
+#            cty.POINTER(xfc.FL_OBJECT), [cty.c_int, xfc.FL_Coord,
+#            xfc.FL_Coord, xfc.FL_Coord, xfc.FL_Coord, xfc.STRING],
 #            """FL_OBJECT * fl_create_counter(int type, FL_Coord x, FL_Coord y,
-#               FL_Coord w, FL_Coord h, const char * label) 
-#            """) 
-#    check_admitted_listvalues(countertype, xfc.COUNTERTYPE_list) 
-#    icountertype = convert_to_int(countertype) 
-#    ix = convert_to_FL_Coord(x) 
-#    iy = convert_to_FL_Coord(y) 
-#    iw = convert_to_FL_Coord(w) 
-#    ih = convert_to_FL_Coord(h) 
-#    slabel = convert_to_string(label) 
-#    keep_elem_refs(countertype, x, y, w, h, label, icountertype, ix, iy, 
-#                   iw, ih, slabel) 
-#    retval = _fl_create_counter(icountertype, ix, iy, iw, ih, slabel) 
-#    return retval 
+#               FL_Coord w, FL_Coord h, const char * label)
+#            """)
+#    check_admitted_listvalues(countertype, xfc.COUNTERTYPE_list)
+#    icountertype = convert_to_int(countertype)
+#    ix = convert_to_FL_Coord(x)
+#    iy = convert_to_FL_Coord(y)
+#    iw = convert_to_FL_Coord(w)
+#    ih = convert_to_FL_Coord(h)
+#    slabel = convert_to_string(label)
+#    keep_elem_refs(countertype, x, y, w, h, label, icountertype, ix, iy,
+#                   iw, ih, slabel)
+#    retval = _fl_create_counter(icountertype, ix, iy, iw, ih, slabel)
+#    return retval
 
 
-#def fl_create_dial(dialtype, x, y, w, h, label): 
-#    """ 
-#        fl_create_dial(dialtype, x, y, w, h, label) -> pObject 
-# 
-#        Creates a dial object. 
-# 
-#        @param dialtype : type of dial to be created 
-#        @param x : horizontal position (upper-left corner) 
-#        @param x : vertical position (upper-left corner) 
-#        @param w : width in coord units 
-#        @param h : height in coord units 
-#        @param label : text label of dial 
-# 
-#        @status: Untested + NoDoc + NoExample = NOT OK 
-#    """ 
-# 
-#    _fl_create_dial = cfuncproto( 
-#            load_so_libforms(), "fl_create_dial", 
-#            cty.POINTER(xfc.FL_OBJECT), [cty.c_int, xfc.FL_Coord, 
-#            xfc.FL_Coord, xfc.FL_Coord, xfc.FL_Coord, xfc.STRING], 
-#            """FL_OBJECT * fl_create_dial(int type, FL_Coord x, FL_Coord y, 
-#               FL_Coord w, FL_Coord h, const char * label) 
-#            """) 
-#    check_admitted_listvalues(dialtype, xfc.DIALTYPE_list) 
-#    idialtype = convert_to_int(dialtype) 
-#    ix = convert_to_FL_Coord(x) 
-#    iy = convert_to_FL_Coord(y) 
-#    iw = convert_to_FL_Coord(w) 
-#    ih = convert_to_FL_Coord(h) 
-#    slabel = convert_to_string(label) 
-#    keep_elem_refs(dialtype, x, y, w, h, label, idialtype, ix, iy, 
-#                   iw, ih, slabel) 
-#    retval = _fl_create_dial(idialtype, ix, iy, iw, ih, slabel) 
-#    return retval 
+#def fl_create_dial(dialtype, x, y, w, h, label):
+#    """
+#        fl_create_dial(dialtype, x, y, w, h, label) -> pObject
+#
+#        Creates a dial object.
+#
+#        @param dialtype : type of dial to be created
+#        @param x : horizontal position (upper-left corner)
+#        @param x : vertical position (upper-left corner)
+#        @param w : width in coord units
+#        @param h : height in coord units
+#        @param label : text label of dial
+#
+#        @status: Untested + NoDoc + NoExample = NOT OK
+#    """
+#
+#    _fl_create_dial = cfuncproto(
+#            load_so_libforms(), "fl_create_dial",
+#            cty.POINTER(xfc.FL_OBJECT), [cty.c_int, xfc.FL_Coord,
+#            xfc.FL_Coord, xfc.FL_Coord, xfc.FL_Coord, xfc.STRING],
+#            """FL_OBJECT * fl_create_dial(int type, FL_Coord x, FL_Coord y,
+#               FL_Coord w, FL_Coord h, const char * label)
+#            """)
+#    check_admitted_listvalues(dialtype, xfc.DIALTYPE_list)
+#    idialtype = convert_to_int(dialtype)
+#    ix = convert_to_FL_Coord(x)
+#    iy = convert_to_FL_Coord(y)
+#    iw = convert_to_FL_Coord(w)
+#    ih = convert_to_FL_Coord(h)
+#    slabel = convert_to_string(label)
+#    keep_elem_refs(dialtype, x, y, w, h, label, idialtype, ix, iy,
+#                   iw, ih, slabel)
+#    retval = _fl_create_dial(idialtype, ix, iy, iw, ih, slabel)
+#    return retval
 
 
-def fl_create_formbrowser(frmbrwstype, x, y, w, h, label): 
-#    """ 
-#        fl_create_formbrowser(frmbrwstype, x, y, w, h, label) -> pObject 
-# 
-#        Creates a formbrowser object. 
-# 
-#        @param frmbrwstype : type of formbrowser to be created 
-#        @param x : horizontal position (upper-left corner) 
-#        @param x : vertical position (upper-left corner) 
-#        @param w : width in coord units 
-#        @param h : height in coord units 
-#        @param label : text label of formbrowser 
-# 
-#        @status: Untested + NoDoc + NoExample = NOT OK 
-#    """ 
-#   
-#    _fl_create_formbrowser = cfuncproto( 
-#            load_so_libforms(), "fl_create_formbrowser", 
-#            cty.POINTER(xfc.FL_OBJECT), [cty.c_int, xfc.FL_Coord, 
-#            xfc.FL_Coord, xfc.FL_Coord, xfc.FL_Coord, xfc.STRING], 
-#            """FL_OBJECT * fl_create_formbrowser(int type, FL_Coord x, 
-#               FL_Coord y, FL_Coord w, FL_Coord h, const char * label) 
-#            """) 
-#    check_admitted_listvalues(frmbrwstype, xfc.FORMBRWSTYPE_list) 
-#    ifrmbrwstype = convert_to_int(frmbrwstype) 
-#    ix = convert_to_FL_Coord(x) 
-#    iy = convert_to_FL_Coord(y) 
-#    iw = convert_to_FL_Coord(w) 
-#    ih = convert_to_FL_Coord(h) 
-#    slabel = convert_to_string(label) 
-#    keep_elem_refs(frmbrwstype, x, y, w, h, label, ifrmbrwstype, ix, iy, 
-#                   iw, ih, slabel) 
-#    retval = _fl_create_formbrowser(ifrmbrwstype, ix, iy, iw, ih, slabel) 
-#    return retval 
+def fl_create_formbrowser(frmbrwstype, x, y, w, h, label):
+#    """
+#        fl_create_formbrowser(frmbrwstype, x, y, w, h, label) -> pObject
+#
+#        Creates a formbrowser object.
+#
+#        @param frmbrwstype : type of formbrowser to be created
+#        @param x : horizontal position (upper-left corner)
+#        @param x : vertical position (upper-left corner)
+#        @param w : width in coord units
+#        @param h : height in coord units
+#        @param label : text label of formbrowser
+#
+#        @status: Untested + NoDoc + NoExample = NOT OK
+#    """
+#
+#    _fl_create_formbrowser = cfuncproto(
+#            load_so_libforms(), "fl_create_formbrowser",
+#            cty.POINTER(xfc.FL_OBJECT), [cty.c_int, xfc.FL_Coord,
+#            xfc.FL_Coord, xfc.FL_Coord, xfc.FL_Coord, xfc.STRING],
+#            """FL_OBJECT * fl_create_formbrowser(int type, FL_Coord x,
+#               FL_Coord y, FL_Coord w, FL_Coord h, const char * label)
+#            """)
+#    check_admitted_listvalues(frmbrwstype, xfc.FORMBRWSTYPE_list)
+#    ifrmbrwstype = convert_to_int(frmbrwstype)
+#    ix = convert_to_FL_Coord(x)
+#    iy = convert_to_FL_Coord(y)
+#    iw = convert_to_FL_Coord(w)
+#    ih = convert_to_FL_Coord(h)
+#    slabel = convert_to_string(label)
+#    keep_elem_refs(frmbrwstype, x, y, w, h, label, ifrmbrwstype, ix, iy,
+#                   iw, ih, slabel)
+#    retval = _fl_create_formbrowser(ifrmbrwstype, ix, iy, iw, ih, slabel)
+#    return retval
 
 
-#def fl_create_frame(frametype, x, y, w, h, label): 
-#    """ 
-#        fl_create_frame(frametype, x, y, w, h, label) -> pObject 
-# 
-#        Creates a frame object. 
-# 
-#        @param frametype : type of frame to be created 
-#        @param x : horizontal position (upper-left corner) 
-#        @param x : vertical position (upper-left corner) 
-#        @param w : width in coord units 
-#        @param h : height in coord units 
-#        @param label : text label of frame 
-# 
-#        @status: Untested + NoDoc + NoExample = NOT OK 
-#    """ 
-# 
-#    _fl_create_frame = cfuncproto( 
-#            load_so_libforms(), "fl_create_frame", 
-#            cty.POINTER(xfc.FL_OBJECT), [cty.c_int, xfc.FL_Coord, 
-#            xfc.FL_Coord, xfc.FL_Coord, xfc.FL_Coord, xfc.STRING], 
-#            """FL_OBJECT * fl_create_frame(int type, FL_Coord x, FL_Coord y, 
-#               FL_Coord w, FL_Coord h, const char * label) 
-#            """) 
-#    check_admitted_listvalues(frametype, xfc.FRAMETYPE_list) 
-#    iframetype = convert_to_int(frametype) 
-#    ix = convert_to_FL_Coord(x) 
-#    iy = convert_to_FL_Coord(y) 
-#    iw = convert_to_FL_Coord(w) 
-#    ih = convert_to_FL_Coord(h) 
-#    slabel = convert_to_string(label) 
-#    keep_elem_refs(frametype, x, y, w, h, label, iframetype, ix, iy, 
-#                   iw, ih, slabel) 
-#    retval = _fl_create_frame(iframetype, ix, iy, iw, ih, slabel) 
-#    return retval 
+#def fl_create_frame(frametype, x, y, w, h, label):
+#    """
+#        fl_create_frame(frametype, x, y, w, h, label) -> pObject
+#
+#        Creates a frame object.
+#
+#        @param frametype : type of frame to be created
+#        @param x : horizontal position (upper-left corner)
+#        @param x : vertical position (upper-left corner)
+#        @param w : width in coord units
+#        @param h : height in coord units
+#        @param label : text label of frame
+#
+#        @status: Untested + NoDoc + NoExample = NOT OK
+#    """
+#
+#    _fl_create_frame = cfuncproto(
+#            load_so_libforms(), "fl_create_frame",
+#            cty.POINTER(xfc.FL_OBJECT), [cty.c_int, xfc.FL_Coord,
+#            xfc.FL_Coord, xfc.FL_Coord, xfc.FL_Coord, xfc.STRING],
+#            """FL_OBJECT * fl_create_frame(int type, FL_Coord x, FL_Coord y,
+#               FL_Coord w, FL_Coord h, const char * label)
+#            """)
+#    check_admitted_listvalues(frametype, xfc.FRAMETYPE_list)
+#    iframetype = convert_to_int(frametype)
+#    ix = convert_to_FL_Coord(x)
+#    iy = convert_to_FL_Coord(y)
+#    iw = convert_to_FL_Coord(w)
+#    ih = convert_to_FL_Coord(h)
+#    slabel = convert_to_string(label)
+#    keep_elem_refs(frametype, x, y, w, h, label, iframetype, ix, iy,
+#                   iw, ih, slabel)
+#    retval = _fl_create_frame(iframetype, ix, iy, iw, ih, slabel)
+#    return retval
 
 
-#def fl_create_labelframe(frametype, x, y, w, h, label): 
-#    """ 
-#        fl_create_labelframe(frametype, x, y, w, h, label) -> pObject 
-# 
-#        Creates a labelframe object. 
-# 
-#        @param frametype : type of labelframe to be created 
-#        @param x : horizontal position (upper-left corner) 
-#        @param x : vertical position (upper-left corner) 
-#        @param w : width in coord units 
-#        @param h : height in coord units 
-#        @param label : text label of labelframe 
-# 
-#        @status: Untested + NoDoc + NoExample = NOT OK 
-#    """ 
-# 
-#    _fl_create_labelframe = cfuncproto( 
-#            load_so_libforms(), "fl_create_labelframe", 
-#            cty.POINTER(xfc.FL_OBJECT), [cty.c_int, xfc.FL_Coord, 
-#            xfc.FL_Coord, xfc.FL_Coord, xfc.FL_Coord, xfc.STRING], 
-#            """FL_OBJECT * fl_create_labelframe(int type, FL_Coord x, 
-#               FL_Coord y, FL_Coord w, FL_Coord h, const char * label) 
-#            """) 
-#    check_admitted_listvalues(frametype, xfc.FRAMETYPE_list) 
-#    iframetype = convert_to_int(frametype) 
-#    ix = convert_to_FL_Coord(x) 
-#    iy = convert_to_FL_Coord(y) 
-#    iw = convert_to_FL_Coord(w) 
-#    ih = convert_to_FL_Coord(h) 
-#    slabel = convert_to_string(label) 
-#    keep_elem_refs(frametype, x, y, w, h, label, iframetype, ix, iy, 
-#                   iw, ih, slabel) 
-#    retval = _fl_create_labelframe(iframetype, ix, iy, iw, ih, slabel) 
-#    return retval 
+#def fl_create_labelframe(frametype, x, y, w, h, label):
+#    """
+#        fl_create_labelframe(frametype, x, y, w, h, label) -> pObject
+#
+#        Creates a labelframe object.
+#
+#        @param frametype : type of labelframe to be created
+#        @param x : horizontal position (upper-left corner)
+#        @param x : vertical position (upper-left corner)
+#        @param w : width in coord units
+#        @param h : height in coord units
+#        @param label : text label of labelframe
+#
+#        @status: Untested + NoDoc + NoExample = NOT OK
+#    """
+#
+#    _fl_create_labelframe = cfuncproto(
+#            load_so_libforms(), "fl_create_labelframe",
+#            cty.POINTER(xfc.FL_OBJECT), [cty.c_int, xfc.FL_Coord,
+#            xfc.FL_Coord, xfc.FL_Coord, xfc.FL_Coord, xfc.STRING],
+#            """FL_OBJECT * fl_create_labelframe(int type, FL_Coord x,
+#               FL_Coord y, FL_Coord w, FL_Coord h, const char * label)
+#            """)
+#    check_admitted_listvalues(frametype, xfc.FRAMETYPE_list)
+#    iframetype = convert_to_int(frametype)
+#    ix = convert_to_FL_Coord(x)
+#    iy = convert_to_FL_Coord(y)
+#    iw = convert_to_FL_Coord(w)
+#    ih = convert_to_FL_Coord(h)
+#    slabel = convert_to_string(label)
+#    keep_elem_refs(frametype, x, y, w, h, label, iframetype, ix, iy,
+#                   iw, ih, slabel)
+#    retval = _fl_create_labelframe(iframetype, ix, iy, iw, ih, slabel)
+#    return retval
 
 
-#def fl_create_free(freetype, x, y, w, h, label, py_HandlePtr): 
-#    """ 
-#        fl_create_free(freetype, x, y, w, h, label, py_HandlePtr) -> pObject 
-# 
-#        Creates a free object. 
-# 
-#        @param freetype : type of free to be created 
-#        @param x : horizontal position (upper-left corner) 
-#        @param x : vertical position (upper-left corner) 
-#        @param w : width in coord units 
-#        @param h : height in coord units 
-#        @param label : text label of free 
-# 
-#        @status: Untested + NoDoc + NoExample = NOT OK 
-#    """ 
-# 
-#    _fl_create_free = cfuncproto( 
-#            load_so_libforms(), "fl_create_free", 
-#            cty.POINTER(xfc.FL_OBJECT), [cty.c_int, xfc.FL_Coord, 
-#            xfc.FL_Coord, xfc.FL_Coord, xfc.FL_Coord, xfc.STRING, 
-#            xfc.FL_HANDLEPTR], 
-#            """FL_OBJECT * fl_create_free(int type, FL_Coord x, FL_Coord y, 
-#               FL_Coord w, FL_Coord h, const char * label, 
-#               FL_HANDLEPTR handle) 
-#            """) 
-#    check_admitted_listvalues(freetype, xfc.FREETYPE_list) 
-#    ifreetype = convert_to_int(freetype) 
-#    ix = convert_to_FL_Coord(x) 
-#    iy = convert_to_FL_Coord(y) 
-#    iw = convert_to_FL_Coord(w) 
-#    ih = convert_to_FL_Coord(h) 
-#    slabel = convert_to_string(label) 
-#    c_HandlePtr = xfc.FL_HANDLEPTR(py_HandlePtr) 
-#    keep_cfunc_refs(c_HandlePtr, py_HandlePtr) 
-#    keep_elem_refs(freetype, x, y, w, h, label, ifreetype, ix, iy, iw, ih, 
-#                   slabel) 
-#    retval = _fl_create_free(ifreetype, ix, iy, iw, ih, slabel, c_HandlePtr) 
-#    return retval 
+#def fl_create_free(freetype, x, y, w, h, label, py_HandlePtr):
+#    """
+#        fl_create_free(freetype, x, y, w, h, label, py_HandlePtr) -> pObject
+#
+#        Creates a free object.
+#
+#        @param freetype : type of free to be created
+#        @param x : horizontal position (upper-left corner)
+#        @param x : vertical position (upper-left corner)
+#        @param w : width in coord units
+#        @param h : height in coord units
+#        @param label : text label of free
+#
+#        @status: Untested + NoDoc + NoExample = NOT OK
+#    """
+#
+#    _fl_create_free = cfuncproto(
+#            load_so_libforms(), "fl_create_free",
+#            cty.POINTER(xfc.FL_OBJECT), [cty.c_int, xfc.FL_Coord,
+#            xfc.FL_Coord, xfc.FL_Coord, xfc.FL_Coord, xfc.STRING,
+#            xfc.FL_HANDLEPTR],
+#            """FL_OBJECT * fl_create_free(int type, FL_Coord x, FL_Coord y,
+#               FL_Coord w, FL_Coord h, const char * label,
+#               FL_HANDLEPTR handle)
+#            """)
+#    check_admitted_listvalues(freetype, xfc.FREETYPE_list)
+#    ifreetype = convert_to_int(freetype)
+#    ix = convert_to_FL_Coord(x)
+#    iy = convert_to_FL_Coord(y)
+#    iw = convert_to_FL_Coord(w)
+#    ih = convert_to_FL_Coord(h)
+#    slabel = convert_to_string(label)
+#    c_HandlePtr = xfc.FL_HANDLEPTR(py_HandlePtr)
+#    keep_cfunc_refs(c_HandlePtr, py_HandlePtr)
+#    keep_elem_refs(freetype, x, y, w, h, label, ifreetype, ix, iy, iw, ih,
+#                   slabel)
+#    retval = _fl_create_free(ifreetype, ix, iy, iw, ih, slabel, c_HandlePtr)
+#    return retval
 
 
-#def fl_create_input(inputtype, x, y, w, h, label): 
-#    """ 
-#        fl_create_input(inputtype, x, y, w, h, label) -> pObject 
-# 
-#        Creates an input object. 
-# 
-#        @param inputtype : type of input to be created 
-#        @param x : horizontal position (upper-left corner) 
-#        @param x : vertical position (upper-left corner) 
-#        @param w : width in coord units 
-#        @param h : height in coord units 
-#        @param label : text label of input 
-# 
-#        @status: Untested + NoDoc + NoExample = NOT OK 
-#    """ 
-# 
-#    _fl_create_input = cfuncproto( 
-#            load_so_libforms(), "fl_create_input", 
-#            cty.POINTER(xfc.FL_OBJECT), [cty.c_int, xfc.FL_Coord, 
-#            xfc.FL_Coord, xfc.FL_Coord, xfc.FL_Coord, xfc.STRING], 
-#            """FL_OBJECT * fl_create_input(int type, FL_Coord x, FL_Coord y, 
-#               FL_Coord w, FL_Coord h, const char * label) 
-#            """) 
-#    check_admitted_listvalues(inputtype, xfc.INPUTTYPE_list) 
-#    iinputtype = convert_to_int(inputtype) 
-#    ix = convert_to_FL_Coord(x) 
-#    iy = convert_to_FL_Coord(y) 
-#    iw = convert_to_FL_Coord(w) 
-#    ih = convert_to_FL_Coord(h) 
-#    slabel = convert_to_string(label) 
-#    keep_elem_refs(inputtype, x, y, w, h, label, iinputtype, ix, iy, 
-#                   iw, ih, slabel) 
-#    retval = _fl_create_input(iinputtype, ix, iy, iw, ih, slabel) 
-#    return retval 
+#def fl_create_input(inputtype, x, y, w, h, label):
+#    """
+#        fl_create_input(inputtype, x, y, w, h, label) -> pObject
+#
+#        Creates an input object.
+#
+#        @param inputtype : type of input to be created
+#        @param x : horizontal position (upper-left corner)
+#        @param x : vertical position (upper-left corner)
+#        @param w : width in coord units
+#        @param h : height in coord units
+#        @param label : text label of input
+#
+#        @status: Untested + NoDoc + NoExample = NOT OK
+#    """
+#
+#    _fl_create_input = cfuncproto(
+#            load_so_libforms(), "fl_create_input",
+#            cty.POINTER(xfc.FL_OBJECT), [cty.c_int, xfc.FL_Coord,
+#            xfc.FL_Coord, xfc.FL_Coord, xfc.FL_Coord, xfc.STRING],
+#            """FL_OBJECT * fl_create_input(int type, FL_Coord x, FL_Coord y,
+#               FL_Coord w, FL_Coord h, const char * label)
+#            """)
+#    check_admitted_listvalues(inputtype, xfc.INPUTTYPE_list)
+#    iinputtype = convert_to_int(inputtype)
+#    ix = convert_to_FL_Coord(x)
+#    iy = convert_to_FL_Coord(y)
+#    iw = convert_to_FL_Coord(w)
+#    ih = convert_to_FL_Coord(h)
+#    slabel = convert_to_string(label)
+#    keep_elem_refs(inputtype, x, y, w, h, label, iinputtype, ix, iy,
+#                   iw, ih, slabel)
+#    retval = _fl_create_input(iinputtype, ix, iy, iw, ih, slabel)
+#    return retval
 
 
-# TODO: this function seems to be internal: proposed for removal 
-#def fl_set_input_return(pObject, when): 
-#    """ 
-#        fl_set_input_return(pObject, when) 
-# 
-#        @param pObject : pointer to input object 
-#        @param when : return type (when it returns) 
-# 
-#        @status: Tested + NoDoc + Example = OK 
-#    """ 
-# 
-#    _fl_set_input_return = cfuncproto( 
-#            load_so_libforms(), "fl_set_input_return", 
-#            None, [cty.POINTER(xfc.FL_OBJECT), cty.c_uint], 
-#            """void fl_set_input_return(FL_OBJECT * ob, unsigned 
-#               int value) 
-#            """) 
-#    check_admitted_listvalues(when, xfc.RETURN_list) 
-#    uiwhen = convert_to_uint(when) 
-#    keep_elem_refs(pObject, when, uiwhen) 
-#    _fl_set_input_return(pObject, uiwhen) 
+# TODO: this function seems to be internal: proposed for removal
+#def fl_set_input_return(pObject, when):
+#    """
+#        fl_set_input_return(pObject, when)
+#
+#        @param pObject : pointer to input object
+#        @param when : return type (when it returns)
+#
+#        @status: Tested + NoDoc + Example = OK
+#    """
+#
+#    _fl_set_input_return = cfuncproto(
+#            load_so_libforms(), "fl_set_input_return",
+#            None, [cty.POINTER(xfc.FL_OBJECT), cty.c_uint],
+#            """void fl_set_input_return(FL_OBJECT * ob, unsigned
+#               int value)
+#            """)
+#    check_admitted_listvalues(when, xfc.RETURN_list)
+#    uiwhen = convert_to_uint(when)
+#    keep_elem_refs(pObject, when, uiwhen)
+#    _fl_set_input_return(pObject, uiwhen)
 
 
-#def fl_create_menu(menutype, x, y, w, h, label): 
-#    """ 
-#        fl_create_menu(menutype, x, y, w, h, label) -> pObject 
-# 
-#        Creates a menu object. 
-# 
-#        @param menutype : type of menu to be created 
-#        @param x : horizontal position (upper-left corner) 
-#        @param x : vertical position (upper-left corner) 
-#        @param w : width in coord units 
-#        @param h : height in coord units 
-#        @param label : text label of menu 
-# 
-#        @status: Untested + NoDoc + NoExample = NOT OK 
-#        @deprecated: Use corresponding fl_*nmenu* function 
-#    """ 
-# 
-#    _fl_create_menu = cfuncproto( 
-#            load_so_libforms(), "fl_create_menu", 
-#            cty.POINTER(xfc.FL_OBJECT), [cty.c_int, xfc.FL_Coord, 
-#            xfc.FL_Coord, xfc.FL_Coord, xfc.FL_Coord, xfc.STRING], 
-#            """FL_OBJECT * fl_create_menu(int type, FL_Coord x, FL_Coord y, 
-#               FL_Coord w, FL_Coord h, const char * label) 
-#            """) 
-#    warn_deprecated_function("fl_*nmenu*") 
-#    check_admitted_listvalues(menutype, xfc.MENUTYPE_list) 
-#    imenutype = convert_to_int(menutype) 
-#    ix = convert_to_FL_Coord(x) 
-#    iy = convert_to_FL_Coord(y) 
-#    iw = convert_to_FL_Coord(w) 
-#    ih = convert_to_FL_Coord(h) 
-#    slabel = convert_to_string(label) 
-#    keep_elem_refs(menutype, x, y, w, h, label, imenutype, ix, iy, 
-#                   iw, ih, slabel) 
-#    retval = _fl_create_menu(imenutype, ix, iy, iw, ih, slabel) 
-#    return retval 
+#def fl_create_menu(menutype, x, y, w, h, label):
+#    """
+#        fl_create_menu(menutype, x, y, w, h, label) -> pObject
+#
+#        Creates a menu object.
+#
+#        @param menutype : type of menu to be created
+#        @param x : horizontal position (upper-left corner)
+#        @param x : vertical position (upper-left corner)
+#        @param w : width in coord units
+#        @param h : height in coord units
+#        @param label : text label of menu
+#
+#        @status: Untested + NoDoc + NoExample = NOT OK
+#        @deprecated: Use corresponding fl_*nmenu* function
+#    """
+#
+#    _fl_create_menu = cfuncproto(
+#            load_so_libforms(), "fl_create_menu",
+#            cty.POINTER(xfc.FL_OBJECT), [cty.c_int, xfc.FL_Coord,
+#            xfc.FL_Coord, xfc.FL_Coord, xfc.FL_Coord, xfc.STRING],
+#            """FL_OBJECT * fl_create_menu(int type, FL_Coord x, FL_Coord y,
+#               FL_Coord w, FL_Coord h, const char * label)
+#            """)
+#    warn_deprecated_function("fl_*nmenu*")
+#    check_admitted_listvalues(menutype, xfc.MENUTYPE_list)
+#    imenutype = convert_to_int(menutype)
+#    ix = convert_to_FL_Coord(x)
+#    iy = convert_to_FL_Coord(y)
+#    iw = convert_to_FL_Coord(w)
+#    ih = convert_to_FL_Coord(h)
+#    slabel = convert_to_string(label)
+#    keep_elem_refs(menutype, x, y, w, h, label, imenutype, ix, iy,
+#                   iw, ih, slabel)
+#    retval = _fl_create_menu(imenutype, ix, iy, iw, ih, slabel)
+#    return retval
 
 
-#def fl_create_nmenu(nmenutype, x, y, w, h, label): 
-#    """ 
-#        fl_create_nmenu(nmenutype, x, y, w, h, label) -> pObject 
-# 
-#        Creates a nmenu object. 
-# 
-#        @param nmenutype : type of nmenu to be created 
-#        @param x : horizontal position (upper-left corner) 
-#        @param y : vertical position (upper-left corner) 
-#        @param w : width in coord units 
-#        @param h : height in coord units 
-#        @param label : text label of nmenu object 
-# 
-#        @status: Untested + NoDoc + NoExample = NOT OK 
-#    """ 
-# 
-#    _fl_create_nmenu = cfuncproto( 
-#            load_so_libforms(), "fl_create_nmenu", 
-#            cty.POINTER(xfc.FL_OBJECT), [cty.c_int, xfc.FL_Coord, 
-#            xfc.FL_Coord, xfc.FL_Coord, xfc.FL_Coord, xfc.STRING], 
-#            """FL_OBJECT * fl_create_nmenu(int p1, FL_Coord p2, FL_Coord p3, 
-#               FL_Coord p4, FL_Coord p5, const char * p6) 
-#            """) 
-#    check_admitted_listvalues(nmenutype, xfc.NMENUTYPE_list) 
-#    inmenutype = convert_to_int(nmenutype) 
-#    ix = convert_to_FL_Coord(x) 
-#    iy = convert_to_FL_Coord(y) 
-#    iw = convert_to_FL_Coord(w) 
-#    ih = convert_to_FL_Coord(h) 
-#    slabel = convert_to_string(label) 
-#    keep_elem_refs(nmenutype, x, y, w, h, label, inmenutype, ix, iy, 
-#                   iw, ih, slabel) 
-#    retval = _fl_create_nmenu(inmenutype, ix, iy, iw, ih, slabel) 
-#    return retval 
+#def fl_create_nmenu(nmenutype, x, y, w, h, label):
+#    """
+#        fl_create_nmenu(nmenutype, x, y, w, h, label) -> pObject
+#
+#        Creates a nmenu object.
+#
+#        @param nmenutype : type of nmenu to be created
+#        @param x : horizontal position (upper-left corner)
+#        @param y : vertical position (upper-left corner)
+#        @param w : width in coord units
+#        @param h : height in coord units
+#        @param label : text label of nmenu object
+#
+#        @status: Untested + NoDoc + NoExample = NOT OK
+#    """
+#
+#    _fl_create_nmenu = cfuncproto(
+#            load_so_libforms(), "fl_create_nmenu",
+#            cty.POINTER(xfc.FL_OBJECT), [cty.c_int, xfc.FL_Coord,
+#            xfc.FL_Coord, xfc.FL_Coord, xfc.FL_Coord, xfc.STRING],
+#            """FL_OBJECT * fl_create_nmenu(int p1, FL_Coord p2, FL_Coord p3,
+#               FL_Coord p4, FL_Coord p5, const char * p6)
+#            """)
+#    check_admitted_listvalues(nmenutype, xfc.NMENUTYPE_list)
+#    inmenutype = convert_to_int(nmenutype)
+#    ix = convert_to_FL_Coord(x)
+#    iy = convert_to_FL_Coord(y)
+#    iw = convert_to_FL_Coord(w)
+#    ih = convert_to_FL_Coord(h)
+#    slabel = convert_to_string(label)
+#    keep_elem_refs(nmenutype, x, y, w, h, label, inmenutype, ix, iy,
+#                   iw, ih, slabel)
+#    retval = _fl_create_nmenu(inmenutype, ix, iy, iw, ih, slabel)
+#    return retval
 
 
-#def fl_create_positioner(postype, x, y, w, h, label): 
-#    """ 
-#        fl_create_positioner(postype, x, y, w, h, label) -> pObject 
-# 
-#        Creates a positioner object. 
-# 
-#        @param postype : type of positioner to be created 
-#        @param x : horizontal position (upper-left corner) 
-#        @param y : vertical position (upper-left corner) 
-#        @param w : width in coord units 
-#        @param h : height in coord units 
-#        @param label : text label of positioner 
-# 
-#        @status: Untested + NoDoc + NoExample = NOT OK 
-#    """ 
-# 
-#    _fl_create_positioner = cfuncproto( 
-#            load_so_libforms(), "fl_create_positioner", 
-#            cty.POINTER(xfc.FL_OBJECT), [cty.c_int, xfc.FL_Coord, 
-#            xfc.FL_Coord, xfc.FL_Coord, xfc.FL_Coord, xfc.STRING], 
-#            """FL_OBJECT * fl_create_positioner(int type, FL_Coord x, 
-#               FL_Coord y, FL_Coord w, FL_Coord h, const char * label) 
-#            """) 
-#    check_admitted_listvalues(postype, xfc.POSITIONERTYPE_list) 
-#    ipostype = convert_to_int(postype) 
-#    ix = convert_to_FL_Coord(x) 
-#    iy = convert_to_FL_Coord(y) 
-#    iw = convert_to_FL_Coord(w) 
-#    ih = convert_to_FL_Coord(h) 
-#    slabel = convert_to_string(label) 
-#    keep_elem_refs(postype, x, y, w, h, label, ipostype, ix, iy, 
-#                   iw, ih, slabel) 
-#    retval = _fl_create_positioner(ipostype, ix, iy, iw, ih, slabel) 
-#    return retval 
+#def fl_create_positioner(postype, x, y, w, h, label):
+#    """
+#        fl_create_positioner(postype, x, y, w, h, label) -> pObject
+#
+#        Creates a positioner object.
+#
+#        @param postype : type of positioner to be created
+#        @param x : horizontal position (upper-left corner)
+#        @param y : vertical position (upper-left corner)
+#        @param w : width in coord units
+#        @param h : height in coord units
+#        @param label : text label of positioner
+#
+#        @status: Untested + NoDoc + NoExample = NOT OK
+#    """
+#
+#    _fl_create_positioner = cfuncproto(
+#            load_so_libforms(), "fl_create_positioner",
+#            cty.POINTER(xfc.FL_OBJECT), [cty.c_int, xfc.FL_Coord,
+#            xfc.FL_Coord, xfc.FL_Coord, xfc.FL_Coord, xfc.STRING],
+#            """FL_OBJECT * fl_create_positioner(int type, FL_Coord x,
+#               FL_Coord y, FL_Coord w, FL_Coord h, const char * label)
+#            """)
+#    check_admitted_listvalues(postype, xfc.POSITIONERTYPE_list)
+#    ipostype = convert_to_int(postype)
+#    ix = convert_to_FL_Coord(x)
+#    iy = convert_to_FL_Coord(y)
+#    iw = convert_to_FL_Coord(w)
+#    ih = convert_to_FL_Coord(h)
+#    slabel = convert_to_string(label)
+#    keep_elem_refs(postype, x, y, w, h, label, ipostype, ix, iy,
+#                   iw, ih, slabel)
+#    retval = _fl_create_positioner(ipostype, ix, iy, iw, ih, slabel)
+#    return retval
 
 
-#def fl_create_scrollbar(scrolltype, x, y, w, h, label): 
-#    """ 
-#        fl_create_scrollbar(scrolltype, x, y, w, h, label) -> pObject 
-# 
-#        Creates a scrollbar object. 
-# 
-#        @param scrolltype : type of scrollbar to be created 
-#        @param x : horizontal position (upper-left corner) 
-#        @param y : vertical position (upper-left corner) 
-#        @param w : width in coord units 
-#        @param h : height in coord units 
-#        @param label : label text of the scrollbar 
-# 
-#        @status: Untested + NoDoc + NoExample = NOT OK 
-#    """ 
-# 
-#    _fl_create_scrollbar = cfuncproto( 
-#            load_so_libforms(), "fl_create_scrollbar", 
-#            cty.POINTER(xfc.FL_OBJECT), [cty.c_int, xfc.FL_Coord, 
-#            xfc.FL_Coord, xfc.FL_Coord, xfc.FL_Coord, xfc.STRING], 
-#            """FL_OBJECT * fl_create_scrollbar(int type, FL_Coord x, 
-#               FL_Coord y, FL_Coord w, FL_Coord h, const char * label) 
-#            """) 
-#    check_admitted_listvalues(scrolltype, xfc.SCROLLTYPE_list) 
-#    iscrolltype = convert_to_int(scrolltype) 
-#    ix = convert_to_FL_Coord(x) 
-#    iy = convert_to_FL_Coord(y) 
-#    iw = convert_to_FL_Coord(w) 
-#    ih = convert_to_FL_Coord(h) 
-#    slabel = convert_to_string(label) 
-#    keep_elem_refs(scrolltype, x, y, w, h, label, iscrolltype, ix, iy, 
-#                   iw, ih, slabel) 
-#    retval = _fl_create_scrollbar(iscrolltype, ix, iy, iw, ih, slabel) 
-#    return retval 
+#def fl_create_scrollbar(scrolltype, x, y, w, h, label):
+#    """
+#        fl_create_scrollbar(scrolltype, x, y, w, h, label) -> pObject
+#
+#        Creates a scrollbar object.
+#
+#        @param scrolltype : type of scrollbar to be created
+#        @param x : horizontal position (upper-left corner)
+#        @param y : vertical position (upper-left corner)
+#        @param w : width in coord units
+#        @param h : height in coord units
+#        @param label : label text of the scrollbar
+#
+#        @status: Untested + NoDoc + NoExample = NOT OK
+#    """
+#
+#    _fl_create_scrollbar = cfuncproto(
+#            load_so_libforms(), "fl_create_scrollbar",
+#            cty.POINTER(xfc.FL_OBJECT), [cty.c_int, xfc.FL_Coord,
+#            xfc.FL_Coord, xfc.FL_Coord, xfc.FL_Coord, xfc.STRING],
+#            """FL_OBJECT * fl_create_scrollbar(int type, FL_Coord x,
+#               FL_Coord y, FL_Coord w, FL_Coord h, const char * label)
+#            """)
+#    check_admitted_listvalues(scrolltype, xfc.SCROLLTYPE_list)
+#    iscrolltype = convert_to_int(scrolltype)
+#    ix = convert_to_FL_Coord(x)
+#    iy = convert_to_FL_Coord(y)
+#    iw = convert_to_FL_Coord(w)
+#    ih = convert_to_FL_Coord(h)
+#    slabel = convert_to_string(label)
+#    keep_elem_refs(scrolltype, x, y, w, h, label, iscrolltype, ix, iy,
+#                   iw, ih, slabel)
+#    retval = _fl_create_scrollbar(iscrolltype, ix, iy, iw, ih, slabel)
+#    return retval
 
 
-#def fl_set_scrollbar_return(pObject, returnnum): 
-#    """ 
-#        fl_set_scrollbar_return(pObject, returnnum) 
-# 
-#        Sets the type of return of a scrollbar. 
-# 
-#        @param pObject : pointer to scrollbar object 
-#        @param returnnum : value of return type 
-# 
-#        @status: Untested + NoDoc + NoExample = NOT OK 
-#    """ 
-# 
-#    _fl_set_scrollbar_return = cfuncproto( 
-#            load_so_libforms(), "fl_set_scrollbar_return", 
-#            None, [cty.POINTER(xfc.FL_OBJECT), cty.c_uint], 
-#            """void fl_set_scrollbar_return(FL_OBJECT * ob, unsigned. 
-#               int ret) 
-#            """) 
-#    check_admitted_listvalues(returnnum, xfc.RETURN_list) 
-#    uireturnnum = convert_to_uint(returnnum) 
-#    keep_elem_refs(pObject, returnnum, uireturnnum) 
-#    _fl_set_scrollbar_return(pObject, uireturnnum) 
+#def fl_set_scrollbar_return(pObject, returnnum):
+#    """
+#        fl_set_scrollbar_return(pObject, returnnum)
+#
+#        Sets the type of return of a scrollbar.
+#
+#        @param pObject : pointer to scrollbar object
+#        @param returnnum : value of return type
+#
+#        @status: Untested + NoDoc + NoExample = NOT OK
+#    """
+#
+#    _fl_set_scrollbar_return = cfuncproto(
+#            load_so_libforms(), "fl_set_scrollbar_return",
+#            None, [cty.POINTER(xfc.FL_OBJECT), cty.c_uint],
+#            """void fl_set_scrollbar_return(FL_OBJECT * ob, unsigned.
+#               int ret)
+#            """)
+#    check_admitted_listvalues(returnnum, xfc.RETURN_list)
+#    uireturnnum = convert_to_uint(returnnum)
+#    keep_elem_refs(pObject, returnnum, uireturnnum)
+#    _fl_set_scrollbar_return(pObject, uireturnnum)
 
 
-#def fl_create_select(selecttype, x, y, w, h, label): 
-#    """ 
-#        fl_create_select(selecttype, x, y, w, h, label) -> pObject 
-# 
-#        Creates a select object. 
-# 
-#        @param selecttype : type of select to be created 
-#        @param x : horizontal position (upper-left corner) 
-#        @param x : vertical position (upper-left corner) 
-#        @param w : width in coord units 
-#        @param h : height in coord units 
-#        @param label : text label of select 
-# 
-#        @status: Untested + NoDoc + NoExample = NOT OK 
-#    """ 
-# 
-#    _fl_create_select = cfuncproto( 
-#            load_so_libforms(), "fl_create_select", 
-#            cty.POINTER(xfc.FL_OBJECT), [cty.c_int, xfc.FL_Coord, 
-#            xfc.FL_Coord, xfc.FL_Coord, xfc.FL_Coord, xfc.STRING], 
-#            """FL_OBJECT * fl_create_select(int p1, FL_Coord p2, FL_Coord p3, 
-#               FL_Coord p4, FL_Coord p5, const char * p6) 
-#            """) 
-#    check_admitted_listvalues(selecttype, xfc.SELECTTYPE_list) 
-#    iselecttype = convert_to_int(selecttype) 
-#    ix = convert_to_FL_Coord(x) 
-#    iy = convert_to_FL_Coord(y) 
-#    iw = convert_to_FL_Coord(w) 
-#    ih = convert_to_FL_Coord(h) 
-#    slabel = convert_to_string(label) 
-#    keep_elem_refs(selecttype, x, y, w, h, label, iselecttype, ix, iy, 
-#                   iw, ih, slabel) 
-#    retval = _fl_create_select(iselecttype, ix, iy, iw, ih, slabel) 
-#    return retval 
+#def fl_create_select(selecttype, x, y, w, h, label):
+#    """
+#        fl_create_select(selecttype, x, y, w, h, label) -> pObject
+#
+#        Creates a select object.
+#
+#        @param selecttype : type of select to be created
+#        @param x : horizontal position (upper-left corner)
+#        @param x : vertical position (upper-left corner)
+#        @param w : width in coord units
+#        @param h : height in coord units
+#        @param label : text label of select
+#
+#        @status: Untested + NoDoc + NoExample = NOT OK
+#    """
+#
+#    _fl_create_select = cfuncproto(
+#            load_so_libforms(), "fl_create_select",
+#            cty.POINTER(xfc.FL_OBJECT), [cty.c_int, xfc.FL_Coord,
+#            xfc.FL_Coord, xfc.FL_Coord, xfc.FL_Coord, xfc.STRING],
+#            """FL_OBJECT * fl_create_select(int p1, FL_Coord p2, FL_Coord p3,
+#               FL_Coord p4, FL_Coord p5, const char * p6)
+#            """)
+#    check_admitted_listvalues(selecttype, xfc.SELECTTYPE_list)
+#    iselecttype = convert_to_int(selecttype)
+#    ix = convert_to_FL_Coord(x)
+#    iy = convert_to_FL_Coord(y)
+#    iw = convert_to_FL_Coord(w)
+#    ih = convert_to_FL_Coord(h)
+#    slabel = convert_to_string(label)
+#    keep_elem_refs(selecttype, x, y, w, h, label, iselecttype, ix, iy,
+#                   iw, ih, slabel)
+#    retval = _fl_create_select(iselecttype, ix, iy, iw, ih, slabel)
+#    return retval
 
 
-#def fl_create_slider(slidertype, x, y, w, h, label): 
-#    """ 
-#        fl_create_slider(slidertype, x, y, w, h, label) -> pObject 
-# 
-#        Creates a slider object. 
-# 
-#        @param slidertype : type of slider to be created 
-#        @param x : horizontal position in coord units (upper-left corner) 
-#        @param x : vertical position (upper-left corner) 
-#        @param w : width in coord units 
-#        @param h : height in coord units 
-#        @param label : text label of slider 
-# 
-#        @status: Untested + NoDoc + NoExample = NOT OK 
-#    """ 
-# 
-#    _fl_create_slider = cfuncproto( 
-#            load_so_libforms(), "fl_create_slider", 
-#            cty.POINTER(xfc.FL_OBJECT), [cty.c_int, xfc.FL_Coord,. 
-#            xfc.FL_Coord, xfc.FL_Coord, xfc.FL_Coord, xfc.STRING], 
-#            """FL_OBJECT * fl_create_slider(int type, FL_Coord x, FL_Coord y, 
-#               FL_Coord w, FL_Coord h, const char * label) 
-#            """) 
-#    check_admitted_listvalues(slidertype, xfc.SLIDERTYPE_list) 
-#    islidertype = convert_to_int(slidertype) 
-#    ix = convert_to_FL_Coord(x) 
-#    iy = convert_to_FL_Coord(y) 
-#    iw = convert_to_FL_Coord(w) 
-#    ih = convert_to_FL_Coord(h) 
-#    slabel = convert_to_string(label) 
-#    keep_elem_refs(slidertype, x, y, w, h, label, islidertype, ix, iy, 
-#                   iw, ih, slabel) 
-#    retval = _fl_create_slider(islidertype, ix, iy, iw, ih, slabel) 
-#    return retval 
+#def fl_create_slider(slidertype, x, y, w, h, label):
+#    """
+#        fl_create_slider(slidertype, x, y, w, h, label) -> pObject
+#
+#        Creates a slider object.
+#
+#        @param slidertype : type of slider to be created
+#        @param x : horizontal position in coord units (upper-left corner)
+#        @param x : vertical position (upper-left corner)
+#        @param w : width in coord units
+#        @param h : height in coord units
+#        @param label : text label of slider
+#
+#        @status: Untested + NoDoc + NoExample = NOT OK
+#    """
+#
+#    _fl_create_slider = cfuncproto(
+#            load_so_libforms(), "fl_create_slider",
+#            cty.POINTER(xfc.FL_OBJECT), [cty.c_int, xfc.FL_Coord,.
+#            xfc.FL_Coord, xfc.FL_Coord, xfc.FL_Coord, xfc.STRING],
+#            """FL_OBJECT * fl_create_slider(int type, FL_Coord x, FL_Coord y,
+#               FL_Coord w, FL_Coord h, const char * label)
+#            """)
+#    check_admitted_listvalues(slidertype, xfc.SLIDERTYPE_list)
+#    islidertype = convert_to_int(slidertype)
+#    ix = convert_to_FL_Coord(x)
+#    iy = convert_to_FL_Coord(y)
+#    iw = convert_to_FL_Coord(w)
+#    ih = convert_to_FL_Coord(h)
+#    slabel = convert_to_string(label)
+#    keep_elem_refs(slidertype, x, y, w, h, label, islidertype, ix, iy,
+#                   iw, ih, slabel)
+#    retval = _fl_create_slider(islidertype, ix, iy, iw, ih, slabel)
+#    return retval
 
 
-#def fl_create_valslider(slidertype, x, y, w, h, label): 
-#    """ 
-#        fl_create_valslider(slidertype, x, y, w, h, label) -> pObject 
-# 
-#        Creates a valslider object. 
-# 
-#        @param slidertype : type of slider to be created 
-#        @param x : horizontal position (upper-left corner) 
-#        @param x : vertical position (upper-left corner) 
-#        @param w : width in coord units 
-#        @param h : height in coord units 
-#        @param label : text label of slider 
-# 
-#        @status: Untested + NoDoc + NoExample = NOT OK 
-#    """ 
-# 
-#    _fl_create_valslider = cfuncproto( 
-#            load_so_libforms(), "fl_create_valslider", 
-#            cty.POINTER(xfc.FL_OBJECT), [cty.c_int, xfc.FL_Coord, 
-#            xfc.FL_Coord, xfc.FL_Coord, xfc.FL_Coord, xfc.STRING], 
-#            """FL_OBJECT * fl_create_valslider(int type, FL_Coord x, 
-#               FL_Coord y, FL_Coord w, FL_Coord h, const char * label) 
-#            """) 
-#    check_admitted_listvalues(slidertype, xfc.SLIDERTYPE_list) 
-#    islidertype = convert_to_int(slidertype) 
-#    ix = convert_to_FL_Coord(x) 
-#    iy = convert_to_FL_Coord(y) 
-#    iw = convert_to_FL_Coord(w) 
-#    ih = convert_to_FL_Coord(h) 
-#    slabel = convert_to_string(label) 
-#    keep_elem_refs(slidertype, x, y, w, h, label, islidertype, ix, iy, 
-#                   iw, ih, slabel) 
-#    retval = _fl_create_valslider(islidertype, ix, iy, iw, ih, slabel) 
-#    return retval 
+#def fl_create_valslider(slidertype, x, y, w, h, label):
+#    """
+#        fl_create_valslider(slidertype, x, y, w, h, label) -> pObject
+#
+#        Creates a valslider object.
+#
+#        @param slidertype : type of slider to be created
+#        @param x : horizontal position (upper-left corner)
+#        @param x : vertical position (upper-left corner)
+#        @param w : width in coord units
+#        @param h : height in coord units
+#        @param label : text label of slider
+#
+#        @status: Untested + NoDoc + NoExample = NOT OK
+#    """
+#
+#    _fl_create_valslider = cfuncproto(
+#            load_so_libforms(), "fl_create_valslider",
+#            cty.POINTER(xfc.FL_OBJECT), [cty.c_int, xfc.FL_Coord,
+#            xfc.FL_Coord, xfc.FL_Coord, xfc.FL_Coord, xfc.STRING],
+#            """FL_OBJECT * fl_create_valslider(int type, FL_Coord x,
+#               FL_Coord y, FL_Coord w, FL_Coord h, const char * label)
+#            """)
+#    check_admitted_listvalues(slidertype, xfc.SLIDERTYPE_list)
+#    islidertype = convert_to_int(slidertype)
+#    ix = convert_to_FL_Coord(x)
+#    iy = convert_to_FL_Coord(y)
+#    iw = convert_to_FL_Coord(w)
+#    ih = convert_to_FL_Coord(h)
+#    slabel = convert_to_string(label)
+#    keep_elem_refs(slidertype, x, y, w, h, label, islidertype, ix, iy,
+#                   iw, ih, slabel)
+#    retval = _fl_create_valslider(islidertype, ix, iy, iw, ih, slabel)
+#    return retval
 
-#def fl_create_spinner(spinnertype, x, y, w, h, label): 
-#    """ 
-#        fl_create_spinner(spinnertype, x, y, w, h, label) -> pObject 
-# 
-#        Creates a spinner object. 
-# 
-#        @param spinnertype : type of spinner to be created 
-#        @param x : horizontal position (upper-left corner) 
-#        @param x : vertical position (upper-left corner) 
-#        @param w : width in coord units 
-#        @param h : height in coord units 
-#        @param label : text label of spinner 
-# 
-#        @status: Untested + NoDoc + NoExample = NOT OK 
-#    """ 
-# 
-#    _fl_create_spinner = cfuncproto( 
-#            load_so_libforms(), "fl_create_spinner", 
-#            cty.POINTER(xfc.FL_OBJECT), [cty.c_int, xfc.FL_Coord, 
-#            xfc.FL_Coord, xfc.FL_Coord, xfc.FL_Coord, xfc.STRING], 
+#def fl_create_spinner(spinnertype, x, y, w, h, label):
+#    """
+#        fl_create_spinner(spinnertype, x, y, w, h, label) -> pObject
+#
+#        Creates a spinner object.
+#
+#        @param spinnertype : type of spinner to be created
+#        @param x : horizontal position (upper-left corner)
+#        @param x : vertical position (upper-left corner)
+#        @param w : width in coord units
+#        @param h : height in coord units
+#        @param label : text label of spinner
+#
+#        @status: Untested + NoDoc + NoExample = NOT OK
+#    """
+#
+#    _fl_create_spinner = cfuncproto(
+#            load_so_libforms(), "fl_create_spinner",
+#            cty.POINTER(xfc.FL_OBJECT), [cty.c_int, xfc.FL_Coord,
+#            xfc.FL_Coord, xfc.FL_Coord, xfc.FL_Coord, xfc.STRING],
 #            """FL_OBJECT * fl_create_spinner(int type, FL_Coord x, FL_Coord y,
-#               FL_Coord w, FL_Coord h, const char * label) 
-#            """) 
-#    check_admitted_listvalues(spinnertype, xfc.SPINNERTYPE_list) 
-#    ispinnertype = convert_to_int(spinnertype) 
-#    ix = convert_to_FL_Coord(x) 
-#    iy = convert_to_FL_Coord(y) 
-#    iw = convert_to_FL_Coord(w) 
-#    ih = convert_to_FL_Coord(h) 
-#    slabel = convert_to_string(label) 
-#    keep_elem_refs(spinnertype, x, y, w, h, label, ispinnertype, ix, iy, 
-#                   iw, ih, slabel) 
-#    retval = _fl_create_spinner(ispinnertype, ix, iy, iw, ih, slabel) 
-#    return retval 
+#               FL_Coord w, FL_Coord h, const char * label)
+#            """)
+#    check_admitted_listvalues(spinnertype, xfc.SPINNERTYPE_list)
+#    ispinnertype = convert_to_int(spinnertype)
+#    ix = convert_to_FL_Coord(x)
+#    iy = convert_to_FL_Coord(y)
+#    iw = convert_to_FL_Coord(w)
+#    ih = convert_to_FL_Coord(h)
+#    slabel = convert_to_string(label)
+#    keep_elem_refs(spinnertype, x, y, w, h, label, ispinnertype, ix, iy,
+#                   iw, ih, slabel)
+#    retval = _fl_create_spinner(ispinnertype, ix, iy, iw, ih, slabel)
+#    return retval
 
-#def fl_create_tabfolder(foldertype, x, y, w, h, label): 
-#    """ 
-#        fl_create_tabfolder(foldertype, x, y, w, h, label) -> pObject 
-# 
-#        Creates a tabfolder object. 
-# 
-#        @param foldertype : type of tabfolder to be created 
-#        @param x : horizontal position (upper-left corner) 
-#        @param x : vertical position (upper-left corner) 
-#        @param w : width in coord units 
-#        @param h : height in coord units 
-#        @param label : text label of tabfolder 
-# 
-#        @status: Untested + NoDoc + NoExample = NOT OK 
-#    """ 
-# 
-#    _fl_create_tabfolder = cfuncproto( 
-#            load_so_libforms(), "fl_create_tabfolder", 
-#            cty.POINTER(xfc.FL_OBJECT), [cty.c_int, xfc.FL_Coord, 
-#            xfc.FL_Coord, xfc.FL_Coord, xfc.FL_Coord, xfc.STRING], 
-#            """FL_OBJECT * fl_create_tabfolder(int type, FL_Coord x, 
-#               FL_Coord y, FL_Coord w, FL_Coord h, const char * label) 
-#            """) 
-#    check_admitted_listvalues(foldertype, xfc.TABFOLDERTYPE_list) 
-#    ifoldertype = convert_to_int(foldertype) 
-#    ix = convert_to_FL_Coord(x) 
-#    iy = convert_to_FL_Coord(y) 
-#    iw = convert_to_FL_Coord(w) 
-#    ih = convert_to_FL_Coord(h) 
-#    slabel = convert_to_string(label) 
-#    keep_elem_refs(foldertype, x, y, w, h, label, ifoldertype, ix, iy, 
-#                   iw, ih, slabel) 
-#    retval = _fl_create_tabfolder(ifoldertype, ix, iy, iw, ih, slabel) 
-#    return retval 
-
-
-#def fl_create_text(texttype, x, y, w, h, label): 
-#    """ 
-#        fl_create_text(texttype, x, y, w, h, label) -> pObject 
-# 
-#        Creates a text object. 
-# 
-#        @param texttype : type of text to be created 
-#        @param x : horizontal position (upper-left corner) 
-#        @param x : vertical position (upper-left corner) 
-#        @param w : width in coord units 
-#        @param h : height in coord units 
-#        @param label : text label of text 
-# 
-#        @status: Untested + NoDoc + NoExample = NOT OK 
-#    """ 
-# 
-#    _fl_create_text = cfuncproto( 
-#            load_so_libforms(), "fl_create_text", 
-#            cty.POINTER(xfc.FL_OBJECT), [cty.c_int, xfc.FL_Coord, 
-#            xfc.FL_Coord, xfc.FL_Coord, xfc.FL_Coord, xfc.STRING], 
-#            """FL_OBJECT * fl_create_text(int type, FL_Coord x, FL_Coord y, 
-#               FL_Coord w, FL_Coord h, const char * label) 
-#            """) 
-#    check_admitted_listvalues(texttype, xfc.TEXTTYPE_list) 
-#    itexttype = convert_to_int(texttype) 
-#    ix = convert_to_FL_Coord(x) 
-#    iy = convert_to_FL_Coord(y) 
-#    iw = convert_to_FL_Coord(w) 
-#    ih = convert_to_FL_Coord(h) 
-#    slabel = convert_to_string(label) 
-#    keep_elem_refs(texttype, x, y, w, h, label, itexttype, ix, iy, 
-#                   iw, ih, slabel) 
-#    retval = _fl_create_text(itexttype, ix, iy, iw, ih, slabel) 
-#    return retval 
+#def fl_create_tabfolder(foldertype, x, y, w, h, label):
+#    """
+#        fl_create_tabfolder(foldertype, x, y, w, h, label) -> pObject
+#
+#        Creates a tabfolder object.
+#
+#        @param foldertype : type of tabfolder to be created
+#        @param x : horizontal position (upper-left corner)
+#        @param x : vertical position (upper-left corner)
+#        @param w : width in coord units
+#        @param h : height in coord units
+#        @param label : text label of tabfolder
+#
+#        @status: Untested + NoDoc + NoExample = NOT OK
+#    """
+#
+#    _fl_create_tabfolder = cfuncproto(
+#            load_so_libforms(), "fl_create_tabfolder",
+#            cty.POINTER(xfc.FL_OBJECT), [cty.c_int, xfc.FL_Coord,
+#            xfc.FL_Coord, xfc.FL_Coord, xfc.FL_Coord, xfc.STRING],
+#            """FL_OBJECT * fl_create_tabfolder(int type, FL_Coord x,
+#               FL_Coord y, FL_Coord w, FL_Coord h, const char * label)
+#            """)
+#    check_admitted_listvalues(foldertype, xfc.TABFOLDERTYPE_list)
+#    ifoldertype = convert_to_int(foldertype)
+#    ix = convert_to_FL_Coord(x)
+#    iy = convert_to_FL_Coord(y)
+#    iw = convert_to_FL_Coord(w)
+#    ih = convert_to_FL_Coord(h)
+#    slabel = convert_to_string(label)
+#    keep_elem_refs(foldertype, x, y, w, h, label, ifoldertype, ix, iy,
+#                   iw, ih, slabel)
+#    retval = _fl_create_tabfolder(ifoldertype, ix, iy, iw, ih, slabel)
+#    return retval
 
 
-#def fl_create_thumbwheel(wheeltype, x, y, w, h, label): 
-#    """ 
-#        fl_create_thumbwheel(wheeltype, x, y, w, h, label) -> pObject 
-# 
-#        Creates a thumbwheel object. 
-# 
-#        @param wheeltype : type of thumbwheel to be created 
-#        @param x : horizontal position (upper-left corner) 
-#        @param x : vertical position (upper-left corner) 
-#        @param w : width in coord units 
-#        @param h : height in coord units 
-#        @param label : text label of thumbwheel 
-# 
-#        @status: Untested + NoDoc + NoExample = NOT OK 
-#    """ 
-# 
-#    _fl_create_thumbwheel = cfuncproto( 
-#            load_so_libforms(), "fl_create_thumbwheel", 
+#def fl_create_text(texttype, x, y, w, h, label):
+#    """
+#        fl_create_text(texttype, x, y, w, h, label) -> pObject
+#
+#        Creates a text object.
+#
+#        @param texttype : type of text to be created
+#        @param x : horizontal position (upper-left corner)
+#        @param x : vertical position (upper-left corner)
+#        @param w : width in coord units
+#        @param h : height in coord units
+#        @param label : text label of text
+#
+#        @status: Untested + NoDoc + NoExample = NOT OK
+#    """
+#
+#    _fl_create_text = cfuncproto(
+#            load_so_libforms(), "fl_create_text",
+#            cty.POINTER(xfc.FL_OBJECT), [cty.c_int, xfc.FL_Coord,
+#            xfc.FL_Coord, xfc.FL_Coord, xfc.FL_Coord, xfc.STRING],
+#            """FL_OBJECT * fl_create_text(int type, FL_Coord x, FL_Coord y,
+#               FL_Coord w, FL_Coord h, const char * label)
+#            """)
+#    check_admitted_listvalues(texttype, xfc.TEXTTYPE_list)
+#    itexttype = convert_to_int(texttype)
+#    ix = convert_to_FL_Coord(x)
+#    iy = convert_to_FL_Coord(y)
+#    iw = convert_to_FL_Coord(w)
+#    ih = convert_to_FL_Coord(h)
+#    slabel = convert_to_string(label)
+#    keep_elem_refs(texttype, x, y, w, h, label, itexttype, ix, iy,
+#                   iw, ih, slabel)
+#    retval = _fl_create_text(itexttype, ix, iy, iw, ih, slabel)
+#    return retval
+
+
+#def fl_create_thumbwheel(wheeltype, x, y, w, h, label):
+#    """
+#        fl_create_thumbwheel(wheeltype, x, y, w, h, label) -> pObject
+#
+#        Creates a thumbwheel object.
+#
+#        @param wheeltype : type of thumbwheel to be created
+#        @param x : horizontal position (upper-left corner)
+#        @param x : vertical position (upper-left corner)
+#        @param w : width in coord units
+#        @param h : height in coord units
+#        @param label : text label of thumbwheel
+#
+#        @status: Untested + NoDoc + NoExample = NOT OK
+#    """
+#
+#    _fl_create_thumbwheel = cfuncproto(
+#            load_so_libforms(), "fl_create_thumbwheel",
 #            cty.POINTER(xfc.FL_OBJECT), [cty.c_int, xfc.FL_Coord, xfc.FL_Coord,
-#            xfc.FL_Coord, xfc.STRING], 
-#            """FL_OBJECT * fl_create_thumbwheel(int type, FL_Coord x, 
-#               FL_Coord y, FL_Coord w, FL_Coord h, const char * label) 
-#            """) 
-#    check_admitted_listvalues(wheeltype, xfc.THUMBWHEELTYPE_list) 
-#    iwheeltype = convert_to_int(wheeltype) 
-#    ix = convert_to_FL_Coord(x) 
-#    iy = convert_to_FL_Coord(y) 
-#    iw = convert_to_FL_Coord(w) 
-#    ih = convert_to_FL_Coord(h) 
-#    slabel = convert_to_string(label) 
-#    keep_elem_refs(wheeltype, x, y, w, h, label, iwheeltype, ix, iy, 
-#                   iw, ih, slabel) 
-#    retval = _fl_create_thumbwheel(iwheeltype, ix, iy, iw, ih, slabel) 
-#    return retval 
+#            xfc.FL_Coord, xfc.STRING],
+#            """FL_OBJECT * fl_create_thumbwheel(int type, FL_Coord x,
+#               FL_Coord y, FL_Coord w, FL_Coord h, const char * label)
+#            """)
+#    check_admitted_listvalues(wheeltype, xfc.THUMBWHEELTYPE_list)
+#    iwheeltype = convert_to_int(wheeltype)
+#    ix = convert_to_FL_Coord(x)
+#    iy = convert_to_FL_Coord(y)
+#    iw = convert_to_FL_Coord(w)
+#    ih = convert_to_FL_Coord(h)
+#    slabel = convert_to_string(label)
+#    keep_elem_refs(wheeltype, x, y, w, h, label, iwheeltype, ix, iy,
+#                   iw, ih, slabel)
+#    retval = _fl_create_thumbwheel(iwheeltype, ix, iy, iw, ih, slabel)
+#    return retval
 
 
-#def fl_create_timer(timertype, x, y, w, h, label): 
-#    """ 
-#        fl_create_timer(timertype, x, y, w, h, label) -> pObject 
-# 
-#        Creates a timer object. 
-# 
-#        @param timertype : type of timer to be created 
-#        @param x : horizontal position (upper-left corner) 
-#        @param x : vertical position (upper-left corner) 
-#        @param w : width in coord units 
-#        @param h : height in coord units 
-#        @param label : text label of timer 
-# 
-#        @status: Untested + NoDoc + NoExample = NOT OK 
-#    """ 
-# 
-#    _fl_create_timer = cfuncproto( 
-#            load_so_libforms(), "fl_create_timer", 
+#def fl_create_timer(timertype, x, y, w, h, label):
+#    """
+#        fl_create_timer(timertype, x, y, w, h, label) -> pObject
+#
+#        Creates a timer object.
+#
+#        @param timertype : type of timer to be created
+#        @param x : horizontal position (upper-left corner)
+#        @param x : vertical position (upper-left corner)
+#        @param w : width in coord units
+#        @param h : height in coord units
+#        @param label : text label of timer
+#
+#        @status: Untested + NoDoc + NoExample = NOT OK
+#    """
+#
+#    _fl_create_timer = cfuncproto(
+#            load_so_libforms(), "fl_create_timer",
 #            cty.POINTER(xfc.FL_OBJECT), [cty.c_int, xfc.FL_Coord, xfc.FL_Coord,
-#            xfc.FL_Coord, xfc.FL_Coord, xfc.STRING], 
-#            """FL_OBJECT * fl_create_timer(int type, FL_Coord x, FL_Coord y, 
-#            FL_Coord w, FL_Coord h, const char * label) 
-#            """) 
-#    check_admitted_listvalues(timertype, xfc.TIMERTYPE_list) 
-#    itimertype = convert_to_int(timertype) 
-#    ix = convert_to_FL_Coord(x) 
-#    iy = convert_to_FL_Coord(y) 
-#    iw = convert_to_FL_Coord(w) 
-#    ih = convert_to_FL_Coord(h) 
-#    slabel = convert_to_string(label) 
-#    keep_elem_refs(timertype, x, y, w, h, label, itimertype, ix, iy, 
-#                   iw, ih, slabel) 
-#    retval = _fl_create_timer(itimertype, ix, iy, iw, ih, slabel) 
-#    return retval 
+#            xfc.FL_Coord, xfc.FL_Coord, xfc.STRING],
+#            """FL_OBJECT * fl_create_timer(int type, FL_Coord x, FL_Coord y,
+#            FL_Coord w, FL_Coord h, const char * label)
+#            """)
+#    check_admitted_listvalues(timertype, xfc.TIMERTYPE_list)
+#    itimertype = convert_to_int(timertype)
+#    ix = convert_to_FL_Coord(x)
+#    iy = convert_to_FL_Coord(y)
+#    iw = convert_to_FL_Coord(w)
+#    ih = convert_to_FL_Coord(h)
+#    slabel = convert_to_string(label)
+#    keep_elem_refs(timertype, x, y, w, h, label, itimertype, ix, iy,
+#                   iw, ih, slabel)
+#    retval = _fl_create_timer(itimertype, ix, iy, iw, ih, slabel)
+#    return retval
 
 
-#def fl_create_xyplot(plottype, x, y, w, h, label): 
-#    """ 
-#        fl_create_xyplot(plottype, x, y, w, h, label) -> pObject 
-# 
-#        Creates an xyplot object. 
-# 
-#        @param plottype : type of xyplot to be created 
-#        @param x : horizontal position (upper-left corner) 
-#        @param x : vertical position (upper-left corner) 
-#        @param w : width in coord units 
-#        @param h : height in coord units 
-#        @param label : text label of xyplot 
-# 
-#        @status: Untested + NoDoc + NoExample = NOT OK 
-#    """ 
-# 
-#    _fl_create_xyplot = cfuncproto( 
-#            load_so_libforms(), "fl_create_xyplot", 
-#            cty.POINTER(xfc.FL_OBJECT), [cty.c_int, xfc.FL_Coord, 
-#            xfc.FL_Coord, xfc.FL_Coord, xfc.FL_Coord, xfc.STRING], 
-#            """FL_OBJECT * fl_create_xyplot(int t, FL_Coord x, FL_Coord y, 
-#               FL_Coord w, FL_Coord h, const char * label) 
-#            """) 
-#    check_admitted_listvalues(plottype, xfc.XYPLOTTYPE_list) 
-#    iplottype = convert_to_int(plottype) 
-#    ix = convert_to_FL_Coord(x) 
-#    iy = convert_to_FL_Coord(y) 
-#    iw = convert_to_FL_Coord(w) 
-#    ih = convert_to_FL_Coord(h) 
-#    slabel = convert_to_string(label) 
-#    keep_elem_refs(plottype, x, y, w, h, label, iplottype, ix, iy, 
-#                   iw, ih, slabel) 
-#    retval = _fl_create_xyplot(iplottype, ix, iy, iw, ih, slabel) 
-#    return retval 
+#def fl_create_xyplot(plottype, x, y, w, h, label):
+#    """
+#        fl_create_xyplot(plottype, x, y, w, h, label) -> pObject
+#
+#        Creates an xyplot object.
+#
+#        @param plottype : type of xyplot to be created
+#        @param x : horizontal position (upper-left corner)
+#        @param x : vertical position (upper-left corner)
+#        @param w : width in coord units
+#        @param h : height in coord units
+#        @param label : text label of xyplot
+#
+#        @status: Untested + NoDoc + NoExample = NOT OK
+#    """
+#
+#    _fl_create_xyplot = cfuncproto(
+#            load_so_libforms(), "fl_create_xyplot",
+#            cty.POINTER(xfc.FL_OBJECT), [cty.c_int, xfc.FL_Coord,
+#            xfc.FL_Coord, xfc.FL_Coord, xfc.FL_Coord, xfc.STRING],
+#            """FL_OBJECT * fl_create_xyplot(int t, FL_Coord x, FL_Coord y,
+#               FL_Coord w, FL_Coord h, const char * label)
+#            """)
+#    check_admitted_listvalues(plottype, xfc.XYPLOTTYPE_list)
+#    iplottype = convert_to_int(plottype)
+#    ix = convert_to_FL_Coord(x)
+#    iy = convert_to_FL_Coord(y)
+#    iw = convert_to_FL_Coord(w)
+#    ih = convert_to_FL_Coord(h)
+#    slabel = convert_to_string(label)
+#    keep_elem_refs(plottype, x, y, w, h, label, iplottype, ix, iy,
+#                   iw, ih, slabel)
+#    retval = _fl_create_xyplot(iplottype, ix, iy, iw, ih, slabel)
+#    return retval
+
+def fl_set_xyplot_return(pFlObject, when):
+    """
+
+    --
+
+    :Parameters:
+      `pFlObject` : pointer to xfdata.FL_OBJECT
+        xyplot object
+      `when` : int_pos
+        return type. Values (from xfdata.py) FL_RETURN_NONE,
+        FL_RETURN_CHANGED, FL_RETURN_END, FL_RETURN_END_CHANGED,
+        FL_RETURN_SELECTION, FL_RETURN_DESELECTION,
+        FL_RETURN_TRIGGERED, FL_RETURN_ALWAYS
+
+    :note: e.g. *todo*
+
+    :status: Untested + NoDoc + NoDemo = NOT OK
+
+    """
+    _fl_set_xyplot_return = libr.cfuncproto(
+        libr.load_so_libforms(), "fl_set_xyplot_return",
+        None, [cty.POINTER(xfdata.FL_OBJECT), cty.c_uint],
+        """void fl_set_xyplot_return(FL_OBJECT * ob, unsigned
+           int when)""")
+    libr.check_if_initialized()
+    libr.verify_flobjectptr_type(pFlObject)
+    libr.checkfatal_allowed_value_in_list(when, xfdata.RETURN_list)
+    uiwhen = libr.convert_to_uint(when)
+    libr.keep_elem_refs(pFlObject, when, uiwhen)
+    _fl_set_xyplot_return(pFlObject, uiwhen)
 
 
-# low-level, maybe unused in python --LK 
-#def fl_safe_free(p): 
-#    if p: 
-#        fl_free(p) 
-#        p = None        # UNSURE 
+
+
+
+
+# low-level, maybe unused in python --LK
+#def fl_safe_free(p):
+#    if p:
+#        fl_free(p)
+#        p = None        # UNSURE
 
 
 #########################################
@@ -1551,84 +1586,84 @@ XFDATA VARIABLES
 #########################################
 
 
-# internal data dismissed use --LK 
-#FL_TEXTBOX = 34             # internal use 
-#end internal 
+# internal data dismissed use --LK
+#FL_TEXTBOX = 34             # internal use
+#end internal
 
 
-# internal data dismissed --LK 
-# for internal use only 
-#FL_TOPTAB_UPBOX = 18 
-#FL_SELECTED_TOPTAB_UPBOX = 19 
-#FL_BOTTOMTAB_UPBOX = 20 
-#FL_SELECTED_BOTTOMTAB_UPBOX = 21 
-# end internal --LK 
+# internal data dismissed --LK
+# for internal use only
+#FL_TOPTAB_UPBOX = 18
+#FL_SELECTED_TOPTAB_UPBOX = 19
+#FL_BOTTOMTAB_UPBOX = 20
+#FL_SELECTED_BOTTOMTAB_UPBOX = 21
+# end internal --LK
 
 
-# backward data dismissed --LK 
-# the rest is for backward compatibility only, don't use! 
-#FL_ALIGN_TOP_LEFT     = FL_ALIGN_LEFT_TOP 
-#FL_ALIGN_TOP_RIGHT    = FL_ALIGN_RIGHT_TOP 
-#FL_ALIGN_BOTTOM_LEFT  = FL_ALIGN_LEFT_BOTTOM 
-#FL_ALIGN_BOTTOM_RIGHT = FL_ALIGN_RIGHT_BOTTOM 
+# backward data dismissed --LK
+# the rest is for backward compatibility only, don't use!
+#FL_ALIGN_TOP_LEFT     = FL_ALIGN_LEFT_TOP
+#FL_ALIGN_TOP_RIGHT    = FL_ALIGN_RIGHT_TOP
+#FL_ALIGN_BOTTOM_LEFT  = FL_ALIGN_LEFT_BOTTOM
+#FL_ALIGN_BOTTOM_RIGHT = FL_ALIGN_RIGHT_BOTTOM
 #end backwards
 
 
-# backward data dismissed --LK 
-# An alias probably for an earlier typo 
-#FL_DOGERBLUE = FL_DODGERBLUE 
+# backward data dismissed --LK
+# An alias probably for an earlier typo
+#FL_DOGERBLUE = FL_DODGERBLUE
 #end backwards
 
 
-# backward data dismissed --LK 
-# The following are only for backward compatibility, not used anymore 
-#FL_MOVE = FL_MOTION 
-#FL_KEYBOARD = FL_KEYPRESS 
-#FL_MOUSE = FL_UPDATE 
-#end backwards --LK 
+# backward data dismissed --LK
+# The following are only for backward compatibility, not used anymore
+#FL_MOVE = FL_MOTION
+#FL_KEYBOARD = FL_KEYPRESS
+#FL_MOUSE = FL_UPDATE
+#end backwards --LK
 
 
-# backward data dismissed --LK 
-#FL_ALT_VAL = FL_ALT_MASK    # Don't use! 
-# end backward --LK 
+# backward data dismissed --LK
+#FL_ALT_VAL = FL_ALT_MASK    # Don't use!
+# end backward --LK
 
 
-#backward data dismissed --LK 
-#FL_PUP_TOGGLE = FL_PUP_BOX          # not used anymore 
-#end backward 
+#backward data dismissed --LK
+#FL_PUP_TOGGLE = FL_PUP_BOX          # not used anymore
+#end backward
 
 
-# backward data dismissed --LK 
-# Defines for compatibility 
-#FL_TINY_FONT = FL_TINY_SIZE 
-#FL_SMALL_FONT = FL_SMALL_SIZE 
-#FL_NORMAL_FONT = FL_NORMAL_SIZE 
-#FL_MEDIUM_FONT = FL_MEDIUM_SIZE 
-#FL_LARGE_FONT = FL_LARGE_SIZE 
-#FL_HUGE_FONT = FL_HUGE_SIZE 
-#FL_NORMAL_FONT1 = FL_SMALL_FONT 
-#FL_NORMAL_FONT2 = FL_NORMAL_FONT 
-#FL_DEFAULT_FONT = FL_SMALL_FONT 
-#end backward --LK 
+# backward data dismissed --LK
+# Defines for compatibility
+#FL_TINY_FONT = FL_TINY_SIZE
+#FL_SMALL_FONT = FL_SMALL_SIZE
+#FL_NORMAL_FONT = FL_NORMAL_SIZE
+#FL_MEDIUM_FONT = FL_MEDIUM_SIZE
+#FL_LARGE_FONT = FL_LARGE_SIZE
+#FL_HUGE_FONT = FL_HUGE_SIZE
+#FL_NORMAL_FONT1 = FL_SMALL_FONT
+#FL_NORMAL_FONT2 = FL_NORMAL_FONT
+#FL_DEFAULT_FONT = FL_SMALL_FONT
+#end backward --LK
 
 
-# FL_xxx does not do anything anymore, but kept for compatibility 
-# values for unnamed enumeration 
+# FL_xxx does not do anything anymore, but kept for compatibility
+# values for unnamed enumeration
 FL_IllegalVisual = -1
 """"""
-FL_StaticGray = 0           # StaticGray 
+FL_StaticGray = 0           # StaticGray
 """"""
-FL_GrayScale = 1            # GrayScale 
+FL_GrayScale = 1            # GrayScale
 """"""
-FL_StaticColor = 2          # StaticColor 
+FL_StaticColor = 2          # StaticColor
 """"""
-FL_PseudoColor = 3          # PseudoColor 
+FL_PseudoColor = 3          # PseudoColor
 """"""
-FL_TrueColor = 4            # TrueColor 
+FL_TrueColor = 4            # TrueColor
 """"""
-FL_DirectColor = 5          # DirectColor 
+FL_DirectColor = 5          # DirectColor
 """"""
-FL_DefaultVisual = 10       # special request 
+FL_DefaultVisual = 10       # special request
 """"""
 
 # my add --LK
@@ -1636,896 +1671,896 @@ TrueColor = FL_TrueColor
 DirectColor = FL_DirectColor
 
 
-# backward data dismissed --LK. 
-#FL_MENU_MAXSTR = 64        # not used anymore! JTT. 
-#end backward --LK. 
+# backward data dismissed --LK.
+#FL_MENU_MAXSTR = 64        # not used anymore! JTT.
+#end backward --LK.
 
 
-# backward data dismissed --LK 
-#FL_STATE = FL_State     # for compatibility 
+# backward data dismissed --LK
+#FL_STATE = FL_State     # for compatibility
 
 
-# backward data dismissed --LK 
-# This exists only for backward compatibility and isn't used anymore! 
-#FL_BROWSER_LINELENGTH = 2048 
-# end backwards 
+# backward data dismissed --LK
+# This exists only for backward compatibility and isn't used anymore!
+#FL_BROWSER_LINELENGTH = 2048
+# end backwards
 
 
-# backward data dismissed --LK 
-#FL_FILLED_CHART = FL_FILL_CHART     # for backward compatibility 
+# backward data dismissed --LK
+#FL_FILLED_CHART = FL_FILL_CHART     # for backward compatibility
 
 
 
-# my add --LK  - obsoleted by fl_is_same_object() function 
-# As ctypes creates a new instance of each object every time, two objects 
-# aren't really comparable. Here a trick can be used: comparing u_ldata 
-# element of every concerned objects. 
-# e.g.: if fl_do_forms()[0].u_ldata == otherobj[0].u_ldata ... 
-#EXITVAL = 255       # value for "u_ldata" to allow a comparison 
+# my add --LK  - obsoleted by fl_is_same_object() function
+# As ctypes creates a new instance of each object every time, two objects
+# aren't really comparable. Here a trick can be used: comparing u_ldata
+# element of every concerned objects.
+# e.g.: if fl_do_forms()[0].u_ldata == otherobj[0].u_ldata ...
+#EXITVAL = 255       # value for "u_ldata" to allow a comparison
 
 
 def flps_apply_gamma(p1):
-    """ 
-        flps_apply_gamma(p1) 
- 
-        @status: Untested + NoDoc + NoExample = NOT OK 
-    """ 
- 
-    _flps_apply_gamma = cfuncproto( 
-            load_so_libflimage(), "flps_apply_gamma", 
-            None, [cty.c_float], 
-            """void flps_apply_gamma(float p1) 
-            """) 
-    fp1 = convert_to_float(p1) 
-    keep_elem_refs(p1, fp1) 
-    _flps_apply_gamma(fp1) 
+    """
+        flps_apply_gamma(p1)
+
+        @status: Untested + NoDoc + NoExample = NOT OK
+    """
+
+    _flps_apply_gamma = cfuncproto(
+            load_so_libflimage(), "flps_apply_gamma",
+            None, [cty.c_float],
+            """void flps_apply_gamma(float p1)
+            """)
+    fp1 = convert_to_float(p1)
+    keep_elem_refs(p1, fp1)
+    _flps_apply_gamma(fp1)
 
 
 def flps_arc(fill, x, y, r, t1, t2, colr):
-    """ 
-        flps_arc(fill, x, y, r, t1, t2, colr) 
- 
-        @status: Untested + NoDoc + NoExample = NOT OK 
-    """ 
- 
-    _flps_arc = cfuncproto( 
-            load_so_libflimage(), "flps_arc", 
-            None, [cty.c_int, cty.c_int, cty.c_int, cty.c_int, cty.c_int, 
-            cty.c_int, xfc.FL_COLOR], 
-            """void flps_arc(int p1, int p2, int p3, int p4, int p5, int p6, 
-               FL_COLOR p7) 
-            """) 
-    check_admitted_listvalues(colr, xfc.COLOR_list) 
-    ifill = convert_to_int(fill) 
-    ix = convert_to_int(x) 
-    iy = convert_to_int(y) 
-    ir = convert_to_int(r) 
-    it1 = convert_to_int(t1) 
-    it2 = convert_to_int(t2) 
-    ulcolr = convert_to_FL_COLOR(colr) 
-    keep_elem_refs(fill, x, y, r, t1, t2, colr, ifill, ix, iy, ir, it1, \ 
-                   it2, ulcolr) 
-    _flps_arc(ifill, ix, iy, ir, it1, it2, ulcolr) 
+    """
+        flps_arc(fill, x, y, r, t1, t2, colr)
+
+        @status: Untested + NoDoc + NoExample = NOT OK
+    """
+
+    _flps_arc = cfuncproto(
+            load_so_libflimage(), "flps_arc",
+            None, [cty.c_int, cty.c_int, cty.c_int, cty.c_int, cty.c_int,
+            cty.c_int, xfc.FL_COLOR],
+            """void flps_arc(int p1, int p2, int p3, int p4, int p5, int p6,
+               FL_COLOR p7)
+            """)
+    check_admitted_listvalues(colr, xfc.COLOR_list)
+    ifill = convert_to_int(fill)
+    ix = convert_to_int(x)
+    iy = convert_to_int(y)
+    ir = convert_to_int(r)
+    it1 = convert_to_int(t1)
+    it2 = convert_to_int(t2)
+    ulcolr = convert_to_FL_COLOR(colr)
+    keep_elem_refs(fill, x, y, r, t1, t2, colr, ifill, ix, iy, ir, it1, \
+                   it2, ulcolr)
+    _flps_arc(ifill, ix, iy, ir, it1, it2, ulcolr)
 
 
 def flps_circ(fill, x, y, r, colr):
-    """ 
-        flps_circ(fill, x, y, r, colr) 
- 
-        @status: Untested + NoDoc + NoExample = NOT OK 
-    """ 
- 
-    _flps_circ = cfuncproto( 
-            load_so_libflimage(), "flps_circ", 
-            None, [cty.c_int, cty.c_int, cty.c_int, cty.c_int, xfc.FL_COLOR], 
-            """void flps_circ(int p1, int p2, int p3, int p4, FL_COLOR p5) 
-            """) 
-    check_admitted_listvalues(colr, xfc.COLOR_list) 
-    ifill = convert_to_int(fill) 
-    ix = convert_to_int(x) 
-    iy = convert_to_int(y) 
-    ir = convert_to_int(r) 
-    ulcolr = convert_to_FL_COLOR(colr) 
-    keep_elem_refs(fill, x, y, r, colr, ifill, ix, iy, ir, ulcolr) 
-    _flps_circ(fill, x, y, r, colr, ifill, ix, iy, ir, ulcolr) 
+    """
+        flps_circ(fill, x, y, r, colr)
+
+        @status: Untested + NoDoc + NoExample = NOT OK
+    """
+
+    _flps_circ = cfuncproto(
+            load_so_libflimage(), "flps_circ",
+            None, [cty.c_int, cty.c_int, cty.c_int, cty.c_int, xfc.FL_COLOR],
+            """void flps_circ(int p1, int p2, int p3, int p4, FL_COLOR p5)
+            """)
+    check_admitted_listvalues(colr, xfc.COLOR_list)
+    ifill = convert_to_int(fill)
+    ix = convert_to_int(x)
+    iy = convert_to_int(y)
+    ir = convert_to_int(r)
+    ulcolr = convert_to_FL_COLOR(colr)
+    keep_elem_refs(fill, x, y, r, colr, ifill, ix, iy, ir, ulcolr)
+    _flps_circ(fill, x, y, r, colr, ifill, ix, iy, ir, ulcolr)
 
 
 def flps_color(colr):
-    """ 
-        flps_color(colr) 
- 
-        @status: Untested + NoDoc + NoExample = NOT OK 
-    """ 
- 
-    _flps_color = cfuncproto( 
-            load_so_libflimage(), "flps_color", 
-            None, [xfc.FL_COLOR], 
-            """void flps_color(FL_COLOR p1) 
-            """) 
-    check_admitted_listvalues(colr, xfc.COLOR_list) 
-    ulcolr = convert_to_FL_COLOR(colr) 
-    keep_elem_refs(colr, ulcolr) 
-    _flps_color(ulcolr) 
+    """
+        flps_color(colr)
+
+        @status: Untested + NoDoc + NoExample = NOT OK
+    """
+
+    _flps_color = cfuncproto(
+            load_so_libflimage(), "flps_color",
+            None, [xfc.FL_COLOR],
+            """void flps_color(FL_COLOR p1)
+            """)
+    check_admitted_listvalues(colr, xfc.COLOR_list)
+    ulcolr = convert_to_FL_COLOR(colr)
+    keep_elem_refs(colr, ulcolr)
+    _flps_color(ulcolr)
 
 
 def flps_draw_box(style, x, y, w, h, colr, bwIn):
-    """ 
-        flps_draw_box(style, x, y, w, h, colr, bwIn) 
- 
-        @status: Untested + NoDoc + NoExample = NOT OK 
-    """ 
- 
-    _flps_draw_box = cfuncproto( 
-            load_so_libflimage(), "flps_draw_box", 
-            None, [cty.c_int, cty.c_int, cty.c_int, cty.c_int, cty.c_int, 
-            xfc.FL_COLOR, cty.c_int], 
-            """void flps_draw_box(int p1, int p2, int p3, int p4, int p5, 
-               FL_COLOR p6, int p7) 
-            """) 
-    check_admitted_listvalues(colr, xfc.COLOR_list) 
-    istyle = convert_to_int(style) 
-    ix = convert_to_int(x) 
-    iy = convert_to_int(y) 
-    iw = convert_to_int(w) 
-    ih = convert_to_int(h) 
-    ulcolr = convert_to_FL_COLOR(colr) 
-    ibwIn = convert_to_int(bwIn) 
-    keep_elem_refs(style, x, y, w, h, colr, bwIn, istyle, ix, iy, iw, ih, \ 
-                   ulcolr, ibwIn) 
-    _flps_draw_box(istyle, ix, iy, iw, ih, ulcolr, ibwIn) 
+    """
+        flps_draw_box(style, x, y, w, h, colr, bwIn)
+
+        @status: Untested + NoDoc + NoExample = NOT OK
+    """
+
+    _flps_draw_box = cfuncproto(
+            load_so_libflimage(), "flps_draw_box",
+            None, [cty.c_int, cty.c_int, cty.c_int, cty.c_int, cty.c_int,
+            xfc.FL_COLOR, cty.c_int],
+            """void flps_draw_box(int p1, int p2, int p3, int p4, int p5,
+               FL_COLOR p6, int p7)
+            """)
+    check_admitted_listvalues(colr, xfc.COLOR_list)
+    istyle = convert_to_int(style)
+    ix = convert_to_int(x)
+    iy = convert_to_int(y)
+    iw = convert_to_int(w)
+    ih = convert_to_int(h)
+    ulcolr = convert_to_FL_COLOR(colr)
+    ibwIn = convert_to_int(bwIn)
+    keep_elem_refs(style, x, y, w, h, colr, bwIn, istyle, ix, iy, iw, ih, \
+                   ulcolr, ibwIn)
+    _flps_draw_box(istyle, ix, iy, iw, ih, ulcolr, ibwIn)
 
 
 def flps_draw_checkbox(boxtype, x, y, w, h, colr, bw):
-    """ 
-        flps_draw_checkbox(boxtype, x, y, w, h, colr, bw) 
- 
-        @status: Untested + NoDoc + NoExample = NOT OK 
-    """ 
- 
-    _flps_draw_checkbox = cfuncproto( 
-            load_so_libflimage(), "flps_draw_checkbox", 
-            None, [cty.c_int, cty.c_int, cty.c_int, cty.c_int, cty.c_int, 
-            xfc.FL_COLOR, cty.c_int], 
-            """void flps_draw_checkbox(int p1, int p2, int p3, int p4, 
-               int p5, FL_COLOR p6, int p7) 
-            """) 
-    check_admitted_listvalues(colr, xfc.COLOR_list) 
-    iboxtype = convert_to_int(boxtype) 
-    ix = convert_to_int(x) 
-    iy = convert_to_int(y) 
-    iw = convert_to_int(w) 
-    ih = convert_to_int(h) 
-    ulcolr = convert_to_FL_COLOR(colr) 
-    ibw = convert_to_int(bw) 
-    keep_elem_refs(boxtype, x, y, w, h, colr, bw, iboxtype, ix, iy, iw, ih, \ 
-                   ulcolr, ibw) 
-    _flps_draw_checkbox(iboxtype, ix, iy, iw, ih, ulcolr, ibw) 
+    """
+        flps_draw_checkbox(boxtype, x, y, w, h, colr, bw)
+
+        @status: Untested + NoDoc + NoExample = NOT OK
+    """
+
+    _flps_draw_checkbox = cfuncproto(
+            load_so_libflimage(), "flps_draw_checkbox",
+            None, [cty.c_int, cty.c_int, cty.c_int, cty.c_int, cty.c_int,
+            xfc.FL_COLOR, cty.c_int],
+            """void flps_draw_checkbox(int p1, int p2, int p3, int p4,
+               int p5, FL_COLOR p6, int p7)
+            """)
+    check_admitted_listvalues(colr, xfc.COLOR_list)
+    iboxtype = convert_to_int(boxtype)
+    ix = convert_to_int(x)
+    iy = convert_to_int(y)
+    iw = convert_to_int(w)
+    ih = convert_to_int(h)
+    ulcolr = convert_to_FL_COLOR(colr)
+    ibw = convert_to_int(bw)
+    keep_elem_refs(boxtype, x, y, w, h, colr, bw, iboxtype, ix, iy, iw, ih, \
+                   ulcolr, ibw)
+    _flps_draw_checkbox(iboxtype, ix, iy, iw, ih, ulcolr, ibw)
 
 
 def flps_draw_frame(style, x, y, w, h, colr, bw):
-    """ 
-        flps_draw_frame(style, x, y, w, h, colr, bw) 
- 
-        @status: Untested + NoDoc + NoExample = NOT OK 
-    """ 
- 
-    _flps_draw_frame = cfuncproto( 
-            load_so_libflimage(), "flps_draw_frame", 
-            None, [cty.c_int, cty.c_int, cty.c_int, cty.c_int, cty.c_int, 
-            xfc.FL_COLOR, cty.c_int], 
-            """void flps_draw_frame(int p1, int p2, int p3, int p4, int p5, 
-               FL_COLOR p6, int p7) 
-            """) 
-    check_admitted_listvalues(colr, xfc.COLOR_list) 
-    istyle = convert_to_int(style) 
-    ix = convert_to_int(x) 
-    iy = convert_to_int(y) 
-    iw = convert_to_int(w) 
-    ih = convert_to_int(h) 
-    ulcolr = convert_to_FL_COLOR(colr) 
-    ibw = convert_to_int(bw) 
-    keep_elem_refs(style, x, y, w, h, colr, bw, istyle, ix, iy, iw, ih, \ 
-                   ulcolr, ibw) 
-    _flps_draw_frame(istyle, ix, iy, iw, ih, ulcolr, ibw) 
+    """
+        flps_draw_frame(style, x, y, w, h, colr, bw)
+
+        @status: Untested + NoDoc + NoExample = NOT OK
+    """
+
+    _flps_draw_frame = cfuncproto(
+            load_so_libflimage(), "flps_draw_frame",
+            None, [cty.c_int, cty.c_int, cty.c_int, cty.c_int, cty.c_int,
+            xfc.FL_COLOR, cty.c_int],
+            """void flps_draw_frame(int p1, int p2, int p3, int p4, int p5,
+               FL_COLOR p6, int p7)
+            """)
+    check_admitted_listvalues(colr, xfc.COLOR_list)
+    istyle = convert_to_int(style)
+    ix = convert_to_int(x)
+    iy = convert_to_int(y)
+    iw = convert_to_int(w)
+    ih = convert_to_int(h)
+    ulcolr = convert_to_FL_COLOR(colr)
+    ibw = convert_to_int(bw)
+    keep_elem_refs(style, x, y, w, h, colr, bw, istyle, ix, iy, iw, ih, \
+                   ulcolr, ibw)
+    _flps_draw_frame(istyle, ix, iy, iw, ih, ulcolr, ibw)
 
 
 def flps_draw_symbol(label, x, y, w, h, colr):
-    """ 
-        flps_draw_symbol(label, x, y, w, h, colr) -> num. 
- 
-        @status: Untested + NoDoc + NoExample = NOT OK 
-    """ 
- 
-    _flps_draw_symbol = cfuncproto( 
-            load_so_libflimage(), "flps_draw_symbol", 
+    """
+        flps_draw_symbol(label, x, y, w, h, colr) -> num.
+
+        @status: Untested + NoDoc + NoExample = NOT OK
+    """
+
+    _flps_draw_symbol = cfuncproto(
+            load_so_libflimage(), "flps_draw_symbol",
             cty.c_int, [xfc.STRING, cty.c_int, cty.c_int, cty.c_int, cty.c_int,
-            xfc.FL_COLOR], 
-            """int flps_draw_symbol(const char * p1, int p2, int p3, int p4, 
-               int p5, FL_COLOR p6) 
-            """) 
-    check_admitted_listvalues(colr, xfc.COLOR_list) 
-    slabel = convert_to_string(label) 
-    ix = convert_to_int(x) 
-    iy = convert_to_int(y) 
-    iw = convert_to_int(w) 
-    ih = convert_to_int(h) 
-    ulcolr = convert_to_FL_COLOR(colr) 
-    keep_elem_refs(label, x, y, w, h, colr, slabel, ix, iy, iw, ih, ulcolr) 
-    retval = _flps_draw_symbol(slabel, ix, iy, iw, ih, ulcolr) 
-    return retval 
+            xfc.FL_COLOR],
+            """int flps_draw_symbol(const char * p1, int p2, int p3, int p4,
+               int p5, FL_COLOR p6)
+            """)
+    check_admitted_listvalues(colr, xfc.COLOR_list)
+    slabel = convert_to_string(label)
+    ix = convert_to_int(x)
+    iy = convert_to_int(y)
+    iw = convert_to_int(w)
+    ih = convert_to_int(h)
+    ulcolr = convert_to_FL_COLOR(colr)
+    keep_elem_refs(label, x, y, w, h, colr, slabel, ix, iy, iw, ih, ulcolr)
+    retval = _flps_draw_symbol(slabel, ix, iy, iw, ih, ulcolr)
+    return retval
 
 
 def flps_draw_tbox(style, x, y, w, h, colr, bw):
-    """ 
-        flps_draw_tbox(style, x, y, w, h, colr, bw) 
- 
-        @status: Untested + NoDoc + NoExample = NOT OK 
-    """ 
- 
-    _flps_draw_tbox = cfuncproto( 
-            load_so_libflimage(), "flps_draw_tbox", 
-            None, [cty.c_int, cty.c_int, cty.c_int, cty.c_int, cty.c_int, 
-            xfc.FL_COLOR, cty.c_int], 
-            """void flps_draw_tbox(int p1, int p2, int p3, int p4, int p5, 
-               FL_COLOR p6, int p7) 
-            """) 
-    check_admitted_listvalues(colr, xfc.COLOR_list) 
-    istyle = convert_to_int(style) 
-    ix = convert_to_int(x) 
-    iy = convert_to_int(y) 
-    iw = convert_to_int(w) 
-    ih = convert_to_int(h) 
-    ulcolr = convert_to_FL_COLOR(colr) 
-    ibw = convert_to_int(bw) 
+    """
+        flps_draw_tbox(style, x, y, w, h, colr, bw)
+
+        @status: Untested + NoDoc + NoExample = NOT OK
+    """
+
+    _flps_draw_tbox = cfuncproto(
+            load_so_libflimage(), "flps_draw_tbox",
+            None, [cty.c_int, cty.c_int, cty.c_int, cty.c_int, cty.c_int,
+            xfc.FL_COLOR, cty.c_int],
+            """void flps_draw_tbox(int p1, int p2, int p3, int p4, int p5,
+               FL_COLOR p6, int p7)
+            """)
+    check_admitted_listvalues(colr, xfc.COLOR_list)
+    istyle = convert_to_int(style)
+    ix = convert_to_int(x)
+    iy = convert_to_int(y)
+    iw = convert_to_int(w)
+    ih = convert_to_int(h)
+    ulcolr = convert_to_FL_COLOR(colr)
+    ibw = convert_to_int(bw)
     keep_elem_refs(style, x, y, w, h, colr, bw, istyle, ix, iy, iw, ih, ulcolr,
                    ibw)
-    _flps_draw_tbox(istyle, ix, iy, iw, ih, ulcolr, ibw) 
+    _flps_draw_tbox(istyle, ix, iy, iw, ih, ulcolr, ibw)
 
 
 def flps_draw_text(align, x, y, w, h, colr, style, size, text):
-    """ 
-        flps_draw_text(align, x, y, w, h, colr, style, size, text) 
- 
-        @status: Untested + NoDoc + NoExample = NOT OK 
-    """ 
- 
-    _flps_draw_text = cfuncproto( 
-            load_so_libflimage(), "flps_draw_text", 
-            None, [cty.c_int, cty.c_int, cty.c_int, cty.c_int, cty.c_int, 
-            xfc.FL_COLOR, cty.c_int, cty.c_int, xfc.STRING], 
-            """void flps_draw_text(int p1, int p2, int p3, int p4, int p5, 
-               FL_COLOR p6, int p7, int p8, const char * p9) 
-            """) 
-    check_admitted_listvalues(colr, xfc.COLOR_list) 
-    ialign = convert_to_int(align) 
-    ix = convert_to_int(x) 
-    iy = convert_to_int(y) 
-    iw = convert_to_int(w) 
-    ih = convert_to_int(h) 
-    ulcolr = convert_to_FL_COLOR(colr) 
-    istyle = convert_to_int(style) 
-    isize = convert_to_int(size) 
-    stext = convert_to_string(text) 
-    keep_elem_refs(align, x, y, w, h, colr, style, size, text, ialign, \ 
-                   ix, iy, iw, ih, ulcolr, istyle, isize, stext) 
-    _flps_draw_text(ialign, ix, iy, iw, ih, ulcolr, istyle, isize, stext) 
+    """
+        flps_draw_text(align, x, y, w, h, colr, style, size, text)
+
+        @status: Untested + NoDoc + NoExample = NOT OK
+    """
+
+    _flps_draw_text = cfuncproto(
+            load_so_libflimage(), "flps_draw_text",
+            None, [cty.c_int, cty.c_int, cty.c_int, cty.c_int, cty.c_int,
+            xfc.FL_COLOR, cty.c_int, cty.c_int, xfc.STRING],
+            """void flps_draw_text(int p1, int p2, int p3, int p4, int p5,
+               FL_COLOR p6, int p7, int p8, const char * p9)
+            """)
+    check_admitted_listvalues(colr, xfc.COLOR_list)
+    ialign = convert_to_int(align)
+    ix = convert_to_int(x)
+    iy = convert_to_int(y)
+    iw = convert_to_int(w)
+    ih = convert_to_int(h)
+    ulcolr = convert_to_FL_COLOR(colr)
+    istyle = convert_to_int(style)
+    isize = convert_to_int(size)
+    stext = convert_to_string(text)
+    keep_elem_refs(align, x, y, w, h, colr, style, size, text, ialign, \
+                   ix, iy, iw, ih, ulcolr, istyle, isize, stext)
+    _flps_draw_text(ialign, ix, iy, iw, ih, ulcolr, istyle, isize, stext)
 
 
 def flps_draw_text_beside(align, x, y, w, h, colr, style, size, text):
-    """ 
-        flps_draw_text_beside(align, x, y, w, h, colr, style, size, text) 
- 
-        @status: Untested + NoDoc + NoExample = NOT OK 
-    """ 
- 
-    _flps_draw_text_beside = cfuncproto( 
-            load_so_libflimage(), "flps_draw_text_beside", 
-            None, [cty.c_int, cty.c_int, cty.c_int, cty.c_int, cty.c_int, 
-            xfc.FL_COLOR, cty.c_int, cty.c_int, xfc.STRING], 
-            """void flps_draw_text_beside(int p1, int p2, int p3, int p4, 
-               int p5, FL_COLOR p6, int p7, int p8, const char * p9) 
-            """) 
-    check_admitted_listvalues(colr, xfc.COLOR_list) 
-    ialign = convert_to_int(align) 
-    ix = convert_to_int(x) 
-    iy = convert_to_int(y) 
-    iw = convert_to_int(w) 
-    ih = convert_to_int(h) 
-    ulcolr = convert_to_FL_COLOR(colr) 
-    istyle = convert_to_int(style) 
-    isize = convert_to_int(size) 
-    stext = convert_to_string(text) 
-    keep_elem_refs(align, x, y, w, h, colr, style, size, text, ialign, \ 
-                   ix, iy, iw, ih, ulcolr, istyle, isize, stext) 
-    _flps_draw_text_beside(ialign, ix, iy, iw, ih, ulcolr, istyle, isize, \ 
-                           stext) 
+    """
+        flps_draw_text_beside(align, x, y, w, h, colr, style, size, text)
+
+        @status: Untested + NoDoc + NoExample = NOT OK
+    """
+
+    _flps_draw_text_beside = cfuncproto(
+            load_so_libflimage(), "flps_draw_text_beside",
+            None, [cty.c_int, cty.c_int, cty.c_int, cty.c_int, cty.c_int,
+            xfc.FL_COLOR, cty.c_int, cty.c_int, xfc.STRING],
+            """void flps_draw_text_beside(int p1, int p2, int p3, int p4,
+               int p5, FL_COLOR p6, int p7, int p8, const char * p9)
+            """)
+    check_admitted_listvalues(colr, xfc.COLOR_list)
+    ialign = convert_to_int(align)
+    ix = convert_to_int(x)
+    iy = convert_to_int(y)
+    iw = convert_to_int(w)
+    ih = convert_to_int(h)
+    ulcolr = convert_to_FL_COLOR(colr)
+    istyle = convert_to_int(style)
+    isize = convert_to_int(size)
+    stext = convert_to_string(text)
+    keep_elem_refs(align, x, y, w, h, colr, style, size, text, ialign, \
+                   ix, iy, iw, ih, ulcolr, istyle, isize, stext)
+    _flps_draw_text_beside(ialign, ix, iy, iw, ih, ulcolr, istyle, isize, \
+                           stext)
 
 
 def flps_emit_header(title, npages, xi, yi, xf, yf):
-    """ 
-        flps_emit_header(title, npages, xi, yi, xf, yf) 
- 
-        @status: Untested + NoDoc + NoExample = NOT OK 
-    """ 
- 
-    _flps_emit_header = cfuncproto( 
-            load_so_libflimage(), "flps_emit_header", 
-            None, [xfc.STRING, cty.c_int, cty.c_int, cty.c_int, cty.c_int, 
-            cty.c_int], 
-            """void flps_emit_header(const char * p1, int p2, int p3, 
-               int p4, int p5, int p6) 
-            """) 
-    stitle = convert_to_string(title) 
-    inpages = convert_to_int(npages) 
-    ixi = convert_to_int(xi) 
-    iyi = convert_to_int(yi) 
-    ixf = convert_to_int(xf) 
-    iyf = convert_to_int(yf) 
-    keep_elem_refs(title, npages, xi, yi, xf, yf, stitle, inpages, ixi, \ 
-                   iyi, ixf, iyf) 
-    _flps_emit_header(stitle, inpages, ixi, iyi, ixf, iyf) 
+    """
+        flps_emit_header(title, npages, xi, yi, xf, yf)
+
+        @status: Untested + NoDoc + NoExample = NOT OK
+    """
+
+    _flps_emit_header = cfuncproto(
+            load_so_libflimage(), "flps_emit_header",
+            None, [xfc.STRING, cty.c_int, cty.c_int, cty.c_int, cty.c_int,
+            cty.c_int],
+            """void flps_emit_header(const char * p1, int p2, int p3,
+               int p4, int p5, int p6)
+            """)
+    stitle = convert_to_string(title)
+    inpages = convert_to_int(npages)
+    ixi = convert_to_int(xi)
+    iyi = convert_to_int(yi)
+    ixf = convert_to_int(xf)
+    iyf = convert_to_int(yf)
+    keep_elem_refs(title, npages, xi, yi, xf, yf, stitle, inpages, ixi, \
+                   iyi, ixf, iyf)
+    _flps_emit_header(stitle, inpages, ixi, iyi, ixf, iyf)
 
 
 def flps_emit_prolog():
-    """ 
-        flps_emit_prolog() 
- 
-        @status: Untested + NoDoc + NoExample = NOT OK 
-    """ 
- 
-    _flps_emit_prolog = cfuncproto( 
-            load_so_libflimage(), "flps_emit_prolog", 
-            None, [], 
-            """void flps_emit_prolog() 
-            """) 
-    _flps_emit_prolog() 
+    """
+        flps_emit_prolog()
+
+        @status: Untested + NoDoc + NoExample = NOT OK
+    """
+
+    _flps_emit_prolog = cfuncproto(
+            load_so_libflimage(), "flps_emit_prolog",
+            None, [],
+            """void flps_emit_prolog()
+            """)
+    _flps_emit_prolog()
 
 
 def flps_get_gray255(colr):
-    """ 
-        flps_get_gray255(colr) -> num. 
- 
-        @status: Untested + NoDoc + NoExample = NOT OK 
-    """ 
- 
-    _flps_get_gray255 = cfuncproto( 
-            load_so_libflimage(), "flps_get_gray255", 
-            cty.c_int, [xfc.FL_COLOR], 
-            """int flps_get_gray255(FL_COLORp1) 
-            """) 
-    check_admitted_listvalues(colr, xfc.COLOR_list) 
-    ulcolr = convert_to_FL_COLOR(colr) 
-    keep_elem_refs(colr, ulcolr) 
-    retval = _flps_get_gray255(ulcolr) 
-    return retval 
+    """
+        flps_get_gray255(colr) -> num.
+
+        @status: Untested + NoDoc + NoExample = NOT OK
+    """
+
+    _flps_get_gray255 = cfuncproto(
+            load_so_libflimage(), "flps_get_gray255",
+            cty.c_int, [xfc.FL_COLOR],
+            """int flps_get_gray255(FL_COLORp1)
+            """)
+    check_admitted_listvalues(colr, xfc.COLOR_list)
+    ulcolr = convert_to_FL_COLOR(colr)
+    keep_elem_refs(colr, ulcolr)
+    retval = _flps_get_gray255(ulcolr)
+    return retval
 
 
 def flps_get_linestyle():
-    """ 
-        flps_get_linestyle() -> num. 
- 
-        @status: Untested + NoDoc + NoExample = NOT OK 
-    """ 
- 
-    _flps_get_linestyle = cfuncproto( 
-            load_so_libflimage(), "flps_get_linestyle", 
-            cty.c_int, [], 
-            """int flps_get_linestyle() 
-            """) 
-    retval = _flps_get_linestyle() 
-    return retval 
+    """
+        flps_get_linestyle() -> num.
+
+        @status: Untested + NoDoc + NoExample = NOT OK
+    """
+
+    _flps_get_linestyle = cfuncproto(
+            load_so_libflimage(), "flps_get_linestyle",
+            cty.c_int, [],
+            """int flps_get_linestyle()
+            """)
+    retval = _flps_get_linestyle()
+    return retval
 
 
 def flps_get_linewidth():
-    """ 
-        flps_get_linewidth() -> width num. 
- 
-        @status: Untested + NoDoc + NoExample = NOT OK 
-    """ 
- 
-    _flps_get_linewidth = cfuncproto( 
-            load_so_libflimage(), "flps_get_linewidth", 
-            cty.c_int, [], 
-            """int flps_get_linewidth() 
-            """) 
-    retval = _flps_get_linewidth() 
-    return retval 
+    """
+        flps_get_linewidth() -> width num.
+
+        @status: Untested + NoDoc + NoExample = NOT OK
+    """
+
+    _flps_get_linewidth = cfuncproto(
+            load_so_libflimage(), "flps_get_linewidth",
+            cty.c_int, [],
+            """int flps_get_linewidth()
+            """)
+    retval = _flps_get_linewidth()
+    return retval
 
 
 def flps_get_namedcolor(colrname):
-    """ 
-        flps_get_namedcolor(colrname) -> color value 
- 
-        @status: Untested + NoDoc + NoExample = NOT OK 
-    """ 
- 
-    _flps_get_namedcolor = cfuncproto( 
-            load_so_libflimage(), "flps_get_namedcolor", 
-            xfc.FL_COLOR, [xfc.STRING], 
-            """FL_COLOR flps_get_namedcolor(const char * p1) 
-            """) 
-    scolrname = convert_to_string(colrname) 
-    keep_elem_refs(colrname, scolrname) 
-    retval = _flps_get_namedcolor(scolrname) 
-    return retval 
+    """
+        flps_get_namedcolor(colrname) -> color value
+
+        @status: Untested + NoDoc + NoExample = NOT OK
+    """
+
+    _flps_get_namedcolor = cfuncproto(
+            load_so_libflimage(), "flps_get_namedcolor",
+            xfc.FL_COLOR, [xfc.STRING],
+            """FL_COLOR flps_get_namedcolor(const char * p1)
+            """)
+    scolrname = convert_to_string(colrname)
+    keep_elem_refs(colrname, scolrname)
+    retval = _flps_get_namedcolor(scolrname)
+    return retval
 
 
 def flps_invalidate_color_cache():
-    """ 
-        flps_invalidate_color_cache() 
- 
-        @status: Untested + NoDoc + NoExample = NOT OK 
-    """ 
- 
-    _flps_invalidate_color_cache = cfuncproto( 
-            load_so_libflimage(), "flps_invalidate_color_cache", 
-            None, [], 
-            """void flps_invalidate_color_cache() 
-            """) 
-    _flps_invalidate_color_cache() 
+    """
+        flps_invalidate_color_cache()
+
+        @status: Untested + NoDoc + NoExample = NOT OK
+    """
+
+    _flps_invalidate_color_cache = cfuncproto(
+            load_so_libflimage(), "flps_invalidate_color_cache",
+            None, [],
+            """void flps_invalidate_color_cache()
+            """)
+    _flps_invalidate_color_cache()
 
 
 def flps_invalidate_font_cache():
-    """ 
-        flps_invalidate_font_cache() 
- 
-        @status: Untested + NoDoc + NoExample = NOT OK 
-    """ 
- 
-    _flps_invalidate_font_cache = cfuncproto( 
-            load_so_libflimage(), "flps_invalidate_font_cache", 
-            None, [], 
-            """void flps_invalidate_font_cache() 
-            """) 
-    _flps_invalidate_font_cache() 
+    """
+        flps_invalidate_font_cache()
+
+        @status: Untested + NoDoc + NoExample = NOT OK
+    """
+
+    _flps_invalidate_font_cache = cfuncproto(
+            load_so_libflimage(), "flps_invalidate_font_cache",
+            None, [],
+            """void flps_invalidate_font_cache()
+            """)
+    _flps_invalidate_font_cache()
 
 
 def flps_invalidate_linewidth_cache():
-    """ 
-        flps_invalidate_linewidth_cache() 
- 
-        @status: Untested + NoDoc + NoExample = NOT OK 
-    """ 
- 
-    _flps_invalidate_linewidth_cache = cfuncproto( 
-            load_so_libflimage(), "flps_invalidate_linewidth_cache", 
-            None, [], 
-            """void flps_invalidate_linewidth_cache() 
-            """) 
-    _flps_invalidate_linewidth_cache() 
+    """
+        flps_invalidate_linewidth_cache()
+
+        @status: Untested + NoDoc + NoExample = NOT OK
+    """
+
+    _flps_invalidate_linewidth_cache = cfuncproto(
+            load_so_libflimage(), "flps_invalidate_linewidth_cache",
+            None, [],
+            """void flps_invalidate_linewidth_cache()
+            """)
+    _flps_invalidate_linewidth_cache()
 
 
 def flps_invalidate_symbol_cache():
-    """ 
-        flps_invalidate_symbol_cache() 
- 
-        @status: Untested + NoDoc + NoExample = NOT OK 
-    """ 
- 
-    _flps_invalidate_symbol_cache = cfuncproto( 
-            load_so_libflimage(), "flps_invalidate_symbol_cache", 
-            None, [], 
-            """void flps_invalidate_symbol_cache() 
-            """) 
-    _flps_invalidate_symbol_cache() 
+    """
+        flps_invalidate_symbol_cache()
+
+        @status: Untested + NoDoc + NoExample = NOT OK
+    """
+
+    _flps_invalidate_symbol_cache = cfuncproto(
+            load_so_libflimage(), "flps_invalidate_symbol_cache",
+            None, [],
+            """void flps_invalidate_symbol_cache()
+            """)
+    _flps_invalidate_symbol_cache()
 
 
 def flps_line(xi, yi, xf, yf, colr):
-    """ 
-        flps_line(xi, yi, xf, yf, colr) 
- 
-        @status: Untested + NoDoc + NoExample = NOT OK 
-    """ 
- 
-    _flps_line = cfuncproto( 
-            load_so_libflimage(), "flps_line", 
-            None, [cty.c_int, cty.c_int, cty.c_int, cty.c_int, xfc.FL_COLOR], 
-            """void flps_line(int p1, int p2, int p3, int p4, FL_COLOR p5) 
-            """) 
-    check_admitted_listvalues(colr, xfc.COLOR_list) 
-    ixi = convert_to_int(xi) 
-    iyi = convert_to_int(yi) 
-    ixf = convert_to_int(xf) 
-    iyf = convert_to_int(yf) 
-    ulcolr = convert_to_FL_COLOR(colr) 
-    keep_elem_refs(xi, yi, xf, yf, colr, ixi, iyi, ixf, iyf, ulcolr) 
-    _flps_line(ixi, iyi, ixf, iyf, ulcolr) 
+    """
+        flps_line(xi, yi, xf, yf, colr)
+
+        @status: Untested + NoDoc + NoExample = NOT OK
+    """
+
+    _flps_line = cfuncproto(
+            load_so_libflimage(), "flps_line",
+            None, [cty.c_int, cty.c_int, cty.c_int, cty.c_int, xfc.FL_COLOR],
+            """void flps_line(int p1, int p2, int p3, int p4, FL_COLOR p5)
+            """)
+    check_admitted_listvalues(colr, xfc.COLOR_list)
+    ixi = convert_to_int(xi)
+    iyi = convert_to_int(yi)
+    ixf = convert_to_int(xf)
+    iyf = convert_to_int(yf)
+    ulcolr = convert_to_FL_COLOR(colr)
+    keep_elem_refs(xi, yi, xf, yf, colr, ixi, iyi, ixf, iyf, ulcolr)
+    _flps_line(ixi, iyi, ixf, iyf, ulcolr)
 
 
 def flps_lines(Point, numpt, colr):
-    """ flps_lines(Point, numpt, colr) 
- 
-        @param Point: an array of xfc.FL_POINT class instance 
-        @param numpt: number of points 
-        @param colr: value of color to be set 
- 
-        @status: Untested + NoDoc + NoExample = NOT OK 
-    """ 
- 
-    _flps_lines = cfuncproto( 
-            load_so_libflimage(), "flps_lines", 
-            None, [cty.POINTER(xfc.FL_POINT), cty.c_int, xfc.FL_COLOR], 
-            """void flps_lines(FL_POINT * p1, int p2, FL_COLORp3) 
-            """) 
-    check_admitted_listvalues(colr, xfc.COLOR_list) 
-    pPoint = cty.cast(Point, cty.POINTER(xfc.FL_POINT)) 
-    inumpt = convert_to_int(numpt) 
-    ulcolr = convert_to_FL_COLOR(colr) 
-    keep_elem_refs(Point, numpt, colr, pPoint, inumpt, ulcolr) 
-    _flps_lines(pPoint, inumpt, ulcolr) 
+    """ flps_lines(Point, numpt, colr)
+
+        @param Point: an array of xfc.FL_POINT class instance
+        @param numpt: number of points
+        @param colr: value of color to be set
+
+        @status: Untested + NoDoc + NoExample = NOT OK
+    """
+
+    _flps_lines = cfuncproto(
+            load_so_libflimage(), "flps_lines",
+            None, [cty.POINTER(xfc.FL_POINT), cty.c_int, xfc.FL_COLOR],
+            """void flps_lines(FL_POINT * p1, int p2, FL_COLORp3)
+            """)
+    check_admitted_listvalues(colr, xfc.COLOR_list)
+    pPoint = cty.cast(Point, cty.POINTER(xfc.FL_POINT))
+    inumpt = convert_to_int(numpt)
+    ulcolr = convert_to_FL_COLOR(colr)
+    keep_elem_refs(Point, numpt, colr, pPoint, inumpt, ulcolr)
+    _flps_lines(pPoint, inumpt, ulcolr)
 
 
 def flps_linestyle(linestyle):
-    """ flps_linestyle(linestyle) 
- 
-        @param linestyle: style of the line to draw 
-        @type linestyle: [num./int] from xfdata module FL_SOLID, FL_USERDASH, 
-                         FL_USERDOUBLEDASH, FL_DOT, FL_DOTDASH, FL_DASH, 
-                         FL_LONGDASH 
- 
-        @status: Untested + NoDoc + NoExample = NOT OK 
-    """ 
- 
-    _flps_linestyle = cfuncproto( 
-            load_so_libflimage(), "flps_linestyle", 
-            None, [cty.c_int], 
-            """void flps_linestyle(int p1) 
-            """) 
-    check_admitted_listvalues(linestyle, xfc.LINESTYLE_list) 
-    ilinestyle = convert_to_int(linestyle) 
-    keep_elem_refs(linestyle, ilinestyle) 
-    _flps_linestyle(ilinestyle) 
+    """ flps_linestyle(linestyle)
+
+        @param linestyle: style of the line to draw
+        @type linestyle: [num./int] from xfdata module FL_SOLID, FL_USERDASH,
+                         FL_USERDOUBLEDASH, FL_DOT, FL_DOTDASH, FL_DASH,
+                         FL_LONGDASH
+
+        @status: Untested + NoDoc + NoExample = NOT OK
+    """
+
+    _flps_linestyle = cfuncproto(
+            load_so_libflimage(), "flps_linestyle",
+            None, [cty.c_int],
+            """void flps_linestyle(int p1)
+            """)
+    check_admitted_listvalues(linestyle, xfc.LINESTYLE_list)
+    ilinestyle = convert_to_int(linestyle)
+    keep_elem_refs(linestyle, ilinestyle)
+    _flps_linestyle(ilinestyle)
 
 
 def flps_linewidth(linewidth):
-    """ flps_linewidth(linewidth) 
- 
-        @status: Untested + NoDoc + NoExample = NOT OK 
-    """ 
- 
-    _flps_linewidth = cfuncproto( 
-            load_so_libflimage(), "flps_linewidth", 
-            None, [cty.c_int], 
-            """void flps_linewidth(int p1) 
-            """) 
-    ilinewidth = convert_to_int(linewidth) 
-    keep_elem_refs(linewidth, ilinewidth) 
-    _flps_linewidth(ilinewidth) 
+    """ flps_linewidth(linewidth)
+
+        @status: Untested + NoDoc + NoExample = NOT OK
+    """
+
+    _flps_linewidth = cfuncproto(
+            load_so_libflimage(), "flps_linewidth",
+            None, [cty.c_int],
+            """void flps_linewidth(int p1)
+            """)
+    ilinewidth = convert_to_int(linewidth)
+    keep_elem_refs(linewidth, ilinewidth)
+    _flps_linewidth(ilinewidth)
 
 
 def flps_log(text):
-    """ flps_log(text) 
- 
-        @status: Untested + NoDoc + NoExample = NOT OK 
-    """ 
- 
-    _flps_log = cfuncproto( 
-            load_so_libflimage(), "flps_log", 
-            None, [xfc.STRING], 
-            """void flps_log(const char * p1) 
-            """) 
-    stext = convert_to_string(text) 
-    keep_elem_refs(text, stext) 
-    _flps_log(stext) 
+    """ flps_log(text)
+
+        @status: Untested + NoDoc + NoExample = NOT OK
+    """
+
+    _flps_log = cfuncproto(
+            load_so_libflimage(), "flps_log",
+            None, [xfc.STRING],
+            """void flps_log(const char * p1)
+            """)
+    stext = convert_to_string(text)
+    keep_elem_refs(text, stext)
+    _flps_log(stext)
 
 
 def flps_output(fmt):
-    """ flps_output(fmt) 
- 
-        @status: Untested + NoDoc + NoExample = NOT OK 
-    """ 
- 
-    _flps_output = cfuncproto( 
-            load_so_libflimage(), "flps_output", 
-            None, [xfc.STRING], 
-            """void flps_output(const char * p1) 
-            """) 
-    sfmt = convert_to_string(fmt) 
-    keep_elem_refs(fmt, sfmt) 
-    _flps_output(sfmt) 
+    """ flps_output(fmt)
+
+        @status: Untested + NoDoc + NoExample = NOT OK
+    """
+
+    _flps_output = cfuncproto(
+            load_so_libflimage(), "flps_output",
+            None, [xfc.STRING],
+            """void flps_output(const char * p1)
+            """)
+    sfmt = convert_to_string(fmt)
+    keep_elem_refs(fmt, sfmt)
+    _flps_output(sfmt)
 
 
 def flps_oval(fill, x, y, w, h, colr):
-    """ flps_oval(fill, x, y, w, h, colr) 
- 
-        @status: Untested + NoDoc + NoExample = NOT OK 
-    """ 
- 
-    _flps_oval = cfuncproto( 
-            load_so_libflimage(), "flps_oval", 
-            None, [cty.c_int, cty.c_int, cty.c_int, cty.c_int, cty.c_int, 
-            xfc.FL_COLOR], 
-            """void flps_oval(int p1, int p2, int p3, int p4, int p5, 
-               FL_COLOR p6) 
-            """) 
-    check_admitted_listvalues(colr, xfc.COLOR_list) 
-    ifill = convert_to_int(fill) 
-    ix = convert_to_int(x) 
-    iy = convert_to_int(y) 
-    iw = convert_to_int(w) 
-    ih = convert_to_int(h) 
-    ulcolr = convert_to_FL_COLOR(colr) 
-    keep_elem_refs(fill, x, y, w, h, colr, ifill, ix, iy, iw, ih, ulcolr) 
-    _flps_oval(ifill, ix, iy, iw, ih, ulcolr) 
+    """ flps_oval(fill, x, y, w, h, colr)
+
+        @status: Untested + NoDoc + NoExample = NOT OK
+    """
+
+    _flps_oval = cfuncproto(
+            load_so_libflimage(), "flps_oval",
+            None, [cty.c_int, cty.c_int, cty.c_int, cty.c_int, cty.c_int,
+            xfc.FL_COLOR],
+            """void flps_oval(int p1, int p2, int p3, int p4, int p5,
+               FL_COLOR p6)
+            """)
+    check_admitted_listvalues(colr, xfc.COLOR_list)
+    ifill = convert_to_int(fill)
+    ix = convert_to_int(x)
+    iy = convert_to_int(y)
+    iw = convert_to_int(w)
+    ih = convert_to_int(h)
+    ulcolr = convert_to_FL_COLOR(colr)
+    keep_elem_refs(fill, x, y, w, h, colr, ifill, ix, iy, iw, ih, ulcolr)
+    _flps_oval(ifill, ix, iy, iw, ih, ulcolr)
 
 
 def flps_pieslice(fill, x, y, w, h, t1, t2, colr):
-    """ flps_pieslice(fill, x, y, w, h, t1, t2, colr) 
- 
-        @status: Untested + NoDoc + NoExample = NOT OK 
-    """ 
- 
-    _flps_pieslice = cfuncproto( 
-            load_so_libflimage(), "flps_pieslice", 
-            None, [cty.c_int, cty.c_int, cty.c_int, cty.c_int, cty.c_int, 
-            cty.c_int, cty.c_int, xfc.FL_COLOR], 
-            """void flps_pieslice(int p1, int p2, int p3, int p4, int p5, 
-               int p6, int p7, FL_COLOR p8) 
-            """) 
-    check_admitted_listvalues(colr, xfc.COLOR_list) 
-    ifill = convert_to_int(fill) 
-    ix = convert_to_int(x) 
-    iy = convert_to_int(y) 
-    iw = convert_to_int(w) 
-    ih = convert_to_int(h) 
-    it1 = convert_to_int(t1) 
-    it2 = convert_to_int(t2) 
-    ulcolr = convert_to_FL_COLOR(colr) 
-    keep_elem_refs(fill, x, y, w, h, t1, t2, colr, ifill, ix, iy, iw, \ 
-                   ih, it1, it2, ulcolr) 
-    _flps_pieslice(ifill, ix, iy, iw, ih, it1, it2, ulcolr) 
+    """ flps_pieslice(fill, x, y, w, h, t1, t2, colr)
+
+        @status: Untested + NoDoc + NoExample = NOT OK
+    """
+
+    _flps_pieslice = cfuncproto(
+            load_so_libflimage(), "flps_pieslice",
+            None, [cty.c_int, cty.c_int, cty.c_int, cty.c_int, cty.c_int,
+            cty.c_int, cty.c_int, xfc.FL_COLOR],
+            """void flps_pieslice(int p1, int p2, int p3, int p4, int p5,
+               int p6, int p7, FL_COLOR p8)
+            """)
+    check_admitted_listvalues(colr, xfc.COLOR_list)
+    ifill = convert_to_int(fill)
+    ix = convert_to_int(x)
+    iy = convert_to_int(y)
+    iw = convert_to_int(w)
+    ih = convert_to_int(h)
+    it1 = convert_to_int(t1)
+    it2 = convert_to_int(t2)
+    ulcolr = convert_to_FL_COLOR(colr)
+    keep_elem_refs(fill, x, y, w, h, t1, t2, colr, ifill, ix, iy, iw, \
+                   ih, it1, it2, ulcolr)
+    _flps_pieslice(ifill, ix, iy, iw, ih, it1, it2, ulcolr)
 
 
 def flps_poly(fill, Point, numpt, colr):
-    """ flps_poly(fill, Point, numpt, colr) 
- 
-        @param fill: if polygon has to be filled or not (1|0) 
-        @param Point: an array of xfc.FL_POINT class instance 
-        @param numpt: number of points 
-        @param colr: value of color to be set 
- 
-        @status: Untested + NoDoc + NoExample = NOT OK 
-    """ 
- 
-    _flps_poly = cfuncproto( 
-            load_so_libflimage(), "flps_poly", 
+    """ flps_poly(fill, Point, numpt, colr)
+
+        @param fill: if polygon has to be filled or not (1|0)
+        @param Point: an array of xfc.FL_POINT class instance
+        @param numpt: number of points
+        @param colr: value of color to be set
+
+        @status: Untested + NoDoc + NoExample = NOT OK
+    """
+
+    _flps_poly = cfuncproto(
+            load_so_libflimage(), "flps_poly",
             None, [cty.c_int, cty.POINTER(xfc.FL_POINT), cty.c_int, xfc.FL_COLO
-            """void flps_poly(int p1, FL_POINT * p2, int p3, FL_COLOR p4) 
-            """) 
-    check_admitted_listvalues(colr, xfc.COLOR_list) 
-    ifill = convert_to_int(fill) 
-    pPoint = cty.cast(Point, cty.POINTER(xfc.FL_POINT)) 
-    inumpt = convert_to_int(numpt) 
-    ulcolr = convert_to_FL_COLOR(colr) 
-    keep_elem_refs(fill, Point, numpt, colr, ifill, pPoint, inumpt, ulcolr) 
-    _flps_poly(ifill, pPoint, inumpt, ulcolr) 
+            """void flps_poly(int p1, FL_POINT * p2, int p3, FL_COLOR p4)
+            """)
+    check_admitted_listvalues(colr, xfc.COLOR_list)
+    ifill = convert_to_int(fill)
+    pPoint = cty.cast(Point, cty.POINTER(xfc.FL_POINT))
+    inumpt = convert_to_int(numpt)
+    ulcolr = convert_to_FL_COLOR(colr)
+    keep_elem_refs(fill, Point, numpt, colr, ifill, pPoint, inumpt, ulcolr)
+    _flps_poly(ifill, pPoint, inumpt, ulcolr)
 
 
 def flps_rectangle(fill, x, y, w, h, colr):
-    """ flps_rectangle(fill, x, y, w, h, colr) 
- 
-        @status: Untested + NoDoc + NoExample = NOT OK 
-    """ 
- 
-    _flps_rectangle = cfuncproto( 
-            load_so_libflimage(), "flps_rectangle", 
-            None, [cty.c_int, cty.c_int, cty.c_int, cty.c_int, cty.c_int, 
-            xfc.FL_COLOR], 
-            """void flps_rectangle(int p1, int p2, int p3, int p4, int p5, 
-               FL_COLOR p6) 
-            """) 
-    check_admitted_listvalues(colr, xfc.COLOR_list) 
-    ifill = convert_to_int(fill) 
-    ix = convert_to_int(x) 
-    iy = convert_to_int(y) 
-    iw = convert_to_int(w) 
-    ih = convert_to_int(h) 
-    ulcolr = convert_to_FL_COLOR(colr) 
-    keep_elem_refs(fill, x, y, w, h, colr, ifill, ix, iy, iw, ih, ulcolr) 
-    _flps_rectangle(ifill, ix, iy, iw, ih, ulcolr) 
+    """ flps_rectangle(fill, x, y, w, h, colr)
+
+        @status: Untested + NoDoc + NoExample = NOT OK
+    """
+
+    _flps_rectangle = cfuncproto(
+            load_so_libflimage(), "flps_rectangle",
+            None, [cty.c_int, cty.c_int, cty.c_int, cty.c_int, cty.c_int,
+            xfc.FL_COLOR],
+            """void flps_rectangle(int p1, int p2, int p3, int p4, int p5,
+               FL_COLOR p6)
+            """)
+    check_admitted_listvalues(colr, xfc.COLOR_list)
+    ifill = convert_to_int(fill)
+    ix = convert_to_int(x)
+    iy = convert_to_int(y)
+    iw = convert_to_int(w)
+    ih = convert_to_int(h)
+    ulcolr = convert_to_FL_COLOR(colr)
+    keep_elem_refs(fill, x, y, w, h, colr, ifill, ix, iy, iw, ih, ulcolr)
+    _flps_rectangle(ifill, ix, iy, iw, ih, ulcolr)
 
 
 def flps_reset_cache():
-    """ flps_reset_cache() 
- 
-        @status: Untested + NoDoc + NoExample = NOT OK 
-    """ 
- 
-    _flps_reset_cache = cfuncproto( 
-            load_so_libflimage(), "flps_reset_cache", 
-            None, [], 
-            """void flps_reset_cache() 
-            """) 
-    _flps_reset_cache() 
+    """ flps_reset_cache()
+
+        @status: Untested + NoDoc + NoExample = NOT OK
+    """
+
+    _flps_reset_cache = cfuncproto(
+            load_so_libflimage(), "flps_reset_cache",
+            None, [],
+            """void flps_reset_cache()
+            """)
+    _flps_reset_cache()
 
 
 def flps_reset_linewidth():
-    """ flps_reset_linewidth() 
- 
-        @status: Untested + NoDoc + NoExample = NOT OK 
-    """ 
- 
-    _flps_reset_linewidth = cfuncproto( 
-            load_so_libflimage(), "flps_reset_linewidth", 
-            None, [], 
-            """void flps_reset_linewidth() 
-            """) 
-    _flps_reset_linewidth() 
+    """ flps_reset_linewidth()
+
+        @status: Untested + NoDoc + NoExample = NOT OK
+    """
+
+    _flps_reset_linewidth = cfuncproto(
+            load_so_libflimage(), "flps_reset_linewidth",
+            None, [],
+            """void flps_reset_linewidth()
+            """)
+    _flps_reset_linewidth()
 
 
 def flps_restore_flps():
-    """ flps_restore_flps() 
- 
-        @status: Untested + NoDoc + NoExample = NOT OK 
-    """ 
- 
-    _flps_restore_flps = cfuncproto( 
-            load_so_libflimage(), "flps_restore_flps", 
-            None, [], 
-            """void flps_restore_flps() 
-            """) 
-    _flps_restore_flps() 
+    """ flps_restore_flps()
+
+        @status: Untested + NoDoc + NoExample = NOT OK
+    """
+
+    _flps_restore_flps = cfuncproto(
+            load_so_libflimage(), "flps_restore_flps",
+            None, [],
+            """void flps_restore_flps()
+            """)
+    _flps_restore_flps()
 
 
 def flps_rgbcolor(r, g, b):
-    """ flps_rgbcolor(r, g, b) 
- 
-        @status: Untested + NoDoc + NoExample = NOT OK 
-    """ 
- 
-    _flps_rgbcolor = cfuncproto( 
-            load_so_libflimage(), "flps_rgbcolor", 
-            None, [cty.c_int, cty.c_int, cty.c_int], 
-            """void flps_rgbcolor(int p1, int p2, int p3) 
-            """) 
-    ir = convert_to_int(r) 
-    ig = convert_to_int(g) 
-    ib = convert_to_int(b) 
-    keep_elem_refs(r, g, b, ir, ig, ib) 
-    _flps_rgbcolor(ir, ig, ib) 
+    """ flps_rgbcolor(r, g, b)
+
+        @status: Untested + NoDoc + NoExample = NOT OK
+    """
+
+    _flps_rgbcolor = cfuncproto(
+            load_so_libflimage(), "flps_rgbcolor",
+            None, [cty.c_int, cty.c_int, cty.c_int],
+            """void flps_rgbcolor(int p1, int p2, int p3)
+            """)
+    ir = convert_to_int(r)
+    ig = convert_to_int(g)
+    ib = convert_to_int(b)
+    keep_elem_refs(r, g, b, ir, ig, ib)
+    _flps_rgbcolor(ir, ig, ib)
 
 
 def flps_roundrectangle(fill, x, y, w, h, colr):
-    """ flps_roundrectangle(fill, x, y, w, h, colr) 
- 
-        @status: Untested + NoDoc + NoExample = NOT OK 
-    """ 
- 
-    _flps_roundrectangle = cfuncproto( 
-            load_so_libflimage(), "flps_roundrectangle", 
-            None, [cty.c_int, cty.c_int, cty.c_int, cty.c_int, cty.c_int, 
-            xfc.FL_COLOR], 
-            """void flps_roundrectangle(int p1, int p2, int p3, int p4, 
-               int p5, FL_COLOR p6) 
-            """) 
-    check_admitted_listvalues(colr, xfc.COLOR_list) 
-    ifill = convert_to_int(fill) 
-    ix = convert_to_int(x) 
-    iy = convert_to_int(y) 
-    iw = convert_to_int(w) 
-    ih = convert_to_int(h) 
-    ulcolr = convert_to_FL_COLOR(colr) 
-    keep_elem_refs(fill, x, y, w, h, colr, ifill, ix, iy, iw, ih, ulcolr) 
-    _flps_roundrectangle(ifill, ix, iy, iw, ih, ulcolr) 
+    """ flps_roundrectangle(fill, x, y, w, h, colr)
+
+        @status: Untested + NoDoc + NoExample = NOT OK
+    """
+
+    _flps_roundrectangle = cfuncproto(
+            load_so_libflimage(), "flps_roundrectangle",
+            None, [cty.c_int, cty.c_int, cty.c_int, cty.c_int, cty.c_int,
+            xfc.FL_COLOR],
+            """void flps_roundrectangle(int p1, int p2, int p3, int p4,
+               int p5, FL_COLOR p6)
+            """)
+    check_admitted_listvalues(colr, xfc.COLOR_list)
+    ifill = convert_to_int(fill)
+    ix = convert_to_int(x)
+    iy = convert_to_int(y)
+    iw = convert_to_int(w)
+    ih = convert_to_int(h)
+    ulcolr = convert_to_FL_COLOR(colr)
+    keep_elem_refs(fill, x, y, w, h, colr, ifill, ix, iy, iw, ih, ulcolr)
+    _flps_roundrectangle(ifill, ix, iy, iw, ih, ulcolr)
 
 
 def flps_set_clipping(x, y, w, h):
-    """ flps_set_clipping(x, y, w, h) 
- 
-        @status: Untested + NoDoc + NoExample = NOT OK 
-    """ 
- 
-    _flps_set_clipping = cfuncproto( 
-            load_so_libflimage(), "flps_set_clipping", 
-            None, [cty.c_int, cty.c_int, cty.c_int, cty.c_int], 
-            """void flps_set_clipping(int p1, int p2, int p3, int p4) 
-            """) 
-    ix = convert_to_int(x) 
-    iy = convert_to_int(y) 
-    iw = convert_to_int(w) 
-    ih = convert_to_int(h) 
-    keep_elem_refs(x, y, w, h, ix, iy, iw, ih) 
-    _flps_set_clipping(ix, iy, iw, ih) 
+    """ flps_set_clipping(x, y, w, h)
+
+        @status: Untested + NoDoc + NoExample = NOT OK
+    """
+
+    _flps_set_clipping = cfuncproto(
+            load_so_libflimage(), "flps_set_clipping",
+            None, [cty.c_int, cty.c_int, cty.c_int, cty.c_int],
+            """void flps_set_clipping(int p1, int p2, int p3, int p4)
+            """)
+    ix = convert_to_int(x)
+    iy = convert_to_int(y)
+    iw = convert_to_int(w)
+    ih = convert_to_int(h)
+    keep_elem_refs(x, y, w, h, ix, iy, iw, ih)
+    _flps_set_clipping(ix, iy, iw, ih)
 
 
 def flps_set_font(style, size):
-    """ flps_set_font(style, size) 
- 
-        @param style: label style 
-        @type style: [num./int] from xfdata module FL_NORMAL_STYLE, 
-                      FL_BOLD_STYLE, FL_ITALIC_STYLE, FL_BOLDITALIC_STYLE, 
-                      FL_FIXED_STYLE, FL_FIXEDBOLD_STYLE, 
-                      FL_FIXEDITALIC_STYLE, FL_FIXEDBOLDITALIC_STYLE, 
-                      FL_TIMES_STYLE, FL_TIMESBOLD_STYLE, 
-                      FL_TIMESITALIC_STYLE, FL_TIMESBOLDITALIC_STYLE, 
-                      FL_MISC_STYLE, FL_MISCBOLD_STYLE, FL_MISCITALIC_STYLE, 
-                      FL_SYMBOL_STYLE, FL_SHADOW_STYLE, FL_ENGRAVED_STYLE, 
-                      FL_EMBOSSED_STYLE 
- 
-        @status: Untested + NoDoc + NoExample = NOT OK 
-    """ 
- 
-    _flps_set_font = cfuncproto( 
-            load_so_libflimage(), "flps_set_font", 
-            None, [cty.c_int, cty.c_int], 
-            """void flps_set_font(int p1, int p2) 
-            """) 
-    check_admitted_listvalues(style, xfc.TEXTSTYLE_list) 
-    istyle = convert_to_int(style) 
-    isize = convert_to_int(size) 
-    keep_elem_refs(style, size, istyle, isize) 
-    _flps_set_font(istyle, isize) 
+    """ flps_set_font(style, size)
+
+        @param style: label style
+        @type style: [num./int] from xfdata module FL_NORMAL_STYLE,
+                      FL_BOLD_STYLE, FL_ITALIC_STYLE, FL_BOLDITALIC_STYLE,
+                      FL_FIXED_STYLE, FL_FIXEDBOLD_STYLE,
+                      FL_FIXEDITALIC_STYLE, FL_FIXEDBOLDITALIC_STYLE,
+                      FL_TIMES_STYLE, FL_TIMESBOLD_STYLE,
+                      FL_TIMESITALIC_STYLE, FL_TIMESBOLDITALIC_STYLE,
+                      FL_MISC_STYLE, FL_MISCBOLD_STYLE, FL_MISCITALIC_STYLE,
+                      FL_SYMBOL_STYLE, FL_SHADOW_STYLE, FL_ENGRAVED_STYLE,
+                      FL_EMBOSSED_STYLE
+
+        @status: Untested + NoDoc + NoExample = NOT OK
+    """
+
+    _flps_set_font = cfuncproto(
+            load_so_libflimage(), "flps_set_font",
+            None, [cty.c_int, cty.c_int],
+            """void flps_set_font(int p1, int p2)
+            """)
+    check_admitted_listvalues(style, xfc.TEXTSTYLE_list)
+    istyle = convert_to_int(style)
+    isize = convert_to_int(size)
+    keep_elem_refs(style, size, istyle, isize)
+    _flps_set_font(istyle, isize)
 
 
 def flps_unset_clipping():
-    """ flps_unset_clipping() 
- 
-        @status: Untested + NoDoc + NoExample = NOT OK 
-    """ 
- 
-    _flps_unset_clipping = cfuncproto( 
-            load_so_libflimage(), "flps_unset_clipping", 
-            None, [], 
-            """void flps_unset_clipping() 
-            """) 
-    _flps_unset_clipping() 
+    """ flps_unset_clipping()
+
+        @status: Untested + NoDoc + NoExample = NOT OK
+    """
+
+    _flps_unset_clipping = cfuncproto(
+            load_so_libflimage(), "flps_unset_clipping",
+            None, [],
+            """void flps_unset_clipping()
+            """)
+    _flps_unset_clipping()
 
 
 def fl_show_errors(y):
-#    """ fl_show_errors(y) 
-# 
-#        @param y: (<int>) 
-# 
-#        @example:. 
-# 
-#        @status: Untested + NoDoc + NoDemo = NOT OK 
-#    """ 
-# 
-#    _fl_show_errors = cfuncproto( 
-#            load_so_libforms(), "fl_show_errors",\ 
-#            None, [cty.c_int],\ 
-#            """void fl_show_errors(int y) 
-#            """) 
-#    iy = convert_to_int(y) 
-#    keep_elem_refs(y, iy) 
-#    _fl_show_errors(iy) 
+#    """ fl_show_errors(y)
+#
+#        @param y: (<int>)
+#
+#        @example:.
+#
+#        @status: Untested + NoDoc + NoDemo = NOT OK
+#    """
+#
+#    _fl_show_errors = cfuncproto(
+#            load_so_libforms(), "fl_show_errors",\
+#            None, [cty.c_int],\
+#            """void fl_show_errors(int y)
+#            """)
+#    iy = convert_to_int(y)
+#    keep_elem_refs(y, iy)
+#    _fl_show_errors(iy)
 
 
 def fl_strdup(strng):
-    """ fl_strdup(strng) -> string 
- 
-        @status: Untested + NoDoc + NoDemo = NOT OK 
+    """ fl_strdup(strng) -> string
+
+        @status: Untested + NoDoc + NoDemo = NOT OK
     """
- 
-    _fl_strdup = cfuncproto( 
+
+    _fl_strdup = cfuncproto(
             load_so_libforms(), "fl_strdup",\
             xfc.STRING, [xfc.STRING],\
-            """char * fl_strdup(const char * s) 
-            """) 
-    sstrng = convert_to_string(strng) 
-    keep_elem_refs(strng, sstrng) 
-    retval = _fl_strdup(sstrng) 
-    return retval 
+            """char * fl_strdup(const char * s)
+            """)
+    sstrng = convert_to_string(strng)
+    keep_elem_refs(strng, sstrng)
+    retval = _fl_strdup(sstrng)
+    return retval
 
 
 
-# backward data dismissed --LK 
-# This function is retained for compatibility reasons only. 
-# It returns 1 always. 
-#def fl_init_RGBdatabase(text): 
-#    """ 
-#        fl_init_RGBdatabase(text) -> num. 
-#    """ 
-# 
-#    _fl_init_RGBdatabase = cfuncproto( 
-#            load_so_libflimage(), "fl_init_RGBdatabase", 
-#            cty.c_int, [xfc.STRING], 
-#            """int fl_init_RGBdatabase(const char * p1) 
-#            """) 
-#    stext = convert_to_string(text) 
-#    keep_elem_refs(text, stext) 
-#    retval = _fl_init_RGBdatabase(stext) 
-#    return retval 
-#end backwards --LK 
+# backward data dismissed --LK
+# This function is retained for compatibility reasons only.
+# It returns 1 always.
+#def fl_init_RGBdatabase(text):
+#    """
+#        fl_init_RGBdatabase(text) -> num.
+#    """
+#
+#    _fl_init_RGBdatabase = cfuncproto(
+#            load_so_libflimage(), "fl_init_RGBdatabase",
+#            cty.c_int, [xfc.STRING],
+#            """int fl_init_RGBdatabase(const char * p1)
+#            """)
+#    stext = convert_to_string(text)
+#    keep_elem_refs(text, stext)
+#    retval = _fl_init_RGBdatabase(stext)
+#    return retval
+#end backwards --LK
 
 

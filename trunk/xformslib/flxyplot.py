@@ -46,7 +46,8 @@ from xformslib import xfdata
 
 
 def fl_add_xyplot(plottype, x, y, w, h, label):
-    """Adds an xyplot object.
+    """Adds an xyplot object. It gives an easy way to display a tabulated
+    function generated on the fly or from an existing data file.
 
     --
 
@@ -92,13 +93,15 @@ def fl_add_xyplot(plottype, x, y, w, h, label):
     ih = libr.convert_to_FL_Coord(h)
     slabel = libr.convert_to_string(label)
     libr.keep_elem_refs(plottype, x, y, w, h, label, iplottype, ix, iy,
-                   iw, ih, slabel)
+                        iw, ih, slabel)
     retval = _fl_add_xyplot(iplottype, ix, iy, iw, ih, slabel)
     return retval
 
 
-def fl_set_xyplot_data(pFlObject, xlist, ylist, n, title, xlabel, ylabel):
-    """*todo*
+def fl_set_xyplot_data(pFlObject, xlist, ylist, npoints, title,
+                       xlabel, ylabel):
+    """Set or replaces data for a xyplot object, using supplied values. If
+    the xyplot object being set exists already, old data will be cleared.
 
     --
 
@@ -106,17 +109,17 @@ def fl_set_xyplot_data(pFlObject, xlist, ylist, n, title, xlabel, ylabel):
       `pFlObject` : pointer to xfdata.FL_OBJECT
         xyplot object
       `xlist` : list_of_float
-        list of horizontal values?
+        list of values for the tabulated function on the x-axis
       `ylist` : list_of_float
-        list of vertical values?
-      `n` : int
-        *todo*
+        list of values for the tabulated function on the y-axis
+      `npoints` : int
+        number of data points
       `title` : str
-        title of xyplot
+        title drawn above the xyplot
       `xlabel` : str
-        label of horizontal values
+        label for values on x-axis
       `ylabel` : str
-        label of vertical values
+        label for values on y-axis
 
     :note: e.g. *todo*
 
@@ -146,37 +149,41 @@ def fl_set_xyplot_data(pFlObject, xlist, ylist, n, title, xlabel, ylabel):
         fylist[a] = libr.convert_to_float(ylist[a])
     pylist = cty.pointer(fylist)
     print "ylist, fylist, pylist", ylist, fylist, pylist
-    inum = libr.convert_to_int(n)
+    inpoints = libr.convert_to_int(npoints)
     stitle = libr.convert_to_string(title)
     sxlabel = libr.convert_to_string(xlabel)
     sylabel = libr.convert_to_string(ylabel)
-    libr.keep_elem_refs(pFlObject, xlist, ylist, n, fxlist, fylist, pxlist,
-             pylist, title, xlabel, ylabel, inum, stitle, sxlabel, sylabel)
+    libr.keep_elem_refs(pFlObject, xlist, ylist, npoints, fxlist, fylist,
+                pxlist, pylist, title, xlabel, ylabel, inpoints, stitle,
+                sxlabel, sylabel)
     _fl_set_xyplot_data(pFlObject, pxlist, pylist, inum, stitle, sxlabel,
                         sylabel)
 
 
-def fl_set_xyplot_data_double(pFlObject, xlist, ylist, n, title, xlabel,
-                              ylabel):
-    """*todo*
+def fl_set_xyplot_data_double(pFlObject, xlist, ylist, npoints, title,
+                              xlabel, ylabel):
+    """Set or replaces data for a xyplot object, using supplied values. If
+    the xyplot object being set exists already, old data will be cleared.
+    It's about the same as fl_set_xyplot_data_double(), but uses double type
+    internally.
 
-    --
+--
 
     :Parameters:
       `pFlObject` : pointer to xfdata.FL_OBJECT
         xyplot object
       `xlist` : list_of_float
-        list of horizontal values?
+        list of values for the tabulated function on the x-axis
       `ylist` : list_of_float
-        list of vertical values?
-      `n` : int
-        *todo*
+        list of values for the tabulated function on the y-axis
+      `npoints` : int
+        number of data points
       `title` : str
-        title of xyplot
+        title drawn above the xyplot
       `xlabel` : str
-        label of horizontal values
+        label for values on x-axis
       `ylabel` : str
-        label of vertical values
+        label for values on y-axis
 
     :note: e.g. *todo*
 
@@ -195,19 +202,23 @@ def fl_set_xyplot_data_double(pFlObject, xlist, ylist, n, title, xlabel,
     libr.verify_flobjectptr_type(pFlObject)
     pxlist = cty.cast(xlist, cty.POINTER(cty.c_double))
     pylist = cty.cast(ylist, cty.POINTER(cty.c_double))
-    inum = libr.convert_to_int(n)
+    inpoints = libr.convert_to_int(npoints)
     stitle = libr.convert_to_string(title)
     sxlabel = libr.convert_to_string(xlabel)
     sylabel = libr.convert_to_string(ylabel)
-    libr.keep_elem_refs(pFlObject, xlist, ylist, n, title, xlabel, ylabel,
-                    pxlist, pylist, inum, stitle, sxlabel, sylabel)
-    _fl_set_xyplot_data_double(pFlObject, pxlist, pylist, n, title, \
-                                        xlabel, ylabel, inum, stitle, \
-                                        sxlabel, sylabel)
+    libr.keep_elem_refs(pFlObject, xlist, ylist, npoints, title, xlabel,
+                ylabel, pxlist, pylist, inpoints, stitle, sxlabel, sylabel)
+    _fl_set_xyplot_data_double(pFlObject, pxlist, pylist, npoints, title, \
+                        xlabel, ylabel, inpoints, stitle, sxlabel, sylabel)
 
 
 def fl_set_xyplot_file(pFlObject, fname, title, xlabel, ylabel):
-    """*todo*
+    """Sets or replaces data for a xyplot object, by loading a tabulated
+    function from a file. The data file should be an ASCII file consisting
+    of data lines. Each data line must have two columns, indicating the (x,y)
+    pair with a space, tab or comma (,) separating the two columns. Lines
+    that start with any of !, ; or # are considered to be comments and are
+    ignored.
 
     --
 
@@ -223,7 +234,8 @@ def fl_set_xyplot_file(pFlObject, fname, title, xlabel, ylabel):
       `ylabel` : str
         label for vertical values
 
-    :return: num.
+    :return: number of data points successfully read, or 0 (if the file can?t
+        be opened)
     :rtype: int
 
     :note: e.g. *todo*
@@ -249,22 +261,25 @@ def fl_set_xyplot_file(pFlObject, fname, title, xlabel, ylabel):
     return retval
 
 
-def fl_insert_xyplot_data(pFlObject, idnum, n, valx, valy):
-    """Inserts a point after n position in a xyplot object.
+def fl_insert_xyplot_data(pFlObject, ovlid, idxpt, x, y):
+    """Inserts a point after a supplied index position in a xyplot object.
 
     --
 
     :Parameters:
       `pFlObject` : pointer to xfdata.FL_OBJECT
         xyplot object
-      `idnum` : int
-        *todo*
-      `n` : int
-        *todo*
-      `valx` : float
-        *todo*
-      `valy` : float
-        *todo*
+      `ovlid` : int
+        the overlay ID
+      `idxpt` : int
+        the index of the point after which the data new point is to be
+        inserted.If it's -1 inserts the point in front. To append to the data,
+        set n to be equal or larger than the return value of
+        fl_get_xyplot_numdata().
+      `x` : float
+        horizontal position of the point
+      `y` : float
+        vertical position of the point
 
     :note: e.g. *todo*
 
@@ -279,31 +294,37 @@ def fl_insert_xyplot_data(pFlObject, idnum, n, valx, valy):
            double x, double y)""")
     libr.check_if_initialized()
     libr.verify_flobjectptr_type(pFlObject)
-    iidnum = libr.convert_to_int(idnum)
-    inum = libr.convert_to_int(n)
-    fvalx = libr.convert_to_double(valx)
-    fvaly = libr.convert_to_double(valy)
-    libr.keep_elem_refs(pFlObject, idnum, n, valx, valy, iidnum, inum, \
-                        fvalx, fvaly)
-    _fl_insert_xyplot_data(pFlObject, iidnum, inum, fvalx, fvaly)
+    iovlid = libr.convert_to_int(ovlid)
+    iidxpt = libr.convert_to_int(idxpt)
+    fx = libr.convert_to_double(x)
+    fy = libr.convert_to_double(y)
+    libr.keep_elem_refs(pFlObject, ovlid, idxpt, x, y, iovlid, iidxpt, \
+                        fx, fy)
+    _fl_insert_xyplot_data(pFlObject, iovlid, iidxpt, fx, fy)
 
 
-def fl_add_xyplot_text(pFlObject, valx, valy, text, al, colr):
-    """*todo*
+def fl_add_xyplot_text(pFlObject, x, y, text, align, colr):
+    """Places an inset text on an xyplot object (up to
+    xfdata.FL_MAX_XYPLOTOVERLAY or the value set via
+    fl_set_xyplot_maxoverlays() of such insets can be accommodated).
 
     --
 
     :Parameters:
       `pFlObject` : pointer to xfdata.FL_OBJECT
         xyplot object
-      `valx` : float
-        *todo*
-      `valy` : float
-        *todo*
+      `x` : float
+        horizontal coordinates where text is to be placed
+      `y` : float
+        vertical coordinates where text is to be placed
       `text` : str
-        text to be added to xyplot
-      `al` : int
-        *todo*
+        text to be added to xyplot. If it starts with '@', a symbol is drawn.
+      `align` : int
+        alignment of text. Values (from xfdata.py) FL_ALIGN_CENTER,
+        FL_ALIGN_TOP, FL_ALIGN_BOTTOM, FL_ALIGN_LEFT, FL_ALIGN_RIGHT,
+        FL_ALIGN_LEFT_TOP, FL_ALIGN_RIGHT_TOP, FL_ALIGN_LEFT_BOTTOM,
+        FL_ALIGN_RIGHT_BOTTOM, FL_ALIGN_INSIDE, FL_ALIGN_VERT.
+        Bitwise OR with FL_ALIGN_INSIDE is allowed.
       `colr` : long_pos
         color value
 
@@ -321,18 +342,19 @@ def fl_add_xyplot_text(pFlObject, valx, valy, text, al, colr):
     libr.check_if_initialized()
     libr.verify_flobjectptr_type(pFlObject)
     libr.checknonfatal_allowed_value_in_list(colr, xfdata.COLOR_list)
-    fvalx = libr.convert_to_double(valx)
-    fvaly = libr.convert_to_double(valy)
+    fx = libr.convert_to_double(x)
+    fy = libr.convert_to_double(y)
     stext = libr.convert_to_string(text)
-    ial = libr.convert_to_int(al)
+    libr.checkfatal_allowed_value_in_list(align, xfdata.ALIGN_list)
+    ialign = libr.convert_to_int(align)
     ulcolr = libr.convert_to_FL_COLOR(colr)
-    libr.keep_elem_refs(pFlObject, valx, valy, text, al, colr, fvalx, fvaly, \
-                   stext, ial, ulcolr)
-    _fl_add_xyplot_text(pFlObject, fvalx, fvaly, stext, ial, ulcolr)
+    libr.keep_elem_refs(pFlObject, x, y, text, align, colr, fx, fy, stext, \
+                        ialign, ulcolr)
+    _fl_add_xyplot_text(pFlObject, fx, fy, stext, ialign, ulcolr)
 
 
 def fl_delete_xyplot_text(pFlObject, text):
-    """*todo*
+    """Removes an inset text from a xyplot object.
 
     --
 
@@ -358,18 +380,19 @@ def fl_delete_xyplot_text(pFlObject, text):
     _fl_delete_xyplot_text(pFlObject, stext)
 
 
-def fl_set_xyplot_maxoverlays(pFlObject, maxover):
-    """*todo*
+def fl_set_xyplot_maxoverlays(pFlObject, numovl):
+    """Changes the maximum number of overlays an object can have. By default,
+    it is 32.
 
     --
 
     :Parameters:
       `pFlObject` : pointer to xfdata.FL_OBJECT
         xyplot object
-      `maxover` : int
-        *todo*
+      `numovl` : int
+        maximum number of overlays.
 
-    :return: num.
+    :return: previous maximum number of overlays
     :rtype: int
 
     :note: e.g. *todo*
@@ -383,28 +406,29 @@ def fl_set_xyplot_maxoverlays(pFlObject, maxover):
         """int fl_set_xyplot_maxoverlays(FL_OBJECT * ob, int maxover)""")
     libr.check_if_initialized()
     libr.verify_flobjectptr_type(pFlObject)
-    imaxover = libr.convert_to_int(maxover)
-    libr.keep_elem_refs(pFlObject, maxover, imaxover)
-    retval = _fl_set_xyplot_maxoverlays(pFlObject, imaxover)
+    inumovl = libr.convert_to_int(numovl)
+    libr.keep_elem_refs(pFlObject, numovl, inumovl)
+    retval = _fl_set_xyplot_maxoverlays(pFlObject, inumovl)
     return retval
 
 
-def fl_add_xyplot_overlay(pFlObject, idnum, x, y, n, colr):
-    """*todo*
+def fl_add_xyplot_overlay(pFlObject, ovlid, x, y, npoints, colr):
+    """Overlay several plots together.
 
     --
 
     :Parameters:
       `pFlObject` : pointer to xfdata.FL_OBJECT
         xyplot object
-      `idnum` : int
-        *todo*
+      `ovlid` : int
+        overlay id. Values between 1 and xfdata.FL_MAX_XYPLOTOVERLAY
+        (currently 32)
       `x` : float
-        *todo*
+        horizontal position
       `y` : float
-        *todo*
-      `n` : int
-        *todo*
+        vertical position
+      `npoints` : int
+        number of data points.
       `colr` : long_pos
         color value
 
@@ -423,32 +447,33 @@ def fl_add_xyplot_overlay(pFlObject, idnum, x, y, n, colr):
     libr.check_if_initialized()
     libr.verify_flobjectptr_type(pFlObject)
     libr.checknonfatal_allowed_value_in_list(colr, xfdata.COLOR_list)
-    iidnum = libr.convert_to_int(idnum)
+    iovlid = libr.convert_to_int(ovlid)
     px = cty.cast(x, cty.POINTER(cty.c_float))
     py = cty.cast(y, cty.POINTER(cty.c_float))
-    inum = libr.convert_to_int(n)
+    inpoints = libr.convert_to_int(npoints)
     ulcolr = libr.convert_to_FL_COLOR(colr)
-    libr.keep_elem_refs(pFlObject, idnum, x, y, n, colr, iidnum, px, py, \
-                        inum, ulcolr)
-    _fl_add_xyplot_overlay(pFlObject, iidnum, px, py, inum, ulcolr)
+    libr.keep_elem_refs(pFlObject, ovlid, x, y, npoints, colr, iovlid,
+                        px, py, inpoints, ulcolr)
+    _fl_add_xyplot_overlay(pFlObject, iovlid, px, py, inpoints, ulcolr)
 
 
-def fl_add_xyplot_overlay_file(pFlObject, idnum, fname, colr):
-    """*todo*
+def fl_add_xyplot_overlay_file(pFlObject, ovlid, fname, colr):
+    """Adds an overlay, using a data file to specify the (x,y) function for
+    the base data.
 
     --
 
     :Parameters:
       `pFlObject` : pointer to xfdata.FL_OBJECT
         xyplot object
-      `idnum` : int
-        *todo*
+      `ovlid` : int
+        overlay id
       `fname` : str
         name of file
       `colr` : long_pos
         color value
 
-    :return: num.
+    :return: number of data points successfully read
     :rtype: int
 
     :note: e.g. *todo*
@@ -465,48 +490,24 @@ def fl_add_xyplot_overlay_file(pFlObject, idnum, fname, colr):
     libr.check_if_initialized()
     libr.verify_flobjectptr_type(pFlObject)
     libr.checknonfatal_allowed_value_in_list(colr, xfdata.COLOR_list)
-    iidnum = libr.convert_to_int(idnum)
+    iovlid = libr.convert_to_int(ovlid)
     sfname = libr.convert_to_string(fname)
     ulcolr = libr.convert_to_FL_COLOR(colr)
-    libr.keep_elem_refs(pFlObject, idnum, fname, colr, iidnum, sfname, ulcolr)
-    retval = _fl_add_xyplot_overlay_file(pFlObject, iidnum, sfname, ulcolr)
+    libr.keep_elem_refs(pFlObject, ovlid, fname, colr, iovlid, sfname, ulcolr)
+    retval = _fl_add_xyplot_overlay_file(pFlObject, iovlid, sfname, ulcolr)
     return retval
 
 
-def fl_set_xyplot_return(pFlObject, when):
-    """*todo*
-
-    --
-
-    :Parameters:
-      `pFlObject` : pointer to xfdata.FL_OBJECT
-        xyplot object
-      `when` : int_pos
-        return type. Values (from xfdata.py) FL_RETURN_NONE,
-        FL_RETURN_CHANGED, FL_RETURN_END, FL_RETURN_END_CHANGED,
-        FL_RETURN_SELECTION, FL_RETURN_DESELECTION,
-        FL_RETURN_TRIGGERED, FL_RETURN_ALWAYS
-
-    :note: e.g. *todo*
-
-    :status: Untested + NoDoc + NoDemo = NOT OK
-
-    """
-    _fl_set_xyplot_return = libr.cfuncproto(
-        libr.load_so_libforms(), "fl_set_xyplot_return",
-        None, [cty.POINTER(xfdata.FL_OBJECT), cty.c_uint],
-        """void fl_set_xyplot_return(FL_OBJECT * ob, unsigned
-           int when)""")
-    libr.check_if_initialized()
-    libr.verify_flobjectptr_type(pFlObject)
-    libr.checkfatal_allowed_value_in_list(when, xfdata.RETURN_list)
-    uiwhen = libr.convert_to_uint(when)
-    libr.keep_elem_refs(pFlObject, when, uiwhen)
-    _fl_set_xyplot_return(pFlObject, uiwhen)
+# fl_set_xyplot_return(pFlObject, when) function placeholder (internal)
 
 
 def fl_set_xyplot_xtics(pFlObject, major, minor):
-    """*todo*
+    """Changes the number of tic marks of a xyplot object on x-axis. The
+    actual scaling routine may choose a value other than that requested if it
+    decides that this would make the plot look nicer, thus major and minor
+    are only taken as a hint to the scaling routine. However, in almost all
+    cases the scaling routine will not generate a major that differs from the
+    requested value by more than 3.
 
     --
 
@@ -514,9 +515,11 @@ def fl_set_xyplot_xtics(pFlObject, major, minor):
       `pFlObject` : pointer to xfdata.FL_OBJECT
         xyplot object
       `major` : int
-        *todo*
+        number of tic marks to be placed on the plot. If it's -1 suppresses
+        the tic marks completely, if it's 0 restores the default settings.
       `minor` : int
-        *todo*
+        number of divisions between major tic marks. If it's -1 suppresses
+        the tic marks completely, if it's 0 restores the default settings.
 
     :note: e.g. *todo*
 
@@ -536,7 +539,12 @@ def fl_set_xyplot_xtics(pFlObject, major, minor):
 
 
 def fl_set_xyplot_ytics(pFlObject, major, minor):
-    """*todo*
+    """Changes the number of tic marks of a xyplot object on y-axis. The
+    actual scaling routine may choose a value other than that requested if it
+    decides that this would make the plot look nicer, thus major and minor
+    are only taken as a hint to the scaling routine. However, in almost all
+    cases the scaling routine will not generate a major that differs from the
+    requested value by more than 3.
 
     --
 
@@ -544,9 +552,11 @@ def fl_set_xyplot_ytics(pFlObject, major, minor):
       `pFlObject` : pointer to xfdata.FL_OBJECT
         xyplot object
       `major` : int
-        *todo*
+        number of tic marks to be placed on the plot. If it's -1 suppresses
+        the tic marks completely, if it's 0 restores the default settings.
       `minor` : int
-        *todo*
+        number of divisions between major tic marks. If it's -1 suppresses
+        the tic marks completely, if it's 0 restores the default settings.
 
     :note: e.g. *todo*
 
@@ -566,7 +576,8 @@ def fl_set_xyplot_ytics(pFlObject, major, minor):
 
 
 def fl_set_xyplot_xbounds(pFlObject, minbound, maxbound):
-    """*todo*
+    """Sets and uses absolute bounds/limits on x-axis of a xyplot object as
+    opposed to actual bounds in data.
 
     --
 
@@ -597,7 +608,8 @@ def fl_set_xyplot_xbounds(pFlObject, minbound, maxbound):
 
 
 def fl_set_xyplot_ybounds(pFlObject, minbound, maxbound):
-    """*todo*
+    """Sets and uses absolute bounds/limits on y-axis of a xyplot object as
+    opposed to actual bounds in data.
 
     --
 
@@ -628,7 +640,10 @@ def fl_set_xyplot_ybounds(pFlObject, minbound, maxbound):
 
 
 def fl_get_xyplot_xbounds(pFlObject):
-    """*todo*
+    """Obtains the current bounds/limits for x-axis of a xyplot object. The
+    bounds returned are the bounds used in clipping the data, which are not
+    necessarily the bounds used in computing the world/screen mapping due to
+    tic rounding.
 
     --
 
@@ -663,7 +678,10 @@ def fl_get_xyplot_xbounds(pFlObject):
 
 
 def fl_get_xyplot_ybounds(pFlObject):
-    """*todo*
+    """Obtains the current bounds/limits for y-axis of a xyplot object. The
+    bounds returned are the bounds used in clipping the data, which are not
+    necessarily the bounds used in computing the world/screen mapping due to
+    tic rounding.
 
     --
 
@@ -698,7 +716,8 @@ def fl_get_xyplot_ybounds(pFlObject):
 
 
 def fl_get_xyplot(pFlObject):
-    """*todo*
+    """Obtains the current value of the point of a xyplot object that has
+    changed.
 
     --
 
@@ -706,7 +725,9 @@ def fl_get_xyplot(pFlObject):
       `pFlObject` : pointer to xfdata.FL_OBJECT
         xyplot object
 
-    :return: *todo*
+    :return: horizontal position of data point (x), vertical position of data
+        point (y), the data index starting from 0 (i) or -1 (if no point is
+        changed)
     :rtype: float, float, int
 
     :note: e.g. *todo*
@@ -734,7 +755,7 @@ def fl_get_xyplot(pFlObject):
 
 
 def fl_get_xyplot_data(pFlObject):
-    """*todo*
+    """Obtains a copy of the current xyplot data.
 
     --
 
@@ -742,7 +763,8 @@ def fl_get_xyplot_data(pFlObject):
       `pFlObject` : pointer to xfdata.FL_OBJECT
         xyplot object
 
-    :return: *todo*
+    :return: list of x-axis values?, list of y-axis values?, number of data
+        points
     :rtype: float, float, int
 
     :note: e.g. *todo*
@@ -769,19 +791,22 @@ def fl_get_xyplot_data(pFlObject):
     return x.value, y.value, n.value
 
 
-def fl_get_xyplot_data_pointer(pFlObject, idnum):
-    """*todo*
+# TODO: verify it it can be suppressed - problematic
+def fl_get_xyplot_data_pointer(pFlObject, ovlid):
+    """Obtains the pointer to the data of xyplot object rather (instead of a
+    copy of the data).
 
     --
 
     :Parameters:
       `pFlObject` : pointer to xfdata.FL_OBJECT
         xyplot object
-      `idnum` : int
-        *todo*
+      `ovlid` : int
+        overlay? id
 
-    :return: *todo*
-    :rtype: float, float, int
+    :return: pointer to list of x-axis values?, pointer to list of y-axis
+        values?, number of data points
+    :rtype: float?, float?, int
 
     :note: e.g. *todo*
 
@@ -800,16 +825,17 @@ def fl_get_xyplot_data_pointer(pFlObject, idnum):
            float * * x, float * * y, int * n)""")
     libr.check_if_initialized()
     libr.verify_flobjectptr_type(pFlObject)
-    iidnum = libr.convert_to_int(idnum)
+    iovlid = libr.convert_to_int(ovlid)
     x, px = libr.make_float_and_pointer()
     y, py = libr.make_float_and_pointer()
-    n, pn = libr.make_int_and_pointer()
-    libr.keep_elem_refs(pFlObject, idnum, iidnum, x, y, n, px, py, pn)
-    _fl_get_xyplot_data_pointer(pFlObject, iidnum, px, py, pn)
-    return x.value, y.value, n.value
+    npoints, pnpoints = libr.make_int_and_pointer()
+    libr.keep_elem_refs(pFlObject, ovlid, iovlid, x, y, npoints, px, py,
+                        pnpoints)
+    _fl_get_xyplot_data_pointer(pFlObject, iovlid, px, py, pnpoints)
+    return x.value, y.value, npoints.value
 
 
-def fl_get_xyplot_overlay_data(pFlObject, idnum):
+def fl_get_xyplot_overlay_data(pFlObject, ovlid):
     """*todo*
 
     --
@@ -817,8 +843,9 @@ def fl_get_xyplot_overlay_data(pFlObject, idnum):
     :Parameters:
       `pFlObject` : pointer to xfdata.FL_OBJECT
         xyplot object
-      `idnum` : int
-        *todo*
+      `ovlid` : int
+        overlay id. Values between 1 and xfdata.FL_MAX_XYPLOTOVERLAY or the
+        number set via fl_set_xyplot_maxoverlays()
 
     :return: *todo*
     :rtype: float, float, int
@@ -840,16 +867,16 @@ def fl_get_xyplot_overlay_data(pFlObject, idnum):
            float * x, float * y, int * n)""")
     libr.check_if_initialized()
     libr.verify_flobjectptr_type(pFlObject)
-    iidnum = libr.convert_to_int(idnum)
+    iovlid = libr.convert_to_int(ovlid)
     x, px = libr.make_float_and_pointer()
     y, py = libr.make_float_and_pointer()
-    n, pn = libr.make_int_and_pointer()
-    libr.keep_elem_refs(pFlObject, idnum, iidnum, x, y, n, px, py, pn)
-    _fl_get_xyplot_overlay_data(pFlObject, iidnum, px, py, pn)
-    return x.value, y.value, n.value
+    npoints, pnpoints = libr.make_int_and_pointer()
+    libr.keep_elem_refs(pFlObject, ovlid, iovlid, x, y, n, px, py, pnpoints)
+    _fl_get_xyplot_overlay_data(pFlObject, iovlid, px, py, pnpoints)
+    return x.value, y.value, npoints.value
 
 
-def fl_set_xyplot_overlay_type(pFlObject, idnum, plottype):
+def fl_set_xyplot_overlay_type(pFlObject, ovlid, plottype):
     """*todo*
 
     --
@@ -857,8 +884,9 @@ def fl_set_xyplot_overlay_type(pFlObject, idnum, plottype):
     :Parameters:
       `pFlObject` : pointer to xfdata.FL_OBJECT
         xyplot object
-      `idnum` : int
-        *todo*
+      `ovlid` : int
+        overlay id. Values between 1 and xfdata.FL_MAX_XYPLOTOVERLAY or the
+        number set via fl_set_xyplot_maxoverlays()
       `plottype` : int
         type of xyplot.  Values (from xfdata.py) FL_NORMAL_XYPLOT,
         FL_SQUARE_XYPLOT, FL_CIRCLE_XYPLOT, FL_FILL_XYPLOT,
@@ -878,23 +906,24 @@ def fl_set_xyplot_overlay_type(pFlObject, idnum, plottype):
            int type)""")
     libr.check_if_initialized()
     libr.verify_flobjectptr_type(pFlObject)
-    iidnum = libr.convert_to_int(idnum)
+    iovlid = libr.convert_to_int(ovlid)
     libr.checkfatal_allowed_value_in_list(plottype, xfdata.XYPLOTTYPE_list)
     iplottype = libr.convert_to_int(plottype)
-    libr.keep_elem_refs(pFlObject, idnum, plottype, iidnum, iplottype)
-    _fl_set_xyplot_overlay_type(pFlObject, iidnum, iplottype)
+    libr.keep_elem_refs(pFlObject, ovlid, plottype, iovlid, iplottype)
+    _fl_set_xyplot_overlay_type(pFlObject, iovlid, iplottype)
 
 
-def fl_delete_xyplot_overlay(pFlObject, idnum):
-    """*todo*
+def fl_delete_xyplot_overlay(pFlObject, ovlid):
+    """Deletes an overlay of a xyplot object.
 
     --
 
     :Parameters:
       `pFlObject` : pointer to xfdata.FL_OBJECT
         xyplot object
-      `idnum` : int
-        *todo*
+      `ovlid` : int
+        overlay id. Values between 1 and xfdata.FL_MAX_XYPLOTOVERLAY or the
+        number set via fl_set_xyplot_maxoverlays()
 
     :note: e.g. *todo*
 
@@ -907,25 +936,28 @@ def fl_delete_xyplot_overlay(pFlObject, idnum):
         """void fl_delete_xyplot_overlay(FL_OBJECT * ob, int id)""")
     libr.check_if_initialized()
     libr.verify_flobjectptr_type(pFlObject)
-    iidnum = libr.convert_to_int(idnum)
-    libr.keep_elem_refs(pFlObject, idnum, iidnum)
-    _fl_delete_xyplot_overlay(pFlObject, iidnum)
+    iovlid = libr.convert_to_int(ovlid)
+    libr.keep_elem_refs(pFlObject, ovlid, iovlid)
+    _fl_delete_xyplot_overlay(pFlObject, iovlid)
 
 
-def fl_set_xyplot_interpolate(pFlObject, idnum, deg, grid):
-    """*todo*
+def fl_set_xyplot_interpolate(pFlObject, ovlid, deg, grid):
+    """Interpolates xyplot data using an nth order Lagrangian polynomial.
 
     --
 
     :Parameters:
       `pFlObject` : pointer to xfdata.FL_OBJECT
         xyplot object
-      `idnum` : int
-        *todo*
+      `ovlid` : int
+        overlay id. Values between 1 and xfdata.FL_MAX_XYPLOTOVERLAY or the
+        number set via fl_set_xyplot_maxoverlays(). If it's 0 uses the base
+        data set
       `deg` : int
-        *todo*
+        the order of the polynomial to use. If it's 0 or 1, restores the
+        default linear interpolation.
       `grid` : float
-        *todo*
+        the working grid onto which the data are to be interpolated.
 
     :note: e.g. *todo*
 
@@ -940,23 +972,27 @@ def fl_set_xyplot_interpolate(pFlObject, idnum, deg, grid):
            int deg, double grid)""")
     libr.check_if_initialized()
     libr.verify_flobjectptr_type(pFlObject)
-    iidnum = libr.convert_to_int(idnum)
+    iovlid = libr.convert_to_int(ovlid)
     ideg = libr.convert_to_int(deg)
     fgrid = libr.convert_to_double(grid)
-    libr.keep_elem_refs(pFlObject, idnum, deg, grid, iidnum, ideg, fgrid)
-    _fl_set_xyplot_interpolate(pFlObject, iidnum, ideg, fgrid)
+    libr.keep_elem_refs(pFlObject, ovlid, deg, grid, iovlid, ideg, fgrid)
+    _fl_set_xyplot_interpolate(pFlObject, iovlid, ideg, fgrid)
 
 
-def fl_set_xyplot_inspect(pFlObject, yes):
-    """*todo*
+def fl_set_xyplot_inspect(pFlObject, yesno):
+    """Makes aware or not xyplot objects of mouse clicks. Once an XYPlot is in
+    inspect mode, whenever the mouse is released and the mouse position is on
+    one of the data point, the object is returned to the caller or its
+    callback is invoked. You can use fl_get_xyplot() to find out which point
+    the mouse was clicked on.
 
     --
 
     :Parameters:
       `pFlObject` : pointer to xfdata.FL_OBJECT
         xyplot object
-      `yes` : int
-        *todo*
+      `yesno` : int
+        flag to enable/disable inspect mode. Values 0 (disabled) or 1 (enabled)
 
     :note: e.g. *todo*
 
@@ -969,21 +1005,22 @@ def fl_set_xyplot_inspect(pFlObject, yes):
         """void fl_set_xyplot_inspect(FL_OBJECT * ob, int yes)""")
     libr.check_if_initialized()
     libr.verify_flobjectptr_type(pFlObject)
-    iyes = libr.convert_to_int(yes)
-    libr.keep_elem_refs(pFlObject, yes, iyes)
-    _fl_set_xyplot_inspect(pFlObject, iyes)
+    iyesno = libr.convert_to_int(yesno)
+    libr.keep_elem_refs(pFlObject, yesno, iyesno)
+    _fl_set_xyplot_inspect(pFlObject, iyesno)
 
 
-def fl_set_xyplot_symbolsize(pFlObject, n):
-    """*todo*
+def fl_set_xyplot_symbolsize(pFlObject, symsize):
+    """Changes the size of the symbols drawn at data points of a xyplot
+    object. By default it is 4.
 
     --
 
     :Parameters:
       `pFlObject` : pointer to xfdata.FL_OBJECT
         xyplot object
-      `n` : int
-        *todo*
+      `symsize` : int
+        size of symbol in pixel
 
     :note: e.g. *todo*
 
@@ -996,25 +1033,25 @@ def fl_set_xyplot_symbolsize(pFlObject, n):
         """void fl_set_xyplot_symbolsize(FL_OBJECT * ob, int n)""")
     libr.check_if_initialized()
     libr.verify_flobjectptr_type(pFlObject)
-    inum = libr.convert_to_int(n)
-    libr.keep_elem_refs(pFlObject, n, inum)
-    _fl_set_xyplot_symbolsize(pFlObject, inum)
+    isymsize = libr.convert_to_int(symsize)
+    libr.keep_elem_refs(pFlObject, symsize, isymsize)
+    _fl_set_xyplot_symbolsize(pFlObject, isymsize)
 
 
-def fl_replace_xyplot_point(pFlObject, i, valx, valy):
-    """*todo*
+def fl_replace_xyplot_point(pFlObject, idxpt, x, y):
+    """Replaces the value of a particular point of a xyplot object.
 
     --
 
     :Parameters:
       `pFlObject` : pointer to xfdata.FL_OBJECT
         xyplot object
-      `i` : int
-        *todo*
-      `valx` : float
-        *todo*
-      `valy` : float
-        *todo*
+      `idxpt` : int
+        index of the value to be replaced. The first value has an index of 0.
+      `x` : float
+        new horizontal position
+      `y` : float
+        new vertical position
 
     :note: e.g. *todo*
 
@@ -1029,11 +1066,11 @@ def fl_replace_xyplot_point(pFlObject, i, valx, valy):
            double x, double y)""")
     libr.check_if_initialized()
     libr.verify_flobjectptr_type(pFlObject)
-    ii = libr.convert_to_int(i)
-    fvalx = libr.convert_to_double(valx)
-    fvaly = libr.convert_to_double(valy)
-    libr.keep_elem_refs(pFlObject, i, valx, valy, ii, fvalx, fvaly)
-    _fl_replace_xyplot_point(pFlObject, ii, fvalx, fvaly)
+    iidxpt = libr.convert_to_int(idxpt)
+    fx = libr.convert_to_double(x)
+    fy = libr.convert_to_double(y)
+    libr.keep_elem_refs(pFlObject, idxpt, x, y, iidxpt, fx, fy)
+    _fl_replace_xyplot_point(pFlObject, iidxpt, fx, fy)
 
 
 # Replace the value of a particular point in dataset setID,
@@ -1880,18 +1917,18 @@ def fl_set_xyplot_symbol(pFlObject, idnum, py_XyPlotSymbol):
     return retval
 
 
-def fl_set_xyplot_mark_active(pFlObject, y):
-    """*todo*
+def fl_set_xyplot_mark_active(pFlObject, yesno):
+    """Draws the squares that mark an active plot or not.
 
     --
 
     :Parameters:
       `pFlObject` : pointer to xfdata.FL_OBJECT
         xyplot object
-      `y` : int
-        *todo*
+      `yesno` : int
+        flag to enable/disable drawing. Values 0 (disabled) or 1 (enabled)
 
-    :return: num.
+    :return: old setting
     :rtype: int
 
     :note: e.g. *todo*
@@ -1905,7 +1942,7 @@ def fl_set_xyplot_mark_active(pFlObject, y):
         """int fl_set_xyplot_mark_active(FL_OBJECT * ob, int y)""")
     libr.check_if_initialized()
     libr.verify_flobjectptr_type(pFlObject)
-    iy = libr.convert_to_int(y)
-    libr.keep_elem_refs(pFlObject, y, iy)
-    retval = _fl_set_xyplot_mark_active(pFlObject, iy)
+    iyesno = libr.convert_to_int(yesno)
+    libr.keep_elem_refs(pFlObject, yesno, iyesno)
+    retval = _fl_set_xyplot_mark_active(pFlObject, iyesno)
     return retval
