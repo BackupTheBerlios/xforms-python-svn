@@ -156,7 +156,7 @@ def fl_set_xyplot_data(pFlObject, xlist, ylist, npoints, title,
     libr.keep_elem_refs(pFlObject, xlist, ylist, npoints, fxlist, fylist,
                 pxlist, pylist, title, xlabel, ylabel, inpoints, stitle,
                 sxlabel, sylabel)
-    _fl_set_xyplot_data(pFlObject, pxlist, pylist, inum, stitle, sxlabel,
+    _fl_set_xyplot_data(pFlObject, pxlist, pylist, inpoints, stitle, sxlabel,
                         sylabel)
 
 
@@ -270,11 +270,12 @@ def fl_insert_xyplot_data(pFlObject, ovlid, idxpt, x, y):
       `pFlObject` : pointer to xfdata.FL_OBJECT
         xyplot object
       `ovlid` : int
-        the overlay ID
+        overlay id. Values between 1 and xfdata.FL_MAX_XYPLOTOVERLAY or the
+        number set via fl_set_xyplot_maxoverlays()
       `idxpt` : int
         the index of the point after which the data new point is to be
         inserted.If it's -1 inserts the point in front. To append to the data,
-        set n to be equal or larger than the return value of
+        set it to be equal or larger than the return value of
         fl_get_xyplot_numdata().
       `x` : float
         horizontal position of the point
@@ -421,8 +422,8 @@ def fl_add_xyplot_overlay(pFlObject, ovlid, x, y, npoints, colr):
       `pFlObject` : pointer to xfdata.FL_OBJECT
         xyplot object
       `ovlid` : int
-        overlay id. Values between 1 and xfdata.FL_MAX_XYPLOTOVERLAY
-        (currently 32)
+        overlay id. Values between 1 and xfdata.FL_MAX_XYPLOTOVERLAY or the
+        number set via fl_set_xyplot_maxoverlays()
       `x` : float
         horizontal position
       `y` : float
@@ -467,7 +468,8 @@ def fl_add_xyplot_overlay_file(pFlObject, ovlid, fname, colr):
       `pFlObject` : pointer to xfdata.FL_OBJECT
         xyplot object
       `ovlid` : int
-        overlay id
+        overlay id. Values between 1 and xfdata.FL_MAX_XYPLOTOVERLAY or the
+        number set via fl_set_xyplot_maxoverlays()
       `fname` : str
         name of file
       `colr` : long_pos
@@ -507,7 +509,8 @@ def fl_set_xyplot_xtics(pFlObject, major, minor):
     decides that this would make the plot look nicer, thus major and minor
     are only taken as a hint to the scaling routine. However, in almost all
     cases the scaling routine will not generate a major that differs from the
-    requested value by more than 3.
+    requested value by more than 3. fl_set_xyplot_alphaxtics can?t be active
+    at the same time and the one that gets used is the one that was set last.
 
     --
 
@@ -544,7 +547,8 @@ def fl_set_xyplot_ytics(pFlObject, major, minor):
     decides that this would make the plot look nicer, thus major and minor
     are only taken as a hint to the scaling routine. However, in almost all
     cases the scaling routine will not generate a major that differs from the
-    requested value by more than 3.
+    requested value by more than 3. fl_set_xyplot_ytics can?t be active at the
+    same time and the one that gets used is the one that was set last.
 
     --
 
@@ -802,16 +806,17 @@ def fl_get_xyplot_data_pointer(pFlObject, ovlid):
       `pFlObject` : pointer to xfdata.FL_OBJECT
         xyplot object
       `ovlid` : int
-        overlay? id
+        overlay id. Values between 1 and xfdata.FL_MAX_XYPLOTOVERLAY or the
+        number set via fl_set_xyplot_maxoverlays()
 
     :return: pointer to list of x-axis values?, pointer to list of y-axis
         values?, number of data points
-    :rtype: float?, float?, int
+    :rtype: list_of_float?, list_of_float?, int
 
     :note: e.g. *todo*
 
     :attention: API change from XForms - upstream was
-        fl_get_xyplot_data_pointer(pFlObject, idnum, x, y, n)
+        fl_get_xyplot_data_pointer(pFlObject, ovlid, x, y, n)
 
     :status: Untested + NoDoc + NoDemo = NOT OK
 
@@ -853,7 +858,7 @@ def fl_get_xyplot_overlay_data(pFlObject, ovlid):
     :note: e.g. *todo*
 
     :attention: API change from XForms - upstream was
-        fl_get_xyplot_overlay_data(pFlObject, idnum, x, y, n)
+        fl_get_xyplot_overlay_data(pFlObject, ovlid, x, y, n)
 
     :status: Untested + NoDoc + NoDemo = NOT OK
 
@@ -871,7 +876,8 @@ def fl_get_xyplot_overlay_data(pFlObject, ovlid):
     x, px = libr.make_float_and_pointer()
     y, py = libr.make_float_and_pointer()
     npoints, pnpoints = libr.make_int_and_pointer()
-    libr.keep_elem_refs(pFlObject, ovlid, iovlid, x, y, n, px, py, pnpoints)
+    libr.keep_elem_refs(pFlObject, ovlid, iovlid, x, y, npoints, px, py,
+                        pnpoints)
     _fl_get_xyplot_overlay_data(pFlObject, iovlid, px, py, pnpoints)
     return x.value, y.value, npoints.value
 
@@ -1039,7 +1045,8 @@ def fl_set_xyplot_symbolsize(pFlObject, symsize):
 
 
 def fl_replace_xyplot_point(pFlObject, idxpt, x, y):
-    """Replaces the value of a particular point of a xyplot object.
+    """Replaces the value of a particular point of a xyplot object. It acts
+    on the first dataset only.
 
     --
 
@@ -1073,27 +1080,25 @@ def fl_replace_xyplot_point(pFlObject, idxpt, x, y):
     _fl_replace_xyplot_point(pFlObject, iidxpt, fx, fy)
 
 
-# Replace the value of a particular point in dataset setID,
-# where setID=0 is the first data set.
-# This routine is an extension of fl_replace_xyplot_point
-# which acts on the first dataset only.
 
-def fl_replace_xyplot_point_in_overlay(pFlObject, i, setID, valx, valy):
-    """*todo*
+def fl_replace_xyplot_point_in_overlay(pFlObject, idxpt, setID, x, y):
+    """Replaces the value of a particular point in specified dataset. This
+    routine is an extension of fl_replace_xyplot_point() for more than one
+    dataset.
 
     --
 
     :Parameters:
       `pFlObject` : pointer to xfdata.FL_OBJECT
         xyplot object
-      `i` : int
-        *todo*
+      `idxpt` : int
+        index of the value to be replaced. The first value has an index of 0.
       `setID` : int
-        *todo*
-      `valx` : float
-        *todo*
-      `valy` : float
-        *todo*
+        dataset the points belongs to. e.g. the first dsata set is 0.
+      `x` : float
+        new horizontal position
+      `y` : float
+        new vertical position
 
     :note: e.g. *todo*
 
@@ -1108,17 +1113,21 @@ def fl_replace_xyplot_point_in_overlay(pFlObject, i, setID, valx, valy):
            int i, int setID, double x, double y)""")
     libr.check_if_initialized()
     libr.verify_flobjectptr_type(pFlObject)
-    ii = libr.convert_to_int(i)
+    iidxpt = libr.convert_to_int(idxpt)
     isetID = libr.convert_to_int(setID)
-    fvalx = libr.convert_to_double(valx)
-    fvaly = libr.convert_to_double(valy)
-    libr.keep_elem_refs(pFlObject, i, setID, valx, valy, ii, isetID, \
-                        fvalx, fvaly)
-    _fl_replace_xyplot_point_in_overlay(pFlObject, ii, isetID, fvalx, fvaly)
+    fx = libr.convert_to_double(x)
+    fy = libr.convert_to_double(y)
+    libr.keep_elem_refs(pFlObject, idxpt, setID, x, y, iidxpt, isetID, \
+                        fx, fy)
+    _fl_replace_xyplot_point_in_overlay(pFlObject, iidxpt, isetID, fx, fy)
 
 
 def fl_get_xyplot_xmapping(pFlObject):
-    """*todo*
+    """Obtains the mapping between the screen coordinates and data on x-axis.
+    Mapping constants are used as follows
+    screenCoord = a * data + b       (linear scale)
+    screenCoord = a * math.log(data) / math.log(p) + b (log scale)
+    where p is the base of the requested logarithm.
 
     --
 
@@ -1126,7 +1135,7 @@ def fl_get_xyplot_xmapping(pFlObject):
       `pFlObject` : pointer to xfdata.FL_OBJECT
         xyplot object
 
-    :return: *todo*
+    :return: first mapping constant, second mapping constant
     :rtype: float, float
 
     :note: e.g. *todo*
@@ -1153,7 +1162,11 @@ def fl_get_xyplot_xmapping(pFlObject):
 
 
 def fl_get_xyplot_ymapping(pFlObject):
-    """*todo*
+    """Obtains the mapping between the screen coordinates and data on y-axis.
+    Mapping constants are used as follows
+    screenCoord = a * data + b       (linear scale)
+    screenCoord = a * math.log(data) / math.log(p) + b (log scale)
+    where p is the base of the requested logarithm.
 
     --
 
@@ -1161,7 +1174,7 @@ def fl_get_xyplot_ymapping(pFlObject):
       `pFlObject` : pointer to xfdata.FL_OBJECT
         xyplot object
 
-    :return: *todo*
+    :return: first mapping constant, second mapping constant
     :rtype: float, float
 
     :note: e.g. *todo*
@@ -1187,26 +1200,33 @@ def fl_get_xyplot_ymapping(pFlObject):
     return a.value, b.value
 
 
-def fl_set_xyplot_keys(pFlObject, keys, valx, valy, align):
-    """*todo*
+def fl_set_xyplot_keys(pFlObject, keystxt, x, y, align):
+    """Adds a series of keys to a particular plot and sets the position for
+    each key. A key is the combination of drawing a segment of the plot line
+    style with a piece of text that describes what the corresponding line
+    represents. Obviously, keys are most useful when you have more than one
+    plot (i.e. overlays).
 
     --
 
     :Parameters:
       `pFlObject` : pointer to xfdata.FL_OBJECT
         xyplot object
-      `keys` : str
-        *todo*
-      `valx` : float
-        *todo*
-      `valy` : float
-        *todo*
+      `keystxt` : list_of_str
+        series of keys for each plot. The last element of the array must be
+        None to indicate the end. The array index is the plot id, i.e., key[0]
+        is the key for the base plot, key[1] the key for the the first overlay
+        etc.
+      `x` : list_of_float
+        series of horizontal positions in world coordinate system
+      `y` : list_of_float
+        series of horizontal positions in world coordinate system
       `align` : int
-        alignment of xyplot keys. Values (from xfdata.py) FL_ALIGN_CENTER,
-        FL_ALIGN_TOP, FL_ALIGN_BOTTOM, FL_ALIGN_LEFT, FL_ALIGN_RIGHT,
-        FL_ALIGN_LEFT_TOP, FL_ALIGN_RIGHT_TOP, FL_ALIGN_LEFT_BOTTOM,
-        FL_ALIGN_RIGHT_BOTTOM, FL_ALIGN_INSIDE, FL_ALIGN_VERT.
-        Bitwise OR with FL_ALIGN_INSIDE is allowed.
+        alignment of the entire key box relative to the given position. Values
+        (from xfdata.py) FL_ALIGN_CENTER, FL_ALIGN_TOP, FL_ALIGN_BOTTOM,
+        FL_ALIGN_LEFT, FL_ALIGN_RIGHT, FL_ALIGN_LEFT_TOP, FL_ALIGN_RIGHT_TOP,
+        FL_ALIGN_LEFT_BOTTOM, FL_ALIGN_RIGHT_BOTTOM, FL_ALIGN_INSIDE,
+        FL_ALIGN_VERT. Bitwise OR with FL_ALIGN_INSIDE is allowed.
 
     :note: e.g. *todo*
 
@@ -1221,27 +1241,32 @@ def fl_set_xyplot_keys(pFlObject, keys, valx, valy, align):
            float y, int align)""")
     libr.check_if_initialized()
     libr.verify_flobjectptr_type(pFlObject)
-    fvalx = libr.convert_to_float(valx)
-    fvaly = libr.convert_to_float(valy)
+    # keystxt to be handled
+    fx = libr.convert_to_float(x)
+    fy = libr.convert_to_float(y)
     libr.checkfatal_allowed_value_in_list(align, xfdata.ALIGN_list)
     ialign = libr.convert_to_int(align)
-    libr.keep_elem_refs(pFlObject, keys, valx, valy, align, fvalx, fvaly, \
-                        ialign)
-    _fl_set_xyplot_keys(pFlObject, keys, fvalx, fvaly, ialign)
+    libr.keep_elem_refs(pFlObject, keystxt, x, y, align, fx, fy, ialign)
+    _fl_set_xyplot_keys(pFlObject, keystxt, fx, fy, ialign)
 
 
-def fl_set_xyplot_key(pFlObject, idnum, keytxt):
-    """*todo*
+def fl_set_xyplot_key(pFlObject, ovlid, keytxt):
+    """Adds or removes a key to a particular plot. A key is the combination
+    of drawing a segment of the plot line style with a piece of text that
+    describes what the corresponding line represents. Obviously, keys are
+    most useful when you have more than one plot (i.e. overlays). All the
+    keys will be drawn together inside a box.
 
     --
 
     :Parameters:
       `pFlObject` : pointer to xfdata.FL_OBJECT
         xyplot object
-      `idnum` : int
-        *todo*
+      `ovlid` : int
+        overlay id. Values between 1 and xfdata.FL_MAX_XYPLOTOVERLAY or the
+        number set via fl_set_xyplot_maxoverlays()
       `keytxt` : str
-        *todo*
+        key for the plot. If it's 'None' removes a key.
 
     :note: e.g. *todo*
 
@@ -1255,30 +1280,33 @@ def fl_set_xyplot_key(pFlObject, idnum, keytxt):
            const char * key)""")
     libr.check_if_initialized()
     libr.verify_flobjectptr_type(pFlObject)
-    iidnum = libr.convert_to_int(idnum)
-    skeytxt = libr.convert_to_string(keytxt)
-    libr.keep_elem_refs(pFlObject, idnum, keytxt, iidnum, skeytxt)
-    _fl_set_xyplot_key(pFlObject, iidnum, skeytxt)
+    iovlid = libr.convert_to_int(ovlid)
+    if not keytxt:          # it's None
+        skeytxt = cty.cast(keytxt, cty.POINTER(cty.c_void_p))
+    else:                   # real string
+        skeytxt = libr.convert_to_string(keytxt)
+    libr.keep_elem_refs(pFlObject, ovlid, keytxt, iovlid, skeytxt)
+    _fl_set_xyplot_key(pFlObject, iovlid, skeytxt)
 
 
 def fl_set_xyplot_key_position(pFlObject, valx, valy, align):
-    """*todo*
+    """Sets the position of the keys in xyplot object.
 
     --
 
     :Parameters:
       `pFlObject` : pointer to xfdata.FL_OBJECT
         xyplot object
-      `valx` : float
-        *todo*
-      `valy` : float
-        *todo*
+      `x` : float
+        horizontal position in world coordinate system
+      `y` : float
+        horizontal position in world coordinate system
       `align` : int
-        alignment of xyplot keys. Values (from xfdata.py) FL_ALIGN_CENTER,
-        FL_ALIGN_TOP, FL_ALIGN_BOTTOM, FL_ALIGN_LEFT, FL_ALIGN_RIGHT,
-        FL_ALIGN_LEFT_TOP, FL_ALIGN_RIGHT_TOP, FL_ALIGN_LEFT_BOTTOM,
-        FL_ALIGN_RIGHT_BOTTOM, FL_ALIGN_INSIDE, FL_ALIGN_VERT
-        Bitwise OR with FL_ALIGN_INSIDE is allowed.
+        alignment of the entire key box relative to the given position. Values
+        (from xfdata.py) FL_ALIGN_CENTER, FL_ALIGN_TOP, FL_ALIGN_BOTTOM,
+        FL_ALIGN_LEFT, FL_ALIGN_RIGHT, FL_ALIGN_LEFT_TOP, FL_ALIGN_RIGHT_TOP,
+        FL_ALIGN_LEFT_BOTTOM, FL_ALIGN_RIGHT_BOTTOM, FL_ALIGN_INSIDE,
+        FL_ALIGN_VERT. Bitwise OR with FL_ALIGN_INSIDE is allowed.
 
     :note: e.g. *todo*
 
@@ -1302,7 +1330,7 @@ def fl_set_xyplot_key_position(pFlObject, valx, valy, align):
 
 
 def fl_set_xyplot_key_font(pFlObject, style, size):
-    """*todo*
+    """Changes the font the key text uses in xyplot object.
 
     --
 
@@ -1342,18 +1370,20 @@ def fl_set_xyplot_key_font(pFlObject, style, size):
     _fl_set_xyplot_key_font(pFlObject, istyle, isize)
 
 
-def fl_get_xyplot_numdata(pFlObject, idnum):
-    """*todo*
+def fl_get_xyplot_numdata(pFlObject, ovlid):
+    """Obtain the number of data points of a xyplot object.
 
     --
 
     :Parameters:
       `pFlObject` : pointer to xfdata.FL_OBJECT
         xyplot object
-      `idnum` : int
-        *todo*
+      `ovlid` : int
+        overlay id. Values between 1 and xfdata.FL_MAX_XYPLOTOVERLAY or the
+        number set via fl_set_xyplot_maxoverlays(). If it's 0 uses the base
+        dataset.
 
-    :return: num.
+    :return: number of data points
     :rtype: int
 
     :note: e.g. *todo*
@@ -1367,9 +1397,9 @@ def fl_get_xyplot_numdata(pFlObject, idnum):
         """int fl_get_xyplot_numdata(FL_OBJECT * ob, int id)""")
     libr.check_if_initialized()
     libr.verify_flobjectptr_type(pFlObject)
-    iidnum = libr.convert_to_int(idnum)
-    libr.keep_elem_refs(pFlObject, idnum, iidnum)
-    retval = _fl_get_xyplot_numdata(pFlObject, iidnum)
+    iovlid = libr.convert_to_int(ovlid)
+    libr.keep_elem_refs(pFlObject, ovlid, iovlid)
+    retval = _fl_get_xyplot_numdata(pFlObject, iovlid)
     return retval
 
 
@@ -1378,7 +1408,8 @@ def fl_get_xyplot_numdata(pFlObject, idnum):
 
 
 def fl_xyplot_s2w(pFlObject, sx, sy):
-    """*todo*
+    """Obtains, by conversion, the world coordinates from the screen
+    coordinates of a xyplot object.
 
     --
 
@@ -1386,11 +1417,12 @@ def fl_xyplot_s2w(pFlObject, sx, sy):
       `pFlObject` : pointer to xfdata.FL_OBJECT
         xyplot object
       `sx` : float
-        *todo*
+        horizontal position in screen coordinates
       `sy` : float
-        *todo*
+        vertical position in screen coordinates
 
-    :return: wx, wy *todo*
+    :return: horizontal position in world coordinates (wx), vertical position
+        in world coordinates (wy)
     :rtype: float, float
 
     :note: e.g. *todo*
@@ -1419,7 +1451,8 @@ def fl_xyplot_s2w(pFlObject, sx, sy):
 
 
 def fl_xyplot_w2s(pFlObject, wx, wy):
-    """*todo*
+    """Obtains, by conversion, the screen coordinates from the world
+    coordinates of a xyplot object.
 
     --
 
@@ -1427,11 +1460,12 @@ def fl_xyplot_w2s(pFlObject, wx, wy):
       `pFlObject` : pointer to xfdata.FL_OBJECT
         xyplot object
       `wx` : float
-        *todo*
+        horizontal position in world coordinates
       `wy` : float
-        *todo*
+        vertical position in world coordinates
 
-    :return: sx, sy *todo*
+    :return: horizontal position in screen coordinates (sx), vertical position
+        in screen coordinates (sy)
     :rtype: float, float
 
     :note: e.g. *todo*
@@ -1460,7 +1494,8 @@ def fl_xyplot_w2s(pFlObject, wx, wy):
 
 
 def fl_set_xyplot_xscale(pFlObject, scale, base):
-    """*todo*
+    """Changes the scaling for a xyplot object. By default, a linear scale in
+    x-direction is used.
 
     --
 
@@ -1468,9 +1503,10 @@ def fl_set_xyplot_xscale(pFlObject, scale, base):
       `pFlObject` : pointer to xfdata.FL_OBJECT
         xyplot object
       `scale` : int
-        *todo*
+        scaling to be used. Values (from xfdata.py) FL_LINEAR (default) or
+        FL_LOG
       `base` : float
-        *todo*
+        base of the logarithm to be used. Used only if scale is xfdata.FL_LOG
 
     :note: e.g. *todo*
 
@@ -1484,6 +1520,7 @@ def fl_set_xyplot_xscale(pFlObject, scale, base):
            double base)""")
     libr.check_if_initialized()
     libr.verify_flobjectptr_type(pFlObject)
+    libr.checkfatal_allowed_value_in_list(scale, xfdata.XYPLOTSCALE_list)
     iscale = libr.convert_to_int(scale)
     fbase = libr.convert_to_double(base)
     libr.keep_elem_refs(pFlObject, scale, base, iscale, fbase)
@@ -1491,7 +1528,8 @@ def fl_set_xyplot_xscale(pFlObject, scale, base):
 
 
 def fl_set_xyplot_yscale(pFlObject, scale, base):
-    """*todo*
+    """Changes the scaling for a xyplot object. By default, a linear scale in
+    y-direction is used.
 
     --
 
@@ -1499,9 +1537,10 @@ def fl_set_xyplot_yscale(pFlObject, scale, base):
       `pFlObject` : pointer to xfdata.FL_OBJECT
         xyplot object
       `scale` : int
-        *todo*
+        scaling to be used. Values (from xfdata.py) FL_LINEAR (default) or
+        FL_LOG
       `base` : float
-        *todo*
+        base of the logarithm to be used. Used only if scale is xfdata.FL_LOG
 
     :note: e.g. *todo*
 
@@ -1515,6 +1554,7 @@ def fl_set_xyplot_yscale(pFlObject, scale, base):
            double base)""")
     libr.check_if_initialized()
     libr.verify_flobjectptr_type(pFlObject)
+    libr.checkfatal_allowed_value_in_list(scale, xfdata.XYPLOTSCALE_list)
     iscale = libr.convert_to_int(scale)
     fbase = libr.convert_to_double(base)
     libr.keep_elem_refs(pFlObject, scale, base, iscale, fbase)
@@ -1522,7 +1562,11 @@ def fl_set_xyplot_yscale(pFlObject, scale, base):
 
 
 def fl_clear_xyplot(pFlObject):
-    """*todo*
+    """Clears a xyplot object. It frees all data associated with an xyplot,
+    including all overlays and all inset texts. It does not reset all
+    plotting options, such as line thickness, major/minor divisions etc. nor
+    does it free all memories associated with the xyplot, for this
+    fl_free_object() is needed.
 
     --
 
@@ -1545,18 +1589,21 @@ def fl_clear_xyplot(pFlObject):
     _fl_clear_xyplot(pFlObject)
 
 
-def fl_set_xyplot_linewidth(pFlObject, idnum, lw):
-    """*todo*
+def fl_set_xyplot_linewidth(pFlObject, ovlid, lw):
+    """Changes the line thickness of an xyplot (base data or overlay).
 
     --
 
     :Parameters:
       `pFlObject` : pointer to xfdata.FL_OBJECT
         xyplot object
-      `idnum` : int
-        *todo*
+      `ovlid` : int
+        overlay id. Values between 1 and xfdata.FL_MAX_XYPLOTOVERLAY or the
+        number set via fl_set_xyplot_maxoverlays(). If it's 0 uses the base
+        dataset.
       `lw` : int
-        width of line
+        width of line. If it's 0, restores the server default and typically
+        is the fastest
 
     :note: e.g. *todo*
 
@@ -1570,22 +1617,23 @@ def fl_set_xyplot_linewidth(pFlObject, idnum, lw):
         """void fl_set_xyplot_linewidth(FL_OBJECT * ob, int id, int lw)""")
     libr.check_if_initialized()
     libr.verify_flobjectptr_type(pFlObject)
-    iidnum = libr.convert_to_int(idnum)
+    iovlid = libr.convert_to_int(ovlid)
     ilw = libr.convert_to_int(lw)
-    libr.keep_elem_refs(pFlObject, idnum, lw, iidnum, ilw)
-    _fl_set_xyplot_linewidth(pFlObject, iidnum, ilw)
+    libr.keep_elem_refs(pFlObject, ovlid, lw, iovlid, ilw)
+    _fl_set_xyplot_linewidth(pFlObject, iovlid, ilw)
 
 
-def fl_set_xyplot_xgrid(pFlObject, xgrid):
-    """*todo*
+def fl_set_xyplot_xgrid(pFlObject, grid):
+    """Sets up the grid level for x-axis of a xyplot object.
 
     --
 
     :Parameters:
       `pFlObject` : pointer to xfdata.FL_OBJECT
         xyplot object
-      `xgrid` : int
-        *todo*
+      `grid` : int
+        level of grid to be set. Values (from xfdata.py) FL_GRID_NONE,
+        FL_GRID_MAJOR, FL_GRID_MINOR
 
     :note: e.g. *todo*
 
@@ -1599,21 +1647,23 @@ def fl_set_xyplot_xgrid(pFlObject, xgrid):
         """void fl_set_xyplot_xgrid(FL_OBJECT * ob, int xgrid)""")
     libr.check_if_initialized()
     libr.verify_flobjectptr_type(pFlObject)
-    ixgrid = libr.convert_to_int(xgrid)
-    libr.keep_elem_refs(pFlObject, xgrid, ixgrid)
-    _fl_set_xyplot_xgrid(pFlObject, ixgrid)
+    libr.checkfatal_allowed_value_in_list(grid, xfdata.XYPLOTGRID)
+    igrid = libr.convert_to_int(grid)
+    libr.keep_elem_refs(pFlObject, grid, igrid)
+    _fl_set_xyplot_xgrid(pFlObject, igrid)
 
 
-def fl_set_xyplot_ygrid(pFlObject, ygrid):
-    """*todo*
+def fl_set_xyplot_ygrid(pFlObject, grid):
+    """Sets up the grid level for y-axis of a xyplot object.
 
     --
 
     :Parameters:
       `pFlObject` : pointer to xfdata.FL_OBJECT
         xyplot object
-      `ygrid` : int
-        *todo*
+      `grid` : int
+        level of grid to be set. Values (from xfdata.py) FL_GRID_NONE,
+        FL_GRID_MAJOR, FL_GRID_MINOR
 
     :note: e.g. *todo*
 
@@ -1626,13 +1676,15 @@ def fl_set_xyplot_ygrid(pFlObject, ygrid):
         """void fl_set_xyplot_ygrid(FL_OBJECT * ob, int ygrid)""")
     libr.check_if_initialized()
     libr.verify_flobjectptr_type(pFlObject)
-    iygrid = libr.convert_to_int(ygrid)
-    libr.keep_elem_refs(pFlObject, ygrid, iygrid)
-    _fl_set_xyplot_ygrid(pFlObject, iygrid)
+    libr.checkfatal_allowed_value_in_list(grid, xfdata.XYPLOTGRID)
+    igrid = libr.convert_to_int(grid)
+    libr.keep_elem_refs(pFlObject, grid, igrid)
+    _fl_set_xyplot_ygrid(pFlObject, igrid)
 
 
 def fl_set_xyplot_grid_linestyle(pFlObject, linestyle):
-    """*todo*
+    """Changes the linestyle used for drawing  the grid line of xyplot. By
+    default it uses a dotted line
 
     --
 
@@ -1644,7 +1696,7 @@ def fl_set_xyplot_grid_linestyle(pFlObject, linestyle):
         FL_USERDASH, FL_USERDOUBLEDASH, FL_DOT, FL_DOTDASH, FL_DASH,
         FL_LONGDASH
 
-    :return: num.
+    :return: old grid linestyle
     :rtype: int
 
     :note: e.g. *todo*
@@ -1665,18 +1717,30 @@ def fl_set_xyplot_grid_linestyle(pFlObject, linestyle):
     return retval
 
 
-def fl_set_xyplot_alphaxtics(pFlObject, m, s):
-    """*todo*
+def fl_set_xyplot_alphaxtics(pFlObject, major, minor=1):
+    """Labels the major tic marks on x-axis with alphanumerical characters
+    (instead of numerical values). fl_set_xyplot_xtics can?t be active at the
+    same time and the one that gets used is the one that was set last. It can
+    be used to specify non-uniform and arbitary major divisions; to achieve
+    this, you should embed the major tic location information in the
+    alphanumerical text; the location information is introduced by the symbol
+    and followed by a float number specifying the coordinates in world
+    coordinates; the entire location info should follow the label. E.g.
+    "Begin@1.0|3/4@0.75|1.9@1.9" will produce three major tic marks at 0.75,
+    1.0, and 1.9 and labeled "3/4", "begin", and "1.9".
 
     --
 
     :Parameters:
       `pFlObject` : pointer to xfdata.FL_OBJECT
         xyplot object
-      `m` : str
-        *todo*
-      `s` : str
-        unused *todo*
+      `major` : str
+        text specifying the labels with the embedded character | that
+        describes major divisions. E.g. to label a plot with Monday, Tuesday
+        etc, major should be given as Monday|Tuesday|....
+      `minor` : str
+        currently unused. It is set to 1, i.e, no divisions between major tic
+        marks.
 
     :note: e.g. *todo*
 
@@ -1690,24 +1754,36 @@ def fl_set_xyplot_alphaxtics(pFlObject, m, s):
             const char * s)""")
     libr.check_if_initialized()
     libr.verify_flobjectptr_type(pFlObject)
-    sm = libr.convert_to_string(m)
-    ss = libr.convert_to_string(s)
-    libr.keep_elem_refs(pFlObject, m, s, sm, ss)
-    _fl_set_xyplot_alphaxtics(pFlObject, sm, ss)
+    smajor = libr.convert_to_string(major)
+    sminor = libr.convert_to_string(minor)
+    libr.keep_elem_refs(pFlObject, major, minor, smajor, sminor)
+    _fl_set_xyplot_alphaxtics(pFlObject, smajor, sminor)
 
 
 def fl_set_xyplot_alphaytics(pFlObject, m, s):
-    """*todo*
+    """Labels the major tic marks on y-axis with alphanumerical characters
+    (instead of numerical values). fl_set_xyplot_ytics can?t be active at the
+    same time and the one that gets used is the one that was set last. It can
+    be used to specify non-uniform and arbitary major divisions; to achieve
+    this, you should embed the major tic location information in the
+    alphanumerical text; the location information is introduced by the symbol
+    and followed by a float number specifying the coordinates in world
+    coordinates; the entire location info should follow the label. E.g.
+    "Begin@1.0|3/4@0.75|1.9@1.9" will produce three major tic marks at 0.75,
+    1.0, and 1.9 and labeled "3/4", "begin", and "1.9".
 
     --
 
     :Parameters:
       `pFlObject` : pointer to xfdata.FL_OBJECT
         xyplot object
-      `m` : str
-        *todo*
-      `s` : str
-        unused *todo*
+      `major` : str
+        text specifying the labels with the embedded character | that
+        describes major divisions. E.g. to label a plot with Monday, Tuesday
+        etc, major should be given as Monday|Tuesday|....
+      `minor` : str
+        currently unused. It is set to 1, i.e, no divisions between major tic
+        marks.
 
     :note: e.g. *todo*
 
@@ -1721,24 +1797,30 @@ def fl_set_xyplot_alphaytics(pFlObject, m, s):
             const char * s)""")
     libr.check_if_initialized()
     libr.verify_flobjectptr_type(pFlObject)
-    sm = libr.convert_to_string(m)
-    ss = libr.convert_to_string(s)
-    libr.keep_elem_refs(pFlObject, m, s, sm, ss)
-    _fl_set_xyplot_alphaytics(pFlObject, sm, ss)
+    smajor = libr.convert_to_string(major)
+    sminor = libr.convert_to_string(minor)
+    libr.keep_elem_refs(pFlObject, major, minor, smajor, sminor)
+    _fl_set_xyplot_alphaytics(pFlObject, smajor, sminor)
 
 
-def fl_set_xyplot_fixed_xaxis(pFlObject, lm, rm):
-    """*todo*
+def fl_set_xyplot_fixed_xaxis(pFlObject, leftmrg, rightmrg):
+    """Controls the plotting area for x-axis of xyplot object. By default,
+    the plotting area is automatically adjusted for tic labels and titles so
+    that a maximum plotting area results, but this can be undesirable in
+    certain situations. The pixel amounts are computed using the current
+    label font and size.
 
     --
 
     :Parameters:
       `pFlObject` : pointer to xfdata.FL_OBJECT
         xyplot object
-      `lm` : str
-        left? *todo*
-      `rm` : str
-        right? *todo*
+      `leftmrg` : str
+        left margin to be set. If it's 'None' restore automatic margin
+        computation
+      `rightmrg` : str
+        right margin to be set. If it's 'None', restores automatic margin
+        computation.
 
     :note: e.g. *todo*
 
@@ -1752,24 +1834,39 @@ def fl_set_xyplot_fixed_xaxis(pFlObject, lm, rm):
             const char * rm)""")
     libr.check_if_initialized()
     libr.verify_flobjectptr_type(pFlObject)
-    slm = libr.convert_to_string(lm)
-    srm = libr.convert_to_string(rm)
-    libr.keep_elem_refs(pFlObject, lm, rm, slm, srm)
-    _fl_set_xyplot_fixed_xaxis(pFlObject, slm, srm)
+    if not leftmrg:             # if it's None
+        sleftmrg = ct.cast(leftmrg, cty.POINTER(cty.c_void_p))
+    else:                       # real string
+        sleftmrg = libr.convert_to_string(leftmrg)
+    if not rightmrg:             # if it's None
+        srightmrg = ct.cast(rightmrg, cty.POINTER(cty.c_void_p))
+    else:                       # real string
+        srightmrg = libr.convert_to_string(rightmrg)
+    libr.keep_elem_refs(pFlObject, leftmrg, rightmrg, sleftmrg, srightmrg)
+    _fl_set_xyplot_fixed_xaxis(pFlObject, sleftmrg, srightmrg)
 
 
-def fl_set_xyplot_fixed_yaxis(pFlObject, bm, tm):
-    """*todo*
+def fl_set_xyplot_fixed_yaxis(pFlObject, bottommrg, topmrg):
+    """Controls the plotting area for y-axis of xyplot object. By default,
+    the plotting area is automatically adjusted for tic labels and titles so
+    that a maximum plotting area results, but this can be undesirable in
+    certain situations. The pixel amounts are computed using the current
+    label font and size. Even for y-axis margins the length of the string,
+    not the height, is used as the margin, thus to leave space for one line
+    of text, a single character (say m) or two narrow characters (say ii)
+    should be used.
 
     --
 
     :Parameters:
       `pFlObject` : pointer to xfdata.FL_OBJECT
         xyplot object
-      `bm` : str
-        bottom? *todo*
-      `tm` : str
-        top? *todo*
+      `bottommrg` : str
+        bottom margin to be set. If it's 'None' restore automatic margin
+        computation
+      `topmrg` : str
+        top margin to be set. If it's 'None', restores automatic margin
+        computation.
 
     :note: e.g. *todo*
 
@@ -1783,37 +1880,48 @@ def fl_set_xyplot_fixed_yaxis(pFlObject, bm, tm):
             const char * tm)""")
     libr.check_if_initialized()
     libr.verify_flobjectptr_type(pFlObject)
-    sbm = libr.convert_to_string(bm)
-    stm = libr.convert_to_string(tm)
-    libr.keep_elem_refs(pFlObject, bm, tm, sbm, stm)
-    _fl_set_xyplot_fixed_yaxis(pFlObject, sbm, stm)
+    if not bottommrg:             # if it's None
+        sbottommrg = ct.cast(bottommrg, cty.POINTER(cty.c_void_p))
+    else:                       # real string
+        sbottommrg = libr.convert_to_string(bottommrg)
+    if not topmrg:             # if it's None
+        stopmrg = ct.cast(topmrg, cty.POINTER(cty.c_void_p))
+    else:                       # real string
+        stopmrg = libr.convert_to_string(topmrg)
+    libr.keep_elem_refs(pFlObject, bottommrg, topmrg, sbottommrg, stopmrg)
+    _fl_set_xyplot_fixed_yaxis(pFlObject, sbottommrg, stopmrg)
 
 
-def fl_interpolate(wx, wy, nin, x, y, grid, ndeg):
-    """*todo*
+# TODO: verify if it is of any use in python.
+def fl_interpolate(wx, wy, numin, grid, degree):
+    """Manage polynomial interpolation function and obtains the number of
+    points in interpolated function ((wx[numin - 1] - wx[0]) / grid + 1.01)
+    and the interpolate values.
 
     --
 
     :Parameters:
       `wx` : float
-        *todo*
+        horizontal value in world coordinates
       `wy` : float
-        *todo*
-      `nin` : int
-        *todo*
-      `x` : float
-        *todo*
-      `y` : float
-        *todo*
+        vertical value in world coordinates
+      `numin` : int
+        number of points to interpolate
       `grid` : float
-        *todo*
-      `ndeg` : int
-        *todo*
+        the working grid onto which the data are to be interpolated.
+      `degree` : int
+        the order of the polynomial to use. If it's 0 or 1, restores the
+        default linear interpolation.
 
-    :return: num.
-    :rtype: int
+    :return: number of points in the interpolated function or -1 (on failure),
+        interpolated value for x-axis (outx), interpolate value for y-axis
+        (outy)
+    :rtype: int, float, float
 
     :note: e.g. *todo*
+
+    :attention: API change from XForms - upstream was
+        fl_interpolate(inx, iny, num_in, outx, outy, grid, ndeg)
 
     :status: Untested + NoDoc + NoDemo = NOT OK
 
@@ -1826,37 +1934,44 @@ def fl_interpolate(wx, wy, nin, x, y, grid, ndeg):
         """int fl_interpolate(const float * wx, const float * wy, int nin,
             float * x, float * y, double grid, int ndeg)""")
     libr.check_if_initialized()
-    inin = libr.convert_to_int(nin)
+    inumin = libr.convert_to_int(numin)
+    outx, poutx = libr.make_float_and_pointer()
+    outy, pouty = libr.make_float_and_pointer()
     fgrid = libr.convert_to_double(grid)
-    indeg = libr.convert_to_int(ndeg)
-    libr.keep_elem_refs(wx, wy, nin, x, y, grid, ndeg, inin, fgrid, indeg)
-    retval = _fl_interpolate(wx, wy, inin, x, y, fgrid, indeg)
-    return retval
+    idegree = libr.convert_to_int(degree)
+    libr.keep_elem_refs(wx, wy, numin, outx, poutx, outy, pouty, grid,
+                        degree, inumin, fgrid, idegree)
+    retval = _fl_interpolate(wx, wy, inumin, poutx, pouty, fgrid, idegree)
+    return retval, outx.value, outy.value
 
 
-def fl_spline_interpolate(wx, wy, nin, x, y, grid):
-    """*todo*
+def fl_spline_interpolate(wx, wy, numin, grid):
+    """Manages spline interpolation function. Spline interpolation is a form
+    of interpolation where the interpolant is a special type of piecewise
+    polynomial called a spline. Obtain number of points in interpolate
+    function and the interpolate values.
 
     --
 
     :Parameters:
       `wx` : float
-        *todo*
+        horizontal value in world coordinates
       `wy` : float
-        *todo*
-      `nin` : int
-        *todo*
-      `x` : float
-        *todo*
-      `y` : float
-        *todo*
+        vertical value in world coordinates
+      `numin` : int
+        number of points to interpolate
       `grid` : float
-        *todo*
+        the working grid onto which the data are to be interpolated.
 
-    :return: num.
-    :rtype: int
+    :return: number of points in the interpolated function or -1 (on failure),
+        interpolated value for x-axis (outx), interpolate value for y-axis
+        (outy)
+    :rtype: int, float, float
 
     :note: e.g. *todo*
+
+    :attention: API change from XForms - upstream was
+        fl_spline_interpolate(inx, iny, num_in, outx, outy, grid)
 
     :status: Untested + NoDoc + NoDemo = NOT OK
 
@@ -1869,25 +1984,35 @@ def fl_spline_interpolate(wx, wy, nin, x, y, grid):
         """int fl_spline_interpolate(const float * wx, const float * wy,
             int nin, float * x, float * y, double grid)""")
     libr.check_if_initialized()
-    inin = libr.convert_to_int(nin)
+    inumin = libr.convert_to_int(numin)
+    outx, poutx = libr.make_float_and_pointer()
+    outy, pouty = libr.make_float_and_pointer()
     fgrid = libr.convert_to_double(grid)
-    libr.keep_elem_refs(wx, wy, nin, x, y, grid, inin, fgrid)
-    retval = _fl_spline_interpolate(wx, wy, inin, x, y, fgrid)
-    return retval
+    libr.keep_elem_refs(wx, wy, numin, outx, poutx, outy, pouty, grid,
+                        inumin, fgrid)
+    retval = _fl_spline_interpolate(wx, wy, inumin, poutx, pouty, fgrid)
+    return retval, outx.value, outy.value
 
 
-def fl_set_xyplot_symbol(pFlObject, idnum, py_XyPlotSymbol):
-    """*todo*
+def fl_set_xyplot_symbol(pFlObject, ovlid, py_XyPlotSymbol):
+    """Sets a python function to change a symbol, to be invoked for
+    xfdata.FL_POINTS_XYPLOT and xfdata.FL_LINEPOINTS_XYPLOT's xyplot types
+    (main plot or overlay). If the type of xyplot corresponding to ovlid is
+    not one of them, the function will not be called.
 
     --
 
     :Parameters:
       `pFlObject` : pointer to xfdata.FL_OBJECT
         xyplot object
-      `idnum` : int
-        *todo*
-      `py_XyPlotSymbol` : python function to set symbol, no return
-        name referring to function(pFlObject, int, pPoint, int, int, int)
+      `ovlid` : int
+        overlay id (0 means the main plot, and you can use -1 to indicate all)
+      `py_XyPlotSymbol` : python function, no return
+        It will be called to draw the symbols on the data point.
+        Name referring to function(pFlObject, int ovlid, pPoint, int npoints,
+        int w, int h). The parameters passed to this function are the object
+        pointer, the overlay id, the center of the symbol (p.x, p.y), the
+        number of data points and the preferred symbol size (w, h).
 
     :return: old xyplotsymbol function
     :rtype: xfdata.FL_XYPLOT_SYMBOL
@@ -1908,12 +2033,12 @@ def fl_set_xyplot_symbol(pFlObject, idnum, py_XyPlotSymbol):
            FL_XYPLOT_SYMBOL symbol)""")
     libr.check_if_initialized()
     libr.verify_flobjectptr_type(pFlObject)
-    iidnum = libr.convert_to_int(idnum)
+    iovlid = libr.convert_to_int(ovlid)
     libr.verify_function_type(py_XyPlotSymbol)
     c_XyPlotSymbol = xfdata.FL_XYPLOT_SYMBOL(py_XyPlotSymbol)
     libr.keep_cfunc_refs(c_XyPlotSymbol, py_XyPlotSymbol)
-    libr.keep_elem_refs(pFlObject, idnum, iidnum)
-    retval = _fl_set_xyplot_symbol(pFlObject, iidnum, c_XyPlotSymbol)
+    libr.keep_elem_refs(pFlObject, ovlid, iovlid)
+    retval = _fl_set_xyplot_symbol(pFlObject, iovlid, c_XyPlotSymbol)
     return retval
 
 

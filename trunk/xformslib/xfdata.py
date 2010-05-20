@@ -4744,17 +4744,25 @@ XYPLOTTYPE_list = [FL_NORMAL_XYPLOT, FL_SQUARE_XYPLOT, FL_CIRCLE_XYPLOT,
 
 # values for unnamed enumeration
 FL_LINEAR = 0
-""""""
+"""Use linear scale for xyplot"""
 FL_LOG = 1
-""""""
+"""Use logarithmic scale for xyplot"""
+
+# list of possible values - my add --LK
+XYPLOTSCALE_list = [FL_LINEAR, FL_LOG]
+
 
 # values for unnamed enumeration
 FL_GRID_NONE  = 0
-""""""
+"""No grid for xyplot"""
 FL_GRID_MAJOR = 1
-""""""
+"""Grid for the major divisions of xyplot."""
 FL_GRID_MINOR = 2
-""""""
+"""Grid for the major and minor divisions of xyplot."""
+
+# list of possible values - my add --LK
+XYPLOTGRID_list = [FL_GRID_NONE, FL_GRID_MAJOR, FL_GRID_MINOR]
+
 
 # Defaults
 FL_XYPLOT_BOXTYPE = FL_FLAT_BOX
