@@ -841,7 +841,7 @@ def fl_get_xyplot_data_pointer(pFlObject, ovlid):
 
 
 def fl_get_xyplot_overlay_data(pFlObject, ovlid):
-    """*todo*
+    """Obtains the current data of an overlay of a xyplot object.
 
     --
 
@@ -850,9 +850,10 @@ def fl_get_xyplot_overlay_data(pFlObject, ovlid):
         xyplot object
       `ovlid` : int
         overlay id. Values between 1 and xfdata.FL_MAX_XYPLOTOVERLAY or the
-        number set via fl_set_xyplot_maxoverlays()
+        number set via fl_set_xyplot_maxoverlays(). If it's 0 uses the base
+        dataset
 
-    :return: *todo*
+    :return: x-axis value, y-axis value, number of data points (npoints)
     :rtype: float, float, int
 
     :note: e.g. *todo*
@@ -883,7 +884,11 @@ def fl_get_xyplot_overlay_data(pFlObject, ovlid):
 
 
 def fl_set_xyplot_overlay_type(pFlObject, ovlid, plottype):
-    """*todo*
+    """Changes the type for an overlay of a xyplot object. The type used in
+    overlay plot is the same as the object itself. Note that although the API
+    of adding an overlay is similar to adding an object, an xyplot overlay is
+    not a separate object, it is simply a property of an already existing
+    xyplot.
 
     --
 
@@ -1289,7 +1294,7 @@ def fl_set_xyplot_key(pFlObject, ovlid, keytxt):
     _fl_set_xyplot_key(pFlObject, iovlid, skeytxt)
 
 
-def fl_set_xyplot_key_position(pFlObject, valx, valy, align):
+def fl_set_xyplot_key_position(pFlObject, x, y, align):
     """Sets the position of the keys in xyplot object.
 
     --
@@ -1321,12 +1326,12 @@ def fl_set_xyplot_key_position(pFlObject, valx, valy, align):
            float y, int align)""")
     libr.check_if_initialized()
     libr.verify_flobjectptr_type(pFlObject)
-    fvalx = libr.convert_to_float(valx)
-    fvaly = libr.convert_to_float(valy)
+    fx = libr.convert_to_float(x)
+    fy = libr.convert_to_float(y)
     libr.checkfatal_allowed_value_in_list(align, xfdata.ALIGN_list)
     ialign = libr.convert_to_int(align)
-    libr.keep_elem_refs(pFlObject, valx, valy, align, fvalx, fvaly, ialign)
-    _fl_set_xyplot_key_position(pFlObject, fvalx, fvaly, ialign)
+    libr.keep_elem_refs(pFlObject, x, y, align, fx, fy, ialign)
+    _fl_set_xyplot_key_position(pFlObject, fx, fy, ialign)
 
 
 def fl_set_xyplot_key_font(pFlObject, style, size):
@@ -1647,7 +1652,7 @@ def fl_set_xyplot_xgrid(pFlObject, grid):
         """void fl_set_xyplot_xgrid(FL_OBJECT * ob, int xgrid)""")
     libr.check_if_initialized()
     libr.verify_flobjectptr_type(pFlObject)
-    libr.checkfatal_allowed_value_in_list(grid, xfdata.XYPLOTGRID)
+    libr.checkfatal_allowed_value_in_list(grid, xfdata.XYPLOTGRID_list)
     igrid = libr.convert_to_int(grid)
     libr.keep_elem_refs(pFlObject, grid, igrid)
     _fl_set_xyplot_xgrid(pFlObject, igrid)
@@ -1676,7 +1681,7 @@ def fl_set_xyplot_ygrid(pFlObject, grid):
         """void fl_set_xyplot_ygrid(FL_OBJECT * ob, int ygrid)""")
     libr.check_if_initialized()
     libr.verify_flobjectptr_type(pFlObject)
-    libr.checkfatal_allowed_value_in_list(grid, xfdata.XYPLOTGRID)
+    libr.checkfatal_allowed_value_in_list(grid, xfdata.XYPLOTGRID_list)
     igrid = libr.convert_to_int(grid)
     libr.keep_elem_refs(pFlObject, grid, igrid)
     _fl_set_xyplot_ygrid(pFlObject, igrid)
@@ -1717,7 +1722,7 @@ def fl_set_xyplot_grid_linestyle(pFlObject, linestyle):
     return retval
 
 
-def fl_set_xyplot_alphaxtics(pFlObject, major, minor=1):
+def fl_set_xyplot_alphaxtics(pFlObject, major, minor):
     """Labels the major tic marks on x-axis with alphanumerical characters
     (instead of numerical values). fl_set_xyplot_xtics can?t be active at the
     same time and the one that gets used is the one that was set last. It can
@@ -1760,7 +1765,7 @@ def fl_set_xyplot_alphaxtics(pFlObject, major, minor=1):
     _fl_set_xyplot_alphaxtics(pFlObject, smajor, sminor)
 
 
-def fl_set_xyplot_alphaytics(pFlObject, m, s):
+def fl_set_xyplot_alphaytics(pFlObject, major, minor):
     """Labels the major tic marks on y-axis with alphanumerical characters
     (instead of numerical values). fl_set_xyplot_ytics can?t be active at the
     same time and the one that gets used is the one that was set last. It can
@@ -1835,11 +1840,11 @@ def fl_set_xyplot_fixed_xaxis(pFlObject, leftmrg, rightmrg):
     libr.check_if_initialized()
     libr.verify_flobjectptr_type(pFlObject)
     if not leftmrg:             # if it's None
-        sleftmrg = ct.cast(leftmrg, cty.POINTER(cty.c_void_p))
+        sleftmrg = cty.cast(leftmrg, cty.POINTER(cty.c_void_p))
     else:                       # real string
         sleftmrg = libr.convert_to_string(leftmrg)
     if not rightmrg:             # if it's None
-        srightmrg = ct.cast(rightmrg, cty.POINTER(cty.c_void_p))
+        srightmrg = cty.cast(rightmrg, cty.POINTER(cty.c_void_p))
     else:                       # real string
         srightmrg = libr.convert_to_string(rightmrg)
     libr.keep_elem_refs(pFlObject, leftmrg, rightmrg, sleftmrg, srightmrg)
@@ -1881,11 +1886,11 @@ def fl_set_xyplot_fixed_yaxis(pFlObject, bottommrg, topmrg):
     libr.check_if_initialized()
     libr.verify_flobjectptr_type(pFlObject)
     if not bottommrg:             # if it's None
-        sbottommrg = ct.cast(bottommrg, cty.POINTER(cty.c_void_p))
+        sbottommrg = cty.cast(bottommrg, cty.POINTER(cty.c_void_p))
     else:                       # real string
         sbottommrg = libr.convert_to_string(bottommrg)
     if not topmrg:             # if it's None
-        stopmrg = ct.cast(topmrg, cty.POINTER(cty.c_void_p))
+        stopmrg = cty.cast(topmrg, cty.POINTER(cty.c_void_p))
     else:                       # real string
         stopmrg = libr.convert_to_string(topmrg)
     libr.keep_elem_refs(pFlObject, bottommrg, topmrg, sbottommrg, stopmrg)

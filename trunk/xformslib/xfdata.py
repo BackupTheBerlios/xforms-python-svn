@@ -104,93 +104,92 @@ FL_CLASS = cty.c_int  # enum
 FL_INVALID_CLASS = 0
 """"""
 FL_BUTTON = 1
-""""""
+"""button object class"""
 FL_LIGHTBUTTON = 2
-""""""
+"""light button object class"""
 FL_ROUNDBUTTON = 3
-""""""
+"""round button object class"""
 FL_ROUND3DBUTTON = 4
-""""""
+"""round 3D button object class"""
 FL_CHECKBUTTON = 5
-""""""
+"""check button object class"""
 FL_BITMAPBUTTON = 6
-""""""
+"""bitmap button object class"""
 FL_PIXMAPBUTTON = 7
-""""""
+"""pixmap button object class"""
 FL_BITMAP = 8
-""""""
+"""bitmap object class"""
 FL_PIXMAP = 9
-""""""
+"""pixmap object class"""
 FL_BOX = 10
-""""""
+"""box object class"""
 FL_TEXT = 11
-""""""
+"""text object class"""
 FL_MENU = 12
-""""""
+"""menu object class"""
 FL_CHART = 13
-""""""
+"""chart object class"""
 FL_CHOICE = 14
-""""""
+"""choice object class"""
 FL_COUNTER = 15
-""""""
+"""counter object class"""
 FL_SLIDER = 16
-""""""
+"""slider object class"""
 FL_VALSLIDER = 17
-""""""
+"""valslider object class"""
 FL_INPUT = 18
-""""""
+"""input object class"""
 FL_BROWSER = 19
-""""""
+"""browser object class"""
 FL_DIAL = 20
-""""""
+"""dial object class"""
 FL_TIMER = 21
-""""""
+"""timer object class"""
 FL_CLOCK = 22
-""""""
+"""clock object class"""
 FL_POSITIONER = 23
-""""""
+"""positioner object class"""
 FL_FREE = 24
-""""""
+"""free object class"""
 FL_XYPLOT = 25
-""""""
+"""xyplot object class"""
 FL_FRAME = 26
-""""""
+"""frame object class"""
 FL_LABELFRAME = 27
-""""""
+"""labelframe object class"""
 FL_CANVAS = 28
-""""""
+"""canvas object class"""
 FL_GLCANVAS = 29
-""""""
+"""glcanvas object class"""
 FL_TABFOLDER = 30
-""""""
+"""tabfolder object class"""
 FL_SCROLLBAR = 31
-""""""
+"""scrollbar object class"""
 FL_SCROLLBUTTON = 32
-""""""
+"""scrollbutton object class"""
 FL_MENUBAR = 33
-""""""
+"""menubar object class"""
 #FL_TEXTBOX placeholder (internal)
-
 FL_LABELBUTTON = 35
-""""""
+"""labelbutton object class"""
 FL_COMBOBOX = 36
-""""""
+"""combobox object class"""
 FL_IMAGECANVAS = 37
-""""""
+"""imagecanvas object class"""
 FL_THUMBWHEEL = 38
-""""""
+"""thumbwheel object class"""
 FL_COLORWHEEL = 39
-""""""
+"""colorwheel object class"""
 FL_FORMBROWSER = 40
-""""""
+"""formbrowser object class"""
 FL_SELECT = 41
-""""""
+"""select object class"""
 FL_NMENU = 42
-""""""
+"""nmenu object class"""
 FL_SPINNER = 43
-""""""
+"""spinner object class"""
 FL_TBOX = 44
-""""""
+"""textbox object class"""
 FL_CLASS_END = 45           # sentinel
 
 # my add, list of possible values --LK
@@ -208,11 +207,11 @@ OBJCLASS_list = [FL_BUTTON, FL_LIGHTBUTTON, FL_ROUNDBUTTON, FL_ROUND3DBUTTON,
 FL_BEGIN_GROUP = 10000
 FL_END_GROUP = 20000
 
-FL_USER_CLASS_START = 1001      # min. user class value
-FL_USER_CLASS_END = 9999        # max. user class value
+FL_USER_CLASS_START = 1001      #: min. user class value
+FL_USER_CLASS_END = 9999        #: max. user class value
 
-# maximum border width (in pixel)
-FL_MAX_BW = 10
+
+FL_MAX_BW = 10      #: maximum border width (in pixel)
 
 # how to display a form onto screen
 # values for enumeration 'FL_PLACE'
@@ -230,27 +229,27 @@ FL_PLACE_CENTER = 2     # center of the screen
 """(place) The form is placed in the center of the screen. If FL_FREE_SIZE
 is also specified, interactive resizing will be allowed."""
 FL_PLACE_POSITION = 4   # specific position
-"""(place) Initial position used will be the one set via fl_set_form_position().
-Interactive resizing is possible."""
+"""(place) Initial position used will be the one set via
+fl_set_form_position(). Interactive resizing is possible."""
 FL_PLACE_SIZE = 8       # specific size
-"""(place) The user can control the position but the size is fixed. Interactive
-resizing is not allowed once the form becomes visible."""
+"""(place) The user can control the position but the size is fixed.
+Interactive resizing is not allowed once the form becomes visible."""
 FL_PLACE_GEOMETRY = 16  # specific size and position
-"""(place) Place at the latest position and size (see also below) or the geometry
-set via fl_set_form_geometry() etc. A form so shown will have a fixed size
-and interactive resizing is not allowed."""
+"""(place) Place at the latest position and size (see also below) or the
+geometry set via fl_set_form_geometry() etc. A form so shown will have a fixed
+size and interactive resizing is not allowed."""
 FL_PLACE_ASPECT =  32   # keep aspect ratio
-"""(place) Allows interactive resizing but any new size will have the aspect ratio
-as that of the initial size."""
+"""(place) Allows interactive resizing but any new size will have the aspect
+ratio as that of the initial size."""
 FL_PLACE_FULLSCREEN = 64        # scale to fit to screen
-"""(place) The form is scaled to cover the full screen. If FL_FREE_SIZE is also
- specified, interative resizing will be allowed."""
+"""(place) The form is scaled to cover the full screen. If FL_FREE_SIZE is
+also specified, interative resizing will be allowed."""
 FL_PLACE_HOTSPOT = 128          # so mouse fall on (x,y)
-"""(place) The form is so placed that mouse is on the "hotspot". If FL_FREE_SIZE
-is also specified, interactive resizing will be allowed."""
+"""(place) The form is so placed that mouse is on the "hotspot". If
+FL_FREE_SIZE is also specified, interactive resizing will be allowed."""
 FL_PLACE_ICONIC = 256           # start in iconified form
-"""(place) The form is shown initially iconified. The size and location used are
-the window manager's default."""
+"""(place) The form is shown initially iconified. The size and location used
+are the window manager's default."""
 # modifiers
 FL_FREE_SIZE = (1<<14)          # 16384
 """(place) Allows resizing."""
@@ -259,11 +258,11 @@ FL_FIX_SIZE  = (1<<15)          # seems to be useless, but some programs
                                 # seem to rely on it...
 
 FL_PLACE_FREE_CENTER = (FL_PLACE_CENTER | FL_FREE_SIZE)
-"""(place) Same as FL_PLACE_CENTER | FL_FREE_SIZE, i.e., place the form at the
-center of the screen and allow resizing."""
+"""(place) Same as FL_PLACE_CENTER | FL_FREE_SIZE, i.e., place the form at
+the center of the screen and allow resizing."""
 FL_PLACE_CENTERFREE = (FL_PLACE_CENTER | FL_FREE_SIZE)
-"""(place) Same as FL_PLACE_CENTER | FL_FREE_SIZE, i.e., place the form at the
-center of the screen and allow resizing."""
+"""(place) Same as FL_PLACE_CENTER | FL_FREE_SIZE, i.e., place the form at
+the center of the screen and allow resizing."""
 
 # my add, list of possible values --LK
 # single values, or bitwise OR-ed with FL_FREE_SIZE (only if it makes sense)
@@ -283,7 +282,7 @@ FL_TRANSIENT = 2        # set TRANSIENT_FOR property
 """Draw borders with possibly less decoration (depends on the window
 managers behaviour). You might not be able to iconify a form under
 some WMs."""
-FL_NOBORDER = 3         # use override_redirect to supress decor.
+FL_NOBORDER = 3         # use override_redirect to suppress decoration.
 """Draw no border at all. You can't iconify a form with no borders"""
 
 # my add, list of possible values --LK
@@ -361,13 +360,17 @@ FL_ALIGN_LEFT = 4
 FL_ALIGN_RIGHT = 8
 """To the right of the box (outside it, if FL_ALIGN_INSIDE isn't used)"""
 FL_ALIGN_LEFT_TOP = (FL_ALIGN_TOP|FL_ALIGN_LEFT)
-"""To the left and top of the box (outside it, if FL_ALIGN_INSIDE isn't used)"""
+"""To the left and top of the box (outside it, if FL_ALIGN_INSIDE isn't
+used)"""
 FL_ALIGN_RIGHT_TOP = (FL_ALIGN_TOP|FL_ALIGN_RIGHT)
-"""To the right and top of the box (outside it, if FL_ALIGN_INSIDE isn't used)"""
+"""To the right and top of the box (outside it, if FL_ALIGN_INSIDE isn't
+used)"""
 FL_ALIGN_LEFT_BOTTOM = (FL_ALIGN_BOTTOM|FL_ALIGN_LEFT)
-"""To the left and bottom of the box (outside it, if FL_ALIGN_INSIDE isn't used)"""
+"""To the left and bottom of the box (outside it, if FL_ALIGN_INSIDE isn't
+used)"""
 FL_ALIGN_RIGHT_BOTTOM = (FL_ALIGN_BOTTOM|FL_ALIGN_RIGHT)
-"""To the right and bottom of the box (outside it, if FL_ALIGN_INSIDE isn't used)"""
+"""To the right and bottom of the box (outside it, if FL_ALIGN_INSIDE isn't
+used)"""
 FL_ALIGN_INSIDE = 8192      # (1<<13)
 """places the text inside the box"""
 FL_ALIGN_VERT = 16384       # (1<<14)  not functional yet
@@ -435,7 +438,7 @@ MOUSEBTN_list = [FL_MBUTTON1, FL_MBUTTON2, FL_MBUTTON3, FL_MBUTTON4,
 
 # control when to return input, slider and dial etc. object.
 FL_RETURN_NONE = 0
-"""Never notiy the application about interactions with this object (i.e.
+"""Never notify the application about interactions with this object (i.e.
 never return it nor invoke its callback). Note, this is not meant for
 deactivation of an object, it will still seem to work as normal, it just
 doesn't get returned to the application nor does its callback get invoked."""
@@ -546,7 +549,7 @@ FL_ALICEBLUE = 32
 FL_ANTIQUEWHITE = 33
 """RGB triple (250,235,215)"""
 FL_AQUA = 34
-"""RGB triple (,,)"""
+"""RGB triple (0,255,255)"""
 FL_AQUAMARINE = 35
 """RGB triple (127,255,212)"""
 FL_AZURE = 36
@@ -969,16 +972,17 @@ to the routine via the 'key' argument, modifier keys can be retrieved from
 the state member of the XEvent also passed to the function via 'xev'.
 This event only happens between FL_FOCUS and FL_UNFOCUS events. Not all
 objects sent keyboard events, only those that have non-zero value in field
-pOobject.contents.input or pObject.contents.wantkey."""
-FL_UPDATE = 10   # for objects that need to update something from time to time
-"""An FL_UPDATE event, like the FL_STEP event, also gets send about every 50
-msec (but less often under high load) to objects while they are
-"pushed", i.e. between receiving a FL_PUSH and a FL_RELEASE event if the
-pObject.contents.want_update field is set for the object. Like for the
-FL_STEP event the handling routine receives a synthetic MotionNotify event
-as the XEvent. This is typically used by objects that have to perform tasks
-at regular time intervals while they are "pushed" (e.g. counters that need
-to count up or down while the mouse is pushed on one of its buttons)."""
+pObject.contents.input or pObject.contents.wantkey."""
+FL_UPDATE = 10
+"""for objects that need to update something from time to time. Such an event,
+like the FL_STEP event, also gets send about every 50 msec (but less often
+under high load) to objects while they are "pushed", i.e. between receiving
+a FL_PUSH and a FL_RELEASE event if the pObject.contents.want_update field is
+set for the object. Like for the FL_STEP event the handling routine receives
+a synthetic MotionNotify event as the XEvent. This is typically used by
+objects that have to perform tasks at regular time intervals while they are
+"pushed" (e.g. counters that need to count up or down while the mouse is
+pushed on one of its buttons)."""
 FL_STEP = 11
 """A FL_STEP event is sent all the time (typically about 20 times a second
 but possibly less often because of system delays and other time-consuming
@@ -993,41 +997,41 @@ parameter key. See below for more on shortcuts."""
 FL_FREEMEM = 13
 """This event is sent when the object is to be freed. All memory
 allocated for the object must be freed when this event is received"""
-FL_OTHER = 14           # property, selection etc.
-"""Events other than the above. These events currently include
-ClientMessage, Selection and possibly other window manager events. All
-information about the event is contained in 'xev' parameter and 'mx',
-'my' may or may not reflect the actual position of the mouse."""
+FL_OTHER = 14
+"""property, selection etc. Events other than the above. These events
+currently include ClientMessage, Selection and possibly other window manager
+events. All information about the event is contained in 'xev' parameter and
+'mx', 'my' may or may not reflect the actual position of the mouse."""
 FL_DRAWLABEL = 15
 """This event typically follows FL_DRAW and indicates that the object label
 needs to be (re)drawn. If the object in question always draws its label
 inside the bounding box and this is taken care of by handing FL_DRAW, you
 can ignore this event."""
-FL_DBLCLICK = 16        # double click
-"""The user has pushed a mouse button twice within a certain time limit
-(FL_CLICK_TIMEOUT), which by default is 400 msec. This event is sent
-after two FL_PUSH, FL_RELEASE sequence. Note that FL_DBLCLICK is only
+FL_DBLCLICK = 16
+"""double click. The user has pushed a mouse button twice within a certain
+time limit (FL_CLICK_TIMEOUT), which by default is 400 msec. This event is
+sent after two FL_PUSH, FL_RELEASE sequence. Note that FL_DBLCLICK is only
 generated for objects that have non-zero pObject.contents.click timeout
 fields and it will not be generated for events from the scroll wheel."""
-FL_TRPLCLICK = 17       # triple click
-"""The user has pushed a mouse button three times within a certain time
-window. This event is sent after a FL_DBLCLICK, FL_PUSH, FL_RELEASE
-sequence. Set click timeout to none-zero to activate FL_TRPLCLICK"""
-FL_ATTRIB = 18          # attribute change
-""""""
+FL_TRPLCLICK = 17
+"""triple click. The user has pushed a mouse button three times within a
+certain time window. This event is sent after a FL_DBLCLICK, FL_PUSH,
+FL_RELEASE sequence. Set click timeout to none-zero to activate FL_TRPLCLICK"""
+FL_ATTRIB = 18
+"""attribute change"""
+
 FL_KEYRELEASE = 19
 """"""
-FL_PS = 20              # dump a form into EPS
-""""""
-FL_MOVEORIGIN = 21  # dragging the form across the screen changes its
-""""""
-                    # absolute x,y coords. Objects that themselves
-                    # contain forms should ensure that they are up to
-                    # date.
-FL_RESIZED = 22     # the object has been resized by scale_form
-""""""
-# the object has been resized by scale_form. Tell it that this has happened
-# so that it can resize any FL_FORMs that it contains.
+FL_PS = 20
+"""dump a form into EPS"""
+FL_MOVEORIGIN = 21
+""" dragging the form across the screen changes its absolute x,y coords.
+Objects that themselves contain forms should ensure that they are up to
+date."""
+FL_RESIZED = 22
+"""the object has been resized by scale_form the object has been resized by
+scale_form. Tell it that this has happened so that it can resize any FL_FORMs
+that it contains."""
 
 # FL_MOVE placeholder (backwards)
 # FL_KEYBOARD placeholder (backwards)
@@ -1119,7 +1123,7 @@ FL_MAXFONTS = 48        # max number of fonts
 # values for enumeration 'FL_TEXT_STYLE'
 FL_TEXT_STYLE = cty.c_int       # enum
 FL_INVALID_STYLE = -1
-""""""
+"""style not valid"""
 FL_NORMAL_STYLE = 0
 """Helvetica normal text"""
 FL_BOLD_STYLE = 1
@@ -1215,11 +1219,24 @@ FL_CLICK_TIMEOUT = 400      # double click interval
 # Definition of basic struct that holds an object
 
 class FL_FORM_(cty.Structure):
+    """To access to the data referenced by a pointer to FL_FORM (pForm) you
+    need to use "pForm.contents", then one of its attributes' name.
+    """
     pass
+
 FL_FORM = FL_FORM_
 
 
 class FL_OBJECT_(cty.Structure):
+    """Each XForms object has a number of attributes. Some of them are used by
+    the main routine, some have a fixed meaning and should never be altered
+    by the class routines and some are free for the class routines to use.
+    Please always use accessor methods when available instead of using or
+    changing the object?s properties directly.
+
+    To access to the data referenced by a pointer to FL_OBJECT (pObject) you
+    need to use "pObject.contents", then one of its attributes' name.
+    """
     pass
 FL_OBJECT = FL_OBJECT_
 
@@ -1337,7 +1354,7 @@ FL_FORMCALLBACKPTR = cty.CFUNCTYPE(None, cty.POINTER(FL_OBJECT), cty.c_void_p)
 """
 
 
-# cfunction for _fl_for_all_objects
+# cfunction for fl_for_all_objects()
 cfunc_int_pobject_pvoid = cty.CFUNCTYPE(cty.c_int, cty.POINTER(FL_OBJECT), \
                                         cty.c_void_p)
 
@@ -1402,22 +1419,22 @@ FL_ERROR_FUNC = cty.CFUNCTYPE(None, STRING, STRING)
 
 FL_FORM_._pack_ = 4
 FL_FORM_._fields_ = [
-    ('fdui', cty.c_void_p),             # for fdesign
-    ('u_vdata', cty.c_void_p),          # for application
-    ('u_cdata', STRING),                # for application
-    ('u_ldata', cty.c_long),            # for application
-    ('label', STRING),                  # window title
-    ('window', Window),                 # X resource ID for window
-    ('x', FL_Coord),                    # current geometry info
+    ('fdui', cty.c_void_p),             #: for fdesign
+    ('u_vdata', cty.c_void_p),          #: for application
+    ('u_cdata', STRING),                #: for application
+    ('u_ldata', cty.c_long),            #: for application
+    ('label', STRING),                  #: window title
+    ('window', Window),                 #: X resource ID for window
+    ('x', FL_Coord),                    #: current geometry info
     ('y', FL_Coord),
     ('w', FL_Coord),
     ('h', FL_Coord),
     ('handle_dec_x', cty.c_int),
     ('handle_dec_y', cty.c_int),
-    ('hotx', FL_Coord),                 # hot-spot of the form
-    ('hoty', FL_Coord),
-    ('w_hr', cty.c_double),             # high resolution width and height
-    ('h_hr', cty.c_double),             # (needed for precise scaling)
+    ('hotx', FL_Coord),                 #: horizontal hot-spot of the form
+    ('hoty', FL_Coord),                 #: vertical hot-spot of the form
+    ('w_hr', cty.c_double),   #: high resolution width (for precise scaling)
+    ('h_hr', cty.c_double),   #: high resolution height (for precise scaling)
     ('first', cty.POINTER(FL_OBJECT)),
     ('last', cty.POINTER(FL_OBJECT)),
     ('focusobj', cty.POINTER(FL_OBJECT)),
@@ -1437,16 +1454,16 @@ FL_FORM_._fields_ = [
     # WM_DELETE_WINDOW message handler
     ('close_callback', FL_FORM_ATCLOSE),
     ('close_data', cty.c_void_p),
-    ('flpixmap', cty.POINTER(FL_pixmap)),       # back buffer
+    ('flpixmap', cty.POINTER(FL_pixmap)),       #: back buffer
     ('icon_pixmap', Pixmap),
     ('icon_mask', Pixmap),
     # interaction and other flags
-    ('deactivated', cty.c_int),               # non-zero if deactiated
-    ('use_pixmap', cty.c_int),                # true if dbl buffering
-    ('frozen', cty.c_int),                    # true if sync change
-    ('visible', cty.c_int),                   # true if mapped
-    ('wm_border', cty.c_int),                 # window manager info
-    ('prop', cty.c_uint),                     # other attributes
+    ('deactivated', cty.c_int),               #: non-zero if deactiated
+    ('use_pixmap', cty.c_int),                #: true if dbl buffering
+    ('frozen', cty.c_int),                    #: true if sync change
+    ('visible', cty.c_int),                   #: true if mapped
+    ('wm_border', cty.c_int),                 #: window manager info
+    ('prop', cty.c_uint),                     #: other attributes
     ('num_auto_objects', cty.c_int),
     ('top', cty.c_int),
     ('sort_of_modal', cty.c_int),             # internal use
@@ -1461,33 +1478,33 @@ FL_FORM_._fields_ = [
 
 FL_OBJECT_._pack_ = 4
 FL_OBJECT_._fields_ = [
-    ('form', cty.POINTER(FL_FORM)),   # the form this object belongs to
-    ('u_vdata', cty.c_void_p),        # anything the user likes
-    ('u_cdata', STRING),              # anything the user likes
-    ('u_ldata', cty.c_long),          # anything the user likes
-    ('objclass', cty.c_int),          # class of object, button, slider etc
-    ('type', cty.c_int),              # type within the class
-    ('boxtype', cty.c_int),           # what kind of box type
-    ('x', FL_Coord),                  # current obj. location and size
+    ('form', cty.POINTER(FL_FORM)),   #: the form this object belongs to
+    ('u_vdata', cty.c_void_p),        #: anything the user likes
+    ('u_cdata', STRING),              #: anything the user likes
+    ('u_ldata', cty.c_long),          #: anything the user likes
+    ('objclass', cty.c_int),          #: class of object, button, slider etc
+    ('type', cty.c_int),              #: type within the class
+    ('boxtype', cty.c_int),           #: what kind of box type
+    ('x', FL_Coord),                  #: current obj. location and size
     ('y', FL_Coord),
     ('w', FL_Coord),
     ('h', FL_Coord),
-    ('fl1', cty.c_double),            # distances of upper left hand (1) and
-    ('fr1', cty.c_double),            # lower right hand corner (2) to left,
-    ('ft1', cty.c_double),            # right, top and bottom of enclosing
-    ('fb1', cty.c_double),            # form
+    ('fl1', cty.c_double),            #: distances of upper left hand (1) and
+    ('fr1', cty.c_double),            #: lower right hand corner (2) to left,
+    ('ft1', cty.c_double),            #: right, top and bottom of enclosing
+    ('fb1', cty.c_double),            #: form
     ('fl2', cty.c_double),
     ('fr2', cty.c_double),
     ('ft2', cty.c_double),
     ('fb2', cty.c_double),
     ('bw', FL_Coord),
-    ('col1', FL_COLOR),                 # colors of obj
+    ('col1', FL_COLOR),                 #: colors of obj
     ('col2', FL_COLOR),
-    ('label', STRING),                  # object label
-    ('lcol', FL_COLOR),                 # label color
-    ('align', cty.c_int),
-    ('lsize', cty.c_int),               # label size and style
-    ('lstyle', cty.c_int),
+    ('label', STRING),                  #: object label
+    ('lcol', FL_COLOR),                 #: label color
+    ('align', cty.c_int),               #: alignment
+    ('lsize', cty.c_int),               #: label size
+    ('lstyle', cty.c_int),              #: label style
     ('shortcut', cty.POINTER(cty.c_long)),
     ('handle', cty.CFUNCTYPE(cty.c_int, cty.POINTER(FL_OBJECT), cty.c_int, \
     FL_Coord, FL_Coord, cty.c_int, cty.c_void_p)),
@@ -1501,37 +1518,37 @@ FL_OBJECT_._fields_ = [
     cty.c_int, FL_Coord, FL_Coord, cty.c_int, cty.c_void_p)),
     ('set_return', cty.CFUNCTYPE(None, cty.POINTER(FL_OBJECT), cty.c_uint)),
     # re-configure preference
-    ('resize', cty.c_uint),               # what to do if WM resizes the FORM
-    ('nwgravity', cty.c_uint),            # how to re-position top-left corner
-    ('segravity', cty.c_uint),         # how to re-position lower-right corner
-    ('prev', cty.POINTER(FL_OBJECT)),     # prev. obj in form
-    ('next', cty.POINTER(FL_OBJECT)),     # next obj in form
+    ('resize', cty.c_uint),           #: what to do if WM resizes the FORM
+    ('nwgravity', cty.c_uint),        #: how to re-position top-left corner
+    ('segravity', cty.c_uint),       #: how to re-position lower-right corner
+    ('prev', cty.POINTER(FL_OBJECT)),     #: prev. obj in form
+    ('next', cty.POINTER(FL_OBJECT)),     #: next obj in form
     ('parent', cty.POINTER(FL_OBJECT)),
     ('child', cty.POINTER(FL_OBJECT)),
-    ('nc', cty.POINTER(FL_OBJECT)),     # next child
-    ('flpixmap', cty.POINTER(FL_pixmap)),  # pixmap doublebuffering stateinfo
-    ('use_pixmap', cty.c_int),          # true to use pixmap double buffering
+    ('nc', cty.POINTER(FL_OBJECT)),     #: next child
+    ('flpixmap', cty.POINTER(FL_pixmap)),  #: pixmap doublebuffering stateinfo
+    ('use_pixmap', cty.c_int),        #: true to use pixmap double buffering
     # some interaction flags
-    ('returned', cty.c_int),            # what last interaction returned
-    ('how_return', cty.c_uint),          # under which conditions to return
-    ('double_buffer', cty.c_int),         # only used by mesa/gl canvas
+    ('returned', cty.c_int),            #: what last interaction returned
+    ('how_return', cty.c_uint),          #: under which conditions to return
+    ('double_buffer', cty.c_int),         #: only used by mesa/gl canvas
     ('pushed', cty.c_int),
     ('focus', cty.c_int),
     ('belowmouse', cty.c_int),
-    ('active', cty.c_int),                # if accept event
+    ('active', cty.c_int),                #: if accepting event
     ('input', cty.c_int),
     ('wantkey', cty.c_int),
     ('radio', cty.c_int),
     ('automatic', cty.c_int),
     ('redraw', cty.c_int),
     ('visible', cty.c_int),
-    ('is_under', cty.c_int),          # if (partially) hidden by other object
+    ('is_under', cty.c_int),        #: if (partially) hidden by other object
     ('clip', cty.c_int),
     ('click_timeout', cty.c_ulong),
-    ('c_vdata', cty.c_void_p),            # for class use
-    ('c_cdata', STRING),                # for class use
-    ('c_ldata', cty.c_long),              # for class use
-    ('dbl_background', FL_COLOR),       # double buffer background
+    ('c_vdata', cty.c_void_p),          #: for class use
+    ('c_cdata', STRING),                #: for class use
+    ('c_ldata', cty.c_long),            #: for class use
+    ('dbl_background', FL_COLOR),       #: double buffer background
     ('tooltip', STRING),
     ('tipID', cty.c_int),
     ('group_id', cty.c_int),
@@ -1609,51 +1626,51 @@ FL_MAX_MENU_CHOICE_ITEMS = 128
 # TTY function keys, cleverly chosen to map to ASCII, for convenience of
 # programming, but could have been arbitrary (at the cost of lookup
 # tables in client code).
-XK_BackSpace = 0xff08           # Back space, back char
+XK_BackSpace = 0xff08           #: Back space, back char
 XK_Tab = 0xff09
-XK_Linefeed = 0xff0a            # Linefeed, LF
+XK_Linefeed = 0xff0a            #: Linefeed, LF
 XK_Clear = 0xff0b
-XK_Return = 0xff0d              # Return, enter
-XK_Pause = 0xff13               # Pause, hold
+XK_Return = 0xff0d              #: Return, enter
+XK_Pause = 0xff13               #: Pause, hold
 XK_Scroll_Lock = 0xff14
 XK_Sys_Req = 0xff15
 XK_Escape = 0xff1b
-XK_Delete = 0xffff              # Delete, rubout
+XK_Delete = 0xffff              #: Delete, rubout
 
 # Cursor control & motion
 XK_Home = 0xff50
-XK_Left = 0xff51               # Move left, left arrow
-XK_Up = 0xff52                 # Move up, up arrow
-XK_Right = 0xff53              # Move right, right arrow
-XK_Down = 0xff54               # Move down, down arrow
-XK_Prior = 0xff55              # Prior, previous
+XK_Left = 0xff51               #: Move left, left arrow
+XK_Up = 0xff52                 #: Move up, up arrow
+XK_Right = 0xff53              #: Move right, right arrow
+XK_Down = 0xff54               #: Move down, down arrow
+XK_Prior = 0xff55              #: Prior, previous
 XK_Page_Up = 0xff55
-XK_Next = 0xff56               # Next
+XK_Next = 0xff56               #: Next
 XK_Page_Down = 0xff56
-XK_End = 0xff57                # EOL
-XK_Begin = 0xff58              # BOL
+XK_End = 0xff57                #: EOL
+XK_Begin = 0xff58              #: BOL
 
 # Misc functions
-XK_Select = 0xff60             # Select, mark
+XK_Select = 0xff60             #: Select, mark
 XK_Print = 0xff61
-XK_Execute = 0xff62            # Execute, run, do
-XK_Insert = 0xff63             # Insert, insert here
+XK_Execute = 0xff62            #: Execute, run, do
+XK_Insert = 0xff63             #: Insert, insert here
 XK_Undo = 0xff65
-XK_Redo = 0xff66               # Redo, again
+XK_Redo = 0xff66               #: Redo, again
 XK_Menu = 0xff67
-XK_Find = 0xff68               # Find, search
-XK_Cancel = 0xff69             # Cancel, stop, abort, exit
-XK_Help = 0xff6a               # Help
+XK_Find = 0xff68               #: Find, search
+XK_Cancel = 0xff69             #: Cancel, stop, abort, exit
+XK_Help = 0xff6a               #: Help
 XK_Break = 0xff6b
-XK_Mode_switch = 0xff7e        # Character set switch
-XK_script_switch = 0xff7e      # Alias for mode_switch
+XK_Mode_switch = 0xff7e        #: Character set switch
+XK_script_switch = 0xff7e      #: Alias for mode_switch
 XK_Num_Lock = 0xff7f
 
 # Keypad functions, keypad numbers cleverly chosen to map to ASCII
-XK_KP_Space = 0xff80           # Space
+XK_KP_Space = 0xff80           #: Space
 XK_KP_Tab = 0xff89
-XK_KP_Enter = 0xff8d           # Enter
-XK_KP_F1 = 0xff91              # PF1, KP_A, ...
+XK_KP_Enter = 0xff8d           #: Enter
+XK_KP_F1 = 0xff91              #: PF1, KP_A, ...
 XK_KP_F2 = 0xff92
 XK_KP_F3 = 0xff93
 XK_KP_F4 = 0xff94
@@ -1670,10 +1687,10 @@ XK_KP_End = 0xff9c
 XK_KP_Begin = 0xff9d
 XK_KP_Insert = 0xff9e
 XK_KP_Delete = 0xff9f
-XK_KP_Equal = 0xffbd           # Equals
+XK_KP_Equal = 0xffbd           #: Equals
 XK_KP_Multiply = 0xffaa
 XK_KP_Add = 0xffab
-XK_KP_Separator = 0xffac       # Separator, often comma
+XK_KP_Separator = 0xffac       #: Separator, often comma
 XK_KP_Subtract = 0xffad
 XK_KP_Decimal = 0xffae
 XK_KP_Divide = 0xffaf
@@ -1755,21 +1772,21 @@ XK_F35 = 0xffe0
 XK_R15 = 0xffe0
 
 # Modifiers
-XK_Shift_L = 0xffe1             # Left shift
-XK_Shift_R = 0xffe2             # Right shift
-XK_Control_L = 0xffe3           # Left control
-XK_Control_R = 0xffe4           # Right control
-XK_Caps_Lock = 0xffe5           # Caps lock
-XK_Shift_Lock = 0xffe6          # Shift lock
+XK_Shift_L = 0xffe1             #: Left shift
+XK_Shift_R = 0xffe2             #: Right shift
+XK_Control_L = 0xffe3           #: Left control
+XK_Control_R = 0xffe4           #: Right control
+XK_Caps_Lock = 0xffe5           #: Caps lock
+XK_Shift_Lock = 0xffe6          #: Shift lock
 
-XK_Meta_L = 0xffe7              # Left meta
-XK_Meta_R = 0xffe8              # Right meta
-XK_Alt_L = 0xffe9               # Left alt
-XK_Alt_R = 0xffe                # Right alt
-XK_Super_L = 0xffeb             # Left super
-XK_Super_R = 0xffec             # Right super
-XK_Hyper_L = 0xffed             # Left hyper
-XK_Hyper_R = 0xffee             # Right hyper
+XK_Meta_L = 0xffe7              #: Left meta
+XK_Meta_R = 0xffe8              #: Right meta
+XK_Alt_L = 0xffe9               #: Left alt
+XK_Alt_R = 0xffe                #: Right alt
+XK_Super_L = 0xffeb             #: Left super
+XK_Super_R = 0xffec             #: Right super
+XK_Hyper_L = 0xffed             #: Left hyper
+XK_Hyper_R = 0xffee             #: Right hyper
 # *** end - from /usr/include/X11/keysymdef.h ***
 
 
@@ -2003,13 +2020,20 @@ Display = _XDisplay
 FL_MAX_FONTSIZES = 10
 
 class FL_FONT(cty.Structure):
-    pass
-FL_FONT._fields_ = [
-    ('fs', cty.POINTER(XFontStruct) * FL_MAX_FONTSIZES),  # cached fontstruct
-    ('size', cty.c_short * FL_MAX_FONTSIZES),       # cached sizes
-    ('nsize', cty.c_short),                         # cached so far
-    ('fname', cty.c_char * 80),                     # without size info
-]
+    """Font class.
+
+    --
+
+    Variables:
+      fs (cached fontstruct), size (cached sizes), nsize (cached so far),
+      fname (filename without size info).
+    """
+    _fields_ = [
+    ('fs', cty.POINTER(XFontStruct) * FL_MAX_FONTSIZES),
+    ('size', cty.c_short * FL_MAX_FONTSIZES),
+    ('nsize', cty.c_short),
+    ('fname', cty.c_char * 80), ]
+
 
 # /usr/include/X11/Xlib.h 439
 class XPoint(cty.Structure):
@@ -2128,28 +2152,53 @@ RTYPE_list = [FL_NONE, FL_SHORT, FL_BOOL, FL_INT, FL_LONG, FL_FLOAT,
 
 
 class FL_RESOURCE(cty.Structure):
-    pass
-FL_RESOURCE._fields_ = [
-    ('res_name', STRING),           # resource name
-    ('res_class', STRING),          # resource class
-    ('type', FL_RTYPE),             # FL_INT, FL_FLOAT, FL_BOOL, etc..
-    ('var', cty.c_void_p),          # address for the variable
-    ('defval', STRING),             # default setting in string form
-    ('nbytes', cty.c_int),          # used only for strings
+    """XForms Library built-in resource.
+      rgamma (class Gamma, type float, default value 1.0);
+      ggamma (class Gamma, type float, default value 1.0)
+      bgamma (class Gamma, type float, default value 1.0)
+      visual (class Visual, type string, default value best)
+      depth (class Depth, type int, default value best)
+      doubleBuffer (class DoubleBuffer, type bool, default value true)
+      privateColormap (class PrivateColormap, type bool, default value false)
+      standardColormap (class StandardColormap, type bool, default value false)
+      sharedColormap (class SharedColormap, type bool, default value false)
+      pupFontSize (class PupFontSize, type int, default value 12pt)
+      buttonFontSize (class FontSize, type int, default value 10pt)
+      sliderFontSize (class FontSize, type int, default value 10pt)
+      inputFontSize (class FontSize, type int, default value 10pt)
+      browserFontSize (class FontSize, type int, default value 10pt)
+      menuFontSize (class FontSize, type int, default value 10pt)
+      choiceFontSize (class FontSize, type int, default value 10pt)
+      ulPropWidth (class ULPropWidth, type bool, default value true)
+      ulThickness (class ULThickness, type int, default value 1)
+      scrollbarType (class ScrollbarType, type string, default value thin)
+      coordUnit (class CoordUnit, type string, default value pixel)
+      borderWidth (class BorderWidth, type int, default value 1)
+
+    Again, "best" means that the Forms Library by default selects a visual
+    that has the most depth.
+    """
+    _fields_ = [
+    ('res_name', STRING),           #: resource name
+    ('res_class', STRING),          #: resource class
+    ('type', FL_RTYPE),             #: FL_INT, FL_FLOAT, FL_BOOL, etc..
+    ('var', cty.c_void_p),          #: address for the variable
+    ('defval', STRING),             #: default setting in string form
+    ('nbytes', cty.c_int),          #: size used only for strings
 ]
 
 
 # values for enumeration 'XrmOptionKind'
 XrmOptionKind = cty.c_int       # enum
-XrmoptionNoArg = 0      # Value is specified in OptionDescRec.value
-XrmoptionIsArg = 1      # Value is the option string itself
-XrmoptionStickyArg = 2  # Value is characters immediately following option
-XrmoptionSepArg = 3     # Value is next argument in argv
-XrmoptionResArg = 4     # Resource and value in next argument in argv
-XrmoptionSkipArg = 5    # Ignore this option and the next argument in argv
-XrmoptionSkipLine = 6   # Ignore this option and the rest of argv
-XrmoptionSkipNArgs = 7          # Ignore this option and the next
-                        # OptionDescRes.value arguments in argv
+XrmoptionNoArg = 0      #: Value is specified in OptionDescRec.value
+XrmoptionIsArg = 1      #: Value is the option string itself
+XrmoptionStickyArg = 2  #: Value is characters immediately following option
+XrmoptionSepArg = 3     #: Value is next argument in argv
+XrmoptionResArg = 4     #: Resource and value in next argument in argv
+XrmoptionSkipArg = 5    #: Ignore this option and the next argument in argv
+XrmoptionSkipLine = 6   #: Ignore this option and the rest of argv
+XrmoptionSkipNArgs = 7
+""" Ignore this option and the next OptionDescRes.value arguments in argv"""
 
 
 # /usr/include/X11/Xresource.h 345
@@ -2184,7 +2233,7 @@ FL_IOPT._fields_ = [
     ('depth', cty.c_int),
     ('vclass', cty.c_int),
     ('doubleBuffer', cty.c_int),
-    ('ulPropWidth', cty.c_int),           # underline stuff
+    ('ulPropWidth', cty.c_int),           #: underline stuff
     ('ulThickness', cty.c_int),
     ('buttonFontSize', cty.c_int),
     ('sliderFontSize', cty.c_int),
@@ -2192,8 +2241,8 @@ FL_IOPT._fields_ = [
     ('browserFontSize', cty.c_int),
     ('menuFontSize', cty.c_int),
     ('choiceFontSize', cty.c_int),
-    ('labelFontSize', cty.c_int),         # all other labels fonts
-    ('pupFontSize', cty.c_int),           # font for pop-up menus
+    ('labelFontSize', cty.c_int),         #: all other labels fonts
+    ('pupFontSize', cty.c_int),           #: font for pop-up menus
     ('pupFontStyle', cty.c_int),
     ('privateColormap', cty.c_int),
     ('sharedColormap', cty.c_int),
@@ -2203,7 +2252,7 @@ FL_IOPT._fields_ = [
     ('coordUnit', cty.c_int),
     ('borderWidth', cty.c_int),
     ('safe', cty.c_int),
-    ('rgbfile', STRING),                # where RGB file is
+    ('rgbfile', STRING),                #: where RGB file is
     ('vname', cty.c_char * 24),
 ]
 
@@ -2286,7 +2335,7 @@ PRGDEFAULTS_list = [FL_PDDepth, FL_PDClass, FL_PDDouble, FL_PDSync,
 
 
 # How we pack and unpack colors
-FL_PCTYPE = cty.c_ubyte         # primary color type
+FL_PCTYPE = cty.c_ubyte         #: primary color type
 FL_PCBITS = 8
 FL_PCMAX = (1 << FL_PCBITS) - 1
 
@@ -3105,8 +3154,8 @@ XEVENTNAMES_list = [KeyPress, KeyRelease, ButtonPress, ButtonRelease,
 # *** start - from /usr/include/X11/Xutil.h 139 ***
 # definitions for initial window state
 #WithdrawnState = 0      # for windows that are not mapped
-NormalState = 1         # most applications want to start this way
-IconicState = 3         # application wants to start as an icon
+NormalState = 1         #: most applications want to start this way
+IconicState = 3         #: application wants to start as an icon
 # *** end - from /usr/include/X11/Xutil.h ***
 
 # my add - list of possible values --LK
@@ -3119,7 +3168,7 @@ WINSTATE_list = [NormalState, IconicState]
 #######################
 
 FL_NORMAL_BITMAP = 0
-""""""
+"""normal bitmap object type"""
 
 # my add - list of possible values --LK
 BITMAPTYPE_list = [FL_NORMAL_BITMAP, ]
@@ -3127,16 +3176,16 @@ BITMAPTYPE_list = [FL_NORMAL_BITMAP, ]
 
 # Defaults
 FL_BITMAP_BOXTYPE = FL_NO_BOX
-FL_BITMAP_COL1 = FL_COL1            # background of bitmap
-FL_BITMAP_COL2 = FL_COL1            # not used currently
-FL_BITMAP_LCOL = FL_LCOL            # foreground of bitmap
+FL_BITMAP_COL1 = FL_COL1            #: background of bitmap
+FL_BITMAP_COL2 = FL_COL1            #: not used currently
+FL_BITMAP_LCOL = FL_LCOL            #: foreground of bitmap
 FL_BITMAP_ALIGN = FL_ALIGN_BOTTOM
 
 
 # PIXMAP stuff
 
 FL_NORMAL_PIXMAP = 0
-""""""
+"""normal pixmap object type"""
 
 # my add - list of possible values --LK
 PIXMAPTYPE_list = [FL_NORMAL_PIXMAP, ]
@@ -3225,14 +3274,14 @@ FL_BUTTON_SPEC._fields_ = [
     ('mask', Pixmap),
     ('bits_w', cty.c_uint),
     ('bits_h', cty.c_uint),
-    ('val', cty.c_int),               # state of button whether (on/off)
-    ('mousebut', cty.c_int),          # mouse button that caused the push
-    ('timdel', cty.c_int),            # time since last touch (TOUCH buttons)
-    ('event', cty.c_int),             # what event triggers redraw
-    ('is_pushed', cty.c_int),         # set while drawn as pushed down
-    ('react_to', cty.c_int * 5),      # mouse buttons button reacts to
-    ('cspecl', cty.c_long),           # reserved for class specific stuff
-    ('cspecv', cty.c_void_p),         # misc. things
+    ('val', cty.c_int),               #: state of button, whether on/off
+    ('mousebut', cty.c_int),          #: mouse button that caused the push
+    ('timdel', cty.c_int),            #: time since last touch (TOUCH buttons)
+    ('event', cty.c_int),             #: what event triggers redraw
+    ('is_pushed', cty.c_int),         #: set while drawn as pushed down
+    ('react_to', cty.c_int * 5),      #: mouse buttons button reacts to
+    ('cspecl', cty.c_long),           #: reserved for class specific stuff
+    ('cspecv', cty.c_void_p),         #: misc. things
     ('filename', STRING),
     ('focus_pixmap', Pixmap),
     ('focus_mask', Pixmap),
@@ -3292,9 +3341,9 @@ FL_CHECKBUTTON_MCOL = FL_MCOL
 
 # bitmap button defaults
 FL_BITMAPBUTTON_BOXTYPE = FL_UP_BOX
-FL_BITMAPBUTTON_COL1 = FL_COL1         # bitmap background
-FL_BITMAPBUTTON_COL2 = FL_BLUE         # "focus" color
-FL_BITMAPBUTTON_LCOL = FL_LCOL         # bitmap foreground
+FL_BITMAPBUTTON_COL1 = FL_COL1         #: bitmap background
+FL_BITMAPBUTTON_COL2 = FL_BLUE         #: "focus" color
+FL_BITMAPBUTTON_LCOL = FL_LCOL         #: bitmap foreground
 FL_BITMAPBUTTON_ALIGN = FL_ALIGN_BOTTOM
 
 # bitmap button defaults
@@ -3331,7 +3380,7 @@ CANVASTYPE_list = [FL_NORMAL_CANVAS, FL_SCROLLED_CANVAS]
 
 
 # Default
-FL_CANVAS_BOXTYPE = FL_DOWN_BOX     # really the decoration frame
+FL_CANVAS_BOXTYPE = FL_DOWN_BOX     #: really the decoration frame
 FL_CANVAS_ALIGN = FL_ALIGN_TOP
 
 
@@ -3445,8 +3494,8 @@ COUNTERTYPE_list = [FL_NORMAL_COUNTER, FL_SIMPLE_COUNTER]
 # Defaults
 FL_COUNTER_BOXTYPE = FL_UP_BOX
 FL_COUNTER_COL1 = FL_COL1
-FL_COUNTER_COL2 = FL_BLUE           # ct label
-FL_COUNTER_LCOL = FL_LCOL           # ct reporting
+FL_COUNTER_COL2 = FL_BLUE           #: counter label
+FL_COUNTER_LCOL = FL_LCOL           #: counter reporting
 FL_COUNTER_ALIGN = FL_ALIGN_BOTTOM
 
 # Others
@@ -3463,7 +3512,7 @@ FL_VAL_FILTER = cty.CFUNCTYPE(STRING, cty.POINTER(FL_OBJECT),
 #############################
 
 # *** start - from /usr/include/X11/cursorfont.h ***
-XC_num_glyphs = 255             # original 154
+XC_num_glyphs = 154             # in linux 255
 XC_X_cursor = 0
 XC_arrow = 2
 XC_based_arrow_down = 4
@@ -3651,13 +3700,11 @@ FT_OTHER = 7
 
 
 class FL_Dirlist(cty.Structure):
-    pass
-
-FL_Dirlist._fields_ = [
-    ('name', STRING),               # entry name
-    ('type', cty.c_int),              # FILE_TYPE
-    ('dl_mtime', cty.c_long),         # file modification time
-    ('dl_size', cty.c_ulong),         # file size in bytes
+    _fields_ = [
+        ('name', STRING),               # entry name
+        ('type', cty.c_int),            #: FILE_TYPE
+        ('dl_mtime', cty.c_long),       #: file modification time
+        ('dl_size', cty.c_ulong),       #: file size in bytes
 ]
 
 
@@ -3691,7 +3738,7 @@ FL_DIRLIST_FILTER = cty.CFUNCTYPE(cty.c_int, STRING, cty.c_int)
 
 # values for unnamed enumeration
 FL_NORMAL_FORMBROWSER = 0
-""""""
+"""normal formbrowser type"""
 
 # list of possible values - my add --LK
 FORMBRWSTYPE_list = [FL_NORMAL_FORMBROWSER, ]
@@ -3747,12 +3794,12 @@ GLX_STEREO = 6
 monoscopic visuals are considered."""
 GLX_AUX_BUFFERS = 7
 """Must be followed by a nonnegative integer that indicates the desired
-number of auxiliary buffers. Visuals with the smallest number of
-auxiliary buffers that meets or exceeds the specified number are preferred."""
+number of auxiliary buffers. Visuals with the smallest number of auxiliary
+buffers that meets or exceeds the specified number are preferred."""
 GLX_RED_SIZE = 8
-"""Must be followed by a nonnegative minimum size specification. If this
-value is zero, the smallest available red buffer is preferred. Otherwise,
-the largest available red buffer of at least the minimum size is preferred."""
+"""Must be followed by a nonnegative minimum size specification. If this value
+is zero, the smallest available red buffer is preferred. Otherwise, the
+largest available red buffer of at least the minimum size is preferred."""
 GLX_GREEN_SIZE = 9
 """Must be followed by a nonnegative minimum size specification. If this value
 is zero, the smallest available green buffer is preferred. Otherwise, the
@@ -3766,25 +3813,29 @@ GLX_ALPHA_SIZE = 11
 is zero, the smallest available alpha buffer is preferred. Otherwise, the
 largest available alpha buffer of at least the minimum size is preferred."""
 GLX_DEPTH_SIZE = 12
-"""Must be followed by a nonnegative minimum size specification. If this value is
-zero, visuals with no depth buffer are preferred. Otherwise, the largest available
-depth buffer of at least the minimum size is preferred."""
+"""Must be followed by a nonnegative minimum size specification. If this value
+is zero, visuals with no depth buffer are preferred. Otherwise, the largest
+available depth buffer of at least the minimum size is preferred."""
 GLX_STENCIL_SIZE = 13
-"""Must be followed by a nonnegative integer that indicates the desired number of
-stencil bitplanes. The smallest stencil buffer of at least the specified size is
-preferred. If the desired value is zero, visuals with no stencil buffer are preferred."""
+"""Must be followed by a nonnegative integer that indicates the desired number
+of stencil bitplanes. The smallest stencil buffer of at least the specified
+size is preferred. If the desired value is zero, visuals with no stencil
+buffer are preferred."""
 GLX_ACCUM_RED_SIZE = 14
-"""Must be followed by a nonnegative minimum size specification. If this value is
-zero, visuals with no red accumulation buffer are preferred. Otherwise, the
-largest possible red accumulation buffer of at least the minimum size is preferred."""
+"""Must be followed by a nonnegative minimum size specification. If this value
+is zero, visuals with no red accumulation buffer are preferred. Otherwise, the
+largest possible red accumulation buffer of at least the minimum size is
+preferred."""
 GLX_ACCUM_GREEN_SIZE = 15
-"""Must be followed by a nonnegative minimum size specification. If this value is
-zero, visuals with no green accumulation buffer are preferred. Otherwise, the
-largest possible green accumulation buffer of at least the minimum size is preferred."""
+"""Must be followed by a nonnegative minimum size specification. If this value
+is zero, visuals with no green accumulation buffer are preferred. Otherwise,
+the largest possible green accumulation buffer of at least the minimum size
+is preferred."""
 GLX_ACCUM_BLUE_SIZE = 16
 """Must be followed by a nonnegative minimum size specification. If this value
-is zero, visuals with no blue accumulation buffer are preferred. Otherwise, the
-largest possible blue accumulation buffer of at least the minimum size is preferred."""
+is zero, visuals with no blue accumulation buffer are preferred. Otherwise,
+the largest possible blue accumulation buffer of at least the minimum size
+is preferred."""
 GLX_ACCUM_ALPHA_SIZE = 17
 """Must be followed by a nonnegative minimum size specification. If this value
 is zero, visuals with no alpha accumulation buffer are preferred. Otherwise,
@@ -4036,13 +4087,13 @@ FL_CPTYPE = Atom        # c_ulong
 
 # postscript stuff
 # values for unnamed enumeration
-FLPS_AUTO = 0              # switch to landscape if does not fit
-"""Automatic orientation."""
-FLPS_LANDSCAPE = 1         # landscape always
-"""Landscape  orientation (horizontal)."""
-FLPS_PORTRAIT = 2          # portrait always
-"""Portrait orientation (vertical)."""
-FLPS_BESTFIT = 3           # even margins/best fit
+FLPS_AUTO = 0
+"""Automatic orientation, switch to landscape if does not fit."""
+FLPS_LANDSCAPE = 1
+"""Landscape  orientation always (horizontal)."""
+FLPS_PORTRAIT = 2
+"""Portrait orientation always (vertical)."""
+FLPS_BESTFIT = 3
 """Best fit orientation with even margin."""
 
 # values for unnamed enumeration
@@ -4094,7 +4145,7 @@ FL_DOWN_FRAME = 2
 FL_BORDER_FRAME = 3
 """A frame with a simple outline."""
 FL_SHADOW_FRAME = 4
-""""""
+"""A frame with a shadow."""
 FL_ENGRAVED_FRAME = 5
 """A frame appears to be engraved."""
 FL_ROUNDED_FRAME = 6
@@ -4176,7 +4227,7 @@ FREETYPE_list = [FL_NORMAL_FREE, FL_INACTIVE_FREE, FL_INPUT_FREE,
 
 # values for unnamed enumeration
 FL_NORMAL_TEXT = 0
-""""""
+"""Normal text object type"""
 
 # list of possible values - my add --LK
 TEXTTYPE_list = [FL_NORMAL_TEXT, ]
@@ -4232,40 +4283,40 @@ FL_POPUP_RETURN = FL_POPUP_RETURN_
 
 
 FL_POPUP_RETURN_._fields_ = [
-    ('val', cty.c_long),              # value assigned to popup entry
-    ('user_data', cty.c_void_p),      # pointer to user data
-    ('text', STRING),               # text of the selected popup entry
-    ('label', STRING),              # left-flushed label part
-    ('accel', STRING),              # right-flushed label part
-    ('entry', cty.POINTER(FL_POPUP_ENTRY)),   # pointer to selected popup entry
-    ('popup', cty.POINTER(FL_POPUP)),         # popup we're called for
+    ('val', cty.c_long),              #: value assigned to popup entry
+    ('user_data', cty.c_void_p),      #: pointer to user data
+    ('text', STRING),               #: text of the selected popup entry
+    ('label', STRING),              #: left-flushed label part
+    ('accel', STRING),              #: right-flushed label part
+    ('entry', cty.POINTER(FL_POPUP_ENTRY)),  #: pointer to selected popup entry
+    ('popup', cty.POINTER(FL_POPUP)),        #: popup we're called for
 ]
 
 
 FL_POPUP_CB = cty.CFUNCTYPE(cty.c_int, cty.POINTER(FL_POPUP_RETURN))
 
 FL_POPUP_._fields_ = [
-    ('next', cty.POINTER(FL_POPUP)),      # next in linked list
-    ('prev', cty.POINTER(FL_POPUP)),      # previous in linked list
-    ('parent', cty.POINTER(FL_POPUP)),        # for sub-popups, direct parent
-    ('top_parent', cty.POINTER(FL_POPUP)),    # and top-most parent
-    ('entries', cty.POINTER(FL_POPUP_ENTRY)),     # pointer to list of entries
+    ('next', cty.POINTER(FL_POPUP)),      #: next in linked list
+    ('prev', cty.POINTER(FL_POPUP)),      #: previous in linked list
+    ('parent', cty.POINTER(FL_POPUP)),      #: for sub-popups, direct parent
+    ('top_parent', cty.POINTER(FL_POPUP)),  #: and top-most parent
+    ('entries', cty.POINTER(FL_POPUP_ENTRY)),   #: pointer to list of entries
     ('title', STRING),
-    ('win', Window),                    # popup window
-    ('parent_win', Window),             # parent window of popup window
-    ('cursor', Cursor),                 # cursor for the popup
+    ('win', Window),                    #: popup window
+    ('parent_win', Window),             #: parent window of popup window
+    ('cursor', Cursor),                 #: cursor for the popup
     ('callback', FL_POPUP_CB),
-    ('use_req_pos', cty.c_int),           # if set use req_x, req_y
+    ('use_req_pos', cty.c_int),         #: if set use req_x, req_y
     ('req_x', cty.c_int),
     ('req_y', cty.c_int),
-    ('x', cty.c_int),                     # position of popup window
+    ('x', cty.c_int),                   #: position of popup window
     ('y', cty.c_int),
-    ('w', cty.c_uint),                    # dimensions of popup window
+    ('w', cty.c_uint),                  #: dimensions of popup window
     ('h', cty.c_uint),
-    ('min_width', cty.c_int),             # minimum width of popup
-    ('title_box_x', cty.c_int),           # position of title box
+    ('min_width', cty.c_int),           #: minimum width of popup
+    ('title_box_x', cty.c_int),         #: position of title box
     ('title_box_y', cty.c_int),
-    ('title_box_w', cty.c_uint),          # dimensions of title box
+    ('title_box_w', cty.c_uint),        #: dimensions of title box
     ('title_box_h', cty.c_uint),
     ('has_subs', cty.c_int),
     ('has_boxes', cty.c_int),
@@ -4275,43 +4326,43 @@ FL_POPUP_._fields_ = [
     ('entry_font_style', cty.c_int),
     ('entry_font_size', cty.c_int),
     ('event_mask', cty.c_ulong),
-    ('bw', cty.c_int),                    # border width
-    ('bg_color', FL_COLOR),             # background color of popup
-    ('on_color', FL_COLOR),             # color of entry under mouse
-    ('title_color', FL_COLOR),          # color of title text
-    ('text_color', FL_COLOR),           # normal text color of entry
-    ('text_on_color', FL_COLOR),        # text color when mouse on entry
-    ('text_off_color', FL_COLOR),       # text color of disabled entry
-    ('radio_color', FL_COLOR),          # color of radio buttons
+    ('bw', cty.c_int),                  #: border width
+    ('bg_color', FL_COLOR),             #: background color of popup
+    ('on_color', FL_COLOR),             #: color of entry under mouse
+    ('title_color', FL_COLOR),          #: color of title text
+    ('text_color', FL_COLOR),           #: normal text color of entry
+    ('text_on_color', FL_COLOR),        #: text color when mouse on entry
+    ('text_off_color', FL_COLOR),       #: text color of disabled entry
+    ('radio_color', FL_COLOR),          #: color of radio buttons
     ('policy', cty.c_int),
-    ('need_recalc', cty.c_int),           # do we need to recalc position?
-    ('ret', FL_POPUP_RETURN),     # structure passed to callbacks and returned
-                                  # on selection
+    ('need_recalc', cty.c_int),         #: do we need to recalc position?
+    ('ret', FL_POPUP_RETURN),  #: structure passed to callbacks and returned
+                               #: on selection
 ]
 
 FL_POPUP_ENTRY_._fields_ = [
-    ('prev', cty.POINTER(FL_POPUP_ENTRY)),    # next in linked list
-    ('next', cty.POINTER(FL_POPUP_ENTRY)),    # previous in linked list
-    ('popup', cty.POINTER(FL_POPUP)),         # popup it belongs to
-    ('is_act', cty.c_int),                    # set while mouse is over it
-    ('text', STRING),                       # complete text of entry
-    ('label', STRING),                      # cleaned-up label text
-    ('accel', STRING),                      # cleaned-up accelerator key text
-    ('val', cty.c_long),                      # value associated with entry
-    ('user_data', cty.c_void_p),              # pointer to user data
-    ('type', cty.c_int),                      # normal, toggle, radio, sub-popup
-    ('state', cty.c_uint),                    # disabled, hidden, checked
-    ('group', cty.c_int),                     # group (for radio entries only)
-    ('sub', cty.POINTER(FL_POPUP)),           # sub-popup bound to entry
-    ('shortcut', cty.POINTER(cty.c_long)),      # keyboard shortcuts
-    ('ulpos', cty.c_int),                     # underline position in text
-    ('callback', FL_POPUP_CB),              # callback for entry
-    ('enter_callback', FL_POPUP_CB),        # callback for entering entry
-    ('leave_callback', FL_POPUP_CB),        # callback for leaving entry
-    ('x', cty.c_int),                         # position of entry text
-    ('y', cty.c_int),
-    ('w', cty.c_uint),
-    ('h', cty.c_uint),                        # height of entry text
+    ('prev', cty.POINTER(FL_POPUP_ENTRY)),  #: next in linked list
+    ('next', cty.POINTER(FL_POPUP_ENTRY)),  #: previous in linked list
+    ('popup', cty.POINTER(FL_POPUP)),       #: popup it belongs to
+    ('is_act', cty.c_int),                  #: set while mouse is over it
+    ('text', STRING),                       #: complete text of entry
+    ('label', STRING),                      #: cleaned-up label text
+    ('accel', STRING),                      #: cleaned-up accelerator key text
+    ('val', cty.c_long),                    #: value associated with entry
+    ('user_data', cty.c_void_p),            #: pointer to user data
+    ('type', cty.c_int),                   #: normal, toggle, radio, sub-popup
+    ('state', cty.c_uint),                  #: disabled, hidden, checked
+    ('group', cty.c_int),                   #: group (for radio entries only)
+    ('sub', cty.POINTER(FL_POPUP)),         #: sub-popup bound to entry
+    ('shortcut', cty.POINTER(cty.c_long)),    #: keyboard shortcuts
+    ('ulpos', cty.c_int),                     #: underline position in text
+    ('callback', FL_POPUP_CB),              #: callback for entry
+    ('enter_callback', FL_POPUP_CB),        #: callback for entering entry
+    ('leave_callback', FL_POPUP_CB),        #: callback for leaving entry
+    ('x', cty.c_int),                   #: horizontal position of entry text
+    ('y', cty.c_int),                   #: vertical position of entry text
+    ('w', cty.c_uint),                      #: width of entry text
+    ('h', cty.c_uint),                      #: height of entry text
     ('box_x', cty.c_int),
     ('box_y', cty.c_int),
     ('box_w', cty.c_uint),
@@ -4326,11 +4377,11 @@ FL_POPUP_ENTRY_._fields_ = [
 class FL_POPUP_ITEM(cty.Structure):
     pass
 FL_POPUP_ITEM._fields_ = [
-    ('text', STRING),               # text of entry
-    ('callback', FL_POPUP_CB),      # (selection) callback
-    ('shortcut', STRING),           # keyboard shortcut description
-    ('type', cty.c_int),              # type of entry
-    ('state', cty.c_int),             # disabled, hidden, checked
+    ('text', STRING),               #: text of entry
+    ('callback', FL_POPUP_CB),      #: (selection) callback
+    ('shortcut', STRING),           #: keyboard shortcut description
+    ('type', cty.c_int),              #: type of entry
+    ('state', cty.c_int),             #: disabled, hidden, checked
 ]
 
 
@@ -4349,14 +4400,14 @@ POPUPPOLICY_list = [FL_POPUP_NORMAL_SELECT, FL_POPUP_DRAG_SELECT]
 # Popup states
 # values for unnamed enumeration
 FL_POPUP_NONE = 0
-"""No special flags are set for the state of the item."""
+"""No special flags are set for the state of the popup."""
 FL_POPUP_DISABLED = 1       # entry is disabled
-"""The item is disabled and can't be selected."""
+"""The popup is disabled and can't be selected."""
 FL_POPUP_HIDDEN   = 2       # entry is temporarily hidden
 """The popup is hidden, i.e. does not get shown (and thus can't be
 selected)."""
 FL_POPUP_CHECKED  = 4       # toggle/radio item is in on state
-"""Only relevant for toggle or radio items, marks it as in "on" state."""
+"""Only relevant for toggle or radio popups, marks it as in "on" state."""
 
 # list of possible values, my add --LK
 # single values and bitwise OR-ed of them
@@ -4371,10 +4422,10 @@ POPUPSTATE_list = [FL_POPUP_NONE, FL_POPUP_DISABLED, FL_POPUP_HIDDEN,
 FL_POPUP_NORMAL = 0         # normal popup entry
 """Normal popup entry with no special properties."""
 FL_POPUP_TOGGLE = 1         # toggle ("binary") popup entry
-"""Toggle or binary entry, drawn with a check-mark to its left if
+"""Toggle or binary popup entry, drawn with a check-mark to its left if
 in 'on' state"""
 FL_POPUP_RADIO = 2          # radio popup entry
-"""Radio entry, drawn with a circle to its left (color-filled when
+"""Radio popup entry, drawn with a circle to its left (color-filled when
 'on'. The group member of the FL_POPUP_ENTRY structure determines to
 which group the entry belongs."""
 FL_POPUP_SUB = 3            # sub-popup popup entry
@@ -4448,13 +4499,13 @@ FL_POSITIONER_ALIGN = FL_ALIGN_BOTTOM
 
 # values for unnamed enumeration
 FL_VERT_SCROLLBAR = 0
-"""A vertical xfdata."""
+"""A vertical scrollbar."""
 FL_HOR_SCROLLBAR = 1
-"""A horizontal xfdata."""
+"""A horizontal scrollbar."""
 FL_VERT_THIN_SCROLLBAR = 2
-"""A different looking vertical xfdata."""
+"""A different looking vertical scrollbar."""
 FL_HOR_THIN_SCROLLBAR = 3
-"""A different looking horizontal xfdata."""
+"""A different looking horizontal scrollbar."""
 FL_VERT_NICE_SCROLLBAR = 4
 """A vertical scrollbar using FL_NICE_SLIDER."""
 FL_HOR_NICE_SCROLLBAR = 5
@@ -4621,15 +4672,15 @@ SPINNERTYPE_list = [FL_INT_SPINNER, FL_FLOAT_SPINNER]
 
 # values for unnamed enumeration
 FL_TOP_TABFOLDER = 0        # tab on top
-""""""
+"""tabfolder with tab on top"""
 FL_BOTTOM_TABFOLDER = 1
-""""""
+"""tabfolder with tab on bottom"""
 FL_LEFT_TABFOLDER = 2
-""""""
+"""tabfolder with tab on left"""
 FL_RIGHT_TABFOLDER = 3
-""""""
+"""tabfolder with tab on right"""
 FL_NORMAL_TABFOLDER = FL_TOP_TABFOLDER
-""""""
+"""tabfolder with tab on top"""
 
 # list of possible values - my add --LK
 TABFOLDERTYPE_list = [FL_TOP_TABFOLDER, FL_BOTTOM_TABFOLDER,
@@ -4708,21 +4759,21 @@ FL_TIMER_FILTER = cty.CFUNCTYPE(STRING, cty.POINTER(FL_OBJECT),
 # values for enumeration 'FL_XYPLOT_TYPE'
 FL_XYPLOT_TYPE = cty.c_int      # enum
 FL_NORMAL_XYPLOT = 0    # solid line
-""""""
-FL_SQUARE_XYPLOT = 1    # with added square
-""""""
-FL_CIRCLE_XYPLOT = 2    # with added circle
-""""""
-FL_FILL_XYPLOT = 3      # fill completely
-""""""
-FL_POINTS_XYPLOT = 4    # only data points
-""""""
-FL_DASHED_XYPLOT = 5    # dashed line
-""""""
+"""xyplot object type with solid line"""
+FL_SQUARE_XYPLOT = 1
+"""xyplot object type has added square"""
+FL_CIRCLE_XYPLOT = 2
+"""xyplot object type has added circle"""
+FL_FILL_XYPLOT = 3
+"""xyplot object type is filled completely"""
+FL_POINTS_XYPLOT = 4
+"""xyplot object type has only data points"""
+FL_DASHED_XYPLOT = 5
+"""xyplot object type has dashed line"""
 FL_IMPULSE_XYPLOT = 6
 """"""
-FL_ACTIVE_XYPLOT = 7    # accepts interactive manipulations
-""""""
+FL_ACTIVE_XYPLOT = 7    #
+"""xyplot object type accepts interactive manipulations"""
 FL_EMPTY_XYPLOT = 8
 """"""
 FL_DOTTED_XYPLOT = 9
@@ -4731,8 +4782,8 @@ FL_DOTDASHED_XYPLOT = 10
 """"""
 FL_LONGDASHED_XYPLOT = 11
 """"""
-FL_LINEPOINTS_XYPLOT = 12   # line & points
-""""""
+FL_LINEPOINTS_XYPLOT = 12
+"""xyplot object type has line and points"""
 
 # list of possible values - my add --LK
 XYPLOTTYPE_list = [FL_NORMAL_XYPLOT, FL_SQUARE_XYPLOT, FL_CIRCLE_XYPLOT,
@@ -4783,7 +4834,7 @@ FL_XYPLOT_SYMBOL = cty.CFUNCTYPE(None, cty.POINTER(FL_OBJECT), cty.c_int,
 
 # values for unnamed enumeration
 FL_IMAGE_NONE = 0
-""""""
+"""not supported image file format"""
 FL_IMAGE_MONO = 1
 """b&w. 1bit bitmaps. 0=white 1=black"""
 FL_IMAGE_GRAY = 2
@@ -4799,26 +4850,25 @@ FL_IMAGE_GRAY16 = 32
 FL_IMAGE_RGB16 = 64
 """36bits color image"""
 FL_IMAGE_FLEX = 1023        # all formats
-""""""
+
 # aliases
 FLIMAGE_NONE = FL_IMAGE_NONE
 """"""
 FLIMAGE_MONO = FL_IMAGE_MONO
-""""""
+"""b&w. 1bit bitmaps. 0=white 1=black"""
 FLIMAGE_GRAY = FL_IMAGE_GRAY
-""""""
+"""gray-scale image (8 bit)"""
 FLIMAGE_CI = FL_IMAGE_CI
-""""""
+"""generic colormmaped index image"""
 FLIMAGE_RGB = FL_IMAGE_RGB
-""""""
+"""24 bit RGB(A) image (8bit each)"""
 FLIMAGE_PACKED = FL_IMAGE_PACKED
-""""""
+"""24 bit RGB(A) packed into an int"""
 FLIMAGE_GRAY16 = FL_IMAGE_GRAY16
-""""""
+"""gray-scale image (9 to 16 bit)"""
 FLIMAGE_RGB16 = FL_IMAGE_RGB16
-""""""
+"""36bits color image"""
 FLIMAGE_FLEX = FL_IMAGE_FLEX
-""""""
 
 # my add --LK - list of possible values
 FLIMAGETYPE_list = [FL_IMAGE_NONE, FL_IMAGE_MONO, FL_IMAGE_GRAY, \
@@ -4843,17 +4893,17 @@ FL_WINDOW = Window    # cty.c_ulong
 class flimage_text_(cty.Structure):
     pass
 flimage_text_._fields_ = [
-    ('str', STRING),            # the string itself
-    ('len', cty.c_int),             # string length
-    ('x', cty.c_int),               # starting location of text (wrt image)
+    ('str', STRING),                #: the string itself
+    ('len', cty.c_int),             #: string length
+    ('x', cty.c_int),               #: starting location of text (wrt image)
     ('y', cty.c_int),
-    ('color', cty.c_uint),          # color of the text
-    ('bcolor', cty.c_uint),         # background color of the text
-    ('nobk', cty.c_int),            # no background
-    ('size', cty.c_int),            # font size & style
+    ('color', cty.c_uint),          #: color of the text
+    ('bcolor', cty.c_uint),         #: background color of the text
+    ('nobk', cty.c_int),            #: no background
+    ('size', cty.c_int),            #: font size & style
     ('style', cty.c_int),
-    ('angle', cty.c_int),           # in 1/10th of a degrees
-    ('align', cty.c_int),           # alignment wrt to (x,y)
+    ('angle', cty.c_int),           #: in 1/10th of a degrees
+    ('align', cty.c_int),           #: alignment with regards to (x,y)
 ]
 FLIMAGE_TEXT = flimage_text_
 
@@ -4861,17 +4911,17 @@ FLIMAGE_TEXT = flimage_text_
 class flimage_marker_(cty.Structure):
     pass
 flimage_marker_._fields_ = [
-    ('name', STRING),           # marker name
-    ('w', cty.c_int),               # size
-    ('h', cty.c_int),
-    ('x', cty.c_int),               # location
-    ('y', cty.c_int),
-    ('color', cty.c_uint),          # color of the marker
-    ('bcolor', cty.c_uint),         # aux. color of the marker
-    ('angle', cty.c_int),           # in 1/10th of a degree
+    ('name', STRING),               #: marker name
+    ('w', cty.c_int),               #: width
+    ('h', cty.c_int),               #: height
+    ('x', cty.c_int),               #: horizontal location
+    ('y', cty.c_int),               #: vertical location
+    ('color', cty.c_uint),          #: color of the marker
+    ('bcolor', cty.c_uint),         #: aux. color of the marker
+    ('angle', cty.c_int),           #: in 1/10th of a degree
     ('fill', cty.c_int),
-    ('thickness', cty.c_int),       # line thickness
-    ('style', cty.c_int),           # line style
+    ('thickness', cty.c_int),       #: line thickness
+    ('style', cty.c_int),           #: line style
     # the following is filled by the library
     ('display', cty.c_void_p),
     ('gc', cty.c_void_p),
@@ -4893,16 +4943,16 @@ FLIMAGESETUP = cty.POINTER(flimage_setup_)
 # values for unnamed enumeration
 FLIMAGE_ERR_NONE = 0
 """"""
-FLIMAGE_ERR_ALLOC = -50         # allocation error
-""""""
-FLIMAGE_ERR_INVALID = -49       # invalid image
-""""""
-FLIMAGE_ERR_ARGUMENT = -48      # bad argument/request
-""""""
-FLIMAGE_ERR_FILE = -47          # io error
-""""""
-FLIMAGE_ERR_INTERNAL = -46      # bugs
-""""""
+FLIMAGE_ERR_ALLOC = -50
+"""allocation error"""
+FLIMAGE_ERR_INVALID = -49
+"""invalid image"""
+FLIMAGE_ERR_ARGUMENT = -48
+"""bad argument/request"""
+FLIMAGE_ERR_FILE = -47
+"""io error"""
+FLIMAGE_ERR_INTERNAL = -46
+"""bugs"""
 FLIMAGE_ERR_UNKNOWN = -45
 """"""
 
@@ -4910,49 +4960,49 @@ FLIMAGE_ERR_UNKNOWN = -45
 class flimage_(cty.Structure):
     pass
 flimage_._fields_ = [
-    ('type', cty.c_int),            # image type
-    ('w', cty.c_int),               # image size
-    ('h', cty.c_int),
-    ('app_data', cty.c_void_p),     # for application at setup time
-    ('u_vdata', cty.c_void_p),      # for application
-    ('u_ldata', cty.c_long),        # for application
+    ('type', cty.c_int),            #: image type
+    ('w', cty.c_int),               #: image width
+    ('h', cty.c_int),               #: image height
+    ('app_data', cty.c_void_p),     #: for application at setup time
+    ('u_vdata', cty.c_void_p),      #: for application
+    ('u_ldata', cty.c_long),        #: for application
     ('red', cty.POINTER(cty.POINTER(cty.c_ubyte))),
     ('green', cty.POINTER(cty.POINTER(cty.c_ubyte))),
     ('blue', cty.POINTER(cty.POINTER(cty.c_ubyte))),
     ('alpha', cty.POINTER(cty.POINTER(cty.c_ubyte))),
-    ('rgba', cty.POINTER(cty.POINTER(cty.c_ubyte)) * 4),    # alias
+    ('rgba', cty.POINTER(cty.POINTER(cty.c_ubyte)) * 4),    #: alias
     ('ci', cty.POINTER(cty.POINTER(cty.c_ushort))),
     ('gray', cty.POINTER(cty.POINTER(cty.c_ushort))),
     ('packed', cty.POINTER(cty.POINTER(FL_PACKED4))),
-    ('red16', cty.POINTER(cty.POINTER(cty.c_ushort))),  # not currently supported
+    ('red16', cty.POINTER(cty.POINTER(cty.c_ushort))),  #not currently supported
     ('green16', cty.POINTER(cty.POINTER(cty.c_ushort))),  #not currently supported
     ('blue16', cty.POINTER(cty.POINTER(cty.c_ushort))),  # not currently supported
     ('alpha16', cty.POINTER(cty.POINTER(cty.c_ushort))),  # not currently supported
     ('ci8', cty.POINTER(cty.POINTER(cty.c_ubyte))), # not currently supported
-    ('red_lut', cty.POINTER(cty.c_int)),        # red lookup tables
-    ('green_lut', cty.POINTER(cty.c_int)),      # green lookup tables
-    ('blue_lut', cty.POINTER(cty.c_int)),       # blue lookup tables
-    ('alpha_lut', cty.POINTER(cty.c_int)),      # alpha lookup tables
-    ('lut', cty.POINTER(cty.c_int) * 4),        # alias
-    ('map_len', cty.c_int),                 # lut length
-    ('colors', cty.c_int),                  # actual colors used in displaying
-    ('gray_maxval', cty.c_int),             # indicate the range of gray16
-    ('ci_maxval', cty.c_int),               # max value of ci. not used, use map_len
-    ('rgb_maxval', cty.c_int),              # max value for rgb16 image
+    ('red_lut', cty.POINTER(cty.c_int)),        #: red lookup tables
+    ('green_lut', cty.POINTER(cty.c_int)),      #: green lookup tables
+    ('blue_lut', cty.POINTER(cty.c_int)),       #: blue lookup tables
+    ('alpha_lut', cty.POINTER(cty.c_int)),      #: alpha lookup tables
+    ('lut', cty.POINTER(cty.c_int) * 4),        #: alias
+    ('map_len', cty.c_int),                 #: lut length
+    ('colors', cty.c_int),              #: actual colors used in displaying
+    ('gray_maxval', cty.c_int),             #: indicate the range of gray16
+    ('ci_maxval', cty.c_int),       #: max value of ci. not used, use map_len
+    ('rgb_maxval', cty.c_int),              #: max value for rgb16 image
     ('level', cty.c_int),
     ('wwidth', cty.c_int),
-    ('wlut', cty.POINTER(cty.c_ushort)),        # lut for window levelling
+    ('wlut', cty.POINTER(cty.c_ushort)),        #: lut for window levelling
     ('wlut_len', cty.c_int),
-    ('app_background', cty.c_int),          # transparent color, in RGB
+    ('app_background', cty.c_int),          #: transparent color, in RGB
     ('comments', STRING),
     ('comments_len', cty.c_int),
     ('available_type', cty.c_int),
     ('next', cty.POINTER(flimage_)),
-    ('sx', cty.c_int),                      # display subimage origin
+    ('sx', cty.c_int),                      #: display subimage origin
     ('sy', cty.c_int),
-    ('sw', cty.c_int),                      # display subimage width
+    ('sw', cty.c_int),                      #: display subimage width
     ('sh', cty.c_int),
-    ('wx', cty.c_int),              # display location relative to win
+    ('wx', cty.c_int),              #: display location relative to win
     ('wy', cty.c_int),
     ('modified', cty.c_int),
     ('display', cty.CFUNCTYPE(cty.c_int, cty.POINTER(flimage_), FL_WINDOW)),
@@ -4963,7 +5013,7 @@ flimage_._fields_ = [
     ('shd', cty.c_int),
     ('wxd', cty.c_int),
     ('wyd', cty.c_int),
-    ('fmt_name', STRING),       # format name (ppm,jpg etc)
+    ('fmt_name', STRING),       #: format name (ppm,jpg etc)
     # annotation stuff
     ('text', cty.POINTER(FLIMAGE_TEXT)),
     ('ntext', cty.c_int),
@@ -4978,8 +5028,8 @@ flimage_._fields_ = [
     ('display_markers', cty.CFUNCTYPE(None, cty.POINTER(flimage_))),
     ('free_markers', cty.CFUNCTYPE(None, cty.POINTER(flimage_))),
     # physicalValue = poffset + pixelValue * pscale
-    ('pmin', cty.c_double),         # physical data range
-    ('pmax', cty.c_double),
+    ('pmin', cty.c_double),         #: minimum value physical data range
+    ('pmax', cty.c_double),         #: maximum value physical data range
     ('poffset', cty.c_double),
     ('pscale', cty.c_double),
     #  pixel grid distance
@@ -4996,14 +5046,14 @@ flimage_._fields_ = [
     ('pre_write', cty.CFUNCTYPE(cty.c_int, cty.POINTER(flimage_))),
     ('post_write', cty.CFUNCTYPE(cty.c_int, cty.POINTER(flimage_))),
     # image processing stuff
-    ('subx', cty.c_int),        # subimage origin
-    ('suby', cty.c_int),
-    ('subw', cty.c_int),        # subimage size
-    ('subh', cty.c_int),
-    ('sub_shape', cty.c_int),   # shape of the subimage
-    ('fill_color', cty.c_uint),     # fill color
+    ('subx', cty.c_int),        #: subimage horizontal origin
+    ('suby', cty.c_int),        #: subimage vertical origin
+    ('subw', cty.c_int),        #: subimage width
+    ('subh', cty.c_int),        #: subimage height
+    ('sub_shape', cty.c_int),   #: shape of the subimage
+    ('fill_color', cty.c_uint),     #: fill color
     ('force_convert', cty.c_int),
-    ('llut', cty.POINTER(cty.c_int) * 3),   # linear lut
+    ('llut', cty.POINTER(cty.c_int) * 3),   #: linear lut
     ('llut_len', cty.c_int),
     ('hist', cty.POINTER(cty.c_uint) * 4),
     # application handlers
@@ -5012,12 +5062,12 @@ flimage_._fields_ = [
     ('visual_cue', cty.CFUNCTYPE(cty.c_int, cty.POINTER(flimage_), STRING)),
     ('error_message', cty.CFUNCTYPE(None, cty.POINTER(flimage_), STRING)),
     ('error_code', cty.c_int),      # not currently used
-    ('display_type', cty.c_int),    # just before handing it to X
+    ('display_type', cty.c_int),    #: just before handing it to X
     ('pixels', cty.POINTER(cty.POINTER(cty.c_ushort))),
-    ('image_spec', cty.c_void_p),   # additional image info
-    ('xdisplay', cty.c_void_p),     # the X connection
-    ('tran_rgb', cty.c_int),        # RGB color that should be transparent
-    ('tran_index', cty.c_int),      # index that should be transparent
+    ('image_spec', cty.c_void_p),   #: additional image info
+    ('xdisplay', cty.c_void_p),     #: the X connection
+    ('tran_rgb', cty.c_int),        #: RGB color that should be transparent
+    ('tran_index', cty.c_int),      #: index that should be transparent
     ('matr', cty.c_int),
     ('matc', cty.c_int),
     # multi-frame images
@@ -5026,7 +5076,8 @@ flimage_._fields_ = [
     ('total_frames', cty.c_int),
     ('next_frame', cty.CFUNCTYPE(cty.c_int, cty.POINTER(flimage_))),
     ('prev_frame', cty.CFUNCTYPE(cty.c_int, cty.POINTER(flimage_))),
-    ('random_frame', cty.CFUNCTYPE(cty.c_int, cty.POINTER(flimage_), cty.c_int)),
+    ('random_frame', cty.CFUNCTYPE(cty.c_int, cty.POINTER(flimage_), \
+        cty.c_int)),
     ('rewind_frame', cty.CFUNCTYPE(cty.c_int, cty.POINTER(flimage_))),
     ('cleanup', cty.CFUNCTYPE(None, cty.POINTER(flimage_))),
     ('stop_looping', cty.c_int),
@@ -5034,9 +5085,9 @@ flimage_._fields_ = [
     ('fpin', cty.POINTER(FILE)),
     ('fpout', cty.POINTER(FILE)),
     ('image_io', cty.c_void_p),
-    ('io_spec', cty.c_void_p),      # io operation helper
+    ('io_spec', cty.c_void_p),      #: io operation helper
     ('spec_size', cty.c_int),
-    ('depth', cty.c_int),           # the depth we actually use
+    ('depth', cty.c_int),           #: the depth we actually use
     ('vclass', cty.c_int),
     ('visual', cty.c_void_p),
     ('xcolormap', cty.c_ulong),
@@ -5044,7 +5095,7 @@ flimage_._fields_ = [
     ('ximage', cty.c_void_p),
     ('win', FL_WINDOW),
     ('gc', cty.c_void_p),
-    ('sdepth', cty.c_int),          # depth the server says
+    ('sdepth', cty.c_int),          #: depth the server says
     ('textgc', cty.c_void_p),
     ('markergc', cty.c_void_p),
     ('extra_io_info', cty.c_void_p),
@@ -5122,16 +5173,16 @@ FL_SMOOTH = FLIMAGE_SMOOTH
 FL_SHARPEN = FLIMAGE_SHARPEN
 
 # values for unnamed enumeration
-FLIMAGE_NOSUBPIXEL = 0      # scale with no subpixel sampling
+FLIMAGE_NOSUBPIXEL = 0
 """scale with no subpixel sampling"""
-FLIMAGE_SUBPIXEL = 1        # scale with subpixel sampling
+FLIMAGE_SUBPIXEL = 1
 """scale with subpixel sampling"""
-FLIMAGE_CENTER = 2          # center warped image. default
-""""""
-FLIMAGE_RIGHT = 8           # flush right the warped image
-""""""
-FLIMAGE_ASPECT = 32         # fit the size
-""""""
+FLIMAGE_CENTER = 2
+"""center warped image. default"""
+FLIMAGE_RIGHT = 8
+"""flush right the warped image"""
+FLIMAGE_ASPECT = 32
+"""fit the size"""
 FLIMAGE_NOCENTER = FL_ALIGN_LEFT_TOP
 """"""
 

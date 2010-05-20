@@ -109,7 +109,7 @@ def fl_popup_add_entries(pPopup, entrytxt):
         """FL_POPUP_ENTRY * fl_popup_add_entries(FL_POPUP * p1,
            const char * p2)""")
     libr.check_if_initialized()
-    libr.verify_flflpopupptr_type(pPopup)
+    libr.verify_flpopupptr_type(pPopup)
     sentrytxt = libr.convert_to_string(entrytxt)
     libr.keep_elem_refs(pPopup, entrytxt, sentrytxt)
     retval = _fl_popup_add_entries(pPopup, sentrytxt)
@@ -147,7 +147,7 @@ def fl_popup_insert_entries(pPopup, pPopupEntry, entrytxt):
         """FL_POPUP_ENTRY * fl_popup_insert_entries(FL_POPUP * p1,
            FL_POPUP_ENTRY * p2, const char * p3)""")
     libr.check_if_initialized()
-    libr.verify_flflpopupptr_type(pPopup)
+    libr.verify_flpopupptr_type(pPopup)
     if not pPopupEntry:         # it's None
         pPopupEntry_alt = cty.cast(pPopupEntry, cty.POINTER(cty.c_void_p))
     else:                       # real FL_POPUP_ENTRY pointer
@@ -233,7 +233,7 @@ def fl_popup_add_items(pPopup, pPopupItem):
         """FL_POPUP_ENTRY * fl_popup_add_items(FL_POPUP * p1,
            FL_POPUP_ITEM * p2)""")
     libr.check_if_initialized()
-    libr.verify_flflpopupptr_type(pPopup)
+    libr.verify_flpopupptr_type(pPopup)
     libr.verify_flpopupitemptr_type(pPopupItem)
     libr.keep_elem_refs(pPopup, pPopupItem)
     retval = _fl_popup_add_items(pPopup, pPopupItem)
@@ -269,7 +269,7 @@ def fl_popup_insert_items(pPopup, pPopupEntry, pPopupItem):
         """FL_POPUP_ENTRY * fl_popup_insert_items(FL_POPUP * p1,
            FL_POPUP_ENTRY * p2, FL_POPUP_ITEM * p3)""")
     libr.check_if_initialized()
-    libr.verify_flflpopupptr_type(pPopup)
+    libr.verify_flpopupptr_type(pPopup)
     libr.verify_flpopupentryptr_type(pPopupEntry)
     libr.verify_flpopupitemptr_type(pPopupItem)
     libr.keep_elem_refs(pPopup, pPopupEntry, pPopupItem)
@@ -303,7 +303,7 @@ def fl_popup_delete(pPopup):
         cty.c_int, [cty.POINTER(xfdata.FL_POPUP)],
         """int fl_popup_delete(FL_POPUP * p1)""")
     libr.check_if_initialized()
-    libr.verify_flflpopupptr_type(pPopup)
+    libr.verify_flpopupptr_type(pPopup)
     libr.keep_elem_refs(pPopup)
     retval = _fl_popup_delete(pPopup)
     return retval
@@ -361,7 +361,7 @@ def fl_popup_do(pPopup):
         cty.POINTER(xfdata.FL_POPUP_RETURN), [cty.POINTER(xfdata.FL_POPUP)],
         """FL_POPUP_RETURN * fl_popup_do(FL_POPUP * p1)""")
     libr.check_if_initialized()
-    libr.verify_flflpopupptr_type(pPopup)
+    libr.verify_flpopupptr_type(pPopup)
     libr.keep_elem_refs(pPopup)
     retval = _fl_popup_do(pPopup)
     return retval
@@ -391,7 +391,7 @@ def fl_popup_set_position(pPopup, x, y):
         None, [cty.POINTER(xfdata.FL_POPUP), cty.c_int, cty.c_int],
         """void fl_popup_set_position(FL_POPUP * p1, int p2, int p3)""")
     libr.check_if_initialized()
-    libr.verify_flflpopupptr_type(pPopup)
+    libr.verify_flpopupptr_type(pPopup)
     ix = libr.convert_to_int(x)
     iy = libr.convert_to_int(y)
     libr.keep_elem_refs(pPopup, x, y, ix, iy)
@@ -474,7 +474,8 @@ def fl_popup_set_policy(pPopup, policy):
 
 
 def fl_popup_set_callback(pPopup, py_PopupCb):
-    """*todo*
+    """Associates with a popup or changes a callback function to be invoked
+    when an entry (or an entry of a sub-popup) is selected,
 
     --
 
@@ -482,9 +483,12 @@ def fl_popup_set_callback(pPopup, py_PopupCb):
       `pPopup` : pointer to xfdata.FL_POPUP
         popup class instance
       `py_PopupCb` : python function callback, returning value
+        callback that is called after entry selection.
         name referring to function(pPopupReturn) -> num.
+        parameter pPopopReturn is of type xfdata.FL_POPUP_RETURN
 
-    :return: old popup callback
+    :return: old popup callback, or None (on errors, or if no callback was
+        defined)
     :rtype: pointer ot xfdata.FL_POPUP_CB
 
     :note: e.g. *todo*
@@ -501,7 +505,7 @@ def fl_popup_set_callback(pPopup, py_PopupCb):
         """FL_POPUP_CB fl_popup_set_callback(FL_POPUP * p1,
            FL_POPUP_CB p2)""")
     libr.check_if_initialized()
-    libr.verify_flflpopupptr_type(pPopup)
+    libr.verify_flpopupptr_type(pPopup)
     libr.verify_function_type(py_PopupCb)
     c_PopupCb = xfdata.FL_POPUP_CB(py_PopupCb)
     libr.keep_cfunc_refs(c_PopupCb, py_PopupCb)
@@ -511,7 +515,7 @@ def fl_popup_set_callback(pPopup, py_PopupCb):
 
 
 def fl_popup_get_title_font(pPopup):
-    """*todo*
+    """Obtains the font style and size of the popup's title.
 
     --
 
@@ -537,7 +541,7 @@ def fl_popup_get_title_font(pPopup):
         """void fl_popup_get_title_font(FL_POPUP * p1, int * p2,
            int * p3)""")
     libr.check_if_initialized()
-    libr.verify_flflpopupptr_type(pPopup)
+    libr.verify_flpopupptr_type(pPopup)
     style, pstyle = libr.make_int_and_pointer()
     size, psize = libr.make_int_and_pointer()
     libr.keep_elem_refs(pPopup, style, size, pstyle, psize)
@@ -546,7 +550,10 @@ def fl_popup_get_title_font(pPopup):
 
 
 def fl_popup_set_title_font(pPopup, style, size):
-    """*todo*
+    """Sets the font style and size of the popup's title. This setting also
+    applies to sub-popups of the popup, thus setting a title font for
+    sub-popups is useless. By default, size and style are (from xfdata)
+    FL_NORMAL_SIZE and FL_EMBOSSED_STYLE.
 
     --
 
@@ -554,9 +561,17 @@ def fl_popup_set_title_font(pPopup, style, size):
       `pPopup` : pointer to xfdata.FL_POPUP
         popup class instance
       `style` : int
-        *todo*
+        title style. Values (from xfdata.py) FL_NORMAL_STYLE,
+        FL_BOLD_STYLE, FL_ITALIC_STYLE, FL_BOLDITALIC_STYLE, FL_FIXED_STYLE,
+        FL_FIXEDBOLD_STYLE, FL_FIXEDITALIC_STYLE, FL_FIXEDBOLDITALIC_STYLE,
+        FL_TIMES_STYLE, FL_TIMESBOLD_STYLE, FL_TIMESITALIC_STYLE,
+        FL_TIMESBOLDITALIC_STYLE, FL_MISC_STYLE, FL_MISCBOLD_STYLE,
+        FL_MISCITALIC_STYLE, FL_SYMBOL_STYLE, FL_SHADOW_STYLE,
+        FL_ENGRAVED_STYLE, FL_EMBOSSED_STYLE
       `size` : int
-        *todo*
+        title size. Values (from xfdata.py) FL_TINY_SIZE, FL_SMALL_SIZE,
+        FL_NORMAL_SIZE, FL_MEDIUM_SIZE, FL_LARGE_SIZE, FL_HUGE_SIZE,
+        FL_DEFAULT_SIZE
 
     :note: e.g. *todo*
 
@@ -568,16 +583,17 @@ def fl_popup_set_title_font(pPopup, style, size):
         None, [cty.POINTER(xfdata.FL_POPUP), cty.c_int, cty.c_int],
         """void fl_popup_set_title_font(FL_POPUP * p1, int p2, int p3)""")
     libr.check_if_initialized()
-    libr.verify_flflpopupptr_type(pPopup)
-    # TODO: check admitted values in style, size
+    libr.verify_flpopupptr_type(pPopup)
+    libr.checkfatal_allowed_value_in_list(style, xfdata.TEXTSTYLE_list)
     istyle = libr.convert_to_int(style)
+    libr.checknonfatal_allowed_value_in_list(size, xfdata.FONTSIZE_list)
     isize = libr.convert_to_int(size)
     libr.keep_elem_refs(pPopup, style, size, istyle, isize)
     _fl_popup_set_title_font(pPopup, istyle, isize)
 
 
 def fl_popup_entry_get_font(pPopup):
-    """*todo*
+    """Obtains the font style and size of the popup entries.
 
     --
 
@@ -602,7 +618,7 @@ def fl_popup_entry_get_font(pPopup):
         cty.POINTER(cty.c_int)],
         """void fl_popup_entry_get_font(FL_POPUP * p1, int * p2, int * p3)""")
     libr.check_if_initialized()
-    libr.verify_flflpopupptr_type(pPopup)
+    libr.verify_flpopupptr_type(pPopup)
     style, pstyle = libr.make_int_and_pointer()
     size, psize = libr.make_int_and_pointer()
     libr.keep_elem_refs(pPopup, style, size, pstyle, psize)
@@ -611,7 +627,7 @@ def fl_popup_entry_get_font(pPopup):
 
 
 def fl_popup_entry_set_font(pPopup, style, size):
-    """Sets the font style and size of a popup entry.
+    """Sets the font style and size of the popup entries.
 
     --
 
@@ -619,9 +635,17 @@ def fl_popup_entry_set_font(pPopup, style, size):
       `pPopup` : pointer to xfdata.FL_POPUP
         popup class instance
       `style` : int
-        style of the popup entry *todo*
+        style of popup entries. Values (from xfdata.py) FL_NORMAL_STYLE,
+        FL_BOLD_STYLE, FL_ITALIC_STYLE, FL_BOLDITALIC_STYLE, FL_FIXED_STYLE,
+        FL_FIXEDBOLD_STYLE, FL_FIXEDITALIC_STYLE, FL_FIXEDBOLDITALIC_STYLE,
+        FL_TIMES_STYLE, FL_TIMESBOLD_STYLE, FL_TIMESITALIC_STYLE,
+        FL_TIMESBOLDITALIC_STYLE, FL_MISC_STYLE, FL_MISCBOLD_STYLE,
+        FL_MISCITALIC_STYLE, FL_SYMBOL_STYLE, FL_SHADOW_STYLE,
+        FL_ENGRAVED_STYLE, FL_EMBOSSED_STYLE
       `size` : int
-        size of the popup entry *todo*
+        size of popup entries. Values (from xfdata.py) FL_TINY_SIZE,
+        FL_SMALL_SIZE, FL_NORMAL_SIZE, FL_MEDIUM_SIZE, FL_LARGE_SIZE,
+        FL_HUGE_SIZE, FL_DEFAULT_SIZE
 
     :note: e.g. *todo*
 
@@ -633,16 +657,17 @@ def fl_popup_entry_set_font(pPopup, style, size):
         None, [cty.POINTER(xfdata.FL_POPUP), cty.c_int, cty.c_int],
         """void fl_popup_entry_set_font(FL_POPUP * p1, int p2, int p3)""")
     libr.check_if_initialized()
-    libr.verify_flflpopupptr_type(pPopup)
-    # TODO: check admitted values in style, size
+    libr.verify_flpopupptr_type(pPopup)
+    libr.checkfatal_allowed_value_in_list(style, xfdata.TEXTSTYLE_list)
     istyle = libr.convert_to_int(style)
+    libr.checknonfatal_allowed_value_in_list(size, xfdata.FONTSIZE_list)
     isize = libr.convert_to_int(size)
     libr.keep_elem_refs(pPopup, style, size, istyle, isize)
     _fl_popup_entry_set_font(pPopup, istyle, isize)
 
 
 def fl_popup_get_bw(pPopup):
-    """Returns the border width of a popup.
+    """Obtains the border width of a popup.
 
     --
 
@@ -651,7 +676,7 @@ def fl_popup_get_bw(pPopup):
         popup class instance
 
     :return: borderwidth (bw)
-    :rtype:
+    :rtype: int
 
     :note: e.g. *todo*
 
@@ -663,7 +688,7 @@ def fl_popup_get_bw(pPopup):
         cty.c_int, [cty.POINTER(xfdata.FL_POPUP)],
         """int fl_popup_get_bw(FL_POPUP * p1)""")
     libr.check_if_initialized()
-    libr.verify_flflpopupptr_type(pPopup)
+    libr.verify_flpopupptr_type(pPopup)
     libr.keep_elem_refs(pPopup)
     retval = _fl_popup_get_bw(pPopup)
     return retval
@@ -693,7 +718,7 @@ def fl_popup_set_bw(pPopup, bw):
         cty.c_int, [cty.POINTER(xfdata.FL_POPUP), cty.c_int],
         """int fl_popup_set_bw(FL_POPUP * p1, int p2)""")
     libr.check_if_initialized()
-    libr.verify_flflpopupptr_type(pPopup)
+    libr.verify_flpopupptr_type(pPopup)
     ibw = libr.convert_to_int(bw)
     libr.keep_elem_refs(pPopup, bw, ibw)
     retval = _fl_popup_set_bw(pPopup, ibw)
@@ -701,7 +726,7 @@ def fl_popup_set_bw(pPopup, bw):
 
 
 def fl_popup_get_color(pPopup, colrpos):
-    """*todo*
+    """Obtains several colors used in drawing a popup.
 
     --
 
@@ -727,7 +752,7 @@ def fl_popup_get_color(pPopup, colrpos):
         xfdata.FL_COLOR, [cty.POINTER(xfdata.FL_POPUP), cty.c_int],
         """FL_COLOR fl_popup_get_color(FL_POPUP * p1, int p2)""")
     libr.check_if_initialized()
-    libr.verify_flflpopupptr_type(pPopup)
+    libr.verify_flpopupptr_type(pPopup)
     libr.checkfatal_allowed_value_in_list(colrpos, xfdata.POPUPCOLOR_list)
     icolrpos = libr.convert_to_int(colrpos)
     libr.keep_elem_refs(pPopup, colrpos, icolrpos)
@@ -736,7 +761,7 @@ def fl_popup_get_color(pPopup, colrpos):
 
 
 def fl_popup_set_color(pPopup, colrpos, colr):
-    """*todo*
+    """Sets several colors used in drawing a popup.
 
     --
 
@@ -765,7 +790,7 @@ def fl_popup_set_color(pPopup, colrpos, colr):
         xfdata.FL_COLOR],
         """FL_COLOR fl_popup_set_color(FL_POPUP * p1, int p2, FL_COLOR p3)""")
     libr.check_if_initialized()
-    libr.verify_flflpopupptr_type(pPopup)
+    libr.verify_flpopupptr_type(pPopup)
     libr.checkfatal_allowed_value_in_list(colrpos, xfdata.POPUPCOLOR_list)
     libr.checknonfatal_allowed_value_in_list(colr, xfdata.COLOR_list)
     icolrpos = libr.convert_to_int(colrpos)
@@ -796,7 +821,7 @@ def fl_popup_set_cursor(pPopup, cursnum):
         None, [cty.POINTER(xfdata.FL_POPUP), cty.c_int],
         """void fl_popup_set_cursor(FL_POPUP * p1, int p2)""")
     libr.check_if_initialized()
-    libr.verify_flflpopupptr_type(pPopup)
+    libr.verify_flpopupptr_type(pPopup)
     icursnum = libr.convert_to_int(cursnum)
     libr.keep_elem_refs(pPopup, cursnum, icursnum)
     _fl_popup_set_cursor(pPopup, icursnum)
@@ -824,7 +849,7 @@ def fl_popup_get_title(pPopup):
         xfdata.STRING, [cty.POINTER(xfdata.FL_POPUP)],
         """const char * fl_popup_get_title(FL_POPUP * p1)""")
     libr.check_if_initialized()
-    libr.verify_flflpopupptr_type(pPopup)
+    libr.verify_flpopupptr_type(pPopup)
     libr.keep_elem_refs(pPopup)
     retval = _fl_popup_get_title(pPopup)
     return retval
@@ -856,7 +881,7 @@ def fl_popup_set_title(pPopup, title):
         xfdata.STRING],
         """FL_POPUP * fl_popup_set_title(FL_POPUP * p1, const char * p2)""")
     libr.check_if_initialized()
-    libr.verify_flflpopupptr_type(pPopup)
+    libr.verify_flpopupptr_type(pPopup)
     stitle = libr.convert_to_string(title)
     libr.keep_elem_refs(pPopup, title, stitle)
     retval = _fl_popup_set_title(pPopup, stitle)
@@ -1079,7 +1104,7 @@ def fl_popup_entry_raise_state(pPopupEntry, state):
     :Parameters:
       `pPopupEntry` : pointer to xfdata.FL_POPUP_ENTRY
         popup entry
-    `state` : int_pos
+      `state` : int_pos
         state to be set. Values (from xfdata.py) FL_POPUP_DISABLED,
         FL_POPUP_HIDDEN or FL_POPUP_CHECKED. Or a bitwise OR of them.
 
@@ -1113,7 +1138,7 @@ def fl_popup_entry_toggle_state(pPopupEntry, state):
     :Parameters:
       `pPopupEntry` : pointer to xfdata.FL_POPUP_ENTRY
         popup entry
-    `state` : int_pos
+      `state` : int_pos
         state to be toggled. Values (from xfdata.py) FL_POPUP_DISABLED,
         FL_POPUP_HIDDEN or FL_POPUP_CHECKED. Or a bitwise OR of them.
 
@@ -1296,7 +1321,7 @@ def fl_popup_entry_get_by_position(pPopup, posnum):
         """FL_POPUP_ENTRY * fl_popup_entry_get_by_position(FL_POPUP * p1,
            int p2)""")
     libr.check_if_initialized()
-    libr.verify_flflpopupptr_type(pPopup)
+    libr.verify_flpopupptr_type(pPopup)
     iposnum = libr.convert_to_int(posnum)
     libr.keep_elem_refs(pPopup, posnum, iposnum)
     retval = _fl_popup_entry_get_by_position(pPopup, iposnum)
@@ -1329,7 +1354,7 @@ def fl_popup_entry_get_by_value(pPopup, val):
         """FL_POPUP_ENTRY * fl_popup_entry_get_by_value(FL_POPUP * p1,
            long int p2)""")
     libr.check_if_initialized()
-    libr.verify_flflpopupptr_type(pPopup)
+    libr.verify_flpopupptr_type(pPopup)
     lval = libr.convert_to_long(val)
     libr.keep_elem_refs(pPopup, val, lval)
     retval = _fl_popup_entry_get_by_value(pPopup, lval)
@@ -1363,7 +1388,7 @@ def fl_popup_entry_get_by_user_data(pPopup, vdata):
         """FL_POPUP_ENTRY * fl_popup_entry_get_by_user_data(FL_POPUP * p1,
            void * p2)""")
     libr.check_if_initialized()
-    libr.verify_flflpopupptr_type(pPopup)
+    libr.verify_flpopupptr_type(pPopup)
     pvdata = cty.cast(vdata, cty.c_void_p)
     libr.keep_elem_refs(pPopup, vdata, pvdata)
     retval = _fl_popup_entry_get_by_user_data(pPopup, pvdata)
@@ -1398,7 +1423,7 @@ def fl_popup_entry_get_by_text(pPopup, text):
         """FL_POPUP_ENTRY * fl_popup_entry_get_by_text(FL_POPUP * p1,
            const char * p2)""")
     libr.check_if_initialized()
-    libr.verify_flflpopupptr_type(pPopup)
+    libr.verify_flpopupptr_type(pPopup)
     stext = libr.convert_to_string(text)
     libr.keep_elem_refs(pPopup, text, stext)
     retval = _fl_popup_entry_get_by_text(pPopup, stext)
@@ -1407,9 +1432,9 @@ def fl_popup_entry_get_by_text(pPopup, text):
 
 def fl_popup_entry_get_by_label(pPopup, label):
     """Finds a popup entry by its left-flushed label parts of the entry as
-    shown on the screen (note that tab characters '\t' originally embedded
+    shown on the screen (note that tab characters `\\t` originally embedded
     in the text used when creating the label have been replaced by single
-    spaces and backspace characters '\b' were removed as well as all special
+    spaces and backspace characters `\\b` were removed as well as all special
     sequences).
 
     --
@@ -1435,7 +1460,7 @@ def fl_popup_entry_get_by_label(pPopup, label):
         """FL_POPUP_ENTRY * fl_popup_entry_get_by_label(FL_POPUP * p1,
            const char * p2)""")
     libr.check_if_initialized()
-    libr.verify_flflpopupptr_type(pPopup)
+    libr.verify_flpopupptr_type(pPopup)
     slabel = libr.convert_to_string(label)
     libr.keep_elem_refs(pPopup, label, slabel)
     retval = _fl_popup_entry_get_by_label(pPopup, slabel)
@@ -1561,7 +1586,7 @@ def fl_popup_entry_set_subpopup(pPopupEntry, pPopup):
            FL_POPUP * p2)""")
     libr.check_if_initialized()
     libr.verify_flpopupentryptr_type(pPopupEntry)
-    libr.verify_flflpopupptr_type(pPopup)
+    libr.verify_flpopupptr_type(pPopup)
     libr.keep_elem_refs(pPopupEntry, pPopup)
     retval = _fl_popup_entry_set_subpopup(pPopupEntry, pPopup)
     return retval
@@ -1597,7 +1622,7 @@ def fl_popup_get_size(pPopup):
         """int fl_popup_get_size(FL_POPUP * p1, unsigned int * p2,
            unsigned int * p3)""")
     libr.check_if_initialized()
-    libr.verify_flflpopupptr_type(pPopup)
+    libr.verify_flpopupptr_type(pPopup)
     w, pw = libr.make_uint_and_pointer()
     h, ph = libr.make_uint_and_pointer()
     libr.keep_elem_refs(pPopup, w, h, pw, ph)
@@ -1627,7 +1652,7 @@ def fl_popup_get_min_width(pPopup):
         cty.c_int, [cty.POINTER(xfdata.FL_POPUP)],
         """int fl_popup_get_min_width(FL_POPUP * p1)""")
     libr.check_if_initialized()
-    libr.verify_flflpopupptr_type(pPopup)
+    libr.verify_flpopupptr_type(pPopup)
     libr.keep_elem_refs(pPopup)
     retval = _fl_popup_get_min_width(pPopup)
     return retval
@@ -1659,7 +1684,7 @@ def fl_popup_set_min_width(pPopup, width):
         cty.c_int, [cty.POINTER(xfdata.FL_POPUP), cty.c_int],
         """int fl_popup_set_min_width(FL_POPUP * p1, int p2)""")
     libr.check_if_initialized()
-    libr.verify_flflpopupptr_type(pPopup)
+    libr.verify_flpopupptr_type(pPopup)
     iwidth = libr.convert_to_int(width)
     libr.keep_elem_refs(pPopup, width, iwidth)
     retval = _fl_popup_set_min_width(pPopup, iwidth)

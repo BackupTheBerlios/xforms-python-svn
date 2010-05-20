@@ -463,7 +463,7 @@ def verify_flflimageptr_type(paramname):
                         (paramname, type(paramname)))
 
 
-def verify_flflpopupptr_type(paramname):
+def verify_flpopupptr_type(paramname):
     """Check if paramname is a valid pointer to xfdata.FL_POPUP."""
     if not isinstance(paramname, cty.POINTER(xfdata.FL_POPUP)):
         raise XFormsTypeError("Parameter %s (whose type is %s) must be a " \

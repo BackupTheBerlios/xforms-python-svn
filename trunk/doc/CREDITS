@@ -17,14 +17,12 @@ Copyright owners and original authors:
 Past and current maintainers:
 Jean-Marc Lasgouttes, Angus Leeming, Jens Thoms Toerring
 
-Same acknowlegement applies to documentation as I've used
-plenty of it for function and variables docstrings and .tex
-files.
+Same acknowlegement applies to XForms documentation as I've used plenty of
+it for functions' descriptions and variables docstrings and .tex files.
 
-I would particularly mention Jens Thoms Toerring for his
-dedication, helpfulness and patience with problems I've found
-while implementing this python port. A special commendation
-goes to him.
+I would particularly mention Jens Thoms Toerring for his dedication,
+helpfulness and patience with problems I've found while implementing
+this python port, thus a special commendation goes to him.
 
 
 
@@ -40,7 +38,8 @@ Copyright owner and author:
  (C) 2000, 2001, 2002, 2003, 2004 by Thomas Heller
 
 
-I wish thank also:
-- Python author and maintainers and
-- Xorg X11 Window System developers
+I wish to thank also:
+- Python author and maintainers (for python standard library)
+and
+- Xorg X11 Window System developers (for some constants from X-Window system)
 

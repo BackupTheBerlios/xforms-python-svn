@@ -69,7 +69,8 @@ def fl_add_timer(timertype, x, y, w, h, label):
     :return: timer object added (pFlObject)
     :rtype: pointer to xfdata.FL_OBJECT
 
-    :note: e.g. *todo*
+    :note: e.g. ptimerobj = fl_add_timer(xfdata.FL_NORMAL_TIMER, 120, 120,
+        210, 210, "My Timer")
 
     :status: Tested + NoDoc + Demo = OK
 
@@ -94,18 +95,19 @@ def fl_add_timer(timertype, x, y, w, h, label):
     return retval
 
 
-def fl_set_timer(pFlObject, total):
-    """*todo*
+def fl_set_timer(pFlObject, delay):
+    """Sets the timer to a particular value.
 
     --
 
     :Parameters:
       `pFlObject` : pointer to xfdata.FL_OBJECT
         timer object
-      `total` : float
-        *todo*
+      `delay` : float
+        number of seconds the timer should run. If it's 0.0, resets/de-blinks
+        the timer.
 
-    :note: e.g. *todo*
+    :note: e.g. fl_set_timer(ptimerobj, 20)
 
     :status: Tested + NoDoc + Demo = OK
 
@@ -116,13 +118,13 @@ def fl_set_timer(pFlObject, total):
         """void fl_set_timer(FL_OBJECT * ob, double total)""")
     libr.check_if_initialized()
     libr.verify_flobjectptr_type(pFlObject)
-    ftotal = libr.convert_to_double(total)
-    libr.keep_elem_refs(pFlObject, total, ftotal)
-    _fl_set_timer(pFlObject, ftotal)
+    fdelay = libr.convert_to_double(delay)
+    libr.keep_elem_refs(pFlObject, delay, fdelay)
+    _fl_set_timer(pFlObject, fdelay)
 
 
 def fl_get_timer(pFlObject):
-    """*todo*
+    """Obtains the time left in the timer.
 
     --
 
@@ -130,10 +132,10 @@ def fl_get_timer(pFlObject):
       `pFlObject` : pointer to xfdata.FL_OBJECT
         timer object
 
-    :return: num.
+    :return: time left
     :rtype: float
 
-    :note: e.g. *todo*
+    :note: e.g. lefttim = fl_get_timer(ptimerobj)
 
     :status: Untested + NoDoc + NoDemo = NOT OK
 
@@ -149,18 +151,21 @@ def fl_get_timer(pFlObject):
     return retval
 
 
-def fl_set_timer_countup(pFlObject, yes):
-    """*todo*
+def fl_set_timer_countup(pFlObject, yesno):
+    """Changes timer behavior so the timer counts up and shows elapsed time.
+    By default, a timer counts down toward zero and the value shown (for
+    xfdata.FL_VALUE_TIMERs) is the time left until the timer expires.
 
     --
 
     :Parameters:
       `pFlObject` : pointer to xfdata.FL_OBJECT
         timer object
-      `yes` : int
-        *todo*
+      `yesno` : int
+        flag to set count up or down. Values 0 (counts down and shows time
+        left) or 1 (counts up and shows elapsed time)
 
-    :note: e.g. *todo*
+    :note: e.g. fl_set_timer_countup(ptimerobj, 1)
 
     :status: Tested + NoDoc + Demo = OK
 
@@ -171,14 +176,16 @@ def fl_set_timer_countup(pFlObject, yes):
         """void fl_set_timer_countup(FL_OBJECT * ob, int yes)""")
     libr.check_if_initialized()
     libr.verify_flobjectptr_type(pFlObject)
-    iyes = libr.convert_to_int(yes)
-    libr.keep_elem_refs(pFlObject, yes, iyes)
-    _fl_set_timer_countup(pFlObject, iyes)
+    iyesno = libr.convert_to_int(yesno)
+    libr.keep_elem_refs(pFlObject, yesno, iyesno)
+    _fl_set_timer_countup(pFlObject, iyesno)
 
 
 
 def fl_set_timer_filter(pFlObject, py_TimerFilter):
-    """*todo*
+    """Sets a function to change the way the time is presented in
+    xfdata.FL_VALUE_TIMER. By default, it returns the time in a
+    hour:minutes:seconds.fraction format
 
     --
 
@@ -186,12 +193,16 @@ def fl_set_timer_filter(pFlObject, py_TimerFilter):
       `pFlObject` : pointer to xfdata.FL_OBJECT
         timer object
       `py_TimerFilter` : python callback function, returning value
-        name referring to function(pFlObject, valfloat) -> str
+        name referring to function(pFlObject, float secs) -> str
+        Parameter secs is time left for count-down timers and the elapsed
+        time for up-counting timers (in units of seconds). Returns string
+        representation of time.
 
     :return: old timer filter function
     :rtype: pointer to xfdata.FL_TIMER_FILTER
 
-    :note: e.g. *todo*
+    :note: e.g. def timefilt(pobj, elapsedsecs): > ... ; return newstr
+    :note: e.g. oldtimerfunc = fl_set_timer_filter(ptimerobj, timefilt)
 
     :status: Untested + NoDoc + NoDemo = NOT OK
 
@@ -223,7 +234,7 @@ def fl_suspend_timer(pFlObject):
       `pFlObject` : pointer to xfdata.FL_OBJECT
         timer object
 
-    :note: e.g. fl_suspend_timer(timerobj)
+    :note: e.g. fl_suspend_timer(ptimerobj)
 
     :status: Tested + Doc + Demo = OK
 
@@ -239,7 +250,10 @@ def fl_suspend_timer(pFlObject):
 
 
 def fl_resume_timer(pFlObject):
-    """Resumes timer previously paused (with fl_suspend_timer).
+    """Resumes timer previously paused (with fl_suspend_timer). Unlike
+    fl_set_timer() a suspended timer keeps its internal state (total delay,
+    time left etc.), so when it is resumed, it starts from where it was
+    suspended.
 
     --
 
@@ -247,7 +261,7 @@ def fl_resume_timer(pFlObject):
       `pFlObject` : pointer to xfdata.FL_OBJECT
         timer object
 
-    :note: e.g. fl_resume_timer(timerobj)
+    :note: e.g. fl_resume_timer(ptimobj)
 
     :status: Tested + Doc + Demo = OK
 

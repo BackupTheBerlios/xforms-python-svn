@@ -1,6 +1,7 @@
 
 
 SVN
+    * some bugfixes and other docstrings improved.
     * some docstrings improved.
     * restored correctness of all examples.
     * introduce a new convenience function for checking admittable values

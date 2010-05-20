@@ -2869,10 +2869,13 @@ def fl_get_real_object_window(pFlObject):
 FL_OBJECT_WID = FL_ObjWin
 
 
+# TODO: verify if fl_XNextEvent(), fl_XPeekEvent(), fl_XEventsQueued() and
+# fl_XPutbackEvent() functions are of any use in python.
+
 # Replacements for X functions that access the event queue
 
 def fl_XNextEvent(pXEvent):
-    """*todo*
+    """X11 XNextEvent equivalent function.
 
     --
 
@@ -2900,7 +2903,7 @@ def fl_XNextEvent(pXEvent):
 
 
 def fl_XPeekEvent(pXEvent):
-    """*todo*
+    """X11 XPeekEvent equivalent function.
 
     --
 
@@ -2928,7 +2931,7 @@ def fl_XPeekEvent(pXEvent):
 
 
 def fl_XEventsQueued(mode):
-    """*todo*
+    """X11 XEventsQueued equivalent function.
 
     --
 
@@ -2956,7 +2959,7 @@ def fl_XEventsQueued(mode):
 
 
 def fl_XPutBackEvent(pXEvent):
-    """ fl_XPutBackEvent(pXEvent)
+    """X11 XPutBackEvent equivalent function.
 
     --
 
@@ -2980,14 +2983,17 @@ def fl_XPutBackEvent(pXEvent):
 
 
 def fl_last_event():
-    """*todo*
+    """Obtains the last X event. If this routine is used outside of a callback
+    function, the value returned may not be the real "last event" if the
+    program was idling and, in this case, it returns a synthetic
+    xfdata.MotionNotify event.
 
     --
 
     :return: XEvent class instance (pXEvent)
     :rtype: pointer to xfdata.XEvent
 
-    :note: e.g. *todo*
+    :note: e.g. pxev = flk_last_event()
 
     :status: Untested + NoDoc + NoDemo = NOT OK
 
@@ -3446,16 +3452,18 @@ def fl_finish():
     _fl_finish()
 
 
-def fl_get_resource(rname, cname, dtype, defval, val, size):
-    """*todo*
+def fl_get_resource(resname, resclass, dtype, defval, val, size):
+    """Obtains resource data at the lowest level. It may be useful to e.g.
+    retrieve arbitrary strings and values and to pass data around.
+
 
     --
 
     :Parameters:
-      `rname` : str
+      `resname` : str
         complete resource name specification (minus the application name)
         and should not contain wildcards of any kind
-      `cname` : str
+      `resclass` : str
         complete resource class specification (minus the application name)
         and should not contain wildcards of any kind
       `dtype` : int
@@ -3463,15 +3471,17 @@ def fl_get_resource(rname, cname, dtype, defval, val, size):
         FL_INT, FL_LONG, FL_FLOAT, FL_STRING
       `defval` : str
         default value
-      `val` : pointer to void?
-        *todo*
       `size` : int
         number of bytes, used only if dtype is FL_STRING
 
-    :return: text representation of the resource value
-    :rtype: str
+    :return: text representation of the resource value or None (on failure),
+        variable value (val)
+    :rtype: str, any type
 
     :note: e.g. *todo*
+
+    :attention: API change from XForms - upstream was
+        fl_get_resource(resname, resclass, dtype, defval, val, size)
 
     :status: Untested + NoDoc + NoDemo = NOT OK
 
@@ -3484,28 +3494,35 @@ def fl_get_resource(rname, cname, dtype, defval, val, size):
            const char * cname, FL_RTYPE dtype, const char * defval,
            void * val, int size)""")
     libr.checkfatal_allowed_value_in_list(dtype, xfdata.RTYPE_list)
-    srname = libr.convert_to_string(rname)
-    scname = libr.convert_to_string(cname)
+    sresname = libr.convert_to_string(resname)
+    sresclass = libr.convert_to_string(resclass)
     idtype = libr.convert_to_int(dtype)
-    sdefval = libr.convert_to_string(defval)
-    pval = cty.cast(val, cty.c_void_p)
+    if not defval:              # if it's None
+        sdefval = cty.cast(defval, cty.POINTER(cty.c_void_p))
+    else:                       # real string
+        sdefval = libr.convert_to_string(defval)
+    pval = cty.c_void_p()   # variable of any type that will hold the value
     isize = libr.convert_to_int(size)
-    libr.keep_elem_refs(rname, cname, dtype, defval, val, size, srname,
-                        scname, idtype, sdefval, pval, isize)
-    retval = _fl_get_resource(srname, scname, idtype, sdefval, pval, isize)
-    return retval
+    libr.keep_elem_refs(resname, resclass, dtype, defval, size, sresname,
+                        sresclass, idtype, sdefval, pval, isize)
+    retval = _fl_get_resource(sresname, sresclass, idtype, sdefval, pval,
+                              isize)
+    return retval, pval.contents.value
 
 
-def fl_set_resource(resstr, txtval):
-    """Changes some of the built-in button labels with proper resource names.
+def fl_set_resource(resnamecls, txtval):
+    """Sets a resource, associating a value to it. It may be useful to e.g.
+    change a built-in button labels with proper resource names, or to store
+    arbitrary strings and values and to pass data around.
 
     --
 
     :Parameters:
-      `resstr` : str
-        resource name
+      `resnamecls` : str
+        a fully qualified resource name (minus the application name) or a
+        resource class
       `txtval` : str
-        new string value for resource
+        new text value for resource
 
     :note: e.g. *todo*
 
@@ -3516,10 +3533,10 @@ def fl_set_resource(resstr, txtval):
         libr.load_so_libforms(), "fl_set_resource",
         None, [xfdata.STRING, xfdata.STRING],
         """void fl_set_resource(const char * str, const char * val)""")
-    sresstr = libr.convert_to_string(resstr)
+    sresnamecls = libr.convert_to_string(resnamecls)
     stxtval = libr.convert_to_string(txtval)
-    libr.keep_elem_refs(resstr, txtval, sresstr, stxtval)
-    _fl_set_resource(sresstr, stxtval)
+    libr.keep_elem_refs(resnamecls, txtval, sresnamecls, stxtval)
+    _fl_set_resource(sresnamecls, stxtval)
 
 
 def fl_get_app_resources(pResource, nresources):

@@ -384,7 +384,7 @@ def fl_set_select_popup(pFlObject, pPopup):
         """int fl_set_select_popup(FL_OBJECT * p1, FL_POPUP * p2)""")
     libr.check_if_initialized()
     libr.verify_flobjectptr_type(pFlObject)
-    libr.verify_flflpopupptr_type(pPopup)
+    libr.verify_flpopupptr_type(pPopup)
     libr.keep_elem_refs(pFlObject, pPopup)
     retval = _fl_set_select_popup(pFlObject, pPopup)
     return retval
