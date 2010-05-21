@@ -1,6 +1,7 @@
 
 
 SVN
+    * most of Structure classes in xfdata.py have a docstring now.
     * some bugfixes and other docstrings improved.
     * some docstrings improved.
     * restored correctness of all examples.
