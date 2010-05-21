@@ -81,6 +81,9 @@ def fl_popup_add(win, title):
     return retval
 
 
+# TODO: maybe extrytxt can be handled as a dict to allow special
+#  sequences? # I might remove multiple entries option, and pass all special
+# sequences (defaulting to something, if not provided by user)
 def fl_popup_add_entries(pPopup, entrytxt):
     """Adds one or more entries to a popup.
 

@@ -3452,7 +3452,7 @@ def fl_finish():
     _fl_finish()
 
 
-def fl_get_resource(resname, resclass, dtype, defval, val, size):
+def fl_get_resource(resname, resclass, dtype, defval, size):
     """Obtains resource data at the lowest level. It may be useful to e.g.
     retrieve arbitrary strings and values and to pass data around.
 

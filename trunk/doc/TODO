@@ -35,36 +35,50 @@ is in a alpha development state, presently.
 
 *** Ideas for further development ***
 
-- reduce chance to incur in Segmentation Fault/Illegal Instruction
-(need a deeper testing) (the highest priority).
+- polish wrapper to remove unnecessary comments {DONE}
 
-- for each acquired c function I need to improve a python
+- verify all c macro conversion's correctness (if needed) {DONE}.
+
+- Adopting RestructuredText format (rst) in functions' docstrings,
+replacing epytext format {DONE}.
+
+- Module deprecated.py will be removed (as I don't see a reason to
+support it, as it contains functions and variables already deprecated
+by XForms developers). Before removing it is necessary to get rid
+of examples that are based on that module's functions and port them
+to alternative functions {DONE}.
+
+- reduce chance to incur in Segmentation Fault/Illegal Instruction
+(it needs a deeper testing) (the highest priority).
+
+- for each acquired c function I need to improve the python
 wrapping function, in order to check if a parameter of
-correct type has been passed and convert it. (high priority) {WIP}.
+correct type has been passed and convert it if feasible (high priority)
+{WIP}.
 
 - convert XForms c examples to be used as python scripts
 (they can be used as working tests as well) (high priority) {WIP}.
 
-- polish wrapper to remove unnecessary comments {DONE}
-
 - verify external functions/data from Xlib and C stdlib
 to be resolved and correct related shared library loaded
 by ctypes, remove external functions not directy referenced
-by XForms library.
+by XForms library. It depends on edge cases of XForms demos remaining
+to be ported as examples to xforms-python.
 
-- verify all c macro conversion's correctness (if needed) {DONE}.
-
-- do a simple and meaningful docstring for every public
-function; this is absolutely annoying as I have to manually
-copy functions' description and parameters' lists from XForms
+- do a detailed and meaningful docstring for every public function;
+this is absolutely annoying as I have to manually copy functions'
+description and parameters' lists from XForms
 documentation, so it may take several months. But, meantime,
 I plan to rename functions' parameters, where possible, in
 order to improve usability. {WIP}
 
 - have a minimal but complete function reference guide; I
-do not intend to do a real developer/user manual as
-xforms.pdf present in XForms is absolutely great and
-functions call in xforms-python are only slightly modified {WIP}.
+do not intend to do a real developer/user manual as xforms.pdf
+present in XForms is absolutely great and functions call in
+xforms-python are only slightly modified. BTW I'm using epydoc,
+building .tex reference guide from docstrings. It needs docstrings
+completeness (for Structure classes, functions, constants and other
+variables) {WIP}
 
 - find some way to get rid of all direct X11/Xlib functions,
 depending only on XForms library functions (hopefully).
@@ -75,31 +89,28 @@ that are not supported yet in XForms (this should not be a problem
 for most of strings used in functions, but it *is* surely a problem
 in 1 byte-characters used for keys, shortcut etc...)
 
-- Adopting RestructuredText format (rst) in functions' docstrings,
-replacing epytext format {DONE}.
-
-- Module deprecated.py will be removed (as I don't see a reason to
-support it, as it contains functions and variables already deprecated
-by XForms developers). Before removing it is necessary to get rid
-of examples that are based on that module's functions and port them
-to alternative functions.
-
-- Covering all (public) functions with a proper unit-test (or a sort
-of). My intention is to have at least 2 use cases for each : 1st for
-a surely working solution (i.e. parameters of correct type and values
-range), 2nd for a failing/not working but error-checked and managed
+- Covering all (public) functions with a proper unit-test for functions
+(or a sort of). My intention is to have at least 2 use cases for each:
+1st for a surely working solution (i.e. parameters of correct type and
+values range), 2nd for a failing/not working but error-checked and managed
 solution (xforms-python catches incorrect types and/or values). It
-would be ideal if I could a known failing solution who is not
+would be ideal if I could have a known failing solution who is not
 checked/not managed solution (it should display original XForms error
 messages and so relies on XForms upstream library error handling).
+I don't think a real traditional unit-test can be of any use here, as
+for a library toolkit wrapper, it is not enough using assertions etc...
+{WIP}
 
 - Creating a python tool to parse/convert .fd (XForms's fdesign files)
-to python.
+to python. As XForms fdesign is too complex to be utterly duplicated
+in python, a parser and converter of fdesign's results file is much more
+reasonable. It needs that xforms-python's API is stable and toolbox results
+correspond to well-documented and working functions.
 
 - Figuring out which values in xfdata.py can be used as single values
- or bitwise OR-ed with each other, so check_admitted_value_in_list
+ or bitwise OR-ed with each other, so checking for allowed value in list
  function doesn't forbid such a resulting value incorrectly.
 
 - Porting xforms-python to object-oriented/classes (maybe for version 2.x,
-lowest priority).
+UNSURE, maybe it isn't worth the effort).
 

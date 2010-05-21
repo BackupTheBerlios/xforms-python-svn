@@ -1509,11 +1509,14 @@ class _XExtData(cty.Structure):
       `private_data` : str
         *todo*
     """
-    _fields_ = [
-        ('number', cty.c_int),
-        ('next', cty.POINTER(_XExtData)),
-        ('free_private', cty.CFUNCTYPE(cty.c_int, cty.POINTER(_XExtData))),
-        ('private_data', XPointer), ]
+    pass
+
+_XExtData._fields_ = [
+    ('number', cty.c_int),
+    ('next', cty.POINTER(_XExtData)),
+    ('free_private', cty.CFUNCTYPE(cty.c_int, cty.POINTER(_XExtData))),
+    ('private_data', XPointer), ]
+
 XExtData = _XExtData
 
 VisualID = cty.c_ulong
@@ -5556,7 +5559,9 @@ FLIMAGE_ERR_UNKNOWN = -45
 
 
 class flimage_(cty.Structure):
-    _fields_ = [
+    pass
+
+flimage_._fields_ = [
         ('type', cty.c_int),            #: image type
         ('w', cty.c_int),               #: image width
         ('h', cty.c_int),               #: image height
