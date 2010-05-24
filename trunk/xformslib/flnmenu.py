@@ -136,8 +136,9 @@ def fl_add_nmenu_items(pFlObject, entryitems_txtlst):
         arguments (if needed). Text may contain `|` to separate entries and
         newline characters which allows to create entries that span more than
         a single line. Special sequences who are allowed are: %x, %u, %f, %E,
-        %L, %m, %T or %t, %R or %r, %l, %d, %h, %S, %s. Up to 20 additional
-        separated arguments are supported in xforms-python currently, only.
+        %L, %m, %T or %t, %R or %r, %l, %d, %h, %S, %s, %%. Up to 20
+        additional separated arguments are supported in xforms-python
+        currently, only.
 
     :return: popup entry
     :rtype: pointer to xfdata.FL_POPUP_ENTRY
@@ -187,8 +188,9 @@ def fl_insert_nmenu_items(pFlObject, pPopupEntry, entryitems_txtlst):
         arguments (if needed). Text may contain `|` to separate entries and
         newline characters which allows to create entries that span more than
         a single line. Special sequences who are allowed are: %x, %u, %f, %E,
-        %L, %m, %T or %t, %R or %r, %l, %d, %h, %S, %s. Up to 20 additional
-        separated arguments are supported in xforms-python currently, only.
+        %L, %m, %T or %t, %R or %r, %l, %d, %h, %S, %s, %%. Up to 20
+        additional separated arguments are supported in xforms-python
+        currently, only.
 
     :return: popup entry
     :rtype: pointer to xfdata.FL_POPUP_ENTRY
@@ -238,8 +240,9 @@ def fl_replace_nmenu_item(pFlObject, pPopupEntry, entryitems_txtlst):
         arguments (if needed). Text may contain `|` to separate entries and
         newline characters which allows to create entries that span more than
         a single line. Special sequences who are allowed are: %x, %u, %f, %E,
-        %L, %m, %T or %t, %R or %r, %l, %d, %h, %S, %s. Up to 20 additional
-        separated arguments are supported in xforms-python currently, only.
+        %L, %m, %T or %t, %R or %r, %l, %d, %h, %S, %s, %%. Up to 20
+        additional separated arguments are supported in xforms-python
+        currently, only.
 
     :return: popup entry
     :rtype: pointer to xfdata.FL_POPUP_ENTRY

@@ -141,9 +141,10 @@ def fl_add_select_items(pFlObject, entryitems_txtlst):
         special sequences with or without separate or not separated additional
         arguments (if needed). Text may contain `|` to separate entries and
         newline characters which allows to create entries that span more than
-        a single line. Special sequences who are allowed are: %x, %u, %f, %E,
-        %L, %m, %T or %t, %R or %r, %l, %d, %h, %S, %s. Up to 20 additional
-        separated arguments are supported in xforms-python currently, only.
+        a single line. Only some special sequences are allowed: %x, %u, %f,
+        %E, %L, %d, %h, %S, %s, %% (other combinations don't make sense here).
+        Up to 20 additional separated arguments are supported in xforms-python
+        currently, only.
 
     :return: popup entry (pPopupEntry)
     :rtype: pointer to xfdata.FL_POPUP_ENTRY
@@ -192,9 +193,10 @@ def fl_insert_select_items(pFlObject, pPopupEntry, entryitems_txtlst):
         special sequences with or without separate or not separated additional
         arguments (if needed). Text may contain `|` to separate entries and
         newline characters which allows to create entries that span more than
-        a single line. Special sequences who are allowed are: %x, %u, %f, %E,
-        %L, %m, %T or %t, %R or %r, %l, %d, %h, %S, %s. Up to 20 additional
-        separated arguments are supported in xforms-python currently, only.
+        a single line. Only some special sequences are allowed: %x, %u, %f,
+        %E, %L, %d, %h, %S, %s (other combinations don't make sense here). Up
+        to 20 additional separated arguments are supported in xforms-python
+        currently, only.
 
     :return: popup entry
     :rtype: pointer to xfdata.FL_POPUP_ENTRY
@@ -243,9 +245,10 @@ def fl_replace_select_item(pFlObject, pPopupEntry, entryitems_txtlst):
         special sequences with or without separate or not separated additional
         arguments (if needed). Text may contain `|` to separate entries and
         newline characters which allows to create entries that span more than
-        a single line. Special sequences who are allowed are: %x, %u, %f, %E,
-        %L, %m, %T or %t, %R or %r, %l, %d, %h, %S, %s. Up to 20 additional
-        separated arguments are supported in xforms-python currently, only.
+        a single line. Only some special sequences are allowed: %x, %u, %f,
+        %E, %L, %d, %h, %S, %s (other combinations don't make sense here). Up
+        to 20 additional separated arguments are supported in xforms-python
+        currently, only.
 
     :return: popup entry
     :rtype: pointer to xfdata.FL_POPUP_ENTRY
