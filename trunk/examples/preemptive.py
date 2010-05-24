@@ -181,10 +181,10 @@ class Flpreempt(object):
         fl_set_object_lsize(pobj, FL_MEDIUM_SIZE)
         fl_set_object_lalign(pobj, FL_ALIGN_CENTER)
         fl_set_object_lstyle(pobj, FL_BOLD_STYLE)
-        fdui.peek = fl_add_checkbutton(FL_RADIO_BUTTON, 165, 40, 35, 30,
+        fdui.peek = fl_add_checkbutton(FL_RADIO_BUTTON, 150, 40, 35, 30,
                                       "Peek")
         fl_set_object_color(fdui.peek, FL_COL1, FL_BLUE)
-        fdui.override = fl_add_checkbutton(FL_RADIO_BUTTON, 230, 40, \
+        fdui.override = fl_add_checkbutton(FL_RADIO_BUTTON, 210, 40, \
                                           35, 30, "Override")
         fl_set_object_color(fdui.override, FL_COL1, FL_BLUE)
         fdui.event = fl_add_box(FL_FLAT_BOX, 40, 180, 245, 25, "")

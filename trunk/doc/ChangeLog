@@ -1,6 +1,10 @@
 
 
 SVN
+    * Realign to upstream XForms version 1.0.93.
+    * Functions to add and insert entries in popups and derived entities
+    (nmenus and selcts) supports special sequencies (even if some problematic
+    aspects may still apply).
     * most of Structure classes in xfdata.py have a docstring now.
     * some bugfixes and other docstrings improved.
     * some docstrings improved.

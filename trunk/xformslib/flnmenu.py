@@ -122,7 +122,7 @@ def fl_clear_nmenu(pFlObject):
     return retval
 
 
-def fl_add_nmenu_items(pFlObject, itemstr):
+def fl_add_nmenu_items(pFlObject, entryitems_txtlst):
     """Adds items to an existing nmenu object.
 
     --
@@ -130,11 +130,19 @@ def fl_add_nmenu_items(pFlObject, itemstr):
     :Parameters:
       `pFlObject` : pointer to xfdata.FL_OBJECT
         nmenu object
-      `itemstr` : str
-        text of the item (among special sequences only %S is supported)
+      `entryitems_txtlst` : list_of_str_and_any_type
+        list representing the text of the entry to be added and in-text
+        special sequences with or without separate or not separated additional
+        arguments (if needed). Text may contain `|` to separate entries and
+        newline characters which allows to create entries that span more than
+        a single line. Special sequences who are allowed are: %x, %u, %f, %E,
+        %L, %m, %T or %t, %R or %r, %l, %d, %h, %S, %s. Up to 20 additional
+        separated arguments are supported in xforms-python currently, only.
 
     :return: popup entry
     :rtype: pointer to xfdata.FL_POPUP_ENTRY
+
+    :see: `Special sequences in entry text` documentation.
 
     :note: e.g. *todo*
 
@@ -144,18 +152,25 @@ def fl_add_nmenu_items(pFlObject, itemstr):
     _fl_add_nmenu_items = libr.cfuncproto(
         libr.load_so_libforms(), "fl_add_nmenu_items",
         cty.POINTER(xfdata.FL_POPUP_ENTRY), [cty.POINTER(xfdata.FL_OBJECT),
-        xfdata.STRING],
+        xfdata.STRING, cty.c_void_p, cty.c_void_p, cty.c_void_p, cty.c_void_p,
+        cty.c_void_p, cty.c_void_p, cty.c_void_p, cty.c_void_p, cty.c_void_p,
+        cty.c_void_p, cty.c_void_p, cty.c_void_p, cty.c_void_p, cty.c_void_p,
+        cty.c_void_p, cty.c_void_p, cty.c_void_p, cty.c_void_p, cty.c_void_p,
+        cty.c_void_p],
         """FL_POPUP_ENTRY * fl_add_nmenu_items(FL_OBJECT * p1,
-           const char * p2)""")
+           const char * p2, ...)""")
     libr.check_if_initialized()
     libr.verify_flobjectptr_type(pFlObject)
-    sitemstr = libr.convert_to_string(itemstr)
-    libr.keep_elem_refs(pFlObject, itemstr, sitemstr)
-    retval = _fl_add_nmenu_items(pFlObject, sitemstr)
+    # first str + 20 additional args max
+    tmpentryitems_txtlst, finalentryitems_txtlst = \
+        libr.create_argslist_for_entrytxt(entryitems_txtlst, 21)
+    libr.keep_elem_refs(pFlObject, entryitems_txtlst, tmpentryitems_txtlst, \
+                        finalentryitems_txtlst)
+    retval = _fl_add_nmenu_items(pFlObject, *finalentryitems_txtlst)
     return retval
 
 
-def fl_insert_nmenu_items(pFlObject, pPopupEntry, itemstr):
+def fl_insert_nmenu_items(pFlObject, pPopupEntry, entryitems_txtlst):
     """Inserts additional items in nmenu object.
 
     --
@@ -166,11 +181,19 @@ def fl_insert_nmenu_items(pFlObject, pPopupEntry, itemstr):
       `pPopupEntry` : pointer to xfdata.FL_POPUP_ENTRY
         existing popup entry, after which the new items are to be inserted.
         If it's 'None', it inserts items at the very start.
-      `itemstr` : str
-        text of the item (among special sequences only %S is supported)
+      `entryitems_txtlst` : list_of_str_and_any_type
+        list representing the text of the entry to be added and in-text
+        special sequences with or without separate or not separated additional
+        arguments (if needed). Text may contain `|` to separate entries and
+        newline characters which allows to create entries that span more than
+        a single line. Special sequences who are allowed are: %x, %u, %f, %E,
+        %L, %m, %T or %t, %R or %r, %l, %d, %h, %S, %s. Up to 20 additional
+        separated arguments are supported in xforms-python currently, only.
 
     :return: popup entry
     :rtype: pointer to xfdata.FL_POPUP_ENTRY
+
+    :see: `Special sequences in entry text` documentation.
 
     :note: e.g. *todo*
 
@@ -180,19 +203,27 @@ def fl_insert_nmenu_items(pFlObject, pPopupEntry, itemstr):
     _fl_insert_nmenu_items = libr.cfuncproto(
         libr.load_so_libforms(), "fl_insert_nmenu_items",
         cty.POINTER(xfdata.FL_POPUP_ENTRY), [cty.POINTER(xfdata.FL_OBJECT),
-        cty.POINTER(xfdata.FL_POPUP_ENTRY), xfdata.STRING],
+        cty.POINTER(xfdata.FL_POPUP_ENTRY), xfdata.STRING, cty.c_void_p,
+        cty.c_void_p, cty.c_void_p, cty.c_void_p, cty.c_void_p, cty.c_void_p,
+        cty.c_void_p, cty.c_void_p, cty.c_void_p, cty.c_void_p, cty.c_void_p,
+        cty.c_void_p, cty.c_void_p, cty.c_void_p, cty.c_void_p, cty.c_void_p,
+        cty.c_void_p, cty.c_void_p, cty.c_void_p, cty.c_void_p],
         """FL_POPUP_ENTRY * fl_insert_nmenu_items(FL_OBJECT * p1,
-           FL_POPUP_ENTRY * p2, const char * p3)""")
+           FL_POPUP_ENTRY * p2, const char * p3, ...)""")
     libr.check_if_initialized()
     libr.verify_flobjectptr_type(pFlObject)
-    sitemstr = libr.convert_to_string(itemstr)
-    libr.keep_elem_refs(pFlObject, pPopupEntry, itemstr, sitemstr)
-    retval = _fl_insert_nmenu_items(pFlObject, pPopupEntry, sitemstr)
+    # first str + 20 additional args max
+    tmpentryitems_txtlst, finalentryitems_txtlst = \
+        libr.create_argslist_for_entrytxt(entryitems_txtlst, 21)
+    libr.keep_elem_refs(pFlObject, pPopupEntry, entryitems_txtlst, \
+                        tmpentryitems_txtlst, finalentryitems_txtlst)
+    retval = _fl_insert_nmenu_items(pFlObject, pPopupEntry, \
+                                    *finalentryitems_txtlst)
     return retval
 
 
-def fl_replace_nmenu_item(pFlObject, pPopupEntry, itemstr):
-    """
+def fl_replace_nmenu_item(pFlObject, pPopupEntry, entryitems_txtlst):
+    """Replaces an existing item of a nmenu object with another.
 
     --
 
@@ -201,11 +232,19 @@ def fl_replace_nmenu_item(pFlObject, pPopupEntry, itemstr):
         nmenu object
       `pPopupEntry` : pointer to xfdata.FL_POPUP_ENTRY
         old popup entry to be replaced
-      `itemstr` : str
-        text of the item (among special sequences only %S is supported)
+      `entryitems_txtlst` : list_of_str_and_any_type
+        list representing the text of the entry to be added and in-text
+        special sequences with or without separate or not separated additional
+        arguments (if needed). Text may contain `|` to separate entries and
+        newline characters which allows to create entries that span more than
+        a single line. Special sequences who are allowed are: %x, %u, %f, %E,
+        %L, %m, %T or %t, %R or %r, %l, %d, %h, %S, %s. Up to 20 additional
+        separated arguments are supported in xforms-python currently, only.
 
     :return: popup entry
     :rtype: pointer to xfdata.FL_POPUP_ENTRY
+
+    :see: `Special sequences in entry text` documentation.
 
     :note: e.g. *todo*
 
@@ -215,20 +254,28 @@ def fl_replace_nmenu_item(pFlObject, pPopupEntry, itemstr):
     _fl_replace_nmenu_item = libr.cfuncproto(
         libr.load_so_libforms(), "fl_replace_nmenu_item",
         cty.POINTER(xfdata.FL_POPUP_ENTRY), [cty.POINTER(xfdata.FL_OBJECT),
-        cty.POINTER(xfdata.FL_POPUP_ENTRY), xfdata.STRING],
+        cty.POINTER(xfdata.FL_POPUP_ENTRY), xfdata.STRING, cty.c_void_p,
+        cty.c_void_p, cty.c_void_p, cty.c_void_p, cty.c_void_p, cty.c_void_p,
+        cty.c_void_p, cty.c_void_p, cty.c_void_p, cty.c_void_p, cty.c_void_p,
+        cty.c_void_p, cty.c_void_p, cty.c_void_p, cty.c_void_p, cty.c_void_p,
+        cty.c_void_p, cty.c_void_p, cty.c_void_p, cty.c_void_p],
         """FL_POPUP_ENTRY * fl_replace_nmenu_item(FL_OBJECT * p1,
-           FL_POPUP_ENTRY * p2, const char * p3)""")
+           FL_POPUP_ENTRY * p2, const char * p3, ...)""")
     libr.check_if_initialized()
     libr.verify_flobjectptr_type(pFlObject)
     libr.verify_flpopupentryptr_type(pPopupEntry)
-    sitemstr = libr.convert_to_string(itemstr)
-    libr.keep_elem_refs(pFlObject, pPopupEntry, itemstr, sitemstr)
-    retval = _fl_replace_nmenu_item(pFlObject, pPopupEntry, sitemstr)
+    # first str + 20 additional args max
+    tmpentryitems_txtlst, finalentryitems_txtlst = \
+        libr.create_argslist_for_entrytxt(entryitems_txtlst, 21)
+    libr.keep_elem_refs(pFlObject, pPopupEntry, entryitems_txtlst, \
+                        tmpentryitems_txtlst, finalentryitems_txtlst)
+    retval = _fl_replace_nmenu_item(pFlObject, pPopupEntry, \
+                                    *finalentryitems_txtlst)
     return retval
 
 
 def fl_delete_nmenu_item(pFlObject, pPopupEntry):
-    """Deletes an item froma nmenu object.
+    """Deletes an item from a nmenu object.
 
     --
 

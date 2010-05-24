@@ -9,7 +9,7 @@ if [[ ! -x /usr/bin/epydoc ]]; then
 fi
 
 # doc for xformslib/deprecated.py removed
-epydoc -v --docformat=restructuredtext --latex \
+epydoc -v -n xforms-python --docformat=restructuredtext --latex \
   xformslib/__init__.py xformslib/flbasic.py xformslib/flbitmap.py \
   xformslib/flbrowser.py xformslib/flbutton.py xformslib/flcanvas.py \
   xformslib/flchart.py xformslib/flclock.py xformslib/flcounter.py \

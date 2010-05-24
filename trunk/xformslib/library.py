@@ -634,3 +634,40 @@ def create_pPopupItem_from_list(listofpopupitems):
         keep_elem_refs(listofpopupitems, popupitem, ppopupitem)
         return ppopupitem
         # end of series of lists
+
+
+def create_argslist_for_entrytxt(singlelist, elemsnum):
+    """Handles mutable arguments of e.g. fl_popup_add_entries
+    singlelist has following format:
+    ["entrytxt sometext", series of special sequencies params]
+    Elements not inserted are replaced by None. Then they are converted
+    to some ctypes types when possible.
+    """
+
+    singlelist2 = singlelist[:]      # use a copy to be manipulated
+    finallist = elemsnum * [None]
+    while len(singlelist2) < elemsnum:
+        singlelist2.append(None)
+    singlelist2[0] = convert_to_string(singlelist2[0])  # 1st must be a str
+    for e in range(0, len(singlelist2)):
+        if not singlelist2[e]:
+            # it's None
+            finallist[e] = cty.cast(singlelist2[e], cty.c_void_p)
+        elif isinstance(singlelist2[e], str):
+            # it's a str
+            finallist[e] = convert_to_string(singlelist2[e])
+        elif hasattr(singlelist2[e], '__call__'):
+            # it's a function
+            finallist[e] = xfdata.FL_POPUP_CB(singlelist2[e])
+            keep_cfunc_refs(finallist[e], singlelist2[e])
+        elif isinstance(singlelist2[e], cty.POINTER(xfdata.FL_POPUP)):
+            # it's a popup
+            finallist[e] = cty.cast(singlelist2[e], \
+                cty.POINTER(xfdata.FL_POPUP))
+        elif isinstance(singlelist2[e], long):
+            # it's a long (maybe from %x)
+            finallist[e] = convert_to_long(singlelist2[e])
+        else:
+            # every other type
+            finallist[e] = singlelist2[e]
+    return singlelist2, finallist

@@ -81,10 +81,7 @@ def fl_popup_add(win, title):
     return retval
 
 
-# TODO: maybe extrytxt can be handled as a dict to allow special
-#  sequences? # I might remove multiple entries option, and pass all special
-# sequences (defaulting to something, if not provided by user)
-def fl_popup_add_entries(pPopup, entrytxt):
+def fl_popup_add_entries(pPopup, entryitems_txtlst):
     """Adds one or more entries to a popup.
 
     --
@@ -92,13 +89,19 @@ def fl_popup_add_entries(pPopup, entrytxt):
     :Parameters:
       `pPopup` : pointer to xfdata.FL_POPUP
         popup class instance
-      `entrytxt` : str
-        text of the entry to be added. It may contain newline characters which
-        allows to create entries that span more than a single line (among
-        special sequences only %S is supported)
+      `entryitems_txtlst` : list_of_str_and_any_type
+        list representing the text of the entry to be added and in-text
+        special sequences with or without separate or not separated additional
+        arguments (if needed). Text may contain `|` to separate entries and
+        newline characters which allows to create entries that span more than
+        a single line. Special sequences who are allowed are: %x, %u, %f, %E,
+        %L, %m, %T or %t, %R or %r, %l, %d, %h, %S, %s. Up to 20 additional
+        separated arguments are supported in xforms-python currently, only.
 
     :return: popup entry, or None (on failure)
     :rtype: pointer to xfdata.FL_POPUP
+
+    :see: `Special sequences in entry text` documentation.
 
     :note: e.g. *todo*
 
@@ -108,18 +111,25 @@ def fl_popup_add_entries(pPopup, entrytxt):
     _fl_popup_add_entries = libr.cfuncproto(
         libr.load_so_libforms(), "fl_popup_add_entries",
         cty.POINTER(xfdata.FL_POPUP_ENTRY), [cty.POINTER(xfdata.FL_POPUP),
-        xfdata.STRING],
+        xfdata.STRING, cty.c_void_p, cty.c_void_p, cty.c_void_p, cty.c_void_p,
+        cty.c_void_p, cty.c_void_p, cty.c_void_p, cty.c_void_p, cty.c_void_p,
+        cty.c_void_p, cty.c_void_p, cty.c_void_p, cty.c_void_p, cty.c_void_p,
+        cty.c_void_p, cty.c_void_p, cty.c_void_p, cty.c_void_p, cty.c_void_p,
+        cty.c_void_p],
         """FL_POPUP_ENTRY * fl_popup_add_entries(FL_POPUP * p1,
-           const char * p2)""")
+           const char * p2, ...)""")
     libr.check_if_initialized()
     libr.verify_flpopupptr_type(pPopup)
-    sentrytxt = libr.convert_to_string(entrytxt)
-    libr.keep_elem_refs(pPopup, entrytxt, sentrytxt)
-    retval = _fl_popup_add_entries(pPopup, sentrytxt)
+    # first str + 20 additional args max
+    tmpentryitems_txtlst, finalentryitems_txtlst = \
+        libr.create_argslist_for_entrytxt(entryitems_txtlst, 21)
+    libr.keep_elem_refs(pPopup, entryitems_txtlst, tmpentryitems_txtlst, \
+        finalentryitems_txtlst)
+    retval = _fl_popup_add_entries(pPopup, *finalentryitems_txtlst)
     return retval
 
 
-def fl_popup_insert_entries(pPopup, pPopupEntry, entrytxt):
+def fl_popup_insert_entries(pPopup, pPopupEntry, entryitems_txtlst):
     """Inserts one or more entries into a popup.
 
     --
@@ -130,13 +140,19 @@ def fl_popup_insert_entries(pPopup, pPopupEntry, entrytxt):
       `pPopupEntry` : pointer to xfdata.FL_POPUP_ENTRY
         popup entry after which entry is inserted. If it's 'None', it inserts
         items at the very start.
-      `entrytxt` : str
-        text of the entry to be added. It may contain newline characters which
-        allows to create entries that span more than a single line (among
-        special sequences only %S is supported)
+      `entryitems_txtlst` : list_of_str_and_any_type
+        list representing the text of the entry to be added and in-text
+        special sequences with or without separate or not separated additional
+        arguments (if needed). Text may contain `|` to separate entries and
+        newline characters which allows to create entries that span more than
+        a single line. Special sequences who are allowed are: %x, %u, %f, %E,
+        %L, %m, %T or %t, %R or %r, %l, %d, %h, %S, %s. Up to 20 additional
+        separated arguments are supported in xforms-python currently, only.
 
     :return: popup entry inserted, or None (on failure)
     :rtype: pointer to xfdata.FL_POPUP_ENTRY
+
+    :see: `Special sequences in entry text` documentation.
 
     :note: e.g. *todo*
 
@@ -146,9 +162,13 @@ def fl_popup_insert_entries(pPopup, pPopupEntry, entrytxt):
     _fl_popup_insert_entries = libr.cfuncproto(
         libr.load_so_libforms(), "fl_popup_insert_entries",
         cty.POINTER(xfdata.FL_POPUP_ENTRY), [cty.POINTER(xfdata.FL_POPUP),
-        cty.POINTER(xfdata.FL_POPUP_ENTRY), xfdata.STRING],
+        cty.POINTER(xfdata.FL_POPUP_ENTRY), xfdata.STRING, cty.c_void_p,
+        cty.c_void_p, cty.c_void_p, cty.c_void_p, cty.c_void_p, cty.c_void_p,
+        cty.c_void_p, cty.c_void_p, cty.c_void_p, cty.c_void_p, cty.c_void_p,
+        cty.c_void_p, cty.c_void_p, cty.c_void_p, cty.c_void_p, cty.c_void_p,
+        cty.c_void_p, cty.c_void_p, cty.c_void_p, cty.c_void_p],
         """FL_POPUP_ENTRY * fl_popup_insert_entries(FL_POPUP * p1,
-           FL_POPUP_ENTRY * p2, const char * p3)""")
+           FL_POPUP_ENTRY * p2, const char * p3, ...)""")
     libr.check_if_initialized()
     libr.verify_flpopupptr_type(pPopup)
     if not pPopupEntry:         # it's None
@@ -156,10 +176,13 @@ def fl_popup_insert_entries(pPopup, pPopupEntry, entrytxt):
     else:                       # real FL_POPUP_ENTRY pointer
         pPopupEntry_alt = pPopupEntry
         libr.verify_flpopupentryptr_type(pPopupEntry_alt)
-    sentrytxt = libr.convert_to_string(entrytxt)
-    libr.keep_elem_refs(pPopup, pPopupEntry, pPopupEntry_alt, entrytxt,
-                        sentrytxt)
-    retval = _fl_popup_insert_entries(pPopup, pPopupEntry_alt, sentrytxt)
+    # first str + 20 additional args max
+    tmpentryitems_txtlst, finalentryitems_txtlst = \
+        libr.create_argslist_for_entrytxt(entryitems_txtlst, 21)
+    libr.keep_elem_refs(pPopup, pPopupEntry, pPopupEntry_alt, \
+            entryitems_txtlst, tmpentryitems_txtlst, finalentryitems_txtlst)
+    retval = _fl_popup_insert_entries(pPopup, pPopupEntry_alt, \
+                                      *finalentryitems_txtlst)
     return retval
 
 
@@ -478,7 +501,7 @@ def fl_popup_set_policy(pPopup, policy):
 
 def fl_popup_set_callback(pPopup, py_PopupCb):
     """Associates with a popup or changes a callback function to be invoked
-    when an entry (or an entry of a sub-popup) is selected,
+    when an entry (or an entry of a sub-popup) is selected.
 
     --
 
@@ -490,7 +513,7 @@ def fl_popup_set_callback(pPopup, py_PopupCb):
         name referring to function(pPopupReturn) -> num.
         parameter pPopopReturn is of type xfdata.FL_POPUP_RETURN
 
-    :return: old popup callback, or None (on errors, or if no callback was
+    :return: old popup callback, or None (on errors or if no callback was
         defined)
     :rtype: pointer ot xfdata.FL_POPUP_CB
 

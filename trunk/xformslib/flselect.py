@@ -128,7 +128,7 @@ def fl_clear_select(pFlObject):
     _fl_clear_select(pFlObject)
 
 
-def fl_add_select_items(pFlObject, itemstr):
+def fl_add_select_items(pFlObject, entryitems_txtlst):
     """Adds one or more items to a select object.
 
     --
@@ -136,21 +136,19 @@ def fl_add_select_items(pFlObject, itemstr):
     :Parameters:
       `pFlObject` : pointer to xfdata.FL_OBJECT
         select object
-      `itemstr` : str
-        text for the items to add, separated by the | character. Some special
-        sequences are allowed just after the item ('%d' marks the item as
-        disabled, i.e. it can't be selected and its text is per default drawn
-        in a different color / '%h' marks the item as hidden, i.e. it is not
-        shown while in this state / '%S' can split the items text into two
-        parts, the first one (before it) being drawn flushed left and the
-        second part flushed right, anyway you still need to set a shortcut key
-        / '%s' sets one or more shortcut keys for an item, it requires a
-        string with the shortcuts in the argument following the items string;
-        the character in the label identical to the shortcut character is only
-        shown as underlined if %S isn't used.
+      `entryitems_txtlst` : list_of_str_and_any_type
+        list representing the text of the entry to be added and in-text
+        special sequences with or without separate or not separated additional
+        arguments (if needed). Text may contain `|` to separate entries and
+        newline characters which allows to create entries that span more than
+        a single line. Special sequences who are allowed are: %x, %u, %f, %E,
+        %L, %m, %T or %t, %R or %r, %l, %d, %h, %S, %s. Up to 20 additional
+        separated arguments are supported in xforms-python currently, only.
 
     :return: popup entry (pPopupEntry)
     :rtype: pointer to xfdata.FL_POPUP_ENTRY
+
+    :see: `Special sequences in entry text` documentation.
 
     :note: e.g. *todo*
 
@@ -160,18 +158,25 @@ def fl_add_select_items(pFlObject, itemstr):
     _fl_add_select_items = libr.cfuncproto(
         libr.load_so_libforms(), "fl_add_select_items",
         cty.POINTER(xfdata.FL_POPUP_ENTRY), [cty.POINTER(xfdata.FL_OBJECT),
-        xfdata.STRING],
+        xfdata.STRING, cty.c_void_p, cty.c_void_p, cty.c_void_p, cty.c_void_p,
+        cty.c_void_p, cty.c_void_p, cty.c_void_p, cty.c_void_p, cty.c_void_p,
+        cty.c_void_p, cty.c_void_p, cty.c_void_p, cty.c_void_p, cty.c_void_p,
+        cty.c_void_p, cty.c_void_p, cty.c_void_p, cty.c_void_p, cty.c_void_p,
+        cty.c_void_p],
         """FL_POPUP_ENTRY * fl_add_select_items(FL_OBJECT * p1,
-           const char * p2)""")
+           const char * p2, ...)""")
     libr.check_if_initialized()
     libr.verify_flobjectptr_type(pFlObject)
-    sitemstr = libr.convert_to_string(itemstr)
-    libr.keep_elem_refs(pFlObject, itemstr, sitemstr)
-    retval = _fl_add_select_items(pFlObject, sitemstr)
+    # first str + 20 additional args max
+    tmpentryitems_txtlst, finalentryitems_txtlst = \
+        libr.create_argslist_for_entrytxt(entryitems_txtlst, 21)
+    libr.keep_elem_refs(pFlObject, entryitems_txtlst, tmpentryitems_txtlst, \
+                        finalentryitems_txtlst)
+    retval = _fl_add_select_items(pFlObject, *finalentryitems_txtlst)
     return retval
 
 
-def fl_insert_select_items(pFlObject, pPopupEntry, itemstr):
+def fl_insert_select_items(pFlObject, pPopupEntry, entryitems_txtlst):
     """Inserts new items somewhere in the middle of a list of already existing
     items.
 
@@ -182,21 +187,19 @@ def fl_insert_select_items(pFlObject, pPopupEntry, itemstr):
         select object
       `pPopupEntry` : pointer to xfdata.FL_POPUP_ENTRY
         popup entry. If it's 'None' new items are inserted at the very start.
-      `itemstr` : str
-        text for the items to insert, separated by the | character. Some
-        special sequences are allowed just after the item ('%d' marks the item
-        as disabled, i.e. it can't be selected and its text is per default
-        drawn in a different color / '%h' marks the item as hidden, i.e. it
-        is not shown while in this state / '%S' can split the items text into
-        two parts, the first one (before it) being drawn flushed left and the
-        second part flushed right, anyway you still need to set a shortcut key
-        / '%s' sets one or more shortcut keys for an item, it requires a
-        string with the shortcuts in the argument following the items string;
-        the character in the label identical to the shortcut character is only
-        shown as underlined if %S isn't used.
+      `entryitems_txtlst` : list_of_str_and_any_type
+        list representing the text of the entry to be added and in-text
+        special sequences with or without separate or not separated additional
+        arguments (if needed). Text may contain `|` to separate entries and
+        newline characters which allows to create entries that span more than
+        a single line. Special sequences who are allowed are: %x, %u, %f, %E,
+        %L, %m, %T or %t, %R or %r, %l, %d, %h, %S, %s. Up to 20 additional
+        separated arguments are supported in xforms-python currently, only.
 
     :return: popup entry
     :rtype: pointer to xfdata.FL_POPUP_ENTRY
+
+    :see: `Special sequences in entry text` documentation.
 
     :note: e.g. *todo*
 
@@ -206,19 +209,27 @@ def fl_insert_select_items(pFlObject, pPopupEntry, itemstr):
     _fl_insert_select_items = libr.cfuncproto(
         libr.load_so_libforms(), "fl_insert_select_items",
         cty.POINTER(xfdata.FL_POPUP_ENTRY), [cty.POINTER(xfdata.FL_OBJECT),
-        cty.POINTER(xfdata.FL_POPUP_ENTRY), xfdata.STRING],
+        cty.POINTER(xfdata.FL_POPUP_ENTRY), xfdata.STRING, cty.c_void_p,
+        cty.c_void_p, cty.c_void_p, cty.c_void_p, cty.c_void_p, cty.c_void_p,
+        cty.c_void_p, cty.c_void_p, cty.c_void_p, cty.c_void_p, cty.c_void_p,
+        cty.c_void_p, cty.c_void_p, cty.c_void_p, cty.c_void_p, cty.c_void_p,
+        cty.c_void_p, cty.c_void_p, cty.c_void_p, cty.c_void_p],
         """FL_POPUP_ENTRY * fl_insert_select_items(FL_OBJECT * p1,
-           FL_POPUP_ENTRY * p2, const char * p3)""")
+           FL_POPUP_ENTRY * p2, const char * p3, ...)""")
     libr.check_if_initialized()
     libr.verify_flobjectptr_type(pFlObject)
-    sitemstr = libr.convert_to_string(itemstr)
-    libr.keep_elem_refs(pFlObject, pPopupEntry, itemstr, sitemstr)
-    retval = _fl_insert_select_items(pFlObject, pPopupEntry, sitemstr)
+    # first str + 20 additional args max
+    tmpentryitems_txtlst, finalentryitems_txtlst = \
+        libr.create_argslist_for_entrytxt(entryitems_txtlst, 21)
+    libr.keep_elem_refs(pFlObject, pPopupEntry, entryitems_txtlst, \
+                        tmpentryitems_txtlst, finalentryitems_txtlst)
+    retval = _fl_insert_select_items(pFlObject, pPopupEntry, \
+                                     *finalentryitems_txtlst)
     return retval
 
 
-def fl_replace_select_item(pFlObject, pPopupEntry, itemstr):
-    """*todo*
+def fl_replace_select_item(pFlObject, pPopupEntry, entryitems_txtlst):
+    """Replaces an existing item of a select object with another.
 
     --
 
@@ -227,21 +238,19 @@ def fl_replace_select_item(pFlObject, pPopupEntry, itemstr):
         select object
       `pPopupEntry` : pointer to xfdata.FL_POPUP_ENTRY
         popup entry
-      `itemstr` : str
-        text for the items to replace, separated by the | character. Some
-        special sequences are allowed just after the item ('%d' marks the item
-        as disabled, i.e. it can't be selected and its text is per default
-        drawn in a different color / '%h' marks the item as hidden, i.e. it
-        is not shown while in this state / '%S' can split the items text into
-        two parts, the first one (before it) being drawn flushed left and the
-        second part flushed right, anyway you still need to set a shortcut key
-        / '%s' sets one or more shortcut keys for an item, it requires a
-        string with the shortcuts in the argument following the items string;
-        the character in the label identical to the shortcut character is only
-        shown as underlined if %S isn't used.
+      `entryitems_txtlst` : list_of_str_and_any_type
+        list representing the text of the entry to be added and in-text
+        special sequences with or without separate or not separated additional
+        arguments (if needed). Text may contain `|` to separate entries and
+        newline characters which allows to create entries that span more than
+        a single line. Special sequences who are allowed are: %x, %u, %f, %E,
+        %L, %m, %T or %t, %R or %r, %l, %d, %h, %S, %s. Up to 20 additional
+        separated arguments are supported in xforms-python currently, only.
 
     :return: popup entry
     :rtype: pointer to xfdata.FL_POPUP_ENTRY
+
+    :see: `Special sequences in entry text` documentation.
 
     :note: e.g. *todo*
 
@@ -251,14 +260,22 @@ def fl_replace_select_item(pFlObject, pPopupEntry, itemstr):
     _fl_replace_select_item = libr.cfuncproto(
         libr.load_so_libforms(), "fl_replace_select_item",
         cty.POINTER(xfdata.FL_POPUP_ENTRY), [cty.POINTER(xfdata.FL_OBJECT),
-        cty.POINTER(xfdata.FL_POPUP_ENTRY), xfdata.STRING],
+        cty.POINTER(xfdata.FL_POPUP_ENTRY), xfdata.STRING, cty.c_void_p,
+        cty.c_void_p, cty.c_void_p, cty.c_void_p, cty.c_void_p, cty.c_void_p,
+        cty.c_void_p, cty.c_void_p, cty.c_void_p, cty.c_void_p, cty.c_void_p,
+        cty.c_void_p, cty.c_void_p, cty.c_void_p, cty.c_void_p, cty.c_void_p,
+        cty.c_void_p, cty.c_void_p, cty.c_void_p, cty.c_void_p],
         """FL_POPUP_ENTRY * fl_replace_select_item(FL_OBJECT * p1,
-            FL_POPUP_ENTRY * p2, const char * p3)""")
+            FL_POPUP_ENTRY * p2, const char * p3, ...)""")
     libr.check_if_initialized()
     libr.verify_flobjectptr_type(pFlObject)
-    sitemstr = libr.convert_to_string(itemstr)
-    libr.keep_elem_refs(pFlObject, pPopupEntry, itemstr, sitemstr)
-    retval = _fl_replace_select_item(pFlObject, pPopupEntry, sitemstr)
+    # first str + 20 additional args max
+    tmpentryitems_txtlst, finalentryitems_txtlst = \
+        libr.create_argslist_for_entrytxt(entryitems_txtlst, 21)
+    libr.keep_elem_refs(pFlObject, pPopupEntry, entryitems_txtlst, \
+                        tmpentryitems_txtlst, finalentryitems_txtlst)
+    retval = _fl_replace_select_item(pFlObject, pPopupEntry, \
+                    *finalentryitems_txtlst)
     return retval
 
 
