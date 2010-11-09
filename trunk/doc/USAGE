@@ -1,8 +1,18 @@
 To use xforms-python you have to import its modules. You can do that
-in two preferred ways:
+importing package directly (new preferred way):
 
+    import xformslib
 
-1) importing code/data from needed module(s) implicitly (not really
+e.g. import xformslib
+(you will need to use xformslib.fl_<xxx> for functions and
+xformslib.FL_<XXX> for data)
+e.g. import xformslib as xfl
+(you can use xfl..fl_<xxx> for functions and xfl.FL_<XXX> for data)
+
+-----------------------------------------------------------------------
+The following methods are NOT recommended anymore:
+
+-) importing code/data from needed module(s) implicitly (not really
 recommended as it pollutes namespace):
 
     from xformslib.<MODULENAME> import *
@@ -13,7 +23,7 @@ You can then call xforms-python functions and use constants directly
 without any prefix, e.g. fl_initialize(...)
 
 
-2) importing needed module(s) explicitly (if you don't want pollute
+-) importing needed module(s) explicitly (if you don't want pollute
 namespace and you need to use only few modules), one of more in a bunch:
 
     from xformslib import <MODULENAME>
@@ -24,9 +34,10 @@ You then need to call xforms-python functions and use constants, prefixing
 them with the module name, e.g. flbasic.fl_initialize(...).
 
 
-
 You can mix more modules importing them at once as e.g.:
 from xformslib import flbasic, flxbasic, xfdata
 
 You can also use an abbreviation as e.g.:
 from xformslib import flxbasic as flxb
+
+-----------------------------------------------------------------------------

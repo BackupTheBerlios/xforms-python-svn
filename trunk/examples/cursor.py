@@ -12,12 +12,7 @@
 
 import sys
 #sys.path.append("..")
-from xformslib.flbasic import *
-from xformslib.flxbasic import *
-from xformslib.flcursor import *
-from xformslib.flbutton import *
-from xformslib.flmisc import *
-from xformslib.xfdata import *
+import xformslib as xfl
 
 
 
@@ -43,7 +38,6 @@ for x in curslist:
 curs += hex(-1)         #"\xffffffff"
 
 
-
 class FD_cursor(object):
     cursor = None
     vdata = None
@@ -51,91 +45,95 @@ class FD_cursor(object):
     ldata = 0
 
 
-
 class FLCursor(object):
     def __init__(self, lsysargv, sysarg):
-        fl_set_border_width(-2)
-        fl_initialize(lsysargv, sysarg, "FormDemo", 0, 0)
+        xfl.fl_set_border_width(-2)
+        xfl.fl_initialize(lsysargv, sysarg, "FormDemo", 0, 0)
         self.fd_cursor = self.create_form_cursor()
 
         # fill-in form initialization code
-        fl_set_cursor_color(FL_BUSY_CURSOR, FL_BLACK, FL_RED)
+        xfl.fl_set_cursor_color(xfl.FL_BUSY_CURSOR, xfl.FL_BLACK, xfl.FL_RED)
 
         self.create_other_cursors()
 
-        fl_show_form(self.fd_cursor.cursor, FL_PLACE_CENTER, FL_FULLBORDER, \
-                    "cursor")
-        fl_do_forms()
+        xfl.fl_show_form(self.fd_cursor.cursor, xfl.FL_PLACE_CENTER, \
+                xfl.FL_FULLBORDER, "cursor")
+        xfl.fl_do_forms()
 
 
     # callbacks for form cursor
 
     def setcursor_cb(self, pobj, data):
-        fl_set_cursor(FL_ObjWin(pobj), data)
+        xfl.fl_set_cursor(xfl.FL_ObjWin(pobj), data)
 
 
     def setbitmapcursor_cb(self, pobj, data):
-        fl_reset_cursor(FL_ObjWin(pobj))      # back to default
-        fl_set_cursor(FL_ObjWin(pobj), self.pbitmapcur)
-        fl_redraw_form(self.fd_cursor.cursor)
+        xfl.fl_reset_cursor(xfl.FL_ObjWin(pobj))      # back to default
+        xfl.fl_set_cursor(xfl.FL_ObjWin(pobj), self.pbitmapcur)
+        xfl.fl_redraw_form(self.fd_cursor.cursor)
 
 
     def setanimatedcursor_cb(self, pobj, data):
-        fl_reset_cursor(FL_ObjWin(pobj))      # back to default
-        fl_set_cursor(FL_ObjWin(pobj), self.panimated)
+        xfl.fl_reset_cursor(xfl.FL_ObjWin(pobj))      # back to default
+        xfl.fl_set_cursor(xfl.FL_ObjWin(pobj), self.panimated)
 
 
     def done_cb(self, pobj, data):
-        fl_finish()
+        xfl.fl_finish()
         sys.exit(0)
 
 
     def create_other_cursors(self):
-        self.pbitmapcur = fl_create_bitmap_cursor(bm1_bits, bm2_bits, \
+        self.pbitmapcur = xfl.fl_create_bitmap_cursor(bm1_bits, bm2_bits, \
                     bm1_width, bm1_height, bm1_width / 2, bm1_height / 2)
-        self.panimated = fl_create_animated_cursor(curs, 150)
+        self.panimated = xfl.fl_create_animated_cursor(curs, 150)
 
 
     def create_form_cursor(self):
 
         fdui = FD_cursor()
 
-        fdui.cursor = fl_bgn_form(FL_NO_BOX, 325, 175)
+        fdui.cursor = xfl.fl_bgn_form(xfl.FL_NO_BOX, 325, 175)
 
-        fl_add_box(FL_UP_BOX, 0 ,0, 325, 175, "")
-        fl_add_frame(FL_EMBOSSED_FRAME, 10, 10, 305, 120, "")
+        xfl.fl_add_box(xfl.FL_UP_BOX, 0 ,0, 325, 175, "")
+        xfl.fl_add_frame(xfl.FL_EMBOSSED_FRAME, 10, 10, 305, 120, "")
 
-        pobj = fl_add_button(FL_NORMAL_BUTTON, 20, 20, 50, 25, "Hand")
-        fl_set_object_callback(pobj, self.setcursor_cb, XC_hand2)
+        pobj = xfl.fl_add_button(xfl.FL_NORMAL_BUTTON, 20, 20, 50, 25, "Hand")
+        xfl.fl_set_object_callback(pobj, self.setcursor_cb, xfl.XC_hand2)
 
-        pobj = fl_add_button(FL_NORMAL_BUTTON, 70, 20, 50, 25, "Watch")
-        fl_set_object_callback(pobj, self.setcursor_cb, FL_BUSY_CURSOR)
+        pobj = xfl.fl_add_button(xfl.FL_NORMAL_BUTTON, 70, 20, 50, 25, "Watch")
+        xfl.fl_set_object_callback(pobj, self.setcursor_cb, xfl.FL_BUSY_CURSOR)
 
-        pobj = fl_add_button(FL_NORMAL_BUTTON, 120, 20, 60, 25, "Invisible")
-        fl_set_object_callback(pobj, self.setcursor_cb, FL_INVISIBLE_CURSOR)
+        pobj = xfl.fl_add_button(xfl.FL_NORMAL_BUTTON, 120, 20, 60, 25, \
+                "Invisible")
+        xfl.fl_set_object_callback(pobj, self.setcursor_cb, \
+                xfl.FL_INVISIBLE_CURSOR)
 
-        pobj = fl_add_button(FL_NORMAL_BUTTON, 180, 20, 62, 25, "Animated")
-        fl_set_object_callback(pobj, self.setanimatedcursor_cb, 0)
+        pobj = xfl.fl_add_button(xfl.FL_NORMAL_BUTTON, 180, 20, 62, 25, \
+                "Animated")
+        xfl.fl_set_object_callback(pobj, self.setanimatedcursor_cb, 0)
 
-        pobj = fl_add_button(FL_NORMAL_BUTTON, 242, 20, 62, 25, "BitmapCur")
-        fl_set_object_callback(pobj, self.setbitmapcursor_cb, 0)
+        pobj = xfl.fl_add_button(xfl.FL_NORMAL_BUTTON, 242, 20, 62, 25, \
+                "BitmapCur")
+        xfl.fl_set_object_callback(pobj, self.setbitmapcursor_cb, 0)
 
-        pobj = fl_add_button(FL_NORMAL_BUTTON, 90, 70, 140, 50, "DefaultCursor")
-        fl_set_button_shortcut(pobj, "Dd#d", 1)
-        fl_set_object_callback(pobj, self.setcursor_cb, FL_DEFAULT_CURSOR)
+        pobj = xfl.fl_add_button(xfl.FL_NORMAL_BUTTON, 90, 70, 140, 50, \
+                "DefaultCursor")
+        xfl.fl_set_button_shortcut(pobj, "Dd#d", 1)
+        xfl.fl_set_object_callback(pobj, self.setcursor_cb, \
+                xfl.FL_DEFAULT_CURSOR)
 
-        pobj = fl_add_button(FL_NORMAL_BUTTON, 250, 140, 60, 25, "Done")
-        fl_set_object_callback(pobj, self.done_cb, 0)
+        pobj = xfl.fl_add_button(xfl.FL_NORMAL_BUTTON, 250, 140, 60, 25, \
+                "Done")
+        xfl.fl_set_object_callback(pobj, self.done_cb, 0)
 
-        fl_end_form()
+        xfl.fl_end_form()
 
-        fl_adjust_form_size(fdui.cursor)
+        xfl.fl_adjust_form_size(fdui.cursor)
 
         return fdui
 
 
 
-
 if __name__ == '__main__':
     FLCursor(len(sys.argv), sys.argv)
-

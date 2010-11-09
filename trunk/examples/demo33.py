@@ -10,11 +10,7 @@
 #
 
 import sys
-from xformslib.flbasic import *
-from xformslib.flxbasic import *
-from xformslib.flbitmap import *
-from xformslib.flbutton import *
-from xformslib.xfdata import *
+import xformslib as xfl
 
 
 bmpfilename = "srs.xbm"
@@ -22,23 +18,24 @@ bmpfilename = "srs.xbm"
 
 def main(lsysargv, sysargv):
 
-    fl_initialize(lsysargv, sysargv, "FormDemo", 0, 0 )
-    pform = fl_bgn_form(FL_UP_BOX, 200, 200)
+    xfl.fl_initialize(lsysargv, sysargv, "FormDemo", 0, 0 )
+    pform = xfl.fl_bgn_form(xfl.FL_UP_BOX, 200, 200)
 
-    pobj = fl_add_bitmap(FL_NORMAL_BITMAP, 50, 50, 100, 100, "A bitmap")
-    fl_set_object_lcol(pobj, FL_BLUE)
-    fl_add_button(FL_HIDDEN_BUTTON, 50, 50, 100, 100, "")
+    pobj = xfl.fl_add_bitmap(xfl.FL_NORMAL_BITMAP, 50, 50, 100, 100, \
+            "A bitmap")
+    xfl.fl_set_object_lcol(pobj, xfl.FL_BLUE)
+    xfl.fl_add_button(xfl.FL_HIDDEN_BUTTON, 50, 50, 100, 100, "")
 
-    fl_end_form()
+    xfl.fl_end_form()
 
-    # fl_set_bitmap_data not used
-    fl_set_bitmap_file(pobj, bmpfilename)
+    # xfl.fl_set_bitmap_data not used
+    xfl.fl_set_bitmap_file(pobj, bmpfilename)
 
-    fl_show_form(pform, FL_PLACE_MOUSE, FL_NOBORDER, "X Bitmap")
+    xfl.fl_show_form(pform, xfl.FL_PLACE_MOUSE, xfl.FL_NOBORDER, "X Bitmap")
 
-    fl_do_forms()
-    fl_hide_form(pform)
-    fl_finish()
+    xfl.fl_do_forms()
+    xfl.fl_hide_form(pform)
+    xfl.fl_finish()
 
     return 0
 
@@ -46,4 +43,3 @@ def main(lsysargv, sysargv):
 
 if __name__ == '__main__':
     main(len(sys.argv), sys.argv)
-

@@ -128,7 +128,7 @@ def fl_clear_select(pFlObject):
     _fl_clear_select(pFlObject)
 
 
-def fl_add_select_items(pFlObject, entryitems_txtlst):
+def fl_add_select_items(pFlObject, entryitems_txt):
     """Adds one or more items to a select object.
 
     --
@@ -136,15 +136,13 @@ def fl_add_select_items(pFlObject, entryitems_txtlst):
     :Parameters:
       `pFlObject` : pointer to xfdata.FL_OBJECT
         select object
-      `entryitems_txtlst` : list_of_str_and_any_type
-        list representing the text of the entry to be added and in-text
-        special sequences with or without separate or not separated additional
-        arguments (if needed). Text may contain `|` to separate entries and
-        newline characters which allows to create entries that span more than
-        a single line. Only some special sequences are allowed: %x, %u, %f,
-        %E, %L, %d, %h, %S, %s, %% (other combinations don't make sense here).
-        Up to 20 additional separated arguments are supported in xforms-python
-        currently, only.
+      `entryitems_txt` : str
+        text of the entry to be added and in-text special sequences with or
+        without not separated additional arguments (if needed). Text may
+        contain `|` to separate entries and newline characters which allows
+        to create entries that span more than a single line. Only some special
+        sequences are allowed: %x, %u, %f, %E, %L, %d, %h, %S, %s, %% (other
+        combinations don't make sense here). *to be verified!*
 
     :return: popup entry (pPopupEntry)
     :rtype: pointer to xfdata.FL_POPUP_ENTRY
@@ -159,27 +157,48 @@ def fl_add_select_items(pFlObject, entryitems_txtlst):
     _fl_add_select_items = libr.cfuncproto(
         libr.load_so_libforms(), "fl_add_select_items",
         cty.POINTER(xfdata.FL_POPUP_ENTRY), [cty.POINTER(xfdata.FL_OBJECT),
-        xfdata.STRING, cty.c_void_p, cty.c_void_p, cty.c_void_p, cty.c_void_p,
-        cty.c_void_p, cty.c_void_p, cty.c_void_p, cty.c_void_p, cty.c_void_p,
-        cty.c_void_p, cty.c_void_p, cty.c_void_p, cty.c_void_p, cty.c_void_p,
-        cty.c_void_p, cty.c_void_p, cty.c_void_p, cty.c_void_p, cty.c_void_p,
-        cty.c_void_p],
+        xfdata.STRING],
         """FL_POPUP_ENTRY * fl_add_select_items(FL_OBJECT * p1,
            const char * p2, ...)""")
     libr.check_if_initialized()
     libr.verify_flobjectptr_type(pFlObject)
-    # first str + 20 additional args max
-    tmpentryitems_txtlst, finalentryitems_txtlst = \
-        libr.create_argslist_for_entrytxt(entryitems_txtlst, 21)
-    libr.keep_elem_refs(pFlObject, entryitems_txtlst, tmpentryitems_txtlst, \
-                        finalentryitems_txtlst)
-    retval = _fl_add_select_items(pFlObject, *finalentryitems_txtlst)
+    sentryitems_txt = libr.convert_to_string(entryitems_txt)
+    libr.keep_elem_refs(pFlObject, entryitems_txt, sentryitems_txt)
+    retval = _fl_add_select_items(pFlObject, sentryitems_txt)
     return retval
+#      `entryitems_txtlst` : list_of_str_and_any_type
+#        list representing the text of the entry to be added and in-text
+#        special sequences with or without separate or not separated additional
+#        arguments (if needed). Text may contain `|` to separate entries and
+#        newline characters which allows to create entries that span more than
+#        a single line. Only some special sequences are allowed: %x, %u, %f,
+#        %E, %L, %d, %h, %S, %s, %% (other combinations don't make sense here).
+#        Up to 20 additional separated arguments are supported in xforms-python
+#        currently, only.
+#   _fl_add_select_items = libr.cfuncproto(
+#        libr.load_so_libforms(), "fl_add_select_items",
+#        cty.POINTER(xfdata.FL_POPUP_ENTRY), [cty.POINTER(xfdata.FL_OBJECT),
+#        xfdata.STRING, cty.c_void_p, cty.c_void_p, cty.c_void_p, cty.c_void_p,
+#        cty.c_void_p, cty.c_void_p, cty.c_void_p, cty.c_void_p, cty.c_void_p,
+#        cty.c_void_p, cty.c_void_p, cty.c_void_p, cty.c_void_p, cty.c_void_p,
+#        cty.c_void_p, cty.c_void_p, cty.c_void_p, cty.c_void_p, cty.c_void_p,
+#        cty.c_void_p],
+#        """FL_POPUP_ENTRY * fl_add_select_items(FL_OBJECT * p1,
+#           const char * p2, ...)""")
+#    libr.check_if_initialized()
+#    libr.verify_flobjectptr_type(pFlObject)
+#    # first str + 20 additional args max
+#    tmpentryitems_txtlst, finalentryitems_txtlst = \
+#        libr.create_argslist_for_entrytxt(entryitems_txtlst, 21)
+#    libr.keep_elem_refs(pFlObject, entryitems_txtlst, tmpentryitems_txtlst, \
+#                        finalentryitems_txtlst)
+#    retval = _fl_add_select_items(pFlObject, *finalentryitems_txtlst)
+#    return retval
 
 
-def fl_insert_select_items(pFlObject, pPopupEntry, entryitems_txtlst):
-    """Inserts new items somewhere in the middle of a list of already existing
-    items.
+def fl_insert_select_items(pFlObject, pPopupEntry, entryitems_txt):
+    """Inserts new items somewhere in the middle of a list of already
+    existing items.
 
     --
 
@@ -188,15 +207,13 @@ def fl_insert_select_items(pFlObject, pPopupEntry, entryitems_txtlst):
         select object
       `pPopupEntry` : pointer to xfdata.FL_POPUP_ENTRY
         popup entry. If it's 'None' new items are inserted at the very start.
-      `entryitems_txtlst` : list_of_str_and_any_type
-        list representing the text of the entry to be added and in-text
-        special sequences with or without separate or not separated additional
-        arguments (if needed). Text may contain `|` to separate entries and
-        newline characters which allows to create entries that span more than
-        a single line. Only some special sequences are allowed: %x, %u, %f,
-        %E, %L, %d, %h, %S, %s (other combinations don't make sense here). Up
-        to 20 additional separated arguments are supported in xforms-python
-        currently, only.
+      `entryitems_txt` : str
+        text of the entry to be added and in-text special sequences with or
+        without not separated additional arguments (if needed). Text may
+        contain `|` to separate entries and newline characters which allows
+        to create entries that span more than a single line. Only some special
+        sequences are allowed: %x, %u, %f, %E, %L, %d, %h, %S, %s (other
+        combinations don't make sense here).
 
     :return: popup entry
     :rtype: pointer to xfdata.FL_POPUP_ENTRY
@@ -211,26 +228,20 @@ def fl_insert_select_items(pFlObject, pPopupEntry, entryitems_txtlst):
     _fl_insert_select_items = libr.cfuncproto(
         libr.load_so_libforms(), "fl_insert_select_items",
         cty.POINTER(xfdata.FL_POPUP_ENTRY), [cty.POINTER(xfdata.FL_OBJECT),
-        cty.POINTER(xfdata.FL_POPUP_ENTRY), xfdata.STRING, cty.c_void_p,
-        cty.c_void_p, cty.c_void_p, cty.c_void_p, cty.c_void_p, cty.c_void_p,
-        cty.c_void_p, cty.c_void_p, cty.c_void_p, cty.c_void_p, cty.c_void_p,
-        cty.c_void_p, cty.c_void_p, cty.c_void_p, cty.c_void_p, cty.c_void_p,
-        cty.c_void_p, cty.c_void_p, cty.c_void_p, cty.c_void_p],
+        cty.POINTER(xfdata.FL_POPUP_ENTRY), xfdata.STRING],
         """FL_POPUP_ENTRY * fl_insert_select_items(FL_OBJECT * p1,
            FL_POPUP_ENTRY * p2, const char * p3, ...)""")
     libr.check_if_initialized()
     libr.verify_flobjectptr_type(pFlObject)
-    # first str + 20 additional args max
-    tmpentryitems_txtlst, finalentryitems_txtlst = \
-        libr.create_argslist_for_entrytxt(entryitems_txtlst, 21)
-    libr.keep_elem_refs(pFlObject, pPopupEntry, entryitems_txtlst, \
-                        tmpentryitems_txtlst, finalentryitems_txtlst)
-    retval = _fl_insert_select_items(pFlObject, pPopupEntry, \
-                                     *finalentryitems_txtlst)
+    libr.verify_flpopupentryptr_type(pPopupEntry)
+    sentryitems_txt = libr.convert_to_string(entryitems_txt)
+    libr.keep_elem_refs(pFlObject, pPopupEntry, entryitems_txt, \
+                        sentryitems_txt)
+    retval = _fl_insert_select_items(pFlObject, pPopupEntry, sentryitems_txt)
     return retval
 
 
-def fl_replace_select_item(pFlObject, pPopupEntry, entryitems_txtlst):
+def fl_replace_select_item(pFlObject, pPopupEntry, entryitems_txt):
     """Replaces an existing item of a select object with another.
 
     --
@@ -240,15 +251,13 @@ def fl_replace_select_item(pFlObject, pPopupEntry, entryitems_txtlst):
         select object
       `pPopupEntry` : pointer to xfdata.FL_POPUP_ENTRY
         popup entry
-      `entryitems_txtlst` : list_of_str_and_any_type
-        list representing the text of the entry to be added and in-text
-        special sequences with or without separate or not separated additional
-        arguments (if needed). Text may contain `|` to separate entries and
-        newline characters which allows to create entries that span more than
-        a single line. Only some special sequences are allowed: %x, %u, %f,
-        %E, %L, %d, %h, %S, %s (other combinations don't make sense here). Up
-        to 20 additional separated arguments are supported in xforms-python
-        currently, only.
+      `entryitems_txt` : str
+        text of the entry to be added and in-text special sequences with or 
+        without not separated additional arguments (if needed). Text may
+        contain `|` to separate entries and newline characters which allows
+        to create entries that span more than a single line. Only some special
+        sequences are allowed: %x, %u, %f, %E, %L, %d, %h, %S, %s (other
+        combinations don't make sense here).
 
     :return: popup entry
     :rtype: pointer to xfdata.FL_POPUP_ENTRY
@@ -263,22 +272,16 @@ def fl_replace_select_item(pFlObject, pPopupEntry, entryitems_txtlst):
     _fl_replace_select_item = libr.cfuncproto(
         libr.load_so_libforms(), "fl_replace_select_item",
         cty.POINTER(xfdata.FL_POPUP_ENTRY), [cty.POINTER(xfdata.FL_OBJECT),
-        cty.POINTER(xfdata.FL_POPUP_ENTRY), xfdata.STRING, cty.c_void_p,
-        cty.c_void_p, cty.c_void_p, cty.c_void_p, cty.c_void_p, cty.c_void_p,
-        cty.c_void_p, cty.c_void_p, cty.c_void_p, cty.c_void_p, cty.c_void_p,
-        cty.c_void_p, cty.c_void_p, cty.c_void_p, cty.c_void_p, cty.c_void_p,
-        cty.c_void_p, cty.c_void_p, cty.c_void_p, cty.c_void_p],
+        cty.POINTER(xfdata.FL_POPUP_ENTRY), xfdata.STRING],
         """FL_POPUP_ENTRY * fl_replace_select_item(FL_OBJECT * p1,
             FL_POPUP_ENTRY * p2, const char * p3, ...)""")
     libr.check_if_initialized()
     libr.verify_flobjectptr_type(pFlObject)
-    # first str + 20 additional args max
-    tmpentryitems_txtlst, finalentryitems_txtlst = \
-        libr.create_argslist_for_entrytxt(entryitems_txtlst, 21)
-    libr.keep_elem_refs(pFlObject, pPopupEntry, entryitems_txtlst, \
-                        tmpentryitems_txtlst, finalentryitems_txtlst)
-    retval = _fl_replace_select_item(pFlObject, pPopupEntry, \
-                    *finalentryitems_txtlst)
+    libr.verify_flpopupentryptr_type(pPopupEntry)
+    sentryitems_txt = libr.convert_to_string(entryitems_txt)
+    libr.keep_elem_refs(pFlObject, pPopupEntry, entryitems_txt, \
+                        sentryitems_txt)
+    retval = _fl_replace_select_item(pFlObject, pPopupEntry, sentryitems_txt)
     return retval
 
 
@@ -378,7 +381,7 @@ def fl_get_select_popup(pFlObject):
 def fl_set_select_popup(pFlObject, pPopup):
     """Creates a popup directly and then associates it with the select object.
     Supplied popup may not contain any entries other than those of type
-    xfdata.FL_POPUP_NORMAL (and, of course, the popup can?t be a sub-popup
+    xfdata.FL_POPUP_NORMAL (and, of course, the popup can't be a sub-popup
     of another popup)
 
     --

@@ -8,7 +8,7 @@
 #
 
 import sys
-from xformslib.flbasic import *
+import xformslib as xfl
 from xformslib.flxbasic import *
 from xformslib.flbutton import *
 from xformslib.xfdata import *
@@ -17,15 +17,15 @@ from xformslib.xfdata import *
 
 def main(lsysargv, sysargv):
 
-    fl_initialize(lsysargv, sysargv, "FormDemo", 0, 0)
-    psimpleform = fl_bgn_form(FL_UP_BOX, 230, 160)
-    fl_add_button(FL_NORMAL_BUTTON, 40, 50, 150, 60, "Push Me")
-    fl_end_form()
+    xfl.fl_initialize(lsysargv, sysargv, "FormDemo", 0, 0)
+    psimpleform = xfl.fl_bgn_form(xfl.FL_UP_BOX, 230, 160)
+    xfl.fl_add_button(xfl.FL_NORMAL_BUTTON, 40, 50, 150, 60, "Push Me")
+    xfl.fl_end_form()
 
-    fl_show_form(psimpleform, FL_PLACE_MOUSE, FL_NOBORDER, "PushMe")
+    xfl.fl_show_form(psimpleform, xfl.FL_PLACE_MOUSE, xfl.FL_NOBORDER, "PushMe")
 
-    fl_do_forms()
-    fl_hide_form(psimpleform)
+    xfl.fl_do_forms()
+    xfl.fl_hide_form(psimpleform)
     return 0
 
 

@@ -253,7 +253,7 @@ are the window manager's default."""
 # modifiers
 FL_FREE_SIZE = (1<<14)          # 16384
 """(place) Allows resizing."""
-# TODO: verify it it can still be used now
+# TODO: verify if it can still be used now
 FL_FIX_SIZE  = (1<<15)          # seems to be useless, but some programs
                                 # seem to rely on it...
 

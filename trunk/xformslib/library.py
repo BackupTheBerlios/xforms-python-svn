@@ -53,6 +53,11 @@ class XFormsValueError(ValueError):
     """ Fatal generic error for unexpected value"""
     pass
 
+class XFormsFuncNotSupported(ValueError):
+    """ Fatal error for XForms functions not supported or not yet
+        stabilized in xforms-python. """
+    pass
+
 class XFormsWarning(Warning):
     """ Generic warning for non fatal errors"""
     pass
@@ -415,7 +420,7 @@ def make_ushort_and_pointer():
 def checkfatal_allowed_value_in_list(paramname, valueslist):
     """ Check if paramname value is valid in accordance to a list or tuple
         of admissible values, otherwise raise a fatal error."""
-    if isinstance(valueslist, list) or isinstance(valueslist, tuple):
+    if isinstance(valueslist, (list, tuple)):
         if paramname not in valueslist:
             raise XFormsValueError("Parameter %s value (whose type is %s) must be " \
                     "one of those included in list/tuple %s." % \
@@ -424,7 +429,7 @@ def checkfatal_allowed_value_in_list(paramname, valueslist):
 def checknonfatal_allowed_value_in_list(paramname, valueslist):
     """ Check if paramname value is valid in accordance to a list or tuple
         of admissible values, otherwise issues a warning."""
-    if isinstance(valueslist, list) or isinstance(valueslist, tuple):
+    if isinstance(valueslist, (list, tuple)):
         if paramname not in valueslist:
             nonfatalwarnmsg = "Parameter %s value (whose type is %s) is" \
                     " not one of those included in list/tuple %s." % \
@@ -434,7 +439,7 @@ def checknonfatal_allowed_value_in_list(paramname, valueslist):
 
 def verify_tuplelist_type(paramname):
     """Check if paramname is a valid list or tuple."""
-    if not isinstance(paramname, list) and not isinstance(paramname, tuple):
+    if not isinstance(paramname, (list, tuple)):
         raise XFormsTypeError("Parameter %s (whose type is %s) must be a " \
                         "list or a tuple." % (paramname, type(paramname)))
 
@@ -526,21 +531,33 @@ def create_pPopupItem_from_dict(dictofpopupitems):
     to xfdata.FL_POPUP_ITEM. """
     if not isinstance(dictofpopupitems, dict):
         raise XFormsTypeError("Parameter %s (of type %s) must be a python" \
-                        " dict" % dictofpopupitems, type(dictofpopupitems))
-        #return None, None
+                        " dict" % (dictofpopupitems, type(dictofpopupitems)))
 
     pyclstext = dictofpopupitems['text']
+    print pyclstext
     spitext = convert_to_string(pyclstext)
-    pyclscallback = dictofpopupitems['callback']
+    print spitext
+    if 'callback' in dictofpopupitems:
+        pyclscallback = dictofpopupitems['callback']
+        print pyclscallback
+    else:                       # no callback passed
+        pyclscallback = donothing_popupcb
     c_picallback = xfdata.FL_POPUP_CB(pyclscallback)
+    print c_picallback
     pyclsshortcut = dictofpopupitems['shortcut']
+    print pyclsshortcut
     spishortcut = convert_to_string(pyclsshortcut)
+    print spishortcut
     pyclstype = dictofpopupitems['type']
+    print pyclstype
     checkfatal_allowed_value_in_list(pyclstype, xfdata.POPUPTYPE_list)
     ipitype = convert_to_int(pyclstype)
+    print ipitype
     pyclsstate = dictofpopupitems['state']
-    checkfatal_allowed_value_in_list(pyclstype, xfdata.POPUPSTATE_list)
+    print pyclsstate
+    checkfatal_allowed_value_in_list(pyclsstate, xfdata.POPUPSTATE_list)
     ipistate = convert_to_int(pyclsstate)
+    print ipistate
 
     popupitem = (xfdata.FL_POPUP_ITEM * 2)()
     popupitem[0].text = spitext
@@ -549,58 +566,76 @@ def create_pPopupItem_from_dict(dictofpopupitems):
     popupitem[0].type = ipitype
     popupitem[0].state = ipistate
     popupitem[1].text = None        # this ends array, preventing SegFault
+    print popupitem
 
     ppopupitem = cty.pointer(popupitem[0])
+    print popupitem, popupitem[0], ppopupitem
     keep_cfunc_refs(pyclscallback, c_picallback)
-    keep_elem_refs(dictofpopupitems, pyclsshortcut, pyclstype,
-                   pyclstext, spitext, pyclsshortcut,
-                   spishortcut, pyclstype, ipitype, pyclsstate,
-                   ipistate, popupitem, ppopupitem)
-    return ppopupitem
+    keep_elem_refs(dictofpopupitems, pyclstext, spitext, pyclsshortcut,
+                spishortcut, pyclstype, ipitype, pyclsstate, ipistate,
+                popupitem, ppopupitem)
+    return popupitem[0], ppopupitem
 
 
 def create_pPopupItem_from_list(listofpopupitems):
     """ create_pPopupItem_from_list(listofpopupitems) -> pPopupItem
 
     Taking a python single list/several lists of popup items, with
-    elements in the same order as xfdata.FL_POPUP_ITEM prepares and
-    returns a C-compatible pointer to xfdata.FL_POPUP_ITEM."""
-    # hack to manage both single list and several lists passed as arguments
+    elements in the same order as xfdata.FL_POPUP_ITEM (text, callback,
+    shortcut, type, state) prepares and returns a C-compatible pointer to
+    xfdata.FL_POPUP_ITEM."""
+    # hack to manage both single list and a list of several lists passed as
+    # arguments
     try:
         tmpval = listofpopupitems[1][0]
         tmpval = tmpval
 
     except TypeError:
+        if not isinstance(listofpopupitems, (list, tuple)):
+            raise XFormsTypeError("Parameter %s (of type %s) must be a " \
+                "python list or tuple" % (listofpopupitems, \
+                type(listofpopupitems)))
+
         # only one list passed (array of 2 member)
         popupitem = (xfdata.FL_POPUP_ITEM * 2)()   # 1 list and 1 None
 
         spitext = convert_to_string(listofpopupitems[0])
         popupitem[0].text = spitext
+        print spitext
         c_picallback = xfdata.FL_POPUP_CB(listofpopupitems[1])
+        print c_picallback
         popupitem[0].callback = c_picallback
         spishortcut = convert_to_string(listofpopupitems[2])
         popupitem[0].shortcut = spishortcut
+        print spishortcut
         checkfatal_allowed_value_in_list(listofpopupitems[3], \
             xfdata.POPUPTYPE_list)
         ipitype = convert_to_int(listofpopupitems[3])
         popupitem[0].type = ipitype
+        print ipitype
         checkfatal_allowed_value_in_list(listofpopupitems[4], \
             xfdata.POPUPSTATE_list)
         ipistate = convert_to_int(listofpopupitems[4])
         popupitem[0].state = ipistate
+        print ipistate
 
         popupitem[1].text = None      # ends array, preventing SegFault
-
-        keep_cfunc_refs(listofpopupitems[1], c_picallback)
-        keep_elem_refs(popupitem, spitext, spishortcut,
-                       ipitype, ipistate)
+        print popupitem
 
         ppopupitem = cty.pointer(popupitem[0])
-        keep_elem_refs(listofpopupitems, popupitem, ppopupitem)
+        print ppopupitem
+        keep_cfunc_refs(listofpopupitems[1], c_picallback)
+        keep_elem_refs(spitext, spishortcut, ipitype, ipistate,
+                       listofpopupitems, popupitem, ppopupitem)
         return ppopupitem
         # end of 1 list
 
     else:
+        if not isinstance(listofpopupitems, (list, tuple)):
+            raise XFormsTypeError("Parameter %s (of type %s) must be a " \
+                "python list or tuple" % (listofpopupitems, \
+                type(listofpopupitems)))
+
         # series of lists passed (array of n+1 members)
         numarray = len(listofpopupitems)
         lngarray = numarray + 1         # consider final None

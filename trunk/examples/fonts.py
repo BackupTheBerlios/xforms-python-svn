@@ -10,14 +10,8 @@
 # Demo, showing the different fonts in different sizes.
 #
 
-
 import sys
-from xformslib.flbasic import *
-from xformslib.flxbasic import *
-from xformslib.flbrowser import *
-from xformslib.flbutton import *
-from xformslib.flmisc import *
-from xformslib.xfdata import *
+import xformslib as xfl
 
 
 
@@ -36,85 +30,86 @@ class Flfonts(object):
 
     def __init__(self, lsysargv, sysargv):
 
-        fl_set_border_width(-3)
-        fl_initialize(lsysargv, sysargv, "FormDemo", 0, 0)
+        xfl.fl_set_border_width(-3)
+        xfl.fl_initialize(lsysargv, sysargv, "FormDemo", 0, 0)
 
         self.ui = self.create_form_fontsform()
-        fl_scale_form(self.ui.pfontsform, 1.1, 1.2)
-        fl_set_object_dblbuffer(self.ui.ptextobj, 1)
-        fl_set_object_bw(self.ui.ptextobj, 5)
+        xfl.fl_scale_form(self.ui.pfontsform, 1.1, 1.2)
+        xfl.fl_set_object_dblbuffer(self.ui.ptextobj, 1)
+        xfl.fl_set_object_bw(self.ui.ptextobj, 5)
 
-        fl_enumerate_fonts(self.addit, 1)
-        fl_select_browser_line(self.ui.pfontobj, 1)
-        fl_addto_browser(self.ui.psizeobj, "8  (tiny)")
-        fl_addto_browser(self.ui.psizeobj, "10 (small)")
-        fl_addto_browser(self.ui.psizeobj, "11 (scaled)")
-        fl_addto_browser(self.ui.psizeobj, "12 (normal)")
-        fl_addto_browser(self.ui.psizeobj, "13 (scaled)")
-        fl_addto_browser(self.ui.psizeobj, "14 (medium)")
-        fl_addto_browser(self.ui.psizeobj, "18 (large)")
-        fl_addto_browser(self.ui.psizeobj, "24 (Huge)")
-        fl_addto_browser(self.ui.psizeobj, "30 (scaled)")
-        fl_select_browser_line(self.ui.psizeobj, 2)
-        fl_set_object_lstyle(self.ui.ptextobj, FL_NORMAL_STYLE)
-        fl_call_object_callback(self.ui.pfontobj)
-        fl_call_object_callback(self.ui.psizeobj)
-        fl_show_form(self.ui.pfontsform, FL_PLACE_CENTER, FL_TRANSIENT, "Fonts")
+        xfl.fl_enumerate_fonts(self.addit, 1)
+        xfl.fl_select_browser_line(self.ui.pfontobj, 1)
+        xfl.fl_addto_browser(self.ui.psizeobj, "8  (tiny)")
+        xfl.fl_addto_browser(self.ui.psizeobj, "10 (small)")
+        xfl.fl_addto_browser(self.ui.psizeobj, "11 (scaled)")
+        xfl.fl_addto_browser(self.ui.psizeobj, "12 (normal)")
+        xfl.fl_addto_browser(self.ui.psizeobj, "13 (scaled)")
+        xfl.fl_addto_browser(self.ui.psizeobj, "14 (medium)")
+        xfl.fl_addto_browser(self.ui.psizeobj, "18 (large)")
+        xfl.fl_addto_browser(self.ui.psizeobj, "24 (Huge)")
+        xfl.fl_addto_browser(self.ui.psizeobj, "30 (scaled)")
+        xfl.fl_select_browser_line(self.ui.psizeobj, 2)
+        xfl.fl_set_object_lstyle(self.ui.ptextobj, xfl.FL_NORMAL_STYLE)
+        xfl.fl_call_object_callback(self.ui.pfontobj)
+        xfl.fl_call_object_callback(self.ui.psizeobj)
+        xfl.fl_show_form(self.ui.pfontsform, xfl.FL_PLACE_CENTER, \
+                xfl.FL_TRANSIENT, "Fonts")
 
-        fl_do_forms()
+        xfl.fl_do_forms()
 
 
     def done_cb(self, pobj, arg):
-        fl_finish()
+        xfl.fl_finish()
         sys.exit(0)
 
 
     def style_cb(self, pobj, arg):
-        fl_set_object_lstyle(self.ui.ptextobj, fl_get_browser(pobj) - 1)
+        xfl.fl_set_object_lstyle(self.ui.ptextobj, \
+                xfl.fl_get_browser(pobj) - 1)
 
 
     def size_cb(self, pobj, arg):
         sizes = [8, 10, 11, 12, 13, 14, 18, 24, 30]
-        fl_set_object_lsize(self.ui.ptextobj, sizes[fl_get_browser(pobj) - 1 ])
+        xfl.fl_set_object_lsize(self.ui.ptextobj, \
+                sizes[xfl.fl_get_browser(pobj) - 1 ])
 
 
     def addit(self, txtstr):
-        fl_add_browser_line(self.ui.pfontobj, txtstr)
+        xfl.fl_add_browser_line(self.ui.pfontobj, txtstr)
 
 
     def create_form_fontsform(self):
 
         fdui = FD_fontsform()
 
-        fdui.pfontsform = fl_bgn_form(FL_NO_BOX, 371, 296)
+        fdui.pfontsform = xfl.fl_bgn_form(xfl.FL_NO_BOX, 371, 296)
 
-        pobj = fl_add_box(FL_FLAT_BOX, 0, 0, 371, 296, "")
-        fl_set_object_color(pobj, FL_SLATEBLUE, FL_COL1)
+        pobj = xfl.fl_add_box(xfl.FL_FLAT_BOX, 0, 0, 371, 296, "")
+        xfl.fl_set_object_color(pobj, xfl.FL_SLATEBLUE, xfl.FL_COL1)
+        fdui.pfontobj = xfl.fl_add_browser(xfl.FL_HOLD_BROWSER, 10, 145, \
+                195, 135, "")
+        xfl.fl_set_object_lalign(fdui.pfontobj, \
+                xfl.FL_ALIGN_BOTTOM | xfl.FL_ALIGN_INSIDE)
+        xfl.fl_set_object_callback(fdui.pfontobj, self.style_cb, 0)
+        fdui.psizeobj = xfl.fl_add_browser(xfl.FL_HOLD_BROWSER, 215, 145, \
+                145, 135, "")
+        xfl.fl_set_object_lalign(fdui.psizeobj, \
+                xfl.FL_ALIGN_BOTTOM | xfl.FL_ALIGN_INSIDE)
+        xfl.fl_set_object_callback(fdui.psizeobj, self.size_cb, 0)
+        fdui.ptextobj = xfl.fl_add_text(xfl.FL_NORMAL_TEXT, 10, 5, 351, 125, \
+                "The quick brown\nfox jumps over\nthe lazy dog.")
+        xfl.fl_set_object_boxtype(fdui.ptextobj, xfl.FL_FRAME_BOX)
+        xfl.fl_set_object_lalign(fdui.ptextobj, xfl.FL_ALIGN_CENTER)
+        pobj = xfl.fl_add_button(xfl.FL_HIDDEN_BUTTON, 0, 0, 370, 140, \
+                "Button")
+        xfl.fl_set_button_shortcut(pobj, "^[qQ", 1)
+        xfl.fl_set_object_callback(pobj, self.done_cb, 0)
 
-        fdui.pfontobj = fl_add_browser(FL_HOLD_BROWSER, 10, 145, 195, 135, "")
-        fl_set_object_lalign(fdui.pfontobj, FL_ALIGN_BOTTOM | FL_ALIGN_INSIDE)
-        fl_set_object_callback(fdui.pfontobj, self.style_cb, 0)
-
-        fdui.psizeobj = fl_add_browser(FL_HOLD_BROWSER, 215, 145, 145, 135, "")
-        fl_set_object_lalign(fdui.psizeobj, FL_ALIGN_BOTTOM | FL_ALIGN_INSIDE)
-        fl_set_object_callback(fdui.psizeobj, self.size_cb, 0)
-
-        fdui.ptextobj = fl_add_text(FL_NORMAL_TEXT, 10, 5, 351, 125, \
-                               "The quick brown\nfox jumps over\n" \
-                               "the lazy dog.")
-        fl_set_object_boxtype(fdui.ptextobj, FL_FRAME_BOX)
-        fl_set_object_lalign(fdui.ptextobj, FL_ALIGN_CENTER)
-
-        pobj = fl_add_button(FL_HIDDEN_BUTTON, 0, 0, 370, 140, "Button")
-        fl_set_button_shortcut(pobj, "^[qQ", 1)
-        fl_set_object_callback(pobj, self.done_cb, 0)
-
-        fl_end_form()
+        xfl.fl_end_form()
 
         return fdui
 
 
-
 if __name__ == '__main__':
     Flfonts(len(sys.argv), sys.argv)
-

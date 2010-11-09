@@ -11,47 +11,43 @@
 
 import sys
 #sys.path.append("..")
-from xformslib.flbasic import *
-from xformslib.flxbasic import *
-from xformslib.flbutton import *
-from xformslib.flslider import *
-from xformslib.xfdata import *
-
+import xformslib as xfl
 
 
 
 def main(lsysarg, sysargv):
 
-    fl_initialize(lsysarg, sysargv, "FormDemo", 0, 0)
+    xfl.fl_initialize(lsysarg, sysargv, "FormDemo", 0, 0)
 
-    pform = fl_bgn_form(FL_UP_BOX, 300, 300)
-    psl = fl_add_slider(FL_VERT_SLIDER, 40, 40, 60, 220, "X")
+    pform = xfl.fl_bgn_form(xfl.FL_UP_BOX, 300, 300)
+    psl = xfl.fl_add_slider(xfl.FL_VERT_SLIDER, 40, 40, 60, 220, "X")
     psl.contents.radio = 1
-    pbut1 = fl_add_lightbutton(FL_RADIO_BUTTON, 140, 220, 120, 40, "0.0")
-    pbut2 = fl_add_lightbutton(FL_RADIO_BUTTON, 140, 160, 120, 40, "0.5")
-    pbut3 = fl_add_lightbutton(FL_RADIO_BUTTON, 140, 100, 120, 40, "1.0")
-    pbut = fl_add_button(FL_NORMAL_BUTTON, 140, 40, 120, 40, "Exit")
-    fl_end_form()
+    pbut1 = xfl.fl_add_lightbutton(xfl.FL_RADIO_BUTTON, 140, 220, \
+            120, 40, "0.0")
+    pbut2 = xfl.fl_add_lightbutton(xfl.FL_RADIO_BUTTON, 140, 160, \
+            120, 40, "0.5")
+    pbut3 = xfl.fl_add_lightbutton(xfl.FL_RADIO_BUTTON, 140, 100, \
+            120, 40, "1.0")
+    pbut = xfl.fl_add_button(xfl.FL_NORMAL_BUTTON, 140, 40, 120, 40, "Exit")
+    xfl.fl_end_form()
 
-    fl_show_form(pform, FL_PLACE_CENTER, FL_NOBORDER, "slRadio")
+    xfl.fl_show_form(pform, xfl.FL_PLACE_CENTER, xfl.FL_NOBORDER, "slRadio")
 
     while True:
-        pobj = fl_do_forms()
-        if fl_is_same_object(pobj, pbut1):
-            fl_set_slider_value(psl, 0.0)
-        elif fl_is_same_object(pobj, pbut2):
-            fl_set_slider_value(psl, 0.5)
-        elif fl_is_same_object(pobj, pbut3):
-            fl_set_slider_value(psl, 1.0)
-        elif fl_is_same_object(pobj, pbut):
+        pobj = xfl.fl_do_forms()
+        if xfl.fl_is_same_object(pobj, pbut1):
+            xfl.fl_set_slider_value(psl, 0.0)
+        elif xfl.fl_is_same_object(pobj, pbut2):
+            xfl.fl_set_slider_value(psl, 0.5)
+        elif xfl.fl_is_same_object(pobj, pbut3):
+            xfl.fl_set_slider_value(psl, 1.0)
+        elif xfl.fl_is_same_object(pobj, pbut):
             break
 
-    fl_finish()
+    xfl.fl_finish()
     return 0
 
 
 
 if __name__ == '__main__':
     main(len(sys.argv), sys.argv)
-
-

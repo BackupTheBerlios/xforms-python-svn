@@ -12,31 +12,27 @@
 
 import sys
 #sys.path.append("..")
-from xformslib.flbasic import *
-from xformslib.flxbasic import *
-from xformslib.flbutton import *
-from xformslib.flmisc import *
-from xformslib.flclock import *
-from xformslib.xfdata import *
+import xformslib as xfl
 
 
 
-class Flflclock(object):
+class Flclock(object):
 
     def __init__(self, lsysargv, sysargv):
         self.pfclock = None
 
-        fl_initialize(lsysargv, sysargv, "FormDemo", 0,  0)
+        xfl.fl_initialize(lsysargv, sysargv, "FormDemo", 0,  0)
 
         self.create_form_clock()
-        fl_show_form(self.pfclock, FL_PLACE_CENTER, FL_TRANSIENT, "clocks")
+        xfl.fl_show_form(self.pfclock, xfl.FL_PLACE_CENTER, \
+                xfl.FL_TRANSIENT, "clocks")
 
-        fl_do_forms()
-        fl_finish()
+        xfl.fl_do_forms()
+        xfl.fl_finish()
 
 
     def exit_cb(self, pobj, q):
-        fl_finish()
+        xfl.fl_finish()
         sys.exit(0)
 
 
@@ -44,31 +40,30 @@ class Flflclock(object):
         if self.pfclock:
             return
 
-        self.pfclock = fl_bgn_form(FL_NO_BOX, 500, 350)
-        pobj = fl_add_box(FL_UP_BOX, 0, 0, 500, 350, "")
+        self.pfclock = xfl.fl_bgn_form(xfl.FL_NO_BOX, 500, 350)
+        pobj = xfl.fl_add_box(xfl.FL_UP_BOX, 0, 0, 500, 350, "")
 
-        pobj = fl_add_clock(FL_DIGITAL_CLOCK, 185, 20, 150, 35, "")
-        fl_set_object_boxtype(pobj, FL_ROUNDED_BOX)
-        fl_set_object_color(pobj, FL_COL1, FL_BLACK)
-        fl_set_object_lsize(pobj, FL_MEDIUM_SIZE)
-        fl_set_object_lstyle(pobj, FL_BOLD_STYLE)
+        pobj = xfl.fl_add_clock(xfl.FL_DIGITAL_CLOCK, 185, 20, 150, 35, "")
+        xfl.fl_set_object_boxtype(pobj, xfl.FL_ROUNDED_BOX)
+        xfl.fl_set_object_color(pobj, xfl.FL_COL1, xfl.FL_BLACK)
+        xfl.fl_set_object_lsize(pobj, xfl.FL_MEDIUM_SIZE)
+        xfl.fl_set_object_lstyle(pobj, xfl.FL_BOLD_STYLE)
 
-        pobj = fl_add_clock(FL_ANALOG_CLOCK, 30, 70, 220, 200, "")
-        fl_set_object_boxtype(pobj, FL_UP_BOX)
+        pobj = xfl.fl_add_clock(xfl.FL_ANALOG_CLOCK, 30, 70, 220, 200, "")
+        xfl.fl_set_object_boxtype(pobj, xfl.FL_UP_BOX)
 
-        pobj = fl_add_clock(FL_ANALOG_CLOCK, 260, 70, 220, 200, "")
-        fl_set_object_boxtype(pobj, FL_OVAL3D_UPBOX)
+        pobj = xfl.fl_add_clock(xfl.FL_ANALOG_CLOCK, 260, 70, 220, 200, "")
+        xfl.fl_set_object_boxtype(pobj, xfl.FL_OVAL3D_UPBOX)
 
-        pobj = fl_add_button(FL_NORMAL_BUTTON, 375, 300, 110, 35, "Exit")
-        fl_set_object_callback(pobj, self.exit_cb, 0)
+        pobj = xfl.fl_add_button(xfl.FL_NORMAL_BUTTON, 375, 300, 110, 35, \
+                "Exit")
+        xfl.fl_set_object_callback(pobj, self.exit_cb, 0)
 
-        fl_end_form()
+        xfl.fl_end_form()
 
-        fl_scale_form(self.pfclock, 0.7, 0.7)
-
+        xfl.fl_scale_form(self.pfclock, 0.7, 0.7)
 
 
 
 if __name__ == '__main__':
-    Flflclock(len(sys.argv), sys.argv)
-
+    Flclock(len(sys.argv), sys.argv)

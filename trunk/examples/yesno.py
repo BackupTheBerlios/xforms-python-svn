@@ -12,7 +12,7 @@
 
 
 import sys
-from xformslib.flbasic import *
+import xformslib as xfl
 from xformslib.flxbasic import *
 from xformslib.flbutton import *
 from xformslib.flmisc import *
@@ -22,25 +22,25 @@ from xformslib.xfdata import *
 
 def main(lsysargv, sysargv):
 
-    fl_initialize(lsysargv, sysargv, "FormDemo", 0, 0 )
+    xfl.fl_initialize(lsysargv, sysargv, "FormDemo", 0, 0 )
 
-    pform = fl_bgn_form(FL_UP_BOX, 320, 120)
+    pform = xfl.fl_bgn_form(xfl.FL_UP_BOX, 320, 120)
 
-    fl_add_box(FL_NO_BOX, 0, 10, 320, 40, "Do you want to quit?")
-    pyes = fl_add_button(FL_NORMAL_BUTTON, 40, 70, 80, 30," Yes")
-    pno = fl_add_button(FL_NORMAL_BUTTON, 200, 70, 80, 30, "No")
+    xfl.fl_add_box(xfl.FL_NO_BOX, 0, 10, 320, 40, "Do you want to quit?")
+    pyes = xfl.fl_add_button(xfl.FL_NORMAL_BUTTON, 40, 70, 80, 30," Yes")
+    pno = xfl.fl_add_button(xfl.FL_NORMAL_BUTTON, 200, 70, 80, 30, "No")
 
-    fl_end_form()
+    xfl.fl_end_form()
 
-    fl_show_form(pform, FL_PLACE_MOUSE, FL_TRANSIENT, "Question")
+    xfl.fl_show_form(pform, xfl.FL_PLACE_MOUSE, xfl.FL_TRANSIENT, "Question")
 
     while True:
-        pobj = fl_do_forms()
-        if fl_is_same_object(pobj, pyes):
-            fl_hide_form(pform)
+        pobj = xfl.fl_do_forms()
+        if xfl.fl_is_same_object(pobj, pyes):
+            xfl.fl_hide_form(pform)
             sys.exit(0)
 
-    fl_finish()
+    xfl.fl_finish()
 
     return 0
 
@@ -48,4 +48,3 @@ def main(lsysargv, sysargv):
 
 if __name__ == '__main__':
     main(len(sys.argv), sys.argv)
-

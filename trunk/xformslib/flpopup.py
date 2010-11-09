@@ -188,7 +188,7 @@ def fl_popup_insert_entries(pPopup, pPopupEntry, entryitems_txtlst):
     return retval
 
 
-def fl_popup_create(win, title, pPopupItem):
+def fl_popup_create(win, title, datavar_for_pPopupItem):
     """Creates a popup. It doesn't allow to associate values or pointers to
     user data to individual entries, set titles for sub-popups, have radio
     entries belong to different groups or set enter or leave callback
@@ -205,8 +205,9 @@ def fl_popup_create(win, title, pPopupItem):
         not wanted, pass an empty string or 'None'. It may contain embedded
         newline characters, this allows to create titles that span more than
         one line.
-      `pPopupItem` : pointer to xfdata.FL_POPUP_ITEM
-        popup item
+      `datavar_for_pPopupItem` : dict or single list or list of lists
+        data to be used to create a popup item. Data must contain elements
+        from xfdata.FL_POPUP_ITEM.
 
     :return: popup created, or None (on failure)
     :rtype: pointer to xfdata.FL_POPUP
@@ -229,13 +230,20 @@ def fl_popup_create(win, title, pPopupItem):
     if not title:       # if it's None
         title = ""
     stitle = libr.convert_to_string(title)
+    if isinstance(datavar_for_pPopupItem, dict):
+        # it's a dict
+        pPopupItem = libr.create_pPopupItem_from_dict(datavar_for_pPopupItem)
+    elif isinstance(datavar_for_pPopupItem, list):
+        # it's list or list of lists
+        pPopupItem = libr.create_pPopupItem_from_list(datavar_for_pPopupItem)
     libr.verify_flpopupitemptr_type(pPopupItem)
-    libr.keep_elem_refs(win, title, pPopupItem, ulwin, stitle)
+    libr.keep_elem_refs(win, title, datavar_for_pPopupItem, pPopupItem, ulwin,
+                        stitle)
     retval = _fl_popup_create(ulwin, stitle, pPopupItem)
     return retval
 
 
-def fl_popup_add_items(pPopup, pPopupItem):
+def fl_popup_add_items(pPopup, datavar_for_pPopupItem):
     """Adds one or more items to a popup.
 
     --
@@ -243,8 +251,9 @@ def fl_popup_add_items(pPopup, pPopupItem):
     :Parameters:
       `pPopup` : pointer to xfdata.FL_POPUP
         popup class instance
-      `pPopupItem` : pointer to xfdata.FL_POPUP_ITEM
-        popup item
+      `datavar_for_pPopupItem` : dict or single list or list of lists
+        data to be used to create a popup item. Data must contain elements
+        from xfdata.FL_POPUP_ITEM.
 
     :return: popup entry, or None
     :rtype: pointer to xfdata.FL_POPUP_ENTRY
@@ -262,13 +271,26 @@ def fl_popup_add_items(pPopup, pPopupItem):
            FL_POPUP_ITEM * p2)""")
     libr.check_if_initialized()
     libr.verify_flpopupptr_type(pPopup)
+    if isinstance(datavar_for_pPopupItem, dict):
+        # it's a dict
+        PopupItem, pPopupItem = libr.create_pPopupItem_from_dict( \
+            datavar_for_pPopupItem)
+        print "datavar is dict", datavar_for_pPopupItem, "pPopIt", pPopupItem, \
+            "PopIt", PopupItem
+    elif isinstance(datavar_for_pPopupItem, list):
+        # it's list or list of lists
+        pPopupItem = libr.create_pPopupItem_from_list(datavar_for_pPopupItem)
+    else:
+        pPopupItem = cty.cast(datavar_for_pPopupItem, cty.POINTER( \
+            xfdata.FL_POPUP_ITEM))
+        #PopupItem = pPopupItem
     libr.verify_flpopupitemptr_type(pPopupItem)
-    libr.keep_elem_refs(pPopup, pPopupItem)
+    libr.keep_elem_refs(pPopup, datavar_for_pPopupItem, pPopupItem)
     retval = _fl_popup_add_items(pPopup, pPopupItem)
     return retval
 
 
-def fl_popup_insert_items(pPopup, pPopupEntry, pPopupItem):
+def fl_popup_insert_items(pPopup, pPopupEntry, datavar_for_pPopupItem):
     """Inserts entries into a popup.
 
     --
@@ -279,8 +301,9 @@ def fl_popup_insert_items(pPopup, pPopupEntry, pPopupItem):
       `pPopupEntry` : pointer to xfdata.FL_POPUP_ENTRY
         popup entry after which items are inserted. If it's 'None', items are
         inserted at the very start.
-      `pPopupItem` : pointer to xfdata.FL_POPUP_ITEM
-        popup item
+      `datavar_for_pPopupItem` : dict or single list or list of lists
+        data to be used to create a popup item. Data must contain elements
+        from xfdata.FL_POPUP_ITEM.
 
     :return: popup entry
     :rtype: pointer to xfdata.FL_POPUP_ENTRY
@@ -299,8 +322,17 @@ def fl_popup_insert_items(pPopup, pPopupEntry, pPopupItem):
     libr.check_if_initialized()
     libr.verify_flpopupptr_type(pPopup)
     libr.verify_flpopupentryptr_type(pPopupEntry)
+    print datavar_for_pPopupItem, type(datavar_for_pPopupItem)
+    if isinstance(datavar_for_pPopupItem, dict):
+        # it's a dict
+        pPopupItem = libr.create_pPopupItem_from_dict(datavar_for_pPopupItem)
+    elif isinstance(datavar_for_pPopupItem, list):
+        # it's list or list of lists
+        pPopupItem = libr.create_pPopupItem_from_list(datavar_for_pPopupItem)
+    print pPopupItem
     libr.verify_flpopupitemptr_type(pPopupItem)
-    libr.keep_elem_refs(pPopup, pPopupEntry, pPopupItem)
+    libr.keep_elem_refs(pPopup, pPopupEntry, datavar_for_pPopupItem,
+                        pPopupItem)
     retval = _fl_popup_insert_items(pPopup, pPopupEntry, pPopupItem)
     return retval
 

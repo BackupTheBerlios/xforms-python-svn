@@ -7,37 +7,31 @@
 #  file for xforms-python license and copyright attribution.
 #
 # A demo showing the use of timer objects.
-# note there is only one fl_do_form().
+# note there is only one xfl.fl_do_form().
 #
 
 import sys
 #sys.path.append("..")
-from xformslib.flbasic import *
-from xformslib.flxbasic import *
-from xformslib.fltimer import *
-from xformslib.flbutton import *
-from xformslib.flmisc import *
-from xformslib.xfdata import *
-
+import xformslib as xfl
 
 
 
 class Fltimer2(object):
     def __init__(self, lsysargv, sysargv):
         self.TIME = 5
-        fl_initialize(lsysargv, sysargv, "FormDemo", 0, 0)
+        xfl.fl_initialize(lsysargv, sysargv, "FormDemo", 0, 0)
         self.makeforms()
-        fl_show_form(self.pform1, FL_PLACE_CENTER, FL_NOBORDER, \
-                        "Timer")
-        fl_set_timer(self.ptim, self.TIME)
-        fl_do_forms()
+        xfl.fl_show_form(self.pform1, xfl.FL_PLACE_CENTER, xfl.FL_NOBORDER, \
+                "Timer")
+        xfl.fl_set_timer(self.ptim, self.TIME)
+        xfl.fl_do_forms()
 
 
     def timer1_expired(self, pobj, q):
-        fl_deactivate_form(self.pform1)
-        fl_set_timer(self.ptim2, 10)
-        fl_show_form(self.pform2, FL_PLACE_MOUSE, \
-                    FL_TRANSIENT, "Q")
+        xfl.fl_deactivate_form(self.pform1)
+        xfl.fl_set_timer(self.ptim2, 10)
+        xfl.fl_show_form(self.pform2, xfl.FL_PLACE_MOUSE, \
+                xfl.FL_TRANSIENT, "Q")
 
 
     def nothing(self, pobj, q):
@@ -45,44 +39,44 @@ class Fltimer2(object):
 
 
     def continue_cb(self, pobj, q):
-        fl_hide_form(self.pform2)
-        fl_activate_form(self.pform1)
-        fl_set_timer(self.ptim, self.TIME)
-        fl_set_object_callback(self.ptim, self.nothing, 0)
+        xfl.fl_hide_form(self.pform2)
+        xfl.fl_activate_form(self.pform1)
+        xfl.fl_set_timer(self.ptim, self.TIME)
+        xfl.fl_set_object_callback(self.ptim, self.nothing, 0)
 
 
     def done_cb(self, pobj, a):
-        fl_finish()
+        xfl.fl_finish()
         sys.exit(0)
 
 
     def makeforms(self):
-        self.pform1 = fl_bgn_form(FL_UP_BOX, 400, 400)
+        self.pform1 = xfl.fl_bgn_form(xfl.FL_UP_BOX, 400, 400)
 
-        pobj = fl_add_button(FL_NORMAL_BUTTON, 140, 160, 120, 80, "Push Me")
-        fl_set_object_callback(pobj, self.done_cb, 0)
+        pobj = xfl.fl_add_button(xfl.FL_NORMAL_BUTTON, 140, 160, \
+                120, 80, "Push Me")
+        xfl.fl_set_object_callback(pobj, self.done_cb, 0)
 
-        self.ptim = fl_add_timer(FL_VALUE_TIMER, 200, 40, 90, 50, "Time Left")
-        fl_set_object_callback(self.ptim, self.timer1_expired, 0)
-        fl_set_object_lcol(self.ptim, FL_BLACK)
+        self.ptim = xfl.fl_add_timer(xfl.FL_VALUE_TIMER, 200, 40, \
+                90, 50, "Time Left")
+        xfl.fl_set_object_callback(self.ptim, self.timer1_expired, 0)
+        xfl.fl_set_object_lcol(self.ptim, xfl.FL_BLACK)
 
-        fl_end_form()
+        xfl.fl_end_form()
 
-        self.pform2 = fl_bgn_form(FL_UP_BOX, 320, 120)
+        self.pform2 = xfl.fl_bgn_form(xfl.FL_UP_BOX, 320, 120)
 
-        fl_add_box(FL_NO_BOX, 160, 40, 0, 0, "You were too late")
+        xfl.fl_add_box(xfl.FL_NO_BOX, 160, 40, 0, 0, "You were too late")
 
-        pobj = fl_add_button(FL_NORMAL_BUTTON, 100, 70, 120, 30, "Try Again")
-        fl_set_object_callback(pobj, self.continue_cb, 0)
+        pobj = xfl.fl_add_button(xfl.FL_NORMAL_BUTTON, 100, 70, 120, 30, \
+                "Try Again")
+        xfl.fl_set_object_callback(pobj, self.continue_cb, 0)
 
-        self.ptim2 = fl_add_timer(FL_HIDDEN_TIMER, 0, 0, 1, 2, "")
-        fl_set_object_callback(self.ptim2, self.continue_cb, 0)
-        fl_end_form()
-
-
+        self.ptim2 = xfl.fl_add_timer(xfl.FL_HIDDEN_TIMER, 0, 0, 1, 2, "")
+        xfl.fl_set_object_callback(self.ptim2, self.continue_cb, 0)
+        xfl.fl_end_form()
 
 
 
 if __name__ == '__main__':
     Fltimer2(len(sys.argv), sys.argv)
-

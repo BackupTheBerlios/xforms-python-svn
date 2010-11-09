@@ -11,12 +11,7 @@
 
 import sys
 #sys.path.append("..")
-from xformslib.flbasic import *
-from xformslib.flxbasic import *
-from xformslib.flbutton import *
-from xformslib.flmisc import *
-from xformslib.xfdata import *
-
+import xformslib as xfl
 
 
 
@@ -40,44 +35,41 @@ label3 = "And now back to the first one:\n\n" \
          "all of this works without any problem."
 
 
-
 def main(lsysargv, sysargv):
 
-    fl_initialize(lsysargv, sysargv, "FormDemo", 0, 0)
+    xfl.fl_initialize(lsysargv, sysargv, "FormDemo", 0, 0)
 
-    pform = fl_bgn_form(FL_UP_BOX, 400, 300)
+    pform = xfl.fl_bgn_form(xfl.FL_UP_BOX, 400, 300)
 
-    pstrobj = fl_add_box(FL_DOWN_BOX, 10, 10, 380, 240, "Press Next")
-    fl_set_object_lsize(pstrobj, FL_NORMAL_SIZE)
+    pstrobj = xfl.fl_add_box(xfl.FL_DOWN_BOX, 10, 10, 380, 240, "Press Next")
+    xfl.fl_set_object_lsize(pstrobj, xfl.FL_NORMAL_SIZE)
+    pbut = xfl.fl_add_button(xfl.FL_NORMAL_BUTTON, 160, 260, 80, 30, "Next")
 
-    pbut = fl_add_button(FL_NORMAL_BUTTON, 160, 260, 80, 30, "Next")
+    xfl.fl_end_form()
 
-    fl_end_form()
+    xfl.fl_set_form_hotobject(pform, pbut)
 
-    fl_set_form_hotobject(pform, pbut)
+    xfl.fl_show_form(pform, xfl.FL_PLACE_HOTSPOT, xfl.FL_TRANSIENT, \
+            "longlabel")
+    xfl.fl_do_forms()
 
-    fl_show_form(pform, FL_PLACE_HOTSPOT, FL_TRANSIENT, "longlabel")
-    fl_do_forms()
+    xfl.fl_set_object_label(pstrobj, label1)
+    xfl.fl_do_forms()
 
-    fl_set_object_label(pstrobj, label1)
-    fl_do_forms()
+    xfl.fl_set_object_label(pstrobj, label2)
+    xfl.fl_do_forms()
 
-    fl_set_object_label(pstrobj, label2)
-    fl_do_forms()
+    xfl.fl_set_object_label(pstrobj, "Now we turn to a short label")
+    xfl.fl_do_forms()
 
-    fl_set_object_label(pstrobj, "Now we turn to a short label")
-    fl_do_forms()
+    xfl.fl_set_object_label(pstrobj, label3)
+    xfl.fl_set_object_label(pbut, "Quit")
+    xfl.fl_do_forms()
 
-    fl_set_object_label(pstrobj, label3)
-    fl_set_object_label(pbut, "Quit")
-    fl_do_forms()
-
-    fl_finish()
+    xfl.fl_finish()
     return 0
-
 
 
 
 if __name__ == '__main__':
     main(len(sys.argv), sys.argv)
-

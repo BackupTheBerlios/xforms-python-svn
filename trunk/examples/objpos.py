@@ -13,40 +13,32 @@
 
 import sys
 #sys.path.append("..")
-from xformslib.flbasic import *
-from xformslib.flxbasic import *
-from xformslib.flbutton import *
-from xformslib.xfdata import *
-
-
+import xformslib as xfl
 
 
 class Flobjpos(object):
 
     def __init__(self, lsysargv, sysargv):
-
-        fl_initialize(lsysargv, sysargv, "FormDemo", 0, 0)
-
-        pform = fl_bgn_form(FL_DOWN_BOX, 400, 200)
-        self.pbut = fl_add_button(FL_NORMAL_BUTTON, 10, 60, 70, 35, "Exit")  # 140 160
-        fl_set_object_resize(self.pbut, FL_RESIZE_NONE)
-        pobj = fl_add_button(FL_TOUCH_BUTTON, 330, 150, 50, 30, "Move")
-        fl_set_object_resize(pobj, FL_RESIZE_NONE)
-        fl_set_object_gravity(pobj, FL_SouthEast, FL_SouthEast )
-        fl_set_object_callback(pobj, self.move_cb, 0)   # but
-        fl_end_form()
-
-        fl_show_form(pform, FL_PLACE_MOUSE | FL_FREE_SIZE, \
-                     FL_FULLBORDER, "ObjPos")
-
-        fl_do_forms()
+        xfl.fl_initialize(lsysargv, sysargv, "FormDemo", 0, 0)
+        pform = xfl.fl_bgn_form(xfl.FL_DOWN_BOX, 400, 200)
+        self.pbut = xfl.fl_add_button(xfl.FL_NORMAL_BUTTON, 10, 60, \
+                70, 35, "Exit")  # 140 160
+        xfl.fl_set_object_resize(self.pbut, xfl.FL_RESIZE_NONE)
+        pobj = xfl.fl_add_button(xfl.FL_TOUCH_BUTTON, 330, 150, 50, 30, "Move")
+        xfl.fl_set_object_resize(pobj, xfl.FL_RESIZE_NONE)
+        xfl.fl_set_object_gravity(pobj, xfl.FL_SouthEast, xfl.FL_SouthEast )
+        xfl.fl_set_object_callback(pobj, self.move_cb, 0)   # but
+        xfl.fl_end_form()
+        xfl.fl_show_form(pform, xfl.FL_PLACE_MOUSE | xfl.FL_FREE_SIZE, \
+                     xfl.FL_FULLBORDER, "ObjPos")
+        xfl.fl_do_forms()
 
 
     def move_cb(self, pobj, data):
 
         dx = 8
         dy = 8
-        x, y, w, h = fl_get_object_geometry(self.pbut)
+        x, y, w, h = xfl.fl_get_object_geometry(self.pbut)
 
         xlimitup = x + w + dx
         xlimitdown = x + dx
@@ -63,11 +55,9 @@ class Flobjpos(object):
         x += dx
         y += dy
 
-        fl_set_object_position(self.pbut, x, y)
-
+        xfl.fl_set_object_position(self.pbut, x, y)
 
 
 
 if __name__ == '__main__':
     Flobjpos(len(sys.argv), sys.argv)
-

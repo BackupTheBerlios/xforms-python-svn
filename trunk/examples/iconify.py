@@ -12,15 +12,11 @@
 
 import sys
 #sys.path.append("..")
-from xformslib.flbasic import *
-from xformslib.flxbasic import *
-from xformslib.flbutton import *
-from xformslib.flbitmap import *
-from xformslib.xfdata import *
+import xformslib as xfl
 
 
 
-# from "crab.xpm" file
+# contents from "crab.xpm" file
     # width height ncolors chars_per_pixel / pixels data
 crab = \
     "28 28 6 2 " \
@@ -62,30 +58,32 @@ crab = \
 
 def main(lsysargv, sysargv):
 
-    fl_initialize(lsysargv, sysargv, "FormDemo", 0, 0)
+    xfl.fl_initialize(lsysargv, sysargv, "FormDemo", 0, 0)
     pform = create_form_form()
 
     # unused because of segfault down there
-    #pix, w, h, mask, hx, hy = fl_read_pixmapfile(fl_root, "crab.xpm", 0)
-    #fl_set_form_icon(pform, pix, mask)
+    #pix, w, h, mask, hx, hy = xfl.fl_read_pixmapfile(xfl.fl_root, \
+    #           "crab.xpm", 0)
+    #xfl.fl_set_form_icon(pform, pix, mask)
 
-    fl_show_form(pform, FL_PLACE_CENTER, FL_FULLBORDER, "IconTest")
-    fl_do_forms()
+    xfl.fl_show_form(pform, xfl.FL_PLACE_CENTER, xfl.FL_FULLBORDER, "IconTest")
+    xfl.fl_do_forms()
     return 0
 
 
 def create_form_form():
 
-    pform = fl_bgn_form(FL_NO_BOX, 151, 111)
+    pform = xfl.fl_bgn_form(xfl.FL_NO_BOX, 151, 111)
 
-    pobj = fl_add_pixmapbutton(FL_NORMAL_BUTTON, 0, 0, 151, 111,
-                               "Iconify Me\nvia Window Manager")
-    fl_set_object_lalign(pobj, FL_ALIGN_BOTTOM | FL_ALIGN_INSIDE)
-    fl_set_object_lstyle(pobj, FL_BOLD_STYLE)
-    fl_set_pixmapbutton_file(pobj, "crab.xpm")
-    #fl_set_pixmap_data(pobj, crab) not used as it gives a SegmentationFault :-/
+    pobj = xfl.fl_add_pixmapbutton(xfl.FL_NORMAL_BUTTON, 0, 0, 151, 111, \
+            "Iconify Me\nvia Window Manager")
+    xfl.fl_set_object_lalign(pobj, xfl.FL_ALIGN_BOTTOM | xfl.FL_ALIGN_INSIDE)
+    xfl.fl_set_object_lstyle(pobj, xfl.FL_BOLD_STYLE)
+    xfl.fl_set_pixmapbutton_file(pobj, "crab.xpm")
+    #xfl.fl_set_pixmap_data(pobj, crab) not used as it gives a
+    # SegmentationFault :-/
 
-    fl_end_form()
+    xfl.fl_end_form()
 
     return pform
 
@@ -93,4 +91,3 @@ def create_form_form():
 
 if __name__ == '__main__':
     main(len(sys.argv), sys.argv)
-

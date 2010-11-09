@@ -459,3 +459,69 @@ def fl_set_slider_filter(pFlObject, py_ValFilter):
     libr.keep_cfunc_refs(c_ValFilter, py_ValFilter)
     libr.keep_elem_refs(pFlObject)
     _fl_set_slider_filter(pFlObject, c_ValFilter)
+
+
+def fl_get_slider_repeat(pFlObject):
+    """Obtains the time delay (in milliseconds) between jumps of the
+    scrollbar knob when the mouse button is kept pressed down on the
+    scrollbar outside of the knobs area. The delay for the very first
+    jump is twice that long in order to avoid jumping to start too soon
+    when only a single click was intended but the user is a bit slow in
+    releasing the mouse button.
+    
+    --
+    
+    :Parameters:
+      `pFlObject` : pointer to xfdata.FL_OBJECT
+        slider object
+
+    :return: time delay
+    :rtype: int
+
+    :note: e.g. *todo*
+
+    :status: Untested + NoDoc + NoDemo = NOT OK
+
+    """
+    _fl_get_slider_repeat = libr.cfuncproto(
+        libr.load_so_libforms(), "fl_get_slider_repeat",
+        cty.c_int, [cty.POINTER(xfdata.FL_OBJECT)],
+        """int fl_get_slider_repeat(FL_OBJECT * obj)""")
+    libr.check_if_initialized()
+    libr.verify_flobjectptr_type(pFlObject)
+    libr.keep_elem_refs(pFlObject)
+    retval = _fl_get_slider_repeat(pFlObject)
+    return retval
+
+
+def fl_set_slider_repeat(pFlObject, delay):
+    """Sets the time delay between jumps of the scrollbar knob when the
+    mouse button is kept pressed down on the scrollbar outside of the
+    knobs area. The delay for the very first jump is twice that long in
+    order to avoid jumping to start too soon when only a single click
+    was intended but the user is a bit slow in releasing the mouse button.
+    
+    --
+    
+    :Parameters:
+      `pFlObject` : pointer to xfdata.FL_OBJECT
+        slider object
+      `delay` : int
+        time delay (in milliseconds) to be set. The default value is
+        100 ms.
+
+    :note: e.g. *todo*
+
+    :status: Untested + NoDoc + NoDemo = NOT OK
+
+    """
+    _fl_set_slider_repeat = libr.cfuncproto(
+        libr.load_so_libforms(), "fl_set_slider_repeat",
+        None, [cty.POINTER(xfdata.FL_OBJECT), cty.c_int],
+        """void fl_get_slider_repeat(FL_OBJECT * obj, int)""")
+    libr.check_if_initialized()
+    libr.verify_flobjectptr_type(pFlObject)
+    idelay = libr.convert_to_int(delay)
+    libr.keep_elem_refs(pFlObject, delay, idelay)
+    _fl_set_slider_repeat(pFlObject, idelay)
+    

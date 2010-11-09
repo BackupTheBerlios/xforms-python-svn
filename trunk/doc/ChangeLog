@@ -1,9 +1,12 @@
 
 
 SVN
+    * Realignment to upstream XForms version 1.0.94pre1. New mode for importing
+    python package and examples' adjustment. Bugfixes. Some examples remain to
+    adjust.
     * Realign to upstream XForms version 1.0.93.
     * Functions to add and insert entries in popups and derived entities
-    (nmenus and selcts) supports special sequencies (even if some problematic
+    (nmenus and selects) supports special sequencies (even if some problematic
     aspects may still apply).
     * most of Structure classes in xfdata.py have a docstring now.
     * some bugfixes and other docstrings improved.
@@ -14,7 +17,7 @@ SVN
     some function can use different values than pre-defined ones).
     check_admitted_value_in_list renamed to checkfatal_allowed_value_in_list.
     * some bugfixes. Realign to upstream XForms. RGB color triples documented.
-    * Finally deprecate.py module is gone. Remaining examples who used
+    * Finally deprecated.py module is gone. Remaining examples who used
     deprecated functions are removed and replaced by: buttonall_new.py, 
     thumbwheel_new.py
     * better error handling (error message more complete). First unit-test

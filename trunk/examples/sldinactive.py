@@ -11,43 +11,36 @@
 
 import sys
 #sys.path.append("..")
-from xformslib.flbasic import *
-from xformslib.flxbasic import *
-from xformslib.flbutton import *
-from xformslib.flslider import *
-from xformslib.xfdata import *
-
+import xformslib as xfl
 
 
 
 def exitcb(pobj, data):
-    fl_finish()
+    xfl.fl_finish()
     sys.exit(0)
 
 
 def main(lsysargv, sysargv):
-    fl_initialize(lsysargv, sysargv, "FormDemo", 0, 0)
-    pform = fl_bgn_form(FL_UP_BOX, 150 ,300)
-    psl1 = fl_add_slider(FL_VERT_SLIDER, 20, 20, \
-                            40, 180, "X")
-    psl2 = fl_add_slider(FL_VERT_SLIDER, 90, 20, \
-                            40, 180, "1-X")
-    fl_deactivate_object(psl2)
-    pbut = fl_add_button(FL_NORMAL_BUTTON, 40, 250, \
-                            70, 30, "Exit")
-    fl_set_object_callback(pbut, exitcb, 0)
+    xfl.fl_initialize(lsysargv, sysargv, "FormDemo", 0, 0)
+    pform = xfl.fl_bgn_form(xfl.FL_UP_BOX, 150 ,300)
 
-    fl_end_form()
+    psl1 = xfl.fl_add_slider(xfl.FL_VERT_SLIDER, 20, 20, 40, 180, "X")
+    psl2 = xfl.fl_add_slider(xfl.FL_VERT_SLIDER, 90, 20, 40, 180, "1-X")
+    xfl.fl_deactivate_object(psl2)
+    pbut = xfl.fl_add_button(xfl.FL_NORMAL_BUTTON, 40, 250, 70, 30, "Exit")
+    xfl.fl_set_object_callback(pbut, exitcb, 0)
 
-    fl_show_form(pform, FL_PLACE_CENTER, FL_NOBORDER, \
-                    "Inactive Slider")
+    xfl.fl_end_form()
+
+    xfl.fl_show_form(pform, xfl.FL_PLACE_CENTER, xfl.FL_NOBORDER, \
+            "Inactive Slider")
 
     while True:
-        pobj = fl_do_forms()
-        fl_set_slider_value(psl2, 1.0 - fl_get_slider_value(psl1))
+        pobj = xfl.fl_do_forms()
+        xfl.fl_set_slider_value(psl2, 1.0 - xfl.fl_get_slider_value(psl1))
 
-    fl_hide_form(pform)
-    fl_finish()
+    xfl.fl_hide_form(pform)
+    xfl.fl_finish()
 
     return 0
 
@@ -55,4 +48,3 @@ def main(lsysargv, sysargv):
 
 if __name__ == '__main__':
     main(len(sys.argv), sys.argv)
-

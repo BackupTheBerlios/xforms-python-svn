@@ -13,14 +13,7 @@
 
 import sys
 #sys.path.append("..")
-from xformslib.flbasic import *
-from xformslib.flxbasic import *
-from xformslib.flinput import *
-from xformslib.flmisc import *
-from xformslib.flbutton import *
-from xformslib.flselect import *
-from xformslib.xfdata import *
-
+import xformslib as xfl
 
 
 
@@ -28,67 +21,65 @@ class Choice(object):
 
     def __init__(self, lsysargv, sysargv):
 
-        fl_flip_yorigin()
-        fl_initialize(lsysargv, sysargv, "FormDemo", 0, 0)
+        xfl.fl_flip_yorigin()
+        xfl.fl_initialize(lsysargv, sysargv, "FormDemo", 0, 0)
 
         self.create_form()
-        fl_add_select_items(self.psexobj,"Male")
-        fl_add_select_items(self.psexobj,"Female")
-        fl_add_select_items(self.pchildobj, "Zero|One|Two|Three|Four|Many")
-        fl_add_select_items(self.plicenceobj, "Yes")
-        fl_add_select_items(self.plicenceobj, "No")
-        fl_add_select_items(self.pmarriedobj, "Yes")
-        fl_add_select_items(self.pmarriedobj, "No")
+        xfl.fl_add_select_items(self.psexobj,"Male")
+        xfl.fl_add_select_items(self.psexobj,"Female")
+        xfl.fl_add_select_items(self.pchildobj, "Zero|One|Two|Three|Four|Many")
+        xfl.fl_add_select_items(self.plicenceobj, "Yes")
+        xfl.fl_add_select_items(self.plicenceobj, "No")
+        xfl.fl_add_select_items(self.pmarriedobj, "Yes")
+        xfl.fl_add_select_items(self.pmarriedobj, "No")
 
-        fl_show_form(self.pform, FL_PLACE_CENTER | FL_FREE_SIZE, \
-                    FL_TRANSIENT, "Choice(Select)Demo")
+        xfl.fl_show_form(self.pform, xfl.FL_PLACE_CENTER | xfl.FL_FREE_SIZE, \
+                xfl.FL_TRANSIENT, "Choice(Select)Demo")
 
-        while fl_do_forms():
+        while xfl.fl_do_forms():
             pass            # empty
 
 
     def exitcb(self, pobj, data):
-        fl_hide_form(self.pform)
-        fl_finish()
+        xfl.fl_hide_form(self.pform)
+        xfl.fl_finish()
         sys.exit()
 
 
     def cb(self, pobj, data):
-        pselitem = fl_get_select_item(pobj)
+        pselitem = xfl.fl_get_select_item(pobj)
         print("CallBack: %d\n" % pselitem.contents.val)
 
 
     def create_form(self):
-        self.pform = fl_bgn_form(FL_NO_BOX, 420, 360)
+        self.pform = xfl.fl_bgn_form(xfl.FL_NO_BOX, 420, 360)
 
-        fl_add_box(FL_UP_BOX, 0, 0, 420, 360, "")
-        fl_add_input(FL_NORMAL_INPUT, 70, 300, 320, 30, "Name")
-        fl_add_input(FL_NORMAL_INPUT, 70, 260, 320, 30, "Address")
-        fl_add_input(FL_NORMAL_INPUT, 70, 220, 320, 30, "City")
-        fl_add_input(FL_NORMAL_INPUT, 70, 180, 320, 30, "Country")
+        xfl.fl_add_box(xfl.FL_UP_BOX, 0, 0, 420, 360, "")
+        xfl.fl_add_input(xfl.FL_NORMAL_INPUT, 70, 300, 320, 30, "Name")
+        xfl.fl_add_input(xfl.FL_NORMAL_INPUT, 70, 260, 320, 30, "Address")
+        xfl.fl_add_input(xfl.FL_NORMAL_INPUT, 70, 220, 320, 30, "City")
+        xfl.fl_add_input(xfl.FL_NORMAL_INPUT, 70, 180, 320, 30, "Country")
 
-        self.psexobj = fl_add_select(FL_NORMAL_SELECT, 70, 130, 110, 30, \
-                               "Sex")
-        fl_set_object_shortcut(self.psexobj, "S", 1)
+        self.psexobj = xfl.fl_add_select(xfl.FL_NORMAL_SELECT, 70, 130, \
+                110, 30, "Sex")
+        xfl.fl_set_object_shortcut(self.psexobj, "S", 1)
 
-        self.pchildobj = fl_add_select(FL_MENU_SELECT, 280, 130, 110, 30,
-                                 "Children")
-        self.plicenceobj = fl_add_select(FL_NORMAL_SELECT, 280, 80, 110, 30, \
-                                   "Licence")
-        self.pmarriedobj = fl_add_select(FL_DROPLIST_SELECT, 70, 80, 110, 27,
-                                   "Married")
-        fl_set_object_boxtype(self.pmarriedobj, FL_UP_BOX)
-        fl_set_object_callback(self.pmarriedobj, self.cb, 0)
+        self.pchildobj = xfl.fl_add_select(xfl.FL_MENU_SELECT, 280, 130, \
+                110, 30, "Children")
+        self.plicenceobj = xfl.fl_add_select(xfl.FL_NORMAL_SELECT, 280, 80, \
+                110, 30, "Licence")
+        self.pmarriedobj = xfl.fl_add_select(xfl.FL_DROPLIST_SELECT, 70, 80, \
+                110, 27, "Married")
+        xfl.fl_set_object_boxtype(self.pmarriedobj, xfl.FL_UP_BOX)
+        xfl.fl_set_object_callback(self.pmarriedobj, self.cb, 0)
 
-        self.preadyobj = fl_add_button(FL_NORMAL_BUTTON, 150, 20, 140, 30, \
-                                 "Quit")
-        fl_set_object_callback(self.preadyobj, self.exitcb, 0)
+        self.preadyobj = xfl.fl_add_button(xfl.FL_NORMAL_BUTTON, 150, 20, \
+                140, 30, "Quit")
+        xfl.fl_set_object_callback(self.preadyobj, self.exitcb, 0)
 
-        fl_end_form()
-
+        xfl.fl_end_form()
 
 
 
 if __name__ == '__main__':
     appl = Choice(len(sys.argv), sys.argv)
-

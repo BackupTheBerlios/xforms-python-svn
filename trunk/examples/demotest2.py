@@ -13,69 +13,64 @@
 
 import sys
 #sys.path.append("..")
-from xformslib.flbasic import *
-from xformslib.flxbasic import *
-from xformslib.flgoodies import *
-from xformslib.xfdata import *
-
+import xformslib as xfl
 
 
 
 def timeout_remove_alert(idn, vdata):
-    fl_hide_alert()
+    xfl.fl_hide_alert()
 
 
 def main(lsysargv, sysargv):
 
-    fl_initialize(lsysargv, sysargv, "FormDemo", 0, 0)
+    xfl.fl_initialize(lsysargv, sysargv, "FormDemo", 0, 0)
 
-    fl_set_resource(FLOKLabel, "Go")
+    xfl.fl_set_resource(xfl.FLOKLabel, "Go")
 
-    if fl_show_question("Do you want bold font ?", 1):
-        fl_set_goodies_font(FL_BOLD_STYLE, FL_NORMAL_SIZE)
+    if xfl.fl_show_question("Do you want bold font ?", 1):
+        xfl.fl_set_goodies_font(xfl.FL_BOLD_STYLE, xfl.FL_NORMAL_SIZE)
 
-    fl_show_messages("This is a test program for the goodies of the"
-                        "forms library")
+    xfl.fl_show_messages("This is a test program for the goodies of the " \
+                        "xforms library")
 
-    fl_add_timeout(5000, timeout_remove_alert, 0)
-    fl_show_alert("Alert", "Alert form can be used to inform",
+    xfl.fl_add_timeout(5000, timeout_remove_alert, 0)
+    xfl.fl_show_alert("Alert", "Alert form can be used to inform",
                      "recoverable errors", 0)
 
-    if fl_show_question("Do you want to quit?", 0):
+    if xfl.fl_show_question("Do you want to quit?", 0):
         sys.exit(0)
 
-    s = fl_show_input("Give a string:", "" )
+    s = xfl.fl_show_input("Give a string:", "" )
     if s:
         str1 = s
     else:
         str1 = ""
 
-    fl_show_message("You typed:", "", str1)
-    choice = fl_show_choices("Pick a choice", 2, "One", "Two", "Three", 2)
+    xfl.fl_show_message("You typed:", "", str1)
+    choice = xfl.fl_show_choices("Pick a choice", 2, "One", "Two", "Three", 2)
 
     if choice == 1:
-        fl_show_message("You typed: One", "", "")
+        xfl.fl_show_message("You typed: One", "", "")
     elif choice == 2:
-        fl_show_message("You typed: Two", "", "")
+        xfl.fl_show_message("You typed: Two", "", "")
     elif choice == 3:
-        fl_show_message("You typed: Three", "", "")
+        xfl.fl_show_message("You typed: Three", "", "")
     else:
-        fl_show_message("An error occured!", "", "")
+        xfl.fl_show_message("An error occured!", "", "")
 
-    s = fl_show_input("Give another string:", str1)
+    s = xfl.fl_show_input("Give another string:", str1)
     if s:
         str2 = s
     else:
         str2 = "<Cancel>"
 
-    fl_show_message("You typed:", "", str2)
-    fl_show_messages("Good Bye")
+    xfl.fl_show_message("You typed:", "", str2)
+    xfl.fl_show_messages("Good Bye")
 
-    fl_finish()
+    xfl.fl_finish()
     return 0
 
 
 
 if __name__ == '__main__':
     main(len(sys.argv), sys.argv)
-
