@@ -1,6 +1,8 @@
 
 
 SVN
+    * New file flstruct.py for functions to prepare xfdata Structures to be
+    used in fl* functions. Some corrections in flnmenu and flpopup (WIP).
     * Realignment to upstream XForms version 1.0.94pre1. New mode for importing
     python package and examples' adjustment. Bugfixes. Some examples remain to
     adjust.

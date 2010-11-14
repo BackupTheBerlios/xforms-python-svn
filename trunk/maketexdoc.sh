@@ -21,5 +21,5 @@ epydoc -v -n xforms-python --docformat=restructuredtext --latex \
   xformslib/flslider.py xformslib/flspinner.py xformslib/fltabfolder.py \
   xformslib/flthumbwheel.py xformslib/fltimer.py xformslib/vers.py \
   xformslib/flxbasic.py xformslib/flxyplot.py xformslib/xfdata.py \
+  xformslib/flstruct.py \
   -o doc/tex --url http://xforms-python.berlios.de
-

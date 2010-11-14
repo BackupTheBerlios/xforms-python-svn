@@ -35,7 +35,7 @@ __all__ = ["flbasic", "flbitmap", "flbrowser", "flbutton", "flcanvas", \
           "flgoodies", "flinput", "flmisc", "flnmenu", "flpopup", \
           "flpositioner", "flscrollbar", "flselect", "flslider", \
            "flspinner", "fltabfolder", "flthumbwheel", "fltimer", \
-           "flxbasic", "flxyplot", "xfdata", "library"]
+           "flxbasic", "flxyplot", "xfdata", "library", "flstruct"]
 
 # deprecated module is meant to be explicitly imported!
 
@@ -69,4 +69,5 @@ from xformslib.fltimer import *
 from xformslib.flxbasic import *
 from xformslib.flxyplot import *
 from xformslib.xfdata import *
+from xformslib.flstruct import *
 

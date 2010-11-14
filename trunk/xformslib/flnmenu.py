@@ -231,7 +231,7 @@ def fl_insert_nmenu_items(pFlObject, pPopupEntry, entryitems_txt):
     libr.verify_flpopupentryptr_type(pPopupEntry)
     sentryitems_txt = libr.convert_to_string(entryitems_txt)
     libr.keep_elem_refs(pFlObject, pPopupEntry, entryitems_txt, \
-                        sentryitems_txt)
+            sentryitems_txt)
     retval = _fl_insert_nmenu_items(pFlObject, pPopupEntry, sentryitems_txt)
     return retval
 
@@ -275,9 +275,9 @@ def fl_replace_nmenu_item(pFlObject, pPopupEntry, entryitems_txt):
     libr.verify_flpopupentryptr_type(pPopupEntry)
     sentryitems_txt = libr.convert_to_string(entryitems_txt)
     libr.keep_elem_refs(pFlObject, pPopupEntry, entryitems_txt, \
-                        sentryitems_txt)
+            sentryitems_txt)
     retval = _fl_replace_nmenu_item(pFlObject, pPopupEntry, \
-                                    sentryitems_txtlst)
+            sentryitems_txt)
     return retval
 
 
@@ -408,7 +408,7 @@ def fl_insert_nmenu_items2(pFlObject, pPopupEntry, pPopupItem):
     _fl_insert_nmenu_items2 = libr.cfuncproto(
         libr.load_so_libforms(), "fl_insert_nmenu_items2",
         cty.POINTER(xfdata.FL_POPUP_ENTRY), [cty.POINTER(xfdata.FL_OBJECT),
-        cty.POINTER(xfdata.FL_POPUP_ENTRY), cty.POINTER(xfdata.FL_POPUP_ITEM)],
+        cty.c_void_p, cty.POINTER(xfdata.FL_POPUP_ITEM)],
         """FL_POPUP_ENTRY * fl_insert_nmenu_items2(FL_OBJECT * obj,
            FL_POPUP_ITEM * p2, FL_POPUP_ITEM * p3)""")
     libr.check_if_initialized()

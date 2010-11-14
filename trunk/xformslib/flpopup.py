@@ -73,7 +73,7 @@ def fl_popup_add(win, title):
     if not win:         # if it's None
         win = flxbasic.fl_root
     ulwin = libr.convert_to_Window(win)
-    if not title:       # if it's None
+    if not title:       # if it's None or ""
         title = ""
     stitle = libr.convert_to_string(title)
     libr.keep_elem_refs(win, title, ulwin, stitle)
@@ -81,7 +81,7 @@ def fl_popup_add(win, title):
     return retval
 
 
-def fl_popup_add_entries(pPopup, entryitems_txtlst):
+def fl_popup_add_entries(pPopup, entryitems_txt):
     """Adds one or more entries to a popup.
 
     --
@@ -89,15 +89,13 @@ def fl_popup_add_entries(pPopup, entryitems_txtlst):
     :Parameters:
       `pPopup` : pointer to xfdata.FL_POPUP
         popup class instance
-      `entryitems_txtlst` : list_of_str_and_any_type
-        list representing the text of the entry to be added and in-text
-        special sequences with or without separate or not separated additional
-        arguments (if needed). Text may contain `|` to separate entries and
-        newline characters which allows to create entries that span more than
-        a single line. Special sequences who are allowed are: %x, %u, %f, %E,
-        %L, %m, %T or %t, %R or %r, %l, %d, %h, %S, %s, %%. Up to 20
-        additional separated arguments are supported in xforms-python
-        currently, only.
+      `entryitems_txt` : str
+        text of the entry to be added and in-text special sequences with or
+        without not separated additional arguments (if needed). Text may
+        contain `|` to separate entries and newline characters which allows
+        to create entries that span more than a single line. Special sequences
+        who are allowed are: %x, %u, %f, %E, %L, %m, %T or %t, %R or %r, %l,
+        %d, %h, %S, %s, %%.
 
     :return: popup entry, or None (on failure)
     :rtype: pointer to xfdata.FL_POPUP
@@ -112,25 +110,18 @@ def fl_popup_add_entries(pPopup, entryitems_txtlst):
     _fl_popup_add_entries = libr.cfuncproto(
         libr.load_so_libforms(), "fl_popup_add_entries",
         cty.POINTER(xfdata.FL_POPUP_ENTRY), [cty.POINTER(xfdata.FL_POPUP),
-        xfdata.STRING, cty.c_void_p, cty.c_void_p, cty.c_void_p, cty.c_void_p,
-        cty.c_void_p, cty.c_void_p, cty.c_void_p, cty.c_void_p, cty.c_void_p,
-        cty.c_void_p, cty.c_void_p, cty.c_void_p, cty.c_void_p, cty.c_void_p,
-        cty.c_void_p, cty.c_void_p, cty.c_void_p, cty.c_void_p, cty.c_void_p,
-        cty.c_void_p],
+        xfdata.STRING],
         """FL_POPUP_ENTRY * fl_popup_add_entries(FL_POPUP * p1,
            const char * p2, ...)""")
     libr.check_if_initialized()
     libr.verify_flpopupptr_type(pPopup)
-    # first str + 20 additional args max
-    tmpentryitems_txtlst, finalentryitems_txtlst = \
-        libr.create_argslist_for_entrytxt(entryitems_txtlst, 21)
-    libr.keep_elem_refs(pPopup, entryitems_txtlst, tmpentryitems_txtlst, \
-        finalentryitems_txtlst)
-    retval = _fl_popup_add_entries(pPopup, *finalentryitems_txtlst)
+    sentryitems_txt = libr.convert_to_string(entryitems_txt)
+    libr.keep_elem_refs(pPopup, entryitems_txt, sentryitems_txt)
+    retval = _fl_popup_add_entries(pPopup, sentryitems_txt)
     return retval
 
 
-def fl_popup_insert_entries(pPopup, pPopupEntry, entryitems_txtlst):
+def fl_popup_insert_entries(pPopup, pPopupEntry, entryitems_txt):
     """Inserts one or more entries into a popup.
 
     --
@@ -141,15 +132,13 @@ def fl_popup_insert_entries(pPopup, pPopupEntry, entryitems_txtlst):
       `pPopupEntry` : pointer to xfdata.FL_POPUP_ENTRY
         popup entry after which entry is inserted. If it's 'None', it inserts
         items at the very start.
-      `entryitems_txtlst` : list_of_str_and_any_type
-        list representing the text of the entry to be added and in-text
-        special sequences with or without separate or not separated additional
-        arguments (if needed). Text may contain `|` to separate entries and
-        newline characters which allows to create entries that span more than
-        a single line. Special sequences who are allowed are: %x, %u, %f, %E,
-        %L, %m, %T or %t, %R or %r, %l, %d, %h, %S, %s, %%. Up to 20
-        additional separated arguments are supported in xforms-python
-        currently, only.
+      `entryitems_txt` : str
+        text of the entry to be added and in-text special sequences with or
+        without not separated additional arguments (if needed). Text may
+        contain `|` to separate entries and newline characters which allows
+        to create entries that span more than a single line. Special sequences
+        who are allowed are: %x, %u, %f, %E, %L, %m, %T or %t, %R or %r, %l,
+        %d, %h, %S, %s, %%.
 
     :return: popup entry inserted, or None (on failure)
     :rtype: pointer to xfdata.FL_POPUP_ENTRY
@@ -164,11 +153,7 @@ def fl_popup_insert_entries(pPopup, pPopupEntry, entryitems_txtlst):
     _fl_popup_insert_entries = libr.cfuncproto(
         libr.load_so_libforms(), "fl_popup_insert_entries",
         cty.POINTER(xfdata.FL_POPUP_ENTRY), [cty.POINTER(xfdata.FL_POPUP),
-        cty.POINTER(xfdata.FL_POPUP_ENTRY), xfdata.STRING, cty.c_void_p,
-        cty.c_void_p, cty.c_void_p, cty.c_void_p, cty.c_void_p, cty.c_void_p,
-        cty.c_void_p, cty.c_void_p, cty.c_void_p, cty.c_void_p, cty.c_void_p,
-        cty.c_void_p, cty.c_void_p, cty.c_void_p, cty.c_void_p, cty.c_void_p,
-        cty.c_void_p, cty.c_void_p, cty.c_void_p, cty.c_void_p],
+        cty.c_void_p, xfdata.STRING],
         """FL_POPUP_ENTRY * fl_popup_insert_entries(FL_POPUP * p1,
            FL_POPUP_ENTRY * p2, const char * p3, ...)""")
     libr.check_if_initialized()
@@ -178,17 +163,15 @@ def fl_popup_insert_entries(pPopup, pPopupEntry, entryitems_txtlst):
     else:                       # real FL_POPUP_ENTRY pointer
         pPopupEntry_alt = pPopupEntry
         libr.verify_flpopupentryptr_type(pPopupEntry_alt)
-    # first str + 20 additional args max
-    tmpentryitems_txtlst, finalentryitems_txtlst = \
-        libr.create_argslist_for_entrytxt(entryitems_txtlst, 21)
+    sentryitems_txt = libr.convert_to_string(entryitems_txt)
     libr.keep_elem_refs(pPopup, pPopupEntry, pPopupEntry_alt, \
-            entryitems_txtlst, tmpentryitems_txtlst, finalentryitems_txtlst)
+            entryitems_txt, sentryitems_txt)
     retval = _fl_popup_insert_entries(pPopup, pPopupEntry_alt, \
-                                      *finalentryitems_txtlst)
+            sentryitems_txt)
     return retval
 
 
-def fl_popup_create(win, title, datavar_for_pPopupItem):
+def fl_popup_create(win, title, pPopupItem):
     """Creates a popup. It doesn't allow to associate values or pointers to
     user data to individual entries, set titles for sub-popups, have radio
     entries belong to different groups or set enter or leave callback
@@ -205,9 +188,8 @@ def fl_popup_create(win, title, datavar_for_pPopupItem):
         not wanted, pass an empty string or 'None'. It may contain embedded
         newline characters, this allows to create titles that span more than
         one line.
-      `datavar_for_pPopupItem` : dict or single list or list of lists
-        data to be used to create a popup item. Data must contain elements
-        from xfdata.FL_POPUP_ITEM.
+      `pPopupItem` : pointer to xfdata.FL_POPUP_ITEM
+        new popup item to be created.
 
     :return: popup created, or None (on failure)
     :rtype: pointer to xfdata.FL_POPUP
@@ -227,23 +209,16 @@ def fl_popup_create(win, title, datavar_for_pPopupItem):
     if not win:         # if it's None
         win = flxbasic.fl_root
     ulwin = libr.convert_to_Window(win)
-    if not title:       # if it's None
+    if not title:       # if it's None or ""
         title = ""
     stitle = libr.convert_to_string(title)
-    if isinstance(datavar_for_pPopupItem, dict):
-        # it's a dict
-        pPopupItem = libr.create_pPopupItem_from_dict(datavar_for_pPopupItem)
-    elif isinstance(datavar_for_pPopupItem, list):
-        # it's list or list of lists
-        pPopupItem = libr.create_pPopupItem_from_list(datavar_for_pPopupItem)
     libr.verify_flpopupitemptr_type(pPopupItem)
-    libr.keep_elem_refs(win, title, datavar_for_pPopupItem, pPopupItem, ulwin,
-                        stitle)
+    libr.keep_elem_refs(win, title, pPopupItem, ulwin, stitle)
     retval = _fl_popup_create(ulwin, stitle, pPopupItem)
     return retval
 
 
-def fl_popup_add_items(pPopup, datavar_for_pPopupItem):
+def fl_popup_add_items(pPopup, pPopupItem):
     """Adds one or more items to a popup.
 
     --
@@ -251,9 +226,8 @@ def fl_popup_add_items(pPopup, datavar_for_pPopupItem):
     :Parameters:
       `pPopup` : pointer to xfdata.FL_POPUP
         popup class instance
-      `datavar_for_pPopupItem` : dict or single list or list of lists
-        data to be used to create a popup item. Data must contain elements
-        from xfdata.FL_POPUP_ITEM.
+      `pPopupItem` : pointer to xfdata.FL_POPUP_ITEM
+        new popup item to be added.
 
     :return: popup entry, or None
     :rtype: pointer to xfdata.FL_POPUP_ENTRY
@@ -271,26 +245,13 @@ def fl_popup_add_items(pPopup, datavar_for_pPopupItem):
            FL_POPUP_ITEM * p2)""")
     libr.check_if_initialized()
     libr.verify_flpopupptr_type(pPopup)
-    if isinstance(datavar_for_pPopupItem, dict):
-        # it's a dict
-        PopupItem, pPopupItem = libr.create_pPopupItem_from_dict( \
-            datavar_for_pPopupItem)
-        print "datavar is dict", datavar_for_pPopupItem, "pPopIt", pPopupItem, \
-            "PopIt", PopupItem
-    elif isinstance(datavar_for_pPopupItem, list):
-        # it's list or list of lists
-        pPopupItem = libr.create_pPopupItem_from_list(datavar_for_pPopupItem)
-    else:
-        pPopupItem = cty.cast(datavar_for_pPopupItem, cty.POINTER( \
-            xfdata.FL_POPUP_ITEM))
-        #PopupItem = pPopupItem
     libr.verify_flpopupitemptr_type(pPopupItem)
-    libr.keep_elem_refs(pPopup, datavar_for_pPopupItem, pPopupItem)
+    libr.keep_elem_refs(pPopup, pPopupItem)
     retval = _fl_popup_add_items(pPopup, pPopupItem)
     return retval
 
 
-def fl_popup_insert_items(pPopup, pPopupEntry, datavar_for_pPopupItem):
+def fl_popup_insert_items(pPopup, pPopupEntry, pPopupItem):
     """Inserts entries into a popup.
 
     --
@@ -301,9 +262,8 @@ def fl_popup_insert_items(pPopup, pPopupEntry, datavar_for_pPopupItem):
       `pPopupEntry` : pointer to xfdata.FL_POPUP_ENTRY
         popup entry after which items are inserted. If it's 'None', items are
         inserted at the very start.
-      `datavar_for_pPopupItem` : dict or single list or list of lists
-        data to be used to create a popup item. Data must contain elements
-        from xfdata.FL_POPUP_ITEM.
+      `pPopupItem` : pointer to xfdata.FL_POPUP_ITEM
+        new popup item to be inserted.
 
     :return: popup entry
     :rtype: pointer to xfdata.FL_POPUP_ENTRY
@@ -322,23 +282,14 @@ def fl_popup_insert_items(pPopup, pPopupEntry, datavar_for_pPopupItem):
     libr.check_if_initialized()
     libr.verify_flpopupptr_type(pPopup)
     libr.verify_flpopupentryptr_type(pPopupEntry)
-    print datavar_for_pPopupItem, type(datavar_for_pPopupItem)
-    if isinstance(datavar_for_pPopupItem, dict):
-        # it's a dict
-        pPopupItem = libr.create_pPopupItem_from_dict(datavar_for_pPopupItem)
-    elif isinstance(datavar_for_pPopupItem, list):
-        # it's list or list of lists
-        pPopupItem = libr.create_pPopupItem_from_list(datavar_for_pPopupItem)
-    print pPopupItem
     libr.verify_flpopupitemptr_type(pPopupItem)
-    libr.keep_elem_refs(pPopup, pPopupEntry, datavar_for_pPopupItem,
-                        pPopupItem)
+    libr.keep_elem_refs(pPopup, pPopupEntry, pPopupItem)
     retval = _fl_popup_insert_items(pPopup, pPopupEntry, pPopupItem)
     return retval
 
 
 def fl_popup_delete(pPopup):
-    """Deletes a popup. It?s not possible to call the function while the
+    """Deletes a popup. It is not possible to call the function while the
     popup is still visible on the screen. Calling it from any callback
     function is problematic unless you know for sure that the popup to be
     deleted (and sub-popups of it) won't be used later and thus normally
