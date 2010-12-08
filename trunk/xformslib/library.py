@@ -121,7 +121,7 @@ def verify_version_compatibility():
 
 
 def func_notexisting_placeholder(cfunction):
-    """ Print a warning if called function doesn't exist """
+    """ Print a warning if called function does not exist """
     warningmsg = "C function %s does NOT exist, hence it is not wrappable" \
             " and callable in python and its call is ignored. Maybe " \
             "removed or disabled?" % cfunction
@@ -206,7 +206,7 @@ def cfuncproto(library, cfuncname, retval, arglist, doc=""):
     try:
         loadedfunc = getattr(library, cfuncname)
     except AttributeError:
-        # function doesn't exist
+        # function does not exist
         loadedfunc = func_notexisting_placeholder(cfuncname)
     else:
         loadedfunc.restype = retval
@@ -521,3 +521,4 @@ def donothing_popupcb(pPopupReturn):
     """ It replaces a callback function not defined for class instances
     as e.g. xfdata.FL_POPUP_ITEM    *temporary* """
     return 0
+

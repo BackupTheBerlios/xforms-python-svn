@@ -1,5 +1,6 @@
 #!/bin/env python
 # -*- coding: iso8859-1 -*-
+
 """
     xforms-python - Python wrapper for XForms (X11) GUI C toolkit library
     using ctypes.
@@ -23,9 +24,6 @@
     ctypes and other developers.
 """
 
-# for epydoc
-__docformat__ = "restructuredtext en"    # to be used with epydoc doc
-
 
 #raise ImportError("This file is not meant to be imported directly.")
 
@@ -35,9 +33,7 @@ __all__ = ["flbasic", "flbitmap", "flbrowser", "flbutton", "flcanvas", \
           "flgoodies", "flinput", "flmisc", "flnmenu", "flpopup", \
           "flpositioner", "flscrollbar", "flselect", "flslider", \
            "flspinner", "fltabfolder", "flthumbwheel", "fltimer", \
-           "flxbasic", "flxyplot", "xfdata", "library", "flstruct"]
-
-# deprecated module is meant to be explicitly imported!
+           "flxbasic", "flxyplot", "xfdata", "library", "xfstruct"]
 
 from xformslib.flbasic import *
 from xformslib.flbitmap import *
@@ -69,5 +65,5 @@ from xformslib.fltimer import *
 from xformslib.flxbasic import *
 from xformslib.flxyplot import *
 from xformslib.xfdata import *
-from xformslib.flstruct import *
+from xformslib.xfstruct import *
 
