@@ -1,6 +1,10 @@
 
 
 SVN
+    * Simplified documentation layout (now you don't need epydoc anymore),
+    html files are now generated using pydoc. Massime docstrings reorganization.
+    Bugfixes and typos' correction. flstruct.py renamed to xfstruct (as it is not
+    part of upstream XForms).
     * New file flstruct.py for functions to prepare xfdata Structures to be
     used in fl* functions. Some corrections in flnmenu and flpopup (WIP).
     * Realignment to upstream XForms version 1.0.94pre1. New mode for importing

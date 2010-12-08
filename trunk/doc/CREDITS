@@ -1,4 +1,4 @@
-This work could not be possible without these really great people
+This work could not be possible without the following really great people
 I owe huge thanks and a respectful acknowledgement to:
 
 
@@ -17,13 +17,12 @@ Copyright owners and original authors:
 Past and current maintainers:
 Jean-Marc Lasgouttes, Angus Leeming, Jens Thoms Toerring
 
-Same acknowlegement applies to XForms documentation as I've used plenty of
-it for functions' descriptions and variables docstrings and .tex files.
+Same acknowlegement applies to XForms documentation as I've used plenty
+of it for functions' descriptions, classes and variables docstrings.
 
 I would particularly mention Jens Thoms Toerring for his dedication,
 helpfulness and patience with problems I've found while implementing
 this python port, thus a special commendation goes to him.
-
 
 
 ###########################################
@@ -41,5 +40,6 @@ Copyright owner and author:
 I wish to thank also:
 - Python author and maintainers (for python standard library)
 and
-- Xorg X11 Window System developers (for some constants from X-Window system)
+- Xorg X11 Window System developers (for some constants and structures from
+X-Window system include files I had to use, and correlative X documentation).
 

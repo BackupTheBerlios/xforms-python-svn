@@ -3,17 +3,13 @@ This file describes documentation currently available for xforms-python.
 
 If you need a guidance to xforms-python API, you should read (in this order):
 
-* LaTex documentation (.tex) files in doc/tex/ directory, as API reference
-(you may create .pdf or .html documentation by yourself or using existing one,
-if already updated)
+* HTML documentation (.html) files in doc/ directory, as API reference.
 * demos examples in examples/ directory
 * XForms-toolkit documentation (.html or .tex files) available from
 XForms homepage (http://www.xforms-toolkit.org): most of XForms docs
 applies also to xforms-python, with some adaptations (e.g. python language
 specific instead of C's, some functions have a different API, different
 purpose and number of parameters, etc..). This is a really good guide.
-
-You can produce .pdf file from .tex, using a provided script.
 
 
 Every fl* function has a status representing its current development state:
@@ -31,4 +27,3 @@ c) presence of demo/example:
 d) Usable state:
     1) OK: it is usable (if Tested and Demo-ed, or Tested and Documented)
     2) NOT OK: its usage is not verified or it fails under some conditions
-

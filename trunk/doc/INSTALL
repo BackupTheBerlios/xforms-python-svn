@@ -1,5 +1,5 @@
 xforms-python requires at least Python 2.6.x (or python 2.5.x
-with the most recent ctypes). It doesn't support Python 3.x yet.
+with the most recent ctypes). It does not support Python 3.x yet.
 
 It requires:
 - python standard library modules (including ctypes), and
@@ -10,7 +10,7 @@ To install this package (including python modules and documentation),
 simply run the following with root's privileges:
    python ./setup.py build install
 
-Documentation files (except API docs) are installed in
+Documentation files (API docs included) are installed in
 "/usr/doc/xforms-python-$VERSION/", by default.
 If your operating system/distribution uses another directory for doc
 files, you may use, e.g.:
@@ -27,11 +27,7 @@ you may use:
 (to install in "<otherdir>")
 
 
-To install API docs (LaTex format) you have to copy doc/tex/ directory.
-
-
 This software is mainly intended to be used on GNU/Linux. For other
 operating systems your mileage may vary.
 
 Read TODO file for usage limitations.
-
