@@ -335,7 +335,8 @@ def fl_add_canvas_handler(pFlObject, xev, py_HandleCanvas, vdata):
             old canvas handler function
 
     Examples
-    -------- *todo*
+    --------
+        >>> *todo*
 
     Notes
     -----

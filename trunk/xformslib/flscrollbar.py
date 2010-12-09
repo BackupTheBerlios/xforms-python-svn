@@ -75,7 +75,7 @@ def fl_add_scrollbar(scrolltype, x, y, w, h, label):
 
     Examples
     --------
-        >>> scrbobj = fl_add_scrollbar(scrolltype, 182, 140, 50, 150, \
+        >>> scrbobj = fl_add_scrollbar(scrolltype, 182, 140, 50, 150,
                 "MyScrollbar")
 
     Notes

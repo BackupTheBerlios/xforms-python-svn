@@ -77,7 +77,7 @@ def fl_add_xyplot(plottype, x, y, w, h, label):
  
     Examples
     --------
-        >>> xyplobj = fl_add_xyplot(xfdata.FL_CIRCLE_XYPLOT, \
+        >>> xyplobj = fl_add_xyplot(xfdata.FL_CIRCLE_XYPLOT,
                 124, 145, 320, 230, "MyXyplot")
 
     Notes
@@ -1100,8 +1100,8 @@ def fl_delete_xyplot_overlay(pFlObject, ovlid):
         pFlObject : pointer to xfdata.FL_OBJECT
             xyplot object
         ovlid : int
-            overlay id. Values between 1 and xfdata.FL_MAX_XYPLOTOVERLAY or
-            the number set via fl_set_xyplot_maxoverlays()
+            overlay id. Values between 1 and xfdata.FL_MAX_XYPLOTOVERLAY
+            or the number set via fl_set_xyplot_maxoverlays()
 
     Examples
     --------

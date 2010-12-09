@@ -337,5 +337,3 @@ def make_flpopupitem(dictofpopupitems):
 #            # every other type
 #            finallist[e] = singlelist2[e]
 #    return singlelist2, finallist
-
-

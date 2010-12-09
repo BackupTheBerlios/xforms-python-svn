@@ -73,7 +73,7 @@ def fl_add_box(boxtype, x, y, w, h, label):
 
     Examples
     --------
-        >>> boxobj = fl_add_box(xfdata.FL_UP_BOX, 120, 150, 200, 250, \
+        >>> boxobj = fl_add_box(xfdata.FL_UP_BOX, 120, 150, 200, 250,
                 "MyBox")
 
     Notes
@@ -367,7 +367,7 @@ def fl_add_frame(frametype, x, y, w, h, label):
 
     Examples
     --------
-        >>> frmobj = fl_add_frame(xfdsata.FL_BORDER_FRAME, 100, 100, \
+        >>> frmobj = fl_add_frame(xfdsata.FL_BORDER_FRAME, 100, 100,
                 400, 300, "MyFrame")
 
     Notes
@@ -431,7 +431,7 @@ def fl_add_labelframe(frametype, x, y, w, h, label):
 
     Examples
     --------
-        >>> lfrmobj = fl_add_labelframe(xfdsata.FL_SHADOW_FRAME, 100, 100, \
+        >>> lfrmobj = fl_add_labelframe(xfdsata.FL_SHADOW_FRAME, 100, 100,
                 400, 300, "MyFrame")
 
     Notes

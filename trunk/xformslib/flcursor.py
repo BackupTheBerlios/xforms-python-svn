@@ -89,7 +89,7 @@ def fl_set_cursor_color(cursnum, fgcolr, bgcolr):
 
     Examples
     --------
-        >>> fl_set_cursor_color(FL_CROSSHAIR_CURSOR, xfdata.FL_WHITE,
+        >>> fl_set_cursor_color(xfdata.FL_CROSSHAIR_CURSOR, xfdata.FL_WHITE,
                 xfdata.FL_ORANGE)
 
     Notes

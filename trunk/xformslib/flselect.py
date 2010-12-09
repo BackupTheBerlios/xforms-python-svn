@@ -76,7 +76,7 @@ def fl_add_select(selecttype, x, y, w, h, label):
 
     Examples
     --------
-        >>> selobj = fl_add_select(xfdata.FL_NORMAL_SELECT, \
+        >>> selobj = fl_add_select(xfdata.FL_NORMAL_SELECT,
                 120, 140, 250, 250, "MySelect")
 
     Notes
@@ -530,11 +530,13 @@ def fl_set_select_item(pFlObject, pPopupEntry):
             popup return
 
     Examples
-    -------->>> *todo*
+    --------
+        >>> *todo*
 
     Notes
     -----
-        Status: HalfTested + NoDoc + Demo = NOT OK (FL_POPUP_ENTRY not prepared)
+        Status: HalfTested + NoDoc + Demo = NOT OK (FL_POPUP_ENTRY not
+        prepared)
 
     """
     _fl_set_select_item = library.cfuncproto(
@@ -826,8 +828,8 @@ def fl_set_select_text_font(pFlObject, style, size):
 
     Examples
     --------
-        >>> rslt = fl_set_select_text_font(selobj, \
-                xfdata.FL_TIMESBOLD_STYLE, xfdata.Fl_LARGE_SIZE)
+        >>> rslt = fl_set_select_text_font(selobj,
+                xfdata.FL_TIMESBOLD_STYLE, xfdata.FL_LARGE_SIZE)
 
     Notes
     -----

@@ -99,7 +99,7 @@ def fl_add_io_callback(fd, mask, py_IoCallback, vdata):
             a valid file descriptor in a unix system from an opened file
         mask : int
             under what circumstance the input callback should be invoked.
-            Admitted values (from xfdata.py) are FL_READ, FL_WRITE, FL_EXCEPT
+            Values (from xfdata.py) are FL_READ, FL_WRITE, FL_EXCEPT
         py_IoCallback : python function to be invoked, no return
             name referring to function(num, vdata)
         vdata : any type (e.g. 'None', int, str, etc..)
@@ -147,7 +147,7 @@ def fl_remove_io_callback(fd, mask, py_IoCallback):
             a valid file descriptor in a unix system
         mask : int
             under what circumstance the input callback should be removed.
-            Admitted values (from xfdata.py) are FL_READ, FL_WRITE, FL_EXCEPT
+            Values (from xfdata.py) are FL_READ, FL_WRITE, FL_EXCEPT
         py_IoCallback : python function to be removed, no return
             name referring to function(num, vdata)
 
@@ -191,7 +191,7 @@ def fl_add_signal_callback(sglnum, py_SignalHandler, vdata):
     Parameters
     ----------
         sglnum : int
-            signal number. Admitted values (from external signal module)
+            signal number. Values (from external signal module)
             SIGALRM, SIGINT, ...
         py_SignalHandler : callback invoked after catching signal, no return
             name referring to function(num, vdata)
@@ -234,7 +234,7 @@ def fl_remove_signal_callback(sglnum):
     Parameters
     ----------
         sglnum : int
-            signal number. Admitted values (from external signal module)
+            signal number. Values (from external signal module)
             SIGALRM, SIGINT, ...
 
     Examples
@@ -265,7 +265,7 @@ def fl_signal_caught(sglnum):
     Parameters
     ----------
         sglnum : int
-            signal number. Admitted values (from external signal module)
+            signal number. Values (from external signal module)
             SIGALRM, SIGINT, ...
 
     Examples
@@ -297,7 +297,7 @@ def fl_app_signal_direct(yesno):
     Parameters
     ----------
         yesno : int
-            flag to disable/enable signal. Admitted values 0 (disabled) or
+            flag to disable/enable signal. Values 0 (disabled) or
             1 (enabled)
 
     Examples
@@ -327,7 +327,7 @@ def fl_input_end_return_handling(endtype):
     Parameters
     ----------
         endtype : int
-            how end return event for input is handled. Admitted values (from
+            how end return event for input is handled. Values (from
             xfdata.py) FL_INPUT_END_EVENT_ALWAYS (default) or
             FL_INPUT_END_EVENT_CLASSIC (old behavior)
 
@@ -442,7 +442,7 @@ def fl_remove_timeout(timerid):
 def fl_library_version():
     """fl_library_version()
     
-    Returns consolidated, major and minor version informations.
+    Obtains consolidated, major and minor version informations.
 
     Returns
     -------
@@ -470,7 +470,7 @@ def fl_library_version():
         library.load_so_libforms(), "fl_library_version", \
         cty.c_int, [cty.POINTER(cty.c_int), cty.POINTER(cty.c_int)], \
         """int fl_library_version(int * ver, int * rev) """)
-    library.check_if_initialized()
+    #library.check_if_initialized()
     ver, pver = library.make_int_and_pointer()
     rev, prev = library.make_int_and_pointer()
     library.keep_elem_refs(ver, rev, pver, prev)
@@ -488,7 +488,7 @@ def fl_bgn_form(formtype, w, h):
     Parameters
     ----------
         formtype : int
-            type of box used as a background. Admitted values (from xfdata.py)
+            type of box used as a background. Values (from xfdata.py)
             FL_NO_BOX, FL_UP_BOX, FL_DOWN_BOX, FL_BORDER_BOX, FL_SHADOW_BOX,
             FL_FRAME_BOX, FL_ROUNDED_BOX, FL_EMBOSSED_BOX, FL_FLAT_BOX,
             FL_RFLAT_BOX, FL_RSHADOW_BOX, FL_OVAL_BOX, FL_ROUNDED3D_UPBOX,
@@ -598,9 +598,7 @@ def fl_check_forms():
 
     Notes
     -----
-        Notes
------
-Status: Tested + Doc + Demo = OK
+        Status: Tested + Doc + Demo = OK
 
     """
     _fl_check_forms = library.cfuncproto(
@@ -621,6 +619,7 @@ def fl_do_only_forms():
     similar routines.
 
     Returns
+    -------
         pFlObject : pointer to xfdata.FL_OBJECT
             object changed
 
@@ -630,9 +629,7 @@ def fl_do_only_forms():
 
     Notes
     -----
-        Notes
------
-Status: Tested + Doc + NoDemo = OK
+        Status: Tested + Doc + NoDemo = OK
 
     """
     _fl_do_only_forms = library.cfuncproto(
@@ -662,9 +659,7 @@ def fl_check_only_forms():
 
     Notes
     -----
-        Notes
------
-Status: Tested + Doc + NoDemo = OK
+        Status: Tested + Doc + NoDemo = OK
 
     """
     _fl_check_only_forms = library.cfuncproto(
@@ -693,9 +688,7 @@ def fl_freeze_form(pFlForm):
 
     Notes
     -----
-        Notes
------
-Status: Tested + Doc + Demo = OK
+        Status: Tested + Doc + Demo = OK
 
     """
     _fl_freeze_form = library.cfuncproto(
@@ -908,7 +901,7 @@ def fl_set_atclose(py_FormAtclose, vdata):
 def fl_set_form_atactivate(pFlForm, py_FormAtactivate, vdata):
     """fl_set_form_atactivate(pFlForm, py_FormAtactivate, vdata)
     
-    Register a callback that is called when activation status of a forms
+    Registers a callback that is called when activation status of a forms
     is enabled.
 
     Parameters
@@ -959,7 +952,7 @@ def fl_set_form_atactivate(pFlForm, py_FormAtactivate, vdata):
 def fl_set_form_atdeactivate(pFlForm, py_FormAtdeactivate, vdata):
     """fl_set_form_atdeactivate(pFlForm, py_FormAtdeactivate, vdata)
     
-    Register a callback that is called when activation status of a forms
+    Registers a callback that is called when activation status of a forms
     is disabled.
 
     Parameters
@@ -1021,7 +1014,7 @@ def fl_unfreeze_form(pFlForm):
 
     Examples
     --------
-    >>> fl_unfreeze_form(pform)
+        >>> fl_unfreeze_form(pform)
 
     Notes
     -----
@@ -1276,7 +1269,7 @@ def fl_set_form_title(pFlForm, title):
 
     Examples
     --------
-    >>> fl_set_form_title(pform, "My great form")
+        >>> fl_set_form_title(pform, "My great form")
 
     Notes
     -----
@@ -1404,8 +1397,8 @@ def fl_set_form_callback(pFlForm, py_FormCallbackPtr, vdata):
         py_FormCallbackPtr : python callback to be set, no return
             name referring to function(pFlObject, vdata)
         vdata : any type (e.g. 'None', int, str, etc..)
-            user data to be passed to function; callback has to take care of
-            type check
+            user data to be passed to function; callback has to take care
+            of type check
 
     Examples
     --------
@@ -1635,8 +1628,8 @@ def fl_set_form_event_cmask(pFlForm, cmask):
         pFlForm : pointer to xfdata.FL_FORM
             form
         cmask : long_pos
-            event compress mask for form. Values (from xfdata.py) one or more
-            OR-ed between NoEventMask, KeyPressMask, KeyReleaseMask,
+            event compress mask for form. Values (from xfdata.py) one or
+            more OR-ed between NoEventMask, KeyPressMask, KeyReleaseMask,
             ButtonPressMask, ButtonReleaseMask, EnterWindowMask,
             LeaveWindowMask, PointerMotionMask, PointerMotionHintMask,
             Button1MotionMask, Button2MotionMask, Button3MotionMask,
@@ -1670,7 +1663,7 @@ def fl_set_form_event_cmask(pFlForm, cmask):
 def fl_get_form_event_cmask(pFlForm):
     """fl_get_form_event_cmask(pFlForm)
     
-    Returns event compress mask a form can react to.
+    Obtains event compress mask a form can react to.
 
     Parameters
     ----------
@@ -2100,7 +2093,7 @@ def fl_form_is_visible(pFlForm):
 def fl_form_is_iconified(pFlForm):
     """fl_form_is_iconified(pFlForm)
     
-    Returns if a form's window is in iconified state or not.
+    Tells if a form's window is in iconified state or not.
 
     Parameters
     ----------
@@ -2396,7 +2389,7 @@ def fl_set_object_boxtype(pFlObject, boxtype):
 def fl_get_object_boxtype(pFlObject):
     """fl_get_object_boxtype(pFlObject)
     
-    Returns the current boxtype of an object (e.g. no box, up box,
+    Obtains the current boxtype of an object (e.g. no box, up box,
     shadow box, etc..).
 
     Parameters
@@ -2554,7 +2547,7 @@ def fl_get_object_resize(pFlObject):
 
     Examples
     --------
-    >>> reszprop = fl_get_object_resize(pobj)
+        >>> reszprop = fl_get_object_resize(pobj)
 
     API_diversion
     ----------
@@ -3620,7 +3613,7 @@ fl_draw_object_outside_label = fl_draw_object_label_outside
 def fl_get_object_component(pFlObject, objclass, compontype, seqnum):
     """fl_get_object_component(pFlObject, objclass, compontype, seqnum)
     
-    Returns the object that is a component of a composite object. E.g. the
+    Obtains the object that is a component of a composite object. E.g. the
     scrollbar object is made of a slider and two scroll buttons.
 
     Parameters
@@ -6851,7 +6844,7 @@ def fl_set_error_handler(py_ErrorFunc):
 # commented as it gives a SegFault
 #def fl_get_cmdline_args(argnum):
 #    """fl_get_cmdline_args(argnum)
-#    Returns command line arguments.
+#    Obtains command line arguments.
 #
 #    Parameters
 #    ----------

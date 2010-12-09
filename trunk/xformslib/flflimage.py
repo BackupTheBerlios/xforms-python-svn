@@ -1251,7 +1251,7 @@ def flimage_ps_options():
 
     Examples
     --------
-        flimage_ps_options()
+        >>> flimage_ps_options()
 
     Notes
     -----

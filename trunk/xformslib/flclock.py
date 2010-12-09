@@ -71,7 +71,7 @@ def fl_add_clock(clocktype, x, y, w, h, label):
     Examples
     --------
         >>> clkobj = fl_add_clock(xfdata.FL_ANALOG_CLOCK, 150, 210,
-                    220, 200, "My great clock")
+                220, 200, "My great clock")
 
     Notes
     -----

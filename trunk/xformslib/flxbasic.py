@@ -1452,7 +1452,7 @@ def fl_drw_frame(boxtype, x, y, w, h, colr, bw):
     Examples
     --------
         >>> fl_drw_frame(xfdata.FL_UP_BOX, 470, 560, 170, 280,
-                    xfdata.FL_DIMGRAY, 2)
+                xfdata.FL_DIMGRAY, 2)
 
     Notes
     -----
@@ -1568,7 +1568,7 @@ def fl_get_fontstruct(style, size):
 
     Examples
     --------
-        >>> pfstruc = fl_get_fontstruct(xfdata.FL_ITALIC_STYLE, \
+        >>> pfstruc = fl_get_fontstruct(xfdata.FL_ITALIC_STYLE,
                 xfdata.FL_NORMAL_STYLE)
 
     Notes
@@ -3308,6 +3308,7 @@ def FL_IS_CANVAS(pFlObject):
 
 
 # The window an object belongs to - for drawing
+
 def FL_ObjWin(pFlObject):
     """FL_ObjWin(pFlObject)
     

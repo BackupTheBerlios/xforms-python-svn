@@ -7,7 +7,7 @@ here use a 3-types approach when possible: None, long, or FL_OBJECT.
 - To compare two FL-objects you can use fl_is_same_object(..),
 instead of using 'if obj == someobj'
 - For some functions who use some parameters as an address
-value (e.g. in c: &a) that is modified by the function
+value (e.g. in C: &a) that is modified by the function
 itself, there has been a change in API so these arguments
 represent multiple return values here.
 - First two parameters of fl_initialize (len(sys.argv) and
@@ -17,16 +17,17 @@ so command line arguments are not usable.
 consistent, until version 1.0.0 will be released. So library
 name and directory layout might change in order to achieve
 a better reorganization.
-- some ported-to-python XForms c function are for internal
+- some ported-to-python XForms C functions are for internal
 use or low level work in XForms: as maybe they are not useful
-in python, will be commented/disabled, when I find all of them.
+in python, they will be commented/disabled, when I find all of
+them.
 - this software is mainly focused on GNU/Linux operating
 systems. Apple MacOS and MS Windows are not supported, yet.
 Other unix-like operating systems may or may not be working.
 - not all public functions are working, for now. I am quite
 sure public functions used by examples in related directory
 are working well. Other ones are being tested on case-by-case
-basis (as type conversion from python to c are somehow
+basis (as type conversion from python to C are somehow
 problematic, in some critical cases).
 - testing is much appreciated, but be warned this software
 is in a alpha development state, presently.
@@ -42,7 +43,7 @@ is in a alpha development state, presently.
 - Adopting RestructuredText format (rst) in functions' docstrings,
 replacing epytext format {DONE}.
 
-- Module deprecated.py will be removed (as I don't see a reason to
+- Module deprecated.py will be removed (as I do not see a reason to
 support it, as it contains functions and variables already deprecated
 by XForms developers). Before removing it is necessary to get rid
 of examples that are based on that module's functions and port them
@@ -51,12 +52,11 @@ to alternative functions {DONE}.
 - reduce chance to incur in Segmentation Fault/Illegal Instruction
 (it needs a deeper testing) (the highest priority).
 
-- for each acquired c function I need to improve the python
-wrapping function, in order to check if a parameter of
-correct type has been passed and convert it if feasible (high priority)
-{WIP}.
+- for each acquired C function I need to improve the python
+wrapping function, in order to check if a parameter of correct type
+has been passed and convert it if feasible (high priority) {WIP}.
 
-- convert XForms c examples to be used as python scripts
+- convert XForms C examples to be used as python scripts
 (they can be used as working tests as well) (high priority) {WIP}.
 
 - verify external functions/data from Xlib and C stdlib
@@ -67,16 +67,15 @@ to be ported as examples to xforms-python.
 
 - do a detailed and meaningful docstring for every public function;
 this is absolutely annoying as I have to manually copy functions'
-description and parameters' lists from XForms
-documentation, so it may take several months. But, meantime,
-I plan to rename functions' parameters, where possible, in
-order to improve usability. {WIP}
+description and parameters' lists from XForms documentation, so it
+may take several months. But, meantime, I plan to rename functions'
+parameters, where possible, in order to improve usability. {WIP}
 
-- have a minimal but complete function reference guide; I
-do not intend to do a real developer/user manual as xforms.pdf
-present in XForms is absolutely great and functions call in
-xforms-python are only slightly modified. BTW I'm using epydoc,
-building .tex reference guide from docstrings. It needs docstrings
+- have a minimal but complete function reference guide; I do not
+intend to do a real developer/user manual as upstream's xforms.pdf
+(present in XForms) is absolutely great and function calls in
+xforms-python are only slightly modified. BTW I'm using pydoc,
+building .html reference guide from docstrings. It needs docstrings'
 completeness (for Structure classes, functions, constants and other
 variables) {WIP}
 
@@ -97,7 +96,7 @@ solution (xforms-python catches incorrect types and/or values). It
 would be ideal if I could have a known failing solution who is not
 checked/not managed solution (it should display original XForms error
 messages and so relies on XForms upstream library error handling).
-I don't think a real traditional unit-test can be of any use here, as
+I do not think a real traditional unit-test can be of any use here, as
 for a library toolkit wrapper, it is not enough using assertions etc...
 {WIP}
 
@@ -109,8 +108,8 @@ correspond to well-documented and working functions.
 
 - Figuring out which values in xfdata.py can be used as single values
  or bitwise OR-ed with each other, so checking for allowed value in list
- function doesn't forbid such a resulting value incorrectly.
+ function does not forbid such a resulting value incorrectly.
 
-- Porting xforms-python to object-oriented/classes (maybe for version 2.x,
-UNSURE, maybe it isn't worth the effort).
+- Porting xforms-python to object-oriented/classes: it is UNLIKELY (it is
+not worth the effort).
 

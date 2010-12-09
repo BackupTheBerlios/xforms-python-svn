@@ -119,12 +119,10 @@ def fl_set_dirlist_filter(py_DirFilter):
     Examples
     --------
         >>> def dirfilter(fname, ftype):
-        >>> ... return type == xfdata.FT_DIR || return type == \
-        >>>     xfdata.FT_FILE || return type == xfdata.FT_SOCK || \
-        >>>     return type == xfdata.FT_FIFO || return type == \
-        >>>     xfdata.FT_LINK || return type == xfdata.FT_BLK || \
-        >>>     return type == xfdata.FT_CHR || return type == \
-        >>>     xfdata.FT_OTHER
+        >>> ... return (ftype == xfdata.FT_DIR || ftype == xfdata.FT_FILE ||
+        >>>     ftype == xfdata.FT_SOCK || ftype == xfdata.FT_FIFO ||
+        >>>     ftype == xfdata.FT_LINK || ftype == xfdata.FT_BLK ||
+        >>>     ftype == xfdata.FT_CHR || type == xfdata.FT_OTHER)
         >>> olddirfiltfunc = fl_set_dirlist_filter(dirfilter)
 
     Notes

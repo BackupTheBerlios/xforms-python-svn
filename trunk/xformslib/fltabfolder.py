@@ -71,7 +71,7 @@ def fl_add_tabfolder(foldertype, x, y, w, h, label):
 
     Examples
     --------
-        >>> tbfobj = fl_add_tabfolder(xfdata.FL_TOP_TABFOLDER, 120, 120, \
+        >>> tbfobj = fl_add_tabfolder(xfdata.FL_TOP_TABFOLDER, 120, 120,
                 250, 400, "myTabFolder")
 
     Notes

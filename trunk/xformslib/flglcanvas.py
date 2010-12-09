@@ -71,8 +71,9 @@ def fl_add_glcanvas(canvastype, x, y, w, h, label):
             glcanvas object added
 
     Examples
-    -------- fl_add_glcanvas(xfdata.FL_NORMAL_CANVAS, 14, 21, 654, 457,
-        "My Gl Canvas")
+    --------
+        >>> globj =  fl_add_glcanvas(xfdata.FL_NORMAL_CANVAS, 14, 21,
+                654, 457, "My Gl Canvas")
 
     Notes
     -----

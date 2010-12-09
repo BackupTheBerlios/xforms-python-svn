@@ -511,7 +511,8 @@ def fl_show_colormap(oldcolr):
             index of the color selected (or the index of the old color)
 
     Examples
-    -------- colridx = fl_show_colormap(xfdata.Fl_YELLOWGREEN)
+    --------
+        >>> idxcolr = fl_show_colormap(xfdata.FL_YELLOWGREEN)
 
     Notes
     -----
@@ -877,7 +878,7 @@ def fl_set_tooltip_font(style, size):
 
     Examples
     --------
-        >>> fl_set_tooltip_font(xfdata.FL_SHADOW_STYLE, \
+        >>> fl_set_tooltip_font(xfdata.FL_SHADOW_STYLE,
                 xfdata.FL_DEFAULT_SIZE)
 
     Notes
@@ -1753,14 +1754,18 @@ def fl_get_directory():
 
 
 def fl_get_pattern():
-    """Obtains the pattern after the user changed it.
+    """fl_get_pattern()
 
-    --
+    Obtains the pattern after the user changed it.
 
     Returns
     -------
- pattern text
-    :rtype: str
+        pattern : str
+            pattern text
+
+    Examples
+    --------
+        >>> ptrntxt = fl_get_pattern()
 
     Notes
     -----
@@ -1823,7 +1828,7 @@ def fl_set_pattern(pattern):
 
     Examples
     --------
-            >>> fl_set_pattern("\*.txt")
+        >>> fl_set_pattern("\*.txt")
 
     Notes
     -----

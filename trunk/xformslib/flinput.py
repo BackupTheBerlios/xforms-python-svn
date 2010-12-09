@@ -386,7 +386,7 @@ def fl_get_input_selected_range(pFlObject):
 
     Examples
     --------
-        selstr, vstart, vend = fl_get_input_selected_range(inpobj)
+        >>> selstr, vstart, vend = fl_get_input_selected_range(inpobj)
 
     API_diversion
     ----------

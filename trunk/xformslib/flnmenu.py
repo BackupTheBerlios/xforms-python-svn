@@ -73,7 +73,7 @@ def fl_add_nmenu(nmenutype, x, y, w, h, label):
 
     Examples
     --------
-        >>> nmnobj = fl_add_nmenu(xfdata.FL_NORMAL_NMENU, 50, 100, \
+        >>> nmnobj = fl_add_nmenu(xfdata.FL_NORMAL_NMENU, 50, 100,
                 300, 90, "MyNmenu")
 
     Notes

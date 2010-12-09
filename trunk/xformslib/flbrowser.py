@@ -714,7 +714,7 @@ def fl_get_browser_screenlines(pFlObject):
 
     Examples
     --------
-        visiblines = fl_get_browser_screenlines(brobj)
+        >>> visiblines = fl_get_browser_screenlines(brobj)
 
     Notes
     -----

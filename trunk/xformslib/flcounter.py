@@ -463,7 +463,7 @@ def fl_get_counter_repeat(pFlObject):
 
     Examples
     --------
-        intdly = fl_get_counter_repeat(ctrobj)
+        >>> intdly = fl_get_counter_repeat(ctrobj)
 
     Notes
     -----
@@ -533,7 +533,7 @@ def fl_get_counter_min_repeat(pFlObject):
 
     Examples
     --------
-        fnldly = fl_get_counter_min_repeat(ctrobj)
+        >>> fnldly = fl_get_counter_min_repeat(ctrobj)
 
     Notes
     -----
@@ -602,7 +602,7 @@ def fl_get_counter_speedjump(pFlObject):
 
     Examples
     --------
-        isspdjmp = fl_get_counter_speedjump(ctrobj)
+        >>> isspdjmp = fl_get_counter_speedjump(ctrobj)
 
     Notes
     -----

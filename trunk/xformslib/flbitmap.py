@@ -74,7 +74,7 @@ def fl_add_bitmap(bitmaptype, x, y, w, h, label):
 
     Examples
     --------
-        >>> fl_add_bitmap(xfdata.FL_NORMAL_BITMAP, 320, 200, 100, 100, \
+        >>> fl_add_bitmap(xfdata.FL_NORMAL_BITMAP, 320, 200, 100, 100,
                 "MyBitmap")
 
     Notes
@@ -322,8 +322,8 @@ def fl_add_pixmap(pixmaptype, x, y, w, h, label):
 
     Examples
     --------
-        >>> fl_add_pixmap(xfdata.FL_NORMAL_PIXMAP, 320, 200, 100, 100, \
-                  "MyPixmap")
+        >>> fl_add_pixmap(xfdata.FL_NORMAL_PIXMAP, 320, 200, 100, 100,
+                "MyPixmap")
 
     Notes
     -----
@@ -669,8 +669,8 @@ def fl_read_pixmapfile(win, fname, tran):
 
     Examples
     --------
-        >>> pmap, w, h, shapmsk, hotx, hoty = fl_read_pixmapfile(win0, \
-                    "xpmfile.xpm", xfdata.FL_WHITE)
+        >>> pmap, w, h, shapmsk, hotx, hoty = fl_read_pixmapfile(win0,
+                "xpmfile.xpm", xfdata.FL_WHITE)
 
     API_diversion
     ----------

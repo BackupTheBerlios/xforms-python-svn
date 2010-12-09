@@ -381,7 +381,7 @@ def fl_add_thumbwheel(wheeltype, x, y, w, h, label):
 
     Examples
     --------
-        >>> tmwobj = fl_add_thumbwheel(xfdata.FL_HOR_THUMBWHEEL, \
+        >>> tmwobj = fl_add_thumbwheel(xfdata.FL_HOR_THUMBWHEEL,
                 140, 134, 250, 30, "MyThumbwheel")
 
     Notes

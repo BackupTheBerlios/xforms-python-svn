@@ -270,11 +270,11 @@ OBJCLASS_list = [FL_BUTTON, FL_LIGHTBUTTON, FL_ROUNDBUTTON, FL_ROUND3DBUTTON,
 FL_BEGIN_GROUP = 10000
 FL_END_GROUP = 20000
 
-FL_USER_CLASS_START = 1001      #: min. user class value
-FL_USER_CLASS_END = 9999        #: max. user class value
+FL_USER_CLASS_START = 1001      # min. user class value
+FL_USER_CLASS_END = 9999        # max. user class value
 
 
-FL_MAX_BW = 10      #: maximum border width (in pixel)
+FL_MAX_BW = 10      # maximum border width (in pixel)
 
 # how to display a form onto screen
 # values for enumeration 'FL_PLACE'
@@ -2334,51 +2334,51 @@ FL_MAX_MENU_CHOICE_ITEMS = 128
 # TTY function keys, cleverly chosen to map to ASCII, for convenience of
 # programming, but could have been arbitrary (at the cost of lookup
 # tables in client code).
-XK_BackSpace = 0xff08           #: Back space, back char
+XK_BackSpace = 0xff08           # Back space, back char
 XK_Tab = 0xff09
-XK_Linefeed = 0xff0a            #: Linefeed, LF
+XK_Linefeed = 0xff0a            # Linefeed, LF
 XK_Clear = 0xff0b
-XK_Return = 0xff0d              #: Return, enter
-XK_Pause = 0xff13               #: Pause, hold
+XK_Return = 0xff0d              # Return, enter
+XK_Pause = 0xff13               # Pause, hold
 XK_Scroll_Lock = 0xff14
 XK_Sys_Req = 0xff15
 XK_Escape = 0xff1b
-XK_Delete = 0xffff              #: Delete, rubout
+XK_Delete = 0xffff              # Delete, rubout
 
 # Cursor control & motion
 XK_Home = 0xff50
-XK_Left = 0xff51               #: Move left, left arrow
-XK_Up = 0xff52                 #: Move up, up arrow
-XK_Right = 0xff53              #: Move right, right arrow
-XK_Down = 0xff54               #: Move down, down arrow
-XK_Prior = 0xff55              #: Prior, previous
+XK_Left = 0xff51               # Move left, left arrow
+XK_Up = 0xff52                 # Move up, up arrow
+XK_Right = 0xff53              # Move right, right arrow
+XK_Down = 0xff54               # Move down, down arrow
+XK_Prior = 0xff55              # Prior, previous
 XK_Page_Up = 0xff55
-XK_Next = 0xff56               #: Next
+XK_Next = 0xff56               # Next
 XK_Page_Down = 0xff56
-XK_End = 0xff57                #: EOL
-XK_Begin = 0xff58              #: BOL
+XK_End = 0xff57                # EOL
+XK_Begin = 0xff58              # BOL
 
 # Misc functions
-XK_Select = 0xff60             #: Select, mark
+XK_Select = 0xff60             # Select, mark
 XK_Print = 0xff61
-XK_Execute = 0xff62            #: Execute, run, do
-XK_Insert = 0xff63             #: Insert, insert here
+XK_Execute = 0xff62            # Execute, run, do
+XK_Insert = 0xff63             # Insert, insert here
 XK_Undo = 0xff65
-XK_Redo = 0xff66               #: Redo, again
+XK_Redo = 0xff66               # Redo, again
 XK_Menu = 0xff67
-XK_Find = 0xff68               #: Find, search
-XK_Cancel = 0xff69             #: Cancel, stop, abort, exit
-XK_Help = 0xff6a               #: Help
+XK_Find = 0xff68               # Find, search
+XK_Cancel = 0xff69             # Cancel, stop, abort, exit
+XK_Help = 0xff6a               # Help
 XK_Break = 0xff6b
-XK_Mode_switch = 0xff7e        #: Character set switch
-XK_script_switch = 0xff7e      #: Alias for mode_switch
+XK_Mode_switch = 0xff7e        # Character set switch
+XK_script_switch = 0xff7e      # Alias for mode_switch
 XK_Num_Lock = 0xff7f
 
 # Keypad functions, keypad numbers cleverly chosen to map to ASCII
-XK_KP_Space = 0xff80           #: Space
+XK_KP_Space = 0xff80           # Space
 XK_KP_Tab = 0xff89
-XK_KP_Enter = 0xff8d           #: Enter
-XK_KP_F1 = 0xff91              #: PF1, KP_A, ...
+XK_KP_Enter = 0xff8d           # Enter
+XK_KP_F1 = 0xff91              # PF1, KP_A, ...
 XK_KP_F2 = 0xff92
 XK_KP_F3 = 0xff93
 XK_KP_F4 = 0xff94
@@ -2395,10 +2395,10 @@ XK_KP_End = 0xff9c
 XK_KP_Begin = 0xff9d
 XK_KP_Insert = 0xff9e
 XK_KP_Delete = 0xff9f
-XK_KP_Equal = 0xffbd           #: Equals
+XK_KP_Equal = 0xffbd           # Equals
 XK_KP_Multiply = 0xffaa
 XK_KP_Add = 0xffab
-XK_KP_Separator = 0xffac       #: Separator, often comma
+XK_KP_Separator = 0xffac       # Separator, often comma
 XK_KP_Subtract = 0xffad
 XK_KP_Decimal = 0xffae
 XK_KP_Divide = 0xffaf
@@ -2480,21 +2480,21 @@ XK_F35 = 0xffe0
 XK_R15 = 0xffe0
 
 # Modifiers
-XK_Shift_L = 0xffe1             #: Left shift
-XK_Shift_R = 0xffe2             #: Right shift
-XK_Control_L = 0xffe3           #: Left control
-XK_Control_R = 0xffe4           #: Right control
-XK_Caps_Lock = 0xffe5           #: Caps lock
-XK_Shift_Lock = 0xffe6          #: Shift lock
+XK_Shift_L = 0xffe1             # Left shift
+XK_Shift_R = 0xffe2             # Right shift
+XK_Control_L = 0xffe3           # Left control
+XK_Control_R = 0xffe4           # Right control
+XK_Caps_Lock = 0xffe5           # Caps lock
+XK_Shift_Lock = 0xffe6          # Shift lock
 
-XK_Meta_L = 0xffe7              #: Left meta
-XK_Meta_R = 0xffe8              #: Right meta
-XK_Alt_L = 0xffe9               #: Left alt
-XK_Alt_R = 0xffe                #: Right alt
-XK_Super_L = 0xffeb             #: Left super
-XK_Super_R = 0xffec             #: Right super
-XK_Hyper_L = 0xffed             #: Left hyper
-XK_Hyper_R = 0xffee             #: Right hyper
+XK_Meta_L = 0xffe7              # Left meta
+XK_Meta_R = 0xffe8              # Right meta
+XK_Alt_L = 0xffe9               # Left alt
+XK_Alt_R = 0xffe                # Right alt
+XK_Super_L = 0xffeb             # Left super
+XK_Super_R = 0xffec             # Right super
+XK_Hyper_L = 0xffed             # Left hyper
+XK_Hyper_R = 0xffee             # Right hyper
 # *** end - from /usr/include/X11/keysymdef.h ***
 
 
@@ -3173,13 +3173,13 @@ class FL_RESOURCE(cty.Structure):
 
 # values for enumeration 'XrmOptionKind'
 XrmOptionKind = cty.c_int       # enum
-XrmoptionNoArg = 0      #: Value is specified in OptionDescRec.value
-XrmoptionIsArg = 1      #: Value is the option string itself
-XrmoptionStickyArg = 2  #: Value is characters immediately following option
-XrmoptionSepArg = 3     #: Value is next argument in argv
-XrmoptionResArg = 4     #: Resource and value in next argument in argv
-XrmoptionSkipArg = 5    #: Ignore this option and the next argument in argv
-XrmoptionSkipLine = 6   #: Ignore this option and the rest of argv
+XrmoptionNoArg = 0      # Value is specified in OptionDescRec.value
+XrmoptionIsArg = 1      # Value is the option string itself
+XrmoptionStickyArg = 2  # Value is characters immediately following option
+XrmoptionSepArg = 3     # Value is next argument in argv
+XrmoptionResArg = 4     # Resource and value in next argument in argv
+XrmoptionSkipArg = 5    # Ignore this option and the next argument in argv
+XrmoptionSkipLine = 6   # Ignore this option and the rest of argv
 XrmoptionSkipNArgs = 7
 
 class admitted_values_for_XrmOptionKind(object):
@@ -5202,8 +5202,8 @@ XEVENTNAMES_list = [KeyPress, KeyRelease, ButtonPress, ButtonRelease,
 # *** start - from /usr/include/X11/Xutil.h 139 ***
 # definitions for initial window state
 #WithdrawnState = 0      # for windows that are not mapped
-NormalState = 1         #: most applications want to start this way
-IconicState = 3         #: application wants to start as an icon
+NormalState = 1         # most applications want to start this way
+IconicState = 3         # application wants to start as an icon
 # *** end - from /usr/include/X11/Xutil.h ***
 
 class admitted_values_for_initialwinstate(object):
@@ -5245,9 +5245,9 @@ BITMAPTYPE_list = [FL_NORMAL_BITMAP, ]
 
 # Defaults
 FL_BITMAP_BOXTYPE = FL_NO_BOX
-FL_BITMAP_COL1 = FL_COL1            #: background of bitmap
-FL_BITMAP_COL2 = FL_COL1            #: not used currently
-FL_BITMAP_LCOL = FL_LCOL            #: foreground of bitmap
+FL_BITMAP_COL1 = FL_COL1            # background of bitmap
+FL_BITMAP_COL2 = FL_COL1            # not used currently
+FL_BITMAP_LCOL = FL_LCOL            # foreground of bitmap
 FL_BITMAP_ALIGN = FL_ALIGN_BOTTOM
 
 
@@ -5488,9 +5488,9 @@ FL_CHECKBUTTON_MCOL = FL_MCOL
 
 # bitmap button defaults
 FL_BITMAPBUTTON_BOXTYPE = FL_UP_BOX
-FL_BITMAPBUTTON_COL1 = FL_COL1         #: bitmap background
-FL_BITMAPBUTTON_COL2 = FL_BLUE         #: "focus" color
-FL_BITMAPBUTTON_LCOL = FL_LCOL         #: bitmap foreground
+FL_BITMAPBUTTON_COL1 = FL_COL1         # bitmap background
+FL_BITMAPBUTTON_COL2 = FL_BLUE         # "focus" color
+FL_BITMAPBUTTON_LCOL = FL_LCOL         # bitmap foreground
 FL_BITMAPBUTTON_ALIGN = FL_ALIGN_BOTTOM
 
 # bitmap button defaults
@@ -5538,7 +5538,7 @@ CANVASTYPE_list = [FL_NORMAL_CANVAS, FL_SCROLLED_CANVAS]
 
 
 # Default
-FL_CANVAS_BOXTYPE = FL_DOWN_BOX     #: really the decoration frame
+FL_CANVAS_BOXTYPE = FL_DOWN_BOX     # really the decoration frame
 FL_CANVAS_ALIGN = FL_ALIGN_TOP
 
 
@@ -5720,8 +5720,8 @@ COUNTERTYPE_list = [FL_NORMAL_COUNTER, FL_SIMPLE_COUNTER]
 # Defaults
 FL_COUNTER_BOXTYPE = FL_UP_BOX
 FL_COUNTER_COL1 = FL_COL1
-FL_COUNTER_COL2 = FL_BLUE           #: counter label
-FL_COUNTER_LCOL = FL_LCOL           #: counter reporting
+FL_COUNTER_COL2 = FL_BLUE           # counter label
+FL_COUNTER_LCOL = FL_LCOL           # counter reporting
 FL_COUNTER_ALIGN = FL_ALIGN_BOTTOM
 
 # Others
@@ -8027,17 +8027,17 @@ class flimage_marker_(cty.Structure):
             *todo*
     """
     _fields_ = [
-        ('name', STRING),               #: marker name
-        ('w', cty.c_int),               #: width
-        ('h', cty.c_int),               #: height
-        ('x', cty.c_int),               #: horizontal location
-        ('y', cty.c_int),               #: vertical location
-        ('color', cty.c_uint),          #: color of the marker
-        ('bcolor', cty.c_uint),         #: aux. color of the marker
-        ('angle', cty.c_int),           #: in 1/10th of a degree
+        ('name', STRING),               # marker name
+        ('w', cty.c_int),               # width
+        ('h', cty.c_int),               # height
+        ('x', cty.c_int),               # horizontal location
+        ('y', cty.c_int),               # vertical location
+        ('color', cty.c_uint),          # color of the marker
+        ('bcolor', cty.c_uint),         # aux. color of the marker
+        ('angle', cty.c_int),           # in 1/10th of a degree
         ('fill', cty.c_int),
-        ('thickness', cty.c_int),       #: line thickness
-        ('style', cty.c_int),           #: line style
+        ('thickness', cty.c_int),       # line thickness
+        ('style', cty.c_int),           # line style
         # the following is filled by the library
         ('display', cty.c_void_p),
         ('gc', cty.c_void_p),
@@ -8403,17 +8403,17 @@ class flimage_(cty.Structure):
     pass
 
 flimage_._fields_ = [
-        ('type', cty.c_int),            #: image type
-        ('w', cty.c_int),               #: image width
-        ('h', cty.c_int),               #: image height
-        ('app_data', cty.c_void_p),     #: for application at setup time
-        ('u_vdata', cty.c_void_p),      #: for application
-        ('u_ldata', cty.c_long),        #: for application
+        ('type', cty.c_int),            # image type
+        ('w', cty.c_int),               # image width
+        ('h', cty.c_int),               # image height
+        ('app_data', cty.c_void_p),     # for application at setup time
+        ('u_vdata', cty.c_void_p),      # for application
+        ('u_ldata', cty.c_long),        # for application
         ('red', cty.POINTER(cty.POINTER(cty.c_ubyte))),
         ('green', cty.POINTER(cty.POINTER(cty.c_ubyte))),
         ('blue', cty.POINTER(cty.POINTER(cty.c_ubyte))),
         ('alpha', cty.POINTER(cty.POINTER(cty.c_ubyte))),
-        ('rgba', cty.POINTER(cty.POINTER(cty.c_ubyte)) * 4),    #: alias
+        ('rgba', cty.POINTER(cty.POINTER(cty.c_ubyte)) * 4),    # alias
         ('ci', cty.POINTER(cty.POINTER(cty.c_ushort))),
         ('gray', cty.POINTER(cty.POINTER(cty.c_ushort))),
         ('packed', cty.POINTER(cty.POINTER(FL_PACKED4))),
@@ -8422,30 +8422,30 @@ flimage_._fields_ = [
         ('blue16', cty.POINTER(cty.POINTER(cty.c_ushort))),  # not currently supported
         ('alpha16', cty.POINTER(cty.POINTER(cty.c_ushort))),  # not currently supported
         ('ci8', cty.POINTER(cty.POINTER(cty.c_ubyte))), # not currently supported
-        ('red_lut', cty.POINTER(cty.c_int)),        #: red lookup tables
-        ('green_lut', cty.POINTER(cty.c_int)),      #: green lookup tables
-        ('blue_lut', cty.POINTER(cty.c_int)),       #: blue lookup tables
-        ('alpha_lut', cty.POINTER(cty.c_int)),      #: alpha lookup tables
-        ('lut', cty.POINTER(cty.c_int) * 4),        #: alias
-        ('map_len', cty.c_int),                 #: lut length
-        ('colors', cty.c_int),              #: actual colors used in displaying
-        ('gray_maxval', cty.c_int),             #: indicate the range of gray16
-        ('ci_maxval', cty.c_int),       #: max value of ci. not used, use map_len
-        ('rgb_maxval', cty.c_int),              #: max value for rgb16 image
+        ('red_lut', cty.POINTER(cty.c_int)),        # red lookup tables
+        ('green_lut', cty.POINTER(cty.c_int)),      # green lookup tables
+        ('blue_lut', cty.POINTER(cty.c_int)),       # blue lookup tables
+        ('alpha_lut', cty.POINTER(cty.c_int)),      # alpha lookup tables
+        ('lut', cty.POINTER(cty.c_int) * 4),        # alias
+        ('map_len', cty.c_int),                 # lut length
+        ('colors', cty.c_int),              # actual colors used in displaying
+        ('gray_maxval', cty.c_int),             # indicate the range of gray16
+        ('ci_maxval', cty.c_int),       # max value of ci. not used, use map_len
+        ('rgb_maxval', cty.c_int),              # max value for rgb16 image
         ('level', cty.c_int),
         ('wwidth', cty.c_int),
-        ('wlut', cty.POINTER(cty.c_ushort)),        #: lut for window levelling
+        ('wlut', cty.POINTER(cty.c_ushort)),        # lut for window levelling
         ('wlut_len', cty.c_int),
-        ('app_background', cty.c_int),          #: transparent color, in RGB
+        ('app_background', cty.c_int),          # transparent color, in RGB
         ('comments', STRING),
         ('comments_len', cty.c_int),
         ('available_type', cty.c_int),
         ('next', cty.POINTER(flimage_)),
-        ('sx', cty.c_int),                      #: display subimage origin
+        ('sx', cty.c_int),                      # display subimage origin
         ('sy', cty.c_int),
-        ('sw', cty.c_int),                      #: display subimage width
+        ('sw', cty.c_int),                      # display subimage width
         ('sh', cty.c_int),
-        ('wx', cty.c_int),              #: display location relative to win
+        ('wx', cty.c_int),              # display location relative to win
         ('wy', cty.c_int),
         ('modified', cty.c_int),
         ('display', cty.CFUNCTYPE(cty.c_int, cty.POINTER(flimage_), FL_WINDOW)),
@@ -8456,7 +8456,7 @@ flimage_._fields_ = [
         ('shd', cty.c_int),
         ('wxd', cty.c_int),
         ('wyd', cty.c_int),
-        ('fmt_name', STRING),       #: format name (ppm,jpg etc)
+        ('fmt_name', STRING),       # format name (ppm,jpg etc)
         # annotation stuff
         ('text', cty.POINTER(FLIMAGE_TEXT)),
         ('ntext', cty.c_int),
@@ -8471,8 +8471,8 @@ flimage_._fields_ = [
         ('display_markers', cty.CFUNCTYPE(None, cty.POINTER(flimage_))),
         ('free_markers', cty.CFUNCTYPE(None, cty.POINTER(flimage_))),
         # physicalValue = poffset + pixelValue * pscale
-        ('pmin', cty.c_double),         #: minimum value physical data range
-        ('pmax', cty.c_double),         #: maximum value physical data range
+        ('pmin', cty.c_double),         # minimum value physical data range
+        ('pmax', cty.c_double),         # maximum value physical data range
         ('poffset', cty.c_double),
         ('pscale', cty.c_double),
         #  pixel grid distance
@@ -8489,14 +8489,14 @@ flimage_._fields_ = [
         ('pre_write', cty.CFUNCTYPE(cty.c_int, cty.POINTER(flimage_))),
         ('post_write', cty.CFUNCTYPE(cty.c_int, cty.POINTER(flimage_))),
         # image processing stuff
-        ('subx', cty.c_int),        #: subimage horizontal origin
-        ('suby', cty.c_int),        #: subimage vertical origin
-        ('subw', cty.c_int),        #: subimage width
-        ('subh', cty.c_int),        #: subimage height
-        ('sub_shape', cty.c_int),   #: shape of the subimage
-        ('fill_color', cty.c_uint),     #: fill color
+        ('subx', cty.c_int),        # subimage horizontal origin
+        ('suby', cty.c_int),        # subimage vertical origin
+        ('subw', cty.c_int),        # subimage width
+        ('subh', cty.c_int),        # subimage height
+        ('sub_shape', cty.c_int),   # shape of the subimage
+        ('fill_color', cty.c_uint),     # fill color
         ('force_convert', cty.c_int),
-        ('llut', cty.POINTER(cty.c_int) * 3),   #: linear lut
+        ('llut', cty.POINTER(cty.c_int) * 3),   # linear lut
         ('llut_len', cty.c_int),
         ('hist', cty.POINTER(cty.c_uint) * 4),
         # application handlers
@@ -8507,12 +8507,12 @@ flimage_._fields_ = [
         ('error_message', cty.CFUNCTYPE(None, cty.POINTER(flimage_), \
             STRING)),
         ('error_code', cty.c_int),      # not currently used
-        ('display_type', cty.c_int),    #: just before handing it to X
+        ('display_type', cty.c_int),    # just before handing it to X
         ('pixels', cty.POINTER(cty.POINTER(cty.c_ushort))),
-        ('image_spec', cty.c_void_p),   #: additional image info
-        ('xdisplay', cty.c_void_p),     #: the X connection
-        ('tran_rgb', cty.c_int),        #: RGB color that should be transparent
-        ('tran_index', cty.c_int),      #: index that should be transparent
+        ('image_spec', cty.c_void_p),   # additional image info
+        ('xdisplay', cty.c_void_p),     # the X connection
+        ('tran_rgb', cty.c_int),        # RGB color that should be transparent
+        ('tran_index', cty.c_int),      # index that should be transparent
         ('matr', cty.c_int),
         ('matc', cty.c_int),
         # multi-frame images
@@ -8530,9 +8530,9 @@ flimage_._fields_ = [
         ('fpin', cty.POINTER(FILE)),
         ('fpout', cty.POINTER(FILE)),
         ('image_io', cty.c_void_p),
-        ('io_spec', cty.c_void_p),      #: io operation helper
+        ('io_spec', cty.c_void_p),      # io operation helper
         ('spec_size', cty.c_int),
-        ('depth', cty.c_int),           #: the depth we actually use
+        ('depth', cty.c_int),           # the depth we actually use
         ('vclass', cty.c_int),
         ('visual', cty.c_void_p),
         ('xcolormap', cty.c_ulong),
@@ -8540,7 +8540,7 @@ flimage_._fields_ = [
         ('ximage', cty.c_void_p),
         ('win', FL_WINDOW),
         ('gc', cty.c_void_p),
-        ('sdepth', cty.c_int),          #: depth the server says
+        ('sdepth', cty.c_int),          # depth the server says
         ('textgc', cty.c_void_p),
         ('markergc', cty.c_void_p),
         ('extra_io_info', cty.c_void_p),

@@ -74,7 +74,7 @@ def fl_add_positioner(postype, x, y, w, h, label):
 
     Examples
     --------
-        >>> pstobj = fl_add_positioner(xfdata.FL_NORMAL_POSITIONER, \
+        >>> pstobj = fl_add_positioner(xfdata.FL_NORMAL_POSITIONER,
                 140, 120, 180, 180, "MyPositioner")
 
     Notes

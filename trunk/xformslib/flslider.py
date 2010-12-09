@@ -79,7 +79,7 @@ def fl_add_slider(slidertype, x, y, w, h, label):
 
     Examples
     --------
-        >>> sldobj = fl_add_slider(xfdata.FL_VERT_SLIDER, 200, 120, \
+        >>> sldobj = fl_add_slider(xfdata.FL_VERT_SLIDER, 200, 120,
                 30, 100, "MySlider")
 
     Notes
@@ -145,7 +145,7 @@ def fl_add_valslider(slidertype, x, y, w, h, label):
 
     Examples
     --------
-        >>> sldobj = fl_add_valslider(xfdata.FL_VERT_SLIDER, 200, 120, \
+        >>> sldobj = fl_add_valslider(xfdata.FL_VERT_SLIDER, 200, 120,
                 30, 100, "MyValSlider")
 
     Notes
