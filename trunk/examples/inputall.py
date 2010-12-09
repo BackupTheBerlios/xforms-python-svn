@@ -35,9 +35,17 @@ class Flinputall(object):
 
         # fill-in form initialization code
         xfl.fl_set_object_dblbuffer(self.fd_input.report, 1)
-        xfl.fl_set_object_return(self.fd_input.multiinput, \
-                xfl.FL_RETURN_ALWAYS)
         xfl.fl_set_object_return(self.fd_input.norminput, \
+                xfl.FL_RETURN_ALWAYS)
+        xfl.fl_set_object_return(self.fd_input.intinput, \
+                xfl.FL_RETURN_ALWAYS)
+        xfl.fl_set_object_return(self.fd_input.floatiinput, \
+                xfl.FL_RETURN_ALWAYS)
+        xfl.fl_set_object_return(self.fd_input.dateinput, \
+                xfl.FL_RETURN_ALWAYS)
+        xfl.fl_set_object_return(self.fd_input.secretinput, \
+                xfl.FL_RETURN_ALWAYS)
+        xfl.fl_set_object_return(self.fd_input.multiinput, \
                 xfl.FL_RETURN_ALWAYS)
 
         # show the first form
@@ -55,7 +63,7 @@ class Flinputall(object):
 
     def input_cb(self, pobj, data):
         unused, cx, cy = xfl.fl_get_input_cursorpos(pobj)
-        buf = "x=%d y=%d" % (cx, cy)
+        buf = "x = %d, y = %d" % (cx, cy)
         xfl.fl_set_object_label(self.fd_input.report, buf)
 
     def hide_show_cb(self, pobj, data):

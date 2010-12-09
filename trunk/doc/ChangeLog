@@ -1,6 +1,6 @@
 
-
 SVN
+    * Realign to upstream XForms 1.0.94pre3. Add demo33_var.py example.
     * adjustments for pydoc-generated html files. Remove old and unused
     internal directory.
     * setup.py takes care of examples and html files' installation now.

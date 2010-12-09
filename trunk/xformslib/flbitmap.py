@@ -49,7 +49,7 @@ from xformslib import xfdata
 def fl_add_bitmap(bitmaptype, x, y, w, h, label):
     """fl_add_bitmap(bitmaptype, x, y, w, h, label)
     
-    Adds a bitmap object.
+    Adds a bitmap object. The bitmap is empty on creation.
 
     Parameters
     ----------

@@ -464,13 +464,13 @@ def fl_library_version():
     Notes
     -----
         Status: Tested + Doc + NoDemo = OK
+        It does not need initialization
 
     """
     _fl_library_version = library.cfuncproto(
         library.load_so_libforms(), "fl_library_version", \
         cty.c_int, [cty.POINTER(cty.c_int), cty.POINTER(cty.c_int)], \
         """int fl_library_version(int * ver, int * rev) """)
-    #library.check_if_initialized()
     ver, pver = library.make_int_and_pointer()
     rev, prev = library.make_int_and_pointer()
     library.keep_elem_refs(ver, rev, pver, prev)

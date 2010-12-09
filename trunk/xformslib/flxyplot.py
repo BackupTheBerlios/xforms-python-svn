@@ -882,6 +882,42 @@ def fl_get_xyplot(pFlObject):
     return x.value, y.value, i.value
 
 
+def fl_get_xyplot_data_size(pFlObject):
+    """fl_get_xyplot_data_size(pFlObject) -> int
+    
+    Obtains the number of points a call of fl_get_xyplot_data()
+    will return.
+
+    Parameters
+    ----------
+        pFlObject : pointer to xfdata.FL_OBJECT
+            xyplot object
+
+    Returns
+    -------
+        num. : int
+            number of points returned by fl_get_xyplot_data()
+
+    Examples
+    --------
+        >>> *todo*
+
+    Notes
+    -----
+        Status: Untested + NoDoc + NoDemo = NOT OK
+
+    """
+    _fl_get_xyplot_data_size = library.cfuncproto(
+        library.load_so_libforms(), "fl_get_xyplot_data_size",
+        cty.c_int, [cty.POINTER(xfdata.FL_OBJECT)],
+        """int fl_get_xyplot_data_size(FL_OBJECT * obj)""")
+    library.check_if_initialized()
+    library.verify_flobjectptr_type(pFlObject)
+    library.keep_elem_refs(pFlObject)
+    retval = _fl_get_xyplot_data(pFlObject)
+    return retval
+
+
 def fl_get_xyplot_data(pFlObject):
     """fl_get_xyplot_data(pFlObject)
     
