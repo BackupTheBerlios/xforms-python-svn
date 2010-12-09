@@ -1,6 +1,8 @@
 
 
 SVN
+    * adjustments for pydoc-generated html files. Remove old and unused
+    internal directory.
     * setup.py takes care of examples and html files' installation now.
     Some malformed docstrings corrected. Remove local links in html files and
     create a custom index.html to do a modules list.
