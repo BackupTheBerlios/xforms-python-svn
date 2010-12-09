@@ -1,0 +1,397 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html><head><title>Python: module flcanvas</title>
+</head><body bgcolor="#f0f0f8">
+
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="heading">
+<tr bgcolor="#7799ee">
+<td valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial">&nbsp;<br><big><big><strong>flcanvas</strong></big></big></font></td
+><td align=right valign=bottom
+><font color="#ffffff" face="helvetica, arial"><a href=".">index</a><br>     <a href="index.html">list</a></font></td></tr></table>
+    <p><tt>xforms-python's&nbsp;functions&nbsp;to&nbsp;manage&nbsp;canvas&nbsp;objects.</tt></p>
+<p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#aa55cc">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Modules</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#aa55cc"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><table width="100%" summary="list"><tr><td width="25%" valign=top><a href="ctypes.html">ctypes</a><br>
+</td><td width="25%" valign=top><a href="library.html">library</a><br>
+</td><td width="25%" valign=top><a href="xfdata.html">xfdata</a><br>
+</td><td width="25%" valign=top></td></tr></table></td></tr></table><p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#eeaa77">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Functions</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#eeaa77"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><dl><dt><a name="-fl_add_canvas"><strong>fl_add_canvas</strong></a>(canvastype, x, y, w, h, label)</dt><dd><tt><a href="#-fl_add_canvas">fl_add_canvas</a>(canvastype,&nbsp;x,&nbsp;y,&nbsp;w,&nbsp;h,&nbsp;label)<br>
+&nbsp;<br>
+Adds&nbsp;a&nbsp;canvas&nbsp;object.<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;canvastype&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;type&nbsp;of&nbsp;canvas&nbsp;to&nbsp;be&nbsp;added.&nbsp;Values&nbsp;(from&nbsp;xfdata.py)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_NORMAL_CANVAS,&nbsp;FL_SCROLLED_CANVAS&nbsp;(not&nbsp;enabled)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;x&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;horizontal&nbsp;position&nbsp;(upper-left&nbsp;corner)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;y&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;vertical&nbsp;position&nbsp;(upper-left&nbsp;corner)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;w&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;width&nbsp;in&nbsp;coord&nbsp;units<br>
+&nbsp;&nbsp;&nbsp;&nbsp;h&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;height&nbsp;in&nbsp;coord&nbsp;units<br>
+&nbsp;&nbsp;&nbsp;&nbsp;label&nbsp;:&nbsp;str<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;text&nbsp;label&nbsp;of&nbsp;canvas<br>
+&nbsp;<br>
+Returns<br>
+-------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;pFlObject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;canvas&nbsp;object&nbsp;added<br>
+&nbsp;<br>
+Examples<br>
+--------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;canvobj&nbsp;=&nbsp;<a href="#-fl_add_canvas">fl_add_canvas</a>(xfdata.FL_NORMAL_CANVAS,&nbsp;150,&nbsp;210,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;320,&nbsp;200,&nbsp;"My&nbsp;Canvas")<br>
+&nbsp;<br>
+Notes<br>
+-----<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
+ <dl><dt><a name="-fl_add_canvas_handler"><strong>fl_add_canvas_handler</strong></a>(pFlObject, xev, py_HandleCanvas, vdata)</dt><dd><tt><a href="#-fl_add_canvas_handler">fl_add_canvas_handler</a>(pFlObject,&nbsp;xev,&nbsp;py_HandleCanvas,&nbsp;vdata)<br>
+&nbsp;<br>
+Sets&nbsp;a&nbsp;callback&nbsp;to&nbsp;be&nbsp;invoked&nbsp;for&nbsp;a&nbsp;specific&nbsp;X&nbsp;event.<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;pFlObject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;canvas&nbsp;object<br>
+&nbsp;&nbsp;&nbsp;&nbsp;xev&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;X&nbsp;event&nbsp;number.&nbsp;Values&nbsp;(from&nbsp;X11):&nbsp;Expose,&nbsp;etc..&nbsp;??<br>
+&nbsp;&nbsp;&nbsp;&nbsp;py_HandleCanvas&nbsp;:&nbsp;python&nbsp;function&nbsp;to&nbsp;handle&nbsp;canvas,&nbsp;returned&nbsp;value<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;name&nbsp;referring&nbsp;to&nbsp;function(pFlObject,&nbsp;win,&nbsp;num,&nbsp;num,&nbsp;pXEvent,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;vdata)&nbsp;-&gt;&nbsp;num<br>
+&nbsp;&nbsp;&nbsp;&nbsp;vdata&nbsp;:&nbsp;any&nbsp;type&nbsp;(e.g.&nbsp;'None',&nbsp;int,&nbsp;str,&nbsp;etc..)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;user&nbsp;data&nbsp;to&nbsp;be&nbsp;passed&nbsp;to&nbsp;function;&nbsp;callback&nbsp;has&nbsp;to&nbsp;take&nbsp;care&nbsp;of<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;type&nbsp;check.<br>
+&nbsp;<br>
+Returns<br>
+-------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;HandleCanvas&nbsp;:&nbsp;xfdata.FL_HANDLE_CANVAS<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;old&nbsp;canvas&nbsp;handler&nbsp;function<br>
+&nbsp;<br>
+Examples<br>
+--------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;*todo*<br>
+&nbsp;<br>
+Notes<br>
+-----<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
+ <dl><dt><a name="-fl_canvas_yield_to_shortcut"><strong>fl_canvas_yield_to_shortcut</strong></a>(pFlObject, yesno)</dt><dd><tt><a href="#-fl_canvas_yield_to_shortcut">fl_canvas_yield_to_shortcut</a>(pFlObject,&nbsp;yesno)<br>
+&nbsp;<br>
+Enables&nbsp;or&nbsp;disables&nbsp;keyboard&nbsp;input's&nbsp;stealing&nbsp;by&nbsp;canvas.&nbsp;By&nbsp;default,<br>
+objects&nbsp;with&nbsp;shortcuts&nbsp;appearing&nbsp;on&nbsp;the&nbsp;same&nbsp;form&nbsp;as&nbsp;the&nbsp;canvas&nbsp;will<br>
+"steal"&nbsp;keyboard&nbsp;inputs&nbsp;if&nbsp;they&nbsp;match&nbsp;the&nbsp;shortcuts.<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;pFlObject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;canvas&nbsp;object<br>
+&nbsp;&nbsp;&nbsp;&nbsp;yesno&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;flag&nbsp;to&nbsp;enable/disable&nbsp;keyboard&nbsp;inputs&nbsp;stealing&nbsp;by&nbsp;canvas.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Values&nbsp;0&nbsp;(to&nbsp;disable)&nbsp;or&nbsp;1&nbsp;(to&nbsp;enable)<br>
+&nbsp;<br>
+Examples<br>
+--------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;<a href="#-fl_canvas_yield_to_shortcut">fl_canvas_yield_to_shortcut</a>(canvobj,&nbsp;yesno)<br>
+&nbsp;<br>
+Notes<br>
+-----<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
+ <dl><dt><a name="-fl_clear_canvas"><strong>fl_clear_canvas</strong></a>(pFlObject)</dt><dd><tt><a href="#-fl_clear_canvas">fl_clear_canvas</a>(pFlObject)<br>
+&nbsp;<br>
+Clears&nbsp;the&nbsp;canvas&nbsp;to&nbsp;the&nbsp;background&nbsp;color.&nbsp;If&nbsp;no&nbsp;background&nbsp;is<br>
+defined&nbsp;uses&nbsp;black.<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;pFlObject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;canvas&nbsp;object<br>
+&nbsp;<br>
+Examples<br>
+--------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;<a href="#-fl_clear_canvas">fl_clear_canvas</a>(canvobj)<br>
+&nbsp;<br>
+Notes<br>
+-----<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
+ <dl><dt><a name="-fl_create_generic_canvas"><strong>fl_create_generic_canvas</strong></a>(canvasclass, canvastype, x, y, w, h, label)</dt><dd><tt><a href="#-fl_create_generic_canvas">fl_create_generic_canvas</a>(canvasclass,&nbsp;canvastype,&nbsp;x,&nbsp;y,&nbsp;w,&nbsp;h,&nbsp;label):<br>
+&nbsp;<br>
+Creates&nbsp;a&nbsp;generic&nbsp;canvas&nbsp;object.<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;canvasclass&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;value&nbsp;of&nbsp;a&nbsp;new&nbsp;canvas&nbsp;class<br>
+&nbsp;&nbsp;&nbsp;&nbsp;canvastype&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;type&nbsp;of&nbsp;canvas&nbsp;to&nbsp;be&nbsp;created.&nbsp;Values&nbsp;(from&nbsp;xfdata.py)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_NORMAL_CANVAS,&nbsp;FL_SCROLLED_CANVAS&nbsp;(not&nbsp;enabled)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;x&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;horizontal&nbsp;position&nbsp;(upper-left&nbsp;corner)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;y&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;vertical&nbsp;position&nbsp;(upper-left&nbsp;corner)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;w&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;width&nbsp;in&nbsp;coord&nbsp;units<br>
+&nbsp;&nbsp;&nbsp;&nbsp;h&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;height&nbsp;in&nbsp;coord&nbsp;units<br>
+&nbsp;&nbsp;&nbsp;&nbsp;label&nbsp;:&nbsp;str<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;text&nbsp;label&nbsp;of&nbsp;canvas<br>
+&nbsp;<br>
+Returns<br>
+-------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;pFlObject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;canvas&nbsp;object&nbsp;created<br>
+&nbsp;<br>
+Examples<br>
+--------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;*todo*<br>
+&nbsp;<br>
+Notes<br>
+-----<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
+ <dl><dt><a name="-fl_get_canvas_colormap"><strong>fl_get_canvas_colormap</strong></a>(pFlObject)</dt><dd><tt><a href="#-fl_get_canvas_colormap">fl_get_canvas_colormap</a>(pFlObject)<br>
+&nbsp;<br>
+Obtains&nbsp;the&nbsp;colormap&nbsp;of&nbsp;a&nbsp;canvas&nbsp;object.<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;pFlObject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;canvas&nbsp;object<br>
+&nbsp;<br>
+Returns<br>
+-------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;colrmap&nbsp;:&nbsp;long_pos<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;canvas&nbsp;colormap<br>
+&nbsp;<br>
+Examples<br>
+--------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;ccmap&nbsp;=&nbsp;<a href="#-fl_get_canvas_colormap">fl_get_canvas_colormap</a>(pobj)<br>
+&nbsp;<br>
+Notes<br>
+-----<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
+ <dl><dt><a name="-fl_get_canvas_depth"><strong>fl_get_canvas_depth</strong></a>(pFlObject)</dt><dd><tt><a href="#-fl_get_canvas_depth">fl_get_canvas_depth</a>(pFlObject)<br>
+&nbsp;<br>
+Obtains&nbsp;the&nbsp;depth&nbsp;of&nbsp;a&nbsp;canvas&nbsp;object.<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;pFlObject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;canvas&nbsp;object<br>
+&nbsp;<br>
+Returns<br>
+-------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;depth&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;canvas&nbsp;depth&nbsp;num.&nbsp;(e.g.&nbsp;8,&nbsp;16,&nbsp;24?,&nbsp;32&nbsp;..)<br>
+&nbsp;<br>
+Examples<br>
+--------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;canvdph&nbsp;=&nbsp;<a href="#-fl_get_canvas_depth">fl_get_canvas_depth</a>(canvobj)<br>
+&nbsp;<br>
+Notes<br>
+-----<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
+ <dl><dt><a name="-fl_get_canvas_id"><strong>fl_get_canvas_id</strong></a>(pFlObject)</dt><dd><tt><a href="#-fl_get_canvas_id">fl_get_canvas_id</a>(pFlObject)<br>
+&nbsp;<br>
+Obtains&nbsp;the&nbsp;window&nbsp;id&nbsp;of&nbsp;the&nbsp;canvas&nbsp;object.<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;pFlObject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;canvas&nbsp;object<br>
+&nbsp;<br>
+Returns<br>
+-------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;win&nbsp;:&nbsp;long_pos<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;window&nbsp;id<br>
+&nbsp;<br>
+Examples<br>
+--------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;canvwin&nbsp;=&nbsp;<a href="#-fl_get_canvas_id">fl_get_canvas_id</a>(pobj)<br>
+&nbsp;<br>
+Notes<br>
+-----<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
+ <dl><dt><a name="-fl_hide_canvas"><strong>fl_hide_canvas</strong></a>(pFlObject)</dt><dd><tt><a href="#-fl_hide_canvas">fl_hide_canvas</a>(pFlObject)<br>
+&nbsp;<br>
+Hides&nbsp;a&nbsp;canvas&nbsp;object.<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;pFlObject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;canvas&nbsp;object<br>
+&nbsp;<br>
+Examples<br>
+--------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;<a href="#-fl_hide_canvas">fl_hide_canvas</a>(canvobj)<br>
+&nbsp;<br>
+Notes<br>
+-----<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
+ <dl><dt><a name="-fl_modify_canvas_prop"><strong>fl_modify_canvas_prop</strong></a>(pFlObject, py_initModifyCanvasProp, py_activateModifyCanvasProp, py_cleanupModifyCanvasProp)</dt><dd><tt><a href="#-fl_modify_canvas_prop">fl_modify_canvas_prop</a>(pFlObject,&nbsp;py_initModifyCanvasProp,<br>
+py_activateModifyCanvasProp,&nbsp;py_cleanupModifyCanvasProp)<br>
+&nbsp;<br>
+Modifies&nbsp;init,&nbsp;activate&nbsp;and&nbsp;cleanup&nbsp;handler&nbsp;properties&nbsp;of&nbsp;a&nbsp;canvas<br>
+object.<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;pFlObject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;canvas&nbsp;object<br>
+&nbsp;&nbsp;&nbsp;&nbsp;py_initModifyCanvasProp&nbsp;:&nbsp;python&nbsp;function&nbsp;callback,&nbsp;returned&nbsp;value<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;name&nbsp;referring&nbsp;to&nbsp;function(pFlObject)&nbsp;-&gt;&nbsp;num.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;py_activateModifyCanvasProp&nbsp;:&nbsp;python&nbsp;function&nbsp;callback,&nbsp;returned&nbsp;value<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;name&nbsp;referring&nbsp;to&nbsp;function(pFlObject)&nbsp;-&gt;&nbsp;num.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;py_cleanupModifyCanvasProp&nbsp;:&nbsp;python&nbsp;function&nbsp;callback,&nbsp;returned&nbsp;value<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;name&nbsp;referring&nbsp;to&nbsp;function(pFlObject)&nbsp;-&gt;&nbsp;num.<br>
+&nbsp;<br>
+Examples<br>
+--------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;*todo*<br>
+&nbsp;<br>
+Notes<br>
+-----<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
+ <dl><dt><a name="-fl_remove_canvas_handler"><strong>fl_remove_canvas_handler</strong></a>(pFlObject, xev, py_HandleCanvas)</dt><dd><tt><a href="#-fl_remove_canvas_handler">fl_remove_canvas_handler</a>(pFlObject,&nbsp;xev,&nbsp;py_HandleCanvas)<br>
+&nbsp;<br>
+Removes&nbsp;a&nbsp;particular&nbsp;handler&nbsp;for&nbsp;a&nbsp;specified&nbsp;X&nbsp;event&nbsp;(previously<br>
+created&nbsp;with&nbsp;fl_add_canvas_handler).<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;pFlObject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;canvas&nbsp;object<br>
+&nbsp;&nbsp;&nbsp;&nbsp;xev&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;X&nbsp;event&nbsp;number.&nbsp;If&nbsp;it&nbsp;is&nbsp;invalid,&nbsp;removes&nbsp;all&nbsp;handlers&nbsp;and&nbsp;their<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;corresponding&nbsp;event&nbsp;mask.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;py_HandleCanvas&nbsp;:&nbsp;python&nbsp;function&nbsp;to&nbsp;handle&nbsp;canvas,&nbsp;returned&nbsp;value<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;name&nbsp;referring&nbsp;to&nbsp;function(pFlObject,&nbsp;win,&nbsp;num,&nbsp;num,&nbsp;pXEvent,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;vdata)&nbsp;-&gt;&nbsp;num<br>
+&nbsp;<br>
+Examples<br>
+--------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;*todo*<br>
+&nbsp;<br>
+Notes<br>
+-----<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
+ <dl><dt><a name="-fl_set_canvas_attributes"><strong>fl_set_canvas_attributes</strong></a>(pFlObject, mask, pXSetWindowAttributes)</dt><dd><tt><a href="#-fl_set_canvas_attributes">fl_set_canvas_attributes</a>(pFlObject,&nbsp;mask,&nbsp;pXSetWindowAttributes)<br>
+&nbsp;<br>
+Modifies&nbsp;attributes&nbsp;of&nbsp;a&nbsp;canvas&nbsp;object&nbsp;(e.g.&nbsp;visual,&nbsp;depth&nbsp;and<br>
+colormap&nbsp;etc.).&nbsp;By&nbsp;default,&nbsp;upon&nbsp;canvas&nbsp;creation,&nbsp;all&nbsp;its&nbsp;window&nbsp;related<br>
+attributes&nbsp;are&nbsp;inherited&nbsp;from&nbsp;its&nbsp;parent&nbsp;(i.e.&nbsp;the&nbsp;window&nbsp;of&nbsp;the&nbsp;form&nbsp;the<br>
+canvas&nbsp;belongs&nbsp;to).&nbsp;You&nbsp;should&nbsp;not&nbsp;use&nbsp;this&nbsp;function&nbsp;to&nbsp;modify&nbsp;events.<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;pFlObject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;canvas&nbsp;object<br>
+&nbsp;&nbsp;&nbsp;&nbsp;mask&nbsp;:&nbsp;int_pos<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;mask&nbsp;num.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;pXSetWindowAttributes&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.XSetWindowAttributes<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;class&nbsp;instance<br>
+&nbsp;<br>
+Examples<br>
+--------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;*todo*<br>
+&nbsp;<br>
+Notes<br>
+-----<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
+ <dl><dt><a name="-fl_set_canvas_colormap"><strong>fl_set_canvas_colormap</strong></a>(pFlObject, colormap)</dt><dd><tt><a href="#-fl_set_canvas_colormap">fl_set_canvas_colormap</a>(pFlObject,&nbsp;colormap)<br>
+&nbsp;<br>
+Sets&nbsp;the&nbsp;color&nbsp;property&nbsp;of&nbsp;canvas.&nbsp;Caution:&nbsp;when&nbsp;the&nbsp;canvas&nbsp;window&nbsp;goes<br>
+away,&nbsp;e.g.&nbsp;as&nbsp;a&nbsp;result&nbsp;of&nbsp;a&nbsp;call&nbsp;of&nbsp;fl_hide_form(),&nbsp;the&nbsp;colormap&nbsp;associated<br>
+with&nbsp;the&nbsp;canvas&nbsp;is&nbsp;freed&nbsp;(destroyed);&nbsp;this&nbsp;likely&nbsp;will&nbsp;cause&nbsp;problems&nbsp;if&nbsp;a<br>
+single&nbsp;colormap&nbsp;is&nbsp;used&nbsp;for&nbsp;multiple&nbsp;canvases&nbsp;as&nbsp;each&nbsp;canvas&nbsp;will&nbsp;attempt<br>
+to&nbsp;free&nbsp;the&nbsp;same&nbsp;colormap,&nbsp;resulting&nbsp;in&nbsp;an&nbsp;X&nbsp;error.<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;pFlObject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;canvas&nbsp;object<br>
+&nbsp;&nbsp;&nbsp;&nbsp;colormap&nbsp;:&nbsp;long_pos<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;colormap&nbsp;of&nbsp;canvas<br>
+&nbsp;<br>
+Examples<br>
+--------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;*todo*<br>
+&nbsp;<br>
+Notes<br>
+-----<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
+ <dl><dt><a name="-fl_set_canvas_depth"><strong>fl_set_canvas_depth</strong></a>(pFlObject, depth)</dt><dd><tt><a href="#-fl_set_canvas_depth">fl_set_canvas_depth</a>(pFlObject,&nbsp;depth)<br>
+&nbsp;<br>
+Sets&nbsp;the&nbsp;depth&nbsp;of&nbsp;canvas&nbsp;object.&nbsp;Changing&nbsp;depth&nbsp;does&nbsp;not&nbsp;generally&nbsp;make<br>
+sense&nbsp;once&nbsp;the&nbsp;canvas&nbsp;window&nbsp;is&nbsp;created&nbsp;(which&nbsp;happens&nbsp;when&nbsp;the&nbsp;parent<br>
+form&nbsp;is&nbsp;shown).<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;pFlObject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;canvas&nbsp;object<br>
+&nbsp;&nbsp;&nbsp;&nbsp;depth&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;depth&nbsp;value&nbsp;of&nbsp;canvas.&nbsp;Values&nbsp;(from&nbsp;xfdata.py)&nbsp;e.g.&nbsp;8,&nbsp;16,&nbsp;24?,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;32,&nbsp;...<br>
+&nbsp;<br>
+Examples<br>
+--------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;<a href="#-fl_set_canvas_depth">fl_set_canvas_depth</a>(canvobj,&nbsp;32)<br>
+&nbsp;<br>
+Notes<br>
+-----<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
+ <dl><dt><a name="-fl_set_canvas_visual"><strong>fl_set_canvas_visual</strong></a>(pFlObject, pVisual)</dt><dd><tt><a href="#-fl_set_canvas_visual">fl_set_canvas_visual</a>(pFlObject,&nbsp;pVisual)<br>
+&nbsp;<br>
+Sets&nbsp;visual&nbsp;property&nbsp;of&nbsp;canvas.&nbsp;Changing&nbsp;visual&nbsp;does&nbsp;not&nbsp;generally&nbsp;make<br>
+sense&nbsp;once&nbsp;the&nbsp;canvas&nbsp;window&nbsp;is&nbsp;created&nbsp;(which&nbsp;happens&nbsp;when&nbsp;the&nbsp;parent<br>
+form&nbsp;is&nbsp;shown).&nbsp;Also,&nbsp;typically&nbsp;if&nbsp;you&nbsp;change&nbsp;the&nbsp;canvas&nbsp;visual,&nbsp;you<br>
+probably&nbsp;should&nbsp;also&nbsp;change&nbsp;the&nbsp;canvas&nbsp;depth&nbsp;to&nbsp;match&nbsp;the&nbsp;visual.<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;pFlObject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;canvas&nbsp;object<br>
+&nbsp;&nbsp;&nbsp;&nbsp;pVisual&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.Visual<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;class&nbsp;instance<br>
+&nbsp;<br>
+Examples<br>
+--------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;*todo*<br>
+&nbsp;<br>
+Notes<br>
+-----<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
+ <dl><dt><a name="-fl_share_canvas_colormap"><strong>fl_share_canvas_colormap</strong></a>(pFlObject, colrmap)</dt><dd><tt><a href="#-fl_share_canvas_colormap">fl_share_canvas_colormap</a>(pFlObject,&nbsp;colrmap)<br>
+&nbsp;<br>
+Sets&nbsp;the&nbsp;color&nbsp;property&nbsp;of&nbsp;canvas.&nbsp;It&nbsp;also&nbsp;sets&nbsp;a&nbsp;internal&nbsp;flag&nbsp;so&nbsp;the<br>
+colormap&nbsp;is&nbsp;not&nbsp;freed&nbsp;when&nbsp;the&nbsp;canvas&nbsp;goes&nbsp;away.<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;pFlObject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;canvas&nbsp;object<br>
+&nbsp;&nbsp;&nbsp;&nbsp;colrmap&nbsp;:&nbsp;long_pos<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;color&nbsp;map<br>
+&nbsp;<br>
+Examples<br>
+--------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;*todo*<br>
+&nbsp;<br>
+Notes<br>
+-----<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
+</td></tr></table>
+</body></html>

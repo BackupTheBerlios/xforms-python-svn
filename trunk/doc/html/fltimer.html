@@ -1,0 +1,191 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html><head><title>Python: module fltimer</title>
+</head><body bgcolor="#f0f0f8">
+
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="heading">
+<tr bgcolor="#7799ee">
+<td valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial">&nbsp;<br><big><big><strong>fltimer</strong></big></big></font></td
+><td align=right valign=bottom
+><font color="#ffffff" face="helvetica, arial"><a href=".">index</a><br>     <a href="index.html">list</a></font></td></tr></table>
+    <p><tt>xforms-python's&nbsp;functions&nbsp;to&nbsp;manage&nbsp;timer&nbsp;objects.</tt></p>
+<p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#aa55cc">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Modules</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#aa55cc"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><table width="100%" summary="list"><tr><td width="25%" valign=top><a href="ctypes.html">ctypes</a><br>
+</td><td width="25%" valign=top><a href="library.html">library</a><br>
+</td><td width="25%" valign=top><a href="xfdata.html">xfdata</a><br>
+</td><td width="25%" valign=top></td></tr></table></td></tr></table><p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#eeaa77">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Functions</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#eeaa77"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><dl><dt><a name="-fl_add_timer"><strong>fl_add_timer</strong></a>(timertype, x, y, w, h, label)</dt><dd><tt><a href="#-fl_add_timer">fl_add_timer</a>(timertype,&nbsp;x,&nbsp;y,&nbsp;w,&nbsp;h,&nbsp;label)<br>
+&nbsp;<br>
+Adds&nbsp;a&nbsp;timer&nbsp;object.<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;timertype&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;type&nbsp;of&nbsp;timer&nbsp;to&nbsp;be&nbsp;added.&nbsp;Values&nbsp;(from&nbsp;xfdata.py)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_NORMAL_TIMER,&nbsp;FL_VALUE_TIMER,&nbsp;FL_HIDDEN_TIMER<br>
+&nbsp;&nbsp;&nbsp;&nbsp;x&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;horizontal&nbsp;position&nbsp;(upper-left&nbsp;corner)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;y&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;vertical&nbsp;position&nbsp;(upper-left&nbsp;corner)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;w&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;width&nbsp;in&nbsp;coord&nbsp;units<br>
+&nbsp;&nbsp;&nbsp;&nbsp;h&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;height&nbsp;in&nbsp;coord&nbsp;units<br>
+&nbsp;&nbsp;&nbsp;&nbsp;label&nbsp;:&nbsp;str<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;text&nbsp;label&nbsp;of&nbsp;timer<br>
+&nbsp;<br>
+Returns<br>
+-------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;pFlObject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;timer&nbsp;object&nbsp;added<br>
+&nbsp;<br>
+Examples<br>
+--------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;ptimerobj&nbsp;=&nbsp;<a href="#-fl_add_timer">fl_add_timer</a>(xfdata.FL_NORMAL_TIMER,&nbsp;120,&nbsp;120,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;210,&nbsp;210,&nbsp;"My&nbsp;Timer")<br>
+&nbsp;<br>
+Notes<br>
+-----<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;Demo&nbsp;=&nbsp;OK</tt></dd></dl>
+ <dl><dt><a name="-fl_get_timer"><strong>fl_get_timer</strong></a>(pFlObject)</dt><dd><tt><a href="#-fl_get_timer">fl_get_timer</a>(pFlObject)<br>
+&nbsp;<br>
+Obtains&nbsp;the&nbsp;time&nbsp;left&nbsp;in&nbsp;the&nbsp;timer.<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;pFlObject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;timer&nbsp;object<br>
+&nbsp;<br>
+Returns<br>
+-------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ltime&nbsp;:&nbsp;float<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;time&nbsp;left<br>
+&nbsp;<br>
+Examples<br>
+--------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;lefttim&nbsp;=&nbsp;<a href="#-fl_get_timer">fl_get_timer</a>(ptimerobj)<br>
+&nbsp;<br>
+Notes<br>
+-----<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
+ <dl><dt><a name="-fl_resume_timer"><strong>fl_resume_timer</strong></a>(pFlObject)</dt><dd><tt><a href="#-fl_resume_timer">fl_resume_timer</a>(pFlObject)<br>
+&nbsp;<br>
+Resumes&nbsp;timer&nbsp;previously&nbsp;paused&nbsp;(with&nbsp;fl_suspend_timer).&nbsp;Unlike<br>
+<a href="#-fl_set_timer">fl_set_timer</a>()&nbsp;a&nbsp;suspended&nbsp;timer&nbsp;keeps&nbsp;its&nbsp;internal&nbsp;state&nbsp;(total<br>
+delay,&nbsp;time&nbsp;left&nbsp;etc.),&nbsp;so&nbsp;when&nbsp;it&nbsp;is&nbsp;resumed,&nbsp;it&nbsp;starts&nbsp;from<br>
+where&nbsp;it&nbsp;was&nbsp;suspended.<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;pFlObject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;timer&nbsp;object<br>
+&nbsp;<br>
+Examples<br>
+--------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;<a href="#-fl_resume_timer">fl_resume_timer</a>(ptimobj)<br>
+&nbsp;<br>
+Notes<br>
+-----<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;Demo&nbsp;=&nbsp;OK</tt></dd></dl>
+ <dl><dt><a name="-fl_set_timer"><strong>fl_set_timer</strong></a>(pFlObject, delay)</dt><dd><tt><a href="#-fl_set_timer">fl_set_timer</a>(pFlObject,&nbsp;delay)<br>
+&nbsp;<br>
+Sets&nbsp;the&nbsp;timer&nbsp;to&nbsp;a&nbsp;particular&nbsp;value.<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;pFlObject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;timer&nbsp;object<br>
+&nbsp;&nbsp;&nbsp;&nbsp;delay&nbsp;:&nbsp;float<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;number&nbsp;of&nbsp;seconds&nbsp;the&nbsp;timer&nbsp;should&nbsp;run.&nbsp;If&nbsp;it&nbsp;is&nbsp;0.0,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;resets/de-blinks&nbsp;the&nbsp;timer.<br>
+&nbsp;<br>
+Examples<br>
+--------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;<a href="#-fl_set_timer">fl_set_timer</a>(ptimerobj,&nbsp;20)<br>
+&nbsp;<br>
+Notes<br>
+-----<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;Demo&nbsp;=&nbsp;OK</tt></dd></dl>
+ <dl><dt><a name="-fl_set_timer_countup"><strong>fl_set_timer_countup</strong></a>(pFlObject, yesno)</dt><dd><tt><a href="#-fl_set_timer_countup">fl_set_timer_countup</a>(pFlObject,&nbsp;yesno)<br>
+&nbsp;<br>
+Changes&nbsp;timer&nbsp;behavior&nbsp;so&nbsp;the&nbsp;timer&nbsp;counts&nbsp;up&nbsp;and&nbsp;shows&nbsp;elapsed&nbsp;time.<br>
+By&nbsp;default,&nbsp;a&nbsp;timer&nbsp;counts&nbsp;down&nbsp;toward&nbsp;zero&nbsp;and&nbsp;the&nbsp;value&nbsp;shown&nbsp;(for<br>
+xfdata.FL_VALUE_TIMERs)&nbsp;is&nbsp;the&nbsp;time&nbsp;left&nbsp;until&nbsp;the&nbsp;timer&nbsp;expires.<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;pFlObject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;timer&nbsp;object<br>
+&nbsp;&nbsp;&nbsp;&nbsp;yesno&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;flag&nbsp;to&nbsp;set&nbsp;count&nbsp;up&nbsp;or&nbsp;down.&nbsp;Values&nbsp;0&nbsp;(counts&nbsp;down&nbsp;and&nbsp;shows<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;time&nbsp;left)&nbsp;or&nbsp;1&nbsp;(counts&nbsp;up&nbsp;and&nbsp;shows&nbsp;elapsed&nbsp;time)<br>
+&nbsp;<br>
+Examples<br>
+--------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;<a href="#-fl_set_timer_countup">fl_set_timer_countup</a>(ptimerobj,&nbsp;1)<br>
+&nbsp;<br>
+Notes<br>
+-----<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;Demo&nbsp;=&nbsp;OK</tt></dd></dl>
+ <dl><dt><a name="-fl_set_timer_filter"><strong>fl_set_timer_filter</strong></a>(pFlObject, py_TimerFilter)</dt><dd><tt><a href="#-fl_set_timer_filter">fl_set_timer_filter</a>(pFlObject,&nbsp;py_TimerFilter)<br>
+&nbsp;<br>
+Sets&nbsp;a&nbsp;function&nbsp;to&nbsp;change&nbsp;the&nbsp;way&nbsp;the&nbsp;time&nbsp;is&nbsp;presented&nbsp;in<br>
+xfdata.FL_VALUE_TIMER.&nbsp;By&nbsp;default,&nbsp;it&nbsp;returns&nbsp;the&nbsp;time&nbsp;in&nbsp;a<br>
+hour:minutes:seconds.fraction&nbsp;format<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;pFlObject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;timer&nbsp;object<br>
+&nbsp;&nbsp;&nbsp;&nbsp;py_TimerFilter&nbsp;:&nbsp;python&nbsp;callback&nbsp;function,&nbsp;returned&nbsp;value<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;name&nbsp;referring&nbsp;to&nbsp;function(pFlObject,&nbsp;float&nbsp;secs)&nbsp;-&gt;&nbsp;str<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Parameter&nbsp;secs&nbsp;is&nbsp;time&nbsp;left&nbsp;for&nbsp;count-down&nbsp;timers&nbsp;and&nbsp;the<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;elapsed&nbsp;time&nbsp;for&nbsp;up-counting&nbsp;timers&nbsp;(in&nbsp;units&nbsp;of&nbsp;seconds).<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Returns&nbsp;string&nbsp;representation&nbsp;of&nbsp;time.<br>
+&nbsp;<br>
+Returns<br>
+-------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;TimerFilter&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_TIMER_FILTER<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;old&nbsp;timer&nbsp;filter&nbsp;function<br>
+&nbsp;<br>
+Examples<br>
+--------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;def&nbsp;timefilt(pobj,&nbsp;elapsedsecs):<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;...&nbsp;&lt;something&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;...&nbsp;return&nbsp;newstr<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;oldtimerfunc&nbsp;=&nbsp;<a href="#-fl_set_timer_filter">fl_set_timer_filter</a>(ptimerobj,&nbsp;timefilt)<br>
+&nbsp;<br>
+Notes<br>
+-----<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
+ <dl><dt><a name="-fl_suspend_timer"><strong>fl_suspend_timer</strong></a>(pFlObject)</dt><dd><tt><a href="#-fl_suspend_timer">fl_suspend_timer</a>(pFlObject)<br>
+&nbsp;<br>
+Suspends&nbsp;timer,&nbsp;pausing&nbsp;time.<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;pFlObject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;timer&nbsp;object<br>
+&nbsp;<br>
+Examples<br>
+--------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;<a href="#-fl_suspend_timer">fl_suspend_timer</a>(ptimerobj)<br>
+&nbsp;<br>
+Notes<br>
+-----<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;Demo&nbsp;=&nbsp;OK</tt></dd></dl>
+</td></tr></table>
+</body></html>

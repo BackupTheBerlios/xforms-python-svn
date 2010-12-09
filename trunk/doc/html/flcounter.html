@@ -1,0 +1,388 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html><head><title>Python: module flcounter</title>
+</head><body bgcolor="#f0f0f8">
+
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="heading">
+<tr bgcolor="#7799ee">
+<td valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial">&nbsp;<br><big><big><strong>flcounter</strong></big></big></font></td
+><td align=right valign=bottom
+><font color="#ffffff" face="helvetica, arial"><a href=".">index</a><br>     <a href="index.html">list</a></font></td></tr></table>
+    <p><tt>xforms-python's&nbsp;functions&nbsp;to&nbsp;manage&nbsp;counters.</tt></p>
+<p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#aa55cc">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Modules</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#aa55cc"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><table width="100%" summary="list"><tr><td width="25%" valign=top><a href="ctypes.html">ctypes</a><br>
+</td><td width="25%" valign=top><a href="library.html">library</a><br>
+</td><td width="25%" valign=top><a href="xfdata.html">xfdata</a><br>
+</td><td width="25%" valign=top></td></tr></table></td></tr></table><p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#eeaa77">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Functions</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#eeaa77"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><dl><dt><a name="-fl_add_counter"><strong>fl_add_counter</strong></a>(countertype, x, y, w, h, label)</dt><dd><tt><a href="#-fl_add_counter">fl_add_counter</a>(countertype,&nbsp;x,&nbsp;y,&nbsp;w,&nbsp;h,&nbsp;label)<br>
+&nbsp;<br>
+Adds&nbsp;a&nbsp;counter&nbsp;object.<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;countertype&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;type&nbsp;of&nbsp;counter&nbsp;to&nbsp;be&nbsp;added.&nbsp;Values&nbsp;(from&nbsp;xfdata.py)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_NORMAL_COUNTER,&nbsp;FL_SIMPLE_COUNTER<br>
+&nbsp;&nbsp;&nbsp;&nbsp;x&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;horizontal&nbsp;position&nbsp;(upper-left&nbsp;corner)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;y&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;vertical&nbsp;position&nbsp;(upper-left&nbsp;corner)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;w&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;width&nbsp;in&nbsp;coord&nbsp;units<br>
+&nbsp;&nbsp;&nbsp;&nbsp;h&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;height&nbsp;in&nbsp;coord&nbsp;units<br>
+&nbsp;&nbsp;&nbsp;&nbsp;label&nbsp;:&nbsp;str<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;text&nbsp;label&nbsp;of&nbsp;counter<br>
+&nbsp;<br>
+Returns<br>
+-------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;pFlObject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;counter&nbsp;object&nbsp;added<br>
+&nbsp;<br>
+Examples<br>
+--------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;ctrobj&nbsp;=&nbsp;<a href="#-fl_add_counter">fl_add_counter</a>(FL_NORMAL_COUNTER,&nbsp;142,&nbsp;230,&nbsp;142,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;100,&nbsp;"My&nbsp;Counter")<br>
+&nbsp;<br>
+Notes<br>
+-----<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;Demo&nbsp;=&nbsp;OK</tt></dd></dl>
+ <dl><dt><a name="-fl_get_counter_bounds"><strong>fl_get_counter_bounds</strong></a>(pFlObject)</dt><dd><tt><a href="#-fl_get_counter_bounds">fl_get_counter_bounds</a>(pFlObject)<br>
+&nbsp;<br>
+Obtains&nbsp;the&nbsp;current&nbsp;minimum&nbsp;and&nbsp;maximum&nbsp;bounds&nbsp;of&nbsp;the&nbsp;counter.<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;pFlObject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;counter&nbsp;object<br>
+&nbsp;<br>
+Returns<br>
+-------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;minbound&nbsp;:&nbsp;float<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;minimum&nbsp;limit<br>
+&nbsp;&nbsp;&nbsp;&nbsp;maxbound&nbsp;:&nbsp;float<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;maximum&nbsp;limit<br>
+&nbsp;<br>
+Examples<br>
+--------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;minb,&nbsp;maxb&nbsp;=&nbsp;<a href="#-fl_get_counter_bounds">fl_get_counter_bounds</a>(ctrobj)<br>
+&nbsp;<br>
+API_diversion<br>
+----------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;API&nbsp;changed&nbsp;from&nbsp;XForms,&nbsp;upstream&nbsp;was<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="#-fl_get_counter_bounds">fl_get_counter_bounds</a>(pFlObject,&nbsp;minbound,&nbsp;maxbound)<br>
+&nbsp;<br>
+Notes<br>
+-----<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
+ <dl><dt><a name="-fl_get_counter_min_repeat"><strong>fl_get_counter_min_repeat</strong></a>(pFlObject)</dt><dd><tt><a href="#-fl_get_counter_min_repeat">fl_get_counter_min_repeat</a>(pFlObject)<br>
+&nbsp;<br>
+Obtains&nbsp;the&nbsp;final&nbsp;delay&nbsp;of&nbsp;a&nbsp;counter&nbsp;object.<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;pFlObject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;counter&nbsp;object<br>
+&nbsp;<br>
+Returns<br>
+-------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;fdelay&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;final&nbsp;delay&nbsp;in&nbsp;milliseconds<br>
+&nbsp;<br>
+Examples<br>
+--------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;fnldly&nbsp;=&nbsp;<a href="#-fl_get_counter_min_repeat">fl_get_counter_min_repeat</a>(ctrobj)<br>
+&nbsp;<br>
+Notes<br>
+-----<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
+ <dl><dt><a name="-fl_get_counter_precision"><strong>fl_get_counter_precision</strong></a>(pFlObject)</dt><dd><tt><a href="#-fl_get_counter_precision">fl_get_counter_precision</a>(pFlObject)<br>
+&nbsp;<br>
+Obtains&nbsp;the&nbsp;current&nbsp;value&nbsp;of&nbsp;the&nbsp;precision&nbsp;(number&nbsp;of&nbsp;digits&nbsp;after&nbsp;the<br>
+dot)&nbsp;of&nbsp;the&nbsp;counter.<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;pFlObject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;counter&nbsp;object<br>
+&nbsp;<br>
+Returns<br>
+-------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;prec&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;number&nbsp;of&nbsp;digits&nbsp;after&nbsp;the&nbsp;dot<br>
+&nbsp;<br>
+Examples<br>
+--------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;currprec&nbsp;=&nbsp;<a href="#-fl_get_counter_precision">fl_get_counter_precision</a>(ctrobj)<br>
+&nbsp;<br>
+Notes<br>
+-----<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
+ <dl><dt><a name="-fl_get_counter_repeat"><strong>fl_get_counter_repeat</strong></a>(pFlObject)</dt><dd><tt><a href="#-fl_get_counter_repeat">fl_get_counter_repeat</a>(pFlObject)<br>
+&nbsp;<br>
+Obtains&nbsp;the&nbsp;initial&nbsp;delay&nbsp;of&nbsp;the&nbsp;counter.<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;pFlObject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;counter&nbsp;object<br>
+&nbsp;<br>
+Returns<br>
+-------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;tdelay&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;initial&nbsp;delay&nbsp;in&nbsp;milliseconds<br>
+&nbsp;<br>
+Examples<br>
+--------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;intdly&nbsp;=&nbsp;<a href="#-fl_get_counter_repeat">fl_get_counter_repeat</a>(ctrobj)<br>
+&nbsp;<br>
+Notes<br>
+-----<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
+ <dl><dt><a name="-fl_get_counter_speedjump"><strong>fl_get_counter_speedjump</strong></a>(pFlObject)</dt><dd><tt><a href="#-fl_get_counter_speedjump">fl_get_counter_speedjump</a>(pFlObject)<br>
+&nbsp;<br>
+Obtains&nbsp;the&nbsp;setting&nbsp;for&nbsp;speedjumping.<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;pFlObject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;counter&nbsp;object<br>
+&nbsp;<br>
+Returns<br>
+-------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;speedjmp&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;setting&nbsp;flag&nbsp;of&nbsp;speedjump&nbsp;(1&nbsp;if&nbsp;set,&nbsp;or&nbsp;0&nbsp;if&nbsp;unset)<br>
+&nbsp;<br>
+Examples<br>
+--------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;isspdjmp&nbsp;=&nbsp;<a href="#-fl_get_counter_speedjump">fl_get_counter_speedjump</a>(ctrobj)<br>
+&nbsp;<br>
+Notes<br>
+-----<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
+ <dl><dt><a name="-fl_get_counter_step"><strong>fl_get_counter_step</strong></a>(pFlObject)</dt><dd><tt>Obtains&nbsp;the&nbsp;current&nbsp;small&nbsp;and&nbsp;large&nbsp;step's&nbsp;sizes&nbsp;of&nbsp;a&nbsp;counter.<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;pFlObject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;counter&nbsp;object<br>
+&nbsp;<br>
+Returns<br>
+-------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;smsize&nbsp;:&nbsp;float<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;small&nbsp;step&nbsp;size<br>
+&nbsp;&nbsp;&nbsp;&nbsp;lgsize&nbsp;:&nbsp;float<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;large&nbsp;step&nbsp;size<br>
+&nbsp;<br>
+Examples<br>
+--------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;smlsz,&nbsp;lrgsz&nbsp;=&nbsp;<a href="#-fl_get_counter_step">fl_get_counter_step</a>(ctrobj)<br>
+&nbsp;<br>
+API_diversion<br>
+----------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;API&nbsp;changed&nbsp;from&nbsp;XForms,&nbsp;upstream&nbsp;was<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="#-fl_get_counter_step">fl_get_counter_step</a>(pFlObject,&nbsp;sml,&nbsp;lrg)<br>
+&nbsp;<br>
+Notes<br>
+-----<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
+ <dl><dt><a name="-fl_get_counter_value"><strong>fl_get_counter_value</strong></a>(pFlObject)</dt><dd><tt><a href="#-fl_get_counter_value">fl_get_counter_value</a>(pFlObject)<br>
+&nbsp;<br>
+Obtains&nbsp;the&nbsp;current&nbsp;value&nbsp;of&nbsp;the&nbsp;counter.<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;pFlObject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;counter&nbsp;object<br>
+&nbsp;<br>
+Returns<br>
+-------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;cvalue&nbsp;:&nbsp;float<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;current&nbsp;value<br>
+&nbsp;<br>
+Examples<br>
+--------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;currvalue&nbsp;=&nbsp;<a href="#-fl_get_counter_value">fl_get_counter_value</a>(ctrobj)<br>
+&nbsp;<br>
+Notes<br>
+-----<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;Demo&nbsp;=&nbsp;OK</tt></dd></dl>
+ <dl><dt><a name="-fl_set_counter_bounds"><strong>fl_set_counter_bounds</strong></a>(pFlObject, minbound, maxbound)</dt><dd><tt><a href="#-fl_set_counter_bounds">fl_set_counter_bounds</a>(pFlObject,&nbsp;minbound,&nbsp;maxbound)<br>
+&nbsp;<br>
+Sets&nbsp;the&nbsp;minimum&nbsp;and&nbsp;maximum&nbsp;values&nbsp;that&nbsp;the&nbsp;counter&nbsp;will&nbsp;take.&nbsp;For<br>
+conflicting&nbsp;settings&nbsp;bound&nbsp;takes&nbsp;precedence&nbsp;over&nbsp;value.<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;pFlObject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;counter&nbsp;object<br>
+&nbsp;&nbsp;&nbsp;&nbsp;minbound&nbsp;:&nbsp;float<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;minimum&nbsp;value&nbsp;to&nbsp;be&nbsp;set.&nbsp;By&nbsp;default&nbsp;it&nbsp;is&nbsp;-1000000.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;maxbound&nbsp;:&nbsp;float<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;maximum&nbsp;value&nbsp;to&nbsp;be&nbsp;set.&nbsp;By&nbsp;default&nbsp;it&nbsp;is&nbsp;1000000.<br>
+&nbsp;<br>
+Examples<br>
+--------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;<a href="#-fl_set_counter_bounds">fl_set_counter_bounds</a>(ctrobj,&nbsp;-100.0,&nbsp;100.0)<br>
+&nbsp;<br>
+Notes<br>
+-----<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;Demo&nbsp;=&nbsp;OK</tt></dd></dl>
+ <dl><dt><a name="-fl_set_counter_filter"><strong>fl_set_counter_filter</strong></a>(pFlObject, py_ValFilter)</dt><dd><tt><a href="#-fl_set_counter_filter">fl_set_counter_filter</a>(pFlObject,&nbsp;py_ValFilter)<br>
+&nbsp;<br>
+Overrides&nbsp;the&nbsp;format&nbsp;and&nbsp;value&nbsp;shown&nbsp;by&nbsp;the&nbsp;counter.&nbsp;By&nbsp;default&nbsp;the<br>
+value&nbsp;is&nbsp;shown&nbsp;in&nbsp;floating&nbsp;point&nbsp;format.<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;pFlObject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;counter&nbsp;object<br>
+&nbsp;&nbsp;&nbsp;&nbsp;py_ValFilter&nbsp;:&nbsp;python&nbsp;callback&nbsp;function,&nbsp;returned&nbsp;value<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;name&nbsp;referring&nbsp;to&nbsp;function(pObject,&nbsp;valfloat,&nbsp;intprec)&nbsp;-&gt;&nbsp;str<br>
+&nbsp;<br>
+Examples<br>
+--------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;def&nbsp;ctrvalfilt(pobj,&nbsp;fvalue,&nbsp;prec):<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;...&nbsp;&lt;something&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;...&nbsp;return&nbsp;string<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;<a href="#-fl_set_counter_filter">fl_set_counter_filter</a>(ctrobj,&nbsp;ctrvalfilt)<br>
+&nbsp;<br>
+Notes<br>
+-----<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
+ <dl><dt><a name="-fl_set_counter_min_repeat"><strong>fl_set_counter_min_repeat</strong></a>(pFlObject, msec)</dt><dd><tt><a href="#-fl_set_counter_min_repeat">fl_set_counter_min_repeat</a>(pFlObject,&nbsp;msec)<br>
+&nbsp;<br>
+Sets&nbsp;the&nbsp;final&nbsp;delay&nbsp;of&nbsp;a&nbsp;counter.&nbsp;By&nbsp;default&nbsp;the&nbsp;counter&nbsp;value<br>
+changes&nbsp;first&nbsp;slowly&nbsp;and&nbsp;the&nbsp;rate&nbsp;of&nbsp;change&nbsp;then&nbsp;accelerates&nbsp;until<br>
+a&nbsp;final&nbsp;speed&nbsp;is&nbsp;reached.&nbsp;The&nbsp;default&nbsp;the&nbsp;final&nbsp;delay&nbsp;is&nbsp;50&nbsp;ms.<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;pFlObject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;counter&nbsp;object<br>
+&nbsp;&nbsp;&nbsp;&nbsp;msec&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;final&nbsp;delay&nbsp;in&nbsp;milliseconds<br>
+&nbsp;<br>
+Examples<br>
+--------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;<a href="#-fl_set_counter_min_repeat">fl_set_counter_min_repeat</a>(ctrobj,&nbsp;100)<br>
+&nbsp;<br>
+Notes<br>
+-----<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
+ <dl><dt><a name="-fl_set_counter_precision"><strong>fl_set_counter_precision</strong></a>(pFlObject, prec)</dt><dd><tt><a href="#-fl_set_counter_precision">fl_set_counter_precision</a>(pFlObject,&nbsp;prec)<br>
+&nbsp;<br>
+Sets&nbsp;the&nbsp;precision&nbsp;(number&nbsp;of&nbsp;digits&nbsp;after&nbsp;the&nbsp;dot)&nbsp;with&nbsp;which<br>
+the&nbsp;counter&nbsp;value&nbsp;is&nbsp;displayed.<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;pFlObject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;counter&nbsp;object<br>
+&nbsp;&nbsp;&nbsp;&nbsp;prec&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;precision&nbsp;to&nbsp;be&nbsp;set<br>
+&nbsp;<br>
+Examples<br>
+--------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;<a href="#-fl_set_counter_precision">fl_set_counter_precision</a>(ctrobj,&nbsp;2)<br>
+&nbsp;<br>
+Notes<br>
+-----<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;Demo&nbsp;=&nbsp;OK</tt></dd></dl>
+ <dl><dt><a name="-fl_set_counter_repeat"><strong>fl_set_counter_repeat</strong></a>(pFlObject, msec)</dt><dd><tt><a href="#-fl_set_counter_repeat">fl_set_counter_repeat</a>(pFlObject,&nbsp;msec)<br>
+&nbsp;<br>
+Sets&nbsp;the&nbsp;initial&nbsp;delay&nbsp;of&nbsp;a&nbsp;counter.&nbsp;By&nbsp;default&nbsp;the&nbsp;counter&nbsp;value<br>
+changes&nbsp;first&nbsp;slowly&nbsp;and&nbsp;the&nbsp;rate&nbsp;of&nbsp;change&nbsp;then&nbsp;accelerates&nbsp;until&nbsp;a<br>
+final&nbsp;speed&nbsp;is&nbsp;reached.&nbsp;The&nbsp;default&nbsp;delay&nbsp;between&nbsp;the&nbsp;value&nbsp;changing<br>
+is&nbsp;600&nbsp;ms&nbsp;at&nbsp;the&nbsp;start.<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;pFlObject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;counter&nbsp;object<br>
+&nbsp;&nbsp;&nbsp;&nbsp;msec&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;initial&nbsp;delay&nbsp;in&nbsp;milliseconds<br>
+&nbsp;<br>
+Examples<br>
+--------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;<a href="#-fl_set_counter_repeat">fl_set_counter_repeat</a>(ctrobj,&nbsp;200)<br>
+&nbsp;<br>
+Notes<br>
+-----<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
+ <dl><dt><a name="-fl_set_counter_speedjump"><strong>fl_set_counter_speedjump</strong></a>(pFlObject, yesno)</dt><dd><tt><a href="#-fl_set_counter_speedjump">fl_set_counter_speedjump</a>(pFlObject,&nbsp;yesno)<br>
+&nbsp;<br>
+Makes&nbsp;only&nbsp;the&nbsp;first&nbsp;change&nbsp;of&nbsp;the&nbsp;counter&nbsp;has&nbsp;a&nbsp;different&nbsp;delay<br>
+from&nbsp;all&nbsp;the&nbsp;following&nbsp;ones.&nbsp;The&nbsp;delay&nbsp;for&nbsp;the&nbsp;first&nbsp;change&nbsp;of&nbsp;the<br>
+counter&nbsp;value&nbsp;will&nbsp;then&nbsp;be&nbsp;the&nbsp;one&nbsp;set&nbsp;by&nbsp;<a href="#-fl_set_counter_repeat">fl_set_counter_repeat</a>()<br>
+and&nbsp;the&nbsp;following&nbsp;delays&nbsp;last&nbsp;as&nbsp;long&nbsp;as&nbsp;set&nbsp;by<br>
+<a href="#-fl_set_counter_min_repeat">fl_set_counter_min_repeat</a>().<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;pFlObject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;counter&nbsp;object<br>
+&nbsp;&nbsp;&nbsp;&nbsp;yesno&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;flag.&nbsp;Values&nbsp;1&nbsp;(to&nbsp;set&nbsp;speedjump)&nbsp;or&nbsp;0&nbsp;(to&nbsp;unset&nbsp;speedjump)<br>
+&nbsp;<br>
+Examples<br>
+--------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;<a href="#-fl_set_counter_speedjump">fl_set_counter_speedjump</a>(ctrobj,&nbsp;1)<br>
+&nbsp;<br>
+Notes<br>
+-----<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
+ <dl><dt><a name="-fl_set_counter_step"><strong>fl_set_counter_step</strong></a>(pFlObject, small, large)</dt><dd><tt><a href="#-fl_set_counter_step">fl_set_counter_step</a>(pFlObject,&nbsp;small,&nbsp;large)<br>
+&nbsp;<br>
+Sets&nbsp;the&nbsp;sizes&nbsp;of&nbsp;the&nbsp;small&nbsp;and&nbsp;large&nbsp;steps&nbsp;of&nbsp;a&nbsp;counter.&nbsp;For&nbsp;simple<br>
+counters&nbsp;only&nbsp;the&nbsp;small&nbsp;step&nbsp;is&nbsp;used.<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;pFlObject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;counter&nbsp;object<br>
+&nbsp;&nbsp;&nbsp;&nbsp;small&nbsp;:&nbsp;float<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;small&nbsp;step's&nbsp;size.&nbsp;By&nbsp;default&nbsp;it&nbsp;is&nbsp;0.1.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;large&nbsp;:&nbsp;float<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;large&nbsp;step's&nbsp;size.&nbsp;By&nbsp;default&nbsp;it&nbsp;is&nbsp;1.<br>
+&nbsp;<br>
+Examples<br>
+--------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;<a href="#-fl_set_counter_step">fl_set_counter_step</a>(ctrobj,&nbsp;0.2,&nbsp;2)<br>
+&nbsp;<br>
+Notes<br>
+-----<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;Demo&nbsp;=&nbsp;OK</tt></dd></dl>
+ <dl><dt><a name="-fl_set_counter_value"><strong>fl_set_counter_value</strong></a>(pFlObject, val)</dt><dd><tt><a href="#-fl_set_counter_value">fl_set_counter_value</a>(pFlObject,&nbsp;val)<br>
+&nbsp;<br>
+Sets&nbsp;the&nbsp;value&nbsp;of&nbsp;the&nbsp;counter.<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;pFlObject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;counter&nbsp;object<br>
+&nbsp;&nbsp;&nbsp;&nbsp;val&nbsp;:&nbsp;float<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;value&nbsp;to&nbsp;be&nbsp;set.&nbsp;By&nbsp;default&nbsp;it&nbsp;is&nbsp;0.<br>
+&nbsp;<br>
+Examples<br>
+--------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;<a href="#-fl_set_counter_value">fl_set_counter_value</a>(ctrobj,&nbsp;42.0)<br>
+&nbsp;<br>
+Notes<br>
+-----<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;Demo&nbsp;=&nbsp;OK</tt></dd></dl>
+</td></tr></table>
+</body></html>

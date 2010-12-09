@@ -1,0 +1,3169 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html><head><title>Python: module flxbasic</title>
+</head><body bgcolor="#f0f0f8">
+
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="heading">
+<tr bgcolor="#7799ee">
+<td valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial">&nbsp;<br><big><big><strong>flxbasic</strong></big></big></font></td
+><td align=right valign=bottom
+><font color="#ffffff" face="helvetica, arial"><a href=".">index</a><br>     <a href="index.html">list</a></font></td></tr></table>
+    <p><tt>xforms-python's&nbsp;functions&nbsp;to&nbsp;handle&nbsp;X&nbsp;Window&nbsp;basic&nbsp;and&nbsp;drawing&nbsp;stuff.</tt></p>
+<p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#aa55cc">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Modules</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#aa55cc"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><table width="100%" summary="list"><tr><td width="25%" valign=top><a href="ctypes.html">ctypes</a><br>
+<a href="flbasic.html">flbasic</a><br>
+</td><td width="25%" valign=top><a href="flcanvas.html">flcanvas</a><br>
+<a href="library.html">library</a><br>
+</td><td width="25%" valign=top><a href="xfdata.html">xfdata</a><br>
+</td><td width="25%" valign=top></td></tr></table></td></tr></table><p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#eeaa77">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Functions</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#eeaa77"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><dl><dt><a name="-FL_FormDisplay"><strong>FL_FormDisplay</strong></a>(pFlForm)</dt></dl>
+ <dl><dt><a name="-FL_GETA"><strong>FL_GETA</strong></a>(packed)</dt></dl>
+ <dl><dt><a name="-FL_GETB"><strong>FL_GETB</strong></a>(packed)</dt></dl>
+ <dl><dt><a name="-FL_GETG"><strong>FL_GETG</strong></a>(packed)</dt></dl>
+ <dl><dt><a name="-FL_GETR"><strong>FL_GETR</strong></a>(packed)</dt></dl>
+ <dl><dt><a name="-FL_IS_CANVAS"><strong>FL_IS_CANVAS</strong></a>(pFlObject)</dt></dl>
+ <dl><dt><a name="-FL_OBJECT_WID"><strong>FL_OBJECT_WID</strong></a> = FL_ObjWin(pFlObject)</dt><dd><tt><a href="#-FL_ObjWin">FL_ObjWin</a>(pFlObject)<br>
+&nbsp;<br>
+Obtains&nbsp;the&nbsp;window&nbsp;id&nbsp;an&nbsp;object&nbsp;belongs&nbsp;to&nbsp;(for&nbsp;general&nbsp;use).<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;pFlObject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;object<br>
+&nbsp;<br>
+Returns<br>
+-------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;win&nbsp;:&nbsp;long_pos<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;window&nbsp;id<br>
+&nbsp;<br>
+Examples<br>
+--------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;wind&nbsp;=&nbsp;<a href="#-FL_ObjWin">FL_ObjWin</a>(pobj)<br>
+&nbsp;<br>
+Notes<br>
+-----<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;Demo&nbsp;=&nbsp;OK</tt></dd></dl>
+ <dl><dt><a name="-FL_ObjWin"><strong>FL_ObjWin</strong></a>(pFlObject)</dt><dd><tt><a href="#-FL_ObjWin">FL_ObjWin</a>(pFlObject)<br>
+&nbsp;<br>
+Obtains&nbsp;the&nbsp;window&nbsp;id&nbsp;an&nbsp;object&nbsp;belongs&nbsp;to&nbsp;(for&nbsp;general&nbsp;use).<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;pFlObject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;object<br>
+&nbsp;<br>
+Returns<br>
+-------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;win&nbsp;:&nbsp;long_pos<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;window&nbsp;id<br>
+&nbsp;<br>
+Examples<br>
+--------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;wind&nbsp;=&nbsp;<a href="#-FL_ObjWin">FL_ObjWin</a>(pobj)<br>
+&nbsp;<br>
+Notes<br>
+-----<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;Demo&nbsp;=&nbsp;OK</tt></dd></dl>
+ <dl><dt><a name="-FL_ObjectDisplay"><strong>FL_ObjectDisplay</strong></a>(pFlObject)</dt><dd><tt>#&nbsp;undocumented&nbsp;data,&nbsp;maybe&nbsp;dismissed?&nbsp;--LK</tt></dd></dl>
+ <dl><dt><a name="-FL_PACK"><strong>FL_PACK</strong></a> = FL_PACK3(r, g, b)</dt></dl>
+ <dl><dt><a name="-FL_PACK3"><strong>FL_PACK3</strong></a>(r, g, b)</dt></dl>
+ <dl><dt><a name="-FL_PACK4"><strong>FL_PACK4</strong></a>(r, g, b, a)</dt></dl>
+ <dl><dt><a name="-FL_PCCLAMP"><strong>FL_PCCLAMP</strong></a>(a)</dt></dl>
+ <dl><dt><a name="-FL_UNPACK"><strong>FL_UNPACK</strong></a>(packed)</dt></dl>
+ <dl><dt><a name="-FL_UNPACK3"><strong>FL_UNPACK3</strong></a> = FL_UNPACK(packed)</dt></dl>
+ <dl><dt><a name="-FL_UNPACK4"><strong>FL_UNPACK4</strong></a>(p, r, g, b, a)</dt></dl>
+ <dl><dt><a name="-FL_is_gray"><strong>FL_is_gray</strong></a>(v)</dt></dl>
+ <dl><dt><a name="-FL_is_rgb"><strong>FL_is_rgb</strong></a>(v)</dt></dl>
+ <dl><dt><a name="-button_down"><strong>button_down</strong></a>(mask)</dt></dl>
+ <dl><dt><a name="-controlkey_down"><strong>controlkey_down</strong></a>(mask)</dt></dl>
+ <dl><dt><a name="-fl_XEventsQueued"><strong>fl_XEventsQueued</strong></a>(mode)</dt><dd><tt><a href="#-fl_XEventsQueued">fl_XEventsQueued</a>(mode)<br>
+&nbsp;<br>
+X11&nbsp;XEventsQueued&nbsp;equivalent&nbsp;function.<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;mode&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;mode&nbsp;???<br>
+&nbsp;<br>
+Returns<br>
+-------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;evt&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;event&nbsp;num.<br>
+&nbsp;<br>
+Examples<br>
+--------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;*todo*<br>
+&nbsp;<br>
+Notes<br>
+-----<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
+ <dl><dt><a name="-fl_XFlush"><strong>fl_XFlush</strong></a>()</dt><dd><tt><a href="#-fl_XFlush">fl_XFlush</a>()<br>
+&nbsp;<br>
+Flushes&nbsp;the&nbsp;output&nbsp;buffer.&nbsp;Convenience&nbsp;replacement&nbsp;for&nbsp;X11&nbsp;XFlush()<br>
+function.<br>
+&nbsp;<br>
+Examples<br>
+--------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;<a href="#-fl_XFlush">fl_XFlush</a>()<br>
+&nbsp;<br>
+Notes<br>
+-----<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;Demo&nbsp;=&nbsp;OK</tt></dd></dl>
+ <dl><dt><a name="-fl_XNextEvent"><strong>fl_XNextEvent</strong></a>(pXEvent)</dt><dd><tt><a href="#-fl_XNextEvent">fl_XNextEvent</a>(pXEvent)<br>
+&nbsp;<br>
+X11&nbsp;XNextEvent&nbsp;equivalent&nbsp;function.<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;pXEvent&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.XEvent<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;XEvent&nbsp;class&nbsp;instance<br>
+&nbsp;<br>
+Returns<br>
+-------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;evt&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;event&nbsp;num.<br>
+&nbsp;<br>
+Examples<br>
+--------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;*todo*<br>
+&nbsp;<br>
+Notes<br>
+-----<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
+ <dl><dt><a name="-fl_XPeekEvent"><strong>fl_XPeekEvent</strong></a>(pXEvent)</dt><dd><tt><a href="#-fl_XPeekEvent">fl_XPeekEvent</a>(pXEvent)<br>
+&nbsp;<br>
+X11&nbsp;XPeekEvent&nbsp;equivalent&nbsp;function.<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;pXEvent&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.XEvent<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;XEvent&nbsp;class&nbsp;instance<br>
+&nbsp;<br>
+Returns<br>
+-------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;evt&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;event&nbsp;num.<br>
+&nbsp;<br>
+Examples<br>
+--------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;*todo*<br>
+&nbsp;<br>
+Notes<br>
+-----<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
+ <dl><dt><a name="-fl_XPutBackEvent"><strong>fl_XPutBackEvent</strong></a>(pXEvent)</dt><dd><tt><a href="#-fl_XPutBackEvent">fl_XPutBackEvent</a>(pXEvent)<br>
+&nbsp;<br>
+X11&nbsp;XPutBackEvent&nbsp;equivalent&nbsp;function.<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;pXEvent&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.XEvent<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;XEvent&nbsp;class&nbsp;instance<br>
+&nbsp;<br>
+Examples<br>
+--------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;*todo*<br>
+&nbsp;<br>
+Notes<br>
+-----<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
+ <dl><dt><a name="-fl_activate_event_callbacks"><strong>fl_activate_event_callbacks</strong></a>(win)</dt><dd><tt><a href="#-fl_activate_event_callbacks">fl_activate_event_callbacks</a>(win)<br>
+&nbsp;<br>
+Handles&nbsp;event&nbsp;solicitation.&nbsp;Activates&nbsp;the&nbsp;default&nbsp;mapping&nbsp;of&nbsp;events<br>
+to&nbsp;event&nbsp;masks&nbsp;built-in&nbsp;in&nbsp;the&nbsp;XForms&nbsp;Library,&nbsp;and&nbsp;causes&nbsp;the&nbsp;system<br>
+to&nbsp;solicit&nbsp;the&nbsp;events&nbsp;for&nbsp;you.&nbsp;Note&nbsp;however,&nbsp;the&nbsp;mapping&nbsp;of&nbsp;events&nbsp;to<br>
+masks&nbsp;are&nbsp;not&nbsp;unique&nbsp;and&nbsp;depending&nbsp;on&nbsp;applications,&nbsp;the&nbsp;default&nbsp;mapping<br>
+may&nbsp;or&nbsp;may&nbsp;not&nbsp;be&nbsp;the&nbsp;one&nbsp;you&nbsp;want.<br>
+&nbsp;<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;win&nbsp;:&nbsp;long_pos<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;window&nbsp;whose&nbsp;events&nbsp;are&nbsp;referred&nbsp;to<br>
+&nbsp;<br>
+Examples<br>
+--------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;fl_activate_event_callback(win3)<br>
+&nbsp;<br>
+Notes<br>
+-----<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
+ <dl><dt><a name="-fl_add_event_callback"><strong>fl_add_event_callback</strong></a>(win, evttype, py_AppEventCb, vdata)</dt><dd><tt><a href="#-fl_add_event_callback">fl_add_event_callback</a>(win,&nbsp;evttype,&nbsp;py_AppEventCb,&nbsp;vdata)<br>
+&nbsp;<br>
+Adds&nbsp;an&nbsp;event&nbsp;handler&nbsp;for&nbsp;a&nbsp;window.&nbsp;Manipulates&nbsp;the&nbsp;event&nbsp;callback<br>
+functions&nbsp;for&nbsp;the&nbsp;window&nbsp;specified,&nbsp;which&nbsp;will&nbsp;be&nbsp;called&nbsp;when&nbsp;an<br>
+event&nbsp;of&nbsp;specified&nbsp;type&nbsp;is&nbsp;pending&nbsp;for&nbsp;the&nbsp;window.&nbsp;It&nbsp;does&nbsp;not<br>
+solicit&nbsp;any&nbsp;event&nbsp;for&nbsp;the&nbsp;caller,&nbsp;i.e.&nbsp;the&nbsp;XForms&nbsp;library&nbsp;assumes<br>
+the&nbsp;caller&nbsp;opens&nbsp;the&nbsp;window&nbsp;and&nbsp;solicits&nbsp;all&nbsp;events&nbsp;before&nbsp;calling<br>
+these&nbsp;routines.<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;win&nbsp;:&nbsp;long_pos<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;window&nbsp;id&nbsp;to&nbsp;add&nbsp;event&nbsp;handler&nbsp;to<br>
+&nbsp;&nbsp;&nbsp;&nbsp;evttype&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;event&nbsp;type&nbsp;number.&nbsp;If&nbsp;it&nbsp;is&nbsp;0,&nbsp;the&nbsp;callback&nbsp;is&nbsp;for&nbsp;all&nbsp;events&nbsp;for<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;the&nbsp;window<br>
+&nbsp;&nbsp;&nbsp;&nbsp;py_AppEventCb&nbsp;:&nbsp;python&nbsp;function&nbsp;callback,&nbsp;returned&nbsp;value<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;name&nbsp;referring&nbsp;function(pXEvent,&nbsp;vdata)&nbsp;-&gt;&nbsp;num.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;vdata&nbsp;:&nbsp;any&nbsp;type&nbsp;(e.g.&nbsp;'None',&nbsp;int,&nbsp;str,&nbsp;etc..)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;user&nbsp;data&nbsp;to&nbsp;be&nbsp;passed&nbsp;to&nbsp;function;&nbsp;callback&nbsp;has&nbsp;to&nbsp;take&nbsp;care<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;of&nbsp;type&nbsp;check<br>
+&nbsp;<br>
+Returns<br>
+-------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;AppEventCb&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_APPEVENT_CB<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;old&nbsp;event&nbsp;callback<br>
+&nbsp;<br>
+Examples<br>
+--------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;def&nbsp;eventcb(pxev,&nbsp;vdata):<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;...&nbsp;&lt;something&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;...&nbsp;return&nbsp;0<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;<a href="#-fl_add_event_callback">fl_add_event_callback</a>(win2,&nbsp;0,&nbsp;eventcb,&nbsp;None)<br>
+&nbsp;<br>
+Notes<br>
+-----<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
+ <dl><dt><a name="-fl_add_selected_xevent"><strong>fl_add_selected_xevent</strong></a> = fl_addto_selected_xevent(win, mask)</dt><dd><tt><a href="#-fl_addto_selected_xevent">fl_addto_selected_xevent</a>(win,&nbsp;mask)<br>
+&nbsp;<br>
+Adds&nbsp;solicited&nbsp;event&nbsp;masks&nbsp;on&nbsp;the&nbsp;fly&nbsp;without&nbsp;altering&nbsp;other&nbsp;masks<br>
+already&nbsp;selected.<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;win&nbsp;:&nbsp;long_pos<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;window&nbsp;id<br>
+&nbsp;&nbsp;&nbsp;&nbsp;mask&nbsp;:&nbsp;long<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;event&nbsp;mask<br>
+&nbsp;<br>
+Returns<br>
+-------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;num.&nbsp;:&nbsp;long<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*todo*<br>
+&nbsp;<br>
+Examples<br>
+--------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;lnum&nbsp;=&nbsp;<a href="#-fl_addto_selected_xevent">fl_addto_selected_xevent</a>(win7,&nbsp;xfdata.ButtonMotionMask)<br>
+&nbsp;<br>
+Notes<br>
+-----<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
+ <dl><dt><a name="-fl_addto_selected_xevent"><strong>fl_addto_selected_xevent</strong></a>(win, mask)</dt><dd><tt><a href="#-fl_addto_selected_xevent">fl_addto_selected_xevent</a>(win,&nbsp;mask)<br>
+&nbsp;<br>
+Adds&nbsp;solicited&nbsp;event&nbsp;masks&nbsp;on&nbsp;the&nbsp;fly&nbsp;without&nbsp;altering&nbsp;other&nbsp;masks<br>
+already&nbsp;selected.<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;win&nbsp;:&nbsp;long_pos<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;window&nbsp;id<br>
+&nbsp;&nbsp;&nbsp;&nbsp;mask&nbsp;:&nbsp;long<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;event&nbsp;mask<br>
+&nbsp;<br>
+Returns<br>
+-------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;num.&nbsp;:&nbsp;long<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*todo*<br>
+&nbsp;<br>
+Examples<br>
+--------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;lnum&nbsp;=&nbsp;<a href="#-fl_addto_selected_xevent">fl_addto_selected_xevent</a>(win7,&nbsp;xfdata.ButtonMotionMask)<br>
+&nbsp;<br>
+Notes<br>
+-----<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
+ <dl><dt><a name="-fl_arc"><strong>fl_arc</strong></a>(x, y, r, stheta, etheta, colr)</dt><dd><tt><a href="#-fl_arc">fl_arc</a>(x,&nbsp;y,&nbsp;r,&nbsp;stheta,&nbsp;etheta,&nbsp;colr)<br>
+&nbsp;<br>
+Draws&nbsp;an&nbsp;open&nbsp;circular&nbsp;arc.&nbsp;If&nbsp;the&nbsp;difference&nbsp;between&nbsp;theta&nbsp;end&nbsp;and<br>
+theta&nbsp;start&nbsp;is&nbsp;larger&nbsp;than&nbsp;3600&nbsp;(360&nbsp;degrees),&nbsp;drawing&nbsp;is&nbsp;truncated&nbsp;to<br>
+360&nbsp;degrees.<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;x&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;horizontal&nbsp;position&nbsp;of&nbsp;the&nbsp;center&nbsp;of&nbsp;the&nbsp;arc<br>
+&nbsp;&nbsp;&nbsp;&nbsp;y&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;vertical&nbsp;position&nbsp;of&nbsp;the&nbsp;center&nbsp;of&nbsp;the&nbsp;arc<br>
+&nbsp;&nbsp;&nbsp;&nbsp;r&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;radius&nbsp;of&nbsp;the&nbsp;arc<br>
+&nbsp;&nbsp;&nbsp;&nbsp;stheta&nbsp;:&nbsp;starting&nbsp;angle&nbsp;of&nbsp;the&nbsp;arc&nbsp;in&nbsp;units&nbsp;of&nbsp;tenths&nbsp;of&nbsp;a&nbsp;degree<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(where&nbsp;0&nbsp;stands&nbsp;for&nbsp;a&nbsp;direction&nbsp;of&nbsp;3&nbsp;o'clock,&nbsp;i.e.&nbsp;the&nbsp;right-most<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;point&nbsp;of&nbsp;a&nbsp;circle)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;etheta&nbsp;:&nbsp;ending&nbsp;angle&nbsp;of&nbsp;the&nbsp;arc&nbsp;in&nbsp;units&nbsp;of&nbsp;tenths&nbsp;of&nbsp;a&nbsp;degree<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(where&nbsp;0&nbsp;stands&nbsp;for&nbsp;a&nbsp;direction&nbsp;of&nbsp;3&nbsp;o'clock,&nbsp;i.e.&nbsp;the&nbsp;right-most<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;point&nbsp;of&nbsp;a&nbsp;circle)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;colr&nbsp;:&nbsp;long_pos<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;color&nbsp;value<br>
+&nbsp;<br>
+Examples<br>
+--------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;<a href="#-fl_arc">fl_arc</a>(120,&nbsp;253,&nbsp;40,&nbsp;10,&nbsp;60,&nbsp;xfdata.FL_FORESTGREEN)<br>
+&nbsp;<br>
+Notes<br>
+-----<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
+ <dl><dt><a name="-fl_arcf"><strong>fl_arcf</strong></a>(x, y, r, stheta, etheta, colr)</dt><dd><tt><a href="#-fl_arcf">fl_arcf</a>(x,&nbsp;y,&nbsp;r,&nbsp;stheta,&nbsp;etheta,&nbsp;colr)<br>
+&nbsp;<br>
+Draws&nbsp;a&nbsp;filled&nbsp;circular&nbsp;arc.&nbsp;If&nbsp;the&nbsp;difference&nbsp;between&nbsp;theta&nbsp;end&nbsp;and<br>
+theta&nbsp;start&nbsp;is&nbsp;larger&nbsp;than&nbsp;3600&nbsp;(360&nbsp;degrees),&nbsp;drawing&nbsp;is&nbsp;truncated&nbsp;to<br>
+360&nbsp;degrees.<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;x&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;horizontal&nbsp;position&nbsp;of&nbsp;the&nbsp;center&nbsp;of&nbsp;the&nbsp;arc<br>
+&nbsp;&nbsp;&nbsp;&nbsp;y&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;vertical&nbsp;position&nbsp;of&nbsp;the&nbsp;center&nbsp;of&nbsp;the&nbsp;arc<br>
+&nbsp;&nbsp;&nbsp;&nbsp;r&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;radius&nbsp;of&nbsp;the&nbsp;arc<br>
+&nbsp;&nbsp;&nbsp;&nbsp;stheta&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;starting&nbsp;angle&nbsp;of&nbsp;the&nbsp;arc&nbsp;in&nbsp;units&nbsp;of&nbsp;tenths&nbsp;of&nbsp;a&nbsp;degree&nbsp;(where<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;0&nbsp;stands&nbsp;for&nbsp;a&nbsp;direction&nbsp;of&nbsp;3&nbsp;o'clock,&nbsp;i.e.&nbsp;the&nbsp;right-most&nbsp;point<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;of&nbsp;a&nbsp;circle)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;etheta&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ending&nbsp;angle&nbsp;of&nbsp;the&nbsp;arc&nbsp;in&nbsp;units&nbsp;of&nbsp;tenths&nbsp;of&nbsp;a&nbsp;degree&nbsp;(where&nbsp;0<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;stands&nbsp;for&nbsp;a&nbsp;direction&nbsp;of&nbsp;3&nbsp;o'clock,&nbsp;i.e.&nbsp;the&nbsp;right-most&nbsp;point&nbsp;of<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;a&nbsp;circle)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;colr&nbsp;:&nbsp;long_pos<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;color&nbsp;value<br>
+&nbsp;<br>
+Examples<br>
+--------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;<a href="#-fl_arcf">fl_arcf</a>(120,&nbsp;253,&nbsp;40,&nbsp;10,&nbsp;60,&nbsp;xfdata.FL_FIREBRICK)<br>
+&nbsp;<br>
+Notes<br>
+-----<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
+ <dl><dt><a name="-fl_circ"><strong>fl_circ</strong></a>(x, y, r, colr)</dt><dd><tt><a href="#-fl_circ">fl_circ</a>(x,&nbsp;y,&nbsp;r,&nbsp;colr)<br>
+&nbsp;<br>
+Draws&nbsp;an&nbsp;open&nbsp;circle.<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;x&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;horizontal&nbsp;position&nbsp;of&nbsp;the&nbsp;center&nbsp;of&nbsp;the&nbsp;arc<br>
+&nbsp;&nbsp;&nbsp;&nbsp;y&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;vertical&nbsp;position&nbsp;of&nbsp;the&nbsp;center&nbsp;of&nbsp;the&nbsp;arc<br>
+&nbsp;&nbsp;&nbsp;&nbsp;r&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;radius&nbsp;of&nbsp;the&nbsp;arc<br>
+&nbsp;<br>
+Examples<br>
+--------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;<a href="#-fl_circ">fl_circ</a>(200,&nbsp;250,&nbsp;69,&nbsp;xfdata.FL_GAINSBORO)<br>
+&nbsp;<br>
+Notes<br>
+-----<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
+ <dl><dt><a name="-fl_circf"><strong>fl_circf</strong></a>(x, y, r, colr)</dt><dd><tt><a href="#-fl_circf">fl_circf</a>(x,&nbsp;y,&nbsp;r,&nbsp;colr)<br>
+&nbsp;<br>
+Draws&nbsp;a&nbsp;filled&nbsp;circle.<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;x&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;horizontal&nbsp;position&nbsp;of&nbsp;the&nbsp;center&nbsp;of&nbsp;the&nbsp;arc<br>
+&nbsp;&nbsp;&nbsp;&nbsp;y&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;vertical&nbsp;position&nbsp;of&nbsp;the&nbsp;center&nbsp;of&nbsp;the&nbsp;arc<br>
+&nbsp;&nbsp;&nbsp;&nbsp;r&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;radius&nbsp;of&nbsp;the&nbsp;arc<br>
+&nbsp;&nbsp;&nbsp;&nbsp;colr&nbsp;:&nbsp;long_pos<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;color&nbsp;value<br>
+&nbsp;<br>
+Examples<br>
+--------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;<a href="#-fl_circf">fl_circf</a>(200,&nbsp;250,&nbsp;69,&nbsp;xfdata.FL_FUCHSIA)<br>
+&nbsp;<br>
+Notes<br>
+-----<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;Demo&nbsp;=&nbsp;OK</tt></dd></dl>
+ <dl><dt><a name="-fl_create_colormap"><strong>fl_create_colormap</strong></a>(pXVisualInfo, nfill)</dt><dd><tt><a href="#-fl_create_colormap">fl_create_colormap</a>(pXVisualInfo,&nbsp;nfill)<br>
+&nbsp;<br>
+Creates&nbsp;a&nbsp;colormap&nbsp;appropriate&nbsp;for&nbsp;a&nbsp;given&nbsp;visual&nbsp;to&nbsp;be&nbsp;used&nbsp;with<br>
+a&nbsp;canvas.<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;pXVisualInfo&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.XVisualInfo<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;XVisualInfo&nbsp;class&nbsp;instance<br>
+&nbsp;&nbsp;&nbsp;&nbsp;nfill&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;how&nbsp;many&nbsp;colors&nbsp;in&nbsp;the&nbsp;newly&nbsp;created&nbsp;colormap&nbsp;should&nbsp;be&nbsp;filled<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;with&nbsp;XForms'&nbsp;default&nbsp;colors&nbsp;(to&nbsp;avoid&nbsp;flashing&nbsp;effects)<br>
+&nbsp;<br>
+Returns<br>
+-------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;cmap&nbsp;:&nbsp;long_pos<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;created&nbsp;colormap<br>
+&nbsp;<br>
+Examples<br>
+--------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;*todo*<br>
+&nbsp;<br>
+Notes<br>
+-----<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
+ <dl><dt><a name="-fl_dashedlinestyle"><strong>fl_dashedlinestyle</strong></a>(dash, ndash)</dt><dd><tt><a href="#-fl_dashedlinestyle">fl_dashedlinestyle</a>(dash,&nbsp;ndash)<br>
+&nbsp;<br>
+Changes&nbsp;the&nbsp;dash&nbsp;pattern&nbsp;for&nbsp;xfdata.FL_USERDASH&nbsp;and<br>
+xfdata.FL&nbsp;USERDOUBLEDASH.&nbsp;Each&nbsp;element&nbsp;of&nbsp;the&nbsp;array&nbsp;dash&nbsp;is&nbsp;the&nbsp;length&nbsp;of<br>
+a&nbsp;segment&nbsp;of&nbsp;the&nbsp;pattern&nbsp;in&nbsp;pixels.&nbsp;Dashed&nbsp;lines&nbsp;are&nbsp;drawn&nbsp;as&nbsp;alternating<br>
+segments,&nbsp;each&nbsp;with&nbsp;the&nbsp;length&nbsp;of&nbsp;an&nbsp;element&nbsp;in&nbsp;dash.&nbsp;Thus&nbsp;the&nbsp;overall<br>
+length&nbsp;of&nbsp;the&nbsp;dash&nbsp;pattern,&nbsp;in&nbsp;pixels,&nbsp;is&nbsp;the&nbsp;sum&nbsp;of&nbsp;all&nbsp;elements&nbsp;of&nbsp;dash.<br>
+When&nbsp;the&nbsp;pattern&nbsp;is&nbsp;used&nbsp;up&nbsp;but&nbsp;the&nbsp;line&nbsp;to&nbsp;draw&nbsp;is&nbsp;longer&nbsp;it&nbsp;used&nbsp;from&nbsp;the<br>
+start&nbsp;again.&nbsp;You&nbsp;have&nbsp;to&nbsp;call&nbsp;this&nbsp;one&nbsp;whenever&nbsp;xfdata.FL_USERDASH&nbsp;is&nbsp;used<br>
+to&nbsp;set&nbsp;the&nbsp;dash&nbsp;pattern,&nbsp;otherwise&nbsp;whatever&nbsp;the&nbsp;last&nbsp;pattern&nbsp;was,&nbsp;it&nbsp;will<br>
+be&nbsp;used.&nbsp;After&nbsp;the&nbsp;sequence,&nbsp;the&nbsp;pattern&nbsp;repeats.<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;dash&nbsp;:&nbsp;list_of_int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;sequence&nbsp;list&nbsp;of&nbsp;dashes&nbsp;to&nbsp;use.&nbsp;If&nbsp;it&nbsp;is&nbsp;'None',&nbsp;use&nbsp;default&nbsp;dash<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;pattern.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ndash&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;length&nbsp;of&nbsp;dashes&nbsp;list<br>
+&nbsp;<br>
+Examples<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;dashlist&nbsp;=&nbsp;[9,&nbsp;3,&nbsp;2,&nbsp;3]<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;<a href="#-fl_dashedlinestyle">fl_dashedlinestyle</a>(dashlist,&nbsp;4)<br>
+&nbsp;<br>
+Notes<br>
+-----<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
+ <dl><dt><a name="-fl_default_win"><strong>fl_default_win</strong></a>()</dt></dl>
+ <dl><dt><a name="-fl_default_window"><strong>fl_default_window</strong></a>()</dt></dl>
+ <dl><dt><a name="-fl_diagline"><strong>fl_diagline</strong></a>(x, y, w, h, colr)</dt><dd><tt><a href="#-fl_diagline">fl_diagline</a>(x,&nbsp;y,&nbsp;w,&nbsp;h,&nbsp;colr)<br>
+&nbsp;<br>
+Draws&nbsp;a&nbsp;line&nbsp;along&nbsp;the&nbsp;diagonal&nbsp;of&nbsp;a&nbsp;box&nbsp;(to&nbsp;draw&nbsp;a&nbsp;horizontal&nbsp;line<br>
+set&nbsp;h&nbsp;to&nbsp;1,&nbsp;not&nbsp;to&nbsp;0).<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;x&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;horizontal&nbsp;position&nbsp;(upper-left&nbsp;corner)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;y&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;vertical&nbsp;position&nbsp;(upper-left&nbsp;corner)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;w&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;width&nbsp;in&nbsp;coord&nbsp;units<br>
+&nbsp;&nbsp;&nbsp;&nbsp;h&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;height&nbsp;in&nbsp;coord&nbsp;units<br>
+&nbsp;&nbsp;&nbsp;&nbsp;colr&nbsp;:&nbsp;long_pos<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;color&nbsp;value<br>
+&nbsp;<br>
+Examples<br>
+--------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;<a href="#-fl_diagline">fl_diagline</a>(180,&nbsp;90,&nbsp;5,&nbsp;2,&nbsp;xfdata.FL_BISQUE)<br>
+&nbsp;<br>
+Notes<br>
+-----<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
+ <dl><dt><a name="-fl_drawmode"><strong>fl_drawmode</strong></a>(mode)</dt><dd><tt><a href="#-fl_drawmode">fl_drawmode</a>(mode)<br>
+&nbsp;<br>
+Changes&nbsp;the&nbsp;drawing&nbsp;mode&nbsp;so&nbsp;the&nbsp;destination&nbsp;pixel&nbsp;values&nbsp;play&nbsp;a&nbsp;role<br>
+in&nbsp;the&nbsp;final&nbsp;pixel&nbsp;value.&nbsp;By&nbsp;default,&nbsp;all&nbsp;lines&nbsp;are&nbsp;drawn&nbsp;so&nbsp;they<br>
+overwrite&nbsp;the&nbsp;destination&nbsp;pixel&nbsp;values.<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+&nbsp;&nbsp;mode&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;requested&nbsp;mode&nbsp;setting.&nbsp;Values&nbsp;(from&nbsp;xfdata&nbsp;module)&nbsp;FL_XOR,&nbsp;FL_COPY,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;FL_AND<br>
+&nbsp;<br>
+Examples<br>
+--------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;<a href="#-fl_drawmode">fl_drawmode</a>(xfdata.FL_AND)<br>
+&nbsp;<br>
+Notes<br>
+-----<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
+ <dl><dt><a name="-fl_drw_checkbox"><strong>fl_drw_checkbox</strong></a>(boxtype, x, y, w, h, colr, bw)</dt><dd><tt><a href="#-fl_drw_checkbox">fl_drw_checkbox</a>(boxtype,&nbsp;x,&nbsp;y,&nbsp;w,&nbsp;h,&nbsp;colr,&nbsp;bw)<br>
+&nbsp;<br>
+Draws&nbsp;a&nbsp;box&nbsp;rotated&nbsp;45&nbsp;degrees.<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;boxtype&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;type&nbsp;of&nbsp;checkbox&nbsp;to&nbsp;draw.&nbsp;Values&nbsp;(from&nbsp;xfdata.py)&nbsp;FL_NO_BOX,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_UP_BOX,&nbsp;FL_DOWN_BOX,&nbsp;FL_BORDER_BOX,&nbsp;FL_SHADOW_BOX,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_FRAME_BOX,&nbsp;FL_ROUNDED_BOX,&nbsp;FL_EMBOSSED_BOX,&nbsp;FL_FLAT_BOX,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_RFLAT_BOX,&nbsp;FL_RSHADOW_BOX,&nbsp;FL_OVAL_BOX,&nbsp;FL_ROUNDED3D_UPBOX,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_ROUNDED3D_DOWNBOX,&nbsp;FL_OVAL3D_UPBOX,&nbsp;FL_OVAL3D_DOWNBOX,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_OVAL3D_FRAMEBOX,&nbsp;FL_OVAL3D_EMBOSSEDBOX<br>
+&nbsp;&nbsp;&nbsp;&nbsp;x&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;horizontal&nbsp;position&nbsp;(upper-left&nbsp;corner)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;y&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;vertical&nbsp;position&nbsp;(upper-left&nbsp;corner)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;w&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;width&nbsp;in&nbsp;coord&nbsp;units<br>
+&nbsp;&nbsp;&nbsp;&nbsp;h&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;height&nbsp;in&nbsp;coord&nbsp;units<br>
+&nbsp;&nbsp;&nbsp;&nbsp;colr&nbsp;:&nbsp;long_pos<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;color&nbsp;value<br>
+&nbsp;&nbsp;&nbsp;&nbsp;bw&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;width&nbsp;of&nbsp;boundary<br>
+&nbsp;<br>
+Examples<br>
+--------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;<a href="#-fl_drw_checkbox">fl_drw_checkbox</a>(xfdata.FL_ROUNDED3D_UPBOX,&nbsp;470,&nbsp;560,&nbsp;170,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;280,&nbsp;xfdata.FL_LEMONCHIFFON,&nbsp;-2)<br>
+&nbsp;<br>
+Notes<br>
+-----<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
+ <dl><dt><a name="-fl_drw_frame"><strong>fl_drw_frame</strong></a>(boxtype, x, y, w, h, colr, bw)</dt><dd><tt><a href="#-fl_drw_frame">fl_drw_frame</a>(boxtype,&nbsp;x,&nbsp;y,&nbsp;w,&nbsp;h,&nbsp;colr,&nbsp;bw)<br>
+&nbsp;<br>
+Draws&nbsp;a&nbsp;frame&nbsp;outside&nbsp;of&nbsp;the&nbsp;bounding&nbsp;box&nbsp;specified.<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;boxtype&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;type&nbsp;of&nbsp;frame&nbsp;box.&nbsp;Values&nbsp;(from&nbsp;xfdata.py)&nbsp;FL_NO_BOX,&nbsp;FL_UP_BOX,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_DOWN_BOX,&nbsp;FL_BORDER_BOX,&nbsp;FL_SHADOW_BOX,&nbsp;FL_FRAME_BOX,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_ROUNDED_BOX,&nbsp;FL_EMBOSSED_BOX,&nbsp;FL_FLAT_BOX,&nbsp;FL_RFLAT_BOX,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_RSHADOW_BOX,&nbsp;FL_OVAL_BOX,&nbsp;FL_ROUNDED3D_UPBOX,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_ROUNDED3D_DOWNBOX,&nbsp;FL_OVAL3D_UPBOX,&nbsp;FL_OVAL3D_DOWNBOX,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_OVAL3D_FRAMEBOX,&nbsp;FL_OVAL3D_EMBOSSEDBOX<br>
+&nbsp;&nbsp;&nbsp;&nbsp;x&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;horizontal&nbsp;position&nbsp;(upper-left&nbsp;corner)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;y&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;vertical&nbsp;position&nbsp;(upper-left&nbsp;corner)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;w&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;width&nbsp;in&nbsp;coord&nbsp;units<br>
+&nbsp;&nbsp;&nbsp;&nbsp;h&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;height&nbsp;in&nbsp;coord&nbsp;units<br>
+&nbsp;&nbsp;&nbsp;&nbsp;colr&nbsp;:&nbsp;long_pos<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;color&nbsp;value<br>
+&nbsp;&nbsp;&nbsp;&nbsp;bw&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;width&nbsp;of&nbsp;boundary<br>
+&nbsp;<br>
+Examples<br>
+--------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;<a href="#-fl_drw_frame">fl_drw_frame</a>(xfdata.FL_UP_BOX,&nbsp;470,&nbsp;560,&nbsp;170,&nbsp;280,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;xfdata.FL_DIMGRAY,&nbsp;2)<br>
+&nbsp;<br>
+Notes<br>
+-----<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
+ <dl><dt><a name="-fl_finish"><strong>fl_finish</strong></a>()</dt><dd><tt><a href="#-fl_finish">fl_finish</a>()<br>
+&nbsp;<br>
+It&nbsp;is&nbsp;a&nbsp;final&nbsp;cleanup&nbsp;routine,&nbsp;restores&nbsp;all&nbsp;X&nbsp;server&nbsp;defaults,&nbsp;shuts<br>
+down&nbsp;the&nbsp;connection&nbsp;and&nbsp;frees&nbsp;dynamically&nbsp;allocated&nbsp;memory.<br>
+&nbsp;<br>
+Examples<br>
+--------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;<a href="#-fl_finish">fl_finish</a>()<br>
+&nbsp;<br>
+Notes<br>
+-----<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;Demo&nbsp;=&nbsp;OK</tt></dd></dl>
+ <dl><dt><a name="-fl_get_app_resources"><strong>fl_get_app_resources</strong></a>(pResource, nresources)</dt><dd><tt><a href="#-fl_get_app_resources">fl_get_app_resources</a>(pResource,&nbsp;nresources)<br>
+&nbsp;<br>
+*todo*<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;pResource&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_RESOURCE<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;an&nbsp;array&nbsp;of&nbsp;resource&nbsp;class&nbsp;instances<br>
+&nbsp;&nbsp;&nbsp;&nbsp;nresources&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;number&nbsp;of&nbsp;resources&nbsp;(starting&nbsp;from&nbsp;1)&nbsp;passed&nbsp;with&nbsp;pResource&nbsp;array<br>
+&nbsp;<br>
+Examples<br>
+--------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;*todo*<br>
+&nbsp;<br>
+Notes<br>
+-----<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
+ <dl><dt><a name="-fl_get_decoration_sizes"><strong>fl_get_decoration_sizes</strong></a>(pFlForm)</dt><dd><tt><a href="#-fl_get_decoration_sizes">fl_get_decoration_sizes</a>(pFlForm)<br>
+&nbsp;<br>
+Obtains&nbsp;the&nbsp;sizes&nbsp;of&nbsp;the&nbsp;"decorations"&nbsp;the&nbsp;window&nbsp;manager&nbsp;puts&nbsp;around<br>
+a&nbsp;form's&nbsp;window.<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;pFlForm&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_FORM<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;form<br>
+&nbsp;<br>
+Returns<br>
+-------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;result&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;0&nbsp;(on&nbsp;success)&nbsp;or&nbsp;-1&nbsp;(if&nbsp;the&nbsp;form&nbsp;is&nbsp;not&nbsp;visible&nbsp;or&nbsp;it&nbsp;is&nbsp;a<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;form&nbsp;embedded&nbsp;into&nbsp;another&nbsp;form)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;tpsize&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;top&nbsp;size<br>
+&nbsp;&nbsp;&nbsp;&nbsp;rgsize&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;right&nbsp;size<br>
+&nbsp;&nbsp;&nbsp;&nbsp;btsize&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;bottom&nbsp;size<br>
+&nbsp;&nbsp;&nbsp;&nbsp;lfsize&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;left&nbsp;size<br>
+&nbsp;<br>
+Examples<br>
+--------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;dsize&nbsp;=&nbsp;<a href="#-fl_get_decoration_sizes">fl_get_decoration_sizes</a>(pform)<br>
+&nbsp;<br>
+API_diversion<br>
+-------------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;API&nbsp;changed&nbsp;from&nbsp;XForms,&nbsp;upstream&nbsp;was<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="#-fl_get_decoration_sizes">fl_get_decoration_sizes</a>(pFlForm,&nbsp;top,&nbsp;right,&nbsp;bottom,&nbsp;left)<br>
+&nbsp;<br>
+Notes<br>
+-----<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
+ <dl><dt><a name="-fl_get_defaults"><strong>fl_get_defaults</strong></a>()</dt><dd><tt><a href="#-fl_get_defaults">fl_get_defaults</a>()<br>
+&nbsp;<br>
+Obtains&nbsp;program&nbsp;defaults&nbsp;from&nbsp;the&nbsp;resource&nbsp;database.<br>
+&nbsp;<br>
+Returns<br>
+-------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Iopt&nbsp;:&nbsp;instance&nbsp;of&nbsp;xfdata.FL_IOPT<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;program&nbsp;defaults&nbsp;class&nbsp;instance<br>
+&nbsp;<br>
+Examples<br>
+--------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;defprgres&nbsp;=&nbsp;<a href="#-fl_get_defaults">fl_get_defaults</a>()<br>
+&nbsp;<br>
+API_diversion<br>
+-------------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;API&nbsp;changed&nbsp;from&nbsp;XForms,&nbsp;upstream&nbsp;was&nbsp;<a href="#-fl_get_defaults">fl_get_defaults</a>(pIopt)<br>
+&nbsp;<br>
+Notes<br>
+-----<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
+ <dl><dt><a name="-fl_get_display"><strong>fl_get_display</strong></a>()</dt></dl>
+ <dl><dt><a name="-fl_get_drawmode"><strong>fl_get_drawmode</strong></a>()</dt><dd><tt><a href="#-fl_get_drawmode">fl_get_drawmode</a>()<br>
+&nbsp;<br>
+Obtains&nbsp;the&nbsp;drawing&nbsp;mode&nbsp;of&nbsp;lines.<br>
+&nbsp;<br>
+Returns<br>
+-------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;dmode&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;drawing&nbsp;mode&nbsp;(from&nbsp;xfdata.py,&nbsp;e.g.&nbsp;FL_AND,&nbsp;FL_XOR&nbsp;etc..)<br>
+&nbsp;<br>
+Examples<br>
+--------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;currdrw&nbsp;=&nbsp;fl_get_draw_mode()<br>
+&nbsp;<br>
+Notes<br>
+-----<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
+ <dl><dt><a name="-fl_get_fntstruct"><strong>fl_get_fntstruct</strong></a> = fl_get_fontstruct(style, size)</dt><dd><tt><a href="#-fl_get_fontstruct">fl_get_fontstruct</a>(style,&nbsp;size)<br>
+&nbsp;<br>
+Obtains&nbsp;the&nbsp;X&nbsp;font&nbsp;structure&nbsp;for&nbsp;a&nbsp;particular&nbsp;size&nbsp;and&nbsp;style&nbsp;as&nbsp;used<br>
+in&nbsp;XForms&nbsp;library.<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;style&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;font&nbsp;style.&nbsp;Values&nbsp;(from&nbsp;xfdata.py)&nbsp;FL_NORMAL_STYLE,&nbsp;FL_BOLD_STYLE,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_ITALIC_STYLE,&nbsp;FL_BOLDITALIC_STYLE,&nbsp;FL_FIXED_STYLE,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_FIXEDBOLD_STYLE,&nbsp;FL_FIXEDITALIC_STYLE,&nbsp;FL_FIXEDBOLDITALIC_STYLE,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_TIMES_STYLE,&nbsp;FL_TIMESBOLD_STYLE,&nbsp;FL_TIMESITALIC_STYLE,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_TIMESBOLDITALIC_STYLE,&nbsp;FL_MISC_STYLE,&nbsp;FL_MISCBOLD_STYLE,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_MISCITALIC_STYLE,&nbsp;FL_SYMBOL_STYLE,&nbsp;FL_SHADOW_STYLE,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_ENGRAVED_STYLE,&nbsp;FL_EMBOSSED_STYLE<br>
+&nbsp;&nbsp;&nbsp;&nbsp;size&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;font&nbsp;size.&nbsp;Values&nbsp;(from&nbsp;xfdata.py)&nbsp;FL_TINY_SIZE,&nbsp;FL_SMALL_SIZE,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_NORMAL_SIZE,&nbsp;FL_MEDIUM_SIZE,&nbsp;FL_LARGE_SIZE,&nbsp;FL_HUGE_SIZE,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_DEFAULT_SIZE<br>
+&nbsp;<br>
+Returns<br>
+-------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;pXFontStruct&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.XFontStruct<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;XFontStruct&nbsp;class&nbsp;instance<br>
+&nbsp;<br>
+Examples<br>
+--------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;pfstruc&nbsp;=&nbsp;<a href="#-fl_get_fontstruct">fl_get_fontstruct</a>(xfdata.FL_ITALIC_STYLE,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;xfdata.FL_NORMAL_STYLE)<br>
+&nbsp;<br>
+Notes<br>
+-----<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
+ <dl><dt><a name="-fl_get_font_struct"><strong>fl_get_font_struct</strong></a> = fl_get_fontstruct(style, size)</dt><dd><tt><a href="#-fl_get_fontstruct">fl_get_fontstruct</a>(style,&nbsp;size)<br>
+&nbsp;<br>
+Obtains&nbsp;the&nbsp;X&nbsp;font&nbsp;structure&nbsp;for&nbsp;a&nbsp;particular&nbsp;size&nbsp;and&nbsp;style&nbsp;as&nbsp;used<br>
+in&nbsp;XForms&nbsp;library.<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;style&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;font&nbsp;style.&nbsp;Values&nbsp;(from&nbsp;xfdata.py)&nbsp;FL_NORMAL_STYLE,&nbsp;FL_BOLD_STYLE,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_ITALIC_STYLE,&nbsp;FL_BOLDITALIC_STYLE,&nbsp;FL_FIXED_STYLE,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_FIXEDBOLD_STYLE,&nbsp;FL_FIXEDITALIC_STYLE,&nbsp;FL_FIXEDBOLDITALIC_STYLE,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_TIMES_STYLE,&nbsp;FL_TIMESBOLD_STYLE,&nbsp;FL_TIMESITALIC_STYLE,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_TIMESBOLDITALIC_STYLE,&nbsp;FL_MISC_STYLE,&nbsp;FL_MISCBOLD_STYLE,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_MISCITALIC_STYLE,&nbsp;FL_SYMBOL_STYLE,&nbsp;FL_SHADOW_STYLE,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_ENGRAVED_STYLE,&nbsp;FL_EMBOSSED_STYLE<br>
+&nbsp;&nbsp;&nbsp;&nbsp;size&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;font&nbsp;size.&nbsp;Values&nbsp;(from&nbsp;xfdata.py)&nbsp;FL_TINY_SIZE,&nbsp;FL_SMALL_SIZE,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_NORMAL_SIZE,&nbsp;FL_MEDIUM_SIZE,&nbsp;FL_LARGE_SIZE,&nbsp;FL_HUGE_SIZE,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_DEFAULT_SIZE<br>
+&nbsp;<br>
+Returns<br>
+-------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;pXFontStruct&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.XFontStruct<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;XFontStruct&nbsp;class&nbsp;instance<br>
+&nbsp;<br>
+Examples<br>
+--------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;pfstruc&nbsp;=&nbsp;<a href="#-fl_get_fontstruct">fl_get_fontstruct</a>(xfdata.FL_ITALIC_STYLE,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;xfdata.FL_NORMAL_STYLE)<br>
+&nbsp;<br>
+Notes<br>
+-----<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
+ <dl><dt><a name="-fl_get_fontstruct"><strong>fl_get_fontstruct</strong></a>(style, size)</dt><dd><tt><a href="#-fl_get_fontstruct">fl_get_fontstruct</a>(style,&nbsp;size)<br>
+&nbsp;<br>
+Obtains&nbsp;the&nbsp;X&nbsp;font&nbsp;structure&nbsp;for&nbsp;a&nbsp;particular&nbsp;size&nbsp;and&nbsp;style&nbsp;as&nbsp;used<br>
+in&nbsp;XForms&nbsp;library.<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;style&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;font&nbsp;style.&nbsp;Values&nbsp;(from&nbsp;xfdata.py)&nbsp;FL_NORMAL_STYLE,&nbsp;FL_BOLD_STYLE,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_ITALIC_STYLE,&nbsp;FL_BOLDITALIC_STYLE,&nbsp;FL_FIXED_STYLE,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_FIXEDBOLD_STYLE,&nbsp;FL_FIXEDITALIC_STYLE,&nbsp;FL_FIXEDBOLDITALIC_STYLE,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_TIMES_STYLE,&nbsp;FL_TIMESBOLD_STYLE,&nbsp;FL_TIMESITALIC_STYLE,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_TIMESBOLDITALIC_STYLE,&nbsp;FL_MISC_STYLE,&nbsp;FL_MISCBOLD_STYLE,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_MISCITALIC_STYLE,&nbsp;FL_SYMBOL_STYLE,&nbsp;FL_SHADOW_STYLE,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_ENGRAVED_STYLE,&nbsp;FL_EMBOSSED_STYLE<br>
+&nbsp;&nbsp;&nbsp;&nbsp;size&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;font&nbsp;size.&nbsp;Values&nbsp;(from&nbsp;xfdata.py)&nbsp;FL_TINY_SIZE,&nbsp;FL_SMALL_SIZE,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_NORMAL_SIZE,&nbsp;FL_MEDIUM_SIZE,&nbsp;FL_LARGE_SIZE,&nbsp;FL_HUGE_SIZE,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_DEFAULT_SIZE<br>
+&nbsp;<br>
+Returns<br>
+-------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;pXFontStruct&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.XFontStruct<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;XFontStruct&nbsp;class&nbsp;instance<br>
+&nbsp;<br>
+Examples<br>
+--------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;pfstruc&nbsp;=&nbsp;<a href="#-fl_get_fontstruct">fl_get_fontstruct</a>(xfdata.FL_ITALIC_STYLE,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;xfdata.FL_NORMAL_STYLE)<br>
+&nbsp;<br>
+Notes<br>
+-----<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
+ <dl><dt><a name="-fl_get_form_mouse"><strong>fl_get_form_mouse</strong></a>(pFlForm)</dt><dd><tt><a href="#-fl_get_form_mouse">fl_get_form_mouse</a>(pFlForm)<br>
+&nbsp;<br>
+Obtains&nbsp;the&nbsp;position&nbsp;of&nbsp;the&nbsp;mouse&nbsp;relative&nbsp;to&nbsp;a&nbsp;certain&nbsp;form,&nbsp;and<br>
+the&nbsp;current&nbsp;state&nbsp;of&nbsp;the&nbsp;modifier&nbsp;keys&nbsp;and&nbsp;pointer&nbsp;buttons.<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;pFlForm&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_FORM<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;form<br>
+&nbsp;<br>
+Returns<br>
+-------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;win&nbsp;:&nbsp;long_pos<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;window&nbsp;the&nbsp;mouse&nbsp;is&nbsp;in<br>
+&nbsp;&nbsp;&nbsp;&nbsp;x&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;horizontal&nbsp;position&nbsp;of&nbsp;mouse<br>
+&nbsp;&nbsp;&nbsp;&nbsp;y&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;vertical&nbsp;position&nbsp;of&nbsp;mouse<br>
+&nbsp;&nbsp;&nbsp;&nbsp;keymask&nbsp;:&nbsp;int_pos<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*todo*<br>
+&nbsp;<br>
+Examples<br>
+--------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;win,&nbsp;x,&nbsp;y,&nbsp;keym&nbsp;=&nbsp;<a href="#-fl_get_form_mouse">fl_get_form_mouse</a>()<br>
+&nbsp;<br>
+API_diversion<br>
+-------------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;API&nbsp;changed&nbsp;from&nbsp;XForms,&nbsp;upstream&nbsp;was<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="#-fl_get_form_mouse">fl_get_form_mouse</a>(fm,&nbsp;x,&nbsp;y,&nbsp;keymask)<br>
+&nbsp;<br>
+Notes<br>
+-----<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
+ <dl><dt><a name="-fl_get_form_vclass"><strong>fl_get_form_vclass</strong></a>(a)</dt></dl>
+ <dl><dt><a name="-fl_get_gc"><strong>fl_get_gc</strong></a>()</dt></dl>
+ <dl><dt><a name="-fl_get_linestyle"><strong>fl_get_linestyle</strong></a>()</dt><dd><tt><a href="#-fl_get_linestyle">fl_get_linestyle</a>()<br>
+&nbsp;<br>
+Obtains&nbsp;the&nbsp;style&nbsp;of&nbsp;line.<br>
+&nbsp;<br>
+Returns<br>
+-------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;linestyle:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;line&nbsp;style&nbsp;(from&nbsp;xfdata.py,&nbsp;e.g.&nbsp;FL_SOLID,&nbsp;FL_DOT,&nbsp;etc..)<br>
+&nbsp;<br>
+Examples<br>
+--------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;currstl&nbsp;=&nbsp;<a href="#-fl_get_linestyle">fl_get_linestyle</a>()<br>
+&nbsp;<br>
+Notes<br>
+-----<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
+ <dl><dt><a name="-fl_get_linewidth"><strong>fl_get_linewidth</strong></a>()</dt><dd><tt><a href="#-fl_get_linewidth">fl_get_linewidth</a>()<br>
+&nbsp;<br>
+Obtains&nbsp;the&nbsp;width&nbsp;of&nbsp;line.<br>
+&nbsp;<br>
+Returns<br>
+-------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;lw&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;line&nbsp;width<br>
+&nbsp;<br>
+Examples<br>
+--------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;wid&nbsp;=&nbsp;<a href="#-fl_get_linewidth">fl_get_linewidth</a>()<br>
+&nbsp;<br>
+Notes<br>
+-----<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
+ <dl><dt><a name="-fl_get_mouse"><strong>fl_get_mouse</strong></a>()</dt><dd><tt><a href="#-fl_get_mouse">fl_get_mouse</a>()<br>
+&nbsp;<br>
+Obtains&nbsp;the&nbsp;current&nbsp;mouse&nbsp;position&nbsp;relative&nbsp;to&nbsp;the&nbsp;root&nbsp;window,&nbsp;and<br>
+the&nbsp;current&nbsp;state&nbsp;of&nbsp;the&nbsp;modifier&nbsp;keys&nbsp;and&nbsp;pointer&nbsp;buttons.<br>
+&nbsp;<br>
+Returns<br>
+-------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;win&nbsp;:&nbsp;long_pos<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;window&nbsp;the&nbsp;mouse&nbsp;is&nbsp;in<br>
+&nbsp;&nbsp;&nbsp;&nbsp;x&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;horizontal&nbsp;position&nbsp;of&nbsp;mouse<br>
+&nbsp;&nbsp;&nbsp;&nbsp;y&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;vertical&nbsp;position&nbsp;of&nbsp;mouse<br>
+&nbsp;&nbsp;&nbsp;&nbsp;keymask&nbsp;:&nbsp;int_pos<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*todo*<br>
+&nbsp;<br>
+Examples<br>
+--------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;win,&nbsp;x,&nbsp;y,&nbsp;kmsk&nbsp;=&nbsp;<a href="#-fl_get_mouse">fl_get_mouse</a>()<br>
+&nbsp;<br>
+API_diversion<br>
+-------------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;API&nbsp;changed&nbsp;from&nbsp;XForms,&nbsp;upstream&nbsp;was&nbsp;<a href="#-fl_get_mouse">fl_get_mouse</a>(x,&nbsp;y,&nbsp;keymask)<br>
+&nbsp;<br>
+Notes<br>
+-----<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
+ <dl><dt><a name="-fl_get_real_object_window"><strong>fl_get_real_object_window</strong></a>(pFlObject)</dt><dd><tt><a href="#-fl_get_real_object_window">fl_get_real_object_window</a>(pFlObject)<br>
+&nbsp;<br>
+Obtains&nbsp;the&nbsp;real&nbsp;window&nbsp;id&nbsp;an&nbsp;object&nbsp;belongs&nbsp;to&nbsp;(to&nbsp;be&nbsp;used&nbsp;for<br>
+cursor&nbsp;or&nbsp;pointer&nbsp;routines).<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;pFlObject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;object<br>
+&nbsp;<br>
+Returns<br>
+-------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;win&nbsp;:&nbsp;long_pos<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;window&nbsp;id<br>
+&nbsp;<br>
+Examples<br>
+--------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;wind&nbsp;=&nbsp;<a href="#-fl_get_real_object_window">fl_get_real_object_window</a>(pobj)<br>
+&nbsp;<br>
+Notes<br>
+-----<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
+ <dl><dt><a name="-fl_get_resource"><strong>fl_get_resource</strong></a>(resname, resclass, dtype, defval, size)</dt><dd><tt><a href="#-fl_get_resource">fl_get_resource</a>(resname,&nbsp;resclass,&nbsp;dtype,&nbsp;defval,&nbsp;size)<br>
+&nbsp;<br>
+Obtains&nbsp;resource&nbsp;data&nbsp;at&nbsp;the&nbsp;lowest&nbsp;level.&nbsp;It&nbsp;may&nbsp;be&nbsp;useful&nbsp;to&nbsp;e.g.<br>
+retrieve&nbsp;arbitrary&nbsp;strings&nbsp;and&nbsp;values&nbsp;and&nbsp;to&nbsp;pass&nbsp;data&nbsp;around.<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;resname&nbsp;:&nbsp;str<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;complete&nbsp;resource&nbsp;name&nbsp;specification&nbsp;(minus&nbsp;the&nbsp;application&nbsp;name)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;and&nbsp;should&nbsp;not&nbsp;contain&nbsp;wildcards&nbsp;of&nbsp;any&nbsp;kind<br>
+&nbsp;&nbsp;&nbsp;&nbsp;resclass&nbsp;:&nbsp;str<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;complete&nbsp;resource&nbsp;class&nbsp;specification&nbsp;(minus&nbsp;the&nbsp;application&nbsp;name)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;and&nbsp;should&nbsp;not&nbsp;contain&nbsp;wildcards&nbsp;of&nbsp;any&nbsp;kind<br>
+&nbsp;&nbsp;&nbsp;&nbsp;dtype&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;type&nbsp;of&nbsp;resource.&nbsp;Values&nbsp;(from&nbsp;xfdata.py)&nbsp;FL_NONE,&nbsp;FL_SHORT,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_BOOL,&nbsp;FL_INT,&nbsp;FL_LONG,&nbsp;FL_FLOAT,&nbsp;FL_STRING<br>
+&nbsp;&nbsp;&nbsp;&nbsp;defval&nbsp;:&nbsp;str<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;default&nbsp;value<br>
+&nbsp;&nbsp;&nbsp;&nbsp;size&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;number&nbsp;of&nbsp;bytes,&nbsp;used&nbsp;only&nbsp;if&nbsp;dtype&nbsp;is&nbsp;FL_STRING<br>
+&nbsp;<br>
+Returns<br>
+-------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;restext&nbsp;:&nbsp;str<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;text&nbsp;representation&nbsp;of&nbsp;the&nbsp;resource&nbsp;value,&nbsp;or&nbsp;None&nbsp;(on&nbsp;failure)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;varval&nbsp;:&nbsp;any&nbsp;type<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;variable&nbsp;value<br>
+&nbsp;<br>
+Examples<br>
+--------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;*todo*<br>
+&nbsp;<br>
+API_diversion<br>
+-------------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;API&nbsp;changed&nbsp;from&nbsp;XForms,&nbsp;upstream&nbsp;was<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="#-fl_get_resource">fl_get_resource</a>(resname,&nbsp;resclass,&nbsp;dtype,&nbsp;defval,&nbsp;val,&nbsp;size)<br>
+&nbsp;<br>
+Notes<br>
+-----<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
+ <dl><dt><a name="-fl_get_vclass"><strong>fl_get_vclass</strong></a>()</dt><dd><tt>#&nbsp;Current&nbsp;version&nbsp;only&nbsp;runs&nbsp;in&nbsp;single&nbsp;visual&nbsp;mode</tt></dd></dl>
+ <dl><dt><a name="-fl_get_visual_depth"><strong>fl_get_visual_depth</strong></a>()</dt><dd><tt><a href="#-fl_get_visual_depth">fl_get_visual_depth</a>()<br>
+&nbsp;<br>
+Obtains&nbsp;the&nbsp;visual&nbsp;depth.<br>
+&nbsp;<br>
+Returns<br>
+-------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;depth&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;visual&nbsp;depth&nbsp;for&nbsp;current&nbsp;mode<br>
+&nbsp;<br>
+Examples<br>
+--------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;curdepth&nbsp;=&nbsp;<a href="#-fl_get_visual_depth">fl_get_visual_depth</a>()<br>
+&nbsp;<br>
+Notes<br>
+-----<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;Demo&nbsp;=&nbsp;OK</tt></dd></dl>
+ <dl><dt><a name="-fl_get_win_mouse"><strong>fl_get_win_mouse</strong></a>(win)</dt><dd><tt><a href="#-fl_get_win_mouse">fl_get_win_mouse</a>(win)<br>
+&nbsp;<br>
+Obtains&nbsp;the&nbsp;position&nbsp;of&nbsp;the&nbsp;mouse&nbsp;relative&nbsp;to&nbsp;a&nbsp;certain&nbsp;window,&nbsp;and<br>
+the&nbsp;current&nbsp;state&nbsp;of&nbsp;the&nbsp;modifier&nbsp;keys&nbsp;and&nbsp;pointer&nbsp;buttons.<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;win&nbsp;:&nbsp;long_pos<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;window&nbsp;id<br>
+&nbsp;<br>
+Returns<br>
+-------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;win&nbsp;:&nbsp;long_pos<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;window&nbsp;the&nbsp;mouse&nbsp;is&nbsp;in<br>
+&nbsp;&nbsp;&nbsp;&nbsp;x&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;horizontal&nbsp;position&nbsp;of&nbsp;mouse<br>
+&nbsp;&nbsp;&nbsp;&nbsp;y&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;vertical&nbsp;position&nbsp;of&nbsp;mouse<br>
+&nbsp;&nbsp;&nbsp;&nbsp;keymask&nbsp;:&nbsp;int_pos<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*todo*<br>
+&nbsp;<br>
+Examples<br>
+--------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;win,&nbsp;x,&nbsp;y,&nbsp;keym&nbsp;=&nbsp;<a href="#-fl_get_win_mouse">fl_get_win_mouse</a>()<br>
+&nbsp;<br>
+API_diversion<br>
+-------------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;API&nbsp;changed&nbsp;from&nbsp;XForms,&nbsp;upstream&nbsp;was<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="#-fl_get_win_mouse">fl_get_win_mouse</a>(win,&nbsp;x,&nbsp;y,&nbsp;keymask)<br>
+&nbsp;<br>
+Notes<br>
+-----<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;Demo&nbsp;=&nbsp;OK</tt></dd></dl>
+ <dl><dt><a name="-fl_get_wingeometry"><strong>fl_get_wingeometry</strong></a>(win)</dt><dd><tt><a href="#-fl_get_wingeometry">fl_get_wingeometry</a>(win)<br>
+&nbsp;<br>
+Obtains&nbsp;geometry&nbsp;(position&nbsp;and&nbsp;size)&nbsp;of&nbsp;a&nbsp;window.<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;win&nbsp;:&nbsp;long_pos<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;window&nbsp;id&nbsp;to&nbsp;evaluate<br>
+&nbsp;<br>
+Returns<br>
+-------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;x&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;horizontal&nbsp;position&nbsp;of&nbsp;window<br>
+&nbsp;&nbsp;&nbsp;&nbsp;y&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;vertical&nbsp;position&nbsp;of&nbsp;window<br>
+&nbsp;&nbsp;&nbsp;&nbsp;w&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;width&nbsp;of&nbsp;window<br>
+&nbsp;&nbsp;&nbsp;&nbsp;h&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;height&nbsp;of&nbsp;window<br>
+&nbsp;<br>
+Examples<br>
+--------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;xpos,&nbsp;ypos,&nbsp;wid,&nbsp;hei&nbsp;=&nbsp;<a href="#-fl_get_wingeometry">fl_get_wingeometry</a>(win0)<br>
+&nbsp;<br>
+API_diversion<br>
+-------------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;API&nbsp;changed&nbsp;from&nbsp;XForms,&nbsp;upstream&nbsp;was<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="#-fl_get_wingeometry">fl_get_wingeometry</a>(win,&nbsp;x,&nbsp;y,&nbsp;w,&nbsp;h)<br>
+&nbsp;<br>
+Notes<br>
+-----<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
+ <dl><dt><a name="-fl_get_winorigin"><strong>fl_get_winorigin</strong></a>(win)</dt><dd><tt><a href="#-fl_get_winorigin">fl_get_winorigin</a>(win)<br>
+&nbsp;<br>
+Obtains&nbsp;the&nbsp;origin&nbsp;(position)&nbsp;of&nbsp;the&nbsp;specified&nbsp;window.<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;win&nbsp;:&nbsp;long_pos<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;window&nbsp;id&nbsp;to&nbsp;evaluate<br>
+&nbsp;<br>
+Returns<br>
+-------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;x&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;horizontal&nbsp;position&nbsp;of&nbsp;window<br>
+&nbsp;&nbsp;&nbsp;&nbsp;y&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;vertical&nbsp;position&nbsp;of&nbsp;window<br>
+&nbsp;<br>
+Examples<br>
+--------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;xpos,&nbsp;ypos&nbsp;=&nbsp;<a href="#-fl_get_winorigin">fl_get_winorigin</a>(win0)<br>
+&nbsp;<br>
+API_diversion<br>
+-------------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;API&nbsp;changed&nbsp;from&nbsp;XForms,&nbsp;upstream&nbsp;was&nbsp;<a href="#-fl_get_winorigin">fl_get_winorigin</a>(win,&nbsp;x,&nbsp;y)<br>
+&nbsp;<br>
+Notes<br>
+-----<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
+ <dl><dt><a name="-fl_get_winsize"><strong>fl_get_winsize</strong></a>(win)</dt><dd><tt><a href="#-fl_get_winsize">fl_get_winsize</a>(win)<br>
+&nbsp;<br>
+Obtains&nbsp;the&nbsp;size&nbsp;of&nbsp;the&nbsp;specified&nbsp;window.<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;win&nbsp;:&nbsp;long_pos<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;window&nbsp;id&nbsp;to&nbsp;evaluate<br>
+&nbsp;<br>
+Returns<br>
+-------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;w&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;width&nbsp;of&nbsp;window<br>
+&nbsp;&nbsp;&nbsp;&nbsp;h&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;height&nbsp;of&nbsp;window<br>
+&nbsp;<br>
+Examples<br>
+--------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;wid,&nbsp;hei&nbsp;=&nbsp;<a href="#-fl_get_winsize">fl_get_winsize</a>(win0)<br>
+&nbsp;<br>
+API_diversion<br>
+-------------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;API&nbsp;changed&nbsp;from&nbsp;XForms,&nbsp;upstream&nbsp;was&nbsp;<a href="#-fl_get_winsize">fl_get_winsize</a>(win,&nbsp;w,&nbsp;h)<br>
+&nbsp;<br>
+Notes<br>
+-----<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
+ <dl><dt><a name="-fl_iconify"><strong>fl_iconify</strong></a>(win)</dt><dd><tt><a href="#-fl_iconify">fl_iconify</a>(win)<br>
+&nbsp;<br>
+Iconifies&nbsp;the&nbsp;specified&nbsp;window.<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;win&nbsp;:&nbsp;long_pos<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;window&nbsp;id<br>
+&nbsp;<br>
+Returns<br>
+-------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;num.&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*todo*<br>
+&nbsp;<br>
+Examples<br>
+--------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;<a href="#-fl_iconify">fl_iconify</a>(win2)<br>
+&nbsp;<br>
+Notes<br>
+-----<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
+ <dl><dt><a name="-fl_initial_wingeometry"><strong>fl_initial_wingeometry</strong></a>(x, y, w, h)</dt><dd><tt><a href="#-fl_initial_wingeometry">fl_initial_wingeometry</a>(x,&nbsp;y,&nbsp;w,&nbsp;h)<br>
+&nbsp;<br>
+Sets&nbsp;the&nbsp;initial&nbsp;geometry&nbsp;(position&nbsp;and&nbsp;size)&nbsp;of&nbsp;the&nbsp;window&nbsp;to&nbsp;be<br>
+opened.<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;x&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;horizontal&nbsp;position&nbsp;(upper-left&nbsp;corner)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;y&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;vertical&nbsp;position&nbsp;(upper-left&nbsp;corner)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;w&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;width&nbsp;in&nbsp;coord&nbsp;units<br>
+&nbsp;&nbsp;&nbsp;&nbsp;h&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;height&nbsp;in&nbsp;coord&nbsp;units<br>
+&nbsp;<br>
+Examples<br>
+--------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;<a href="#-fl_initial_wingeometry">fl_initial_wingeometry</a>(192,&nbsp;231,&nbsp;450,&nbsp;550)<br>
+&nbsp;<br>
+Notes<br>
+-----<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
+ <dl><dt><a name="-fl_initial_winsize"><strong>fl_initial_winsize</strong></a>(w, h)</dt><dd><tt><a href="#-fl_initial_winsize">fl_initial_winsize</a>(w,&nbsp;h)<br>
+&nbsp;<br>
+Sets&nbsp;the&nbsp;preferred&nbsp;window&nbsp;size&nbsp;(before&nbsp;calling&nbsp;fl_winopen).<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;w&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;width&nbsp;in&nbsp;coord&nbsp;units<br>
+&nbsp;&nbsp;&nbsp;&nbsp;h&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;height&nbsp;in&nbsp;coord&nbsp;units<br>
+&nbsp;<br>
+Examples<br>
+--------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;<a href="#-fl_initial_winsize">fl_initial_winsize</a>(700,&nbsp;600)<br>
+&nbsp;<br>
+Notes<br>
+-----<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;Demo&nbsp;=&nbsp;OK</tt></dd></dl>
+ <dl><dt><a name="-fl_initial_winstate"><strong>fl_initial_winstate</strong></a>(state)</dt><dd><tt><a href="#-fl_initial_winstate">fl_initial_winstate</a>(state)<br>
+&nbsp;<br>
+Sets&nbsp;initial&nbsp;state,&nbsp;normal&nbsp;or&nbsp;iconic,&nbsp;of&nbsp;the&nbsp;window.<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;state&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;window&nbsp;state&nbsp;to&nbsp;be&nbsp;set.&nbsp;Values&nbsp;(from&nbsp;xfdata.py)&nbsp;NormalState,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;IconicState<br>
+&nbsp;<br>
+Examples<br>
+--------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;<a href="#-fl_initial_winstate">fl_initial_winstate</a>(xfdata.IconicState)<br>
+&nbsp;<br>
+Notes<br>
+-----<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
+ <dl><dt><a name="-fl_initialize"><strong>fl_initialize</strong></a>(numargs, argslist, appname<font color="#909090">=''</font>, appoptions<font color="#909090">=0</font>, nappopts<font color="#909090">=0</font>)</dt><dd><tt><a href="#-fl_initialize">fl_initialize</a>(numargs,&nbsp;argslist,&nbsp;appname="",&nbsp;appoptions=0,&nbsp;nappopts=0)<br>
+&nbsp;<br>
+Initializes&nbsp;XForms&nbsp;library.&nbsp;It&nbsp;should&nbsp;always&nbsp;be&nbsp;called&nbsp;before&nbsp;any<br>
+other&nbsp;calls&nbsp;to&nbsp;the&nbsp;XForms&nbsp;Library&nbsp;(except&nbsp;<a href="#-fl_set_defaults">fl_set_defaults</a>()&nbsp;and&nbsp;a&nbsp;few<br>
+other&nbsp;functions&nbsp;that&nbsp;alter&nbsp;some&nbsp;of&nbsp;the&nbsp;defaults&nbsp;of&nbsp;the&nbsp;library.<br>
+Command&nbsp;line&nbsp;arguments&nbsp;are&nbsp;NOT&nbsp;supported&nbsp;in&nbsp;xforms-python,&nbsp;but&nbsp;you&nbsp;can<br>
+always&nbsp;set&nbsp;most&nbsp;of&nbsp;parameters&nbsp;with&nbsp;relative&nbsp;functions.<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;numargs&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;number&nbsp;of&nbsp;arguments&nbsp;passed&nbsp;to&nbsp;command&nbsp;line,&nbsp;unused&nbsp;in&nbsp;python<br>
+&nbsp;&nbsp;&nbsp;&nbsp;argslist&nbsp;:&nbsp;list_of_str<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;arguments&nbsp;passed&nbsp;to&nbsp;command&nbsp;line,&nbsp;unused&nbsp;in&nbsp;python<br>
+&nbsp;&nbsp;&nbsp;&nbsp;appname&nbsp;:&nbsp;str<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;application&nbsp;class&nbsp;name<br>
+&nbsp;&nbsp;&nbsp;&nbsp;appoptions&nbsp;:&nbsp;instance&nbsp;of&nbsp;xfdata.FL_CMD_OPT<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;options&nbsp;passed&nbsp;as&nbsp;a&nbsp;flcmdopt&nbsp;class&nbsp;instance<br>
+&nbsp;&nbsp;&nbsp;&nbsp;nappopts&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;number&nbsp;of&nbsp;options<br>
+&nbsp;<br>
+Returns<br>
+-------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;pDisplay&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.Display<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;display,&nbsp;or&nbsp;None&nbsp;(on&nbsp;failure,&nbsp;if&nbsp;a&nbsp;connection&nbsp;could&nbsp;not&nbsp;be&nbsp;made)<br>
+&nbsp;<br>
+Examples<br>
+--------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;import&nbsp;sys<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;<a href="#-fl_initialize">fl_initialize</a>(len(sys.argv),&nbsp;sys.argv,&nbsp;"MyFormDemo",&nbsp;0,&nbsp;0)<br>
+&nbsp;<br>
+Notes<br>
+-----<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;HalfTested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;Demo&nbsp;=&nbsp;HALF&nbsp;OK&nbsp;(not&nbsp;for&nbsp;command&nbsp;line&nbsp;args)</tt></dd></dl>
+ <dl><dt><a name="-fl_keypressed"><strong>fl_keypressed</strong></a> = fl_keysym_pressed(keysym)</dt><dd><tt><a href="#-fl_keysym_pressed">fl_keysym_pressed</a>(keysym)<br>
+&nbsp;<br>
+*todo*<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;keysym&nbsp;:&nbsp;long_pos<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*todo*<br>
+&nbsp;<br>
+Returns<br>
+-------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;num.&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;num.,&nbsp;or&nbsp;0&nbsp;(on&nbsp;failure)<br>
+&nbsp;<br>
+Examples<br>
+--------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;*todo*<br>
+&nbsp;<br>
+Notes<br>
+-----<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
+ <dl><dt><a name="-fl_keysym_pressed"><strong>fl_keysym_pressed</strong></a>(keysym)</dt><dd><tt><a href="#-fl_keysym_pressed">fl_keysym_pressed</a>(keysym)<br>
+&nbsp;<br>
+*todo*<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;keysym&nbsp;:&nbsp;long_pos<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*todo*<br>
+&nbsp;<br>
+Returns<br>
+-------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;num.&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;num.,&nbsp;or&nbsp;0&nbsp;(on&nbsp;failure)<br>
+&nbsp;<br>
+Examples<br>
+--------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;*todo*<br>
+&nbsp;<br>
+Notes<br>
+-----<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
+ <dl><dt><a name="-fl_last_event"><strong>fl_last_event</strong></a>()</dt><dd><tt><a href="#-fl_last_event">fl_last_event</a>()<br>
+&nbsp;<br>
+Obtains&nbsp;the&nbsp;last&nbsp;X&nbsp;event.&nbsp;If&nbsp;this&nbsp;routine&nbsp;is&nbsp;used&nbsp;outside&nbsp;of&nbsp;a&nbsp;callback<br>
+function,&nbsp;the&nbsp;value&nbsp;returned&nbsp;may&nbsp;not&nbsp;be&nbsp;the&nbsp;real&nbsp;"last&nbsp;event"&nbsp;if&nbsp;the<br>
+program&nbsp;was&nbsp;idling&nbsp;and,&nbsp;in&nbsp;this&nbsp;case,&nbsp;it&nbsp;returns&nbsp;a&nbsp;synthetic<br>
+xfdata.MotionNotify&nbsp;event.<br>
+&nbsp;<br>
+Returns<br>
+-------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;pXEvent&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.XEvent<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;XEvent&nbsp;class&nbsp;instance<br>
+&nbsp;<br>
+Examples<br>
+--------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;pxev&nbsp;=&nbsp;flk_last_event()<br>
+&nbsp;<br>
+Notes<br>
+-----<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
+ <dl><dt><a name="-fl_line"><strong>fl_line</strong></a>(xi, yi, xf, yf, colr)</dt><dd><tt><a href="#-fl_line">fl_line</a>(xi,&nbsp;yi,&nbsp;xf,&nbsp;yf,&nbsp;colr)<br>
+&nbsp;<br>
+Connects&nbsp;two&nbsp;points&nbsp;with&nbsp;a&nbsp;straight&nbsp;line.<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;xi&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;initial&nbsp;horizontal&nbsp;position&nbsp;(upper-left&nbsp;corner)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;yi&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;initial&nbsp;vertical&nbsp;position&nbsp;(upper-left&nbsp;corner)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;xf&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;final&nbsp;horizontal&nbsp;position&nbsp;(upper-left&nbsp;corner)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;yf&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;final&nbsp;vertical&nbsp;position&nbsp;(upper-left&nbsp;corner)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;colr&nbsp;:&nbsp;long_pos<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;color&nbsp;value<br>
+&nbsp;<br>
+Examples<br>
+--------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;<a href="#-fl_line">fl_line</a>(100,&nbsp;100,&nbsp;200,&nbsp;200,&nbsp;xfdata.FL_ANTIQUEWHITE)<br>
+&nbsp;<br>
+Notes<br>
+-----<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
+ <dl><dt><a name="-fl_lines"><strong>fl_lines</strong></a>(Point, numpt, colr)</dt><dd><tt><a href="#-fl_lines">fl_lines</a>(Point,&nbsp;numpt,&nbsp;colr)<br>
+&nbsp;<br>
+Draws&nbsp;connected&nbsp;line&nbsp;segments&nbsp;between&nbsp;a&nbsp;number&nbsp;of&nbsp;points.<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Point&nbsp;:&nbsp;array&nbsp;of&nbsp;xfdata.FL_POINT<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;an&nbsp;array&nbsp;of&nbsp;point&nbsp;class&nbsp;instances<br>
+&nbsp;&nbsp;&nbsp;&nbsp;numpt&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;number&nbsp;of&nbsp;points<br>
+&nbsp;&nbsp;&nbsp;&nbsp;colr&nbsp;:&nbsp;long_pos<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;value&nbsp;of&nbsp;color&nbsp;to&nbsp;be&nbsp;set<br>
+&nbsp;<br>
+Examples<br>
+--------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;pointmap&nbsp;=&nbsp;(FL_POINT&nbsp;*&nbsp;4)()<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;pointmap[0].x&nbsp;=&nbsp;23&nbsp;;&nbsp;pointmap[0].y&nbsp;=&nbsp;12<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;pointmap[1].x&nbsp;=&nbsp;56&nbsp;;&nbsp;pointmap[1].y&nbsp;=&nbsp;34<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;pointmap[2].x&nbsp;=&nbsp;102&nbsp;;&nbsp;pointmap[2].y&nbsp;=&nbsp;250<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;<a href="#-fl_lines">fl_lines</a>(pointmap,&nbsp;3,&nbsp;xfdata.FL_DODGERBLUE)<br>
+&nbsp;<br>
+Notes<br>
+-----<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
+ <dl><dt><a name="-fl_linestyle"><strong>fl_linestyle</strong></a>(linestyle)</dt><dd><tt><a href="#-fl_linestyle">fl_linestyle</a>(linestyle)<br>
+&nbsp;<br>
+Changes&nbsp;the&nbsp;line&nbsp;style.<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;linestyle&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;style&nbsp;of&nbsp;the&nbsp;line&nbsp;to&nbsp;draw.&nbsp;Values&nbsp;(from&nbsp;xfdata.py)&nbsp;FL_SOLID,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_USERDASH,&nbsp;FL_USERDOUBLEDASH,&nbsp;FL_DOT,&nbsp;FL_DOTDASH,&nbsp;FL_DASH,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_LONGDASH<br>
+&nbsp;<br>
+Examples<br>
+--------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;<a href="#-fl_linestyle">fl_linestyle</a>(xfdata.FL_DOT)<br>
+&nbsp;<br>
+Notes<br>
+-----<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
+ <dl><dt><a name="-fl_linewidth"><strong>fl_linewidth</strong></a>(lw)</dt><dd><tt><a href="#-fl_linewidth">fl_linewidth</a>(lw)<br>
+&nbsp;<br>
+Changes&nbsp;the&nbsp;line&nbsp;width.<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;lw&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;width&nbsp;of&nbsp;line&nbsp;in&nbsp;coord&nbsp;units.&nbsp;If&nbsp;it&nbsp;is&nbsp;0,&nbsp;reset&nbsp;to&nbsp;the&nbsp;server's<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;default<br>
+&nbsp;<br>
+Examples<br>
+--------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;<a href="#-fl_linewidth">fl_linewidth</a>(2)<br>
+&nbsp;<br>
+Notes<br>
+-----<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
+ <dl><dt><a name="-fl_lower_form"><strong>fl_lower_form</strong></a>(pFlForm)</dt><dd><tt><a href="#-fl_lower_form">fl_lower_form</a>(pFlForm)<br>
+&nbsp;<br>
+Lowers&nbsp;a&nbsp;form&nbsp;to&nbsp;the&nbsp;bottom&nbsp;of&nbsp;the&nbsp;stack.<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;pFlForm&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_FORM<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;form&nbsp;to&nbsp;be&nbsp;lowered<br>
+&nbsp;<br>
+Examples<br>
+--------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;<a href="#-fl_lower_form">fl_lower_form</a>(pform2)<br>
+&nbsp;<br>
+Notes<br>
+-----<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
+ <dl><dt><a name="-fl_mode_capable"><strong>fl_mode_capable</strong></a>(mode, warn)</dt><dd><tt><a href="#-fl_mode_capable">fl_mode_capable</a>(mode,&nbsp;warn)<br>
+&nbsp;<br>
+Tells&nbsp;if&nbsp;the&nbsp;system&nbsp;is&nbsp;capable&nbsp;of&nbsp;displaying&nbsp;in&nbsp;the&nbsp;specified&nbsp;visual<br>
+class,&nbsp;or&nbsp;not.<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;mode&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;visual&nbsp;mode.&nbsp;Values&nbsp;(from&nbsp;xfdata&nbsp;module)&nbsp;GrayScale,&nbsp;StaticGray,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;PseudoColor,&nbsp;StaticColor,&nbsp;DirectColor&nbsp;or&nbsp;TrueColor<br>
+&nbsp;&nbsp;&nbsp;&nbsp;warn&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if&nbsp;set&nbsp;a&nbsp;warning&nbsp;is&nbsp;printed&nbsp;out&nbsp;in&nbsp;case&nbsp;the&nbsp;capability&nbsp;asked&nbsp;for<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;is&nbsp;not&nbsp;available.&nbsp;Values&nbsp;0&nbsp;(do&nbsp;not&nbsp;print&nbsp;warning)&nbsp;or&nbsp;1&nbsp;(print<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;warning)<br>
+&nbsp;<br>
+Returns<br>
+-------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;yesno&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;flag&nbsp;1&nbsp;(if&nbsp;capable)&nbsp;or&nbsp;0&nbsp;otherwise<br>
+&nbsp;<br>
+Examples<br>
+--------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;capable&nbsp;=&nbsp;<a href="#-fl_mode_capable">fl_mode_capable</a>(xfdata.GrayScale,&nbsp;1)<br>
+&nbsp;<br>
+Notes<br>
+-----<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
+ <dl><dt><a name="-fl_noborder"><strong>fl_noborder</strong></a>()</dt><dd><tt><a href="#-fl_noborder">fl_noborder</a>()<br>
+&nbsp;<br>
+Suppresses&nbsp;the&nbsp;window&nbsp;manager's&nbsp;decoration&nbsp;(before&nbsp;creating&nbsp;the<br>
+window).<br>
+&nbsp;<br>
+Examples<br>
+--------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;<a href="#-fl_noborder">fl_noborder</a>()<br>
+&nbsp;<br>
+Notes<br>
+-----<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
+ <dl><dt><a name="-fl_oval"><strong>fl_oval</strong></a>(fill, x, y, w, h, colr)</dt><dd><tt><a href="#-fl_oval">fl_oval</a>(fill,&nbsp;x,&nbsp;y,&nbsp;w,&nbsp;h,&nbsp;colr)<br>
+&nbsp;<br>
+Draws&nbsp;an&nbsp;ellipse,&nbsp;either&nbsp;filled&nbsp;or&nbsp;open.&nbsp;Use&nbsp;w&nbsp;equal&nbsp;to&nbsp;h&nbsp;to&nbsp;get&nbsp;a<br>
+circle.<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;fill&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;flag&nbsp;if&nbsp;filled&nbsp;or&nbsp;open&nbsp;ellipse.&nbsp;Values&nbsp;1&nbsp;(if&nbsp;filled&nbsp;ellipse)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;or&nbsp;0&nbsp;(if&nbsp;open)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;x&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;horizontal&nbsp;position&nbsp;(upper-left&nbsp;corner)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;y&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;vertical&nbsp;position&nbsp;(upper-left&nbsp;corner)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;w&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;width&nbsp;in&nbsp;coord&nbsp;units<br>
+&nbsp;&nbsp;&nbsp;&nbsp;h&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;height&nbsp;in&nbsp;coord&nbsp;units<br>
+&nbsp;&nbsp;&nbsp;&nbsp;colr&nbsp;:&nbsp;long_pos<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;color&nbsp;value<br>
+&nbsp;<br>
+Examples<br>
+--------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;<a href="#-fl_oval">fl_oval</a>(1,&nbsp;125,&nbsp;256,&nbsp;145,&nbsp;320,&nbsp;xfdata.FL_BURLYWOOD)<br>
+&nbsp;<br>
+Notes<br>
+-----<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
+ <dl><dt><a name="-fl_oval_bound"><strong>fl_oval_bound</strong></a> = fl_ovalbound(x, y, w, h, colr)</dt><dd><tt><a href="#-fl_ovalbound">fl_ovalbound</a>(x,&nbsp;y,&nbsp;w,&nbsp;h,&nbsp;colr)<br>
+&nbsp;<br>
+Draws&nbsp;a&nbsp;filled&nbsp;ellipse&nbsp;with&nbsp;a&nbsp;black&nbsp;outline.&nbsp;Use&nbsp;w&nbsp;equal&nbsp;to&nbsp;h&nbsp;to&nbsp;get&nbsp;a<br>
+circle.<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;x&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;horizontal&nbsp;position&nbsp;(upper-left&nbsp;corner)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;y&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;vertical&nbsp;position&nbsp;(upper-left&nbsp;corner)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;w&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;width&nbsp;in&nbsp;coord&nbsp;units<br>
+&nbsp;&nbsp;&nbsp;&nbsp;h&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;height&nbsp;in&nbsp;coord&nbsp;units<br>
+&nbsp;&nbsp;&nbsp;&nbsp;colr&nbsp;:&nbsp;long_pos<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;color&nbsp;value<br>
+&nbsp;<br>
+Examples<br>
+--------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;<a href="#-fl_ovalbound">fl_ovalbound</a>(1,&nbsp;125,&nbsp;256,&nbsp;145,&nbsp;320,&nbsp;xfdata.FL_BLANCHEDALMOND)<br>
+&nbsp;<br>
+Notes<br>
+-----<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
+ <dl><dt><a name="-fl_ovalarc"><strong>fl_ovalarc</strong></a>(fill, x, y, w, h, stheta, dtheta, colr)</dt><dd><tt><a href="#-fl_ovalarc">fl_ovalarc</a>(fill,&nbsp;x,&nbsp;y,&nbsp;w,&nbsp;h,&nbsp;stheta,&nbsp;dtheta,&nbsp;colr)<br>
+&nbsp;<br>
+Draws&nbsp;an&nbsp;elliptical&nbsp;arc,&nbsp;either&nbsp;filled&nbsp;or&nbsp;open.<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;fill&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;flag&nbsp;if&nbsp;filled&nbsp;or&nbsp;open.&nbsp;Values&nbsp;1&nbsp;(if&nbsp;filled)&nbsp;or&nbsp;0&nbsp;(if&nbsp;open)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;x&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;horizontal&nbsp;position&nbsp;(upper-left&nbsp;corner)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;y&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;vertical&nbsp;position&nbsp;(upper-left&nbsp;corner)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;w&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;width&nbsp;in&nbsp;coord&nbsp;units<br>
+&nbsp;&nbsp;&nbsp;&nbsp;h&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;height&nbsp;in&nbsp;coord&nbsp;units<br>
+&nbsp;&nbsp;&nbsp;&nbsp;stheta&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;starting&nbsp;angle,&nbsp;measured&nbsp;in&nbsp;tenth&nbsp;of&nbsp;a&nbsp;degree&nbsp;and&nbsp;with&nbsp;0&nbsp;at&nbsp;3<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;o'clock&nbsp;position<br>
+&nbsp;&nbsp;&nbsp;&nbsp;dtheta&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;the&nbsp;directione&nbsp;and&nbsp;the&nbsp;extent&nbsp;of&nbsp;the&nbsp;arc.&nbsp;If&nbsp;positive&nbsp;the&nbsp;arc<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;is&nbsp;drawn&nbsp;in&nbsp;counter-clockwise&nbsp;direction&nbsp;from&nbsp;the&nbsp;starting&nbsp;point,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;otherwise&nbsp;in&nbsp;clockwise&nbsp;direction.&nbsp;If&nbsp;it&nbsp;is&nbsp;larger&nbsp;than&nbsp;3600&nbsp;it<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;is&nbsp;truncated&nbsp;to&nbsp;3600.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;colr&nbsp;:&nbsp;long_pos<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;color&nbsp;value<br>
+&nbsp;<br>
+Examples<br>
+--------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;<a href="#-fl_ovalarc">fl_ovalarc</a>(1,&nbsp;275,&nbsp;256,&nbsp;145,&nbsp;320,&nbsp;200,&nbsp;900,&nbsp;xfdata.FL_DARKSALMON)<br>
+&nbsp;<br>
+Notes<br>
+-----<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
+ <dl><dt><a name="-fl_ovalbound"><strong>fl_ovalbound</strong></a>(x, y, w, h, colr)</dt><dd><tt><a href="#-fl_ovalbound">fl_ovalbound</a>(x,&nbsp;y,&nbsp;w,&nbsp;h,&nbsp;colr)<br>
+&nbsp;<br>
+Draws&nbsp;a&nbsp;filled&nbsp;ellipse&nbsp;with&nbsp;a&nbsp;black&nbsp;outline.&nbsp;Use&nbsp;w&nbsp;equal&nbsp;to&nbsp;h&nbsp;to&nbsp;get&nbsp;a<br>
+circle.<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;x&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;horizontal&nbsp;position&nbsp;(upper-left&nbsp;corner)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;y&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;vertical&nbsp;position&nbsp;(upper-left&nbsp;corner)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;w&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;width&nbsp;in&nbsp;coord&nbsp;units<br>
+&nbsp;&nbsp;&nbsp;&nbsp;h&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;height&nbsp;in&nbsp;coord&nbsp;units<br>
+&nbsp;&nbsp;&nbsp;&nbsp;colr&nbsp;:&nbsp;long_pos<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;color&nbsp;value<br>
+&nbsp;<br>
+Examples<br>
+--------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;<a href="#-fl_ovalbound">fl_ovalbound</a>(1,&nbsp;125,&nbsp;256,&nbsp;145,&nbsp;320,&nbsp;xfdata.FL_BLANCHEDALMOND)<br>
+&nbsp;<br>
+Notes<br>
+-----<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
+ <dl><dt><a name="-fl_ovalf"><strong>fl_ovalf</strong></a>(x, y, w, h, colr)</dt><dd><tt><a href="#-fl_ovalf">fl_ovalf</a>(x,&nbsp;y,&nbsp;w,&nbsp;h,&nbsp;colr)<br>
+&nbsp;<br>
+Draws&nbsp;a&nbsp;filled&nbsp;ellipse.&nbsp;Use&nbsp;w&nbsp;equal&nbsp;to&nbsp;h&nbsp;to&nbsp;get&nbsp;a&nbsp;circle.<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;x&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;horizontal&nbsp;position&nbsp;(upper-left&nbsp;corner)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;y&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;vertical&nbsp;position&nbsp;(upper-left&nbsp;corner)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;w&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;width&nbsp;in&nbsp;coord&nbsp;units<br>
+&nbsp;&nbsp;&nbsp;&nbsp;h&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;height&nbsp;in&nbsp;coord&nbsp;units<br>
+&nbsp;&nbsp;&nbsp;&nbsp;colr&nbsp;:&nbsp;long_pos<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;color&nbsp;value<br>
+&nbsp;<br>
+Examples<br>
+--------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;<a href="#-fl_ovalf">fl_ovalf</a>(125,&nbsp;256,&nbsp;145,&nbsp;320,&nbsp;xfdata.FL_CORNFLOWERBLUE)<br>
+&nbsp;<br>
+Notes<br>
+-----<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
+ <dl><dt><a name="-fl_ovall"><strong>fl_ovall</strong></a>(x, y, w, h, colr)</dt><dd><tt><a href="#-fl_ovall">fl_ovall</a>(x,&nbsp;y,&nbsp;w,&nbsp;h,&nbsp;colr)<br>
+&nbsp;<br>
+Draws&nbsp;an&nbsp;open&nbsp;ellipse.&nbsp;Use&nbsp;w&nbsp;equal&nbsp;to&nbsp;h&nbsp;to&nbsp;get&nbsp;a&nbsp;circle.<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;x&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;horizontal&nbsp;position&nbsp;(upper-left&nbsp;corner)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;y&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;vertical&nbsp;position&nbsp;(upper-left&nbsp;corner)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;w&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;width&nbsp;in&nbsp;coord&nbsp;units<br>
+&nbsp;&nbsp;&nbsp;&nbsp;h&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;height&nbsp;in&nbsp;coord&nbsp;units<br>
+&nbsp;&nbsp;&nbsp;&nbsp;colr&nbsp;:&nbsp;long_pos<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;color&nbsp;value<br>
+&nbsp;<br>
+Examples<br>
+--------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;<a href="#-fl_ovall">fl_ovall</a>(125,&nbsp;256,&nbsp;145,&nbsp;320,&nbsp;xfdata.FL_DARKERED)<br>
+&nbsp;<br>
+Notes<br>
+-----<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
+ <dl><dt><a name="-fl_pieslice"><strong>fl_pieslice</strong></a>(fill, x, y, w, h, stheta, etheta, colr)</dt><dd><tt><a href="#-fl_pieslice">fl_pieslice</a>(fill,&nbsp;x,&nbsp;y,&nbsp;w,&nbsp;h,&nbsp;stheta,&nbsp;etheta,&nbsp;colr)<br>
+&nbsp;<br>
+Draws&nbsp;an&nbsp;elliptical&nbsp;arc,&nbsp;either&nbsp;filled&nbsp;or&nbsp;open.<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;fill&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if&nbsp;the&nbsp;arc&nbsp;is&nbsp;filled&nbsp;or&nbsp;open.&nbsp;Values&nbsp;1&nbsp;(if&nbsp;filled)&nbsp;or&nbsp;0&nbsp;(if&nbsp;open)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;x&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;horizontal&nbsp;position&nbsp;of&nbsp;the&nbsp;bounding&nbsp;box<br>
+&nbsp;&nbsp;&nbsp;&nbsp;y&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;vertical&nbsp;position&nbsp;of&nbsp;the&nbsp;bounding&nbsp;box<br>
+&nbsp;&nbsp;&nbsp;&nbsp;h&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;horizontal&nbsp;axe&nbsp;of&nbsp;the&nbsp;ellipse<br>
+&nbsp;&nbsp;&nbsp;&nbsp;w&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;vertical&nbsp;axe&nbsp;of&nbsp;the&nbsp;ellipse<br>
+&nbsp;&nbsp;&nbsp;&nbsp;stheta&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;starting&nbsp;angle&nbsp;of&nbsp;the&nbsp;arc&nbsp;in&nbsp;units&nbsp;of&nbsp;tenths&nbsp;of&nbsp;a&nbsp;degree&nbsp;(where<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;0&nbsp;stands&nbsp;for&nbsp;a&nbsp;direction&nbsp;of&nbsp;3&nbsp;o'clock,&nbsp;i.e.&nbsp;the&nbsp;right-most&nbsp;point<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;of&nbsp;a&nbsp;circle)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;etheta&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ending&nbsp;angle&nbsp;of&nbsp;the&nbsp;arc&nbsp;in&nbsp;units&nbsp;of&nbsp;tenths&nbsp;of&nbsp;a&nbsp;degree&nbsp;(where&nbsp;0<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;stands&nbsp;for&nbsp;a&nbsp;direction&nbsp;of&nbsp;3&nbsp;o'clock,&nbsp;i.e.&nbsp;the&nbsp;right-most&nbsp;point&nbsp;of<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;a&nbsp;circle)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;colr&nbsp;:&nbsp;long_pos<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;color&nbsp;value<br>
+&nbsp;<br>
+Examples<br>
+--------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;<a href="#-fl_pieslice">fl_pieslice</a>(1,&nbsp;120,&nbsp;253,&nbsp;400,&nbsp;100,&nbsp;60,&nbsp;70,&nbsp;xfdata.FL_GOLD)<br>
+&nbsp;<br>
+Notes<br>
+-----<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
+ <dl><dt><a name="-fl_point"><strong>fl_point</strong></a>(x, y, colr)</dt><dd><tt><a href="#-fl_point">fl_point</a>(x,&nbsp;y,&nbsp;colr)<br>
+&nbsp;<br>
+Draws&nbsp;one&nbsp;point&nbsp;on&nbsp;the&nbsp;screen.<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;x&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;horizontal&nbsp;position&nbsp;(upper-left&nbsp;corner)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;y&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;vertical&nbsp;position&nbsp;(upper-left&nbsp;corner)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;colr&nbsp;:&nbsp;long_pos<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;color&nbsp;value<br>
+&nbsp;<br>
+Examples<br>
+--------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;<a href="#-fl_point">fl_point</a>(75,&nbsp;452,&nbsp;xfdata.FL_CHARTREUSE)<br>
+&nbsp;<br>
+Notes<br>
+-----<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
+ <dl><dt><a name="-fl_points"><strong>fl_points</strong></a>(Point, numpt, colr)</dt><dd><tt><a href="#-fl_points">fl_points</a>(Point,&nbsp;numpt,&nbsp;colr)<br>
+&nbsp;<br>
+Draws&nbsp;more&nbsp;than&nbsp;one&nbsp;points.<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Point&nbsp;:&nbsp;array&nbsp;of&nbsp;xfdata.FL_POINT<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;an&nbsp;array&nbsp;of&nbsp;point&nbsp;class&nbsp;instances<br>
+&nbsp;&nbsp;&nbsp;&nbsp;numpt&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;number&nbsp;of&nbsp;points<br>
+&nbsp;&nbsp;&nbsp;&nbsp;colr&nbsp;:&nbsp;long_pos<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;value&nbsp;of&nbsp;color&nbsp;to&nbsp;be&nbsp;set<br>
+&nbsp;<br>
+Examples<br>
+--------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;pointmap&nbsp;=&nbsp;(FL_POINT&nbsp;*&nbsp;3)()<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;pointmap[0].x&nbsp;=&nbsp;23&nbsp;;&nbsp;pointmap[0].y&nbsp;=&nbsp;12<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;pointmap[1].x&nbsp;=&nbsp;56&nbsp;;&nbsp;pointmap[1].y&nbsp;=&nbsp;34<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;pointmap[2].x&nbsp;=&nbsp;102&nbsp;;&nbsp;pointmap[2].y&nbsp;=&nbsp;250<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;<a href="#-fl_points">fl_points</a>(pointmap,&nbsp;3,&nbsp;xfdata.FL_AZURE)<br>
+&nbsp;<br>
+Notes<br>
+-----<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
+ <dl><dt><a name="-fl_polybound"><strong>fl_polybound</strong></a>(Point, numpt, colr)</dt><dd><tt><a href="#-fl_polybound">fl_polybound</a>(Point,&nbsp;numpt,&nbsp;colr)<br>
+&nbsp;<br>
+Draws&nbsp;a&nbsp;generic&nbsp;filled&nbsp;polygon&nbsp;with&nbsp;a&nbsp;black&nbsp;border&nbsp;in&nbsp;the&nbsp;screen.<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Point&nbsp;:&nbsp;array&nbsp;of&nbsp;xfdata.FL_POINT<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;an&nbsp;array&nbsp;of&nbsp;point&nbsp;class&nbsp;instances<br>
+&nbsp;&nbsp;&nbsp;&nbsp;numpt&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;number&nbsp;of&nbsp;points<br>
+&nbsp;&nbsp;&nbsp;&nbsp;colr&nbsp;:&nbsp;long_pos<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;value&nbsp;of&nbsp;color&nbsp;to&nbsp;be&nbsp;set<br>
+&nbsp;<br>
+Examples<br>
+--------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;pointmap&nbsp;=&nbsp;(FL_POINT&nbsp;*&nbsp;4)()<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;pointmap[0].x&nbsp;=&nbsp;12&nbsp;;&nbsp;pointmap[0].y&nbsp;=&nbsp;32<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;pointmap[1].x&nbsp;=&nbsp;24&nbsp;;&nbsp;pointmap[1].y&nbsp;=&nbsp;100<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;pointmap[2].x&nbsp;=&nbsp;87&nbsp;;&nbsp;pointmap[0].y&nbsp;=&nbsp;132<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;<a href="#-fl_polybound">fl_polybound</a>(pointmap,&nbsp;3,&nbsp;xfdata.FL_DARKGOLD)<br>
+&nbsp;<br>
+Notes<br>
+-----<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
+ <dl><dt><a name="-fl_polyf"><strong>fl_polyf</strong></a>(Point, numpt, colr)</dt><dd><tt><a href="#-fl_polyf">fl_polyf</a>(Point,&nbsp;numpt,&nbsp;colr)<br>
+&nbsp;<br>
+Draws&nbsp;a&nbsp;generic&nbsp;filled&nbsp;polygon&nbsp;on&nbsp;the&nbsp;screen.<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Point&nbsp;:&nbsp;array&nbsp;of&nbsp;xfdata.FL_POINT<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;an&nbsp;array&nbsp;of&nbsp;point&nbsp;class&nbsp;instances<br>
+&nbsp;&nbsp;&nbsp;&nbsp;numpt&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;number&nbsp;of&nbsp;points<br>
+&nbsp;&nbsp;&nbsp;&nbsp;colr&nbsp;:&nbsp;long_pos<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;value&nbsp;of&nbsp;color&nbsp;to&nbsp;be&nbsp;set<br>
+&nbsp;<br>
+Examples<br>
+--------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;pointmap&nbsp;=&nbsp;(FL_POINT&nbsp;*&nbsp;4)()<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;pointmap[0].x&nbsp;=&nbsp;12&nbsp;;&nbsp;pointmap[0].y&nbsp;=&nbsp;32<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;pointmap[1].x&nbsp;=&nbsp;24&nbsp;;&nbsp;pointmap[1].y&nbsp;=&nbsp;100<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;pointmap[2].x&nbsp;=&nbsp;87&nbsp;;&nbsp;pointmap[2].y&nbsp;=&nbsp;132<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;<a href="#-fl_polyf">fl_polyf</a>(pointmap,&nbsp;3,&nbsp;xfdata.FL_PALEGREEN)<br>
+&nbsp;<br>
+Notes<br>
+-----<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;Demo&nbsp;=&nbsp;OK</tt></dd></dl>
+ <dl><dt><a name="-fl_polygon"><strong>fl_polygon</strong></a>(fill, Point, numpt, colr)</dt><dd><tt><a href="#-fl_polygon">fl_polygon</a>(fill,&nbsp;Point,&nbsp;numpt,&nbsp;colr)<br>
+&nbsp;<br>
+Draws&nbsp;a&nbsp;generic&nbsp;polygon&nbsp;on&nbsp;the&nbsp;screen&nbsp;(filled&nbsp;or&nbsp;just&nbsp;an&nbsp;outline).<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;fill&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if&nbsp;polygon&nbsp;has&nbsp;to&nbsp;be&nbsp;filled&nbsp;or&nbsp;just&nbsp;an&nbsp;outline&nbsp;is&nbsp;needed.&nbsp;Values<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1&nbsp;(if&nbsp;filled)&nbsp;or&nbsp;0&nbsp;(an&nbsp;outline&nbsp;only)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Point&nbsp;:&nbsp;array&nbsp;of&nbsp;xfdata.FL_POINT<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;an&nbsp;array&nbsp;of&nbsp;point&nbsp;class&nbsp;instances<br>
+&nbsp;&nbsp;&nbsp;&nbsp;numpt&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;number&nbsp;of&nbsp;points<br>
+&nbsp;&nbsp;&nbsp;&nbsp;colr&nbsp;:&nbsp;long_pos<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;value&nbsp;of&nbsp;color&nbsp;to&nbsp;be&nbsp;set<br>
+&nbsp;<br>
+Examples<br>
+--------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;pointmap&nbsp;=&nbsp;(FL_POINT&nbsp;*&nbsp;4)()<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;pointmap[0].x&nbsp;=&nbsp;12&nbsp;;&nbsp;pointmap[0].y&nbsp;=&nbsp;32<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;pointmap[1].x&nbsp;=&nbsp;24&nbsp;;&nbsp;pointmap[1].y&nbsp;=&nbsp;100<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;pointmap[2].x&nbsp;=&nbsp;87&nbsp;;&nbsp;pointmap[2].y&nbsp;=&nbsp;132<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;<a href="#-fl_polygon">fl_polygon</a>(1,&nbsp;pointmap,&nbsp;3,&nbsp;xfdata.FL_PALEGREEN)<br>
+&nbsp;<br>
+Notes<br>
+-----<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;Demo&nbsp;=&nbsp;OK</tt></dd></dl>
+ <dl><dt><a name="-fl_polyl"><strong>fl_polyl</strong></a>(Point, numpt, colr)</dt><dd><tt><a href="#-fl_polyl">fl_polyl</a>(Point,&nbsp;numpt,&nbsp;colr)<br>
+&nbsp;<br>
+Draws&nbsp;a&nbsp;generic&nbsp;polygon's&nbsp;outline&nbsp;on&nbsp;the&nbsp;screen.<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Point&nbsp;:&nbsp;array&nbsp;of&nbsp;xfdata.FL_POINT<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;an&nbsp;array&nbsp;of&nbsp;point&nbsp;class&nbsp;instances<br>
+&nbsp;&nbsp;&nbsp;&nbsp;numpt&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;number&nbsp;of&nbsp;points<br>
+&nbsp;&nbsp;&nbsp;&nbsp;colr&nbsp;:&nbsp;long_pos<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;value&nbsp;of&nbsp;color&nbsp;to&nbsp;be&nbsp;set<br>
+&nbsp;<br>
+Examples<br>
+--------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;pointmap&nbsp;=&nbsp;(FL_POINT&nbsp;*&nbsp;4)()<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;pointmap[0].x&nbsp;=&nbsp;12&nbsp;;&nbsp;pointmap[0].y&nbsp;=&nbsp;32<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;pointmap[1].x&nbsp;=&nbsp;24&nbsp;;&nbsp;pointmap[1].y&nbsp;=&nbsp;100<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;pointmap[2].x&nbsp;=&nbsp;87&nbsp;;&nbsp;pointmap[2].y&nbsp;=&nbsp;132<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;<a href="#-fl_polyl">fl_polyl</a>(pointmap,&nbsp;3,&nbsp;xfdata.FL_ORCHID)<br>
+&nbsp;<br>
+Notes<br>
+-----<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
+ <dl><dt><a name="-fl_pref_wingeometry"><strong>fl_pref_wingeometry</strong></a> = fl_wingeometry(x, y, w, h)</dt><dd><tt><a href="#-fl_wingeometry">fl_wingeometry</a>(x,&nbsp;y,&nbsp;w,&nbsp;h)<br>
+&nbsp;<br>
+Sets&nbsp;the&nbsp;initial&nbsp;geometry&nbsp;(position&nbsp;and&nbsp;size)&nbsp;of&nbsp;the&nbsp;window&nbsp;to&nbsp;be<br>
+opened;&nbsp;the&nbsp;window&nbsp;will&nbsp;not&nbsp;be&nbsp;resizable.<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;x&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;horizontal&nbsp;position&nbsp;(upper-left&nbsp;corner)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;y&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;vertical&nbsp;position&nbsp;(upper-left&nbsp;corner)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;w&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;width&nbsp;in&nbsp;coord&nbsp;units<br>
+&nbsp;&nbsp;&nbsp;&nbsp;h&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;height&nbsp;in&nbsp;coord&nbsp;units<br>
+&nbsp;<br>
+Examples<br>
+--------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;<a href="#-fl_wingeometry">fl_wingeometry</a>(192,&nbsp;231,&nbsp;450,&nbsp;550)<br>
+&nbsp;<br>
+Notes<br>
+-----<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;Demo&nbsp;=&nbsp;OK</tt></dd></dl>
+ <dl><dt><a name="-fl_pref_winposition"><strong>fl_pref_winposition</strong></a> = fl_winposition(x, y)</dt><dd><tt><a href="#-fl_winposition">fl_winposition</a>(x,&nbsp;y)<br>
+&nbsp;<br>
+Sets&nbsp;the&nbsp;position&nbsp;of&nbsp;a&nbsp;window&nbsp;to&nbsp;be&nbsp;opened.<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;x&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;horizontal&nbsp;position&nbsp;of&nbsp;window&nbsp;(upper-left&nbsp;corner)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;y&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;vertical&nbsp;position&nbsp;of&nbsp;window&nbsp;(upper-left&nbsp;corner)<br>
+&nbsp;<br>
+Examples<br>
+--------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;<a href="#-fl_winposition">fl_winposition</a>(140,&nbsp;123)<br>
+&nbsp;<br>
+Notes<br>
+-----<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
+ <dl><dt><a name="-fl_pref_winsize"><strong>fl_pref_winsize</strong></a> = fl_winsize(w, h)</dt><dd><tt><a href="#-fl_winsize">fl_winsize</a>(w,&nbsp;h)<br>
+&nbsp;<br>
+Sets&nbsp;the&nbsp;preferred&nbsp;window&nbsp;size&nbsp;(before&nbsp;calling&nbsp;fl_winopen),&nbsp;and<br>
+makes&nbsp;the&nbsp;window&nbsp;non-resizeable.<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;w&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;width&nbsp;in&nbsp;coord&nbsp;units<br>
+&nbsp;&nbsp;&nbsp;&nbsp;h&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;height&nbsp;in&nbsp;coord&nbsp;units<br>
+&nbsp;<br>
+Examples<br>
+--------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;<a href="#-fl_winsize">fl_winsize</a>(700,&nbsp;600)<br>
+&nbsp;<br>
+Notes<br>
+-----<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
+ <dl><dt><a name="-fl_print_xevent_name"><strong>fl_print_xevent_name</strong></a>(where, pXEvent)</dt><dd><tt><a href="#-fl_print_xevent_name">fl_print_xevent_name</a>(where,&nbsp;pXEvent)<br>
+&nbsp;<br>
+Prints&nbsp;the&nbsp;name&nbsp;of&nbsp;an&nbsp;XEvent&nbsp;and&nbsp;some&nbsp;other&nbsp;infos.<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;where&nbsp;:&nbsp;str<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;text.&nbsp;It&nbsp;can&nbsp;indicate&nbsp;where&nbsp;this&nbsp;function&nbsp;is&nbsp;called.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;pXEvent&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.XEvent<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;XEvent&nbsp;class&nbsp;instance<br>
+&nbsp;<br>
+Returns<br>
+-------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;pXEvent&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.XEvent<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;event<br>
+&nbsp;<br>
+Examples<br>
+--------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;pxev&nbsp;=&nbsp;<a href="#-fl_print_xevent_name">fl_print_xevent_name</a>("from&nbsp;whatever.py",&nbsp;pxev)<br>
+&nbsp;<br>
+Notes<br>
+-----<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
+ <dl><dt><a name="-fl_raise_form"><strong>fl_raise_form</strong></a>(pFlForm)</dt><dd><tt><a href="#-fl_raise_form">fl_raise_form</a>(pFlForm)<br>
+&nbsp;<br>
+Raises&nbsp;a&nbsp;form&nbsp;to&nbsp;the&nbsp;top&nbsp;of&nbsp;the&nbsp;screen&nbsp;so&nbsp;no&nbsp;other&nbsp;forms&nbsp;obscure&nbsp;it.<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;pFlForm&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_FORM<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;form&nbsp;to&nbsp;be&nbsp;raised<br>
+&nbsp;<br>
+Examples<br>
+--------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;<a href="#-fl_raise_form">fl_raise_form</a>(pform2)<br>
+&nbsp;<br>
+Notes<br>
+-----<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
+ <dl><dt><a name="-fl_rect"><strong>fl_rect</strong></a>(x, y, w, h, colr)</dt><dd><tt><a href="#-fl_rect">fl_rect</a>(x,&nbsp;y,&nbsp;w,&nbsp;h,&nbsp;colr)<br>
+&nbsp;<br>
+Draws&nbsp;a&nbsp;rectangle's&nbsp;outline&nbsp;on&nbsp;the&nbsp;screen.<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;x&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;horizontal&nbsp;position&nbsp;(upper-left&nbsp;corner)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;y&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;vertical&nbsp;position&nbsp;(upper-left&nbsp;corner)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;w&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;width&nbsp;in&nbsp;coord&nbsp;units<br>
+&nbsp;&nbsp;&nbsp;&nbsp;h&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;height&nbsp;in&nbsp;coord&nbsp;units<br>
+&nbsp;&nbsp;&nbsp;&nbsp;colr&nbsp;:&nbsp;long_pos<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;color&nbsp;value<br>
+&nbsp;<br>
+Examples<br>
+--------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;<a href="#-fl_rect">fl_rect</a>(100,&nbsp;200,&nbsp;300,&nbsp;200,&nbsp;xfdata.FL_SLATEBLUE)<br>
+&nbsp;<br>
+Notes<br>
+-----<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;Demo&nbsp;=&nbsp;OK</tt></dd></dl>
+ <dl><dt><a name="-fl_rectangle"><strong>fl_rectangle</strong></a>(fill, x, y, w, h, colr)</dt><dd><tt><a href="#-fl_rectangle">fl_rectangle</a>(fill,&nbsp;x,&nbsp;y,&nbsp;w,&nbsp;h,&nbsp;colr)<br>
+&nbsp;<br>
+Draws&nbsp;a&nbsp;rectangle.<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;fill&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;flag&nbsp;if&nbsp;the&nbsp;rectangle&nbsp;has&nbsp;to&nbsp;be&nbsp;filled&nbsp;or&nbsp;just&nbsp;the&nbsp;outline&nbsp;is<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;needed.&nbsp;Values&nbsp;0&nbsp;(the&nbsp;outline&nbsp;only)&nbsp;or&nbsp;1&nbsp;(filled).<br>
+&nbsp;&nbsp;&nbsp;&nbsp;x&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;horizontal&nbsp;position&nbsp;(upper-left&nbsp;corner)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;y&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;vertical&nbsp;position&nbsp;(upper-left&nbsp;corner)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;w&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;width&nbsp;in&nbsp;coord&nbsp;units<br>
+&nbsp;&nbsp;&nbsp;&nbsp;h&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;height&nbsp;in&nbsp;coord&nbsp;units<br>
+&nbsp;&nbsp;&nbsp;&nbsp;colr&nbsp;:&nbsp;long_pos<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;color&nbsp;value<br>
+&nbsp;<br>
+Examples<br>
+--------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;<a href="#-fl_rectangle">fl_rectangle</a>(1,&nbsp;100,&nbsp;200,&nbsp;300,&nbsp;200,&nbsp;xfdata.FL_BEIGE)<br>
+&nbsp;<br>
+Notes<br>
+-----<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;Demo&nbsp;=&nbsp;OK</tt></dd></dl>
+ <dl><dt><a name="-fl_rectbound"><strong>fl_rectbound</strong></a>(x, y, w, h, colr)</dt><dd><tt><a href="#-fl_rectbound">fl_rectbound</a>(x,&nbsp;y,&nbsp;w,&nbsp;h,&nbsp;colr)<br>
+&nbsp;<br>
+Draws&nbsp;a&nbsp;filled&nbsp;rectangle&nbsp;with&nbsp;a&nbsp;black&nbsp;border.<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;x&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;horizontal&nbsp;position&nbsp;(upper-left&nbsp;corner)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;y&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;vertical&nbsp;position&nbsp;(upper-left&nbsp;corner)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;w&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;width&nbsp;in&nbsp;coord&nbsp;units<br>
+&nbsp;&nbsp;&nbsp;&nbsp;h&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;height&nbsp;in&nbsp;coord&nbsp;units<br>
+&nbsp;&nbsp;&nbsp;&nbsp;colr&nbsp;:&nbsp;long_pos<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;color&nbsp;value<br>
+&nbsp;<br>
+Examples<br>
+--------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;<a href="#-fl_rectbound">fl_rectbound</a>(100,&nbsp;200,&nbsp;300,&nbsp;200,&nbsp;xfdata.FL_PINK)<br>
+&nbsp;<br>
+Notes<br>
+-----<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
+ <dl><dt><a name="-fl_rectf"><strong>fl_rectf</strong></a>(x, y, w, h, colr)</dt><dd><tt><a href="#-fl_rectf">fl_rectf</a>(x,&nbsp;y,&nbsp;w,&nbsp;h,&nbsp;colr)<br>
+&nbsp;<br>
+Draws&nbsp;a&nbsp;filled&nbsp;rectangle&nbsp;on&nbsp;the&nbsp;screen.<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;x&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;horizontal&nbsp;position&nbsp;(upper-left&nbsp;corner)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;y&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;vertical&nbsp;position&nbsp;(upper-left&nbsp;corner)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;w&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;width&nbsp;in&nbsp;coord&nbsp;units<br>
+&nbsp;&nbsp;&nbsp;&nbsp;h&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;height&nbsp;in&nbsp;coord&nbsp;units<br>
+&nbsp;&nbsp;&nbsp;&nbsp;colr&nbsp;:&nbsp;long_pos<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;color&nbsp;value<br>
+&nbsp;<br>
+Examples<br>
+--------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;<a href="#-fl_rectf">fl_rectf</a>(150,&nbsp;220,&nbsp;300,&nbsp;200,&nbsp;xfdata.FL_TOMATO)<br>
+&nbsp;<br>
+Notes<br>
+-----<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;Demo&nbsp;=&nbsp;OK</tt></dd></dl>
+ <dl><dt><a name="-fl_remove_event_callback"><strong>fl_remove_event_callback</strong></a>(win, evttype)</dt><dd><tt><a href="#-fl_remove_event_callback">fl_remove_event_callback</a>(win,&nbsp;evttype)<br>
+&nbsp;<br>
+Removes&nbsp;one&nbsp;or&nbsp;all&nbsp;event&nbsp;callbacks&nbsp;for&nbsp;a&nbsp;window&nbsp;and&nbsp;for&nbsp;an&nbsp;event&nbsp;of<br>
+specified&nbsp;type.&nbsp;May&nbsp;be&nbsp;called&nbsp;with&nbsp;for&nbsp;a&nbsp;window&nbsp;for&nbsp;which&nbsp;no&nbsp;event<br>
+callbacks&nbsp;have&nbsp;been&nbsp;set.<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;win&nbsp;:&nbsp;long_pos<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;window&nbsp;id<br>
+&nbsp;&nbsp;&nbsp;&nbsp;evttype&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;event&nbsp;type&nbsp;number<br>
+&nbsp;<br>
+Examples<br>
+--------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;<a href="#-fl_remove_event_callback">fl_remove_event_callback</a>(win2,&nbsp;0)<br>
+&nbsp;<br>
+Notes<br>
+-----<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
+ <dl><dt><a name="-fl_remove_selected_xevent"><strong>fl_remove_selected_xevent</strong></a>(win, mask)</dt><dd><tt><a href="#-fl_remove_selected_xevent">fl_remove_selected_xevent</a>(win,&nbsp;mask)<br>
+&nbsp;<br>
+Removes&nbsp;solicited&nbsp;event&nbsp;masks&nbsp;on&nbsp;the&nbsp;fly&nbsp;without&nbsp;altering&nbsp;other&nbsp;masks<br>
+already&nbsp;selected.<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;win&nbsp;:&nbsp;long_pos<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;window&nbsp;id<br>
+&nbsp;&nbsp;&nbsp;&nbsp;mask&nbsp;:&nbsp;long<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;event&nbsp;mask<br>
+&nbsp;<br>
+Returns<br>
+-------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;num.&nbsp;:&nbsp;long<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*todo*<br>
+&nbsp;<br>
+Examples<br>
+--------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;lnum&nbsp;=&nbsp;<a href="#-fl_remove_selected_xevent">fl_remove_selected_xevent</a>(win7,&nbsp;xfdata.ButtonMotionMask)<br>
+&nbsp;<br>
+Notes<br>
+-----<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
+ <dl><dt><a name="-fl_reset_winconstraints"><strong>fl_reset_winconstraints</strong></a>(win)</dt><dd><tt><a href="#-fl_reset_winconstraints">fl_reset_winconstraints</a>(win)<br>
+&nbsp;<br>
+Changes&nbsp;constraints&nbsp;(size&nbsp;and&nbsp;aspect&nbsp;ratio)&nbsp;on&nbsp;an&nbsp;active&nbsp;window.<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;win&nbsp;:&nbsp;long_pos<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;window&nbsp;to&nbsp;be&nbsp;reset<br>
+&nbsp;<br>
+Examples<br>
+--------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;fl_reset_constraints(win0)<br>
+&nbsp;<br>
+Notes<br>
+-----<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
+ <dl><dt><a name="-fl_roundrect"><strong>fl_roundrect</strong></a>(x, y, w, h, colr)</dt><dd><tt><a href="#-fl_roundrect">fl_roundrect</a>(x,&nbsp;y,&nbsp;w,&nbsp;h,&nbsp;colr)<br>
+&nbsp;<br>
+Draws&nbsp;a&nbsp;rectangle's&nbsp;outline&nbsp;with&nbsp;rounded&nbsp;corners.<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;x&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;horizontal&nbsp;position&nbsp;(upper-left&nbsp;corner)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;y&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;vertical&nbsp;position&nbsp;(upper-left&nbsp;corner)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;w&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;width&nbsp;in&nbsp;coord&nbsp;units<br>
+&nbsp;&nbsp;&nbsp;&nbsp;h&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;height&nbsp;in&nbsp;coord&nbsp;units<br>
+&nbsp;&nbsp;&nbsp;&nbsp;colr&nbsp;:&nbsp;long_pos<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;color&nbsp;value<br>
+&nbsp;<br>
+Examples<br>
+--------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;<a href="#-fl_roundrect">fl_roundrect</a>(100,&nbsp;200,&nbsp;300,&nbsp;200,&nbsp;xfdata.FL_INDIANRED)<br>
+&nbsp;<br>
+Notes<br>
+-----<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
+ <dl><dt><a name="-fl_roundrectangle"><strong>fl_roundrectangle</strong></a>(fill, x, y, w, h, colr)</dt><dd><tt><a href="#-fl_roundrectangle">fl_roundrectangle</a>(fill,&nbsp;x,&nbsp;y,&nbsp;w,&nbsp;h,&nbsp;colr)<br>
+&nbsp;<br>
+Draws&nbsp;a&nbsp;rectangle&nbsp;with&nbsp;rounded&nbsp;corners&nbsp;(filled&nbsp;or&nbsp;just&nbsp;the&nbsp;outline).<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;fill&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;flag&nbsp;if&nbsp;the&nbsp;rectangle&nbsp;has&nbsp;to&nbsp;be&nbsp;filled&nbsp;or&nbsp;just&nbsp;the&nbsp;outline&nbsp;is<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;needed.&nbsp;Values&nbsp;0&nbsp;(the&nbsp;outline&nbsp;only)&nbsp;or&nbsp;1&nbsp;(filled)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;x&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;horizontal&nbsp;position&nbsp;(upper-left&nbsp;corner)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;y&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;vertical&nbsp;position&nbsp;(upper-left&nbsp;corner)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;w&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;width&nbsp;in&nbsp;coord&nbsp;units<br>
+&nbsp;&nbsp;&nbsp;&nbsp;h&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;height&nbsp;in&nbsp;coord&nbsp;units<br>
+&nbsp;&nbsp;&nbsp;&nbsp;colr&nbsp;:&nbsp;long_pos<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;color&nbsp;value<br>
+&nbsp;<br>
+Examples<br>
+--------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;<a href="#-fl_roundrectangle">fl_roundrectangle</a>(1,&nbsp;100,&nbsp;200,&nbsp;300,&nbsp;200,&nbsp;xfdata.FL_MAGENTA)<br>
+&nbsp;<br>
+Notes<br>
+-----<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
+ <dl><dt><a name="-fl_roundrectf"><strong>fl_roundrectf</strong></a>(x, y, w, h, colr)</dt><dd><tt><a href="#-fl_roundrectf">fl_roundrectf</a>(x,&nbsp;y,&nbsp;w,&nbsp;h,&nbsp;colr)<br>
+&nbsp;<br>
+Draws&nbsp;a&nbsp;filled&nbsp;rectangle&nbsp;with&nbsp;rounded&nbsp;corners.<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;x&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;horizontal&nbsp;position&nbsp;(upper-left&nbsp;corner)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;y&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;vertical&nbsp;position&nbsp;(upper-left&nbsp;corner)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;w&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;width&nbsp;in&nbsp;coord&nbsp;units<br>
+&nbsp;&nbsp;&nbsp;&nbsp;h&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;height&nbsp;in&nbsp;coord&nbsp;units<br>
+&nbsp;&nbsp;&nbsp;&nbsp;colr&nbsp;:&nbsp;long_pos<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;color&nbsp;value<br>
+&nbsp;<br>
+Examples<br>
+--------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;<a href="#-fl_roundrectf">fl_roundrectf</a>(100,&nbsp;200,&nbsp;300,&nbsp;200,&nbsp;xfdata.FL_CYAN)<br>
+&nbsp;<br>
+Notes<br>
+-----<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
+ <dl><dt><a name="-fl_set_background"><strong>fl_set_background</strong></a>(gc, colr)</dt><dd><tt><a href="#-fl_set_background">fl_set_background</a>(gc,&nbsp;colr)<br>
+&nbsp;<br>
+Sets&nbsp;background&nbsp;color&nbsp;in&nbsp;Graphics&nbsp;contexts&nbsp;(GCs)&nbsp;other&nbsp;than&nbsp;the&nbsp;XForms<br>
+library's&nbsp;default.<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;gc&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.GC?<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Graphics&nbsp;context&nbsp;number<br>
+&nbsp;&nbsp;&nbsp;&nbsp;colr&nbsp;:&nbsp;long_pos<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;color&nbsp;value&nbsp;to&nbsp;be&nbsp;set&nbsp;as&nbsp;background<br>
+&nbsp;<br>
+Examples<br>
+--------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;gc&nbsp;=&nbsp;fl_state[<a href="#-fl_get_vclass">fl_get_vclass</a>()].gc[0]&nbsp;????<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;<a href="#-fl_set_foreground">fl_set_foreground</a>(gc,&nbsp;xfdata.FL_HONEYDEW)<br>
+&nbsp;<br>
+Notes<br>
+-----<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK&nbsp;(NULL&nbsp;pointer&nbsp;access)</tt></dd></dl>
+ <dl><dt><a name="-fl_set_clipping"><strong>fl_set_clipping</strong></a>(x, y, w, h)</dt><dd><tt><a href="#-fl_set_clipping">fl_set_clipping</a>(x,&nbsp;y,&nbsp;w,&nbsp;h)<br>
+&nbsp;<br>
+Sets&nbsp;a&nbsp;clipping&nbsp;region&nbsp;in&nbsp;the&nbsp;XForms&nbsp;Library's&nbsp;default&nbsp;GC&nbsp;(gc[0]).<br>
+This&nbsp;defines&nbsp;the&nbsp;area&nbsp;(delimited&nbsp;by&nbsp;arguments&nbsp;passed)&nbsp;drawing&nbsp;is&nbsp;to<br>
+restrict&nbsp;to&nbsp;and&nbsp;are&nbsp;relative&nbsp;to&nbsp;the&nbsp;window/form&nbsp;that&nbsp;will&nbsp;be&nbsp;drawn&nbsp;to.<br>
+In&nbsp;this&nbsp;way&nbsp;you&nbsp;can&nbsp;prevent&nbsp;drawing&nbsp;over&nbsp;other&nbsp;object&nbsp;and&nbsp;outside&nbsp;the<br>
+box.<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;x&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;horizontal&nbsp;position&nbsp;(upper-left&nbsp;corner)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;y&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;vertical&nbsp;position&nbsp;(upper-left&nbsp;corner)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;w&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;width&nbsp;in&nbsp;coord&nbsp;units<br>
+&nbsp;&nbsp;&nbsp;&nbsp;h&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;height&nbsp;in&nbsp;coord&nbsp;units<br>
+&nbsp;<br>
+Examples<br>
+--------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;<a href="#-fl_set_clipping">fl_set_clipping</a>(250,&nbsp;200,&nbsp;100,&nbsp;80)<br>
+&nbsp;<br>
+Notes<br>
+-----<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
+ <dl><dt><a name="-fl_set_clippings"><strong>fl_set_clippings</strong></a>(pRect, nrect)</dt><dd><tt><a href="#-fl_set_clippings">fl_set_clippings</a>(pRect,&nbsp;nrect)<br>
+&nbsp;<br>
+*todo*<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;pRect&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_RECT<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;rectangle&nbsp;class&nbsp;instance<br>
+&nbsp;&nbsp;&nbsp;&nbsp;nrect&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;number&nbsp;of&nbsp;rectangles<br>
+&nbsp;<br>
+Examples<br>
+--------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;*todo*<br>
+&nbsp;<br>
+Notes<br>
+-----<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
+ <dl><dt><a name="-fl_set_defaults"><strong>fl_set_defaults</strong></a>(mask, pIopt)</dt><dd><tt><a href="#-fl_set_defaults">fl_set_defaults</a>(mask,&nbsp;pIopt)<br>
+&nbsp;<br>
+*todo*<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;mask&nbsp;:&nbsp;long_pos<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Mask&nbsp;of&nbsp;program&nbsp;defaults.&nbsp;Values&nbsp;(from&nbsp;xfdata.py)&nbsp;FL_PDDepth,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_PDClass,&nbsp;FL_PDDouble,&nbsp;FL_PDSync,&nbsp;FL_PDPrivateMap,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_PDScrollbarType,&nbsp;FL_PDPupFontSize,&nbsp;FL_PDButtonFontSize,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_PDInputFontSize,&nbsp;FL_PDSliderFontSize,&nbsp;FL_PDVisual,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_PDULThickness,&nbsp;FL_PDULPropWidth,&nbsp;FL_PDBS,&nbsp;FL_PDCoordUnit,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_PDDebug,&nbsp;FL_PDSharedMap,&nbsp;FL_PDStandardMap,&nbsp;FL_PDBorderWidth,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_PDSafe,&nbsp;FL_PDMenuFontSize,&nbsp;FL_PDBrowserFontSize,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_PDChoiceFontSize,&nbsp;FL_PDLabelFontSize,&nbsp;FL_PDButtonLabelSize,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_PDSliderLabelSize,&nbsp;FL_PDInputLabelSize,&nbsp;FL_PDButtonLabel<br>
+&nbsp;&nbsp;&nbsp;&nbsp;pIopt&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_IOPT&nbsp;array<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;an&nbsp;array&nbsp;of&nbsp;program&nbsp;defaults&nbsp;class&nbsp;instances<br>
+&nbsp;<br>
+Examples<br>
+--------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;*todo*<br>
+&nbsp;<br>
+Notes<br>
+-----<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
+ <dl><dt><a name="-fl_set_drawmode"><strong>fl_set_drawmode</strong></a> = fl_drawmode(mode)</dt><dd><tt><a href="#-fl_drawmode">fl_drawmode</a>(mode)<br>
+&nbsp;<br>
+Changes&nbsp;the&nbsp;drawing&nbsp;mode&nbsp;so&nbsp;the&nbsp;destination&nbsp;pixel&nbsp;values&nbsp;play&nbsp;a&nbsp;role<br>
+in&nbsp;the&nbsp;final&nbsp;pixel&nbsp;value.&nbsp;By&nbsp;default,&nbsp;all&nbsp;lines&nbsp;are&nbsp;drawn&nbsp;so&nbsp;they<br>
+overwrite&nbsp;the&nbsp;destination&nbsp;pixel&nbsp;values.<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+&nbsp;&nbsp;mode&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;requested&nbsp;mode&nbsp;setting.&nbsp;Values&nbsp;(from&nbsp;xfdata&nbsp;module)&nbsp;FL_XOR,&nbsp;FL_COPY,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;FL_AND<br>
+&nbsp;<br>
+Examples<br>
+--------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;<a href="#-fl_drawmode">fl_drawmode</a>(xfdata.FL_AND)<br>
+&nbsp;<br>
+Notes<br>
+-----<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
+ <dl><dt><a name="-fl_set_event_callback"><strong>fl_set_event_callback</strong></a>(py_AppEventCb, vdata)</dt><dd><tt><a href="#-fl_set_event_callback">fl_set_event_callback</a>(py_AppEventCb,&nbsp;vdata)<br>
+&nbsp;<br>
+Sets&nbsp;up&nbsp;an&nbsp;event&nbsp;callback&nbsp;routine.&nbsp;Whenever&nbsp;an&nbsp;event&nbsp;happens,&nbsp;the<br>
+callback&nbsp;function&nbsp;is&nbsp;invoked&nbsp;with&nbsp;the&nbsp;event&nbsp;as&nbsp;the&nbsp;first&nbsp;argument.<br>
+This&nbsp;assumes&nbsp;the&nbsp;application&nbsp;program&nbsp;solicits&nbsp;the&nbsp;events&nbsp;and&nbsp;further,<br>
+the&nbsp;callback&nbsp;routine&nbsp;should&nbsp;be&nbsp;prepared&nbsp;to&nbsp;handle&nbsp;all&nbsp;X&nbsp;Event&nbsp;for&nbsp;all<br>
+non-form&nbsp;windows.&nbsp;This&nbsp;routine&nbsp;will&nbsp;be&nbsp;called&nbsp;whenever&nbsp;an&nbsp;X&nbsp;Event&nbsp;is<br>
+pending&nbsp;for&nbsp;the&nbsp;application's&nbsp;own&nbsp;window.<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;py_AppEventCb&nbsp;:&nbsp;python&nbsp;function&nbsp;callback,&nbsp;returned&nbsp;value<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;name&nbsp;referring&nbsp;to&nbsp;function(pXEvent,&nbsp;vdata)&nbsp;-&gt;&nbsp;num.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The&nbsp;callback&nbsp;function&nbsp;normally&nbsp;should&nbsp;return&nbsp;0&nbsp;unless&nbsp;the<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;event&nbsp;is&nbsp;not&nbsp;for&nbsp;one&nbsp;of&nbsp;the&nbsp;applcation-managed&nbsp;windows.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;vdata&nbsp;:&nbsp;any&nbsp;type&nbsp;(e.g.&nbsp;'None',&nbsp;int,&nbsp;str,&nbsp;etc..)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;user&nbsp;data&nbsp;to&nbsp;be&nbsp;passed&nbsp;to&nbsp;function;&nbsp;callback&nbsp;has&nbsp;to&nbsp;take&nbsp;care<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;of&nbsp;type&nbsp;check<br>
+&nbsp;<br>
+Returns<br>
+-------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;AppEventCb&nbsp;:&nbsp;xfdata.FL_APPEVENT_CB<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;old&nbsp;event&nbsp;callback<br>
+&nbsp;<br>
+Examples<br>
+--------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;def&nbsp;eventcb(pxev,&nbsp;vdata):<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;...&nbsp;&lt;something&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;...&nbsp;return&nbsp;0<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;<a href="#-fl_set_event_callback">fl_set_event_callback</a>(eventcb,&nbsp;None)<br>
+&nbsp;<br>
+Notes<br>
+-----<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;Demo&nbsp;=&nbsp;OK</tt></dd></dl>
+ <dl><dt><a name="-fl_set_foreground"><strong>fl_set_foreground</strong></a>(gc, colr)</dt><dd><tt><a href="#-fl_set_foreground">fl_set_foreground</a>(gc,&nbsp;colr)<br>
+&nbsp;<br>
+Sets&nbsp;foreground&nbsp;color&nbsp;in&nbsp;Graphics&nbsp;Contexts&nbsp;(GCs)&nbsp;other&nbsp;than&nbsp;the&nbsp;XForms<br>
+library's&nbsp;default.<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;gc&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.GC?<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Graphics&nbsp;context&nbsp;number<br>
+&nbsp;&nbsp;&nbsp;&nbsp;colr&nbsp;:&nbsp;long_pos<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;color&nbsp;value&nbsp;to&nbsp;be&nbsp;set&nbsp;as&nbsp;foreground<br>
+&nbsp;<br>
+Examples<br>
+--------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;gc&nbsp;=&nbsp;fl_state[<a href="#-fl_get_vclass">fl_get_vclass</a>()].gc[0]&nbsp;????<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;<a href="#-fl_set_foreground">fl_set_foreground</a>(gc,&nbsp;xfdata.FL_LAWNGREEN)<br>
+&nbsp;<br>
+Notes<br>
+-----<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK&nbsp;(NULL&nbsp;pointer&nbsp;access)</tt></dd></dl>
+ <dl><dt><a name="-fl_set_form_icon"><strong>fl_set_form_icon</strong></a>(pFlForm, icon, mask)</dt><dd><tt><a href="#-fl_set_form_icon">fl_set_form_icon</a>(pFlForm,&nbsp;icon,&nbsp;mask)<br>
+&nbsp;<br>
+Sets&nbsp;or&nbsp;changes&nbsp;the&nbsp;icon&nbsp;shown&nbsp;when&nbsp;a&nbsp;form&nbsp;is&nbsp;iconified.<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;pFlForm&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_FORM<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;form<br>
+&nbsp;&nbsp;&nbsp;&nbsp;icon&nbsp;:&nbsp;long_pos<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;icon&nbsp;pixmap&nbsp;id<br>
+&nbsp;&nbsp;&nbsp;&nbsp;mask&nbsp;:&nbsp;long_pos<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;mask&nbsp;pixmap&nbsp;id<br>
+&nbsp;<br>
+Examples<br>
+--------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;*todo*<br>
+&nbsp;<br>
+Notes<br>
+-----<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;Demo&nbsp;=&nbsp;OK</tt></dd></dl>
+ <dl><dt><a name="-fl_set_graphics_mode"><strong>fl_set_graphics_mode</strong></a>(mode, doublebuf)</dt><dd><tt><a href="#-fl_set_graphics_mode">fl_set_graphics_mode</a>(mode,&nbsp;doublebuf)<br>
+&nbsp;<br>
+*todo*<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;mode&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;graphics&nbsp;mode&nbsp;to&nbsp;be&nbsp;set<br>
+&nbsp;&nbsp;&nbsp;&nbsp;doublebuf&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*todo*<br>
+&nbsp;<br>
+Returns<br>
+-------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;num.&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*todo*<br>
+&nbsp;<br>
+Examples<br>
+--------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;*todo*<br>
+&nbsp;<br>
+Notes<br>
+-----<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
+ <dl><dt><a name="-fl_set_idle_callback"><strong>fl_set_idle_callback</strong></a>(py_AppEventCb, vdata)</dt><dd><tt><a href="#-fl_set_idle_callback">fl_set_idle_callback</a>(py_AppEventCb,&nbsp;vdata)<br>
+&nbsp;<br>
+Registers&nbsp;an&nbsp;idle&nbsp;callback.&nbsp;Interaction&nbsp;with&nbsp;it&nbsp;&nbsp;can&nbsp;used&nbsp;for&nbsp;periodic<br>
+tasks,&nbsp;e.g.&nbsp;rotating&nbsp;an&nbsp;image,&nbsp;checking&nbsp;the&nbsp;status&nbsp;of&nbsp;some&nbsp;external<br>
+device&nbsp;or&nbsp;application&nbsp;state&nbsp;etc.&nbsp;An&nbsp;idle&nbsp;callback&nbsp;is&nbsp;an&nbsp;application<br>
+function&nbsp;that&nbsp;is&nbsp;registered&nbsp;with&nbsp;the&nbsp;system&nbsp;and&nbsp;is&nbsp;called&nbsp;whenever&nbsp;there<br>
+are&nbsp;no&nbsp;events&nbsp;pending&nbsp;for&nbsp;forms&nbsp;(or&nbsp;application&nbsp;windows).&nbsp;If&nbsp;called&nbsp;with<br>
+a&nbsp;function&nbsp;as&nbsp;callback&nbsp;who&nbsp;does&nbsp;nothing,&nbsp;it&nbsp;removes&nbsp;idle&nbsp;callback.<br>
+The&nbsp;time&nbsp;interval&nbsp;between&nbsp;invocations&nbsp;of&nbsp;the&nbsp;idle&nbsp;callback&nbsp;can&nbsp;vary<br>
+considerably&nbsp;depending&nbsp;on&nbsp;interface&nbsp;activity&nbsp;and&nbsp;other&nbsp;factors.&nbsp;A<br>
+range&nbsp;between&nbsp;50&nbsp;and&nbsp;300&nbsp;msec&nbsp;should&nbsp;be&nbsp;expected.<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;py_AppEventCb&nbsp;:&nbsp;python&nbsp;function&nbsp;callback,&nbsp;returning&nbsp;unused&nbsp;value<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;name&nbsp;referring&nbsp;to&nbsp;function(pXEvent,&nbsp;vdata)&nbsp;-&gt;&nbsp;num.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;vdata&nbsp;:&nbsp;any&nbsp;type&nbsp;(e.g.&nbsp;'None',&nbsp;int,&nbsp;str,&nbsp;etc..)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;user&nbsp;data&nbsp;to&nbsp;be&nbsp;passed&nbsp;to&nbsp;function;&nbsp;callback&nbsp;has&nbsp;to&nbsp;take&nbsp;care<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;of&nbsp;type&nbsp;check<br>
+&nbsp;<br>
+Returns<br>
+-------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;AppEventCB&nbsp;:&nbsp;xfdata.FL_APPEVENT_CB<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;old&nbsp;event&nbsp;callback&nbsp;function<br>
+&nbsp;<br>
+Examples<br>
+--------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;def&nbsp;idlecb(xev,&nbsp;vdata):<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;...&nbsp;&lt;something&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;...&nbsp;return&nbsp;0<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;appevtcb&nbsp;=&nbsp;<a href="#-fl_set_idle_callback">fl_set_idle_callback</a>(idlecb,&nbsp;None)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;def&nbsp;donothing_idlecb(xev,&nbsp;vdata):<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;...&nbsp;pass<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;...&nbsp;return&nbsp;0<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;removedcb&nbsp;=&nbsp;<a href="#-fl_set_idle_callback">fl_set_idle_callback</a>(donothing_idlecb,&nbsp;None)<br>
+&nbsp;<br>
+Notes<br>
+-----<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
+ <dl><dt><a name="-fl_set_idle_delta"><strong>fl_set_idle_delta</strong></a>(msec)</dt><dd><tt><a href="#-fl_set_idle_delta">fl_set_idle_delta</a>(msec)<br>
+&nbsp;<br>
+Changes&nbsp;what&nbsp;the&nbsp;library&nbsp;considers&nbsp;to&nbsp;be&nbsp;"idle".&nbsp;Be&nbsp;aware&nbsp;that&nbsp;under<br>
+some&nbsp;conditions&nbsp;ad&nbsp;idle&nbsp;callback&nbsp;can&nbsp;be&nbsp;called&nbsp;sooner&nbsp;than&nbsp;the&nbsp;minimum<br>
+interval;&nbsp;if&nbsp;the&nbsp;timing&nbsp;of&nbsp;the&nbsp;idle&nbsp;callback&nbsp;is&nbsp;of&nbsp;concerned,&nbsp;timeouts<br>
+should&nbsp;be&nbsp;used.<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;msec&nbsp;:&nbsp;long<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;minimum&nbsp;time&nbsp;interval&nbsp;of&nbsp;inactivity,&nbsp;after&nbsp;which&nbsp;the&nbsp;main&nbsp;loop<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;is&nbsp;considered&nbsp;to&nbsp;be&nbsp;in&nbsp;idle&nbsp;state<br>
+&nbsp;<br>
+Examples<br>
+--------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;<a href="#-fl_set_idle_delta">fl_set_idle_delta</a>(800)<br>
+&nbsp;<br>
+Notes<br>
+-----<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
+ <dl><dt><a name="-fl_set_linestyle"><strong>fl_set_linestyle</strong></a> = fl_linestyle(linestyle)</dt><dd><tt><a href="#-fl_linestyle">fl_linestyle</a>(linestyle)<br>
+&nbsp;<br>
+Changes&nbsp;the&nbsp;line&nbsp;style.<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;linestyle&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;style&nbsp;of&nbsp;the&nbsp;line&nbsp;to&nbsp;draw.&nbsp;Values&nbsp;(from&nbsp;xfdata.py)&nbsp;FL_SOLID,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_USERDASH,&nbsp;FL_USERDOUBLEDASH,&nbsp;FL_DOT,&nbsp;FL_DOTDASH,&nbsp;FL_DASH,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_LONGDASH<br>
+&nbsp;<br>
+Examples<br>
+--------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;<a href="#-fl_linestyle">fl_linestyle</a>(xfdata.FL_DOT)<br>
+&nbsp;<br>
+Notes<br>
+-----<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
+ <dl><dt><a name="-fl_set_linewidth"><strong>fl_set_linewidth</strong></a> = fl_linewidth(lw)</dt><dd><tt><a href="#-fl_linewidth">fl_linewidth</a>(lw)<br>
+&nbsp;<br>
+Changes&nbsp;the&nbsp;line&nbsp;width.<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;lw&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;width&nbsp;of&nbsp;line&nbsp;in&nbsp;coord&nbsp;units.&nbsp;If&nbsp;it&nbsp;is&nbsp;0,&nbsp;reset&nbsp;to&nbsp;the&nbsp;server's<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;default<br>
+&nbsp;<br>
+Examples<br>
+--------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;<a href="#-fl_linewidth">fl_linewidth</a>(2)<br>
+&nbsp;<br>
+Notes<br>
+-----<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
+ <dl><dt><a name="-fl_set_mouse"><strong>fl_set_mouse</strong></a>(x, y)</dt><dd><tt><a href="#-fl_set_mouse">fl_set_mouse</a>(x,&nbsp;y)<br>
+&nbsp;<br>
+Moves&nbsp;the&nbsp;mouse&nbsp;to&nbsp;a&nbsp;specific&nbsp;location&nbsp;relative&nbsp;to&nbsp;the&nbsp;root&nbsp;window.<br>
+Use&nbsp;this&nbsp;function&nbsp;sparingly,&nbsp;it&nbsp;can&nbsp;be&nbsp;extremely&nbsp;annoying&nbsp;for&nbsp;the&nbsp;user<br>
+if&nbsp;the&nbsp;mouse&nbsp;position&nbsp;is&nbsp;changed&nbsp;by&nbsp;a&nbsp;program.<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;x&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;horizontal&nbsp;position<br>
+&nbsp;&nbsp;&nbsp;&nbsp;y&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;vertical&nbsp;position<br>
+&nbsp;<br>
+Examples<br>
+--------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;<a href="#-fl_set_mouse">fl_set_mouse</a>(200,&nbsp;120)<br>
+&nbsp;<br>
+Notes<br>
+-----<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
+ <dl><dt><a name="-fl_set_resource"><strong>fl_set_resource</strong></a>(resnamecls, txtval)</dt><dd><tt><a href="#-fl_set_resource">fl_set_resource</a>(resnamecls,&nbsp;txtval)<br>
+&nbsp;<br>
+Sets&nbsp;a&nbsp;resource,&nbsp;associating&nbsp;a&nbsp;value&nbsp;to&nbsp;it.&nbsp;It&nbsp;may&nbsp;be&nbsp;useful&nbsp;to&nbsp;e.g.<br>
+change&nbsp;a&nbsp;built-in&nbsp;button&nbsp;labels&nbsp;with&nbsp;proper&nbsp;resource&nbsp;names,&nbsp;or&nbsp;to&nbsp;store<br>
+arbitrary&nbsp;strings&nbsp;and&nbsp;values&nbsp;and&nbsp;to&nbsp;pass&nbsp;data&nbsp;around.<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;resnamecls&nbsp;:&nbsp;str<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;a&nbsp;fully&nbsp;qualified&nbsp;resource&nbsp;name&nbsp;(minus&nbsp;the&nbsp;application&nbsp;name)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;or&nbsp;a&nbsp;resource&nbsp;class<br>
+&nbsp;&nbsp;&nbsp;&nbsp;txtval&nbsp;:&nbsp;str<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;new&nbsp;text&nbsp;value&nbsp;for&nbsp;resource<br>
+&nbsp;<br>
+Examples<br>
+--------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;*todo*<br>
+&nbsp;<br>
+Notes<br>
+-----<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;Demo&nbsp;=&nbsp;OK</tt></dd></dl>
+ <dl><dt><a name="-fl_set_tabstop"><strong>fl_set_tabstop</strong></a>(tabtext)</dt><dd><tt><a href="#-fl_set_tabstop">fl_set_tabstop</a>(tabtext)<br>
+&nbsp;<br>
+Adjusts&nbsp;the&nbsp;distance&nbsp;by&nbsp;setting&nbsp;the&nbsp;tab&nbsp;stops.&nbsp;For&nbsp;proportional&nbsp;font,<br>
+substituting&nbsp;tabs&nbsp;with&nbsp;spaces&nbsp;is&nbsp;not&nbsp;always&nbsp;appropriate&nbsp;because&nbsp;this<br>
+most&nbsp;likely&nbsp;will&nbsp;fail&nbsp;to&nbsp;align&nbsp;text&nbsp;properly.&nbsp;Instead,&nbsp;a&nbsp;tab&nbsp;is<br>
+treated&nbsp;as&nbsp;an&nbsp;absolute&nbsp;measure&nbsp;of&nbsp;distance,&nbsp;in&nbsp;pixels,&nbsp;and&nbsp;a&nbsp;tab<br>
+stop&nbsp;will&nbsp;always&nbsp;end&nbsp;at&nbsp;multiples&nbsp;of&nbsp;this&nbsp;distance.&nbsp;The&nbsp;default&nbsp;is<br>
+"aaaaaaaa"&nbsp;(i.e.&nbsp;eight&nbsp;'a's).<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;tabtext&nbsp;:&nbsp;str<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;text&nbsp;string&nbsp;whose&nbsp;width&nbsp;in&nbsp;pixel&nbsp;is&nbsp;to&nbsp;be&nbsp;used&nbsp;as&nbsp;the&nbsp;tab&nbsp;length.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The&nbsp;font&nbsp;used&nbsp;to&nbsp;calculate&nbsp;the&nbsp;width&nbsp;is&nbsp;the&nbsp;same&nbsp;font&nbsp;that&nbsp;is<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;used&nbsp;to&nbsp;render&nbsp;the&nbsp;string&nbsp;in&nbsp;which&nbsp;the&nbsp;tab&nbsp;is&nbsp;embedded.<br>
+&nbsp;<br>
+Examples<br>
+--------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;<a href="#-fl_set_tabstop">fl_set_tabstop</a>("aaaa")<br>
+&nbsp;<br>
+Notes<br>
+-----<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
+ <dl><dt><a name="-fl_set_text_clipping"><strong>fl_set_text_clipping</strong></a>(x, y, w, h)</dt><dd><tt><a href="#-fl_set_text_clipping">fl_set_text_clipping</a>(x,&nbsp;y,&nbsp;w,&nbsp;h)<br>
+&nbsp;<br>
+Sets&nbsp;a&nbsp;clipping&nbsp;region&nbsp;for&nbsp;text&nbsp;in&nbsp;the&nbsp;XForms&nbsp;Library's&nbsp;default&nbsp;GC<br>
+(gc[0]).&nbsp;This&nbsp;defines&nbsp;the&nbsp;area&nbsp;(delimited&nbsp;by&nbsp;arguments&nbsp;passed)&nbsp;drawing<br>
+is&nbsp;to&nbsp;restrict&nbsp;to&nbsp;and&nbsp;are&nbsp;relative&nbsp;to&nbsp;the&nbsp;window/form&nbsp;that&nbsp;will&nbsp;be<br>
+drawn&nbsp;to.&nbsp;In&nbsp;this&nbsp;way&nbsp;you&nbsp;can&nbsp;prevent&nbsp;drawing&nbsp;over&nbsp;other&nbsp;object&nbsp;and<br>
+outside&nbsp;the&nbsp;box.<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;x&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;horizontal&nbsp;position&nbsp;(upper-left&nbsp;corner)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;y&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;vertical&nbsp;position&nbsp;(upper-left&nbsp;corner)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;w&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;width&nbsp;in&nbsp;coord&nbsp;units<br>
+&nbsp;&nbsp;&nbsp;&nbsp;h&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;height&nbsp;in&nbsp;coord&nbsp;units<br>
+&nbsp;<br>
+Examples<br>
+--------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;<a href="#-fl_set_text_clipping">fl_set_text_clipping</a>(200,&nbsp;200,&nbsp;300,&nbsp;50)<br>
+&nbsp;<br>
+Notes<br>
+-----<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
+ <dl><dt><a name="-fl_set_ul_property"><strong>fl_set_ul_property</strong></a>(proportional, thickness)</dt><dd><tt><a href="#-fl_set_ul_property">fl_set_ul_property</a>(proportional,&nbsp;thickness)<br>
+&nbsp;<br>
+Sets&nbsp;property&nbsp;of&nbsp;an&nbsp;underlined&nbsp;text.<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;proportional&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if&nbsp;width&nbsp;is&nbsp;proportional&nbsp;or&nbsp;not.&nbsp;Values&nbsp;0&nbsp;(if&nbsp;fixed)&nbsp;or&nbsp;1&nbsp;(if<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;proportional)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;thickness&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;thickness&nbsp;of&nbsp;underline.<br>
+&nbsp;<br>
+Examples<br>
+--------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;*todo*<br>
+&nbsp;<br>
+Notes<br>
+-----<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
+ <dl><dt><a name="-fl_set_visualID"><strong>fl_set_visualID</strong></a>(idnum)</dt><dd><tt><a href="#-fl_set_visualID">fl_set_visualID</a>(idnum)<br>
+&nbsp;<br>
+Sets&nbsp;visual&nbsp;and&nbsp;depth.&nbsp;By&nbsp;default,&nbsp;X&nbsp;Server's&nbsp;visual&nbsp;and&nbsp;depth&nbsp;values<br>
+are&nbsp;used.<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;idnum&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;visual&nbsp;id.&nbsp;Values&nbsp;(from&nbsp;xfdata.py)&nbsp;TrueColor,&nbsp;PseudoColor,&nbsp;etc..<br>
+&nbsp;<br>
+Examples<br>
+--------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;*todo*<br>
+&nbsp;<br>
+Notes<br>
+-----<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Precondition:&nbsp;to&nbsp;be&nbsp;called&nbsp;before&nbsp;<a href="#-fl_initialize">fl_initialize</a>()</tt></dd></dl>
+ <dl><dt><a name="-fl_set_winstepunit"><strong>fl_set_winstepunit</strong></a> = fl_winstepsize(win, xunit, yunit)</dt><dd><tt><a href="#-fl_winstepsize">fl_winstepsize</a>(win,&nbsp;xunit,&nbsp;yunit)<br>
+&nbsp;<br>
+Sets&nbsp;the&nbsp;steps&nbsp;by&nbsp;which&nbsp;the&nbsp;size&nbsp;of&nbsp;a&nbsp;window&nbsp;can&nbsp;be&nbsp;changed.&nbsp;Changes<br>
+to&nbsp;the&nbsp;window&nbsp;size&nbsp;will&nbsp;be&nbsp;multiples&nbsp;of&nbsp;specified&nbsp;units&nbsp;after&nbsp;this<br>
+call.&nbsp;Note&nbsp;that&nbsp;this&nbsp;only&nbsp;applies&nbsp;to&nbsp;interactive&nbsp;resizing.<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;win&nbsp;:&nbsp;long_pos<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;window&nbsp;id<br>
+&nbsp;&nbsp;&nbsp;&nbsp;xunit&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;number&nbsp;of&nbsp;pixels&nbsp;of&nbsp;changes&nbsp;per&nbsp;unit&nbsp;in&nbsp;horizontal&nbsp;direction<br>
+&nbsp;&nbsp;&nbsp;&nbsp;yunit&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;number&nbsp;of&nbsp;pixels&nbsp;of&nbsp;changes&nbsp;per&nbsp;unit&nbsp;in&nbsp;vertical&nbsp;direction<br>
+&nbsp;<br>
+Examples<br>
+--------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;<a href="#-fl_winstepsize">fl_winstepsize</a>(win0,&nbsp;10,&nbsp;10)<br>
+&nbsp;<br>
+Notes<br>
+-----<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
+ <dl><dt><a name="-fl_simple_line"><strong>fl_simple_line</strong></a> = fl_line(xi, yi, xf, yf, colr)</dt><dd><tt><a href="#-fl_line">fl_line</a>(xi,&nbsp;yi,&nbsp;xf,&nbsp;yf,&nbsp;colr)<br>
+&nbsp;<br>
+Connects&nbsp;two&nbsp;points&nbsp;with&nbsp;a&nbsp;straight&nbsp;line.<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;xi&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;initial&nbsp;horizontal&nbsp;position&nbsp;(upper-left&nbsp;corner)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;yi&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;initial&nbsp;vertical&nbsp;position&nbsp;(upper-left&nbsp;corner)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;xf&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;final&nbsp;horizontal&nbsp;position&nbsp;(upper-left&nbsp;corner)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;yf&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;final&nbsp;vertical&nbsp;position&nbsp;(upper-left&nbsp;corner)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;colr&nbsp;:&nbsp;long_pos<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;color&nbsp;value<br>
+&nbsp;<br>
+Examples<br>
+--------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;<a href="#-fl_line">fl_line</a>(100,&nbsp;100,&nbsp;200,&nbsp;200,&nbsp;xfdata.FL_ANTIQUEWHITE)<br>
+&nbsp;<br>
+Notes<br>
+-----<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
+ <dl><dt><a name="-fl_transient"><strong>fl_transient</strong></a>()</dt><dd><tt><a href="#-fl_transient">fl_transient</a>()<br>
+&nbsp;<br>
+Makes&nbsp;a&nbsp;window&nbsp;a&nbsp;transient&nbsp;one&nbsp;(before&nbsp;creating&nbsp;the&nbsp;window).<br>
+&nbsp;<br>
+Examples<br>
+--------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;<a href="#-fl_transient">fl_transient</a>()<br>
+&nbsp;<br>
+Notes<br>
+-----<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
+ <dl><dt><a name="-fl_unset_clipping"><strong>fl_unset_clipping</strong></a>()</dt><dd><tt><a href="#-fl_unset_clipping">fl_unset_clipping</a>()<br>
+&nbsp;<br>
+Stops&nbsp;clipping&nbsp;and&nbsp;removes&nbsp;clipping&nbsp;area&nbsp;defined&nbsp;with<br>
+<a href="#-fl_set_clipping">fl_set_clipping</a>()<br>
+&nbsp;<br>
+Examples<br>
+--------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;<a href="#-fl_unset_clipping">fl_unset_clipping</a>()<br>
+&nbsp;<br>
+Notes<br>
+-----<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
+ <dl><dt><a name="-fl_unset_text_clipping"><strong>fl_unset_text_clipping</strong></a>()</dt><dd><tt><a href="#-fl_unset_text_clipping">fl_unset_text_clipping</a>()<br>
+&nbsp;<br>
+Stops&nbsp;clipping&nbsp;for&nbsp;text&nbsp;and&nbsp;removes&nbsp;clipping&nbsp;area&nbsp;defined&nbsp;with<br>
+<a href="#-fl_set_text_clipping">fl_set_text_clipping</a>()<br>
+&nbsp;<br>
+Examples<br>
+--------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;<a href="#-fl_unset_text_clipping">fl_unset_text_clipping</a>()<br>
+&nbsp;<br>
+Notes<br>
+-----<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
+ <dl><dt><a name="-fl_update_display"><strong>fl_update_display</strong></a>(block)</dt><dd><tt><a href="#-fl_update_display">fl_update_display</a>(block)<br>
+&nbsp;<br>
+Flushes&nbsp;properly&nbsp;the&nbsp;output&nbsp;buffer.&nbsp;It&nbsp;resolves&nbsp;the&nbsp;problem&nbsp;of&nbsp;the<br>
+form&nbsp;being&nbsp;only&nbsp;partially&nbsp;redrawn,&nbsp;due&nbsp;to&nbsp;the&nbsp;two&nbsp;way&nbsp;buffering&nbsp;mechanism<br>
+of&nbsp;Xlib,&nbsp;if&nbsp;fl_show_form()&nbsp;is&nbsp;followed&nbsp;by&nbsp;something&nbsp;that&nbsp;blocks&nbsp;(e.g.,<br>
+waiting&nbsp;for&nbsp;a&nbsp;device&nbsp;other&nbsp;than&nbsp;X&nbsp;devices&nbsp;to&nbsp;come&nbsp;online).&nbsp;For&nbsp;typical<br>
+programs&nbsp;that&nbsp;use&nbsp;fl_do_forms()&nbsp;or&nbsp;fl_check_forms()&nbsp;after&nbsp;fl_show_form(),<br>
+flushing&nbsp;is&nbsp;not&nbsp;necessary&nbsp;as&nbsp;the&nbsp;output&nbsp;buffer&nbsp;is&nbsp;flushed&nbsp;automatically.<br>
+Excessive&nbsp;call&nbsp;to&nbsp;<a href="#-fl_update_display">fl_update_display</a>()&nbsp;degrades&nbsp;performance.<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;block&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;mode&nbsp;of&nbsp;X&nbsp;buffer&nbsp;flushing.&nbsp;Values&nbsp;0&nbsp;(it&nbsp;is&nbsp;flushed&nbsp;so&nbsp;the&nbsp;drawing<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;requests&nbsp;are&nbsp;on&nbsp;their&nbsp;way&nbsp;to&nbsp;the&nbsp;server)&nbsp;or&nbsp;1&nbsp;(it&nbsp;is&nbsp;flushed&nbsp;and<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;waits&nbsp;until&nbsp;all&nbsp;the&nbsp;events&nbsp;are&nbsp;received&nbsp;and&nbsp;processed&nbsp;by&nbsp;the<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;server)<br>
+&nbsp;<br>
+Examples<br>
+--------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;<a href="#-fl_update_display">fl_update_display</a>()<br>
+&nbsp;<br>
+Notes<br>
+-----<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Postcondition:&nbsp;to&nbsp;be&nbsp;used&nbsp;after&nbsp;fl_show_form()</tt></dd></dl>
+ <dl><dt><a name="-fl_vclass_name"><strong>fl_vclass_name</strong></a>(mode)</dt><dd><tt><a href="#-fl_vclass_name">fl_vclass_name</a>(mode)<br>
+&nbsp;<br>
+Obtains&nbsp;name&nbsp;corresponding&nbsp;to&nbsp;a&nbsp;visual&nbsp;mode.<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;mode&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;visual&nbsp;mode.<br>
+&nbsp;<br>
+Returns<br>
+-------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;name&nbsp;:&nbsp;str<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;vclass&nbsp;name<br>
+&nbsp;<br>
+Examples<br>
+--------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;*todo*<br>
+&nbsp;<br>
+Notes<br>
+-----<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
+ <dl><dt><a name="-fl_vclass_val"><strong>fl_vclass_val</strong></a>(name)</dt><dd><tt><a href="#-fl_vclass_val">fl_vclass_val</a>(name)<br>
+&nbsp;<br>
+Obtains&nbsp;value&nbsp;of&nbsp;visual&nbsp;mode.<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;name&nbsp;:&nbsp;str<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;name&nbsp;of&nbsp;visual&nbsp;mode<br>
+&nbsp;<br>
+Returns<br>
+-------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;num&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;vclass&nbsp;num.<br>
+&nbsp;<br>
+Examples<br>
+--------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;*todo*<br>
+&nbsp;<br>
+Notes<br>
+-----<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
+ <dl><dt><a name="-fl_win_background"><strong>fl_win_background</strong></a> = fl_winbackground(win, bgcolr)</dt><dd><tt><a href="#-fl_winbackground">fl_winbackground</a>(win,&nbsp;bgcolr)<br>
+&nbsp;<br>
+Sets&nbsp;the&nbsp;background&nbsp;of&nbsp;window&nbsp;to&nbsp;a&nbsp;certain&nbsp;color.<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;win&nbsp;:&nbsp;long_pos<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;window&nbsp;id<br>
+&nbsp;&nbsp;&nbsp;&nbsp;bgcolr&nbsp;:&nbsp;long_pos<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;background&nbsp;color&nbsp;to&nbsp;be&nbsp;set<br>
+&nbsp;<br>
+Examples<br>
+--------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;<a href="#-fl_winbackground">fl_winbackground</a>(win1,&nbsp;xfdata.FL_GHOSTWHITE)<br>
+&nbsp;<br>
+Notes<br>
+-----<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;Demo&nbsp;=&nbsp;OK</tt></dd></dl>
+ <dl><dt><a name="-fl_win_to_form"><strong>fl_win_to_form</strong></a>(win)</dt><dd><tt><a href="#-fl_win_to_form">fl_win_to_form</a>(win)<br>
+&nbsp;<br>
+Obtains&nbsp;the&nbsp;form&nbsp;the&nbsp;specified&nbsp;window&nbsp;belongs&nbsp;to.<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+&nbsp;&nbsp;win&nbsp;:&nbsp;long_pos<br>
+&nbsp;&nbsp;&nbsp;&nbsp;window&nbsp;id<br>
+&nbsp;<br>
+Returns<br>
+-------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;pFlForm&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_FORM<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;form,&nbsp;or&nbsp;None&nbsp;(on&nbsp;failure)<br>
+&nbsp;<br>
+Examples<br>
+--------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;pform2&nbsp;=&nbsp;<a href="#-fl_win_to_form">fl_win_to_form</a>(win1)<br>
+&nbsp;<br>
+Notes<br>
+-----<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
+ <dl><dt><a name="-fl_winaspect"><strong>fl_winaspect</strong></a>(win, x, y)</dt><dd><tt><a href="#-fl_winaspect">fl_winaspect</a>(win,&nbsp;x,&nbsp;y)<br>
+&nbsp;<br>
+Sets&nbsp;the&nbsp;aspect&nbsp;ratio&nbsp;of&nbsp;the&nbsp;window&nbsp;for&nbsp;later&nbsp;interactive&nbsp;resizing.<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;win&nbsp;:&nbsp;long_pos<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;window&nbsp;id&nbsp;to&nbsp;be&nbsp;set<br>
+&nbsp;&nbsp;&nbsp;&nbsp;x&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;horizontal&nbsp;aspect&nbsp;ratio&nbsp;in&nbsp;coord&nbsp;units<br>
+&nbsp;&nbsp;&nbsp;&nbsp;y&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;vertical&nbsp;aspect&nbsp;ratio&nbsp;in&nbsp;coord&nbsp;units<br>
+&nbsp;<br>
+Examples<br>
+--------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;<a href="#-fl_winaspect">fl_winaspect</a>(win0,&nbsp;2,&nbsp;4)<br>
+&nbsp;<br>
+Notes<br>
+-----<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
+ <dl><dt><a name="-fl_winbackground"><strong>fl_winbackground</strong></a>(win, bgcolr)</dt><dd><tt><a href="#-fl_winbackground">fl_winbackground</a>(win,&nbsp;bgcolr)<br>
+&nbsp;<br>
+Sets&nbsp;the&nbsp;background&nbsp;of&nbsp;window&nbsp;to&nbsp;a&nbsp;certain&nbsp;color.<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;win&nbsp;:&nbsp;long_pos<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;window&nbsp;id<br>
+&nbsp;&nbsp;&nbsp;&nbsp;bgcolr&nbsp;:&nbsp;long_pos<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;background&nbsp;color&nbsp;to&nbsp;be&nbsp;set<br>
+&nbsp;<br>
+Examples<br>
+--------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;<a href="#-fl_winbackground">fl_winbackground</a>(win1,&nbsp;xfdata.FL_GHOSTWHITE)<br>
+&nbsp;<br>
+Notes<br>
+-----<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;Demo&nbsp;=&nbsp;OK</tt></dd></dl>
+ <dl><dt><a name="-fl_winclose"><strong>fl_winclose</strong></a>(win)</dt><dd><tt><a href="#-fl_winclose">fl_winclose</a>(win)<br>
+&nbsp;<br>
+Closes&nbsp;(hides&nbsp;and&nbsp;destroys)&nbsp;the&nbsp;specified&nbsp;window.<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;win&nbsp;:&nbsp;long_pos<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;window&nbsp;id&nbsp;to&nbsp;close<br>
+&nbsp;<br>
+Examples<br>
+--------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;<a href="#-fl_winclose">fl_winclose</a>(win2)<br>
+&nbsp;<br>
+Notes<br>
+-----<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
+ <dl><dt><a name="-fl_wincreate"><strong>fl_wincreate</strong></a>(title)</dt><dd><tt><a href="#-fl_wincreate">fl_wincreate</a>(title)<br>
+&nbsp;<br>
+Creates&nbsp;a&nbsp;window&nbsp;with&nbsp;a&nbsp;specified&nbsp;title.<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;title&nbsp;:&nbsp;str<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;title&nbsp;of&nbsp;the&nbsp;window<br>
+&nbsp;<br>
+Returns<br>
+-------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;win&nbsp;:&nbsp;long_pos<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;created&nbsp;window&nbsp;id<br>
+&nbsp;<br>
+Examples<br>
+--------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;win2&nbsp;=&nbsp;<a href="#-fl_wincreate">fl_wincreate</a>("My&nbsp;long&nbsp;title")<br>
+&nbsp;<br>
+Notes<br>
+-----<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
+ <dl><dt><a name="-fl_winfocus"><strong>fl_winfocus</strong></a>(win)</dt><dd><tt><a href="#-fl_winfocus">fl_winfocus</a>(win)<br>
+&nbsp;<br>
+Keyboard&nbsp;input&nbsp;is&nbsp;directed&nbsp;to&nbsp;the&nbsp;specified&nbsp;window,&nbsp;overriding&nbsp;the<br>
+keyboard&nbsp;focus&nbsp;assignment.<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;win&nbsp;:&nbsp;long_pos<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;window&nbsp;id<br>
+&nbsp;<br>
+Examples<br>
+--------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;<a href="#-fl_winfocus">fl_winfocus</a>(win3)<br>
+&nbsp;<br>
+Notes<br>
+-----<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
+ <dl><dt><a name="-fl_wingeometry"><strong>fl_wingeometry</strong></a>(x, y, w, h)</dt><dd><tt><a href="#-fl_wingeometry">fl_wingeometry</a>(x,&nbsp;y,&nbsp;w,&nbsp;h)<br>
+&nbsp;<br>
+Sets&nbsp;the&nbsp;initial&nbsp;geometry&nbsp;(position&nbsp;and&nbsp;size)&nbsp;of&nbsp;the&nbsp;window&nbsp;to&nbsp;be<br>
+opened;&nbsp;the&nbsp;window&nbsp;will&nbsp;not&nbsp;be&nbsp;resizable.<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;x&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;horizontal&nbsp;position&nbsp;(upper-left&nbsp;corner)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;y&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;vertical&nbsp;position&nbsp;(upper-left&nbsp;corner)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;w&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;width&nbsp;in&nbsp;coord&nbsp;units<br>
+&nbsp;&nbsp;&nbsp;&nbsp;h&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;height&nbsp;in&nbsp;coord&nbsp;units<br>
+&nbsp;<br>
+Examples<br>
+--------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;<a href="#-fl_wingeometry">fl_wingeometry</a>(192,&nbsp;231,&nbsp;450,&nbsp;550)<br>
+&nbsp;<br>
+Notes<br>
+-----<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;Demo&nbsp;=&nbsp;OK</tt></dd></dl>
+ <dl><dt><a name="-fl_winget"><strong>fl_winget</strong></a>()</dt><dd><tt><a href="#-fl_winget">fl_winget</a>()<br>
+&nbsp;<br>
+Queries&nbsp;the&nbsp;current&nbsp;window.&nbsp;One&nbsp;caveat&nbsp;about&nbsp;<a href="#-fl_winget">fl_winget</a>()&nbsp;is&nbsp;that&nbsp;it<br>
+can&nbsp;return&nbsp;None&nbsp;if&nbsp;called&nbsp;outside&nbsp;of&nbsp;an&nbsp;object's&nbsp;event&nbsp;handler,&nbsp;depending<br>
+on&nbsp;where&nbsp;the&nbsp;mouse&nbsp;is.&nbsp;Thus,&nbsp;the&nbsp;return&nbsp;value&nbsp;of&nbsp;this&nbsp;function&nbsp;should&nbsp;be<br>
+checked&nbsp;when&nbsp;called&nbsp;outside&nbsp;of&nbsp;an&nbsp;object&nbsp;handler.<br>
+&nbsp;<br>
+Returns<br>
+-------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;win&nbsp;:&nbsp;long_pos<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;window&nbsp;id<br>
+&nbsp;<br>
+Examples<br>
+--------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;currwin&nbsp;=&nbsp;<a href="#-fl_winget">fl_winget</a>()<br>
+&nbsp;<br>
+Notes<br>
+-----<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
+ <dl><dt><a name="-fl_winhide"><strong>fl_winhide</strong></a>(win)</dt><dd><tt><a href="#-fl_winhide">fl_winhide</a>(win)<br>
+&nbsp;<br>
+Hides&nbsp;a&nbsp;shown&nbsp;window.<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;win&nbsp;:&nbsp;long_pos<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;window&nbsp;id&nbsp;to&nbsp;hide<br>
+&nbsp;<br>
+Examples<br>
+--------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;<a href="#-fl_winhide">fl_winhide</a>(win2)<br>
+&nbsp;<br>
+Notes<br>
+-----<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;Demo&nbsp;=&nbsp;OK</tt></dd></dl>
+ <dl><dt><a name="-fl_winicon"><strong>fl_winicon</strong></a>(win, icon, mask)</dt><dd><tt><a href="#-fl_winicon">fl_winicon</a>(win,&nbsp;icon,&nbsp;mask)<br>
+&nbsp;<br>
+Installs&nbsp;an&nbsp;icon&nbsp;for&nbsp;the&nbsp;window.<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;win&nbsp;:&nbsp;long_pos<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;window&nbsp;id<br>
+&nbsp;&nbsp;&nbsp;&nbsp;icon&nbsp;:&nbsp;long_pos<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;pixmap&nbsp;icon&nbsp;id&nbsp;to&nbsp;be&nbsp;installed&nbsp;in&nbsp;window<br>
+&nbsp;&nbsp;&nbsp;&nbsp;mask&nbsp;:&nbsp;long_pos<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;pixmap&nbsp;mask&nbsp;id<br>
+&nbsp;<br>
+Examples<br>
+--------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;*todo*<br>
+&nbsp;<br>
+Notes<br>
+-----<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
+ <dl><dt><a name="-fl_winicontitle"><strong>fl_winicontitle</strong></a>(win, title)</dt><dd><tt><a href="#-fl_winicontitle">fl_winicontitle</a>(win,&nbsp;title)<br>
+&nbsp;<br>
+Changes&nbsp;only&nbsp;the&nbsp;icon&nbsp;title&nbsp;for&nbsp;the&nbsp;window.<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;win&nbsp;:&nbsp;long_pos<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;window&nbsp;id<br>
+&nbsp;&nbsp;&nbsp;&nbsp;title&nbsp;:&nbsp;str<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;icon&nbsp;title&nbsp;to&nbsp;be&nbsp;set<br>
+&nbsp;<br>
+Examples<br>
+--------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;<a href="#-fl_winicontitle">fl_winicontitle</a>(win0,&nbsp;"My&nbsp;icon&nbsp;label")<br>
+&nbsp;<br>
+Notes<br>
+-----<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
+ <dl><dt><a name="-fl_winisvalid"><strong>fl_winisvalid</strong></a>(win)</dt><dd><tt><a href="#-fl_winisvalid">fl_winisvalid</a>(win)<br>
+&nbsp;<br>
+Checks&nbsp;if&nbsp;a&nbsp;window&nbsp;id&nbsp;is&nbsp;valid&nbsp;or&nbsp;not.&nbsp;Note&nbsp;that&nbsp;excessive&nbsp;use&nbsp;of<br>
+this&nbsp;function&nbsp;may&nbsp;negatively&nbsp;impact&nbsp;performance.<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;win&nbsp;:&nbsp;long_pos<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;window&nbsp;id&nbsp;to&nbsp;evaluate<br>
+&nbsp;<br>
+Returns<br>
+-------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;num.&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*todo*<br>
+&nbsp;<br>
+Examples<br>
+--------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;if&nbsp;<a href="#-fl_winisvalid">fl_winisvalid</a>(win3):<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;...&nbsp;&lt;something&gt;<br>
+&nbsp;<br>
+Notes<br>
+-----<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
+ <dl><dt><a name="-fl_winmaxsize"><strong>fl_winmaxsize</strong></a>(win, w, h)</dt><dd><tt><a href="#-fl_winmaxsize">fl_winmaxsize</a>(win,&nbsp;w,&nbsp;h)<br>
+&nbsp;<br>
+Sets&nbsp;a&nbsp;constraint&nbsp;for&nbsp;a&nbsp;resizable&nbsp;window&nbsp;whose&nbsp;size&nbsp;will&nbsp;be&nbsp;within&nbsp;a<br>
+range&nbsp;not&nbsp;bigger&nbsp;than&nbsp;maximum&nbsp;(before&nbsp;calling&nbsp;fl_winopen).<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;win&nbsp;:&nbsp;long_pos<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;window&nbsp;id&nbsp;to&nbsp;be&nbsp;set<br>
+&nbsp;&nbsp;&nbsp;&nbsp;w&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;maximum&nbsp;width&nbsp;of&nbsp;window&nbsp;in&nbsp;coord&nbsp;units<br>
+&nbsp;&nbsp;&nbsp;&nbsp;h&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;maximum&nbsp;height&nbsp;of&nbsp;window&nbsp;in&nbsp;coord&nbsp;units<br>
+&nbsp;<br>
+Examples<br>
+--------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;<a href="#-fl_winmaxsize">fl_winmaxsize</a>(win1,&nbsp;500,&nbsp;500)<br>
+&nbsp;<br>
+Notes<br>
+-----<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
+ <dl><dt><a name="-fl_winminsize"><strong>fl_winminsize</strong></a>(win, w, h)</dt><dd><tt><a href="#-fl_winminsize">fl_winminsize</a>(win,&nbsp;w,&nbsp;h)<br>
+&nbsp;<br>
+Sets&nbsp;a&nbsp;constraint&nbsp;for&nbsp;a&nbsp;resizable&nbsp;window&nbsp;whose&nbsp;size&nbsp;will&nbsp;be&nbsp;within&nbsp;a<br>
+range&nbsp;not&nbsp;less&nbsp;than&nbsp;minumum&nbsp;(to&nbsp;be&nbsp;used&nbsp;before&nbsp;calling&nbsp;fl_winopen).<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;win&nbsp;:&nbsp;long_pos<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;window&nbsp;id&nbsp;to&nbsp;be&nbsp;set<br>
+&nbsp;&nbsp;&nbsp;&nbsp;w&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;minimum&nbsp;width&nbsp;of&nbsp;window&nbsp;in&nbsp;coord&nbsp;units<br>
+&nbsp;&nbsp;&nbsp;&nbsp;h&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;minimum&nbsp;height&nbsp;of&nbsp;window&nbsp;in&nbsp;coord&nbsp;units<br>
+&nbsp;<br>
+Examples<br>
+--------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;<a href="#-fl_winminsize">fl_winminsize</a>(win1,&nbsp;500,&nbsp;500)<br>
+&nbsp;<br>
+Notes<br>
+-----<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
+ <dl><dt><a name="-fl_winmove"><strong>fl_winmove</strong></a>(win, x, y)</dt><dd><tt><a href="#-fl_winmove">fl_winmove</a>(win,&nbsp;x,&nbsp;y)<br>
+&nbsp;<br>
+Moves&nbsp;the&nbsp;specified&nbsp;window&nbsp;to&nbsp;a&nbsp;new&nbsp;position.<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;win&nbsp;:&nbsp;long_pos<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;window&nbsp;id&nbsp;to&nbsp;move&nbsp;to&nbsp;a&nbsp;new&nbsp;position<br>
+&nbsp;&nbsp;&nbsp;&nbsp;x&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;new&nbsp;horizontal&nbsp;position&nbsp;(upper-left&nbsp;corner)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;y&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;new&nbsp;vertical&nbsp;position&nbsp;(upper-left&nbsp;corner)<br>
+&nbsp;<br>
+Examples<br>
+--------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;<a href="#-fl_winmove">fl_winmove</a>(win5,&nbsp;116,&nbsp;331)<br>
+&nbsp;<br>
+Notes<br>
+-----<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
+ <dl><dt><a name="-fl_winopen"><strong>fl_winopen</strong></a>(title)</dt><dd><tt><a href="#-fl_winopen">fl_winopen</a>(title)<br>
+&nbsp;<br>
+Opens&nbsp;(creates&nbsp;and&nbsp;shows)&nbsp;a&nbsp;toplevel&nbsp;window&nbsp;with&nbsp;the&nbsp;specified&nbsp;title.<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;title&nbsp;:&nbsp;str<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;title&nbsp;of&nbsp;the&nbsp;window<br>
+&nbsp;<br>
+Returns<br>
+-------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;win&nbsp;:&nbsp;long_pos<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;created&nbsp;window&nbsp;id<br>
+&nbsp;<br>
+Examples<br>
+--------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;win2&nbsp;=&nbsp;<a href="#-fl_winopen">fl_winopen</a>("My&nbsp;long&nbsp;title")<br>
+&nbsp;<br>
+Notes<br>
+-----<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;Demo&nbsp;=&nbsp;OK</tt></dd></dl>
+ <dl><dt><a name="-fl_winposition"><strong>fl_winposition</strong></a>(x, y)</dt><dd><tt><a href="#-fl_winposition">fl_winposition</a>(x,&nbsp;y)<br>
+&nbsp;<br>
+Sets&nbsp;the&nbsp;position&nbsp;of&nbsp;a&nbsp;window&nbsp;to&nbsp;be&nbsp;opened.<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;x&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;horizontal&nbsp;position&nbsp;of&nbsp;window&nbsp;(upper-left&nbsp;corner)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;y&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;vertical&nbsp;position&nbsp;of&nbsp;window&nbsp;(upper-left&nbsp;corner)<br>
+&nbsp;<br>
+Examples<br>
+--------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;<a href="#-fl_winposition">fl_winposition</a>(140,&nbsp;123)<br>
+&nbsp;<br>
+Notes<br>
+-----<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
+ <dl><dt><a name="-fl_winreparent"><strong>fl_winreparent</strong></a>(win, winnewparent)</dt><dd><tt><a href="#-fl_winreparent">fl_winreparent</a>(win,&nbsp;winnewparent)<br>
+&nbsp;<br>
+Makes&nbsp;a&nbsp;toplevel&nbsp;window&nbsp;a&nbsp;subwindow&nbsp;of&nbsp;another&nbsp;(new&nbsp;parent)&nbsp;window;<br>
+both&nbsp;the&nbsp;window&nbsp;and&nbsp;the&nbsp;parent&nbsp;window&nbsp;must&nbsp;be&nbsp;valid&nbsp;ones.<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;win&nbsp;:&nbsp;long_pos<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;window&nbsp;id&nbsp;to&nbsp;be&nbsp;made&nbsp;a&nbsp;subwindow<br>
+&nbsp;&nbsp;&nbsp;&nbsp;winnewparent&nbsp;:&nbsp;long_pos<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;window&nbsp;id&nbsp;to&nbsp;become&nbsp;its&nbsp;new&nbsp;parent&nbsp;window<br>
+&nbsp;<br>
+Returns<br>
+-------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;result&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;num.,&nbsp;or&nbsp;-1&nbsp;(on&nbsp;failure)<br>
+&nbsp;<br>
+Examples<br>
+--------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;exitval&nbsp;=&nbsp;<a href="#-fl_winreparent">fl_winreparent</a>(win1,&nbsp;win3)<br>
+&nbsp;<br>
+Notes<br>
+-----<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
+ <dl><dt><a name="-fl_winreshape"><strong>fl_winreshape</strong></a>(win, x, y, w, h)</dt><dd><tt><a href="#-fl_winreshape">fl_winreshape</a>(win,&nbsp;x,&nbsp;y,&nbsp;w,&nbsp;h)<br>
+&nbsp;<br>
+Reshapes&nbsp;(resizes&nbsp;and&nbsp;moves)&nbsp;a&nbsp;window.<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;win&nbsp;:&nbsp;long_pos<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;window&nbsp;id&nbsp;to&nbsp;reshape<br>
+&nbsp;&nbsp;&nbsp;&nbsp;x&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;new&nbsp;horizontal&nbsp;position&nbsp;(upper-left&nbsp;corner)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;y&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;new&nbsp;vertical&nbsp;position&nbsp;(upper-left&nbsp;corner)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;w&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;new&nbsp;width&nbsp;in&nbsp;coord&nbsp;units<br>
+&nbsp;&nbsp;&nbsp;&nbsp;h&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;new&nbsp;height&nbsp;in&nbsp;coord&nbsp;units<br>
+&nbsp;<br>
+Examples<br>
+--------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;<a href="#-fl_winreshape">fl_winreshape</a>(win5,&nbsp;116,&nbsp;331,&nbsp;144,&nbsp;182)<br>
+&nbsp;<br>
+Notes<br>
+-----<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
+ <dl><dt><a name="-fl_winresize"><strong>fl_winresize</strong></a>(win, w, h)</dt><dd><tt><a href="#-fl_winresize">fl_winresize</a>(win,&nbsp;w,&nbsp;h)<br>
+&nbsp;<br>
+Resizes&nbsp;a&nbsp;window.<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;win&nbsp;:&nbsp;long_pos<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;window&nbsp;id&nbsp;to&nbsp;resize<br>
+&nbsp;&nbsp;&nbsp;&nbsp;w&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;new&nbsp;width&nbsp;in&nbsp;coord&nbsp;units<br>
+&nbsp;&nbsp;&nbsp;&nbsp;h&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;new&nbsp;height&nbsp;in&nbsp;coord&nbsp;units<br>
+&nbsp;<br>
+Examples<br>
+--------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;<a href="#-fl_winresize">fl_winresize</a>(win6,&nbsp;547,&nbsp;624)<br>
+&nbsp;<br>
+Notes<br>
+-----<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
+ <dl><dt><a name="-fl_winset"><strong>fl_winset</strong></a>(win)</dt><dd><tt><a href="#-fl_winset">fl_winset</a>(win)<br>
+&nbsp;<br>
+Sets&nbsp;the&nbsp;"current&nbsp;window",&nbsp;defined&nbsp;as&nbsp;the&nbsp;window&nbsp;the&nbsp;object&nbsp;that&nbsp;uses<br>
+the&nbsp;drawing&nbsp;routine&nbsp;belongs&nbsp;to.<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;win&nbsp;:&nbsp;long_pos<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;window&nbsp;id&nbsp;to&nbsp;be&nbsp;set<br>
+&nbsp;<br>
+Examples<br>
+--------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;<a href="#-fl_winset">fl_winset</a>(win3)<br>
+&nbsp;<br>
+Notes<br>
+-----<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;Demo&nbsp;=&nbsp;OK</tt></dd></dl>
+ <dl><dt><a name="-fl_winshow"><strong>fl_winshow</strong></a>(win)</dt><dd><tt><a href="#-fl_winshow">fl_winshow</a>(win)<br>
+&nbsp;<br>
+Shows&nbsp;the&nbsp;window&nbsp;(created&nbsp;with&nbsp;fl_wincreate).<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;win&nbsp;:&nbsp;long_pos<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;window&nbsp;id&nbsp;to&nbsp;show<br>
+&nbsp;<br>
+Returns<br>
+-------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;win&nbsp;:&nbsp;long_pos<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;window&nbsp;id&nbsp;shown<br>
+&nbsp;<br>
+Examples<br>
+--------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;winw&nbsp;=&nbsp;<a href="#-fl_winshow">fl_winshow</a>(win2)<br>
+&nbsp;<br>
+Notes<br>
+-----<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
+ <dl><dt><a name="-fl_winsize"><strong>fl_winsize</strong></a>(w, h)</dt><dd><tt><a href="#-fl_winsize">fl_winsize</a>(w,&nbsp;h)<br>
+&nbsp;<br>
+Sets&nbsp;the&nbsp;preferred&nbsp;window&nbsp;size&nbsp;(before&nbsp;calling&nbsp;fl_winopen),&nbsp;and<br>
+makes&nbsp;the&nbsp;window&nbsp;non-resizeable.<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;w&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;width&nbsp;in&nbsp;coord&nbsp;units<br>
+&nbsp;&nbsp;&nbsp;&nbsp;h&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;height&nbsp;in&nbsp;coord&nbsp;units<br>
+&nbsp;<br>
+Examples<br>
+--------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;<a href="#-fl_winsize">fl_winsize</a>(700,&nbsp;600)<br>
+&nbsp;<br>
+Notes<br>
+-----<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
+ <dl><dt><a name="-fl_winstepsize"><strong>fl_winstepsize</strong></a>(win, xunit, yunit)</dt><dd><tt><a href="#-fl_winstepsize">fl_winstepsize</a>(win,&nbsp;xunit,&nbsp;yunit)<br>
+&nbsp;<br>
+Sets&nbsp;the&nbsp;steps&nbsp;by&nbsp;which&nbsp;the&nbsp;size&nbsp;of&nbsp;a&nbsp;window&nbsp;can&nbsp;be&nbsp;changed.&nbsp;Changes<br>
+to&nbsp;the&nbsp;window&nbsp;size&nbsp;will&nbsp;be&nbsp;multiples&nbsp;of&nbsp;specified&nbsp;units&nbsp;after&nbsp;this<br>
+call.&nbsp;Note&nbsp;that&nbsp;this&nbsp;only&nbsp;applies&nbsp;to&nbsp;interactive&nbsp;resizing.<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;win&nbsp;:&nbsp;long_pos<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;window&nbsp;id<br>
+&nbsp;&nbsp;&nbsp;&nbsp;xunit&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;number&nbsp;of&nbsp;pixels&nbsp;of&nbsp;changes&nbsp;per&nbsp;unit&nbsp;in&nbsp;horizontal&nbsp;direction<br>
+&nbsp;&nbsp;&nbsp;&nbsp;yunit&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;number&nbsp;of&nbsp;pixels&nbsp;of&nbsp;changes&nbsp;per&nbsp;unit&nbsp;in&nbsp;vertical&nbsp;direction<br>
+&nbsp;<br>
+Examples<br>
+--------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;<a href="#-fl_winstepsize">fl_winstepsize</a>(win0,&nbsp;10,&nbsp;10)<br>
+&nbsp;<br>
+Notes<br>
+-----<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
+ <dl><dt><a name="-fl_winstepunit"><strong>fl_winstepunit</strong></a> = fl_winstepsize(win, xunit, yunit)</dt><dd><tt><a href="#-fl_winstepsize">fl_winstepsize</a>(win,&nbsp;xunit,&nbsp;yunit)<br>
+&nbsp;<br>
+Sets&nbsp;the&nbsp;steps&nbsp;by&nbsp;which&nbsp;the&nbsp;size&nbsp;of&nbsp;a&nbsp;window&nbsp;can&nbsp;be&nbsp;changed.&nbsp;Changes<br>
+to&nbsp;the&nbsp;window&nbsp;size&nbsp;will&nbsp;be&nbsp;multiples&nbsp;of&nbsp;specified&nbsp;units&nbsp;after&nbsp;this<br>
+call.&nbsp;Note&nbsp;that&nbsp;this&nbsp;only&nbsp;applies&nbsp;to&nbsp;interactive&nbsp;resizing.<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;win&nbsp;:&nbsp;long_pos<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;window&nbsp;id<br>
+&nbsp;&nbsp;&nbsp;&nbsp;xunit&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;number&nbsp;of&nbsp;pixels&nbsp;of&nbsp;changes&nbsp;per&nbsp;unit&nbsp;in&nbsp;horizontal&nbsp;direction<br>
+&nbsp;&nbsp;&nbsp;&nbsp;yunit&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;number&nbsp;of&nbsp;pixels&nbsp;of&nbsp;changes&nbsp;per&nbsp;unit&nbsp;in&nbsp;vertical&nbsp;direction<br>
+&nbsp;<br>
+Examples<br>
+--------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;<a href="#-fl_winstepsize">fl_winstepsize</a>(win0,&nbsp;10,&nbsp;10)<br>
+&nbsp;<br>
+Notes<br>
+-----<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
+ <dl><dt><a name="-fl_wintitle"><strong>fl_wintitle</strong></a>(win, title)</dt><dd><tt><a href="#-fl_wintitle">fl_wintitle</a>(win,&nbsp;title)<br>
+&nbsp;<br>
+Changes&nbsp;the&nbsp;window&nbsp;title&nbsp;(and&nbsp;its&nbsp;associated&nbsp;icon&nbsp;title).<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;win&nbsp;:&nbsp;long_pos<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;window&nbsp;id<br>
+&nbsp;&nbsp;&nbsp;&nbsp;title&nbsp;:&nbsp;str<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;window&nbsp;title&nbsp;to&nbsp;be&nbsp;set<br>
+&nbsp;<br>
+Examples<br>
+--------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;win0&nbsp;=&nbsp;<a href="#-fl_winget">fl_winget</a>()<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;<a href="#-fl_wintitle">fl_wintitle</a>(win0,&nbsp;"My&nbsp;brand&nbsp;new&nbsp;title")<br>
+&nbsp;<br>
+Notes<br>
+-----<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
+ <dl><dt><a name="-metakey_down"><strong>metakey_down</strong></a>(mask)</dt></dl>
+ <dl><dt><a name="-shiftkey_down"><strong>shiftkey_down</strong></a>(mask)</dt></dl>
+</td></tr></table><p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#55aa55">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Data</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#55aa55"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><strong>fl_current_form</strong> = &lt;xfdata.LP_FL_FORM_ object&gt;<br>
+<strong>fl_display</strong> = &lt;xfdata.LP__XDisplay object&gt;<br>
+<strong>fl_root</strong> = c_ulong(0L)<br>
+<strong>fl_screen</strong> = c_int(0)<br>
+<strong>fl_scrh</strong> = c_int(0)<br>
+<strong>fl_scrw</strong> = c_int(0)<br>
+<strong>fl_state</strong> = &lt;flxbasic.LP_FL_State object&gt;<br>
+<strong>fl_ul_magic_char</strong> = c_char_p(None)<br>
+<strong>fl_vmode</strong> = c_int(-1)<br>
+<strong>fl_vroot</strong> = c_ulong(0L)</td></tr></table>
+</body></html>

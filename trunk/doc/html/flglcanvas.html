@@ -1,0 +1,289 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html><head><title>Python: module flglcanvas</title>
+</head><body bgcolor="#f0f0f8">
+
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="heading">
+<tr bgcolor="#7799ee">
+<td valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial">&nbsp;<br><big><big><strong>flglcanvas</strong></big></big></font></td
+><td align=right valign=bottom
+><font color="#ffffff" face="helvetica, arial"><a href=".">index</a><br>     <a href="index.html">list</a></font></td></tr></table>
+    <p><tt>xforms-python's&nbsp;functions&nbsp;to&nbsp;manage&nbsp;GLcanvas&nbsp;objects.</tt></p>
+<p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#aa55cc">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Modules</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#aa55cc"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><table width="100%" summary="list"><tr><td width="25%" valign=top><a href="ctypes.html">ctypes</a><br>
+</td><td width="25%" valign=top><a href="library.html">library</a><br>
+</td><td width="25%" valign=top><a href="xfdata.html">xfdata</a><br>
+</td><td width="25%" valign=top></td></tr></table></td></tr></table><p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#eeaa77">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Functions</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#eeaa77"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><dl><dt><a name="-fl_activate_glcanvas"><strong>fl_activate_glcanvas</strong></a>(pFlObject)</dt><dd><tt><a href="#-fl_activate_glcanvas">fl_activate_glcanvas</a>(pFlObject)<br>
+&nbsp;<br>
+Activates&nbsp;a&nbsp;glcanvas&nbsp;object&nbsp;before&nbsp;drawing&nbsp;into&nbsp;glcanvas&nbsp;object.&nbsp;OpenGL<br>
+drawing&nbsp;routines&nbsp;always&nbsp;draw&nbsp;into&nbsp;the&nbsp;window&nbsp;the&nbsp;current&nbsp;context&nbsp;is&nbsp;bound<br>
+to.&nbsp;For&nbsp;application&nbsp;with&nbsp;a&nbsp;single&nbsp;canvas,&nbsp;this&nbsp;is&nbsp;not&nbsp;a&nbsp;problem.&nbsp;In&nbsp;case<br>
+of&nbsp;multiple&nbsp;canvases,&nbsp;the&nbsp;canvas&nbsp;driver&nbsp;takes&nbsp;care&nbsp;of&nbsp;setting&nbsp;the&nbsp;proper<br>
+context&nbsp;before&nbsp;invoking&nbsp;the&nbsp;expose&nbsp;handler.&nbsp;In&nbsp;some&nbsp;cases,&nbsp;the<br>
+application&nbsp;may&nbsp;want&nbsp;to&nbsp;draw&nbsp;into&nbsp;canvases&nbsp;actively.&nbsp;In&nbsp;this&nbsp;case,&nbsp;use<br>
+this&nbsp;function&nbsp;for&nbsp;explicit&nbsp;drawing&nbsp;context&nbsp;switching.<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;pFlObject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;glcanvas&nbsp;object<br>
+&nbsp;<br>
+Examples<br>
+--------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;<a href="#-fl_activate_glcanvas">fl_activate_glcanvas</a>(glcanobj)<br>
+&nbsp;<br>
+Notes<br>
+-----<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
+ <dl><dt><a name="-fl_add_glcanvas"><strong>fl_add_glcanvas</strong></a>(canvastype, x, y, w, h, label)</dt><dd><tt><a href="#-fl_add_glcanvas">fl_add_glcanvas</a>(canvastype,&nbsp;x,&nbsp;y,&nbsp;w,&nbsp;h,&nbsp;label)<br>
+&nbsp;<br>
+Adds&nbsp;a&nbsp;glcanvas&nbsp;object&nbsp;to&nbsp;the&nbsp;form.<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;canvastype&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;type&nbsp;of&nbsp;glcanvas&nbsp;to&nbsp;be&nbsp;added.&nbsp;Values&nbsp;(from&nbsp;xfdata.py)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_NORMAL_CANVAS,&nbsp;FL_SCROLLED_CANVAS&nbsp;(not&nbsp;enabled)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;x&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;horizontal&nbsp;position&nbsp;(upper-left&nbsp;corner)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;y&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;vertical&nbsp;position&nbsp;(upper-left&nbsp;corner)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;w&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;width&nbsp;in&nbsp;coord&nbsp;units<br>
+&nbsp;&nbsp;&nbsp;&nbsp;h&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;height&nbsp;in&nbsp;coord&nbsp;units<br>
+&nbsp;&nbsp;&nbsp;&nbsp;label&nbsp;:&nbsp;str<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;text&nbsp;label&nbsp;of&nbsp;glcanvas<br>
+&nbsp;<br>
+Returns<br>
+-------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;pFlObject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;glcanvas&nbsp;object&nbsp;added<br>
+&nbsp;<br>
+Examples<br>
+--------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;globj&nbsp;=&nbsp;&nbsp;<a href="#-fl_add_glcanvas">fl_add_glcanvas</a>(xfdata.FL_NORMAL_CANVAS,&nbsp;14,&nbsp;21,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;654,&nbsp;457,&nbsp;"My&nbsp;Gl&nbsp;Canvas")<br>
+&nbsp;<br>
+Notes<br>
+-----<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
+ <dl><dt><a name="-fl_get_glcanvas_attributes"><strong>fl_get_glcanvas_attributes</strong></a>(pFlObject)</dt><dd><tt><a href="#-fl_get_glcanvas_attributes">fl_get_glcanvas_attributes</a>(pFlObject)<br>
+&nbsp;<br>
+Obtains&nbsp;the&nbsp;attributes&nbsp;of&nbsp;a&nbsp;glcanvas&nbsp;object.<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;pFlObject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;glcanvas&nbsp;object<br>
+&nbsp;<br>
+Returns<br>
+-------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;attribs&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;glcanvas&nbsp;attributes<br>
+&nbsp;<br>
+Examples<br>
+--------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;attrb&nbsp;=&nbsp;<a href="#-fl_get_glcanvas_attributes">fl_get_glcanvas_attributes</a>(glcanobj)<br>
+&nbsp;<br>
+API_diversion<br>
+----------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;API&nbsp;changed&nbsp;from&nbsp;XForms,&nbsp;upstream&nbsp;was<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="#-fl_get_glcanvas_attributes">fl_get_glcanvas_attributes</a>(pFlObject,&nbsp;attributes)<br>
+&nbsp;<br>
+Notes<br>
+-----<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
+ <dl><dt><a name="-fl_get_glcanvas_context"><strong>fl_get_glcanvas_context</strong></a>(pFlObject)</dt><dd><tt><a href="#-fl_get_glcanvas_context">fl_get_glcanvas_context</a>(pFlObject)<br>
+&nbsp;<br>
+Obtains&nbsp;GLXContext&nbsp;of&nbsp;a&nbsp;glcanvas&nbsp;object.<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;pFlObject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;glcanvas&nbsp;object<br>
+&nbsp;<br>
+Returns<br>
+-------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;pGLXContext&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.GLXContext<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;glxcontext&nbsp;class&nbsp;instance<br>
+&nbsp;<br>
+Examples<br>
+--------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;glxcont&nbsp;=&nbsp;<a href="#-fl_get_glcanvas_context">fl_get_glcanvas_context</a>(glcanobj)<br>
+&nbsp;<br>
+Notes<br>
+-----<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
+ <dl><dt><a name="-fl_get_glcanvas_defaults"><strong>fl_get_glcanvas_defaults</strong></a>()</dt><dd><tt><a href="#-fl_get_glcanvas_defaults">fl_get_glcanvas_defaults</a>()<br>
+&nbsp;<br>
+Obtains&nbsp;the&nbsp;global&nbsp;defaults&nbsp;attributes&nbsp;for&nbsp;glcanvas.<br>
+&nbsp;<br>
+Returns<br>
+-------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;config&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;configuration&nbsp;settings<br>
+&nbsp;<br>
+Examples<br>
+--------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;cnfset&nbsp;=&nbsp;<a href="#-fl_get_glcanvas_defaults">fl_get_glcanvas_defaults</a>()<br>
+&nbsp;<br>
+API_diversion<br>
+----------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;API&nbsp;changed&nbsp;from&nbsp;XForms,&nbsp;upstream&nbsp;was<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="#-fl_get_glcanvas_defaults">fl_get_glcanvas_defaults</a>(config)<br>
+&nbsp;<br>
+Notes<br>
+-----<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
+ <dl><dt><a name="-fl_get_glcanvas_xvisualinfo"><strong>fl_get_glcanvas_xvisualinfo</strong></a>(pFlObject)</dt><dd><tt><a href="#-fl_get_glcanvas_xvisualinfo">fl_get_glcanvas_xvisualinfo</a>(pFlObject)<br>
+&nbsp;<br>
+Obtains&nbsp;the&nbsp;XVisual&nbsp;information&nbsp;that&nbsp;is&nbsp;used&nbsp;to&nbsp;create&nbsp;the&nbsp;context<br>
+of&nbsp;a&nbsp;glcanvas&nbsp;object.<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;pFlObject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;glcanvas&nbsp;object<br>
+&nbsp;<br>
+Returns<br>
+-------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;pXVisualInfo&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.XVisualInfo<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;XVisualInfo&nbsp;instance&nbsp;class<br>
+&nbsp;<br>
+Examples<br>
+--------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;pxviscls&nbsp;=&nbsp;<a href="#-fl_get_glcanvas_xvisualinfo">fl_get_glcanvas_xvisualinfo</a>(glcanobj)<br>
+&nbsp;<br>
+Notes<br>
+-----<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
+ <dl><dt><a name="-fl_glwincreate"><strong>fl_glwincreate</strong></a>(config, glxcontext, w, h)</dt><dd><tt><a href="#-fl_glwincreate">fl_glwincreate</a>(config,&nbsp;glxcontext,&nbsp;w,&nbsp;h)<br>
+&nbsp;<br>
+Creates&nbsp;a&nbsp;toplevel&nbsp;OpenGl&nbsp;window.<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;config&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;GL&nbsp;configuration&nbsp;settings<br>
+&nbsp;&nbsp;&nbsp;&nbsp;glxcontext&nbsp;:&nbsp;xfdata.GLXContext&nbsp;instance<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;glxcontext&nbsp;class&nbsp;instance<br>
+&nbsp;&nbsp;&nbsp;&nbsp;w&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;width&nbsp;of&nbsp;GL&nbsp;window&nbsp;in&nbsp;coord&nbsp;units<br>
+&nbsp;&nbsp;&nbsp;&nbsp;h&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;height&nbsp;of&nbsp;GL&nbsp;window&nbsp;in&nbsp;coord&nbsp;units<br>
+&nbsp;<br>
+Returns<br>
+-------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;win&nbsp;:&nbsp;long_pos<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;window&nbsp;created<br>
+&nbsp;<br>
+Examples<br>
+--------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;*todo*<br>
+&nbsp;<br>
+Notes<br>
+-----<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
+ <dl><dt><a name="-fl_glwinopen"><strong>fl_glwinopen</strong></a>(config, glxcontext, w, h)</dt><dd><tt><a href="#-fl_glwinopen">fl_glwinopen</a>(config,&nbsp;glxcontext,&nbsp;w,&nbsp;h)<br>
+&nbsp;<br>
+Opens&nbsp;a&nbsp;toplevel&nbsp;OpenGL&nbsp;window.<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;config&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;GL&nbsp;configuration&nbsp;settings<br>
+&nbsp;&nbsp;&nbsp;&nbsp;glxcontext&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.GLXContext<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;glxcontext&nbsp;class&nbsp;instance<br>
+&nbsp;&nbsp;&nbsp;&nbsp;w&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;width&nbsp;of&nbsp;GL&nbsp;window&nbsp;in&nbsp;coord&nbsp;units<br>
+&nbsp;&nbsp;&nbsp;&nbsp;h&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;height&nbsp;of&nbsp;GL&nbsp;window&nbsp;in&nbsp;coord&nbsp;units<br>
+&nbsp;<br>
+Returns<br>
+-------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;win&nbsp;:&nbsp;long_pos<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;window&nbsp;opened<br>
+&nbsp;<br>
+Examples<br>
+--------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;*todo*<br>
+&nbsp;<br>
+Notes<br>
+-----<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
+ <dl><dt><a name="-fl_set_glcanvas_attributes"><strong>fl_set_glcanvas_attributes</strong></a>(pFlObject, config)</dt><dd><tt><a href="#-fl_set_glcanvas_attributes">fl_set_glcanvas_attributes</a>(pFlObject,&nbsp;config)<br>
+&nbsp;<br>
+Modifies&nbsp;the&nbsp;default&nbsp;configuration&nbsp;of&nbsp;a&nbsp;particular&nbsp;glcanvas<br>
+object.&nbsp;You&nbsp;can&nbsp;change&nbsp;a&nbsp;glcanvas&nbsp;attribute&nbsp;on&nbsp;the&nbsp;fly&nbsp;even&nbsp;if<br>
+the&nbsp;canvas&nbsp;is&nbsp;already&nbsp;visible&nbsp;and&nbsp;active.<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;pFlObject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;glcanvas&nbsp;object<br>
+&nbsp;&nbsp;&nbsp;&nbsp;config&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;configuration&nbsp;settings&nbsp;to&nbsp;be&nbsp;set.&nbsp;Attributes&nbsp;are&nbsp;those&nbsp;defined<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;in&nbsp;OpenGL&nbsp;glXChooseVisual()&nbsp;function&nbsp;*todo*<br>
+&nbsp;<br>
+Examples<br>
+--------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;*todo*<br>
+&nbsp;<br>
+Notes<br>
+-----<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
+ <dl><dt><a name="-fl_set_glcanvas_defaults"><strong>fl_set_glcanvas_defaults</strong></a>(config)</dt><dd><tt><a href="#-fl_set_glcanvas_defaults">fl_set_glcanvas_defaults</a>(config)<br>
+&nbsp;<br>
+Modifies&nbsp;the&nbsp;global&nbsp;default&nbsp;attributes&nbsp;for&nbsp;glcanvas,&nbsp;before&nbsp;the<br>
+creation&nbsp;of&nbsp;glcanvases.<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;config&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;configuration&nbsp;settings.&nbsp;Attributes&nbsp;are&nbsp;those&nbsp;defined&nbsp;in&nbsp;OpenGL<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;glXChooseVisual()&nbsp;function&nbsp;*todo*<br>
+&nbsp;<br>
+Examples<br>
+--------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;*todo*<br>
+&nbsp;<br>
+Notes<br>
+-----<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
+ <dl><dt><a name="-fl_set_glcanvas_direct"><strong>fl_set_glcanvas_direct</strong></a>(pFlObject, yesno)</dt><dd><tt><a href="#-fl_set_glcanvas_direct">fl_set_glcanvas_direct</a>(pFlObject,&nbsp;yesno)<br>
+&nbsp;<br>
+Changes&nbsp;the&nbsp;rendering&nbsp;context&nbsp;created&nbsp;by&nbsp;a&nbsp;glcanvas.&nbsp;By&nbsp;default&nbsp;it<br>
+uses&nbsp;direct&nbsp;rendering&nbsp;(i.e.&nbsp;by-passing&nbsp;the&nbsp;Xserver).<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;pFlObject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;glcanvas&nbsp;object<br>
+&nbsp;&nbsp;&nbsp;&nbsp;yesno&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;flag&nbsp;to&nbsp;use&nbsp;direct&nbsp;or&nbsp;through-Xserver&nbsp;rendering.&nbsp;Values&nbsp;0&nbsp;(to<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;use&nbsp;Xserver&nbsp;rendering)&nbsp;or&nbsp;1&nbsp;(to&nbsp;use&nbsp;direct&nbsp;rendering)<br>
+&nbsp;<br>
+Examples<br>
+--------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;<a href="#-fl_set_glcanvas_direct">fl_set_glcanvas_direct</a>(glcanobj,&nbsp;0)<br>
+&nbsp;<br>
+Notes<br>
+-----<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
+</td></tr></table>
+</body></html>

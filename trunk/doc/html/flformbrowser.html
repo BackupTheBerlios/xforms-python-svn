@@ -1,0 +1,519 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html><head><title>Python: module flformbrowser</title>
+</head><body bgcolor="#f0f0f8">
+
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="heading">
+<tr bgcolor="#7799ee">
+<td valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial">&nbsp;<br><big><big><strong>flformbrowser</strong></big></big></font></td
+><td align=right valign=bottom
+><font color="#ffffff" face="helvetica, arial"><a href=".">index</a><br>     <a href="index.html">list</a></font></td></tr></table>
+    <p><tt>xforms-python's&nbsp;functions&nbsp;to&nbsp;manage&nbsp;formbrowser&nbsp;objects.</tt></p>
+<p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#aa55cc">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Modules</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#aa55cc"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><table width="100%" summary="list"><tr><td width="25%" valign=top><a href="ctypes.html">ctypes</a><br>
+</td><td width="25%" valign=top><a href="library.html">library</a><br>
+</td><td width="25%" valign=top><a href="xfdata.html">xfdata</a><br>
+</td><td width="25%" valign=top></td></tr></table></td></tr></table><p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#eeaa77">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Functions</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#eeaa77"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><dl><dt><a name="-fl_add_formbrowser"><strong>fl_add_formbrowser</strong></a>(frmbrwstype, x, y, w, h, label)</dt><dd><tt><a href="#-fl_add_formbrowser">fl_add_formbrowser</a>(frmbrwstype,&nbsp;x,&nbsp;y,&nbsp;w,&nbsp;h,&nbsp;label)<br>
+&nbsp;<br>
+Adds&nbsp;a&nbsp;formbrowser&nbsp;object.<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;frmbrwstype&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;type&nbsp;of&nbsp;formbrowser&nbsp;to&nbsp;be&nbsp;added.&nbsp;Values&nbsp;(from&nbsp;xfdata.py)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_NORMAL_FORMBROWSER<br>
+&nbsp;&nbsp;&nbsp;&nbsp;x&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;horizontal&nbsp;position&nbsp;(upper-left&nbsp;corner)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;y&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;vertical&nbsp;position&nbsp;(upper-left&nbsp;corner)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;w&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;width&nbsp;in&nbsp;coord&nbsp;units<br>
+&nbsp;&nbsp;&nbsp;&nbsp;h&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;height&nbsp;in&nbsp;coord&nbsp;units<br>
+&nbsp;&nbsp;&nbsp;&nbsp;label&nbsp;:&nbsp;str<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;text&nbsp;label&nbsp;of&nbsp;formbrowser<br>
+&nbsp;<br>
+Returns<br>
+-------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;pFlObject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;formbrowser&nbsp;object&nbsp;added<br>
+&nbsp;<br>
+Examples<br>
+--------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;frmbrobj&nbsp;=&nbsp;<a href="#-fl_add_formbrowser">fl_add_formbrowser</a>(xfdata.FL_NORMAL_FORMBROWSER,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;110,&nbsp;60,&nbsp;550,&nbsp;750,&nbsp;"My&nbsp;Formbrowser)<br>
+&nbsp;<br>
+Notes<br>
+-----<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
+ <dl><dt><a name="-fl_addto_formbrowser"><strong>fl_addto_formbrowser</strong></a>(pFlObject, pFlForm)</dt><dd><tt><a href="#-fl_addto_formbrowser">fl_addto_formbrowser</a>(pFlObject,&nbsp;pFlForm)<br>
+&nbsp;<br>
+Populates&nbsp;a&nbsp;formbrowser.&nbsp;The&nbsp;form&nbsp;so&nbsp;added&nbsp;is&nbsp;appended&nbsp;to&nbsp;the&nbsp;list&nbsp;of<br>
+forms&nbsp;that&nbsp;are&nbsp;already&nbsp;in&nbsp;the&nbsp;formbrowser.&nbsp;Form&nbsp;should&nbsp;be&nbsp;valid&nbsp;for&nbsp;the<br>
+duration&nbsp;of&nbsp;the&nbsp;formbrowser&nbsp;and&nbsp;the&nbsp;application&nbsp;program&nbsp;should&nbsp;not&nbsp;destroy<br>
+a&nbsp;form&nbsp;that&nbsp;is&nbsp;added&nbsp;to&nbsp;a&nbsp;formbrowser&nbsp;before&nbsp;deleting&nbsp;the&nbsp;form&nbsp;from&nbsp;the<br>
+formbrowser&nbsp;first.<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;pFlObject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;formbrowser&nbsp;object<br>
+&nbsp;&nbsp;&nbsp;&nbsp;pFlForm&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_FORM<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;form<br>
+&nbsp;<br>
+Returns<br>
+-------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;numforms&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;total&nbsp;number&nbsp;of&nbsp;forms&nbsp;in&nbsp;the&nbsp;formbrowser<br>
+&nbsp;<br>
+Examples<br>
+--------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;ntotfrms&nbsp;=&nbsp;<a href="#-fl_addto_formbrowser">fl_addto_formbrowser</a>(frmbrobj,&nbsp;newform)<br>
+&nbsp;<br>
+Notes<br>
+-----<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
+ <dl><dt><a name="-fl_delete_formbrowser"><strong>fl_delete_formbrowser</strong></a>(pFlObject, pFlForm)</dt><dd><tt><a href="#-fl_delete_formbrowser">fl_delete_formbrowser</a>(pFlObject,&nbsp;pFlForm)<br>
+&nbsp;<br>
+Removes&nbsp;a&nbsp;specified&nbsp;form&nbsp;from&nbsp;the&nbsp;formbrowser.<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;pFlObject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;formbrowser&nbsp;object<br>
+&nbsp;&nbsp;&nbsp;&nbsp;pFlForm&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_FORM<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;form&nbsp;candidate&nbsp;to&nbsp;deletion<br>
+&nbsp;<br>
+Returns<br>
+-------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;numforms&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;current&nbsp;(after&nbsp;deletion)&nbsp;number&nbsp;of&nbsp;forms&nbsp;in&nbsp;the&nbsp;formbrowser<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;or&nbsp;-1&nbsp;(on&nbsp;failure)<br>
+&nbsp;<br>
+Examples<br>
+--------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;numfrm&nbsp;=&nbsp;<a href="#-fl_delete_formbrowser">fl_delete_formbrowser</a>(frmbrobj,&nbsp;p2ndform)<br>
+&nbsp;<br>
+Notes<br>
+-----<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
+ <dl><dt><a name="-fl_delete_formbrowser_bynumber"><strong>fl_delete_formbrowser_bynumber</strong></a>(pFlObject, seqnum)</dt><dd><tt><a href="#-fl_delete_formbrowser_bynumber">fl_delete_formbrowser_bynumber</a>(pFlObject,&nbsp;seqnum)<br>
+&nbsp;<br>
+Removes&nbsp;a&nbsp;form&nbsp;from&nbsp;the&nbsp;formbrowser&nbsp;using&nbsp;a&nbsp;sequence&nbsp;number,&nbsp;an<br>
+integer&nbsp;between&nbsp;1&nbsp;and&nbsp;the&nbsp;number&nbsp;of&nbsp;forms&nbsp;in&nbsp;the&nbsp;browser.&nbsp;After&nbsp;a<br>
+form&nbsp;is&nbsp;removed,&nbsp;the&nbsp;sequence&nbsp;numbers&nbsp;are&nbsp;re-adjusted&nbsp;so&nbsp;they&nbsp;are<br>
+always&nbsp;consecutive.<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;pFlObject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;formbrowser&nbsp;object<br>
+&nbsp;&nbsp;&nbsp;&nbsp;seqnum&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;sequence&nbsp;number&nbsp;of&nbsp;form&nbsp;to&nbsp;be&nbsp;removed<br>
+&nbsp;<br>
+Returns<br>
+-------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;pFlForm&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_FORM<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;removed&nbsp;form,&nbsp;or&nbsp;None&nbsp;(on&nbsp;failure)<br>
+&nbsp;<br>
+Examples<br>
+--------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;delfrm&nbsp;=&nbsp;<a href="#-fl_delete_formbrowser_bynumber">fl_delete_formbrowser_bynumber</a>(frmbrobj,&nbsp;2)<br>
+&nbsp;<br>
+Notes<br>
+-----<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
+ <dl><dt><a name="-fl_find_formbrowser_form_number"><strong>fl_find_formbrowser_form_number</strong></a>(pFlObject, pFlForm)</dt><dd><tt><a href="#-fl_find_formbrowser_form_number">fl_find_formbrowser_form_number</a>(pFlObject,&nbsp;pFlForm)<br>
+&nbsp;<br>
+Finds&nbsp;out&nbsp;the&nbsp;sequence&nbsp;number&nbsp;of&nbsp;a&nbsp;particular&nbsp;form.<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;pFlObject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;formbrowser&nbsp;object<br>
+&nbsp;&nbsp;&nbsp;&nbsp;pFlForm&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_FORM<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;form&nbsp;candidate&nbsp;to&nbsp;be&nbsp;found<br>
+&nbsp;<br>
+Returns<br>
+-------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;seqnum&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;sequence&nbsp;number&nbsp;of&nbsp;form<br>
+&nbsp;<br>
+Examples<br>
+--------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;frmid&nbsp;=&nbsp;<a href="#-fl_find_formbrowser_form_number">fl_find_formbrowser_form_number</a>(frmbrobj,&nbsp;pform)<br>
+&nbsp;<br>
+Notes<br>
+-----<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
+ <dl><dt><a name="-fl_get_formbrowser_area"><strong>fl_get_formbrowser_area</strong></a>(pFlObject)</dt><dd><tt><a href="#-fl_get_formbrowser_area">fl_get_formbrowser_area</a>(pFlObject)<br>
+&nbsp;<br>
+Obtains&nbsp;the&nbsp;actual&nbsp;size&nbsp;of&nbsp;the&nbsp;form's&nbsp;area.&nbsp;The&nbsp;area&nbsp;occupied&nbsp;by&nbsp;the<br>
+formbrowser&nbsp;contains&nbsp;the&nbsp;space&nbsp;for&nbsp;the&nbsp;scrollbars.<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;pFlObject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;formbrowser&nbsp;object<br>
+&nbsp;<br>
+Returns<br>
+-------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;result&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1,&nbsp;or&nbsp;0&nbsp;(on&nbsp;failure)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;x&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;horizontal&nbsp;position<br>
+&nbsp;&nbsp;&nbsp;&nbsp;y&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;vertical&nbsp;position<br>
+&nbsp;&nbsp;&nbsp;&nbsp;w&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;width&nbsp;of&nbsp;form's&nbsp;area<br>
+&nbsp;&nbsp;&nbsp;&nbsp;h&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;height&nbsp;of&nbsp;form's&nbsp;area<br>
+&nbsp;<br>
+Examples<br>
+--------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;exval,&nbsp;x,&nbsp;y,&nbsp;w,&nbsp;h&nbsp;=&nbsp;<a href="#-fl_get_formbrowser_area">fl_get_formbrowser_area</a>(frmbrobj)<br>
+&nbsp;<br>
+API_diversion<br>
+----------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;API&nbsp;changed&nbsp;from&nbsp;XForms,&nbsp;upstream&nbsp;was<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="#-fl_get_formbrowser_area">fl_get_formbrowser_area</a>(pFlObject,&nbsp;x,&nbsp;y,&nbsp;w,&nbsp;h)<br>
+&nbsp;<br>
+Notes<br>
+-----<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
+ <dl><dt><a name="-fl_get_formbrowser_form"><strong>fl_get_formbrowser_form</strong></a>(pFlObject, seqnum)</dt><dd><tt><a href="#-fl_get_formbrowser_form">fl_get_formbrowser_form</a>(pFlObject,&nbsp;seqnum)<br>
+&nbsp;<br>
+Obtains&nbsp;the&nbsp;form&nbsp;handle&nbsp;from&nbsp;the&nbsp;sequence&nbsp;number.<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;pFlObject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;formbrowser&nbsp;object<br>
+&nbsp;&nbsp;&nbsp;&nbsp;seqnum&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;sequence&nbsp;number&nbsp;of&nbsp;the&nbsp;form<br>
+&nbsp;<br>
+Returns<br>
+-------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;pFlForm&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_FORM<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;form<br>
+&nbsp;<br>
+Examples<br>
+--------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;pform&nbsp;=&nbsp;<a href="#-fl_get_formbrowser_form">fl_get_formbrowser_form</a>(frmbrobj,&nbsp;2)<br>
+&nbsp;<br>
+Notes<br>
+-----<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
+ <dl><dt><a name="-fl_get_formbrowser_numforms"><strong>fl_get_formbrowser_numforms</strong></a>(pFlObject)</dt><dd><tt><a href="#-fl_get_formbrowser_numforms">fl_get_formbrowser_numforms</a>(pFlObject)<br>
+&nbsp;<br>
+Obtains&nbsp;the&nbsp;total&nbsp;number&nbsp;of&nbsp;forms&nbsp;in&nbsp;a&nbsp;formbrowser&nbsp;object.<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;pFlObject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;formbrowser&nbsp;object<br>
+&nbsp;<br>
+Returns<br>
+-------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;numforms&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;number&nbsp;of&nbsp;forms&nbsp;in&nbsp;formbrowser<br>
+&nbsp;<br>
+Examples<br>
+--------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;frmsnum&nbsp;=&nbsp;<a href="#-fl_get_formbrowser_numforms">fl_get_formbrowser_numforms</a>(frmbrobj)<br>
+&nbsp;<br>
+Notes<br>
+-----<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
+ <dl><dt><a name="-fl_get_formbrowser_topform"><strong>fl_get_formbrowser_topform</strong></a>(pFlObject)</dt><dd><tt><a href="#-fl_get_formbrowser_topform">fl_get_formbrowser_topform</a>(pFlObject)<br>
+&nbsp;<br>
+Obtains&nbsp;the&nbsp;form&nbsp;that&nbsp;is&nbsp;currently&nbsp;the&nbsp;first&nbsp;form&nbsp;in&nbsp;the&nbsp;formbrowser<br>
+visible&nbsp;to&nbsp;the&nbsp;user.<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;pFlObject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;formbrowser&nbsp;object<br>
+&nbsp;<br>
+Returns<br>
+-------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;pFlForm&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_FORM<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;first&nbsp;visible&nbsp;form<br>
+&nbsp;<br>
+Examples<br>
+--------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;pform&nbsp;=&nbsp;<a href="#-fl_get_formbrowser_topform">fl_get_formbrowser_topform</a>(frmbrobj)<br>
+&nbsp;<br>
+Notes<br>
+-----<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
+ <dl><dt><a name="-fl_get_formbrowser_xoffset"><strong>fl_get_formbrowser_xoffset</strong></a>(pFlObject)</dt><dd><tt><a href="#-fl_get_formbrowser_xoffset">fl_get_formbrowser_xoffset</a>(pFlObject)<br>
+&nbsp;<br>
+Obtains&nbsp;the&nbsp;current&nbsp;horizontal&nbsp;offset&nbsp;from&nbsp;left&nbsp;in&nbsp;pixel&nbsp;of&nbsp;a<br>
+formbrowser.<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;pFlObject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;formbrowser&nbsp;object<br>
+&nbsp;<br>
+Returns<br>
+-------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;offset&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;horizontal&nbsp;offset<br>
+&nbsp;<br>
+Examples<br>
+--------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;xoffset&nbsp;=&nbsp;<a href="#-fl_get_formbrowser_xoffset">fl_get_formbrowser_xoffset</a>(frmbrobj)<br>
+&nbsp;<br>
+Notes<br>
+-----<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
+ <dl><dt><a name="-fl_get_formbrowser_yoffset"><strong>fl_get_formbrowser_yoffset</strong></a>(pFlObject)</dt><dd><tt><a href="#-fl_get_formbrowser_yoffset">fl_get_formbrowser_yoffset</a>(pFlObject)<br>
+&nbsp;<br>
+Obtains&nbsp;the&nbsp;current&nbsp;vertical&nbsp;offset&nbsp;from&nbsp;top&nbsp;in&nbsp;pixel&nbsp;of&nbsp;a<br>
+formbrowser.<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;pFlObject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;formbrowser&nbsp;object<br>
+&nbsp;<br>
+Returns<br>
+-------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;offset&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;vertical&nbsp;offset<br>
+&nbsp;<br>
+Examples<br>
+--------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;yoffset&nbsp;=&nbsp;<a href="#-fl_get_formbrowser_yoffset">fl_get_formbrowser_yoffset</a>(frmbrobj)<br>
+&nbsp;<br>
+Notes<br>
+-----<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
+ <dl><dt><a name="-fl_insert_formbrowser"><strong>fl_insert_formbrowser</strong></a>(pFlObject, seqnum, pFlForm)</dt><dd><tt><a href="#-fl_insert_formbrowser">fl_insert_formbrowser</a>(pFlObject,&nbsp;seqnum,&nbsp;pFlForm)<br>
+&nbsp;<br>
+Inserts&nbsp;a&nbsp;form&nbsp;into&nbsp;a&nbsp;formbrowser&nbsp;at&nbsp;arbitrary&nbsp;location.<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;pFlObject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;formbrowser&nbsp;object<br>
+&nbsp;&nbsp;&nbsp;&nbsp;seqnum&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;the&nbsp;sequence&nbsp;number&nbsp;before&nbsp;which&nbsp;the&nbsp;new&nbsp;form&nbsp;form&nbsp;is&nbsp;to&nbsp;be<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;inserted&nbsp;into&nbsp;the&nbsp;formbrowser<br>
+&nbsp;&nbsp;&nbsp;&nbsp;pFlForm&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_FORM<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;new&nbsp;form&nbsp;to&nbsp;insert<br>
+&nbsp;<br>
+Returns<br>
+-------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;numforms&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;number&nbsp;of&nbsp;forms&nbsp;in&nbsp;the&nbsp;formbrowser,&nbsp;or&nbsp;-1&nbsp;(on&nbsp;failure)<br>
+&nbsp;<br>
+Examples<br>
+--------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;frmsnum&nbsp;=&nbsp;<a href="#-fl_insert_formbrowser">fl_insert_formbrowser</a>(frmbrobj,&nbsp;5,&nbsp;pform)<br>
+&nbsp;<br>
+Notes<br>
+-----<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
+ <dl><dt><a name="-fl_replace_formbrowser"><strong>fl_replace_formbrowser</strong></a>(pFlObject, seqnum, pFlForm)</dt><dd><tt><a href="#-fl_replace_formbrowser">fl_replace_formbrowser</a>(pFlObject,&nbsp;seqnum,&nbsp;pFlForm)<br>
+&nbsp;<br>
+Replaces&nbsp;a&nbsp;form&nbsp;in&nbsp;formbrowser&nbsp;specified&nbsp;by&nbsp;a&nbsp;sequence&nbsp;number<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;pFlObject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;formbrowser&nbsp;object<br>
+&nbsp;&nbsp;&nbsp;&nbsp;seqnum&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;sequence&nbsp;number&nbsp;of&nbsp;form&nbsp;to&nbsp;be&nbsp;replaced<br>
+&nbsp;&nbsp;&nbsp;&nbsp;pFlForm&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_FORM<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;form&nbsp;used&nbsp;as&nbsp;replacement<br>
+&nbsp;<br>
+Returns<br>
+-------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;pFlForm&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_FORM<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;form&nbsp;that&nbsp;has&nbsp;been&nbsp;replaced,&nbsp;or&nbsp;None&nbsp;(on&nbsp;failure)<br>
+&nbsp;<br>
+Examples<br>
+--------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;replfrm&nbsp;=&nbsp;<a href="#-fl_replace_formbrowser">fl_replace_formbrowser</a>(frmbrobj,&nbsp;4,&nbsp;newreplfrm)<br>
+&nbsp;<br>
+Notes<br>
+-----<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
+ <dl><dt><a name="-fl_set_formbrowser_hscrollbar"><strong>fl_set_formbrowser_hscrollbar</strong></a>(pFlObject, how)</dt><dd><tt><a href="#-fl_set_formbrowser_hscrollbar">fl_set_formbrowser_hscrollbar</a>(pFlObject,&nbsp;how)<br>
+&nbsp;<br>
+Controls&nbsp;the&nbsp;presence&nbsp;of&nbsp;horizontal&nbsp;scrollbar.&nbsp;By&nbsp;default,&nbsp;if&nbsp;the&nbsp;size<br>
+of&nbsp;the&nbsp;forms&nbsp;exceeds&nbsp;the&nbsp;size&nbsp;of&nbsp;the&nbsp;formbrowser,&nbsp;scrollbars&nbsp;are&nbsp;added<br>
+automatically.<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;pFlObject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;formbrowser&nbsp;object<br>
+&nbsp;&nbsp;&nbsp;&nbsp;how&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if&nbsp;scrollbar&nbsp;is&nbsp;added&nbsp;or&nbsp;not.&nbsp;Values&nbsp;(from&nbsp;xfdata&nbsp;module)&nbsp;FL_ON,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_OFF,&nbsp;FL_AUTO<br>
+&nbsp;<br>
+Examples<br>
+--------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;<a href="#-fl_set_formbrowser_hscrollbar">fl_set_formbrowser_hscrollbar</a>(frmbrobj,&nbsp;xfdata.FL_OFF)<br>
+&nbsp;<br>
+Notes<br>
+-----<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
+ <dl><dt><a name="-fl_set_formbrowser_scroll"><strong>fl_set_formbrowser_scroll</strong></a>(pFlObject, how)</dt><dd><tt><a href="#-fl_set_formbrowser_scroll">fl_set_formbrowser_scroll</a>(pFlObject,&nbsp;how)<br>
+&nbsp;<br>
+Changes&nbsp;the&nbsp;vertical&nbsp;scrollbar&nbsp;so&nbsp;each&nbsp;action&nbsp;of&nbsp;the&nbsp;scrollbar&nbsp;scrolls<br>
+to&nbsp;the&nbsp;next&nbsp;forms.&nbsp;By&nbsp;default&nbsp;it&nbsp;scrolls&nbsp;a&nbsp;fixed&nbsp;number&nbsp;of&nbsp;pixels.<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;pFlObject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;formbrowser&nbsp;object<br>
+&nbsp;&nbsp;&nbsp;&nbsp;how&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;How&nbsp;it&nbsp;scrolls.&nbsp;Values&nbsp;(from&nbsp;xfdata&nbsp;module)&nbsp;FL_SMOOTH_SCROLL<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(default)&nbsp;or&nbsp;FL_JUMP_SCROLL<br>
+&nbsp;<br>
+Examples<br>
+--------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;<a href="#-fl_set_formbrowser_scroll">fl_set_formbrowser_scroll</a>(frmbrobj,&nbsp;xfdata.FL_JUMP_SCROLL)<br>
+&nbsp;<br>
+Notes<br>
+-----<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
+ <dl><dt><a name="-fl_set_formbrowser_topform"><strong>fl_set_formbrowser_topform</strong></a>(pFlObject, pFlForm)</dt><dd><tt><a href="#-fl_set_formbrowser_topform">fl_set_formbrowser_topform</a>(pFlObject,&nbsp;pFlForm)<br>
+&nbsp;<br>
+Sets&nbsp;which&nbsp;form&nbsp;to&nbsp;show&nbsp;by&nbsp;setting&nbsp;the&nbsp;top&nbsp;form.<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;pFlObject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;formbrowser&nbsp;object<br>
+&nbsp;&nbsp;&nbsp;&nbsp;pFlForm&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_FORM<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;form<br>
+&nbsp;<br>
+Returns<br>
+-------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;seqnum&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;sequence&nbsp;number&nbsp;of&nbsp;the&nbsp;form<br>
+&nbsp;<br>
+Examples<br>
+--------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;frmid&nbsp;=&nbsp;<a href="#-fl_set_formbrowser_topform">fl_set_formbrowser_topform</a>(frmbrobj,&nbsp;pform)<br>
+&nbsp;<br>
+Notes<br>
+-----<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
+ <dl><dt><a name="-fl_set_formbrowser_topform_bynumber"><strong>fl_set_formbrowser_topform_bynumber</strong></a>(pFlObject, seqnum)</dt><dd><tt><a href="#-fl_set_formbrowser_topform_bynumber">fl_set_formbrowser_topform_bynumber</a>(pFlObject,&nbsp;seqnum)<br>
+&nbsp;<br>
+Sets&nbsp;which&nbsp;form&nbsp;to&nbsp;show&nbsp;by&nbsp;setting&nbsp;the&nbsp;top&nbsp;form,&nbsp;using&nbsp;a&nbsp;sequence<br>
+number.<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;pFlObject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;formbrowser&nbsp;object<br>
+&nbsp;&nbsp;&nbsp;&nbsp;seqnum&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;sequence&nbsp;number&nbsp;of&nbsp;form<br>
+&nbsp;<br>
+Returns<br>
+-------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;pFlForm&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_FORM<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;new&nbsp;top&nbsp;form<br>
+&nbsp;<br>
+Examples<br>
+--------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;pform&nbsp;=&nbsp;<a href="#-fl_set_formbrowser_topform_bynumber">fl_set_formbrowser_topform_bynumber</a>(frmbrobj,&nbsp;2)<br>
+&nbsp;<br>
+Notes<br>
+-----<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
+ <dl><dt><a name="-fl_set_formbrowser_vscrollbar"><strong>fl_set_formbrowser_vscrollbar</strong></a>(pFlObject, how)</dt><dd><tt><a href="#-fl_set_formbrowser_vscrollbar">fl_set_formbrowser_vscrollbar</a>(pFlObject,&nbsp;how)<br>
+&nbsp;<br>
+Controls&nbsp;the&nbsp;presence&nbsp;of&nbsp;vertical&nbsp;scrollbar.&nbsp;By&nbsp;default,&nbsp;if&nbsp;the&nbsp;size&nbsp;of<br>
+the&nbsp;forms&nbsp;exceeds&nbsp;the&nbsp;size&nbsp;of&nbsp;the&nbsp;formbrowser,&nbsp;scrollbars&nbsp;are&nbsp;added<br>
+automatically<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;pFlObject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;formbrowser&nbsp;object<br>
+&nbsp;&nbsp;&nbsp;&nbsp;how&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if&nbsp;scrollbar&nbsp;is&nbsp;added&nbsp;or&nbsp;not.&nbsp;Values&nbsp;(from&nbsp;xfdata&nbsp;module)&nbsp;FL_ON,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_OFF,&nbsp;FL_AUTO<br>
+&nbsp;<br>
+Examples<br>
+--------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;<a href="#-fl_set_formbrowser_vscrollbar">fl_set_formbrowser_vscrollbar</a>(frmbrobj,&nbsp;FL_OFF)<br>
+&nbsp;<br>
+Notes<br>
+-----<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
+ <dl><dt><a name="-fl_set_formbrowser_xoffset"><strong>fl_set_formbrowser_xoffset</strong></a>(pFlObject, offset)</dt><dd><tt><a href="#-fl_set_formbrowser_xoffset">fl_set_formbrowser_xoffset</a>(pFlObject,&nbsp;offset)<br>
+&nbsp;<br>
+Scrolls&nbsp;within&nbsp;a&nbsp;formbrowser&nbsp;in&nbsp;horizontal&nbsp;direction.<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;pFlObject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;formbrowser&nbsp;object<br>
+&nbsp;&nbsp;&nbsp;&nbsp;offset&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;positive&nbsp;number,&nbsp;measuring&nbsp;in&nbsp;pixels&nbsp;the&nbsp;offset&nbsp;from&nbsp;the&nbsp;natural<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;position&nbsp;from&nbsp;the&nbsp;left.&nbsp;0&nbsp;indicates&nbsp;the&nbsp;natural&nbsp;position&nbsp;of&nbsp;the<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;content&nbsp;within&nbsp;the&nbsp;formbrowser.<br>
+&nbsp;<br>
+Returns<br>
+-------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;num.&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*todo*<br>
+&nbsp;<br>
+Examples<br>
+--------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;num&nbsp;=&nbsp;<a href="#-fl_set_formbrowser_xoffset">fl_set_formbrowser_xoffset</a>(frmbrobj,&nbsp;15)<br>
+&nbsp;<br>
+Notes<br>
+-----<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
+ <dl><dt><a name="-fl_set_formbrowser_yoffset"><strong>fl_set_formbrowser_yoffset</strong></a>(pFlObject, offset)</dt><dd><tt><a href="#-fl_set_formbrowser_yoffset">fl_set_formbrowser_yoffset</a>(pFlObject,&nbsp;offset)<br>
+&nbsp;<br>
+Scrolls&nbsp;within&nbsp;a&nbsp;formbrowser&nbsp;in&nbsp;vertical&nbsp;direction.<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;pFlObject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;formbrowser&nbsp;object<br>
+&nbsp;&nbsp;&nbsp;&nbsp;offset&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;positive&nbsp;number,&nbsp;measuring&nbsp;in&nbsp;pixels&nbsp;the&nbsp;offset&nbsp;from&nbsp;the&nbsp;natural<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;position&nbsp;from&nbsp;the&nbsp;top.&nbsp;0&nbsp;indicates&nbsp;the&nbsp;natural&nbsp;position&nbsp;of&nbsp;the<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;content&nbsp;within&nbsp;the&nbsp;formbrowser<br>
+&nbsp;<br>
+Returns<br>
+-------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;num.&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*todo*<br>
+&nbsp;<br>
+Examples<br>
+--------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;num&nbsp;=&nbsp;<a href="#-fl_set_formbrowser_yoffset">fl_set_formbrowser_yoffset</a>(frmbrobj,&nbsp;15)<br>
+&nbsp;<br>
+Notes<br>
+-----<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
+</td></tr></table>
+</body></html>

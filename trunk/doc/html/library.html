@@ -1,0 +1,552 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html><head><title>Python: module library</title>
+</head><body bgcolor="#f0f0f8">
+
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="heading">
+<tr bgcolor="#7799ee">
+<td valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial">&nbsp;<br><big><big><strong>library</strong></big></big></font></td
+><td align=right valign=bottom
+><font color="#ffffff" face="helvetica, arial"><a href=".">index</a><br>     <a href="index.html">list</a></font></td></tr></table>
+    <p><tt>Convenience/internal&nbsp;functions&nbsp;to&nbsp;deal&nbsp;with&nbsp;xforms-python&nbsp;wrapper's<br>
+functions.<br>
+&nbsp;<br>
+Copyright&nbsp;(C)&nbsp;2009,&nbsp;2010&nbsp;&nbsp;Luca&nbsp;Lazzaroni&nbsp;"LukenShiro"<br>
+e-mail:&nbsp;&lt;lukenshiro@ngi.it&gt;<br>
+&nbsp;<br>
+This&nbsp;program&nbsp;is&nbsp;free&nbsp;software:&nbsp;you&nbsp;can&nbsp;redistribute&nbsp;it&nbsp;and/or&nbsp;modify<br>
+it&nbsp;under&nbsp;the&nbsp;terms&nbsp;of&nbsp;the&nbsp;GNU&nbsp;Lesser&nbsp;General&nbsp;Public&nbsp;License&nbsp;as<br>
+published&nbsp;by&nbsp;the&nbsp;Free&nbsp;Software&nbsp;Foundation,&nbsp;version&nbsp;2.1&nbsp;of&nbsp;the&nbsp;License.<br>
+&nbsp;<br>
+This&nbsp;program&nbsp;is&nbsp;distributed&nbsp;in&nbsp;the&nbsp;hope&nbsp;that&nbsp;it&nbsp;will&nbsp;be&nbsp;useful,<br>
+but&nbsp;WITHOUT&nbsp;ANY&nbsp;WARRANTY;&nbsp;without&nbsp;even&nbsp;the&nbsp;implied&nbsp;warranty&nbsp;of<br>
+MERCHANTABILITY&nbsp;or&nbsp;FITNESS&nbsp;FOR&nbsp;A&nbsp;PARTICULAR&nbsp;PURPOSE.&nbsp;See&nbsp;the<br>
+GNU&nbsp;Lesser&nbsp;General&nbsp;Public&nbsp;License&nbsp;for&nbsp;more&nbsp;details.<br>
+&nbsp;<br>
+You&nbsp;should&nbsp;have&nbsp;received&nbsp;a&nbsp;copy&nbsp;of&nbsp;the&nbsp;GNU&nbsp;LGPL&nbsp;along&nbsp;with&nbsp;this<br>
+program.&nbsp;If&nbsp;not,&nbsp;see&nbsp;&lt;<a href="http://www.gnu.org/licenses/">http://www.gnu.org/licenses/</a>&gt;.<br>
+&nbsp;<br>
+See&nbsp;CREDITS&nbsp;file&nbsp;to&nbsp;read&nbsp;acknowledgements&nbsp;and&nbsp;thanks&nbsp;to&nbsp;XForms,<br>
+ctypes&nbsp;and&nbsp;other&nbsp;developers.</tt></p>
+<p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#aa55cc">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Modules</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#aa55cc"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><table width="100%" summary="list"><tr><td width="25%" valign=top><a href="ctypes.html">ctypes</a><br>
+<a href="ctypes.util.html">ctypes.util</a><br>
+</td><td width="25%" valign=top><a href="xformslib.vers.html">xformslib.vers</a><br>
+<a href="warnings.html">warnings</a><br>
+</td><td width="25%" valign=top><a href="xformslib.xfdata.html">xformslib.xfdata</a><br>
+</td><td width="25%" valign=top></td></tr></table></td></tr></table><p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ee77aa">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Classes</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#ee77aa"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><dl>
+<dt><font face="helvetica, arial"><a href="exceptions.html#OSError">exceptions.OSError</a>(<a href="exceptions.html#EnvironmentError">exceptions.EnvironmentError</a>)
+</font></dt><dd>
+<dl>
+<dt><font face="helvetica, arial"><a href="library.html#XFormsInitError">XFormsInitError</a>
+</font></dt><dt><font face="helvetica, arial"><a href="library.html#XFormsLoadError">XFormsLoadError</a>
+</font></dt></dl>
+</dd>
+<dt><font face="helvetica, arial"><a href="exceptions.html#TypeError">exceptions.TypeError</a>(<a href="exceptions.html#StandardError">exceptions.StandardError</a>)
+</font></dt><dd>
+<dl>
+<dt><font face="helvetica, arial"><a href="library.html#XFormsTypeError">XFormsTypeError</a>
+</font></dt></dl>
+</dd>
+<dt><font face="helvetica, arial"><a href="exceptions.html#ValueError">exceptions.ValueError</a>(<a href="exceptions.html#StandardError">exceptions.StandardError</a>)
+</font></dt><dd>
+<dl>
+<dt><font face="helvetica, arial"><a href="library.html#XFormsFuncNotSupported">XFormsFuncNotSupported</a>
+</font></dt><dt><font face="helvetica, arial"><a href="library.html#XFormsValueError">XFormsValueError</a>
+</font></dt></dl>
+</dd>
+<dt><font face="helvetica, arial"><a href="exceptions.html#Warning">exceptions.Warning</a>(<a href="exceptions.html#Exception">exceptions.Exception</a>)
+</font></dt><dd>
+<dl>
+<dt><font face="helvetica, arial"><a href="library.html#XFormsWarning">XFormsWarning</a>
+</font></dt></dl>
+</dd>
+</dl>
+ <p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ffc8d8">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#000000" face="helvetica, arial"><a name="XFormsFuncNotSupported">class <strong>XFormsFuncNotSupported</strong></a>(<a href="exceptions.html#ValueError">exceptions.ValueError</a>)</font></td></tr>
+    
+<tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
+<td colspan=2><tt>Fatal&nbsp;error&nbsp;for&nbsp;XForms&nbsp;functions&nbsp;not&nbsp;supported&nbsp;or&nbsp;not&nbsp;yet<br>
+stabilized&nbsp;in&nbsp;xforms-python.<br>&nbsp;</tt></td></tr>
+<tr><td>&nbsp;</td>
+<td width="100%"><dl><dt>Method resolution order:</dt>
+<dd><a href="library.html#XFormsFuncNotSupported">XFormsFuncNotSupported</a></dd>
+<dd><a href="exceptions.html#ValueError">exceptions.ValueError</a></dd>
+<dd><a href="exceptions.html#StandardError">exceptions.StandardError</a></dd>
+<dd><a href="exceptions.html#Exception">exceptions.Exception</a></dd>
+<dd><a href="exceptions.html#BaseException">exceptions.BaseException</a></dd>
+<dd><a href="__builtin__.html#object">__builtin__.object</a></dd>
+</dl>
+<hr>
+Data descriptors defined here:<br>
+<dl><dt><strong>__weakref__</strong></dt>
+<dd><tt>list&nbsp;of&nbsp;weak&nbsp;references&nbsp;to&nbsp;the&nbsp;object&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+<hr>
+Methods inherited from <a href="exceptions.html#ValueError">exceptions.ValueError</a>:<br>
+<dl><dt><a name="XFormsFuncNotSupported-__init__"><strong>__init__</strong></a>(...)</dt><dd><tt>x.<a href="#XFormsFuncNotSupported-__init__">__init__</a>(...)&nbsp;initializes&nbsp;x;&nbsp;see&nbsp;x.__class__.__doc__&nbsp;for&nbsp;signature</tt></dd></dl>
+
+<hr>
+Data and other attributes inherited from <a href="exceptions.html#ValueError">exceptions.ValueError</a>:<br>
+<dl><dt><strong>__new__</strong> = &lt;built-in method __new__ of type object&gt;<dd><tt>T.<a href="#XFormsFuncNotSupported-__new__">__new__</a>(S,&nbsp;...)&nbsp;-&gt;&nbsp;a&nbsp;new&nbsp;object&nbsp;with&nbsp;type&nbsp;S,&nbsp;a&nbsp;subtype&nbsp;of&nbsp;T</tt></dl>
+
+<hr>
+Methods inherited from <a href="exceptions.html#BaseException">exceptions.BaseException</a>:<br>
+<dl><dt><a name="XFormsFuncNotSupported-__delattr__"><strong>__delattr__</strong></a>(...)</dt><dd><tt>x.<a href="#XFormsFuncNotSupported-__delattr__">__delattr__</a>('name')&nbsp;&lt;==&gt;&nbsp;del&nbsp;x.name</tt></dd></dl>
+
+<dl><dt><a name="XFormsFuncNotSupported-__getattribute__"><strong>__getattribute__</strong></a>(...)</dt><dd><tt>x.<a href="#XFormsFuncNotSupported-__getattribute__">__getattribute__</a>('name')&nbsp;&lt;==&gt;&nbsp;x.name</tt></dd></dl>
+
+<dl><dt><a name="XFormsFuncNotSupported-__getitem__"><strong>__getitem__</strong></a>(...)</dt><dd><tt>x.<a href="#XFormsFuncNotSupported-__getitem__">__getitem__</a>(y)&nbsp;&lt;==&gt;&nbsp;x[y]</tt></dd></dl>
+
+<dl><dt><a name="XFormsFuncNotSupported-__getslice__"><strong>__getslice__</strong></a>(...)</dt><dd><tt>x.<a href="#XFormsFuncNotSupported-__getslice__">__getslice__</a>(i,&nbsp;j)&nbsp;&lt;==&gt;&nbsp;x[i:j]<br>
+&nbsp;<br>
+Use&nbsp;of&nbsp;negative&nbsp;indices&nbsp;is&nbsp;not&nbsp;supported.</tt></dd></dl>
+
+<dl><dt><a name="XFormsFuncNotSupported-__reduce__"><strong>__reduce__</strong></a>(...)</dt></dl>
+
+<dl><dt><a name="XFormsFuncNotSupported-__repr__"><strong>__repr__</strong></a>(...)</dt><dd><tt>x.<a href="#XFormsFuncNotSupported-__repr__">__repr__</a>()&nbsp;&lt;==&gt;&nbsp;repr(x)</tt></dd></dl>
+
+<dl><dt><a name="XFormsFuncNotSupported-__setattr__"><strong>__setattr__</strong></a>(...)</dt><dd><tt>x.<a href="#XFormsFuncNotSupported-__setattr__">__setattr__</a>('name',&nbsp;value)&nbsp;&lt;==&gt;&nbsp;x.name&nbsp;=&nbsp;value</tt></dd></dl>
+
+<dl><dt><a name="XFormsFuncNotSupported-__setstate__"><strong>__setstate__</strong></a>(...)</dt></dl>
+
+<dl><dt><a name="XFormsFuncNotSupported-__str__"><strong>__str__</strong></a>(...)</dt><dd><tt>x.<a href="#XFormsFuncNotSupported-__str__">__str__</a>()&nbsp;&lt;==&gt;&nbsp;str(x)</tt></dd></dl>
+
+<dl><dt><a name="XFormsFuncNotSupported-__unicode__"><strong>__unicode__</strong></a>(...)</dt></dl>
+
+<hr>
+Data descriptors inherited from <a href="exceptions.html#BaseException">exceptions.BaseException</a>:<br>
+<dl><dt><strong>__dict__</strong></dt>
+</dl>
+<dl><dt><strong>args</strong></dt>
+</dl>
+<dl><dt><strong>message</strong></dt>
+</dl>
+</td></tr></table> <p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ffc8d8">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#000000" face="helvetica, arial"><a name="XFormsInitError">class <strong>XFormsInitError</strong></a>(<a href="exceptions.html#OSError">exceptions.OSError</a>)</font></td></tr>
+    
+<tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
+<td colspan=2><tt>Fatal&nbsp;error&nbsp;in&nbsp;initializing&nbsp;library,&nbsp;not&nbsp;using&nbsp;fl_initialize()<br>
+before&nbsp;functions&nbsp;who&nbsp;require&nbsp;it.<br>&nbsp;</tt></td></tr>
+<tr><td>&nbsp;</td>
+<td width="100%"><dl><dt>Method resolution order:</dt>
+<dd><a href="library.html#XFormsInitError">XFormsInitError</a></dd>
+<dd><a href="exceptions.html#OSError">exceptions.OSError</a></dd>
+<dd><a href="exceptions.html#EnvironmentError">exceptions.EnvironmentError</a></dd>
+<dd><a href="exceptions.html#StandardError">exceptions.StandardError</a></dd>
+<dd><a href="exceptions.html#Exception">exceptions.Exception</a></dd>
+<dd><a href="exceptions.html#BaseException">exceptions.BaseException</a></dd>
+<dd><a href="__builtin__.html#object">__builtin__.object</a></dd>
+</dl>
+<hr>
+Data descriptors defined here:<br>
+<dl><dt><strong>__weakref__</strong></dt>
+<dd><tt>list&nbsp;of&nbsp;weak&nbsp;references&nbsp;to&nbsp;the&nbsp;object&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+<hr>
+Methods inherited from <a href="exceptions.html#OSError">exceptions.OSError</a>:<br>
+<dl><dt><a name="XFormsInitError-__init__"><strong>__init__</strong></a>(...)</dt><dd><tt>x.<a href="#XFormsInitError-__init__">__init__</a>(...)&nbsp;initializes&nbsp;x;&nbsp;see&nbsp;x.__class__.__doc__&nbsp;for&nbsp;signature</tt></dd></dl>
+
+<hr>
+Data and other attributes inherited from <a href="exceptions.html#OSError">exceptions.OSError</a>:<br>
+<dl><dt><strong>__new__</strong> = &lt;built-in method __new__ of type object&gt;<dd><tt>T.<a href="#XFormsInitError-__new__">__new__</a>(S,&nbsp;...)&nbsp;-&gt;&nbsp;a&nbsp;new&nbsp;object&nbsp;with&nbsp;type&nbsp;S,&nbsp;a&nbsp;subtype&nbsp;of&nbsp;T</tt></dl>
+
+<hr>
+Methods inherited from <a href="exceptions.html#EnvironmentError">exceptions.EnvironmentError</a>:<br>
+<dl><dt><a name="XFormsInitError-__reduce__"><strong>__reduce__</strong></a>(...)</dt></dl>
+
+<dl><dt><a name="XFormsInitError-__str__"><strong>__str__</strong></a>(...)</dt><dd><tt>x.<a href="#XFormsInitError-__str__">__str__</a>()&nbsp;&lt;==&gt;&nbsp;str(x)</tt></dd></dl>
+
+<hr>
+Data descriptors inherited from <a href="exceptions.html#EnvironmentError">exceptions.EnvironmentError</a>:<br>
+<dl><dt><strong>errno</strong></dt>
+<dd><tt>exception&nbsp;errno</tt></dd>
+</dl>
+<dl><dt><strong>filename</strong></dt>
+<dd><tt>exception&nbsp;filename</tt></dd>
+</dl>
+<dl><dt><strong>strerror</strong></dt>
+<dd><tt>exception&nbsp;strerror</tt></dd>
+</dl>
+<hr>
+Methods inherited from <a href="exceptions.html#BaseException">exceptions.BaseException</a>:<br>
+<dl><dt><a name="XFormsInitError-__delattr__"><strong>__delattr__</strong></a>(...)</dt><dd><tt>x.<a href="#XFormsInitError-__delattr__">__delattr__</a>('name')&nbsp;&lt;==&gt;&nbsp;del&nbsp;x.name</tt></dd></dl>
+
+<dl><dt><a name="XFormsInitError-__getattribute__"><strong>__getattribute__</strong></a>(...)</dt><dd><tt>x.<a href="#XFormsInitError-__getattribute__">__getattribute__</a>('name')&nbsp;&lt;==&gt;&nbsp;x.name</tt></dd></dl>
+
+<dl><dt><a name="XFormsInitError-__getitem__"><strong>__getitem__</strong></a>(...)</dt><dd><tt>x.<a href="#XFormsInitError-__getitem__">__getitem__</a>(y)&nbsp;&lt;==&gt;&nbsp;x[y]</tt></dd></dl>
+
+<dl><dt><a name="XFormsInitError-__getslice__"><strong>__getslice__</strong></a>(...)</dt><dd><tt>x.<a href="#XFormsInitError-__getslice__">__getslice__</a>(i,&nbsp;j)&nbsp;&lt;==&gt;&nbsp;x[i:j]<br>
+&nbsp;<br>
+Use&nbsp;of&nbsp;negative&nbsp;indices&nbsp;is&nbsp;not&nbsp;supported.</tt></dd></dl>
+
+<dl><dt><a name="XFormsInitError-__repr__"><strong>__repr__</strong></a>(...)</dt><dd><tt>x.<a href="#XFormsInitError-__repr__">__repr__</a>()&nbsp;&lt;==&gt;&nbsp;repr(x)</tt></dd></dl>
+
+<dl><dt><a name="XFormsInitError-__setattr__"><strong>__setattr__</strong></a>(...)</dt><dd><tt>x.<a href="#XFormsInitError-__setattr__">__setattr__</a>('name',&nbsp;value)&nbsp;&lt;==&gt;&nbsp;x.name&nbsp;=&nbsp;value</tt></dd></dl>
+
+<dl><dt><a name="XFormsInitError-__setstate__"><strong>__setstate__</strong></a>(...)</dt></dl>
+
+<dl><dt><a name="XFormsInitError-__unicode__"><strong>__unicode__</strong></a>(...)</dt></dl>
+
+<hr>
+Data descriptors inherited from <a href="exceptions.html#BaseException">exceptions.BaseException</a>:<br>
+<dl><dt><strong>__dict__</strong></dt>
+</dl>
+<dl><dt><strong>args</strong></dt>
+</dl>
+<dl><dt><strong>message</strong></dt>
+</dl>
+</td></tr></table> <p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ffc8d8">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#000000" face="helvetica, arial"><a name="XFormsLoadError">class <strong>XFormsLoadError</strong></a>(<a href="exceptions.html#OSError">exceptions.OSError</a>)</font></td></tr>
+    
+<tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
+<td colspan=2><tt>Fatal&nbsp;error&nbsp;in&nbsp;loading&nbsp;shared&nbsp;object&nbsp;library<br>&nbsp;</tt></td></tr>
+<tr><td>&nbsp;</td>
+<td width="100%"><dl><dt>Method resolution order:</dt>
+<dd><a href="library.html#XFormsLoadError">XFormsLoadError</a></dd>
+<dd><a href="exceptions.html#OSError">exceptions.OSError</a></dd>
+<dd><a href="exceptions.html#EnvironmentError">exceptions.EnvironmentError</a></dd>
+<dd><a href="exceptions.html#StandardError">exceptions.StandardError</a></dd>
+<dd><a href="exceptions.html#Exception">exceptions.Exception</a></dd>
+<dd><a href="exceptions.html#BaseException">exceptions.BaseException</a></dd>
+<dd><a href="__builtin__.html#object">__builtin__.object</a></dd>
+</dl>
+<hr>
+Data descriptors defined here:<br>
+<dl><dt><strong>__weakref__</strong></dt>
+<dd><tt>list&nbsp;of&nbsp;weak&nbsp;references&nbsp;to&nbsp;the&nbsp;object&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+<hr>
+Methods inherited from <a href="exceptions.html#OSError">exceptions.OSError</a>:<br>
+<dl><dt><a name="XFormsLoadError-__init__"><strong>__init__</strong></a>(...)</dt><dd><tt>x.<a href="#XFormsLoadError-__init__">__init__</a>(...)&nbsp;initializes&nbsp;x;&nbsp;see&nbsp;x.__class__.__doc__&nbsp;for&nbsp;signature</tt></dd></dl>
+
+<hr>
+Data and other attributes inherited from <a href="exceptions.html#OSError">exceptions.OSError</a>:<br>
+<dl><dt><strong>__new__</strong> = &lt;built-in method __new__ of type object&gt;<dd><tt>T.<a href="#XFormsLoadError-__new__">__new__</a>(S,&nbsp;...)&nbsp;-&gt;&nbsp;a&nbsp;new&nbsp;object&nbsp;with&nbsp;type&nbsp;S,&nbsp;a&nbsp;subtype&nbsp;of&nbsp;T</tt></dl>
+
+<hr>
+Methods inherited from <a href="exceptions.html#EnvironmentError">exceptions.EnvironmentError</a>:<br>
+<dl><dt><a name="XFormsLoadError-__reduce__"><strong>__reduce__</strong></a>(...)</dt></dl>
+
+<dl><dt><a name="XFormsLoadError-__str__"><strong>__str__</strong></a>(...)</dt><dd><tt>x.<a href="#XFormsLoadError-__str__">__str__</a>()&nbsp;&lt;==&gt;&nbsp;str(x)</tt></dd></dl>
+
+<hr>
+Data descriptors inherited from <a href="exceptions.html#EnvironmentError">exceptions.EnvironmentError</a>:<br>
+<dl><dt><strong>errno</strong></dt>
+<dd><tt>exception&nbsp;errno</tt></dd>
+</dl>
+<dl><dt><strong>filename</strong></dt>
+<dd><tt>exception&nbsp;filename</tt></dd>
+</dl>
+<dl><dt><strong>strerror</strong></dt>
+<dd><tt>exception&nbsp;strerror</tt></dd>
+</dl>
+<hr>
+Methods inherited from <a href="exceptions.html#BaseException">exceptions.BaseException</a>:<br>
+<dl><dt><a name="XFormsLoadError-__delattr__"><strong>__delattr__</strong></a>(...)</dt><dd><tt>x.<a href="#XFormsLoadError-__delattr__">__delattr__</a>('name')&nbsp;&lt;==&gt;&nbsp;del&nbsp;x.name</tt></dd></dl>
+
+<dl><dt><a name="XFormsLoadError-__getattribute__"><strong>__getattribute__</strong></a>(...)</dt><dd><tt>x.<a href="#XFormsLoadError-__getattribute__">__getattribute__</a>('name')&nbsp;&lt;==&gt;&nbsp;x.name</tt></dd></dl>
+
+<dl><dt><a name="XFormsLoadError-__getitem__"><strong>__getitem__</strong></a>(...)</dt><dd><tt>x.<a href="#XFormsLoadError-__getitem__">__getitem__</a>(y)&nbsp;&lt;==&gt;&nbsp;x[y]</tt></dd></dl>
+
+<dl><dt><a name="XFormsLoadError-__getslice__"><strong>__getslice__</strong></a>(...)</dt><dd><tt>x.<a href="#XFormsLoadError-__getslice__">__getslice__</a>(i,&nbsp;j)&nbsp;&lt;==&gt;&nbsp;x[i:j]<br>
+&nbsp;<br>
+Use&nbsp;of&nbsp;negative&nbsp;indices&nbsp;is&nbsp;not&nbsp;supported.</tt></dd></dl>
+
+<dl><dt><a name="XFormsLoadError-__repr__"><strong>__repr__</strong></a>(...)</dt><dd><tt>x.<a href="#XFormsLoadError-__repr__">__repr__</a>()&nbsp;&lt;==&gt;&nbsp;repr(x)</tt></dd></dl>
+
+<dl><dt><a name="XFormsLoadError-__setattr__"><strong>__setattr__</strong></a>(...)</dt><dd><tt>x.<a href="#XFormsLoadError-__setattr__">__setattr__</a>('name',&nbsp;value)&nbsp;&lt;==&gt;&nbsp;x.name&nbsp;=&nbsp;value</tt></dd></dl>
+
+<dl><dt><a name="XFormsLoadError-__setstate__"><strong>__setstate__</strong></a>(...)</dt></dl>
+
+<dl><dt><a name="XFormsLoadError-__unicode__"><strong>__unicode__</strong></a>(...)</dt></dl>
+
+<hr>
+Data descriptors inherited from <a href="exceptions.html#BaseException">exceptions.BaseException</a>:<br>
+<dl><dt><strong>__dict__</strong></dt>
+</dl>
+<dl><dt><strong>args</strong></dt>
+</dl>
+<dl><dt><strong>message</strong></dt>
+</dl>
+</td></tr></table> <p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ffc8d8">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#000000" face="helvetica, arial"><a name="XFormsTypeError">class <strong>XFormsTypeError</strong></a>(<a href="exceptions.html#TypeError">exceptions.TypeError</a>)</font></td></tr>
+    
+<tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
+<td colspan=2><tt>Fatal&nbsp;generic&nbsp;error&nbsp;for&nbsp;type&nbsp;mismatch<br>&nbsp;</tt></td></tr>
+<tr><td>&nbsp;</td>
+<td width="100%"><dl><dt>Method resolution order:</dt>
+<dd><a href="library.html#XFormsTypeError">XFormsTypeError</a></dd>
+<dd><a href="exceptions.html#TypeError">exceptions.TypeError</a></dd>
+<dd><a href="exceptions.html#StandardError">exceptions.StandardError</a></dd>
+<dd><a href="exceptions.html#Exception">exceptions.Exception</a></dd>
+<dd><a href="exceptions.html#BaseException">exceptions.BaseException</a></dd>
+<dd><a href="__builtin__.html#object">__builtin__.object</a></dd>
+</dl>
+<hr>
+Data descriptors defined here:<br>
+<dl><dt><strong>__weakref__</strong></dt>
+<dd><tt>list&nbsp;of&nbsp;weak&nbsp;references&nbsp;to&nbsp;the&nbsp;object&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+<hr>
+Methods inherited from <a href="exceptions.html#TypeError">exceptions.TypeError</a>:<br>
+<dl><dt><a name="XFormsTypeError-__init__"><strong>__init__</strong></a>(...)</dt><dd><tt>x.<a href="#XFormsTypeError-__init__">__init__</a>(...)&nbsp;initializes&nbsp;x;&nbsp;see&nbsp;x.__class__.__doc__&nbsp;for&nbsp;signature</tt></dd></dl>
+
+<hr>
+Data and other attributes inherited from <a href="exceptions.html#TypeError">exceptions.TypeError</a>:<br>
+<dl><dt><strong>__new__</strong> = &lt;built-in method __new__ of type object&gt;<dd><tt>T.<a href="#XFormsTypeError-__new__">__new__</a>(S,&nbsp;...)&nbsp;-&gt;&nbsp;a&nbsp;new&nbsp;object&nbsp;with&nbsp;type&nbsp;S,&nbsp;a&nbsp;subtype&nbsp;of&nbsp;T</tt></dl>
+
+<hr>
+Methods inherited from <a href="exceptions.html#BaseException">exceptions.BaseException</a>:<br>
+<dl><dt><a name="XFormsTypeError-__delattr__"><strong>__delattr__</strong></a>(...)</dt><dd><tt>x.<a href="#XFormsTypeError-__delattr__">__delattr__</a>('name')&nbsp;&lt;==&gt;&nbsp;del&nbsp;x.name</tt></dd></dl>
+
+<dl><dt><a name="XFormsTypeError-__getattribute__"><strong>__getattribute__</strong></a>(...)</dt><dd><tt>x.<a href="#XFormsTypeError-__getattribute__">__getattribute__</a>('name')&nbsp;&lt;==&gt;&nbsp;x.name</tt></dd></dl>
+
+<dl><dt><a name="XFormsTypeError-__getitem__"><strong>__getitem__</strong></a>(...)</dt><dd><tt>x.<a href="#XFormsTypeError-__getitem__">__getitem__</a>(y)&nbsp;&lt;==&gt;&nbsp;x[y]</tt></dd></dl>
+
+<dl><dt><a name="XFormsTypeError-__getslice__"><strong>__getslice__</strong></a>(...)</dt><dd><tt>x.<a href="#XFormsTypeError-__getslice__">__getslice__</a>(i,&nbsp;j)&nbsp;&lt;==&gt;&nbsp;x[i:j]<br>
+&nbsp;<br>
+Use&nbsp;of&nbsp;negative&nbsp;indices&nbsp;is&nbsp;not&nbsp;supported.</tt></dd></dl>
+
+<dl><dt><a name="XFormsTypeError-__reduce__"><strong>__reduce__</strong></a>(...)</dt></dl>
+
+<dl><dt><a name="XFormsTypeError-__repr__"><strong>__repr__</strong></a>(...)</dt><dd><tt>x.<a href="#XFormsTypeError-__repr__">__repr__</a>()&nbsp;&lt;==&gt;&nbsp;repr(x)</tt></dd></dl>
+
+<dl><dt><a name="XFormsTypeError-__setattr__"><strong>__setattr__</strong></a>(...)</dt><dd><tt>x.<a href="#XFormsTypeError-__setattr__">__setattr__</a>('name',&nbsp;value)&nbsp;&lt;==&gt;&nbsp;x.name&nbsp;=&nbsp;value</tt></dd></dl>
+
+<dl><dt><a name="XFormsTypeError-__setstate__"><strong>__setstate__</strong></a>(...)</dt></dl>
+
+<dl><dt><a name="XFormsTypeError-__str__"><strong>__str__</strong></a>(...)</dt><dd><tt>x.<a href="#XFormsTypeError-__str__">__str__</a>()&nbsp;&lt;==&gt;&nbsp;str(x)</tt></dd></dl>
+
+<dl><dt><a name="XFormsTypeError-__unicode__"><strong>__unicode__</strong></a>(...)</dt></dl>
+
+<hr>
+Data descriptors inherited from <a href="exceptions.html#BaseException">exceptions.BaseException</a>:<br>
+<dl><dt><strong>__dict__</strong></dt>
+</dl>
+<dl><dt><strong>args</strong></dt>
+</dl>
+<dl><dt><strong>message</strong></dt>
+</dl>
+</td></tr></table> <p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ffc8d8">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#000000" face="helvetica, arial"><a name="XFormsValueError">class <strong>XFormsValueError</strong></a>(<a href="exceptions.html#ValueError">exceptions.ValueError</a>)</font></td></tr>
+    
+<tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
+<td colspan=2><tt>Fatal&nbsp;generic&nbsp;error&nbsp;for&nbsp;unexpected&nbsp;value<br>&nbsp;</tt></td></tr>
+<tr><td>&nbsp;</td>
+<td width="100%"><dl><dt>Method resolution order:</dt>
+<dd><a href="library.html#XFormsValueError">XFormsValueError</a></dd>
+<dd><a href="exceptions.html#ValueError">exceptions.ValueError</a></dd>
+<dd><a href="exceptions.html#StandardError">exceptions.StandardError</a></dd>
+<dd><a href="exceptions.html#Exception">exceptions.Exception</a></dd>
+<dd><a href="exceptions.html#BaseException">exceptions.BaseException</a></dd>
+<dd><a href="__builtin__.html#object">__builtin__.object</a></dd>
+</dl>
+<hr>
+Data descriptors defined here:<br>
+<dl><dt><strong>__weakref__</strong></dt>
+<dd><tt>list&nbsp;of&nbsp;weak&nbsp;references&nbsp;to&nbsp;the&nbsp;object&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+<hr>
+Methods inherited from <a href="exceptions.html#ValueError">exceptions.ValueError</a>:<br>
+<dl><dt><a name="XFormsValueError-__init__"><strong>__init__</strong></a>(...)</dt><dd><tt>x.<a href="#XFormsValueError-__init__">__init__</a>(...)&nbsp;initializes&nbsp;x;&nbsp;see&nbsp;x.__class__.__doc__&nbsp;for&nbsp;signature</tt></dd></dl>
+
+<hr>
+Data and other attributes inherited from <a href="exceptions.html#ValueError">exceptions.ValueError</a>:<br>
+<dl><dt><strong>__new__</strong> = &lt;built-in method __new__ of type object&gt;<dd><tt>T.<a href="#XFormsValueError-__new__">__new__</a>(S,&nbsp;...)&nbsp;-&gt;&nbsp;a&nbsp;new&nbsp;object&nbsp;with&nbsp;type&nbsp;S,&nbsp;a&nbsp;subtype&nbsp;of&nbsp;T</tt></dl>
+
+<hr>
+Methods inherited from <a href="exceptions.html#BaseException">exceptions.BaseException</a>:<br>
+<dl><dt><a name="XFormsValueError-__delattr__"><strong>__delattr__</strong></a>(...)</dt><dd><tt>x.<a href="#XFormsValueError-__delattr__">__delattr__</a>('name')&nbsp;&lt;==&gt;&nbsp;del&nbsp;x.name</tt></dd></dl>
+
+<dl><dt><a name="XFormsValueError-__getattribute__"><strong>__getattribute__</strong></a>(...)</dt><dd><tt>x.<a href="#XFormsValueError-__getattribute__">__getattribute__</a>('name')&nbsp;&lt;==&gt;&nbsp;x.name</tt></dd></dl>
+
+<dl><dt><a name="XFormsValueError-__getitem__"><strong>__getitem__</strong></a>(...)</dt><dd><tt>x.<a href="#XFormsValueError-__getitem__">__getitem__</a>(y)&nbsp;&lt;==&gt;&nbsp;x[y]</tt></dd></dl>
+
+<dl><dt><a name="XFormsValueError-__getslice__"><strong>__getslice__</strong></a>(...)</dt><dd><tt>x.<a href="#XFormsValueError-__getslice__">__getslice__</a>(i,&nbsp;j)&nbsp;&lt;==&gt;&nbsp;x[i:j]<br>
+&nbsp;<br>
+Use&nbsp;of&nbsp;negative&nbsp;indices&nbsp;is&nbsp;not&nbsp;supported.</tt></dd></dl>
+
+<dl><dt><a name="XFormsValueError-__reduce__"><strong>__reduce__</strong></a>(...)</dt></dl>
+
+<dl><dt><a name="XFormsValueError-__repr__"><strong>__repr__</strong></a>(...)</dt><dd><tt>x.<a href="#XFormsValueError-__repr__">__repr__</a>()&nbsp;&lt;==&gt;&nbsp;repr(x)</tt></dd></dl>
+
+<dl><dt><a name="XFormsValueError-__setattr__"><strong>__setattr__</strong></a>(...)</dt><dd><tt>x.<a href="#XFormsValueError-__setattr__">__setattr__</a>('name',&nbsp;value)&nbsp;&lt;==&gt;&nbsp;x.name&nbsp;=&nbsp;value</tt></dd></dl>
+
+<dl><dt><a name="XFormsValueError-__setstate__"><strong>__setstate__</strong></a>(...)</dt></dl>
+
+<dl><dt><a name="XFormsValueError-__str__"><strong>__str__</strong></a>(...)</dt><dd><tt>x.<a href="#XFormsValueError-__str__">__str__</a>()&nbsp;&lt;==&gt;&nbsp;str(x)</tt></dd></dl>
+
+<dl><dt><a name="XFormsValueError-__unicode__"><strong>__unicode__</strong></a>(...)</dt></dl>
+
+<hr>
+Data descriptors inherited from <a href="exceptions.html#BaseException">exceptions.BaseException</a>:<br>
+<dl><dt><strong>__dict__</strong></dt>
+</dl>
+<dl><dt><strong>args</strong></dt>
+</dl>
+<dl><dt><strong>message</strong></dt>
+</dl>
+</td></tr></table> <p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ffc8d8">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#000000" face="helvetica, arial"><a name="XFormsWarning">class <strong>XFormsWarning</strong></a>(<a href="exceptions.html#Warning">exceptions.Warning</a>)</font></td></tr>
+    
+<tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
+<td colspan=2><tt>Generic&nbsp;warning&nbsp;for&nbsp;non&nbsp;fatal&nbsp;errors<br>&nbsp;</tt></td></tr>
+<tr><td>&nbsp;</td>
+<td width="100%"><dl><dt>Method resolution order:</dt>
+<dd><a href="library.html#XFormsWarning">XFormsWarning</a></dd>
+<dd><a href="exceptions.html#Warning">exceptions.Warning</a></dd>
+<dd><a href="exceptions.html#Exception">exceptions.Exception</a></dd>
+<dd><a href="exceptions.html#BaseException">exceptions.BaseException</a></dd>
+<dd><a href="__builtin__.html#object">__builtin__.object</a></dd>
+</dl>
+<hr>
+Data descriptors defined here:<br>
+<dl><dt><strong>__weakref__</strong></dt>
+<dd><tt>list&nbsp;of&nbsp;weak&nbsp;references&nbsp;to&nbsp;the&nbsp;object&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+<hr>
+Methods inherited from <a href="exceptions.html#Warning">exceptions.Warning</a>:<br>
+<dl><dt><a name="XFormsWarning-__init__"><strong>__init__</strong></a>(...)</dt><dd><tt>x.<a href="#XFormsWarning-__init__">__init__</a>(...)&nbsp;initializes&nbsp;x;&nbsp;see&nbsp;x.__class__.__doc__&nbsp;for&nbsp;signature</tt></dd></dl>
+
+<hr>
+Data and other attributes inherited from <a href="exceptions.html#Warning">exceptions.Warning</a>:<br>
+<dl><dt><strong>__new__</strong> = &lt;built-in method __new__ of type object&gt;<dd><tt>T.<a href="#XFormsWarning-__new__">__new__</a>(S,&nbsp;...)&nbsp;-&gt;&nbsp;a&nbsp;new&nbsp;object&nbsp;with&nbsp;type&nbsp;S,&nbsp;a&nbsp;subtype&nbsp;of&nbsp;T</tt></dl>
+
+<hr>
+Methods inherited from <a href="exceptions.html#BaseException">exceptions.BaseException</a>:<br>
+<dl><dt><a name="XFormsWarning-__delattr__"><strong>__delattr__</strong></a>(...)</dt><dd><tt>x.<a href="#XFormsWarning-__delattr__">__delattr__</a>('name')&nbsp;&lt;==&gt;&nbsp;del&nbsp;x.name</tt></dd></dl>
+
+<dl><dt><a name="XFormsWarning-__getattribute__"><strong>__getattribute__</strong></a>(...)</dt><dd><tt>x.<a href="#XFormsWarning-__getattribute__">__getattribute__</a>('name')&nbsp;&lt;==&gt;&nbsp;x.name</tt></dd></dl>
+
+<dl><dt><a name="XFormsWarning-__getitem__"><strong>__getitem__</strong></a>(...)</dt><dd><tt>x.<a href="#XFormsWarning-__getitem__">__getitem__</a>(y)&nbsp;&lt;==&gt;&nbsp;x[y]</tt></dd></dl>
+
+<dl><dt><a name="XFormsWarning-__getslice__"><strong>__getslice__</strong></a>(...)</dt><dd><tt>x.<a href="#XFormsWarning-__getslice__">__getslice__</a>(i,&nbsp;j)&nbsp;&lt;==&gt;&nbsp;x[i:j]<br>
+&nbsp;<br>
+Use&nbsp;of&nbsp;negative&nbsp;indices&nbsp;is&nbsp;not&nbsp;supported.</tt></dd></dl>
+
+<dl><dt><a name="XFormsWarning-__reduce__"><strong>__reduce__</strong></a>(...)</dt></dl>
+
+<dl><dt><a name="XFormsWarning-__repr__"><strong>__repr__</strong></a>(...)</dt><dd><tt>x.<a href="#XFormsWarning-__repr__">__repr__</a>()&nbsp;&lt;==&gt;&nbsp;repr(x)</tt></dd></dl>
+
+<dl><dt><a name="XFormsWarning-__setattr__"><strong>__setattr__</strong></a>(...)</dt><dd><tt>x.<a href="#XFormsWarning-__setattr__">__setattr__</a>('name',&nbsp;value)&nbsp;&lt;==&gt;&nbsp;x.name&nbsp;=&nbsp;value</tt></dd></dl>
+
+<dl><dt><a name="XFormsWarning-__setstate__"><strong>__setstate__</strong></a>(...)</dt></dl>
+
+<dl><dt><a name="XFormsWarning-__str__"><strong>__str__</strong></a>(...)</dt><dd><tt>x.<a href="#XFormsWarning-__str__">__str__</a>()&nbsp;&lt;==&gt;&nbsp;str(x)</tt></dd></dl>
+
+<dl><dt><a name="XFormsWarning-__unicode__"><strong>__unicode__</strong></a>(...)</dt></dl>
+
+<hr>
+Data descriptors inherited from <a href="exceptions.html#BaseException">exceptions.BaseException</a>:<br>
+<dl><dt><strong>__dict__</strong></dt>
+</dl>
+<dl><dt><strong>args</strong></dt>
+</dl>
+<dl><dt><strong>message</strong></dt>
+</dl>
+</td></tr></table></td></tr></table><p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#eeaa77">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Functions</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#eeaa77"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><dl><dt><a name="-cfuncproto"><strong>cfuncproto</strong></a>(library, cfuncname, retval, arglist, doc<font color="#909090">=''</font>)</dt><dd><tt>Prototype&nbsp;for&nbsp;C&nbsp;functions&nbsp;to&nbsp;be&nbsp;wrapped&nbsp;in&nbsp;python</tt></dd></dl>
+ <dl><dt><a name="-check_if_initialized"><strong>check_if_initialized</strong></a>()</dt><dd><tt>Check&nbsp;if&nbsp;fl_initialize()&nbsp;has&nbsp;been&nbsp;called&nbsp;before&nbsp;caller&nbsp;function.<br>
+Needed&nbsp;for&nbsp;most&nbsp;functions,&nbsp;except&nbsp;those&nbsp;supposed&nbsp;to&nbsp;be&nbsp;used<br>
+*BEFORE*&nbsp;initialization.</tt></dd></dl>
+ <dl><dt><a name="-checkfatal_allowed_value_in_list"><strong>checkfatal_allowed_value_in_list</strong></a>(paramname, valueslist)</dt><dd><tt>Check&nbsp;if&nbsp;paramname&nbsp;value&nbsp;is&nbsp;valid&nbsp;in&nbsp;accordance&nbsp;to&nbsp;a&nbsp;list&nbsp;or&nbsp;tuple<br>
+of&nbsp;admissible&nbsp;values,&nbsp;otherwise&nbsp;raise&nbsp;a&nbsp;fatal&nbsp;error.</tt></dd></dl>
+ <dl><dt><a name="-checknonfatal_allowed_value_in_list"><strong>checknonfatal_allowed_value_in_list</strong></a>(paramname, valueslist)</dt><dd><tt>Check&nbsp;if&nbsp;paramname&nbsp;value&nbsp;is&nbsp;valid&nbsp;in&nbsp;accordance&nbsp;to&nbsp;a&nbsp;list&nbsp;or&nbsp;tuple<br>
+of&nbsp;admissible&nbsp;values,&nbsp;otherwise&nbsp;issues&nbsp;a&nbsp;warning.</tt></dd></dl>
+ <dl><dt><a name="-convert_to_FL_COLOR"><strong>convert_to_FL_COLOR</strong></a> = convert_to_ulong(paramname)</dt><dd><tt>Converts&nbsp;paramname&nbsp;to&nbsp;python&nbsp;long&nbsp;and&nbsp;to&nbsp;ctypes&nbsp;c_ulong</tt></dd></dl>
+ <dl><dt><a name="-convert_to_FL_Coord"><strong>convert_to_FL_Coord</strong></a> = convert_to_int(paramname)</dt><dd><tt>Converts&nbsp;paramname&nbsp;to&nbsp;python&nbsp;int&nbsp;and&nbsp;to&nbsp;ctypes&nbsp;c_int</tt></dd></dl>
+ <dl><dt><a name="-convert_to_Pixmap"><strong>convert_to_Pixmap</strong></a> = convert_to_ulong(paramname)</dt><dd><tt>Converts&nbsp;paramname&nbsp;to&nbsp;python&nbsp;long&nbsp;and&nbsp;to&nbsp;ctypes&nbsp;c_ulong</tt></dd></dl>
+ <dl><dt><a name="-convert_to_Window"><strong>convert_to_Window</strong></a> = convert_to_ulong(paramname)</dt><dd><tt>Converts&nbsp;paramname&nbsp;to&nbsp;python&nbsp;long&nbsp;and&nbsp;to&nbsp;ctypes&nbsp;c_ulong</tt></dd></dl>
+ <dl><dt><a name="-convert_to_double"><strong>convert_to_double</strong></a>(paramname)</dt><dd><tt>Converts&nbsp;paramname&nbsp;to&nbsp;python&nbsp;float&nbsp;and&nbsp;to&nbsp;ctypes&nbsp;c_double</tt></dd></dl>
+ <dl><dt><a name="-convert_to_float"><strong>convert_to_float</strong></a>(paramname)</dt><dd><tt>Converts&nbsp;paramname&nbsp;to&nbsp;python&nbsp;float&nbsp;and&nbsp;to&nbsp;ctypes&nbsp;c_float</tt></dd></dl>
+ <dl><dt><a name="-convert_to_int"><strong>convert_to_int</strong></a>(paramname)</dt><dd><tt>Converts&nbsp;paramname&nbsp;to&nbsp;python&nbsp;int&nbsp;and&nbsp;to&nbsp;ctypes&nbsp;c_int</tt></dd></dl>
+ <dl><dt><a name="-convert_to_long"><strong>convert_to_long</strong></a>(paramname)</dt><dd><tt>Converts&nbsp;paramname&nbsp;to&nbsp;python&nbsp;long&nbsp;and&nbsp;to&nbsp;ctypes&nbsp;c_long</tt></dd></dl>
+ <dl><dt><a name="-convert_to_string"><strong>convert_to_string</strong></a>(paramname)</dt><dd><tt>Converts&nbsp;paramname&nbsp;to&nbsp;python&nbsp;str&nbsp;and&nbsp;to&nbsp;ctypes&nbsp;c_char_p</tt></dd></dl>
+ <dl><dt><a name="-convert_to_ubyte"><strong>convert_to_ubyte</strong></a>(paramname)</dt><dd><tt>Converts&nbsp;paramname&nbsp;to&nbsp;ctypes&nbsp;c_ubyte</tt></dd></dl>
+ <dl><dt><a name="-convert_to_uint"><strong>convert_to_uint</strong></a>(paramname)</dt><dd><tt>Converts&nbsp;paramname&nbsp;to&nbsp;python&nbsp;int&nbsp;and&nbsp;to&nbsp;ctypes&nbsp;c_uint</tt></dd></dl>
+ <dl><dt><a name="-convert_to_ulong"><strong>convert_to_ulong</strong></a>(paramname)</dt><dd><tt>Converts&nbsp;paramname&nbsp;to&nbsp;python&nbsp;long&nbsp;and&nbsp;to&nbsp;ctypes&nbsp;c_ulong</tt></dd></dl>
+ <dl><dt><a name="-donothing_popupcb"><strong>donothing_popupcb</strong></a>(pPopupReturn)</dt><dd><tt>It&nbsp;replaces&nbsp;a&nbsp;callback&nbsp;function&nbsp;not&nbsp;defined&nbsp;for&nbsp;class&nbsp;instances<br>
+as&nbsp;e.g.&nbsp;xfdata.FL_POPUP_ITEM&nbsp;&nbsp;&nbsp;&nbsp;*temporary*</tt></dd></dl>
+ <dl><dt><a name="-func_notexisting_placeholder"><strong>func_notexisting_placeholder</strong></a>(cfunction)</dt><dd><tt>Print&nbsp;a&nbsp;warning&nbsp;if&nbsp;called&nbsp;function&nbsp;does&nbsp;not&nbsp;exist</tt></dd></dl>
+ <dl><dt><a name="-get_xforms_version"><strong>get_xforms_version</strong></a>()</dt><dd><tt>Returns&nbsp;version&nbsp;string&nbsp;of&nbsp;installed&nbsp;XForms&nbsp;library/header</tt></dd></dl>
+ <dl><dt><a name="-keep_cfunc_refs"><strong>keep_cfunc_refs</strong></a>(*cfunclist)</dt><dd><tt>Adds&nbsp;a&nbsp;reference&nbsp;for&nbsp;_cfunc_refs&nbsp;list&nbsp;of&nbsp;values</tt></dd></dl>
+ <dl><dt><a name="-keep_elem_refs"><strong>keep_elem_refs</strong></a>(*elemlist)</dt><dd><tt>Adds&nbsp;a&nbsp;reference&nbsp;for&nbsp;_elem_refs&nbsp;list&nbsp;of&nbsp;values</tt></dd></dl>
+ <dl><dt><a name="-load_so_libflimage"><strong>load_so_libflimage</strong></a>()</dt><dd><tt>Load&nbsp;libflimage.so&nbsp;else&nbsp;raise&nbsp;an&nbsp;error&nbsp;-&gt;&nbsp;library&nbsp;instance</tt></dd></dl>
+ <dl><dt><a name="-load_so_libforms"><strong>load_so_libforms</strong></a>()</dt><dd><tt>Load&nbsp;libforms.so&nbsp;else&nbsp;raise&nbsp;an&nbsp;error&nbsp;-&gt;&nbsp;library&nbsp;instance</tt></dd></dl>
+ <dl><dt><a name="-load_so_libformsgl"><strong>load_so_libformsgl</strong></a>()</dt><dd><tt>Load&nbsp;libformsGL.so&nbsp;else&nbsp;raise&nbsp;an&nbsp;error&nbsp;-&gt;&nbsp;library&nbsp;instance</tt></dd></dl>
+ <dl><dt><a name="-load_so_libx11"><strong>load_so_libx11</strong></a>()</dt><dd><tt>Load&nbsp;libX11.so.6&nbsp;else&nbsp;raise&nbsp;an&nbsp;error&nbsp;-&gt;&nbsp;library&nbsp;instance</tt></dd></dl>
+ <dl><dt><a name="-make_FL_COLOR_and_pointer"><strong>make_FL_COLOR_and_pointer</strong></a> = make_ulong_and_pointer()</dt><dd><tt>Makes&nbsp;a&nbsp;ctypes&nbsp;c_ulong&nbsp;and&nbsp;its&nbsp;pointer,&nbsp;and&nbsp;returns&nbsp;both</tt></dd></dl>
+ <dl><dt><a name="-make_FL_Coord_and_pointer"><strong>make_FL_Coord_and_pointer</strong></a> = make_int_and_pointer()</dt><dd><tt>Makes&nbsp;a&nbsp;ctypes&nbsp;c_int&nbsp;and&nbsp;its&nbsp;pointer,&nbsp;and&nbsp;returns&nbsp;both</tt></dd></dl>
+ <dl><dt><a name="-make_Pixmap_and_pointer"><strong>make_Pixmap_and_pointer</strong></a> = make_ulong_and_pointer()</dt><dd><tt>Makes&nbsp;a&nbsp;ctypes&nbsp;c_ulong&nbsp;and&nbsp;its&nbsp;pointer,&nbsp;and&nbsp;returns&nbsp;both</tt></dd></dl>
+ <dl><dt><a name="-make_double_and_pointer"><strong>make_double_and_pointer</strong></a>()</dt><dd><tt>Makes&nbsp;a&nbsp;ctypes&nbsp;c_double&nbsp;and&nbsp;its&nbsp;pointer,&nbsp;and&nbsp;returns&nbsp;both</tt></dd></dl>
+ <dl><dt><a name="-make_float_and_pointer"><strong>make_float_and_pointer</strong></a>()</dt><dd><tt>Makes&nbsp;a&nbsp;ctypes&nbsp;c_float&nbsp;and&nbsp;its&nbsp;pointer,&nbsp;and&nbsp;returns&nbsp;both</tt></dd></dl>
+ <dl><dt><a name="-make_int_and_pointer"><strong>make_int_and_pointer</strong></a>()</dt><dd><tt>Makes&nbsp;a&nbsp;ctypes&nbsp;c_int&nbsp;and&nbsp;its&nbsp;pointer,&nbsp;and&nbsp;returns&nbsp;both</tt></dd></dl>
+ <dl><dt><a name="-make_long_and_pointer"><strong>make_long_and_pointer</strong></a>()</dt><dd><tt>Makes&nbsp;a&nbsp;ctypes&nbsp;c_long&nbsp;and&nbsp;its&nbsp;pointer,&nbsp;and&nbsp;returns&nbsp;both</tt></dd></dl>
+ <dl><dt><a name="-make_ubyte_and_pointer"><strong>make_ubyte_and_pointer</strong></a>()</dt><dd><tt>Makes&nbsp;a&nbsp;ctypes&nbsp;c_ubyte&nbsp;and&nbsp;its&nbsp;pointer,&nbsp;and&nbsp;returns&nbsp;both</tt></dd></dl>
+ <dl><dt><a name="-make_uint_and_pointer"><strong>make_uint_and_pointer</strong></a>()</dt><dd><tt>Makes&nbsp;a&nbsp;ctypes&nbsp;c_uint&nbsp;and&nbsp;its&nbsp;pointer,&nbsp;and&nbsp;returns&nbsp;both</tt></dd></dl>
+ <dl><dt><a name="-make_ulong_and_pointer"><strong>make_ulong_and_pointer</strong></a>()</dt><dd><tt>Makes&nbsp;a&nbsp;ctypes&nbsp;c_ulong&nbsp;and&nbsp;its&nbsp;pointer,&nbsp;and&nbsp;returns&nbsp;both</tt></dd></dl>
+ <dl><dt><a name="-make_ushort_and_pointer"><strong>make_ushort_and_pointer</strong></a>()</dt><dd><tt>Makes&nbsp;a&nbsp;ctypes&nbsp;c_ushort&nbsp;and&nbsp;its&nbsp;pointer,&nbsp;and&nbsp;returns&nbsp;both</tt></dd></dl>
+ <dl><dt><a name="-set_initialized"><strong>set_initialized</strong></a>()</dt><dd><tt>fl_initialize()&nbsp;has&nbsp;beeen&nbsp;called</tt></dd></dl>
+ <dl><dt><a name="-verify_flflimageptr_type"><strong>verify_flflimageptr_type</strong></a>(paramname)</dt><dd><tt>Check&nbsp;if&nbsp;paramname&nbsp;is&nbsp;a&nbsp;valid&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_IMAGE.</tt></dd></dl>
+ <dl><dt><a name="-verify_flformptr_type"><strong>verify_flformptr_type</strong></a>(paramname)</dt><dd><tt>Check&nbsp;if&nbsp;paramname&nbsp;is&nbsp;a&nbsp;valid&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_FORM.</tt></dd></dl>
+ <dl><dt><a name="-verify_flobjectptr_type"><strong>verify_flobjectptr_type</strong></a>(paramname)</dt><dd><tt>Check&nbsp;if&nbsp;paramname&nbsp;is&nbsp;a&nbsp;valid&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT.</tt></dd></dl>
+ <dl><dt><a name="-verify_flpopupentryptr_type"><strong>verify_flpopupentryptr_type</strong></a>(paramname)</dt><dd><tt>Check&nbsp;if&nbsp;paramname&nbsp;is&nbsp;a&nbsp;valid&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_POPUP_ENTRY.</tt></dd></dl>
+ <dl><dt><a name="-verify_flpopupitemptr_type"><strong>verify_flpopupitemptr_type</strong></a>(paramname)</dt><dd><tt>Check&nbsp;if&nbsp;paramname&nbsp;is&nbsp;a&nbsp;valid&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_POPUP_ITEM.</tt></dd></dl>
+ <dl><dt><a name="-verify_flpopupptr_type"><strong>verify_flpopupptr_type</strong></a>(paramname)</dt><dd><tt>Check&nbsp;if&nbsp;paramname&nbsp;is&nbsp;a&nbsp;valid&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_POPUP.</tt></dd></dl>
+ <dl><dt><a name="-verify_flpopupreturnptr_type"><strong>verify_flpopupreturnptr_type</strong></a>(paramname)</dt><dd><tt>Check&nbsp;if&nbsp;paramname&nbsp;is&nbsp;a&nbsp;valid&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_POPUP_RETURN.</tt></dd></dl>
+ <dl><dt><a name="-verify_function_type"><strong>verify_function_type</strong></a>(paramname)</dt><dd><tt>Check&nbsp;if&nbsp;paramname&nbsp;value&nbsp;is&nbsp;a&nbsp;valid&nbsp;python&nbsp;function&nbsp;to&nbsp;be&nbsp;passed&nbsp;as<br>
+e.g.&nbsp;callback&nbsp;in&nbsp;a&nbsp;public&nbsp;function.</tt></dd></dl>
+ <dl><dt><a name="-verify_otherclassptr_type"><strong>verify_otherclassptr_type</strong></a>(paramname, pstructinst)</dt><dd><tt>Check&nbsp;if&nbsp;paramname&nbsp;value&nbsp;is&nbsp;a&nbsp;valid&nbsp;pointer&nbsp;to&nbsp;a&nbsp;provided&nbsp;'Structure'<br>
+class&nbsp;instance,&nbsp;different&nbsp;from&nbsp;previous&nbsp;classes.</tt></dd></dl>
+ <dl><dt><a name="-verify_tuplelist_type"><strong>verify_tuplelist_type</strong></a>(paramname)</dt><dd><tt>Check&nbsp;if&nbsp;paramname&nbsp;is&nbsp;a&nbsp;valid&nbsp;list&nbsp;or&nbsp;tuple.</tt></dd></dl>
+ <dl><dt><a name="-verify_version_compatibility"><strong>verify_version_compatibility</strong></a>()</dt><dd><tt>verify&nbsp;compatibility&nbsp;between&nbsp;xforms-python&nbsp;and&nbsp;XForms&nbsp;versions</tt></dd></dl>
+</td></tr></table><p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#55aa55">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Data</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#55aa55"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><strong>flinitialized</strong> = False<br>
+<strong>header_filename</strong> = '/usr/include/forms.h'<br>
+<strong>loaded_xlibraries</strong> = {'libflimage': None, 'libforms': None, 'libformsgl': None, 'libx11': None}</td></tr></table>
+</body></html>

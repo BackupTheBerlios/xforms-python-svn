@@ -1,0 +1,1411 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html><head><title>Python: module flgoodies</title>
+</head><body bgcolor="#f0f0f8">
+
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="heading">
+<tr bgcolor="#7799ee">
+<td valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial">&nbsp;<br><big><big><strong>flgoodies</strong></big></big></font></td
+><td align=right valign=bottom
+><font color="#ffffff" face="helvetica, arial"><a href=".">index</a><br>     <a href="index.html">list</a></font></td></tr></table>
+    <p><tt>xforms-python's&nbsp;functions&nbsp;to&nbsp;manage&nbsp;goodies&nbsp;objects.</tt></p>
+<p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#aa55cc">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Modules</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#aa55cc"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><table width="100%" summary="list"><tr><td width="25%" valign=top><a href="ctypes.html">ctypes</a><br>
+</td><td width="25%" valign=top><a href="flbasic.html">flbasic</a><br>
+</td><td width="25%" valign=top><a href="library.html">library</a><br>
+</td><td width="25%" valign=top><a href="xfdata.html">xfdata</a><br>
+</td></tr></table></td></tr></table><p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#eeaa77">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Functions</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#eeaa77"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><dl><dt><a name="-fl_add_fselector_appbutton"><strong>fl_add_fselector_appbutton</strong></a>(label, py_fn, vdata)</dt><dd><tt><a href="#-fl_add_fselector_appbutton">fl_add_fselector_appbutton</a>(label,&nbsp;py_fn,&nbsp;vdata)<br>
+&nbsp;<br>
+Adds&nbsp;an&nbsp;application&nbsp;specific&nbsp;button&nbsp;from&nbsp;file&nbsp;selector&nbsp;and&nbsp;a&nbsp;callback<br>
+routine&nbsp;for&nbsp;it.<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;label&nbsp;:&nbsp;str<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;text&nbsp;of&nbsp;label<br>
+&nbsp;&nbsp;&nbsp;&nbsp;py_fn&nbsp;:&nbsp;python&nbsp;function&nbsp;callback,&nbsp;no&nbsp;return<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;name&nbsp;referring&nbsp;to&nbsp;function(vdata)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;vdata&nbsp;:&nbsp;any&nbsp;type&nbsp;(e.g.&nbsp;'None',&nbsp;int,&nbsp;str,&nbsp;etc..)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;user&nbsp;data&nbsp;to&nbsp;be&nbsp;passed&nbsp;to&nbsp;function;&nbsp;callback&nbsp;has&nbsp;to&nbsp;take&nbsp;care<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;of&nbsp;type&nbsp;check<br>
+&nbsp;<br>
+Examples<br>
+--------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;def&nbsp;fsbtn_cb(cvoidp):<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;...&nbsp;&lt;something&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;<a href="#-fl_add_fselector_appbutton">fl_add_fselector_appbutton</a>("SomeButton",&nbsp;fsbtn_cb,&nbsp;None)<br>
+&nbsp;<br>
+Notes<br>
+-----<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
+ <dl><dt><a name="-fl_addto_command_log"><strong>fl_addto_command_log</strong></a>(txtstr)</dt><dd><tt><a href="#-fl_addto_command_log">fl_addto_command_log</a>(txtstr)<br>
+&nbsp;<br>
+Adds&nbsp;arbitrary&nbsp;text&nbsp;to&nbsp;the&nbsp;command&nbsp;browser.<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;txtstr&nbsp;:&nbsp;str<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;text&nbsp;line&nbsp;to&nbsp;be&nbsp;added&nbsp;(with&nbsp;possible&nbsp;embedded&nbsp;newlines)<br>
+&nbsp;<br>
+Examples<br>
+--------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;<a href="#-fl_addto_command_log">fl_addto_command_log</a>("Another&nbsp;line&nbsp;to&nbsp;add&nbsp;to&nbsp;CmdLog")<br>
+&nbsp;<br>
+Notes<br>
+-----<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
+ <dl><dt><a name="-fl_check_command"><strong>fl_check_command</strong></a>(pid)</dt><dd><tt><a href="#-fl_check_command">fl_check_command</a>(pid)<br>
+&nbsp;<br>
+Polls&nbsp;the&nbsp;status&nbsp;of&nbsp;a&nbsp;child&nbsp;process.<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;pid&nbsp;:&nbsp;long<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;process&nbsp;id&nbsp;returned&nbsp;by&nbsp;<a href="#-fl_exe_command">fl_exe_command</a>()<br>
+&nbsp;<br>
+Returns<br>
+-------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;result&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;0&nbsp;if&nbsp;the&nbsp;child&nbsp;process&nbsp;is&nbsp;finished,&nbsp;or&nbsp;1&nbsp;if&nbsp;the&nbsp;child&nbsp;process<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;still&nbsp;exists&nbsp;(running&nbsp;or&nbsp;stopped),&nbsp;or&nbsp;-1&nbsp;if&nbsp;an&nbsp;error&nbsp;has<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;occurred&nbsp;inside&nbsp;the&nbsp;function<br>
+&nbsp;<br>
+Examples<br>
+--------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;<a href="#-fl_check_command">fl_check_command</a>(1488)<br>
+&nbsp;<br>
+Notes<br>
+-----<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
+ <dl><dt><a name="-fl_clear_command_log"><strong>fl_clear_command_log</strong></a>()</dt><dd><tt><a href="#-fl_clear_command_log">fl_clear_command_log</a>()<br>
+&nbsp;<br>
+Clears&nbsp;the&nbsp;browser&nbsp;and&nbsp;the&nbsp;logging&nbsp;output&nbsp;displayed&nbsp;within&nbsp;it.<br>
+&nbsp;<br>
+Examples<br>
+--------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;<a href="#-fl_clear_command_log">fl_clear_command_log</a>()<br>
+&nbsp;<br>
+Notes<br>
+-----<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
+ <dl><dt><a name="-fl_close_command"><strong>fl_close_command</strong></a> = fl_end_command(pid)</dt><dd><tt><a href="#-fl_end_command">fl_end_command</a>(pid)<br>
+&nbsp;<br>
+Suspends&nbsp;the&nbsp;current&nbsp;process&nbsp;and&nbsp;waits&nbsp;until&nbsp;the&nbsp;child&nbsp;process&nbsp;is<br>
+completed.<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;pid&nbsp;:&nbsp;long<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;process&nbsp;id&nbsp;returned&nbsp;by&nbsp;<a href="#-fl_exe_command">fl_exe_command</a>()<br>
+&nbsp;<br>
+Returns<br>
+-------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;status&nbsp;:&nbsp;long<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;exit&nbsp;status&nbsp;of&nbsp;child&nbsp;process,&nbsp;or&nbsp;-1&nbsp;(if&nbsp;an&nbsp;error&nbsp;has&nbsp;occurred)<br>
+&nbsp;<br>
+Examples<br>
+--------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;<a href="#-fl_end_command">fl_end_command</a>(1488)<br>
+&nbsp;<br>
+Notes<br>
+-----<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
+ <dl><dt><a name="-fl_disable_fselector_cache"><strong>fl_disable_fselector_cache</strong></a>(yesno)</dt><dd><tt><a href="#-fl_disable_fselector_cache">fl_disable_fselector_cache</a>(yesno)<br>
+&nbsp;<br>
+Disables&nbsp;file&nbsp;selector&nbsp;caching.<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;yesno&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;flag.&nbsp;Values&nbsp;0&nbsp;(to&nbsp;enable&nbsp;cache)&nbsp;or&nbsp;1&nbsp;(to&nbsp;disable&nbsp;cache)<br>
+&nbsp;<br>
+Examples<br>
+--------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;<a href="#-fl_disable_fselector_cache">fl_disable_fselector_cache</a>(1)<br>
+&nbsp;<br>
+Notes<br>
+-----<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
+ <dl><dt><a name="-fl_end_all_command"><strong>fl_end_all_command</strong></a>()</dt><dd><tt><a href="#-fl_end_all_command">fl_end_all_command</a>()<br>
+&nbsp;<br>
+Waits&nbsp;for&nbsp;all&nbsp;the&nbsp;child&nbsp;processes&nbsp;initiated&nbsp;by&nbsp;<a href="#-fl_exe_command">fl_exe_command</a>()<br>
+to&nbsp;complete.<br>
+&nbsp;<br>
+Returns<br>
+-------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;status&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;exit&nbsp;status&nbsp;of&nbsp;the&nbsp;last&nbsp;child&nbsp;process<br>
+&nbsp;<br>
+Examples<br>
+--------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;<a href="#-fl_end_all_command">fl_end_all_command</a>()<br>
+&nbsp;<br>
+Notes<br>
+-----<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
+ <dl><dt><a name="-fl_end_command"><strong>fl_end_command</strong></a>(pid)</dt><dd><tt><a href="#-fl_end_command">fl_end_command</a>(pid)<br>
+&nbsp;<br>
+Suspends&nbsp;the&nbsp;current&nbsp;process&nbsp;and&nbsp;waits&nbsp;until&nbsp;the&nbsp;child&nbsp;process&nbsp;is<br>
+completed.<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;pid&nbsp;:&nbsp;long<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;process&nbsp;id&nbsp;returned&nbsp;by&nbsp;<a href="#-fl_exe_command">fl_exe_command</a>()<br>
+&nbsp;<br>
+Returns<br>
+-------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;status&nbsp;:&nbsp;long<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;exit&nbsp;status&nbsp;of&nbsp;child&nbsp;process,&nbsp;or&nbsp;-1&nbsp;(if&nbsp;an&nbsp;error&nbsp;has&nbsp;occurred)<br>
+&nbsp;<br>
+Examples<br>
+--------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;<a href="#-fl_end_command">fl_end_command</a>(1488)<br>
+&nbsp;<br>
+Notes<br>
+-----<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
+ <dl><dt><a name="-fl_exe_command"><strong>fl_exe_command</strong></a>(cmdtxt, block)</dt><dd><tt><a href="#-fl_exe_command">fl_exe_command</a>(cmdtxt,&nbsp;block)<br>
+&nbsp;<br>
+Forks&nbsp;a&nbsp;new&nbsp;process&nbsp;that&nbsp;runs&nbsp;specified&nbsp;command.<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;cmdtxt&nbsp;:&nbsp;str<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;a&nbsp;shell&nbsp;command&nbsp;line<br>
+&nbsp;&nbsp;&nbsp;&nbsp;block&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;blocking&nbsp;flag&nbsp;indicating&nbsp;if&nbsp;the&nbsp;function&nbsp;should&nbsp;wait&nbsp;for&nbsp;the<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;child&nbsp;process&nbsp;to&nbsp;finish&nbsp;or&nbsp;not.&nbsp;Values&nbsp;non-zero&nbsp;(for&nbsp;waiting)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;or&nbsp;0&nbsp;(do&nbsp;not&nbsp;wait).<br>
+&nbsp;<br>
+Returns<br>
+-------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;status&nbsp;:&nbsp;long<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;exit&nbsp;status<br>
+&nbsp;<br>
+Examples<br>
+--------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;*todo*<br>
+&nbsp;<br>
+Notes<br>
+-----<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
+ <dl><dt><a name="-fl_get_command_log_fdstruct"><strong>fl_get_command_log_fdstruct</strong></a>()</dt><dd><tt><a href="#-fl_get_command_log_fdstruct">fl_get_command_log_fdstruct</a>()<br>
+&nbsp;<br>
+Obtains&nbsp;the&nbsp;GUI&nbsp;structure&nbsp;of&nbsp;the&nbsp;command&nbsp;browser.&nbsp;From&nbsp;the&nbsp;information<br>
+returned,&nbsp;the&nbsp;application&nbsp;program&nbsp;can&nbsp;change&nbsp;various&nbsp;attributes&nbsp;of&nbsp;the<br>
+command&nbsp;browser&nbsp;and&nbsp;its&nbsp;associated&nbsp;objects.&nbsp;Note&nbsp;however,&nbsp;that&nbsp;you<br>
+should&nbsp;not&nbsp;hide/show&nbsp;the&nbsp;form&nbsp;or&nbsp;free&nbsp;any&nbsp;member&nbsp;of&nbsp;the&nbsp;returned<br>
+structure.<br>
+&nbsp;<br>
+Returns<br>
+-------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;pCmdlog&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FD_CMDLOG<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;command&nbsp;log&nbsp;browser&nbsp;class&nbsp;instance<br>
+&nbsp;<br>
+Examples<br>
+--------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;pcmdlogbr&nbsp;=&nbsp;<a href="#-fl_get_command_log_fdstruct">fl_get_command_log_fdstruct</a>()<br>
+&nbsp;<br>
+Notes<br>
+-----<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
+ <dl><dt><a name="-fl_get_directory"><strong>fl_get_directory</strong></a>()</dt><dd><tt><a href="#-fl_get_directory">fl_get_directory</a>()<br>
+&nbsp;<br>
+Obtains&nbsp;the&nbsp;directory&nbsp;name&nbsp;after&nbsp;the&nbsp;user&nbsp;changed&nbsp;it.<br>
+&nbsp;<br>
+Returns<br>
+-------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;dirname&nbsp;:&nbsp;str<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;name&nbsp;of&nbsp;directory<br>
+&nbsp;<br>
+Examples<br>
+--------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;newdname&nbsp;=&nbsp;<a href="#-fl_get_directory">fl_get_directory</a>()<br>
+&nbsp;<br>
+Notes<br>
+-----<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
+ <dl><dt><a name="-fl_get_filename"><strong>fl_get_filename</strong></a>()</dt><dd><tt><a href="#-fl_get_filename">fl_get_filename</a>()<br>
+&nbsp;<br>
+Obtains&nbsp;the&nbsp;file&nbsp;name&nbsp;(without&nbsp;the&nbsp;path)&nbsp;after&nbsp;the&nbsp;user&nbsp;changed&nbsp;it.<br>
+&nbsp;<br>
+Returns<br>
+-------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;fname&nbsp;:&nbsp;str<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;name&nbsp;of&nbsp;file&nbsp;(fname)<br>
+&nbsp;<br>
+Examples<br>
+--------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;newfname&nbsp;=&nbsp;<a href="#-fl_get_filename">fl_get_filename</a>()<br>
+&nbsp;<br>
+Notes<br>
+-----<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
+ <dl><dt><a name="-fl_get_fselector_fdstruct"><strong>fl_get_fselector_fdstruct</strong></a>()</dt><dd><tt><a href="#-fl_get_fselector_fdstruct">fl_get_fselector_fdstruct</a>()<br>
+&nbsp;<br>
+Obtains&nbsp;a&nbsp;xfdata.FD_FSELECTOR&nbsp;class&nbsp;instance,&nbsp;allowing&nbsp;direct<br>
+access&nbsp;to&nbsp;the&nbsp;individual&nbsp;objects&nbsp;of&nbsp;a&nbsp;file&nbsp;selector.<br>
+&nbsp;<br>
+Returns<br>
+-------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;FdSelector&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FD_FSELECTOR<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;file&nbsp;selector&nbsp;class&nbsp;instance<br>
+&nbsp;<br>
+Examples<br>
+--------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;fdfsel&nbsp;=&nbsp;<a href="#-fl_get_fselector_fdstruct">fl_get_fselector_fdstruct</a>()<br>
+&nbsp;<br>
+Notes<br>
+-----<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
+ <dl><dt><a name="-fl_get_fselector_form"><strong>fl_get_fselector_form</strong></a>()</dt><dd><tt><a href="#-fl_get_fselector_form">fl_get_fselector_form</a>()<br>
+&nbsp;<br>
+Obtains&nbsp;the&nbsp;form&nbsp;of&nbsp;file&nbsp;selector.<br>
+&nbsp;<br>
+Examples<br>
+--------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;pform&nbsp;=&nbsp;<a href="#-fl_get_fselector_form">fl_get_fselector_form</a>()<br>
+&nbsp;<br>
+Notes<br>
+-----<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
+ <dl><dt><a name="-fl_get_pattern"><strong>fl_get_pattern</strong></a>()</dt><dd><tt><a href="#-fl_get_pattern">fl_get_pattern</a>()<br>
+&nbsp;<br>
+Obtains&nbsp;the&nbsp;pattern&nbsp;after&nbsp;the&nbsp;user&nbsp;changed&nbsp;it.<br>
+&nbsp;<br>
+Returns<br>
+-------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;pattern&nbsp;:&nbsp;str<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;pattern&nbsp;text<br>
+&nbsp;<br>
+Examples<br>
+--------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;ptrntxt&nbsp;=&nbsp;<a href="#-fl_get_pattern">fl_get_pattern</a>()<br>
+&nbsp;<br>
+Notes<br>
+-----<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
+ <dl><dt><a name="-fl_goodies_atclose"><strong>fl_goodies_atclose</strong></a>(pFlForm, vdata)</dt><dd><tt><a href="#-fl_goodies_atclose">fl_goodies_atclose</a>(pFlForm,&nbsp;vdata)<br>
+&nbsp;<br>
+*todo*<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;pFlForm&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_FORM<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;form<br>
+&nbsp;&nbsp;&nbsp;&nbsp;vdata&nbsp;:&nbsp;any&nbsp;type&nbsp;(e.g.&nbsp;'None',&nbsp;int,&nbsp;str,&nbsp;etc..)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;user&nbsp;data&nbsp;to&nbsp;be&nbsp;passed&nbsp;to&nbsp;function;&nbsp;callback&nbsp;has&nbsp;to&nbsp;take&nbsp;care<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;of&nbsp;type&nbsp;check<br>
+&nbsp;<br>
+Returns<br>
+-------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;unused&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;unused&nbsp;value&nbsp;(xfdata.FL_IGNORE)<br>
+&nbsp;<br>
+Examples<br>
+--------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;*todo*<br>
+&nbsp;<br>
+Notes<br>
+-----<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
+ <dl><dt><a name="-fl_hide_alert"><strong>fl_hide_alert</strong></a>()</dt><dd><tt><a href="#-fl_hide_alert">fl_hide_alert</a>()<br>
+&nbsp;<br>
+Hides&nbsp;a&nbsp;previously&nbsp;shown&nbsp;alert&nbsp;message.<br>
+&nbsp;<br>
+Examples<br>
+--------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;<a href="#-fl_hide_alert">fl_hide_alert</a>()<br>
+&nbsp;<br>
+Notes<br>
+-----<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;Demo&nbsp;=&nbsp;OK</tt></dd></dl>
+ <dl><dt><a name="-fl_hide_choice"><strong>fl_hide_choice</strong></a>()</dt><dd><tt><a href="#-fl_hide_choice">fl_hide_choice</a>()<br>
+&nbsp;<br>
+Hides&nbsp;the&nbsp;choice&nbsp;message.<br>
+&nbsp;<br>
+Examples<br>
+--------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;<a href="#-fl_hide_choice">fl_hide_choice</a>()<br>
+&nbsp;<br>
+Notes<br>
+-----<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
+ <dl><dt><a name="-fl_hide_command_log"><strong>fl_hide_command_log</strong></a>()</dt><dd><tt><a href="#-fl_hide_command_log">fl_hide_command_log</a>()<br>
+&nbsp;<br>
+Hides&nbsp;the&nbsp;log&nbsp;of&nbsp;the&nbsp;command&nbsp;output.<br>
+&nbsp;<br>
+Examples<br>
+--------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;<a href="#-fl_hide_command_log">fl_hide_command_log</a>()<br>
+&nbsp;<br>
+Notes<br>
+-----<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
+ <dl><dt><a name="-fl_hide_fselector"><strong>fl_hide_fselector</strong></a>()</dt><dd><tt><a href="#-fl_hide_fselector">fl_hide_fselector</a>()<br>
+&nbsp;<br>
+Hides&nbsp;a&nbsp;file&nbsp;selector.<br>
+&nbsp;<br>
+Examples<br>
+--------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;<a href="#-fl_hide_fselector">fl_hide_fselector</a>()<br>
+&nbsp;<br>
+Notes<br>
+-----<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
+ <dl><dt><a name="-fl_hide_input"><strong>fl_hide_input</strong></a>()</dt><dd><tt><a href="#-fl_hide_input">fl_hide_input</a>()<br>
+&nbsp;<br>
+Hides&nbsp;a&nbsp;previously&nbsp;shown&nbsp;input&nbsp;object.<br>
+&nbsp;<br>
+Examples<br>
+--------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;<a href="#-fl_hide_input">fl_hide_input</a>()<br>
+&nbsp;<br>
+Notes<br>
+-----<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
+ <dl><dt><a name="-fl_hide_message"><strong>fl_hide_message</strong></a>()</dt><dd><tt><a href="#-fl_hide_message">fl_hide_message</a>()<br>
+&nbsp;<br>
+Hides&nbsp;a&nbsp;text&nbsp;message&nbsp;already&nbsp;shown.<br>
+&nbsp;<br>
+Examples<br>
+--------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;<a href="#-fl_hide_message">fl_hide_message</a>()<br>
+&nbsp;<br>
+Notes<br>
+-----<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
+ <dl><dt><a name="-fl_hide_messages"><strong>fl_hide_messages</strong></a> = fl_hide_message()</dt><dd><tt><a href="#-fl_hide_message">fl_hide_message</a>()<br>
+&nbsp;<br>
+Hides&nbsp;a&nbsp;text&nbsp;message&nbsp;already&nbsp;shown.<br>
+&nbsp;<br>
+Examples<br>
+--------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;<a href="#-fl_hide_message">fl_hide_message</a>()<br>
+&nbsp;<br>
+Notes<br>
+-----<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
+ <dl><dt><a name="-fl_hide_msg"><strong>fl_hide_msg</strong></a> = fl_hide_message()</dt><dd><tt><a href="#-fl_hide_message">fl_hide_message</a>()<br>
+&nbsp;<br>
+Hides&nbsp;a&nbsp;text&nbsp;message&nbsp;already&nbsp;shown.<br>
+&nbsp;<br>
+Examples<br>
+--------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;<a href="#-fl_hide_message">fl_hide_message</a>()<br>
+&nbsp;<br>
+Notes<br>
+-----<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
+ <dl><dt><a name="-fl_hide_oneliner"><strong>fl_hide_oneliner</strong></a>()</dt><dd><tt><a href="#-fl_hide_oneliner">fl_hide_oneliner</a>()<br>
+&nbsp;<br>
+Hides&nbsp;the&nbsp;oneliner&nbsp;message&nbsp;previously&nbsp;shown.<br>
+&nbsp;<br>
+Examples<br>
+--------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;<a href="#-fl_hide_oneliner">fl_hide_oneliner</a>()<br>
+&nbsp;<br>
+Notes<br>
+-----<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;Demo&nbsp;=&nbsp;OK</tt></dd></dl>
+ <dl><dt><a name="-fl_hide_question"><strong>fl_hide_question</strong></a>()</dt><dd><tt><a href="#-fl_hide_question">fl_hide_question</a>()<br>
+&nbsp;<br>
+Hides&nbsp;a&nbsp;question&nbsp;message&nbsp;already&nbsp;shown.<br>
+&nbsp;<br>
+Examples<br>
+--------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;<a href="#-fl_hide_question">fl_hide_question</a>()<br>
+&nbsp;<br>
+Notes<br>
+-----<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
+ <dl><dt><a name="-fl_invalidate_fselector_cache"><strong>fl_invalidate_fselector_cache</strong></a>()</dt><dd><tt><a href="#-fl_invalidate_fselector_cache">fl_invalidate_fselector_cache</a>()<br>
+&nbsp;<br>
+Forces&nbsp;an&nbsp;update&nbsp;of&nbsp;file&nbsp;selector&nbsp;caching&nbsp;programmatically.&nbsp;It&nbsp;forces<br>
+it&nbsp;only&nbsp;once,&nbsp;and&nbsp;on&nbsp;the&nbsp;directory&nbsp;that&nbsp;is&nbsp;to&nbsp;be&nbsp;browsed.<br>
+&nbsp;<br>
+Examples<br>
+--------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;<a href="#-fl_invalidate_fselector_cache">fl_invalidate_fselector_cache</a>()<br>
+&nbsp;<br>
+Notes<br>
+-----<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
+ <dl><dt><a name="-fl_open_command"><strong>fl_open_command</strong></a> = fl_exe_command(cmdtxt, block)</dt><dd><tt><a href="#-fl_exe_command">fl_exe_command</a>(cmdtxt,&nbsp;block)<br>
+&nbsp;<br>
+Forks&nbsp;a&nbsp;new&nbsp;process&nbsp;that&nbsp;runs&nbsp;specified&nbsp;command.<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;cmdtxt&nbsp;:&nbsp;str<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;a&nbsp;shell&nbsp;command&nbsp;line<br>
+&nbsp;&nbsp;&nbsp;&nbsp;block&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;blocking&nbsp;flag&nbsp;indicating&nbsp;if&nbsp;the&nbsp;function&nbsp;should&nbsp;wait&nbsp;for&nbsp;the<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;child&nbsp;process&nbsp;to&nbsp;finish&nbsp;or&nbsp;not.&nbsp;Values&nbsp;non-zero&nbsp;(for&nbsp;waiting)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;or&nbsp;0&nbsp;(do&nbsp;not&nbsp;wait).<br>
+&nbsp;<br>
+Returns<br>
+-------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;status&nbsp;:&nbsp;long<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;exit&nbsp;status<br>
+&nbsp;<br>
+Examples<br>
+--------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;*todo*<br>
+&nbsp;<br>
+Notes<br>
+-----<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
+ <dl><dt><a name="-fl_pclose"><strong>fl_pclose</strong></a>(pFile)</dt><dd><tt><a href="#-fl_pclose">fl_pclose</a>(pFile)<br>
+&nbsp;<br>
+Cleans&nbsp;up&nbsp;the&nbsp;child&nbsp;process&nbsp;executed.<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;pFile&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FILE<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;opened&nbsp;file&nbsp;stream&nbsp;returned&nbsp;by&nbsp;<a href="#-fl_popen">fl_popen</a>()<br>
+&nbsp;<br>
+Returns<br>
+-------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;result&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;non-zero,&nbsp;or&nbsp;-1&nbsp;(on&nbsp;failure)<br>
+&nbsp;<br>
+Examples<br>
+--------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;if&nbsp;<a href="#-fl_pclose">fl_pclose</a>(pfile)&nbsp;==&nbsp;-1:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;...&nbsp;&lt;something&gt;<br>
+&nbsp;<br>
+Notes<br>
+-----<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
+ <dl><dt><a name="-fl_popen"><strong>fl_popen</strong></a>(cmdtxt, otype)</dt><dd><tt><a href="#-fl_popen">fl_popen</a>(cmdtxt,&nbsp;otype)<br>
+&nbsp;<br>
+Executes&nbsp;the&nbsp;command&nbsp;in&nbsp;a&nbsp;child&nbsp;process,&nbsp;and&nbsp;logs&nbsp;the&nbsp;stderr&nbsp;messages<br>
+into&nbsp;the&nbsp;command&nbsp;log.&nbsp;If&nbsp;otype&nbsp;is&nbsp;"w",&nbsp;stdout&nbsp;will&nbsp;also&nbsp;be&nbsp;logged&nbsp;into<br>
+the&nbsp;command&nbsp;browser.<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;cmdtxt&nbsp;:&nbsp;str<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;existing&nbsp;filename&nbsp;to&nbsp;execute<br>
+&nbsp;&nbsp;&nbsp;&nbsp;otype&nbsp;:&nbsp;str<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;type&nbsp;of&nbsp;opening&nbsp;(e.g.&nbsp;w,&nbsp;r&nbsp;..)<br>
+&nbsp;<br>
+Returns<br>
+-------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;pFile&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FILE<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;file&nbsp;opened<br>
+&nbsp;<br>
+Examples<br>
+--------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;pfile&nbsp;=&nbsp;<a href="#-fl_popen">fl_popen</a>("/usr/bin/somecommand",&nbsp;"r")<br>
+&nbsp;<br>
+Notes<br>
+-----<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
+ <dl><dt><a name="-fl_refresh_fselector"><strong>fl_refresh_fselector</strong></a>()</dt><dd><tt><a href="#-fl_refresh_fselector">fl_refresh_fselector</a>()<br>
+&nbsp;<br>
+Refreshes&nbsp;the&nbsp;file&nbsp;selector,&nbsp;re-scanning&nbsp;the&nbsp;current&nbsp;directory&nbsp;and<br>
+listing&nbsp;all&nbsp;entries&nbsp;in&nbsp;it.<br>
+&nbsp;<br>
+Examples<br>
+--------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;<a href="#-fl_refresh_fselector">fl_refresh_fselector</a>()<br>
+&nbsp;<br>
+Notes<br>
+-----<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
+ <dl><dt><a name="-fl_remove_fselector_appbutton"><strong>fl_remove_fselector_appbutton</strong></a>(label)</dt><dd><tt><a href="#-fl_remove_fselector_appbutton">fl_remove_fselector_appbutton</a>(label)<br>
+&nbsp;<br>
+Removes&nbsp;an&nbsp;application&nbsp;specific&nbsp;button&nbsp;from&nbsp;file&nbsp;selector.<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;label&nbsp;:&nbsp;str<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;text&nbsp;of&nbsp;label<br>
+&nbsp;<br>
+Examples<br>
+--------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;fl_remove_selector_appbutton("SomeButton")<br>
+&nbsp;<br>
+Notes<br>
+-----<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
+ <dl><dt><a name="-fl_set_choice_shortcut"><strong>fl_set_choice_shortcut</strong></a> = fl_set_choices_shortcut(shc1txt, shc2txt, shc3txt)</dt><dd><tt><a href="#-fl_set_choices_shortcut">fl_set_choices_shortcut</a>(shc1txt,&nbsp;shc2txt,&nbsp;shc3txt)<br>
+&nbsp;<br>
+Defines&nbsp;more&nbsp;mnemonic&nbsp;hotkeys&nbsp;as&nbsp;shortcut&nbsp;text&nbsp;for&nbsp;choices.<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;shc1txt&nbsp;:&nbsp;str<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;shortcut&nbsp;to&nbsp;bind&nbsp;to&nbsp;first&nbsp;button<br>
+&nbsp;&nbsp;&nbsp;&nbsp;shc2txt&nbsp;:&nbsp;str<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;shortcut&nbsp;to&nbsp;bind&nbsp;to&nbsp;second&nbsp;button<br>
+&nbsp;&nbsp;&nbsp;&nbsp;shc3txt&nbsp;:&nbsp;str<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;shortcut&nbsp;to&nbsp;bind&nbsp;to&nbsp;third&nbsp;button<br>
+&nbsp;<br>
+Examples<br>
+--------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;<a href="#-fl_set_choices_shortcut">fl_set_choices_shortcut</a>("a",&nbsp;"B",&nbsp;"^C")<br>
+&nbsp;<br>
+Notes<br>
+-----<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
+ <dl><dt><a name="-fl_set_choices_shortcut"><strong>fl_set_choices_shortcut</strong></a>(shc1txt, shc2txt, shc3txt)</dt><dd><tt><a href="#-fl_set_choices_shortcut">fl_set_choices_shortcut</a>(shc1txt,&nbsp;shc2txt,&nbsp;shc3txt)<br>
+&nbsp;<br>
+Defines&nbsp;more&nbsp;mnemonic&nbsp;hotkeys&nbsp;as&nbsp;shortcut&nbsp;text&nbsp;for&nbsp;choices.<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;shc1txt&nbsp;:&nbsp;str<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;shortcut&nbsp;to&nbsp;bind&nbsp;to&nbsp;first&nbsp;button<br>
+&nbsp;&nbsp;&nbsp;&nbsp;shc2txt&nbsp;:&nbsp;str<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;shortcut&nbsp;to&nbsp;bind&nbsp;to&nbsp;second&nbsp;button<br>
+&nbsp;&nbsp;&nbsp;&nbsp;shc3txt&nbsp;:&nbsp;str<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;shortcut&nbsp;to&nbsp;bind&nbsp;to&nbsp;third&nbsp;button<br>
+&nbsp;<br>
+Examples<br>
+--------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;<a href="#-fl_set_choices_shortcut">fl_set_choices_shortcut</a>("a",&nbsp;"B",&nbsp;"^C")<br>
+&nbsp;<br>
+Notes<br>
+-----<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
+ <dl><dt><a name="-fl_set_command_log_position"><strong>fl_set_command_log_position</strong></a>(x, y)</dt><dd><tt><a href="#-fl_set_command_log_position">fl_set_command_log_position</a>(x,&nbsp;y)<br>
+&nbsp;<br>
+Changes&nbsp;the&nbsp;default&nbsp;placement&nbsp;of&nbsp;the&nbsp;command&nbsp;log.<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;x&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;horizontal&nbsp;position&nbsp;(upper-left&nbsp;corner)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;y&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;vertical&nbsp;position&nbsp;(upper-left&nbsp;corner)<br>
+&nbsp;<br>
+Examples<br>
+--------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;<a href="#-fl_set_command_log_position">fl_set_command_log_position</a>(174,&nbsp;288)<br>
+&nbsp;<br>
+Notes<br>
+-----<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
+ <dl><dt><a name="-fl_set_directory"><strong>fl_set_directory</strong></a>(dirname)</dt><dd><tt><a href="#-fl_set_directory">fl_set_directory</a>(dirname)<br>
+&nbsp;<br>
+Sets&nbsp;programmatically&nbsp;new&nbsp;value&nbsp;for&nbsp;the&nbsp;default&nbsp;directory.<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;dirname&nbsp;:&nbsp;str<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;name&nbsp;of&nbsp;directory&nbsp;to&nbsp;be&nbsp;set<br>
+&nbsp;<br>
+Returns<br>
+-------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;result&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;0&nbsp;on&nbsp;success,&nbsp;or&nbsp;1&nbsp;(on&nbsp;failure)<br>
+&nbsp;<br>
+Examples<br>
+--------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;sth&nbsp;=&nbsp;<a href="#-fl_set_directory">fl_set_directory</a>("/home/userdir/blabla")<br>
+&nbsp;<br>
+Notes<br>
+-----<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
+ <dl><dt><a name="-fl_set_fselector_border"><strong>fl_set_fselector_border</strong></a>(border)</dt><dd><tt><a href="#-fl_set_fselector_border">fl_set_fselector_border</a>(border)<br>
+&nbsp;<br>
+Changes&nbsp;the&nbsp;border&nbsp;of&nbsp;file&nbsp;selector.&nbsp;By&nbsp;default&nbsp;it&nbsp;is&nbsp;displayed&nbsp;with<br>
+transient&nbsp;property&nbsp;set&nbsp;(FL_NOBORDER&nbsp;is&nbsp;ignored).<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;border&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;window&nbsp;manager&nbsp;decoration.&nbsp;Values&nbsp;(from&nbsp;xfdata.py)&nbsp;FL_FULLBORDER,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_TRANSIENT,&nbsp;FL_NOBORDER<br>
+&nbsp;<br>
+Examples<br>
+--------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;<a href="#-fl_set_fselector_border">fl_set_fselector_border</a>(xfdata.FL_FULLBORDER)<br>
+&nbsp;<br>
+Notes<br>
+-----<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
+ <dl><dt><a name="-fl_set_fselector_callback"><strong>fl_set_fselector_callback</strong></a>(py_FSCB, vdata)</dt><dd><tt><a href="#-fl_set_fselector_callback">fl_set_fselector_callback</a>(py_FSCB,&nbsp;vdata)<br>
+&nbsp;<br>
+Sets&nbsp;a&nbsp;callback&nbsp;routine&nbsp;so&nbsp;that&nbsp;whenever&nbsp;the&nbsp;user&nbsp;double&nbsp;clicks&nbsp;on&nbsp;a<br>
+filename,&nbsp;instead&nbsp;of&nbsp;returning&nbsp;the&nbsp;filename,&nbsp;this&nbsp;routine&nbsp;is&nbsp;invoked<br>
+with&nbsp;the&nbsp;filename&nbsp;as&nbsp;the&nbsp;argument.&nbsp;The&nbsp;behavior&nbsp;of&nbsp;the&nbsp;file&nbsp;selector&nbsp;is<br>
+slightly&nbsp;different&nbsp;when&nbsp;a&nbsp;callback&nbsp;is&nbsp;present.&nbsp;Without&nbsp;the&nbsp;callback,&nbsp;a<br>
+file&nbsp;selector&nbsp;is&nbsp;always&nbsp;modal.&nbsp;Please&nbsp;note&nbsp;that&nbsp;when&nbsp;a&nbsp;file&nbsp;selector&nbsp;has<br>
+a&nbsp;callback&nbsp;installed&nbsp;the&nbsp;field&nbsp;for&nbsp;manually&nbsp;entering&nbsp;a&nbsp;file&nbsp;name&nbsp;is&nbsp;not<br>
+shown.<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;py_FSCB&nbsp;:&nbsp;python&nbsp;function&nbsp;callback,&nbsp;returning&nbsp;(unused)&nbsp;value<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;name&nbsp;referring&nbsp;to&nbsp;function(string,&nbsp;vdata)&nbsp;-&gt;&nbsp;num<br>
+&nbsp;&nbsp;&nbsp;&nbsp;vdata&nbsp;:&nbsp;any&nbsp;type&nbsp;(e.g.&nbsp;'None',&nbsp;int,&nbsp;str,&nbsp;etc..)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;user&nbsp;data&nbsp;to&nbsp;be&nbsp;passed&nbsp;to&nbsp;function;&nbsp;callback&nbsp;has&nbsp;to&nbsp;take&nbsp;care<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;of&nbsp;type&nbsp;check.<br>
+&nbsp;<br>
+Examples<br>
+--------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;def&nbsp;fsel_cb(fname,&nbsp;cvoidp):<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;...&nbsp;&lt;something&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;...&nbsp;return&nbsp;UnusedVal<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;<a href="#-fl_set_fselector_callback">fl_set_fselector_callback</a>(fsel_cb,&nbsp;None)<br>
+&nbsp;<br>
+Notes<br>
+-----<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;Demo&nbsp;=&nbsp;OK</tt></dd></dl>
+ <dl><dt><a name="-fl_set_fselector_cb"><strong>fl_set_fselector_cb</strong></a> = fl_set_fselector_callback(py_FSCB, vdata)</dt><dd><tt><a href="#-fl_set_fselector_callback">fl_set_fselector_callback</a>(py_FSCB,&nbsp;vdata)<br>
+&nbsp;<br>
+Sets&nbsp;a&nbsp;callback&nbsp;routine&nbsp;so&nbsp;that&nbsp;whenever&nbsp;the&nbsp;user&nbsp;double&nbsp;clicks&nbsp;on&nbsp;a<br>
+filename,&nbsp;instead&nbsp;of&nbsp;returning&nbsp;the&nbsp;filename,&nbsp;this&nbsp;routine&nbsp;is&nbsp;invoked<br>
+with&nbsp;the&nbsp;filename&nbsp;as&nbsp;the&nbsp;argument.&nbsp;The&nbsp;behavior&nbsp;of&nbsp;the&nbsp;file&nbsp;selector&nbsp;is<br>
+slightly&nbsp;different&nbsp;when&nbsp;a&nbsp;callback&nbsp;is&nbsp;present.&nbsp;Without&nbsp;the&nbsp;callback,&nbsp;a<br>
+file&nbsp;selector&nbsp;is&nbsp;always&nbsp;modal.&nbsp;Please&nbsp;note&nbsp;that&nbsp;when&nbsp;a&nbsp;file&nbsp;selector&nbsp;has<br>
+a&nbsp;callback&nbsp;installed&nbsp;the&nbsp;field&nbsp;for&nbsp;manually&nbsp;entering&nbsp;a&nbsp;file&nbsp;name&nbsp;is&nbsp;not<br>
+shown.<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;py_FSCB&nbsp;:&nbsp;python&nbsp;function&nbsp;callback,&nbsp;returning&nbsp;(unused)&nbsp;value<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;name&nbsp;referring&nbsp;to&nbsp;function(string,&nbsp;vdata)&nbsp;-&gt;&nbsp;num<br>
+&nbsp;&nbsp;&nbsp;&nbsp;vdata&nbsp;:&nbsp;any&nbsp;type&nbsp;(e.g.&nbsp;'None',&nbsp;int,&nbsp;str,&nbsp;etc..)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;user&nbsp;data&nbsp;to&nbsp;be&nbsp;passed&nbsp;to&nbsp;function;&nbsp;callback&nbsp;has&nbsp;to&nbsp;take&nbsp;care<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;of&nbsp;type&nbsp;check.<br>
+&nbsp;<br>
+Examples<br>
+--------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;def&nbsp;fsel_cb(fname,&nbsp;cvoidp):<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;...&nbsp;&lt;something&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;...&nbsp;return&nbsp;UnusedVal<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;<a href="#-fl_set_fselector_callback">fl_set_fselector_callback</a>(fsel_cb,&nbsp;None)<br>
+&nbsp;<br>
+Notes<br>
+-----<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;Demo&nbsp;=&nbsp;OK</tt></dd></dl>
+ <dl><dt><a name="-fl_set_fselector_filetype_marker"><strong>fl_set_fselector_filetype_marker</strong></a>(dirmk, fifomk, sockmk, cdevmk, bdevmk)</dt><dd><tt><a href="#-fl_set_fselector_filetype_marker">fl_set_fselector_filetype_marker</a>(dirmk,&nbsp;fifomk,&nbsp;sockmk,&nbsp;cdevmk,<br>
+bdevmk)<br>
+&nbsp;<br>
+Changes&nbsp;the&nbsp;prefix&nbsp;by&nbsp;which&nbsp;the&nbsp;listing&nbsp;of&nbsp;files&nbsp;in&nbsp;a&nbsp;directory&nbsp;special<br>
+files&nbsp;are&nbsp;marked&nbsp;with&nbsp;in&nbsp;browser.&nbsp;By&nbsp;default&nbsp;D&nbsp;is&nbsp;used&nbsp;for&nbsp;directories,<br>
+p&nbsp;for&nbsp;pipes&nbsp;etc.)<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;dirmk&nbsp;:&nbsp;int&nbsp;or&nbsp;char<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;marker&nbsp;character&nbsp;for&nbsp;directories<br>
+&nbsp;&nbsp;&nbsp;&nbsp;fifomk&nbsp;:&nbsp;int&nbsp;or&nbsp;char<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;marker&nbsp;for&nbsp;pipes&nbsp;and&nbsp;FIFOs<br>
+&nbsp;&nbsp;&nbsp;&nbsp;sockmk&nbsp;:&nbsp;int&nbsp;or&nbsp;char<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;marker&nbsp;for&nbsp;sockets<br>
+&nbsp;&nbsp;&nbsp;&nbsp;cdevmk&nbsp;:&nbsp;int&nbsp;or&nbsp;char<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;marker&nbsp;for&nbsp;character&nbsp;device&nbsp;files<br>
+&nbsp;&nbsp;&nbsp;&nbsp;bdevmk&nbsp;:&nbsp;int&nbsp;or&nbsp;char<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;marker&nbsp;character&nbsp;for&nbsp;block&nbsp;device&nbsp;files<br>
+&nbsp;<br>
+Examples<br>
+--------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;<a href="#-fl_set_fselector_filetype_marker">fl_set_fselector_filetype_marker</a>('d',&nbsp;'P',&nbsp;'S',&nbsp;'V',&nbsp;'b')<br>
+&nbsp;<br>
+Notes<br>
+-----<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
+ <dl><dt><a name="-fl_set_fselector_fontsize"><strong>fl_set_fselector_fontsize</strong></a>(size)</dt><dd><tt><a href="#-fl_set_fselector_fontsize">fl_set_fselector_fontsize</a>(size)<br>
+&nbsp;<br>
+Changes&nbsp;the&nbsp;font&nbsp;size&nbsp;of&nbsp;a&nbsp;file&nbsp;selector.<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;size&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;label&nbsp;size.&nbsp;Values&nbsp;(from&nbsp;xfdata.py)&nbsp;FL_TINY_SIZE,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_SMALL_SIZE,&nbsp;FL_NORMAL_SIZE,&nbsp;FL_MEDIUM_SIZE,&nbsp;FL_LARGE_SIZE,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_HUGE_SIZE,&nbsp;FL_DEFAULT_SIZE<br>
+&nbsp;<br>
+Examples<br>
+--------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;<a href="#-fl_set_fselector_fontsize">fl_set_fselector_fontsize</a>(xfdata.TINY_SIZE)<br>
+&nbsp;<br>
+Notes<br>
+-----<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
+ <dl><dt><a name="-fl_set_fselector_fontstyle"><strong>fl_set_fselector_fontstyle</strong></a>(style)</dt><dd><tt><a href="#-fl_set_fselector_fontstyle">fl_set_fselector_fontstyle</a>(style)<br>
+&nbsp;<br>
+Changes&nbsp;the&nbsp;font&nbsp;style&nbsp;of&nbsp;a&nbsp;file&nbsp;selector.<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;style&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;label&nbsp;style.&nbsp;Values&nbsp;(from&nbsp;xfdata.py)&nbsp;FL_NORMAL_STYLE,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_BOLD_STYLE,&nbsp;FL_ITALIC_STYLE,&nbsp;FL_BOLDITALIC_STYLE,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_FIXED_STYLE,&nbsp;FL_FIXEDBOLD_STYLE,&nbsp;FL_FIXEDITALIC_STYLE,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_FIXEDBOLDITALIC_STYLE,&nbsp;FL_TIMES_STYLE,&nbsp;FL_TIMESBOLD_STYLE,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_TIMESITALIC_STYLE,&nbsp;FL_TIMESBOLDITALIC_STYLE,&nbsp;FL_MISC_STYLE,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_MISCBOLD_STYLE,&nbsp;FL_MISCITALIC_STYLE,&nbsp;FL_SYMBOL_STYLE,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_SHADOW_STYLE,&nbsp;FL_ENGRAVED_STYLE,&nbsp;FL_EMBOSSED_STYLE<br>
+&nbsp;<br>
+Examples<br>
+--------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;<a href="#-fl_set_fselector_fontstyle">fl_set_fselector_fontstyle</a>(xfdata.FL_SHADOW_STYLE)<br>
+&nbsp;<br>
+Notes<br>
+-----<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
+ <dl><dt><a name="-fl_set_fselector_placement"><strong>fl_set_fselector_placement</strong></a>(place)</dt><dd><tt><a href="#-fl_set_fselector_placement">fl_set_fselector_placement</a>(place)<br>
+&nbsp;<br>
+Sets&nbsp;the&nbsp;placement&nbsp;of&nbsp;the&nbsp;file&nbsp;selector.&nbsp;By&nbsp;default&nbsp;it&nbsp;is&nbsp;centered<br>
+on&nbsp;the&nbsp;screen&nbsp;(FL_PLACE_CENTER|FL_FREE_SIZE).<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;place&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;where&nbsp;to&nbsp;place&nbsp;it.&nbsp;Values&nbsp;(from&nbsp;xfdata.py)&nbsp;FL_PLACE_FREE,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_PLACE_MOUSE,&nbsp;FL_PLACE_CENTER,&nbsp;FL_PLACE_POSITION,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_PLACE_SIZE,&nbsp;FL_PLACE_GEOMETRY,&nbsp;FL_PLACE_ASPECT,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_PLACE_FULLSCREEN,&nbsp;FL_PLACE_HOTSPOT,&nbsp;FL_PLACE_ICONIC,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_FREE_SIZE,&nbsp;FL_PLACE_FREE_CENTER,&nbsp;FL_PLACE_CENTERFREE,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_PLACE_MOUSE|FL_FREE_SIZE,&nbsp;FL_PLACE_FULLSCREEN|FL_FREE_SIZE,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_PLACE_HOTSPOT|FL_FREE_SIZE<br>
+&nbsp;<br>
+Examples<br>
+--------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;<a href="#-fl_set_fselector_placement">fl_set_fselector_placement</a>(xfdata.FL_PLACE_HOTSPOT)<br>
+&nbsp;<br>
+Notes<br>
+-----<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;Demo&nbsp;=&nbsp;OK</tt></dd></dl>
+ <dl><dt><a name="-fl_set_fselector_title"><strong>fl_set_fselector_title</strong></a>(title)</dt><dd><tt><a href="#-fl_set_fselector_title">fl_set_fselector_title</a>(title)<br>
+&nbsp;<br>
+Sets&nbsp;the&nbsp;title&nbsp;of&nbsp;a&nbsp;file&nbsp;selector.<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;title&nbsp;:&nbsp;str<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;title&nbsp;to&nbsp;be&nbsp;set<br>
+&nbsp;<br>
+Examples<br>
+--------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;<a href="#-fl_set_fselector_title">fl_set_fselector_title</a>("My&nbsp;own&nbsp;title&nbsp;of&nbsp;F.S.")<br>
+&nbsp;<br>
+Notes<br>
+-----<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
+ <dl><dt><a name="-fl_set_fselector_transient"><strong>fl_set_fselector_transient</strong></a>(yesno)</dt><dd><tt><a href="#-fl_set_fselector_transient">fl_set_fselector_transient</a>(yesno)<br>
+&nbsp;<br>
+Sets&nbsp;the&nbsp;property&nbsp;of&nbsp;file&nbsp;selector&nbsp;as&nbsp;transient&nbsp;or&nbsp;fullborder.<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;yesno&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;flag&nbsp;if&nbsp;transient&nbsp;or&nbsp;not.&nbsp;Values&nbsp;1&nbsp;(transient)&nbsp;or&nbsp;0<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(not&nbsp;transient)<br>
+&nbsp;<br>
+Examples<br>
+--------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;<a href="#-fl_set_fselector_transient">fl_set_fselector_transient</a>(0)<br>
+&nbsp;<br>
+Notes<br>
+-----<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
+ <dl><dt><a name="-fl_set_goodies_font"><strong>fl_set_goodies_font</strong></a>(style, size)</dt><dd><tt><a href="#-fl_set_goodies_font">fl_set_goodies_font</a>(style,&nbsp;size)<br>
+&nbsp;<br>
+Changes&nbsp;the&nbsp;font&nbsp;used&nbsp;in&nbsp;all&nbsp;messages.<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;style&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;goodies&nbsp;style.&nbsp;Values&nbsp;(from&nbsp;xfdata.py)&nbsp;FL_NORMAL_STYLE,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_BOLD_STYLE,&nbsp;FL_ITALIC_STYLE,&nbsp;FL_BOLDITALIC_STYLE,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_FIXED_STYLE,&nbsp;FL_FIXEDBOLD_STYLE,&nbsp;FL_FIXEDITALIC_STYLE,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_FIXEDBOLDITALIC_STYLE,&nbsp;FL_TIMES_STYLE,&nbsp;FL_TIMESBOLD_STYLE,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_TIMESITALIC_STYLE,&nbsp;FL_TIMESBOLDITALIC_STYLE,&nbsp;FL_MISC_STYLE,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_MISCBOLD_STYLE,&nbsp;FL_MISCITALIC_STYLE,&nbsp;FL_SYMBOL_STYLE,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_SHADOW_STYLE,&nbsp;FL_ENGRAVED_STYLE,&nbsp;FL_EMBOSSED_STYLE<br>
+&nbsp;&nbsp;&nbsp;&nbsp;size&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;goodies&nbsp;size.&nbsp;Values&nbsp;(from&nbsp;xfdata.py)&nbsp;FL_TINY_SIZE,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_SMALL_SIZE,&nbsp;FL_NORMAL_SIZE,&nbsp;FL_MEDIUM_SIZE,&nbsp;FL_LARGE_SIZE,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_HUGE_SIZE,&nbsp;FL_DEFAULT_SIZE<br>
+&nbsp;<br>
+Examples<br>
+--------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;<a href="#-fl_set_goodies_font">fl_set_goodies_font</a>(xfdata.FL_BOLD_STYLE,&nbsp;xfdata.FL_MEDIUM_SIZE)<br>
+&nbsp;<br>
+Notes<br>
+-----<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;Demo&nbsp;=&nbsp;OK</tt></dd></dl>
+ <dl><dt><a name="-fl_set_oneliner_color"><strong>fl_set_oneliner_color</strong></a>(fgcolr, bgcolr)</dt><dd><tt><a href="#-fl_set_oneliner_color">fl_set_oneliner_color</a>(fgcolr,&nbsp;bgcolr)<br>
+&nbsp;<br>
+Sets&nbsp;color&nbsp;to&nbsp;use&nbsp;with&nbsp;oneliner&nbsp;message.&nbsp;By&nbsp;default,&nbsp;the&nbsp;background<br>
+of&nbsp;the&nbsp;message&nbsp;is&nbsp;yellow&nbsp;and&nbsp;the&nbsp;text&nbsp;black.<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;fgcolr&nbsp;:&nbsp;long_pos<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;color&nbsp;value&nbsp;for&nbsp;oneliner&nbsp;foreground<br>
+&nbsp;&nbsp;&nbsp;&nbsp;bgcolr&nbsp;:&nbsp;long_pos<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;color&nbsp;value&nbsp;for&nbsp;oneliner&nbsp;background<br>
+&nbsp;<br>
+Examples<br>
+--------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;<a href="#-fl_set_oneliner_color">fl_set_oneliner_color</a>(fgcolr,&nbsp;bgcolr)<br>
+&nbsp;<br>
+Notes<br>
+-----<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
+ <dl><dt><a name="-fl_set_oneliner_font"><strong>fl_set_oneliner_font</strong></a>(style, size)</dt><dd><tt><a href="#-fl_set_oneliner_font">fl_set_oneliner_font</a>(style,&nbsp;size)<br>
+&nbsp;<br>
+Sets&nbsp;font&nbsp;style&nbsp;and&nbsp;size&nbsp;to&nbsp;use&nbsp;in&nbsp;a&nbsp;oneliner&nbsp;message.<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;style&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;label&nbsp;style.&nbsp;Values&nbsp;(from&nbsp;xfdata.py)&nbsp;FL_NORMAL_STYLE,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_BOLD_STYLE,&nbsp;FL_ITALIC_STYLE,&nbsp;FL_BOLDITALIC_STYLE,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_FIXED_STYLE,&nbsp;FL_FIXEDBOLD_STYLE,&nbsp;FL_FIXEDITALIC_STYLE,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_FIXEDBOLDITALIC_STYLE,&nbsp;FL_TIMES_STYLE,&nbsp;FL_TIMESBOLD_STYLE,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_TIMESITALIC_STYLE,&nbsp;FL_TIMESBOLDITALIC_STYLE,&nbsp;FL_MISC_STYLE,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_MISCBOLD_STYLE,&nbsp;FL_MISCITALIC_STYLE,&nbsp;FL_SYMBOL_STYLE,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_SHADOW_STYLE,&nbsp;FL_ENGRAVED_STYLE,&nbsp;FL_EMBOSSED_STYLE<br>
+&nbsp;&nbsp;&nbsp;&nbsp;size&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;label&nbsp;size.&nbsp;Values&nbsp;(from&nbsp;xfdata.py)&nbsp;FL_TINY_SIZE,&nbsp;FL_SMALL_SIZE,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_NORMAL_SIZE,&nbsp;FL_MEDIUM_SIZE,&nbsp;FL_LARGE_SIZE,&nbsp;FL_HUGE_SIZE,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_DEFAULT_SIZE<br>
+&nbsp;<br>
+Examples<br>
+--------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;<a href="#-fl_set_oneliner_font">fl_set_oneliner_font</a>(FL_BOLD_STYLE,&nbsp;FL_NORMAL_SIZE)<br>
+&nbsp;<br>
+Notes<br>
+-----<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
+ <dl><dt><a name="-fl_set_pattern"><strong>fl_set_pattern</strong></a>(pattern)</dt><dd><tt><a href="#-fl_set_pattern">fl_set_pattern</a>(pattern)<br>
+&nbsp;<br>
+Sets&nbsp;programmatically&nbsp;a&nbsp;new&nbsp;value&nbsp;for&nbsp;the&nbsp;default&nbsp;pattern.<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;pattern&nbsp;:&nbsp;str<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;text&nbsp;to&nbsp;be&nbsp;used&nbsp;for&nbsp;pattern<br>
+&nbsp;<br>
+Examples<br>
+--------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;<a href="#-fl_set_pattern">fl_set_pattern</a>("\*.txt")<br>
+&nbsp;<br>
+Notes<br>
+-----<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
+ <dl><dt><a name="-fl_set_tooltip_boxtype"><strong>fl_set_tooltip_boxtype</strong></a>(boxtype)</dt><dd><tt><a href="#-fl_set_tooltip_boxtype">fl_set_tooltip_boxtype</a>(boxtype)<br>
+&nbsp;<br>
+Sets&nbsp;the&nbsp;boxtype&nbsp;of&nbsp;the&nbsp;tooltip.<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;boxtype&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;type&nbsp;of&nbsp;the&nbsp;box&nbsp;to&nbsp;be&nbsp;added.&nbsp;Values&nbsp;(from&nbsp;xfdata.py)&nbsp;FL_NO_BOX,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_UP_BOX,&nbsp;FL_DOWN_BOX,&nbsp;FL_BORDER_BOX,&nbsp;FL_SHADOW_BOX,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_FRAME_BOX,&nbsp;FL_ROUNDED_BOX,&nbsp;FL_EMBOSSED_BOX,&nbsp;FL_FLAT_BOX,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_RFLAT_BOX,&nbsp;FL_RSHADOW_BOX,&nbsp;FL_OVAL_BOX,&nbsp;FL_ROUNDED3D_UPBOX,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_ROUNDED3D_DOWNBOX,&nbsp;FL_OVAL3D_UPBOX,&nbsp;FL_OVAL3D_DOWNBOX,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_OVAL3D_FRAMEBOX,&nbsp;FL_OVAL3D_EMBOSSEDBOX<br>
+&nbsp;<br>
+Examples<br>
+--------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;<a href="#-fl_set_tooltip_boxtype">fl_set_tooltip_boxtype</a>(xfdata.FL_OVAL3D_DOWNBOX)<br>
+&nbsp;<br>
+Notes<br>
+-----<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
+ <dl><dt><a name="-fl_set_tooltip_color"><strong>fl_set_tooltip_color</strong></a>(fgcolr, bgcolr)</dt><dd><tt><a href="#-fl_set_tooltip_color">fl_set_tooltip_color</a>(fgcolr,&nbsp;bgcolr)<br>
+&nbsp;<br>
+Sets&nbsp;the&nbsp;foreground&nbsp;and&nbsp;the&nbsp;background&nbsp;colors&nbsp;of&nbsp;the&nbsp;tooltip.<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;fgcolr&nbsp;:&nbsp;long_pos<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;foreground&nbsp;color&nbsp;value<br>
+&nbsp;&nbsp;&nbsp;&nbsp;bgcolr&nbsp;:&nbsp;long_pos<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;background&nbsp;color&nbsp;value<br>
+&nbsp;<br>
+Examples<br>
+--------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;<a href="#-fl_set_tooltip_color">fl_set_tooltip_color</a>(xfdata.FL_BLUE,&nbsp;xfdata.FL_VIOLET)<br>
+&nbsp;<br>
+Notes<br>
+-----<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
+ <dl><dt><a name="-fl_set_tooltip_font"><strong>fl_set_tooltip_font</strong></a>(style, size)</dt><dd><tt><a href="#-fl_set_tooltip_font">fl_set_tooltip_font</a>(style,&nbsp;size)<br>
+&nbsp;<br>
+Sets&nbsp;the&nbsp;font&nbsp;style&nbsp;and&nbsp;size&nbsp;of&nbsp;the&nbsp;tooltip.<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;style&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;label&nbsp;style.&nbsp;Values&nbsp;(from&nbsp;xfdata.py)&nbsp;FL_NORMAL_STYLE,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_BOLD_STYLE,&nbsp;FL_ITALIC_STYLE,&nbsp;FL_BOLDITALIC_STYLE,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_FIXED_STYLE,&nbsp;FL_FIXEDBOLD_STYLE,&nbsp;FL_FIXEDITALIC_STYLE,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_FIXEDBOLDITALIC_STYLE,&nbsp;FL_TIMES_STYLE,&nbsp;FL_TIMESBOLD_STYLE,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_TIMESITALIC_STYLE,&nbsp;FL_TIMESBOLDITALIC_STYLE,&nbsp;FL_MISC_STYLE,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_MISCBOLD_STYLE,&nbsp;FL_MISCITALIC_STYLE,&nbsp;FL_SYMBOL_STYLE,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_SHADOW_STYLE,&nbsp;FL_ENGRAVED_STYLE,&nbsp;FL_EMBOSSED_STYLE<br>
+&nbsp;&nbsp;&nbsp;&nbsp;size&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;label&nbsp;size.&nbsp;Values&nbsp;(from&nbsp;xfdata.py)&nbsp;FL_TINY_SIZE,&nbsp;FL_SMALL_SIZE,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_NORMAL_SIZE,&nbsp;FL_MEDIUM_SIZE,&nbsp;FL_LARGE_SIZE,&nbsp;FL_HUGE_SIZE,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_DEFAULT_SIZE<br>
+&nbsp;<br>
+Examples<br>
+--------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;<a href="#-fl_set_tooltip_font">fl_set_tooltip_font</a>(xfdata.FL_SHADOW_STYLE,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;xfdata.FL_DEFAULT_SIZE)<br>
+&nbsp;<br>
+Notes<br>
+-----<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
+ <dl><dt><a name="-fl_set_tooltip_lalign"><strong>fl_set_tooltip_lalign</strong></a>(align)</dt><dd><tt><a href="#-fl_set_tooltip_lalign">fl_set_tooltip_lalign</a>(align)<br>
+&nbsp;<br>
+Sets&nbsp;the&nbsp;alignment&nbsp;of&nbsp;the&nbsp;tooltip.<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;align&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;alignment&nbsp;of&nbsp;tooltip.&nbsp;Values&nbsp;(from&nbsp;xfdata.py)&nbsp;FL_ALIGN_CENTER,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_ALIGN_TOP,&nbsp;FL_ALIGN_BOTTOM,&nbsp;FL_ALIGN_LEFT,&nbsp;FL_ALIGN_RIGHT,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_ALIGN_LEFT_TOP,&nbsp;FL_ALIGN_RIGHT_TOP,&nbsp;FL_ALIGN_LEFT_BOTTOM,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_ALIGN_RIGHT_BOTTOM,&nbsp;FL_ALIGN_INSIDE,&nbsp;FL_ALIGN_VERT.&nbsp;Bitwise<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OR&nbsp;with&nbsp;FL_ALIGN_INSIDE&nbsp;is&nbsp;allowed.<br>
+&nbsp;<br>
+Examples<br>
+--------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;<a href="#-fl_set_tooltip_lalign">fl_set_tooltip_lalign</a>(xfdata.FL_ALIGN_RIGHT_TOP)<br>
+&nbsp;<br>
+Notes<br>
+-----<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
+ <dl><dt><a name="-fl_show_alert"><strong>fl_show_alert</strong></a>(title, msg1, msg2, centered)</dt><dd><tt><a href="#-fl_show_alert">fl_show_alert</a>(title,&nbsp;msg1,&nbsp;msg2,&nbsp;centered)<br>
+&nbsp;<br>
+Shows&nbsp;an&nbsp;alert&nbsp;message,&nbsp;with&nbsp;an&nbsp;alert&nbsp;icon&nbsp;(!)&nbsp;is&nbsp;added&nbsp;and&nbsp;the<br>
+first&nbsp;string&nbsp;is&nbsp;shown&nbsp;bold-faced.<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;title&nbsp;:&nbsp;str<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;title&nbsp;of&nbsp;alert<br>
+&nbsp;&nbsp;&nbsp;&nbsp;msg1&nbsp;:&nbsp;str<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;first&nbsp;message&nbsp;text<br>
+&nbsp;&nbsp;&nbsp;&nbsp;msg2&nbsp;:&nbsp;str<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;other&nbsp;message&nbsp;text<br>
+&nbsp;&nbsp;&nbsp;&nbsp;centered&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if&nbsp;alert&nbsp;has&nbsp;to&nbsp;be&nbsp;displayed&nbsp;centered&nbsp;on&nbsp;the&nbsp;screen&nbsp;or&nbsp;not.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Values&nbsp;1&nbsp;(if&nbsp;centered)&nbsp;or&nbsp;0&nbsp;(not&nbsp;centered)<br>
+&nbsp;<br>
+Examples<br>
+--------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;<a href="#-fl_show_alert">fl_show_alert</a>("My&nbsp;title",&nbsp;"first&nbsp;text",&nbsp;"second&nbsp;text",&nbsp;1)<br>
+&nbsp;<br>
+Notes<br>
+-----<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;Demo&nbsp;=&nbsp;OK</tt></dd></dl>
+ <dl><dt><a name="-fl_show_alert2"><strong>fl_show_alert2</strong></a>(centered, fmttxt)</dt><dd><tt><a href="#-fl_show_alert2">fl_show_alert2</a>(centered,&nbsp;fmttxt)<br>
+&nbsp;<br>
+Shows&nbsp;a&nbsp;formatted&nbsp;alert&nbsp;message.&nbsp;The&nbsp;string&nbsp;resulting&nbsp;from&nbsp;expansion<br>
+of&nbsp;the&nbsp;format&nbsp;string&nbsp;using&nbsp;the&nbsp;rest&nbsp;of&nbsp;the&nbsp;arguments&nbsp;can&nbsp;have&nbsp;arbitrary<br>
+length&nbsp;and&nbsp;the&nbsp;first&nbsp;embedded&nbsp;form-feed&nbsp;character&nbsp;(backslash-f)&nbsp;is&nbsp;used<br>
+as&nbsp;the&nbsp;separator&nbsp;between&nbsp;the&nbsp;title&nbsp;string&nbsp;and&nbsp;the&nbsp;message&nbsp;of&nbsp;the&nbsp;alert<br>
+box.&nbsp;Embedded&nbsp;newline&nbsp;characters&nbsp;produce&nbsp;lines&nbsp;break.<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;centered&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if&nbsp;alert&nbsp;has&nbsp;to&nbsp;be&nbsp;displayed&nbsp;centered&nbsp;on&nbsp;the&nbsp;screen&nbsp;or&nbsp;not.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Values&nbsp;1&nbsp;(if&nbsp;centered)&nbsp;or&nbsp;0&nbsp;(not&nbsp;centered)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;fmttxt&nbsp;:&nbsp;str<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;formatted&nbsp;message&nbsp;text<br>
+&nbsp;<br>
+Examples<br>
+--------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;<a href="#-fl_show_alert2">fl_show_alert2</a>(1,&nbsp;"formatted&nbsp;text&nbsp;%s&nbsp;%d"&nbsp;%&nbsp;(mystr,&nbsp;myval))<br>
+&nbsp;<br>
+Notes<br>
+-----<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
+ <dl><dt><a name="-fl_show_choice"><strong>fl_show_choice</strong></a>(msg1txt, msg2txt, msg3txt, numb, btn1txt, btn2txt, btn3txt, defcho)</dt><dd><tt><a href="#-fl_show_choice">fl_show_choice</a>(msg1txt,&nbsp;msg2txt,&nbsp;msg3txt,&nbsp;numb,&nbsp;btn1txt,&nbsp;btn2txt,<br>
+btn3txt,&nbsp;defcho)<br>
+&nbsp;<br>
+Shows&nbsp;a&nbsp;message,&nbsp;up&nbsp;to&nbsp;three&nbsp;lines,&nbsp;with&nbsp;one,&nbsp;two&nbsp;or&nbsp;three&nbsp;buttons.<br>
+The&nbsp;user&nbsp;can&nbsp;also&nbsp;press&nbsp;the&nbsp;&lt;1&gt;,&nbsp;&lt;2&gt;&nbsp;or&nbsp;&lt;3&gt;&nbsp;key&nbsp;to&nbsp;indicate&nbsp;the&nbsp;first,<br>
+second,&nbsp;or&nbsp;third&nbsp;button.<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;msg1txt&nbsp;:&nbsp;str<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;first&nbsp;message&nbsp;text<br>
+&nbsp;&nbsp;&nbsp;&nbsp;msg2txt&nbsp;:&nbsp;str<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;second&nbsp;message&nbsp;text<br>
+&nbsp;&nbsp;&nbsp;&nbsp;msg3txt&nbsp;:&nbsp;str<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;third&nbsp;message&nbsp;text<br>
+&nbsp;&nbsp;&nbsp;&nbsp;numb&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;number&nbsp;of&nbsp;buttons<br>
+&nbsp;&nbsp;&nbsp;&nbsp;btn1txt&nbsp;:&nbsp;str<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;label&nbsp;of&nbsp;first&nbsp;button&nbsp;from&nbsp;the&nbsp;left<br>
+&nbsp;&nbsp;&nbsp;&nbsp;btn2txt&nbsp;:&nbsp;str<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;label&nbsp;of&nbsp;second&nbsp;button&nbsp;from&nbsp;the&nbsp;left<br>
+&nbsp;&nbsp;&nbsp;&nbsp;btn3txt&nbsp;:&nbsp;str<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;label&nbsp;of&nbsp;first&nbsp;button&nbsp;from&nbsp;the&nbsp;right<br>
+&nbsp;&nbsp;&nbsp;&nbsp;defcho&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;default&nbsp;choice&nbsp;(1,&nbsp;2&nbsp;or&nbsp;3)<br>
+&nbsp;<br>
+Returns<br>
+-------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;btnnum&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;number&nbsp;of&nbsp;the&nbsp;button&nbsp;pressed&nbsp;(1,&nbsp;2&nbsp;or&nbsp;3)<br>
+&nbsp;<br>
+Examples<br>
+--------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;pressbtn&nbsp;=&nbsp;<a href="#-fl_show_choices">fl_show_choices</a>("some&nbsp;message",&nbsp;"some&nbsp;other",<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"the&nbsp;end",&nbsp;3,&nbsp;"1st",&nbsp;"2nd",&nbsp;"3rd",&nbsp;1)<br>
+&nbsp;<br>
+Notes<br>
+-----<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;Demo&nbsp;=&nbsp;OK</tt></dd></dl>
+ <dl><dt><a name="-fl_show_choices"><strong>fl_show_choices</strong></a>(msgtxt, numb, btn1txt, btn2txt, btn3txt, defcho)</dt><dd><tt><a href="#-fl_show_choices">fl_show_choices</a>(msgtxt,&nbsp;numb,&nbsp;btn1txt,&nbsp;btn2txt,&nbsp;btn3txt,&nbsp;defcho)<br>
+&nbsp;<br>
+Shows&nbsp;a&nbsp;message,&nbsp;as&nbsp;a&nbsp;single&nbsp;string&nbsp;with&nbsp;possible&nbsp;embedded&nbsp;newlines,<br>
+with&nbsp;one,&nbsp;two&nbsp;or&nbsp;three&nbsp;buttons.&nbsp;The&nbsp;user&nbsp;can&nbsp;also&nbsp;press&nbsp;the&nbsp;&lt;1&gt;,&nbsp;&lt;2&gt;&nbsp;or<br>
+&lt;3&gt;&nbsp;key&nbsp;to&nbsp;indicate&nbsp;the&nbsp;first,&nbsp;second,&nbsp;or&nbsp;third&nbsp;button.<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;msgtxt&nbsp;:&nbsp;str<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;message&nbsp;text<br>
+&nbsp;&nbsp;&nbsp;&nbsp;numb&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;number&nbsp;of&nbsp;buttons<br>
+&nbsp;&nbsp;&nbsp;&nbsp;btn1txt&nbsp;:&nbsp;str<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;label&nbsp;of&nbsp;first&nbsp;button&nbsp;from&nbsp;the&nbsp;left<br>
+&nbsp;&nbsp;&nbsp;&nbsp;btn2txt&nbsp;:&nbsp;str<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;label&nbsp;of&nbsp;second&nbsp;button&nbsp;from&nbsp;the&nbsp;left<br>
+&nbsp;&nbsp;&nbsp;&nbsp;btn3txt&nbsp;:&nbsp;str<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;label&nbsp;of&nbsp;first&nbsp;button&nbsp;from&nbsp;the&nbsp;right<br>
+&nbsp;&nbsp;&nbsp;&nbsp;defcho&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;default&nbsp;choice&nbsp;(1,&nbsp;2&nbsp;or&nbsp;3)<br>
+&nbsp;<br>
+Returns<br>
+-------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;btnnum&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;number&nbsp;of&nbsp;the&nbsp;button&nbsp;pressed&nbsp;(1,&nbsp;2&nbsp;or&nbsp;3)<br>
+&nbsp;<br>
+Examples<br>
+--------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;pressbtn&nbsp;=&nbsp;<a href="#-fl_show_choices">fl_show_choices</a>("some&nbsp;message",&nbsp;3,&nbsp;"1st",&nbsp;"2nd",<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"3rd",&nbsp;1)<br>
+&nbsp;<br>
+Notes<br>
+-----<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;Demo&nbsp;=&nbsp;OK</tt></dd></dl>
+ <dl><dt><a name="-fl_show_colormap"><strong>fl_show_colormap</strong></a>(oldcolr)</dt><dd><tt><a href="#-fl_show_colormap">fl_show_colormap</a>(oldcolr)<br>
+&nbsp;<br>
+Shows&nbsp;a&nbsp;colormap&nbsp;color&nbsp;selector&nbsp;from&nbsp;which&nbsp;the&nbsp;user&nbsp;can&nbsp;select&nbsp;a<br>
+color.&nbsp;The&nbsp;user&nbsp;can&nbsp;decide&nbsp;not&nbsp;to&nbsp;change&nbsp;this&nbsp;color&nbsp;by&nbsp;pressing&nbsp;the<br>
+Cancel&nbsp;button&nbsp;in&nbsp;the&nbsp;form.&nbsp;In&nbsp;a&nbsp;number&nbsp;of&nbsp;applications&nbsp;the&nbsp;user&nbsp;has<br>
+to&nbsp;select&nbsp;a&nbsp;color&nbsp;from&nbsp;the&nbsp;colormap.&nbsp;For&nbsp;this&nbsp;a&nbsp;goody&nbsp;has&nbsp;been&nbsp;created.<br>
+It&nbsp;shows&nbsp;the&nbsp;first&nbsp;64&nbsp;entries&nbsp;of&nbsp;the&nbsp;colormap.&nbsp;The&nbsp;user&nbsp;can&nbsp;scroll<br>
+through&nbsp;the&nbsp;colormap&nbsp;to&nbsp;see&nbsp;more&nbsp;entries.&nbsp;Once&nbsp;the&nbsp;user&nbsp;presses&nbsp;the<br>
+mouse&nbsp;one&nbsp;of&nbsp;the&nbsp;entries&nbsp;the&nbsp;corresponding&nbsp;index&nbsp;is&nbsp;returned&nbsp;and&nbsp;the<br>
+colormap&nbsp;is&nbsp;removed&nbsp;from&nbsp;the&nbsp;screen.<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;oldcolr&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;current&nbsp;or&nbsp;default&nbsp;color&nbsp;num.&nbsp;(Not&nbsp;xfdata.FL_COLOR)<br>
+&nbsp;<br>
+Returns<br>
+-------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;colridx&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;index&nbsp;of&nbsp;the&nbsp;color&nbsp;selected&nbsp;(or&nbsp;the&nbsp;index&nbsp;of&nbsp;the&nbsp;old&nbsp;color)<br>
+&nbsp;<br>
+Examples<br>
+--------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;idxcolr&nbsp;=&nbsp;<a href="#-fl_show_colormap">fl_show_colormap</a>(xfdata.FL_YELLOWGREEN)<br>
+&nbsp;<br>
+Notes<br>
+-----<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;Demo&nbsp;=&nbsp;OK</tt></dd></dl>
+ <dl><dt><a name="-fl_show_command_log"><strong>fl_show_command_log</strong></a>(border)</dt><dd><tt><a href="#-fl_show_command_log">fl_show_command_log</a>(border)<br>
+&nbsp;<br>
+Shows&nbsp;the&nbsp;log&nbsp;of&nbsp;the&nbsp;command&nbsp;output.<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;border&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;window&nbsp;manager&nbsp;decoration.&nbsp;Values&nbsp;(from&nbsp;xfdata.py)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_FULLBORDER,&nbsp;FL_TRANSIENT,&nbsp;FL_NOBORDER<br>
+&nbsp;<br>
+Examples<br>
+--------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;<a href="#-fl_show_command_log">fl_show_command_log</a>(xfdata.FL_FULLBORDER)<br>
+&nbsp;<br>
+Notes<br>
+-----<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
+ <dl><dt><a name="-fl_show_file_selector"><strong>fl_show_file_selector</strong></a> = fl_show_fselector(msgtxt, dirname, pattern, deftxt)</dt><dd><tt><a href="#-fl_show_fselector">fl_show_fselector</a>(msgtxt,&nbsp;dirname,&nbsp;pattern,&nbsp;deftxt)<br>
+&nbsp;<br>
+Show&nbsp;a&nbsp;file&nbsp;selector,&nbsp;providing&nbsp;an&nbsp;easy&nbsp;and&nbsp;interactive&nbsp;way&nbsp;to&nbsp;let<br>
+the&nbsp;user&nbsp;select&nbsp;files.<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;msgtxt&nbsp;:&nbsp;str<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;message&nbsp;text<br>
+&nbsp;&nbsp;&nbsp;&nbsp;dirname&nbsp;:&nbsp;str<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;directory&nbsp;name<br>
+&nbsp;&nbsp;&nbsp;&nbsp;pattern&nbsp;:&nbsp;str<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;any&nbsp;kind&nbsp;of&nbsp;regular&nbsp;expression,&nbsp;e.g.&nbsp;"[a-f]*c"&nbsp;which&nbsp;would<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;list&nbsp;all&nbsp;files&nbsp;starting&nbsp;with&nbsp;a&nbsp;letter&nbsp;between&nbsp;a&nbsp;and&nbsp;f&nbsp;and<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ending&nbsp;with&nbsp;c.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;deftxt&nbsp;:&nbsp;str<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;default&nbsp;file&nbsp;name<br>
+&nbsp;<br>
+Returns<br>
+-------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;text&nbsp;:&nbsp;str<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;fselector&nbsp;text,&nbsp;or&nbsp;None&nbsp;(if&nbsp;the&nbsp;Cancel&nbsp;button&nbsp;is&nbsp;pressed)<br>
+&nbsp;<br>
+Examples<br>
+--------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;fstxt&nbsp;=&nbsp;<a href="#-fl_show_fselector">fl_show_fselector</a>("Choose&nbsp;file:",&nbsp;"/home/userdir",<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"*.*",&nbsp;"")<br>
+&nbsp;<br>
+Notes<br>
+-----<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;Demo&nbsp;=&nbsp;OK</tt></dd></dl>
+ <dl><dt><a name="-fl_show_fselector"><strong>fl_show_fselector</strong></a>(msgtxt, dirname, pattern, deftxt)</dt><dd><tt><a href="#-fl_show_fselector">fl_show_fselector</a>(msgtxt,&nbsp;dirname,&nbsp;pattern,&nbsp;deftxt)<br>
+&nbsp;<br>
+Show&nbsp;a&nbsp;file&nbsp;selector,&nbsp;providing&nbsp;an&nbsp;easy&nbsp;and&nbsp;interactive&nbsp;way&nbsp;to&nbsp;let<br>
+the&nbsp;user&nbsp;select&nbsp;files.<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;msgtxt&nbsp;:&nbsp;str<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;message&nbsp;text<br>
+&nbsp;&nbsp;&nbsp;&nbsp;dirname&nbsp;:&nbsp;str<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;directory&nbsp;name<br>
+&nbsp;&nbsp;&nbsp;&nbsp;pattern&nbsp;:&nbsp;str<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;any&nbsp;kind&nbsp;of&nbsp;regular&nbsp;expression,&nbsp;e.g.&nbsp;"[a-f]*c"&nbsp;which&nbsp;would<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;list&nbsp;all&nbsp;files&nbsp;starting&nbsp;with&nbsp;a&nbsp;letter&nbsp;between&nbsp;a&nbsp;and&nbsp;f&nbsp;and<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ending&nbsp;with&nbsp;c.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;deftxt&nbsp;:&nbsp;str<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;default&nbsp;file&nbsp;name<br>
+&nbsp;<br>
+Returns<br>
+-------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;text&nbsp;:&nbsp;str<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;fselector&nbsp;text,&nbsp;or&nbsp;None&nbsp;(if&nbsp;the&nbsp;Cancel&nbsp;button&nbsp;is&nbsp;pressed)<br>
+&nbsp;<br>
+Examples<br>
+--------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;fstxt&nbsp;=&nbsp;<a href="#-fl_show_fselector">fl_show_fselector</a>("Choose&nbsp;file:",&nbsp;"/home/userdir",<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"*.*",&nbsp;"")<br>
+&nbsp;<br>
+Notes<br>
+-----<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;Demo&nbsp;=&nbsp;OK</tt></dd></dl>
+ <dl><dt><a name="-fl_show_input"><strong>fl_show_input</strong></a>(msgtxt, defstr)</dt><dd><tt><a href="#-fl_show_input">fl_show_input</a>(msgtxt,&nbsp;defstr)<br>
+&nbsp;<br>
+Obtains&nbsp;some&nbsp;text&nbsp;from&nbsp;user,&nbsp;showing&nbsp;a&nbsp;default&nbsp;text.&nbsp;It&nbsp;has&nbsp;OK<br>
+and&nbsp;Cancel&nbsp;buttons.<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;msgtxt&nbsp;:&nbsp;str<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;text&nbsp;used&nbsp;to&nbsp;ask&nbsp;for&nbsp;input<br>
+&nbsp;&nbsp;&nbsp;&nbsp;defstr&nbsp;:&nbsp;str<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;default&nbsp;user&nbsp;answer&nbsp;to&nbsp;show<br>
+&nbsp;<br>
+Returns<br>
+-------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;text&nbsp;:&nbsp;str<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;text&nbsp;inserted&nbsp;by&nbsp;user<br>
+&nbsp;<br>
+Examples<br>
+--------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;inpstr&nbsp;=&nbsp;<a href="#-fl_show_input">fl_show_input</a>("Insert&nbsp;number&nbsp;of&nbsp;eggs:&nbsp;",&nbsp;"None")<br>
+&nbsp;<br>
+Notes<br>
+-----<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;Demo&nbsp;=&nbsp;OK</tt></dd></dl>
+ <dl><dt><a name="-fl_show_message"><strong>fl_show_message</strong></a>(msgtxt1, msgtxt2, msgtxt3)</dt><dd><tt><a href="#-fl_show_message">fl_show_message</a>(msgtxt1,&nbsp;msgtxt2,&nbsp;msgtxt3)<br>
+&nbsp;<br>
+Shows&nbsp;a&nbsp;simple&nbsp;form&nbsp;with&nbsp;three&nbsp;lines&nbsp;of&nbsp;text&nbsp;and&nbsp;a&nbsp;button&nbsp;labeled<br>
+OK&nbsp;on&nbsp;it.&nbsp;The&nbsp;mouse&nbsp;pointer&nbsp;is&nbsp;on&nbsp;the&nbsp;button.<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;msgtxt1&nbsp;:&nbsp;str<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;first&nbsp;message&nbsp;to&nbsp;show<br>
+&nbsp;&nbsp;&nbsp;&nbsp;msgtxt2&nbsp;:&nbsp;str<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;second&nbsp;message&nbsp;to&nbsp;show<br>
+&nbsp;&nbsp;&nbsp;&nbsp;msgtxt3&nbsp;:&nbsp;str<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;third&nbsp;message&nbsp;to&nbsp;show<br>
+&nbsp;<br>
+Examples<br>
+--------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;<a href="#-fl_show_message">fl_show_message</a>("first&nbsp;message",&nbsp;"second&nbsp;message",<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"third&nbsp;message")<br>
+&nbsp;<br>
+Notes<br>
+-----<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;Demo&nbsp;=&nbsp;OK</tt></dd></dl>
+ <dl><dt><a name="-fl_show_messages"><strong>fl_show_messages</strong></a>(msgtxt)</dt><dd><tt><a href="#-fl_show_messages">fl_show_messages</a>(msgtxt)<br>
+&nbsp;<br>
+Shows&nbsp;a&nbsp;message.&nbsp;You&nbsp;can&nbsp;use&nbsp;it&nbsp;with&nbsp;a&nbsp;single&nbsp;line&nbsp;or&nbsp;when&nbsp;you<br>
+know&nbsp;the&nbsp;message&nbsp;in&nbsp;advance.&nbsp;To&nbsp;get&nbsp;multi-line&nbsp;messages&nbsp;use&nbsp;embedded<br>
+newlines.&nbsp;It&nbsp;blocks&nbsp;execution&nbsp;and&nbsp;does&nbsp;not&nbsp;return&nbsp;immediately&nbsp;(but&nbsp;idle<br>
+callback&nbsp;and&nbsp;asynchronous&nbsp;IO&nbsp;continue&nbsp;being&nbsp;run&nbsp;and&nbsp;checked).&nbsp;Execution<br>
+continues&nbsp;when&nbsp;the&nbsp;OK&nbsp;button&nbsp;is&nbsp;pressed&nbsp;or&nbsp;&lt;Return&gt;&nbsp;is&nbsp;hit&nbsp;or&nbsp;when&nbsp;the<br>
+message&nbsp;form&nbsp;is&nbsp;removed&nbsp;from&nbsp;the&nbsp;screen&nbsp;by&nbsp;<a href="#-fl_hide_message">fl_hide_message</a>().<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;msgtxt&nbsp;:&nbsp;str<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;message&nbsp;to&nbsp;show<br>
+&nbsp;<br>
+Examples<br>
+--------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;<a href="#-fl_show_messages">fl_show_messages</a>("Some&nbsp;messages")<br>
+&nbsp;<br>
+Notes<br>
+-----<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;Demo&nbsp;=&nbsp;OK</tt></dd></dl>
+ <dl><dt><a name="-fl_show_msg"><strong>fl_show_msg</strong></a>(fmttxt)</dt><dd><tt><a href="#-fl_show_msg">fl_show_msg</a>(fmttxt)<br>
+&nbsp;<br>
+Shows&nbsp;a&nbsp;formatted&nbsp;text&nbsp;message.&nbsp;The&nbsp;string&nbsp;resulting&nbsp;from&nbsp;expansion<br>
+of&nbsp;the&nbsp;format&nbsp;string&nbsp;using&nbsp;the&nbsp;remaining&nbsp;arguments&nbsp;can&nbsp;have&nbsp;arbitrary<br>
+length&nbsp;and&nbsp;embedded&nbsp;newline&nbsp;characters,&nbsp;producing&nbsp;line&nbsp;breaks.&nbsp;The&nbsp;size<br>
+of&nbsp;the&nbsp;message&nbsp;box&nbsp;gets&nbsp;set&nbsp;in&nbsp;a&nbsp;way&nbsp;that&nbsp;the&nbsp;whole&nbsp;text&nbsp;fits&nbsp;into&nbsp;it.<br>
+It&nbsp;blocks&nbsp;execution&nbsp;and&nbsp;does&nbsp;not&nbsp;return&nbsp;immediately&nbsp;(but&nbsp;idle&nbsp;callback<br>
+and&nbsp;asynchronous&nbsp;IO&nbsp;continue&nbsp;being&nbsp;run&nbsp;and&nbsp;checked).&nbsp;Execution&nbsp;continues<br>
+when&nbsp;the&nbsp;OK&nbsp;button&nbsp;is&nbsp;pressed&nbsp;or&nbsp;&lt;Return&gt;&nbsp;is&nbsp;hit&nbsp;or&nbsp;when&nbsp;the&nbsp;message<br>
+form&nbsp;is&nbsp;removed&nbsp;from&nbsp;the&nbsp;screen&nbsp;by&nbsp;<a href="#-fl_hide_message">fl_hide_message</a>().<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;fmttxt&nbsp;:&nbsp;str<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;the&nbsp;message&nbsp;to&nbsp;show&nbsp;(with&nbsp;format&nbsp;parameters,&nbsp;e.g.&nbsp;%s,&nbsp;%d,&nbsp;%f<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;etc..)<br>
+&nbsp;<br>
+Examples<br>
+--------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;<a href="#-fl_show_msg">fl_show_msg</a>("formatted&nbsp;text&nbsp;%s&nbsp;%d"&nbsp;%&nbsp;(mystr,&nbsp;myval))<br>
+&nbsp;<br>
+Notes<br>
+-----<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
+ <dl><dt><a name="-fl_show_oneliner"><strong>fl_show_oneliner</strong></a>(text, x, y)</dt><dd><tt><a href="#-fl_show_oneliner">fl_show_oneliner</a>(text,&nbsp;x,&nbsp;y)<br>
+&nbsp;<br>
+Shows&nbsp;a&nbsp;one-line&nbsp;message&nbsp;that&nbsp;can&nbsp;only&nbsp;be&nbsp;removed&nbsp;programmatically.<br>
+Multi-line&nbsp;message&nbsp;is&nbsp;possible&nbsp;by&nbsp;embedding&nbsp;the&nbsp;newline&nbsp;character&nbsp;in&nbsp;text.<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;text&nbsp;:&nbsp;str<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;oneliner&nbsp;message&nbsp;text<br>
+&nbsp;&nbsp;&nbsp;&nbsp;x&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;horizontal&nbsp;position&nbsp;(relative&nbsp;to&nbsp;root&nbsp;window)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;y&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;vertical&nbsp;position&nbsp;(relative&nbsp;to&nbsp;root&nbsp;window)<br>
+&nbsp;<br>
+Examples<br>
+--------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;<a href="#-fl_show_oneliner">fl_show_oneliner</a>("Button&nbsp;to&nbsp;close&nbsp;window",&nbsp;134,&nbsp;155)<br>
+&nbsp;<br>
+Notes<br>
+-----<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;Demo&nbsp;=&nbsp;OK</tt></dd></dl>
+ <dl><dt><a name="-fl_show_question"><strong>fl_show_question</strong></a>(questmsg, defbtn)</dt><dd><tt><a href="#-fl_show_question">fl_show_question</a>(questmsg,&nbsp;defbtn)<br>
+&nbsp;<br>
+Shows&nbsp;a&nbsp;message&nbsp;(with&nbsp;possible&nbsp;embedded&nbsp;newlines&nbsp;in&nbsp;it)&nbsp;with&nbsp;a&nbsp;Yes<br>
+and&nbsp;a&nbsp;No&nbsp;button.&nbsp;It&nbsp;returns&nbsp;whether&nbsp;the&nbsp;user&nbsp;pushed&nbsp;the&nbsp;Yes&nbsp;button.&nbsp;The<br>
+user&nbsp;can&nbsp;also&nbsp;press&nbsp;the&nbsp;&lt;Y&gt;&nbsp;key&nbsp;to&nbsp;mean&nbsp;Yes&nbsp;and&nbsp;the&nbsp;&lt;N&gt;&nbsp;key&nbsp;to&nbsp;mean&nbsp;No.<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;questmsg&nbsp;:&nbsp;str<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;text&nbsp;of&nbsp;question&nbsp;message&nbsp;to&nbsp;show<br>
+&nbsp;&nbsp;&nbsp;&nbsp;defbtn&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;which&nbsp;button&nbsp;the&nbsp;mouse&nbsp;pointer&nbsp;should&nbsp;be&nbsp;on.&nbsp;Values&nbsp;1&nbsp;(for&nbsp;Yes)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;or&nbsp;0&nbsp;(for&nbsp;No)&nbsp;and&nbsp;any&nbsp;other&nbsp;value&nbsp;causes&nbsp;the&nbsp;form&nbsp;to&nbsp;be&nbsp;shown&nbsp;so<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;the&nbsp;mouse&nbsp;pointer&nbsp;is&nbsp;at&nbsp;the&nbsp;center&nbsp;of&nbsp;the&nbsp;form.<br>
+&nbsp;<br>
+Returns<br>
+-------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;pushedbtn&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1&nbsp;(if&nbsp;Yes&nbsp;button&nbsp;pushed)&nbsp;or&nbsp;0&nbsp;otherwise<br>
+&nbsp;<br>
+Examples<br>
+--------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;qresp&nbsp;=&nbsp;<a href="#-fl_show_question">fl_show_question</a>("My&nbsp;question?",&nbsp;1)<br>
+&nbsp;<br>
+Notes<br>
+-----<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;Demo&nbsp;=&nbsp;OK</tt></dd></dl>
+ <dl><dt><a name="-fl_show_simple_input"><strong>fl_show_simple_input</strong></a>(msgtxt, defstr)</dt><dd><tt><a href="#-fl_show_simple_input">fl_show_simple_input</a>(msgtxt,&nbsp;defstr)<br>
+&nbsp;<br>
+Asks&nbsp;the&nbsp;user&nbsp;for&nbsp;textual&nbsp;input.&nbsp;It&nbsp;has&nbsp;an&nbsp;OK&nbsp;button&nbsp;only.<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;msgtxt&nbsp;:&nbsp;str<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;message&nbsp;used&nbsp;to&nbsp;ask&nbsp;for&nbsp;input<br>
+&nbsp;&nbsp;&nbsp;&nbsp;defstr&nbsp;:&nbsp;str<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;default&nbsp;user&nbsp;answer&nbsp;in&nbsp;input<br>
+&nbsp;<br>
+Returns<br>
+-------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;text&nbsp;:&nbsp;str<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;text&nbsp;inserted&nbsp;by&nbsp;user<br>
+&nbsp;<br>
+Examples<br>
+--------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;inpstr&nbsp;=&nbsp;<a href="#-fl_show_simple_input">fl_show_simple_input</a>("Insert&nbsp;name&nbsp;and&nbsp;surname:",<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"John&nbsp;Doe")<br>
+&nbsp;<br>
+Notes<br>
+-----<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
+ <dl><dt><a name="-fl_use_fselector"><strong>fl_use_fselector</strong></a>(num)</dt><dd><tt><a href="#-fl_use_fselector">fl_use_fselector</a>(num)<br>
+&nbsp;<br>
+Sets&nbsp;the&nbsp;currently&nbsp;active&nbsp;file&nbsp;selector.<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;num&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;fselector&nbsp;number&nbsp;to&nbsp;use.&nbsp;Values&nbsp;between&nbsp;0&nbsp;and<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;xfdata.FL_MAX_FSELECTOR&nbsp;-&nbsp;1<br>
+&nbsp;<br>
+Returns<br>
+-------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;oldnum&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;old&nbsp;file&nbsp;selector&nbsp;number<br>
+&nbsp;<br>
+Examples<br>
+--------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;oldfsel&nbsp;=&nbsp;<a href="#-fl_use_fselector">fl_use_fselector</a>(1)<br>
+&nbsp;<br>
+Notes<br>
+-----<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
+</td></tr></table>
+</body></html>

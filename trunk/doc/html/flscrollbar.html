@@ -1,0 +1,255 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html><head><title>Python: module flscrollbar</title>
+</head><body bgcolor="#f0f0f8">
+
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="heading">
+<tr bgcolor="#7799ee">
+<td valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial">&nbsp;<br><big><big><strong>flscrollbar</strong></big></big></font></td
+><td align=right valign=bottom
+><font color="#ffffff" face="helvetica, arial"><a href=".">index</a><br>     <a href="index.html">list</a></font></td></tr></table>
+    <p><tt>xforms-python's&nbsp;functions&nbsp;to&nbsp;manage&nbsp;scrollbar&nbsp;objects.</tt></p>
+<p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#aa55cc">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Modules</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#aa55cc"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><table width="100%" summary="list"><tr><td width="25%" valign=top><a href="ctypes.html">ctypes</a><br>
+</td><td width="25%" valign=top><a href="library.html">library</a><br>
+</td><td width="25%" valign=top><a href="xfdata.html">xfdata</a><br>
+</td><td width="25%" valign=top></td></tr></table></td></tr></table><p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#eeaa77">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Functions</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#eeaa77"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><dl><dt><a name="-fl_add_scrollbar"><strong>fl_add_scrollbar</strong></a>(scrolltype, x, y, w, h, label)</dt><dd><tt><a href="#-fl_add_scrollbar">fl_add_scrollbar</a>(scrolltype,&nbsp;x,&nbsp;y,&nbsp;w,&nbsp;h,&nbsp;label)<br>
+&nbsp;<br>
+Adds&nbsp;a&nbsp;scrollbar&nbsp;object&nbsp;to&nbsp;a&nbsp;form.<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;scrolltype&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;type&nbsp;of&nbsp;scrollbar&nbsp;to&nbsp;be&nbsp;added.&nbsp;Values&nbsp;(from&nbsp;xfdata.py)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_VERT_SCROLLBAR,&nbsp;FL_HOR_SCROLLBAR,&nbsp;FL_VERT_THIN_SCROLLBAR<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_HOR_THIN_SCROLLBAR,&nbsp;FL_VERT_NICE_SCROLLBAR,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_HOR_NICE_SCROLLBAR,&nbsp;FL_VERT_PLAIN_SCROLLBAR,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_HOR_PLAIN_SCROLLBAR,&nbsp;FL_HOR_BASIC_SCROLLBAR,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_VERT_BASIC_SCROLLBAR,&nbsp;FL_NORMAL_SCROLLBAR,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_THIN_SCROLLBAR,&nbsp;FL_NICE_SCROLLBAR,&nbsp;FL_PLAIN_SCROLLBAR<br>
+&nbsp;&nbsp;&nbsp;&nbsp;x&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;horizontal&nbsp;position&nbsp;(upper-left&nbsp;corner)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;y&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;vertical&nbsp;position&nbsp;(upper-left&nbsp;corner)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;w&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;width&nbsp;in&nbsp;coord&nbsp;units<br>
+&nbsp;&nbsp;&nbsp;&nbsp;h&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;height&nbsp;in&nbsp;coord&nbsp;units<br>
+&nbsp;&nbsp;&nbsp;&nbsp;label&nbsp;:&nbsp;str<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;label&nbsp;text&nbsp;of&nbsp;scrollbar<br>
+&nbsp;<br>
+Returns<br>
+-------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;pFlObject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;scrollbar&nbsp;object&nbsp;added<br>
+&nbsp;<br>
+Examples<br>
+--------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;scrbobj&nbsp;=&nbsp;<a href="#-fl_add_scrollbar">fl_add_scrollbar</a>(scrolltype,&nbsp;182,&nbsp;140,&nbsp;50,&nbsp;150,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"MyScrollbar")<br>
+&nbsp;<br>
+Notes<br>
+-----<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;Demo&nbsp;=&nbsp;OK</tt></dd></dl>
+ <dl><dt><a name="-fl_get_scrollbar_bounds"><strong>fl_get_scrollbar_bounds</strong></a>(pFlObject)</dt><dd><tt><a href="#-fl_get_scrollbar_bounds">fl_get_scrollbar_bounds</a>(pFlObject)<br>
+&nbsp;<br>
+Obtains&nbsp;minimum&nbsp;and&nbsp;maximum&nbsp;bounds/limits&nbsp;of&nbsp;a&nbsp;scrollbar&nbsp;object.<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;pFlObject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;scrollbar&nbsp;object<br>
+&nbsp;<br>
+Returns<br>
+-------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;minbound&nbsp;:&nbsp;float<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;minimum&nbsp;bound<br>
+&nbsp;&nbsp;&nbsp;&nbsp;maxbound&nbsp;:&nbsp;float<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;maximum&nbsp;bound<br>
+&nbsp;<br>
+Examples<br>
+--------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;minb,&nbsp;maxb&nbsp;=&nbsp;<a href="#-fl_get_scrollbar_bounds">fl_get_scrollbar_bounds</a>(scrbobj)<br>
+&nbsp;<br>
+API_diversion<br>
+----------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;API&nbsp;changed&nbsp;from&nbsp;XForms,&nbsp;upstream&nbsp;was<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="#-fl_get_scrollbar_bounds">fl_get_scrollbar_bounds</a>(pFlObject,&nbsp;b1,&nbsp;b2)<br>
+&nbsp;<br>
+Notes<br>
+-----<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
+ <dl><dt><a name="-fl_get_scrollbar_increment"><strong>fl_get_scrollbar_increment</strong></a>(pFlObject)</dt><dd><tt><a href="#-fl_get_scrollbar_increment">fl_get_scrollbar_increment</a>(pFlObject)<br>
+&nbsp;<br>
+Obtains&nbsp;the&nbsp;increment&nbsp;of&nbsp;size&nbsp;of&nbsp;a&nbsp;scrollbar&nbsp;for&nbsp;left&nbsp;and&nbsp;middle&nbsp;mouse<br>
+buttons.<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;pFlObject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;scrollbar&nbsp;object<br>
+&nbsp;<br>
+Returns<br>
+-------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;leftbtnval&nbsp;:&nbsp;float<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;left&nbsp;button&nbsp;increment<br>
+&nbsp;&nbsp;&nbsp;&nbsp;midbtnval&nbsp;:&nbsp;float<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;middle&nbsp;button&nbsp;increment<br>
+&nbsp;<br>
+Examples<br>
+--------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;leftbv,&nbsp;midbv&nbsp;=&nbsp;<a href="#-fl_get_scrollbar_increment">fl_get_scrollbar_increment</a>(scrbobj)<br>
+&nbsp;<br>
+API_diversion<br>
+----------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;API&nbsp;changed&nbsp;from&nbsp;XForms,&nbsp;upstream&nbsp;was<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="#-fl_get_scrollbar_increment">fl_get_scrollbar_increment</a>(pFlObject,&nbsp;leftbtnval,&nbsp;midlbtnval)<br>
+&nbsp;<br>
+Notes<br>
+-----<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
+ <dl><dt><a name="-fl_get_scrollbar_value"><strong>fl_get_scrollbar_value</strong></a>(pFlObject)</dt><dd><tt><a href="#-fl_get_scrollbar_value">fl_get_scrollbar_value</a>(pFlObject)<br>
+&nbsp;<br>
+Obtains&nbsp;the&nbsp;current&nbsp;value&nbsp;of&nbsp;a&nbsp;scrollbar&nbsp;object.<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;pFlObject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;scrollbar&nbsp;object<br>
+&nbsp;<br>
+Returns<br>
+-------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;value&nbsp;:&nbsp;float<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;scrollbar&nbsp;value<br>
+&nbsp;<br>
+Examples<br>
+--------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;val&nbsp;=&nbsp;<a href="#-fl_get_scrollbar_value">fl_get_scrollbar_value</a>(scrbobj)<br>
+&nbsp;<br>
+Notes<br>
+-----<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
+ <dl><dt><a name="-fl_set_scrollbar_bounds"><strong>fl_set_scrollbar_bounds</strong></a>(pFlObject, minbound, maxbound)</dt><dd><tt><a href="#-fl_set_scrollbar_bounds">fl_set_scrollbar_bounds</a>(pFlObject,&nbsp;minbound,&nbsp;maxbound)<br>
+&nbsp;<br>
+Sets&nbsp;minimum&nbsp;and&nbsp;maximum&nbsp;the&nbsp;bounds/limits&nbsp;of&nbsp;a&nbsp;scrollbar&nbsp;object.&nbsp;For<br>
+vertical&nbsp;sliders&nbsp;the&nbsp;slider&nbsp;position&nbsp;for&nbsp;the&nbsp;minimum&nbsp;value&nbsp;is&nbsp;at&nbsp;the&nbsp;left,<br>
+for&nbsp;horizontal&nbsp;sliders&nbsp;at&nbsp;the&nbsp;top&nbsp;of&nbsp;the&nbsp;slider.&nbsp;By&nbsp;setting&nbsp;min&nbsp;to&nbsp;a<br>
+larger&nbsp;value&nbsp;than&nbsp;max&nbsp;in&nbsp;a&nbsp;call&nbsp;of&nbsp;<a href="#-fl_set_scrollbar_bounds">fl_set_scrollbar_bounds</a>()&nbsp;this&nbsp;can&nbsp;be<br>
+reversed.&nbsp;When&nbsp;this&nbsp;function&nbsp;is&nbsp;called,&nbsp;if&nbsp;the&nbsp;actual&nbsp;value&nbsp;of&nbsp;a&nbsp;scrollbar<br>
+is&nbsp;not&nbsp;within&nbsp;the&nbsp;range&nbsp;of&nbsp;the&nbsp;new&nbsp;bounds,&nbsp;its&nbsp;value&nbsp;gets&nbsp;adjusted&nbsp;to&nbsp;the<br>
+nearest&nbsp;limit.<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;pFlObject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;scrollbar&nbsp;object<br>
+&nbsp;&nbsp;&nbsp;&nbsp;minbound&nbsp;:&nbsp;float<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;minimum&nbsp;bound&nbsp;of&nbsp;scrollbar.&nbsp;By&nbsp;default,&nbsp;the&nbsp;minimum&nbsp;value<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;for&nbsp;a&nbsp;slider&nbsp;is&nbsp;0.0.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;maxbound&nbsp;:&nbsp;float<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;maximum&nbsp;bound&nbsp;of&nbsp;scrollbar.&nbsp;By&nbsp;default,&nbsp;the&nbsp;maximum&nbsp;value<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;for&nbsp;a&nbsp;slider&nbsp;is&nbsp;1.0.<br>
+&nbsp;<br>
+Examples<br>
+--------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;<a href="#-fl_set_scrollbar_bounds">fl_set_scrollbar_bounds</a>(scrbobj,&nbsp;1.0,&nbsp;2.0)<br>
+&nbsp;<br>
+Notes<br>
+-----<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
+ <dl><dt><a name="-fl_set_scrollbar_increment"><strong>fl_set_scrollbar_increment</strong></a>(pFlObject, leftbtnval, midlbtnval)</dt><dd><tt><a href="#-fl_set_scrollbar_increment">fl_set_scrollbar_increment</a>(pFlObject,&nbsp;leftbtnval,&nbsp;midlbtnval)<br>
+&nbsp;<br>
+Sets&nbsp;the&nbsp;size&nbsp;of&nbsp;the&nbsp;steps&nbsp;of&nbsp;a&nbsp;scrollbar&nbsp;jump.&nbsp;By&nbsp;default,&nbsp;if&nbsp;the<br>
+mouse&nbsp;is&nbsp;pressed&nbsp;beside&nbsp;the&nbsp;the&nbsp;sliding&nbsp;bar,&nbsp;the&nbsp;bar&nbsp;starts&nbsp;to&nbsp;jumps<br>
+in&nbsp;the&nbsp;direction&nbsp;of&nbsp;the&nbsp;mouse&nbsp;position.<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;pFlObject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;scrollbar&nbsp;object<br>
+&nbsp;&nbsp;&nbsp;&nbsp;leftbtnval&nbsp;:&nbsp;float<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;value&nbsp;to&nbsp;increment&nbsp;if&nbsp;the&nbsp;left&nbsp;mouse&nbsp;button&nbsp;is&nbsp;pressed<br>
+&nbsp;&nbsp;&nbsp;&nbsp;midlbtnval&nbsp;:&nbsp;float<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;value&nbsp;to&nbsp;increment&nbsp;if&nbsp;the&nbsp;middle&nbsp;mouse&nbsp;button&nbsp;is&nbsp;pressed<br>
+&nbsp;<br>
+Examples<br>
+--------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;*todo*<br>
+&nbsp;<br>
+Notes<br>
+-----<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
+ <dl><dt><a name="-fl_set_scrollbar_size"><strong>fl_set_scrollbar_size</strong></a>(pFlObject, val)</dt><dd><tt><a href="#-fl_set_scrollbar_size">fl_set_scrollbar_size</a>(pFlObject,&nbsp;val)<br>
+&nbsp;<br>
+Controls&nbsp;the&nbsp;size&nbsp;of&nbsp;the&nbsp;sliding&nbsp;bar&nbsp;inside&nbsp;the&nbsp;box.&nbsp;This&nbsp;function<br>
+does&nbsp;nothing&nbsp;if&nbsp;applied&nbsp;to&nbsp;scrollbars&nbsp;of&nbsp;type&nbsp;xfdata.FL_NICE_SCROLLBAR.<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;pFlObject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;scrollbar&nbsp;object<br>
+&nbsp;&nbsp;&nbsp;&nbsp;val&nbsp;:&nbsp;float<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;size&nbsp;should&nbsp;be&nbsp;a&nbsp;value&nbsp;between&nbsp;0.0&nbsp;and&nbsp;1.0.&nbsp;The&nbsp;default&nbsp;is<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;xfdata.FL_SLIDER_WIDTH&nbsp;(which&nbsp;is&nbsp;0.15&nbsp;for&nbsp;all&nbsp;scrollbars).&nbsp;If&nbsp;it<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;is&nbsp;1.0,&nbsp;the&nbsp;scrollbar&nbsp;covers&nbsp;the&nbsp;box&nbsp;completely&nbsp;and&nbsp;can&nbsp;no&nbsp;longer<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;be&nbsp;moved.<br>
+&nbsp;<br>
+Examples<br>
+--------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;<a href="#-fl_set_scrollbar_size">fl_set_scrollbar_size</a>(scrbobj,&nbsp;0.2)<br>
+&nbsp;<br>
+Notes<br>
+-----<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;Demo&nbsp;=&nbsp;OK</tt></dd></dl>
+ <dl><dt><a name="-fl_set_scrollbar_step"><strong>fl_set_scrollbar_step</strong></a>(pFlObject, step)</dt><dd><tt><a href="#-fl_set_scrollbar_step">fl_set_scrollbar_step</a>(pFlObject,&nbsp;step)<br>
+&nbsp;<br>
+Sets&nbsp;the&nbsp;step&nbsp;size&nbsp;of&nbsp;a&nbsp;scrollbar&nbsp;to&nbsp;which&nbsp;values&nbsp;are&nbsp;rounded.<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;pFlObject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;scrollbar&nbsp;object<br>
+&nbsp;&nbsp;&nbsp;&nbsp;step&nbsp;:&nbsp;float<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;rounded&nbsp;value.<br>
+&nbsp;<br>
+Examples<br>
+--------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;<a href="#-fl_set_scrollbar_step">fl_set_scrollbar_step</a>(scrbobj,&nbsp;1)<br>
+&nbsp;<br>
+Notes<br>
+-----<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
+ <dl><dt><a name="-fl_set_scrollbar_value"><strong>fl_set_scrollbar_value</strong></a>(pFlObject, val)</dt><dd><tt><a href="#-fl_set_scrollbar_value">fl_set_scrollbar_value</a>(pFlObject,&nbsp;val)<br>
+&nbsp;<br>
+Sets&nbsp;the&nbsp;value&nbsp;of&nbsp;a&nbsp;scrollbar&nbsp;object.<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;pFlObject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;scrollbar&nbsp;object<br>
+&nbsp;&nbsp;&nbsp;&nbsp;val&nbsp;:&nbsp;float<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;value&nbsp;of&nbsp;the&nbsp;scrollbar&nbsp;to&nbsp;be&nbsp;set.&nbsp;By&nbsp;default&nbsp;it&nbsp;is&nbsp;0.5.<br>
+&nbsp;<br>
+Examples<br>
+--------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;<a href="#-fl_set_scrollbar_value">fl_set_scrollbar_value</a>(scrbobj,&nbsp;0.75)<br>
+&nbsp;<br>
+Notes<br>
+-----<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;Demo&nbsp;=&nbsp;OK</tt></dd></dl>
+</td></tr></table>
+</body></html>

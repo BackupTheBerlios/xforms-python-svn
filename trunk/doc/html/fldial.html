@@ -1,0 +1,272 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html><head><title>Python: module fldial</title>
+</head><body bgcolor="#f0f0f8">
+
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="heading">
+<tr bgcolor="#7799ee">
+<td valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial">&nbsp;<br><big><big><strong>fldial</strong></big></big></font></td
+><td align=right valign=bottom
+><font color="#ffffff" face="helvetica, arial"><a href=".">index</a><br>     <a href="index.html">list</a></font></td></tr></table>
+    <p><tt>xforms-python's&nbsp;functions&nbsp;to&nbsp;manage&nbsp;dial&nbsp;objects.</tt></p>
+<p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#aa55cc">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Modules</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#aa55cc"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><table width="100%" summary="list"><tr><td width="25%" valign=top><a href="ctypes.html">ctypes</a><br>
+</td><td width="25%" valign=top><a href="library.html">library</a><br>
+</td><td width="25%" valign=top><a href="xfdata.html">xfdata</a><br>
+</td><td width="25%" valign=top></td></tr></table></td></tr></table><p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#eeaa77">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Functions</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#eeaa77"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><dl><dt><a name="-fl_add_dial"><strong>fl_add_dial</strong></a>(dialtype, x, y, w, h, label)</dt><dd><tt><a href="#-fl_add_dial">fl_add_dial</a>(dialtype,&nbsp;x,&nbsp;y,&nbsp;w,&nbsp;h,&nbsp;label)<br>
+&nbsp;<br>
+Adds&nbsp;a&nbsp;dial&nbsp;object&nbsp;to&nbsp;the&nbsp;form.<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;dialtype&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;type&nbsp;of&nbsp;dial&nbsp;to&nbsp;be&nbsp;added.&nbsp;Values&nbsp;(from&nbsp;xfdata.py)&nbsp;FL_NORMAL_DIAL,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_LINE_DIAL,&nbsp;FL_FILL_DIAL<br>
+&nbsp;&nbsp;&nbsp;&nbsp;x&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;horizontal&nbsp;position&nbsp;(upper-left&nbsp;corner)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;y&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;vertical&nbsp;position&nbsp;(upper-left&nbsp;corner)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;w&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;width&nbsp;in&nbsp;coord&nbsp;units<br>
+&nbsp;&nbsp;&nbsp;&nbsp;h&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;height&nbsp;in&nbsp;coord&nbsp;units<br>
+&nbsp;&nbsp;&nbsp;&nbsp;label&nbsp;:&nbsp;str<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;text&nbsp;label&nbsp;of&nbsp;dial<br>
+&nbsp;<br>
+Returns<br>
+-------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;pFlObject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;dial&nbsp;object&nbsp;added<br>
+&nbsp;<br>
+Examples<br>
+--------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;<a href="#-fl_add_dial">fl_add_dial</a>(xfdata.FL_LINE_DIAL,&nbsp;140,&nbsp;120,&nbsp;123,&nbsp;521,&nbsp;"MyDial")<br>
+&nbsp;<br>
+Notes<br>
+-----<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;Demo&nbsp;=&nbsp;OK</tt></dd></dl>
+ <dl><dt><a name="-fl_get_dial_bounds"><strong>fl_get_dial_bounds</strong></a>(pFlObject)</dt><dd><tt><a href="#-fl_get_dial_bounds">fl_get_dial_bounds</a>(pFlObject)<br>
+&nbsp;<br>
+Obtains&nbsp;the&nbsp;minimum&nbsp;and&nbsp;maximum&nbsp;values&nbsp;of&nbsp;a&nbsp;dial&nbsp;object.<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;pFlObject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;dial&nbsp;object<br>
+&nbsp;<br>
+Returns<br>
+-------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;minval&nbsp;:&nbsp;float<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;minimum&nbsp;value<br>
+&nbsp;&nbsp;&nbsp;&nbsp;maxval&nbsp;:&nbsp;float<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;maximum&nbsp;value&nbsp;of&nbsp;dial<br>
+&nbsp;<br>
+Examples<br>
+--------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;minb,&nbsp;maxb&nbsp;=&nbsp;<a href="#-fl_get_dial_bounds">fl_get_dial_bounds</a>(dialobj)<br>
+&nbsp;<br>
+API_diversion<br>
+----------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;API&nbsp;changed&nbsp;from&nbsp;XForms,&nbsp;upstream&nbsp;was<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="#-fl_get_dial_bounds">fl_get_dial_bounds</a>(pFlObject,&nbsp;minbound,&nbsp;maxbound)<br>
+&nbsp;<br>
+Notes<br>
+-----<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
+ <dl><dt><a name="-fl_get_dial_value"><strong>fl_get_dial_value</strong></a>(pFlObject)</dt><dd><tt><a href="#-fl_get_dial_value">fl_get_dial_value</a>(pFlObject)<br>
+&nbsp;<br>
+Obtains&nbsp;the&nbsp;current&nbsp;value&nbsp;of&nbsp;a&nbsp;dial&nbsp;object.<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;pFlObject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;dial&nbsp;object<br>
+&nbsp;<br>
+Returns<br>
+-------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;dialval&nbsp;:&nbsp;float<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;current&nbsp;value&nbsp;of&nbsp;dial<br>
+&nbsp;<br>
+Examples<br>
+--------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;currval&nbsp;=&nbsp;<a href="#-fl_get_dial_value">fl_get_dial_value</a>(dialobj)<br>
+&nbsp;<br>
+Notes<br>
+-----<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;Demo&nbsp;=&nbsp;OK</tt></dd></dl>
+ <dl><dt><a name="-fl_set_dial_angles"><strong>fl_set_dial_angles</strong></a>(pFlObject, angmin, angmax)</dt><dd><tt><a href="#-fl_set_dial_angles">fl_set_dial_angles</a>(pFlObject,&nbsp;angmin,&nbsp;angmax)<br>
+&nbsp;<br>
+Limits&nbsp;the&nbsp;angular&nbsp;range&nbsp;a&nbsp;dial&nbsp;can&nbsp;take&nbsp;or&nbsp;choose&nbsp;an&nbsp;angle&nbsp;other<br>
+than&nbsp;0&nbsp;to&nbsp;represent&nbsp;the&nbsp;minimum&nbsp;value.&nbsp;The&nbsp;angles&nbsp;are&nbsp;relative&nbsp;to&nbsp;the<br>
+origin&nbsp;of&nbsp;the&nbsp;dial,&nbsp;which&nbsp;is&nbsp;by&nbsp;default&nbsp;at&nbsp;6&nbsp;o'clock&nbsp;and&nbsp;rotates<br>
+clock-wise.<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;pFlObject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;dial&nbsp;object<br>
+&nbsp;&nbsp;&nbsp;&nbsp;angmin&nbsp;:&nbsp;float<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;minimum&nbsp;value&nbsp;of&nbsp;angle.&nbsp;By&nbsp;default&nbsp;it&nbsp;is&nbsp;0.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;angmax&nbsp;:&nbsp;float<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;maximum&nbsp;value&nbsp;of&nbsp;angle.&nbsp;By&nbsp;default&nbsp;it&nbsp;is&nbsp;360.<br>
+&nbsp;<br>
+Examples<br>
+--------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;<a href="#-fl_set_dial_angles">fl_set_dial_angles</a>(dialobj,&nbsp;45,&nbsp;180)<br>
+&nbsp;<br>
+Notes<br>
+-----<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;Demo&nbsp;=&nbsp;OK</tt></dd></dl>
+ <dl><dt><a name="-fl_set_dial_bounds"><strong>fl_set_dial_bounds</strong></a>(pFlObject, minbound, maxbound)</dt><dd><tt><a href="#-fl_set_dial_bounds">fl_set_dial_bounds</a>(pFlObject,&nbsp;minbound,&nbsp;maxbound)<br>
+&nbsp;<br>
+Sets&nbsp;the&nbsp;minimum&nbsp;and&nbsp;the&nbsp;maximum&nbsp;values&nbsp;of&nbsp;a&nbsp;dial&nbsp;object.<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;pFlObject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;dial&nbsp;object<br>
+&nbsp;&nbsp;&nbsp;&nbsp;minbound&nbsp;:&nbsp;float<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;minimum&nbsp;value&nbsp;of&nbsp;dial.&nbsp;By&nbsp;default&nbsp;it&nbsp;is&nbsp;0.0.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;maxbound&nbsp;:&nbsp;float<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;maximum&nbsp;value&nbsp;of&nbsp;dial.&nbsp;By&nbsp;default&nbsp;it&nbsp;is&nbsp;1.0.<br>
+&nbsp;<br>
+Examples<br>
+--------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;<a href="#-fl_set_dial_bounds">fl_set_dial_bounds</a>(dialobj,&nbsp;0,&nbsp;200)<br>
+&nbsp;<br>
+Notes<br>
+-----<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;Demo&nbsp;=&nbsp;OK</tt></dd></dl>
+ <dl><dt><a name="-fl_set_dial_cross"><strong>fl_set_dial_cross</strong></a>(pFlObject, yesno)</dt><dd><tt><a href="#-fl_set_dial_cross">fl_set_dial_cross</a>(pFlObject,&nbsp;yesno)<br>
+&nbsp;<br>
+Allows&nbsp;crossing&nbsp;over&nbsp;of&nbsp;dial&nbsp;object.&nbsp;By&nbsp;default,&nbsp;crossing&nbsp;from<br>
+359.9&nbsp;to&nbsp;0&nbsp;or&nbsp;from&nbsp;0&nbsp;to&nbsp;359.9&nbsp;is&nbsp;not&nbsp;allowed.<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;pFlObject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;dial&nbsp;object<br>
+&nbsp;&nbsp;&nbsp;&nbsp;yesno&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;flag&nbsp;to&nbsp;enable&nbsp;(1)&nbsp;or&nbsp;disable&nbsp;(0)&nbsp;crossover<br>
+&nbsp;<br>
+Examples<br>
+--------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;<a href="#-fl_set_dial_cross">fl_set_dial_cross</a>(dialobj,&nbsp;1)<br>
+&nbsp;<br>
+Notes<br>
+-----<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
+ <dl><dt><a name="-fl_set_dial_crossover"><strong>fl_set_dial_crossover</strong></a> = fl_set_dial_cross(pFlObject, yesno)</dt><dd><tt><a href="#-fl_set_dial_cross">fl_set_dial_cross</a>(pFlObject,&nbsp;yesno)<br>
+&nbsp;<br>
+Allows&nbsp;crossing&nbsp;over&nbsp;of&nbsp;dial&nbsp;object.&nbsp;By&nbsp;default,&nbsp;crossing&nbsp;from<br>
+359.9&nbsp;to&nbsp;0&nbsp;or&nbsp;from&nbsp;0&nbsp;to&nbsp;359.9&nbsp;is&nbsp;not&nbsp;allowed.<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;pFlObject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;dial&nbsp;object<br>
+&nbsp;&nbsp;&nbsp;&nbsp;yesno&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;flag&nbsp;to&nbsp;enable&nbsp;(1)&nbsp;or&nbsp;disable&nbsp;(0)&nbsp;crossover<br>
+&nbsp;<br>
+Examples<br>
+--------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;<a href="#-fl_set_dial_cross">fl_set_dial_cross</a>(dialobj,&nbsp;1)<br>
+&nbsp;<br>
+Notes<br>
+-----<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
+ <dl><dt><a name="-fl_set_dial_direction"><strong>fl_set_dial_direction</strong></a>(pFlObject, directn)</dt><dd><tt><a href="#-fl_set_dial_direction">fl_set_dial_direction</a>(pFlObject,&nbsp;directn)<br>
+&nbsp;<br>
+Changes&nbsp;what&nbsp;rotation&nbsp;modifies&nbsp;dial&nbsp;value.&nbsp;By&nbsp;default,&nbsp;clock-wise<br>
+rotation&nbsp;increases&nbsp;the&nbsp;dial&nbsp;value.<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;pFlObject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;dial&nbsp;object<br>
+&nbsp;&nbsp;&nbsp;&nbsp;directn&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;direction&nbsp;of&nbsp;dial&nbsp;rotation.&nbsp;Values&nbsp;(from&nbsp;xfdata.py)&nbsp;FL_DIAL_CCW<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(counter-clock-wise)&nbsp;or&nbsp;FL_DIAL_CW&nbsp;(clock-wise)<br>
+&nbsp;<br>
+Examples<br>
+--------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;<a href="#-fl_set_dial_direction">fl_set_dial_direction</a>(dialobj,&nbsp;xfdata.FL_DIAL_CCW)<br>
+&nbsp;<br>
+Notes<br>
+-----<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;Demo&nbsp;=&nbsp;OK</tt></dd></dl>
+ <dl><dt><a name="-fl_set_dial_return"><strong>fl_set_dial_return</strong></a>(pFlObject, when)</dt><dd><tt><a href="#-fl_set_dial_return">fl_set_dial_return</a>(pFlObject,&nbsp;when)<br>
+&nbsp;<br>
+Sets&nbsp;the&nbsp;conditions&nbsp;under&nbsp;which&nbsp;a&nbsp;dial&nbsp;object&nbsp;gets&nbsp;returned&nbsp;(or<br>
+its&nbsp;callback&nbsp;invoked).<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;pFlObject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;dial&nbsp;object<br>
+&nbsp;&nbsp;&nbsp;&nbsp;when&nbsp;:&nbsp;int_pos<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;type&nbsp;(when&nbsp;it&nbsp;returns).&nbsp;Values&nbsp;(from&nbsp;xfdata.py)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_RETURN_NONE,&nbsp;FL_RETURN_CHANGED,&nbsp;FL_RETURN_END,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_RETURN_END_CHANGED,&nbsp;FL_RETURN_SELECTION,&nbsp;FL_RETURN_DESELECTION,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_RETURN_TRIGGERED,&nbsp;FL_RETURN_ALWAYS<br>
+&nbsp;<br>
+Examples<br>
+--------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;<a href="#-fl_set_dial_return">fl_set_dial_return</a>(dialobj,&nbsp;xfdata.FL_RETURN_END)<br>
+&nbsp;<br>
+Notes<br>
+-----<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
+ <dl><dt><a name="-fl_set_dial_step"><strong>fl_set_dial_step</strong></a>(pFlObject, step)</dt><dd><tt><a href="#-fl_set_dial_step">fl_set_dial_step</a>(pFlObject,&nbsp;step)<br>
+&nbsp;<br>
+Sets&nbsp;the&nbsp;dial&nbsp;value&nbsp;to&nbsp;be&nbsp;rounded&nbsp;to&nbsp;a&nbsp;specified&nbsp;step&nbsp;or&nbsp;a<br>
+multiple&nbsp;of&nbsp;it.<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;pFlObject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;dial&nbsp;object<br>
+&nbsp;&nbsp;&nbsp;&nbsp;step&nbsp;:&nbsp;float<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;rounding&nbsp;value&nbsp;to&nbsp;be&nbsp;set.&nbsp;Use&nbsp;0.0&nbsp;to&nbsp;switch&nbsp;off&nbsp;rounding.<br>
+&nbsp;<br>
+Examples<br>
+--------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;<a href="#-fl_set_dial_step">fl_set_dial_step</a>(dialobj,&nbsp;2)<br>
+&nbsp;<br>
+Notes<br>
+-----<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
+ <dl><dt><a name="-fl_set_dial_value"><strong>fl_set_dial_value</strong></a>(pFlObject, val)</dt><dd><tt><a href="#-fl_set_dial_value">fl_set_dial_value</a>(pFlObject,&nbsp;val)<br>
+&nbsp;<br>
+Sets&nbsp;the&nbsp;value&nbsp;of&nbsp;a&nbsp;dial&nbsp;object.&nbsp;By&nbsp;default&nbsp;the&nbsp;value&nbsp;is&nbsp;0.<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;pFlObject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;dial&nbsp;object<br>
+&nbsp;&nbsp;&nbsp;&nbsp;val&nbsp;:&nbsp;float<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;value&nbsp;of&nbsp;dial&nbsp;to&nbsp;be&nbsp;set<br>
+&nbsp;<br>
+Examples<br>
+--------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;<a href="#-fl_set_dial_value">fl_set_dial_value</a>(dialobj,&nbsp;155.0)<br>
+&nbsp;<br>
+Notes<br>
+-----<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;Demo&nbsp;=&nbsp;OK</tt></dd></dl>
+</td></tr></table>
+</body></html>

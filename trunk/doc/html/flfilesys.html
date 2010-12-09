@@ -1,0 +1,234 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html><head><title>Python: module flfilesys</title>
+</head><body bgcolor="#f0f0f8">
+
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="heading">
+<tr bgcolor="#7799ee">
+<td valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial">&nbsp;<br><big><big><strong>flfilesys</strong></big></big></font></td
+><td align=right valign=bottom
+><font color="#ffffff" face="helvetica, arial"><a href=".">index</a><br>     <a href="index.html">list</a></font></td></tr></table>
+    <p><tt>xforms-python's&nbsp;functions&nbsp;to&nbsp;manage&nbsp;files&nbsp;and&nbsp;directories.</tt></p>
+<p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#aa55cc">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Modules</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#aa55cc"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><table width="100%" summary="list"><tr><td width="25%" valign=top><a href="ctypes.html">ctypes</a><br>
+</td><td width="25%" valign=top><a href="library.html">library</a><br>
+</td><td width="25%" valign=top><a href="xfdata.html">xfdata</a><br>
+</td><td width="25%" valign=top></td></tr></table></td></tr></table><p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#eeaa77">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Functions</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#eeaa77"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><dl><dt><a name="-fl_fix_dirname"><strong>fl_fix_dirname</strong></a>(dirname)</dt><dd><tt><a href="#-fl_fix_dirname">fl_fix_dirname</a>(dirname)<br>
+&nbsp;<br>
+Fixes&nbsp;the&nbsp;name&nbsp;of&nbsp;a&nbsp;directory&nbsp;that&nbsp;has&nbsp;a&nbsp;relative&nbsp;path&nbsp;("..")&nbsp;in&nbsp;it.<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;dirname&nbsp;:&nbsp;str<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;name&nbsp;of&nbsp;the&nbsp;directory&nbsp;to&nbsp;evaluate<br>
+&nbsp;<br>
+Returns<br>
+-------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;fixdirname&nbsp;:&nbsp;str<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;fixed&nbsp;directory&nbsp;name<br>
+&nbsp;<br>
+Examples<br>
+--------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;newdirnam&nbsp;=&nbsp;<a href="#-fl_fix_dirname">fl_fix_dirname</a>("../../home/user/../user/mydir/")<br>
+&nbsp;<br>
+Notes<br>
+-----<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
+ <dl><dt><a name="-fl_fmtime"><strong>fl_fmtime</strong></a>(fname)</dt><dd><tt><a href="#-fl_fmtime">fl_fmtime</a>(fname)<br>
+&nbsp;<br>
+Obtains&nbsp;the&nbsp;modification&nbsp;time&nbsp;of&nbsp;a&nbsp;specified&nbsp;file.<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;fname&nbsp;:&nbsp;str<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;name&nbsp;of&nbsp;the&nbsp;file<br>
+&nbsp;<br>
+Returns<br>
+-------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;mtime&nbsp;:&nbsp;long_pos<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;file&nbsp;modification&nbsp;time<br>
+&nbsp;<br>
+Examples<br>
+--------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;fmtime&nbsp;=&nbsp;<a href="#-fl_fmtime">fl_fmtime</a>("/home/user/somefile")<br>
+&nbsp;<br>
+Notes<br>
+-----<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
+ <dl><dt><a name="-fl_free_all_dirlist"><strong>fl_free_all_dirlist</strong></a>()</dt><dd><tt><a href="#-fl_free_all_dirlist">fl_free_all_dirlist</a>()<br>
+&nbsp;<br>
+Frees&nbsp;all&nbsp;the&nbsp;list&nbsp;caches&nbsp;returned&nbsp;by&nbsp;<a href="#-fl_get_dirlist">fl_get_dirlist</a>().<br>
+&nbsp;<br>
+Examples<br>
+--------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;<a href="#-fl_free_all_dirlist">fl_free_all_dirlist</a>()<br>
+&nbsp;<br>
+Notes<br>
+-----<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
+ <dl><dt><a name="-fl_free_dirlist"><strong>fl_free_dirlist</strong></a>(pDirList)</dt><dd><tt><a href="#-fl_free_dirlist">fl_free_dirlist</a>(pDirList)<br>
+&nbsp;<br>
+Frees&nbsp;the&nbsp;list&nbsp;cache&nbsp;returned&nbsp;by&nbsp;<a href="#-fl_get_dirlist">fl_get_dirlist</a>().<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;pDirList&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_DirList<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;instance&nbsp;of&nbsp;DirList&nbsp;class<br>
+&nbsp;<br>
+Examples<br>
+--------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;<a href="#-fl_free_dirlist">fl_free_dirlist</a>(pdirlist)<br>
+&nbsp;<br>
+Notes<br>
+-----<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
+ <dl><dt><a name="-fl_get_dirlist"><strong>fl_get_dirlist</strong></a>(dirname, pattern, rescan)</dt><dd><tt><a href="#-fl_get_dirlist">fl_get_dirlist</a>(dirname,&nbsp;pattern,&nbsp;rescan)<br>
+&nbsp;<br>
+Obtains&nbsp;a&nbsp;listing&nbsp;of&nbsp;specified&nbsp;directory.<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;dirname&nbsp;:&nbsp;str<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;name&nbsp;of&nbsp;directory<br>
+&nbsp;&nbsp;&nbsp;&nbsp;pattern&nbsp;:&nbsp;str<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;regular&nbsp;expression&nbsp;that&nbsp;is&nbsp;used&nbsp;to&nbsp;filter&nbsp;the&nbsp;directory&nbsp;entries<br>
+&nbsp;&nbsp;&nbsp;&nbsp;rescan&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;flag&nbsp;to&nbsp;request&nbsp;a&nbsp;re-read&nbsp;or&nbsp;not.&nbsp;Values&nbsp;0&nbsp;(no&nbsp;re-read)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;or&nbsp;non-zero&nbsp;(to&nbsp;do&nbsp;a&nbsp;re-read)<br>
+&nbsp;<br>
+Returns<br>
+-------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;pDirList&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_DIRLIST,&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;array&nbsp;of&nbsp;DirList&nbsp;class&nbsp;instances<br>
+&nbsp;&nbsp;&nbsp;&nbsp;numfiles&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;number&nbsp;of&nbsp;files&nbsp;(total&nbsp;number&nbsp;of&nbsp;entries&nbsp;in&nbsp;directory&nbsp;dirname<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;that&nbsp;match&nbsp;the&nbsp;pattern&nbsp;specified&nbsp;by&nbsp;pattern)<br>
+&nbsp;<br>
+Examples<br>
+--------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;pdirlist,&nbsp;nfiles&nbsp;=&nbsp;dirlistfl_get_dirlist("/home",&nbsp;"*.*",&nbsp;1)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;print&nbsp;pdirlist[1].name<br>
+&nbsp;<br>
+API_diversion<br>
+----------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;API&nbsp;changed&nbsp;from&nbsp;XForms,&nbsp;upstream&nbsp;was<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="#-fl_get_dirlist">fl_get_dirlist</a>(directory,&nbsp;pattern,&nbsp;n,&nbsp;rescan)<br>
+&nbsp;<br>
+Notes<br>
+-----<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
+ <dl><dt><a name="-fl_is_valid_dir"><strong>fl_is_valid_dir</strong></a>(dirname)</dt><dd><tt><a href="#-fl_is_valid_dir">fl_is_valid_dir</a>(dirname)<br>
+&nbsp;<br>
+Checks&nbsp;if&nbsp;dirname&nbsp;is&nbsp;a&nbsp;valid&nbsp;name&nbsp;of&nbsp;a&nbsp;directory.<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;dirname&nbsp;:&nbsp;str<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;name&nbsp;of&nbsp;the&nbsp;directory&nbsp;to&nbsp;evaluate<br>
+&nbsp;<br>
+Returns<br>
+-------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;yesno&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1&nbsp;(if&nbsp;valid)&nbsp;or&nbsp;0&nbsp;(if&nbsp;invalid)<br>
+&nbsp;<br>
+Examples<br>
+--------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;isvalid&nbsp;=&nbsp;<a href="#-fl_is_valid_dir">fl_is_valid_dir</a>("/etc/mydirname")<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;if&nbsp;not&nbsp;isvalid:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;...&nbsp;&lt;something&gt;<br>
+&nbsp;<br>
+Notes<br>
+-----<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
+ <dl><dt><a name="-fl_set_dirlist_filter"><strong>fl_set_dirlist_filter</strong></a>(py_DirFilter)</dt><dd><tt><a href="#-fl_set_dirlist_filter">fl_set_dirlist_filter</a>(py_DirFilter)<br>
+&nbsp;<br>
+Changes&nbsp;the&nbsp;default&nbsp;filter&nbsp;by&nbsp;which&nbsp;file&nbsp;types&nbsp;are&nbsp;returned.<br>
+By&nbsp;default&nbsp;not&nbsp;all&nbsp;types&nbsp;of&nbsp;files&nbsp;are&nbsp;returned&nbsp;(only&nbsp;directories,<br>
+normal&nbsp;files&nbsp;and&nbsp;link&nbsp;files).<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;py_DirFilter&nbsp;:&nbsp;python&nbsp;function&nbsp;used&nbsp;to&nbsp;filter&nbsp;types,&nbsp;returned&nbsp;value<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;name&nbsp;referring&nbsp;to&nbsp;function&nbsp;(strname,&nbsp;inttype)&nbsp;-&gt;&nbsp;(non-zero&nbsp;if&nbsp;is<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;to&nbsp;be&nbsp;included,&nbsp;0&nbsp;otherwise)<br>
+&nbsp;<br>
+Returns<br>
+-------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;DirFilter&nbsp;:&nbsp;xfdata.FL_DIRLIST_FILTER&nbsp;class&nbsp;instance<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;old&nbsp;dirlist&nbsp;filter&nbsp;function<br>
+&nbsp;<br>
+Examples<br>
+--------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;def&nbsp;dirfilter(fname,&nbsp;ftype):<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;...&nbsp;return&nbsp;(ftype&nbsp;==&nbsp;xfdata.FT_DIR&nbsp;||&nbsp;ftype&nbsp;==&nbsp;xfdata.FT_FILE&nbsp;||<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ftype&nbsp;==&nbsp;xfdata.FT_SOCK&nbsp;||&nbsp;ftype&nbsp;==&nbsp;xfdata.FT_FIFO&nbsp;||<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ftype&nbsp;==&nbsp;xfdata.FT_LINK&nbsp;||&nbsp;ftype&nbsp;==&nbsp;xfdata.FT_BLK&nbsp;||<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ftype&nbsp;==&nbsp;xfdata.FT_CHR&nbsp;||&nbsp;type&nbsp;==&nbsp;xfdata.FT_OTHER)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;olddirfiltfunc&nbsp;=&nbsp;<a href="#-fl_set_dirlist_filter">fl_set_dirlist_filter</a>(dirfilter)<br>
+&nbsp;<br>
+Notes<br>
+-----<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
+ <dl><dt><a name="-fl_set_dirlist_filterdir"><strong>fl_set_dirlist_filterdir</strong></a>(yesno)</dt><dd><tt><a href="#-fl_set_dirlist_filterdir">fl_set_dirlist_filterdir</a>(yesno)<br>
+&nbsp;<br>
+Changes&nbsp;the&nbsp;filter&nbsp;to&nbsp;include&nbsp;the&nbsp;directories.&nbsp;By&nbsp;default&nbsp;directories<br>
+are&nbsp;not&nbsp;subject&nbsp;to&nbsp;filtering.<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;yesno&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;flag&nbsp;to&nbsp;enable/disable&nbsp;directory&nbsp;filter.&nbsp;Values&nbsp;1&nbsp;(enabled)&nbsp;or&nbsp;0<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(disabled)<br>
+&nbsp;<br>
+Returns<br>
+-------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;oldfilt&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;old&nbsp;filter&nbsp;setting<br>
+&nbsp;<br>
+Examples<br>
+--------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;olddirfilt&nbsp;=&nbsp;<a href="#-fl_set_dirlist_filterdir">fl_set_dirlist_filterdir</a>(1)<br>
+&nbsp;<br>
+Notes<br>
+-----<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
+ <dl><dt><a name="-fl_set_dirlist_sort"><strong>fl_set_dirlist_sort</strong></a>(method)</dt><dd><tt><a href="#-fl_set_dirlist_sort">fl_set_dirlist_sort</a>(method)<br>
+&nbsp;<br>
+Changes&nbsp;the&nbsp;default&nbsp;sorting&nbsp;of&nbsp;files&nbsp;in&nbsp;directory.&nbsp;By&nbsp;default&nbsp;the<br>
+files&nbsp;returned&nbsp;are&nbsp;sorted&nbsp;alphabetically.<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;method&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;method&nbsp;of&nbsp;sorting.&nbsp;Values&nbsp;(from&nbsp;xfdata.py)&nbsp;FL_NONE,&nbsp;FL_ALPHASORT,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_RALPHASORT,&nbsp;FL_MTIMESORT,&nbsp;FL_RMTIMESORT,&nbsp;&nbsp;FL_SIZESORT,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_RSIZESORT,&nbsp;FL_CASEALPHASORT,&nbsp;FL_RCASEALPHASORT<br>
+&nbsp;<br>
+Returns<br>
+-------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;oldsort&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;old&nbsp;sort&nbsp;method<br>
+&nbsp;<br>
+Examples<br>
+--------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;num&nbsp;=&nbsp;<a href="#-fl_set_dirlist_sort">fl_set_dirlist_sort</a>(xfdata.FL_CASEALPHASORT)<br>
+&nbsp;<br>
+Notes<br>
+-----<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
+</td></tr></table>
+</body></html>

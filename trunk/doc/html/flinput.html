@@ -1,0 +1,730 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html><head><title>Python: module flinput</title>
+</head><body bgcolor="#f0f0f8">
+
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="heading">
+<tr bgcolor="#7799ee">
+<td valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial">&nbsp;<br><big><big><strong>flinput</strong></big></big></font></td
+><td align=right valign=bottom
+><font color="#ffffff" face="helvetica, arial"><a href=".">index</a><br>     <a href="index.html">list</a></font></td></tr></table>
+    <p><tt>xforms-python's&nbsp;functions&nbsp;to&nbsp;manage&nbsp;input&nbsp;objects.</tt></p>
+<p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#aa55cc">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Modules</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#aa55cc"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><table width="100%" summary="list"><tr><td width="25%" valign=top><a href="ctypes.html">ctypes</a><br>
+</td><td width="25%" valign=top><a href="flbasic.html">flbasic</a><br>
+</td><td width="25%" valign=top><a href="library.html">library</a><br>
+</td><td width="25%" valign=top><a href="xfdata.html">xfdata</a><br>
+</td></tr></table></td></tr></table><p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#eeaa77">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Functions</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#eeaa77"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><dl><dt><a name="-fl_add_input"><strong>fl_add_input</strong></a>(inputtype, x, y, w, h, label)</dt><dd><tt><a href="#-fl_add_input">fl_add_input</a>(inputtype,&nbsp;x,&nbsp;y,&nbsp;w,&nbsp;h,&nbsp;label)<br>
+&nbsp;<br>
+Adds&nbsp;an&nbsp;input&nbsp;object.<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;inputtype&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;type&nbsp;of&nbsp;input&nbsp;to&nbsp;be&nbsp;added.&nbsp;Values&nbsp;(from&nbsp;xfdata.py)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_NORMAL_INPUT,&nbsp;FL_FLOAT_INPUT,&nbsp;FL_INT_INPUT,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_DATE_INPUT,&nbsp;FL_MULTILINE_INPUT,&nbsp;FL_HIDDEN_INPUT,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_SECRET_INPUT<br>
+&nbsp;&nbsp;&nbsp;&nbsp;x&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;horizontal&nbsp;position&nbsp;(upper-left&nbsp;corner)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;y&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;vertical&nbsp;position&nbsp;(upper-left&nbsp;corner)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;w&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;width&nbsp;in&nbsp;coord&nbsp;units<br>
+&nbsp;&nbsp;&nbsp;&nbsp;h&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;height&nbsp;in&nbsp;coord&nbsp;units<br>
+&nbsp;&nbsp;&nbsp;&nbsp;label&nbsp;:&nbsp;str<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;text&nbsp;label&nbsp;of&nbsp;input<br>
+&nbsp;<br>
+Returns<br>
+-------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;pFlObject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;object&nbsp;created<br>
+&nbsp;<br>
+Examples<br>
+--------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;*todo*<br>
+&nbsp;<br>
+Notes<br>
+-----<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;Demo&nbsp;=&nbsp;OK</tt></dd></dl>
+ <dl><dt><a name="-fl_get_input"><strong>fl_get_input</strong></a>(pFlObject)</dt><dd><tt><a href="#-fl_get_input">fl_get_input</a>(pFlObject)<br>
+&nbsp;<br>
+Obtains&nbsp;the&nbsp;text&nbsp;string&nbsp;in&nbsp;the&nbsp;field&nbsp;(when&nbsp;the&nbsp;user&nbsp;has&nbsp;changed&nbsp;it).<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;pFlObject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;input&nbsp;object<br>
+&nbsp;<br>
+Returns<br>
+-------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;textins&nbsp;:&nbsp;str<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;user&nbsp;input&nbsp;string<br>
+&nbsp;<br>
+Examples<br>
+--------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;usertxt&nbsp;=&nbsp;<a href="#-fl_get_input">fl_get_input</a>(inpobj)<br>
+&nbsp;<br>
+Notes<br>
+-----<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;Demo&nbsp;=&nbsp;OK</tt></dd></dl>
+ <dl><dt><a name="-fl_get_input_color"><strong>fl_get_input_color</strong></a>(pFlObject)</dt><dd><tt><a href="#-fl_get_input_color">fl_get_input_color</a>(pFlObject)<br>
+&nbsp;<br>
+Obtains&nbsp;current&nbsp;color&nbsp;for&nbsp;text&nbsp;and&nbsp;cursor&nbsp;of&nbsp;an&nbsp;input&nbsp;object.<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;pFlObject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;input&nbsp;object<br>
+&nbsp;<br>
+Returns<br>
+-------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;textcolr&nbsp;:&nbsp;long_pos<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;color&nbsp;value&nbsp;for&nbsp;text<br>
+&nbsp;&nbsp;&nbsp;&nbsp;curscolr&nbsp;:&nbsp;long_pos<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;color&nbsp;value&nbsp;for&nbsp;cursor<br>
+&nbsp;<br>
+Examples<br>
+--------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;*todo*<br>
+&nbsp;<br>
+API_diversion<br>
+----------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;API&nbsp;changed&nbsp;from&nbsp;XForms,&nbsp;upstream&nbsp;was<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="#-fl_get_input_color">fl_get_input_color</a>(pFlObject,&nbsp;textcolr,&nbsp;curscolr)<br>
+&nbsp;<br>
+Notes<br>
+-----<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
+ <dl><dt><a name="-fl_get_input_cursorpos"><strong>fl_get_input_cursorpos</strong></a>(pFlObject)</dt><dd><tt><a href="#-fl_get_input_cursorpos">fl_get_input_cursorpos</a>(pFlObject)<br>
+&nbsp;<br>
+Obtains&nbsp;the&nbsp;cursor&nbsp;position&nbsp;measured&nbsp;in&nbsp;number&nbsp;of&nbsp;characters<br>
+(including&nbsp;newline&nbsp;characters)&nbsp;in&nbsp;front&nbsp;of&nbsp;the&nbsp;cursor.<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;pFlObject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;input&nbsp;object<br>
+&nbsp;<br>
+Returns<br>
+-------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;result&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;num.&nbsp;or&nbsp;-1&nbsp;(if&nbsp;the&nbsp;input&nbsp;field&nbsp;does&nbsp;not&nbsp;have&nbsp;input&nbsp;focus<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;thus&nbsp;does&nbsp;not&nbsp;have&nbsp;a&nbsp;cursor)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;x&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;horizontal&nbsp;position<br>
+&nbsp;&nbsp;&nbsp;&nbsp;y&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;vertical&nbsp;position<br>
+&nbsp;<br>
+Examples<br>
+--------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;rslt,&nbsp;x,&nbsp;y&nbsp;=&nbsp;<a href="#-fl_get_input_cursorpos">fl_get_input_cursorpos</a>(inpobj)<br>
+&nbsp;<br>
+API_diversion<br>
+----------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;API&nbsp;change&nbsp;from&nbsp;XForms,&nbsp;upstream&nbsp;was<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="#-fl_get_input_cursorpos">fl_get_input_cursorpos</a>(pFlObject,&nbsp;x,&nbsp;y)<br>
+&nbsp;<br>
+Notes<br>
+-----<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;Demo&nbsp;=&nbsp;OK</tt></dd></dl>
+ <dl><dt><a name="-fl_get_input_format"><strong>fl_get_input_format</strong></a>(pFlObject)</dt><dd><tt><a href="#-fl_get_input_format">fl_get_input_format</a>(pFlObject)<br>
+&nbsp;<br>
+Provides&nbsp;means&nbsp;for&nbsp;the&nbsp;validator&nbsp;to&nbsp;retrieve&nbsp;some&nbsp;information&nbsp;about<br>
+user&nbsp;preference&nbsp;or&nbsp;other&nbsp;state&nbsp;dependent&nbsp;informations.<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;pFlObject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;input&nbsp;object<br>
+&nbsp;<br>
+Returns<br>
+-------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;fmt&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;format<br>
+&nbsp;&nbsp;&nbsp;&nbsp;sep&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;separator&nbsp;(in&nbsp;ordinal&nbsp;form)<br>
+&nbsp;<br>
+Examples<br>
+--------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;fmt,&nbsp;sep&nbsp;=&nbsp;&nbsp;<a href="#-fl_get_input_format">fl_get_input_format</a>(inpobj)<br>
+&nbsp;<br>
+API_diversion<br>
+----------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;API&nbsp;changed&nbsp;from&nbsp;XForms,&nbsp;upstream&nbsp;was<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="#-fl_get_input_format">fl_get_input_format</a>(pFlObject,&nbsp;fmt,&nbsp;sep)<br>
+&nbsp;<br>
+Notes<br>
+-----<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
+ <dl><dt><a name="-fl_get_input_numberoflines"><strong>fl_get_input_numberoflines</strong></a>(pFlObject)</dt><dd><tt><a href="#-fl_get_input_numberoflines">fl_get_input_numberoflines</a>(pFlObject)<br>
+&nbsp;<br>
+Obtains&nbsp;the&nbsp;number&nbsp;of&nbsp;lines&nbsp;in&nbsp;the&nbsp;input&nbsp;field.<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;pFlObject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;input&nbsp;object<br>
+&nbsp;<br>
+Returns<br>
+-------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;numlines&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;number&nbsp;of&nbsp;lines&nbsp;in&nbsp;input<br>
+&nbsp;<br>
+Examples<br>
+--------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;<a href="#-fl_get_input_numberoflines">fl_get_input_numberoflines</a>(inpobj)<br>
+&nbsp;<br>
+Notes<br>
+-----<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
+ <dl><dt><a name="-fl_get_input_screenlines"><strong>fl_get_input_screenlines</strong></a>(pFlObject)</dt><dd><tt><a href="#-fl_get_input_screenlines">fl_get_input_screenlines</a>(pFlObject)<br>
+&nbsp;<br>
+Obtains&nbsp;the&nbsp;number&nbsp;of&nbsp;lines&nbsp;that&nbsp;fit&nbsp;inside&nbsp;the&nbsp;input&nbsp;box.<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;pFlObject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;input&nbsp;object<br>
+&nbsp;<br>
+Returns<br>
+-------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;numlines&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;number&nbsp;of&nbsp;lines<br>
+&nbsp;<br>
+Examples<br>
+--------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;<a href="#-fl_get_input_screenlines">fl_get_input_screenlines</a>(inpobj)<br>
+&nbsp;<br>
+Notes<br>
+-----<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
+ <dl><dt><a name="-fl_get_input_scrollbarsize"><strong>fl_get_input_scrollbarsize</strong></a>(pFlObject)</dt><dd><tt><a href="#-fl_get_input_scrollbarsize">fl_get_input_scrollbarsize</a>(pFlObject)<br>
+&nbsp;<br>
+Obtains&nbsp;the&nbsp;current&nbsp;settings&nbsp;for&nbsp;the&nbsp;horizontal&nbsp;scrollbar&nbsp;height<br>
+and&nbsp;the&nbsp;vertical&nbsp;scrollbar&nbsp;width.<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;pFlObject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;input&nbsp;object<br>
+&nbsp;<br>
+Returns<br>
+-------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;hh&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;horizontal&nbsp;height<br>
+&nbsp;&nbsp;&nbsp;&nbsp;vw&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;vertical&nbsp;width<br>
+&nbsp;<br>
+API_diversion<br>
+----------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;API&nbsp;changed&nbsp;from&nbsp;XForms,&nbsp;upstream&nbsp;was<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="#-fl_get_input_scrollbarsize">fl_get_input_scrollbarsize</a>(pFlObject,&nbsp;hh,&nbsp;vw)<br>
+&nbsp;<br>
+Examples<br>
+--------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;*todo*<br>
+&nbsp;<br>
+Notes<br>
+-----<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
+ <dl><dt><a name="-fl_get_input_selected_range"><strong>fl_get_input_selected_range</strong></a>(pFlObject)</dt><dd><tt><a href="#-fl_get_input_selected_range">fl_get_input_selected_range</a>(pFlObject)<br>
+&nbsp;<br>
+Obtains&nbsp;the&nbsp;currently&nbsp;selected&nbsp;range,&nbsp;either&nbsp;selected&nbsp;by&nbsp;the<br>
+application&nbsp;or&nbsp;by&nbsp;the&nbsp;user.<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;pFlObject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;input&nbsp;object<br>
+&nbsp;<br>
+Returns<br>
+-------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;selstr&nbsp;:&nbsp;str<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;selected&nbsp;string<br>
+&nbsp;&nbsp;&nbsp;&nbsp;start&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;starting&nbsp;value&nbsp;of&nbsp;selection&nbsp;(in&nbsp;characters)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;end&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ending&nbsp;value&nbsp;of&nbsp;selection&nbsp;(in&nbsp;characters)<br>
+&nbsp;<br>
+Examples<br>
+--------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;selstr,&nbsp;vstart,&nbsp;vend&nbsp;=&nbsp;<a href="#-fl_get_input_selected_range">fl_get_input_selected_range</a>(inpobj)<br>
+&nbsp;<br>
+API_diversion<br>
+----------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;API&nbsp;changed&nbsp;from&nbsp;XForms,&nbsp;upstream&nbsp;was<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="#-fl_get_input_selected_range">fl_get_input_selected_range</a>(pFlObject,&nbsp;begin,&nbsp;end)<br>
+&nbsp;<br>
+Notes<br>
+-----<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
+ <dl><dt><a name="-fl_get_input_topline"><strong>fl_get_input_topline</strong></a>(pFlObject)</dt><dd><tt><a href="#-fl_get_input_topline">fl_get_input_topline</a>(pFlObject)<br>
+&nbsp;<br>
+Obtains&nbsp;the&nbsp;current&nbsp;topline&nbsp;in&nbsp;the&nbsp;input&nbsp;field.<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;pFlObject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;input&nbsp;object<br>
+&nbsp;<br>
+Returns<br>
+-------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;num.&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;current&nbsp;topline<br>
+&nbsp;<br>
+Examples<br>
+--------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;<a href="#-fl_get_input_topline">fl_get_input_topline</a>(pFlObject)<br>
+&nbsp;<br>
+Notes<br>
+-----<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
+ <dl><dt><a name="-fl_get_input_xoffset"><strong>fl_get_input_xoffset</strong></a>(pFlObject)</dt><dd><tt><a href="#-fl_get_input_xoffset">fl_get_input_xoffset</a>(pFlObject)<br>
+&nbsp;<br>
+Obtains&nbsp;the&nbsp;current&nbsp;horizontal&nbsp;scrolling&nbsp;offset.<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;pFlObject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;input&nbsp;object<br>
+&nbsp;<br>
+Returns<br>
+-------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;offset&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;horizontal&nbsp;offset&nbsp;of&nbsp;input.<br>
+&nbsp;<br>
+Examples<br>
+--------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;hoffset&nbsp;=&nbsp;<a href="#-fl_get_input_xoffset">fl_get_input_xoffset</a>(inpobj)<br>
+&nbsp;<br>
+Notes<br>
+-----<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
+ <dl><dt><a name="-fl_set_input"><strong>fl_set_input</strong></a>(pFlObject, text)</dt><dd><tt><a href="#-fl_set_input">fl_set_input</a>(pFlObject,&nbsp;text)<br>
+&nbsp;<br>
+Sets&nbsp;the&nbsp;particular&nbsp;input&nbsp;string,&nbsp;with&nbsp;no&nbsp;checks&nbsp;for&nbsp;validity.<br>
+An&nbsp;empty&nbsp;string&nbsp;can&nbsp;be&nbsp;used&nbsp;to&nbsp;clear&nbsp;an&nbsp;input&nbsp;field.<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;pFlObject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;input&nbsp;object<br>
+&nbsp;&nbsp;&nbsp;&nbsp;text&nbsp;:&nbsp;str<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;input&nbsp;text<br>
+&nbsp;<br>
+Examples<br>
+--------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;<a href="#-fl_set_input">fl_set_input</a>(inpobj,&nbsp;"some&nbsp;text")<br>
+&nbsp;<br>
+Notes<br>
+-----<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;Demo&nbsp;=&nbsp;OK</tt></dd></dl>
+ <dl><dt><a name="-fl_set_input_color"><strong>fl_set_input_color</strong></a>(pFlObject, txtcolr, curscolr)</dt><dd><tt><a href="#-fl_set_input_color">fl_set_input_color</a>(pFlObject,&nbsp;txtcolr,&nbsp;curscolr)<br>
+&nbsp;<br>
+Sets&nbsp;text&nbsp;and&nbsp;cursor&nbsp;colors&nbsp;to&nbsp;be&nbsp;used&nbsp;in&nbsp;input&nbsp;object.<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;pFlObject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;input&nbsp;object<br>
+&nbsp;&nbsp;&nbsp;&nbsp;txtcolr&nbsp;:&nbsp;long_pos<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;color&nbsp;value&nbsp;for&nbsp;text<br>
+&nbsp;&nbsp;&nbsp;&nbsp;curscolr&nbsp;:&nbsp;long_pos<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;color&nbsp;value&nbsp;for&nbsp;cursor<br>
+&nbsp;<br>
+Examples<br>
+--------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;*todo*<br>
+&nbsp;<br>
+Notes<br>
+-----<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
+ <dl><dt><a name="-fl_set_input_cursor_visible"><strong>fl_set_input_cursor_visible</strong></a>(pFlObject, yesno)</dt><dd><tt><a href="#-fl_set_input_cursor_visible">fl_set_input_cursor_visible</a>(pFlObject,&nbsp;yesno)<br>
+&nbsp;<br>
+Turns&nbsp;on/off&nbsp;the&nbsp;cursor&nbsp;of&nbsp;the&nbsp;input&nbsp;field.<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;pFlObject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;input&nbsp;object<br>
+&nbsp;&nbsp;&nbsp;&nbsp;yesno&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;flag&nbsp;to&nbsp;set/unset&nbsp;cursor&nbsp;visibility.&nbsp;Values&nbsp;1&nbsp;(visible)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;or&nbsp;0&nbsp;(not&nbsp;visible)<br>
+&nbsp;<br>
+Examples<br>
+--------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;<a href="#-fl_set_input_cursor_visible">fl_set_input_cursor_visible</a>(inpobj,&nbsp;1)<br>
+&nbsp;<br>
+Notes<br>
+-----<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
+ <dl><dt><a name="-fl_set_input_cursorpos"><strong>fl_set_input_cursorpos</strong></a>(pFlObject, xpos, ypos)</dt><dd><tt><a href="#-fl_set_input_cursorpos">fl_set_input_cursorpos</a>(pFlObject,&nbsp;xpos,&nbsp;ypos)<br>
+&nbsp;<br>
+Moves&nbsp;the&nbsp;cursor&nbsp;within&nbsp;the&nbsp;input&nbsp;field.<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;pFlObject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;input&nbsp;object<br>
+&nbsp;&nbsp;&nbsp;&nbsp;xpos&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;horizontal&nbsp;cursor&nbsp;position&nbsp;in&nbsp;characters<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ypos&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;vertical&nbsp;cursor&nbsp;position&nbsp;in&nbsp;lines<br>
+&nbsp;<br>
+Examples<br>
+--------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;*todo*<br>
+&nbsp;<br>
+Notes<br>
+-----<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
+ <dl><dt><a name="-fl_set_input_editkeymap"><strong>fl_set_input_editkeymap</strong></a>(pEditKeymap)</dt><dd><tt><a href="#-fl_set_input_editkeymap">fl_set_input_editkeymap</a>(pEditKeymap)<br>
+&nbsp;<br>
+Changes&nbsp;the&nbsp;default&nbsp;edit&nbsp;keymaps.&nbsp;Edit&nbsp;keymap&nbsp;is&nbsp;global&nbsp;and&nbsp;affects&nbsp;all<br>
+input&nbsp;field&nbsp;within&nbsp;the&nbsp;application.&nbsp;All&nbsp;cursor&nbsp;keys&nbsp;(&lt;Left&gt;,&nbsp;&lt;Home&gt;&nbsp;etc.)<br>
+are&nbsp;reserved&nbsp;and&nbsp;their&nbsp;meanings&nbsp;hard-coded,&nbsp;thus&nbsp;can?t&nbsp;be&nbsp;used&nbsp;in&nbsp;the<br>
+mapping.&nbsp;For&nbsp;example,&nbsp;if&nbsp;you&nbsp;try&nbsp;to&nbsp;set&nbsp;del_prev_char&nbsp;to&nbsp;&lt;Home&gt;,&nbsp;pressing<br>
+the&nbsp;&lt;Home&gt;&nbsp;key&nbsp;will&nbsp;not&nbsp;delete&nbsp;the&nbsp;previous&nbsp;character.&nbsp;In&nbsp;filling&nbsp;the<br>
+keymap&nbsp;structure,&nbsp;ASCII&nbsp;characters&nbsp;(i.e.&nbsp;characters&nbsp;with&nbsp;values&nbsp;below<br>
+128,&nbsp;including&nbsp;the&nbsp;control&nbsp;characters&nbsp;with&nbsp;values&nbsp;below&nbsp;32)&nbsp;should&nbsp;be<br>
+specified&nbsp;by&nbsp;their&nbsp;ASCII&nbsp;codes&nbsp;(&lt;Ctrl&gt;&nbsp;C&nbsp;is&nbsp;3&nbsp;etc.),&nbsp;while&nbsp;all&nbsp;others&nbsp;by<br>
+their&nbsp;Keysyms&nbsp;(XK_F1&nbsp;etc.).&nbsp;Control&nbsp;and&nbsp;special&nbsp;character&nbsp;combinations<br>
+can&nbsp;be&nbsp;obtained&nbsp;by&nbsp;adding&nbsp;xfdata.FL_CONTROL_MASK&nbsp;to&nbsp;the&nbsp;Keysym.&nbsp;To<br>
+specify&nbsp;Meta&nbsp;add&nbsp;xfdata.FL_ALT_MASK&nbsp;to&nbsp;the&nbsp;key&nbsp;value.<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;pEditKeymap&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_EditKeymap<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;class&nbsp;instance&nbsp;(filled&nbsp;or&nbsp;partially&nbsp;filled).&nbsp;If&nbsp;None,&nbsp;it<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;restores&nbsp;the&nbsp;default&nbsp;keymap.<br>
+&nbsp;<br>
+Examples<br>
+--------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;*todo*<br>
+&nbsp;<br>
+Notes<br>
+-----<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
+ <dl><dt><a name="-fl_set_input_fieldchar"><strong>fl_set_input_fieldchar</strong></a>(pFlObject, fldchar)</dt><dd><tt><a href="#-fl_set_input_fieldchar">fl_set_input_fieldchar</a>(pFlObject,&nbsp;fldchar)<br>
+&nbsp;<br>
+Changes&nbsp;the&nbsp;character&nbsp;used&nbsp;to&nbsp;draw&nbsp;the&nbsp;text,&nbsp;for&nbsp;secret&nbsp;input&nbsp;field.<br>
+By&nbsp;default&nbsp;text&nbsp;is&nbsp;drawn&nbsp;using&nbsp;spaces.<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;pFlObject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;input&nbsp;object<br>
+&nbsp;&nbsp;&nbsp;&nbsp;fldchar&nbsp;:&nbsp;int&nbsp;or&nbsp;char<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;character&nbsp;to&nbsp;use&nbsp;in&nbsp;secret&nbsp;input&nbsp;fields<br>
+&nbsp;<br>
+Returns<br>
+-------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;oldchar&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;old&nbsp;field&nbsp;character&nbsp;(ordinal&nbsp;form)<br>
+&nbsp;<br>
+Examples<br>
+--------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;oldchar&nbsp;=&nbsp;<a href="#-fl_set_input_fieldchar">fl_set_input_fieldchar</a>(inpobj,&nbsp;'*')<br>
+&nbsp;<br>
+Notes<br>
+-----<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
+ <dl><dt><a name="-fl_set_input_filter"><strong>fl_set_input_filter</strong></a>(pFlObject, py_InputValidator)</dt><dd><tt><a href="#-fl_set_input_filter">fl_set_input_filter</a>(pFlObject,&nbsp;py_InputValidator)<br>
+&nbsp;<br>
+Sets&nbsp;up&nbsp;a&nbsp;validator&nbsp;function,&nbsp;that&nbsp;is&nbsp;is&nbsp;called&nbsp;whenever&nbsp;a&nbsp;new<br>
+(regular)&nbsp;character&nbsp;is&nbsp;entered.<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;pFlObject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;input&nbsp;object<br>
+&nbsp;&nbsp;&nbsp;&nbsp;py_InputValidator&nbsp;:&nbsp;python&nbsp;function&nbsp;to&nbsp;set&nbsp;validator,&nbsp;returned&nbsp;value<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;name&nbsp;referring&nbsp;to&nbsp;function(pFlObject,&nbsp;oldstr,&nbsp;c,&nbsp;int)&nbsp;-&gt;&nbsp;oldfilt<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;oldstr&nbsp;is&nbsp;the&nbsp;string&nbsp;in&nbsp;the&nbsp;input&nbsp;field&nbsp;before&nbsp;the&nbsp;newly&nbsp;typed<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;character&nbsp;c&nbsp;was&nbsp;added&nbsp;to&nbsp;form&nbsp;the&nbsp;new&nbsp;string&nbsp;cur.&nbsp;If&nbsp;the&nbsp;new<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;character&nbsp;is&nbsp;not&nbsp;an&nbsp;acceptable&nbsp;character&nbsp;for&nbsp;the&nbsp;input&nbsp;field,&nbsp;the<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;filter&nbsp;function&nbsp;should&nbsp;return&nbsp;xfdata.FL_INVALID&nbsp;otherwise<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;xfdata.FL_VALID.&nbsp;If&nbsp;xfdata.FL_INVALID&nbsp;is&nbsp;returned,&nbsp;the&nbsp;new<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;character&nbsp;is&nbsp;discarded&nbsp;and&nbsp;the&nbsp;input&nbsp;field&nbsp;remains&nbsp;unmodified.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The&nbsp;function&nbsp;returns&nbsp;the&nbsp;old&nbsp;filter.&nbsp;While&nbsp;the&nbsp;built-in&nbsp;filters<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;also&nbsp;sound&nbsp;the&nbsp;keyboard&nbsp;bell,&nbsp;this&nbsp;does&nbsp;not&nbsp;happen&nbsp;if&nbsp;a&nbsp;custom<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;filter&nbsp;only&nbsp;returns&nbsp;FL_INVALID.&nbsp;To&nbsp;also&nbsp;sound&nbsp;the&nbsp;keyboard&nbsp;bell<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;you&nbsp;can&nbsp;logically&nbsp;OR&nbsp;it&nbsp;with&nbsp;xfdata.FL_INVALID|FL_RINGBELL.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;This&nbsp;still&nbsp;leaves&nbsp;the&nbsp;possibility&nbsp;that&nbsp;the&nbsp;input&nbsp;is&nbsp;valid&nbsp;for<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;every&nbsp;character&nbsp;entered,&nbsp;but&nbsp;the&nbsp;string&nbsp;is&nbsp;invalid&nbsp;for&nbsp;the<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;field&nbsp;because&nbsp;it&nbsp;is&nbsp;incomplete.&nbsp;E.g.&nbsp;12.0e&nbsp;is&nbsp;valid&nbsp;for&nbsp;a<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;float&nbsp;input&nbsp;field&nbsp;for&nbsp;every&nbsp;character&nbsp;typed,&nbsp;but&nbsp;the&nbsp;final&nbsp;string<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;is&nbsp;not&nbsp;a&nbsp;valid&nbsp;floating&nbsp;point&nbsp;number.&nbsp;To&nbsp;guard&nbsp;again&nbsp;this,&nbsp;the<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;filter&nbsp;function&nbsp;is&nbsp;also&nbsp;called&nbsp;just&nbsp;prior&nbsp;to&nbsp;returning&nbsp;the&nbsp;object<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;with&nbsp;the&nbsp;argument&nbsp;c&nbsp;(for&nbsp;the&nbsp;newly&nbsp;entered&nbsp;character)&nbsp;set&nbsp;to&nbsp;zero.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;If&nbsp;the&nbsp;validator&nbsp;returns&nbsp;xfdata.FL_INVALID&nbsp;the&nbsp;object&nbsp;is&nbsp;not<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;returned&nbsp;to&nbsp;the&nbsp;application&nbsp;program,&nbsp;but&nbsp;input&nbsp;focus&nbsp;can&nbsp;change<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;to&nbsp;the&nbsp;next&nbsp;input&nbsp;field.&nbsp;If&nbsp;the&nbsp;return&nbsp;value<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;xfdata.FL_INVALID|FL_RINGBELL,&nbsp;the&nbsp;keyboard&nbsp;bell&nbsp;is&nbsp;sounded&nbsp;and<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;the&nbsp;object&nbsp;is&nbsp;not&nbsp;returned&nbsp;to&nbsp;the&nbsp;application&nbsp;program&nbsp;and&nbsp;the<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;input&nbsp;focus&nbsp;remains&nbsp;in&nbsp;the&nbsp;object.<br>
+&nbsp;<br>
+Returns<br>
+-------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;InputValidator&nbsp;:&nbsp;xfdata.FL_INPUTVALIDATOR<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;old&nbsp;filter&nbsp;function&nbsp;for&nbsp;input<br>
+&nbsp;<br>
+Examples<br>
+--------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;*todo*<br>
+&nbsp;<br>
+Notes<br>
+-----<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
+ <dl><dt><a name="-fl_set_input_format"><strong>fl_set_input_format</strong></a>(pFlObject, fmt, sep)</dt><dd><tt><a href="#-fl_set_input_format">fl_set_input_format</a>(pFlObject,&nbsp;fmt,&nbsp;sep)<br>
+&nbsp;<br>
+Sets&nbsp;the&nbsp;format&nbsp;used&nbsp;for&nbsp;an&nbsp;input&nbsp;object.&nbsp;Currently&nbsp;used&nbsp;only&nbsp;for<br>
+xfdata.FL_DATE_INPUT&nbsp;objects.<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;fmt&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;format&nbsp;for&nbsp;the&nbsp;input.&nbsp;Values&nbsp;(from&nbsp;xfdata.py)&nbsp;FL_INPUT_DDMM,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_INPUT_MMDD<br>
+&nbsp;&nbsp;&nbsp;&nbsp;sep&nbsp;:&nbsp;int&nbsp;or&nbsp;char<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;printable&nbsp;single&nbsp;character&nbsp;used&nbsp;as&nbsp;separator<br>
+&nbsp;<br>
+Examples<br>
+--------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;*todo*<br>
+&nbsp;<br>
+Notes<br>
+-----<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
+ <dl><dt><a name="-fl_set_input_hscrollbar"><strong>fl_set_input_hscrollbar</strong></a>(pFlObject, pref)</dt><dd><tt><a href="#-fl_set_input_hscrollbar">fl_set_input_hscrollbar</a>(pFlObject,&nbsp;pref)<br>
+&nbsp;<br>
+Sets&nbsp;horizontal&nbsp;scrollbar&nbsp;settings.&nbsp;By&nbsp;default,&nbsp;if&nbsp;an&nbsp;input&nbsp;field&nbsp;of<br>
+type&nbsp;xfdata.FL_MULTILINE_INPUT&nbsp;contains&nbsp;more&nbsp;text&nbsp;than&nbsp;can&nbsp;be&nbsp;shown,<br>
+scrollbars&nbsp;will&nbsp;appear&nbsp;with&nbsp;which&nbsp;the&nbsp;user&nbsp;can&nbsp;scroll&nbsp;the&nbsp;text&nbsp;around<br>
+horizontally.&nbsp;Turning&nbsp;off&nbsp;scrollbars&nbsp;for&nbsp;an&nbsp;input&nbsp;field&nbsp;does&nbsp;not&nbsp;turn<br>
+off&nbsp;scrolling,&nbsp;the&nbsp;user&nbsp;can&nbsp;still&nbsp;scroll&nbsp;the&nbsp;field&nbsp;using&nbsp;cursor&nbsp;and<br>
+other&nbsp;keys.<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;pFlObject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;input&nbsp;object<br>
+&nbsp;&nbsp;&nbsp;&nbsp;pref&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;how&nbsp;is&nbsp;horizontal&nbsp;scrollbar&nbsp;shown.&nbsp;Values&nbsp;(from&nbsp;xfdata.py)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_AUTO,&nbsp;FL_ON,&nbsp;FL_OFF<br>
+&nbsp;<br>
+Examples<br>
+--------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;*todo*<br>
+&nbsp;<br>
+Notes<br>
+-----<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
+ <dl><dt><a name="-fl_set_input_maxchars"><strong>fl_set_input_maxchars</strong></a>(pFlObject, maxchars)</dt><dd><tt><a href="#-fl_set_input_maxchars">fl_set_input_maxchars</a>(pFlObject,&nbsp;maxchars)<br>
+&nbsp;<br>
+Limits&nbsp;the&nbsp;number&nbsp;of&nbsp;characters&nbsp;per&nbsp;line&nbsp;for&nbsp;input&nbsp;fields&nbsp;of&nbsp;type<br>
+xfdata.FL_NORMAL_INPUT.&nbsp;Note&nbsp;that&nbsp;input&nbsp;objects&nbsp;of&nbsp;type<br>
+xfdata.FL_DATE_INPUT&nbsp;are&nbsp;limited&nbsp;to&nbsp;10&nbsp;characters&nbsp;per&nbsp;default&nbsp;and&nbsp;those<br>
+of&nbsp;type&nbsp;xfdata.FL_SECRET_INPUT&nbsp;to&nbsp;16.<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;pFlObject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;input&nbsp;object<br>
+&nbsp;&nbsp;&nbsp;&nbsp;maxchars&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;maximum&nbsp;characters&nbsp;to&nbsp;be&nbsp;set.&nbsp;If&nbsp;it&nbsp;is&nbsp;0,&nbsp;limit&nbsp;is&nbsp;reset&nbsp;to<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;infinite.<br>
+&nbsp;<br>
+Examples<br>
+--------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;<a href="#-fl_set_input_maxchars">fl_set_input_maxchars</a>(inpobj,&nbsp;20)<br>
+&nbsp;<br>
+Notes<br>
+-----<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
+ <dl><dt><a name="-fl_set_input_scroll"><strong>fl_set_input_scroll</strong></a>(pFlObject, yesno)</dt><dd><tt><a href="#-fl_set_input_scroll">fl_set_input_scroll</a>(pFlObject,&nbsp;yesno)<br>
+&nbsp;<br>
+Turn&nbsp;on/off&nbsp;scrolling&nbsp;for&nbsp;an&nbsp;input&nbsp;field&nbsp;(for&nbsp;both&nbsp;multiline&nbsp;and&nbsp;single<br>
+line&nbsp;input&nbsp;field).<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;pFlObject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;input&nbsp;object<br>
+&nbsp;&nbsp;&nbsp;&nbsp;yesno&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;flag&nbsp;to&nbsp;enable/disable&nbsp;scrolling.&nbsp;Values&nbsp;0&nbsp;(disabled)&nbsp;or&nbsp;1<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(enabled)<br>
+&nbsp;<br>
+Examples<br>
+--------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;*todo*<br>
+&nbsp;<br>
+Notes<br>
+-----<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
+ <dl><dt><a name="-fl_set_input_scrollbarsize"><strong>fl_set_input_scrollbarsize</strong></a>(pFlObject, hh, vw)</dt><dd><tt><a href="#-fl_set_input_scrollbarsize">fl_set_input_scrollbarsize</a>(pFlObject,&nbsp;hh,&nbsp;vw)<br>
+&nbsp;<br>
+Changes&nbsp;the&nbsp;size&nbsp;of&nbsp;the&nbsp;scrollbars.&nbsp;By&nbsp;default,&nbsp;the&nbsp;scrollbar&nbsp;size<br>
+is&nbsp;dependent&nbsp;on&nbsp;the&nbsp;initial&nbsp;size&nbsp;of&nbsp;the&nbsp;input&nbsp;box.<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;pFlObject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;input&nbsp;object<br>
+&nbsp;&nbsp;&nbsp;&nbsp;hh&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;horizontal&nbsp;height&nbsp;of&nbsp;scrollbar&nbsp;in&nbsp;pixels<br>
+&nbsp;&nbsp;&nbsp;&nbsp;vw&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;vertical&nbsp;width&nbsp;of&nbsp;scrollbar&nbsp;in&nbsp;pixels<br>
+&nbsp;<br>
+Examples<br>
+--------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;*todo*<br>
+&nbsp;<br>
+Notes<br>
+-----<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
+ <dl><dt><a name="-fl_set_input_selected"><strong>fl_set_input_selected</strong></a>(pFlObject, yesno)</dt><dd><tt><a href="#-fl_set_input_selected">fl_set_input_selected</a>(pFlObject,&nbsp;yesno)<br>
+&nbsp;<br>
+Selects&nbsp;or&nbsp;deselects&nbsp;the&nbsp;current&nbsp;input.&nbsp;It&nbsp;places&nbsp;the&nbsp;cursor<br>
+at&nbsp;the&nbsp;end&nbsp;of&nbsp;the&nbsp;string&nbsp;when&nbsp;selected.<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;pFlObject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;input&nbsp;object<br>
+&nbsp;&nbsp;&nbsp;&nbsp;yesno&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;flag&nbsp;to&nbsp;deselect/select&nbsp;input.&nbsp;Values&nbsp;0&nbsp;(deselected)&nbsp;or&nbsp;1<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(selected)<br>
+&nbsp;<br>
+Examples<br>
+--------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;<a href="#-fl_set_input_selected">fl_set_input_selected</a>(inpobj,&nbsp;1)<br>
+&nbsp;<br>
+Notes<br>
+-----<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
+ <dl><dt><a name="-fl_set_input_selected_range"><strong>fl_set_input_selected_range</strong></a>(pFlObject, begin, end)</dt><dd><tt><a href="#-fl_set_input_selected_range">fl_set_input_selected_range</a>(pFlObject,&nbsp;begin,&nbsp;end)<br>
+&nbsp;<br>
+Selects&nbsp;or&nbsp;deselects&nbsp;the&nbsp;current&nbsp;input&nbsp;of&nbsp;part&nbsp;of&nbsp;it.&nbsp;When&nbsp;begin&nbsp;is<br>
+0&nbsp;and&nbsp;end&nbsp;is&nbsp;the&nbsp;last&nbsp;character&nbsp;number,&nbsp;all&nbsp;input&nbsp;is&nbsp;selected.&nbsp;It<br>
+places&nbsp;the&nbsp;cursor&nbsp;at&nbsp;the&nbsp;beginning&nbsp;of&nbsp;selected&nbsp;string.<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;pFlObject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;input&nbsp;object<br>
+&nbsp;&nbsp;&nbsp;&nbsp;begin&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;starting&nbsp;value&nbsp;in&nbsp;characters<br>
+&nbsp;&nbsp;&nbsp;&nbsp;end&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ending&nbsp;value&nbsp;in&nbsp;characters<br>
+&nbsp;<br>
+Examples<br>
+--------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;*todo*<br>
+&nbsp;<br>
+Notes<br>
+-----<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
+ <dl><dt><a name="-fl_set_input_topline"><strong>fl_set_input_topline</strong></a>(pFlObject, linenum)</dt><dd><tt><a href="#-fl_set_input_topline">fl_set_input_topline</a>(pFlObject,&nbsp;linenum)<br>
+&nbsp;<br>
+Scrolls&nbsp;vertically&nbsp;an&nbsp;input&nbsp;object&nbsp;(for&nbsp;input&nbsp;fields&nbsp;of&nbsp;type<br>
+xfdata.FL_MULTILINE_INPUT&nbsp;only).<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;pFlObject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;input&nbsp;object<br>
+&nbsp;&nbsp;&nbsp;&nbsp;linenum&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;the&nbsp;new&nbsp;top&nbsp;line&nbsp;(starting&nbsp;from&nbsp;1)&nbsp;in&nbsp;the&nbsp;input&nbsp;field.<br>
+&nbsp;<br>
+Examples<br>
+--------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;<a href="#-fl_set_input_topline">fl_set_input_topline</a>(pFlObject,&nbsp;3)<br>
+&nbsp;<br>
+Notes<br>
+-----<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
+ <dl><dt><a name="-fl_set_input_vscrollbar"><strong>fl_set_input_vscrollbar</strong></a>(pFlObject, pref)</dt><dd><tt><a href="#-fl_set_input_vscrollbar">fl_set_input_vscrollbar</a>(pFlObject,&nbsp;pref)<br>
+&nbsp;<br>
+Sets&nbsp;vertical&nbsp;scrollbar&nbsp;settings.&nbsp;By&nbsp;default,&nbsp;if&nbsp;an&nbsp;input&nbsp;field&nbsp;of&nbsp;type<br>
+xfdata.FL_MULTILINE_INPUT&nbsp;contains&nbsp;more&nbsp;text&nbsp;than&nbsp;can&nbsp;be&nbsp;shown,<br>
+scrollbars&nbsp;will&nbsp;appear&nbsp;with&nbsp;which&nbsp;the&nbsp;user&nbsp;can&nbsp;scroll&nbsp;the&nbsp;text&nbsp;around<br>
+vertically.&nbsp;Turning&nbsp;off&nbsp;scrollbars&nbsp;for&nbsp;an&nbsp;input&nbsp;field&nbsp;does&nbsp;not&nbsp;turn&nbsp;off<br>
+scrolling,&nbsp;the&nbsp;user&nbsp;can&nbsp;still&nbsp;scroll&nbsp;the&nbsp;field&nbsp;using&nbsp;cursor&nbsp;and&nbsp;other<br>
+keys.<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;pFlObject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;input&nbsp;object<br>
+&nbsp;&nbsp;&nbsp;&nbsp;pref&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;how&nbsp;is&nbsp;vertical&nbsp;scrollbar&nbsp;shown.&nbsp;Values&nbsp;(from&nbsp;xfdata.py)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_AUTO,&nbsp;FL_ON,&nbsp;FL_OFF<br>
+&nbsp;<br>
+Examples<br>
+--------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;<a href="#-fl_set_input_vscrollbar">fl_set_input_vscrollbar</a>(inpobj,&nbsp;xfdata.FL_OFF)<br>
+&nbsp;<br>
+Notes<br>
+-----<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
+ <dl><dt><a name="-fl_set_input_xoffset"><strong>fl_set_input_xoffset</strong></a>(pFlObject, offset)</dt><dd><tt><a href="#-fl_set_input_xoffset">fl_set_input_xoffset</a>(pFlObject,&nbsp;offset)<br>
+&nbsp;<br>
+Scrolls&nbsp;programmatically&nbsp;horizontally&nbsp;(to&nbsp;the&nbsp;left).<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;pFlObject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;input&nbsp;object<br>
+&nbsp;&nbsp;&nbsp;&nbsp;offset&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;positive&nbsp;number&nbsp;of&nbsp;pixels&nbsp;to&nbsp;scroll&nbsp;to&nbsp;the&nbsp;left&nbsp;relative<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;to&nbsp;the&nbsp;nominal&nbsp;position&nbsp;of&nbsp;the&nbsp;text&nbsp;lines.<br>
+&nbsp;<br>
+Examples<br>
+--------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;*todo*<br>
+&nbsp;<br>
+Notes<br>
+-----<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
+ <dl><dt><a name="-fl_validate_input"><strong>fl_validate_input</strong></a>(pFlObject)</dt><dd><tt><a href="#-fl_validate_input">fl_validate_input</a>(pFlObject)<br>
+&nbsp;<br>
+Tests&nbsp;if&nbsp;the&nbsp;value&nbsp;in&nbsp;an&nbsp;input&nbsp;field&nbsp;is&nbsp;valid,&nbsp;according&nbsp;to&nbsp;the<br>
+pre-defined&nbsp;validator&nbsp;function.<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;pFlObject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;input&nbsp;object<br>
+&nbsp;<br>
+Returns<br>
+-------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;result&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;xfdata.FL_VALID&nbsp;(if&nbsp;value&nbsp;is&nbsp;valid&nbsp;or&nbsp;if&nbsp;there&nbsp;is&nbsp;no<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;validator&nbsp;function&nbsp;set&nbsp;for&nbsp;the&nbsp;input),&nbsp;otherwise&nbsp;FL_INVALID<br>
+&nbsp;<br>
+Examples<br>
+--------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;*todo*<br>
+&nbsp;<br>
+Notes<br>
+-----<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
+</td></tr></table>
+</body></html>
