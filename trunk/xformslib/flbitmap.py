@@ -49,7 +49,8 @@ from xformslib import xfdata
 def fl_add_bitmap(bitmaptype, x, y, w, h, label):
     """fl_add_bitmap(bitmaptype, x, y, w, h, label)
     
-    Adds a bitmap object. The bitmap is empty on creation.
+    Adds a bitmap (a plain text monochrome image format) object to a form.
+    The bitmap is empty on creation.
 
     Parameters
     ----------
@@ -74,12 +75,13 @@ def fl_add_bitmap(bitmaptype, x, y, w, h, label):
 
     Examples
     --------
-        >>> fl_add_bitmap(xfdata.FL_NORMAL_BITMAP, 320, 200, 100, 100,
-                "MyBitmap")
+        >>> xbmobj = fl_add_bitmap(xfdata.FL_NORMAL_BITMAP, 320, 200, 100,
+                100, "MyBitmap")
 
     Notes
     -----
-        Status: Tested + NoDoc + Demo = OK
+        Status: Tested + Doc + Demo = OK
+        Review: UT+
 
     """
     _fl_add_bitmap = library.cfuncproto(
@@ -122,11 +124,14 @@ def fl_set_bitmap_data(pFlObject, w, h, xbmcontents):
 
     Examples
     --------
-        >>> *todo*
+        >>> bitmapcontents = "\x01\x1a\x27\x34\x41\x4e\x5b\x68" \
+        >>>                  "\x75\x82\x8f\x9c\xa9\xb6\xc3\xd0"
+        >>> fl_set_bitmap_data(xbmobj, 4, 4, bitmapcontents)
 
     Notes
     -----
         Status: Untested + Doc + NoDemo = NOT OK
+        Review: UT+
 
     """
     _fl_set_bitmap_data = library.cfuncproto(
@@ -139,6 +144,7 @@ def fl_set_bitmap_data(pFlObject, w, h, xbmcontents):
     library.verify_flobjectptr_type(pFlObject)
     iw = library.convert_to_int(w)
     ih = library.convert_to_int(h)
+    library.check_param_length(xbmcontents, w*h)
     pxbmcontents = cty.cast(xbmcontents, cty.POINTER(cty.c_ubyte))
     library.keep_elem_refs(pFlObject, w, h, xbmcontents, iw, ih, pxbmcontents)
     _fl_set_bitmap_data(pFlObject, iw, ih, pxbmcontents)
@@ -150,7 +156,6 @@ def fl_set_bitmap_file(pFlObject, fname):
     Sets the actual bitmap being displayed from a specified .xbm file. A
     number of bitmaps can be found in '/usr/include/X11/bitmaps' or similar
     places. The X program 'bitmap' can be used to create bitmaps.
-
 
     Parameters
     ----------
@@ -166,6 +171,7 @@ def fl_set_bitmap_file(pFlObject, fname):
     Notes
     -----
         Status: Tested + Doc + Demo = OK
+        Review: UT+
 
     """
     _fl_set_bitmap_file = library.cfuncproto(
