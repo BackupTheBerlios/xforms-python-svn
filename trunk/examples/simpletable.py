@@ -155,4 +155,6 @@ class Flsimpletable(object):
 
 
 if __name__ == '__main__':
+    print ("********* simpletable.py *********")
     Flsimpletable(len(sys.argv), sys.argv)
+

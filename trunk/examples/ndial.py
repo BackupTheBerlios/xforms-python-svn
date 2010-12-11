@@ -69,4 +69,6 @@ class Flndial(object):
 
 
 if __name__ == '__main__':
-    Flndial(len(sys.argv), sys.argv)
+    print("********* ndial.py *********")
+    appl = Flndial(len(sys.argv), sys.argv)
+

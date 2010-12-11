@@ -205,4 +205,6 @@ class BrowserAll(object):
 
 
 if __name__ == '__main__':
+    print("********* browserall.py *********")
     BrowserAll(len(sys.argv), sys.argv)
+

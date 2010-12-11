@@ -151,9 +151,9 @@ class Flgrav(object):
         #grav = FD_gravity()
         #help_ = FD_help()
 
-        xfl.fl_initialize(lsysargv, sysargv, "Gravity Demo", 0, 0)
+        xfl.fl_initialize(lsysargv, sysargv, "FormDemo", 0, 0)
         self.help_ = self.create_form_help()
-        self.grav = self.create_form_gravity(self.help_)
+        self.grav = self.create_form_gravity(self.help_.help_)
         xfl.fl_set_app_mainform(self.grav.grav)
 
         for i in range (0, 9):
@@ -233,18 +233,16 @@ class Flgrav(object):
 
 
     def help_callback(self, obj, data):
-        self.h = self.help_     # FD_help *h = (FD_help * ) data
-        if not self.h.is_shown:
-            xfl.fl_show_form(self.h.help_, \
+        if not self.help_.is_shown:
+            xfl.fl_show_form(self.help_.help_, \
                     xfl.FL_PLACE_CENTER | xfl.FL_FREE_SIZE, xfl.FL_FULLBORDER,
                     "Gravity Demo Help")
-            self.h.is_shown = 1
+            self.help_.is_shown = 1
 
 
     def close_callback(self, obj, data):
-        self.h = self.help_     # FD_help *h = (FD_help * ) data
-        xfl.fl_hide_form(self.h.help_)
-        self.h.is_shown = 0
+        xfl.fl_hide_form(self.help_.help_)
+        self.help_.is_shown = 0
 
 
     def create_form_gravity(self, help_):
@@ -270,7 +268,7 @@ class Flgrav(object):
             xfl.fl_set_object_gravity(pobj, xfl.FL_NorthWest, xfl.FL_NorthWest)
             xfl.fl_set_object_callback(pobj, self.nw_callback, i)   # long gd+i
             xfl.fl_set_object_color(pobj, xfl.FL_COL1, xfl.FL_MCOL)
-            if  fdui.box.contents.nwgravity == self.gr[i]:
+            if fdui.box.contents.nwgravity == self.gr[i]:
                 boolval = True
             else:
                 boolval = False
@@ -384,4 +382,6 @@ class Flgrav(object):
 
 
 if __name__ == '__main__':
+    print("********* grav.py *********")
     Flgrav(len(sys.argv), sys.argv)
+

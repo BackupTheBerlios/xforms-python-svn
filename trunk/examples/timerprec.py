@@ -28,7 +28,7 @@ class FD_form0(object):
 
 class Fltimerprec(object):
     def __init__(self, lsysargv, sysargv):
-        xfl.fl_initialize(lsysargv, sysargv, 0, 0, 0)
+        xfl.fl_initialize(lsysargv, sysargv, "FormDemo", 0, 0)
         self.fdform0 = self.create_form_form0()
         # fill-in form initialization code
         self.fdform0.ldata = 2800.0
@@ -89,4 +89,6 @@ class Fltimerprec(object):
 
 
 if __name__ == '__main__':
+    print ("********* timerprec.py *********")
     Fltimerprec(len(sys.argv), sys.argv)
+

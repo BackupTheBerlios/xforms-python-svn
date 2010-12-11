@@ -50,8 +50,10 @@ fl_vroot = (xfdata.Window).in_dll(library.load_so_libforms(), 'fl_vroot')
 fl_scrh = (cty.c_int).in_dll(library.load_so_libforms(), 'fl_scrh')
 fl_scrw = (cty.c_int).in_dll(library.load_so_libforms(), 'fl_scrw')
 fl_vmode = (cty.c_int).in_dll(library.load_so_libforms(), 'fl_vmode')
-fl_state = (cty.POINTER(xfdata.FL_State)).in_dll(library.load_so_libforms(),
-            'fl_state')
+#fl_state = (cty.POINTER(xfdata.FL_State)).in_dll(library.load_so_libforms(),
+#            'fl_state')
+fl_state = (xfdata.FL_State * 6)()  # fl_state is an array of 6 FL_State
+
 fl_ul_magic_char = (xfdata.STRING).in_dll(library.load_so_libforms(),
                     'fl_state')
 
@@ -77,15 +79,16 @@ def FL_is_rgb(v):
 
 # Current version only runs in single visual mode
 def fl_get_vclass():
-    return fl_vmode
+    return fl_vmode.value       # fl_vmode
 
 
 def fl_get_form_vclass(a):
-    return fl_vmode
+    return fl_vmode.value       # fl_vmode
 
 
 def fl_get_gc():
-    return fl_state[fl_vmode].gc[0]
+    return fl_state[fl_vmode.value].gc[0]
+    #return fl_state[fl_vmode].gc[0]
 
 
 def fl_mode_capable(mode, warn):
@@ -132,11 +135,13 @@ def fl_mode_capable(mode, warn):
 
 
 def fl_default_win():
-    return fl_state[fl_vmode].trailblazer
+    return fl_state[fl_vmode.value].trailblazer
+    #return fl_state[fl_vmode].trailblazer
 
 
 def fl_default_window():
-    return fl_state[fl_vmode].trailblazer
+    return fl_state[fl_vmode.value].trailblazer
+    #return fl_state[fl_vmode].trailblazer
 
 
 # Some basic drawing routines
@@ -2524,11 +2529,11 @@ def fl_winbackground(win, bgcolr):
         win : long_pos
             window id
         bgcolr : long_pos
-            background color to be set
+            background color to be set *todo* it's really a pixel not a color?
 
     Examples
     --------
-        >>> fl_winbackground(win1, xfdata.FL_GHOSTWHITE)
+        >>> fl_winbackground(win1, xfl.fl_get_pixel(xfdata.FL_GHOSTWHITE))
 
     Notes
     -----

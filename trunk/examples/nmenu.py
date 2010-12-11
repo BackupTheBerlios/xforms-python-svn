@@ -323,4 +323,6 @@ class Flnmenu(object):
 
 
 if __name__ == '__main__':
-    Flnmenu(len(sys.argv), sys.argv)
+    print ("********* nmenu.py *********")
+    appl = Flnmenu(len(sys.argv), sys.argv)
+

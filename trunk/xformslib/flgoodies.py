@@ -407,7 +407,7 @@ def fl_show_input(msgtxt, defstr):
 
     Examples
     --------
-        >>> inpstr = fl_show_input("Insert number of eggs: ", "None")
+        >>> inpstr = fl_show_input("Insert number of eggs: ", "Zero")
 
     Notes
     -----

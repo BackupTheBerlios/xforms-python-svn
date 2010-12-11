@@ -66,4 +66,6 @@ class Flclock(object):
 
 
 if __name__ == '__main__':
-    Flclock(len(sys.argv), sys.argv)
+    print("********* clock.py *********")
+    appl = Flclock(len(sys.argv), sys.argv)
+

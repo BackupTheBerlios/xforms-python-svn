@@ -62,4 +62,6 @@ class Colsel1(object):
 
 
 if __name__ == '__main__':
+    print("********* colsel1.py *********")
     appl = Colsel1(len(sys.argv), sys.argv)
+

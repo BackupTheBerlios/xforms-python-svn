@@ -79,4 +79,6 @@ class Fltimer2(object):
 
 
 if __name__ == '__main__':
+    print ("********* timer2.py *********")
     Fltimer2(len(sys.argv), sys.argv)
+

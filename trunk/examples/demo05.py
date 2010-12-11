@@ -48,4 +48,5 @@ class Demo05(object):
 
 
 if __name__ == '__main__':
-    Demo05(len(sys.argv), sys.argv)
+    print("********* demo05.py *********")
+    appl = Demo05(len(sys.argv), sys.argv)

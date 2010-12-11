@@ -84,4 +84,6 @@ class Flinvslider(object):
 
 
 if __name__ == '__main__':
+    print ("********* invslider.py *********")
     Flinvslider(len(sys.argv), sys.argv)
+

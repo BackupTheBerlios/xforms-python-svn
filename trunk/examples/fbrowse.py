@@ -124,4 +124,5 @@ class FLfbrowse(object):
 
 
 if __name__ == '__main__':
-    FLfbrowse(len(sys.argv), sys.argv)
+    print("********* fbrowse.py *********")
+    appl = FLfbrowse(len(sys.argv), sys.argv)

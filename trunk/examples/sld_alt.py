@@ -93,4 +93,6 @@ class Flsldalt(object):
 
 
 if __name__ == '__main__':
+    print ("********* sld_alt.py *********")
     Flsldalt(len(sys.argv), sys.argv)
+

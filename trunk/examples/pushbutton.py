@@ -58,4 +58,5 @@ class Flpushbtn(object):
 
 
 if __name__ == '__main__':
+    print ("********* pushbutton.py *********")
     Flpushbtn(len(sys.argv), sys.argv)

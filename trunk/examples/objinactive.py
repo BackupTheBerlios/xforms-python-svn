@@ -23,7 +23,7 @@ class Flobjinactive(object):
         self.create_form()
         xfl.fl_set_button(self.pfirstbut, 1)
         xfl.fl_show_form(self.pform, xfl.FL_PLACE_CENTER, xfl.FL_NOBORDER, \
-                None)
+                "")
         while xfl.fl_do_forms():
             pass            # empty
 
@@ -116,4 +116,6 @@ class Flobjinactive(object):
 
 
 if __name__ == '__main__':
+    print ("********* objinactive.py *********")
     Flobjinactive(len(sys.argv), sys.argv)
+

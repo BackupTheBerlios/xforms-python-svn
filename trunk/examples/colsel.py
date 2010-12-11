@@ -23,11 +23,13 @@ def main(lsysargv, sysargv):
     print "Click one of trasparent colors to exit"
     while True:
         i = xfl.fl_show_colormap(i)
-        if i > xfl.FL_YELLOWGREEN:
+        if i >= 157:
             break
     xfl.fl_finish()
 
 
 
 if __name__ == '__main__':
+    print("********* colsel.py *********")
     main(len(sys.argv), sys.argv)
+

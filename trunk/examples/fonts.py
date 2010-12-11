@@ -112,4 +112,6 @@ class Flfonts(object):
 
 
 if __name__ == '__main__':
+    print("********* fonts.py *********")
     Flfonts(len(sys.argv), sys.argv)
+

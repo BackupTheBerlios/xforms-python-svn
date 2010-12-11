@@ -80,4 +80,5 @@ class FLCounter(object):
 
 
 if __name__ == '__main__':
+    print("********* counter.py *********")
     appl = FLCounter(len(sys.argv), sys.argv)

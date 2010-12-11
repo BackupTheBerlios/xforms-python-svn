@@ -111,4 +111,6 @@ class Flfdial(object):
 
 
 if __name__ == '__main__':
-    Flfdial(len(sys.argv), sys.argv)
+    print("********* fdial.py *********")
+    appl = Flfdial(len(sys.argv), sys.argv)
+

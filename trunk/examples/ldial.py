@@ -80,4 +80,6 @@ class Flldial(object):
 
 
 if __name__ == '__main__':
-    Flldial(len(sys.argv), sys.argv)
+    print("********* ldial.py *********")
+    appl = Flldial(len(sys.argv), sys.argv)
+

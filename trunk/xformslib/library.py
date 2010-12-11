@@ -248,6 +248,23 @@ def convert_to_string(paramname):
                 (paramname, type(paramname)))
 
 
+def convert_to_ptr_string(paramname):
+    """ Converts paramname (list of str) to a ctypes pointer to c_char_p """
+    if isinstance(paramname, list):     # list of str
+        for idx in range(0, len(paramname)):
+            if not isinstance(paramname[idx], basestring):
+                # every part must be a str
+                raise XFormsTypeError("Provided parameter '%s' has %s type,"
+                        " but a 'list of str'/'pointer to c_char_p' type"
+                        " should be used." % (paramname, type(paramname)))
+        retv = (cty.c_char_p * len(paramname))(*paramname)    # already a pointer
+        return retv
+    else:               # not a list
+        raise XFormsTypeError("Provided parameter '%s' has %s type, "
+                "but a 'list of str'/'array of c_char_p' type should "
+                "be used." % (paramname, type(paramname)))
+
+
 def convert_to_int(paramname):
     """ Converts paramname to python int and to ctypes c_int """
     if not isinstance(paramname, cty.c_int):
@@ -351,10 +368,18 @@ def convert_to_float(paramname):
         return paramname
 
 
-def convert_to_ubyte(paramname):
-    """ Converts paramname to ctypes c_ubyte """
-    retv = cty.c_ubyte(paramname)
-    return retv
+def convert_to_ubyte_array(paramname):
+    """ Converts paramname to a ctypes c_ubyte array"""
+    if isinstance(paramname, list):     # list of int
+        lenparam = len(paramname)
+        retv = (cty.c_ubyte * lenparam)()      # it's already a pointer
+        for n in range(0, lenparam-1):
+            retv[n] = paramname[n]
+        return retv
+    else:               # not a list
+        raise XFormsTypeError("Provided parameter '%s' has %s type, "
+                "but a 'list of int'/'c_ubyte' type should be used." % \
+                (paramname, type(paramname)))
 
 
 def make_int_and_pointer():
@@ -437,14 +462,15 @@ def checknonfatal_allowed_value_in_list(paramname, valueslist):
                     (paramname, type(paramname), valueslist)
             warnings.warn(nonfatalwarnmsg, XFormsWarning, 3)
 
-def check_param_length(paramname, predeflen):
-    """ Checks if paramname's length equals to a predefined length,
-        otherwise raises a fatal error."""
-    paramlen = len(paramname)
-    if paramlen != predeflen:
-        raise XFormsValueError("Length of parameter %s is %d, but it should be "
-                "%d, in accordance to other parameters in called function." % \
-                (paramname, paramlen, predeflen))
+# TODO: verify where can be used
+#def check_param_length(paramname, predeflen):
+#    """ Checks if paramname's length equals to a predefined length,
+#        otherwise raises a fatal error."""
+#    paramlen = len(paramname)
+#    if paramlen != predeflen:
+#        raise XFormsValueError("Length of parameter %s is %d, but it should"
+#	         " be %d, in accordance to other parameters in called "
+#		 "function." % (paramname, paramlen, predeflen))
 
 def verify_tuplelist_type(paramname):
     """Checks if paramname is a valid list or tuple."""

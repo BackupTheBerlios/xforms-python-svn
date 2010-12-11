@@ -152,4 +152,6 @@ class Flalignpixmap(object):
 
 
 if __name__ == '__main__':
-    Flalignpixmap(len(sys.argv), sys.argv)
+    print("********* lalign_pixmap.py *********")
+    appl = Flalignpixmap(len(sys.argv), sys.argv)
+

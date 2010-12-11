@@ -33,7 +33,7 @@ class Flsecrinp(object):
 
         xfl.fl_end_form()
 
-        xfl.fl_show_form(self.pform, xfl.FL_PLACE_MOUSE, xfl.FL_NOBORDER, 0)
+        xfl.fl_show_form(self.pform, xfl.FL_PLACE_MOUSE, xfl.FL_NOBORDER, "secret")
 
         while xfl.fl_do_forms():
             strng = "Password 1 is: %s , Password 2 is: %s" % \
@@ -50,4 +50,6 @@ class Flsecrinp(object):
 
 
 if __name__ == '__main__':
+    print ("********* secretinput.py *********")
     Flsecrinp(len(sys.argv), sys.argv)
+

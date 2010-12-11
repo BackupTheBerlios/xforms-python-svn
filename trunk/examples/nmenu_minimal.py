@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-#  This file is part of xforms-python, and it is a variation of nmenu
+#  This file is part of xforms-python, and it is a variant of nmenu
 #  to show some xfl.fl_*_nmenu_items2 functions.
 #
 #  See CREDITS file for XForms copyright attribution, and LICENSE
@@ -162,4 +162,6 @@ class Flnmenumin(object):
 
 
 if __name__ == '__main__':
-    Flnmenumin(len(sys.argv), sys.argv)
+    print ("********* nmenu_minimal.py *********")
+    appl = Flnmenumin(len(sys.argv), sys.argv)
+

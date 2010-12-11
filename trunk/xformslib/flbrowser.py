@@ -427,7 +427,7 @@ def fl_load_browser(pFlObject, filename):
         pFlObject : pointer to xfdata.FL_OBJECT
             browser object
         filename : str
-            name of the file
+            name of the file. If it's empty or None does not load a new new file.
 
     Returns
     -------
@@ -445,10 +445,13 @@ def fl_load_browser(pFlObject, filename):
     """
     _fl_load_browser = library.cfuncproto(
         library.load_so_libforms(), "fl_load_browser",
-        cty.c_int, [cty.POINTER(xfdata.FL_OBJECT), xfdata.STRING],
+        cty.c_int, [cty.POINTER(xfdata.FL_OBJECT), cty.c_void_p],
         """int fl_load_browser(FL_OBJECT * ob, const char * filename)""")
     library.verify_flobjectptr_type(pFlObject)
-    sfilename = library.convert_to_string(filename)
+    if not filename:            # it is None or empty
+        sfilename = cty.cast(filename, cty.c_void_p)
+    else:
+        sfilename = library.convert_to_string(filename)
     library.keep_elem_refs(pFlObject, filename, sfilename)
     retval = _fl_load_browser(pFlObject, sfilename)
     return retval

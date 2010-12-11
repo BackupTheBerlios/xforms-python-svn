@@ -39,7 +39,7 @@ class Flpmbrowse(object):
 
         xfl.fl_set_fselector_placement(xfl.FL_PLACE_FREE)
         xfl.fl_set_fselector_callback(self.load_file, 0)
-        xfl.fl_show_fselector("Load a Pixmap file", None, "*.x?m", None)
+        xfl.fl_show_fselector("Load a Pixmap file", "", "*.x?m", "")
         xfl.fl_do_forms()
 
 
@@ -111,9 +111,11 @@ class Flpmbrowse(object):
     def reloadfile(self, pobj, q):
         xfl.fl_set_fselector_placement(xfl.FL_PLACE_MOUSE)
         xfl.fl_set_fselector_callback(self.load_file, 0)
-        xfl.fl_show_fselector("Load a Pix/bitMap file", None, None, None)
+        xfl.fl_show_fselector("Load a Pix/bitMap file", "", "", "")
 
 
 
 if __name__ == '__main__':
+    print ("********* pmbrowse.py *********")
     Flpmbrowse(len(sys.argv), sys.argv)
+

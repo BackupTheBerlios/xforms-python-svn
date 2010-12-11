@@ -99,4 +99,6 @@ class BorderWidth(object):
 
 
 if __name__ == '__main__':
-    BorderWidth(len(sys.argv), sys.argv)
+    print("********* borderwidth.py *********")
+    appl = BorderWidth(len(sys.argv), sys.argv)
+

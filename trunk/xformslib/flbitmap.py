@@ -119,18 +119,18 @@ def fl_set_bitmap_data(pFlObject, w, h, xbmcontents):
             width of bitmap in cood units
         h : int
             height of bitmap in coord units
-        xbmcontents : str of ubytes characters
+        xbmcontents : list of ubytes
             bitmap data used for contents
 
     Examples
     --------
-        >>> bitmapcontents = "\x01\x1a\x27\x34\x41\x4e\x5b\x68" \
-        >>>                  "\x75\x82\x8f\x9c\xa9\xb6\xc3\xd0"
+        >>> bitmapcontents = [0x01, 0x1a, 0x27, 0x34, 0x41, 0x4e, 0x5b, 0x68,
+        >>>                  0x75, 0x82, 0x8f, 0x9c, 0xa9, 0xb6, 0xc3, 0xd0]
         >>> fl_set_bitmap_data(xbmobj, 4, 4, bitmapcontents)
 
     Notes
     -----
-        Status: Untested + Doc + NoDemo = NOT OK
+        Status: Tested + Doc + NoDemo = NOT OK
         Review: UT+
 
     """
@@ -144,8 +144,8 @@ def fl_set_bitmap_data(pFlObject, w, h, xbmcontents):
     library.verify_flobjectptr_type(pFlObject)
     iw = library.convert_to_int(w)
     ih = library.convert_to_int(h)
-    library.check_param_length(xbmcontents, w*h)
-    pxbmcontents = cty.cast(xbmcontents, cty.POINTER(cty.c_ubyte))
+    pxbmcontents = library.convert_to_ubyte_array(xbmcontents)
+    #pxbmcontents = cty.cast(xbmcontents, cty.POINTER(cty.c_ubyte))
     library.keep_elem_refs(pFlObject, w, h, xbmcontents, iw, ih, pxbmcontents)
     _fl_set_bitmap_data(pFlObject, iw, ih, pxbmcontents)
 
@@ -228,6 +228,7 @@ def fl_read_bitmapfile(win, fname):
     Notes
     -----
         Status: Tested + Doc + NoDemo = OK
+        Review: UT+
 
     """
     _fl_read_bitmapfile = library.cfuncproto(
@@ -250,8 +251,8 @@ def fl_read_bitmapfile(win, fname):
     return retval, w.value, h.value, hotx.value, hoty.value
 
 
-def fl_create_from_bitmapdata(win, data, w, h):
-    """fl_create_from_bitmapdata(win, data, w, h)
+def fl_create_from_bitmapdata(win, xbmdata, w, h):
+    """fl_create_from_bitmapdata(win, xbmdata, w, h)
     
     Makes a bitmap from bitmap contents data.
 
@@ -259,8 +260,8 @@ def fl_create_from_bitmapdata(win, data, w, h):
     ----------
         win : long_pos
             window id
-        data : str of ubyte
-            bitmap contents data
+        xbmdata : str
+            bitmap data used for contents
         w : int_pos
             width of bitmap in coord units
         h : int_pos
@@ -273,11 +274,13 @@ def fl_create_from_bitmapdata(win, data, w, h):
 
     Examples
     --------
-        >>> *todo*
+        >>> xbmdata = "\x10\x18\x1f\x20\x28x\x2f\x30\x38\x3f\x40\x48\x4f\x50"
+        >>> pmap = fl_create_from_bitmapdata(win0, xbmdata, 20, 20)
 
     Notes
     -----
-        Status: Untested + Doc + NoDemo = NOT OK
+        Status: Tested + Doc + NoDemo = NOT OK
+        Review: UT+
 
     """
     _fl_create_from_bitmapdata = library.cfuncproto(
@@ -287,11 +290,11 @@ def fl_create_from_bitmapdata(win, data, w, h):
            char * data, int width, int height)""")
     library.check_if_initialized()
     ulwin = library.convert_to_Window(win)
-    sdata = library.convert_to_string(data)
+    sxbmdata = library.convert_to_string(xbmdata)
     iw = library.convert_to_int(w)
     ih = library.convert_to_int(h)
-    library.keep_elem_refs(win, data, w, h, ulwin, sdata, iw, ih)
-    retval = _fl_create_from_bitmapdata(ulwin, sdata, iw, ih)
+    library.keep_elem_refs(win, xbmdata, w, h, ulwin, sxbmdata, iw, ih)
+    retval = _fl_create_from_bitmapdata(ulwin, sxbmdata, iw, ih)
     return retval
 
 
@@ -303,7 +306,8 @@ def fl_create_from_bitmapdata(win, data, w, h):
 def fl_add_pixmap(pixmaptype, x, y, w, h, label):
     """fl_add_pixmap(pixmaptype, x, y, w, h, label)
     
-    Adds a pixmap object.
+    Adds a pixmap object (plain text multi-color image format). The label
+    is by default placed below the pixmap. The pixmap is empty on creation.
 
     Parameters
     ----------
@@ -334,6 +338,7 @@ def fl_add_pixmap(pixmaptype, x, y, w, h, label):
     Notes
     -----
         Status: Tested + Doc + NoDemo = OK
+        Review: UT+
 
     """
     _fl_add_pixmap = library.cfuncproto(
@@ -357,27 +362,39 @@ def fl_add_pixmap(pixmaptype, x, y, w, h, label):
     return retval
 
 
-def fl_set_pixmap_data(pFlObject, bits):
-    """fl_set_pixmap_data(pFlObject, bits)
+def fl_set_pixmap_data(pFlObject, xpmdatalist):
+    """fl_set_pixmap_data(pFlObject, xpmdatalist)
     
-    Sets the actual bitmap being displayed from specified data. A
-    number of pixmaps can be found in '/usr/include/X11/pixmaps' or similar
-    places.
+    Sets the actual pixmap being displayed from specified data. A number
+    of pixmaps can be found in '/usr/include/X11/pixmaps' or similar places.
 
     Parameters
     ----------
         pFlObject : pointer to xfdata.FL_OBJECT
              pixmap object
-        bits : str of ubytes
+        xpmdatalist : list of str
             bits contents of pixmap
 
     Examples
     --------
-        >>> *todo*
+        >>> xpmdata = ["28 28 6 2 . white x orange s s_SteelBlue * black",
+                ". . . . . . * * * * . . . . . . . . . * * * * . . . . . ",
+                ". . . . + * x x * . . . . . . . . . . + * x x * . . . . ",
+                ". . . + * x x * . . . . . . . . . . . . + * x x * . . . ",
+                ". . + * x * . . . * . . . . . . . . . * . . + * x * . . ",
+                ". . + * x * . . + * . . . . . . . . + * . . + * x * . . ",
+                ". . + * x * . + * * . . . . . . . . + * * . + * x * . . ",
+                ". . + * x * + * * . . . . . . . . . . + * * + * x * . . ",
+                ". . + * x * * * . . . . . . . . . . . . + * * x x * . . ",
+                ". . . + * x * . . + * . . . . . . + * . . + * x * . . . ",
+                ". . . + * x . . + * . + * * . * * . + * . . + x * . . . ",
+                ". . . . + x . . + * . + * * . * * . + * . . + x . . . . "]
+        >>> fl_set_pixmap_data(pxmobj, xpmdata)
 
     Notes
     -----
-        Status: Untested + Doc + NoDemo = NOT OK
+        Status: Tested + Doc + NoDemo = NOT OK
+        Review: UT- broken
 
     """
     _fl_set_pixmap_data = library.cfuncproto(
@@ -386,13 +403,11 @@ def fl_set_pixmap_data(pFlObject, bits):
         """void fl_set_pixmap_data(FL_OBJECT * ob, char * * bits)""")
     library.check_if_initialized()
     library.verify_flobjectptr_type(pFlObject)
-    print "bits", bits
-    sbits = library.convert_to_string(bits)
-    print "sbits", sbits
-    pbits = cty.pointer(sbits)   # cty.cast(bits, cty.POINTER(xfdata.STRING))
-    print "pbits", pbits
-    library.keep_elem_refs(pFlObject, bits, sbits, pbits)
-    _fl_set_pixmap_data(pFlObject, pbits)
+    pxpmdatalist = library.convert_to_ptr_string(xpmdatalist)
+    #pbits = cty.pointer(sbits)   # cty.cast(bits, cty.POINTER(xfdata.STRING))
+    #print "pbits", pbits
+    library.keep_elem_refs(pFlObject, xpmdatalist, pxpmdatalist)
+    _fl_set_pixmap_data(pFlObject, pxpmdatalist)
 
 
 def fl_set_pixmap_file(pFlObject, fname):

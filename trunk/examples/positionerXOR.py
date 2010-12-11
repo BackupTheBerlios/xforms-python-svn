@@ -64,4 +64,5 @@ class Flpositxor(object):
 
 
 if __name__ == '__main__':
+    print ("********* positionerXOR.py *********")
     Flpositxor(len(sys.argv), sys.argv)

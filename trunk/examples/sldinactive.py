@@ -47,4 +47,6 @@ def main(lsysargv, sysargv):
 
 
 if __name__ == '__main__':
+    print ("********* sldinactive.py *********")
     main(len(sys.argv), sys.argv)
+

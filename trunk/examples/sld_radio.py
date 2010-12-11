@@ -28,7 +28,7 @@ def main(lsysarg, sysargv):
             120, 40, "0.5")
     pbut3 = xfl.fl_add_lightbutton(xfl.FL_RADIO_BUTTON, 140, 100, \
             120, 40, "1.0")
-    pbut = xfl.fl_add_button(xfl.FL_NORMAL_BUTTON, 140, 40, 120, 40, "Exit")
+    pexitbut = xfl.fl_add_button(xfl.FL_NORMAL_BUTTON, 140, 40, 120, 40, "Exit")
     xfl.fl_end_form()
 
     xfl.fl_show_form(pform, xfl.FL_PLACE_CENTER, xfl.FL_NOBORDER, "slRadio")
@@ -41,7 +41,7 @@ def main(lsysarg, sysargv):
             xfl.fl_set_slider_value(psl, 0.5)
         elif xfl.fl_is_same_object(pobj, pbut3):
             xfl.fl_set_slider_value(psl, 1.0)
-        elif xfl.fl_is_same_object(pobj, pbut):
+        elif xfl.fl_is_same_object(pobj, pexitbut):
             break
 
     xfl.fl_finish()
@@ -50,4 +50,6 @@ def main(lsysarg, sysargv):
 
 
 if __name__ == '__main__':
+    print ("********* sld_radio.py *********")
     main(len(sys.argv), sys.argv)
+

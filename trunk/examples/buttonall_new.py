@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-#  This file is part of xforms-python, and it is a variation of
+#  This file is part of xforms-python, and it is a variant of
 #  buttonall.c XForms demo, not using deprecated functions, with some
 #  adaptations.
 #
@@ -36,7 +36,7 @@ class ButtonAll(object):
 
     def __init__(self, lsysargv, sysargv):
 
-        xfl.fl_initialize(lsysargv, sysargv, 0, 0, 0)
+        xfl.fl_initialize(lsysargv, sysargv, "", 0, 0)
         self.fd_buttform = self.create_form_buttform()
 
         # fill-in form initialization code
@@ -171,4 +171,6 @@ class ButtonAll(object):
 
 
 if __name__ == '__main__':
+    print("********* buttonall_new.py *********")
     ButtonAll(len(sys.argv), sys.argv)
+

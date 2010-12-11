@@ -139,4 +139,6 @@ class ChartStrip(object):
 
 
 if __name__ == '__main__':
+    print("********* chartstrip.py *********")
     appl = ChartStrip(len(sys.argv), sys.argv)
+

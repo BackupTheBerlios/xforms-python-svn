@@ -30,7 +30,7 @@ class Flobjpos(object):
         xfl.fl_set_object_callback(pobj, self.move_cb, 0)   # but
         xfl.fl_end_form()
         xfl.fl_show_form(pform, xfl.FL_PLACE_MOUSE | xfl.FL_FREE_SIZE, \
-                     xfl.FL_FULLBORDER, "ObjPos")
+                 xfl.FL_FULLBORDER, "ObjPos")
         xfl.fl_do_forms()
 
 
@@ -60,4 +60,6 @@ class Flobjpos(object):
 
 
 if __name__ == '__main__':
+    print ("********* objpos.py *********")
     Flobjpos(len(sys.argv), sys.argv)
+

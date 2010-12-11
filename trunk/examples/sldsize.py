@@ -64,4 +64,6 @@ class Flsldsize(object):
 
 
 if __name__ == '__main__':
+    print ("********* sldsize.py *********")
     Flsldsize(len(sys.argv), sys.argv)
+

@@ -101,4 +101,5 @@ class Flsliderall(object):
 
 
 if __name__ == '__main__':
+    print ("********* sliderall.py *********")
     Flsliderall(len(sys.argv), sys.argv)

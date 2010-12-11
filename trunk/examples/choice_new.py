@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-#  This file is part of xforms-python, and it is a variation of
+#  This file is part of xforms-python, and it is a variant of
 #  choice.c XForms demo, not using deprecated functions, with some
 #  adaptations.
 #
@@ -82,4 +82,6 @@ class Choice(object):
 
 
 if __name__ == '__main__':
+    print("********* choice_new.py *********")
     appl = Choice(len(sys.argv), sys.argv)
+

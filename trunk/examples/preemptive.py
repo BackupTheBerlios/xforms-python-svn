@@ -186,5 +186,7 @@ class Flpreempt(object):
         return fdui
 
 
+
 if __name__ == '__main__':
+    print ("********* preemptive.py *********")
     Flpreempt(len(sys.argv), sys.argv)

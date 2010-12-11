@@ -70,4 +70,6 @@ class Fltouchbtn(object):
 
 
 if __name__ == '__main__':
+    print ("********* touchbutton.py *********")
     Fltouchbtn(len(sys.argv), sys.argv)
+

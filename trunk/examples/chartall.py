@@ -94,4 +94,5 @@ class ChartAll(object):
 
 
 if __name__ == '__main__':
+    print("********* chartall.py *********")
     appl = ChartAll(len(sys.argv), sys.argv)

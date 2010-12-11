@@ -72,4 +72,5 @@ class FLDemo06(object):
 
 
 if __name__ == '__main__':
-    FLDemo06(len(sys.argv), sys.argv)
+    print("********* demo06.py *********")
+    appl = FLDemo06(len(sys.argv), sys.argv)

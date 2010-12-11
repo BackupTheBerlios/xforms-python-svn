@@ -23,6 +23,10 @@ class FD_input(object):
     cdata = ""
     ldata = 0
     norminput = None
+    intinput = None
+    floatinput = None
+    dateinput = None
+    secretinput = None
     multiinput = None
     report = None
 
@@ -30,7 +34,7 @@ class FD_input(object):
 class Flinputall(object):
     def __init__(self, lsysargv, sysargv):
 
-        xfl.fl_initialize(lsysargv, sysargv, 0, 0, 0)
+        xfl.fl_initialize(lsysargv, sysargv, "FormDemo", 0, 0)
         self.fd_input = self.create_form_input()
 
         # fill-in form initialization code
@@ -39,7 +43,7 @@ class Flinputall(object):
                 xfl.FL_RETURN_ALWAYS)
         xfl.fl_set_object_return(self.fd_input.intinput, \
                 xfl.FL_RETURN_ALWAYS)
-        xfl.fl_set_object_return(self.fd_input.floatiinput, \
+        xfl.fl_set_object_return(self.fd_input.floatinput, \
                 xfl.FL_RETURN_ALWAYS)
         xfl.fl_set_object_return(self.fd_input.dateinput, \
                 xfl.FL_RETURN_ALWAYS)
@@ -86,22 +90,22 @@ class Flinputall(object):
         xfl.fl_set_object_lalign(fdui.norminput, xfl.FL_ALIGN_LEFT_TOP)
         xfl.fl_set_object_callback(fdui.norminput, self.input_cb, 0)
         xfl.fl_set_object_return(fdui.norminput, xfl.FL_RETURN_END_CHANGED)
-        pobj = xfl.fl_add_input(xfl.FL_INT_INPUT, 40, 100, 160, 30, \
+        fdui.intinput = xfl.fl_add_input(xfl.FL_INT_INPUT, 40, 100, 160, 30, \
                 "Integer Input")
-        xfl.fl_set_object_lalign(pobj, xfl.FL_ALIGN_LEFT_TOP)
-        xfl.fl_set_object_return(pobj, xfl.FL_RETURN_END_CHANGED)
-        pobj = xfl.fl_add_input(xfl.FL_FLOAT_INPUT, 230, 100, 160, 30, \
-                "Float Input")
-        xfl.fl_set_object_lalign(pobj, xfl.FL_ALIGN_LEFT_TOP)
-        xfl.fl_set_object_return(pobj, xfl.FL_RETURN_END_CHANGED)
-        pobj = xfl.fl_add_input(xfl.FL_DATE_INPUT, 40, 150, 160, 30, \
+        xfl.fl_set_object_lalign(fdui.intinput, xfl.FL_ALIGN_LEFT_TOP)
+        xfl.fl_set_object_return(fdui.intinput, xfl.FL_RETURN_END_CHANGED)
+        fdui.floatinput = xfl.fl_add_input(xfl.FL_FLOAT_INPUT, 230, 100, \
+                160, 30, "Float Input")
+        xfl.fl_set_object_lalign(fdui.floatinput, xfl.FL_ALIGN_LEFT_TOP)
+        xfl.fl_set_object_return(fdui.floatinput, xfl.FL_RETURN_END_CHANGED)
+        fdui.dateinput = xfl.fl_add_input(xfl.FL_DATE_INPUT, 40, 150, 160, 30, \
                 "Date Input")
-        xfl.fl_set_object_lalign(pobj, xfl.FL_ALIGN_LEFT_TOP)
-        xfl.fl_set_object_return(pobj, xfl.FL_RETURN_END_CHANGED)
-        pobj = xfl.fl_add_input(xfl.FL_SECRET_INPUT, 230, 150, 160, 30, \
-                "Secret Input")
-        xfl.fl_set_object_lalign(pobj, xfl.FL_ALIGN_LEFT_TOP)
-        xfl.fl_set_object_return(pobj, xfl.FL_RETURN_END_CHANGED)
+        xfl.fl_set_object_lalign(fdui.dateinput, xfl.FL_ALIGN_LEFT_TOP)
+        xfl.fl_set_object_return(fdui.dateinput, xfl.FL_RETURN_END_CHANGED)
+        fdui.secretinput = xfl.fl_add_input(xfl.FL_SECRET_INPUT, 230, 150, \
+                160, 30, "Secret Input")
+        xfl.fl_set_object_lalign(fdui.secretinput, xfl.FL_ALIGN_LEFT_TOP)
+        xfl.fl_set_object_return(fdui.secretinput, xfl.FL_RETURN_END_CHANGED)
         fdui.multiinput = xfl.fl_add_input(xfl.FL_MULTILINE_INPUT, 40, 210, \
                 360, 180, "Multi-line input")
         xfl.fl_set_object_lalign(fdui.multiinput, xfl.FL_ALIGN_LEFT_TOP)

@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-#  This file is part of xforms-python, and it is a variation of
+#  This file is part of xforms-python, and it is a variant of
 #  thumbwheel.c XForms demo, not using deprecated functions, with some
 #  adaptations.
 #
@@ -17,7 +17,7 @@ import xformslib as xfl
 
 class Flthumbwheel(object):
     def __init__(self, lsysargv, sysargv):
-        xfl.fl_initialize(lsysargv, sysargv, 0, 0, 0)
+        xfl.fl_initialize(lsysargv, sysargv, "FormDemo", 0, 0)
         fd_twheelform = self.create_form_twheelform()
         # show the first form
         xfl.fl_show_form(fd_twheelform, xfl.FL_PLACE_CENTERFREE, \
@@ -76,4 +76,6 @@ class Flthumbwheel(object):
 
 
 if __name__ == '__main__':
+    print ("********* thumbwheel_new.py *********")
     Flthumbwheel(len(sys.argv), sys.argv)
+

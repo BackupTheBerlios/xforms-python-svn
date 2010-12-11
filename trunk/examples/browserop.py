@@ -103,4 +103,6 @@ class BrowserOp(object):
 
 
 if __name__ == '__main__':
+    print("********* browserop.py *********")
     BrowserOp(len(sys.argv), sys.argv)
+

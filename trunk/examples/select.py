@@ -81,4 +81,6 @@ class Flselect(object):
 
 
 if __name__ == '__main__':
+    print ("********* select.py *********")
     Flselect(len(sys.argv), sys.argv)
+

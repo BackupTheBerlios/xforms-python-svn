@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-#  This file is part of xforms-python, and it is a variation of
+#  This file is part of xforms-python, and it is a variant of
 #  demo33.c XForms demo, with some adaptations.
 #
 #  See CREDITS file for XForms copyright attribution, and LICENSE
@@ -41,5 +41,6 @@ def main(lsysargv, sysargv):
 
 
 if __name__ == '__main__':
+    print("********* demo33_var.py *********")
     main(len(sys.argv), sys.argv)
 

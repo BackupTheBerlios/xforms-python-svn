@@ -58,4 +58,6 @@ class Flpositioner(object):
 
 
 if __name__ == '__main__':
+    print ("********* positioner.py *********")
     Flpositioner(len(sys.argv), sys.argv)
+

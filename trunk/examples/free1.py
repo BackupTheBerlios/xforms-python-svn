@@ -87,4 +87,5 @@ class Flfree1(object):
 
 
 if __name__ == '__main__':
-    Flfree1(len(sys.argv), sys.argv)
+    print("********* free1.py *********")
+    appl = Flfree1(len(sys.argv), sys.argv)

@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-#  This file is part of xforms-python, and it is a variation of
+#  This file is part of xforms-python, and it is a variant of
 #  folder.c XForms demo, not using deprecated functions, with some
 #  adaptations.
 #
@@ -59,7 +59,7 @@ class Flfolder(object):
     def __init__(self, lsysargv, sysargv):
 
         xfl.fl_set_border_width(-2)
-        xfl.fl_initialize(lsysargv, sysargv, 0, 0, 0)
+        xfl.fl_initialize(lsysargv, sysargv, 'FormDemo', 0, 0)
         self.fd_mainform = self.create_form_mainform()
         xfl.fl_set_object_return(self.fd_mainform.folder, xfl.FL_RETURN_NONE)
 
@@ -358,4 +358,6 @@ class Flfolder(object):
 
 
 if __name__ == '__main__':
-    Flfolder(len(sys.argv), sys.argv)
+    print("********* folder_new.py *********")
+    appl = Flfolder(len(sys.argv), sys.argv)
+

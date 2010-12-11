@@ -72,7 +72,7 @@ class Flminput2(object):
         xfl.fl_set_object_lalign(fdui.input1, xfl.FL_ALIGN_TOP)
         xfl.fl_set_object_callback(fdui.input1, self.input_callback, 1)
         fdui.howreturn = xfl.fl_add_checkbutton(xfl.FL_PUSH_BUTTON,
-                                   375, 435, 80, 35, "always\nreturn")
+                375, 435, 80, 35, "always\nreturn")
         xfl.fl_set_object_color(fdui.howreturn, xfl.FL_COL1, xfl.FL_BLUE)
         xfl.fl_set_object_callback(fdui.howreturn, self.howreturn_callback, 0)
         fdui.status = xfl.fl_add_text(xfl.FL_NORMAL_TEXT, 20, 15, 270, 30, "")
@@ -90,4 +90,6 @@ class Flminput2(object):
 
 
 if __name__ == '__main__':
+    print("********* minput2.py *********")
     Flminput2(len(sys.argv), sys.argv)
+

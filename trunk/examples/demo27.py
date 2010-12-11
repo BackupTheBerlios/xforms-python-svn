@@ -230,4 +230,5 @@ class Demo27(object):
 
 
 if __name__ == '__main__':
+    print("********* demo27.py *********")
     appl = Demo27(len(sys.argv), sys.argv)

@@ -62,8 +62,8 @@ class FLfbrowse1(object):
 
 
     def load_file(self, pobj, arg):
-        if not xfl.fl_load_browser(self.pbr, \
-         xfl.fl_show_input("Filename to load", "")):
+        myfilename = xfl.fl_show_input("Filename to load", "")
+        if not xfl.fl_load_browser(self.pbr, myfilename):
             xfl.fl_add_browser_line(self.pbr, "NO SUCH FILE!")
 
 
@@ -73,4 +73,5 @@ class FLfbrowse1(object):
 
 
 if __name__ == '__main__':
-    FLfbrowse1(len(sys.argv), sys.argv)
+    print("********* fbrowse1.py *********")
+    appl = FLfbrowse1(len(sys.argv), sys.argv)

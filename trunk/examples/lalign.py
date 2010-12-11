@@ -154,4 +154,6 @@ class Flalign(object):
 
 
 if __name__ == '__main__':
-    Flalign(len(sys.argv), sys.argv)
+    print("********* lalign.py *********")
+    appl = Flalign(len(sys.argv), sys.argv)
+
