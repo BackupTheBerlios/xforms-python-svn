@@ -44,21 +44,21 @@ class Flobjreturn(object):
         xfl.fl_set_object_dblbuffer(self.fd_form0.br, 1)
 
         pitem1st = xfl.fl_add_select_items(self.fd_form0.when, "RETURN_NONE")
-        xfl.fl_popup_entry_set_shortcut(pitem1st, xfl.FL_RETURN_NONE)
+        xfl.fl_popup_entry_set_value(pitem1st, xfl.FL_RETURN_NONE)
 
         pitem2nd = xfl.fl_insert_select_items(self.fd_form0.when, pitem1st, \
                 "RETURN_CHANGED")
-        xfl.fl_popup_entry_set_shortcut(pitem2nd, xfl.FL_RETURN_CHANGED)
+        xfl.fl_popup_entry_set_value(pitem2nd, xfl.FL_RETURN_CHANGED)
 
         pitem3rd = xfl.fl_insert_select_items(self.fd_form0.when, pitem2nd, \
                 "RETURN_END")
-        xfl.fl_popup_entry_set_shortcut(pitem3rd, xfl.FL_RETURN_END)
+        xfl.fl_popup_entry_set_value(pitem3rd, xfl.FL_RETURN_END)
         pitem4th = xfl.fl_insert_select_items(self.fd_form0.when, pitem3rd, \
                 "RETURN_END_CHANGED")
-        xfl.fl_popup_entry_set_shortcut(pitem4th, xfl.FL_RETURN_END_CHANGED)
+        xfl.fl_popup_entry_set_value(pitem4th, xfl.FL_RETURN_END_CHANGED)
         pitem5th = xfl.fl_insert_select_items(self.fd_form0.when, pitem4th, \
                 "RETURN_ALWAYS")
-        xfl.fl_popup_entry_set_shortcut(pitem5th, xfl.FL_RETURN_ALWAYS)
+        xfl.fl_popup_entry_set_value(pitem5th, xfl.FL_RETURN_ALWAYS)
 
         # show the first form
         xfl.fl_show_form(self.fd_form0.form0, xfl.FL_PLACE_CENTER, \
@@ -116,7 +116,8 @@ class Flobjreturn(object):
         fdui.br = xfl.fl_add_browser(xfl.FL_NORMAL_BROWSER, 170, 55, \
                 140, 160, "")
 
-        fdui.pobj[3] = xfl.fl_add_input(xfl.FL_INT_INPUT, 12, 187, 138, 25, "")
+        fdui.pobj[3] = xfl.fl_add_input(xfl.FL_INT_INPUT, 12, 187, \
+                138, 25, "")
         xfl.fl_set_object_lalign(fdui.pobj[3], xfl.FL_ALIGN_LEFT | \
                 xfl.FL_ALIGN_INSIDE)
         xfl.fl_set_object_callback(fdui.pobj[3], self.return_cb, 3)

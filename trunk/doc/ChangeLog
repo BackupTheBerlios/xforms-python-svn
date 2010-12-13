@@ -1,8 +1,9 @@
 
 SVN
+    * bugfixes in some examples.
     * managed how to correctly handle char** in fl_set_pixmap_data (thanks to
     Mark Tolonen, from ctypes-users mailing-list). Some adjustment in examples.
-    New iconify_var_py example.
+    New iconify_var.py example.
     * new handling of ubyte array in library.py. Bugfixes for fl_state and
     fl_vmode.
     * unit-tests introduced for some flbitmap.py's functions. Some
