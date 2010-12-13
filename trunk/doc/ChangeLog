@@ -1,8 +1,8 @@
 
 SVN
-    * bugfixes in some examples.
+    * bugfixes in some examples. butttype.py example added.
     * managed how to correctly handle char** in fl_set_pixmap_data (thanks to
-    Mark Tolonen, from ctypes-users mailing-list). Some adjustment in examples.
+    Mark Tolonen, on ctypes-users mailing-list). Some adjustment in examples.
     New iconify_var.py example.
     * new handling of ubyte array in library.py. Bugfixes for fl_state and
     fl_vmode.
