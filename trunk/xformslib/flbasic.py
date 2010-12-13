@@ -478,6 +478,56 @@ def fl_library_version():
     return retval, ver.value, rev.value
 
 
+def fl_library_full_version():
+    """fl_library_full_version()
+    
+    Obtains full consolidated, major, minor and fixlevel version informations.
+
+    Returns
+    -------
+        fversion_rev : int
+            full consolidated version (computed as 1000000 * version +
+            revision * 1000 + fixlevel)
+        ver : int
+            major version (e.g. 1 in 1.y.zz)
+        rev : int
+            revision (e.g. 0 in x.0.zz)
+        fixlvl : int
+            numeric part of fixlevel (e.g. 93 in x.y.93sp1)
+        extrafixlvl : str
+            textual part of fixlevel (e.g. sp1 in x.y.93sp1)
+
+    Examples
+    --------
+        >>> fcompver, ver, rev, fixl, extrafixl = fl_library_full_version()
+
+    API_diversion
+    ----------
+        API is changed from XForms, upstream was
+        fl_library_full_version(ver, rev, fixlvl, extra) -> fconsolver
+
+    Notes
+    -----
+        Status: Tested + Doc + NoDemo = OK
+        It does not need initialization
+
+    """
+    _fl_library_full_version = library.cfuncproto(
+        library.load_so_libforms(), "fl_library_full_version", \
+        cty.c_long, [cty.POINTER(cty.c_int), cty.POINTER(cty.c_int), \
+        cty.POINTER(cty.c_int), cty.POINTER(cty.c_char_p)], \
+        """long fl_library_full_version(int * ver, int * rev, int * fix_level
+           const char ** extra) """)
+    ver, pver = library.make_int_and_pointer()
+    rev, prev = library.make_int_and_pointer()
+    fixlvl, pfixlvl = library.make_int_and_pointer()
+    extrafixlvl, pextrafixlvl = library.make_string_and_pointer()
+    library.keep_elem_refs(ver, rev, pver, prev, fixlvl, pfixlvl, \
+            extrafixlvl, pextrafixlvl)
+    retval = _fl_library_full_version(pver, prev, pfixlvl, pextrafixlvl)
+    return retval, ver.value, rev.value, fixlvl.value, extrafixlvl.value
+
+
 # Generic routines that deal with FORMS
 
 def fl_bgn_form(formtype, w, h):

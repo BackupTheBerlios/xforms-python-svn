@@ -388,13 +388,14 @@ def fl_set_pixmap_data(pFlObject, xpmdatalist):
                 ". . + * x * * * . . . . . . . . . . . . + * * x x * . . ",
                 ". . . + * x * . . + * . . . . . . + * . . + * x * . . . ",
                 ". . . + * x . . + * . + * * . * * . + * . . + x * . . . ",
-                ". . . . + x . . + * . + * * . * * . + * . . + x . . . . "]
+                ". . . . + x . . + * . + * * . * * . + * . . + x . . . . ",
+                ...etc...]
         >>> fl_set_pixmap_data(pxmobj, xpmdata)
 
     Notes
     -----
         Status: Tested + Doc + NoDemo = NOT OK
-        Review: UT- broken
+        Review: UT+ ok_broken
 
     """
     _fl_set_pixmap_data = library.cfuncproto(
@@ -404,8 +405,6 @@ def fl_set_pixmap_data(pFlObject, xpmdatalist):
     library.check_if_initialized()
     library.verify_flobjectptr_type(pFlObject)
     pxpmdatalist = library.convert_to_ptr_string(xpmdatalist)
-    #pbits = cty.pointer(sbits)   # cty.cast(bits, cty.POINTER(xfdata.STRING))
-    #print "pbits", pbits
     library.keep_elem_refs(pFlObject, xpmdatalist, pxpmdatalist)
     _fl_set_pixmap_data(pFlObject, pxpmdatalist)
 
@@ -452,7 +451,8 @@ def fl_set_pixmap_align(pFlObject, align, xmargin, ymargin):
     """fl_set_pixmap_align(pFlObject, align, xmargin, ymargin)
     
     Changes alignment of a pixmap. By default it is displayed centered
-    inside the bounding box.
+    inside the bounding box; although you can place a pixmap outside of
+    the bounding box, it probably is not a good idea.
 
     Parameters
     ----------
@@ -464,6 +464,12 @@ def fl_set_pixmap_align(pFlObject, align, xmargin, ymargin):
             FL_ALIGN_LEFT_TOP, FL_ALIGN_RIGHT_TOP, FL_ALIGN_LEFT_BOTTOM,
             FL_ALIGN_RIGHT_BOTTOM, FL_ALIGN_INSIDE, FL_ALIGN_VERT. Bitwise
             'OR' with FL_ALIGN_INSIDE is allowed.
+        xmargin : int
+            extra margin to leave in addition to the object border width. By
+            default it is 3.
+        ymargin : int
+            extra margin to leave in addition to the object border width. By
+            default it is 3.
 
     Examples
     --------
@@ -472,6 +478,7 @@ def fl_set_pixmap_align(pFlObject, align, xmargin, ymargin):
     Notes
     -----
         Status: Tested + Doc + Demo = OK
+        Review: UT+
 
     """
     _fl_set_pixmap_align = library.cfuncproto(

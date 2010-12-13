@@ -1498,7 +1498,7 @@ class FL_FORM_(cty.Structure):
         label : str
             window title
         window : Window
-            X resource ID for window
+            X resource ID for form window
         x : int
             horizontal position
         y : int
@@ -1520,11 +1520,11 @@ class FL_FORM_(cty.Structure):
         h_hr : float
             high resolution height (for precise scaling)
         first : pointer to FL_OBJECT
-            *todo*
+            points to the first object on the form (list)
         last : pointer to FL_OBJECT
             *todo*
         focusobj : pointer to FL_OBJECT
-            *todo*
+            points to the object on the form that has the input focus
         form_callback : function
             FL_FORMCALLBACKPTR type function
         activate_callback : function
@@ -1562,13 +1562,15 @@ class FL_FORM_(cty.Structure):
         icon_mask : long_pos
             *todo*
         deactivated : int
-            non-zero if deactivated
+            non-zero if deactivated., It can be changed using
+            fl_activated_form() and fl_deactivated_form().
         use_pixmap : int
             true if dbl buffering
         frozen : int
             true if sync change
         visible : int
-            true if mapped
+            true if visible on screen (mapped). It can be changed using
+            fl_show_form() and fl_hide_form()
         wm_border : int
             window manager info
         prop : int_pos
@@ -1608,34 +1610,68 @@ class FL_OBJECT_(cty.Structure):
     Please always use accessor methods when available instead of using or
     changing the object's properties directly.
 
-    To access to the data referenced by a pointer to FL_OBJECT (pObject) you
-    need to use "pObject.contents", then one of its attributes' name.
-    Nonetheless, whenever possible it is better to use appropriate functions.
+    To access directly to the data referenced by a pointer to FL_OBJECT
+    (pObject) you need to use "pObject.contents", then one of its attributes'
+    name. Nonetheless, whenever possible it is always better to use
+    appropriate functions.
 
     Attributes
     ----------
         form : pointer to FL_FORM
-            the form this object belongs to
+            the form this object belongs to. It is used by the main routines.
+            The class routines should not change it.
         u_vdata : pointer to any type
-            anything the user likes as user data
+            anything the user likes as user data for application program. The
+            main module does not reference or modify this field in any way
+            and neither should the class routines.
         u_cdata : str
-            anything the user likes
+            anything the user likes for application program. The main module
+            does not reference or modify this field in any way and neither
+            should the class routines.
         u_ldata : long
-            anything the user likes
+            anything the user likes for application program. The main module
+            does not reference or modify this field in any way and neither
+            should the class routines.
         objclass : int
-            class of object (button, slider, etc)
+            XForms class of object (button, slider, etc). It can be queried
+            using fl_get_object_class()
         type : int
-            type within the class
+            type of object within the class. At least one type should exist
+            and should be provided. They should be numbered from 0 upwards.
+            It can be queried using fl_get_object_type()
         boxtype : int
-            what kind of box type
+            what kind of bounding box type. The handling routine for the
+            object must take care that is actually drawn (with a specific
+            routine). It can be changed or queried using
+            fl_set_object_boxtype() and fl_get_object_boxtype()
         x : int
-            current obj horizontal position
+            current horizontal position of bounding box of the object. This
+            value will change when the user resizes the form window. To
+            determine position use fl_get_object_position() or
+            fl_get_object_geometry() (for size too). To change position use
+            fl_set_object_position(), or fl_set_object_geometry() (for size
+            too)
         y : int
-            current obj vertical position
+            current vertical position of bounding box of the object. This
+            value will change when the user resizes the form window. To
+            determine position use fl_get_object_position() or
+            fl_get_object_geometry() (for size too). To change position use
+            fl_set_object_position(), or fl_set_object_geometry() (for size
+            too)
         w : int
-            current obj width
+            current width of bounding box of the object. This value
+            value will change when the user resizes the form window. To
+            determine size use fl_get_object_size() or
+            fl_get_object_geometry() (for position too). To change size use
+            fl_get_object_size() or fl_get_object_geometry() (for position
+            too).
         h : int
-            current obj height
+            current height of bounding box of the object. This
+            value will change when the user resizes the form window. To
+            determine size use fl_get_object_size() or
+            fl_get_object_geometry() (for position too). To change size use
+            fl_get_object_size() or fl_get_object_geometry() (for position
+            too).
         fl1 : float
             distance of upper left hand corner to left of enclosing form
         fr1 : float
@@ -1653,31 +1689,65 @@ class FL_OBJECT_(cty.Structure):
         fb2 : float
             distance of lower right hand corner to bottom of enclosing form
         bw : int
-            *todo*
+            border width of object. Negative values indicate the up box
+            should look "softer" (in which case no black line of 1 pixel
+            width is drawn around the objects box). It can be queried using
+            fl_get_object_bw(). A different border width can be set using
+            fl_set_object_bw()
         col1 : long_pos
-            first color of obj
+            first color index of object in the internal color lookup table
+            Colors can be changed using fl_set_object_color() and queried
+            using fl_get_object_color()
         col2 : long_pos
-            second color of obj
+            second color index of object in the internal color lookup table
+            Colors can be changed using fl_set_object_color() and queried
+            using fl_get_object_color()
         label : str
-            object label
+            textual label of object. It can be changed using
+            fl_set_object_label() and queried using fl_get_object_label()
+            It must be drawn by the routine handling the object when it
+            receives a FL_DRAWLABEL event (or it could be part of the code
+            for FL_DRAW event). For non-offsetted labels, i.e. the alignment
+            is relative to the entire bounding box, simply calling
+            fl_draw_object_label() should be enough.
         lcol : long_pos
-            label color
+            color of the label. It can be set using fl_set_object_lcol()
+            and queried using fl_get_object_lcol()
         align : int
-            alignment
+            alignment of label with respect to the object. It can be set
+            using fl_set_object_lalign() and queried using
+            fl_get_object_lalign()
         lsize : int
-            label size
+            size of font to draw the label. It can be set using
+            fl_set_object_lsize() and queried using fl_get_object_lsize()
         lstyle : int
-            label style
+            style of font to draw the label. It can be set using
+            fl_set_object_lstyle() and queried using fl_get_object_lstyle()
         shortcut : pointer to long
-            *todo*
+            A pointer to long containing all shortcuts (as keysyms) defined
+            for the object. You should never need them because they are fully
+            handled by the main routines.
         handle : function, returning value
             function(pObject, int, crd, crd, int, pvdata) -> int
+            This is a pointer to the interaction handling routine for the
+            object. fl_add_NEW() sets this by providing the correct handling
+            routine. Normally it is never used (except by the main routine)
+            or changed although there might be situations in which you want
+            to change the interaction handling routine for an object, due to
+            some user action.
         object_callback : function, no return
             function(pObject, long)
+            callback routine that the application program assigned to the
+            object and that the system invokes when the user does something
+            with the object.
         argument : long
-            *todo*
+            The argument to be passed to the callback routine when invoked.
         spec : pointer to any type
-            instantiation
+            Instantiation. This is a pointer that points to any class specific
+            information. For example, for sliders it stores the minimum,
+            maximum and current value of the slider. Most classes (except the
+            most simple ones like boxes and texts) will need this. Whenever the
+            object receives the event FL_FREEMEM it should free this memory.
         prehandle : function, returning value
             function(pObject, int, crd, crd, int, pvdata)
         posthandle : function, returning value
@@ -1685,15 +1755,22 @@ class FL_OBJECT_(cty.Structure):
         set_return : function, no return
             function(pObject, int_pos)
         resize : int_pos
-            what to do if WM resizes the form
+            what to do if WM resizes the form. It can be set using
+            fl_set_object_resize() and queried using fl_get_object_resize()
         nwgravity : int_pos
-            how to re-position top-left corner
+            how to re-position top-left corner relative to its position
+            prior to resizing. It can be set using fl_set_object_gravity()
+            and queried using fl_get_object_gravity()
         segravity : int_pos
-            how to re-position lower-right corner
+            how to re-position lower-right corner relative to its position
+            prior to resizing. It can be set using fl_set_object_gravity()
+            and queried using fl_get_object_gravity()
         prev : pointer to FL_OBJECT
-            prev. obj in form
+            previous object in form. It is used by the main routines. The
+            class routines should not change it.
         next : pointer to FL_OBJECT
-            next obj in form
+            next object in form. It is used by the main routines. The class
+            routines should not change it.
         parent : pointer to FL_OBJECT
             *todo*
         child : pointer to FL_OBJECT
@@ -1705,43 +1782,97 @@ class FL_OBJECT_(cty.Structure):
         use_pixmap : int
             true to use pixmap double buffering
         returned : int
-            what last interaction returned
+            what last interaction returned (by object handling function).
+            Values: FL_RETURN_NONE (Handling function did FL_RETURN_NONE,
+            i.e. 0), FL_RETURN_CHANGED (Handling function detected a change
+            of the objects state), FL_RETURN_END (Handling function detected
+            end of interaction with object). FL_RETURN_CHANGED and
+            FL_RETURN_END are bits that can be bitwise OR-ed. If both are
+            set this indicates that the objects state was changed and the
+            interaction ended.
         how_return : int_pos
-            under which conditions to return
+            under what circumstances the object is returned by e.g.
+            fl_do_forms() or the callback function for the object is invoked.
+            It can be changed using fl_set_object_return(). Especially in
+            the case of objects having child objects also the corresponding
+            settings for child objects may need changes and which automatically
+            get adjusted when the above function is used.
         double_buffer : int
             only used by mesa/gl canvas
         pushed : int
-            *todo*
+            flag if the mouse is pushed within the bounding box of the object.
+            It is set and reset by the main routine. Class routines should
+            never change it but can use it to draw or handle objects
+            differently.
         focus : int
-            *todo*
+            flag if keyboard input is sent to this object. It is set and reset
+            by the main routine. Never change it but you can use its value.
         belowmouse : int
-            *todo*
+            flag if the mouse is on this object. It is set and reset by the
+            main routine. The class routines should never change it but can
+            use it to draw or handle the object differently.
         active : int
-            if accepting event
+            flag if object is active, accepting event other than FL_DRAW.
+            Static objects (e.g. text and boxes) are inactive. By default
+            objects are active; it can be changed by using
+            fl_deactivate_object() and fl_activate_object(). It can be queried
+            using fl_object_is_active()
         input : int
-            *todo*
+            flag if this object can receive keyboard input. If not, events
+            related to keyboard input are not sent to the object. The default
+            value of input is false. Note that not all keys are sent (see
+            wantkey).
         wantkey : int
-            *todo*
+            An input object normally does not receive <Tab> or <Return>
+            keystrokes or any other keys except those that have values between
+            0-255, the <Left> and <Right> arrow keys and <Home> and <End>
+            (<Tab> and <Return> are normally used to switch between input
+            objects). By setting this field to FL_KEY_TAB enforces that the
+            object receives also these two keys as well as the <Up> and <Down>
+            arrow keys and <PgUp> and <PgDn> when it has the focus. To receive
+            other special keys (e.g. function keys) FL_KEY_SPECIAL must be set
+            here. By setting wantkey to FL_KEY_ALL all keys are sent to the
+            object.
         radio : int
             *todo*
         automatic : int
-            *todo*
+            An object is automatic if it automatically (without user actions)
+            has to change its contents. Automatic objects get a FL_STEP event
+            about every 50 msec. E.g. the object class FL_CLOCK is automatic.
+            It is false, by default. It can be set using
+            fl_set_object_automatic() (do not set the object member directly
+            except from within a function like fl_add_NEW(), in other contexts
+            some extra work is required) and to test the object for it use
+            fl_object_is_automatic().
         redraw : int
             *todo*
         visible : int
-            *todo*
+            flag if the object is visible. When the object is not visible the
+            main routine will never try to draw it or send events to it. By
+            default objects are visible. It can be hidden using
+            fl_hide_object() and queried using fl_object_is_visible(). Note
+            that this does not guarantee that the object is visible on the
+            screen, you need to verify if the form the object belongs to is
+            visible using fl_form_is_visible() (when returning true).
         is_under : int
             if (partially) hidden by other object
         clip : int
             *todo*
         click_timeout : long_pos
-            *todo*
+            If non-zero this indicates the the maximum elapsed time (in msec)
+            between two mouse clicks to be considered a double click. A zero
+            value disables double/triple click detection. It can be set using
+            fl_set_object_dblclick() and queried using fl_get_object_dblclick()
         c_vdata : pointer to any type
-            for class use
+            for class use. The main module does not reference or modify this
+            field in any way. The object classes, including the built-in ones,
+            may use this field.
         c_cdata : str
             for class use
         c_ldata : long
-            for class use
+            for class use. The main module does not reference or modify this
+            field in any way. The object classes, including the built-in ones,
+            may use this field.
         dbl_background : long_pos
             double buffer background color
         tooltip : str

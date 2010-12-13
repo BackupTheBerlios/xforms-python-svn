@@ -64,9 +64,23 @@ class XFormsWarning(Warning):
     pass
 
 
+def get_xforms_version():
+    """ Returns version string of installed XForms library. """
+    from xformslib.flbasic import fl_library_full_version
+    try:
+        fconsolver, ver, rev, fixlvl, extrafixlvl = \
+                fl_library_full_version()
+    except TypeError:           # not existing function
+        complete_xf_version = ""
+    else:
+        complete_xf_version = "%s.%s.%s%s" % \
+                (str(ver), str(rev), str(fixlvl), extrafixlvl)
+    return complete_xf_version
+
+
 header_filename = "/usr/include/forms.h"
 
-def get_xforms_version():
+def get_xforms_version_fallback():
     """ Returns version string of installed XForms library/header """
     complete_xf_version = ""
     try:
@@ -111,6 +125,8 @@ def get_xforms_version():
 def verify_version_compatibility():
     """ verify compatibility between xforms-python and XForms versions """
     xforms_vers = get_xforms_version()
+    if not xforms_vers:                 # no chance for direct version getter
+        xforms_vers = get_xforms_version_fallback()
     if vers.__vers_against_xforms__ != xforms_vers:      # no match
         warningmsg = "xforms-python is implemented against XForms version " \
                 "%s and does not match XForms installed version (%s)." \
@@ -124,7 +140,7 @@ def func_notexisting_placeholder(cfunction):
     """ Print a warning if called function does not exist """
     warningmsg = "C function %s does NOT exist, hence it is not wrappable" \
             " and callable in python and its call is ignored. Maybe " \
-            "removed or disabled?" % cfunction
+            "removed, disabled or not implemented yet?" % cfunction
     warnings.warn(warningmsg, UserWarning)
     return None
 
@@ -439,6 +455,13 @@ def make_ubyte_and_pointer():
 def make_ushort_and_pointer():
     """ Makes a ctypes c_ushort and its pointer, and returns both """
     baseval = cty.c_ushort()
+    ptrbaseval = cty.byref(baseval)
+    return baseval, ptrbaseval
+
+
+def make_string_and_pointer():
+    """ Makes a ctypes c_char_p and its pointer, and returns both """
+    baseval = cty.c_char_p()
     ptrbaseval = cty.byref(baseval)
     return baseval, ptrbaseval
 
