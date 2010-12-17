@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: iso8859-1 -*-
 
-""" xforms-python's functions to manage browser objects.
+""" xforms-python's functions to manage browser flobjects.
 """
 
 #    Copyright (C) 2009, 2010  Luca Lazzaroni "LukenShiro"
@@ -26,7 +26,7 @@
 # then heavily reordered and reworked
 
 # ############################################# #
-# Interface to XForms shared object libraries   #
+# Interface to XForms shared flobject libraries   #
 # ############################################# #
 
 
@@ -45,10 +45,11 @@ from xformslib import xfdata
 # fl_create_browser function placeholder (internal)
 
 
-def fl_add_browser(browsertype, x, y, w, h, label):
-    """fl_add_browser(browsertype, x, y, w, h, label)
+def fl_add_browser(browsertype, xpos, ypos, width, height, label):
+    """fl_add_browser(browsertype, xpos, ypos, width, height, label)
+    -> ptr_flobject
     
-    Adds a browser object. The label is placed below the box by default.
+    Adds a browser flobject. The label is placed below the box by default.
 
     Parameters
     ----------
@@ -56,21 +57,21 @@ def fl_add_browser(browsertype, x, y, w, h, label):
             type of the browser to be added. Values (from xfdata.py)
             FL_NORMAL_BROWSER, FL_SELECT_BROWSER, FL_HOLD_BROWSER,
             FL_MULTI_BROWSER
-        x : int
+        xpos : int
             horizontal position (upper-left corner)
-        y : int
+        ypos : int
             vertical position (upper-left corner)
-        w : int
+        width : int
             width in coord units
-        h : int
+        height : int
             height in coord units
         label : str
             text label of browser
 
     Returns
     -------
-        pFlObject : pointer to xfdata.FL_OBJECT
-            browser object created
+        ptr_flobject : pointer to xfdata.FL_OBJECT
+            browser flobject created
 
     Examples
     --------
@@ -90,28 +91,29 @@ def fl_add_browser(browsertype, x, y, w, h, label):
            FL_Coord w, FL_Coord h, const char * label)""")
     library.check_if_initialized()
     library.checkfatal_allowed_value_in_list(browsertype,
-        xfdata.BROWSERTYPE_list)
-    ibrowsertype = library.convert_to_int(browsertype)
-    ix = library.convert_to_FL_Coord(x)
-    iy = library.convert_to_FL_Coord(y)
-    iw = library.convert_to_FL_Coord(w)
-    ih = library.convert_to_FL_Coord(h)
-    slabel = library.convert_to_string(label)
-    library.keep_elem_refs(browsertype, x, y, w, h, label, ibrowsertype, ix, \
-                        iy, iw, ih, slabel)
-    retval = _fl_add_browser(ibrowsertype, ix, iy, iw, ih, slabel)
+            xfdata.BROWSERTYPE_list)
+    i_browsertype = library.convert_to_intc(browsertype)
+    i_xpos = library.convert_to_FL_Coord(xpos)
+    i_ypos = library.convert_to_FL_Coord(ypos)
+    i_width = library.convert_to_FL_Coord(width)
+    i_height = library.convert_to_FL_Coord(height)
+    s_label = library.convert_to_stringc(label)
+    library.keep_elem_refs(browsertype, xpos, ypos, width, height, label, \
+            i_browsertype, i_xpos, i_ypos, i_width, i_height, s_label)
+    retval = _fl_add_browser(i_browsertype, i_xpos, i_ypos, i_width, \
+            i_height, s_label)
     return retval
 
 
-def fl_clear_browser(pFlObject):
-    """fl_clear_browser(pFlObject)
+def fl_clear_browser(ptr_flobject):
+    """fl_clear_browser(ptr_flobject)
     
-    Clears contents of a browser object.
+    Clears contents of a browser flobject.
 
     Parameters
     ----------
-        pFlObject : pointer to xfdata.FL_OBJECT
-            browser object
+        ptr_flobject : pointer to xfdata.FL_OBJECT
+            browser flobject
 
     Examples
     --------
@@ -127,15 +129,15 @@ def fl_clear_browser(pFlObject):
         None, [cty.POINTER(xfdata.FL_OBJECT)],
         """void fl_clear_browser(FL_OBJECT * ob)""")
     library.check_if_initialized()
-    library.verify_flobjectptr_type(pFlObject)
-    library.keep_elem_refs(pFlObject)
-    _fl_clear_browser(pFlObject)
+    library.verify_flobjectptr_type(ptr_flobject)
+    library.keep_elem_refs(ptr_flobject)
+    _fl_clear_browser(ptr_flobject)
 
 
-def fl_add_browser_line(pFlObject, newtext):
-    """fl_add_browser_line(pFlObject, newtext)
+def fl_add_browser_line(ptr_flobject, newtext):
+    """fl_add_browser_line(ptr_flobject, newtext)
     
-    Add a line to a browser object. The line may contain embedded newline
+    Add a line to a browser flobject. The line may contain embedded newline
     characters: these will result in the text being split up into several
     lines, separated at the newline characters. It is possible to change the
     appearance of individual lines in the browser. Whenever a line starts
@@ -162,8 +164,8 @@ def fl_add_browser_line(pFlObject, newtext):
 
     Parameters
     ----------
-        pFlObject : pointer to xfdata.FL_OBJECT
-            browser object
+        ptr_flobject : pointer to xfdata.FL_OBJECT
+            browser flobject
         newtext : str
             line of text to be added
 
@@ -181,24 +183,24 @@ def fl_add_browser_line(pFlObject, newtext):
         None, [cty.POINTER(xfdata.FL_OBJECT), xfdata.STRING],
         """void fl_add_browser_line(FL_OBJECT * ob, const char * newtext)""")
     library.check_if_initialized()
-    library.verify_flobjectptr_type(pFlObject)
-    snewtext = library.convert_to_string(newtext)
-    library.keep_elem_refs(pFlObject, newtext, snewtext)
-    _fl_add_browser_line(pFlObject, snewtext)
+    library.verify_flobjectptr_type(ptr_flobject)
+    s_newtext = library.convert_to_stringc(newtext)
+    library.keep_elem_refs(ptr_flobject, newtext, s_newtext)
+    _fl_add_browser_line(ptr_flobject, s_newtext)
 
 
-def fl_addto_browser(pFlObject, newtext):
-    """fl_addto_browser(pFlObject, newtext)
+def fl_addto_browser(ptr_flobject, newtext):
+    """fl_addto_browser(ptr_flobject, newtext)
     
     Adds text to browser. The browser will be shifted such that the newly
-    appended line is visible. This is useful when e.g. using the browser to
-    display messages. The text may contain embedded newline characters. See
-    fl_add_browser_line() for appearance change.
+    appended line is visible. This is useful when e.g. using the browser
+    to display messages. The text may contain embedded newline characters.
+    See fl_add_browser_line() for appearance change.
 
     Parameters
     ----------
-        pFlObject : pointer to xfdata.FL_OBJECT
-            browser object
+        ptr_flobject : pointer to xfdata.FL_OBJECT
+            browser flobject
         newtext : str
             text to be added
 
@@ -216,26 +218,27 @@ def fl_addto_browser(pFlObject, newtext):
         None, [cty.POINTER(xfdata.FL_OBJECT), xfdata.STRING],
         """void fl_addto_browser(FL_OBJECT * ob, const char * newtext)""")
     library.check_if_initialized()
-    library.verify_flobjectptr_type(pFlObject)
-    snewtext = library.convert_to_string(newtext)
-    library.keep_elem_refs(pFlObject, newtext, snewtext)
-    _fl_addto_browser(pFlObject, snewtext)
+    library.verify_flobjectptr_type(ptr_flobject)
+    s_newtext = library.convert_to_stringc(newtext)
+    library.keep_elem_refs(ptr_flobject, newtext, s_newtext)
+    _fl_addto_browser(ptr_flobject, s_newtext)
 
 
-def fl_addto_browser_chars(pFlObject, addedtext):
-    """fl_addto_browser_chars(pFlObject, addedtext)
+def fl_addto_browser_chars(ptr_flobject, addedtext):
+    """fl_addto_browser_chars(ptr_flobject, addedtext)
     
     Appends text to the last line in the browser without advancing the
-    line counter. The text may contain embedded newline characters. In that
-    case, the text before the first embedded newline is appended to the last
-    line, and everything aferwards is put onto new lines. As in the case of
-    fl_addto_browser() the last added line will be visible in the browser.
-    See fl_add_browser_line() for appearance change.
+    line counter. The text may contain embedded newline characters. In
+    that case, the text before the first embedded newline is appended
+    to the last line, and everything afterwards is put onto new lines.
+    As in the case of fl_addto_browser() the last added line will be
+    visible in the browser. See fl_add_browser_line() for appearance
+    change.
 
     Parameters
     ----------
-        pFlObject : pointer to xfdata.FL_OBJECT
-            browser object
+        ptr_flobject : pointer to xfdata.FL_OBJECT
+            browser flobject
         addedtext : str
             text to be added
 
@@ -253,32 +256,33 @@ def fl_addto_browser_chars(pFlObject, addedtext):
         None, [cty.POINTER(xfdata.FL_OBJECT), xfdata.STRING],
         """void fl_addto_browser_chars(FL_OBJECT * ob, const char * str)""")
     library.check_if_initialized()
-    library.verify_flobjectptr_type(pFlObject)
-    saddedtext = library.convert_to_string(addedtext)
-    library.keep_elem_refs(pFlObject, addedtext, saddedtext)
-    _fl_addto_browser_chars(pFlObject, saddedtext)
+    library.verify_flobjectptr_type(ptr_flobject)
+    s_addedtext = library.convert_to_stringc(addedtext)
+    library.keep_elem_refs(ptr_flobject, addedtext, s_addedtext)
+    _fl_addto_browser_chars(ptr_flobject, s_addedtext)
 
 
 fl_append_browser = fl_addto_browser_chars
 
 
-def fl_insert_browser_line(pFlObject, linenum, newtext):
-    """fl_insert_browser_line(pFlObject, linenum, newtext)
+def fl_insert_browser_line(ptr_flobject, linenum, newtext):
+    """fl_insert_browser_line(ptr_flobject, linenum, newtext)
     
-    Inserts a line in front of a given line in browser. All lines after it
-    will be shifted. Embedded newline characters do not result in the line
-    being split up as it is done in the previous functions. Instead they will
-    rather likely appear as strange looking characters in the text shown. The
-    only exception is when inserting into an empty browser or after the last
-    line, then this function works exactly as if you had called
-    fl_add_browser_line(). See fl_add_browser_line() for appearance change.
+    Inserts a line in front of a given line in browser. All lines after
+    it will be shifted. Embedded newline characters do not result in the
+    line being split up as it is done in the previous functions. Instead
+    they will rather likely appear as strange looking characters in the
+    text shown. The only exception is when inserting into an empty browser
+    or after the last line, then this function works exactly as if you had
+    called fl_add_browser_line(). See fl_add_browser_line() for appearance
+    change.
 
     Parameters
     ----------
-        pFlObject : pointer to xfdata.FL_OBJECT
-            browser object
+        ptr_flobject : pointer to xfdata.FL_OBJECT
+            browser flobject
         linenum : int
-            line number after which insert it (top line is numbered 1, not 0)
+            line id after which insert it (top line is numbered 1, not 0)
         newtext : str
             text to be inserted
 
@@ -297,24 +301,25 @@ def fl_insert_browser_line(pFlObject, linenum, newtext):
         """void fl_insert_browser_line(FL_OBJECT * ob, int linenumb,
            const char * newtext)""")
     library.check_if_initialized()
-    library.verify_flobjectptr_type(pFlObject)
-    ilinenum = library.convert_to_int(linenum)
-    snewtext = library.convert_to_string(newtext)
-    library.keep_elem_refs(pFlObject, linenum, newtext, ilinenum, snewtext)
-    _fl_insert_browser_line(pFlObject, ilinenum, snewtext)
+    library.verify_flobjectptr_type(ptr_flobject)
+    i_linenum = library.convert_to_intc(linenum)
+    s_newtext = library.convert_to_stringc(newtext)
+    library.keep_elem_refs(ptr_flobject, linenum, newtext, i_linenum, \
+            s_newtext)
+    _fl_insert_browser_line(ptr_flobject, i_linenum, s_newtext)
 
 
-def fl_delete_browser_line(pFlObject, linenum):
-    """fl_delete_browser_line(pFlObject, linenum)
+def fl_delete_browser_line(ptr_flobject, linenum):
+    """fl_delete_browser_line(ptr_flobject, linenum)
     
-    Deletes a line (shifting the following lines)
+    Deletes a line from browser flobject (shifting the following lines).
 
     Parameters
     ----------
-        pFlObject : pointer to xfdata.FL_OBJECT
-            browser object
+        ptr_flobject : pointer to xfdata.FL_OBJECT
+            browser flobject
         linenum : int
-            line number to delete
+            line id to delete
 
     Examples
     --------
@@ -329,27 +334,27 @@ def fl_delete_browser_line(pFlObject, linenum):
         library.load_so_libforms(), "fl_delete_browser_line",
         None, [cty.POINTER(xfdata.FL_OBJECT), cty.c_int],
         """void fl_delete_browser_line(FL_OBJECT * ob, int linenumb)""")
-    library.verify_flobjectptr_type(pFlObject)
-    ilinenum = library.convert_to_int(linenum)
-    library.keep_elem_refs(pFlObject, linenum, ilinenum)
-    _fl_delete_browser_line(pFlObject, ilinenum)
+    library.verify_flobjectptr_type(ptr_flobject)
+    ilinenum = library.convert_to_intc(linenum)
+    library.keep_elem_refs(ptr_flobject, linenum, ilinenum)
+    _fl_delete_browser_line(ptr_flobject, ilinenum)
 
 
-def fl_replace_browser_line(pFlObject, linenum, newtext):
-    """fl_replace_browser_line(pFlObject, linenum, newtext)
+def fl_replace_browser_line(ptr_flobject, linenum, newtext):
+    """fl_replace_browser_line(ptr_flobject, linenum, newtext)
     
     Replaces a line in the browser. As in the case of
-    fl_insert_browser_line() newline characters embedded into the replacement
-    text do not have any special meaning, i.e. they do not result in replacement
-    of more than a single line. See fl_add_browser_line() for appearance
-    change.
+    fl_insert_browser_line() newline characters embedded into the
+    replacement text do not have any special meaning, i.e. they do not
+    result in replacement of more than a single line. See
+    fl_add_browser_line() for appearance change.
 
     Parameters
     ----------
-        pFlObject : pointer to xfdata.FL_OBJECT
-            browser object
+        ptr_flobject : pointer to xfdata.FL_OBJECT
+            browser flobject
         linenum : int
-            line number to replace
+            line id to replace
         newtext : str
             text line used as replacement
 
@@ -368,29 +373,30 @@ def fl_replace_browser_line(pFlObject, linenum, newtext):
         """void fl_replace_browser_line(FL_OBJECT * ob, int linenumb,
            const char * newtext)""")
     library.check_if_initialized()
-    library.verify_flobjectptr_type(pFlObject)
-    ilinenum = library.convert_to_int(linenum)
-    snewtext = library.convert_to_string(newtext)
-    library.keep_elem_refs(pFlObject, linenum, newtext, ilinenum, snewtext)
-    _fl_replace_browser_line(pFlObject, ilinenum, snewtext)
+    library.verify_flobjectptr_type(ptr_flobject)
+    i_linenum = library.convert_to_intc(linenum)
+    s_newtext = library.convert_to_stringc(newtext)
+    library.keep_elem_refs(ptr_flobject, linenum, newtext, i_linenum, \
+            s_newtext)
+    _fl_replace_browser_line(ptr_flobject, i_linenum, s_newtext)
 
 
-def fl_get_browser_line(pFlObject, linenum):
-    """fl_get_browser_line(pFlObject, linenum)
+def fl_get_browser_line(ptr_flobject, linenum):
+    """fl_get_browser_line(ptr_flobject, linenum) -> linetext
     
-    Obtains the contents of a particular line in the browser.
+    Finds out the contents of a particular line in the browser.
 
     Parameters
     ----------
-        pFlObject : pointer to xfdata.FL_OBJECT
-            browser object
+        ptr_flobject : pointer to xfdata.FL_OBJECT
+            browser flobject
         linenum : int
-            line number to return
+            line id to return
 
     Returns
     -------
-        ltext : str
-            line text
+        linetext : str
+            text of requested line
 
     Examples
     --------
@@ -406,28 +412,28 @@ def fl_get_browser_line(pFlObject, linenum):
         xfdata.STRING, [cty.POINTER(xfdata.FL_OBJECT), cty.c_int],
         """const char * fl_get_browser_line(FL_OBJECT * ob, int linenumb)""")
     library.check_if_initialized()
-    library.verify_flobjectptr_type(pFlObject)
-    ilinenum = library.convert_to_int(linenum)
-    library.keep_elem_refs(pFlObject, linenum, ilinenum)
-    retval = _fl_get_browser_line(pFlObject, ilinenum)
+    library.verify_flobjectptr_type(ptr_flobject)
+    i_linenum = library.convert_to_intc(linenum)
+    library.keep_elem_refs(ptr_flobject, linenum, i_linenum)
+    retval = _fl_get_browser_line(ptr_flobject, i_linenum)
     return retval
 
 
-def fl_load_browser(pFlObject, filename):
-    """fl_load_browser(pFlObject, filename)
+def fl_load_browser(ptr_flobject, filename):
+    """fl_load_browser(ptr_flobject, filename) -> result
     
-    Loads an entire file into a browser. An empty string (or the file
-    could not be opened for reading) the browser is just cleared. This
-    routine is particularly useful when using the browser for a help
+    Loads an entire file into a browser. With an empty string (or if the
+    file could not be opened for reading) the browser is just cleared.
+    This routine is particularly useful when using the browser for a help
     facility. You can create different help files and load the needed one
     depending on context.
 
     Parameters
     ----------
-        pFlObject : pointer to xfdata.FL_OBJECT
-            browser object
+        ptr_flobject : pointer to xfdata.FL_OBJECT
+            browser flobject
         filename : str
-            name of the file. If it's empty or None does not load a new new file.
+            name of the file. If it's empty or None does not load a new file.
 
     Returns
     -------
@@ -447,27 +453,27 @@ def fl_load_browser(pFlObject, filename):
         library.load_so_libforms(), "fl_load_browser",
         cty.c_int, [cty.POINTER(xfdata.FL_OBJECT), cty.c_void_p],
         """int fl_load_browser(FL_OBJECT * ob, const char * filename)""")
-    library.verify_flobjectptr_type(pFlObject)
+    library.verify_flobjectptr_type(ptr_flobject)
     if not filename:            # it is None or empty
         sfilename = cty.cast(filename, cty.c_void_p)
     else:
-        sfilename = library.convert_to_string(filename)
-    library.keep_elem_refs(pFlObject, filename, sfilename)
-    retval = _fl_load_browser(pFlObject, sfilename)
+        sfilename = library.convert_to_stringc(filename)
+    library.keep_elem_refs(ptr_flobject, filename, sfilename)
+    retval = _fl_load_browser(ptr_flobject, sfilename)
     return retval
 
 
-def fl_select_browser_line(pFlObject, linenum):
-    """fl_select_browser_line(pFlObject, linenum)
+def fl_select_browser_line(ptr_flobject, linenum):
+    """fl_select_browser_line(ptr_flobject, linenum)
     
-    Selects a line in the browser.
+    Selects a line in the browser flobject.
 
     Parameters
     ----------
-        pFlObject : pointer to xfdata.FL_OBJECT
-            browser object
+        ptr_flobject : pointer to xfdata.FL_OBJECT
+            browser flobject
         linenum : int
-            line number to select
+            line id to select
 
     Examples
     --------
@@ -483,21 +489,21 @@ def fl_select_browser_line(pFlObject, linenum):
         None, [cty.POINTER(xfdata.FL_OBJECT), cty.c_int],
         """void fl_select_browser_line(FL_OBJECT * ob, int line)""")
     library.check_if_initialized()
-    library.verify_flobjectptr_type(pFlObject)
-    ilinenum = library.convert_to_int(linenum)
-    library.keep_elem_refs(pFlObject, linenum, ilinenum)
-    _fl_select_browser_line(pFlObject, ilinenum)
+    library.verify_flobjectptr_type(ptr_flobject)
+    ilinenum = library.convert_to_intc(linenum)
+    library.keep_elem_refs(ptr_flobject, linenum, ilinenum)
+    _fl_select_browser_line(ptr_flobject, ilinenum)
 
 
-def fl_deselect_browser_line(pFlObject, linenum):
-    """fl_deselect_browser_line(pFlObject, linenum)
+def fl_deselect_browser_line(ptr_flobject, linenum):
+    """fl_deselect_browser_line(ptr_flobject, linenum)
     
-    Deselects a line in the browser.
+    Deselects a line in the browser flobject.
 
     Parameters
     ----------
-        pFlObject : pointer to xfdata.FL_OBJECT
-            browser object
+        ptr_flobject : pointer to xfdata.FL_OBJECT
+            browser flobject
         linenum : int
             line id to deselect
 
@@ -515,21 +521,21 @@ def fl_deselect_browser_line(pFlObject, linenum):
         None, [cty.POINTER(xfdata.FL_OBJECT), cty.c_int],
         """void fl_deselect_browser_line(FL_OBJECT * ob, int line)""")
     library.check_if_initialized()
-    library.verify_flobjectptr_type(pFlObject)
-    ilinenum = library.convert_to_int(linenum)
-    library.keep_elem_refs(pFlObject, linenum, ilinenum)
-    _fl_deselect_browser_line(pFlObject, ilinenum)
+    library.verify_flobjectptr_type(ptr_flobject)
+    i_linenum = library.convert_to_intc(linenum)
+    library.keep_elem_refs(ptr_flobject, linenum, i_linenum)
+    _fl_deselect_browser_line(ptr_flobject, i_linenum)
 
 
-def fl_deselect_browser(pFlObject):
-    """fl_deselect_browser(pFlObject)
+def fl_deselect_browser(ptr_flobject):
+    """fl_deselect_browser(ptr_flobject)
     
     Deselects all lines in the browser.
 
     Parameters
     ----------
-        pFlObject : pointer to xfdata.FL_OBJECT
-            browser object
+        ptr_flobject : pointer to xfdata.FL_OBJECT
+            browser flobject
 
     Examples
     --------
@@ -545,27 +551,27 @@ def fl_deselect_browser(pFlObject):
         None, [cty.POINTER(xfdata.FL_OBJECT)],
         """void fl_deselect_browser(FL_OBJECT * ob)""")
     library.check_if_initialized()
-    library.verify_flobjectptr_type(pFlObject)
-    library.keep_elem_refs(pFlObject)
-    _fl_deselect_browser(pFlObject)
+    library.verify_flobjectptr_type(ptr_flobject)
+    library.keep_elem_refs(ptr_flobject)
+    _fl_deselect_browser(ptr_flobject)
 
 
-def fl_isselected_browser_line(pFlObject, linenum):
-    """fl_isselected_browser_line(pFlObject, linenum)
+def fl_isselected_browser_line(ptr_flobject, linenum):
+    """fl_isselected_browser_line(ptr_flobject, linenum) -> yesno
     
-    Checks whether a line is selected or not.
+    Checks whether a line of the browser flobject is selected or not.
 
     Parameters
     ----------
-        pFlObject : pointer to xfdata.FL_OBJECT
-            browser object
+        ptr_flobject : pointer to xfdata.FL_OBJECT
+            browser flobject
         linenum : int
             line id to evaluate
 
     Returns
     -------
-        flag : int
-            *todo*
+        yesno : int
+            flag. true? if selected, otherwise false?
 
     Examples
     --------
@@ -582,28 +588,28 @@ def fl_isselected_browser_line(pFlObject, linenum):
         cty.c_int, [cty.POINTER(xfdata.FL_OBJECT), cty.c_int],
         """int fl_isselected_browser_line(FL_OBJECT * ob, int line)""")
     library.check_if_initialized()
-    library.verify_flobjectptr_type(pFlObject)
-    ilinenum = library.convert_to_int(linenum)
-    library.keep_elem_refs(pFlObject, linenum, ilinenum)
-    retval = _fl_isselected_browser_line(pFlObject, ilinenum)
+    library.verify_flobjectptr_type(ptr_flobject)
+    ilinenum = library.convert_to_intc(linenum)
+    library.keep_elem_refs(ptr_flobject, linenum, ilinenum)
+    retval = _fl_isselected_browser_line(ptr_flobject, ilinenum)
     return retval
 
 
-def fl_get_browser_topline(pFlObject):
-    """fl_get_browser_topline(pFlObject)
+def fl_get_browser_topline(ptr_flobject):
+    """fl_get_browser_topline(ptr_flobject) -> linenum
     
     Finds out the (un-obscured) line that is currently shown at the top
     of the browser. The index of the top line is 1, not 0.
 
     Parameters
     ----------
-        pFlObject : pointer to xfdata.FL_OBJECT
-            browser object
+        ptr_flobject : pointer to xfdata.FL_OBJECT
+            browser flobject
 
     Returns
     -------
         linenum : int
-            line id number
+            line id of topline
 
     Examples
     --------
@@ -619,33 +625,33 @@ def fl_get_browser_topline(pFlObject):
         cty.c_int, [cty.POINTER(xfdata.FL_OBJECT)],
         """int fl_get_browser_topline(FL_OBJECT * ob)""")
     library.check_if_initialized()
-    library.verify_flobjectptr_type(pFlObject)
-    library.keep_elem_refs(pFlObject)
-    retval = _fl_get_browser_topline(pFlObject)
+    library.verify_flobjectptr_type(ptr_flobject)
+    library.keep_elem_refs(ptr_flobject)
+    retval = _fl_get_browser_topline(ptr_flobject)
     return retval
 
 
-def fl_get_browser(pFlObject):
-    """fl_get_browser(pFlObject)
+def fl_get_browser(ptr_flobject):
+    """fl_get_browser(ptr_flobject) -> linenum
     
-    Obtains the last selection made by the user, e.g. when the browser is
-    returned.
+    Finds out the last selection made by the user, e.g. when the browser
+    is returned.
 
     Parameters
     ----------
-        pFlObject : pointer to xfdata.FL_OBJECT
-            browser object
+        ptr_flobject : pointer to xfdata.FL_OBJECT
+            browser flobject
 
     Returns
     -------
         linenum : int
-            line num. of the last selection, or 0 (if no selection was made).
-            For FL_MULTI_BROWSER only: the negative of deselected line num
+            line id of the last selection, or 0 (if no selection was made).
+            For FL_MULTI_BROWSER only: the negative of deselected line id
             (when the last action was a deselection)
 
     Examples
     --------
-        >>> lastsel = fl_get_browser(pFlObject)
+        >>> lastsel = fl_get_browser(ptr_flobject)
 
     Notes
     -----
@@ -657,21 +663,21 @@ def fl_get_browser(pFlObject):
         cty.c_int, [cty.POINTER(xfdata.FL_OBJECT)],
         """int fl_get_browser(FL_OBJECT * ob)""")
     library.check_if_initialized()
-    library.verify_flobjectptr_type(pFlObject)
-    library.keep_elem_refs(pFlObject)
-    retval = _fl_get_browser(pFlObject)
+    library.verify_flobjectptr_type(ptr_flobject)
+    library.keep_elem_refs(ptr_flobject)
+    retval = _fl_get_browser(ptr_flobject)
     return retval
 
 
-def fl_get_browser_maxline(pFlObject):
-    """fl_get_browser_maxline(pFlObject)
+def fl_get_browser_maxline(ptr_flobject):
+    """fl_get_browser_maxline(ptr_flobject) -> numlines
     
-    Returns the number of lines in the browser.
+    Finds out the number of lines in the browser.
 
     Parameters
     ----------
-        pFlObject : pointer to xfdata.FL_OBJECT
-            browser object
+        ptr_flobject : pointer to xfdata.FL_OBJECT
+            browser flobject
 
     Returns
     -------
@@ -692,23 +698,23 @@ def fl_get_browser_maxline(pFlObject):
         cty.c_int, [cty.POINTER(xfdata.FL_OBJECT)],
         """int fl_get_browser_maxline(FL_OBJECT * ob)""")
     library.check_if_initialized()
-    library.verify_flobjectptr_type(pFlObject)
-    library.keep_elem_refs(pFlObject)
-    retval = _fl_get_browser_maxline(pFlObject)
+    library.verify_flobjectptr_type(ptr_flobject)
+    library.keep_elem_refs(ptr_flobject)
+    retval = _fl_get_browser_maxline(ptr_flobject)
     return retval
 
 
-def fl_get_browser_screenlines(pFlObject):
-    """fl_get_browser_screenlines(pFlObject)
+def fl_get_browser_screenlines(ptr_flobject):
+    """fl_get_browser_screenlines(ptr_flobject) -> numlines
     
-    Obtains an approximation of the number of lines shown in the browser.
-    This count only includes lines that are shown completely in the browser,
-    partially obscured ones are not counted in.
+    Finds out an approximation of the number of lines shown in the
+    browser. This count only includes lines that are shown completely
+    in the browser, partially obscured ones are not counted in.
 
     Parameters
     ----------
-        pFlObject : pointer to xfdata.FL_OBJECT
-            browser object
+        ptr_flobject : pointer to xfdata.FL_OBJECT
+            browser flobject
 
     Returns
     -------
@@ -729,21 +735,21 @@ def fl_get_browser_screenlines(pFlObject):
         cty.c_int, [cty.POINTER(xfdata.FL_OBJECT)],
         """int fl_get_browser_screenlines(FL_OBJECT * ob)""")
     library.check_if_initialized()
-    library.verify_flobjectptr_type(pFlObject)
-    library.keep_elem_refs(pFlObject)
-    retval = _fl_get_browser_screenlines(pFlObject)
+    library.verify_flobjectptr_type(ptr_flobject)
+    library.keep_elem_refs(ptr_flobject)
+    retval = _fl_get_browser_screenlines(ptr_flobject)
     return retval
 
 
-def fl_set_browser_topline(pFlObject, linenum):
-    """fl_set_browser_topline(pFlObject, linenum)
+def fl_set_browser_topline(ptr_flobject, linenum):
+    """fl_set_browser_topline(ptr_flobject, linenum)
     
     Moves a text line to the top of the browser. Line numbers start with 1.
 
     Parameters
     ----------
-        pFlObject : pointer to xfdata.FL_OBJECT
-            browser object
+        ptr_flobject : pointer to xfdata.FL_OBJECT
+            browser flobject
         linenum : int
             line id to be moved to top
 
@@ -761,22 +767,22 @@ def fl_set_browser_topline(pFlObject, linenum):
         None, [cty.POINTER(xfdata.FL_OBJECT), cty.c_int],
         """void fl_set_browser_topline(FL_OBJECT * ob, int line)""")
     library.check_if_initialized()
-    library.verify_flobjectptr_type(pFlObject)
-    ilinenum = library.convert_to_int(linenum)
-    library.keep_elem_refs(pFlObject, linenum, ilinenum)
-    _fl_set_browser_topline(pFlObject, ilinenum)
+    library.verify_flobjectptr_type(ptr_flobject)
+    i_linenum = library.convert_to_intc(linenum)
+    library.keep_elem_refs(ptr_flobject, linenum, i_linenum)
+    _fl_set_browser_topline(ptr_flobject, i_linenum)
 
 
-def fl_set_browser_bottomline(pFlObject, linenum):
-    """fl_set_browser_bottomline(pFlObject, linenum)
+def fl_set_browser_bottomline(ptr_flobject, linenum):
+    """fl_set_browser_bottomline(ptr_flobject, linenum)
     
-    Moves a text line to the bottom of the browser. Line numbers start with
-    1.
+    Moves a text line to the bottom of the browser. Line numbers
+    start with 1.
 
     Parameters
     ----------
-        pFlObject : pointer to xfdata.FL_OBJECT
-            browser object
+        ptr_flobject : pointer to xfdata.FL_OBJECT
+            browser flobject
         linenum : int
             line id to be moved to bottom
 
@@ -794,25 +800,26 @@ def fl_set_browser_bottomline(pFlObject, linenum):
         None, [cty.POINTER(xfdata.FL_OBJECT), cty.c_int],
         """void fl_set_browser_bottomline(FL_OBJECT * ob, int line)""")
     library.check_if_initialized()
-    library.verify_flobjectptr_type(pFlObject)
-    ilinenum = library.convert_to_int(linenum)
-    library.keep_elem_refs(pFlObject, linenum, ilinenum)
-    _fl_set_browser_bottomline(pFlObject, ilinenum)
+    library.verify_flobjectptr_type(ptr_flobject)
+    i_linenum = library.convert_to_intc(linenum)
+    library.keep_elem_refs(ptr_flobject, linenum, i_linenum)
+    _fl_set_browser_bottomline(ptr_flobject, i_linenum)
 
 
-def fl_set_browser_fontsize(pFlObject, size):
-    """fl_set_browser_fontsize(pFlObject, size)
+def fl_set_browser_fontsize(ptr_flobject, size):
+    """fl_set_browser_fontsize(ptr_flobject, size)
     
-    Sets the font size used inside the browser.
+    Defines the font size used inside the browser.
 
     Parameters
     ----------
-        pFlObject : pointer to xfdata.FL_OBJECT
-            browser object
+        ptr_flobject : pointer to xfdata.FL_OBJECT
+            browser flobject
         size : int
-            font size to be set. Values (from xfdata.py) FL_TINY_SIZE,
-            FL_SMALL_SIZE, FL_NORMAL_SIZE, FL_MEDIUM_SIZE, FL_LARGE_SIZE,
-            FL_HUGE_SIZE, FL_DEFAULT_SIZE
+            font size to be set. Values (from xfdata.py)
+            FL_TINY_SIZE, FL_SMALL_SIZE, FL_NORMAL_SIZE,
+            FL_MEDIUM_SIZE, FL_LARGE_SIZE, FL_HUGE_SIZE,
+            FL_DEFAULT_SIZE
 
     Examples
     --------
@@ -828,30 +835,31 @@ def fl_set_browser_fontsize(pFlObject, size):
         None, [cty.POINTER(xfdata.FL_OBJECT), cty.c_int],
         """void fl_set_browser_fontsize(FL_OBJECT * ob, int size)""")
     library.check_if_initialized()
-    library.verify_flobjectptr_type(pFlObject)
+    library.verify_flobjectptr_type(ptr_flobject)
     library.checknonfatal_allowed_value_in_list(size, xfdata.FONTSIZE_list)
-    isize = library.convert_to_int(size)
-    library.keep_elem_refs(pFlObject, size, isize)
-    _fl_set_browser_fontsize(pFlObject, isize)
+    i_size = library.convert_to_intc(size)
+    library.keep_elem_refs(ptr_flobject, size, i_size)
+    _fl_set_browser_fontsize(ptr_flobject, i_size)
 
 
-def fl_set_browser_fontstyle(pFlObject, style):
-    """fl_set_browser_fontstyle(pFlObject, style)
+def fl_set_browser_fontstyle(ptr_flobject, style):
+    """fl_set_browser_fontstyle(ptr_flobject, style)
     
-    Sets the font style of a browser object.
+    Defines the font style of a browser flobject.
 
     Parameters
     ----------
-        pFlObject : pointer to xfdata.FL_OBJECT
-            browser object
+        ptr_flobject : pointer to xfdata.FL_OBJECT
+            browser flobject
         style : int
-            font style to be set. Values (from xfdata.py) FL_NORMAL_STYLE,
-            FL_BOLD_STYLE, FL_ITALIC_STYLE, FL_BOLDITALIC_STYLE,
-            FL_FIXED_STYLE, FL_FIXEDBOLD_STYLE, FL_FIXEDITALIC_STYLE,
-            FL_FIXEDBOLDITALIC_STYLE, FL_TIMES_STYLE, FL_TIMESBOLD_STYLE,
-            FL_TIMESITALIC_STYLE, FL_TIMESBOLDITALIC_STYLE, FL_MISC_STYLE,
-            FL_MISCBOLD_STYLE, FL_MISCITALIC_STYLE, FL_SYMBOL_STYLE,
-            FL_SHADOW_STYLE, FL_ENGRAVED_STYLE, FL_EMBOSSED_STYLE
+            font style to be set. Values (from xfdata.py)
+            FL_NORMAL_STYLE, FL_BOLD_STYLE, FL_ITALIC_STYLE,
+            FL_BOLDITALIC_STYLE, FL_FIXED_STYLE, FL_FIXEDBOLD_STYLE,
+            FL_FIXEDITALIC_STYLE, FL_FIXEDBOLDITALIC_STYLE,
+            FL_TIMES_STYLE, FL_TIMESBOLD_STYLE, FL_TIMESITALIC_STYLE,
+            FL_TIMESBOLDITALIC_STYLE, FL_MISC_STYLE, FL_MISCBOLD_STYLE,
+            FL_MISCITALIC_STYLE, FL_SYMBOL_STYLE, FL_SHADOW_STYLE,
+            FL_ENGRAVED_STYLE, FL_EMBOSSED_STYLE
 
     Examples
     --------
@@ -867,26 +875,26 @@ def fl_set_browser_fontstyle(pFlObject, style):
         None, [cty.POINTER(xfdata.FL_OBJECT), cty.c_int],
         """void fl_set_browser_fontstyle(FL_OBJECT * ob, int style)""")
     library.check_if_initialized()
-    library.verify_flobjectptr_type(pFlObject)
+    library.verify_flobjectptr_type(ptr_flobject)
     library.checkfatal_allowed_value_in_list(style, xfdata.TEXTSTYLE_list)
-    istyle = library.convert_to_int(style)
-    library.keep_elem_refs(pFlObject, style, istyle)
-    _fl_set_browser_fontstyle(pFlObject, istyle)
+    i_style = library.convert_to_intc(style)
+    library.keep_elem_refs(ptr_flobject, style, i_style)
+    _fl_set_browser_fontstyle(ptr_flobject, i_style)
 
 
-def fl_set_browser_specialkey(pFlObject, specialkey):
-    """fl_set_browser_specialkey(pFlObject, specialkey)
+def fl_set_browser_specialkey(ptr_flobject, specialkey):
+    """fl_set_browser_specialkey(ptr_flobject, specialkey)
     
-    Changes the special character (used to change appearance, see
-    fl_add_browser_line()) to something other than '@'. In some cases the
-    character '@' might need to be placed at the beginning of the lines
-    without introducing the special meaning mentioned above. In this case you
-    can use "@@".
+    Changes the special character, used to change appearance, see
+    fl_add_browser_line(), to something other than '@'. In some cases
+    the character '@' might need to be placed at the beginning of the
+    lines without introducing the special meaning mentioned above. In
+    this case you can use "@@".
 
     Parameters
     ----------
-        pFlObject : pointer to xfdata.FL_OBJECT
-            browser object
+        ptr_flobject : pointer to xfdata.FL_OBJECT
+            browser flobject
         specialkey : int or char
             escape key to be set
 
@@ -904,31 +912,32 @@ def fl_set_browser_specialkey(pFlObject, specialkey):
         None, [cty.POINTER(xfdata.FL_OBJECT), cty.c_int],
         """void fl_set_browser_specialkey(FL_OBJECT * ob, int specialkey)""")
     library.check_if_initialized()
-    library.verify_flobjectptr_type(pFlObject)
+    library.verify_flobjectptr_type(ptr_flobject)
     if isinstance(specialkey, str):
         # workaround to let a character as int argument
         ordspkey = ord(specialkey)
     else:
         ordspkey = specialkey
-    ispecialkey = library.convert_to_int(ordspkey)
-    library.keep_elem_refs(pFlObject, specialkey, ordspkey, ispecialkey)
-    _fl_set_browser_specialkey(pFlObject, ispecialkey)
+    i_specialkey = library.convert_to_intc(ordspkey)
+    library.keep_elem_refs(ptr_flobject, specialkey, ordspkey, i_specialkey)
+    _fl_set_browser_specialkey(ptr_flobject, i_specialkey)
 
 
-def fl_set_browser_vscrollbar(pFlObject, how):
-    """fl_set_browser_vscrollbar(pFlObject, how)
+def fl_set_browser_vscrollbar(ptr_flobject, howscroll):
+    """fl_set_browser_vscrollbar(ptr_flobject, howscroll)
     
-    Turns the vertical scrollbar on or off. When you switch the scrollbars
-    off the text cannot be scrolled by the user anymore at all (i.e. also not
-    using methods that do not use scrollbars, e.g. using the cursor keys).
+    Turns the vertical scrollbar on or off. When you switch the
+    scrollbars off the text cannot be scrolled by the user anymore
+    at all (i.e. also not using methods that do not use scrollbars,
+    e.g. using the cursor keys).
 
     Parameters
     ----------
-        pFlObject : pointer to xfdata.FL_OBJECT
-            browser object
-        how : int
-            how bar is turned. Values (from xfdata.py) FL_ON, FL_OFF, FL_AUTO
-            (default)
+        ptr_flobject : pointer to xfdata.FL_OBJECT
+            browser flobject
+        howscroll : int
+            if bar is turned on/off. Values (from xfdata.py) FL_ON,
+            FL_OFF, FL_AUTO (default)
 
     Examples
     --------
@@ -944,28 +953,29 @@ def fl_set_browser_vscrollbar(pFlObject, how):
         None, [cty.POINTER(xfdata.FL_OBJECT), cty.c_int],
         """void fl_set_browser_vscrollbar(FL_OBJECT * ob, int on)""")
     library.check_if_initialized()
-    library.verify_flobjectptr_type(pFlObject)
-    library.checkfatal_allowed_value_in_list(how, xfdata.SCROLLBARVAL_list)
-    ihow = library.convert_to_int(how)
-    library.keep_elem_refs(pFlObject, how, ihow)
-    _fl_set_browser_vscrollbar(pFlObject, ihow)
+    library.verify_flobjectptr_type(ptr_flobject)
+    library.checkfatal_allowed_value_in_list(howscroll, \
+            xfdata.SCROLLBARVAL_list)
+    i_howscroll = library.convert_to_intc(howscroll)
+    library.keep_elem_refs(ptr_flobject, howscroll, i_howscroll)
+    _fl_set_browser_vscrollbar(ptr_flobject, i_howscroll)
 
 
-def fl_set_browser_hscrollbar(pFlObject, how):
-    """fl_set_browser_hscrollbar(pFlObject, how)
+def fl_set_browser_hscrollbar(ptr_flobject, howscroll):
+    """fl_set_browser_hscrollbar(ptr_flobject, howscroll)
     
     Turns the horizontal scrollbar on or off. When you switch the
-    scrollbars off the text cannot be scrolled by the user anymore at all (i.e.
-    also not using methods that do not use scrollbars, e.g. using the cursor
-    keys).
+    scrollbars off the text cannot be scrolled by the user anymore at
+    all (i.e. also not using methods that do not use scrollbars, e.g.
+    using the cursor keys).
 
     Parameters
     ----------
-        pFlObject : pointer to xfdata.FL_OBJECT
-            browser object
-        how : int
-            how bar is turned. Values (from xfdata.py) FL_ON, FL_OFF, FL_AUTO
-            (default)
+        ptr_flobject : pointer to xfdata.FL_OBJECT
+            browser flobject
+        howscroll : int
+            if bar is turned on/off. Values (from xfdata.py) FL_ON,
+            FL_OFF, FL_AUTO (default)
 
     Examples
     --------
@@ -981,22 +991,23 @@ def fl_set_browser_hscrollbar(pFlObject, how):
         None, [cty.POINTER(xfdata.FL_OBJECT), cty.c_int],
         """void fl_set_browser_hscrollbar(FL_OBJECT * ob, int on)""")
     library.check_if_initialized()
-    library.verify_flobjectptr_type(pFlObject)
-    library.checkfatal_allowed_value_in_list(how, xfdata.SCROLLBARVAL_list)
-    ihow = library.convert_to_int(how)
-    library.keep_elem_refs(pFlObject, how, ihow)
-    _fl_set_browser_hscrollbar(pFlObject, ihow)
+    library.verify_flobjectptr_type(ptr_flobject)
+    library.checkfatal_allowed_value_in_list(howscroll, \
+            xfdata.SCROLLBARVAL_list)
+    i_howscroll = library.convert_to_intc(howscroll)
+    library.keep_elem_refs(ptr_flobject, howscroll, i_howscroll)
+    _fl_set_browser_hscrollbar(ptr_flobject, i_howscroll)
 
 
-def fl_set_browser_line_selectable(pFlObject, linenum, yesno):
-    """fl_set_browser_line_selectable(pFlObject, linenum, yesno)
+def fl_set_browser_line_selectable(ptr_flobject, linenum, yesno):
+    """fl_set_browser_line_selectable(ptr_flobject, linenum, yesno)
     
-    Sets if a line of browser object is selectable or not.
+    Defines if a line of browser flobject is selectable or not.
 
     Parameters
     ----------
-        pFlObject : pointer to xfdata.FL_OBJECT
-            browser object
+        ptr_flobject : pointer to xfdata.FL_OBJECT
+            browser flobject
         linenum : int
             line id to set
         yesno : int
@@ -1013,42 +1024,42 @@ def fl_set_browser_line_selectable(pFlObject, linenum, yesno):
         """void fl_set_browser_line_selectable(FL_OBJECT * ob, int line,
            int flag)""")
     library.check_if_initialized()
-    library.verify_flobjectptr_type(pFlObject)
-    ilinenum = library.convert_to_int(linenum)
-    iyesno = library.convert_to_int(yesno)
-    library.keep_elem_refs(pFlObject, linenum, yesno, ilinenum, iyesno)
-    _fl_set_browser_line_selectable(pFlObject, ilinenum, iyesno)
+    library.verify_flobjectptr_type(ptr_flobject)
+    i_linenum = library.convert_to_intc(linenum)
+    i_yesno = library.convert_to_intc(yesno)
+    library.keep_elem_refs(ptr_flobject, linenum, yesno, i_linenum, i_yesno)
+    _fl_set_browser_line_selectable(ptr_flobject, i_linenum, i_yesno)
 
 
-def fl_get_browser_dimension(pFlObject):
-    """fl_get_browser_dimension(pFlObject)
+def fl_get_browser_dimension(ptr_flobject):
+    """fl_get_browser_dimension(ptr_flobject) -> xpos, ypos, width, height
     
-    Obtains the browser size in pixels for the text area.
+    Finds out the browser size in pixels for the text area.
 
     Parameters
     ----------
-        pFlObject : pointer to xfdata.FL_OBJECT
-            browser object
+        ptr_flobject : pointer to xfdata.FL_OBJECT
+            browser flobject
 
     Returns
     -------
-        x : int
+        xpos : int
             horizontal position
-        y : int
+        ypos : int
             vertical position
-        w : int
-            width
-        h : int
-            height
+        width : int
+            width of browser in coord units
+        height : int
+            height of browser in coord units
 
     Examples
     --------
-        >>> x, y, wid, hei = fl_get_browser_dimension(brobj)
+        >>> x, y, w, h = fl_get_browser_dimension(brobj)
 
     API_diversion
     ----------
-        API changed from XForms, upstream was
-        fl_get_browser_dimension(pFlObject, x, y, w, h)
+        API changed from XForms, upstream is
+        fl_get_browser_dimension(ptr_flobject, xpos, ypos, width, height)
 
     Notes
     -----
@@ -1063,18 +1074,21 @@ def fl_get_browser_dimension(pFlObject):
         """void fl_get_browser_dimension(FL_OBJECT * ob, FL_Coord * x,
            FL_Coord * y, FL_Coord * w, FL_Coord * h)""")
     library.check_if_initialized()
-    library.verify_flobjectptr_type(pFlObject)
-    x, px = library.make_FL_Coord_and_pointer()
-    y, py = library.make_FL_Coord_and_pointer()
-    w, pw = library.make_FL_Coord_and_pointer()
-    h, ph = library.make_FL_Coord_and_pointer()
-    library.keep_elem_refs(pFlObject, x, y, w, h, px, py, pw, ph)
-    _fl_get_browser_dimension(pFlObject, px, py, pw, ph)
-    return x.value, y.value, w.value, h.value
+    library.verify_flobjectptr_type(ptr_flobject)
+    i_xpos, ptr_xpos = library.make_FL_Coord_and_pointer()
+    i_ypos, ptr_ypos = library.make_FL_Coord_and_pointer()
+    i_width, ptr_width = library.make_FL_Coord_and_pointer()
+    i_height, ptr_height = library.make_FL_Coord_and_pointer()
+    library.keep_elem_refs(ptr_flobject, i_xpos, i_ypos, i_width, \
+            i_height, ptr_xpos, ptr_ypos, ptr_width, ptr_height)
+    _fl_get_browser_dimension(ptr_flobject, ptr_xpos, ptr_ypos, \
+            ptr_width, ptr_height)
+    return i_xpos.value, i_ypos.value, i_width.value, i_height.value
 
 
-def fl_set_browser_dblclick_callback(pFlObject, py_CallbackPtr, data):
-    """fl_set_browser_dblclick_callback(pFlObject, py_CallbackPtr, data)
+def fl_set_browser_dblclick_callback(ptr_flobject, pyfn_CallbackPtr, numdata):
+    """fl_set_browser_dblclick_callback(ptr_flobject, pyfn_CallbackPtr,
+    numdata)
     
     Registers a callback function that gets called when a line is
     double-clicked on. Double-click callbacks make most sense for
@@ -1082,11 +1096,11 @@ def fl_set_browser_dblclick_callback(pFlObject, py_CallbackPtr, data):
 
     Parameters
     ----------
-        pFlObject : pointer to xfdata.FL_OBJECT
-            browser object
-        py_CallbackPtr : python function callback, no return
-            name referring to function(pObject, longdata)
-        data : long
+        ptr_flobject : pointer to xfdata.FL_OBJECT
+            browser flobject
+        pyfn_CallbackPtr : python function callback, no return
+            name referring to function(ptr_flobject, longdata)
+        numdata : long
             user data to be passed to function
 
     Examples
@@ -1109,33 +1123,35 @@ def fl_set_browser_dblclick_callback(pFlObject, py_CallbackPtr, data):
         """void fl_set_browser_dblclick_callback(FL_OBJECT * ob,
            FL_CALLBACKPTR cb, long int a)""")
     library.check_if_initialized()
-    library.verify_flobjectptr_type(pFlObject)
-    ldata = library.convert_to_long(data)
-    library.verify_function_type(py_CallbackPtr)
-    c_CallbackPtr = xfdata.FL_CALLBACKPTR(py_CallbackPtr)
-    library.keep_cfunc_refs(c_CallbackPtr, py_CallbackPtr)
-    library.keep_elem_refs(pFlObject, data, ldata)
-    _fl_set_browser_dblclick_callback(pFlObject, c_CallbackPtr, ldata)
+    library.verify_flobjectptr_type(ptr_flobject)
+    l_numdata = library.convert_to_longc(numdata)
+    library.verify_function_type(pyfn_CallbackPtr)
+    cfn_CallbackPtr = xfdata.FL_CALLBACKPTR(pyfn_CallbackPtr)
+    library.keep_cfunc_refs(cfn_CallbackPtr, pyfn_CallbackPtr)
+    library.keep_elem_refs(ptr_flobject, numdata, l_numdata)
+    _fl_set_browser_dblclick_callback(ptr_flobject, cfn_CallbackPtr, \
+            l_numdata)
 
 
-def fl_get_browser_xoffset(pFlObject):
-    """fl_get_browser_xoffset(pFlObject)
+def fl_get_browser_xoffset(ptr_flobject):
+    """fl_get_browser_xoffset(ptr_flobject) -> numpixels
     
-    Obtains the amount of text that is scrolled in horizontal direction.
+    Finds out the amount of text in pixel that is scrolled in
+    horizontal direction.
 
     Parameters
     ----------
-        pFlObject : pointer to xfdata.FL_OBJECT
-            browser object
+        ptr_flobject : pointer to xfdata.FL_OBJECT
+            browser flobject
 
     Returns
     -------
-        coord : int
-            coord num.
+        numpixels : int
+            pixel amount scrolled
 
     Examples
     --------
-        >>> *todo*
+        >>> xoffset = fl_get_browser_xfoffset(pbrobj)
 
     Notes
     -----
@@ -1147,31 +1163,32 @@ def fl_get_browser_xoffset(pFlObject):
         xfdata.FL_Coord, [cty.POINTER(xfdata.FL_OBJECT)],
         """FL_Coord fl_get_browser_xoffset(FL_OBJECT * ob)""")
     library.check_if_initialized()
-    library.verify_flobjectptr_type(pFlObject)
-    library.keep_elem_refs(pFlObject)
-    retval = _fl_get_browser_xoffset(pFlObject)
+    library.verify_flobjectptr_type(ptr_flobject)
+    library.keep_elem_refs(ptr_flobject)
+    retval = _fl_get_browser_xoffset(ptr_flobject)
     return retval
 
 
-def fl_get_browser_rel_xoffset(pFlObject):
-    """fl_get_browser_rel_xoffset(pFlObject)
+def fl_get_browser_rel_xoffset(ptr_flobject):
+    """fl_get_browser_rel_xoffset(ptr_flobject) -> roffset
     
-    Obtains the relative amount of text that is scrolled in horizontal
-    direction.
+    Finds out the relative amount of text in pixel that is scrolled
+    in horizontal direction.
 
     Parameters
     ----------
-        pFlObject : pointer to xfdata.FL_OBJECT
-            browser object
+        ptr_flobject : pointer to xfdata.FL_OBJECT
+            browser flobject
 
     Returns
     -------
         roffset : float
-            relative offset
+            offset between 0 (starts of lines are shown) and 1 (end of
+            longest line is shown)
 
     Examples
     --------
-        >>> *todo*
+        >>> reloffset = fl_get_browser_rel_xoffset(pbrwsobj)
 
     Notes
     -----
@@ -1183,23 +1200,24 @@ def fl_get_browser_rel_xoffset(pFlObject):
         cty.c_double, [cty.POINTER(xfdata.FL_OBJECT)],
         """double fl_get_browser_rel_xoffset(FL_OBJECT * ob)""")
     library.check_if_initialized()
-    library.verify_flobjectptr_type(pFlObject)
-    library.keep_elem_refs(pFlObject)
-    retval = _fl_get_browser_rel_xoffset(pFlObject)
+    library.verify_flobjectptr_type(ptr_flobject)
+    library.keep_elem_refs(ptr_flobject)
+    retval = _fl_get_browser_rel_xoffset(ptr_flobject)
     return retval
 
 
-def fl_set_browser_xoffset(pFlObject, npixels):
-    """fl_set_browser_xoffset(pFlObject, npixels)
+def fl_set_browser_xoffset(ptr_flobject, numpixels):
+    """fl_set_browser_xoffset(ptr_flobject, numpixels)
     
-    Sets the amount of text that is scrolled in horizontal direction.
+    Defines the amount of text in pixel that is scrolled in
+    horizontal direction.
 
     Parameters
     ----------
-        pFlObject : pointer to xfdata.FL_OBJECT
-            browser object
-        npixels : int
-            amount of text to be scrolled
+        ptr_flobject : pointer to xfdata.FL_OBJECT
+            browser flobject
+        numpixels : int
+            amount of text in pixel to be scrolled
 
     Examples
     --------
@@ -1215,24 +1233,24 @@ def fl_set_browser_xoffset(pFlObject, npixels):
         None, [cty.POINTER(xfdata.FL_OBJECT), xfdata.FL_Coord],
         """void fl_set_browser_xoffset(FL_OBJECT * ob, FL_Coord npixels)""")
     library.check_if_initialized()
-    library.verify_flobjectptr_type(pFlObject)
-    inpixels = library.convert_to_FL_Coord(npixels)
-    library.keep_elem_refs(pFlObject, npixels, inpixels)
-    _fl_set_browser_xoffset(pFlObject, inpixels)
+    library.verify_flobjectptr_type(ptr_flobject)
+    i_numpixels = library.convert_to_FL_Coord(numpixels)
+    library.keep_elem_refs(ptr_flobject, numpixels, i_numpixels)
+    _fl_set_browser_xoffset(ptr_flobject, i_numpixels)
 
 
-def fl_set_browser_rel_xoffset(pFlObject, val):
-    """fl_set_browser_rel_xoffset(pFlObject, val)
+def fl_set_browser_rel_xoffset(ptr_flobject, roffset):
+    """fl_set_browser_rel_xoffset(ptr_flobject, roffset)
     
-    Sets the relative amount of text that is scrolled in horizontal
-    direction.
+    Defines the relative amount of text that is scrolled in
+    horizontal direction.
 
     Parameters
     ----------
-        pFlObject : pointer to xfdata.FL_OBJECT
-            browser object
-        val : float
-            relative amount to be scrolled
+        ptr_flobject : pointer to xfdata.FL_OBJECT
+            browser flobject
+        roffset : float
+            relative amount of text in pixel to be scrolled
 
     Examples
     --------
@@ -1248,30 +1266,31 @@ def fl_set_browser_rel_xoffset(pFlObject, val):
         None, [cty.POINTER(xfdata.FL_OBJECT), cty.c_double],
         """void fl_set_browser_rel_xoffset(FL_OBJECT * ob, double val)""")
     library.check_if_initialized()
-    library.verify_flobjectptr_type(pFlObject)
-    fval = library.convert_to_double(val)
-    library.keep_elem_refs(pFlObject, val, fval)
-    _fl_set_browser_rel_xoffset(pFlObject, fval)
+    library.verify_flobjectptr_type(ptr_flobject)
+    f_roffset = library.convert_to_doublec(roffset)
+    library.keep_elem_refs(ptr_flobject, roffset, f_roffset)
+    _fl_set_browser_rel_xoffset(ptr_flobject, f_roffset)
 
 
-def fl_get_browser_yoffset(pFlObject):
-    """fl_get_browser_yoffset(pFlObject)
+def fl_get_browser_yoffset(ptr_flobject):
+    """fl_get_browser_yoffset(ptr_flobject) -> numpixels
     
-    Obtains the amount of text that is scrolled in horizontal direction.
+    Finds out the amount of text in pixels that is scrolled
+    in vertical direction.
 
     Parameters
     ----------
-        pFlObject : pointer to xfdata.FL_OBJECT
-            browser object
+        ptr_flobject : pointer to xfdata.FL_OBJECT
+            browser flobject
 
     Returns
     -------
-        coord : int
-            coord. num.
+        numpixels : int
+            pixel amount scrolled
 
     Examples
     --------
-        >>> *todo*
+        >>> offset = fl_get_browser_yoffset(pbrobj)
 
     Notes
     -----
@@ -1283,31 +1302,32 @@ def fl_get_browser_yoffset(pFlObject):
         xfdata.FL_Coord, [cty.POINTER(xfdata.FL_OBJECT)],
         """FL_Coord fl_get_browser_yoffset(FL_OBJECT * ob)""")
     library.check_if_initialized()
-    library.verify_flobjectptr_type(pFlObject)
-    library.keep_elem_refs(pFlObject)
-    retval = _fl_get_browser_yoffset(pFlObject)
+    library.verify_flobjectptr_type(ptr_flobject)
+    library.keep_elem_refs(ptr_flobject)
+    retval = _fl_get_browser_yoffset(ptr_flobject)
     return retval
 
 
-def fl_get_browser_rel_yoffset(pFlObject):
-    """fl_get_browser_rel_yoffset(pFlObject)
+def fl_get_browser_rel_yoffset(ptr_flobject):
+    """fl_get_browser_rel_yoffset(ptr_flobject) -> roffset
     
-    Obtains the relative amount of text that is scrolled in horizontal
-    direction.
+    Finds out the relative amount of text in pixel that is scrolled in
+    vertical direction.
 
     Parameters
     ----------
-        pFlObject : pointer to xfdata.FL_OBJECT
-            browser object
+        ptr_flobject : pointer to xfdata.FL_OBJECT
+            browser flobject
 
     Returns
     -------
         roffset : float
-            relative offset
+            offset between 0 (starts of lines are shown) and 1 (end of
+            longest line is shown)
 
     Examples
     --------
-        >>> *todo*
+        >>> reloffset = fl_get_browser_rel_yoffset(pbrobj)
 
     Notes
     -----
@@ -1319,23 +1339,24 @@ def fl_get_browser_rel_yoffset(pFlObject):
         cty.c_double, [cty.POINTER(xfdata.FL_OBJECT)],
         """double fl_get_browser_rel_yoffset(FL_OBJECT * ob)""")
     library.check_if_initialized()
-    library.verify_flobjectptr_type(pFlObject)
-    library.keep_elem_refs(pFlObject)
-    retval = _fl_get_browser_rel_yoffset(pFlObject)
+    library.verify_flobjectptr_type(ptr_flobject)
+    library.keep_elem_refs(ptr_flobject)
+    retval = _fl_get_browser_rel_yoffset(ptr_flobject)
     return retval
 
 
-def fl_set_browser_yoffset(pFlObject, npixels):
-    """fl_set_browser_yoffset(pFlObject, npixels)
+def fl_set_browser_yoffset(ptr_flobject, numpixels):
+    """fl_set_browser_yoffset(ptr_flobject, numpixels)
     
-    Sets the amount of text that is scrolled in horizontal direction.
+    Defines the amount of text in pixels that is scrolled in
+    vertical direction.
 
     Parameters
     ----------
-        pFlObject : pointer to xfdata.FL_OBJECT
-            browser object
-        npixels : int
-            amount of text to be scrolled
+        ptr_flobject : pointer to xfdata.FL_OBJECT
+            browser flobject
+        numpixels : int
+            amount of text in pixels to be scrolled
 
     Examples
     --------
@@ -1351,24 +1372,24 @@ def fl_set_browser_yoffset(pFlObject, npixels):
         None, [cty.POINTER(xfdata.FL_OBJECT), xfdata.FL_Coord],
         """void fl_set_browser_yoffset(FL_OBJECT * ob, FL_Coord npixels)""")
     library.check_if_initialized()
-    library.verify_flobjectptr_type(pFlObject)
-    inpixels = library.convert_to_FL_Coord(npixels)
-    library.keep_elem_refs(pFlObject, npixels, inpixels)
-    _fl_set_browser_yoffset(pFlObject, inpixels)
+    library.verify_flobjectptr_type(ptr_flobject)
+    i_numpixels = library.convert_to_FL_Coord(numpixels)
+    library.keep_elem_refs(ptr_flobject, numpixels, i_numpixels)
+    _fl_set_browser_yoffset(ptr_flobject, i_numpixels)
 
 
-def fl_set_browser_rel_yoffset(pFlObject, val):
-    """fl_set_browser_rel_yoffset(pFlObject, val)
+def fl_set_browser_rel_yoffset(ptr_flobject, roffset):
+    """fl_set_browser_rel_yoffset(ptr_flobject, roffset)
     
-    Sets the relative amount of text that is scrolled in horizontal
-    direction.
+    Defines the relative amount of text in pixels that is scrolled in
+    horizontal direction.
 
     Parameters
     ----------
-        pFlObject : pointer to xfdata.FL_OBJECT
-            browser object
-        val : float
-            relative amount of text to be scrolled
+        ptr_flobject : pointer to xfdata.FL_OBJECT
+            browser flobject
+        roffset : float
+            relative amount of text in pixels to be scrolled
 
     Examples
     --------
@@ -1384,26 +1405,26 @@ def fl_set_browser_rel_yoffset(pFlObject, val):
         None, [cty.POINTER(xfdata.FL_OBJECT), cty.c_double],
         """void fl_set_browser_rel_yoffset(FL_OBJECT * ob, double val)""")
     library.check_if_initialized()
-    library.verify_flobjectptr_type(pFlObject)
-    fval = library.convert_to_double(val)
-    library.keep_elem_refs(pFlObject, val, fval)
-    _fl_set_browser_rel_yoffset(pFlObject, fval)
+    library.verify_flobjectptr_type(ptr_flobject)
+    froffset = library.convert_to_doublec(roffset)
+    library.keep_elem_refs(ptr_flobject, roffset, froffset)
+    _fl_set_browser_rel_yoffset(ptr_flobject, froffset)
 
 
-def fl_set_browser_scrollbarsize(pFlObject, hh, vw):
-    """fl_set_browser_scrollbarsize(pFlObject, hh, vw)
+def fl_set_browser_scrollbarsize(ptr_flobject, height, width):
+    """fl_set_browser_scrollbarsize(ptr_flobject, height, width)
     
-    Sets the scrollbar size of the browser. By default, the scrollbar size
+    Defines the scrollbar size of the browser. By default, the scrollbar size
     is based on the relation between the size of the browser and the size of
     the text.
 
     Parameters
     ----------
-        pFlObject : pointer to xfdata.FL_OBJECT
-            browser object
-        hh : int
+        ptr_flobject : pointer to xfdata.FL_OBJECT
+            browser flobject
+        height : int
             horizontal scrollbar height (0 for the default)
-        vw : int
+        width : int
             vertical scrollbar width (0 for the default)
 
     Examples
@@ -1421,24 +1442,24 @@ def fl_set_browser_scrollbarsize(pFlObject, hh, vw):
         """void fl_set_browser_scrollbarsize(FL_OBJECT * ob,
            int hh, int vw)""")
     library.check_if_initialized()
-    library.verify_flobjectptr_type(pFlObject)
-    ihh = library.convert_to_int(hh)
-    ivw = library.convert_to_int(vw)
-    library.keep_elem_refs(pFlObject, hh, vw, ihh, ivw)
-    _fl_set_browser_scrollbarsize(pFlObject, ihh, ivw)
+    library.verify_flobjectptr_type(ptr_flobject)
+    i_height = library.convert_to_intc(height)
+    i_width = library.convert_to_intc(width)
+    library.keep_elem_refs(ptr_flobject, height, width, i_height, i_width)
+    _fl_set_browser_scrollbarsize(ptr_flobject, i_height, i_width)
 
 
-def fl_show_browser_line(pFlObject, line):
-    """fl_show_browser_line(pFlObject, line)
+def fl_show_browser_line(ptr_flobject, linenum):
+    """fl_show_browser_line(ptr_flobject, linenum)
     
-    Brings a browser line into view.
+    Brings a line of browser flobject into view.
 
     Parameters
     ----------
-        pFlObject : pointer to xfdata.FL_OBJECT
-            browser object
-        line : int
-            line number to show
+        ptr_flobject : pointer to xfdata.FL_OBJECT
+            browser flobject
+        linenum : int
+            line id to show
 
     Examples
     --------
@@ -1454,32 +1475,31 @@ def fl_show_browser_line(pFlObject, line):
         None, [cty.POINTER(xfdata.FL_OBJECT), cty.c_int],
         """void fl_show_browser_line(FL_OBJECT * ob, int j)""")
     library.check_if_initialized()
-    library.verify_flobjectptr_type(pFlObject)
-    iline = library.convert_to_int(line)
-    library.keep_elem_refs(pFlObject, line, iline)
-    _fl_show_browser_line(pFlObject, iline)
+    library.verify_flobjectptr_type(ptr_flobject)
+    i_linenum = library.convert_to_intc(linenum)
+    library.keep_elem_refs(ptr_flobject, linenum, i_linenum)
+    _fl_show_browser_line(ptr_flobject, i_linenum)
 
 
 # fl_set_default_browser_maxlinelength function placeholder (deprecated)
 
 
-def fl_set_browser_hscroll_callback(pFlObject, py_BrowserScrollCallback,
-                                    vdata):
-    """fl_set_browser_hscroll_callback(pFlObject, py_BrowserScrollCallback,
+def fl_set_browser_hscroll_callback(ptr_flobject, pyfn_BrowserScrollCb, vdata):
+    """fl_set_browser_hscroll_callback(ptr_flobject, pyfn_BrowserScrollCb,
     vdata)
     
-    Sets the callback function to be invoked whenever the horizontal
-    scrollbar changes position.
+    Defines the callback function to be invoked whenever the horizontal
+    scrollbar of browser flobject changes position.
 
     Parameters
     ----------
-        pFlObject : pointer to xfdata.FL_OBJECT
-            browser object
-        py_BrowserScrollCallback : python function callback, no return
-            name referring to function(pFlObject, num, vdata)
+        ptr_flobject : pointer to xfdata.FL_OBJECT
+            browser flobject
+        pyfn_BrowserScrollCb : python function callback, no return
+            name referring to function(ptr_flobject, num, vdata)
         vdata : any type (e.g. 'None', int, str, etc..)
-            user data to be passed to function; callback has to take care of
-            type check
+            user data to be passed to function; callback has to take care
+            of type check
 
     Examples
     --------
@@ -1499,34 +1519,34 @@ def fl_set_browser_hscroll_callback(pFlObject, py_BrowserScrollCallback,
         """void fl_set_browser_hscroll_callback(FL_OBJECT * ob,
            FL_BROWSER_SCROLL_CALLBACK cb, void * data)""")
     library.check_if_initialized()
-    library.verify_flobjectptr_type(pFlObject)
-    library.verify_function_type(py_BrowserScrollCallback)
-    c_BrowserScrollCallback = xfdata.FL_BROWSER_SCROLL_CALLBACK( \
-                                py_BrowserScrollCallback)
-    pvdata = cty.cast(vdata, cty.c_void_p)
-    library.keep_cfunc_refs(c_BrowserScrollCallback, py_BrowserScrollCallback)
-    library.keep_elem_refs(pFlObject, vdata, pvdata)
-    _fl_set_browser_hscroll_callback(pFlObject, c_BrowserScrollCallback,
-                                     pvdata)
+    library.verify_flobjectptr_type(ptr_flobject)
+    library.verify_function_type(pyfn_BrowserScrollCb)
+    cfn_BrowserScrollCb = xfdata.FL_BROWSER_SCROLL_CALLBACK( \
+            pyfn_BrowserScrollCb)
+    ptr_vdata = cty.cast(vdata, cty.c_void_p)
+    library.keep_cfunc_refs(cfn_BrowserScrollCb, pyfn_BrowserScrollCb)
+    library.keep_elem_refs(ptr_flobject, vdata, ptr_vdata)
+    _fl_set_browser_hscroll_callback(ptr_flobject, cfn_BrowserScrollCb, \
+            ptr_vdata)
 
 
-def fl_set_browser_vscroll_callback(pFlObject, py_BrowserScrollCallback,
+def fl_set_browser_vscroll_callback(ptr_flobject, pyfn_BrowserScrollCb,
                                     vdata):
-    """fl_set_browser_vscroll_callback(pFlObject, py_BrowserScrollCallback,
+    """fl_set_browser_vscroll_callback(ptr_flobject, pyfn_BrowserScrollCb,
     vdata)
     
-    Sets the callback function to be invoked whenever the vertical
-    scrollbar changes position.
+    Defines the callback function to be invoked whenever the vertical
+    scrollbar of browser flobject changes position.
 
     Parameters
     ----------
-        pFlObject : pointer to xfdata.FL_OBJECT
-            browser object
-        py_BrowserScrollCallback : python function callback, no return
-            name referring to function(pFlObject, num, vdata)
+        ptr_flobject : pointer to xfdata.FL_OBJECT
+            browser flobject
+        pyfn_BrowserScrollCb : python function callback, no return
+            name referring to function(ptr_flobject, num, vdata)
         vdata : any type (e.g. 'None', int, str, etc..)
-            user data to be passed to function; callback has to take care of
-            type check
+            user data to be passed to function; callback has to take care
+            of type check
 
     Examples
     --------
@@ -1544,33 +1564,34 @@ def fl_set_browser_vscroll_callback(pFlObject, py_BrowserScrollCallback,
         """void fl_set_browser_vscroll_callback(FL_OBJECT * ob,
            FL_BROWSER_SCROLL_CALLBACK cb, void * data)""")
     library.check_if_initialized()
-    library.verify_flobjectptr_type(pFlObject)
-    library.verify_function_type(py_BrowserScrollCallback)
-    c_BrowserScrollCallback = xfdata.FL_BROWSER_SCROLL_CALLBACK( \
-                                py_BrowserScrollCallback)
-    pvdata = cty.cast(vdata, cty.c_void_p)
-    library.keep_cfunc_refs(c_BrowserScrollCallback, py_BrowserScrollCallback)
-    library.keep_elem_refs(pFlObject, vdata, pvdata)
-    _fl_set_browser_vscroll_callback(pFlObject, c_BrowserScrollCallback,
-                                    pvdata)
+    library.verify_flobjectptr_type(ptr_flobject)
+    library.verify_function_type(pyfn_BrowserScrollCb)
+    cfn_BrowserScrollCb = xfdata.FL_BROWSER_SCROLL_CALLBACK( \
+            pyfn_BrowserScrollCb)
+    ptr_vdata = cty.cast(vdata, cty.c_void_p)
+    library.keep_cfunc_refs(cfn_BrowserScrollCb, pyfn_BrowserScrollCb)
+    library.keep_elem_refs(ptr_flobject, vdata, ptr_vdata)
+    _fl_set_browser_vscroll_callback(ptr_flobject, cfn_BrowserScrollCb,
+            ptr_vdata)
 
 
-def fl_get_browser_line_yoffset(pFlObject, line):
-    """fl_get_browser_line_yoffset(pFlObject, line)
+def fl_get_browser_line_yoffset(ptr_flobject, linenum):
+    """fl_get_browser_line_yoffset(ptr_flobject, linenum) -> offset
     
-    Obtains the y-offset for a line.
+    Finds out the y-offset in pixels for a line of browser flobject.
 
     Parameters
     ----------
-        pFlObject : pointer to xfdata.FL_OBJECT
-            browser object
-        line : int
-            line number
+        ptr_flobject : pointer to xfdata.FL_OBJECT
+            browser flobject
+        linenum : int
+            line id
 
     Returns
     -------
         offset : int
-            offset of the line, or -1 (if the line does not exist)
+            offset of the line in pixels, or -1 (if the line does not
+            exist)
 
     Notes
     -----
@@ -1582,27 +1603,27 @@ def fl_get_browser_line_yoffset(pFlObject, line):
         cty.c_int, [cty.POINTER(xfdata.FL_OBJECT), cty.c_int],
         """int fl_get_browser_line_yoffset(FL_OBJECT * obj, int line)""")
     library.check_if_initialized()
-    library.verify_flobjectptr_type(pFlObject)
-    iline = library.convert_to_int(line)
-    library.keep_elem_refs(pFlObject, line, iline)
-    retval = _fl_get_browser_line_yoffset(pFlObject, iline)
+    library.verify_flobjectptr_type(ptr_flobject)
+    i_linenum = library.convert_to_intc(linenum)
+    library.keep_elem_refs(ptr_flobject, linenum, i_linenum)
+    retval = _fl_get_browser_line_yoffset(ptr_flobject, i_linenum)
     return retval
 
 
-def fl_get_browser_hscroll_callback(pFlObject):
-    """fl_get_browser_hscroll_callback(pFlObject)
+def fl_get_browser_hscroll_callback(ptr_flobject):
+    """fl_get_browser_hscroll_callback(ptr_flobject) -> BrowserScrollCb
     
-    Obtains the callback function created for horizontal scrollbar position
-    change.
+    Finds out the callback function created for horizontal scrollbar
+    position change of browser flobject.
 
     Parameters
     ----------
-        pFlObject : pointer to xfdata.FL_OBJECT
-            browser object
+        ptr_flobject : pointer to xfdata.FL_OBJECT
+            browser flobject
 
     Returns
     -------
-        BrowserScrollCallback : xfdata.FL_BROWSER_SCROLL_CALLBACK
+        BrowserScrollCb : xfdata.FL_BROWSER_SCROLL_CALLBACK
             xfdata.FL_BROWSER_SCROLL_CALLBACK function
 
     Examples
@@ -1620,26 +1641,26 @@ def fl_get_browser_hscroll_callback(pFlObject):
         """FL_BROWSER_SCROLL_CALLBACK fl_get_browser_hscroll_callback(
            FL_OBJECT * ob)""")
     library.check_if_initialized()
-    library.verify_flobjectptr_type(pFlObject)
-    library.keep_elem_refs(pFlObject)
-    retval = _fl_get_browser_hscroll_callback(pFlObject)
+    library.verify_flobjectptr_type(ptr_flobject)
+    library.keep_elem_refs(ptr_flobject)
+    retval = _fl_get_browser_hscroll_callback(ptr_flobject)
     return retval
 
 
-def fl_get_browser_vscroll_callback(pFlObject):
-    """fl_get_browser_vscroll_callback(pFlObject)
+def fl_get_browser_vscroll_callback(ptr_flobject):
+    """fl_get_browser_vscroll_callback(ptr_flobject) -> BrowserScrollCb
     
-    Obtains the callback function created for horizontal scrollbar position
-    change.
+    Finds out the callback function created for horizontal
+    scrollbar position change of browser flobject.
 
     Parameters
     ----------
-        pFlObject : pointer to xfdata.FL_OBJECT
-            browser object
+        ptr_flobject : pointer to xfdata.FL_OBJECT
+            browser flobject
 
     Returns
     -------
-        BrowserScrollCallback : xfdata.FL_BROWSER_SCROLL_CALLBACK
+        BrowserScrollCb : xfdata.FL_BROWSER_SCROLL_CALLBACK
             xfdata.FL_BROWSER_SCROLL_CALLBACK function
 
     Examples
@@ -1657,16 +1678,16 @@ def fl_get_browser_vscroll_callback(pFlObject):
         """FL_BROWSER_SCROLL_CALLBACK fl_get_browser_vscroll_callback(
            FL_OBJECT * ob)""")
     library.check_if_initialized()
-    library.verify_flobjectptr_type(pFlObject)
-    library.keep_elem_refs(pFlObject)
-    retval = _fl_get_browser_vscroll_callback(pFlObject)
+    library.verify_flobjectptr_type(ptr_flobject)
+    library.keep_elem_refs(ptr_flobject)
+    retval = _fl_get_browser_vscroll_callback(ptr_flobject)
     return retval
 
 
-def fl_get_browser_scrollbar_repeat(pFlObject):
-    """fl_get_browser_scrollbar_repeat(pFlObject)
+def fl_get_browser_scrollbar_repeat(ptr_flobject):
+    """fl_get_browser_scrollbar_repeat(ptr_flobject) -> tdelay
     
-    Obtains the time delay (in milliseconds) between jumps of the
+    Finds out the time delay (in milliseconds) between jumps of the
     scrollbar knob when the mouse button is kept pressed down on the
     scrollbar outside of the knobs area. The delay for the very first
     jump is twice that long in order to avoid jumping to start too soon
@@ -1675,8 +1696,8 @@ def fl_get_browser_scrollbar_repeat(pFlObject):
     
     Parameters
     ----------
-        pFlObject : pointer to xfdata.FL_OBJECT
-            browser object
+        ptr_flobject : pointer to xfdata.FL_OBJECT
+            browser flobject
 
     Returns
     -------
@@ -1697,16 +1718,16 @@ def fl_get_browser_scrollbar_repeat(pFlObject):
         cty.c_int, [cty.POINTER(xfdata.FL_OBJECT)],
         """int fl_get_browser_scrollbar_repeat(FL_OBJECT * obj)""")
     library.check_if_initialized()
-    library.verify_flobjectptr_type(pFlObject)
-    library.keep_elem_refs(pFlObject)
-    retval = _fl_get_browser_scrollbar_repeat(pFlObject)
+    library.verify_flobjectptr_type(ptr_flobject)
+    library.keep_elem_refs(ptr_flobject)
+    retval = _fl_get_browser_scrollbar_repeat(ptr_flobject)
     return retval
 
 
-def fl_set_browser_scrollbar_repeat(pFlObject, delay):
-    """fl_set_browser_scrollbar_repeat(pFlObject, delay)
+def fl_set_browser_scrollbar_repeat(ptr_flobject, tdelay):
+    """fl_set_browser_scrollbar_repeat(ptr_flobject, tdelay)
     
-    Sets the time delay between jumps of the scrollbar knob when the
+    Defines the time delay between jumps of the scrollbar knob when the
     mouse button is kept pressed down on the scrollbar outside of the
     knobs area. The delay for the very first jump is twice that long in
     order to avoid jumping to start too soon when only a single click
@@ -1714,15 +1735,15 @@ def fl_set_browser_scrollbar_repeat(pFlObject, delay):
     
     Parameters
     ----------
-        pFlObject : pointer to xfdata.FL_OBJECT
-            browser object
-        delay : int
-            time delay (in milliseconds) to be set. The default value is
-            100 ms.
+        ptr_flobject : pointer to xfdata.FL_OBJECT
+            browser flobject
+        tdelay : int
+            time delay (in milliseconds) to be set. The default value
+            is 100 ms.
 
     Examples
     --------
-        >>> fl_set_browser_scrollbar_repeat(pobj, 200)
+        >>> fl_set_browser_scrollbar_repeat(pbrobj, 200)
 
     Notes
     -----
@@ -1734,8 +1755,8 @@ def fl_set_browser_scrollbar_repeat(pFlObject, delay):
         None, [cty.POINTER(xfdata.FL_OBJECT), cty.c_int],
         """void fl_set_browser_scrollbar_repeat(FL_OBJECT * obj, int)""")
     library.check_if_initialized()
-    library.verify_flobjectptr_type(pFlObject)
-    idelay = library.convert_to_int(delay)
-    library.keep_elem_refs(pFlObject, delay, idelay)
-    _fl_set_browser_scrollbar_repeat(pFlObject, idelay)
+    library.verify_flobjectptr_type(ptr_flobject)
+    i_tdelay = library.convert_to_intc(tdelay)
+    library.keep_elem_refs(ptr_flobject, tdelay, i_tdelay)
+    _fl_set_browser_scrollbar_repeat(ptr_flobject, i_tdelay)
 

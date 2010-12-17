@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: iso8859-1 -*-
 
-""" xforms-python's functions to manage clock objects.
+""" xforms-python's functions to manage clock flobjects.
 """
 
 #    Copyright (C) 2009, 2010  Luca Lazzaroni "LukenShiro"
@@ -26,7 +26,7 @@
 # then heavily reordered and reworked
 
 # ############################################# #
-# Interface to XForms shared object libraries   #
+# Interface to XForms shared flobject libraries   #
 # ############################################# #
 
 
@@ -42,31 +42,32 @@ from xformslib import xfdata
 # fl_create_clock function placeholder (internal)
 
 
-def fl_add_clock(clocktype, x, y, w, h, label):
-    """fl_add_clock(clocktype, x, y, w, h, label)
+def fl_add_clock(clocktype, xpos, ypos, width, height, label):
+    """fl_add_clock(clocktype, xpos, ypos, width, height, label)
+    -> ptr_flobject
     
-    Adds a clock object.
+    Adds a clock flobject.
 
     Parameters
     ----------
         clocktype : int
             type of clock to be added. Values (from xfdata.py)
             FL_ANALOG_CLOCK, FL_DIGITAL_CLOCK
-        x : int
+        xpos : int
             horizontal position (upper-left corner)
-        y : int
+        ypos : int
             vertical position (upper-left corner)
-        w : int
+        width : int
             width in coord units
-        h : int
+        height : int
             height in coord units
         label : str
             text label of clock
 
     Returns
     -------
-        pFlObject : pointer to xfdata.FL_OBJECT
-            clock object added
+        ptr_flobject : pointer to xfdata.FL_OBJECT
+            clock flobject added
 
     Examples
     --------
@@ -85,33 +86,35 @@ def fl_add_clock(clocktype, x, y, w, h, label):
         """FL_OBJECT * fl_add_clock(int type, FL_Coord x, FL_Coord y,
            FL_Coord w, FL_Coord h, const char * s)""")
     library.check_if_initialized()
-    library.checkfatal_allowed_value_in_list(clocktype, xfdata.CLOCKTYPE_list)
-    iclocktype = library.convert_to_int(clocktype)
-    ix = library.convert_to_FL_Coord(x)
-    iy = library.convert_to_FL_Coord(y)
-    iw = library.convert_to_FL_Coord(w)
-    ih = library.convert_to_FL_Coord(h)
-    slabel = library.convert_to_string(label)
-    library.keep_elem_refs(clocktype, x, y, w, h, label, iclocktype, ix, iy,
-                           iw, ih, slabel)
-    retval = _fl_add_clock(iclocktype, ix, iy, iw, ih, slabel)
+    library.checkfatal_allowed_value_in_list(clocktype, \
+            xfdata.CLOCKTYPE_list)
+    i_clocktype = library.convert_to_intc(clocktype)
+    i_xpos = library.convert_to_FL_Coord(xpos)
+    i_ypos = library.convert_to_FL_Coord(ypos)
+    i_width = library.convert_to_FL_Coord(width)
+    i_height = library.convert_to_FL_Coord(height)
+    s_label = library.convert_to_stringc(label)
+    library.keep_elem_refs(clocktype, xpos, ypos, width, height, label, \
+            i_clocktype, i_xpos, i_ypos, i_width, i_height, s_label)
+    retval = _fl_add_clock(i_clocktype, i_xpos, i_ypos, i_width, i_height, \
+            s_label)
     return retval
 
 
-def fl_get_clock(pFlObject):
-    """fl_get_clock(pFlObject)
+def fl_get_clock(ptr_flobject):
+    """fl_get_clock(ptr_flobject) -> hrs, mins, secs
     
-    Obtains time values from a clock object, with hours in 0-23, minutes
-    in 0-59 and seconds in 0-59.
+    Finds out time values from a clock flobject, with hours in 0-23,
+    minutes in 0-59 and seconds in 0-59.
 
     Parameters
     ----------
-        pFlObject : pointer to xfdata.FL_OBJECT
-            clock object
+        ptr_flobject : pointer to xfdata.FL_OBJECT
+            clock flobject
 
     Returns
     -------
-        hh : int
+        hrs : int
             hours
         mins : int
             minutes
@@ -124,8 +127,8 @@ def fl_get_clock(pFlObject):
 
     API_diversion
     ----------
-        API changed from XForms, upstream was
-        fl_get_clock(pFlObject, hr, mn, sec)
+        API changed from XForms, upstream is
+        fl_get_clock(ptr_flobject, hr, mn, sec)
 
     Notes
     -----
@@ -138,24 +141,25 @@ def fl_get_clock(pFlObject):
         cty.POINTER(cty.c_int), cty.POINTER(cty.c_int)],
         """void fl_get_clock(FL_OBJECT * ob, int * h, int * m, int * s)""")
     library.check_if_initialized()
-    library.verify_flobjectptr_type(pFlObject)
-    hr, phr = library.make_int_and_pointer()
-    mn, pmn = library.make_int_and_pointer()
-    sec, psec = library.make_int_and_pointer()
-    library.keep_elem_refs(pFlObject, hr, mn, sec, phr, pmn, psec)
-    _fl_get_clock(pFlObject, phr, pmn, psec)
-    return hr.value, mn.value, sec.value
+    library.verify_flobjectptr_type(ptr_flobject)
+    i_hrs, ptr_hrs = library.make_intc_and_pointer()
+    i_mins, ptr_mins = library.make_intc_and_pointer()
+    i_secs, ptr_secs = library.make_intc_and_pointer()
+    library.keep_elem_refs(ptr_flobject, i_hrs, i_mins, i_secs, ptr_hrs, \
+            ptr_mins, ptr_secs)
+    _fl_get_clock(ptr_flobject, ptr_hrs, ptr_mins, ptr_secs)
+    return i_hrs.value, i_mins.value, i_secs.value
 
 
-def fl_set_clock_adjustment(pFlObject, offset):
-    """fl_set_clock_adjustment(pFlObject, offset)
+def fl_set_clock_adjustment(ptr_flobject, offset):
+    """fl_set_clock_adjustment(ptr_flobject, offset) -> adjust
     
     Adjusts the clock to display a time other than local time.
 
     Parameters
     ----------
-        pFlObject : pointer to xfdata.FL_OBJECT
-            clock object
+        ptr_flobject : pointer to xfdata.FL_OBJECT
+            clock flobject
         offset : long
             adjustment value in seconds
 
@@ -179,23 +183,23 @@ def fl_set_clock_adjustment(pFlObject, offset):
         """long int fl_set_clock_adjustment(FL_OBJECT * ob,
            long int offset)""")
     library.check_if_initialized()
-    library.verify_flobjectptr_type(pFlObject)
-    loffset = library.convert_to_long(offset)
-    library.keep_elem_refs(pFlObject, offset, loffset)
-    retval = _fl_set_clock_adjustment(pFlObject, loffset)
+    library.verify_flobjectptr_type(ptr_flobject)
+    l_offset = library.convert_to_longc(offset)
+    library.keep_elem_refs(ptr_flobject, offset, l_offset)
+    retval = _fl_set_clock_adjustment(ptr_flobject, l_offset)
     return retval
 
 
-def fl_set_clock_ampm(pFlObject, yesno):
-    """fl_set_clock_ampm(pFlObject, yesno)
+def fl_set_clock_ampm(ptr_flobject, yesno):
+    """fl_set_clock_ampm(ptr_flobject, yesno)
 
     Switches the display to 12hr system (am-pm). By default, the
     digital clock uses 24hr system.
 
     Parameters
     ----------
-        pFlObject : pointer to xfdata.FL_OBJECT
-            clock object
+        ptr_flobject : pointer to xfdata.FL_OBJECT
+            clock flobject
         yesno : int
             flag. Values 1 (12hr system used) or 0 (24hr system used)
 
@@ -213,8 +217,8 @@ def fl_set_clock_ampm(pFlObject, yesno):
         None, [cty.POINTER(xfdata.FL_OBJECT), cty.c_int],
         """void fl_set_clock_ampm(FL_OBJECT * ob, int y)""")
     library.check_if_initialized()
-    library.verify_flobjectptr_type(pFlObject)
-    iyesno = library.convert_to_int(yesno)
-    library.keep_elem_refs(pFlObject, yesno, iyesno)
-    _fl_set_clock_ampm(pFlObject, iyesno)
+    library.verify_flobjectptr_type(ptr_flobject)
+    i_yesno = library.convert_to_intc(yesno)
+    library.keep_elem_refs(ptr_flobject, yesno, i_yesno)
+    _fl_set_clock_ampm(ptr_flobject, i_yesno)
 

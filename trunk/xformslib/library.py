@@ -38,7 +38,7 @@ from xformslib import xfdata
 
 
 class XFormsLoadError(OSError):
-    """ Fatal error in loading shared object library """
+    """ Fatal error in loading shared flobject library """
     pass
 
 class XFormsInitError(OSError):
@@ -251,7 +251,7 @@ def set_initialized():
 # functions to convert a parameter into a python type then into the
 # equivalent ctypes type
 
-def convert_to_string(paramname):
+def convert_to_stringc(paramname):
     """ Converts paramname to python str and to ctypes c_char_p """
     if isinstance(paramname, cty.c_char_p):
         return paramname
@@ -264,7 +264,7 @@ def convert_to_string(paramname):
                 (paramname, type(paramname)))
 
 
-def convert_to_ptr_string(paramname):
+def convert_to_ptr_stringc(paramname):
     """ Converts paramname (list of str) to a ctypes pointer to c_char_p """
     if isinstance(paramname, list):     # list of str
         for idx in range(0, len(paramname)):
@@ -273,7 +273,7 @@ def convert_to_ptr_string(paramname):
                 raise XFormsTypeError("Provided parameter '%s' has %s type,"
                         " but a 'list of str'/'pointer to c_char_p' type"
                         " should be used." % (paramname, type(paramname)))
-        retv = (cty.c_char_p * len(paramname))(*paramname)    # already a pointer
+        retv = (cty.c_char_p * len(paramname))(*paramname)    # already a ptr
         return retv
     else:               # not a list
         raise XFormsTypeError("Provided parameter '%s' has %s type, "
@@ -281,7 +281,7 @@ def convert_to_ptr_string(paramname):
                 "be used." % (paramname, type(paramname)))
 
 
-def convert_to_int(paramname):
+def convert_to_intc(paramname):
     """ Converts paramname to python int and to ctypes c_int """
     if not isinstance(paramname, cty.c_int):
         try:
@@ -295,10 +295,28 @@ def convert_to_int(paramname):
     else:
         return paramname
 
-convert_to_FL_Coord = convert_to_int
+convert_to_FL_Coord = convert_to_intc
 
 
-def convert_to_uint(paramname):
+def convert_to_ptr_intc(paramname):
+    """ Converts paramname (list of int) to a ctypes pointer to c_int """
+    if isinstance(paramname, list):     # list of int
+        for idx in range(0, len(paramname)):
+            if not isinstance(paramname[idx], long) and \
+                    not isinstance(paramname[idx], int):
+                # every part must be an int/long
+                raise XFormsTypeError("Provided parameter '%s' has %s type,"
+                        " but a 'list of int'/'pointer to c_int' type"
+                        " should be used." % (paramname, type(paramname)))
+        retv = (cty.c_ulong * len(paramname))(*paramname)    # already a ptr
+        return retv
+    else:               # not a list
+        raise XFormsTypeError("Provided parameter '%s' has %s type,"
+                " but a 'list of int'/'pointer to c_int' type"
+                " should be used." % (paramname, type(paramname)))
+
+
+def convert_to_uintc(paramname):
     """ Converts paramname to python int and to ctypes c_uint """
     if not isinstance(paramname, cty.c_int):
         try:
@@ -314,7 +332,7 @@ def convert_to_uint(paramname):
         return paramname
 
 
-def convert_to_long(paramname):
+def convert_to_longc(paramname):
     """ Converts paramname to python long and to ctypes c_long """
     if not isinstance(paramname, cty.c_long):
         try:
@@ -330,7 +348,7 @@ def convert_to_long(paramname):
         return paramname
 
 
-def convert_to_ulong(paramname):
+def convert_to_ulongc(paramname):
     """ Converts paramname to python long and to ctypes c_ulong """
     if not isinstance(paramname, cty.c_ulong):
         try:
@@ -345,12 +363,30 @@ def convert_to_ulong(paramname):
     else:
         return paramname
 
-convert_to_FL_COLOR = convert_to_ulong
-convert_to_Window = convert_to_ulong
-convert_to_Pixmap = convert_to_ulong
+convert_to_FL_COLOR = convert_to_ulongc
+convert_to_Window = convert_to_ulongc
+convert_to_Pixmap = convert_to_ulongc
 
 
-def convert_to_double(paramname):
+def convert_to_ptr_ulongc(paramname):
+    """ Converts paramname (list of long) to a ctypes pointer to c_ulong """
+    if isinstance(paramname, list):     # list of long
+        for idx in range(0, len(paramname)):
+            if not isinstance(paramname[idx], long) and \
+                    not isinstance(paramname[idx], int):
+                # every part must be an int/long
+                raise XFormsTypeError("Provided parameter '%s' has %s type,"
+                        " but a 'list of long'/'pointer to c_ulong' type"
+                        " should be used." % (paramname, type(paramname)))
+        retv = (cty.c_ulong * len(paramname))(*paramname)    # already a ptr
+        return retv
+    else:               # not a list
+        raise XFormsTypeError("Provided parameter '%s' has %s type,"
+                " but a 'list of long'/'pointer to c_ulong' type"
+                " should be used." % (paramname, type(paramname)))
+
+
+def convert_to_doublec(paramname):
     """ Converts paramname to python float and to ctypes c_double """
     if not isinstance(paramname, cty.c_double):
         try:
@@ -367,7 +403,7 @@ def convert_to_double(paramname):
         return paramname
 
 
-def convert_to_float(paramname):
+def convert_to_floatc(paramname):
     """ Converts paramname to python float and to ctypes c_float """
     if not isinstance(paramname, cty.c_float):
         try:
@@ -384,7 +420,7 @@ def convert_to_float(paramname):
         return paramname
 
 
-def convert_to_ubyte_array(paramname):
+def convert_to_ubytec_array(paramname):
     """ Converts paramname to a ctypes c_ubyte array"""
     if isinstance(paramname, list):     # list of int
         lenparam = len(paramname)
@@ -398,68 +434,68 @@ def convert_to_ubyte_array(paramname):
                 (paramname, type(paramname)))
 
 
-def make_int_and_pointer():
+def make_intc_and_pointer():
     """ Makes a ctypes c_int and its pointer, and returns both """
     baseval = cty.c_int()
     ptrbaseval = cty.byref(baseval)
     return baseval, ptrbaseval
 
-make_FL_Coord_and_pointer = make_int_and_pointer
+make_FL_Coord_and_pointer = make_intc_and_pointer
 
 
-def make_uint_and_pointer():
+def make_uintc_and_pointer():
     """ Makes a ctypes c_uint and its pointer, and returns both """
     baseval = cty.c_uint()
     ptrbaseval = cty.byref(baseval)
     return baseval, ptrbaseval
 
 
-def make_long_and_pointer():
+def make_longc_and_pointer():
     """ Makes a ctypes c_long and its pointer, and returns both """
     baseval = cty.c_long()
     ptrbaseval = cty.byref(baseval)
     return baseval, ptrbaseval
 
 
-def make_ulong_and_pointer():
+def make_ulongc_and_pointer():
     """ Makes a ctypes c_ulong and its pointer, and returns both """
     baseval = cty.c_ulong()
     ptrbaseval = cty.byref(baseval)
     return baseval, ptrbaseval
 
-make_Pixmap_and_pointer = make_ulong_and_pointer
-make_FL_COLOR_and_pointer = make_ulong_and_pointer
+make_Pixmap_and_pointer = make_ulongc_and_pointer
+make_FL_COLOR_and_pointer = make_ulongc_and_pointer
 
 
-def make_float_and_pointer():
+def make_floatc_and_pointer():
     """ Makes a ctypes c_float and its pointer, and returns both """
     baseval = cty.c_float()
     ptrbaseval = cty.byref(baseval)
     return baseval, ptrbaseval
 
 
-def make_double_and_pointer():
+def make_doublec_and_pointer():
     """ Makes a ctypes c_double and its pointer, and returns both """
     baseval = cty.c_double()
     ptrbaseval = cty.byref(baseval)
     return baseval, ptrbaseval
 
 
-def make_ubyte_and_pointer():
+def make_ubytec_and_pointer():
     """ Makes a ctypes c_ubyte and its pointer, and returns both """
     baseval = cty.c_ubyte()
     ptrbaseval = cty.byref(baseval)
     return baseval, ptrbaseval
 
 
-def make_ushort_and_pointer():
+def make_ushortc_and_pointer():
     """ Makes a ctypes c_ushort and its pointer, and returns both """
     baseval = cty.c_ushort()
     ptrbaseval = cty.byref(baseval)
     return baseval, ptrbaseval
 
 
-def make_string_and_pointer():
+def make_stringc_and_pointer():
     """ Makes a ctypes c_char_p and its pointer, and returns both """
     baseval = cty.c_char_p()
     ptrbaseval = cty.byref(baseval)
@@ -573,12 +609,6 @@ def verify_otherclassptr_type(paramname, pstructinst):
     class instance, different from previous classes."""
     if not isinstance(paramname, pstructinst):
         raise XFormsTypeError("Provided parameter %s has %s type, but " \
-                "a pointer to %s 'Structure' class instance should be used." % \
-                (paramname, type(paramname), pstructinst))
-
-
-def donothing_popupcb(pPopupReturn):
-    """ Replaces a callback function not defined for class instances
-    as e.g. xfdata.FL_POPUP_ITEM    *temporary* """
-    return 0
+                "a pointer to %s 'Structure' class instance should be " \
+                "used." %  (paramname, type(paramname), pstructinst))
 

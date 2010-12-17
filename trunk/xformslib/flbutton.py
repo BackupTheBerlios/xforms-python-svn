@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: iso8859-1 -*-
 
-""" xforms-python's functions to manage button objects.
+""" xforms-python's functions to manage button flobjects.
 """
 
 #    Copyright (C) 2009, 2010  Luca Lazzaroni "LukenShiro"
@@ -26,7 +26,7 @@
 # then heavily reordered and reworked
 
 # ############################################# #
-# Interface to XForms shared object libraries   #
+# Interface to XForms shared flobject libraries   #
 # ############################################# #
 
 
@@ -55,34 +55,35 @@ from xformslib import flbitmap
 # fl_create_labelbutton function placeholder (internal)
 
 
-def fl_add_roundbutton(buttontype, x, y, w, h, label):
-    """fl_add_roundbutton(buttontype, x, y, w, h, label)
+def fl_add_roundbutton(buttontype, xpos, ypos, width, height, label):
+    """fl_add_roundbutton(buttontype, xpos, ypos, width, height, label)
+    -> ptr_flobject
     
-    Adds a roundbutton object.
+    Adds a roundbutton flobject.
 
     Parameters
     ----------
         buttontype : int
-            type of button object to be added. Values (from xfdata.py)
+            type of button flobject to be added. Values (from xfdata.py)
             FL_NORMAL_BUTTON, FL_PUSH_BUTTON, FL_RADIO_BUTTON,
             FL_HIDDEN_BUTTON, FL_TOUCH_BUTTON, FL_INOUT_BUTTON,
             FL_RETURN_BUTTON, FL_HIDDEN_RET_BUTTON, FL_MENU_BUTTON,
             FL_TOGGLE_BUTTON
-        x : int
+        xpos : int
             horizontal position (upper-left corner)
-        y : int
+        ypos : int
             vertical position (upper-left corner)
-        w : int
+        width : int
             width in coord units
-        h : int
+        height : int
             height in coord units
         label : str
             text label of button
 
     Returns
     -------
-        pFlObject : pointer to xfdata.FL_OBJECT
-            button object created 
+        ptr_flobject : pointer to xfdata.FL_OBJECT
+            created button flobject
 
     Examples
     --------
@@ -101,47 +102,50 @@ def fl_add_roundbutton(buttontype, x, y, w, h, label):
         """FL_OBJECT * fl_add_roundbutton(int type, FL_Coord x,
            FL_Coord y, FL_Coord w, FL_Coord h, const char * label)""")
     library.check_if_initialized()
-    library.checkfatal_allowed_value_in_list(buttontype, xfdata.BUTTONTYPE_list)
-    ibuttontype = library.convert_to_int(buttontype)
-    ix = library.convert_to_FL_Coord(x)
-    iy = library.convert_to_FL_Coord(y)
-    iw = library.convert_to_FL_Coord(w)
-    ih = library.convert_to_FL_Coord(h)
-    slabel = library.convert_to_string(label)
-    library.keep_elem_refs(buttontype, x, y, w, h, label, ibuttontype, ix, \
-                        iy, iw, ih, slabel)
-    retval = _fl_add_roundbutton(ibuttontype, ix, iy, iw, ih, slabel)
+    library.checkfatal_allowed_value_in_list(buttontype, \
+            xfdata.BUTTONTYPE_list)
+    i_buttontype = library.convert_to_intc(buttontype)
+    i_xpos = library.convert_to_FL_Coord(xpos)
+    i_ypos = library.convert_to_FL_Coord(ypos)
+    i_width = library.convert_to_FL_Coord(width)
+    i_height = library.convert_to_FL_Coord(height)
+    s_label = library.convert_to_stringc(label)
+    library.keep_elem_refs(buttontype, xpos, ypos, width, height, label, \
+            i_buttontype, i_xpos, i_ypos, i_width, i_height, s_label)
+    retval = _fl_add_roundbutton(i_buttontype, i_xpos, i_ypos, i_width, \
+            i_height, s_label)
     return retval
 
 
-def fl_add_round3dbutton(buttontype, x, y, w, h, label):
-    """fl_add_round3dbutton(buttontype, x, y, w, h, label)
+def fl_add_round3dbutton(buttontype, xpos, ypos, width, height, label):
+    """fl_add_round3dbutton(buttontype, xpos, ypos, width, height, label)
+    -> ptr_flobject
     
-    Adds a 3D roundbutton object.
+    Adds a 3D roundbutton flobject.
 
     Parameters
     ----------
         buttontype : int
-            type of button object to be added. Values (from xfdata.py)
+            type of button flobject to be added. Values (from xfdata.py)
             FL_NORMAL_BUTTON, FL_PUSH_BUTTON, FL_RADIO_BUTTON,
             FL_HIDDEN_BUTTON, FL_TOUCH_BUTTON, FL_INOUT_BUTTON,
             FL_RETURN_BUTTON, FL_HIDDEN_RET_BUTTON, FL_MENU_BUTTON,
             FL_TOGGLE_BUTTON
-        x : int
+        xpos : int
             horizontal position (upper-left corner)
-        y : int
+        ypos : int
             vertical position (upper-left corner)
-        w : int
+        width : int
             width in coord units
-        h : int
+        height : int
             height in coord units
         label : str
             text label of button
 
     Returns
     -------
-        pFlObject : pointer to xfdata.FL_OBJECT
-            button object created 
+        ptr_flobject : pointer to xfdata.FL_OBJECT
+            created button flobject
 
     Examples
     --------
@@ -160,23 +164,26 @@ def fl_add_round3dbutton(buttontype, x, y, w, h, label):
         """FL_OBJECT * fl_add_round3dbutton(int type, FL_Coord x,
            FL_Coord y, FL_Coord w, FL_Coord h, const char * label)""")
     library.check_if_initialized()
-    library.checkfatal_allowed_value_in_list(buttontype, xfdata.BUTTONTYPE_list)
-    ibuttontype = library.convert_to_int(buttontype)
-    ix = library.convert_to_FL_Coord(x)
-    iy = library.convert_to_FL_Coord(y)
-    iw = library.convert_to_FL_Coord(w)
-    ih = library.convert_to_FL_Coord(h)
-    slabel = library.convert_to_string(label)
-    library.keep_elem_refs(buttontype, x, y, w, h, label, ibuttontype, ix, \
-                           iy, iw, ih, slabel)
-    retval = _fl_add_round3dbutton(ibuttontype, ix, iy, iw, ih, slabel)
+    library.checkfatal_allowed_value_in_list(buttontype, \
+            xfdata.BUTTONTYPE_list)
+    i_buttontype = library.convert_to_intc(buttontype)
+    i_xpos = library.convert_to_FL_Coord(xpos)
+    i_ypos = library.convert_to_FL_Coord(ypos)
+    i_width = library.convert_to_FL_Coord(width)
+    i_height = library.convert_to_FL_Coord(height)
+    s_label = library.convert_to_stringc(label)
+    library.keep_elem_refs(buttontype, xpos, ypos, width, height, label, \
+            i_buttontype, i_xpos, i_ypos, i_width, i_height, s_label)
+    retval = _fl_add_round3dbutton(i_buttontype, i_xpos, i_ypos, i_width, \
+            i_height, s_label)
     return retval
 
 
-def fl_add_lightbutton(buttontype, x, y, w, h, label):
-    """fl_add_lightbutton(buttontype, x, y, w, h, label)
+def fl_add_lightbutton(buttontype, xpos, ypos, width, height, label):
+    """fl_add_lightbutton(buttontype, xpos, ypos, width, height, label)
+    -> ptr_flobject
     
-    Adds a lightbutton object (with an on/off light switch).
+    Adds a lightbutton flobject (with an on/off light switch).
 
     Parameters
     ----------
@@ -186,21 +193,21 @@ def fl_add_lightbutton(buttontype, x, y, w, h, label):
             FL_HIDDEN_BUTTON, FL_TOUCH_BUTTON, FL_INOUT_BUTTON,
             FL_RETURN_BUTTON, FL_HIDDEN_RET_BUTTON, FL_MENU_BUTTON,
             FL_TOGGLE_BUTTON
-        x : int
+        xpos : int
             horizontal position (upper-left corner)
-        y : int
+        ypos : int
             vertical position (upper-left corner)
-        w : int
+        width : int
             width in coord units
-        h : int
+        height : int
             height in coord units
         label : str
             text label of button
 
     Returns
     -------
-        pFlObject : pointer to xfdata.FL_OBJECT
-            button object created
+        ptr_flobject : pointer to xfdata.FL_OBJECT
+            created button flobject
 
     Examples
     --------
@@ -219,47 +226,50 @@ def fl_add_lightbutton(buttontype, x, y, w, h, label):
         """FL_OBJECT * fl_add_lightbutton(int type, FL_Coord x, FL_Coord y,
            FL_Coord w, FL_Coord h, const char * label)""")
     library.check_if_initialized()
-    library.checkfatal_allowed_value_in_list(buttontype, xfdata.BUTTONTYPE_list)
-    ibuttontype = library.convert_to_int(buttontype)
-    ix = library.convert_to_FL_Coord(x)
-    iy = library.convert_to_FL_Coord(y)
-    iw = library.convert_to_FL_Coord(w)
-    ih = library.convert_to_FL_Coord(h)
-    slabel = library.convert_to_string(label)
-    library.keep_elem_refs(buttontype, x, y, w, h, label, ibuttontype, ix, \
-                        iy, iw, ih, slabel)
-    retval = _fl_add_lightbutton(ibuttontype, ix, iy, iw, ih, slabel)
+    library.checkfatal_allowed_value_in_list(buttontype, \
+            xfdata.BUTTONTYPE_list)
+    i_buttontype = library.convert_to_intc(buttontype)
+    i_xpos = library.convert_to_FL_Coord(xpos)
+    i_ypos = library.convert_to_FL_Coord(ypos)
+    i_width = library.convert_to_FL_Coord(width)
+    i_height = library.convert_to_FL_Coord(height)
+    s_label = library.convert_to_stringc(label)
+    library.keep_elem_refs(buttontype, xpos, ypos, width, height, label, \
+            i_buttontype, i_xpos, i_ypos, i_width, i_height, s_label)
+    retval = _fl_add_lightbutton(i_buttontype, i_xpos, i_ypos, i_width, \
+            i_height, s_label)
     return retval
 
 
-def fl_add_checkbutton(buttontype, x, y, w, h, label):
-    """fl_add_checkbutton(buttontype, x, y, w, h, label)
+def fl_add_checkbutton(buttontype, xpos, ypos, width, height, label):
+    """fl_add_checkbutton(buttontype, xpos, ypos, width, height, label)
+    -> ptr_flobject
     
-    Adds a checkbutton object.
+    Adds a checkbutton flobject.
 
     Parameters
     ----------
         buttontype : int
-            type of button object to be added. Values (from xfdata.py)
+            type of button flobject to be added. Values (from xfdata.py)
             FL_NORMAL_BUTTON, FL_PUSH_BUTTON, FL_RADIO_BUTTON,
             FL_HIDDEN_BUTTON, FL_TOUCH_BUTTON, FL_INOUT_BUTTON,
             FL_RETURN_BUTTON, FL_HIDDEN_RET_BUTTON, FL_MENU_BUTTON,
             FL_TOGGLE_BUTTON
-        x : int
+        xpos : int
             horizontal position (upper-left corner)
-        y : int
+        ypos : int
             vertical position (upper-left corner)
-      w : int
+        width : int
             width in coord units
-      h : int
+        height : int
             height in coord units
-      label : str
+        label : str
             text label of button
 
     Returns
     -------
-        pFlObject : pointer to xfdata.FL_OBJECT
-            button object created 
+        ptr_flobject : pointer to xfdata.FL_OBJECT
+            created button flobject
 
     Examples
     --------
@@ -278,23 +288,26 @@ def fl_add_checkbutton(buttontype, x, y, w, h, label):
         """FL_OBJECT * fl_add_checkbutton(int type, FL_Coord x, FL_Coord y,
            FL_Coord w, FL_Coord h, const char * label)""")
     library.check_if_initialized()
-    library.checkfatal_allowed_value_in_list(buttontype, xfdata.BUTTONTYPE_list)
-    ibuttontype = library.convert_to_int(buttontype)
-    ix = library.convert_to_FL_Coord(x)
-    iy = library.convert_to_FL_Coord(y)
-    iw = library.convert_to_FL_Coord(w)
-    ih = library.convert_to_FL_Coord(h)
-    slabel = library.convert_to_string(label)
-    library.keep_elem_refs(buttontype, x, y, w, h, label, ibuttontype, ix, \
-                           iy, iw, ih, slabel)
-    retval = _fl_add_checkbutton(ibuttontype, ix, iy, iw, ih, slabel)
+    library.checkfatal_allowed_value_in_list(buttontype, \
+            xfdata.BUTTONTYPE_list)
+    i_buttontype = library.convert_to_intc(buttontype)
+    i_xpos = library.convert_to_FL_Coord(xpos)
+    i_ypos = library.convert_to_FL_Coord(ypos)
+    i_width = library.convert_to_FL_Coord(width)
+    i_height = library.convert_to_FL_Coord(height)
+    s_label = library.convert_to_stringc(label)
+    library.keep_elem_refs(buttontype, xpos, ypos, width, height, label, \
+            i_buttontype, i_xpos, i_ypos, i_width, i_height, s_label)
+    retval = _fl_add_checkbutton(i_buttontype, i_xpos, i_ypos, i_width, \
+            i_height, s_label)
     return retval
 
 
-def fl_add_button(buttontype, x, y, w, h, label):
-    """fl_add_button(buttontype, x, y, w, h, label)
+def fl_add_button(buttontype, xpos, ypos, width, height, label):
+    """fl_add_button(buttontype, xpos, ypos, width, height, label)
+    -> ptr_flobject
     
-    Adds a button object to the current form.
+    Adds a button flobject to the current form.
 
     Parameters
     ----------
@@ -304,21 +317,21 @@ def fl_add_button(buttontype, x, y, w, h, label):
             FL_HIDDEN_BUTTON, FL_TOUCH_BUTTON, FL_INOUT_BUTTON,
             FL_RETURN_BUTTON, FL_HIDDEN_RET_BUTTON, FL_MENU_BUTTON,
             FL_TOGGLE_BUTTON
-        x : int
+        xpos : int
             horizontal position (upper-left corner)
-        y : int
+        ypos : int
             vertical position (upper-left corner)
-        w : int
+        width : int
             width in coord units
-        h : int
+        height : int
             height in coord units
         label : str
             text label of button
 
     Returns
     -------
-        pFlObject : pointer to xfdata.FL_OBJECT
-            button object created 
+        ptr_flobject : pointer to xfdata.FL_OBJECT
+            created button flobject
 
     Examples
     --------
@@ -337,23 +350,26 @@ def fl_add_button(buttontype, x, y, w, h, label):
         """FL_OBJECT * fl_add_button(int type, FL_Coord x, FL_Coord y,
            FL_Coord w, FL_Coord h, const char * label)""")
     library.check_if_initialized()
-    library.checkfatal_allowed_value_in_list(buttontype, xfdata.BUTTONTYPE_list)
-    ibuttontype = library.convert_to_int(buttontype)
-    ix = library.convert_to_FL_Coord(x)
-    iy = library.convert_to_FL_Coord(y)
-    iw = library.convert_to_FL_Coord(w)
-    ih = library.convert_to_FL_Coord(h)
-    slabel = library.convert_to_string(label)
-    library.keep_elem_refs(buttontype, x, y, w, h, label, ibuttontype, ix, \
-                           iy, iw, ih, slabel)
-    retval = _fl_add_button(ibuttontype, ix, iy, iw, ih, slabel)
+    library.checkfatal_allowed_value_in_list(buttontype, \
+            xfdata.BUTTONTYPE_list)
+    i_buttontype = library.convert_to_intc(buttontype)
+    i_xpos = library.convert_to_FL_Coord(xpos)
+    i_ypos = library.convert_to_FL_Coord(ypos)
+    i_width = library.convert_to_FL_Coord(width)
+    i_height = library.convert_to_FL_Coord(height)
+    s_label = library.convert_to_stringc(label)
+    library.keep_elem_refs(buttontype, xpos, ypos, width, height, label, \
+            i_buttontype, i_xpos, i_ypos, i_width, i_height, s_label)
+    retval = _fl_add_button(i_buttontype, i_xpos, i_ypos, i_width, \
+            i_height, s_label)
     return retval
 
 
-def fl_add_bitmapbutton(buttontype, x, y, w, h, label):
-    """fl_add_bitmapbutton(buttontype, x, y, w, h, label)
+def fl_add_bitmapbutton(buttontype, xpos, ypos, width, height, label):
+    """fl_add_bitmapbutton(buttontype, xpos, ypos, width, height, label)
+    -> ptr_object
     
-    Adds a bitmapbutton object.
+    Adds a bitmapbutton flobject.
 
     Parameters
     ----------
@@ -363,21 +379,21 @@ def fl_add_bitmapbutton(buttontype, x, y, w, h, label):
             FL_HIDDEN_BUTTON, FL_TOUCH_BUTTON, FL_INOUT_BUTTON,
             FL_RETURN_BUTTON, FL_HIDDEN_RET_BUTTON, FL_MENU_BUTTON,
             FL_TOGGLE_BUTTON
-        x : int
+        xpos : int
             horizontal position (upper-left corner)
-        y : int
+        ypos : int
             vertical position (upper-left corner)
-        w : int
+        width : int
             width in coord units
-        h : int
+        height : int
             height in coord units
         label : str
             text label of button
 
     Returns
     -------
-        pFlObject : pointer to xfdata.FL_OBJECT
-            button object created
+        ptr_flobject : pointer to xfdata.FL_OBJECT
+            created button flobject
 
     Examples
     --------
@@ -396,23 +412,26 @@ def fl_add_bitmapbutton(buttontype, x, y, w, h, label):
         """FL_OBJECT * fl_add_bitmapbutton(int type, FL_Coord x,
            FL_Coord y, FL_Coord w, FL_Coord h, const char * label)""")
     library.check_if_initialized()
-    library.checkfatal_allowed_value_in_list(buttontype, xfdata.BUTTONTYPE_list)
-    ibuttontype = library.convert_to_int(buttontype)
-    ix = library.convert_to_FL_Coord(x)
-    iy = library.convert_to_FL_Coord(y)
-    iw = library.convert_to_FL_Coord(w)
-    ih = library.convert_to_FL_Coord(h)
-    slabel = library.convert_to_string(label)
-    library.keep_elem_refs(buttontype, x, y, w, h, label, ibuttontype, ix, \
-                           iy, iw, ih, slabel)
-    retval = _fl_add_bitmapbutton(ibuttontype, ix, iy, iw, ih, slabel)
+    library.checkfatal_allowed_value_in_list(buttontype, \
+            xfdata.BUTTONTYPE_list)
+    i_buttontype = library.convert_to_intc(buttontype)
+    i_xpos = library.convert_to_FL_Coord(xpos)
+    i_ypos = library.convert_to_FL_Coord(ypos)
+    i_width = library.convert_to_FL_Coord(width)
+    i_height = library.convert_to_FL_Coord(height)
+    s_label = library.convert_to_stringc(label)
+    library.keep_elem_refs(buttontype, xpos, ypos, width, height, label, \
+            i_buttontype, i_xpos, i_ypos, i_width, i_height, s_label)
+    retval = _fl_add_bitmapbutton(i_buttontype, i_xpos, i_ypos, i_width, \
+            i_height, s_label)
     return retval
 
 
-def fl_add_scrollbutton(buttontype, x, y, w, h, label):
-    """fl_add_scrollbutton(buttontype, x, y, w, h, label)
+def fl_add_scrollbutton(buttontype, xpos, ypos, width, height, label):
+    """fl_add_scrollbutton(buttontype, xpos, ypos, width, height, label)
+    -> ptr_flobject
     
-    Adds a scrollbutton object.
+    Adds a scrollbutton flobject.
 
     Parameters
     ----------
@@ -422,21 +441,21 @@ def fl_add_scrollbutton(buttontype, x, y, w, h, label):
             FL_HIDDEN_BUTTON, FL_TOUCH_BUTTON, FL_INOUT_BUTTON,
             FL_RETURN_BUTTON, FL_HIDDEN_RET_BUTTON, FL_MENU_BUTTON,
             FL_TOGGLE_BUTTON
-        x : int
+        xpos : int
             horizontal position (upper-left corner)
-        y : int
+        ypos : int
             vertical position (upper-left corner)
-        w : int
+        width : int
             width in coord units
-        h : int
+        height : int
             height in coord units
         label : str
             text label of button
 
     Returns
     -------
-        pFlObject : pointer to xfdata.FL_OBJECT
-            button object created
+        ptr_flobject : pointer to xfdata.FL_OBJECT
+            created button flobject
 
     Examples
     --------
@@ -455,23 +474,26 @@ def fl_add_scrollbutton(buttontype, x, y, w, h, label):
         """FL_OBJECT * fl_add_scrollbutton(int type, FL_Coord x,
            FL_Coord y, FL_Coord w, FL_Coord h, const char * label)""")
     library.check_if_initialized()
-    library.checkfatal_allowed_value_in_list(buttontype, xfdata.BUTTONTYPE_list)
-    ibuttontype = library.convert_to_int(buttontype)
-    ix = library.convert_to_FL_Coord(x)
-    iy = library.convert_to_FL_Coord(y)
-    iw = library.convert_to_FL_Coord(w)
-    ih = library.convert_to_FL_Coord(h)
-    slabel = library.convert_to_string(label)
-    library.keep_elem_refs(buttontype, x, y, w, h, label, ibuttontype, ix, iy, iw,
-                   ih, slabel)
-    retval = _fl_add_scrollbutton(ibuttontype, ix, iy, iw, ih, slabel)
+    library.checkfatal_allowed_value_in_list(buttontype, \
+            xfdata.BUTTONTYPE_list)
+    i_buttontype = library.convert_to_intc(buttontype)
+    i_xpos = library.convert_to_FL_Coord(xpos)
+    i_ypos = library.convert_to_FL_Coord(ypos)
+    i_width = library.convert_to_FL_Coord(width)
+    i_height = library.convert_to_FL_Coord(height)
+    s_label = library.convert_to_stringc(label)
+    library.keep_elem_refs(buttontype, xpos, ypos, width, height, label, \
+            i_buttontype, i_xpos, i_ypos, i_width, i_height, s_label)
+    retval = _fl_add_scrollbutton(i_buttontype, i_xpos, i_ypos, i_width, \
+            i_height, s_label)
     return retval
 
 
-def fl_add_labelbutton(buttontype, x, y, w, h, label):
-    """Adds a labelbutton object.
-
-    --
+def fl_add_labelbutton(buttontype, xpos, ypos, width, height, label):
+    """fl_add_labelbutton(buttontype, xpos, ypos, width, height, label)
+    -> ptr_flobject
+    
+    Adds a labelbutton flobject.
 
     Parameters
     ----------
@@ -481,21 +503,21 @@ def fl_add_labelbutton(buttontype, x, y, w, h, label):
             FL_HIDDEN_BUTTON, FL_TOUCH_BUTTON, FL_INOUT_BUTTON,
             FL_RETURN_BUTTON, FL_HIDDEN_RET_BUTTON, FL_MENU_BUTTON,
             FL_TOGGLE_BUTTON
-        x : int
+        xpos : int
             horizontal position (upper-left corner)
-        y : int
+        ypos : int
             vertical position (upper-left corner)
-        w : int
+        width : int
             width in coord units
-        h : int
+        height : int
             height in coord units
         label : str
             text label of button
 
     Returns
     -------
-        pFlObject : pointer to xfdata.FL_OBJECT
-            button object created
+        ptr_flobject : pointer to xfdata.FL_OBJECT
+            created button flobject
 
     Examples
     --------
@@ -514,33 +536,36 @@ def fl_add_labelbutton(buttontype, x, y, w, h, label):
         """FL_OBJECT * fl_add_labelbutton(int type, FL_Coord x,
            FL_Coord y, FL_Coord w, FL_Coord h, const char * label)""")
     library.check_if_initialized()
-    library.checkfatal_allowed_value_in_list(buttontype, xfdata.BUTTONTYPE_list)
-    ibuttontype = library.convert_to_int(buttontype)
-    ix = library.convert_to_FL_Coord(x)
-    iy = library.convert_to_FL_Coord(y)
-    iw = library.convert_to_FL_Coord(w)
-    ih = library.convert_to_FL_Coord(h)
-    slabel = library.convert_to_string(label)
-    library.keep_elem_refs(buttontype, x, y, w, h, label, ibuttontype, ix, \
-                           iy, iw, ih, slabel)
-    retval = _fl_add_labelbutton(ibuttontype, ix, iy, iw, ih, slabel)
+    library.checkfatal_allowed_value_in_list(buttontype, \
+            xfdata.BUTTONTYPE_list)
+    i_buttontype = library.convert_to_intc(buttontype)
+    i_xpos = library.convert_to_FL_Coord(xpos)
+    i_ypos = library.convert_to_FL_Coord(ypos)
+    i_width = library.convert_to_FL_Coord(width)
+    i_height = library.convert_to_FL_Coord(height)
+    s_label = library.convert_to_stringc(label)
+    library.keep_elem_refs(buttontype, xpos, ypos, width, height, label, \
+            i_buttontype, i_xpos, i_ypos, i_width, i_height, s_label)
+    retval = _fl_add_labelbutton(i_buttontype, i_xpos, i_ypos, i_width, \
+            i_height, s_label)
     return retval
 
 
-def fl_set_bitmapbutton_data(pFlObject, w, h, bits):
-    """fl_set_bitmapbutton_data(pFlObject, w, h, bits)
+def fl_set_bitmapbutton_data(ptr_flobject, width, height, xbmdatalist):
+    """fl_set_bitmapbutton_data(ptr_flobject, width, height, xbmdatalist)
     
-    Sets the bitmap to use for a bitmap button, using some data.
+    Defines the bitmap to use for a bitmap button flobject, using
+    some data.
 
     Parameters
     ----------
-        pFlObject : pointer to xfdata.FL_OBJECT
-            button object
-        w : int
+        ptr_flobject : pointer to xfdata.FL_OBJECT
+            button flobject
+        width : int
             width in coord units
-        h : int
+        height : int
             height in coord units
-        bits : str of ubytes
+        xbmdatalist : list of ubytes
             bitmap data
 
     Examples
@@ -559,18 +584,22 @@ def fl_set_bitmapbutton_data(pFlObject, w, h, bits):
         """void fl_set_bitmapbutton_data(FL_OBJECT * ob, int w, int h,
            unsigned char * bits)""")
     library.check_if_initialized()
-    library.verify_flobjectptr_type(pFlObject)
-    iw = library.convert_to_int(w)
-    ih = library.convert_to_int(h)
-    pbits = cty.cast(bits, cty.POINTER(cty.c_ubyte))
-    library.keep_elem_refs(pFlObject, w, h, bits, iw, ih, pbits)
-    _fl_set_bitmapbutton_data(pFlObject, iw, ih, pbits)
+    library.verify_flobjectptr_type(ptr_flobject)
+    i_width = library.convert_to_intc(width)
+    i_height = library.convert_to_intc(height)
+    #ptr_bits = cty.cast(bits, cty.POINTER(cty.c_ubyte))
+    ptr_xbmdatalist = library.convert_to_ubytec_array(xbmdatalist)
+    library.keep_elem_refs(ptr_flobject, width, height, xbmdatalist, \
+            i_width, i_height, ptr_xbmdatalist)
+    _fl_set_bitmapbutton_data(ptr_flobject, i_width, i_height, \
+            ptr_xbmdatalist)
 
 
-def fl_add_pixmapbutton(buttontype, x, y, w, h, label):
-    """fl_add_pixmapbutton(buttontype, x, y, w, h, label)
-
-    Adds a pixmapbutton object.
+def fl_add_pixmapbutton(buttontype, xpos, ypos, width, height, label):
+    """fl_add_pixmapbutton(buttontype, xpos, ypos, width, height, label)
+    -> ptr_flobject
+    
+    Adds a pixmapbutton flobject.
 
     Parameters
     ----------
@@ -580,21 +609,21 @@ def fl_add_pixmapbutton(buttontype, x, y, w, h, label):
             FL_HIDDEN_BUTTON, FL_TOUCH_BUTTON, FL_INOUT_BUTTON,
             FL_RETURN_BUTTON, FL_HIDDEN_RET_BUTTON, FL_MENU_BUTTON,
             FL_TOGGLE_BUTTON
-        x : int
+        xpos : int
             horizontal position (upper-left corner)
-        y : int
+        ypos : int
             vertical position (upper-left corner)
-        w : int
+        width : int
             width in coord units
-        h : int
+        height : int
             height in coord units
         label : str
             text label of button
 
     Returns
     -------
-        pFlObject : pointer to xfdata.FL_OBJECT
-            button object created 
+        ptr_flobject : pointer to xfdata.FL_OBJECT
+            created button flobject
 
     Examples
     --------
@@ -613,28 +642,30 @@ def fl_add_pixmapbutton(buttontype, x, y, w, h, label):
         """FL_OBJECT * fl_add_pixmapbutton(int type, FL_Coord x,
            FL_Coord y, FL_Coord w, FL_Coord h, const char * label)""")
     library.check_if_initialized()
-    library.checkfatal_allowed_value_in_list(buttontype, xfdata.BUTTONTYPE_list)
-    ibuttontype = library.convert_to_int(buttontype)
-    ix = library.convert_to_FL_Coord(x)
-    iy = library.convert_to_FL_Coord(y)
-    iw = library.convert_to_FL_Coord(w)
-    ih = library.convert_to_FL_Coord(h)
-    slabel = library.convert_to_string(label)
-    library.keep_elem_refs(buttontype, x, y, w, h, label, ibuttontype, ix, \
-                           iy, iw, ih, slabel)
-    retval = _fl_add_pixmapbutton(ibuttontype, ix, iy, iw, ih, slabel)
+    library.checkfatal_allowed_value_in_list(buttontype, \
+            xfdata.BUTTONTYPE_list)
+    i_buttontype = library.convert_to_intc(buttontype)
+    i_xpos = library.convert_to_FL_Coord(xpos)
+    i_ypos = library.convert_to_FL_Coord(ypos)
+    i_width = library.convert_to_FL_Coord(width)
+    i_height = library.convert_to_FL_Coord(height)
+    s_label = library.convert_to_stringc(label)
+    library.keep_elem_refs(buttontype, xpos, ypos, width, height, label, \
+            i_buttontype, i_xpos, i_ypos, i_width, i_height, s_label)
+    retval = _fl_add_pixmapbutton(i_buttontype, i_xpos, i_ypos, i_width, \
+            i_height, s_label)
     return retval
 
 
-def fl_set_pixmapbutton_focus_outline(pFlObject, yesno):
-    """fl_set_pixmapbutton_focus_outline(pFlObject, yesno)
+def fl_set_pixmapbutton_focus_outline(ptr_flobject, yesno):
+    """fl_set_pixmapbutton_focus_outline(ptr_flobject, yesno)
     
     Enables or disables the focus outline of the pixmap button.
 
     Parameters
     ----------
-        pFlObject : pointer to xfdata.FL_OBJECT
-            button object
+        ptr_flobject : pointer to xfdata.FL_OBJECT
+            button flobject
         yesno : int
             flag to enable (1) or disable (0) the focus outline
 
@@ -652,28 +683,32 @@ def fl_set_pixmapbutton_focus_outline(pFlObject, yesno):
         None, [cty.POINTER(xfdata.FL_OBJECT), cty.c_int],
         """void fl_set_pixmapbutton_focus_outline(FL_OBJECT * ob, int yes)""")
     library.check_if_initialized()
-    library.verify_flobjectptr_type(pFlObject)
-    iyesno = library.convert_to_int(yesno)
-    library.keep_elem_refs(pFlObject, yesno, iyesno)
-    _fl_set_pixmapbutton_focus_outline(pFlObject, iyesno)
+    library.verify_flobjectptr_type(ptr_flobject)
+    i_yesno = library.convert_to_intc(yesno)
+    library.keep_elem_refs(ptr_flobject, yesno, i_yesno)
+    _fl_set_pixmapbutton_focus_outline(ptr_flobject, i_yesno)
 
 
 fl_set_pixmapbutton_data = flbitmap.fl_set_pixmap_data
 fl_set_pixmapbutton_show_focus = fl_set_pixmapbutton_focus_outline
 
 
-def fl_set_pixmapbutton_focus_data(pFlObject, bits):
-    """fl_set_pixmapbutton_focus_data(pFlObject, bits)
+def fl_set_pixmapbutton_focus_data(ptr_flobject, xpmdata):
+    """fl_set_pixmapbutton_focus_data(ptr_flobject, xpmdata)
     
-    Sets a different pixmap to show, using data, when the mouse enters
-    a pixmap button, instead of an outline of the button.
+    Defines a different pixmap to show, using data, when the mouse enters
+    a pixmap button flobject, instead of an outline of the button.
 
     Parameters
     ----------
-        pFlObject : pointer to xfdata.FL_OBJECT
-            button object
-        bits : str of ubytes ?
+        ptr_flobject : pointer to xfdata.FL_OBJECT
+            button flobject
+        xpmdata : str of ubytes
             pixmap data
+
+    Examples
+    --------
+        >>> *todo*
 
     Notes
     -----
@@ -686,24 +721,29 @@ def fl_set_pixmapbutton_focus_data(pFlObject, bits):
         """void fl_set_pixmapbutton_focus_data(FL_OBJECT * ob,
            char * * bits)""")
     library.check_if_initialized()
-    library.verify_flobjectptr_type(pFlObject)
-    pbits = cty.cast(bits, cty.POINTER(xfdata.STRING))
-    library.keep_elem_refs(pFlObject, bits, pbits)
-    _fl_set_pixmapbutton_focus_data(pFlObject, pbits)
+    library.verify_flobjectptr_type(ptr_flobject)
+    #ptr_bits = cty.cast(bits, cty.POINTER(xfdata.STRING))
+    ptr_xpmdata = library.convert_to_ptr_ubytec(xpmdata)
+    library.keep_elem_refs(ptr_flobject, xpmdata, ptr_xpmdata)
+    _fl_set_pixmapbutton_focus_data(ptr_flobject, ptr_xpmdata)
 
 
-def fl_set_pixmapbutton_focus_file(pFlObject, fname):
-    """fl_set_pixmapbutton_focus_file(pFlObject, fname)
+def fl_set_pixmapbutton_focus_file(ptr_flobject, fname):
+    """fl_set_pixmapbutton_focus_file(ptr_flobject, fname)
     
-    Sets a different pixmap to show, using a file, when the mouse enters
-    a pixmap button, instead of an outline of the button.
+    Defines a different pixmap to show, using a file, when the mouse enters
+    a pixmap button flobject, instead of an outline of the button.
 
     Parameters
     ----------
-        pFlObject : pointer to xfdata.FL_OBJECT
-            button object
+        ptr_flobject : pointer to xfdata.FL_OBJECT
+            button flobject
         fname : str
             name of file containing pixmap resource
+
+    Examples
+    --------
+        >>> *todo*
 
     Notes
     -----
@@ -716,26 +756,27 @@ def fl_set_pixmapbutton_focus_file(pFlObject, fname):
         """void fl_set_pixmapbutton_focus_file(FL_OBJECT * ob,
            const char * fname)""")
     library.check_if_initialized()
-    library.verify_flobjectptr_type(pFlObject)
-    sfname = library.convert_to_string(fname)
-    library.keep_elem_refs(pFlObject, fname, sfname)
-    _fl_set_pixmapbutton_focus_file(pFlObject, sfname)
+    library.verify_flobjectptr_type(ptr_flobject)
+    s_fname = library.convert_to_stringc(fname)
+    library.keep_elem_refs(ptr_flobject, fname, s_fname)
+    _fl_set_pixmapbutton_focus_file(ptr_flobject, s_fname)
 
 
-def fl_set_pixmapbutton_focus_pixmap(pFlObject, pix, mask):
-    """fl_set_pixmapbutton_focus_pixmap(pFlObject, pix, mask)
+def fl_set_pixmapbutton_focus_pixmap(ptr_flobject, pixmap, mask):
+    """fl_set_pixmapbutton_focus_pixmap(ptr_flobject, pixmap, mask)
     
-    Sets a different pixmap to show, using pixmap id, when the mouse
-    enters a pixmap button, instead of an outline of the button.
+    Defines a different pixmap to show, using pixmap resource id, when
+    the mouse enters a pixmap button flobject, instead of an outline of
+    the button.
 
     Parameters
     ----------
-        pFlObject : pointer to xfdata.FL_OBJECT
-            button object
-        pix : long_pos
-            pixmap id
+        ptr_flobject : pointer to xfdata.FL_OBJECT
+            button flobject
+        pixmap : long_pos
+            pixmap resource id
         mask : long_pos
-            pixmap id
+            mask for pixmap
 
     Examples
     --------
@@ -752,27 +793,27 @@ def fl_set_pixmapbutton_focus_pixmap(pFlObject, pix, mask):
         """void fl_set_pixmapbutton_focus_pixmap(FL_OBJECT * ob,
            Pixmap id, Pixmap mask)""")
     library.check_if_initialized()
-    library.verify_flobjectptr_type(pFlObject)
-    ulpix = library.convert_to_Pixmap(pix)
-    ulmask = library.convert_to_Pixmap(mask)
-    library.keep_elem_refs(pFlObject, pix, mask, ulpix, ulmask)
-    _fl_set_pixmapbutton_focus_pixmap(pFlObject, ulpix, ulmask)
+    library.verify_flobjectptr_type(ptr_flobject)
+    ul_pixmap = library.convert_to_Pixmap(pixmap)
+    ul_mask = library.convert_to_Pixmap(mask)
+    library.keep_elem_refs(ptr_flobject, pixmap, mask, ul_pixmap, ul_mask)
+    _fl_set_pixmapbutton_focus_pixmap(ptr_flobject, ul_pixmap, ul_mask)
 
 
-def fl_get_button(pFlObject):
-    """fl_get_button(pFlObject)
+def fl_get_button(ptr_flobject):
+    """fl_get_button(ptr_flobject) -> btnstate
     
-    Obtains the state value of the button.
+    Finds out the push state value of a button flobject.
 
     Parameters
     ----------
-        pFlObject : pointer to xfdata.FL_OBJECT
-            button object
+        ptr_flobject : pointer to xfdata.FL_OBJECT
+            button flobject
 
     Returns
     -------
         btnstate : int
-            0 (not pushed) or 1 (pushed)
+            push state. Values 0 (not pushed) or 1 (pushed)
 
     Examples
     --------
@@ -788,24 +829,24 @@ def fl_get_button(pFlObject):
         cty.c_int, [cty.POINTER(xfdata.FL_OBJECT)],
         """int fl_get_button(FL_OBJECT * ob)""")
     library.check_if_initialized()
-    library.verify_flobjectptr_type(pFlObject)
-    library.keep_elem_refs(pFlObject)
-    retval = _fl_get_button(pFlObject)
+    library.verify_flobjectptr_type(ptr_flobject)
+    library.keep_elem_refs(ptr_flobject)
+    retval = _fl_get_button(ptr_flobject)
     return retval
 
 
-def fl_set_button(pFlObject, yesno):
-    """fl_set_button(pFlObject, yesno)
+def fl_set_button(ptr_flobject, yesno):
+    """fl_set_button(ptr_flobject, yesno)
     
-    Sets the button state (not pushed/pushed).
+    Defines the button state (not pushed/pushed).
 
     Parameters
     ----------
-        pFlObject : pointer to xfdata.FL_OBJECT
-            button object
+        ptr_flobject : pointer to xfdata.FL_OBJECT
+            button flobject
         yesno : int
-            state of button to be set. Values 0 (if not pushed) or 1 (if
-            pushed)
+            state of button to be set. Values 0 (if not pushed)
+            or 1 (if pushed)
 
     Examples
     --------
@@ -821,27 +862,27 @@ def fl_set_button(pFlObject, yesno):
         None, [cty.POINTER(xfdata.FL_OBJECT), cty.c_int],
         """void fl_set_button(FL_OBJECT * ob, int pushed)""")
     library.check_if_initialized()
-    library.verify_flobjectptr_type(pFlObject)
-    iyesno = library.convert_to_int(yesno)
-    library.keep_elem_refs(pFlObject, yesno, iyesno)
-    _fl_set_button(pFlObject, yesno)
+    library.verify_flobjectptr_type(ptr_flobject)
+    i_yesno = library.convert_to_intc(yesno)
+    library.keep_elem_refs(ptr_flobject, yesno, i_yesno)
+    _fl_set_button(ptr_flobject, yesno)
 
 
-def fl_get_button_numb(pFlObject):
-    """fl_get_button_numb(pFlObject)
+def fl_get_button_numb(ptr_flobject):
+    """fl_get_button_numb(ptr_flobject) -> mousebtn
     
-    Obtains the number of the last used mouse button. fl_mouse_button()
-    function will also return the mouse number.
+    Finds out the number of the last used mouse button.
+    fl_mouse_button() function will also return the mouse number.
 
     Parameters
     ----------
-        pFlObject : pointer to xfdata.FL_OBJECT
-            button object
+        ptr_flobject : pointer to xfdata.FL_OBJECT
+            button flobject
 
     Returns
     -------
-        num : int
-            mouse number
+        mousebtn : int
+            last used mouse button
 
     Examples
     --------
@@ -857,19 +898,21 @@ def fl_get_button_numb(pFlObject):
         cty.c_int, [cty.POINTER(xfdata.FL_OBJECT)],
         """int fl_get_button_numb(FL_OBJECT * ob)""")
     library.check_if_initialized()
-    library.verify_flobjectptr_type(pFlObject)
-    library.keep_elem_refs(pFlObject)
-    retval = _fl_get_button_numb(pFlObject)
+    library.verify_flobjectptr_type(ptr_flobject)
+    library.keep_elem_refs(ptr_flobject)
+    retval = _fl_get_button_numb(ptr_flobject)
     return retval
 
 
 fl_set_button_shortcut = flbasic.fl_set_object_shortcut
 
 
-def fl_create_generic_button(btnclass, buttontype, x, y, w, h, label):
-    """fl_create_generic_button(btnclass, buttontype, x, y, w, h, label)
+def fl_create_generic_button(btnclass, buttontype, xpos, ypos, width, height,
+                             label):
+    """fl_create_generic_button(btnclass, buttontype, xpos, ypos, width,
+    height, label) -> ptr_flobject
     
-    Creates a generic button object.
+    Creates a generic button flobject.
 
     Parameters
     ----------
@@ -881,21 +924,21 @@ def fl_create_generic_button(btnclass, buttontype, x, y, w, h, label):
             FL_HIDDEN_BUTTON, FL_TOUCH_BUTTON, FL_INOUT_BUTTON,
             FL_RETURN_BUTTON, FL_HIDDEN_RET_BUTTON, FL_MENU_BUTTON,
             FL_TOGGLE_BUTTON
-        x : int
+        xpos : int
             horizontal position (upper-left corner)
-        y : int
+        ypos : int
             vertical position (upper-left corner)
-        w : int
+        width : int
             width in coord units
-        h : int
+        height : int
             height in coord units
         label : str
             text label of button
 
     Returns
     -------
-        pFlObject : pointer to xfdata.FL_OBJECT
-            button object created
+        ptr_flobject : pointer to xfdata.FL_OBJECT
+            created button flobject
 
     Examples
     --------
@@ -915,23 +958,25 @@ def fl_create_generic_button(btnclass, buttontype, x, y, w, h, label):
            FL_Coord x, FL_Coord y, FL_Coord w, FL_Coord h,
            const char * label)""")
     library.check_if_initialized()
-    library.checkfatal_allowed_value_in_list(buttontype, xfdata.BUTTONTYPE_list)
-    ibtnclass = library.convert_to_int(btnclass)
-    ibuttontype = library.convert_to_int(buttontype)
-    ix = library.convert_to_FL_Coord(x)
-    iy = library.convert_to_FL_Coord(y)
-    iw = library.convert_to_FL_Coord(w)
-    ih = library.convert_to_FL_Coord(h)
-    slabel = library.convert_to_string(label)
-    library.keep_elem_refs(btnclass, buttontype, x, y, w, h, label, ibtnclass,
-                   ibuttontype, ix, iy, iw, ih, slabel)
-    retval = _fl_create_generic_button(ibtnclass, ibuttontype, ix, iy,
-                                       iw, ih, slabel)
+    library.checkfatal_allowed_value_in_list(buttontype, \
+            xfdata.BUTTONTYPE_list)
+    i_btnclass = library.convert_to_intc(btnclass)
+    i_buttontype = library.convert_to_intc(buttontype)
+    i_xpos = library.convert_to_FL_Coord(xpos)
+    i_ypos = library.convert_to_FL_Coord(ypos)
+    i_width = library.convert_to_FL_Coord(width)
+    i_height = library.convert_to_FL_Coord(height)
+    s_label = library.convert_to_stringc(label)
+    library.keep_elem_refs(btnclass, buttontype, xpos, ypos, width, height, \
+            label, i_btnclass, i_buttontype, i_xpos, i_ypos, i_width, \
+            i_height, s_label)
+    retval = _fl_create_generic_button(i_btnclass, i_buttontype, i_xpos, \
+            i_ypos, i_width, i_height, s_label)
     return retval
 
 
-def fl_add_button_class(btnclass, py_DrawButton, py_CleanupButton):
-    """fl_add_button_class(btnclass, py_DrawButton, py_CleanupButton)
+def fl_add_button_class(btnclass, pyfn_DrawButton, pyfn_CleanupButton):
+    """fl_add_button_class(btnclass, pyfn_DrawButton, pyfn_CleanupButton)
     
     Associates a button class with a drawing function.
 
@@ -939,9 +984,9 @@ def fl_add_button_class(btnclass, py_DrawButton, py_CleanupButton):
     ----------
         btnclass : int
             value of a new button class
-        py_DrawButton : python function to draw button, no return
-            name referring to function(pFlObject)
-        py_CleanupButton : python function to cleanup button, no return
+        pyfn_DrawButton : python function to draw button, no return
+            name referring to function(ptr_flobject)
+        pyfn_CleanupButton : python function to cleanup button, no return
             name referring to function(pButtonSpec)
 
     Examples
@@ -965,26 +1010,26 @@ def fl_add_button_class(btnclass, py_DrawButton, py_CleanupButton):
         """void fl_add_button_class(int bclass, FL_DrawButton drawit,
            FL_CleanupButton cleanup)""")
     library.check_if_initialized()
-    ibtnclass = library.convert_to_int(btnclass)
-    library.verify_function_type(py_DrawButton)
-    c_DrawButton = xfdata.FL_DrawButton(py_DrawButton)
-    library.verify_function_type(py_CleanupButton)
-    c_CleanupButton = xfdata.FL_CleanupButton(py_CleanupButton)
-    library.keep_cfunc_refs(c_DrawButton, py_DrawButton, c_CleanupButton,
-                        py_CleanupButton)
-    library.keep_elem_refs(btnclass, ibtnclass)
-    _fl_add_button_class(ibtnclass, c_DrawButton, c_CleanupButton)
+    i_btnclass = library.convert_to_intc(btnclass)
+    library.verify_function_type(pyfn_DrawButton)
+    cfn_DrawButton = xfdata.FL_DrawButton(pyfn_DrawButton)
+    library.verify_function_type(pyfn_CleanupButton)
+    cfn_CleanupButton = xfdata.FL_CleanupButton(pyfn_CleanupButton)
+    library.keep_cfunc_refs(cfn_DrawButton, pyfn_DrawButton, \
+            cfn_CleanupButton, pyfn_CleanupButton)
+    library.keep_elem_refs(btnclass, i_btnclass)
+    _fl_add_button_class(i_btnclass, cfn_DrawButton, cfn_CleanupButton)
 
 
-def fl_set_button_mouse_buttons(pFlObject, buttons):
-    """fl_set_button_mouse_buttons(pFlObject, buttons)
+def fl_set_button_mouse_buttons(ptr_flobject, buttons):
+    """fl_set_button_mouse_buttons(ptr_flobject, buttons)
     
-    Sets up to which mouse buttons the button object will react.
+    Defines up to which mouse buttons the button flobject will react.
 
     Parameters
     ----------
-        pFlObject : pointer to xfdata.FL_OBJECT
-            button object
+        ptr_flobject : pointer to xfdata.FL_OBJECT
+            button flobject
         buttons : int_pos
             value of mouse buttons to be set. Values bitwise 'OR' of the
             numbers 1 for the left mouse button, 2 for the middle, 4 for
@@ -993,7 +1038,7 @@ def fl_set_button_mouse_buttons(pFlObject, buttons):
 
     Examples
     --------
-        >>> fl_set_button_mouse_buttons(pobj, 8|16)
+        >>> fl_set_button_mouse_buttons(pbtnobj, 8|16)
 
     Notes
     -----
@@ -1006,24 +1051,24 @@ def fl_set_button_mouse_buttons(pFlObject, buttons):
         """void fl_set_button_mouse_buttons(FL_OBJECT * ob,
            unsigned int buttons)""")
     library.check_if_initialized()
-    library.verify_flobjectptr_type(pFlObject)
-    ibuttons = library.convert_to_int(buttons)
-    library.keep_elem_refs(pFlObject, buttons, ibuttons)
-    _fl_set_button_mouse_buttons(pFlObject, ibuttons)
+    library.verify_flobjectptr_type(ptr_flobject)
+    i_buttons = library.convert_to_intc(buttons)
+    library.keep_elem_refs(ptr_flobject, buttons, i_buttons)
+    _fl_set_button_mouse_buttons(ptr_flobject, i_buttons)
 
 
-def fl_get_button_mouse_buttons(pFlObject):
-    """fl_get_button_mouse_buttons(pFlObject)
+def fl_get_button_mouse_buttons(ptr_flobject):
+    """fl_get_button_mouse_buttons(ptr_flobject) -> buttons
     
-    Obtains a value indicating which mouse buttons the button object will
-    react to (bitwise OR of the numbers 1 for the left mouse button, 2 for
-    the middle, 4 for the right mouse button, 8 for moving the scroll wheel
-    up "button" and 16 for scrolling down "button").
+    Finds out a value indicating which mouse buttons the button flobject
+    will react to (bitwise OR of the numbers 1 for the left mouse button,
+    2 for the middle, 4 for the right mouse button, 8 for moving the
+    scroll wheel up "button" and 16 for scrolling down "button").
 
     Parameters
     ----------
-        pFlObject : pointer to xfdata.FL_OBJECT
-            button object
+        ptr_flobject : pointer to xfdata.FL_OBJECT
+            button flobject
 
     Returns
     -------
@@ -1032,12 +1077,12 @@ def fl_get_button_mouse_buttons(pFlObject):
 
     Examples
     --------
-        >>> moubtn = fl_get_button_mouse_buttons(pobj)
+        >>> moubtn = fl_get_button_mouse_buttons(pbtnobj)
 
     API_diversion
     ----------
-        API changed from XForms, upstream was
-        fl_get_button_mouse_buttons(pFlObject, buttons)
+        API changed from XForms, upstream is
+        fl_get_button_mouse_buttons(ptr_flobject, buttons)
 
     Notes
     -----
@@ -1050,9 +1095,9 @@ def fl_get_button_mouse_buttons(pFlObject):
         """void fl_get_button_mouse_buttons(FL_OBJECT * ob,
            unsigned int * buttons)""")
     library.check_if_initialized()
-    library.verify_flobjectptr_type(pFlObject)
-    buttons, pbuttons = library.make_uint_and_pointer()
-    library.keep_elem_refs(pFlObject, buttons, pbuttons)
-    _fl_get_button_mouse_buttons(pFlObject, pbuttons)
-    return buttons.value
+    library.verify_flobjectptr_type(ptr_flobject)
+    ui_buttons, ptr_buttons = library.make_uintc_and_pointer()
+    library.keep_elem_refs(ptr_flobject, ui_buttons, ptr_buttons)
+    _fl_get_button_mouse_buttons(ptr_flobject, ptr_buttons)
+    return ui_buttons.value
 

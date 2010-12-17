@@ -1,5 +1,11 @@
 
 SVN
+    * pointer-to-something params have now meaningful names (WIP),
+    c-compatible type have clearer prefixes (WIP). Bugfixes and typos.
+    make_flpopupitem now verifies type, state and shortcut keys.
+    donothing_popupcb as placeholder callback function moved to xfstruct.py.
+    fl_set_color_leak() removed (backwards). Realign to upstream XForms
+    1.0.94pre4: new fl_full_library_version() function.
     * bugfixes in some examples. butttype.py example added.
     * managed how to correctly handle char** in fl_set_pixmap_data (thanks to
     Mark Tolonen, on ctypes-users mailing-list). Some adjustment in examples.

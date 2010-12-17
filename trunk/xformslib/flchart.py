@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: iso8859-1 -*-
 
-""" xforms-python's functions to manage chart objects.
+""" xforms-python's functions to manage chart flobjects.
 """
 
 #    Copyright (C) 2009, 2010  Luca Lazzaroni "LukenShiro"
@@ -26,7 +26,7 @@
 # then heavily reordered and reworked
 
 # ############################################# #
-# Interface to XForms shared object libraries   #
+# Interface to XForms shared flobject libraries   #
 # ############################################# #
 
 
@@ -45,10 +45,11 @@ from xformslib import xfdata
 # fl_create_chart function placeholder (internal)
 
 
-def fl_add_chart(charttype, x, y, w, h, label):
-    """fl_add_chart(charttype, x, y, w, h, label)
+def fl_add_chart(charttype, xpos, ypos, width, height, label):
+    """fl_add_chart(charttype, xpos, ypos, width, height, label)
+    -> ptr_flobject
     
-    Adds a chart object.
+    Adds a chart flobject.
 
     Parameters
     ----------
@@ -56,25 +57,25 @@ def fl_add_chart(charttype, x, y, w, h, label):
             type of chart to be created. Values (from xfdata module)
             FL_BAR_CHART, FL_HORBAR_CHART, FL_LINE_CHART, FL_FILL_CHART,
             FL_SPIKE_CHART, FL_PIE_CHART, FL_SPECIALPIE_CHART
-        x : int
+        xpos : int
             horizontal position (upper-left corner)
-        y : int
+        ypos : int
             vertical position (upper-left corner)
-        w : int
+        width : int
             width in coord units
-        h : int
+        height : int
             height in coord units
         label : str
             text label of chart
 
     Returns
     -------
-        pFlObject : pointer to xfdata.FL_OBJECT
-            chart object added
+        ptr_flobject : pointer to xfdata.FL_OBJECT
+            chart flobject added
 
     Examples
     --------
-        >>> chrtobj = fl_add_chart(xfdata.FL_SPIKE_CHART, 147, 168,
+        >>> pchrtobj = fl_add_chart(xfdata.FL_SPIKE_CHART, 147, 168,
                 250, 492, "My Chart")
 
     Notes
@@ -89,32 +90,34 @@ def fl_add_chart(charttype, x, y, w, h, label):
         """FL_OBJECT * fl_add_chart(int type, FL_Coord x, FL_Coord y,
            FL_Coord w, FL_Coord h, const char * label)""")
     library.check_if_initialized()
-    library.checkfatal_allowed_value_in_list(charttype, xfdata.CHARTTYPE_list)
-    icharttype = library.convert_to_int(charttype)
-    ix = library.convert_to_FL_Coord(x)
-    iy = library.convert_to_FL_Coord(y)
-    iw = library.convert_to_FL_Coord(w)
-    ih = library.convert_to_FL_Coord(h)
-    slabel = library.convert_to_string(label)
-    library.keep_elem_refs(charttype, x, y, w, h, label, icharttype, ix, iy,
-                           iw, ih, slabel)
-    retval = _fl_add_chart(icharttype, ix, iy, iw, ih, slabel)
+    library.checkfatal_allowed_value_in_list(charttype, \
+            xfdata.CHARTTYPE_list)
+    i_charttype = library.convert_to_intc(charttype)
+    i_xpos = library.convert_to_FL_Coord(xpos)
+    i_ypos = library.convert_to_FL_Coord(ypos)
+    i_width = library.convert_to_FL_Coord(width)
+    i_height = library.convert_to_FL_Coord(height)
+    s_label = library.convert_to_stringc(label)
+    library.keep_elem_refs(charttype, xpos, ypos, width, height, label, \
+            i_charttype, i_xpos, i_ypos, i_width, i_height, s_label)
+    retval = _fl_add_chart(i_charttype, i_xpos, i_ypos, i_width, i_height, \
+            s_label)
     return retval
 
 
-def fl_clear_chart(pFlObject):
-    """fl_clear_chart(pFlObject)
+def fl_clear_chart(ptr_flobject):
+    """fl_clear_chart(ptr_flobject)
     
-    Clears the contents of a chart.
+    Clears the contents of a chart flobject.
 
     Parameters
     ----------
-        pFlObject : pointer to xfdata.FL_OBJECT
-            chart object
+        ptr_flobject : pointer to xfdata.FL_OBJECT
+            chart flobject
 
     Examples
     --------
-        >>> fl_clear_chart(chrtobj)
+        >>> fl_clear_chart(pchrtobj)
 
     Notes
     -----
@@ -126,30 +129,30 @@ def fl_clear_chart(pFlObject):
         None, [cty.POINTER(xfdata.FL_OBJECT)],
         """void fl_clear_chart(FL_OBJECT * ob)""")
     library.check_if_initialized()
-    library.verify_flobjectptr_type(pFlObject)
-    library.keep_elem_refs(pFlObject)
-    _fl_clear_chart(pFlObject)
+    library.verify_flobjectptr_type(ptr_flobject)
+    library.keep_elem_refs(ptr_flobject)
+    _fl_clear_chart(ptr_flobject)
 
 
-def fl_add_chart_value(pFlObject, val, label, colr):
-    """fl_add_chart_value(pFlObject, val, label, colr)
+def fl_add_chart_value(ptr_flobject, itemval, label, colr):
+    """fl_add_chart_value(ptr_flobject, itemval, label, colr)
     
-    Adds an item to the chart object.
+    Adds an item to the chart flobject.
 
     Parameters
     ----------
-        pFlObject : pointer to xfdata.FL_OBJECT
-            chart object
-        val : float
+        ptr_flobject : pointer to xfdata.FL_OBJECT
+            chart flobject
+        itemval : float
             value of chart item
         label : str
             text label of chart
         colr : long_pos
-            color num.
+            color value
 
     Examples
     --------
-        >>> fl_add_chart_value(chrtobj, 120, "Some point", xfdata.FL_BLUE)
+        >>> fl_add_chart_value(pchrtobj, 120, "Some point", xfdata.FL_BLUE)
 
     Notes
     -----
@@ -163,27 +166,28 @@ def fl_add_chart_value(pFlObject, val, label, colr):
         """void fl_add_chart_value(FL_OBJECT * ob, double val,
            const char * str, FL_COLOR col)""")
     library.check_if_initialized()
-    library.verify_flobjectptr_type(pFlObject)
-    fval = library.convert_to_double(val)
-    slabel = library.convert_to_string(label)
-    ulcolr = library.convert_to_FL_COLOR(colr)
-    library.keep_elem_refs(pFlObject, val, label, colr, fval, slabel, ulcolr)
-    _fl_add_chart_value(pFlObject, fval, slabel, ulcolr)
+    library.verify_flobjectptr_type(ptr_flobject)
+    f_itemval = library.convert_to_doublec(itemval)
+    s_label = library.convert_to_stringc(label)
+    ul_colr = library.convert_to_FL_COLOR(colr)
+    library.keep_elem_refs(ptr_flobject, itemval, label, colr, f_itemval, \
+            s_label, ul_colr)
+    _fl_add_chart_value(ptr_flobject, f_itemval, s_label, ul_colr)
 
 
-def fl_insert_chart_value(pFlObject, indx, val, label, colr):
-    """fl_insert_chart_value(pFlObject, indx, val, label, colr)
+def fl_insert_chart_value(ptr_flobject, indx, itemval, label, colr):
+    """fl_insert_chart_value(ptr_flobject, indx, itemval, label, colr)
     
-    Inserts a new value at a particular place in a chart object.
+    Inserts a new value at a particular place in a chart flobject.
 
     Parameters
     ----------
-        pFlObject : pointer to xfdata.FL_OBJECT
-            chart object
+        ptr_flobject : pointer to xfdata.FL_OBJECT
+            chart flobject
         indx : int
-            index before which the new item should be inserted. The first
-            item is number 1.
-        val : float
+            index before which the new item should be inserted. The
+            first item is number 1.
+        itemval : float
             value of new chart item
         label : str
             text label of chart
@@ -192,7 +196,7 @@ def fl_insert_chart_value(pFlObject, indx, val, label, colr):
 
     Examples
     --------
-        >>> fl_insert_chart_value(chrtobj, 2, 123.0, "new value",
+        >>> fl_insert_chart_value(pchrtobj, 2, 123.0, "new value",
                 xfdata.FL_DEEPSKYBLUE)
 
     Notes
@@ -207,28 +211,29 @@ def fl_insert_chart_value(pFlObject, indx, val, label, colr):
         """void fl_insert_chart_value(FL_OBJECT * ob, int indx,
            double val, const char * str, FL_COLOR col)""")
     library.check_if_initialized()
-    library.verify_flobjectptr_type(pFlObject)
-    iindx = library.convert_to_int(indx)
-    fval = library.convert_to_double(val)
-    slabel = library.convert_to_string(label)
-    ulcolr = library.convert_to_FL_COLOR(colr)
-    library.keep_elem_refs(pFlObject, indx, val, label, colr, iindx, fval,
-                   slabel, ulcolr)
-    _fl_insert_chart_value(pFlObject, iindx, fval, slabel, ulcolr)
+    library.verify_flobjectptr_type(ptr_flobject)
+    i_indx = library.convert_to_intc(indx)
+    f_itemval = library.convert_to_doublec(itemval)
+    s_label = library.convert_to_stringc(label)
+    ul_colr = library.convert_to_FL_COLOR(colr)
+    library.keep_elem_refs(ptr_flobject, indx, itemval, label, colr, \
+            i_indx, f_itemval, s_label, ul_colr)
+    _fl_insert_chart_value(ptr_flobject, i_indx, f_itemval, s_label, ul_colr)
 
 
-def fl_replace_chart_value(pFlObject, indx, val, label, colr):
-    """fl_replace_chart_value(pFlObject, indx, val, label, colr)
+def fl_replace_chart_value(ptr_flobject, indx, itemval, label, colr):
+    """fl_replace_chart_value(ptr_flobject, indx, itemval, label, colr)
     
-    Replaces value of an item in the chart object.
+    Replaces value of an item in the chart flobject.
 
     Parameters
     ----------
-        pFlObject : pointer to xfdata.FL_OBJECT
-            chart object
+        ptr_flobject : pointer to xfdata.FL_OBJECT
+            chart flobject
         indx : int
-            index position of item to be replaced
-        val : float
+            index position of item to be replaced. The first item
+            is number 1.
+        itemval : float
             value of chart item
         label : str
             text label of chart
@@ -237,7 +242,7 @@ def fl_replace_chart_value(pFlObject, indx, val, label, colr):
 
     Examples
     --------
-        >>> fl_replace_chart_value(chrtobj, 3, 142.0, "replaced item",
+        >>> fl_replace_chart_value(pchrtobj, 3, 142.0, "replaced item",
                 xfdata.FL_FIREBRICK)
 
     Notes
@@ -252,27 +257,27 @@ def fl_replace_chart_value(pFlObject, indx, val, label, colr):
         """void fl_replace_chart_value(FL_OBJECT * ob, int indx,
            double val, const char * str, FL_COLOR col)""")
     library.check_if_initialized()
-    library.verify_flobjectptr_type(pFlObject)
-    iindx = library.convert_to_int(indx)
-    fval = library.convert_to_double(val)
-    slabel = library.convert_to_string(label)
-    ulcolr = library.convert_to_FL_COLOR(colr)
-    library.keep_elem_refs(pFlObject, indx, val, label, colr, iindx, fval,
-                   slabel, ulcolr)
-    _fl_replace_chart_value(pFlObject, iindx, fval, slabel, ulcolr)
+    library.verify_flobjectptr_type(ptr_flobject)
+    i_indx = library.convert_to_intc(indx)
+    f_itemval = library.convert_to_doublec(itemval)
+    s_label = library.convert_to_stringc(label)
+    ul_colr = library.convert_to_FL_COLOR(colr)
+    library.keep_elem_refs(ptr_flobject, indx, itemval, label, colr, \
+            i_indx, f_itemval, s_label, ul_colr)
+    _fl_replace_chart_value(ptr_flobject, i_indx, f_itemval, s_label, ul_colr)
 
 
-def fl_set_chart_bounds(pFlObject, minbound, maxbound):
-    """fl_set_chart_bounds(pFlObject, minbound, maxbound)
+def fl_set_chart_bounds(ptr_flobject, minbound, maxbound):
+    """fl_set_chart_bounds(ptr_flobject, minbound, maxbound)
     
-    Sets the boundaries/limits for values of a chart object. Normally,
+    Defines the boundaries/limits for values of a chart flobject. Normally,
     bar-charts and line-charts are automatically scaled in the vertical
     direction such that all values can be displayed.
 
     Parameters
     ----------
-        pFlObject : pointer to xfdata.FL_OBJECT
-            chart object
+        ptr_flobject : pointer to xfdata.FL_OBJECT
+            chart flobject
         minbound : float
             minimum bounds to be set
         maxbound : float
@@ -280,7 +285,7 @@ def fl_set_chart_bounds(pFlObject, minbound, maxbound):
 
     Examples
     --------
-        >>> fl_set_chart_bounds(chrtobj, 100, 950)
+        >>> fl_set_chart_bounds(pchrtobj, 100, 950)
 
     Notes
     -----
@@ -293,22 +298,23 @@ def fl_set_chart_bounds(pFlObject, minbound, maxbound):
         """void fl_set_chart_bounds(FL_OBJECT * ob, double min,
            double max)""")
     library.check_if_initialized()
-    library.verify_flobjectptr_type(pFlObject)
-    fminbound = library.convert_to_double(minbound)
-    fmaxbound = library.convert_to_double(maxbound)
-    library.keep_elem_refs(pFlObject, minbound, maxbound, fminbound, fmaxbound)
-    _fl_set_chart_bounds(pFlObject, fminbound, fmaxbound)
+    library.verify_flobjectptr_type(ptr_flobject)
+    f_minbound = library.convert_to_doublec(minbound)
+    f_maxbound = library.convert_to_doublec(maxbound)
+    library.keep_elem_refs(ptr_flobject, minbound, maxbound, f_minbound, \
+            f_maxbound)
+    _fl_set_chart_bounds(ptr_flobject, f_minbound, f_maxbound)
 
 
-def fl_get_chart_bounds(pFlObject):
-    """fl_get_chart_bounds(pFlObject)
+def fl_get_chart_bounds(ptr_flobject):
+    """fl_get_chart_bounds(ptr_flobject) -> minbound, maxbound
     
-    Obtains the boundaries/limits set for values of a chart object.
+    Finds out the boundaries/limits set for values of a chart flobject.
 
     Parameters
     ----------
-        pFlObject : pointer to xfdata.FL_OBJECT
-            chart object
+        ptr_flobject : pointer to xfdata.FL_OBJECT
+            chart flobject
 
     Returns
     -------
@@ -319,12 +325,12 @@ def fl_get_chart_bounds(pFlObject):
 
     Examples
     --------
-        >>> minb, maxb = fl_get_chart_bounds(chrtobj)
+        >>> minb, maxb = fl_get_chart_bounds(pchrtobj)
 
     API_diversion
     ----------
-        API changed from XForms, upstream was
-        fl_get_chart_bounds(pFlObject, minbound, maxbound)
+        API changed from XForms, upstream is
+        fl_get_chart_bounds(ptr_flobject, minbound, maxbound)
 
     Notes
     -----
@@ -338,30 +344,31 @@ def fl_get_chart_bounds(pFlObject):
         """void fl_get_chart_bounds(FL_OBJECT * ob, double * min,
            double * max)""")
     library.check_if_initialized()
-    library.verify_flobjectptr_type(pFlObject)
-    minbound, pminbound = library.make_double_and_pointer()
-    maxbound, pmaxbound = library.make_double_and_pointer()
-    library.keep_elem_refs(pFlObject, minbound, maxbound, pminbound, pmaxbound)
-    _fl_get_chart_bounds(pFlObject, pminbound, pmaxbound)
-    return minbound.value, maxbound.value
+    library.verify_flobjectptr_type(ptr_flobject)
+    f_minbound, ptr_minbound = library.make_doublec_and_pointer()
+    f_maxbound, ptr_maxbound = library.make_doublec_and_pointer()
+    library.keep_elem_refs(ptr_flobject, f_minbound, f_maxbound, \
+            ptr_minbound, ptr_maxbound)
+    _fl_get_chart_bounds(ptr_flobject, ptr_minbound, ptr_maxbound)
+    return f_minbound.value, f_maxbound.value
 
 
-def fl_set_chart_maxnumb(pFlObject, maxnum):
-    """fl_set_chart_maxnumb(pFlObject, maxnum)
+def fl_set_chart_maxnumb(ptr_flobject, maxnum):
+    """fl_set_chart_maxnumb(ptr_flobject, maxnum)
     
-    Sets the maximum number of values displayed in the chart. Defaults
+    Defines the maximum number of values displayed in the chart. Defaults
     is xfdata.FL_CHART_MAX; maximum set cannot be more than that.
 
     Parameters
     ----------
-        pFlObject : pointer to xfdata.FL_OBJECT
-            chart object
+        ptr_flobject : pointer to xfdata.FL_OBJECT
+            chart flobject
         maxnum : int
             maximum number of values to display
 
     Examples
     --------
-        >>> fl_set_chart_maxnumb(chrtobj, 12)
+        >>> fl_set_chart_maxnumb(pchrtobj, 12)
 
     Notes
     -----
@@ -373,23 +380,23 @@ def fl_set_chart_maxnumb(pFlObject, maxnum):
         None, [cty.POINTER(xfdata.FL_OBJECT), cty.c_int],
         """void fl_set_chart_maxnumb(FL_OBJECT * ob, int maxnumb)""")
     library.check_if_initialized()
-    library.verify_flobjectptr_type(pFlObject)
-    imaxnum = library.convert_to_int(maxnum)
-    library.keep_elem_refs(pFlObject, maxnum, imaxnum)
-    _fl_set_chart_maxnumb(pFlObject, imaxnum)
+    library.verify_flobjectptr_type(ptr_flobject)
+    i_maxnum = library.convert_to_intc(maxnum)
+    library.keep_elem_refs(ptr_flobject, maxnum, i_maxnum)
+    _fl_set_chart_maxnumb(ptr_flobject, i_maxnum)
 
 
-def fl_set_chart_autosize(pFlObject, yesno):
-    """fl_set_chart_autosize(pFlObject, yesno)
+def fl_set_chart_autosize(ptr_flobject, yesno):
+    """fl_set_chart_autosize(ptr_flobject, yesno)
     
-    Sets whether the chart should autosize along the x-axis. Normally width
-    of the bars and distance between the points in a line-chart are normally
-    scaled.
+    Defines whether the chart should autosize along the x-axis. Normally
+    width of the bars and distance between the points in a line-chart are
+    normally scaled.
 
     Parameters
     ----------
-        pFlObject : pointer to xfdata.FL_OBJECT
-            chart object
+        ptr_flobject : pointer to xfdata.FL_OBJECT
+            chart flobject
         yesno : int
             autosize flag. Values 1 (if enabled) or 0 (if disabled).
             If it is set to 0 the width of the bars will be such that the
@@ -409,22 +416,22 @@ def fl_set_chart_autosize(pFlObject, yesno):
         None, [cty.POINTER(xfdata.FL_OBJECT), cty.c_int],
         """void fl_set_chart_autosize(FL_OBJECT * ob, int autosize)""")
     library.check_if_initialized()
-    library.verify_flobjectptr_type(pFlObject)
-    iyesno = library.convert_to_int(yesno)
-    library.keep_elem_refs(pFlObject, yesno, iyesno)
-    _fl_set_chart_autosize(pFlObject, iyesno)
+    library.verify_flobjectptr_type(ptr_flobject)
+    i_yesno = library.convert_to_intc(yesno)
+    library.keep_elem_refs(ptr_flobject, yesno, i_yesno)
+    _fl_set_chart_autosize(ptr_flobject, i_yesno)
 
 
-def fl_set_chart_lstyle(pFlObject, style):
-    """fl_set_chart_lstyle(pFlObject, style)
+def fl_set_chart_lstyle(ptr_flobject, style):
+    """fl_set_chart_lstyle(ptr_flobject, style)
     
     Changes the font style of a chart's label. By default the label is
     drawn in a tiny font.
 
     Parameters
     ----------
-        pFlObject : pointer to xfdata.FL_OBJECT
-            chart object
+        ptr_flobject : pointer to xfdata.FL_OBJECT
+            chart flobject
         style : int
             label style. Values (from xfdata module) FL_NORMAL_STYLE,
             FL_BOLD_STYLE, FL_ITALIC_STYLE, FL_BOLDITALIC_STYLE,
@@ -448,27 +455,27 @@ def fl_set_chart_lstyle(pFlObject, style):
         None, [cty.POINTER(xfdata.FL_OBJECT), cty.c_int],
         """void fl_set_chart_lstyle(FL_OBJECT * ob, int lstyle)""")
     library.check_if_initialized()
-    library.verify_flobjectptr_type(pFlObject)
+    library.verify_flobjectptr_type(ptr_flobject)
     library.checkfatal_allowed_value_in_list(style, xfdata.TEXTSTYLE_list)
-    istyle = library.convert_to_int(style)
-    library.keep_elem_refs(pFlObject, style, istyle)
-    _fl_set_chart_lstyle(pFlObject, istyle)
+    i_style = library.convert_to_intc(style)
+    library.keep_elem_refs(ptr_flobject, style, i_style)
+    _fl_set_chart_lstyle(ptr_flobject, i_style)
 
 
-def fl_set_chart_lsize(pFlObject, size):
-    """fl_set_chart_lsize(pFlObject, size)
+def fl_set_chart_lsize(ptr_flobject, size):
+    """fl_set_chart_lsize(ptr_flobject, size)
     
     Changes the font size of chart's label. By default, the label is
     drawn in a tiny font.
 
     Parameters
     ----------
-        pFlObject : pointer to xfdata.FL_OBJECT
-            chart object
+        ptr_flobject : pointer to xfdata.FL_OBJECT
+            chart flobject
         size : int
             label size. Values (from xfdata module) FL_TINY_SIZE,
-            FL_SMALL_SIZE, FL_NORMAL_SIZE, FL_MEDIUM_SIZE, FL_LARGE_SIZE,
-            FL_HUGE_SIZE, FL_DEFAULT_SIZE
+            FL_SMALL_SIZE, FL_NORMAL_SIZE, FL_MEDIUM_SIZE,
+            FL_LARGE_SIZE, FL_HUGE_SIZE, FL_DEFAULT_SIZE
 
     Examples
     --------
@@ -484,23 +491,23 @@ def fl_set_chart_lsize(pFlObject, size):
         None, [cty.POINTER(xfdata.FL_OBJECT), cty.c_int],
         """void fl_set_chart_lsize(FL_OBJECT * ob, int lsize)""")
     library.check_if_initialized()
-    library.verify_flobjectptr_type(pFlObject)
+    library.verify_flobjectptr_type(ptr_flobject)
     library.checknonfatal_allowed_value_in_list(size, xfdata.FONTSIZE_list)
-    isize = library.convert_to_int(size)
-    library.keep_elem_refs(pFlObject, size, isize)
-    _fl_set_chart_lsize(pFlObject, isize)
+    i_size = library.convert_to_intc(size)
+    library.keep_elem_refs(ptr_flobject, size, i_size)
+    _fl_set_chart_lsize(ptr_flobject, i_size)
 
 
-def fl_set_chart_lcolor(pFlObject, colr):
-    """fl_set_chart_lcolor(pFlObject, colr)
+def fl_set_chart_lcolor(ptr_flobject, colr):
+    """fl_set_chart_lcolor(ptr_flobject, colr)
     
     Changes the color of chart's label. By default, the label is
     drawn in black.
 
     Parameters
     ----------
-        pFlObject : pointer to xfdata.FL_OBJECT
-            chart object
+        ptr_flobject : pointer to xfdata.FL_OBJECT
+            chart flobject
         colr : long_pos
             color value
 
@@ -518,24 +525,24 @@ def fl_set_chart_lcolor(pFlObject, colr):
         None, [cty.POINTER(xfdata.FL_OBJECT), xfdata.FL_COLOR],
         """void fl_set_chart_lcolor(FL_OBJECT * ob, FL_COLOR lcol)""")
     library.check_if_initialized()
-    library.verify_flobjectptr_type(pFlObject)
+    library.verify_flobjectptr_type(ptr_flobject)
     library.checknonfatal_allowed_value_in_list(colr, xfdata.COLOR_list)
-    ulcolr = library.convert_to_FL_COLOR(colr)
-    library.keep_elem_refs(pFlObject, colr, ulcolr)
-    _fl_set_chart_lcolor(pFlObject, ulcolr)
+    ul_colr = library.convert_to_FL_COLOR(colr)
+    library.keep_elem_refs(ptr_flobject, colr, ul_colr)
+    _fl_set_chart_lcolor(ptr_flobject, ul_colr)
 
 fl_set_chart_lcol = fl_set_chart_lcolor
 
 
-def fl_set_chart_baseline(pFlObject, yesno):
-    """fl_set_chart_baseline(pFlObject, yesno)
+def fl_set_chart_baseline(ptr_flobject, yesno):
+    """fl_set_chart_baseline(ptr_flobject, yesno)
     
     Turns on or off the chart's baseline.
 
     Parameters
     ----------
-        pFlObject : pointer to xfdata.FL_OBJECT
-            chart object
+        ptr_flobject : pointer to xfdata.FL_OBJECT
+            chart flobject
         yesno : int
             flag for baseline. Values 0 (if disabled) or 1 (if enabled)
 
@@ -553,8 +560,8 @@ def fl_set_chart_baseline(pFlObject, yesno):
         None, [cty.POINTER(xfdata.FL_OBJECT), cty.c_int],
         """void fl_set_chart_baseline(FL_OBJECT * ob, int iYesNo)""")
     library.check_if_initialized()
-    library.verify_flobjectptr_type(pFlObject)
-    iyesno = library.convert_to_int(yesno)
-    library.keep_elem_refs(pFlObject, yesno, iyesno)
-    _fl_set_chart_baseline(pFlObject, iyesno)
+    library.verify_flobjectptr_type(ptr_flobject)
+    i_yesno = library.convert_to_intc(yesno)
+    library.keep_elem_refs(ptr_flobject, yesno, i_yesno)
+    _fl_set_chart_baseline(ptr_flobject, i_yesno)
 

@@ -26,7 +26,7 @@
 # then heavily reordered and reworked
 
 # ############################################# #
-# Interface to XForms shared object libraries   #
+# Interface to XForms shared flobject libraries   #
 # ############################################# #
 
 
@@ -44,31 +44,31 @@ from xformslib import xfdata
 # fl_create_counter function placeholder (internal)
 
 
-def fl_add_counter(countertype, x, y, w, h, label):
-    """fl_add_counter(countertype, x, y, w, h, label)
-    
-    Adds a counter object.
+def fl_add_counter(countertype, xpos, ypos, width, height, label):
+    """fl_add_counter(countertype, xpos, ypos, width, height, label)
+    -> ptr_flobject
+    Adds a counter flobject.
 
     Parameters
     ----------
         countertype : int
             type of counter to be added. Values (from xfdata.py)
             FL_NORMAL_COUNTER, FL_SIMPLE_COUNTER
-        x : int
+        xpos : int
             horizontal position (upper-left corner)
-        y : int
+        ypos : int
             vertical position (upper-left corner)
-        w : int
+        width : int
             width in coord units
-        h : int
+        height : int
             height in coord units
         label : str
             text label of counter
 
     Returns
     -------
-        pFlObject : pointer to xfdata.FL_OBJECT
-            counter object added
+        ptr_flobject : pointer to xfdata.FL_OBJECT
+            counter flobject added
 
     Examples
     --------
@@ -89,27 +89,28 @@ def fl_add_counter(countertype, x, y, w, h, label):
     library.check_if_initialized()
     library.checkfatal_allowed_value_in_list(countertype, \
             xfdata.COUNTERTYPE_list)
-    icountertype = library.convert_to_int(countertype)
-    ix = library.convert_to_FL_Coord(x)
-    iy = library.convert_to_FL_Coord(y)
-    iw = library.convert_to_FL_Coord(w)
-    ih = library.convert_to_FL_Coord(h)
-    slabel = library.convert_to_string(label)
-    library.keep_elem_refs(countertype, x, y, w, h, label, icountertype, \
-            ix, iy, iw, ih, slabel)
-    retval = _fl_add_counter(icountertype, ix, iy, iw, ih, slabel)
+    i_countertype = library.convert_to_intc(countertype)
+    i_xpos = library.convert_to_FL_Coord(xpos)
+    i_ypos = library.convert_to_FL_Coord(ypos)
+    i_width = library.convert_to_FL_Coord(width)
+    i_height = library.convert_to_FL_Coord(height)
+    s_label = library.convert_to_stringc(label)
+    library.keep_elem_refs(countertype, xpos, ypos, width, height, label, \
+            i_countertype, i_xpos, i_ypos, i_width, i_height, s_label)
+    retval = _fl_add_counter(i_countertype, i_xpos, i_ypos, i_width, \
+            i_height, s_label)
     return retval
 
 
-def fl_set_counter_value(pFlObject, val):
-    """fl_set_counter_value(pFlObject, val)
+def fl_set_counter_value(ptr_flobject, val):
+    """fl_set_counter_value(ptr_flobject, val)
     
-    Sets the value of the counter.
+    Defines the value of the counter flobject.
 
     Parameters
     ----------
-        pFlObject : pointer to xfdata.FL_OBJECT
-            counter object
+        ptr_flobject : pointer to xfdata.FL_OBJECT
+            counter flobject
         val : float
             value to be set. By default it is 0.
 
@@ -127,22 +128,22 @@ def fl_set_counter_value(pFlObject, val):
         None, [cty.POINTER(xfdata.FL_OBJECT), cty.c_double],
         """void fl_set_counter_value(FL_OBJECT * ob, double val)""")
     library.check_if_initialized()
-    library.verify_flobjectptr_type(pFlObject)
-    fval = library.convert_to_double(val)
-    library.keep_elem_refs(pFlObject, val, fval)
-    _fl_set_counter_value(pFlObject, fval)
+    library.verify_flobjectptr_type(ptr_flobject)
+    f_val = library.convert_to_doublec(val)
+    library.keep_elem_refs(ptr_flobject, val, f_val)
+    _fl_set_counter_value(ptr_flobject, f_val)
 
 
-def fl_set_counter_bounds(pFlObject, minbound, maxbound):
-    """fl_set_counter_bounds(pFlObject, minbound, maxbound)
+def fl_set_counter_bounds(ptr_flobject, minbound, maxbound):
+    """fl_set_counter_bounds(ptr_flobject, minbound, maxbound)
     
-    Sets the minimum and maximum values that the counter will take. For
+    Defines the minimum and maximum values that the counter will take. For
     conflicting settings bound takes precedence over value.
 
     Parameters
     ----------
-        pFlObject : pointer to xfdata.FL_OBJECT
-            counter object
+        ptr_flobject : pointer to xfdata.FL_OBJECT
+            counter flobject
         minbound : float
             minimum value to be set. By default it is -1000000.
         maxbound : float
@@ -163,26 +164,27 @@ def fl_set_counter_bounds(pFlObject, minbound, maxbound):
         """void fl_set_counter_bounds(FL_OBJECT * ob, double min,
            double max)""")
     library.check_if_initialized()
-    library.verify_flobjectptr_type(pFlObject)
-    fminbound = library.convert_to_double(minbound)
-    fmaxbound = library.convert_to_double(maxbound)
-    library.keep_elem_refs(pFlObject, minbound, maxbound, fminbound, fmaxbound)
-    _fl_set_counter_bounds(pFlObject, fminbound, fmaxbound)
+    library.verify_flobjectptr_type(ptr_flobject)
+    f_minbound = library.convert_to_doublec(minbound)
+    f_maxbound = library.convert_to_doublec(maxbound)
+    library.keep_elem_refs(ptr_flobject, minbound, maxbound, f_minbound, \
+            f_maxbound)
+    _fl_set_counter_bounds(ptr_flobject, f_minbound, f_maxbound)
 
 
-def fl_set_counter_step(pFlObject, small, large):
-    """fl_set_counter_step(pFlObject, small, large)
+def fl_set_counter_step(ptr_flobject, smallsize, largesize):
+    """fl_set_counter_step(ptr_flobject, smallsize, largesize)
     
-    Sets the sizes of the small and large steps of a counter. For simple
+    Defines the sizes of the small and large steps of a counter. For simple
     counters only the small step is used.
 
     Parameters
     ----------
-        pFlObject : pointer to xfdata.FL_OBJECT
-            counter object
-        small : float
+        ptr_flobject : pointer to xfdata.FL_OBJECT
+            counter flobject
+        smallsize : float
             small step's size. By default it is 0.1.
-        large : float
+        largesize : float
             large step's size. By default it is 1.
 
     Examples
@@ -198,24 +200,25 @@ def fl_set_counter_step(pFlObject, small, large):
         library.load_so_libforms(), "fl_set_counter_step",
         None, [cty.POINTER(xfdata.FL_OBJECT), cty.c_double, cty.c_double],
         """void fl_set_counter_step(FL_OBJECT * ob, double s, double l)""")
-    library.verify_flobjectptr_type(pFlObject)
-    fsmall = library.convert_to_double(small)
-    flarge = library.convert_to_double(large)
-    library.keep_elem_refs(pFlObject, small, large, fsmall, flarge)
-    _fl_set_counter_step(pFlObject, fsmall, flarge)
+    library.verify_flobjectptr_type(ptr_flobject)
+    f_smallsize = library.convert_to_doublec(smallsize)
+    f_largesize = library.convert_to_doublec(largesize)
+    library.keep_elem_refs(ptr_flobject, smallsize, largesize, f_smallsize,
+            f_largesize)
+    _fl_set_counter_step(ptr_flobject, f_smallsize, f_largesize)
 
 
-def fl_set_counter_precision(pFlObject, prec):
-    """fl_set_counter_precision(pFlObject, prec)
+def fl_set_counter_precision(ptr_flobject, precis):
+    """fl_set_counter_precision(ptr_flobject, precis)
     
-    Sets the precision (number of digits after the dot) with which
+    Defines the precision (number of digits after the dot) with which
     the counter value is displayed.
 
     Parameters
     ----------
-        pFlObject : pointer to xfdata.FL_OBJECT
-            counter object
-        prec : int
+        ptr_flobject : pointer to xfdata.FL_OBJECT
+            counter flobject
+        precis : int
             precision to be set
 
     Examples
@@ -232,26 +235,26 @@ def fl_set_counter_precision(pFlObject, prec):
         None, [cty.POINTER(xfdata.FL_OBJECT), cty.c_int],
         """void fl_set_counter_precision(FL_OBJECT * ob, int prec)""")
     library.check_if_initialized()
-    library.verify_flobjectptr_type(pFlObject)
-    iprec = library.convert_to_int(prec)
-    library.keep_elem_refs(pFlObject, prec, iprec)
-    _fl_set_counter_precision(pFlObject, iprec)
+    library.verify_flobjectptr_type(ptr_flobject)
+    i_precis = library.convert_to_intc(precis)
+    library.keep_elem_refs(ptr_flobject, precis, i_precis)
+    _fl_set_counter_precision(ptr_flobject, i_precis)
 
 
-def fl_get_counter_precision(pFlObject):
-    """fl_get_counter_precision(pFlObject)
+def fl_get_counter_precision(ptr_flobject):
+    """fl_get_counter_precision(ptr_flobject) -> precis
     
-    Obtains the current value of the precision (number of digits after the
-    dot) of the counter.
+    Finds out the current value of the precision (number of digits after
+    the dot) of the counter.
 
     Parameters
     ----------
-        pFlObject : pointer to xfdata.FL_OBJECT
-            counter object
+        ptr_flobject : pointer to xfdata.FL_OBJECT
+            counter flobject
 
     Returns
     -------
-        prec : int
+        precis : int
             number of digits after the dot
 
     Examples
@@ -268,29 +271,29 @@ def fl_get_counter_precision(pFlObject):
         cty.c_int, [cty.POINTER(xfdata.FL_OBJECT)],
         """int fl_get_counter_precision(FL_OBJECT * ob)""")
     library.check_if_initialized()
-    library.verify_flobjectptr_type(pFlObject)
-    library.keep_elem_refs(pFlObject)
-    retval = _fl_get_counter_precision(pFlObject)
+    library.verify_flobjectptr_type(ptr_flobject)
+    library.keep_elem_refs(ptr_flobject)
+    retval = _fl_get_counter_precision(ptr_flobject)
     return retval
 
 
 # fl_set_counter_return function placeholder (deprecated)
 
 
-def fl_get_counter_value(pFlObject):
-    """fl_get_counter_value(pFlObject)
+def fl_get_counter_value(ptr_flobject):
+    """fl_get_counter_value(ptr_flobject) -> value
     
-    Obtains the current value of the counter.
+    Finds out the current value of the counter.
 
     Parameters
     ----------
-        pFlObject : pointer to xfdata.FL_OBJECT
-            counter object
+        ptr_flobject : pointer to xfdata.FL_OBJECT
+            counter flobject
 
     Returns
     -------
-        cvalue : float
-            current value
+        value : float
+            current value of counter
 
     Examples
     --------
@@ -306,21 +309,21 @@ def fl_get_counter_value(pFlObject):
         cty.c_double, [cty.POINTER(xfdata.FL_OBJECT)],
         """double fl_get_counter_value(FL_OBJECT * ob)""")
     library.check_if_initialized()
-    library.verify_flobjectptr_type(pFlObject)
-    library.keep_elem_refs(pFlObject)
-    retval = _fl_get_counter_value(pFlObject)
+    library.verify_flobjectptr_type(ptr_flobject)
+    library.keep_elem_refs(ptr_flobject)
+    retval = _fl_get_counter_value(ptr_flobject)
     return retval
 
 
-def fl_get_counter_bounds(pFlObject):
-    """fl_get_counter_bounds(pFlObject)
+def fl_get_counter_bounds(ptr_flobject):
+    """fl_get_counter_bounds(ptr_flobject) -> minbound, maxbound
     
-    Obtains the current minimum and maximum bounds of the counter.
+    Finds out the current minimum and maximum bounds of the counter.
 
     Parameters
     ----------
-        pFlObject : pointer to xfdata.FL_OBJECT
-            counter object
+        ptr_flobject : pointer to xfdata.FL_OBJECT
+            counter flobject
 
     Returns
     -------
@@ -335,8 +338,8 @@ def fl_get_counter_bounds(pFlObject):
 
     API_diversion
     ----------
-        API changed from XForms, upstream was
-        fl_get_counter_bounds(pFlObject, minbound, maxbound)
+        API changed from XForms, upstream is
+        fl_get_counter_bounds(ptr_flobject, minbound, maxbound)
 
     Notes
     -----
@@ -350,27 +353,30 @@ def fl_get_counter_bounds(pFlObject):
         """void fl_get_counter_bounds(FL_OBJECT * ob, double * min,
            double * max)""")
     library.check_if_initialized()
-    library.verify_flobjectptr_type(pFlObject)
-    minbound, pminbound = library.make_double_and_pointer()
-    maxbound, pmaxbound = library.make_double_and_pointer()
-    library.keep_elem_refs(pFlObject, minbound, maxbound, pminbound, pmaxbound)
-    _fl_get_counter_bounds(pFlObject, pminbound, pmaxbound)
-    return minbound.value, maxbound.value
+    library.verify_flobjectptr_type(ptr_flobject)
+    f_minbound, ptr_minbound = library.make_doublec_and_pointer()
+    f_maxbound, ptr_maxbound = library.make_doublec_and_pointer()
+    library.keep_elem_refs(ptr_flobject, f_minbound, f_maxbound, \
+            ptr_minbound, ptr_maxbound)
+    _fl_get_counter_bounds(ptr_flobject, ptr_minbound, ptr_maxbound)
+    return f_minbound.value, f_maxbound.value
 
 
-def fl_get_counter_step(pFlObject):
-    """Obtains the current small and large step's sizes of a counter.
+def fl_get_counter_step(ptr_flobject):
+    """fl_get_counter_step(ptr_flobject) -> smallsize, largesize
+    
+    Finds out the current small and large step's sizes of a counter.
 
     Parameters
     ----------
-        pFlObject : pointer to xfdata.FL_OBJECT
-            counter object
+        ptr_flobject : pointer to xfdata.FL_OBJECT
+            counter flobject
 
     Returns
     -------
-        smsize : float
+        smallsize : float
             small step size
-        lgsize : float
+        largesize : float
             large step size
 
     Examples
@@ -379,8 +385,8 @@ def fl_get_counter_step(pFlObject):
 
     API_diversion
     ----------
-        API changed from XForms, upstream was
-        fl_get_counter_step(pFlObject, sml, lrg)
+        API changed from XForms, upstream is
+        fl_get_counter_step(ptr_flobject, sml, lrg)
 
     Notes
     -----
@@ -394,26 +400,27 @@ def fl_get_counter_step(pFlObject):
         """void fl_get_counter_step(FL_OBJECT * ob, double * s,
            double * l)""")
     library.check_if_initialized()
-    library.verify_flobjectptr_type(pFlObject)
-    small, psmall = library.make_double_and_pointer()
-    large, plarge = library.make_double_and_pointer()
-    library.keep_elem_refs(pFlObject, small, large, psmall, plarge)
-    _fl_get_counter_step(pFlObject, psmall, plarge)
-    return small.value, large.value
+    library.verify_flobjectptr_type(ptr_flobject)
+    f_smallsize, ptr_smallsize = library.make_doublec_and_pointer()
+    f_largesize, ptr_largesize = library.make_doublec_and_pointer()
+    library.keep_elem_refs(ptr_flobject, f_smallsize, f_largesize, \
+            ptr_smallsize, ptr_largesize)
+    _fl_get_counter_step(ptr_flobject, ptr_smallsize, ptr_largesize)
+    return f_smallsize.value, f_largesize.value
 
 
-def fl_set_counter_filter(pFlObject, py_ValFilter):
-    """fl_set_counter_filter(pFlObject, py_ValFilter)
+def fl_set_counter_filter(ptr_flobject, pyfn_ValFilter):
+    """fl_set_counter_filter(ptr_flobject, pyfn_ValFilter)
     
     Overrides the format and value shown by the counter. By default the
     value is shown in floating point format.
 
     Parameters
     ----------
-        pFlObject : pointer to xfdata.FL_OBJECT
-            counter object
-        py_ValFilter : python callback function, returned value
-            name referring to function(pObject, valfloat, intprec) -> str
+        ptr_flobject : pointer to xfdata.FL_OBJECT
+            counter flobject
+        pyfn_ValFilter : python callback function, returned value
+            name referring to function(ptr_flobject, valfloat, intprec) -> str
 
     Examples
     --------
@@ -435,26 +442,26 @@ def fl_set_counter_filter(pFlObject, py_ValFilter):
         """void fl_set_counter_filter(FL_OBJECT * ob,
            FL_VAL_FILTER filter)""")
     library.check_if_initialized()
-    library.verify_flobjectptr_type(pFlObject)
-    library.verify_function_type(py_ValFilter)
-    c_ValFilter = xfdata.FL_VAL_FILTER(py_ValFilter)
-    library.keep_cfunc_refs(c_ValFilter, py_ValFilter)
-    library.keep_elem_refs(pFlObject)
-    _fl_set_counter_filter(pFlObject, c_ValFilter)
+    library.verify_flobjectptr_type(ptr_flobject)
+    library.verify_function_type(pyfn_ValFilter)
+    c_ValFilter = xfdata.FL_VAL_FILTER(pyfn_ValFilter)
+    library.keep_cfunc_refs(c_ValFilter, pyfn_ValFilter)
+    library.keep_elem_refs(ptr_flobject)
+    _fl_set_counter_filter(ptr_flobject, c_ValFilter)
 
 
 # Functions to set and get the timeout value used by the
 # counter code to control modification of the counter value.
 
-def fl_get_counter_repeat(pFlObject):
-    """fl_get_counter_repeat(pFlObject)
+def fl_get_counter_repeat(ptr_flobject):
+    """fl_get_counter_repeat(ptr_flobject) -> tdelay
 
-    Obtains the initial delay of the counter.
+    Finds out the initial delay of the counter.
 
     Parameters
     ----------
-        pFlObject : pointer to xfdata.FL_OBJECT
-            counter object
+        ptr_flobject : pointer to xfdata.FL_OBJECT
+            counter flobject
 
     Returns
     -------
@@ -475,25 +482,25 @@ def fl_get_counter_repeat(pFlObject):
         cty.c_int, [cty.POINTER(xfdata.FL_OBJECT)],
         """int fl_get_counter_repeat(FL_OBJECT * ob)""")
     library.check_if_initialized()
-    library.verify_flobjectptr_type(pFlObject)
-    library.keep_elem_refs(pFlObject)
-    retval = _fl_get_counter_repeat(pFlObject)
+    library.verify_flobjectptr_type(ptr_flobject)
+    library.keep_elem_refs(ptr_flobject)
+    retval = _fl_get_counter_repeat(ptr_flobject)
     return retval
 
 
-def fl_set_counter_repeat(pFlObject, msec):
-    """fl_set_counter_repeat(pFlObject, msec)
+def fl_set_counter_repeat(ptr_flobject, tdelay):
+    """fl_set_counter_repeat(ptr_flobject, tdelay)
     
-    Sets the initial delay of a counter. By default the counter value
+    Defines the initial delay of a counter. By default the counter value
     changes first slowly and the rate of change then accelerates until a
     final speed is reached. The default delay between the value changing
     is 600 ms at the start.
 
     Parameters
     ----------
-        pFlObject : pointer to xfdata.FL_OBJECT
-            counter object
-        msec : int
+        ptr_flobject : pointer to xfdata.FL_OBJECT
+            counter flobject
+        tdelay : int
             initial delay in milliseconds
 
     Examples
@@ -510,21 +517,21 @@ def fl_set_counter_repeat(pFlObject, msec):
         None, [cty.POINTER(xfdata.FL_OBJECT), cty.c_int],
         """void fl_set_counter_repeat(FL_OBJECT * ob, int millisec)""")
     library.check_if_initialized()
-    library.verify_flobjectptr_type(pFlObject)
-    imsec = library.convert_to_int(msec)
-    library.keep_elem_refs(pFlObject, msec, imsec)
-    _fl_set_counter_repeat(pFlObject, imsec)
+    library.verify_flobjectptr_type(ptr_flobject)
+    i_tdelay = library.convert_to_intc(tdelay)
+    library.keep_elem_refs(ptr_flobject, tdelay, i_tdelay)
+    _fl_set_counter_repeat(ptr_flobject, i_tdelay)
 
 
-def fl_get_counter_min_repeat(pFlObject):
-    """fl_get_counter_min_repeat(pFlObject)
+def fl_get_counter_min_repeat(ptr_flobject):
+    """fl_get_counter_min_repeat(ptr_flobject) -> fdelay
     
-    Obtains the final delay of a counter object.
+    Finds out the final delay of a counter flobject.
 
     Parameters
     ----------
-        pFlObject : pointer to xfdata.FL_OBJECT
-            counter object
+        ptr_flobject : pointer to xfdata.FL_OBJECT
+            counter flobject
 
     Returns
     -------
@@ -545,24 +552,24 @@ def fl_get_counter_min_repeat(pFlObject):
         cty.c_int, [cty.POINTER(xfdata.FL_OBJECT)],
         """int fl_get_counter_min_repeat(FL_OBJECT * ob)""")
     library.check_if_initialized()
-    library.verify_flobjectptr_type(pFlObject)
-    library.keep_elem_refs(pFlObject)
-    retval = _fl_get_counter_min_repeat(pFlObject)
+    library.verify_flobjectptr_type(ptr_flobject)
+    library.keep_elem_refs(ptr_flobject)
+    retval = _fl_get_counter_min_repeat(ptr_flobject)
     return retval
 
 
-def fl_set_counter_min_repeat(pFlObject, msec):
-    """fl_set_counter_min_repeat(pFlObject, msec)
+def fl_set_counter_min_repeat(ptr_flobject, fdelay):
+    """fl_set_counter_min_repeat(ptr_flobject, fdelay)
     
-    Sets the final delay of a counter. By default the counter value
+    Defines the final delay of a counter. By default the counter value
     changes first slowly and the rate of change then accelerates until
     a final speed is reached. The default the final delay is 50 ms.
 
     Parameters
     ----------
-        pFlObject : pointer to xfdata.FL_OBJECT
-            counter object
-        msec : int
+        ptr_flobject : pointer to xfdata.FL_OBJECT
+            counter flobject
+        fdelay : int
             final delay in milliseconds
 
     Examples
@@ -579,21 +586,21 @@ def fl_set_counter_min_repeat(pFlObject, msec):
         None, [cty.POINTER(xfdata.FL_OBJECT), cty.c_int],
         """void fl_set_counter_min_repeat(FL_OBJECT * ob, int millisec)""")
     library.check_if_initialized()
-    library.verify_flobjectptr_type(pFlObject)
-    imsec = library.convert_to_int(msec)
-    library.keep_elem_refs(pFlObject, msec, imsec)
-    _fl_set_counter_min_repeat(pFlObject, imsec)
+    library.verify_flobjectptr_type(ptr_flobject)
+    i_fdelay = library.convert_to_intc(fdelay)
+    library.keep_elem_refs(ptr_flobject, fdelay, i_fdelay)
+    _fl_set_counter_min_repeat(ptr_flobject, i_fdelay)
 
 
-def fl_get_counter_speedjump(pFlObject):
-    """fl_get_counter_speedjump(pFlObject)
+def fl_get_counter_speedjump(ptr_flobject):
+    """fl_get_counter_speedjump(ptr_flobject)
 
-    Obtains the setting for speedjumping.
+    Finds out the setting for speedjumping.
 
     Parameters
     ----------
-        pFlObject : pointer to xfdata.FL_OBJECT
-            counter object
+        ptr_flobject : pointer to xfdata.FL_OBJECT
+            counter flobject
 
     Returns
     -------
@@ -614,14 +621,14 @@ def fl_get_counter_speedjump(pFlObject):
         cty.c_int, [cty.POINTER(xfdata.FL_OBJECT)],
         """int fl_get_counter_speedjump(FL_OBJECT * ob)""")
     library.check_if_initialized()
-    library.verify_flobjectptr_type(pFlObject)
-    library.keep_elem_refs(pFlObject)
-    retval = _fl_get_counter_speedjump(pFlObject)
+    library.verify_flobjectptr_type(ptr_flobject)
+    library.keep_elem_refs(ptr_flobject)
+    retval = _fl_get_counter_speedjump(ptr_flobject)
     return retval
 
 
-def fl_set_counter_speedjump(pFlObject, yesno):
-    """fl_set_counter_speedjump(pFlObject, yesno)
+def fl_set_counter_speedjump(ptr_flobject, yesno):
+    """fl_set_counter_speedjump(ptr_flobject, yesno)
     
     Makes only the first change of the counter has a different delay
     from all the following ones. The delay for the first change of the
@@ -631,8 +638,8 @@ def fl_set_counter_speedjump(pFlObject, yesno):
 
     Parameters
     ----------
-        pFlObject : pointer to xfdata.FL_OBJECT
-            counter object
+        ptr_flobject : pointer to xfdata.FL_OBJECT
+            counter flobject
         yesno : int
             flag. Values 1 (to set speedjump) or 0 (to unset speedjump)
 
@@ -650,8 +657,8 @@ def fl_set_counter_speedjump(pFlObject, yesno):
         None, [cty.POINTER(xfdata.FL_OBJECT), cty.c_int],
         """void fl_set_counter_speedjump(FL_OBJECT * ob, int yes_no)""")
     library.check_if_initialized()
-    library.verify_flobjectptr_type(pFlObject)
-    iyesno = library.convert_to_int(yesno)
-    library.keep_elem_refs(pFlObject, yesno, iyesno)
-    _fl_set_counter_speedjump(pFlObject, iyesno)
+    library.verify_flobjectptr_type(ptr_flobject)
+    i_yesno = library.convert_to_intc(yesno)
+    library.keep_elem_refs(ptr_flobject, yesno, i_yesno)
+    _fl_set_counter_speedjump(ptr_flobject, i_yesno)
 
