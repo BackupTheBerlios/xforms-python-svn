@@ -489,7 +489,7 @@ def fl_show_simple_input(msgtxt, defstr):
 
 
 def fl_show_colormap(oldcolr):
-    """fl_show_colormap(oldcolr) -> colridx
+    """fl_show_colormap(oldcolr) -> colr
     
     Shows a colormap color selector from which the user can select a
     color. The user can decide not to change this color by pressing the
@@ -503,12 +503,12 @@ def fl_show_colormap(oldcolr):
     Parameters
     ----------
         oldcolr : int
-            current or default color num. (Not xfdata.FL_COLOR)
+            XForms colormap index as current default color
 
     Returns
     -------
         colridx : int
-            index of the color selected (or the index of the old color)
+            XForms colormap index as selected color, or default one
 
     Examples
     --------
@@ -832,9 +832,9 @@ def fl_set_oneliner_color(fgcolr, bgcolr):
     Parameters
     ----------
         fgcolr : long_pos
-            color value for oneliner foreground
+            XForms colormap index as color for oneliner foreground
         bgcolr : long_pos
-            color value for oneliner background
+            XForms colormap index as color for oneliner background
 
     Examples
     --------
@@ -909,9 +909,9 @@ def fl_set_tooltip_color(fgcolr, bgcolr):
     Parameters
     ----------
         fgcolr : long_pos
-            foreground color value
+            XForms colormap index as foreground color
         bgcolr : long_pos
-            background color value
+            XForms colormap index as background color
 
     Examples
     --------

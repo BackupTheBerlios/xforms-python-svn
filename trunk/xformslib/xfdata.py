@@ -3642,60 +3642,33 @@ inputLabelSize = FL_IOPT().inputFontSize
 
 # values for unnamed enumeration
 FL_PDDepth = 2                      # (1<<1)
-"""Preferred visual depth (depth)"""
 FL_PDClass = 4                      # (1<<2)
-""" """
 FL_PDDouble = 8                     # (1<<3)
-"""Simulate double buffering (doubleBuffer)"""
 FL_PDSync = 16                      # (1<<4)
-""" """
 FL_PDPrivateMap = 32                # (1<<5)
-"""Select private colormap if appropriate (privateColormap)"""
 FL_PDScrollbarType = 64             # (1<<6)
-"""Scrollbar type to use for browser and input (scrollbarType)"""
 FL_PDPupFontSize = 128              # (1<<7)
-"""Font size for pop-ups (PupFontSize)"""
 FL_PDButtonFontSize = 256           # (1<<8)
-"""Default button label font size (buttonFontSize)"""
 FL_PDInputFontSize = 512            # (1<<9)
-"""Input label and text font size (menuFontSize)"""
 FL_PDSliderFontSize  = 1024         # (1<<10)
-""" """
 FL_PDVisual = 2048                  # (1<<11)
-"""Preferred visual (e.g. TrueColor ..(vclass)"""
 FL_PDULThickness = 4096             # (1<<12)
-"""Underline thickness (ulThickness)"""
 FL_PDULPropWidth = 8192             # (1<<13)
-"""Underline width, 0 for constant width fonts (ulPropWidth)"""
 FL_PDBS = 16384                     # (1<<14)
-"""Turn BackingStore on or off (backingStore)"""
 FL_PDCoordUnit = 32768              # (1<<15)
-"""Unit of measure for screen coordinates (pixel, mm, point, etc..)
-(coordUnit)"""
 FL_PDDebug = 65536                  # (1<<16)
-"""Debug level (0-5) (debug)"""
 FL_PDSharedMap = 131072             # (1<<17)
-"""Force use of shared colormap (sharedColormap)"""
 FL_PDStandardMap = 262144           # (1<<18)
-"""Force use of standard colormap (standardColormap)"""
 FL_PDBorderWidth = 524288           # (1<<19)
-"""Default border width (borderWidth)"""
 FL_PDSafe = 1048576                 # (1<<20)
-""" """
 FL_PDMenuFontSize = 2097152         # (1<<21)
-"""Menu label font size (menuFontSize)"""
 FL_PDBrowserFontSize = 4194304      # (1<<22)
-"""Browser label and text font size (browserFontSize)"""
 FL_PDChoiceFontSize = 8388608       # (1<<23)
-"""Choice label and choice text font size (choiceFontSize)"""
 FL_PDLabelFontSize = 16777216       # (1<<24)
-"""Label font size for all other flobjects (box, pixmap etc.) (labelFontSize)"""
 
 FL_PDButtonLabelSize = FL_PDButtonFontSize
-"""Default button label font size (buttonFontSize)"""
 FL_PDSliderLabelSize = FL_PDSliderFontSize
 FL_PDInputLabelSize = FL_PDInputFontSize
-"""Input label and text font size (menuFontSize)"""
 FL_PDButtonLabel = FL_PDButtonLabelSize
 
 class admitted_values_for_PRGDEFAULTS(object):
@@ -3751,8 +3724,8 @@ class admitted_values_for_PRGDEFAULTS(object):
         FL_PDChoiceFontSize
             Choice label and choice text font size (choiceFontSize)
         FL_PDLabelFontSize
-            Label font size for all other flobjects, e.g. box, pixmap etc..
-            (labelFontSize)
+            Label font size for all other flobjects, e.g. box, pixmap
+             etc.. (labelFontSize)
         FL_PDButtonLabelSize or FL_PDButtonLabel
             Default button label font size (buttonFontSize)
         FL_PDSliderLabelSize = FL_PDSliderFontSize

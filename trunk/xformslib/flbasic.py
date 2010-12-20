@@ -2893,8 +2893,8 @@ def fl_set_object_lcol(ptr_flobject, colr):
         ptr_flobject : pointer to xfdata.FL_OBJECT
             flobject to be set
         colr : long_pos
-            label color. Values (from xfdata.py) one of defined colors
-            FL_BLACK, ... FL_BLUE, ... FL_GREEN, ... FL_RED, ... etc..
+            XForms colormap index as label color. Values (from xfdata.py)
+             one of defined colors FL_BLACK, FL_BLUE, FL_GREEN, FL_RED, etc..
 
     Examples
     --------
@@ -2934,7 +2934,7 @@ def fl_get_object_lcol(ptr_flobject):
     Returns
     -------
         colr : long_pos
-            color value
+            XForms colormap index as color value
 
     Examples
     --------
@@ -3256,9 +3256,9 @@ def fl_set_object_color(ptr_flobject, fgcolr, bgcolr):
         ptr_flobject : pointer to xfdata.FL_OBJECT
             flobject to be set
         fgcolr : long_pos
-            foreground color value
+            XForms colormap index as foreground color
         bgcolr : long_pos
-            background color value
+            XForms colormap index as background color
 
     Examples
     --------
@@ -3299,9 +3299,9 @@ def fl_get_object_color(ptr_flobject):
     Returns
     -------
         fgcolr : long_pos
-            foreground color value
+            XForms colormap index as foreground color
         bgcolr : long_pos
-            background color value
+            XForms colormap index as background color
 
     Examples
     --------
@@ -5318,11 +5318,11 @@ def fl_drw_text(align, xpos, ypos, width, height, colr, style, size, txtstr):
     """fl_drw_text(align, xpos, ypos, width, height, colr, style, size, txtstr)
     
     Draws the text inside the bounding box according to the alignment
-    requested. It puts a padding of 5 pixels in vertical direction and 4
-    in horizontal around the text. Thus the bounding box should be 10 pixels
-    wider and 8 pixels higher than required for the text to be drawn. It
-    interprets a text string starting with the character @ differently in
-    drawing some symbols instead.
+    requested. It puts a padding of 5 pixels in vertical direction and
+    4 in horizontal around the text. Thus the bounding box should be 10
+    pixels wider and 8 pixels higher than required for the text to be
+    drawn. It interprets a text string starting with the character @
+    differently in drawing some symbols instead.
 
     Parameters
     ----------
@@ -5341,7 +5341,7 @@ def fl_drw_text(align, xpos, ypos, width, height, colr, style, size, txtstr):
         height : int
             height in coord units
         colr : long_pos
-            color value
+            XForms colormap index as color
         style : int
             font style. Values (from xfdata.py) FL_NORMAL_STYLE,
             FL_BOLD_STYLE, FL_ITALIC_STYLE, FL_BOLDITALIC_STYLE,
@@ -5420,7 +5420,7 @@ def fl_drw_text_beside(align, xpos, ypos, width, height, colr, style,
         height : int
             height in coord units
         colr : long_pos
-            color value
+            XForms colormap index as color
         style : int
             font style. Values (from xfdata.py) FL_NORMAL_STYLE,
             FL_BOLD_STYLE, FL_ITALIC_STYLE, FL_BOLDITALIC_STYLE,
@@ -5501,7 +5501,7 @@ def fl_drw_text_cursor(align, xpos, ypos, width, height, colr, style, size,
         height : int
             height in coord units
         colr : long_pos
-            color value
+            XForms colormap index as color
         style : int
             font style. Values (from xfdata.py) FL_NORMAL_STYLE,
             FL_BOLD_STYLE, FL_ITALIC_STYLE, FL_BOLDITALIC_STYLE,
@@ -5517,7 +5517,7 @@ def fl_drw_text_cursor(align, xpos, ypos, width, height, colr, style, size,
         txtstr : str
             text to draw
         curscolr : int
-            color of the cursor
+            XForms colormap index as color of the cursor
         pos : int
             position which indicates the index of the character before
             which to draw the cursor (-1 for not showing it)
@@ -5590,7 +5590,7 @@ def fl_drw_box(boxtype, xpos, ypos, width, height, colr, bndrwidth):
         height : int
             height in coord units
         colr : long_pos
-            color value
+            XForms colormap index as color
         bndrwidth : int
             width of the boundary
 
@@ -5647,8 +5647,8 @@ def fl_add_symbol(symbname, pyfn_DrawPtr, scalable):
     Returns
     -------
         result : int
-            1 (on success), or -1 (on failure, if no symbol or no
-            function)
+            1 (on success), or -1 (on failure, if no symbol
+            or no function)
 
     Examples
     --------
@@ -5697,7 +5697,7 @@ def fl_draw_symbol(symbname, xpos, ypos, width, height, colr):
         height : int
             height in coord units
         colr : long_pos
-            color value
+            XForms colormap index as color
 
     Returns
     -------
@@ -5749,7 +5749,7 @@ def fl_mapcolor(colr, red, green, blue):
     Parameters
     ----------
         colr : long_pos
-            new color value to be mapped
+            XForms colormap index as new color to be mapped
         red : int
             value for red
         green : int
@@ -5798,7 +5798,7 @@ def fl_mapcolorname(colr, rgbcolrname):
     Parameters
     ----------
         colr : long_pos
-            color value to be mapped
+            XForms colormap index as color to be mapped
         rgbcolrname : str
             name of mapped color from the systems color database file
             "/usr/share/X11/rgb.txt" (see that file for possible values)
@@ -5843,7 +5843,7 @@ def fl_free_colors(colrlist, numcolr):
     Parameters
     ----------
         colrlist : list of long_pos
-            color value *todo*
+            series of XForms colormap indices as colors
         numcolr : int
             number of colors stored in the array of colors
 
@@ -5917,7 +5917,7 @@ def fl_getmcolor(colr):
     Parameters
     ----------
         colr : long_pos
-            color value
+            XForms colormap index as color
 
     Returns
     -------
@@ -5965,17 +5965,18 @@ def fl_getmcolor(colr):
 def fl_get_pixel(colr):
     """fl_get_pixel(colr) -> pixelval
     
-    Finds out the actual pixel value the X server understands. XForms
-    library keeps an internal colormap, initialized to predefined colors.
-    The predefined colors do not correspond to pixel values the X server
-    understands but are indexes into the colormap. Therefore, they cannot
-    be used in any of the Graphics Context (GC) altering or Xlib routines.
+    Finds out the actual pixel value the X server understands from a XForms
+    colormap index. XForms library keeps an internal colormap, initialized
+    to predefined colors. The predefined colors do not correspond to pixel
+    values the X server understands but are indexes into the colormap.
+    Therefore, they cannot be used in any of the Graphics Context (GC)
+    altering or Xlib routines.
 
     Parameters
     ----------
         colr : long_pos
-            XForms colormap index. Values (from xfdata.py) FL_GREEN ..
-            FL_WHITE .. FL_RED .. etc..
+            XForms colormap index as color. Values (from xfdata.py)
+            FL_GREEN, FL_WHITE, FL_RED, etc..
 
     Returns
     -------
@@ -6018,7 +6019,7 @@ def fl_get_icm_color(colr):
     Parameters
     ----------
         colr : long_pos
-            color value
+            XForms colormap index as color
 
     Returns
     -------
@@ -6072,7 +6073,7 @@ def fl_set_icm_color(colr, red, green, blue):
     Parameters
     ----------
         colr : long_pos
-            color value
+            XForms colormap index as color
         red : int
             value for red
         green : int
@@ -6113,7 +6114,7 @@ def fl_color(colr):
     Parameters
     ----------
         colr : long_pos
-            color value
+            XForms colormap index as color
 
     Examples
     --------
@@ -6144,7 +6145,7 @@ def fl_bk_color(colr):
     Parameters
     ----------
         colr : long_pos
-            color value
+            XForms colormap index as color
 
     Examples
     --------
@@ -6175,7 +6176,7 @@ def fl_textcolor(colr):
     Parameters
     ----------
         colr : long_pos
-            color value
+            XForms colormap index as color
 
     Examples
     --------
@@ -6206,7 +6207,7 @@ def fl_bk_textcolor(colr):
     Parameters
     ----------
         colr : long_pos
-            color value
+            XForms colormap index as color
 
     Examples
     --------
@@ -6445,7 +6446,8 @@ def fl_make_object(flobjclass, otype, xpos, ypos, width, height, label,
            FL_Coord y, FL_Coord w, FL_Coord h, const char * label,
            FL_HANDLEPTR handle)""")
     library.check_if_initialized()
-    library.checkfatal_allowed_value_in_list(flobjclass, xfdata.OBJCLASS_list)
+    library.checkfatal_allowed_value_in_list(flobjclass, \
+            xfdata.OBJCLASS_list)
     i_flobjclass = library.convert_to_intc(flobjclass)
     i_otype = library.convert_to_intc(otype)
     i_xpos = library.convert_to_FL_Coord(xpos)

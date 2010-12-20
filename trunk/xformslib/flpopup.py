@@ -901,7 +901,7 @@ def fl_popup_get_color(ptr_flpopup, colrpos):
     Returns
     -------
         colr : long_pos
-            color
+            XForms colormap index as color
 
     Examples
     --------
@@ -946,7 +946,8 @@ def fl_popup_set_color(ptr_flpopup, colrpos, colr):
     Returns
     -------
         oldcolr : long_pos
-            old color, or xfdata.FL_MAX_COLORS (on errors)
+            XForms colormap index as old color, or xfdata.FL_MAX_COLORS
+            (on errors)
 
     Examples
     --------

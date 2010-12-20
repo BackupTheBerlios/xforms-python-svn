@@ -148,7 +148,7 @@ def fl_add_chart_value(ptr_flobject, itemval, label, colr):
         label : str
             text label of chart
         colr : long_pos
-            color value
+            XForms colormap index as color
 
     Examples
     --------
@@ -192,7 +192,7 @@ def fl_insert_chart_value(ptr_flobject, indx, itemval, label, colr):
         label : str
             text label of chart
         colr : long_pos
-            color value
+            XForms colormap index as color
 
     Examples
     --------
@@ -238,7 +238,7 @@ def fl_replace_chart_value(ptr_flobject, indx, itemval, label, colr):
         label : str
             text label of chart
         colr : long_pos
-            color value
+            XForms colormap index as color
 
     Examples
     --------
@@ -264,7 +264,8 @@ def fl_replace_chart_value(ptr_flobject, indx, itemval, label, colr):
     ul_colr = library.convert_to_FL_COLOR(colr)
     library.keep_elem_refs(ptr_flobject, indx, itemval, label, colr, \
             i_indx, f_itemval, s_label, ul_colr)
-    _fl_replace_chart_value(ptr_flobject, i_indx, f_itemval, s_label, ul_colr)
+    _fl_replace_chart_value(ptr_flobject, i_indx, f_itemval, s_label, \
+            ul_colr)
 
 
 def fl_set_chart_bounds(ptr_flobject, minbound, maxbound):
@@ -353,8 +354,8 @@ def fl_get_chart_bounds(ptr_flobject):
     return f_minbound.value, f_maxbound.value
 
 
-def fl_set_chart_maxnumb(ptr_flobject, maxnum):
-    """fl_set_chart_maxnumb(ptr_flobject, maxnum)
+def fl_set_chart_maxnumb(ptr_flobject, maxnumvals):
+    """fl_set_chart_maxnumb(ptr_flobject, maxnumvals)
     
     Defines the maximum number of values displayed in the chart. Defaults
     is xfdata.FL_CHART_MAX; maximum set cannot be more than that.
@@ -363,7 +364,7 @@ def fl_set_chart_maxnumb(ptr_flobject, maxnum):
     ----------
         ptr_flobject : pointer to xfdata.FL_OBJECT
             chart flobject
-        maxnum : int
+        maxnumvals : int
             maximum number of values to display
 
     Examples
@@ -381,9 +382,9 @@ def fl_set_chart_maxnumb(ptr_flobject, maxnum):
         """void fl_set_chart_maxnumb(FL_OBJECT * ob, int maxnumb)""")
     library.check_if_initialized()
     library.verify_flobjectptr_type(ptr_flobject)
-    i_maxnum = library.convert_to_intc(maxnum)
-    library.keep_elem_refs(ptr_flobject, maxnum, i_maxnum)
-    _fl_set_chart_maxnumb(ptr_flobject, i_maxnum)
+    i_maxnumvals = library.convert_to_intc(maxnumvals)
+    library.keep_elem_refs(ptr_flobject, maxnumvals, i_maxnumvals)
+    _fl_set_chart_maxnumb(ptr_flobject, i_maxnumvals)
 
 
 def fl_set_chart_autosize(ptr_flobject, yesno):
@@ -509,7 +510,7 @@ def fl_set_chart_lcolor(ptr_flobject, colr):
         ptr_flobject : pointer to xfdata.FL_OBJECT
             chart flobject
         colr : long_pos
-            color value
+            XForms colormap index as color
 
     Examples
     --------

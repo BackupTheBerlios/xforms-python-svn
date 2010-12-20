@@ -294,8 +294,8 @@ def fl_set_xyplot_file(ptr_flobject, fname, title, xlabel, ylabel):
     return retval
 
 
-def fl_insert_xyplot_data(ptr_flobject, ovlid, indxpt, xpos, ypos):
-    """fl_insert_xyplot_data(ptr_flobject, ovlid, indxpt, xpos, ypos)
+def fl_insert_xyplot_data(ptr_flobject, ovlnum, indxpt, xpos, ypos):
+    """fl_insert_xyplot_data(ptr_flobject, ovlnum, indxpt, xpos, ypos)
     
     Inserts a point after a supplied index position in a xyplot flobject.
 
@@ -303,7 +303,7 @@ def fl_insert_xyplot_data(ptr_flobject, ovlid, indxpt, xpos, ypos):
     ----------
         ptr_flobject : pointer to xfdata.FL_OBJECT
             xyplot flobject
-        ovlid : int
+        ovlnum : int
             overlay id. Values between 1 and xfdata.FL_MAX_XYPLOTOVERLAY or
             the number set via fl_set_xyplot_maxoverlays()
         indxpt : int
@@ -333,13 +333,13 @@ def fl_insert_xyplot_data(ptr_flobject, ovlid, indxpt, xpos, ypos):
            double x, double y)""")
     library.check_if_initialized()
     library.verify_flobjectptr_type(ptr_flobject)
-    i_ovlid = library.convert_to_intc(ovlid)
+    i_ovlnum = library.convert_to_intc(ovlnum)
     i_indxpt = library.convert_to_intc(indxpt)
     f_xpos = library.convert_to_doublec(xpos)
     f_ypos = library.convert_to_doublec(ypos)
-    library.keep_elem_refs(ptr_flobject, ovlid, indxpt, xpos, ypos, \
-            i_ovlid, i_indxpt, f_xpos, f_ypos)
-    _fl_insert_xyplot_data(ptr_flobject, i_ovlid, i_indxpt, f_xpos, f_ypos)
+    library.keep_elem_refs(ptr_flobject, ovlnum, indxpt, xpos, ypos, \
+            i_ovlnum, i_indxpt, f_xpos, f_ypos)
+    _fl_insert_xyplot_data(ptr_flobject, i_ovlnum, i_indxpt, f_xpos, f_ypos)
 
 
 def fl_add_xyplot_text(ptr_flobject, xpos, ypos, text, align, colr):
@@ -367,7 +367,7 @@ def fl_add_xyplot_text(ptr_flobject, xpos, ypos, text, align, colr):
             FL_ALIGN_RIGHT_BOTTOM, FL_ALIGN_INSIDE, FL_ALIGN_VERT. Bitwise
             OR with FL_ALIGN_INSIDE is allowed.
         colr : long_pos
-            color value
+            XForms colormap index as color
 
     Examples
     --------
@@ -469,9 +469,9 @@ def fl_set_xyplot_maxoverlays(ptr_flobject, numovls):
     return retval
 
 
-def fl_add_xyplot_overlay(ptr_flobject, ovlid, xposlist, yposlist, 
+def fl_add_xyplot_overlay(ptr_flobject, ovlnum, xposlist, yposlist, 
                           numpoints, colr):
-    """fl_add_xyplot_overlay(ptr_flobject, ovlid, xposlist, yposlist,
+    """fl_add_xyplot_overlay(ptr_flobject, ovlnum, xposlist, yposlist,
     numpoints, colr)
     
     Overlays several plots together.
@@ -480,7 +480,7 @@ def fl_add_xyplot_overlay(ptr_flobject, ovlid, xposlist, yposlist,
     ----------
         ptr_flobject : pointer to xfdata.FL_OBJECT
             xyplot flobject
-        ovlid : int
+        ovlnum : int
             overlay id. Values between 1 and xfdata.FL_MAX_XYPLOTOVERLAY
             or the number set via fl_set_xyplot_maxoverlays()
         xposlist : list_of_float
@@ -490,7 +490,7 @@ def fl_add_xyplot_overlay(ptr_flobject, ovlid, xposlist, yposlist,
         numpoints : int
             number of data points
         colr : long_pos
-            color value
+            XForms colormap index as color
 
     Examples
     --------
@@ -511,20 +511,20 @@ def fl_add_xyplot_overlay(ptr_flobject, ovlid, xposlist, yposlist,
     library.check_if_initialized()
     library.verify_flobjectptr_type(ptr_flobject)
     library.checknonfatal_allowed_value_in_list(colr, xfdata.COLOR_list)
-    i_ovlid = library.convert_to_intc(ovlid)
+    i_ovlnum = library.convert_to_intc(ovlnum)
     ptr_xposlist = library.converto_to_ptr_floatc(xposlist)
     ptr_yposlist = library.converto_to_ptr_floatc(yposlist)
     i_numpoints = library.convert_to_intc(numpoints)
     ul_colr = library.convert_to_FL_COLOR(colr)
-    library.keep_elem_refs(ptr_flobject, ovlid, xposlist, yposlist, \
-            numpoints, colr, i_ovlid, ptr_xposlist, ptr_yposlist, \
+    library.keep_elem_refs(ptr_flobject, ovlnum, xposlist, yposlist, \
+            numpoints, colr, i_ovlnum, ptr_xposlist, ptr_yposlist, \
             i_numpoints, ul_colr)
-    _fl_add_xyplot_overlay(ptr_flobject, i_ovlid, ptr_xposlist, \
+    _fl_add_xyplot_overlay(ptr_flobject, i_ovlnum, ptr_xposlist, \
             ptr_yposlist, i_numpoints, ul_colr)
 
 
-def fl_add_xyplot_overlay_file(ptr_flobject, ovlid, fname, colr):
-    """fl_add_xyplot_overlay_file(ptr_flobject, ovlid, fname, colr)
+def fl_add_xyplot_overlay_file(ptr_flobject, ovlnum, fname, colr):
+    """fl_add_xyplot_overlay_file(ptr_flobject, ovlnum, fname, colr)
     -> numpoints
     
     Adds an overlay, using a data file to specify the (x,y) function for
@@ -534,13 +534,13 @@ def fl_add_xyplot_overlay_file(ptr_flobject, ovlid, fname, colr):
     ----------
         ptr_flobject : pointer to xfdata.FL_OBJECT
             xyplot flobject
-        ovlid : int
+        ovlnum : int
             overlay id. Values between 1 and xfdata.FL_MAX_XYPLOTOVERLAY
             or the number set via fl_set_xyplot_maxoverlays()
         fname : str
             name of file
         colr : long_pos
-            color value
+            XForms colormap index as color
 
     Returns
     -------
@@ -564,13 +564,13 @@ def fl_add_xyplot_overlay_file(ptr_flobject, ovlid, fname, colr):
         const char * f, FL_COLOR c)""")
     library.check_if_initialized()
     library.verify_flobjectptr_type(ptr_flobject)
-    i_ovlid = library.convert_to_intc(ovlid)
+    i_ovlnum = library.convert_to_intc(ovlnum)
     s_fname = library.convert_to_stringc(fname)
     library.checknonfatal_allowed_value_in_list(colr, xfdata.COLOR_list)
     ul_colr = library.convert_to_FL_COLOR(colr)
-    library.keep_elem_refs(ptr_flobject, ovlid, fname, colr, i_ovlid, \
+    library.keep_elem_refs(ptr_flobject, ovlnum, fname, colr, i_ovlnum, \
             s_fname, ul_colr)
-    retval = _fl_add_xyplot_overlay_file(ptr_flobject, i_ovlid, \
+    retval = _fl_add_xyplot_overlay_file(ptr_flobject, i_ovlnum, \
             s_fname, ul_colr)
     return retval
 
@@ -987,8 +987,8 @@ def fl_get_xyplot_data(ptr_flobject):
 
 
 # TODO: verify if it can be suppressed - problematic --LK
-def fl_get_xyplot_data_pointer(ptr_flobject, ovlid):
-    """fl_get_xyplot_data_pointer(ptr_flobject, ovlid)
+def fl_get_xyplot_data_pointer(ptr_flobject, ovlnum):
+    """fl_get_xyplot_data_pointer(ptr_flobject, ovlnum)
     -> ptr_xposval, ptr_yposval, numpoints
     
     Finds out the pointer to the data of xyplot flobject rather (instead
@@ -998,7 +998,7 @@ def fl_get_xyplot_data_pointer(ptr_flobject, ovlid):
     ----------
         ptr_flobject : pointer to xfdata.FL_OBJECT
             xyplot flobject
-        ovlid : int
+        ovlnum : int
             overlay id. Values between 1 and xfdata.FL_MAX_XYPLOTOVERLAY
             or the number set via fl_set_xyplot_maxoverlays()
 
@@ -1018,7 +1018,7 @@ def fl_get_xyplot_data_pointer(ptr_flobject, ovlid):
     API_diversion
     -------------
         API changed from XForms, upstream is
-        fl_get_xyplot_data_pointer(ptr_flobject, ovlid, xpos, ypos, n)
+        fl_get_xyplot_data_pointer(ptr_flobject, ovlnum, xpos, ypos, n)
 
     Notes
     -----
@@ -1034,19 +1034,19 @@ def fl_get_xyplot_data_pointer(ptr_flobject, ovlid):
            float * * x, float * * y, int * n)""")
     library.check_if_initialized()
     library.verify_flobjectptr_type(ptr_flobject)
-    i_ovlid = library.convert_to_intc(ovlid)
+    i_ovlnum = library.convert_to_intc(ovlnum)
     f_xpos, ptr_xpos = library.make_floatc_and_pointer()
     f_ypos, ptr_ypos = library.make_floatc_and_pointer()
     i_numpoints, ptr_numpoints = library.make_intc_and_pointer()
-    library.keep_elem_refs(ptr_flobject, ovlid, i_ovlid, f_xpos, f_ypos, \
+    library.keep_elem_refs(ptr_flobject, ovlnum, i_ovlnum, f_xpos, f_ypos, \
             i_numpoints, ptr_xpos, ptr_ypos, ptr_numpoints)
-    _fl_get_xyplot_data_pointer(ptr_flobject, i_ovlid, ptr_xpos, ptr_ypos, \
+    _fl_get_xyplot_data_pointer(ptr_flobject, i_ovlnum, ptr_xpos, ptr_ypos, \
             ptr_numpoints)
     return f_xpos.value, f_ypos.value, i_numpoints.value
 
 
-def fl_get_xyplot_overlay_data(ptr_flobject, ovlid):
-    """fl_get_xyplot_overlay_data(ptr_flobject, ovlid)
+def fl_get_xyplot_overlay_data(ptr_flobject, ovlnum):
+    """fl_get_xyplot_overlay_data(ptr_flobject, ovlnum)
     -> xposval, yposval, numpoints
     
     Finds out the current data of an overlay of a xyplot flobject.
@@ -1055,7 +1055,7 @@ def fl_get_xyplot_overlay_data(ptr_flobject, ovlid):
     ----------
         ptr_flobject : pointer to xfdata.FL_OBJECT
             xyplot flobject
-        ovlid : int
+        ovlnum : int
             overlay id. Values between 1 and xfdata.FL_MAX_XYPLOTOVERLAY or
             the number set via fl_set_xyplot_maxoverlays(). If it is 0 uses
             the base dataset
@@ -1076,7 +1076,7 @@ def fl_get_xyplot_overlay_data(ptr_flobject, ovlid):
     API_diversion
     ----------
         API changed from XForms, upstream is
-        fl_get_xyplot_overlay_data(ptr_flobject, ovlid, xpos, ypos, n)
+        fl_get_xyplot_overlay_data(ptr_flobject, ovlnum, xpos, ypos, n)
 
     Notes
     -----
@@ -1092,19 +1092,19 @@ def fl_get_xyplot_overlay_data(ptr_flobject, ovlid):
            float * x, float * y, int * n)""")
     library.check_if_initialized()
     library.verify_flobjectptr_type(ptr_flobject)
-    i_ovlid = library.convert_to_intc(ovlid)
+    i_ovlnum = library.convert_to_intc(ovlnum)
     f_xpos, ptr_xpos = library.make_floatc_and_pointer()
     f_ypos, ptr_ypos = library.make_floatc_and_pointer()
     i_numpoints, ptr_numpoints = library.make_intc_and_pointer()
-    library.keep_elem_refs(ptr_flobject, ovlid, i_ovlid, f_xpos, f_ypos, \
+    library.keep_elem_refs(ptr_flobject, ovlnum, i_ovlnum, f_xpos, f_ypos, \
             i_numpoints, ptr_xpos, ptr_ypos, ptr_numpoints)
-    _fl_get_xyplot_overlay_data(ptr_flobject, i_ovlid, ptr_xpos, \
+    _fl_get_xyplot_overlay_data(ptr_flobject, i_ovlnum, ptr_xpos, \
             ptr_ypos, ptr_numpoints)
     return f_xpos.value, f_ypos.value, i_numpoints.value
 
 
-def fl_set_xyplot_overlay_type(ptr_flobject, ovlid, plottype):
-    """fl_set_xyplot_overlay_type(ptr_flobject, ovlid, plottype)
+def fl_set_xyplot_overlay_type(ptr_flobject, ovlnum, plottype):
+    """fl_set_xyplot_overlay_type(ptr_flobject, ovlnum, plottype)
     
     Changes the type for an overlay of a xyplot flobject. The type used in
     overlay plot is the same as the flobject itself. Note that although the
@@ -1116,7 +1116,7 @@ def fl_set_xyplot_overlay_type(ptr_flobject, ovlid, plottype):
     ----------
         ptr_flobject : pointer to xfdata.FL_OBJECT
             xyplot flobject
-        ovlid : int
+        ovlnum : int
             overlay id. Values between 1 and xfdata.FL_MAX_XYPLOTOVERLAY
             or the number set via fl_set_xyplot_maxoverlays()
         plottype : int
@@ -1142,16 +1142,16 @@ def fl_set_xyplot_overlay_type(ptr_flobject, ovlid, plottype):
            int type)""")
     library.check_if_initialized()
     library.verify_flobjectptr_type(ptr_flobject)
-    i_ovlid = library.convert_to_intc(ovlid)
+    i_ovlnum = library.convert_to_intc(ovlnum)
     library.checkfatal_allowed_value_in_list(plottype, \
             xfdata.XYPLOTTYPE_list)
     i_plottype = library.convert_to_intc(plottype)
-    library.keep_elem_refs(ptr_flobject, ovlid, plottype, i_ovlid, i_plottype)
-    _fl_set_xyplot_overlay_type(ptr_flobject, i_ovlid, i_plottype)
+    library.keep_elem_refs(ptr_flobject, ovlnum, plottype, i_ovlnum, i_plottype)
+    _fl_set_xyplot_overlay_type(ptr_flobject, i_ovlnum, i_plottype)
 
 
-def fl_delete_xyplot_overlay(ptr_flobject, ovlid):
-    """fl_delete_xyplot_overlay(ptr_flobject, ovlid)
+def fl_delete_xyplot_overlay(ptr_flobject, ovlnum):
+    """fl_delete_xyplot_overlay(ptr_flobject, ovlnum)
     
     Deletes an overlay of a xyplot flobject.
 
@@ -1159,7 +1159,7 @@ def fl_delete_xyplot_overlay(ptr_flobject, ovlid):
     ----------
         ptr_flobject : pointer to xfdata.FL_OBJECT
             xyplot flobject
-        ovlid : int
+        ovlnum : int
             overlay id. Values between 1 and xfdata.FL_MAX_XYPLOTOVERLAY
             or the number set via fl_set_xyplot_maxoverlays()
 
@@ -1178,13 +1178,13 @@ def fl_delete_xyplot_overlay(ptr_flobject, ovlid):
         """void fl_delete_xyplot_overlay(FL_OBJECT * ob, int id)""")
     library.check_if_initialized()
     library.verify_flobjectptr_type(ptr_flobject)
-    i_ovlid = library.convert_to_intc(ovlid)
-    library.keep_elem_refs(ptr_flobject, ovlid, i_ovlid)
-    _fl_delete_xyplot_overlay(ptr_flobject, i_ovlid)
+    i_ovlnum = library.convert_to_intc(ovlnum)
+    library.keep_elem_refs(ptr_flobject, ovlnum, i_ovlnum)
+    _fl_delete_xyplot_overlay(ptr_flobject, i_ovlnum)
 
 
-def fl_set_xyplot_interpolate(ptr_flobject, ovlid, degree, grid):
-    """fl_set_xyplot_interpolate(ptr_flobject, ovlid, degree, grid)
+def fl_set_xyplot_interpolate(ptr_flobject, ovlnum, degree, grid):
+    """fl_set_xyplot_interpolate(ptr_flobject, ovlnum, degree, grid)
     
     Interpolates xyplot data using an nth order Lagrangian polynomial.
 
@@ -1192,7 +1192,7 @@ def fl_set_xyplot_interpolate(ptr_flobject, ovlid, degree, grid):
     ----------
         ptr_flobject : pointer to xfdata.FL_OBJECT
             xyplot flobject
-        ovlid : int
+        ovlnum : int
             overlay id. Values between 1 and xfdata.FL_MAX_XYPLOTOVERLAY or
             the number set via fl_set_xyplot_maxoverlays(). If it is 0 uses
             the base data set
@@ -1219,12 +1219,12 @@ def fl_set_xyplot_interpolate(ptr_flobject, ovlid, degree, grid):
            int degree, double grid)""")
     library.check_if_initialized()
     library.verify_flobjectptr_type(ptr_flobject)
-    i_ovlid = library.convert_to_intc(ovlid)
+    i_ovlnum = library.convert_to_intc(ovlnum)
     i_degree = library.convert_to_intc(degree)
     f_grid = library.convert_to_doublec(grid)
-    library.keep_elem_refs(ptr_flobject, ovlid, degree, grid, i_ovlid, \
+    library.keep_elem_refs(ptr_flobject, ovlnum, degree, grid, i_ovlnum, \
             i_degree, f_grid)
-    _fl_set_xyplot_interpolate(ptr_flobject, i_ovlid, i_degree, f_grid)
+    _fl_set_xyplot_interpolate(ptr_flobject, i_ovlnum, i_degree, f_grid)
 
 
 def fl_set_xyplot_inspect(ptr_flobject, yesno):
@@ -1550,8 +1550,8 @@ def fl_set_xyplot_keys(ptr_flobject, keystxtlist, xposlist, yposlist, align):
             f_yposlist, i_align)
 
 
-def fl_set_xyplot_key(ptr_flobject, ovlid, keytxt):
-    """fl_set_xyplot_key(ptr_flobject, ovlid, keytxt)
+def fl_set_xyplot_key(ptr_flobject, ovlnum, keytxt):
+    """fl_set_xyplot_key(ptr_flobject, ovlnum, keytxt)
     
     Adds or removes a key to a particular plot. A key is the combination
     of drawing a segment of the plot line style with a piece of text that
@@ -1563,7 +1563,7 @@ def fl_set_xyplot_key(ptr_flobject, ovlid, keytxt):
     ----------
         ptr_flobject : pointer to xfdata.FL_OBJECT
             xyplot flobject
-        ovlid : int
+        ovlnum : int
             overlay id. Values between 1 and xfdata.FL_MAX_XYPLOTOVERLAY or
             the number set via fl_set_xyplot_maxoverlays()
         keytxt : str
@@ -1585,13 +1585,13 @@ def fl_set_xyplot_key(ptr_flobject, ovlid, keytxt):
            const char * key)""")
     library.check_if_initialized()
     library.verify_flobjectptr_type(ptr_flobject)
-    i_ovlid = library.convert_to_intc(ovlid)
+    i_ovlnum = library.convert_to_intc(ovlnum)
     if not keytxt:          # it is None
         s_keytxt = cty.cast(keytxt, cty.POINTER(cty.c_void_p))
     else:                   # real string
         s_keytxt = library.convert_to_stringc(keytxt)
-    library.keep_elem_refs(ptr_flobject, ovlid, keytxt, i_ovlid, s_keytxt)
-    _fl_set_xyplot_key(ptr_flobject, i_ovlid, s_keytxt)
+    library.keep_elem_refs(ptr_flobject, ovlnum, keytxt, i_ovlnum, s_keytxt)
+    _fl_set_xyplot_key(ptr_flobject, i_ovlnum, s_keytxt)
 
 
 def fl_set_xyplot_key_position(ptr_flobject, xpos, ypos, align):
@@ -1687,8 +1687,8 @@ def fl_set_xyplot_key_font(ptr_flobject, style, size):
     _fl_set_xyplot_key_font(ptr_flobject, i_style, i_size)
 
 
-def fl_get_xyplot_numdata(ptr_flobject, ovlid):
-    """fl_get_xyplot_numdata(ptr_flobject, ovlid) -> numpoints
+def fl_get_xyplot_numdata(ptr_flobject, ovlnum):
+    """fl_get_xyplot_numdata(ptr_flobject, ovlnum) -> numpoints
     
     Finds out the number of data points of a xyplot flobject.
 
@@ -1696,7 +1696,7 @@ def fl_get_xyplot_numdata(ptr_flobject, ovlid):
     ----------
         ptr_flobject : pointer to xfdata.FL_OBJECT
             xyplot flobject
-        ovlid : int
+        ovlnum : int
             overlay id. Values between 1 and xfdata.FL_MAX_XYPLOTOVERLAY
             or the number set via fl_set_xyplot_maxoverlays(). If it is
             0 uses the base dataset
@@ -1721,9 +1721,9 @@ def fl_get_xyplot_numdata(ptr_flobject, ovlid):
         """int fl_get_xyplot_numdata(FL_OBJECT * ob, int id)""")
     library.check_if_initialized()
     library.verify_flobjectptr_type(ptr_flobject)
-    i_ovlid = library.convert_to_intc(ovlid)
-    library.keep_elem_refs(ptr_flobject, ovlid, i_ovlid)
-    retval = _fl_get_xyplot_numdata(ptr_flobject, i_ovlid)
+    i_ovlnum = library.convert_to_intc(ovlnum)
+    library.keep_elem_refs(ptr_flobject, ovlnum, i_ovlnum)
+    retval = _fl_get_xyplot_numdata(ptr_flobject, i_ovlnum)
     return retval
 
 
@@ -1954,8 +1954,8 @@ def fl_clear_xyplot(ptr_flobject):
     _fl_clear_xyplot(ptr_flobject)
 
 
-def fl_set_xyplot_linewidth(ptr_flobject, ovlid, lnwidth):
-    """fl_set_xyplot_linewidth(ptr_flobject, ovlid, lnwidth)
+def fl_set_xyplot_linewidth(ptr_flobject, ovlnum, lnwidth):
+    """fl_set_xyplot_linewidth(ptr_flobject, ovlnum, lnwidth)
     
     Changes the line thickness of an xyplot (base data or overlay).
 
@@ -1963,7 +1963,7 @@ def fl_set_xyplot_linewidth(ptr_flobject, ovlid, lnwidth):
     ----------
         ptr_flobject : pointer to xfdata.FL_OBJECT
             xyplot flobject
-        ovlid : int
+        ovlnum : int
             overlay id. Values between 1 and xfdata.FL_MAX_XYPLOTOVERLAY or
             the number set via fl_set_xyplot_maxoverlays(). If it is 0, uses
             the base dataset.
@@ -1987,10 +1987,10 @@ def fl_set_xyplot_linewidth(ptr_flobject, ovlid, lnwidth):
         """void fl_set_xyplot_linewidth(FL_OBJECT * ob, int id, int lw)""")
     library.check_if_initialized()
     library.verify_flobjectptr_type(ptr_flobject)
-    i_ovlid = library.convert_to_intc(ovlid)
+    i_ovlnum = library.convert_to_intc(ovlnum)
     i_lnwidth = library.convert_to_intc(lnwidth)
-    library.keep_elem_refs(ptr_flobject, ovlid, lnwidth, i_ovlid, i_lnwidth)
-    _fl_set_xyplot_linewidth(ptr_flobject, i_ovlid, i_lnwidth)
+    library.keep_elem_refs(ptr_flobject, ovlnum, lnwidth, i_ovlnum, i_lnwidth)
+    _fl_set_xyplot_linewidth(ptr_flobject, i_ovlnum, i_lnwidth)
 
 
 def fl_set_xyplot_xgrid(ptr_flobject, grid):
@@ -2437,25 +2437,25 @@ def fl_spline_interpolate(wrldxposlist, wrldyposlist, numpoints, grid):
     return retval, f_outxpos.value, f_outypos.value
 
 
-def fl_set_xyplot_symbol(ptr_flobject, ovlid, pyfn_XyPlotSymbol):
-    """fl_set_xyplot_symbol(ptr_flobject, ovlid, pyfn_XyPlotSymbol)
+def fl_set_xyplot_symbol(ptr_flobject, ovlnum, pyfn_XyPlotSymbol):
+    """fl_set_xyplot_symbol(ptr_flobject, ovlnum, pyfn_XyPlotSymbol)
     -> XyPlotSymbol
     
     Defines a python function to change a symbol, to be invoked for
     xfdata.FL_POINTS_XYPLOT and xfdata.FL_LINEPOINTS_XYPLOT's xyplot types
-    (main plot or overlay). If the type of xyplot corresponding to ovlid is
+    (main plot or overlay). If the type of xyplot corresponding to ovlnum is
     not one of them, the function will not be called.
 
     Parameters
     ----------
         ptr_flobject : pointer to xfdata.FL_OBJECT
             xyplot flobject
-        ovlid : int
+        ovlnum : int
             overlay id (0 means the main plot, and you can use -1 to indicate
             all)
         pyfn_XyPlotSymbol : python function, no return
             It will be called to draw the symbols on the data point.
-            Name referring to function(ptr_flobject, ovlid, ptr_flpoint,
+            Name referring to function(ptr_flobject, ovlnum, ptr_flpoint,
             numpoints, width, height). The parameters passed to this function
             are the flobject pointer, the overlay id, the center of the symbol
             (p.x, p.y), the number of data points and the preferred symbol
@@ -2486,12 +2486,12 @@ def fl_set_xyplot_symbol(ptr_flobject, ovlid, pyfn_XyPlotSymbol):
            FL_XYPLOT_SYMBOL symbol)""")
     library.check_if_initialized()
     library.verify_flobjectptr_type(ptr_flobject)
-    i_ovlid = library.convert_to_intc(ovlid)
+    i_ovlnum = library.convert_to_intc(ovlnum)
     library.verify_function_type(pyfn_XyPlotSymbol)
     cfn_XyPlotSymbol = xfdata.FL_XYPLOT_SYMBOL(pyfn_XyPlotSymbol)
     library.keep_cfunc_refs(cfn_XyPlotSymbol, pyfn_XyPlotSymbol)
-    library.keep_elem_refs(ptr_flobject, ovlid, i_ovlid)
-    retval = _fl_set_xyplot_symbol(ptr_flobject, i_ovlid, cfn_XyPlotSymbol)
+    library.keep_elem_refs(ptr_flobject, ovlnum, i_ovlnum)
+    retval = _fl_set_xyplot_symbol(ptr_flobject, i_ovlnum, cfn_XyPlotSymbol)
     return retval
 
 

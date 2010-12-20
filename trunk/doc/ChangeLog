@@ -1,5 +1,6 @@
 
 SVN
+    * changed descriptions for color params. Some misc. corrections.
     * continuing params' names change to be more meaningful. Some bugfixes
     and some typos fixed.
     * pointer-to-something params have now meaningful names (WIP),

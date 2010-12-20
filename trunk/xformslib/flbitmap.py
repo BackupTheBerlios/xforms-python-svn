@@ -691,7 +691,7 @@ def fl_read_pixmapfile(win, fname, tran):
         fname : str
             name of pixmap (.xpm format) file
         tran : long_pos
-            color value
+            XForms colormap index as color
 
     Returns
     -------
@@ -763,7 +763,7 @@ def fl_create_from_pixmapdata(win, xpmdata, tran):
         xpmdata : str of ubytes
             pixmap contents data
         tran : long_pos
-            color value (currently not used)
+            XForms colormap index as color (currently not used)
 
     Returns
     -------

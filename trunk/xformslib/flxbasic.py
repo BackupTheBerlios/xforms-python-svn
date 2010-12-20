@@ -37,25 +37,35 @@ from xformslib import flbasic
 from xformslib import flcanvas
 
 
-fl_current_form = (cty.POINTER(xfdata.FL_FORM)).in_dll( \
-                   library.load_so_libforms(), 'fl_current_form')
-fl_display = (cty.POINTER(xfdata.Display)).in_dll(library.load_so_libforms(),
-              'fl_display')
-fl_screen = (cty.c_int).in_dll(library.load_so_libforms(), 'fl_screen')
+#fl_current_form = (cty.POINTER(xfdata.FL_FORM)).in_dll( \
+#                   library.load_so_libforms(), 'fl_current_form')
+fl_current_form = cty.POINTER(xfdata.FL_FORM)
+#fl_display = (cty.POINTER(xfdata.Display)).in_dll(library.load_so_libforms(),
+#              'fl_display')
+fl_display = cty.POINTER(xfdata.Display)
+#fl_screen = (cty.c_int).in_dll(library.load_so_libforms(), 'fl_screen')
+fl_screen = cty.c_int
 # root window
 fl_root = (xfdata.Window).in_dll(library.load_so_libforms(), 'fl_root')
+fl_root = xfdata.Window
 # virtual root window
-fl_vroot = (xfdata.Window).in_dll(library.load_so_libforms(), 'fl_vroot')
+#fl_vroot = (xfdata.Window).in_dll(library.load_so_libforms(), 'fl_vroot')
+fl_vroot = xfdata.Window
 # screen dimension in pixels
-fl_scrh = (cty.c_int).in_dll(library.load_so_libforms(), 'fl_scrh')
-fl_scrw = (cty.c_int).in_dll(library.load_so_libforms(), 'fl_scrw')
+#fl_scrh = (cty.c_int).in_dll(library.load_so_libforms(), 'fl_scrh')
+fl_scrh = cty.c_int
+#fl_scrw = (cty.c_int).in_dll(library.load_so_libforms(), 'fl_scrw')
+fl_scrw = cty.c_int
+#fl_vmode = (cty.c_int).in_dll(library.load_so_libforms(), 'fl_vmode')
 fl_vmode = (cty.c_int).in_dll(library.load_so_libforms(), 'fl_vmode')
+
 #fl_state = (cty.POINTER(xfdata.FL_State)).in_dll(library.load_so_libforms(),
 #            'fl_state')
 fl_state = (xfdata.FL_State * 6)()  # fl_state is an array of 6 FL_State
 
-fl_ul_magic_char = (xfdata.STRING).in_dll(library.load_so_libforms(),
-                    'fl_state')
+#fl_ul_magic_char = (xfdata.STRING).in_dll(library.load_so_libforms(),
+#                    'fl_state')
+fl_ul_magic_char = xfdata.STRING
 
 
 ###########################
@@ -169,7 +179,7 @@ def fl_rectangle(fill, xpos, ypos, width, height, colr):
         height : int
             height in coord units
         colr : long_pos
-            color value
+            XForms colormap index as color
 
     Examples
     --------
@@ -215,7 +225,7 @@ def fl_rectbound(xpos, ypos, width, height, colr):
         height : int
             height in coord units
         colr : long_pos
-            color value
+            XForms colormap index as color
 
     Examples
     --------
@@ -260,7 +270,7 @@ def fl_rectf(xpos, ypos, width, height, colr):
         height : int
             height in coord units
         colr : long_pos
-            color value
+            XForms colormap index as color
 
     Examples
     --------
@@ -290,7 +300,7 @@ def fl_rect(xpos, ypos, width, height, colr):
         height : int
             height in coord units
         colr : long_pos
-            color value
+            XForms colormap index as color
 
     Examples
     --------
@@ -325,7 +335,7 @@ def fl_roundrectangle(fill, xpos, ypos, width, height, colr):
         height : int
             height in coord units
         colr : long_pos
-            color value
+            XForms colormap index as color
 
     Examples
     --------
@@ -371,7 +381,7 @@ def fl_roundrectf(xpos, ypos, width, height, colr):
         height : int
             height in coord units
         colr : long_pos
-            color value
+            XForms colormap index as color
 
     Examples
     --------
@@ -401,7 +411,7 @@ def fl_roundrect(xpos, ypos, width, height, colr):
         height : int
             height in coord units
         colr : long_pos
-            color value
+            XForms colormap index as color
 
     Examples
     --------
@@ -432,7 +442,7 @@ def fl_polygon(fill, ptr_flpoint, numpoints, colr):
         numpoints : int
             number of points
         colr : long_pos
-            value of color to be set
+            XForms colormap index as color to be set
 
     Examples
     --------
@@ -476,7 +486,7 @@ def fl_polyf(ptr_flpoint, numpoints, colr):
         numpoints : int
             number of points
         colr : long_pos
-            value of color to be set
+            XForms colormap index as color to be set
 
     Examples
     --------
@@ -506,7 +516,7 @@ def fl_polyl(ptr_flpoint, numpoints, colr):
         numpoints : int
             number of points
         colr : long_pos
-            value of color to be set
+            XForms colormap index as color to be set
 
     Examples
     --------
@@ -536,7 +546,7 @@ def fl_polybound(ptr_flpoint, numpoints, colr):
         numpoints : int
             number of points
         colr : long_pos
-            value of color to be set
+            XForms colormap index as color to be set
 
     Examples
     --------
@@ -567,7 +577,7 @@ def fl_lines(ptr_flpoint, numpoints, colr):
         numpoints : int
             number of points
         colr : long_pos
-            value of color to be set
+            XForms colormap index as color to be set
 
     Examples
     --------
@@ -612,7 +622,7 @@ def fl_line(startxpos, startypos, endxpos, endypos, colr):
         endypos : int
             final vertical position (upper-left corner)
         colr : long_pos
-            color value
+            XForms colormap index as color
 
     Examples
     --------
@@ -656,7 +666,7 @@ def fl_point(xpos, ypos, colr):
         ypos : int
             vertical position (upper-left corner)
         colr : long_pos
-            color value
+            XForms colormap index as color
 
     Examples
     --------
@@ -692,7 +702,7 @@ def fl_points(ptr_flpoint, numpoints, colr):
         numpoints : int
             number of points
         colr : long_pos
-            value of color to be set
+            XForms colormap index as color to be set
 
     Examples
     --------
@@ -824,7 +834,7 @@ def fl_diagline(xpos, ypos, width, height, colr):
         height : int
             height in coord units
         colr : long_pos
-            color value
+            XForms colormap index as color
 
     Examples
     --------
@@ -1051,7 +1061,7 @@ def fl_oval(fill, xpos, ypos, width, height, colr):
         height : int
             height in coord units
         colr : long_pos
-            color value
+            XForms colormap index as color
 
     Examples
     --------
@@ -1098,7 +1108,7 @@ def fl_ovalbound(xpos, ypos, width, height, colr):
         height : int
             height in coord units
         colr : long_pos
-            color value
+            XForms colormap index as color
 
     Examples
     --------
@@ -1153,7 +1163,7 @@ def fl_ovalarc(fill, xpos, ypos, width, height, stheta, dtheta, colr):
             otherwise in clockwise direction. If it is larger than 3600 it
             is truncated to 3600.
         colr : long_pos
-            color value
+            XForms colormap index as color
 
     Examples
     --------
@@ -1205,7 +1215,7 @@ def fl_ovalf(xpos, ypos, width, height, colr):
         height : int
             height in coord units
         colr : long_pos
-            color value
+            XForms colormap index as color
 
     Examples
     --------
@@ -1235,7 +1245,7 @@ def fl_ovall(xpos, ypos, width, height, colr):
         height : int
             height in coord units
         colr : long_pos
-            color value
+            XForms colormap index as color
 
     Examples
     --------
@@ -1266,7 +1276,7 @@ def fl_circf(xpos, ypos, radius, colr):
         radius : int
             radius of the arc
         colr : long_pos
-            color value
+            XForms colormap index as color
 
     Examples
     --------
@@ -1293,6 +1303,8 @@ def fl_circ(xpos, ypos, radius, colr):
             vertical position of the center of the arc
         radius : int
             radius of the arc
+        colr : long_pos
+            XForms colormap index as color
 
     Examples
     --------
@@ -1335,7 +1347,7 @@ def fl_pieslice(fill, xpos, ypos, width, height, stheta, etheta, colr):
             0 stands for a direction of 3 o'clock, i.e. the right-most
             point of a circle)
         colr : long_pos
-            color value
+            XForms colormap index as color
 
     Examples
     --------
@@ -1394,7 +1406,7 @@ def fl_arcf(xpos, ypos, radius, stheta, etheta, colr):
             (where 0 stands for a direction of 3 o'clock, i.e. the
             right-most point of a circle)
         colr : long_pos
-            color value
+            XForms colormap index as color
 
     Examples
     --------
@@ -1433,7 +1445,7 @@ def fl_arc(xpos, ypos, radius, stheta, etheta, colr):
             (where 0 stands for a direction of 3 o'clock, i.e. the
             right-most point of a circle)
         colr : long_pos
-            color value
+            XForms colormap index as color
 
     Examples
     --------
@@ -1473,7 +1485,7 @@ def fl_drw_frame(boxtype, xpos, ypos, width, height, colr, bndrwidth):
         height : int
             height in coord units
         colr : long_pos
-            color value
+            XForms colormap index as color
         bndrwidth : int
             width of boundary
 
@@ -1533,7 +1545,7 @@ def fl_drw_checkbox(boxtype, xpos, ypos, width, height, colr, bndrwidth):
         height : int
             height in coord units
         colr : long_pos
-            color value
+            XForms colormap index as color
         bndrwidth : int
             width of boundary
 
@@ -2020,7 +2032,7 @@ def fl_set_foreground(gc, colr):
         gc : pointer to xfdata.GC
             Graphics context structure *todo*
         colr : long_pos
-            color value to be set as foreground
+            XForms colormap index as color to be set as foreground
 
     Examples
     --------
@@ -2056,7 +2068,7 @@ def fl_set_background(gc, colr):
         gc : pointer to xfdata.GC
             Graphics context structure *todo*
         colr : long_pos
-            color value to be set as background
+            XForms colormap index as color to be set as background
 
     Examples
     --------
@@ -4329,12 +4341,13 @@ def fl_get_app_resources(ptr_flresource, numresources):
 def fl_set_graphics_mode(mode, doublebuf):
     """fl_set_graphics_mode(mode, doublebuf)
     
-    Defines graphics mode and doublebuffer.
+    Defines graphics mode and doublebuffer state.
 
     Parameters
     ----------
         mode : int
-            graphics mode to be set
+            visual mode. Values (from xfdata module) GrayScale, StaticGray,
+            PseudoColor, StaticColor, DirectColor or TrueColor
         doublebuf : int
             flag to enable/disable doublebuffer. Value 0 (to disable)
             or 1 (to enable) *todo* to be verified!
@@ -4434,8 +4447,8 @@ fl_keypressed = fl_keysym_pressed
 
 # Program default masks
 
-def fl_set_defaults(pdmask, ptr_iopt):
-    """fl_set_defaults(pdmask, ptr_iopt)
+def fl_set_defaults(pdmask, ptr_fliopt):
+    """fl_set_defaults(pdmask, ptr_fliopt)
 
     Defines program default option masks.
 
@@ -4451,7 +4464,7 @@ def fl_set_defaults(pdmask, ptr_iopt):
             FL_PDSafe, FL_PDMenuFontSize, FL_PDBrowserFontSize,
             FL_PDChoiceFontSize, FL_PDLabelFontSize, FL_PDButtonLabelSize,
             FL_PDSliderLabelSize, FL_PDInputLabelSize, FL_PDButtonLabel
-        ptr_iopt : pointer to xfdata.FL_IOPT array
+        ptr_fliopt : pointer to xfdata.FL_IOPT array
             an array of program defaults class instances
 
     Examples
@@ -4471,8 +4484,8 @@ def fl_set_defaults(pdmask, ptr_iopt):
     library.checkfatal_allowed_value_in_list(pdmask, \
             xfdata.PRGDEFAULTS_list)
     ul_pdmask = library.convert_to_ulongc(pdmask)
-    library.keep_elem_refs(pdmask, ptr_iopt, ul_pdmask)
-    _fl_set_defaults(ul_pdmask, ptr_iopt)
+    library.keep_elem_refs(pdmask, ptr_fliopt, ul_pdmask)
+    _fl_set_defaults(ul_pdmask, ptr_fliopt)
 
 
 def fl_set_tabstop(tabtext):
@@ -4513,13 +4526,13 @@ def fl_set_tabstop(tabtext):
 
 
 def fl_get_defaults():
-    """fl_get_defaults() -> ptr_iopt
+    """fl_get_defaults() -> ptr_fliopt
     
     Finds out program defaults from the resource database.
 
     Returns
     -------
-        ptr_iopt : instance of xfdata.FL_IOPT
+        ptr_fliopt : instance of xfdata.FL_IOPT
             program defaults class instance
 
     Examples
@@ -4541,10 +4554,10 @@ def fl_get_defaults():
         """void fl_get_defaults(FL_IOPT * cntl)""")
     library.check_if_initialized()
     iopt = xfdata.FL_IOPT()
-    ptr_iopt = cty.byref(iopt)
-    library.keep_elem_refs(iopt, ptr_iopt)
-    _fl_get_defaults(ptr_iopt)
-    return ptr_iopt
+    ptr_fliopt = cty.pointer(iopt)
+    library.keep_elem_refs(iopt, ptr_fliopt)
+    _fl_get_defaults(ptr_fliopt)
+    return ptr_fliopt
 
 
 def fl_get_visual_depth():

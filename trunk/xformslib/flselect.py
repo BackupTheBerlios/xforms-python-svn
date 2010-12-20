@@ -697,7 +697,7 @@ def fl_get_select_text_color(ptr_flobject):
     Returns
     -------
         colr : long_pos
-            color
+            XForms colormap index as color
 
     Examples
     --------
@@ -735,7 +735,7 @@ def fl_set_select_text_color(ptr_flobject, colr):
     Returns
     -------
         oldcolr : long_pos
-            previous color
+            XForms colormap index as previous color
 
     Examples
     --------

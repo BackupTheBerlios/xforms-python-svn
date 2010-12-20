@@ -150,9 +150,9 @@ def fl_set_input_color(ptr_flobject, txtcolr, curscolr):
         ptr_flobject : pointer to xfdata.FL_OBJECT
             input flobject
         txtcolr : long_pos
-            color value for text
+            XForms colormap index as color for text
         curscolr : long_pos
-            color value for cursor
+            XForms colormap index as color for cursor
 
     Examples
     --------
@@ -193,9 +193,9 @@ def fl_get_input_color(ptr_flobject):
     Returns
     -------
         txtcolr : long_pos
-            color value for text
+            XForms colormap index as color for text
         curscolr : long_pos
-            color value for cursor
+            XForms colormap index as color for cursor
 
     Examples
     --------
