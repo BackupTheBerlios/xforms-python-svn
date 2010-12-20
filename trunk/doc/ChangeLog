@@ -1,5 +1,7 @@
 
 SVN
+    * continuing params' names change to be more meaningful. Some bugfixes
+    and some typos fixed.
     * pointer-to-something params have now meaningful names (WIP),
     c-compatible type have clearer prefixes (WIP). Bugfixes and typos.
     make_flpopupitem now verifies type, state and shortcut keys.

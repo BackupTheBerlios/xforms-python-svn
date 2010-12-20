@@ -444,10 +444,10 @@ def fl_set_counter_filter(ptr_flobject, pyfn_ValFilter):
     library.check_if_initialized()
     library.verify_flobjectptr_type(ptr_flobject)
     library.verify_function_type(pyfn_ValFilter)
-    c_ValFilter = xfdata.FL_VAL_FILTER(pyfn_ValFilter)
+    cfn_ValFilter = xfdata.FL_VAL_FILTER(pyfn_ValFilter)
     library.keep_cfunc_refs(c_ValFilter, pyfn_ValFilter)
     library.keep_elem_refs(ptr_flobject)
-    _fl_set_counter_filter(ptr_flobject, c_ValFilter)
+    _fl_set_counter_filter(ptr_flobject, cfn_ValFilter)
 
 
 # Functions to set and get the timeout value used by the

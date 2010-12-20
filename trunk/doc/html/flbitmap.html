@@ -9,7 +9,7 @@
 <font color="#ffffff" face="helvetica, arial">&nbsp;<br><big><big><strong>flbitmap</strong></big></big></font></td
 ><td align=right valign=bottom
 ><font color="#ffffff" face="helvetica, arial"><a href=".">index</a><br>     <a href="index.html">list</a></font></td></tr></table>
-    <p><tt>xforms-python's&nbsp;functions&nbsp;to&nbsp;manage&nbsp;bitmap&nbsp;objects.</tt></p>
+    <p><tt>xforms-python's&nbsp;functions&nbsp;to&nbsp;manage&nbsp;bitmap&nbsp;flobjects.</tt></p>
 <p>
 <table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
 <tr bgcolor="#aa55cc">
@@ -27,63 +27,69 @@
 <font color="#ffffff" face="helvetica, arial"><big><strong>Functions</strong></big></font></td></tr>
     
 <tr><td bgcolor="#eeaa77"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
-<td width="100%"><dl><dt><a name="-fl_add_bitmap"><strong>fl_add_bitmap</strong></a>(bitmaptype, x, y, w, h, label)</dt><dd><tt><a href="#-fl_add_bitmap">fl_add_bitmap</a>(bitmaptype,&nbsp;x,&nbsp;y,&nbsp;w,&nbsp;h,&nbsp;label)<br>
+<td width="100%"><dl><dt><a name="-fl_add_bitmap"><strong>fl_add_bitmap</strong></a>(bitmaptype, xpos, ypos, width, height, label)</dt><dd><tt><a href="#-fl_add_bitmap">fl_add_bitmap</a>(bitmaptype,&nbsp;xpos,&nbsp;ypos,&nbsp;width,&nbsp;height,&nbsp;label)<br>
+-&gt;&nbsp;ptr_flobject<br>
 &nbsp;<br>
-Adds&nbsp;a&nbsp;bitmap&nbsp;object.<br>
+Adds&nbsp;a&nbsp;bitmap&nbsp;(a&nbsp;plain&nbsp;text&nbsp;monochrome&nbsp;image&nbsp;format)&nbsp;flobject<br>
+to&nbsp;a&nbsp;form.&nbsp;The&nbsp;bitmap&nbsp;is&nbsp;empty&nbsp;on&nbsp;creation.<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
 &nbsp;&nbsp;&nbsp;&nbsp;bitmaptype&nbsp;:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;type&nbsp;of&nbsp;bitmap&nbsp;to&nbsp;be&nbsp;added.&nbsp;Values&nbsp;(from&nbsp;xfdata.py)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_NORMAL_BITMAP<br>
-&nbsp;&nbsp;&nbsp;&nbsp;x&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;xpos&nbsp;:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;horizontal&nbsp;position&nbsp;(upper-left&nbsp;corner)<br>
-&nbsp;&nbsp;&nbsp;&nbsp;y&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ypos&nbsp;:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;vertical&nbsp;position&nbsp;of&nbsp;bitmap&nbsp;(upper-left&nbsp;corner)<br>
-&nbsp;&nbsp;&nbsp;&nbsp;w&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;width&nbsp;:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;width&nbsp;in&nbsp;coord&nbsp;units<br>
-&nbsp;&nbsp;&nbsp;&nbsp;h&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;height&nbsp;:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;height&nbsp;in&nbsp;coord&nbsp;units<br>
 &nbsp;&nbsp;&nbsp;&nbsp;label&nbsp;:&nbsp;str<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;text&nbsp;label&nbsp;of&nbsp;bitmap<br>
 &nbsp;<br>
 Returns<br>
 -------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;pFlObject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;object&nbsp;created<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_flobject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;created&nbsp;flobject<br>
 &nbsp;<br>
 Examples<br>
 --------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;<a href="#-fl_add_bitmap">fl_add_bitmap</a>(xfdata.FL_NORMAL_BITMAP,&nbsp;320,&nbsp;200,&nbsp;100,&nbsp;100,<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"MyBitmap")<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;xbmobj&nbsp;=&nbsp;<a href="#-fl_add_bitmap">fl_add_bitmap</a>(xfdata.FL_NORMAL_BITMAP,&nbsp;320,&nbsp;200,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;100,&nbsp;100,&nbsp;"MyBitmap")<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;Demo&nbsp;=&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-fl_add_pixmap"><strong>fl_add_pixmap</strong></a>(pixmaptype, x, y, w, h, label)</dt><dd><tt><a href="#-fl_add_pixmap">fl_add_pixmap</a>(pixmaptype,&nbsp;x,&nbsp;y,&nbsp;w,&nbsp;h,&nbsp;label)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;Demo&nbsp;=&nbsp;OK<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Review:&nbsp;UT+</tt></dd></dl>
+ <dl><dt><a name="-fl_add_pixmap"><strong>fl_add_pixmap</strong></a>(pixmaptype, xpos, ypos, width, height, label)</dt><dd><tt><a href="#-fl_add_pixmap">fl_add_pixmap</a>(pixmaptype,&nbsp;xpos,&nbsp;ypos,&nbsp;width,&nbsp;height,&nbsp;label)<br>
+-&gt;&nbsp;ptr_flobject<br>
 &nbsp;<br>
-Adds&nbsp;a&nbsp;pixmap&nbsp;object.<br>
+Adds&nbsp;a&nbsp;pixmap&nbsp;flobject&nbsp;(plain&nbsp;text&nbsp;multi-color&nbsp;image&nbsp;format).&nbsp;The<br>
+label&nbsp;is&nbsp;by&nbsp;default&nbsp;placed&nbsp;below&nbsp;the&nbsp;pixmap.&nbsp;The&nbsp;pixmap&nbsp;is&nbsp;empty<br>
+on&nbsp;creation.<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
 &nbsp;&nbsp;&nbsp;&nbsp;pixmaptype&nbsp;:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;type&nbsp;of&nbsp;pixmap&nbsp;to&nbsp;be&nbsp;added.&nbsp;Values&nbsp;(from&nbsp;xfdata.py)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_NORMAL_PIXMAP<br>
-&nbsp;&nbsp;&nbsp;&nbsp;x&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;xpos&nbsp;:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;horizontal&nbsp;position&nbsp;(upper-left&nbsp;corner)<br>
-&nbsp;&nbsp;&nbsp;&nbsp;y&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ypos&nbsp;:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;vertical&nbsp;position&nbsp;of&nbsp;bitmap&nbsp;(upper-left&nbsp;corner)<br>
-&nbsp;&nbsp;&nbsp;&nbsp;w&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;width&nbsp;:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;width&nbsp;in&nbsp;coord&nbsp;units<br>
-&nbsp;&nbsp;&nbsp;&nbsp;h&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;height&nbsp;:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;height&nbsp;in&nbsp;coord&nbsp;units<br>
 &nbsp;&nbsp;&nbsp;&nbsp;label&nbsp;:&nbsp;str<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;text&nbsp;label&nbsp;of&nbsp;pixmap<br>
 &nbsp;<br>
 Returns<br>
 -------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;pFlObject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;object&nbsp;created<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_flobject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;flobject&nbsp;created<br>
 &nbsp;<br>
 Examples<br>
 --------<br>
@@ -92,8 +98,9 @@ Examples<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-fl_create_from_bitmapdata"><strong>fl_create_from_bitmapdata</strong></a>(win, data, w, h)</dt><dd><tt><a href="#-fl_create_from_bitmapdata">fl_create_from_bitmapdata</a>(win,&nbsp;data,&nbsp;w,&nbsp;h)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Review:&nbsp;UT+</tt></dd></dl>
+ <dl><dt><a name="-fl_create_from_bitmapdata"><strong>fl_create_from_bitmapdata</strong></a>(win, xbmdata, width, height)</dt><dd><tt><a href="#-fl_create_from_bitmapdata">fl_create_from_bitmapdata</a>(win,&nbsp;xbmdata,&nbsp;width,&nbsp;height)&nbsp;-&gt;&nbsp;pixmapid<br>
 &nbsp;<br>
 Makes&nbsp;a&nbsp;bitmap&nbsp;from&nbsp;bitmap&nbsp;contents&nbsp;data.<br>
 &nbsp;<br>
@@ -101,26 +108,29 @@ Parameters<br>
 ----------<br>
 &nbsp;&nbsp;&nbsp;&nbsp;win&nbsp;:&nbsp;long_pos<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;window&nbsp;id<br>
-&nbsp;&nbsp;&nbsp;&nbsp;data&nbsp;:&nbsp;str&nbsp;of&nbsp;ubyte<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;bitmap&nbsp;contents&nbsp;data<br>
-&nbsp;&nbsp;&nbsp;&nbsp;w&nbsp;:&nbsp;int_pos<br>
+&nbsp;&nbsp;&nbsp;&nbsp;xbmdata&nbsp;:&nbsp;str<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;bitmap&nbsp;data&nbsp;used&nbsp;for&nbsp;contents<br>
+&nbsp;&nbsp;&nbsp;&nbsp;width&nbsp;:&nbsp;int_pos<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;width&nbsp;of&nbsp;bitmap&nbsp;in&nbsp;coord&nbsp;units<br>
-&nbsp;&nbsp;&nbsp;&nbsp;h&nbsp;:&nbsp;int_pos<br>
+&nbsp;&nbsp;&nbsp;&nbsp;height&nbsp;:&nbsp;int_pos<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;height&nbsp;of&nbsp;bitmap&nbsp;in&nbsp;coord&nbsp;units<br>
 &nbsp;<br>
 Returns<br>
 -------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;pmap&nbsp;:&nbsp;long_pos<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;pixmap&nbsp;created<br>
+&nbsp;&nbsp;&nbsp;&nbsp;pixmapid&nbsp;:&nbsp;long_pos<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;created&nbsp;pixmap&nbsp;resource&nbsp;id<br>
 &nbsp;<br>
 Examples<br>
 --------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;*todo*<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;xbmdata&nbsp;=&nbsp;"&nbsp;(x/08?@HOP"<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;pmap&nbsp;=&nbsp;<a href="#-fl_create_from_bitmapdata">fl_create_from_bitmapdata</a>(win0,&nbsp;xbmdata,&nbsp;20,&nbsp;20)<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-fl_create_from_pixmapdata"><strong>fl_create_from_pixmapdata</strong></a>(win, data, w, h, sm, hotx, hoty, tran)</dt><dd><tt><a href="#-fl_create_from_pixmapdata">fl_create_from_pixmapdata</a>(win,&nbsp;data,&nbsp;w,&nbsp;h,&nbsp;sm,&nbsp;hotx,&nbsp;hoty,&nbsp;tran)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Review:&nbsp;UT+</tt></dd></dl>
+ <dl><dt><a name="-fl_create_from_pixmapdata"><strong>fl_create_from_pixmapdata</strong></a>(win, xpmdata, tran)</dt><dd><tt><a href="#-fl_create_from_pixmapdata">fl_create_from_pixmapdata</a>(win,&nbsp;xpmdata,&nbsp;tran)&nbsp;-&gt;&nbsp;pixmapid,&nbsp;width,<br>
+height,&nbsp;smask,&nbsp;hotx,&nbsp;hoty<br>
 &nbsp;<br>
 Makes&nbsp;a&nbsp;pixmap&nbsp;from&nbsp;pixmap&nbsp;contents&nbsp;data.<br>
 &nbsp;<br>
@@ -128,44 +138,49 @@ Parameters<br>
 ----------<br>
 &nbsp;&nbsp;&nbsp;&nbsp;win&nbsp;:&nbsp;long_pos<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;window&nbsp;id<br>
-&nbsp;&nbsp;&nbsp;&nbsp;data&nbsp;:&nbsp;str&nbsp;of&nbsp;ubytes<br>
+&nbsp;&nbsp;&nbsp;&nbsp;xpmdata&nbsp;:&nbsp;str&nbsp;of&nbsp;ubytes<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;pixmap&nbsp;contents&nbsp;data<br>
-&nbsp;&nbsp;&nbsp;&nbsp;w&nbsp;:&nbsp;int_pos<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;width&nbsp;of&nbsp;pixmap&nbsp;in&nbsp;coord&nbsp;units<br>
-&nbsp;&nbsp;&nbsp;&nbsp;h&nbsp;:&nbsp;int_pos<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;height&nbsp;of&nbsp;pixmap&nbsp;in&nbsp;coord&nbsp;units<br>
-&nbsp;&nbsp;&nbsp;&nbsp;sm&nbsp;:&nbsp;long_pos<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;shape&nbsp;mask&nbsp;(of&nbsp;an&nbsp;existing&nbsp;pixmap)&nbsp;used&nbsp;as&nbsp;a&nbsp;clipping&nbsp;mask&nbsp;to<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;achieve&nbsp;transparency,&nbsp;0&nbsp;for&nbsp;no&nbsp;transparency.<br>
-&nbsp;&nbsp;&nbsp;&nbsp;hotx&nbsp;:&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;horizontal&nbsp;position&nbsp;of&nbsp;center&nbsp;of&nbsp;the&nbsp;pixmap&nbsp;(useful&nbsp;if&nbsp;the&nbsp;pixmap<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;is&nbsp;to&nbsp;be&nbsp;used&nbsp;as&nbsp;a&nbsp;cursor)<br>
-&nbsp;&nbsp;&nbsp;&nbsp;hoty&nbsp;:&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;vertical&nbsp;position&nbsp;of&nbsp;center&nbsp;of&nbsp;the&nbsp;pixmap&nbsp;(useful&nbsp;if&nbsp;the&nbsp;pixmap<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;is&nbsp;to&nbsp;be&nbsp;used&nbsp;as&nbsp;a&nbsp;cursor)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;tran&nbsp;:&nbsp;long_pos<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;color&nbsp;value&nbsp;(currently&nbsp;not&nbsp;used)<br>
 &nbsp;<br>
 Returns<br>
 -------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;pmap&nbsp;:&nbsp;long_pos<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;pixmap&nbsp;id&nbsp;created<br>
+&nbsp;&nbsp;&nbsp;&nbsp;pixmapid&nbsp;:&nbsp;long_pos<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;created&nbsp;pixmap&nbsp;resource&nbsp;id<br>
+&nbsp;&nbsp;&nbsp;&nbsp;width&nbsp;:&nbsp;int_pos<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;width&nbsp;of&nbsp;pixmap&nbsp;in&nbsp;coord&nbsp;units<br>
+&nbsp;&nbsp;&nbsp;&nbsp;height&nbsp;:&nbsp;int_pos<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;height&nbsp;of&nbsp;pixmap&nbsp;in&nbsp;coord&nbsp;units<br>
+&nbsp;&nbsp;&nbsp;&nbsp;smask&nbsp;:&nbsp;long_pos<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;shape&nbsp;mask&nbsp;(of&nbsp;an&nbsp;existing&nbsp;pixmap)&nbsp;used&nbsp;as&nbsp;a&nbsp;clipping&nbsp;mask<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;to&nbsp;achieve&nbsp;transparency,&nbsp;0&nbsp;for&nbsp;no&nbsp;transparency.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;hotx&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;horizontal&nbsp;position&nbsp;of&nbsp;center&nbsp;of&nbsp;the&nbsp;pixmap&nbsp;(useful&nbsp;if&nbsp;the<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;pixmap&nbsp;is&nbsp;to&nbsp;be&nbsp;used&nbsp;as&nbsp;a&nbsp;cursor)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;hoty&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;vertical&nbsp;position&nbsp;of&nbsp;center&nbsp;of&nbsp;the&nbsp;pixmap&nbsp;(useful&nbsp;if&nbsp;the<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;pixmap&nbsp;is&nbsp;to&nbsp;be&nbsp;used&nbsp;as&nbsp;a&nbsp;cursor)<br>
 &nbsp;<br>
 Examples<br>
 --------<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;*todo*<br>
 &nbsp;<br>
+API&nbsp;diversion<br>
+-------------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;API&nbsp;changed&nbsp;from&nbsp;XForms,&nbsp;upstream&nbsp;is&nbsp;<a href="#-fl_create_from_pixmapdata">fl_create_from_pixmapdata</a>(win,&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;xpmdata,&nbsp;width,&nbsp;height,&nbsp;smask,&nbsp;hotx,&nbsp;hoty,&nbsp;tran)<br>
+&nbsp;<br>
 Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-fl_free_pixmap"><strong>fl_free_pixmap</strong></a>(pmapid)</dt><dd><tt><a href="#-fl_free_pixmap">fl_free_pixmap</a>(pmapid)<br>
+ <dl><dt><a name="-fl_free_pixmap"><strong>fl_free_pixmap</strong></a>(pixmapid)</dt><dd><tt><a href="#-fl_free_pixmap">fl_free_pixmap</a>(pixmapid)<br>
 &nbsp;<br>
 Frees&nbsp;the&nbsp;pixmap.<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;pmapid&nbsp;:&nbsp;long_pos<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Pixmap&nbsp;id&nbsp;to&nbsp;be&nbsp;freed<br>
+&nbsp;&nbsp;&nbsp;&nbsp;pixmapid&nbsp;:&nbsp;long_pos<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;pixmap&nbsp;resource&nbsp;id&nbsp;to&nbsp;be&nbsp;freed<br>
 &nbsp;<br>
 Examples<br>
 --------<br>
@@ -174,15 +189,15 @@ Examples<br>
 Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-fl_free_pixmap_pixmap"><strong>fl_free_pixmap_pixmap</strong></a>(pFlObject)</dt><dd><tt><a href="#-fl_free_pixmap_pixmap">fl_free_pixmap_pixmap</a>(pFlObject)<br>
+ <dl><dt><a name="-fl_free_pixmap_pixmap"><strong>fl_free_pixmap_pixmap</strong></a>(ptr_flobject)</dt><dd><tt><a href="#-fl_free_pixmap_pixmap">fl_free_pixmap_pixmap</a>(ptr_flobject)<br>
 &nbsp;<br>
-Frees&nbsp;the&nbsp;old&nbsp;pixmap&nbsp;associated&nbsp;to&nbsp;object,&nbsp;the&nbsp;mask,&nbsp;and&nbsp;the&nbsp;colors&nbsp;the<br>
-pixmap&nbsp;allocated.<br>
+Frees&nbsp;the&nbsp;old&nbsp;pixmap&nbsp;associated&nbsp;to&nbsp;flobject,&nbsp;the&nbsp;mask,&nbsp;and&nbsp;the<br>
+colors&nbsp;the&nbsp;pixmap&nbsp;allocated.<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;pFlObject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;pixmap&nbsp;object<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_flobject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;pixmap&nbsp;flobject<br>
 &nbsp;<br>
 Examples<br>
 --------<br>
@@ -191,15 +206,15 @@ Examples<br>
 Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;Demo&nbsp;=&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-fl_free_pixmapbutton_pixmap"><strong>fl_free_pixmapbutton_pixmap</strong></a> = fl_free_pixmap_pixmap(pFlObject)</dt><dd><tt><a href="#-fl_free_pixmap_pixmap">fl_free_pixmap_pixmap</a>(pFlObject)<br>
+ <dl><dt><a name="-fl_free_pixmapbutton_pixmap"><strong>fl_free_pixmapbutton_pixmap</strong></a> = fl_free_pixmap_pixmap(ptr_flobject)</dt><dd><tt><a href="#-fl_free_pixmap_pixmap">fl_free_pixmap_pixmap</a>(ptr_flobject)<br>
 &nbsp;<br>
-Frees&nbsp;the&nbsp;old&nbsp;pixmap&nbsp;associated&nbsp;to&nbsp;object,&nbsp;the&nbsp;mask,&nbsp;and&nbsp;the&nbsp;colors&nbsp;the<br>
-pixmap&nbsp;allocated.<br>
+Frees&nbsp;the&nbsp;old&nbsp;pixmap&nbsp;associated&nbsp;to&nbsp;flobject,&nbsp;the&nbsp;mask,&nbsp;and&nbsp;the<br>
+colors&nbsp;the&nbsp;pixmap&nbsp;allocated.<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;pFlObject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;pixmap&nbsp;object<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_flobject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;pixmap&nbsp;flobject<br>
 &nbsp;<br>
 Examples<br>
 --------<br>
@@ -208,21 +223,21 @@ Examples<br>
 Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;Demo&nbsp;=&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-fl_get_pixmap_pixmap"><strong>fl_get_pixmap_pixmap</strong></a>(pFlObject)</dt><dd><tt><a href="#-fl_get_pixmap_pixmap">fl_get_pixmap_pixmap</a>(pFlObject)<br>
+ <dl><dt><a name="-fl_get_pixmap_pixmap"><strong>fl_get_pixmap_pixmap</strong></a>(ptr_flobject)</dt><dd><tt><a href="#-fl_get_pixmap_pixmap">fl_get_pixmap_pixmap</a>(ptr_flobject)&nbsp;-&gt;&nbsp;pixmapid1,&nbsp;pixmapid2,&nbsp;pmask<br>
 &nbsp;<br>
-Obtains&nbsp;the&nbsp;pixmap&nbsp;ID&nbsp;currently&nbsp;being&nbsp;displayed.<br>
+Finds&nbsp;out&nbsp;the&nbsp;pixmap&nbsp;resource&nbsp;id&nbsp;currently&nbsp;being&nbsp;displayed.<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;pFlObject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;pixmap&nbsp;object<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_flobject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;pixmap&nbsp;flobject<br>
 &nbsp;<br>
 Returns<br>
 -------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;pmap1&nbsp;:&nbsp;long_pos<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;pixmap&nbsp;id<br>
-&nbsp;&nbsp;&nbsp;&nbsp;pmap2&nbsp;:&nbsp;long_pos<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;pixmap&nbsp;id<br>
+&nbsp;&nbsp;&nbsp;&nbsp;pixmapid1&nbsp;:&nbsp;long_pos<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;pixmap&nbsp;resource&nbsp;id<br>
+&nbsp;&nbsp;&nbsp;&nbsp;pixmapid2&nbsp;:&nbsp;long_pos<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;pixmap&nbsp;resource&nbsp;id<br>
 &nbsp;&nbsp;&nbsp;&nbsp;pmask&nbsp;:&nbsp;long_pos<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;pixmap&nbsp;mask<br>
 &nbsp;<br>
@@ -232,27 +247,27 @@ Examples<br>
 &nbsp;<br>
 API_diversion<br>
 ----------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;API&nbsp;changed&nbsp;from&nbsp;XForms,&nbsp;upstream&nbsp;was<br>
-&nbsp;&nbsp;&nbsp;&nbsp;<a href="#-fl_get_pixmap_pixmap">fl_get_pixmap_pixmap</a>(pFlObject,&nbsp;p,&nbsp;m)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;API&nbsp;changed&nbsp;from&nbsp;XForms,&nbsp;upstream&nbsp;is<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="#-fl_get_pixmap_pixmap">fl_get_pixmap_pixmap</a>(ptr_flobject,&nbsp;p,&nbsp;m)<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-fl_get_pixmapbutton_pixmap"><strong>fl_get_pixmapbutton_pixmap</strong></a> = fl_get_pixmap_pixmap(pFlObject)</dt><dd><tt><a href="#-fl_get_pixmap_pixmap">fl_get_pixmap_pixmap</a>(pFlObject)<br>
+ <dl><dt><a name="-fl_get_pixmapbutton_pixmap"><strong>fl_get_pixmapbutton_pixmap</strong></a> = fl_get_pixmap_pixmap(ptr_flobject)</dt><dd><tt><a href="#-fl_get_pixmap_pixmap">fl_get_pixmap_pixmap</a>(ptr_flobject)&nbsp;-&gt;&nbsp;pixmapid1,&nbsp;pixmapid2,&nbsp;pmask<br>
 &nbsp;<br>
-Obtains&nbsp;the&nbsp;pixmap&nbsp;ID&nbsp;currently&nbsp;being&nbsp;displayed.<br>
+Finds&nbsp;out&nbsp;the&nbsp;pixmap&nbsp;resource&nbsp;id&nbsp;currently&nbsp;being&nbsp;displayed.<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;pFlObject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;pixmap&nbsp;object<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_flobject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;pixmap&nbsp;flobject<br>
 &nbsp;<br>
 Returns<br>
 -------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;pmap1&nbsp;:&nbsp;long_pos<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;pixmap&nbsp;id<br>
-&nbsp;&nbsp;&nbsp;&nbsp;pmap2&nbsp;:&nbsp;long_pos<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;pixmap&nbsp;id<br>
+&nbsp;&nbsp;&nbsp;&nbsp;pixmapid1&nbsp;:&nbsp;long_pos<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;pixmap&nbsp;resource&nbsp;id<br>
+&nbsp;&nbsp;&nbsp;&nbsp;pixmapid2&nbsp;:&nbsp;long_pos<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;pixmap&nbsp;resource&nbsp;id<br>
 &nbsp;&nbsp;&nbsp;&nbsp;pmask&nbsp;:&nbsp;long_pos<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;pixmap&nbsp;mask<br>
 &nbsp;<br>
@@ -262,15 +277,15 @@ Examples<br>
 &nbsp;<br>
 API_diversion<br>
 ----------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;API&nbsp;changed&nbsp;from&nbsp;XForms,&nbsp;upstream&nbsp;was<br>
-&nbsp;&nbsp;&nbsp;&nbsp;<a href="#-fl_get_pixmap_pixmap">fl_get_pixmap_pixmap</a>(pFlObject,&nbsp;p,&nbsp;m)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;API&nbsp;changed&nbsp;from&nbsp;XForms,&nbsp;upstream&nbsp;is<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="#-fl_get_pixmap_pixmap">fl_get_pixmap_pixmap</a>(ptr_flobject,&nbsp;p,&nbsp;m)<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-fl_read_bitmapfile"><strong>fl_read_bitmapfile</strong></a>(win, fname)</dt><dd><tt><a href="#-fl_read_bitmapfile">fl_read_bitmapfile</a>(win,&nbsp;fname)<br>
+ <dl><dt><a name="-fl_read_bitmapfile"><strong>fl_read_bitmapfile</strong></a>(win, fname)</dt><dd><tt><a href="#-fl_read_bitmapfile">fl_read_bitmapfile</a>(win,&nbsp;fname)&nbsp;-&gt;&nbsp;pixmapid,&nbsp;width,&nbsp;height,&nbsp;hotx,&nbsp;hoty<br>
 &nbsp;<br>
-Makes&nbsp;a&nbsp;bitmap&nbsp;from&nbsp;a&nbsp;bitmap&nbsp;file.<br>
+Makes&nbsp;a&nbsp;bitmap&nbsp;from&nbsp;a&nbsp;bitmap&nbsp;(.xpm&nbsp;format)&nbsp;file.<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
@@ -281,11 +296,11 @@ Parameters<br>
 &nbsp;<br>
 Returns<br>
 -------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;pmap&nbsp;:&nbsp;long_pos<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;pixmap&nbsp;id<br>
-&nbsp;&nbsp;&nbsp;&nbsp;w&nbsp;:&nbsp;int_pos<br>
+&nbsp;&nbsp;&nbsp;&nbsp;pixmapid&nbsp;:&nbsp;long_pos<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;pixmap&nbsp;resource&nbsp;id<br>
+&nbsp;&nbsp;&nbsp;&nbsp;width&nbsp;:&nbsp;int_pos<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;width<br>
-&nbsp;&nbsp;&nbsp;&nbsp;h&nbsp;:&nbsp;int_pos<br>
+&nbsp;&nbsp;&nbsp;&nbsp;height&nbsp;:&nbsp;int_pos<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;height<br>
 &nbsp;&nbsp;&nbsp;&nbsp;hotx&nbsp;:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;hotspot&nbsp;horizontal&nbsp;position<br>
@@ -298,15 +313,17 @@ Examples<br>
 &nbsp;<br>
 API_diversion<br>
 ----------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;API&nbsp;changed&nbsp;from&nbsp;XForms,&nbsp;upstream&nbsp;was<br>
-&nbsp;&nbsp;&nbsp;&nbsp;<a href="#-fl_read_bitmapfile">fl_read_bitmapfile</a>(win,&nbsp;filename,&nbsp;w,&nbsp;h,&nbsp;hotx,&nbsp;hoty)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;API&nbsp;changed&nbsp;from&nbsp;XForms,&nbsp;upstream&nbsp;is<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="#-fl_read_bitmapfile">fl_read_bitmapfile</a>(win,&nbsp;filename,&nbsp;width,&nbsp;height,&nbsp;hotx,&nbsp;hoty)<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-fl_read_pixmapfile"><strong>fl_read_pixmapfile</strong></a>(win, fname, tran)</dt><dd><tt><a href="#-fl_read_pixmapfile">fl_read_pixmapfile</a>(win,&nbsp;fname,&nbsp;tran)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Review:&nbsp;UT+</tt></dd></dl>
+ <dl><dt><a name="-fl_read_pixmapfile"><strong>fl_read_pixmapfile</strong></a>(win, fname, tran)</dt><dd><tt><a href="#-fl_read_pixmapfile">fl_read_pixmapfile</a>(win,&nbsp;fname,&nbsp;tran)&nbsp;-&gt;&nbsp;pixmapid,&nbsp;width,&nbsp;height,<br>
+smask,&nbsp;hotx,&nbsp;hoty<br>
 &nbsp;<br>
-Makes&nbsp;a&nbsp;pixmap&nbsp;from&nbsp;a&nbsp;pixmap&nbsp;file.<br>
+Makes&nbsp;a&nbsp;pixmap&nbsp;from&nbsp;a&nbsp;pixmap&nbsp;(.xpm&nbsp;format)&nbsp;file.<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
@@ -319,11 +336,11 @@ Parameters<br>
 &nbsp;<br>
 Returns<br>
 -------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;pmap&nbsp;:&nbsp;long_pos<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;pixmap<br>
-&nbsp;&nbsp;&nbsp;&nbsp;w&nbsp;:&nbsp;int_pos<br>
+&nbsp;&nbsp;&nbsp;&nbsp;pixmap&nbsp;:&nbsp;long_pos<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;pixmap&nbsp;resource&nbsp;id<br>
+&nbsp;&nbsp;&nbsp;&nbsp;width&nbsp;:&nbsp;int_pos<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;width<br>
-&nbsp;&nbsp;&nbsp;&nbsp;h&nbsp;:&nbsp;int_pos<br>
+&nbsp;&nbsp;&nbsp;&nbsp;height&nbsp;:&nbsp;int_pos<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;height<br>
 &nbsp;&nbsp;&nbsp;&nbsp;smask&nbsp;:&nbsp;long_pos<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;shapemask<br>
@@ -339,47 +356,49 @@ Examples<br>
 &nbsp;<br>
 API_diversion<br>
 ----------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;API&nbsp;changed&nbsp;from&nbsp;XForms,&nbsp;upstream&nbsp;was<br>
-&nbsp;&nbsp;&nbsp;&nbsp;<a href="#-fl_read_pixmapfile">fl_read_pixmapfile</a>(win,&nbsp;filename,&nbsp;w,&nbsp;h,&nbsp;shape_mask,&nbsp;hotx,&nbsp;hoty,&nbsp;tran)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;API&nbsp;changed&nbsp;from&nbsp;XForms,&nbsp;upstream&nbsp;is&nbsp;<a href="#-fl_read_pixmapfile">fl_read_pixmapfile</a>(win,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;filename,&nbsp;width,&nbsp;height,&nbsp;shape_mask,&nbsp;hotx,&nbsp;hoty,&nbsp;tran)<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;Demo&nbsp;=&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-fl_set_bitmap_data"><strong>fl_set_bitmap_data</strong></a>(pFlObject, w, h, xbmcontents)</dt><dd><tt><a href="#-fl_set_bitmap_data">fl_set_bitmap_data</a>(pFlObject,&nbsp;w,&nbsp;h,&nbsp;xbmcontents)<br>
+ <dl><dt><a name="-fl_set_bitmap_data"><strong>fl_set_bitmap_data</strong></a>(ptr_flobject, width, height, xbmcontentslist)</dt><dd><tt><a href="#-fl_set_bitmap_data">fl_set_bitmap_data</a>(ptr_flobject,&nbsp;width,&nbsp;height,&nbsp;xbmcontentslist)<br>
 &nbsp;<br>
-Sets&nbsp;the&nbsp;actual&nbsp;bitmap&nbsp;being&nbsp;displayed&nbsp;from&nbsp;specified&nbsp;contents.&nbsp;A<br>
+Defines&nbsp;the&nbsp;actual&nbsp;bitmap&nbsp;being&nbsp;displayed&nbsp;from&nbsp;specified&nbsp;contents.&nbsp;A<br>
 number&nbsp;of&nbsp;bitmaps&nbsp;can&nbsp;be&nbsp;found&nbsp;in&nbsp;'/usr/include/X11/bitmaps'&nbsp;or&nbsp;similar<br>
 places.&nbsp;The&nbsp;X&nbsp;program&nbsp;'bitmap'&nbsp;can&nbsp;be&nbsp;used&nbsp;to&nbsp;create&nbsp;bitmaps.<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;pFlObject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;bitmap&nbsp;object<br>
-&nbsp;&nbsp;&nbsp;&nbsp;w&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_flobject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;bitmap&nbsp;flobject<br>
+&nbsp;&nbsp;&nbsp;&nbsp;width&nbsp;:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;width&nbsp;of&nbsp;bitmap&nbsp;in&nbsp;cood&nbsp;units<br>
-&nbsp;&nbsp;&nbsp;&nbsp;h&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;height&nbsp;:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;height&nbsp;of&nbsp;bitmap&nbsp;in&nbsp;coord&nbsp;units<br>
-&nbsp;&nbsp;&nbsp;&nbsp;xbmcontents&nbsp;:&nbsp;str&nbsp;of&nbsp;ubytes&nbsp;characters<br>
+&nbsp;&nbsp;&nbsp;&nbsp;xbmcontentslist&nbsp;:&nbsp;list&nbsp;of&nbsp;ubytes<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;bitmap&nbsp;data&nbsp;used&nbsp;for&nbsp;contents<br>
 &nbsp;<br>
 Examples<br>
 --------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;*todo*<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;bitmapcontents&nbsp;=&nbsp;[0x01,&nbsp;0x1a,&nbsp;0x27,&nbsp;0x34,&nbsp;0x41,&nbsp;0x4e,&nbsp;0x5b,&nbsp;0x68,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;0x75,&nbsp;0x82,&nbsp;0x8f,&nbsp;0x9c,&nbsp;0xa9,&nbsp;0xb6,&nbsp;0xc3,&nbsp;0xd0]<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;<a href="#-fl_set_bitmap_data">fl_set_bitmap_data</a>(xbmobj,&nbsp;4,&nbsp;4,&nbsp;bitmapcontents)<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-fl_set_bitmap_file"><strong>fl_set_bitmap_file</strong></a>(pFlObject, fname)</dt><dd><tt><a href="#-fl_set_bitmap_file">fl_set_bitmap_file</a>(pFlObject,&nbsp;fname)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Review:&nbsp;UT+</tt></dd></dl>
+ <dl><dt><a name="-fl_set_bitmap_file"><strong>fl_set_bitmap_file</strong></a>(ptr_flobject, fname)</dt><dd><tt><a href="#-fl_set_bitmap_file">fl_set_bitmap_file</a>(ptr_flobject,&nbsp;fname)<br>
 &nbsp;<br>
-Sets&nbsp;the&nbsp;actual&nbsp;bitmap&nbsp;being&nbsp;displayed&nbsp;from&nbsp;a&nbsp;specified&nbsp;.xbm&nbsp;file.&nbsp;A<br>
-number&nbsp;of&nbsp;bitmaps&nbsp;can&nbsp;be&nbsp;found&nbsp;in&nbsp;'/usr/include/X11/bitmaps'&nbsp;or&nbsp;similar<br>
-places.&nbsp;The&nbsp;X&nbsp;program&nbsp;'bitmap'&nbsp;can&nbsp;be&nbsp;used&nbsp;to&nbsp;create&nbsp;bitmaps.<br>
-&nbsp;<br>
+Defines&nbsp;the&nbsp;actual&nbsp;bitmap&nbsp;being&nbsp;displayed&nbsp;from&nbsp;a&nbsp;specified&nbsp;.xbm&nbsp;file.<br>
+A&nbsp;number&nbsp;of&nbsp;bitmaps&nbsp;can&nbsp;be&nbsp;found&nbsp;in&nbsp;'/usr/include/X11/bitmaps'&nbsp;or<br>
+similar&nbsp;places.&nbsp;The&nbsp;X&nbsp;program&nbsp;'bitmap'&nbsp;can&nbsp;be&nbsp;used&nbsp;to&nbsp;create&nbsp;bitmaps.<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;pFlObject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;bitmap&nbsp;object<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_flobject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;bitmap&nbsp;flobject<br>
 &nbsp;&nbsp;&nbsp;&nbsp;fname&nbsp;:&nbsp;str<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;name&nbsp;(path&nbsp;included&nbsp;if&nbsp;necessary)&nbsp;of&nbsp;bitmap&nbsp;(.xbm&nbsp;format)&nbsp;file<br>
 &nbsp;<br>
@@ -389,18 +408,18 @@ Examples<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;Demo&nbsp;=&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-fl_set_bitmapbutton_datafile"><strong>fl_set_bitmapbutton_datafile</strong></a> = fl_set_bitmap_file(pFlObject, fname)</dt><dd><tt><a href="#-fl_set_bitmap_file">fl_set_bitmap_file</a>(pFlObject,&nbsp;fname)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;Demo&nbsp;=&nbsp;OK<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Review:&nbsp;UT+</tt></dd></dl>
+ <dl><dt><a name="-fl_set_bitmapbutton_datafile"><strong>fl_set_bitmapbutton_datafile</strong></a> = fl_set_bitmap_file(ptr_flobject, fname)</dt><dd><tt><a href="#-fl_set_bitmap_file">fl_set_bitmap_file</a>(ptr_flobject,&nbsp;fname)<br>
 &nbsp;<br>
-Sets&nbsp;the&nbsp;actual&nbsp;bitmap&nbsp;being&nbsp;displayed&nbsp;from&nbsp;a&nbsp;specified&nbsp;.xbm&nbsp;file.&nbsp;A<br>
-number&nbsp;of&nbsp;bitmaps&nbsp;can&nbsp;be&nbsp;found&nbsp;in&nbsp;'/usr/include/X11/bitmaps'&nbsp;or&nbsp;similar<br>
-places.&nbsp;The&nbsp;X&nbsp;program&nbsp;'bitmap'&nbsp;can&nbsp;be&nbsp;used&nbsp;to&nbsp;create&nbsp;bitmaps.<br>
-&nbsp;<br>
+Defines&nbsp;the&nbsp;actual&nbsp;bitmap&nbsp;being&nbsp;displayed&nbsp;from&nbsp;a&nbsp;specified&nbsp;.xbm&nbsp;file.<br>
+A&nbsp;number&nbsp;of&nbsp;bitmaps&nbsp;can&nbsp;be&nbsp;found&nbsp;in&nbsp;'/usr/include/X11/bitmaps'&nbsp;or<br>
+similar&nbsp;places.&nbsp;The&nbsp;X&nbsp;program&nbsp;'bitmap'&nbsp;can&nbsp;be&nbsp;used&nbsp;to&nbsp;create&nbsp;bitmaps.<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;pFlObject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;bitmap&nbsp;object<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_flobject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;bitmap&nbsp;flobject<br>
 &nbsp;&nbsp;&nbsp;&nbsp;fname&nbsp;:&nbsp;str<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;name&nbsp;(path&nbsp;included&nbsp;if&nbsp;necessary)&nbsp;of&nbsp;bitmap&nbsp;(.xbm&nbsp;format)&nbsp;file<br>
 &nbsp;<br>
@@ -410,18 +429,18 @@ Examples<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;Demo&nbsp;=&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-fl_set_bitmapbutton_file"><strong>fl_set_bitmapbutton_file</strong></a> = fl_set_bitmap_file(pFlObject, fname)</dt><dd><tt><a href="#-fl_set_bitmap_file">fl_set_bitmap_file</a>(pFlObject,&nbsp;fname)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;Demo&nbsp;=&nbsp;OK<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Review:&nbsp;UT+</tt></dd></dl>
+ <dl><dt><a name="-fl_set_bitmapbutton_file"><strong>fl_set_bitmapbutton_file</strong></a> = fl_set_bitmap_file(ptr_flobject, fname)</dt><dd><tt><a href="#-fl_set_bitmap_file">fl_set_bitmap_file</a>(ptr_flobject,&nbsp;fname)<br>
 &nbsp;<br>
-Sets&nbsp;the&nbsp;actual&nbsp;bitmap&nbsp;being&nbsp;displayed&nbsp;from&nbsp;a&nbsp;specified&nbsp;.xbm&nbsp;file.&nbsp;A<br>
-number&nbsp;of&nbsp;bitmaps&nbsp;can&nbsp;be&nbsp;found&nbsp;in&nbsp;'/usr/include/X11/bitmaps'&nbsp;or&nbsp;similar<br>
-places.&nbsp;The&nbsp;X&nbsp;program&nbsp;'bitmap'&nbsp;can&nbsp;be&nbsp;used&nbsp;to&nbsp;create&nbsp;bitmaps.<br>
-&nbsp;<br>
+Defines&nbsp;the&nbsp;actual&nbsp;bitmap&nbsp;being&nbsp;displayed&nbsp;from&nbsp;a&nbsp;specified&nbsp;.xbm&nbsp;file.<br>
+A&nbsp;number&nbsp;of&nbsp;bitmaps&nbsp;can&nbsp;be&nbsp;found&nbsp;in&nbsp;'/usr/include/X11/bitmaps'&nbsp;or<br>
+similar&nbsp;places.&nbsp;The&nbsp;X&nbsp;program&nbsp;'bitmap'&nbsp;can&nbsp;be&nbsp;used&nbsp;to&nbsp;create&nbsp;bitmaps.<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;pFlObject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;bitmap&nbsp;object<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_flobject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;bitmap&nbsp;flobject<br>
 &nbsp;&nbsp;&nbsp;&nbsp;fname&nbsp;:&nbsp;str<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;name&nbsp;(path&nbsp;included&nbsp;if&nbsp;necessary)&nbsp;of&nbsp;bitmap&nbsp;(.xbm&nbsp;format)&nbsp;file<br>
 &nbsp;<br>
@@ -431,22 +450,30 @@ Examples<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;Demo&nbsp;=&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-fl_set_pixmap_align"><strong>fl_set_pixmap_align</strong></a>(pFlObject, align, xmargin, ymargin)</dt><dd><tt><a href="#-fl_set_pixmap_align">fl_set_pixmap_align</a>(pFlObject,&nbsp;align,&nbsp;xmargin,&nbsp;ymargin)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;Demo&nbsp;=&nbsp;OK<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Review:&nbsp;UT+</tt></dd></dl>
+ <dl><dt><a name="-fl_set_pixmap_align"><strong>fl_set_pixmap_align</strong></a>(ptr_flobject, align, xmargin, ymargin)</dt><dd><tt><a href="#-fl_set_pixmap_align">fl_set_pixmap_align</a>(ptr_flobject,&nbsp;align,&nbsp;xmargin,&nbsp;ymargin)<br>
 &nbsp;<br>
 Changes&nbsp;alignment&nbsp;of&nbsp;a&nbsp;pixmap.&nbsp;By&nbsp;default&nbsp;it&nbsp;is&nbsp;displayed&nbsp;centered<br>
-inside&nbsp;the&nbsp;bounding&nbsp;box.<br>
+inside&nbsp;the&nbsp;bounding&nbsp;box;&nbsp;although&nbsp;you&nbsp;can&nbsp;place&nbsp;a&nbsp;pixmap&nbsp;outside&nbsp;of<br>
+the&nbsp;bounding&nbsp;box,&nbsp;it&nbsp;probably&nbsp;is&nbsp;not&nbsp;a&nbsp;good&nbsp;idea.<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;pFlObject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;pixmap&nbsp;object<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_flobject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;pixmap&nbsp;flobject<br>
 &nbsp;&nbsp;&nbsp;&nbsp;align&nbsp;:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;alignment&nbsp;of&nbsp;pixmap.&nbsp;Values&nbsp;(from&nbsp;xfdata.py)&nbsp;FL_ALIGN_CENTER,<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_ALIGN_TOP,&nbsp;FL_ALIGN_BOTTOM,&nbsp;FL_ALIGN_LEFT,&nbsp;FL_ALIGN_RIGHT,<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_ALIGN_LEFT_TOP,&nbsp;FL_ALIGN_RIGHT_TOP,&nbsp;FL_ALIGN_LEFT_BOTTOM,<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_ALIGN_RIGHT_BOTTOM,&nbsp;FL_ALIGN_INSIDE,&nbsp;FL_ALIGN_VERT.&nbsp;Bitwise<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'OR'&nbsp;with&nbsp;FL_ALIGN_INSIDE&nbsp;is&nbsp;allowed.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;xmargin&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;extra&nbsp;margin&nbsp;to&nbsp;leave&nbsp;in&nbsp;addition&nbsp;to&nbsp;the&nbsp;flobject&nbsp;border<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;width.&nbsp;By&nbsp;default&nbsp;it&nbsp;is&nbsp;3.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ymargin&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;extra&nbsp;margin&nbsp;to&nbsp;leave&nbsp;in&nbsp;addition&nbsp;to&nbsp;the&nbsp;flobject&nbsp;border<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;height.&nbsp;By&nbsp;default&nbsp;it&nbsp;is&nbsp;3.<br>
 &nbsp;<br>
 Examples<br>
 --------<br>
@@ -454,7 +481,8 @@ Examples<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;Demo&nbsp;=&nbsp;OK</tt></dd></dl>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;Demo&nbsp;=&nbsp;OK<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Review:&nbsp;UT+</tt></dd></dl>
  <dl><dt><a name="-fl_set_pixmap_colorcloseness"><strong>fl_set_pixmap_colorcloseness</strong></a>(red, green, blue)</dt><dd><tt><a href="#-fl_set_pixmap_colorcloseness">fl_set_pixmap_colorcloseness</a>(red,&nbsp;green,&nbsp;blue)<br>
 &nbsp;<br>
 Changes&nbsp;difference&nbsp;between&nbsp;the&nbsp;requested&nbsp;color&nbsp;and&nbsp;the&nbsp;color&nbsp;found<br>
@@ -479,36 +507,47 @@ Examples<br>
 Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-fl_set_pixmap_data"><strong>fl_set_pixmap_data</strong></a>(pFlObject, bits)</dt><dd><tt><a href="#-fl_set_pixmap_data">fl_set_pixmap_data</a>(pFlObject,&nbsp;bits)<br>
+ <dl><dt><a name="-fl_set_pixmap_data"><strong>fl_set_pixmap_data</strong></a>(ptr_flobject, xpmdatalist)</dt><dd><tt><a href="#-fl_set_pixmap_data">fl_set_pixmap_data</a>(ptr_flobject,&nbsp;xpmdatalist)<br>
 &nbsp;<br>
-Sets&nbsp;the&nbsp;actual&nbsp;bitmap&nbsp;being&nbsp;displayed&nbsp;from&nbsp;specified&nbsp;data.&nbsp;A<br>
-number&nbsp;of&nbsp;pixmaps&nbsp;can&nbsp;be&nbsp;found&nbsp;in&nbsp;'/usr/include/X11/pixmaps'&nbsp;or&nbsp;similar<br>
-places.<br>
+Defines&nbsp;the&nbsp;actual&nbsp;pixmap&nbsp;being&nbsp;displayed&nbsp;from&nbsp;specified&nbsp;data.&nbsp;A<br>
+number&nbsp;of&nbsp;pixmaps&nbsp;can&nbsp;be&nbsp;found&nbsp;in&nbsp;'/usr/include/X11/pixmaps'&nbsp;or<br>
+similar&nbsp;places.<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;pFlObject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;pixmap&nbsp;object<br>
-&nbsp;&nbsp;&nbsp;&nbsp;bits&nbsp;:&nbsp;str&nbsp;of&nbsp;ubytes<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_flobject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;pixmap&nbsp;flobject<br>
+&nbsp;&nbsp;&nbsp;&nbsp;xpmdatalist&nbsp;:&nbsp;list&nbsp;of&nbsp;str<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;bits&nbsp;contents&nbsp;of&nbsp;pixmap<br>
 &nbsp;<br>
 Examples<br>
 --------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;*todo*<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;xpmdata&nbsp;=&nbsp;["28&nbsp;28&nbsp;6&nbsp;2&nbsp;.&nbsp;white&nbsp;x&nbsp;orange&nbsp;s&nbsp;s_SteelBlue&nbsp;*&nbsp;black",<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;".&nbsp;.&nbsp;.&nbsp;.&nbsp;.&nbsp;.&nbsp;*&nbsp;*&nbsp;*&nbsp;*&nbsp;.&nbsp;.&nbsp;.&nbsp;.&nbsp;.&nbsp;.&nbsp;.&nbsp;.&nbsp;.&nbsp;*&nbsp;*&nbsp;*&nbsp;*&nbsp;.&nbsp;.&nbsp;.&nbsp;.&nbsp;.&nbsp;",<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;".&nbsp;.&nbsp;.&nbsp;.&nbsp;+&nbsp;*&nbsp;x&nbsp;x&nbsp;*&nbsp;.&nbsp;.&nbsp;.&nbsp;.&nbsp;.&nbsp;.&nbsp;.&nbsp;.&nbsp;.&nbsp;.&nbsp;+&nbsp;*&nbsp;x&nbsp;x&nbsp;*&nbsp;.&nbsp;.&nbsp;.&nbsp;.&nbsp;",<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;".&nbsp;.&nbsp;.&nbsp;+&nbsp;*&nbsp;x&nbsp;x&nbsp;*&nbsp;.&nbsp;.&nbsp;.&nbsp;.&nbsp;.&nbsp;.&nbsp;.&nbsp;.&nbsp;.&nbsp;.&nbsp;.&nbsp;.&nbsp;+&nbsp;*&nbsp;x&nbsp;x&nbsp;*&nbsp;.&nbsp;.&nbsp;.&nbsp;",<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;".&nbsp;.&nbsp;+&nbsp;*&nbsp;x&nbsp;*&nbsp;.&nbsp;.&nbsp;.&nbsp;*&nbsp;.&nbsp;.&nbsp;.&nbsp;.&nbsp;.&nbsp;.&nbsp;.&nbsp;.&nbsp;.&nbsp;*&nbsp;.&nbsp;.&nbsp;+&nbsp;*&nbsp;x&nbsp;*&nbsp;.&nbsp;.&nbsp;",<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;".&nbsp;.&nbsp;+&nbsp;*&nbsp;x&nbsp;*&nbsp;.&nbsp;.&nbsp;+&nbsp;*&nbsp;.&nbsp;.&nbsp;.&nbsp;.&nbsp;.&nbsp;.&nbsp;.&nbsp;.&nbsp;+&nbsp;*&nbsp;.&nbsp;.&nbsp;+&nbsp;*&nbsp;x&nbsp;*&nbsp;.&nbsp;.&nbsp;",<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;".&nbsp;.&nbsp;+&nbsp;*&nbsp;x&nbsp;*&nbsp;.&nbsp;+&nbsp;*&nbsp;*&nbsp;.&nbsp;.&nbsp;.&nbsp;.&nbsp;.&nbsp;.&nbsp;.&nbsp;.&nbsp;+&nbsp;*&nbsp;*&nbsp;.&nbsp;+&nbsp;*&nbsp;x&nbsp;*&nbsp;.&nbsp;.&nbsp;",<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;".&nbsp;.&nbsp;+&nbsp;*&nbsp;x&nbsp;*&nbsp;+&nbsp;*&nbsp;*&nbsp;.&nbsp;.&nbsp;.&nbsp;.&nbsp;.&nbsp;.&nbsp;.&nbsp;.&nbsp;.&nbsp;.&nbsp;+&nbsp;*&nbsp;*&nbsp;+&nbsp;*&nbsp;x&nbsp;*&nbsp;.&nbsp;.&nbsp;",<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;".&nbsp;.&nbsp;+&nbsp;*&nbsp;x&nbsp;*&nbsp;*&nbsp;*&nbsp;.&nbsp;.&nbsp;.&nbsp;.&nbsp;.&nbsp;.&nbsp;.&nbsp;.&nbsp;.&nbsp;.&nbsp;.&nbsp;.&nbsp;+&nbsp;*&nbsp;*&nbsp;x&nbsp;x&nbsp;*&nbsp;.&nbsp;.&nbsp;",<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;...etc...]<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;<a href="#-fl_set_pixmap_data">fl_set_pixmap_data</a>(pxmobj,&nbsp;xpmdata)<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-fl_set_pixmap_file"><strong>fl_set_pixmap_file</strong></a>(pFlObject, fname)</dt><dd><tt><a href="#-fl_set_pixmap_file">fl_set_pixmap_file</a>(pFlObject,&nbsp;fname)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Review:&nbsp;UT+&nbsp;ok_broken</tt></dd></dl>
+ <dl><dt><a name="-fl_set_pixmap_file"><strong>fl_set_pixmap_file</strong></a>(ptr_flobject, fname)</dt><dd><tt><a href="#-fl_set_pixmap_file">fl_set_pixmap_file</a>(ptr_flobject,&nbsp;fname)<br>
 &nbsp;<br>
-Sets&nbsp;the&nbsp;actual&nbsp;bitmap&nbsp;being&nbsp;displayed&nbsp;from&nbsp;a&nbsp;specified&nbsp;.xpm&nbsp;file.&nbsp;A<br>
+Defines&nbsp;the&nbsp;actual&nbsp;bitmap&nbsp;being&nbsp;displayed&nbsp;from&nbsp;a&nbsp;specified&nbsp;.xpm&nbsp;file.&nbsp;A<br>
 number&nbsp;of&nbsp;pixmaps&nbsp;can&nbsp;be&nbsp;found&nbsp;in&nbsp;'/usr/include/X11/pixmaps'&nbsp;or&nbsp;similar<br>
 places.<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;pFlObject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;pixmap&nbsp;object<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_flobject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;pixmap&nbsp;flobject<br>
 &nbsp;&nbsp;&nbsp;&nbsp;fname&nbsp;:&nbsp;str<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;name&nbsp;(path&nbsp;included&nbsp;if&nbsp;necessary)&nbsp;of&nbsp;pixmap&nbsp;(.xpm&nbsp;format)&nbsp;file<br>
 &nbsp;<br>
@@ -519,17 +558,17 @@ Examples<br>
 Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;Demo&nbsp;=&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-fl_set_pixmap_pixmap"><strong>fl_set_pixmap_pixmap</strong></a>(pFlObject, idnum, mask)</dt><dd><tt><a href="#-fl_set_pixmap_pixmap">fl_set_pixmap_pixmap</a>(pFlObject,&nbsp;idnum,&nbsp;mask)<br>
+ <dl><dt><a name="-fl_set_pixmap_pixmap"><strong>fl_set_pixmap_pixmap</strong></a>(ptr_flobject, pixmapid, mask)</dt><dd><tt><a href="#-fl_set_pixmap_pixmap">fl_set_pixmap_pixmap</a>(ptr_flobject,&nbsp;pixmapid,&nbsp;mask)<br>
 &nbsp;<br>
-Changes&nbsp;the&nbsp;pixmap&nbsp;for&nbsp;the&nbsp;object&nbsp;with&nbsp;a&nbsp;pixmap&nbsp;resource&nbsp;id&nbsp;you&nbsp;already<br>
-may&nbsp;have.&nbsp;It&nbsp;does&nbsp;not&nbsp;free&nbsp;the&nbsp;pixmap&nbsp;ID&nbsp;nor&nbsp;the&nbsp;mask&nbsp;already&nbsp;associated<br>
-with&nbsp;the&nbsp;object.<br>
+Changes&nbsp;the&nbsp;pixmap&nbsp;for&nbsp;the&nbsp;flobject&nbsp;with&nbsp;a&nbsp;pixmap&nbsp;resource&nbsp;id&nbsp;you<br>
+already&nbsp;may&nbsp;have.&nbsp;It&nbsp;does&nbsp;not&nbsp;free&nbsp;the&nbsp;pixmap&nbsp;ID&nbsp;nor&nbsp;the&nbsp;mask&nbsp;already<br>
+associated&nbsp;with&nbsp;the&nbsp;flobject.<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;pFlObject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;pixmap&nbsp;object<br>
-&nbsp;&nbsp;&nbsp;&nbsp;idnum&nbsp;:&nbsp;long_pos<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_flobject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;pixmap&nbsp;flobject<br>
+&nbsp;&nbsp;&nbsp;&nbsp;pixmapid&nbsp;:&nbsp;long_pos<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;pixmap&nbsp;resource&nbsp;id&nbsp;to&nbsp;be&nbsp;used<br>
 &nbsp;&nbsp;&nbsp;&nbsp;mask&nbsp;:&nbsp;long_pos<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;mask&nbsp;used&nbsp;for&nbsp;transparency.&nbsp;If&nbsp;no&nbsp;special&nbsp;clipping&nbsp;attributes<br>
@@ -542,21 +581,28 @@ Examples<br>
 Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-fl_set_pixmapbutton_align"><strong>fl_set_pixmapbutton_align</strong></a> = fl_set_pixmap_align(pFlObject, align, xmargin, ymargin)</dt><dd><tt><a href="#-fl_set_pixmap_align">fl_set_pixmap_align</a>(pFlObject,&nbsp;align,&nbsp;xmargin,&nbsp;ymargin)<br>
+ <dl><dt><a name="-fl_set_pixmapbutton_align"><strong>fl_set_pixmapbutton_align</strong></a> = fl_set_pixmap_align(ptr_flobject, align, xmargin, ymargin)</dt><dd><tt><a href="#-fl_set_pixmap_align">fl_set_pixmap_align</a>(ptr_flobject,&nbsp;align,&nbsp;xmargin,&nbsp;ymargin)<br>
 &nbsp;<br>
 Changes&nbsp;alignment&nbsp;of&nbsp;a&nbsp;pixmap.&nbsp;By&nbsp;default&nbsp;it&nbsp;is&nbsp;displayed&nbsp;centered<br>
-inside&nbsp;the&nbsp;bounding&nbsp;box.<br>
+inside&nbsp;the&nbsp;bounding&nbsp;box;&nbsp;although&nbsp;you&nbsp;can&nbsp;place&nbsp;a&nbsp;pixmap&nbsp;outside&nbsp;of<br>
+the&nbsp;bounding&nbsp;box,&nbsp;it&nbsp;probably&nbsp;is&nbsp;not&nbsp;a&nbsp;good&nbsp;idea.<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;pFlObject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;pixmap&nbsp;object<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_flobject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;pixmap&nbsp;flobject<br>
 &nbsp;&nbsp;&nbsp;&nbsp;align&nbsp;:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;alignment&nbsp;of&nbsp;pixmap.&nbsp;Values&nbsp;(from&nbsp;xfdata.py)&nbsp;FL_ALIGN_CENTER,<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_ALIGN_TOP,&nbsp;FL_ALIGN_BOTTOM,&nbsp;FL_ALIGN_LEFT,&nbsp;FL_ALIGN_RIGHT,<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_ALIGN_LEFT_TOP,&nbsp;FL_ALIGN_RIGHT_TOP,&nbsp;FL_ALIGN_LEFT_BOTTOM,<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_ALIGN_RIGHT_BOTTOM,&nbsp;FL_ALIGN_INSIDE,&nbsp;FL_ALIGN_VERT.&nbsp;Bitwise<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'OR'&nbsp;with&nbsp;FL_ALIGN_INSIDE&nbsp;is&nbsp;allowed.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;xmargin&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;extra&nbsp;margin&nbsp;to&nbsp;leave&nbsp;in&nbsp;addition&nbsp;to&nbsp;the&nbsp;flobject&nbsp;border<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;width.&nbsp;By&nbsp;default&nbsp;it&nbsp;is&nbsp;3.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ymargin&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;extra&nbsp;margin&nbsp;to&nbsp;leave&nbsp;in&nbsp;addition&nbsp;to&nbsp;the&nbsp;flobject&nbsp;border<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;height.&nbsp;By&nbsp;default&nbsp;it&nbsp;is&nbsp;3.<br>
 &nbsp;<br>
 Examples<br>
 --------<br>
@@ -564,17 +610,18 @@ Examples<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;Demo&nbsp;=&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-fl_set_pixmapbutton_datafile"><strong>fl_set_pixmapbutton_datafile</strong></a> = fl_set_pixmap_file(pFlObject, fname)</dt><dd><tt><a href="#-fl_set_pixmap_file">fl_set_pixmap_file</a>(pFlObject,&nbsp;fname)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;Demo&nbsp;=&nbsp;OK<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Review:&nbsp;UT+</tt></dd></dl>
+ <dl><dt><a name="-fl_set_pixmapbutton_datafile"><strong>fl_set_pixmapbutton_datafile</strong></a> = fl_set_pixmap_file(ptr_flobject, fname)</dt><dd><tt><a href="#-fl_set_pixmap_file">fl_set_pixmap_file</a>(ptr_flobject,&nbsp;fname)<br>
 &nbsp;<br>
-Sets&nbsp;the&nbsp;actual&nbsp;bitmap&nbsp;being&nbsp;displayed&nbsp;from&nbsp;a&nbsp;specified&nbsp;.xpm&nbsp;file.&nbsp;A<br>
+Defines&nbsp;the&nbsp;actual&nbsp;bitmap&nbsp;being&nbsp;displayed&nbsp;from&nbsp;a&nbsp;specified&nbsp;.xpm&nbsp;file.&nbsp;A<br>
 number&nbsp;of&nbsp;pixmaps&nbsp;can&nbsp;be&nbsp;found&nbsp;in&nbsp;'/usr/include/X11/pixmaps'&nbsp;or&nbsp;similar<br>
 places.<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;pFlObject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;pixmap&nbsp;object<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_flobject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;pixmap&nbsp;flobject<br>
 &nbsp;&nbsp;&nbsp;&nbsp;fname&nbsp;:&nbsp;str<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;name&nbsp;(path&nbsp;included&nbsp;if&nbsp;necessary)&nbsp;of&nbsp;pixmap&nbsp;(.xpm&nbsp;format)&nbsp;file<br>
 &nbsp;<br>
@@ -585,16 +632,16 @@ Examples<br>
 Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;Demo&nbsp;=&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-fl_set_pixmapbutton_file"><strong>fl_set_pixmapbutton_file</strong></a> = fl_set_pixmap_file(pFlObject, fname)</dt><dd><tt><a href="#-fl_set_pixmap_file">fl_set_pixmap_file</a>(pFlObject,&nbsp;fname)<br>
+ <dl><dt><a name="-fl_set_pixmapbutton_file"><strong>fl_set_pixmapbutton_file</strong></a> = fl_set_pixmap_file(ptr_flobject, fname)</dt><dd><tt><a href="#-fl_set_pixmap_file">fl_set_pixmap_file</a>(ptr_flobject,&nbsp;fname)<br>
 &nbsp;<br>
-Sets&nbsp;the&nbsp;actual&nbsp;bitmap&nbsp;being&nbsp;displayed&nbsp;from&nbsp;a&nbsp;specified&nbsp;.xpm&nbsp;file.&nbsp;A<br>
+Defines&nbsp;the&nbsp;actual&nbsp;bitmap&nbsp;being&nbsp;displayed&nbsp;from&nbsp;a&nbsp;specified&nbsp;.xpm&nbsp;file.&nbsp;A<br>
 number&nbsp;of&nbsp;pixmaps&nbsp;can&nbsp;be&nbsp;found&nbsp;in&nbsp;'/usr/include/X11/pixmaps'&nbsp;or&nbsp;similar<br>
 places.<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;pFlObject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;pixmap&nbsp;object<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_flobject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;pixmap&nbsp;flobject<br>
 &nbsp;&nbsp;&nbsp;&nbsp;fname&nbsp;:&nbsp;str<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;name&nbsp;(path&nbsp;included&nbsp;if&nbsp;necessary)&nbsp;of&nbsp;pixmap&nbsp;(.xpm&nbsp;format)&nbsp;file<br>
 &nbsp;<br>
@@ -605,17 +652,17 @@ Examples<br>
 Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;Demo&nbsp;=&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-fl_set_pixmapbutton_pixmap"><strong>fl_set_pixmapbutton_pixmap</strong></a> = fl_set_pixmap_pixmap(pFlObject, idnum, mask)</dt><dd><tt><a href="#-fl_set_pixmap_pixmap">fl_set_pixmap_pixmap</a>(pFlObject,&nbsp;idnum,&nbsp;mask)<br>
+ <dl><dt><a name="-fl_set_pixmapbutton_pixmap"><strong>fl_set_pixmapbutton_pixmap</strong></a> = fl_set_pixmap_pixmap(ptr_flobject, pixmapid, mask)</dt><dd><tt><a href="#-fl_set_pixmap_pixmap">fl_set_pixmap_pixmap</a>(ptr_flobject,&nbsp;pixmapid,&nbsp;mask)<br>
 &nbsp;<br>
-Changes&nbsp;the&nbsp;pixmap&nbsp;for&nbsp;the&nbsp;object&nbsp;with&nbsp;a&nbsp;pixmap&nbsp;resource&nbsp;id&nbsp;you&nbsp;already<br>
-may&nbsp;have.&nbsp;It&nbsp;does&nbsp;not&nbsp;free&nbsp;the&nbsp;pixmap&nbsp;ID&nbsp;nor&nbsp;the&nbsp;mask&nbsp;already&nbsp;associated<br>
-with&nbsp;the&nbsp;object.<br>
+Changes&nbsp;the&nbsp;pixmap&nbsp;for&nbsp;the&nbsp;flobject&nbsp;with&nbsp;a&nbsp;pixmap&nbsp;resource&nbsp;id&nbsp;you<br>
+already&nbsp;may&nbsp;have.&nbsp;It&nbsp;does&nbsp;not&nbsp;free&nbsp;the&nbsp;pixmap&nbsp;ID&nbsp;nor&nbsp;the&nbsp;mask&nbsp;already<br>
+associated&nbsp;with&nbsp;the&nbsp;flobject.<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;pFlObject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;pixmap&nbsp;object<br>
-&nbsp;&nbsp;&nbsp;&nbsp;idnum&nbsp;:&nbsp;long_pos<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_flobject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;pixmap&nbsp;flobject<br>
+&nbsp;&nbsp;&nbsp;&nbsp;pixmapid&nbsp;:&nbsp;long_pos<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;pixmap&nbsp;resource&nbsp;id&nbsp;to&nbsp;be&nbsp;used<br>
 &nbsp;&nbsp;&nbsp;&nbsp;mask&nbsp;:&nbsp;long_pos<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;mask&nbsp;used&nbsp;for&nbsp;transparency.&nbsp;If&nbsp;no&nbsp;special&nbsp;clipping&nbsp;attributes<br>
@@ -629,4 +676,4 @@ Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
 </td></tr></table>
-<p>Updated on: 2010-12-09 10:11 +0100</body></html>
+<p>Updated on: 2010-12-20 01:16 +0100</body></html>

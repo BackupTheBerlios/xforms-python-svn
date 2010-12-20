@@ -9,7 +9,7 @@
 <font color="#ffffff" face="helvetica, arial">&nbsp;<br><big><big><strong>flbrowser</strong></big></big></font></td
 ><td align=right valign=bottom
 ><font color="#ffffff" face="helvetica, arial"><a href=".">index</a><br>     <a href="index.html">list</a></font></td></tr></table>
-    <p><tt>xforms-python's&nbsp;functions&nbsp;to&nbsp;manage&nbsp;browser&nbsp;objects.</tt></p>
+    <p><tt>xforms-python's&nbsp;functions&nbsp;to&nbsp;manage&nbsp;browser&nbsp;flobjects.</tt></p>
 <p>
 <table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
 <tr bgcolor="#aa55cc">
@@ -27,9 +27,10 @@
 <font color="#ffffff" face="helvetica, arial"><big><strong>Functions</strong></big></font></td></tr>
     
 <tr><td bgcolor="#eeaa77"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
-<td width="100%"><dl><dt><a name="-fl_add_browser"><strong>fl_add_browser</strong></a>(browsertype, x, y, w, h, label)</dt><dd><tt><a href="#-fl_add_browser">fl_add_browser</a>(browsertype,&nbsp;x,&nbsp;y,&nbsp;w,&nbsp;h,&nbsp;label)<br>
+<td width="100%"><dl><dt><a name="-fl_add_browser"><strong>fl_add_browser</strong></a>(browsertype, xpos, ypos, width, height, label)</dt><dd><tt><a href="#-fl_add_browser">fl_add_browser</a>(browsertype,&nbsp;xpos,&nbsp;ypos,&nbsp;width,&nbsp;height,&nbsp;label)<br>
+-&gt;&nbsp;ptr_flobject<br>
 &nbsp;<br>
-Adds&nbsp;a&nbsp;browser&nbsp;object.&nbsp;The&nbsp;label&nbsp;is&nbsp;placed&nbsp;below&nbsp;the&nbsp;box&nbsp;by&nbsp;default.<br>
+Adds&nbsp;a&nbsp;browser&nbsp;flobject.&nbsp;The&nbsp;label&nbsp;is&nbsp;placed&nbsp;below&nbsp;the&nbsp;box&nbsp;by&nbsp;default.<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
@@ -37,21 +38,21 @@ Parameters<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;type&nbsp;of&nbsp;the&nbsp;browser&nbsp;to&nbsp;be&nbsp;added.&nbsp;Values&nbsp;(from&nbsp;xfdata.py)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_NORMAL_BROWSER,&nbsp;FL_SELECT_BROWSER,&nbsp;FL_HOLD_BROWSER,<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_MULTI_BROWSER<br>
-&nbsp;&nbsp;&nbsp;&nbsp;x&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;xpos&nbsp;:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;horizontal&nbsp;position&nbsp;(upper-left&nbsp;corner)<br>
-&nbsp;&nbsp;&nbsp;&nbsp;y&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ypos&nbsp;:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;vertical&nbsp;position&nbsp;(upper-left&nbsp;corner)<br>
-&nbsp;&nbsp;&nbsp;&nbsp;w&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;width&nbsp;:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;width&nbsp;in&nbsp;coord&nbsp;units<br>
-&nbsp;&nbsp;&nbsp;&nbsp;h&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;height&nbsp;:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;height&nbsp;in&nbsp;coord&nbsp;units<br>
 &nbsp;&nbsp;&nbsp;&nbsp;label&nbsp;:&nbsp;str<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;text&nbsp;label&nbsp;of&nbsp;browser<br>
 &nbsp;<br>
 Returns<br>
 -------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;pFlObject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;browser&nbsp;object&nbsp;created<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_flobject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;browser&nbsp;flobject&nbsp;created<br>
 &nbsp;<br>
 Examples<br>
 --------<br>
@@ -61,9 +62,9 @@ Examples<br>
 Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;Demo&nbsp;=&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-fl_add_browser_line"><strong>fl_add_browser_line</strong></a>(pFlObject, newtext)</dt><dd><tt><a href="#-fl_add_browser_line">fl_add_browser_line</a>(pFlObject,&nbsp;newtext)<br>
+ <dl><dt><a name="-fl_add_browser_line"><strong>fl_add_browser_line</strong></a>(ptr_flobject, newtext)</dt><dd><tt><a href="#-fl_add_browser_line">fl_add_browser_line</a>(ptr_flobject,&nbsp;newtext)<br>
 &nbsp;<br>
-Add&nbsp;a&nbsp;line&nbsp;to&nbsp;a&nbsp;browser&nbsp;object.&nbsp;The&nbsp;line&nbsp;may&nbsp;contain&nbsp;embedded&nbsp;newline<br>
+Add&nbsp;a&nbsp;line&nbsp;to&nbsp;a&nbsp;browser&nbsp;flobject.&nbsp;The&nbsp;line&nbsp;may&nbsp;contain&nbsp;embedded&nbsp;newline<br>
 characters:&nbsp;these&nbsp;will&nbsp;result&nbsp;in&nbsp;the&nbsp;text&nbsp;being&nbsp;split&nbsp;up&nbsp;into&nbsp;several<br>
 lines,&nbsp;separated&nbsp;at&nbsp;the&nbsp;newline&nbsp;characters.&nbsp;It&nbsp;is&nbsp;possible&nbsp;to&nbsp;change&nbsp;the<br>
 appearance&nbsp;of&nbsp;individual&nbsp;lines&nbsp;in&nbsp;the&nbsp;browser.&nbsp;Whenever&nbsp;a&nbsp;line&nbsp;starts<br>
@@ -90,8 +91,8 @@ size&nbsp;and&nbsp;style&nbsp;lines&nbsp;may&nbsp;have&nbsp;different&nbsp;heigh
 &nbsp;<br>
 Parameters<br>
 ----------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;pFlObject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;browser&nbsp;object<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_flobject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;browser&nbsp;flobject<br>
 &nbsp;&nbsp;&nbsp;&nbsp;newtext&nbsp;:&nbsp;str<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;line&nbsp;of&nbsp;text&nbsp;to&nbsp;be&nbsp;added<br>
 &nbsp;<br>
@@ -102,17 +103,17 @@ Examples<br>
 Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;Demo&nbsp;=&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-fl_addto_browser"><strong>fl_addto_browser</strong></a>(pFlObject, newtext)</dt><dd><tt><a href="#-fl_addto_browser">fl_addto_browser</a>(pFlObject,&nbsp;newtext)<br>
+ <dl><dt><a name="-fl_addto_browser"><strong>fl_addto_browser</strong></a>(ptr_flobject, newtext)</dt><dd><tt><a href="#-fl_addto_browser">fl_addto_browser</a>(ptr_flobject,&nbsp;newtext)<br>
 &nbsp;<br>
 Adds&nbsp;text&nbsp;to&nbsp;browser.&nbsp;The&nbsp;browser&nbsp;will&nbsp;be&nbsp;shifted&nbsp;such&nbsp;that&nbsp;the&nbsp;newly<br>
-appended&nbsp;line&nbsp;is&nbsp;visible.&nbsp;This&nbsp;is&nbsp;useful&nbsp;when&nbsp;e.g.&nbsp;using&nbsp;the&nbsp;browser&nbsp;to<br>
-display&nbsp;messages.&nbsp;The&nbsp;text&nbsp;may&nbsp;contain&nbsp;embedded&nbsp;newline&nbsp;characters.&nbsp;See<br>
-<a href="#-fl_add_browser_line">fl_add_browser_line</a>()&nbsp;for&nbsp;appearance&nbsp;change.<br>
+appended&nbsp;line&nbsp;is&nbsp;visible.&nbsp;This&nbsp;is&nbsp;useful&nbsp;when&nbsp;e.g.&nbsp;using&nbsp;the&nbsp;browser<br>
+to&nbsp;display&nbsp;messages.&nbsp;The&nbsp;text&nbsp;may&nbsp;contain&nbsp;embedded&nbsp;newline&nbsp;characters.<br>
+See&nbsp;<a href="#-fl_add_browser_line">fl_add_browser_line</a>()&nbsp;for&nbsp;appearance&nbsp;change.<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;pFlObject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;browser&nbsp;object<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_flobject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;browser&nbsp;flobject<br>
 &nbsp;&nbsp;&nbsp;&nbsp;newtext&nbsp;:&nbsp;str<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;text&nbsp;to&nbsp;be&nbsp;added<br>
 &nbsp;<br>
@@ -123,19 +124,20 @@ Examples<br>
 Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;Demo&nbsp;=&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-fl_addto_browser_chars"><strong>fl_addto_browser_chars</strong></a>(pFlObject, addedtext)</dt><dd><tt><a href="#-fl_addto_browser_chars">fl_addto_browser_chars</a>(pFlObject,&nbsp;addedtext)<br>
+ <dl><dt><a name="-fl_addto_browser_chars"><strong>fl_addto_browser_chars</strong></a>(ptr_flobject, addedtext)</dt><dd><tt><a href="#-fl_addto_browser_chars">fl_addto_browser_chars</a>(ptr_flobject,&nbsp;addedtext)<br>
 &nbsp;<br>
 Appends&nbsp;text&nbsp;to&nbsp;the&nbsp;last&nbsp;line&nbsp;in&nbsp;the&nbsp;browser&nbsp;without&nbsp;advancing&nbsp;the<br>
-line&nbsp;counter.&nbsp;The&nbsp;text&nbsp;may&nbsp;contain&nbsp;embedded&nbsp;newline&nbsp;characters.&nbsp;In&nbsp;that<br>
-case,&nbsp;the&nbsp;text&nbsp;before&nbsp;the&nbsp;first&nbsp;embedded&nbsp;newline&nbsp;is&nbsp;appended&nbsp;to&nbsp;the&nbsp;last<br>
-line,&nbsp;and&nbsp;everything&nbsp;aferwards&nbsp;is&nbsp;put&nbsp;onto&nbsp;new&nbsp;lines.&nbsp;As&nbsp;in&nbsp;the&nbsp;case&nbsp;of<br>
-<a href="#-fl_addto_browser">fl_addto_browser</a>()&nbsp;the&nbsp;last&nbsp;added&nbsp;line&nbsp;will&nbsp;be&nbsp;visible&nbsp;in&nbsp;the&nbsp;browser.<br>
-See&nbsp;<a href="#-fl_add_browser_line">fl_add_browser_line</a>()&nbsp;for&nbsp;appearance&nbsp;change.<br>
+line&nbsp;counter.&nbsp;The&nbsp;text&nbsp;may&nbsp;contain&nbsp;embedded&nbsp;newline&nbsp;characters.&nbsp;In<br>
+that&nbsp;case,&nbsp;the&nbsp;text&nbsp;before&nbsp;the&nbsp;first&nbsp;embedded&nbsp;newline&nbsp;is&nbsp;appended<br>
+to&nbsp;the&nbsp;last&nbsp;line,&nbsp;and&nbsp;everything&nbsp;afterwards&nbsp;is&nbsp;put&nbsp;onto&nbsp;new&nbsp;lines.<br>
+As&nbsp;in&nbsp;the&nbsp;case&nbsp;of&nbsp;<a href="#-fl_addto_browser">fl_addto_browser</a>()&nbsp;the&nbsp;last&nbsp;added&nbsp;line&nbsp;will&nbsp;be<br>
+visible&nbsp;in&nbsp;the&nbsp;browser.&nbsp;See&nbsp;<a href="#-fl_add_browser_line">fl_add_browser_line</a>()&nbsp;for&nbsp;appearance<br>
+change.<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;pFlObject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;browser&nbsp;object<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_flobject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;browser&nbsp;flobject<br>
 &nbsp;&nbsp;&nbsp;&nbsp;addedtext&nbsp;:&nbsp;str<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;text&nbsp;to&nbsp;be&nbsp;added<br>
 &nbsp;<br>
@@ -146,19 +148,20 @@ Examples<br>
 Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-fl_append_browser"><strong>fl_append_browser</strong></a> = fl_addto_browser_chars(pFlObject, addedtext)</dt><dd><tt><a href="#-fl_addto_browser_chars">fl_addto_browser_chars</a>(pFlObject,&nbsp;addedtext)<br>
+ <dl><dt><a name="-fl_append_browser"><strong>fl_append_browser</strong></a> = fl_addto_browser_chars(ptr_flobject, addedtext)</dt><dd><tt><a href="#-fl_addto_browser_chars">fl_addto_browser_chars</a>(ptr_flobject,&nbsp;addedtext)<br>
 &nbsp;<br>
 Appends&nbsp;text&nbsp;to&nbsp;the&nbsp;last&nbsp;line&nbsp;in&nbsp;the&nbsp;browser&nbsp;without&nbsp;advancing&nbsp;the<br>
-line&nbsp;counter.&nbsp;The&nbsp;text&nbsp;may&nbsp;contain&nbsp;embedded&nbsp;newline&nbsp;characters.&nbsp;In&nbsp;that<br>
-case,&nbsp;the&nbsp;text&nbsp;before&nbsp;the&nbsp;first&nbsp;embedded&nbsp;newline&nbsp;is&nbsp;appended&nbsp;to&nbsp;the&nbsp;last<br>
-line,&nbsp;and&nbsp;everything&nbsp;aferwards&nbsp;is&nbsp;put&nbsp;onto&nbsp;new&nbsp;lines.&nbsp;As&nbsp;in&nbsp;the&nbsp;case&nbsp;of<br>
-<a href="#-fl_addto_browser">fl_addto_browser</a>()&nbsp;the&nbsp;last&nbsp;added&nbsp;line&nbsp;will&nbsp;be&nbsp;visible&nbsp;in&nbsp;the&nbsp;browser.<br>
-See&nbsp;<a href="#-fl_add_browser_line">fl_add_browser_line</a>()&nbsp;for&nbsp;appearance&nbsp;change.<br>
+line&nbsp;counter.&nbsp;The&nbsp;text&nbsp;may&nbsp;contain&nbsp;embedded&nbsp;newline&nbsp;characters.&nbsp;In<br>
+that&nbsp;case,&nbsp;the&nbsp;text&nbsp;before&nbsp;the&nbsp;first&nbsp;embedded&nbsp;newline&nbsp;is&nbsp;appended<br>
+to&nbsp;the&nbsp;last&nbsp;line,&nbsp;and&nbsp;everything&nbsp;afterwards&nbsp;is&nbsp;put&nbsp;onto&nbsp;new&nbsp;lines.<br>
+As&nbsp;in&nbsp;the&nbsp;case&nbsp;of&nbsp;<a href="#-fl_addto_browser">fl_addto_browser</a>()&nbsp;the&nbsp;last&nbsp;added&nbsp;line&nbsp;will&nbsp;be<br>
+visible&nbsp;in&nbsp;the&nbsp;browser.&nbsp;See&nbsp;<a href="#-fl_add_browser_line">fl_add_browser_line</a>()&nbsp;for&nbsp;appearance<br>
+change.<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;pFlObject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;browser&nbsp;object<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_flobject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;browser&nbsp;flobject<br>
 &nbsp;&nbsp;&nbsp;&nbsp;addedtext&nbsp;:&nbsp;str<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;text&nbsp;to&nbsp;be&nbsp;added<br>
 &nbsp;<br>
@@ -169,14 +172,14 @@ Examples<br>
 Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-fl_clear_browser"><strong>fl_clear_browser</strong></a>(pFlObject)</dt><dd><tt><a href="#-fl_clear_browser">fl_clear_browser</a>(pFlObject)<br>
+ <dl><dt><a name="-fl_clear_browser"><strong>fl_clear_browser</strong></a>(ptr_flobject)</dt><dd><tt><a href="#-fl_clear_browser">fl_clear_browser</a>(ptr_flobject)<br>
 &nbsp;<br>
-Clears&nbsp;contents&nbsp;of&nbsp;a&nbsp;browser&nbsp;object.<br>
+Clears&nbsp;contents&nbsp;of&nbsp;a&nbsp;browser&nbsp;flobject.<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;pFlObject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;browser&nbsp;object<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_flobject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;browser&nbsp;flobject<br>
 &nbsp;<br>
 Examples<br>
 --------<br>
@@ -185,16 +188,16 @@ Examples<br>
 Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;Demo&nbsp;=&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-fl_delete_browser_line"><strong>fl_delete_browser_line</strong></a>(pFlObject, linenum)</dt><dd><tt><a href="#-fl_delete_browser_line">fl_delete_browser_line</a>(pFlObject,&nbsp;linenum)<br>
+ <dl><dt><a name="-fl_delete_browser_line"><strong>fl_delete_browser_line</strong></a>(ptr_flobject, linenum)</dt><dd><tt><a href="#-fl_delete_browser_line">fl_delete_browser_line</a>(ptr_flobject,&nbsp;linenum)<br>
 &nbsp;<br>
-Deletes&nbsp;a&nbsp;line&nbsp;(shifting&nbsp;the&nbsp;following&nbsp;lines)<br>
+Deletes&nbsp;a&nbsp;line&nbsp;from&nbsp;browser&nbsp;flobject&nbsp;(shifting&nbsp;the&nbsp;following&nbsp;lines).<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;pFlObject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;browser&nbsp;object<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_flobject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;browser&nbsp;flobject<br>
 &nbsp;&nbsp;&nbsp;&nbsp;linenum&nbsp;:&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;line&nbsp;number&nbsp;to&nbsp;delete<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;line&nbsp;id&nbsp;to&nbsp;delete<br>
 &nbsp;<br>
 Examples<br>
 --------<br>
@@ -203,14 +206,14 @@ Examples<br>
 Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;Demo&nbsp;=&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-fl_deselect_browser"><strong>fl_deselect_browser</strong></a>(pFlObject)</dt><dd><tt><a href="#-fl_deselect_browser">fl_deselect_browser</a>(pFlObject)<br>
+ <dl><dt><a name="-fl_deselect_browser"><strong>fl_deselect_browser</strong></a>(ptr_flobject)</dt><dd><tt><a href="#-fl_deselect_browser">fl_deselect_browser</a>(ptr_flobject)<br>
 &nbsp;<br>
 Deselects&nbsp;all&nbsp;lines&nbsp;in&nbsp;the&nbsp;browser.<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;pFlObject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;browser&nbsp;object<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_flobject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;browser&nbsp;flobject<br>
 &nbsp;<br>
 Examples<br>
 --------<br>
@@ -219,14 +222,14 @@ Examples<br>
 Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;Demo&nbsp;=&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-fl_deselect_browser_line"><strong>fl_deselect_browser_line</strong></a>(pFlObject, linenum)</dt><dd><tt><a href="#-fl_deselect_browser_line">fl_deselect_browser_line</a>(pFlObject,&nbsp;linenum)<br>
+ <dl><dt><a name="-fl_deselect_browser_line"><strong>fl_deselect_browser_line</strong></a>(ptr_flobject, linenum)</dt><dd><tt><a href="#-fl_deselect_browser_line">fl_deselect_browser_line</a>(ptr_flobject,&nbsp;linenum)<br>
 &nbsp;<br>
-Deselects&nbsp;a&nbsp;line&nbsp;in&nbsp;the&nbsp;browser.<br>
+Deselects&nbsp;a&nbsp;line&nbsp;in&nbsp;the&nbsp;browser&nbsp;flobject.<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;pFlObject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;browser&nbsp;object<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_flobject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;browser&nbsp;flobject<br>
 &nbsp;&nbsp;&nbsp;&nbsp;linenum&nbsp;:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;line&nbsp;id&nbsp;to&nbsp;deselect<br>
 &nbsp;<br>
@@ -237,75 +240,75 @@ Examples<br>
 Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;Demo&nbsp;=&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-fl_get_browser"><strong>fl_get_browser</strong></a>(pFlObject)</dt><dd><tt><a href="#-fl_get_browser">fl_get_browser</a>(pFlObject)<br>
+ <dl><dt><a name="-fl_get_browser"><strong>fl_get_browser</strong></a>(ptr_flobject)</dt><dd><tt><a href="#-fl_get_browser">fl_get_browser</a>(ptr_flobject)&nbsp;-&gt;&nbsp;linenum<br>
 &nbsp;<br>
-Obtains&nbsp;the&nbsp;last&nbsp;selection&nbsp;made&nbsp;by&nbsp;the&nbsp;user,&nbsp;e.g.&nbsp;when&nbsp;the&nbsp;browser&nbsp;is<br>
-returned.<br>
+Finds&nbsp;out&nbsp;the&nbsp;last&nbsp;selection&nbsp;made&nbsp;by&nbsp;the&nbsp;user,&nbsp;e.g.&nbsp;when&nbsp;the&nbsp;browser<br>
+is&nbsp;returned.<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;pFlObject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;browser&nbsp;object<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_flobject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;browser&nbsp;flobject<br>
 &nbsp;<br>
 Returns<br>
 -------<br>
 &nbsp;&nbsp;&nbsp;&nbsp;linenum&nbsp;:&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;line&nbsp;num.&nbsp;of&nbsp;the&nbsp;last&nbsp;selection,&nbsp;or&nbsp;0&nbsp;(if&nbsp;no&nbsp;selection&nbsp;was&nbsp;made).<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;For&nbsp;FL_MULTI_BROWSER&nbsp;only:&nbsp;the&nbsp;negative&nbsp;of&nbsp;deselected&nbsp;line&nbsp;num<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;line&nbsp;id&nbsp;of&nbsp;the&nbsp;last&nbsp;selection,&nbsp;or&nbsp;0&nbsp;(if&nbsp;no&nbsp;selection&nbsp;was&nbsp;made).<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;For&nbsp;FL_MULTI_BROWSER&nbsp;only:&nbsp;the&nbsp;negative&nbsp;of&nbsp;deselected&nbsp;line&nbsp;id<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(when&nbsp;the&nbsp;last&nbsp;action&nbsp;was&nbsp;a&nbsp;deselection)<br>
 &nbsp;<br>
 Examples<br>
 --------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;lastsel&nbsp;=&nbsp;<a href="#-fl_get_browser">fl_get_browser</a>(pFlObject)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;lastsel&nbsp;=&nbsp;<a href="#-fl_get_browser">fl_get_browser</a>(ptr_flobject)<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;Demo&nbsp;=&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-fl_get_browser_dimension"><strong>fl_get_browser_dimension</strong></a>(pFlObject)</dt><dd><tt><a href="#-fl_get_browser_dimension">fl_get_browser_dimension</a>(pFlObject)<br>
+ <dl><dt><a name="-fl_get_browser_dimension"><strong>fl_get_browser_dimension</strong></a>(ptr_flobject)</dt><dd><tt><a href="#-fl_get_browser_dimension">fl_get_browser_dimension</a>(ptr_flobject)&nbsp;-&gt;&nbsp;xpos,&nbsp;ypos,&nbsp;width,&nbsp;height<br>
 &nbsp;<br>
-Obtains&nbsp;the&nbsp;browser&nbsp;size&nbsp;in&nbsp;pixels&nbsp;for&nbsp;the&nbsp;text&nbsp;area.<br>
+Finds&nbsp;out&nbsp;the&nbsp;browser&nbsp;size&nbsp;in&nbsp;pixels&nbsp;for&nbsp;the&nbsp;text&nbsp;area.<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;pFlObject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;browser&nbsp;object<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_flobject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;browser&nbsp;flobject<br>
 &nbsp;<br>
 Returns<br>
 -------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;x&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;xpos&nbsp;:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;horizontal&nbsp;position<br>
-&nbsp;&nbsp;&nbsp;&nbsp;y&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ypos&nbsp;:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;vertical&nbsp;position<br>
-&nbsp;&nbsp;&nbsp;&nbsp;w&nbsp;:&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;width<br>
-&nbsp;&nbsp;&nbsp;&nbsp;h&nbsp;:&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;height<br>
+&nbsp;&nbsp;&nbsp;&nbsp;width&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;width&nbsp;of&nbsp;browser&nbsp;in&nbsp;coord&nbsp;units<br>
+&nbsp;&nbsp;&nbsp;&nbsp;height&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;height&nbsp;of&nbsp;browser&nbsp;in&nbsp;coord&nbsp;units<br>
 &nbsp;<br>
 Examples<br>
 --------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;x,&nbsp;y,&nbsp;wid,&nbsp;hei&nbsp;=&nbsp;<a href="#-fl_get_browser_dimension">fl_get_browser_dimension</a>(brobj)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;x,&nbsp;y,&nbsp;w,&nbsp;h&nbsp;=&nbsp;<a href="#-fl_get_browser_dimension">fl_get_browser_dimension</a>(brobj)<br>
 &nbsp;<br>
 API_diversion<br>
 ----------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;API&nbsp;changed&nbsp;from&nbsp;XForms,&nbsp;upstream&nbsp;was<br>
-&nbsp;&nbsp;&nbsp;&nbsp;<a href="#-fl_get_browser_dimension">fl_get_browser_dimension</a>(pFlObject,&nbsp;x,&nbsp;y,&nbsp;w,&nbsp;h)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;API&nbsp;changed&nbsp;from&nbsp;XForms,&nbsp;upstream&nbsp;is<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="#-fl_get_browser_dimension">fl_get_browser_dimension</a>(ptr_flobject,&nbsp;xpos,&nbsp;ypos,&nbsp;width,&nbsp;height)<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-fl_get_browser_hscroll_callback"><strong>fl_get_browser_hscroll_callback</strong></a>(pFlObject)</dt><dd><tt><a href="#-fl_get_browser_hscroll_callback">fl_get_browser_hscroll_callback</a>(pFlObject)<br>
+ <dl><dt><a name="-fl_get_browser_hscroll_callback"><strong>fl_get_browser_hscroll_callback</strong></a>(ptr_flobject)</dt><dd><tt><a href="#-fl_get_browser_hscroll_callback">fl_get_browser_hscroll_callback</a>(ptr_flobject)&nbsp;-&gt;&nbsp;BrowserScrollCb<br>
 &nbsp;<br>
-Obtains&nbsp;the&nbsp;callback&nbsp;function&nbsp;created&nbsp;for&nbsp;horizontal&nbsp;scrollbar&nbsp;position<br>
-change.<br>
+Finds&nbsp;out&nbsp;the&nbsp;callback&nbsp;function&nbsp;created&nbsp;for&nbsp;horizontal&nbsp;scrollbar<br>
+position&nbsp;change&nbsp;of&nbsp;browser&nbsp;flobject.<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;pFlObject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;browser&nbsp;object<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_flobject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;browser&nbsp;flobject<br>
 &nbsp;<br>
 Returns<br>
 -------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;BrowserScrollCallback&nbsp;:&nbsp;xfdata.FL_BROWSER_SCROLL_CALLBACK<br>
+&nbsp;&nbsp;&nbsp;&nbsp;BrowserScrollCb&nbsp;:&nbsp;xfdata.FL_BROWSER_SCROLL_CALLBACK<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;xfdata.FL_BROWSER_SCROLL_CALLBACK&nbsp;function<br>
 &nbsp;<br>
 Examples<br>
@@ -315,21 +318,21 @@ Examples<br>
 Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-fl_get_browser_line"><strong>fl_get_browser_line</strong></a>(pFlObject, linenum)</dt><dd><tt><a href="#-fl_get_browser_line">fl_get_browser_line</a>(pFlObject,&nbsp;linenum)<br>
+ <dl><dt><a name="-fl_get_browser_line"><strong>fl_get_browser_line</strong></a>(ptr_flobject, linenum)</dt><dd><tt><a href="#-fl_get_browser_line">fl_get_browser_line</a>(ptr_flobject,&nbsp;linenum)&nbsp;-&gt;&nbsp;linetext<br>
 &nbsp;<br>
-Obtains&nbsp;the&nbsp;contents&nbsp;of&nbsp;a&nbsp;particular&nbsp;line&nbsp;in&nbsp;the&nbsp;browser.<br>
+Finds&nbsp;out&nbsp;the&nbsp;contents&nbsp;of&nbsp;a&nbsp;particular&nbsp;line&nbsp;in&nbsp;the&nbsp;browser.<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;pFlObject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;browser&nbsp;object<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_flobject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;browser&nbsp;flobject<br>
 &nbsp;&nbsp;&nbsp;&nbsp;linenum&nbsp;:&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;line&nbsp;number&nbsp;to&nbsp;return<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;line&nbsp;id&nbsp;to&nbsp;return<br>
 &nbsp;<br>
 Returns<br>
 -------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;ltext&nbsp;:&nbsp;str<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;line&nbsp;text<br>
+&nbsp;&nbsp;&nbsp;&nbsp;linetext&nbsp;:&nbsp;str<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;text&nbsp;of&nbsp;requested&nbsp;line<br>
 &nbsp;<br>
 Examples<br>
 --------<br>
@@ -338,33 +341,34 @@ Examples<br>
 Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;Demo&nbsp;=&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-fl_get_browser_line_yoffset"><strong>fl_get_browser_line_yoffset</strong></a>(pFlObject, line)</dt><dd><tt><a href="#-fl_get_browser_line_yoffset">fl_get_browser_line_yoffset</a>(pFlObject,&nbsp;line)<br>
+ <dl><dt><a name="-fl_get_browser_line_yoffset"><strong>fl_get_browser_line_yoffset</strong></a>(ptr_flobject, linenum)</dt><dd><tt><a href="#-fl_get_browser_line_yoffset">fl_get_browser_line_yoffset</a>(ptr_flobject,&nbsp;linenum)&nbsp;-&gt;&nbsp;offset<br>
 &nbsp;<br>
-Obtains&nbsp;the&nbsp;y-offset&nbsp;for&nbsp;a&nbsp;line.<br>
+Finds&nbsp;out&nbsp;the&nbsp;y-offset&nbsp;in&nbsp;pixels&nbsp;for&nbsp;a&nbsp;line&nbsp;of&nbsp;browser&nbsp;flobject.<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;pFlObject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;browser&nbsp;object<br>
-&nbsp;&nbsp;&nbsp;&nbsp;line&nbsp;:&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;line&nbsp;number<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_flobject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;browser&nbsp;flobject<br>
+&nbsp;&nbsp;&nbsp;&nbsp;linenum&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;line&nbsp;id<br>
 &nbsp;<br>
 Returns<br>
 -------<br>
 &nbsp;&nbsp;&nbsp;&nbsp;offset&nbsp;:&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;offset&nbsp;of&nbsp;the&nbsp;line,&nbsp;or&nbsp;-1&nbsp;(if&nbsp;the&nbsp;line&nbsp;does&nbsp;not&nbsp;exist)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;offset&nbsp;of&nbsp;the&nbsp;line&nbsp;in&nbsp;pixels,&nbsp;or&nbsp;-1&nbsp;(if&nbsp;the&nbsp;line&nbsp;does&nbsp;not<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;exist)<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-fl_get_browser_maxline"><strong>fl_get_browser_maxline</strong></a>(pFlObject)</dt><dd><tt><a href="#-fl_get_browser_maxline">fl_get_browser_maxline</a>(pFlObject)<br>
+ <dl><dt><a name="-fl_get_browser_maxline"><strong>fl_get_browser_maxline</strong></a>(ptr_flobject)</dt><dd><tt><a href="#-fl_get_browser_maxline">fl_get_browser_maxline</a>(ptr_flobject)&nbsp;-&gt;&nbsp;numlines<br>
 &nbsp;<br>
-Returns&nbsp;the&nbsp;number&nbsp;of&nbsp;lines&nbsp;in&nbsp;the&nbsp;browser.<br>
+Finds&nbsp;out&nbsp;the&nbsp;number&nbsp;of&nbsp;lines&nbsp;in&nbsp;the&nbsp;browser.<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;pFlObject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;browser&nbsp;object<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_flobject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;browser&nbsp;flobject<br>
 &nbsp;<br>
 Returns<br>
 -------<br>
@@ -378,60 +382,62 @@ Examples<br>
 Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-fl_get_browser_rel_xoffset"><strong>fl_get_browser_rel_xoffset</strong></a>(pFlObject)</dt><dd><tt><a href="#-fl_get_browser_rel_xoffset">fl_get_browser_rel_xoffset</a>(pFlObject)<br>
+ <dl><dt><a name="-fl_get_browser_rel_xoffset"><strong>fl_get_browser_rel_xoffset</strong></a>(ptr_flobject)</dt><dd><tt><a href="#-fl_get_browser_rel_xoffset">fl_get_browser_rel_xoffset</a>(ptr_flobject)&nbsp;-&gt;&nbsp;roffset<br>
 &nbsp;<br>
-Obtains&nbsp;the&nbsp;relative&nbsp;amount&nbsp;of&nbsp;text&nbsp;that&nbsp;is&nbsp;scrolled&nbsp;in&nbsp;horizontal<br>
-direction.<br>
+Finds&nbsp;out&nbsp;the&nbsp;relative&nbsp;amount&nbsp;of&nbsp;text&nbsp;in&nbsp;pixel&nbsp;that&nbsp;is&nbsp;scrolled<br>
+in&nbsp;horizontal&nbsp;direction.<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;pFlObject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;browser&nbsp;object<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_flobject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;browser&nbsp;flobject<br>
 &nbsp;<br>
 Returns<br>
 -------<br>
 &nbsp;&nbsp;&nbsp;&nbsp;roffset&nbsp;:&nbsp;float<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;relative&nbsp;offset<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;offset&nbsp;between&nbsp;0&nbsp;(starts&nbsp;of&nbsp;lines&nbsp;are&nbsp;shown)&nbsp;and&nbsp;1&nbsp;(end&nbsp;of<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;longest&nbsp;line&nbsp;is&nbsp;shown)<br>
 &nbsp;<br>
 Examples<br>
 --------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;*todo*<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;reloffset&nbsp;=&nbsp;<a href="#-fl_get_browser_rel_xoffset">fl_get_browser_rel_xoffset</a>(pbrwsobj)<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-fl_get_browser_rel_yoffset"><strong>fl_get_browser_rel_yoffset</strong></a>(pFlObject)</dt><dd><tt><a href="#-fl_get_browser_rel_yoffset">fl_get_browser_rel_yoffset</a>(pFlObject)<br>
+ <dl><dt><a name="-fl_get_browser_rel_yoffset"><strong>fl_get_browser_rel_yoffset</strong></a>(ptr_flobject)</dt><dd><tt><a href="#-fl_get_browser_rel_yoffset">fl_get_browser_rel_yoffset</a>(ptr_flobject)&nbsp;-&gt;&nbsp;roffset<br>
 &nbsp;<br>
-Obtains&nbsp;the&nbsp;relative&nbsp;amount&nbsp;of&nbsp;text&nbsp;that&nbsp;is&nbsp;scrolled&nbsp;in&nbsp;horizontal<br>
-direction.<br>
+Finds&nbsp;out&nbsp;the&nbsp;relative&nbsp;amount&nbsp;of&nbsp;text&nbsp;in&nbsp;pixel&nbsp;that&nbsp;is&nbsp;scrolled&nbsp;in<br>
+vertical&nbsp;direction.<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;pFlObject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;browser&nbsp;object<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_flobject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;browser&nbsp;flobject<br>
 &nbsp;<br>
 Returns<br>
 -------<br>
 &nbsp;&nbsp;&nbsp;&nbsp;roffset&nbsp;:&nbsp;float<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;relative&nbsp;offset<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;offset&nbsp;between&nbsp;0&nbsp;(starts&nbsp;of&nbsp;lines&nbsp;are&nbsp;shown)&nbsp;and&nbsp;1&nbsp;(end&nbsp;of<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;longest&nbsp;line&nbsp;is&nbsp;shown)<br>
 &nbsp;<br>
 Examples<br>
 --------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;*todo*<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;reloffset&nbsp;=&nbsp;<a href="#-fl_get_browser_rel_yoffset">fl_get_browser_rel_yoffset</a>(pbrobj)<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-fl_get_browser_screenlines"><strong>fl_get_browser_screenlines</strong></a>(pFlObject)</dt><dd><tt><a href="#-fl_get_browser_screenlines">fl_get_browser_screenlines</a>(pFlObject)<br>
+ <dl><dt><a name="-fl_get_browser_screenlines"><strong>fl_get_browser_screenlines</strong></a>(ptr_flobject)</dt><dd><tt><a href="#-fl_get_browser_screenlines">fl_get_browser_screenlines</a>(ptr_flobject)&nbsp;-&gt;&nbsp;numlines<br>
 &nbsp;<br>
-Obtains&nbsp;an&nbsp;approximation&nbsp;of&nbsp;the&nbsp;number&nbsp;of&nbsp;lines&nbsp;shown&nbsp;in&nbsp;the&nbsp;browser.<br>
-This&nbsp;count&nbsp;only&nbsp;includes&nbsp;lines&nbsp;that&nbsp;are&nbsp;shown&nbsp;completely&nbsp;in&nbsp;the&nbsp;browser,<br>
-partially&nbsp;obscured&nbsp;ones&nbsp;are&nbsp;not&nbsp;counted&nbsp;in.<br>
+Finds&nbsp;out&nbsp;an&nbsp;approximation&nbsp;of&nbsp;the&nbsp;number&nbsp;of&nbsp;lines&nbsp;shown&nbsp;in&nbsp;the<br>
+browser.&nbsp;This&nbsp;count&nbsp;only&nbsp;includes&nbsp;lines&nbsp;that&nbsp;are&nbsp;shown&nbsp;completely<br>
+in&nbsp;the&nbsp;browser,&nbsp;partially&nbsp;obscured&nbsp;ones&nbsp;are&nbsp;not&nbsp;counted&nbsp;in.<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;pFlObject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;browser&nbsp;object<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_flobject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;browser&nbsp;flobject<br>
 &nbsp;<br>
 Returns<br>
 -------<br>
@@ -445,9 +451,9 @@ Examples<br>
 Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-fl_get_browser_scrollbar_repeat"><strong>fl_get_browser_scrollbar_repeat</strong></a>(pFlObject)</dt><dd><tt><a href="#-fl_get_browser_scrollbar_repeat">fl_get_browser_scrollbar_repeat</a>(pFlObject)<br>
+ <dl><dt><a name="-fl_get_browser_scrollbar_repeat"><strong>fl_get_browser_scrollbar_repeat</strong></a>(ptr_flobject)</dt><dd><tt><a href="#-fl_get_browser_scrollbar_repeat">fl_get_browser_scrollbar_repeat</a>(ptr_flobject)&nbsp;-&gt;&nbsp;tdelay<br>
 &nbsp;<br>
-Obtains&nbsp;the&nbsp;time&nbsp;delay&nbsp;(in&nbsp;milliseconds)&nbsp;between&nbsp;jumps&nbsp;of&nbsp;the<br>
+Finds&nbsp;out&nbsp;the&nbsp;time&nbsp;delay&nbsp;(in&nbsp;milliseconds)&nbsp;between&nbsp;jumps&nbsp;of&nbsp;the<br>
 scrollbar&nbsp;knob&nbsp;when&nbsp;the&nbsp;mouse&nbsp;button&nbsp;is&nbsp;kept&nbsp;pressed&nbsp;down&nbsp;on&nbsp;the<br>
 scrollbar&nbsp;outside&nbsp;of&nbsp;the&nbsp;knobs&nbsp;area.&nbsp;The&nbsp;delay&nbsp;for&nbsp;the&nbsp;very&nbsp;first<br>
 jump&nbsp;is&nbsp;twice&nbsp;that&nbsp;long&nbsp;in&nbsp;order&nbsp;to&nbsp;avoid&nbsp;jumping&nbsp;to&nbsp;start&nbsp;too&nbsp;soon<br>
@@ -456,8 +462,8 @@ releasing&nbsp;the&nbsp;mouse&nbsp;button.<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;pFlObject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;browser&nbsp;object<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_flobject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;browser&nbsp;flobject<br>
 &nbsp;<br>
 Returns<br>
 -------<br>
@@ -471,20 +477,20 @@ Examples<br>
 Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-fl_get_browser_topline"><strong>fl_get_browser_topline</strong></a>(pFlObject)</dt><dd><tt><a href="#-fl_get_browser_topline">fl_get_browser_topline</a>(pFlObject)<br>
+ <dl><dt><a name="-fl_get_browser_topline"><strong>fl_get_browser_topline</strong></a>(ptr_flobject)</dt><dd><tt><a href="#-fl_get_browser_topline">fl_get_browser_topline</a>(ptr_flobject)&nbsp;-&gt;&nbsp;linenum<br>
 &nbsp;<br>
 Finds&nbsp;out&nbsp;the&nbsp;(un-obscured)&nbsp;line&nbsp;that&nbsp;is&nbsp;currently&nbsp;shown&nbsp;at&nbsp;the&nbsp;top<br>
 of&nbsp;the&nbsp;browser.&nbsp;The&nbsp;index&nbsp;of&nbsp;the&nbsp;top&nbsp;line&nbsp;is&nbsp;1,&nbsp;not&nbsp;0.<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;pFlObject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;browser&nbsp;object<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_flobject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;browser&nbsp;flobject<br>
 &nbsp;<br>
 Returns<br>
 -------<br>
 &nbsp;&nbsp;&nbsp;&nbsp;linenum&nbsp;:&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;line&nbsp;id&nbsp;number<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;line&nbsp;id&nbsp;of&nbsp;topline<br>
 &nbsp;<br>
 Examples<br>
 --------<br>
@@ -493,19 +499,19 @@ Examples<br>
 Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-fl_get_browser_vscroll_callback"><strong>fl_get_browser_vscroll_callback</strong></a>(pFlObject)</dt><dd><tt><a href="#-fl_get_browser_vscroll_callback">fl_get_browser_vscroll_callback</a>(pFlObject)<br>
+ <dl><dt><a name="-fl_get_browser_vscroll_callback"><strong>fl_get_browser_vscroll_callback</strong></a>(ptr_flobject)</dt><dd><tt><a href="#-fl_get_browser_vscroll_callback">fl_get_browser_vscroll_callback</a>(ptr_flobject)&nbsp;-&gt;&nbsp;BrowserScrollCb<br>
 &nbsp;<br>
-Obtains&nbsp;the&nbsp;callback&nbsp;function&nbsp;created&nbsp;for&nbsp;horizontal&nbsp;scrollbar&nbsp;position<br>
-change.<br>
+Finds&nbsp;out&nbsp;the&nbsp;callback&nbsp;function&nbsp;created&nbsp;for&nbsp;horizontal<br>
+scrollbar&nbsp;position&nbsp;change&nbsp;of&nbsp;browser&nbsp;flobject.<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;pFlObject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;browser&nbsp;object<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_flobject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;browser&nbsp;flobject<br>
 &nbsp;<br>
 Returns<br>
 -------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;BrowserScrollCallback&nbsp;:&nbsp;xfdata.FL_BROWSER_SCROLL_CALLBACK<br>
+&nbsp;&nbsp;&nbsp;&nbsp;BrowserScrollCb&nbsp;:&nbsp;xfdata.FL_BROWSER_SCROLL_CALLBACK<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;xfdata.FL_BROWSER_SCROLL_CALLBACK&nbsp;function<br>
 &nbsp;<br>
 Examples<br>
@@ -515,64 +521,67 @@ Examples<br>
 Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-fl_get_browser_xoffset"><strong>fl_get_browser_xoffset</strong></a>(pFlObject)</dt><dd><tt><a href="#-fl_get_browser_xoffset">fl_get_browser_xoffset</a>(pFlObject)<br>
+ <dl><dt><a name="-fl_get_browser_xoffset"><strong>fl_get_browser_xoffset</strong></a>(ptr_flobject)</dt><dd><tt><a href="#-fl_get_browser_xoffset">fl_get_browser_xoffset</a>(ptr_flobject)&nbsp;-&gt;&nbsp;numpixels<br>
 &nbsp;<br>
-Obtains&nbsp;the&nbsp;amount&nbsp;of&nbsp;text&nbsp;that&nbsp;is&nbsp;scrolled&nbsp;in&nbsp;horizontal&nbsp;direction.<br>
+Finds&nbsp;out&nbsp;the&nbsp;amount&nbsp;of&nbsp;text&nbsp;in&nbsp;pixel&nbsp;that&nbsp;is&nbsp;scrolled&nbsp;in<br>
+horizontal&nbsp;direction.<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;pFlObject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;browser&nbsp;object<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_flobject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;browser&nbsp;flobject<br>
 &nbsp;<br>
 Returns<br>
 -------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;coord&nbsp;:&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;coord&nbsp;num.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;numpixels&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;pixel&nbsp;amount&nbsp;scrolled<br>
 &nbsp;<br>
 Examples<br>
 --------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;*todo*<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;xoffset&nbsp;=&nbsp;fl_get_browser_xfoffset(pbrobj)<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-fl_get_browser_yoffset"><strong>fl_get_browser_yoffset</strong></a>(pFlObject)</dt><dd><tt><a href="#-fl_get_browser_yoffset">fl_get_browser_yoffset</a>(pFlObject)<br>
+ <dl><dt><a name="-fl_get_browser_yoffset"><strong>fl_get_browser_yoffset</strong></a>(ptr_flobject)</dt><dd><tt><a href="#-fl_get_browser_yoffset">fl_get_browser_yoffset</a>(ptr_flobject)&nbsp;-&gt;&nbsp;numpixels<br>
 &nbsp;<br>
-Obtains&nbsp;the&nbsp;amount&nbsp;of&nbsp;text&nbsp;that&nbsp;is&nbsp;scrolled&nbsp;in&nbsp;horizontal&nbsp;direction.<br>
+Finds&nbsp;out&nbsp;the&nbsp;amount&nbsp;of&nbsp;text&nbsp;in&nbsp;pixels&nbsp;that&nbsp;is&nbsp;scrolled<br>
+in&nbsp;vertical&nbsp;direction.<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;pFlObject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;browser&nbsp;object<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_flobject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;browser&nbsp;flobject<br>
 &nbsp;<br>
 Returns<br>
 -------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;coord&nbsp;:&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;coord.&nbsp;num.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;numpixels&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;pixel&nbsp;amount&nbsp;scrolled<br>
 &nbsp;<br>
 Examples<br>
 --------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;*todo*<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;offset&nbsp;=&nbsp;<a href="#-fl_get_browser_yoffset">fl_get_browser_yoffset</a>(pbrobj)<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;Demo&nbsp;=&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-fl_insert_browser_line"><strong>fl_insert_browser_line</strong></a>(pFlObject, linenum, newtext)</dt><dd><tt><a href="#-fl_insert_browser_line">fl_insert_browser_line</a>(pFlObject,&nbsp;linenum,&nbsp;newtext)<br>
+ <dl><dt><a name="-fl_insert_browser_line"><strong>fl_insert_browser_line</strong></a>(ptr_flobject, linenum, newtext)</dt><dd><tt><a href="#-fl_insert_browser_line">fl_insert_browser_line</a>(ptr_flobject,&nbsp;linenum,&nbsp;newtext)<br>
 &nbsp;<br>
-Inserts&nbsp;a&nbsp;line&nbsp;in&nbsp;front&nbsp;of&nbsp;a&nbsp;given&nbsp;line&nbsp;in&nbsp;browser.&nbsp;All&nbsp;lines&nbsp;after&nbsp;it<br>
-will&nbsp;be&nbsp;shifted.&nbsp;Embedded&nbsp;newline&nbsp;characters&nbsp;do&nbsp;not&nbsp;result&nbsp;in&nbsp;the&nbsp;line<br>
-being&nbsp;split&nbsp;up&nbsp;as&nbsp;it&nbsp;is&nbsp;done&nbsp;in&nbsp;the&nbsp;previous&nbsp;functions.&nbsp;Instead&nbsp;they&nbsp;will<br>
-rather&nbsp;likely&nbsp;appear&nbsp;as&nbsp;strange&nbsp;looking&nbsp;characters&nbsp;in&nbsp;the&nbsp;text&nbsp;shown.&nbsp;The<br>
-only&nbsp;exception&nbsp;is&nbsp;when&nbsp;inserting&nbsp;into&nbsp;an&nbsp;empty&nbsp;browser&nbsp;or&nbsp;after&nbsp;the&nbsp;last<br>
-line,&nbsp;then&nbsp;this&nbsp;function&nbsp;works&nbsp;exactly&nbsp;as&nbsp;if&nbsp;you&nbsp;had&nbsp;called<br>
-<a href="#-fl_add_browser_line">fl_add_browser_line</a>().&nbsp;See&nbsp;<a href="#-fl_add_browser_line">fl_add_browser_line</a>()&nbsp;for&nbsp;appearance&nbsp;change.<br>
+Inserts&nbsp;a&nbsp;line&nbsp;in&nbsp;front&nbsp;of&nbsp;a&nbsp;given&nbsp;line&nbsp;in&nbsp;browser.&nbsp;All&nbsp;lines&nbsp;after<br>
+it&nbsp;will&nbsp;be&nbsp;shifted.&nbsp;Embedded&nbsp;newline&nbsp;characters&nbsp;do&nbsp;not&nbsp;result&nbsp;in&nbsp;the<br>
+line&nbsp;being&nbsp;split&nbsp;up&nbsp;as&nbsp;it&nbsp;is&nbsp;done&nbsp;in&nbsp;the&nbsp;previous&nbsp;functions.&nbsp;Instead<br>
+they&nbsp;will&nbsp;rather&nbsp;likely&nbsp;appear&nbsp;as&nbsp;strange&nbsp;looking&nbsp;characters&nbsp;in&nbsp;the<br>
+text&nbsp;shown.&nbsp;The&nbsp;only&nbsp;exception&nbsp;is&nbsp;when&nbsp;inserting&nbsp;into&nbsp;an&nbsp;empty&nbsp;browser<br>
+or&nbsp;after&nbsp;the&nbsp;last&nbsp;line,&nbsp;then&nbsp;this&nbsp;function&nbsp;works&nbsp;exactly&nbsp;as&nbsp;if&nbsp;you&nbsp;had<br>
+called&nbsp;<a href="#-fl_add_browser_line">fl_add_browser_line</a>().&nbsp;See&nbsp;<a href="#-fl_add_browser_line">fl_add_browser_line</a>()&nbsp;for&nbsp;appearance<br>
+change.<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;pFlObject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;browser&nbsp;object<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_flobject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;browser&nbsp;flobject<br>
 &nbsp;&nbsp;&nbsp;&nbsp;linenum&nbsp;:&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;line&nbsp;number&nbsp;after&nbsp;which&nbsp;insert&nbsp;it&nbsp;(top&nbsp;line&nbsp;is&nbsp;numbered&nbsp;1,&nbsp;not&nbsp;0)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;line&nbsp;id&nbsp;after&nbsp;which&nbsp;insert&nbsp;it&nbsp;(top&nbsp;line&nbsp;is&nbsp;numbered&nbsp;1,&nbsp;not&nbsp;0)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;newtext&nbsp;:&nbsp;str<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;text&nbsp;to&nbsp;be&nbsp;inserted<br>
 &nbsp;<br>
@@ -583,21 +592,21 @@ Examples<br>
 Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;Demo&nbsp;=&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-fl_isselected_browser_line"><strong>fl_isselected_browser_line</strong></a>(pFlObject, linenum)</dt><dd><tt><a href="#-fl_isselected_browser_line">fl_isselected_browser_line</a>(pFlObject,&nbsp;linenum)<br>
+ <dl><dt><a name="-fl_isselected_browser_line"><strong>fl_isselected_browser_line</strong></a>(ptr_flobject, linenum)</dt><dd><tt><a href="#-fl_isselected_browser_line">fl_isselected_browser_line</a>(ptr_flobject,&nbsp;linenum)&nbsp;-&gt;&nbsp;yesno<br>
 &nbsp;<br>
-Checks&nbsp;whether&nbsp;a&nbsp;line&nbsp;is&nbsp;selected&nbsp;or&nbsp;not.<br>
+Checks&nbsp;whether&nbsp;a&nbsp;line&nbsp;of&nbsp;the&nbsp;browser&nbsp;flobject&nbsp;is&nbsp;selected&nbsp;or&nbsp;not.<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;pFlObject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;browser&nbsp;object<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_flobject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;browser&nbsp;flobject<br>
 &nbsp;&nbsp;&nbsp;&nbsp;linenum&nbsp;:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;line&nbsp;id&nbsp;to&nbsp;evaluate<br>
 &nbsp;<br>
 Returns<br>
 -------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;flag&nbsp;:&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*todo*<br>
+&nbsp;&nbsp;&nbsp;&nbsp;yesno&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;flag.&nbsp;true?&nbsp;if&nbsp;selected,&nbsp;otherwise&nbsp;false?<br>
 &nbsp;<br>
 Examples<br>
 --------<br>
@@ -607,20 +616,20 @@ Examples<br>
 Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-fl_load_browser"><strong>fl_load_browser</strong></a>(pFlObject, filename)</dt><dd><tt><a href="#-fl_load_browser">fl_load_browser</a>(pFlObject,&nbsp;filename)<br>
+ <dl><dt><a name="-fl_load_browser"><strong>fl_load_browser</strong></a>(ptr_flobject, filename)</dt><dd><tt><a href="#-fl_load_browser">fl_load_browser</a>(ptr_flobject,&nbsp;filename)&nbsp;-&gt;&nbsp;result<br>
 &nbsp;<br>
-Loads&nbsp;an&nbsp;entire&nbsp;file&nbsp;into&nbsp;a&nbsp;browser.&nbsp;An&nbsp;empty&nbsp;string&nbsp;(or&nbsp;the&nbsp;file<br>
-could&nbsp;not&nbsp;be&nbsp;opened&nbsp;for&nbsp;reading)&nbsp;the&nbsp;browser&nbsp;is&nbsp;just&nbsp;cleared.&nbsp;This<br>
-routine&nbsp;is&nbsp;particularly&nbsp;useful&nbsp;when&nbsp;using&nbsp;the&nbsp;browser&nbsp;for&nbsp;a&nbsp;help<br>
+Loads&nbsp;an&nbsp;entire&nbsp;file&nbsp;into&nbsp;a&nbsp;browser.&nbsp;With&nbsp;an&nbsp;empty&nbsp;string&nbsp;(or&nbsp;if&nbsp;the<br>
+file&nbsp;could&nbsp;not&nbsp;be&nbsp;opened&nbsp;for&nbsp;reading)&nbsp;the&nbsp;browser&nbsp;is&nbsp;just&nbsp;cleared.<br>
+This&nbsp;routine&nbsp;is&nbsp;particularly&nbsp;useful&nbsp;when&nbsp;using&nbsp;the&nbsp;browser&nbsp;for&nbsp;a&nbsp;help<br>
 facility.&nbsp;You&nbsp;can&nbsp;create&nbsp;different&nbsp;help&nbsp;files&nbsp;and&nbsp;load&nbsp;the&nbsp;needed&nbsp;one<br>
 depending&nbsp;on&nbsp;context.<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;pFlObject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;browser&nbsp;object<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_flobject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;browser&nbsp;flobject<br>
 &nbsp;&nbsp;&nbsp;&nbsp;filename&nbsp;:&nbsp;str<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;name&nbsp;of&nbsp;the&nbsp;file<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;name&nbsp;of&nbsp;the&nbsp;file.&nbsp;If&nbsp;it's&nbsp;empty&nbsp;or&nbsp;None&nbsp;does&nbsp;not&nbsp;load&nbsp;a&nbsp;new&nbsp;file.<br>
 &nbsp;<br>
 Returns<br>
 -------<br>
@@ -634,20 +643,20 @@ Examples<br>
 Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;Demo&nbsp;=&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-fl_replace_browser_line"><strong>fl_replace_browser_line</strong></a>(pFlObject, linenum, newtext)</dt><dd><tt><a href="#-fl_replace_browser_line">fl_replace_browser_line</a>(pFlObject,&nbsp;linenum,&nbsp;newtext)<br>
+ <dl><dt><a name="-fl_replace_browser_line"><strong>fl_replace_browser_line</strong></a>(ptr_flobject, linenum, newtext)</dt><dd><tt><a href="#-fl_replace_browser_line">fl_replace_browser_line</a>(ptr_flobject,&nbsp;linenum,&nbsp;newtext)<br>
 &nbsp;<br>
 Replaces&nbsp;a&nbsp;line&nbsp;in&nbsp;the&nbsp;browser.&nbsp;As&nbsp;in&nbsp;the&nbsp;case&nbsp;of<br>
-<a href="#-fl_insert_browser_line">fl_insert_browser_line</a>()&nbsp;newline&nbsp;characters&nbsp;embedded&nbsp;into&nbsp;the&nbsp;replacement<br>
-text&nbsp;do&nbsp;not&nbsp;have&nbsp;any&nbsp;special&nbsp;meaning,&nbsp;i.e.&nbsp;they&nbsp;do&nbsp;not&nbsp;result&nbsp;in&nbsp;replacement<br>
-of&nbsp;more&nbsp;than&nbsp;a&nbsp;single&nbsp;line.&nbsp;See&nbsp;<a href="#-fl_add_browser_line">fl_add_browser_line</a>()&nbsp;for&nbsp;appearance<br>
-change.<br>
+<a href="#-fl_insert_browser_line">fl_insert_browser_line</a>()&nbsp;newline&nbsp;characters&nbsp;embedded&nbsp;into&nbsp;the<br>
+replacement&nbsp;text&nbsp;do&nbsp;not&nbsp;have&nbsp;any&nbsp;special&nbsp;meaning,&nbsp;i.e.&nbsp;they&nbsp;do&nbsp;not<br>
+result&nbsp;in&nbsp;replacement&nbsp;of&nbsp;more&nbsp;than&nbsp;a&nbsp;single&nbsp;line.&nbsp;See<br>
+<a href="#-fl_add_browser_line">fl_add_browser_line</a>()&nbsp;for&nbsp;appearance&nbsp;change.<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;pFlObject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;browser&nbsp;object<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_flobject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;browser&nbsp;flobject<br>
 &nbsp;&nbsp;&nbsp;&nbsp;linenum&nbsp;:&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;line&nbsp;number&nbsp;to&nbsp;replace<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;line&nbsp;id&nbsp;to&nbsp;replace<br>
 &nbsp;&nbsp;&nbsp;&nbsp;newtext&nbsp;:&nbsp;str<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;text&nbsp;line&nbsp;used&nbsp;as&nbsp;replacement<br>
 &nbsp;<br>
@@ -658,16 +667,16 @@ Examples<br>
 Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;Demo&nbsp;=&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-fl_select_browser_line"><strong>fl_select_browser_line</strong></a>(pFlObject, linenum)</dt><dd><tt><a href="#-fl_select_browser_line">fl_select_browser_line</a>(pFlObject,&nbsp;linenum)<br>
+ <dl><dt><a name="-fl_select_browser_line"><strong>fl_select_browser_line</strong></a>(ptr_flobject, linenum)</dt><dd><tt><a href="#-fl_select_browser_line">fl_select_browser_line</a>(ptr_flobject,&nbsp;linenum)<br>
 &nbsp;<br>
-Selects&nbsp;a&nbsp;line&nbsp;in&nbsp;the&nbsp;browser.<br>
+Selects&nbsp;a&nbsp;line&nbsp;in&nbsp;the&nbsp;browser&nbsp;flobject.<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;pFlObject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;browser&nbsp;object<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_flobject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;browser&nbsp;flobject<br>
 &nbsp;&nbsp;&nbsp;&nbsp;linenum&nbsp;:&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;line&nbsp;number&nbsp;to&nbsp;select<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;line&nbsp;id&nbsp;to&nbsp;select<br>
 &nbsp;<br>
 Examples<br>
 --------<br>
@@ -676,15 +685,15 @@ Examples<br>
 Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-fl_set_browser_bottomline"><strong>fl_set_browser_bottomline</strong></a>(pFlObject, linenum)</dt><dd><tt><a href="#-fl_set_browser_bottomline">fl_set_browser_bottomline</a>(pFlObject,&nbsp;linenum)<br>
+ <dl><dt><a name="-fl_set_browser_bottomline"><strong>fl_set_browser_bottomline</strong></a>(ptr_flobject, linenum)</dt><dd><tt><a href="#-fl_set_browser_bottomline">fl_set_browser_bottomline</a>(ptr_flobject,&nbsp;linenum)<br>
 &nbsp;<br>
-Moves&nbsp;a&nbsp;text&nbsp;line&nbsp;to&nbsp;the&nbsp;bottom&nbsp;of&nbsp;the&nbsp;browser.&nbsp;Line&nbsp;numbers&nbsp;start&nbsp;with<br>
-1.<br>
+Moves&nbsp;a&nbsp;text&nbsp;line&nbsp;to&nbsp;the&nbsp;bottom&nbsp;of&nbsp;the&nbsp;browser.&nbsp;Line&nbsp;numbers<br>
+start&nbsp;with&nbsp;1.<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;pFlObject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;browser&nbsp;object<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_flobject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;browser&nbsp;flobject<br>
 &nbsp;&nbsp;&nbsp;&nbsp;linenum&nbsp;:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;line&nbsp;id&nbsp;to&nbsp;be&nbsp;moved&nbsp;to&nbsp;bottom<br>
 &nbsp;<br>
@@ -695,7 +704,8 @@ Examples<br>
 Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-fl_set_browser_dblclick_callback"><strong>fl_set_browser_dblclick_callback</strong></a>(pFlObject, py_CallbackPtr, data)</dt><dd><tt><a href="#-fl_set_browser_dblclick_callback">fl_set_browser_dblclick_callback</a>(pFlObject,&nbsp;py_CallbackPtr,&nbsp;data)<br>
+ <dl><dt><a name="-fl_set_browser_dblclick_callback"><strong>fl_set_browser_dblclick_callback</strong></a>(ptr_flobject, pyfn_CallbackPtr, numdata)</dt><dd><tt><a href="#-fl_set_browser_dblclick_callback">fl_set_browser_dblclick_callback</a>(ptr_flobject,&nbsp;pyfn_CallbackPtr,<br>
+numdata)<br>
 &nbsp;<br>
 Registers&nbsp;a&nbsp;callback&nbsp;function&nbsp;that&nbsp;gets&nbsp;called&nbsp;when&nbsp;a&nbsp;line&nbsp;is<br>
 double-clicked&nbsp;on.&nbsp;Double-click&nbsp;callbacks&nbsp;make&nbsp;most&nbsp;sense&nbsp;for<br>
@@ -703,11 +713,11 @@ xfdata.FL_HOLD_BROWSERs.<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;pFlObject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;browser&nbsp;object<br>
-&nbsp;&nbsp;&nbsp;&nbsp;py_CallbackPtr&nbsp;:&nbsp;python&nbsp;function&nbsp;callback,&nbsp;no&nbsp;return<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;name&nbsp;referring&nbsp;to&nbsp;function(pObject,&nbsp;longdata)<br>
-&nbsp;&nbsp;&nbsp;&nbsp;data&nbsp;:&nbsp;long<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_flobject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;browser&nbsp;flobject<br>
+&nbsp;&nbsp;&nbsp;&nbsp;pyfn_CallbackPtr&nbsp;:&nbsp;python&nbsp;function&nbsp;callback,&nbsp;no&nbsp;return<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;name&nbsp;referring&nbsp;to&nbsp;function(ptr_flobject,&nbsp;longdata)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;numdata&nbsp;:&nbsp;long<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;user&nbsp;data&nbsp;to&nbsp;be&nbsp;passed&nbsp;to&nbsp;function<br>
 &nbsp;<br>
 Examples<br>
@@ -719,18 +729,19 @@ Examples<br>
 Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-fl_set_browser_fontsize"><strong>fl_set_browser_fontsize</strong></a>(pFlObject, size)</dt><dd><tt><a href="#-fl_set_browser_fontsize">fl_set_browser_fontsize</a>(pFlObject,&nbsp;size)<br>
+ <dl><dt><a name="-fl_set_browser_fontsize"><strong>fl_set_browser_fontsize</strong></a>(ptr_flobject, size)</dt><dd><tt><a href="#-fl_set_browser_fontsize">fl_set_browser_fontsize</a>(ptr_flobject,&nbsp;size)<br>
 &nbsp;<br>
-Sets&nbsp;the&nbsp;font&nbsp;size&nbsp;used&nbsp;inside&nbsp;the&nbsp;browser.<br>
+Defines&nbsp;the&nbsp;font&nbsp;size&nbsp;used&nbsp;inside&nbsp;the&nbsp;browser.<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;pFlObject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;browser&nbsp;object<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_flobject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;browser&nbsp;flobject<br>
 &nbsp;&nbsp;&nbsp;&nbsp;size&nbsp;:&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;font&nbsp;size&nbsp;to&nbsp;be&nbsp;set.&nbsp;Values&nbsp;(from&nbsp;xfdata.py)&nbsp;FL_TINY_SIZE,<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_SMALL_SIZE,&nbsp;FL_NORMAL_SIZE,&nbsp;FL_MEDIUM_SIZE,&nbsp;FL_LARGE_SIZE,<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_HUGE_SIZE,&nbsp;FL_DEFAULT_SIZE<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;font&nbsp;size&nbsp;to&nbsp;be&nbsp;set.&nbsp;Values&nbsp;(from&nbsp;xfdata.py)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_TINY_SIZE,&nbsp;FL_SMALL_SIZE,&nbsp;FL_NORMAL_SIZE,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_MEDIUM_SIZE,&nbsp;FL_LARGE_SIZE,&nbsp;FL_HUGE_SIZE,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_DEFAULT_SIZE<br>
 &nbsp;<br>
 Examples<br>
 --------<br>
@@ -739,22 +750,23 @@ Examples<br>
 Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;Demo&nbsp;=&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-fl_set_browser_fontstyle"><strong>fl_set_browser_fontstyle</strong></a>(pFlObject, style)</dt><dd><tt><a href="#-fl_set_browser_fontstyle">fl_set_browser_fontstyle</a>(pFlObject,&nbsp;style)<br>
+ <dl><dt><a name="-fl_set_browser_fontstyle"><strong>fl_set_browser_fontstyle</strong></a>(ptr_flobject, style)</dt><dd><tt><a href="#-fl_set_browser_fontstyle">fl_set_browser_fontstyle</a>(ptr_flobject,&nbsp;style)<br>
 &nbsp;<br>
-Sets&nbsp;the&nbsp;font&nbsp;style&nbsp;of&nbsp;a&nbsp;browser&nbsp;object.<br>
+Defines&nbsp;the&nbsp;font&nbsp;style&nbsp;of&nbsp;a&nbsp;browser&nbsp;flobject.<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;pFlObject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;browser&nbsp;object<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_flobject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;browser&nbsp;flobject<br>
 &nbsp;&nbsp;&nbsp;&nbsp;style&nbsp;:&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;font&nbsp;style&nbsp;to&nbsp;be&nbsp;set.&nbsp;Values&nbsp;(from&nbsp;xfdata.py)&nbsp;FL_NORMAL_STYLE,<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_BOLD_STYLE,&nbsp;FL_ITALIC_STYLE,&nbsp;FL_BOLDITALIC_STYLE,<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_FIXED_STYLE,&nbsp;FL_FIXEDBOLD_STYLE,&nbsp;FL_FIXEDITALIC_STYLE,<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_FIXEDBOLDITALIC_STYLE,&nbsp;FL_TIMES_STYLE,&nbsp;FL_TIMESBOLD_STYLE,<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_TIMESITALIC_STYLE,&nbsp;FL_TIMESBOLDITALIC_STYLE,&nbsp;FL_MISC_STYLE,<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_MISCBOLD_STYLE,&nbsp;FL_MISCITALIC_STYLE,&nbsp;FL_SYMBOL_STYLE,<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_SHADOW_STYLE,&nbsp;FL_ENGRAVED_STYLE,&nbsp;FL_EMBOSSED_STYLE<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;font&nbsp;style&nbsp;to&nbsp;be&nbsp;set.&nbsp;Values&nbsp;(from&nbsp;xfdata.py)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_NORMAL_STYLE,&nbsp;FL_BOLD_STYLE,&nbsp;FL_ITALIC_STYLE,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_BOLDITALIC_STYLE,&nbsp;FL_FIXED_STYLE,&nbsp;FL_FIXEDBOLD_STYLE,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_FIXEDITALIC_STYLE,&nbsp;FL_FIXEDBOLDITALIC_STYLE,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_TIMES_STYLE,&nbsp;FL_TIMESBOLD_STYLE,&nbsp;FL_TIMESITALIC_STYLE,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_TIMESBOLDITALIC_STYLE,&nbsp;FL_MISC_STYLE,&nbsp;FL_MISCBOLD_STYLE,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_MISCITALIC_STYLE,&nbsp;FL_SYMBOL_STYLE,&nbsp;FL_SHADOW_STYLE,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_ENGRAVED_STYLE,&nbsp;FL_EMBOSSED_STYLE<br>
 &nbsp;<br>
 Examples<br>
 --------<br>
@@ -763,21 +775,21 @@ Examples<br>
 Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-fl_set_browser_hscroll_callback"><strong>fl_set_browser_hscroll_callback</strong></a>(pFlObject, py_BrowserScrollCallback, vdata)</dt><dd><tt><a href="#-fl_set_browser_hscroll_callback">fl_set_browser_hscroll_callback</a>(pFlObject,&nbsp;py_BrowserScrollCallback,<br>
+ <dl><dt><a name="-fl_set_browser_hscroll_callback"><strong>fl_set_browser_hscroll_callback</strong></a>(ptr_flobject, pyfn_BrowserScrollCb, vdata)</dt><dd><tt><a href="#-fl_set_browser_hscroll_callback">fl_set_browser_hscroll_callback</a>(ptr_flobject,&nbsp;pyfn_BrowserScrollCb,<br>
 vdata)<br>
 &nbsp;<br>
-Sets&nbsp;the&nbsp;callback&nbsp;function&nbsp;to&nbsp;be&nbsp;invoked&nbsp;whenever&nbsp;the&nbsp;horizontal<br>
-scrollbar&nbsp;changes&nbsp;position.<br>
+Defines&nbsp;the&nbsp;callback&nbsp;function&nbsp;to&nbsp;be&nbsp;invoked&nbsp;whenever&nbsp;the&nbsp;horizontal<br>
+scrollbar&nbsp;of&nbsp;browser&nbsp;flobject&nbsp;changes&nbsp;position.<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;pFlObject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;browser&nbsp;object<br>
-&nbsp;&nbsp;&nbsp;&nbsp;py_BrowserScrollCallback&nbsp;:&nbsp;python&nbsp;function&nbsp;callback,&nbsp;no&nbsp;return<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;name&nbsp;referring&nbsp;to&nbsp;function(pFlObject,&nbsp;num,&nbsp;vdata)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_flobject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;browser&nbsp;flobject<br>
+&nbsp;&nbsp;&nbsp;&nbsp;pyfn_BrowserScrollCb&nbsp;:&nbsp;python&nbsp;function&nbsp;callback,&nbsp;no&nbsp;return<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;name&nbsp;referring&nbsp;to&nbsp;function(ptr_flobject,&nbsp;num,&nbsp;vdata)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;vdata&nbsp;:&nbsp;any&nbsp;type&nbsp;(e.g.&nbsp;'None',&nbsp;int,&nbsp;str,&nbsp;etc..)<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;user&nbsp;data&nbsp;to&nbsp;be&nbsp;passed&nbsp;to&nbsp;function;&nbsp;callback&nbsp;has&nbsp;to&nbsp;take&nbsp;care&nbsp;of<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;type&nbsp;check<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;user&nbsp;data&nbsp;to&nbsp;be&nbsp;passed&nbsp;to&nbsp;function;&nbsp;callback&nbsp;has&nbsp;to&nbsp;take&nbsp;care<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;of&nbsp;type&nbsp;check<br>
 &nbsp;<br>
 Examples<br>
 --------<br>
@@ -786,20 +798,20 @@ Examples<br>
 Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-fl_set_browser_hscrollbar"><strong>fl_set_browser_hscrollbar</strong></a>(pFlObject, how)</dt><dd><tt><a href="#-fl_set_browser_hscrollbar">fl_set_browser_hscrollbar</a>(pFlObject,&nbsp;how)<br>
+ <dl><dt><a name="-fl_set_browser_hscrollbar"><strong>fl_set_browser_hscrollbar</strong></a>(ptr_flobject, howscroll)</dt><dd><tt><a href="#-fl_set_browser_hscrollbar">fl_set_browser_hscrollbar</a>(ptr_flobject,&nbsp;howscroll)<br>
 &nbsp;<br>
 Turns&nbsp;the&nbsp;horizontal&nbsp;scrollbar&nbsp;on&nbsp;or&nbsp;off.&nbsp;When&nbsp;you&nbsp;switch&nbsp;the<br>
-scrollbars&nbsp;off&nbsp;the&nbsp;text&nbsp;cannot&nbsp;be&nbsp;scrolled&nbsp;by&nbsp;the&nbsp;user&nbsp;anymore&nbsp;at&nbsp;all&nbsp;(i.e.<br>
-also&nbsp;not&nbsp;using&nbsp;methods&nbsp;that&nbsp;do&nbsp;not&nbsp;use&nbsp;scrollbars,&nbsp;e.g.&nbsp;using&nbsp;the&nbsp;cursor<br>
-keys).<br>
+scrollbars&nbsp;off&nbsp;the&nbsp;text&nbsp;cannot&nbsp;be&nbsp;scrolled&nbsp;by&nbsp;the&nbsp;user&nbsp;anymore&nbsp;at<br>
+all&nbsp;(i.e.&nbsp;also&nbsp;not&nbsp;using&nbsp;methods&nbsp;that&nbsp;do&nbsp;not&nbsp;use&nbsp;scrollbars,&nbsp;e.g.<br>
+using&nbsp;the&nbsp;cursor&nbsp;keys).<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;pFlObject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;browser&nbsp;object<br>
-&nbsp;&nbsp;&nbsp;&nbsp;how&nbsp;:&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;how&nbsp;bar&nbsp;is&nbsp;turned.&nbsp;Values&nbsp;(from&nbsp;xfdata.py)&nbsp;FL_ON,&nbsp;FL_OFF,&nbsp;FL_AUTO<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(default)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_flobject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;browser&nbsp;flobject<br>
+&nbsp;&nbsp;&nbsp;&nbsp;howscroll&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if&nbsp;bar&nbsp;is&nbsp;turned&nbsp;on/off.&nbsp;Values&nbsp;(from&nbsp;xfdata.py)&nbsp;FL_ON,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_OFF,&nbsp;FL_AUTO&nbsp;(default)<br>
 &nbsp;<br>
 Examples<br>
 --------<br>
@@ -808,14 +820,14 @@ Examples<br>
 Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-fl_set_browser_line_selectable"><strong>fl_set_browser_line_selectable</strong></a>(pFlObject, linenum, yesno)</dt><dd><tt><a href="#-fl_set_browser_line_selectable">fl_set_browser_line_selectable</a>(pFlObject,&nbsp;linenum,&nbsp;yesno)<br>
+ <dl><dt><a name="-fl_set_browser_line_selectable"><strong>fl_set_browser_line_selectable</strong></a>(ptr_flobject, linenum, yesno)</dt><dd><tt><a href="#-fl_set_browser_line_selectable">fl_set_browser_line_selectable</a>(ptr_flobject,&nbsp;linenum,&nbsp;yesno)<br>
 &nbsp;<br>
-Sets&nbsp;if&nbsp;a&nbsp;line&nbsp;of&nbsp;browser&nbsp;object&nbsp;is&nbsp;selectable&nbsp;or&nbsp;not.<br>
+Defines&nbsp;if&nbsp;a&nbsp;line&nbsp;of&nbsp;browser&nbsp;flobject&nbsp;is&nbsp;selectable&nbsp;or&nbsp;not.<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;pFlObject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;browser&nbsp;object<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_flobject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;browser&nbsp;flobject<br>
 &nbsp;&nbsp;&nbsp;&nbsp;linenum&nbsp;:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;line&nbsp;id&nbsp;to&nbsp;set<br>
 &nbsp;&nbsp;&nbsp;&nbsp;yesno&nbsp;:&nbsp;int<br>
@@ -824,17 +836,17 @@ Parameters<br>
 Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-fl_set_browser_rel_xoffset"><strong>fl_set_browser_rel_xoffset</strong></a>(pFlObject, val)</dt><dd><tt><a href="#-fl_set_browser_rel_xoffset">fl_set_browser_rel_xoffset</a>(pFlObject,&nbsp;val)<br>
+ <dl><dt><a name="-fl_set_browser_rel_xoffset"><strong>fl_set_browser_rel_xoffset</strong></a>(ptr_flobject, roffset)</dt><dd><tt><a href="#-fl_set_browser_rel_xoffset">fl_set_browser_rel_xoffset</a>(ptr_flobject,&nbsp;roffset)<br>
 &nbsp;<br>
-Sets&nbsp;the&nbsp;relative&nbsp;amount&nbsp;of&nbsp;text&nbsp;that&nbsp;is&nbsp;scrolled&nbsp;in&nbsp;horizontal<br>
-direction.<br>
+Defines&nbsp;the&nbsp;relative&nbsp;amount&nbsp;of&nbsp;text&nbsp;that&nbsp;is&nbsp;scrolled&nbsp;in<br>
+horizontal&nbsp;direction.<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;pFlObject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;browser&nbsp;object<br>
-&nbsp;&nbsp;&nbsp;&nbsp;val&nbsp;:&nbsp;float<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;relative&nbsp;amount&nbsp;to&nbsp;be&nbsp;scrolled<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_flobject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;browser&nbsp;flobject<br>
+&nbsp;&nbsp;&nbsp;&nbsp;roffset&nbsp;:&nbsp;float<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;relative&nbsp;amount&nbsp;of&nbsp;text&nbsp;in&nbsp;pixel&nbsp;to&nbsp;be&nbsp;scrolled<br>
 &nbsp;<br>
 Examples<br>
 --------<br>
@@ -843,17 +855,17 @@ Examples<br>
 Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-fl_set_browser_rel_yoffset"><strong>fl_set_browser_rel_yoffset</strong></a>(pFlObject, val)</dt><dd><tt><a href="#-fl_set_browser_rel_yoffset">fl_set_browser_rel_yoffset</a>(pFlObject,&nbsp;val)<br>
+ <dl><dt><a name="-fl_set_browser_rel_yoffset"><strong>fl_set_browser_rel_yoffset</strong></a>(ptr_flobject, roffset)</dt><dd><tt><a href="#-fl_set_browser_rel_yoffset">fl_set_browser_rel_yoffset</a>(ptr_flobject,&nbsp;roffset)<br>
 &nbsp;<br>
-Sets&nbsp;the&nbsp;relative&nbsp;amount&nbsp;of&nbsp;text&nbsp;that&nbsp;is&nbsp;scrolled&nbsp;in&nbsp;horizontal<br>
-direction.<br>
+Defines&nbsp;the&nbsp;relative&nbsp;amount&nbsp;of&nbsp;text&nbsp;in&nbsp;pixels&nbsp;that&nbsp;is&nbsp;scrolled&nbsp;in<br>
+horizontal&nbsp;direction.<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;pFlObject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;browser&nbsp;object<br>
-&nbsp;&nbsp;&nbsp;&nbsp;val&nbsp;:&nbsp;float<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;relative&nbsp;amount&nbsp;of&nbsp;text&nbsp;to&nbsp;be&nbsp;scrolled<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_flobject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;browser&nbsp;flobject<br>
+&nbsp;&nbsp;&nbsp;&nbsp;roffset&nbsp;:&nbsp;float<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;relative&nbsp;amount&nbsp;of&nbsp;text&nbsp;in&nbsp;pixels&nbsp;to&nbsp;be&nbsp;scrolled<br>
 &nbsp;<br>
 Examples<br>
 --------<br>
@@ -862,9 +874,9 @@ Examples<br>
 Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-fl_set_browser_scrollbar_repeat"><strong>fl_set_browser_scrollbar_repeat</strong></a>(pFlObject, delay)</dt><dd><tt><a href="#-fl_set_browser_scrollbar_repeat">fl_set_browser_scrollbar_repeat</a>(pFlObject,&nbsp;delay)<br>
+ <dl><dt><a name="-fl_set_browser_scrollbar_repeat"><strong>fl_set_browser_scrollbar_repeat</strong></a>(ptr_flobject, tdelay)</dt><dd><tt><a href="#-fl_set_browser_scrollbar_repeat">fl_set_browser_scrollbar_repeat</a>(ptr_flobject,&nbsp;tdelay)<br>
 &nbsp;<br>
-Sets&nbsp;the&nbsp;time&nbsp;delay&nbsp;between&nbsp;jumps&nbsp;of&nbsp;the&nbsp;scrollbar&nbsp;knob&nbsp;when&nbsp;the<br>
+Defines&nbsp;the&nbsp;time&nbsp;delay&nbsp;between&nbsp;jumps&nbsp;of&nbsp;the&nbsp;scrollbar&nbsp;knob&nbsp;when&nbsp;the<br>
 mouse&nbsp;button&nbsp;is&nbsp;kept&nbsp;pressed&nbsp;down&nbsp;on&nbsp;the&nbsp;scrollbar&nbsp;outside&nbsp;of&nbsp;the<br>
 knobs&nbsp;area.&nbsp;The&nbsp;delay&nbsp;for&nbsp;the&nbsp;very&nbsp;first&nbsp;jump&nbsp;is&nbsp;twice&nbsp;that&nbsp;long&nbsp;in<br>
 order&nbsp;to&nbsp;avoid&nbsp;jumping&nbsp;to&nbsp;start&nbsp;too&nbsp;soon&nbsp;when&nbsp;only&nbsp;a&nbsp;single&nbsp;click<br>
@@ -872,32 +884,32 @@ was&nbsp;intended&nbsp;but&nbsp;the&nbsp;user&nbsp;is&nbsp;a&nbsp;bit&nbsp;slow&
 &nbsp;<br>
 Parameters<br>
 ----------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;pFlObject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;browser&nbsp;object<br>
-&nbsp;&nbsp;&nbsp;&nbsp;delay&nbsp;:&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;time&nbsp;delay&nbsp;(in&nbsp;milliseconds)&nbsp;to&nbsp;be&nbsp;set.&nbsp;The&nbsp;default&nbsp;value&nbsp;is<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;100&nbsp;ms.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_flobject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;browser&nbsp;flobject<br>
+&nbsp;&nbsp;&nbsp;&nbsp;tdelay&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;time&nbsp;delay&nbsp;(in&nbsp;milliseconds)&nbsp;to&nbsp;be&nbsp;set.&nbsp;The&nbsp;default&nbsp;value<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;is&nbsp;100&nbsp;ms.<br>
 &nbsp;<br>
 Examples<br>
 --------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;<a href="#-fl_set_browser_scrollbar_repeat">fl_set_browser_scrollbar_repeat</a>(pobj,&nbsp;200)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;<a href="#-fl_set_browser_scrollbar_repeat">fl_set_browser_scrollbar_repeat</a>(pbrobj,&nbsp;200)<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-fl_set_browser_scrollbarsize"><strong>fl_set_browser_scrollbarsize</strong></a>(pFlObject, hh, vw)</dt><dd><tt><a href="#-fl_set_browser_scrollbarsize">fl_set_browser_scrollbarsize</a>(pFlObject,&nbsp;hh,&nbsp;vw)<br>
+ <dl><dt><a name="-fl_set_browser_scrollbarsize"><strong>fl_set_browser_scrollbarsize</strong></a>(ptr_flobject, height, width)</dt><dd><tt><a href="#-fl_set_browser_scrollbarsize">fl_set_browser_scrollbarsize</a>(ptr_flobject,&nbsp;height,&nbsp;width)<br>
 &nbsp;<br>
-Sets&nbsp;the&nbsp;scrollbar&nbsp;size&nbsp;of&nbsp;the&nbsp;browser.&nbsp;By&nbsp;default,&nbsp;the&nbsp;scrollbar&nbsp;size<br>
+Defines&nbsp;the&nbsp;scrollbar&nbsp;size&nbsp;of&nbsp;the&nbsp;browser.&nbsp;By&nbsp;default,&nbsp;the&nbsp;scrollbar&nbsp;size<br>
 is&nbsp;based&nbsp;on&nbsp;the&nbsp;relation&nbsp;between&nbsp;the&nbsp;size&nbsp;of&nbsp;the&nbsp;browser&nbsp;and&nbsp;the&nbsp;size&nbsp;of<br>
 the&nbsp;text.<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;pFlObject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;browser&nbsp;object<br>
-&nbsp;&nbsp;&nbsp;&nbsp;hh&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_flobject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;browser&nbsp;flobject<br>
+&nbsp;&nbsp;&nbsp;&nbsp;height&nbsp;:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;horizontal&nbsp;scrollbar&nbsp;height&nbsp;(0&nbsp;for&nbsp;the&nbsp;default)<br>
-&nbsp;&nbsp;&nbsp;&nbsp;vw&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;width&nbsp;:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;vertical&nbsp;scrollbar&nbsp;width&nbsp;(0&nbsp;for&nbsp;the&nbsp;default)<br>
 &nbsp;<br>
 Examples<br>
@@ -907,18 +919,18 @@ Examples<br>
 Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-fl_set_browser_specialkey"><strong>fl_set_browser_specialkey</strong></a>(pFlObject, specialkey)</dt><dd><tt><a href="#-fl_set_browser_specialkey">fl_set_browser_specialkey</a>(pFlObject,&nbsp;specialkey)<br>
+ <dl><dt><a name="-fl_set_browser_specialkey"><strong>fl_set_browser_specialkey</strong></a>(ptr_flobject, specialkey)</dt><dd><tt><a href="#-fl_set_browser_specialkey">fl_set_browser_specialkey</a>(ptr_flobject,&nbsp;specialkey)<br>
 &nbsp;<br>
-Changes&nbsp;the&nbsp;special&nbsp;character&nbsp;(used&nbsp;to&nbsp;change&nbsp;appearance,&nbsp;see<br>
-<a href="#-fl_add_browser_line">fl_add_browser_line</a>())&nbsp;to&nbsp;something&nbsp;other&nbsp;than&nbsp;'@'.&nbsp;In&nbsp;some&nbsp;cases&nbsp;the<br>
-character&nbsp;'@'&nbsp;might&nbsp;need&nbsp;to&nbsp;be&nbsp;placed&nbsp;at&nbsp;the&nbsp;beginning&nbsp;of&nbsp;the&nbsp;lines<br>
-without&nbsp;introducing&nbsp;the&nbsp;special&nbsp;meaning&nbsp;mentioned&nbsp;above.&nbsp;In&nbsp;this&nbsp;case&nbsp;you<br>
-can&nbsp;use&nbsp;"@@".<br>
+Changes&nbsp;the&nbsp;special&nbsp;character,&nbsp;used&nbsp;to&nbsp;change&nbsp;appearance,&nbsp;see<br>
+<a href="#-fl_add_browser_line">fl_add_browser_line</a>(),&nbsp;to&nbsp;something&nbsp;other&nbsp;than&nbsp;'@'.&nbsp;In&nbsp;some&nbsp;cases<br>
+the&nbsp;character&nbsp;'@'&nbsp;might&nbsp;need&nbsp;to&nbsp;be&nbsp;placed&nbsp;at&nbsp;the&nbsp;beginning&nbsp;of&nbsp;the<br>
+lines&nbsp;without&nbsp;introducing&nbsp;the&nbsp;special&nbsp;meaning&nbsp;mentioned&nbsp;above.&nbsp;In<br>
+this&nbsp;case&nbsp;you&nbsp;can&nbsp;use&nbsp;"@@".<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;pFlObject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;browser&nbsp;object<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_flobject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;browser&nbsp;flobject<br>
 &nbsp;&nbsp;&nbsp;&nbsp;specialkey&nbsp;:&nbsp;int&nbsp;or&nbsp;char<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;escape&nbsp;key&nbsp;to&nbsp;be&nbsp;set<br>
 &nbsp;<br>
@@ -929,14 +941,14 @@ Examples<br>
 Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-fl_set_browser_topline"><strong>fl_set_browser_topline</strong></a>(pFlObject, linenum)</dt><dd><tt><a href="#-fl_set_browser_topline">fl_set_browser_topline</a>(pFlObject,&nbsp;linenum)<br>
+ <dl><dt><a name="-fl_set_browser_topline"><strong>fl_set_browser_topline</strong></a>(ptr_flobject, linenum)</dt><dd><tt><a href="#-fl_set_browser_topline">fl_set_browser_topline</a>(ptr_flobject,&nbsp;linenum)<br>
 &nbsp;<br>
 Moves&nbsp;a&nbsp;text&nbsp;line&nbsp;to&nbsp;the&nbsp;top&nbsp;of&nbsp;the&nbsp;browser.&nbsp;Line&nbsp;numbers&nbsp;start&nbsp;with&nbsp;1.<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;pFlObject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;browser&nbsp;object<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_flobject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;browser&nbsp;flobject<br>
 &nbsp;&nbsp;&nbsp;&nbsp;linenum&nbsp;:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;line&nbsp;id&nbsp;to&nbsp;be&nbsp;moved&nbsp;to&nbsp;top<br>
 &nbsp;<br>
@@ -947,21 +959,21 @@ Examples<br>
 Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-fl_set_browser_vscroll_callback"><strong>fl_set_browser_vscroll_callback</strong></a>(pFlObject, py_BrowserScrollCallback, vdata)</dt><dd><tt><a href="#-fl_set_browser_vscroll_callback">fl_set_browser_vscroll_callback</a>(pFlObject,&nbsp;py_BrowserScrollCallback,<br>
+ <dl><dt><a name="-fl_set_browser_vscroll_callback"><strong>fl_set_browser_vscroll_callback</strong></a>(ptr_flobject, pyfn_BrowserScrollCb, vdata)</dt><dd><tt><a href="#-fl_set_browser_vscroll_callback">fl_set_browser_vscroll_callback</a>(ptr_flobject,&nbsp;pyfn_BrowserScrollCb,<br>
 vdata)<br>
 &nbsp;<br>
-Sets&nbsp;the&nbsp;callback&nbsp;function&nbsp;to&nbsp;be&nbsp;invoked&nbsp;whenever&nbsp;the&nbsp;vertical<br>
-scrollbar&nbsp;changes&nbsp;position.<br>
+Defines&nbsp;the&nbsp;callback&nbsp;function&nbsp;to&nbsp;be&nbsp;invoked&nbsp;whenever&nbsp;the&nbsp;vertical<br>
+scrollbar&nbsp;of&nbsp;browser&nbsp;flobject&nbsp;changes&nbsp;position.<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;pFlObject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;browser&nbsp;object<br>
-&nbsp;&nbsp;&nbsp;&nbsp;py_BrowserScrollCallback&nbsp;:&nbsp;python&nbsp;function&nbsp;callback,&nbsp;no&nbsp;return<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;name&nbsp;referring&nbsp;to&nbsp;function(pFlObject,&nbsp;num,&nbsp;vdata)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_flobject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;browser&nbsp;flobject<br>
+&nbsp;&nbsp;&nbsp;&nbsp;pyfn_BrowserScrollCb&nbsp;:&nbsp;python&nbsp;function&nbsp;callback,&nbsp;no&nbsp;return<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;name&nbsp;referring&nbsp;to&nbsp;function(ptr_flobject,&nbsp;num,&nbsp;vdata)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;vdata&nbsp;:&nbsp;any&nbsp;type&nbsp;(e.g.&nbsp;'None',&nbsp;int,&nbsp;str,&nbsp;etc..)<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;user&nbsp;data&nbsp;to&nbsp;be&nbsp;passed&nbsp;to&nbsp;function;&nbsp;callback&nbsp;has&nbsp;to&nbsp;take&nbsp;care&nbsp;of<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;type&nbsp;check<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;user&nbsp;data&nbsp;to&nbsp;be&nbsp;passed&nbsp;to&nbsp;function;&nbsp;callback&nbsp;has&nbsp;to&nbsp;take&nbsp;care<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;of&nbsp;type&nbsp;check<br>
 &nbsp;<br>
 Examples<br>
 --------<br>
@@ -970,19 +982,20 @@ Examples<br>
 Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;Demo&nbsp;=&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-fl_set_browser_vscrollbar"><strong>fl_set_browser_vscrollbar</strong></a>(pFlObject, how)</dt><dd><tt><a href="#-fl_set_browser_vscrollbar">fl_set_browser_vscrollbar</a>(pFlObject,&nbsp;how)<br>
+ <dl><dt><a name="-fl_set_browser_vscrollbar"><strong>fl_set_browser_vscrollbar</strong></a>(ptr_flobject, howscroll)</dt><dd><tt><a href="#-fl_set_browser_vscrollbar">fl_set_browser_vscrollbar</a>(ptr_flobject,&nbsp;howscroll)<br>
 &nbsp;<br>
-Turns&nbsp;the&nbsp;vertical&nbsp;scrollbar&nbsp;on&nbsp;or&nbsp;off.&nbsp;When&nbsp;you&nbsp;switch&nbsp;the&nbsp;scrollbars<br>
-off&nbsp;the&nbsp;text&nbsp;cannot&nbsp;be&nbsp;scrolled&nbsp;by&nbsp;the&nbsp;user&nbsp;anymore&nbsp;at&nbsp;all&nbsp;(i.e.&nbsp;also&nbsp;not<br>
-using&nbsp;methods&nbsp;that&nbsp;do&nbsp;not&nbsp;use&nbsp;scrollbars,&nbsp;e.g.&nbsp;using&nbsp;the&nbsp;cursor&nbsp;keys).<br>
+Turns&nbsp;the&nbsp;vertical&nbsp;scrollbar&nbsp;on&nbsp;or&nbsp;off.&nbsp;When&nbsp;you&nbsp;switch&nbsp;the<br>
+scrollbars&nbsp;off&nbsp;the&nbsp;text&nbsp;cannot&nbsp;be&nbsp;scrolled&nbsp;by&nbsp;the&nbsp;user&nbsp;anymore<br>
+at&nbsp;all&nbsp;(i.e.&nbsp;also&nbsp;not&nbsp;using&nbsp;methods&nbsp;that&nbsp;do&nbsp;not&nbsp;use&nbsp;scrollbars,<br>
+e.g.&nbsp;using&nbsp;the&nbsp;cursor&nbsp;keys).<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;pFlObject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;browser&nbsp;object<br>
-&nbsp;&nbsp;&nbsp;&nbsp;how&nbsp;:&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;how&nbsp;bar&nbsp;is&nbsp;turned.&nbsp;Values&nbsp;(from&nbsp;xfdata.py)&nbsp;FL_ON,&nbsp;FL_OFF,&nbsp;FL_AUTO<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(default)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_flobject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;browser&nbsp;flobject<br>
+&nbsp;&nbsp;&nbsp;&nbsp;howscroll&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if&nbsp;bar&nbsp;is&nbsp;turned&nbsp;on/off.&nbsp;Values&nbsp;(from&nbsp;xfdata.py)&nbsp;FL_ON,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_OFF,&nbsp;FL_AUTO&nbsp;(default)<br>
 &nbsp;<br>
 Examples<br>
 --------<br>
@@ -991,16 +1004,17 @@ Examples<br>
 Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;Demo&nbsp;=&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-fl_set_browser_xoffset"><strong>fl_set_browser_xoffset</strong></a>(pFlObject, npixels)</dt><dd><tt><a href="#-fl_set_browser_xoffset">fl_set_browser_xoffset</a>(pFlObject,&nbsp;npixels)<br>
+ <dl><dt><a name="-fl_set_browser_xoffset"><strong>fl_set_browser_xoffset</strong></a>(ptr_flobject, numpixels)</dt><dd><tt><a href="#-fl_set_browser_xoffset">fl_set_browser_xoffset</a>(ptr_flobject,&nbsp;numpixels)<br>
 &nbsp;<br>
-Sets&nbsp;the&nbsp;amount&nbsp;of&nbsp;text&nbsp;that&nbsp;is&nbsp;scrolled&nbsp;in&nbsp;horizontal&nbsp;direction.<br>
+Defines&nbsp;the&nbsp;amount&nbsp;of&nbsp;text&nbsp;in&nbsp;pixel&nbsp;that&nbsp;is&nbsp;scrolled&nbsp;in<br>
+horizontal&nbsp;direction.<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;pFlObject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;browser&nbsp;object<br>
-&nbsp;&nbsp;&nbsp;&nbsp;npixels&nbsp;:&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;amount&nbsp;of&nbsp;text&nbsp;to&nbsp;be&nbsp;scrolled<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_flobject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;browser&nbsp;flobject<br>
+&nbsp;&nbsp;&nbsp;&nbsp;numpixels&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;amount&nbsp;of&nbsp;text&nbsp;in&nbsp;pixel&nbsp;to&nbsp;be&nbsp;scrolled<br>
 &nbsp;<br>
 Examples<br>
 --------<br>
@@ -1009,16 +1023,17 @@ Examples<br>
 Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-fl_set_browser_yoffset"><strong>fl_set_browser_yoffset</strong></a>(pFlObject, npixels)</dt><dd><tt><a href="#-fl_set_browser_yoffset">fl_set_browser_yoffset</a>(pFlObject,&nbsp;npixels)<br>
+ <dl><dt><a name="-fl_set_browser_yoffset"><strong>fl_set_browser_yoffset</strong></a>(ptr_flobject, numpixels)</dt><dd><tt><a href="#-fl_set_browser_yoffset">fl_set_browser_yoffset</a>(ptr_flobject,&nbsp;numpixels)<br>
 &nbsp;<br>
-Sets&nbsp;the&nbsp;amount&nbsp;of&nbsp;text&nbsp;that&nbsp;is&nbsp;scrolled&nbsp;in&nbsp;horizontal&nbsp;direction.<br>
+Defines&nbsp;the&nbsp;amount&nbsp;of&nbsp;text&nbsp;in&nbsp;pixels&nbsp;that&nbsp;is&nbsp;scrolled&nbsp;in<br>
+vertical&nbsp;direction.<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;pFlObject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;browser&nbsp;object<br>
-&nbsp;&nbsp;&nbsp;&nbsp;npixels&nbsp;:&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;amount&nbsp;of&nbsp;text&nbsp;to&nbsp;be&nbsp;scrolled<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_flobject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;browser&nbsp;flobject<br>
+&nbsp;&nbsp;&nbsp;&nbsp;numpixels&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;amount&nbsp;of&nbsp;text&nbsp;in&nbsp;pixels&nbsp;to&nbsp;be&nbsp;scrolled<br>
 &nbsp;<br>
 Examples<br>
 --------<br>
@@ -1027,16 +1042,16 @@ Examples<br>
 Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;Demo&nbsp;=&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-fl_show_browser_line"><strong>fl_show_browser_line</strong></a>(pFlObject, line)</dt><dd><tt><a href="#-fl_show_browser_line">fl_show_browser_line</a>(pFlObject,&nbsp;line)<br>
+ <dl><dt><a name="-fl_show_browser_line"><strong>fl_show_browser_line</strong></a>(ptr_flobject, linenum)</dt><dd><tt><a href="#-fl_show_browser_line">fl_show_browser_line</a>(ptr_flobject,&nbsp;linenum)<br>
 &nbsp;<br>
-Brings&nbsp;a&nbsp;browser&nbsp;line&nbsp;into&nbsp;view.<br>
+Brings&nbsp;a&nbsp;line&nbsp;of&nbsp;browser&nbsp;flobject&nbsp;into&nbsp;view.<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;pFlObject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;browser&nbsp;object<br>
-&nbsp;&nbsp;&nbsp;&nbsp;line&nbsp;:&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;line&nbsp;number&nbsp;to&nbsp;show<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_flobject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;browser&nbsp;flobject<br>
+&nbsp;&nbsp;&nbsp;&nbsp;linenum&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;line&nbsp;id&nbsp;to&nbsp;show<br>
 &nbsp;<br>
 Examples<br>
 --------<br>
@@ -1046,4 +1061,4 @@ Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
 </td></tr></table>
-<p>Updated on: 2010-12-09 10:11 +0100</body></html>
+<p>Updated on: 2010-12-20 01:16 +0100</body></html>

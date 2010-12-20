@@ -26,7 +26,7 @@
 # then heavily reordered and reworked
 
 # ############################################# #
-# Interface to XForms shared object libraries   #
+# Interface to XForms shared flobject libraries #
 # ############################################# #
 
 
@@ -41,7 +41,7 @@ from xformslib import xfdata
 ####################
 
 def fl_popup_add(win, title):
-    """fl_popup_add(win, title)
+    """fl_popup_add(win, title) -> ptr_flpopup
     
     Defines a new popup. There is no built-in limit to the number
     of popups that can be created.
@@ -49,7 +49,7 @@ def fl_popup_add(win, title):
     Parameters
     ----------
         win : long_pos
-            window of a parent object; use flxbasic.FL_ObjWin() to find out
+            window of a parent flobject; use flxbasic.FL_ObjWin() to find out
             about it. You can also use either 'fl_root' or 'None' for the
             root window.
         title : str
@@ -60,7 +60,7 @@ def fl_popup_add(win, title):
 
     Returns
     -------
-        pPopup : pointer to xfdata.FL_POPUP
+        ptr_flpopup : pointer to xfdata.FL_POPUP
             new popup, or None (on failure)
 
     Examples
@@ -79,25 +79,25 @@ def fl_popup_add(win, title):
     library.check_if_initialized()
     if not win:         # if it is None
         win = flxbasic.fl_root
-    ulwin = library.convert_to_Window(win)
+    ul_win = library.convert_to_Window(win)
     if not title:       # if it is None or ""
         title = ""
-    stitle = library.convert_to_string(title)
-    library.keep_elem_refs(win, title, ulwin, stitle)
-    retval = _fl_popup_add(ulwin, stitle)
+    s_title = library.convert_to_stringc(title)
+    library.keep_elem_refs(win, title, ul_win, s_title)
+    retval = _fl_popup_add(ul_win, s_title)
     return retval
 
 
-def fl_popup_add_entries(pPopup, entryitems_txt):
-    """fl_popup_add_entries(pPopup, entryitems_txt)
+def fl_popup_add_entries(ptr_flpopup, entryitemstxt):
+    """fl_popup_add_entries(ptr_flpopup, entryitemstxt) -> ptr_flpopupentry
     
     Adds one or more entries to a popup.
 
     Parameters
     ----------
-        pPopup : pointer to xfdata.FL_POPUP
+        ptr_flpopup : pointer to xfdata.FL_POPUP
             popup class instance
-        entryitems_txt : str
+        entryitemstxt : str
             text of the entry to be added and in-text special sequences with
             or without not separated additional arguments (if needed). Text
             may contain | to separate entries and newline characters which
@@ -107,7 +107,7 @@ def fl_popup_add_entries(pPopup, entryitems_txt):
 
     Returns
     -------
-        pPopup : pointer to xfdata.FL_POPUP
+        ptr_flpopupentry : pointer to xfdata.FL_POPUP_ENTRY
             popup entry, or None (on failure)
 
     Examples
@@ -127,26 +127,27 @@ def fl_popup_add_entries(pPopup, entryitems_txt):
         """FL_POPUP_ENTRY * fl_popup_add_entries(FL_POPUP * p1,
            const char * p2, ...)""")
     library.check_if_initialized()
-    library.verify_flpopupptr_type(pPopup)
-    sentryitems_txt = library.convert_to_string(entryitems_txt)
-    library.keep_elem_refs(pPopup, entryitems_txt, sentryitems_txt)
-    retval = _fl_popup_add_entries(pPopup, sentryitems_txt)
+    library.verify_flpopupptr_type(ptr_flpopup)
+    s_entryitemstxt = library.convert_to_stringc(entryitemstxt)
+    library.keep_elem_refs(ptr_flpopup, entryitemstxt, s_entryitemstxt)
+    retval = _fl_popup_add_entries(ptr_flpopup, s_entryitemstxt)
     return retval
 
 
-def fl_popup_insert_entries(pPopup, pPopupEntry, entryitems_txt):
-    """fl_popup_insert_entries(pPopup, pPopupEntry, entryitems_txt)
+def fl_popup_insert_entries(ptr_flpopup, ptr_flpopupentry, entryitemstxt):
+    """fl_popup_insert_entries(ptr_flpopup, ptr_flpopupentry, entryitemstxt)
+    -> ptr_flpopupentry
     
     Inserts one or more entries into a popup.
 
     Parameters
     ----------
-        pPopup : pointer to xfdata.FL_POPUP
+        ptr_flpopup : pointer to xfdata.FL_POPUP
             popup class instance
-        pPopupEntry : pointer to xfdata.FL_POPUP_ENTRY
+        ptr_flpopupentry : pointer to xfdata.FL_POPUP_ENTRY
             popup entry after which entry is inserted. If it is 'None', it
             inserts items at the very start.
-        entryitems_txt : str
+        entryitemstxt : str
             text of the entry to be added and in-text special sequences with
             or without not separated additional arguments (if needed). Text
             may contain | to separate entries and newline characters which
@@ -156,7 +157,7 @@ def fl_popup_insert_entries(pPopup, pPopupEntry, entryitems_txt):
 
     Returns
     -------
-        pPopup : pointer to xfdata.FL_POPUP_ENTRY
+        ptr_flpopupentry : pointer to xfdata.FL_POPUP_ENTRY
             popup entry inserted, or None (on failure)
 
     Examples
@@ -176,22 +177,22 @@ def fl_popup_insert_entries(pPopup, pPopupEntry, entryitems_txt):
         """FL_POPUP_ENTRY * fl_popup_insert_entries(FL_POPUP * p1,
            FL_POPUP_ENTRY * p2, const char * p3, ...)""")
     library.check_if_initialized()
-    library.verify_flpopupptr_type(pPopup)
-    if not pPopupEntry:         # it is None
-        pPopupEntry_alt = cty.cast(pPopupEntry, cty.POINTER(cty.c_void_p))
+    library.verify_flpopupptr_type(ptr_flpopup)
+    if not ptr_flpopupentry:         # it is None
+        ptr_flpopupentry_alt = cty.cast(ptr_flpopupentry, cty.POINTER(cty.c_void_p))
     else:                       # real FL_POPUP_ENTRY pointer
-        pPopupEntry_alt = pPopupEntry
-        library.verify_flpopupentryptr_type(pPopupEntry_alt)
-    sentryitems_txt = library.convert_to_string(entryitems_txt)
-    library.keep_elem_refs(pPopup, pPopupEntry, pPopupEntry_alt, \
-            entryitems_txt, sentryitems_txt)
-    retval = _fl_popup_insert_entries(pPopup, pPopupEntry_alt, \
-            sentryitems_txt)
+        ptr_flpopupentry_alt = ptr_flpopupentry
+        library.verify_flpopupentryptr_type(ptr_flpopupentry_alt)
+    s_entryitemstxt = library.convert_to_stringc(entryitemstxt)
+    library.keep_elem_refs(ptr_flpopup, ptr_flpopupentry, ptr_flpopupentry_alt, \
+            entryitemstxt, s_entryitemstxt)
+    retval = _fl_popup_insert_entries(ptr_flpopup, ptr_flpopupentry_alt, \
+            s_entryitemstxt)
     return retval
 
 
-def fl_popup_create(win, title, pPopupItem):
-    """fl_popup_create(win, title, pPopupItem)
+def fl_popup_create(win, title, ptr_flpopupitem):
+    """fl_popup_create(win, title, ptr_flpopupitem) -> ptr_flpopup
     
     Creates a popup. It does not allow to associate values or pointers to
     user data to individual entries, set titles for sub-popups, have radio
@@ -201,7 +202,7 @@ def fl_popup_create(win, title, pPopupItem):
     Parameters
     ----------
         win : long_pos
-            window of a parent object (use flxbasic.FL_ObjWin() to find out
+            window of a parent flobject (use flxbasic.FL_ObjWin() to find out
             about it). You can also use either 'fl_root' or 'None' for the
             root window.
         title : str
@@ -209,14 +210,14 @@ def fl_popup_create(win, title, pPopupItem):
             If not wanted, pass an empty string or 'None'. It may contain
             embedded newline characters, this allows to create titles that
             span more than one line.
-        pPopupItem : pointer to xfdata.FL_POPUP_ITEM
+        ptr_flpopupitem : pointer to xfdata.FL_POPUP_ITEM
             new popup item to be created. It can be prepared passing a dict
             (whose keys are corresponding to xfdata.FL_POPUP_ITEM's members)
             to xfstruct.make_flpopupitem function.
 
     Returns
     -------
-        pPopup : pointer to xfdata.FL_POPUP
+        ptr_flpopup : pointer to xfdata.FL_POPUP
             popup created, or None (on failure)
 
     Examples
@@ -237,33 +238,33 @@ def fl_popup_create(win, title, pPopupItem):
     library.check_if_initialized()
     if not win:         # if it is None
         win = flxbasic.fl_root
-    ulwin = library.convert_to_Window(win)
+    ul_win = library.convert_to_Window(win)
     if not title:       # if it is None or ""
         title = ""
-    stitle = library.convert_to_string(title)
-    library.verify_flpopupitemptr_type(pPopupItem)
-    library.keep_elem_refs(win, title, pPopupItem, ulwin, stitle)
-    retval = _fl_popup_create(ulwin, stitle, pPopupItem)
+    s_title = library.convert_to_stringc(title)
+    library.verify_flpopupitemptr_type(ptr_flpopupitem)
+    library.keep_elem_refs(win, title, ptr_flpopupitem, ul_win, s_title)
+    retval = _fl_popup_create(ul_win, s_title, ptr_flpopupitem)
     return retval
 
 
-def fl_popup_add_items(pPopup, pPopupItem):
-    """fl_popup_add_items(pPopup, pPopupItem)
+def fl_popup_add_items(ptr_flpopup, ptr_flpopupitem):
+    """fl_popup_add_items(ptr_flpopup, ptr_flpopupitem) -> ptr_flpopupentry
     
     Adds one or more items to a popup.
 
     Parameters
     ----------
-        pPopup : pointer to xfdata.FL_POPUP
+        ptr_flpopup : pointer to xfdata.FL_POPUP
             popup class instance
-        pPopupItem : pointer to xfdata.FL_POPUP_ITEM
+        ptr_flpopupitem : pointer to xfdata.FL_POPUP_ITEM
             new popup item to be added. It can be prepared passing a dict
             (whose keys are corresponding to xfdata.FL_POPUP_ITEM's members)
             to xfstruct.make_flpopupitem function.
 
     Returns
     -------
-        pPopupEntry : pointer to xfdata.FL_POPUP_ENTRY
+        ptr_flpopupentry : pointer to xfdata.FL_POPUP_ENTRY
             popup entry, or None
 
     Examples
@@ -282,33 +283,34 @@ def fl_popup_add_items(pPopup, pPopupItem):
         """FL_POPUP_ENTRY * fl_popup_add_items(FL_POPUP * p1,
            FL_POPUP_ITEM * p2)""")
     library.check_if_initialized()
-    library.verify_flpopupptr_type(pPopup)
-    library.verify_flpopupitemptr_type(pPopupItem)
-    library.keep_elem_refs(pPopup, pPopupItem)
-    retval = _fl_popup_add_items(pPopup, pPopupItem)
+    library.verify_flpopupptr_type(ptr_flpopup)
+    library.verify_flpopupitemptr_type(ptr_flpopupitem)
+    library.keep_elem_refs(ptr_flpopup, ptr_flpopupitem)
+    retval = _fl_popup_add_items(ptr_flpopup, ptr_flpopupitem)
     return retval
 
 
-def fl_popup_insert_items(pPopup, pPopupEntry, pPopupItem):
-    """fl_popup_insert_items(pPopup, pPopupEntry, pPopupItem)
+def fl_popup_insert_items(ptr_flpopup, ptr_flpopupentry, ptr_flpopupitem):
+    """fl_popup_insert_items(ptr_flpopup, ptr_flpopupentry, ptr_flpopupitem)
+     -> ptr_flpopupentry
     
     Inserts entries into a popup.
 
     Parameters
     ----------
-        pPopup : pointer to xfdata.FL_POPUP
+        ptr_flpopup : pointer to xfdata.FL_POPUP
             popup class instance
-        pPopupEntry : pointer to xfdata.FL_POPUP_ENTRY
+        ptr_flpopupentry : pointer to xfdata.FL_POPUP_ENTRY
             popup entry after which items are inserted. If it is 'None', items
             are inserted at the very start.
-        pPopupItem : pointer to xfdata.FL_POPUP_ITEM
+        ptr_flpopupitem : pointer to xfdata.FL_POPUP_ITEM
             new popup item to be inserted. It can be prepared passing a dict
             (whose keys are corresponding to xfdata.FL_POPUP_ITEM's members)
             to xfstruct.make_flpopupitem function.
 
     Returns
     -------
-        pPopupEntry : pointer to xfdata.FL_POPUP_ENTRY
+        ptr_flpopupentry : pointer to xfdata.FL_POPUP_ENTRY
             popup entry
 
     Examples
@@ -327,16 +329,17 @@ def fl_popup_insert_items(pPopup, pPopupEntry, pPopupItem):
         """FL_POPUP_ENTRY * fl_popup_insert_items(FL_POPUP * p1,
            FL_POPUP_ENTRY * p2, FL_POPUP_ITEM * p3)""")
     library.check_if_initialized()
-    library.verify_flpopupptr_type(pPopup)
-    library.verify_flpopupentryptr_type(pPopupEntry)
-    library.verify_flpopupitemptr_type(pPopupItem)
-    library.keep_elem_refs(pPopup, pPopupEntry, pPopupItem)
-    retval = _fl_popup_insert_items(pPopup, pPopupEntry, pPopupItem)
+    library.verify_flpopupptr_type(ptr_flpopup)
+    library.verify_flpopupentryptr_type(ptr_flpopupentry)
+    library.verify_flpopupitemptr_type(ptr_flpopupitem)
+    library.keep_elem_refs(ptr_flpopup, ptr_flpopupentry, ptr_flpopupitem)
+    retval = _fl_popup_insert_items(ptr_flpopup, ptr_flpopupentry, \
+            ptr_flpopupitem)
     return retval
 
 
-def fl_popup_delete(pPopup):
-    """fl_popup_delete(pPopup)
+def fl_popup_delete(ptr_flpopup):
+    """fl_popup_delete(ptr_flpopup) -> result
     
     Deletes a popup. It is not possible to call the function while the
     popup is still visible on the screen. Calling it from any callback
@@ -346,7 +349,7 @@ def fl_popup_delete(pPopup):
 
     Parameters
     ----------
-        pPopup : pointer to xfdata.FL_POPUP
+        ptr_flpopup : pointer to xfdata.FL_POPUP
             popup class instance
 
     Returns
@@ -368,20 +371,20 @@ def fl_popup_delete(pPopup):
         cty.c_int, [cty.POINTER(xfdata.FL_POPUP)],
         """int fl_popup_delete(FL_POPUP * p1)""")
     library.check_if_initialized()
-    library.verify_flpopupptr_type(pPopup)
-    library.keep_elem_refs(pPopup)
-    retval = _fl_popup_delete(pPopup)
+    library.verify_flpopupptr_type(ptr_flpopup)
+    library.keep_elem_refs(ptr_flpopup)
+    retval = _fl_popup_delete(ptr_flpopup)
     return retval
 
 
-def fl_popup_entry_delete(pPopupEntry):
-    """fl_popup_entry_delete(pPopupEntry)
+def fl_popup_entry_delete(ptr_flpopupentry):
+    """fl_popup_entry_delete(ptr_flpopupentry) -> result
 
     Removes an existing popup entry.
 
     Parameters
     ----------
-        pPopupEntry : pointer to xfdata.FL_POPUP_ENTRY
+        ptr_flpopupentry : pointer to xfdata.FL_POPUP_ENTRY
             popup entry to be removed.
 
     Returns
@@ -403,14 +406,14 @@ def fl_popup_entry_delete(pPopupEntry):
         cty.c_int, [cty.POINTER(xfdata.FL_POPUP_ENTRY)],
         """int fl_popup_entry_delete(FL_POPUP_ENTRY * p1)""")
     library.check_if_initialized()
-    library.verify_flpopupentryptr_type(pPopupEntry)
-    library.keep_elem_refs(pPopupEntry)
-    retval = _fl_popup_entry_delete(pPopupEntry)
+    library.verify_flpopupentryptr_type(ptr_flpopupentry)
+    library.keep_elem_refs(ptr_flpopupentry)
+    retval = _fl_popup_entry_delete(ptr_flpopupentry)
     return retval
 
 
-def fl_popup_do(pPopup):
-    """fl_popup_do(pPopup)
+def fl_popup_do(ptr_flpopup):
+    """fl_popup_do(ptr_flpopup) -> ptr_flpopupreturn
     
     Shows the created popup and returns when the the user is done with the
     popup and it has been removed from the screen. Only idle callbacks and
@@ -418,12 +421,12 @@ def fl_popup_do(pPopup):
 
     Parameters
     ----------
-        pPopup : pointer to xfdata.FL_POPUP
+        ptr_flpopup : pointer to xfdata.FL_POPUP
             popup class instance
 
     Returns
     -------
-        pPopupReturn : pointer to xfdata.FL_POPUP_RETURN
+        ptr_flpopupreturn : pointer to xfdata.FL_POPUP_RETURN
             popup return class instance
 
     Examples
@@ -440,25 +443,25 @@ def fl_popup_do(pPopup):
         cty.POINTER(xfdata.FL_POPUP_RETURN), [cty.POINTER(xfdata.FL_POPUP)],
         """FL_POPUP_RETURN * fl_popup_do(FL_POPUP * p1)""")
     library.check_if_initialized()
-    library.verify_flpopupptr_type(pPopup)
-    library.keep_elem_refs(pPopup)
-    retval = _fl_popup_do(pPopup)
+    library.verify_flpopupptr_type(ptr_flpopup)
+    library.keep_elem_refs(ptr_flpopup)
+    retval = _fl_popup_do(ptr_flpopup)
     return retval
 
 
-def fl_popup_set_position(pPopup, x, y):
-    """fl_popup_set_position(pPopup, x, y)
+def fl_popup_set_position(ptr_flpopup, xpos, ypos):
+    """fl_popup_set_position(ptr_flpopup, xpos, ypos)
     
-    Sets position where the popup is supposed to appear (if never called,
+    Defines position where the popup is supposed to appear (if never called,
     the popup appears at the mouse position).
 
     Parameters
     ----------
-        pPopup : pointer to xfdata.FL_POPUP
+        ptr_flpopup : pointer to xfdata.FL_POPUP
             popup class instance
-        x : int
+        xpos : int
             horizontal position (upper-left corner)
-        y : int
+        ypos : int
             vertical position (upper-left corner)
 
     Examples
@@ -475,22 +478,22 @@ def fl_popup_set_position(pPopup, x, y):
         None, [cty.POINTER(xfdata.FL_POPUP), cty.c_int, cty.c_int],
         """void fl_popup_set_position(FL_POPUP * p1, int p2, int p3)""")
     library.check_if_initialized()
-    library.verify_flpopupptr_type(pPopup)
-    ix = library.convert_to_int(x)
-    iy = library.convert_to_int(y)
-    library.keep_elem_refs(pPopup, x, y, ix, iy)
-    _fl_popup_set_position(pPopup, ix, iy)
+    library.verify_flpopupptr_type(ptr_flpopup)
+    i_xpos = library.convert_to_intc(xpos)
+    i_ypos = library.convert_to_intc(ypos)
+    library.keep_elem_refs(ptr_flpopup, xpos, ypos, i_xpos, i_ypos)
+    _fl_popup_set_position(ptr_flpopup, i_xpos, i_ypos)
 
 
-def fl_popup_get_policy(pPopup):
-    """fl_popup_get_policy(pPopup)
+def fl_popup_get_policy(ptr_flpopup):
+    """fl_popup_get_policy(ptr_flpopup) -> policy
     
-    Obtains current policy setting for handling the popups, or changes
+    Finds out current policy setting for handling the popups, or changes
     the default setting for new popup to be created.
 
     Parameters
     ----------
-        pPopup : pointer to xfdata.FL_POPUP
+        ptr_flpopup : pointer to xfdata.FL_POPUP
             popup class instance. If it is 'None', gives the default setting
             for the popups created afterwards
 
@@ -498,7 +501,7 @@ def fl_popup_get_policy(pPopup):
     -------
         policy : int
             policy for supplied popup, or default policy used in creating
-            new popups is returned (if Nono is supplied), or -1 (on errors).
+            new popups is returned (if None is supplied), or -1 (on errors).
 
     Examples
     --------
@@ -514,27 +517,27 @@ def fl_popup_get_policy(pPopup):
         cty.c_int, [cty.POINTER(xfdata.FL_POPUP)],
         """int fl_popup_get_policy(FL_POPUP * p1)""")
     library.check_if_initialized()
-    if not pPopup:         # it is None
-        pPopup_alt = cty.cast(pPopup, cty.POINTER(cty.c_void_p))
+    if not ptr_flpopup:         # it is None
+        ptr_flpopup_alt = cty.cast(ptr_flpopup, cty.POINTER(cty.c_void_p))
     else:                  # real FL_POPUP pointer
-        pPopup_alt = pPopup
-        library.verify_flpopupptr_type(pPopup_alt)
-    library.keep_elem_refs(pPopup, pPopup_alt)
-    retval = _fl_popup_get_policy(pPopup_alt)
+        ptr_flpopup_alt = ptr_flpopup
+        library.verify_flpopupptr_type(ptr_flpopup_alt)
+    library.keep_elem_refs(ptr_flpopup, ptr_flpopup_alt)
+    retval = _fl_popup_get_policy(ptr_flpopup_alt)
     return retval
 
 
-def fl_popup_set_policy(pPopup, policy):
-    """fl_popup_set_policy(pPopup, policy)
+def fl_popup_set_policy(ptr_flpopup, policy):
+    """fl_popup_set_policy(ptr_flpopup, policy) -> oldpol
     
-    Sets policy for handling the popup (i.e. does it get closed when the
-    user releases the mouse button outside an active entry or not?) or
-    changes the default setting of the policy, used in the creation of new
-    popups.
+    Defines policy for handling the popup (i.e. does it get closed when
+    the user releases the mouse button outside an active entry or not?)
+    or changes the default setting of the policy, used in the creation
+    of new popups.
 
     Parameters
     ----------
-        pPopup : pointer to xfdata.FL_POPUP
+        ptr_flpopup : pointer to xfdata.FL_POPUP
             popup class instance. If it is 'None', changes the default
             setting of the policy, used in the creation of new popups.
         policy : int
@@ -560,39 +563,40 @@ def fl_popup_set_policy(pPopup, policy):
         cty.c_int, [cty.POINTER(xfdata.FL_POPUP), cty.c_int],
         """int fl_popup_set_policy(FL_POPUP * p1, int p2)""")
     library.check_if_initialized()
-    if not pPopup:         # it is None
-        pPopup_alt = cty.cast(pPopup, cty.POINTER(cty.c_void_p))
+    if not ptr_flpopup:         # it is None
+        ptr_flpopup_alt = cty.cast(ptr_flpopup, cty.POINTER(cty.c_void_p))
     else:                  # real FL_POPUP pointer
-        pPopup_alt = pPopup
-        library.verify_flpopupptr_type(pPopup_alt)
+        ptr_flpopup_alt = ptr_flpopup
+        library.verify_flpopupptr_type(ptr_flpopup_alt)
     library.checkfatal_allowed_value_in_list(policy, \
             xfdata.POPUPPOLICY_list)
-    ipolicy = library.convert_to_int(policy)
-    library.keep_elem_refs(pPopup, pPopup_alt, policy, ipolicy)
-    retval = _fl_popup_set_policy(pPopup_alt, ipolicy)
+    i_policy = library.convert_to_intc(policy)
+    library.keep_elem_refs(ptr_flpopup, ptr_flpopup_alt, policy, i_policy)
+    retval = _fl_popup_set_policy(ptr_flpopup_alt, i_policy)
     return retval
 
 
-def fl_popup_set_callback(pPopup, py_PopupCb):
-    """fl_popup_set_callback(pPopup, py_PopupCb)
+def fl_popup_set_callback(ptr_flpopup, pyfn_PopupCb):
+    """fl_popup_set_callback(ptr_flpopup, pyfn_PopupCb) -> Popupcb
     
     Associates with a popup or changes a callback function to be invoked
     when an entry (or an entry of a sub-popup) is selected.
 
     Parameters
     ----------
-        pPopup : pointer to xfdata.FL_POPUP
+        ptr_flpopup : pointer to xfdata.FL_POPUP
             popup class instance
-        py_PopupCb : python function callback, returned value
+        pyfn_PopupCb : python function callback, returned value
             callback that is called after entry selection.
-            name referring to function(pPopupReturn) -> num.
-            parameter pPopopReturn is of type xfdata.FL_POPUP_RETURN
+            name referring to function(ptr_flpopupreturn) -> num.
+            parameter ptr_flpopopreturn is of type
+            xfdata.FL_POPUP_RETURN
 
     Returns
     -------
         PopupCb : pointer ot xfdata.FL_POPUP_CB
-            old popup callback, or None (on errors or if no callback was
-            defined)
+            old popup callback, or None (on errors or if no callback
+            was defined)
 
     Examples
     --------
@@ -612,23 +616,23 @@ def fl_popup_set_callback(pPopup, py_PopupCb):
         """FL_POPUP_CB fl_popup_set_callback(FL_POPUP * p1,
            FL_POPUP_CB p2)""")
     library.check_if_initialized()
-    library.verify_flpopupptr_type(pPopup)
-    library.verify_function_type(py_PopupCb)
-    c_PopupCb = xfdata.FL_POPUP_CB(py_PopupCb)
-    library.keep_cfunc_refs(c_PopupCb, py_PopupCb)
-    library.keep_elem_refs(pPopup)
-    retval = _fl_popup_set_callback(pPopup, c_PopupCb)
+    library.verify_flpopupptr_type(ptr_flpopup)
+    library.verify_function_type(pyfn_PopupCb)
+    cfn_PopupCb = xfdata.FL_POPUP_CB(pyfn_PopupCb)
+    library.keep_cfunc_refs(cfn_PopupCb, pyfn_PopupCb)
+    library.keep_elem_refs(ptr_flpopup)
+    retval = _fl_popup_set_callback(ptr_flpopup, cfn_PopupCb)
     return retval
 
 
-def fl_popup_get_title_font(pPopup):
-    """fl_popup_get_title_font(pPopup)
+def fl_popup_get_title_font(ptr_flpopup):
+    """fl_popup_get_title_font(ptr_flpopup) -> style, size
     
-    Obtains the font style and size of the popup's title.
+    Finds out the font style and size of the popup's title.
 
     Parameters
     ----------
-        pPopup : pointer to xfdata.FL_POPUP
+        ptr_flpopup : pointer to xfdata.FL_POPUP
             popup class instance
 
     Returns
@@ -643,9 +647,9 @@ def fl_popup_get_title_font(pPopup):
         >>> *todo*
 
     API_diversion
-    ----------
-        API changed from XForms, upstream was
-        fl_popup_get_title_font(pPopup, style, size)
+    -------------
+        API changed from XForms, upstream is
+        fl_popup_get_title_font(ptr_flpopup, style, size)
 
     Notes
     -----
@@ -659,25 +663,25 @@ def fl_popup_get_title_font(pPopup):
         """void fl_popup_get_title_font(FL_POPUP * p1, int * p2,
            int * p3)""")
     library.check_if_initialized()
-    library.verify_flpopupptr_type(pPopup)
-    style, pstyle = library.make_int_and_pointer()
-    size, psize = library.make_int_and_pointer()
-    library.keep_elem_refs(pPopup, style, size, pstyle, psize)
-    _fl_popup_get_title_font(pPopup, pstyle, psize)
-    return style.value, size.value
+    library.verify_flpopupptr_type(ptr_flpopup)
+    i_style, ptr_style = library.make_intc_and_pointer()
+    i_size, ptr_size = library.make_intc_and_pointer()
+    library.keep_elem_refs(ptr_flpopup, i_style, i_size, ptr_style, ptr_size)
+    _fl_popup_get_title_font(ptr_flpopup, ptr_style, ptr_size)
+    return i_style.value, i_size.value
 
 
-def fl_popup_set_title_font(pPopup, style, size):
-    """fl_popup_set_title_font(pPopup, style, size)
+def fl_popup_set_title_font(ptr_flpopup, style, size):
+    """fl_popup_set_title_font(ptr_flpopup, style, size)
     
-    Sets the font style and size of the popup's title. This setting also
+    Defines the font style and size of the popup's title. This setting also
     applies to sub-popups of the popup, thus setting a title font for
     sub-popups is useless. By default, size and style are (from xfdata)
     FL_NORMAL_SIZE and FL_EMBOSSED_STYLE.
 
     Parameters
     ----------
-        pPopup : pointer to xfdata.FL_POPUP
+        ptr_flpopup : pointer to xfdata.FL_POPUP
             popup class instance
         style : int
             title style. Values (from xfdata.py) FL_NORMAL_STYLE,
@@ -706,23 +710,23 @@ def fl_popup_set_title_font(pPopup, style, size):
         None, [cty.POINTER(xfdata.FL_POPUP), cty.c_int, cty.c_int],
         """void fl_popup_set_title_font(FL_POPUP * p1, int p2, int p3)""")
     library.check_if_initialized()
-    library.verify_flpopupptr_type(pPopup)
+    library.verify_flpopupptr_type(ptr_flpopup)
     library.checkfatal_allowed_value_in_list(style, xfdata.TEXTSTYLE_list)
-    istyle = library.convert_to_int(style)
+    i_style = library.convert_to_intc(style)
     library.checknonfatal_allowed_value_in_list(size, xfdata.FONTSIZE_list)
-    isize = library.convert_to_int(size)
-    library.keep_elem_refs(pPopup, style, size, istyle, isize)
-    _fl_popup_set_title_font(pPopup, istyle, isize)
+    i_size = library.convert_to_intc(size)
+    library.keep_elem_refs(ptr_flpopup, style, size, i_style, i_size)
+    _fl_popup_set_title_font(ptr_flpopup, i_style, i_size)
 
 
-def fl_popup_entry_get_font(pPopup):
-    """fl_popup_entry_get_font(pPopup)
+def fl_popup_entry_get_font(ptr_flpopup):
+    """fl_popup_entry_get_font(ptr_flpopup) -> style, size
     
-    Obtains the font style and size of the popup entries.
+    Finds out the font style and size of the popup entries.
 
     Parameters
     ----------
-        pPopup : pointer to xfdata.FL_POPUP
+        ptr_flpopup : pointer to xfdata.FL_POPUP
             popup class instance
 
     Returns
@@ -737,9 +741,9 @@ def fl_popup_entry_get_font(pPopup):
         >>> *todo*
 
     API_diversion
-    ----------
-        API changed from XForms, upstream was
-        fl_popup_entry_get_font(pPopup, style, size)
+    -------------
+        API changed from XForms, upstream is
+        fl_popup_entry_get_font(ptr_flpopup, style, size)
 
     Notes
     -----
@@ -752,22 +756,22 @@ def fl_popup_entry_get_font(pPopup):
         cty.POINTER(cty.c_int)],
         """void fl_popup_entry_get_font(FL_POPUP * p1, int * p2, int * p3)""")
     library.check_if_initialized()
-    library.verify_flpopupptr_type(pPopup)
-    style, pstyle = library.make_int_and_pointer()
-    size, psize = library.make_int_and_pointer()
-    library.keep_elem_refs(pPopup, style, size, pstyle, psize)
-    _fl_popup_entry_get_font(pPopup, pstyle, psize)
-    return style.value, size.value
+    library.verify_flpopupptr_type(ptr_flpopup)
+    i_style, ptr_style = library.make_intc_and_pointer()
+    i_size, ptr_size = library.make_intc_and_pointer()
+    library.keep_elem_refs(ptr_flpopup, i_style, i_size, ptr_style, ptr_size)
+    _fl_popup_entry_get_font(ptr_flpopup, ptr_style, ptr_size)
+    return i_style.value, i_size.value
 
 
-def fl_popup_entry_set_font(pPopup, style, size):
-    """fl_popup_entry_set_font(pPopup, style, size)
+def fl_popup_entry_set_font(ptr_flpopup, style, size):
+    """fl_popup_entry_set_font(ptr_flpopup, style, size)
     
-    Sets the font style and size of the popup entries.
+    Defines the font style and size of the popup entries.
 
     Parameters
     ----------
-        pPopup : pointer to xfdata.FL_POPUP
+        ptr_flpopup : pointer to xfdata.FL_POPUP
             popup class instance
         style : int
             style of popup entries. Values (from xfdata.py) FL_NORMAL_STYLE,
@@ -796,29 +800,29 @@ def fl_popup_entry_set_font(pPopup, style, size):
         None, [cty.POINTER(xfdata.FL_POPUP), cty.c_int, cty.c_int],
         """void fl_popup_entry_set_font(FL_POPUP * p1, int p2, int p3)""")
     library.check_if_initialized()
-    library.verify_flpopupptr_type(pPopup)
+    library.verify_flpopupptr_type(ptr_flpopup)
     library.checkfatal_allowed_value_in_list(style, xfdata.TEXTSTYLE_list)
-    istyle = library.convert_to_int(style)
+    i_style = library.convert_to_intc(style)
     library.checknonfatal_allowed_value_in_list(size, xfdata.FONTSIZE_list)
-    isize = library.convert_to_int(size)
-    library.keep_elem_refs(pPopup, style, size, istyle, isize)
-    _fl_popup_entry_set_font(pPopup, istyle, isize)
+    i_size = library.convert_to_intc(size)
+    library.keep_elem_refs(ptr_flpopup, style, size, i_style, i_size)
+    _fl_popup_entry_set_font(ptr_flpopup, i_style, i_size)
 
 
-def fl_popup_get_bw(pPopup):
-    """fl_popup_get_bw(pPopup)
+def fl_popup_get_bw(ptr_flpopup):
+    """fl_popup_get_bw(ptr_flpopup) -> borderwidth
     
-    Obtains the border width of a popup.
+    Finds out the border width of a popup.
 
     Parameters
     ----------
-        pPopup : pointer to xfdata.FL_POPUP
+        ptr_flpopup : pointer to xfdata.FL_POPUP
             popup class instance
 
     Returns
     -------
-        bw : int
-            borderwidth
+        borderwidth : int
+            width of border's popup
 
     Examples
     --------
@@ -834,28 +838,28 @@ def fl_popup_get_bw(pPopup):
         cty.c_int, [cty.POINTER(xfdata.FL_POPUP)],
         """int fl_popup_get_bw(FL_POPUP * p1)""")
     library.check_if_initialized()
-    library.verify_flpopupptr_type(pPopup)
-    library.keep_elem_refs(pPopup)
-    retval = _fl_popup_get_bw(pPopup)
+    library.verify_flpopupptr_type(ptr_flpopup)
+    library.keep_elem_refs(ptr_flpopup)
+    retval = _fl_popup_get_bw(ptr_flpopup)
     return retval
 
 
-def fl_popup_set_bw(pPopup, bw):
-    """fl_popup_set_bw(pPopup, bw)
+def fl_popup_set_bw(ptr_flpopup, borderwidth):
+    """fl_popup_set_bw(ptr_flpopup, borderwidth) -> oldborderwidth
     
-    Sets the border width of a popup.
+    Defines the border width of a popup.
 
     Parameters
     ----------
-        pPopup : pointer to xfdata.FL_POPUP
+        ptr_flpopup : pointer to xfdata.FL_POPUP
             popup class instance
-        bw : int
+        borderwidth : int
             border width value to be set
 
     Returns
     -------
-        num. : int
-            *todo*
+        oldborderwidth : int
+            previous width of border
 
     Examples
     --------
@@ -871,21 +875,21 @@ def fl_popup_set_bw(pPopup, bw):
         cty.c_int, [cty.POINTER(xfdata.FL_POPUP), cty.c_int],
         """int fl_popup_set_bw(FL_POPUP * p1, int p2)""")
     library.check_if_initialized()
-    library.verify_flpopupptr_type(pPopup)
-    ibw = library.convert_to_int(bw)
-    library.keep_elem_refs(pPopup, bw, ibw)
-    retval = _fl_popup_set_bw(pPopup, ibw)
+    library.verify_flpopupptr_type(ptr_flpopup)
+    i_borderwidth = library.convert_to_intc(borderwidth)
+    library.keep_elem_refs(ptr_flpopup, borderwidth, i_borderwidth)
+    retval = _fl_popup_set_bw(ptr_flpopup, i_borderwidth)
     return retval
 
 
-def fl_popup_get_color(pPopup, colrpos):
-    """fl_popup_get_color(pPopup, colrpos)
+def fl_popup_get_color(ptr_flpopup, colrpos):
+    """fl_popup_get_color(ptr_flpopup, colrpos) -> colr
     
-    Obtains several colors used in drawing a popup.
+    Finds out several colors used in drawing a popup.
 
     Parameters
     ----------
-        pPopup : pointer to xfdata.FL_POPUP
+        ptr_flpopup : pointer to xfdata.FL_POPUP
             popup class instance
         colrpos : int
             color type position. Values (from xfdata.py)
@@ -913,22 +917,22 @@ def fl_popup_get_color(pPopup, colrpos):
         xfdata.FL_COLOR, [cty.POINTER(xfdata.FL_POPUP), cty.c_int],
         """FL_COLOR fl_popup_get_color(FL_POPUP * p1, int p2)""")
     library.check_if_initialized()
-    library.verify_flpopupptr_type(pPopup)
+    library.verify_flpopupptr_type(ptr_flpopup)
     library.checkfatal_allowed_value_in_list(colrpos, xfdata.POPUPCOLOR_list)
-    icolrpos = library.convert_to_int(colrpos)
-    library.keep_elem_refs(pPopup, colrpos, icolrpos)
-    retval = _fl_popup_get_color(pPopup, icolrpos)
+    i_colrpos = library.convert_to_intc(colrpos)
+    library.keep_elem_refs(ptr_flpopup, colrpos, i_colrpos)
+    retval = _fl_popup_get_color(ptr_flpopup, i_colrpos)
     return retval
 
 
-def fl_popup_set_color(pPopup, colrpos, colr):
-    """fl_popup_set_color(pPopup, colrpos, colr)
+def fl_popup_set_color(ptr_flpopup, colrpos, colr):
+    """fl_popup_set_color(ptr_flpopup, colrpos, colr) -> oldcolr
     
-    Sets several colors used in drawing a popup.
+    Defines several colors used in drawing a popup.
 
     Parameters
     ----------
-        pPopup : pointer to xfdata.FL_POPUP
+        ptr_flpopup : pointer to xfdata.FL_POPUP
             popup class instance
         colrpos : int
             color type position. Values (from xfdata.py)
@@ -941,8 +945,8 @@ def fl_popup_set_color(pPopup, colrpos, colr):
 
     Returns
     -------
-        colr : long_pos
-            color
+        oldcolr : long_pos
+            old color, or xfdata.FL_MAX_COLORS (on errors)
 
     Examples
     --------
@@ -959,26 +963,27 @@ def fl_popup_set_color(pPopup, colrpos, colr):
         xfdata.FL_COLOR],
         """FL_COLOR fl_popup_set_color(FL_POPUP * p1, int p2, FL_COLOR p3)""")
     library.check_if_initialized()
-    library.verify_flpopupptr_type(pPopup)
-    library.checkfatal_allowed_value_in_list(colrpos, xfdata.POPUPCOLOR_list)
+    library.verify_flpopupptr_type(ptr_flpopup)
+    library.checkfatal_allowed_value_in_list(colrpos, \
+            xfdata.POPUPCOLOR_list)
+    i_colrpos = library.convert_to_intc(colrpos)
     library.checknonfatal_allowed_value_in_list(colr, xfdata.COLOR_list)
-    icolrpos = library.convert_to_int(colrpos)
-    ulcolr = library.convert_to_FL_COLOR(colr)
-    library.keep_elem_refs(pPopup, colrpos, colr, icolrpos, ulcolr)
-    retval = _fl_popup_set_color(pPopup, icolrpos, ulcolr)
+    ul_colr = library.convert_to_FL_COLOR(colr)
+    library.keep_elem_refs(ptr_flpopup, colrpos, colr, i_colrpos, ul_colr)
+    retval = _fl_popup_set_color(ptr_flpopup, i_colrpos, ul_colr)
     return retval
 
 
-def fl_popup_set_cursor(pPopup, cursnum):
-    """fl_popup_set_cursor(pPopup, cursnum)
+def fl_popup_set_cursor(ptr_flpopup, cursornum):
+    """fl_popup_set_cursor(ptr_flpopup, cursornum)
     
     Changes the cursor displayed when a popup is shown.
 
     Parameters
     ----------
-        pPopup : pointer to xfdata.FL_POPUP
+        ptr_flpopup : pointer to xfdata.FL_POPUP
             popup class instance
-        cursnum : int
+        cursornum : int
             id of a symbolic cursor shape's name
 
     Examples
@@ -995,20 +1000,20 @@ def fl_popup_set_cursor(pPopup, cursnum):
         None, [cty.POINTER(xfdata.FL_POPUP), cty.c_int],
         """void fl_popup_set_cursor(FL_POPUP * p1, int p2)""")
     library.check_if_initialized()
-    library.verify_flpopupptr_type(pPopup)
-    icursnum = library.convert_to_int(cursnum)
-    library.keep_elem_refs(pPopup, cursnum, icursnum)
-    _fl_popup_set_cursor(pPopup, icursnum)
+    library.verify_flpopupptr_type(ptr_flpopup)
+    i_cursornum = library.convert_to_intc(cursornum)
+    library.keep_elem_refs(ptr_flpopup, cursornum, i_cursornum)
+    _fl_popup_set_cursor(ptr_flpopup, i_cursornum)
 
 
-def fl_popup_get_title(pPopup):
-    """fl_popup_get_title(pPopup)
+def fl_popup_get_title(ptr_flpopup):
+    """fl_popup_get_title(ptr_flpopup) -> title
     
-    Obtains the title of a popup.
+    Finds out the title of a popup.
 
     Parameters
     ----------
-        pPopup : pointer to xfdata.FL_POPUP
+        ptr_flpopup : pointer to xfdata.FL_POPUP
             popup class instance
 
     Returns
@@ -1030,28 +1035,28 @@ def fl_popup_get_title(pPopup):
         xfdata.STRING, [cty.POINTER(xfdata.FL_POPUP)],
         """const char * fl_popup_get_title(FL_POPUP * p1)""")
     library.check_if_initialized()
-    library.verify_flpopupptr_type(pPopup)
-    library.keep_elem_refs(pPopup)
-    retval = _fl_popup_get_title(pPopup)
+    library.verify_flpopupptr_type(ptr_flpopup)
+    library.keep_elem_refs(ptr_flpopup)
+    retval = _fl_popup_get_title(ptr_flpopup)
     return retval
 
 
-def fl_popup_set_title(pPopup, title):
-    """fl_popup_set_title(pPopup, title)
+def fl_popup_set_title(ptr_flpopup, title):
+    """fl_popup_set_title(ptr_flpopup, title) -> ptr_flpopup
     
-    Sets the title of a popup. By default, the popup of a select object
-    does not have a title drawn on top of it.
+    Defines the title of a popup. By default, the popup of a select
+    flobject does not have a title drawn on top of it.
 
     Parameters
     ----------
-        pPopup : pointer to xfdata.FL_POPUP
+        ptr_flpopup : pointer to xfdata.FL_POPUP
             popup class instance
         title : str
             title of the popup
 
     Returns
     -------
-        pPopup : pointer to xfdata.FL_POPUP
+        ptr_flpopup : pointer to xfdata.FL_POPUP
             popup class instance
 
     Examples
@@ -1069,24 +1074,24 @@ def fl_popup_set_title(pPopup, title):
         xfdata.STRING],
         """FL_POPUP * fl_popup_set_title(FL_POPUP * p1, const char * p2)""")
     library.check_if_initialized()
-    library.verify_flpopupptr_type(pPopup)
-    stitle = library.convert_to_string(title)
-    library.keep_elem_refs(pPopup, title, stitle)
-    retval = _fl_popup_set_title(pPopup, stitle)
+    library.verify_flpopupptr_type(ptr_flpopup)
+    s_title = library.convert_to_stringc(title)
+    library.keep_elem_refs(ptr_flpopup, title, s_title)
+    retval = _fl_popup_set_title(ptr_flpopup, s_title)
     return retval
 
 
-def fl_popup_entry_set_callback(pPopupEntry, py_PopupCb):
-    """fl_popup_entry_set_callback(pPopupEntry, py_PopupCb)
+def fl_popup_entry_set_callback(ptr_flpopupentry, pyfn_PopupCb):
+    """fl_popup_entry_set_callback(ptr_flpopupentry, pyfn_PopupCb) -> PopupCb
     
-    Sets the callback invoked when the entry of a popup is selected.
+    Defines the callback invoked when the entry of a popup is selected.
 
     Parameters
     ----------
-        pPopupEntry : pointer to xfdata.FL_POPUP_ENTRY
+        ptr_flpopupentry : pointer to xfdata.FL_POPUP_ENTRY
             popup entry
-        py_PopupCb : python callback function, returned value
-            name referring to function(pPopupReturn) -> num.
+        pyfn_PopupCb : python callback function, returned value
+            name referring to function(ptr_flpopupreturn) -> num.
 
     Returns
     -------
@@ -1111,27 +1116,27 @@ def fl_popup_entry_set_callback(pPopupEntry, py_PopupCb):
         """FL_POPUP_CB fl_popup_entry_set_callback(FL_POPUP_ENTRY * p1,
            FL_POPUP_CB p2)""")
     library.check_if_initialized()
-    library.verify_flpopupentryptr_type(pPopupEntry)
-    library.verify_function_type(py_PopupCb)
-    c_PopupCb = xfdata.FL_POPUP_CB(py_PopupCb)
-    library.keep_cfunc_refs(c_PopupCb, py_PopupCb)
-    library.keep_elem_refs(pPopupEntry)
-    retval = _fl_popup_entry_set_callback(pPopupEntry, c_PopupCb)
+    library.verify_flpopupentryptr_type(ptr_flpopupentry)
+    library.verify_function_type(pyfn_PopupCb)
+    cfn_PopupCb = xfdata.FL_POPUP_CB(pyfn_PopupCb)
+    library.keep_cfunc_refs(cfn_PopupCb, pyfn_PopupCb)
+    library.keep_elem_refs(ptr_flpopupentry)
+    retval = _fl_popup_entry_set_callback(ptr_flpopupentry, cfn_PopupCb)
     return retval
 
 
-def fl_popup_entry_set_enter_callback(pPopupEntry, py_PopupCb):
-    """fl_popup_entry_set_enter_callback(pPopupEntry, py_PopupCb)
+def fl_popup_entry_set_enter_callback(ptr_flpopupentry, pyfn_PopupCb):
+    """fl_popup_entry_set_enter_callback(ptr_flpopupentry, pyfn_PopupCb) -> PopupCb
     
-    Sets the callback invoked when the mouse enters the area of the popup
+    Defines the callback invoked when the mouse enters the area of the popup
     entry.
 
     Parameters
     ----------
-        pPopupEntry : pointer to xfdata.FL_POPUP_ENTRY
+        ptr_flpopupentry : pointer to xfdata.FL_POPUP_ENTRY
             popup entry
-        py_PopupCb : python callback function, returned value
-            name referring to function(pPopupReturn) -> num.
+        pyfn_PopupCb : python callback function, returned value
+            name referring to function(ptr_flpopupreturn) -> num.
 
     Returns
     -------
@@ -1156,26 +1161,28 @@ def fl_popup_entry_set_enter_callback(pPopupEntry, py_PopupCb):
         """FL_POPUP_CB fl_popup_entry_set_enter_callback(
            FL_POPUP_ENTRY * p1, FL_POPUP_CB p2)""")
     library.check_if_initialized()
-    library.verify_flpopupentryptr_type(pPopupEntry)
-    library.verify_function_type(py_PopupCb)
-    c_PopupCb = xfdata.FL_POPUP_CB(py_PopupCb)
-    library.keep_cfunc_refs(c_PopupCb, py_PopupCb)
-    library.keep_elem_refs(pPopupEntry)
-    retval = _fl_popup_entry_set_enter_callback(pPopupEntry, c_PopupCb)
+    library.verify_flpopupentryptr_type(ptr_flpopupentry)
+    library.verify_function_type(pyfn_PopupCb)
+    cfn_PopupCb = xfdata.FL_POPUP_CB(pyfn_PopupCb)
+    library.keep_cfunc_refs(cfn_PopupCb, pyfn_PopupCb)
+    library.keep_elem_refs(ptr_flpopupentry)
+    retval = _fl_popup_entry_set_enter_callback(ptr_flpopupentry, \
+            cfn_PopupCb)
     return retval
 
 
-def fl_popup_entry_set_leave_callback(pPopupEntry, py_PopupCb):
-    """fl_popup_entry_set_leave_callback(pPopupEntry, py_PopupCb)
+def fl_popup_entry_set_leave_callback(ptr_flpopupentry, pyfn_PopupCb):
+    """fl_popup_entry_set_leave_callback(ptr_flpopupentry, pyfn_PopupCb)
+    -> PopupCb
     
-    Sets the callback invoked when leaves the area of the popup entry.
+    Defines the callback invoked when leaves the area of the popup entry.
 
     Parameters
     ----------
-        pPopupEntry : pointer to xfdata.FL_POPUP_ENTRY
+        ptr_flpopupentry : pointer to xfdata.FL_POPUP_ENTRY
             popup entry
-        py_PopupCb : python callback function, returned value
-            name referring to function(pPopupReturn) -> num.
+        pyfn_PopupCb : python callback function, returned value
+            name referring to function(ptr_flpopupreturn) -> num.
 
     Returns
     -------
@@ -1199,30 +1206,30 @@ def fl_popup_entry_set_leave_callback(pPopupEntry, py_PopupCb):
         """FL_POPUP_CB fl_popup_entry_set_leave_callback(
            FL_POPUP_ENTRY * p1, FL_POPUP_CB p2)""")
     library.check_if_initialized()
-    library.verify_flpopupentryptr_type(pPopupEntry)
-    library.verify_function_type(py_PopupCb)
-    c_PopupCb = xfdata.FL_POPUP_CB(py_PopupCb)
-    library.keep_cfunc_refs(c_PopupCb, py_PopupCb)
-    library.keep_elem_refs(pPopupEntry)
-    retval = _fl_popup_entry_set_leave_callback(pPopupEntry, c_PopupCb)
+    library.verify_flpopupentryptr_type(ptr_flpopupentry)
+    library.verify_function_type(pyfn_PopupCb)
+    cfn_PopupCb = xfdata.FL_POPUP_CB(pyfn_PopupCb)
+    library.keep_cfunc_refs(cfn_PopupCb, pyfn_PopupCb)
+    library.keep_elem_refs(ptr_flpopupentry)
+    retval = _fl_popup_entry_set_leave_callback(ptr_flpopupentry, cfn_PopupCb)
     return retval
 
 
-def fl_popup_entry_get_state(pPopupEntry):
-    """fl_popup_entry_get_state(pPopupEntry)
+def fl_popup_entry_get_state(ptr_flpopupentry):
+    """fl_popup_entry_get_state(ptr_flpopupentry) -> state
     
-    Obtains the state of a popup entry (e.g. from xfdata.py
+    Finds out the state of a popup entry (e.g. from xfdata.py
     FL_POPUP_DISABLED, FL_POPUP_HIDDEN and FL_POPUP_CHECKED).
 
     Parameters
     ----------
-        pPopupEntry : pointer to xfdata.FL_POPUP_ENTRY
+        ptr_flpopupentry : pointer to xfdata.FL_POPUP_ENTRY
             popup entry
 
     Returns
     -------
         state : int_pos
-            current state
+            current state, or xfdata.UINT_MAX (on failure)
 
     Examples
     --------
@@ -1238,20 +1245,20 @@ def fl_popup_entry_get_state(pPopupEntry):
         cty.c_uint, [cty.POINTER(xfdata.FL_POPUP_ENTRY)],
         """unsigned int fl_popup_entry_get_state(FL_POPUP_ENTRY * p1)""")
     library.check_if_initialized()
-    library.verify_flpopupentryptr_type(pPopupEntry)
-    library.keep_elem_refs(pPopupEntry)
-    retval = _fl_popup_entry_get_state(pPopupEntry)
+    library.verify_flpopupentryptr_type(ptr_flpopupentry)
+    library.keep_elem_refs(ptr_flpopupentry)
+    retval = _fl_popup_entry_get_state(ptr_flpopupentry)
     return retval
 
 
-def fl_popup_entry_set_state(pPopupEntry, state):
-    """fl_popup_entry_set_state(pPopupEntry, state)
+def fl_popup_entry_set_state(ptr_flpopupentry, state):
+    """fl_popup_entry_set_state(ptr_flpopupentry, state) -> oldstate
     
-    Sets the state of a popup entry.
+    Defines the state of a popup entry.
 
     Parameters
     ----------
-        pPopupEntry : pointer to xfdata.FL_POPUP_ENTRY
+        ptr_flpopupentry : pointer to xfdata.FL_POPUP_ENTRY
             popup entry
         state : int_pos
             state to be set. Values (from xfdata.py) FL_POPUP_DISABLED,
@@ -1260,7 +1267,7 @@ def fl_popup_entry_set_state(pPopupEntry, state):
     Returns
     -------
         oldstate : int_pos
-            old state, or UINT_MAX? (on errors)
+            old state, or xfdata.UINT_MAX (on failure)
 
     Examples
     --------
@@ -1277,22 +1284,22 @@ def fl_popup_entry_set_state(pPopupEntry, state):
         """unsigned int fl_popup_entry_set_state(FL_POPUP_ENTRY * p1,
            unsigned int p2)""")
     library.check_if_initialized()
-    library.verify_flpopupentryptr_type(pPopupEntry)
+    library.verify_flpopupentryptr_type(ptr_flpopupentry)
     library.checkfatal_allowed_value_in_list(state, xfdata.POPUPSTATE_list)
-    uistate = library.convert_to_uint(state)
-    library.keep_elem_refs(pPopupEntry, state, uistate)
-    retval = _fl_popup_entry_set_state(pPopupEntry, uistate)
+    ui_state = library.convert_to_uintc(state)
+    library.keep_elem_refs(ptr_flpopupentry, state, ui_state)
+    retval = _fl_popup_entry_set_state(ptr_flpopupentry, ui_state)
     return retval
 
 
-def fl_popup_entry_clear_state(pPopupEntry, state):
-    """fl_popup_entry_clear_state(pPopupEntry, state)
+def fl_popup_entry_clear_state(ptr_flpopupentry, state):
+    """fl_popup_entry_clear_state(ptr_flpopupentry, state) -> oldstate
     
     Clears state bits of a popup entry.
 
     Parameters
     ----------
-        pPopupEntry : pointer to xfdata.FL_POPUP_ENTRY
+        ptr_flpopupentry : pointer to xfdata.FL_POPUP_ENTRY
             popup entry
         state : int_pos
             state to be cleared. Values (from xfdata.py) FL_POPUP_DISABLED,
@@ -1301,7 +1308,7 @@ def fl_popup_entry_clear_state(pPopupEntry, state):
     Returns
     -------
         oldstate : int_pos
-            original value of the state
+            original value of the state, or xfdata.UINT_MAX (on failure)
 
     Examples
     --------
@@ -1318,22 +1325,22 @@ def fl_popup_entry_clear_state(pPopupEntry, state):
         """unsigned int fl_popup_entry_clear_state(FL_POPUP_ENTRY * p1,
            unsigned int p2)""")
     library.check_if_initialized()
-    library.verify_flpopupentryptr_type(pPopupEntry)
+    library.verify_flpopupentryptr_type(ptr_flpopupentry)
     library.checkfatal_allowed_value_in_list(state, xfdata.POPUPSTATE_list)
-    uistate = library.convert_to_uint(state)
-    library.keep_elem_refs(pPopupEntry, state, uistate)
-    retval = _fl_popup_entry_clear_state(pPopupEntry, uistate)
+    ui_state = library.convert_to_uintc(state)
+    library.keep_elem_refs(ptr_flpopupentry, state, ui_state)
+    retval = _fl_popup_entry_clear_state(ptr_flpopupentry, ui_state)
     return retval
 
 
-def fl_popup_entry_raise_state(pPopupEntry, state):
-    """fl_popup_entry_raise_state(pPopupEntry, state)
+def fl_popup_entry_raise_state(ptr_flpopupentry, state):
+    """fl_popup_entry_raise_state(ptr_flpopupentry, state) -> oldstate
     
-    Sets the state bits of a popup entry.
+    Defines the state bits of a popup entry.
 
     Parameters
     ----------
-        pPopupEntry : pointer to xfdata.FL_POPUP_ENTRY
+        ptr_flpopupentry : pointer to xfdata.FL_POPUP_ENTRY
             popup entry
         state : int_pos
             state to be set. Values (from xfdata.py) FL_POPUP_DISABLED,
@@ -1342,7 +1349,7 @@ def fl_popup_entry_raise_state(pPopupEntry, state):
     Returns
     -------
         oldstate : int_pos
-             original value of the state
+             original value of the state, or xfdata.UINT_MAX (on failure)
 
     Examples
     --------
@@ -1359,22 +1366,22 @@ def fl_popup_entry_raise_state(pPopupEntry, state):
         """unsigned int fl_popup_entry_raise_state(FL_POPUP_ENTRY * p1,
            unsigned int p2)""")
     library.check_if_initialized()
-    library.verify_flpopupentryptr_type(pPopupEntry)
+    library.verify_flpopupentryptr_type(ptr_flpopupentry)
     library.checkfatal_allowed_value_in_list(state, xfdata.POPUPSTATE_list)
-    uistate = library.convert_to_uint(state)
-    library.keep_elem_refs(pPopupEntry, state, uistate)
-    retval = _fl_popup_entry_raise_state(pPopupEntry, uistate)
+    ui_state = library.convert_to_uintc(state)
+    library.keep_elem_refs(ptr_flpopupentry, state, ui_state)
+    retval = _fl_popup_entry_raise_state(ptr_flpopupentry, ui_state)
     return retval
 
 
-def fl_popup_entry_toggle_state(pPopupEntry, state):
-    """fl_popup_entry_toggle_state(pPopupEntry, state)
+def fl_popup_entry_toggle_state(ptr_flpopupentry, state):
+    """fl_popup_entry_toggle_state(ptr_flpopupentry, state) -> oldstate
     
     Toggles the state bits of a popup entry.
 
     Parameters
     ----------
-        pPopupEntry : pointer to xfdata.FL_POPUP_ENTRY
+        ptr_flpopupentry : pointer to xfdata.FL_POPUP_ENTRY
             popup entry
         state : int_pos
             state to be toggled. Values (from xfdata.py) FL_POPUP_DISABLED,
@@ -1383,7 +1390,7 @@ def fl_popup_entry_toggle_state(pPopupEntry, state):
     Returns
     -------
         oldstate : int_pos
-            original value of the state
+            original value of the state, or xfdata.UINT_MAX (on failure)
 
     Examples
     --------
@@ -1400,22 +1407,22 @@ def fl_popup_entry_toggle_state(pPopupEntry, state):
         """unsigned int fl_popup_entry_toggle_state(FL_POPUP_ENTRY * p1,
            unsigned int p2)""")
     library.check_if_initialized()
-    library.verify_flpopupentryptr_type(pPopupEntry)
+    library.verify_flpopupentryptr_type(ptr_flpopupentry)
     library.checkfatal_allowed_value_in_list(state, xfdata.POPUPSTATE_list)
-    uistate = library.convert_to_uint(state)
-    library.keep_elem_refs(pPopupEntry, state, uistate)
-    retval = _fl_popup_entry_toggle_state(pPopupEntry, uistate)
+    ui_state = library.convert_to_uintc(state)
+    library.keep_elem_refs(ptr_flpopupentry, state, ui_state)
+    retval = _fl_popup_entry_toggle_state(ptr_flpopupentry, ui_state)
     return retval
 
 
-def fl_popup_entry_set_text(pPopupEntry, text):
-    """fl_popup_entry_set_text(pPopupEntry, text)
+def fl_popup_entry_set_text(ptr_flpopupentry, text):
+    """fl_popup_entry_set_text(ptr_flpopupentry, text) -> oldtext
 
     Changes the text of a popup entry.
 
     Parameters
     ----------
-        pPopupEntry : pointer to xfdata.FL_POPUP_ENTRY
+        ptr_flpopupentry : pointer to xfdata.FL_POPUP_ENTRY
             popup entry
         text : str
             text for the entry. No special sequence except "%S" (at which
@@ -1424,8 +1431,8 @@ def fl_popup_entry_set_text(pPopupEntry, text):
 
     Returns
     -------
-        num. : int
-            *todo*
+        oldtext : int
+            previous text, or xfdata.UINT_MAX (on failure)
 
     Examples
     --------
@@ -1442,21 +1449,21 @@ def fl_popup_entry_set_text(pPopupEntry, text):
         """int fl_popup_entry_set_text(FL_POPUP_ENTRY * p1,
            const char * p2)""")
     library.check_if_initialized()
-    library.verify_flpopupentryptr_type(pPopupEntry)
-    stext = library.convert_to_string(text)
-    library.keep_elem_refs(pPopupEntry, text, stext)
-    retval = _fl_popup_entry_set_text(pPopupEntry, stext)
+    library.verify_flpopupentryptr_type(ptr_flpopupentry)
+    s_text = library.convert_to_stringc(text)
+    library.keep_elem_refs(ptr_flpopupentry, text, s_text)
+    retval = _fl_popup_entry_set_text(ptr_flpopupentry, s_text)
     return retval
 
 
-def fl_popup_entry_set_shortcut(pPopupEntry, textsc):
-    """fl_popup_entry_set_shortcut(pPopupEntry, textsc)
+def fl_popup_entry_set_shortcut(ptr_flpopupentry, textsc):
+    """fl_popup_entry_set_shortcut(ptr_flpopupentry, textsc)
     
     Changes the shortcut keys for a popup label.
 
     Parameters
     ----------
-        pPopupEntry : pointer to xfdata.FL_POPUP_ENTRY
+        ptr_flpopupentry : pointer to xfdata.FL_POPUP_ENTRY
             popup entry
         textsc : str
             text for the shortcut
@@ -1476,28 +1483,28 @@ def fl_popup_entry_set_shortcut(pPopupEntry, textsc):
         """void fl_popup_entry_set_shortcut(FL_POPUP_ENTRY * p1,
            const char * p2)""")
     library.check_if_initialized()
-    library.verify_flpopupentryptr_type(pPopupEntry)
-    stextsc = library.convert_to_string(textsc)
-    library.keep_elem_refs(pPopupEntry, textsc, stextsc)
-    _fl_popup_entry_set_shortcut(pPopupEntry, stextsc)
+    library.verify_flpopupentryptr_type(ptr_flpopupentry)
+    s_textsc = library.convert_to_stringc(textsc)
+    library.keep_elem_refs(ptr_flpopupentry, textsc, s_textsc)
+    _fl_popup_entry_set_shortcut(ptr_flpopupentry, s_textsc)
 
 
-def fl_popup_entry_set_value(pPopupEntry, val):
-    """fl_popup_entry_set_value(pPopupEntry, val)
+def fl_popup_entry_set_value(ptr_flpopupentry, entryval):
+    """fl_popup_entry_set_value(ptr_flpopupentry, entryval) -> oldentryval
     
     Changes the value assigned to a popup entry.
 
     Parameters
     ----------
-        pPopupEntry : pointer to xfdata.FL_POPUP_ENTRY
+        ptr_flpopupentry : pointer to xfdata.FL_POPUP_ENTRY
             popup entry
-        val : long
+        entryval : long
             value to be assigned
 
     Returns
     -------
-        oldval : int
-            previous value
+        oldentryval : int
+            previous value, or xfdata.INT_MIN (on failure)
 
     Examples
     --------
@@ -1514,21 +1521,21 @@ def fl_popup_entry_set_value(pPopupEntry, val):
         """long int fl_popup_entry_set_value(FL_POPUP_ENTRY * p1,
            long int p2)""")
     library.check_if_initialized()
-    library.verify_flpopupentryptr_type(pPopupEntry)
-    lval = library.convert_to_long(val)
-    library.keep_elem_refs(pPopupEntry, val, lval)
-    retval = _fl_popup_entry_set_value(pPopupEntry, lval)
+    library.verify_flpopupentryptr_type(ptr_flpopupentry)
+    l_entryval = library.convert_to_longc(entryval)
+    library.keep_elem_refs(ptr_flpopupentry, entryval, l_entryval)
+    retval = _fl_popup_entry_set_value(ptr_flpopupentry, l_entryval)
     return retval
 
 
-def fl_popup_entry_set_user_data(pPopupEntry, vdata):
-    """fl_popup_entry_set_user_data(pPopupEntry, vdata)
+def fl_popup_entry_set_user_data(ptr_flpopupentry, vdata):
+    """fl_popup_entry_set_user_data(ptr_flpopupentry, vdata) -> oldvdata
     
     Modifies user data associated with a popup entry.
 
     Parameters
     ----------
-        pPopupEntry : pointer to xfdata.FL_POPUP_ENTRY
+        ptr_flpopupentry : pointer to xfdata.FL_POPUP_ENTRY
             popup entry
         vdata : any type (e.g. 'None', int, str, etc..)
             user data to be passed to function; callback has to take care
@@ -1536,8 +1543,8 @@ def fl_popup_entry_set_user_data(pPopupEntry, vdata):
 
     Returns
     -------
-        olddata : pointer to void?
-            previous user data settings
+        oldvdata : pointer to void?
+            previous user data, or None (on failure)
 
     Examples
     --------
@@ -1554,22 +1561,22 @@ def fl_popup_entry_set_user_data(pPopupEntry, vdata):
         """void * fl_popup_entry_set_user_data(FL_POPUP_ENTRY * p1,
            void * p2)""")
     library.check_if_initialized()
-    library.verify_flpopupentryptr_type(pPopupEntry)
-    pvdata = cty.cast(vdata, cty.c_void_p)
-    library.keep_elem_refs(pPopupEntry, vdata, pvdata)
-    retval = _fl_popup_entry_set_user_data(pPopupEntry, pvdata)
+    library.verify_flpopupentryptr_type(ptr_flpopupentry)
+    ptr_vdata = cty.cast(vdata, cty.c_void_p)
+    library.keep_elem_refs(ptr_flpopupentry, vdata, ptr_vdata)
+    retval = _fl_popup_entry_set_user_data(ptr_flpopupentry, ptr_vdata)
     return retval
 
 
-def fl_popup_entry_get_by_position(pPopup, posnum):
-    """fl_popup_entry_get_by_position(pPopup, posnum)
+def fl_popup_entry_get_by_position(ptr_flpopup, posnum):
+    """fl_popup_entry_get_by_position(ptr_flpopup, posnum) -> ptr_flpopupentry
     
     Finds an entry by its current position in the popup. Sub-popups are not
     taken into consideration.
 
     Parameters
     ----------
-        pPopup : pointer to xfdata.FL_POPUP
+        ptr_flpopup : pointer to xfdata.FL_POPUP
             popup class instance
         posnum : int
             position number starting with 0 (e.g. when called with 0 the
@@ -1579,7 +1586,7 @@ def fl_popup_entry_get_by_position(pPopup, posnum):
 
     Returns
     -------
-        pPopupEntry : pointer to xfdata.FL_POPUP_ENTRY
+        ptr_flpopupentry : pointer to xfdata.FL_POPUP_ENTRY
             popup entry
 
     Examples
@@ -1598,28 +1605,28 @@ def fl_popup_entry_get_by_position(pPopup, posnum):
         """FL_POPUP_ENTRY * fl_popup_entry_get_by_position(FL_POPUP * p1,
            int p2)""")
     library.check_if_initialized()
-    library.verify_flpopupptr_type(pPopup)
-    iposnum = library.convert_to_int(posnum)
-    library.keep_elem_refs(pPopup, posnum, iposnum)
-    retval = _fl_popup_entry_get_by_position(pPopup, iposnum)
+    library.verify_flpopupptr_type(ptr_flpopup)
+    i_posnum = library.convert_to_intc(posnum)
+    library.keep_elem_refs(ptr_flpopup, posnum, i_posnum)
+    retval = _fl_popup_entry_get_by_position(ptr_flpopup, i_posnum)
     return retval
 
 
-def fl_popup_entry_get_by_value(pPopup, val):
-    """fl_popup_entry_get_by_value(pPopup, val)
+def fl_popup_entry_get_by_value(ptr_flpopup, entryval):
+    """fl_popup_entry_get_by_value(ptr_flpopup, entryval) -> ptr_flpopupentry
     
     Finds a popup entry by its assigned value.
 
     Parameters
     ----------
-        pPopup : pointer to xfdata.FL_POPUP
+        ptr_flpopup : pointer to xfdata.FL_POPUP
             popup class instance
-        val : long
+        entryval : long
             value assigned to the entry
 
     Returns
     -------
-        pPopupEntry : pointer to xfdata.FL_POPUP_ENTRY
+        ptr_flpopupentry : pointer to xfdata.FL_POPUP_ENTRY
             popup entry
 
     Examples
@@ -1638,21 +1645,21 @@ def fl_popup_entry_get_by_value(pPopup, val):
         """FL_POPUP_ENTRY * fl_popup_entry_get_by_value(FL_POPUP * p1,
            long int p2)""")
     library.check_if_initialized()
-    library.verify_flpopupptr_type(pPopup)
-    lval = library.convert_to_long(val)
-    library.keep_elem_refs(pPopup, val, lval)
-    retval = _fl_popup_entry_get_by_value(pPopup, lval)
+    library.verify_flpopupptr_type(ptr_flpopup)
+    l_entryval = library.convert_to_longc(entryval)
+    library.keep_elem_refs(ptr_flpopup, entryval, l_entryval)
+    retval = _fl_popup_entry_get_by_value(ptr_flpopup, l_entryval)
     return retval
 
 
-def fl_popup_entry_get_by_user_data(pPopup, vdata):
-    """fl_popup_entry_get_by_user_data(pPopup, vdata)
+def fl_popup_entry_get_by_user_data(ptr_flpopup, vdata):
+    """fl_popup_entry_get_by_user_data(ptr_flpopup, vdata) -> ptr_flpopupentry
     
     Finds a popup entry by its assigned user data.
 
     Parameters
     ----------
-        pPopup : pointer to xfdata.FL_POPUP
+        ptr_flpopup : pointer to xfdata.FL_POPUP
             popup class instance
         vdata : any type (e.g. 'None', int, str, etc..)
             user data assigned to the popup entry; callback has to take care
@@ -1660,7 +1667,7 @@ def fl_popup_entry_get_by_user_data(pPopup, vdata):
 
     Returns
     -------
-        pPopupEntry : pointer to xfdata.FL_POPUP_ENTRY
+        ptr_flpopupentry : pointer to xfdata.FL_POPUP_ENTRY
             popup entry
 
     Examples
@@ -1679,31 +1686,31 @@ def fl_popup_entry_get_by_user_data(pPopup, vdata):
         """FL_POPUP_ENTRY * fl_popup_entry_get_by_user_data(FL_POPUP * p1,
            void * p2)""")
     library.check_if_initialized()
-    library.verify_flpopupptr_type(pPopup)
-    pvdata = cty.cast(vdata, cty.c_void_p)
-    library.keep_elem_refs(pPopup, vdata, pvdata)
-    retval = _fl_popup_entry_get_by_user_data(pPopup, pvdata)
+    library.verify_flpopupptr_type(ptr_flpopup)
+    ptr_vdata = cty.cast(vdata, cty.c_void_p)
+    library.keep_elem_refs(ptr_flpopup, vdata, ptr_vdata)
+    retval = _fl_popup_entry_get_by_user_data(ptr_flpopup, ptr_vdata)
     return retval
 
 
-def fl_popup_entry_get_by_text(pPopup, text):
-    """fl_popup_entry_get_by_text(pPopup, text)
+def fl_popup_entry_get_by_text(ptr_flpopup, text):
+    """fl_popup_entry_get_by_text(ptr_flpopup, text) ->ptr_flpopupentry
     
     Finds a popup entry that had been created with a certain text,
     including all the special sequences.
 
     Parameters
     ----------
-        pPopup : pointer to xfdata.FL_POPUP
+        ptr_flpopup : pointer to xfdata.FL_POPUP
             popup class instance
         text : str
             text of the popup entry to be found.
 
     Returns
     -------
-        pPopupEntry : pointer to xfdata.FL_POPUP_ENTRY
-            popup entry, or None (on failure, because either no entry
-            with this text was found or the popup does not exist)
+        ptr_flpopupentry : pointer to xfdata.FL_POPUP_ENTRY
+            popup entry, or None (on failure, if no entry with this
+            text was found or the popup does not exist)
 
     Examples
     --------
@@ -1721,15 +1728,15 @@ def fl_popup_entry_get_by_text(pPopup, text):
         """FL_POPUP_ENTRY * fl_popup_entry_get_by_text(FL_POPUP * p1,
            const char * p2)""")
     library.check_if_initialized()
-    library.verify_flpopupptr_type(pPopup)
-    stext = library.convert_to_string(text)
-    library.keep_elem_refs(pPopup, text, stext)
-    retval = _fl_popup_entry_get_by_text(pPopup, stext)
+    library.verify_flpopupptr_type(ptr_flpopup)
+    s_text = library.convert_to_stringc(text)
+    library.keep_elem_refs(ptr_flpopup, text, s_text)
+    retval = _fl_popup_entry_get_by_text(ptr_flpopup, s_text)
     return retval
 
 
-def fl_popup_entry_get_by_label(pPopup, label):
-    """fl_popup_entry_get_by_label(pPopup, label)
+def fl_popup_entry_get_by_label(ptr_flpopup, label):
+    """fl_popup_entry_get_by_label(ptr_flpopup, label) -> ptr_flpopupentry
     
     Finds a popup entry by its left-flushed label parts of the entry as
     shown on the screen. Note that tab characters (backslash-t) originally
@@ -1739,14 +1746,14 @@ def fl_popup_entry_get_by_label(pPopup, label):
 
     Parameters
     ----------
-        pPopup : pointer to xfdata.FL_POPUP
+        ptr_flpopup : pointer to xfdata.FL_POPUP
             popup class instance
         label : str
             label of the popup entry.
 
     Returns
     -------
-        pPopupEntry : pointer to xfdata.FL_POPUP_ENTRY
+        ptr_flpopupentry : pointer to xfdata.FL_POPUP_ENTRY
             popup entry
 
     Examples
@@ -1765,22 +1772,22 @@ def fl_popup_entry_get_by_label(pPopup, label):
         """FL_POPUP_ENTRY * fl_popup_entry_get_by_label(FL_POPUP * p1,
            const char * p2)""")
     library.check_if_initialized()
-    library.verify_flpopupptr_type(pPopup)
-    slabel = library.convert_to_string(label)
-    library.keep_elem_refs(pPopup, label, slabel)
-    retval = _fl_popup_entry_get_by_label(pPopup, slabel)
+    library.verify_flpopupptr_type(ptr_flpopup)
+    s_label = library.convert_to_stringc(label)
+    library.keep_elem_refs(ptr_flpopup, label, s_label)
+    retval = _fl_popup_entry_get_by_label(ptr_flpopup, s_label)
     return retval
 
 
-def fl_popup_entry_get_group(pPopupEntry):
-    """fl_popup_entry_get_group(pPopupEntry)
+def fl_popup_entry_get_group(ptr_flpopupentry):
+    """fl_popup_entry_get_group(ptr_flpopupentry) -> groupnum
     
-    Obtains which group a radio popup entry belongs. It makes much
+    Finds out which group a radio popup entry belongs. It makes much
     sense when applied to radio entries.
 
     Parameters
     ----------
-        pPopupEntry : pointer to xfdata.FL_POPUP_ENTRY
+        ptr_flpopupentry : pointer to xfdata.FL_POPUP_ENTRY
             popup entry
 
     Returns
@@ -1802,14 +1809,14 @@ def fl_popup_entry_get_group(pPopupEntry):
         cty.c_int, [cty.POINTER(xfdata.FL_POPUP_ENTRY)],
         """int fl_popup_entry_get_group(FL_POPUP_ENTRY * p1)""")
     library.check_if_initialized()
-    library.verify_flpopupentryptr_type(pPopupEntry)
-    library.keep_elem_refs(pPopupEntry)
-    retval = _fl_popup_entry_get_group(pPopupEntry)
+    library.verify_flpopupentryptr_type(ptr_flpopupentry)
+    library.keep_elem_refs(ptr_flpopupentry)
+    retval = _fl_popup_entry_get_group(ptr_flpopupentry)
     return retval
 
 
-def fl_popup_entry_set_group(pPopupEntry, groupnum):
-    """fl_popup_entry_set_group(pPopupEntry, groupnum)
+def fl_popup_entry_set_group(ptr_flpopupentry, groupnum):
+    """fl_popup_entry_set_group(ptr_flpopupentry, groupnum) -> oldgroupnum
     
     Assigns a radio entry to a different group. It makes much sense when
     applied to radio entries. If one of the entries of the new group was in
@@ -1817,7 +1824,7 @@ def fl_popup_entry_set_group(pPopupEntry, groupnum):
 
     Parameters
     ----------
-        pPopupEntry : pointer to xfdata.FL_POPUP_ENTRY
+        ptr_flpopupentry : pointer to xfdata.FL_POPUP_ENTRY
             popup entry
         groupnum : int
             group number to be assigned.
@@ -1841,27 +1848,27 @@ def fl_popup_entry_set_group(pPopupEntry, groupnum):
         cty.c_int, [cty.POINTER(xfdata.FL_POPUP_ENTRY), cty.c_int],
         """int fl_popup_entry_set_group(FL_POPUP_ENTRY * p1, int p2)""")
     library.check_if_initialized()
-    library.verify_flpopupentryptr_type(pPopupEntry)
-    igroupnum = library.convert_to_int(groupnum)
-    library.keep_elem_refs(pPopupEntry, groupnum, igroupnum)
-    retval = _fl_popup_entry_set_group(pPopupEntry, igroupnum)
+    library.verify_flpopupentryptr_type(ptr_flpopupentry)
+    i_groupnum = library.convert_to_intc(groupnum)
+    library.keep_elem_refs(ptr_flpopupentry, groupnum, i_groupnum)
+    retval = _fl_popup_entry_set_group(ptr_flpopupentry, i_groupnum)
     return retval
 
 
-def fl_popup_entry_get_subpopup(pPopupEntry):
-    """fl_popup_entry_get_subpopup(pPopupEntry):
+def fl_popup_entry_get_subpopup(ptr_flpopupentry):
+    """fl_popup_entry_get_subpopup(ptr_flpopupentry) -> ptr_flpopup
     
-    Obtains the sub-popup associated with a sub-popup-entry. It only
+    Finds out the sub-popup associated with a sub-popup-entry. It only
     makes sense for sub-popup entries.
 
     Parameters
     ----------
-        pPopupEntry : pointer to xfdata.FL_POPUP_ENTRY
+        ptr_flpopupentry : pointer to xfdata.FL_POPUP_ENTRY
             popup entry
 
     Returns
     -------
-        pPopup : pointer to xfdata.FL_POPUP
+        ptr_flpopup : pointer to xfdata.FL_POPUP
             popup class instance
 
     Examples
@@ -1878,28 +1885,29 @@ def fl_popup_entry_get_subpopup(pPopupEntry):
         cty.POINTER(xfdata.FL_POPUP), [cty.POINTER(xfdata.FL_POPUP_ENTRY)],
         """FL_POPUP * fl_popup_entry_get_subpopup(FL_POPUP_ENTRY * p1)""")
     library.check_if_initialized()
-    library.verify_flpopupentryptr_type(pPopupEntry)
-    library.keep_elem_refs(pPopupEntry)
-    retval = _fl_popup_entry_get_subpopup(pPopupEntry)
+    library.verify_flpopupentryptr_type(ptr_flpopupentry)
+    library.keep_elem_refs(ptr_flpopupentry)
+    retval = _fl_popup_entry_get_subpopup(ptr_flpopupentry)
     return retval
 
 
-def fl_popup_entry_set_subpopup(pPopupEntry, pPopup):
-    """fl_popup_entry_set_subpopup(pPopupEntry, pPopup)
+def fl_popup_entry_set_subpopup(ptr_flpopupentry, ptr_flpopup):
+    """fl_popup_entry_set_subpopup(ptr_flpopupentry, ptr_flpopup)
+    -> ptr_flpopup
     
-    Sets the sub-popup associated with a sub-popup-entry. It only makes
+    Defines the sub-popup associated with a sub-popup-entry. It only makes
     sense for sub-popup entries.
 
     Parameters
     ----------
-        pPopupEntry : pointer to xfdata.FL_POPUP_ENTRY
+        ptr_flpopupentry : pointer to xfdata.FL_POPUP_ENTRY
             popup entry
-        pPopup : pointer to xfdata.FL_POPUP
+        ptr_flpopup : pointer to xfdata.FL_POPUP
             popup class instance
 
     Returns
     -------
-        pPopup : pointer to xfdata.FL_POPUP
+        ptr_flpopup : pointer to xfdata.FL_POPUP
             popup class instance
 
     Examples
@@ -1918,33 +1926,33 @@ def fl_popup_entry_set_subpopup(pPopupEntry, pPopup):
         """FL_POPUP * fl_popup_entry_set_subpopup(FL_POPUP_ENTRY * p1,
            FL_POPUP * p2)""")
     library.check_if_initialized()
-    library.verify_flpopupentryptr_type(pPopupEntry)
-    library.verify_flpopupptr_type(pPopup)
-    library.keep_elem_refs(pPopupEntry, pPopup)
-    retval = _fl_popup_entry_set_subpopup(pPopupEntry, pPopup)
+    library.verify_flpopupentryptr_type(ptr_flpopupentry)
+    library.verify_flpopupptr_type(ptr_flpopup)
+    library.keep_elem_refs(ptr_flpopupentry, ptr_flpopup)
+    retval = _fl_popup_entry_set_subpopup(ptr_flpopupentry, ptr_flpopup)
     return retval
 
 
-def fl_popup_get_size(pPopup):
-    """fl_popup_get_size(pPopup)
+def fl_popup_get_size(ptr_flpopup):
+    """fl_popup_get_size(ptr_flpopup) -> result, width, height
     
-    Obtains the exact sizes of its window. The reported values are
+    Finds out the exact sizes of its window. The reported values are
     only valid until the popup is changed, e.g. by adding, deleting or
     changing entries or changing the appearance of the popup.
 
     Parameters
     ----------
-        pPopup : pointer to xfdata.FL_POPUP
+        ptr_flpopup : pointer to xfdata.FL_POPUP
             popup class instance
 
     Returns
     -------
         result : int
-            0 or -1 on error (in case the supplied popup argument is not
-            valid)
-        w : int_pos
+            0 or -1 on error (if the supplied popup argument is
+            not valid)
+        width : int_pos
             width of popup
-        h : int_pos
+        height : int_pos
             height of popup
 
     Examples
@@ -1952,9 +1960,9 @@ def fl_popup_get_size(pPopup):
         >>> *todo*
 
     API_diversion
-    ----------
-        API changed from XForms, upstream was
-        fl_popup_get_size(pPopup, w, h)
+    -------------
+        API changed from XForms, upstream is
+        fl_popup_get_size(ptr_flpopup, width, height)
 
     Notes
     -----
@@ -1968,28 +1976,29 @@ def fl_popup_get_size(pPopup):
         """int fl_popup_get_size(FL_POPUP * p1, unsigned int * p2,
            unsigned int * p3)""")
     library.check_if_initialized()
-    library.verify_flpopupptr_type(pPopup)
-    w, pw = library.make_uint_and_pointer()
-    h, ph = library.make_uint_and_pointer()
-    library.keep_elem_refs(pPopup, w, h, pw, ph)
-    retval = _fl_popup_get_size(pPopup, pw, ph)
-    return retval, w.value, h.value
+    library.verify_flpopupptr_type(ptr_flpopup)
+    i_width, ptr_width = library.make_uintc_and_pointer()
+    i_height, ptr_height = library.make_uintc_and_pointer()
+    library.keep_elem_refs(ptr_flpopup, i_width, i_height, ptr_width, \
+            ptr_height)
+    retval = _fl_popup_get_size(ptr_flpopup, ptr_width, ptr_height)
+    return retval, i_width.value, i_height.value
 
 
-def fl_popup_get_min_width(pPopup):
-    """fl_popup_get_min_width(pPopup)
+def fl_popup_get_min_width(ptr_flpopup):
+    """fl_popup_get_min_width(ptr_flpopup) -> width
     
-    Obtains the currently set minimum width.
+    Finds out the currently set minimum width of popup.
 
     Parameters
     ----------
-        pPopup : pointer to xfdata.FL_POPUP
+        ptr_flpopup : pointer to xfdata.FL_POPUP
             popup class instance
 
     Returns
     -------
-        w : int
-            width, or negative number (on errors)
+        width : int
+            width, or -1 (on errors)
 
     Examples
     --------
@@ -2005,21 +2014,21 @@ def fl_popup_get_min_width(pPopup):
         cty.c_int, [cty.POINTER(xfdata.FL_POPUP)],
         """int fl_popup_get_min_width(FL_POPUP * p1)""")
     library.check_if_initialized()
-    library.verify_flpopupptr_type(pPopup)
-    library.keep_elem_refs(pPopup)
-    retval = _fl_popup_get_min_width(pPopup)
+    library.verify_flpopupptr_type(ptr_flpopup)
+    library.keep_elem_refs(ptr_flpopup)
+    retval = _fl_popup_get_min_width(ptr_flpopup)
     return retval
 
 
-def fl_popup_set_min_width(pPopup, width):
-    """fl_popup_set_min_width(pPopup, width)
+def fl_popup_set_min_width(ptr_flpopup, width):
+    """fl_popup_set_min_width(ptr_flpopup, width) -> oldwidth
     
-    Sets a new minimum width of a popup. By default the width of a popup
+    Defines a new minimum width of a popup. By default the width of a popup
     is calculated using the widths of the title and the entries.
 
     Parameters
     ----------
-        pPopup : pointer to xfdata.FL_POPUP
+        ptr_flpopup : pointer to xfdata.FL_POPUP
             popup class instance
         width : int
             minimum width to be set. If it is 0 or negative switches the use
@@ -2027,8 +2036,8 @@ def fl_popup_set_min_width(pPopup, width):
 
     Returns
     -------
-        oldw : int
-            previous width, or negative num. (on errors)
+        oldwidth : int
+            previous width, or -1 (on errors)
 
     Examples
     --------
@@ -2044,9 +2053,9 @@ def fl_popup_set_min_width(pPopup, width):
         cty.c_int, [cty.POINTER(xfdata.FL_POPUP), cty.c_int],
         """int fl_popup_set_min_width(FL_POPUP * p1, int p2)""")
     library.check_if_initialized()
-    library.verify_flpopupptr_type(pPopup)
-    iwidth = library.convert_to_int(width)
-    library.keep_elem_refs(pPopup, width, iwidth)
-    retval = _fl_popup_set_min_width(pPopup, iwidth)
+    library.verify_flpopupptr_type(ptr_flpopup)
+    i_width = library.convert_to_intc(width)
+    library.keep_elem_refs(ptr_flpopup, width, i_width)
+    retval = _fl_popup_set_min_width(ptr_flpopup, i_width)
     return retval
 

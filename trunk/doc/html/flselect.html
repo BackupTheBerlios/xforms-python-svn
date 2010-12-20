@@ -9,7 +9,7 @@
 <font color="#ffffff" face="helvetica, arial">&nbsp;<br><big><big><strong>flselect</strong></big></big></font></td
 ><td align=right valign=bottom
 ><font color="#ffffff" face="helvetica, arial"><a href=".">index</a><br>     <a href="index.html">list</a></font></td></tr></table>
-    <p><tt>xforms-python's&nbsp;functions&nbsp;to&nbsp;manage&nbsp;select&nbsp;objects.</tt></p>
+    <p><tt>xforms-python's&nbsp;functions&nbsp;to&nbsp;manage&nbsp;select&nbsp;flobjects.</tt></p>
 <p>
 <table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
 <tr bgcolor="#aa55cc">
@@ -27,12 +27,13 @@
 <font color="#ffffff" face="helvetica, arial"><big><strong>Functions</strong></big></font></td></tr>
     
 <tr><td bgcolor="#eeaa77"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
-<td width="100%"><dl><dt><a name="-fl_add_select"><strong>fl_add_select</strong></a>(selecttype, x, y, w, h, label)</dt><dd><tt><a href="#-fl_add_select">fl_add_select</a>(selecttype,&nbsp;x,&nbsp;y,&nbsp;w,&nbsp;h,&nbsp;label)<br>
+<td width="100%"><dl><dt><a name="-fl_add_select"><strong>fl_add_select</strong></a>(selecttype, xpos, ypos, width, height, label)</dt><dd><tt><a href="#-fl_add_select">fl_add_select</a>(selecttype,&nbsp;xpos,&nbsp;ypos,&nbsp;width,&nbsp;height,&nbsp;label)<br>
+-&gt;&nbsp;ptr_flobject<br>
 &nbsp;<br>
-Adds&nbsp;a&nbsp;select&nbsp;(new&nbsp;generation&nbsp;choice)&nbsp;object&nbsp;to&nbsp;the&nbsp;form.&nbsp;It&nbsp;is&nbsp;a<br>
-rather&nbsp;simple&nbsp;object&nbsp;that&nbsp;allows&nbsp;the&nbsp;user&nbsp;to&nbsp;pick&nbsp;alternatives&nbsp;from&nbsp;a<br>
-linear&nbsp;list&nbsp;that&nbsp;pops&nbsp;up&nbsp;when&nbsp;he&nbsp;clicks&nbsp;on&nbsp;the&nbsp;object.&nbsp;It&nbsp;remembers&nbsp;the<br>
-last&nbsp;selected&nbsp;item,&nbsp;which&nbsp;is&nbsp;also&nbsp;shown&nbsp;on&nbsp;top&nbsp;of&nbsp;the&nbsp;select&nbsp;object.&nbsp;It<br>
+Adds&nbsp;a&nbsp;select&nbsp;(new&nbsp;generation&nbsp;choice)&nbsp;flobject&nbsp;to&nbsp;the&nbsp;form.&nbsp;It&nbsp;is&nbsp;a<br>
+rather&nbsp;simple&nbsp;flobject&nbsp;that&nbsp;allows&nbsp;the&nbsp;user&nbsp;to&nbsp;pick&nbsp;alternatives&nbsp;from&nbsp;a<br>
+linear&nbsp;list&nbsp;that&nbsp;pops&nbsp;up&nbsp;when&nbsp;he&nbsp;clicks&nbsp;on&nbsp;the&nbsp;flobject.&nbsp;It&nbsp;remembers&nbsp;the<br>
+last&nbsp;selected&nbsp;item,&nbsp;which&nbsp;is&nbsp;also&nbsp;shown&nbsp;on&nbsp;top&nbsp;of&nbsp;the&nbsp;select&nbsp;flobject.&nbsp;It<br>
 internally&nbsp;uses&nbsp;a&nbsp;popup.<br>
 &nbsp;<br>
 Parameters<br>
@@ -40,21 +41,21 @@ Parameters<br>
 &nbsp;&nbsp;&nbsp;&nbsp;selecttype&nbsp;:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;type&nbsp;of&nbsp;select&nbsp;to&nbsp;be&nbsp;added.&nbsp;Values&nbsp;(from&nbsp;xfdata.py)&nbsp;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_NORMAL_SELECT,&nbsp;FL_MENU_SELECT,&nbsp;FL_DROPLIST_SELECT<br>
-&nbsp;&nbsp;&nbsp;&nbsp;x&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;xpos&nbsp;:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;horizontal&nbsp;position&nbsp;(upper-left&nbsp;corner)<br>
-&nbsp;&nbsp;&nbsp;&nbsp;y&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ypos&nbsp;:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;vertical&nbsp;position&nbsp;(upper-left&nbsp;corner)<br>
-&nbsp;&nbsp;&nbsp;&nbsp;w&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;width&nbsp;:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;width&nbsp;in&nbsp;coord&nbsp;units<br>
-&nbsp;&nbsp;&nbsp;&nbsp;h&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;height&nbsp;:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;height&nbsp;in&nbsp;coord&nbsp;units<br>
 &nbsp;&nbsp;&nbsp;&nbsp;label&nbsp;:&nbsp;str<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;text&nbsp;label&nbsp;of&nbsp;select<br>
 &nbsp;<br>
 Returns<br>
 -------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;pFlObject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;select&nbsp;object&nbsp;added<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_flobject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;select&nbsp;flobject&nbsp;added<br>
 &nbsp;<br>
 Examples<br>
 --------<br>
@@ -64,26 +65,27 @@ Examples<br>
 Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;Demo&nbsp;=&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-fl_add_select_items"><strong>fl_add_select_items</strong></a>(pFlObject, entryitems_txt)</dt><dd><tt><a href="#-fl_add_select_items">fl_add_select_items</a>(pFlObject,&nbsp;entryitems_txt)<br>
-Adds&nbsp;one&nbsp;or&nbsp;more&nbsp;items&nbsp;to&nbsp;a&nbsp;select&nbsp;object.<br>
+ <dl><dt><a name="-fl_add_select_items"><strong>fl_add_select_items</strong></a>(ptr_flobject, entryitemstxt)</dt><dd><tt><a href="#-fl_add_select_items">fl_add_select_items</a>(ptr_flobject,&nbsp;entryitemstxt)&nbsp;-&gt;&nbsp;ptr_flpopupentry<br>
+&nbsp;<br>
+Adds&nbsp;one&nbsp;or&nbsp;more&nbsp;items&nbsp;to&nbsp;a&nbsp;select&nbsp;flobject.<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;pFlObject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;select&nbsp;object<br>
-&nbsp;&nbsp;&nbsp;&nbsp;entryitems_txt&nbsp;:&nbsp;str<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_flobject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;select&nbsp;flobject<br>
+&nbsp;&nbsp;&nbsp;&nbsp;entryitemstxt&nbsp;:&nbsp;str<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;text&nbsp;of&nbsp;the&nbsp;entry&nbsp;to&nbsp;be&nbsp;added&nbsp;and&nbsp;in-text&nbsp;special&nbsp;sequences&nbsp;with<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;or&nbsp;without&nbsp;not&nbsp;separated&nbsp;additional&nbsp;arguments&nbsp;(if&nbsp;needed).&nbsp;Text<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;may&nbsp;contain&nbsp;|&nbsp;to&nbsp;separate&nbsp;entries&nbsp;and&nbsp;newline&nbsp;characters&nbsp;which<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;allows&nbsp;to&nbsp;create&nbsp;entries&nbsp;that&nbsp;span&nbsp;more&nbsp;than&nbsp;a&nbsp;single&nbsp;line.&nbsp;Only<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;some&nbsp;special&nbsp;sequences&nbsp;are&nbsp;allowed:&nbsp;%x,&nbsp;%u,&nbsp;%f,&nbsp;%E,&nbsp;%L,&nbsp;%d,&nbsp;%h,<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%S,&nbsp;%s,&nbsp;%%&nbsp;(other&nbsp;combinations&nbsp;do&nbsp;not&nbsp;make&nbsp;sense&nbsp;here).&nbsp;*todo*&nbsp;to&nbsp;be<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;verified!<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%S,&nbsp;%s,&nbsp;%%&nbsp;(other&nbsp;combinations&nbsp;do&nbsp;not&nbsp;make&nbsp;sense&nbsp;here).<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*todo*&nbsp;to&nbsp;be&nbsp;verified!<br>
 &nbsp;<br>
 Returns<br>
 -------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;pPopupEntry&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_POPUP_ENTRY<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;popup&nbsp;entry&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_flpopupentry&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_POPUP_ENTRY<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;popup&nbsp;entry&nbsp;,&nbsp;or&nbsp;None&nbsp;(on&nbsp;failure)<br>
 &nbsp;<br>
 Examples<br>
 --------<br>
@@ -93,23 +95,23 @@ Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;HalfTested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;Demo&nbsp;=&nbsp;NOT&nbsp;OK&nbsp;(sequence&nbsp;param.)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;See:&nbsp;Special&nbsp;sequences&nbsp;in&nbsp;entry&nbsp;text&nbsp;documentation.</tt></dd></dl>
- <dl><dt><a name="-fl_clear_select"><strong>fl_clear_select</strong></a>(pFlObject)</dt><dd><tt><a href="#-fl_clear_select">fl_clear_select</a>(pFlObject)<br>
+ <dl><dt><a name="-fl_clear_select"><strong>fl_clear_select</strong></a>(ptr_flobject)</dt><dd><tt><a href="#-fl_clear_select">fl_clear_select</a>(ptr_flobject)&nbsp;-&gt;&nbsp;result<br>
 &nbsp;<br>
-Removes&nbsp;all&nbsp;items&nbsp;from&nbsp;a&nbsp;select&nbsp;object.&nbsp;If&nbsp;you&nbsp;used<br>
-<a href="#-fl_set_select_popup">fl_set_select_popup</a>()&nbsp;to&nbsp;set&nbsp;a&nbsp;popup&nbsp;for&nbsp;the&nbsp;select&nbsp;object&nbsp;then&nbsp;that<br>
-popup&nbsp;gets&nbsp;deleted&nbsp;automatically&nbsp;on&nbsp;calling&nbsp;<a href="#-fl_clear_select">fl_clear_select</a>().&nbsp;The<br>
-values&nbsp;automatically&nbsp;associated&nbsp;with&nbsp;items&nbsp;when&nbsp;calling<br>
+Removes&nbsp;all&nbsp;items&nbsp;from&nbsp;a&nbsp;select&nbsp;flobject.&nbsp;If&nbsp;you&nbsp;used<br>
+<a href="#-fl_set_select_popup">fl_set_select_popup</a>()&nbsp;to&nbsp;set&nbsp;a&nbsp;popup&nbsp;for&nbsp;the&nbsp;select&nbsp;flobject&nbsp;then<br>
+that&nbsp;popup&nbsp;gets&nbsp;deleted&nbsp;automatically&nbsp;on&nbsp;calling&nbsp;<a href="#-fl_clear_select">fl_clear_select</a>().<br>
+The&nbsp;values&nbsp;automatically&nbsp;associated&nbsp;with&nbsp;items&nbsp;when&nbsp;calling<br>
 <a href="#-fl_add_select_items">fl_add_select_items</a>()&nbsp;will&nbsp;start&nbsp;at&nbsp;0&nbsp;again.<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;pFlObject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;select&nbsp;object<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_flobject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;select&nbsp;flobject<br>
 &nbsp;<br>
 Returns<br>
 -------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;num.&nbsp;:&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*todo*<br>
+&nbsp;&nbsp;&nbsp;&nbsp;result&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;0&nbsp;on&nbsp;success,&nbsp;or&nbsp;-1&nbsp;(on&nbsp;failure)<br>
 &nbsp;<br>
 Examples<br>
 --------<br>
@@ -118,22 +120,22 @@ Examples<br>
 Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-fl_delete_select_item"><strong>fl_delete_select_item</strong></a>(pFlObject, pPopupEntry)</dt><dd><tt><a href="#-fl_delete_select_item">fl_delete_select_item</a>(pFlObject,&nbsp;pPopupEntry)<br>
+ <dl><dt><a name="-fl_delete_select_item"><strong>fl_delete_select_item</strong></a>(ptr_flobject, ptr_flpopupentry)</dt><dd><tt><a href="#-fl_delete_select_item">fl_delete_select_item</a>(ptr_flobject,&nbsp;ptr_flpopupentry)&nbsp;-&gt;&nbsp;result<br>
 &nbsp;<br>
-Deletes&nbsp;an&nbsp;item&nbsp;of&nbsp;a&nbsp;select&nbsp;object.&nbsp;The&nbsp;values&nbsp;associated&nbsp;with&nbsp;items<br>
+Deletes&nbsp;an&nbsp;item&nbsp;of&nbsp;a&nbsp;select&nbsp;flobject.&nbsp;The&nbsp;values&nbsp;associated&nbsp;with&nbsp;items<br>
 will&nbsp;not&nbsp;change&nbsp;due&nbsp;to&nbsp;removing&nbsp;an&nbsp;item.<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;pFlObject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;select&nbsp;object<br>
-&nbsp;&nbsp;&nbsp;&nbsp;pPopupEntry&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_POPUP_ENTRY<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_flobject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;select&nbsp;flobject<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_flpopupentry&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_POPUP_ENTRY<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;popup&nbsp;entry<br>
 &nbsp;<br>
 Returns<br>
 -------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;num.&nbsp;:&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*todo*<br>
+&nbsp;&nbsp;&nbsp;&nbsp;result&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;0&nbsp;on&nbsp;success,&nbsp;or&nbsp;-1&nbsp;(on&nbsp;failure)<br>
 &nbsp;<br>
 Examples<br>
 --------<br>
@@ -142,18 +144,18 @@ Examples<br>
 Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-fl_get_select_item"><strong>fl_get_select_item</strong></a>(pFlObject)</dt><dd><tt><a href="#-fl_get_select_item">fl_get_select_item</a>(pFlObject)<br>
+ <dl><dt><a name="-fl_get_select_item"><strong>fl_get_select_item</strong></a>(ptr_flobject)</dt><dd><tt><a href="#-fl_get_select_item">fl_get_select_item</a>(ptr_flobject)&nbsp;-&gt;&nbsp;ptr_flpopupreturn<br>
 &nbsp;<br>
-Obtains&nbsp;currently&nbsp;selected&nbsp;item&nbsp;of&nbsp;a&nbsp;select&nbsp;object.<br>
+Finds&nbsp;out&nbsp;currently&nbsp;selected&nbsp;item&nbsp;of&nbsp;a&nbsp;select&nbsp;flobject.<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;pFlObject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;select&nbsp;object<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_flobject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;select&nbsp;flobject<br>
 &nbsp;<br>
 Returns<br>
 -------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;pPopupReturn&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_POPUP_RETURN<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_flpopupreturn&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_POPUP_RETURN<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;popup&nbsp;return<br>
 &nbsp;<br>
 Examples<br>
@@ -163,21 +165,21 @@ Examples<br>
 Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;Demo&nbsp;=&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-fl_get_select_item_by_label"><strong>fl_get_select_item_by_label</strong></a>(pFlObject, label)</dt><dd><tt><a href="#-fl_get_select_item_by_label">fl_get_select_item_by_label</a>(pFlObject,&nbsp;label)<br>
+ <dl><dt><a name="-fl_get_select_item_by_label"><strong>fl_get_select_item_by_label</strong></a>(ptr_flobject, label)</dt><dd><tt><a href="#-fl_get_select_item_by_label">fl_get_select_item_by_label</a>(ptr_flobject,&nbsp;label)&nbsp;-&gt;&nbsp;ptr_flpopupentry<br>
 &nbsp;<br>
-Finds&nbsp;out&nbsp;an&nbsp;item&nbsp;of&nbsp;select&nbsp;object&nbsp;who&nbsp;has&nbsp;a&nbsp;certain&nbsp;label&nbsp;as<br>
+Finds&nbsp;out&nbsp;an&nbsp;item&nbsp;of&nbsp;select&nbsp;flobject&nbsp;who&nbsp;has&nbsp;a&nbsp;certain&nbsp;label&nbsp;as<br>
 displayed&nbsp;for&nbsp;the&nbsp;item&nbsp;in&nbsp;the&nbsp;popup.<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;pFlObject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;select&nbsp;object<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_flobject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;select&nbsp;flobject<br>
 &nbsp;&nbsp;&nbsp;&nbsp;label&nbsp;:&nbsp;str<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;label&nbsp;of&nbsp;the&nbsp;item.<br>
 &nbsp;<br>
 Returns<br>
 -------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;pPopupEntry&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_POPUP_ENTRY<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_flpopupentry&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_POPUP_ENTRY<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;popup&nbsp;entry&nbsp;class&nbsp;instance<br>
 &nbsp;<br>
 Examples<br>
@@ -187,21 +189,21 @@ Examples<br>
 Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;Demo&nbsp;=&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-fl_get_select_item_by_text"><strong>fl_get_select_item_by_text</strong></a>(pFlObject, txtstr)</dt><dd><tt><a href="#-fl_get_select_item_by_text">fl_get_select_item_by_text</a>(pFlObject,&nbsp;txtstr)<br>
+ <dl><dt><a name="-fl_get_select_item_by_text"><strong>fl_get_select_item_by_text</strong></a>(ptr_flobject, txtstr)</dt><dd><tt><a href="#-fl_get_select_item_by_text">fl_get_select_item_by_text</a>(ptr_flobject,&nbsp;txtstr)&nbsp;-&gt;&nbsp;ptr_flpopupentry<br>
 &nbsp;<br>
-Finds&nbsp;out&nbsp;an&nbsp;item&nbsp;of&nbsp;select&nbsp;object&nbsp;who&nbsp;has&nbsp;supplied&nbsp;text&nbsp;(that&nbsp;might<br>
-be&nbsp;the&nbsp;same&nbsp;as&nbsp;the&nbsp;label&nbsp;text&nbsp;in&nbsp;simple&nbsp;cases).<br>
+Finds&nbsp;out&nbsp;an&nbsp;item&nbsp;of&nbsp;select&nbsp;flobject&nbsp;who&nbsp;has&nbsp;supplied&nbsp;text<br>
+(that&nbsp;might&nbsp;be&nbsp;the&nbsp;same&nbsp;as&nbsp;the&nbsp;label&nbsp;text&nbsp;in&nbsp;simple&nbsp;cases).<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;pFlObject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;select&nbsp;object<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_flobject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;select&nbsp;flobject<br>
 &nbsp;&nbsp;&nbsp;&nbsp;txtstr&nbsp;:&nbsp;str<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;text&nbsp;of&nbsp;the&nbsp;item.<br>
 &nbsp;<br>
 Returns<br>
 -------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;pPopupEntry&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_POPUP_ENTRY<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_flpopupentry&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_POPUP_ENTRY<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;popup&nbsp;entry&nbsp;class&nbsp;instance<br>
 &nbsp;<br>
 Examples<br>
@@ -211,21 +213,21 @@ Examples<br>
 Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-fl_get_select_item_by_value"><strong>fl_get_select_item_by_value</strong></a>(pFlObject, value)</dt><dd><tt><a href="#-fl_get_select_item_by_value">fl_get_select_item_by_value</a>(pFlObject,&nbsp;value)<br>
+ <dl><dt><a name="-fl_get_select_item_by_value"><strong>fl_get_select_item_by_value</strong></a>(ptr_flobject, itemval)</dt><dd><tt><a href="#-fl_get_select_item_by_value">fl_get_select_item_by_value</a>(ptr_flobject,&nbsp;itemval)&nbsp;-&gt;&nbsp;ptr_flpopupentry<br>
 &nbsp;<br>
-Finds&nbsp;the&nbsp;first&nbsp;item&nbsp;of&nbsp;select&nbsp;object&nbsp;with&nbsp;the&nbsp;value&nbsp;associated&nbsp;with<br>
+Finds&nbsp;the&nbsp;first&nbsp;item&nbsp;of&nbsp;select&nbsp;flobject&nbsp;with&nbsp;the&nbsp;value&nbsp;associated&nbsp;with<br>
 the&nbsp;item.<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;pFlObject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;select&nbsp;object<br>
-&nbsp;&nbsp;&nbsp;&nbsp;value&nbsp;:&nbsp;long<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_flobject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;select&nbsp;flobject<br>
+&nbsp;&nbsp;&nbsp;&nbsp;itemval&nbsp;:&nbsp;long<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;value&nbsp;of&nbsp;the&nbsp;select&nbsp;item.<br>
 &nbsp;<br>
 Returns<br>
 -------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;pPopupEntry&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_POPUP_ENTRY<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_flpopupentry&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_POPUP_ENTRY<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;popup&nbsp;entry&nbsp;class&nbsp;instance,&nbsp;or&nbsp;None&nbsp;(on&nbsp;failure)<br>
 &nbsp;<br>
 Examples<br>
@@ -235,18 +237,18 @@ Examples<br>
 Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-fl_get_select_popup"><strong>fl_get_select_popup</strong></a>(pFlObject)</dt><dd><tt><a href="#-fl_get_select_popup">fl_get_select_popup</a>(pFlObject)<br>
+ <dl><dt><a name="-fl_get_select_popup"><strong>fl_get_select_popup</strong></a>(ptr_flobject)</dt><dd><tt><a href="#-fl_get_select_popup">fl_get_select_popup</a>(ptr_flobject)&nbsp;-&gt;&nbsp;ptr_flpopup<br>
 &nbsp;<br>
-Finds&nbsp;out&nbsp;which&nbsp;item&nbsp;of&nbsp;a&nbsp;select&nbsp;object&nbsp;is&nbsp;currently&nbsp;selected.<br>
+Finds&nbsp;out&nbsp;which&nbsp;item&nbsp;of&nbsp;a&nbsp;select&nbsp;flobject&nbsp;is&nbsp;currently&nbsp;selected.<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;pFlObject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;select&nbsp;object<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_flobject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;select&nbsp;flobject<br>
 &nbsp;<br>
 Returns<br>
 -------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;pPopup&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_POPUP<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_flpopup&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_POPUP<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;popup&nbsp;class&nbsp;instance<br>
 &nbsp;<br>
 Examples<br>
@@ -256,20 +258,20 @@ Examples<br>
 Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;Demo&nbsp;=&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-fl_get_select_text_align"><strong>fl_get_select_text_align</strong></a>(pFlObject)</dt><dd><tt><a href="#-fl_get_select_text_align">fl_get_select_text_align</a>(pFlObject)<br>
+ <dl><dt><a name="-fl_get_select_text_align"><strong>fl_get_select_text_align</strong></a>(ptr_flobject)</dt><dd><tt><a href="#-fl_get_select_text_align">fl_get_select_text_align</a>(ptr_flobject)&nbsp;-&gt;&nbsp;align<br>
 &nbsp;<br>
-Obtains&nbsp;the&nbsp;alignment&nbsp;of&nbsp;the&nbsp;text&nbsp;with&nbsp;the&nbsp;currently&nbsp;selected&nbsp;item<br>
-on&nbsp;top&nbsp;of&nbsp;the&nbsp;select&nbsp;object.<br>
+Finds&nbsp;out&nbsp;the&nbsp;alignment&nbsp;of&nbsp;the&nbsp;text&nbsp;with&nbsp;the&nbsp;currently&nbsp;selected<br>
+item&nbsp;on&nbsp;top&nbsp;of&nbsp;the&nbsp;select&nbsp;flobject.<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;pFlObject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;select&nbsp;object<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_flobject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;select&nbsp;flobject<br>
 &nbsp;<br>
 Returns<br>
 -------<br>
 &nbsp;&nbsp;&nbsp;&nbsp;align&nbsp;:&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;alignment<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;alignment&nbsp;of&nbsp;text<br>
 &nbsp;<br>
 Examples<br>
 --------<br>
@@ -278,15 +280,15 @@ Examples<br>
 Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-fl_get_select_text_color"><strong>fl_get_select_text_color</strong></a>(pFlObject)</dt><dd><tt><a href="#-fl_get_select_text_color">fl_get_select_text_color</a>(pFlObject)<br>
+ <dl><dt><a name="-fl_get_select_text_color"><strong>fl_get_select_text_color</strong></a>(ptr_flobject)</dt><dd><tt><a href="#-fl_get_select_text_color">fl_get_select_text_color</a>(ptr_flobject)&nbsp;-&gt;&nbsp;colr<br>
 &nbsp;<br>
-Obtains&nbsp;the&nbsp;color&nbsp;of&nbsp;the&nbsp;text&nbsp;of&nbsp;the&nbsp;currenty&nbsp;selected&nbsp;item&nbsp;on&nbsp;top&nbsp;of<br>
-the&nbsp;object.<br>
+Finds&nbsp;out&nbsp;the&nbsp;color&nbsp;of&nbsp;the&nbsp;text&nbsp;of&nbsp;the&nbsp;currenty&nbsp;selected&nbsp;item<br>
+on&nbsp;top&nbsp;of&nbsp;the&nbsp;flobject.<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;pFlObject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;select&nbsp;object<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_flobject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;select&nbsp;flobject<br>
 &nbsp;<br>
 Returns<br>
 -------<br>
@@ -300,14 +302,15 @@ Examples<br>
 Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-fl_get_select_text_font"><strong>fl_get_select_text_font</strong></a>(pFlObject)</dt><dd><tt><a href="#-fl_get_select_text_font">fl_get_select_text_font</a>(pFlObject)<br>
+ <dl><dt><a name="-fl_get_select_text_font"><strong>fl_get_select_text_font</strong></a>(ptr_flobject)</dt><dd><tt><a href="#-fl_get_select_text_font">fl_get_select_text_font</a>(ptr_flobject)&nbsp;-&gt;&nbsp;result,&nbsp;style,&nbsp;size<br>
 &nbsp;<br>
-Obtains&nbsp;the&nbsp;font&nbsp;style&nbsp;and&nbsp;size&nbsp;used&nbsp;for&nbsp;the&nbsp;text&nbsp;of&nbsp;a&nbsp;select&nbsp;object.<br>
+Finds&nbsp;out&nbsp;the&nbsp;font&nbsp;style&nbsp;and&nbsp;size&nbsp;used&nbsp;for&nbsp;the&nbsp;text&nbsp;of&nbsp;a&nbsp;select<br>
+flobject.<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
-&nbsp;&nbsp;pFlObject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
-&nbsp;&nbsp;&nbsp;&nbsp;select&nbsp;object<br>
+&nbsp;&nbsp;ptr_flobject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
+&nbsp;&nbsp;&nbsp;&nbsp;select&nbsp;flobject<br>
 &nbsp;<br>
 Returns<br>
 -------<br>
@@ -323,26 +326,27 @@ Examples<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;rslt,&nbsp;style,&nbsp;size&nbsp;=&nbsp;<a href="#-fl_get_select_text_font">fl_get_select_text_font</a>(selobj)<br>
 &nbsp;<br>
 API_diversion<br>
-----------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;API&nbsp;changed&nbsp;from&nbsp;XForms,&nbsp;upstream&nbsp;was<br>
-&nbsp;&nbsp;&nbsp;&nbsp;<a href="#-fl_get_select_text_font">fl_get_select_text_font</a>(pFlObject,&nbsp;p2,&nbsp;p3)<br>
+-------------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;API&nbsp;changed&nbsp;from&nbsp;XForms,&nbsp;upstream&nbsp;is<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="#-fl_get_select_text_font">fl_get_select_text_font</a>(ptr_flobject,&nbsp;p2,&nbsp;p3)<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-fl_insert_select_items"><strong>fl_insert_select_items</strong></a>(pFlObject, pPopupEntry, entryitems_txt)</dt><dd><tt><a href="#-fl_insert_select_items">fl_insert_select_items</a>(pFlObject,&nbsp;pPopupEntry,&nbsp;entryitems_txt)<br>
+ <dl><dt><a name="-fl_insert_select_items"><strong>fl_insert_select_items</strong></a>(ptr_flobject, ptr_flpopupentry, entryitemstxt)</dt><dd><tt><a href="#-fl_insert_select_items">fl_insert_select_items</a>(ptr_flobject,&nbsp;ptr_flpopupentry,&nbsp;entryitemstxt)<br>
+-&gt;&nbsp;ptr_flpopupentry<br>
 &nbsp;<br>
 Inserts&nbsp;new&nbsp;items&nbsp;somewhere&nbsp;in&nbsp;the&nbsp;middle&nbsp;of&nbsp;a&nbsp;list&nbsp;of&nbsp;already<br>
 existing&nbsp;items.<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;pFlObject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;select&nbsp;object<br>
-&nbsp;&nbsp;&nbsp;&nbsp;pPopupEntry&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_POPUP_ENTRY<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_flobject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;select&nbsp;flobject<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_flpopupentry&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_POPUP_ENTRY<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;popup&nbsp;entry.&nbsp;If&nbsp;it&nbsp;is&nbsp;'None'&nbsp;new&nbsp;items&nbsp;are&nbsp;inserted&nbsp;at&nbsp;the&nbsp;very<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;start.<br>
-&nbsp;&nbsp;&nbsp;&nbsp;entryitems_txt&nbsp;:&nbsp;str<br>
+&nbsp;&nbsp;&nbsp;&nbsp;entryitemstxt&nbsp;:&nbsp;str<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;text&nbsp;of&nbsp;the&nbsp;entry&nbsp;to&nbsp;be&nbsp;added&nbsp;and&nbsp;in-text&nbsp;special&nbsp;sequences&nbsp;with<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;or&nbsp;without&nbsp;not&nbsp;separated&nbsp;additional&nbsp;arguments&nbsp;(if&nbsp;needed).&nbsp;Text<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;may&nbsp;contain&nbsp;|&nbsp;to&nbsp;separate&nbsp;entries&nbsp;and&nbsp;newline&nbsp;characters&nbsp;which<br>
@@ -352,8 +356,8 @@ Parameters<br>
 &nbsp;<br>
 Returns<br>
 -------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;pPopupEntry&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_POPUP_ENTRY<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;popup&nbsp;entry<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_flpopupentry&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_POPUP_ENTRY<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;popup&nbsp;entry,&nbsp;or&nbsp;None&nbsp;(on&nbsp;failure)<br>
 &nbsp;<br>
 Examples<br>
 --------<br>
@@ -363,17 +367,18 @@ Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;HalfTested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;Demo&nbsp;=&nbsp;NOT&nbsp;OK&nbsp;(special&nbsp;sequence)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;See:&nbsp;Special&nbsp;sequences&nbsp;in&nbsp;entry&nbsp;text&nbsp;documentation.</tt></dd></dl>
- <dl><dt><a name="-fl_replace_select_item"><strong>fl_replace_select_item</strong></a>(pFlObject, pPopupEntry, entryitems_txt)</dt><dd><tt><a href="#-fl_replace_select_item">fl_replace_select_item</a>(pFlObject,&nbsp;pPopupEntry,&nbsp;entryitems_txt)<br>
+ <dl><dt><a name="-fl_replace_select_item"><strong>fl_replace_select_item</strong></a>(ptr_flobject, ptr_flpopupentry, entryitemstxt)</dt><dd><tt><a href="#-fl_replace_select_item">fl_replace_select_item</a>(ptr_flobject,&nbsp;ptr_flpopupentry,&nbsp;entryitemstxt)<br>
+-&gt;&nbsp;ptr_flpopupentry<br>
 &nbsp;<br>
-Replaces&nbsp;an&nbsp;existing&nbsp;item&nbsp;of&nbsp;a&nbsp;select&nbsp;object&nbsp;with&nbsp;another.<br>
+Replaces&nbsp;an&nbsp;existing&nbsp;item&nbsp;of&nbsp;a&nbsp;select&nbsp;flobject&nbsp;with&nbsp;another.<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;pFlObject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;select&nbsp;object<br>
-&nbsp;&nbsp;&nbsp;&nbsp;pPopupEntry&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_POPUP_ENTRY<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_flobject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;select&nbsp;flobject<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_flpopupentry&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_POPUP_ENTRY<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;popup&nbsp;entry<br>
-&nbsp;&nbsp;&nbsp;&nbsp;entryitems_txt&nbsp;:&nbsp;str<br>
+&nbsp;&nbsp;&nbsp;&nbsp;entryitemstxt&nbsp;:&nbsp;str<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;text&nbsp;of&nbsp;the&nbsp;entry&nbsp;to&nbsp;be&nbsp;added&nbsp;and&nbsp;in-text&nbsp;special&nbsp;sequences&nbsp;with<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;or&nbsp;without&nbsp;not&nbsp;separated&nbsp;additional&nbsp;arguments&nbsp;(if&nbsp;needed).&nbsp;Text<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;may&nbsp;contain&nbsp;|&nbsp;to&nbsp;separate&nbsp;entries&nbsp;and&nbsp;newline&nbsp;characters&nbsp;which<br>
@@ -383,8 +388,8 @@ Parameters<br>
 &nbsp;<br>
 Returns<br>
 -------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;pPopupEntry&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_POPUP_ENTRY<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;popup&nbsp;entry<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_flpopupentry&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_POPUP_ENTRY<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;popup&nbsp;entry,&nbsp;or&nbsp;None&nbsp;(on&nbsp;failure)<br>
 &nbsp;<br>
 Examples<br>
 --------<br>
@@ -394,20 +399,20 @@ Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK<br>
 &nbsp;&nbsp;&nbsp;&nbsp;See:&nbsp;Special&nbsp;sequences&nbsp;in&nbsp;entry&nbsp;text&nbsp;documentation.</tt></dd></dl>
- <dl><dt><a name="-fl_set_select_item"><strong>fl_set_select_item</strong></a>(pFlObject, pPopupEntry)</dt><dd><tt><a href="#-fl_set_select_item">fl_set_select_item</a>(pFlObject,&nbsp;pPopupEntry)<br>
+ <dl><dt><a name="-fl_set_select_item"><strong>fl_set_select_item</strong></a>(ptr_flobject, ptr_flpopupentry)</dt><dd><tt><a href="#-fl_set_select_item">fl_set_select_item</a>(ptr_flobject,&nbsp;ptr_flpopupentry)&nbsp;-&gt;&nbsp;ptr_flpopupreturn<br>
 &nbsp;<br>
-Sets&nbsp;a&nbsp;new&nbsp;item&nbsp;of&nbsp;a&nbsp;select&nbsp;object&nbsp;as&nbsp;currently&nbsp;selected.<br>
+Defines&nbsp;a&nbsp;new&nbsp;item&nbsp;of&nbsp;a&nbsp;select&nbsp;flobject&nbsp;as&nbsp;currently&nbsp;selected.<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;pFlObject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;select&nbsp;object<br>
-&nbsp;&nbsp;&nbsp;&nbsp;pPopupEntry&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_POPUP_ENTRY<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_flobject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;select&nbsp;flobject<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_flpopupentry&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_POPUP_ENTRY<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;popup&nbsp;entry&nbsp;class&nbsp;instance<br>
 &nbsp;<br>
 Returns<br>
 -------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;pPopupReturn&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_POPUP_RETURN<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_flpopupreturn&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_POPUP_RETURN<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;popup&nbsp;return<br>
 &nbsp;<br>
 Examples<br>
@@ -418,23 +423,23 @@ Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;HalfTested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;Demo&nbsp;=&nbsp;NOT&nbsp;OK&nbsp;(FL_POPUP_ENTRY&nbsp;not<br>
 &nbsp;&nbsp;&nbsp;&nbsp;prepared)</tt></dd></dl>
- <dl><dt><a name="-fl_set_select_items"><strong>fl_set_select_items</strong></a>(pFlObject, pPopupItem)</dt><dd><tt><a href="#-fl_set_select_items">fl_set_select_items</a>(pFlObject,&nbsp;pPopupItem)<br>
+ <dl><dt><a name="-fl_set_select_items"><strong>fl_set_select_items</strong></a>(ptr_flobject, ptr_flpopupitem)</dt><dd><tt><a href="#-fl_set_select_items">fl_set_select_items</a>(ptr_flobject,&nbsp;ptr_flpopupitem)&nbsp;-&gt;&nbsp;numitems<br>
 &nbsp;<br>
-(Re)populates&nbsp;a&nbsp;select&nbsp;object.<br>
+(Re)populates&nbsp;a&nbsp;select&nbsp;flobject.<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;pFlObject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;select&nbsp;object<br>
-&nbsp;&nbsp;&nbsp;&nbsp;pPopupItem&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_POPUP_ITEM<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_flobject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;select&nbsp;flobject<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_flpopupitem&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_POPUP_ITEM<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;popup&nbsp;item&nbsp;to&nbsp;be&nbsp;set.&nbsp;It&nbsp;can&nbsp;be&nbsp;prepared&nbsp;passing&nbsp;a&nbsp;dict&nbsp;(whose<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;keys&nbsp;are&nbsp;corresponding&nbsp;to&nbsp;xfdata.FL_POPUP_ITEM's&nbsp;members)&nbsp;to<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;xfstruct.make_flpopupitem&nbsp;function.<br>
 &nbsp;<br>
 Returns<br>
 -------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;num.&nbsp;:&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*todo*<br>
+&nbsp;&nbsp;&nbsp;&nbsp;numitems&nbsp;:&nbsp;long<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;number&nbsp;of&nbsp;items,&nbsp;or&nbsp;-1&nbsp;(on&nbsp;failure)<br>
 &nbsp;<br>
 Examples<br>
 --------<br>
@@ -443,18 +448,18 @@ Examples<br>
 Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-fl_set_select_policy"><strong>fl_set_select_policy</strong></a>(pFlObject, policy)</dt><dd><tt><a href="#-fl_set_select_policy">fl_set_select_policy</a>(pFlObject,&nbsp;policy)<br>
+ <dl><dt><a name="-fl_set_select_policy"><strong>fl_set_select_policy</strong></a>(ptr_flobject, policy)</dt><dd><tt><a href="#-fl_set_select_policy">fl_set_select_policy</a>(ptr_flobject,&nbsp;policy)&nbsp;-&gt;&nbsp;oldpol<br>
 &nbsp;<br>
-Sets&nbsp;a&nbsp;policy&nbsp;of&nbsp;a&nbsp;select&nbsp;object.&nbsp;By&nbsp;default,&nbsp;the&nbsp;popup&nbsp;of&nbsp;a&nbsp;select<br>
-objects&nbsp;remains&nbsp;shown&nbsp;when&nbsp;the&nbsp;user&nbsp;releases&nbsp;the&nbsp;mouse&nbsp;somewhere&nbsp;outside<br>
-the&nbsp;popup&nbsp;window&nbsp;(or&nbsp;on&nbsp;its&nbsp;title&nbsp;area).&nbsp;The&nbsp;alternative&nbsp;is&nbsp;to&nbsp;close&nbsp;the<br>
-popup&nbsp;immediately&nbsp;when&nbsp;the&nbsp;user&nbsp;releases&nbsp;the&nbsp;mouse,&nbsp;independent&nbsp;of&nbsp;where<br>
-it&nbsp;is.<br>
+Defines&nbsp;a&nbsp;policy&nbsp;of&nbsp;a&nbsp;select&nbsp;flobject.&nbsp;By&nbsp;default,&nbsp;the&nbsp;popup&nbsp;of&nbsp;a<br>
+select&nbsp;flobjects&nbsp;remains&nbsp;shown&nbsp;when&nbsp;the&nbsp;user&nbsp;releases&nbsp;the&nbsp;mouse<br>
+somewhere&nbsp;outside&nbsp;the&nbsp;popup&nbsp;window&nbsp;(or&nbsp;on&nbsp;its&nbsp;title&nbsp;area).&nbsp;The<br>
+alternative&nbsp;is&nbsp;to&nbsp;close&nbsp;the&nbsp;popup&nbsp;immediately&nbsp;when&nbsp;the&nbsp;user&nbsp;releases<br>
+the&nbsp;mouse,&nbsp;independent&nbsp;of&nbsp;where&nbsp;it&nbsp;is.<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;pFlObject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;select&nbsp;object<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_flobject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;select&nbsp;flobject<br>
 &nbsp;&nbsp;&nbsp;&nbsp;policy&nbsp;:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;popup&nbsp;policy&nbsp;to&nbsp;be&nbsp;set.&nbsp;Values&nbsp;(from&nbsp;xfdata.py)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_POPUP_NORMAL_SELECT,&nbsp;FL_POPUP_DRAG_SELECT<br>
@@ -471,24 +476,24 @@ Examples<br>
 Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;Demo&nbsp;=&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-fl_set_select_popup"><strong>fl_set_select_popup</strong></a>(pFlObject, pPopup)</dt><dd><tt><a href="#-fl_set_select_popup">fl_set_select_popup</a>(pFlObject,&nbsp;pPopup)<br>
+ <dl><dt><a name="-fl_set_select_popup"><strong>fl_set_select_popup</strong></a>(ptr_flobject, ptr_flpopup)</dt><dd><tt><a href="#-fl_set_select_popup">fl_set_select_popup</a>(ptr_flobject,&nbsp;ptr_flpopup)&nbsp;-&gt;&nbsp;result<br>
 &nbsp;<br>
-Creates&nbsp;a&nbsp;popup&nbsp;directly&nbsp;and&nbsp;then&nbsp;associates&nbsp;it&nbsp;with&nbsp;the&nbsp;select&nbsp;object.<br>
-Supplied&nbsp;popup&nbsp;may&nbsp;not&nbsp;contain&nbsp;any&nbsp;entries&nbsp;other&nbsp;than&nbsp;those&nbsp;of&nbsp;type<br>
-xfdata.FL_POPUP_NORMAL&nbsp;(and,&nbsp;of&nbsp;course,&nbsp;the&nbsp;popup&nbsp;cannot&nbsp;be&nbsp;a&nbsp;sub-popup<br>
-of&nbsp;another&nbsp;popup).<br>
+Creates&nbsp;a&nbsp;popup&nbsp;directly&nbsp;and&nbsp;then&nbsp;associates&nbsp;it&nbsp;with&nbsp;the&nbsp;select<br>
+flobject.&nbsp;Supplied&nbsp;popup&nbsp;may&nbsp;not&nbsp;contain&nbsp;any&nbsp;entries&nbsp;other&nbsp;than<br>
+those&nbsp;of&nbsp;type&nbsp;xfdata.FL_POPUP_NORMAL,&nbsp;and,&nbsp;of&nbsp;course,&nbsp;the&nbsp;popup<br>
+cannot&nbsp;be&nbsp;a&nbsp;sub-popup&nbsp;of&nbsp;another&nbsp;popup).<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;pFlObject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;select&nbsp;object<br>
-&nbsp;&nbsp;&nbsp;&nbsp;pPopup&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_POPUP<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_flobject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;select&nbsp;flobject<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_flpopup&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_POPUP<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;popup&nbsp;class&nbsp;instance<br>
 &nbsp;<br>
 Returns<br>
 -------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;num.&nbsp;:&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*todo*<br>
+&nbsp;&nbsp;&nbsp;&nbsp;result&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1&nbsp;on&nbsp;success,&nbsp;or&nbsp;-1&nbsp;(on&nbsp;failure)<br>
 &nbsp;<br>
 Examples<br>
 --------<br>
@@ -497,17 +502,17 @@ Examples<br>
 Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-fl_set_select_text_align"><strong>fl_set_select_text_align</strong></a>(pFlObject, align)</dt><dd><tt><a href="#-fl_set_select_text_align">fl_set_select_text_align</a>(pFlObject,&nbsp;align)<br>
+ <dl><dt><a name="-fl_set_select_text_align"><strong>fl_set_select_text_align</strong></a>(ptr_flobject, align)</dt><dd><tt><a href="#-fl_set_select_text_align">fl_set_select_text_align</a>(ptr_flobject,&nbsp;align)&nbsp;-&gt;&nbsp;oldalign<br>
 &nbsp;<br>
-Sets&nbsp;the&nbsp;alignment&nbsp;of&nbsp;the&nbsp;text&nbsp;with&nbsp;the&nbsp;currently&nbsp;selected&nbsp;item&nbsp;on<br>
-top&nbsp;of&nbsp;the&nbsp;select&nbsp;object.&nbsp;The&nbsp;xfdata.FL_ALIGN_INSIDE&nbsp;flag&nbsp;should&nbsp;be&nbsp;set<br>
-with&nbsp;align&nbsp;since&nbsp;the&nbsp;text&nbsp;always&nbsp;will&nbsp;be&nbsp;drawn&nbsp;withing&nbsp;the&nbsp;boundaries&nbsp;of<br>
-the&nbsp;object.<br>
+Defines&nbsp;the&nbsp;alignment&nbsp;of&nbsp;the&nbsp;text&nbsp;with&nbsp;the&nbsp;currently&nbsp;selected&nbsp;item&nbsp;on<br>
+top&nbsp;of&nbsp;the&nbsp;select&nbsp;flobject.&nbsp;The&nbsp;xfdata.FL_ALIGN_INSIDE&nbsp;flag&nbsp;should&nbsp;be<br>
+set&nbsp;with&nbsp;align&nbsp;since&nbsp;the&nbsp;text&nbsp;always&nbsp;will&nbsp;be&nbsp;drawn&nbsp;withing&nbsp;the<br>
+boundaries&nbsp;of&nbsp;the&nbsp;flobject.<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;pFlObject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;select&nbsp;object<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_flobject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;select&nbsp;flobject<br>
 &nbsp;&nbsp;&nbsp;&nbsp;align&nbsp;:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;alignment&nbsp;of&nbsp;text.&nbsp;Values&nbsp;(from&nbsp;xfdata.py)&nbsp;FL_ALIGN_CENTER,<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_ALIGN_TOP,&nbsp;FL_ALIGN_BOTTOM,&nbsp;FL_ALIGN_LEFT,&nbsp;FL_ALIGN_RIGHT,<br>
@@ -527,15 +532,15 @@ Examples<br>
 Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-fl_set_select_text_color"><strong>fl_set_select_text_color</strong></a>(pFlObject, colr)</dt><dd><tt><a href="#-fl_set_select_text_color">fl_set_select_text_color</a>(pFlObject,&nbsp;colr)<br>
+ <dl><dt><a name="-fl_set_select_text_color"><strong>fl_set_select_text_color</strong></a>(ptr_flobject, colr)</dt><dd><tt><a href="#-fl_set_select_text_color">fl_set_select_text_color</a>(ptr_flobject,&nbsp;colr)&nbsp;-&gt;&nbsp;oldcolr<br>
 &nbsp;<br>
-Sets&nbsp;the&nbsp;color&nbsp;of&nbsp;the&nbsp;text&nbsp;of&nbsp;the&nbsp;currenty&nbsp;selected&nbsp;item&nbsp;on&nbsp;top&nbsp;of<br>
-the&nbsp;object.<br>
+Defines&nbsp;the&nbsp;color&nbsp;of&nbsp;the&nbsp;text&nbsp;of&nbsp;the&nbsp;currenty&nbsp;selected&nbsp;item&nbsp;on<br>
+top&nbsp;of&nbsp;the&nbsp;flobject.<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;pFlObject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;select&nbsp;object<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_flobject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;select&nbsp;flobject<br>
 &nbsp;&nbsp;&nbsp;&nbsp;colr&nbsp;:&nbsp;long_pos<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;color&nbsp;value<br>
 &nbsp;<br>
@@ -551,14 +556,15 @@ Examples<br>
 Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-fl_set_select_text_font"><strong>fl_set_select_text_font</strong></a>(pFlObject, style, size)</dt><dd><tt><a href="#-fl_set_select_text_font">fl_set_select_text_font</a>(pFlObject,&nbsp;style,&nbsp;size)<br>
+ <dl><dt><a name="-fl_set_select_text_font"><strong>fl_set_select_text_font</strong></a>(ptr_flobject, style, size)</dt><dd><tt><a href="#-fl_set_select_text_font">fl_set_select_text_font</a>(ptr_flobject,&nbsp;style,&nbsp;size)&nbsp;-&gt;&nbsp;result<br>
 &nbsp;<br>
-Sets&nbsp;the&nbsp;font&nbsp;style&nbsp;and&nbsp;size&nbsp;used&nbsp;for&nbsp;the&nbsp;text&nbsp;of&nbsp;a&nbsp;select&nbsp;object.<br>
+Defines&nbsp;the&nbsp;font&nbsp;style&nbsp;and&nbsp;size&nbsp;used&nbsp;for&nbsp;the&nbsp;text&nbsp;of&nbsp;a&nbsp;select<br>
+flobject.<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;pFlObject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;select&nbsp;object<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_flobject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;select&nbsp;flobject<br>
 &nbsp;&nbsp;&nbsp;&nbsp;style&nbsp;:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;text&nbsp;style.&nbsp;Values&nbsp;(from&nbsp;xfdata.py)&nbsp;FL_NORMAL_STYLE,<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_BOLD_STYLE,&nbsp;FL_ITALIC_STYLE,&nbsp;FL_BOLDITALIC_STYLE,<br>
@@ -586,4 +592,4 @@ Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
 </td></tr></table>
-<p>Updated on: 2010-12-09 10:11 +0100</body></html>
+<p>Updated on: 2010-12-20 01:16 +0100</body></html>

@@ -9,7 +9,7 @@
 <font color="#ffffff" face="helvetica, arial">&nbsp;<br><big><big><strong>flcursor</strong></big></big></font></td
 ><td align=right valign=bottom
 ><font color="#ffffff" face="helvetica, arial"><a href=".">index</a><br>     <a href="index.html">list</a></font></td></tr></table>
-    <p><tt>xforms-python's&nbsp;functions&nbsp;to&nbsp;manage&nbsp;cursor&nbsp;objects.</tt></p>
+    <p><tt>xforms-python's&nbsp;functions&nbsp;to&nbsp;manage&nbsp;cursor&nbsp;flobjects.</tt></p>
 <p>
 <table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
 <tr bgcolor="#aa55cc">
@@ -27,7 +27,7 @@
 <font color="#ffffff" face="helvetica, arial"><big><strong>Functions</strong></big></font></td></tr>
     
 <tr><td bgcolor="#eeaa77"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
-<td width="100%"><dl><dt><a name="-fl_create_animated_cursor"><strong>fl_create_animated_cursor</strong></a>(curseries, timeout)</dt><dd><tt><a href="#-fl_create_animated_cursor">fl_create_animated_cursor</a>(curseries,&nbsp;timeout)<br>
+<td width="100%"><dl><dt><a name="-fl_create_animated_cursor"><strong>fl_create_animated_cursor</strong></a>(curseries, timeout)</dt><dd><tt><a href="#-fl_create_animated_cursor">fl_create_animated_cursor</a>(curseries,&nbsp;timeout)&nbsp;-&gt;&nbsp;cursornum<br>
 &nbsp;<br>
 Creates&nbsp;an&nbsp;animated&nbsp;series&nbsp;of&nbsp;cursors,&nbsp;that&nbsp;change&nbsp;after&nbsp;timeout<br>
 is&nbsp;expired&nbsp;(several&nbsp;cursors&nbsp;are&nbsp;displayed&nbsp;one&nbsp;after&nbsp;another).&nbsp;Internally<br>
@@ -37,9 +37,9 @@ the&nbsp;timeouts),&nbsp;the&nbsp;animation&nbsp;will&nbsp;stop.<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;curseries&nbsp;:&nbsp;str&nbsp;of&nbsp;ubytes<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;sequence&nbsp;of&nbsp;cursor&nbsp;names&nbsp;(either&nbsp;X&nbsp;standard&nbsp;cursors&nbsp;or&nbsp;cursor<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;names&nbsp;returned&nbsp;by&nbsp;fl_create_bitmap_cursor),&nbsp;terminated&nbsp;by&nbsp;-1.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;curseries&nbsp;:&nbsp;list&nbsp;of&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;sequence&nbsp;of&nbsp;cursor&nbsp;names,&nbsp;either&nbsp;X&nbsp;standard&nbsp;cursors&nbsp;or&nbsp;cursor<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;names&nbsp;returned&nbsp;by&nbsp;<a href="#-fl_create_bitmap_cursor">fl_create_bitmap_cursor</a>(),&nbsp;terminated&nbsp;by&nbsp;-1.<br>
 &nbsp;&nbsp;&nbsp;&nbsp;timeout&nbsp;:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;time&nbsp;after&nbsp;which&nbsp;the&nbsp;cursor&nbsp;is&nbsp;changed,&nbsp;replacing&nbsp;by&nbsp;the&nbsp;next&nbsp;in<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;sequence.&nbsp;An&nbsp;interval&nbsp;about&nbsp;150&nbsp;msec&nbsp;is&nbsp;a&nbsp;good&nbsp;value&nbsp;for&nbsp;typical<br>
@@ -47,7 +47,7 @@ Parameters<br>
 &nbsp;<br>
 Returns<br>
 -------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;cursid&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;cursornum&nbsp;:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;cursor&nbsp;id<br>
 &nbsp;<br>
 Examples<br>
@@ -57,7 +57,8 @@ Examples<br>
 Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;HalfTested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;Demo&nbsp;=&nbsp;NOT&nbsp;OK&nbsp;(curnums&nbsp;data&nbsp;problematic)</tt></dd></dl>
- <dl><dt><a name="-fl_create_bitmap_cursor"><strong>fl_create_bitmap_cursor</strong></a>(source, maskstr, w, h, hotx, hoty)</dt><dd><tt><a href="#-fl_create_bitmap_cursor">fl_create_bitmap_cursor</a>(source,&nbsp;maskstr,&nbsp;w,&nbsp;h,&nbsp;hotx,&nbsp;hoty)<br>
+ <dl><dt><a name="-fl_create_bitmap_cursor"><strong>fl_create_bitmap_cursor</strong></a>(source, maskstr, width, height, hotx, hoty)</dt><dd><tt><a href="#-fl_create_bitmap_cursor">fl_create_bitmap_cursor</a>(source,&nbsp;maskstr,&nbsp;width,&nbsp;height,&nbsp;hotx,&nbsp;hoty)<br>
+-&gt;&nbsp;cursornum<br>
 &nbsp;<br>
 Creates&nbsp;a&nbsp;bitmap&nbsp;cursor,&nbsp;using&nbsp;cursors&nbsp;other&nbsp;than&nbsp;those&nbsp;defined&nbsp;by<br>
 the&nbsp;standard&nbsp;cursor&nbsp;font.<br>
@@ -70,9 +71,9 @@ Parameters<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;bitmap&nbsp;defining&nbsp;the&nbsp;shape&nbsp;of&nbsp;the&nbsp;cursor.&nbsp;The&nbsp;pixels&nbsp;set&nbsp;to&nbsp;1<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;define&nbsp;which&nbsp;source&nbsp;pixels&nbsp;are&nbsp;displayed.&nbsp;If&nbsp;it&nbsp;is&nbsp;'None'&nbsp;all<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;bits&nbsp;in&nbsp;source&nbsp;are&nbsp;displayed.<br>
-&nbsp;&nbsp;&nbsp;&nbsp;w&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;width&nbsp;:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;width&nbsp;of&nbsp;cursor<br>
-&nbsp;&nbsp;&nbsp;&nbsp;h&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;height&nbsp;:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;height&nbsp;of&nbsp;cursor<br>
 &nbsp;&nbsp;&nbsp;&nbsp;hotx&nbsp;:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;horizontal&nbsp;hotspot&nbsp;of&nbsp;the&nbsp;cursor&nbsp;(relative&nbsp;to&nbsp;the&nbsp;source's&nbsp;origin)<br>
@@ -81,7 +82,7 @@ Parameters<br>
 &nbsp;<br>
 Returns<br>
 -------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;cursid&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;cursornum&nbsp;:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;cursor&nbsp;id<br>
 &nbsp;<br>
 Examples<br>
@@ -91,9 +92,9 @@ Examples<br>
 Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;Demo&nbsp;=&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-fl_get_cursor_byname"><strong>fl_get_cursor_byname</strong></a>(cursnum)</dt><dd><tt><a href="#-fl_get_cursor_byname">fl_get_cursor_byname</a>(cursnum)<br>
+ <dl><dt><a name="-fl_get_cursor_byname"><strong>fl_get_cursor_byname</strong></a>(cursnum)</dt><dd><tt><a href="#-fl_get_cursor_byname">fl_get_cursor_byname</a>(cursnum)&nbsp;-&gt;&nbsp;cursor<br>
 &nbsp;<br>
-Obtains&nbsp;cursor&nbsp;corresponding&nbsp;to&nbsp;its&nbsp;number&nbsp;(cursor&nbsp;id).<br>
+Finds&nbsp;out&nbsp;cursor&nbsp;corresponding&nbsp;to&nbsp;its&nbsp;number&nbsp;(cursor&nbsp;id).<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
@@ -114,7 +115,7 @@ Notes<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
  <dl><dt><a name="-fl_reset_cursor"><strong>fl_reset_cursor</strong></a>(win)</dt><dd><tt><a href="#-fl_reset_cursor">fl_reset_cursor</a>(win)<br>
 &nbsp;<br>
-Reset&nbsp;used&nbsp;cursor,&nbsp;reverting&nbsp;to&nbsp;default&nbsp;one.<br>
+Resets&nbsp;used&nbsp;cursor,&nbsp;reverting&nbsp;to&nbsp;default&nbsp;one.<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
@@ -128,15 +129,15 @@ Examples<br>
 Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;Demo&nbsp;=&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-fl_set_cursor"><strong>fl_set_cursor</strong></a>(win, cursnum)</dt><dd><tt><a href="#-fl_set_cursor">fl_set_cursor</a>(win,&nbsp;cursnum)<br>
+ <dl><dt><a name="-fl_set_cursor"><strong>fl_set_cursor</strong></a>(win, cursornum)</dt><dd><tt><a href="#-fl_set_cursor">fl_set_cursor</a>(win,&nbsp;cursornum)<br>
 &nbsp;<br>
-Sets&nbsp;cursor&nbsp;for&nbsp;window&nbsp;to&nbsp;a&nbsp;specific&nbsp;cursor&nbsp;number.<br>
+Defines&nbsp;cursor&nbsp;for&nbsp;window&nbsp;to&nbsp;a&nbsp;specific&nbsp;cursor&nbsp;number.<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
 &nbsp;&nbsp;&nbsp;&nbsp;win&nbsp;:&nbsp;long_pos<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;window<br>
-&nbsp;&nbsp;&nbsp;&nbsp;cursnum&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;cursornum&nbsp;:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;cursor&nbsp;id&nbsp;(either&nbsp;the&nbsp;standard&nbsp;XC_*&nbsp;or&nbsp;Form-defined)<br>
 &nbsp;<br>
 Examples<br>
@@ -146,13 +147,13 @@ Examples<br>
 Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;Demo&nbsp;=&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-fl_set_cursor_color"><strong>fl_set_cursor_color</strong></a>(cursnum, fgcolr, bgcolr)</dt><dd><tt><a href="#-fl_set_cursor_color">fl_set_cursor_color</a>(cursnum,&nbsp;fgcolr,&nbsp;bgcolr)<br>
+ <dl><dt><a name="-fl_set_cursor_color"><strong>fl_set_cursor_color</strong></a>(cursornum, fgcolr, bgcolr)</dt><dd><tt><a href="#-fl_set_cursor_color">fl_set_cursor_color</a>(cursornum,&nbsp;fgcolr,&nbsp;bgcolr)<br>
 &nbsp;<br>
-Sets&nbsp;foreground&nbsp;and&nbsp;background&nbsp;colors&nbsp;of&nbsp;a&nbsp;cursor.<br>
+Defines&nbsp;foreground&nbsp;and&nbsp;background&nbsp;colors&nbsp;of&nbsp;a&nbsp;cursor.<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;cursnum&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;cursornum&nbsp;:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;cursor&nbsp;id<br>
 &nbsp;&nbsp;&nbsp;&nbsp;fgcolr&nbsp;:&nbsp;long_pos<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;foreground&nbsp;color&nbsp;to&nbsp;be&nbsp;set<br>
@@ -168,4 +169,4 @@ Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;Demo&nbsp;=&nbsp;OK</tt></dd></dl>
 </td></tr></table>
-<p>Updated on: 2010-12-09 10:11 +0100</body></html>
+<p>Updated on: 2010-12-20 01:16 +0100</body></html>

@@ -246,8 +246,8 @@ def fl_read_bitmapfile(win, fname):
     library.check_if_initialized()
     ul_win = library.convert_to_Window(win)
     s_fname = library.convert_to_stringc(fname)
-    i_width, ptr_width= library.make_uintc_and_pointer()
-    i_height, ptr_height= library.make_uintc_and_pointer()
+    i_width, ptr_width = library.make_uintc_and_pointer()
+    i_height, ptr_height = library.make_uintc_and_pointer()
     i_hotx, ptr_hotx = library.make_intc_and_pointer()
     i_hoty, ptr_hoty = library.make_intc_and_pointer()
     library.keep_elem_refs(win, fname, i_width, i_height, i_hotx, i_hoty, \
@@ -301,7 +301,8 @@ def fl_create_from_bitmapdata(win, xbmdata, width, height):
     i_height = library.convert_to_intc(height)
     library.keep_elem_refs(win, xbmdata, width, height, ul_win, \
             s_xbmdata, i_width, i_height)
-    retval = _fl_create_from_bitmapdata(ul_win, s_xbmdata, i_width, i_height)
+    retval = _fl_create_from_bitmapdata(ul_win, s_xbmdata, i_width, \
+            i_height)
     return retval
 
 
@@ -365,8 +366,9 @@ def fl_add_pixmap(pixmaptype, xpos, ypos, width, height, label):
     i_width = library.convert_to_FL_Coord(width)
     i_height = library.convert_to_FL_Coord(height)
     s_label = library.convert_to_stringc(label)
-    library.keep_elem_refs(pixmaptype, xpos, ypos, width, height, label,\
-            i_pixmaptype, i_xpos, i_ypos, i_width, i_height, s_label)
+    library.keep_elem_refs(pixmaptype, xpos, ypos, width, height, \
+            label, i_pixmaptype, i_xpos, i_ypos, i_width, i_height, \
+            s_label)
     retval = _fl_add_pixmap(i_pixmaptype, i_xpos, i_ypos, i_width, \
             i_height, s_label)
     return retval

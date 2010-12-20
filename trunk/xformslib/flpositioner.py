@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: iso8859-1 -*-
 
-""" xforms-python's functions to manage positioner objects.
+""" xforms-python's functions to manage positioner flobjects.
 """
 
 #    Copyright (C) 2009, 2010  Luca Lazzaroni "LukenShiro"
@@ -26,7 +26,7 @@
 # then heavily reordered and reworked
 
 # ############################################# #
-# Interface to XForms shared object libraries   #
+# Interface to XForms shared flobject libraries #
 # ############################################# #
 
 
@@ -44,33 +44,34 @@ from xformslib import xfdata
 # fl_create_positioner function placeholder (internal)
 
 
-def fl_add_positioner(postype, x, y, w, h, label):
-    """fl_add_positioner(postype, x, y, w, h, label)
+def fl_add_positioner(posittype, xpos, ypos, width, height, label):
+    """fl_add_positioner(posittype, xpos, ypos, width, height, label)
+    -> ptr_flobject
     
-    Adds a positioner object. By default the label is placed below
+    Adds a positioner flobject. By default the label is placed below
     the box.
 
     Parameters
     ----------
-        postype : int
+        posittype : int
             type of positioner to be added. Values (from xfdata.py)
             FL_NORMAL_POSITIONER, FL_OVERLAY_POSITIONER,
             FL_INVISIBLE_POSITIONER
-        x : int
+        xpos : int
             horizontal position (upper-left corner)
-        y : int
+        ypos : int
             vertical position (upper-left corner)
-        w : int
+        width : int
             width in coord units
-        h : int
+        height : int
             height in coord units
         label : str
             text label of positioner.
 
     Returns
     -------
-        pFlObject : pointer to xfdata.FL_OBJECT
-            positioner object added
+        ptr_flobject : pointer to xfdata.FL_OBJECT
+            positioner flobject added
 
     Examples
     --------
@@ -89,31 +90,32 @@ def fl_add_positioner(postype, x, y, w, h, label):
         """FL_OBJECT * fl_add_positioner(int type, FL_Coord x, FL_Coord y,
            FL_Coord w, FL_Coord h, const char * label)""")
     library.check_if_initialized()
-    library.checkfatal_allowed_value_in_list(postype, \
+    library.checkfatal_allowed_value_in_list(posittype, \
             xfdata.POSITIONERTYPE_list)
-    ipostype = library.convert_to_int(postype)
-    ix = library.convert_to_FL_Coord(x)
-    iy = library.convert_to_FL_Coord(y)
-    iw = library.convert_to_FL_Coord(w)
-    ih = library.convert_to_FL_Coord(h)
-    slabel = library.convert_to_string(label)
-    library.keep_elem_refs(postype, x, y, w, h, label, ipostype, ix, iy,
-            iw, ih, slabel)
-    retval = _fl_add_positioner(ipostype, ix, iy, iw, ih, slabel)
+    i_posittype = library.convert_to_intc(posittype)
+    i_xpos = library.convert_to_FL_Coord(xpos)
+    i_ypos = library.convert_to_FL_Coord(ypos)
+    i_width = library.convert_to_FL_Coord(width)
+    i_height = library.convert_to_FL_Coord(height)
+    s_label = library.convert_to_stringc(label)
+    library.keep_elem_refs(posittype, xpos, ypos, width, height, label, \
+            i_posittype, i_xpos, i_ypos, i_width, i_height, s_label)
+    retval = _fl_add_positioner(i_posittype, i_xpos, i_ypos, i_width, \
+            i_height, s_label)
     return retval
 
 
-def fl_set_positioner_xvalue(pFlObject, val):
-    """fl_set_positioner_xvalue(pFlObject, val)
+def fl_set_positioner_xvalue(ptr_flobject, xvalue):
+    """fl_set_positioner_xvalue(ptr_flobject, xvalue)
     
-    Sets the actual value of positioner object in horizontal direction.
+    Defines the actual value of positioner flobject in horizontal direction.
 
     Parameters
     ----------
-        pFlObject : pointer to xfdata.FL_OBJECT
-            positioner object
-        val : float
-            value to be set. By default it is 0.5.
+        ptr_flobject : pointer to xfdata.FL_OBJECT
+            positioner flobject
+        xvalue : float
+            horizontal value to be set. By default it is 0.5.
 
     Examples
     --------
@@ -129,25 +131,25 @@ def fl_set_positioner_xvalue(pFlObject, val):
         None, [cty.POINTER(xfdata.FL_OBJECT), cty.c_double],
         """void fl_set_positioner_xvalue(FL_OBJECT * ob, double val)""")
     library.check_if_initialized()
-    library.verify_flobjectptr_type(pFlObject)
-    fval = library.convert_to_double(val)
-    library.keep_elem_refs(pFlObject, val, fval)
-    _fl_set_positioner_xvalue(pFlObject, fval)
+    library.verify_flobjectptr_type(ptr_flobject)
+    f_xvalue = library.convert_to_doublec(xvalue)
+    library.keep_elem_refs(ptr_flobject, xvalue, f_xvalue)
+    _fl_set_positioner_xvalue(ptr_flobject, f_xvalue)
 
 
-def fl_get_positioner_xvalue(pFlObject):
-    """fl_get_positioner_xvalue(pFlObject)
+def fl_get_positioner_xvalue(ptr_flobject):
+    """fl_get_positioner_xvalue(ptr_flobject) -> xvalue
     
-    Obtains value of positioner object in horizontal direction.
+    Finds out value of positioner flobject in horizontal direction.
 
     Parameters
     ----------
-        pFlObject : pointer to xfdata.FL_OBJECT
-            positioner object
+        ptr_flobject : pointer to xfdata.FL_OBJECT
+            positioner flobject
 
     Returns
     -------
-        value : float
+        xvalue : float
             value in horizontal direction
 
     Examples
@@ -164,26 +166,28 @@ def fl_get_positioner_xvalue(pFlObject):
         cty.c_double, [cty.POINTER(xfdata.FL_OBJECT)],
         """double fl_get_positioner_xvalue(FL_OBJECT * ob)""")
     library.check_if_initialized()
-    library.verify_flobjectptr_type(pFlObject)
-    library.keep_elem_refs(pFlObject)
-    retval = _fl_get_positioner_xvalue(pFlObject)
+    library.verify_flobjectptr_type(ptr_flobject)
+    library.keep_elem_refs(ptr_flobject)
+    retval = _fl_get_positioner_xvalue(ptr_flobject)
     return retval
 
 
-def fl_set_positioner_xbounds(pFlObject, minbound, maxbound):
-    """fl_set_positioner_xbounds(pFlObject, minbound, maxbound)
+def fl_set_positioner_xbounds(ptr_flobject, minbound, maxbound):
+    """fl_set_positioner_xbounds(ptr_flobject, minbound, maxbound)
     
-    Sets minimum and maximum bounds/limits of a positioner in horizontal
+    Defines minimum and maximum bounds/limits of a positioner in horizontal
     direction.
 
     Parameters
     ----------
-        pFlObject : pointer to xfdata.FL_OBJECT
-            positioner object
+        ptr_flobject : pointer to xfdata.FL_OBJECT
+            positioner flobject
         minbound : float
-            minimum bound to be set. By default the minimum value is 0.0.
+            minimum value limit to be set. By default the minimum
+            value is 0.0.
         maxbound : float
-            maximum bound to be set. By default the maximum value is 1.0.
+            maximum value limit to be set. By default the maximum
+            value is 1.0.
 
     Examples
     --------
@@ -200,24 +204,24 @@ def fl_set_positioner_xbounds(pFlObject, minbound, maxbound):
         """void fl_set_positioner_xbounds(FL_OBJECT * ob, double min,
             double max)""")
     library.check_if_initialized()
-    library.verify_flobjectptr_type(pFlObject)
-    fminbound = library.convert_to_double(minbound)
-    fmaxbound = library.convert_to_double(maxbound)
-    library.keep_elem_refs(pFlObject, minbound, maxbound, fminbound, \
-            fmaxbound)
-    _fl_set_positioner_xbounds(pFlObject, fminbound, fmaxbound)
+    library.verify_flobjectptr_type(ptr_flobject)
+    f_minbound = library.convert_to_doublec(minbound)
+    f_maxbound = library.convert_to_doublec(maxbound)
+    library.keep_elem_refs(ptr_flobject, minbound, maxbound, f_minbound, \
+            f_maxbound)
+    _fl_set_positioner_xbounds(ptr_flobject, f_minbound, f_maxbound)
 
 
-def fl_get_positioner_xbounds(pFlObject):
-    """fl_get_positioner_xbounds(pFlObject)
+def fl_get_positioner_xbounds(ptr_flobject):
+    """fl_get_positioner_xbounds(ptr_flobject) -> minbound, maxbound
     
-    Obtain minumum and maximum bounds/limits of a positioner in horizontal
-    direction.
+    Obtain minumum and maximum value bounds/limits of a positioner in
+    horizontal direction.
 
     Parameters
     ----------
-        pFlObject : pointer to xfdata.FL_OBJECT
-            positioner object
+        ptr_flobject : pointer to xfdata.FL_OBJECT
+            positioner flobject
 
     Returns
     -------
@@ -231,9 +235,9 @@ def fl_get_positioner_xbounds(pFlObject):
         >>> minb, maxb = fl_get_positioner_xbounds(pstobj)
 
     API_diversion
-    ----------
-        API changed from XForms, upstream was
-        fl_get_positioner_xbounds(pFlObject, minbound, maxbound)
+    -------------
+        API changed from XForms, upstream is
+        fl_get_positioner_xbounds(ptr_flobject, minbound, maxbound)
 
     Notes
     -----
@@ -247,26 +251,26 @@ def fl_get_positioner_xbounds(pFlObject):
         """void fl_get_positioner_xbounds(FL_OBJECT * ob, double * min,
         double * max)""")
     library.check_if_initialized()
-    library.verify_flobjectptr_type(pFlObject)
-    minbound, pminbound = library.make_double_and_pointer()
-    maxbound, pmaxbound = library.make_double_and_pointer()
-    library.keep_elem_refs(pFlObject, minbound, maxbound, pminbound,
-                        pmaxbound)
-    _fl_get_positioner_xbounds(pFlObject, pminbound, pmaxbound)
-    return minbound.value, maxbound.value
+    library.verify_flobjectptr_type(ptr_flobject)
+    f_minbound, ptr_minbound = library.make_doublec_and_pointer()
+    f_maxbound, ptr_maxbound = library.make_doublec_and_pointer()
+    library.keep_elem_refs(ptr_flobject, f_minbound, f_maxbound, \
+            ptr_minbound, ptr_maxbound)
+    _fl_get_positioner_xbounds(ptr_flobject, ptr_minbound, ptr_maxbound)
+    return f_minbound.value, f_maxbound.value
 
 
-def fl_set_positioner_yvalue(pFlObject, val):
-    """fl_set_positioner_yvalue(pFlObject, val)
+def fl_set_positioner_yvalue(ptr_flobject, yvalue):
+    """fl_set_positioner_yvalue(ptr_flobject, yvalue)
     
-    Sets the actual value of positioner object in vertical direction.
+    Defines the actual value of positioner flobject in vertical direction.
 
     Parameters
     ----------
-        pFlObject : pointer to xfdata.FL_OBJECT
-            positioner object
-        val : float
-            value to be set. By default it is 0.5.
+        ptr_flobject : pointer to xfdata.FL_OBJECT
+            positioner flobject
+        yvalue : float
+            vertical value to be set. By default it is 0.5.
 
     Examples
     --------
@@ -282,25 +286,25 @@ def fl_set_positioner_yvalue(pFlObject, val):
         None, [cty.POINTER(xfdata.FL_OBJECT), cty.c_double],
         """void fl_set_positioner_yvalue(FL_OBJECT * ob, double val)""")
     library.check_if_initialized()
-    library.verify_flobjectptr_type(pFlObject)
-    fval = library.convert_to_double(val)
-    library.keep_elem_refs(pFlObject, val, fval)
-    _fl_set_positioner_yvalue(pFlObject, fval)
+    library.verify_flobjectptr_type(ptr_flobject)
+    f_yvalue = library.convert_to_doublec(yvalue)
+    library.keep_elem_refs(ptr_flobject, yvalue, f_yvalue)
+    _fl_set_positioner_yvalue(ptr_flobject, f_yvalue)
 
 
-def fl_get_positioner_yvalue(pFlObject):
-    """fl_get_positioner_yvalue(pFlObject)
+def fl_get_positioner_yvalue(ptr_flobject):
+    """fl_get_positioner_yvalue(ptr_flobject) -> yvalue
     
-    Obtains value of positioner object in vertical direction.
+    Finds out value of positioner flobject in vertical direction.
 
     Parameters
     ----------
-        pFlObject : pointer to xfdata.FL_OBJECT
-            positioner object
+        ptr_flobject : pointer to xfdata.FL_OBJECT
+            positioner flobject
 
     Returns
     -------
-        value : float
+        yvalue : float
             value in vertical direction
 
     Examples
@@ -317,26 +321,28 @@ def fl_get_positioner_yvalue(pFlObject):
         cty.c_double, [cty.POINTER(xfdata.FL_OBJECT)],
         """double fl_get_positioner_yvalue(FL_OBJECT * ob)""")
     library.check_if_initialized()
-    library.verify_flobjectptr_type(pFlObject)
-    library.keep_elem_refs(pFlObject)
-    retval = _fl_get_positioner_yvalue(pFlObject)
+    library.verify_flobjectptr_type(ptr_flobject)
+    library.keep_elem_refs(ptr_flobject)
+    retval = _fl_get_positioner_yvalue(ptr_flobject)
     return retval
 
 
-def fl_set_positioner_ybounds(pFlObject, minbound, maxbound):
-    """fl_set_positioner_ybounds(pFlObject, minbound, maxbound)
+def fl_set_positioner_ybounds(ptr_flobject, minbound, maxbound):
+    """fl_set_positioner_ybounds(ptr_flobject, minbound, maxbound)
     
-    Sets minimum and maximum bounds/limits of a positioner in vertical
+    Defines minimum and maximum bounds/limits of a positioner in vertical
     direction.
 
     Parameters
     ----------
-        pFlObject : pointer to xfdata.FL_OBJECT
-            positioner object
+        ptr_flobject : pointer to xfdata.FL_OBJECT
+            positioner flobject
         minbound : float
-            minimum bound to be set. By default the minimum value is 0.0.
+            minimum value limit to be set. By default the minimum
+            value is 0.0.
         maxbound : float
-            maximum bound to be set. By default the maximum value is 1.0.
+            maximum value limit to be set. By default the maximum
+            value is 1.0.
 
     Examples
     --------
@@ -353,24 +359,24 @@ def fl_set_positioner_ybounds(pFlObject, minbound, maxbound):
         """void fl_set_positioner_ybounds(FL_OBJECT * ob, double min,
            double max)""")
     library.check_if_initialized()
-    library.verify_flobjectptr_type(pFlObject)
-    fminbound = library.convert_to_double(minbound)
-    fmaxbound = library.convert_to_double(maxbound)
-    library.keep_elem_refs(pFlObject, minbound, maxbound, fminbound,
-                        fmaxbound)
-    _fl_set_positioner_ybounds(pFlObject, fminbound, fmaxbound)
+    library.verify_flobjectptr_type(ptr_flobject)
+    f_minbound = library.convert_to_doublec(minbound)
+    f_maxbound = library.convert_to_doublec(maxbound)
+    library.keep_elem_refs(ptr_flobject, minbound, maxbound, f_minbound,
+                        f_maxbound)
+    _fl_set_positioner_ybounds(ptr_flobject, f_minbound, f_maxbound)
 
 
-def fl_get_positioner_ybounds(pFlObject):
-    """fl_get_positioner_ybounds(pFlObject)
+def fl_get_positioner_ybounds(ptr_flobject):
+    """fl_get_positioner_ybounds(ptr_flobject) -> minbound, maxbound
     
     Obtain minimum and maximum bounds/limits of a positioner in vertical
     direction.
 
     Parameters
     ----------
-        pFlObject : pointer to xfdata.FL_OBJECT
-            positioner object
+        ptr_flobject : pointer to xfdata.FL_OBJECT
+            positioner flobject
 
     Returns
     -------
@@ -384,9 +390,9 @@ def fl_get_positioner_ybounds(pFlObject):
         >>> minb, maxb = fl_get_positioner_ybounds(pstobj)
 
     API_diversion
-    ----------
-        API changed from XForms, upstream was
-        fl_get_positioner_ybounds(pFlObject, minbound, maxbound)
+    -------------
+        API changed from XForms, upstream is
+        fl_get_positioner_ybounds(ptr_flobject, minbound, maxbound)
 
     Notes
     -----
@@ -400,25 +406,25 @@ def fl_get_positioner_ybounds(pFlObject):
         """void fl_get_positioner_ybounds(FL_OBJECT * ob, double * min,
            double * max)""")
     library.check_if_initialized()
-    library.verify_flobjectptr_type(pFlObject)
-    minbound, pminbound = library.make_double_and_pointer()
-    maxbound, pmaxbound = library.make_double_and_pointer()
-    library.keep_elem_refs(pFlObject, minbound, maxbound, pminbound, \
-            pmaxbound)
-    _fl_get_positioner_ybounds(pFlObject, pminbound, pmaxbound)
-    return minbound.value, maxbound.value
+    library.verify_flobjectptr_type(ptr_flobject)
+    f_minbound, ptr_minbound = library.make_doublec_and_pointer()
+    f_maxbound, ptr_maxbound = library.make_doublec_and_pointer()
+    library.keep_elem_refs(ptr_flobject, f_minbound, f_maxbound, \
+            ptr_minbound, ptr_maxbound)
+    _fl_get_positioner_ybounds(ptr_flobject, ptr_minbound, ptr_maxbound)
+    return f_minbound.value, f_maxbound.value
 
 
-def fl_set_positioner_xstep(pFlObject, step):
-    """fl_set_positioner_xstep(pFlObject, step)
+def fl_set_positioner_xstep(ptr_flobject, step):
+    """fl_set_positioner_xstep(ptr_flobject, step)
     
-    Handles positioner values in horizontal direction to be rounded to some
-    values (multiples of step), e.g. to integer values.
+    Handles positioner values in horizontal direction to be rounded to
+    some values (multiples of step), e.g. to integer values.
 
     Parameters
     ----------
-        pFlObject : pointer to xfdata.FL_OBJECT
-            positioner object
+        ptr_flobject : pointer to xfdata.FL_OBJECT
+            positioner flobject
         step : float
             rounded value. If it is 0.0, switch off rounding.
 
@@ -436,22 +442,22 @@ def fl_set_positioner_xstep(pFlObject, step):
         None, [cty.POINTER(xfdata.FL_OBJECT), cty.c_double],
         """void fl_set_positioner_xstep(FL_OBJECT * ob, double value)""")
     library.check_if_initialized()
-    library.verify_flobjectptr_type(pFlObject)
-    fstep = library.convert_to_double(step)
-    library.keep_elem_refs(pFlObject, step, fstep)
-    _fl_set_positioner_xstep(pFlObject, fstep)
+    library.verify_flobjectptr_type(ptr_flobject)
+    f_step = library.convert_to_doublec(step)
+    library.keep_elem_refs(ptr_flobject, step, f_step)
+    _fl_set_positioner_xstep(ptr_flobject, f_step)
 
 
-def fl_set_positioner_ystep(pFlObject, step):
-    """fl_set_positioner_ystep(pFlObject, step)
+def fl_set_positioner_ystep(ptr_flobject, step):
+    """fl_set_positioner_ystep(ptr_flobject, step)
     
-    Handles positioner values in vertical direction to be rounded to some
-    values (multiples of step), e.g. to integer values.
+    Handles positioner values in vertical direction to be rounded to
+    some values (multiples of step), e.g. to integer values.
 
     Parameters
     ----------
-        pFlObject : pointer to xfdata.FL_OBJECT
-            positioner object
+        ptr_flobject : pointer to xfdata.FL_OBJECT
+            positioner flobject
         step : float
             rounded value. If it is 0.0, switch off rounding.
 
@@ -469,10 +475,10 @@ def fl_set_positioner_ystep(pFlObject, step):
         None, [cty.POINTER(xfdata.FL_OBJECT), cty.c_double],
         """void fl_set_positioner_ystep(FL_OBJECT * ob, double value)""")
     library.check_if_initialized()
-    library.verify_flobjectptr_type(pFlObject)
-    fstep = library.convert_to_double(step)
-    library.keep_elem_refs(pFlObject, step, fstep)
-    _fl_set_positioner_ystep(pFlObject, fstep)
+    library.verify_flobjectptr_type(ptr_flobject)
+    f_step = library.convert_to_doublec(step)
+    library.keep_elem_refs(ptr_flobject, step, f_step)
+    _fl_set_positioner_ystep(ptr_flobject, f_step)
 
 # fl_set_positioner_return function placeholder (deprecated)
 

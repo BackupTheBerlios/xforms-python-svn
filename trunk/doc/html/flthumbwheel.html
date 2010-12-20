@@ -9,7 +9,7 @@
 <font color="#ffffff" face="helvetica, arial">&nbsp;<br><big><big><strong>flthumbwheel</strong></big></big></font></td
 ><td align=right valign=bottom
 ><font color="#ffffff" face="helvetica, arial"><a href=".">index</a><br>     <a href="index.html">list</a></font></td></tr></table>
-    <p><tt>xforms-python's&nbsp;functions&nbsp;to&nbsp;manage&nbsp;thumbwheel&nbsp;objects.</tt></p>
+    <p><tt>xforms-python's&nbsp;functions&nbsp;to&nbsp;manage&nbsp;thumbwheel&nbsp;flobjects.</tt></p>
 <p>
 <table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
 <tr bgcolor="#aa55cc">
@@ -27,30 +27,30 @@
 <font color="#ffffff" face="helvetica, arial"><big><strong>Functions</strong></big></font></td></tr>
     
 <tr><td bgcolor="#eeaa77"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
-<td width="100%"><dl><dt><a name="-fl_add_thumbwheel"><strong>fl_add_thumbwheel</strong></a>(wheeltype, x, y, w, h, label)</dt><dd><tt><a href="#-fl_add_thumbwheel">fl_add_thumbwheel</a>(wheeltype,&nbsp;x,&nbsp;y,&nbsp;w,&nbsp;h,&nbsp;label)<br>
+<td width="100%"><dl><dt><a name="-fl_add_thumbwheel"><strong>fl_add_thumbwheel</strong></a>(wheeltype, xpos, ypos, width, height, label)</dt><dd><tt><a href="#-fl_add_thumbwheel">fl_add_thumbwheel</a>(wheeltype,&nbsp;xpos,&nbsp;ypos,&nbsp;width,&nbsp;height,&nbsp;label)&nbsp;-&gt;&nbsp;ptr_flobject<br>
 &nbsp;<br>
-Adds&nbsp;a&nbsp;thumbwheel&nbsp;object.<br>
+Adds&nbsp;a&nbsp;thumbwheel&nbsp;flobject.<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
 &nbsp;&nbsp;&nbsp;&nbsp;wheeltype&nbsp;:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;type&nbsp;of&nbsp;thumbwheel&nbsp;to&nbsp;be&nbsp;added.&nbsp;Values&nbsp;(from&nbsp;xfdata.py)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_VERT_THUMBWHEEL,&nbsp;FL_HOR_THUMBWHEEL<br>
-&nbsp;&nbsp;&nbsp;&nbsp;x&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;xpos&nbsp;:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;horizontal&nbsp;position&nbsp;(upper-left&nbsp;corner)<br>
-&nbsp;&nbsp;&nbsp;&nbsp;y&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ypos&nbsp;:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;vertical&nbsp;position&nbsp;(upper-left&nbsp;corner)<br>
-&nbsp;&nbsp;&nbsp;&nbsp;w&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;width&nbsp;:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;width&nbsp;in&nbsp;coord&nbsp;units<br>
-&nbsp;&nbsp;&nbsp;&nbsp;h&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;height&nbsp;:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;height&nbsp;in&nbsp;coord&nbsp;units<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;label&nbsp;:&nbsp;str<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;text&nbsp;label&nbsp;of&nbsp;thumbwheel<br>
 &nbsp;<br>
 Returns<br>
 -------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;pFlObject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;thumbwheel&nbsp;object&nbsp;added<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_flobject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;thumbwheel&nbsp;flobject&nbsp;added<br>
 &nbsp;<br>
 Examples<br>
 --------<br>
@@ -60,47 +60,47 @@ Examples<br>
 Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;Demo&nbsp;=&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-fl_get_thumbwheel_bounds"><strong>fl_get_thumbwheel_bounds</strong></a>(pFlObject)</dt><dd><tt><a href="#-fl_get_thumbwheel_bounds">fl_get_thumbwheel_bounds</a>(pFlObject)<br>
+ <dl><dt><a name="-fl_get_thumbwheel_bounds"><strong>fl_get_thumbwheel_bounds</strong></a>(ptr_flobject)</dt><dd><tt><a href="#-fl_get_thumbwheel_bounds">fl_get_thumbwheel_bounds</a>(ptr_flobject)&nbsp;-&gt;&nbsp;minbound,&nbsp;maxbound<br>
 &nbsp;<br>
-*todo*<br>
+Finds&nbsp;out&nbsp;minimum&nbsp;and&nbsp;maximum&nbsp;value&nbsp;limits&nbsp;of&nbsp;a&nbsp;thumbwheel&nbsp;flobject.<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;pFlObject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;thumbwheel&nbsp;object<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_flobject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;thumbwheel&nbsp;flobject<br>
 &nbsp;<br>
 Returns<br>
 -------<br>
 &nbsp;&nbsp;&nbsp;&nbsp;minbound&nbsp;:&nbsp;float<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;minimum&nbsp;bound<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;minimum&nbsp;value&nbsp;bound<br>
 &nbsp;&nbsp;&nbsp;&nbsp;maxbound&nbsp;:&nbsp;float<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;maximum&nbsp;bound<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;maximum&nbsp;value&nbsp;bound<br>
 &nbsp;<br>
 Examples<br>
 --------<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;*todo*<br>
 &nbsp;<br>
 API_diversion<br>
-----------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;API&nbsp;changed&nbsp;from&nbsp;XForms,&nbsp;upstream&nbsp;was<br>
-&nbsp;&nbsp;&nbsp;&nbsp;<a href="#-fl_get_thumbwheel_bounds">fl_get_thumbwheel_bounds</a>(pFlObject,&nbsp;minbound,&nbsp;maxbound)<br>
+-------------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;API&nbsp;changed&nbsp;from&nbsp;XForms,&nbsp;upstream&nbsp;is<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="#-fl_get_thumbwheel_bounds">fl_get_thumbwheel_bounds</a>(ptr_flobject,&nbsp;minbound,&nbsp;maxbound)<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-fl_get_thumbwheel_step"><strong>fl_get_thumbwheel_step</strong></a>(pFlObject)</dt><dd><tt><a href="#-fl_get_thumbwheel_step">fl_get_thumbwheel_step</a>(pFlObject)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
+ <dl><dt><a name="-fl_get_thumbwheel_step"><strong>fl_get_thumbwheel_step</strong></a>(ptr_flobject)</dt><dd><tt><a href="#-fl_get_thumbwheel_step">fl_get_thumbwheel_step</a>(ptr_flobject)&nbsp;-&gt;&nbsp;step<br>
 &nbsp;<br>
-*todo*<br>
+Finds&nbsp;out&nbsp;step&nbsp;for&nbsp;thumbwheel&nbsp;flobject&nbsp;value&nbsp;to&nbsp;be&nbsp;rounded&nbsp;to.<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;pFlObject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;thumbwheel&nbsp;object<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_flobject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;thumbwheel&nbsp;flobject<br>
 &nbsp;<br>
 Returns<br>
 -------<br>
 &nbsp;&nbsp;&nbsp;&nbsp;step&nbsp;:&nbsp;float<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;step&nbsp;value<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;step&nbsp;value&nbsp;to&nbsp;be&nbsp;rounded<br>
 &nbsp;<br>
 Examples<br>
 --------<br>
@@ -109,19 +109,19 @@ Examples<br>
 Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-fl_get_thumbwheel_value"><strong>fl_get_thumbwheel_value</strong></a>(pFlObject)</dt><dd><tt><a href="#-fl_get_thumbwheel_value">fl_get_thumbwheel_value</a>(pFlObject)<br>
+ <dl><dt><a name="-fl_get_thumbwheel_value"><strong>fl_get_thumbwheel_value</strong></a>(ptr_flobject)</dt><dd><tt><a href="#-fl_get_thumbwheel_value">fl_get_thumbwheel_value</a>(ptr_flobject)&nbsp;-&gt;&nbsp;thwvalue<br>
 &nbsp;<br>
-*todo*<br>
+Finds&nbsp;out&nbsp;the&nbsp;current&nbsp;value&nbsp;of&nbsp;a&nbsp;thumbwheel&nbsp;flobject.<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;pFlObject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;thumbwheel&nbsp;object<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_flobject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;thumbwheel&nbsp;flobject<br>
 &nbsp;<br>
 Returns<br>
 -------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;num.&nbsp;:&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*todo*<br>
+&nbsp;&nbsp;&nbsp;&nbsp;thwvalue&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;current&nbsp;thumbwheel&nbsp;value,&nbsp;or&nbsp;1.0&nbsp;(on&nbsp;failure)<br>
 &nbsp;<br>
 Examples<br>
 --------<br>
@@ -130,18 +130,18 @@ Examples<br>
 Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;Demo&nbsp;=&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-fl_set_thumbwheel_bounds"><strong>fl_set_thumbwheel_bounds</strong></a>(pFlObject, minbound, maxbound)</dt><dd><tt><a href="#-fl_set_thumbwheel_bounds">fl_set_thumbwheel_bounds</a>(pFlObject,&nbsp;minbound,&nbsp;maxbound)<br>
+ <dl><dt><a name="-fl_set_thumbwheel_bounds"><strong>fl_set_thumbwheel_bounds</strong></a>(ptr_flobject, minbound, maxbound)</dt><dd><tt><a href="#-fl_set_thumbwheel_bounds">fl_set_thumbwheel_bounds</a>(ptr_flobject,&nbsp;minbound,&nbsp;maxbound)<br>
 &nbsp;<br>
-*todo*<br>
+Defines&nbsp;minimum&nbsp;and&nbsp;maximum&nbsp;value&nbsp;limits&nbsp;of&nbsp;a&nbsp;thumbwheel&nbsp;flobject.<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;pFlObject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;thumbwheel&nbsp;object<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_flobject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;thumbwheel&nbsp;flobject<br>
 &nbsp;&nbsp;&nbsp;&nbsp;minbound&nbsp;:&nbsp;float<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;minimum&nbsp;bound&nbsp;of&nbsp;thumbwheel<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;minimum&nbsp;value&nbsp;bound&nbsp;of&nbsp;thumbwheel<br>
 &nbsp;&nbsp;&nbsp;&nbsp;maxbound&nbsp;:&nbsp;float<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;maximum&nbsp;bound&nbsp;of&nbsp;thumbwheel<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;maximum&nbsp;value&nbsp;bound&nbsp;of&nbsp;thumbwheel<br>
 &nbsp;<br>
 Examples<br>
 --------<br>
@@ -150,21 +150,21 @@ Examples<br>
 Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-fl_set_thumbwheel_crossover"><strong>fl_set_thumbwheel_crossover</strong></a>(pFlObject, flag)</dt><dd><tt><a href="#-fl_set_thumbwheel_crossover">fl_set_thumbwheel_crossover</a>(pFlObject,&nbsp;flag)<br>
+ <dl><dt><a name="-fl_set_thumbwheel_crossover"><strong>fl_set_thumbwheel_crossover</strong></a>(ptr_flobject, flag)</dt><dd><tt><a href="#-fl_set_thumbwheel_crossover">fl_set_thumbwheel_crossover</a>(ptr_flobject,&nbsp;flag)&nbsp;-&gt;&nbsp;oldcrossover<br>
 &nbsp;<br>
-*todo*<br>
+Defines&nbsp;crossover&nbsp;for&nbsp;&nbsp;thumbwheel&nbsp;flobject.<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;pFlObject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;thumbwheel&nbsp;object<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_flobject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;thumbwheel&nbsp;flobject<br>
 &nbsp;&nbsp;&nbsp;&nbsp;flag&nbsp;:&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*todo*<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;flag&nbsp;for&nbsp;crossover<br>
 &nbsp;<br>
 Returns<br>
 -------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;num.&nbsp;:&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*todo*<br>
+&nbsp;&nbsp;&nbsp;&nbsp;oldcrossover&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;previous&nbsp;crossover<br>
 &nbsp;<br>
 Examples<br>
 --------<br>
@@ -173,47 +173,21 @@ Examples<br>
 Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-fl_set_thumbwheel_return"><strong>fl_set_thumbwheel_return</strong></a>(pFlObject, when)</dt><dd><tt><a href="#-fl_set_thumbwheel_return">fl_set_thumbwheel_return</a>(pFlObject,&nbsp;when)<br>
+ <dl><dt><a name="-fl_set_thumbwheel_step"><strong>fl_set_thumbwheel_step</strong></a>(ptr_flobject, step)</dt><dd><tt><a href="#-fl_set_thumbwheel_step">fl_set_thumbwheel_step</a>(ptr_flobject,&nbsp;step)&nbsp;-&gt;&nbsp;oldstep<br>
 &nbsp;<br>
-*todo*<br>
-&nbsp;<br>
-Parameters<br>
-----------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;pFlObject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;thumbwheel&nbsp;object<br>
-&nbsp;&nbsp;&nbsp;&nbsp;when&nbsp;:&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;type&nbsp;(when&nbsp;it&nbsp;returns).&nbsp;Values&nbsp;(from&nbsp;xfdata.py)<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_RETURN_NONE,&nbsp;FL_RETURN_CHANGED,&nbsp;FL_RETURN_END,<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_RETURN_END_CHANGED,&nbsp;FL_RETURN_SELECTION,&nbsp;FL_RETURN_DESELECTION,<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_RETURN_TRIGGERED,&nbsp;FL_RETURN_ALWAYS<br>
-&nbsp;<br>
-Returns<br>
--------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;num.&nbsp;:&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;previous&nbsp;return&nbsp;type?<br>
-&nbsp;<br>
-Examples<br>
---------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;*todo*<br>
-&nbsp;<br>
-Notes<br>
------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;Demo&nbsp;=&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-fl_set_thumbwheel_step"><strong>fl_set_thumbwheel_step</strong></a>(pFlObject, step)</dt><dd><tt><a href="#-fl_set_thumbwheel_step">fl_set_thumbwheel_step</a>(pFlObject,&nbsp;step)<br>
-&nbsp;<br>
-*todo*<br>
+Defines&nbsp;step&nbsp;for&nbsp;thumbwheel&nbsp;flobject&nbsp;value&nbsp;to&nbsp;be&nbsp;rounded&nbsp;to.<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;pFlObject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;thumbwheel&nbsp;object<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_flobject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;thumbwheel&nbsp;flobject<br>
 &nbsp;&nbsp;&nbsp;&nbsp;step&nbsp;:&nbsp;float<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;step&nbsp;value&nbsp;to&nbsp;be&nbsp;set<br>
 &nbsp;<br>
 Returns<br>
 -------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;num.&nbsp;:&nbsp;float<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*todo*<br>
+&nbsp;&nbsp;&nbsp;&nbsp;oldstep&nbsp;:&nbsp;float<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;previous&nbsp;step&nbsp;value<br>
 &nbsp;<br>
 Examples<br>
 --------<br>
@@ -222,21 +196,21 @@ Examples<br>
 Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;Demo&nbsp;=&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-fl_set_thumbwheel_value"><strong>fl_set_thumbwheel_value</strong></a>(pFlObject, value)</dt><dd><tt><a href="#-fl_set_thumbwheel_value">fl_set_thumbwheel_value</a>(pFlObject,&nbsp;value)<br>
+ <dl><dt><a name="-fl_set_thumbwheel_value"><strong>fl_set_thumbwheel_value</strong></a>(ptr_flobject, thwvalue)</dt><dd><tt><a href="#-fl_set_thumbwheel_value">fl_set_thumbwheel_value</a>(ptr_flobject,&nbsp;thwvalue)&nbsp;-&gt;&nbsp;oldthwvalue<br>
 &nbsp;<br>
-*todo*<br>
+Defines&nbsp;a&nbsp;new&nbsp;value&nbsp;of&nbsp;a&nbsp;thumbwheel&nbsp;flobject.<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;pFlObject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;thumbwheel&nbsp;object<br>
-&nbsp;&nbsp;&nbsp;&nbsp;value&nbsp;:&nbsp;float<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;value&nbsp;to&nbsp;be&nbsp;set<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_flobject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;thumbwheel&nbsp;flobject<br>
+&nbsp;&nbsp;&nbsp;&nbsp;thwvalue&nbsp;:&nbsp;float<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;new&nbsp;value&nbsp;to&nbsp;be&nbsp;set<br>
 &nbsp;<br>
 Returns<br>
 -------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;num.&nbsp;:&nbsp;float<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*todo*<br>
+&nbsp;&nbsp;&nbsp;&nbsp;oldthwvalue&nbsp;:&nbsp;float<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;previous&nbsp;value,&nbsp;or&nbsp;1.0&nbsp;(on&nbsp;failure)<br>
 &nbsp;<br>
 Examples<br>
 --------<br>
@@ -246,4 +220,4 @@ Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
 </td></tr></table>
-<p>Updated on: 2010-12-09 10:11 +0100</body></html>
+<p>Updated on: 2010-12-20 01:16 +0100</body></html>

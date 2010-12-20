@@ -9,7 +9,7 @@
 <font color="#ffffff" face="helvetica, arial">&nbsp;<br><big><big><strong>flchart</strong></big></big></font></td
 ><td align=right valign=bottom
 ><font color="#ffffff" face="helvetica, arial"><a href=".">index</a><br>     <a href="index.html">list</a></font></td></tr></table>
-    <p><tt>xforms-python's&nbsp;functions&nbsp;to&nbsp;manage&nbsp;chart&nbsp;objects.</tt></p>
+    <p><tt>xforms-python's&nbsp;functions&nbsp;to&nbsp;manage&nbsp;chart&nbsp;flobjects.</tt></p>
 <p>
 <table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
 <tr bgcolor="#aa55cc">
@@ -27,9 +27,10 @@
 <font color="#ffffff" face="helvetica, arial"><big><strong>Functions</strong></big></font></td></tr>
     
 <tr><td bgcolor="#eeaa77"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
-<td width="100%"><dl><dt><a name="-fl_add_chart"><strong>fl_add_chart</strong></a>(charttype, x, y, w, h, label)</dt><dd><tt><a href="#-fl_add_chart">fl_add_chart</a>(charttype,&nbsp;x,&nbsp;y,&nbsp;w,&nbsp;h,&nbsp;label)<br>
+<td width="100%"><dl><dt><a name="-fl_add_chart"><strong>fl_add_chart</strong></a>(charttype, xpos, ypos, width, height, label)</dt><dd><tt><a href="#-fl_add_chart">fl_add_chart</a>(charttype,&nbsp;xpos,&nbsp;ypos,&nbsp;width,&nbsp;height,&nbsp;label)<br>
+-&gt;&nbsp;ptr_flobject<br>
 &nbsp;<br>
-Adds&nbsp;a&nbsp;chart&nbsp;object.<br>
+Adds&nbsp;a&nbsp;chart&nbsp;flobject.<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
@@ -37,76 +38,76 @@ Parameters<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;type&nbsp;of&nbsp;chart&nbsp;to&nbsp;be&nbsp;created.&nbsp;Values&nbsp;(from&nbsp;xfdata&nbsp;module)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_BAR_CHART,&nbsp;FL_HORBAR_CHART,&nbsp;FL_LINE_CHART,&nbsp;FL_FILL_CHART,<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_SPIKE_CHART,&nbsp;FL_PIE_CHART,&nbsp;FL_SPECIALPIE_CHART<br>
-&nbsp;&nbsp;&nbsp;&nbsp;x&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;xpos&nbsp;:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;horizontal&nbsp;position&nbsp;(upper-left&nbsp;corner)<br>
-&nbsp;&nbsp;&nbsp;&nbsp;y&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ypos&nbsp;:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;vertical&nbsp;position&nbsp;(upper-left&nbsp;corner)<br>
-&nbsp;&nbsp;&nbsp;&nbsp;w&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;width&nbsp;:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;width&nbsp;in&nbsp;coord&nbsp;units<br>
-&nbsp;&nbsp;&nbsp;&nbsp;h&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;height&nbsp;:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;height&nbsp;in&nbsp;coord&nbsp;units<br>
 &nbsp;&nbsp;&nbsp;&nbsp;label&nbsp;:&nbsp;str<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;text&nbsp;label&nbsp;of&nbsp;chart<br>
 &nbsp;<br>
 Returns<br>
 -------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;pFlObject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;chart&nbsp;object&nbsp;added<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_flobject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;chart&nbsp;flobject&nbsp;added<br>
 &nbsp;<br>
 Examples<br>
 --------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;chrtobj&nbsp;=&nbsp;<a href="#-fl_add_chart">fl_add_chart</a>(xfdata.FL_SPIKE_CHART,&nbsp;147,&nbsp;168,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;pchrtobj&nbsp;=&nbsp;<a href="#-fl_add_chart">fl_add_chart</a>(xfdata.FL_SPIKE_CHART,&nbsp;147,&nbsp;168,<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;250,&nbsp;492,&nbsp;"My&nbsp;Chart")<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;Demo&nbsp;=&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-fl_add_chart_value"><strong>fl_add_chart_value</strong></a>(pFlObject, val, label, colr)</dt><dd><tt><a href="#-fl_add_chart_value">fl_add_chart_value</a>(pFlObject,&nbsp;val,&nbsp;label,&nbsp;colr)<br>
+ <dl><dt><a name="-fl_add_chart_value"><strong>fl_add_chart_value</strong></a>(ptr_flobject, itemval, label, colr)</dt><dd><tt><a href="#-fl_add_chart_value">fl_add_chart_value</a>(ptr_flobject,&nbsp;itemval,&nbsp;label,&nbsp;colr)<br>
 &nbsp;<br>
-Adds&nbsp;an&nbsp;item&nbsp;to&nbsp;the&nbsp;chart&nbsp;object.<br>
+Adds&nbsp;an&nbsp;item&nbsp;to&nbsp;the&nbsp;chart&nbsp;flobject.<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;pFlObject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;chart&nbsp;object<br>
-&nbsp;&nbsp;&nbsp;&nbsp;val&nbsp;:&nbsp;float<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_flobject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;chart&nbsp;flobject<br>
+&nbsp;&nbsp;&nbsp;&nbsp;itemval&nbsp;:&nbsp;float<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;value&nbsp;of&nbsp;chart&nbsp;item<br>
 &nbsp;&nbsp;&nbsp;&nbsp;label&nbsp;:&nbsp;str<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;text&nbsp;label&nbsp;of&nbsp;chart<br>
 &nbsp;&nbsp;&nbsp;&nbsp;colr&nbsp;:&nbsp;long_pos<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;color&nbsp;num.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;color&nbsp;value<br>
 &nbsp;<br>
 Examples<br>
 --------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;<a href="#-fl_add_chart_value">fl_add_chart_value</a>(chrtobj,&nbsp;120,&nbsp;"Some&nbsp;point",&nbsp;xfdata.FL_BLUE)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;<a href="#-fl_add_chart_value">fl_add_chart_value</a>(pchrtobj,&nbsp;120,&nbsp;"Some&nbsp;point",&nbsp;xfdata.FL_BLUE)<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;Demo&nbsp;=&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-fl_clear_chart"><strong>fl_clear_chart</strong></a>(pFlObject)</dt><dd><tt><a href="#-fl_clear_chart">fl_clear_chart</a>(pFlObject)<br>
+ <dl><dt><a name="-fl_clear_chart"><strong>fl_clear_chart</strong></a>(ptr_flobject)</dt><dd><tt><a href="#-fl_clear_chart">fl_clear_chart</a>(ptr_flobject)<br>
 &nbsp;<br>
-Clears&nbsp;the&nbsp;contents&nbsp;of&nbsp;a&nbsp;chart.<br>
+Clears&nbsp;the&nbsp;contents&nbsp;of&nbsp;a&nbsp;chart&nbsp;flobject.<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;pFlObject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;chart&nbsp;object<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_flobject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;chart&nbsp;flobject<br>
 &nbsp;<br>
 Examples<br>
 --------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;<a href="#-fl_clear_chart">fl_clear_chart</a>(chrtobj)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;<a href="#-fl_clear_chart">fl_clear_chart</a>(pchrtobj)<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-fl_get_chart_bounds"><strong>fl_get_chart_bounds</strong></a>(pFlObject)</dt><dd><tt><a href="#-fl_get_chart_bounds">fl_get_chart_bounds</a>(pFlObject)<br>
+ <dl><dt><a name="-fl_get_chart_bounds"><strong>fl_get_chart_bounds</strong></a>(ptr_flobject)</dt><dd><tt><a href="#-fl_get_chart_bounds">fl_get_chart_bounds</a>(ptr_flobject)&nbsp;-&gt;&nbsp;minbound,&nbsp;maxbound<br>
 &nbsp;<br>
-Obtains&nbsp;the&nbsp;boundaries/limits&nbsp;set&nbsp;for&nbsp;values&nbsp;of&nbsp;a&nbsp;chart&nbsp;object.<br>
+Finds&nbsp;out&nbsp;the&nbsp;boundaries/limits&nbsp;set&nbsp;for&nbsp;values&nbsp;of&nbsp;a&nbsp;chart&nbsp;flobject.<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;pFlObject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;chart&nbsp;object<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_flobject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;chart&nbsp;flobject<br>
 &nbsp;<br>
 Returns<br>
 -------<br>
@@ -117,28 +118,28 @@ Returns<br>
 &nbsp;<br>
 Examples<br>
 --------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;minb,&nbsp;maxb&nbsp;=&nbsp;<a href="#-fl_get_chart_bounds">fl_get_chart_bounds</a>(chrtobj)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;minb,&nbsp;maxb&nbsp;=&nbsp;<a href="#-fl_get_chart_bounds">fl_get_chart_bounds</a>(pchrtobj)<br>
 &nbsp;<br>
 API_diversion<br>
 ----------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;API&nbsp;changed&nbsp;from&nbsp;XForms,&nbsp;upstream&nbsp;was<br>
-&nbsp;&nbsp;&nbsp;&nbsp;<a href="#-fl_get_chart_bounds">fl_get_chart_bounds</a>(pFlObject,&nbsp;minbound,&nbsp;maxbound)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;API&nbsp;changed&nbsp;from&nbsp;XForms,&nbsp;upstream&nbsp;is<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="#-fl_get_chart_bounds">fl_get_chart_bounds</a>(ptr_flobject,&nbsp;minbound,&nbsp;maxbound)<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-fl_insert_chart_value"><strong>fl_insert_chart_value</strong></a>(pFlObject, indx, val, label, colr)</dt><dd><tt><a href="#-fl_insert_chart_value">fl_insert_chart_value</a>(pFlObject,&nbsp;indx,&nbsp;val,&nbsp;label,&nbsp;colr)<br>
+ <dl><dt><a name="-fl_insert_chart_value"><strong>fl_insert_chart_value</strong></a>(ptr_flobject, indx, itemval, label, colr)</dt><dd><tt><a href="#-fl_insert_chart_value">fl_insert_chart_value</a>(ptr_flobject,&nbsp;indx,&nbsp;itemval,&nbsp;label,&nbsp;colr)<br>
 &nbsp;<br>
-Inserts&nbsp;a&nbsp;new&nbsp;value&nbsp;at&nbsp;a&nbsp;particular&nbsp;place&nbsp;in&nbsp;a&nbsp;chart&nbsp;object.<br>
+Inserts&nbsp;a&nbsp;new&nbsp;value&nbsp;at&nbsp;a&nbsp;particular&nbsp;place&nbsp;in&nbsp;a&nbsp;chart&nbsp;flobject.<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;pFlObject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;chart&nbsp;object<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_flobject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;chart&nbsp;flobject<br>
 &nbsp;&nbsp;&nbsp;&nbsp;indx&nbsp;:&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;index&nbsp;before&nbsp;which&nbsp;the&nbsp;new&nbsp;item&nbsp;should&nbsp;be&nbsp;inserted.&nbsp;The&nbsp;first<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;item&nbsp;is&nbsp;number&nbsp;1.<br>
-&nbsp;&nbsp;&nbsp;&nbsp;val&nbsp;:&nbsp;float<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;index&nbsp;before&nbsp;which&nbsp;the&nbsp;new&nbsp;item&nbsp;should&nbsp;be&nbsp;inserted.&nbsp;The<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;first&nbsp;item&nbsp;is&nbsp;number&nbsp;1.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;itemval&nbsp;:&nbsp;float<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;value&nbsp;of&nbsp;new&nbsp;chart&nbsp;item<br>
 &nbsp;&nbsp;&nbsp;&nbsp;label&nbsp;:&nbsp;str<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;text&nbsp;label&nbsp;of&nbsp;chart<br>
@@ -147,23 +148,24 @@ Parameters<br>
 &nbsp;<br>
 Examples<br>
 --------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;<a href="#-fl_insert_chart_value">fl_insert_chart_value</a>(chrtobj,&nbsp;2,&nbsp;123.0,&nbsp;"new&nbsp;value",<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;<a href="#-fl_insert_chart_value">fl_insert_chart_value</a>(pchrtobj,&nbsp;2,&nbsp;123.0,&nbsp;"new&nbsp;value",<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;xfdata.FL_DEEPSKYBLUE)<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-fl_replace_chart_value"><strong>fl_replace_chart_value</strong></a>(pFlObject, indx, val, label, colr)</dt><dd><tt><a href="#-fl_replace_chart_value">fl_replace_chart_value</a>(pFlObject,&nbsp;indx,&nbsp;val,&nbsp;label,&nbsp;colr)<br>
+ <dl><dt><a name="-fl_replace_chart_value"><strong>fl_replace_chart_value</strong></a>(ptr_flobject, indx, itemval, label, colr)</dt><dd><tt><a href="#-fl_replace_chart_value">fl_replace_chart_value</a>(ptr_flobject,&nbsp;indx,&nbsp;itemval,&nbsp;label,&nbsp;colr)<br>
 &nbsp;<br>
-Replaces&nbsp;value&nbsp;of&nbsp;an&nbsp;item&nbsp;in&nbsp;the&nbsp;chart&nbsp;object.<br>
+Replaces&nbsp;value&nbsp;of&nbsp;an&nbsp;item&nbsp;in&nbsp;the&nbsp;chart&nbsp;flobject.<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;pFlObject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;chart&nbsp;object<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_flobject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;chart&nbsp;flobject<br>
 &nbsp;&nbsp;&nbsp;&nbsp;indx&nbsp;:&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;index&nbsp;position&nbsp;of&nbsp;item&nbsp;to&nbsp;be&nbsp;replaced<br>
-&nbsp;&nbsp;&nbsp;&nbsp;val&nbsp;:&nbsp;float<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;index&nbsp;position&nbsp;of&nbsp;item&nbsp;to&nbsp;be&nbsp;replaced.&nbsp;The&nbsp;first&nbsp;item<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;is&nbsp;number&nbsp;1.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;itemval&nbsp;:&nbsp;float<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;value&nbsp;of&nbsp;chart&nbsp;item<br>
 &nbsp;&nbsp;&nbsp;&nbsp;label&nbsp;:&nbsp;str<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;text&nbsp;label&nbsp;of&nbsp;chart<br>
@@ -172,22 +174,22 @@ Parameters<br>
 &nbsp;<br>
 Examples<br>
 --------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;<a href="#-fl_replace_chart_value">fl_replace_chart_value</a>(chrtobj,&nbsp;3,&nbsp;142.0,&nbsp;"replaced&nbsp;item",<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;<a href="#-fl_replace_chart_value">fl_replace_chart_value</a>(pchrtobj,&nbsp;3,&nbsp;142.0,&nbsp;"replaced&nbsp;item",<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;xfdata.FL_FIREBRICK)<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-fl_set_chart_autosize"><strong>fl_set_chart_autosize</strong></a>(pFlObject, yesno)</dt><dd><tt><a href="#-fl_set_chart_autosize">fl_set_chart_autosize</a>(pFlObject,&nbsp;yesno)<br>
+ <dl><dt><a name="-fl_set_chart_autosize"><strong>fl_set_chart_autosize</strong></a>(ptr_flobject, yesno)</dt><dd><tt><a href="#-fl_set_chart_autosize">fl_set_chart_autosize</a>(ptr_flobject,&nbsp;yesno)<br>
 &nbsp;<br>
-Sets&nbsp;whether&nbsp;the&nbsp;chart&nbsp;should&nbsp;autosize&nbsp;along&nbsp;the&nbsp;x-axis.&nbsp;Normally&nbsp;width<br>
-of&nbsp;the&nbsp;bars&nbsp;and&nbsp;distance&nbsp;between&nbsp;the&nbsp;points&nbsp;in&nbsp;a&nbsp;line-chart&nbsp;are&nbsp;normally<br>
-scaled.<br>
+Defines&nbsp;whether&nbsp;the&nbsp;chart&nbsp;should&nbsp;autosize&nbsp;along&nbsp;the&nbsp;x-axis.&nbsp;Normally<br>
+width&nbsp;of&nbsp;the&nbsp;bars&nbsp;and&nbsp;distance&nbsp;between&nbsp;the&nbsp;points&nbsp;in&nbsp;a&nbsp;line-chart&nbsp;are<br>
+normally&nbsp;scaled.<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;pFlObject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;chart&nbsp;object<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_flobject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;chart&nbsp;flobject<br>
 &nbsp;&nbsp;&nbsp;&nbsp;yesno&nbsp;:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;autosize&nbsp;flag.&nbsp;Values&nbsp;1&nbsp;(if&nbsp;enabled)&nbsp;or&nbsp;0&nbsp;(if&nbsp;disabled).<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;If&nbsp;it&nbsp;is&nbsp;set&nbsp;to&nbsp;0&nbsp;the&nbsp;width&nbsp;of&nbsp;the&nbsp;bars&nbsp;will&nbsp;be&nbsp;such&nbsp;that&nbsp;the<br>
@@ -200,14 +202,14 @@ Examples<br>
 Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-fl_set_chart_baseline"><strong>fl_set_chart_baseline</strong></a>(pFlObject, yesno)</dt><dd><tt><a href="#-fl_set_chart_baseline">fl_set_chart_baseline</a>(pFlObject,&nbsp;yesno)<br>
+ <dl><dt><a name="-fl_set_chart_baseline"><strong>fl_set_chart_baseline</strong></a>(ptr_flobject, yesno)</dt><dd><tt><a href="#-fl_set_chart_baseline">fl_set_chart_baseline</a>(ptr_flobject,&nbsp;yesno)<br>
 &nbsp;<br>
 Turns&nbsp;on&nbsp;or&nbsp;off&nbsp;the&nbsp;chart's&nbsp;baseline.<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;pFlObject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;chart&nbsp;object<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_flobject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;chart&nbsp;flobject<br>
 &nbsp;&nbsp;&nbsp;&nbsp;yesno&nbsp;:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;flag&nbsp;for&nbsp;baseline.&nbsp;Values&nbsp;0&nbsp;(if&nbsp;disabled)&nbsp;or&nbsp;1&nbsp;(if&nbsp;enabled)<br>
 &nbsp;<br>
@@ -218,16 +220,16 @@ Examples<br>
 Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-fl_set_chart_bounds"><strong>fl_set_chart_bounds</strong></a>(pFlObject, minbound, maxbound)</dt><dd><tt><a href="#-fl_set_chart_bounds">fl_set_chart_bounds</a>(pFlObject,&nbsp;minbound,&nbsp;maxbound)<br>
+ <dl><dt><a name="-fl_set_chart_bounds"><strong>fl_set_chart_bounds</strong></a>(ptr_flobject, minbound, maxbound)</dt><dd><tt><a href="#-fl_set_chart_bounds">fl_set_chart_bounds</a>(ptr_flobject,&nbsp;minbound,&nbsp;maxbound)<br>
 &nbsp;<br>
-Sets&nbsp;the&nbsp;boundaries/limits&nbsp;for&nbsp;values&nbsp;of&nbsp;a&nbsp;chart&nbsp;object.&nbsp;Normally,<br>
+Defines&nbsp;the&nbsp;boundaries/limits&nbsp;for&nbsp;values&nbsp;of&nbsp;a&nbsp;chart&nbsp;flobject.&nbsp;Normally,<br>
 bar-charts&nbsp;and&nbsp;line-charts&nbsp;are&nbsp;automatically&nbsp;scaled&nbsp;in&nbsp;the&nbsp;vertical<br>
 direction&nbsp;such&nbsp;that&nbsp;all&nbsp;values&nbsp;can&nbsp;be&nbsp;displayed.<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;pFlObject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;chart&nbsp;object<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_flobject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;chart&nbsp;flobject<br>
 &nbsp;&nbsp;&nbsp;&nbsp;minbound&nbsp;:&nbsp;float<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;minimum&nbsp;bounds&nbsp;to&nbsp;be&nbsp;set<br>
 &nbsp;&nbsp;&nbsp;&nbsp;maxbound&nbsp;:&nbsp;float<br>
@@ -235,20 +237,20 @@ Parameters<br>
 &nbsp;<br>
 Examples<br>
 --------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;<a href="#-fl_set_chart_bounds">fl_set_chart_bounds</a>(chrtobj,&nbsp;100,&nbsp;950)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;<a href="#-fl_set_chart_bounds">fl_set_chart_bounds</a>(pchrtobj,&nbsp;100,&nbsp;950)<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-fl_set_chart_lcol"><strong>fl_set_chart_lcol</strong></a> = fl_set_chart_lcolor(pFlObject, colr)</dt><dd><tt><a href="#-fl_set_chart_lcolor">fl_set_chart_lcolor</a>(pFlObject,&nbsp;colr)<br>
+ <dl><dt><a name="-fl_set_chart_lcol"><strong>fl_set_chart_lcol</strong></a> = fl_set_chart_lcolor(ptr_flobject, colr)</dt><dd><tt><a href="#-fl_set_chart_lcolor">fl_set_chart_lcolor</a>(ptr_flobject,&nbsp;colr)<br>
 &nbsp;<br>
 Changes&nbsp;the&nbsp;color&nbsp;of&nbsp;chart's&nbsp;label.&nbsp;By&nbsp;default,&nbsp;the&nbsp;label&nbsp;is<br>
 drawn&nbsp;in&nbsp;black.<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;pFlObject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;chart&nbsp;object<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_flobject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;chart&nbsp;flobject<br>
 &nbsp;&nbsp;&nbsp;&nbsp;colr&nbsp;:&nbsp;long_pos<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;color&nbsp;value<br>
 &nbsp;<br>
@@ -259,15 +261,15 @@ Examples<br>
 Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-fl_set_chart_lcolor"><strong>fl_set_chart_lcolor</strong></a>(pFlObject, colr)</dt><dd><tt><a href="#-fl_set_chart_lcolor">fl_set_chart_lcolor</a>(pFlObject,&nbsp;colr)<br>
+ <dl><dt><a name="-fl_set_chart_lcolor"><strong>fl_set_chart_lcolor</strong></a>(ptr_flobject, colr)</dt><dd><tt><a href="#-fl_set_chart_lcolor">fl_set_chart_lcolor</a>(ptr_flobject,&nbsp;colr)<br>
 &nbsp;<br>
 Changes&nbsp;the&nbsp;color&nbsp;of&nbsp;chart's&nbsp;label.&nbsp;By&nbsp;default,&nbsp;the&nbsp;label&nbsp;is<br>
 drawn&nbsp;in&nbsp;black.<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;pFlObject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;chart&nbsp;object<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_flobject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;chart&nbsp;flobject<br>
 &nbsp;&nbsp;&nbsp;&nbsp;colr&nbsp;:&nbsp;long_pos<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;color&nbsp;value<br>
 &nbsp;<br>
@@ -278,19 +280,19 @@ Examples<br>
 Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-fl_set_chart_lsize"><strong>fl_set_chart_lsize</strong></a>(pFlObject, size)</dt><dd><tt><a href="#-fl_set_chart_lsize">fl_set_chart_lsize</a>(pFlObject,&nbsp;size)<br>
+ <dl><dt><a name="-fl_set_chart_lsize"><strong>fl_set_chart_lsize</strong></a>(ptr_flobject, size)</dt><dd><tt><a href="#-fl_set_chart_lsize">fl_set_chart_lsize</a>(ptr_flobject,&nbsp;size)<br>
 &nbsp;<br>
 Changes&nbsp;the&nbsp;font&nbsp;size&nbsp;of&nbsp;chart's&nbsp;label.&nbsp;By&nbsp;default,&nbsp;the&nbsp;label&nbsp;is<br>
 drawn&nbsp;in&nbsp;a&nbsp;tiny&nbsp;font.<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;pFlObject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;chart&nbsp;object<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_flobject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;chart&nbsp;flobject<br>
 &nbsp;&nbsp;&nbsp;&nbsp;size&nbsp;:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;label&nbsp;size.&nbsp;Values&nbsp;(from&nbsp;xfdata&nbsp;module)&nbsp;FL_TINY_SIZE,<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_SMALL_SIZE,&nbsp;FL_NORMAL_SIZE,&nbsp;FL_MEDIUM_SIZE,&nbsp;FL_LARGE_SIZE,<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_HUGE_SIZE,&nbsp;FL_DEFAULT_SIZE<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_SMALL_SIZE,&nbsp;FL_NORMAL_SIZE,&nbsp;FL_MEDIUM_SIZE,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_LARGE_SIZE,&nbsp;FL_HUGE_SIZE,&nbsp;FL_DEFAULT_SIZE<br>
 &nbsp;<br>
 Examples<br>
 --------<br>
@@ -299,15 +301,15 @@ Examples<br>
 Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-fl_set_chart_lstyle"><strong>fl_set_chart_lstyle</strong></a>(pFlObject, style)</dt><dd><tt><a href="#-fl_set_chart_lstyle">fl_set_chart_lstyle</a>(pFlObject,&nbsp;style)<br>
+ <dl><dt><a name="-fl_set_chart_lstyle"><strong>fl_set_chart_lstyle</strong></a>(ptr_flobject, style)</dt><dd><tt><a href="#-fl_set_chart_lstyle">fl_set_chart_lstyle</a>(ptr_flobject,&nbsp;style)<br>
 &nbsp;<br>
 Changes&nbsp;the&nbsp;font&nbsp;style&nbsp;of&nbsp;a&nbsp;chart's&nbsp;label.&nbsp;By&nbsp;default&nbsp;the&nbsp;label&nbsp;is<br>
 drawn&nbsp;in&nbsp;a&nbsp;tiny&nbsp;font.<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;pFlObject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;chart&nbsp;object<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_flobject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;chart&nbsp;flobject<br>
 &nbsp;&nbsp;&nbsp;&nbsp;style&nbsp;:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;label&nbsp;style.&nbsp;Values&nbsp;(from&nbsp;xfdata&nbsp;module)&nbsp;FL_NORMAL_STYLE,<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_BOLD_STYLE,&nbsp;FL_ITALIC_STYLE,&nbsp;FL_BOLDITALIC_STYLE,<br>
@@ -324,24 +326,24 @@ Examples<br>
 Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-fl_set_chart_maxnumb"><strong>fl_set_chart_maxnumb</strong></a>(pFlObject, maxnum)</dt><dd><tt><a href="#-fl_set_chart_maxnumb">fl_set_chart_maxnumb</a>(pFlObject,&nbsp;maxnum)<br>
+ <dl><dt><a name="-fl_set_chart_maxnumb"><strong>fl_set_chart_maxnumb</strong></a>(ptr_flobject, maxnum)</dt><dd><tt><a href="#-fl_set_chart_maxnumb">fl_set_chart_maxnumb</a>(ptr_flobject,&nbsp;maxnum)<br>
 &nbsp;<br>
-Sets&nbsp;the&nbsp;maximum&nbsp;number&nbsp;of&nbsp;values&nbsp;displayed&nbsp;in&nbsp;the&nbsp;chart.&nbsp;Defaults<br>
+Defines&nbsp;the&nbsp;maximum&nbsp;number&nbsp;of&nbsp;values&nbsp;displayed&nbsp;in&nbsp;the&nbsp;chart.&nbsp;Defaults<br>
 is&nbsp;xfdata.FL_CHART_MAX;&nbsp;maximum&nbsp;set&nbsp;cannot&nbsp;be&nbsp;more&nbsp;than&nbsp;that.<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;pFlObject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;chart&nbsp;object<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_flobject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;chart&nbsp;flobject<br>
 &nbsp;&nbsp;&nbsp;&nbsp;maxnum&nbsp;:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;maximum&nbsp;number&nbsp;of&nbsp;values&nbsp;to&nbsp;display<br>
 &nbsp;<br>
 Examples<br>
 --------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;<a href="#-fl_set_chart_maxnumb">fl_set_chart_maxnumb</a>(chrtobj,&nbsp;12)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;<a href="#-fl_set_chart_maxnumb">fl_set_chart_maxnumb</a>(pchrtobj,&nbsp;12)<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
 </td></tr></table>
-<p>Updated on: 2010-12-09 10:11 +0100</body></html>
+<p>Updated on: 2010-12-20 01:16 +0100</body></html>

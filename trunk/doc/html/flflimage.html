@@ -9,7 +9,7 @@
 <font color="#ffffff" face="helvetica, arial">&nbsp;<br><big><big><strong>flflimage</strong></big></big></font></td
 ><td align=right valign=bottom
 ><font color="#ffffff" face="helvetica, arial"><a href=".">index</a><br>     <a href="index.html">list</a></font></td></tr></table>
-    <p><tt>xforms-python's&nbsp;functions&nbsp;to&nbsp;manage&nbsp;image&nbsp;objects.</tt></p>
+    <p><tt>xforms-python's&nbsp;functions&nbsp;to&nbsp;manage&nbsp;image&nbsp;flobjects.</tt></p>
 <p>
 <table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
 <tr bgcolor="#aa55cc">
@@ -27,16 +27,16 @@
 <font color="#ffffff" face="helvetica, arial"><big><strong>Functions</strong></big></font></td></tr>
     
 <tr><td bgcolor="#eeaa77"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
-<td width="100%"><dl><dt><a name="-FL_IsPacked"><strong>FL_IsPacked</strong></a>(pImage)</dt></dl>
- <dl><dt><a name="-FL_IsRGB"><strong>FL_IsRGB</strong></a>(pImage)</dt></dl>
+<td width="100%"><dl><dt><a name="-FL_IsPacked"><strong>FL_IsPacked</strong></a>(ptr_image)</dt></dl>
+ <dl><dt><a name="-FL_IsRGB"><strong>FL_IsRGB</strong></a>(ptr_image)</dt></dl>
  <dl><dt><a name="-FL_RGB2GRAY"><strong>FL_RGB2GRAY</strong></a>(r, g, b)</dt></dl>
- <dl><dt><a name="-fl_free_matrix"><strong>fl_free_matrix</strong></a>(mtrx)</dt><dd><tt><a href="#-fl_free_matrix">fl_free_matrix</a>(mtrx)<br>
+ <dl><dt><a name="-fl_free_matrix"><strong>fl_free_matrix</strong></a>(matrix)</dt><dd><tt><a href="#-fl_free_matrix">fl_free_matrix</a>(matrix)<br>
 &nbsp;<br>
 Frees&nbsp;a&nbsp;matrix&nbsp;allocated&nbsp;using&nbsp;<a href="#-fl_get_matrix">fl_get_matrix</a>()&nbsp;or&nbsp;<a href="#-fl_make_matrix">fl_make_matrix</a>().<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;mtrx&nbsp;:&nbsp;*todo*<br>
+&nbsp;&nbsp;&nbsp;&nbsp;matrix&nbsp;:&nbsp;*todo*<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;a&nbsp;matrix?<br>
 &nbsp;<br>
 Examples<br>
@@ -46,16 +46,16 @@ Examples<br>
 Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-fl_get_matrix"><strong>fl_get_matrix</strong></a>(nrows, ncols, elemsize)</dt><dd><tt><a href="#-fl_get_matrix">fl_get_matrix</a>(nrows,&nbsp;ncols,&nbsp;elemsize)<br>
+ <dl><dt><a name="-fl_get_matrix"><strong>fl_get_matrix</strong></a>(numrows, numcols, elemsize)</dt><dd><tt><a href="#-fl_get_matrix">fl_get_matrix</a>(numrows,&nbsp;numcols,&nbsp;elemsize)&nbsp;-&gt;&nbsp;matrix<br>
 &nbsp;<br>
 Creates&nbsp;a&nbsp;2-dimensional&nbsp;array&nbsp;of&nbsp;entities&nbsp;of&nbsp;size&nbsp;elemsize.&nbsp;The&nbsp;array<br>
-is&nbsp;of&nbsp;nrows&nbsp;by&nbsp;ncols&nbsp;in&nbsp;size.<br>
+is&nbsp;of&nbsp;numrows&nbsp;by&nbsp;numcols&nbsp;in&nbsp;size.<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;nrows&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;numrows&nbsp;:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;number&nbsp;of&nbsp;rows<br>
-&nbsp;&nbsp;&nbsp;&nbsp;ncols&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;numcols&nbsp;:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;number&nbsp;of&nbsp;columns<br>
 &nbsp;&nbsp;&nbsp;&nbsp;elemsize&nbsp;:&nbsp;int_pos<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;size&nbsp;of&nbsp;matrix&nbsp;in&nbsp;bytes<br>
@@ -72,7 +72,8 @@ Examples<br>
 Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-fl_get_submatrix"><strong>fl_get_submatrix</strong></a>(inmtrx, nrows, ncols, r1, c1, rs, cs, elemsize)</dt><dd><tt><a href="#-fl_get_submatrix">fl_get_submatrix</a>(inmtrx,&nbsp;nrows,&nbsp;ncols,&nbsp;r1,&nbsp;c1,&nbsp;rs,&nbsp;cs,&nbsp;elemsize)<br>
+ <dl><dt><a name="-fl_get_submatrix"><strong>fl_get_submatrix</strong></a>(inmatrix, numrows, numcols, startrow, startcol, endrow, endcol, elemsize)</dt><dd><tt><a href="#-fl_get_submatrix">fl_get_submatrix</a>(inmatrix,&nbsp;numrows,&nbsp;numcols,&nbsp;startrow,&nbsp;startcol,<br>
+endrow,&nbsp;endcol,&nbsp;elemsize)<br>
 &nbsp;<br>
 Grabs&nbsp;a&nbsp;piece&nbsp;of&nbsp;an&nbsp;image&nbsp;matrix.&nbsp;The&nbsp;piece&nbsp;is&nbsp;of&nbsp;nrows&nbsp;by&nbsp;ncols&nbsp;in<br>
 size.<br>
@@ -81,25 +82,25 @@ Parameters<br>
 ----------<br>
 &nbsp;&nbsp;&nbsp;&nbsp;inmtrx&nbsp;:&nbsp;*todo*<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;image&nbsp;matrix<br>
-&nbsp;&nbsp;&nbsp;&nbsp;nrows&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;numrows&nbsp;:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;number&nbsp;of&nbsp;rows<br>
-&nbsp;&nbsp;&nbsp;&nbsp;ncols&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;numcols&nbsp;:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;number&nbsp;of&nbsp;columns<br>
-&nbsp;&nbsp;&nbsp;&nbsp;r1&nbsp;:&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;initial&nbsp;row?<br>
-&nbsp;&nbsp;&nbsp;&nbsp;c1&nbsp;:&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;initial&nbsp;column?<br>
-&nbsp;&nbsp;&nbsp;&nbsp;rs&nbsp;:&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;final&nbsp;row?<br>
-&nbsp;&nbsp;&nbsp;&nbsp;cs&nbsp;:&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;final&nbsp;column?<br>
+&nbsp;&nbsp;&nbsp;&nbsp;startrow&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;initial&nbsp;row?&nbsp;(r1)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;startcol&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;initial&nbsp;column?&nbsp;(c1)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;endrow&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;final&nbsp;row?&nbsp;(rs)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;endcol&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;final&nbsp;column?&nbsp;(cs)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;elemsize&nbsp;:&nbsp;int_pos<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;size&nbsp;of&nbsp;matrix&nbsp;in&nbsp;bytes<br>
 &nbsp;<br>
 Returns<br>
 -------<br>
 &nbsp;&nbsp;&nbsp;&nbsp;num.&nbsp;:&nbsp;*todo*<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;a&nbsp;matrix?<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;submatrix<br>
 &nbsp;<br>
 Examples<br>
 --------<br>
@@ -108,8 +109,8 @@ Examples<br>
 Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-fl_j2pass_quantize_packed"><strong>fl_j2pass_quantize_packed</strong></a>(packed, w, h, maxcolr, ci, actualcolr, redlut, greenlut, bluelut, pImage)</dt><dd><tt><a href="#-fl_j2pass_quantize_packed">fl_j2pass_quantize_packed</a>(packed,&nbsp;w,&nbsp;h,&nbsp;maxcolr,&nbsp;ci,&nbsp;actualcolr,<br>
-redlut,&nbsp;greenlut,&nbsp;bluelut,&nbsp;pImage)<br>
+ <dl><dt><a name="-fl_j2pass_quantize_packed"><strong>fl_j2pass_quantize_packed</strong></a>(packed, width, height, maxcolr, ci, actualcolr, redlut, greenlut, bluelut, ptr_image)</dt><dd><tt><a href="#-fl_j2pass_quantize_packed">fl_j2pass_quantize_packed</a>(packed,&nbsp;width,&nbsp;height,&nbsp;maxcolr,&nbsp;ci,<br>
+actualcolr,&nbsp;redlut,&nbsp;greenlut,&nbsp;bluelut,&nbsp;ptr_image)&nbsp;-&gt;&nbsp;num<br>
 &nbsp;<br>
 *todo*<br>
 &nbsp;<br>
@@ -117,9 +118,9 @@ Parameters<br>
 ----------<br>
 &nbsp;&nbsp;&nbsp;&nbsp;packed&nbsp;:&nbsp;*todo*<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*todo*<br>
-&nbsp;&nbsp;&nbsp;&nbsp;w&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;width&nbsp;:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*todo*<br>
-&nbsp;&nbsp;&nbsp;&nbsp;h&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;height&nbsp;:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*todo*<br>
 &nbsp;&nbsp;&nbsp;&nbsp;maxcolr&nbsp;:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*todo*<br>
@@ -133,7 +134,7 @@ Parameters<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*todo*<br>
 &nbsp;&nbsp;&nbsp;&nbsp;bluelut&nbsp;:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*todo*<br>
-&nbsp;&nbsp;&nbsp;&nbsp;pImage&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_IMAGE<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_image&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_IMAGE<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;image<br>
 &nbsp;<br>
 Returns<br>
@@ -148,8 +149,8 @@ Examples<br>
 Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-fl_j2pass_quantize_rgb"><strong>fl_j2pass_quantize_rgb</strong></a>(red, green, blue, w, h, maxcolr, ci, actualcolr, redlut, greenlut, bluelut, pImage)</dt><dd><tt><a href="#-fl_j2pass_quantize_rgb">fl_j2pass_quantize_rgb</a>(red,&nbsp;green,&nbsp;blue,&nbsp;w,&nbsp;h,&nbsp;maxcolr,&nbsp;ci,<br>
-actualcolr,&nbsp;redlut,&nbsp;greenlut,&nbsp;bluelut,&nbsp;pImage)<br>
+ <dl><dt><a name="-fl_j2pass_quantize_rgb"><strong>fl_j2pass_quantize_rgb</strong></a>(red, green, blue, width, height, maxcolr, ci, actualcolr, redlut, greenlut, bluelut, ptr_image)</dt><dd><tt><a href="#-fl_j2pass_quantize_rgb">fl_j2pass_quantize_rgb</a>(red,&nbsp;green,&nbsp;blue,&nbsp;width,&nbsp;height,&nbsp;maxcolr,&nbsp;ci,<br>
+actualcolr,&nbsp;redlut,&nbsp;greenlut,&nbsp;bluelut,&nbsp;ptr_image)&nbsp;-&gt;&nbsp;num<br>
 &nbsp;<br>
 *todo*<br>
 &nbsp;<br>
@@ -161,9 +162,9 @@ Parameters<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*todo*<br>
 &nbsp;&nbsp;&nbsp;&nbsp;blue&nbsp;:&nbsp;*todo*<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*todo*<br>
-&nbsp;&nbsp;&nbsp;&nbsp;w&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;width&nbsp;:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*todo*<br>
-&nbsp;&nbsp;&nbsp;&nbsp;h&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;height&nbsp;:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*todo*<br>
 &nbsp;&nbsp;&nbsp;&nbsp;maxcolr&nbsp;:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*todo*<br>
@@ -177,7 +178,7 @@ Parameters<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*todo*<br>
 &nbsp;&nbsp;&nbsp;&nbsp;bluelut&nbsp;:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*todo*<br>
-&nbsp;&nbsp;&nbsp;&nbsp;pImage&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_IMAGE<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_image&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_IMAGE<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;image<br>
 &nbsp;<br>
 Returns<br>
@@ -192,9 +193,9 @@ Examples<br>
 Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-fl_lookup_RGBcolor"><strong>fl_lookup_RGBcolor</strong></a>(colrname)</dt><dd><tt><a href="#-fl_lookup_RGBcolor">fl_lookup_RGBcolor</a>(colrname)<br>
+ <dl><dt><a name="-fl_lookup_RGBcolor"><strong>fl_lookup_RGBcolor</strong></a>(colrname)</dt><dd><tt><a href="#-fl_lookup_RGBcolor">fl_lookup_RGBcolor</a>(colrname)&nbsp;-&gt;&nbsp;result,&nbsp;red,&nbsp;green,&nbsp;blue<br>
 &nbsp;<br>
-*todo*<br>
+Finds&nbsp;out&nbsp;red,&nbsp;green&nbsp;and&nbsp;blue&nbsp;value&nbsp;corresponding&nbsp;to&nbsp;a&nbsp;color&nbsp;name.<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
@@ -218,21 +219,21 @@ Examples<br>
 &nbsp;<br>
 API_diversion<br>
 ----------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;API&nbsp;changed&nbsp;from&nbsp;XForms,&nbsp;upstream&nbsp;was<br>
+&nbsp;&nbsp;&nbsp;&nbsp;API&nbsp;changed&nbsp;from&nbsp;XForms,&nbsp;upstream&nbsp;is<br>
 &nbsp;&nbsp;&nbsp;&nbsp;<a href="#-fl_lookup_RGBcolor">fl_lookup_RGBcolor</a>(text,&nbsp;r,&nbsp;g,&nbsp;b)<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-fl_make_matrix"><strong>fl_make_matrix</strong></a>(nrows, ncols, elemsize, mem)</dt><dd><tt><a href="#-fl_make_matrix">fl_make_matrix</a>(nrows,&nbsp;ncols,&nbsp;elemsize,&nbsp;mem)<br>
+ <dl><dt><a name="-fl_make_matrix"><strong>fl_make_matrix</strong></a>(numrows, numcols, elemsize, mem)</dt><dd><tt><a href="#-fl_make_matrix">fl_make_matrix</a>(numrows,&nbsp;numcols,&nbsp;elemsize,&nbsp;mem)&nbsp;-&gt;&nbsp;matrix<br>
 &nbsp;<br>
 Makes&nbsp;a&nbsp;matrix&nbsp;out&nbsp;of&nbsp;a&nbsp;given&nbsp;piece&nbsp;of&nbsp;memory.<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;nrows&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;numrows&nbsp;:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;number&nbsp;of&nbsp;rows<br>
-&nbsp;&nbsp;&nbsp;&nbsp;ncols&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;numcols&nbsp;:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;number&nbsp;of&nbsp;columns<br>
 &nbsp;&nbsp;&nbsp;&nbsp;elemsize&nbsp;:&nbsp;int_pos<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;size&nbsp;of&nbsp;matrix&nbsp;in&nbsp;bytes<br>
@@ -251,25 +252,26 @@ Examples<br>
 Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-fl_make_submatrix"><strong>fl_make_submatrix</strong></a>(inmtrx, nrows, ncols, r1, c1, rs, cs, elemsize)</dt><dd><tt><a href="#-fl_make_submatrix">fl_make_submatrix</a>(inmtrx,&nbsp;nrows,&nbsp;ncols,&nbsp;r1,&nbsp;c1,&nbsp;rs,&nbsp;cs,&nbsp;elemsize)<br>
+ <dl><dt><a name="-fl_make_submatrix"><strong>fl_make_submatrix</strong></a>(inmatrix, numrows, numcols, startrow, startcol, endrow, endcol, elemsize)</dt><dd><tt><a href="#-fl_make_submatrix">fl_make_submatrix</a>(inmatrix,&nbsp;numrows,&nbsp;numcols,&nbsp;startrow,&nbsp;startcol,<br>
+endrow,&nbsp;endcol,&nbsp;elemsize)&nbsp;-&gt;&nbsp;submatrix<br>
 &nbsp;<br>
 *todo*<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;inmtrx&nbsp;:&nbsp;*todo*<br>
+&nbsp;&nbsp;&nbsp;&nbsp;inmatrix&nbsp;:&nbsp;*todo*<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;image&nbsp;matrix<br>
-&nbsp;&nbsp;&nbsp;&nbsp;nrows&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;numrows&nbsp;:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;number&nbsp;of&nbsp;rows<br>
-&nbsp;&nbsp;&nbsp;&nbsp;ncols&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;numcols&nbsp;:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;number&nbsp;of&nbsp;columns<br>
-&nbsp;&nbsp;&nbsp;&nbsp;r1&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;startrow&nbsp;:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;initial&nbsp;row?<br>
-&nbsp;&nbsp;&nbsp;&nbsp;c1&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;startcol&nbsp;:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;initial&nbsp;column?<br>
-&nbsp;&nbsp;&nbsp;&nbsp;rs&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;endrow&nbsp;:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;final&nbsp;row?<br>
-&nbsp;&nbsp;&nbsp;&nbsp;cs&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;endcol&nbsp;:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;final&nbsp;column?<br>
 &nbsp;&nbsp;&nbsp;&nbsp;elemsize&nbsp;:&nbsp;int_pos<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;size&nbsp;of&nbsp;matrix&nbsp;in&nbsp;bytes<br>
@@ -277,7 +279,7 @@ Parameters<br>
 Returns<br>
 -------<br>
 &nbsp;&nbsp;&nbsp;&nbsp;num&nbsp;:&nbsp;*todo*<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;a&nbsp;matrix?<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;submatrix<br>
 &nbsp;<br>
 Examples<br>
 --------<br>
@@ -286,7 +288,7 @@ Examples<br>
 Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-fl_pack_bits"><strong>fl_pack_bits</strong></a>(inval, lng)</dt><dd><tt><a href="#-fl_pack_bits">fl_pack_bits</a>(inval,&nbsp;lng)<br>
+ <dl><dt><a name="-fl_pack_bits"><strong>fl_pack_bits</strong></a>(inval, numindxs)</dt><dd><tt><a href="#-fl_pack_bits">fl_pack_bits</a>(inval,&nbsp;numindxs)&nbsp;-&gt;&nbsp;outval<br>
 &nbsp;<br>
 Packs&nbsp;color&nbsp;index&nbsp;(0&nbsp;or&nbsp;1)&nbsp;into&nbsp;bytes.<br>
 &nbsp;<br>
@@ -294,8 +296,8 @@ Parameters<br>
 ----------<br>
 &nbsp;&nbsp;&nbsp;&nbsp;inval&nbsp;:&nbsp;short_pos<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;input&nbsp;value&nbsp;to&nbsp;be&nbsp;packed<br>
-&nbsp;&nbsp;&nbsp;&nbsp;lng&nbsp;:&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;number&nbsp;of&nbsp;indexes<br>
+&nbsp;&nbsp;&nbsp;&nbsp;numindxs&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;number&nbsp;of&nbsp;indices<br>
 &nbsp;<br>
 Returns<br>
 -------<br>
@@ -308,12 +310,12 @@ Examples<br>
 &nbsp;<br>
 API_diversion<br>
 ----------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;API&nbsp;changed&nbsp;from&nbsp;XForms,&nbsp;upstream&nbsp;was<br>
+&nbsp;&nbsp;&nbsp;&nbsp;API&nbsp;changed&nbsp;from&nbsp;XForms,&nbsp;upstream&nbsp;is<br>
 &nbsp;&nbsp;&nbsp;&nbsp;<a href="#-fl_pack_bits">fl_pack_bits</a>(outval,&nbsp;inval,&nbsp;lng)<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK&nbsp;(how&nbsp;to&nbsp;pass&nbsp;inval)</tt></dd></dl>
  <dl><dt><a name="-fl_select_mediancut_quantizer"><strong>fl_select_mediancut_quantizer</strong></a>()</dt><dd><tt><a href="#-fl_select_mediancut_quantizer">fl_select_mediancut_quantizer</a>()<br>
 &nbsp;<br>
 Selects&nbsp;median&nbsp;cut&nbsp;quantizer,&nbsp;who&nbsp;uses&nbsp;Heckbert's&nbsp;median&nbsp;cut&nbsp;algorithm<br>
@@ -331,7 +333,7 @@ Examples<br>
 Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-fl_unpack_bits"><strong>fl_unpack_bits</strong></a>(inval, lng)</dt><dd><tt><a href="#-fl_unpack_bits">fl_unpack_bits</a>(inval,&nbsp;lng)<br>
+ <dl><dt><a name="-fl_unpack_bits"><strong>fl_unpack_bits</strong></a>(inval, numindxs)</dt><dd><tt><a href="#-fl_unpack_bits">fl_unpack_bits</a>(inval,&nbsp;numindxs)&nbsp;-&gt;&nbsp;outval<br>
 &nbsp;<br>
 Unpacks&nbsp;packed&nbsp;bits&nbsp;into&nbsp;color&nbsp;indexes&nbsp;(0&nbsp;or&nbsp;1).<br>
 &nbsp;<br>
@@ -339,7 +341,7 @@ Parameters<br>
 ----------<br>
 &nbsp;&nbsp;&nbsp;&nbsp;inval&nbsp;:&nbsp;byte_pos<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;input&nbsp;value&nbsp;to&nbsp;be&nbsp;unpacked<br>
-&nbsp;&nbsp;&nbsp;&nbsp;lng&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;numindxs&nbsp;:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;length&nbsp;of&nbsp;packed&nbsp;bytes.<br>
 &nbsp;<br>
 Returns<br>
@@ -353,13 +355,13 @@ Examples<br>
 &nbsp;<br>
 API_diversion<br>
 ----------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;API&nbsp;changed&nbsp;from&nbsp;XForms,&nbsp;upstream&nbsp;was<br>
+&nbsp;&nbsp;&nbsp;&nbsp;API&nbsp;changed&nbsp;from&nbsp;XForms,&nbsp;upstream&nbsp;is<br>
 &nbsp;&nbsp;&nbsp;&nbsp;<a href="#-fl_unpack_bits">fl_unpack_bits</a>(outval,&nbsp;inval,&nbsp;lng)<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-fl_value_to_bits"><strong>fl_value_to_bits</strong></a>(val)</dt><dd><tt><a href="#-fl_value_to_bits">fl_value_to_bits</a>(val)<br>
+ <dl><dt><a name="-fl_value_to_bits"><strong>fl_value_to_bits</strong></a>(val)</dt><dd><tt><a href="#-fl_value_to_bits">fl_value_to_bits</a>(val)&nbsp;-&gt;&nbsp;num<br>
 &nbsp;<br>
 *todo*<br>
 &nbsp;<br>
@@ -380,17 +382,17 @@ Examples<br>
 Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-flimage_add_comments"><strong>flimage_add_comments</strong></a>(pImage, text, lng)</dt><dd><tt><a href="#-flimage_add_comments">flimage_add_comments</a>(pImage,&nbsp;text,&nbsp;lng)<br>
+ <dl><dt><a name="-flimage_add_comments"><strong>flimage_add_comments</strong></a>(ptr_image, text, length)</dt><dd><tt><a href="#-flimage_add_comments">flimage_add_comments</a>(ptr_image,&nbsp;text,&nbsp;length)<br>
 &nbsp;<br>
 Adds&nbsp;a&nbsp;comment&nbsp;to&nbsp;an&nbsp;image.<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;pImage&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_IMAGE<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_image&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_IMAGE<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;image<br>
 &nbsp;&nbsp;&nbsp;&nbsp;text&nbsp;:&nbsp;str<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;comment&nbsp;to&nbsp;be&nbsp;added<br>
-&nbsp;&nbsp;&nbsp;&nbsp;lng&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;length&nbsp;:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;length&nbsp;of&nbsp;comment<br>
 &nbsp;<br>
 Examples<br>
@@ -400,9 +402,9 @@ Examples<br>
 Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-flimage_add_format"><strong>flimage_add_format</strong></a>(formalname, shortname, extension, imagetype, py_ImageIdentify, py_ImageDescription, py_ImageReadPixels, py_ImageWriteImage)</dt><dd><tt><a href="#-flimage_add_format">flimage_add_format</a>(formalname,&nbsp;shortname,&nbsp;extension,&nbsp;imagetype,<br>
-py_ImageIdentify,&nbsp;py_ImageDescription,&nbsp;py_ImageReadPixels,<br>
-py_ImageWriteImage)<br>
+ <dl><dt><a name="-flimage_add_format"><strong>flimage_add_format</strong></a>(formalname, shortname, extension, imagetype, pyfn_ImageIdentify, pyfn_ImageDescription, pyfn_ImageReadPixels, pyfn_ImageWriteImage)</dt><dd><tt><a href="#-flimage_add_format">flimage_add_format</a>(formalname,&nbsp;shortname,&nbsp;extension,&nbsp;imagetype,<br>
+pyfn_ImageIdentify,&nbsp;pyfn_ImageDescription,&nbsp;pyfn_ImageReadPixels,<br>
+pyfn_ImageWriteImage)&nbsp;-&gt;&nbsp;result<br>
 &nbsp;<br>
 Adds&nbsp;the&nbsp;newly&nbsp;specified&nbsp;image&nbsp;format&nbsp;to&nbsp;a&nbsp;recognized&nbsp;image&nbsp;format<br>
 pool&nbsp;in&nbsp;the&nbsp;library.<br>
@@ -410,29 +412,30 @@ pool&nbsp;in&nbsp;the&nbsp;library.<br>
 Parameters<br>
 ----------<br>
 &nbsp;&nbsp;&nbsp;&nbsp;formalname&nbsp;:&nbsp;str<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;the&nbsp;formal&nbsp;name&nbsp;of&nbsp;image&nbsp;format<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;the&nbsp;formal&nbsp;name&nbsp;of&nbsp;image&nbsp;format,&nbsp;e.g.&nbsp;"Tag&nbsp;Image&nbsp;File&nbsp;Format"<br>
 &nbsp;&nbsp;&nbsp;&nbsp;shortname&nbsp;:&nbsp;str<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;an&nbsp;abbreviated&nbsp;name&nbsp;for&nbsp;the&nbsp;image&nbsp;format<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;an&nbsp;abbreviated&nbsp;name&nbsp;for&nbsp;the&nbsp;image&nbsp;forma,&nbsp;e.g.&nbsp;"tiff"<br>
 &nbsp;&nbsp;&nbsp;&nbsp;extension&nbsp;:&nbsp;str<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;file&nbsp;extension.&nbsp;If&nbsp;it&nbsp;is&nbsp;None,&nbsp;shortname&nbsp;will&nbsp;be&nbsp;substituted<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;file&nbsp;extension,&nbsp;e.g.&nbsp;"tif".&nbsp;If&nbsp;it&nbsp;is&nbsp;None,&nbsp;shortname&nbsp;will&nbsp;be<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;substituted<br>
 &nbsp;&nbsp;&nbsp;&nbsp;imagetype&nbsp;:&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The&nbsp;image&nbsp;type,&nbsp;generally&nbsp;one&nbsp;of&nbsp;the&nbsp;supported&nbsp;image&nbsp;types&nbsp;(e.g.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;the&nbsp;image&nbsp;type,&nbsp;generally&nbsp;one&nbsp;of&nbsp;the&nbsp;supported&nbsp;image&nbsp;types&nbsp;(e.g.<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;xfdata.FL_IMAGE_RGB),&nbsp;but&nbsp;it&nbsp;does&nbsp;not&nbsp;have&nbsp;to.&nbsp;For&nbsp;image&nbsp;file<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;formats&nbsp;that&nbsp;are&nbsp;capable&nbsp;of&nbsp;holding&nbsp;more&nbsp;than&nbsp;one&nbsp;type&nbsp;of&nbsp;images,<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;this&nbsp;field&nbsp;can&nbsp;be&nbsp;set&nbsp;to&nbsp;indicate&nbsp;this&nbsp;by&nbsp;ORing&nbsp;the&nbsp;supported<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;this&nbsp;field&nbsp;can&nbsp;be&nbsp;set&nbsp;to&nbsp;indicate&nbsp;this&nbsp;by&nbsp;OR-ing&nbsp;the&nbsp;supported<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;types&nbsp;together&nbsp;(e.g.,&nbsp;xfdata.FL_IMAGE_RGB|FL_IMAGE_GRAY).<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;However,&nbsp;when&nbsp;description&nbsp;returns,&nbsp;the&nbsp;image&nbsp;type&nbsp;should&nbsp;be&nbsp;set<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;to&nbsp;the&nbsp;actual&nbsp;type&nbsp;in&nbsp;the&nbsp;file.<br>
-&nbsp;&nbsp;&nbsp;&nbsp;py_ImageIdentify&nbsp;:&nbsp;function&nbsp;to&nbsp;identify&nbsp;format,&nbsp;returned&nbsp;value<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;name&nbsp;referring&nbsp;to&nbsp;function(pFile)&nbsp;-&gt;&nbsp;num.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;pyfn_ImageIdentify&nbsp;:&nbsp;function&nbsp;to&nbsp;identify&nbsp;format,&nbsp;returned&nbsp;value<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;name&nbsp;referring&nbsp;to&nbsp;function(ptr_file)&nbsp;-&gt;&nbsp;num.<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;This&nbsp;function&nbsp;should&nbsp;return&nbsp;1&nbsp;if&nbsp;the&nbsp;file&nbsp;pointed&nbsp;to&nbsp;by&nbsp;the&nbsp;file<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;pointer&nbsp;passed&nbsp;in&nbsp;is&nbsp;the&nbsp;expected&nbsp;image&nbsp;format&nbsp;(e.g&nbsp;by&nbsp;checking<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;signature).&nbsp;It&nbsp;should&nbsp;return&nbsp;a&nbsp;negative&nbsp;number&nbsp;if&nbsp;the&nbsp;file&nbsp;is<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;not&nbsp;recognized.&nbsp;The&nbsp;decision&nbsp;if&nbsp;the&nbsp;file&nbsp;pointer&nbsp;should&nbsp;be<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;rewound&nbsp;or&nbsp;not&nbsp;is&nbsp;between&nbsp;this&nbsp;function&nbsp;and&nbsp;the&nbsp;description<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;function.<br>
-&nbsp;&nbsp;&nbsp;&nbsp;py_ImageDescription&nbsp;:&nbsp;function&nbsp;to&nbsp;set&nbsp;description,&nbsp;returned&nbsp;value<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;name&nbsp;referring&nbsp;to&nbsp;function(pImage)&nbsp;-&gt;&nbsp;num.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;pyfn_ImageDescription&nbsp;:&nbsp;function&nbsp;to&nbsp;set&nbsp;description,&nbsp;returned&nbsp;value<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;name&nbsp;referring&nbsp;to&nbsp;function(ptr_image)&nbsp;-&gt;&nbsp;num.<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;This&nbsp;function&nbsp;in&nbsp;general&nbsp;should&nbsp;set&nbsp;the&nbsp;image&nbsp;dimension&nbsp;and&nbsp;type<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;fields&nbsp;(and&nbsp;colormap&nbsp;length&nbsp;for&nbsp;color&nbsp;index&nbsp;images)&nbsp;if<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;successful,&nbsp;so&nbsp;the&nbsp;driver&nbsp;can&nbsp;allocate&nbsp;the&nbsp;necessary&nbsp;memory&nbsp;for<br>
@@ -440,28 +443,28 @@ Parameters<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;itself,&nbsp;the&nbsp;description&nbsp;function&nbsp;does&nbsp;not&nbsp;have&nbsp;to&nbsp;set&nbsp;any&nbsp;fields.<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;However,&nbsp;if&nbsp;reading&nbsp;should&nbsp;continue,&nbsp;the&nbsp;function&nbsp;should&nbsp;return<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1,&nbsp;otherwise&nbsp;a&nbsp;negative&nbsp;number.<br>
-&nbsp;&nbsp;&nbsp;&nbsp;py_ImageReadPixels&nbsp;:&nbsp;python&nbsp;function&nbsp;to&nbsp;read&nbsp;pixels,&nbsp;returned&nbsp;value<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;name&nbsp;referring&nbsp;to&nbsp;function(pImage)&nbsp;-&gt;&nbsp;num.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;pyfn_ImageReadPixels&nbsp;:&nbsp;python&nbsp;function&nbsp;to&nbsp;read&nbsp;pixels,&nbsp;returned&nbsp;value<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;name&nbsp;referring&nbsp;to&nbsp;function(ptr_image)&nbsp;-&gt;&nbsp;num.<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;This&nbsp;function&nbsp;reads&nbsp;the&nbsp;pixels&nbsp;from&nbsp;the&nbsp;file&nbsp;and&nbsp;fills&nbsp;one&nbsp;of&nbsp;the<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;pixel&nbsp;matrix&nbsp;in&nbsp;the&nbsp;image&nbsp;structure&nbsp;depending&nbsp;on&nbsp;the&nbsp;type.&nbsp;If<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;reading&nbsp;is&nbsp;successful,&nbsp;a&nbsp;non-negative&nbsp;number&nbsp;should&nbsp;be&nbsp;returned<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;otherwise&nbsp;a&nbsp;negative&nbsp;number&nbsp;should&nbsp;be&nbsp;returned.&nbsp;Upon&nbsp;entry,<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;pImage.contents.completed&nbsp;is&nbsp;set&nbsp;to&nbsp;zero.&nbsp;The&nbsp;function&nbsp;should&nbsp;not<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;close&nbsp;the&nbsp;file.<br>
-&nbsp;&nbsp;&nbsp;&nbsp;py_ImageWriteImage&nbsp;:&nbsp;python&nbsp;function&nbsp;to&nbsp;write&nbsp;image,&nbsp;returned&nbsp;value<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;name&nbsp;referring&nbsp;to&nbsp;function(pImage)&nbsp;-&gt;&nbsp;num.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ptr_image.contents.completed&nbsp;is&nbsp;set&nbsp;to&nbsp;zero.&nbsp;The&nbsp;function&nbsp;should<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;not&nbsp;close&nbsp;the&nbsp;file.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;pyfn_ImageWriteImage&nbsp;:&nbsp;python&nbsp;function&nbsp;to&nbsp;write&nbsp;image,&nbsp;returned&nbsp;value<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;name&nbsp;referring&nbsp;to&nbsp;function(ptr_image)&nbsp;-&gt;&nbsp;num.<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;This&nbsp;function&nbsp;takes&nbsp;an&nbsp;image&nbsp;structure&nbsp;and&nbsp;should&nbsp;write&nbsp;the&nbsp;image<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;out&nbsp;in&nbsp;a&nbsp;format&nbsp;it&nbsp;knows.&nbsp;Prior&nbsp;to&nbsp;calling&nbsp;this&nbsp;routine,&nbsp;the<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;driver&nbsp;will&nbsp;have&nbsp;already&nbsp;converted&nbsp;the&nbsp;image&nbsp;type&nbsp;to&nbsp;the&nbsp;type&nbsp;it<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;wants.&nbsp;The&nbsp;function&nbsp;should&nbsp;return&nbsp;1&nbsp;on&nbsp;success&nbsp;and&nbsp;a&nbsp;negative<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;number&nbsp;otherwise.&nbsp;If&nbsp;only&nbsp;reading&nbsp;of&nbsp;the&nbsp;image&nbsp;format&nbsp;is<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;supported&nbsp;this&nbsp;parameter&nbsp;can&nbsp;be&nbsp;set&nbsp;to&nbsp;None.&nbsp;The&nbsp;function&nbsp;should<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;write&nbsp;to&nbsp;file&nbsp;stream&nbsp;pImage.contents.fpout.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;write&nbsp;to&nbsp;file&nbsp;stream&nbsp;ptr_image.contents.fpout.<br>
 &nbsp;<br>
 Returns<br>
 -------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;num.&nbsp;:&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*todo*<br>
+&nbsp;&nbsp;&nbsp;&nbsp;result&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;num,&nbsp;or&nbsp;-1&nbsp;(on&nbsp;failure)<br>
 &nbsp;<br>
 Examples<br>
 --------<br>
@@ -470,27 +473,27 @@ Examples<br>
 Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-flimage_add_marker"><strong>flimage_add_marker</strong></a>(pImage, name, x, y, w, h, style, fill, rot, colr, bcolr)</dt><dd><tt><a href="#-flimage_add_marker">flimage_add_marker</a>(pImage,&nbsp;name,&nbsp;x,&nbsp;y,&nbsp;w,&nbsp;h,&nbsp;style,&nbsp;fill,&nbsp;rot,<br>
-colr,&nbsp;bcolr)<br>
+ <dl><dt><a name="-flimage_add_marker"><strong>flimage_add_marker</strong></a>(ptr_image, name, xpos, ypos, width, height, style, fill, rot, colr, bcolr)</dt><dd><tt><a href="#-flimage_add_marker">flimage_add_marker</a>(ptr_image,&nbsp;name,&nbsp;xpos,&nbsp;ypos,&nbsp;width,&nbsp;height,<br>
+style,&nbsp;fill,&nbsp;rot,&nbsp;colr,&nbsp;bcolr)&nbsp;-&gt;&nbsp;nummarkers<br>
 &nbsp;<br>
-Adds&nbsp;simple&nbsp;markers&nbsp;(arrows,&nbsp;circles&nbsp;etc)&nbsp;to&nbsp;an&nbsp;image,&nbsp;passing<br>
+Adds&nbsp;simple&nbsp;markers&nbsp;(e.g.&nbsp;arrows,&nbsp;circles,&nbsp;etc)&nbsp;to&nbsp;an&nbsp;image,&nbsp;passing<br>
 parameters&nbsp;individually.<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;pImage&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_IMAGE<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_image&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_IMAGE<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;image<br>
 &nbsp;&nbsp;&nbsp;&nbsp;name&nbsp;:&nbsp;str<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;marker&nbsp;name&nbsp;*todo*<br>
-&nbsp;&nbsp;&nbsp;&nbsp;x&nbsp;:&nbsp;float<br>
+&nbsp;&nbsp;&nbsp;&nbsp;xpos&nbsp;:&nbsp;float<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;horizontal&nbsp;position&nbsp;of&nbsp;the&nbsp;center&nbsp;of&nbsp;the&nbsp;marker&nbsp;in&nbsp;physical<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;coordinates&nbsp;relative&nbsp;to&nbsp;the&nbsp;origin&nbsp;of&nbsp;the&nbsp;image<br>
-&nbsp;&nbsp;&nbsp;&nbsp;y&nbsp;:&nbsp;float<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ypos&nbsp;:&nbsp;float<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;vertical&nbsp;position&nbsp;of&nbsp;the&nbsp;center&nbsp;of&nbsp;the&nbsp;marker&nbsp;in&nbsp;physical<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;coordinates&nbsp;relative&nbsp;to&nbsp;the&nbsp;origin&nbsp;of&nbsp;the&nbsp;image<br>
-&nbsp;&nbsp;&nbsp;&nbsp;w&nbsp;:&nbsp;float<br>
+&nbsp;&nbsp;&nbsp;&nbsp;width&nbsp;:&nbsp;float<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;width&nbsp;of&nbsp;the&nbsp;bounding&nbsp;box&nbsp;of&nbsp;the&nbsp;marker&nbsp;in&nbsp;physical&nbsp;coordinates<br>
-&nbsp;&nbsp;&nbsp;&nbsp;h&nbsp;:&nbsp;float<br>
+&nbsp;&nbsp;&nbsp;&nbsp;height&nbsp;:&nbsp;float<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;height&nbsp;of&nbsp;the&nbsp;bounding&nbsp;box&nbsp;of&nbsp;the&nbsp;marker&nbsp;in&nbsp;physical&nbsp;coordinates<br>
 &nbsp;&nbsp;&nbsp;&nbsp;style&nbsp;:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;style&nbsp;of&nbsp;the&nbsp;line&nbsp;to&nbsp;draw.&nbsp;Values&nbsp;(from&nbsp;xfdata.py)&nbsp;FL_SOLID,<br>
@@ -508,8 +511,8 @@ Parameters<br>
 &nbsp;<br>
 Returns<br>
 -------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;num.&nbsp;:&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*todo*<br>
+&nbsp;&nbsp;&nbsp;&nbsp;nummarkers&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;current&nbsp;number&nbsp;of&nbsp;markers,&nbsp;or&nbsp;-1&nbsp;(on&nbsp;failure)<br>
 &nbsp;<br>
 Examples<br>
 --------<br>
@@ -518,22 +521,22 @@ Examples<br>
 Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-flimage_add_marker_struct"><strong>flimage_add_marker_struct</strong></a>(pImage, pImageMarker)</dt><dd><tt><a href="#-flimage_add_marker_struct">flimage_add_marker_struct</a>(pImage,&nbsp;pImageMarker)<br>
+ <dl><dt><a name="-flimage_add_marker_struct"><strong>flimage_add_marker_struct</strong></a>(ptr_image, ptr_imagemarker)</dt><dd><tt><a href="#-flimage_add_marker_struct">flimage_add_marker_struct</a>(ptr_image,&nbsp;ptr_imagemarker)&nbsp;-&gt;&nbsp;nummarkers<br>
 &nbsp;<br>
-Adds&nbsp;simple&nbsp;markers&nbsp;(arrows,&nbsp;circles&nbsp;etc)&nbsp;to&nbsp;an&nbsp;image,&nbsp;using<br>
+Adds&nbsp;simple&nbsp;markers&nbsp;(e.g.&nbsp;arrows,&nbsp;circles,&nbsp;etc)&nbsp;to&nbsp;an&nbsp;image,&nbsp;using<br>
 xfdata.FLIMAGE_MARKER&nbsp;class&nbsp;instance.<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;pImage&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_IMAGE<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_image&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_IMAGE<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;image<br>
-&nbsp;&nbsp;&nbsp;&nbsp;pImageMarker&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FLIMAGE_MARKER<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_imagemarker&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FLIMAGE_MARKER<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;flimagemarker&nbsp;class&nbsp;instance<br>
 &nbsp;<br>
 Returns<br>
 -------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;num.&nbsp;:&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*todo*<br>
+&nbsp;&nbsp;&nbsp;&nbsp;nummarkers&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;current&nbsp;number&nbsp;of&nbsp;markers,&nbsp;or&nbsp;-1&nbsp;(on&nbsp;failure)<br>
 &nbsp;<br>
 Examples<br>
 --------<br>
@@ -542,18 +545,18 @@ Examples<br>
 Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-flimage_add_text"><strong>flimage_add_text</strong></a>(pImage, text, length, style, size, txtcolr, bgcolr, nobk, tx, ty, rot)</dt><dd><tt><a href="#-flimage_add_text">flimage_add_text</a>(pImage,&nbsp;text,&nbsp;length,&nbsp;style,&nbsp;size,&nbsp;txtcolr,&nbsp;bgcolr,<br>
-nobk,&nbsp;tx,&nbsp;ty,&nbsp;rot)<br>
+ <dl><dt><a name="-flimage_add_text"><strong>flimage_add_text</strong></a>(ptr_image, text, length, style, size, txtcolr, bgcolr, nobk, txtxpos, txtypos, rot)</dt><dd><tt><a href="#-flimage_add_text">flimage_add_text</a>(ptr_image,&nbsp;text,&nbsp;length,&nbsp;style,&nbsp;size,&nbsp;txtcolr,<br>
+bgcolr,&nbsp;nobk,&nbsp;txtxpos,&nbsp;txtypos,&nbsp;rot)&nbsp;-&gt;&nbsp;numstrings<br>
 &nbsp;<br>
-Places&nbsp;text&nbsp;into&nbsp;the&nbsp;image,&nbsp;passing&nbsp;parameters&nbsp;individually.&nbsp;If&nbsp;text<br>
-starts&nbsp;with&nbsp;character&nbsp;'@'&nbsp;a&nbsp;symbol&nbsp;is&nbsp;drawn.<br>
+Places&nbsp;text&nbsp;into&nbsp;the&nbsp;image,&nbsp;passing&nbsp;parameters&nbsp;individually.<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;pImage&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_IMAGE<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_image&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_IMAGE<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;image<br>
 &nbsp;&nbsp;&nbsp;&nbsp;text&nbsp;:&nbsp;str<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;text&nbsp;string&nbsp;to&nbsp;be&nbsp;placed&nbsp;in&nbsp;image<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;text&nbsp;string&nbsp;to&nbsp;be&nbsp;placed&nbsp;in&nbsp;image.&nbsp;If&nbsp;it&nbsp;starts&nbsp;with&nbsp;character<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'@'&nbsp;a&nbsp;symbol&nbsp;is&nbsp;drawn.<br>
 &nbsp;&nbsp;&nbsp;&nbsp;length&nbsp;:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;length&nbsp;of&nbsp;text<br>
 &nbsp;&nbsp;&nbsp;&nbsp;style&nbsp;:&nbsp;int<br>
@@ -564,29 +567,29 @@ Parameters<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_TIMESITALIC_STYLE,&nbsp;FL_TIMESBOLDITALIC_STYLE,&nbsp;FL_MISC_STYLE,<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_MISCBOLD_STYLE,&nbsp;FL_MISCITALIC_STYLE,&nbsp;FL_SYMBOL_STYLE,<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_SHADOW_STYLE,&nbsp;FL_ENGRAVED_STYLE,&nbsp;FL_EMBOSSED_STYLE<br>
-&nbsp;&nbsp;size&nbsp;:&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;label&nbsp;size.&nbsp;Values&nbsp;(from&nbsp;xfdata.py)&nbsp;FL_TINY_SIZE,&nbsp;FL_SMALL_SIZE,<br>
-&nbsp;&nbsp;&nbsp;&nbsp;FL_NORMAL_SIZE,&nbsp;FL_MEDIUM_SIZE,&nbsp;FL_LARGE_SIZE,&nbsp;FL_HUGE_SIZE,<br>
-&nbsp;&nbsp;&nbsp;&nbsp;FL_DEFAULT_SIZE<br>
-&nbsp;&nbsp;txtcolr&nbsp;:&nbsp;int_pos<br>
-&nbsp;&nbsp;&nbsp;&nbsp;color&nbsp;to&nbsp;use&nbsp;for&nbsp;text<br>
-&nbsp;&nbsp;bgcolr&nbsp;:&nbsp;int_pos<br>
-&nbsp;&nbsp;&nbsp;&nbsp;color&nbsp;to&nbsp;use&nbsp;for&nbsp;background&nbsp;(only&nbsp;if&nbsp;nobk&nbsp;is&nbsp;0)<br>
-&nbsp;&nbsp;nobk&nbsp;:&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;flag&nbsp;to&nbsp;enable/disable&nbsp;background.&nbsp;Values&nbsp;0&nbsp;(drawn&nbsp;with&nbsp;background)<br>
-&nbsp;&nbsp;&nbsp;&nbsp;or&nbsp;1&nbsp;(text&nbsp;is&nbsp;drawn&nbsp;without&nbsp;a&nbsp;background)<br>
-&nbsp;&nbsp;tx&nbsp;:&nbsp;float<br>
-&nbsp;&nbsp;&nbsp;&nbsp;horizontal&nbsp;location&nbsp;of&nbsp;the&nbsp;text&nbsp;relative&nbsp;to&nbsp;the&nbsp;image&nbsp;origin.&nbsp;The<br>
-&nbsp;&nbsp;&nbsp;&nbsp;location&nbsp;specified&nbsp;is&nbsp;the&nbsp;lower-right&nbsp;corner&nbsp;of&nbsp;the&nbsp;text.<br>
-&nbsp;&nbsp;ty&nbsp;:&nbsp;float<br>
-&nbsp;&nbsp;&nbsp;&nbsp;vertical&nbsp;location&nbsp;of&nbsp;the&nbsp;text&nbsp;relative&nbsp;to&nbsp;the&nbsp;image&nbsp;origin.&nbsp;The<br>
-&nbsp;&nbsp;&nbsp;&nbsp;location&nbsp;specified&nbsp;is&nbsp;the&nbsp;lower-right&nbsp;corner&nbsp;of&nbsp;the&nbsp;text.<br>
-&nbsp;&nbsp;rot&nbsp;:&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;rotation<br>
+&nbsp;&nbsp;&nbsp;&nbsp;size&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;label&nbsp;size.&nbsp;Values&nbsp;(from&nbsp;xfdata.py)&nbsp;FL_TINY_SIZE,&nbsp;FL_SMALL_SIZE,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_NORMAL_SIZE,&nbsp;FL_MEDIUM_SIZE,&nbsp;FL_LARGE_SIZE,&nbsp;FL_HUGE_SIZE,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_DEFAULT_SIZE<br>
+&nbsp;&nbsp;&nbsp;&nbsp;txtcolr&nbsp;:&nbsp;int_pos<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;color&nbsp;to&nbsp;use&nbsp;for&nbsp;text<br>
+&nbsp;&nbsp;&nbsp;&nbsp;bgcolr&nbsp;:&nbsp;int_pos<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;color&nbsp;to&nbsp;use&nbsp;for&nbsp;background&nbsp;(only&nbsp;if&nbsp;nobk&nbsp;is&nbsp;0)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;nobk&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;flag&nbsp;to&nbsp;enable/disable&nbsp;background.&nbsp;Values&nbsp;0&nbsp;(drawn&nbsp;with<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;background)&nbsp;or&nbsp;1&nbsp;(text&nbsp;is&nbsp;drawn&nbsp;without&nbsp;a&nbsp;background)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;txtxpos&nbsp;:&nbsp;float<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;horizontal&nbsp;location&nbsp;of&nbsp;the&nbsp;text&nbsp;relative&nbsp;to&nbsp;the&nbsp;image&nbsp;origin.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The&nbsp;location&nbsp;specified&nbsp;is&nbsp;the&nbsp;lower-right&nbsp;corner&nbsp;of&nbsp;the&nbsp;text.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;txtypos&nbsp;:&nbsp;float<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;vertical&nbsp;location&nbsp;of&nbsp;the&nbsp;text&nbsp;relative&nbsp;to&nbsp;the&nbsp;image&nbsp;origin.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The&nbsp;location&nbsp;specified&nbsp;is&nbsp;the&nbsp;lower-right&nbsp;corner&nbsp;of&nbsp;the&nbsp;text.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;rot&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;rotation<br>
 &nbsp;<br>
 Returns<br>
 -------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;nstrings&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;numstrings&nbsp;:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;current&nbsp;number&nbsp;of&nbsp;strings&nbsp;for&nbsp;the&nbsp;image<br>
 &nbsp;<br>
 Examples<br>
@@ -596,22 +599,22 @@ Examples<br>
 Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-flimage_add_text_struct"><strong>flimage_add_text_struct</strong></a>(pImage, pImageText)</dt><dd><tt><a href="#-flimage_add_text_struct">flimage_add_text_struct</a>(pImage,&nbsp;pImageText)<br>
+ <dl><dt><a name="-flimage_add_text_struct"><strong>flimage_add_text_struct</strong></a>(ptr_image, ptr_imagetext)</dt><dd><tt><a href="#-flimage_add_text_struct">flimage_add_text_struct</a>(ptr_image,&nbsp;ptr_imagetext)&nbsp;-&gt;&nbsp;numstrings<br>
 &nbsp;<br>
 Places&nbsp;text&nbsp;into&nbsp;the&nbsp;image,&nbsp;using&nbsp;xfdata.FLIMAGE_TEXT&nbsp;class&nbsp;instance.<br>
 If&nbsp;text&nbsp;starts&nbsp;with&nbsp;character&nbsp;'@'&nbsp;a&nbsp;symbol&nbsp;is&nbsp;drawn.<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;pImage&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_IMAGE<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_image&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_IMAGE<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;image<br>
-&nbsp;&nbsp;&nbsp;&nbsp;pImageText&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FLIMAGE_TEXT<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_imagetext&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FLIMAGE_TEXT<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;flimagetext&nbsp;class&nbsp;instance<br>
 &nbsp;<br>
 Returns<br>
 -------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;nstrings&nbsp;:&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;current&nbsp;number&nbsp;of&nbsp;strings&nbsp;for&nbsp;the&nbsp;image<br>
+&nbsp;&nbsp;&nbsp;&nbsp;numstrings&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;current&nbsp;number&nbsp;of&nbsp;strings&nbsp;for&nbsp;the&nbsp;image,&nbsp;or&nbsp;-1&nbsp;(on&nbsp;failure)<br>
 &nbsp;<br>
 Examples<br>
 --------<br>
@@ -620,14 +623,14 @@ Examples<br>
 Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-flimage_alloc"><strong>flimage_alloc</strong></a>()</dt><dd><tt><a href="#-flimage_alloc">flimage_alloc</a>()<br>
+ <dl><dt><a name="-flimage_alloc"><strong>flimage_alloc</strong></a>()</dt><dd><tt><a href="#-flimage_alloc">flimage_alloc</a>()&nbsp;-&gt;&nbsp;ptr_image<br>
 &nbsp;<br>
 Creates&nbsp;an&nbsp;image&nbsp;structure&nbsp;whose&nbsp;dynamically&nbsp;allocated&nbsp;memory&nbsp;is<br>
 properly&nbsp;initialized,&nbsp;and&nbsp;returning&nbsp;it.<br>
 &nbsp;<br>
 Returns<br>
 -------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;pImage&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_IMAGE<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_image&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_IMAGE<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;image&nbsp;class&nbsp;instance<br>
 &nbsp;<br>
 Examples<br>
@@ -637,7 +640,7 @@ Examples<br>
 Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-flimage_autocrop"><strong>flimage_autocrop</strong></a>(pImage, bgcolr)</dt><dd><tt><a href="#-flimage_autocrop">flimage_autocrop</a>(pImage,&nbsp;bgcolr)<br>
+ <dl><dt><a name="-flimage_autocrop"><strong>flimage_autocrop</strong></a>(ptr_image, bgcolr)</dt><dd><tt><a href="#-flimage_autocrop">flimage_autocrop</a>(ptr_image,&nbsp;bgcolr)&nbsp;-&gt;&nbsp;result<br>
 &nbsp;<br>
 Automatically&nbsp;crops&nbsp;an&nbsp;image&nbsp;using&nbsp;the&nbsp;background&nbsp;as&nbsp;the&nbsp;color&nbsp;to&nbsp;crop,<br>
 by&nbsp;searching&nbsp;the&nbsp;image&nbsp;from&nbsp;all&nbsp;four&nbsp;sides&nbsp;and&nbsp;removing&nbsp;all&nbsp;contiguous<br>
@@ -646,7 +649,7 @@ in&nbsp;place.<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;pImage&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_IMAGE<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_image&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_IMAGE<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;image<br>
 &nbsp;&nbsp;&nbsp;&nbsp;bgcolr&nbsp;:&nbsp;int_pos<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;background&nbsp;color&nbsp;to&nbsp;crop.&nbsp;If&nbsp;it&nbsp;is&nbsp;xfdata.FLIMAGE_AUTOCOLOR,&nbsp;the<br>
@@ -654,8 +657,8 @@ Parameters<br>
 &nbsp;<br>
 Returns<br>
 -------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;num.&nbsp;:&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;non-negative&nbsp;num.,&nbsp;or&nbsp;-1&nbsp;(on&nbsp;failure)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;result&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;0,&nbsp;or&nbsp;-1&nbsp;(on&nbsp;failure)<br>
 &nbsp;<br>
 Examples<br>
 --------<br>
@@ -664,13 +667,13 @@ Examples<br>
 Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-flimage_close"><strong>flimage_close</strong></a>(pImage)</dt><dd><tt><a href="#-flimage_close">flimage_close</a>(pImage)<br>
+ <dl><dt><a name="-flimage_close"><strong>flimage_close</strong></a>(ptr_image)</dt><dd><tt><a href="#-flimage_close">flimage_close</a>(ptr_image)&nbsp;-&gt;&nbsp;result<br>
 &nbsp;<br>
 Closes&nbsp;all&nbsp;file&nbsp;streams&nbsp;used&nbsp;to&nbsp;create&nbsp;the&nbsp;image.<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;pImage&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_IMAGE<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_image&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_IMAGE<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;image&nbsp;to&nbsp;be&nbsp;closed<br>
 &nbsp;<br>
 Returns<br>
@@ -686,27 +689,27 @@ Examples<br>
 Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-flimage_color_to_pixel"><strong>flimage_color_to_pixel</strong></a>(pImage, r, g, b)</dt><dd><tt><a href="#-flimage_color_to_pixel">flimage_color_to_pixel</a>(pImage,&nbsp;r,&nbsp;g,&nbsp;b)<br>
+ <dl><dt><a name="-flimage_color_to_pixel"><strong>flimage_color_to_pixel</strong></a>(ptr_image, red, green, blue)</dt><dd><tt><a href="#-flimage_color_to_pixel">flimage_color_to_pixel</a>(ptr_image,&nbsp;red,&nbsp;green,&nbsp;blue)&nbsp;-&gt;&nbsp;pixelval,&nbsp;pixel<br>
 &nbsp;<br>
 Convert&nbsp;an&nbsp;RGB&nbsp;triple&nbsp;to&nbsp;a&nbsp;pixel.<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;pImage&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_IMAGE<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_image&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_IMAGE<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;image<br>
-&nbsp;&nbsp;&nbsp;&nbsp;r&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;red&nbsp;:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;value&nbsp;for&nbsp;red&nbsp;color<br>
-&nbsp;&nbsp;&nbsp;&nbsp;g&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;green&nbsp;:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;value&nbsp;for&nbsp;green&nbsp;color<br>
-&nbsp;&nbsp;&nbsp;&nbsp;b&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;blue&nbsp;:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;value&nbsp;for&nbsp;blue&nbsp;color<br>
 &nbsp;<br>
 Returns<br>
 -------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;pixid&nbsp;:&nbsp;long_pos<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;pixel&nbsp;id<br>
+&nbsp;&nbsp;&nbsp;&nbsp;pixelval&nbsp;:&nbsp;long_pos<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;pixel&nbsp;value,&nbsp;or&nbsp;0&nbsp;(on&nbsp;failure)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;pixel&nbsp;:&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;new&nbsp;pixel<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;new&nbsp;pixel?&nbsp;*todo*<br>
 &nbsp;<br>
 Examples<br>
 --------<br>
@@ -714,28 +717,28 @@ Examples<br>
 &nbsp;<br>
 API_diversion<br>
 ----------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;API&nbsp;changed&nbsp;from&nbsp;XForms,&nbsp;upstream&nbsp;was<br>
-&nbsp;&nbsp;&nbsp;&nbsp;<a href="#-flimage_color_to_pixel">flimage_color_to_pixel</a>(pImage,&nbsp;r,&nbsp;g,&nbsp;b,&nbsp;newpix)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;API&nbsp;changed&nbsp;from&nbsp;XForms,&nbsp;upstream&nbsp;is<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="#-flimage_color_to_pixel">flimage_color_to_pixel</a>(ptr_image,&nbsp;r,&nbsp;g,&nbsp;b,&nbsp;newpix)<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-flimage_combine"><strong>flimage_combine</strong></a>(pImage1, pImage2, alpha)</dt><dd><tt><a href="#-flimage_combine">flimage_combine</a>(pImage1,&nbsp;pImage2,&nbsp;alpha)<br>
+ <dl><dt><a name="-flimage_combine"><strong>flimage_combine</strong></a>(ptr_image1, ptr_image2, alpha)</dt><dd><tt><a href="#-flimage_combine">flimage_combine</a>(ptr_image1,&nbsp;ptr_image2,&nbsp;alpha)&nbsp;-&gt;&nbsp;ptr_image<br>
 &nbsp;<br>
 Combines&nbsp;two&nbsp;images&nbsp;with&nbsp;alpha&nbsp;level?,&nbsp;returning&nbsp;a&nbsp;new&nbsp;image.<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;pImage1&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_IMAGE<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_image1&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_IMAGE<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;first&nbsp;image&nbsp;to&nbsp;combine<br>
-&nbsp;&nbsp;&nbsp;&nbsp;pImage2&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_IMAGE<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_image2&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_IMAGE<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;second&nbsp;image&nbsp;to&nbsp;combine<br>
 &nbsp;&nbsp;&nbsp;&nbsp;alpha&nbsp;:&nbsp;float<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;alpha&nbsp;level?<br>
 &nbsp;<br>
 Returns<br>
 -------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;pImage&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_IMAGE<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_image&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_IMAGE<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;image&nbsp;class&nbsp;instance<br>
 &nbsp;<br>
 Examples<br>
@@ -745,21 +748,21 @@ Examples<br>
 Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-flimage_convert"><strong>flimage_convert</strong></a>(pImage, newtype, ncolors)</dt><dd><tt><a href="#-flimage_convert">flimage_convert</a>(pImage,&nbsp;newtype,&nbsp;ncolors)<br>
+ <dl><dt><a name="-flimage_convert"><strong>flimage_convert</strong></a>(ptr_image, newimagetype, numcolors)</dt><dd><tt><a href="#-flimage_convert">flimage_convert</a>(ptr_image,&nbsp;newimagetype,&nbsp;numcolors)&nbsp;-&gt;&nbsp;result<br>
 &nbsp;<br>
 Converts&nbsp;an&nbsp;image&nbsp;to&nbsp;a&nbsp;new&nbsp;type.&nbsp;Depending&nbsp;on&nbsp;which&nbsp;quantization<br>
 function&nbsp;is&nbsp;used,&nbsp;the&nbsp;number&nbsp;of&nbsp;quantized&nbsp;colors&nbsp;may&nbsp;not&nbsp;be&nbsp;more&nbsp;than&nbsp;256.<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;pImage&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_IMAGE<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_image&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_IMAGE<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;image<br>
-&nbsp;&nbsp;&nbsp;&nbsp;newtype&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;newimagetype&nbsp;:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;one&nbsp;of&nbsp;supported&nbsp;image&nbsp;type&nbsp;to&nbsp;convert&nbsp;to.&nbsp;Values&nbsp;(from&nbsp;xfdata.py)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_IMAGE_NONE,&nbsp;FL_IMAGE_MONO,&nbsp;FL_IMAGE_GRAY,&nbsp;FL_IMAGE_CI,<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_IMAGE_RGB,&nbsp;FL_IMAGE_PACKED,&nbsp;FL_IMAGE_GRAY16,&nbsp;FL_IMAGE_RGB16,<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_IMAGE_FLEX<br>
-&nbsp;&nbsp;&nbsp;&nbsp;ncolors&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;numcolors&nbsp;:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;number&nbsp;of&nbsp;colors&nbsp;to&nbsp;generate.&nbsp;It&nbsp;makes&nbsp;sense&nbsp;only&nbsp;when&nbsp;newtype&nbsp;is<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;xfdata.FL_IMAGE_CI.<br>
 &nbsp;<br>
@@ -775,14 +778,14 @@ Examples<br>
 Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-flimage_convolve"><strong>flimage_convolve</strong></a>(pImage, kernel, krows, kcols)</dt><dd><tt><a href="#-flimage_convolve">flimage_convolve</a>(pImage,&nbsp;kernel,&nbsp;krows,&nbsp;kcols)<br>
+ <dl><dt><a name="-flimage_convolve"><strong>flimage_convolve</strong></a>(ptr_image, kernel, krows, kcols)</dt><dd><tt><a href="#-flimage_convolve">flimage_convolve</a>(ptr_image,&nbsp;kernel,&nbsp;krows,&nbsp;kcols)&nbsp;-&gt;&nbsp;result<br>
 &nbsp;<br>
 Takes&nbsp;a&nbsp;convolution&nbsp;kernel&nbsp;of&nbsp;krows&nbsp;by&nbsp;kcols&nbsp;and&nbsp;convolves&nbsp;it&nbsp;with<br>
 the&nbsp;image.&nbsp;The&nbsp;result&nbsp;replaces&nbsp;the&nbsp;input&nbsp;image.<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;pImage&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_IMAGE<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_image&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_IMAGE<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;image<br>
 &nbsp;&nbsp;&nbsp;&nbsp;kernel&nbsp;:&nbsp;*todo*<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The&nbsp;kernel&nbsp;size&nbsp;should&nbsp;be&nbsp;odd,&nbsp;and&nbsp;should&nbsp;be&nbsp;allocated&nbsp;by<br>
@@ -794,8 +797,8 @@ Parameters<br>
 &nbsp;<br>
 Returns<br>
 -------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;num.&nbsp;:&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;positive&nbsp;num.,&nbsp;or&nbsp;negative&nbsp;num&nbsp;(on&nbsp;failure)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;result&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;0&nbsp;,&nbsp;or&nbsp;-1&nbsp;(on&nbsp;failure)<br>
 &nbsp;<br>
 Examples<br>
 --------<br>
@@ -803,28 +806,28 @@ Examples<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-flimage_convolvea"><strong>flimage_convolvea</strong></a>(pImage, kernel, krow, kcol)</dt><dd><tt><a href="#-flimage_convolvea">flimage_convolvea</a>(pImage,&nbsp;kernel,&nbsp;krow,&nbsp;kcol)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK&nbsp;(how&nbsp;to&nbsp;create&nbsp;kernel)</tt></dd></dl>
+ <dl><dt><a name="-flimage_convolvea"><strong>flimage_convolvea</strong></a>(ptr_image, kernel, krows, kcols)</dt><dd><tt><a href="#-flimage_convolvea">flimage_convolvea</a>(ptr_image,&nbsp;kernel,&nbsp;krows,&nbsp;kcols)&nbsp;-&gt;&nbsp;result<br>
 &nbsp;<br>
-Takes&nbsp;a&nbsp;convolution&nbsp;kernel&nbsp;of&nbsp;krow&nbsp;by&nbsp;kcol&nbsp;and&nbsp;convolves&nbsp;it&nbsp;with<br>
-the&nbsp;image.&nbsp;The&nbsp;result&nbsp;replaces&nbsp;the&nbsp;input&nbsp;image.&nbsp;It&nbsp;uses&nbsp;a&nbsp;kernel&nbsp;that's&nbsp;a<br>
-C&nbsp;2-dimensional&nbsp;array&nbsp;(cast&nbsp;to&nbsp;a&nbsp;pointer&nbsp;to&nbsp;int).<br>
+Takes&nbsp;a&nbsp;convolution&nbsp;kernel&nbsp;of&nbsp;krows&nbsp;by&nbsp;kcols&nbsp;and&nbsp;convolves&nbsp;it&nbsp;with&nbsp;the<br>
+image.&nbsp;The&nbsp;result&nbsp;replaces&nbsp;the&nbsp;input&nbsp;image.&nbsp;It&nbsp;uses&nbsp;a&nbsp;kernel&nbsp;that&nbsp;is&nbsp;a<br>
+C&nbsp;2-dimensional&nbsp;array,&nbsp;kernel[krows][kcols]&nbsp;(cast&nbsp;to&nbsp;a&nbsp;pointer&nbsp;to&nbsp;int).<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;pImage&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_IMAGE<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_image&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_IMAGE<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;image<br>
 &nbsp;&nbsp;&nbsp;&nbsp;kernel&nbsp;:&nbsp;*todo*<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;C&nbsp;2-dimensional&nbsp;array&nbsp;*todo*<br>
-&nbsp;&nbsp;&nbsp;&nbsp;krow&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;krows&nbsp;:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;number&nbsp;of&nbsp;kernel&nbsp;rows<br>
-&nbsp;&nbsp;&nbsp;&nbsp;kcol&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;kcols&nbsp;:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;number&nbsp;of&nbsp;kernel&nbsp;columns<br>
 &nbsp;<br>
 Returns<br>
 -------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;num.&nbsp;:&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;positive&nbsp;num.,&nbsp;or&nbsp;negative&nbsp;num&nbsp;(on&nbsp;failure)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;result&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;0,&nbsp;or&nbsp;-1&nbsp;(on&nbsp;failure)<br>
 &nbsp;<br>
 Examples<br>
 --------<br>
@@ -832,36 +835,36 @@ Examples<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-flimage_crop"><strong>flimage_crop</strong></a>(pImage, xl, yt, xr, yb)</dt><dd><tt><a href="#-flimage_crop">flimage_crop</a>(pImage,&nbsp;xl,&nbsp;yt,&nbsp;xr,&nbsp;yb)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK&nbsp;(how&nbsp;to&nbsp;create&nbsp;kernel)</tt></dd></dl>
+ <dl><dt><a name="-flimage_crop"><strong>flimage_crop</strong></a>(ptr_image, xloff, ytoff, xroff, yboff)</dt><dd><tt><a href="#-flimage_crop">flimage_crop</a>(ptr_image,&nbsp;xloff,&nbsp;ytoff,&nbsp;xroff,&nbsp;yboff)<br>
 &nbsp;<br>
 Crops&nbsp;an&nbsp;image,&nbsp;using&nbsp;offsets&nbsp;supplied&nbsp;by&nbsp;the&nbsp;user.<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;pImage&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_IMAGE<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;image<br>
-&nbsp;&nbsp;&nbsp;&nbsp;xl&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_image&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_IMAGE<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;image&nbsp;to&nbsp;be&nbsp;cropped<br>
+&nbsp;&nbsp;&nbsp;&nbsp;xloff&nbsp;:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;offset&nbsp;from&nbsp;left&nbsp;side.&nbsp;If&nbsp;it&nbsp;is&nbsp;negative,&nbsp;it&nbsp;indicates<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;enlargement&nbsp;of&nbsp;the&nbsp;image.&nbsp;(e.g.&nbsp;if&nbsp;it&nbsp;is&nbsp;1&nbsp;the&nbsp;cropping<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;removes&nbsp;the&nbsp;first&nbsp;column&nbsp;from&nbsp;the&nbsp;image).<br>
-&nbsp;&nbsp;&nbsp;&nbsp;yt&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ytoff&nbsp;:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;offset&nbsp;from&nbsp;top&nbsp;side.&nbsp;If&nbsp;it&nbsp;is&nbsp;negative,&nbsp;it&nbsp;indicates<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;enlargement&nbsp;of&nbsp;the&nbsp;image.&nbsp;(e.g.&nbsp;if&nbsp;it&nbsp;is&nbsp;1&nbsp;the&nbsp;cropping<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;removes&nbsp;the&nbsp;first&nbsp;row&nbsp;from&nbsp;the&nbsp;image).<br>
-&nbsp;&nbsp;&nbsp;&nbsp;xr&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;xroff&nbsp;:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;offset&nbsp;from&nbsp;right&nbsp;side.&nbsp;If&nbsp;it&nbsp;is&nbsp;negative,&nbsp;it&nbsp;indicates<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;enlargement&nbsp;of&nbsp;the&nbsp;image.&nbsp;(e.g.&nbsp;if&nbsp;it&nbsp;is&nbsp;1&nbsp;the&nbsp;cropping<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;removes&nbsp;the&nbsp;last&nbsp;column&nbsp;from&nbsp;the&nbsp;image).<br>
-&nbsp;&nbsp;&nbsp;&nbsp;yb&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;yboff&nbsp;:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;offset&nbsp;from&nbsp;bottom&nbsp;side.&nbsp;If&nbsp;it&nbsp;is&nbsp;negative,&nbsp;it&nbsp;indicates<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;enlargement&nbsp;of&nbsp;the&nbsp;image.&nbsp;(e.g.&nbsp;if&nbsp;it&nbsp;is&nbsp;1&nbsp;the&nbsp;cropping<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;removes&nbsp;the&nbsp;last&nbsp;row&nbsp;from&nbsp;the&nbsp;image).<br>
 &nbsp;<br>
 Returns<br>
 -------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;num.&nbsp;:&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*todo*<br>
+&nbsp;&nbsp;&nbsp;&nbsp;result&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;0,&nbsp;or&nbsp;&nbsp;-1&nbsp;(on&nbsp;failure)<br>
 &nbsp;<br>
 Examples<br>
 --------<br>
@@ -870,16 +873,16 @@ Examples<br>
 Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-flimage_define_marker"><strong>flimage_define_marker</strong></a>(mkname, py_FlimageMarkerDraw, psdraw)</dt><dd><tt><a href="#-flimage_define_marker">flimage_define_marker</a>(mkname,&nbsp;py_FlimageMarkerDraw,&nbsp;psdraw)<br>
+ <dl><dt><a name="-flimage_define_marker"><strong>flimage_define_marker</strong></a>(mkname, pyfn_FlimageMarkerDraw, psdraw)</dt><dd><tt><a href="#-flimage_define_marker">flimage_define_marker</a>(mkname,&nbsp;pyfn_FlimageMarkerDraw,&nbsp;psdraw)&nbsp;-&gt;&nbsp;result<br>
 &nbsp;<br>
 Defines&nbsp;a&nbsp;custom&nbsp;marker,&nbsp;using&nbsp;a&nbsp;specific&nbsp;function&nbsp;for&nbsp;drawing&nbsp;it.<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
 &nbsp;&nbsp;&nbsp;&nbsp;mkname&nbsp;:&nbsp;str<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;name&nbsp;of&nbsp;the&nbsp;marker&nbsp;*todo*<br>
-&nbsp;&nbsp;&nbsp;&nbsp;py_FlimageMarkerDraw&nbsp;:&nbsp;python&nbsp;function&nbsp;to&nbsp;draw&nbsp;marker,&nbsp;no&nbsp;return<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;name&nbsp;referring&nbsp;to&nbsp;function(pImageMarker)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;name&nbsp;of&nbsp;the&nbsp;marker<br>
+&nbsp;&nbsp;&nbsp;&nbsp;pyfn_FlimageMarkerDraw&nbsp;:&nbsp;python&nbsp;function&nbsp;to&nbsp;draw&nbsp;marker,&nbsp;no&nbsp;return<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;name&nbsp;referring&nbsp;to&nbsp;function(ptr_imageMarker)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;psdraw&nbsp;:&nbsp;str<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;string&nbsp;that&nbsp;draws&nbsp;a&nbsp;marker&nbsp;in&nbsp;a&nbsp;square&nbsp;with&nbsp;the&nbsp;corner&nbsp;coordinates<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(-1,&nbsp;-1),&nbsp;(-1,&nbsp;1),&nbsp;(1,&nbsp;1)&nbsp;and&nbsp;(1,&nbsp;-1)&nbsp;in&nbsp;PostScript.&nbsp;e.g.&nbsp;the<br>
@@ -888,8 +891,8 @@ Parameters<br>
 &nbsp;<br>
 Returns<br>
 -------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;num.&nbsp;:&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*todo*<br>
+&nbsp;&nbsp;&nbsp;&nbsp;result&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;0,&nbsp;or&nbsp;-1&nbsp;(on&nbsp;failure)<br>
 &nbsp;<br>
 Examples<br>
 --------<br>
@@ -898,13 +901,13 @@ Examples<br>
 Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-flimage_delete_all_markers"><strong>flimage_delete_all_markers</strong></a>(pImage)</dt><dd><tt><a href="#-flimage_delete_all_markers">flimage_delete_all_markers</a>(pImage)<br>
+ <dl><dt><a name="-flimage_delete_all_markers"><strong>flimage_delete_all_markers</strong></a>(ptr_image)</dt><dd><tt><a href="#-flimage_delete_all_markers">flimage_delete_all_markers</a>(ptr_image)<br>
 &nbsp;<br>
 Deletes&nbsp;all&nbsp;markers&nbsp;added&nbsp;to&nbsp;an&nbsp;image<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;pImage&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_IMAGE<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_image&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_IMAGE<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;image<br>
 &nbsp;<br>
 Examples<br>
@@ -914,13 +917,13 @@ Examples<br>
 Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-flimage_delete_all_text"><strong>flimage_delete_all_text</strong></a>(pImage)</dt><dd><tt><a href="#-flimage_delete_all_text">flimage_delete_all_text</a>(pImage)<br>
+ <dl><dt><a name="-flimage_delete_all_text"><strong>flimage_delete_all_text</strong></a>(ptr_image)</dt><dd><tt><a href="#-flimage_delete_all_text">flimage_delete_all_text</a>(ptr_image)<br>
 &nbsp;<br>
 Deletes&nbsp;all&nbsp;the&nbsp;texts&nbsp;you&nbsp;added&nbsp;to&nbsp;an&nbsp;image.<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;pImage&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_IMAGE<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_image&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_IMAGE<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;image<br>
 &nbsp;<br>
 Examples<br>
@@ -930,29 +933,29 @@ Examples<br>
 Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-flimage_description_via_filter"><strong>flimage_description_via_filter</strong></a>(pImage, cmds, what, verbose)</dt><dd><tt><a href="#-flimage_description_via_filter">flimage_description_via_filter</a>(pImage,&nbsp;cmds,&nbsp;what,&nbsp;verbose)<br>
+ <dl><dt><a name="-flimage_description_via_filter"><strong>flimage_description_via_filter</strong></a>(ptr_image, cmds, what, verbose)</dt><dd><tt><a href="#-flimage_description_via_filter">flimage_description_via_filter</a>(ptr_image,&nbsp;cmds,&nbsp;what,&nbsp;verbose)&nbsp;-&gt;&nbsp;result<br>
 &nbsp;<br>
 Adds&nbsp;a&nbsp;description&nbsp;to&nbsp;be&nbsp;used&nbsp;with&nbsp;<a href="#-flimage_add_format">flimage_add_format</a>()&nbsp;to&nbsp;add&nbsp;image<br>
 formats&nbsp;via&nbsp;an&nbsp;external&nbsp;filter's&nbsp;command.<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;pImage&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_IMAGE<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_image&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_IMAGE<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;image<br>
-&nbsp;&nbsp;&nbsp;&nbsp;cmds&nbsp;:&nbsp;str?<br>
+&nbsp;&nbsp;&nbsp;&nbsp;cmds&nbsp;:&nbsp;list&nbsp;of&nbsp;str?<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;a&nbsp;list&nbsp;of&nbsp;shell&nbsp;commands&nbsp;(filters)&nbsp;that&nbsp;convert&nbsp;the&nbsp;format&nbsp;in<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;question&nbsp;into&nbsp;one&nbsp;of&nbsp;the&nbsp;supported&nbsp;formats.<br>
 &nbsp;&nbsp;&nbsp;&nbsp;what&nbsp;:&nbsp;str<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;text&nbsp;for&nbsp;reporting&nbsp;purpose<br>
 &nbsp;&nbsp;&nbsp;&nbsp;verbose&nbsp;:&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;controls&nbsp;if&nbsp;some&nbsp;information&nbsp;and&nbsp;error&nbsp;messages&nbsp;should&nbsp;be&nbsp;printed<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(mainly&nbsp;for&nbsp;debugging&nbsp;purpose).&nbsp;Values&nbsp;0&nbsp;(to&nbsp;disable)&nbsp;or&nbsp;1<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(to&nbsp;enable)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;controls&nbsp;if&nbsp;some&nbsp;information&nbsp;and&nbsp;error&nbsp;messages&nbsp;should&nbsp;be<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;printed&nbsp;(mainly&nbsp;for&nbsp;debugging&nbsp;purpose).&nbsp;Values&nbsp;0&nbsp;(to&nbsp;disable)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;or&nbsp;1&nbsp;(to&nbsp;enable)<br>
 &nbsp;<br>
 Returns<br>
 -------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;num.&nbsp;:&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*todo*<br>
+&nbsp;&nbsp;&nbsp;&nbsp;result&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*todo*,&nbsp;or&nbsp;&nbsp;-1&nbsp;(on&nbsp;errors)<br>
 &nbsp;<br>
 Examples<br>
 --------<br>
@@ -961,16 +964,16 @@ Examples<br>
 Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-flimage_display"><strong>flimage_display</strong></a>(pImage, win)</dt><dd><tt><a href="#-flimage_display">flimage_display</a>(pImage,&nbsp;win)<br>
+ <dl><dt><a name="-flimage_display"><strong>flimage_display</strong></a>(ptr_image, win)</dt><dd><tt><a href="#-flimage_display">flimage_display</a>(ptr_image,&nbsp;win)&nbsp;-&gt;&nbsp;result<br>
 &nbsp;<br>
 Displays&nbsp;a&nbsp;single&nbsp;or&nbsp;multiple&nbsp;images&nbsp;in&nbsp;a&nbsp;window.<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;pImage&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_IMAGE<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_image&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_IMAGE<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;image<br>
 &nbsp;&nbsp;&nbsp;&nbsp;win&nbsp;:&nbsp;long_pos<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;window<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;window&nbsp;id<br>
 &nbsp;<br>
 Returns<br>
 -------<br>
@@ -984,13 +987,13 @@ Examples<br>
 Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-flimage_display_markers"><strong>flimage_display_markers</strong></a>(pImage)</dt><dd><tt><a href="#-flimage_display_markers">flimage_display_markers</a>(pImage)<br>
+ <dl><dt><a name="-flimage_display_markers"><strong>flimage_display_markers</strong></a>(ptr_image)</dt><dd><tt><a href="#-flimage_display_markers">flimage_display_markers</a>(ptr_image)<br>
 &nbsp;<br>
 Displays&nbsp;markers&nbsp;added&nbsp;to&nbsp;an&nbsp;image.<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;pImage&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_IMAGE<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_image&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_IMAGE<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;image<br>
 &nbsp;<br>
 Examples<br>
@@ -1000,23 +1003,23 @@ Examples<br>
 Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-flimage_dump"><strong>flimage_dump</strong></a>(pImage, fname, fmt)</dt><dd><tt><a href="#-flimage_dump">flimage_dump</a>(pImage,&nbsp;fname,&nbsp;fmt)<br>
+ <dl><dt><a name="-flimage_dump"><strong>flimage_dump</strong></a>(ptr_image, fname, fmt)</dt><dd><tt><a href="#-flimage_dump">flimage_dump</a>(ptr_image,&nbsp;fname,&nbsp;fmt)&nbsp;-&gt;&nbsp;result<br>
 &nbsp;<br>
-Takes&nbsp;an&nbsp;image,&nbsp;either&nbsp;returned&nbsp;by&nbsp;<a href="#-flimage_load">flimage_load</a>()&nbsp;(possibly&nbsp;after&nbsp;some<br>
-processing)&nbsp;or&nbsp;created&nbsp;on&nbsp;the&nbsp;fly&nbsp;by&nbsp;the&nbsp;application,&nbsp;attempts&nbsp;to&nbsp;create<br>
-a&nbsp;file&nbsp;to&nbsp;store&nbsp;the&nbsp;image.<br>
+Takes&nbsp;an&nbsp;image,&nbsp;either&nbsp;returned&nbsp;by&nbsp;<a href="#-flimage_load">flimage_load</a>()&nbsp;(possibly&nbsp;after<br>
+some&nbsp;processing)&nbsp;or&nbsp;created&nbsp;on&nbsp;the&nbsp;fly&nbsp;by&nbsp;the&nbsp;application,&nbsp;attempts<br>
+to&nbsp;create&nbsp;a&nbsp;file&nbsp;to&nbsp;store&nbsp;the&nbsp;image.<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;pImage&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_IMAGE<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_image&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_IMAGE<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;image&nbsp;class&nbsp;instance<br>
 &nbsp;&nbsp;&nbsp;&nbsp;fname&nbsp;:&nbsp;str<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;name&nbsp;of&nbsp;file&nbsp;to&nbsp;be&nbsp;saved<br>
 &nbsp;&nbsp;&nbsp;&nbsp;fmt&nbsp;:&nbsp;str<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;formal&nbsp;name&nbsp;or&nbsp;short&nbsp;name&nbsp;of&nbsp;a&nbsp;supported&nbsp;image&nbsp;format.&nbsp;Values:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;jpeg,&nbsp;ppm,&nbsp;gif,&nbsp;bmp,&nbsp;etc...&nbsp;or&nbsp;some&nbsp;other&nbsp;formats&nbsp;the&nbsp;application<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;knows&nbsp;how&nbsp;to&nbsp;write.&nbsp;If&nbsp;it&nbsp;is&nbsp;'None',&nbsp;the&nbsp;original&nbsp;format&nbsp;the&nbsp;image<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;was&nbsp;in&nbsp;is&nbsp;used.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;formal&nbsp;name&nbsp;or&nbsp;short&nbsp;name&nbsp;of&nbsp;a&nbsp;supported&nbsp;image&nbsp;format.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Values:&nbsp;jpeg,&nbsp;ppm,&nbsp;gif,&nbsp;bmp,&nbsp;etc...&nbsp;or&nbsp;some&nbsp;other&nbsp;formats&nbsp;the<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;application&nbsp;knows&nbsp;how&nbsp;to&nbsp;write.&nbsp;If&nbsp;it&nbsp;is&nbsp;'None',&nbsp;the&nbsp;original<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;format&nbsp;the&nbsp;image&nbsp;was&nbsp;in&nbsp;is&nbsp;used.<br>
 &nbsp;<br>
 Returns<br>
 -------<br>
@@ -1030,7 +1033,7 @@ Examples<br>
 Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-flimage_dup"><strong>flimage_dup</strong></a>(pImage)</dt><dd><tt><a href="#-flimage_dup">flimage_dup</a>(pImage)<br>
+ <dl><dt><a name="-flimage_dup"><strong>flimage_dup</strong></a>(ptr_image)</dt><dd><tt><a href="#-flimage_dup">flimage_dup</a>(ptr_image)&nbsp;-&gt;&nbsp;ptr_image<br>
 &nbsp;<br>
 Duplicates&nbsp;an&nbsp;image&nbsp;and&nbsp;returns&nbsp;the&nbsp;duplicated&nbsp;image.&nbsp;At&nbsp;the&nbsp;moment,<br>
 only&nbsp;the&nbsp;first&nbsp;image&nbsp;is&nbsp;duplicated&nbsp;even&nbsp;if&nbsp;the&nbsp;input&nbsp;image&nbsp;has&nbsp;multiple<br>
@@ -1038,13 +1041,13 @@ frames.&nbsp;Furthermore,&nbsp;markers&nbsp;and&nbsp;annotations&nbsp;are&nbsp;n
 &nbsp;<br>
 Parameters<br>
 ----------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;pImage&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_IMAGE<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_image&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_IMAGE<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;image&nbsp;to&nbsp;be&nbsp;duplicated<br>
 &nbsp;<br>
 Returns<br>
 -------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;pImage&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_IMAGE<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;duplicated&nbsp;image&nbsp;class&nbsp;instance<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_image&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_IMAGE<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;duplicated&nbsp;image&nbsp;class&nbsp;instance,&nbsp;or&nbsp;None&nbsp;(on&nbsp;failure)<br>
 &nbsp;<br>
 Examples<br>
 --------<br>
@@ -1053,21 +1056,21 @@ Examples<br>
 Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-flimage_dup_"><strong>flimage_dup_</strong></a>(pImage, pix)</dt><dd><tt><a href="#-flimage_dup_">flimage_dup_</a>(pImage,&nbsp;pix)<br>
+ <dl><dt><a name="-flimage_dup_"><strong>flimage_dup_</strong></a>(ptr_image, copypix)</dt><dd><tt><a href="#-flimage_dup_">flimage_dup_</a>(ptr_image,&nbsp;copypix)<br>
 &nbsp;<br>
-Duplicates&nbsp;an&nbsp;image,&nbsp;with&nbsp;or&nbsp;without&nbsp;the&nbsp;pixels<br>
+Duplicates&nbsp;an&nbsp;image,&nbsp;with&nbsp;or&nbsp;without&nbsp;the&nbsp;pixels.<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;pImage&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_IMAGE<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_image&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_IMAGE<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;image<br>
-&nbsp;&nbsp;&nbsp;&nbsp;pix&nbsp;:&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;pixel?<br>
+&nbsp;&nbsp;&nbsp;&nbsp;copypix&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;flag&nbsp;to&nbsp;copy&nbsp;pixels&nbsp;(1)&nbsp;or&nbsp;not&nbsp;(0)<br>
 &nbsp;<br>
 Returns<br>
 -------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;pImage&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_IMAGE<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;image&nbsp;class&nbsp;instance<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_image&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_IMAGE<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;image&nbsp;class&nbsp;instance,&nbsp;or&nbsp;0&nbsp;(on&nbsp;failure)<br>
 &nbsp;<br>
 Examples<br>
 --------<br>
@@ -1236,20 +1239,20 @@ Examples<br>
 Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-flimage_enhance"><strong>flimage_enhance</strong></a>(pImage, delta)</dt><dd><tt><a href="#-flimage_enhance">flimage_enhance</a>(pImage,&nbsp;delta)<br>
+ <dl><dt><a name="-flimage_enhance"><strong>flimage_enhance</strong></a>(ptr_image, delta)</dt><dd><tt><a href="#-flimage_enhance">flimage_enhance</a>(ptr_image,&nbsp;delta)<br>
 &nbsp;<br>
-*todo*<br>
+Enhances&nbsp;an&nbsp;image&nbsp;*todo*<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;pImage&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_IMAGE<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_image&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_IMAGE<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;image<br>
 &nbsp;&nbsp;&nbsp;&nbsp;delta&nbsp;:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;unused.<br>
 &nbsp;<br>
 Returns<br>
 -------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;num.&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;result&nbsp;:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;0?<br>
 &nbsp;<br>
 Examples<br>
@@ -1259,13 +1262,13 @@ Examples<br>
 Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-flimage_error"><strong>flimage_error</strong></a>(pImage, text)</dt><dd><tt><a href="#-flimage_error">flimage_error</a>(pImage,&nbsp;text)<br>
+ <dl><dt><a name="-flimage_error"><strong>flimage_error</strong></a>(ptr_image, text)</dt><dd><tt><a href="#-flimage_error">flimage_error</a>(ptr_image,&nbsp;text)<br>
 &nbsp;<br>
 Calls&nbsp;the&nbsp;error&nbsp;message&nbsp;handler&nbsp;for&nbsp;an&nbsp;image.<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;pImage&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_IMAGE<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_image&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_IMAGE<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;image&nbsp;to&nbsp;be&nbsp;worked&nbsp;on<br>
 &nbsp;&nbsp;&nbsp;&nbsp;text&nbsp;:&nbsp;str<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;a&nbsp;brief&nbsp;message,&nbsp;such&nbsp;as&nbsp;"memory&nbsp;allocation&nbsp;failed"&nbsp;etc..<br>
@@ -1277,7 +1280,7 @@ Examples<br>
 Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-flimage_flip"><strong>flimage_flip</strong></a>(pImage, what)</dt><dd><tt><a href="#-flimage_flip">flimage_flip</a>(pImage,&nbsp;what)<br>
+ <dl><dt><a name="-flimage_flip"><strong>flimage_flip</strong></a>(ptr_image, flipaxis)</dt><dd><tt><a href="#-flimage_flip">flimage_flip</a>(ptr_image,&nbsp;flipaxis)&nbsp;-&gt;&nbsp;result<br>
 &nbsp;<br>
 Does&nbsp;the&nbsp;mirror&nbsp;operation&nbsp;in&nbsp;x-&nbsp;or&nbsp;y-direction&nbsp;at&nbsp;the&nbsp;center.&nbsp;For<br>
 example,&nbsp;to&nbsp;flip&nbsp;the&nbsp;columns&nbsp;of&nbsp;an&nbsp;image,&nbsp;the&nbsp;left&nbsp;and&nbsp;right&nbsp;of&nbsp;the<br>
@@ -1287,16 +1290,16 @@ the&nbsp;last&nbsp;pixel&nbsp;becomes&nbsp;the&nbsp;first&nbsp;etc.<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;pImage&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_IMAGE<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_image&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_IMAGE<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;image<br>
-&nbsp;&nbsp;&nbsp;&nbsp;what&nbsp;:&nbsp;int&nbsp;or&nbsp;char<br>
+&nbsp;&nbsp;&nbsp;&nbsp;flipaxis&nbsp;:&nbsp;int&nbsp;or&nbsp;char<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;desired&nbsp;direction&nbsp;of&nbsp;flipping.&nbsp;Values&nbsp;'c'&nbsp;(column,&nbsp;horizontal<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;flipping)&nbsp;or&nbsp;'r'&nbsp;(row,&nbsp;vertical&nbsp;flipping)<br>
 &nbsp;<br>
 Returns<br>
 -------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;num.&nbsp;:&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*todo*<br>
+&nbsp;&nbsp;&nbsp;&nbsp;result&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;0,&nbsp;or&nbsp;-1&nbsp;(on&nbsp;failure)<br>
 &nbsp;<br>
 Examples<br>
 --------<br>
@@ -1305,14 +1308,14 @@ Examples<br>
 Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-flimage_free"><strong>flimage_free</strong></a>(pImage)</dt><dd><tt><a href="#-flimage_free">flimage_free</a>(pImage)<br>
+ <dl><dt><a name="-flimage_free"><strong>flimage_free</strong></a>(ptr_image)</dt><dd><tt><a href="#-flimage_free">flimage_free</a>(ptr_image)<br>
 &nbsp;<br>
 Frees&nbsp;all&nbsp;memory&nbsp;allocated&nbsp;for&nbsp;the&nbsp;image,&nbsp;then&nbsp;the&nbsp;image&nbsp;structure<br>
 itself.&nbsp;After&nbsp;the&nbsp;function&nbsp;returns,&nbsp;the&nbsp;image&nbsp;should&nbsp;not&nbsp;be&nbsp;referenced.<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;pImage&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_IMAGE<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_image&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_IMAGE<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;image<br>
 &nbsp;<br>
 Examples<br>
@@ -1322,13 +1325,13 @@ Examples<br>
 Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-flimage_free_ci"><strong>flimage_free_ci</strong></a>(pImage)</dt><dd><tt><a href="#-flimage_free_ci">flimage_free_ci</a>(pImage)<br>
+ <dl><dt><a name="-flimage_free_ci"><strong>flimage_free_ci</strong></a>(ptr_image)</dt><dd><tt><a href="#-flimage_free_ci">flimage_free_ci</a>(ptr_image)<br>
 &nbsp;<br>
 Frees&nbsp;an&nbsp;image&nbsp;of&nbsp;type&nbsp;xfdata.FL_IMAGE_CI?<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;pImage&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_IMAGE<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_image&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_IMAGE<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;image<br>
 &nbsp;<br>
 Examples<br>
@@ -1338,13 +1341,13 @@ Examples<br>
 Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-flimage_free_gray"><strong>flimage_free_gray</strong></a>(pImage)</dt><dd><tt><a href="#-flimage_free_gray">flimage_free_gray</a>(pImage)<br>
+ <dl><dt><a name="-flimage_free_gray"><strong>flimage_free_gray</strong></a>(ptr_image)</dt><dd><tt><a href="#-flimage_free_gray">flimage_free_gray</a>(ptr_image)<br>
 &nbsp;<br>
 Frees&nbsp;an&nbsp;image&nbsp;of&nbsp;type&nbsp;xfdata.FL_IMAGE_GRAY?.<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;pImage&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_IMAGE<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_image&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_IMAGE<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;image<br>
 &nbsp;<br>
 Examples<br>
@@ -1354,13 +1357,13 @@ Examples<br>
 Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-flimage_free_linearlut"><strong>flimage_free_linearlut</strong></a>(pImage)</dt><dd><tt><a href="#-flimage_free_linearlut">flimage_free_linearlut</a>(pImage)<br>
+ <dl><dt><a name="-flimage_free_linearlut"><strong>flimage_free_linearlut</strong></a>(ptr_image)</dt><dd><tt><a href="#-flimage_free_linearlut">flimage_free_linearlut</a>(ptr_image)<br>
 &nbsp;<br>
 *todo*<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;pImage&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_IMAGE<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_image&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_IMAGE<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;image<br>
 &nbsp;<br>
 Examples<br>
@@ -1370,13 +1373,13 @@ Examples<br>
 Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-flimage_free_rgb"><strong>flimage_free_rgb</strong></a>(pImage)</dt><dd><tt><a href="#-flimage_free_rgb">flimage_free_rgb</a>(pImage)<br>
+ <dl><dt><a name="-flimage_free_rgb"><strong>flimage_free_rgb</strong></a>(ptr_image)</dt><dd><tt><a href="#-flimage_free_rgb">flimage_free_rgb</a>(ptr_image)<br>
 &nbsp;<br>
 Frees&nbsp;an&nbsp;image&nbsp;of&nbsp;type&nbsp;xfdata.FL_IMAGE_RGB?.<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;pImage&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_IMAGE<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_image&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_IMAGE<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;image<br>
 &nbsp;<br>
 Examples<br>
@@ -1386,13 +1389,13 @@ Examples<br>
 Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-flimage_freemem"><strong>flimage_freemem</strong></a>(pImage)</dt><dd><tt><a href="#-flimage_freemem">flimage_freemem</a>(pImage)<br>
+ <dl><dt><a name="-flimage_freemem"><strong>flimage_freemem</strong></a>(ptr_image)</dt><dd><tt><a href="#-flimage_freemem">flimage_freemem</a>(ptr_image)<br>
 &nbsp;<br>
 Frees&nbsp;all&nbsp;allocated&nbsp;memory&nbsp;associated&nbsp;with&nbsp;the&nbsp;image.<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;pImage&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_IMAGE<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_image&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_IMAGE<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;image<br>
 &nbsp;<br>
 Examples<br>
@@ -1402,21 +1405,21 @@ Examples<br>
 Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-flimage_from_pixmap"><strong>flimage_from_pixmap</strong></a>(pImage, pixmap)</dt><dd><tt><a href="#-flimage_from_pixmap">flimage_from_pixmap</a>(pImage,&nbsp;pixmap)<br>
+ <dl><dt><a name="-flimage_from_pixmap"><strong>flimage_from_pixmap</strong></a>(ptr_image, pixmap)</dt><dd><tt><a href="#-flimage_from_pixmap">flimage_from_pixmap</a>(ptr_image,&nbsp;pixmap)&nbsp;-&gt;&nbsp;result<br>
 &nbsp;<br>
 Converts&nbsp;a&nbsp;Pixmap&nbsp;to&nbsp;an&nbsp;image.&nbsp;*todo*<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;pImage&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_IMAGE<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_image&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_IMAGE<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;image<br>
 &nbsp;&nbsp;&nbsp;&nbsp;pixmap&nbsp;:&nbsp;long_pos<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;pixmap&nbsp;id<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;pixmap&nbsp;resource&nbsp;id<br>
 &nbsp;<br>
 Returns<br>
 -------<br>
 &nbsp;&nbsp;&nbsp;&nbsp;num.&nbsp;:&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*todo*<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*todo*,&nbsp;or&nbsp;-1&nbsp;(failure)<br>
 &nbsp;<br>
 Examples<br>
 --------<br>
@@ -1425,14 +1428,15 @@ Examples<br>
 Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-flimage_get_autocrop"><strong>flimage_get_autocrop</strong></a>(pImage, bgcolr)</dt><dd><tt><a href="#-flimage_get_autocrop">flimage_get_autocrop</a>(pImage,&nbsp;bgcolr)<br>
+ <dl><dt><a name="-flimage_get_autocrop"><strong>flimage_get_autocrop</strong></a>(ptr_image, bgcolr)</dt><dd><tt><a href="#-flimage_get_autocrop">flimage_get_autocrop</a>(ptr_image,&nbsp;bgcolr)&nbsp;-&gt;&nbsp;result,&nbsp;xloff,&nbsp;ytoff,<br>
+xroff,&nbsp;yboff<br>
 &nbsp;<br>
-Obtains&nbsp;the&nbsp;auto-cropping&nbsp;offsets&nbsp;(from&nbsp;left,&nbsp;right,&nbsp;top&nbsp;and&nbsp;bottom<br>
+Finds&nbsp;out&nbsp;the&nbsp;auto-cropping&nbsp;offsets&nbsp;(from&nbsp;left,&nbsp;right,&nbsp;top&nbsp;and&nbsp;bottom<br>
 sides)&nbsp;of&nbsp;an&nbsp;image.<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;pImage&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_IMAGE<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_image&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_IMAGE<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;image<br>
 &nbsp;&nbsp;&nbsp;&nbsp;bgcolr&nbsp;:&nbsp;int_pos<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;background&nbsp;color&nbsp;to&nbsp;crop.&nbsp;If&nbsp;it&nbsp;is&nbsp;xfdata.FLIMAGE_AUTOCOLOR,&nbsp;the<br>
@@ -1440,16 +1444,16 @@ Parameters<br>
 &nbsp;<br>
 Returns<br>
 -------<br>
-num.&nbsp;:&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;*todo*<br>
-xl&nbsp;:&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;offset&nbsp;from&nbsp;left&nbsp;side<br>
-yt&nbsp;:&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;offset&nbsp;from&nbsp;top&nbsp;side<br>
-xr&nbsp;:&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;offset&nbsp;from&nbsp;right&nbsp;side<br>
-yb&nbsp;:&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;offset&nbsp;from&nbsp;bottom&nbsp;side<br>
+&nbsp;&nbsp;&nbsp;&nbsp;result&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;0,&nbsp;or&nbsp;-1&nbsp;(on&nbsp;failure)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;xloff&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;offset&nbsp;from&nbsp;left&nbsp;side<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ytoff&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;offset&nbsp;from&nbsp;top&nbsp;side<br>
+&nbsp;&nbsp;&nbsp;&nbsp;xroff&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;offset&nbsp;from&nbsp;right&nbsp;side<br>
+&nbsp;&nbsp;&nbsp;&nbsp;yboff&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;offset&nbsp;from&nbsp;bottom&nbsp;side<br>
 &nbsp;<br>
 Examples<br>
 --------<br>
@@ -1457,19 +1461,19 @@ Examples<br>
 &nbsp;<br>
 API_diversion<br>
 ----------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;API&nbsp;changed&nbsp;from&nbsp;XForms,&nbsp;upstream&nbsp;was<br>
-&nbsp;&nbsp;&nbsp;&nbsp;<a href="#-flimage_get_autocrop">flimage_get_autocrop</a>(pImage,&nbsp;bk,&nbsp;xl,&nbsp;yt,&nbsp;xr,&nbsp;yb)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;API&nbsp;changed&nbsp;from&nbsp;XForms,&nbsp;upstream&nbsp;is<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="#-flimage_get_autocrop">flimage_get_autocrop</a>(ptr_image,&nbsp;bk,&nbsp;xl,&nbsp;yt,&nbsp;xr,&nbsp;yb)<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-flimage_get_closest_color_from_map"><strong>flimage_get_closest_color_from_map</strong></a>(pImage, colr)</dt><dd><tt><a href="#-flimage_get_closest_color_from_map">flimage_get_closest_color_from_map</a>(pImage,&nbsp;colr)<br>
+ <dl><dt><a name="-flimage_get_closest_color_from_map"><strong>flimage_get_closest_color_from_map</strong></a>(ptr_image, colr)</dt><dd><tt><a href="#-flimage_get_closest_color_from_map">flimage_get_closest_color_from_map</a>(ptr_image,&nbsp;colr)&nbsp;-&gt;&nbsp;colr<br>
 &nbsp;<br>
 Gets&nbsp;closest&nbsp;color&nbsp;from&nbsp;color&nbsp;map?<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;pImage&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_IMAGE<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_image&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_IMAGE<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;image<br>
 &nbsp;&nbsp;&nbsp;&nbsp;colr&nbsp;:&nbsp;int_pos<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;color&nbsp;to&nbsp;evaluate<br>
@@ -1486,19 +1490,19 @@ Examples<br>
 Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-flimage_get_format_info"><strong>flimage_get_format_info</strong></a>(nformat)</dt><dd><tt><a href="#-flimage_get_format_info">flimage_get_format_info</a>(nformat)<br>
+ <dl><dt><a name="-flimage_get_format_info"><strong>flimage_get_format_info</strong></a>(imgfmtnum)</dt><dd><tt><a href="#-flimage_get_format_info">flimage_get_format_info</a>(imgfmtnum)&nbsp;-&gt;&nbsp;ptr_imageformatinfo<br>
 &nbsp;<br>
-Obtains&nbsp;detailed&nbsp;information&nbsp;for&nbsp;each&nbsp;image&nbsp;format.<br>
+Finds&nbsp;out&nbsp;detailed&nbsp;information&nbsp;for&nbsp;each&nbsp;image&nbsp;format.<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;nformat&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;imgfmtnum&nbsp;:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;number&nbsp;between&nbsp;1&nbsp;and&nbsp;the&nbsp;return&nbsp;value&nbsp;of<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#-flimage_get_number_of_formats">flimage_get_number_of_formats</a>()&nbsp;??<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#-flimage_get_number_of_formats">flimage_get_number_of_formats</a>()<br>
 &nbsp;<br>
 Returns<br>
 -------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;pImageFormatInfo&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FLIMAGE_FORMAT_INFO<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_imageformatinfo&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FLIMAGE_FORMAT_INFO<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ImageFormatInfo&nbsp;class&nbsp;instance<br>
 &nbsp;<br>
 Examples<br>
@@ -1508,18 +1512,18 @@ Examples<br>
 Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-flimage_get_linearlut"><strong>flimage_get_linearlut</strong></a>(pImage)</dt><dd><tt><a href="#-flimage_get_linearlut">flimage_get_linearlut</a>(pImage)<br>
+ <dl><dt><a name="-flimage_get_linearlut"><strong>flimage_get_linearlut</strong></a>(ptr_image)</dt><dd><tt><a href="#-flimage_get_linearlut">flimage_get_linearlut</a>(ptr_image)&nbsp;-&gt;&nbsp;result<br>
 &nbsp;<br>
 *todo*<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;pImage&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_IMAGE<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_image&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_IMAGE<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;image<br>
 &nbsp;<br>
 Returns<br>
 -------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;num&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;result&nbsp;:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;num.,&nbsp;or&nbsp;-1&nbsp;(on&nbsp;failure?)<br>
 &nbsp;<br>
 Examples<br>
@@ -1529,13 +1533,13 @@ Examples<br>
 Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-flimage_get_number_of_formats"><strong>flimage_get_number_of_formats</strong></a>()</dt><dd><tt><a href="#-flimage_get_number_of_formats">flimage_get_number_of_formats</a>()<br>
+ <dl><dt><a name="-flimage_get_number_of_formats"><strong>flimage_get_number_of_formats</strong></a>()</dt><dd><tt><a href="#-flimage_get_number_of_formats">flimage_get_number_of_formats</a>()&nbsp;-&gt;&nbsp;numformats<br>
 &nbsp;<br>
-Obtains&nbsp;the&nbsp;number&nbsp;of&nbsp;currently&nbsp;supported&nbsp;image&nbsp;format.<br>
+Finds&nbsp;out&nbsp;the&nbsp;number&nbsp;of&nbsp;currently&nbsp;supported&nbsp;image&nbsp;formats.<br>
 &nbsp;<br>
 Returns<br>
 -------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;nformats&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;numformats&nbsp;:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;number&nbsp;of&nbsp;formats&nbsp;supported,&nbsp;for&nbsp;reading&nbsp;or&nbsp;writing&nbsp;or&nbsp;both<br>
 &nbsp;<br>
 Examples<br>
@@ -1545,13 +1549,13 @@ Examples<br>
 Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-flimage_getcolormap"><strong>flimage_getcolormap</strong></a>(pImage)</dt><dd><tt><a href="#-flimage_getcolormap">flimage_getcolormap</a>(pImage)<br>
+ <dl><dt><a name="-flimage_getcolormap"><strong>flimage_getcolormap</strong></a>(ptr_image)</dt><dd><tt><a href="#-flimage_getcolormap">flimage_getcolormap</a>(ptr_image)<br>
 &nbsp;<br>
-Obtains&nbsp;color&nbsp;map&nbsp;for&nbsp;an&nbsp;image.<br>
+Finds&nbsp;out&nbsp;color&nbsp;map&nbsp;for&nbsp;an&nbsp;image.<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
-&nbsp;&nbsp;pImage&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_IMAGE<br>
+&nbsp;&nbsp;ptr_image&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_IMAGE<br>
 &nbsp;&nbsp;&nbsp;&nbsp;image<br>
 &nbsp;<br>
 Returns<br>
@@ -1566,20 +1570,20 @@ Examples<br>
 Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-flimage_getmem"><strong>flimage_getmem</strong></a>(pImage)</dt><dd><tt><a href="#-flimage_getmem">flimage_getmem</a>(pImage)<br>
+ <dl><dt><a name="-flimage_getmem"><strong>flimage_getmem</strong></a>(ptr_image)</dt><dd><tt><a href="#-flimage_getmem">flimage_getmem</a>(ptr_image)&nbsp;-&gt;&nbsp;result<br>
 &nbsp;<br>
 Allocates&nbsp;the&nbsp;proper&nbsp;amount&nbsp;of&nbsp;memory&nbsp;appropriate&nbsp;for&nbsp;the&nbsp;image&nbsp;type,<br>
 including&nbsp;colormaps&nbsp;when&nbsp;needed.<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;pImage&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_IMAGE<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_image&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_IMAGE<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;image<br>
 &nbsp;<br>
 Returns<br>
 -------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;num.&nbsp;:&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*todo*<br>
+&nbsp;&nbsp;&nbsp;&nbsp;result&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;0,&nbsp;or&nbsp;-1&nbsp;(on&nbsp;errors)<br>
 &nbsp;<br>
 Examples<br>
 --------<br>
@@ -1590,7 +1594,7 @@ Notes<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
  <dl><dt><a name="-flimage_gif_options"><strong>flimage_gif_options</strong></a> = flimage_gif_output_options(interlace)</dt><dd><tt><a href="#-flimage_gif_output_options">flimage_gif_output_options</a>(interlace)<br>
 &nbsp;<br>
-Sets&nbsp;options&nbsp;of&nbsp;GIF&nbsp;images.<br>
+Defines&nbsp;options&nbsp;of&nbsp;GIF&nbsp;images.<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
@@ -1607,7 +1611,7 @@ Notes<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
  <dl><dt><a name="-flimage_gif_output_options"><strong>flimage_gif_output_options</strong></a>(interlace)</dt><dd><tt><a href="#-flimage_gif_output_options">flimage_gif_output_options</a>(interlace)<br>
 &nbsp;<br>
-Sets&nbsp;options&nbsp;of&nbsp;GIF&nbsp;images.<br>
+Defines&nbsp;options&nbsp;of&nbsp;GIF&nbsp;images.<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
@@ -1622,12 +1626,14 @@ Examples<br>
 Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-flimage_invalidate_pixels"><strong>flimage_invalidate_pixels</strong></a>(pImage)</dt><dd><tt>Invalidates/frees&nbsp;all&nbsp;other&nbsp;types&nbsp;of&nbsp;image,&nbsp;before&nbsp;we&nbsp;modify&nbsp;the<br>
+ <dl><dt><a name="-flimage_invalidate_pixels"><strong>flimage_invalidate_pixels</strong></a>(ptr_image)</dt><dd><tt><a href="#-flimage_invalidate_pixels">flimage_invalidate_pixels</a>(ptr_image)<br>
+&nbsp;<br>
+Invalidates/frees&nbsp;all&nbsp;other&nbsp;types&nbsp;of&nbsp;image,&nbsp;before&nbsp;we&nbsp;modify&nbsp;the<br>
 current&nbsp;image.<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;pImage&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_IMAGE<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_image&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_IMAGE<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;image<br>
 &nbsp;<br>
 Examples<br>
@@ -1637,7 +1643,7 @@ Examples<br>
 Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-flimage_is_supported"><strong>flimage_is_supported</strong></a>(fname)</dt><dd><tt><a href="#-flimage_is_supported">flimage_is_supported</a>(fname)<br>
+ <dl><dt><a name="-flimage_is_supported"><strong>flimage_is_supported</strong></a>(fname)</dt><dd><tt><a href="#-flimage_is_supported">flimage_is_supported</a>(fname)&nbsp;-&gt;&nbsp;yesno<br>
 &nbsp;<br>
 Finds&nbsp;out&nbsp;if&nbsp;a&nbsp;specific&nbsp;file&nbsp;is&nbsp;a&nbsp;known&nbsp;image&nbsp;file&nbsp;or&nbsp;not.<br>
 &nbsp;<br>
@@ -1648,7 +1654,7 @@ Parameters<br>
 &nbsp;<br>
 Returns<br>
 -------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;isknown&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;yesno&nbsp;:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1&nbsp;(if&nbsp;it&nbsp;is&nbsp;a&nbsp;known&nbsp;image&nbsp;file),&nbsp;or&nbsp;0&nbsp;(on&nbsp;failure)<br>
 &nbsp;<br>
 Examples<br>
@@ -1658,16 +1664,16 @@ Examples<br>
 Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-flimage_jpeg_options"><strong>flimage_jpeg_options</strong></a> = flimage_jpeg_output_options(pImageJpegOption)</dt><dd><tt><a href="#-flimage_jpeg_output_options">flimage_jpeg_output_options</a>(pImageJpegOption)<br>
+ <dl><dt><a name="-flimage_jpeg_options"><strong>flimage_jpeg_options</strong></a> = flimage_jpeg_output_options(ptr_imagejpegoption)</dt><dd><tt><a href="#-flimage_jpeg_output_options">flimage_jpeg_output_options</a>(ptr_imagejpegoption)<br>
 &nbsp;<br>
-Sets&nbsp;quality&nbsp;and&nbsp;smoothing&nbsp;options&nbsp;of&nbsp;a&nbsp;JPEG&nbsp;image,&nbsp;using<br>
+Defines&nbsp;quality&nbsp;and&nbsp;smoothing&nbsp;options&nbsp;of&nbsp;a&nbsp;JPEG&nbsp;image,&nbsp;using<br>
 xfdata.FLIMAGE_JPEG_OPTION.&nbsp;The&nbsp;default&nbsp;quality&nbsp;factor&nbsp;for&nbsp;JPEG&nbsp;output<br>
 is&nbsp;75.&nbsp;In&nbsp;general,&nbsp;the&nbsp;higher&nbsp;the&nbsp;quality&nbsp;factor&nbsp;the&nbsp;better&nbsp;the&nbsp;image<br>
 is,&nbsp;but&nbsp;the&nbsp;file&nbsp;size&nbsp;gets&nbsp;larger.&nbsp;The&nbsp;default&nbsp;smoothing&nbsp;factor&nbsp;is&nbsp;0.<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;pImageJpegOption&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FLIMAGE_JPEG_OPTION<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_imagejpegoption&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FLIMAGE_JPEG_OPTION<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;flimage&nbsp;jpeg&nbsp;option&nbsp;class&nbsp;instance<br>
 &nbsp;<br>
 Examples<br>
@@ -1677,16 +1683,16 @@ Examples<br>
 Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-flimage_jpeg_output_options"><strong>flimage_jpeg_output_options</strong></a>(pImageJpegOption)</dt><dd><tt><a href="#-flimage_jpeg_output_options">flimage_jpeg_output_options</a>(pImageJpegOption)<br>
+ <dl><dt><a name="-flimage_jpeg_output_options"><strong>flimage_jpeg_output_options</strong></a>(ptr_imagejpegoption)</dt><dd><tt><a href="#-flimage_jpeg_output_options">flimage_jpeg_output_options</a>(ptr_imagejpegoption)<br>
 &nbsp;<br>
-Sets&nbsp;quality&nbsp;and&nbsp;smoothing&nbsp;options&nbsp;of&nbsp;a&nbsp;JPEG&nbsp;image,&nbsp;using<br>
+Defines&nbsp;quality&nbsp;and&nbsp;smoothing&nbsp;options&nbsp;of&nbsp;a&nbsp;JPEG&nbsp;image,&nbsp;using<br>
 xfdata.FLIMAGE_JPEG_OPTION.&nbsp;The&nbsp;default&nbsp;quality&nbsp;factor&nbsp;for&nbsp;JPEG&nbsp;output<br>
 is&nbsp;75.&nbsp;In&nbsp;general,&nbsp;the&nbsp;higher&nbsp;the&nbsp;quality&nbsp;factor&nbsp;the&nbsp;better&nbsp;the&nbsp;image<br>
 is,&nbsp;but&nbsp;the&nbsp;file&nbsp;size&nbsp;gets&nbsp;larger.&nbsp;The&nbsp;default&nbsp;smoothing&nbsp;factor&nbsp;is&nbsp;0.<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;pImageJpegOption&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FLIMAGE_JPEG_OPTION<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_imagejpegoption&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FLIMAGE_JPEG_OPTION<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;flimage&nbsp;jpeg&nbsp;option&nbsp;class&nbsp;instance<br>
 &nbsp;<br>
 Examples<br>
@@ -1696,7 +1702,7 @@ Examples<br>
 Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-flimage_load"><strong>flimage_load</strong></a>(fname)</dt><dd><tt><a href="#-flimage_load">flimage_load</a>(fname)<br>
+ <dl><dt><a name="-flimage_load"><strong>flimage_load</strong></a>(fname)</dt><dd><tt><a href="#-flimage_load">flimage_load</a>(fname)&nbsp;-&gt;&nbsp;ptr_image<br>
 &nbsp;<br>
 Loads&nbsp;an&nbsp;image&nbsp;file&nbsp;into&nbsp;memory.<br>
 &nbsp;<br>
@@ -1707,7 +1713,7 @@ Parameters<br>
 &nbsp;<br>
 Returns<br>
 -------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;pImage&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_IMAGE<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_image&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_IMAGE<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;an&nbsp;image&nbsp;class&nbsp;instance,&nbsp;or&nbsp;None&nbsp;(on&nbsp;failure)<br>
 &nbsp;<br>
 Examples<br>
@@ -1717,9 +1723,9 @@ Examples<br>
 Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-flimage_open"><strong>flimage_open</strong></a>(fname)</dt><dd><tt><a href="#-flimage_open">flimage_open</a>(fname)<br>
+ <dl><dt><a name="-flimage_open"><strong>flimage_open</strong></a>(fname)</dt><dd><tt><a href="#-flimage_open">flimage_open</a>(fname)&nbsp;-&gt;&nbsp;ptr_image<br>
 &nbsp;<br>
-Opens&nbsp;an&nbsp;image&nbsp;file.&nbsp;Use&nbsp;flimage_read&nbsp;to&nbsp;read&nbsp;it.<br>
+Opens&nbsp;an&nbsp;image&nbsp;file.&nbsp;Use&nbsp;<a href="#-flimage_read">flimage_read</a>()&nbsp;to&nbsp;read&nbsp;it.<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
@@ -1728,7 +1734,7 @@ Parameters<br>
 &nbsp;<br>
 Returns<br>
 -------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;pImage&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_IMAGE<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_image&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_IMAGE<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;image&nbsp;class&nbsp;instance&nbsp;opened,&nbsp;or&nbsp;None&nbsp;(on&nbsp;failure)<br>
 &nbsp;<br>
 Examples<br>
@@ -1740,13 +1746,13 @@ Notes<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
  <dl><dt><a name="-flimage_pnm_options"><strong>flimage_pnm_options</strong></a> = flimage_pnm_output_options(rawformat)</dt><dd><tt><a href="#-flimage_pnm_output_options">flimage_pnm_output_options</a>(rawformat)<br>
 &nbsp;<br>
-Sets&nbsp;variant&nbsp;options&nbsp;for&nbsp;PNM&nbsp;(ppm,&nbsp;pgm&nbsp;and&nbsp;pbm)&nbsp;images.<br>
+Defines&nbsp;variant&nbsp;options&nbsp;for&nbsp;PNM&nbsp;(ppm,&nbsp;pgm&nbsp;and&nbsp;pbm)&nbsp;images.<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
 &nbsp;&nbsp;&nbsp;&nbsp;rawformat&nbsp;:&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;flag&nbsp;of&nbsp;supported&nbsp;variants.&nbsp;Values&nbsp;1&nbsp;(binary&nbsp;raw&nbsp;format,&nbsp;default)<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;or&nbsp;0&nbsp;(ASCII&nbsp;format).&nbsp;If&nbsp;the&nbsp;output&nbsp;image&nbsp;is&nbsp;of&nbsp;type<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;flag&nbsp;of&nbsp;supported&nbsp;variants.&nbsp;Values&nbsp;1&nbsp;(binary&nbsp;raw&nbsp;format,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;default)&nbsp;or&nbsp;0&nbsp;(ASCII&nbsp;format).&nbsp;If&nbsp;the&nbsp;output&nbsp;image&nbsp;is&nbsp;of&nbsp;type<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;xfdata.FL_IMAGE_GRAY16,&nbsp;it&nbsp;is&nbsp;always&nbsp;ASCII&nbsp;format<br>
 &nbsp;<br>
 Examples<br>
@@ -1758,13 +1764,13 @@ Notes<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
  <dl><dt><a name="-flimage_pnm_output_options"><strong>flimage_pnm_output_options</strong></a>(rawformat)</dt><dd><tt><a href="#-flimage_pnm_output_options">flimage_pnm_output_options</a>(rawformat)<br>
 &nbsp;<br>
-Sets&nbsp;variant&nbsp;options&nbsp;for&nbsp;PNM&nbsp;(ppm,&nbsp;pgm&nbsp;and&nbsp;pbm)&nbsp;images.<br>
+Defines&nbsp;variant&nbsp;options&nbsp;for&nbsp;PNM&nbsp;(ppm,&nbsp;pgm&nbsp;and&nbsp;pbm)&nbsp;images.<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
 &nbsp;&nbsp;&nbsp;&nbsp;rawformat&nbsp;:&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;flag&nbsp;of&nbsp;supported&nbsp;variants.&nbsp;Values&nbsp;1&nbsp;(binary&nbsp;raw&nbsp;format,&nbsp;default)<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;or&nbsp;0&nbsp;(ASCII&nbsp;format).&nbsp;If&nbsp;the&nbsp;output&nbsp;image&nbsp;is&nbsp;of&nbsp;type<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;flag&nbsp;of&nbsp;supported&nbsp;variants.&nbsp;Values&nbsp;1&nbsp;(binary&nbsp;raw&nbsp;format,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;default)&nbsp;or&nbsp;0&nbsp;(ASCII&nbsp;format).&nbsp;If&nbsp;the&nbsp;output&nbsp;image&nbsp;is&nbsp;of&nbsp;type<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;xfdata.FL_IMAGE_GRAY16,&nbsp;it&nbsp;is&nbsp;always&nbsp;ASCII&nbsp;format<br>
 &nbsp;<br>
 Examples<br>
@@ -1774,14 +1780,14 @@ Examples<br>
 Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-flimage_ps_options"><strong>flimage_ps_options</strong></a>()</dt><dd><tt><a href="#-flimage_ps_options">flimage_ps_options</a>()<br>
+ <dl><dt><a name="-flimage_ps_options"><strong>flimage_ps_options</strong></a>()</dt><dd><tt><a href="#-flimage_ps_options">flimage_ps_options</a>()&nbsp;-&gt;&nbsp;ptr_flpscontrol<br>
 &nbsp;<br>
-Sets&nbsp;reading&nbsp;and&nbsp;writing&nbsp;options&nbsp;for&nbsp;PostScript.<br>
+Defines&nbsp;reading&nbsp;and&nbsp;writing&nbsp;options&nbsp;for&nbsp;PostScript.<br>
 &nbsp;<br>
 Returns<br>
 -------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;pFlpsControl&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FLPS_CONTROL<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;flpscontrol&nbsp;class&nbsp;instance<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_flpscontrol&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FLPS_CONTROL<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;flps&nbsp;control&nbsp;class&nbsp;instance<br>
 &nbsp;<br>
 Examples<br>
 --------<br>
@@ -1790,19 +1796,19 @@ Examples<br>
 Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-flimage_read"><strong>flimage_read</strong></a>(pImage)</dt><dd><tt><a href="#-flimage_read">flimage_read</a>(pImage)<br>
+ <dl><dt><a name="-flimage_read"><strong>flimage_read</strong></a>(ptr_image)</dt><dd><tt><a href="#-flimage_read">flimage_read</a>(ptr_image)&nbsp;-&gt;&nbsp;ptr_image<br>
 &nbsp;<br>
 Takes&nbsp;a&nbsp;xfdata.FL_IMAGE&nbsp;class&nbsp;instance&nbsp;returned&nbsp;by&nbsp;<a href="#-flimage_open">flimage_open</a>()<br>
 and&nbsp;fills&nbsp;the&nbsp;image&nbsp;structure.<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;pImage&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_IMAGE<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_image&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_IMAGE<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;image&nbsp;class&nbsp;instance<br>
 &nbsp;<br>
 Returns<br>
 -------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;pImage&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_IMAGE<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_image&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_IMAGE<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;an&nbsp;image&nbsp;class&nbsp;instance,&nbsp;or&nbsp;None&nbsp;(on&nbsp;failure)<br>
 &nbsp;<br>
 Examples<br>
@@ -1813,13 +1819,13 @@ Examples<br>
 Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-flimage_read_annotation"><strong>flimage_read_annotation</strong></a>(pImage)</dt><dd><tt><a href="#-flimage_read_annotation">flimage_read_annotation</a>(pImage)<br>
+ <dl><dt><a name="-flimage_read_annotation"><strong>flimage_read_annotation</strong></a>(ptr_image)</dt><dd><tt><a href="#-flimage_read_annotation">flimage_read_annotation</a>(ptr_image)&nbsp;-&gt;&nbsp;resutl<br>
 &nbsp;<br>
 Reads&nbsp;annotation&nbsp;in&nbsp;the&nbsp;image?<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;pImage&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_IMAGE<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_image&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_IMAGE<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;image<br>
 &nbsp;<br>
 Returns<br>
@@ -1834,11 +1840,11 @@ Examples<br>
 Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-flimage_render_annotation"><strong>flimage_render_annotation</strong></a>(pImage, win)</dt><dd><tt><a href="#-flimage_render_annotation">flimage_render_annotation</a>(pImage,&nbsp;win)<br>
+ <dl><dt><a name="-flimage_render_annotation"><strong>flimage_render_annotation</strong></a>(ptr_image, win)</dt><dd><tt><a href="#-flimage_render_annotation">flimage_render_annotation</a>(ptr_image,&nbsp;win)&nbsp;-&gt;&nbsp;result<br>
 &nbsp;<br>
 Makes&nbsp;the&nbsp;annotations&nbsp;a&nbsp;part&nbsp;of&nbsp;the&nbsp;image&nbsp;pixel.&nbsp;By&nbsp;default&nbsp;annotations<br>
-placed&nbsp;on&nbsp;the&nbsp;image&nbsp;are&nbsp;kept&nbsp;seperate&nbsp;from&nbsp;the&nbsp;image&nbsp;pixels&nbsp;themselves,&nbsp;as<br>
-keeping&nbsp;the&nbsp;annotation&nbsp;seperate&nbsp;makes&nbsp;it&nbsp;possible&nbsp;to&nbsp;later&nbsp;edit&nbsp;the<br>
+placed&nbsp;on&nbsp;the&nbsp;image&nbsp;are&nbsp;kept&nbsp;seperate&nbsp;from&nbsp;the&nbsp;image&nbsp;pixels&nbsp;themselves,<br>
+as&nbsp;keeping&nbsp;the&nbsp;annotation&nbsp;seperate&nbsp;makes&nbsp;it&nbsp;possible&nbsp;to&nbsp;later&nbsp;edit&nbsp;the<br>
 annotations,&nbsp;and&nbsp;typically&nbsp;the&nbsp;screen&nbsp;has&nbsp;a&nbsp;lower&nbsp;resolutions&nbsp;than&nbsp;other<br>
 output&nbsp;devices&nbsp;(by&nbsp;keeping&nbsp;the&nbsp;annotations&nbsp;separate&nbsp;from&nbsp;the&nbsp;pixels&nbsp;makes<br>
 it&nbsp;possible&nbsp;to&nbsp;obtain&nbsp;better&nbsp;image&nbsp;qualities&nbsp;when&nbsp;the&nbsp;annotations&nbsp;are<br>
@@ -1850,41 +1856,41 @@ function&nbsp;for&nbsp;it&nbsp;to&nbsp;work&nbsp;correctly.<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;pImage&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_IMAGE<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_image&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_IMAGE<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;image<br>
 &nbsp;&nbsp;&nbsp;&nbsp;win&nbsp;:&nbsp;long_pos<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;window<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;window&nbsp;id<br>
 &nbsp;<br>
 Returns<br>
 -------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;num.&nbsp;:&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;num.,&nbsp;or&nbsp;-1&nbsp;(on&nbsp;failure)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;result&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;0&nbsp;(on&nbsp;success&nbsp;or&nbsp;if&nbsp;no&nbsp;markers&nbsp;and&nbsp;no&nbsp;texts),&nbsp;or&nbsp;-1&nbsp;(on&nbsp;failure)<br>
 &nbsp;<br>
 Examples<br>
 --------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;if&nbsp;<a href="#-flimage_render_annotation">flimage_render_annotation</a>(pImage,&nbsp;win0)&nbsp;!=&nbsp;-1:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;if&nbsp;<a href="#-flimage_render_annotation">flimage_render_annotation</a>(ptr_image,&nbsp;win0)&nbsp;!=&nbsp;-1:<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;...&nbsp;&lt;something&gt;<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-flimage_replace_image"><strong>flimage_replace_image</strong></a>(pImage, w, h, r, g, b)</dt><dd><tt><a href="#-flimage_replace_image">flimage_replace_image</a>(pImage,&nbsp;w,&nbsp;h,&nbsp;r,&nbsp;g,&nbsp;b)<br>
+ <dl><dt><a name="-flimage_replace_image"><strong>flimage_replace_image</strong></a>(ptr_image, width, height, red, green, blue)</dt><dd><tt><a href="#-flimage_replace_image">flimage_replace_image</a>(ptr_image,&nbsp;width,&nbsp;height,&nbsp;red,&nbsp;green,&nbsp;blue)<br>
 &nbsp;<br>
 Replaces&nbsp;an&nbsp;image?<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;pImage&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_IMAGE<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_image&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_IMAGE<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;image<br>
-&nbsp;&nbsp;&nbsp;&nbsp;w&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;width&nbsp;:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;width<br>
-&nbsp;&nbsp;&nbsp;&nbsp;h&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;height&nbsp;:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;heigth<br>
-&nbsp;&nbsp;&nbsp;&nbsp;r&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;red&nbsp;:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;value&nbsp;for&nbsp;red&nbsp;color<br>
-&nbsp;&nbsp;&nbsp;&nbsp;g&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;green&nbsp;:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;value&nbsp;for&nbsp;green&nbsp;color<br>
-&nbsp;&nbsp;&nbsp;&nbsp;b&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;blue&nbsp;:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;value&nbsp;for&nbsp;blue&nbsp;color<br>
 &nbsp;<br>
 Examples<br>
@@ -1894,13 +1900,13 @@ Examples<br>
 Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-flimage_replace_pixel"><strong>flimage_replace_pixel</strong></a>(pImage, targetcolr, newcolr)</dt><dd><tt><a href="#-flimage_replace_pixel">flimage_replace_pixel</a>(pImage,&nbsp;targetcolr,&nbsp;newcolr)<br>
+ <dl><dt><a name="-flimage_replace_pixel"><strong>flimage_replace_pixel</strong></a>(ptr_image, targetcolr, newcolr)</dt><dd><tt><a href="#-flimage_replace_pixel">flimage_replace_pixel</a>(ptr_image,&nbsp;targetcolr,&nbsp;newcolr)&nbsp;-&gt;&nbsp;result<br>
 &nbsp;<br>
 Replaces&nbsp;all&nbsp;color&nbsp;targetcolr&nbsp;with&nbsp;the&nbsp;new&nbsp;desired&nbsp;color.<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;pImage&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_IMAGE<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_image&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_IMAGE<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;image<br>
 &nbsp;&nbsp;&nbsp;&nbsp;targetcolr&nbsp;:&nbsp;int_pos<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;color&nbsp;to&nbsp;be&nbsp;replaced<br>
@@ -1919,7 +1925,7 @@ Examples<br>
 Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-flimage_rotate"><strong>flimage_rotate</strong></a>(pImage, angle, subpixel)</dt><dd><tt><a href="#-flimage_rotate">flimage_rotate</a>(pImage,&nbsp;angle,&nbsp;subpixel)<br>
+ <dl><dt><a name="-flimage_rotate"><strong>flimage_rotate</strong></a>(ptr_image, angle, subpixel)</dt><dd><tt><a href="#-flimage_rotate">flimage_rotate</a>(ptr_image,&nbsp;angle,&nbsp;subpixel)&nbsp;-&gt;&nbsp;result<br>
 &nbsp;<br>
 Does&nbsp;an&nbsp;image&nbsp;rotation.&nbsp;Repeated&nbsp;rotations&nbsp;should&nbsp;be&nbsp;avoided&nbsp;if&nbsp;possible.<br>
 If&nbsp;you&nbsp;have&nbsp;to&nbsp;call&nbsp;it&nbsp;more&nbsp;than&nbsp;once&nbsp;it&nbsp;is&nbsp;a&nbsp;good&nbsp;idea&nbsp;to&nbsp;crop&nbsp;after<br>
@@ -1927,12 +1933,12 @@ rotations&nbsp;in&nbsp;order&nbsp;to&nbsp;get&nbsp;rid&nbsp;of&nbsp;the&nbsp;reg
 &nbsp;<br>
 Parameters<br>
 ----------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;pImage&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_IMAGE<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_image&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_IMAGE<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;image<br>
 &nbsp;&nbsp;&nbsp;&nbsp;angle&nbsp;:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;the&nbsp;angle&nbsp;in&nbsp;one-tenth&nbsp;of&nbsp;a&nbsp;degree&nbsp;(i.e.,&nbsp;a&nbsp;45&nbsp;degree&nbsp;rotation<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;should&nbsp;be&nbsp;specified&nbsp;as&nbsp;450)&nbsp;with&nbsp;a&nbsp;positive&nbsp;sign&nbsp;for&nbsp;counter-clock<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;rotation.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;should&nbsp;be&nbsp;specified&nbsp;as&nbsp;450)&nbsp;with&nbsp;a&nbsp;positive&nbsp;sign&nbsp;for<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;counter-clock&nbsp;rotation.<br>
 &nbsp;&nbsp;&nbsp;&nbsp;subpixel&nbsp;:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if&nbsp;subpixel&nbsp;sampling&nbsp;should&nbsp;be&nbsp;enabled.&nbsp;Values&nbsp;(from&nbsp;xfdata.py)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FLIMAGE_NOSUBPIXEL&nbsp;or&nbsp;FLIMAGE_SUBPIXEL.&nbsp;If&nbsp;enabled,&nbsp;the&nbsp;resulting<br>
@@ -1945,8 +1951,8 @@ Parameters<br>
 &nbsp;<br>
 Returns<br>
 -------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;num.&nbsp;:&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;num.,&nbsp;or&nbsp;negative&nbsp;num.&nbsp;(on&nbsp;failure)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;result&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;0,&nbsp;or&nbsp;-1&nbsp;(on&nbsp;failure)<br>
 &nbsp;<br>
 Examples<br>
 --------<br>
@@ -1955,7 +1961,7 @@ Examples<br>
 Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-flimage_scale"><strong>flimage_scale</strong></a>(pImage, newwidth, newheight, option)</dt><dd><tt><a href="#-flimage_scale">flimage_scale</a>(pImage,&nbsp;newwidth,&nbsp;newheight,&nbsp;option)<br>
+ <dl><dt><a name="-flimage_scale"><strong>flimage_scale</strong></a>(ptr_image, newwidth, newheight, option)</dt><dd><tt><a href="#-flimage_scale">flimage_scale</a>(ptr_image,&nbsp;newwidth,&nbsp;newheight,&nbsp;option)&nbsp;-&gt;&nbsp;result<br>
 &nbsp;<br>
 Scales&nbsp;an&nbsp;image&nbsp;to&nbsp;any&nbsp;desired&nbsp;size&nbsp;with&nbsp;or&nbsp;without&nbsp;subpixel&nbsp;sampling.<br>
 Without&nbsp;subpixel&nbsp;sampling&nbsp;simple&nbsp;pixel&nbsp;replication&nbsp;is&nbsp;used,&nbsp;otherwise&nbsp;a<br>
@@ -1964,7 +1970,7 @@ much&nbsp;less&nbsp;artifacts.<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;pImage&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_IMAGE<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_image&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_IMAGE<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;image<br>
 &nbsp;&nbsp;&nbsp;&nbsp;newwidth&nbsp;:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;desired&nbsp;image&nbsp;width<br>
@@ -1980,8 +1986,8 @@ Parameters<br>
 &nbsp;<br>
 Returns<br>
 -------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;num.&nbsp;:&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*todo*<br>
+&nbsp;&nbsp;&nbsp;&nbsp;result&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;0&nbsp;(on&nbsp;success&nbsp;or&nbsp;if&nbsp;no&nbsp;scaling&nbsp;needed),&nbsp;or&nbsp;-1&nbsp;(on&nbsp;failure)<br>
 &nbsp;<br>
 Examples<br>
 --------<br>
@@ -1990,16 +1996,16 @@ Examples<br>
 Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-flimage_sdisplay"><strong>flimage_sdisplay</strong></a>(pImage, win)</dt><dd><tt><a href="#-flimage_sdisplay">flimage_sdisplay</a>(pImage,&nbsp;win)<br>
+ <dl><dt><a name="-flimage_sdisplay"><strong>flimage_sdisplay</strong></a>(ptr_image, win)</dt><dd><tt><a href="#-flimage_sdisplay">flimage_sdisplay</a>(ptr_image,&nbsp;win)&nbsp;-&gt;&nbsp;result<br>
 &nbsp;<br>
 Displays&nbsp;a&nbsp;single&nbsp;image&nbsp;in&nbsp;a&nbsp;window.<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;pImage&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_IMAGE<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_image&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_IMAGE<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;image<br>
 &nbsp;&nbsp;&nbsp;&nbsp;win&nbsp;:&nbsp;long_pos<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;window<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;window&nbsp;id<br>
 &nbsp;<br>
 Returns<br>
 -------<br>
@@ -2008,14 +2014,14 @@ Returns<br>
 &nbsp;<br>
 Examples<br>
 --------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;<a href="#-flimage_sdisplay">flimage_sdisplay</a>(pImage,&nbsp;win)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;<a href="#-flimage_sdisplay">flimage_sdisplay</a>(ptr_image,&nbsp;win)<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
  <dl><dt><a name="-flimage_set_annotation_support"><strong>flimage_set_annotation_support</strong></a>(imgnum, yesno)</dt><dd><tt><a href="#-flimage_set_annotation_support">flimage_set_annotation_support</a>(imgnum,&nbsp;yesno)<br>
 &nbsp;<br>
-Sets&nbsp;support&nbsp;for&nbsp;annotations.<br>
+Defines&nbsp;support&nbsp;for&nbsp;annotations.<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
@@ -2032,35 +2038,35 @@ Examples<br>
 Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-flimage_set_fits_bits"><strong>flimage_set_fits_bits</strong></a>(nbits)</dt><dd><tt><a href="#-flimage_set_fits_bits">flimage_set_fits_bits</a>(nbits)<br>
+ <dl><dt><a name="-flimage_set_fits_bits"><strong>flimage_set_fits_bits</strong></a>(numbits)</dt><dd><tt><a href="#-flimage_set_fits_bits">flimage_set_fits_bits</a>(numbits)&nbsp;-&gt;&nbsp;oldnumbits<br>
 &nbsp;<br>
-Sets&nbsp;the&nbsp;number&nbsp;of&nbsp;bit&nbsp;of&nbsp;a&nbsp;FITS&nbsp;image.<br>
+Defines&nbsp;the&nbsp;number&nbsp;of&nbsp;bits&nbsp;of&nbsp;a&nbsp;FITS&nbsp;image.<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;nbits&nbsp;:&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;number&nbsp;of&nbsp;bit&nbsp;to&nbsp;be&nbsp;set<br>
+&nbsp;&nbsp;&nbsp;&nbsp;numbits&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;number&nbsp;of&nbsp;bits&nbsp;to&nbsp;be&nbsp;set<br>
 &nbsp;<br>
 Returns<br>
 -------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;oldbit&nbsp;:&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;old&nbsp;number&nbsp;of&nbsp;bit,&nbsp;or&nbsp;negative&nbsp;number&nbsp;(on&nbsp;failure)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;oldnumbits&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;old&nbsp;number&nbsp;of&nbsp;bits,&nbsp;or&nbsp;negative&nbsp;number&nbsp;(on&nbsp;failure)<br>
 &nbsp;<br>
 Examples<br>
 --------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;oldnumbit&nbsp;=&nbsp;<a href="#-flimage_set_fits_bits">flimage_set_fits_bits</a>(16)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;oldnbit&nbsp;=&nbsp;<a href="#-flimage_set_fits_bits">flimage_set_fits_bits</a>(16)<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-flimage_setup"><strong>flimage_setup</strong></a>(pImageSetup)</dt><dd><tt><a href="#-flimage_setup">flimage_setup</a>(pImageSetup)<br>
+ <dl><dt><a name="-flimage_setup"><strong>flimage_setup</strong></a>(ptr_imagesetup)</dt><dd><tt><a href="#-flimage_setup">flimage_setup</a>(ptr_imagesetup)<br>
 &nbsp;<br>
-Sets&nbsp;up&nbsp;and&nbsp;configures&nbsp;image&nbsp;objects&nbsp;support&nbsp;and&nbsp;initializes<br>
+Defines&nbsp;up&nbsp;and&nbsp;configures&nbsp;image&nbsp;flobjects&nbsp;support&nbsp;and&nbsp;initializes<br>
 xfdata.FLIMAGE_SETUP&nbsp;class&nbsp;instance.<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;pImageSetup&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FLIMAGE_SETUP<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_imagesetup&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FLIMAGE_SETUP<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;imagesetup&nbsp;class&nbsp;instance<br>
 &nbsp;<br>
 Examples<br>
@@ -2070,18 +2076,18 @@ Examples<br>
 Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-flimage_swapbuffer"><strong>flimage_swapbuffer</strong></a>(pImage)</dt><dd><tt><a href="#-flimage_swapbuffer">flimage_swapbuffer</a>(pImage)<br>
+ <dl><dt><a name="-flimage_swapbuffer"><strong>flimage_swapbuffer</strong></a>(ptr_image)</dt><dd><tt><a href="#-flimage_swapbuffer">flimage_swapbuffer</a>(ptr_image)&nbsp;-&gt;&nbsp;result<br>
 &nbsp;<br>
 Swaps&nbsp;buffer&nbsp;of&nbsp;an&nbsp;image?<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;pImage&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_IMAGE<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_image&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_IMAGE<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;image<br>
 &nbsp;<br>
 Returns<br>
 -------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;num.&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;result&nbsp;:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;0?<br>
 &nbsp;<br>
 Examples<br>
@@ -2091,7 +2097,7 @@ Examples<br>
 Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-flimage_tint"><strong>flimage_tint</strong></a>(pImage, packed, opacity)</dt><dd><tt><a href="#-flimage_tint">flimage_tint</a>(pImage,&nbsp;packed,&nbsp;opacity)<br>
+ <dl><dt><a name="-flimage_tint"><strong>flimage_tint</strong></a>(ptr_image, packed, opacity)</dt><dd><tt><a href="#-flimage_tint">flimage_tint</a>(ptr_image,&nbsp;packed,&nbsp;opacity)&nbsp;-&gt;&nbsp;result<br>
 &nbsp;<br>
 Emulates&nbsp;the&nbsp;effect&nbsp;of&nbsp;looking&nbsp;at&nbsp;an&nbsp;image&nbsp;through&nbsp;a&nbsp;piece&nbsp;of&nbsp;colored<br>
 glass.&nbsp;Tint&nbsp;is&nbsp;most&nbsp;useful&nbsp;in&nbsp;cases&nbsp;where&nbsp;you&nbsp;want&nbsp;to&nbsp;put&nbsp;some&nbsp;annotations<br>
@@ -2102,7 +2108,7 @@ image&nbsp;beneath&nbsp;completely.&nbsp;Tint&nbsp;operation&nbsp;uses&nbsp;the&
 &nbsp;<br>
 Parameters<br>
 ----------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;pImage&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_IMAGE<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_image&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_IMAGE<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;image<br>
 &nbsp;&nbsp;&nbsp;&nbsp;packed&nbsp;:&nbsp;int_pos<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;packed&nbsp;RGB&nbsp;color,&nbsp;specifying&nbsp;the&nbsp;color&nbsp;of&nbsp;the&nbsp;glass.<br>
@@ -2117,7 +2123,7 @@ Parameters<br>
 Returns<br>
 -------<br>
 &nbsp;&nbsp;&nbsp;&nbsp;num.&nbsp;:&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*todo*<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*todo*,&nbsp;-1&nbsp;(on&nbsp;failure)<br>
 &nbsp;<br>
 Examples<br>
 --------<br>
@@ -2127,14 +2133,14 @@ Examples<br>
 Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-flimage_to_pixmap"><strong>flimage_to_pixmap</strong></a>(pImage, win)</dt><dd><tt><a href="#-flimage_to_pixmap">flimage_to_pixmap</a>(pImage,&nbsp;win)<br>
+ <dl><dt><a name="-flimage_to_pixmap"><strong>flimage_to_pixmap</strong></a>(ptr_image, win)</dt><dd><tt><a href="#-flimage_to_pixmap">flimage_to_pixmap</a>(ptr_image,&nbsp;win)&nbsp;-&gt;&nbsp;pixmap<br>
 &nbsp;<br>
 Converts&nbsp;an&nbsp;image&nbsp;into&nbsp;a&nbsp;Pixmap&nbsp;(a&nbsp;server&nbsp;side&nbsp;resource)&nbsp;that<br>
-can&nbsp;be&nbsp;used&nbsp;in&nbsp;the&nbsp;pixmap&nbsp;object.<br>
+can&nbsp;be&nbsp;used&nbsp;in&nbsp;the&nbsp;pixmap&nbsp;flobject.<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;pImage&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_IMAGE<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_image&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_IMAGE<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;image<br>
 &nbsp;&nbsp;&nbsp;&nbsp;win&nbsp;:&nbsp;long_pos<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;window&nbsp;id<br>
@@ -2142,7 +2148,7 @@ Parameters<br>
 Returns<br>
 -------<br>
 &nbsp;&nbsp;&nbsp;&nbsp;pixmap&nbsp;:&nbsp;long_pos<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;pixmap&nbsp;id<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;pixmap&nbsp;resource&nbsp;id<br>
 &nbsp;<br>
 Examples<br>
 --------<br>
@@ -2151,23 +2157,24 @@ Examples<br>
 Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-flimage_to_ximage"><strong>flimage_to_ximage</strong></a>(pImage, win, pXWindowAttributes)</dt><dd><tt><a href="#-flimage_to_ximage">flimage_to_ximage</a>(pImage,&nbsp;win,&nbsp;pXWindowAttributes)<br>
+ <dl><dt><a name="-flimage_to_ximage"><strong>flimage_to_ximage</strong></a>(ptr_image, win, ptr_xwindowattributes)</dt><dd><tt><a href="#-flimage_to_ximage">flimage_to_ximage</a>(ptr_image,&nbsp;win,&nbsp;ptr_xwindowattributes)&nbsp;-&gt;&nbsp;result<br>
 &nbsp;<br>
-Converts&nbsp;an&nbsp;FL_IMAGE&nbsp;into&nbsp;an&nbsp;XImage.<br>
+Converts&nbsp;an&nbsp;FL_IMAGE&nbsp;into&nbsp;an&nbsp;XImage.&nbsp;The&nbsp;converted&nbsp;ximage&nbsp;is<br>
+ptr_image.contents.ximage&nbsp;if&nbsp;successful&nbsp;*todo*<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;pImage&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_IMAGE<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_image&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_IMAGE<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;image<br>
 &nbsp;&nbsp;&nbsp;&nbsp;win&nbsp;:&nbsp;window&nbsp;id<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;long_pos<br>
-&nbsp;&nbsp;&nbsp;&nbsp;pXWindowAttributes&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.XWindowAttributes<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_xwindowattributes&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.XWindowAttributes<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;class&nbsp;instance<br>
 &nbsp;<br>
 Returns<br>
 -------<br>
 &nbsp;&nbsp;&nbsp;&nbsp;num.&nbsp;:&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*todo*<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*todo*,&nbsp;or&nbsp;-1&nbsp;(on&nbsp;failure)<br>
 &nbsp;<br>
 Examples<br>
 --------<br>
@@ -2176,13 +2183,13 @@ Examples<br>
 Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-flimage_transform_pixels"><strong>flimage_transform_pixels</strong></a>(pImage, red, green, blue)</dt><dd><tt><a href="#-flimage_transform_pixels">flimage_transform_pixels</a>(pImage,&nbsp;red,&nbsp;green,&nbsp;blue)<br>
+ <dl><dt><a name="-flimage_transform_pixels"><strong>flimage_transform_pixels</strong></a>(ptr_image, red, green, blue)</dt><dd><tt><a href="#-flimage_transform_pixels">flimage_transform_pixels</a>(ptr_image,&nbsp;red,&nbsp;green,&nbsp;blue)<br>
 &nbsp;<br>
 Processes&nbsp;an&nbsp;image&nbsp;in&nbsp;place&nbsp;with&nbsp;RGB&nbsp;transformation&nbsp;and&nbsp;replaces&nbsp;it.<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;pImage&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_IMAGE<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_image&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_IMAGE<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;image<br>
 &nbsp;&nbsp;&nbsp;&nbsp;red&nbsp;:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;lookup&nbsp;tables&nbsp;for&nbsp;red&nbsp;color&nbsp;of&nbsp;a&nbsp;length&nbsp;of&nbsp;at&nbsp;least<br>
@@ -2196,8 +2203,8 @@ Parameters<br>
 &nbsp;<br>
 Returns<br>
 -------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;num.&nbsp;:&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;positive&nbsp;num.,&nbsp;or&nbsp;-1&nbsp;(on&nbsp;failure)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;result&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;0,&nbsp;or&nbsp;-1&nbsp;(on&nbsp;failure)<br>
 &nbsp;<br>
 Examples<br>
 --------<br>
@@ -2206,9 +2213,9 @@ Examples<br>
 Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-flimage_type_name"><strong>flimage_type_name</strong></a>(imagetype)</dt><dd><tt><a href="#-flimage_type_name">flimage_type_name</a>(imagetype)<br>
+ <dl><dt><a name="-flimage_type_name"><strong>flimage_type_name</strong></a>(imagetype)</dt><dd><tt><a href="#-flimage_type_name">flimage_type_name</a>(imagetype)&nbsp;-&gt;&nbsp;typename<br>
 &nbsp;<br>
-Obtains&nbsp;the&nbsp;image&nbsp;type&nbsp;name&nbsp;in&nbsp;string&nbsp;format,&nbsp;e.g.,&nbsp;for&nbsp;reporting<br>
+Finds&nbsp;out&nbsp;the&nbsp;image&nbsp;type&nbsp;name&nbsp;in&nbsp;string&nbsp;format,&nbsp;e.g.,&nbsp;for&nbsp;reporting<br>
 purposes.<br>
 &nbsp;<br>
 Parameters<br>
@@ -2231,7 +2238,8 @@ Examples<br>
 Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-flimage_warp"><strong>flimage_warp</strong></a>(pImage, mtrx, newwidth, newheight, subpixel)</dt><dd><tt><a href="#-flimage_warp">flimage_warp</a>(pImage,&nbsp;mtrx,&nbsp;newwidth,&nbsp;newheight,&nbsp;subpixel)<br>
+ <dl><dt><a name="-flimage_warp"><strong>flimage_warp</strong></a>(ptr_image, matrix, newwidth, newheight, subpixel)</dt><dd><tt><a href="#-flimage_warp">flimage_warp</a>(ptr_image,&nbsp;matrix,&nbsp;newwidth,&nbsp;newheight,&nbsp;subpixel)<br>
+-&gt;&nbsp;result<br>
 &nbsp;<br>
 Does&nbsp;transformation&nbsp;of&nbsp;pixel&nbsp;coordinates.&nbsp;Rotation,&nbsp;scaling,&nbsp;shearing<br>
 etc.&nbsp;are&nbsp;examples&nbsp;of&nbsp;(linear&nbsp;and&nbsp;non-perspective)&nbsp;image&nbsp;warping.&nbsp;User&nbsp;can<br>
@@ -2241,9 +2249,9 @@ preserving&nbsp;scaling&nbsp;is&nbsp;implemented.&nbsp;The&nbsp;image&nbsp;is&nb
 &nbsp;<br>
 Parameters<br>
 ----------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;pImage&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_IMAGE<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_image&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_IMAGE<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;image<br>
-&nbsp;&nbsp;&nbsp;&nbsp;mtrx&nbsp;:&nbsp;*todo*<br>
+&nbsp;&nbsp;&nbsp;&nbsp;matrix&nbsp;:&nbsp;*todo*<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;the&nbsp;warp&nbsp;matrix<br>
 &nbsp;&nbsp;&nbsp;&nbsp;newwidth&nbsp;:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;desired&nbsp;image&nbsp;width<br>
@@ -2260,8 +2268,8 @@ Parameters<br>
 &nbsp;<br>
 Returns<br>
 -------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;num.&nbsp;:&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*todo*<br>
+&nbsp;&nbsp;&nbsp;&nbsp;result&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;0,&nbsp;or&nbsp;-1&nbsp;(on&nbsp;failure)<br>
 &nbsp;<br>
 Examples<br>
 --------<br>
@@ -2270,14 +2278,14 @@ Examples<br>
 Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-flimage_windowlevel"><strong>flimage_windowlevel</strong></a>(pImage, winlvl, width)</dt><dd><tt><a href="#-flimage_windowlevel">flimage_windowlevel</a>(pImage,&nbsp;winlvl,&nbsp;width)<br>
+ <dl><dt><a name="-flimage_windowlevel"><strong>flimage_windowlevel</strong></a>(ptr_image, winlvl, width)</dt><dd><tt><a href="#-flimage_windowlevel">flimage_windowlevel</a>(ptr_image,&nbsp;winlvl,&nbsp;width)<br>
 &nbsp;<br>
-Sets&nbsp;the&nbsp;window&nbsp;level&nbsp;for&nbsp;an&nbsp;image.&nbsp;It&nbsp;points&nbsp;to&nbsp;a&nbsp;multiple&nbsp;image,<br>
+Defines&nbsp;the&nbsp;window&nbsp;level&nbsp;for&nbsp;an&nbsp;image.&nbsp;If&nbsp;it&nbsp;points&nbsp;to&nbsp;a&nbsp;multiple&nbsp;image,<br>
 window&nbsp;level&nbsp;parameters&nbsp;are&nbsp;changed&nbsp;for&nbsp;all&nbsp;images.<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;pImage&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_IMAGE<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_image&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_IMAGE<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;image<br>
 &nbsp;&nbsp;&nbsp;&nbsp;winlvl&nbsp;:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;new&nbsp;level&nbsp;of&nbsp;window<br>
@@ -2297,18 +2305,18 @@ Examples<br>
 Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-flimage_write_annotation"><strong>flimage_write_annotation</strong></a>(pImage)</dt><dd><tt><a href="#-flimage_write_annotation">flimage_write_annotation</a>(pImage)<br>
+ <dl><dt><a name="-flimage_write_annotation"><strong>flimage_write_annotation</strong></a>(ptr_image)</dt><dd><tt><a href="#-flimage_write_annotation">flimage_write_annotation</a>(ptr_image)&nbsp;-&gt;&nbsp;result<br>
 &nbsp;<br>
 Writes&nbsp;annotation&nbsp;in&nbsp;the&nbsp;image?<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;pImage&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_IMAGE<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_image&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_IMAGE<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;image<br>
 &nbsp;<br>
 Returns<br>
 -------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;num.&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;result&nbsp;:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;0,&nbsp;or&nbsp;-1&nbsp;(on&nbsp;failure)<br>
 &nbsp;<br>
 Examples<br>
@@ -2318,7 +2326,7 @@ Examples<br>
 Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-flimage_write_via_filter"><strong>flimage_write_via_filter</strong></a>(pImage, cmds, formats, verbose)</dt><dd><tt><a href="#-flimage_write_via_filter">flimage_write_via_filter</a>(pImage,&nbsp;cmds,&nbsp;formats,&nbsp;verbose)<br>
+ <dl><dt><a name="-flimage_write_via_filter"><strong>flimage_write_via_filter</strong></a>(ptr_image, cmds, formats, verbose)</dt><dd><tt><a href="#-flimage_write_via_filter">flimage_write_via_filter</a>(ptr_image,&nbsp;cmds,&nbsp;formats,&nbsp;verbose)&nbsp;-&gt;&nbsp;result<br>
 &nbsp;<br>
 Uses&nbsp;external&nbsp;filters&nbsp;to&nbsp;add&nbsp;image&nbsp;formats,&nbsp;in&nbsp;order&nbsp;to&nbsp;convert<br>
 an&nbsp;unsupported&nbsp;format&nbsp;into&nbsp;one&nbsp;that&nbsp;is.&nbsp;pbmplus&nbsp;or&nbsp;netpbm&nbsp;are&nbsp;excellent<br>
@@ -2326,9 +2334,9 @@ packages&nbsp;for&nbsp;this&nbsp;purpose.<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;pImage&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_IMAGE<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_image&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_IMAGE<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;image<br>
-&nbsp;&nbsp;&nbsp;&nbsp;cmds&nbsp;:&nbsp;str?<br>
+&nbsp;&nbsp;&nbsp;&nbsp;cmds&nbsp;:&nbsp;list&nbsp;of&nbsp;str?<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;a&nbsp;list&nbsp;of&nbsp;shell&nbsp;commands&nbsp;(filters)&nbsp;that&nbsp;convert&nbsp;the&nbsp;format&nbsp;in<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;question&nbsp;into&nbsp;one&nbsp;of&nbsp;the&nbsp;supported&nbsp;formats.<br>
 &nbsp;&nbsp;&nbsp;&nbsp;formats&nbsp;:&nbsp;str?<br>
@@ -2340,8 +2348,8 @@ Parameters<br>
 &nbsp;<br>
 Returns<br>
 -------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;num.&nbsp;:&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*todo*<br>
+&nbsp;&nbsp;&nbsp;&nbsp;result&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;0,&nbsp;or&nbsp;-1&nbsp;(on&nbsp;errors)<br>
 &nbsp;<br>
 Examples<br>
 --------<br>
@@ -2351,4 +2359,4 @@ Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
 </td></tr></table>
-<p>Updated on: 2010-12-09 10:11 +0100</body></html>
+<p>Updated on: 2010-12-20 01:16 +0100</body></html>

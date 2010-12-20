@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: iso8859-1 -*-
 
-""" xforms-python's functions to manage GLcanvas objects.
+""" xforms-python's functions to manage GLcanvas flobjects.
 """
 
 #    Copyright (C) 2009, 2010  Luca Lazzaroni "LukenShiro"
@@ -26,7 +26,7 @@
 # then heavily reordered and reworked
 
 # ############################################# #
-# Interface to XForms shared object libraries   #
+# Interface to XForms shared flobject libraries #
 # ############################################# #
 
 
@@ -44,31 +44,32 @@ from xformslib import xfdata
 # fl_create_glcanvas function placeholder (internal)
 
 
-def fl_add_glcanvas(canvastype, x, y, w, h, label):
-    """fl_add_glcanvas(canvastype, x, y, w, h, label)
+def fl_add_glcanvas(canvastype, xpos, ypos, width, height, label):
+    """fl_add_glcanvas(canvastype, xpos, ypos, width, height, label)
+    -> ptr_flobject
     
-    Adds a glcanvas object to the form.
+    Adds a glcanvas flobject to the form.
 
     Parameters
     ----------
         canvastype : int
             type of glcanvas to be added. Values (from xfdata.py)
             FL_NORMAL_CANVAS, FL_SCROLLED_CANVAS (not enabled)
-        x : int
+        xpos : int
             horizontal position (upper-left corner)
-        y : int
+        ypos : int
             vertical position (upper-left corner)
-        w : int
+        width : int
             width in coord units
-        h : int
+        height : int
             height in coord units
         label : str
             text label of glcanvas
 
     Returns
     -------
-        pFlObject : pointer to xfdata.FL_OBJECT
-            glcanvas object added
+        ptr_flobject : pointer to xfdata.FL_OBJECT
+            glcanvas flobject added
 
     Examples
     --------
@@ -89,29 +90,35 @@ def fl_add_glcanvas(canvastype, x, y, w, h, label):
     library.check_if_initialized()
     library.checkfatal_allowed_value_in_list(canvastype, \
             xfdata.CANVASTYPE_list)
-    icanvastype = library.convert_to_int(canvastype)
-    ix = library.convert_to_FL_Coord(x)
-    iy = library.convert_to_FL_Coord(y)
-    iw = library.convert_to_FL_Coord(w)
-    ih = library.convert_to_FL_Coord(h)
-    slabel = library.convert_to_string(label)
-    library.keep_elem_refs(canvastype, x, y, w, h, label, icanvastype, ix, iy,
-                   iw, ih, slabel)
-    retval = _fl_add_glcanvas(icanvastype, ix, iy, iw, ih, slabel)
+    i_canvastype = library.convert_to_intc(canvastype)
+    i_xpos = library.convert_to_FL_Coord(xpos)
+    i_ypos = library.convert_to_FL_Coord(ypos)
+    i_width = library.convert_to_FL_Coord(width)
+    i_height = library.convert_to_FL_Coord(height)
+    s_label = library.convert_to_stringc(label)
+    library.keep_elem_refs(canvastype, xpos, ypos, width, height, label, \
+            i_canvastype, i_xpos, i_ypos, i_width, i_height, s_label)
+    retval = _fl_add_glcanvas(i_canvastype, i_xpos, i_ypos, i_width, \
+            i_height, s_label)
     return retval
 
 
-def fl_set_glcanvas_defaults(config):
-    """fl_set_glcanvas_defaults(config)
+def fl_set_glcanvas_defaults(glconfig):
+    """fl_set_glcanvas_defaults(glconfig)
     
     Modifies the global default attributes for glcanvas, before the
     creation of glcanvases.
 
     Parameters
     ----------
-        config : int
-            configuration settings. Attributes are those defined in OpenGL
-            glXChooseVisual() function *todo*
+        glconfig : list of int
+            configuration settings, ending with -1. Attributes are (as
+            defined in OpenGL glXChooseVisual() function) GLX_USE_GL,
+            GLX_BUFFER_SIZE, GLX_LEVEL, GLX_RGBA, GLX_DOUBLEBUFFER,
+            GLX_STEREO, GLX_AUX_BUFFERS, GLX_RED_SIZE, GLX_GREEN_SIZE,
+            GLX_BLUE_SIZE, GLX_ALPHA_SIZE, GLX_DEPTH_SIZE, GLX_STENCIL_SIZE,
+            GLX_ACCUM_RED_SIZE, GLX_ACCUM_GREEN_SIZE, GLX_ACCUM_BLUE_SIZE,
+            GLX_ACCUM_ALPHA_SIZE. See xfdata.py for values.
 
     Examples
     --------
@@ -127,20 +134,27 @@ def fl_set_glcanvas_defaults(config):
         None, [cty.POINTER(cty.c_int)],
         """void fl_set_glcanvas_defaults(const int * config)""")
     library.check_if_initialized()     # unsure
-    pconfig = cty.cast(config, cty.POINTER(cty.c_int))
-    library.keep_elem_refs(config, pconfig)
-    _fl_set_glcanvas_defaults(pconfig)
+    #ptr_config = cty.cast(config, cty.POINTER(cty.c_int))  # to be verified
+    ptr_glconfig = library.convert_to_ptr_intc(glconfig)
+    library.keep_elem_refs(glconfig, ptr_glconfig)
+    _fl_set_glcanvas_defaults(ptr_glconfig)
 
 
 def fl_get_glcanvas_defaults():
-    """fl_get_glcanvas_defaults()
+    """fl_get_glcanvas_defaults() -> glconfig
     
-    Obtains the global defaults attributes for glcanvas.
+    Finds out the global defaults attributes for glcanvas.
 
     Returns
     -------
-        config : int
-            configuration settings
+        glconfig : array of int
+            configuration settings, ending with -1. Attributes are (as
+            defined in OpenGL glXChooseVisual() function) GLX_USE_GL,
+            GLX_BUFFER_SIZE, GLX_LEVEL, GLX_RGBA, GLX_DOUBLEBUFFER,
+            GLX_STEREO, GLX_AUX_BUFFERS, GLX_RED_SIZE, GLX_GREEN_SIZE,
+            GLX_BLUE_SIZE, GLX_ALPHA_SIZE, GLX_DEPTH_SIZE, GLX_STENCIL_SIZE,
+            GLX_ACCUM_RED_SIZE, GLX_ACCUM_GREEN_SIZE, GLX_ACCUM_BLUE_SIZE,
+            GLX_ACCUM_ALPHA_SIZE. See xfdata.py for values.
 
     Examples
     --------
@@ -148,7 +162,7 @@ def fl_get_glcanvas_defaults():
 
     API_diversion
     ----------
-        API changed from XForms, upstream was
+        API changed from XForms, upstream is
         fl_get_glcanvas_defaults(config)
 
     Notes
@@ -161,26 +175,31 @@ def fl_get_glcanvas_defaults():
         None, [cty.POINTER(cty.c_int)],
         """void fl_get_glcanvas_defaults(int config[ ])""")
     library.check_if_initialized()     # unsure
-    config, pconfig = library.make_int_and_pointer()
-    library.keep_elem_refs(config, pconfig)
-    _fl_get_glcanvas_defaults(pconfig)
-    return config.value
+    i_glconfig, ptr_glconfig = library.make_intc_and_pointer()
+    library.keep_elem_refs(i_glconfig, ptr_glconfig)
+    _fl_get_glcanvas_defaults(ptr_glconfig)
+    return i_glconfig.value
 
 
-def fl_set_glcanvas_attributes(pFlObject, config):
-    """fl_set_glcanvas_attributes(pFlObject, config)
+def fl_set_glcanvas_attributes(ptr_flobject, glconfig):
+    """fl_set_glcanvas_attributes(ptr_flobject, glconfig)
     
-    Modifies the default configuration of a particular glcanvas
-    object. You can change a glcanvas attribute on the fly even if
-    the canvas is already visible and active.
+    Modifies the default configuration of a particular glcanvas flobject.
+    You can change a glcanvas attribute on the fly even if the canvas is
+    already visible and active.
 
     Parameters
     ----------
-        pFlObject : pointer to xfdata.FL_OBJECT
-            glcanvas object
-        config : int
-            configuration settings to be set. Attributes are those defined
-            in OpenGL glXChooseVisual() function *todo*
+        ptr_flobject : pointer to xfdata.FL_OBJECT
+            glcanvas flobject
+        glconfig : list of int
+            configuration settings to be set. Attributes are (as
+            defined in OpenGL glXChooseVisual() function) GLX_USE_GL,
+            GLX_BUFFER_SIZE, GLX_LEVEL, GLX_RGBA, GLX_DOUBLEBUFFER,
+            GLX_STEREO, GLX_AUX_BUFFERS, GLX_RED_SIZE, GLX_GREEN_SIZE,
+            GLX_BLUE_SIZE, GLX_ALPHA_SIZE, GLX_DEPTH_SIZE, GLX_STENCIL_SIZE,
+            GLX_ACCUM_RED_SIZE, GLX_ACCUM_GREEN_SIZE, GLX_ACCUM_BLUE_SIZE,
+            GLX_ACCUM_ALPHA_SIZE. See xfdata.py for values.
 
     Examples
     --------
@@ -197,26 +216,33 @@ def fl_set_glcanvas_attributes(pFlObject, config):
         """void fl_set_glcanvas_attributes(FL_OBJECT * ob,
            const int * config)""")
     library.check_if_initialized()     # unsure
-    library.verify_flobjectptr_type(pFlObject)
-    pconfig = cty.cast(config, cty.POINTER(cty.c_int))
-    library.keep_elem_refs(pFlObject, config, pconfig)
-    _fl_set_glcanvas_attributes(pFlObject, pconfig)
+    library.verify_flobjectptr_type(ptr_flobject)
+    #pconfig = cty.cast(config, cty.POINTER(cty.c_int))
+    ptr_glconfig = library.convert_to_ptr_intc(glconfig)
+    library.keep_elem_refs(ptr_flobject, glconfig, ptr_glconfig)
+    _fl_set_glcanvas_attributes(ptr_flobject, ptr_glconfig)
 
 
-def fl_get_glcanvas_attributes(pFlObject):
-    """fl_get_glcanvas_attributes(pFlObject)
+def fl_get_glcanvas_attributes(ptr_flobject):
+    """fl_get_glcanvas_attributes(ptr_flobject) -> glconfig
     
-    Obtains the attributes of a glcanvas object.
+    Finds out the attributes of a glcanvas flobject.
 
     Parameters
     ----------
-        pFlObject : pointer to xfdata.FL_OBJECT
-            glcanvas object
+        ptr_flobject : pointer to xfdata.FL_OBJECT
+            glcanvas flobject
 
     Returns
     -------
-        attribs : int
-            glcanvas attributes
+        glconfig : int
+            glcanvas configuration settings. Attributes are (as
+            defined in OpenGL glXChooseVisual() function) GLX_USE_GL,
+            GLX_BUFFER_SIZE, GLX_LEVEL, GLX_RGBA, GLX_DOUBLEBUFFER,
+            GLX_STEREO, GLX_AUX_BUFFERS, GLX_RED_SIZE, GLX_GREEN_SIZE,
+            GLX_BLUE_SIZE, GLX_ALPHA_SIZE, GLX_DEPTH_SIZE, GLX_STENCIL_SIZE,
+            GLX_ACCUM_RED_SIZE, GLX_ACCUM_GREEN_SIZE, GLX_ACCUM_BLUE_SIZE,
+            GLX_ACCUM_ALPHA_SIZE. See xfdata.py for values.
 
     Examples
     --------
@@ -224,8 +250,8 @@ def fl_get_glcanvas_attributes(pFlObject):
 
     API_diversion
     ----------
-        API changed from XForms, upstream was
-        fl_get_glcanvas_attributes(pFlObject, attributes)
+        API changed from XForms, upstream is
+        fl_get_glcanvas_attributes(ptr_flobject, attributes)
 
     Notes
     -----
@@ -238,23 +264,23 @@ def fl_get_glcanvas_attributes(pFlObject):
         """void fl_get_glcanvas_attributes(FL_OBJECT * ob,
            int * attributes)""")
     library.check_if_initialized()     # unsure
-    library.verify_flobjectptr_type(pFlObject)
-    attributes, pattributes = library.make_int_and_pointer()
-    library.keep_elem_refs(pFlObject, attributes, pattributes)
-    _fl_get_glcanvas_attributes(pFlObject, pattributes)
-    return attributes.value
+    library.verify_flobjectptr_type(ptr_flobject)
+    glconfig, ptr_glconfig = library.make_intc_and_pointer()
+    library.keep_elem_refs(ptr_flobject, glconfig, ptr_glconfig)
+    _fl_get_glcanvas_attributes(ptr_flobject, ptr_glconfig)
+    return glconfig.value
 
 
-def fl_set_glcanvas_direct(pFlObject, yesno):
-    """fl_set_glcanvas_direct(pFlObject, yesno)
+def fl_set_glcanvas_direct(ptr_flobject, yesno):
+    """fl_set_glcanvas_direct(ptr_flobject, yesno)
     
     Changes the rendering context created by a glcanvas. By default it
     uses direct rendering (i.e. by-passing the Xserver).
 
     Parameters
     ----------
-        pFlObject : pointer to xfdata.FL_OBJECT
-            glcanvas object
+        ptr_flobject : pointer to xfdata.FL_OBJECT
+            glcanvas flobject
         yesno : int
             flag to use direct or through-Xserver rendering. Values 0 (to
             use Xserver rendering) or 1 (to use direct rendering)
@@ -273,27 +299,27 @@ def fl_set_glcanvas_direct(pFlObject, yesno):
         None, [cty.POINTER(xfdata.FL_OBJECT), cty.c_int],
         """void fl_set_glcanvas_direct(FL_OBJECT * ob, int direct)""")
     library.check_if_initialized()
-    library.verify_flobjectptr_type(pFlObject)
-    iyesno = library.convert_to_int(yesno)
-    library.keep_elem_refs(pFlObject, yesno, iyesno)
-    _fl_set_glcanvas_direct(pFlObject, iyesno)
+    library.verify_flobjectptr_type(ptr_flobject)
+    i_yesno = library.convert_to_intc(yesno)
+    library.keep_elem_refs(ptr_flobject, yesno, i_yesno)
+    _fl_set_glcanvas_direct(ptr_flobject, i_yesno)
 
 
-def fl_activate_glcanvas(pFlObject):
-    """fl_activate_glcanvas(pFlObject)
+def fl_activate_glcanvas(ptr_flobject):
+    """fl_activate_glcanvas(ptr_flobject)
     
-    Activates a glcanvas object before drawing into glcanvas object. OpenGL
-    drawing routines always draw into the window the current context is bound
-    to. For application with a single canvas, this is not a problem. In case
-    of multiple canvases, the canvas driver takes care of setting the proper
-    context before invoking the expose handler. In some cases, the
+    Activates a glcanvas flobject before drawing into glcanvas flobject.
+    OpenGL drawing routines always draw into the window the current context
+    is bound to. For application with a single canvas, this is not a problem.
+    In case of multiple canvases, the canvas driver takes care of setting
+    the proper context before invoking the expose handler. In some cases, the
     application may want to draw into canvases actively. In this case, use
     this function for explicit drawing context switching.
 
     Parameters
     ----------
-        pFlObject : pointer to xfdata.FL_OBJECT
-            glcanvas object
+        ptr_flobject : pointer to xfdata.FL_OBJECT
+            glcanvas flobject
 
     Examples
     --------
@@ -309,25 +335,25 @@ def fl_activate_glcanvas(pFlObject):
         None, [cty.POINTER(xfdata.FL_OBJECT)],
         """void fl_activate_glcanvas(FL_OBJECT * ob)""")
     library.check_if_initialized()
-    library.verify_flobjectptr_type(pFlObject)
-    library.keep_elem_refs(pFlObject)
-    _fl_activate_glcanvas(pFlObject)
+    library.verify_flobjectptr_type(ptr_flobject)
+    library.keep_elem_refs(ptr_flobject)
+    _fl_activate_glcanvas(ptr_flobject)
 
 
-def fl_get_glcanvas_xvisualinfo(pFlObject):
-    """fl_get_glcanvas_xvisualinfo(pFlObject)
+def fl_get_glcanvas_xvisualinfo(ptr_flobject):
+    """fl_get_glcanvas_xvisualinfo(ptr_flobject) -> ptr_xvisualinfo
     
-    Obtains the XVisual information that is used to create the context
-    of a glcanvas object.
+    Finds out the XVisual information that is used to create the context
+    of a glcanvas flobject.
 
     Parameters
     ----------
-        pFlObject : pointer to xfdata.FL_OBJECT
-            glcanvas object
+        ptr_flobject : pointer to xfdata.FL_OBJECT
+            glcanvas flobject
 
     Returns
     -------
-        pXVisualInfo : pointer to xfdata.XVisualInfo
+        ptr_xvisualinfo : pointer to xfdata.XVisualInfo
             XVisualInfo instance class
 
     Examples
@@ -344,25 +370,25 @@ def fl_get_glcanvas_xvisualinfo(pFlObject):
         cty.POINTER(xfdata.XVisualInfo), [cty.POINTER(xfdata.FL_OBJECT)],
         """XVisualInfo * fl_get_glcanvas_xvisualinfo(FL_OBJECT * ob)""")
     library.check_if_initialized()
-    library.verify_flobjectptr_type(pFlObject)
-    library.keep_elem_refs(pFlObject)
-    retval = _fl_get_glcanvas_xvisualinfo(pFlObject)
+    library.verify_flobjectptr_type(ptr_flobject)
+    library.keep_elem_refs(ptr_flobject)
+    retval = _fl_get_glcanvas_xvisualinfo(ptr_flobject)
     return retval
 
 
-def fl_get_glcanvas_context(pFlObject):
-    """fl_get_glcanvas_context(pFlObject)
+def fl_get_glcanvas_context(ptr_flobject):
+    """fl_get_glcanvas_context(ptr_flobject) -> ptr_glxcontext
     
-    Obtains GLXContext of a glcanvas object.
+    Finds out GLXContext of a glcanvas flobject.
 
     Parameters
     ----------
-        pFlObject : pointer to xfdata.FL_OBJECT
-            glcanvas object
+        ptr_flobject : pointer to xfdata.FL_OBJECT
+            glcanvas flobject
 
     Returns
     -------
-        pGLXContext : pointer to xfdata.GLXContext
+        ptr_glxcontext : pointer to xfdata.GLXContext
             glxcontext class instance
 
     Examples
@@ -379,32 +405,32 @@ def fl_get_glcanvas_context(pFlObject):
         xfdata.GLXContext, [cty.POINTER(xfdata.FL_OBJECT)],
         """GLXContext fl_get_glcanvas_context(FL_OBJECT * ob)""")
     library.check_if_initialized()
-    library.verify_flobjectptr_type(pFlObject)
-    library.keep_elem_refs(pFlObject)
-    retval = _fl_get_glcanvas_context(pFlObject)
+    library.verify_flobjectptr_type(ptr_flobject)
+    library.keep_elem_refs(ptr_flobject)
+    retval = _fl_get_glcanvas_context(ptr_flobject)
     return retval
 
 
-def fl_glwincreate(config, glxcontext, w, h):
-    """fl_glwincreate(config, glxcontext, w, h)
+def fl_glwincreate(glconfig, ptr_glxcontext, width, height):
+    """fl_glwincreate(glconfig, ptr_glxcontext, width, height) -> win
     
-    Creates a toplevel OpenGl window.
+    Creates a toplevel OpenGL window.
 
     Parameters
     ----------
-        config : int
-            GL configuration settings
-        glxcontext : xfdata.GLXContext instance
+        glconfig : int
+            GL configuration settings. See xfdata.py for values
+        ptr_glxcontext : pointer to xfdata.GLXContext
             glxcontext class instance
-        w : int
+        width : int
             width of GL window in coord units
-        h : int
+        height : int
             height of GL window in coord units
 
     Returns
     -------
         win : long_pos
-            window created
+            window id created
 
     Examples
     --------
@@ -421,34 +447,38 @@ def fl_glwincreate(config, glxcontext, w, h):
         cty.c_int, cty.c_int],
         """Window fl_glwincreate(int * config, GLXContext * context,
            int w, int h)""")
-    pGLXContext = cty.cast(glxcontext, cty.POINTER(xfdata.GLXContext))
-    iw = library.convert_to_int(w)
-    ih = library.convert_to_int(h)
-    library.keep_elem_refs(config, pGLXContext, w, h, iw, ih)
-    retval = _fl_glwincreate(config, pGLXContext, iw, ih)
+    ptr_glconfig = cty.cast(glconfig, cty.POINTER(cty.c_int)) # to be verified
+    #pGLXContext = cty.cast(glxcontext, cty.POINTER(xfdata.GLXContext)
+    library.verify_otherclassptr_type(ptr_glxcontext, \
+            cty.POINTER(xfdata.GLXContext))
+    i_width = library.convert_to_intc(width)
+    i_height = library.convert_to_intc(height)
+    library.keep_elem_refs(glconfig, ptr_glxcontext, width, height, i_width, \
+            i_height, ptr_glconfig)
+    retval = _fl_glwincreate(ptr_glconfig, ptr_glxcontext, i_width, i_height)
     return retval
 
 
-def fl_glwinopen(config, glxcontext, w, h):
-    """fl_glwinopen(config, glxcontext, w, h)
+def fl_glwinopen(glconfig, ptr_glxcontext, width, height):
+    """fl_glwinopen(glconfig, ptr_glxcontext, width, height)
     
     Opens a toplevel OpenGL window.
 
     Parameters
     ----------
-        config : int
-            GL configuration settings
-        glxcontext : pointer to xfdata.GLXContext
+        glconfig : int
+            GL configuration settings. See xfdata.py for values
+        ptr_glxcontext : pointer to xfdata.GLXContext
             glxcontext class instance
-        w : int
+        width : int
             width of GL window in coord units
-        h : int
+        height : int
             height of GL window in coord units
 
     Returns
     -------
         win : long_pos
-            window opened
+            window id opened
 
     Examples
     --------
@@ -466,10 +496,14 @@ def fl_glwinopen(config, glxcontext, w, h):
         """Window fl_glwinopen(int * config, GLXContext * context,
            int w, int h""")
     library.check_if_initialized()
-    pGLXContext = cty.cast(glxcontext, cty.POINTER(xfdata.GLXContext))
-    iw = library.convert_to_int(w)
-    ih = library.convert_to_int(h)
-    library.keep_elem_refs(config, pGLXContext, w, h, iw, ih)
-    retval = _fl_glwinopen(config, pGLXContext, iw, ih)
+    ptr_glconfig = cty.cast(glconfig, cty.POINTER(cty.c_int)) # to be verified
+    #pGLXContext = cty.cast(glxcontext, cty.POINTER(xfdata.GLXContext))
+    library.verify_otherclassptr_type(ptr_glxcontext, \
+            cty.POINTER(xfdata.GLXContext))
+    i_width = library.convert_to_intc(width)
+    i_height = library.convert_to_intc(height)
+    library.keep_elem_refs(glconfig, ptr_glxcontext, width, height, \
+            i_width, i_height, ptr_glconfig)
+    retval = _fl_glwinopen(ptr_glconfig, ptr_glxcontext, i_width, i_height)
     return retval
 

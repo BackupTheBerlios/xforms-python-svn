@@ -26,7 +26,7 @@
 # then heavily reordered and reworked
 
 # ############################################# #
-# Interface to XForms shared object libraries   #
+# Interface to XForms shared flobject libraries   #
 # ############################################# #
 
 # Using a hack (fake class) to allow docstrings for variables,
@@ -111,7 +111,7 @@ COORDUNIT_list = [FL_COORD_PIXEL, FL_COORD_MM, FL_COORD_POINT,
                   FL_COORD_centiMM, FL_COORD_centiPOINT]
 
 
-# All object classes.
+# All flobject classes.
 # values for enumeration 'FL_CLASS'
 FL_CLASS = cty.c_int  # enum
 FL_INVALID_CLASS = 0
@@ -167,91 +167,91 @@ class admitted_values_for_FL_CLASS(object):
     Admitted values
     ---------------
         FL_BUTTON
-            button object class
+            button flobject class
         FL_LIGHTBUTTON
-            light button object class
+            light button flobject class
         FL_ROUNDBUTTON
-            round button object class
+            round button flobject class
         FL_ROUND3DBUTTON
-            round 3D button object class
+            round 3D button flobject class
         FL_CHECKBUTTON
-            check button object class
+            check button flobject class
         FL_BITMAPBUTTON
-            bitmap button object class
+            bitmap button flobject class
         FL_PIXMAPBUTTON
-            pixmap button object class
+            pixmap button flobject class
         FL_BITMAP
-            bitmap object class
+            bitmap flobject class
         FL_PIXMAP
-            pixmap object class
+            pixmap flobject class
         FL_BOX
-            box object class
+            box flobject class
         FL_TEXT
-            text object class
+            text flobject class
         FL_MENU
-            menu object class
+            menu flobject class
         FL_CHART
-            chart object class
+            chart flobject class
         FL_CHOICE
-            choice object class
+            choice flobject class
         FL_COUNTER
-            counter object class
+            counter flobject class
         FL_SLIDER
-            slider object class
+            slider flobject class
         FL_VALSLIDER
-            valslider object class
+            valslider flobject class
         FL_INPUT
-            input object class
+            input flobject class
         FL_BROWSER
-            browser object class
+            browser flobject class
         FL_DIAL
-            dial object class
+            dial flobject class
         FL_TIMER
-            timer object class
+            timer flobject class
         FL_CLOCK
-            clock object class
+            clock flobject class
         FL_POSITIONER
-            positioner object class
+            positioner flobject class
         FL_FREE
-            free object class
+            free flobject class
         FL_XYPLOT
-            xyplot object class
+            xyplot flobject class
         FL_FRAME
-            frame object class
+            frame flobject class
         FL_LABELFRAME
-            labelframe object class
+            labelframe flobject class
         FL_CANVAS
-            canvas object class
+            canvas flobject class
         FL_GLCANVAS
-            glcanvas object class
+            glcanvas flobject class
         FL_TABFOLDER
-            tabfolder object class
+            tabfolder flobject class
         FL_SCROLLBAR
-            scrollbar object class
+            scrollbar flobject class
         FL_SCROLLBUTTON
-            scrollbutton object class
+            scrollbutton flobject class
         FL_MENUBAR
-            menubar object class
+            menubar flobject class
         FL_LABELBUTTON
-            labelbutton object class
+            labelbutton flobject class
         FL_COMBOBOX
-            combobox object class
+            combobox flobject class
         FL_IMAGECANVAS
-            imagecanvas object class
+            imagecanvas flobject class
         FL_THUMBWHEEL
-            thumbwheel object class
+            thumbwheel flobject class
         FL_COLORWHEEL
-            colorwheel object class
+            colorwheel flobject class
         FL_FORMBROWSER
-            formbrowser object class
+            formbrowser flobject class
         FL_SELECT
-            select object class
+            select flobject class
         FL_NMENU
-            nmenu object class
+            nmenu flobject class
         FL_SPINNER
-            spinner object class
+            spinner flobject class
         FL_TBOX
-            textbox object class
+            textbox flobject class
     """
     pass
 
@@ -602,8 +602,8 @@ class admitted_values_for_RETURN(object):
     ---------------
         FL_RETURN_NONE
             Never notify the application about interactions with this
-            object (i.e. never return it nor invoke its callback). Note,
-            this is not meant for deactivation of an object, it will
+            flobject (i.e. never return it nor invoke its callback). Note,
+            this is not meant for deactivation of a flobject, it will
             still seem to work as normal, it just does not get returned
             to the application nor does its callback get invoked.
         FL_RETURN_CHANGED
@@ -636,8 +636,10 @@ RETURN_list = [FL_RETURN_NONE, FL_RETURN_CHANGED, FL_RETURN_END,
                FL_RETURN_DESELECTION, FL_RETURN_TRIGGERED, FL_RETURN_ALWAYS]
 
 
-# my add --LK
+# from /usr/include/limits.h, my add --LK
 INT_MAX = 2147483647L
+INT_MIN = (-INT_MAX - 1)
+UINT_MAX = 4294967295
 
 
 # Some special color indices for FL private colormap.
@@ -1092,47 +1094,47 @@ class admitted_values_for_FL_EVENTS(object):
         FL_NOEVENT
             *todo*
         FL_DRAW
-            The object has to be (re)drawn. To figure out the actual size
-            of the object you can use the fields pObject.contents.x,
-            pObject.contents.y, pObject.contents.w and pObject.contents.h.
+            The flobject has to be (re)drawn. To figure out the actual size
+            of the flobject you can use the fields ptr_flobject.contents.x,
+            ptr_flobject.contents.y, ptr_flobject.contents.w and ptr_flobject.contents.h.
             Many Xlib drawing routines require a window ID, which you can
-            obtain from the object pointer using FL_ObjWin(pObject).
-            Some other aspects might also influence the way the object has
-            to be drawn. E.g., you might want to draw the object differently
+            obtain from the flobject pointer using FL_ObjWin(ptr_flobject).
+            Some other aspects might also influence the way the flobject has
+            to be drawn. E.g., you might want to draw the flobject differently
             when the mouse is on top of it or when the mouse is pressed on
             it. This can be figured out the following way, the field
-            pObject.contents.belowmouse tells you whether the object is
-            below the mouse. The field pObject.contents.pushed indicates
-            whether the object is currently being pushed with the mouse.
-            Finally, pObject.contents.focus indicate whether input focus
-            is directed towards this object. Note that drawing of the object
-            is the full responsibility of the object class, including the
+            ptr_flobject.contents.belowmouse tells you whether the flobject is
+            below the mouse. The field ptr_flobject.contents.pushed indicates
+            whether the flobject is currently being pushed with the mouse.
+            Finally, ptr_flobject.contents.focus indicate whether input focus
+            is directed towards this object. Note that drawing of the flobject
+            is the full responsibility of the flobject class, including the
             bounding box and the label, which can be found in the field
-            pObject.contents.label. The Forms Library provides a large number
+            ptr_flobject.contents.label. The Forms Library provides a large number
             of routines to help you draw object. One important caution about
             your draw event handling code, none of the high level routines
             (fl_freeze_form(), fl_deactivate_form()) etc. can be used. The
             only routines allowed to be used are (direct) drawing functions
-            and object internal book keeping routines. Attribute modifying
+            and flobject internal book keeping routines. Attribute modifying
             routines, such as fl_set_object_color() etc. are not allowed
             (using them can lead to infinite recursions). In addition,
-            (re)drawing of other objects using fl_redraw_object() while
+            (re)drawing of other flobjects using fl_redraw_object() while
             handling FL_DRAW will also not work. Due to the way double
             buffering is handled, at the time the FL_DRAW event is passed
-            to the handling function (and only then) FL_ObjWin(pObject) might
-            return a pixmap used as the backbuffer (at least if the object is
-            double buffered). What that means is that FL_ObjWin(pObject)
+            to the handling function (and only then) FL_ObjWin(ptr_flobject) might
+            return a pixmap used as the backbuffer (at least if the flobject is
+            double buffered). What that means is that FL_ObjWin(ptr_flobject)
             should not be used when a real window is needed. For a real window
             you can change the window's cursor or query the mouse position
             within it. You cannot do either of these with the backbuffer
             pixmap. If there is a need to obtain the real window ID the
             following routine can be used fl_get_real_object_window().
-            To summarize, use FL_ObjWin(pObject) when drawing and use
+            To summarize, use FL_ObjWin(ptr_flobject) when drawing and use
             fl_get_real_object_window() for cursor or pointer routines.
             This distinction is important only while handling FL_DRAW events,
             FL_ObjWin(obj) should be used anywhere else.
         FL_PUSH
-            The user has pushed a mouse button on the object. Normally this
+            The user has pushed a mouse button on the flobject. Normally this
             requires some actual action. The number of the mouse button pushed
             is given in the 'key' parameter, having one of FL_*_MOUSE values.
         FL_RELEASE
@@ -1141,59 +1143,59 @@ class admitted_values_for_FL_EVENTS(object):
         FL_ENTER
             This event is sent when the mouse has entered the bounding box
             and might require some action. Note also that the field
-            pObject.content.belowmouse in the object is being set. If entering
-            an objects area only changes its appearance, redrawing it normally
-            suffices. Do not do this directly! Always redraw the object by
+            ptr_flobject.content.belowmouse in the flobject is being set. If entering
+            an flobjects area only changes its appearance, redrawing it normally
+            suffices. Do not do this directly! Always redraw the flobject by
             calling fl_redraw_object(). It will send an FL_DRAW event to the
-            object but also does some other things (like setting window IDs
+            flobject but also does some other things (like setting window IDs
             and taking care of double buffering etc.).
         FL_LEAVE
             The mouse has left the bounding box. Again, normally a redraw is
             enough (or nothing at all).
         FL_MOTION
             Motion events get sent between FL_ENTER and FL_LEAVE events when
-            the mouse position changes on the object. The mouse position is
+            the mouse position changes on the flobject. The mouse position is
             given as an argument to the handle routine.
         FL_FOCUS
             Input got focussed to this object. This type of event and the
-            next two are only sent to objects for which the field
-            pObject.contents.input is set to 1 (see below).
+            next two are only sent to flobjects for which the field
+            ptr_flobject.contents.input is set to 1 (see below).
         FL_UNFOCUS
-            Input is no longer focussed on the object.
+            Input is no longer focussed on the flobject.
         FL_KEYPRESS
             A key was pressed. The ASCII value (or KeySym if non-ASCII) is
             passed to the routine via the 'key' argument, modifier keys can
             be retrieved from the state member of the XEvent also passed to
             the function via 'xev'. This event only happens between FL_FOCUS
-            and FL_UNFOCUS events. Not all objects sent keyboard events, only
-            those that have non-zero value in field pObject.contents.input or
-            pObject.contents.wantkey.
+            and FL_UNFOCUS events. Not all flobjects sent keyboard events, only
+            those that have non-zero value in field ptr_flobject.contents.input or
+            ptr_flobject.contents.wantkey.
         FL_UPDATE
-            for objects that need to update something from time to time. Such
+            for flobjects that need to update something from time to time. Such
             an event, like the FL_STEP event, also gets send about every 50
-            msec (but less often under high load) to objects while they are
+            msec (but less often under high load) to flobjects while they are
             "pushed", i.e. between receiving a FL_PUSH and a FL_RELEASE event
-            if the pObject.contents.want_update field is set for the object.
+            if the ptr_flobject.contents.want_update field is set for the flobject.
             Like for the FL_STEP event the handling routine receives a
             synthetic MotionNotify event as the XEvent. This is typically used
-            by objects that have to perform tasks at regular time intervals
+            by flobjects that have to perform tasks at regular time intervals
             while they are "pushed" (e.g. counters that need to count up or
             down while the mouse is pushed on one of its buttons).
         FL_STEP
             A FL_STEP event is sent all the time (typically about 20 times
             a second but possibly less often because of system delays and
-            other time-consuming tasks) to objects for which the field
-            pObject.contents.automatic has been set to a non-zero value.
+            other time-consuming tasks) to flobjects for which the field
+            ptr_flobject.contents.automatic has been set to a non-zero value.
             The handling routine receives a synthetic MotionNotify event as
-            the XEvent. This can be used to make an object change appearance
-            without user action. Clock and timer objects use this type of
+            the XEvent. This can be used to make a flobject change appearance
+            without user action. Clock and timer flobjects use this type of
             event.
         FL_SHORTCUT
             The user used a keyboard shortcut. The shortcut used is given
             in the parameter key. See below for more on shortcuts.
         FL_FREEMEM
-            This event is sent when the object is to be freed. All memory
-            allocated for the object must be freed when this event is
+            This event is sent when the flobject is to be freed. All memory
+            allocated for the flobject must be freed when this event is
             received.
         FL_OTHER
             property, selection etc. Events other than the above. These
@@ -1203,15 +1205,15 @@ class admitted_values_for_FL_EVENTS(object):
             reflect the actual position of the mouse.
         FL_DRAWLABEL
             This event typically follows FL_DRAW and indicates that the
-            object label needs to be (re)drawn. If the object in question
+            flobject label needs to be (re)drawn. If the flobject in question
             always draws its label inside the bounding box and this is
             taken care of by handing FL_DRAW, you can ignore this event.
         FL_DBLCLICK
             double click. The user has pushed a mouse button twice within
             a certain time limit (FL_CLICK_TIMEOUT), which by default is
             400 msec. This event is sent after two FL_PUSH, FL_RELEASE
-            sequence. Note that FL_DBLCLICK is only generated for objects
-            that have non-zero pObject.contents.click timeout fields and
+            sequence. Note that FL_DBLCLICK is only generated for flobjects
+            that have non-zero ptr_flobject.contents.click timeout fields and
             it will not be generated for events from the scroll wheel.
         FL_TRPLCLICK
             triple click. The user has pushed a mouse button three times
@@ -1229,7 +1231,7 @@ class admitted_values_for_FL_EVENTS(object):
             coords. Objects that themselves contain forms should ensure
             that they are up to date.
         FL_RESIZED
-            the object has been resized by scale_form the object has been
+            the flobject has been resized by scale_form the flobject has been
             resized by scale_form. Tell it that this has happened so that
             it can resize any FL_FORMs that it contains.
     """
@@ -1293,14 +1295,14 @@ class admitted_values_for_FL_KEY(object):
     Admitted values
     ---------------
         FL_KEY_NORMAL
-            The object receives left and right cursor, <Home> and <End>
+            The flobject receives left and right cursor, <Home> and <End>
             keys plus all normal keys (0-255) except <Tab> <Return>
             (default).
         FL_KEY_TAB
             Object receives the <Tab>, <Return> as well as the <Up> and
             <Down> cursor keys.
         FL_KEY_SPECIAL
-            The object receives all keys with a KeySym above 255 which
+            The flobject receives all keys with a KeySym above 255 which
             are not already covered by FL_KEY_NORMAL and FL_KEY_TAB
             (e.g. function keys etc.)
         FL_KEY_ALL
@@ -1476,13 +1478,13 @@ FL_BOUND_WIDTH = 1     # Border width of boxes, FL_Coord(1)
 FL_CLICK_TIMEOUT = 400      # double click interval
 
 
-# Definition of basic struct that holds an object
+# Definition of basic struct that holds a flobject
 
 class FL_FORM_(cty.Structure):
     """FL_FORM class
     
-    To access to the data referenced by a pointer to FL_FORM (pForm) you
-    need to use "pForm.contents", then one of its attributes' name.
+    To access to the data referenced by a pointer to FL_FORM (ptr_flform) you
+    need to use "ptr_flform.contents", then one of its attributes' name.
     Nonetheless, whenever possible it is better to use appropriate functions.
 
     Attributes
@@ -1499,13 +1501,13 @@ class FL_FORM_(cty.Structure):
             window title
         window : Window
             X resource ID for form window
-        x : int
+        xpos : int
             horizontal position
-        y : int
+        ypos : int
             vertical position
-        w : int
+        width : int
             width
-        h : int
+        height : int
             height
         handle_dec_x : int
             *todo*
@@ -1520,11 +1522,11 @@ class FL_FORM_(cty.Structure):
         h_hr : float
             high resolution height (for precise scaling)
         first : pointer to FL_OBJECT
-            points to the first object on the form (list)
+            points to the first flobject on the form (list)
         last : pointer to FL_OBJECT
             *todo*
         focusobj : pointer to FL_OBJECT
-            points to the object on the form that has the input focus
+            points to the flobject on the form that has the input focus
         form_callback : function
             FL_FORMCALLBACKPTR type function
         activate_callback : function
@@ -1590,7 +1592,7 @@ class FL_FORM_(cty.Structure):
         attached : int
             not independent anymore
         pre_attach : function, no return
-            function(pFlForm) type
+            function(ptr_flform) type
         attach_data : pointer to any type
             *todo*
         no_tooltip : int
@@ -1604,21 +1606,21 @@ FL_FORM = FL_FORM_
 class FL_OBJECT_(cty.Structure):
     """FL_OBJECT class
     
-    Each XForms object has a number of attributes. Some of them are used by
+    Each XForms flobject has a number of attributes. Some of them are used by
     the main routine, some have a fixed meaning and should never be altered
     by the class routines and some are free for the class routines to use.
     Please always use accessor methods when available instead of using or
-    changing the object's properties directly.
+    changing the flobject's properties directly.
 
     To access directly to the data referenced by a pointer to FL_OBJECT
-    (pObject) you need to use "pObject.contents", then one of its attributes'
+    (ptr_flobject) you need to use "ptr_flobject.contents", then one of its attributes'
     name. Nonetheless, whenever possible it is always better to use
     appropriate functions.
 
     Attributes
     ----------
         form : pointer to FL_FORM
-            the form this object belongs to. It is used by the main routines.
+            the form this flobject belongs to. It is used by the main routines.
             The class routines should not change it.
         u_vdata : pointer to any type
             anything the user likes as user data for application program. The
@@ -1633,40 +1635,40 @@ class FL_OBJECT_(cty.Structure):
             does not reference or modify this field in any way and neither
             should the class routines.
         objclass : int
-            XForms class of object (button, slider, etc). It can be queried
+            XForms class of flobject (button, slider, etc). It can be queried
             using fl_get_object_class()
         type : int
-            type of object within the class. At least one type should exist
+            type of flobject within the class. At least one type should exist
             and should be provided. They should be numbered from 0 upwards.
             It can be queried using fl_get_object_type()
         boxtype : int
             what kind of bounding box type. The handling routine for the
-            object must take care that is actually drawn (with a specific
+            flobject must take care that is actually drawn (with a specific
             routine). It can be changed or queried using
             fl_set_object_boxtype() and fl_get_object_boxtype()
-        x : int
-            current horizontal position of bounding box of the object. This
+        xpos : int
+            current horizontal position of bounding box of the flobject. This
             value will change when the user resizes the form window. To
             determine position use fl_get_object_position() or
             fl_get_object_geometry() (for size too). To change position use
             fl_set_object_position(), or fl_set_object_geometry() (for size
             too)
-        y : int
-            current vertical position of bounding box of the object. This
+        ypos : int
+            current vertical position of bounding box of the flobject. This
             value will change when the user resizes the form window. To
             determine position use fl_get_object_position() or
             fl_get_object_geometry() (for size too). To change position use
             fl_set_object_position(), or fl_set_object_geometry() (for size
             too)
-        w : int
-            current width of bounding box of the object. This value
+        width : int
+            current width of bounding box of the flobject. This value
             value will change when the user resizes the form window. To
             determine size use fl_get_object_size() or
             fl_get_object_geometry() (for position too). To change size use
             fl_get_object_size() or fl_get_object_geometry() (for position
             too).
-        h : int
-            current height of bounding box of the object. This
+        height : int
+            current height of bounding box of the flobject. This
             value will change when the user resizes the form window. To
             determine size use fl_get_object_size() or
             fl_get_object_geometry() (for position too). To change size use
@@ -1689,23 +1691,23 @@ class FL_OBJECT_(cty.Structure):
         fb2 : float
             distance of lower right hand corner to bottom of enclosing form
         bw : int
-            border width of object. Negative values indicate the up box
+            border width of flobject. Negative values indicate the up box
             should look "softer" (in which case no black line of 1 pixel
-            width is drawn around the objects box). It can be queried using
+            width is drawn around the flobjects box). It can be queried using
             fl_get_object_bw(). A different border width can be set using
             fl_set_object_bw()
         col1 : long_pos
-            first color index of object in the internal color lookup table
+            first color index of flobject in the internal color lookup table
             Colors can be changed using fl_set_object_color() and queried
             using fl_get_object_color()
         col2 : long_pos
-            second color index of object in the internal color lookup table
+            second color index of flobject in the internal color lookup table
             Colors can be changed using fl_set_object_color() and queried
             using fl_get_object_color()
         label : str
-            textual label of object. It can be changed using
+            textual label of flobject. It can be changed using
             fl_set_object_label() and queried using fl_get_object_label()
-            It must be drawn by the routine handling the object when it
+            It must be drawn by the routine handling the flobject when it
             receives a FL_DRAWLABEL event (or it could be part of the code
             for FL_DRAW event). For non-offsetted labels, i.e. the alignment
             is relative to the entire bounding box, simply calling
@@ -1714,7 +1716,7 @@ class FL_OBJECT_(cty.Structure):
             color of the label. It can be set using fl_set_object_lcol()
             and queried using fl_get_object_lcol()
         align : int
-            alignment of label with respect to the object. It can be set
+            alignment of label with respect to the flobject. It can be set
             using fl_set_object_lalign() and queried using
             fl_get_object_lalign()
         lsize : int
@@ -1725,21 +1727,21 @@ class FL_OBJECT_(cty.Structure):
             fl_set_object_lstyle() and queried using fl_get_object_lstyle()
         shortcut : pointer to long
             A pointer to long containing all shortcuts (as keysyms) defined
-            for the object. You should never need them because they are fully
+            for the flobject. You should never need them because they are fully
             handled by the main routines.
         handle : function, returning value
-            function(pObject, int, crd, crd, int, pvdata) -> int
+            function(ptr_flobject, int, crd, crd, int, pvdata) -> int
             This is a pointer to the interaction handling routine for the
             object. fl_add_NEW() sets this by providing the correct handling
             routine. Normally it is never used (except by the main routine)
             or changed although there might be situations in which you want
-            to change the interaction handling routine for an object, due to
+            to change the interaction handling routine for a flobject, due to
             some user action.
         object_callback : function, no return
-            function(pObject, long)
+            function(ptr_flobject, long)
             callback routine that the application program assigned to the
-            object and that the system invokes when the user does something
-            with the object.
+            flobject and that the system invokes when the user does something
+            with the flobject.
         argument : long
             The argument to be passed to the callback routine when invoked.
         spec : pointer to any type
@@ -1747,13 +1749,13 @@ class FL_OBJECT_(cty.Structure):
             information. For example, for sliders it stores the minimum,
             maximum and current value of the slider. Most classes (except the
             most simple ones like boxes and texts) will need this. Whenever the
-            object receives the event FL_FREEMEM it should free this memory.
+            flobject receives the event FL_FREEMEM it should free this memory.
         prehandle : function, returning value
-            function(pObject, int, crd, crd, int, pvdata)
+            function(ptr_flobject, int, crd, crd, int, pvdata)
         posthandle : function, returning value
-            function(pObject, int, crd, crd, int, pvdata)
+            function(ptr_flobject, int, crd, crd, int, pvdata)
         set_return : function, no return
-            function(pObject, int_pos)
+            function(ptr_flobject, int_pos)
         resize : int_pos
             what to do if WM resizes the form. It can be set using
             fl_set_object_resize() and queried using fl_get_object_resize()
@@ -1766,10 +1768,10 @@ class FL_OBJECT_(cty.Structure):
             prior to resizing. It can be set using fl_set_object_gravity()
             and queried using fl_get_object_gravity()
         prev : pointer to FL_OBJECT
-            previous object in form. It is used by the main routines. The
+            previous flobject in form. It is used by the main routines. The
             class routines should not change it.
         next : pointer to FL_OBJECT
-            next object in form. It is used by the main routines. The class
+            next flobject in form. It is used by the main routines. The class
             routines should not change it.
         parent : pointer to FL_OBJECT
             *todo*
@@ -1782,27 +1784,27 @@ class FL_OBJECT_(cty.Structure):
         use_pixmap : int
             true to use pixmap double buffering
         returned : int
-            what last interaction returned (by object handling function).
+            what last interaction returned (by flobject handling function).
             Values: FL_RETURN_NONE (Handling function did FL_RETURN_NONE,
             i.e. 0), FL_RETURN_CHANGED (Handling function detected a change
-            of the objects state), FL_RETURN_END (Handling function detected
+            of the flobjects state), FL_RETURN_END (Handling function detected
             end of interaction with object). FL_RETURN_CHANGED and
             FL_RETURN_END are bits that can be bitwise OR-ed. If both are
-            set this indicates that the objects state was changed and the
+            set this indicates that the flobjects state was changed and the
             interaction ended.
         how_return : int_pos
-            under what circumstances the object is returned by e.g.
-            fl_do_forms() or the callback function for the object is invoked.
+            under what circumstances the flobject is returned by e.g.
+            fl_do_forms() or the callback function for the flobject is invoked.
             It can be changed using fl_set_object_return(). Especially in
-            the case of objects having child objects also the corresponding
-            settings for child objects may need changes and which automatically
+            the case of flobjects having child flobjects also the corresponding
+            settings for child flobjects may need changes and which automatically
             get adjusted when the above function is used.
         double_buffer : int
             only used by mesa/gl canvas
         pushed : int
-            flag if the mouse is pushed within the bounding box of the object.
+            flag if the mouse is pushed within the bounding box of the flobject.
             It is set and reset by the main routine. Class routines should
-            never change it but can use it to draw or handle objects
+            never change it but can use it to draw or handle flobjects
             differently.
         focus : int
             flag if keyboard input is sent to this object. It is set and reset
@@ -1810,25 +1812,25 @@ class FL_OBJECT_(cty.Structure):
         belowmouse : int
             flag if the mouse is on this object. It is set and reset by the
             main routine. The class routines should never change it but can
-            use it to draw or handle the object differently.
+            use it to draw or handle the flobject differently.
         active : int
-            flag if object is active, accepting event other than FL_DRAW.
-            Static objects (e.g. text and boxes) are inactive. By default
-            objects are active; it can be changed by using
+            flag if flobject is active, accepting event other than FL_DRAW.
+            Static flobjects (e.g. text and boxes) are inactive. By default
+            flobjects are active; it can be changed by using
             fl_deactivate_object() and fl_activate_object(). It can be queried
             using fl_object_is_active()
         input : int
-            flag if this object can receive keyboard input. If not, events
-            related to keyboard input are not sent to the object. The default
+            flag if this flobject can receive keyboard input. If not, events
+            related to keyboard input are not sent to the flobject. The default
             value of input is false. Note that not all keys are sent (see
             wantkey).
         wantkey : int
-            An input object normally does not receive <Tab> or <Return>
+            An input flobject normally does not receive <Tab> or <Return>
             keystrokes or any other keys except those that have values between
             0-255, the <Left> and <Right> arrow keys and <Home> and <End>
             (<Tab> and <Return> are normally used to switch between input
-            objects). By setting this field to FL_KEY_TAB enforces that the
-            object receives also these two keys as well as the <Up> and <Down>
+            flobjects). By setting this field to FL_KEY_TAB enforces that the
+            flobject receives also these two keys as well as the <Up> and <Down>
             arrow keys and <PgUp> and <PgDn> when it has the focus. To receive
             other special keys (e.g. function keys) FL_KEY_SPECIAL must be set
             here. By setting wantkey to FL_KEY_ALL all keys are sent to the
@@ -1836,26 +1838,26 @@ class FL_OBJECT_(cty.Structure):
         radio : int
             *todo*
         automatic : int
-            An object is automatic if it automatically (without user actions)
-            has to change its contents. Automatic objects get a FL_STEP event
-            about every 50 msec. E.g. the object class FL_CLOCK is automatic.
+            An flobject is automatic if it automatically (without user actions)
+            has to change its contents. Automatic flobjects get a FL_STEP event
+            about every 50 msec. E.g. the flobject class FL_CLOCK is automatic.
             It is false, by default. It can be set using
-            fl_set_object_automatic() (do not set the object member directly
+            fl_set_object_automatic() (do not set the flobject member directly
             except from within a function like fl_add_NEW(), in other contexts
-            some extra work is required) and to test the object for it use
+            some extra work is required) and to test the flobject for it use
             fl_object_is_automatic().
         redraw : int
             *todo*
         visible : int
-            flag if the object is visible. When the object is not visible the
+            flag if the flobject is visible. When the flobject is not visible the
             main routine will never try to draw it or send events to it. By
-            default objects are visible. It can be hidden using
+            default flobjects are visible. It can be hidden using
             fl_hide_object() and queried using fl_object_is_visible(). Note
-            that this does not guarantee that the object is visible on the
-            screen, you need to verify if the form the object belongs to is
+            that this does not guarantee that the flobject is visible on the
+            screen, you need to verify if the form the flobject belongs to is
             visible using fl_form_is_visible() (when returning true).
         is_under : int
-            if (partially) hidden by other object
+            if (partially) hidden by other flobject
         clip : int
             *todo*
         click_timeout : long_pos
@@ -1865,13 +1867,13 @@ class FL_OBJECT_(cty.Structure):
             fl_set_object_dblclick() and queried using fl_get_object_dblclick()
         c_vdata : pointer to any type
             for class use. The main module does not reference or modify this
-            field in any way. The object classes, including the built-in ones,
+            field in any way. The flobject classes, including the built-in ones,
             may use this field.
         c_cdata : str
             for class use
         c_ldata : long
             for class use. The main module does not reference or modify this
-            field in any way. The object classes, including the built-in ones,
+            field in any way. The flobject classes, including the built-in ones,
             may use this field.
         dbl_background : long_pos
             double buffer background color
@@ -1970,13 +1972,13 @@ class FL_pixmap_(cty.Structure):
             window
         visual : pointer to Visual
             *todo*
-        x : int
+        xpos : int
             horizontal position
-        y : int
+        ypos : int
             vertical position
-        w : int
+        width : int
             width
-        h : int
+        height : int
             height
         depth : int
             *todo*
@@ -2031,7 +2033,7 @@ class function_prototype_for_FL_TIMEOUT_CALLBACK(object):
 FL_FORM_ATCLOSE = cty.CFUNCTYPE(cty.c_int, cty.POINTER(FL_FORM), \
                                 cty.c_void_p)
 class function_prototype_for_FL_FORM_ATCLOSE(object):
-    """ FL_FORM_ATCLOSE(pForm, vdata) -> num
+    """ FL_FORM_ATCLOSE(ptr_flform, vdata) -> num
 
     prototype when a form is closed (used by fl_set_form_atclose,
     fl_set_atclose), returning value
@@ -2041,7 +2043,7 @@ class function_prototype_for_FL_FORM_ATCLOSE(object):
 # deactivate/activate callbacks
 FL_FORM_ATACTIVATE = cty.CFUNCTYPE(None, cty.POINTER(FL_FORM), cty.c_void_p)
 class function_prototype_for_FL_FORM_ATACTIVATE(object):
-    """ FL_FORM_ATACTIVATE(pForm, vdata)
+    """ FL_FORM_ATACTIVATE(ptr_flform, vdata)
 
     prototype when a form is activated (used by fl_set_form_atactivate),
     no return value
@@ -2050,7 +2052,7 @@ class function_prototype_for_FL_FORM_ATACTIVATE(object):
 
 FL_FORM_ATDEACTIVATE = cty.CFUNCTYPE(None, cty.POINTER(FL_FORM), cty.c_void_p)
 class function_prototype_for_FL_FORM_ATDEACTIVATE(object):
-    """ FL_FORM_DEATACTIVATE(pForm, vdata)
+    """ FL_FORM_DEATACTIVATE(ptr_flform, vdata)
 
     prototype when a form is deactivated (used by fl_set_form_atdeactivate),
     no return value
@@ -2060,7 +2062,7 @@ class function_prototype_for_FL_FORM_ATDEACTIVATE(object):
 # callback function for an entire form
 FL_FORMCALLBACKPTR = cty.CFUNCTYPE(None, cty.POINTER(FL_OBJECT), cty.c_void_p)
 class function_prototype_for_FL_FORMCALLBACKPTR(object):
-    """ FL_FORMCALLBACKPTR(pObject, vdata)
+    """ FL_FORMCALLBACKPTR(ptr_flobject, vdata)
 
     prototype for handling a callback for the entire form (used by
     fl_set_form_callback), no return value
@@ -2075,9 +2077,9 @@ cfunc_int_pobject_pvoid = cty.CFUNCTYPE(cty.c_int, cty.POINTER(FL_OBJECT), \
 FL_HANDLEPTR = cty.CFUNCTYPE(cty.c_int, cty.POINTER(FL_OBJECT), cty.c_int, \
                 FL_Coord, FL_Coord, cty.c_int, cty.c_void_p)
 class function_prototype_for_FL_HANDLEPTR(object):
-    """ FL_HANDLEPTR(pObject, num, coord, coord, num, vdata) -> num
+    """ FL_HANDLEPTR(ptr_flobject, num, coord, coord, num, vdata) -> num
 
-    prototype for registering a pre- or post- handler for an object,
+    prototype for registering a pre- or post- handler for a flobject,
     returning value (used by fl_set_object_prehandler,
     fl_set_object_posthandler, fl_make_object)
     """
@@ -2165,26 +2167,26 @@ XEvent = _XEvent
 
 
 
-# preemptive callback function - pXEvent is necessary as type cast is not
+# preemptive callback function - ptr_XEvent is necessary as type cast is not
 # handled here in xforms-python
 # FL_RAW_CALLBACK = cty.CFUNCTYPE(cty.c_int, cty.POINTER(FL_FORM), \
 #                       cty.c_void_p)
 FL_RAW_CALLBACK = cty.CFUNCTYPE(cty.c_int, cty.POINTER(FL_FORM), \
                                 cty.POINTER(XEvent))
 class function_prototype_for_FL_RAW_CALLBACK(object):
-    """ FL_RAW_CALLBACK(pForm, pXEvent) -> num.
+    """ FL_RAW_CALLBACK(ptr_flform, ptr_XEvent) -> num.
 
     prototype for handling a raw callback for X events (used by
     fl_register_raw_callback), with returning value
     """
     pass
 
-# object callback function
+# flobject callback function
 FL_CALLBACKPTR = cty.CFUNCTYPE(None, cty.POINTER(FL_OBJECT), cty.c_long)
 class function_prototype_for_FL_CALLBACKPTR(object):
-    """ FL_CALLBACKPTR(pObject, longnum)
+    """ FL_CALLBACKPTR(ptr_flobject, longnum)
 
-    prototype for handling a callback function bound to an object, no return
+    prototype for handling a callback function bound to a flobject, no return
     value (used by fl_set_object_callback)
     """
     pass
@@ -2197,7 +2199,7 @@ cfunc_none_string = cty.CFUNCTYPE(None, STRING)
 FL_DRAWPTR = cty.CFUNCTYPE(None, FL_Coord, FL_Coord, FL_Coord, FL_Coord,
                            cty.c_int, FL_COLOR)
 class function_prototype_for_FL_DRAWPTR(object):
-    """ FL_DRAWPTR(x, y, w, h, angle_degree_rotation, colr)
+    """ FL_DRAWPTR(xpos, ypos, width, height, angle_degree_rotation, colr)
 
     prototype for handling a symbol drawing (used by fl_add_symbol),
     no return
@@ -2274,11 +2276,11 @@ FL_FORM_._fields_ = [
 
 FL_OBJECT_._pack_ = 4
 FL_OBJECT_._fields_ = [
-    ('form', cty.POINTER(FL_FORM)),   # the form this object belongs to
+    ('form', cty.POINTER(FL_FORM)),   # the form this flobject belongs to
     ('u_vdata', cty.c_void_p),        # anything the user likes
     ('u_cdata', STRING),              # anything the user likes
     ('u_ldata', cty.c_long),          # anything the user likes
-    ('objclass', cty.c_int),          # class of object, button, slider etc
+    ('objclass', cty.c_int),          # class of flobject, button, slider etc
     ('type', cty.c_int),              # type within the class
     ('boxtype', cty.c_int),           # what kind of box type
     ('x', FL_Coord),                  # current obj. location and size
@@ -2296,7 +2298,7 @@ FL_OBJECT_._fields_ = [
     ('bw', FL_Coord),
     ('col1', FL_COLOR),                 # colors of obj
     ('col2', FL_COLOR),
-    ('label', STRING),                  # object label
+    ('label', STRING),                  # flobject label
     ('lcol', FL_COLOR),                 # label color
     ('align', cty.c_int),               # alignment
     ('lsize', cty.c_int),               # label size
@@ -2338,7 +2340,7 @@ FL_OBJECT_._fields_ = [
     ('automatic', cty.c_int),
     ('redraw', cty.c_int),
     ('visible', cty.c_int),
-    ('is_under', cty.c_int),        # if (partially) hidden by other object
+    ('is_under', cty.c_int),        # if (partially) hidden by other flobject
     ('clip', cty.c_int),
     ('click_timeout', cty.c_ulong),
     ('c_vdata', cty.c_void_p),          # for class use
@@ -2435,27 +2437,27 @@ class admitted_values_for_Fl_INPUT_END(object):
     FL_INPUT_END_EVENT_CLASSIC
         Uses old behavior in handling return of end event for input. An
         "end of edit" event was not reported back to the program when
-        the user clicked on a non-input object, i.e. changed to a different
-        input object. This let to some problems when the interaction with
-        the clicked-on non-input object depended on the new content of the
-        input object, just having been edited, but which had not been been
+        the user clicked on a non-input flobject, i.e. changed to a different
+        input flobject. This let to some problems when the interaction with
+        the clicked-on non-input flobject depended on the new content of the
+        input flobject, just having been edited, but which had not been been
         reported back to the caller.
     FL_INPUT_END_EVENT_ALWAYS
         Uses new (default) behavior in handling return of end event for
         input. It means that the users either hits the <Tab> or the
         <Return> key (except for multi-line inputs) or that she clicks
-        onto some other object that in principle allows user interaction.
+        onto some other flobject that in principle allows user interaction.
         These events are interpreted as an indication the user is done
         editing the input field and thus are reported back to the program,
-        either by returning the input object or invoking its callback. But
-        unless the user goes to a different input object the input field
+        either by returning the input flobject or invoking its callback. But
+        unless the user goes to a different input flobject the input field
         edited retains the focus.
     """
     pass
 
 # my add, list of possible values --LK
 INPUTENDRETNEVENT_list = [FL_INPUT_END_EVENT_CLASSIC, \
-    FL_INPUT_END_EVENT_ALWAYS]
+        FL_INPUT_END_EVENT_ALWAYS]
 
 
 FL_MAX_MENU_CHOICE_ITEMS = 128
@@ -2628,6 +2630,160 @@ XK_Hyper_L = 0xffed             # Left hyper
 XK_Hyper_R = 0xffee             # Right hyper
 # *** end - from /usr/include/X11/keysymdef.h ***
 
+class admitted_values_for_KEYSYM(object):
+    """KeySym keyboard symbols
+    
+    Admitted values
+    ---------------
+        XK_BackSpace (Back space/char key)
+        XK_Tab (Tab key)
+        XK_Linefeed (Linefeed, LF key)
+        XK_Clear *todo*
+        XK_Return (Return, enter key)
+        XK_Pause (Pause, hold key)
+        XK_Scroll_Lock (Scroll Lock key)
+        XK_Sys_Req (Print Sys Req key)
+        XK_Escape (Esc key)
+        XK_Delete (Delete, rubout key)
+        XK_Home (Home key)
+        XK_Left (Move left, left arrow cursor key)
+        XK_Up (Move up, up arrow cursor key)
+        XK_Right (Move right, right arrow cursor key)
+        XK_Down (Move down, down arrow cursor key)
+        XK_Prior (Prior, previous key) ?
+        XK_Page_Up (Page up key)
+        XK_Next (Next key) ?
+        XK_Page_Down (Page down key)
+        XK_End (EOL End key)
+        XK_Begin (BOL Begin key) ?
+        XK_Select (Select, mark key) ?
+        XK_Print (Print key) ?
+        XK_Execute (Execute, run, do key) ?
+        XK_Insert (Insert, insert here key) ?
+        XK_Undo (Undo key) ?
+        XK_Redo (Redo, again key) ?
+        XK_Menu (Menu key) ?
+        XK_Find (Find, search key) ?
+        XK_Cancel (Cancel, stop, abort, exit key) ?
+        XK_Help (Help key) ?
+        XK_Break (Break key) ?
+        XK_Mode_switch (Character set switch key) ?
+        XK_script_switch (Alias for mode_switch key) ?
+        XK_Num_Lock (Num Lock key)
+        XK_KP_Space (Space Keypad key)
+        XK_KP_Tab (Tab Keypad key)
+        XK_KP_Enter (Enter Keypad key)
+        XK_KP_F1 (PF1, KP_A, ... Keypad Fn 1)
+        XK_KP_F2 (Keypad Fn 2 key)
+        XK_KP_F3 (Keypad Fn 3 key)
+        XK_KP_F4 (Keypad Fn 4 key)
+        XK_KP_Home (Keypad Home key)
+        XK_KP_Left (Keypad left key)
+        XK_KP_Up (Keypad up key)
+        XK_KP_Right (Keypad right key)
+        XK_KP_Down (Keypad down key)
+        XK_KP_Prior (Keypad prior key)
+        XK_KP_Page_Up (Keypad page up key)
+        XK_KP_Next (Keypad next key)
+        XK_KP_Page_Down (Keypad page down key)
+        XK_KP_End (Keypad End key)
+        XK_KP_Begin (Keypad begin key) ?
+        XK_KP_Insert (Keypad insert key)
+        XK_KP_Delete (Keypad Delete key)
+        XK_KP_Equal (Equals Keypad key)
+        XK_KP_Multiply (Keypad multiply key) ?
+        XK_KP_Add (Keypad add key)
+        XK_KP_Separator (Separator, often comma, Keypad key)
+        XK_KP_Subtract (Keypad subtract key)
+        XK_KP_Decimal (Keypad decimal key)
+        XK_KP_Divide (Keypad divide key)
+        XK_KP_0 (Keypad 0 key)
+        XK_KP_1 (Keypad 1 key)
+        XK_KP_2 (Keypad 2 key)
+        XK_KP_3 (Keypad 3 key)
+        XK_KP_4 (Keypad 4 key)
+        XK_KP_5 (Keypad 5 key)
+        XK_KP_6 (Keypad 6 key)
+        XK_KP_7 (Keypad 7 key)
+        XK_KP_8 (Keypad 8 key)
+        XK_KP_9 (Keypad 9 key)
+        XK_F1 (Fn 1 key)
+        XK_F2 (Fn 2 key)
+        XK_F3 (Fn 3 key)
+        XK_F4 (Fn 4 key)
+        XK_F5 (Fn 5 key)
+        XK_F6 (Fn 6 key)
+        XK_F7 (Fn 7 key)
+        XK_F8 (Fn 8 key)
+        XK_F9 (Fn 9 key)
+        XK_F10 (Fn 10 key)
+        XK_F11 (Fn 11 key)
+        XK_L1 *todo*
+        XK_F12 (Fn 12 key)
+        XK_L2 *todo*
+        XK_F13 (Fn 13 key)
+        XK_L3 *todo*
+        XK_F14 (Fn 14 key)
+        XK_L4 *todo*
+        XK_F15 (Fn 15 key)
+        XK_L5 *todo*
+        XK_F16 (Fn 16 key)
+        XK_L6 *todo*
+        XK_F17 (Fn 17 key)
+        XK_L7 *todo*
+        XK_F18 (Fn 18 key)
+        XK_L8 *todo*
+        XK_F19 (Fn 19 key)
+        XK_L9 *todo*
+        XK_F20 (Fn 20 key)
+        XK_L10 *todo*
+        XK_F21 (Fn 21 key)
+        XK_R1 *todo*
+        XK_F22 (Fn 22 key)
+        XK_R2 *todo*
+        XK_F23 (Fn 23 key)
+        XK_R3 *todo*
+        XK_F24 (Fn 24 key)
+        XK_R4 *todo*
+        XK_F25 (Fn 25 key)
+        XK_R5 *todo*
+        XK_F26 (Fn 26 key)
+        XK_R6 *todo*
+        XK_F27 (Fn 27 key)
+        XK_R7 *todo*
+        XK_F28 (Fn 28 key)
+        XK_R8 *todo*
+        XK_F29 (Fn 29 key)
+        XK_R9 *todo*
+        XK_F30 (Fn 30 key)
+        XK_R10 *todo*
+        XK_F31 (Fn 31 key)
+        XK_R11 *todo*
+        XK_F32 (Fn 32 key)
+        XK_R12 *todo*
+        XK_F33 (Fn 33 key)
+        XK_R13 *todo*
+        XK_F34 (Fn 34 key)
+        XK_R14 *todo*
+        XK_F35 (Fn 35 key)
+        XK_R15 *todo*
+        XK_Shift_L (Modifier Left shift)
+        XK_Shift_R (Modifier Right shift)
+        XK_Control_L (Modifier Left control)
+        XK_Control_R (Modifier Right control)
+        XK_Caps_Lock (Modifier Caps lock)
+        XK_Shift_Lock (Modifier Shift lock) ?
+        XK_Meta_L (Modifier Left meta) ?
+        XK_Meta_R (Modifier Right meta) ?
+        XK_Alt_L (Modifier Left alt)
+        XK_Alt_R (Modifier Right alt)
+        XK_Super_L (Modifier Left super) ?
+        XK_Super_R (Modifier Right super) ?
+        XK_Hyper_L (Modifier Left hyper) ?
+        XK_Hyper_R (Modifier Right hyper) ?
+    """
+    pass
+
 
 class _IO_FILE(cty.Structure):
     pass
@@ -2688,7 +2844,7 @@ Pixmap = XID    # cty.c_ulong
 FL_APPEVENT_CB = cty.CFUNCTYPE(cty.c_int, cty.POINTER(XEvent),
                                cty.c_void_p)
 class function_prototype_for_FL_APPEVENT_CB(object):
-    """ FL_APPEVENT_CB(pXEvent, vdata) -> num.
+    """ FL_APPEVENT_CB(ptr_XEvent, vdata) -> num.
 
     prototype for handling event callback (used by fl_set_event_callback,
     fl_set_idle_callback, fl_add_event_callback), returning value.
@@ -3065,9 +3221,9 @@ class XPoint(cty.Structure):
     
     Attributes
     ----------
-        x : short
+        xpos : short
             horizontal position of a point
-        y : short
+        ypos : short
             vertical position of a point
     """
     pass
@@ -3079,9 +3235,9 @@ class XRectangle(cty.Structure):
     
     Attributes
     ----------
-        x : short
+        xpos : short
             horizontal position of rectangle
-        y : short
+        ypos : short
             vertical position of rectangle
         width : ushort
             width of rectangle
@@ -3187,6 +3343,17 @@ AnyModifier = (1 << 15)       # used in GrabButton, GrabKey
 FL_ALL_EVENT = (KeyPressMask | KeyReleaseMask | \
         ButtonPressMask | ButtonReleaseMask | EnterWindowMask | \
         LeaveWindowMask | ButtonMotionMask | PointerMotionMask)
+
+# my add, list of possible values --LK
+INPUTEVENTMASK_list = [NoEventMask, KeyPressMask, KeyReleaseMask, \
+        ButtonPressMask, ButtonReleaseMask, EnterWindowMask, \
+        LeaveWindowMask, PointerMotionMask, PointerMotionHintMask, \
+        Button1MotionMask, Button2MotionMask, Button3MotionMask, \
+        Button4MotionMask, Button5MotionMask, ButtonMotionMask, \
+        KeymapStateMask, ExposureMask, VisibilityChangeMask,
+        StructureNotifyMask, ResizeRedirectMask, SubstructureNotifyMask,\
+        SubstructureRedirectMask, FocusChangeMask, ColormapChangeMask,
+        OwnerGrabButtonMask]
 
 
 # Resources
@@ -3522,7 +3689,7 @@ FL_PDBrowserFontSize = 4194304      # (1<<22)
 FL_PDChoiceFontSize = 8388608       # (1<<23)
 """Choice label and choice text font size (choiceFontSize)"""
 FL_PDLabelFontSize = 16777216       # (1<<24)
-"""Label font size for all other objects (box, pixmap etc.) (labelFontSize)"""
+"""Label font size for all other flobjects (box, pixmap etc.) (labelFontSize)"""
 
 FL_PDButtonLabelSize = FL_PDButtonFontSize
 """Default button label font size (buttonFontSize)"""
@@ -3584,7 +3751,7 @@ class admitted_values_for_PRGDEFAULTS(object):
         FL_PDChoiceFontSize
             Choice label and choice text font size (choiceFontSize)
         FL_PDLabelFontSize
-            Label font size for all other objects, e.g. box, pixmap etc..
+            Label font size for all other flobjects, e.g. box, pixmap etc..
             (labelFontSize)
         FL_PDButtonLabelSize or FL_PDButtonLabel
             Default button label font size (buttonFontSize)
@@ -3690,9 +3857,9 @@ class XWindowChanges(cty.Structure):
     
     Attributes
     ----------
-        x : int
+        xpos : int
             *todo*
-        y : int
+        ypos : int
             *todo*
         width : int
             *todo*
@@ -3786,9 +3953,9 @@ class XArc(cty.Structure):
     
     Attributes
     ----------
-        x : short
+        xpos : short
             *todo*
-        y : short
+        ypos : short
             *todo*
         width : ushort
             *todo*
@@ -3881,9 +4048,9 @@ class XTimeCoord(cty.Structure):
     ----------
         time : long_pos
             Time
-        x : short
+        xpos : short
             *todo*
-        y : short
+        ypos : short
             *todo*
     """
     _fields_ = [
@@ -3943,9 +4110,9 @@ class XKeyEvent(cty.Structure):
             Window
         time : long_pos
             Time
-        x : int
+        xpos : int
             *todo*
-        y : int
+        ypos : int
             *todo*
         x_root : int
             *todo*
@@ -4000,9 +4167,9 @@ class XButtonEvent(cty.Structure):
             Window
         time : long_pos
             Time
-        x : int
+        xpos : int
             *todo*
-        y : int
+        ypos : int
             *todo*
         x_root : int
             *todo*
@@ -4057,9 +4224,9 @@ class XMotionEvent(cty.Structure):
              Window
         time : long_pos
             Time
-        x : int
+        xpos : int
             *todo*
-        y : int
+        ypos : int
             *todo*
         x_root : int
             *todo*
@@ -4113,9 +4280,9 @@ class XCrossingEvent(cty.Structure):
             Window
         time : long_pos
             Time
-        x : int
+        xpos : int
             *todo*
-        y : int
+        ypos : int
             *todo*
         x_root : int
             *todo*
@@ -4232,9 +4399,9 @@ class XExposeEvent(cty.Structure):
             *todo*
         window : long_pos
             Window
-        x : int
+        xpos : int
             *todo*
-        y : int
+        ypos : int
             *todo*
         width : int
             *todo*
@@ -4275,9 +4442,9 @@ class XGraphicsExposeEvent(cty.Structure):
             *todo*
         drawable : long_pos
             Drawable
-        x : int
+        xpos : int
             *todo*
-        y : int
+        ypos : int
             *todo*
         width : int
             *todo*
@@ -4382,9 +4549,9 @@ class XCreateWindowEvent(cty.Structure):
             Window
         window : long_pos
             Window
-        x : int
+        xpos : int
             *todo*
-        y : int
+        ypos : int
             *todo*
         width : int
             *todo*
@@ -4548,9 +4715,9 @@ class XReparentEvent(cty.Structure):
             Window
         parent : long_pos
             Window
-        x : int
+        xpos : int
             *todo*
-        y : int
+        ypos : int
             *todo*
         override_redirect : int
             *todo*
@@ -4586,9 +4753,9 @@ class XConfigureEvent(cty.Structure):
             Window
         window : long_pos
             Window
-        x : int
+        xpos : int
             *todo*
-        y : int
+        ypos : int
             *todo*
         width : int
             *todo*
@@ -4635,9 +4802,9 @@ class XGravityEvent(cty.Structure):
             Window
         window : long_pos
             Window
-        x : int
+        xpos : int
             *todo*
-        y : int
+        ypos : int
             *todo*
     """
     _fields_ = [
@@ -4700,9 +4867,9 @@ class XConfigureRequestEvent(cty.Structure):
             Window
         window : long_pos
             Window
-        x : int
+        xpos : int
             *todo*
-        y : int
+        ypos : int
             *todo*
         width : int
             *todo*
@@ -5321,7 +5488,8 @@ class admitted_values_for_EventNames(object):
     pass
 
 # my add, list of possible values --LK
-XEVENTNAMES_list = [KeyPress, KeyRelease, ButtonPress, ButtonRelease,
+# added 0, for all event types --LK
+XEVENTNAMES_list = [0, KeyPress, KeyRelease, ButtonPress, ButtonRelease,
             MotionNotify, EnterNotify, LeaveNotify, FocusIn, FocusOut,
             KeymapNotify, Expose, GraphicsExpose, NoExpose, VisibilityNotify,
             CreateNotify, DestroyNotify, UnmapNotify, MapNotify, MapRequest,
@@ -5356,7 +5524,7 @@ WINSTATE_list = [NormalState, IconicState]
 
 #######################
 # forms.h (bitmap.h)
-# Bitmap object class
+# Bitmap flobject class
 #######################
 
 FL_NORMAL_BITMAP = 0
@@ -5367,7 +5535,7 @@ class admitted_values_for_BITMAPTYPE(object):
     Admitted values
     ---------------
         FL_NORMAL_BITMAP
-            normal bitmap object type
+            normal bitmap flobject type
     """
 
 # my add, list of possible values --LK
@@ -5392,7 +5560,7 @@ class admitted_values_for_PIXMAPTYPE(object):
     Admitted values
     ---------------
         FL_NORMAL_PIXMAP
-            normal pixmap object type
+            normal pixmap flobject type
     """
 
 # my add - list of possible values --LK
@@ -5451,9 +5619,9 @@ FL_BROWSER_FONTSIZE = FL_SMALL_SIZE
 FL_BROWSER_SCROLL_CALLBACK = cty.CFUNCTYPE(None, cty.POINTER(FL_OBJECT),
                 cty.c_int, cty.c_void_p)
 class function_prototype_for_FL_BROWSER_SCROLL_CALLBACK(object):
-    """FL_BROWSER_SCROLL_CALLBACK(pObject, int, vdata)
+    """FL_BROWSER_SCROLL_CALLBACK(ptr_flobject, int, vdata)
     
-    prototype for function handling callback for browser objects,
+    prototype for function handling callback for browser flobjects,
     no return
     """
     pass
@@ -5737,7 +5905,7 @@ FL_MODIFY_CANVAS_PROP = cty.CFUNCTYPE(cty.c_int, cty.POINTER(FL_OBJECT))
 
 #############################
 # forms.h (chart.h)
-# Chart object class
+# Chart flobject class
 #############################
 
 # values for enumeration 'FL_CHART_TYPE'
@@ -6662,7 +6830,7 @@ FL_INPUTVALIDATOR = cty.CFUNCTYPE(cty.c_int, cty.POINTER(FL_OBJECT),
 # forms.h (nmenu.h)
 #####################
 
-# Nmenu object types
+# Nmenu flobject types
 # values for unnamed enumeration
 FL_NORMAL_NMENU = 0
 FL_NORMAL_TOUCH_NMENU = 1
@@ -6683,12 +6851,12 @@ class admitted_values_for_NMENUTYPE(object):
             any further user action required
         FL_BUTTON_NMENU
             When not active shown as text on borderless background,
-            when clicked on popup is shown and the object itself being
+            when clicked on popup is shown and the flobject itself being
             dispayed as a button
         FL_BUTTON_TOUCH_NMENU
             When not active shown as text on borderless background,
             when mouse is moved onto it the popup is shown and the
-            object itself is displayed as a button
+            flobject itself is displayed as a button
     """
     pass
 
@@ -6921,7 +7089,7 @@ FL_FRAME_LCOL = FL_BLACK        # label color
 
 #####################
 # forms.h (free.h)
-# Free object class
+# Free flobject class
 #####################
 
 # values for enumeration 'FL_FREE_TYPE'
@@ -6940,25 +7108,25 @@ class admitted_values_for_FL_FREE_TYPE(object):
     Admitted values
     ---------------
         FL_NORMAL_FREE
-            The object will receive the events FL_DRAW, FL_ENTER,
+            The flobject will receive the events FL_DRAW, FL_ENTER,
             FL_LEAVE, FL_MOTION, FL_PUSH, FL_RELEASE and FL_MOUSE
         FL_INACTIVE_FREE or FL_SLEEPING_FREE
-            The object only receives FL_DRAW events. This should be
-            used for objects without interaction (e.g. a picture)
+            The flobject only receives FL_DRAW events. This should be
+            used for flobjects without interaction (e.g. a picture)
         FL_INPUT_FREE
-            Same as FL_NORMAL_FREE but the object also receives
+            Same as FL_NORMAL_FREE but the flobject also receives
             FL_FOCUS, FL_UNFOCUS and FL_KEYBOARD events. The
-            pObject.contents.wantkey is by default set to FL_KEY_NORMAL,
-            i.e., the free object will receive all normal keys (0-255)
+            ptr_flobject.contents.wantkey is by default set to FL_KEY_NORMAL,
+            i.e., the free flobject will receive all normal keys (0-255)
             except <Tab> and <Return> key. If you're interested in <Tab>
             or <Return> key, you need to change obj->wantkey to
             FL_KEY_TAB or FL_KEY_ALL. See section Events, for details
         FL_CONTINUOUS_FREE
-            Same as FL_NORMAL_FREE but the object also receives FL_STEP
-            events. This should be used for objects that change themselves
+            Same as FL_NORMAL_FREE but the flobject also receives FL_STEP
+            events. This should be used for flobjects that change themselves
             continuously
         FL_ALL_FREE
-            The object receives all types of events
+            The flobject receives all types of events
     """
     pass
 
@@ -6969,7 +7137,7 @@ FREETYPE_list = [FL_NORMAL_FREE, FL_INACTIVE_FREE, FL_INPUT_FREE,
 
 #####################
 # forms.h (menu.h)
-#  Menu object class
+#  Menu flobject class
 #####################
 
 # FL_MENU_TYPE placeholder (deprecated)
@@ -6999,7 +7167,7 @@ class admitted_values_for_TEXTTYPE(object):
     Admitted values
     ---------------
         FL_NORMAL_TEXT
-            Normal text object type
+            Normal text flobject type
     """
     pass
 
@@ -7074,13 +7242,13 @@ class FL_POPUP_(cty.Structure):
             *todo*
         req_y : int
             *todo*
-        x : int
+        xpos : int
             horizontal position of popup window
-        y : int
+        ypos : int
             vertical position of popup window
-        w : int_pos
+        width : int_pos
             width of popup window
-        h : int_pos
+        height : int_pos
             height of popup window
         min_width : int
             minimum width of popup
@@ -7177,13 +7345,13 @@ class FL_POPUP_ENTRY_(cty.Structure):
             callback for entering entry
         leave_callback : FL_POPUP_CB function type
             callback for leaving entry
-        x : int
+        xpos : int
             horizontal position of entry text
-        y : int
+        ypos : int
             vertical position of entry text
-        w : int_pos
+        width : int_pos
             width of entry text
-        h : int_pos
+        height : int_pos
             height of entry text
         box_x : int
             *todo*
@@ -7226,7 +7394,7 @@ class FL_POPUP_RETURN_(cty.Structure):
         entry : pointer to FL_POPUP_ENTRY
             pointer to selected popup entry
         popup : pointer to FL_POPUP
-            popup we're called for
+            popup or sub-popup it belongs to
     """
     _fields_ = [
         ('val', cty.c_long),              # value assigned to popup entry
@@ -7499,7 +7667,7 @@ class admitted_values_for_POSITIONERTYPE(object):
             in XOR mode)
         FL_INVISIBLE_POSITIONER
             Completely invisible positioner to be used just for the
-            side effect of obtaining a position (typically an object
+            side effect of obtaining a position (typically a flobject
             is below it that otherwise would receive user events)
     """
     pass
@@ -7585,23 +7753,23 @@ SCROLLTYPE_list = [FL_VERT_SCROLLBAR, FL_HOR_SCROLLBAR, \
 # forms.h (select.h)
 #####################
 
-# Select object types
+# Select flobject types
 # values for unnamed enumeration
 FL_NORMAL_SELECT = 0
 FL_MENU_SELECT = 1
 FL_DROPLIST_SELECT = 2
 
 class admitted_values_for_SELECTTYPE(object):
-    """Select object types
+    """Select flobject types
     
     Admitted values
     ---------------
         FL_NORMAL_SELECT
             Per default this type is drawn as a rounded, flat box (but you
-            can change that by setting a different boxtype for the object)
+            can change that by setting a different boxtype for the flobject)
             with the text of the currently selected item in its center
         FL_MENU_SELECT
-            This select object looks like a button with a little extra box
+            This select flobject looks like a button with a little extra box
             at its right side (just like a FL_MENU_BUTTON) and the text of
             the currently selected item is drawn on the button-like object
         FL_DROPLIST_SELECT
@@ -7624,7 +7792,7 @@ FL_SELECT_ALIGN = FL_ALIGN_LEFT
 
 #######################
 # forms.h (slider.h)
-# Slider object class
+# Slider flobject class
 #######################
 
 FL_HOR_FLAG = 1
@@ -7794,19 +7962,23 @@ FL_NO = 0
 FL_FIT = 1
 FL_ENLARGE_ONLY = 2
 
-class admitted_values_for_TABFOLDERFIT(object):
+class admitted_values_for_FOLDERSIZESFIT(object):
     """How values fit?
     
     Admitted values
     ---------------
         FL_NO
-            *todo*
+            do not scale the form
         FL_FIT
-            *todo*
+            Always scale the form
         FL_ENLARGE_ONLY
-            *todo*
+            Scale the form only if it is smaller than folder area
     """
     pass
+
+# my add, list of possible values --LK
+FOLDERSIZESFIT_list = [FL_NO, FL_FIT, FL_ENLARGE_ONLY]
+
 
 
 #########################
@@ -7843,7 +8015,7 @@ FL_THUMBWHEEL_ALIGN = FL_ALIGN_BOTTOM
 
 ######################
 # forms.h (timer.h)
-# Timer object class
+# Timer flobject class
 ######################
 
 # values for enumeration 'FL_TIMER_TYPE'
@@ -7913,21 +8085,21 @@ class admitted_values_for_FL_XYPLOT_TYPE(object):
     Admitted values
     ---------------
         FL_NORMAL_XYPLOT
-            xyplot object type with solid line
+            xyplot flobject type with solid line
         FL_SQUARE_XYPLOT
-            xyplot object type has added square
+            xyplot flobject type has added square
         FL_CIRCLE_XYPLOT
-            xyplot object type has added circle
+            xyplot flobject type has added circle
         FL_FILL_XYPLOT
-            xyplot object type is filled completely
+            xyplot flobject type is filled completely
         FL_POINTS_XYPLOT
-            xyplot object type has only data points
+            xyplot flobject type has only data points
         FL_DASHED_XYPLOT
-            xyplot object type has dashed line
+            xyplot flobject type has dashed line
         FL_IMPULSE_XYPLOT
             *todo*
         FL_ACTIVE_XYPLOT
-            xyplot object type accepts interactive manipulations
+            xyplot flobject type accepts interactive manipulations
         FL_EMPTY_XYPLOT
             *todo*
         FL_DOTTED_XYPLOT
@@ -7937,7 +8109,7 @@ class admitted_values_for_FL_XYPLOT_TYPE(object):
         FL_LONGDASHED_XYPLOT
             *todo*
         FL_LINEPOINTS_XYPLOT
-            xyplot object type has lines and points
+            xyplot flobject type has lines and points
     """
     pass
 
@@ -8087,9 +8259,9 @@ class flimage_text_(cty.Structure):
             the text string itself
         len : int
             string length
-        x : int
+        xpos : int
             starting horizontal position of text (wrt image)
-        y : int
+        ypos : int
             starting vertical position of text (wrt image)
         color : int_pos
             color of the text
@@ -8128,13 +8300,13 @@ class flimage_marker_(cty.Structure):
     ----------
         name : str
             marker name
-        w : int
+        width : int
             width
-        h : int
+        height : int
             height
-        x : int
+        xpos : int
             horizontal location
-        y :  int
+        ypos :  int
             vertical location
         color : int_pos
             color of the marker
@@ -8257,9 +8429,9 @@ class flimage_(cty.Structure):
     ----------
         type : int
             image type
-        w : int
+        width : int
             image width
-        h : int
+        height : int
             image height
         app_data : pointer to void
             for application at setup time
@@ -8771,10 +8943,10 @@ class FLIMAGE_FORMAT_INFO(cty.Structure):
 
 # simple image processing routines
 
-FLIMAGE_SHARPEN = cty.pointer(cty.pointer(cty.c_int(-1)))
-#FLIMAGE_SHARPEN = cty.c_int(-1)
-FLIMAGE_SMOOTH = cty.pointer(cty.pointer(cty.c_int(-2)))
-#FLIMAGE_SMOOTH = cty.c_int(-2)
+#FLIMAGE_SHARPEN = cty.pointer(cty.pointer(cty.c_int(-1)))
+FLIMAGE_SHARPEN = -1
+#FLIMAGE_SMOOTH = cty.pointer(cty.pointer(cty.c_int(-2)))
+FLIMAGE_SMOOTH = -2
 FL_SMOOTH = FLIMAGE_SMOOTH
 FL_SHARPEN = FLIMAGE_SHARPEN
 
@@ -8830,9 +9002,9 @@ class XWindowAttributes(cty.Structure):
 
     Attributes
     ----------
-        x : int
+        xpos : int
             *todo*
-        y : int
+        ypos : int
             *todo*
         width : int
             *todo*

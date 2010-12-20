@@ -4029,10 +4029,10 @@ def fl_get_object_geometry(ptr_flobject):
            FL_Coord * y, FL_Coord * w, FL_Coord * h)""")
     library.check_if_initialized()
     library.verify_flobjectptr_type(ptr_flobject)
-    i_xpos, ptr_xpos= library.make_FL_Coord_and_pointer()
-    i_ypos, ptr_ypos= library.make_FL_Coord_and_pointer()
-    i_width, ptr_width= library.make_FL_Coord_and_pointer()
-    i_height, ptr_height= library.make_FL_Coord_and_pointer()
+    i_xpos, ptr_xpos = library.make_FL_Coord_and_pointer()
+    i_ypos, ptr_ypos = library.make_FL_Coord_and_pointer()
+    i_width, ptr_width = library.make_FL_Coord_and_pointer()
+    i_height, ptr_height = library.make_FL_Coord_and_pointer()
     library.keep_elem_refs(ptr_flobject, i_xpos, ptr_xpos, i_ypos, ptr_ypos, \
             i_width, ptr_width, i_height, ptr_height)
     _fl_get_object_geometry(ptr_flobject, ptr_xpos, ptr_ypos, ptr_width, \
@@ -4079,8 +4079,8 @@ def fl_get_object_position(ptr_flobject):
            FL_Coord * y)""")
     library.check_if_initialized()
     library.verify_flobjectptr_type(ptr_flobject)
-    i_xpos, ptr_xpos= library.make_FL_Coord_and_pointer()
-    i_ypos, ptr_ypos= library.make_FL_Coord_and_pointer()
+    i_xpos, ptr_xpos = library.make_FL_Coord_and_pointer()
+    i_ypos, ptr_ypos = library.make_FL_Coord_and_pointer()
     library.keep_elem_refs(ptr_flobject, i_xpos, ptr_xpos, \
             i_ypos, ptr_ypos)
     _fl_get_object_position(ptr_flobject, ptr_xpos, ptr_ypos)

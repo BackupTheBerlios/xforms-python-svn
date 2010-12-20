@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: iso8859-1 -*-
 
-""" xforms-python's functions to manage nmenu objects.
+""" xforms-python's functions to manage nmenu flobjects.
 """
 
 #    Copyright (C) 2009, 2010  Luca Lazzaroni "LukenShiro"
@@ -26,7 +26,7 @@
 # then heavily reordered and reworked
 
 # ############################################# #
-# Interface to XForms shared object libraries   #
+# Interface to XForms shared flobject libraries   #
 # ############################################# #
 
 
@@ -39,13 +39,14 @@ from xformslib import xfdata
 # forms.h (nmenu.h)
 #####################
 
-# Nmenu object types
+# Nmenu flobject types
 
 # fl_create_nmenu function placeholder (internal)
 
 
-def fl_add_nmenu(nmenutype, x, y, w, h, label):
-    """fl_add_nmenu(nmenutype, x, y, w, h, label)
+def fl_add_nmenu(nmenutype, xpos, ypos, width, height, label):
+    """fl_add_nmenu(nmenutype, xpos, ypos, width, height, label)
+    -> ptr_flobject
     
     Adds a new generation menu (nmenu) object. It heavily depends on
     popups.
@@ -55,21 +56,21 @@ def fl_add_nmenu(nmenutype, x, y, w, h, label):
         nmenutype : type of nmenu to be. Values (from xfdata.py)
             FL_NORMAL_NMENU, FL_NORMAL_TOUCH_NMENU, FL_BUTTON_NMENU,
             FL_BUTTON_TOUCH_NMENU
-        x : int
+        xpos : int
             horizontal position (upper-left corner)
-        y : int
+        ypos : int
             vertical position (upper-left corner)
-        w : int
+        width : int
             width in coord units
-        h : int
+        height : int
             height in coord units
         label : str
-            text label of nmenu object
+            text label of nmenu flobject
 
     Returns
     -------
-        pFlObject : pointer to xfdata.FL_OBJECT
-            nmenu object added
+        ptr_flobject : pointer to xfdata.FL_OBJECT
+            nmenu flobject added
 
     Examples
     --------
@@ -90,32 +91,33 @@ def fl_add_nmenu(nmenutype, x, y, w, h, label):
     library.check_if_initialized()
     library.checkfatal_allowed_value_in_list(nmenutype, \
             xfdata.NMENUTYPE_list)
-    inmenutype = library.convert_to_int(nmenutype)
-    ix = library.convert_to_FL_Coord(x)
-    iy = library.convert_to_FL_Coord(y)
-    iw = library.convert_to_FL_Coord(w)
-    ih = library.convert_to_FL_Coord(h)
-    slabel = library.convert_to_string(label)
-    library.keep_elem_refs(nmenutype, x, y, w, h, label, inmenutype, \
-            ix, iy, iw, ih, slabel)
-    retval = _fl_add_nmenu(inmenutype, ix, iy, iw, ih, slabel)
+    i_nmenutype = library.convert_to_intc(nmenutype)
+    i_xpos = library.convert_to_FL_Coord(xpos)
+    i_ypos = library.convert_to_FL_Coord(ypos)
+    i_width = library.convert_to_FL_Coord(width)
+    i_height = library.convert_to_FL_Coord(height)
+    s_label = library.convert_to_stringc(label)
+    library.keep_elem_refs(nmenutype, xpos, ypos, width, height, label, \
+            i_nmenutype, i_xpos, i_ypos, i_width, i_height, s_label)
+    retval = _fl_add_nmenu(i_nmenutype, i_xpos, i_ypos, i_width, \
+            i_height, s_label)
     return retval
 
 
-def fl_clear_nmenu(pFlObject):
-    """fl_clear_nmenu(pFlObject)
+def fl_clear_nmenu(ptr_flobject):
+    """fl_clear_nmenu(ptr_flobject) -> result
     
-    Removes all items from a nmenu object at once.
+    Removes all items from a nmenu flobject at once.
 
     Parameters
     ----------
-        pFlObject : pointer to xfdata.FL_OBJECT
-            nmenu object
+        ptr_flobject : pointer to xfdata.FL_OBJECT
+            nmenu flobject
 
     Returns
     -------
-        num. : int
-            *todo*
+        result : int
+            0 on success, or -1 (on failure)
 
     Examples
     --------
@@ -131,22 +133,22 @@ def fl_clear_nmenu(pFlObject):
         cty.c_int, [cty.POINTER(xfdata.FL_OBJECT)],
         """int fl_clear_nmenu(FL_OBJECT * p1)""")
     library.check_if_initialized()
-    library.verify_flobjectptr_type(pFlObject)
-    library.keep_elem_refs(pFlObject)
-    retval = _fl_clear_nmenu(pFlObject)
+    library.verify_flobjectptr_type(ptr_flobject)
+    library.keep_elem_refs(ptr_flobject)
+    retval = _fl_clear_nmenu(ptr_flobject)
     return retval
 
 
-def fl_add_nmenu_items(pFlObject, entryitems_txt):
-    """fl_add_nmenu_items(pFlObject, entryitems_txt)
+def fl_add_nmenu_items(ptr_flobject, entryitemstxt):
+    """fl_add_nmenu_items(ptr_flobject, entryitemstxt) -> ptr_flpopupentry
     
-    Adds items to an existing nmenu object.
+    Adds items to an existing nmenu flobject.
 
     Parameters
     ----------
-        pFlObject : pointer to xfdata.FL_OBJECT
-            nmenu object
-        entryitems_txt : str
+        ptr_flobject : pointer to xfdata.FL_OBJECT
+            nmenu flobject
+        entryitemstxt : str
             text of the entry to be added and in-text special sequences
             with or without not separated additional arguments (if needed).
             Text may contain | to separate entries and newline characters
@@ -156,7 +158,7 @@ def fl_add_nmenu_items(pFlObject, entryitems_txt):
 
     Returns
     -------
-        pPopupentry : pointer to xfdata.FL_POPUP_ENTRY
+        ptr_flpopupentry : pointer to xfdata.FL_POPUP_ENTRY
             popup entry
 
     Examples
@@ -176,12 +178,12 @@ def fl_add_nmenu_items(pFlObject, entryitems_txt):
         """FL_POPUP_ENTRY * fl_add_nmenu_items(FL_OBJECT * p1,
            const char * p2, ...)""")
     library.check_if_initialized()
-    library.verify_flobjectptr_type(pFlObject)
-    sentryitems_txt = library.convert_to_string(entryitems_txt)
-    library.keep_elem_refs(pFlObject, entryitems_txt, sentryitems_txt)
-    retval = _fl_add_nmenu_items(pFlObject, sentryitems_txt)
+    library.verify_flobjectptr_type(ptr_flobject)
+    s_entryitemstxt = library.convert_to_stringc(entryitemstxt)
+    library.keep_elem_refs(ptr_flobject, entryitemstxt, s_entryitemstxt)
+    retval = _fl_add_nmenu_items(ptr_flobject, s_entryitemstxt)
     return retval
-#      entryitems_txtlst : list_of_str_and_any_type
+#      entryitemstxtlst : list_of_str_and_any_type
 #        list representing the text of the entry to be added and in-text
 #        special sequences with or without separate or not separated additional
 #        arguments (if needed). Text may contain | to separate entries and
@@ -201,29 +203,30 @@ def fl_add_nmenu_items(pFlObject, entryitems_txt):
 #        """FL_POPUP_ENTRY * fl_add_nmenu_items(FL_OBJECT * p1,
 #           const char * p2, ...)""")
 #    library.check_if_initialized()
-#    library.verify_flobjectptr_type(pFlObject)
+#    library.verify_flobjectptr_type(ptr_flobject)
 #    # first str + 20 additional args max
-#    tmpentryitems_txtlst, finalentryitems_txtlst = \
-#        library.create_argslist_for_entrytxt(entryitems_txtlst, 21)
-#    library.keep_elem_refs(pFlObject, entryitems_txtlst, tmpentryitems_txtlst, \
-#                        finalentryitems_txtlst)
-#    retval = _fl_add_nmenu_items(pFlObject, *finalentryitems_txtlst)
+#    tmpentryitemstxtlst, finalentryitemstxtlst = \
+#        library.create_argslist_for_entrytxt(entryitemstxtlst, 21)
+#    library.keep_elem_refs(ptr_flobject, entryitemstxtlst, \
+#        tmpentryitemstxtlst, finalentryitemstxtlst)
+#    retval = _fl_add_nmenu_items(ptr_flobject, *finalentryitemstxtlst)
 #    return retval
 
 
-def fl_insert_nmenu_items(pFlObject, pPopupEntry, entryitems_txt):
-    """fl_insert_nmenu_items(pFlObject, pPopupEntry, entryitems_txt)
+def fl_insert_nmenu_items(ptr_flobject, ptr_flpopupentry, entryitemstxt):
+    """fl_insert_nmenu_items(ptr_flobject, ptr_flpopupentry, entryitemstxt)
+    -> ptr_flpopupentry
     
-    Inserts additional items in nmenu object.
+    Inserts additional items in nmenu flobject.
 
     Parameters
     ----------
-        pFlObject : pointer to xfdata.FL_OBJECT
-            nmenu object
-        pPopupEntry : pointer to xfdata.FL_POPUP_ENTRY
+        ptr_flobject : pointer to xfdata.FL_OBJECT
+            nmenu flobject
+        ptr_flpopupentry : pointer to xfdata.FL_POPUP_ENTRY
             existing popup entry, after which the new items are to be
             inserted. If it is 'None', it inserts items at the very start.
-        entryitems_txt : str
+        entryitemstxt : str
             text of the entry to be added and in-text special sequences with
             or without not separated additional arguments (if needed). Text
             may contain | to separate entries and newline characters which
@@ -233,7 +236,7 @@ def fl_insert_nmenu_items(pFlObject, pPopupEntry, entryitems_txt):
 
     Returns
     -------
-        pPopupentry : pointer to xfdata.FL_POPUP_ENTRY
+        ptr_flpopupentry : pointer to xfdata.FL_POPUP_ENTRY
             popup entry
 
     Examples
@@ -253,27 +256,29 @@ def fl_insert_nmenu_items(pFlObject, pPopupEntry, entryitems_txt):
         """FL_POPUP_ENTRY * fl_insert_nmenu_items(FL_OBJECT * p1,
            FL_POPUP_ENTRY * p2, const char * p3, ...)""")
     library.check_if_initialized()
-    library.verify_flobjectptr_type(pFlObject)
-    library.verify_flpopupentryptr_type(pPopupEntry)
-    sentryitems_txt = library.convert_to_string(entryitems_txt)
-    library.keep_elem_refs(pFlObject, pPopupEntry, entryitems_txt, \
-            sentryitems_txt)
-    retval = _fl_insert_nmenu_items(pFlObject, pPopupEntry, sentryitems_txt)
+    library.verify_flobjectptr_type(ptr_flobject)
+    library.verify_flpopupentryptr_type(ptr_flpopupentry)
+    s_entryitemstxt = library.convert_to_stringc(entryitemstxt)
+    library.keep_elem_refs(ptr_flobject, ptr_flpopupentry, entryitemstxt, \
+            s_entryitemstxt)
+    retval = _fl_insert_nmenu_items(ptr_flobject, ptr_flpopupentry, \
+            s_entryitemstxt)
     return retval
 
 
-def fl_replace_nmenu_item(pFlObject, pPopupEntry, entryitems_txt):
-    """fl_replace_nmenu_item(pFlObject, pPopupEntry, entryitems_txt)
+def fl_replace_nmenu_item(ptr_flobject, ptr_flpopupentry, entryitemstxt):
+    """fl_replace_nmenu_item(ptr_flobject, ptr_flpopupentry, entryitemstxt)
+    -> ptr_flpopupentry
     
-    Replaces an existing item of a nmenu object with another.
+    Replaces an existing item of a nmenu flobject with another.
 
     Parameters
     ----------
-        pFlObject : pointer to xfdata.FL_OBJECT
-            nmenu object
-        pPopupEntry : pointer to xfdata.FL_POPUP_ENTRY
+        ptr_flobject : pointer to xfdata.FL_OBJECT
+            nmenu flobject
+        ptr_flpopupentry : pointer to xfdata.FL_POPUP_ENTRY
             old popup entry to be replaced
-        entryitems_txt : str
+        entryitemstxt : str
         text of the entry to be added and in-text special sequences with or
             without not separated additional arguments (if needed). Text may
             contain | to separate entries and newline characters which allows
@@ -283,7 +288,7 @@ def fl_replace_nmenu_item(pFlObject, pPopupEntry, entryitems_txt):
 
     Returns
     -------
-        pPopupentry : pointer to xfdata.FL_POPUP_ENTRY
+        ptr_flpopupentry : pointer to xfdata.FL_POPUP_ENTRY
             popup entry
 
     Examples
@@ -303,32 +308,32 @@ def fl_replace_nmenu_item(pFlObject, pPopupEntry, entryitems_txt):
         """FL_POPUP_ENTRY * fl_replace_nmenu_item(FL_OBJECT * p1,
            FL_POPUP_ENTRY * p2, const char * p3, ...)""")
     library.check_if_initialized()
-    library.verify_flobjectptr_type(pFlObject)
-    library.verify_flpopupentryptr_type(pPopupEntry)
-    sentryitems_txt = library.convert_to_string(entryitems_txt)
-    library.keep_elem_refs(pFlObject, pPopupEntry, entryitems_txt, \
-            sentryitems_txt)
-    retval = _fl_replace_nmenu_item(pFlObject, pPopupEntry, \
-            sentryitems_txt)
+    library.verify_flobjectptr_type(ptr_flobject)
+    library.verify_flpopupentryptr_type(ptr_flpopupentry)
+    s_entryitemstxt = library.convert_to_stringc(entryitemstxt)
+    library.keep_elem_refs(ptr_flobject, ptr_flpopupentry, entryitemstxt, \
+            s_entryitemstxt)
+    retval = _fl_replace_nmenu_item(ptr_flobject, ptr_flpopupentry, \
+            s_entryitemstxt)
     return retval
 
 
-def fl_delete_nmenu_item(pFlObject, pPopupEntry):
-    """fl_delete_nmenu_item(pFlObject, pPopupEntry)
+def fl_delete_nmenu_item(ptr_flobject, ptr_flpopupentry):
+    """fl_delete_nmenu_item(ptr_flobject, ptr_flpopupentry) -> result
     
-    Deletes an item from a nmenu object.
+    Deletes an item from a nmenu flobject.
 
     Parameters
     ----------
-        pFlObject : pointer to xfdata.FL_OBJECT
-            nmenu object
-        pPopupEntry : pointer to xfdata.FL_POPUP_ENTRY
+        ptr_flobject : pointer to xfdata.FL_OBJECT
+            nmenu flobject
+        ptr_flpopupentry : pointer to xfdata.FL_POPUP_ENTRY
             existing popup entry to delete
 
     Returns
     -------
-        num. : int
-            *todo*
+        result : int
+            0 on success, or -1 (on failure)
 
     Examples
     --------
@@ -345,30 +350,30 @@ def fl_delete_nmenu_item(pFlObject, pPopupEntry):
         cty.POINTER(xfdata.FL_POPUP_ENTRY)],
         """int fl_delete_nmenu_item(FL_OBJECT * p1, FL_POPUP_ENTRY * p2)""")
     library.check_if_initialized()
-    library.verify_flobjectptr_type(pFlObject)
-    library.verify_flpopupentryptr_type(pPopupEntry)
-    library.keep_elem_refs(pFlObject, pPopupEntry)
-    retval = _fl_delete_nmenu_item(pFlObject, pPopupEntry)
+    library.verify_flobjectptr_type(ptr_flobject)
+    library.verify_flpopupentryptr_type(ptr_flpopupentry)
+    library.keep_elem_refs(ptr_flobject, ptr_flpopupentry)
+    retval = _fl_delete_nmenu_item(ptr_flobject, ptr_flpopupentry)
     return retval
 
 
-def fl_set_nmenu_items(pFlObject, pPopupItem):
-    """fl_set_nmenu_items(pFlObject, pPopupItem)
+def fl_set_nmenu_items(ptr_flobject, ptr_flpopupitem):
+    """fl_set_nmenu_items(ptr_flobject, ptr_flpopupitem) -> ptr_flpopupentry
     
-    Sets a popup nmenu item.
+    Defines a popup nmenu item.
 
     Parameters
     ----------
-        pFlObject : pointer to xfdata.FL_OBJECT
-            nmenu object
-        pPopupItem : pointer to xfdata.FL_POPUP_ITEM
+        ptr_flobject : pointer to xfdata.FL_OBJECT
+            nmenu flobject
+        ptr_flpopupitem : pointer to xfdata.FL_POPUP_ITEM
             popup item to be set. It can be prepared passing a dict (whose
             keys are corresponding to xfdata.FL_POPUP_ITEM's members) to
             xfstruct.make_flpopupitem function.
 
     Returns
     -------
-        pPopupentry : pointer to xfdata.FL_POPUP_ENTRY
+        ptr_flpopupentry : pointer to xfdata.FL_POPUP_ENTRY
             first nmenu item, or None (on failure)
 
     Examples
@@ -387,30 +392,30 @@ def fl_set_nmenu_items(pFlObject, pPopupItem):
         """FL_POPUP_ENTRY * fl_set_nmenu_items(FL_OBJECT * p1,
            FL_POPUP_ITEM * p2)""")
     library.check_if_initialized()
-    library.verify_flobjectptr_type(pFlObject)
-    library.verify_flpopupitemptr_type(pPopupItem)
-    library.keep_elem_refs(pFlObject, pPopupItem)
-    retval = _fl_set_nmenu_items(pFlObject, pPopupItem)
+    library.verify_flobjectptr_type(ptr_flobject)
+    library.verify_flpopupitemptr_type(ptr_flpopupitem)
+    library.keep_elem_refs(ptr_flobject, ptr_flpopupitem)
+    retval = _fl_set_nmenu_items(ptr_flobject, ptr_flpopupitem)
     return retval
 
 
-def fl_add_nmenu_items2(pFlObject, pPopupItem):
-    """fl_add_nmenu_items2(pFlObject, pPopupItem)
+def fl_add_nmenu_items2(ptr_flobject, ptr_flpopupitem):
+    """fl_add_nmenu_items2(ptr_flobject, ptr_flpopupitem) -> ptr_flpopupentry
     
-    Adds items to a nmenu object (alternative).
+    Adds items to a nmenu flobject (alternative).
 
     Parameters
     ----------
-        pFlObject : pointer to xfdata.FL_OBJECT
-            nmenu object
-        pPopupItem : pointer to xfdata.FL_POPUP_ITEM
+        ptr_flobject : pointer to xfdata.FL_OBJECT
+            nmenu flobject
+        ptr_flpopupitem : pointer to xfdata.FL_POPUP_ITEM
             popup item to be set. It can be prepared passing a dict (whose
             keys are corresponding to xfdata.FL_POPUP_ITEM's members) to
             xfstruct.make_flpopupitem function.
 
     Returns
     -------
-        pPopupentry : pointer to xfdata.FL_POPUP_ENTRY
+        ptr_flpopupentry : pointer to xfdata.FL_POPUP_ENTRY
             first nmenu item, or None (on failure)
 
     Examples
@@ -429,33 +434,34 @@ def fl_add_nmenu_items2(pFlObject, pPopupItem):
         """FL_POPUP_ENTRY * fl_add_nmenu_items2(FL_OBJECT * obj,
            FL_POPUP_ITEM * p2)""")
     library.check_if_initialized()
-    library.verify_flobjectptr_type(pFlObject)
-    library.verify_flpopupitemptr_type(pPopupItem)
-    library.keep_elem_refs(pFlObject, pPopupItem)
-    retval = _fl_add_nmenu_items2(pFlObject, pPopupItem)
+    library.verify_flobjectptr_type(ptr_flobject)
+    library.verify_flpopupitemptr_type(ptr_flpopupitem)
+    library.keep_elem_refs(ptr_flobject, ptr_flpopupitem)
+    retval = _fl_add_nmenu_items2(ptr_flobject, ptr_flpopupitem)
     return retval
 
 
-def fl_insert_nmenu_items2(pFlObject, pPopupEntry, pPopupItem):
-    """fl_insert_nmenu_items2(pFlObject, pPopupEntry, pPopupItem)
+def fl_insert_nmenu_items2(ptr_flobject, ptr_flpopupentry, ptr_flpopupitem):
+    """fl_insert_nmenu_items2(ptr_flobject, ptr_flpopupentry, ptr_flpopupitem)
+    -> ptr_flpopupentry
     
-    Inserts items in a nmenu object (alternative).
+    Inserts items in a nmenu flobject (alternative).
 
     Parameters
     ----------
-        pFlObject : pointer to xfdata.FL_OBJECT
-            nmenu object
-        pPopupEntry : pointer to xfdata.FL_POPUP_ENTRY
+        ptr_flobject : pointer to xfdata.FL_OBJECT
+            nmenu flobject
+        ptr_flpopupentry : pointer to xfdata.FL_POPUP_ENTRY
             existing popup entry, after which the new items are to be
             inserted. If it is 'None', it inserts items at the very start.
-        pPopupItem : pointer to xfdata.FL_POPUP_ITEM
+        ptr_flpopupitem : pointer to xfdata.FL_POPUP_ITEM
             popup item to be set. It can be prepared passing a dict (whose
             keys are corresponding to xfdata.FL_POPUP_ITEM's members) to
             xfstruct.make_flpopupitem function.
 
     Returns
     -------
-        pPopupentry : pointer to xfdata.FL_POPUP_ENTRY
+        ptr_flpopupentry : pointer to xfdata.FL_POPUP_ENTRY
              first nmenu item, or None (on failure)
 
     Examples
@@ -474,37 +480,41 @@ def fl_insert_nmenu_items2(pFlObject, pPopupEntry, pPopupItem):
         """FL_POPUP_ENTRY * fl_insert_nmenu_items2(FL_OBJECT * obj,
            FL_POPUP_ITEM * p2, FL_POPUP_ITEM * p3)""")
     library.check_if_initialized()
-    library.verify_flobjectptr_type(pFlObject)
-    if not pPopupEntry:         # it is None
-        pPopupEntry_alt = cty.cast(pPopupEntry, cty.POINTER(cty.c_void_p))
-    else:                       # real FL_POPUP_ENTRY pointer
-        pPopupEntry_alt = pPopupEntry
-        library.verify_flpopupentryptr_type(pPopupEntry_alt)
-    library.verify_flpopupitemptr_type(pPopupItem)
-    library.keep_elem_refs(pFlObject, pPopupEntry, pPopupEntry_alt, pPopupItem)
-    retval = _fl_insert_nmenu_items2(pFlObject, pPopupEntry_alt, pPopupItem)
+    library.verify_flobjectptr_type(ptr_flobject)
+    if not ptr_flpopupentry:        # it is None
+        ptr_flpopupentry_alt = cty.cast(ptr_flpopupentry, \
+                cty.POINTER(cty.c_void_p))
+    else:                           # real FL_POPUP_ENTRY pointer
+        ptr_flpopupentry_alt = ptr_flpopupentry
+        library.verify_flpopupentryptr_type(ptr_flpopupentry_alt)
+    library.verify_flpopupitemptr_type(ptr_flpopupitem)
+    library.keep_elem_refs(ptr_flobject, ptr_flpopupentry, \
+            ptr_flpopupentry_alt, ptr_flpopupitem)
+    retval = _fl_insert_nmenu_items2(ptr_flobject, ptr_flpopupentry_alt, \
+            ptr_flpopupitem)
     return retval
 
 
-def fl_replace_nmenu_items2(pFlObject, pPopupEntry, pPopupItem):
-    """fl_replace_nmenu_items2(pFlObject, pPopupEntry, pPopupItem)
+def fl_replace_nmenu_items2(ptr_flobject, ptr_flpopupentry, ptr_flpopupitem):
+    """fl_replace_nmenu_items2(ptr_flobject, ptr_flpopupentry, ptr_flpopupitem)
+    -> ptr_flpopupentry
     
-    Replaces an item of a nmenu object (alternative).
+    Replaces an item of a nmenu flobject (alternative).
 
     Parameters
     ----------
-        pFlObject : pointer to xfdata.FL_OBJECT
-            nmenu object
-        pPopupEntry : pointer to xfdata.FL_POPUP_ENTRY
+        ptr_flobject : pointer to xfdata.FL_OBJECT
+            nmenu flobject
+        ptr_flpopupentry : pointer to xfdata.FL_POPUP_ENTRY
             old popup entry to be replaced
-        pPopupItem : pointer to xfdata.FL_POPUP_ITEM
+        ptr_flpopupitem : pointer to xfdata.FL_POPUP_ITEM
             new popup item. It can be prepared passing a dict (whose keys
             are corresponding to xfdata.FL_POPUP_ITEM's members) to
             xfstruct.make_flpopupitem function.
 
     Returns
     -------
-        pPopupentry : pointer to xfdata.FL_POPUP_ENTRY
+        ptr_flpopupentry : pointer to xfdata.FL_POPUP_ENTRY
             first nmenu item, or None (on failure)
 
     Examples
@@ -523,27 +533,28 @@ def fl_replace_nmenu_items2(pFlObject, pPopupEntry, pPopupItem):
         """FL_POPUP_ENTRY * fl_replace_nmenu_items2(FL_OBJECT * obj,
            FL_POPUP_ENTRY * p2, FL_POPUP_ITEM * p3)""")
     library.check_if_initialized()
-    library.verify_flobjectptr_type(pFlObject)
-    library.verify_flpopupentryptr_type(pPopupEntry)
-    library.verify_flpopupitemptr_type(pPopupItem)
-    library.keep_elem_refs(pFlObject, pPopupEntry, pPopupItem)
-    retval = _fl_replace_nmenu_items2(pFlObject, pPopupEntry, pPopupItem)
+    library.verify_flobjectptr_type(ptr_flobject)
+    library.verify_flpopupentryptr_type(ptr_flpopupentry)
+    library.verify_flpopupitemptr_type(ptr_flpopupitem)
+    library.keep_elem_refs(ptr_flobject, ptr_flpopupentry, ptr_flpopupitem)
+    retval = _fl_replace_nmenu_items2(ptr_flobject, ptr_flpopupentry, \
+            ptr_flpopupitem)
     return retval
 
 
-def fl_get_nmenu_popup(pFlObject):
-    """fl_get_nmenu_popup(pFlObject)
+def fl_get_nmenu_popup(ptr_flobject):
+    """fl_get_nmenu_popup(ptr_flobject) -> ptr_flpopup
     
-    Obtains which popup is associated with the nmenu object.
+    Finds out which popup is associated with the nmenu flobject.
 
     Parameters
     ----------
-        pFlObject : pointer to xfdata.FL_OBJECT
-            nmenu object
+        ptr_flobject : pointer to xfdata.FL_OBJECT
+            nmenu flobject
 
     Returns
     -------
-        pPopup : pointer to xfdata.FL_POPUP
+        ptr_flpopup : pointer to xfdata.FL_POPUP
             popup class instance
 
     Examples
@@ -559,28 +570,28 @@ def fl_get_nmenu_popup(pFlObject):
         library.load_so_libforms(), "fl_get_nmenu_popup",
         cty.POINTER(xfdata.FL_POPUP), [cty.POINTER(xfdata.FL_OBJECT)],
         """FL_POPUP * fl_get_nmenu_popup(FL_OBJECT * p1)""")
-    library.verify_flobjectptr_type(pFlObject)
-    library.keep_elem_refs(pFlObject)
-    retval = _fl_get_nmenu_popup(pFlObject)
+    library.verify_flobjectptr_type(ptr_flobject)
+    library.keep_elem_refs(ptr_flobject)
+    retval = _fl_get_nmenu_popup(ptr_flobject)
     return retval
 
 
-def fl_set_nmenu_popup(pFlObject, pPopup):
-    """fl_set_nmenu_popup(pFlObject, pPopup)
+def fl_set_nmenu_popup(ptr_flobject, ptr_flpopup):
+    """fl_set_nmenu_popup(ptr_flobject, ptr_flpopup) -> ptr_flpopup
     
-    Sets an existing popup as the nmenu's popup. The popup you associate
-    with the nmenu object in this way cannot be a sub-popup.
+    Defines an existing popup as the nmenu's popup. The popup you associate
+    with the nmenu flobject in this way cannot be a sub-popup.
 
     Parameters
     ----------
-        pFlObject : pointer to xfdata.FL_OBJECT
-            nmenu object
-        pPopup : pointer to xfdata.FL_POPUP
+        ptr_flobject : pointer to xfdata.FL_OBJECT
+            nmenu flobject
+        ptr_flpopup : pointer to xfdata.FL_POPUP
             popup class instance
 
     Returns
     -------
-        pPopup : pointer to xfdata.FL_POPUP
+        ptr_flpopup : pointer to xfdata.FL_POPUP
             popup class instance
 
     Examples
@@ -598,32 +609,35 @@ def fl_set_nmenu_popup(pFlObject, pPopup):
         cty.POINTER(xfdata.FL_POPUP)],
         """int fl_set_nmenu_popup(FL_OBJECT * p1, FL_POPUP * p2)""")
     library.check_if_initialized()
-    library.verify_flobjectptr_type(pFlObject)
-    library.verify_flpopupptr_type(pPopup)
-    library.keep_elem_refs(pFlObject, pPopup)
-    retval = _fl_set_nmenu_popup(pFlObject, pPopup)
+    library.verify_flobjectptr_type(ptr_flobject)
+    library.verify_flpopupptr_type(ptr_flpopup)
+    library.keep_elem_refs(ptr_flobject, ptr_flpopup)
+    retval = _fl_set_nmenu_popup(ptr_flobject, ptr_flpopup)
     return retval
 
 
-def fl_get_nmenu_item(pFlObject):
-    """fl_get_nmenu_item(pFlObject)
+def fl_get_nmenu_item(ptr_flobject):
+    """fl_get_nmenu_item(ptr_flobject) -> ptr_flpopupreturn
     
-    Finds out which item of a nmenu object was selected.
+    Finds out which item of a nmenu flobject was selected.
 
     Parameters
     ----------
-        pFlObject : pointer to xfdata.FL_OBJECT
-            nmenu object
+        ptr_flobject : pointer to xfdata.FL_OBJECT
+            nmenu flobject
 
     Returns
     -------
-        pPopupReturn : pointer to xfdata.FL_POPUP_RETURN
+        ptr_flpopupreturn : pointer to xfdata.FL_POPUP_RETURN
             popup return class instance, or None (if no selection
-            was made the last time the nmenu object was used)
+            was made the last time the nmenu flobject was used)
 
     Examples
     --------
-        >>> *todo*
+        >>> pPpRtn = fl_get_nmenu(pnmenuobj)
+        >>> print "order number" % pPpRtn.contents.val
+        >>> print "extry text" % pPpRtn.contents.text
+        >>> print "order number" % pPpRtn.contents.val
 
     Notes
     -----
@@ -635,28 +649,28 @@ def fl_get_nmenu_item(pFlObject):
         cty.POINTER(xfdata.FL_POPUP_RETURN), [cty.POINTER(xfdata.FL_OBJECT)],
         """FL_POPUP_RETURN * fl_get_nmenu_item(FL_OBJECT * p1)""")
     library.check_if_initialized()
-    library.verify_flobjectptr_type(pFlObject)
-    library.keep_elem_refs(pFlObject)
-    retval = _fl_get_nmenu_item(pFlObject)
+    library.verify_flobjectptr_type(ptr_flobject)
+    library.keep_elem_refs(ptr_flobject)
+    retval = _fl_get_nmenu_item(ptr_flobject)
     return retval
 
 
-def fl_get_nmenu_item_by_value(pFlObject, value):
-    """fl_get_nmenu_item_by_value(pFlObject, value)
+def fl_get_nmenu_item_by_value(ptr_flobject, itemval):
+    """fl_get_nmenu_item_by_value(ptr_flobject, itemval) -> ptr_flpopupentry
     
     Searches through the list of all items (including items in sub-popups)
     and returns the first one with the val associated with the item
 
     Parameters
     ----------
-        pFlObject : pointer to xfdata.FL_OBJECT
-            nmenu object
-        value : long
+        ptr_flobject : pointer to xfdata.FL_OBJECT
+            nmenu flobject
+        itemval : long
             value corresponding to an item to be searched.
 
     Returns
     -------
-        pPopupentry : pointer to xfdata.FL_POPUP_ENTRY
+        ptr_flpopupentry : pointer to xfdata.FL_POPUP_ENTRY
             first item associated, or None (if none is found)
 
     Examples
@@ -675,29 +689,29 @@ def fl_get_nmenu_item_by_value(pFlObject, value):
         """FL_POPUP_ENTRY * fl_get_nmenu_item_by_value(FL_OBJECT * p1,
            long int p2)""")
     library.check_if_initialized()
-    library.verify_flobjectptr_type(pFlObject)
-    lvalue = library.convert_to_long(value)
-    library.keep_elem_refs(pFlObject, value, lvalue)
-    retval = _fl_get_nmenu_item_by_value(pFlObject, lvalue)
+    library.verify_flobjectptr_type(ptr_flobject)
+    l_itemval = library.convert_to_longc(itemval)
+    library.keep_elem_refs(ptr_flobject, itemval, l_itemval)
+    retval = _fl_get_nmenu_item_by_value(ptr_flobject, l_itemval)
     return retval
 
 
-def fl_get_nmenu_item_by_label(pFlObject, label):
-    """fl_get_nmenu_item_by_label(pFlObject, label)
+def fl_get_nmenu_item_by_label(ptr_flobject, label):
+    """fl_get_nmenu_item_by_label(ptr_flobject, label) -> ptr_flpopupentry
     
     Searches for a certain label as displayed for the item in the nmenu's
     popup.
 
     Parameters
     ----------
-        pFlObject : pointer to xfdata.FL_OBJECT
-            nmenu object
+        ptr_flobject : pointer to xfdata.FL_OBJECT
+            nmenu flobject
         label : str
             text associated with an item.
 
     Returns
     -------
-        pPopupEntry : pointer to xfdata.FL_POPUP_ENTRY
+        ptr_flpopupentry : pointer to xfdata.FL_POPUP_ENTRY
             first item associated, or None (if none is found)
 
     Examples
@@ -716,29 +730,29 @@ def fl_get_nmenu_item_by_label(pFlObject, label):
         """FL_POPUP_ENTRY * fl_get_nmenu_item_by_label(FL_OBJECT * p1,
            const char * p2)""")
     library.check_if_initialized()
-    library.verify_flobjectptr_type(pFlObject)
-    slabel = library.convert_to_string(label)
-    library.keep_elem_refs(pFlObject, label, slabel)
-    retval = _fl_get_nmenu_item_by_label(pFlObject, slabel)
+    library.verify_flobjectptr_type(ptr_flobject)
+    s_label = library.convert_to_stringc(label)
+    library.keep_elem_refs(ptr_flobject, label, s_label)
+    retval = _fl_get_nmenu_item_by_label(ptr_flobject, s_label)
     return retval
 
 
-def fl_get_nmenu_item_by_text(pFlObject, text):
-    """fl_get_nmenu_item_by_text(pFlObject, text)
+def fl_get_nmenu_item_by_text(ptr_flobject, text):
+    """fl_get_nmenu_item_by_text(ptr_flobject, text) -> ptr_flpopupentry
     
-    Searches for the text the item in nmenu object was created by (that
+    Searches for the text the item in nmenu flobject was created by (that
     might be the same as the label text in simple cases).
 
     Parameters
     ----------
-        pFlObject : pointer to xfdata.FL_OBJECT
-            nmenu object
+        ptr_flobject : pointer to xfdata.FL_OBJECT
+            nmenu flobject
         text : str
             text associated with an item.
 
     Returns
     -------
-        pPopupEntry : pointer to xfdata.FL_POPUP_ENTRY
+        ptr_flpopupentry : pointer to xfdata.FL_POPUP_ENTRY
             first item associated, or None (if none is found)
 
     Examples
@@ -757,26 +771,26 @@ def fl_get_nmenu_item_by_text(pFlObject, text):
         """FL_POPUP_ENTRY * fl_get_nmenu_item_by_text(FL_OBJECT * p1,
            const char * p2)""")
     library.check_if_initialized()
-    library.verify_flobjectptr_type(pFlObject)
-    stext = library.convert_to_string(text)
-    library.keep_elem_refs(pFlObject, text, stext)
-    retval = _fl_get_nmenu_item_by_text(pFlObject, stext)
+    library.verify_flobjectptr_type(ptr_flobject)
+    s_text = library.convert_to_stringc(text)
+    library.keep_elem_refs(ptr_flobject, text, s_text)
+    retval = _fl_get_nmenu_item_by_text(ptr_flobject, s_text)
     return retval
 
 
-def fl_set_nmenu_policy(pFlObject, policy):
-    """fl_set_nmenu_policy(pFlObject, policy)
+def fl_set_nmenu_policy(ptr_flobject, policy):
+    """fl_set_nmenu_policy(ptr_flobject, policy) -> oldpol
     
     Changes nmenu policy about closing, so that the popup also gets closed
-    (without a selection) when the mouse button is clicked or released on a
-    non-selectable item (giving the impression of a "pull-down" menu). By
-    default, the popup is closed when an item is selected or (without a
+    (without a selection) when the mouse button is clicked or released on
+    a non-selectable item (giving the impression of a "pull-down" menu).
+    By default, the popup is closed when an item is selected or (without a
     selection) when the user clicks somehwere outside of the popups area.
 
     Parameters
     ----------
-        pFlObject : pointer to xfdata.FL_OBJECT
-            nmenu object
+        ptr_flobject : pointer to xfdata.FL_OBJECT
+            nmenu flobject
         policy : int
             under which conditions the nmenu's popup gets closed. Values
             (from xfdata.py) FL_POPUP_NORMAL_SELECT (default) or
@@ -801,27 +815,29 @@ def fl_set_nmenu_policy(pFlObject, policy):
         cty.c_int, [cty.POINTER(xfdata.FL_OBJECT), cty.c_int],
         """int fl_set_nmenu_policy(FL_OBJECT * p1, int p2)""")
     library.check_if_initialized()
-    library.verify_flobjectptr_type(pFlObject)
-    library.checkfatal_allowed_value_in_list(policy, xfdata.POPUPPOLICY_list)
-    ipolicy = library.convert_to_int(policy)
-    library.keep_elem_refs(pFlObject, policy, ipolicy)
-    retval = _fl_set_nmenu_policy(pFlObject, ipolicy)
+    library.verify_flobjectptr_type(ptr_flobject)
+    library.checkfatal_allowed_value_in_list(policy, \
+            xfdata.POPUPPOLICY_list)
+    i_policy = library.convert_to_intc(policy)
+    library.keep_elem_refs(ptr_flobject, policy, i_policy)
+    retval = _fl_set_nmenu_policy(ptr_flobject, i_policy)
     return retval
 
 
-def fl_set_nmenu_hl_text_color(pFlObject, colr):
-    """fl_set_nmenu_hl_text_color(pFlObject, colr)
+def fl_set_nmenu_hl_text_color(ptr_flobject, colr):
+    """fl_set_nmenu_hl_text_color(ptr_flobject, colr) -> oldcolr
     
-    Sets the color of label when it is in "active" state (i.e. while the
-    popup is shown). In "inactive" state this is set by fl_set_object_lcol().
-    By default, this color is xfdata.FL_BLACK for nmenus that are shown as a
-    button while being "active", while for normal nmenus it is the same color
-    that is used items in the popup when the mouse is hovering over them.
+    Defines the color of label when it is in "active" state (i.e. while
+    the popup is shown). In "inactive" state this is set by
+    fl_set_object_lcol(). By default, this color is xfdata.FL_BLACK for
+    nmenus that are shown as a button while being "active", while for
+    normal nmenus it is the same color that is used items in the popup
+    when the mouse is hovering over them.
 
     Parameters
     ----------
-        pFlObject : pointer to xfdata.FL_OBJECT
-            nmenu object
+        ptr_flobject : pointer to xfdata.FL_OBJECT
+            nmenu flobject
         colr : long_pos
             color to be set
 
@@ -845,10 +861,10 @@ def fl_set_nmenu_hl_text_color(pFlObject, colr):
         """FL_COLOR fl_set_nmenu_hl_text_color(FL_OBJECT * p1,
            FL_COLOR p2)""")
     library.check_if_initialized()
-    library.verify_flobjectptr_type(pFlObject)
+    library.verify_flobjectptr_type(ptr_flobject)
     library.checknonfatal_allowed_value_in_list(colr, xfdata.COLOR_list)
-    ulcolr = library.convert_to_FL_COLOR(colr)
-    library.keep_elem_refs(pFlObject, colr, ulcolr)
-    retval = _fl_set_nmenu_hl_text_color(pFlObject, ulcolr)
+    ul_colr = library.convert_to_FL_COLOR(colr)
+    library.keep_elem_refs(ptr_flobject, colr, ul_colr)
+    retval = _fl_set_nmenu_hl_text_color(ptr_flobject, ul_colr)
     return retval
 

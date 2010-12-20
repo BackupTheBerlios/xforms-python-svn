@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: iso8859-1 -*-
 
-""" xforms-python's functions to manage slider objects.
+""" xforms-python's functions to manage slider flobjects.
 """
 
 #    Copyright (C) 2009, 2010  Luca Lazzaroni "LukenShiro"
@@ -26,7 +26,7 @@
 # then heavily reordered and reworked
 
 # ############################################# #
-# Interface to XForms shared object libraries   #
+# Interface to XForms shared flobject libraries   #
 # ############################################# #
 
 
@@ -45,8 +45,9 @@ from xformslib import xfdata
 # fl_create_slider function placeholder (internal)
 
 
-def fl_add_slider(slidertype, x, y, w, h, label):
-    """fl_add_slider(slidertype, x, y, w, h, label)
+def fl_add_slider(slidertype, xpos, ypos, width, height, label):
+    """fl_add_slider(slidertype, xpos, ypos, width, height, label)
+    -> ptr_flobject
     
     Adds a slider to a form. No value is displayed.
 
@@ -61,21 +62,21 @@ def fl_add_slider(slidertype, x, y, w, h, label):
             FL_VERT_THIN_SLIDER, FL_HOR_THIN_SLIDER, FL_VERT_THIN_SLIDER,
             FL_HOR_THIN_SLIDER, FL_VERT_NICE_SLIDER2, FL_HOR_NICE_SLIDER2,
             FL_VERT_BASIC_SLIDER, FL_HOR_BASIC_SLIDER
-        x : int
+        xpos : int
             horizontal position (upper-left corner)
-        y : int
+        ypos : int
             vertical position (upper-left corner)
-        w : int
+        width : int
             width in coord units
-        h : int
+        height : int
             height in coord units
         label : int
             label of the slider (placed below it by default)
 
     Returns
     -------
-        pFlObject : pointer to xfdata.FL_OBJECT
-            slider object added 
+        ptr_flobject : pointer to xfdata.FL_OBJECT
+            slider flobject added 
 
     Examples
     --------
@@ -96,23 +97,25 @@ def fl_add_slider(slidertype, x, y, w, h, label):
     library.check_if_initialized()
     library.checkfatal_allowed_value_in_list(slidertype, \
             xfdata.SLIDERTYPE_list)
-    islidertype = library.convert_to_int(slidertype)
-    ix = library.convert_to_FL_Coord(x)
-    iy = library.convert_to_FL_Coord(y)
-    iw = library.convert_to_FL_Coord(w)
-    ih = library.convert_to_FL_Coord(h)
-    slabel = library.convert_to_string(label)
-    library.keep_elem_refs(slidertype, x, y, w, h, label, islidertype, \
-            ix, iy, iw, ih, slabel)
-    retval = _fl_add_slider(islidertype, ix, iy, iw, ih, slabel)
+    i_slidertype = library.convert_to_intc(slidertype)
+    i_xpos = library.convert_to_FL_Coord(xpos)
+    i_ypos = library.convert_to_FL_Coord(ypos)
+    i_width = library.convert_to_FL_Coord(width)
+    i_height = library.convert_to_FL_Coord(height)
+    s_label = library.convert_to_stringc(label)
+    library.keep_elem_refs(slidertype, xpos, ypos, width, height, label, \
+            i_slidertype, i_xpos, i_ypos, i_width, i_height, s_label)
+    retval = _fl_add_slider(i_slidertype, i_xpos, i_ypos, i_width, \
+            i_height, s_label)
     return retval
 
 
 # fl_create_valslider function placeholder (internal)
 
 
-def fl_add_valslider(slidertype, x, y, w, h, label):
-    """fl_add_valslider(slidertype, x, y, w, h, label)
+def fl_add_valslider(slidertype, xpos, ypos, width, height, label):
+    """fl_add_valslider(slidertype, xpos, ypos, width, height, label)
+    -> ptr_flobject
     
     Adds a slider to a form. Its value is displayed above or to the left
     of the slider.
@@ -127,21 +130,21 @@ def fl_add_valslider(slidertype, x, y, w, h, label):
             FL_HOR_BROWSER_SLIDER2, FL_VERT_THIN_SLIDER, FL_HOR_THIN_SLIDER,
             FL_VERT_THIN_SLIDER, FL_HOR_THIN_SLIDER, FL_VERT_NICE_SLIDER2,
             FL_HOR_NICE_SLIDER2, FL_VERT_BASIC_SLIDER, FL_HOR_BASIC_SLIDER
-        x : int
+        xpos : int
             horizontal position (upper-left corner)
-        y : int
+        ypos : int
             vertical position (upper-left corner)
-        w : int
+        width : int
             width in coord units
-        h : int
+        height : int
             height in coord units
         label : str
             text label of slider
 
     Returns
     -------
-        pFlObject : pointer to xfdata.FL_OBJECT
-            slider with value object added
+        ptr_flobject : pointer to xfdata.FL_OBJECT
+            slider with value flobject added
 
     Examples
     --------
@@ -162,28 +165,29 @@ def fl_add_valslider(slidertype, x, y, w, h, label):
     library.check_if_initialized()
     library.checkfatal_allowed_value_in_list(slidertype, \
             xfdata.SLIDERTYPE_list)
-    islidertype = library.convert_to_int(slidertype)
-    ix = library.convert_to_FL_Coord(x)
-    iy = library.convert_to_FL_Coord(y)
-    iw = library.convert_to_FL_Coord(w)
-    ih = library.convert_to_FL_Coord(h)
-    slabel = library.convert_to_string(label)
-    library.keep_elem_refs(slidertype, x, y, w, h, label, islidertype, \
-            ix, iy, iw, ih, slabel)
-    retval = _fl_add_valslider(islidertype, ix, iy, iw, ih, slabel)
+    i_slidertype = library.convert_to_intc(slidertype)
+    i_xpos = library.convert_to_FL_Coord(xpos)
+    i_ypos = library.convert_to_FL_Coord(ypos)
+    i_width = library.convert_to_FL_Coord(width)
+    i_height = library.convert_to_FL_Coord(height)
+    s_label = library.convert_to_stringc(label)
+    library.keep_elem_refs(slidertype, xpos, ypos, width, height, label, \
+            i_slidertype, i_xpos, i_ypos, i_width, i_height, s_label)
+    retval = _fl_add_valslider(i_slidertype, i_xpos, i_ypos, i_width, \
+            i_height, s_label)
     return retval
 
 
-def fl_set_slider_value(pFlObject, val):
-    """fl_set_slider_value(pFlObject, val)
+def fl_set_slider_value(ptr_flobject, slvalue):
+    """fl_set_slider_value(ptr_flobject, slvalue)
     
     Changes the value of a slider.
 
     Parameters
     ----------
-        pFlObject : pointer to xfdata.FL_OBJECT
-            slider object
-        val : float
+        ptr_flobject : pointer to xfdata.FL_OBJECT
+            slider flobject
+        slvalue : float
             new value of slider
 
     Examples
@@ -200,25 +204,25 @@ def fl_set_slider_value(pFlObject, val):
         None, [cty.POINTER(xfdata.FL_OBJECT), cty.c_double],
         """void fl_set_slider_value(FL_OBJECT * ob, double val)""")
     library.check_if_initialized()
-    library.verify_flobjectptr_type(pFlObject)
-    fval = library.convert_to_double(val)
-    library.keep_elem_refs(pFlObject, val, fval)
-    _fl_set_slider_value(pFlObject, fval)
+    library.verify_flobjectptr_type(ptr_flobject)
+    f_slvalue = library.convert_to_doublec(slvalue)
+    library.keep_elem_refs(ptr_flobject, slvalue, f_slvalue)
+    _fl_set_slider_value(ptr_flobject, f_slvalue)
 
 
-def fl_get_slider_value(pFlObject):
-    """fl_get_slider_value(pFlObject)
+def fl_get_slider_value(ptr_flobject):
+    """fl_get_slider_value(ptr_flobject) -> slvalue
     
-    Obtains value of a slider.
+    Finds out value of a slider.
 
     Parameters
     ----------
-        pFlObject : pointer to xfdata.FL_OBJECT
-            slider object
+        ptr_flobject : pointer to xfdata.FL_OBJECT
+            slider flobject
 
     Returns
     -------
-        val : float
+        slvalue : float
             current value
 
     Examples
@@ -235,25 +239,25 @@ def fl_get_slider_value(pFlObject):
         cty.c_double, [cty.POINTER(xfdata.FL_OBJECT)],
         """double fl_get_slider_value(FL_OBJECT * ob)""")
     library.check_if_initialized()
-    library.verify_flobjectptr_type(pFlObject)
-    library.keep_elem_refs(pFlObject)
-    retval = _fl_get_slider_value(pFlObject)
+    library.verify_flobjectptr_type(ptr_flobject)
+    library.keep_elem_refs(ptr_flobject)
+    retval = _fl_get_slider_value(ptr_flobject)
     return retval
 
 
-def fl_set_slider_bounds(pFlObject, minbound, maxbound):
-    """fl_set_slider_bounds(pFlObject, minbound, maxbound)
+def fl_set_slider_bounds(ptr_flobject, minbound, maxbound):
+    """fl_set_slider_bounds(ptr_flobject, minbound, maxbound)
     
-    Sets minimum and maximum bounds/limits of a slider.
+    Defines minimum and maximum value limits of a slider flobject.
 
     Parameters
     ----------
-        pFlObject : pointer to xfdata.FL_OBJECT
-            slider object
+        ptr_flobject : pointer to xfdata.FL_OBJECT
+            slider flobject
         minbound : float
-            minimum bound of slider
+            minimum value bound of slider
         maxbound : float
-            maximum bound of slider
+            maximum value bound of slider
 
     Examples
     --------
@@ -270,23 +274,23 @@ def fl_set_slider_bounds(pFlObject, minbound, maxbound):
         """void fl_set_slider_bounds(FL_OBJECT * ob, double min,
            double max)""")
     library.check_if_initialized()
-    library.verify_flobjectptr_type(pFlObject)
-    fminbound = library.convert_to_double(minbound)
-    fmaxbound = library.convert_to_double(maxbound)
-    library.keep_elem_refs(pFlObject, minbound, maxbound, fminbound, \
-            fmaxbound)
-    _fl_set_slider_bounds(pFlObject, fminbound, fmaxbound)
+    library.verify_flobjectptr_type(ptr_flobject)
+    f_minbound = library.convert_to_doublec(minbound)
+    f_maxbound = library.convert_to_doublec(maxbound)
+    library.keep_elem_refs(ptr_flobject, minbound, maxbound, f_minbound, \
+            f_maxbound)
+    _fl_set_slider_bounds(ptr_flobject, f_minbound, f_maxbound)
 
 
-def fl_get_slider_bounds(pFlObject):
-    """fl_get_slider_bounds(pFlObject)
+def fl_get_slider_bounds(ptr_flobject):
+    """fl_get_slider_bounds(ptr_flobject) -> minbound, maxbound
     
-    Obtains minimum and maximum bounds/limits of a slider.
+    Finds out minimum and maximum value limits of a slider.
 
     Parameters
     ----------
-        pFlObject : pointer to xfdata.FL_OBJECT
-            slider object
+        ptr_flobject : pointer to xfdata.FL_OBJECT
+            slider flobject
 
     Returns
     -------
@@ -301,8 +305,8 @@ def fl_get_slider_bounds(pFlObject):
 
     API_diversion
     ----------
-        API changed from XForms, upstream was
-        fl_get_slider_bounds(pFlObject, minbound, maxbound)
+        API changed from XForms, upstream is
+        fl_get_slider_bounds(ptr_flobject, minbound, maxbound)
 
     Notes
     -----
@@ -316,27 +320,28 @@ def fl_get_slider_bounds(pFlObject):
         """void fl_get_slider_bounds(FL_OBJECT * ob, double * min,
            double * max)""")
     library.check_if_initialized()
-    library.verify_flobjectptr_type(pFlObject)
-    minbound, pminbound = library.make_double_and_pointer()
-    maxbound, pmaxbound = library.make_double_and_pointer()
-    library.keep_elem_refs(pFlObject, minbound, maxbound, pminbound, \
-            pmaxbound)
-    _fl_get_slider_bounds(pFlObject, pminbound, pmaxbound)
-    return minbound.value, maxbound.value
+    library.verify_flobjectptr_type(ptr_flobject)
+    f_minbound, ptr_minbound = library.make_doublec_and_pointer()
+    f_maxbound, ptr_maxbound = library.make_doublec_and_pointer()
+    library.keep_elem_refs(ptr_flobject, f_minbound, f_maxbound, \
+            ptr_minbound, ptr_maxbound)
+    _fl_get_slider_bounds(ptr_flobject, ptr_minbound, ptr_maxbound)
+    return f_minbound.value, f_maxbound.value
 
 
 # fl_set_slider_return function placeholder (deprecated)
 
 
-def fl_set_slider_step(pFlObject, step):
-    """fl_set_slider_step(pFlObject, step)
+def fl_set_slider_step(ptr_flobject, step):
+    """fl_set_slider_step(ptr_flobject, step)
     
-    *todo*
+    Defines the step size to which values are rounded in the
+    slider flobject.
 
     Parameters
     ----------
-        pFlObject : pointer to xfdata.FL_OBJECT
-            slider object
+        ptr_flobject : pointer to xfdata.FL_OBJECT
+            slider flobject
         step : float
             step value
 
@@ -354,21 +359,22 @@ def fl_set_slider_step(pFlObject, step):
         None, [cty.POINTER(xfdata.FL_OBJECT), cty.c_double],
         """void fl_set_slider_step(FL_OBJECT * ob, double value)""")
     library.check_if_initialized()
-    library.verify_flobjectptr_type(pFlObject)
-    fstep = library.convert_to_double(step)
-    library.keep_elem_refs(pFlObject, step, fstep)
-    _fl_set_slider_step(pFlObject, fstep)
+    library.verify_flobjectptr_type(ptr_flobject)
+    f_step = library.convert_to_doublec(step)
+    library.keep_elem_refs(ptr_flobject, step, f_step)
+    _fl_set_slider_step(ptr_flobject, f_step)
 
 
-def fl_set_slider_increment(pFlObject, leftbtnval, midbtnval):
-    """fl_set_slider_increment(pFlObject, leftbtnval, midbtnval)
+def fl_set_slider_increment(ptr_flobject, leftbtnval, midbtnval):
+    """fl_set_slider_increment(ptr_flobject, leftbtnval, midbtnval)
     
-    *todo*
+    Defines slider increments for clicks with left and middle
+    mouse button.
 
     Parameters
     ----------
-        pFlObject : pointer to xfdata.FL_OBJECT
-            slider object
+        ptr_flobject : pointer to xfdata.FL_OBJECT
+            slider flobject
         leftbtnval : float
             value to increment if the left mouse button is pressed
         midbtnval : float
@@ -389,23 +395,24 @@ def fl_set_slider_increment(pFlObject, leftbtnval, midbtnval):
         """void fl_set_slider_increment(FL_OBJECT * ob, double l,
            double r)""")
     library.check_if_initialized()
-    library.verify_flobjectptr_type(pFlObject)
-    fleftbtnval = library.convert_to_double(leftbtnval)
-    fmidbtnval = library.convert_to_double(midbtnval)
-    library.keep_elem_refs(pFlObject, leftbtnval, midbtnval, fleftbtnval,
-            fmidbtnval)
-    _fl_set_slider_increment(pFlObject, fleftbtnval, fmidbtnval)
+    library.verify_flobjectptr_type(ptr_flobject)
+    f_leftbtnval = library.convert_to_doublec(leftbtnval)
+    f_midbtnval = library.convert_to_doublec(midbtnval)
+    library.keep_elem_refs(ptr_flobject, leftbtnval, midbtnval, \
+            f_leftbtnval, f_midbtnval)
+    _fl_set_slider_increment(ptr_flobject, f_leftbtnval, f_midbtnval)
 
 
-def fl_get_slider_increment(pFlObject):
-    """fl_get_slider_increment(pFlObject)
+def fl_get_slider_increment(ptr_flobject):
+    """fl_get_slider_increment(ptr_flobject) -> leftbtnval, midbtnval
     
-    *todo*
+    Finds out current slider increments for clicks with left and middle
+    mouse button.
 
     Parameters
     ----------
-        pFlObject : pointer to xfdata.FL_OBJECT
-            slider object
+        ptr_flobject : pointer to xfdata.FL_OBJECT
+            slider flobject
 
     Returns
     -------
@@ -420,8 +427,8 @@ def fl_get_slider_increment(pFlObject):
 
     API_diversion
     ----------
-        API changed from XForms, upstream was
-        fl_get_slider_increment(pFlObject, leftbtnval, midlbtnval)
+        API changed from XForms, upstream is
+        fl_get_slider_increment(ptr_flobject, leftbtnval, midlbtnval)
 
     Notes
     -----
@@ -435,24 +442,24 @@ def fl_get_slider_increment(pFlObject):
         """void fl_get_slider_increment(FL_OBJECT * ob, double * l,
            double * r)""")
     library.check_if_initialized()
-    library.verify_flobjectptr_type(pFlObject)
-    leftbtnval, pleftbtnval = library.make_double_and_pointer()
-    midlbtnval, pmidlbtnval = library.make_double_and_pointer()
-    library.keep_elem_refs(pFlObject, leftbtnval, midlbtnval, pleftbtnval,
-            pmidlbtnval)
-    _fl_get_slider_increment(pFlObject, pleftbtnval, pmidlbtnval)
-    return leftbtnval.value, midlbtnval.value
+    library.verify_flobjectptr_type(ptr_flobject)
+    f_leftbtnval, ptr_leftbtnval = library.make_doublec_and_pointer()
+    f_midlbtnval, ptr_midlbtnval = library.make_doublec_and_pointer()
+    library.keep_elem_refs(ptr_flobject, f_leftbtnval, f_midlbtnval, \
+            ptr_leftbtnval, ptr_midlbtnval)
+    _fl_get_slider_increment(ptr_flobject, ptr_leftbtnval, ptr_midlbtnval)
+    return f_leftbtnval.value, f_midlbtnval.value
 
 
-def fl_set_slider_size(pFlObject, size):
-    """fl_set_slider_size(pFlObject, size)
+def fl_set_slider_size(ptr_flobject, size):
+    """fl_set_slider_size(ptr_flobject, size)
     
-    Sets the size of a slider.
+    Defines the size of a slider flobject.
 
     Parameters
     ----------
-        pFlObject : pointer to xfdata.FL_OBJECT
-            slider object
+        ptr_flobject : pointer to xfdata.FL_OBJECT
+            slider flobject
         size : float
             value of size of the slider
 
@@ -470,27 +477,27 @@ def fl_set_slider_size(pFlObject, size):
         None, [cty.POINTER(xfdata.FL_OBJECT), cty.c_double],
         """void fl_set_slider_size(FL_OBJECT * ob, double size)""")
     library.check_if_initialized()
-    library.verify_flobjectptr_type(pFlObject)
-    fsize = library.convert_to_double(size)
-    library.keep_elem_refs(pFlObject, size, fsize)
-    _fl_set_slider_size(pFlObject, fsize)
+    library.verify_flobjectptr_type(ptr_flobject)
+    f_size = library.convert_to_doublec(size)
+    library.keep_elem_refs(ptr_flobject, size, f_size)
+    _fl_set_slider_size(ptr_flobject, f_size)
 
 
-def fl_set_slider_precision(pFlObject, precnum):
-    """fl_set_slider_precision(pFlObject, prec)
+def fl_set_slider_precision(ptr_flobject, precis):
+    """fl_set_slider_precision(ptr_flobject, precis)
     
-    Sets precision which value a valslider is shown with.
+    Defines the precision which value a valslider is shown with.
 
     Parameters
     ----------
-        pFlObject : pointer to xfdata.FL_OBJECT
-            slider object
-        prec : int
-            precision of shown value
+        ptr_flobject : pointer to xfdata.FL_OBJECT
+            slider flobject
+        precis : int
+            precision number of shown value after the dot.
 
     Examples
     --------
-        >>> *todo*
+        >>> fl_set_slider_precision(sldobj, 3)
 
     Notes
     -----
@@ -502,25 +509,26 @@ def fl_set_slider_precision(pFlObject, precnum):
         None, [cty.POINTER(xfdata.FL_OBJECT), cty.c_int],
         """void fl_set_slider_precision(FL_OBJECT * ob, int prec)""")
     library.check_if_initialized()
-    library.verify_flobjectptr_type(pFlObject)
-    iprecnum = library.convert_to_int(precnum)
-    library.keep_elem_refs(pFlObject, precnum, iprecnum)
-    _fl_set_slider_precision(pFlObject, iprecnum)
+    library.verify_flobjectptr_type(ptr_flobject)
+    i_precis = library.convert_to_intc(precis)
+    library.keep_elem_refs(ptr_flobject, precis, i_precis)
+    _fl_set_slider_precision(ptr_flobject, i_precis)
 
 
-def fl_set_slider_filter(pFlObject, py_ValFilter):
-    """fl_set_slider_filter(pFlObject, py_ValFilter)
+def fl_set_slider_filter(ptr_flobject, pyfn_ValFilter):
+    """fl_set_slider_filter(ptr_flobject, pyfn_ValFilter)
     
-    Registers a filter function to show alues in a slider object. By
-    default, slider value shown in floating point format)
+    Registers a filter function to show values in a slider flobject.
+    By default, slider value shown in floating point format.
 
     Parameters
     ----------
-        pFlObject : pointer to xfdata.FL_OBJECT
-            slider object
-        py_ValFilter : python function to show values in slider, returned value
-            name referring to function(pFlObject, valfloat, intprecis) ->
-            string
+        ptr_flobject : pointer to xfdata.FL_OBJECT
+            slider flobject
+        pyfn_ValFilter : python function, returned value
+            name referring to function(ptr_flobject, valfloat,
+            intprecis) -> string
+            function to show values in slider
 
     Examples
     --------
@@ -538,18 +546,18 @@ def fl_set_slider_filter(pFlObject, py_ValFilter):
         None, [cty.POINTER(xfdata.FL_OBJECT), xfdata.FL_VAL_FILTER],
         """void fl_set_slider_filter(FL_OBJECT * ob, FL_VAL_FILTER filter)""")
     library.check_if_initialized()
-    library.verify_flobjectptr_type(pFlObject)
-    library.verify_function_type(py_ValFilter)
-    c_ValFilter = xfdata.FL_VAL_FILTER(py_ValFilter)
-    library.keep_cfunc_refs(c_ValFilter, py_ValFilter)
-    library.keep_elem_refs(pFlObject)
-    _fl_set_slider_filter(pFlObject, c_ValFilter)
+    library.verify_flobjectptr_type(ptr_flobject)
+    library.verify_function_type(pyfn_ValFilter)
+    cfn_ValFilter = xfdata.FL_VAL_FILTER(pyfn_ValFilter)
+    library.keep_cfunc_refs(cfn_ValFilter, pyfn_ValFilter)
+    library.keep_elem_refs(ptr_flobject)
+    _fl_set_slider_filter(ptr_flobject, cfn_ValFilter)
 
 
-def fl_get_slider_repeat(pFlObject):
-    """fl_get_slider_repeat(pFlObject)
+def fl_get_slider_repeat(ptr_flobject):
+    """fl_get_slider_repeat(ptr_flobject) -> tdelay
     
-    Obtains the time delay (in milliseconds) between jumps of the
+    Finds out the time delay (in milliseconds) between jumps of the
     scrollbar knob when the mouse button is kept pressed down on the
     scrollbar outside of the knobs area. The delay for the very first
     jump is twice that long in order to avoid jumping to start too soon
@@ -558,13 +566,13 @@ def fl_get_slider_repeat(pFlObject):
 
     Parameters
     ----------
-        pFlObject : pointer to xfdata.FL_OBJECT
-            slider object
+        ptr_flobject : pointer to xfdata.FL_OBJECT
+            slider flobject
 
     Returns
     -------
         tdelay : int
-            time delay
+            time delay in millisecs
 
     Examples
     --------
@@ -580,16 +588,16 @@ def fl_get_slider_repeat(pFlObject):
         cty.c_int, [cty.POINTER(xfdata.FL_OBJECT)],
         """int fl_get_slider_repeat(FL_OBJECT * obj)""")
     library.check_if_initialized()
-    library.verify_flobjectptr_type(pFlObject)
-    library.keep_elem_refs(pFlObject)
-    retval = _fl_get_slider_repeat(pFlObject)
+    library.verify_flobjectptr_type(ptr_flobject)
+    library.keep_elem_refs(ptr_flobject)
+    retval = _fl_get_slider_repeat(ptr_flobject)
     return retval
 
 
-def fl_set_slider_repeat(pFlObject, delay):
-    """fl_set_slider_repeat(pFlObject, delay)
+def fl_set_slider_repeat(ptr_flobject, tdelay):
+    """fl_set_slider_repeat(ptr_flobject, tdelay)
     
-    Sets the time delay between jumps of the scrollbar knob when the
+    Defines the time delay between jumps of the scrollbar knob when the
     mouse button is kept pressed down on the scrollbar outside of the
     knobs area. The delay for the very first jump is twice that long in
     order to avoid jumping to start too soon when only a single click
@@ -597,11 +605,11 @@ def fl_set_slider_repeat(pFlObject, delay):
 
     Parameters
     ----------
-        pFlObject : pointer to xfdata.FL_OBJECT
-            slider object
-        delay : int
-            time delay (in milliseconds) to be set. The default value is
-            100 ms.
+        ptr_flobject : pointer to xfdata.FL_OBJECT
+            slider flobject
+        tdelay : int
+            time delay (in milliseconds) to be set. The default
+            value is 100 ms.
 
     Examples
     --------
@@ -617,8 +625,8 @@ def fl_set_slider_repeat(pFlObject, delay):
         None, [cty.POINTER(xfdata.FL_OBJECT), cty.c_int],
         """void fl_get_slider_repeat(FL_OBJECT * obj, int)""")
     library.check_if_initialized()
-    library.verify_flobjectptr_type(pFlObject)
-    idelay = library.convert_to_int(delay)
-    library.keep_elem_refs(pFlObject, delay, idelay)
-    _fl_set_slider_repeat(pFlObject, idelay)
+    library.verify_flobjectptr_type(ptr_flobject)
+    i_tdelay = library.convert_to_intc(tdelay)
+    library.keep_elem_refs(ptr_flobject, tdelay, i_tdelay)
+    _fl_set_slider_repeat(ptr_flobject, i_tdelay)
 

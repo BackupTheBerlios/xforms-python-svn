@@ -223,7 +223,7 @@ Data descriptors inherited from <a href="exceptions.html#BaseException">exceptio
 <font color="#000000" face="helvetica, arial"><a name="XFormsLoadError">class <strong>XFormsLoadError</strong></a>(<a href="exceptions.html#OSError">exceptions.OSError</a>)</font></td></tr>
     
 <tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
-<td colspan=2><tt>Fatal&nbsp;error&nbsp;in&nbsp;loading&nbsp;shared&nbsp;object&nbsp;library<br>&nbsp;</tt></td></tr>
+<td colspan=2><tt>Fatal&nbsp;error&nbsp;in&nbsp;loading&nbsp;shared&nbsp;flobject&nbsp;library<br>&nbsp;</tt></td></tr>
 <tr><td>&nbsp;</td>
 <td width="100%"><dl><dt>Method resolution order:</dt>
 <dd><a href="library.html#XFormsLoadError">XFormsLoadError</a></dd>
@@ -487,57 +487,62 @@ Data descriptors inherited from <a href="exceptions.html#BaseException">exceptio
 <td width="100%"><dl><dt><a name="-cfuncproto"><strong>cfuncproto</strong></a>(library, cfuncname, retval, arglist, doc<font color="#909090">=''</font>)</dt><dd><tt>Prototype&nbsp;for&nbsp;C&nbsp;functions&nbsp;to&nbsp;be&nbsp;wrapped&nbsp;in&nbsp;python</tt></dd></dl>
  <dl><dt><a name="-check_if_initialized"><strong>check_if_initialized</strong></a>()</dt><dd><tt>Check&nbsp;if&nbsp;fl_initialize()&nbsp;has&nbsp;been&nbsp;called&nbsp;before&nbsp;caller&nbsp;function.<br>
 Needed&nbsp;for&nbsp;most&nbsp;functions,&nbsp;except&nbsp;those&nbsp;supposed&nbsp;to&nbsp;be&nbsp;used<br>
-*BEFORE*&nbsp;initialization.</tt></dd></dl>
- <dl><dt><a name="-checkfatal_allowed_value_in_list"><strong>checkfatal_allowed_value_in_list</strong></a>(paramname, valueslist)</dt><dd><tt>Check&nbsp;if&nbsp;paramname&nbsp;value&nbsp;is&nbsp;valid&nbsp;in&nbsp;accordance&nbsp;to&nbsp;a&nbsp;list&nbsp;or&nbsp;tuple<br>
-of&nbsp;admissible&nbsp;values,&nbsp;otherwise&nbsp;raise&nbsp;a&nbsp;fatal&nbsp;error.</tt></dd></dl>
- <dl><dt><a name="-checknonfatal_allowed_value_in_list"><strong>checknonfatal_allowed_value_in_list</strong></a>(paramname, valueslist)</dt><dd><tt>Check&nbsp;if&nbsp;paramname&nbsp;value&nbsp;is&nbsp;valid&nbsp;in&nbsp;accordance&nbsp;to&nbsp;a&nbsp;list&nbsp;or&nbsp;tuple<br>
+*BEFORE*&nbsp;initialization&nbsp;or&nbsp;those&nbsp;freely&nbsp;useable.</tt></dd></dl>
+ <dl><dt><a name="-checkfatal_allowed_value_in_list"><strong>checkfatal_allowed_value_in_list</strong></a>(paramname, valueslist)</dt><dd><tt>Checks&nbsp;if&nbsp;paramname&nbsp;value&nbsp;is&nbsp;valid&nbsp;in&nbsp;accordance&nbsp;to&nbsp;a&nbsp;list&nbsp;or&nbsp;tuple<br>
+of&nbsp;admissible&nbsp;values,&nbsp;otherwise&nbsp;raises&nbsp;a&nbsp;fatal&nbsp;error.</tt></dd></dl>
+ <dl><dt><a name="-checknonfatal_allowed_value_in_list"><strong>checknonfatal_allowed_value_in_list</strong></a>(paramname, valueslist)</dt><dd><tt>Checks&nbsp;if&nbsp;paramname&nbsp;value&nbsp;is&nbsp;valid&nbsp;in&nbsp;accordance&nbsp;to&nbsp;a&nbsp;list&nbsp;or&nbsp;tuple<br>
 of&nbsp;admissible&nbsp;values,&nbsp;otherwise&nbsp;issues&nbsp;a&nbsp;warning.</tt></dd></dl>
- <dl><dt><a name="-convert_to_FL_COLOR"><strong>convert_to_FL_COLOR</strong></a> = convert_to_ulong(paramname)</dt><dd><tt>Converts&nbsp;paramname&nbsp;to&nbsp;python&nbsp;long&nbsp;and&nbsp;to&nbsp;ctypes&nbsp;c_ulong</tt></dd></dl>
- <dl><dt><a name="-convert_to_FL_Coord"><strong>convert_to_FL_Coord</strong></a> = convert_to_int(paramname)</dt><dd><tt>Converts&nbsp;paramname&nbsp;to&nbsp;python&nbsp;int&nbsp;and&nbsp;to&nbsp;ctypes&nbsp;c_int</tt></dd></dl>
- <dl><dt><a name="-convert_to_Pixmap"><strong>convert_to_Pixmap</strong></a> = convert_to_ulong(paramname)</dt><dd><tt>Converts&nbsp;paramname&nbsp;to&nbsp;python&nbsp;long&nbsp;and&nbsp;to&nbsp;ctypes&nbsp;c_ulong</tt></dd></dl>
- <dl><dt><a name="-convert_to_Window"><strong>convert_to_Window</strong></a> = convert_to_ulong(paramname)</dt><dd><tt>Converts&nbsp;paramname&nbsp;to&nbsp;python&nbsp;long&nbsp;and&nbsp;to&nbsp;ctypes&nbsp;c_ulong</tt></dd></dl>
- <dl><dt><a name="-convert_to_double"><strong>convert_to_double</strong></a>(paramname)</dt><dd><tt>Converts&nbsp;paramname&nbsp;to&nbsp;python&nbsp;float&nbsp;and&nbsp;to&nbsp;ctypes&nbsp;c_double</tt></dd></dl>
- <dl><dt><a name="-convert_to_float"><strong>convert_to_float</strong></a>(paramname)</dt><dd><tt>Converts&nbsp;paramname&nbsp;to&nbsp;python&nbsp;float&nbsp;and&nbsp;to&nbsp;ctypes&nbsp;c_float</tt></dd></dl>
- <dl><dt><a name="-convert_to_int"><strong>convert_to_int</strong></a>(paramname)</dt><dd><tt>Converts&nbsp;paramname&nbsp;to&nbsp;python&nbsp;int&nbsp;and&nbsp;to&nbsp;ctypes&nbsp;c_int</tt></dd></dl>
- <dl><dt><a name="-convert_to_long"><strong>convert_to_long</strong></a>(paramname)</dt><dd><tt>Converts&nbsp;paramname&nbsp;to&nbsp;python&nbsp;long&nbsp;and&nbsp;to&nbsp;ctypes&nbsp;c_long</tt></dd></dl>
- <dl><dt><a name="-convert_to_string"><strong>convert_to_string</strong></a>(paramname)</dt><dd><tt>Converts&nbsp;paramname&nbsp;to&nbsp;python&nbsp;str&nbsp;and&nbsp;to&nbsp;ctypes&nbsp;c_char_p</tt></dd></dl>
- <dl><dt><a name="-convert_to_ubyte"><strong>convert_to_ubyte</strong></a>(paramname)</dt><dd><tt>Converts&nbsp;paramname&nbsp;to&nbsp;ctypes&nbsp;c_ubyte</tt></dd></dl>
- <dl><dt><a name="-convert_to_uint"><strong>convert_to_uint</strong></a>(paramname)</dt><dd><tt>Converts&nbsp;paramname&nbsp;to&nbsp;python&nbsp;int&nbsp;and&nbsp;to&nbsp;ctypes&nbsp;c_uint</tt></dd></dl>
- <dl><dt><a name="-convert_to_ulong"><strong>convert_to_ulong</strong></a>(paramname)</dt><dd><tt>Converts&nbsp;paramname&nbsp;to&nbsp;python&nbsp;long&nbsp;and&nbsp;to&nbsp;ctypes&nbsp;c_ulong</tt></dd></dl>
- <dl><dt><a name="-donothing_popupcb"><strong>donothing_popupcb</strong></a>(pPopupReturn)</dt><dd><tt>It&nbsp;replaces&nbsp;a&nbsp;callback&nbsp;function&nbsp;not&nbsp;defined&nbsp;for&nbsp;class&nbsp;instances<br>
-as&nbsp;e.g.&nbsp;xfdata.FL_POPUP_ITEM&nbsp;&nbsp;&nbsp;&nbsp;*temporary*</tt></dd></dl>
+ <dl><dt><a name="-convert_to_FL_COLOR"><strong>convert_to_FL_COLOR</strong></a> = convert_to_ulongc(paramname)</dt><dd><tt>Converts&nbsp;paramname&nbsp;to&nbsp;python&nbsp;long&nbsp;and&nbsp;to&nbsp;ctypes&nbsp;c_ulong</tt></dd></dl>
+ <dl><dt><a name="-convert_to_FL_Coord"><strong>convert_to_FL_Coord</strong></a> = convert_to_intc(paramname)</dt><dd><tt>Converts&nbsp;paramname&nbsp;to&nbsp;python&nbsp;int&nbsp;and&nbsp;to&nbsp;ctypes&nbsp;c_int</tt></dd></dl>
+ <dl><dt><a name="-convert_to_Pixmap"><strong>convert_to_Pixmap</strong></a> = convert_to_ulongc(paramname)</dt><dd><tt>Converts&nbsp;paramname&nbsp;to&nbsp;python&nbsp;long&nbsp;and&nbsp;to&nbsp;ctypes&nbsp;c_ulong</tt></dd></dl>
+ <dl><dt><a name="-convert_to_Window"><strong>convert_to_Window</strong></a> = convert_to_ulongc(paramname)</dt><dd><tt>Converts&nbsp;paramname&nbsp;to&nbsp;python&nbsp;long&nbsp;and&nbsp;to&nbsp;ctypes&nbsp;c_ulong</tt></dd></dl>
+ <dl><dt><a name="-convert_to_doublec"><strong>convert_to_doublec</strong></a>(paramname)</dt><dd><tt>Converts&nbsp;paramname&nbsp;to&nbsp;python&nbsp;float&nbsp;and&nbsp;to&nbsp;ctypes&nbsp;c_double</tt></dd></dl>
+ <dl><dt><a name="-convert_to_floatc"><strong>convert_to_floatc</strong></a>(paramname)</dt><dd><tt>Converts&nbsp;paramname&nbsp;to&nbsp;python&nbsp;float&nbsp;and&nbsp;to&nbsp;ctypes&nbsp;c_float</tt></dd></dl>
+ <dl><dt><a name="-convert_to_intc"><strong>convert_to_intc</strong></a>(paramname)</dt><dd><tt>Converts&nbsp;paramname&nbsp;to&nbsp;python&nbsp;int&nbsp;and&nbsp;to&nbsp;ctypes&nbsp;c_int</tt></dd></dl>
+ <dl><dt><a name="-convert_to_longc"><strong>convert_to_longc</strong></a>(paramname)</dt><dd><tt>Converts&nbsp;paramname&nbsp;to&nbsp;python&nbsp;long&nbsp;and&nbsp;to&nbsp;ctypes&nbsp;c_long</tt></dd></dl>
+ <dl><dt><a name="-convert_to_ptr_doublec"><strong>convert_to_ptr_doublec</strong></a>(paramname)</dt><dd><tt>Converts&nbsp;paramname&nbsp;(list&nbsp;of&nbsp;float)&nbsp;to&nbsp;a&nbsp;ctypes&nbsp;pointer&nbsp;to&nbsp;c_double</tt></dd></dl>
+ <dl><dt><a name="-convert_to_ptr_floatc"><strong>convert_to_ptr_floatc</strong></a>(paramname)</dt><dd><tt>Converts&nbsp;paramname&nbsp;(list&nbsp;of&nbsp;float)&nbsp;to&nbsp;a&nbsp;ctypes&nbsp;pointer&nbsp;to&nbsp;c_float</tt></dd></dl>
+ <dl><dt><a name="-convert_to_ptr_intc"><strong>convert_to_ptr_intc</strong></a>(paramname)</dt><dd><tt>Converts&nbsp;paramname&nbsp;(list&nbsp;of&nbsp;int)&nbsp;to&nbsp;a&nbsp;ctypes&nbsp;pointer&nbsp;to&nbsp;c_int</tt></dd></dl>
+ <dl><dt><a name="-convert_to_ptr_stringc"><strong>convert_to_ptr_stringc</strong></a>(paramname)</dt><dd><tt>Converts&nbsp;paramname&nbsp;(list&nbsp;of&nbsp;str)&nbsp;to&nbsp;a&nbsp;ctypes&nbsp;pointer&nbsp;to&nbsp;c_char_p</tt></dd></dl>
+ <dl><dt><a name="-convert_to_ptr_ulongc"><strong>convert_to_ptr_ulongc</strong></a>(paramname)</dt><dd><tt>Converts&nbsp;paramname&nbsp;(list&nbsp;of&nbsp;long)&nbsp;to&nbsp;a&nbsp;ctypes&nbsp;pointer&nbsp;to&nbsp;c_ulong</tt></dd></dl>
+ <dl><dt><a name="-convert_to_stringc"><strong>convert_to_stringc</strong></a>(paramname)</dt><dd><tt>Converts&nbsp;paramname&nbsp;to&nbsp;python&nbsp;str&nbsp;and&nbsp;to&nbsp;ctypes&nbsp;c_char_p</tt></dd></dl>
+ <dl><dt><a name="-convert_to_ubytec_array"><strong>convert_to_ubytec_array</strong></a>(paramname)</dt><dd><tt>Converts&nbsp;paramname&nbsp;to&nbsp;a&nbsp;ctypes&nbsp;c_ubyte&nbsp;array</tt></dd></dl>
+ <dl><dt><a name="-convert_to_uintc"><strong>convert_to_uintc</strong></a>(paramname)</dt><dd><tt>Converts&nbsp;paramname&nbsp;to&nbsp;python&nbsp;int&nbsp;and&nbsp;to&nbsp;ctypes&nbsp;c_uint</tt></dd></dl>
+ <dl><dt><a name="-convert_to_ulongc"><strong>convert_to_ulongc</strong></a>(paramname)</dt><dd><tt>Converts&nbsp;paramname&nbsp;to&nbsp;python&nbsp;long&nbsp;and&nbsp;to&nbsp;ctypes&nbsp;c_ulong</tt></dd></dl>
  <dl><dt><a name="-func_notexisting_placeholder"><strong>func_notexisting_placeholder</strong></a>(cfunction)</dt><dd><tt>Print&nbsp;a&nbsp;warning&nbsp;if&nbsp;called&nbsp;function&nbsp;does&nbsp;not&nbsp;exist</tt></dd></dl>
- <dl><dt><a name="-get_xforms_version"><strong>get_xforms_version</strong></a>()</dt><dd><tt>Returns&nbsp;version&nbsp;string&nbsp;of&nbsp;installed&nbsp;XForms&nbsp;library/header</tt></dd></dl>
+ <dl><dt><a name="-get_xforms_version"><strong>get_xforms_version</strong></a>()</dt><dd><tt>Returns&nbsp;version&nbsp;string&nbsp;of&nbsp;installed&nbsp;XForms&nbsp;library.</tt></dd></dl>
+ <dl><dt><a name="-get_xforms_version_fallback"><strong>get_xforms_version_fallback</strong></a>()</dt><dd><tt>Returns&nbsp;version&nbsp;string&nbsp;of&nbsp;installed&nbsp;XForms&nbsp;library/header</tt></dd></dl>
  <dl><dt><a name="-keep_cfunc_refs"><strong>keep_cfunc_refs</strong></a>(*cfunclist)</dt><dd><tt>Adds&nbsp;a&nbsp;reference&nbsp;for&nbsp;_cfunc_refs&nbsp;list&nbsp;of&nbsp;values</tt></dd></dl>
  <dl><dt><a name="-keep_elem_refs"><strong>keep_elem_refs</strong></a>(*elemlist)</dt><dd><tt>Adds&nbsp;a&nbsp;reference&nbsp;for&nbsp;_elem_refs&nbsp;list&nbsp;of&nbsp;values</tt></dd></dl>
  <dl><dt><a name="-load_so_libflimage"><strong>load_so_libflimage</strong></a>()</dt><dd><tt>Load&nbsp;libflimage.so&nbsp;else&nbsp;raise&nbsp;an&nbsp;error&nbsp;-&gt;&nbsp;library&nbsp;instance</tt></dd></dl>
  <dl><dt><a name="-load_so_libforms"><strong>load_so_libforms</strong></a>()</dt><dd><tt>Load&nbsp;libforms.so&nbsp;else&nbsp;raise&nbsp;an&nbsp;error&nbsp;-&gt;&nbsp;library&nbsp;instance</tt></dd></dl>
  <dl><dt><a name="-load_so_libformsgl"><strong>load_so_libformsgl</strong></a>()</dt><dd><tt>Load&nbsp;libformsGL.so&nbsp;else&nbsp;raise&nbsp;an&nbsp;error&nbsp;-&gt;&nbsp;library&nbsp;instance</tt></dd></dl>
  <dl><dt><a name="-load_so_libx11"><strong>load_so_libx11</strong></a>()</dt><dd><tt>Load&nbsp;libX11.so.6&nbsp;else&nbsp;raise&nbsp;an&nbsp;error&nbsp;-&gt;&nbsp;library&nbsp;instance</tt></dd></dl>
- <dl><dt><a name="-make_FL_COLOR_and_pointer"><strong>make_FL_COLOR_and_pointer</strong></a> = make_ulong_and_pointer()</dt><dd><tt>Makes&nbsp;a&nbsp;ctypes&nbsp;c_ulong&nbsp;and&nbsp;its&nbsp;pointer,&nbsp;and&nbsp;returns&nbsp;both</tt></dd></dl>
- <dl><dt><a name="-make_FL_Coord_and_pointer"><strong>make_FL_Coord_and_pointer</strong></a> = make_int_and_pointer()</dt><dd><tt>Makes&nbsp;a&nbsp;ctypes&nbsp;c_int&nbsp;and&nbsp;its&nbsp;pointer,&nbsp;and&nbsp;returns&nbsp;both</tt></dd></dl>
- <dl><dt><a name="-make_Pixmap_and_pointer"><strong>make_Pixmap_and_pointer</strong></a> = make_ulong_and_pointer()</dt><dd><tt>Makes&nbsp;a&nbsp;ctypes&nbsp;c_ulong&nbsp;and&nbsp;its&nbsp;pointer,&nbsp;and&nbsp;returns&nbsp;both</tt></dd></dl>
- <dl><dt><a name="-make_double_and_pointer"><strong>make_double_and_pointer</strong></a>()</dt><dd><tt>Makes&nbsp;a&nbsp;ctypes&nbsp;c_double&nbsp;and&nbsp;its&nbsp;pointer,&nbsp;and&nbsp;returns&nbsp;both</tt></dd></dl>
- <dl><dt><a name="-make_float_and_pointer"><strong>make_float_and_pointer</strong></a>()</dt><dd><tt>Makes&nbsp;a&nbsp;ctypes&nbsp;c_float&nbsp;and&nbsp;its&nbsp;pointer,&nbsp;and&nbsp;returns&nbsp;both</tt></dd></dl>
- <dl><dt><a name="-make_int_and_pointer"><strong>make_int_and_pointer</strong></a>()</dt><dd><tt>Makes&nbsp;a&nbsp;ctypes&nbsp;c_int&nbsp;and&nbsp;its&nbsp;pointer,&nbsp;and&nbsp;returns&nbsp;both</tt></dd></dl>
- <dl><dt><a name="-make_long_and_pointer"><strong>make_long_and_pointer</strong></a>()</dt><dd><tt>Makes&nbsp;a&nbsp;ctypes&nbsp;c_long&nbsp;and&nbsp;its&nbsp;pointer,&nbsp;and&nbsp;returns&nbsp;both</tt></dd></dl>
- <dl><dt><a name="-make_ubyte_and_pointer"><strong>make_ubyte_and_pointer</strong></a>()</dt><dd><tt>Makes&nbsp;a&nbsp;ctypes&nbsp;c_ubyte&nbsp;and&nbsp;its&nbsp;pointer,&nbsp;and&nbsp;returns&nbsp;both</tt></dd></dl>
- <dl><dt><a name="-make_uint_and_pointer"><strong>make_uint_and_pointer</strong></a>()</dt><dd><tt>Makes&nbsp;a&nbsp;ctypes&nbsp;c_uint&nbsp;and&nbsp;its&nbsp;pointer,&nbsp;and&nbsp;returns&nbsp;both</tt></dd></dl>
- <dl><dt><a name="-make_ulong_and_pointer"><strong>make_ulong_and_pointer</strong></a>()</dt><dd><tt>Makes&nbsp;a&nbsp;ctypes&nbsp;c_ulong&nbsp;and&nbsp;its&nbsp;pointer,&nbsp;and&nbsp;returns&nbsp;both</tt></dd></dl>
- <dl><dt><a name="-make_ushort_and_pointer"><strong>make_ushort_and_pointer</strong></a>()</dt><dd><tt>Makes&nbsp;a&nbsp;ctypes&nbsp;c_ushort&nbsp;and&nbsp;its&nbsp;pointer,&nbsp;and&nbsp;returns&nbsp;both</tt></dd></dl>
- <dl><dt><a name="-set_initialized"><strong>set_initialized</strong></a>()</dt><dd><tt>fl_initialize()&nbsp;has&nbsp;beeen&nbsp;called</tt></dd></dl>
- <dl><dt><a name="-verify_flflimageptr_type"><strong>verify_flflimageptr_type</strong></a>(paramname)</dt><dd><tt>Check&nbsp;if&nbsp;paramname&nbsp;is&nbsp;a&nbsp;valid&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_IMAGE.</tt></dd></dl>
- <dl><dt><a name="-verify_flformptr_type"><strong>verify_flformptr_type</strong></a>(paramname)</dt><dd><tt>Check&nbsp;if&nbsp;paramname&nbsp;is&nbsp;a&nbsp;valid&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_FORM.</tt></dd></dl>
- <dl><dt><a name="-verify_flobjectptr_type"><strong>verify_flobjectptr_type</strong></a>(paramname)</dt><dd><tt>Check&nbsp;if&nbsp;paramname&nbsp;is&nbsp;a&nbsp;valid&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT.</tt></dd></dl>
- <dl><dt><a name="-verify_flpopupentryptr_type"><strong>verify_flpopupentryptr_type</strong></a>(paramname)</dt><dd><tt>Check&nbsp;if&nbsp;paramname&nbsp;is&nbsp;a&nbsp;valid&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_POPUP_ENTRY.</tt></dd></dl>
- <dl><dt><a name="-verify_flpopupitemptr_type"><strong>verify_flpopupitemptr_type</strong></a>(paramname)</dt><dd><tt>Check&nbsp;if&nbsp;paramname&nbsp;is&nbsp;a&nbsp;valid&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_POPUP_ITEM.</tt></dd></dl>
- <dl><dt><a name="-verify_flpopupptr_type"><strong>verify_flpopupptr_type</strong></a>(paramname)</dt><dd><tt>Check&nbsp;if&nbsp;paramname&nbsp;is&nbsp;a&nbsp;valid&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_POPUP.</tt></dd></dl>
- <dl><dt><a name="-verify_flpopupreturnptr_type"><strong>verify_flpopupreturnptr_type</strong></a>(paramname)</dt><dd><tt>Check&nbsp;if&nbsp;paramname&nbsp;is&nbsp;a&nbsp;valid&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_POPUP_RETURN.</tt></dd></dl>
- <dl><dt><a name="-verify_function_type"><strong>verify_function_type</strong></a>(paramname)</dt><dd><tt>Check&nbsp;if&nbsp;paramname&nbsp;value&nbsp;is&nbsp;a&nbsp;valid&nbsp;python&nbsp;function&nbsp;to&nbsp;be&nbsp;passed&nbsp;as<br>
+ <dl><dt><a name="-make_FL_COLOR_and_pointer"><strong>make_FL_COLOR_and_pointer</strong></a> = make_ulongc_and_pointer()</dt><dd><tt>Makes&nbsp;a&nbsp;ctypes&nbsp;c_ulong&nbsp;and&nbsp;its&nbsp;pointer,&nbsp;and&nbsp;returns&nbsp;both</tt></dd></dl>
+ <dl><dt><a name="-make_FL_Coord_and_pointer"><strong>make_FL_Coord_and_pointer</strong></a> = make_intc_and_pointer()</dt><dd><tt>Makes&nbsp;a&nbsp;ctypes&nbsp;c_int&nbsp;and&nbsp;its&nbsp;pointer,&nbsp;and&nbsp;returns&nbsp;both</tt></dd></dl>
+ <dl><dt><a name="-make_Pixmap_and_pointer"><strong>make_Pixmap_and_pointer</strong></a> = make_ulongc_and_pointer()</dt><dd><tt>Makes&nbsp;a&nbsp;ctypes&nbsp;c_ulong&nbsp;and&nbsp;its&nbsp;pointer,&nbsp;and&nbsp;returns&nbsp;both</tt></dd></dl>
+ <dl><dt><a name="-make_doublec_and_pointer"><strong>make_doublec_and_pointer</strong></a>()</dt><dd><tt>Makes&nbsp;a&nbsp;ctypes&nbsp;c_double&nbsp;and&nbsp;its&nbsp;pointer,&nbsp;and&nbsp;returns&nbsp;both</tt></dd></dl>
+ <dl><dt><a name="-make_floatc_and_pointer"><strong>make_floatc_and_pointer</strong></a>()</dt><dd><tt>Makes&nbsp;a&nbsp;ctypes&nbsp;c_float&nbsp;and&nbsp;its&nbsp;pointer,&nbsp;and&nbsp;returns&nbsp;both</tt></dd></dl>
+ <dl><dt><a name="-make_intc_and_pointer"><strong>make_intc_and_pointer</strong></a>()</dt><dd><tt>Makes&nbsp;a&nbsp;ctypes&nbsp;c_int&nbsp;and&nbsp;its&nbsp;pointer,&nbsp;and&nbsp;returns&nbsp;both</tt></dd></dl>
+ <dl><dt><a name="-make_longc_and_pointer"><strong>make_longc_and_pointer</strong></a>()</dt><dd><tt>Makes&nbsp;a&nbsp;ctypes&nbsp;c_long&nbsp;and&nbsp;its&nbsp;pointer,&nbsp;and&nbsp;returns&nbsp;both</tt></dd></dl>
+ <dl><dt><a name="-make_stringc_and_pointer"><strong>make_stringc_and_pointer</strong></a>()</dt><dd><tt>Makes&nbsp;a&nbsp;ctypes&nbsp;c_char_p&nbsp;and&nbsp;its&nbsp;pointer,&nbsp;and&nbsp;returns&nbsp;both</tt></dd></dl>
+ <dl><dt><a name="-make_ubytec_and_pointer"><strong>make_ubytec_and_pointer</strong></a>()</dt><dd><tt>Makes&nbsp;a&nbsp;ctypes&nbsp;c_ubyte&nbsp;and&nbsp;its&nbsp;pointer,&nbsp;and&nbsp;returns&nbsp;both</tt></dd></dl>
+ <dl><dt><a name="-make_uintc_and_pointer"><strong>make_uintc_and_pointer</strong></a>()</dt><dd><tt>Makes&nbsp;a&nbsp;ctypes&nbsp;c_uint&nbsp;and&nbsp;its&nbsp;pointer,&nbsp;and&nbsp;returns&nbsp;both</tt></dd></dl>
+ <dl><dt><a name="-make_ulongc_and_pointer"><strong>make_ulongc_and_pointer</strong></a>()</dt><dd><tt>Makes&nbsp;a&nbsp;ctypes&nbsp;c_ulong&nbsp;and&nbsp;its&nbsp;pointer,&nbsp;and&nbsp;returns&nbsp;both</tt></dd></dl>
+ <dl><dt><a name="-make_ushortc_and_pointer"><strong>make_ushortc_and_pointer</strong></a>()</dt><dd><tt>Makes&nbsp;a&nbsp;ctypes&nbsp;c_ushort&nbsp;and&nbsp;its&nbsp;pointer,&nbsp;and&nbsp;returns&nbsp;both</tt></dd></dl>
+ <dl><dt><a name="-set_initialized"><strong>set_initialized</strong></a>()</dt><dd><tt>fl_initialize()&nbsp;has&nbsp;been&nbsp;called</tt></dd></dl>
+ <dl><dt><a name="-verify_flflimageptr_type"><strong>verify_flflimageptr_type</strong></a>(paramname)</dt><dd><tt>Checks&nbsp;if&nbsp;paramname&nbsp;is&nbsp;a&nbsp;valid&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_IMAGE.</tt></dd></dl>
+ <dl><dt><a name="-verify_flformptr_type"><strong>verify_flformptr_type</strong></a>(paramname)</dt><dd><tt>Checks&nbsp;if&nbsp;paramname&nbsp;is&nbsp;a&nbsp;valid&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_FORM.</tt></dd></dl>
+ <dl><dt><a name="-verify_flobjectptr_type"><strong>verify_flobjectptr_type</strong></a>(paramname)</dt><dd><tt>Checks&nbsp;if&nbsp;paramname&nbsp;is&nbsp;a&nbsp;valid&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT.</tt></dd></dl>
+ <dl><dt><a name="-verify_flpopupentryptr_type"><strong>verify_flpopupentryptr_type</strong></a>(paramname)</dt><dd><tt>Checks&nbsp;if&nbsp;paramname&nbsp;is&nbsp;a&nbsp;valid&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_POPUP_ENTRY.</tt></dd></dl>
+ <dl><dt><a name="-verify_flpopupitemptr_type"><strong>verify_flpopupitemptr_type</strong></a>(paramname)</dt><dd><tt>Checks&nbsp;if&nbsp;paramname&nbsp;is&nbsp;a&nbsp;valid&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_POPUP_ITEM.</tt></dd></dl>
+ <dl><dt><a name="-verify_flpopupptr_type"><strong>verify_flpopupptr_type</strong></a>(paramname)</dt><dd><tt>Checks&nbsp;if&nbsp;paramname&nbsp;is&nbsp;a&nbsp;valid&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_POPUP.</tt></dd></dl>
+ <dl><dt><a name="-verify_flpopupreturnptr_type"><strong>verify_flpopupreturnptr_type</strong></a>(paramname)</dt><dd><tt>Checks&nbsp;if&nbsp;paramname&nbsp;is&nbsp;a&nbsp;valid&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_POPUP_RETURN.</tt></dd></dl>
+ <dl><dt><a name="-verify_function_type"><strong>verify_function_type</strong></a>(paramname)</dt><dd><tt>Checks&nbsp;if&nbsp;paramname&nbsp;value&nbsp;is&nbsp;a&nbsp;valid&nbsp;python&nbsp;function&nbsp;to&nbsp;be&nbsp;passed&nbsp;as<br>
 e.g.&nbsp;callback&nbsp;in&nbsp;a&nbsp;public&nbsp;function.</tt></dd></dl>
- <dl><dt><a name="-verify_otherclassptr_type"><strong>verify_otherclassptr_type</strong></a>(paramname, pstructinst)</dt><dd><tt>Check&nbsp;if&nbsp;paramname&nbsp;value&nbsp;is&nbsp;a&nbsp;valid&nbsp;pointer&nbsp;to&nbsp;a&nbsp;provided&nbsp;'Structure'<br>
+ <dl><dt><a name="-verify_otherclassptr_type"><strong>verify_otherclassptr_type</strong></a>(paramname, pstructinst)</dt><dd><tt>Checks&nbsp;if&nbsp;paramname&nbsp;value&nbsp;is&nbsp;a&nbsp;valid&nbsp;pointer&nbsp;to&nbsp;a&nbsp;provided&nbsp;'Structure'<br>
 class&nbsp;instance,&nbsp;different&nbsp;from&nbsp;previous&nbsp;classes.</tt></dd></dl>
- <dl><dt><a name="-verify_tuplelist_type"><strong>verify_tuplelist_type</strong></a>(paramname)</dt><dd><tt>Check&nbsp;if&nbsp;paramname&nbsp;is&nbsp;a&nbsp;valid&nbsp;list&nbsp;or&nbsp;tuple.</tt></dd></dl>
+ <dl><dt><a name="-verify_tuplelist_type"><strong>verify_tuplelist_type</strong></a>(paramname)</dt><dd><tt>Checks&nbsp;if&nbsp;paramname&nbsp;is&nbsp;a&nbsp;valid&nbsp;list&nbsp;or&nbsp;tuple.</tt></dd></dl>
  <dl><dt><a name="-verify_version_compatibility"><strong>verify_version_compatibility</strong></a>()</dt><dd><tt>verify&nbsp;compatibility&nbsp;between&nbsp;xforms-python&nbsp;and&nbsp;XForms&nbsp;versions</tt></dd></dl>
 </td></tr></table><p>
 <table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
@@ -549,4 +554,4 @@ class&nbsp;instance,&nbsp;different&nbsp;from&nbsp;previous&nbsp;classes.</tt></
 <td width="100%"><strong>flinitialized</strong> = False<br>
 <strong>header_filename</strong> = '/usr/include/forms.h'<br>
 <strong>loaded_xlibraries</strong> = {'libflimage': None, 'libforms': None, 'libformsgl': None, 'libx11': None}</td></tr></table>
-<p>Updated on: 2010-12-09 10:11 +0100</body></html>
+<p>Updated on: 2010-12-20 01:16 +0100</body></html>

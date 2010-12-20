@@ -9,7 +9,7 @@
 <font color="#ffffff" face="helvetica, arial">&nbsp;<br><big><big><strong>flpositioner</strong></big></big></font></td
 ><td align=right valign=bottom
 ><font color="#ffffff" face="helvetica, arial"><a href=".">index</a><br>     <a href="index.html">list</a></font></td></tr></table>
-    <p><tt>xforms-python's&nbsp;functions&nbsp;to&nbsp;manage&nbsp;positioner&nbsp;objects.</tt></p>
+    <p><tt>xforms-python's&nbsp;functions&nbsp;to&nbsp;manage&nbsp;positioner&nbsp;flobjects.</tt></p>
 <p>
 <table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
 <tr bgcolor="#aa55cc">
@@ -27,32 +27,33 @@
 <font color="#ffffff" face="helvetica, arial"><big><strong>Functions</strong></big></font></td></tr>
     
 <tr><td bgcolor="#eeaa77"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
-<td width="100%"><dl><dt><a name="-fl_add_positioner"><strong>fl_add_positioner</strong></a>(postype, x, y, w, h, label)</dt><dd><tt><a href="#-fl_add_positioner">fl_add_positioner</a>(postype,&nbsp;x,&nbsp;y,&nbsp;w,&nbsp;h,&nbsp;label)<br>
+<td width="100%"><dl><dt><a name="-fl_add_positioner"><strong>fl_add_positioner</strong></a>(posittype, xpos, ypos, width, height, label)</dt><dd><tt><a href="#-fl_add_positioner">fl_add_positioner</a>(posittype,&nbsp;xpos,&nbsp;ypos,&nbsp;width,&nbsp;height,&nbsp;label)<br>
+-&gt;&nbsp;ptr_flobject<br>
 &nbsp;<br>
-Adds&nbsp;a&nbsp;positioner&nbsp;object.&nbsp;By&nbsp;default&nbsp;the&nbsp;label&nbsp;is&nbsp;placed&nbsp;below<br>
+Adds&nbsp;a&nbsp;positioner&nbsp;flobject.&nbsp;By&nbsp;default&nbsp;the&nbsp;label&nbsp;is&nbsp;placed&nbsp;below<br>
 the&nbsp;box.<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;postype&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;posittype&nbsp;:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;type&nbsp;of&nbsp;positioner&nbsp;to&nbsp;be&nbsp;added.&nbsp;Values&nbsp;(from&nbsp;xfdata.py)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_NORMAL_POSITIONER,&nbsp;FL_OVERLAY_POSITIONER,<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_INVISIBLE_POSITIONER<br>
-&nbsp;&nbsp;&nbsp;&nbsp;x&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;xpos&nbsp;:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;horizontal&nbsp;position&nbsp;(upper-left&nbsp;corner)<br>
-&nbsp;&nbsp;&nbsp;&nbsp;y&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ypos&nbsp;:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;vertical&nbsp;position&nbsp;(upper-left&nbsp;corner)<br>
-&nbsp;&nbsp;&nbsp;&nbsp;w&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;width&nbsp;:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;width&nbsp;in&nbsp;coord&nbsp;units<br>
-&nbsp;&nbsp;&nbsp;&nbsp;h&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;height&nbsp;:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;height&nbsp;in&nbsp;coord&nbsp;units<br>
 &nbsp;&nbsp;&nbsp;&nbsp;label&nbsp;:&nbsp;str<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;text&nbsp;label&nbsp;of&nbsp;positioner.<br>
 &nbsp;<br>
 Returns<br>
 -------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;pFlObject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;positioner&nbsp;object&nbsp;added<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_flobject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;positioner&nbsp;flobject&nbsp;added<br>
 &nbsp;<br>
 Examples<br>
 --------<br>
@@ -62,15 +63,15 @@ Examples<br>
 Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;Demo&nbsp;=&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-fl_get_positioner_xbounds"><strong>fl_get_positioner_xbounds</strong></a>(pFlObject)</dt><dd><tt><a href="#-fl_get_positioner_xbounds">fl_get_positioner_xbounds</a>(pFlObject)<br>
+ <dl><dt><a name="-fl_get_positioner_xbounds"><strong>fl_get_positioner_xbounds</strong></a>(ptr_flobject)</dt><dd><tt><a href="#-fl_get_positioner_xbounds">fl_get_positioner_xbounds</a>(ptr_flobject)&nbsp;-&gt;&nbsp;minbound,&nbsp;maxbound<br>
 &nbsp;<br>
-Obtain&nbsp;minumum&nbsp;and&nbsp;maximum&nbsp;bounds/limits&nbsp;of&nbsp;a&nbsp;positioner&nbsp;in&nbsp;horizontal<br>
-direction.<br>
+Obtain&nbsp;minumum&nbsp;and&nbsp;maximum&nbsp;value&nbsp;bounds/limits&nbsp;of&nbsp;a&nbsp;positioner&nbsp;in<br>
+horizontal&nbsp;direction.<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;pFlObject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;positioner&nbsp;object<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_flobject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;positioner&nbsp;flobject<br>
 &nbsp;<br>
 Returns<br>
 -------<br>
@@ -84,25 +85,25 @@ Examples<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;minb,&nbsp;maxb&nbsp;=&nbsp;<a href="#-fl_get_positioner_xbounds">fl_get_positioner_xbounds</a>(pstobj)<br>
 &nbsp;<br>
 API_diversion<br>
-----------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;API&nbsp;changed&nbsp;from&nbsp;XForms,&nbsp;upstream&nbsp;was<br>
-&nbsp;&nbsp;&nbsp;&nbsp;<a href="#-fl_get_positioner_xbounds">fl_get_positioner_xbounds</a>(pFlObject,&nbsp;minbound,&nbsp;maxbound)<br>
+-------------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;API&nbsp;changed&nbsp;from&nbsp;XForms,&nbsp;upstream&nbsp;is<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="#-fl_get_positioner_xbounds">fl_get_positioner_xbounds</a>(ptr_flobject,&nbsp;minbound,&nbsp;maxbound)<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-fl_get_positioner_xvalue"><strong>fl_get_positioner_xvalue</strong></a>(pFlObject)</dt><dd><tt><a href="#-fl_get_positioner_xvalue">fl_get_positioner_xvalue</a>(pFlObject)<br>
+ <dl><dt><a name="-fl_get_positioner_xvalue"><strong>fl_get_positioner_xvalue</strong></a>(ptr_flobject)</dt><dd><tt><a href="#-fl_get_positioner_xvalue">fl_get_positioner_xvalue</a>(ptr_flobject)&nbsp;-&gt;&nbsp;xvalue<br>
 &nbsp;<br>
-Obtains&nbsp;value&nbsp;of&nbsp;positioner&nbsp;object&nbsp;in&nbsp;horizontal&nbsp;direction.<br>
+Finds&nbsp;out&nbsp;value&nbsp;of&nbsp;positioner&nbsp;flobject&nbsp;in&nbsp;horizontal&nbsp;direction.<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;pFlObject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;positioner&nbsp;object<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_flobject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;positioner&nbsp;flobject<br>
 &nbsp;<br>
 Returns<br>
 -------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;value&nbsp;:&nbsp;float<br>
+&nbsp;&nbsp;&nbsp;&nbsp;xvalue&nbsp;:&nbsp;float<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;value&nbsp;in&nbsp;horizontal&nbsp;direction<br>
 &nbsp;<br>
 Examples<br>
@@ -112,15 +113,15 @@ Examples<br>
 Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;Demo&nbsp;=&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-fl_get_positioner_ybounds"><strong>fl_get_positioner_ybounds</strong></a>(pFlObject)</dt><dd><tt><a href="#-fl_get_positioner_ybounds">fl_get_positioner_ybounds</a>(pFlObject)<br>
+ <dl><dt><a name="-fl_get_positioner_ybounds"><strong>fl_get_positioner_ybounds</strong></a>(ptr_flobject)</dt><dd><tt><a href="#-fl_get_positioner_ybounds">fl_get_positioner_ybounds</a>(ptr_flobject)&nbsp;-&gt;&nbsp;minbound,&nbsp;maxbound<br>
 &nbsp;<br>
 Obtain&nbsp;minimum&nbsp;and&nbsp;maximum&nbsp;bounds/limits&nbsp;of&nbsp;a&nbsp;positioner&nbsp;in&nbsp;vertical<br>
 direction.<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;pFlObject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;positioner&nbsp;object<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_flobject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;positioner&nbsp;flobject<br>
 &nbsp;<br>
 Returns<br>
 -------<br>
@@ -134,25 +135,25 @@ Examples<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;minb,&nbsp;maxb&nbsp;=&nbsp;<a href="#-fl_get_positioner_ybounds">fl_get_positioner_ybounds</a>(pstobj)<br>
 &nbsp;<br>
 API_diversion<br>
-----------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;API&nbsp;changed&nbsp;from&nbsp;XForms,&nbsp;upstream&nbsp;was<br>
-&nbsp;&nbsp;&nbsp;&nbsp;<a href="#-fl_get_positioner_ybounds">fl_get_positioner_ybounds</a>(pFlObject,&nbsp;minbound,&nbsp;maxbound)<br>
+-------------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;API&nbsp;changed&nbsp;from&nbsp;XForms,&nbsp;upstream&nbsp;is<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="#-fl_get_positioner_ybounds">fl_get_positioner_ybounds</a>(ptr_flobject,&nbsp;minbound,&nbsp;maxbound)<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-fl_get_positioner_yvalue"><strong>fl_get_positioner_yvalue</strong></a>(pFlObject)</dt><dd><tt><a href="#-fl_get_positioner_yvalue">fl_get_positioner_yvalue</a>(pFlObject)<br>
+ <dl><dt><a name="-fl_get_positioner_yvalue"><strong>fl_get_positioner_yvalue</strong></a>(ptr_flobject)</dt><dd><tt><a href="#-fl_get_positioner_yvalue">fl_get_positioner_yvalue</a>(ptr_flobject)&nbsp;-&gt;&nbsp;yvalue<br>
 &nbsp;<br>
-Obtains&nbsp;value&nbsp;of&nbsp;positioner&nbsp;object&nbsp;in&nbsp;vertical&nbsp;direction.<br>
+Finds&nbsp;out&nbsp;value&nbsp;of&nbsp;positioner&nbsp;flobject&nbsp;in&nbsp;vertical&nbsp;direction.<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;pFlObject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;positioner&nbsp;object<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_flobject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;positioner&nbsp;flobject<br>
 &nbsp;<br>
 Returns<br>
 -------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;value&nbsp;:&nbsp;float<br>
+&nbsp;&nbsp;&nbsp;&nbsp;yvalue&nbsp;:&nbsp;float<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;value&nbsp;in&nbsp;vertical&nbsp;direction<br>
 &nbsp;<br>
 Examples<br>
@@ -162,19 +163,21 @@ Examples<br>
 Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-fl_set_positioner_xbounds"><strong>fl_set_positioner_xbounds</strong></a>(pFlObject, minbound, maxbound)</dt><dd><tt><a href="#-fl_set_positioner_xbounds">fl_set_positioner_xbounds</a>(pFlObject,&nbsp;minbound,&nbsp;maxbound)<br>
+ <dl><dt><a name="-fl_set_positioner_xbounds"><strong>fl_set_positioner_xbounds</strong></a>(ptr_flobject, minbound, maxbound)</dt><dd><tt><a href="#-fl_set_positioner_xbounds">fl_set_positioner_xbounds</a>(ptr_flobject,&nbsp;minbound,&nbsp;maxbound)<br>
 &nbsp;<br>
-Sets&nbsp;minimum&nbsp;and&nbsp;maximum&nbsp;bounds/limits&nbsp;of&nbsp;a&nbsp;positioner&nbsp;in&nbsp;horizontal<br>
+Defines&nbsp;minimum&nbsp;and&nbsp;maximum&nbsp;bounds/limits&nbsp;of&nbsp;a&nbsp;positioner&nbsp;in&nbsp;horizontal<br>
 direction.<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;pFlObject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;positioner&nbsp;object<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_flobject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;positioner&nbsp;flobject<br>
 &nbsp;&nbsp;&nbsp;&nbsp;minbound&nbsp;:&nbsp;float<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;minimum&nbsp;bound&nbsp;to&nbsp;be&nbsp;set.&nbsp;By&nbsp;default&nbsp;the&nbsp;minimum&nbsp;value&nbsp;is&nbsp;0.0.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;minimum&nbsp;value&nbsp;limit&nbsp;to&nbsp;be&nbsp;set.&nbsp;By&nbsp;default&nbsp;the&nbsp;minimum<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;value&nbsp;is&nbsp;0.0.<br>
 &nbsp;&nbsp;&nbsp;&nbsp;maxbound&nbsp;:&nbsp;float<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;maximum&nbsp;bound&nbsp;to&nbsp;be&nbsp;set.&nbsp;By&nbsp;default&nbsp;the&nbsp;maximum&nbsp;value&nbsp;is&nbsp;1.0.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;maximum&nbsp;value&nbsp;limit&nbsp;to&nbsp;be&nbsp;set.&nbsp;By&nbsp;default&nbsp;the&nbsp;maximum<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;value&nbsp;is&nbsp;1.0.<br>
 &nbsp;<br>
 Examples<br>
 --------<br>
@@ -183,15 +186,15 @@ Examples<br>
 Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;Demo&nbsp;=&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-fl_set_positioner_xstep"><strong>fl_set_positioner_xstep</strong></a>(pFlObject, step)</dt><dd><tt><a href="#-fl_set_positioner_xstep">fl_set_positioner_xstep</a>(pFlObject,&nbsp;step)<br>
+ <dl><dt><a name="-fl_set_positioner_xstep"><strong>fl_set_positioner_xstep</strong></a>(ptr_flobject, step)</dt><dd><tt><a href="#-fl_set_positioner_xstep">fl_set_positioner_xstep</a>(ptr_flobject,&nbsp;step)<br>
 &nbsp;<br>
-Handles&nbsp;positioner&nbsp;values&nbsp;in&nbsp;horizontal&nbsp;direction&nbsp;to&nbsp;be&nbsp;rounded&nbsp;to&nbsp;some<br>
-values&nbsp;(multiples&nbsp;of&nbsp;step),&nbsp;e.g.&nbsp;to&nbsp;integer&nbsp;values.<br>
+Handles&nbsp;positioner&nbsp;values&nbsp;in&nbsp;horizontal&nbsp;direction&nbsp;to&nbsp;be&nbsp;rounded&nbsp;to<br>
+some&nbsp;values&nbsp;(multiples&nbsp;of&nbsp;step),&nbsp;e.g.&nbsp;to&nbsp;integer&nbsp;values.<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;pFlObject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;positioner&nbsp;object<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_flobject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;positioner&nbsp;flobject<br>
 &nbsp;&nbsp;&nbsp;&nbsp;step&nbsp;:&nbsp;float<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;rounded&nbsp;value.&nbsp;If&nbsp;it&nbsp;is&nbsp;0.0,&nbsp;switch&nbsp;off&nbsp;rounding.<br>
 &nbsp;<br>
@@ -202,16 +205,16 @@ Examples<br>
 Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-fl_set_positioner_xvalue"><strong>fl_set_positioner_xvalue</strong></a>(pFlObject, val)</dt><dd><tt><a href="#-fl_set_positioner_xvalue">fl_set_positioner_xvalue</a>(pFlObject,&nbsp;val)<br>
+ <dl><dt><a name="-fl_set_positioner_xvalue"><strong>fl_set_positioner_xvalue</strong></a>(ptr_flobject, xvalue)</dt><dd><tt><a href="#-fl_set_positioner_xvalue">fl_set_positioner_xvalue</a>(ptr_flobject,&nbsp;xvalue)<br>
 &nbsp;<br>
-Sets&nbsp;the&nbsp;actual&nbsp;value&nbsp;of&nbsp;positioner&nbsp;object&nbsp;in&nbsp;horizontal&nbsp;direction.<br>
+Defines&nbsp;the&nbsp;actual&nbsp;value&nbsp;of&nbsp;positioner&nbsp;flobject&nbsp;in&nbsp;horizontal&nbsp;direction.<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;pFlObject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;positioner&nbsp;object<br>
-&nbsp;&nbsp;&nbsp;&nbsp;val&nbsp;:&nbsp;float<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;value&nbsp;to&nbsp;be&nbsp;set.&nbsp;By&nbsp;default&nbsp;it&nbsp;is&nbsp;0.5.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_flobject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;positioner&nbsp;flobject<br>
+&nbsp;&nbsp;&nbsp;&nbsp;xvalue&nbsp;:&nbsp;float<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;horizontal&nbsp;value&nbsp;to&nbsp;be&nbsp;set.&nbsp;By&nbsp;default&nbsp;it&nbsp;is&nbsp;0.5.<br>
 &nbsp;<br>
 Examples<br>
 --------<br>
@@ -220,19 +223,21 @@ Examples<br>
 Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;Demo&nbsp;=&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-fl_set_positioner_ybounds"><strong>fl_set_positioner_ybounds</strong></a>(pFlObject, minbound, maxbound)</dt><dd><tt><a href="#-fl_set_positioner_ybounds">fl_set_positioner_ybounds</a>(pFlObject,&nbsp;minbound,&nbsp;maxbound)<br>
+ <dl><dt><a name="-fl_set_positioner_ybounds"><strong>fl_set_positioner_ybounds</strong></a>(ptr_flobject, minbound, maxbound)</dt><dd><tt><a href="#-fl_set_positioner_ybounds">fl_set_positioner_ybounds</a>(ptr_flobject,&nbsp;minbound,&nbsp;maxbound)<br>
 &nbsp;<br>
-Sets&nbsp;minimum&nbsp;and&nbsp;maximum&nbsp;bounds/limits&nbsp;of&nbsp;a&nbsp;positioner&nbsp;in&nbsp;vertical<br>
+Defines&nbsp;minimum&nbsp;and&nbsp;maximum&nbsp;bounds/limits&nbsp;of&nbsp;a&nbsp;positioner&nbsp;in&nbsp;vertical<br>
 direction.<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;pFlObject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;positioner&nbsp;object<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_flobject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;positioner&nbsp;flobject<br>
 &nbsp;&nbsp;&nbsp;&nbsp;minbound&nbsp;:&nbsp;float<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;minimum&nbsp;bound&nbsp;to&nbsp;be&nbsp;set.&nbsp;By&nbsp;default&nbsp;the&nbsp;minimum&nbsp;value&nbsp;is&nbsp;0.0.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;minimum&nbsp;value&nbsp;limit&nbsp;to&nbsp;be&nbsp;set.&nbsp;By&nbsp;default&nbsp;the&nbsp;minimum<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;value&nbsp;is&nbsp;0.0.<br>
 &nbsp;&nbsp;&nbsp;&nbsp;maxbound&nbsp;:&nbsp;float<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;maximum&nbsp;bound&nbsp;to&nbsp;be&nbsp;set.&nbsp;By&nbsp;default&nbsp;the&nbsp;maximum&nbsp;value&nbsp;is&nbsp;1.0.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;maximum&nbsp;value&nbsp;limit&nbsp;to&nbsp;be&nbsp;set.&nbsp;By&nbsp;default&nbsp;the&nbsp;maximum<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;value&nbsp;is&nbsp;1.0.<br>
 &nbsp;<br>
 Examples<br>
 --------<br>
@@ -241,15 +246,15 @@ Examples<br>
 Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;Demo&nbsp;=&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-fl_set_positioner_ystep"><strong>fl_set_positioner_ystep</strong></a>(pFlObject, step)</dt><dd><tt><a href="#-fl_set_positioner_ystep">fl_set_positioner_ystep</a>(pFlObject,&nbsp;step)<br>
+ <dl><dt><a name="-fl_set_positioner_ystep"><strong>fl_set_positioner_ystep</strong></a>(ptr_flobject, step)</dt><dd><tt><a href="#-fl_set_positioner_ystep">fl_set_positioner_ystep</a>(ptr_flobject,&nbsp;step)<br>
 &nbsp;<br>
-Handles&nbsp;positioner&nbsp;values&nbsp;in&nbsp;vertical&nbsp;direction&nbsp;to&nbsp;be&nbsp;rounded&nbsp;to&nbsp;some<br>
-values&nbsp;(multiples&nbsp;of&nbsp;step),&nbsp;e.g.&nbsp;to&nbsp;integer&nbsp;values.<br>
+Handles&nbsp;positioner&nbsp;values&nbsp;in&nbsp;vertical&nbsp;direction&nbsp;to&nbsp;be&nbsp;rounded&nbsp;to<br>
+some&nbsp;values&nbsp;(multiples&nbsp;of&nbsp;step),&nbsp;e.g.&nbsp;to&nbsp;integer&nbsp;values.<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;pFlObject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;positioner&nbsp;object<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_flobject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;positioner&nbsp;flobject<br>
 &nbsp;&nbsp;&nbsp;&nbsp;step&nbsp;:&nbsp;float<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;rounded&nbsp;value.&nbsp;If&nbsp;it&nbsp;is&nbsp;0.0,&nbsp;switch&nbsp;off&nbsp;rounding.<br>
 &nbsp;<br>
@@ -260,16 +265,16 @@ Examples<br>
 Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-fl_set_positioner_yvalue"><strong>fl_set_positioner_yvalue</strong></a>(pFlObject, val)</dt><dd><tt><a href="#-fl_set_positioner_yvalue">fl_set_positioner_yvalue</a>(pFlObject,&nbsp;val)<br>
+ <dl><dt><a name="-fl_set_positioner_yvalue"><strong>fl_set_positioner_yvalue</strong></a>(ptr_flobject, yvalue)</dt><dd><tt><a href="#-fl_set_positioner_yvalue">fl_set_positioner_yvalue</a>(ptr_flobject,&nbsp;yvalue)<br>
 &nbsp;<br>
-Sets&nbsp;the&nbsp;actual&nbsp;value&nbsp;of&nbsp;positioner&nbsp;object&nbsp;in&nbsp;vertical&nbsp;direction.<br>
+Defines&nbsp;the&nbsp;actual&nbsp;value&nbsp;of&nbsp;positioner&nbsp;flobject&nbsp;in&nbsp;vertical&nbsp;direction.<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;pFlObject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;positioner&nbsp;object<br>
-&nbsp;&nbsp;&nbsp;&nbsp;val&nbsp;:&nbsp;float<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;value&nbsp;to&nbsp;be&nbsp;set.&nbsp;By&nbsp;default&nbsp;it&nbsp;is&nbsp;0.5.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_flobject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;positioner&nbsp;flobject<br>
+&nbsp;&nbsp;&nbsp;&nbsp;yvalue&nbsp;:&nbsp;float<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;vertical&nbsp;value&nbsp;to&nbsp;be&nbsp;set.&nbsp;By&nbsp;default&nbsp;it&nbsp;is&nbsp;0.5.<br>
 &nbsp;<br>
 Examples<br>
 --------<br>
@@ -279,4 +284,4 @@ Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;Demo&nbsp;=&nbsp;OK</tt></dd></dl>
 </td></tr></table>
-<p>Updated on: 2010-12-09 10:11 +0100</body></html>
+<p>Updated on: 2010-12-20 01:16 +0100</body></html>

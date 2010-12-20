@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: iso8859-1 -*-
 
-""" xforms-python's functions to manage goodies objects.
+""" xforms-python's functions to manage goodies flobjects.
 """
 
 #    Copyright (C) 2009, 2010  Luca Lazzaroni "LukenShiro"
@@ -26,7 +26,7 @@
 # then heavily reordered and reworked
 
 # ############################################# #
-# Interface to XForms shared object libraries   #
+# Interface to XForms shared flobject libraries #
 # ############################################# #
 
 
@@ -78,10 +78,10 @@ def fl_set_goodies_font(style, size):
     library.check_if_initialized()
     library.checkfatal_allowed_value_in_list(style, xfdata.TEXTSTYLE_list)
     library.checknonfatal_allowed_value_in_list(size, xfdata.FONTSIZE_list)
-    istyle = library.convert_to_int(style)
-    isize = library.convert_to_int(size)
-    library.keep_elem_refs(style, size, istyle, isize)
-    _fl_set_goodies_font(istyle, isize)
+    i_style = library.convert_to_intc(style)
+    i_size = library.convert_to_intc(size)
+    library.keep_elem_refs(style, size, i_style, i_size)
+    _fl_set_goodies_font(i_style, i_size)
 
 
 # messages and questions
@@ -117,12 +117,12 @@ def fl_show_message(msgtxt1, msgtxt2, msgtxt3):
         """void fl_show_message(const char * p1, const char * p2,
            const char * p3)""")
     library.check_if_initialized()
-    smsgtxt1 = library.convert_to_string(msgtxt1)
-    smsgtxt2 = library.convert_to_string(msgtxt2)
-    smsgtxt3 = library.convert_to_string(msgtxt3)
-    library.keep_elem_refs(msgtxt1, msgtxt2, msgtxt3, smsgtxt1, \
-            smsgtxt2, smsgtxt3)
-    _fl_show_message(smsgtxt1, smsgtxt2, smsgtxt3)
+    s_msgtxt1 = library.convert_to_stringc(msgtxt1)
+    s_msgtxt2 = library.convert_to_stringc(msgtxt2)
+    s_msgtxt3 = library.convert_to_stringc(msgtxt3)
+    library.keep_elem_refs(msgtxt1, msgtxt2, msgtxt3, s_msgtxt1, \
+            s_msgtxt2, s_msgtxt3)
+    _fl_show_message(s_msgtxt1, s_msgtxt2, s_msgtxt3)
 
 
 def fl_show_messages(msgtxt):
@@ -154,9 +154,9 @@ def fl_show_messages(msgtxt):
         None, [xfdata.STRING],
         """void fl_show_messages(const char * p1)""")
     library.check_if_initialized()
-    smsgtxt = library.convert_to_string(msgtxt)
-    library.keep_elem_refs(msgtxt, smsgtxt)
-    _fl_show_messages(smsgtxt)
+    s_msgtxt = library.convert_to_stringc(msgtxt)
+    library.keep_elem_refs(msgtxt, s_msgtxt)
+    _fl_show_messages(s_msgtxt)
 
 
 def fl_show_msg(fmttxt):
@@ -191,9 +191,9 @@ def fl_show_msg(fmttxt):
         None, [xfdata.STRING],
         """void fl_show_msg(const char * p1)""")
     library.check_if_initialized()
-    sfmttxt = library.convert_to_string(fmttxt)
-    library.keep_elem_refs(fmttxt, sfmttxt)
-    _fl_show_msg(sfmttxt)
+    s_fmttxt = library.convert_to_stringc(fmttxt)
+    library.keep_elem_refs(fmttxt, s_fmttxt)
+    _fl_show_msg(s_fmttxt)
 
 
 def fl_hide_message():
@@ -223,7 +223,7 @@ fl_hide_messages = fl_hide_message
 
 
 def fl_show_question(questmsg, defbtn):
-    """fl_show_question(questmsg, defbtn)
+    """fl_show_question(questmsg, defbtn) -> pushedbtn
     
     Shows a message (with possible embedded newlines in it) with a Yes
     and a No button. It returns whether the user pushed the Yes button. The
@@ -257,10 +257,10 @@ def fl_show_question(questmsg, defbtn):
         cty.c_int, [xfdata.STRING, cty.c_int],
         """int fl_show_question(const char * p1, int p2)""")
     library.check_if_initialized()
-    squestmsg = library.convert_to_string(questmsg)
-    idefbtn = library.convert_to_int(defbtn)
-    library.keep_elem_refs(questmsg, defbtn, squestmsg, idefbtn)
-    retval = _fl_show_question(squestmsg, idefbtn)
+    s_questmsg = library.convert_to_stringc(questmsg)
+    i_defbtn = library.convert_to_intc(defbtn)
+    library.keep_elem_refs(questmsg, defbtn, s_questmsg, i_defbtn)
+    retval = _fl_show_question(s_questmsg, i_defbtn)
     return retval
 
 
@@ -286,8 +286,8 @@ def fl_hide_question():
     _fl_hide_question()
 
 
-def fl_show_alert(title, msg1, msg2, centered):
-    """fl_show_alert(title, msg1, msg2, centered)
+def fl_show_alert(title, msgtxt1, msgtxt2, centered):
+    """fl_show_alert(title, msgtxt1, msgtxt2, centered)
     
     Shows an alert message, with an alert icon (!) is added and the
     first string is shown bold-faced.
@@ -296,9 +296,9 @@ def fl_show_alert(title, msg1, msg2, centered):
     ----------
         title : str
             title of alert
-        msg1 : str
+        msgtxt1 : str
             first message text
-        msg2 : str
+        msgtxt2 : str
             other message text
         centered : int
             if alert has to be displayed centered on the screen or not.
@@ -319,13 +319,13 @@ def fl_show_alert(title, msg1, msg2, centered):
         """void fl_show_alert(const char * p1, const char * p2,
            const char * p3, int p4)""")
     library.check_if_initialized()
-    stitle = library.convert_to_string(title)
-    smsg1 = library.convert_to_string(msg1)
-    smsg2 = library.convert_to_string(msg2)
-    icentered = library.convert_to_int(centered)
-    library.keep_elem_refs(title, msg1, msg2, centered, stitle, smsg1,
-                           smsg2, icentered)
-    _fl_show_alert(stitle, smsg1, smsg2, icentered)
+    s_title = library.convert_to_stringc(title)
+    s_msgtxt1 = library.convert_to_stringc(msgtxt1)
+    s_msgtxt2 = library.convert_to_stringc(msgtxt2)
+    i_centered = library.convert_to_intc(centered)
+    library.keep_elem_refs(title, msgtxt1, msgtxt2, centered, s_title, \
+            s_msgtxt1, s_msgtxt2, i_centered)
+    _fl_show_alert(s_title, s_msgtxt1, s_msgtxt2, i_centered)
 
 
 def fl_show_alert2(centered, fmttxt):
@@ -359,10 +359,10 @@ def fl_show_alert2(centered, fmttxt):
         None, [cty.c_int, xfdata.STRING],
         """void fl_show_alert2(int c, const char * fmt)""")
     library.check_if_initialized()
-    icentered = library.convert_to_int(centered)
-    sfmttxt = library.convert_to_string(fmttxt)
-    library.keep_elem_refs(centered, fmttxt, icentered, sfmttxt)
-    _fl_show_alert2(icentered, sfmttxt)
+    i_centered = library.convert_to_intc(centered)
+    s_fmttxt = library.convert_to_stringc(fmttxt)
+    library.keep_elem_refs(centered, fmttxt, i_centered, s_fmttxt)
+    _fl_show_alert2(i_centered, s_fmttxt)
 
 
 def fl_hide_alert():
@@ -388,9 +388,9 @@ def fl_hide_alert():
 
 
 def fl_show_input(msgtxt, defstr):
-    """fl_show_input(msgtxt, defstr)
+    """fl_show_input(msgtxt, defstr) -> text
     
-    Obtains some text from user, showing a default text. It has OK
+    Finds out some text from user, showing a default text. It has OK
     and Cancel buttons.
 
     Parameters
@@ -419,17 +419,17 @@ def fl_show_input(msgtxt, defstr):
         xfdata.STRING, [xfdata.STRING, xfdata.STRING],
         """const char * fl_show_input(const char * p1, const char * p2)""")
     library.check_if_initialized()
-    smsgtxt = library.convert_to_string(msgtxt)
-    sdefstr = library.convert_to_string(defstr)
-    library.keep_elem_refs(msgtxt, defstr, smsgtxt, sdefstr)
-    retval = _fl_show_input(smsgtxt, sdefstr)
+    s_msgtxt = library.convert_to_stringc(msgtxt)
+    s_defstr = library.convert_to_stringc(defstr)
+    library.keep_elem_refs(msgtxt, defstr, s_msgtxt, s_defstr)
+    retval = _fl_show_input(s_msgtxt, s_defstr)
     return retval
 
 
 def fl_hide_input():
     """fl_hide_input()
     
-    Hides a previously shown input object.
+    Hides a previously shown input goodie.
 
     Examples
     --------
@@ -449,7 +449,7 @@ def fl_hide_input():
 
 
 def fl_show_simple_input(msgtxt, defstr):
-    """fl_show_simple_input(msgtxt, defstr)
+    """fl_show_simple_input(msgtxt, defstr) -> text
     
     Asks the user for textual input. It has an OK button only.
 
@@ -481,15 +481,15 @@ def fl_show_simple_input(msgtxt, defstr):
         """const char * fl_show_simple_input(const char * p1,
            const char * p2)""")
     library.check_if_initialized()
-    smsgtxt = library.convert_to_string(msgtxt)
-    sdefstr = library.convert_to_string(defstr)
-    library.keep_elem_refs(msgtxt, defstr, smsgtxt, sdefstr)
-    retval = _fl_show_simple_input(smsgtxt, sdefstr)
+    s_msgtxt = library.convert_to_stringc(msgtxt)
+    s_defstr = library.convert_to_stringc(defstr)
+    library.keep_elem_refs(msgtxt, defstr, s_msgtxt, s_defstr)
+    retval = _fl_show_simple_input(s_msgtxt, s_defstr)
     return retval
 
 
 def fl_show_colormap(oldcolr):
-    """fl_show_colormap(oldcolr)
+    """fl_show_colormap(oldcolr) -> colridx
     
     Shows a colormap color selector from which the user can select a
     color. The user can decide not to change this color by pressing the
@@ -524,16 +524,17 @@ def fl_show_colormap(oldcolr):
         cty.c_int, [cty.c_int],
         """int fl_show_colormap(int p1)""")
     library.check_if_initialized()
-    ioldcolr = library.convert_to_int(oldcolr)
-    library.keep_elem_refs(oldcolr, ioldcolr)
-    retval = _fl_show_colormap(ioldcolr)
+    i_oldcolr = library.convert_to_intc(oldcolr)
+    library.keep_elem_refs(oldcolr, i_oldcolr)
+    retval = _fl_show_colormap(i_oldcolr)
     return retval
 
 
 # choices
 
-def fl_show_choices(msgtxt, numb, btn1txt, btn2txt, btn3txt, defcho):
-    """fl_show_choices(msgtxt, numb, btn1txt, btn2txt, btn3txt, defcho)
+def fl_show_choices(msgtxt, numbtns, btn1txt, btn2txt, btn3txt, defcho):
+    """fl_show_choices(msgtxt, numbtns, btn1txt, btn2txt, btn3txt, defcho)
+    -> btnnum
     
     Shows a message, as a single string with possible embedded newlines,
     with one, two or three buttons. The user can also press the <1>, <2> or
@@ -543,7 +544,7 @@ def fl_show_choices(msgtxt, numb, btn1txt, btn2txt, btn3txt, defcho):
     ----------
         msgtxt : str
             message text
-        numb : int
+        numbtns : int
             number of buttons
         btn1txt : str
             label of first button from the left
@@ -576,23 +577,24 @@ def fl_show_choices(msgtxt, numb, btn1txt, btn2txt, btn3txt, defcho):
         """int fl_show_choices(const char * p1, int p2,
            const char * p3, const char * p4, const char * p5, int p6)""")
     library.check_if_initialized()
-    smsgtxt = library.convert_to_string(msgtxt)
-    inumb = library.convert_to_int(numb)
-    sbtn1txt = library.convert_to_string(btn1txt)
-    sbtn2txt = library.convert_to_string(btn2txt)
-    sbtn3txt = library.convert_to_string(btn3txt)
-    idefcho = library.convert_to_int(defcho)
-    library.keep_elem_refs(msgtxt, numb, btn1txt, btn2txt, btn3txt, defcho, \
-            smsgtxt, inumb, sbtn1txt, sbtn2txt, sbtn3txt, idefcho)
-    retval = _fl_show_choices(smsgtxt, inumb, sbtn1txt, sbtn2txt, sbtn3txt, \
-                              idefcho)
+    s_msgtxt = library.convert_to_stringc(msgtxt)
+    i_numbtns = library.convert_to_intc(numbtns)
+    s_btn1txt = library.convert_to_stringc(btn1txt)
+    s_btn2txt = library.convert_to_stringc(btn2txt)
+    s_btn3txt = library.convert_to_stringc(btn3txt)
+    i_defcho = library.convert_to_intc(defcho)
+    library.keep_elem_refs(msgtxt, numbtns, btn1txt, btn2txt, btn3txt, \
+            defcho, s_msgtxt, i_numbtns, s_btn1txt, s_btn2txt, s_btn3txt, \
+            i_defcho)
+    retval = _fl_show_choices(s_msgtxt, i_numbtns, s_btn1txt, s_btn2txt, \
+            s_btn3txt, i_defcho)
     return retval
 
 
-def fl_show_choice(msg1txt, msg2txt, msg3txt, numb, btn1txt, btn2txt, btn3txt,
-                   defcho):
-    """fl_show_choice(msg1txt, msg2txt, msg3txt, numb, btn1txt, btn2txt,
-    btn3txt, defcho)
+def fl_show_choice(msg1txt, msg2txt, msg3txt, numbtns, btn1txt, btn2txt, 
+                   btn3txt, defcho):
+    """fl_show_choice(msg1txt, msg2txt, msg3txt, numbtns, btn1txt, btn2txt,
+    btn3txt, defcho) -> btnnum
     
     Shows a message, up to three lines, with one, two or three buttons.
     The user can also press the <1>, <2> or <3> key to indicate the first,
@@ -606,7 +608,7 @@ def fl_show_choice(msg1txt, msg2txt, msg3txt, numb, btn1txt, btn2txt, btn3txt,
             second message text
         msg3txt : str
             third message text
-        numb : int
+        numbtns : int
             number of buttons
         btn1txt : str
             label of first button from the left
@@ -640,19 +642,19 @@ def fl_show_choice(msg1txt, msg2txt, msg3txt, numb, btn1txt, btn2txt, btn3txt,
            const char * p3, int p4, const char * p5, const char * p6,
            const char * p7, int p8)""")
     library.check_if_initialized()
-    smsg1txt = library.convert_to_string(msg1txt)
-    smsg2txt = library.convert_to_string(msg2txt)
-    smsg3txt = library.convert_to_string(msg3txt)
-    inumb = library.convert_to_int(numb)
-    sbtn1txt = library.convert_to_string(btn1txt)
-    sbtn2txt = library.convert_to_string(btn2txt)
-    sbtn3txt = library.convert_to_string(btn3txt)
-    idefcho = library.convert_to_int(defcho)
-    library.keep_elem_refs(msg1txt, msg2txt, msg3txt, numb, btn1txt,
-            btn2txt, btn3txt, defcho, smsg1txt, smsg2txt, smsg3txt, inumb,
-            sbtn1txt, sbtn2txt, sbtn3txt, idefcho)
-    retval = _fl_show_choice(smsg1txt, smsg2txt, smsg3txt, inumb, sbtn1txt,
-            sbtn2txt, sbtn3txt, idefcho)
+    s_msg1txt = library.convert_to_stringc(msg1txt)
+    s_msg2txt = library.convert_to_stringc(msg2txt)
+    s_msg3txt = library.convert_to_stringc(msg3txt)
+    i_numbtns = library.convert_to_intc(numbtns)
+    s_btn1txt = library.convert_to_stringc(btn1txt)
+    s_btn2txt = library.convert_to_stringc(btn2txt)
+    s_btn3txt = library.convert_to_stringc(btn3txt)
+    i_defcho = library.convert_to_intc(defcho)
+    library.keep_elem_refs(msg1txt, msg2txt, msg3txt, numbtns, btn1txt, \
+            btn2txt, btn3txt, defcho, s_msg1txt, s_msg2txt, s_msg3txt, \
+            i_numbtns, s_btn1txt, s_btn2txt, s_btn3txt, i_defcho)
+    retval = _fl_show_choice(s_msg1txt, s_msg2txt, s_msg3txt, i_numbtns, \
+            s_btn1txt, s_btn2txt, s_btn3txt, i_defcho)
     return retval
 
 
@@ -678,18 +680,18 @@ def fl_hide_choice():
     _fl_hide_choice()
 
 
-def fl_set_choices_shortcut(shc1txt, shc2txt, shc3txt):
-    """fl_set_choices_shortcut(shc1txt, shc2txt, shc3txt)
+def fl_set_choices_shortcut(shortcuttxt1, shortcuttxt2, shortcuttxt3):
+    """fl_set_choices_shortcut(shortcuttxt1, shortcuttxt2, shortcuttxt3)
     
     Defines more mnemonic hotkeys as shortcut text for choices.
 
     Parameters
     ----------
-        shc1txt : str
+        shortcuttxt1 : str
             shortcut to bind to first button
-        shc2txt : str
+        shortcuttxt2 : str
             shortcut to bind to second button
-        shc3txt : str
+        shortcuttxt3 : str
             shortcut to bind to third button
 
     Examples
@@ -707,12 +709,12 @@ def fl_set_choices_shortcut(shc1txt, shc2txt, shc3txt):
         """void fl_set_choices_shortcut(const char * p1, const char * p2,
            const char * p3)""")
     library.check_if_initialized()
-    sshc1txt = library.convert_to_string(shc1txt)
-    sshc2txt = library.convert_to_string(shc2txt)
-    sshc3txt = library.convert_to_string(shc3txt)
-    library.keep_elem_refs(shc1txt, shc2txt, shc3txt, sshc1txt, sshc2txt,
-        sshc3txt)
-    _fl_set_choices_shortcut(sshc1txt, sshc2txt, sshc3txt)
+    s_shortcuttxt1 = library.convert_to_stringc(shortcuttxt1)
+    s_shortcuttxt2 = library.convert_to_stringc(shortcuttxt2)
+    s_shortcuttxt3 = library.convert_to_stringc(shortcuttxt3)
+    library.keep_elem_refs(shortcuttxt1, shortcuttxt2, shortcuttxt3, \
+            s_shortcuttxt1, s_shortcuttxt2, s_shortcuttxt3)
+    _fl_set_choices_shortcut(s_shortcuttxt1, s_shortcuttxt2, s_shortcuttxt3)
 
 
 fl_set_choice_shortcut = fl_set_choices_shortcut
@@ -720,8 +722,8 @@ fl_set_choice_shortcut = fl_set_choices_shortcut
 
 # one liner
 
-def fl_show_oneliner(text, x, y):
-    """fl_show_oneliner(text, x, y)
+def fl_show_oneliner(text, xpos, ypos):
+    """fl_show_oneliner(text, xpos, ypos)
     
     Shows a one-line message that can only be removed programmatically.
     Multi-line message is possible by embedding the newline character in text.
@@ -730,9 +732,9 @@ def fl_show_oneliner(text, x, y):
     ----------
         text : str
             oneliner message text
-        x : int
+        xpos : int
             horizontal position (relative to root window)
-        y : int
+        ypos : int
             vertical position (relative to root window)
 
     Examples
@@ -750,11 +752,11 @@ def fl_show_oneliner(text, x, y):
         """void fl_show_oneliner(const char * p1, FL_Coord p2,
            FL_Coord p3)""")
     library.check_if_initialized()
-    stext = library.convert_to_string(text)
-    ix = library.convert_to_FL_Coord(x)
-    iy = library.convert_to_FL_Coord(y)
-    library.keep_elem_refs(text, stext, x, ix, y, iy)
-    _fl_show_oneliner(stext, ix, iy)
+    s_text = library.convert_to_stringc(text)
+    i_xpos = library.convert_to_FL_Coord(xpos)
+    i_ypos = library.convert_to_FL_Coord(ypos)
+    library.keep_elem_refs(text, s_text, xpos, i_xpos, ypos, i_ypos)
+    _fl_show_oneliner(s_text, i_xpos, i_ypos)
 
 
 def fl_hide_oneliner():
@@ -782,7 +784,7 @@ def fl_hide_oneliner():
 def fl_set_oneliner_font(style, size):
     """fl_set_oneliner_font(style, size)
     
-    Sets font style and size to use in a oneliner message.
+    Defines font style and size to use in a oneliner message.
 
     Parameters
     ----------
@@ -801,7 +803,7 @@ def fl_set_oneliner_font(style, size):
 
     Examples
     --------
-        >>> fl_set_oneliner_font(FL_BOLD_STYLE, FL_NORMAL_SIZE)
+        >>> fl_set_oneliner_font(xfdata.FL_BOLD_STYLE, xfdata.FL_NORMAL_SIZE)
 
     Notes
     -----
@@ -814,17 +816,17 @@ def fl_set_oneliner_font(style, size):
         """void fl_set_oneliner_font(int p1, int p2)""")
     library.check_if_initialized()
     library.checkfatal_allowed_value_in_list(style, xfdata.TEXTSTYLE_list)
+    i_style = library.convert_to_intc(style)
     library.checknonfatal_allowed_value_in_list(size, xfdata.FONTSIZE_list)
-    istyle = library.convert_to_int(style)
-    isize = library.convert_to_int(size)
-    library.keep_elem_refs(style, size, istyle, isize)
-    _fl_set_oneliner_font(istyle, isize)
+    i_size = library.convert_to_intc(size)
+    library.keep_elem_refs(style, size, i_style, i_size)
+    _fl_set_oneliner_font(i_style, i_size)
 
 
 def fl_set_oneliner_color(fgcolr, bgcolr):
     """fl_set_oneliner_color(fgcolr, bgcolr)
     
-    Sets color to use with oneliner message. By default, the background
+    Defines color to use with oneliner message. By default, the background
     of the message is yellow and the text black.
 
     Parameters
@@ -836,7 +838,7 @@ def fl_set_oneliner_color(fgcolr, bgcolr):
 
     Examples
     --------
-        >>> fl_set_oneliner_color(fgcolr, bgcolr)
+        >>> fl_set_oneliner_color(xfdata.FL_RED, xfdata.FL_YELLOW)
 
     Notes
     -----
@@ -850,16 +852,16 @@ def fl_set_oneliner_color(fgcolr, bgcolr):
     library.check_if_initialized()
     library.checknonfatal_allowed_value_in_list(fgcolr, xfdata.COLOR_list)
     library.checknonfatal_allowed_value_in_list(bgcolr, xfdata.COLOR_list)
-    ulfgcolr = library.convert_to_FL_COLOR(fgcolr)
-    ulbgcolr = library.convert_to_FL_COLOR(bgcolr)
-    library.keep_elem_refs(fgcolr, bgcolr, ulfgcolr, ulbgcolr)
-    _fl_set_oneliner_color(ulfgcolr, ulbgcolr)
+    ul_fgcolr = library.convert_to_FL_COLOR(fgcolr)
+    ul_bgcolr = library.convert_to_FL_COLOR(bgcolr)
+    library.keep_elem_refs(fgcolr, bgcolr, ul_fgcolr, ul_bgcolr)
+    _fl_set_oneliner_color(ul_fgcolr, ul_bgcolr)
 
 
 def fl_set_tooltip_font(style, size):
     """fl_set_tooltip_font(style, size)
     
-    Sets the font style and size of the tooltip.
+    Defines the font style and size of the tooltip.
 
     Parameters
     ----------
@@ -892,17 +894,17 @@ def fl_set_tooltip_font(style, size):
         """void fl_set_tooltip_font(int p1, int p2)""")
     library.check_if_initialized()
     library.checkfatal_allowed_value_in_list(style, xfdata.TEXTSTYLE_list)
+    i_style = library.convert_to_intc(style)
     library.checknonfatal_allowed_value_in_list(size, xfdata.FONTSIZE_list)
-    istyle = library.convert_to_int(style)
-    isize = library.convert_to_int(size)
-    library.keep_elem_refs(style, size, istyle, isize)
-    _fl_set_tooltip_font(istyle, isize)
+    i_size = library.convert_to_intc(size)
+    library.keep_elem_refs(style, size, i_style, i_size)
+    _fl_set_tooltip_font(i_style, i_size)
 
 
 def fl_set_tooltip_color(fgcolr, bgcolr):
     """fl_set_tooltip_color(fgcolr, bgcolr)
     
-    Sets the foreground and the background colors of the tooltip.
+    Defines the foreground and the background colors of the tooltip.
 
     Parameters
     ----------
@@ -926,17 +928,17 @@ def fl_set_tooltip_color(fgcolr, bgcolr):
         """void fl_set_tooltip_color(FL_COLOR p1, FL_COLOR p2)""")
     library.check_if_initialized()
     library.checknonfatal_allowed_value_in_list(fgcolr, xfdata.COLOR_list)
+    ul_fgcolr = library.convert_to_FL_COLOR(fgcolr)
     library.checknonfatal_allowed_value_in_list(bgcolr, xfdata.COLOR_list)
-    ulfgcolr = library.convert_to_FL_COLOR(fgcolr)
-    ulbgcolr = library.convert_to_FL_COLOR(bgcolr)
-    library.keep_elem_refs(fgcolr, bgcolr, ulfgcolr, ulbgcolr)
-    _fl_set_tooltip_color(ulfgcolr, ulbgcolr)
+    ul_bgcolr = library.convert_to_FL_COLOR(bgcolr)
+    library.keep_elem_refs(fgcolr, bgcolr, ul_fgcolr, ul_bgcolr)
+    _fl_set_tooltip_color(ul_fgcolr, ul_bgcolr)
 
 
 def fl_set_tooltip_boxtype(boxtype):
     """fl_set_tooltip_boxtype(boxtype)
     
-    Sets the boxtype of the tooltip.
+    Defines the boxtype of the tooltip.
 
     Parameters
     ----------
@@ -963,15 +965,15 @@ def fl_set_tooltip_boxtype(boxtype):
         """void fl_set_tooltip_boxtype(int p1)""")
     library.check_if_initialized()
     library.checkfatal_allowed_value_in_list(boxtype, xfdata.BOXTYPE_list)
-    iboxtype = library.convert_to_int(boxtype)
-    library.keep_elem_refs(boxtype, iboxtype)
-    _fl_set_tooltip_boxtype(iboxtype)
+    i_boxtype = library.convert_to_intc(boxtype)
+    library.keep_elem_refs(boxtype, i_boxtype)
+    _fl_set_tooltip_boxtype(i_boxtype)
 
 
 def fl_set_tooltip_lalign(align):
     """fl_set_tooltip_lalign(align)
     
-    Sets the alignment of the tooltip.
+    Defines the alignment of the tooltip.
 
     Parameters
     ----------
@@ -997,13 +999,13 @@ def fl_set_tooltip_lalign(align):
         """void fl_set_tooltip_lalign(int p1)""")
     library.check_if_initialized()
     library.checkfatal_allowed_value_in_list(align, xfdata.ALIGN_list)
-    ialign = library.convert_to_int(align)
-    library.keep_elem_refs(align, ialign)
-    _fl_set_tooltip_lalign(ialign)
+    i_align = library.convert_to_intc(align)
+    library.keep_elem_refs(align, i_align)
+    _fl_set_tooltip_lalign(i_align)
 
 
 def fl_exe_command(cmdtxt, block):
-    """fl_exe_command(cmdtxt, block)
+    """fl_exe_command(cmdtxt, block) -> status
     
     Forks a new process that runs specified command.
 
@@ -1035,10 +1037,10 @@ def fl_exe_command(cmdtxt, block):
         cty.c_long, [xfdata.STRING, cty.c_int],
         """long int fl_exe_command(const char * p1, int p2)""")
     library.check_if_initialized()
-    scmdtxt = library.convert_to_string(cmdtxt)
-    iblock = library.convert_to_int(block)
-    library.keep_elem_refs(cmdtxt, block, scmdtxt, iblock)
-    retval = _fl_exe_command(scmdtxt, iblock)
+    s_cmdtxt = library.convert_to_stringc(cmdtxt)
+    i_block = library.convert_to_intc(block)
+    library.keep_elem_refs(cmdtxt, block, s_cmdtxt, i_block)
+    retval = _fl_exe_command(s_cmdtxt, i_block)
     return retval
 
 
@@ -1046,7 +1048,7 @@ fl_open_command = fl_exe_command
 
 
 def fl_end_command(pid):
-    """fl_end_command(pid)
+    """fl_end_command(pid) -> status
     
     Suspends the current process and waits until the child process is
     completed.
@@ -1075,9 +1077,9 @@ def fl_end_command(pid):
         cty.c_int, [cty.c_long],
         """int fl_end_command(long int p1)""")
     library.check_if_initialized()
-    lpid = library.convert_to_long(pid)
-    library.keep_elem_refs(pid, lpid)
-    retval = _fl_end_command(lpid)
+    l_pid = library.convert_to_longc(pid)
+    library.keep_elem_refs(pid, l_pid)
+    retval = _fl_end_command(l_pid)
     return retval
 
 
@@ -1085,7 +1087,7 @@ fl_close_command = fl_end_command
 
 
 def fl_check_command(pid):
-    """fl_check_command(pid)
+    """fl_check_command(pid) -> status
     
     Polls the status of a child process.
 
@@ -1096,7 +1098,7 @@ def fl_check_command(pid):
 
     Returns
     -------
-        result : int
+        status : int
             0 if the child process is finished, or 1 if the child process
             still exists (running or stopped), or -1 if an error has
             occurred inside the function
@@ -1115,14 +1117,14 @@ def fl_check_command(pid):
         cty.c_int, [cty.c_long],
         """int fl_check_command(long int p1)""")
     library.check_if_initialized()
-    lpid = library.convert_to_long(pid)
-    library.keep_elem_refs(pid, lpid)
-    retval = _fl_check_command(lpid)
+    l_pid = library.convert_to_longc(pid)
+    library.keep_elem_refs(pid, l_pid)
+    retval = _fl_check_command(l_pid)
     return retval
 
 
-def fl_popen(cmdtxt, otype):
-    """fl_popen(cmdtxt, otype)
+def fl_popen(cmdtxt, opntype):
+    """fl_popen(cmdtxt, opntype) -> ptr_file
     
     Executes the command in a child process, and logs the stderr messages
     into the command log. If otype is "w", stdout will also be logged into
@@ -1132,12 +1134,12 @@ def fl_popen(cmdtxt, otype):
     ----------
         cmdtxt : str
             existing filename to execute
-        otype : str
+        opntype : str
             type of opening (e.g. w, r ..)
 
     Returns
     -------
-        pFile : pointer to xfdata.FILE
+        ptr_file : pointer to xfdata.FILE
             file opened
 
     Examples
@@ -1154,21 +1156,21 @@ def fl_popen(cmdtxt, otype):
         cty.POINTER(xfdata.FILE), [xfdata.STRING, xfdata.STRING],
         """FILE * fl_popen(const char * p1, const char * p2)""")
     library.check_if_initialized()
-    scmdtxt = library.convert_to_string(cmdtxt)
-    sotype = library.convert_to_string(otype)
-    library.keep_elem_refs(cmdtxt, otype, scmdtxt, sotype)
-    retval = _fl_popen(scmdtxt, sotype)
+    s_cmdtxt = library.convert_to_stringc(cmdtxt)
+    s_opntype = library.convert_to_stringc(opntype)
+    library.keep_elem_refs(cmdtxt, opntype, s_cmdtxt, s_opntype)
+    retval = _fl_popen(s_cmdtxt, s_opntype)
     return retval
 
 
-def fl_pclose(pFile):
-    """fl_pclose(pFile)
+def fl_pclose(ptr_file):
+    """fl_pclose(ptr_file) -> result
     
     Cleans up the child process executed.
 
     Parameters
     ----------
-        pFile : pointer to xfdata.FILE
+        ptr_file : pointer to xfdata.FILE
             opened file stream returned by fl_popen()
 
     Returns
@@ -1191,14 +1193,14 @@ def fl_pclose(pFile):
         cty.c_int, [cty.POINTER(xfdata.FILE)],
         """int fl_pclose(FILE * p1)""")
     library.check_if_initialized()
-    library.verify_otherclassptr_type(pFile, cty.POINTER(xfdata.FILE))
-    library.keep_elem_refs(pFile)
-    retval = _fl_pclose(pFile)
+    library.verify_otherclassptr_type(ptr_file, cty.POINTER(xfdata.FILE))
+    library.keep_elem_refs(ptr_file)
+    retval = _fl_pclose(ptr_file)
     return retval
 
 
 def fl_end_all_command():
-    """fl_end_all_command()
+    """fl_end_all_command() -> status
     
     Waits for all the child processes initiated by fl_exe_command()
     to complete.
@@ -1252,9 +1254,9 @@ def fl_show_command_log(border):
     library.check_if_initialized()
     library.checkfatal_allowed_value_in_list(border, \
             xfdata.DECORATION_list)
-    iborder = library.convert_to_int(border)
-    library.keep_elem_refs(border, iborder)
-    _fl_show_command_log(iborder)
+    i_border = library.convert_to_intc(border)
+    library.keep_elem_refs(border, i_border)
+    _fl_show_command_log(i_border)
 
 
 def fl_hide_command_log():
@@ -1325,21 +1327,21 @@ def fl_addto_command_log(txtstr):
         None, [xfdata.STRING],
         """void fl_addto_command_log(const char * p1)""")
     library.check_if_initialized()
-    stxtstr = library.convert_to_string(txtstr)
-    library.keep_elem_refs(txtstr, stxtstr)
-    _fl_addto_command_log(stxtstr)
+    s_txtstr = library.convert_to_stringc(txtstr)
+    library.keep_elem_refs(txtstr, s_txtstr)
+    _fl_addto_command_log(s_txtstr)
 
 
-def fl_set_command_log_position(x, y):
-    """fl_set_command_log_position(x, y)
+def fl_set_command_log_position(xpos, ypos):
+    """fl_set_command_log_position(xpos, ypos)
     
     Changes the default placement of the command log.
 
     Parameters
     ----------
-        x : int
+        xpos : int
             horizontal position (upper-left corner)
-        y : int
+        ypos : int
             vertical position (upper-left corner)
 
     Examples
@@ -1356,24 +1358,24 @@ def fl_set_command_log_position(x, y):
         None, [cty.c_int, cty.c_int],
         """void fl_set_command_log_position(int p1, int p2)""")
     library.check_if_initialized()
-    ix = library.convert_to_int(x)
-    iy = library.convert_to_int(y)
-    library.keep_elem_refs(x, y, ix, iy)
-    _fl_set_command_log_position(ix, iy)
+    i_xpos = library.convert_to_intc(xpos)
+    i_ypos = library.convert_to_intc(ypos)
+    library.keep_elem_refs(xpos, ypos, i_xpos, i_ypos)
+    _fl_set_command_log_position(i_xpos, i_ypos)
 
 
 def fl_get_command_log_fdstruct():
-    """fl_get_command_log_fdstruct()
+    """fl_get_command_log_fdstruct() -> ptr_cmdlog
     
-    Obtains the GUI structure of the command browser. From the information
+    Finds out the GUI structure of the command browser. From the information
     returned, the application program can change various attributes of the
-    command browser and its associated objects. Note however, that you
+    command browser and its associated flobjects. Note however, that you
     should not hide/show the form or free any member of the returned
     structure.
 
     Returns
     -------
-        pCmdlog : pointer to xfdata.FD_CMDLOG
+        ptr_cmdlog : pointer to xfdata.FD_CMDLOG
             command log browser class instance
 
     Examples
@@ -1396,20 +1398,20 @@ def fl_get_command_log_fdstruct():
 
 # file selector
 
-def fl_use_fselector(num):
-    """fl_use_fselector(num)
+def fl_use_fselector(fselnum):
+    """fl_use_fselector(fselnum) -> oldfselnum
     
-    Sets the currently active file selector.
+    Defines the currently active file selector.
 
     Parameters
     ----------
-        num : int
+        fselnum : int
             fselector number to use. Values between 0 and
             xfdata.FL_MAX_FSELECTOR - 1
 
     Returns
     -------
-        oldnum : int
+        oldfselnum : int
             old file selector number
 
     Examples
@@ -1426,14 +1428,14 @@ def fl_use_fselector(num):
         cty.c_int, [cty.c_int],
         """int fl_use_fselector(int p1)""")
     library.check_if_initialized()
-    inum = library.convert_to_int(num)
-    library.keep_elem_refs(num, inum)
-    retval = _fl_use_fselector(inum)
+    i_fselnum = library.convert_to_intc(fselnum)
+    library.keep_elem_refs(fselnum, i_fselnum)
+    retval = _fl_use_fselector(i_fselnum)
     return retval
 
 
 def fl_show_fselector(msgtxt, dirname, pattern, deftxt):
-    """fl_show_fselector(msgtxt, dirname, pattern, deftxt)
+    """fl_show_fselector(msgtxt, dirname, pattern, deftxt) -> text
     
     Show a file selector, providing an easy and interactive way to let
     the user select files.
@@ -1473,13 +1475,13 @@ def fl_show_fselector(msgtxt, dirname, pattern, deftxt):
         """const char * fl_show_fselector(const char * p1,
            const char * p2, const char * p3, const char * p4)""")
     library.check_if_initialized()
-    smsgtxt = library.convert_to_string(msgtxt)
-    sdirname = library.convert_to_string(dirname)
-    spattern = library.convert_to_string(pattern)
-    sdeftxt = library.convert_to_string(deftxt)
-    library.keep_elem_refs(msgtxt, dirname, pattern, deftxt, smsgtxt,
-        sdirname, spattern, sdeftxt)
-    retval = _fl_show_fselector(smsgtxt, sdirname, spattern, sdeftxt)
+    s_msgtxt = library.convert_to_stringc(msgtxt)
+    s_dirname = library.convert_to_stringc(dirname)
+    s_pattern = library.convert_to_stringc(pattern)
+    s_deftxt = library.convert_to_stringc(deftxt)
+    library.keep_elem_refs(msgtxt, dirname, pattern, deftxt, s_msgtxt,
+        s_dirname, s_pattern, s_deftxt)
+    retval = _fl_show_fselector(s_msgtxt, s_dirname, s_pattern, s_deftxt)
     return retval
 
 
@@ -1513,9 +1515,9 @@ def fl_set_fselector_fontsize(size):
         """void fl_set_fselector_fontsize(int p1)""")
     library.check_if_initialized()
     library.checknonfatal_allowed_value_in_list(size, xfdata.FONTSIZE_list)
-    isize = library.convert_to_int(size)
-    library.keep_elem_refs(size, isize)
-    _fl_set_fselector_fontsize(isize)
+    i_size = library.convert_to_intc(size)
+    library.keep_elem_refs(size, i_size)
+    _fl_set_fselector_fontsize(i_size)
 
 
 def fl_set_fselector_fontstyle(style):
@@ -1549,15 +1551,15 @@ def fl_set_fselector_fontstyle(style):
         """void fl_set_fselector_fontstyle(int p1)""")
     library.check_if_initialized()
     library.checkfatal_allowed_value_in_list(style, xfdata.TEXTSTYLE_list)
-    istyle = library.convert_to_int(style)
-    library.keep_elem_refs(style, istyle)
-    _fl_set_fselector_fontstyle(istyle)
+    i_style = library.convert_to_intc(style)
+    library.keep_elem_refs(style, i_style)
+    _fl_set_fselector_fontstyle(i_style)
 
 
 def fl_set_fselector_placement(place):
     """fl_set_fselector_placement(place)
     
-    Sets the placement of the file selector. By default it is centered
+    Defines the placement of the file selector. By default it is centered
     on the screen (FL_PLACE_CENTER|FL_FREE_SIZE).
 
     Parameters
@@ -1586,9 +1588,9 @@ def fl_set_fselector_placement(place):
         """void fl_set_fselector_placement(int p1)""")
     library.check_if_initialized()
     library.checkfatal_allowed_value_in_list(place, xfdata.PLACE_list)
-    iplace = library.convert_to_int(place)
-    library.keep_elem_refs(place, iplace)
-    _fl_set_fselector_placement(iplace)
+    i_place = library.convert_to_intc(place)
+    library.keep_elem_refs(place, i_place)
+    _fl_set_fselector_placement(i_place)
 
 
 def fl_set_fselector_border(border):
@@ -1618,15 +1620,15 @@ def fl_set_fselector_border(border):
         """void fl_set_fselector_border(int p1)""")
     library.check_if_initialized()
     library.checkfatal_allowed_value_in_list(border, xfdata.DECORATION_list)
-    iborder = library.convert_to_int(border)
-    library.keep_elem_refs(border, iborder)
-    _fl_set_fselector_border(iborder)
+    i_border = library.convert_to_intc(border)
+    library.keep_elem_refs(border, i_border)
+    _fl_set_fselector_border(i_border)
 
 
 def fl_set_fselector_transient(yesno):
     """fl_set_fselector_transient(yesno)
     
-    Sets the property of file selector as transient or fullborder.
+    Defines the property of file selector as transient or fullborder.
 
     Parameters
     ----------
@@ -1650,10 +1652,10 @@ def fl_set_fselector_transient(yesno):
     fl_set_fselector_border(argval)
 
 
-def fl_set_fselector_callback(py_FSCB, vdata):
-    """fl_set_fselector_callback(py_FSCB, vdata)
+def fl_set_fselector_callback(pyfn_FSCB, vdata):
+    """fl_set_fselector_callback(pyfn_FSCB, vdata)
     
-    Sets a callback routine so that whenever the user double clicks on a
+    Defines a callback routine so that whenever the user double clicks on a
     filename, instead of returning the filename, this routine is invoked
     with the filename as the argument. The behavior of the file selector is
     slightly different when a callback is present. Without the callback, a
@@ -1663,7 +1665,7 @@ def fl_set_fselector_callback(py_FSCB, vdata):
 
     Parameters
     ----------
-        py_FSCB : python function callback, returning (unused) value
+        pyfn_FSCB : python function callback, returning (unused) value
             name referring to function(string, vdata) -> num
         vdata : any type (e.g. 'None', int, str, etc..)
             user data to be passed to function; callback has to take care
@@ -1687,21 +1689,21 @@ def fl_set_fselector_callback(py_FSCB, vdata):
         None, [xfdata.FL_FSCB, cty.c_void_p],
         """void fl_set_fselector_callback(FL_FSCB p1, void * p2)""")
     library.check_if_initialized()
-    library.verify_function_type(py_FSCB)
-    c_FSCB = xfdata.FL_FSCB(py_FSCB)
-    pvdata = cty.cast(vdata, cty.c_void_p)
-    library.keep_cfunc_refs(c_FSCB, py_FSCB)
-    library.keep_elem_refs(vdata, pvdata)
-    _fl_set_fselector_callback(c_FSCB, pvdata)
+    library.verify_function_type(pyfn_FSCB)
+    cfn_FSCB = xfdata.FL_FSCB(pyfn_FSCB)
+    ptr_vdata = cty.cast(vdata, cty.c_void_p)
+    library.keep_cfunc_refs(cfn_FSCB, pyfn_FSCB)
+    library.keep_elem_refs(vdata, ptr_vdata)
+    _fl_set_fselector_callback(cfn_FSCB, ptr_vdata)
 
 
 fl_set_fselector_cb = fl_set_fselector_callback
 
 
 def fl_get_filename():
-    """fl_get_filename()
+    """fl_get_filename() -> fname
 
-    Obtains the file name (without the path) after the user changed it.
+    Finds out the file name (without the path) after the user changed it.
 
     Returns
     -------
@@ -1727,9 +1729,9 @@ def fl_get_filename():
 
 
 def fl_get_directory():
-    """fl_get_directory()
+    """fl_get_directory() -> dirname
     
-    Obtains the directory name after the user changed it.
+    Finds out the directory name after the user changed it.
 
     Returns
     -------
@@ -1754,9 +1756,9 @@ def fl_get_directory():
 
 
 def fl_get_pattern():
-    """fl_get_pattern()
+    """fl_get_pattern() -> pattern
 
-    Obtains the pattern after the user changed it.
+    Finds out the pattern after the user changed it.
 
     Returns
     -------
@@ -1782,9 +1784,9 @@ def fl_get_pattern():
 
 
 def fl_set_directory(dirname):
-    """fl_set_directory(dirname)
+    """fl_set_directory(dirname) -> result
     
-    Sets programmatically new value for the default directory.
+    Defines programmatically new value for the default directory.
 
     Parameters
     ----------
@@ -1810,16 +1812,16 @@ def fl_set_directory(dirname):
         cty.c_int, [xfdata.STRING],
         """int fl_set_directory(const char * p1)""")
     library.check_if_initialized()
-    sdirname = library.convert_to_string(dirname)
-    library.keep_elem_refs(dirname, sdirname)
-    retval = _fl_set_directory(sdirname)
+    s_dirname = library.convert_to_stringc(dirname)
+    library.keep_elem_refs(dirname, s_dirname)
+    retval = _fl_set_directory(s_dirname)
     return retval
 
 
 def fl_set_pattern(pattern):
     """fl_set_pattern(pattern)
     
-    Sets programmatically a new value for the default pattern.
+    Defines programmatically a new value for the default pattern.
 
     Parameters
     ----------
@@ -1840,9 +1842,9 @@ def fl_set_pattern(pattern):
         None, [xfdata.STRING],
         """void fl_set_pattern(const char * p1)""")
     library.check_if_initialized()
-    spattern = library.convert_to_string(pattern)
-    library.keep_elem_refs(pattern, spattern)
-    _fl_set_pattern(spattern)
+    s_pattern = library.convert_to_stringc(pattern)
+    library.keep_elem_refs(pattern, s_pattern)
+    _fl_set_pattern(s_pattern)
 
 
 def fl_refresh_fselector():
@@ -1868,8 +1870,8 @@ def fl_refresh_fselector():
     _fl_refresh_fselector()
 
 
-def fl_add_fselector_appbutton(label, py_fn, vdata):
-    """fl_add_fselector_appbutton(label, py_fn, vdata)
+def fl_add_fselector_appbutton(label, pyfn_fselappbtn, vdata):
+    """fl_add_fselector_appbutton(label, pyfn_fselappbtn, vdata)
     
     Adds an application specific button from file selector and a callback
     routine for it.
@@ -1878,7 +1880,7 @@ def fl_add_fselector_appbutton(label, py_fn, vdata):
     ----------
         label : str
             text of label
-        py_fn : python function callback, no return
+        pyfn_fselappbtn : python function callback, no return
             name referring to function(vdata)
         vdata : any type (e.g. 'None', int, str, etc..)
             user data to be passed to function; callback has to take care
@@ -1902,13 +1904,13 @@ def fl_add_fselector_appbutton(label, py_fn, vdata):
         """void fl_add_fselector_appbutton(const char * p1,
            const char * p2, void * p3)""")
     library.check_if_initialized()
-    slabel = library.convert_to_string(label)
-    library.verify_function_type(py_fn)
-    c_fn = xfdata.cfunc_none_voidp(py_fn)
-    pvdata = cty.cast(vdata, cty.c_void_p)
-    library.keep_cfunc_refs(c_fn, py_fn)
-    library.keep_elem_refs(label, vdata, slabel, pvdata)
-    _fl_add_fselector_appbutton(slabel, c_fn, pvdata)
+    s_label = library.convert_to_stringc(label)
+    library.verify_function_type(pyfn_fselappbtn)
+    cfn_fselappbtn = xfdata.cfunc_none_voidp(pyfn_fselappbtn)
+    ptr_vdata = cty.cast(vdata, cty.c_void_p)
+    library.keep_cfunc_refs(cfn_fselappbtn, pyfn_fselappbtn)
+    library.keep_elem_refs(label, vdata, s_label, ptr_vdata)
+    _fl_add_fselector_appbutton(s_label, cfn_fselappbtn, ptr_vdata)
 
 
 def fl_remove_fselector_appbutton(label):
@@ -1935,20 +1937,21 @@ def fl_remove_fselector_appbutton(label):
         None, [xfdata.STRING],
         """void fl_remove_fselector_appbutton(const char * p1)""")
     library.check_if_initialized()
-    slabel = library.convert_to_string(label)
-    library.keep_elem_refs(label, slabel)
-    _fl_remove_fselector_appbutton(slabel)
+    s_label = library.convert_to_stringc(label)
+    library.keep_elem_refs(label, s_label)
+    _fl_remove_fselector_appbutton(s_label)
 
 
 def fl_disable_fselector_cache(yesno):
     """fl_disable_fselector_cache(yesno)
     
-    Disables file selector caching.
+    Disables or enables file selector caching.
 
     Parameters
     ----------
         yesno : int
-            flag. Values 0 (to enable cache) or 1 (to disable cache)
+            flag to enable/disable caching. Values 0 (to enable)
+            or 1 (to disable)
 
     Examples
     --------
@@ -1964,9 +1967,9 @@ def fl_disable_fselector_cache(yesno):
         None, [cty.c_int],
         """void fl_disable_fselector_cache(int p1)""")
     library.check_if_initialized()
-    iyesno = library.convert_to_int(yesno)
-    library.keep_elem_refs(yesno, iyesno)
-    _fl_disable_fselector_cache(iyesno)
+    i_yesno = library.convert_to_intc(yesno)
+    library.keep_elem_refs(yesno, i_yesno)
+    _fl_disable_fselector_cache(i_yesno)
 
 
 def fl_invalidate_fselector_cache():
@@ -1993,9 +1996,14 @@ def fl_invalidate_fselector_cache():
 
 
 def fl_get_fselector_form():
-    """fl_get_fselector_form()
+    """fl_get_fselector_form() -> ptr_flform
     
-    Obtains the form of file selector.
+    Finds out the form of file selector.
+
+    Returns
+    -------
+        ptr_flform : pointer to xfdata.FL_FORM
+            fselector form
 
     Examples
     --------
@@ -2016,14 +2024,14 @@ def fl_get_fselector_form():
 
 
 def fl_get_fselector_fdstruct():
-    """fl_get_fselector_fdstruct()
+    """fl_get_fselector_fdstruct() -> ptr_fdselector
     
-    Obtains a xfdata.FD_FSELECTOR class instance, allowing direct
-    access to the individual objects of a file selector.
+    Finds out xfdata.FD_FSELECTOR class instance, allowing direct
+    access to the individual flobjects of a file selector.
 
     Returns
     -------
-        FdSelector : pointer to xfdata.FD_FSELECTOR
+        ptr_fdselector : pointer to xfdata.FD_FSELECTOR
             file selector class instance
 
     Examples
@@ -2066,26 +2074,28 @@ def fl_hide_fselector():
     _fl_hide_fselector()
 
 
-def fl_set_fselector_filetype_marker(dirmk, fifomk, sockmk, cdevmk, bdevmk):
-    """fl_set_fselector_filetype_marker(dirmk, fifomk, sockmk, cdevmk,
-    bdevmk)
+def fl_set_fselector_filetype_marker(dirmrkr, fifomrkr, sockmrkr, cdevmrkr,
+                                     bdevmrkr):
+    """fl_set_fselector_filetype_marker(dirmrkr, fifomrkr, sockmrkr, cdevmrkr,
+    bdevmrkr)
     
     Changes the prefix by which the listing of files in a directory special
     files are marked with in browser. By default D is used for directories,
-    p for pipes etc.)
+    b for special block files, c for special character file, p for pipes,
+    s for sockets.
 
     Parameters
     ----------
-        dirmk : int or char
-            marker character for directories
-        fifomk : int or char
+        dirmrkr : int or char
+            marker for directories
+        fifomrkr : int or char
             marker for pipes and FIFOs
-        sockmk : int or char
+        sockmrkr : int or char
             marker for sockets
-        cdevmk : int or char
+        cdevmrkr : int or char
             marker for character device files
-        bdevmk : int or char
-            marker character for block device files
+        bdevmrkr : int or char
+            marker for block device files
 
     Examples
     --------
@@ -2102,46 +2112,46 @@ def fl_set_fselector_filetype_marker(dirmk, fifomk, sockmk, cdevmk, bdevmk):
         """void fl_set_fselector_filetype_marker(int p1, int p2, int p3,
            int p4, int p5)""")
     library.check_if_initialized()
-    if isinstance(dirmk, str):
+    if isinstance(dirmrkr, str):
         # workaround to let a character as int argument
-        odirmk = ord(dirmk)
+        odirmrkr = ord(dirmrkr)
     else:
-        odirmk = dirmk
-    idirmk = library.convert_to_int(odirmk)
-    if isinstance(fifomk, str):
+        odirmrkr = dirmrkr
+    i_dirmrkr = library.convert_to_intc(odirmrkr)
+    if isinstance(fifomrkr, str):
         # workaround to let a character as int argument
-        ofifomk = ord(fifomk)
+        ofifomrkr = ord(fifomrkr)
     else:
-        ofifomk = fifomk
-    ififomk = library.convert_to_int(ofifomk)
-    if isinstance(sockmk, str):
+        ofifomrkr = fifomrkr
+    i_fifomrkr = library.convert_to_intc(ofifomrkr)
+    if isinstance(sockmrkr, str):
         # workaround to let a character as int argument
-        osockmk = ord(sockmk)
+        osockmrkr = ord(sockmrkr)
     else:
-        osockmk = sockmk
-    isockmk = library.convert_to_int(osockmk)
-    if isinstance(cdevmk, str):
+        osockmrkr = sockmrkr
+    i_sockmrkr = library.convert_to_intc(osockmrkr)
+    if isinstance(cdevmrkr, str):
         # workaround to let a character as int argument
-        ocdevmk = ord(cdevmk)
+        ocdevmrkr = ord(cdevmrkr)
     else:
-        ocdevmk = cdevmk
-    icdevmk = library.convert_to_int(ocdevmk)
-    if isinstance(bdevmk, str):
+        ocdevmrkr = cdevmrkr
+    i_cdevmrkr = library.convert_to_intc(ocdevmrkr)
+    if isinstance(bdevmrkr, str):
         # workaround to let a character as int argument
-        obdevmk = ord(bdevmk)
+        obdevmrkr = ord(bdevmrkr)
     else:
-        obdevmk = bdevmk
-    ibdevmk = library.convert_to_int(obdevmk)
-    library.keep_elem_refs(dirmk, fifomk, sockmk, cdevmk, bdevmk, idirmk,
-        ififomk, isockmk, icdevmk, ibdevmk)
-    _fl_set_fselector_filetype_marker(idirmk, ififomk, isockmk, icdevmk,
-        ibdevmk)
+        obdevmrkr = bdevmrkr
+    i_bdevmrkr = library.convert_to_intc(obdevmrkr)
+    library.keep_elem_refs(dirmrkr, fifomrkr, sockmrkr, cdevmrkr, bdevmrkr, \
+            i_dirmrkr, i_fifomrkr, i_sockmrkr, i_cdevmrkr, i_bdevmrkr)
+    _fl_set_fselector_filetype_marker(i_dirmrkr, i_fifomrkr, i_sockmrkr, \
+            i_cdevmrkr, i_bdevmrkr)
 
 
 def fl_set_fselector_title(title):
     """fl_set_fselector_title(title)
     
-    Sets the title of a file selector.
+    Defines the title of a file selector.
 
     Parameters
     ----------
@@ -2160,14 +2170,14 @@ def fl_set_fselector_title(title):
     flbasic.fl_set_form_title(fl_get_fselector_form(), title)
 
 
-def fl_goodies_atclose(pFlForm, vdata):
-    """fl_goodies_atclose(pFlForm, vdata)
+def fl_goodies_atclose(ptr_flform, vdata):
+    """fl_goodies_atclose(ptr_flform, vdata) -> unused
     
     *todo*
 
     Parameters
     ----------
-        pFlForm : pointer to xfdata.FL_FORM
+        ptr_flform : pointer to xfdata.FL_FORM
             form
         vdata : any type (e.g. 'None', int, str, etc..)
             user data to be passed to function; callback has to take care
@@ -2192,9 +2202,9 @@ def fl_goodies_atclose(pFlForm, vdata):
         cty.c_int, [cty.POINTER(xfdata.FL_FORM), cty.c_void_p],
         """int fl_goodies_atclose(FL_FORM * p1, void * p2)""")
     library.check_if_initialized()
-    library.verify_flformptr_type(pFlForm)
-    pvdata = cty.cast(vdata, cty.c_void_p)
-    library.keep_elem_refs(pFlForm, vdata, pvdata)
-    retval = _fl_goodies_atclose(pFlForm, pvdata)
+    library.verify_flformptr_type(ptr_flform)
+    ptr_vdata = cty.cast(vdata, cty.c_void_p)
+    library.keep_elem_refs(ptr_flform, vdata, ptr_vdata)
+    retval = _fl_goodies_atclose(ptr_flform, ptr_vdata)
     return retval
 

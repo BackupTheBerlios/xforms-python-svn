@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: iso8859-1 -*-
 
-""" xforms-python's functions to manage tabfolder objects.
+""" xforms-python's functions to manage tabfolder flobjects.
 """
 
 #    Copyright (C) 2009, 2010  Luca Lazzaroni "LukenShiro"
@@ -26,7 +26,7 @@
 # then heavily reordered and reworked
 
 # ############################################# #
-# Interface to XForms shared object libraries   #
+# Interface to XForms shared flobject libraries #
 # ############################################# #
 
 
@@ -42,10 +42,15 @@ from xformslib import xfdata
 # fl_create_tabfolder function placeholde (internal)
 
 
-def fl_add_tabfolder(foldertype, x, y, w, h, label):
-    """fl_add_tabfolder(foldertype, x, y, w, h, label)
+def fl_add_tabfolder(foldertype, xpos, ypos, width, height, label):
+    """fl_add_tabfolder(foldertype, xpos, ypos, width, height, label)
+    -> ptr_flobject
     
-    Adds a tabfolder object.
+    Adds a tabfolder flobject. It is a special container that is capable
+    of holding multiple groups of objects (folders) to maximize the
+    utilization of the screen real estate. Each folder has its own tab
+    the user can click on to call up a specific folder from which option
+    can be selected.
 
     Parameters
     ----------
@@ -53,21 +58,21 @@ def fl_add_tabfolder(foldertype, x, y, w, h, label):
             type of tabfolder to be added. Values (from xfdata.py)
             FL_TOP_TABFOLDER, FL_BOTTOM_TABFOLDER, FL_LEFT_TABFOLDER,
             FL_RIGHT_TABFOLDER, FL_NORMAL_TABFOLDER
-        x : int
+        xpos : int
             horizontal position (upper-left corner)
-        y : int
+        ypos : int
             vertical position (upper-left corner)
-        w : int
+        width : int
             width in coord units
-        h : int
+        height : int
             height in coord units
         label : str
             text label of tabfolder
 
     Returns
     -------
-        pFlObject : pointer to xfdata.FL_OBJECT
-            tabfolder object added
+        ptr_flobject : pointer to xfdata.FL_OBJECT
+            tabfolder flobject added
 
     Examples
     --------
@@ -88,36 +93,48 @@ def fl_add_tabfolder(foldertype, x, y, w, h, label):
     library.check_if_initialized()
     library.checkfatal_allowed_value_in_list(foldertype, \
             xfdata.TABFOLDERTYPE_list)
-    ifoldertype = library.convert_to_int(foldertype)
-    ix = library.convert_to_FL_Coord(x)
-    iy = library.convert_to_FL_Coord(y)
-    iw = library.convert_to_FL_Coord(w)
-    ih = library.convert_to_FL_Coord(h)
-    slabel = library.convert_to_string(label)
-    library.keep_elem_refs(foldertype, x, y, w, h, label, ifoldertype, \
-            ix, iy, iw, ih, slabel)
-    retval = _fl_add_tabfolder(ifoldertype, ix, iy, iw, ih, slabel)
+    i_foldertype = library.convert_to_intc(foldertype)
+    i_xpos = library.convert_to_FL_Coord(xpos)
+    i_ypos = library.convert_to_FL_Coord(ypos)
+    i_width = library.convert_to_FL_Coord(width)
+    i_height = library.convert_to_FL_Coord(height)
+    s_label = library.convert_to_stringc(label)
+    library.keep_elem_refs(foldertype, xpos, ypos, width, height, label, \
+            i_foldertype, i_xpos, i_ypos, i_width, i_height, s_label)
+    retval = _fl_add_tabfolder(i_foldertype, i_xpos, i_ypos, i_width, \
+            i_height, s_label)
     return retval
 
 
-def fl_addto_tabfolder(pFlObject, title, pFlForm):
-    """fl_addto_tabfolder(pFlObject, title, pFlForm)
+def fl_addto_tabfolder(ptr_flobject, tabtitle, ptr_flform):
+    """fl_addto_tabfolder(ptr_flobject, tabtitle, ptr_flform) -> ptr_flobject
     
-    *todo*
+    Populates a tabbed folder, adding a regular form to it. Note: application
+    program should not destroy a form that has been added to a tabbed folder.
+    You can change the attributes of the returned flobject just like any other
+    objects, but not all possibilities result in a pleasing appearance.
+    Although there is no specific requirement of what the backface of the
+    folder/form should be, a boxtype other than xfdata.FL_FLAT_BOX or
+    xfdata.FL_NO_BOX may not look nice. If the backface of the form is of
+    xfdata.FL_FLAT_BOX the associated tab will take on the color of the
+    backface when activated. Each tab must have its own form, i.e. you should
+    not associate the same form with two different tabs; however, you can
+    create copies of a form and use these copies.
+    
 
     Parameters
     ----------
-        pFlObject : pointer to xfdata.FL_OBJECT
-            tabfolder object
-        title : str
-            *todo*
-        pFlForm : pointer to xfdata.FL_FORM
+        ptr_flobject : pointer to xfdata.FL_OBJECT
+            tabfolder flobject
+        tabtitle : str
+            text of the tab rider (with possible embedded newlines in it)
+        ptr_flform : pointer to xfdata.FL_FORM
             form
 
     Returns
     -------
-        pFlObject : pointer to xfdata.FL_OBJECT
-            tabfolder object 
+        ptr_flobject : pointer to xfdata.FL_OBJECT
+            tabfolder flobject 
 
     Examples
     --------
@@ -135,30 +152,31 @@ def fl_addto_tabfolder(pFlObject, title, pFlForm):
         """FL_OBJECT * fl_addto_tabfolder(FL_OBJECT * ob,
            const char * title, FL_FORM * form)""")
     library.check_if_initialized()
-    library.verify_flobjectptr_type(pFlObject)
-    library.verify_flformptr_type(pFlForm)
-    stitle = library.convert_to_string(title)
-    library.keep_elem_refs(pFlObject, title, pFlForm, stitle)
-    retval = _fl_addto_tabfolder(pFlObject, stitle, pFlForm)
+    library.verify_flobjectptr_type(ptr_flobject)
+    library.verify_flformptr_type(ptr_flform)
+    s_tabtitle = library.convert_to_stringc(tabtitle)
+    library.keep_elem_refs(ptr_flobject, tabtitle, ptr_flform, s_tabtitle)
+    retval = _fl_addto_tabfolder(ptr_flobject, s_tabtitle, ptr_flform)
     return retval
 
 
-def fl_get_tabfolder_folder_bynumber(pFlObject, num):
-    """fl_get_tabfolder_folder_bynumber(pFlObject, num)
+def fl_get_tabfolder_folder_bynumber(ptr_flobject, seqnum):
+    """fl_get_tabfolder_folder_bynumber(ptr_flobject, seqnum) -> ptr_flform
     
-    *todo*
+    Accesses an individual form on the tabfolder by its sequence number.
 
     Parameters
     ----------
-        pFlObject : pointer to xfdata.FL_OBJECT
-            tabfolder object
-        num : int
-            sequence number?
+        ptr_flobject : pointer to xfdata.FL_OBJECT
+            tabfolder flobject
+        seqnum : int
+            sequence number. The first tab on the left is 1,
+            the second 2 etc..)
 
     Returns
     -------
-        pForm : pointer to xfdata.FL_FORM
-            form
+        ptr_flform : pointer to xfdata.FL_FORM
+            form associated with the number, or None (on failure)
 
     Examples
     --------
@@ -175,29 +193,29 @@ def fl_get_tabfolder_folder_bynumber(pFlObject, num):
         cty.c_int],
         """FL_FORM * fl_get_tabfolder_folder_bynumber(FL_OBJECT * ob,
            int num)""")
-    library.verify_flobjectptr_type(pFlObject)
-    inum = library.convert_to_int(num)
-    library.keep_elem_refs(pFlObject, num, inum)
-    retval = _fl_get_tabfolder_folder_bynumber(pFlObject, inum)
+    library.verify_flobjectptr_type(ptr_flobject)
+    i_seqnum = library.convert_to_intc(seqnum)
+    library.keep_elem_refs(ptr_flobject, seqnum, i_seqnum)
+    retval = _fl_get_tabfolder_folder_bynumber(ptr_flobject, i_seqnum)
     return retval
 
 
-def fl_get_tabfolder_folder_byname(pFlObject, name):
-    """fl_get_tabfolder_folder_byname(pFlObject, name)
+def fl_get_tabfolder_folder_byname(ptr_flobject, name):
+    """fl_get_tabfolder_folder_byname(ptr_flobject, name) -> ptr_flform
     
-    *todo*
+    Accesses an individual form on the tabfolder by its name.
 
     Parameters
     ----------
-        pFlObject : pointer to xfdata.FL_OBJECT
-            tabfolder object
+        ptr_flobject : pointer to xfdata.FL_OBJECT
+            tabfolder flobject
         name : str
-            name?
+            name of folder
 
     Returns
     -------
-        pForm : pointer to xfdata.FL_FORM
-            form
+        ptr_flform : pointer to xfdata.FL_FORM
+            form associated with the name, or None (on failure)
 
     Examples
     --------
@@ -215,23 +233,26 @@ def fl_get_tabfolder_folder_byname(pFlObject, name):
         """FL_FORM * fl_get_tabfolder_folder_byname(FL_OBJECT * ob,
            const char * name)""")
     library.check_if_initialized()
-    library.verify_flobjectptr_type(pFlObject)
-    sname = library.convert_to_string(name)
-    library.keep_elem_refs(pFlObject, name, sname)
-    retval = _fl_get_tabfolder_folder_byname(pFlObject, sname)
+    library.verify_flobjectptr_type(ptr_flobject)
+    s_name = library.convert_to_stringc(name)
+    library.keep_elem_refs(ptr_flobject, name, s_name)
+    retval = _fl_get_tabfolder_folder_byname(ptr_flobject, s_name)
     return retval
 
 
-def fl_delete_folder(pFlObject, pFlForm):
-    """fl_delete_folder(pFlObject, pFlForm)
+def fl_delete_folder(ptr_flobject, ptr_flform):
+    """fl_delete_folder(ptr_flobject, ptr_flform)
     
-    *todo*
+    Removes a folder from a tabfolder flobject. After deletion, the number
+    of folders in the tabfolder as well as the sequence numbers are
+    updated. This means if you want to delete all folders after the
+    second folder, you can do that by deleting the third folder repeatedly.
 
     Parameters
     ----------
-        pFlObject : pointer to xfdata.FL_OBJECT
-            tabfolder object
-        pFlForm : pointer to xfdata.FL_FORM
+        ptr_flobject : pointer to xfdata.FL_OBJECT
+            tabfolder flobject
+        ptr_flform : pointer to xfdata.FL_FORM
             form
 
     Examples
@@ -248,23 +269,27 @@ def fl_delete_folder(pFlObject, pFlForm):
         None, [cty.POINTER(xfdata.FL_OBJECT), cty.POINTER(xfdata.FL_FORM)],
         """void fl_delete_folder(FL_OBJECT * ob, FL_FORM * form)""")
     library.check_if_initialized()
-    library.verify_flobjectptr_type(pFlObject)
-    library.verify_flformptr_type(pFlForm)
-    library.keep_elem_refs(pFlObject, pFlForm)
-    _fl_delete_folder(pFlObject, pFlForm)
+    library.verify_flobjectptr_type(ptr_flobject)
+    library.verify_flformptr_type(ptr_flform)
+    library.keep_elem_refs(ptr_flobject, ptr_flform)
+    _fl_delete_folder(ptr_flobject, ptr_flform)
 
 
-def fl_delete_folder_bynumber(pFlObject, num):
-    """fl_delete_folder_bynumber(pFlObject, num)
+def fl_delete_folder_bynumber(ptr_flobject, seqnum):
+    """fl_delete_folder_bynumber(ptr_flobject, seqnum)
     
-    *todo*
+    Removes a folder from a tabfolder flobject by its sequence number.
+    After deletion, the number of folders in the tabfolder as well as
+    the sequence numbers are updated. This means if you want to delete
+    all folders after the second folder, you can do that by deleting
+    the third folder repeatedly.
 
     Parameters
     ----------
-        pFlObject : pointer to xfdata.FL_OBJECT
-            tabfolder object
-        num : int
-            sequnece number?
+        ptr_flobject : pointer to xfdata.FL_OBJECT
+            tabfolder flobject
+        seqnum : int
+            sequence number of folder to be deleted
 
     Examples
     --------
@@ -280,23 +305,27 @@ def fl_delete_folder_bynumber(pFlObject, num):
         None, [cty.POINTER(xfdata.FL_OBJECT), cty.c_int],
         """void fl_delete_folder_bynumber(FL_OBJECT * ob, int num)""")
     library.check_if_initialized()
-    library.verify_flobjectptr_type(pFlObject)
-    inum = library.convert_to_int(num)
-    library.keep_elem_refs(pFlObject, num, inum)
-    _fl_delete_folder_bynumber(pFlObject, inum)
+    library.verify_flobjectptr_type(ptr_flobject)
+    i_seqnum = library.convert_to_intc(seqnum)
+    library.keep_elem_refs(ptr_flobject, seqnum, i_seqnum)
+    _fl_delete_folder_bynumber(ptr_flobject, i_seqnum)
 
 
-def fl_delete_folder_byname(pFlObject, name):
-    """fl_delete_folder_byname(pFlObject, name)
+def fl_delete_folder_byname(ptr_flobject, name):
+    """fl_delete_folder_byname(ptr_flobject, name)
     
-    *todo*
+    Removes a folder from a tabfolder flobject by its name. After
+    deletion, the number of folders in the tabfolder as well as the
+    sequence numbers are updated. This means if you want to delete
+    all folders after the second folder, you can do that by deleting
+    the third folder repeatedly.
 
     Parameters
     ----------
-        pFlObject : pointer to xfdata.FL_OBJECT
-            tabfolder object
+        ptr_flobject : pointer to xfdata.FL_OBJECT
+            tabfolder flobject
         name : str
-            name of folder
+            name of folder to be deleted
 
     Examples
     --------
@@ -312,23 +341,23 @@ def fl_delete_folder_byname(pFlObject, name):
         None, [cty.POINTER(xfdata.FL_OBJECT), xfdata.STRING],
         """void fl_delete_folder_byname(FL_OBJECT * ob, const char * name)""")
     library.check_if_initialized()
-    library.verify_flobjectptr_type(pFlObject)
-    sname = library.convert_to_string(name)
-    library.keep_elem_refs(pFlObject, name, sname)
-    _fl_delete_folder_byname(pFlObject, sname)
+    library.verify_flobjectptr_type(ptr_flobject)
+    s_name = library.convert_to_stringc(name)
+    library.keep_elem_refs(ptr_flobject, name, s_name)
+    _fl_delete_folder_byname(ptr_flobject, s_name)
 
 
-def fl_set_folder(pFlObject, pFlForm):
-    """fl_set_folder(pFlObject, pFlForm)
+def fl_set_folder(ptr_flobject, ptr_flform):
+    """fl_set_folder(ptr_flobject, ptr_flform)
     
-    *todo*
+    Defines which folder to show.
 
     Parameters
     ----------
-        pFlObject : pointer to xfdata.FL_OBJECT
-            tabfolder object
-        pFlForm : pointer to xfdata.FL_FORM
-            form
+        ptr_flobject : pointer to xfdata.FL_OBJECT
+            tabfolder flobject
+        ptr_flform : pointer to xfdata.FL_FORM
+            form to show
 
     Examples
     --------
@@ -344,23 +373,23 @@ def fl_set_folder(pFlObject, pFlForm):
         None, [cty.POINTER(xfdata.FL_OBJECT), cty.POINTER(xfdata.FL_FORM)],
         """void fl_set_folder(FL_OBJECT * ob, FL_FORM * form)""")
     library.check_if_initialized()
-    library.verify_flobjectptr_type(pFlObject)
-    library.verify_flformptr_type(pFlForm)
-    library.keep_elem_refs(pFlObject, pFlForm)
-    _fl_set_folder(pFlObject, pFlForm)
+    library.verify_flobjectptr_type(ptr_flobject)
+    library.verify_flformptr_type(ptr_flform)
+    library.keep_elem_refs(ptr_flobject, ptr_flform)
+    _fl_set_folder(ptr_flobject, ptr_flform)
 
 
-def fl_set_folder_byname(pFlObject, name):
-    """fl_set_folder_byname(pFlObject, name)
+def fl_set_folder_byname(ptr_flobject, name):
+    """fl_set_folder_byname(ptr_flobject, name)
     
-    *todo*
+    Defines which folder to show by its name.
 
     Parameters
     ----------
-        pFlObject : pointer to xfdata.FL_OBJECT
-            tabfolder object
+        ptr_flobject : pointer to xfdata.FL_OBJECT
+            tabfolder flobject
         name : str
-            name of folder
+            name of folder to show
 
     Examples
     --------
@@ -376,23 +405,23 @@ def fl_set_folder_byname(pFlObject, name):
         None, [cty.POINTER(xfdata.FL_OBJECT), xfdata.STRING],
         """void fl_set_folder_byname(FL_OBJECT * ob, const char * name)""")
     library.check_if_initialized()
-    library.verify_flobjectptr_type(pFlObject)
-    sname = library.convert_to_string(name)
-    library.keep_elem_refs(pFlObject, name, sname)
-    _fl_set_folder_byname(pFlObject, name)
+    library.verify_flobjectptr_type(ptr_flobject)
+    sname = library.convert_to_stringc(name)
+    library.keep_elem_refs(ptr_flobject, name, sname)
+    _fl_set_folder_byname(ptr_flobject, name)
 
 
-def fl_set_folder_bynumber(pFlObject, num):
-    """fl_set_folder_bynumber(pFlObject, num)
+def fl_set_folder_bynumber(ptr_flobject, seqnum):
+    """fl_set_folder_bynumber(ptr_flobject, seqnum)
     
-    *todo*
+    Defines which folder to show by its sequence number.
 
     Parameters
     ----------
-        pFlObject : pointer to xfdata.FL_OBJECT
-            tabfolder object
-        num : int
-            sequence number?
+        ptr_flobject : pointer to xfdata.FL_OBJECT
+            tabfolder flobject
+        seqnum : int
+            sequence number of folder to show
 
     Examples
     --------
@@ -408,26 +437,27 @@ def fl_set_folder_bynumber(pFlObject, num):
         None, [cty.POINTER(xfdata.FL_OBJECT), cty.c_int],
         """void fl_set_folder_bynumber(FL_OBJECT * ob, int num)""")
     library.check_if_initialized()
-    library.verify_flobjectptr_type(pFlObject)
-    inum = library.convert_to_int(num)
-    library.keep_elem_refs(pFlObject, num, inum)
-    _fl_set_folder_bynumber(pFlObject, inum)
+    library.verify_flobjectptr_type(ptr_flobject)
+    i_seqnum = library.convert_to_intc(seqnum)
+    library.keep_elem_refs(ptr_flobject, seqnum, i_seqnum)
+    _fl_set_folder_bynumber(ptr_flobject, i_seqnum)
 
 
-def fl_get_folder(pFlObject):
-    """fl_get_folder(pFlObject)
+def fl_get_folder(ptr_flobject):
+    """fl_get_folder(ptr_flobject) -> ptr_flform
     
-    *todo*
+    Finds out what the last active folder is (which may be of greater
+    interest than the currently active one).
 
     Parameters
     ----------
-        pFlObject : pointer to xfdata.FL_OBJECT
-            tabfolder object
+        ptr_flobject : pointer to xfdata.FL_OBJECT
+            tabfolder flobject
 
     Returns
     -------
-        pForm : pointer to xfdata.FL_FORM
-            form
+        ptr_flform : pointer to xfdata.FL_FORM
+            last active folder form
 
     Examples
     --------
@@ -443,26 +473,27 @@ def fl_get_folder(pFlObject):
         cty.POINTER(xfdata.FL_FORM), [cty.POINTER(xfdata.FL_OBJECT)],
         """FL_FORM * fl_get_folder(FL_OBJECT * ob)""")
     library.check_if_initialized()
-    library.verify_flobjectptr_type(pFlObject)
-    library.keep_elem_refs(pFlObject)
-    retval = _fl_get_folder(pFlObject)
+    library.verify_flobjectptr_type(ptr_flobject)
+    library.keep_elem_refs(ptr_flobject)
+    retval = _fl_get_folder(ptr_flobject)
     return retval
 
 
-def fl_get_folder_number(pFlObject):
-    """fl_get_folder_number(pFlObject)
+def fl_get_folder_number(ptr_flobject):
+    """fl_get_folder_number(ptr_flobject)
     
-    *todo*
+    Finds out what the sequence number of the last active folder is (which
+    may be of greater interest than the currently active one).
 
     Parameters
     ----------
-        pFlObject : pointer to xfdata.FL_OBJECT
-            tabfolder object
+        ptr_flobject : pointer to xfdata.FL_OBJECT
+            tabfolder flobject
 
     Returns
     -------
-        num. : int
-            folder num.
+        seqnum. : int
+            sequence number of the last active folder form
 
     Examples
     --------
@@ -478,26 +509,27 @@ def fl_get_folder_number(pFlObject):
         cty.c_int, [cty.POINTER(xfdata.FL_OBJECT)],
         """int fl_get_folder_number(FL_OBJECT * ob)""")
     library.check_if_initialized()
-    library.verify_flobjectptr_type(pFlObject)
-    library.keep_elem_refs(pFlObject)
-    retval = _fl_get_folder_number(pFlObject)
+    library.verify_flobjectptr_type(ptr_flobject)
+    library.keep_elem_refs(ptr_flobject)
+    retval = _fl_get_folder_number(ptr_flobject)
     return retval
 
 
-def fl_get_folder_name(pFlObject):
-    """fl_get_folder_name(pFlObject)
+def fl_get_folder_name(ptr_flobject):
+    """fl_get_folder_name(ptr_flobject)
     
-    *todo*
+    Finds out what the name of the last active folder is (which may
+    be of greater interest than the currently active one).
 
     Parameters
     ----------
-        pFlObject : pointer to xfdata.FL_OBJECT
-            tabfolder object
+        ptr_flobject : pointer to xfdata.FL_OBJECT
+            tabfolder flobject
 
     Returns
     -------
         name : str
-            name of folder
+            name of the last active folder form
 
     Examples
     --------
@@ -513,26 +545,26 @@ def fl_get_folder_name(pFlObject):
         xfdata.STRING, [cty.POINTER(xfdata.FL_OBJECT)],
         """const char * fl_get_folder_name(FL_OBJECT * ob)""")
     library.check_if_initialized()
-    library.verify_flobjectptr_type(pFlObject)
-    library.keep_elem_refs(pFlObject)
-    retval = _fl_get_folder_name(pFlObject)
+    library.verify_flobjectptr_type(ptr_flobject)
+    library.keep_elem_refs(ptr_flobject)
+    retval = _fl_get_folder_name(ptr_flobject)
     return retval
 
 
-def fl_get_tabfolder_numfolders(pFlObject):
-    """fl_get_tabfolder_numfolders(pFlObject)
+def fl_get_tabfolder_numfolders(ptr_flobject):
+    """fl_get_tabfolder_numfolders(ptr_flobject) -> numfolders
     
-    *todo*
+    Finds out the number of folders in the tabfolder.
 
     Parameters
     ----------
-        pFlObject : pointer to xfdata.FL_OBJECT
-            tabfolder object
+        ptr_flobject : pointer to xfdata.FL_OBJECT
+            tabfolder flobject
 
     Returns
     -------
-        num. : int
-            *todo*
+        numfolders : int
+            number of folders in tabfolder
 
     Examples
     --------
@@ -548,26 +580,26 @@ def fl_get_tabfolder_numfolders(pFlObject):
         cty.c_int, [cty.POINTER(xfdata.FL_OBJECT)],
         """int fl_get_tabfolder_numfolders(FL_OBJECT * ob)""")
     library.check_if_initialized()
-    library.verify_flobjectptr_type(pFlObject)
-    library.keep_elem_refs(pFlObject)
-    retval = _fl_get_tabfolder_numfolders(pFlObject)
+    library.verify_flobjectptr_type(ptr_flobject)
+    library.keep_elem_refs(ptr_flobject)
+    retval = _fl_get_tabfolder_numfolders(ptr_flobject)
     return retval
 
 
-def fl_get_active_folder(pFlObject):
-    """fl_get_active_folder(pFlObject)
-    
-    *todo*
+def fl_get_active_folder(ptr_flobject):
+    """fl_get_active_folder(ptr_flobject) -> ptr_flform
+
+    Finds out which folder is currently active.
 
     Parameters
     ----------
-        pFlObject : pointer to xfdata.FL_OBJECT
-            tabfolder object
+        ptr_flobject : pointer to xfdata.FL_OBJECT
+            tabfolder flobject
 
     Returns
     -------
-        pForm : pointer to xfdata.FL_FORM
-            form
+        ptr_flform : pointer to xfdata.FL_FORM
+            form associated with folder
 
     Examples
     --------
@@ -583,26 +615,27 @@ def fl_get_active_folder(pFlObject):
         cty.POINTER(xfdata.FL_FORM), [cty.POINTER(xfdata.FL_OBJECT)],
         """FL_FORM * fl_get_active_folder(FL_OBJECT * ob)""")
     library.check_if_initialized()
-    library.verify_flobjectptr_type(pFlObject)
-    library.keep_elem_refs(pFlObject)
-    retval = _fl_get_active_folder(pFlObject)
+    library.verify_flobjectptr_type(ptr_flobject)
+    library.keep_elem_refs(ptr_flobject)
+    retval = _fl_get_active_folder(ptr_flobject)
     return retval
 
 
-def fl_get_active_folder_number(pFlObject):
-    """fl_get_active_folder_number(pFlObject)
+def fl_get_active_folder_number(ptr_flobject):
+    """fl_get_active_folder_number(ptr_flobject) -> seqnum
     
-    *todo*
+    Finds out the sequence number of which folder is currently
+    active, starting from 1 on the left.
 
     Parameters
     ----------
-        pFlObject : pointer to xfdata.FL_OBJECT
-            tabfolder object
+        ptr_flobject : pointer to xfdata.FL_OBJECT
+            tabfolder flobject
 
     Returns
     -------
-        num : int
-            active folder id
+        seqnum : int
+            sequence number of active folder
 
     Examples
     --------
@@ -618,21 +651,21 @@ def fl_get_active_folder_number(pFlObject):
         cty.c_int, [cty.POINTER(xfdata.FL_OBJECT)],
         """int fl_get_active_folder_number(FL_OBJECT * ob)""")
     library.check_if_initialized()
-    library.verify_flobjectptr_type(pFlObject)
-    library.keep_elem_refs(pFlObject)
-    retval = _fl_get_active_folder_number(pFlObject)
+    library.verify_flobjectptr_type(ptr_flobject)
+    library.keep_elem_refs(ptr_flobject)
+    retval = _fl_get_active_folder_number(ptr_flobject)
     return retval
 
 
-def fl_get_active_folder_name(pFlObject):
-    """fl_get_active_folder_name(pFlObject)
+def fl_get_active_folder_name(ptr_flobject):
+    """fl_get_active_folder_name(ptr_flobject) -> name
     
-    *todo*
+    Finds out the name of which folder is currently active.
 
     Parameters
     ----------
-        pFlObject : pointer to xfdata.FL_OBJECT
-            tabfolder object
+        ptr_flobject : pointer to xfdata.FL_OBJECT
+            tabfolder flobject
 
     Returns
     -------
@@ -653,41 +686,45 @@ def fl_get_active_folder_name(pFlObject):
         xfdata.STRING, [cty.POINTER(xfdata.FL_OBJECT)],
         """const char * fl_get_active_folder_name(FL_OBJECT * ob)""")
     library.check_if_initialized()
-    library.verify_flobjectptr_type(pFlObject)
-    library.keep_elem_refs(pFlObject)
-    retval = _fl_get_active_folder_name(pFlObject)
+    library.verify_flobjectptr_type(ptr_flobject)
+    library.keep_elem_refs(ptr_flobject)
+    retval = _fl_get_active_folder_name(ptr_flobject)
     return retval
 
 
-def fl_get_folder_area(pFlObject):
-    """fl_get_folder_area(pFlObject)
-    
-    *todo*
+def fl_get_folder_area(ptr_flobject):
+    """fl_get_folder_area(ptr_flobject) -> xpos, ypos, width, height
+
+    Finds out the actual folder size. The folder area may not be constant
+    depending on the current tabs. E.g. adding a multi-line tab will reduce
+    the area for the folders).
 
     Parameters
     ----------
-        pFlObject : pointer to xfdata.FL_OBJECT
-            tabfolder object
+        ptr_flobject : pointer to xfdata.FL_OBJECT
+            tabfolder flobject
 
     Returns
     -------
-        x : int
-            horizontal position of tabfolder
-        y : int
-            vertical position of tabfolder
-        w : int
+        xpos : int
+            horizontal position of folder, relative to the (top-level)
+            form the tabbed folder belongs to
+        ypos : int
+            vertical position of folder, relative to the (top-level)
+            form the tabbed folder belongs to
+        width : int
             width
-        h : int
+        height : int
             height
 
     Examples
     --------
-        >>> x, y, w, h = fl_get_folder_area(tbfobj)
+        >>> xpos, ypos, width, height = fl_get_folder_area(tbfobj)
 
     API_diversion
-    ----------
-        API changed from XForms, upstream was
-        fl_get_folder_area(pFlObject, x, y, w, h)
+    -------------
+        API changed from XForms, upstream is
+        fl_get_folder_area(ptr_flobject, xpos, ypos, width, height)
 
     Notes
     -----
@@ -702,29 +739,32 @@ def fl_get_folder_area(pFlObject):
         """void fl_get_folder_area(FL_OBJECT * ob, FL_Coord * x,
            FL_Coord * y, FL_Coord * w, FL_Coord * h)""")
     library.check_if_initialized()
-    library.verify_flobjectptr_type(pFlObject)
-    x, px = library.make_int_and_pointer()
-    y, py = library.make_int_and_pointer()
-    w, pw = library.make_int_and_pointer()
-    h, ph = library.make_int_and_pointer()
-    library.keep_elem_refs(pFlObject, x, y, w, h, px, py, pw, ph)
-    _fl_get_folder_area(pFlObject, px, py, pw, ph)
-    return x.value, y.value, w.value, h.value
+    library.verify_flobjectptr_type(ptr_flobject)
+    i_xpos, ptr_xpos = library.make_intc_and_pointer()
+    i_ypos, ptr_ypos = library.make_intc_and_pointer()
+    i_width, ptr_width = library.make_intc_and_pointer()
+    i_height, ptr_height = library.make_intc_and_pointer()
+    library.keep_elem_refs(ptr_flobject, i_xpos, i_ypos, i_width, \
+            i_height, ptr_xpos, ptr_ypos, ptr_width, ptr_height)
+    _fl_get_folder_area(ptr_flobject, ptr_xpos, ptr_ypos, ptr_width, \
+            ptr_height)
+    return i_xpos.value, i_ypos.value, i_width.value, i_height.value
 
 
-def fl_replace_folder_bynumber(pFlObject, num, pFlForm):
-    """fl_replace_folder_bynumber(pFlObject, num, pFlForm)
+def fl_replace_folder_bynumber(ptr_flobject, seqnum, ptr_flform):
+    """fl_replace_folder_bynumber(ptr_flobject, seqnum, ptr_flform)
     
-    *todo*
+    Replaces a form associated with folder having a particular sequence
+    number with a new form
 
     Parameters
     ----------
-        pFlObject : pointer to xfdata.FL_OBJECT
-            tabfolder object
+        ptr_flobject : pointer to xfdata.FL_OBJECT
+            tabfolder flobject
         num : int
-            sequence number?
-        pFlForm : pointer to xfdata.FL_FORM
-            form
+            sequence number of folder to be replaced
+        ptr_flform : pointer to xfdata.FL_FORM
+            new form associated with folder
 
     Examples
     --------
@@ -742,29 +782,33 @@ def fl_replace_folder_bynumber(pFlObject, num, pFlForm):
         """void fl_replace_folder_bynumber(FL_OBJECT * ob, int num,
            FL_FORM * form)""")
     library.check_if_initialized()
-    library.verify_flobjectptr_type(pFlObject)
-    library.verify_flformptr_type(pFlForm)
-    inum = library.convert_to_int(num)
-    library.keep_elem_refs(pFlObject, num, pFlForm, inum)
-    _fl_replace_folder_bynumber(pFlObject, inum, pFlForm)
+    library.verify_flobjectptr_type(ptr_flobject)
+    library.verify_flformptr_type(ptr_flform)
+    i_seqnum = library.convert_to_intc(seqnum)
+    library.keep_elem_refs(ptr_flobject, seqnum, ptr_flform, i_seqnum)
+    _fl_replace_folder_bynumber(ptr_flobject, i_seqnum, ptr_flform)
 
 
-def fl_set_tabfolder_autofit(pFlObject, num):
-    """fl_set_tabfolder_autofit(pFlObject, num)
-    
-    *todo*
+def fl_set_tabfolder_autofit(ptr_flobject, howfit):
+    """fl_set_tabfolder_autofit(ptr_flobject, howfit) -> oldhowfit
+
+    Adjusts dynamically the sizes of the folders in the tab folder so they
+    fit. Since tab size can vary depending on monitor/font resolutions, it
+    is in general not possible to design the forms (folders) so they fit
+    exactly into the folder area.
 
     Parameters
     ----------
-        pFlObject : pointer to xfdata.FL_OBJECT
-            tabfolder object
-        num : int
-            sequence number?
+        ptr_flobject : pointer to xfdata.FL_OBJECT
+            tabfolder flobject
+        howfit : int
+            how do folders' sizes fit . Values (from xfdata.py) FL_NO,
+            FL_FIT, FL_ENLARGE_ONLY
 
     Returns
     -------
-        num. : int
-            *todo*
+        oldhowfit : int
+            previous fit settings
 
     Examples
     --------
@@ -780,27 +824,29 @@ def fl_set_tabfolder_autofit(pFlObject, num):
         cty.c_int, [cty.POINTER(xfdata.FL_OBJECT), cty.c_int],
         """int fl_set_tabfolder_autofit(FL_OBJECT * ob, int y)""")
     library.check_if_initialized()
-    library.verify_flobjectptr_type(pFlObject)
-    inum = library.convert_to_int(num)
-    library.keep_elem_refs(pFlObject, num, inum)
-    retval = _fl_set_tabfolder_autofit(pFlObject, inum)
+    library.verify_flobjectptr_type(ptr_flobject)
+    library.checkfatal_allowed_value_in_list(howfit, \
+            xfdata.FOLDERSIZESFIT_list)
+    i_howfit = library.convert_to_intc(howfit)
+    library.keep_elem_refs(ptr_flobject, howfit, i_howfit)
+    retval = _fl_set_tabfolder_autofit(ptr_flobject, i_howfit)
     return retval
 
 
-def fl_set_default_tabfolder_corner(npixels):
-    """fl_set_default_tabfolder_corner(npixels)
+def fl_set_default_tabfolder_corner(numpixels):
+    """fl_set_default_tabfolder_corner(numpixels) -> oldnumpixels
     
     Adjusts the corner pixels, changing appearance of the tabs.
 
     Parameters
     ----------
-        npixels : int
+        numpixels : int
             number of corner pixels (default 3)
 
     Returns
     -------
-        oldpix : int
-            old pixels num.
+        oldnumpixels : int
+            old number of corner pixels
 
     Examples
     --------
@@ -816,28 +862,63 @@ def fl_set_default_tabfolder_corner(npixels):
         cty.c_int, [cty.c_int],
         """int fl_set_default_tabfolder_corner(int n):""")
     library.check_if_initialized()
-    ipixels = library.convert_to_int(npixels)
-    library.keep_elem_refs(npixels, ipixels)
-    retval = _fl_set_default_tabfolder_corner(ipixels)
+    i_numpixels = library.convert_to_intc(numpixels)
+    library.keep_elem_refs(numpixels, i_numpixels)
+    retval = _fl_set_default_tabfolder_corner(i_numpixels)
     return retval
 
 
-def fl_set_tabfolder_offset(pFlObject, offset):
-    """fl_set_tabfolder_offset(pFlObject, offset)
+def fl_get_tabfolder_offset(ptr_flobject):
+    """fl_get_tabfolder_offset(ptr_flobject) -> offset
     
-    *todo*
+    Finds out current offset for a tabfolder flobject.
 
     Parameters
     ----------
-        pFlObject : pointer to xfdata.FL_OBJECT
-            tabfolder object
-        offset : int
-            *todo*
+        ptr_flobject : pointer to xfdata.FL_OBJECT
+            tabfolder flobject
 
     Returns
     -------
-        num. : int
-            *todo*
+        offset : int
+            current offset value
+
+    Examples
+    --------
+        >>> *todo*
+
+    Notes
+    -----
+        Status: Untested + NoDoc + NoDemo = NOT OK
+
+    """
+    _fl_get_tabfolder_offset = library.cfuncproto(
+        library.load_so_libforms(), "fl_get_tabfolder_offset",
+        cty.c_int, [cty.POINTER(xfdata.FL_OBJECT)],
+        """int fl_get_tabfolder_offset(FL_OBJECT * ob)""")
+    library.check_if_initialized()
+    library.verify_flobjectptr_type(ptr_flobject)
+    library.keep_elem_refs(ptr_flobject)
+    retval = _fl_get_tabfolder_offset(ptr_flobject)
+    return retval
+
+
+def fl_set_tabfolder_offset(ptr_flobject, offset):
+    """fl_set_tabfolder_offset(ptr_flobject, offset) -> oldoffset
+    
+    Defines offset for a tabfolder flobject.
+
+    Parameters
+    ----------
+        ptr_flobject : pointer to xfdata.FL_OBJECT
+            tabfolder flobject
+        offset : int
+            value of tabfolder offset
+
+    Returns
+    -------
+        oldoffset : int
+            previous offset value
 
     Examples
     --------
@@ -853,9 +934,9 @@ def fl_set_tabfolder_offset(pFlObject, offset):
         cty.c_int, [cty.POINTER(xfdata.FL_OBJECT), cty.c_int],
         """int fl_set_tabfolder_offset(FL_OBJECT * ob, int offset)""")
     library.check_if_initialized()
-    library.verify_flobjectptr_type(pFlObject)
-    ioffset = library.convert_to_int(offset)
-    library.keep_elem_refs(pFlObject, offset, ioffset)
-    retval = _fl_set_tabfolder_offset(pFlObject, ioffset)
+    library.verify_flobjectptr_type(ptr_flobject)
+    i_offset = library.convert_to_intc(offset)
+    library.keep_elem_refs(ptr_flobject, offset, i_offset)
+    retval = _fl_set_tabfolder_offset(ptr_flobject, i_offset)
     return retval
 

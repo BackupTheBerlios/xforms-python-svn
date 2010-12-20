@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: iso8859-1 -*-
 
-""" xforms-python's functions to manage spinner objects.
+""" xforms-python's functions to manage spinner flobjects.
 """
 
 #    Copyright (C) 2009, 2010  Luca Lazzaroni "LukenShiro"
@@ -26,7 +26,7 @@
 # then heavily reordered and reworked
 
 # ############################################# #
-# Interface to XForms shared object libraries   #
+# Interface to XForms shared flobject libraries #
 # ############################################# #
 
 
@@ -43,31 +43,32 @@ from xformslib import xfdata
 # fl_create_spinner function placeholder (internal)
 
 
-def fl_add_spinner(spinnertype, x, y, w, h, label):
-    """fl_add_spinner(spinnertype, x, y, w, h, label)
+def fl_add_spinner(spinnertype, xpos, ypos, width, height, label):
+    """fl_add_spinner(spinnertype, xpos, ypos, width, height, label)
+    -> ptr_flobject
     
-    Adds a spinner object.
+    Adds a spinner flobject.
 
     Parameters
     ----------
         spinnertype : int
             type of spinner to be added. Values (from xfdata.py)
             FL_INT_SPINNER, FL_FLOAT_SPINNER
-        x : int
+        xpos : int
             horizontal position (upper-left corner)
-        y : int
+        ypos : int
             vertical position (upper-left corner)
-        w : int
+        width : int
             width in coord units
-        h : int
+        height : int
             height in coord units
         label : str
             text label of spinner
 
     Returns
     -------
-        pFlObject : pointer to xfdata.FL_OBJECT
-            spinner object added
+        ptr_flobject : pointer to xfdata.FL_OBJECT
+            spinner flobject added
 
     Examples
     --------
@@ -87,31 +88,32 @@ def fl_add_spinner(spinnertype, x, y, w, h, label):
     library.check_if_initialized()
     library.checkfatal_allowed_value_in_list(spinnertype, \
             xfdata.SPINNERTYPE_list)
-    ispinnertype = library.convert_to_int(spinnertype)
-    ix = library.convert_to_FL_Coord(x)
-    iy = library.convert_to_FL_Coord(y)
-    iw = library.convert_to_FL_Coord(w)
-    ih = library.convert_to_FL_Coord(h)
-    slabel = library.convert_to_string(label)
-    library.keep_elem_refs(spinnertype, x, y, w, h, label, ispinnertype, \
-            ix, iy, iw, ih, slabel)
-    retval = _fl_add_spinner(ispinnertype, ix, iy, iw, ih, slabel)
+    i_spinnertype = library.convert_to_intc(spinnertype)
+    i_xpos = library.convert_to_FL_Coord(xpos)
+    i_ypos = library.convert_to_FL_Coord(ypos)
+    i_width = library.convert_to_FL_Coord(width)
+    i_height = library.convert_to_FL_Coord(height)
+    s_label = library.convert_to_stringc(label)
+    library.keep_elem_refs(spinnertype, xpos, ypos, width, height, label, \
+            i_spinnertype, i_xpos, i_ypos, i_width, i_height, s_label)
+    retval = _fl_add_spinner(i_spinnertype, i_xpos, i_ypos, i_width, \
+            i_height, s_label)
     return retval
 
 
-def fl_get_spinner_value(pFlObject):
-    """fl_get_spinner_value(pFlObject)
+def fl_get_spinner_value(ptr_flobject):
+    """fl_get_spinner_value(ptr_flobject) -> spvalue
 
-    Obtains value of a spinner object.
+    Finds out value of a spinner flobject.
 
     Parameters
     ----------
-        pFlObject : pointer to xfdata.FL_OBJECT
-            spinner object
+        ptr_flobject : pointer to xfdata.FL_OBJECT
+            spinner flobject
 
     Returns
     -------
-        val : float
+        spvalue : float
             spinner value
 
     Examples
@@ -128,27 +130,27 @@ def fl_get_spinner_value(pFlObject):
         cty.c_double, [cty.POINTER(xfdata.FL_OBJECT)],
         """double fl_get_spinner_value(FL_OBJECT * obj)""")
     library.check_if_initialized()
-    library.verify_flobjectptr_type(pFlObject)
-    library.keep_elem_refs(pFlObject)
-    retval = _fl_get_spinner_value(pFlObject)
+    library.verify_flobjectptr_type(ptr_flobject)
+    library.keep_elem_refs(ptr_flobject)
+    retval = _fl_get_spinner_value(ptr_flobject)
     return retval
 
 
-def fl_set_spinner_value(pFlObject, val):
-    """fl_set_spinner_value(pFlObject, val)
+def fl_set_spinner_value(ptr_flobject, spvalue):
+    """fl_set_spinner_value(ptr_flobject, spvalue) -> oldspvalue
     
-    Sets value of a spinner object.
+    Defines value of a spinner flobject.
 
     Parameters
     ----------
-        pFlObject : pointer to xfdata.FL_OBJECT
-            spinner object
-        val : float
+        ptr_flobject : pointer to xfdata.FL_OBJECT
+            spinner flobject
+        spvalue : float
             value to be set
 
     Returns
     -------
-        oldval : float
+        oldspvalue : float
             previous spinner value
 
     Examples
@@ -164,25 +166,25 @@ def fl_set_spinner_value(pFlObject, val):
         library.load_so_libforms(), "fl_set_spinner_value",
         cty.c_double, [cty.POINTER(xfdata.FL_OBJECT), cty.c_double],
         """double fl_set_spinner_value(FL_OBJECT * obj, double val)""")
-    library.verify_flobjectptr_type(pFlObject)
-    fval = library.convert_to_double(val)
-    library.keep_elem_refs(pFlObject, val, fval)
-    _fl_set_spinner_value(pFlObject, fval)
+    library.verify_flobjectptr_type(ptr_flobject)
+    f_spvalue = library.convert_to_doublec(spvalue)
+    library.keep_elem_refs(ptr_flobject, spvalue, f_spvalue)
+    _fl_set_spinner_value(ptr_flobject, f_spvalue)
 
 
-def fl_set_spinner_bounds(pFlObject, minbound, maxbound):
-    """fl_set_spinner_bounds(pFlObject, minbound, maxbound)
+def fl_set_spinner_bounds(ptr_flobject, minbound, maxbound):
+    """fl_set_spinner_bounds(ptr_flobject, minbound, maxbound)
     
-    Sets minimum and maximum bounds/limits of a spinner object.
+    Defines minimum and maximum value limits of a spinner flobject.
 
     Parameters
     ----------
-        pFlObject : pointer to xfdata.FL_OBJECT
-            spinner object
+        ptr_flobject : pointer to xfdata.FL_OBJECT
+            spinner flobject
         minbound : float
-            minimum bound to be set
+            minimum value bound to be set
         maxbound : float
-            maximum bound to be set
+            maximum value bound to be set
 
     Examples
     --------
@@ -199,30 +201,30 @@ def fl_set_spinner_bounds(pFlObject, minbound, maxbound):
         """void fl_set_spinner_bounds(FL_OBJECT * obj, double min,
            double max)""")
     library.check_if_initialized()
-    library.verify_flobjectptr_type(pFlObject)
-    fminbound = library.convert_to_double(minbound)
-    fmaxbound = library.convert_to_double(maxbound)
-    library.keep_elem_refs(pFlObject, minbound, maxbound, fminbound, \
-            fmaxbound)
-    _fl_set_spinner_bounds(pFlObject, fminbound, fmaxbound)
+    library.verify_flobjectptr_type(ptr_flobject)
+    f_minbound = library.convert_to_doublec(minbound)
+    f_maxbound = library.convert_to_doublec(maxbound)
+    library.keep_elem_refs(ptr_flobject, minbound, maxbound, \
+            f_minbound, f_maxbound)
+    _fl_set_spinner_bounds(ptr_flobject, f_minbound, f_maxbound)
 
 
-def fl_get_spinner_bounds(pFlObject):
-    """fl_get_spinner_bounds(pFlObject)
+def fl_get_spinner_bounds(ptr_flobject):
+    """fl_get_spinner_bounds(ptr_flobject) -> minbound, maxbound
     
-    Obtains minimum and maximum bounds/limits of a spinner.
+    Finds out minimum and maximum value limits of a spinner flobject.
 
     Parameters
     ----------
-        pFlObject : pointer to xfdata.FL_OBJECT
-            spinner object
+        ptr_flobject : pointer to xfdata.FL_OBJECT
+            spinner flobject
 
     Returns
     -------
         minbound : float
-            minimum bound
+            minimum value bound
         maxbound : float
-            maximum bound
+            maximum value bound
 
     Examples
     --------
@@ -230,8 +232,8 @@ def fl_get_spinner_bounds(pFlObject):
 
     API_diversion
     ----------
-        API changed from XForms, upstream was
-        fl_get_spinner_bounds(pFlObject, minbound, maxbound)
+        API changed from XForms, upstream is
+        fl_get_spinner_bounds(ptr_flobject, minbound, maxbound)
 
     Notes
     -----
@@ -245,26 +247,26 @@ def fl_get_spinner_bounds(pFlObject):
         """void fl_get_spinner_bounds(FL_OBJECT * obj, double * min,
            double * max)""")
     library.check_if_initialized()
-    library.verify_flobjectptr_type(pFlObject)
-    minbound, pminbound = library.make_double_and_pointer()
-    maxbound, pmaxbound = library.make_double_and_pointer()
-    library.keep_elem_refs(pFlObject, minbound, maxbound, pminbound, \
-            pmaxbound)
-    _fl_get_spinner_bounds(pFlObject, pminbound, pmaxbound)
-    return minbound.value, maxbound.value
+    library.verify_flobjectptr_type(ptr_flobject)
+    f_minbound, ptr_minbound = library.make_doublec_and_pointer()
+    f_maxbound, ptr_maxbound = library.make_doublec_and_pointer()
+    library.keep_elem_refs(ptr_flobject, f_minbound, f_maxbound, \
+            ptr_minbound, ptr_maxbound)
+    _fl_get_spinner_bounds(ptr_flobject, ptr_minbound, ptr_maxbound)
+    return f_minbound.value, f_maxbound.value
 
 
-def fl_set_spinner_step(pFlObject, step):
-    """fl_set_spinner_step(pFlObject, step)
+def fl_set_spinner_step(ptr_flobject, step):
+    """fl_set_spinner_step(ptr_flobject, step)
     
-    *todo*
+    Defines step that spinner values are rounded to.
 
     Parameters
     ----------
-        pFlObject : pointer to xfdata.FL_OBJECT
-            spinner object
+        ptr_flobject : pointer to xfdata.FL_OBJECT
+            spinner flobject
         step : float
-            step value?
+            step value to round spinner values to
 
     Examples
     --------
@@ -280,26 +282,26 @@ def fl_set_spinner_step(pFlObject, step):
         None, [cty.POINTER(xfdata.FL_OBJECT), cty.c_double],
         """void fl_set_spinner_step(FL_OBJECT * obj, double step)""")
     library.check_if_initialized()
-    library.verify_flobjectptr_type(pFlObject)
-    fstep = library.convert_to_double(step)
-    library.keep_elem_refs(pFlObject, step, fstep)
-    _fl_set_spinner_step(pFlObject, fstep)
+    library.verify_flobjectptr_type(ptr_flobject)
+    f_step = library.convert_to_doublec(step)
+    library.keep_elem_refs(ptr_flobject, step, f_step)
+    _fl_set_spinner_step(ptr_flobject, f_step)
 
 
-def fl_get_spinner_step(pFlObject):
-    """fl_get_spinner_step(pFlObject)
+def fl_get_spinner_step(ptr_flobject):
+    """fl_get_spinner_step(ptr_flobject) -> step
     
-    *todo*
+    Finds out step that spinner values are rounded to.
 
     Parameters
     ----------
-        pFlObject : pointer to xfdata.FL_OBJECT
-            spinner object
+        ptr_flobject : pointer to xfdata.FL_OBJECT
+            spinner flobject
 
     Returns
     -------
         step : float
-            step value
+            step values are rounded to
 
     Examples
     --------
@@ -315,23 +317,23 @@ def fl_get_spinner_step(pFlObject):
         cty.c_double, [cty.POINTER(xfdata.FL_OBJECT)],
         """double fl_get_spinner_step(FL_OBJECT * obj)""")
     library.check_if_initialized()
-    library.verify_flobjectptr_type(pFlObject)
-    library.keep_elem_refs(pFlObject)
-    retval = _fl_get_spinner_step(pFlObject)
+    library.verify_flobjectptr_type(ptr_flobject)
+    library.keep_elem_refs(ptr_flobject)
+    retval = _fl_get_spinner_step(ptr_flobject)
     return retval
 
 
-def fl_set_spinner_precision(pFlObject, prec):
-    """fl_set_spinner_precision(pFlObject, prec)
+def fl_set_spinner_precision(ptr_flobject, precis):
+    """fl_set_spinner_precision(ptr_flobject, precis)
     
-    *todo*
+    Defines the precision number of values in a spinner flobject.
 
     Parameters
     ----------
-        pFlObject : pointer to xfdata.FL_OBJECT
-            spinner object
-        prec : int
-            precision value to be set
+        ptr_flobject : pointer to xfdata.FL_OBJECT
+            spinner flobject
+        precis : int
+            precision value to be set after the dot
 
     Examples
     --------
@@ -347,26 +349,27 @@ def fl_set_spinner_precision(pFlObject, prec):
         None, [cty.POINTER(xfdata.FL_OBJECT), cty.c_int],
         """void fl_set_spinner_precision(FL_OBJECT * obj, int prec)""")
     library.check_if_initialized()
-    library.verify_flobjectptr_type(pFlObject)
-    iprec = library.convert_to_int(prec)
-    library.keep_elem_refs(pFlObject, prec, iprec)
-    _fl_set_spinner_precision(pFlObject, iprec)
+    library.verify_flobjectptr_type(ptr_flobject)
+    i_precis = library.convert_to_intc(precis)
+    library.keep_elem_refs(ptr_flobject, precis, i_precis)
+    _fl_set_spinner_precision(ptr_flobject, i_precis)
 
 
-def fl_get_spinner_precision(pFlObject):
-    """fl_get_spinner_precision(pFlObject)
+def fl_get_spinner_precision(ptr_flobject):
+    """fl_get_spinner_precision(ptr_flobject) -> precis
     
-    *todo*
+    Finds out the precision of values in a spinner flobject.
 
     Parameters
     ----------
-        pFlObject : pointer to xfdata.FL_OBJECT
-            spinner object
+        ptr_flobject : pointer to xfdata.FL_OBJECT
+            spinner flobject
 
     Returns
     -------
-        prec : int
-            precision
+        precis : int
+            precision number after the dot, or 0
+            (if it is integer)
 
     Examples
     --------
@@ -382,26 +385,26 @@ def fl_get_spinner_precision(pFlObject):
         cty.c_int, [cty.POINTER(xfdata.FL_OBJECT)],
         """int fl_get_spinner_precision(FL_OBJECT * obj)""")
     library.check_if_initialized()
-    library.verify_flobjectptr_type(pFlObject)
-    library.keep_elem_refs(pFlObject)
-    retval = _fl_get_spinner_precision(pFlObject)
+    library.verify_flobjectptr_type(ptr_flobject)
+    library.keep_elem_refs(ptr_flobject)
+    retval = _fl_get_spinner_precision(ptr_flobject)
     return retval
 
 
-def fl_get_spinner_input(pFlObject):
-    """fl_get_spinner_input(pFlObject)
+def fl_get_spinner_input(ptr_flobject):
+    """fl_get_spinner_input(ptr_flobject) -> ptr_flobject
     
-    *todo*
+    Finds out the input sub-flobject of the spinner flobject.
 
     Parameters
     ----------
-        pFlObject : pointer to xfdata.FL_OBJECT
-            spinner object
+        ptr_flobject : pointer to xfdata.FL_OBJECT
+            spinner flobject
 
     Returns
     -------
-        pFlObject : pointer to xfdata.FL_OBJECT
-            spinner object
+        ptr_flobject : pointer to xfdata.FL_OBJECT
+            input sub-flobject of spinner
 
     Examples
     --------
@@ -417,26 +420,26 @@ def fl_get_spinner_input(pFlObject):
         cty.POINTER(xfdata.FL_OBJECT), [cty.POINTER(xfdata.FL_OBJECT)],
         """FL_OBJECT * fl_get_spinner_input(FL_OBJECT * obj)""")
     library.check_if_initialized()
-    library.verify_flobjectptr_type(pFlObject)
-    library.keep_elem_refs(pFlObject)
-    retval = _fl_get_spinner_input(pFlObject)
+    library.verify_flobjectptr_type(ptr_flobject)
+    library.keep_elem_refs(ptr_flobject)
+    retval = _fl_get_spinner_input(ptr_flobject)
     return retval
 
 
-def fl_get_spinner_up_button(pFlObject):
-    """fl_get_spinner_up_button(pFlObject)
+def fl_get_spinner_up_button(ptr_flobject):
+    """fl_get_spinner_up_button(ptr_flobject) -> ptr_flobject
     
-    *todo*
+    Finds out up button sub-flobject of a spinner flobject.
 
     Parameters
     ----------
-        pFlObject : pointer to xfdata.FL_OBJECT
-            spinner object
+        ptr_flobject : pointer to xfdata.FL_OBJECT
+            spinner flobject
 
     Returns
     -------
-        pFlObject : pointer to xfdata.FL_OBJECT
-            spinner object
+        ptr_flobject : pointer to xfdata.FL_OBJECT
+            up button sub-flobject of spinner
 
     Examples
     --------
@@ -452,26 +455,26 @@ def fl_get_spinner_up_button(pFlObject):
         cty.POINTER(xfdata.FL_OBJECT), [cty.POINTER(xfdata.FL_OBJECT)],
         """FL_OBJECT * fl_get_spinner_up_button(FL_OBJECT * obj)""")
     library.check_if_initialized()
-    library.verify_flobjectptr_type(pFlObject)
-    library.keep_elem_refs(pFlObject)
-    retval = _fl_get_spinner_up_button(pFlObject)
+    library.verify_flobjectptr_type(ptr_flobject)
+    library.keep_elem_refs(ptr_flobject)
+    retval = _fl_get_spinner_up_button(ptr_flobject)
     return retval
 
 
-def fl_get_spinner_down_button(pFlObject):
-    """fl_get_spinner_down_button(pFlObject)
+def fl_get_spinner_down_button(ptr_flobject):
+    """fl_get_spinner_down_button(ptr_flobject) -> ptr_flobject
     
-    *todo*
+    Finds out down button sub-flobject of a spinner flobject.
 
     Parameters
     ----------
-        pFlObject : pointer to xfdata.FL_OBJECT
-            spinner object
+        ptr_flobject : pointer to xfdata.FL_OBJECT
+            spinner flobject
 
     Returns
     -------
-        pFlObject : pointer to xfdata.FL_OBJECT
-            spinner object
+        ptr_flobject : pointer to xfdata.FL_OBJECT
+            down button sub-flobject of spinner
 
     Examples
     --------
@@ -487,8 +490,8 @@ def fl_get_spinner_down_button(pFlObject):
         cty.POINTER(xfdata.FL_OBJECT), [cty.POINTER(xfdata.FL_OBJECT)],
         """FL_OBJECT * fl_get_spinner_down_button(FL_OBJECT * obj)""")
     library.check_if_initialized()
-    library.verify_flobjectptr_type(pFlObject)
-    library.keep_elem_refs(pFlObject)
-    retval = _fl_get_spinner_down_button(pFlObject)
+    library.verify_flobjectptr_type(ptr_flobject)
+    library.keep_elem_refs(ptr_flobject)
+    retval = _fl_get_spinner_down_button(ptr_flobject)
     return retval
 

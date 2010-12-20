@@ -28,7 +28,7 @@
 <font color="#ffffff" face="helvetica, arial"><big><strong>Functions</strong></big></font></td></tr>
     
 <tr><td bgcolor="#eeaa77"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
-<td width="100%"><dl><dt><a name="-fl_popup_add"><strong>fl_popup_add</strong></a>(win, title)</dt><dd><tt><a href="#-fl_popup_add">fl_popup_add</a>(win,&nbsp;title)<br>
+<td width="100%"><dl><dt><a name="-fl_popup_add"><strong>fl_popup_add</strong></a>(win, title)</dt><dd><tt><a href="#-fl_popup_add">fl_popup_add</a>(win,&nbsp;title)&nbsp;-&gt;&nbsp;ptr_flpopup<br>
 &nbsp;<br>
 Defines&nbsp;a&nbsp;new&nbsp;popup.&nbsp;There&nbsp;is&nbsp;no&nbsp;built-in&nbsp;limit&nbsp;to&nbsp;the&nbsp;number<br>
 of&nbsp;popups&nbsp;that&nbsp;can&nbsp;be&nbsp;created.<br>
@@ -36,7 +36,7 @@ of&nbsp;popups&nbsp;that&nbsp;can&nbsp;be&nbsp;created.<br>
 Parameters<br>
 ----------<br>
 &nbsp;&nbsp;&nbsp;&nbsp;win&nbsp;:&nbsp;long_pos<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;window&nbsp;of&nbsp;a&nbsp;parent&nbsp;object;&nbsp;use&nbsp;flxbasic.FL_ObjWin()&nbsp;to&nbsp;find&nbsp;out<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;window&nbsp;of&nbsp;a&nbsp;parent&nbsp;flobject;&nbsp;use&nbsp;flxbasic.FL_ObjWin()&nbsp;to&nbsp;find&nbsp;out<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;about&nbsp;it.&nbsp;You&nbsp;can&nbsp;also&nbsp;use&nbsp;either&nbsp;'fl_root'&nbsp;or&nbsp;'None'&nbsp;for&nbsp;the<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;root&nbsp;window.<br>
 &nbsp;&nbsp;&nbsp;&nbsp;title&nbsp;:&nbsp;str<br>
@@ -47,7 +47,7 @@ Parameters<br>
 &nbsp;<br>
 Returns<br>
 -------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;pPopup&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_POPUP<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_flpopup&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_POPUP<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;new&nbsp;popup,&nbsp;or&nbsp;None&nbsp;(on&nbsp;failure)<br>
 &nbsp;<br>
 Examples<br>
@@ -57,15 +57,15 @@ Examples<br>
 Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-fl_popup_add_entries"><strong>fl_popup_add_entries</strong></a>(pPopup, entryitems_txt)</dt><dd><tt><a href="#-fl_popup_add_entries">fl_popup_add_entries</a>(pPopup,&nbsp;entryitems_txt)<br>
+ <dl><dt><a name="-fl_popup_add_entries"><strong>fl_popup_add_entries</strong></a>(ptr_flpopup, entryitemstxt)</dt><dd><tt><a href="#-fl_popup_add_entries">fl_popup_add_entries</a>(ptr_flpopup,&nbsp;entryitemstxt)&nbsp;-&gt;&nbsp;ptr_flpopupentry<br>
 &nbsp;<br>
 Adds&nbsp;one&nbsp;or&nbsp;more&nbsp;entries&nbsp;to&nbsp;a&nbsp;popup.<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;pPopup&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_POPUP<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_flpopup&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_POPUP<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;popup&nbsp;class&nbsp;instance<br>
-&nbsp;&nbsp;&nbsp;&nbsp;entryitems_txt&nbsp;:&nbsp;str<br>
+&nbsp;&nbsp;&nbsp;&nbsp;entryitemstxt&nbsp;:&nbsp;str<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;text&nbsp;of&nbsp;the&nbsp;entry&nbsp;to&nbsp;be&nbsp;added&nbsp;and&nbsp;in-text&nbsp;special&nbsp;sequences&nbsp;with<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;or&nbsp;without&nbsp;not&nbsp;separated&nbsp;additional&nbsp;arguments&nbsp;(if&nbsp;needed).&nbsp;Text<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;may&nbsp;contain&nbsp;|&nbsp;to&nbsp;separate&nbsp;entries&nbsp;and&nbsp;newline&nbsp;characters&nbsp;which<br>
@@ -75,7 +75,7 @@ Parameters<br>
 &nbsp;<br>
 Returns<br>
 -------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;pPopup&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_POPUP<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_flpopupentry&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_POPUP_ENTRY<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;popup&nbsp;entry,&nbsp;or&nbsp;None&nbsp;(on&nbsp;failure)<br>
 &nbsp;<br>
 Examples<br>
@@ -86,22 +86,22 @@ Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK<br>
 &nbsp;&nbsp;&nbsp;&nbsp;See:&nbsp;Special&nbsp;sequences&nbsp;in&nbsp;entry&nbsp;text&nbsp;documentation.</tt></dd></dl>
- <dl><dt><a name="-fl_popup_add_items"><strong>fl_popup_add_items</strong></a>(pPopup, pPopupItem)</dt><dd><tt><a href="#-fl_popup_add_items">fl_popup_add_items</a>(pPopup,&nbsp;pPopupItem)<br>
+ <dl><dt><a name="-fl_popup_add_items"><strong>fl_popup_add_items</strong></a>(ptr_flpopup, ptr_flpopupitem)</dt><dd><tt><a href="#-fl_popup_add_items">fl_popup_add_items</a>(ptr_flpopup,&nbsp;ptr_flpopupitem)&nbsp;-&gt;&nbsp;ptr_flpopupentry<br>
 &nbsp;<br>
 Adds&nbsp;one&nbsp;or&nbsp;more&nbsp;items&nbsp;to&nbsp;a&nbsp;popup.<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;pPopup&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_POPUP<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_flpopup&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_POPUP<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;popup&nbsp;class&nbsp;instance<br>
-&nbsp;&nbsp;&nbsp;&nbsp;pPopupItem&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_POPUP_ITEM<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_flpopupitem&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_POPUP_ITEM<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;new&nbsp;popup&nbsp;item&nbsp;to&nbsp;be&nbsp;added.&nbsp;It&nbsp;can&nbsp;be&nbsp;prepared&nbsp;passing&nbsp;a&nbsp;dict<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(whose&nbsp;keys&nbsp;are&nbsp;corresponding&nbsp;to&nbsp;xfdata.FL_POPUP_ITEM's&nbsp;members)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;to&nbsp;xfstruct.make_flpopupitem&nbsp;function.<br>
 &nbsp;<br>
 Returns<br>
 -------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;pPopupEntry&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_POPUP_ENTRY<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_flpopupentry&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_POPUP_ENTRY<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;popup&nbsp;entry,&nbsp;or&nbsp;None<br>
 &nbsp;<br>
 Examples<br>
@@ -111,7 +111,7 @@ Examples<br>
 Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-fl_popup_create"><strong>fl_popup_create</strong></a>(win, title, pPopupItem)</dt><dd><tt><a href="#-fl_popup_create">fl_popup_create</a>(win,&nbsp;title,&nbsp;pPopupItem)<br>
+ <dl><dt><a name="-fl_popup_create"><strong>fl_popup_create</strong></a>(win, title, ptr_flpopupitem)</dt><dd><tt><a href="#-fl_popup_create">fl_popup_create</a>(win,&nbsp;title,&nbsp;ptr_flpopupitem)&nbsp;-&gt;&nbsp;ptr_flpopup<br>
 &nbsp;<br>
 Creates&nbsp;a&nbsp;popup.&nbsp;It&nbsp;does&nbsp;not&nbsp;allow&nbsp;to&nbsp;associate&nbsp;values&nbsp;or&nbsp;pointers&nbsp;to<br>
 user&nbsp;data&nbsp;to&nbsp;individual&nbsp;entries,&nbsp;set&nbsp;titles&nbsp;for&nbsp;sub-popups,&nbsp;have&nbsp;radio<br>
@@ -121,7 +121,7 @@ functions.<br>
 Parameters<br>
 ----------<br>
 &nbsp;&nbsp;&nbsp;&nbsp;win&nbsp;:&nbsp;long_pos<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;window&nbsp;of&nbsp;a&nbsp;parent&nbsp;object&nbsp;(use&nbsp;flxbasic.FL_ObjWin()&nbsp;to&nbsp;find&nbsp;out<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;window&nbsp;of&nbsp;a&nbsp;parent&nbsp;flobject&nbsp;(use&nbsp;flxbasic.FL_ObjWin()&nbsp;to&nbsp;find&nbsp;out<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;about&nbsp;it).&nbsp;You&nbsp;can&nbsp;also&nbsp;use&nbsp;either&nbsp;'fl_root'&nbsp;or&nbsp;'None'&nbsp;for&nbsp;the<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;root&nbsp;window.<br>
 &nbsp;&nbsp;&nbsp;&nbsp;title&nbsp;:&nbsp;str<br>
@@ -129,14 +129,14 @@ Parameters<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;If&nbsp;not&nbsp;wanted,&nbsp;pass&nbsp;an&nbsp;empty&nbsp;string&nbsp;or&nbsp;'None'.&nbsp;It&nbsp;may&nbsp;contain<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;embedded&nbsp;newline&nbsp;characters,&nbsp;this&nbsp;allows&nbsp;to&nbsp;create&nbsp;titles&nbsp;that<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;span&nbsp;more&nbsp;than&nbsp;one&nbsp;line.<br>
-&nbsp;&nbsp;&nbsp;&nbsp;pPopupItem&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_POPUP_ITEM<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_flpopupitem&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_POPUP_ITEM<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;new&nbsp;popup&nbsp;item&nbsp;to&nbsp;be&nbsp;created.&nbsp;It&nbsp;can&nbsp;be&nbsp;prepared&nbsp;passing&nbsp;a&nbsp;dict<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(whose&nbsp;keys&nbsp;are&nbsp;corresponding&nbsp;to&nbsp;xfdata.FL_POPUP_ITEM's&nbsp;members)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;to&nbsp;xfstruct.make_flpopupitem&nbsp;function.<br>
 &nbsp;<br>
 Returns<br>
 -------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;pPopup&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_POPUP<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_flpopup&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_POPUP<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;popup&nbsp;created,&nbsp;or&nbsp;None&nbsp;(on&nbsp;failure)<br>
 &nbsp;<br>
 Examples<br>
@@ -146,7 +146,7 @@ Examples<br>
 Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-fl_popup_delete"><strong>fl_popup_delete</strong></a>(pPopup)</dt><dd><tt><a href="#-fl_popup_delete">fl_popup_delete</a>(pPopup)<br>
+ <dl><dt><a name="-fl_popup_delete"><strong>fl_popup_delete</strong></a>(ptr_flpopup)</dt><dd><tt><a href="#-fl_popup_delete">fl_popup_delete</a>(ptr_flpopup)&nbsp;-&gt;&nbsp;result<br>
 &nbsp;<br>
 Deletes&nbsp;a&nbsp;popup.&nbsp;It&nbsp;is&nbsp;not&nbsp;possible&nbsp;to&nbsp;call&nbsp;the&nbsp;function&nbsp;while&nbsp;the<br>
 popup&nbsp;is&nbsp;still&nbsp;visible&nbsp;on&nbsp;the&nbsp;screen.&nbsp;Calling&nbsp;it&nbsp;from&nbsp;any&nbsp;callback<br>
@@ -156,7 +156,7 @@ should&nbsp;be&nbsp;avoided.<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;pPopup&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_POPUP<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_flpopup&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_POPUP<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;popup&nbsp;class&nbsp;instance<br>
 &nbsp;<br>
 Returns<br>
@@ -171,7 +171,7 @@ Examples<br>
 Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-fl_popup_do"><strong>fl_popup_do</strong></a>(pPopup)</dt><dd><tt><a href="#-fl_popup_do">fl_popup_do</a>(pPopup)<br>
+ <dl><dt><a name="-fl_popup_do"><strong>fl_popup_do</strong></a>(ptr_flpopup)</dt><dd><tt><a href="#-fl_popup_do">fl_popup_do</a>(ptr_flpopup)&nbsp;-&gt;&nbsp;ptr_flpopupreturn<br>
 &nbsp;<br>
 Shows&nbsp;the&nbsp;created&nbsp;popup&nbsp;and&nbsp;returns&nbsp;when&nbsp;the&nbsp;the&nbsp;user&nbsp;is&nbsp;done&nbsp;with&nbsp;the<br>
 popup&nbsp;and&nbsp;it&nbsp;has&nbsp;been&nbsp;removed&nbsp;from&nbsp;the&nbsp;screen.&nbsp;Only&nbsp;idle&nbsp;callbacks&nbsp;and<br>
@@ -179,12 +179,12 @@ timers&nbsp;etc.&nbsp;are&nbsp;executed&nbsp;in&nbsp;the&nbsp;background&nbsp;wh
 &nbsp;<br>
 Parameters<br>
 ----------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;pPopup&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_POPUP<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_flpopup&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_POPUP<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;popup&nbsp;class&nbsp;instance<br>
 &nbsp;<br>
 Returns<br>
 -------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;pPopupReturn&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_POPUP_RETURN<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_flpopupreturn&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_POPUP_RETURN<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;popup&nbsp;return&nbsp;class&nbsp;instance<br>
 &nbsp;<br>
 Examples<br>
@@ -194,13 +194,13 @@ Examples<br>
 Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-fl_popup_entry_clear_state"><strong>fl_popup_entry_clear_state</strong></a>(pPopupEntry, state)</dt><dd><tt><a href="#-fl_popup_entry_clear_state">fl_popup_entry_clear_state</a>(pPopupEntry,&nbsp;state)<br>
+ <dl><dt><a name="-fl_popup_entry_clear_state"><strong>fl_popup_entry_clear_state</strong></a>(ptr_flpopupentry, state)</dt><dd><tt><a href="#-fl_popup_entry_clear_state">fl_popup_entry_clear_state</a>(ptr_flpopupentry,&nbsp;state)&nbsp;-&gt;&nbsp;oldstate<br>
 &nbsp;<br>
 Clears&nbsp;state&nbsp;bits&nbsp;of&nbsp;a&nbsp;popup&nbsp;entry.<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;pPopupEntry&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_POPUP_ENTRY<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_flpopupentry&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_POPUP_ENTRY<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;popup&nbsp;entry<br>
 &nbsp;&nbsp;&nbsp;&nbsp;state&nbsp;:&nbsp;int_pos<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;state&nbsp;to&nbsp;be&nbsp;cleared.&nbsp;Values&nbsp;(from&nbsp;xfdata.py)&nbsp;FL_POPUP_DISABLED,<br>
@@ -209,7 +209,7 @@ Parameters<br>
 Returns<br>
 -------<br>
 &nbsp;&nbsp;&nbsp;&nbsp;oldstate&nbsp;:&nbsp;int_pos<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;original&nbsp;value&nbsp;of&nbsp;the&nbsp;state<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;original&nbsp;value&nbsp;of&nbsp;the&nbsp;state,&nbsp;or&nbsp;xfdata.UINT_MAX&nbsp;(on&nbsp;failure)<br>
 &nbsp;<br>
 Examples<br>
 --------<br>
@@ -218,13 +218,13 @@ Examples<br>
 Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-fl_popup_entry_delete"><strong>fl_popup_entry_delete</strong></a>(pPopupEntry)</dt><dd><tt><a href="#-fl_popup_entry_delete">fl_popup_entry_delete</a>(pPopupEntry)<br>
+ <dl><dt><a name="-fl_popup_entry_delete"><strong>fl_popup_entry_delete</strong></a>(ptr_flpopupentry)</dt><dd><tt><a href="#-fl_popup_entry_delete">fl_popup_entry_delete</a>(ptr_flpopupentry)&nbsp;-&gt;&nbsp;result<br>
 &nbsp;<br>
 Removes&nbsp;an&nbsp;existing&nbsp;popup&nbsp;entry.<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;pPopupEntry&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_POPUP_ENTRY<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_flpopupentry&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_POPUP_ENTRY<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;popup&nbsp;entry&nbsp;to&nbsp;be&nbsp;removed.<br>
 &nbsp;<br>
 Returns<br>
@@ -239,7 +239,7 @@ Examples<br>
 Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-fl_popup_entry_get_by_label"><strong>fl_popup_entry_get_by_label</strong></a>(pPopup, label)</dt><dd><tt><a href="#-fl_popup_entry_get_by_label">fl_popup_entry_get_by_label</a>(pPopup,&nbsp;label)<br>
+ <dl><dt><a name="-fl_popup_entry_get_by_label"><strong>fl_popup_entry_get_by_label</strong></a>(ptr_flpopup, label)</dt><dd><tt><a href="#-fl_popup_entry_get_by_label">fl_popup_entry_get_by_label</a>(ptr_flpopup,&nbsp;label)&nbsp;-&gt;&nbsp;ptr_flpopupentry<br>
 &nbsp;<br>
 Finds&nbsp;a&nbsp;popup&nbsp;entry&nbsp;by&nbsp;its&nbsp;left-flushed&nbsp;label&nbsp;parts&nbsp;of&nbsp;the&nbsp;entry&nbsp;as<br>
 shown&nbsp;on&nbsp;the&nbsp;screen.&nbsp;Note&nbsp;that&nbsp;tab&nbsp;characters&nbsp;(backslash-t)&nbsp;originally<br>
@@ -249,14 +249,14 @@ well&nbsp;as&nbsp;all&nbsp;special&nbsp;sequences).<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;pPopup&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_POPUP<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_flpopup&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_POPUP<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;popup&nbsp;class&nbsp;instance<br>
 &nbsp;&nbsp;&nbsp;&nbsp;label&nbsp;:&nbsp;str<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;label&nbsp;of&nbsp;the&nbsp;popup&nbsp;entry.<br>
 &nbsp;<br>
 Returns<br>
 -------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;pPopupEntry&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_POPUP_ENTRY<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_flpopupentry&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_POPUP_ENTRY<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;popup&nbsp;entry<br>
 &nbsp;<br>
 Examples<br>
@@ -266,14 +266,14 @@ Examples<br>
 Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-fl_popup_entry_get_by_position"><strong>fl_popup_entry_get_by_position</strong></a>(pPopup, posnum)</dt><dd><tt><a href="#-fl_popup_entry_get_by_position">fl_popup_entry_get_by_position</a>(pPopup,&nbsp;posnum)<br>
+ <dl><dt><a name="-fl_popup_entry_get_by_position"><strong>fl_popup_entry_get_by_position</strong></a>(ptr_flpopup, posnum)</dt><dd><tt><a href="#-fl_popup_entry_get_by_position">fl_popup_entry_get_by_position</a>(ptr_flpopup,&nbsp;posnum)&nbsp;-&gt;&nbsp;ptr_flpopupentry<br>
 &nbsp;<br>
 Finds&nbsp;an&nbsp;entry&nbsp;by&nbsp;its&nbsp;current&nbsp;position&nbsp;in&nbsp;the&nbsp;popup.&nbsp;Sub-popups&nbsp;are&nbsp;not<br>
 taken&nbsp;into&nbsp;consideration.<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;pPopup&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_POPUP<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_flpopup&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_POPUP<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;popup&nbsp;class&nbsp;instance<br>
 &nbsp;&nbsp;&nbsp;&nbsp;posnum&nbsp;:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;position&nbsp;number&nbsp;starting&nbsp;with&nbsp;0&nbsp;(e.g.&nbsp;when&nbsp;called&nbsp;with&nbsp;0&nbsp;the<br>
@@ -283,7 +283,7 @@ Parameters<br>
 &nbsp;<br>
 Returns<br>
 -------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;pPopupEntry&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_POPUP_ENTRY<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_flpopupentry&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_POPUP_ENTRY<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;popup&nbsp;entry<br>
 &nbsp;<br>
 Examples<br>
@@ -293,23 +293,23 @@ Examples<br>
 Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-fl_popup_entry_get_by_text"><strong>fl_popup_entry_get_by_text</strong></a>(pPopup, text)</dt><dd><tt><a href="#-fl_popup_entry_get_by_text">fl_popup_entry_get_by_text</a>(pPopup,&nbsp;text)<br>
+ <dl><dt><a name="-fl_popup_entry_get_by_text"><strong>fl_popup_entry_get_by_text</strong></a>(ptr_flpopup, text)</dt><dd><tt><a href="#-fl_popup_entry_get_by_text">fl_popup_entry_get_by_text</a>(ptr_flpopup,&nbsp;text)&nbsp;-&gt;ptr_flpopupentry<br>
 &nbsp;<br>
 Finds&nbsp;a&nbsp;popup&nbsp;entry&nbsp;that&nbsp;had&nbsp;been&nbsp;created&nbsp;with&nbsp;a&nbsp;certain&nbsp;text,<br>
 including&nbsp;all&nbsp;the&nbsp;special&nbsp;sequences.<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;pPopup&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_POPUP<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_flpopup&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_POPUP<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;popup&nbsp;class&nbsp;instance<br>
 &nbsp;&nbsp;&nbsp;&nbsp;text&nbsp;:&nbsp;str<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;text&nbsp;of&nbsp;the&nbsp;popup&nbsp;entry&nbsp;to&nbsp;be&nbsp;found.<br>
 &nbsp;<br>
 Returns<br>
 -------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;pPopupEntry&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_POPUP_ENTRY<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;popup&nbsp;entry,&nbsp;or&nbsp;None&nbsp;(on&nbsp;failure,&nbsp;because&nbsp;either&nbsp;no&nbsp;entry<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;with&nbsp;this&nbsp;text&nbsp;was&nbsp;found&nbsp;or&nbsp;the&nbsp;popup&nbsp;does&nbsp;not&nbsp;exist)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_flpopupentry&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_POPUP_ENTRY<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;popup&nbsp;entry,&nbsp;or&nbsp;None&nbsp;(on&nbsp;failure,&nbsp;if&nbsp;no&nbsp;entry&nbsp;with&nbsp;this<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;text&nbsp;was&nbsp;found&nbsp;or&nbsp;the&nbsp;popup&nbsp;does&nbsp;not&nbsp;exist)<br>
 &nbsp;<br>
 Examples<br>
 --------<br>
@@ -318,13 +318,13 @@ Examples<br>
 Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-fl_popup_entry_get_by_user_data"><strong>fl_popup_entry_get_by_user_data</strong></a>(pPopup, vdata)</dt><dd><tt><a href="#-fl_popup_entry_get_by_user_data">fl_popup_entry_get_by_user_data</a>(pPopup,&nbsp;vdata)<br>
+ <dl><dt><a name="-fl_popup_entry_get_by_user_data"><strong>fl_popup_entry_get_by_user_data</strong></a>(ptr_flpopup, vdata)</dt><dd><tt><a href="#-fl_popup_entry_get_by_user_data">fl_popup_entry_get_by_user_data</a>(ptr_flpopup,&nbsp;vdata)&nbsp;-&gt;&nbsp;ptr_flpopupentry<br>
 &nbsp;<br>
 Finds&nbsp;a&nbsp;popup&nbsp;entry&nbsp;by&nbsp;its&nbsp;assigned&nbsp;user&nbsp;data.<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;pPopup&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_POPUP<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_flpopup&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_POPUP<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;popup&nbsp;class&nbsp;instance<br>
 &nbsp;&nbsp;&nbsp;&nbsp;vdata&nbsp;:&nbsp;any&nbsp;type&nbsp;(e.g.&nbsp;'None',&nbsp;int,&nbsp;str,&nbsp;etc..)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;user&nbsp;data&nbsp;assigned&nbsp;to&nbsp;the&nbsp;popup&nbsp;entry;&nbsp;callback&nbsp;has&nbsp;to&nbsp;take&nbsp;care<br>
@@ -332,7 +332,7 @@ Parameters<br>
 &nbsp;<br>
 Returns<br>
 -------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;pPopupEntry&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_POPUP_ENTRY<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_flpopupentry&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_POPUP_ENTRY<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;popup&nbsp;entry<br>
 &nbsp;<br>
 Examples<br>
@@ -342,20 +342,20 @@ Examples<br>
 Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-fl_popup_entry_get_by_value"><strong>fl_popup_entry_get_by_value</strong></a>(pPopup, val)</dt><dd><tt><a href="#-fl_popup_entry_get_by_value">fl_popup_entry_get_by_value</a>(pPopup,&nbsp;val)<br>
+ <dl><dt><a name="-fl_popup_entry_get_by_value"><strong>fl_popup_entry_get_by_value</strong></a>(ptr_flpopup, entryval)</dt><dd><tt><a href="#-fl_popup_entry_get_by_value">fl_popup_entry_get_by_value</a>(ptr_flpopup,&nbsp;entryval)&nbsp;-&gt;&nbsp;ptr_flpopupentry<br>
 &nbsp;<br>
 Finds&nbsp;a&nbsp;popup&nbsp;entry&nbsp;by&nbsp;its&nbsp;assigned&nbsp;value.<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;pPopup&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_POPUP<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_flpopup&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_POPUP<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;popup&nbsp;class&nbsp;instance<br>
-&nbsp;&nbsp;&nbsp;&nbsp;val&nbsp;:&nbsp;long<br>
+&nbsp;&nbsp;&nbsp;&nbsp;entryval&nbsp;:&nbsp;long<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;value&nbsp;assigned&nbsp;to&nbsp;the&nbsp;entry<br>
 &nbsp;<br>
 Returns<br>
 -------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;pPopupEntry&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_POPUP_ENTRY<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_flpopupentry&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_POPUP_ENTRY<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;popup&nbsp;entry<br>
 &nbsp;<br>
 Examples<br>
@@ -365,13 +365,13 @@ Examples<br>
 Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-fl_popup_entry_get_font"><strong>fl_popup_entry_get_font</strong></a>(pPopup)</dt><dd><tt><a href="#-fl_popup_entry_get_font">fl_popup_entry_get_font</a>(pPopup)<br>
+ <dl><dt><a name="-fl_popup_entry_get_font"><strong>fl_popup_entry_get_font</strong></a>(ptr_flpopup)</dt><dd><tt><a href="#-fl_popup_entry_get_font">fl_popup_entry_get_font</a>(ptr_flpopup)&nbsp;-&gt;&nbsp;style,&nbsp;size<br>
 &nbsp;<br>
-Obtains&nbsp;the&nbsp;font&nbsp;style&nbsp;and&nbsp;size&nbsp;of&nbsp;the&nbsp;popup&nbsp;entries.<br>
+Finds&nbsp;out&nbsp;the&nbsp;font&nbsp;style&nbsp;and&nbsp;size&nbsp;of&nbsp;the&nbsp;popup&nbsp;entries.<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;pPopup&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_POPUP<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_flpopup&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_POPUP<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;popup&nbsp;class&nbsp;instance<br>
 &nbsp;<br>
 Returns<br>
@@ -386,21 +386,21 @@ Examples<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;*todo*<br>
 &nbsp;<br>
 API_diversion<br>
-----------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;API&nbsp;changed&nbsp;from&nbsp;XForms,&nbsp;upstream&nbsp;was<br>
-&nbsp;&nbsp;&nbsp;&nbsp;<a href="#-fl_popup_entry_get_font">fl_popup_entry_get_font</a>(pPopup,&nbsp;style,&nbsp;size)<br>
+-------------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;API&nbsp;changed&nbsp;from&nbsp;XForms,&nbsp;upstream&nbsp;is<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="#-fl_popup_entry_get_font">fl_popup_entry_get_font</a>(ptr_flpopup,&nbsp;style,&nbsp;size)<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-fl_popup_entry_get_group"><strong>fl_popup_entry_get_group</strong></a>(pPopupEntry)</dt><dd><tt><a href="#-fl_popup_entry_get_group">fl_popup_entry_get_group</a>(pPopupEntry)<br>
+ <dl><dt><a name="-fl_popup_entry_get_group"><strong>fl_popup_entry_get_group</strong></a>(ptr_flpopupentry)</dt><dd><tt><a href="#-fl_popup_entry_get_group">fl_popup_entry_get_group</a>(ptr_flpopupentry)&nbsp;-&gt;&nbsp;groupnum<br>
 &nbsp;<br>
-Obtains&nbsp;which&nbsp;group&nbsp;a&nbsp;radio&nbsp;popup&nbsp;entry&nbsp;belongs.&nbsp;It&nbsp;makes&nbsp;much<br>
+Finds&nbsp;out&nbsp;which&nbsp;group&nbsp;a&nbsp;radio&nbsp;popup&nbsp;entry&nbsp;belongs.&nbsp;It&nbsp;makes&nbsp;much<br>
 sense&nbsp;when&nbsp;applied&nbsp;to&nbsp;radio&nbsp;entries.<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;pPopupEntry&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_POPUP_ENTRY<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_flpopupentry&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_POPUP_ENTRY<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;popup&nbsp;entry<br>
 &nbsp;<br>
 Returns<br>
@@ -415,20 +415,20 @@ Examples<br>
 Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-fl_popup_entry_get_state"><strong>fl_popup_entry_get_state</strong></a>(pPopupEntry)</dt><dd><tt><a href="#-fl_popup_entry_get_state">fl_popup_entry_get_state</a>(pPopupEntry)<br>
+ <dl><dt><a name="-fl_popup_entry_get_state"><strong>fl_popup_entry_get_state</strong></a>(ptr_flpopupentry)</dt><dd><tt><a href="#-fl_popup_entry_get_state">fl_popup_entry_get_state</a>(ptr_flpopupentry)&nbsp;-&gt;&nbsp;state<br>
 &nbsp;<br>
-Obtains&nbsp;the&nbsp;state&nbsp;of&nbsp;a&nbsp;popup&nbsp;entry&nbsp;(e.g.&nbsp;from&nbsp;xfdata.py<br>
+Finds&nbsp;out&nbsp;the&nbsp;state&nbsp;of&nbsp;a&nbsp;popup&nbsp;entry&nbsp;(e.g.&nbsp;from&nbsp;xfdata.py<br>
 FL_POPUP_DISABLED,&nbsp;FL_POPUP_HIDDEN&nbsp;and&nbsp;FL_POPUP_CHECKED).<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;pPopupEntry&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_POPUP_ENTRY<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_flpopupentry&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_POPUP_ENTRY<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;popup&nbsp;entry<br>
 &nbsp;<br>
 Returns<br>
 -------<br>
 &nbsp;&nbsp;&nbsp;&nbsp;state&nbsp;:&nbsp;int_pos<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;current&nbsp;state<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;current&nbsp;state,&nbsp;or&nbsp;xfdata.UINT_MAX&nbsp;(on&nbsp;failure)<br>
 &nbsp;<br>
 Examples<br>
 --------<br>
@@ -437,19 +437,19 @@ Examples<br>
 Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-fl_popup_entry_get_subpopup"><strong>fl_popup_entry_get_subpopup</strong></a>(pPopupEntry)</dt><dd><tt><a href="#-fl_popup_entry_get_subpopup">fl_popup_entry_get_subpopup</a>(pPopupEntry):<br>
+ <dl><dt><a name="-fl_popup_entry_get_subpopup"><strong>fl_popup_entry_get_subpopup</strong></a>(ptr_flpopupentry)</dt><dd><tt><a href="#-fl_popup_entry_get_subpopup">fl_popup_entry_get_subpopup</a>(ptr_flpopupentry)&nbsp;-&gt;&nbsp;ptr_flpopup<br>
 &nbsp;<br>
-Obtains&nbsp;the&nbsp;sub-popup&nbsp;associated&nbsp;with&nbsp;a&nbsp;sub-popup-entry.&nbsp;It&nbsp;only<br>
+Finds&nbsp;out&nbsp;the&nbsp;sub-popup&nbsp;associated&nbsp;with&nbsp;a&nbsp;sub-popup-entry.&nbsp;It&nbsp;only<br>
 makes&nbsp;sense&nbsp;for&nbsp;sub-popup&nbsp;entries.<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;pPopupEntry&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_POPUP_ENTRY<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_flpopupentry&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_POPUP_ENTRY<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;popup&nbsp;entry<br>
 &nbsp;<br>
 Returns<br>
 -------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;pPopup&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_POPUP<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_flpopup&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_POPUP<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;popup&nbsp;class&nbsp;instance<br>
 &nbsp;<br>
 Examples<br>
@@ -459,13 +459,13 @@ Examples<br>
 Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-fl_popup_entry_raise_state"><strong>fl_popup_entry_raise_state</strong></a>(pPopupEntry, state)</dt><dd><tt><a href="#-fl_popup_entry_raise_state">fl_popup_entry_raise_state</a>(pPopupEntry,&nbsp;state)<br>
+ <dl><dt><a name="-fl_popup_entry_raise_state"><strong>fl_popup_entry_raise_state</strong></a>(ptr_flpopupentry, state)</dt><dd><tt><a href="#-fl_popup_entry_raise_state">fl_popup_entry_raise_state</a>(ptr_flpopupentry,&nbsp;state)&nbsp;-&gt;&nbsp;oldstate<br>
 &nbsp;<br>
-Sets&nbsp;the&nbsp;state&nbsp;bits&nbsp;of&nbsp;a&nbsp;popup&nbsp;entry.<br>
+Defines&nbsp;the&nbsp;state&nbsp;bits&nbsp;of&nbsp;a&nbsp;popup&nbsp;entry.<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;pPopupEntry&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_POPUP_ENTRY<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_flpopupentry&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_POPUP_ENTRY<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;popup&nbsp;entry<br>
 &nbsp;&nbsp;&nbsp;&nbsp;state&nbsp;:&nbsp;int_pos<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;state&nbsp;to&nbsp;be&nbsp;set.&nbsp;Values&nbsp;(from&nbsp;xfdata.py)&nbsp;FL_POPUP_DISABLED,<br>
@@ -474,7 +474,7 @@ Parameters<br>
 Returns<br>
 -------<br>
 &nbsp;&nbsp;&nbsp;&nbsp;oldstate&nbsp;:&nbsp;int_pos<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;original&nbsp;value&nbsp;of&nbsp;the&nbsp;state<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;original&nbsp;value&nbsp;of&nbsp;the&nbsp;state,&nbsp;or&nbsp;xfdata.UINT_MAX&nbsp;(on&nbsp;failure)<br>
 &nbsp;<br>
 Examples<br>
 --------<br>
@@ -483,16 +483,16 @@ Examples<br>
 Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-fl_popup_entry_set_callback"><strong>fl_popup_entry_set_callback</strong></a>(pPopupEntry, py_PopupCb)</dt><dd><tt><a href="#-fl_popup_entry_set_callback">fl_popup_entry_set_callback</a>(pPopupEntry,&nbsp;py_PopupCb)<br>
+ <dl><dt><a name="-fl_popup_entry_set_callback"><strong>fl_popup_entry_set_callback</strong></a>(ptr_flpopupentry, pyfn_PopupCb)</dt><dd><tt><a href="#-fl_popup_entry_set_callback">fl_popup_entry_set_callback</a>(ptr_flpopupentry,&nbsp;pyfn_PopupCb)&nbsp;-&gt;&nbsp;PopupCb<br>
 &nbsp;<br>
-Sets&nbsp;the&nbsp;callback&nbsp;invoked&nbsp;when&nbsp;the&nbsp;entry&nbsp;of&nbsp;a&nbsp;popup&nbsp;is&nbsp;selected.<br>
+Defines&nbsp;the&nbsp;callback&nbsp;invoked&nbsp;when&nbsp;the&nbsp;entry&nbsp;of&nbsp;a&nbsp;popup&nbsp;is&nbsp;selected.<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;pPopupEntry&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_POPUP_ENTRY<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_flpopupentry&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_POPUP_ENTRY<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;popup&nbsp;entry<br>
-&nbsp;&nbsp;&nbsp;&nbsp;py_PopupCb&nbsp;:&nbsp;python&nbsp;callback&nbsp;function,&nbsp;returned&nbsp;value<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;name&nbsp;referring&nbsp;to&nbsp;function(pPopupReturn)&nbsp;-&gt;&nbsp;num.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;pyfn_PopupCb&nbsp;:&nbsp;python&nbsp;callback&nbsp;function,&nbsp;returned&nbsp;value<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;name&nbsp;referring&nbsp;to&nbsp;function(ptr_flpopupreturn)&nbsp;-&gt;&nbsp;num.<br>
 &nbsp;<br>
 Returns<br>
 -------<br>
@@ -507,17 +507,17 @@ Examples<br>
 Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;Demo&nbsp;=&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-fl_popup_entry_set_enter_callback"><strong>fl_popup_entry_set_enter_callback</strong></a>(pPopupEntry, py_PopupCb)</dt><dd><tt><a href="#-fl_popup_entry_set_enter_callback">fl_popup_entry_set_enter_callback</a>(pPopupEntry,&nbsp;py_PopupCb)<br>
+ <dl><dt><a name="-fl_popup_entry_set_enter_callback"><strong>fl_popup_entry_set_enter_callback</strong></a>(ptr_flpopupentry, pyfn_PopupCb)</dt><dd><tt><a href="#-fl_popup_entry_set_enter_callback">fl_popup_entry_set_enter_callback</a>(ptr_flpopupentry,&nbsp;pyfn_PopupCb)&nbsp;-&gt;&nbsp;PopupCb<br>
 &nbsp;<br>
-Sets&nbsp;the&nbsp;callback&nbsp;invoked&nbsp;when&nbsp;the&nbsp;mouse&nbsp;enters&nbsp;the&nbsp;area&nbsp;of&nbsp;the&nbsp;popup<br>
+Defines&nbsp;the&nbsp;callback&nbsp;invoked&nbsp;when&nbsp;the&nbsp;mouse&nbsp;enters&nbsp;the&nbsp;area&nbsp;of&nbsp;the&nbsp;popup<br>
 entry.<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;pPopupEntry&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_POPUP_ENTRY<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_flpopupentry&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_POPUP_ENTRY<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;popup&nbsp;entry<br>
-&nbsp;&nbsp;&nbsp;&nbsp;py_PopupCb&nbsp;:&nbsp;python&nbsp;callback&nbsp;function,&nbsp;returned&nbsp;value<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;name&nbsp;referring&nbsp;to&nbsp;function(pPopupReturn)&nbsp;-&gt;&nbsp;num.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;pyfn_PopupCb&nbsp;:&nbsp;python&nbsp;callback&nbsp;function,&nbsp;returned&nbsp;value<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;name&nbsp;referring&nbsp;to&nbsp;function(ptr_flpopupreturn)&nbsp;-&gt;&nbsp;num.<br>
 &nbsp;<br>
 Returns<br>
 -------<br>
@@ -532,13 +532,13 @@ Examples<br>
 Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-fl_popup_entry_set_font"><strong>fl_popup_entry_set_font</strong></a>(pPopup, style, size)</dt><dd><tt><a href="#-fl_popup_entry_set_font">fl_popup_entry_set_font</a>(pPopup,&nbsp;style,&nbsp;size)<br>
+ <dl><dt><a name="-fl_popup_entry_set_font"><strong>fl_popup_entry_set_font</strong></a>(ptr_flpopup, style, size)</dt><dd><tt><a href="#-fl_popup_entry_set_font">fl_popup_entry_set_font</a>(ptr_flpopup,&nbsp;style,&nbsp;size)<br>
 &nbsp;<br>
-Sets&nbsp;the&nbsp;font&nbsp;style&nbsp;and&nbsp;size&nbsp;of&nbsp;the&nbsp;popup&nbsp;entries.<br>
+Defines&nbsp;the&nbsp;font&nbsp;style&nbsp;and&nbsp;size&nbsp;of&nbsp;the&nbsp;popup&nbsp;entries.<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;pPopup&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_POPUP<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_flpopup&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_POPUP<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;popup&nbsp;class&nbsp;instance<br>
 &nbsp;&nbsp;&nbsp;&nbsp;style&nbsp;:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;style&nbsp;of&nbsp;popup&nbsp;entries.&nbsp;Values&nbsp;(from&nbsp;xfdata.py)&nbsp;FL_NORMAL_STYLE,<br>
@@ -560,7 +560,7 @@ Examples<br>
 Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-fl_popup_entry_set_group"><strong>fl_popup_entry_set_group</strong></a>(pPopupEntry, groupnum)</dt><dd><tt><a href="#-fl_popup_entry_set_group">fl_popup_entry_set_group</a>(pPopupEntry,&nbsp;groupnum)<br>
+ <dl><dt><a name="-fl_popup_entry_set_group"><strong>fl_popup_entry_set_group</strong></a>(ptr_flpopupentry, groupnum)</dt><dd><tt><a href="#-fl_popup_entry_set_group">fl_popup_entry_set_group</a>(ptr_flpopupentry,&nbsp;groupnum)&nbsp;-&gt;&nbsp;oldgroupnum<br>
 &nbsp;<br>
 Assigns&nbsp;a&nbsp;radio&nbsp;entry&nbsp;to&nbsp;a&nbsp;different&nbsp;group.&nbsp;It&nbsp;makes&nbsp;much&nbsp;sense&nbsp;when<br>
 applied&nbsp;to&nbsp;radio&nbsp;entries.&nbsp;If&nbsp;one&nbsp;of&nbsp;the&nbsp;entries&nbsp;of&nbsp;the&nbsp;new&nbsp;group&nbsp;was&nbsp;in<br>
@@ -568,7 +568,7 @@ applied&nbsp;to&nbsp;radio&nbsp;entries.&nbsp;If&nbsp;one&nbsp;of&nbsp;the&nbsp;
 &nbsp;<br>
 Parameters<br>
 ----------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;pPopupEntry&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_POPUP_ENTRY<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_flpopupentry&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_POPUP_ENTRY<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;popup&nbsp;entry<br>
 &nbsp;&nbsp;&nbsp;&nbsp;groupnum&nbsp;:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;group&nbsp;number&nbsp;to&nbsp;be&nbsp;assigned.<br>
@@ -585,16 +585,17 @@ Examples<br>
 Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-fl_popup_entry_set_leave_callback"><strong>fl_popup_entry_set_leave_callback</strong></a>(pPopupEntry, py_PopupCb)</dt><dd><tt><a href="#-fl_popup_entry_set_leave_callback">fl_popup_entry_set_leave_callback</a>(pPopupEntry,&nbsp;py_PopupCb)<br>
+ <dl><dt><a name="-fl_popup_entry_set_leave_callback"><strong>fl_popup_entry_set_leave_callback</strong></a>(ptr_flpopupentry, pyfn_PopupCb)</dt><dd><tt><a href="#-fl_popup_entry_set_leave_callback">fl_popup_entry_set_leave_callback</a>(ptr_flpopupentry,&nbsp;pyfn_PopupCb)<br>
+-&gt;&nbsp;PopupCb<br>
 &nbsp;<br>
-Sets&nbsp;the&nbsp;callback&nbsp;invoked&nbsp;when&nbsp;leaves&nbsp;the&nbsp;area&nbsp;of&nbsp;the&nbsp;popup&nbsp;entry.<br>
+Defines&nbsp;the&nbsp;callback&nbsp;invoked&nbsp;when&nbsp;leaves&nbsp;the&nbsp;area&nbsp;of&nbsp;the&nbsp;popup&nbsp;entry.<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;pPopupEntry&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_POPUP_ENTRY<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_flpopupentry&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_POPUP_ENTRY<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;popup&nbsp;entry<br>
-&nbsp;&nbsp;&nbsp;&nbsp;py_PopupCb&nbsp;:&nbsp;python&nbsp;callback&nbsp;function,&nbsp;returned&nbsp;value<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;name&nbsp;referring&nbsp;to&nbsp;function(pPopupReturn)&nbsp;-&gt;&nbsp;num.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;pyfn_PopupCb&nbsp;:&nbsp;python&nbsp;callback&nbsp;function,&nbsp;returned&nbsp;value<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;name&nbsp;referring&nbsp;to&nbsp;function(ptr_flpopupreturn)&nbsp;-&gt;&nbsp;num.<br>
 &nbsp;<br>
 Returns<br>
 -------<br>
@@ -609,13 +610,13 @@ Examples<br>
 Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-fl_popup_entry_set_shortcut"><strong>fl_popup_entry_set_shortcut</strong></a>(pPopupEntry, textsc)</dt><dd><tt><a href="#-fl_popup_entry_set_shortcut">fl_popup_entry_set_shortcut</a>(pPopupEntry,&nbsp;textsc)<br>
+ <dl><dt><a name="-fl_popup_entry_set_shortcut"><strong>fl_popup_entry_set_shortcut</strong></a>(ptr_flpopupentry, textsc)</dt><dd><tt><a href="#-fl_popup_entry_set_shortcut">fl_popup_entry_set_shortcut</a>(ptr_flpopupentry,&nbsp;textsc)<br>
 &nbsp;<br>
 Changes&nbsp;the&nbsp;shortcut&nbsp;keys&nbsp;for&nbsp;a&nbsp;popup&nbsp;label.<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;pPopupEntry&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_POPUP_ENTRY<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_flpopupentry&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_POPUP_ENTRY<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;popup&nbsp;entry<br>
 &nbsp;&nbsp;&nbsp;&nbsp;textsc&nbsp;:&nbsp;str<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;text&nbsp;for&nbsp;the&nbsp;shortcut<br>
@@ -627,13 +628,13 @@ Examples<br>
 Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;Demo&nbsp;=&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-fl_popup_entry_set_state"><strong>fl_popup_entry_set_state</strong></a>(pPopupEntry, state)</dt><dd><tt><a href="#-fl_popup_entry_set_state">fl_popup_entry_set_state</a>(pPopupEntry,&nbsp;state)<br>
+ <dl><dt><a name="-fl_popup_entry_set_state"><strong>fl_popup_entry_set_state</strong></a>(ptr_flpopupentry, state)</dt><dd><tt><a href="#-fl_popup_entry_set_state">fl_popup_entry_set_state</a>(ptr_flpopupentry,&nbsp;state)&nbsp;-&gt;&nbsp;oldstate<br>
 &nbsp;<br>
-Sets&nbsp;the&nbsp;state&nbsp;of&nbsp;a&nbsp;popup&nbsp;entry.<br>
+Defines&nbsp;the&nbsp;state&nbsp;of&nbsp;a&nbsp;popup&nbsp;entry.<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;pPopupEntry&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_POPUP_ENTRY<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_flpopupentry&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_POPUP_ENTRY<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;popup&nbsp;entry<br>
 &nbsp;&nbsp;&nbsp;&nbsp;state&nbsp;:&nbsp;int_pos<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;state&nbsp;to&nbsp;be&nbsp;set.&nbsp;Values&nbsp;(from&nbsp;xfdata.py)&nbsp;FL_POPUP_DISABLED,<br>
@@ -642,7 +643,7 @@ Parameters<br>
 Returns<br>
 -------<br>
 &nbsp;&nbsp;&nbsp;&nbsp;oldstate&nbsp;:&nbsp;int_pos<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;old&nbsp;state,&nbsp;or&nbsp;UINT_MAX?&nbsp;(on&nbsp;errors)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;old&nbsp;state,&nbsp;or&nbsp;xfdata.UINT_MAX&nbsp;(on&nbsp;failure)<br>
 &nbsp;<br>
 Examples<br>
 --------<br>
@@ -651,21 +652,22 @@ Examples<br>
 Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;Demo&nbsp;=&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-fl_popup_entry_set_subpopup"><strong>fl_popup_entry_set_subpopup</strong></a>(pPopupEntry, pPopup)</dt><dd><tt><a href="#-fl_popup_entry_set_subpopup">fl_popup_entry_set_subpopup</a>(pPopupEntry,&nbsp;pPopup)<br>
+ <dl><dt><a name="-fl_popup_entry_set_subpopup"><strong>fl_popup_entry_set_subpopup</strong></a>(ptr_flpopupentry, ptr_flpopup)</dt><dd><tt><a href="#-fl_popup_entry_set_subpopup">fl_popup_entry_set_subpopup</a>(ptr_flpopupentry,&nbsp;ptr_flpopup)<br>
+-&gt;&nbsp;ptr_flpopup<br>
 &nbsp;<br>
-Sets&nbsp;the&nbsp;sub-popup&nbsp;associated&nbsp;with&nbsp;a&nbsp;sub-popup-entry.&nbsp;It&nbsp;only&nbsp;makes<br>
+Defines&nbsp;the&nbsp;sub-popup&nbsp;associated&nbsp;with&nbsp;a&nbsp;sub-popup-entry.&nbsp;It&nbsp;only&nbsp;makes<br>
 sense&nbsp;for&nbsp;sub-popup&nbsp;entries.<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;pPopupEntry&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_POPUP_ENTRY<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_flpopupentry&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_POPUP_ENTRY<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;popup&nbsp;entry<br>
-&nbsp;&nbsp;&nbsp;&nbsp;pPopup&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_POPUP<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_flpopup&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_POPUP<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;popup&nbsp;class&nbsp;instance<br>
 &nbsp;<br>
 Returns<br>
 -------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;pPopup&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_POPUP<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_flpopup&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_POPUP<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;popup&nbsp;class&nbsp;instance<br>
 &nbsp;<br>
 Examples<br>
@@ -675,13 +677,13 @@ Examples<br>
 Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-fl_popup_entry_set_text"><strong>fl_popup_entry_set_text</strong></a>(pPopupEntry, text)</dt><dd><tt><a href="#-fl_popup_entry_set_text">fl_popup_entry_set_text</a>(pPopupEntry,&nbsp;text)<br>
+ <dl><dt><a name="-fl_popup_entry_set_text"><strong>fl_popup_entry_set_text</strong></a>(ptr_flpopupentry, text)</dt><dd><tt><a href="#-fl_popup_entry_set_text">fl_popup_entry_set_text</a>(ptr_flpopupentry,&nbsp;text)&nbsp;-&gt;&nbsp;oldtext<br>
 &nbsp;<br>
 Changes&nbsp;the&nbsp;text&nbsp;of&nbsp;a&nbsp;popup&nbsp;entry.<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;pPopupEntry&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_POPUP_ENTRY<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_flpopupentry&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_POPUP_ENTRY<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;popup&nbsp;entry<br>
 &nbsp;&nbsp;&nbsp;&nbsp;text&nbsp;:&nbsp;str<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;text&nbsp;for&nbsp;the&nbsp;entry.&nbsp;No&nbsp;special&nbsp;sequence&nbsp;except&nbsp;"%S"&nbsp;(at&nbsp;which<br>
@@ -690,8 +692,8 @@ Parameters<br>
 &nbsp;<br>
 Returns<br>
 -------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;num.&nbsp;:&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*todo*<br>
+&nbsp;&nbsp;&nbsp;&nbsp;oldtext&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;previous&nbsp;text,&nbsp;or&nbsp;xfdata.UINT_MAX&nbsp;(on&nbsp;failure)<br>
 &nbsp;<br>
 Examples<br>
 --------<br>
@@ -700,13 +702,13 @@ Examples<br>
 Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-fl_popup_entry_set_user_data"><strong>fl_popup_entry_set_user_data</strong></a>(pPopupEntry, vdata)</dt><dd><tt><a href="#-fl_popup_entry_set_user_data">fl_popup_entry_set_user_data</a>(pPopupEntry,&nbsp;vdata)<br>
+ <dl><dt><a name="-fl_popup_entry_set_user_data"><strong>fl_popup_entry_set_user_data</strong></a>(ptr_flpopupentry, vdata)</dt><dd><tt><a href="#-fl_popup_entry_set_user_data">fl_popup_entry_set_user_data</a>(ptr_flpopupentry,&nbsp;vdata)&nbsp;-&gt;&nbsp;oldvdata<br>
 &nbsp;<br>
 Modifies&nbsp;user&nbsp;data&nbsp;associated&nbsp;with&nbsp;a&nbsp;popup&nbsp;entry.<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;pPopupEntry&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_POPUP_ENTRY<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_flpopupentry&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_POPUP_ENTRY<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;popup&nbsp;entry<br>
 &nbsp;&nbsp;&nbsp;&nbsp;vdata&nbsp;:&nbsp;any&nbsp;type&nbsp;(e.g.&nbsp;'None',&nbsp;int,&nbsp;str,&nbsp;etc..)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;user&nbsp;data&nbsp;to&nbsp;be&nbsp;passed&nbsp;to&nbsp;function;&nbsp;callback&nbsp;has&nbsp;to&nbsp;take&nbsp;care<br>
@@ -714,8 +716,8 @@ Parameters<br>
 &nbsp;<br>
 Returns<br>
 -------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;olddata&nbsp;:&nbsp;pointer&nbsp;to&nbsp;void?<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;previous&nbsp;user&nbsp;data&nbsp;settings<br>
+&nbsp;&nbsp;&nbsp;&nbsp;oldvdata&nbsp;:&nbsp;pointer&nbsp;to&nbsp;void?<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;previous&nbsp;user&nbsp;data,&nbsp;or&nbsp;None&nbsp;(on&nbsp;failure)<br>
 &nbsp;<br>
 Examples<br>
 --------<br>
@@ -724,21 +726,21 @@ Examples<br>
 Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-fl_popup_entry_set_value"><strong>fl_popup_entry_set_value</strong></a>(pPopupEntry, val)</dt><dd><tt><a href="#-fl_popup_entry_set_value">fl_popup_entry_set_value</a>(pPopupEntry,&nbsp;val)<br>
+ <dl><dt><a name="-fl_popup_entry_set_value"><strong>fl_popup_entry_set_value</strong></a>(ptr_flpopupentry, entryval)</dt><dd><tt><a href="#-fl_popup_entry_set_value">fl_popup_entry_set_value</a>(ptr_flpopupentry,&nbsp;entryval)&nbsp;-&gt;&nbsp;oldentryval<br>
 &nbsp;<br>
 Changes&nbsp;the&nbsp;value&nbsp;assigned&nbsp;to&nbsp;a&nbsp;popup&nbsp;entry.<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;pPopupEntry&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_POPUP_ENTRY<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_flpopupentry&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_POPUP_ENTRY<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;popup&nbsp;entry<br>
-&nbsp;&nbsp;&nbsp;&nbsp;val&nbsp;:&nbsp;long<br>
+&nbsp;&nbsp;&nbsp;&nbsp;entryval&nbsp;:&nbsp;long<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;value&nbsp;to&nbsp;be&nbsp;assigned<br>
 &nbsp;<br>
 Returns<br>
 -------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;oldval&nbsp;:&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;previous&nbsp;value<br>
+&nbsp;&nbsp;&nbsp;&nbsp;oldentryval&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;previous&nbsp;value,&nbsp;or&nbsp;xfdata.INT_MIN&nbsp;(on&nbsp;failure)<br>
 &nbsp;<br>
 Examples<br>
 --------<br>
@@ -747,13 +749,13 @@ Examples<br>
 Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-fl_popup_entry_toggle_state"><strong>fl_popup_entry_toggle_state</strong></a>(pPopupEntry, state)</dt><dd><tt><a href="#-fl_popup_entry_toggle_state">fl_popup_entry_toggle_state</a>(pPopupEntry,&nbsp;state)<br>
+ <dl><dt><a name="-fl_popup_entry_toggle_state"><strong>fl_popup_entry_toggle_state</strong></a>(ptr_flpopupentry, state)</dt><dd><tt><a href="#-fl_popup_entry_toggle_state">fl_popup_entry_toggle_state</a>(ptr_flpopupentry,&nbsp;state)&nbsp;-&gt;&nbsp;oldstate<br>
 &nbsp;<br>
 Toggles&nbsp;the&nbsp;state&nbsp;bits&nbsp;of&nbsp;a&nbsp;popup&nbsp;entry.<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;pPopupEntry&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_POPUP_ENTRY<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_flpopupentry&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_POPUP_ENTRY<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;popup&nbsp;entry<br>
 &nbsp;&nbsp;&nbsp;&nbsp;state&nbsp;:&nbsp;int_pos<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;state&nbsp;to&nbsp;be&nbsp;toggled.&nbsp;Values&nbsp;(from&nbsp;xfdata.py)&nbsp;FL_POPUP_DISABLED,<br>
@@ -762,7 +764,7 @@ Parameters<br>
 Returns<br>
 -------<br>
 &nbsp;&nbsp;&nbsp;&nbsp;oldstate&nbsp;:&nbsp;int_pos<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;original&nbsp;value&nbsp;of&nbsp;the&nbsp;state<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;original&nbsp;value&nbsp;of&nbsp;the&nbsp;state,&nbsp;or&nbsp;xfdata.UINT_MAX&nbsp;(on&nbsp;failure)<br>
 &nbsp;<br>
 Examples<br>
 --------<br>
@@ -771,19 +773,19 @@ Examples<br>
 Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-fl_popup_get_bw"><strong>fl_popup_get_bw</strong></a>(pPopup)</dt><dd><tt><a href="#-fl_popup_get_bw">fl_popup_get_bw</a>(pPopup)<br>
+ <dl><dt><a name="-fl_popup_get_bw"><strong>fl_popup_get_bw</strong></a>(ptr_flpopup)</dt><dd><tt><a href="#-fl_popup_get_bw">fl_popup_get_bw</a>(ptr_flpopup)&nbsp;-&gt;&nbsp;borderwidth<br>
 &nbsp;<br>
-Obtains&nbsp;the&nbsp;border&nbsp;width&nbsp;of&nbsp;a&nbsp;popup.<br>
+Finds&nbsp;out&nbsp;the&nbsp;border&nbsp;width&nbsp;of&nbsp;a&nbsp;popup.<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;pPopup&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_POPUP<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_flpopup&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_POPUP<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;popup&nbsp;class&nbsp;instance<br>
 &nbsp;<br>
 Returns<br>
 -------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;bw&nbsp;:&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;borderwidth<br>
+&nbsp;&nbsp;&nbsp;&nbsp;borderwidth&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;width&nbsp;of&nbsp;border's&nbsp;popup<br>
 &nbsp;<br>
 Examples<br>
 --------<br>
@@ -792,13 +794,13 @@ Examples<br>
 Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-fl_popup_get_color"><strong>fl_popup_get_color</strong></a>(pPopup, colrpos)</dt><dd><tt><a href="#-fl_popup_get_color">fl_popup_get_color</a>(pPopup,&nbsp;colrpos)<br>
+ <dl><dt><a name="-fl_popup_get_color"><strong>fl_popup_get_color</strong></a>(ptr_flpopup, colrpos)</dt><dd><tt><a href="#-fl_popup_get_color">fl_popup_get_color</a>(ptr_flpopup,&nbsp;colrpos)&nbsp;-&gt;&nbsp;colr<br>
 &nbsp;<br>
-Obtains&nbsp;several&nbsp;colors&nbsp;used&nbsp;in&nbsp;drawing&nbsp;a&nbsp;popup.<br>
+Finds&nbsp;out&nbsp;several&nbsp;colors&nbsp;used&nbsp;in&nbsp;drawing&nbsp;a&nbsp;popup.<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;pPopup&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_POPUP<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_flpopup&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_POPUP<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;popup&nbsp;class&nbsp;instance<br>
 &nbsp;&nbsp;&nbsp;&nbsp;colrpos&nbsp;:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;color&nbsp;type&nbsp;position.&nbsp;Values&nbsp;(from&nbsp;xfdata.py)<br>
@@ -819,19 +821,19 @@ Examples<br>
 Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-fl_popup_get_min_width"><strong>fl_popup_get_min_width</strong></a>(pPopup)</dt><dd><tt><a href="#-fl_popup_get_min_width">fl_popup_get_min_width</a>(pPopup)<br>
+ <dl><dt><a name="-fl_popup_get_min_width"><strong>fl_popup_get_min_width</strong></a>(ptr_flpopup)</dt><dd><tt><a href="#-fl_popup_get_min_width">fl_popup_get_min_width</a>(ptr_flpopup)&nbsp;-&gt;&nbsp;width<br>
 &nbsp;<br>
-Obtains&nbsp;the&nbsp;currently&nbsp;set&nbsp;minimum&nbsp;width.<br>
+Finds&nbsp;out&nbsp;the&nbsp;currently&nbsp;set&nbsp;minimum&nbsp;width&nbsp;of&nbsp;popup.<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;pPopup&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_POPUP<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_flpopup&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_POPUP<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;popup&nbsp;class&nbsp;instance<br>
 &nbsp;<br>
 Returns<br>
 -------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;w&nbsp;:&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;width,&nbsp;or&nbsp;negative&nbsp;number&nbsp;(on&nbsp;errors)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;width&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;width,&nbsp;or&nbsp;-1&nbsp;(on&nbsp;errors)<br>
 &nbsp;<br>
 Examples<br>
 --------<br>
@@ -840,14 +842,14 @@ Examples<br>
 Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-fl_popup_get_policy"><strong>fl_popup_get_policy</strong></a>(pPopup)</dt><dd><tt><a href="#-fl_popup_get_policy">fl_popup_get_policy</a>(pPopup)<br>
+ <dl><dt><a name="-fl_popup_get_policy"><strong>fl_popup_get_policy</strong></a>(ptr_flpopup)</dt><dd><tt><a href="#-fl_popup_get_policy">fl_popup_get_policy</a>(ptr_flpopup)&nbsp;-&gt;&nbsp;policy<br>
 &nbsp;<br>
-Obtains&nbsp;current&nbsp;policy&nbsp;setting&nbsp;for&nbsp;handling&nbsp;the&nbsp;popups,&nbsp;or&nbsp;changes<br>
+Finds&nbsp;out&nbsp;current&nbsp;policy&nbsp;setting&nbsp;for&nbsp;handling&nbsp;the&nbsp;popups,&nbsp;or&nbsp;changes<br>
 the&nbsp;default&nbsp;setting&nbsp;for&nbsp;new&nbsp;popup&nbsp;to&nbsp;be&nbsp;created.<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;pPopup&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_POPUP<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_flpopup&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_POPUP<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;popup&nbsp;class&nbsp;instance.&nbsp;If&nbsp;it&nbsp;is&nbsp;'None',&nbsp;gives&nbsp;the&nbsp;default&nbsp;setting<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;for&nbsp;the&nbsp;popups&nbsp;created&nbsp;afterwards<br>
 &nbsp;<br>
@@ -855,7 +857,7 @@ Returns<br>
 -------<br>
 &nbsp;&nbsp;&nbsp;&nbsp;policy&nbsp;:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;policy&nbsp;for&nbsp;supplied&nbsp;popup,&nbsp;or&nbsp;default&nbsp;policy&nbsp;used&nbsp;in&nbsp;creating<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;new&nbsp;popups&nbsp;is&nbsp;returned&nbsp;(if&nbsp;Nono&nbsp;is&nbsp;supplied),&nbsp;or&nbsp;-1&nbsp;(on&nbsp;errors).<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;new&nbsp;popups&nbsp;is&nbsp;returned&nbsp;(if&nbsp;None&nbsp;is&nbsp;supplied),&nbsp;or&nbsp;-1&nbsp;(on&nbsp;errors).<br>
 &nbsp;<br>
 Examples<br>
 --------<br>
@@ -864,25 +866,25 @@ Examples<br>
 Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-fl_popup_get_size"><strong>fl_popup_get_size</strong></a>(pPopup)</dt><dd><tt><a href="#-fl_popup_get_size">fl_popup_get_size</a>(pPopup)<br>
+ <dl><dt><a name="-fl_popup_get_size"><strong>fl_popup_get_size</strong></a>(ptr_flpopup)</dt><dd><tt><a href="#-fl_popup_get_size">fl_popup_get_size</a>(ptr_flpopup)&nbsp;-&gt;&nbsp;result,&nbsp;width,&nbsp;height<br>
 &nbsp;<br>
-Obtains&nbsp;the&nbsp;exact&nbsp;sizes&nbsp;of&nbsp;its&nbsp;window.&nbsp;The&nbsp;reported&nbsp;values&nbsp;are<br>
+Finds&nbsp;out&nbsp;the&nbsp;exact&nbsp;sizes&nbsp;of&nbsp;its&nbsp;window.&nbsp;The&nbsp;reported&nbsp;values&nbsp;are<br>
 only&nbsp;valid&nbsp;until&nbsp;the&nbsp;popup&nbsp;is&nbsp;changed,&nbsp;e.g.&nbsp;by&nbsp;adding,&nbsp;deleting&nbsp;or<br>
 changing&nbsp;entries&nbsp;or&nbsp;changing&nbsp;the&nbsp;appearance&nbsp;of&nbsp;the&nbsp;popup.<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;pPopup&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_POPUP<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_flpopup&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_POPUP<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;popup&nbsp;class&nbsp;instance<br>
 &nbsp;<br>
 Returns<br>
 -------<br>
 &nbsp;&nbsp;&nbsp;&nbsp;result&nbsp;:&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;0&nbsp;or&nbsp;-1&nbsp;on&nbsp;error&nbsp;(in&nbsp;case&nbsp;the&nbsp;supplied&nbsp;popup&nbsp;argument&nbsp;is&nbsp;not<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;valid)<br>
-&nbsp;&nbsp;&nbsp;&nbsp;w&nbsp;:&nbsp;int_pos<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;0&nbsp;or&nbsp;-1&nbsp;on&nbsp;error&nbsp;(if&nbsp;the&nbsp;supplied&nbsp;popup&nbsp;argument&nbsp;is<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;not&nbsp;valid)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;width&nbsp;:&nbsp;int_pos<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;width&nbsp;of&nbsp;popup<br>
-&nbsp;&nbsp;&nbsp;&nbsp;h&nbsp;:&nbsp;int_pos<br>
+&nbsp;&nbsp;&nbsp;&nbsp;height&nbsp;:&nbsp;int_pos<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;height&nbsp;of&nbsp;popup<br>
 &nbsp;<br>
 Examples<br>
@@ -890,20 +892,20 @@ Examples<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;*todo*<br>
 &nbsp;<br>
 API_diversion<br>
-----------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;API&nbsp;changed&nbsp;from&nbsp;XForms,&nbsp;upstream&nbsp;was<br>
-&nbsp;&nbsp;&nbsp;&nbsp;<a href="#-fl_popup_get_size">fl_popup_get_size</a>(pPopup,&nbsp;w,&nbsp;h)<br>
+-------------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;API&nbsp;changed&nbsp;from&nbsp;XForms,&nbsp;upstream&nbsp;is<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="#-fl_popup_get_size">fl_popup_get_size</a>(ptr_flpopup,&nbsp;width,&nbsp;height)<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-fl_popup_get_title"><strong>fl_popup_get_title</strong></a>(pPopup)</dt><dd><tt><a href="#-fl_popup_get_title">fl_popup_get_title</a>(pPopup)<br>
+ <dl><dt><a name="-fl_popup_get_title"><strong>fl_popup_get_title</strong></a>(ptr_flpopup)</dt><dd><tt><a href="#-fl_popup_get_title">fl_popup_get_title</a>(ptr_flpopup)&nbsp;-&gt;&nbsp;title<br>
 &nbsp;<br>
-Obtains&nbsp;the&nbsp;title&nbsp;of&nbsp;a&nbsp;popup.<br>
+Finds&nbsp;out&nbsp;the&nbsp;title&nbsp;of&nbsp;a&nbsp;popup.<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;pPopup&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_POPUP<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_flpopup&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_POPUP<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;popup&nbsp;class&nbsp;instance<br>
 &nbsp;<br>
 Returns<br>
@@ -918,13 +920,13 @@ Examples<br>
 Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-fl_popup_get_title_font"><strong>fl_popup_get_title_font</strong></a>(pPopup)</dt><dd><tt><a href="#-fl_popup_get_title_font">fl_popup_get_title_font</a>(pPopup)<br>
+ <dl><dt><a name="-fl_popup_get_title_font"><strong>fl_popup_get_title_font</strong></a>(ptr_flpopup)</dt><dd><tt><a href="#-fl_popup_get_title_font">fl_popup_get_title_font</a>(ptr_flpopup)&nbsp;-&gt;&nbsp;style,&nbsp;size<br>
 &nbsp;<br>
-Obtains&nbsp;the&nbsp;font&nbsp;style&nbsp;and&nbsp;size&nbsp;of&nbsp;the&nbsp;popup's&nbsp;title.<br>
+Finds&nbsp;out&nbsp;the&nbsp;font&nbsp;style&nbsp;and&nbsp;size&nbsp;of&nbsp;the&nbsp;popup's&nbsp;title.<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;pPopup&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_POPUP<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_flpopup&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_POPUP<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;popup&nbsp;class&nbsp;instance<br>
 &nbsp;<br>
 Returns<br>
@@ -939,25 +941,26 @@ Examples<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;*todo*<br>
 &nbsp;<br>
 API_diversion<br>
-----------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;API&nbsp;changed&nbsp;from&nbsp;XForms,&nbsp;upstream&nbsp;was<br>
-&nbsp;&nbsp;&nbsp;&nbsp;<a href="#-fl_popup_get_title_font">fl_popup_get_title_font</a>(pPopup,&nbsp;style,&nbsp;size)<br>
+-------------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;API&nbsp;changed&nbsp;from&nbsp;XForms,&nbsp;upstream&nbsp;is<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="#-fl_popup_get_title_font">fl_popup_get_title_font</a>(ptr_flpopup,&nbsp;style,&nbsp;size)<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-fl_popup_insert_entries"><strong>fl_popup_insert_entries</strong></a>(pPopup, pPopupEntry, entryitems_txt)</dt><dd><tt><a href="#-fl_popup_insert_entries">fl_popup_insert_entries</a>(pPopup,&nbsp;pPopupEntry,&nbsp;entryitems_txt)<br>
+ <dl><dt><a name="-fl_popup_insert_entries"><strong>fl_popup_insert_entries</strong></a>(ptr_flpopup, ptr_flpopupentry, entryitemstxt)</dt><dd><tt><a href="#-fl_popup_insert_entries">fl_popup_insert_entries</a>(ptr_flpopup,&nbsp;ptr_flpopupentry,&nbsp;entryitemstxt)<br>
+-&gt;&nbsp;ptr_flpopupentry<br>
 &nbsp;<br>
 Inserts&nbsp;one&nbsp;or&nbsp;more&nbsp;entries&nbsp;into&nbsp;a&nbsp;popup.<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;pPopup&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_POPUP<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_flpopup&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_POPUP<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;popup&nbsp;class&nbsp;instance<br>
-&nbsp;&nbsp;&nbsp;&nbsp;pPopupEntry&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_POPUP_ENTRY<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_flpopupentry&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_POPUP_ENTRY<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;popup&nbsp;entry&nbsp;after&nbsp;which&nbsp;entry&nbsp;is&nbsp;inserted.&nbsp;If&nbsp;it&nbsp;is&nbsp;'None',&nbsp;it<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;inserts&nbsp;items&nbsp;at&nbsp;the&nbsp;very&nbsp;start.<br>
-&nbsp;&nbsp;&nbsp;&nbsp;entryitems_txt&nbsp;:&nbsp;str<br>
+&nbsp;&nbsp;&nbsp;&nbsp;entryitemstxt&nbsp;:&nbsp;str<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;text&nbsp;of&nbsp;the&nbsp;entry&nbsp;to&nbsp;be&nbsp;added&nbsp;and&nbsp;in-text&nbsp;special&nbsp;sequences&nbsp;with<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;or&nbsp;without&nbsp;not&nbsp;separated&nbsp;additional&nbsp;arguments&nbsp;(if&nbsp;needed).&nbsp;Text<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;may&nbsp;contain&nbsp;|&nbsp;to&nbsp;separate&nbsp;entries&nbsp;and&nbsp;newline&nbsp;characters&nbsp;which<br>
@@ -967,7 +970,7 @@ Parameters<br>
 &nbsp;<br>
 Returns<br>
 -------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;pPopup&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_POPUP_ENTRY<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_flpopupentry&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_POPUP_ENTRY<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;popup&nbsp;entry&nbsp;inserted,&nbsp;or&nbsp;None&nbsp;(on&nbsp;failure)<br>
 &nbsp;<br>
 Examples<br>
@@ -978,25 +981,26 @@ Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK<br>
 &nbsp;&nbsp;&nbsp;&nbsp;See:&nbsp;Special&nbsp;sequences&nbsp;in&nbsp;entry&nbsp;text&nbsp;documentation.</tt></dd></dl>
- <dl><dt><a name="-fl_popup_insert_items"><strong>fl_popup_insert_items</strong></a>(pPopup, pPopupEntry, pPopupItem)</dt><dd><tt><a href="#-fl_popup_insert_items">fl_popup_insert_items</a>(pPopup,&nbsp;pPopupEntry,&nbsp;pPopupItem)<br>
+ <dl><dt><a name="-fl_popup_insert_items"><strong>fl_popup_insert_items</strong></a>(ptr_flpopup, ptr_flpopupentry, ptr_flpopupitem)</dt><dd><tt><a href="#-fl_popup_insert_items">fl_popup_insert_items</a>(ptr_flpopup,&nbsp;ptr_flpopupentry,&nbsp;ptr_flpopupitem)<br>
+&nbsp;-&gt;&nbsp;ptr_flpopupentry<br>
 &nbsp;<br>
 Inserts&nbsp;entries&nbsp;into&nbsp;a&nbsp;popup.<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;pPopup&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_POPUP<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_flpopup&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_POPUP<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;popup&nbsp;class&nbsp;instance<br>
-&nbsp;&nbsp;&nbsp;&nbsp;pPopupEntry&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_POPUP_ENTRY<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_flpopupentry&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_POPUP_ENTRY<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;popup&nbsp;entry&nbsp;after&nbsp;which&nbsp;items&nbsp;are&nbsp;inserted.&nbsp;If&nbsp;it&nbsp;is&nbsp;'None',&nbsp;items<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;are&nbsp;inserted&nbsp;at&nbsp;the&nbsp;very&nbsp;start.<br>
-&nbsp;&nbsp;&nbsp;&nbsp;pPopupItem&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_POPUP_ITEM<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_flpopupitem&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_POPUP_ITEM<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;new&nbsp;popup&nbsp;item&nbsp;to&nbsp;be&nbsp;inserted.&nbsp;It&nbsp;can&nbsp;be&nbsp;prepared&nbsp;passing&nbsp;a&nbsp;dict<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(whose&nbsp;keys&nbsp;are&nbsp;corresponding&nbsp;to&nbsp;xfdata.FL_POPUP_ITEM's&nbsp;members)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;to&nbsp;xfstruct.make_flpopupitem&nbsp;function.<br>
 &nbsp;<br>
 Returns<br>
 -------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;pPopupEntry&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_POPUP_ENTRY<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_flpopupentry&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_POPUP_ENTRY<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;popup&nbsp;entry<br>
 &nbsp;<br>
 Examples<br>
@@ -1006,21 +1010,21 @@ Examples<br>
 Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-fl_popup_set_bw"><strong>fl_popup_set_bw</strong></a>(pPopup, bw)</dt><dd><tt><a href="#-fl_popup_set_bw">fl_popup_set_bw</a>(pPopup,&nbsp;bw)<br>
+ <dl><dt><a name="-fl_popup_set_bw"><strong>fl_popup_set_bw</strong></a>(ptr_flpopup, borderwidth)</dt><dd><tt><a href="#-fl_popup_set_bw">fl_popup_set_bw</a>(ptr_flpopup,&nbsp;borderwidth)&nbsp;-&gt;&nbsp;oldborderwidth<br>
 &nbsp;<br>
-Sets&nbsp;the&nbsp;border&nbsp;width&nbsp;of&nbsp;a&nbsp;popup.<br>
+Defines&nbsp;the&nbsp;border&nbsp;width&nbsp;of&nbsp;a&nbsp;popup.<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;pPopup&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_POPUP<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_flpopup&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_POPUP<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;popup&nbsp;class&nbsp;instance<br>
-&nbsp;&nbsp;&nbsp;&nbsp;bw&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;borderwidth&nbsp;:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;border&nbsp;width&nbsp;value&nbsp;to&nbsp;be&nbsp;set<br>
 &nbsp;<br>
 Returns<br>
 -------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;num.&nbsp;:&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*todo*<br>
+&nbsp;&nbsp;&nbsp;&nbsp;oldborderwidth&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;previous&nbsp;width&nbsp;of&nbsp;border<br>
 &nbsp;<br>
 Examples<br>
 --------<br>
@@ -1029,25 +1033,26 @@ Examples<br>
 Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;Demo&nbsp;=&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-fl_popup_set_callback"><strong>fl_popup_set_callback</strong></a>(pPopup, py_PopupCb)</dt><dd><tt><a href="#-fl_popup_set_callback">fl_popup_set_callback</a>(pPopup,&nbsp;py_PopupCb)<br>
+ <dl><dt><a name="-fl_popup_set_callback"><strong>fl_popup_set_callback</strong></a>(ptr_flpopup, pyfn_PopupCb)</dt><dd><tt><a href="#-fl_popup_set_callback">fl_popup_set_callback</a>(ptr_flpopup,&nbsp;pyfn_PopupCb)&nbsp;-&gt;&nbsp;Popupcb<br>
 &nbsp;<br>
 Associates&nbsp;with&nbsp;a&nbsp;popup&nbsp;or&nbsp;changes&nbsp;a&nbsp;callback&nbsp;function&nbsp;to&nbsp;be&nbsp;invoked<br>
 when&nbsp;an&nbsp;entry&nbsp;(or&nbsp;an&nbsp;entry&nbsp;of&nbsp;a&nbsp;sub-popup)&nbsp;is&nbsp;selected.<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;pPopup&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_POPUP<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_flpopup&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_POPUP<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;popup&nbsp;class&nbsp;instance<br>
-&nbsp;&nbsp;&nbsp;&nbsp;py_PopupCb&nbsp;:&nbsp;python&nbsp;function&nbsp;callback,&nbsp;returned&nbsp;value<br>
+&nbsp;&nbsp;&nbsp;&nbsp;pyfn_PopupCb&nbsp;:&nbsp;python&nbsp;function&nbsp;callback,&nbsp;returned&nbsp;value<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;callback&nbsp;that&nbsp;is&nbsp;called&nbsp;after&nbsp;entry&nbsp;selection.<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;name&nbsp;referring&nbsp;to&nbsp;function(pPopupReturn)&nbsp;-&gt;&nbsp;num.<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;parameter&nbsp;pPopopReturn&nbsp;is&nbsp;of&nbsp;type&nbsp;xfdata.FL_POPUP_RETURN<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;name&nbsp;referring&nbsp;to&nbsp;function(ptr_flpopupreturn)&nbsp;-&gt;&nbsp;num.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;parameter&nbsp;ptr_flpopopreturn&nbsp;is&nbsp;of&nbsp;type<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;xfdata.FL_POPUP_RETURN<br>
 &nbsp;<br>
 Returns<br>
 -------<br>
 &nbsp;&nbsp;&nbsp;&nbsp;PopupCb&nbsp;:&nbsp;pointer&nbsp;ot&nbsp;xfdata.FL_POPUP_CB<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;old&nbsp;popup&nbsp;callback,&nbsp;or&nbsp;None&nbsp;(on&nbsp;errors&nbsp;or&nbsp;if&nbsp;no&nbsp;callback&nbsp;was<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;defined)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;old&nbsp;popup&nbsp;callback,&nbsp;or&nbsp;None&nbsp;(on&nbsp;errors&nbsp;or&nbsp;if&nbsp;no&nbsp;callback<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;was&nbsp;defined)<br>
 &nbsp;<br>
 Examples<br>
 --------<br>
@@ -1056,13 +1061,13 @@ Examples<br>
 Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-fl_popup_set_color"><strong>fl_popup_set_color</strong></a>(pPopup, colrpos, colr)</dt><dd><tt><a href="#-fl_popup_set_color">fl_popup_set_color</a>(pPopup,&nbsp;colrpos,&nbsp;colr)<br>
+ <dl><dt><a name="-fl_popup_set_color"><strong>fl_popup_set_color</strong></a>(ptr_flpopup, colrpos, colr)</dt><dd><tt><a href="#-fl_popup_set_color">fl_popup_set_color</a>(ptr_flpopup,&nbsp;colrpos,&nbsp;colr)&nbsp;-&gt;&nbsp;oldcolr<br>
 &nbsp;<br>
-Sets&nbsp;several&nbsp;colors&nbsp;used&nbsp;in&nbsp;drawing&nbsp;a&nbsp;popup.<br>
+Defines&nbsp;several&nbsp;colors&nbsp;used&nbsp;in&nbsp;drawing&nbsp;a&nbsp;popup.<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;pPopup&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_POPUP<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_flpopup&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_POPUP<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;popup&nbsp;class&nbsp;instance<br>
 &nbsp;&nbsp;&nbsp;&nbsp;colrpos&nbsp;:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;color&nbsp;type&nbsp;position.&nbsp;Values&nbsp;(from&nbsp;xfdata.py)<br>
@@ -1075,8 +1080,8 @@ Parameters<br>
 &nbsp;<br>
 Returns<br>
 -------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;colr&nbsp;:&nbsp;long_pos<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;color<br>
+&nbsp;&nbsp;&nbsp;&nbsp;oldcolr&nbsp;:&nbsp;long_pos<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;old&nbsp;color,&nbsp;or&nbsp;xfdata.FL_MAX_COLORS&nbsp;(on&nbsp;errors)<br>
 &nbsp;<br>
 Examples<br>
 --------<br>
@@ -1085,15 +1090,15 @@ Examples<br>
 Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-fl_popup_set_cursor"><strong>fl_popup_set_cursor</strong></a>(pPopup, cursnum)</dt><dd><tt><a href="#-fl_popup_set_cursor">fl_popup_set_cursor</a>(pPopup,&nbsp;cursnum)<br>
+ <dl><dt><a name="-fl_popup_set_cursor"><strong>fl_popup_set_cursor</strong></a>(ptr_flpopup, cursornum)</dt><dd><tt><a href="#-fl_popup_set_cursor">fl_popup_set_cursor</a>(ptr_flpopup,&nbsp;cursornum)<br>
 &nbsp;<br>
 Changes&nbsp;the&nbsp;cursor&nbsp;displayed&nbsp;when&nbsp;a&nbsp;popup&nbsp;is&nbsp;shown.<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;pPopup&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_POPUP<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_flpopup&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_POPUP<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;popup&nbsp;class&nbsp;instance<br>
-&nbsp;&nbsp;&nbsp;&nbsp;cursnum&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;cursornum&nbsp;:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;id&nbsp;of&nbsp;a&nbsp;symbolic&nbsp;cursor&nbsp;shape's&nbsp;name<br>
 &nbsp;<br>
 Examples<br>
@@ -1103,14 +1108,14 @@ Examples<br>
 Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-fl_popup_set_min_width"><strong>fl_popup_set_min_width</strong></a>(pPopup, width)</dt><dd><tt><a href="#-fl_popup_set_min_width">fl_popup_set_min_width</a>(pPopup,&nbsp;width)<br>
+ <dl><dt><a name="-fl_popup_set_min_width"><strong>fl_popup_set_min_width</strong></a>(ptr_flpopup, width)</dt><dd><tt><a href="#-fl_popup_set_min_width">fl_popup_set_min_width</a>(ptr_flpopup,&nbsp;width)&nbsp;-&gt;&nbsp;oldwidth<br>
 &nbsp;<br>
-Sets&nbsp;a&nbsp;new&nbsp;minimum&nbsp;width&nbsp;of&nbsp;a&nbsp;popup.&nbsp;By&nbsp;default&nbsp;the&nbsp;width&nbsp;of&nbsp;a&nbsp;popup<br>
+Defines&nbsp;a&nbsp;new&nbsp;minimum&nbsp;width&nbsp;of&nbsp;a&nbsp;popup.&nbsp;By&nbsp;default&nbsp;the&nbsp;width&nbsp;of&nbsp;a&nbsp;popup<br>
 is&nbsp;calculated&nbsp;using&nbsp;the&nbsp;widths&nbsp;of&nbsp;the&nbsp;title&nbsp;and&nbsp;the&nbsp;entries.<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;pPopup&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_POPUP<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_flpopup&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_POPUP<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;popup&nbsp;class&nbsp;instance<br>
 &nbsp;&nbsp;&nbsp;&nbsp;width&nbsp;:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;minimum&nbsp;width&nbsp;to&nbsp;be&nbsp;set.&nbsp;If&nbsp;it&nbsp;is&nbsp;0&nbsp;or&nbsp;negative&nbsp;switches&nbsp;the&nbsp;use<br>
@@ -1118,8 +1123,8 @@ Parameters<br>
 &nbsp;<br>
 Returns<br>
 -------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;oldw&nbsp;:&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;previous&nbsp;width,&nbsp;or&nbsp;negative&nbsp;num.&nbsp;(on&nbsp;errors)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;oldwidth&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;previous&nbsp;width,&nbsp;or&nbsp;-1&nbsp;(on&nbsp;errors)<br>
 &nbsp;<br>
 Examples<br>
 --------<br>
@@ -1128,16 +1133,16 @@ Examples<br>
 Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-fl_popup_set_policy"><strong>fl_popup_set_policy</strong></a>(pPopup, policy)</dt><dd><tt><a href="#-fl_popup_set_policy">fl_popup_set_policy</a>(pPopup,&nbsp;policy)<br>
+ <dl><dt><a name="-fl_popup_set_policy"><strong>fl_popup_set_policy</strong></a>(ptr_flpopup, policy)</dt><dd><tt><a href="#-fl_popup_set_policy">fl_popup_set_policy</a>(ptr_flpopup,&nbsp;policy)&nbsp;-&gt;&nbsp;oldpol<br>
 &nbsp;<br>
-Sets&nbsp;policy&nbsp;for&nbsp;handling&nbsp;the&nbsp;popup&nbsp;(i.e.&nbsp;does&nbsp;it&nbsp;get&nbsp;closed&nbsp;when&nbsp;the<br>
-user&nbsp;releases&nbsp;the&nbsp;mouse&nbsp;button&nbsp;outside&nbsp;an&nbsp;active&nbsp;entry&nbsp;or&nbsp;not?)&nbsp;or<br>
-changes&nbsp;the&nbsp;default&nbsp;setting&nbsp;of&nbsp;the&nbsp;policy,&nbsp;used&nbsp;in&nbsp;the&nbsp;creation&nbsp;of&nbsp;new<br>
-popups.<br>
+Defines&nbsp;policy&nbsp;for&nbsp;handling&nbsp;the&nbsp;popup&nbsp;(i.e.&nbsp;does&nbsp;it&nbsp;get&nbsp;closed&nbsp;when<br>
+the&nbsp;user&nbsp;releases&nbsp;the&nbsp;mouse&nbsp;button&nbsp;outside&nbsp;an&nbsp;active&nbsp;entry&nbsp;or&nbsp;not?)<br>
+or&nbsp;changes&nbsp;the&nbsp;default&nbsp;setting&nbsp;of&nbsp;the&nbsp;policy,&nbsp;used&nbsp;in&nbsp;the&nbsp;creation<br>
+of&nbsp;new&nbsp;popups.<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;pPopup&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_POPUP<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_flpopup&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_POPUP<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;popup&nbsp;class&nbsp;instance.&nbsp;If&nbsp;it&nbsp;is&nbsp;'None',&nbsp;changes&nbsp;the&nbsp;default<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;setting&nbsp;of&nbsp;the&nbsp;policy,&nbsp;used&nbsp;in&nbsp;the&nbsp;creation&nbsp;of&nbsp;new&nbsp;popups.<br>
 &nbsp;&nbsp;&nbsp;&nbsp;policy&nbsp;:&nbsp;int<br>
@@ -1156,18 +1161,18 @@ Examples<br>
 Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-fl_popup_set_position"><strong>fl_popup_set_position</strong></a>(pPopup, x, y)</dt><dd><tt><a href="#-fl_popup_set_position">fl_popup_set_position</a>(pPopup,&nbsp;x,&nbsp;y)<br>
+ <dl><dt><a name="-fl_popup_set_position"><strong>fl_popup_set_position</strong></a>(ptr_flpopup, xpos, ypos)</dt><dd><tt><a href="#-fl_popup_set_position">fl_popup_set_position</a>(ptr_flpopup,&nbsp;xpos,&nbsp;ypos)<br>
 &nbsp;<br>
-Sets&nbsp;position&nbsp;where&nbsp;the&nbsp;popup&nbsp;is&nbsp;supposed&nbsp;to&nbsp;appear&nbsp;(if&nbsp;never&nbsp;called,<br>
+Defines&nbsp;position&nbsp;where&nbsp;the&nbsp;popup&nbsp;is&nbsp;supposed&nbsp;to&nbsp;appear&nbsp;(if&nbsp;never&nbsp;called,<br>
 the&nbsp;popup&nbsp;appears&nbsp;at&nbsp;the&nbsp;mouse&nbsp;position).<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;pPopup&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_POPUP<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_flpopup&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_POPUP<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;popup&nbsp;class&nbsp;instance<br>
-&nbsp;&nbsp;&nbsp;&nbsp;x&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;xpos&nbsp;:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;horizontal&nbsp;position&nbsp;(upper-left&nbsp;corner)<br>
-&nbsp;&nbsp;&nbsp;&nbsp;y&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ypos&nbsp;:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;vertical&nbsp;position&nbsp;(upper-left&nbsp;corner)<br>
 &nbsp;<br>
 Examples<br>
@@ -1177,21 +1182,21 @@ Examples<br>
 Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-fl_popup_set_title"><strong>fl_popup_set_title</strong></a>(pPopup, title)</dt><dd><tt><a href="#-fl_popup_set_title">fl_popup_set_title</a>(pPopup,&nbsp;title)<br>
+ <dl><dt><a name="-fl_popup_set_title"><strong>fl_popup_set_title</strong></a>(ptr_flpopup, title)</dt><dd><tt><a href="#-fl_popup_set_title">fl_popup_set_title</a>(ptr_flpopup,&nbsp;title)&nbsp;-&gt;&nbsp;ptr_flpopup<br>
 &nbsp;<br>
-Sets&nbsp;the&nbsp;title&nbsp;of&nbsp;a&nbsp;popup.&nbsp;By&nbsp;default,&nbsp;the&nbsp;popup&nbsp;of&nbsp;a&nbsp;select&nbsp;object<br>
-does&nbsp;not&nbsp;have&nbsp;a&nbsp;title&nbsp;drawn&nbsp;on&nbsp;top&nbsp;of&nbsp;it.<br>
+Defines&nbsp;the&nbsp;title&nbsp;of&nbsp;a&nbsp;popup.&nbsp;By&nbsp;default,&nbsp;the&nbsp;popup&nbsp;of&nbsp;a&nbsp;select<br>
+flobject&nbsp;does&nbsp;not&nbsp;have&nbsp;a&nbsp;title&nbsp;drawn&nbsp;on&nbsp;top&nbsp;of&nbsp;it.<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;pPopup&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_POPUP<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_flpopup&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_POPUP<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;popup&nbsp;class&nbsp;instance<br>
 &nbsp;&nbsp;&nbsp;&nbsp;title&nbsp;:&nbsp;str<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;title&nbsp;of&nbsp;the&nbsp;popup<br>
 &nbsp;<br>
 Returns<br>
 -------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;pPopup&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_POPUP<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_flpopup&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_POPUP<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;popup&nbsp;class&nbsp;instance<br>
 &nbsp;<br>
 Examples<br>
@@ -1201,16 +1206,16 @@ Examples<br>
 Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-fl_popup_set_title_font"><strong>fl_popup_set_title_font</strong></a>(pPopup, style, size)</dt><dd><tt><a href="#-fl_popup_set_title_font">fl_popup_set_title_font</a>(pPopup,&nbsp;style,&nbsp;size)<br>
+ <dl><dt><a name="-fl_popup_set_title_font"><strong>fl_popup_set_title_font</strong></a>(ptr_flpopup, style, size)</dt><dd><tt><a href="#-fl_popup_set_title_font">fl_popup_set_title_font</a>(ptr_flpopup,&nbsp;style,&nbsp;size)<br>
 &nbsp;<br>
-Sets&nbsp;the&nbsp;font&nbsp;style&nbsp;and&nbsp;size&nbsp;of&nbsp;the&nbsp;popup's&nbsp;title.&nbsp;This&nbsp;setting&nbsp;also<br>
+Defines&nbsp;the&nbsp;font&nbsp;style&nbsp;and&nbsp;size&nbsp;of&nbsp;the&nbsp;popup's&nbsp;title.&nbsp;This&nbsp;setting&nbsp;also<br>
 applies&nbsp;to&nbsp;sub-popups&nbsp;of&nbsp;the&nbsp;popup,&nbsp;thus&nbsp;setting&nbsp;a&nbsp;title&nbsp;font&nbsp;for<br>
 sub-popups&nbsp;is&nbsp;useless.&nbsp;By&nbsp;default,&nbsp;size&nbsp;and&nbsp;style&nbsp;are&nbsp;(from&nbsp;xfdata)<br>
 FL_NORMAL_SIZE&nbsp;and&nbsp;FL_EMBOSSED_STYLE.<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;pPopup&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_POPUP<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_flpopup&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_POPUP<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;popup&nbsp;class&nbsp;instance<br>
 &nbsp;&nbsp;&nbsp;&nbsp;style&nbsp;:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;title&nbsp;style.&nbsp;Values&nbsp;(from&nbsp;xfdata.py)&nbsp;FL_NORMAL_STYLE,<br>
@@ -1233,4 +1238,4 @@ Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;Demo&nbsp;=&nbsp;OK</tt></dd></dl>
 </td></tr></table>
-<p>Updated on: 2010-12-09 10:11 +0100</body></html>
+<p>Updated on: 2010-12-20 01:16 +0100</body></html>

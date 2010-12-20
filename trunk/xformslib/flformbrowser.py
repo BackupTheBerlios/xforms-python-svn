@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: iso8859-1 -*-
 
-""" xforms-python's functions to manage formbrowser objects.
+""" xforms-python's functions to manage formbrowser flobjects.
 """
 
 #    Copyright (C) 2009, 2010  Luca Lazzaroni "LukenShiro"
@@ -26,7 +26,7 @@
 # then heavily reordered and reworked
 
 # ############################################# #
-# Interface to XForms shared object libraries   #
+# Interface to XForms shared flobject libraries #
 # ############################################# #
 
 
@@ -39,8 +39,8 @@ from xformslib import xfdata
 # forms.h (formbrowser.h)
 ##########################
 
-def fl_addto_formbrowser(pFlObject, pFlForm):
-    """fl_addto_formbrowser(pFlObject, pFlForm)
+def fl_addto_formbrowser(ptr_flobject, ptr_flform):
+    """fl_addto_formbrowser(ptr_flobject, ptr_flform) -> numforms
     
     Populates a formbrowser. The form so added is appended to the list of
     forms that are already in the formbrowser. Form should be valid for the
@@ -50,9 +50,9 @@ def fl_addto_formbrowser(pFlObject, pFlForm):
 
     Parameters
     ----------
-        pFlObject : pointer to xfdata.FL_OBJECT
-            formbrowser object
-        pFlForm : pointer to xfdata.FL_FORM
+        ptr_flobject : pointer to xfdata.FL_OBJECT
+            formbrowser flobject
+        ptr_flform : pointer to xfdata.FL_FORM
             form
 
     Returns
@@ -75,15 +75,15 @@ def fl_addto_formbrowser(pFlObject, pFlForm):
         cty.POINTER(xfdata.FL_FORM)],
         """int fl_addto_formbrowser(FL_OBJECT * ob, FL_FORM * form)""")
     library.check_if_initialized()
-    library.verify_flobjectptr_type(pFlObject)
-    library.verify_flformptr_type(pFlForm)
-    library.keep_elem_refs(pFlObject, pFlForm)
-    retval = _fl_addto_formbrowser(pFlObject, pFlForm)
+    library.verify_flobjectptr_type(ptr_flobject)
+    library.verify_flformptr_type(ptr_flform)
+    library.keep_elem_refs(ptr_flobject, ptr_flform)
+    retval = _fl_addto_formbrowser(ptr_flobject, ptr_flform)
     return retval
 
 
-def fl_delete_formbrowser_bynumber(pFlObject, seqnum):
-    """fl_delete_formbrowser_bynumber(pFlObject, seqnum)
+def fl_delete_formbrowser_bynumber(ptr_flobject, seqnum):
+    """fl_delete_formbrowser_bynumber(ptr_flobject, seqnum) -> ptr_flform
     
     Removes a form from the formbrowser using a sequence number, an
     integer between 1 and the number of forms in the browser. After a
@@ -92,14 +92,14 @@ def fl_delete_formbrowser_bynumber(pFlObject, seqnum):
 
     Parameters
     ----------
-        pFlObject : pointer to xfdata.FL_OBJECT
-            formbrowser object
+        ptr_flobject : pointer to xfdata.FL_OBJECT
+            formbrowser flobject
         seqnum : int
             sequence number of form to be removed
 
     Returns
     -------
-        pFlForm : pointer to xfdata.FL_FORM
+        ptr_flform : pointer to xfdata.FL_FORM
             removed form, or None (on failure)
 
     Examples
@@ -118,29 +118,29 @@ def fl_delete_formbrowser_bynumber(pFlObject, seqnum):
         """FL_FORM * fl_delete_formbrowser_bynumber(FL_OBJECT * ob, int
            num)""")
     library.check_if_initialized()
-    library.verify_flobjectptr_type(pFlObject)
-    iseqnum = library.convert_to_int(seqnum)
-    library.keep_elem_refs(pFlObject, seqnum, iseqnum)
-    retval = _fl_delete_formbrowser_bynumber(pFlObject, iseqnum)
+    library.verify_flobjectptr_type(ptr_flobject)
+    i_seqnum = library.convert_to_intc(seqnum)
+    library.keep_elem_refs(ptr_flobject, seqnum, i_seqnum)
+    retval = _fl_delete_formbrowser_bynumber(ptr_flobject, i_seqnum)
     return retval
 
 
-def fl_delete_formbrowser(pFlObject, pFlForm):
-    """fl_delete_formbrowser(pFlObject, pFlForm)
+def fl_delete_formbrowser(ptr_flobject, ptr_flform):
+    """fl_delete_formbrowser(ptr_flobject, ptr_flform) -> numforms
     
     Removes a specified form from the formbrowser.
 
     Parameters
     ----------
-        pFlObject : pointer to xfdata.FL_OBJECT
-            formbrowser object
-        pFlForm : pointer to xfdata.FL_FORM
+        ptr_flobject : pointer to xfdata.FL_OBJECT
+            formbrowser flobject
+        ptr_flform : pointer to xfdata.FL_FORM
             form candidate to deletion
 
     Returns
     -------
         numforms : int
-            current (after deletion) number of forms in the formbrowser
+            current (after deletion) number of forms in the formbrowser,
             or -1 (on failure)
 
     Examples
@@ -159,30 +159,30 @@ def fl_delete_formbrowser(pFlObject, pFlForm):
         """int fl_delete_formbrowser(FL_OBJECT * ob,
            FL_FORM * candidate_form)""")
     library.check_if_initialized()
-    library.verify_flobjectptr_type(pFlObject)
-    library.verify_flformptr_type(pFlForm)
-    library.keep_elem_refs(pFlObject, pFlForm)
-    retval = _fl_delete_formbrowser(pFlObject, pFlForm)
+    library.verify_flobjectptr_type(ptr_flobject)
+    library.verify_flformptr_type(ptr_flform)
+    library.keep_elem_refs(ptr_flobject, ptr_flform)
+    retval = _fl_delete_formbrowser(ptr_flobject, ptr_flform)
     return retval
 
 
-def fl_replace_formbrowser(pFlObject, seqnum, pFlForm):
-    """fl_replace_formbrowser(pFlObject, seqnum, pFlForm)
+def fl_replace_formbrowser(ptr_flobject, seqnum, ptr_flform):
+    """fl_replace_formbrowser(ptr_flobject, seqnum, ptr_flform) -> ptr_flform
     
     Replaces a form in formbrowser specified by a sequence number
 
     Parameters
     ----------
-        pFlObject : pointer to xfdata.FL_OBJECT
-            formbrowser object
+        ptr_flobject : pointer to xfdata.FL_OBJECT
+            formbrowser flobject
         seqnum : int
             sequence number of form to be replaced
-        pFlForm : pointer to xfdata.FL_FORM
+        ptr_flform : pointer to xfdata.FL_FORM
             form used as replacement
 
     Returns
     -------
-        pFlForm : pointer to xfdata.FL_FORM
+        ptr_flform : pointer to xfdata.FL_FORM
             form that has been replaced, or None (on failure)
 
     Examples
@@ -201,27 +201,27 @@ def fl_replace_formbrowser(pFlObject, seqnum, pFlForm):
         """FL_FORM * fl_replace_formbrowser(FL_OBJECT * ob, int num,
            FL_FORM * form)""")
     library.check_if_initialized()
-    library.verify_flobjectptr_type(pFlObject)
-    iseqnum = library.convert_to_int(seqnum)
-    library.verify_flformptr_type(pFlForm)
-    library.keep_elem_refs(pFlObject, seqnum, pFlForm, iseqnum)
-    retval = _fl_replace_formbrowser(pFlObject, iseqnum, pFlForm)
+    library.verify_flobjectptr_type(ptr_flobject)
+    i_seqnum = library.convert_to_intc(seqnum)
+    library.verify_flformptr_type(ptr_flform)
+    library.keep_elem_refs(ptr_flobject, seqnum, ptr_flform, i_seqnum)
+    retval = _fl_replace_formbrowser(ptr_flobject, i_seqnum, ptr_flform)
     return retval
 
 
-def fl_insert_formbrowser(pFlObject, seqnum, pFlForm):
-    """fl_insert_formbrowser(pFlObject, seqnum, pFlForm)
+def fl_insert_formbrowser(ptr_flobject, seqnum, ptr_flform):
+    """fl_insert_formbrowser(ptr_flobject, seqnum, ptr_flform) -> numforms
     
     Inserts a form into a formbrowser at arbitrary location.
 
     Parameters
     ----------
-        pFlObject : pointer to xfdata.FL_OBJECT
-            formbrowser object
+        ptr_flobject : pointer to xfdata.FL_OBJECT
+            formbrowser flobject
         seqnum : int
             the sequence number before which the new form form is to be
             inserted into the formbrowser
-        pFlForm : pointer to xfdata.FL_FORM
+        ptr_flform : pointer to xfdata.FL_FORM
             new form to insert
 
     Returns
@@ -245,36 +245,37 @@ def fl_insert_formbrowser(pFlObject, seqnum, pFlForm):
         """int fl_insert_formbrowser(FL_OBJECT * ob, int line,
            FL_FORM * new_form)""")
     library.check_if_initialized()
-    library.verify_flobjectptr_type(pFlObject)
-    iseqnum = library.convert_to_int(seqnum)
-    library.verify_flformptr_type(pFlForm)
-    library.keep_elem_refs(pFlObject, seqnum, iseqnum, pFlForm)
-    retval = _fl_insert_formbrowser(pFlObject, iseqnum, pFlForm)
+    library.verify_flobjectptr_type(ptr_flobject)
+    i_seqnum = library.convert_to_intc(seqnum)
+    library.verify_flformptr_type(ptr_flform)
+    library.keep_elem_refs(ptr_flobject, seqnum, i_seqnum, ptr_flform)
+    retval = _fl_insert_formbrowser(ptr_flobject, i_seqnum, ptr_flform)
     return retval
 
 
-def fl_get_formbrowser_area(pFlObject):
-    """fl_get_formbrowser_area(pFlObject)
+def fl_get_formbrowser_area(ptr_flobject):
+    """fl_get_formbrowser_area(ptr_flobject)
+    -> result, xpos, ypos, width, height
     
-    Obtains the actual size of the form's area. The area occupied by the
-    formbrowser contains the space for the scrollbars.
+    Finds out the actual size of the form's area. The area occupied by
+    the formbrowser contains the space for the scrollbars.
 
     Parameters
     ----------
-        pFlObject : pointer to xfdata.FL_OBJECT
-            formbrowser object
+        ptr_flobject : pointer to xfdata.FL_OBJECT
+            formbrowser flobject
 
     Returns
     -------
         result : int
             1, or 0 (on failure)
-        x : int
+        xpos : int
             horizontal position
-        y : int
+        ypos : int
             vertical position
-        w : int
+        width : int
             width of form's area
-        h : int
+        height : int
             height of form's area
 
     Examples
@@ -283,8 +284,8 @@ def fl_get_formbrowser_area(pFlObject):
 
     API_diversion
     ----------
-        API changed from XForms, upstream was
-        fl_get_formbrowser_area(pFlObject, x, y, w, h)
+        API changed from XForms, upstream is
+        fl_get_formbrowser_area(ptr_flobject, xpos, ypos, width, height)
 
     Notes
     -----
@@ -299,27 +300,29 @@ def fl_get_formbrowser_area(pFlObject):
         """int fl_get_formbrowser_area(FL_OBJECT * ob, int * x, int * y,
            int * w, int * h)""")
     library.check_if_initialized()
-    library.verify_flobjectptr_type(pFlObject)
-    x, px = library.make_int_and_pointer()
-    y, py = library.make_int_and_pointer()
-    w, pw = library.make_int_and_pointer()
-    h, ph = library.make_int_and_pointer()
-    library.keep_elem_refs(pFlObject, x, y, w, h, px, py, pw, ph)
-    retval = _fl_get_formbrowser_area(pFlObject, px, py, pw, ph)
-    return retval, x.value, y.value, w.value, h.value
+    library.verify_flobjectptr_type(ptr_flobject)
+    i_xpos, ptr_xpos = library.make_intc_and_pointer()
+    i_ypos, ptr_ypos = library.make_intc_and_pointer()
+    i_width, ptr_width = library.make_intc_and_pointer()
+    i_height, ptr_height = library.make_intc_and_pointer()
+    library.keep_elem_refs(ptr_flobject, i_xpos, i_ypos, i_width, i_height, \
+            ptr_xpos, ptr_ypos, ptr_width, ptr_height)
+    retval = _fl_get_formbrowser_area(ptr_flobject, ptr_xpos, ptr_ypos, \
+            ptr_width, ptr_height)
+    return retval, i_xpos.value, i_ypos.value, i_width.value, i_height.value
 
 
-def fl_set_formbrowser_scroll(pFlObject, how):
-    """fl_set_formbrowser_scroll(pFlObject, how)
+def fl_set_formbrowser_scroll(ptr_flobject, howscroll):
+    """fl_set_formbrowser_scroll(ptr_flobject, howscroll)
     
     Changes the vertical scrollbar so each action of the scrollbar scrolls
     to the next forms. By default it scrolls a fixed number of pixels.
 
     Parameters
     ----------
-        pFlObject : pointer to xfdata.FL_OBJECT
-            formbrowser object
-        how : int
+        ptr_flobject : pointer to xfdata.FL_OBJECT
+            formbrowser flobject
+        howscroll : int
             How it scrolls. Values (from xfdata module) FL_SMOOTH_SCROLL
             (default) or FL_JUMP_SCROLL
 
@@ -337,15 +340,16 @@ def fl_set_formbrowser_scroll(pFlObject, how):
         None, [cty.POINTER(xfdata.FL_OBJECT), cty.c_int],
         """void fl_set_formbrowser_scroll(FL_OBJECT * ob, int how)""")
     library.check_if_initialized()
-    library.verify_flobjectptr_type(pFlObject)
-    library.checkfatal_allowed_value_in_list(how, xfdata.FORMBRWSSCROLL_list)
-    ihow = library.convert_to_int(how)
-    library.keep_elem_refs(pFlObject, how, ihow)
-    _fl_set_formbrowser_scroll(pFlObject, ihow)
+    library.verify_flobjectptr_type(ptr_flobject)
+    library.checkfatal_allowed_value_in_list(howscroll, \
+            xfdata.FORMBRWSSCROLL_list)
+    i_howscroll = library.convert_to_intc(howscroll)
+    library.keep_elem_refs(ptr_flobject, howscroll, i_howscroll)
+    _fl_set_formbrowser_scroll(ptr_flobject, i_howscroll)
 
 
-def fl_set_formbrowser_hscrollbar(pFlObject, how):
-    """fl_set_formbrowser_hscrollbar(pFlObject, how)
+def fl_set_formbrowser_hscrollbar(ptr_flobject, pref):
+    """fl_set_formbrowser_hscrollbar(ptr_flobject, pref)
     
     Controls the presence of horizontal scrollbar. By default, if the size
     of the forms exceeds the size of the formbrowser, scrollbars are added
@@ -353,11 +357,11 @@ def fl_set_formbrowser_hscrollbar(pFlObject, how):
 
     Parameters
     ----------
-        pFlObject : pointer to xfdata.FL_OBJECT
-            formbrowser object
-        how : int
-            if scrollbar is added or not. Values (from xfdata module) FL_ON,
-            FL_OFF, FL_AUTO
+        ptr_flobject : pointer to xfdata.FL_OBJECT
+            formbrowser flobject
+        pref : int
+            if scrollbar is added or not. Values (from xfdata module)
+            FL_ON, FL_OFF, FL_AUTO
 
     Examples
     --------
@@ -373,31 +377,32 @@ def fl_set_formbrowser_hscrollbar(pFlObject, how):
         None, [cty.POINTER(xfdata.FL_OBJECT), cty.c_int],
         """void fl_set_formbrowser_hscrollbar(FL_OBJECT * ob, int how)""")
     library.check_if_initialized()
-    library.verify_flobjectptr_type(pFlObject)
-    library.checkfatal_allowed_value_in_list(how, xfdata.SCROLLBARVAL_list)
-    ihow = library.convert_to_int(how)
-    library.keep_elem_refs(pFlObject, how, ihow)
-    _fl_set_formbrowser_hscrollbar(pFlObject, ihow)
+    library.verify_flobjectptr_type(ptr_flobject)
+    library.checkfatal_allowed_value_in_list(pref, \
+            xfdata.SCROLLBARVAL_list)
+    i_pref = library.convert_to_intc(pref)
+    library.keep_elem_refs(ptr_flobject, pref, i_pref)
+    _fl_set_formbrowser_hscrollbar(ptr_flobject, i_pref)
 
 
-def fl_set_formbrowser_vscrollbar(pFlObject, how):
-    """fl_set_formbrowser_vscrollbar(pFlObject, how)
+def fl_set_formbrowser_vscrollbar(ptr_flobject, pref):
+    """fl_set_formbrowser_vscrollbar(ptr_flobject, pref)
     
-    Controls the presence of vertical scrollbar. By default, if the size of
-    the forms exceeds the size of the formbrowser, scrollbars are added
-    automatically
+    Controls the presence of vertical scrollbar. By default, if the size
+    of the forms exceeds the size of the formbrowser, scrollbars are added
+    automatically.
 
     Parameters
     ----------
-        pFlObject : pointer to xfdata.FL_OBJECT
-            formbrowser object
-        how : int
-            if scrollbar is added or not. Values (from xfdata module) FL_ON,
-            FL_OFF, FL_AUTO
+        ptr_flobject : pointer to xfdata.FL_OBJECT
+            formbrowser flobject
+        pref : int
+            if scrollbar is added or not. Values (from xfdata module)
+            FL_ON, FL_OFF, FL_AUTO
 
     Examples
     --------
-        >>> fl_set_formbrowser_vscrollbar(frmbrobj, FL_OFF)
+        >>> fl_set_formbrowser_vscrollbar(frmbrobj, xfdata.FL_OFF)
 
     Notes
     -----
@@ -409,32 +414,33 @@ def fl_set_formbrowser_vscrollbar(pFlObject, how):
         None, [cty.POINTER(xfdata.FL_OBJECT), cty.c_int],
         """void fl_set_formbrowser_vscrollbar(FL_OBJECT * ob, int how)""")
     library.check_if_initialized()
-    library.verify_flobjectptr_type(pFlObject)
-    library.checkfatal_allowed_value_in_list(how, xfdata.SCROLLBARVAL_list)
-    ihow = library.convert_to_int(how)
-    library.keep_elem_refs(pFlObject, how, ihow)
-    _fl_set_formbrowser_vscrollbar(pFlObject, ihow)
+    library.verify_flobjectptr_type(ptr_flobject)
+    library.checkfatal_allowed_value_in_list(pref, \
+            xfdata.SCROLLBARVAL_list)
+    i_pref = library.convert_to_intc(pref)
+    library.keep_elem_refs(ptr_flobject, pref, i_pref)
+    _fl_set_formbrowser_vscrollbar(ptr_flobject, i_pref)
 
 
-def fl_get_formbrowser_topform(pFlObject):
-    """fl_get_formbrowser_topform(pFlObject)
+def fl_get_formbrowser_topform(ptr_flobject):
+    """fl_get_formbrowser_topform(ptr_flobject)
     
-    Obtains the form that is currently the first form in the formbrowser
+    Finds out the form that is currently the first form in the formbrowser
     visible to the user.
 
     Parameters
     ----------
-        pFlObject : pointer to xfdata.FL_OBJECT
-            formbrowser object
+        ptr_flobject : pointer to xfdata.FL_OBJECT
+            formbrowser flobject
 
     Returns
     -------
-        pFlForm : pointer to xfdata.FL_FORM
+        ptr_flform : pointer to xfdata.FL_FORM
             first visible form
 
     Examples
     --------
-        >>> pform = fl_get_formbrowser_topform(frmbrobj)
+        >>> pform4 = fl_get_formbrowser_topform(frmbrobj)
 
     Notes
     -----
@@ -446,22 +452,22 @@ def fl_get_formbrowser_topform(pFlObject):
         cty.POINTER(xfdata.FL_FORM), [cty.POINTER(xfdata.FL_OBJECT)],
         """FL_FORM * fl_get_formbrowser_topform(FL_OBJECT * ob)""")
     library.check_if_initialized()
-    library.verify_flobjectptr_type(pFlObject)
-    library.keep_elem_refs(pFlObject)
-    retval = _fl_get_formbrowser_topform(pFlObject)
+    library.verify_flobjectptr_type(ptr_flobject)
+    library.keep_elem_refs(ptr_flobject)
+    retval = _fl_get_formbrowser_topform(ptr_flobject)
     return retval
 
 
-def fl_set_formbrowser_topform(pFlObject, pFlForm):
-    """fl_set_formbrowser_topform(pFlObject, pFlForm)
+def fl_set_formbrowser_topform(ptr_flobject, ptr_flform):
+    """fl_set_formbrowser_topform(ptr_flobject, ptr_flform) -> seqnum
     
-    Sets which form to show by setting the top form.
+    Defines which form to show by setting the top form.
 
     Parameters
     ----------
-        pFlObject : pointer to xfdata.FL_OBJECT
-            formbrowser object
-        pFlForm : pointer to xfdata.FL_FORM
+        ptr_flobject : pointer to xfdata.FL_OBJECT
+            formbrowser flobject
+        ptr_flform : pointer to xfdata.FL_FORM
             form
 
     Returns
@@ -484,29 +490,29 @@ def fl_set_formbrowser_topform(pFlObject, pFlForm):
         cty.POINTER(xfdata.FL_FORM)],
         """int fl_set_formbrowser_topform(FL_OBJECT * ob, FL_FORM * form)""")
     library.check_if_initialized()
-    library.verify_flobjectptr_type(pFlObject)
-    library.verify_flformptr_type(pFlForm)
-    library.keep_elem_refs(pFlObject, pFlForm)
-    retval = _fl_set_formbrowser_topform(pFlObject, pFlForm)
+    library.verify_flobjectptr_type(ptr_flobject)
+    library.verify_flformptr_type(ptr_flform)
+    library.keep_elem_refs(ptr_flobject, ptr_flform)
+    retval = _fl_set_formbrowser_topform(ptr_flobject, ptr_flform)
     return retval
 
 
-def fl_set_formbrowser_topform_bynumber(pFlObject, seqnum):
-    """fl_set_formbrowser_topform_bynumber(pFlObject, seqnum)
+def fl_set_formbrowser_topform_bynumber(ptr_flobject, seqnum):
+    """fl_set_formbrowser_topform_bynumber(ptr_flobject, seqnum) -> ptr_flform
     
-    Sets which form to show by setting the top form, using a sequence
+    Defines which form to show by setting the top form, using a sequence
     number.
 
     Parameters
     ----------
-        pFlObject : pointer to xfdata.FL_OBJECT
-            formbrowser object
+        ptr_flobject : pointer to xfdata.FL_OBJECT
+            formbrowser flobject
         seqnum : int
             sequence number of form
 
     Returns
     -------
-        pFlForm : pointer to xfdata.FL_FORM
+        ptr_flform : pointer to xfdata.FL_FORM
             new top form
 
     Examples
@@ -525,31 +531,31 @@ def fl_set_formbrowser_topform_bynumber(pFlObject, seqnum):
         """FL_FORM * fl_set_formbrowser_topform_bynumber( \
            FL_OBJECT * ob, int n)""")
     library.check_if_initialized()
-    library.verify_flobjectptr_type(pFlObject)
-    iseqnum = library.convert_to_int(seqnum)
-    library.keep_elem_refs(pFlObject, seqnum, iseqnum)
-    retval = _fl_set_formbrowser_topform_bynumber(pFlObject, iseqnum)
+    library.verify_flobjectptr_type(ptr_flobject)
+    i_seqnum = library.convert_to_intc(seqnum)
+    library.keep_elem_refs(ptr_flobject, seqnum, i_seqnum)
+    retval = _fl_set_formbrowser_topform_bynumber(ptr_flobject, i_seqnum)
     return retval
 
 
-def fl_set_formbrowser_xoffset(pFlObject, offset):
-    """fl_set_formbrowser_xoffset(pFlObject, offset)
+def fl_set_formbrowser_xoffset(ptr_flobject, offset):
+    """fl_set_formbrowser_xoffset(ptr_flobject, offset) -> oldoffset
     
     Scrolls within a formbrowser in horizontal direction.
 
     Parameters
     ----------
-        pFlObject : pointer to xfdata.FL_OBJECT
-            formbrowser object
+        ptr_flobject : pointer to xfdata.FL_OBJECT
+            formbrowser flobject
         offset : int
-            positive number, measuring in pixels the offset from the natural
-            position from the left. 0 indicates the natural position of the
-            content within the formbrowser.
+            positive number, measuring in pixels the offset from the
+            natural position from the left. 0 indicates the natural
+            position of the content within the formbrowser.
 
     Returns
     -------
-        num. : int
-            *todo*
+        oldoffset : int
+            previous horizontal offset
 
     Examples
     --------
@@ -565,31 +571,31 @@ def fl_set_formbrowser_xoffset(pFlObject, offset):
         cty.c_int, [cty.POINTER(xfdata.FL_OBJECT), cty.c_int],
         """int fl_set_formbrowser_xoffset(FL_OBJECT * ob, int offset)""")
     library.check_if_initialized()
-    library.verify_flobjectptr_type(pFlObject)
-    ioffset = library.convert_to_int(offset)
-    library.keep_elem_refs(pFlObject, offset, ioffset)
-    retval = _fl_set_formbrowser_xoffset(pFlObject, ioffset)
+    library.verify_flobjectptr_type(ptr_flobject)
+    i_offset = library.convert_to_intc(offset)
+    library.keep_elem_refs(ptr_flobject, offset, i_offset)
+    retval = _fl_set_formbrowser_xoffset(ptr_flobject, i_offset)
     return retval
 
 
-def fl_set_formbrowser_yoffset(pFlObject, offset):
-    """fl_set_formbrowser_yoffset(pFlObject, offset)
+def fl_set_formbrowser_yoffset(ptr_flobject, offset):
+    """fl_set_formbrowser_yoffset(ptr_flobject, offset) -> oldoffset
     
     Scrolls within a formbrowser in vertical direction.
 
     Parameters
     ----------
-        pFlObject : pointer to xfdata.FL_OBJECT
-            formbrowser object
+        ptr_flobject : pointer to xfdata.FL_OBJECT
+            formbrowser flobject
         offset : int
-            positive number, measuring in pixels the offset from the natural
-            position from the top. 0 indicates the natural position of the
-            content within the formbrowser
+            positive number, measuring in pixels the offset from the
+            natural position from the top. 0 indicates the natural
+            position of the content within the formbrowser
 
     Returns
     -------
-        num. : int
-            *todo*
+        oldoffset : int
+            previous vertical offset
 
     Examples
     --------
@@ -605,23 +611,23 @@ def fl_set_formbrowser_yoffset(pFlObject, offset):
         cty.c_int, [cty.POINTER(xfdata.FL_OBJECT), cty.c_int],
         """int fl_set_formbrowser_yoffset(FL_OBJECT * ob, int offset)""")
     library.check_if_initialized()
-    library.verify_flobjectptr_type(pFlObject)
-    ioffset = library.convert_to_int(offset)
-    library.keep_elem_refs(pFlObject, offset, ioffset)
-    retval = _fl_set_formbrowser_yoffset(pFlObject, ioffset)
+    library.verify_flobjectptr_type(ptr_flobject)
+    i_offset = library.convert_to_intc(offset)
+    library.keep_elem_refs(ptr_flobject, offset, i_offset)
+    retval = _fl_set_formbrowser_yoffset(ptr_flobject, i_offset)
     return retval
 
 
-def fl_get_formbrowser_xoffset(pFlObject):
-    """fl_get_formbrowser_xoffset(pFlObject)
+def fl_get_formbrowser_xoffset(ptr_flobject):
+    """fl_get_formbrowser_xoffset(ptr_flobject) -> offset
     
-    Obtains the current horizontal offset from left in pixel of a
+    Finds out the current horizontal offset from left in pixel of a
     formbrowser.
 
     Parameters
     ----------
-        pFlObject : pointer to xfdata.FL_OBJECT
-            formbrowser object
+        ptr_flobject : pointer to xfdata.FL_OBJECT
+            formbrowser flobject
 
     Returns
     -------
@@ -642,22 +648,22 @@ def fl_get_formbrowser_xoffset(pFlObject):
         cty.c_int, [cty.POINTER(xfdata.FL_OBJECT)],
         """int fl_get_formbrowser_xoffset(FL_OBJECT * ob)""")
     library.check_if_initialized()
-    library.verify_flobjectptr_type(pFlObject)
-    library.keep_elem_refs(pFlObject)
-    retval = _fl_get_formbrowser_xoffset(pFlObject)
+    library.verify_flobjectptr_type(ptr_flobject)
+    library.keep_elem_refs(ptr_flobject)
+    retval = _fl_get_formbrowser_xoffset(ptr_flobject)
     return retval
 
 
-def fl_get_formbrowser_yoffset(pFlObject):
-    """fl_get_formbrowser_yoffset(pFlObject)
+def fl_get_formbrowser_yoffset(ptr_flobject):
+    """fl_get_formbrowser_yoffset(ptr_flobject) -> offset
     
-    Obtains the current vertical offset from top in pixel of a
+    Finds out the current vertical offset from top in pixel of a
     formbrowser.
 
     Parameters
     ----------
-        pFlObject : pointer to xfdata.FL_OBJECT
-            formbrowser object
+        ptr_flobject : pointer to xfdata.FL_OBJECT
+            formbrowser flobject
 
     Returns
     -------
@@ -678,22 +684,22 @@ def fl_get_formbrowser_yoffset(pFlObject):
         cty.c_int, [cty.POINTER(xfdata.FL_OBJECT)],
         """int fl_get_formbrowser_yoffset(FL_OBJECT * ob)""")
     library.check_if_initialized()
-    library.verify_flobjectptr_type(pFlObject)
-    library.keep_elem_refs(pFlObject)
-    retval = _fl_get_formbrowser_yoffset(pFlObject)
+    library.verify_flobjectptr_type(ptr_flobject)
+    library.keep_elem_refs(ptr_flobject)
+    retval = _fl_get_formbrowser_yoffset(ptr_flobject)
     return retval
 
 
-def fl_find_formbrowser_form_number(pFlObject, pFlForm):
-    """fl_find_formbrowser_form_number(pFlObject, pFlForm)
+def fl_find_formbrowser_form_number(ptr_flobject, ptr_flform):
+    """fl_find_formbrowser_form_number(ptr_flobject, ptr_flform) -> seqnum
     
     Finds out the sequence number of a particular form.
 
     Parameters
     ----------
-        pFlObject : pointer to xfdata.FL_OBJECT
-            formbrowser object
-        pFlForm : pointer to xfdata.FL_FORM
+        ptr_flobject : pointer to xfdata.FL_OBJECT
+            formbrowser flobject
+        ptr_flform : pointer to xfdata.FL_FORM
             form candidate to be found
 
     Returns
@@ -717,38 +723,39 @@ def fl_find_formbrowser_form_number(pFlObject, pFlForm):
         """int fl_find_formbrowser_form_number(FL_OBJECT * ob,
            FL_FORM * candidate_form)""")
     library.check_if_initialized()
-    library.verify_flobjectptr_type(pFlObject)
-    library.verify_flformptr_type(pFlForm)
-    library.keep_elem_refs(pFlObject, pFlForm)
-    retval = _fl_find_formbrowser_form_number(pFlObject, pFlForm)
+    library.verify_flobjectptr_type(ptr_flobject)
+    library.verify_flformptr_type(ptr_flform)
+    library.keep_elem_refs(ptr_flobject, ptr_flform)
+    retval = _fl_find_formbrowser_form_number(ptr_flobject, ptr_flform)
     return retval
 
 
-def fl_add_formbrowser(frmbrwstype, x, y, w, h, label):
-    """fl_add_formbrowser(frmbrwstype, x, y, w, h, label)
+def fl_add_formbrowser(frmbrwstype, xpos, ypos, width, height, label):
+    """fl_add_formbrowser(frmbrwstype, xpos, ypos, width, height, label)
+    -> ptr_flform
     
-    Adds a formbrowser object.
+    Adds a formbrowser flobject.
 
     Parameters
     ----------
         frmbrwstype : int
             type of formbrowser to be added. Values (from xfdata.py)
             FL_NORMAL_FORMBROWSER
-        x : int
+        xpos : int
             horizontal position (upper-left corner)
-        y : int
+        ypos : int
             vertical position (upper-left corner)
-        w : int
+        width : int
             width in coord units
-        h : int
+        height : int
             height in coord units
         label : str
             text label of formbrowser
 
     Returns
     -------
-        pFlObject : pointer to xfdata.FL_OBJECT
-            formbrowser object added
+        ptr_flobject : pointer to xfdata.FL_OBJECT
+            formbrowser flobject added
 
     Examples
     --------
@@ -769,30 +776,31 @@ def fl_add_formbrowser(frmbrwstype, x, y, w, h, label):
     library.check_if_initialized()
     library.checkfatal_allowed_value_in_list(frmbrwstype, \
             xfdata.FORMBRWSTYPE_list)
-    ifrmbrwstype = library.convert_to_int(frmbrwstype)
-    ix = library.convert_to_FL_Coord(x)
-    iy = library.convert_to_FL_Coord(y)
-    iw = library.convert_to_FL_Coord(w)
-    ih = library.convert_to_FL_Coord(h)
-    slabel = library.convert_to_string(label)
-    library.keep_elem_refs(frmbrwstype, x, y, w, h, label, ifrmbrwstype, \
-            ix, iy, iw, ih, slabel)
-    retval = _fl_add_formbrowser(ifrmbrwstype, ix, iy, iw, ih, slabel)
+    i_frmbrwstype = library.convert_to_intc(frmbrwstype)
+    i_xpos = library.convert_to_FL_Coord(xpos)
+    i_ypos = library.convert_to_FL_Coord(ypos)
+    i_width = library.convert_to_FL_Coord(width)
+    i_height = library.convert_to_FL_Coord(height)
+    s_label = library.convert_to_stringc(label)
+    library.keep_elem_refs(frmbrwstype, xpos, ypos, width, height, label, \
+            i_frmbrwstype, i_xpos, i_ypos, i_width, i_height, s_label)
+    retval = _fl_add_formbrowser(i_frmbrwstype, i_xpos, i_ypos, i_width, \
+            i_height, s_label)
     return retval
 
 
 # fl_create_formbrowser function placeholder (internal)
 
 
-def fl_get_formbrowser_numforms(pFlObject):
-    """fl_get_formbrowser_numforms(pFlObject)
+def fl_get_formbrowser_numforms(ptr_flobject):
+    """fl_get_formbrowser_numforms(ptr_flobject) -> numforms
     
-    Obtains the total number of forms in a formbrowser object.
+    Finds out the total number of forms in a formbrowser flobject.
 
     Parameters
     ----------
-        pFlObject : pointer to xfdata.FL_OBJECT
-            formbrowser object
+        ptr_flobject : pointer to xfdata.FL_OBJECT
+            formbrowser flobject
 
     Returns
     -------
@@ -813,27 +821,27 @@ def fl_get_formbrowser_numforms(pFlObject):
         cty.c_int, [cty.POINTER(xfdata.FL_OBJECT)],
         """int fl_get_formbrowser_numforms(FL_OBJECT * ob)""")
     library.check_if_initialized()
-    library.verify_flobjectptr_type(pFlObject)
-    library.keep_elem_refs(pFlObject)
-    retval = _fl_get_formbrowser_numforms(pFlObject)
+    library.verify_flobjectptr_type(ptr_flobject)
+    library.keep_elem_refs(ptr_flobject)
+    retval = _fl_get_formbrowser_numforms(ptr_flobject)
     return retval
 
 
-def fl_get_formbrowser_form(pFlObject, seqnum):
-    """fl_get_formbrowser_form(pFlObject, seqnum)
+def fl_get_formbrowser_form(ptr_flobject, seqnum):
+    """fl_get_formbrowser_form(ptr_flobject, seqnum) -> ptr_flform
     
-    Obtains the form handle from the sequence number.
+    Finds out the form handle from the sequence number.
 
     Parameters
     ----------
-        pFlObject : pointer to xfdata.FL_OBJECT
-            formbrowser object
+        ptr_flobject : pointer to xfdata.FL_OBJECT
+            formbrowser flobject
         seqnum : int
             sequence number of the form
 
     Returns
     -------
-        pFlForm : pointer to xfdata.FL_FORM
+        ptr_flform : pointer to xfdata.FL_FORM
             form
 
     Examples
@@ -851,9 +859,9 @@ def fl_get_formbrowser_form(pFlObject, seqnum):
         cty.c_int],
         """FL_FORM * fl_get_formbrowser_form(FL_OBJECT * ob, int n)""")
     library.check_if_initialized()
-    library.verify_flobjectptr_type(pFlObject)
-    iseqnum = library.convert_to_int(seqnum)
-    library.keep_elem_refs(pFlObject, seqnum, iseqnum)
-    retval = _fl_get_formbrowser_form(pFlObject, iseqnum)
+    library.verify_flobjectptr_type(ptr_flobject)
+    i_seqnum = library.convert_to_intc(seqnum)
+    library.keep_elem_refs(ptr_flobject, seqnum, i_seqnum)
+    retval = _fl_get_formbrowser_form(ptr_flobject, i_seqnum)
     return retval
 

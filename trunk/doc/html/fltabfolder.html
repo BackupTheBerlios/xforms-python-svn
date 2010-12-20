@@ -9,7 +9,7 @@
 <font color="#ffffff" face="helvetica, arial">&nbsp;<br><big><big><strong>fltabfolder</strong></big></big></font></td
 ><td align=right valign=bottom
 ><font color="#ffffff" face="helvetica, arial"><a href=".">index</a><br>     <a href="index.html">list</a></font></td></tr></table>
-    <p><tt>xforms-python's&nbsp;functions&nbsp;to&nbsp;manage&nbsp;tabfolder&nbsp;objects.</tt></p>
+    <p><tt>xforms-python's&nbsp;functions&nbsp;to&nbsp;manage&nbsp;tabfolder&nbsp;flobjects.</tt></p>
 <p>
 <table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
 <tr bgcolor="#aa55cc">
@@ -27,9 +27,14 @@
 <font color="#ffffff" face="helvetica, arial"><big><strong>Functions</strong></big></font></td></tr>
     
 <tr><td bgcolor="#eeaa77"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
-<td width="100%"><dl><dt><a name="-fl_add_tabfolder"><strong>fl_add_tabfolder</strong></a>(foldertype, x, y, w, h, label)</dt><dd><tt><a href="#-fl_add_tabfolder">fl_add_tabfolder</a>(foldertype,&nbsp;x,&nbsp;y,&nbsp;w,&nbsp;h,&nbsp;label)<br>
+<td width="100%"><dl><dt><a name="-fl_add_tabfolder"><strong>fl_add_tabfolder</strong></a>(foldertype, xpos, ypos, width, height, label)</dt><dd><tt><a href="#-fl_add_tabfolder">fl_add_tabfolder</a>(foldertype,&nbsp;xpos,&nbsp;ypos,&nbsp;width,&nbsp;height,&nbsp;label)<br>
+-&gt;&nbsp;ptr_flobject<br>
 &nbsp;<br>
-Adds&nbsp;a&nbsp;tabfolder&nbsp;object.<br>
+Adds&nbsp;a&nbsp;tabfolder&nbsp;flobject.&nbsp;It&nbsp;is&nbsp;a&nbsp;special&nbsp;container&nbsp;that&nbsp;is&nbsp;capable<br>
+of&nbsp;holding&nbsp;multiple&nbsp;groups&nbsp;of&nbsp;objects&nbsp;(folders)&nbsp;to&nbsp;maximize&nbsp;the<br>
+utilization&nbsp;of&nbsp;the&nbsp;screen&nbsp;real&nbsp;estate.&nbsp;Each&nbsp;folder&nbsp;has&nbsp;its&nbsp;own&nbsp;tab<br>
+the&nbsp;user&nbsp;can&nbsp;click&nbsp;on&nbsp;to&nbsp;call&nbsp;up&nbsp;a&nbsp;specific&nbsp;folder&nbsp;from&nbsp;which&nbsp;option<br>
+can&nbsp;be&nbsp;selected.<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
@@ -37,21 +42,21 @@ Parameters<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;type&nbsp;of&nbsp;tabfolder&nbsp;to&nbsp;be&nbsp;added.&nbsp;Values&nbsp;(from&nbsp;xfdata.py)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_TOP_TABFOLDER,&nbsp;FL_BOTTOM_TABFOLDER,&nbsp;FL_LEFT_TABFOLDER,<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_RIGHT_TABFOLDER,&nbsp;FL_NORMAL_TABFOLDER<br>
-&nbsp;&nbsp;&nbsp;&nbsp;x&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;xpos&nbsp;:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;horizontal&nbsp;position&nbsp;(upper-left&nbsp;corner)<br>
-&nbsp;&nbsp;&nbsp;&nbsp;y&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ypos&nbsp;:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;vertical&nbsp;position&nbsp;(upper-left&nbsp;corner)<br>
-&nbsp;&nbsp;&nbsp;&nbsp;w&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;width&nbsp;:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;width&nbsp;in&nbsp;coord&nbsp;units<br>
-&nbsp;&nbsp;&nbsp;&nbsp;h&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;height&nbsp;:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;height&nbsp;in&nbsp;coord&nbsp;units<br>
 &nbsp;&nbsp;&nbsp;&nbsp;label&nbsp;:&nbsp;str<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;text&nbsp;label&nbsp;of&nbsp;tabfolder<br>
 &nbsp;<br>
 Returns<br>
 -------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;pFlObject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;tabfolder&nbsp;object&nbsp;added<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_flobject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;tabfolder&nbsp;flobject&nbsp;added<br>
 &nbsp;<br>
 Examples<br>
 --------<br>
@@ -61,23 +66,34 @@ Examples<br>
 Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-fl_addto_tabfolder"><strong>fl_addto_tabfolder</strong></a>(pFlObject, title, pFlForm)</dt><dd><tt><a href="#-fl_addto_tabfolder">fl_addto_tabfolder</a>(pFlObject,&nbsp;title,&nbsp;pFlForm)<br>
+ <dl><dt><a name="-fl_addto_tabfolder"><strong>fl_addto_tabfolder</strong></a>(ptr_flobject, tabtitle, ptr_flform)</dt><dd><tt><a href="#-fl_addto_tabfolder">fl_addto_tabfolder</a>(ptr_flobject,&nbsp;tabtitle,&nbsp;ptr_flform)&nbsp;-&gt;&nbsp;ptr_flobject<br>
 &nbsp;<br>
-*todo*<br>
+Populates&nbsp;a&nbsp;tabbed&nbsp;folder,&nbsp;adding&nbsp;a&nbsp;regular&nbsp;form&nbsp;to&nbsp;it.&nbsp;Note:&nbsp;application<br>
+program&nbsp;should&nbsp;not&nbsp;destroy&nbsp;a&nbsp;form&nbsp;that&nbsp;has&nbsp;been&nbsp;added&nbsp;to&nbsp;a&nbsp;tabbed&nbsp;folder.<br>
+You&nbsp;can&nbsp;change&nbsp;the&nbsp;attributes&nbsp;of&nbsp;the&nbsp;returned&nbsp;flobject&nbsp;just&nbsp;like&nbsp;any&nbsp;other<br>
+objects,&nbsp;but&nbsp;not&nbsp;all&nbsp;possibilities&nbsp;result&nbsp;in&nbsp;a&nbsp;pleasing&nbsp;appearance.<br>
+Although&nbsp;there&nbsp;is&nbsp;no&nbsp;specific&nbsp;requirement&nbsp;of&nbsp;what&nbsp;the&nbsp;backface&nbsp;of&nbsp;the<br>
+folder/form&nbsp;should&nbsp;be,&nbsp;a&nbsp;boxtype&nbsp;other&nbsp;than&nbsp;xfdata.FL_FLAT_BOX&nbsp;or<br>
+xfdata.FL_NO_BOX&nbsp;may&nbsp;not&nbsp;look&nbsp;nice.&nbsp;If&nbsp;the&nbsp;backface&nbsp;of&nbsp;the&nbsp;form&nbsp;is&nbsp;of<br>
+xfdata.FL_FLAT_BOX&nbsp;the&nbsp;associated&nbsp;tab&nbsp;will&nbsp;take&nbsp;on&nbsp;the&nbsp;color&nbsp;of&nbsp;the<br>
+backface&nbsp;when&nbsp;activated.&nbsp;Each&nbsp;tab&nbsp;must&nbsp;have&nbsp;its&nbsp;own&nbsp;form,&nbsp;i.e.&nbsp;you&nbsp;should<br>
+not&nbsp;associate&nbsp;the&nbsp;same&nbsp;form&nbsp;with&nbsp;two&nbsp;different&nbsp;tabs;&nbsp;however,&nbsp;you&nbsp;can<br>
+create&nbsp;copies&nbsp;of&nbsp;a&nbsp;form&nbsp;and&nbsp;use&nbsp;these&nbsp;copies.<br>
+&nbsp;<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;pFlObject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;tabfolder&nbsp;object<br>
-&nbsp;&nbsp;&nbsp;&nbsp;title&nbsp;:&nbsp;str<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*todo*<br>
-&nbsp;&nbsp;&nbsp;&nbsp;pFlForm&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_FORM<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_flobject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;tabfolder&nbsp;flobject<br>
+&nbsp;&nbsp;&nbsp;&nbsp;tabtitle&nbsp;:&nbsp;str<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;text&nbsp;of&nbsp;the&nbsp;tab&nbsp;rider&nbsp;(with&nbsp;possible&nbsp;embedded&nbsp;newlines&nbsp;in&nbsp;it)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_flform&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_FORM<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;form<br>
 &nbsp;<br>
 Returns<br>
 -------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;pFlObject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;tabfolder&nbsp;object&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_flobject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;tabfolder&nbsp;flobject&nbsp;<br>
 &nbsp;<br>
 Examples<br>
 --------<br>
@@ -86,15 +102,18 @@ Examples<br>
 Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;Demo&nbsp;=&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-fl_delete_folder"><strong>fl_delete_folder</strong></a>(pFlObject, pFlForm)</dt><dd><tt><a href="#-fl_delete_folder">fl_delete_folder</a>(pFlObject,&nbsp;pFlForm)<br>
+ <dl><dt><a name="-fl_delete_folder"><strong>fl_delete_folder</strong></a>(ptr_flobject, ptr_flform)</dt><dd><tt><a href="#-fl_delete_folder">fl_delete_folder</a>(ptr_flobject,&nbsp;ptr_flform)<br>
 &nbsp;<br>
-*todo*<br>
+Removes&nbsp;a&nbsp;folder&nbsp;from&nbsp;a&nbsp;tabfolder&nbsp;flobject.&nbsp;After&nbsp;deletion,&nbsp;the&nbsp;number<br>
+of&nbsp;folders&nbsp;in&nbsp;the&nbsp;tabfolder&nbsp;as&nbsp;well&nbsp;as&nbsp;the&nbsp;sequence&nbsp;numbers&nbsp;are<br>
+updated.&nbsp;This&nbsp;means&nbsp;if&nbsp;you&nbsp;want&nbsp;to&nbsp;delete&nbsp;all&nbsp;folders&nbsp;after&nbsp;the<br>
+second&nbsp;folder,&nbsp;you&nbsp;can&nbsp;do&nbsp;that&nbsp;by&nbsp;deleting&nbsp;the&nbsp;third&nbsp;folder&nbsp;repeatedly.<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;pFlObject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;tabfolder&nbsp;object<br>
-&nbsp;&nbsp;&nbsp;&nbsp;pFlForm&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_FORM<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_flobject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;tabfolder&nbsp;flobject<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_flform&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_FORM<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;form<br>
 &nbsp;<br>
 Examples<br>
@@ -104,16 +123,20 @@ Examples<br>
 Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-fl_delete_folder_byname"><strong>fl_delete_folder_byname</strong></a>(pFlObject, name)</dt><dd><tt><a href="#-fl_delete_folder_byname">fl_delete_folder_byname</a>(pFlObject,&nbsp;name)<br>
+ <dl><dt><a name="-fl_delete_folder_byname"><strong>fl_delete_folder_byname</strong></a>(ptr_flobject, name)</dt><dd><tt><a href="#-fl_delete_folder_byname">fl_delete_folder_byname</a>(ptr_flobject,&nbsp;name)<br>
 &nbsp;<br>
-*todo*<br>
+Removes&nbsp;a&nbsp;folder&nbsp;from&nbsp;a&nbsp;tabfolder&nbsp;flobject&nbsp;by&nbsp;its&nbsp;name.&nbsp;After<br>
+deletion,&nbsp;the&nbsp;number&nbsp;of&nbsp;folders&nbsp;in&nbsp;the&nbsp;tabfolder&nbsp;as&nbsp;well&nbsp;as&nbsp;the<br>
+sequence&nbsp;numbers&nbsp;are&nbsp;updated.&nbsp;This&nbsp;means&nbsp;if&nbsp;you&nbsp;want&nbsp;to&nbsp;delete<br>
+all&nbsp;folders&nbsp;after&nbsp;the&nbsp;second&nbsp;folder,&nbsp;you&nbsp;can&nbsp;do&nbsp;that&nbsp;by&nbsp;deleting<br>
+the&nbsp;third&nbsp;folder&nbsp;repeatedly.<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;pFlObject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;tabfolder&nbsp;object<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_flobject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;tabfolder&nbsp;flobject<br>
 &nbsp;&nbsp;&nbsp;&nbsp;name&nbsp;:&nbsp;str<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;name&nbsp;of&nbsp;folder<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;name&nbsp;of&nbsp;folder&nbsp;to&nbsp;be&nbsp;deleted<br>
 &nbsp;<br>
 Examples<br>
 --------<br>
@@ -122,16 +145,20 @@ Examples<br>
 Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-fl_delete_folder_bynumber"><strong>fl_delete_folder_bynumber</strong></a>(pFlObject, num)</dt><dd><tt><a href="#-fl_delete_folder_bynumber">fl_delete_folder_bynumber</a>(pFlObject,&nbsp;num)<br>
+ <dl><dt><a name="-fl_delete_folder_bynumber"><strong>fl_delete_folder_bynumber</strong></a>(ptr_flobject, seqnum)</dt><dd><tt><a href="#-fl_delete_folder_bynumber">fl_delete_folder_bynumber</a>(ptr_flobject,&nbsp;seqnum)<br>
 &nbsp;<br>
-*todo*<br>
+Removes&nbsp;a&nbsp;folder&nbsp;from&nbsp;a&nbsp;tabfolder&nbsp;flobject&nbsp;by&nbsp;its&nbsp;sequence&nbsp;number.<br>
+After&nbsp;deletion,&nbsp;the&nbsp;number&nbsp;of&nbsp;folders&nbsp;in&nbsp;the&nbsp;tabfolder&nbsp;as&nbsp;well&nbsp;as<br>
+the&nbsp;sequence&nbsp;numbers&nbsp;are&nbsp;updated.&nbsp;This&nbsp;means&nbsp;if&nbsp;you&nbsp;want&nbsp;to&nbsp;delete<br>
+all&nbsp;folders&nbsp;after&nbsp;the&nbsp;second&nbsp;folder,&nbsp;you&nbsp;can&nbsp;do&nbsp;that&nbsp;by&nbsp;deleting<br>
+the&nbsp;third&nbsp;folder&nbsp;repeatedly.<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;pFlObject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;tabfolder&nbsp;object<br>
-&nbsp;&nbsp;&nbsp;&nbsp;num&nbsp;:&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;sequnece&nbsp;number?<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_flobject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;tabfolder&nbsp;flobject<br>
+&nbsp;&nbsp;&nbsp;&nbsp;seqnum&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;sequence&nbsp;number&nbsp;of&nbsp;folder&nbsp;to&nbsp;be&nbsp;deleted<br>
 &nbsp;<br>
 Examples<br>
 --------<br>
@@ -140,19 +167,19 @@ Examples<br>
 Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-fl_get_active_folder"><strong>fl_get_active_folder</strong></a>(pFlObject)</dt><dd><tt><a href="#-fl_get_active_folder">fl_get_active_folder</a>(pFlObject)<br>
+ <dl><dt><a name="-fl_get_active_folder"><strong>fl_get_active_folder</strong></a>(ptr_flobject)</dt><dd><tt><a href="#-fl_get_active_folder">fl_get_active_folder</a>(ptr_flobject)&nbsp;-&gt;&nbsp;ptr_flform<br>
 &nbsp;<br>
-*todo*<br>
+Finds&nbsp;out&nbsp;which&nbsp;folder&nbsp;is&nbsp;currently&nbsp;active.<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;pFlObject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;tabfolder&nbsp;object<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_flobject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;tabfolder&nbsp;flobject<br>
 &nbsp;<br>
 Returns<br>
 -------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;pForm&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_FORM<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;form<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_flform&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_FORM<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;form&nbsp;associated&nbsp;with&nbsp;folder<br>
 &nbsp;<br>
 Examples<br>
 --------<br>
@@ -161,14 +188,14 @@ Examples<br>
 Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;Demo&nbsp;=&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-fl_get_active_folder_name"><strong>fl_get_active_folder_name</strong></a>(pFlObject)</dt><dd><tt><a href="#-fl_get_active_folder_name">fl_get_active_folder_name</a>(pFlObject)<br>
+ <dl><dt><a name="-fl_get_active_folder_name"><strong>fl_get_active_folder_name</strong></a>(ptr_flobject)</dt><dd><tt><a href="#-fl_get_active_folder_name">fl_get_active_folder_name</a>(ptr_flobject)&nbsp;-&gt;&nbsp;name<br>
 &nbsp;<br>
-*todo*<br>
+Finds&nbsp;out&nbsp;the&nbsp;name&nbsp;of&nbsp;which&nbsp;folder&nbsp;is&nbsp;currently&nbsp;active.<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;pFlObject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;tabfolder&nbsp;object<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_flobject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;tabfolder&nbsp;flobject<br>
 &nbsp;<br>
 Returns<br>
 -------<br>
@@ -182,19 +209,20 @@ Examples<br>
 Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-fl_get_active_folder_number"><strong>fl_get_active_folder_number</strong></a>(pFlObject)</dt><dd><tt><a href="#-fl_get_active_folder_number">fl_get_active_folder_number</a>(pFlObject)<br>
+ <dl><dt><a name="-fl_get_active_folder_number"><strong>fl_get_active_folder_number</strong></a>(ptr_flobject)</dt><dd><tt><a href="#-fl_get_active_folder_number">fl_get_active_folder_number</a>(ptr_flobject)&nbsp;-&gt;&nbsp;seqnum<br>
 &nbsp;<br>
-*todo*<br>
+Finds&nbsp;out&nbsp;the&nbsp;sequence&nbsp;number&nbsp;of&nbsp;which&nbsp;folder&nbsp;is&nbsp;currently<br>
+active,&nbsp;starting&nbsp;from&nbsp;1&nbsp;on&nbsp;the&nbsp;left.<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;pFlObject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;tabfolder&nbsp;object<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_flobject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;tabfolder&nbsp;flobject<br>
 &nbsp;<br>
 Returns<br>
 -------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;num&nbsp;:&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;active&nbsp;folder&nbsp;id<br>
+&nbsp;&nbsp;&nbsp;&nbsp;seqnum&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;sequence&nbsp;number&nbsp;of&nbsp;active&nbsp;folder<br>
 &nbsp;<br>
 Examples<br>
 --------<br>
@@ -203,19 +231,20 @@ Examples<br>
 Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-fl_get_folder"><strong>fl_get_folder</strong></a>(pFlObject)</dt><dd><tt><a href="#-fl_get_folder">fl_get_folder</a>(pFlObject)<br>
+ <dl><dt><a name="-fl_get_folder"><strong>fl_get_folder</strong></a>(ptr_flobject)</dt><dd><tt><a href="#-fl_get_folder">fl_get_folder</a>(ptr_flobject)&nbsp;-&gt;&nbsp;ptr_flform<br>
 &nbsp;<br>
-*todo*<br>
+Finds&nbsp;out&nbsp;what&nbsp;the&nbsp;last&nbsp;active&nbsp;folder&nbsp;is&nbsp;(which&nbsp;may&nbsp;be&nbsp;of&nbsp;greater<br>
+interest&nbsp;than&nbsp;the&nbsp;currently&nbsp;active&nbsp;one).<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;pFlObject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;tabfolder&nbsp;object<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_flobject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;tabfolder&nbsp;flobject<br>
 &nbsp;<br>
 Returns<br>
 -------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;pForm&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_FORM<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;form<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_flform&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_FORM<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;last&nbsp;active&nbsp;folder&nbsp;form<br>
 &nbsp;<br>
 Examples<br>
 --------<br>
@@ -224,52 +253,102 @@ Examples<br>
 Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-fl_get_folder_area"><strong>fl_get_folder_area</strong></a>(pFlObject)</dt><dd><tt><a href="#-fl_get_folder_area">fl_get_folder_area</a>(pFlObject)<br>
+ <dl><dt><a name="-fl_get_folder_area"><strong>fl_get_folder_area</strong></a>(ptr_flobject)</dt><dd><tt><a href="#-fl_get_folder_area">fl_get_folder_area</a>(ptr_flobject)&nbsp;-&gt;&nbsp;xpos,&nbsp;ypos,&nbsp;width,&nbsp;height<br>
 &nbsp;<br>
-*todo*<br>
+Finds&nbsp;out&nbsp;the&nbsp;actual&nbsp;folder&nbsp;size.&nbsp;The&nbsp;folder&nbsp;area&nbsp;may&nbsp;not&nbsp;be&nbsp;constant<br>
+depending&nbsp;on&nbsp;the&nbsp;current&nbsp;tabs.&nbsp;E.g.&nbsp;adding&nbsp;a&nbsp;multi-line&nbsp;tab&nbsp;will&nbsp;reduce<br>
+the&nbsp;area&nbsp;for&nbsp;the&nbsp;folders).<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;pFlObject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;tabfolder&nbsp;object<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_flobject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;tabfolder&nbsp;flobject<br>
 &nbsp;<br>
 Returns<br>
 -------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;x&nbsp;:&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;horizontal&nbsp;position&nbsp;of&nbsp;tabfolder<br>
-&nbsp;&nbsp;&nbsp;&nbsp;y&nbsp;:&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;vertical&nbsp;position&nbsp;of&nbsp;tabfolder<br>
-&nbsp;&nbsp;&nbsp;&nbsp;w&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;xpos&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;horizontal&nbsp;position&nbsp;of&nbsp;folder,&nbsp;relative&nbsp;to&nbsp;the&nbsp;(top-level)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;form&nbsp;the&nbsp;tabbed&nbsp;folder&nbsp;belongs&nbsp;to<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ypos&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;vertical&nbsp;position&nbsp;of&nbsp;folder,&nbsp;relative&nbsp;to&nbsp;the&nbsp;(top-level)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;form&nbsp;the&nbsp;tabbed&nbsp;folder&nbsp;belongs&nbsp;to<br>
+&nbsp;&nbsp;&nbsp;&nbsp;width&nbsp;:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;width<br>
-&nbsp;&nbsp;&nbsp;&nbsp;h&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;height&nbsp;:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;height<br>
 &nbsp;<br>
 Examples<br>
 --------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;x,&nbsp;y,&nbsp;w,&nbsp;h&nbsp;=&nbsp;<a href="#-fl_get_folder_area">fl_get_folder_area</a>(tbfobj)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;xpos,&nbsp;ypos,&nbsp;width,&nbsp;height&nbsp;=&nbsp;<a href="#-fl_get_folder_area">fl_get_folder_area</a>(tbfobj)<br>
 &nbsp;<br>
 API_diversion<br>
-----------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;API&nbsp;changed&nbsp;from&nbsp;XForms,&nbsp;upstream&nbsp;was<br>
-&nbsp;&nbsp;&nbsp;&nbsp;<a href="#-fl_get_folder_area">fl_get_folder_area</a>(pFlObject,&nbsp;x,&nbsp;y,&nbsp;w,&nbsp;h)<br>
+-------------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;API&nbsp;changed&nbsp;from&nbsp;XForms,&nbsp;upstream&nbsp;is<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="#-fl_get_folder_area">fl_get_folder_area</a>(ptr_flobject,&nbsp;xpos,&nbsp;ypos,&nbsp;width,&nbsp;height)<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-fl_get_folder_name"><strong>fl_get_folder_name</strong></a>(pFlObject)</dt><dd><tt><a href="#-fl_get_folder_name">fl_get_folder_name</a>(pFlObject)<br>
+ <dl><dt><a name="-fl_get_folder_name"><strong>fl_get_folder_name</strong></a>(ptr_flobject)</dt><dd><tt><a href="#-fl_get_folder_name">fl_get_folder_name</a>(ptr_flobject)<br>
 &nbsp;<br>
-*todo*<br>
+Finds&nbsp;out&nbsp;what&nbsp;the&nbsp;name&nbsp;of&nbsp;the&nbsp;last&nbsp;active&nbsp;folder&nbsp;is&nbsp;(which&nbsp;may<br>
+be&nbsp;of&nbsp;greater&nbsp;interest&nbsp;than&nbsp;the&nbsp;currently&nbsp;active&nbsp;one).<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;pFlObject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;tabfolder&nbsp;object<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_flobject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;tabfolder&nbsp;flobject<br>
 &nbsp;<br>
 Returns<br>
 -------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;name&nbsp;:&nbsp;str<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;name&nbsp;of&nbsp;the&nbsp;last&nbsp;active&nbsp;folder&nbsp;form<br>
+&nbsp;<br>
+Examples<br>
+--------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;*todo*<br>
+&nbsp;<br>
+Notes<br>
+-----<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
+ <dl><dt><a name="-fl_get_folder_number"><strong>fl_get_folder_number</strong></a>(ptr_flobject)</dt><dd><tt><a href="#-fl_get_folder_number">fl_get_folder_number</a>(ptr_flobject)<br>
+&nbsp;<br>
+Finds&nbsp;out&nbsp;what&nbsp;the&nbsp;sequence&nbsp;number&nbsp;of&nbsp;the&nbsp;last&nbsp;active&nbsp;folder&nbsp;is&nbsp;(which<br>
+may&nbsp;be&nbsp;of&nbsp;greater&nbsp;interest&nbsp;than&nbsp;the&nbsp;currently&nbsp;active&nbsp;one).<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_flobject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;tabfolder&nbsp;flobject<br>
+&nbsp;<br>
+Returns<br>
+-------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;seqnum.&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;sequence&nbsp;number&nbsp;of&nbsp;the&nbsp;last&nbsp;active&nbsp;folder&nbsp;form<br>
+&nbsp;<br>
+Examples<br>
+--------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;*todo*<br>
+&nbsp;<br>
+Notes<br>
+-----<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
+ <dl><dt><a name="-fl_get_tabfolder_folder_byname"><strong>fl_get_tabfolder_folder_byname</strong></a>(ptr_flobject, name)</dt><dd><tt><a href="#-fl_get_tabfolder_folder_byname">fl_get_tabfolder_folder_byname</a>(ptr_flobject,&nbsp;name)&nbsp;-&gt;&nbsp;ptr_flform<br>
+&nbsp;<br>
+Accesses&nbsp;an&nbsp;individual&nbsp;form&nbsp;on&nbsp;the&nbsp;tabfolder&nbsp;by&nbsp;its&nbsp;name.<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_flobject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;tabfolder&nbsp;flobject<br>
 &nbsp;&nbsp;&nbsp;&nbsp;name&nbsp;:&nbsp;str<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;name&nbsp;of&nbsp;folder<br>
 &nbsp;<br>
+Returns<br>
+-------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_flform&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_FORM<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;form&nbsp;associated&nbsp;with&nbsp;the&nbsp;name,&nbsp;or&nbsp;None&nbsp;(on&nbsp;failure)<br>
+&nbsp;<br>
 Examples<br>
 --------<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;*todo*<br>
@@ -277,19 +356,22 @@ Examples<br>
 Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-fl_get_folder_number"><strong>fl_get_folder_number</strong></a>(pFlObject)</dt><dd><tt><a href="#-fl_get_folder_number">fl_get_folder_number</a>(pFlObject)<br>
+ <dl><dt><a name="-fl_get_tabfolder_folder_bynumber"><strong>fl_get_tabfolder_folder_bynumber</strong></a>(ptr_flobject, seqnum)</dt><dd><tt><a href="#-fl_get_tabfolder_folder_bynumber">fl_get_tabfolder_folder_bynumber</a>(ptr_flobject,&nbsp;seqnum)&nbsp;-&gt;&nbsp;ptr_flform<br>
 &nbsp;<br>
-*todo*<br>
+Accesses&nbsp;an&nbsp;individual&nbsp;form&nbsp;on&nbsp;the&nbsp;tabfolder&nbsp;by&nbsp;its&nbsp;sequence&nbsp;number.<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;pFlObject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;tabfolder&nbsp;object<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_flobject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;tabfolder&nbsp;flobject<br>
+&nbsp;&nbsp;&nbsp;&nbsp;seqnum&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;sequence&nbsp;number.&nbsp;The&nbsp;first&nbsp;tab&nbsp;on&nbsp;the&nbsp;left&nbsp;is&nbsp;1,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;the&nbsp;second&nbsp;2&nbsp;etc..)<br>
 &nbsp;<br>
 Returns<br>
 -------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;num.&nbsp;:&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;folder&nbsp;num.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_flform&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_FORM<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;form&nbsp;associated&nbsp;with&nbsp;the&nbsp;number,&nbsp;or&nbsp;None&nbsp;(on&nbsp;failure)<br>
 &nbsp;<br>
 Examples<br>
 --------<br>
@@ -298,21 +380,19 @@ Examples<br>
 Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-fl_get_tabfolder_folder_byname"><strong>fl_get_tabfolder_folder_byname</strong></a>(pFlObject, name)</dt><dd><tt><a href="#-fl_get_tabfolder_folder_byname">fl_get_tabfolder_folder_byname</a>(pFlObject,&nbsp;name)<br>
+ <dl><dt><a name="-fl_get_tabfolder_numfolders"><strong>fl_get_tabfolder_numfolders</strong></a>(ptr_flobject)</dt><dd><tt><a href="#-fl_get_tabfolder_numfolders">fl_get_tabfolder_numfolders</a>(ptr_flobject)&nbsp;-&gt;&nbsp;numfolders<br>
 &nbsp;<br>
-*todo*<br>
+Finds&nbsp;out&nbsp;the&nbsp;number&nbsp;of&nbsp;folders&nbsp;in&nbsp;the&nbsp;tabfolder.<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;pFlObject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;tabfolder&nbsp;object<br>
-&nbsp;&nbsp;&nbsp;&nbsp;name&nbsp;:&nbsp;str<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;name?<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_flobject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;tabfolder&nbsp;flobject<br>
 &nbsp;<br>
 Returns<br>
 -------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;pForm&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_FORM<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;form<br>
+&nbsp;&nbsp;&nbsp;&nbsp;numfolders&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;number&nbsp;of&nbsp;folders&nbsp;in&nbsp;tabfolder<br>
 &nbsp;<br>
 Examples<br>
 --------<br>
@@ -321,21 +401,40 @@ Examples<br>
 Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-fl_get_tabfolder_folder_bynumber"><strong>fl_get_tabfolder_folder_bynumber</strong></a>(pFlObject, num)</dt><dd><tt><a href="#-fl_get_tabfolder_folder_bynumber">fl_get_tabfolder_folder_bynumber</a>(pFlObject,&nbsp;num)<br>
+ <dl><dt><a name="-fl_get_tabfolder_offset"><strong>fl_get_tabfolder_offset</strong></a>(ptr_flobject)</dt><dd><tt><a href="#-fl_get_tabfolder_offset">fl_get_tabfolder_offset</a>(ptr_flobject)&nbsp;-&gt;&nbsp;offset<br>
 &nbsp;<br>
-*todo*<br>
+Finds&nbsp;out&nbsp;current&nbsp;offset&nbsp;for&nbsp;a&nbsp;tabfolder&nbsp;flobject.<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;pFlObject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;tabfolder&nbsp;object<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_flobject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;tabfolder&nbsp;flobject<br>
+&nbsp;<br>
+Returns<br>
+-------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;offset&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;current&nbsp;offset&nbsp;value<br>
+&nbsp;<br>
+Examples<br>
+--------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;*todo*<br>
+&nbsp;<br>
+Notes<br>
+-----<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
+ <dl><dt><a name="-fl_replace_folder_bynumber"><strong>fl_replace_folder_bynumber</strong></a>(ptr_flobject, seqnum, ptr_flform)</dt><dd><tt><a href="#-fl_replace_folder_bynumber">fl_replace_folder_bynumber</a>(ptr_flobject,&nbsp;seqnum,&nbsp;ptr_flform)<br>
+&nbsp;<br>
+Replaces&nbsp;a&nbsp;form&nbsp;associated&nbsp;with&nbsp;folder&nbsp;having&nbsp;a&nbsp;particular&nbsp;sequence<br>
+number&nbsp;with&nbsp;a&nbsp;new&nbsp;form<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_flobject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;tabfolder&nbsp;flobject<br>
 &nbsp;&nbsp;&nbsp;&nbsp;num&nbsp;:&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;sequence&nbsp;number?<br>
-&nbsp;<br>
-Returns<br>
--------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;pForm&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_FORM<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;form<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;sequence&nbsp;number&nbsp;of&nbsp;folder&nbsp;to&nbsp;be&nbsp;replaced<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_flform&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_FORM<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;new&nbsp;form&nbsp;associated&nbsp;with&nbsp;folder<br>
 &nbsp;<br>
 Examples<br>
 --------<br>
@@ -344,60 +443,19 @@ Examples<br>
 Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-fl_get_tabfolder_numfolders"><strong>fl_get_tabfolder_numfolders</strong></a>(pFlObject)</dt><dd><tt><a href="#-fl_get_tabfolder_numfolders">fl_get_tabfolder_numfolders</a>(pFlObject)<br>
-&nbsp;<br>
-*todo*<br>
-&nbsp;<br>
-Parameters<br>
-----------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;pFlObject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;tabfolder&nbsp;object<br>
-&nbsp;<br>
-Returns<br>
--------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;num.&nbsp;:&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*todo*<br>
-&nbsp;<br>
-Examples<br>
---------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;*todo*<br>
-&nbsp;<br>
-Notes<br>
------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-fl_replace_folder_bynumber"><strong>fl_replace_folder_bynumber</strong></a>(pFlObject, num, pFlForm)</dt><dd><tt><a href="#-fl_replace_folder_bynumber">fl_replace_folder_bynumber</a>(pFlObject,&nbsp;num,&nbsp;pFlForm)<br>
-&nbsp;<br>
-*todo*<br>
-&nbsp;<br>
-Parameters<br>
-----------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;pFlObject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;tabfolder&nbsp;object<br>
-&nbsp;&nbsp;&nbsp;&nbsp;num&nbsp;:&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;sequence&nbsp;number?<br>
-&nbsp;&nbsp;&nbsp;&nbsp;pFlForm&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_FORM<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;form<br>
-&nbsp;<br>
-Examples<br>
---------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;*todo*<br>
-&nbsp;<br>
-Notes<br>
------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-fl_set_default_tabfolder_corner"><strong>fl_set_default_tabfolder_corner</strong></a>(npixels)</dt><dd><tt><a href="#-fl_set_default_tabfolder_corner">fl_set_default_tabfolder_corner</a>(npixels)<br>
+ <dl><dt><a name="-fl_set_default_tabfolder_corner"><strong>fl_set_default_tabfolder_corner</strong></a>(numpixels)</dt><dd><tt><a href="#-fl_set_default_tabfolder_corner">fl_set_default_tabfolder_corner</a>(numpixels)&nbsp;-&gt;&nbsp;oldnumpixels<br>
 &nbsp;<br>
 Adjusts&nbsp;the&nbsp;corner&nbsp;pixels,&nbsp;changing&nbsp;appearance&nbsp;of&nbsp;the&nbsp;tabs.<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;npixels&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;numpixels&nbsp;:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;number&nbsp;of&nbsp;corner&nbsp;pixels&nbsp;(default&nbsp;3)<br>
 &nbsp;<br>
 Returns<br>
 -------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;oldpix&nbsp;:&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;old&nbsp;pixels&nbsp;num.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;oldnumpixels&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;old&nbsp;number&nbsp;of&nbsp;corner&nbsp;pixels<br>
 &nbsp;<br>
 Examples<br>
 --------<br>
@@ -406,16 +464,16 @@ Examples<br>
 Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-fl_set_folder"><strong>fl_set_folder</strong></a>(pFlObject, pFlForm)</dt><dd><tt><a href="#-fl_set_folder">fl_set_folder</a>(pFlObject,&nbsp;pFlForm)<br>
+ <dl><dt><a name="-fl_set_folder"><strong>fl_set_folder</strong></a>(ptr_flobject, ptr_flform)</dt><dd><tt><a href="#-fl_set_folder">fl_set_folder</a>(ptr_flobject,&nbsp;ptr_flform)<br>
 &nbsp;<br>
-*todo*<br>
+Defines&nbsp;which&nbsp;folder&nbsp;to&nbsp;show.<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;pFlObject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;tabfolder&nbsp;object<br>
-&nbsp;&nbsp;&nbsp;&nbsp;pFlForm&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_FORM<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;form<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_flobject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;tabfolder&nbsp;flobject<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_flform&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_FORM<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;form&nbsp;to&nbsp;show<br>
 &nbsp;<br>
 Examples<br>
 --------<br>
@@ -424,16 +482,16 @@ Examples<br>
 Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-fl_set_folder_byname"><strong>fl_set_folder_byname</strong></a>(pFlObject, name)</dt><dd><tt><a href="#-fl_set_folder_byname">fl_set_folder_byname</a>(pFlObject,&nbsp;name)<br>
+ <dl><dt><a name="-fl_set_folder_byname"><strong>fl_set_folder_byname</strong></a>(ptr_flobject, name)</dt><dd><tt><a href="#-fl_set_folder_byname">fl_set_folder_byname</a>(ptr_flobject,&nbsp;name)<br>
 &nbsp;<br>
-*todo*<br>
+Defines&nbsp;which&nbsp;folder&nbsp;to&nbsp;show&nbsp;by&nbsp;its&nbsp;name.<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;pFlObject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;tabfolder&nbsp;object<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_flobject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;tabfolder&nbsp;flobject<br>
 &nbsp;&nbsp;&nbsp;&nbsp;name&nbsp;:&nbsp;str<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;name&nbsp;of&nbsp;folder<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;name&nbsp;of&nbsp;folder&nbsp;to&nbsp;show<br>
 &nbsp;<br>
 Examples<br>
 --------<br>
@@ -442,16 +500,16 @@ Examples<br>
 Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-fl_set_folder_bynumber"><strong>fl_set_folder_bynumber</strong></a>(pFlObject, num)</dt><dd><tt><a href="#-fl_set_folder_bynumber">fl_set_folder_bynumber</a>(pFlObject,&nbsp;num)<br>
+ <dl><dt><a name="-fl_set_folder_bynumber"><strong>fl_set_folder_bynumber</strong></a>(ptr_flobject, seqnum)</dt><dd><tt><a href="#-fl_set_folder_bynumber">fl_set_folder_bynumber</a>(ptr_flobject,&nbsp;seqnum)<br>
 &nbsp;<br>
-*todo*<br>
+Defines&nbsp;which&nbsp;folder&nbsp;to&nbsp;show&nbsp;by&nbsp;its&nbsp;sequence&nbsp;number.<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;pFlObject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;tabfolder&nbsp;object<br>
-&nbsp;&nbsp;&nbsp;&nbsp;num&nbsp;:&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;sequence&nbsp;number?<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_flobject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;tabfolder&nbsp;flobject<br>
+&nbsp;&nbsp;&nbsp;&nbsp;seqnum&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;sequence&nbsp;number&nbsp;of&nbsp;folder&nbsp;to&nbsp;show<br>
 &nbsp;<br>
 Examples<br>
 --------<br>
@@ -460,21 +518,25 @@ Examples<br>
 Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;Demo&nbsp;=&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-fl_set_tabfolder_autofit"><strong>fl_set_tabfolder_autofit</strong></a>(pFlObject, num)</dt><dd><tt><a href="#-fl_set_tabfolder_autofit">fl_set_tabfolder_autofit</a>(pFlObject,&nbsp;num)<br>
+ <dl><dt><a name="-fl_set_tabfolder_autofit"><strong>fl_set_tabfolder_autofit</strong></a>(ptr_flobject, howfit)</dt><dd><tt><a href="#-fl_set_tabfolder_autofit">fl_set_tabfolder_autofit</a>(ptr_flobject,&nbsp;howfit)&nbsp;-&gt;&nbsp;oldhowfit<br>
 &nbsp;<br>
-*todo*<br>
+Adjusts&nbsp;dynamically&nbsp;the&nbsp;sizes&nbsp;of&nbsp;the&nbsp;folders&nbsp;in&nbsp;the&nbsp;tab&nbsp;folder&nbsp;so&nbsp;they<br>
+fit.&nbsp;Since&nbsp;tab&nbsp;size&nbsp;can&nbsp;vary&nbsp;depending&nbsp;on&nbsp;monitor/font&nbsp;resolutions,&nbsp;it<br>
+is&nbsp;in&nbsp;general&nbsp;not&nbsp;possible&nbsp;to&nbsp;design&nbsp;the&nbsp;forms&nbsp;(folders)&nbsp;so&nbsp;they&nbsp;fit<br>
+exactly&nbsp;into&nbsp;the&nbsp;folder&nbsp;area.<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;pFlObject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;tabfolder&nbsp;object<br>
-&nbsp;&nbsp;&nbsp;&nbsp;num&nbsp;:&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;sequence&nbsp;number?<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_flobject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;tabfolder&nbsp;flobject<br>
+&nbsp;&nbsp;&nbsp;&nbsp;howfit&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;how&nbsp;do&nbsp;folders'&nbsp;sizes&nbsp;fit&nbsp;.&nbsp;Values&nbsp;(from&nbsp;xfdata.py)&nbsp;FL_NO,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_FIT,&nbsp;FL_ENLARGE_ONLY<br>
 &nbsp;<br>
 Returns<br>
 -------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;num.&nbsp;:&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*todo*<br>
+&nbsp;&nbsp;&nbsp;&nbsp;oldhowfit&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;previous&nbsp;fit&nbsp;settings<br>
 &nbsp;<br>
 Examples<br>
 --------<br>
@@ -483,21 +545,21 @@ Examples<br>
 Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-fl_set_tabfolder_offset"><strong>fl_set_tabfolder_offset</strong></a>(pFlObject, offset)</dt><dd><tt><a href="#-fl_set_tabfolder_offset">fl_set_tabfolder_offset</a>(pFlObject,&nbsp;offset)<br>
+ <dl><dt><a name="-fl_set_tabfolder_offset"><strong>fl_set_tabfolder_offset</strong></a>(ptr_flobject, offset)</dt><dd><tt><a href="#-fl_set_tabfolder_offset">fl_set_tabfolder_offset</a>(ptr_flobject,&nbsp;offset)&nbsp;-&gt;&nbsp;oldoffset<br>
 &nbsp;<br>
-*todo*<br>
+Defines&nbsp;offset&nbsp;for&nbsp;a&nbsp;tabfolder&nbsp;flobject.<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;pFlObject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;tabfolder&nbsp;object<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_flobject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;tabfolder&nbsp;flobject<br>
 &nbsp;&nbsp;&nbsp;&nbsp;offset&nbsp;:&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*todo*<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;value&nbsp;of&nbsp;tabfolder&nbsp;offset<br>
 &nbsp;<br>
 Returns<br>
 -------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;num.&nbsp;:&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*todo*<br>
+&nbsp;&nbsp;&nbsp;&nbsp;oldoffset&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;previous&nbsp;offset&nbsp;value<br>
 &nbsp;<br>
 Examples<br>
 --------<br>
@@ -507,4 +569,4 @@ Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
 </td></tr></table>
-<p>Updated on: 2010-12-09 10:11 +0100</body></html>
+<p>Updated on: 2010-12-20 01:16 +0100</body></html>

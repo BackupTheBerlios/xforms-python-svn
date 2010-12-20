@@ -403,6 +403,23 @@ def convert_to_doublec(paramname):
         return paramname
 
 
+def convert_to_ptr_doublec(paramname):
+    """ Converts paramname (list of float) to a ctypes pointer to c_double """
+    if isinstance(paramname, list):     # list of double
+        for idx in range(0, len(paramname)):
+            if not isinstance(paramname[idx], float):
+                # every part must be a float
+                raise XFormsTypeError("Provided parameter '%s' has %s type,"
+                        " but a 'list of float'/'pointer to c_double' type"
+                        " should be used." % (paramname, type(paramname)))
+        retv = (cty.c_float * len(paramname))(*paramname)    # already a ptr
+        return retv
+    else:               # not a list
+        raise XFormsTypeError("Provided parameter '%s' has %s type,"
+                " but a 'list of float'/'pointer to c_double' type"
+                " should be used." % (paramname, type(paramname)))
+
+
 def convert_to_floatc(paramname):
     """ Converts paramname to python float and to ctypes c_float """
     if not isinstance(paramname, cty.c_float):
@@ -418,6 +435,23 @@ def convert_to_floatc(paramname):
             return retv
     else:
         return paramname
+
+
+def convert_to_ptr_floatc(paramname):
+    """ Converts paramname (list of float) to a ctypes pointer to c_float """
+    if isinstance(paramname, list):     # list of float
+        for idx in range(0, len(paramname)):
+            if not isinstance(paramname[idx], float):
+                # every part must be a float
+                raise XFormsTypeError("Provided parameter '%s' has %s type,"
+                        " but a 'list of float'/'pointer to c_float' type"
+                        " should be used." % (paramname, type(paramname)))
+        retv = (cty.c_float * len(paramname))(*paramname)    # already a ptr
+        return retv
+    else:               # not a list
+        raise XFormsTypeError("Provided parameter '%s' has %s type,"
+                " but a 'list of float'/'pointer to c_float' type"
+                " should be used." % (paramname, type(paramname)))
 
 
 def convert_to_ubytec_array(paramname):

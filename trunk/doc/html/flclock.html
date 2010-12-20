@@ -9,7 +9,7 @@
 <font color="#ffffff" face="helvetica, arial">&nbsp;<br><big><big><strong>flclock</strong></big></big></font></td
 ><td align=right valign=bottom
 ><font color="#ffffff" face="helvetica, arial"><a href=".">index</a><br>     <a href="index.html">list</a></font></td></tr></table>
-    <p><tt>xforms-python's&nbsp;functions&nbsp;to&nbsp;manage&nbsp;clock&nbsp;objects.</tt></p>
+    <p><tt>xforms-python's&nbsp;functions&nbsp;to&nbsp;manage&nbsp;clock&nbsp;flobjects.</tt></p>
 <p>
 <table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
 <tr bgcolor="#aa55cc">
@@ -27,30 +27,31 @@
 <font color="#ffffff" face="helvetica, arial"><big><strong>Functions</strong></big></font></td></tr>
     
 <tr><td bgcolor="#eeaa77"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
-<td width="100%"><dl><dt><a name="-fl_add_clock"><strong>fl_add_clock</strong></a>(clocktype, x, y, w, h, label)</dt><dd><tt><a href="#-fl_add_clock">fl_add_clock</a>(clocktype,&nbsp;x,&nbsp;y,&nbsp;w,&nbsp;h,&nbsp;label)<br>
+<td width="100%"><dl><dt><a name="-fl_add_clock"><strong>fl_add_clock</strong></a>(clocktype, xpos, ypos, width, height, label)</dt><dd><tt><a href="#-fl_add_clock">fl_add_clock</a>(clocktype,&nbsp;xpos,&nbsp;ypos,&nbsp;width,&nbsp;height,&nbsp;label)<br>
+-&gt;&nbsp;ptr_flobject<br>
 &nbsp;<br>
-Adds&nbsp;a&nbsp;clock&nbsp;object.<br>
+Adds&nbsp;a&nbsp;clock&nbsp;flobject.<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
 &nbsp;&nbsp;&nbsp;&nbsp;clocktype&nbsp;:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;type&nbsp;of&nbsp;clock&nbsp;to&nbsp;be&nbsp;added.&nbsp;Values&nbsp;(from&nbsp;xfdata.py)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_ANALOG_CLOCK,&nbsp;FL_DIGITAL_CLOCK<br>
-&nbsp;&nbsp;&nbsp;&nbsp;x&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;xpos&nbsp;:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;horizontal&nbsp;position&nbsp;(upper-left&nbsp;corner)<br>
-&nbsp;&nbsp;&nbsp;&nbsp;y&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ypos&nbsp;:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;vertical&nbsp;position&nbsp;(upper-left&nbsp;corner)<br>
-&nbsp;&nbsp;&nbsp;&nbsp;w&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;width&nbsp;:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;width&nbsp;in&nbsp;coord&nbsp;units<br>
-&nbsp;&nbsp;&nbsp;&nbsp;h&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;height&nbsp;:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;height&nbsp;in&nbsp;coord&nbsp;units<br>
 &nbsp;&nbsp;&nbsp;&nbsp;label&nbsp;:&nbsp;str<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;text&nbsp;label&nbsp;of&nbsp;clock<br>
 &nbsp;<br>
 Returns<br>
 -------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;pFlObject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;clock&nbsp;object&nbsp;added<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_flobject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;clock&nbsp;flobject&nbsp;added<br>
 &nbsp;<br>
 Examples<br>
 --------<br>
@@ -60,19 +61,19 @@ Examples<br>
 Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;Demo&nbsp;=&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-fl_get_clock"><strong>fl_get_clock</strong></a>(pFlObject)</dt><dd><tt><a href="#-fl_get_clock">fl_get_clock</a>(pFlObject)<br>
+ <dl><dt><a name="-fl_get_clock"><strong>fl_get_clock</strong></a>(ptr_flobject)</dt><dd><tt><a href="#-fl_get_clock">fl_get_clock</a>(ptr_flobject)&nbsp;-&gt;&nbsp;hrs,&nbsp;mins,&nbsp;secs<br>
 &nbsp;<br>
-Obtains&nbsp;time&nbsp;values&nbsp;from&nbsp;a&nbsp;clock&nbsp;object,&nbsp;with&nbsp;hours&nbsp;in&nbsp;0-23,&nbsp;minutes<br>
-in&nbsp;0-59&nbsp;and&nbsp;seconds&nbsp;in&nbsp;0-59.<br>
+Finds&nbsp;out&nbsp;time&nbsp;values&nbsp;from&nbsp;a&nbsp;clock&nbsp;flobject,&nbsp;with&nbsp;hours&nbsp;in&nbsp;0-23,<br>
+minutes&nbsp;in&nbsp;0-59&nbsp;and&nbsp;seconds&nbsp;in&nbsp;0-59.<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;pFlObject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;clock&nbsp;object<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_flobject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;clock&nbsp;flobject<br>
 &nbsp;<br>
 Returns<br>
 -------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;hh&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;hrs&nbsp;:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;hours<br>
 &nbsp;&nbsp;&nbsp;&nbsp;mins&nbsp;:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;minutes<br>
@@ -85,20 +86,20 @@ Examples<br>
 &nbsp;<br>
 API_diversion<br>
 ----------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;API&nbsp;changed&nbsp;from&nbsp;XForms,&nbsp;upstream&nbsp;was<br>
-&nbsp;&nbsp;&nbsp;&nbsp;<a href="#-fl_get_clock">fl_get_clock</a>(pFlObject,&nbsp;hr,&nbsp;mn,&nbsp;sec)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;API&nbsp;changed&nbsp;from&nbsp;XForms,&nbsp;upstream&nbsp;is<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="#-fl_get_clock">fl_get_clock</a>(ptr_flobject,&nbsp;hr,&nbsp;mn,&nbsp;sec)<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-fl_set_clock_adjustment"><strong>fl_set_clock_adjustment</strong></a>(pFlObject, offset)</dt><dd><tt><a href="#-fl_set_clock_adjustment">fl_set_clock_adjustment</a>(pFlObject,&nbsp;offset)<br>
+ <dl><dt><a name="-fl_set_clock_adjustment"><strong>fl_set_clock_adjustment</strong></a>(ptr_flobject, offset)</dt><dd><tt><a href="#-fl_set_clock_adjustment">fl_set_clock_adjustment</a>(ptr_flobject,&nbsp;offset)&nbsp;-&gt;&nbsp;adjust<br>
 &nbsp;<br>
 Adjusts&nbsp;the&nbsp;clock&nbsp;to&nbsp;display&nbsp;a&nbsp;time&nbsp;other&nbsp;than&nbsp;local&nbsp;time.<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;pFlObject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;clock&nbsp;object<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_flobject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;clock&nbsp;flobject<br>
 &nbsp;&nbsp;&nbsp;&nbsp;offset&nbsp;:&nbsp;long<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;adjustment&nbsp;value&nbsp;in&nbsp;seconds<br>
 &nbsp;<br>
@@ -114,15 +115,15 @@ Examples<br>
 Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-fl_set_clock_ampm"><strong>fl_set_clock_ampm</strong></a>(pFlObject, yesno)</dt><dd><tt><a href="#-fl_set_clock_ampm">fl_set_clock_ampm</a>(pFlObject,&nbsp;yesno)<br>
+ <dl><dt><a name="-fl_set_clock_ampm"><strong>fl_set_clock_ampm</strong></a>(ptr_flobject, yesno)</dt><dd><tt><a href="#-fl_set_clock_ampm">fl_set_clock_ampm</a>(ptr_flobject,&nbsp;yesno)<br>
 &nbsp;<br>
 Switches&nbsp;the&nbsp;display&nbsp;to&nbsp;12hr&nbsp;system&nbsp;(am-pm).&nbsp;By&nbsp;default,&nbsp;the<br>
 digital&nbsp;clock&nbsp;uses&nbsp;24hr&nbsp;system.<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;pFlObject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;clock&nbsp;object<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_flobject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;clock&nbsp;flobject<br>
 &nbsp;&nbsp;&nbsp;&nbsp;yesno&nbsp;:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;flag.&nbsp;Values&nbsp;1&nbsp;(12hr&nbsp;system&nbsp;used)&nbsp;or&nbsp;0&nbsp;(24hr&nbsp;system&nbsp;used)<br>
 &nbsp;<br>
@@ -134,4 +135,4 @@ Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
 </td></tr></table>
-<p>Updated on: 2010-12-09 10:11 +0100</body></html>
+<p>Updated on: 2010-12-20 01:16 +0100</body></html>

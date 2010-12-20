@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: iso8859-1 -*-
 
-""" xforms-python's functions to manage thumbwheel objects.
+""" xforms-python's functions to manage thumbwheel flobjects.
 """
 
 #    Copyright (C) 2009, 2010  Luca Lazzaroni "LukenShiro"
@@ -26,7 +26,7 @@
 # then heavily reordered and reworked
 
 # ############################################# #
-# Interface to XForms shared object libraries   #
+# Interface to XForms shared flobject libraries #
 # ############################################# #
 
 
@@ -39,20 +39,20 @@ from xformslib import xfdata
 # forms.h (thumbwheel.h)
 #########################
 
-def fl_get_thumbwheel_value(pFlObject):
-    """fl_get_thumbwheel_value(pFlObject)
+def fl_get_thumbwheel_value(ptr_flobject):
+    """fl_get_thumbwheel_value(ptr_flobject) -> thwvalue
     
-    *todo*
+    Finds out the current value of a thumbwheel flobject.
 
     Parameters
     ----------
-        pFlObject : pointer to xfdata.FL_OBJECT
-            thumbwheel object
+        ptr_flobject : pointer to xfdata.FL_OBJECT
+            thumbwheel flobject
 
     Returns
     -------
-        num. : int
-            *todo*
+        thwvalue : int
+            current thumbwheel value, or 1.0 (on failure)
 
     Examples
     --------
@@ -68,28 +68,28 @@ def fl_get_thumbwheel_value(pFlObject):
         cty.c_double, [cty.POINTER(xfdata.FL_OBJECT)],
         """double fl_get_thumbwheel_value(FL_OBJECT * ob)""")
     library.check_if_initialized()
-    library.verify_flobjectptr_type(pFlObject)
-    library.keep_elem_refs(pFlObject)
-    retval = _fl_get_thumbwheel_value(pFlObject)
+    library.verify_flobjectptr_type(ptr_flobject)
+    library.keep_elem_refs(ptr_flobject)
+    retval = _fl_get_thumbwheel_value(ptr_flobject)
     return retval
 
 
-def fl_set_thumbwheel_value(pFlObject, value):
-    """fl_set_thumbwheel_value(pFlObject, value)
+def fl_set_thumbwheel_value(ptr_flobject, thwvalue):
+    """fl_set_thumbwheel_value(ptr_flobject, thwvalue) -> oldthwvalue
     
-    *todo*
+    Defines a new value of a thumbwheel flobject.
 
     Parameters
     ----------
-        pFlObject : pointer to xfdata.FL_OBJECT
-            thumbwheel object
-        value : float
-            value to be set
+        ptr_flobject : pointer to xfdata.FL_OBJECT
+            thumbwheel flobject
+        thwvalue : float
+            new value to be set
 
     Returns
     -------
-        num. : float
-            *todo*
+        oldthwvalue : float
+            previous value, or 1.0 (on failure)
 
     Examples
     --------
@@ -105,27 +105,27 @@ def fl_set_thumbwheel_value(pFlObject, value):
         cty.c_double, [cty.POINTER(xfdata.FL_OBJECT), cty.c_double],
         """double fl_set_thumbwheel_value(FL_OBJECT * ob, double value)""")
     library.check_if_initialized()
-    library.verify_flobjectptr_type(pFlObject)
-    fvalue = library.convert_to_double(value)
-    library.keep_elem_refs(pFlObject, value, fvalue)
-    retval = _fl_set_thumbwheel_value(pFlObject, fvalue)
+    library.verify_flobjectptr_type(ptr_flobject)
+    f_thwvalue = library.convert_to_doublec(thwvalue)
+    library.keep_elem_refs(ptr_flobject, thwvalue, f_thwvalue)
+    retval = _fl_set_thumbwheel_value(ptr_flobject, f_thwvalue)
     return retval
 
 
-def fl_get_thumbwheel_step(pFlObject):
-    """fl_get_thumbwheel_step(pFlObject)
+def fl_get_thumbwheel_step(ptr_flobject):
+    """fl_get_thumbwheel_step(ptr_flobject) -> step
     
-    *todo*
+    Finds out step for thumbwheel flobject value to be rounded to.
 
     Parameters
     ----------
-        pFlObject : pointer to xfdata.FL_OBJECT
-            thumbwheel object
+        ptr_flobject : pointer to xfdata.FL_OBJECT
+            thumbwheel flobject
 
     Returns
     -------
         step : float
-            step value
+            step value to be rounded
 
     Examples
     --------
@@ -141,28 +141,28 @@ def fl_get_thumbwheel_step(pFlObject):
         cty.c_double, [cty.POINTER(xfdata.FL_OBJECT)],
         """double fl_get_thumbwheel_step(FL_OBJECT * ob)""")
     library.check_if_initialized()
-    library.verify_flobjectptr_type(pFlObject)
-    library.keep_elem_refs(pFlObject)
-    retval = _fl_get_thumbwheel_step(pFlObject)
+    library.verify_flobjectptr_type(ptr_flobject)
+    library.keep_elem_refs(ptr_flobject)
+    retval = _fl_get_thumbwheel_step(ptr_flobject)
     return retval
 
 
-def fl_set_thumbwheel_step(pFlObject, step):
-    """fl_set_thumbwheel_step(pFlObject, step)
+def fl_set_thumbwheel_step(ptr_flobject, step):
+    """fl_set_thumbwheel_step(ptr_flobject, step) -> oldstep
     
-    *todo*
+    Defines step for thumbwheel flobject value to be rounded to.
 
     Parameters
     ----------
-        pFlObject : pointer to xfdata.FL_OBJECT
-            thumbwheel object
+        ptr_flobject : pointer to xfdata.FL_OBJECT
+            thumbwheel flobject
         step : float
             step value to be set
 
     Returns
     -------
-        num. : float
-            *todo*
+        oldstep : float
+            previous step value
 
     Examples
     --------
@@ -178,72 +178,33 @@ def fl_set_thumbwheel_step(pFlObject, step):
         cty.c_double, [cty.POINTER(xfdata.FL_OBJECT), cty.c_double],
         """double fl_set_thumbwheel_step(FL_OBJECT * ob, double step)""")
     library.check_if_initialized()
-    library.verify_flobjectptr_type(pFlObject)
-    fstep = library.convert_to_double(step)
-    library.keep_elem_refs(pFlObject, step, fstep)
-    retval = _fl_set_thumbwheel_step(pFlObject, fstep)
+    library.verify_flobjectptr_type(ptr_flobject)
+    f_step = library.convert_to_doublec(step)
+    library.keep_elem_refs(ptr_flobject, step, f_step)
+    retval = _fl_set_thumbwheel_step(ptr_flobject, f_step)
     return retval
 
 
-def fl_set_thumbwheel_return(pFlObject, when):
-    """fl_set_thumbwheel_return(pFlObject, when)
+# fl_set_thumbwheel_return(ptr_flobject, when) funct. placeholder (deprecated)
+
+
+# TODO: it is apparently unused and undocumented; slated for removal --LK
+def fl_set_thumbwheel_crossover(ptr_flobject, flag):
+    """fl_set_thumbwheel_crossover(ptr_flobject, flag) -> oldcrossover
     
-    *todo*
+    Defines crossover for  thumbwheel flobject.
 
     Parameters
     ----------
-        pFlObject : pointer to xfdata.FL_OBJECT
-            thumbwheel object
-        when : int
-            return type (when it returns). Values (from xfdata.py)
-            FL_RETURN_NONE, FL_RETURN_CHANGED, FL_RETURN_END,
-            FL_RETURN_END_CHANGED, FL_RETURN_SELECTION, FL_RETURN_DESELECTION,
-            FL_RETURN_TRIGGERED, FL_RETURN_ALWAYS
-
-    Returns
-    -------
-        num. : int
-            previous return type?
-
-    Examples
-    --------
-        >>> *todo*
-
-    Notes
-    -----
-        Status: Tested + NoDoc + Demo = OK
-
-    """
-    _fl_set_thumbwheel_return = library.cfuncproto(
-        library.load_so_libforms(), "fl_set_thumbwheel_return",
-        cty.c_int, [cty.POINTER(xfdata.FL_OBJECT), cty.c_uint],
-        """int fl_set_thumbwheel_return(FL_OBJECT * ob, unsigned
-           int how)""")
-    library.check_if_initialized()
-    library.verify_flobjectptr_type(pFlObject)
-    library.checkfatal_allowed_value_in_list(when, xfdata.RETURN_list)
-    uiwhen = library.convert_to_uint(when)
-    library.keep_elem_refs(pFlObject, when, uiwhen)
-    retval = _fl_set_thumbwheel_return(pFlObject, uiwhen)
-    return retval
-
-
-def fl_set_thumbwheel_crossover(pFlObject, flag):
-    """fl_set_thumbwheel_crossover(pFlObject, flag)
-    
-    *todo*
-
-    Parameters
-    ----------
-        pFlObject : pointer to xfdata.FL_OBJECT
-            thumbwheel object
+        ptr_flobject : pointer to xfdata.FL_OBJECT
+            thumbwheel flobject
         flag : int
-            *todo*
+            flag for crossover
 
     Returns
     -------
-        num. : int
-            *todo*
+        oldcrossover : int
+            previous crossover
 
     Examples
     --------
@@ -259,26 +220,26 @@ def fl_set_thumbwheel_crossover(pFlObject, flag):
         cty.c_int, [cty.POINTER(xfdata.FL_OBJECT), cty.c_int],
         """int fl_set_thumbwheel_crossover(FL_OBJECT * ob, int flag)""")
     library.check_if_initialized()
-    library.verify_flobjectptr_type(pFlObject)
-    iflag = library.convert_to_int(flag)
-    library.keep_elem_refs(pFlObject, flag, iflag)
-    retval = _fl_set_thumbwheel_crossover(pFlObject, iflag)
+    library.verify_flobjectptr_type(ptr_flobject)
+    i_flag = library.convert_to_intc(flag)
+    library.keep_elem_refs(ptr_flobject, flag, i_flag)
+    retval = _fl_set_thumbwheel_crossover(ptr_flobject, i_flag)
     return retval
 
 
-def fl_set_thumbwheel_bounds(pFlObject, minbound, maxbound):
-    """fl_set_thumbwheel_bounds(pFlObject, minbound, maxbound)
+def fl_set_thumbwheel_bounds(ptr_flobject, minbound, maxbound):
+    """fl_set_thumbwheel_bounds(ptr_flobject, minbound, maxbound)
     
-    *todo*
+    Defines minimum and maximum value limits of a thumbwheel flobject.
 
     Parameters
     ----------
-        pFlObject : pointer to xfdata.FL_OBJECT
-            thumbwheel object
+        ptr_flobject : pointer to xfdata.FL_OBJECT
+            thumbwheel flobject
         minbound : float
-            minimum bound of thumbwheel
+            minimum value bound of thumbwheel
         maxbound : float
-            maximum bound of thumbwheel
+            maximum value bound of thumbwheel
 
     Examples
     --------
@@ -295,43 +256,43 @@ def fl_set_thumbwheel_bounds(pFlObject, minbound, maxbound):
         """void fl_set_thumbwheel_bounds(FL_OBJECT * ob, double min,
            double max)""")
     library.check_if_initialized()
-    library.verify_flobjectptr_type(pFlObject)
-    fminbound = library.convert_to_double(minbound)
-    fmaxbound = library.convert_to_double(maxbound)
-    library.keep_elem_refs(pFlObject, minbound, maxbound, fminbound, \
-            fmaxbound)
-    _fl_set_thumbwheel_bounds(pFlObject, fminbound, fmaxbound)
+    library.verify_flobjectptr_type(ptr_flobject)
+    f_minbound = library.convert_to_doublec(minbound)
+    f_maxbound = library.convert_to_doublec(maxbound)
+    library.keep_elem_refs(ptr_flobject, minbound, maxbound, f_minbound, \
+            f_maxbound)
+    _fl_set_thumbwheel_bounds(ptr_flobject, f_minbound, f_maxbound)
 
 
-def fl_get_thumbwheel_bounds(pFlObject):
-    """fl_get_thumbwheel_bounds(pFlObject)
+def fl_get_thumbwheel_bounds(ptr_flobject):
+    """fl_get_thumbwheel_bounds(ptr_flobject) -> minbound, maxbound
     
-    *todo*
+    Finds out minimum and maximum value limits of a thumbwheel flobject.
 
     Parameters
     ----------
-        pFlObject : pointer to xfdata.FL_OBJECT
-            thumbwheel object
+        ptr_flobject : pointer to xfdata.FL_OBJECT
+            thumbwheel flobject
 
     Returns
     -------
         minbound : float
-            minimum bound
+            minimum value bound
         maxbound : float
-            maximum bound
+            maximum value bound
 
     Examples
     --------
         >>> *todo*
 
     API_diversion
-    ----------
-        API changed from XForms, upstream was
-        fl_get_thumbwheel_bounds(pFlObject, minbound, maxbound)
+    -------------
+        API changed from XForms, upstream is
+        fl_get_thumbwheel_bounds(ptr_flobject, minbound, maxbound)
 
     Notes
     -----
-        Status: Untested + NoDoc + NoDemo = NOT OK
+        Status: Untested + Doc + NoDemo = NOT OK
 
     """
     _fl_get_thumbwheel_bounds = library.cfuncproto(
@@ -341,43 +302,43 @@ def fl_get_thumbwheel_bounds(pFlObject):
         """void fl_get_thumbwheel_bounds(FL_OBJECT * ob, double * min,
            double * max)""")
     library.check_if_initialized()
-    library.verify_flobjectptr_type(pFlObject)
-    minbound, pminbound = library.make_double_and_pointer()
-    maxbound, pmaxbound = library.make_double_and_pointer()
-    library.keep_elem_refs(pFlObject, minbound, maxbound, pminbound, \
-            pmaxbound)
-    _fl_get_thumbwheel_bounds(pFlObject, pminbound, pmaxbound)
-    return minbound.value, maxbound.value
+    library.verify_flobjectptr_type(ptr_flobject)
+    f_minbound, ptr_minbound = library.make_doublec_and_pointer()
+    f_maxbound, ptr_maxbound = library.make_doublec_and_pointer()
+    library.keep_elem_refs(ptr_flobject, f_minbound, f_maxbound, \
+            ptr_minbound, ptr_maxbound)
+    _fl_get_thumbwheel_bounds(ptr_flobject, ptr_minbound, ptr_maxbound)
+    return f_minbound.value, f_maxbound.value
 
 
 # fl_create_thumbwheel function placeholder (internal)
 
 
-def fl_add_thumbwheel(wheeltype, x, y, w, h, label):
-    """fl_add_thumbwheel(wheeltype, x, y, w, h, label)
+def fl_add_thumbwheel(wheeltype, xpos, ypos, width, height, label):
+    """fl_add_thumbwheel(wheeltype, xpos, ypos, width, height, label) -> ptr_flobject
     
-    Adds a thumbwheel object.
+    Adds a thumbwheel flobject.
 
     Parameters
     ----------
         wheeltype : int
             type of thumbwheel to be added. Values (from xfdata.py)
             FL_VERT_THUMBWHEEL, FL_HOR_THUMBWHEEL
-        x : int
+        xpos : int
             horizontal position (upper-left corner)
-        y : int
+        ypos : int
             vertical position (upper-left corner)
-        w : int
+        width : int
             width in coord units
-        h : int
+        height : int
             height in coord units
           label : str
             text label of thumbwheel
 
     Returns
     -------
-        pFlObject : pointer to xfdata.FL_OBJECT
-            thumbwheel object added
+        ptr_flobject : pointer to xfdata.FL_OBJECT
+            thumbwheel flobject added
 
     Examples
     --------
@@ -398,14 +359,15 @@ def fl_add_thumbwheel(wheeltype, x, y, w, h, label):
     library.check_if_initialized()
     library.checkfatal_allowed_value_in_list(wheeltype, \
             xfdata.THUMBWHEELTYPE_list)
-    iwheeltype = library.convert_to_int(wheeltype)
-    ix = library.convert_to_FL_Coord(x)
-    iy = library.convert_to_FL_Coord(y)
-    iw = library.convert_to_FL_Coord(w)
-    ih = library.convert_to_FL_Coord(h)
-    slabel = library.convert_to_string(label)
-    library.keep_elem_refs(wheeltype, x, y, w, h, label, iwheeltype, \
-            ix, iy, iw, ih, slabel)
-    retval = _fl_add_thumbwheel(iwheeltype, ix, iy, iw, ih, slabel)
+    i_wheeltype = library.convert_to_intc(wheeltype)
+    i_xpos = library.convert_to_FL_Coord(xpos)
+    i_ypos = library.convert_to_FL_Coord(ypos)
+    i_width = library.convert_to_FL_Coord(width)
+    i_height = library.convert_to_FL_Coord(height)
+    s_label = library.convert_to_stringc(label)
+    library.keep_elem_refs(wheeltype, xpos, ypos, width, height, label, \
+            i_wheeltype, i_xpos, i_ypos, i_width, i_height, s_label)
+    retval = _fl_add_thumbwheel(i_wheeltype, i_xpos, i_ypos, i_width, \
+            i_height, s_label)
     return retval
 

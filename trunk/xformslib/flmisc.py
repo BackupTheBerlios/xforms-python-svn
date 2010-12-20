@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: iso8859-1 -*-
 
-""" xforms-python's functions to manage miscellaneous objects.
+""" xforms-python's functions to manage miscellaneous flobjects.
 """
 
 #    Copyright (C) 2009, 2010  Luca Lazzaroni "LukenShiro"
@@ -26,7 +26,7 @@
 # then heavily reordered and reworked
 
 # ############################################# #
-# Interface to XForms shared object libraries   #
+# Interface to XForms shared flobject libraries #
 # ############################################# #
 
 import ctypes as cty
@@ -41,10 +41,10 @@ from xformslib import xfdata
 # fl_create_box function placeholder (internal)
 
 
-def fl_add_box(boxtype, x, y, w, h, label):
-    """fl_add_box(boxtype, x, y, w, h, label)
+def fl_add_box(boxtype, xpos, ypos, width, height, label):
+    """fl_add_box(boxtype, xpos, ypos, width, height, label) -> ptr_flobject
     
-    Adds a box object.
+    Adds a box flobject.
 
     Parameters
     ----------
@@ -55,21 +55,21 @@ def fl_add_box(boxtype, x, y, w, h, label):
             FL_RFLAT_BOX, FL_RSHADOW_BOX, FL_OVAL_BOX, FL_ROUNDED3D_UPBOX,
             FL_ROUNDED3D_DOWNBOX, FL_OVAL3D_UPBOX, FL_OVAL3D_DOWNBOX,
             FL_OVAL3D_FRAMEBOX, FL_OVAL3D_EMBOSSEDBOX
-        x : int
+        xpos : int
             horizontal position (upper-left corner)
-        y : int
+        ypos : int
             vertical position (upper-left corner)
-        w : int
+        width : int
             width in coord units
-        h : int
+        height : int
             height in coord units
         label : str
             text label of box
 
     Returns
     -------
-        pFlObject : pointer to xfdata.FL_OBJECT
-            box object added
+        ptr_flobject : pointer to xfdata.FL_OBJECT
+            box flobject added
 
     Examples
     --------
@@ -89,15 +89,16 @@ def fl_add_box(boxtype, x, y, w, h, label):
            FL_Coord w, FL_Coord h, const char * label)""")
     library.check_if_initialized()
     library.checkfatal_allowed_value_in_list(boxtype, xfdata.BOXTYPE_list)
-    iboxtype = library.convert_to_int(boxtype)
-    ix = library.convert_to_FL_Coord(x)
-    iy = library.convert_to_FL_Coord(y)
-    iw = library.convert_to_FL_Coord(w)
-    ih = library.convert_to_FL_Coord(h)
-    slabel = library.convert_to_string(label)
-    library.keep_elem_refs(boxtype, x, y, w, h, label, iboxtype, ix, \
-            iy, iw, ih, slabel)
-    retval = _fl_add_box(iboxtype, ix, iy, iw, ih, slabel)
+    i_boxtype = library.convert_to_intc(boxtype)
+    i_xpos = library.convert_to_FL_Coord(xpos)
+    i_ypos = library.convert_to_FL_Coord(ypos)
+    i_width = library.convert_to_FL_Coord(width)
+    i_height = library.convert_to_FL_Coord(height)
+    s_label = library.convert_to_stringc(label)
+    library.keep_elem_refs(boxtype, xpos, ypos, width, height, label, \
+            i_boxtype, i_xpos, i_ypos, i_width, i_height, s_label)
+    retval = _fl_add_box(i_boxtype, i_xpos, i_ypos, i_width, \
+            i_height, s_label)
     return retval
 
 
@@ -134,30 +135,30 @@ def fl_add_box(boxtype, x, y, w, h, label):
 #################################
 
 
-def fl_stuff_clipboard(pFlObject, clipbdtype, data, size, \
-                       py_LoseSelectionCb):
-    """fl_stuff_clipboard(pFlObject, clipbdtype, data, size,
-    py_LoseSelectionCb)
+def fl_stuff_clipboard(ptr_flobject, clipbdtype, vdata, size, \
+                       pyfn_LoseSelectionCb):
+    """fl_stuff_clipboard(ptr_flobject, clipbdtype, vdata, size,
+    pyfn_LoseSelectionCb) -> size
     
     Stores data in clipboard?
 
     Parameters
     ----------
-        pFlObject : pointer to xfdata.FL_OBJECT
-            clipboard object
+        ptr_flobject : pointer to xfdata.FL_OBJECT
+            clipboard flobject
         clipbdtype : long
             type of clipboard (not used)
-        data : *todo*
+        vdata : *todo*
             *todo*
         size : long
-            *todo*
-        py_LoseSelectionCb : python function callback, returned value
-            name referring to function(pFlObject, longnum) -> num.
+            size of data to be stuffed
+        pyfn_LoseSelectionCb : python function callback, returned value
+            name referring to function(ptr_flobject, longnum) -> num.
 
     Returns
     -------
-        num. : int
-            *todo*
+        size : int
+            size of stuffed data?, or 0 (on failure)
 
     Examples
     --------
@@ -178,39 +179,39 @@ def fl_stuff_clipboard(pFlObject, clipbdtype, data, size, \
            const char * data, long int size,
            FL_LOSE_SELECTION_CB lose_callback)""")
     library.check_if_initialized()
-    library.verify_flobjectptr_type(pFlObject)
-    lclipbdtype = library.convert_to_long(clipbdtype)
-    pdata = cty.cast(data, cty.c_void_p)
-    lsize = library.convert_to_long(size)
-    library.verify_function_type(py_LoseSelectionCb)
-    c_LoseSelectionCb = xfdata.FL_LOSE_SELECTION_CB(py_LoseSelectionCb)
-    library.keep_cfunc_refs(c_LoseSelectionCb, py_LoseSelectionCb)
-    library.keep_elem_refs(pFlObject, clipbdtype, data, size, lclipbdtype,
-            data, lsize)
-    retval = _fl_stuff_clipboard(pFlObject, lclipbdtype, pdata, lsize,
-            c_LoseSelectionCb)
+    library.verify_flobjectptr_type(ptr_flobject)
+    l_clipbdtype = library.convert_to_longc(clipbdtype)
+    ptr_vdata = cty.cast(vdata, cty.c_void_p)
+    l_size = library.convert_to_longc(size)
+    library.verify_function_type(pyfn_LoseSelectionCb)
+    cfn_LoseSelectionCb = xfdata.FL_LOSE_SELECTION_CB(pyfn_LoseSelectionCb)
+    library.keep_cfunc_refs(cfn_LoseSelectionCb, pyfn_LoseSelectionCb)
+    library.keep_elem_refs(ptr_flobject, clipbdtype, vdata, size, \
+            l_clipbdtype, ptr_vdata, l_size)
+    retval = _fl_stuff_clipboard(ptr_flobject, l_clipbdtype, ptr_vdata, \
+            l_size, cfn_LoseSelectionCb)
     return retval
 
 
-def fl_request_clipboard(pFlObject, clipbdtype, py_SelectionCb):
-    """fl_request_clipboard(pFlObject, clipbdtype, py_SelectionCb)
+def fl_request_clipboard(ptr_flobject, clipbdtype, pyfn_SelectionCb):
+    """fl_request_clipboard(ptr_flobject, clipbdtype, pyfn_SelectionCb) -> size
     
     Retrieves data from clipboard?
 
     Parameters
     ----------
-        pFlObject : pointer to xfdata.FL_OBJECT
-            clipboard object
+        ptr_flobject : pointer to xfdata.FL_OBJECT
+            clipboard flobject
         clipbdtype : long
             type of clipboard (not used)
-        py_SelectionCb : python function callback, returned value
-            name referring to function(pFlObject, longnum, vdata, longnum)
-            -> num.
+        pyfn_SelectionCb : python function callback, returned value
+            name referring to function(ptr_flobject, longnum, vdata,
+            longnum) -> num.
 
     Returns
     -------
         result : int
-            0, or -1 (if it is on different window?)
+            size?, or -1 (if it is on different window?)
 
     Examples
     --------
@@ -230,13 +231,14 @@ def fl_request_clipboard(pFlObject, clipbdtype, py_SelectionCb):
         """int fl_request_clipboard(FL_OBJECT * ob, long int type,
            FL_SELECTION_CB got_it_callback)""")
     library.check_if_initialized()
-    library.verify_flobjectptr_type(pFlObject)
-    lclipbdtype = library.convert_to_long(clipbdtype)
-    library.verify_function_type(py_SelectionCb)
-    c_SelectionCb = xfdata.FL_SELECTION_CB(py_SelectionCb)
-    library.keep_cfunc_refs(c_SelectionCb, py_SelectionCb)
-    library.keep_elem_refs(pFlObject, clipbdtype, lclipbdtype)
-    retval = _fl_request_clipboard(pFlObject, lclipbdtype, c_SelectionCb)
+    library.verify_flobjectptr_type(ptr_flobject)
+    l_clipbdtype = library.convert_to_longc(clipbdtype)
+    library.verify_function_type(pyfn_SelectionCb)
+    cfn_SelectionCb = xfdata.FL_SELECTION_CB(pyfn_SelectionCb)
+    library.keep_cfunc_refs(cfn_SelectionCb, pyfn_SelectionCb)
+    library.keep_elem_refs(ptr_flobject, clipbdtype, l_clipbdtype)
+    retval = _fl_request_clipboard(ptr_flobject, l_clipbdtype, \
+            cfn_SelectionCb)
     return retval
 
 
@@ -249,15 +251,15 @@ def fl_request_clipboard(pFlObject, clipbdtype, py_SelectionCb):
 
 
 def flps_init():
-    """flps_init()
+    """flps_init() -> ptr_flpscontrol
     
     Customizes the output by changing the PostScript output control
     parameters.
 
     Returns
     -------
-    pFlpsControl : pointer to xfdata.FLPS_CONTROL
-        xfdata.FLPS_CONTROL class instance
+        ptr_flpscontrol : pointer to xfdata.FLPS_CONTROL
+            xfdata.FLPS_CONTROL class instance
 
     Examples
     --------
@@ -277,25 +279,25 @@ def flps_init():
     return retval
 
 
-def fl_object_ps_dump(pFlObject, fname):
-    """fl_object_ps_dump(pFlObject, fname)
+def fl_object_ps_dump(ptr_flobject, fname):
+    """fl_object_ps_dump(ptr_flobject, fname) -> result
     
-    Obtains hardcopies of some objects in a what-you-see-is-what-you-get
+    Finds out hardcopies of some flobjects in a what-you-see-is-what-you-get
     (WYSIWYG) way, especially those that are dynamic and of vector-graphics
-    in nature. It outputs the specified object in PostScript. The object must
-    be visible at the time of the function call. The hardcopy should mostly
-    be WYSIWYG and centered on the printed page. The orientation is determined
-    such that a balanced margin results, i.e., if the width of the object is
-    larger than the height, landscape mode will be used. Further, if the
-    object is too big to fit on the printed page, a scale factor will be
-    applied so the object fits. The box underneath the object is by default
-    not drawn and in the default black&white mode, all curves are drawn in
-    black.
+    in nature. It outputs the specified flobject in PostScript. The flobject
+    must be visible at the time of the function call. The hardcopy should
+    mostly be WYSIWYG and centered on the printed page. The orientation is
+    determined such that a balanced margin results, i.e., if the width of
+    the flobject is larger than the height, landscape mode will be used.
+    Further, if the flobject is too big to fit on the printed page, a scale
+    factor will be applied so the flobject fits. The box underneath the
+    flobject is by default not drawn and in the default black&white mode,
+    all curves are drawn in black.
 
     Parameters
     ----------
-        pFlObject : pointer to xfdata.FL_OBJECT
-            object. Only the xfdata.FL_XYPLOT object is supported.
+        ptr_flobject : pointer to xfdata.FL_OBJECT
+            object. Only the xfdata.FL_XYPLOT flobject is supported.
         fname : str
             name of output file. If None, a fselector will be shown to
             ask the user for a file name.
@@ -303,7 +305,7 @@ def fl_object_ps_dump(pFlObject, fname):
     Returns
     -------
         result : int
-            non-negative num., or negative num. (on failure)
+            0 on success, or -1 (on errors)
 
     Examples
     --------
@@ -317,16 +319,16 @@ def fl_object_ps_dump(pFlObject, fname):
     """
     _fl_object_ps_dump = library.cfuncproto(
         library.load_so_libflimage(), "fl_object_ps_dump",
-        cty.c_int, [cty.POINTER(xfdata.FL_OBJECT), cty.void_p],
+        cty.c_int, [cty.POINTER(xfdata.FL_OBJECT), cty.c_void_p],
         """int fl_object_ps_dump(FL_OBJECT * ob, const char * fname)""")
     library.check_if_initialized()
-    library.verify_flobjectptr_type(pFlObject)
+    library.verify_flobjectptr_type(ptr_flobject)
     if not fname:       # if it is None
-        sfname = None
+        s_fname = None
     else:
-        sfname = library.convert_to_string(fname)
-    library.keep_elem_refs(pFlObject, fname, sfname)
-    retval = _fl_object_ps_dump(pFlObject, sfname)
+        s_fname = library.convert_to_stringc(fname)
+    library.keep_elem_refs(ptr_flobject, fname, s_fname)
+    retval = _fl_object_ps_dump(ptr_flobject, s_fname)
     return retval
 
 
@@ -337,10 +339,11 @@ def fl_object_ps_dump(pFlObject, fname):
 # fl_create_frame function placeholder (internal)
 
 
-def fl_add_frame(frametype, x, y, w, h, label):
-    """fl_add_frame(frametype, x, y, w, h, label)
+def fl_add_frame(frametype, xpos, ypos, width, height, label):
+    """fl_add_frame(frametype, xpos, ypos, width, height, label)
+    -> ptr_flobject
     
-    Adds a frame object.
+    Adds a frame flobject.
 
     Parameters
     ----------
@@ -349,21 +352,21 @@ def fl_add_frame(frametype, x, y, w, h, label):
             FL_UP_FRAME, FL_DOWN_FRAME, FL_BORDER_FRAME, FL_SHADOW_FRAME,
             FL_ENGRAVED_FRAME, FL_ROUNDED_FRAME, FL_EMBOSSED_FRAME,
             FL_OVAL_FRAME
-        x : int
+        xpos : int
             horizontal position (upper-left corner)
-        y : int
+        ypos : int
             vertical position (upper-left corner)
-        w : int
+        width : int
             width in coord units
-        h : int
+        height : int
             height in coord units
         label : str
             text label of frame
 
     Returns
     -------
-        pFlObject : pointer to xfdata.FL_OBJECT
-            frame object added
+        ptr_flobject : pointer to xfdata.FL_OBJECT
+            frame flobject added
 
     Examples
     --------
@@ -384,15 +387,16 @@ def fl_add_frame(frametype, x, y, w, h, label):
     library.check_if_initialized()
     library.checkfatal_allowed_value_in_list(frametype, \
             xfdata.FRAMETYPE_list)
-    iframetype = library.convert_to_int(frametype)
-    ix = library.convert_to_FL_Coord(x)
-    iy = library.convert_to_FL_Coord(y)
-    iw = library.convert_to_FL_Coord(w)
-    ih = library.convert_to_FL_Coord(h)
-    slabel = library.convert_to_string(label)
-    library.keep_elem_refs(frametype, x, y, w, h, label, iframetype, \
-            ix, iy, iw, ih, slabel)
-    retval = _fl_add_frame(iframetype, ix, iy, iw, ih, slabel)
+    i_frametype = library.convert_to_intc(frametype)
+    i_xpos = library.convert_to_FL_Coord(xpos)
+    i_ypos = library.convert_to_FL_Coord(ypos)
+    i_width = library.convert_to_FL_Coord(width)
+    i_height = library.convert_to_FL_Coord(height)
+    s_label = library.convert_to_stringc(label)
+    library.keep_elem_refs(frametype, xpos, ypos, width, height, label, \
+            i_frametype, i_xpos, i_ypos, i_width, i_height, s_label)
+    retval = _fl_add_frame(i_frametype, i_xpos, i_ypos, i_width, \
+            i_height, s_label)
     return retval
 
 
@@ -401,10 +405,11 @@ def fl_add_frame(frametype, x, y, w, h, label):
 # fl_create_labelframe function placeholder (internal)
 
 
-def fl_add_labelframe(frametype, x, y, w, h, label):
-    """fl_add_labelframe(frametype, x, y, w, h, label)
+def fl_add_labelframe(frametype, xpos, ypos, width, height, label):
+    """fl_add_labelframe(frametype, xpos, ypos, width, height, label)
+    -> ptr_flobject
     
-    Adds a labelframe object.
+    Adds a labelframe flobject.
 
     Parameters
     ----------
@@ -413,26 +418,26 @@ def fl_add_labelframe(frametype, x, y, w, h, label):
             FL_NO_FRAME, FL_UP_FRAME, FL_DOWN_FRAME, FL_BORDER_FRAME,
             FL_SHADOW_FRAME, FL_ENGRAVED_FRAME, FL_ROUNDED_FRAME,
             FL_EMBOSSED_FRAME, FL_OVAL_FRAME
-        x : int
+        xpos : int
             horizontal position (upper-left corner)
-        y : int
+        ypos : int
             vertical position (upper-left corner)
-        w : int
+        width : int
             width in coord units
-        h : int
+        height : int
             height in coord units
         label : str
             text label of labelframe
 
     Returns
     -------
-        pFlObject : pointer to xfdata.FL_OBJECT
-            labelframe object added
+        ptr_flobject : pointer to xfdata.FL_OBJECT
+            labelframe flobject added
 
     Examples
     --------
-        >>> lfrmobj = fl_add_labelframe(xfdsata.FL_SHADOW_FRAME, 100, 100,
-                400, 300, "MyFrame")
+        >>> lfrmobj = fl_add_labelframe(xfdata.FL_SHADOW_FRAME, 100,
+                100, 400, 300, "MyFrame")
 
     Notes
     -----
@@ -448,15 +453,16 @@ def fl_add_labelframe(frametype, x, y, w, h, label):
     library.check_if_initialized()
     library.checkfatal_allowed_value_in_list(frametype, \
             xfdata.FRAMETYPE_list)
-    iframetype = library.convert_to_int(frametype)
-    ix = library.convert_to_FL_Coord(x)
-    iy = library.convert_to_FL_Coord(y)
-    iw = library.convert_to_FL_Coord(w)
-    ih = library.convert_to_FL_Coord(h)
-    slabel = library.convert_to_string(label)
-    library.keep_elem_refs(frametype, x, y, w, h, label, iframetype, \
-            ix, iy, iw, ih, slabel)
-    retval = _fl_add_labelframe(iframetype, ix, iy, iw, ih, slabel)
+    i_frametype = library.convert_to_intc(frametype)
+    i_xpos = library.convert_to_FL_Coord(xpos)
+    i_ypos = library.convert_to_FL_Coord(ypos)
+    i_width = library.convert_to_FL_Coord(width)
+    i_height = library.convert_to_FL_Coord(height)
+    s_label = library.convert_to_stringc(label)
+    library.keep_elem_refs(frametype, xpos, ypos, width, height, label, \
+            i_frametype, i_xpos, i_ypos, i_width, i_height, s_label)
+    retval = _fl_add_labelframe(i_frametype, i_xpos, i_ypos, i_width, \
+            i_height, s_label)
     return retval
 
 
@@ -469,8 +475,9 @@ def fl_add_labelframe(frametype, x, y, w, h, label):
 # fl_create_free function placeholder (internal)
 
 
-def fl_add_free(freetype, x, y, w, h, label, py_HandlePtr):
-    """fl_add_free(freetype, x, y, w, h, label, py_HandlePtr)
+def fl_add_free(freetype, xpos, ypos, width, height, label, pyfn_HandlePtr):
+    """fl_add_free(freetype, xpos, ypos, width, height, label, pyfn_HandlePtr)
+    -> ptr_flobject
     
     Adds a free object.
 
@@ -480,24 +487,24 @@ def fl_add_free(freetype, x, y, w, h, label, py_HandlePtr):
             type of free to be added. Value (from xfdata.py) FL_NORMAL_FREE,
             FL_INACTIVE_FREE, FL_INPUT_FREE, FL_CONTINUOUS_FREE, FL_ALL_FREE,
             FL_SLEEPING_FREE
-        x : int
+        xpos : int
             horizontal position (upper-left corner)
-        y : int
+        ypos : int
             vertical position (upper-left corner)
-        w : int
+        width : int
             width in coord units
-        h : int
+        height : int
             height in coord units
         label : str
             text label of free
-        py_HandlePtr : python function to handle free object, returned value
-            name referring to function(int, pFlObject, int, coord, coord,
+        pyfn_HandlePtr : python function to handle free object, returned value
+            name referring to function(int, ptr_flobject, int, coord, coord,
             int, voidp) -> num.
 
     Returns
     -------
-        pFlObject : pointer to xfdata.FL_OBJECT
-            free object added
+        ptr_flobject : pointer to xfdata.FL_OBJECT
+            free flobject added
 
     Examples
     --------
@@ -519,18 +526,19 @@ def fl_add_free(freetype, x, y, w, h, label, py_HandlePtr):
            FL_Coord w, FL_Coord h, const char * label, FL_HANDLEPTR handle)""")
     library.check_if_initialized()
     library.checkfatal_allowed_value_in_list(freetype, xfdata.FREETYPE_list)
-    ifreetype = library.convert_to_int(freetype)
-    ix = library.convert_to_FL_Coord(x)
-    iy = library.convert_to_FL_Coord(y)
-    iw = library.convert_to_FL_Coord(w)
-    ih = library.convert_to_FL_Coord(h)
-    slabel = library.convert_to_string(label)
-    library.verify_function_type(py_HandlePtr)
-    c_HandlePtr = xfdata.FL_HANDLEPTR(py_HandlePtr)
-    library.keep_cfunc_refs(c_HandlePtr, py_HandlePtr)
-    library.keep_elem_refs(freetype, x, y, w, h, label, ifreetype, \
-            ix, iy, iw,ih, slabel)
-    retval = _fl_add_free(ifreetype, ix, iy, iw, ih, slabel, c_HandlePtr)
+    i_freetype = library.convert_to_intc(freetype)
+    i_xpos = library.convert_to_FL_Coord(xpos)
+    i_ypos = library.convert_to_FL_Coord(ypos)
+    i_width = library.convert_to_FL_Coord(width)
+    i_height = library.convert_to_FL_Coord(height)
+    s_label = library.convert_to_stringc(label)
+    library.verify_function_type(pyfn_HandlePtr)
+    cfn_HandlePtr = xfdata.FL_HANDLEPTR(pyfn_HandlePtr)
+    library.keep_cfunc_refs(cfn_HandlePtr, pyfn_HandlePtr)
+    library.keep_elem_refs(freetype, xpos, ypos, width, height, label, \
+            i_freetype, i_xpos, i_ypos, i_width,i_height, s_label)
+    retval = _fl_add_free(i_freetype, i_xpos, i_ypos, i_width, i_height, \
+            s_label, cfn_HandlePtr)
     return retval
 
 
@@ -570,34 +578,35 @@ def fl_add_free(freetype, x, y, w, h, label, py_HandlePtr):
 # fl_create_text function placeholder (internal)
 
 
-def fl_add_text(texttype, x, y, w, h, label):
-    """fl_add_text(texttype, x, y, w, h, label)
+def fl_add_text(texttype, xpos, ypos, width, height, label):
+    """fl_add_text(texttype, xpos, ypos, width, height, label) -> ptr_flobject
     
-    Adds a text object.
+    Adds a text flobject.
 
     Parameters
     ----------
         texttype : int
-            type of text to be added. Values FL_NORMAL_TEXT
-        x : int
+            type of text to be added. Values (from xfdata.py) FL_NORMAL_TEXT
+        xpos : int
             horizontal position (upper-left corner)
-        y : int
+        ypos : int
             vertical position (upper-left corner)
-        w : int
+        width : int
             width in coord units
-        h : int
+        height : int
             height in coord units
         label : str
             text label of text
 
     Returns
     -------
-        pFlObject : pointer to xfdata.FL_OBJECT
-            text object added
+        ptr_flobject : pointer to xfdata.FL_OBJECT
+            text flobject added
 
     Examples
     --------
-        >>> *todo*
+        >>> txtobj = fl_add_text(xfdata.FL_NORMAL_TEXT, 140, 120, 400, 500,
+                "My text flobject")
 
     Notes
     -----
@@ -612,15 +621,16 @@ def fl_add_text(texttype, x, y, w, h, label):
             FL_Coord w, FL_Coord h, const char * label)""")
     library.check_if_initialized()
     library.checkfatal_allowed_value_in_list(texttype, xfdata.TEXTTYPE_list)
-    itexttype = library.convert_to_int(texttype)
-    ix = library.convert_to_FL_Coord(x)
-    iy = library.convert_to_FL_Coord(y)
-    iw = library.convert_to_FL_Coord(w)
-    ih = library.convert_to_FL_Coord(h)
-    slabel = library.convert_to_string(label)
-    library.keep_elem_refs(texttype, x, y, w, h, label, itexttype, ix, iy,
-                   iw, ih, slabel)
-    retval = _fl_add_text(itexttype, ix, iy, iw, ih, slabel)
+    i_texttype = library.convert_to_intc(texttype)
+    i_xpos = library.convert_to_FL_Coord(xpos)
+    i_ypos = library.convert_to_FL_Coord(ypos)
+    i_width = library.convert_to_FL_Coord(width)
+    i_height = library.convert_to_FL_Coord(height)
+    s_label = library.convert_to_stringc(label)
+    library.keep_elem_refs(texttype, xpos, ypos, width, height, label, \
+            i_texttype, i_xpos, i_ypos, i_width, i_height, s_label)
+    retval = _fl_add_text(i_texttype, i_xpos, i_ypos, i_width, i_height, \
+            s_label)
     return retval
 
 
@@ -678,13 +688,13 @@ def fl_add_text(texttype, x, y, w, h, label):
 # that were using them. Put them back in 10/22/00
 
 def fl_gc_():
-    """fl_gc_()
+    """fl_gc_() -> gc
     
-    *todo*
+    Finds out non-text graphics context.
 
     Returns
     -------
-        GrCtx : xfdata.GC
+        gc : xfdata.GC
             graphics context id
 
     Examples
@@ -704,18 +714,18 @@ def fl_gc_():
     retval = _fl_gc_()
     return retval
 
-#fl_gc = fl_gc_()       # commented to prevent a SegmentationFault --LK
+#fl_gc = fl_gc_()       # commented to prevent a SegmentationFault? --LK
 fl_gc = fl_gc_
 
 
 def fl_textgc_():
-    """fl_textgc_()
+    """fl_textgc_() -> txtgc
     
-    *todo*
+    Finds out text graphics context,
 
     Returns
     -------
-        GrCtx = xfdata.GC
+        txtgc = xfdata.GC
             graphics context id
 
     Examples
@@ -735,23 +745,23 @@ def fl_textgc_():
     retval = _fl_textgc_()
     return retval
 
-#fl_textgc = fl_textgc_()       # commented to prevent a SegmentationFault --LK
+#fl_textgc = fl_textgc_()   # commented to prevent a SegmentationFault? --LK
 fl_textgc = fl_textgc_
 
 
 def fl_fheight_():
-    """fl_fheight_()
+    """fl_fheight_() -> fheight
     
-    *todo*
+    Finds out font height
 
     Returns
     -------
-        num. : int
-            *todo*
+        fheight : int
+            font height
 
     Examples
     --------
-        >>> *todo*
+        >>> fonth = fl_fheight_()
 
     Notes
     -----
@@ -767,23 +777,23 @@ def fl_fheight_():
     return retval
 
 
-#fl_fheight = fl_fheight_()  # commented to prevent a SegmentationFault --LK
+#fl_fheight = fl_fheight_()  # commented to prevent a SegmentationFault? --LK
 fl_fheight = fl_fheight_
 
 
 def fl_fdesc_():
-    """fl_fdesc_()
+    """fl_fdesc_() -> descndt
     
-    *todo*
+    Finds out descendent of font.
 
     Returns
     -------
-        num. : int
-            *todo*
+        descndt : int
+            font descendent
 
     Examples
     --------
-        >>> *todo*
+        >>> fontdesc = fl_fdesc_()
 
     Notes
     -----
@@ -798,14 +808,14 @@ def fl_fdesc_():
     retval = _fl_fdesc_()
     return retval
 
-#fl_fdesc = fl_fdesc_()   # commented to prevent a SegmentationFault --LK
+#fl_fdesc = fl_fdesc_()   # commented to prevent a SegmentationFault? --LK
 fl_fdesc = fl_fdesc_
 
 
 def fl_cur_win_():
-    """fl_cur_win_()
+    """fl_cur_win_() -> win
     
-    *todo*
+    Finds out current window.
 
     Returns
     -------
@@ -834,13 +844,13 @@ fl_cur_win = fl_cur_win_
 
 
 def fl_cur_fs_():
-    """fl_cur_fs_()
+    """fl_cur_fs_() -> ptr_xfontstruct
     
-    *todo*
+    Finds out current font structure.
 
     Returns
     -------
-        pXFontStruct : pointer to xfdata.XFontStruct
+        ptr_xforntstruct : pointer to xfdata.XFontStruct
             font structure class instance
 
     Examples
@@ -866,13 +876,13 @@ fl_cur_fs = fl_cur_fs_
 
 
 def fl_display_():
-    """fl_display_()
+    """fl_display_() -> ptr_display
     
-    *todo*
+    Finds out current X display.
 
     Returns
     -------
-        pDisplay : pointer to xfdata.Display
+        ptr_display : pointer to xfdata.Display
             current display?
 
     Examples
@@ -895,19 +905,23 @@ def fl_display_():
 
 
 # flps_apply_gamma(p1) function placeholder (internal)
-# flps_arc(fill, x, y, r, t1, t2, colr)function placeholder (internal)
-# flps_circ(fill, x, y, r, colr) function placeholder (internal)
+# flps_arc(fill, xpos, ypos, r, t1, t2, colr)function placeholder (internal)
+# flps_circ(fill, xpos, ypos, r, colr) function placeholder (internal)
 # flps_color(colr) function placeholder (internal)
-# flps_draw_box(style, x, y, w, h, colr, bwIn) function placeholder (internal)
-# flps_draw_checkbox(boxtype, x, y, w, h, colr, bw)
+# flps_draw_box(style, xpos, ypos, width, height, colr, bwIn) function
+#placeholder (internal)
+# flps_draw_checkbox(boxtype, xpos, ypos, width, height, colr, bw)
 #  function placeholder (internal)
-# flps_draw_frame(style, x, y, w, h, colr, bw) function placeholder (internal)
-# flps_draw_symbol(label, x, y, w, h, colr) function placeholder (internal)
-# flps_draw_tbox(style, x, y, w, h, colr, bw) function placeholder (internal)
-# flps_draw_text(align, x, y, w, h, colr, style, size, text)
+# flps_draw_frame(style, xpos, ypos, width, height, colr, bw) function 
+#placeholder (internal)
+# flps_draw_symbol(label, xpos, ypos, width, height, colr) function
+# placeholder (internal)
+# flps_draw_tbox(style, xpos, ypos, width, height, colr, bw) function
+#placeholder (internal)
+# flps_draw_text(align, xpos, ypos, width, height, colr, style, size, text)
 #  function placeholder (internal)
-# flps_draw_text_beside(align, x, y, w, h, colr, style, size, text)
-#  function placeholder (internal)
+# flps_draw_text_beside(align, xpos, ypos, width, height, colr, style,
+#size, text) function placeholder (internal)
 # flps_emit_header(title, npages, xi, yi, xf, yf)
 #  function placeholder (internal)
 # flps_emit_prolog() function placeholder (internal)
@@ -925,17 +939,20 @@ def fl_display_():
 # flps_linewidth(linewidth) function placeholder (internal)
 # flps_log(text) function placeholder (internal)
 # flps_output(fmt) function placeholder (internal)
-# flps_oval(fill, x, y, w, h, colr) function placeholder (internal)
-# flps_pieslice(fill, x, y, w, h, t1, t2, colr)
+# flps_oval(fill, xpos, ypos, width, height, colr) function
+#placeholder (internal)
+# flps_pieslice(fill, xpos, ypos, width, height, t1, t2, colr)
 # function placeholder (internal)
 # flps_poly(fill, Point, numpt, colr) function placeholder (internal)
-# flps_rectangle(fill, x, y, w, h, colr) function placeholder (internal)
+# flps_rectangle(fill, xpos, ypos, width, height, colr) function
+#placeholder (internal)
 # flps_reset_cache() function placeholder (internal)
 # flps_reset_linewidth() function placeholder (internal)
 # flps_restore_flps() function placeholder (internal)
 # flps_rgbcolor(r, g, b) function placeholder (internal)
-# flps_roundrectangle(fill, x, y, w, h, colr) function placeholder (internal)
-# flps_set_clipping(x, y, w, h) function placeholder (internal)
+# flps_roundrectangle(fill, xpos, ypos, width, height, colr) function
+#placeholder (internal)
+# flps_set_clipping(xpos, ypos, width, height) function placeholder (internal)
 # flps_set_font(style, size) function placeholder (internal)
 # flps_unset_clipping() function placeholder (internal)
 

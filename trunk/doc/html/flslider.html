@@ -9,7 +9,7 @@
 <font color="#ffffff" face="helvetica, arial">&nbsp;<br><big><big><strong>flslider</strong></big></big></font></td
 ><td align=right valign=bottom
 ><font color="#ffffff" face="helvetica, arial"><a href=".">index</a><br>     <a href="index.html">list</a></font></td></tr></table>
-    <p><tt>xforms-python's&nbsp;functions&nbsp;to&nbsp;manage&nbsp;slider&nbsp;objects.</tt></p>
+    <p><tt>xforms-python's&nbsp;functions&nbsp;to&nbsp;manage&nbsp;slider&nbsp;flobjects.</tt></p>
 <p>
 <table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
 <tr bgcolor="#aa55cc">
@@ -27,7 +27,8 @@
 <font color="#ffffff" face="helvetica, arial"><big><strong>Functions</strong></big></font></td></tr>
     
 <tr><td bgcolor="#eeaa77"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
-<td width="100%"><dl><dt><a name="-fl_add_slider"><strong>fl_add_slider</strong></a>(slidertype, x, y, w, h, label)</dt><dd><tt><a href="#-fl_add_slider">fl_add_slider</a>(slidertype,&nbsp;x,&nbsp;y,&nbsp;w,&nbsp;h,&nbsp;label)<br>
+<td width="100%"><dl><dt><a name="-fl_add_slider"><strong>fl_add_slider</strong></a>(slidertype, xpos, ypos, width, height, label)</dt><dd><tt><a href="#-fl_add_slider">fl_add_slider</a>(slidertype,&nbsp;xpos,&nbsp;ypos,&nbsp;width,&nbsp;height,&nbsp;label)<br>
+-&gt;&nbsp;ptr_flobject<br>
 &nbsp;<br>
 Adds&nbsp;a&nbsp;slider&nbsp;to&nbsp;a&nbsp;form.&nbsp;No&nbsp;value&nbsp;is&nbsp;displayed.<br>
 &nbsp;<br>
@@ -42,21 +43,21 @@ Parameters<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_VERT_THIN_SLIDER,&nbsp;FL_HOR_THIN_SLIDER,&nbsp;FL_VERT_THIN_SLIDER,<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_HOR_THIN_SLIDER,&nbsp;FL_VERT_NICE_SLIDER2,&nbsp;FL_HOR_NICE_SLIDER2,<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_VERT_BASIC_SLIDER,&nbsp;FL_HOR_BASIC_SLIDER<br>
-&nbsp;&nbsp;&nbsp;&nbsp;x&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;xpos&nbsp;:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;horizontal&nbsp;position&nbsp;(upper-left&nbsp;corner)<br>
-&nbsp;&nbsp;&nbsp;&nbsp;y&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ypos&nbsp;:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;vertical&nbsp;position&nbsp;(upper-left&nbsp;corner)<br>
-&nbsp;&nbsp;&nbsp;&nbsp;w&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;width&nbsp;:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;width&nbsp;in&nbsp;coord&nbsp;units<br>
-&nbsp;&nbsp;&nbsp;&nbsp;h&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;height&nbsp;:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;height&nbsp;in&nbsp;coord&nbsp;units<br>
 &nbsp;&nbsp;&nbsp;&nbsp;label&nbsp;:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;label&nbsp;of&nbsp;the&nbsp;slider&nbsp;(placed&nbsp;below&nbsp;it&nbsp;by&nbsp;default)<br>
 &nbsp;<br>
 Returns<br>
 -------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;pFlObject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;slider&nbsp;object&nbsp;added&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_flobject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;slider&nbsp;flobject&nbsp;added&nbsp;<br>
 &nbsp;<br>
 Examples<br>
 --------<br>
@@ -66,7 +67,8 @@ Examples<br>
 Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;Demo&nbsp;=&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-fl_add_valslider"><strong>fl_add_valslider</strong></a>(slidertype, x, y, w, h, label)</dt><dd><tt><a href="#-fl_add_valslider">fl_add_valslider</a>(slidertype,&nbsp;x,&nbsp;y,&nbsp;w,&nbsp;h,&nbsp;label)<br>
+ <dl><dt><a name="-fl_add_valslider"><strong>fl_add_valslider</strong></a>(slidertype, xpos, ypos, width, height, label)</dt><dd><tt><a href="#-fl_add_valslider">fl_add_valslider</a>(slidertype,&nbsp;xpos,&nbsp;ypos,&nbsp;width,&nbsp;height,&nbsp;label)<br>
+-&gt;&nbsp;ptr_flobject<br>
 &nbsp;<br>
 Adds&nbsp;a&nbsp;slider&nbsp;to&nbsp;a&nbsp;form.&nbsp;Its&nbsp;value&nbsp;is&nbsp;displayed&nbsp;above&nbsp;or&nbsp;to&nbsp;the&nbsp;left<br>
 of&nbsp;the&nbsp;slider.<br>
@@ -81,21 +83,21 @@ Parameters<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_HOR_BROWSER_SLIDER2,&nbsp;FL_VERT_THIN_SLIDER,&nbsp;FL_HOR_THIN_SLIDER,<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_VERT_THIN_SLIDER,&nbsp;FL_HOR_THIN_SLIDER,&nbsp;FL_VERT_NICE_SLIDER2,<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_HOR_NICE_SLIDER2,&nbsp;FL_VERT_BASIC_SLIDER,&nbsp;FL_HOR_BASIC_SLIDER<br>
-&nbsp;&nbsp;&nbsp;&nbsp;x&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;xpos&nbsp;:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;horizontal&nbsp;position&nbsp;(upper-left&nbsp;corner)<br>
-&nbsp;&nbsp;&nbsp;&nbsp;y&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ypos&nbsp;:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;vertical&nbsp;position&nbsp;(upper-left&nbsp;corner)<br>
-&nbsp;&nbsp;&nbsp;&nbsp;w&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;width&nbsp;:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;width&nbsp;in&nbsp;coord&nbsp;units<br>
-&nbsp;&nbsp;&nbsp;&nbsp;h&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;height&nbsp;:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;height&nbsp;in&nbsp;coord&nbsp;units<br>
 &nbsp;&nbsp;&nbsp;&nbsp;label&nbsp;:&nbsp;str<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;text&nbsp;label&nbsp;of&nbsp;slider<br>
 &nbsp;<br>
 Returns<br>
 -------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;pFlObject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;slider&nbsp;with&nbsp;value&nbsp;object&nbsp;added<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_flobject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;slider&nbsp;with&nbsp;value&nbsp;flobject&nbsp;added<br>
 &nbsp;<br>
 Examples<br>
 --------<br>
@@ -105,14 +107,14 @@ Examples<br>
 Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;Demo&nbsp;=&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-fl_get_slider_bounds"><strong>fl_get_slider_bounds</strong></a>(pFlObject)</dt><dd><tt><a href="#-fl_get_slider_bounds">fl_get_slider_bounds</a>(pFlObject)<br>
+ <dl><dt><a name="-fl_get_slider_bounds"><strong>fl_get_slider_bounds</strong></a>(ptr_flobject)</dt><dd><tt><a href="#-fl_get_slider_bounds">fl_get_slider_bounds</a>(ptr_flobject)&nbsp;-&gt;&nbsp;minbound,&nbsp;maxbound<br>
 &nbsp;<br>
-Obtains&nbsp;minimum&nbsp;and&nbsp;maximum&nbsp;bounds/limits&nbsp;of&nbsp;a&nbsp;slider.<br>
+Finds&nbsp;out&nbsp;minimum&nbsp;and&nbsp;maximum&nbsp;value&nbsp;limits&nbsp;of&nbsp;a&nbsp;slider.<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;pFlObject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;slider&nbsp;object<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_flobject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;slider&nbsp;flobject<br>
 &nbsp;<br>
 Returns<br>
 -------<br>
@@ -127,20 +129,21 @@ Examples<br>
 &nbsp;<br>
 API_diversion<br>
 ----------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;API&nbsp;changed&nbsp;from&nbsp;XForms,&nbsp;upstream&nbsp;was<br>
-&nbsp;&nbsp;&nbsp;&nbsp;<a href="#-fl_get_slider_bounds">fl_get_slider_bounds</a>(pFlObject,&nbsp;minbound,&nbsp;maxbound)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;API&nbsp;changed&nbsp;from&nbsp;XForms,&nbsp;upstream&nbsp;is<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="#-fl_get_slider_bounds">fl_get_slider_bounds</a>(ptr_flobject,&nbsp;minbound,&nbsp;maxbound)<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-fl_get_slider_increment"><strong>fl_get_slider_increment</strong></a>(pFlObject)</dt><dd><tt><a href="#-fl_get_slider_increment">fl_get_slider_increment</a>(pFlObject)<br>
+ <dl><dt><a name="-fl_get_slider_increment"><strong>fl_get_slider_increment</strong></a>(ptr_flobject)</dt><dd><tt><a href="#-fl_get_slider_increment">fl_get_slider_increment</a>(ptr_flobject)&nbsp;-&gt;&nbsp;leftbtnval,&nbsp;midbtnval<br>
 &nbsp;<br>
-*todo*<br>
+Finds&nbsp;out&nbsp;current&nbsp;slider&nbsp;increments&nbsp;for&nbsp;clicks&nbsp;with&nbsp;left&nbsp;and&nbsp;middle<br>
+mouse&nbsp;button.<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;pFlObject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;slider&nbsp;object<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_flobject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;slider&nbsp;flobject<br>
 &nbsp;<br>
 Returns<br>
 -------<br>
@@ -155,15 +158,15 @@ Examples<br>
 &nbsp;<br>
 API_diversion<br>
 ----------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;API&nbsp;changed&nbsp;from&nbsp;XForms,&nbsp;upstream&nbsp;was<br>
-&nbsp;&nbsp;&nbsp;&nbsp;<a href="#-fl_get_slider_increment">fl_get_slider_increment</a>(pFlObject,&nbsp;leftbtnval,&nbsp;midlbtnval)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;API&nbsp;changed&nbsp;from&nbsp;XForms,&nbsp;upstream&nbsp;is<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="#-fl_get_slider_increment">fl_get_slider_increment</a>(ptr_flobject,&nbsp;leftbtnval,&nbsp;midlbtnval)<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-fl_get_slider_repeat"><strong>fl_get_slider_repeat</strong></a>(pFlObject)</dt><dd><tt><a href="#-fl_get_slider_repeat">fl_get_slider_repeat</a>(pFlObject)<br>
+ <dl><dt><a name="-fl_get_slider_repeat"><strong>fl_get_slider_repeat</strong></a>(ptr_flobject)</dt><dd><tt><a href="#-fl_get_slider_repeat">fl_get_slider_repeat</a>(ptr_flobject)&nbsp;-&gt;&nbsp;tdelay<br>
 &nbsp;<br>
-Obtains&nbsp;the&nbsp;time&nbsp;delay&nbsp;(in&nbsp;milliseconds)&nbsp;between&nbsp;jumps&nbsp;of&nbsp;the<br>
+Finds&nbsp;out&nbsp;the&nbsp;time&nbsp;delay&nbsp;(in&nbsp;milliseconds)&nbsp;between&nbsp;jumps&nbsp;of&nbsp;the<br>
 scrollbar&nbsp;knob&nbsp;when&nbsp;the&nbsp;mouse&nbsp;button&nbsp;is&nbsp;kept&nbsp;pressed&nbsp;down&nbsp;on&nbsp;the<br>
 scrollbar&nbsp;outside&nbsp;of&nbsp;the&nbsp;knobs&nbsp;area.&nbsp;The&nbsp;delay&nbsp;for&nbsp;the&nbsp;very&nbsp;first<br>
 jump&nbsp;is&nbsp;twice&nbsp;that&nbsp;long&nbsp;in&nbsp;order&nbsp;to&nbsp;avoid&nbsp;jumping&nbsp;to&nbsp;start&nbsp;too&nbsp;soon<br>
@@ -172,13 +175,13 @@ releasing&nbsp;the&nbsp;mouse&nbsp;button.<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;pFlObject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;slider&nbsp;object<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_flobject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;slider&nbsp;flobject<br>
 &nbsp;<br>
 Returns<br>
 -------<br>
 &nbsp;&nbsp;&nbsp;&nbsp;tdelay&nbsp;:&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;time&nbsp;delay<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;time&nbsp;delay&nbsp;in&nbsp;millisecs<br>
 &nbsp;<br>
 Examples<br>
 --------<br>
@@ -187,18 +190,18 @@ Examples<br>
 Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-fl_get_slider_value"><strong>fl_get_slider_value</strong></a>(pFlObject)</dt><dd><tt><a href="#-fl_get_slider_value">fl_get_slider_value</a>(pFlObject)<br>
+ <dl><dt><a name="-fl_get_slider_value"><strong>fl_get_slider_value</strong></a>(ptr_flobject)</dt><dd><tt><a href="#-fl_get_slider_value">fl_get_slider_value</a>(ptr_flobject)&nbsp;-&gt;&nbsp;slvalue<br>
 &nbsp;<br>
-Obtains&nbsp;value&nbsp;of&nbsp;a&nbsp;slider.<br>
+Finds&nbsp;out&nbsp;value&nbsp;of&nbsp;a&nbsp;slider.<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;pFlObject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;slider&nbsp;object<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_flobject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;slider&nbsp;flobject<br>
 &nbsp;<br>
 Returns<br>
 -------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;val&nbsp;:&nbsp;float<br>
+&nbsp;&nbsp;&nbsp;&nbsp;slvalue&nbsp;:&nbsp;float<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;current&nbsp;value<br>
 &nbsp;<br>
 Examples<br>
@@ -208,18 +211,18 @@ Examples<br>
 Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;Demo&nbsp;=&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-fl_set_slider_bounds"><strong>fl_set_slider_bounds</strong></a>(pFlObject, minbound, maxbound)</dt><dd><tt><a href="#-fl_set_slider_bounds">fl_set_slider_bounds</a>(pFlObject,&nbsp;minbound,&nbsp;maxbound)<br>
+ <dl><dt><a name="-fl_set_slider_bounds"><strong>fl_set_slider_bounds</strong></a>(ptr_flobject, minbound, maxbound)</dt><dd><tt><a href="#-fl_set_slider_bounds">fl_set_slider_bounds</a>(ptr_flobject,&nbsp;minbound,&nbsp;maxbound)<br>
 &nbsp;<br>
-Sets&nbsp;minimum&nbsp;and&nbsp;maximum&nbsp;bounds/limits&nbsp;of&nbsp;a&nbsp;slider.<br>
+Defines&nbsp;minimum&nbsp;and&nbsp;maximum&nbsp;value&nbsp;limits&nbsp;of&nbsp;a&nbsp;slider&nbsp;flobject.<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;pFlObject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;slider&nbsp;object<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_flobject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;slider&nbsp;flobject<br>
 &nbsp;&nbsp;&nbsp;&nbsp;minbound&nbsp;:&nbsp;float<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;minimum&nbsp;bound&nbsp;of&nbsp;slider<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;minimum&nbsp;value&nbsp;bound&nbsp;of&nbsp;slider<br>
 &nbsp;&nbsp;&nbsp;&nbsp;maxbound&nbsp;:&nbsp;float<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;maximum&nbsp;bound&nbsp;of&nbsp;slider<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;maximum&nbsp;value&nbsp;bound&nbsp;of&nbsp;slider<br>
 &nbsp;<br>
 Examples<br>
 --------<br>
@@ -228,18 +231,19 @@ Examples<br>
 Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;Demo&nbsp;=&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-fl_set_slider_filter"><strong>fl_set_slider_filter</strong></a>(pFlObject, py_ValFilter)</dt><dd><tt><a href="#-fl_set_slider_filter">fl_set_slider_filter</a>(pFlObject,&nbsp;py_ValFilter)<br>
+ <dl><dt><a name="-fl_set_slider_filter"><strong>fl_set_slider_filter</strong></a>(ptr_flobject, pyfn_ValFilter)</dt><dd><tt><a href="#-fl_set_slider_filter">fl_set_slider_filter</a>(ptr_flobject,&nbsp;pyfn_ValFilter)<br>
 &nbsp;<br>
-Registers&nbsp;a&nbsp;filter&nbsp;function&nbsp;to&nbsp;show&nbsp;alues&nbsp;in&nbsp;a&nbsp;slider&nbsp;object.&nbsp;By<br>
-default,&nbsp;slider&nbsp;value&nbsp;shown&nbsp;in&nbsp;floating&nbsp;point&nbsp;format)<br>
+Registers&nbsp;a&nbsp;filter&nbsp;function&nbsp;to&nbsp;show&nbsp;values&nbsp;in&nbsp;a&nbsp;slider&nbsp;flobject.<br>
+By&nbsp;default,&nbsp;slider&nbsp;value&nbsp;shown&nbsp;in&nbsp;floating&nbsp;point&nbsp;format.<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;pFlObject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;slider&nbsp;object<br>
-&nbsp;&nbsp;&nbsp;&nbsp;py_ValFilter&nbsp;:&nbsp;python&nbsp;function&nbsp;to&nbsp;show&nbsp;values&nbsp;in&nbsp;slider,&nbsp;returned&nbsp;value<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;name&nbsp;referring&nbsp;to&nbsp;function(pFlObject,&nbsp;valfloat,&nbsp;intprecis)&nbsp;-&gt;<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;string<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_flobject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;slider&nbsp;flobject<br>
+&nbsp;&nbsp;&nbsp;&nbsp;pyfn_ValFilter&nbsp;:&nbsp;python&nbsp;function,&nbsp;returned&nbsp;value<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;name&nbsp;referring&nbsp;to&nbsp;function(ptr_flobject,&nbsp;valfloat,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;intprecis)&nbsp;-&gt;&nbsp;string<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;function&nbsp;to&nbsp;show&nbsp;values&nbsp;in&nbsp;slider<br>
 &nbsp;<br>
 Examples<br>
 --------<br>
@@ -248,14 +252,15 @@ Examples<br>
 Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-fl_set_slider_increment"><strong>fl_set_slider_increment</strong></a>(pFlObject, leftbtnval, midbtnval)</dt><dd><tt><a href="#-fl_set_slider_increment">fl_set_slider_increment</a>(pFlObject,&nbsp;leftbtnval,&nbsp;midbtnval)<br>
+ <dl><dt><a name="-fl_set_slider_increment"><strong>fl_set_slider_increment</strong></a>(ptr_flobject, leftbtnval, midbtnval)</dt><dd><tt><a href="#-fl_set_slider_increment">fl_set_slider_increment</a>(ptr_flobject,&nbsp;leftbtnval,&nbsp;midbtnval)<br>
 &nbsp;<br>
-*todo*<br>
+Defines&nbsp;slider&nbsp;increments&nbsp;for&nbsp;clicks&nbsp;with&nbsp;left&nbsp;and&nbsp;middle<br>
+mouse&nbsp;button.<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;pFlObject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;slider&nbsp;object<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_flobject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;slider&nbsp;flobject<br>
 &nbsp;&nbsp;&nbsp;&nbsp;leftbtnval&nbsp;:&nbsp;float<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;value&nbsp;to&nbsp;increment&nbsp;if&nbsp;the&nbsp;left&nbsp;mouse&nbsp;button&nbsp;is&nbsp;pressed<br>
 &nbsp;&nbsp;&nbsp;&nbsp;midbtnval&nbsp;:&nbsp;float<br>
@@ -268,27 +273,27 @@ Examples<br>
 Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-fl_set_slider_precision"><strong>fl_set_slider_precision</strong></a>(pFlObject, precnum)</dt><dd><tt><a href="#-fl_set_slider_precision">fl_set_slider_precision</a>(pFlObject,&nbsp;prec)<br>
+ <dl><dt><a name="-fl_set_slider_precision"><strong>fl_set_slider_precision</strong></a>(ptr_flobject, precis)</dt><dd><tt><a href="#-fl_set_slider_precision">fl_set_slider_precision</a>(ptr_flobject,&nbsp;precis)<br>
 &nbsp;<br>
-Sets&nbsp;precision&nbsp;which&nbsp;value&nbsp;a&nbsp;valslider&nbsp;is&nbsp;shown&nbsp;with.<br>
+Defines&nbsp;the&nbsp;precision&nbsp;which&nbsp;value&nbsp;a&nbsp;valslider&nbsp;is&nbsp;shown&nbsp;with.<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;pFlObject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;slider&nbsp;object<br>
-&nbsp;&nbsp;&nbsp;&nbsp;prec&nbsp;:&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;precision&nbsp;of&nbsp;shown&nbsp;value<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_flobject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;slider&nbsp;flobject<br>
+&nbsp;&nbsp;&nbsp;&nbsp;precis&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;precision&nbsp;number&nbsp;of&nbsp;shown&nbsp;value&nbsp;after&nbsp;the&nbsp;dot.<br>
 &nbsp;<br>
 Examples<br>
 --------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;*todo*<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;<a href="#-fl_set_slider_precision">fl_set_slider_precision</a>(sldobj,&nbsp;3)<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-fl_set_slider_repeat"><strong>fl_set_slider_repeat</strong></a>(pFlObject, delay)</dt><dd><tt><a href="#-fl_set_slider_repeat">fl_set_slider_repeat</a>(pFlObject,&nbsp;delay)<br>
+ <dl><dt><a name="-fl_set_slider_repeat"><strong>fl_set_slider_repeat</strong></a>(ptr_flobject, tdelay)</dt><dd><tt><a href="#-fl_set_slider_repeat">fl_set_slider_repeat</a>(ptr_flobject,&nbsp;tdelay)<br>
 &nbsp;<br>
-Sets&nbsp;the&nbsp;time&nbsp;delay&nbsp;between&nbsp;jumps&nbsp;of&nbsp;the&nbsp;scrollbar&nbsp;knob&nbsp;when&nbsp;the<br>
+Defines&nbsp;the&nbsp;time&nbsp;delay&nbsp;between&nbsp;jumps&nbsp;of&nbsp;the&nbsp;scrollbar&nbsp;knob&nbsp;when&nbsp;the<br>
 mouse&nbsp;button&nbsp;is&nbsp;kept&nbsp;pressed&nbsp;down&nbsp;on&nbsp;the&nbsp;scrollbar&nbsp;outside&nbsp;of&nbsp;the<br>
 knobs&nbsp;area.&nbsp;The&nbsp;delay&nbsp;for&nbsp;the&nbsp;very&nbsp;first&nbsp;jump&nbsp;is&nbsp;twice&nbsp;that&nbsp;long&nbsp;in<br>
 order&nbsp;to&nbsp;avoid&nbsp;jumping&nbsp;to&nbsp;start&nbsp;too&nbsp;soon&nbsp;when&nbsp;only&nbsp;a&nbsp;single&nbsp;click<br>
@@ -296,11 +301,11 @@ was&nbsp;intended&nbsp;but&nbsp;the&nbsp;user&nbsp;is&nbsp;a&nbsp;bit&nbsp;slow&
 &nbsp;<br>
 Parameters<br>
 ----------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;pFlObject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;slider&nbsp;object<br>
-&nbsp;&nbsp;&nbsp;&nbsp;delay&nbsp;:&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;time&nbsp;delay&nbsp;(in&nbsp;milliseconds)&nbsp;to&nbsp;be&nbsp;set.&nbsp;The&nbsp;default&nbsp;value&nbsp;is<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;100&nbsp;ms.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_flobject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;slider&nbsp;flobject<br>
+&nbsp;&nbsp;&nbsp;&nbsp;tdelay&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;time&nbsp;delay&nbsp;(in&nbsp;milliseconds)&nbsp;to&nbsp;be&nbsp;set.&nbsp;The&nbsp;default<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;value&nbsp;is&nbsp;100&nbsp;ms.<br>
 &nbsp;<br>
 Examples<br>
 --------<br>
@@ -309,14 +314,14 @@ Examples<br>
 Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-fl_set_slider_size"><strong>fl_set_slider_size</strong></a>(pFlObject, size)</dt><dd><tt><a href="#-fl_set_slider_size">fl_set_slider_size</a>(pFlObject,&nbsp;size)<br>
+ <dl><dt><a name="-fl_set_slider_size"><strong>fl_set_slider_size</strong></a>(ptr_flobject, size)</dt><dd><tt><a href="#-fl_set_slider_size">fl_set_slider_size</a>(ptr_flobject,&nbsp;size)<br>
 &nbsp;<br>
-Sets&nbsp;the&nbsp;size&nbsp;of&nbsp;a&nbsp;slider.<br>
+Defines&nbsp;the&nbsp;size&nbsp;of&nbsp;a&nbsp;slider&nbsp;flobject.<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;pFlObject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;slider&nbsp;object<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_flobject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;slider&nbsp;flobject<br>
 &nbsp;&nbsp;&nbsp;&nbsp;size&nbsp;:&nbsp;float<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;value&nbsp;of&nbsp;size&nbsp;of&nbsp;the&nbsp;slider<br>
 &nbsp;<br>
@@ -327,14 +332,15 @@ Examples<br>
 Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;Demo&nbsp;=&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-fl_set_slider_step"><strong>fl_set_slider_step</strong></a>(pFlObject, step)</dt><dd><tt><a href="#-fl_set_slider_step">fl_set_slider_step</a>(pFlObject,&nbsp;step)<br>
+ <dl><dt><a name="-fl_set_slider_step"><strong>fl_set_slider_step</strong></a>(ptr_flobject, step)</dt><dd><tt><a href="#-fl_set_slider_step">fl_set_slider_step</a>(ptr_flobject,&nbsp;step)<br>
 &nbsp;<br>
-*todo*<br>
+Defines&nbsp;the&nbsp;step&nbsp;size&nbsp;to&nbsp;which&nbsp;values&nbsp;are&nbsp;rounded&nbsp;in&nbsp;the<br>
+slider&nbsp;flobject.<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;pFlObject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;slider&nbsp;object<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_flobject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;slider&nbsp;flobject<br>
 &nbsp;&nbsp;&nbsp;&nbsp;step&nbsp;:&nbsp;float<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;step&nbsp;value<br>
 &nbsp;<br>
@@ -345,15 +351,15 @@ Examples<br>
 Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-fl_set_slider_value"><strong>fl_set_slider_value</strong></a>(pFlObject, val)</dt><dd><tt><a href="#-fl_set_slider_value">fl_set_slider_value</a>(pFlObject,&nbsp;val)<br>
+ <dl><dt><a name="-fl_set_slider_value"><strong>fl_set_slider_value</strong></a>(ptr_flobject, slvalue)</dt><dd><tt><a href="#-fl_set_slider_value">fl_set_slider_value</a>(ptr_flobject,&nbsp;slvalue)<br>
 &nbsp;<br>
 Changes&nbsp;the&nbsp;value&nbsp;of&nbsp;a&nbsp;slider.<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;pFlObject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;slider&nbsp;object<br>
-&nbsp;&nbsp;&nbsp;&nbsp;val&nbsp;:&nbsp;float<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_flobject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;slider&nbsp;flobject<br>
+&nbsp;&nbsp;&nbsp;&nbsp;slvalue&nbsp;:&nbsp;float<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;new&nbsp;value&nbsp;of&nbsp;slider<br>
 &nbsp;<br>
 Examples<br>
@@ -364,4 +370,4 @@ Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;Demo&nbsp;=&nbsp;OK</tt></dd></dl>
 </td></tr></table>
-<p>Updated on: 2010-12-09 10:11 +0100</body></html>
+<p>Updated on: 2010-12-20 01:16 +0100</body></html>
