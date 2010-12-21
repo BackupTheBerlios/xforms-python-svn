@@ -3,7 +3,8 @@ This file describes documentation currently available for xforms-python.
 
 If you need a guidance to xforms-python API, you should read (in this order):
 
-* HTML documentation (.html) files in doc/ directory, as API reference.
+* functions' docstring in python code, or HTML documentation (.html) files
+in doc/ directory, as API reference.
 * demos examples in examples/ directory
 * XForms-toolkit documentation (.html or .tex files) available from
 XForms homepage (http://www.xforms-toolkit.org): most of XForms docs

@@ -20,7 +20,7 @@ import xformslib as xfl
 class FLDemo06(object):
     def __init__(self, lsysargv, sysargv):
 
-        xfl.fl_initialize(lsysargv, sysargv, "FormDemo", 0, 0)
+        xfl.fl_initialize(lsysargv, sysargv, "FormDemo", None, 0)
         self.make_form1()
         xfl.fl_show_form(self.pform, xfl.FL_PLACE_CENTER, xfl.FL_NOBORDER, \
                 "Demo06")

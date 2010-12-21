@@ -23,7 +23,7 @@ class FD_form0(object):
 
 class Flstrsize(object):
     def __init__(self, lsysargv, sysargv):
-        xfl.fl_initialize(lsysargv, sysargv, "FormDemo", 0, 0)
+        xfl.fl_initialize(lsysargv, sysargv, "FormDemo", None, 0)
         # fill-in form initialization code
         self.fd_form0 = self.create_form_form0()
         # show the first form

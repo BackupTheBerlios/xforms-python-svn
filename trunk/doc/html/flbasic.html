@@ -198,8 +198,8 @@ Parameters<br>
 Returns<br>
 -------<br>
 &nbsp;&nbsp;&nbsp;&nbsp;result&nbsp;:&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1&nbsp;(on&nbsp;success),&nbsp;or&nbsp;-1&nbsp;(on&nbsp;failure,&nbsp;if&nbsp;no&nbsp;symbol&nbsp;or&nbsp;no<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;function)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1&nbsp;(on&nbsp;success),&nbsp;or&nbsp;-1&nbsp;(on&nbsp;failure,&nbsp;if&nbsp;no&nbsp;symbol<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;or&nbsp;no&nbsp;function)<br>
 &nbsp;<br>
 Examples<br>
 --------<br>
@@ -380,7 +380,7 @@ Defines&nbsp;the&nbsp;background&nbsp;color&nbsp;in&nbsp;the&nbsp;default&nbsp;G
 Parameters<br>
 ----------<br>
 &nbsp;&nbsp;&nbsp;&nbsp;colr&nbsp;:&nbsp;long_pos<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;color&nbsp;value<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;XForms&nbsp;colormap&nbsp;index&nbsp;as&nbsp;color<br>
 &nbsp;<br>
 Examples<br>
 --------<br>
@@ -397,7 +397,7 @@ Defines&nbsp;the&nbsp;background&nbsp;color&nbsp;for&nbsp;text&nbsp;in&nbsp;the&
 Parameters<br>
 ----------<br>
 &nbsp;&nbsp;&nbsp;&nbsp;colr&nbsp;:&nbsp;long_pos<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;color&nbsp;value<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;XForms&nbsp;colormap&nbsp;index&nbsp;as&nbsp;color<br>
 &nbsp;<br>
 Examples<br>
 --------<br>
@@ -468,7 +468,7 @@ Graphics&nbsp;Context&nbsp;(gc[0]).<br>
 Parameters<br>
 ----------<br>
 &nbsp;&nbsp;&nbsp;&nbsp;colr&nbsp;:&nbsp;long_pos<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;color&nbsp;value<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;XForms&nbsp;colormap&nbsp;index&nbsp;as&nbsp;color<br>
 &nbsp;<br>
 Examples<br>
 --------<br>
@@ -677,7 +677,7 @@ Parameters<br>
 &nbsp;&nbsp;&nbsp;&nbsp;height&nbsp;:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;height&nbsp;in&nbsp;coord&nbsp;units<br>
 &nbsp;&nbsp;&nbsp;&nbsp;colr&nbsp;:&nbsp;long_pos<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;color&nbsp;value<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;XForms&nbsp;colormap&nbsp;index&nbsp;as&nbsp;color<br>
 &nbsp;<br>
 Returns<br>
 -------<br>
@@ -714,7 +714,7 @@ Parameters<br>
 &nbsp;&nbsp;&nbsp;&nbsp;height&nbsp;:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;height&nbsp;in&nbsp;coord&nbsp;units<br>
 &nbsp;&nbsp;&nbsp;&nbsp;colr&nbsp;:&nbsp;long_pos<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;color&nbsp;value<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;XForms&nbsp;colormap&nbsp;index&nbsp;as&nbsp;color<br>
 &nbsp;&nbsp;&nbsp;&nbsp;bndrwidth&nbsp;:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;width&nbsp;of&nbsp;the&nbsp;boundary<br>
 &nbsp;<br>
@@ -729,11 +729,11 @@ Notes<br>
  <dl><dt><a name="-fl_drw_text"><strong>fl_drw_text</strong></a>(align, xpos, ypos, width, height, colr, style, size, txtstr)</dt><dd><tt><a href="#-fl_drw_text">fl_drw_text</a>(align,&nbsp;xpos,&nbsp;ypos,&nbsp;width,&nbsp;height,&nbsp;colr,&nbsp;style,&nbsp;size,&nbsp;txtstr)<br>
 &nbsp;<br>
 Draws&nbsp;the&nbsp;text&nbsp;inside&nbsp;the&nbsp;bounding&nbsp;box&nbsp;according&nbsp;to&nbsp;the&nbsp;alignment<br>
-requested.&nbsp;It&nbsp;puts&nbsp;a&nbsp;padding&nbsp;of&nbsp;5&nbsp;pixels&nbsp;in&nbsp;vertical&nbsp;direction&nbsp;and&nbsp;4<br>
-in&nbsp;horizontal&nbsp;around&nbsp;the&nbsp;text.&nbsp;Thus&nbsp;the&nbsp;bounding&nbsp;box&nbsp;should&nbsp;be&nbsp;10&nbsp;pixels<br>
-wider&nbsp;and&nbsp;8&nbsp;pixels&nbsp;higher&nbsp;than&nbsp;required&nbsp;for&nbsp;the&nbsp;text&nbsp;to&nbsp;be&nbsp;drawn.&nbsp;It<br>
-interprets&nbsp;a&nbsp;text&nbsp;string&nbsp;starting&nbsp;with&nbsp;the&nbsp;character&nbsp;@&nbsp;differently&nbsp;in<br>
-drawing&nbsp;some&nbsp;symbols&nbsp;instead.<br>
+requested.&nbsp;It&nbsp;puts&nbsp;a&nbsp;padding&nbsp;of&nbsp;5&nbsp;pixels&nbsp;in&nbsp;vertical&nbsp;direction&nbsp;and<br>
+4&nbsp;in&nbsp;horizontal&nbsp;around&nbsp;the&nbsp;text.&nbsp;Thus&nbsp;the&nbsp;bounding&nbsp;box&nbsp;should&nbsp;be&nbsp;10<br>
+pixels&nbsp;wider&nbsp;and&nbsp;8&nbsp;pixels&nbsp;higher&nbsp;than&nbsp;required&nbsp;for&nbsp;the&nbsp;text&nbsp;to&nbsp;be<br>
+drawn.&nbsp;It&nbsp;interprets&nbsp;a&nbsp;text&nbsp;string&nbsp;starting&nbsp;with&nbsp;the&nbsp;character&nbsp;@<br>
+differently&nbsp;in&nbsp;drawing&nbsp;some&nbsp;symbols&nbsp;instead.<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
@@ -752,7 +752,7 @@ Parameters<br>
 &nbsp;&nbsp;&nbsp;&nbsp;height&nbsp;:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;height&nbsp;in&nbsp;coord&nbsp;units<br>
 &nbsp;&nbsp;&nbsp;&nbsp;colr&nbsp;:&nbsp;long_pos<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;color&nbsp;value<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;XForms&nbsp;colormap&nbsp;index&nbsp;as&nbsp;color<br>
 &nbsp;&nbsp;&nbsp;&nbsp;style&nbsp;:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;font&nbsp;style.&nbsp;Values&nbsp;(from&nbsp;xfdata.py)&nbsp;FL_NORMAL_STYLE,<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_BOLD_STYLE,&nbsp;FL_ITALIC_STYLE,&nbsp;FL_BOLDITALIC_STYLE,<br>
@@ -800,7 +800,7 @@ Parameters<br>
 &nbsp;&nbsp;&nbsp;&nbsp;height&nbsp;:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;height&nbsp;in&nbsp;coord&nbsp;units<br>
 &nbsp;&nbsp;&nbsp;&nbsp;colr&nbsp;:&nbsp;long_pos<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;color&nbsp;value<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;XForms&nbsp;colormap&nbsp;index&nbsp;as&nbsp;color<br>
 &nbsp;&nbsp;&nbsp;&nbsp;style&nbsp;:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;font&nbsp;style.&nbsp;Values&nbsp;(from&nbsp;xfdata.py)&nbsp;FL_NORMAL_STYLE,<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_BOLD_STYLE,&nbsp;FL_ITALIC_STYLE,&nbsp;FL_BOLDITALIC_STYLE,<br>
@@ -849,7 +849,7 @@ Parameters<br>
 &nbsp;&nbsp;&nbsp;&nbsp;height&nbsp;:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;height&nbsp;in&nbsp;coord&nbsp;units<br>
 &nbsp;&nbsp;&nbsp;&nbsp;colr&nbsp;:&nbsp;long_pos<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;color&nbsp;value<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;XForms&nbsp;colormap&nbsp;index&nbsp;as&nbsp;color<br>
 &nbsp;&nbsp;&nbsp;&nbsp;style&nbsp;:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;font&nbsp;style.&nbsp;Values&nbsp;(from&nbsp;xfdata.py)&nbsp;FL_NORMAL_STYLE,<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_BOLD_STYLE,&nbsp;FL_ITALIC_STYLE,&nbsp;FL_BOLDITALIC_STYLE,<br>
@@ -865,7 +865,7 @@ Parameters<br>
 &nbsp;&nbsp;&nbsp;&nbsp;txtstr&nbsp;:&nbsp;str<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;text&nbsp;to&nbsp;draw<br>
 &nbsp;&nbsp;&nbsp;&nbsp;curscolr&nbsp;:&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;color&nbsp;of&nbsp;the&nbsp;cursor<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;XForms&nbsp;colormap&nbsp;index&nbsp;as&nbsp;color&nbsp;of&nbsp;the&nbsp;cursor<br>
 &nbsp;&nbsp;&nbsp;&nbsp;pos&nbsp;:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;position&nbsp;which&nbsp;indicates&nbsp;the&nbsp;index&nbsp;of&nbsp;the&nbsp;character&nbsp;before<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;which&nbsp;to&nbsp;draw&nbsp;the&nbsp;cursor&nbsp;(-1&nbsp;for&nbsp;not&nbsp;showing&nbsp;it)<br>
@@ -1041,7 +1041,7 @@ of&nbsp;colors&nbsp;are&nbsp;known.&nbsp;You&nbsp;should&nbsp;not&nbsp;do&nbsp;t
 Parameters<br>
 ----------<br>
 &nbsp;&nbsp;&nbsp;&nbsp;colrlist&nbsp;:&nbsp;list&nbsp;of&nbsp;long_pos<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;color&nbsp;value&nbsp;*todo*<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;series&nbsp;of&nbsp;XForms&nbsp;colormap&nbsp;indices&nbsp;as&nbsp;colors<br>
 &nbsp;&nbsp;&nbsp;&nbsp;numcolr&nbsp;:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;number&nbsp;of&nbsp;colors&nbsp;stored&nbsp;in&nbsp;the&nbsp;array&nbsp;of&nbsp;colors<br>
 &nbsp;<br>
@@ -1312,17 +1312,18 @@ Notes<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;Demo&nbsp;=&nbsp;OK</tt></dd></dl>
  <dl><dt><a name="-fl_get_flcolor"><strong>fl_get_flcolor</strong></a> = fl_get_pixel(colr)</dt><dd><tt><a href="#-fl_get_pixel">fl_get_pixel</a>(colr)&nbsp;-&gt;&nbsp;pixelval<br>
 &nbsp;<br>
-Finds&nbsp;out&nbsp;the&nbsp;actual&nbsp;pixel&nbsp;value&nbsp;the&nbsp;X&nbsp;server&nbsp;understands.&nbsp;XForms<br>
-library&nbsp;keeps&nbsp;an&nbsp;internal&nbsp;colormap,&nbsp;initialized&nbsp;to&nbsp;predefined&nbsp;colors.<br>
-The&nbsp;predefined&nbsp;colors&nbsp;do&nbsp;not&nbsp;correspond&nbsp;to&nbsp;pixel&nbsp;values&nbsp;the&nbsp;X&nbsp;server<br>
-understands&nbsp;but&nbsp;are&nbsp;indexes&nbsp;into&nbsp;the&nbsp;colormap.&nbsp;Therefore,&nbsp;they&nbsp;cannot<br>
-be&nbsp;used&nbsp;in&nbsp;any&nbsp;of&nbsp;the&nbsp;Graphics&nbsp;Context&nbsp;(GC)&nbsp;altering&nbsp;or&nbsp;Xlib&nbsp;routines.<br>
+Finds&nbsp;out&nbsp;the&nbsp;actual&nbsp;pixel&nbsp;value&nbsp;the&nbsp;X&nbsp;server&nbsp;understands&nbsp;from&nbsp;a&nbsp;XForms<br>
+colormap&nbsp;index.&nbsp;XForms&nbsp;library&nbsp;keeps&nbsp;an&nbsp;internal&nbsp;colormap,&nbsp;initialized<br>
+to&nbsp;predefined&nbsp;colors.&nbsp;The&nbsp;predefined&nbsp;colors&nbsp;do&nbsp;not&nbsp;correspond&nbsp;to&nbsp;pixel<br>
+values&nbsp;the&nbsp;X&nbsp;server&nbsp;understands&nbsp;but&nbsp;are&nbsp;indexes&nbsp;into&nbsp;the&nbsp;colormap.<br>
+Therefore,&nbsp;they&nbsp;cannot&nbsp;be&nbsp;used&nbsp;in&nbsp;any&nbsp;of&nbsp;the&nbsp;Graphics&nbsp;Context&nbsp;(GC)<br>
+altering&nbsp;or&nbsp;Xlib&nbsp;routines.<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
 &nbsp;&nbsp;&nbsp;&nbsp;colr&nbsp;:&nbsp;long_pos<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;XForms&nbsp;colormap&nbsp;index.&nbsp;Values&nbsp;(from&nbsp;xfdata.py)&nbsp;FL_GREEN&nbsp;..<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_WHITE&nbsp;..&nbsp;FL_RED&nbsp;..&nbsp;etc..<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;XForms&nbsp;colormap&nbsp;index&nbsp;as&nbsp;color.&nbsp;Values&nbsp;(from&nbsp;xfdata.py)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_GREEN,&nbsp;FL_WHITE,&nbsp;FL_RED,&nbsp;etc..<br>
 &nbsp;<br>
 Returns<br>
 -------<br>
@@ -1389,7 +1390,7 @@ initialization&nbsp;routine&nbsp;fl_initialize().<br>
 Parameters<br>
 ----------<br>
 &nbsp;&nbsp;&nbsp;&nbsp;colr&nbsp;:&nbsp;long_pos<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;color&nbsp;value<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;XForms&nbsp;colormap&nbsp;index&nbsp;as&nbsp;color<br>
 &nbsp;<br>
 Returns<br>
 -------<br>
@@ -1504,9 +1505,9 @@ Parameters<br>
 Returns<br>
 -------<br>
 &nbsp;&nbsp;&nbsp;&nbsp;fgcolr&nbsp;:&nbsp;long_pos<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;foreground&nbsp;color&nbsp;value<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;XForms&nbsp;colormap&nbsp;index&nbsp;as&nbsp;foreground&nbsp;color<br>
 &nbsp;&nbsp;&nbsp;&nbsp;bgcolr&nbsp;:&nbsp;long_pos<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;background&nbsp;color&nbsp;value<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;XForms&nbsp;colormap&nbsp;index&nbsp;as&nbsp;background&nbsp;color<br>
 &nbsp;<br>
 Examples<br>
 --------<br>
@@ -1689,7 +1690,7 @@ Parameters<br>
 Returns<br>
 -------<br>
 &nbsp;&nbsp;&nbsp;&nbsp;colr&nbsp;:&nbsp;long_pos<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;color&nbsp;value<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;XForms&nbsp;colormap&nbsp;index&nbsp;as&nbsp;color&nbsp;value<br>
 &nbsp;<br>
 Examples<br>
 --------<br>
@@ -1893,17 +1894,18 @@ Notes<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
  <dl><dt><a name="-fl_get_pixel"><strong>fl_get_pixel</strong></a>(colr)</dt><dd><tt><a href="#-fl_get_pixel">fl_get_pixel</a>(colr)&nbsp;-&gt;&nbsp;pixelval<br>
 &nbsp;<br>
-Finds&nbsp;out&nbsp;the&nbsp;actual&nbsp;pixel&nbsp;value&nbsp;the&nbsp;X&nbsp;server&nbsp;understands.&nbsp;XForms<br>
-library&nbsp;keeps&nbsp;an&nbsp;internal&nbsp;colormap,&nbsp;initialized&nbsp;to&nbsp;predefined&nbsp;colors.<br>
-The&nbsp;predefined&nbsp;colors&nbsp;do&nbsp;not&nbsp;correspond&nbsp;to&nbsp;pixel&nbsp;values&nbsp;the&nbsp;X&nbsp;server<br>
-understands&nbsp;but&nbsp;are&nbsp;indexes&nbsp;into&nbsp;the&nbsp;colormap.&nbsp;Therefore,&nbsp;they&nbsp;cannot<br>
-be&nbsp;used&nbsp;in&nbsp;any&nbsp;of&nbsp;the&nbsp;Graphics&nbsp;Context&nbsp;(GC)&nbsp;altering&nbsp;or&nbsp;Xlib&nbsp;routines.<br>
+Finds&nbsp;out&nbsp;the&nbsp;actual&nbsp;pixel&nbsp;value&nbsp;the&nbsp;X&nbsp;server&nbsp;understands&nbsp;from&nbsp;a&nbsp;XForms<br>
+colormap&nbsp;index.&nbsp;XForms&nbsp;library&nbsp;keeps&nbsp;an&nbsp;internal&nbsp;colormap,&nbsp;initialized<br>
+to&nbsp;predefined&nbsp;colors.&nbsp;The&nbsp;predefined&nbsp;colors&nbsp;do&nbsp;not&nbsp;correspond&nbsp;to&nbsp;pixel<br>
+values&nbsp;the&nbsp;X&nbsp;server&nbsp;understands&nbsp;but&nbsp;are&nbsp;indexes&nbsp;into&nbsp;the&nbsp;colormap.<br>
+Therefore,&nbsp;they&nbsp;cannot&nbsp;be&nbsp;used&nbsp;in&nbsp;any&nbsp;of&nbsp;the&nbsp;Graphics&nbsp;Context&nbsp;(GC)<br>
+altering&nbsp;or&nbsp;Xlib&nbsp;routines.<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
 &nbsp;&nbsp;&nbsp;&nbsp;colr&nbsp;:&nbsp;long_pos<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;XForms&nbsp;colormap&nbsp;index.&nbsp;Values&nbsp;(from&nbsp;xfdata.py)&nbsp;FL_GREEN&nbsp;..<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_WHITE&nbsp;..&nbsp;FL_RED&nbsp;..&nbsp;etc..<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;XForms&nbsp;colormap&nbsp;index&nbsp;as&nbsp;color.&nbsp;Values&nbsp;(from&nbsp;xfdata.py)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_GREEN,&nbsp;FL_WHITE,&nbsp;FL_RED,&nbsp;etc..<br>
 &nbsp;<br>
 Returns<br>
 -------<br>
@@ -2137,7 +2139,7 @@ of&nbsp;XForms&nbsp;<a href="#-fl_get_icm_color">fl_get_icm_color</a>()&nbsp;is&
 Parameters<br>
 ----------<br>
 &nbsp;&nbsp;&nbsp;&nbsp;colr&nbsp;:&nbsp;long_pos<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;color&nbsp;value<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;XForms&nbsp;colormap&nbsp;index&nbsp;as&nbsp;color<br>
 &nbsp;<br>
 Returns<br>
 -------<br>
@@ -2378,7 +2380,7 @@ Indices&nbsp;larger&nbsp;than&nbsp;224&nbsp;are&nbsp;reserved&nbsp;and&nbsp;shou
 Parameters<br>
 ----------<br>
 &nbsp;&nbsp;&nbsp;&nbsp;colr&nbsp;:&nbsp;long_pos<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;new&nbsp;color&nbsp;value&nbsp;to&nbsp;be&nbsp;mapped<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;XForms&nbsp;colormap&nbsp;index&nbsp;as&nbsp;new&nbsp;color&nbsp;to&nbsp;be&nbsp;mapped<br>
 &nbsp;&nbsp;&nbsp;&nbsp;red&nbsp;:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;value&nbsp;for&nbsp;red<br>
 &nbsp;&nbsp;&nbsp;&nbsp;green&nbsp;:&nbsp;int<br>
@@ -2408,7 +2410,7 @@ obtained&nbsp;via&nbsp;resources.<br>
 Parameters<br>
 ----------<br>
 &nbsp;&nbsp;&nbsp;&nbsp;colr&nbsp;:&nbsp;long_pos<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;color&nbsp;value&nbsp;to&nbsp;be&nbsp;mapped<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;XForms&nbsp;colormap&nbsp;index&nbsp;as&nbsp;color&nbsp;to&nbsp;be&nbsp;mapped<br>
 &nbsp;&nbsp;&nbsp;&nbsp;rgbcolrname&nbsp;:&nbsp;str<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;name&nbsp;of&nbsp;mapped&nbsp;color&nbsp;from&nbsp;the&nbsp;systems&nbsp;color&nbsp;database&nbsp;file<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"/usr/share/X11/rgb.txt"&nbsp;(see&nbsp;that&nbsp;file&nbsp;for&nbsp;possible&nbsp;values)<br>
@@ -2434,7 +2436,7 @@ obtained&nbsp;via&nbsp;resources.<br>
 Parameters<br>
 ----------<br>
 &nbsp;&nbsp;&nbsp;&nbsp;colr&nbsp;:&nbsp;long_pos<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;color&nbsp;value&nbsp;to&nbsp;be&nbsp;mapped<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;XForms&nbsp;colormap&nbsp;index&nbsp;as&nbsp;color&nbsp;to&nbsp;be&nbsp;mapped<br>
 &nbsp;&nbsp;&nbsp;&nbsp;rgbcolrname&nbsp;:&nbsp;str<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;name&nbsp;of&nbsp;mapped&nbsp;color&nbsp;from&nbsp;the&nbsp;systems&nbsp;color&nbsp;database&nbsp;file<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"/usr/share/X11/rgb.txt"&nbsp;(see&nbsp;that&nbsp;file&nbsp;for&nbsp;possible&nbsp;values)<br>
@@ -3570,7 +3572,7 @@ server&nbsp;by&nbsp;the&nbsp;initialization&nbsp;routine&nbsp;fl_initialize().<b
 Parameters<br>
 ----------<br>
 &nbsp;&nbsp;&nbsp;&nbsp;colr&nbsp;:&nbsp;long_pos<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;color&nbsp;value<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;XForms&nbsp;colormap&nbsp;index&nbsp;as&nbsp;color<br>
 &nbsp;&nbsp;&nbsp;&nbsp;red&nbsp;:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;value&nbsp;for&nbsp;red<br>
 &nbsp;&nbsp;&nbsp;&nbsp;green&nbsp;:&nbsp;int<br>
@@ -3737,9 +3739,9 @@ Parameters<br>
 &nbsp;&nbsp;&nbsp;&nbsp;ptr_flobject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;flobject&nbsp;to&nbsp;be&nbsp;set<br>
 &nbsp;&nbsp;&nbsp;&nbsp;fgcolr&nbsp;:&nbsp;long_pos<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;foreground&nbsp;color&nbsp;value<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;XForms&nbsp;colormap&nbsp;index&nbsp;as&nbsp;foreground&nbsp;color<br>
 &nbsp;&nbsp;&nbsp;&nbsp;bgcolr&nbsp;:&nbsp;long_pos<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;background&nbsp;color&nbsp;value<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;XForms&nbsp;colormap&nbsp;index&nbsp;as&nbsp;background&nbsp;color<br>
 &nbsp;<br>
 Examples<br>
 --------<br>
@@ -3933,8 +3935,8 @@ Parameters<br>
 &nbsp;&nbsp;&nbsp;&nbsp;ptr_flobject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;flobject&nbsp;to&nbsp;be&nbsp;set<br>
 &nbsp;&nbsp;&nbsp;&nbsp;colr&nbsp;:&nbsp;long_pos<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;label&nbsp;color.&nbsp;Values&nbsp;(from&nbsp;xfdata.py)&nbsp;one&nbsp;of&nbsp;defined&nbsp;colors<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_BLACK,&nbsp;...&nbsp;FL_BLUE,&nbsp;...&nbsp;FL_GREEN,&nbsp;...&nbsp;FL_RED,&nbsp;...&nbsp;etc..<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;XForms&nbsp;colormap&nbsp;index&nbsp;as&nbsp;label&nbsp;color.&nbsp;Values&nbsp;(from&nbsp;xfdata.py)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;one&nbsp;of&nbsp;defined&nbsp;colors&nbsp;FL_BLACK,&nbsp;FL_BLUE,&nbsp;FL_GREEN,&nbsp;FL_RED,&nbsp;etc..<br>
 &nbsp;<br>
 Examples<br>
 --------<br>
@@ -3952,8 +3954,8 @@ Parameters<br>
 &nbsp;&nbsp;&nbsp;&nbsp;ptr_flobject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;flobject&nbsp;to&nbsp;be&nbsp;set<br>
 &nbsp;&nbsp;&nbsp;&nbsp;colr&nbsp;:&nbsp;long_pos<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;label&nbsp;color.&nbsp;Values&nbsp;(from&nbsp;xfdata.py)&nbsp;one&nbsp;of&nbsp;defined&nbsp;colors<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_BLACK,&nbsp;...&nbsp;FL_BLUE,&nbsp;...&nbsp;FL_GREEN,&nbsp;...&nbsp;FL_RED,&nbsp;...&nbsp;etc..<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;XForms&nbsp;colormap&nbsp;index&nbsp;as&nbsp;label&nbsp;color.&nbsp;Values&nbsp;(from&nbsp;xfdata.py)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;one&nbsp;of&nbsp;defined&nbsp;colors&nbsp;FL_BLACK,&nbsp;FL_BLUE,&nbsp;FL_GREEN,&nbsp;FL_RED,&nbsp;etc..<br>
 &nbsp;<br>
 Examples<br>
 --------<br>
@@ -4351,7 +4353,7 @@ Defines&nbsp;the&nbsp;foreground&nbsp;color&nbsp;for&nbsp;text&nbsp;in&nbsp;the&
 Parameters<br>
 ----------<br>
 &nbsp;&nbsp;&nbsp;&nbsp;colr&nbsp;:&nbsp;long_pos<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;color&nbsp;value<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;XForms&nbsp;colormap&nbsp;index&nbsp;as&nbsp;color<br>
 &nbsp;<br>
 Examples<br>
 --------<br>
@@ -4435,4 +4437,4 @@ Notes<br>
     
 <tr><td bgcolor="#55aa55"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
 <td width="100%"><strong>FL_EVENT</strong> = &lt;xfdata.LP_FL_OBJECT_ object&gt;</td></tr></table>
-<p>Updated on: 2010-12-20 01:16 +0100</body></html>
+<p>Updated on: 2010-12-22 00:35 +0100</body></html>

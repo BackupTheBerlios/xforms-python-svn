@@ -19,7 +19,7 @@ class Fltouchbtn(object):
     def __init__(self, lsysargv, sysarg):
 
         self.val = 0
-        xfl.fl_initialize(lsysargv, sysarg, "FormDemo", 0, 0)
+        xfl.fl_initialize(lsysargv, sysarg, "FormDemo", None, 0)
 
         pform = xfl.fl_bgn_form(xfl.FL_UP_BOX, 360, 140)
 

@@ -24,7 +24,7 @@ class ChartStrip(object):
         self.step = 0.15
 
         xfl.fl_flip_yorigin()
-        xfl.fl_initialize(lsysargv, sysargv, "FormDemo", 0, 0)
+        xfl.fl_initialize(lsysargv, sysargv, "FormDemo", None, 0)
         self.create_form_form()
         xfl.fl_set_chart_bounds(self.pchartobj, -1.5, 1.5)
         xfl.fl_set_chart_maxnumb(self.pchartobj, 80)

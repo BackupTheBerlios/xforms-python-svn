@@ -49,7 +49,7 @@ def create_form_form():
 def main(lsysargv, sysargv):
     sc = 1.0
 
-    xfl.fl_initialize(lsysargv, sysargv, "FormDemo", 0, 0)
+    xfl.fl_initialize(lsysargv, sysargv, "FormDemo", None, 0)
     ui = create_form_form()
     strng = "%.2f" % sc
     xfl.fl_set_input(ui.pscaleobj, strng)

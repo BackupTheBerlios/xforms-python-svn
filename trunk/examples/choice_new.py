@@ -22,7 +22,7 @@ class Choice(object):
     def __init__(self, lsysargv, sysargv):
 
         xfl.fl_flip_yorigin()
-        xfl.fl_initialize(lsysargv, sysargv, "FormDemo", 0, 0)
+        xfl.fl_initialize(lsysargv, sysargv, "FormDemo", None, 0)
 
         self.create_form()
         xfl.fl_add_select_items(self.psexobj,"Male")

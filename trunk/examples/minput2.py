@@ -30,7 +30,7 @@ class Flminput2(object):
 
     def __init__(self, lsysargv, sysargv):
 
-        xfl.fl_initialize(lsysargv, sysargv, "FormDemo", 0, 0)
+        xfl.fl_initialize(lsysargv, sysargv, "FormDemo", None, 0)
         self.ui = self.create_form_inputform()
         xfl.fl_register_raw_callback(self.ui.inputform, xfl.KeyPressMask, \
                 self.peek_event)

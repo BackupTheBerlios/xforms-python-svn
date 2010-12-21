@@ -49,7 +49,7 @@ class FLCursor(object):
     def __init__(self, lsysargv, sysarg):
         self.pbitmapcur = None
         xfl.fl_set_border_width(-2)
-        xfl.fl_initialize(lsysargv, sysarg, "FormDemo", 0, 0)
+        xfl.fl_initialize(lsysargv, sysarg, "FormDemo", None, 0)
         self.fd_cursor = self.create_form_cursor()
 
         # fill-in form initialization code

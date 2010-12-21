@@ -863,9 +863,9 @@ of&nbsp;the&nbsp;message&nbsp;is&nbsp;yellow&nbsp;and&nbsp;the&nbsp;text&nbsp;bl
 Parameters<br>
 ----------<br>
 &nbsp;&nbsp;&nbsp;&nbsp;fgcolr&nbsp;:&nbsp;long_pos<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;color&nbsp;value&nbsp;for&nbsp;oneliner&nbsp;foreground<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;XForms&nbsp;colormap&nbsp;index&nbsp;as&nbsp;color&nbsp;for&nbsp;oneliner&nbsp;foreground<br>
 &nbsp;&nbsp;&nbsp;&nbsp;bgcolr&nbsp;:&nbsp;long_pos<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;color&nbsp;value&nbsp;for&nbsp;oneliner&nbsp;background<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;XForms&nbsp;colormap&nbsp;index&nbsp;as&nbsp;color&nbsp;for&nbsp;oneliner&nbsp;background<br>
 &nbsp;<br>
 Examples<br>
 --------<br>
@@ -944,9 +944,9 @@ Defines&nbsp;the&nbsp;foreground&nbsp;and&nbsp;the&nbsp;background&nbsp;colors&n
 Parameters<br>
 ----------<br>
 &nbsp;&nbsp;&nbsp;&nbsp;fgcolr&nbsp;:&nbsp;long_pos<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;foreground&nbsp;color&nbsp;value<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;XForms&nbsp;colormap&nbsp;index&nbsp;as&nbsp;foreground&nbsp;color<br>
 &nbsp;&nbsp;&nbsp;&nbsp;bgcolr&nbsp;:&nbsp;long_pos<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;background&nbsp;color&nbsp;value<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;XForms&nbsp;colormap&nbsp;index&nbsp;as&nbsp;background&nbsp;color<br>
 &nbsp;<br>
 Examples<br>
 --------<br>
@@ -1123,7 +1123,7 @@ Examples<br>
 Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;Demo&nbsp;=&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-fl_show_colormap"><strong>fl_show_colormap</strong></a>(oldcolr)</dt><dd><tt><a href="#-fl_show_colormap">fl_show_colormap</a>(oldcolr)&nbsp;-&gt;&nbsp;colridx<br>
+ <dl><dt><a name="-fl_show_colormap"><strong>fl_show_colormap</strong></a>(oldcolr)</dt><dd><tt><a href="#-fl_show_colormap">fl_show_colormap</a>(oldcolr)&nbsp;-&gt;&nbsp;colr<br>
 &nbsp;<br>
 Shows&nbsp;a&nbsp;colormap&nbsp;color&nbsp;selector&nbsp;from&nbsp;which&nbsp;the&nbsp;user&nbsp;can&nbsp;select&nbsp;a<br>
 color.&nbsp;The&nbsp;user&nbsp;can&nbsp;decide&nbsp;not&nbsp;to&nbsp;change&nbsp;this&nbsp;color&nbsp;by&nbsp;pressing&nbsp;the<br>
@@ -1137,12 +1137,12 @@ colormap&nbsp;is&nbsp;removed&nbsp;from&nbsp;the&nbsp;screen.<br>
 Parameters<br>
 ----------<br>
 &nbsp;&nbsp;&nbsp;&nbsp;oldcolr&nbsp;:&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;current&nbsp;or&nbsp;default&nbsp;color&nbsp;num.&nbsp;(Not&nbsp;xfdata.FL_COLOR)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;XForms&nbsp;colormap&nbsp;index&nbsp;as&nbsp;current&nbsp;default&nbsp;color<br>
 &nbsp;<br>
 Returns<br>
 -------<br>
 &nbsp;&nbsp;&nbsp;&nbsp;colridx&nbsp;:&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;index&nbsp;of&nbsp;the&nbsp;color&nbsp;selected&nbsp;(or&nbsp;the&nbsp;index&nbsp;of&nbsp;the&nbsp;old&nbsp;color)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;XForms&nbsp;colormap&nbsp;index&nbsp;as&nbsp;selected&nbsp;color,&nbsp;or&nbsp;default&nbsp;one<br>
 &nbsp;<br>
 Examples<br>
 --------<br>
@@ -1416,4 +1416,4 @@ Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
 </td></tr></table>
-<p>Updated on: 2010-12-20 01:16 +0100</body></html>
+<p>Updated on: 2010-12-22 00:35 +0100</body></html>

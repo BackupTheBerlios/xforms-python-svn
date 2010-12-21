@@ -19,10 +19,11 @@ import xformslib as xfl
 
 def main(lsysargv, sysargv):
 
-    xfl.fl_initialize(lsysargv, sysargv, "FormDemo", 0, 0)
+    xfl.fl_initialize(lsysargv, sysargv, "FormDemo", None, 0)
     pform = create_form_form()
 
-    xfl.fl_show_form(pform, xfl.FL_PLACE_CENTER, xfl.FL_FULLBORDER, "IconTest")
+    xfl.fl_show_form(pform, xfl.FL_PLACE_CENTER, xfl.FL_FULLBORDER, \
+            "IconTest")
     xfl.fl_do_forms()
     return 0
 

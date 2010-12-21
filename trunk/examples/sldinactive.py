@@ -21,7 +21,7 @@ def exitcb(pobj, data):
 
 
 def main(lsysargv, sysargv):
-    xfl.fl_initialize(lsysargv, sysargv, "FormDemo", 0, 0)
+    xfl.fl_initialize(lsysargv, sysargv, "FormDemo", None, 0)
     pform = xfl.fl_bgn_form(xfl.FL_UP_BOX, 150 ,300)
 
     psl1 = xfl.fl_add_slider(xfl.FL_VERT_SLIDER, 20, 20, 40, 180, "X")

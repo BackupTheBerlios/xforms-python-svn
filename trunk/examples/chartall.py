@@ -19,7 +19,7 @@ class ChartAll(object):
 
     def __init__(self, lsysargv, sysargv):
 
-        xfl.fl_initialize(lsysargv, sysargv, "FormDemo", 0, 0)
+        xfl.fl_initialize(lsysargv, sysargv, "FormDemo", None, 0)
 
         self.create_form_form()
         self.fill_in(self.pbarchart)

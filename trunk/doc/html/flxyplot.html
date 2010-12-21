@@ -66,7 +66,7 @@ Examples<br>
 Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-fl_add_xyplot_overlay"><strong>fl_add_xyplot_overlay</strong></a>(ptr_flobject, ovlid, xposlist, yposlist, numpoints, colr)</dt><dd><tt><a href="#-fl_add_xyplot_overlay">fl_add_xyplot_overlay</a>(ptr_flobject,&nbsp;ovlid,&nbsp;xposlist,&nbsp;yposlist,<br>
+ <dl><dt><a name="-fl_add_xyplot_overlay"><strong>fl_add_xyplot_overlay</strong></a>(ptr_flobject, ovlnum, xposlist, yposlist, numpoints, colr)</dt><dd><tt><a href="#-fl_add_xyplot_overlay">fl_add_xyplot_overlay</a>(ptr_flobject,&nbsp;ovlnum,&nbsp;xposlist,&nbsp;yposlist,<br>
 numpoints,&nbsp;colr)<br>
 &nbsp;<br>
 Overlays&nbsp;several&nbsp;plots&nbsp;together.<br>
@@ -75,7 +75,7 @@ Parameters<br>
 ----------<br>
 &nbsp;&nbsp;&nbsp;&nbsp;ptr_flobject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;xyplot&nbsp;flobject<br>
-&nbsp;&nbsp;&nbsp;&nbsp;ovlid&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ovlnum&nbsp;:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;overlay&nbsp;id.&nbsp;Values&nbsp;between&nbsp;1&nbsp;and&nbsp;xfdata.FL_MAX_XYPLOTOVERLAY<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;or&nbsp;the&nbsp;number&nbsp;set&nbsp;via&nbsp;<a href="#-fl_set_xyplot_maxoverlays">fl_set_xyplot_maxoverlays</a>()<br>
 &nbsp;&nbsp;&nbsp;&nbsp;xposlist&nbsp;:&nbsp;list_of_float<br>
@@ -85,7 +85,7 @@ Parameters<br>
 &nbsp;&nbsp;&nbsp;&nbsp;numpoints&nbsp;:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;number&nbsp;of&nbsp;data&nbsp;points<br>
 &nbsp;&nbsp;&nbsp;&nbsp;colr&nbsp;:&nbsp;long_pos<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;color&nbsp;value<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;XForms&nbsp;colormap&nbsp;index&nbsp;as&nbsp;color<br>
 &nbsp;<br>
 Examples<br>
 --------<br>
@@ -94,7 +94,7 @@ Examples<br>
 Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-fl_add_xyplot_overlay_file"><strong>fl_add_xyplot_overlay_file</strong></a>(ptr_flobject, ovlid, fname, colr)</dt><dd><tt><a href="#-fl_add_xyplot_overlay_file">fl_add_xyplot_overlay_file</a>(ptr_flobject,&nbsp;ovlid,&nbsp;fname,&nbsp;colr)<br>
+ <dl><dt><a name="-fl_add_xyplot_overlay_file"><strong>fl_add_xyplot_overlay_file</strong></a>(ptr_flobject, ovlnum, fname, colr)</dt><dd><tt><a href="#-fl_add_xyplot_overlay_file">fl_add_xyplot_overlay_file</a>(ptr_flobject,&nbsp;ovlnum,&nbsp;fname,&nbsp;colr)<br>
 -&gt;&nbsp;numpoints<br>
 &nbsp;<br>
 Adds&nbsp;an&nbsp;overlay,&nbsp;using&nbsp;a&nbsp;data&nbsp;file&nbsp;to&nbsp;specify&nbsp;the&nbsp;(x,y)&nbsp;function&nbsp;for<br>
@@ -104,13 +104,13 @@ Parameters<br>
 ----------<br>
 &nbsp;&nbsp;&nbsp;&nbsp;ptr_flobject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;xyplot&nbsp;flobject<br>
-&nbsp;&nbsp;&nbsp;&nbsp;ovlid&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ovlnum&nbsp;:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;overlay&nbsp;id.&nbsp;Values&nbsp;between&nbsp;1&nbsp;and&nbsp;xfdata.FL_MAX_XYPLOTOVERLAY<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;or&nbsp;the&nbsp;number&nbsp;set&nbsp;via&nbsp;<a href="#-fl_set_xyplot_maxoverlays">fl_set_xyplot_maxoverlays</a>()<br>
 &nbsp;&nbsp;&nbsp;&nbsp;fname&nbsp;:&nbsp;str<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;name&nbsp;of&nbsp;file<br>
 &nbsp;&nbsp;&nbsp;&nbsp;colr&nbsp;:&nbsp;long_pos<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;color&nbsp;value<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;XForms&nbsp;colormap&nbsp;index&nbsp;as&nbsp;color<br>
 &nbsp;<br>
 Returns<br>
 -------<br>
@@ -148,7 +148,7 @@ Parameters<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_ALIGN_RIGHT_BOTTOM,&nbsp;FL_ALIGN_INSIDE,&nbsp;FL_ALIGN_VERT.&nbsp;Bitwise<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OR&nbsp;with&nbsp;FL_ALIGN_INSIDE&nbsp;is&nbsp;allowed.<br>
 &nbsp;&nbsp;&nbsp;&nbsp;colr&nbsp;:&nbsp;long_pos<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;color&nbsp;value<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;XForms&nbsp;colormap&nbsp;index&nbsp;as&nbsp;color<br>
 &nbsp;<br>
 Examples<br>
 --------<br>
@@ -177,7 +177,7 @@ Examples<br>
 Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-fl_delete_xyplot_overlay"><strong>fl_delete_xyplot_overlay</strong></a>(ptr_flobject, ovlid)</dt><dd><tt><a href="#-fl_delete_xyplot_overlay">fl_delete_xyplot_overlay</a>(ptr_flobject,&nbsp;ovlid)<br>
+ <dl><dt><a name="-fl_delete_xyplot_overlay"><strong>fl_delete_xyplot_overlay</strong></a>(ptr_flobject, ovlnum)</dt><dd><tt><a href="#-fl_delete_xyplot_overlay">fl_delete_xyplot_overlay</a>(ptr_flobject,&nbsp;ovlnum)<br>
 &nbsp;<br>
 Deletes&nbsp;an&nbsp;overlay&nbsp;of&nbsp;a&nbsp;xyplot&nbsp;flobject.<br>
 &nbsp;<br>
@@ -185,7 +185,7 @@ Parameters<br>
 ----------<br>
 &nbsp;&nbsp;&nbsp;&nbsp;ptr_flobject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;xyplot&nbsp;flobject<br>
-&nbsp;&nbsp;&nbsp;&nbsp;ovlid&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ovlnum&nbsp;:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;overlay&nbsp;id.&nbsp;Values&nbsp;between&nbsp;1&nbsp;and&nbsp;xfdata.FL_MAX_XYPLOTOVERLAY<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;or&nbsp;the&nbsp;number&nbsp;set&nbsp;via&nbsp;<a href="#-fl_set_xyplot_maxoverlays">fl_set_xyplot_maxoverlays</a>()<br>
 &nbsp;<br>
@@ -276,7 +276,7 @@ API_diversion<br>
 Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-fl_get_xyplot_data_pointer"><strong>fl_get_xyplot_data_pointer</strong></a>(ptr_flobject, ovlid)</dt><dd><tt><a href="#-fl_get_xyplot_data_pointer">fl_get_xyplot_data_pointer</a>(ptr_flobject,&nbsp;ovlid)<br>
+ <dl><dt><a name="-fl_get_xyplot_data_pointer"><strong>fl_get_xyplot_data_pointer</strong></a>(ptr_flobject, ovlnum)</dt><dd><tt><a href="#-fl_get_xyplot_data_pointer">fl_get_xyplot_data_pointer</a>(ptr_flobject,&nbsp;ovlnum)<br>
 -&gt;&nbsp;ptr_xposval,&nbsp;ptr_yposval,&nbsp;numpoints<br>
 &nbsp;<br>
 Finds&nbsp;out&nbsp;the&nbsp;pointer&nbsp;to&nbsp;the&nbsp;data&nbsp;of&nbsp;xyplot&nbsp;flobject&nbsp;rather&nbsp;(instead<br>
@@ -286,7 +286,7 @@ Parameters<br>
 ----------<br>
 &nbsp;&nbsp;&nbsp;&nbsp;ptr_flobject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;xyplot&nbsp;flobject<br>
-&nbsp;&nbsp;&nbsp;&nbsp;ovlid&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ovlnum&nbsp;:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;overlay&nbsp;id.&nbsp;Values&nbsp;between&nbsp;1&nbsp;and&nbsp;xfdata.FL_MAX_XYPLOTOVERLAY<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;or&nbsp;the&nbsp;number&nbsp;set&nbsp;via&nbsp;<a href="#-fl_set_xyplot_maxoverlays">fl_set_xyplot_maxoverlays</a>()<br>
 &nbsp;<br>
@@ -306,7 +306,7 @@ Examples<br>
 API_diversion<br>
 -------------<br>
 &nbsp;&nbsp;&nbsp;&nbsp;API&nbsp;changed&nbsp;from&nbsp;XForms,&nbsp;upstream&nbsp;is<br>
-&nbsp;&nbsp;&nbsp;&nbsp;<a href="#-fl_get_xyplot_data_pointer">fl_get_xyplot_data_pointer</a>(ptr_flobject,&nbsp;ovlid,&nbsp;xpos,&nbsp;ypos,&nbsp;n)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="#-fl_get_xyplot_data_pointer">fl_get_xyplot_data_pointer</a>(ptr_flobject,&nbsp;ovlnum,&nbsp;xpos,&nbsp;ypos,&nbsp;n)<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
@@ -333,7 +333,7 @@ Examples<br>
 Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-fl_get_xyplot_numdata"><strong>fl_get_xyplot_numdata</strong></a>(ptr_flobject, ovlid)</dt><dd><tt><a href="#-fl_get_xyplot_numdata">fl_get_xyplot_numdata</a>(ptr_flobject,&nbsp;ovlid)&nbsp;-&gt;&nbsp;numpoints<br>
+ <dl><dt><a name="-fl_get_xyplot_numdata"><strong>fl_get_xyplot_numdata</strong></a>(ptr_flobject, ovlnum)</dt><dd><tt><a href="#-fl_get_xyplot_numdata">fl_get_xyplot_numdata</a>(ptr_flobject,&nbsp;ovlnum)&nbsp;-&gt;&nbsp;numpoints<br>
 &nbsp;<br>
 Finds&nbsp;out&nbsp;the&nbsp;number&nbsp;of&nbsp;data&nbsp;points&nbsp;of&nbsp;a&nbsp;xyplot&nbsp;flobject.<br>
 &nbsp;<br>
@@ -341,7 +341,7 @@ Parameters<br>
 ----------<br>
 &nbsp;&nbsp;&nbsp;&nbsp;ptr_flobject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;xyplot&nbsp;flobject<br>
-&nbsp;&nbsp;&nbsp;&nbsp;ovlid&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ovlnum&nbsp;:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;overlay&nbsp;id.&nbsp;Values&nbsp;between&nbsp;1&nbsp;and&nbsp;xfdata.FL_MAX_XYPLOTOVERLAY<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;or&nbsp;the&nbsp;number&nbsp;set&nbsp;via&nbsp;<a href="#-fl_set_xyplot_maxoverlays">fl_set_xyplot_maxoverlays</a>().&nbsp;If&nbsp;it&nbsp;is<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;0&nbsp;uses&nbsp;the&nbsp;base&nbsp;dataset<br>
@@ -358,7 +358,7 @@ Examples<br>
 Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-fl_get_xyplot_overlay_data"><strong>fl_get_xyplot_overlay_data</strong></a>(ptr_flobject, ovlid)</dt><dd><tt><a href="#-fl_get_xyplot_overlay_data">fl_get_xyplot_overlay_data</a>(ptr_flobject,&nbsp;ovlid)<br>
+ <dl><dt><a name="-fl_get_xyplot_overlay_data"><strong>fl_get_xyplot_overlay_data</strong></a>(ptr_flobject, ovlnum)</dt><dd><tt><a href="#-fl_get_xyplot_overlay_data">fl_get_xyplot_overlay_data</a>(ptr_flobject,&nbsp;ovlnum)<br>
 -&gt;&nbsp;xposval,&nbsp;yposval,&nbsp;numpoints<br>
 &nbsp;<br>
 Finds&nbsp;out&nbsp;the&nbsp;current&nbsp;data&nbsp;of&nbsp;an&nbsp;overlay&nbsp;of&nbsp;a&nbsp;xyplot&nbsp;flobject.<br>
@@ -367,7 +367,7 @@ Parameters<br>
 ----------<br>
 &nbsp;&nbsp;&nbsp;&nbsp;ptr_flobject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;xyplot&nbsp;flobject<br>
-&nbsp;&nbsp;&nbsp;&nbsp;ovlid&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ovlnum&nbsp;:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;overlay&nbsp;id.&nbsp;Values&nbsp;between&nbsp;1&nbsp;and&nbsp;xfdata.FL_MAX_XYPLOTOVERLAY&nbsp;or<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;the&nbsp;number&nbsp;set&nbsp;via&nbsp;<a href="#-fl_set_xyplot_maxoverlays">fl_set_xyplot_maxoverlays</a>().&nbsp;If&nbsp;it&nbsp;is&nbsp;0&nbsp;uses<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;the&nbsp;base&nbsp;dataset<br>
@@ -388,7 +388,7 @@ Examples<br>
 API_diversion<br>
 ----------<br>
 &nbsp;&nbsp;&nbsp;&nbsp;API&nbsp;changed&nbsp;from&nbsp;XForms,&nbsp;upstream&nbsp;is<br>
-&nbsp;&nbsp;&nbsp;&nbsp;<a href="#-fl_get_xyplot_overlay_data">fl_get_xyplot_overlay_data</a>(ptr_flobject,&nbsp;ovlid,&nbsp;xpos,&nbsp;ypos,&nbsp;n)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="#-fl_get_xyplot_overlay_data">fl_get_xyplot_overlay_data</a>(ptr_flobject,&nbsp;ovlnum,&nbsp;xpos,&nbsp;ypos,&nbsp;n)<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
@@ -519,7 +519,7 @@ API_diversion<br>
 Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-fl_insert_xyplot_data"><strong>fl_insert_xyplot_data</strong></a>(ptr_flobject, ovlid, indxpt, xpos, ypos)</dt><dd><tt><a href="#-fl_insert_xyplot_data">fl_insert_xyplot_data</a>(ptr_flobject,&nbsp;ovlid,&nbsp;indxpt,&nbsp;xpos,&nbsp;ypos)<br>
+ <dl><dt><a name="-fl_insert_xyplot_data"><strong>fl_insert_xyplot_data</strong></a>(ptr_flobject, ovlnum, indxpt, xpos, ypos)</dt><dd><tt><a href="#-fl_insert_xyplot_data">fl_insert_xyplot_data</a>(ptr_flobject,&nbsp;ovlnum,&nbsp;indxpt,&nbsp;xpos,&nbsp;ypos)<br>
 &nbsp;<br>
 Inserts&nbsp;a&nbsp;point&nbsp;after&nbsp;a&nbsp;supplied&nbsp;index&nbsp;position&nbsp;in&nbsp;a&nbsp;xyplot&nbsp;flobject.<br>
 &nbsp;<br>
@@ -527,7 +527,7 @@ Parameters<br>
 ----------<br>
 &nbsp;&nbsp;&nbsp;&nbsp;ptr_flobject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;xyplot&nbsp;flobject<br>
-&nbsp;&nbsp;&nbsp;&nbsp;ovlid&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ovlnum&nbsp;:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;overlay&nbsp;id.&nbsp;Values&nbsp;between&nbsp;1&nbsp;and&nbsp;xfdata.FL_MAX_XYPLOTOVERLAY&nbsp;or<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;the&nbsp;number&nbsp;set&nbsp;via&nbsp;<a href="#-fl_set_xyplot_maxoverlays">fl_set_xyplot_maxoverlays</a>()<br>
 &nbsp;&nbsp;&nbsp;&nbsp;indxpt&nbsp;:&nbsp;int<br>
@@ -817,10 +817,10 @@ Parameters<br>
 &nbsp;&nbsp;&nbsp;&nbsp;ptr_flobject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;xyplot&nbsp;flobject<br>
 &nbsp;&nbsp;&nbsp;&nbsp;leftmrg&nbsp;:&nbsp;str<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;left&nbsp;margin&nbsp;to&nbsp;be&nbsp;set.&nbsp;If&nbsp;it&nbsp;is&nbsp;'None'&nbsp;restore&nbsp;automatic<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;left&nbsp;margin&nbsp;to&nbsp;be&nbsp;set.&nbsp;If&nbsp;it&nbsp;is&nbsp;empty&nbsp;(""),&nbsp;restore&nbsp;automatic<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;margin&nbsp;computation<br>
 &nbsp;&nbsp;&nbsp;&nbsp;rightmrg&nbsp;:&nbsp;str<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;right&nbsp;margin&nbsp;to&nbsp;be&nbsp;set.&nbsp;If&nbsp;it&nbsp;is&nbsp;'None',&nbsp;restores&nbsp;automatic<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;right&nbsp;margin&nbsp;to&nbsp;be&nbsp;set.&nbsp;If&nbsp;it&nbsp;is&nbsp;empty&nbsp;(""),&nbsp;restores&nbsp;automatic<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;margin&nbsp;computation.<br>
 &nbsp;<br>
 Examples<br>
@@ -846,10 +846,10 @@ Parameters<br>
 &nbsp;&nbsp;&nbsp;&nbsp;ptr_flobject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;xyplot&nbsp;flobject<br>
 &nbsp;&nbsp;&nbsp;&nbsp;bottommrg&nbsp;:&nbsp;str<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;bottom&nbsp;margin&nbsp;to&nbsp;be&nbsp;set.&nbsp;If&nbsp;it&nbsp;is&nbsp;'None'&nbsp;restore&nbsp;automatic<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;bottom&nbsp;margin&nbsp;to&nbsp;be&nbsp;set.&nbsp;If&nbsp;it&nbsp;is&nbsp;empty&nbsp;(""),&nbsp;restore&nbsp;automatic<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;margin&nbsp;computation<br>
 &nbsp;&nbsp;&nbsp;&nbsp;topmrg&nbsp;:&nbsp;str<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;top&nbsp;margin&nbsp;to&nbsp;be&nbsp;set.&nbsp;If&nbsp;it&nbsp;is&nbsp;'None',&nbsp;restores&nbsp;automatic<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;top&nbsp;margin&nbsp;to&nbsp;be&nbsp;set.&nbsp;If&nbsp;it&nbsp;is&nbsp;empty&nbsp;(""),&nbsp;restores&nbsp;automatic<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;margin&nbsp;computation<br>
 &nbsp;<br>
 Examples<br>
@@ -908,7 +908,7 @@ Examples<br>
 Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-fl_set_xyplot_interpolate"><strong>fl_set_xyplot_interpolate</strong></a>(ptr_flobject, ovlid, degree, grid)</dt><dd><tt><a href="#-fl_set_xyplot_interpolate">fl_set_xyplot_interpolate</a>(ptr_flobject,&nbsp;ovlid,&nbsp;degree,&nbsp;grid)<br>
+ <dl><dt><a name="-fl_set_xyplot_interpolate"><strong>fl_set_xyplot_interpolate</strong></a>(ptr_flobject, ovlnum, degree, grid)</dt><dd><tt><a href="#-fl_set_xyplot_interpolate">fl_set_xyplot_interpolate</a>(ptr_flobject,&nbsp;ovlnum,&nbsp;degree,&nbsp;grid)<br>
 &nbsp;<br>
 Interpolates&nbsp;xyplot&nbsp;data&nbsp;using&nbsp;an&nbsp;nth&nbsp;order&nbsp;Lagrangian&nbsp;polynomial.<br>
 &nbsp;<br>
@@ -916,7 +916,7 @@ Parameters<br>
 ----------<br>
 &nbsp;&nbsp;&nbsp;&nbsp;ptr_flobject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;xyplot&nbsp;flobject<br>
-&nbsp;&nbsp;&nbsp;&nbsp;ovlid&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ovlnum&nbsp;:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;overlay&nbsp;id.&nbsp;Values&nbsp;between&nbsp;1&nbsp;and&nbsp;xfdata.FL_MAX_XYPLOTOVERLAY&nbsp;or<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;the&nbsp;number&nbsp;set&nbsp;via&nbsp;<a href="#-fl_set_xyplot_maxoverlays">fl_set_xyplot_maxoverlays</a>().&nbsp;If&nbsp;it&nbsp;is&nbsp;0&nbsp;uses<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;the&nbsp;base&nbsp;data&nbsp;set<br>
@@ -933,7 +933,7 @@ Examples<br>
 Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-fl_set_xyplot_key"><strong>fl_set_xyplot_key</strong></a>(ptr_flobject, ovlid, keytxt)</dt><dd><tt><a href="#-fl_set_xyplot_key">fl_set_xyplot_key</a>(ptr_flobject,&nbsp;ovlid,&nbsp;keytxt)<br>
+ <dl><dt><a name="-fl_set_xyplot_key"><strong>fl_set_xyplot_key</strong></a>(ptr_flobject, ovlnum, keytxt)</dt><dd><tt><a href="#-fl_set_xyplot_key">fl_set_xyplot_key</a>(ptr_flobject,&nbsp;ovlnum,&nbsp;keytxt)<br>
 &nbsp;<br>
 Adds&nbsp;or&nbsp;removes&nbsp;a&nbsp;key&nbsp;to&nbsp;a&nbsp;particular&nbsp;plot.&nbsp;A&nbsp;key&nbsp;is&nbsp;the&nbsp;combination<br>
 of&nbsp;drawing&nbsp;a&nbsp;segment&nbsp;of&nbsp;the&nbsp;plot&nbsp;line&nbsp;style&nbsp;with&nbsp;a&nbsp;piece&nbsp;of&nbsp;text&nbsp;that<br>
@@ -945,11 +945,11 @@ Parameters<br>
 ----------<br>
 &nbsp;&nbsp;&nbsp;&nbsp;ptr_flobject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;xyplot&nbsp;flobject<br>
-&nbsp;&nbsp;&nbsp;&nbsp;ovlid&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ovlnum&nbsp;:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;overlay&nbsp;id.&nbsp;Values&nbsp;between&nbsp;1&nbsp;and&nbsp;xfdata.FL_MAX_XYPLOTOVERLAY&nbsp;or<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;the&nbsp;number&nbsp;set&nbsp;via&nbsp;<a href="#-fl_set_xyplot_maxoverlays">fl_set_xyplot_maxoverlays</a>()<br>
 &nbsp;&nbsp;&nbsp;&nbsp;keytxt&nbsp;:&nbsp;str<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;key&nbsp;for&nbsp;the&nbsp;plot.&nbsp;If&nbsp;it&nbsp;is&nbsp;'None'&nbsp;removes&nbsp;a&nbsp;key.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;key&nbsp;for&nbsp;the&nbsp;plot.&nbsp;If&nbsp;it&nbsp;is&nbsp;empty&nbsp;(""),&nbsp;removes&nbsp;a&nbsp;key.<br>
 &nbsp;<br>
 Examples<br>
 --------<br>
@@ -1049,7 +1049,7 @@ Examples<br>
 Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-fl_set_xyplot_linewidth"><strong>fl_set_xyplot_linewidth</strong></a>(ptr_flobject, ovlid, lnwidth)</dt><dd><tt><a href="#-fl_set_xyplot_linewidth">fl_set_xyplot_linewidth</a>(ptr_flobject,&nbsp;ovlid,&nbsp;lnwidth)<br>
+ <dl><dt><a name="-fl_set_xyplot_linewidth"><strong>fl_set_xyplot_linewidth</strong></a>(ptr_flobject, ovlnum, lnwidth)</dt><dd><tt><a href="#-fl_set_xyplot_linewidth">fl_set_xyplot_linewidth</a>(ptr_flobject,&nbsp;ovlnum,&nbsp;lnwidth)<br>
 &nbsp;<br>
 Changes&nbsp;the&nbsp;line&nbsp;thickness&nbsp;of&nbsp;an&nbsp;xyplot&nbsp;(base&nbsp;data&nbsp;or&nbsp;overlay).<br>
 &nbsp;<br>
@@ -1057,7 +1057,7 @@ Parameters<br>
 ----------<br>
 &nbsp;&nbsp;&nbsp;&nbsp;ptr_flobject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;xyplot&nbsp;flobject<br>
-&nbsp;&nbsp;&nbsp;&nbsp;ovlid&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ovlnum&nbsp;:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;overlay&nbsp;id.&nbsp;Values&nbsp;between&nbsp;1&nbsp;and&nbsp;xfdata.FL_MAX_XYPLOTOVERLAY&nbsp;or<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;the&nbsp;number&nbsp;set&nbsp;via&nbsp;<a href="#-fl_set_xyplot_maxoverlays">fl_set_xyplot_maxoverlays</a>().&nbsp;If&nbsp;it&nbsp;is&nbsp;0,&nbsp;uses<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;the&nbsp;base&nbsp;dataset.<br>
@@ -1120,7 +1120,7 @@ Examples<br>
 Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-fl_set_xyplot_overlay_type"><strong>fl_set_xyplot_overlay_type</strong></a>(ptr_flobject, ovlid, plottype)</dt><dd><tt><a href="#-fl_set_xyplot_overlay_type">fl_set_xyplot_overlay_type</a>(ptr_flobject,&nbsp;ovlid,&nbsp;plottype)<br>
+ <dl><dt><a name="-fl_set_xyplot_overlay_type"><strong>fl_set_xyplot_overlay_type</strong></a>(ptr_flobject, ovlnum, plottype)</dt><dd><tt><a href="#-fl_set_xyplot_overlay_type">fl_set_xyplot_overlay_type</a>(ptr_flobject,&nbsp;ovlnum,&nbsp;plottype)<br>
 &nbsp;<br>
 Changes&nbsp;the&nbsp;type&nbsp;for&nbsp;an&nbsp;overlay&nbsp;of&nbsp;a&nbsp;xyplot&nbsp;flobject.&nbsp;The&nbsp;type&nbsp;used&nbsp;in<br>
 overlay&nbsp;plot&nbsp;is&nbsp;the&nbsp;same&nbsp;as&nbsp;the&nbsp;flobject&nbsp;itself.&nbsp;Note&nbsp;that&nbsp;although&nbsp;the<br>
@@ -1132,7 +1132,7 @@ Parameters<br>
 ----------<br>
 &nbsp;&nbsp;&nbsp;&nbsp;ptr_flobject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;xyplot&nbsp;flobject<br>
-&nbsp;&nbsp;&nbsp;&nbsp;ovlid&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ovlnum&nbsp;:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;overlay&nbsp;id.&nbsp;Values&nbsp;between&nbsp;1&nbsp;and&nbsp;xfdata.FL_MAX_XYPLOTOVERLAY<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;or&nbsp;the&nbsp;number&nbsp;set&nbsp;via&nbsp;<a href="#-fl_set_xyplot_maxoverlays">fl_set_xyplot_maxoverlays</a>()<br>
 &nbsp;&nbsp;&nbsp;&nbsp;plottype&nbsp;:&nbsp;int<br>
@@ -1149,24 +1149,24 @@ Examples<br>
 Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-fl_set_xyplot_symbol"><strong>fl_set_xyplot_symbol</strong></a>(ptr_flobject, ovlid, pyfn_XyPlotSymbol)</dt><dd><tt><a href="#-fl_set_xyplot_symbol">fl_set_xyplot_symbol</a>(ptr_flobject,&nbsp;ovlid,&nbsp;pyfn_XyPlotSymbol)<br>
+ <dl><dt><a name="-fl_set_xyplot_symbol"><strong>fl_set_xyplot_symbol</strong></a>(ptr_flobject, ovlnum, pyfn_XyPlotSymbol)</dt><dd><tt><a href="#-fl_set_xyplot_symbol">fl_set_xyplot_symbol</a>(ptr_flobject,&nbsp;ovlnum,&nbsp;pyfn_XyPlotSymbol)<br>
 -&gt;&nbsp;XyPlotSymbol<br>
 &nbsp;<br>
 Defines&nbsp;a&nbsp;python&nbsp;function&nbsp;to&nbsp;change&nbsp;a&nbsp;symbol,&nbsp;to&nbsp;be&nbsp;invoked&nbsp;for<br>
 xfdata.FL_POINTS_XYPLOT&nbsp;and&nbsp;xfdata.FL_LINEPOINTS_XYPLOT's&nbsp;xyplot&nbsp;types<br>
-(main&nbsp;plot&nbsp;or&nbsp;overlay).&nbsp;If&nbsp;the&nbsp;type&nbsp;of&nbsp;xyplot&nbsp;corresponding&nbsp;to&nbsp;ovlid&nbsp;is<br>
+(main&nbsp;plot&nbsp;or&nbsp;overlay).&nbsp;If&nbsp;the&nbsp;type&nbsp;of&nbsp;xyplot&nbsp;corresponding&nbsp;to&nbsp;ovlnum&nbsp;is<br>
 not&nbsp;one&nbsp;of&nbsp;them,&nbsp;the&nbsp;function&nbsp;will&nbsp;not&nbsp;be&nbsp;called.<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
 &nbsp;&nbsp;&nbsp;&nbsp;ptr_flobject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;xyplot&nbsp;flobject<br>
-&nbsp;&nbsp;&nbsp;&nbsp;ovlid&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ovlnum&nbsp;:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;overlay&nbsp;id&nbsp;(0&nbsp;means&nbsp;the&nbsp;main&nbsp;plot,&nbsp;and&nbsp;you&nbsp;can&nbsp;use&nbsp;-1&nbsp;to&nbsp;indicate<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;all)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;pyfn_XyPlotSymbol&nbsp;:&nbsp;python&nbsp;function,&nbsp;no&nbsp;return<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;It&nbsp;will&nbsp;be&nbsp;called&nbsp;to&nbsp;draw&nbsp;the&nbsp;symbols&nbsp;on&nbsp;the&nbsp;data&nbsp;point.<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Name&nbsp;referring&nbsp;to&nbsp;function(ptr_flobject,&nbsp;ovlid,&nbsp;ptr_flpoint,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Name&nbsp;referring&nbsp;to&nbsp;function(ptr_flobject,&nbsp;ovlnum,&nbsp;ptr_flpoint,<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;numpoints,&nbsp;width,&nbsp;height).&nbsp;The&nbsp;parameters&nbsp;passed&nbsp;to&nbsp;this&nbsp;function<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;are&nbsp;the&nbsp;flobject&nbsp;pointer,&nbsp;the&nbsp;overlay&nbsp;id,&nbsp;the&nbsp;center&nbsp;of&nbsp;the&nbsp;symbol<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(p.x,&nbsp;p.y),&nbsp;the&nbsp;number&nbsp;of&nbsp;data&nbsp;points&nbsp;and&nbsp;the&nbsp;preferred&nbsp;symbol<br>
@@ -1498,4 +1498,4 @@ Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
 </td></tr></table>
-<p>Updated on: 2010-12-20 01:16 +0100</body></html>
+<p>Updated on: 2010-12-22 00:35 +0100</body></html>

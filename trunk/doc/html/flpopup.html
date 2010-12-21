@@ -41,9 +41,9 @@ Parameters<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;root&nbsp;window.<br>
 &nbsp;&nbsp;&nbsp;&nbsp;title&nbsp;:&nbsp;str<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;text&nbsp;of&nbsp;title&nbsp;that&nbsp;gets&nbsp;shown&nbsp;at&nbsp;the&nbsp;top&nbsp;of&nbsp;the&nbsp;popup&nbsp;in&nbsp;a&nbsp;frame.<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;If&nbsp;not&nbsp;wanted,&nbsp;pass&nbsp;an&nbsp;empty&nbsp;string&nbsp;or&nbsp;'None'.&nbsp;It&nbsp;may&nbsp;contain<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;embedded&nbsp;newline&nbsp;characters,&nbsp;this&nbsp;allows&nbsp;to&nbsp;create&nbsp;titles&nbsp;that<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;span&nbsp;more&nbsp;than&nbsp;one&nbsp;line.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;If&nbsp;not&nbsp;wanted,&nbsp;pass&nbsp;an&nbsp;empty&nbsp;string.&nbsp;It&nbsp;may&nbsp;contain&nbsp;embedded<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;newline&nbsp;characters,&nbsp;this&nbsp;allows&nbsp;to&nbsp;create&nbsp;titles&nbsp;that&nbsp;span&nbsp;more<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;than&nbsp;one&nbsp;line.<br>
 &nbsp;<br>
 Returns<br>
 -------<br>
@@ -126,9 +126,9 @@ Parameters<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;root&nbsp;window.<br>
 &nbsp;&nbsp;&nbsp;&nbsp;title&nbsp;:&nbsp;str<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;text&nbsp;of&nbsp;title&nbsp;that&nbsp;gets&nbsp;shown&nbsp;at&nbsp;the&nbsp;top&nbsp;of&nbsp;the&nbsp;popup&nbsp;in&nbsp;a&nbsp;frame.<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;If&nbsp;not&nbsp;wanted,&nbsp;pass&nbsp;an&nbsp;empty&nbsp;string&nbsp;or&nbsp;'None'.&nbsp;It&nbsp;may&nbsp;contain<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;embedded&nbsp;newline&nbsp;characters,&nbsp;this&nbsp;allows&nbsp;to&nbsp;create&nbsp;titles&nbsp;that<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;span&nbsp;more&nbsp;than&nbsp;one&nbsp;line.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;If&nbsp;not&nbsp;wanted,&nbsp;pass&nbsp;an&nbsp;empty&nbsp;string.&nbsp;It&nbsp;may&nbsp;contain&nbsp;embedded<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;newline&nbsp;characters,&nbsp;this&nbsp;allows&nbsp;to&nbsp;create&nbsp;titles&nbsp;that&nbsp;span&nbsp;more<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;than&nbsp;one&nbsp;line.<br>
 &nbsp;&nbsp;&nbsp;&nbsp;ptr_flpopupitem&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_POPUP_ITEM<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;new&nbsp;popup&nbsp;item&nbsp;to&nbsp;be&nbsp;created.&nbsp;It&nbsp;can&nbsp;be&nbsp;prepared&nbsp;passing&nbsp;a&nbsp;dict<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(whose&nbsp;keys&nbsp;are&nbsp;corresponding&nbsp;to&nbsp;xfdata.FL_POPUP_ITEM's&nbsp;members)<br>
@@ -812,7 +812,7 @@ Parameters<br>
 Returns<br>
 -------<br>
 &nbsp;&nbsp;&nbsp;&nbsp;colr&nbsp;:&nbsp;long_pos<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;color<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;XForms&nbsp;colormap&nbsp;index&nbsp;as&nbsp;color<br>
 &nbsp;<br>
 Examples<br>
 --------<br>
@@ -1081,7 +1081,8 @@ Parameters<br>
 Returns<br>
 -------<br>
 &nbsp;&nbsp;&nbsp;&nbsp;oldcolr&nbsp;:&nbsp;long_pos<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;old&nbsp;color,&nbsp;or&nbsp;xfdata.FL_MAX_COLORS&nbsp;(on&nbsp;errors)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;XForms&nbsp;colormap&nbsp;index&nbsp;as&nbsp;old&nbsp;color,&nbsp;or&nbsp;xfdata.FL_MAX_COLORS<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(on&nbsp;errors)<br>
 &nbsp;<br>
 Examples<br>
 --------<br>
@@ -1238,4 +1239,4 @@ Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;Demo&nbsp;=&nbsp;OK</tt></dd></dl>
 </td></tr></table>
-<p>Updated on: 2010-12-20 01:16 +0100</body></html>
+<p>Updated on: 2010-12-22 00:35 +0100</body></html>

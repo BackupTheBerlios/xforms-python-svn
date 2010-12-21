@@ -54,9 +54,9 @@ def fl_popup_add(win, title):
             root window.
         title : str
             text of title that gets shown at the top of the popup in a frame.
-            If not wanted, pass an empty string or 'None'. It may contain
-            embedded newline characters, this allows to create titles that
-            span more than one line.
+            If not wanted, pass an empty string. It may contain embedded
+            newline characters, this allows to create titles that span more
+            than one line.
 
     Returns
     -------
@@ -80,8 +80,6 @@ def fl_popup_add(win, title):
     if not win:         # if it is None
         win = flxbasic.fl_root
     ul_win = library.convert_to_Window(win)
-    if not title:       # if it is None or ""
-        title = ""
     s_title = library.convert_to_stringc(title)
     library.keep_elem_refs(win, title, ul_win, s_title)
     retval = _fl_popup_add(ul_win, s_title)
@@ -179,7 +177,8 @@ def fl_popup_insert_entries(ptr_flpopup, ptr_flpopupentry, entryitemstxt):
     library.check_if_initialized()
     library.verify_flpopupptr_type(ptr_flpopup)
     if not ptr_flpopupentry:         # it is None
-        ptr_flpopupentry_alt = cty.cast(ptr_flpopupentry, cty.POINTER(cty.c_void_p))
+        ptr_flpopupentry_alt = cty.cast(ptr_flpopupentry, \
+                cty.POINTER(cty.c_void_p))
     else:                       # real FL_POPUP_ENTRY pointer
         ptr_flpopupentry_alt = ptr_flpopupentry
         library.verify_flpopupentryptr_type(ptr_flpopupentry_alt)
@@ -207,9 +206,9 @@ def fl_popup_create(win, title, ptr_flpopupitem):
             root window.
         title : str
             text of title that gets shown at the top of the popup in a frame.
-            If not wanted, pass an empty string or 'None'. It may contain
-            embedded newline characters, this allows to create titles that
-            span more than one line.
+            If not wanted, pass an empty string. It may contain embedded
+            newline characters, this allows to create titles that span more
+            than one line.
         ptr_flpopupitem : pointer to xfdata.FL_POPUP_ITEM
             new popup item to be created. It can be prepared passing a dict
             (whose keys are corresponding to xfdata.FL_POPUP_ITEM's members)
@@ -239,8 +238,6 @@ def fl_popup_create(win, title, ptr_flpopupitem):
     if not win:         # if it is None
         win = flxbasic.fl_root
     ul_win = library.convert_to_Window(win)
-    if not title:       # if it is None or ""
-        title = ""
     s_title = library.convert_to_stringc(title)
     library.verify_flpopupitemptr_type(ptr_flpopupitem)
     library.keep_elem_refs(win, title, ptr_flpopupitem, ul_win, s_title)

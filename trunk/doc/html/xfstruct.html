@@ -29,11 +29,37 @@
 <tr><td bgcolor="#eeaa77"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
 <td width="100%"><dl><dt><a name="-donothing_flpopupcb"><strong>donothing_flpopupcb</strong></a>(ptr_flpopupreturn)</dt><dd><tt>Replaces&nbsp;a&nbsp;callback&nbsp;function&nbsp;not&nbsp;defined&nbsp;for&nbsp;class&nbsp;instances<br>
 as&nbsp;e.g.&nbsp;xfdata.FL_POPUP_ITEM</tt></dd></dl>
- <dl><dt><a name="-make_flpopupitem"><strong>make_flpopupitem</strong></a>(dictofpopupitems)</dt><dd><tt><a href="#-make_flpopupitem">make_flpopupitem</a>(dictofpopupitems)&nbsp;-&gt;&nbsp;ptr_flpopupitem<br>
+ <dl><dt><a name="-make_flcmdopt"><strong>make_flcmdopt</strong></a>(dictflcmdopt)</dt><dd><tt><a href="#-make_flcmdopt">make_flcmdopt</a>(dictflcmdopt)&nbsp;-&gt;&nbsp;ptr_flcmdopt<br>
+&nbsp;<br>
+Taking&nbsp;a&nbsp;python&nbsp;dict&nbsp;(for&nbsp;one&nbsp;dict&nbsp;item)&nbsp;or&nbsp;a&nbsp;list&nbsp;of&nbsp;dicts&nbsp;(for&nbsp;more<br>
+than&nbsp;one&nbsp;dict&nbsp;item)&nbsp;with&nbsp;keys&nbsp;corresponding&nbsp;to&nbsp;xfdata.FL_CMD_OPT<br>
+attributes,&nbsp;prepares&nbsp;and&nbsp;returns&nbsp;a&nbsp;C-compatible&nbsp;pointer&nbsp;to<br>
+xfdata.FL_CMD_OPT.&nbsp;Keys&nbsp;are:&nbsp;'option',&nbsp;'specifier',&nbsp;'argKind',<br>
+'value'.</tt></dd></dl>
+ <dl><dt><a name="-make_fliopt"><strong>make_fliopt</strong></a>(dictfliopt)</dt><dd><tt><a href="#-make_fliopt">make_fliopt</a>(dictfliopt)&nbsp;-&gt;&nbsp;ptr_fliopt<br>
+&nbsp;<br>
+Taking&nbsp;a&nbsp;python&nbsp;dict&nbsp;(for&nbsp;one&nbsp;dict&nbsp;item)&nbsp;with&nbsp;keys&nbsp;corresponding&nbsp;to<br>
+xfdata.FL_IOPT&nbsp;elements&nbsp;prepares&nbsp;and&nbsp;returns&nbsp;a&nbsp;C-compatible&nbsp;pointer<br>
+to&nbsp;xfdata.FL_IOPT.&nbsp;Not&nbsp;all&nbsp;elements&nbsp;have&nbsp;necessarily&nbsp;to&nbsp;be&nbsp;passed.<br>
+Keys&nbsp;are:&nbsp;'rgamma',&nbsp;'ggamma',&nbsp;'bgamma',&nbsp;'debug',&nbsp;'sync',&nbsp;'depth',<br>
+'vclass',&nbsp;'doubleBuffer',&nbsp;'ulPropWidth',&nbsp;'ulThickness',&nbsp;'buttonFontSize',<br>
+'sliderFontSize',&nbsp;'inputFontSize',&nbsp;'browserFontSize',&nbsp;'menuFontSize',<br>
+'choiceFontSize',&nbsp;'labelFontSize',&nbsp;'pupFontSize',&nbsp;'privateColormap',<br>
+'sharedColormap',&nbsp;'standardColormap',&nbsp;'scrollbarType',&nbsp;'backingStore',<br>
+'coordUnit',&nbsp;'borderWidth',&nbsp;'safe',&nbsp;'rgbfile',&nbsp;'vname'.</tt></dd></dl>
+ <dl><dt><a name="-make_flpopupitem"><strong>make_flpopupitem</strong></a>(dictpopupitems)</dt><dd><tt><a href="#-make_flpopupitem">make_flpopupitem</a>(dictpopupitems)&nbsp;-&gt;&nbsp;ptr_flpopupitem<br>
 &nbsp;<br>
 Taking&nbsp;a&nbsp;python&nbsp;dict&nbsp;(for&nbsp;one&nbsp;dict&nbsp;item)&nbsp;or&nbsp;a&nbsp;python&nbsp;list&nbsp;of&nbsp;dicts&nbsp;(for<br>
-more&nbsp;than&nbsp;one&nbsp;dict&nbsp;item)&nbsp;with&nbsp;a&nbsp;structure&nbsp;corresponding&nbsp;to<br>
-xfdata.FL_POPUP_ITEM&nbsp;prepares&nbsp;and&nbsp;returns&nbsp;a&nbsp;C-compatible&nbsp;pointer&nbsp;to<br>
-xfdata.FL_POPUP_ITEM.</tt></dd></dl>
+more&nbsp;than&nbsp;one&nbsp;dict&nbsp;item)&nbsp;with&nbsp;keys&nbsp;corresponding&nbsp;to&nbsp;xfdata.FL_POPUP_ITEM<br>
+attributes,&nbsp;prepares&nbsp;and&nbsp;returns&nbsp;a&nbsp;C-compatible&nbsp;pointer&nbsp;to<br>
+xfdata.FL_POPUP_ITEM.&nbsp;Keys&nbsp;are:&nbsp;'text',&nbsp;'callback',&nbsp;'shortcut',&nbsp;'type'<br>
+and&nbsp;'state'.</tt></dd></dl>
+ <dl><dt><a name="-make_flresource"><strong>make_flresource</strong></a>(dictflresource)</dt><dd><tt><a href="#-make_flresource">make_flresource</a>(dictflresource)&nbsp;-&gt;&nbsp;ptr_flresource<br>
+&nbsp;<br>
+Taking&nbsp;a&nbsp;python&nbsp;dict&nbsp;(for&nbsp;one&nbsp;dict&nbsp;item)&nbsp;or&nbsp;a&nbsp;list&nbsp;of&nbsp;dicts&nbsp;(for&nbsp;more<br>
+than&nbsp;one&nbsp;dict&nbsp;item)&nbsp;with&nbsp;keys&nbsp;corresponding&nbsp;to&nbsp;xfdata.FL_RESOURCE<br>
+attributes&nbsp;prepares&nbsp;and&nbsp;returns&nbsp;a&nbsp;C-compatible&nbsp;pointer&nbsp;to<br>
+xfdata.FL_RESOURCE.&nbsp;Keys&nbsp;are:&nbsp;'res_name',&nbsp;'res_class',&nbsp;'type',&nbsp;'var',<br>
+'defval',&nbsp;'nbytes'.</tt></dd></dl>
 </td></tr></table>
-<p>Updated on: 2010-12-20 01:16 +0100</body></html>
+<p>Updated on: 2010-12-22 00:35 +0100</body></html>

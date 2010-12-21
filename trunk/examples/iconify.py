@@ -57,7 +57,7 @@ crab = ["28 28 6 2 ", \
 
 def main(lsysargv, sysargv):
 
-    xfl.fl_initialize(lsysargv, sysargv, "FormDemo", 0, 0)
+    xfl.fl_initialize(lsysargv, sysargv, "FormDemo", None, 0)
     pform = create_form_form()
 
     pix, w, h, mask, hx, hy = xfl.fl_read_pixmapfile(xfl.fl_root, \

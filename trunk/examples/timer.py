@@ -28,7 +28,7 @@ class Fltimer(object):
     def __init__(self, lsysargv, sysargv):
         self.T = 20
         xfl.fl_set_border_width(-2)
-        xfl.fl_initialize(lsysargv, sysargv, "FormDemo", 0, 0)
+        xfl.fl_initialize(lsysargv, sysargv, "FormDemo", None, 0)
         self.fd_timerform = self.create_form_timerform()
         # fill-in form initialization code
         xfl.fl_set_timer(self.fd_timerform.timer, self.T)

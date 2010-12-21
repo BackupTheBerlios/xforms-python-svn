@@ -31,7 +31,7 @@ class Flfonts(object):
     def __init__(self, lsysargv, sysargv):
 
         xfl.fl_set_border_width(-3)
-        xfl.fl_initialize(lsysargv, sysargv, "FormDemo", 0, 0)
+        xfl.fl_initialize(lsysargv, sysargv, "FormDemo", None, 0)
 
         self.ui = self.create_form_fontsform()
         xfl.fl_scale_form(self.ui.pfontsform, 1.1, 1.2)

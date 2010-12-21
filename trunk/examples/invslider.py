@@ -28,7 +28,7 @@ class FD_inv(object):
 class Flinvslider(object):
 
     def __init__(self, lsysargv, sysargv):
-        xfl.fl_initialize(lsysargv, sysargv, "FormDemo", 0, 0)
+        xfl.fl_initialize(lsysargv, sysargv, "FormDemo", None, 0)
         self.ui = self.create_form_inv()
         xfl.fl_show_form(self.ui.inv, \
                 xfl.FL_PLACE_CENTER | xfl.FL_FREE_SIZE, xfl.FL_TRANSIENT, \

@@ -18,7 +18,7 @@ import xformslib as xfl
 class Colsel1(object):
     def __init__(self, lsysargv, sysargv):
 
-        xfl.fl_initialize(lsysargv, sysargv, "FormDemo", 0, 0)
+        xfl.fl_initialize(lsysargv, sysargv, "FormDemo", None, 0)
 
         self.makeform()
         xfl.fl_scale_form(self.pform, 4.0, 4.0)

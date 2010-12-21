@@ -346,7 +346,7 @@ Parameters<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(where&nbsp;0&nbsp;stands&nbsp;for&nbsp;a&nbsp;direction&nbsp;of&nbsp;3&nbsp;o'clock,&nbsp;i.e.&nbsp;the<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;right-most&nbsp;point&nbsp;of&nbsp;a&nbsp;circle)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;colr&nbsp;:&nbsp;long_pos<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;color&nbsp;value<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;XForms&nbsp;colormap&nbsp;index&nbsp;as&nbsp;color<br>
 &nbsp;<br>
 Examples<br>
 --------<br>
@@ -378,7 +378,7 @@ Parameters<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(where&nbsp;0&nbsp;stands&nbsp;for&nbsp;a&nbsp;direction&nbsp;of&nbsp;3&nbsp;o'clock,&nbsp;i.e.&nbsp;the<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;right-most&nbsp;point&nbsp;of&nbsp;a&nbsp;circle)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;colr&nbsp;:&nbsp;long_pos<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;color&nbsp;value<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;XForms&nbsp;colormap&nbsp;index&nbsp;as&nbsp;color<br>
 &nbsp;<br>
 Examples<br>
 --------<br>
@@ -399,6 +399,8 @@ Parameters<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;vertical&nbsp;position&nbsp;of&nbsp;the&nbsp;center&nbsp;of&nbsp;the&nbsp;arc<br>
 &nbsp;&nbsp;&nbsp;&nbsp;radius&nbsp;:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;radius&nbsp;of&nbsp;the&nbsp;arc<br>
+&nbsp;&nbsp;&nbsp;&nbsp;colr&nbsp;:&nbsp;long_pos<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;XForms&nbsp;colormap&nbsp;index&nbsp;as&nbsp;color<br>
 &nbsp;<br>
 Examples<br>
 --------<br>
@@ -420,7 +422,7 @@ Parameters<br>
 &nbsp;&nbsp;&nbsp;&nbsp;radius&nbsp;:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;radius&nbsp;of&nbsp;the&nbsp;arc<br>
 &nbsp;&nbsp;&nbsp;&nbsp;colr&nbsp;:&nbsp;long_pos<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;color&nbsp;value<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;XForms&nbsp;colormap&nbsp;index&nbsp;as&nbsp;color<br>
 &nbsp;<br>
 Examples<br>
 --------<br>
@@ -471,13 +473,13 @@ sequence,&nbsp;the&nbsp;pattern&nbsp;repeats.<br>
 Parameters<br>
 ----------<br>
 &nbsp;&nbsp;&nbsp;&nbsp;dash&nbsp;:&nbsp;str<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;text&nbsp;sequence&nbsp;of&nbsp;dashes&nbsp;to&nbsp;use.&nbsp;If&nbsp;it&nbsp;is&nbsp;'None',&nbsp;use<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;default&nbsp;dash&nbsp;pattern.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;text&nbsp;sequence&nbsp;of&nbsp;dashes&nbsp;to&nbsp;use.&nbsp;If&nbsp;it&nbsp;is&nbsp;empty&nbsp;(""),&nbsp;use<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;default&nbsp;dash&nbsp;pattern<br>
 &nbsp;&nbsp;&nbsp;&nbsp;numdash&nbsp;:&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;length&nbsp;of&nbsp;dashes&nbsp;list<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;length&nbsp;of&nbsp;dashes&nbsp;list.&nbsp;If&nbsp;it&nbsp;is&nbsp;0,&nbsp;use&nbsp;the&nbsp;default&nbsp;dash&nbsp;pattern<br>
 &nbsp;<br>
 Examples<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;dashlist&nbsp;=&nbsp;"&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;,&nbsp;3,&nbsp;2,&nbsp;3]<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;dashlist&nbsp;=&nbsp;"&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;<a href="#-fl_dashedlinestyle">fl_dashedlinestyle</a>(dashlist,&nbsp;4)<br>
 &nbsp;<br>
 Notes<br>
@@ -501,7 +503,7 @@ Parameters<br>
 &nbsp;&nbsp;&nbsp;&nbsp;height&nbsp;:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;height&nbsp;in&nbsp;coord&nbsp;units<br>
 &nbsp;&nbsp;&nbsp;&nbsp;colr&nbsp;:&nbsp;long_pos<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;color&nbsp;value<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;XForms&nbsp;colormap&nbsp;index&nbsp;as&nbsp;color<br>
 &nbsp;<br>
 Examples<br>
 --------<br>
@@ -551,7 +553,7 @@ Parameters<br>
 &nbsp;&nbsp;&nbsp;&nbsp;height&nbsp;:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;height&nbsp;in&nbsp;coord&nbsp;units<br>
 &nbsp;&nbsp;&nbsp;&nbsp;colr&nbsp;:&nbsp;long_pos<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;color&nbsp;value<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;XForms&nbsp;colormap&nbsp;index&nbsp;as&nbsp;color<br>
 &nbsp;&nbsp;&nbsp;&nbsp;bndrwidth&nbsp;:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;width&nbsp;of&nbsp;boundary<br>
 &nbsp;<br>
@@ -585,7 +587,7 @@ Parameters<br>
 &nbsp;&nbsp;&nbsp;&nbsp;height&nbsp;:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;height&nbsp;in&nbsp;coord&nbsp;units<br>
 &nbsp;&nbsp;&nbsp;&nbsp;colr&nbsp;:&nbsp;long_pos<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;color&nbsp;value<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;XForms&nbsp;colormap&nbsp;index&nbsp;as&nbsp;color<br>
 &nbsp;&nbsp;&nbsp;&nbsp;bndrwidth&nbsp;:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;width&nbsp;of&nbsp;boundary<br>
 &nbsp;<br>
@@ -617,7 +619,9 @@ Reads&nbsp;user&nbsp;application&nbsp;specific&nbsp;options.<br>
 Parameters<br>
 ----------<br>
 &nbsp;&nbsp;&nbsp;&nbsp;ptr_flresource&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_RESOURCE<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;an&nbsp;array&nbsp;of&nbsp;resource&nbsp;class&nbsp;instances<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;an&nbsp;array&nbsp;of&nbsp;resource&nbsp;class&nbsp;instances.&nbsp;You&nbsp;can&nbsp;use<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;xfstruct.make_flresource()&nbsp;passing&nbsp;a&nbsp;dict&nbsp;or&nbsp;a&nbsp;list&nbsp;of&nbsp;dicts<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;with&nbsp;keys&nbsp;corresponding&nbsp;to&nbsp;xfdata.FL_RESOURCE&nbsp;attributes<br>
 &nbsp;&nbsp;&nbsp;&nbsp;numresources&nbsp;:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;number&nbsp;of&nbsp;resources&nbsp;(starting&nbsp;from&nbsp;1)&nbsp;passed&nbsp;with<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ptr_flresource&nbsp;array<br>
@@ -656,7 +660,7 @@ Returns<br>
 &nbsp;<br>
 Examples<br>
 --------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;dsize&nbsp;=&nbsp;<a href="#-fl_get_decoration_sizes">fl_get_decoration_sizes</a>(pform)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;resl,&nbsp;top,&nbsp;right,&nbsp;bottom,&nbsp;left&nbsp;=&nbsp;<a href="#-fl_get_decoration_sizes">fl_get_decoration_sizes</a>(pform)<br>
 &nbsp;<br>
 API_diversion<br>
 -------------<br>
@@ -666,13 +670,13 @@ API_diversion<br>
 Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-fl_get_defaults"><strong>fl_get_defaults</strong></a>()</dt><dd><tt><a href="#-fl_get_defaults">fl_get_defaults</a>()&nbsp;-&gt;&nbsp;ptr_iopt<br>
+ <dl><dt><a name="-fl_get_defaults"><strong>fl_get_defaults</strong></a>()</dt><dd><tt><a href="#-fl_get_defaults">fl_get_defaults</a>()&nbsp;-&gt;&nbsp;ptr_fliopt<br>
 &nbsp;<br>
 Finds&nbsp;out&nbsp;program&nbsp;defaults&nbsp;from&nbsp;the&nbsp;resource&nbsp;database.<br>
 &nbsp;<br>
 Returns<br>
 -------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;ptr_iopt&nbsp;:&nbsp;instance&nbsp;of&nbsp;xfdata.FL_IOPT<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_fliopt&nbsp;:&nbsp;instance&nbsp;of&nbsp;xfdata.FL_IOPT<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;program&nbsp;defaults&nbsp;class&nbsp;instance<br>
 &nbsp;<br>
 Examples<br>
@@ -924,7 +928,7 @@ Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
  <dl><dt><a name="-fl_get_resource"><strong>fl_get_resource</strong></a>(resname, resclass, dtype, defval, size)</dt><dd><tt><a href="#-fl_get_resource">fl_get_resource</a>(resname,&nbsp;resclass,&nbsp;dtype,&nbsp;defval,&nbsp;size)<br>
--&gt;&nbsp;restext,&nbsp;varval<br>
+-&gt;&nbsp;restext,&nbsp;varvalue<br>
 &nbsp;<br>
 Finds&nbsp;out&nbsp;resource&nbsp;data&nbsp;at&nbsp;the&nbsp;lowest&nbsp;level.&nbsp;It&nbsp;may&nbsp;be&nbsp;useful&nbsp;to&nbsp;e.g.<br>
 retrieve&nbsp;arbitrary&nbsp;strings&nbsp;and&nbsp;values&nbsp;and&nbsp;to&nbsp;pass&nbsp;data&nbsp;around.<br>
@@ -933,15 +937,17 @@ Parameters<br>
 ----------<br>
 &nbsp;&nbsp;&nbsp;&nbsp;resname&nbsp;:&nbsp;str<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;complete&nbsp;resource&nbsp;name&nbsp;specification&nbsp;(minus&nbsp;the&nbsp;application&nbsp;name)<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;and&nbsp;should&nbsp;not&nbsp;contain&nbsp;wildcards&nbsp;of&nbsp;any&nbsp;kind<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;and&nbsp;should&nbsp;not&nbsp;contain&nbsp;wildcards&nbsp;of&nbsp;any&nbsp;kind.&nbsp;Alternative&nbsp;to<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;resource&nbsp;class<br>
 &nbsp;&nbsp;&nbsp;&nbsp;resclass&nbsp;:&nbsp;str<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;complete&nbsp;resource&nbsp;class&nbsp;specification&nbsp;(minus&nbsp;the&nbsp;application&nbsp;name)<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;and&nbsp;should&nbsp;not&nbsp;contain&nbsp;wildcards&nbsp;of&nbsp;any&nbsp;kind<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;and&nbsp;should&nbsp;not&nbsp;contain&nbsp;wildcards&nbsp;of&nbsp;any&nbsp;kind.&nbsp;Alternative&nbsp;to<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;resource&nbsp;name<br>
 &nbsp;&nbsp;&nbsp;&nbsp;dtype&nbsp;:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;type&nbsp;of&nbsp;resource.&nbsp;Values&nbsp;(from&nbsp;xfdata.py)&nbsp;FL_NONE,&nbsp;FL_SHORT,<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_BOOL,&nbsp;FL_INT,&nbsp;FL_LONG,&nbsp;FL_FLOAT,&nbsp;FL_STRING<br>
 &nbsp;&nbsp;&nbsp;&nbsp;defval&nbsp;:&nbsp;str<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;default&nbsp;value<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;default&nbsp;value&nbsp;for&nbsp;resource&nbsp;data<br>
 &nbsp;&nbsp;&nbsp;&nbsp;size&nbsp;:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;number&nbsp;of&nbsp;bytes,&nbsp;used&nbsp;only&nbsp;if&nbsp;dtype&nbsp;is&nbsp;FL_STRING<br>
 &nbsp;<br>
@@ -950,7 +956,7 @@ Returns<br>
 &nbsp;&nbsp;&nbsp;&nbsp;restext&nbsp;:&nbsp;str<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;text&nbsp;representation&nbsp;of&nbsp;the&nbsp;resource&nbsp;value,<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;or&nbsp;None&nbsp;(on&nbsp;failure)<br>
-&nbsp;&nbsp;&nbsp;&nbsp;varval&nbsp;:&nbsp;any&nbsp;type<br>
+&nbsp;&nbsp;&nbsp;&nbsp;varvalue&nbsp;:&nbsp;any&nbsp;type<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;variable&nbsp;value<br>
 &nbsp;<br>
 Examples<br>
@@ -1184,27 +1190,30 @@ Examples<br>
 Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-fl_initialize"><strong>fl_initialize</strong></a>(numargs, argslist, appname<font color="#909090">=''</font>, appoptions<font color="#909090">=0</font>, nappopts<font color="#909090">=0</font>)</dt><dd><tt><a href="#-fl_initialize">fl_initialize</a>(numargs,&nbsp;argslist,&nbsp;appname="",&nbsp;appoptions=0,&nbsp;nappopts=0)<br>
+ <dl><dt><a name="-fl_initialize"><strong>fl_initialize</strong></a>(numargs, argslist, appname, ptr_appoptions, numappopts)</dt><dd><tt><a href="#-fl_initialize">fl_initialize</a>(numargs,&nbsp;argslist,&nbsp;appname,&nbsp;ptr_appoptions,&nbsp;numappopts)<br>
 -&gt;&nbsp;ptr_display<br>
 &nbsp;<br>
 Initializes&nbsp;XForms&nbsp;library.&nbsp;It&nbsp;should&nbsp;always&nbsp;be&nbsp;called&nbsp;before&nbsp;any<br>
-other&nbsp;calls&nbsp;to&nbsp;the&nbsp;XForms&nbsp;Library&nbsp;(except&nbsp;<a href="#-fl_set_defaults">fl_set_defaults</a>()&nbsp;and&nbsp;a&nbsp;few<br>
+other&nbsp;calls&nbsp;to&nbsp;the&nbsp;XForms&nbsp;Library,&nbsp;except&nbsp;<a href="#-fl_set_defaults">fl_set_defaults</a>()&nbsp;and&nbsp;a&nbsp;few<br>
 other&nbsp;functions&nbsp;that&nbsp;alter&nbsp;some&nbsp;of&nbsp;the&nbsp;defaults&nbsp;of&nbsp;the&nbsp;library.<br>
-Command&nbsp;line&nbsp;arguments&nbsp;are&nbsp;NOT&nbsp;supported&nbsp;in&nbsp;xforms-python,&nbsp;but&nbsp;you<br>
-should&nbsp;be&nbsp;able&nbsp;to&nbsp;set&nbsp;most&nbsp;of&nbsp;parameters&nbsp;using&nbsp;relative&nbsp;functions.<br>
+Command&nbsp;line&nbsp;arguments&nbsp;are&nbsp;supported.<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
 &nbsp;&nbsp;&nbsp;&nbsp;numargs&nbsp;:&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;number&nbsp;of&nbsp;arguments&nbsp;passed&nbsp;to&nbsp;command&nbsp;line,&nbsp;unused&nbsp;in&nbsp;python<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;number&nbsp;of&nbsp;arguments&nbsp;passed&nbsp;to&nbsp;command&nbsp;line<br>
 &nbsp;&nbsp;&nbsp;&nbsp;argslist&nbsp;:&nbsp;list_of_str<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;arguments&nbsp;passed&nbsp;to&nbsp;command&nbsp;line,&nbsp;unused&nbsp;in&nbsp;python<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;arguments&nbsp;passed&nbsp;to&nbsp;command&nbsp;line<br>
 &nbsp;&nbsp;&nbsp;&nbsp;appname&nbsp;:&nbsp;str<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;application&nbsp;class&nbsp;name<br>
-&nbsp;&nbsp;&nbsp;&nbsp;appoptions&nbsp;:&nbsp;instance&nbsp;of&nbsp;xfdata.FL_CMD_OPT<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;options&nbsp;passed&nbsp;as&nbsp;a&nbsp;flcmdopt&nbsp;class&nbsp;instance<br>
-&nbsp;&nbsp;&nbsp;&nbsp;nappopts&nbsp;:&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;number&nbsp;of&nbsp;options<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_appoptions&nbsp;:&nbsp;instance&nbsp;of&nbsp;xfdata.FL_CMD_OPT<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;possible&nbsp;options&nbsp;passed&nbsp;as&nbsp;a&nbsp;flcmdopt&nbsp;class&nbsp;instance.&nbsp;You&nbsp;can&nbsp;use<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;make_flcmdopt&nbsp;function,&nbsp;passing&nbsp;a&nbsp;dict&nbsp;with&nbsp;keys&nbsp;corresponding<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;to&nbsp;xfdata.FL_CMD_OPT&nbsp;attributes.&nbsp;If&nbsp;it&nbsp;is&nbsp;None,&nbsp;user&nbsp;application<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;has&nbsp;no&nbsp;options<br>
+&nbsp;&nbsp;&nbsp;&nbsp;numappopts&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;number&nbsp;of&nbsp;options&nbsp;passed&nbsp;in&nbsp;appoptions.&nbsp;If&nbsp;it&nbsp;is&nbsp;0,&nbsp;user<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;application&nbsp;has&nbsp;no&nbsp;options<br>
 &nbsp;<br>
 Returns<br>
 -------<br>
@@ -1214,14 +1223,14 @@ Returns<br>
 Examples<br>
 --------<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;import&nbsp;sys<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;<a href="#-fl_initialize">fl_initialize</a>(len(sys.argv),&nbsp;sys.argv,&nbsp;"MyFormDemo",&nbsp;0,&nbsp;0)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;<a href="#-fl_initialize">fl_initialize</a>(len(sys.argv),&nbsp;sys.argv,&nbsp;"MyFormDemo",&nbsp;None,&nbsp;0)<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;HalfTested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;Demo&nbsp;=&nbsp;HALF&nbsp;OK&nbsp;(not&nbsp;for&nbsp;command&nbsp;line&nbsp;args)</tt></dd></dl>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;HalfTested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;Demo&nbsp;=&nbsp;HALF&nbsp;OK</tt></dd></dl>
  <dl><dt><a name="-fl_keypressed"><strong>fl_keypressed</strong></a> = fl_keysym_pressed(keysym)</dt><dd><tt><a href="#-fl_keysym_pressed">fl_keysym_pressed</a>(keysym)&nbsp;-&gt;&nbsp;num<br>
 &nbsp;<br>
-Find&nbsp;out&nbsp;if&nbsp;a&nbsp;keyboard&nbsp;symbol&nbsp;has&nbsp;been&nbsp;pressed&nbsp;*todo*<br>
+Finds&nbsp;out&nbsp;if&nbsp;a&nbsp;keyboard&nbsp;symbol&nbsp;has&nbsp;been&nbsp;pressed&nbsp;*todo*<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
@@ -1243,7 +1252,7 @@ Notes<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
  <dl><dt><a name="-fl_keysym_pressed"><strong>fl_keysym_pressed</strong></a>(keysym)</dt><dd><tt><a href="#-fl_keysym_pressed">fl_keysym_pressed</a>(keysym)&nbsp;-&gt;&nbsp;num<br>
 &nbsp;<br>
-Find&nbsp;out&nbsp;if&nbsp;a&nbsp;keyboard&nbsp;symbol&nbsp;has&nbsp;been&nbsp;pressed&nbsp;*todo*<br>
+Finds&nbsp;out&nbsp;if&nbsp;a&nbsp;keyboard&nbsp;symbol&nbsp;has&nbsp;been&nbsp;pressed&nbsp;*todo*<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
@@ -1297,7 +1306,7 @@ Parameters<br>
 &nbsp;&nbsp;&nbsp;&nbsp;endypos&nbsp;:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;final&nbsp;vertical&nbsp;position&nbsp;(upper-left&nbsp;corner)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;colr&nbsp;:&nbsp;long_pos<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;color&nbsp;value<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;XForms&nbsp;colormap&nbsp;index&nbsp;as&nbsp;color<br>
 &nbsp;<br>
 Examples<br>
 --------<br>
@@ -1317,7 +1326,7 @@ Parameters<br>
 &nbsp;&nbsp;&nbsp;&nbsp;numpoints&nbsp;:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;number&nbsp;of&nbsp;points<br>
 &nbsp;&nbsp;&nbsp;&nbsp;colr&nbsp;:&nbsp;long_pos<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;value&nbsp;of&nbsp;color&nbsp;to&nbsp;be&nbsp;set<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;XForms&nbsp;colormap&nbsp;index&nbsp;as&nbsp;color&nbsp;to&nbsp;be&nbsp;set<br>
 &nbsp;<br>
 Examples<br>
 --------<br>
@@ -1439,7 +1448,7 @@ Parameters<br>
 &nbsp;&nbsp;&nbsp;&nbsp;height&nbsp;:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;height&nbsp;in&nbsp;coord&nbsp;units<br>
 &nbsp;&nbsp;&nbsp;&nbsp;colr&nbsp;:&nbsp;long_pos<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;color&nbsp;value<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;XForms&nbsp;colormap&nbsp;index&nbsp;as&nbsp;color<br>
 &nbsp;<br>
 Examples<br>
 --------<br>
@@ -1464,7 +1473,7 @@ Parameters<br>
 &nbsp;&nbsp;&nbsp;&nbsp;height&nbsp;:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;height&nbsp;in&nbsp;coord&nbsp;units<br>
 &nbsp;&nbsp;&nbsp;&nbsp;colr&nbsp;:&nbsp;long_pos<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;color&nbsp;value<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;XForms&nbsp;colormap&nbsp;index&nbsp;as&nbsp;color<br>
 &nbsp;<br>
 Examples<br>
 --------<br>
@@ -1498,7 +1507,7 @@ Parameters<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;otherwise&nbsp;in&nbsp;clockwise&nbsp;direction.&nbsp;If&nbsp;it&nbsp;is&nbsp;larger&nbsp;than&nbsp;3600&nbsp;it<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;is&nbsp;truncated&nbsp;to&nbsp;3600.<br>
 &nbsp;&nbsp;&nbsp;&nbsp;colr&nbsp;:&nbsp;long_pos<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;color&nbsp;value<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;XForms&nbsp;colormap&nbsp;index&nbsp;as&nbsp;color<br>
 &nbsp;<br>
 Examples<br>
 --------<br>
@@ -1524,7 +1533,7 @@ Parameters<br>
 &nbsp;&nbsp;&nbsp;&nbsp;height&nbsp;:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;height&nbsp;in&nbsp;coord&nbsp;units<br>
 &nbsp;&nbsp;&nbsp;&nbsp;colr&nbsp;:&nbsp;long_pos<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;color&nbsp;value<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;XForms&nbsp;colormap&nbsp;index&nbsp;as&nbsp;color<br>
 &nbsp;<br>
 Examples<br>
 --------<br>
@@ -1548,7 +1557,7 @@ Parameters<br>
 &nbsp;&nbsp;&nbsp;&nbsp;height&nbsp;:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;height&nbsp;in&nbsp;coord&nbsp;units<br>
 &nbsp;&nbsp;&nbsp;&nbsp;colr&nbsp;:&nbsp;long_pos<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;color&nbsp;value<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;XForms&nbsp;colormap&nbsp;index&nbsp;as&nbsp;color<br>
 &nbsp;<br>
 Examples<br>
 --------<br>
@@ -1572,7 +1581,7 @@ Parameters<br>
 &nbsp;&nbsp;&nbsp;&nbsp;height&nbsp;:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;height&nbsp;in&nbsp;coord&nbsp;units<br>
 &nbsp;&nbsp;&nbsp;&nbsp;colr&nbsp;:&nbsp;long_pos<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;color&nbsp;value<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;XForms&nbsp;colormap&nbsp;index&nbsp;as&nbsp;color<br>
 &nbsp;<br>
 Examples<br>
 --------<br>
@@ -1607,7 +1616,7 @@ Parameters<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;0&nbsp;stands&nbsp;for&nbsp;a&nbsp;direction&nbsp;of&nbsp;3&nbsp;o'clock,&nbsp;i.e.&nbsp;the&nbsp;right-most<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;point&nbsp;of&nbsp;a&nbsp;circle)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;colr&nbsp;:&nbsp;long_pos<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;color&nbsp;value<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;XForms&nbsp;colormap&nbsp;index&nbsp;as&nbsp;color<br>
 &nbsp;<br>
 Examples<br>
 --------<br>
@@ -1627,7 +1636,7 @@ Parameters<br>
 &nbsp;&nbsp;&nbsp;&nbsp;ypos&nbsp;:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;vertical&nbsp;position&nbsp;(upper-left&nbsp;corner)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;colr&nbsp;:&nbsp;long_pos<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;color&nbsp;value<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;XForms&nbsp;colormap&nbsp;index&nbsp;as&nbsp;color<br>
 &nbsp;<br>
 Examples<br>
 --------<br>
@@ -1647,7 +1656,7 @@ Parameters<br>
 &nbsp;&nbsp;&nbsp;&nbsp;numpoints&nbsp;:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;number&nbsp;of&nbsp;points<br>
 &nbsp;&nbsp;&nbsp;&nbsp;colr&nbsp;:&nbsp;long_pos<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;value&nbsp;of&nbsp;color&nbsp;to&nbsp;be&nbsp;set<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;XForms&nbsp;colormap&nbsp;index&nbsp;as&nbsp;color&nbsp;to&nbsp;be&nbsp;set<br>
 &nbsp;<br>
 Examples<br>
 --------<br>
@@ -1671,7 +1680,7 @@ Parameters<br>
 &nbsp;&nbsp;&nbsp;&nbsp;numpoints&nbsp;:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;number&nbsp;of&nbsp;points<br>
 &nbsp;&nbsp;&nbsp;&nbsp;colr&nbsp;:&nbsp;long_pos<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;value&nbsp;of&nbsp;color&nbsp;to&nbsp;be&nbsp;set<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;XForms&nbsp;colormap&nbsp;index&nbsp;as&nbsp;color&nbsp;to&nbsp;be&nbsp;set<br>
 &nbsp;<br>
 Examples<br>
 --------<br>
@@ -1695,7 +1704,7 @@ Parameters<br>
 &nbsp;&nbsp;&nbsp;&nbsp;numpoints&nbsp;:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;number&nbsp;of&nbsp;points<br>
 &nbsp;&nbsp;&nbsp;&nbsp;colr&nbsp;:&nbsp;long_pos<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;value&nbsp;of&nbsp;color&nbsp;to&nbsp;be&nbsp;set<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;XForms&nbsp;colormap&nbsp;index&nbsp;as&nbsp;color&nbsp;to&nbsp;be&nbsp;set<br>
 &nbsp;<br>
 Examples<br>
 --------<br>
@@ -1722,7 +1731,7 @@ Parameters<br>
 &nbsp;&nbsp;&nbsp;&nbsp;numpoints&nbsp;:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;number&nbsp;of&nbsp;points<br>
 &nbsp;&nbsp;&nbsp;&nbsp;colr&nbsp;:&nbsp;long_pos<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;value&nbsp;of&nbsp;color&nbsp;to&nbsp;be&nbsp;set<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;XForms&nbsp;colormap&nbsp;index&nbsp;as&nbsp;color&nbsp;to&nbsp;be&nbsp;set<br>
 &nbsp;<br>
 Examples<br>
 --------<br>
@@ -1746,7 +1755,7 @@ Parameters<br>
 &nbsp;&nbsp;&nbsp;&nbsp;numpoints&nbsp;:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;number&nbsp;of&nbsp;points<br>
 &nbsp;&nbsp;&nbsp;&nbsp;colr&nbsp;:&nbsp;long_pos<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;value&nbsp;of&nbsp;color&nbsp;to&nbsp;be&nbsp;set<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;XForms&nbsp;colormap&nbsp;index&nbsp;as&nbsp;color&nbsp;to&nbsp;be&nbsp;set<br>
 &nbsp;<br>
 Examples<br>
 --------<br>
@@ -1874,7 +1883,7 @@ Parameters<br>
 &nbsp;&nbsp;&nbsp;&nbsp;height&nbsp;:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;height&nbsp;in&nbsp;coord&nbsp;units<br>
 &nbsp;&nbsp;&nbsp;&nbsp;colr&nbsp;:&nbsp;long_pos<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;color&nbsp;value<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;XForms&nbsp;colormap&nbsp;index&nbsp;as&nbsp;color<br>
 &nbsp;<br>
 Examples<br>
 --------<br>
@@ -1901,7 +1910,7 @@ Parameters<br>
 &nbsp;&nbsp;&nbsp;&nbsp;height&nbsp;:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;height&nbsp;in&nbsp;coord&nbsp;units<br>
 &nbsp;&nbsp;&nbsp;&nbsp;colr&nbsp;:&nbsp;long_pos<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;color&nbsp;value<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;XForms&nbsp;colormap&nbsp;index&nbsp;as&nbsp;color<br>
 &nbsp;<br>
 Examples<br>
 --------<br>
@@ -1925,7 +1934,7 @@ Parameters<br>
 &nbsp;&nbsp;&nbsp;&nbsp;height&nbsp;:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;height&nbsp;in&nbsp;coord&nbsp;units<br>
 &nbsp;&nbsp;&nbsp;&nbsp;colr&nbsp;:&nbsp;long_pos<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;color&nbsp;value<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;XForms&nbsp;colormap&nbsp;index&nbsp;as&nbsp;color<br>
 &nbsp;<br>
 Examples<br>
 --------<br>
@@ -1949,7 +1958,7 @@ Parameters<br>
 &nbsp;&nbsp;&nbsp;&nbsp;height&nbsp;:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;height&nbsp;in&nbsp;coord&nbsp;units<br>
 &nbsp;&nbsp;&nbsp;&nbsp;colr&nbsp;:&nbsp;long_pos<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;color&nbsp;value<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;XForms&nbsp;colormap&nbsp;index&nbsp;as&nbsp;color<br>
 &nbsp;<br>
 Examples<br>
 --------<br>
@@ -2051,7 +2060,7 @@ Parameters<br>
 &nbsp;&nbsp;&nbsp;&nbsp;height&nbsp;:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;height&nbsp;in&nbsp;coord&nbsp;units<br>
 &nbsp;&nbsp;&nbsp;&nbsp;colr&nbsp;:&nbsp;long_pos<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;color&nbsp;value<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;XForms&nbsp;colormap&nbsp;index&nbsp;as&nbsp;color<br>
 &nbsp;<br>
 Examples<br>
 --------<br>
@@ -2078,7 +2087,7 @@ Parameters<br>
 &nbsp;&nbsp;&nbsp;&nbsp;height&nbsp;:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;height&nbsp;in&nbsp;coord&nbsp;units<br>
 &nbsp;&nbsp;&nbsp;&nbsp;colr&nbsp;:&nbsp;long_pos<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;color&nbsp;value<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;XForms&nbsp;colormap&nbsp;index&nbsp;as&nbsp;color<br>
 &nbsp;<br>
 Examples<br>
 --------<br>
@@ -2102,7 +2111,7 @@ Parameters<br>
 &nbsp;&nbsp;&nbsp;&nbsp;height&nbsp;:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;height&nbsp;in&nbsp;coord&nbsp;units<br>
 &nbsp;&nbsp;&nbsp;&nbsp;colr&nbsp;:&nbsp;long_pos<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;color&nbsp;value<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;XForms&nbsp;colormap&nbsp;index&nbsp;as&nbsp;color<br>
 &nbsp;<br>
 Examples<br>
 --------<br>
@@ -2121,7 +2130,7 @@ Parameters<br>
 &nbsp;&nbsp;&nbsp;&nbsp;gc&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.GC<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Graphics&nbsp;context&nbsp;structure&nbsp;*todo*<br>
 &nbsp;&nbsp;&nbsp;&nbsp;colr&nbsp;:&nbsp;long_pos<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;color&nbsp;value&nbsp;to&nbsp;be&nbsp;set&nbsp;as&nbsp;background<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;XForms&nbsp;colormap&nbsp;index&nbsp;as&nbsp;color&nbsp;to&nbsp;be&nbsp;set&nbsp;as&nbsp;background<br>
 &nbsp;<br>
 Examples<br>
 --------<br>
@@ -2182,7 +2191,7 @@ Examples<br>
 Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-fl_set_defaults"><strong>fl_set_defaults</strong></a>(pdmask, ptr_iopt)</dt><dd><tt><a href="#-fl_set_defaults">fl_set_defaults</a>(pdmask,&nbsp;ptr_iopt)<br>
+ <dl><dt><a name="-fl_set_defaults"><strong>fl_set_defaults</strong></a>(pdmask, ptr_fliopt)</dt><dd><tt><a href="#-fl_set_defaults">fl_set_defaults</a>(pdmask,&nbsp;ptr_fliopt)<br>
 &nbsp;<br>
 Defines&nbsp;program&nbsp;default&nbsp;option&nbsp;masks.<br>
 &nbsp;<br>
@@ -2198,8 +2207,10 @@ Parameters<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_PDSafe,&nbsp;FL_PDMenuFontSize,&nbsp;FL_PDBrowserFontSize,<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_PDChoiceFontSize,&nbsp;FL_PDLabelFontSize,&nbsp;FL_PDButtonLabelSize,<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_PDSliderLabelSize,&nbsp;FL_PDInputLabelSize,&nbsp;FL_PDButtonLabel<br>
-&nbsp;&nbsp;&nbsp;&nbsp;ptr_iopt&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_IOPT&nbsp;array<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;an&nbsp;array&nbsp;of&nbsp;program&nbsp;defaults&nbsp;class&nbsp;instances<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_fliopt&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_IOPT&nbsp;array<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;program&nbsp;defaults&nbsp;class&nbsp;instance.&nbsp;You&nbsp;can&nbsp;use&nbsp;xfstruct.make_fliopt<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;function&nbsp;passing&nbsp;a&nbsp;dict&nbsp;with&nbsp;keys&nbsp;corresponding&nbsp;to&nbsp;xfdata.FL_IOPT's<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;attributes.<br>
 &nbsp;<br>
 Examples<br>
 --------<br>
@@ -2272,7 +2283,7 @@ Parameters<br>
 &nbsp;&nbsp;&nbsp;&nbsp;gc&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.GC<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Graphics&nbsp;context&nbsp;structure&nbsp;*todo*<br>
 &nbsp;&nbsp;&nbsp;&nbsp;colr&nbsp;:&nbsp;long_pos<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;color&nbsp;value&nbsp;to&nbsp;be&nbsp;set&nbsp;as&nbsp;foreground<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;XForms&nbsp;colormap&nbsp;index&nbsp;as&nbsp;color&nbsp;to&nbsp;be&nbsp;set&nbsp;as&nbsp;foreground<br>
 &nbsp;<br>
 Examples<br>
 --------<br>
@@ -2332,12 +2343,13 @@ Notes<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
  <dl><dt><a name="-fl_set_graphics_mode"><strong>fl_set_graphics_mode</strong></a>(mode, doublebuf)</dt><dd><tt><a href="#-fl_set_graphics_mode">fl_set_graphics_mode</a>(mode,&nbsp;doublebuf)<br>
 &nbsp;<br>
-Defines&nbsp;graphics&nbsp;mode&nbsp;and&nbsp;doublebuffer.<br>
+Defines&nbsp;graphics&nbsp;mode&nbsp;and&nbsp;doublebuffer&nbsp;state.<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
 &nbsp;&nbsp;&nbsp;&nbsp;mode&nbsp;:&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;graphics&nbsp;mode&nbsp;to&nbsp;be&nbsp;set<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;visual&nbsp;mode.&nbsp;Values&nbsp;(from&nbsp;xfdata&nbsp;module)&nbsp;GrayScale,&nbsp;StaticGray,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;PseudoColor,&nbsp;StaticColor,&nbsp;DirectColor&nbsp;or&nbsp;TrueColor<br>
 &nbsp;&nbsp;&nbsp;&nbsp;doublebuf&nbsp;:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;flag&nbsp;to&nbsp;enable/disable&nbsp;doublebuffer.&nbsp;Value&nbsp;0&nbsp;(to&nbsp;disable)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;or&nbsp;1&nbsp;(to&nbsp;enable)&nbsp;*todo*&nbsp;to&nbsp;be&nbsp;verified!<br>
@@ -2472,8 +2484,8 @@ arbitrary&nbsp;strings&nbsp;and&nbsp;values&nbsp;and&nbsp;to&nbsp;pass&nbsp;data
 Parameters<br>
 ----------<br>
 &nbsp;&nbsp;&nbsp;&nbsp;resnamecls&nbsp;:&nbsp;str<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;a&nbsp;fully&nbsp;qualified&nbsp;resource&nbsp;name&nbsp;(minus&nbsp;the&nbsp;application<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;name)&nbsp;or&nbsp;a&nbsp;resource&nbsp;class<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;a&nbsp;fully&nbsp;qualified&nbsp;resource&nbsp;name&nbsp;(minus&nbsp;the&nbsp;application&nbsp;name)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;or&nbsp;a&nbsp;resource&nbsp;class<br>
 &nbsp;&nbsp;&nbsp;&nbsp;txtval&nbsp;:&nbsp;str<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;new&nbsp;text&nbsp;value&nbsp;for&nbsp;resource<br>
 &nbsp;<br>
@@ -2553,14 +2565,14 @@ Examples<br>
 Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-fl_set_visualID"><strong>fl_set_visualID</strong></a>(visualid)</dt><dd><tt><a href="#-fl_set_visualID">fl_set_visualID</a>(visualid)<br>
+ <dl><dt><a name="-fl_set_visualID"><strong>fl_set_visualID</strong></a>(vmode)</dt><dd><tt><a href="#-fl_set_visualID">fl_set_visualID</a>(vmode)<br>
 &nbsp;<br>
 Defines&nbsp;visual&nbsp;mode&nbsp;and&nbsp;depth.&nbsp;By&nbsp;default,&nbsp;X&nbsp;Server's&nbsp;visual&nbsp;and<br>
 depth&nbsp;values&nbsp;are&nbsp;used.<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;visualid&nbsp;:&nbsp;long<br>
+&nbsp;&nbsp;&nbsp;&nbsp;vmode&nbsp;:&nbsp;long<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;visual&nbsp;mode.&nbsp;Values&nbsp;(from&nbsp;xfdata.py)&nbsp;StaticGray,&nbsp;GrayScale,<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;StaticColor,&nbsp;PseudoColor,&nbsp;TrueColor,&nbsp;DirectColor,<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;DefaultVisual,&nbsp;GreyScale,&nbsp;StaticGrey<br>
@@ -2610,7 +2622,7 @@ Parameters<br>
 &nbsp;&nbsp;&nbsp;&nbsp;endypos&nbsp;:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;final&nbsp;vertical&nbsp;position&nbsp;(upper-left&nbsp;corner)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;colr&nbsp;:&nbsp;long_pos<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;color&nbsp;value<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;XForms&nbsp;colormap&nbsp;index&nbsp;as&nbsp;color<br>
 &nbsp;<br>
 Examples<br>
 --------<br>
@@ -3283,14 +3295,5 @@ Notes<br>
 <font color="#ffffff" face="helvetica, arial"><big><strong>Data</strong></big></font></td></tr>
     
 <tr><td bgcolor="#55aa55"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
-<td width="100%"><strong>fl_current_form</strong> = &lt;xfdata.LP_FL_FORM_ object&gt;<br>
-<strong>fl_display</strong> = &lt;xfdata.LP__XDisplay object&gt;<br>
-<strong>fl_root</strong> = c_ulong(0L)<br>
-<strong>fl_screen</strong> = c_int(0)<br>
-<strong>fl_scrh</strong> = c_int(0)<br>
-<strong>fl_scrw</strong> = c_int(0)<br>
-<strong>fl_state</strong> = &lt;flxbasic.FL_State_Array_6 object&gt;<br>
-<strong>fl_ul_magic_char</strong> = c_char_p(None)<br>
-<strong>fl_vmode</strong> = c_int(-1)<br>
-<strong>fl_vroot</strong> = c_ulong(0L)</td></tr></table>
-<p>Updated on: 2010-12-20 01:16 +0100</body></html>
+<td width="100%"><strong>fl_state</strong> = &lt;flxbasic.FL_State_Array_6 object&gt;</td></tr></table>
+<p>Updated on: 2010-12-22 00:35 +0100</body></html>

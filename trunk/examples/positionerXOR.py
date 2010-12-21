@@ -21,7 +21,7 @@ class Flpositxor(object):
     def __init__(self, lsysargv, sysargv):
 
         xfl.fl_set_border_width(-2)
-        xfl.fl_initialize(lsysargv, sysargv, "FormDemo", 0, 0)
+        xfl.fl_initialize(lsysargv, sysargv, "FormDemo", None, 0)
 
         pform = xfl.fl_bgn_form(xfl.FL_UP_BOX, 350, 250)
 

@@ -17,7 +17,7 @@ import xformslib as xfl
 class Flsldalt(object):
     def __init__(self, lsysargv, sysarg):
 
-        xfl.fl_initialize(lsysargv, sysarg, "FormDemo", 0, 0)
+        xfl.fl_initialize(lsysargv, sysarg, "FormDemo", None, 0)
         self.pform = xfl.fl_bgn_form(xfl.FL_UP_BOX, 300, 300)
         self.psl = xfl.fl_add_slider(xfl.FL_VERT_SLIDER, 40, 40, 60, 220, "X")
         xfl.fl_set_slider_value(self.psl, 0.5)

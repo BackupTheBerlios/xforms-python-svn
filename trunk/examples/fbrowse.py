@@ -20,7 +20,7 @@ class FLfbrowse(object):
 
     def __init__(self, lsysarg, sysargv):
 
-        xfl.fl_initialize(lsysarg, sysargv, "FormDemo", 0, 0)
+        xfl.fl_initialize(lsysarg, sysargv, "FormDemo", None, 0)
         fdnew = self.create_form()
 
         xfl.fl_clear_browser(self.pbr)

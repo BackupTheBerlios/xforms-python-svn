@@ -34,7 +34,7 @@ class FD_input(object):
 class Flinputall(object):
     def __init__(self, lsysargv, sysargv):
 
-        xfl.fl_initialize(lsysargv, sysargv, "FormDemo", 0, 0)
+        xfl.fl_initialize(lsysargv, sysargv, "FormDemo", None, 0)
         self.fd_input = self.create_form_input()
 
         # fill-in form initialization code

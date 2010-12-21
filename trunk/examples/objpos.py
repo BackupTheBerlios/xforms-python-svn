@@ -19,7 +19,7 @@ import xformslib as xfl
 class Flobjpos(object):
 
     def __init__(self, lsysargv, sysargv):
-        xfl.fl_initialize(lsysargv, sysargv, "FormDemo", 0, 0)
+        xfl.fl_initialize(lsysargv, sysargv, "FormDemo", None, 0)
         pform = xfl.fl_bgn_form(xfl.FL_DOWN_BOX, 400, 200)
         self.pbut = xfl.fl_add_button(xfl.FL_NORMAL_BUTTON, 10, 60, \
                 70, 35, "Exit")  # 140 160

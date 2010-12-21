@@ -34,7 +34,7 @@ class FD_scb(object):
 class Flscrollbar(object):
     def __init__(self, lsysargv, sysargv):
 
-        xfl.fl_initialize(lsysargv, sysargv, "FormDemo", 0, 0)
+        xfl.fl_initialize(lsysargv, sysargv, "FormDemo", None, 0)
         self.fd_scb = self.create_form_scb()
         xfl.fl_show_form(self.fd_scb.scb, xfl.FL_PLACE_CENTERFREE, \
                 xfl.FL_FULLBORDER, "form0")

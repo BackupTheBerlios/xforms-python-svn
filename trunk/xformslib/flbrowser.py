@@ -433,7 +433,7 @@ def fl_load_browser(ptr_flobject, filename):
         ptr_flobject : pointer to xfdata.FL_OBJECT
             browser flobject
         filename : str
-            name of the file. If it's empty or None does not load a new file.
+            name of the file. If it is empty (""), does not load a new file.
 
     Returns
     -------
@@ -451,15 +451,12 @@ def fl_load_browser(ptr_flobject, filename):
     """
     _fl_load_browser = library.cfuncproto(
         library.load_so_libforms(), "fl_load_browser",
-        cty.c_int, [cty.POINTER(xfdata.FL_OBJECT), cty.c_void_p],
+        cty.c_int, [cty.POINTER(xfdata.FL_OBJECT), xfdata.STRING],
         """int fl_load_browser(FL_OBJECT * ob, const char * filename)""")
     library.verify_flobjectptr_type(ptr_flobject)
-    if not filename:            # it is None or empty
-        sfilename = cty.cast(filename, cty.c_void_p)
-    else:
-        sfilename = library.convert_to_stringc(filename)
-    library.keep_elem_refs(ptr_flobject, filename, sfilename)
-    retval = _fl_load_browser(ptr_flobject, sfilename)
+    s_filename = library.convert_to_stringc(filename)
+    library.keep_elem_refs(ptr_flobject, filename, s_filename)
+    retval = _fl_load_browser(ptr_flobject, s_filename)
     return retval
 
 
@@ -490,9 +487,9 @@ def fl_select_browser_line(ptr_flobject, linenum):
         """void fl_select_browser_line(FL_OBJECT * ob, int line)""")
     library.check_if_initialized()
     library.verify_flobjectptr_type(ptr_flobject)
-    ilinenum = library.convert_to_intc(linenum)
-    library.keep_elem_refs(ptr_flobject, linenum, ilinenum)
-    _fl_select_browser_line(ptr_flobject, ilinenum)
+    i_linenum = library.convert_to_intc(linenum)
+    library.keep_elem_refs(ptr_flobject, linenum, i_linenum)
+    _fl_select_browser_line(ptr_flobject, i_linenum)
 
 
 def fl_deselect_browser_line(ptr_flobject, linenum):

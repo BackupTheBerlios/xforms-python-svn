@@ -13,10 +13,6 @@
 
 import sys
 import xformslib as xfl
-from xformslib.flxbasic import *
-from xformslib.flbutton import *
-from xformslib.flmisc import *
-from xformslib.xfdata import *
 
 
 

@@ -10,6 +10,7 @@
 #
 
 import sys
+import os
 #sys.path.append("..")
 import xformslib as xfl
 
@@ -18,7 +19,7 @@ import xformslib as xfl
 class FLfbrowse1(object):
     def __init__(self, lsysargv, sysargv):
 
-        xfl.fl_initialize(lsysargv, sysargv, "FormDemo", 0, 0)
+        xfl.fl_initialize(lsysargv, sysargv, "FormDemo", None, 0)
 
         pform = xfl.fl_bgn_form(xfl.FL_UP_BOX, 130, 100)
 
@@ -63,8 +64,13 @@ class FLfbrowse1(object):
 
     def load_file(self, pobj, arg):
         myfilename = xfl.fl_show_input("Filename to load", "")
-        if not xfl.fl_load_browser(self.pbr, myfilename):
+        #if not xfl.fl_load_browser(self.pbr, myfilename):
+        #    xfl.fl_add_browser_line(self.pbr, "NO SUCH FILE!")
+        if not myfilename or not os.path.exists(myfilename):
+            xfl.fl_load_browser(self.pbr, "")
             xfl.fl_add_browser_line(self.pbr, "NO SUCH FILE!")
+        else:
+            xfl.fl_load_browser(self.pbr, myfilename)
 
 
     def set_size(self, pobj, arg):

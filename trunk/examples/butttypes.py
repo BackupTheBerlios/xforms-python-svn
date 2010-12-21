@@ -17,7 +17,7 @@ import xformslib as xfl
 
 class Flbuttontypes(object):
     def __init__(self, lsysargv, sysargv):
-        xfl.fl_initialize(lsysargv, sysargv, "FormDemo", 0, 0)
+        xfl.fl_initialize(lsysargv, sysargv, "FormDemo", None, 0)
         self.create_form_form0()
         # fill-in form initialization code
         # show the first form

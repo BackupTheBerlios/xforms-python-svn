@@ -20,7 +20,7 @@ class Flndial(object):
     def __init__(self, lsysargv, sysargv):
         self.pdials = [0] * 3
         self.ptexts = [0] * 3
-        xfl.fl_initialize(lsysargv, sysargv, "FormDemo", 0, 0)
+        xfl.fl_initialize(lsysargv, sysargv, "FormDemo", None, 0)
         self.makeform()
         xfl.fl_show_form(self.pform, xfl.FL_PLACE_MOUSE, xfl.FL_TRANSIENT, \
                 "A Form")

@@ -18,7 +18,7 @@ class BorderWidth(object):
     def __init__(self, lsysargv, sysargv):
         # application default. Can be overriden by the command line options
         xfl.fl_set_border_width(1)
-        xfl.fl_initialize(lsysargv, sysargv, "FormDemo", 0, 0)
+        xfl.fl_initialize(lsysargv, sysargv, "FormDemo", None, 0)
         self.pbwform = xfl.fl_bgn_form(xfl.FL_NO_BOX, 380, 340)
         self.pbwgroup = xfl.fl_bgn_group()
         xfl.fl_add_box(xfl.FL_UP_BOX, 0, 0, 380, 340, "")

@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
-#  This file is part of xforms-python, and it has been ported from
-#  arrowbutton.c XForms demo, with some adaptations.
+#  This file is part of xforms-python, and it is a variant of
+#  arrowbutton.c XForms demo.
 #
 #  arrowbutton.c was written by M. Overmars and T.C. Zhao (1997),
 #  See CREDITS file for XForms copyright attribution, and LICENSE
@@ -21,7 +21,14 @@ def exit_cb(pobj, data):
 
 def main(lsysargv, sysargv):
 
-    xfl.fl_initialize(lsysargv, sysargv, "FormDemo", None, 0)
+    cmdopts = [{'option' : '-first', 'specifier' : '.first',
+            'argKind' : xfl.XrmoptionNoArg, 'value' : 'True'}, \
+            {'option' :'-second', 'specifier' : '.second',
+            'argKind' : xfl.XrmoptionNoArg, 'value' : 'False'}, \
+            {'option' : '-third', 'specifier' : '.third',
+            'argKind' : xfl.XrmoptionSepArg, 'value' : '0'}]
+    pcmdopt = xfl.make_flcmdopt(cmdopts)
+    xfl.fl_initialize(lsysargv, sysargv, "FormDemo", pcmdopt, 3)
 
     pform = xfl.fl_bgn_form(xfl.FL_UP_BOX, 400, 400)
 

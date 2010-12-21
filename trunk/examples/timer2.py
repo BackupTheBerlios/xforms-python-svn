@@ -19,10 +19,10 @@ import xformslib as xfl
 class Fltimer2(object):
     def __init__(self, lsysargv, sysargv):
         self.TIME = 5
-        xfl.fl_initialize(lsysargv, sysargv, "FormDemo", 0, 0)
+        xfl.fl_initialize(lsysargv, sysargv, "FormDemo", None, 0)
         self.makeforms()
-        xfl.fl_show_form(self.pform1, xfl.FL_PLACE_CENTER, xfl.FL_NOBORDER, \
-                "Timer")
+        xfl.fl_show_form(self.pform1, xfl.FL_PLACE_CENTER, \
+                xfl.FL_NOBORDER, "Timer")
         xfl.fl_set_timer(self.ptim, self.TIME)
         xfl.fl_do_forms()
 

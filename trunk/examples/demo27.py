@@ -48,7 +48,7 @@ class Demo27(object):
 
         self.onumb = 0
 
-        xfl.fl_initialize(lsysargv, sysargv, "FormDemo", 0, 0)
+        xfl.fl_initialize(lsysargv, sysargv, "FormDemo", None, 0)
         self.init_colorpart()
         self.init_controlpart()
         self.init_mainpart()

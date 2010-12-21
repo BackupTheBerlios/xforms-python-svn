@@ -1,5 +1,20 @@
+SVN (first entries from top are more recent)
+--------------------------------------------
 
-SVN
+BETA
+    20101221 (beta1)
+    * some miscellaneous bugfixes.
+    * Modified some functions with a parameter of str type who can have None
+    value, so they now require empty str (""), instead of None. Bugfix in
+    fl_vclass_name(). Managed FL_IOPT * param for fl_set_defaults().
+    Now fl_initialize() supports command line arguments, as FL_CMD_OPT *
+    is managed. Modified examples to replace empty appoptions param from 0
+    to None. Added arrowbutton_var example to show FL_CMD_OPT wrapper.
+    Managed FL_RESOURCE * param for fl_get_app_resources().
+    * xforms-python has now entered in beta development state! Hopefully most
+    functions should be reasonably stable now.
+
+ALPHA
     * changed descriptions for color params. Some misc. corrections.
     * continuing params' names change to be more meaningful. Some bugfixes
     and some typos fixed.
@@ -11,7 +26,7 @@ SVN
     1.0.94pre4: new fl_full_library_version() function.
     * bugfixes in some examples. butttype.py example added.
     * managed how to correctly handle char** in fl_set_pixmap_data (thanks to
-    Mark Tolonen, on ctypes-users mailing-list). Some adjustment in examples.
+    Mark Tolonen, on ctypes-users mailing-list). Some adjustments in examples.
     New iconify_var.py example.
     * new handling of ubyte array in library.py. Bugfixes for fl_state and
     fl_vmode.
@@ -340,4 +355,3 @@ SVN
     This is the byproduct of c to py raw conversion,
     using gccxml and h2xml.py/xml2py.py from CtypesLib
     (little gems, to avoid much of raw work).
-

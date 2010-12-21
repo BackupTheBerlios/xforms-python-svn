@@ -18,7 +18,7 @@ import xformslib as xfl
 class Flsecrinp(object):
     def __init__(self, lsysargv, sysargv):
 
-        xfl.fl_initialize(lsysargv, sysargv, "FormDemo", 0, 0)
+        xfl.fl_initialize(lsysargv, sysargv, "FormDemo", None, 0)
 
         self.pform = xfl.fl_bgn_form(xfl.FL_UP_BOX, 400, 300)
 
@@ -33,7 +33,8 @@ class Flsecrinp(object):
 
         xfl.fl_end_form()
 
-        xfl.fl_show_form(self.pform, xfl.FL_PLACE_MOUSE, xfl.FL_NOBORDER, "secret")
+        xfl.fl_show_form(self.pform, xfl.FL_PLACE_MOUSE, \
+                xfl.FL_NOBORDER, "secret")
 
         while xfl.fl_do_forms():
             strng = "Password 1 is: %s , Password 2 is: %s" % \

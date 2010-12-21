@@ -1572,13 +1572,13 @@ Methods inherited from _ctypes._CData:<br>
 Attributes<br>
 ----------<br>
 &nbsp;&nbsp;&nbsp;&nbsp;option&nbsp;:&nbsp;str<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*todo*<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Option&nbsp;abbreviation&nbsp;in&nbsp;sys.argv<br>
 &nbsp;&nbsp;&nbsp;&nbsp;specifier&nbsp;:&nbsp;str<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*todo*<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;resource&nbsp;specifier<br>
 &nbsp;&nbsp;&nbsp;&nbsp;argKind&nbsp;:&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*todo*<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Which&nbsp;style&nbsp;of&nbsp;option&nbsp;it&nbsp;is<br>
 &nbsp;&nbsp;&nbsp;&nbsp;value&nbsp;:&nbsp;str<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*todo*<br>&nbsp;</tt></td></tr>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Value&nbsp;to&nbsp;provide&nbsp;if&nbsp;argKind&nbsp;is&nbsp;XrmoptionNoArg<br>&nbsp;</tt></td></tr>
 <tr><td>&nbsp;</td>
 <td width="100%"><dl><dt>Method resolution order:</dt>
 <dd><a href="xfdata.html#XrmOptionDescRec">XrmOptionDescRec</a></dd>
@@ -5781,61 +5781,61 @@ Attributes<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;resource&nbsp;name<br>
 &nbsp;&nbsp;&nbsp;&nbsp;res_class&nbsp;:&nbsp;str<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;resource&nbsp;class<br>
-&nbsp;&nbsp;&nbsp;&nbsp;type&nbsp;:&nbsp;FL_RTYPE<br>
+&nbsp;&nbsp;&nbsp;&nbsp;type&nbsp;:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;variable&nbsp;type,&nbsp;e.g.&nbsp;FL_INT,&nbsp;FL_FLOAT,&nbsp;FL_BOOL,&nbsp;etc..<br>
 &nbsp;&nbsp;&nbsp;&nbsp;var&nbsp;:&nbsp;pointer&nbsp;to&nbsp;any&nbsp;type<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;address&nbsp;for&nbsp;the&nbsp;variable<br>
 &nbsp;&nbsp;&nbsp;&nbsp;defval&nbsp;:&nbsp;str<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;default&nbsp;setting&nbsp;in&nbsp;string&nbsp;form<br>
 &nbsp;&nbsp;&nbsp;&nbsp;nbytes&nbsp;:&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;size&nbsp;used&nbsp;only&nbsp;for&nbsp;strings<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;size&nbsp;used&nbsp;only&nbsp;if&nbsp;var&nbsp;has&nbsp;'str'&nbsp;type<br>
 &nbsp;<br>
 List&nbsp;of&nbsp;resources<br>
 -----------------<br>
 &nbsp;&nbsp;&nbsp;&nbsp;rgamma<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;class&nbsp;Gamma,&nbsp;type&nbsp;float,&nbsp;default&nbsp;value&nbsp;1.0<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;class&nbsp;Gamma,&nbsp;type&nbsp;FL_FLOAT,&nbsp;default&nbsp;value&nbsp;1.0<br>
 &nbsp;&nbsp;&nbsp;&nbsp;ggamma<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;class&nbsp;Gamma,&nbsp;type&nbsp;float,&nbsp;default&nbsp;value&nbsp;1.0<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;class&nbsp;Gamma,&nbsp;type&nbsp;FL_FLOAT,&nbsp;default&nbsp;value&nbsp;1.0<br>
 &nbsp;&nbsp;&nbsp;&nbsp;bgamma<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;class&nbsp;Gamma,&nbsp;type&nbsp;float,&nbsp;default&nbsp;value&nbsp;1.0<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;class&nbsp;Gamma,&nbsp;type&nbsp;FL_FLOAT,&nbsp;default&nbsp;value&nbsp;1.0<br>
 &nbsp;&nbsp;&nbsp;&nbsp;visual<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;class&nbsp;<a href="#Visual">Visual</a>,&nbsp;type&nbsp;string,&nbsp;default&nbsp;value&nbsp;best<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;class&nbsp;<a href="#Visual">Visual</a>,&nbsp;type&nbsp;FL_STRING,&nbsp;default&nbsp;value&nbsp;best<br>
 &nbsp;&nbsp;&nbsp;&nbsp;depth<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;class&nbsp;<a href="#Depth">Depth</a>,&nbsp;type&nbsp;int,&nbsp;default&nbsp;value&nbsp;best<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;class&nbsp;<a href="#Depth">Depth</a>,&nbsp;type&nbsp;FL_INT,&nbsp;default&nbsp;value&nbsp;best<br>
 &nbsp;&nbsp;&nbsp;&nbsp;doubleBuffer<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;class&nbsp;DoubleBuffer,&nbsp;type&nbsp;bool,&nbsp;default&nbsp;value&nbsp;true<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;class&nbsp;DoubleBuffer,&nbsp;type&nbsp;FL_BOOL,&nbsp;default&nbsp;value&nbsp;true<br>
 &nbsp;&nbsp;&nbsp;&nbsp;privateColormap<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;class&nbsp;PrivateColormap,&nbsp;type&nbsp;bool,&nbsp;default&nbsp;value&nbsp;false<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;class&nbsp;PrivateColormap,&nbsp;type&nbsp;FL_BOOL,&nbsp;default&nbsp;value&nbsp;false<br>
 &nbsp;&nbsp;&nbsp;&nbsp;standardColormap<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;class&nbsp;StandardColormap,&nbsp;type&nbsp;bool,&nbsp;default&nbsp;value&nbsp;false<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;class&nbsp;StandardColormap,&nbsp;type&nbsp;FL_BOOL,&nbsp;default&nbsp;value&nbsp;false<br>
 &nbsp;&nbsp;&nbsp;&nbsp;sharedColormap<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;class&nbsp;SharedColormap,&nbsp;type&nbsp;bool,&nbsp;default&nbsp;value&nbsp;false<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;class&nbsp;SharedColormap,&nbsp;type&nbsp;FL_BOOL,&nbsp;default&nbsp;value&nbsp;false<br>
 &nbsp;&nbsp;&nbsp;&nbsp;pupFontSize<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;class&nbsp;PupFontSize,&nbsp;type&nbsp;int,&nbsp;default&nbsp;value&nbsp;12pt<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;class&nbsp;PupFontSize,&nbsp;type&nbsp;FL_INT,&nbsp;default&nbsp;value&nbsp;12pt<br>
 &nbsp;&nbsp;&nbsp;&nbsp;buttonFontSize<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;class&nbsp;FontSize,&nbsp;type&nbsp;int,&nbsp;default&nbsp;value&nbsp;10pt<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;class&nbsp;FontSize,&nbsp;type&nbsp;FL_INT,&nbsp;default&nbsp;value&nbsp;10pt<br>
 &nbsp;&nbsp;&nbsp;&nbsp;sliderFontSize<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;class&nbsp;FontSize,&nbsp;type&nbsp;int,&nbsp;default&nbsp;value&nbsp;10pt<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;class&nbsp;FontSize,&nbsp;type&nbsp;FL_INT,&nbsp;default&nbsp;value&nbsp;10pt<br>
 &nbsp;&nbsp;&nbsp;&nbsp;inputFontSize<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;class&nbsp;FontSize,&nbsp;type&nbsp;int,&nbsp;default&nbsp;value&nbsp;10pt<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;class&nbsp;FontSize,&nbsp;type&nbsp;FL_INT,&nbsp;default&nbsp;value&nbsp;10pt<br>
 &nbsp;&nbsp;&nbsp;&nbsp;browserFontSize<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;class&nbsp;FontSize,&nbsp;type&nbsp;int,&nbsp;default&nbsp;value&nbsp;10pt<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;class&nbsp;FontSize,&nbsp;type&nbsp;FL_INT,&nbsp;default&nbsp;value&nbsp;10pt<br>
 &nbsp;&nbsp;&nbsp;&nbsp;menuFontSize<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;class&nbsp;FontSize,&nbsp;type&nbsp;int,&nbsp;default&nbsp;value&nbsp;10pt<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;class&nbsp;FontSize,&nbsp;type&nbsp;FL_INT,&nbsp;default&nbsp;value&nbsp;10pt<br>
 &nbsp;&nbsp;&nbsp;&nbsp;choiceFontSize<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;class&nbsp;FontSize,&nbsp;type&nbsp;int,&nbsp;default&nbsp;value&nbsp;10pt<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;class&nbsp;FontSize,&nbsp;type&nbsp;FL_INT,&nbsp;default&nbsp;value&nbsp;10pt<br>
 &nbsp;&nbsp;&nbsp;&nbsp;ulPropWidth<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;class&nbsp;ULPropWidth,&nbsp;type&nbsp;bool,&nbsp;default&nbsp;value&nbsp;true<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;class&nbsp;ULPropWidth,&nbsp;type&nbsp;FL_BOOL,&nbsp;default&nbsp;value&nbsp;true<br>
 &nbsp;&nbsp;&nbsp;&nbsp;ulThickness<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;class&nbsp;ULThickness,&nbsp;type&nbsp;int,&nbsp;default&nbsp;value&nbsp;1<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;class&nbsp;ULThickness,&nbsp;type&nbsp;FL_INT,&nbsp;default&nbsp;value&nbsp;1<br>
 &nbsp;&nbsp;&nbsp;&nbsp;scrollbarType<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;class&nbsp;ScrollbarType,&nbsp;type&nbsp;string,&nbsp;default&nbsp;value&nbsp;thin<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;class&nbsp;ScrollbarType,&nbsp;type&nbsp;FL_STRING,&nbsp;default&nbsp;value&nbsp;thin<br>
 &nbsp;&nbsp;&nbsp;&nbsp;coordUnit<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;class&nbsp;CoordUnit,&nbsp;type&nbsp;string,&nbsp;default&nbsp;value&nbsp;pixel<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;class&nbsp;CoordUnit,&nbsp;type&nbsp;FL_STRING,&nbsp;default&nbsp;value&nbsp;pixel<br>
 &nbsp;&nbsp;&nbsp;&nbsp;borderWidth<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;class&nbsp;BorderWidth,&nbsp;type&nbsp;int,&nbsp;default&nbsp;value&nbsp;1<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;class&nbsp;BorderWidth,&nbsp;type&nbsp;FL_INT,&nbsp;default&nbsp;value&nbsp;1<br>
 &nbsp;<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Again,&nbsp;"best"&nbsp;means&nbsp;that&nbsp;the&nbsp;XForms&nbsp;Library&nbsp;by&nbsp;default&nbsp;selects&nbsp;a<br>
+&nbsp;&nbsp;&nbsp;&nbsp;"best"&nbsp;means&nbsp;that&nbsp;the&nbsp;XForms&nbsp;Library&nbsp;by&nbsp;default&nbsp;selects&nbsp;a<br>
 &nbsp;&nbsp;&nbsp;&nbsp;visual&nbsp;that&nbsp;has&nbsp;the&nbsp;most&nbsp;depth.<br>&nbsp;</tt></td></tr>
 <tr><td>&nbsp;</td>
 <td width="100%"><dl><dt>Method resolution order:</dt>
@@ -6443,61 +6443,61 @@ Attributes<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;resource&nbsp;name<br>
 &nbsp;&nbsp;&nbsp;&nbsp;res_class&nbsp;:&nbsp;str<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;resource&nbsp;class<br>
-&nbsp;&nbsp;&nbsp;&nbsp;type&nbsp;:&nbsp;FL_RTYPE<br>
+&nbsp;&nbsp;&nbsp;&nbsp;type&nbsp;:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;variable&nbsp;type,&nbsp;e.g.&nbsp;FL_INT,&nbsp;FL_FLOAT,&nbsp;FL_BOOL,&nbsp;etc..<br>
 &nbsp;&nbsp;&nbsp;&nbsp;var&nbsp;:&nbsp;pointer&nbsp;to&nbsp;any&nbsp;type<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;address&nbsp;for&nbsp;the&nbsp;variable<br>
 &nbsp;&nbsp;&nbsp;&nbsp;defval&nbsp;:&nbsp;str<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;default&nbsp;setting&nbsp;in&nbsp;string&nbsp;form<br>
 &nbsp;&nbsp;&nbsp;&nbsp;nbytes&nbsp;:&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;size&nbsp;used&nbsp;only&nbsp;for&nbsp;strings<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;size&nbsp;used&nbsp;only&nbsp;if&nbsp;var&nbsp;has&nbsp;'str'&nbsp;type<br>
 &nbsp;<br>
 List&nbsp;of&nbsp;resources<br>
 -----------------<br>
 &nbsp;&nbsp;&nbsp;&nbsp;rgamma<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;class&nbsp;Gamma,&nbsp;type&nbsp;float,&nbsp;default&nbsp;value&nbsp;1.0<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;class&nbsp;Gamma,&nbsp;type&nbsp;FL_FLOAT,&nbsp;default&nbsp;value&nbsp;1.0<br>
 &nbsp;&nbsp;&nbsp;&nbsp;ggamma<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;class&nbsp;Gamma,&nbsp;type&nbsp;float,&nbsp;default&nbsp;value&nbsp;1.0<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;class&nbsp;Gamma,&nbsp;type&nbsp;FL_FLOAT,&nbsp;default&nbsp;value&nbsp;1.0<br>
 &nbsp;&nbsp;&nbsp;&nbsp;bgamma<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;class&nbsp;Gamma,&nbsp;type&nbsp;float,&nbsp;default&nbsp;value&nbsp;1.0<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;class&nbsp;Gamma,&nbsp;type&nbsp;FL_FLOAT,&nbsp;default&nbsp;value&nbsp;1.0<br>
 &nbsp;&nbsp;&nbsp;&nbsp;visual<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;class&nbsp;<a href="#Visual">Visual</a>,&nbsp;type&nbsp;string,&nbsp;default&nbsp;value&nbsp;best<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;class&nbsp;<a href="#Visual">Visual</a>,&nbsp;type&nbsp;FL_STRING,&nbsp;default&nbsp;value&nbsp;best<br>
 &nbsp;&nbsp;&nbsp;&nbsp;depth<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;class&nbsp;<a href="#Depth">Depth</a>,&nbsp;type&nbsp;int,&nbsp;default&nbsp;value&nbsp;best<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;class&nbsp;<a href="#Depth">Depth</a>,&nbsp;type&nbsp;FL_INT,&nbsp;default&nbsp;value&nbsp;best<br>
 &nbsp;&nbsp;&nbsp;&nbsp;doubleBuffer<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;class&nbsp;DoubleBuffer,&nbsp;type&nbsp;bool,&nbsp;default&nbsp;value&nbsp;true<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;class&nbsp;DoubleBuffer,&nbsp;type&nbsp;FL_BOOL,&nbsp;default&nbsp;value&nbsp;true<br>
 &nbsp;&nbsp;&nbsp;&nbsp;privateColormap<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;class&nbsp;PrivateColormap,&nbsp;type&nbsp;bool,&nbsp;default&nbsp;value&nbsp;false<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;class&nbsp;PrivateColormap,&nbsp;type&nbsp;FL_BOOL,&nbsp;default&nbsp;value&nbsp;false<br>
 &nbsp;&nbsp;&nbsp;&nbsp;standardColormap<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;class&nbsp;StandardColormap,&nbsp;type&nbsp;bool,&nbsp;default&nbsp;value&nbsp;false<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;class&nbsp;StandardColormap,&nbsp;type&nbsp;FL_BOOL,&nbsp;default&nbsp;value&nbsp;false<br>
 &nbsp;&nbsp;&nbsp;&nbsp;sharedColormap<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;class&nbsp;SharedColormap,&nbsp;type&nbsp;bool,&nbsp;default&nbsp;value&nbsp;false<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;class&nbsp;SharedColormap,&nbsp;type&nbsp;FL_BOOL,&nbsp;default&nbsp;value&nbsp;false<br>
 &nbsp;&nbsp;&nbsp;&nbsp;pupFontSize<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;class&nbsp;PupFontSize,&nbsp;type&nbsp;int,&nbsp;default&nbsp;value&nbsp;12pt<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;class&nbsp;PupFontSize,&nbsp;type&nbsp;FL_INT,&nbsp;default&nbsp;value&nbsp;12pt<br>
 &nbsp;&nbsp;&nbsp;&nbsp;buttonFontSize<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;class&nbsp;FontSize,&nbsp;type&nbsp;int,&nbsp;default&nbsp;value&nbsp;10pt<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;class&nbsp;FontSize,&nbsp;type&nbsp;FL_INT,&nbsp;default&nbsp;value&nbsp;10pt<br>
 &nbsp;&nbsp;&nbsp;&nbsp;sliderFontSize<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;class&nbsp;FontSize,&nbsp;type&nbsp;int,&nbsp;default&nbsp;value&nbsp;10pt<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;class&nbsp;FontSize,&nbsp;type&nbsp;FL_INT,&nbsp;default&nbsp;value&nbsp;10pt<br>
 &nbsp;&nbsp;&nbsp;&nbsp;inputFontSize<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;class&nbsp;FontSize,&nbsp;type&nbsp;int,&nbsp;default&nbsp;value&nbsp;10pt<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;class&nbsp;FontSize,&nbsp;type&nbsp;FL_INT,&nbsp;default&nbsp;value&nbsp;10pt<br>
 &nbsp;&nbsp;&nbsp;&nbsp;browserFontSize<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;class&nbsp;FontSize,&nbsp;type&nbsp;int,&nbsp;default&nbsp;value&nbsp;10pt<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;class&nbsp;FontSize,&nbsp;type&nbsp;FL_INT,&nbsp;default&nbsp;value&nbsp;10pt<br>
 &nbsp;&nbsp;&nbsp;&nbsp;menuFontSize<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;class&nbsp;FontSize,&nbsp;type&nbsp;int,&nbsp;default&nbsp;value&nbsp;10pt<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;class&nbsp;FontSize,&nbsp;type&nbsp;FL_INT,&nbsp;default&nbsp;value&nbsp;10pt<br>
 &nbsp;&nbsp;&nbsp;&nbsp;choiceFontSize<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;class&nbsp;FontSize,&nbsp;type&nbsp;int,&nbsp;default&nbsp;value&nbsp;10pt<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;class&nbsp;FontSize,&nbsp;type&nbsp;FL_INT,&nbsp;default&nbsp;value&nbsp;10pt<br>
 &nbsp;&nbsp;&nbsp;&nbsp;ulPropWidth<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;class&nbsp;ULPropWidth,&nbsp;type&nbsp;bool,&nbsp;default&nbsp;value&nbsp;true<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;class&nbsp;ULPropWidth,&nbsp;type&nbsp;FL_BOOL,&nbsp;default&nbsp;value&nbsp;true<br>
 &nbsp;&nbsp;&nbsp;&nbsp;ulThickness<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;class&nbsp;ULThickness,&nbsp;type&nbsp;int,&nbsp;default&nbsp;value&nbsp;1<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;class&nbsp;ULThickness,&nbsp;type&nbsp;FL_INT,&nbsp;default&nbsp;value&nbsp;1<br>
 &nbsp;&nbsp;&nbsp;&nbsp;scrollbarType<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;class&nbsp;ScrollbarType,&nbsp;type&nbsp;string,&nbsp;default&nbsp;value&nbsp;thin<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;class&nbsp;ScrollbarType,&nbsp;type&nbsp;FL_STRING,&nbsp;default&nbsp;value&nbsp;thin<br>
 &nbsp;&nbsp;&nbsp;&nbsp;coordUnit<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;class&nbsp;CoordUnit,&nbsp;type&nbsp;string,&nbsp;default&nbsp;value&nbsp;pixel<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;class&nbsp;CoordUnit,&nbsp;type&nbsp;FL_STRING,&nbsp;default&nbsp;value&nbsp;pixel<br>
 &nbsp;&nbsp;&nbsp;&nbsp;borderWidth<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;class&nbsp;BorderWidth,&nbsp;type&nbsp;int,&nbsp;default&nbsp;value&nbsp;1<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;class&nbsp;BorderWidth,&nbsp;type&nbsp;FL_INT,&nbsp;default&nbsp;value&nbsp;1<br>
 &nbsp;<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Again,&nbsp;"best"&nbsp;means&nbsp;that&nbsp;the&nbsp;XForms&nbsp;Library&nbsp;by&nbsp;default&nbsp;selects&nbsp;a<br>
+&nbsp;&nbsp;&nbsp;&nbsp;"best"&nbsp;means&nbsp;that&nbsp;the&nbsp;XForms&nbsp;Library&nbsp;by&nbsp;default&nbsp;selects&nbsp;a<br>
 &nbsp;&nbsp;&nbsp;&nbsp;visual&nbsp;that&nbsp;has&nbsp;the&nbsp;most&nbsp;depth.<br>&nbsp;</tt></td></tr>
 <tr><td>&nbsp;</td>
 <td width="100%"><dl><dt>Method resolution order:</dt>
@@ -13145,13 +13145,13 @@ Methods inherited from _ctypes._CData:<br>
 Attributes<br>
 ----------<br>
 &nbsp;&nbsp;&nbsp;&nbsp;option&nbsp;:&nbsp;str<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*todo*<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Option&nbsp;abbreviation&nbsp;in&nbsp;sys.argv<br>
 &nbsp;&nbsp;&nbsp;&nbsp;specifier&nbsp;:&nbsp;str<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*todo*<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;resource&nbsp;specifier<br>
 &nbsp;&nbsp;&nbsp;&nbsp;argKind&nbsp;:&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*todo*<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Which&nbsp;style&nbsp;of&nbsp;option&nbsp;it&nbsp;is<br>
 &nbsp;&nbsp;&nbsp;&nbsp;value&nbsp;:&nbsp;str<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*todo*<br>&nbsp;</tt></td></tr>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Value&nbsp;to&nbsp;provide&nbsp;if&nbsp;argKind&nbsp;is&nbsp;XrmoptionNoArg<br>&nbsp;</tt></td></tr>
 <tr><td>&nbsp;</td>
 <td width="100%"><dl><dt>Method resolution order:</dt>
 <dd><a href="xfdata.html#XrmOptionDescRec">XrmOptionDescRec</a></dd>
@@ -15673,8 +15673,8 @@ Admitted&nbsp;values<br>
 &nbsp;&nbsp;&nbsp;&nbsp;FL_PDChoiceFontSize<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Choice&nbsp;label&nbsp;and&nbsp;choice&nbsp;text&nbsp;font&nbsp;size&nbsp;(choiceFontSize)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;FL_PDLabelFontSize<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Label&nbsp;font&nbsp;size&nbsp;for&nbsp;all&nbsp;other&nbsp;flobjects,&nbsp;e.g.&nbsp;box,&nbsp;pixmap&nbsp;etc..<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(labelFontSize)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Label&nbsp;font&nbsp;size&nbsp;for&nbsp;all&nbsp;other&nbsp;flobjects,&nbsp;e.g.&nbsp;box,&nbsp;pixmap<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;etc..&nbsp;(labelFontSize)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;FL_PDButtonLabelSize&nbsp;or&nbsp;FL_PDButtonLabel<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Default&nbsp;button&nbsp;label&nbsp;font&nbsp;size&nbsp;(buttonFontSize)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;FL_PDSliderLabelSize&nbsp;=&nbsp;FL_PDSliderFontSize<br>
@@ -18893,4 +18893,4 @@ no&nbsp;return<br>&nbsp;</tt></td></tr>
 <strong>special_sequences_for_entry_text_m</strong> = ''<br>
 <strong>special_sequences_for_entry_text_s</strong> = ''<br>
 <strong>special_sequences_for_entry_text_x</strong> = ''</td></tr></table>
-<p>Updated on: 2010-12-20 01:16 +0100</body></html>
+<p>Updated on: 2010-12-22 00:35 +0100</body></html>

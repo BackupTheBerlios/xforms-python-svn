@@ -151,7 +151,7 @@ class Flgrav(object):
         #grav = FD_gravity()
         #help_ = FD_help()
 
-        xfl.fl_initialize(lsysargv, sysargv, "FormDemo", 0, 0)
+        xfl.fl_initialize(lsysargv, sysargv, "FormDemo", None, 0)
         self.help_ = self.create_form_help()
         self.grav = self.create_form_gravity(self.help_.help_)
         xfl.fl_set_app_mainform(self.grav.grav)

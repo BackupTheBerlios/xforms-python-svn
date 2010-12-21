@@ -3403,61 +3403,61 @@ class FL_RESOURCE(cty.Structure):
             resource name
         res_class : str
             resource class
-        type : FL_RTYPE
+        type : int
             variable type, e.g. FL_INT, FL_FLOAT, FL_BOOL, etc..
         var : pointer to any type
             address for the variable
         defval : str
             default setting in string form
         nbytes : int
-            size used only for strings
+            size used only if var has 'str' type
 
     List of resources
     -----------------
         rgamma
-            class Gamma, type float, default value 1.0
+            class Gamma, type FL_FLOAT, default value 1.0
         ggamma
-            class Gamma, type float, default value 1.0
+            class Gamma, type FL_FLOAT, default value 1.0
         bgamma
-            class Gamma, type float, default value 1.0
+            class Gamma, type FL_FLOAT, default value 1.0
         visual
-            class Visual, type string, default value best
+            class Visual, type FL_STRING, default value best
         depth
-            class Depth, type int, default value best
+            class Depth, type FL_INT, default value best
         doubleBuffer
-            class DoubleBuffer, type bool, default value true
+            class DoubleBuffer, type FL_BOOL, default value true
         privateColormap
-            class PrivateColormap, type bool, default value false
+            class PrivateColormap, type FL_BOOL, default value false
         standardColormap
-            class StandardColormap, type bool, default value false
+            class StandardColormap, type FL_BOOL, default value false
         sharedColormap
-            class SharedColormap, type bool, default value false
+            class SharedColormap, type FL_BOOL, default value false
         pupFontSize
-            class PupFontSize, type int, default value 12pt
+            class PupFontSize, type FL_INT, default value 12pt
         buttonFontSize
-            class FontSize, type int, default value 10pt
+            class FontSize, type FL_INT, default value 10pt
         sliderFontSize
-            class FontSize, type int, default value 10pt
+            class FontSize, type FL_INT, default value 10pt
         inputFontSize
-            class FontSize, type int, default value 10pt
+            class FontSize, type FL_INT, default value 10pt
         browserFontSize
-            class FontSize, type int, default value 10pt
+            class FontSize, type FL_INT, default value 10pt
         menuFontSize
-            class FontSize, type int, default value 10pt
+            class FontSize, type FL_INT, default value 10pt
         choiceFontSize
-            class FontSize, type int, default value 10pt
+            class FontSize, type FL_INT, default value 10pt
         ulPropWidth
-            class ULPropWidth, type bool, default value true
+            class ULPropWidth, type FL_BOOL, default value true
         ulThickness
-            class ULThickness, type int, default value 1
+            class ULThickness, type FL_INT, default value 1
         scrollbarType
-            class ScrollbarType, type string, default value thin
+            class ScrollbarType, type FL_STRING, default value thin
         coordUnit
-            class CoordUnit, type string, default value pixel
+            class CoordUnit, type FL_STRING, default value pixel
         borderWidth
-            class BorderWidth, type int, default value 1
+            class BorderWidth, type FL_INT, default value 1
 
-        Again, "best" means that the XForms Library by default selects a
+        "best" means that the XForms Library by default selects a
         visual that has the most depth.
     """
     _fields_ = [
@@ -3512,13 +3512,13 @@ class XrmOptionDescRec(cty.Structure):
     Attributes
     ----------
         option : str
-            *todo*
+            Option abbreviation in sys.argv
         specifier : str
-            *todo*
+            resource specifier
         argKind : int
-            *todo*
+            Which style of option it is
         value : str
-            *todo*
+            Value to provide if argKind is XrmoptionNoArg
     """
     _fields_ = [
         ('option', STRING),

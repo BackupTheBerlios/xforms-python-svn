@@ -57,7 +57,7 @@ fl_scrh = cty.c_int
 #fl_scrw = (cty.c_int).in_dll(library.load_so_libforms(), 'fl_scrw')
 fl_scrw = cty.c_int
 #fl_vmode = (cty.c_int).in_dll(library.load_so_libforms(), 'fl_vmode')
-fl_vmode = (cty.c_int).in_dll(library.load_so_libforms(), 'fl_vmode')
+fl_vmode = cty.c_int
 
 #fl_state = (cty.POINTER(xfdata.FL_State)).in_dll(library.load_so_libforms(),
 #            'fl_state')
@@ -748,13 +748,13 @@ def fl_dashedlinestyle(dash, numdash):
     Parameters
     ----------
         dash : str
-            text sequence of dashes to use. If it is 'None', use
-            default dash pattern.
+            text sequence of dashes to use. If it is empty (""), use
+            default dash pattern
         numdash : int
-            length of dashes list
+            length of dashes list. If it is 0, use the default dash pattern
 
     Examples
-        >>> dashlist = "\x09, 3, 2, 3]
+        >>> dashlist = "\x09\x03\x02\x03"
         >>> fl_dashedlinestyle(dashlist, 4)
 
     Notes
@@ -767,11 +767,11 @@ def fl_dashedlinestyle(dash, numdash):
         None, [xfdata.STRING, cty.c_int], \
         """void fl_dashedlinestyle(const char * dash, int ndash)""")
     library.check_if_initialized()
-    if not dash:                # it is None
-        #library.verify_tuplelist_type(dash)
-        s_dash = cty.cast(dash, cty.c_void_p)
-    else:
-        s_dash = library.convert_to_stringc(dash)
+    #if not dash:                # it is None
+    #    #library.verify_tuplelist_type(dash)
+    #    s_dash = cty.cast(dash, cty.c_void_p)
+    #else:
+    s_dash = library.convert_to_stringc(dash)
     i_numdash = library.convert_to_intc(numdash)
     library.keep_elem_refs(dash, numdash, s_dash, i_numdash)
     _fl_dashedlinestyle(s_dash, i_numdash)
@@ -1929,7 +1929,7 @@ def fl_get_decoration_sizes(ptr_flform):
 
     Examples
     --------
-        >>> dsize = fl_get_decoration_sizes(pform)
+        >>> resl, top, right, bottom, left = fl_get_decoration_sizes(pform)
 
     API_diversion
     -------------
@@ -4114,29 +4114,31 @@ def button_down(mask):
 
 
 # Resources
-# TODO: verify how cli arguments can be passed to this one.
-def fl_initialize(numargs, argslist, appname="", appoptions=0, nappopts=0):
-    """fl_initialize(numargs, argslist, appname="", appoptions=0, nappopts=0)
+def fl_initialize(numargs, argslist, appname, ptr_appoptions, numappopts):
+    """fl_initialize(numargs, argslist, appname, ptr_appoptions, numappopts)
     -> ptr_display
     
     Initializes XForms library. It should always be called before any
-    other calls to the XForms Library (except fl_set_defaults() and a few
+    other calls to the XForms Library, except fl_set_defaults() and a few
     other functions that alter some of the defaults of the library.
-    Command line arguments are NOT supported in xforms-python, but you
-    should be able to set most of parameters using relative functions.
+    Command line arguments are supported.
 
     Parameters
     ----------
         numargs : int
-            number of arguments passed to command line, unused in python
+            number of arguments passed to command line
         argslist : list_of_str
-            arguments passed to command line, unused in python
+            arguments passed to command line
         appname : str
             application class name
-        appoptions : instance of xfdata.FL_CMD_OPT
-            options passed as a flcmdopt class instance
-        nappopts : int
-            number of options
+        ptr_appoptions : instance of xfdata.FL_CMD_OPT
+            possible options passed as a flcmdopt class instance. You can use
+            make_flcmdopt function, passing a dict with keys corresponding
+            to xfdata.FL_CMD_OPT attributes. If it is None, user application
+            has no options
+        numappopts : int
+            number of options passed in appoptions. If it is 0, user
+            application has no options
 
     Returns
     -------
@@ -4146,11 +4148,11 @@ def fl_initialize(numargs, argslist, appname="", appoptions=0, nappopts=0):
     Examples
     --------
         >>> import sys
-        >>> fl_initialize(len(sys.argv), sys.argv, "MyFormDemo", 0, 0)
+        >>> fl_initialize(len(sys.argv), sys.argv, "MyFormDemo", None, 0)
 
     Notes
     -----
-        Status: HalfTested + Doc + Demo = HALF OK (not for command line args)
+        Status: HalfTested + Doc + Demo = HALF OK
 
     """
     _fl_initialize = library.cfuncproto(
@@ -4163,17 +4165,24 @@ def fl_initialize(numargs, argslist, appname="", appoptions=0, nappopts=0):
     # ok if installed XForms shared library is compatible with this one
     library.verify_version_compatibility()
     library.set_initialized()
-    numargs = 1
+    #numargs = 1
     i_numargs = library.convert_to_intc(numargs)
-    argslist = " "          # discard any script arguments
-    s_argslist = library.convert_to_stringc(argslist)
+    ptr_numargs = cty.pointer(i_numargs)
+    #argslist = " "          # discard any script arguments
+    #argslist1 = " ".join(argslist)
+    ptr_argslist = library.convert_to_ptr_stringc(argslist)
     s_appname = library.convert_to_stringc(appname)
-    ptr_appoptions = cty.cast(appoptions, cty.POINTER(xfdata.FL_CMD_OPT))
-    i_nappopts = library.convert_to_intc(nappopts)
-    library.keep_elem_refs(numargs, i_numargs, argslist, s_argslist, appname,
-            s_appname, appoptions, ptr_appoptions, nappopts, i_nappopts)
-    retval = _fl_initialize(i_numargs, s_argslist, s_appname, ptr_appoptions,
-            i_nappopts)
+    if not ptr_appoptions:      # if it is None
+        ptr_appoption = cty.c_void_p()
+    else:                       # if it is a real FL_CMD_OPT
+        library.verify_otherclassptr_type(ptr_appoptions, \
+                cty.POINTER(xfdata.FL_CMD_OPT))
+    i_numappopts = library.convert_to_intc(numappopts)
+    library.keep_elem_refs(numargs, ptr_numargs, argslist, \
+            ptr_argslist, appname, s_appname, ptr_appoptions, numappopts, \
+            i_numappopts)
+    retval = _fl_initialize(ptr_numargs, ptr_argslist, s_appname, \
+            ptr_appoptions, i_numappopts)
     return retval
 
 
@@ -4203,7 +4212,7 @@ def fl_finish():
 
 def fl_get_resource(resname, resclass, dtype, defval, size):
     """fl_get_resource(resname, resclass, dtype, defval, size)
-    -> restext, varval
+    -> restext, varvalue
     
     Finds out resource data at the lowest level. It may be useful to e.g.
     retrieve arbitrary strings and values and to pass data around.
@@ -4212,15 +4221,17 @@ def fl_get_resource(resname, resclass, dtype, defval, size):
     ----------
         resname : str
             complete resource name specification (minus the application name)
-            and should not contain wildcards of any kind
+            and should not contain wildcards of any kind. Alternative to
+            resource class
         resclass : str
             complete resource class specification (minus the application name)
-            and should not contain wildcards of any kind
+            and should not contain wildcards of any kind. Alternative to
+            resource name
         dtype : int
             type of resource. Values (from xfdata.py) FL_NONE, FL_SHORT,
             FL_BOOL, FL_INT, FL_LONG, FL_FLOAT, FL_STRING
         defval : str
-            default value
+            default value for resource data
         size : int
             number of bytes, used only if dtype is FL_STRING
 
@@ -4229,7 +4240,7 @@ def fl_get_resource(resname, resclass, dtype, defval, size):
         restext : str
             text representation of the resource value,
             or None (on failure)
-        varval : any type
+        varvalue : any type
             variable value
 
     Examples
@@ -4257,17 +4268,14 @@ def fl_get_resource(resname, resclass, dtype, defval, size):
     s_resname = library.convert_to_stringc(resname)
     s_resclass = library.convert_to_stringc(resclass)
     i_dtype = library.convert_to_intc(dtype)
-    if not defval:              # if it is None
-        s_defval = cty.cast(defval, cty.POINTER(cty.c_void_p))
-    else:                       # real string
-        s_defval = library.convert_to_stringc(defval)
-    ptr_val = cty.c_void_p()   # variable of any type who will hold the value
+    s_defval = library.convert_to_stringc(defval)
+    ptr_varvalue = cty.c_void_p()  # it is of any type who will hold the value
     i_size = library.convert_to_intc(size)
     library.keep_elem_refs(resname, resclass, dtype, defval, size, \
-            s_resname, s_resclass, i_dtype, s_defval, ptr_val, i_size)
+            s_resname, s_resclass, i_dtype, s_defval, ptr_varvalue, i_size)
     retval = _fl_get_resource(s_resname, s_resclass, i_dtype, s_defval, \
-            ptr_val, i_size)
-    return retval, ptr_val.contents.value
+            ptr_varvalue, i_size)
+    return retval, ptr_varvalue.contents.value
 
 
 def fl_set_resource(resnamecls, txtval):
@@ -4280,8 +4288,8 @@ def fl_set_resource(resnamecls, txtval):
     Parameters
     ----------
         resnamecls : str
-            a fully qualified resource name (minus the application
-            name) or a resource class
+            a fully qualified resource name (minus the application name)
+            or a resource class
         txtval : str
             new text value for resource
 
@@ -4312,7 +4320,9 @@ def fl_get_app_resources(ptr_flresource, numresources):
     Parameters
     ----------
         ptr_flresource : pointer to xfdata.FL_RESOURCE
-            an array of resource class instances
+            an array of resource class instances. You can use
+            xfstruct.make_flresource() passing a dict or a list of dicts
+            with keys corresponding to xfdata.FL_RESOURCE attributes
         numresources : int
             number of resources (starting from 1) passed with
             ptr_flresource array
@@ -4372,15 +4382,15 @@ def fl_set_graphics_mode(mode, doublebuf):
     _fl_set_graphics_mode(i_mode, i_doublebuf)
 
 
-def fl_set_visualID(visualid):
-    """fl_set_visualID(visualid)
+def fl_set_visualID(vmode):
+    """fl_set_visualID(vmode)
     
     Defines visual mode and depth. By default, X Server's visual and
     depth values are used.
 
     Parameters
     ----------
-        visualid : long
+        vmode : long
             visual mode. Values (from xfdata.py) StaticGray, GrayScale,
             StaticColor, PseudoColor, TrueColor, DirectColor,
             DefaultVisual, GreyScale, StaticGrey
@@ -4399,17 +4409,17 @@ def fl_set_visualID(visualid):
         library.load_so_libforms(), "fl_set_visualID",
         None, [cty.c_long],
         """void fl_set_visualID(long int id)""")
-    library.checkfatal_allowed_value_in_list(visualid, \
+    library.checkfatal_allowed_value_in_list(vmode, \
             xfdata.VISUALMODE_list)
-    l_visualid = library.convert_to_longc(visualid)
-    library.keep_elem_refs(visualid, l_visualid)
-    _fl_set_visualID(l_visualid)
+    l_vmode = library.convert_to_longc(vmode)
+    library.keep_elem_refs(vmode, l_vmode)
+    _fl_set_visualID(l_vmode)
 
 
 def fl_keysym_pressed(keysym):
     """fl_keysym_pressed(keysym) -> num
     
-    Find out if a keyboard symbol has been pressed *todo*
+    Finds out if a keyboard symbol has been pressed *todo*
 
     Parameters
     ----------
@@ -4465,7 +4475,9 @@ def fl_set_defaults(pdmask, ptr_fliopt):
             FL_PDChoiceFontSize, FL_PDLabelFontSize, FL_PDButtonLabelSize,
             FL_PDSliderLabelSize, FL_PDInputLabelSize, FL_PDButtonLabel
         ptr_fliopt : pointer to xfdata.FL_IOPT array
-            an array of program defaults class instances
+            program defaults class instance. You can use xfstruct.make_fliopt
+            function passing a dict with keys corresponding to xfdata.FL_IOPT's
+            attributes.
 
     Examples
     --------
@@ -4619,7 +4631,8 @@ def fl_vclass_name(mode):
     library.check_if_initialized()
     i_mode = library.convert_to_intc(mode)
     library.keep_elem_refs(mode, i_mode)
-    _fl_vclass_name(i_mode)
+    retval = _fl_vclass_name(i_mode)
+    return retval
 
 
 def fl_vclass_val(name):

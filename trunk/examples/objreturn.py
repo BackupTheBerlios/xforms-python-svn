@@ -36,7 +36,7 @@ class Flobjreturn(object):
 
         xfl.fl_set_border_width(-2)
 
-        xfl.fl_initialize(lsysargv, sysargv, "FormDemo", 0, 0)
+        xfl.fl_initialize(lsysargv, sysargv, "FormDemo", None, 0)
         self.fd_form0 = self.create_form_form0()
 
         # fill-in form initialization code

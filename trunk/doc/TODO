@@ -10,17 +10,14 @@ instead of using 'if obj == someobj'
 value (e.g. in C: &a) that is modified by the function
 itself, there has been a change in API so these arguments
 represent multiple return values here.
-- First two parameters of fl_initialize (len(sys.argv) and
-sys.argv) are ignored, to prevent an unexplicable segfault:
-so command line arguments are not usable.
 - public functions are not guaranteed to remain stable and
 consistent, until version 1.0.0 will be released. So library
 name and directory layout might change in order to achieve
 a better reorganization.
 - some ported-to-python XForms C functions are for internal
 use or low level work in XForms: as maybe they are not useful
-in python, they will be commented/disabled, when I find all of
-them.
+in python, they will be commented/disabled or just removed,
+when I find all of them.
 - this software is mainly focused on GNU/Linux operating
 systems. Apple MacOS and MS Windows are not supported, yet.
 Other unix-like operating systems may or may not be working.
@@ -30,7 +27,7 @@ are working well. Other ones are being tested on case-by-case
 basis (as type conversion from python to C are somehow
 problematic, in some critical cases).
 - testing is much appreciated, but be warned this software
-is in a alpha development state, presently.
+is in *BETA* development state, presently.
 
 
 
@@ -69,7 +66,7 @@ to be ported as examples to xforms-python.
 this is absolutely annoying as I have to manually copy functions'
 description and parameters' lists from XForms documentation, so it
 may take several months. But, meantime, I plan to rename functions'
-parameters, where possible, in order to improve usability. {WIP}
+parameters, where possible, in order to improve usability. {DONE}
 
 - have a minimal but complete function reference guide; I do not
 intend to do a real developer/user manual as upstream's xforms.pdf
@@ -103,13 +100,15 @@ for a library toolkit wrapper, it is not enough using assertions etc...
 - Creating a python tool to parse/convert .fd (XForms's fdesign files)
 to python. As XForms fdesign is too complex to be utterly duplicated
 in python, a parser and converter of fdesign's results file is much more
-reasonable. It needs that xforms-python's API is stable and toolbox results
-correspond to well-documented and working functions.
+reasonable. It needs xforms-python's API to be stable and toolbox results
+to be corresponding to well-documented and working functions.
 
 - Figuring out which values in xfdata.py can be used as single values
  or bitwise OR-ed with each other, so checking for allowed value in list
- function does not forbid such a resulting value incorrectly.
+ function does not forbid such a resulting value incorrectly. (low priority:
+ if a value exceeds a prefixed range, it should be caught in upstream XForms)
 
-- Porting xforms-python to object-oriented/classes: it is UNLIKELY (it is
+
+- Porting xforms-python to object-oriented/classes: No Way! (it is
 not worth the effort).
 

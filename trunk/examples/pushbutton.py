@@ -19,7 +19,7 @@ class Flpushbtn(object):
     def __init__(self, lsysarg, sysarg):
         self.pabox = [0] * 8
 
-        xfl.fl_initialize(lsysarg, sysarg, "FormDemo", 0, 0)
+        xfl.fl_initialize(lsysarg, sysarg, "FormDemo", None, 0)
         self.makeform()
 
         xfl.fl_show_form(self.pform, xfl.FL_PLACE_CENTER, xfl.FL_NOBORDER, \

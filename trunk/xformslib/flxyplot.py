@@ -1567,7 +1567,7 @@ def fl_set_xyplot_key(ptr_flobject, ovlnum, keytxt):
             overlay id. Values between 1 and xfdata.FL_MAX_XYPLOTOVERLAY or
             the number set via fl_set_xyplot_maxoverlays()
         keytxt : str
-            key for the plot. If it is 'None' removes a key.
+            key for the plot. If it is empty (""), removes a key.
 
     Examples
     --------
@@ -1580,16 +1580,13 @@ def fl_set_xyplot_key(ptr_flobject, ovlnum, keytxt):
     """
     _fl_set_xyplot_key = library.cfuncproto(
         library.load_so_libforms(), "fl_set_xyplot_key",
-        None, [cty.POINTER(xfdata.FL_OBJECT), cty.c_int, cty.c_void_p],
+        None, [cty.POINTER(xfdata.FL_OBJECT), cty.c_int, xfdata.STRING],
         """void fl_set_xyplot_key(FL_OBJECT * ob, int id,
            const char * key)""")
     library.check_if_initialized()
     library.verify_flobjectptr_type(ptr_flobject)
     i_ovlnum = library.convert_to_intc(ovlnum)
-    if not keytxt:          # it is None
-        s_keytxt = cty.cast(keytxt, cty.POINTER(cty.c_void_p))
-    else:                   # real string
-        s_keytxt = library.convert_to_stringc(keytxt)
+    s_keytxt = library.convert_to_stringc(keytxt)
     library.keep_elem_refs(ptr_flobject, ovlnum, keytxt, i_ovlnum, s_keytxt)
     _fl_set_xyplot_key(ptr_flobject, i_ovlnum, s_keytxt)
 
@@ -2217,10 +2214,10 @@ def fl_set_xyplot_fixed_xaxis(ptr_flobject, leftmrg, rightmrg):
         ptr_flobject : pointer to xfdata.FL_OBJECT
             xyplot flobject
         leftmrg : str
-            left margin to be set. If it is 'None' restore automatic
+            left margin to be set. If it is empty (""), restore automatic
             margin computation
         rightmrg : str
-            right margin to be set. If it is 'None', restores automatic
+            right margin to be set. If it is empty (""), restores automatic
             margin computation.
 
     Examples
@@ -2239,14 +2236,8 @@ def fl_set_xyplot_fixed_xaxis(ptr_flobject, leftmrg, rightmrg):
             const char * rm)""")
     library.check_if_initialized()
     library.verify_flobjectptr_type(ptr_flobject)
-    if not leftmrg:             # if it is None
-        s_leftmrg = cty.cast(leftmrg, cty.POINTER(cty.c_void_p))
-    else:                       # real string
-        s_leftmrg = library.convert_to_stringc(leftmrg)
-    if not rightmrg:             # if it is None
-        s_rightmrg = cty.cast(rightmrg, cty.POINTER(cty.c_void_p))
-    else:                       # real string
-        s_rightmrg = library.convert_to_stringc(rightmrg)
+    s_leftmrg = library.convert_to_stringc(leftmrg)
+    s_rightmrg = library.convert_to_stringc(rightmrg)
     library.keep_elem_refs(ptr_flobject, leftmrg, rightmrg, \
             s_leftmrg, s_rightmrg)
     _fl_set_xyplot_fixed_xaxis(ptr_flobject, s_leftmrg, s_rightmrg)
@@ -2269,10 +2260,10 @@ def fl_set_xyplot_fixed_yaxis(ptr_flobject, bottommrg, topmrg):
         ptr_flobject : pointer to xfdata.FL_OBJECT
             xyplot flobject
         bottommrg : str
-            bottom margin to be set. If it is 'None' restore automatic
+            bottom margin to be set. If it is empty (""), restore automatic
             margin computation
         topmrg : str
-            top margin to be set. If it is 'None', restores automatic
+            top margin to be set. If it is empty (""), restores automatic
             margin computation
 
     Examples
@@ -2291,14 +2282,8 @@ def fl_set_xyplot_fixed_yaxis(ptr_flobject, bottommrg, topmrg):
             const char * tm)""")
     library.check_if_initialized()
     library.verify_flobjectptr_type(ptr_flobject)
-    if not bottommrg:             # if it is None
-        s_bottommrg = cty.cast(bottommrg, cty.POINTER(cty.c_void_p))
-    else:                       # real string
-        s_bottommrg = library.convert_to_stringc(bottommrg)
-    if not topmrg:             # if it is None
-        s_topmrg = cty.cast(topmrg, cty.POINTER(cty.c_void_p))
-    else:                       # real string
-        s_topmrg = library.convert_to_stringc(topmrg)
+    s_bottommrg = library.convert_to_stringc(bottommrg)
+    s_topmrg = library.convert_to_stringc(topmrg)
     library.keep_elem_refs(ptr_flobject, bottommrg, topmrg, \
             s_bottommrg, s_topmrg)
     _fl_set_xyplot_fixed_yaxis(ptr_flobject, s_bottommrg, s_topmrg)

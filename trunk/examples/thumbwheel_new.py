@@ -17,7 +17,7 @@ import xformslib as xfl
 
 class Flthumbwheel(object):
     def __init__(self, lsysargv, sysargv):
-        xfl.fl_initialize(lsysargv, sysargv, "FormDemo", 0, 0)
+        xfl.fl_initialize(lsysargv, sysargv, "FormDemo", None, 0)
         fd_twheelform = self.create_form_twheelform()
         # show the first form
         xfl.fl_show_form(fd_twheelform, xfl.FL_PLACE_CENTERFREE, \

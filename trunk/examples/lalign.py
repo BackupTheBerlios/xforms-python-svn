@@ -32,7 +32,7 @@ class FD_form0(object):
 class Flalign(object):
 
     def __init__(self, lsysargv, sysargv):
-        xfl.fl_initialize(lsysargv, sysargv, "FormDemo", 0, 0)
+        xfl.fl_initialize(lsysargv, sysargv, "FormDemo", None, 0)
         self.fd_form0 = self.create_form_form0()
 
         # fill-in form initialization code

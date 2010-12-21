@@ -68,7 +68,7 @@ for c in range(0, len(coln_headers)):
 class Flsimpletable(object):
     def __init__(self, lsysargv, sysargv):
 
-        xfl.fl_initialize(lsysargv, sysargv, "TableDemo", 0, 0)
+        xfl.fl_initialize(lsysargv, sysargv, "TableDemo", None, 0)
 
         self.pform = xfl.fl_bgn_form(xfl.FL_UP_BOX, \
                 (len(coln_headers)+1) * wcell, \
@@ -134,7 +134,7 @@ class Flsimpletable(object):
         for coln in range(0, len(coln_headers)):
             ch_dynx += wcell
             pbtncol[coln] = xfl.fl_add_button(xfl.FL_NORMAL_BUTTON, ch_dynx, \
-                                ch_dyny, wcell, hcell, coln_headers[coln])
+                    ch_dyny, wcell, hcell, coln_headers[coln])
             xfl.fl_set_object_lcol(pbtncol[coln], xfl.FL_YELLOW)
             xfl.fl_set_object_lstyle(pbtncol[coln], xfl.FL_BOLD_STYLE)
             xfl.fl_set_object_resize(pbtncol[coln], xfl.FL_RESIZE_ALL)

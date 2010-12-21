@@ -19,7 +19,7 @@ import xformslib as xfl
 
 class Demo05(object):
     def __init__(self, lsysargv, sysargv):
-        xfl.fl_initialize(lsysargv, sysargv, "FormDemo", 0, 0)
+        xfl.fl_initialize(lsysargv, sysargv, "FormDemo", None, 0)
 
         pform = xfl.fl_bgn_form(xfl.FL_UP_BOX, 240, 400)
 

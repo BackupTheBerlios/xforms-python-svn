@@ -23,7 +23,7 @@ def timeout_remove_alert(idn, data):
 
 def main(lsysargv, sysargv):
 
-    xfl.fl_initialize(lsysargv, sysargv, "FormDemo", 0, 0)
+    xfl.fl_initialize(lsysargv, sysargv, "FormDemo", None, 0)
 
     xfl.fl_set_resource(xfl.FLOKLabel, "Go")
 

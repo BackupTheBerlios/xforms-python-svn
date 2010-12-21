@@ -28,7 +28,7 @@ class FD_form0(object):
 
 class Fltimerprec(object):
     def __init__(self, lsysargv, sysargv):
-        xfl.fl_initialize(lsysargv, sysargv, "FormDemo", 0, 0)
+        xfl.fl_initialize(lsysargv, sysargv, "FormDemo", None, 0)
         self.fdform0 = self.create_form_form0()
         # fill-in form initialization code
         self.fdform0.ldata = 2800.0
@@ -77,10 +77,11 @@ class Fltimerprec(object):
         fdui.restart = xfl.fl_add_button(xfl.FL_TOUCH_BUTTON, 110, 80, \
                 90, 35, "Restart")
         xfl.fl_set_object_callback(fdui.restart, self.start_timer, 0)
-        fdui.timer = xfl.fl_add_timer(xfl.FL_HIDDEN_TIMER, 10, 40, 100, 40, \
-                "Timer")
+        fdui.timer = xfl.fl_add_timer(xfl.FL_HIDDEN_TIMER, 10, 40, \
+                100, 40, "Timer")
         xfl.fl_set_object_callback(fdui.timer, self.timer_cb, 0)
-        fdui.report = xfl.fl_add_text(xfl.FL_NORMAL_TEXT, 10, 20, 290, 50, "")
+        fdui.report = xfl.fl_add_text(xfl.FL_NORMAL_TEXT, 10, 20, \
+                290, 50, "")
 
         xfl.fl_end_form()
 

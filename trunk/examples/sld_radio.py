@@ -17,7 +17,7 @@ import xformslib as xfl
 
 def main(lsysarg, sysargv):
 
-    xfl.fl_initialize(lsysarg, sysargv, "FormDemo", 0, 0)
+    xfl.fl_initialize(lsysarg, sysargv, "FormDemo", None, 0)
 
     pform = xfl.fl_bgn_form(xfl.FL_UP_BOX, 300, 300)
     psl = xfl.fl_add_slider(xfl.FL_VERT_SLIDER, 40, 40, 60, 220, "X")
@@ -28,7 +28,8 @@ def main(lsysarg, sysargv):
             120, 40, "0.5")
     pbut3 = xfl.fl_add_lightbutton(xfl.FL_RADIO_BUTTON, 140, 100, \
             120, 40, "1.0")
-    pexitbut = xfl.fl_add_button(xfl.FL_NORMAL_BUTTON, 140, 40, 120, 40, "Exit")
+    pexitbut = xfl.fl_add_button(xfl.FL_NORMAL_BUTTON, 140, 40, \
+            120, 40, "Exit")
     xfl.fl_end_form()
 
     xfl.fl_show_form(pform, xfl.FL_PLACE_CENTER, xfl.FL_NOBORDER, "slRadio")

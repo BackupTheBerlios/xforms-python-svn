@@ -31,7 +31,7 @@ class FD_ttt(object):
 class Flpmbrowse(object):
     def __init__(self, lsysargv, sysargv):
 
-        xfl.fl_initialize(lsysargv, sysargv, "FormDemo", 0, 0)
+        xfl.fl_initialize(lsysargv, sysargv, "FormDemo", None, 0)
         self.fd_ttt = self.create_form_ttt()
 
         xfl.fl_show_form(self.fd_ttt.ttt, xfl.FL_PLACE_CENTER, \

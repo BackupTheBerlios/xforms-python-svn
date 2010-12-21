@@ -1539,8 +1539,8 @@ def flimage_add_format(formalname, shortname, extension, imagetype,
         shortname : str
             an abbreviated name for the image forma, e.g. "tiff"
         extension : str
-            file extension, e.g. "tif". If it is None, shortname will be
-            substituted
+            file extension, e.g. "tif". If it is empty (""), shortname will
+            be used, instead
         imagetype : int
             the image type, generally one of the supported image types (e.g.
             xfdata.FL_IMAGE_RGB), but it does not have to. For image file

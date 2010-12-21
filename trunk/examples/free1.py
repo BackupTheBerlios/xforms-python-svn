@@ -22,7 +22,7 @@ class Flfree1(object):
         self.dcol = 1
         self.on = 1
 
-        xfl.fl_initialize(lsysargv, sysargv, "FormDemo", 0, 0)
+        xfl.fl_initialize(lsysargv, sysargv, "FormDemo", None, 0)
 
         pform = xfl.fl_bgn_form(xfl.FL_UP_BOX, 400, 400)
         pobj1 = xfl.fl_add_button(xfl.FL_NORMAL_BUTTON, 320, 20, 40, 30, \

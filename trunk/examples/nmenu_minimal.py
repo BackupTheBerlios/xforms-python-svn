@@ -16,7 +16,7 @@ import xformslib as xfl
 class Flnmenumin(object):
     def __init__(self, lsysargv, sysargv):
 
-        xfl.fl_initialize(lsysargv, sysargv, "FormDemo", 0, 0)
+        xfl.fl_initialize(lsysargv, sysargv, "FormDemo", None, 0)
 
         pform = self.create_form()
 

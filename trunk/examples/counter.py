@@ -20,7 +20,7 @@ class FLCounter(object):
     def __init__(self, lsysargv, sysargv):
 
         self.pco = [0, 0, 0]
-        xfl.fl_initialize(lsysargv, sysargv, "FormDemo", 0, 0)
+        xfl.fl_initialize(lsysargv, sysargv, "FormDemo", None, 0)
 
         self.create_form_form()
         xfl.fl_set_object_color(self.presult, xfl.FL_FREE_COL1, \

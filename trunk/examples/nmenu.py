@@ -21,7 +21,7 @@ class Flnmenu(object):
 
         self.pabox = [None] * 4
         self.set = [0] * 4
-        xfl.fl_initialize(lsysargv, sysargv, "FormDemo", 0, 0)
+        xfl.fl_initialize(lsysargv, sysargv, "FormDemo", None, 0)
 
         pform = self.create_form()
 

@@ -3,12 +3,11 @@ xforms-python
 Python wrapper to XForms X11 Window System GUI C toolkit library.
 It has nothing to do with W3C XML XForms.
 
-I have some goal to achieve:
+I have some goals to achieve:
 - maintaining application programming interface's compatibility with
 XForms library, as much as possible, except for some needed
 adaptations.
 - keeping a low level of dependencies (python standard library, only)
-
 
 
 Author: Luca Lazzaroni (LukenShiro) lukenshiro@ngi.it
@@ -20,5 +19,5 @@ See CREDITS to read dependencies' copyright attribution.
 See INSTALL to read about installation.
 See TODO to read about future development and present limitations.
 
-Documentation is in HTML format on website, and in LaTex format.
+Documentation is in HTML format, created with pydoc from code docstrings.
 

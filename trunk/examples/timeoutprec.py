@@ -28,7 +28,7 @@ class FD_form(object):
 
 class Fltimeoutprec(object):
     def __init__(self, lsysargv, sysargv):
-        xfl.fl_initialize(lsysargv, sysargv, "FormDemo", 0, 0)
+        xfl.fl_initialize(lsysargv, sysargv, "FormDemo", None, 0)
         self.fd_form = self.create_form_form()
         # fill-in form initialization code
         self.fd_form.ldata = 800

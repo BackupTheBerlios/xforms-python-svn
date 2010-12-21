@@ -37,7 +37,7 @@ class Flpreempt(object):
     def __init__(self, lsysargv, sysargv):
 
         self.INTERVAL = 800      # wait this long before show tip
-        xfl.fl_initialize(lsysargv, sysargv, "FormDemo", 0, 0)
+        xfl.fl_initialize(lsysargv, sysargv, "FormDemo", None, 0)
 
         self.fd_form0 = self.create_form_form0()
 

@@ -22,7 +22,7 @@ class Flfdial(object):
     def __init__(self, lsysargv, sysargv):
         strng = ""
 
-        xfl.fl_initialize(lsysargv, sysargv, "FormDemo", 0, 0)
+        xfl.fl_initialize(lsysargv, sysargv, "FormDemo", None, 0)
         self.makeform()
 
         xfl.fl_show_form(self.pform, xfl.FL_PLACE_MOUSE, \

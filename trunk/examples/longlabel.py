@@ -37,7 +37,7 @@ label3 = "And now back to the first one:\n\n" \
 
 def main(lsysargv, sysargv):
 
-    xfl.fl_initialize(lsysargv, sysargv, "FormDemo", 0, 0)
+    xfl.fl_initialize(lsysargv, sysargv, "FormDemo", None, 0)
 
     pform = xfl.fl_bgn_form(xfl.FL_UP_BOX, 400, 300)
 

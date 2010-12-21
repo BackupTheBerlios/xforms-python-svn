@@ -25,7 +25,7 @@ def input2_cb(pobj, data):
 
 def main(lsysargv, sysargv):
 
-    xfl.fl_initialize(lsysargv, sysargv, "FormDemo", 0, 0)
+    xfl.fl_initialize(lsysargv, sysargv, "FormDemo", None, 0)
 
     pform = xfl.fl_bgn_form(xfl.FL_UP_BOX, 400, 450)
 

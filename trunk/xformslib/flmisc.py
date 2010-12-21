@@ -299,8 +299,8 @@ def fl_object_ps_dump(ptr_flobject, fname):
         ptr_flobject : pointer to xfdata.FL_OBJECT
             object. Only the xfdata.FL_XYPLOT flobject is supported.
         fname : str
-            name of output file. If None, a fselector will be shown to
-            ask the user for a file name.
+            name of output file. If it is empty (""), a fselector will
+            be shown to ask the user for a file name.
 
     Returns
     -------
@@ -319,14 +319,11 @@ def fl_object_ps_dump(ptr_flobject, fname):
     """
     _fl_object_ps_dump = library.cfuncproto(
         library.load_so_libflimage(), "fl_object_ps_dump",
-        cty.c_int, [cty.POINTER(xfdata.FL_OBJECT), cty.c_void_p],
+        cty.c_int, [cty.POINTER(xfdata.FL_OBJECT), xfdata.STRING],
         """int fl_object_ps_dump(FL_OBJECT * ob, const char * fname)""")
     library.check_if_initialized()
     library.verify_flobjectptr_type(ptr_flobject)
-    if not fname:       # if it is None
-        s_fname = None
-    else:
-        s_fname = library.convert_to_stringc(fname)
+    s_fname = library.convert_to_stringc(fname)
     library.keep_elem_refs(ptr_flobject, fname, s_fname)
     retval = _fl_object_ps_dump(ptr_flobject, s_fname)
     return retval

@@ -22,7 +22,7 @@ class BrowserAll(object):
         self.pbr = [0, 0, 0, 0]
         self.bnames = ["NORMAL_BROWSER", "SELECT_BROWSER", "HOLD_BROWSER", \
                 "MULTI_BROWSER"]
-        xfl.fl_initialize(lsysargv, sysargv, "FormDemo", 0, 0)
+        xfl.fl_initialize(lsysargv, sysargv, "FormDemo", None, 0)
         self.create_form()
         self.fill_browsers()
         xfl.fl_show_form(self.pform, xfl.FL_PLACE_CENTER | xfl.FL_FREE_SIZE, \

@@ -74,7 +74,7 @@ def make_symbols():
 
 
 def main(lsysargv, sysargv):
-    xfl.fl_initialize(lsysargv, sysargv, "FormDemo", 0, 0)
+    xfl.fl_initialize(lsysargv, sysargv, "FormDemo", None, 0)
     pform = make_symbols()
     xfl.fl_show_form(pform, xfl.FL_PLACE_FREE, xfl.FL_FULLBORDER, "test")
     while xfl.fl_do_forms():
