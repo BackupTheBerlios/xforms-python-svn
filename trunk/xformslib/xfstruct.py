@@ -659,9 +659,8 @@ def make_flresource(dictflresource):
             structflresource[numb].nbytes = i_clsnbytes[numb]
 
             library.keep_elem_refs(dictflresource[numb], \
-                structflresource[numb], ptr_flresource[numb], \
-                pyclsresname[numb], s_clsresname[numb], \
-                pyclsresclass[numb], s_clsresclass[numb], \
+                structflresource[numb], pyclsresname[numb], \
+                s_clsresname[numb], pyclsresclass[numb], s_clsresclass[numb], \
                 pyclstype[numb], i_clstype[numb], pyclsvar[numb], \
                 ptr_clsvar[numb], pyclsdefval[numb], s_clsdefval[numb], \
                 pyclsnbytes[numb], i_clsnbytes[numb])
