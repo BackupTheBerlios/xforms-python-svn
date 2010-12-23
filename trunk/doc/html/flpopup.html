@@ -57,9 +57,12 @@ Examples<br>
 Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-fl_popup_add_entries"><strong>fl_popup_add_entries</strong></a>(ptr_flpopup, entryitemstxt)</dt><dd><tt><a href="#-fl_popup_add_entries">fl_popup_add_entries</a>(ptr_flpopup,&nbsp;entryitemstxt)&nbsp;-&gt;&nbsp;ptr_flpopupentry<br>
+ <dl><dt><a name="-fl_popup_add_entries"><strong>fl_popup_add_entries</strong></a>(ptr_flpopup, entryitemstxt, x<font color="#909090">=None</font>, u<font color="#909090">=None</font>, f<font color="#909090">=None</font>, E<font color="#909090">=None</font>, L<font color="#909090">=None</font>, m<font color="#909090">=None</font>, Rr<font color="#909090">=None</font>, s<font color="#909090">=None</font>)</dt><dd><tt><a href="#-fl_popup_add_entries">fl_popup_add_entries</a>(ptr_flpopup,&nbsp;entryitemstxt,&nbsp;x=None,&nbsp;u=None,&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;f=None,&nbsp;E=None,&nbsp;L=None,&nbsp;m=None,&nbsp;Rr=None,&nbsp;s=None)<br>
+-&gt;&nbsp;ptr_flpopupentry<br>
 &nbsp;<br>
-Adds&nbsp;one&nbsp;or&nbsp;more&nbsp;entries&nbsp;to&nbsp;a&nbsp;popup.<br>
+Adds&nbsp;one&nbsp;entry&nbsp;to&nbsp;a&nbsp;popup&nbsp;(it&nbsp;can&nbsp;be&nbsp;used&nbsp;several&nbsp;times).&nbsp;If&nbsp;additional<br>
+separated&nbsp;arguments&nbsp;are&nbsp;required&nbsp;by&nbsp;in-text&nbsp;special&nbsp;sequences,&nbsp;user&nbsp;must<br>
+respect&nbsp;the&nbsp;same&nbsp;sequences'&nbsp;order.<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
@@ -67,11 +70,44 @@ Parameters<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;popup&nbsp;class&nbsp;instance<br>
 &nbsp;&nbsp;&nbsp;&nbsp;entryitemstxt&nbsp;:&nbsp;str<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;text&nbsp;of&nbsp;the&nbsp;entry&nbsp;to&nbsp;be&nbsp;added&nbsp;and&nbsp;in-text&nbsp;special&nbsp;sequences&nbsp;with<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;or&nbsp;without&nbsp;not&nbsp;separated&nbsp;additional&nbsp;arguments&nbsp;(if&nbsp;needed).&nbsp;Text<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;may&nbsp;contain&nbsp;|&nbsp;to&nbsp;separate&nbsp;entries&nbsp;and&nbsp;newline&nbsp;characters&nbsp;which<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;allows&nbsp;to&nbsp;create&nbsp;entries&nbsp;that&nbsp;span&nbsp;more&nbsp;than&nbsp;a&nbsp;single&nbsp;line.<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Special&nbsp;sequences&nbsp;who&nbsp;are&nbsp;allowed&nbsp;are:&nbsp;%x,&nbsp;%u,&nbsp;%f,&nbsp;%E,&nbsp;%L,&nbsp;%m,<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%T&nbsp;or&nbsp;%t,&nbsp;%R&nbsp;or&nbsp;%r,&nbsp;%l,&nbsp;%d,&nbsp;%h,&nbsp;%S,&nbsp;%s,&nbsp;%%.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;or&nbsp;without&nbsp;not&nbsp;separated&nbsp;additional&nbsp;arguments&nbsp;(if&nbsp;required).&nbsp;Text<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;may&nbsp;contain&nbsp;newline&nbsp;characters&nbsp;which&nbsp;allows&nbsp;to&nbsp;create&nbsp;entries<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;that&nbsp;span&nbsp;more&nbsp;than&nbsp;a&nbsp;single&nbsp;line.&nbsp;Special&nbsp;sequences&nbsp;who&nbsp;are<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;allowed&nbsp;are:&nbsp;%x,&nbsp;%u,&nbsp;%f,&nbsp;%E,&nbsp;%L,&nbsp;%m&nbsp;or&nbsp;%T&nbsp;or&nbsp;%t,&nbsp;%R&nbsp;or&nbsp;%r&nbsp;or&nbsp;%l,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%d,&nbsp;%h,&nbsp;%S,&nbsp;%s,&nbsp;%%.&nbsp;Only&nbsp;one&nbsp;entry&nbsp;is&nbsp;supported&nbsp;in&nbsp;xforms-python.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;x&nbsp;:&nbsp;long<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;user&nbsp;data&nbsp;to&nbsp;be&nbsp;passed&nbsp;to&nbsp;callbacks&nbsp;for&nbsp;entry&nbsp;(separated<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;additional&nbsp;argument&nbsp;corresponding&nbsp;to&nbsp;%x&nbsp;in-text&nbsp;special&nbsp;sequence)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;u&nbsp;:&nbsp;pointer&nbsp;to&nbsp;any&nbsp;type<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;user&nbsp;data&nbsp;to&nbsp;be&nbsp;passed&nbsp;to&nbsp;callbacks&nbsp;for&nbsp;entry&nbsp;(separated<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;additional&nbsp;argument&nbsp;corresponding&nbsp;to&nbsp;%u&nbsp;in-text&nbsp;special&nbsp;sequence)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;f&nbsp;:&nbsp;python&nbsp;callback&nbsp;function,&nbsp;returned&nbsp;value<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;name&nbsp;referring&nbsp;to&nbsp;function(ptr_flpopupreturn)&nbsp;-&gt;&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;function&nbsp;to&nbsp;be&nbsp;invoked&nbsp;on&nbsp;set<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(separated&nbsp;additional&nbsp;argument&nbsp;corresponding&nbsp;to&nbsp;%f&nbsp;in-text<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;special&nbsp;sequence)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;E&nbsp;:&nbsp;python&nbsp;callback&nbsp;function,&nbsp;returned&nbsp;unused&nbsp;value<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;name&nbsp;referring&nbsp;to&nbsp;function(ptr_flpopupreturn)&nbsp;-&gt;&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;function&nbsp;to&nbsp;be&nbsp;invoked&nbsp;on&nbsp;enter<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(separated&nbsp;additional&nbsp;argument&nbsp;corresponding&nbsp;to&nbsp;%E&nbsp;in-text<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;special&nbsp;sequence)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;L&nbsp;:&nbsp;python&nbsp;callback&nbsp;function,&nbsp;returned&nbsp;unused&nbsp;value<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;name&nbsp;referring&nbsp;to&nbsp;function(ptr_flpopupreturn)&nbsp;-&gt;&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;function&nbsp;to&nbsp;be&nbsp;invoked&nbsp;on&nbsp;leave<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(separated&nbsp;additional&nbsp;argument&nbsp;corresponding&nbsp;to&nbsp;%L&nbsp;in-text<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;special&nbsp;sequence)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;m&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_POPUP<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;popup&nbsp;class&nbsp;to&nbsp;be&nbsp;used&nbsp;as&nbsp;sub-popup<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(separated&nbsp;additional&nbsp;argument&nbsp;corresponding&nbsp;to&nbsp;%m&nbsp;in-text<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;special&nbsp;sequence)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Rr&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;group&nbsp;number&nbsp;of&nbsp;a&nbsp;radio&nbsp;entry&nbsp;type<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(separated&nbsp;additional&nbsp;argument&nbsp;corresponding&nbsp;to&nbsp;%R&nbsp;or&nbsp;%r<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;in-text&nbsp;special&nbsp;sequence)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;s&nbsp;:&nbsp;str<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;shortcut&nbsp;text&nbsp;for&nbsp;the&nbsp;entry&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(separated&nbsp;additional&nbsp;argument&nbsp;corresponding&nbsp;to&nbsp;%s&nbsp;in-text<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;special&nbsp;sequence)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>
 &nbsp;<br>
 Returns<br>
 -------<br>
@@ -507,7 +543,8 @@ Examples<br>
 Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;Demo&nbsp;=&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-fl_popup_entry_set_enter_callback"><strong>fl_popup_entry_set_enter_callback</strong></a>(ptr_flpopupentry, pyfn_PopupCb)</dt><dd><tt><a href="#-fl_popup_entry_set_enter_callback">fl_popup_entry_set_enter_callback</a>(ptr_flpopupentry,&nbsp;pyfn_PopupCb)&nbsp;-&gt;&nbsp;PopupCb<br>
+ <dl><dt><a name="-fl_popup_entry_set_enter_callback"><strong>fl_popup_entry_set_enter_callback</strong></a>(ptr_flpopupentry, pyfn_PopupCb)</dt><dd><tt><a href="#-fl_popup_entry_set_enter_callback">fl_popup_entry_set_enter_callback</a>(ptr_flpopupentry,&nbsp;pyfn_PopupCb)<br>
+-&gt;&nbsp;PopupCb<br>
 &nbsp;<br>
 Defines&nbsp;the&nbsp;callback&nbsp;invoked&nbsp;when&nbsp;the&nbsp;mouse&nbsp;enters&nbsp;the&nbsp;area&nbsp;of&nbsp;the&nbsp;popup<br>
 entry.<br>
@@ -948,10 +985,13 @@ API_diversion<br>
 Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-fl_popup_insert_entries"><strong>fl_popup_insert_entries</strong></a>(ptr_flpopup, ptr_flpopupentry, entryitemstxt)</dt><dd><tt><a href="#-fl_popup_insert_entries">fl_popup_insert_entries</a>(ptr_flpopup,&nbsp;ptr_flpopupentry,&nbsp;entryitemstxt)<br>
+ <dl><dt><a name="-fl_popup_insert_entries"><strong>fl_popup_insert_entries</strong></a>(ptr_flpopup, ptr_flpopupentry, entryitemstxt, x<font color="#909090">=None</font>, u<font color="#909090">=None</font>, f<font color="#909090">=None</font>, E<font color="#909090">=None</font>, L<font color="#909090">=None</font>, m<font color="#909090">=None</font>, Rr<font color="#909090">=None</font>, s<font color="#909090">=None</font>)</dt><dd><tt><a href="#-fl_popup_insert_entries">fl_popup_insert_entries</a>(ptr_flpopup,&nbsp;ptr_flpopupentry,&nbsp;entryitemstxt,<br>
+x=None,&nbsp;u=None,&nbsp;f=None,&nbsp;E=None,&nbsp;L=None,&nbsp;m=None,&nbsp;Rr=None,&nbsp;s=None)<br>
 -&gt;&nbsp;ptr_flpopupentry<br>
 &nbsp;<br>
-Inserts&nbsp;one&nbsp;or&nbsp;more&nbsp;entries&nbsp;into&nbsp;a&nbsp;popup.<br>
+Inserts&nbsp;one&nbsp;entry&nbsp;into&nbsp;a&nbsp;popup&nbsp;(it&nbsp;can&nbsp;be&nbsp;used&nbsp;several&nbsp;times).&nbsp;If<br>
+additional&nbsp;separated&nbsp;arguments&nbsp;are&nbsp;required&nbsp;by&nbsp;in-text&nbsp;special&nbsp;sequences,<br>
+user&nbsp;must&nbsp;respect&nbsp;the&nbsp;same&nbsp;sequences'&nbsp;order.<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
@@ -962,11 +1002,44 @@ Parameters<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;inserts&nbsp;items&nbsp;at&nbsp;the&nbsp;very&nbsp;start.<br>
 &nbsp;&nbsp;&nbsp;&nbsp;entryitemstxt&nbsp;:&nbsp;str<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;text&nbsp;of&nbsp;the&nbsp;entry&nbsp;to&nbsp;be&nbsp;added&nbsp;and&nbsp;in-text&nbsp;special&nbsp;sequences&nbsp;with<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;or&nbsp;without&nbsp;not&nbsp;separated&nbsp;additional&nbsp;arguments&nbsp;(if&nbsp;needed).&nbsp;Text<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;may&nbsp;contain&nbsp;|&nbsp;to&nbsp;separate&nbsp;entries&nbsp;and&nbsp;newline&nbsp;characters&nbsp;which<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;allows&nbsp;to&nbsp;create&nbsp;entries&nbsp;that&nbsp;span&nbsp;more&nbsp;than&nbsp;a&nbsp;single&nbsp;line.<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Special&nbsp;sequences&nbsp;who&nbsp;are&nbsp;allowed&nbsp;are:&nbsp;%x,&nbsp;%u,&nbsp;%f,&nbsp;%E,&nbsp;%L,&nbsp;%m,<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%T&nbsp;or&nbsp;%t,&nbsp;%R&nbsp;or&nbsp;%r,&nbsp;%l,&nbsp;%d,&nbsp;%h,&nbsp;%S,&nbsp;%s,&nbsp;%%.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;or&nbsp;without&nbsp;not&nbsp;separated&nbsp;additional&nbsp;arguments&nbsp;(if&nbsp;required).&nbsp;Text<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;may&nbsp;contain&nbsp;newline&nbsp;characters&nbsp;which&nbsp;allows&nbsp;to&nbsp;create&nbsp;entries<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;that&nbsp;span&nbsp;more&nbsp;than&nbsp;a&nbsp;single&nbsp;line.&nbsp;Special&nbsp;sequences&nbsp;who&nbsp;are<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;allowed&nbsp;are:&nbsp;%x,&nbsp;%u,&nbsp;%f,&nbsp;%E,&nbsp;%L,&nbsp;%m&nbsp;or&nbsp;%T&nbsp;or&nbsp;%t,&nbsp;%R&nbsp;or&nbsp;%r&nbsp;or&nbsp;%l,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%d,&nbsp;%h,&nbsp;%S,&nbsp;%s,&nbsp;%%.&nbsp;Only&nbsp;one&nbsp;entry&nbsp;is&nbsp;supported&nbsp;in&nbsp;xforms-python.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;x&nbsp;:&nbsp;long<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;user&nbsp;data&nbsp;to&nbsp;be&nbsp;passed&nbsp;to&nbsp;callbacks&nbsp;for&nbsp;entry&nbsp;(separated<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;additional&nbsp;argument&nbsp;corresponding&nbsp;to&nbsp;%x&nbsp;in-text&nbsp;special&nbsp;sequence)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;u&nbsp;:&nbsp;pointer&nbsp;to&nbsp;any&nbsp;type<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;user&nbsp;data&nbsp;to&nbsp;be&nbsp;passed&nbsp;to&nbsp;callbacks&nbsp;for&nbsp;entry&nbsp;(separated<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;additional&nbsp;argument&nbsp;corresponding&nbsp;to&nbsp;%u&nbsp;in-text&nbsp;special&nbsp;sequence)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;f&nbsp;:&nbsp;python&nbsp;callback&nbsp;function,&nbsp;returned&nbsp;value<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;name&nbsp;referring&nbsp;to&nbsp;function(ptr_flpopupreturn)&nbsp;-&gt;&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;function&nbsp;to&nbsp;be&nbsp;invoked&nbsp;on&nbsp;set<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(separated&nbsp;additional&nbsp;argument&nbsp;corresponding&nbsp;to&nbsp;%f&nbsp;in-text<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;special&nbsp;sequence)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;E&nbsp;:&nbsp;python&nbsp;callback&nbsp;function,&nbsp;returned&nbsp;unused&nbsp;value<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;name&nbsp;referring&nbsp;to&nbsp;function(ptr_flpopupreturn)&nbsp;-&gt;&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;function&nbsp;to&nbsp;be&nbsp;invoked&nbsp;on&nbsp;enter<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(separated&nbsp;additional&nbsp;argument&nbsp;corresponding&nbsp;to&nbsp;%E&nbsp;in-text<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;special&nbsp;sequence)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;L&nbsp;:&nbsp;python&nbsp;callback&nbsp;function,&nbsp;returned&nbsp;unused&nbsp;value<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;name&nbsp;referring&nbsp;to&nbsp;function(ptr_flpopupreturn)&nbsp;-&gt;&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;function&nbsp;to&nbsp;be&nbsp;invoked&nbsp;on&nbsp;leave<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(separated&nbsp;additional&nbsp;argument&nbsp;corresponding&nbsp;to&nbsp;%L&nbsp;in-text<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;special&nbsp;sequence)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;m&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_POPUP<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;popup&nbsp;class&nbsp;to&nbsp;be&nbsp;used&nbsp;as&nbsp;sub-popup<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(separated&nbsp;additional&nbsp;argument&nbsp;corresponding&nbsp;to&nbsp;%m&nbsp;in-text<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;special&nbsp;sequence)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Rr&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;group&nbsp;number&nbsp;of&nbsp;a&nbsp;radio&nbsp;entry&nbsp;type<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(separated&nbsp;additional&nbsp;argument&nbsp;corresponding&nbsp;to&nbsp;%R&nbsp;or&nbsp;%r<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;in-text&nbsp;special&nbsp;sequence)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;s&nbsp;:&nbsp;str<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;shortcut&nbsp;text&nbsp;for&nbsp;the&nbsp;entry&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(separated&nbsp;additional&nbsp;argument&nbsp;corresponding&nbsp;to&nbsp;%s&nbsp;in-text<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;special&nbsp;sequence)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>
 &nbsp;<br>
 Returns<br>
 -------<br>
@@ -1239,4 +1312,4 @@ Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;Demo&nbsp;=&nbsp;OK</tt></dd></dl>
 </td></tr></table>
-<p>Updated on: 2010-12-22 00:35 +0100</body></html>
+<p>Updated on: 2010-12-23 23:57 +0100</body></html>

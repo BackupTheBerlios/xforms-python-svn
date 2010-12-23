@@ -2,6 +2,12 @@ SVN (first entries from top are more recent)
 --------------------------------------------
 
 BETA
+    20101223 (beta2)
+    * some other bugs fixed. Managed special sequences to be passed to
+    fl_popup_add_entries(), fl_popup_insert_entries(), fl_add_select_items(),
+    fl_insert_select_items(), fl_replace_select_item(), fl_add_nmenu_items(),
+    fl_insert_nmenu_items(), fl_replace_nmenu_item() functions, so separate
+      additional args are now supported using python keyword params.
     20101221 (beta1)
     * some miscellaneous bugfixes.
     * Modified some functions with a parameter of str type who can have None

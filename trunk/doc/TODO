@@ -10,6 +10,13 @@ instead of using 'if obj == someobj'
 value (e.g. in C: &a) that is modified by the function
 itself, there has been a change in API so these arguments
 represent multiple return values here.
+- in functions who can have variable params (e.g special sequence
+additional args in fl_*_entries), as I cannot manage variable
+types and positions params here (as ctype requires to know
+beforehand  what kind of param type you pass to), you need to
+respect a precise order in special sequence params of these
+functions (passing as keyword args), otherwise unpredictable
+results can happen (more likely, Segfaults).
 - public functions are not guaranteed to remain stable and
 consistent, until version 1.0.0 will be released. So library
 name and directory layout might change in order to achieve
@@ -107,7 +114,6 @@ to be corresponding to well-documented and working functions.
  or bitwise OR-ed with each other, so checking for allowed value in list
  function does not forbid such a resulting value incorrectly. (low priority:
  if a value exceeds a prefixed range, it should be caught in upstream XForms)
-
 
 - Porting xforms-python to object-oriented/classes: No Way! (it is
 not worth the effort).

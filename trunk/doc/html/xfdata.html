@@ -1572,11 +1572,14 @@ Methods inherited from _ctypes._CData:<br>
 Attributes<br>
 ----------<br>
 &nbsp;&nbsp;&nbsp;&nbsp;option&nbsp;:&nbsp;str<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Option&nbsp;abbreviation&nbsp;in&nbsp;sys.argv<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Option&nbsp;abbreviation&nbsp;in&nbsp;sys.argv&nbsp;(prefixed&nbsp;with&nbsp;'-')<br>
 &nbsp;&nbsp;&nbsp;&nbsp;specifier&nbsp;:&nbsp;str<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;resource&nbsp;specifier<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;resource&nbsp;specifier&nbsp;(starting&nbsp;with&nbsp;'*'&nbsp;or&nbsp;'.')<br>
 &nbsp;&nbsp;&nbsp;&nbsp;argKind&nbsp;:&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Which&nbsp;style&nbsp;of&nbsp;option&nbsp;it&nbsp;is<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Which&nbsp;style&nbsp;of&nbsp;option&nbsp;it&nbsp;is.&nbsp;Values&nbsp;XrmoptionNoArg,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;XrmoptionIsArg,&nbsp;XrmoptionStickyArg,&nbsp;XrmoptionSepArg,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;XrmoptionResArg,&nbsp;XrmoptionSkipArg,&nbsp;XrmoptionSkipLine,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;XrmoptionSkipNArgs<br>
 &nbsp;&nbsp;&nbsp;&nbsp;value&nbsp;:&nbsp;str<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Value&nbsp;to&nbsp;provide&nbsp;if&nbsp;argKind&nbsp;is&nbsp;XrmoptionNoArg<br>&nbsp;</tt></td></tr>
 <tr><td>&nbsp;</td>
@@ -13145,11 +13148,14 @@ Methods inherited from _ctypes._CData:<br>
 Attributes<br>
 ----------<br>
 &nbsp;&nbsp;&nbsp;&nbsp;option&nbsp;:&nbsp;str<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Option&nbsp;abbreviation&nbsp;in&nbsp;sys.argv<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Option&nbsp;abbreviation&nbsp;in&nbsp;sys.argv&nbsp;(prefixed&nbsp;with&nbsp;'-')<br>
 &nbsp;&nbsp;&nbsp;&nbsp;specifier&nbsp;:&nbsp;str<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;resource&nbsp;specifier<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;resource&nbsp;specifier&nbsp;(starting&nbsp;with&nbsp;'*'&nbsp;or&nbsp;'.')<br>
 &nbsp;&nbsp;&nbsp;&nbsp;argKind&nbsp;:&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Which&nbsp;style&nbsp;of&nbsp;option&nbsp;it&nbsp;is<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Which&nbsp;style&nbsp;of&nbsp;option&nbsp;it&nbsp;is.&nbsp;Values&nbsp;XrmoptionNoArg,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;XrmoptionIsArg,&nbsp;XrmoptionStickyArg,&nbsp;XrmoptionSepArg,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;XrmoptionResArg,&nbsp;XrmoptionSkipArg,&nbsp;XrmoptionSkipLine,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;XrmoptionSkipNArgs<br>
 &nbsp;&nbsp;&nbsp;&nbsp;value&nbsp;:&nbsp;str<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Value&nbsp;to&nbsp;provide&nbsp;if&nbsp;argKind&nbsp;is&nbsp;XrmoptionNoArg<br>&nbsp;</tt></td></tr>
 <tr><td>&nbsp;</td>
@@ -18879,18 +18885,20 @@ no&nbsp;return<br>&nbsp;</tt></td></tr>
 <strong>buttonLabelSize</strong> = 0<br>
 <strong>inputLabelSize</strong> = 0<br>
 <strong>sliderLabelSize</strong> = 0<br>
-<strong>special_sequences_for_entry_text</strong> = ''<br>
-<strong>special_sequences_for_entry_text_7</strong> = ''<br>
-<strong>special_sequences_for_entry_text_E</strong> = ''<br>
-<strong>special_sequences_for_entry_text_L</strong> = ''<br>
-<strong>special_sequences_for_entry_text_R_or_r</strong> = ''<br>
-<strong>special_sequences_for_entry_text_S</strong> = ''<br>
-<strong>special_sequences_for_entry_text_T_or_t</strong> = ''<br>
-<strong>special_sequences_for_entry_text_d</strong> = ''<br>
-<strong>special_sequences_for_entry_text_f</strong> = ''<br>
-<strong>special_sequences_for_entry_text_h</strong> = ''<br>
-<strong>special_sequences_for_entry_text_l</strong> = ''<br>
-<strong>special_sequences_for_entry_text_m</strong> = ''<br>
-<strong>special_sequences_for_entry_text_s</strong> = ''<br>
-<strong>special_sequences_for_entry_text_x</strong> = ''</td></tr></table>
-<p>Updated on: 2010-12-22 00:35 +0100</body></html>
+<strong>special_sequences_for_entry_text</strong> = '<font color="#c040c0">\n</font>    Special sequences for extry text<font color="#c040c0">\n</font>    ------...o put a % character within the text of an entry.<font color="#c040c0">\n</font>'<br>
+<strong>special_sequences_for_entry_text_E</strong> = '     %E (with additional separate argument as fu...back function but its return value is never used.'<br>
+<strong>special_sequences_for_entry_text_L</strong> = '     %L (with additional separate argument as fu... function but its<font color="#c040c0">\n</font>    return value is never used.'<br>
+<strong>special_sequences_for_entry_text_R</strong> = '     %R (with additional separate argument as a ...ff" state, i.e. the one<font color="#c040c0">\n</font>    created last "wins").'<br>
+<strong>special_sequences_for_entry_text_S</strong> = '     %S (with an in-text value after)<font color="#c040c0">\n</font>    For en...shortcut key, this still has to be done using %s.'<br>
+<strong>special_sequences_for_entry_text_T</strong> = '     %T (no argument)<font color="#c040c0">\n</font>    makes the entry a "tog...ens automatically when the entry<font color="#c040c0">\n</font>    is selected.'<br>
+<strong>special_sequences_for_entry_text_d</strong> = '     %d (no argument)<font color="#c040c0">\n</font>    marks the entry as dis...ext is<font color="#c040c0">\n</font>    by default drawn in a different color.'<br>
+<strong>special_sequences_for_entry_text_f</strong> = '     %f (with additional separate argument as fu...do() by<font color="#c040c0">\n</font>     returning a value of FL_IGNORE (-1).'<br>
+<strong>special_sequences_for_entry_text_h</strong> = '     %h (no argument)<font color="#c040c0">\n</font>    marks the entry as hidden, i.e. it is not shown while in this state.'<br>
+<strong>special_sequences_for_entry_text_l</strong> = '     %l (no argument)<font color="#c040c0">\n</font>    creates not a real ent...only the "hidden" property is taken into account.'<br>
+<strong>special_sequences_for_entry_text_m</strong> = '     %m (with additional separate argument as po...    indicate that it is an entry for a sub-popup.'<br>
+<strong>special_sequences_for_entry_text_r</strong> = "     %r (with additional separate argument as a ...tart (only one<font color="#c040c0">\n</font>    can be 'on' at the same time)."<br>
+<strong>special_sequences_for_entry_text_s</strong> = '     %s (with additional separate argument as a ...s only shown as underlined if %S is<font color="#c040c0">\n</font>    not used.'<br>
+<strong>special_sequences_for_entry_text_t</strong> = '     %t (no argument)<font color="#c040c0">\n</font>    makes the entry a "tog...ens automatically when the entry<font color="#c040c0">\n</font>    is selected.'<br>
+<strong>special_sequences_for_entry_text_u</strong> = '     %u (with additional separate argument as da...xforms-python it does not fully work as expected.'<br>
+<strong>special_sequences_for_entry_text_x</strong> = '     %x (with additional separate argument as a ...is passed to all callback routines for the entry.'</td></tr></table>
+<p>Updated on: 2010-12-23 23:57 +0100</body></html>
