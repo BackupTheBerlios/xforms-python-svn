@@ -179,12 +179,6 @@ def make_flpopupitem(dictpopupitems):
                 (dictpopupitems, type(dictpopupitems)))
 
 
-def donothing_flpopupcb(ptr_flpopupreturn):
-    """ Replaces a callback function not defined for class instances
-        as e.g. xfdata.FL_POPUP_ITEM """
-    return 0
-
-
 def make_fliopt(dictfliopt):
     """make_fliopt(dictfliopt) -> ptr_fliopt
 
@@ -679,187 +673,25 @@ def make_flresource(dictflresource):
                 (dictflresource, type(dictflresource)))
 
 
+def make_flpopupcb(pyfn_popupcb):
+    """make_flpopupcb(pyfn_popupcb) -> cfn_popupcb
+    
+    Taking a python callback function name, prapares and returns a 
+    C-compatible xfdata.FL_POPUP_CB function."""
 
-# ***** following functions are not used now *****
-#def create_ptr_flpopupitem_from_dict(dictofpopupitems):
-#    """ create_ptr_flpopupitem_from_dict(dictofpopupitems) -> ptr_flpopupitem
-#
-#    Taking a python dict (for one dict item ONLY) with a structure similar
-#    to xfdata.FL_POPUP_ITEM prepares and returns a C-compatible pointer
-#    to xfdata.FL_POPUP_ITEM. """
-#    if not isinstance(dictofpopupitems, dict):
-#        raise XFormsTypeError("Parameter %s (of type %s) must be a python" \
-#                        " dict" % (dictofpopupitems, type(dictofpopupitems)))
-#
-#    pyclstext = dictofpopupitems['text']
-#    print pyclstext
-#    spitext = convert_to_stringc(pyclstext)
-#    print spitext
-#    if 'callback' in dictofpopupitems:
-#        pyclscallback = dictofpopupitems['callback']
-#        print pyclscallback
-#    else:                       # no callback passed
-#        pyclscallback = donothing_popupcb
-#    cfn_clscallback = xfdata.FL_POPUP_CB(pyclscallback)
-#    print cfn_clscallback
-#    pyclsshortcut = dictofpopupitems['shortcut']
-#    print pyclsshortcut
-#    spishortcut = convert_to_stringc(pyclsshortcut)
-#    print spishortcut
-#    pyclstype = dictofpopupitems['type']
-#    print pyclstype
-#    checkfatal_allowed_value_in_list(pyclstype, xfdata.POPUPTYPE_list)
-#    ipitype = convert_to_intc(pyclstype)
-#    print ipitype
-#    pyclsstate = dictofpopupitems['state']
-#    print pyclsstate
-#    checkfatal_allowed_value_in_list(pyclsstate, xfdata.POPUPSTATE_list)
-#    ipistate = convert_to_intc(pyclsstate)
-#    print ipistate
-#
-#    popupitem = (xfdata.FL_POPUP_ITEM * 2)()
-#    popupitem[0].text = spitext
-#    popupitem[0].callback = cfn_clscallback
-#    popupitem[0].shortcut = spishortcut
-#    popupitem[0].type = ipitype
-#    popupitem[0].state = ipistate
-#    popupitem[1].text = None        # this ends array, preventing SegFault#
-#
-#    ppopupitem = cty.pointer(popupitem[0])
-#    print popupitem, popupitem[0], ppopupitem
-#    keep_cfunc_refs(pyclscallback, cfn_clscallback)
-#    keep_elem_refs(dictofpopupitems, pyclstext, spitext, pyclsshortcut,
-#                spishortcut, pyclstype, ipitype, pyclsstate, ipistate,
-#                popupitem, ppopupitem)
-#    return popupitem[0], ppopupitem
+    if hasattr(pyfn_flpopupcb, '__call__'):
+        cfn_popupcb = xfdata.FL_POPUP_CB(pyfn_popupcb)
+        library.keep_cfunc_refs(pyfn_popupcb, cfn_popupcb)
+        return cfn_popupcb
+    else:
+        raise library.XFormsTypeError("Parameter %s (of type %s) must be" \
+                " a python list" % (listspseqargs, type(listspseqargs)))
 
 
-#def create_ptr_flpopupitem_from_list(listofpopupitems):
-#    """ create_ptr_flpopupitem_from_list(listofpopupitems) -> ptr_flpopupitem
-#
-#    Taking a python single list/several lists of popup items, with
-#    elements in the same order as xfdata.FL_POPUP_ITEM (text, callback,
-#    shortcut, type, state) prepares and returns a C-compatible pointer to
-#    xfdata.FL_POPUP_ITEM."""
-#    # hack to manage both single list and a list of several lists passed as
-#    # arguments
-#    try:
-#        tmpval = listofpopupitems[1][0]
-#        tmpval = tmpval
-#
-#    except TypeError:
-#        if not isinstance(listofpopupitems, (list, tuple)):
-#            raise XFormsTypeError("Parameter %s (of type %s) must be a " \
-#                "python list or tuple" % (listofpopupitems, \
-#                type(listofpopupitems)))
-#
-#        # only one list passed (array of 2 member)
-#        popupitem = (xfdata.FL_POPUP_ITEM * 2)()   # 1 list and 1 None
-#
-#        spitext = convert_to_stringc(listofpopupitems[0])
-#        popupitem[0].text = spitext
-#        print spitext
-#        cfn_clscallback = xfdata.FL_POPUP_CB(listofpopupitems[1])
-#        print cfn_clscallback
-#        popupitem[0].callback = cfn_clscallback
-#        spishortcut = convert_to_stringc(listofpopupitems[2])
-#        popupitem[0].shortcut = spishortcut
-#        print spishortcut
-#        checkfatal_allowed_value_in_list(listofpopupitems[3], \
-#            xfdata.POPUPTYPE_list)
-#        ipitype = convert_to_intc(listofpopupitems[3])
-#        popupitem[0].type = ipitype
-#        print ipitype
-#        checkfatal_allowed_value_in_list(listofpopupitems[4], \
-#            xfdata.POPUPSTATE_list)
-#        ipistate = convert_to_intc(listofpopupitems[4])
-#        popupitem[0].state = ipistate
-#        print ipistate
-#
-#        popupitem[1].text = None      # ends array, preventing SegFault
-#        print popupitem
-#
-#        ppopupitem = cty.pointer(popupitem[0])
-#        print ppopupitem
-#        keep_cfunc_refs(listofpopupitems[1], cfn_clscallback)
-#        keep_elem_refs(spitext, spishortcut, ipitype, ipistate,
-#                       listofpopupitems, popupitem, ppopupitem)
-#        return ppopupitem
-#        # end of 1 list
-#
-#    else:
-#        if not isinstance(listofpopupitems, (list, tuple)):
-#            raise XFormsTypeError("Parameter %s (of type %s) must be a " \
-#                "python list or tuple" % (listofpopupitems, \
-#                type(listofpopupitems)))
-#
-#        # series of lists passed (array of n+1 members)
-#        numarray = len(listofpopupitems)
-#        lngarray = numarray + 1         # consider final None
-#        popupitem = (xfdata.FL_POPUP_ITEM * lngarray)()
-#        curitem = 0
-#
-#        for indx in range(0, numarray):
-#            spitext = convert_to_stringc(listofpopupitems[indx][0])
-#            popupitem[indx].text = spitext
-#            cfn_clscallback = xfdata.FL_POPUP_CB(listofpopupitems[indx][1])
-#            popupitem[indx].callback = cfn_clscallback
-#            spishortcut = convert_to_stringc(listofpopupitems[indx][2])
-#            popupitem[indx].shortcut = spishortcut
-#            checkfatal_allowed_value_in_list(listofpopupitems[indx][3], \
-#                                      xfdata.POPUPTYPE_list)
-#            ipitype = convert_to_intc(listofpopupitems[indx][3])
-#            popupitem[indx].type = ipitype
-#            checkfatal_allowed_value_in_list(listofpopupitems[indx][4], \
-#                                      xfdata.POPUPSTATE_list)
-#            ipistate = convert_to_intc(listofpopupitems[indx][4])
-#            popupitem[indx].state = ipistate
-#
-#            keep_cfunc_refs(listofpopupitems[indx][1], cfn_clscallback)
-#            keep_elem_refs(popupitem[indx], spitext, spishortcut,
-#                           ipitype, ipistate)
-#            curitem = indx
-#
-#        curitem += 1
-#        popupitem[curitem].text = None    # ends array, preventing SegFault
-#        ppopupitem = cty.pointer(popupitem[0])
-#        keep_elem_refs(listofpopupitems, popupitem, ppopupitem)
-#        return ppopupitem
-#        # end of series of lists
+def donothing_flpopupcb(ptr_flpopupreturn):
+    """ Replaces a callback function not defined for class instances
+        as e.g. xfdata.FL_POPUP_ITEM."""
+    return 0
 
 
-#def create_argslist_for_entrytxt(singlelist, elemsnum):
-#    """Handles mutable arguments of e.g. fl_popup_add_entries
-#    singlelist has following format:
-#    ["entrytxt sometext", series of special sequencies params]
-#    Elements not inserted are replaced by None. Then they are converted
-#    to some ctypes types when possible.
-#    """
 
-#    singlelist2 = singlelist[:]      # use a copy to be manipulated
-#    finallist = elemsnum * [None]
-#    while len(singlelist2) < elemsnum:
-#        singlelist2.append(None)
-#    singlelist2[0] = convert_to_stringc(singlelist2[0])  # 1st must be a str
-#    for e in range(0, len(singlelist2)):
-#        if not singlelist2[e]:
-#            # it is None
-#            finallist[e] = cty.cast(singlelist2[e], cty.c_void_p)
-#        elif isinstance(singlelist2[e], str):
-#            # it is a str
-#            finallist[e] = convert_to_stringc(singlelist2[e])
-#        elif hasattr(singlelist2[e], '__call__'):
-#            # it is a function
-#            finallist[e] = xfdata.FL_POPUP_CB(singlelist2[e])
-#            keep_cfunc_refs(finallist[e], singlelist2[e])
-#        elif isinstance(singlelist2[e], cty.POINTER(xfdata.FL_POPUP)):
-#            # it is a popup
-#            finallist[e] = cty.cast(singlelist2[e], \
-#                cty.POINTER(xfdata.FL_POPUP))
-#        elif isinstance(singlelist2[e], long):
-#            # it is a long (maybe from %x)
-#            finallist[e] = convert_to_longc(singlelist2[e])
-#        else:
-#            # every other type
-#            finallist[e] = singlelist2[e]
-#    return singlelist2, finallist

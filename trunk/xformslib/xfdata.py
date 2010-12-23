@@ -3512,11 +3512,14 @@ class XrmOptionDescRec(cty.Structure):
     Attributes
     ----------
         option : str
-            Option abbreviation in sys.argv
+            Option abbreviation in sys.argv (prefixed with '-')
         specifier : str
-            resource specifier
+            resource specifier (starting with '*' or '.')
         argKind : int
-            Which style of option it is
+            Which style of option it is. Values XrmoptionNoArg,
+            XrmoptionIsArg, XrmoptionStickyArg, XrmoptionSepArg,
+            XrmoptionResArg, XrmoptionSkipArg, XrmoptionSkipLine,
+            XrmoptionSkipNArgs
         value : str
             Value to provide if argKind is XrmoptionNoArg
     """
@@ -9437,114 +9440,111 @@ cfunc_none_flimagemarker = cty.CFUNCTYPE(None, cty.POINTER(FLIMAGE_MARKER))
 # particularly to a single function or data constant or variable.
 
 # hacks to allow docstrings for non-functions and non-constants, since as a
-# whole they are malformed by epydoc. Values are meant to be ignored.
-special_sequences_for_entry_text = ""
-"""Special sequences for extry text
-   --------------------------------
+# Values are meant to be ignored.
+special_sequences_for_entry_text = """
+    Special sequences for extry text
+    --------------------------------
 
     A special sequences is represented by a case-sensitive alphabetic character
     placed into the entry text, prepended by a '%' character.
 
     There are 3 types of special sequences:
-      - some do not need any additional argument afterhand;
-      - some need an additional value directly inserted in text after it;
-      - some need an additional but separated argument/parameter.
-
-    These are recognized special sequences: %d, %h, %l, %f, %L, %E, %T, %t,
-    %R, %r, %m, %x, %u, %S, %s.
+      - some do not need any additional arguments afterhand (%t, %T, %l, %d,
+      %h);
+      - some need an additional value directly inserted in text after it (%S);
+      - some need an additional but separated argument/parameter (%x, %u, %f,
+      %E, %L, %r, %R, %s).
 
     Some of them are mutually exclusive (%t, %T, %r, %R, %l, %m).
 
     Use %% to put a % character within the text of an entry.
 """
+special_sequences_for_entry_text_x = """ \
+    %x (with additional separate argument as a type long value)
+    sets a value that is passed to all callback routines for the entry."""
+special_sequences_for_entry_text_u = """ \
+    %u (with additional separate argument as data of any type)
+    sets user data that is passed to all callbacks of the entry. Warning:
+    currently in xforms-python it does not fully work as expected."""
+special_sequences_for_entry_text_f = """ \
+    %f (with additional separate argument as function name)
+    sets a callback function that gets called when the entry is selected. The
+     function is of type FL_POPUP_CB, returning an int. Information about the
+     entry etc. gets passed to the callback function via the FL_POPUP_RETURN
+     class instance and the return value of the function can be used to keep
+     the selection being reported back to the caller of fl_popup_do() by
+     returning a value of FL_IGNORE (-1)."""
+special_sequences_for_entry_text_E = """ \
+    %E (with additional separate argument as function name)
+    sets a callback routine that gets called each time the mouse enters the
+    entry (as long as the entry is not disabled or hidden). The function type
+    is the same as %f's callback function but its return value is never used."""
+special_sequences_for_entry_text_L = """ \
+    %L (with additional separate argument as function name)
+    sets a callback routine that gets called each time the mouse leaves the
+    entry. The function type is the same as %f's callback function but its
+    return value is never used."""
+special_sequences_for_entry_text_m = """ \
+    %m (with additional separate argument as popup class instance)
+    a sub-popup gets opened when the mouse enters the entry (the entry itself
+    thus cannot be selected). The sub-popup to be opened must be an already
+    existing FL_POPUP. A triangle will be drawn on the right of the entry to
+    indicate that it is an entry for a sub-popup."""
+special_sequences_for_entry_text_t = """ \
+    %t (no argument)
+    makes the entry a "toggle" entry, an entry that represents binary states
+    and gets a check-mark drawn on its left if in "on" state. It is in "off"
+    state at the start. Switching states happens automatically when the entry
+    is selected."""
+special_sequences_for_entry_text_T = """ \
+    %T (no argument)
+    makes the entry a "toggle" entry, an entry that represents binary states
+    and gets a check-mark drawn on its left if in "on" state. If is in "on"
+    state at the start. Switching states happens automatically when the entry
+    is selected."""
+special_sequences_for_entry_text_r = """ \
+    %r (with additional separate argument as a type int group value)
+    makes the entry a "radio" entry, i.e. it becomes part of a group of
+    entries of which only one can be "on" at a time. The group value cannot
+    be INT_MIN or INT_MAX. Radio entries are drawn with a small circle to the
+    left, with the one for the entry in "on" state filled with a color (blue
+    by default). When a radio entry is selected by the user that was in "off"
+    state the entry of the group that was is "on" state before is automatically
+    switched to "off" state. The entry is in "off" state at start (only one
+    can be 'on' at the same time)."""
+special_sequences_for_entry_text_R = """ \
+    %R (with additional separate argument as a type int group value)
+    makes the entry a "radio" entry, i.e. it becomes part of a group of entries
+    of which only one can be "on" at a time. The group value cannot be INT_MIN
+    or INT_MAX. Radio entries are drawn with a small circle to the left, with
+    the one for the entry in "on" state filled with a color (blue per default).
+    When a radio entry is selected by the user that was in "off" state the
+    entry of the group that was is "on" state before is automatically switched
+    to "off" state. The entry is in "on" state (in that case all entries
+    created before in "on" state are reset to "off" state, i.e. the one
+    created last "wins")."""
+special_sequences_for_entry_text_l = """ \
+    %l (no argument)
+    creates not a real entry but indicates that a line is to be drawn to
+    visually group other entries. While other properties can be set for such
+    an "entry" only the "hidden" property is taken into account."""
+special_sequences_for_entry_text_d = """ \
+    %d (no argument)
+    marks the entry as disabled, i.e. it cannot be selected and its text is
+    by default drawn in a different color."""
+special_sequences_for_entry_text_h = """ \
+    %h (no argument)
+    marks the entry as hidden, i.e. it is not shown while in this state."""
+special_sequences_for_entry_text_s = """ \
+    %s (with additional separate argument as a str)
+    sets one or more shortcut keys for an entry. The character in the label
+    identical to the shortcut character is only shown as underlined if %S is
+    not used."""
+special_sequences_for_entry_text_S = """ \
+    %S (with an in-text value after)
+    For entries with shortcut keys it is quite common to have them shown on
+    the right hand side. Using %S you can split the entry's text into two
+    parts, the first one (before %S) being drawn flushed left and the second
+    part flushed right. Note that using this special sequence does not
+    automatically sets a shortcut key, this still has to be done using %s."""
 
-special_sequences_for_entry_text_T_or_t = ""
-"""%T or %t (no argument) makes the entry a "toggle" entry, an entry that
-represents binary states and gets a check-mark drawn on its left if in "on"
-state. If created with %t its in "off" state at the start, if created with
-"%T" its in "on" state. Switching states happens automatically when the entry
-is selected.
-"""
-
-special_sequences_for_entry_text_l = ""
-"""%l (no argument) creates not a real entry but indicates that a line is
-to be drawn to visually group other entries. While other properties can be
-set for such an "entry" only the "hidden" property is taken into account.
-"""
-
-special_sequences_for_entry_text_d = ""
-"""%d (no argument) marks the entry as disabled, i.e. it cannot be selected
-and its text is per default drawn in a different color.
-"""
-special_sequences_for_entry_text_h = ""
-"""%h marks the entry as hidden, i.e. it is not shown while in this state.
-"""
-special_sequences_for_entry_text_S = ""
-"""%S (with an in-text value after) For entries with shortcut keys it is
-quite common to have them shown on the right hand side. Using %S you can
-split the entry's text into two parts, the first one (before %S) being drawn
-flushed left and the second part flushed right. Note that using this special
-sequence does not automatically sets a shortcut key, this still has to be
-done using %s.
-"""
-
-special_sequences_for_entry_text_x = ""
-"""%x (with additional separate argument as a type long value) sets a value
-that's passed to all callback routines for the entry.
-"""
-
-special_sequences_for_entry_text_7 = ""
-"""%u (with additional separate argument as data of any type) sets user
-data that is passed to all callbacks of the entry. Warning: currently in
-xforms-python it does not fully work as expected.
-"""
-
-special_sequences_for_entry_text_f = ""
-"""%f (with additional separate argument as function name) sets a callback
-function that gets called when the entry is selected. The function is of type
-xfdata.FL_POPUP_CB, returning an int. Information about the entry etc. gets
-passed to the callback function via the xfdata.FL_POPUP_RETURN class instance
-and the return value of the function can be used to keep the selection being
-reported back to the caller of fl_popup_do() by returning a value of -1
-(xfdata.FL_IGNORE).
-"""
-
-special_sequences_for_entry_text_E = ""
-"""%E (with additional separate argument as function name) sets a callback
-routine that gets called each time the mouse enters the entry (as long as the
-entry is not disabled or hidden). The function type is the same as %f's
-callback function but its return value is never used.
-"""
-
-special_sequences_for_entry_text_L = ""
-"""%L (with additional separate argument as function name) sets a callback
-routine that gets called each time the mouse leaves the entry. The function
-type is the same as %f's callback function but its return value is never used.
-"""
-
-special_sequences_for_entry_text_m = ""
-"""%m (with additional separate argument as popup class instance) with it a
-sub-popup gets opened when the mouse enters the entry (the entry itself thus
-cannot be selected). The sub-popup to be opened must be an already existing
-xfdata.FL_POPUP. A triangle will be drawn on the right of the entry to
-indicate that it is an entry for a sub-popup.
-"""
-
-special_sequences_for_entry_text_R_or_r = ""
-"""%R or %r (with additional separate argument as a type int group value)
-makes the entry a "radio" entry, i.e. it becomes part of a group of entries
-of which only one can be "on" at a time. The group value cannot be INT_MIN or
-INT_MAX?. Radio entries are drawn with a small circle to the left, with the
-one for the entry in "on" state filled with a color (blue per default). When
-a radio entry is selected by the user that was in "off" state the entry of
-the group that was is "on" state before is automatically switched to "off"
-state. If the entry gets created with %r the entry is in "off" state, if
-created with %R it is in "on" state (in that case all entries created before
-in "on" state are reset to "off" state, i.e. the one created last "wins").
-"""
-
-special_sequences_for_entry_text_s = ""
-"""%s (with additional separate argument as a str) sets one or more shortcut
-keys for an entry. The character in the label identical to the shortcut
-character is only shown as underlined if %S is not used.
-"""

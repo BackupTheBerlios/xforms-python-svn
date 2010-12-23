@@ -226,8 +226,15 @@ def cfuncproto(library, cfuncname, retval, arglist, doc=""):
         loadedfunc = func_notexisting_placeholder(cfuncname)
     else:
         loadedfunc.restype = retval
-        loadedfunc.argtypes = arglist
         loadedfunc.__doc__ = doc
+        uniqueargslist = []
+        for argelems in arglist:
+            if isinstance(argelems, list):    # if an elem is a list itself
+                for argsubelems in argelems:
+                    uniqueargslist.append(argsubelems)
+            else:
+                uniqueargslist.append(argelems) # if it is not
+        loadedfunc.argtypes = uniqueargslist
 
     return loadedfunc
 
@@ -571,6 +578,8 @@ def verify_tuplelist_type(paramname):
         raise XFormsTypeError("Provided parameter %s has %s type, but " \
                 " a list or a tuple type should be used." % \
                 (paramname, type(paramname)))
+    else:
+        return True
 
 
 def verify_flobjectptr_type(paramname):

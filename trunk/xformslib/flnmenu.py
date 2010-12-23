@@ -139,22 +139,59 @@ def fl_clear_nmenu(ptr_flobject):
     return retval
 
 
-def fl_add_nmenu_items(ptr_flobject, entryitemstxt):
-    """fl_add_nmenu_items(ptr_flobject, entryitemstxt) -> ptr_flpopupentry
+def fl_add_nmenu_items(ptr_flobject, entryitemstxt, x=None, u=None, \
+                       f=None, E=None, L=None, m=None, Rr=None, s=None):
+    """fl_add_nmenu_items(ptr_flobject, entryitemstxtx=None, u=None, \
+    f=None, E=None, L=None, m=None, Rr=None, s=None) -> ptr_flpopupentry
     
-    Adds items to an existing nmenu flobject.
+    Adds an item to an existing nmenu flobject (it can be used several times).
+    If additional separated arguments are required by in-text special
+    sequences, user must respect the same sequences' order.
 
     Parameters
     ----------
         ptr_flobject : pointer to xfdata.FL_OBJECT
             nmenu flobject
         entryitemstxt : str
-            text of the entry to be added and in-text special sequences
-            with or without not separated additional arguments (if needed).
-            Text may contain | to separate entries and newline characters
-            which allows to create entries that span more than a single line.
-            Special sequences who are allowed are: %x, %u, %f, %E, %L, %m,
-            %T or %t, %R or %r, %l, %d, %h, %S, %s, %%.
+            text of the entry to be added and in-text special sequences with
+            or without not separated additional arguments (if required). Text
+            may contain newline characters which allows to create entries
+            that span more than a single line. Special sequences who are
+            allowed are: %x, %u, %f, %E, %L, %m or %T or %t, %R or %r or %l,
+            %d, %h, %S, %s, %%. Only one entry is supported in xforms-python.
+        x : long
+            user data to be passed to callbacks for entry (separated
+            additional argument corresponding to %x in-text special sequence)
+        u : pointer to any type
+            user data to be passed to callbacks for entry (separated
+            additional argument corresponding to %u in-text special sequence)
+        f : python callback function, returned value
+            name referring to function(ptr_flpopupreturn) -> int
+            function to be invoked on set
+            (separated additional argument corresponding to %f in-text
+            special sequence)
+        E : python callback function, returned unused value
+            name referring to function(ptr_flpopupreturn) -> int
+            function to be invoked on enter
+            (separated additional argument corresponding to %E in-text
+            special sequence)
+        L : python callback function, returned unused value
+            name referring to function(ptr_flpopupreturn) -> int
+            function to be invoked on leave
+            (separated additional argument corresponding to %L in-text
+            special sequence)
+        m : pointer to xfdata.FL_POPUP
+            popup class to be used as sub-popup
+            (separated additional argument corresponding to %m in-text
+            special sequence)
+        Rr : int
+            group number of a radio entry type
+            (separated additional argument corresponding to %R or %r
+            in-text special sequence)
+        s : str
+            shortcut text for the entry 
+            (separated additional argument corresponding to %s in-text
+            special sequence)      
 
     Returns
     -------
@@ -171,53 +208,81 @@ def fl_add_nmenu_items(ptr_flobject, entryitemstxt):
         See: Special sequences in entry text documentation.
 
     """
+    # managing additional separate parameters
+    l_x = ptr_u = cfn_f = cfn_E = cfn_L = i_Rr = s_s = None
+    cparam_argstypelist = []
+    specseqargslist = []
+    if x:       # long x additional arg
+        l_x = library.convert_to_longc(x)
+        cparam_argstypelist.append(cty.c_long)
+        specseqargslist.append(l_x)
+    if u:       # pointer to void u additional arg
+        ptr_u = cty.c_void_p(u)
+        cparam_argstypelist.append(cty.c_void_p)
+        specseqargslist.append(ptr_u)
+    if f:       # xfdata.FL_POPUP_CB f additional arg
+        library.verify_function_type(f)
+        cfn_f = xfdata.FL_POPUP_CB(f)
+        cparam_argstypelist.append(xfdata.FL_POPUP_CB)
+        specseqargslist.append(cfn_f)
+    if E:       # xfdata.FL_POPUP_CB E additional arg
+        library.verify_function_type(E)
+        cfn_E = xfdata.FL_POPUP_CB(E)
+        cparam_argstypelist.append(xfdata.FL_POPUP_CB)
+        specseqargslist.append(cfn_E)
+    if L:       # xfdata.FL_POPUP_CB L additional arg
+        library.verify_function_type(L)
+        cfn_L = xfdata.FL_POPUP_CB(L)
+        cparam_argstypelist.append(xfdata.FL_POPUP_CB)
+        specseqargslist.append(cfn_L)
+    if m:       # pointer to xfdata.FL_POPUP m additional arg
+        library.verify_flpopupptr_type(m)
+        # passed as is
+        cparam_argstypelist.append(cty.POINTER(xfdata.FL_POPUP))
+        specseqargslist.append(m)
+    if Rr:      # int R or r additional arg
+        i_Rr = library.convert_to_intc(Rr)
+        cparam_argstypelist.append(cty.c_int)
+        specseqargslist.append(i_Rr)
+    if s:      # str s additional arg
+        s_s = library.convert_to_stringc(s)
+        cparam_argstypelist.append(cty.c_char_p)
+        specseqargslist.append(s_s)
+
+    if not cparam_argstypelist:     # no additional separate params
+        cparam_argstypelist = [cty.c_char_p, cty.c_char_p]
+        specseqargslist = ["", ""]
+    elif len(cparam_argstypelist) < 2:  # just 1 param, add another
+        cparam_argstypelist.append(cty.c_char_p)
+        specseqargslist.append("")
+
     _fl_add_nmenu_items = library.cfuncproto(
         library.load_so_libforms(), "fl_add_nmenu_items",
         cty.POINTER(xfdata.FL_POPUP_ENTRY), [cty.POINTER(xfdata.FL_OBJECT),
-        xfdata.STRING],
+        xfdata.STRING, cparam_argstypelist],
         """FL_POPUP_ENTRY * fl_add_nmenu_items(FL_OBJECT * p1,
            const char * p2, ...)""")
     library.check_if_initialized()
     library.verify_flobjectptr_type(ptr_flobject)
     s_entryitemstxt = library.convert_to_stringc(entryitemstxt)
-    library.keep_elem_refs(ptr_flobject, entryitemstxt, s_entryitemstxt)
-    retval = _fl_add_nmenu_items(ptr_flobject, s_entryitemstxt)
+    library.keep_elem_refs(ptr_flobject, entryitemstxt, s_entryitemstxt, \
+            specseqargslist, cparam_argstypelist, x, u, f, E, L, m, Rr, s, \
+            l_x, ptr_u, cfn_f, cfn_E, cfn_L, i_Rr, s_s)
+    retval = _fl_add_nmenu_items(ptr_flobject, s_entryitemstxt, \
+            *specseqargslist)
     return retval
-#      entryitemstxtlst : list_of_str_and_any_type
-#        list representing the text of the entry to be added and in-text
-#        special sequences with or without separate or not separated additional
-#        arguments (if needed). Text may contain | to separate entries and
-#        newline characters which allows to create entries that span more than
-#        a single line. Special sequences who are allowed are: %x, %u, %f, %E,
-#        %L, %m, %T or %t, %R or %r, %l, %d, %h, %S, %s, %%. Up to 20
-#        additional separated arguments are supported in xforms-python
-#        currently, only.
-#    _fl_add_nmenu_items = library.cfuncproto(
-#        library.load_so_libforms(), "fl_add_nmenu_items",
-#        cty.POINTER(xfdata.FL_POPUP_ENTRY), [cty.POINTER(xfdata.FL_OBJECT),
-#        xfdata.STRING, cty.c_void_p, cty.c_void_p, cty.c_void_p, cty.c_void_p,
-#        cty.c_void_p, cty.c_void_p, cty.c_void_p, cty.c_void_p, cty.c_void_p,
-#        cty.c_void_p, cty.c_void_p, cty.c_void_p, cty.c_void_p, cty.c_void_p,
-#        cty.c_void_p, cty.c_void_p, cty.c_void_p, cty.c_void_p, cty.c_void_p,
-#        cty.c_void_p],
-#        """FL_POPUP_ENTRY * fl_add_nmenu_items(FL_OBJECT * p1,
-#           const char * p2, ...)""")
-#    library.check_if_initialized()
-#    library.verify_flobjectptr_type(ptr_flobject)
-#    # first str + 20 additional args max
-#    tmpentryitemstxtlst, finalentryitemstxtlst = \
-#        library.create_argslist_for_entrytxt(entryitemstxtlst, 21)
-#    library.keep_elem_refs(ptr_flobject, entryitemstxtlst, \
-#        tmpentryitemstxtlst, finalentryitemstxtlst)
-#    retval = _fl_add_nmenu_items(ptr_flobject, *finalentryitemstxtlst)
-#    return retval
 
 
-def fl_insert_nmenu_items(ptr_flobject, ptr_flpopupentry, entryitemstxt):
-    """fl_insert_nmenu_items(ptr_flobject, ptr_flpopupentry, entryitemstxt)
+def fl_insert_nmenu_items(ptr_flobject, ptr_flpopupentry, entryitemstxt, \
+                          x=None, u=None, f=None, E=None, L=None, m=None, \
+                          Rr=None, s=None):
+    """fl_insert_nmenu_items(ptr_flobject, ptr_flpopupentry, entryitemstxt,
+    x=None, u=None, f=None, E=None, L=None, m=None, Rr=None, s=None)
     -> ptr_flpopupentry
     
-    Inserts additional items in nmenu flobject.
+    Inserts an additional item in nmenu flobject (it can be used several
+    times). If additional separated arguments are required by in-text special
+    sequences, user must respect the same sequences' order.
 
     Parameters
     ----------
@@ -227,12 +292,45 @@ def fl_insert_nmenu_items(ptr_flobject, ptr_flpopupentry, entryitemstxt):
             existing popup entry, after which the new items are to be
             inserted. If it is 'None', it inserts items at the very start.
         entryitemstxt : str
-            text of the entry to be added and in-text special sequences with
-            or without not separated additional arguments (if needed). Text
-            may contain | to separate entries and newline characters which
-            allows to create entries that span more than a single line.
-            Special sequences who are allowed are: %x, %u, %f, %E, %L, %m,
-            %T or %t, %R or %r, %l, %d, %h, %S, %s, %%.
+            text of the entry to be inserted and in-text special sequences
+            with or without not separated additional arguments (if required).
+            Text may contain newline characters which allows to create entries
+            that span more than a single line. Special sequences who are
+            allowed are: %x, %u, %f, %E, %L, %m or %T or %t, %R or %r or %l,
+            %d, %h, %S, %s, %%. Only one entry is supported in xforms-python.
+        x : long
+            user data to be passed to callbacks for entry (separated
+            additional argument corresponding to %x in-text special sequence)
+        u : pointer to any type
+            user data to be passed to callbacks for entry (separated
+            additional argument corresponding to %u in-text special sequence)
+        f : python callback function, returned value
+            name referring to function(ptr_flpopupreturn) -> int
+            function to be invoked on set
+            (separated additional argument corresponding to %f in-text
+            special sequence)
+        E : python callback function, returned unused value
+            name referring to function(ptr_flpopupreturn) -> int
+            function to be invoked on enter
+            (separated additional argument corresponding to %E in-text
+            special sequence)
+        L : python callback function, returned unused value
+            name referring to function(ptr_flpopupreturn) -> int
+            function to be invoked on leave
+            (separated additional argument corresponding to %L in-text
+            special sequence)
+        m : pointer to xfdata.FL_POPUP
+            popup class to be used as sub-popup
+            (separated additional argument corresponding to %m in-text
+            special sequence)
+        Rr : int
+            group number of a radio entry type
+            (separated additional argument corresponding to %R or %r
+            in-text special sequence)
+        s : str
+            shortcut text for the entry 
+            (separated additional argument corresponding to %s in-text
+            special sequence)      
 
     Returns
     -------
@@ -249,10 +347,59 @@ def fl_insert_nmenu_items(ptr_flobject, ptr_flpopupentry, entryitemstxt):
         See: Special sequences in entry text documentation.
 
     """
+    # managing additional separate parameters
+    l_x = ptr_u = cfn_f = cfn_E = cfn_L = i_Rr = s_s = None
+    cparam_argstypelist = []
+    specseqargslist = []
+    if x:       # long x additional arg
+        l_x = library.convert_to_longc(x)
+        cparam_argstypelist.append(cty.c_long)
+        specseqargslist.append(l_x)
+    if u:       # pointer to void u additional arg
+        ptr_u = cty.c_void_p(u)
+        cparam_argstypelist.append(cty.c_void_p)
+        specseqargslist.append(ptr_u)
+    if f:       # xfdata.FL_POPUP_CB f additional arg
+        library.verify_function_type(f)
+        cfn_f = xfdata.FL_POPUP_CB(f)
+        cparam_argstypelist.append(xfdata.FL_POPUP_CB)
+        specseqargslist.append(cfn_f)
+    if E:       # xfdata.FL_POPUP_CB E additional arg
+        library.verify_function_type(E)
+        cfn_E = xfdata.FL_POPUP_CB(E)
+        cparam_argstypelist.append(xfdata.FL_POPUP_CB)
+        specseqargslist.append(cfn_E)
+    if L:       # xfdata.FL_POPUP_CB L additional arg
+        library.verify_function_type(L)
+        cfn_L = xfdata.FL_POPUP_CB(L)
+        cparam_argstypelist.append(xfdata.FL_POPUP_CB)
+        specseqargslist.append(cfn_L)
+    if m:       # pointer to xfdata.FL_POPUP m additional arg
+        library.verify_flpopupptr_type(m)
+        # passed as is
+        cparam_argstypelist.append(cty.POINTER(xfdata.FL_POPUP))
+        specseqargslist.append(m)
+    if Rr:      # int R or r additional arg
+        i_Rr = library.convert_to_intc(Rr)
+        cparam_argstypelist.append(cty.c_int)
+        specseqargslist.append(i_Rr)
+    if s:      # str s additional arg
+        s_s = library.convert_to_stringc(s)
+        cparam_argstypelist.append(cty.c_char_p)
+        specseqargslist.append(s_s)
+
+    if not cparam_argstypelist:     # no additional separate params
+        cparam_argstypelist = [cty.c_char_p, cty.c_char_p]
+        specseqargslist = ["", ""]
+    elif len(cparam_argstypelist) < 2:  # just 1 param, add another
+        cparam_argstypelist.append(cty.c_char_p)
+        specseqargslist.append("")
+
     _fl_insert_nmenu_items = library.cfuncproto(
         library.load_so_libforms(), "fl_insert_nmenu_items",
         cty.POINTER(xfdata.FL_POPUP_ENTRY), [cty.POINTER(xfdata.FL_OBJECT),
-        cty.POINTER(xfdata.FL_POPUP_ENTRY), xfdata.STRING],
+        cty.POINTER(xfdata.FL_POPUP_ENTRY), xfdata.STRING, \
+        cparam_argstypelist],
         """FL_POPUP_ENTRY * fl_insert_nmenu_items(FL_OBJECT * p1,
            FL_POPUP_ENTRY * p2, const char * p3, ...)""")
     library.check_if_initialized()
@@ -260,17 +407,23 @@ def fl_insert_nmenu_items(ptr_flobject, ptr_flpopupentry, entryitemstxt):
     library.verify_flpopupentryptr_type(ptr_flpopupentry)
     s_entryitemstxt = library.convert_to_stringc(entryitemstxt)
     library.keep_elem_refs(ptr_flobject, ptr_flpopupentry, entryitemstxt, \
-            s_entryitemstxt)
+            s_entryitemstxt, specseqargslist, cparam_argstypelist, x, u, f, \
+            E, L, m, Rr, s, l_x, ptr_u, cfn_f, cfn_E, cfn_L, i_Rr, s_s)
     retval = _fl_insert_nmenu_items(ptr_flobject, ptr_flpopupentry, \
-            s_entryitemstxt)
+            s_entryitemstxt, *specseqargslist)
     return retval
 
 
-def fl_replace_nmenu_item(ptr_flobject, ptr_flpopupentry, entryitemstxt):
-    """fl_replace_nmenu_item(ptr_flobject, ptr_flpopupentry, entryitemstxt)
+def fl_replace_nmenu_item(ptr_flobject, ptr_flpopupentry, entryitemstxt,
+                          x=None, u=None, f=None, E=None, L=None, m=None, \
+                          Rr=None, s=None):
+    """fl_replace_nmenu_item(ptr_flobject, ptr_flpopupentry, entryitemstxt,
+    x=None, u=None, f=None, E=None, L=None, m=None, Rr=None, s=None)
     -> ptr_flpopupentry
     
-    Replaces an existing item of a nmenu flobject with another.
+    Replaces an existing item of a nmenu flobject with another. If additional
+    separated arguments are required by in-text special sequences, user must
+    respect the same sequences' order.
 
     Parameters
     ----------
@@ -279,12 +432,45 @@ def fl_replace_nmenu_item(ptr_flobject, ptr_flpopupentry, entryitemstxt):
         ptr_flpopupentry : pointer to xfdata.FL_POPUP_ENTRY
             old popup entry to be replaced
         entryitemstxt : str
-        text of the entry to be added and in-text special sequences with or
-            without not separated additional arguments (if needed). Text may
-            contain | to separate entries and newline characters which allows
-            to create entries that span more than a single line. Special
-            sequences who are allowed are: %x, %u, %f, %E, %L, %m, %T or %t,
-            %R or %r, %l, %d, %h, %S, %s, %%.
+            text of the entry to be replaced and in-text special sequences
+            with or without not separated additional arguments (if required).
+            Text may contain newline characters which allows to create entries
+            that span more than a single line. Special sequences who are
+            allowed are: %x, %u, %f, %E, %L, %m or %T or %t, %R or %r or %l,
+            %d, %h, %S, %s, %%. Only one entry is supported in xforms-python.
+        x : long
+            user data to be passed to callbacks for entry (separated
+            additional argument corresponding to %x in-text special sequence)
+        u : pointer to any type
+            user data to be passed to callbacks for entry (separated
+            additional argument corresponding to %u in-text special sequence)
+        f : python callback function, returned value
+            name referring to function(ptr_flpopupreturn) -> int
+            function to be invoked on set
+            (separated additional argument corresponding to %f in-text
+            special sequence)
+        E : python callback function, returned unused value
+            name referring to function(ptr_flpopupreturn) -> int
+            function to be invoked on enter
+            (separated additional argument corresponding to %E in-text
+            special sequence)
+        L : python callback function, returned unused value
+            name referring to function(ptr_flpopupreturn) -> int
+            function to be invoked on leave
+            (separated additional argument corresponding to %L in-text
+            special sequence)
+        m : pointer to xfdata.FL_POPUP
+            popup class to be used as sub-popup
+            (separated additional argument corresponding to %m in-text
+            special sequence)
+        Rr : int
+            group number of a radio entry type
+            (separated additional argument corresponding to %R or %r
+            in-text special sequence)
+        s : str
+            shortcut text for the entry 
+            (separated additional argument corresponding to %s in-text
+            special sequence)      
 
     Returns
     -------
@@ -301,10 +487,59 @@ def fl_replace_nmenu_item(ptr_flobject, ptr_flpopupentry, entryitemstxt):
         See: Special sequences in entry text documentation.
 
     """
+    # managing additional separate parameters
+    l_x = ptr_u = cfn_f = cfn_E = cfn_L = i_Rr = s_s = None
+    cparam_argstypelist = []
+    specseqargslist = []
+    if x:       # long x additional arg
+        l_x = library.convert_to_longc(x)
+        cparam_argstypelist.append(cty.c_long)
+        specseqargslist.append(l_x)
+    if u:       # pointer to void u additional arg
+        ptr_u = cty.c_void_p(u)
+        cparam_argstypelist.append(cty.c_void_p)
+        specseqargslist.append(ptr_u)
+    if f:       # xfdata.FL_POPUP_CB f additional arg
+        library.verify_function_type(f)
+        cfn_f = xfdata.FL_POPUP_CB(f)
+        cparam_argstypelist.append(xfdata.FL_POPUP_CB)
+        specseqargslist.append(cfn_f)
+    if E:       # xfdata.FL_POPUP_CB E additional arg
+        library.verify_function_type(E)
+        cfn_E = xfdata.FL_POPUP_CB(E)
+        cparam_argstypelist.append(xfdata.FL_POPUP_CB)
+        specseqargslist.append(cfn_E)
+    if L:       # xfdata.FL_POPUP_CB L additional arg
+        library.verify_function_type(L)
+        cfn_L = xfdata.FL_POPUP_CB(L)
+        cparam_argstypelist.append(xfdata.FL_POPUP_CB)
+        specseqargslist.append(cfn_L)
+    if m:       # pointer to xfdata.FL_POPUP m additional arg
+        library.verify_flpopupptr_type(m)
+        # passed as is
+        cparam_argstypelist.append(cty.POINTER(xfdata.FL_POPUP))
+        specseqargslist.append(m)
+    if Rr:      # int R or r additional arg
+        i_Rr = library.convert_to_intc(Rr)
+        cparam_argstypelist.append(cty.c_int)
+        specseqargslist.append(i_Rr)
+    if s:      # str s additional arg
+        s_s = library.convert_to_stringc(s)
+        cparam_argstypelist.append(cty.c_char_p)
+        specseqargslist.append(s_s)
+
+    if not cparam_argstypelist:     # no additional separate params
+        cparam_argstypelist = [cty.c_char_p, cty.c_char_p]
+        specseqargslist = ["", ""]
+    elif len(cparam_argstypelist) < 2:  # just 1 param, add another
+        cparam_argstypelist.append(cty.c_char_p)
+        specseqargslist.append("")
+
     _fl_replace_nmenu_item = library.cfuncproto(
         library.load_so_libforms(), "fl_replace_nmenu_item",
         cty.POINTER(xfdata.FL_POPUP_ENTRY), [cty.POINTER(xfdata.FL_OBJECT),
-        cty.POINTER(xfdata.FL_POPUP_ENTRY), xfdata.STRING],
+        cty.POINTER(xfdata.FL_POPUP_ENTRY), xfdata.STRING, \
+        cparam_argstypelist],
         """FL_POPUP_ENTRY * fl_replace_nmenu_item(FL_OBJECT * p1,
            FL_POPUP_ENTRY * p2, const char * p3, ...)""")
     library.check_if_initialized()
@@ -312,9 +547,10 @@ def fl_replace_nmenu_item(ptr_flobject, ptr_flpopupentry, entryitemstxt):
     library.verify_flpopupentryptr_type(ptr_flpopupentry)
     s_entryitemstxt = library.convert_to_stringc(entryitemstxt)
     library.keep_elem_refs(ptr_flobject, ptr_flpopupentry, entryitemstxt, \
-            s_entryitemstxt)
+            s_entryitemstxt, specseqargslist, cparam_argstypelist, x, u, f, \
+            E, L, m, Rr, s, l_x, ptr_u, cfn_f, cfn_E, cfn_L, i_Rr, s_s)
     retval = _fl_replace_nmenu_item(ptr_flobject, ptr_flpopupentry, \
-            s_entryitemstxt)
+            s_entryitemstxt, *specseqargslist)
     return retval
 
 
