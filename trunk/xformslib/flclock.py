@@ -45,14 +45,15 @@ from xformslib import xfdata
 def fl_add_clock(clocktype, xpos, ypos, width, height, label):
     """fl_add_clock(clocktype, xpos, ypos, width, height, label)
     -> ptr_flobject
-    
+
     Adds a clock flobject.
 
     Parameters
     ----------
         clocktype : int
             type of clock to be added. Values (from xfdata.py)
-            FL_ANALOG_CLOCK, FL_DIGITAL_CLOCK
+            FL_ANALOG_CLOCK (An analog clock complete with the second hand),
+            FL_DIGITAL_CLOCK (A digital clock)
         xpos : int
             horizontal position (upper-left corner)
         ypos : int
@@ -103,7 +104,7 @@ def fl_add_clock(clocktype, xpos, ypos, width, height, label):
 
 def fl_get_clock(ptr_flobject):
     """fl_get_clock(ptr_flobject) -> hrs, mins, secs
-    
+
     Finds out time values from a clock flobject, with hours in 0-23,
     minutes in 0-59 and seconds in 0-59.
 
@@ -153,7 +154,7 @@ def fl_get_clock(ptr_flobject):
 
 def fl_set_clock_adjustment(ptr_flobject, offset):
     """fl_set_clock_adjustment(ptr_flobject, offset) -> adjust
-    
+
     Adjusts the clock to display a time other than local time.
 
     Parameters

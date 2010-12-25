@@ -42,7 +42,7 @@ from xformslib import xfdata
 
 def fl_popup_add(win, title):
     """fl_popup_add(win, title) -> ptr_flpopup
-    
+
     Defines a new popup. There is no built-in limit to the number
     of popups that can be created.
 
@@ -50,7 +50,7 @@ def fl_popup_add(win, title):
     ----------
         win : long_pos
             window of a parent flobject; use flxbasic.FL_ObjWin() to find out
-            about it. You can also use either 'fl_root' or 'None' for the
+            about it. You can also use either flxbasic.fl_root or None for the
             root window.
         title : str
             text of title that gets shown at the top of the popup in a frame.
@@ -91,7 +91,7 @@ def fl_popup_add_entries(ptr_flpopup, entryitemstxt, x=None, u=None, \
     """fl_popup_add_entries(ptr_flpopup, entryitemstxt, x=None, u=None, \
     f=None, E=None, L=None, m=None, Rr=None, s=None)
     -> ptr_flpopupentry
-    
+
     Adds one entry to a popup (it can be used several times). If additional
     separated arguments are required by in-text special sequences, user must
     respect the same sequences' order.
@@ -137,9 +137,9 @@ def fl_popup_add_entries(ptr_flpopup, entryitemstxt, x=None, u=None, \
             (separated additional argument corresponding to %R or %r
             in-text special sequence)
         s : str
-            shortcut text for the entry 
+            shortcut text for the entry
             (separated additional argument corresponding to %s in-text
-            special sequence)      
+            special sequence)
 
     Returns
     -------
@@ -227,7 +227,7 @@ def fl_popup_insert_entries(ptr_flpopup, ptr_flpopupentry, entryitemstxt, \
     """fl_popup_insert_entries(ptr_flpopup, ptr_flpopupentry, entryitemstxt,
     x=None, u=None, f=None, E=None, L=None, m=None, Rr=None, s=None)
     -> ptr_flpopupentry
-    
+
     Inserts one entry into a popup (it can be used several times). If
     additional separated arguments are required by in-text special sequences,
     user must respect the same sequences' order.
@@ -276,9 +276,9 @@ def fl_popup_insert_entries(ptr_flpopup, ptr_flpopupentry, entryitemstxt, \
             (separated additional argument corresponding to %R or %r
             in-text special sequence)
         s : str
-            shortcut text for the entry 
+            shortcut text for the entry
             (separated additional argument corresponding to %s in-text
-            special sequence)      
+            special sequence)
 
     Returns
     -------
@@ -369,7 +369,7 @@ def fl_popup_insert_entries(ptr_flpopup, ptr_flpopupentry, entryitemstxt, \
 
 def fl_popup_create(win, title, ptr_flpopupitem):
     """fl_popup_create(win, title, ptr_flpopupitem) -> ptr_flpopup
-    
+
     Creates a popup. It does not allow to associate values or pointers to
     user data to individual entries, set titles for sub-popups, have radio
     entries belong to different groups or set enter or leave callback
@@ -424,7 +424,7 @@ def fl_popup_create(win, title, ptr_flpopupitem):
 
 def fl_popup_add_items(ptr_flpopup, ptr_flpopupitem):
     """fl_popup_add_items(ptr_flpopup, ptr_flpopupitem) -> ptr_flpopupentry
-    
+
     Adds one or more items to a popup.
 
     Parameters
@@ -467,7 +467,7 @@ def fl_popup_add_items(ptr_flpopup, ptr_flpopupitem):
 def fl_popup_insert_items(ptr_flpopup, ptr_flpopupentry, ptr_flpopupitem):
     """fl_popup_insert_items(ptr_flpopup, ptr_flpopupentry, ptr_flpopupitem)
      -> ptr_flpopupentry
-    
+
     Inserts entries into a popup.
 
     Parameters
@@ -514,7 +514,7 @@ def fl_popup_insert_items(ptr_flpopup, ptr_flpopupentry, ptr_flpopupitem):
 
 def fl_popup_delete(ptr_flpopup):
     """fl_popup_delete(ptr_flpopup) -> result
-    
+
     Deletes a popup. It is not possible to call the function while the
     popup is still visible on the screen. Calling it from any callback
     function is problematic unless you know for sure that the popup to be
@@ -588,7 +588,7 @@ def fl_popup_entry_delete(ptr_flpopupentry):
 
 def fl_popup_do(ptr_flpopup):
     """fl_popup_do(ptr_flpopup) -> ptr_flpopupreturn
-    
+
     Shows the created popup and returns when the the user is done with the
     popup and it has been removed from the screen. Only idle callbacks and
     timers etc. are executed in the background while a popup is being shown.
@@ -625,7 +625,7 @@ def fl_popup_do(ptr_flpopup):
 
 def fl_popup_set_position(ptr_flpopup, xpos, ypos):
     """fl_popup_set_position(ptr_flpopup, xpos, ypos)
-    
+
     Defines position where the popup is supposed to appear (if never called,
     the popup appears at the mouse position).
 
@@ -661,7 +661,7 @@ def fl_popup_set_position(ptr_flpopup, xpos, ypos):
 
 def fl_popup_get_policy(ptr_flpopup):
     """fl_popup_get_policy(ptr_flpopup) -> policy
-    
+
     Finds out current policy setting for handling the popups, or changes
     the default setting for new popup to be created.
 
@@ -693,7 +693,7 @@ def fl_popup_get_policy(ptr_flpopup):
     library.check_if_initialized()
     if not ptr_flpopup:         # it is None
         ptr_flpopup_alt = cty.cast(ptr_flpopup, cty.POINTER(cty.c_void_p))
-    else:                  # real FL_POPUP pointer
+    else:                  # real pointer to FL_POPUP
         ptr_flpopup_alt = ptr_flpopup
         library.verify_flpopupptr_type(ptr_flpopup_alt)
     library.keep_elem_refs(ptr_flpopup, ptr_flpopup_alt)
@@ -703,7 +703,7 @@ def fl_popup_get_policy(ptr_flpopup):
 
 def fl_popup_set_policy(ptr_flpopup, policy):
     """fl_popup_set_policy(ptr_flpopup, policy) -> oldpol
-    
+
     Defines policy for handling the popup (i.e. does it get closed when
     the user releases the mouse button outside an active entry or not?)
     or changes the default setting of the policy, used in the creation
@@ -712,11 +712,13 @@ def fl_popup_set_policy(ptr_flpopup, policy):
     Parameters
     ----------
         ptr_flpopup : pointer to xfdata.FL_POPUP
-            popup class instance. If it is 'None', changes the default
+            popup class instance. If it is None, changes the default
             setting of the policy, used in the creation of new popups.
         policy : int
-            policy to be set. Values (from xfdata.py) FL_POPUP_NORMAL_SELECT,
-            FL_POPUP_DRAG_SELECT
+            policy to be set. Values (from xfdata.py)
+            FL_POPUP_NORMAL_SELECT (Keeps the popup opened when the mouse is
+            not released on one of the selectable items), FL_POPUP_DRAG_SELECT
+            (Close the popup immediately when the mouse button is released).
 
     Returns
     -------
@@ -739,7 +741,7 @@ def fl_popup_set_policy(ptr_flpopup, policy):
     library.check_if_initialized()
     if not ptr_flpopup:         # it is None
         ptr_flpopup_alt = cty.cast(ptr_flpopup, cty.POINTER(cty.c_void_p))
-    else:                  # real FL_POPUP pointer
+    else:                  # real pointer to FL_POPUP
         ptr_flpopup_alt = ptr_flpopup
         library.verify_flpopupptr_type(ptr_flpopup_alt)
     library.checkfatal_allowed_value_in_list(policy, \
@@ -752,7 +754,7 @@ def fl_popup_set_policy(ptr_flpopup, policy):
 
 def fl_popup_set_callback(ptr_flpopup, pyfn_PopupCb):
     """fl_popup_set_callback(ptr_flpopup, pyfn_PopupCb) -> Popupcb
-    
+
     Associates with a popup or changes a callback function to be invoked
     when an entry (or an entry of a sub-popup) is selected.
 
@@ -801,7 +803,7 @@ def fl_popup_set_callback(ptr_flpopup, pyfn_PopupCb):
 
 def fl_popup_get_title_font(ptr_flpopup):
     """fl_popup_get_title_font(ptr_flpopup) -> style, size
-    
+
     Finds out the font style and size of the popup's title.
 
     Parameters
@@ -847,7 +849,7 @@ def fl_popup_get_title_font(ptr_flpopup):
 
 def fl_popup_set_title_font(ptr_flpopup, style, size):
     """fl_popup_set_title_font(ptr_flpopup, style, size)
-    
+
     Defines the font style and size of the popup's title. This setting also
     applies to sub-popups of the popup, thus setting a title font for
     sub-popups is useless. By default, size and style are (from xfdata)
@@ -858,17 +860,29 @@ def fl_popup_set_title_font(ptr_flpopup, style, size):
         ptr_flpopup : pointer to xfdata.FL_POPUP
             popup class instance
         style : int
-            title style. Values (from xfdata.py) FL_NORMAL_STYLE,
-            FL_BOLD_STYLE, FL_ITALIC_STYLE, FL_BOLDITALIC_STYLE,
-            FL_FIXED_STYLE, FL_FIXEDBOLD_STYLE, FL_FIXEDITALIC_STYLE,
-            FL_FIXEDBOLDITALIC_STYLE, FL_TIMES_STYLE, FL_TIMESBOLD_STYLE,
-            FL_TIMESITALIC_STYLE, FL_TIMESBOLDITALIC_STYLE, FL_MISC_STYLE,
-            FL_MISCBOLD_STYLE, FL_MISCITALIC_STYLE, FL_SYMBOL_STYLE,
-            FL_SHADOW_STYLE, FL_ENGRAVED_STYLE, FL_EMBOSSED_STYLE
+            title style. Values (from xfdata.py)
+            FL_NORMAL_STYLE (Helvetica normal text), FL_BOLD_STYLE (Helvetica
+            boldface text), FL_ITALIC_STYLE (Helvetica italic text),
+            FL_BOLDITALIC_STYLE (Helvetica boldface and italic text),
+            FL_FIXED_STYLE (Courier fixed width, good for tables),
+            FL_FIXEDBOLD_STYLE (Courier bold fixed text), FL_FIXEDITALIC_STYLE
+            (Courier italic fixed text), FL_FIXEDBOLDITALIC_STYLE (Courier
+            boldface and italic fixed text), FL_TIMES_STYLE (Times-Roman like
+            normal font), FL_TIMESBOLD_STYLE (Times-Roman like boldface text),
+            FL_TIMESITALIC_STYLE (Times-Roman like italic text),
+            FL_TIMESBOLDITALIC_STYLE (Times-Roman like boldface and italic
+            text), FL_MISC_STYLE (Charter normal text), FL_MISCBOLD_STYLE
+            (Charter boldface text), FL_MISCITALIC_STYLE (Charter italic text),
+            FL_SYMBOL_STYLE (Symbol text), FL_SHADOW_STYLE (Text casting a
+            shadow, modifier mask), FL_ENGRAVED_STYLE (Text engraved into the
+            form, modifier mask), FL_EMBOSSED_STYLE (Text standing out,
+            modifier mask). Bitwise OR with any of modifiers is allowed.
           size : int
-            title size. Values (from xfdata.py) FL_TINY_SIZE, FL_SMALL_SIZE,
-            FL_NORMAL_SIZE, FL_MEDIUM_SIZE, FL_LARGE_SIZE, FL_HUGE_SIZE,
-            FL_DEFAULT_SIZE
+            title size. Values (from xfdata.py)
+            FL_TINY_SIZE (8 points font), FL_SMALL_SIZE or FL_DEFAULT_SIZE (10
+            points font, default), FL_NORMAL_SIZE (12 points font),
+            FL_MEDIUM_SIZE (14 points font), FL_LARGE_SIZE (18 points font),
+            FL_HUGE_SIZE (24 points font), or other numeric odd or even value
 
     Examples
     --------
@@ -887,7 +901,6 @@ def fl_popup_set_title_font(ptr_flpopup, style, size):
     library.verify_flpopupptr_type(ptr_flpopup)
     library.checkfatal_allowed_value_in_list(style, xfdata.TEXTSTYLE_list)
     i_style = library.convert_to_intc(style)
-    library.checknonfatal_allowed_value_in_list(size, xfdata.FONTSIZE_list)
     i_size = library.convert_to_intc(size)
     library.keep_elem_refs(ptr_flpopup, style, size, i_style, i_size)
     _fl_popup_set_title_font(ptr_flpopup, i_style, i_size)
@@ -895,7 +908,7 @@ def fl_popup_set_title_font(ptr_flpopup, style, size):
 
 def fl_popup_entry_get_font(ptr_flpopup):
     """fl_popup_entry_get_font(ptr_flpopup) -> style, size
-    
+
     Finds out the font style and size of the popup entries.
 
     Parameters
@@ -940,7 +953,7 @@ def fl_popup_entry_get_font(ptr_flpopup):
 
 def fl_popup_entry_set_font(ptr_flpopup, style, size):
     """fl_popup_entry_set_font(ptr_flpopup, style, size)
-    
+
     Defines the font style and size of the popup entries.
 
     Parameters
@@ -948,17 +961,29 @@ def fl_popup_entry_set_font(ptr_flpopup, style, size):
         ptr_flpopup : pointer to xfdata.FL_POPUP
             popup class instance
         style : int
-            style of popup entries. Values (from xfdata.py) FL_NORMAL_STYLE,
-            FL_BOLD_STYLE, FL_ITALIC_STYLE, FL_BOLDITALIC_STYLE,
-            FL_FIXED_STYLE, FL_FIXEDBOLD_STYLE, FL_FIXEDITALIC_STYLE,
-            FL_FIXEDBOLDITALIC_STYLE, FL_TIMES_STYLE, FL_TIMESBOLD_STYLE,
-            FL_TIMESITALIC_STYLE, FL_TIMESBOLDITALIC_STYLE, FL_MISC_STYLE,
-            FL_MISCBOLD_STYLE, FL_MISCITALIC_STYLE, FL_SYMBOL_STYLE,
-            FL_SHADOW_STYLE, FL_ENGRAVED_STYLE, FL_EMBOSSED_STYLE
+            style of popup entries. Values (from xfdata.py)
+            FL_NORMAL_STYLE (Helvetica normal text), FL_BOLD_STYLE (Helvetica
+            boldface text), FL_ITALIC_STYLE (Helvetica italic text),
+            FL_BOLDITALIC_STYLE (Helvetica boldface and italic text),
+            FL_FIXED_STYLE (Courier fixed width, good for tables),
+            FL_FIXEDBOLD_STYLE (Courier bold fixed text), FL_FIXEDITALIC_STYLE
+            (Courier italic fixed text), FL_FIXEDBOLDITALIC_STYLE (Courier
+            boldface and italic fixed text), FL_TIMES_STYLE (Times-Roman like
+            normal font), FL_TIMESBOLD_STYLE (Times-Roman like boldface text),
+            FL_TIMESITALIC_STYLE (Times-Roman like italic text),
+            FL_TIMESBOLDITALIC_STYLE (Times-Roman like boldface and italic
+            text), FL_MISC_STYLE (Charter normal text), FL_MISCBOLD_STYLE
+            (Charter boldface text), FL_MISCITALIC_STYLE (Charter italic text),
+            FL_SYMBOL_STYLE (Symbol text), FL_SHADOW_STYLE (Text casting a
+            shadow, modifier mask), FL_ENGRAVED_STYLE (Text engraved into the
+            form, modifier mask), FL_EMBOSSED_STYLE (Text standing out,
+            modifier mask). Bitwise OR with any of modifiers is allowed.
         size : int
-            size of popup entries. Values (from xfdata.py) FL_TINY_SIZE,
-            FL_SMALL_SIZE, FL_NORMAL_SIZE, FL_MEDIUM_SIZE, FL_LARGE_SIZE,
-            FL_HUGE_SIZE, FL_DEFAULT_SIZE
+            size of popup entries. Values (from xfdata.py)
+            FL_TINY_SIZE (8 points font), FL_SMALL_SIZE or FL_DEFAULT_SIZE (10
+            points font, default), FL_NORMAL_SIZE (12 points font),
+            FL_MEDIUM_SIZE (14 points font), FL_LARGE_SIZE (18 points font),
+            FL_HUGE_SIZE (24 points font), or other numeric odd or even value
 
     Examples
     --------
@@ -985,7 +1010,7 @@ def fl_popup_entry_set_font(ptr_flpopup, style, size):
 
 def fl_popup_get_bw(ptr_flpopup):
     """fl_popup_get_bw(ptr_flpopup) -> borderwidth
-    
+
     Finds out the border width of a popup.
 
     Parameters
@@ -1020,7 +1045,7 @@ def fl_popup_get_bw(ptr_flpopup):
 
 def fl_popup_set_bw(ptr_flpopup, borderwidth):
     """fl_popup_set_bw(ptr_flpopup, borderwidth) -> oldborderwidth
-    
+
     Defines the border width of a popup.
 
     Parameters
@@ -1058,7 +1083,7 @@ def fl_popup_set_bw(ptr_flpopup, borderwidth):
 
 def fl_popup_get_color(ptr_flpopup, colrpos):
     """fl_popup_get_color(ptr_flpopup, colrpos) -> colr
-    
+
     Finds out several colors used in drawing a popup.
 
     Parameters
@@ -1067,10 +1092,18 @@ def fl_popup_get_color(ptr_flpopup, colrpos):
             popup class instance
         colrpos : int
             color type position. Values (from xfdata.py)
-            FL_POPUP_BACKGROUND_COLOR, FL_POPUP_HIGHLIGHT_COLOR,
-            FL_POPUP_TITLE_COLOR, FL_POPUP_TEXT_COLOR,
-            FL_POPUP_HIGHLIGHT_TEXT_COLOR, FL_POPUP_DISABLED_TEXT_COLOR,
-            FL_POPUP_RADIO_COLOR
+            FL_POPUP_BACKGROUND_COLOR (Background color of the popup, default
+            is FL_MCOL), FL_POPUP_HIGHLIGHT_COLOR (Backgroud color an entry is
+            drawn with when it is selectable and the mouse is on top of it,
+            default is FL_BOTTOM_BCOL), FL_POPUP_TITLE_COLOR (Color used for
+            the title text of a popup, default is FL_BLACK),
+            FL_POPUP_TEXT_COLOR (Color normal used for entry texts, default is
+            FL_BLACK), FL_POPUP_HIGHLIGHT_TEXT_COLOR (Color of the entry text
+            when it is selectable and the mouse is on top of it, default is
+            FL_WHITE), FL_POPUP_DISABLED_TEXT_COLOR (Color for drawing the
+            text of disabled entries, default is FL_INACTIVE_COL),
+            FL_POPUP_RADIO_COLOR (Color the circle drawn for radio entries in
+            'on' state is drawn in).
 
     Returns
     -------
@@ -1101,7 +1134,7 @@ def fl_popup_get_color(ptr_flpopup, colrpos):
 
 def fl_popup_set_color(ptr_flpopup, colrpos, colr):
     """fl_popup_set_color(ptr_flpopup, colrpos, colr) -> oldcolr
-    
+
     Defines several colors used in drawing a popup.
 
     Parameters
@@ -1110,10 +1143,19 @@ def fl_popup_set_color(ptr_flpopup, colrpos, colr):
             popup class instance
         colrpos : int
             color type position. Values (from xfdata.py)
-            FL_POPUP_BACKGROUND_COLOR, FL_POPUP_HIGHLIGHT_COLOR,
-            FL_POPUP_TITLE_COLOR, FL_POPUP_TEXT_COLOR,
-            FL_POPUP_HIGHLIGHT_TEXT_COLOR, FL_POPUP_DISABLED_TEXT_COLOR,
-            FL_POPUP_RADIO_COLOR
+            color type position. Values (from xfdata.py)
+            FL_POPUP_BACKGROUND_COLOR (Background color of the popup, default
+            is FL_MCOL), FL_POPUP_HIGHLIGHT_COLOR (Backgroud color an entry is
+            drawn with when it is selectable and the mouse is on top of it,
+            default is FL_BOTTOM_BCOL), FL_POPUP_TITLE_COLOR (Color used for
+            the title text of a popup, default is FL_BLACK),
+            FL_POPUP_TEXT_COLOR (Color normal used for entry texts, default is
+            FL_BLACK), FL_POPUP_HIGHLIGHT_TEXT_COLOR (Color of the entry text
+            when it is selectable and the mouse is on top of it, default is
+            FL_WHITE), FL_POPUP_DISABLED_TEXT_COLOR (Color for drawing the
+            text of disabled entries, default is FL_INACTIVE_COL),
+            FL_POPUP_RADIO_COLOR (Color the circle drawn for radio entries in
+            'on' state is drawn in).
         colr : long_pos
             color value to be set
 
@@ -1151,7 +1193,7 @@ def fl_popup_set_color(ptr_flpopup, colrpos, colr):
 
 def fl_popup_set_cursor(ptr_flpopup, cursornum):
     """fl_popup_set_cursor(ptr_flpopup, cursornum)
-    
+
     Changes the cursor displayed when a popup is shown.
 
     Parameters
@@ -1183,7 +1225,7 @@ def fl_popup_set_cursor(ptr_flpopup, cursornum):
 
 def fl_popup_get_title(ptr_flpopup):
     """fl_popup_get_title(ptr_flpopup) -> title
-    
+
     Finds out the title of a popup.
 
     Parameters
@@ -1218,7 +1260,7 @@ def fl_popup_get_title(ptr_flpopup):
 
 def fl_popup_set_title(ptr_flpopup, title):
     """fl_popup_set_title(ptr_flpopup, title) -> ptr_flpopup
-    
+
     Defines the title of a popup. By default, the popup of a select
     flobject does not have a title drawn on top of it.
 
@@ -1258,7 +1300,7 @@ def fl_popup_set_title(ptr_flpopup, title):
 
 def fl_popup_entry_set_callback(ptr_flpopupentry, pyfn_PopupCb):
     """fl_popup_entry_set_callback(ptr_flpopupentry, pyfn_PopupCb) -> PopupCb
-    
+
     Defines the callback invoked when the entry of a popup is selected.
 
     Parameters
@@ -1303,7 +1345,7 @@ def fl_popup_entry_set_callback(ptr_flpopupentry, pyfn_PopupCb):
 def fl_popup_entry_set_enter_callback(ptr_flpopupentry, pyfn_PopupCb):
     """fl_popup_entry_set_enter_callback(ptr_flpopupentry, pyfn_PopupCb)
     -> PopupCb
-    
+
     Defines the callback invoked when the mouse enters the area of the popup
     entry.
 
@@ -1350,7 +1392,7 @@ def fl_popup_entry_set_enter_callback(ptr_flpopupentry, pyfn_PopupCb):
 def fl_popup_entry_set_leave_callback(ptr_flpopupentry, pyfn_PopupCb):
     """fl_popup_entry_set_leave_callback(ptr_flpopupentry, pyfn_PopupCb)
     -> PopupCb
-    
+
     Defines the callback invoked when leaves the area of the popup entry.
 
     Parameters
@@ -1393,7 +1435,7 @@ def fl_popup_entry_set_leave_callback(ptr_flpopupentry, pyfn_PopupCb):
 
 def fl_popup_entry_get_state(ptr_flpopupentry):
     """fl_popup_entry_get_state(ptr_flpopupentry) -> state
-    
+
     Finds out the state of a popup entry (e.g. from xfdata.py
     FL_POPUP_DISABLED, FL_POPUP_HIDDEN and FL_POPUP_CHECKED).
 
@@ -1429,7 +1471,7 @@ def fl_popup_entry_get_state(ptr_flpopupentry):
 
 def fl_popup_entry_set_state(ptr_flpopupentry, state):
     """fl_popup_entry_set_state(ptr_flpopupentry, state) -> oldstate
-    
+
     Defines the state of a popup entry.
 
     Parameters
@@ -1437,8 +1479,12 @@ def fl_popup_entry_set_state(ptr_flpopupentry, state):
         ptr_flpopupentry : pointer to xfdata.FL_POPUP_ENTRY
             popup entry
         state : int_pos
-            state to be set. Values (from xfdata.py) FL_POPUP_DISABLED,
-            FL_POPUP_HIDDEN or FL_POPUP_CHECKED
+            state to be set. Values (from xfdata.py)
+            FL_POPUP_DISABLED (The popup is disabled and cannot be selected),
+            FL_POPUP_HIDDEN (The popup is hidden, i.e. does not get shown, and
+            thus cannot be selected), FL_POPUP_CHECKED (Only relevant for
+            toggle or radio popups, marks it as in "on" state). FL_POPUP_NONE
+            should not be used here.
 
     Returns
     -------
@@ -1470,7 +1516,7 @@ def fl_popup_entry_set_state(ptr_flpopupentry, state):
 
 def fl_popup_entry_clear_state(ptr_flpopupentry, state):
     """fl_popup_entry_clear_state(ptr_flpopupentry, state) -> oldstate
-    
+
     Clears state bits of a popup entry.
 
     Parameters
@@ -1511,7 +1557,7 @@ def fl_popup_entry_clear_state(ptr_flpopupentry, state):
 
 def fl_popup_entry_raise_state(ptr_flpopupentry, state):
     """fl_popup_entry_raise_state(ptr_flpopupentry, state) -> oldstate
-    
+
     Defines the state bits of a popup entry.
 
     Parameters
@@ -1552,7 +1598,7 @@ def fl_popup_entry_raise_state(ptr_flpopupentry, state):
 
 def fl_popup_entry_toggle_state(ptr_flpopupentry, state):
     """fl_popup_entry_toggle_state(ptr_flpopupentry, state) -> oldstate
-    
+
     Toggles the state bits of a popup entry.
 
     Parameters
@@ -1634,7 +1680,7 @@ def fl_popup_entry_set_text(ptr_flpopupentry, text):
 
 def fl_popup_entry_set_shortcut(ptr_flpopupentry, textsc):
     """fl_popup_entry_set_shortcut(ptr_flpopupentry, textsc)
-    
+
     Changes the shortcut keys for a popup label.
 
     Parameters
@@ -1667,7 +1713,7 @@ def fl_popup_entry_set_shortcut(ptr_flpopupentry, textsc):
 
 def fl_popup_entry_set_value(ptr_flpopupentry, entryval):
     """fl_popup_entry_set_value(ptr_flpopupentry, entryval) -> oldentryval
-    
+
     Changes the value assigned to a popup entry.
 
     Parameters
@@ -1706,7 +1752,7 @@ def fl_popup_entry_set_value(ptr_flpopupentry, entryval):
 
 def fl_popup_entry_set_user_data(ptr_flpopupentry, vdata):
     """fl_popup_entry_set_user_data(ptr_flpopupentry, vdata) -> oldvdata
-    
+
     Modifies user data associated with a popup entry.
 
     Parameters
@@ -1746,7 +1792,7 @@ def fl_popup_entry_set_user_data(ptr_flpopupentry, vdata):
 
 def fl_popup_entry_get_by_position(ptr_flpopup, posnum):
     """fl_popup_entry_get_by_position(ptr_flpopup, posnum) -> ptr_flpopupentry
-    
+
     Finds an entry by its current position in the popup. Sub-popups are not
     taken into consideration.
 
@@ -1790,7 +1836,7 @@ def fl_popup_entry_get_by_position(ptr_flpopup, posnum):
 
 def fl_popup_entry_get_by_value(ptr_flpopup, entryval):
     """fl_popup_entry_get_by_value(ptr_flpopup, entryval) -> ptr_flpopupentry
-    
+
     Finds a popup entry by its assigned value.
 
     Parameters
@@ -1830,7 +1876,7 @@ def fl_popup_entry_get_by_value(ptr_flpopup, entryval):
 
 def fl_popup_entry_get_by_user_data(ptr_flpopup, vdata):
     """fl_popup_entry_get_by_user_data(ptr_flpopup, vdata) -> ptr_flpopupentry
-    
+
     Finds a popup entry by its assigned user data.
 
     Parameters
@@ -1871,7 +1917,7 @@ def fl_popup_entry_get_by_user_data(ptr_flpopup, vdata):
 
 def fl_popup_entry_get_by_text(ptr_flpopup, text):
     """fl_popup_entry_get_by_text(ptr_flpopup, text) ->ptr_flpopupentry
-    
+
     Finds a popup entry that had been created with a certain text,
     including all the special sequences.
 
@@ -1913,7 +1959,7 @@ def fl_popup_entry_get_by_text(ptr_flpopup, text):
 
 def fl_popup_entry_get_by_label(ptr_flpopup, label):
     """fl_popup_entry_get_by_label(ptr_flpopup, label) -> ptr_flpopupentry
-    
+
     Finds a popup entry by its left-flushed label parts of the entry as
     shown on the screen. Note that tab characters (backslash-t) originally
     embedded in the text used when creating the label have been replaced by
@@ -1957,7 +2003,7 @@ def fl_popup_entry_get_by_label(ptr_flpopup, label):
 
 def fl_popup_entry_get_group(ptr_flpopupentry):
     """fl_popup_entry_get_group(ptr_flpopupentry) -> groupnum
-    
+
     Finds out which group a radio popup entry belongs. It makes much
     sense when applied to radio entries.
 
@@ -1993,7 +2039,7 @@ def fl_popup_entry_get_group(ptr_flpopupentry):
 
 def fl_popup_entry_set_group(ptr_flpopupentry, groupnum):
     """fl_popup_entry_set_group(ptr_flpopupentry, groupnum) -> oldgroupnum
-    
+
     Assigns a radio entry to a different group. It makes much sense when
     applied to radio entries. If one of the entries of the new group was in
     "on" state the entries state will be reset to "off" if necessary.
@@ -2033,7 +2079,7 @@ def fl_popup_entry_set_group(ptr_flpopupentry, groupnum):
 
 def fl_popup_entry_get_subpopup(ptr_flpopupentry):
     """fl_popup_entry_get_subpopup(ptr_flpopupentry) -> ptr_flpopup
-    
+
     Finds out the sub-popup associated with a sub-popup-entry. It only
     makes sense for sub-popup entries.
 
@@ -2070,7 +2116,7 @@ def fl_popup_entry_get_subpopup(ptr_flpopupentry):
 def fl_popup_entry_set_subpopup(ptr_flpopupentry, ptr_flpopup):
     """fl_popup_entry_set_subpopup(ptr_flpopupentry, ptr_flpopup)
     -> ptr_flpopup
-    
+
     Defines the sub-popup associated with a sub-popup-entry. It only makes
     sense for sub-popup entries.
 
@@ -2111,7 +2157,7 @@ def fl_popup_entry_set_subpopup(ptr_flpopupentry, ptr_flpopup):
 
 def fl_popup_get_size(ptr_flpopup):
     """fl_popup_get_size(ptr_flpopup) -> result, width, height
-    
+
     Finds out the exact sizes of its window. The reported values are
     only valid until the popup is changed, e.g. by adding, deleting or
     changing entries or changing the appearance of the popup.
@@ -2163,7 +2209,7 @@ def fl_popup_get_size(ptr_flpopup):
 
 def fl_popup_get_min_width(ptr_flpopup):
     """fl_popup_get_min_width(ptr_flpopup) -> width
-    
+
     Finds out the currently set minimum width of popup.
 
     Parameters
@@ -2198,7 +2244,7 @@ def fl_popup_get_min_width(ptr_flpopup):
 
 def fl_popup_set_min_width(ptr_flpopup, width):
     """fl_popup_set_min_width(ptr_flpopup, width) -> oldwidth
-    
+
     Defines a new minimum width of a popup. By default the width of a popup
     is calculated using the widths of the title and the entries.
 

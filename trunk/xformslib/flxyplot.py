@@ -47,7 +47,7 @@ from xformslib import xfdata
 def fl_add_xyplot(plottype, xpos, ypos, width, height, label):
     """fl_add_xyplot(plottype, xpos, ypos, width, height, label)
     -> ptr_flflobject
-    
+
     Adds an xyplot flobject. It gives an easy way to display a tabulated
     function generated on the fly or from an existing data file.
 
@@ -55,11 +55,17 @@ def fl_add_xyplot(plottype, xpos, ypos, width, height, label):
     ----------
         plottype : int
             type of xyplot to be added. Values (from xfdata.py)
-            FL_NORMAL_XYPLOT, FL_SQUARE_XYPLOT, FL_CIRCLE_XYPLOT,
-            FL_FILL_XYPLOT, FL_POINTS_XYPLOT, FL_DASHED_XYPLOT,
-            FL_IMPULSE_XYPLOT, FL_ACTIVE_XYPLOT, FL_EMPTY_XYPLOT,
-            FL_DOTTED_XYPLOT, FL_DOTDASHED_XYPLOT, FL_LONGDASHED_XYPLOT,
-            FL_LINEPOINTS_XYPLOT
+            FL_NORMAL_XYPLOT (xyplot type with solid line), FL_SQUARE_XYPLOT
+            (xyplot type has added square), FL_CIRCLE_XYPLOT (xyplot type has
+            added circle), FL_FILL_XYPLOT (xyplot type is filled completely),
+            FL_POINTS_XYPLOT (xyplot type has only data points),
+            FL_DASHED_XYPLOT (xyplot type has dashed line), FL_IMPULSE_XYPLOT
+            (Data drawn by vertical lines), FL_ACTIVE_XYPLOT (xyplot type
+            accepts interactive manipulations), FL_EMPTY_XYPLOT (Only the axes
+            are drawn), FL_DOTTED_XYPLOT (Data drawn as a dotted line),
+            FL_DOTDASHED_XYPLOT (Data drawn as a dash-dot-dash line),
+            FL_LONGDASHED_XYPLOT (xyplot type has long dashed line),
+            FL_LINEPOINTS_XYPLOT (xyplot type has lines and points).
         xpos : int
             horizontal position (upper-left corner)
         ypos : int
@@ -75,7 +81,7 @@ def fl_add_xyplot(plottype, xpos, ypos, width, height, label):
     -------
         ptr_flobject : pointer to xfdata.FL_OBJECT
             xyplot flobject added
- 
+
     Examples
     --------
         >>> xyplobj = fl_add_xyplot(xfdata.FL_CIRCLE_XYPLOT,
@@ -111,7 +117,7 @@ def fl_set_xyplot_data(ptr_flobject, xposlist, yposlist, numpoints, title,
                        xlabel, ylabel):
     """fl_set_xyplot_data(ptr_flobject, xposlist, yposlist, numpoints,
     title, xlabel, ylabel)
-    
+
     Defines or replaces data for a xyplot flobject, using supplied values.
     If the xyplot flobject being set exists already, old data will be
     cleared.
@@ -179,7 +185,7 @@ def fl_set_xyplot_data_double(ptr_flobject, xposlist, yposlist, numpoints,
                               title, xlabel, ylabel):
     """fl_set_xyplot_data_double(ptr_flobject, xposlist, yposlist, numpoints,
     title, xlabel, ylabel)
-    
+
     Set or replaces data for a xyplot flobject, using supplied values. If
     the xyplot flobject being set exists already, old data will be cleared.
     It's about the same as fl_set_xyplot_data(), but uses double type
@@ -239,7 +245,7 @@ def fl_set_xyplot_data_double(ptr_flobject, xposlist, yposlist, numpoints,
 def fl_set_xyplot_file(ptr_flobject, fname, title, xlabel, ylabel):
     """fl_set_xyplot_file(ptr_flobject, fname, title, xlabel, ylabel)
     -> numpoints
-    
+
     Defines or replaces data for a xyplot flobject, by loading a tabulated
     function from a file. The data file should be an ASCII file consisting
     of data lines. Each data line must have two columns, indicating the (x,y)
@@ -296,7 +302,7 @@ def fl_set_xyplot_file(ptr_flobject, fname, title, xlabel, ylabel):
 
 def fl_insert_xyplot_data(ptr_flobject, ovlnum, indxpt, xpos, ypos):
     """fl_insert_xyplot_data(ptr_flobject, ovlnum, indxpt, xpos, ypos)
-    
+
     Inserts a point after a supplied index position in a xyplot flobject.
 
     Parameters
@@ -361,11 +367,18 @@ def fl_add_xyplot_text(ptr_flobject, xpos, ypos, text, align, colr):
             text to be added to xyplot. If it starts with '@', a symbol
             is drawn.
         align : int
-            alignment of text. Values (from xfdata.py) FL_ALIGN_CENTER,
-            FL_ALIGN_TOP, FL_ALIGN_BOTTOM, FL_ALIGN_LEFT, FL_ALIGN_RIGHT,
-            FL_ALIGN_LEFT_TOP, FL_ALIGN_RIGHT_TOP, FL_ALIGN_LEFT_BOTTOM,
-            FL_ALIGN_RIGHT_BOTTOM, FL_ALIGN_INSIDE, FL_ALIGN_VERT. Bitwise
-            OR with FL_ALIGN_INSIDE is allowed.
+            alignment of text. Values (from xfdata.py)
+            FL_ALIGN_CENTER (In the middle of the box, inside it), FL_ALIGN_TOP
+            (To the top of the box, outside it), FL_ALIGN_BOTTOM (To the
+            bottom of the box, outside it), FL_ALIGN_LEFT (To the left of the
+            box, outside it), FL_ALIGN_RIGHT (To the right of the box, outside
+            it), FL_ALIGN_LEFT_TOP (To the left and top of the box, outside
+            it), FL_ALIGN_RIGHT_TOP (To the right and top of the box, outside
+            it), FL_ALIGN_LEFT_BOTTOM (To the left and bottom of the box,
+            outside it), FL_ALIGN_RIGHT_BOTTOM (To the right and bottom of
+            the box, outside it), FL_ALIGN_INSIDE (places the text inside the
+            box), FL_ALIGN_VERT (not functional yet). Bitwise OR with
+            FL_ALIGN_INSIDE is allowed.
         colr : long_pos
             XForms colormap index as color
 
@@ -400,7 +413,7 @@ def fl_add_xyplot_text(ptr_flobject, xpos, ypos, text, align, colr):
 
 def fl_delete_xyplot_text(ptr_flobject, text):
     """fl_delete_xyplot_text(ptr_flobject, text)
-    
+
     Removes an inset text from a xyplot flobject.
 
     Parameters
@@ -469,11 +482,11 @@ def fl_set_xyplot_maxoverlays(ptr_flobject, numovls):
     return retval
 
 
-def fl_add_xyplot_overlay(ptr_flobject, ovlnum, xposlist, yposlist, 
+def fl_add_xyplot_overlay(ptr_flobject, ovlnum, xposlist, yposlist,
                           numpoints, colr):
     """fl_add_xyplot_overlay(ptr_flobject, ovlnum, xposlist, yposlist,
     numpoints, colr)
-    
+
     Overlays several plots together.
 
     Parameters
@@ -526,7 +539,7 @@ def fl_add_xyplot_overlay(ptr_flobject, ovlnum, xposlist, yposlist,
 def fl_add_xyplot_overlay_file(ptr_flobject, ovlnum, fname, colr):
     """fl_add_xyplot_overlay_file(ptr_flobject, ovlnum, fname, colr)
     -> numpoints
-    
+
     Adds an overlay, using a data file to specify the (x,y) function for
     the base data.
 
@@ -580,7 +593,7 @@ def fl_add_xyplot_overlay_file(ptr_flobject, ovlnum, fname, colr):
 
 def fl_set_xyplot_xtics(ptr_flobject, ticmajor, ticminor):
     """fl_set_xyplot_xtics(ptr_flobject, ticmajor, ticminor)
-    
+
     Changes the number of tic marks of a xyplot flobject on x-axis. The
     actual scaling routine may choose a value other than that requested if
     it decides that this would make the plot look nicer, thus major and
@@ -627,7 +640,7 @@ def fl_set_xyplot_xtics(ptr_flobject, ticmajor, ticminor):
 
 def fl_set_xyplot_ytics(ptr_flobject, ticmajor, ticminor):
     """fl_set_xyplot_ytics(ptr_flobject, ticmajor, ticminor)
-    
+
     Changes the number of tic marks of a xyplot flobject on y-axis. The
     actual scaling routine may choose a value other than that requested if
     it decides that this would make the plot look nicer, thus major and
@@ -674,7 +687,7 @@ def fl_set_xyplot_ytics(ptr_flobject, ticmajor, ticminor):
 
 def fl_set_xyplot_xbounds(ptr_flobject, minbound, maxbound):
     """fl_set_xyplot_xbounds(ptr_flobject, minbound, maxbound)
-    
+
     Defines and uses absolute value limits on x-axis of a xyplot flobject
     as opposed to actual bounds in data.
 
@@ -712,7 +725,7 @@ def fl_set_xyplot_xbounds(ptr_flobject, minbound, maxbound):
 
 def fl_set_xyplot_ybounds(ptr_flobject, minbound, maxbound):
     """fl_set_xyplot_ybounds(ptr_flobject, minbound, maxbound)
-    
+
     Defines and uses absolute value limits on y-axis of a xyplot flobject
     as opposed to actual bounds in data.
 
@@ -750,7 +763,7 @@ def fl_set_xyplot_ybounds(ptr_flobject, minbound, maxbound):
 
 def fl_get_xyplot_xbounds(ptr_flobject):
     """fl_get_xyplot_xbounds(ptr_flobject) -> minbound, maxbound
-    
+
     Finds out the current value limits for x-axis of a xyplot flobject. The
     bounds returned are those used in clipping the data, which are not
     necessarily the bounds used in computing the world/screen mapping due
@@ -800,7 +813,7 @@ def fl_get_xyplot_xbounds(ptr_flobject):
 
 def fl_get_xyplot_ybounds(ptr_flobject):
     """fl_get_xyplot_ybounds(ptr_flobject) -> minbound, maxbound
-    
+
     Finds out the current value limits for y-axis of a xyplot flobject. The
     bounds returned are those used in clipping the data, which are not
     necessarily the bounds used in computing the world/screen mapping due
@@ -850,7 +863,7 @@ def fl_get_xyplot_ybounds(ptr_flobject):
 
 def fl_get_xyplot(ptr_flobject):
     """fl_get_xyplot(ptr_flobject) -> xpos, ypos, dataindx
-    
+
     Finds out the current value of the point of a xyplot flobject that has
     changed.
 
@@ -902,7 +915,7 @@ def fl_get_xyplot(ptr_flobject):
 
 def fl_get_xyplot_data_size(ptr_flobject):
     """fl_get_xyplot_data_size(ptr_flobject) -> numpoints
-    
+
     Finds out the number of points a call of fl_get_xyplot_data()
     will return.
 
@@ -938,7 +951,7 @@ def fl_get_xyplot_data_size(ptr_flobject):
 
 def fl_get_xyplot_data(ptr_flobject):
     """fl_get_xyplot_data(ptr_flobject) -> xvalarray, yvalarray, numpoints
-    
+
     Finds out a copy of the current xyplot data.
 
     Parameters
@@ -990,7 +1003,7 @@ def fl_get_xyplot_data(ptr_flobject):
 def fl_get_xyplot_data_pointer(ptr_flobject, ovlnum):
     """fl_get_xyplot_data_pointer(ptr_flobject, ovlnum)
     -> ptr_xposval, ptr_yposval, numpoints
-    
+
     Finds out the pointer to the data of xyplot flobject rather (instead
     of a copy of the data).
 
@@ -1048,7 +1061,7 @@ def fl_get_xyplot_data_pointer(ptr_flobject, ovlnum):
 def fl_get_xyplot_overlay_data(ptr_flobject, ovlnum):
     """fl_get_xyplot_overlay_data(ptr_flobject, ovlnum)
     -> xposval, yposval, numpoints
-    
+
     Finds out the current data of an overlay of a xyplot flobject.
 
     Parameters
@@ -1105,7 +1118,7 @@ def fl_get_xyplot_overlay_data(ptr_flobject, ovlnum):
 
 def fl_set_xyplot_overlay_type(ptr_flobject, ovlnum, plottype):
     """fl_set_xyplot_overlay_type(ptr_flobject, ovlnum, plottype)
-    
+
     Changes the type for an overlay of a xyplot flobject. The type used in
     overlay plot is the same as the flobject itself. Note that although the
     API of adding an overlay is similar to adding a flobject, an xyplot
@@ -1152,7 +1165,7 @@ def fl_set_xyplot_overlay_type(ptr_flobject, ovlnum, plottype):
 
 def fl_delete_xyplot_overlay(ptr_flobject, ovlnum):
     """fl_delete_xyplot_overlay(ptr_flobject, ovlnum)
-    
+
     Deletes an overlay of a xyplot flobject.
 
     Parameters
@@ -1185,7 +1198,7 @@ def fl_delete_xyplot_overlay(ptr_flobject, ovlnum):
 
 def fl_set_xyplot_interpolate(ptr_flobject, ovlnum, degree, grid):
     """fl_set_xyplot_interpolate(ptr_flobject, ovlnum, degree, grid)
-    
+
     Interpolates xyplot data using an nth order Lagrangian polynomial.
 
     Parameters
@@ -1229,7 +1242,7 @@ def fl_set_xyplot_interpolate(ptr_flobject, ovlnum, degree, grid):
 
 def fl_set_xyplot_inspect(ptr_flobject, yesno):
     """fl_set_xyplot_inspect(ptr_flobject, yesno)
-    
+
     Makes aware or not xyplot flobjects of mouse clicks. Once an XYPlot is in
     inspect mode, whenever the mouse is released and the mouse position is on
     one of the data point, the flobject is returned to the caller or its
@@ -1266,7 +1279,7 @@ def fl_set_xyplot_inspect(ptr_flobject, yesno):
 
 def fl_set_xyplot_symbolsize(ptr_flobject, symsize):
     """fl_set_xyplot_symbolsize(ptr_flobject, symsize)
-    
+
     Changes the size of the symbols drawn at data points of a xyplot
     object. By default it is 4.
 
@@ -1299,7 +1312,7 @@ def fl_set_xyplot_symbolsize(ptr_flobject, symsize):
 
 def fl_replace_xyplot_point(ptr_flobject, indxpt, xpos, ypos):
     """fl_replace_xyplot_point(ptr_flobject, indxpt, xpos, ypos)
-    
+
     Replaces the value of a particular point of a xyplot flobject. It acts
     on the first dataset only.
 
@@ -1344,7 +1357,7 @@ def fl_replace_xyplot_point_in_overlay(ptr_flobject, indxpt, dsetid, \
                                        xpos, ypos):
     """fl_replace_xyplot_point_in_overlay(ptr_flobject, indxpt, dsetid,
     xpos, ypos)
-    
+
     Replaces the value of a particular point in specified dataset. This
     routine is an extension of fl_replace_xyplot_point() for more than one
     dataset.
@@ -1392,7 +1405,7 @@ def fl_replace_xyplot_point_in_overlay(ptr_flobject, indxpt, dsetid, \
 
 def fl_get_xyplot_xmapping(ptr_flobject):
     """fl_get_xyplot_xmapping(ptr_flobject) -> mapcnst1, mapcnst2
-    
+
     Finds out the mapping between the screen coordinates and data on x-axis.
     Mapping constants are used as follows
     screenCoord = a * data + b       (linear scale)
@@ -1443,7 +1456,7 @@ def fl_get_xyplot_xmapping(ptr_flobject):
 
 def fl_get_xyplot_ymapping(ptr_flobject):
     """fl_get_xyplot_ymapping(ptr_flobject) -> mapcnst1, mapcnst2
-    
+
     Finds out the mapping between the screen coordinates and data on
     y-axis. Mapping constants are used as follows
     screenCoord = a * data + b ... (linear scale)
@@ -1494,7 +1507,7 @@ def fl_get_xyplot_ymapping(ptr_flobject):
 
 def fl_set_xyplot_keys(ptr_flobject, keystxtlist, xposlist, yposlist, align):
     """fl_set_xyplot_keys(ptr_flobject, keystxtlist, xposlist, yposlist, align)
-    
+
     Adds a series of keys to a particular plot and sets the position for
     each key. A key is the combination of drawing a segment of the plot line
     style with a piece of text that describes what the corresponding line
@@ -1516,11 +1529,18 @@ def fl_set_xyplot_keys(ptr_flobject, keystxtlist, xposlist, yposlist, align):
             series of horizontal positions in world coordinate system
         align : int
             alignment of the entire key box relative to the given position.
-            Values (from xfdata.py) FL_ALIGN_CENTER, FL_ALIGN_TOP,
-            FL_ALIGN_BOTTOM, FL_ALIGN_LEFT, FL_ALIGN_RIGHT, FL_ALIGN_LEFT_TOP,
-            FL_ALIGN_RIGHT_TOP, FL_ALIGN_LEFT_BOTTOM, FL_ALIGN_RIGHT_BOTTOM,
-            FL_ALIGN_INSIDE, FL_ALIGN_VERT. Bitwise OR with FL_ALIGN_INSIDE
-            is allowed.
+            Values (from xfdata.py)
+            FL_ALIGN_CENTER (In the middle of the box, inside it), FL_ALIGN_TOP
+            (To the top of the box, outside it), FL_ALIGN_BOTTOM (To the
+            bottom of the box, outside it), FL_ALIGN_LEFT (To the left of the
+            box, outside it), FL_ALIGN_RIGHT (To the right of the box, outside
+            it), FL_ALIGN_LEFT_TOP (To the left and top of the box, outside
+            it), FL_ALIGN_RIGHT_TOP (To the right and top of the box, outside
+            it), FL_ALIGN_LEFT_BOTTOM (To the left and bottom of the box,
+            outside it), FL_ALIGN_RIGHT_BOTTOM (To the right and bottom of
+            the box, outside it), FL_ALIGN_INSIDE (places the text inside the
+            box), FL_ALIGN_VERT (not functional yet). Bitwise OR with
+            FL_ALIGN_INSIDE is allowed.
 
     Examples
     --------
@@ -1552,7 +1572,7 @@ def fl_set_xyplot_keys(ptr_flobject, keystxtlist, xposlist, yposlist, align):
 
 def fl_set_xyplot_key(ptr_flobject, ovlnum, keytxt):
     """fl_set_xyplot_key(ptr_flobject, ovlnum, keytxt)
-    
+
     Adds or removes a key to a particular plot. A key is the combination
     of drawing a segment of the plot line style with a piece of text that
     describes what the corresponding line represents. Obviously, keys are
@@ -1593,7 +1613,7 @@ def fl_set_xyplot_key(ptr_flobject, ovlnum, keytxt):
 
 def fl_set_xyplot_key_position(ptr_flobject, xpos, ypos, align):
     """fl_set_xyplot_key_position(ptr_flobject, xpos, ypos, align)
-    
+
     Defines the position of the keys in xyplot flobject.
 
     Parameters
@@ -1606,11 +1626,18 @@ def fl_set_xyplot_key_position(ptr_flobject, xpos, ypos, align):
             horizontal position in world coordinate system
         align : int
             alignment of the entire key box relative to the given position.
-            Values (from xfdata.py) FL_ALIGN_CENTER, FL_ALIGN_TOP,
-            FL_ALIGN_BOTTOM, FL_ALIGN_LEFT, FL_ALIGN_RIGHT, FL_ALIGN_LEFT_TOP,
-            FL_ALIGN_RIGHT_TOP, FL_ALIGN_LEFT_BOTTOM, FL_ALIGN_RIGHT_BOTTOM,
-            FL_ALIGN_INSIDE, FL_ALIGN_VERT. Bitwise OR with FL_ALIGN_INSIDE
-            is allowed.
+            Values (from xfdata.py)
+            FL_ALIGN_CENTER (In the middle of the box, inside it), FL_ALIGN_TOP
+            (To the top of the box, outside it), FL_ALIGN_BOTTOM (To the
+            bottom of the box, outside it), FL_ALIGN_LEFT (To the left of the
+            box, outside it), FL_ALIGN_RIGHT (To the right of the box, outside
+            it), FL_ALIGN_LEFT_TOP (To the left and top of the box, outside
+            it), FL_ALIGN_RIGHT_TOP (To the right and top of the box, outside
+            it), FL_ALIGN_LEFT_BOTTOM (To the left and bottom of the box,
+            outside it), FL_ALIGN_RIGHT_BOTTOM (To the right and bottom of
+            the box, outside it), FL_ALIGN_INSIDE (places the text inside the
+            box), FL_ALIGN_VERT (not functional yet). Bitwise OR with
+            FL_ALIGN_INSIDE is allowed.
 
     Examples
     --------
@@ -1640,7 +1667,7 @@ def fl_set_xyplot_key_position(ptr_flobject, xpos, ypos, align):
 
 def fl_set_xyplot_key_font(ptr_flobject, style, size):
     """fl_set_xyplot_key_font(ptr_flobject, style, size)
-    
+
     Changes the font the key text uses in xyplot flobject.
 
     Parameters
@@ -1648,17 +1675,29 @@ def fl_set_xyplot_key_font(ptr_flobject, style, size):
         ptr_flobject : pointer to xfdata.FL_OBJECT
             xyplot flobject
         style : int
-            label style. Values (from xfdata.py) FL_NORMAL_STYLE,
-            FL_BOLD_STYLE, FL_ITALIC_STYLE, FL_BOLDITALIC_STYLE,
-            FL_FIXED_STYLE, FL_FIXEDBOLD_STYLE, FL_FIXEDITALIC_STYLE,
-            FL_FIXEDBOLDITALIC_STYLE, FL_TIMES_STYLE, FL_TIMESBOLD_STYLE,
-            FL_TIMESITALIC_STYLE, FL_TIMESBOLDITALIC_STYLE, FL_MISC_STYLE,
-            FL_MISCBOLD_STYLE, FL_MISCITALIC_STYLE, FL_SYMBOL_STYLE,
-            FL_SHADOW_STYLE, FL_ENGRAVED_STYLE, FL_EMBOSSED_STYLE
-          size : int
-            label size. Values (from xfdata.py) FL_TINY_SIZE, FL_SMALL_SIZE,
-            FL_NORMAL_SIZE, FL_MEDIUM_SIZE, FL_LARGE_SIZE, FL_HUGE_SIZE,
-            FL_DEFAULT_SIZE
+            label style. Values (from xfdata.py)
+            FL_NORMAL_STYLE (Helvetica normal text), FL_BOLD_STYLE (Helvetica
+            boldface text), FL_ITALIC_STYLE (Helvetica italic text),
+            FL_BOLDITALIC_STYLE (Helvetica boldface and italic text),
+            FL_FIXED_STYLE (Courier fixed width, good for tables),
+            FL_FIXEDBOLD_STYLE (Courier bold fixed text), FL_FIXEDITALIC_STYLE
+            (Courier italic fixed text), FL_FIXEDBOLDITALIC_STYLE (Courier
+            boldface and italic fixed text), FL_TIMES_STYLE (Times-Roman like
+            normal font), FL_TIMESBOLD_STYLE (Times-Roman like boldface text),
+            FL_TIMESITALIC_STYLE (Times-Roman like italic text),
+            FL_TIMESBOLDITALIC_STYLE (Times-Roman like boldface and italic
+            text), FL_MISC_STYLE (Charter normal text), FL_MISCBOLD_STYLE
+            (Charter boldface text), FL_MISCITALIC_STYLE (Charter italic text),
+            FL_SYMBOL_STYLE (Symbol text), FL_SHADOW_STYLE (Text casting a
+            shadow, modifier mask), FL_ENGRAVED_STYLE (Text engraved into the
+            form, modifier mask), FL_EMBOSSED_STYLE (Text standing out,
+            modifier mask). Bitwise OR with any of modifiers is allowed.
+        size : int
+            label size. Values (from xfdata.py)
+            FL_TINY_SIZE (8 points font), FL_SMALL_SIZE or FL_DEFAULT_SIZE (10
+            points font, default), FL_NORMAL_SIZE (12 points font),
+            FL_MEDIUM_SIZE (14 points font), FL_LARGE_SIZE (18 points font),
+            FL_HUGE_SIZE (24 points font), or other numeric odd or even value
 
     Examples
     --------
@@ -1678,7 +1717,6 @@ def fl_set_xyplot_key_font(ptr_flobject, style, size):
     library.verify_flobjectptr_type(ptr_flobject)
     library.checkfatal_allowed_value_in_list(style, xfdata.TEXTSTYLE_list)
     i_style = library.convert_to_intc(style)
-    library.checknonfatal_allowed_value_in_list(size, xfdata.FONTSIZE_list)
     i_size = library.convert_to_intc(size)
     library.keep_elem_refs(ptr_flobject, style, size, i_style, i_size)
     _fl_set_xyplot_key_font(ptr_flobject, i_style, i_size)
@@ -1686,7 +1724,7 @@ def fl_set_xyplot_key_font(ptr_flobject, style, size):
 
 def fl_get_xyplot_numdata(ptr_flobject, ovlnum):
     """fl_get_xyplot_numdata(ptr_flobject, ovlnum) -> numpoints
-    
+
     Finds out the number of data points of a xyplot flobject.
 
     Parameters
@@ -1730,7 +1768,7 @@ def fl_get_xyplot_numdata(ptr_flobject, ovlnum):
 
 def fl_xyplot_s2w(ptr_flobject, scrnxpos, scrnypos):
     """fl_xyplot_s2w(ptr_flobject, scrnxpos, scrnypos) -> wrldxpos, wrldypos
-    
+
     Finds out, by conversion, the world coordinates from the screen
     coordinates of a xyplot flobject.
 
@@ -1785,7 +1823,7 @@ def fl_xyplot_s2w(ptr_flobject, scrnxpos, scrnypos):
 
 def fl_xyplot_w2s(ptr_flobject, wrldxpos, wrldypos):
     """fl_xyplot_w2s(ptr_flobject, wrldxpos, wrldypos) -> scrnxpos, scrnypos
-    
+
     Finds out, by conversion, the screen coordinates from the world
     coordinates of a xyplot flobject.
 
@@ -1840,7 +1878,7 @@ def fl_xyplot_w2s(ptr_flobject, wrldxpos, wrldypos):
 
 def fl_set_xyplot_xscale(ptr_flobject, scale, logbase):
     """fl_set_xyplot_xscale(ptr_flobject, scale, logbase)
-    
+
     Changes the scaling for a xyplot flobject. By default, a linear scale in
     x-direction is used.
 
@@ -1849,8 +1887,9 @@ def fl_set_xyplot_xscale(ptr_flobject, scale, logbase):
         ptr_flobject : pointer to xfdata.FL_OBJECT
             xyplot flobject
         scale : int
-            scaling to be used. Values (from xfdata.py) FL_LINEAR (default)
-            or FL_LOG
+            scaling to be used. Values (from xfdata.py)
+            FL_LINEAR (Uses linear scale for xyplot, default), FL_LOG (Uses
+            logarithmic scale for xyplot)
         logbase : float
             base of the logarithm to be used. Used only if scale is
             xfdata.FL_LOG
@@ -1880,7 +1919,7 @@ def fl_set_xyplot_xscale(ptr_flobject, scale, logbase):
 
 def fl_set_xyplot_yscale(ptr_flobject, scale, logbase):
     """fl_set_xyplot_yscale(ptr_flobject, scale, logbase)
-    
+
     Changes the scaling for a xyplot flobject. By default, a linear scale in
     y-direction is used.
 
@@ -1920,7 +1959,7 @@ def fl_set_xyplot_yscale(ptr_flobject, scale, logbase):
 
 def fl_clear_xyplot(ptr_flobject):
     """fl_clear_xyplot(ptr_flobject)
-    
+
     Clears a xyplot flobject. It frees all data associated with an xyplot,
     including all overlays and all inset texts. It does not reset all
     plotting options, such as line thickness, major/minor divisions etc. nor
@@ -1953,7 +1992,7 @@ def fl_clear_xyplot(ptr_flobject):
 
 def fl_set_xyplot_linewidth(ptr_flobject, ovlnum, lnwidth):
     """fl_set_xyplot_linewidth(ptr_flobject, ovlnum, lnwidth)
-    
+
     Changes the line thickness of an xyplot (base data or overlay).
 
     Parameters
@@ -1992,7 +2031,7 @@ def fl_set_xyplot_linewidth(ptr_flobject, ovlnum, lnwidth):
 
 def fl_set_xyplot_xgrid(ptr_flobject, grid):
     """fl_set_xyplot_xgrid(ptr_flobject, grid)
-    
+
     Defines up the grid level for x-axis of a xyplot flobject.
 
     Parameters
@@ -2000,8 +2039,10 @@ def fl_set_xyplot_xgrid(ptr_flobject, grid):
         ptr_flobject : pointer to xfdata.FL_OBJECT
             xyplot flobject
         grid : int
-            level of grid to be set. Values (from xfdata.py) FL_GRID_NONE,
-            FL_GRID_MAJOR, FL_GRID_MINOR
+            level of grid to be set. Values (from xfdata.py)
+            FL_GRID_NONE (No grid for xyplot), FL_GRID_MAJOR (Grid for the
+            major divisions of xyplot), FL_GRID_MINOR (Grid for the major
+            and minor divisions of xyplot).
 
     Examples
     --------
@@ -2027,7 +2068,7 @@ def fl_set_xyplot_xgrid(ptr_flobject, grid):
 
 def fl_set_xyplot_ygrid(ptr_flobject, grid):
     """fl_set_xyplot_ygrid(ptr_flobject, grid)
-    
+
     Defines up the grid level for y-axis of a xyplot flobject.
 
     Parameters
@@ -2059,9 +2100,9 @@ def fl_set_xyplot_ygrid(ptr_flobject, grid):
     _fl_set_xyplot_ygrid(ptr_flobject, i_grid)
 
 
-def fl_set_xyplot_grid_linestyle(ptr_flobject, linestyle):
-    """fl_set_xyplot_grid_linestyle(ptr_flobject, linestyle) -> oldlinestyle
-    
+def fl_set_xyplot_grid_linestyle(ptr_flobject, lnstyle):
+    """fl_set_xyplot_grid_linestyle(ptr_flobject, lnstyle) -> oldlinestyle
+
     Changes the linestyle used for drawing  the grid line of xyplot. By
     default it uses a dotted line
 
@@ -2069,10 +2110,17 @@ def fl_set_xyplot_grid_linestyle(ptr_flobject, linestyle):
     ----------
         ptr_flobject : pointer to xfdata.FL_OBJECT
             xyplot flobject
-        linestyle : int
+        lnstyle : int
             style of the line to draw. Values (from xfdata.py)
-            FL_SOLID, FL_USERDASH, FL_USERDOUBLEDASH, FL_DOT,
-            FL_DOTDASH, FL_DASH, FL_LONGDASH
+            FL_SOLID (Solid line. Default and most efficient), FL_USERDASH
+            (Dashed line, but the dash pattern is used-definable via
+            fl_dashedlinestyle(). Only the odd numbered segments are
+            drawn with the foreground color), FL_USERDOUBLEDASH (Similar to
+            FL_LINE_USERDASH but both even and odd numbered segments are
+            drawn, with the even numbered segments drawn in the background
+            color (as set by fl_bk_color()), FL_DOT (Dotted line [....]),
+            FL_DOTDASH (Dash-dot-dash line [-.-.]), FL_DASH (Dashed line
+            [----]), FL_LONGDASH (Long dashed line [--------]).
 
     Returns
     -------
@@ -2094,17 +2142,16 @@ def fl_set_xyplot_grid_linestyle(ptr_flobject, linestyle):
         """int fl_set_xyplot_grid_linestyle(FL_OBJECT * ob, int style)""")
     library.check_if_initialized()
     library.verify_flobjectptr_type(ptr_flobject)
-    library.checkfatal_allowed_value_in_list(linestyle, \
-            xfdata.LINESTYLE_list)
-    i_linestyle = library.convert_to_intc(linestyle)
-    library.keep_elem_refs(ptr_flobject, linestyle, i_linestyle)
-    retval = _fl_set_xyplot_grid_linestyle(ptr_flobject, i_linestyle)
+    library.checkfatal_allowed_value_in_list(lnstyle, xfdata.LINESTYLE_list)
+    i_lnstyle = library.convert_to_intc(lnstyle)
+    library.keep_elem_refs(ptr_flobject, lnstyle, i_lnstyle)
+    retval = _fl_set_xyplot_grid_linestyle(ptr_flobject, i_lnstyle)
     return retval
 
 
 def fl_set_xyplot_alphaxtics(ptr_flobject, ticmajor, ticminor):
     """fl_set_xyplot_alphaxtics(ptr_flobject, ticmajor, ticminor)
-    
+
     Labels the major tic marks on x-axis with alphanumerical characters
     (instead of numerical values). fl_set_xyplot_xtics cannot be active at the
     same time and the one that gets used is the one that was set last. It can
@@ -2153,7 +2200,7 @@ def fl_set_xyplot_alphaxtics(ptr_flobject, ticmajor, ticminor):
 
 def fl_set_xyplot_alphaytics(ptr_flobject, ticmajor, ticminor):
     """fl_set_xyplot_alphaytics(ptr_flobject, ticmajor, ticminor)
-    
+
     Labels the major tic marks on y-axis with alphanumerical characters
     (instead of numerical values). fl_set_xyplot_ytics cannot be active at the
     same time and the one that gets used is the one that was set last. It can
@@ -2202,7 +2249,7 @@ def fl_set_xyplot_alphaytics(ptr_flobject, ticmajor, ticminor):
 
 def fl_set_xyplot_fixed_xaxis(ptr_flobject, leftmrg, rightmrg):
     """fl_set_xyplot_fixed_xaxis(ptr_flobject, leftmrg, rightmrg)
-    
+
     Controls the plotting area for x-axis of xyplot flobject. By default,
     the plotting area is automatically adjusted for tic labels and titles so
     that a maximum plotting area results, but this can be undesirable in
@@ -2245,7 +2292,7 @@ def fl_set_xyplot_fixed_xaxis(ptr_flobject, leftmrg, rightmrg):
 
 def fl_set_xyplot_fixed_yaxis(ptr_flobject, bottommrg, topmrg):
     """fl_set_xyplot_fixed_yaxis(ptr_flobject, bottommrg, topmrg)
-    
+
     Controls the plotting area for y-axis of xyplot flobject. By default,
     the plotting area is automatically adjusted for tic labels and titles so
     that a maximum plotting area results, but this can be undesirable in
@@ -2293,7 +2340,7 @@ def fl_set_xyplot_fixed_yaxis(ptr_flobject, bottommrg, topmrg):
 def fl_interpolate(wrldxposlist, wrldyposlist, numpoints, grid, degree):
     """fl_interpolate(wrldxposlist, wrldyposlist, numpoints, grid, degree)
     -> numpoints, outxpos, outypos
-    
+
     Manages polynomial interpolation function and obtains the number of
     points in interpolated function ((wx[num - 1] - wx[0]) / grid + 1.01)
     and the interpolate values.
@@ -2361,7 +2408,7 @@ def fl_interpolate(wrldxposlist, wrldyposlist, numpoints, grid, degree):
 def fl_spline_interpolate(wrldxposlist, wrldyposlist, numpoints, grid):
     """fl_spline_interpolate(wrldxposlist, wrldyposlist, numpoints, grid)
     -> numpoints, outxpos, outypos
-    
+
     Manages spline interpolation function. Spline interpolation is a form
     of interpolation where the interpolant is a special type of piecewise
     polynomial called a spline. Obtain number of points in interpolate
@@ -2425,7 +2472,7 @@ def fl_spline_interpolate(wrldxposlist, wrldyposlist, numpoints, grid):
 def fl_set_xyplot_symbol(ptr_flobject, ovlnum, pyfn_XyPlotSymbol):
     """fl_set_xyplot_symbol(ptr_flobject, ovlnum, pyfn_XyPlotSymbol)
     -> XyPlotSymbol
-    
+
     Defines a python function to change a symbol, to be invoked for
     xfdata.FL_POINTS_XYPLOT and xfdata.FL_LINEPOINTS_XYPLOT's xyplot types
     (main plot or overlay). If the type of xyplot corresponding to ovlnum is
@@ -2482,7 +2529,7 @@ def fl_set_xyplot_symbol(ptr_flobject, ovlnum, pyfn_XyPlotSymbol):
 
 def fl_set_xyplot_mark_active(ptr_flobject, yesno):
     """fl_set_xyplot_mark_active(ptr_flobject, yesno) -> oldmark
-    
+
     Draws the squares that mark an active plot or not.
 
     Parameters

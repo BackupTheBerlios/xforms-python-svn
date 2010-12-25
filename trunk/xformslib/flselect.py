@@ -47,7 +47,7 @@ from xformslib import xfdata
 def fl_add_select(selecttype, xpos, ypos, width, height, label):
     """fl_add_select(selecttype, xpos, ypos, width, height, label)
     -> ptr_flobject
-    
+
     Adds a select (new generation choice) flobject to the form. It is a
     rather simple flobject that allows the user to pick alternatives from a
     linear list that pops up when he clicks on the flobject. It remembers the
@@ -57,8 +57,17 @@ def fl_add_select(selecttype, xpos, ypos, width, height, label):
     Parameters
     ----------
         selecttype : int
-            type of select to be added. Values (from xfdata.py) 
-            FL_NORMAL_SELECT, FL_MENU_SELECT, FL_DROPLIST_SELECT
+            type of select to be added. Values (from xfdata.py)
+            FL_NORMAL_SELECT (Per default this type is drawn as a rounded,
+            flat box, but you can change that by setting a different boxtype
+            for the flobject, with the text of the currently selected item in
+            its center), FL_MENU_SELECT (This select flobject looks like a
+            button with a little extra box at its right side, just like a
+            FL_MENU_BUTTON and the text of the currently selected item is
+            drawn on the button-like object), FL_DROPLIST_SELECT (This type
+            looks like a button with the text of the currently selected item
+            on top of it and a second square button directly beside it with
+            an downward pointing arrow on it)
         xpos : int
             horizontal position (upper-left corner)
         ypos : int
@@ -109,7 +118,7 @@ def fl_add_select(selecttype, xpos, ypos, width, height, label):
 
 def fl_clear_select(ptr_flobject):
     """fl_clear_select(ptr_flobject) -> result
-    
+
     Removes all items from a select flobject. If you used
     fl_set_select_popup() to set a popup for the select flobject then
     that popup gets deleted automatically on calling fl_clear_select().
@@ -188,7 +197,7 @@ def fl_add_select_items(ptr_flobject, entryitemstxt, x=None, u=None,
             (separated additional argument corresponding to %L in-text
             special sequence)
         s : str
-            shortcut text for the entry 
+            shortcut text for the entry
             (separated additional argument corresponding to %s in-text
             special sequence)
 
@@ -267,7 +276,7 @@ def fl_insert_select_items(ptr_flobject, ptr_flpopupentry, entryitemstxt, \
     """fl_insert_select_items(ptr_flobject, ptr_flpopupentry, entryitemstxt,
     x=None, u=None, f=None, E=None, L=None, s=None)
     -> ptr_flpopupentry
-    
+
     Inserts a new item somewhere in the middle of a list of already
     existing items (it can be used several times). If additional separated
     arguments are required by in-text special sequences, user must respect
@@ -310,7 +319,7 @@ def fl_insert_select_items(ptr_flobject, ptr_flpopupentry, entryitemstxt, \
             (separated additional argument corresponding to %L in-text
             special sequence)
         s : str
-            shortcut text for the entry 
+            shortcut text for the entry
             (separated additional argument corresponding to %s in-text
             special sequence)
 
@@ -392,7 +401,7 @@ def fl_replace_select_item(ptr_flobject, ptr_flpopupentry, entryitemstxt, \
     """fl_replace_select_item(ptr_flobject, ptr_flpopupentry, entryitemstxt,
     x=None, u=None, f=None, E=None, L=None, s=None)
     -> ptr_flpopupentry
-    
+
     Replaces an existing item of a select flobject with another. If additional
     separated arguments are required by in-text special sequences, user must
     respect the same sequences' order.
@@ -433,7 +442,7 @@ def fl_replace_select_item(ptr_flobject, ptr_flpopupentry, entryitemstxt, \
             (separated additional argument corresponding to %L in-text
             special sequence)
         s : str
-            shortcut text for the entry 
+            shortcut text for the entry
             (separated additional argument corresponding to %s in-text
             special sequence)
 
@@ -512,7 +521,7 @@ def fl_replace_select_item(ptr_flobject, ptr_flpopupentry, entryitemstxt, \
 
 def fl_delete_select_item(ptr_flobject, ptr_flpopupentry):
     """fl_delete_select_item(ptr_flobject, ptr_flpopupentry) -> result
-    
+
     Deletes an item of a select flobject. The values associated with items
     will not change due to removing an item.
 
@@ -551,7 +560,7 @@ def fl_delete_select_item(ptr_flobject, ptr_flpopupentry):
 
 def fl_set_select_items(ptr_flobject, ptr_flpopupitem):
     """fl_set_select_items(ptr_flobject, ptr_flpopupitem) -> numitems
-    
+
     (Re)populates a select flobject.
 
     Parameters
@@ -593,7 +602,7 @@ def fl_set_select_items(ptr_flobject, ptr_flpopupitem):
 
 def fl_get_select_popup(ptr_flobject):
     """fl_get_select_popup(ptr_flobject) -> ptr_flpopup
-    
+
     Finds out which item of a select flobject is currently selected.
 
     Parameters
@@ -628,7 +637,7 @@ def fl_get_select_popup(ptr_flobject):
 
 def fl_set_select_popup(ptr_flobject, ptr_flpopup):
     """fl_set_select_popup(ptr_flobject, ptr_flpopup) -> result
-    
+
     Creates a popup directly and then associates it with the select
     flobject. Supplied popup may not contain any entries other than
     those of type xfdata.FL_POPUP_NORMAL, and, of course, the popup
@@ -670,7 +679,7 @@ def fl_set_select_popup(ptr_flobject, ptr_flpopup):
 
 def fl_get_select_item(ptr_flobject):
     """fl_get_select_item(ptr_flobject) -> ptr_flpopupreturn
-    
+
     Finds out currently selected item of a select flobject.
 
     Parameters
@@ -705,7 +714,7 @@ def fl_get_select_item(ptr_flobject):
 
 def fl_set_select_item(ptr_flobject, ptr_flpopupentry):
     """fl_set_select_item(ptr_flobject, ptr_flpopupentry) -> ptr_flpopupreturn
-    
+
     Defines a new item of a select flobject as currently selected.
 
     Parameters
@@ -746,7 +755,7 @@ def fl_set_select_item(ptr_flobject, ptr_flpopupentry):
 
 def fl_get_select_item_by_value(ptr_flobject, itemval):
     """fl_get_select_item_by_value(ptr_flobject, itemval) -> ptr_flpopupentry
-    
+
     Finds the first item of select flobject with the value associated with
     the item.
 
@@ -787,7 +796,7 @@ def fl_get_select_item_by_value(ptr_flobject, itemval):
 
 def fl_get_select_item_by_label(ptr_flobject, label):
     """fl_get_select_item_by_label(ptr_flobject, label) -> ptr_flpopupentry
-    
+
     Finds out an item of select flobject who has a certain label as
     displayed for the item in the popup.
 
@@ -828,7 +837,7 @@ def fl_get_select_item_by_label(ptr_flobject, label):
 
 def fl_get_select_item_by_text(ptr_flobject, txtstr):
     """fl_get_select_item_by_text(ptr_flobject, txtstr) -> ptr_flpopupentry
-    
+
     Finds out an item of select flobject who has supplied text
     (that might be the same as the label text in simple cases).
 
@@ -869,7 +878,7 @@ def fl_get_select_item_by_text(ptr_flobject, txtstr):
 
 def fl_get_select_text_color(ptr_flobject):
     """fl_get_select_text_color(ptr_flobject) -> colr
-    
+
     Finds out the color of the text of the currenty selected item
     on top of the flobject.
 
@@ -905,7 +914,7 @@ def fl_get_select_text_color(ptr_flobject):
 
 def fl_set_select_text_color(ptr_flobject, colr):
     """fl_set_select_text_color(ptr_flobject, colr) -> oldcolr
-    
+
     Defines the color of the text of the currenty selected item on
     top of the flobject.
 
@@ -945,7 +954,7 @@ def fl_set_select_text_color(ptr_flobject, colr):
 
 def fl_get_select_text_font(ptr_flobject):
     """fl_get_select_text_font(ptr_flobject) -> result, style, size
-    
+
     Finds out the font style and size used for the text of a select
     flobject.
 
@@ -993,7 +1002,7 @@ def fl_get_select_text_font(ptr_flobject):
 
 def fl_set_select_text_font(ptr_flobject, style, size):
     """fl_set_select_text_font(ptr_flobject, style, size) -> result
-    
+
     Defines the font style and size used for the text of a select
     flobject.
 
@@ -1002,17 +1011,29 @@ def fl_set_select_text_font(ptr_flobject, style, size):
         ptr_flobject : pointer to xfdata.FL_OBJECT
             select flobject
         style : int
-            text style. Values (from xfdata.py) FL_NORMAL_STYLE,
-            FL_BOLD_STYLE, FL_ITALIC_STYLE, FL_BOLDITALIC_STYLE,
-            FL_FIXED_STYLE, FL_FIXEDBOLD_STYLE, FL_FIXEDITALIC_STYLE,
-            FL_FIXEDBOLDITALIC_STYLE, FL_TIMES_STYLE, FL_TIMESBOLD_STYLE,
-            FL_TIMESITALIC_STYLE, FL_TIMESBOLDITALIC_STYLE, FL_MISC_STYLE,
-            FL_MISCBOLD_STYLE, FL_MISCITALIC_STYLE, FL_SYMBOL_STYLE,
-            FL_SHADOW_STYLE, FL_ENGRAVED_STYLE, FL_EMBOSSED_STYLE
+            text style. Values (from xfdata.py)
+            FL_NORMAL_STYLE (Helvetica normal text), FL_BOLD_STYLE (Helvetica
+            boldface text), FL_ITALIC_STYLE (Helvetica italic text),
+            FL_BOLDITALIC_STYLE (Helvetica boldface and italic text),
+            FL_FIXED_STYLE (Courier fixed width, good for tables),
+            FL_FIXEDBOLD_STYLE (Courier bold fixed text), FL_FIXEDITALIC_STYLE
+            (Courier italic fixed text), FL_FIXEDBOLDITALIC_STYLE (Courier
+            boldface and italic fixed text), FL_TIMES_STYLE (Times-Roman like
+            normal font), FL_TIMESBOLD_STYLE (Times-Roman like boldface text),
+            FL_TIMESITALIC_STYLE (Times-Roman like italic text),
+            FL_TIMESBOLDITALIC_STYLE (Times-Roman like boldface and italic
+            text), FL_MISC_STYLE (Charter normal text), FL_MISCBOLD_STYLE
+            (Charter boldface text), FL_MISCITALIC_STYLE (Charter italic text),
+            FL_SYMBOL_STYLE (Symbol text), FL_SHADOW_STYLE (Text casting a
+            shadow, modifier mask), FL_ENGRAVED_STYLE (Text engraved into the
+            form, modifier mask), FL_EMBOSSED_STYLE (Text standing out,
+            modifier mask). Bitwise OR with any of modifiers is allowed.
         size : int
-            text size. Values (from xfdata.py) FL_TINY_SIZE, FL_SMALL_SIZE,
-            FL_NORMAL_SIZE, FL_MEDIUM_SIZE, FL_LARGE_SIZE, FL_HUGE_SIZE,
-            FL_DEFAULT_SIZE
+            text size. Values (from xfdata.py)
+            FL_TINY_SIZE (8 points font), FL_SMALL_SIZE or FL_DEFAULT_SIZE (10
+            points font, default), FL_NORMAL_SIZE (12 points font),
+            FL_MEDIUM_SIZE (14 points font), FL_LARGE_SIZE (18 points font),
+            FL_HUGE_SIZE (24 points font), or other numeric odd or even value
 
     Returns
     -------
@@ -1036,7 +1057,6 @@ def fl_set_select_text_font(ptr_flobject, style, size):
     library.check_if_initialized()
     library.verify_flobjectptr_type(ptr_flobject)
     library.checkfatal_allowed_value_in_list(style, xfdata.TEXTSTYLE_list)
-    library.checknonfatal_allowed_value_in_list(size, xfdata.FONTSIZE_list)
     i_style = library.convert_to_intc(style)
     i_size = library.convert_to_intc(size)
     library.keep_elem_refs(ptr_flobject, style, size, i_style, i_size)
@@ -1046,7 +1066,7 @@ def fl_set_select_text_font(ptr_flobject, style, size):
 
 def fl_get_select_text_align(ptr_flobject):
     """fl_get_select_text_align(ptr_flobject) -> align
-    
+
     Finds out the alignment of the text with the currently selected
     item on top of the select flobject.
 
@@ -1058,7 +1078,8 @@ def fl_get_select_text_align(ptr_flobject):
     Returns
     -------
         align : int
-            alignment of text
+            alignment of text (from xfdata.py, e.g. FL_ALIGN_CENTER,
+            FL_ALIGN_TOP
 
     Examples
     --------
@@ -1082,7 +1103,7 @@ def fl_get_select_text_align(ptr_flobject):
 
 def fl_set_select_text_align(ptr_flobject, align):
     """fl_set_select_text_align(ptr_flobject, align) -> oldalign
-    
+
     Defines the alignment of the text with the currently selected item on
     top of the select flobject. The xfdata.FL_ALIGN_INSIDE flag should be
     set with align since the text always will be drawn withing the
@@ -1093,11 +1114,18 @@ def fl_set_select_text_align(ptr_flobject, align):
         ptr_flobject : pointer to xfdata.FL_OBJECT
             select flobject
         align : int
-            alignment of text. Values (from xfdata.py) FL_ALIGN_CENTER,
-            FL_ALIGN_TOP, FL_ALIGN_BOTTOM, FL_ALIGN_LEFT, FL_ALIGN_RIGHT,
-            FL_ALIGN_LEFT_TOP, FL_ALIGN_RIGHT_TOP, FL_ALIGN_LEFT_BOTTOM,
-            FL_ALIGN_RIGHT_BOTTOM, FL_ALIGN_INSIDE, FL_ALIGN_VERT. Bitwise
-            OR with FL_ALIGN_INSIDE is allowed.
+            alignment of text. Values (from xfdata.py)
+            FL_ALIGN_CENTER (In the middle of the box, inside it), FL_ALIGN_TOP
+            (To the top of the box, outside it), FL_ALIGN_BOTTOM (To the
+            bottom of the box, outside it), FL_ALIGN_LEFT (To the left of the
+            box, outside it), FL_ALIGN_RIGHT (To the right of the box, outside
+            it), FL_ALIGN_LEFT_TOP (To the left and top of the box, outside
+            it), FL_ALIGN_RIGHT_TOP (To the right and top of the box, outside
+            it), FL_ALIGN_LEFT_BOTTOM (To the left and bottom of the box,
+            outside it), FL_ALIGN_RIGHT_BOTTOM (To the right and bottom of
+            the box, outside it), FL_ALIGN_INSIDE (places the text inside the
+            box), FL_ALIGN_VERT (not functional yet). Bitwise OR with
+            FL_ALIGN_INSIDE is allowed.
 
     Returns
     -------
@@ -1128,7 +1156,7 @@ def fl_set_select_text_align(ptr_flobject, align):
 
 def fl_set_select_policy(ptr_flobject, policy):
     """fl_set_select_policy(ptr_flobject, policy) -> oldpol
-    
+
     Defines a policy of a select flobject. By default, the popup of a
     select flobjects remains shown when the user releases the mouse
     somewhere outside the popup window (or on its title area). The

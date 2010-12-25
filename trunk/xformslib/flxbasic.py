@@ -105,7 +105,7 @@ def fl_get_gc():
 
 def fl_mode_capable(mode, warn):
     """fl_mode_capable(mode, warn) -> yesno
-    
+
     Tells if the system is capable of displaying in the specified visual
     class, or not.
 
@@ -113,7 +113,7 @@ def fl_mode_capable(mode, warn):
     ----------
         mode : int
             visual mode. Values (from xfdata module) GrayScale, StaticGray,
-            PseudoColor, StaticColor, DirectColor or TrueColor
+            PseudoColor, StaticColor, DirectColor, TrueColor, DefaultVisual
         warn : int
             if set a warning is printed out in case the capability asked
             for is not available. Values 0 (do not print warning) or 1
@@ -162,7 +162,7 @@ def fl_default_window():
 
 def fl_rectangle(fill, xpos, ypos, width, height, colr):
     """fl_rectangle(fill, xpos, ypos, width, height, colr)
-    
+
     Draws a rectangle.
 
     Parameters
@@ -211,7 +211,7 @@ def fl_rectangle(fill, xpos, ypos, width, height, colr):
 
 def fl_rectbound(xpos, ypos, width, height, colr):
     """fl_rectbound(xpos, ypos, width, height, colr)
-    
+
     Draws a filled rectangle with a black border.
 
     Parameters
@@ -256,7 +256,7 @@ def fl_rectbound(xpos, ypos, width, height, colr):
 
 def fl_rectf(xpos, ypos, width, height, colr):
     """fl_rectf(xpos, ypos, width, height, colr)
-    
+
     Draws a filled rectangle on the screen.
 
     Parameters
@@ -286,7 +286,7 @@ def fl_rectf(xpos, ypos, width, height, colr):
 
 def fl_rect(xpos, ypos, width, height, colr):
     """fl_rect(xpos, ypos, width, height, colr)
-    
+
     Draws a rectangle's outline on the screen.
 
     Parameters
@@ -318,7 +318,7 @@ def fl_rect(xpos, ypos, width, height, colr):
 
 def fl_roundrectangle(fill, xpos, ypos, width, height, colr):
     """fl_roundrectangle(fill, xpos, ypos, width, height, colr)
-    
+
     Draws a rectangle with rounded corners (filled or just the outline).
 
     Parameters
@@ -367,7 +367,7 @@ def fl_roundrectangle(fill, xpos, ypos, width, height, colr):
 
 def fl_roundrectf(xpos, ypos, width, height, colr):
     """fl_roundrectf(xpos, ypos, width, height, colr)
-    
+
     Draws a filled rectangle with rounded corners.
 
     Parameters
@@ -397,7 +397,7 @@ def fl_roundrectf(xpos, ypos, width, height, colr):
 
 def fl_roundrect(xpos, ypos, width, height, colr):
     """fl_roundrect(xpos, ypos, width, height, colr)
-    
+
     Draws a rectangle's outline with rounded corners.
 
     Parameters
@@ -429,7 +429,7 @@ def fl_roundrect(xpos, ypos, width, height, colr):
 
 def fl_polygon(fill, ptr_flpoint, numpoints, colr):
     """fl_polygon(fill, ptr_flpoint, numpoints, colr)
-    
+
     Draws a generic polygon on the screen (filled or just an outline).
 
     Parameters
@@ -476,7 +476,7 @@ def fl_polygon(fill, ptr_flpoint, numpoints, colr):
 
 def fl_polyf(ptr_flpoint, numpoints, colr):
     """fl_polyf(ptr_flpoint, numpoints, colr)
-    
+
     Draws a generic filled polygon on the screen.
 
     Parameters
@@ -506,7 +506,7 @@ def fl_polyf(ptr_flpoint, numpoints, colr):
 
 def fl_polyl(ptr_flpoint, numpoints, colr):
     """fl_polyl(ptr_flpoint, numpoints, colr)
-    
+
     Draws a generic polygon's outline on the screen.
 
     Parameters
@@ -536,7 +536,7 @@ def fl_polyl(ptr_flpoint, numpoints, colr):
 
 def fl_polybound(ptr_flpoint, numpoints, colr):
     """fl_polybound(ptr_flpoint, numpoints, colr)
-    
+
     Draws a generic filled polygon with a black border in the screen.
 
     Parameters
@@ -567,7 +567,7 @@ def fl_polybound(ptr_flpoint, numpoints, colr):
 
 def fl_lines(ptr_flpoint, numpoints, colr):
     """fl_lines(ptr_flpoint, numpoints, colr)
-    
+
     Draws connected line segments between a number of points.
 
     Parameters
@@ -608,7 +608,7 @@ def fl_lines(ptr_flpoint, numpoints, colr):
 
 def fl_line(startxpos, startypos, endxpos, endypos, colr):
     """fl_line(startxpos, startypos, endxpos, endypos, colr)
-    
+
     Connects two points with a straight line.
 
     Parameters
@@ -656,7 +656,7 @@ fl_simple_line = fl_line
 
 def fl_point(xpos, ypos, colr):
     """fl_point(xpos, ypos, colr)
-    
+
     Draws one point on the screen.
 
     Parameters
@@ -692,7 +692,7 @@ def fl_point(xpos, ypos, colr):
 
 def fl_points(ptr_flpoint, numpoints, colr):
     """fl_points(ptr_flpoint, numpoints, colr)
-    
+
     Draws more than one points.
 
     Parameters
@@ -733,7 +733,7 @@ def fl_points(ptr_flpoint, numpoints, colr):
 
 def fl_dashedlinestyle(dash, numdash):
     """fl_dashedlinestyle(dash, numdash)
-    
+
     Changes the dash pattern for xfdata.FL_USERDASH and
     xfdata.FL USERDOUBLEDASH. Each element of the array dash is the
     length of a segment of the pattern in pixels. Dashed lines are drawn
@@ -779,7 +779,7 @@ def fl_dashedlinestyle(dash, numdash):
 
 def fl_update_display(block):
     """fl_update_display(block)
-    
+
     Flushes properly the output buffer. It resolves the problem of the
     form being only partially redrawn, due to the two way buffering
     mechanism of Xlib, if fl_show_form() is followed by something that
@@ -819,7 +819,7 @@ def fl_update_display(block):
 
 def fl_diagline(xpos, ypos, width, height, colr):
     """fl_diagline(xpos, ypos, width, height, colr)
-    
+
     Draws a line along the diagonal of a box (to draw a horizontal line
     set height to 1, not to 0).
 
@@ -852,7 +852,7 @@ def fl_diagline(xpos, ypos, width, height, colr):
 
 def fl_linewidth(lnwidth):
     """fl_linewidth(lnwidth)
-    
+
     Changes the line width.
 
     Parameters
@@ -883,17 +883,24 @@ def fl_linewidth(lnwidth):
 fl_set_linewidth = fl_linewidth
 
 
-def fl_linestyle(linestyle):
-    """fl_linestyle(linestyle)
-    
+def fl_linestyle(lnstyle):
+    """fl_linestyle(lnstyle)
+
     Changes the line style.
 
     Parameters
     ----------
-        linestyle : int
-            style of the line to draw. Values (from xfdata.py) FL_SOLID,
-            FL_USERDASH, FL_USERDOUBLEDASH, FL_DOT, FL_DOTDASH, FL_DASH,
-            FL_LONGDASH
+        lnstyle : int
+            style of the line to draw. Values (from xfdata.py)
+            FL_SOLID (Solid line. Default and most efficient), FL_USERDASH
+            (Dashed line, but the dash pattern is used-definable via
+            fl_dashedlinestyle(). Only the odd numbered segments are
+            drawn with the foreground color), FL_USERDOUBLEDASH (Similar to
+            FL_LINE_USERDASH but both even and odd numbered segments are
+            drawn, with the even numbered segments drawn in the background
+            color (as set by fl_bk_color()), FL_DOT (Dotted line [....]),
+            FL_DOTDASH (Dash-dot-dash line [-.-.]), FL_DASH (Dashed line
+            [----]), FL_LONGDASH (Long dashed line [--------]).
 
     Examples
     --------
@@ -909,28 +916,31 @@ def fl_linestyle(linestyle):
         None, [cty.c_int],\
         """void fl_linestyle(int n)""")
     library.check_if_initialized()
-    library.checkfatal_allowed_value_in_list(linestyle, \
-            xfdata.LINESTYLE_list)
-    i_linestyle = library.convert_to_intc(linestyle)
-    library.keep_elem_refs(linestyle, i_linestyle)
-    _fl_linestyle(i_linestyle)
+    library.checkfatal_allowed_value_in_list(lnstyle, xfdata.LINESTYLE_list)
+    i_lnstyle = library.convert_to_intc(lnstyle)
+    library.keep_elem_refs(lnstyle, i_lnstyle)
+    _fl_linestyle(i_lnstyle)
 
 
 fl_set_linestyle = fl_linestyle
 
 
-def fl_drawmode(mode):
-    """fl_drawmode(mode)
-    
+def fl_drawmode(dmode):
+    """fl_drawmode(dmode)
+
     Changes the drawing mode so the destination pixel values play a
     role in the final pixel value. By default, all lines are drawn so
     they overwrite the destination pixel values.
 
     Parameters
     ----------
-      mode : int
-        requested mode setting. Values (from xfdata.py) FL_XOR,
-        FL_COPY, FL_AND
+      dmode : int
+        requested mode setting. Values (from xfdata.py)
+        FL_XOR (Bitwise XOR, exclusive-or, of the pixel value to be drawn with
+        the pixel value already on the screen. Useful for rubber-banding),
+        FL_COPY (Default overwrite mode, final pixel value is the same as
+        source), FL_AND (Bitwise AND of the pixel value to be drawn with the
+        pixel value already on the screen).
 
     Examples
     --------
@@ -946,15 +956,15 @@ def fl_drawmode(mode):
         None, [cty.c_int],\
         """void fl_drawmode(int request)""")
     library.check_if_initialized()
-    library.checkfatal_allowed_value_in_list(mode, xfdata.DRAWMODE_list)
-    i_mode = library.convert_to_intc(mode)
-    library.keep_elem_refs(mode, i_mode)
-    _fl_drawmode(i_mode)
+    library.checkfatal_allowed_value_in_list(dmode, xfdata.DRAWMODE_list)
+    i_dmode = library.convert_to_intc(dmode)
+    library.keep_elem_refs(dmode, i_dmode)
+    _fl_drawmode(i_dmode)
 
 
 def fl_get_linewidth():
     """fl_get_linewidth() -> lnwidth
-    
+
     Finds out the width of line.
 
     Returns
@@ -982,7 +992,7 @@ def fl_get_linewidth():
 
 def fl_get_linestyle():
     """fl_get_linestyle() -> linestyle
-    
+
     Finds out the style of line.
 
     Returns
@@ -1009,14 +1019,20 @@ def fl_get_linestyle():
 
 
 def fl_get_drawmode():
-    """fl_get_drawmode() -> mode
-    
+    """fl_get_drawmode() -> dmode
+
     Finds out the drawing mode of lines.
 
     Returns
     -------
-        mode : int
-            drawing mode (from xfdata.py, e.g. FL_AND, FL_XOR etc..)
+        dmode : int
+            drawing mode.
+            Values (from xfdata.py)
+            FL_XOR (Bitwise XOR, exclusive-or, of the pixel value to be drawn
+            with the pixel value already on the screen. Useful for
+            rubber-banding), FL_COPY (Default overwrite mode, final pixel
+            value is the same as source), FL_AND (Bitwise AND of the pixel
+            value to be drawn with the pixel value already on the screen).
 
     Examples
     --------
@@ -1043,7 +1059,7 @@ fl_set_drawmode = fl_drawmode
 
 def fl_oval(fill, xpos, ypos, width, height, colr):
     """fl_oval(fill, xpos, ypos, width, height, colr)
-    
+
     Draws an ellipse, either filled or open. Use width equal to height
     to get a circle.
 
@@ -1093,7 +1109,7 @@ def fl_oval(fill, xpos, ypos, width, height, colr):
 
 def fl_ovalbound(xpos, ypos, width, height, colr):
     """fl_ovalbound(xpos, ypos, width, height, colr)
-    
+
     Draws a filled ellipse with a black outline. Use width equal to height
     to get a circle.
 
@@ -1139,7 +1155,7 @@ def fl_ovalbound(xpos, ypos, width, height, colr):
 
 def fl_ovalarc(fill, xpos, ypos, width, height, stheta, dtheta, colr):
     """fl_ovalarc(fill, xpos, ypos, width, height, stheta, dtheta, colr)
-    
+
     Draws an elliptical arc, either filled or open.
 
     Parameters
@@ -1201,7 +1217,7 @@ def fl_ovalarc(fill, xpos, ypos, width, height, stheta, dtheta, colr):
 
 def fl_ovalf(xpos, ypos, width, height, colr):
     """fl_ovalf(xpos, ypos, width, height, colr)
-    
+
     Draws a filled ellipse. Use width equal to height to get a circle.
 
     Parameters
@@ -1231,7 +1247,7 @@ def fl_ovalf(xpos, ypos, width, height, colr):
 
 def fl_ovall(xpos, ypos, width, height, colr):
     """fl_ovall(xpos, ypos, width, height, colr)
-    
+
     Draws an open ellipse. Use width equal to height to get a circle.
 
     Parameters
@@ -1264,7 +1280,7 @@ fl_oval_bound = fl_ovalbound
 
 def fl_circf(xpos, ypos, radius, colr):
     """fl_circf(xpos, ypos, radius, colr)
-    
+
     Draws a filled circle.
 
     Parameters
@@ -1292,7 +1308,7 @@ def fl_circf(xpos, ypos, radius, colr):
 
 def fl_circ(xpos, ypos, radius, colr):
     """fl_circ(xpos, ypos, radius, colr)
-    
+
     Draws an open circle.
 
     Parameters
@@ -1322,7 +1338,7 @@ def fl_circ(xpos, ypos, radius, colr):
 
 def fl_pieslice(fill, xpos, ypos, width, height, stheta, etheta, colr):
     """fl_pieslice(fill, xpos, ypos, width, height, stheta, etheta, colr)
-    
+
     Draws an elliptical arc, either filled or open.
 
     Parameters
@@ -1384,7 +1400,7 @@ def fl_pieslice(fill, xpos, ypos, width, height, stheta, etheta, colr):
 
 def fl_arcf(xpos, ypos, radius, stheta, etheta, colr):
     """fl_arcf(xpos, ypos, radius, stheta, etheta, colr)
-    
+
     Draws a filled circular arc. If the difference between theta end and
     theta start is larger than 3600 (360 degrees), drawing is truncated
     to 360 degrees.
@@ -1423,7 +1439,7 @@ def fl_arcf(xpos, ypos, radius, stheta, etheta, colr):
 
 def fl_arc(xpos, ypos, radius, stheta, etheta, colr):
     """fl_arc(xpos, ypos, radius, stheta, etheta, colr)
-    
+
     Draws an open circular arc. If the difference between theta end and
     theta start is larger than 3600 (360 degrees), drawing is truncated
     to 360 degrees.
@@ -1464,18 +1480,30 @@ def fl_arc(xpos, ypos, radius, stheta, etheta, colr):
 
 def fl_drw_frame(boxtype, xpos, ypos, width, height, colr, bndrwidth):
     """fl_drw_frame(boxtype, xpos, ypos, width, height, colr, bndrwidth)
-    
+
     Draws a frame outside of the bounding box specified.
 
     Parameters
     ----------
         boxtype : int
-            type of frame box. Values (from xfdata.py) FL_NO_BOX,
-            FL_UP_BOX, FL_DOWN_BOX, FL_BORDER_BOX, FL_SHADOW_BOX,
-            FL_FRAME_BOX, FL_ROUNDED_BOX, FL_EMBOSSED_BOX, FL_FLAT_BOX,
-            FL_RFLAT_BOX, FL_RSHADOW_BOX, FL_OVAL_BOX, FL_ROUNDED3D_UPBOX,
-            FL_ROUNDED3D_DOWNBOX, FL_OVAL3D_UPBOX, FL_OVAL3D_DOWNBOX,
-            FL_OVAL3D_FRAMEBOX, FL_OVAL3D_EMBOSSEDBOX
+            type of frame box. Values (from xfdata.py)
+            FL_NO_BOX (No box at all, it is transparent, just a label),
+            FL_UP_BOX (A box that comes out of the screen), FL_DOWN_BOX (A box
+            that goes down into the screen), FL_BORDER_BOX (A flat box with a
+            border), FL_SHADOW_BOX (A flat box with a shadow), FL_FRAME_BOX (A
+            flat box with an engraved frame), FL_ROUNDED_BOX (A rounded box),
+            FL_EMBOSSED_BOX (A flat box with an embossed frame), FL_FLAT_BOX (A
+            flat box without a border, normally invisible unless given a
+            different color than the surroundings), FL_RFLAT_BOX (A rounded box
+            without a border, normally invisible unless given a different color
+            than the surroundings), FL_RSHADOW_BOX (A rounded box with a
+            shadow)), FL_OVAL_BOX (A box shaped like an ellipse),
+            FL_ROUNDED3D_UPBOX (A rounded box coming out of the screen),
+            FL_ROUNDED3D_DOWNBOX (A rounded box going into the screen),
+            FL_OVAL3D_UPBOX (An oval box coming out of the screen),
+            FL_OVAL3D_DOWNBOX (An oval box going into the screen),
+            FL_OVAL3D_FRAMEBOX (An oval box with an engraved frame),
+            FL_OVAL3D_EMBOSSEDBOX (An oval box with an embossed frame)
         xpos : int
             horizontal position (upper-left corner)
         ypos : int
@@ -1524,18 +1552,30 @@ def fl_drw_frame(boxtype, xpos, ypos, width, height, colr, bndrwidth):
 
 def fl_drw_checkbox(boxtype, xpos, ypos, width, height, colr, bndrwidth):
     """fl_drw_checkbox(boxtype, xpos, ypos, width, height, colr, bndrwidth)
-    
+
     Draws a box rotated 45 degrees.
 
     Parameters
     ----------
         boxtype : int
-            type of checkbox to draw. Values (from xfdata.py) FL_NO_BOX,
-            FL_UP_BOX, FL_DOWN_BOX, FL_BORDER_BOX, FL_SHADOW_BOX,
-            FL_FRAME_BOX, FL_ROUNDED_BOX, FL_EMBOSSED_BOX, FL_FLAT_BOX,
-            FL_RFLAT_BOX, FL_RSHADOW_BOX, FL_OVAL_BOX, FL_ROUNDED3D_UPBOX,
-            FL_ROUNDED3D_DOWNBOX, FL_OVAL3D_UPBOX, FL_OVAL3D_DOWNBOX,
-            FL_OVAL3D_FRAMEBOX, FL_OVAL3D_EMBOSSEDBOX
+            type of checkbox to draw. Values (from xfdata.py)
+            FL_NO_BOX (No box at all, it is transparent, just a label),
+            FL_UP_BOX (A box that comes out of the screen), FL_DOWN_BOX (A box
+            that goes down into the screen), FL_BORDER_BOX (A flat box with a
+            border), FL_SHADOW_BOX (A flat box with a shadow), FL_FRAME_BOX (A
+            flat box with an engraved frame), FL_ROUNDED_BOX (A rounded box),
+            FL_EMBOSSED_BOX (A flat box with an embossed frame), FL_FLAT_BOX (A
+            flat box without a border, normally invisible unless given a
+            different color than the surroundings), FL_RFLAT_BOX (A rounded box
+            without a border, normally invisible unless given a different color
+            than the surroundings), FL_RSHADOW_BOX (A rounded box with a
+            shadow)), FL_OVAL_BOX (A box shaped like an ellipse),
+            FL_ROUNDED3D_UPBOX (A rounded box coming out of the screen),
+            FL_ROUNDED3D_DOWNBOX (A rounded box going into the screen),
+            FL_OVAL3D_UPBOX (An oval box coming out of the screen),
+            FL_OVAL3D_DOWNBOX (An oval box going into the screen),
+            FL_OVAL3D_FRAMEBOX (An oval box with an engraved frame),
+            FL_OVAL3D_EMBOSSEDBOX (An oval box with an embossed frame)
         xpos : int
             horizontal position (upper-left corner)
         ypos : int
@@ -1586,24 +1626,36 @@ def fl_drw_checkbox(boxtype, xpos, ypos, width, height, colr, bndrwidth):
 
 def fl_get_fontstruct(style, size):
     """fl_get_fontstruct(style, size) -> ptr_xfontstruct
-    
+
     Finds out the X font structure for a particular size and style as used
     in XForms library.
 
     Parameters
     ----------
         style : int
-            font style. Values (from xfdata.py) FL_NORMAL_STYLE,
-            FL_BOLD_STYLE, FL_ITALIC_STYLE, FL_BOLDITALIC_STYLE,
-            FL_FIXED_STYLE, FL_FIXEDBOLD_STYLE, FL_FIXEDITALIC_STYLE,
-            FL_FIXEDBOLDITALIC_STYLE, FL_TIMES_STYLE, FL_TIMESBOLD_STYLE,
-            FL_TIMESITALIC_STYLE, FL_TIMESBOLDITALIC_STYLE, FL_MISC_STYLE,
-            FL_MISCBOLD_STYLE, FL_MISCITALIC_STYLE, FL_SYMBOL_STYLE,
-            FL_SHADOW_STYLE, FL_ENGRAVED_STYLE, FL_EMBOSSED_STYLE
+            font style. Values (from xfdata.py)
+            FL_NORMAL_STYLE (Helvetica normal text), FL_BOLD_STYLE (Helvetica
+            boldface text), FL_ITALIC_STYLE (Helvetica italic text),
+            FL_BOLDITALIC_STYLE (Helvetica boldface and italic text),
+            FL_FIXED_STYLE (Courier fixed width, good for tables),
+            FL_FIXEDBOLD_STYLE (Courier bold fixed text), FL_FIXEDITALIC_STYLE
+            (Courier italic fixed text), FL_FIXEDBOLDITALIC_STYLE (Courier
+            boldface and italic fixed text), FL_TIMES_STYLE (Times-Roman like
+            normal font), FL_TIMESBOLD_STYLE (Times-Roman like boldface text),
+            FL_TIMESITALIC_STYLE (Times-Roman like italic text),
+            FL_TIMESBOLDITALIC_STYLE (Times-Roman like boldface and italic
+            text), FL_MISC_STYLE (Charter normal text), FL_MISCBOLD_STYLE
+            (Charter boldface text), FL_MISCITALIC_STYLE (Charter italic text),
+            FL_SYMBOL_STYLE (Symbol text), FL_SHADOW_STYLE (Text casting a
+            shadow, modifier mask), FL_ENGRAVED_STYLE (Text engraved into the
+            form, modifier mask), FL_EMBOSSED_STYLE (Text standing out,
+            modifier mask). Bitwise OR with any of modifiers is allowed.
         size : int
-            font size. Values (from xfdata.py) FL_TINY_SIZE, FL_SMALL_SIZE,
-            FL_NORMAL_SIZE, FL_MEDIUM_SIZE, FL_LARGE_SIZE, FL_HUGE_SIZE,
-            FL_DEFAULT_SIZE
+            font size. Values (from xfdata.py)
+            FL_TINY_SIZE (8 points font), FL_SMALL_SIZE or FL_DEFAULT_SIZE (10
+            points font, default), FL_NORMAL_SIZE (12 points font),
+            FL_MEDIUM_SIZE (14 points font), FL_LARGE_SIZE (18 points font),
+            FL_HUGE_SIZE (24 points font), or other numeric odd or even value
 
     Returns
     -------
@@ -1627,7 +1679,6 @@ def fl_get_fontstruct(style, size):
     library.check_if_initialized()
     library.checkfatal_allowed_value_in_list(style, xfdata.TEXTSTYLE_list)
     i_style = library.convert_to_intc(style)
-    library.checknonfatal_allowed_value_in_list(size, xfdata.FONTSIZE_list)
     i_size = library.convert_to_intc(size)
     library.keep_elem_refs(style, size, i_style, i_size)
     retval = _fl_get_fontstruct(i_style, i_size)
@@ -1640,7 +1691,7 @@ fl_get_fntstruct = fl_get_font_struct
 
 def fl_get_mouse():
     """fl_get_mouse() -> win, xpos, ypos, keymask
-    
+
     Finds out the current mouse position relative to the root window, and
     the current state of the modifier keys and pointer buttons.
 
@@ -1689,7 +1740,7 @@ def fl_get_mouse():
 
 def fl_set_mouse(xpos, ypos):
     """fl_set_mouse(xpos, ypos)
-    
+
     Moves the mouse to a specific location relative to the root window.
     Use this function sparingly, it can be extremely annoying for the
     user if the mouse position is changed by a program.
@@ -1723,7 +1774,7 @@ def fl_set_mouse(xpos, ypos):
 
 def fl_get_win_mouse(win):
     """fl_get_win_mouse(win) -> win, xpos, ypos, keymask
-    
+
     Finds out the position of the mouse relative to a certain window,
     and the current state of the modifier keys and pointer buttons.
 
@@ -1778,7 +1829,7 @@ def fl_get_win_mouse(win):
 
 def fl_get_form_mouse(ptr_flform):
     """fl_get_form_mouse(ptr_flform) -> win, xpos, ypos, keymask
-    
+
     Finds out the position of the mouse relative to a certain form, and
     the current state of the modifier keys and pointer buttons.
 
@@ -1833,7 +1884,7 @@ def fl_get_form_mouse(ptr_flform):
 
 def fl_win_to_form(win):
     """fl_win_to_form(win) -> ptr_flform
-    
+
     Finds out the form the specified window belongs to.
 
     Parameters
@@ -1868,7 +1919,7 @@ def fl_win_to_form(win):
 
 def fl_set_form_icon(ptr_flform, icon, mask):
     """fl_set_form_icon(ptr_flform, icon, mask)
-    
+
     Defines or changes the icon shown when a form is iconified.
 
     Parameters
@@ -1904,7 +1955,7 @@ def fl_set_form_icon(ptr_flform, icon, mask):
 def fl_get_decoration_sizes(ptr_flform):
     """fl_get_decoration_sizes(ptr_flform)
     -> result, topsz, rightsz, bottomsz, leftsz
-    
+
     Finds out the sizes of the "decorations" the window manager puts around
     a form's window.
 
@@ -1964,7 +2015,7 @@ def fl_get_decoration_sizes(ptr_flform):
 
 def fl_raise_form(ptr_flform):
     """fl_raise_form(ptr_flform)
-    
+
     Raises a form to the top of the screen so no other forms obscure it.
 
     Parameters
@@ -1993,7 +2044,7 @@ def fl_raise_form(ptr_flform):
 
 def fl_lower_form(ptr_flform):
     """fl_lower_form(ptr_flform)
-    
+
     Lowers a form to the bottom of the stack.
 
     Parameters
@@ -2023,7 +2074,7 @@ def fl_lower_form(ptr_flform):
 # TODO: verify how to handle GC class
 def fl_set_foreground(gc, colr):
     """fl_set_foreground(gc, colr)
-    
+
     Defines foreground color in Graphics Contexts (GCs) other than the
     XForms library's default (gc[0]).
 
@@ -2059,7 +2110,7 @@ def fl_set_foreground(gc, colr):
 # TODO: verify how to handle GC class
 def fl_set_background(gc, colr):
     """fl_set_background(gc, colr)
-    
+
     Defines background color in Graphics contexts (GCs) other than
     the XForms library's default (gc[0]).
 
@@ -2096,7 +2147,7 @@ def fl_set_background(gc, colr):
 
 def fl_wincreate(title):
     """fl_wincreate(title) -> win
-    
+
     Creates a window with a specified title.
 
     Parameters
@@ -2131,7 +2182,7 @@ def fl_wincreate(title):
 
 def fl_winshow(win):
     """fl_winshow(win) -> win
-    
+
     Shows the window (created with fl_wincreate).
 
     Parameters
@@ -2166,7 +2217,7 @@ def fl_winshow(win):
 
 def fl_winopen(title):
     """fl_winopen(title) -> win
-    
+
     Opens (creates and shows) a toplevel window with the specified title.
 
     Parameters
@@ -2201,7 +2252,7 @@ def fl_winopen(title):
 
 def fl_winhide(win):
     """fl_winhide(win)
-    
+
     Hides a shown window.
 
     Parameters
@@ -2230,7 +2281,7 @@ def fl_winhide(win):
 
 def fl_winclose(win):
     """fl_winclose(win)
-    
+
     Closes (hides and destroys) the specified window.
 
     Parameters
@@ -2259,7 +2310,7 @@ def fl_winclose(win):
 
 def fl_winset(win):
     """fl_winset(win)
-    
+
     Defines the "current window", defined as the window the flobject that
     uses the drawing routine belongs to.
 
@@ -2289,7 +2340,7 @@ def fl_winset(win):
 
 def fl_winreparent(win, winnewparent):
     """fl_winreparent(win, winnewparent) -> result
-    
+
     Makes a toplevel window a subwindow of another (new parent) window;
     both the window and the parent window must be valid ones.
 
@@ -2328,7 +2379,7 @@ def fl_winreparent(win, winnewparent):
 
 def fl_winfocus(win):
     """fl_winfocus(win)
-    
+
     Keyboard input is directed to the specified window, overriding
     the keyboard focus assignment.
 
@@ -2358,7 +2409,7 @@ def fl_winfocus(win):
 
 def fl_winget():
     """fl_winget() -> win
-    
+
     Queries the current window. One caveat about fl_winget() is that it
     can return None if called outside of a flobject's event handler,
     depending on where the mouse is. Thus, the return value of this
@@ -2368,7 +2419,7 @@ def fl_winget():
     -------
         win : long_pos
             window id
- 
+
     Examples
     --------
         >>> currwin = fl_winget()
@@ -2389,7 +2440,7 @@ def fl_winget():
 
 def fl_iconify(win):
     """fl_iconify(win) -> result
-    
+
     Iconifies the specified window.
 
     Parameters
@@ -2424,7 +2475,7 @@ def fl_iconify(win):
 
 def fl_winresize(win, width, height):
     """fl_winresize(win, width, height)
-    
+
     Resizes a window.
 
     Parameters
@@ -2459,7 +2510,7 @@ def fl_winresize(win, width, height):
 
 def fl_winmove(win, xpos, ypos):
     """fl_winmove(win, xpos, ypos)
-    
+
     Moves the specified window to a new position.
 
     Parameters
@@ -2494,7 +2545,7 @@ def fl_winmove(win, xpos, ypos):
 
 def fl_winreshape(win, xpos, ypos, width, height):
     """fl_winreshape(win, xpos, ypos, width, height)
-    
+
     Reshapes (resizes and moves) a window.
 
     Parameters
@@ -2538,7 +2589,7 @@ def fl_winreshape(win, xpos, ypos, width, height):
 
 def fl_winicon(win, icon, mask):
     """fl_winicon(win, icon, mask)
-    
+
     Installs an icon for the window.
 
     Parameters
@@ -2573,7 +2624,7 @@ def fl_winicon(win, icon, mask):
 
 def fl_winbackground(win, pixelval):
     """fl_winbackground(win, pixelval)
-    
+
     Defines the background of window to the color a certain pixel has.
 
     Parameters
@@ -2608,7 +2659,7 @@ fl_win_background = fl_winbackground
 
 def fl_winstepsize(win, xunit, yunit):
     """fl_winstepsize(win, xunit, yunit)
-    
+
     Defines the steps by which the size of a window can be changed. Changes
     to the window size will be multiples of specified units after this
     call. Note that this only applies to interactive resizing.
@@ -2650,7 +2701,7 @@ fl_set_winstepunit = fl_winstepunit
 
 def fl_winisvalid(win):
     """fl_winisvalid(win) -> result
-    
+
     Checks if a window id is valid or not. Note that excessive use
     of this function may negatively impact performance.
 
@@ -2687,7 +2738,7 @@ def fl_winisvalid(win):
 
 def fl_wintitle(win, title):
     """fl_wintitle(win, title)
-    
+
     Changes the window title (and its associated icon title).
 
     Parameters
@@ -2752,7 +2803,7 @@ def fl_winicontitle(win, title):
 
 def fl_winposition(xpos, ypos):
     """fl_winposition(xpos, ypos)
-    
+
     Defines the position of a window to be opened.
 
     Parameters
@@ -2787,7 +2838,7 @@ fl_pref_winposition = fl_winposition
 
 def fl_winminsize(win, width, height):
     """fl_winminsize(win, width, height)
-    
+
     Defines a constraint for a resizable window whose size will be within a
     range not less than minumum (to be used before calling fl_winopen).
 
@@ -2823,7 +2874,7 @@ def fl_winminsize(win, width, height):
 
 def fl_winmaxsize(win, width, height):
     """fl_winmaxsize(win, width, height)
-    
+
     Defines a constraint for a resizable window whose size will be
     within a range not bigger than maximum, before calling fl_winopen().
 
@@ -2859,7 +2910,7 @@ def fl_winmaxsize(win, width, height):
 
 def fl_winaspect(win, xpos, ypos):
     """fl_winaspect(win, xpos, ypos)
-    
+
     Defines the aspect ratio of the window for later interactive resizing.
 
     Parameters
@@ -2894,7 +2945,7 @@ def fl_winaspect(win, xpos, ypos):
 
 def fl_reset_winconstraints(win):
     """fl_reset_winconstraints(win)
-    
+
     Changes constraints (size and aspect ratio) to default ones on
     an active window.
 
@@ -2924,7 +2975,7 @@ def fl_reset_winconstraints(win):
 
 def fl_winsize(width, height):
     """fl_winsize(width, height)
-    
+
     Defines the preferred window size, before calling fl_winopen(),
     and makes the window non-resizeable.
 
@@ -2960,7 +3011,7 @@ fl_pref_winsize = fl_winsize
 
 def fl_initial_winsize(width, height):
     """fl_initial_winsize(width, height)
-    
+
     Defines the preferred window size, before calling fl_winopen().
 
     Parameters
@@ -2993,14 +3044,15 @@ def fl_initial_winsize(width, height):
 # TODO: verify if it is supposed to be used in python
 def fl_initial_winstate(state):
     """fl_initial_winstate(state)
-    
+
     Defines initial state, normal or iconic, of the window.
 
     Parameters
     ----------
         state : int
-            window state to be set. Values (from xfdata.py) NormalState,
-            IconicState
+            window state to be set. Values (from xfdata.py)
+            NormalState (most applications want to start this way), IconicState
+            (application wants to start as an icon).
 
     Examples
     --------
@@ -3024,7 +3076,7 @@ def fl_initial_winstate(state):
 
 def fl_create_colormap(ptr_xvisualinfo, numfilledcolrs):
     """fl_create_colormap(ptr_xvisualinfo, numfilledcolrs) -> colormap
-    
+
     Creates a colormap appropriate for a given visual to be used with
     a canvas.
 
@@ -3065,7 +3117,7 @@ def fl_create_colormap(ptr_xvisualinfo, numfilledcolrs):
 
 def fl_wingeometry(xpos, ypos, width, height):
     """fl_wingeometry(xpos, ypos, width, height)
-    
+
     Defines the initial geometry (position and size) of the window
     to be opened; the window will not be resizable.
 
@@ -3110,7 +3162,7 @@ fl_pref_wingeometry = fl_wingeometry
 
 def fl_initial_wingeometry(xpos, ypos, width, height):
     """fl_initial_wingeometry(xpos, ypos, width, height)
-    
+
     Defines the initial geometry (position and size) of the window
     to be opened.
 
@@ -3152,7 +3204,7 @@ def fl_initial_wingeometry(xpos, ypos, width, height):
 
 def fl_noborder():
     """fl_noborder()
-    
+
     Suppresses the window manager's decoration (before creating
     the window).
 
@@ -3175,7 +3227,7 @@ def fl_noborder():
 
 def fl_transient():
     """fl_transient()
-    
+
     Makes a window a transient one (before creating the window).
 
     Examples
@@ -3197,7 +3249,7 @@ def fl_transient():
 
 def fl_get_winsize(win):
     """fl_get_winsize(win) -> width, height
-    
+
     Finds out the size of the specified window.
 
     Parameters
@@ -3243,7 +3295,7 @@ def fl_get_winsize(win):
 
 def fl_get_winorigin(win):
     """fl_get_winorigin(win) -> xpos, ypos
-    
+
     Finds out the origin (position) of the specified window.
 
     Parameters
@@ -3288,7 +3340,7 @@ def fl_get_winorigin(win):
 
 def fl_get_wingeometry(win):
     """fl_get_wingeometry(win) -> xpos, ypos, width, height
-    
+
     Finds out geometry (position and size) of a window.
 
     Parameters
@@ -3378,7 +3430,7 @@ def FL_IS_CANVAS(ptr_flobject):
 
 def FL_ObjWin(ptr_flobject):
     """FL_ObjWin(ptr_flobject) -> win
-    
+
     Finds out the window id a flobject belongs to (for general use).
 
     Parameters
@@ -3410,7 +3462,7 @@ def FL_ObjWin(ptr_flobject):
 
 def fl_get_real_object_window(ptr_flobject):
     """fl_get_real_object_window(ptr_flobject) -> win
-    
+
     Finds out the real window id a flobject belongs to (to be used
     for cursor or pointer routines).
 
@@ -3454,7 +3506,7 @@ FL_OBJECT_WID = FL_ObjWin
 
 def fl_XNextEvent(ptr_xevent):
     """fl_XNextEvent(ptr_xevent) -> result, ptr_xevent
-    
+
     X11 XNextEvent equivalent function.
 
     Parameters
@@ -3476,7 +3528,7 @@ def fl_XNextEvent(ptr_xevent):
     API_diversion
     -------------
         API changed from XForms, upstream is fl_XNextEvent(ptr_xevent)
-    
+
     Notes
     -----
         Status: Untested + NoDoc + NoDemo = NOT OK
@@ -3496,7 +3548,7 @@ def fl_XNextEvent(ptr_xevent):
 
 def fl_XPeekEvent(ptr_xevent):
     """fl_XPeekEvent(ptr_xevent) -> result, ptr_xevent
-    
+
     X11 XPeekEvent equivalent function. Blocks if there is
     no event until a new one has arrived.
 
@@ -3535,7 +3587,7 @@ def fl_XPeekEvent(ptr_xevent):
 
 def fl_XEventsQueued(mode):
     """fl_XEventsQueued(mode) -> yesno
-    
+
     X11 XEventsQueued equivalent function, finds out if there are any
     events in the event queue.
 
@@ -3571,7 +3623,7 @@ def fl_XEventsQueued(mode):
 
 def fl_XPutBackEvent(ptr_xevent):
     """fl_XPutBackEvent(ptr_xevent)
-    
+
     X11 XPutBackEvent equivalent function, allows to push back an
     event onto the queue.
 
@@ -3602,7 +3654,7 @@ def fl_XPutBackEvent(ptr_xevent):
 
 def fl_last_event():
     """fl_last_event() -> ptr_xevent
-    
+
     Finds out the last X event. If this routine is used outside of a
     callback function, the value returned may not be the real "last
     event" if the program was idling and, in this case, it returns a
@@ -3633,7 +3685,7 @@ def fl_last_event():
 
 def fl_set_event_callback(pyfn_AppEventCb, vdata):
     """fl_set_event_callback(pyfn_AppEventCb, vdata) -> AppEventCb
-    
+
     Defines up an event callback routine. Whenever an event happens, the
     callback function is invoked with the event as the first argument.
     This assumes the application program solicits the events and further,
@@ -3687,7 +3739,7 @@ def fl_set_event_callback(pyfn_AppEventCb, vdata):
 
 def fl_set_idle_callback(pyfn_AppEventCb, vdata):
     """fl_set_idle_callback(pyfn_AppEventCb, vdata) -> AppEventCb
-    
+
     Registers an idle callback. Interaction with it  can used for periodic
     tasks, e.g. rotating an image, checking the status of some external
     device or application state etc. An idle callback is an application
@@ -3746,7 +3798,7 @@ def fl_set_idle_callback(pyfn_AppEventCb, vdata):
 
 def fl_addto_selected_xevent(win, evtmask):
     """fl_addto_selected_xevent(win, evtmask) -> evtmask
-    
+
     Adds solicited event masks on the fly without altering other
     masks already selected.
 
@@ -3796,7 +3848,7 @@ def fl_addto_selected_xevent(win, evtmask):
 
 def fl_remove_selected_xevent(win, evtmask):
     """fl_remove_selected_xevent(win, evtmask) -> evtmask
-    
+
     Removes solicited event masks on the fly without altering other
     masks already selected.
 
@@ -3849,7 +3901,7 @@ fl_add_selected_xevent = fl_addto_selected_xevent
 
 def fl_set_idle_delta(msec):
     """fl_set_idle_delta(msec)
-    
+
     Changes what the library considers to be "idle". Be aware that under
     some conditions ad idle callback can be called sooner than the minimum
     interval; if the timing of the idle callback is of concerned, timeouts
@@ -3883,7 +3935,7 @@ def fl_set_idle_delta(msec):
 def fl_add_event_callback(win, evttype, pyfn_AppEventCb, vdata):
     """fl_add_event_callback(win, evttype, pyfn_AppEventCb, vdata)
     -> AppEventCb
-    
+
     Adds an event handler for a window. Manipulates the event callback
     functions for the window specified, which will be called when an
     event of specified type is pending for the window. It does not
@@ -3954,7 +4006,7 @@ def fl_add_event_callback(win, evttype, pyfn_AppEventCb, vdata):
 
 def fl_remove_event_callback(win, evttype):
     """fl_remove_event_callback(win, evttype)
-    
+
     Removes one or all event callbacks for a window and for an event of
     specified type. May be called with for a window for which no event
     callbacks have been set.
@@ -3998,7 +4050,7 @@ def fl_remove_event_callback(win, evttype):
 
 def fl_activate_event_callbacks(win):
     """fl_activate_event_callbacks(win)
-    
+
     Handles event solicitation. Activates the default mapping of events
     to event masks built-in in the XForms Library, and causes the system
     to solicit the events for you. Note, however, the mapping of events
@@ -4032,7 +4084,7 @@ def fl_activate_event_callbacks(win):
 
 def fl_print_xevent_name(wheretxt, ptr_xevent):
     """fl_print_xevent_name(wheretxt, ptr_xevent) -> ptr_xevent
-    
+
     Prints the name of an XEvent and some other infos.
 
     Parameters
@@ -4072,7 +4124,7 @@ def fl_print_xevent_name(wheretxt, ptr_xevent):
 
 def fl_XFlush():
     """fl_XFlush()
-    
+
     Flushes the X output buffer. Convenience replacement for X11
     XFlush() function.
 
@@ -4117,7 +4169,7 @@ def button_down(mask):
 def fl_initialize(numargs, argslist, appname, ptr_appoptions, numappopts):
     """fl_initialize(numargs, argslist, appname, ptr_appoptions, numappopts)
     -> ptr_display
-    
+
     Initializes XForms library. It should always be called before any
     other calls to the XForms Library, except fl_set_defaults() and a few
     other functions that alter some of the defaults of the library.
@@ -4173,7 +4225,7 @@ def fl_initialize(numargs, argslist, appname, ptr_appoptions, numappopts):
     ptr_argslist = library.convert_to_ptr_stringc(argslist)
     s_appname = library.convert_to_stringc(appname)
     if not ptr_appoptions:      # if it is None
-        ptr_appoption = cty.c_void_p()
+        ptr_appoptions = cty.c_void_p()
     else:                       # if it is a real FL_CMD_OPT
         library.verify_otherclassptr_type(ptr_appoptions, \
                 cty.POINTER(xfdata.FL_CMD_OPT))
@@ -4188,7 +4240,7 @@ def fl_initialize(numargs, argslist, appname, ptr_appoptions, numappopts):
 
 def fl_finish():
     """fl_finish()
-    
+
     It is a final cleanup routine, restores all X server defaults, shuts
     down the connection and frees dynamically allocated memory. To be used
     as the last function.
@@ -4213,7 +4265,7 @@ def fl_finish():
 def fl_get_resource(resname, resclass, dtype, defval, size):
     """fl_get_resource(resname, resclass, dtype, defval, size)
     -> restext, varvalue
-    
+
     Finds out resource data at the lowest level. It may be useful to e.g.
     retrieve arbitrary strings and values and to pass data around.
 
@@ -4228,8 +4280,12 @@ def fl_get_resource(resname, resclass, dtype, defval, size):
             and should not contain wildcards of any kind. Alternative to
             resource name
         dtype : int
-            type of resource. Values (from xfdata.py) FL_NONE, FL_SHORT,
-            FL_BOOL, FL_INT, FL_LONG, FL_FLOAT, FL_STRING
+            type of resource. Values (from xfdata.py)
+            FL_NONE (type for variables not to be used, or not available),
+            FL_SHORT (type for short variable), FL_BOOL (type for boolean
+            variable, int), FL_INT (type for int variable), FL_LONG (type for
+            long variable), FL_FLOAT (type for float variable), FL_STRING
+            (type for char[]/string variable)
         defval : str
             default value for resource data
         size : int
@@ -4280,7 +4336,7 @@ def fl_get_resource(resname, resclass, dtype, defval, size):
 
 def fl_set_resource(resnamecls, txtval):
     """fl_set_resource(resnamecls, txtval)
-    
+
     Defines a resource, associating a value to it. It may be useful to e.g.
     change a built-in button labels with proper resource names, or to store
     arbitrary strings and values and to pass data around.
@@ -4314,7 +4370,7 @@ def fl_set_resource(resnamecls, txtval):
 
 def fl_get_app_resources(ptr_flresource, numresources):
     """fl_get_app_resources(ptr_flresource, numresources)
-    
+
     Reads user application specific options.
 
     Parameters
@@ -4350,7 +4406,7 @@ def fl_get_app_resources(ptr_flresource, numresources):
 
 def fl_set_graphics_mode(mode, doublebuf):
     """fl_set_graphics_mode(mode, doublebuf)
-    
+
     Defines graphics mode and doublebuffer state.
 
     Parameters
@@ -4384,7 +4440,7 @@ def fl_set_graphics_mode(mode, doublebuf):
 
 def fl_set_visualID(vmode):
     """fl_set_visualID(vmode)
-    
+
     Defines visual mode and depth. By default, X Server's visual and
     depth values are used.
 
@@ -4393,7 +4449,7 @@ def fl_set_visualID(vmode):
         vmode : long
             visual mode. Values (from xfdata.py) StaticGray, GrayScale,
             StaticColor, PseudoColor, TrueColor, DirectColor,
-            DefaultVisual, GreyScale, StaticGrey
+            DefaultVisual, GreyScale, StaticGrey.
 
     Examples
     --------
@@ -4418,7 +4474,7 @@ def fl_set_visualID(vmode):
 
 def fl_keysym_pressed(keysym):
     """fl_keysym_pressed(keysym) -> num
-    
+
     Finds out if a keyboard symbol has been pressed *todo*
 
     Parameters
@@ -4465,15 +4521,35 @@ def fl_set_defaults(pdmask, ptr_fliopt):
     Parameters
     ----------
         pdmask : long_pos
-            Mask of program defaults. Values (from xfdata.py) FL_PDDepth,
-            FL_PDClass, FL_PDDouble, FL_PDSync, FL_PDPrivateMap,
-            FL_PDScrollbarType, FL_PDPupFontSize, FL_PDButtonFontSize,
-            FL_PDInputFontSize, FL_PDSliderFontSize, FL_PDVisual,
-            FL_PDULThickness, FL_PDULPropWidth, FL_PDBS, FL_PDCoordUnit,
-            FL_PDDebug, FL_PDSharedMap, FL_PDStandardMap, FL_PDBorderWidth,
-            FL_PDSafe, FL_PDMenuFontSize, FL_PDBrowserFontSize,
-            FL_PDChoiceFontSize, FL_PDLabelFontSize, FL_PDButtonLabelSize,
-            FL_PDSliderLabelSize, FL_PDInputLabelSize, FL_PDButtonLabel
+            Mask of program defaults. Values (from xfdata.py)
+            FL_PDDepth (Preferred visual depth, "depth"), FL_PDClass (*todo*),
+            FL_PDDouble (Simulates double buffering, "doubleBuffer"), FL_PDSync
+            (*todo*), FL_PDPrivateMap (Selects private colormap if appropriate,
+            "privateColormap"), FL_PDScrollbarType (Scrollbar type to use for
+            browser and input, "scrollbarType"), FL_PDPupFontSize (Font size
+            for pop-ups, "PupFontSize"), FL_PDButtonFontSize (Default button
+            label font size, "buttonFontSize"), FL_PDInputFontSize (Input
+            label and text font size, "menuFontSize"), FL_PDSliderFontSize
+            (Slider label and text font size), FL_PDVisual (Preferred visual,
+            e.g. TrueColor .., "vclass"), FL_PDULThickness (Underline thickness
+            "ulThickness"), FL_PDULPropWidth (Underline width, 0 for constant
+            width fonts, "ulPropWidth"), FL_PDBS (Turn BackingStore on or off,
+            "backingStore"), FL_PDCoordUnit (Unit of measure for screen
+            coordinates, e.g. pixel, mm, point, etc.., "coordUnit"), FL_PDDebug
+            (Debug level, 0-5, "debug"), FL_PDSharedMap (Forces use of shared
+            colormap, "sharedColormap"), FL_PDStandardMap (Forces use of
+            standard colormap, "standardColormap"), FL_PDBorderWidth (Default
+            border width, "borderWidth"), FL_PDSafe (*todo*), FL_PDMenuFontSize
+            (Menu label font size, "menuFontSize"), FL_PDBrowserFontSize
+            (Browser label and text font size, "browserFontSize"),
+            FL_PDChoiceFontSize (Choice label and choice text font size,
+            "choiceFontSize"), FL_PDLabelFontSize (Label font size for all
+            other flobjects, e.g. box, pixmap etc.., "labelFontSize"),
+            FL_PDButtonLabelSize or FL_PDButtonLabel or FL_PDButtonFontSize
+            (Default button label font size, "buttonFontSize"),
+            FL_PDSliderLabelSize or FL_PDSliderFontSize (Default slider label
+            font size), FL_PDInputLabelSize or FL_PDInputFontSize (Input label
+            and text font size, "menuFontSize").
         ptr_fliopt : pointer to xfdata.FL_IOPT array
             program defaults class instance. You can use xfstruct.make_fliopt
             function passing a dict with keys corresponding to xfdata.FL_IOPT's
@@ -4502,7 +4578,7 @@ def fl_set_defaults(pdmask, ptr_fliopt):
 
 def fl_set_tabstop(tabtext):
     """fl_set_tabstop(tabtext)
-    
+
     Adjusts the distance by setting the tab stops. For proportional font,
     substituting tabs with spaces is not always appropriate because this
     most likely will fail to align text properly. Instead, a tab is
@@ -4539,7 +4615,7 @@ def fl_set_tabstop(tabtext):
 
 def fl_get_defaults():
     """fl_get_defaults() -> ptr_fliopt
-    
+
     Finds out program defaults from the resource database.
 
     Returns
@@ -4574,7 +4650,7 @@ def fl_get_defaults():
 
 def fl_get_visual_depth():
     """fl_get_visual_depth() -> depth
-    
+
     Finds out the visual depth.
 
     Returns
@@ -4602,7 +4678,7 @@ def fl_get_visual_depth():
 
 def fl_vclass_name(mode):
     """fl_vclass_name(mode) -> name
-    
+
     Finds out name corresponding to a visual mode.
 
     Parameters
@@ -4637,7 +4713,7 @@ def fl_vclass_name(mode):
 
 def fl_vclass_val(name):
     """fl_vclass_val(name) -> vclass
-    
+
     Finds out value of visual mode.
 
     Parameters
@@ -4672,7 +4748,7 @@ def fl_vclass_val(name):
 
 def fl_set_ul_property(proportional, thickness):
     """fl_set_ul_property(proportional, thickness)
-    
+
     Defines property of an underlined text.
 
     Parameters
@@ -4705,7 +4781,7 @@ def fl_set_ul_property(proportional, thickness):
 
 def fl_set_clipping(xpos, ypos, width, height):
     """fl_set_clipping(xpos, ypos, width, height)
-    
+
     Defines a clipping region in the XForms Library's default GC (gc[0]).
     This defines the area (delimited by arguments passed) drawing is to
     restrict to and are relative to the window/form that will be drawn
@@ -4826,7 +4902,7 @@ def fl_unset_gc_clipping(gc):
 
 def fl_set_clippings(ptr_rect, numrects):
     """fl_set_clippings(ptr_rect, numrects)
-    
+
     Changes the clip-mask in the specified GC to the specified list
     of rectangles and sets the clip origin. The output is clipped
     to remain contained within the rectangles. The clip-origin is
@@ -4864,7 +4940,7 @@ def fl_set_clippings(ptr_rect, numrects):
 
 def fl_unset_clipping():
     """fl_unset_clipping()
-    
+
     Stops clipping and removes clipping area defined with
     fl_set_clipping()
 
@@ -4887,7 +4963,7 @@ def fl_unset_clipping():
 
 def fl_set_text_clipping(xpos, ypos, width, height):
     """fl_set_text_clipping(xpos, ypos, width, height)
-    
+
     Defines a clipping region for text in the XForms Library's default
     GC (gc[0]). This defines the area (delimited by arguments passed)
     drawing is to restrict to and are relative to the window/form that
@@ -4932,7 +5008,7 @@ def fl_set_text_clipping(xpos, ypos, width, height):
 
 def fl_unset_text_clipping():
     """fl_unset_text_clipping()
-    
+
     Stops clipping for text and removes clipping area defined with
     fl_set_text_clipping()
 

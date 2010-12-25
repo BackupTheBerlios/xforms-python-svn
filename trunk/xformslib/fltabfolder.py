@@ -45,7 +45,7 @@ from xformslib import xfdata
 def fl_add_tabfolder(foldertype, xpos, ypos, width, height, label):
     """fl_add_tabfolder(foldertype, xpos, ypos, width, height, label)
     -> ptr_flobject
-    
+
     Adds a tabfolder flobject. It is a special container that is capable
     of holding multiple groups of objects (folders) to maximize the
     utilization of the screen real estate. Each folder has its own tab
@@ -56,8 +56,10 @@ def fl_add_tabfolder(foldertype, xpos, ypos, width, height, label):
     ----------
         foldertype : int
             type of tabfolder to be added. Values (from xfdata.py)
-            FL_TOP_TABFOLDER, FL_BOTTOM_TABFOLDER, FL_LEFT_TABFOLDER,
-            FL_RIGHT_TABFOLDER, FL_NORMAL_TABFOLDER
+            FL_TOP_TABFOLDER or FL_NORMAL_TABFOLDER (tabfolder with tab on
+            top), FL_BOTTOM_TABFOLDER (tabfolder with tab on bottom),
+            FL_LEFT_TABFOLDER (tabfolder with tab on left), FL_RIGHT_TABFOLDER
+            (tabfolder with tab on right)
         xpos : int
             horizontal position (upper-left corner)
         ypos : int
@@ -108,7 +110,7 @@ def fl_add_tabfolder(foldertype, xpos, ypos, width, height, label):
 
 def fl_addto_tabfolder(ptr_flobject, tabtitle, ptr_flform):
     """fl_addto_tabfolder(ptr_flobject, tabtitle, ptr_flform) -> ptr_flobject
-    
+
     Populates a tabbed folder, adding a regular form to it. Note: application
     program should not destroy a form that has been added to a tabbed folder.
     You can change the attributes of the returned flobject just like any other
@@ -120,7 +122,7 @@ def fl_addto_tabfolder(ptr_flobject, tabtitle, ptr_flform):
     backface when activated. Each tab must have its own form, i.e. you should
     not associate the same form with two different tabs; however, you can
     create copies of a form and use these copies.
-    
+
 
     Parameters
     ----------
@@ -134,7 +136,7 @@ def fl_addto_tabfolder(ptr_flobject, tabtitle, ptr_flform):
     Returns
     -------
         ptr_flobject : pointer to xfdata.FL_OBJECT
-            tabfolder flobject 
+            tabfolder flobject
 
     Examples
     --------
@@ -162,7 +164,7 @@ def fl_addto_tabfolder(ptr_flobject, tabtitle, ptr_flform):
 
 def fl_get_tabfolder_folder_bynumber(ptr_flobject, seqnum):
     """fl_get_tabfolder_folder_bynumber(ptr_flobject, seqnum) -> ptr_flform
-    
+
     Accesses an individual form on the tabfolder by its sequence number.
 
     Parameters
@@ -202,7 +204,7 @@ def fl_get_tabfolder_folder_bynumber(ptr_flobject, seqnum):
 
 def fl_get_tabfolder_folder_byname(ptr_flobject, name):
     """fl_get_tabfolder_folder_byname(ptr_flobject, name) -> ptr_flform
-    
+
     Accesses an individual form on the tabfolder by its name.
 
     Parameters
@@ -242,7 +244,7 @@ def fl_get_tabfolder_folder_byname(ptr_flobject, name):
 
 def fl_delete_folder(ptr_flobject, ptr_flform):
     """fl_delete_folder(ptr_flobject, ptr_flform)
-    
+
     Removes a folder from a tabfolder flobject. After deletion, the number
     of folders in the tabfolder as well as the sequence numbers are
     updated. This means if you want to delete all folders after the
@@ -277,7 +279,7 @@ def fl_delete_folder(ptr_flobject, ptr_flform):
 
 def fl_delete_folder_bynumber(ptr_flobject, seqnum):
     """fl_delete_folder_bynumber(ptr_flobject, seqnum)
-    
+
     Removes a folder from a tabfolder flobject by its sequence number.
     After deletion, the number of folders in the tabfolder as well as
     the sequence numbers are updated. This means if you want to delete
@@ -313,7 +315,7 @@ def fl_delete_folder_bynumber(ptr_flobject, seqnum):
 
 def fl_delete_folder_byname(ptr_flobject, name):
     """fl_delete_folder_byname(ptr_flobject, name)
-    
+
     Removes a folder from a tabfolder flobject by its name. After
     deletion, the number of folders in the tabfolder as well as the
     sequence numbers are updated. This means if you want to delete
@@ -349,7 +351,7 @@ def fl_delete_folder_byname(ptr_flobject, name):
 
 def fl_set_folder(ptr_flobject, ptr_flform):
     """fl_set_folder(ptr_flobject, ptr_flform)
-    
+
     Defines which folder to show.
 
     Parameters
@@ -381,7 +383,7 @@ def fl_set_folder(ptr_flobject, ptr_flform):
 
 def fl_set_folder_byname(ptr_flobject, name):
     """fl_set_folder_byname(ptr_flobject, name)
-    
+
     Defines which folder to show by its name.
 
     Parameters
@@ -413,7 +415,7 @@ def fl_set_folder_byname(ptr_flobject, name):
 
 def fl_set_folder_bynumber(ptr_flobject, seqnum):
     """fl_set_folder_bynumber(ptr_flobject, seqnum)
-    
+
     Defines which folder to show by its sequence number.
 
     Parameters
@@ -445,7 +447,7 @@ def fl_set_folder_bynumber(ptr_flobject, seqnum):
 
 def fl_get_folder(ptr_flobject):
     """fl_get_folder(ptr_flobject) -> ptr_flform
-    
+
     Finds out what the last active folder is (which may be of greater
     interest than the currently active one).
 
@@ -481,7 +483,7 @@ def fl_get_folder(ptr_flobject):
 
 def fl_get_folder_number(ptr_flobject):
     """fl_get_folder_number(ptr_flobject)
-    
+
     Finds out what the sequence number of the last active folder is (which
     may be of greater interest than the currently active one).
 
@@ -517,7 +519,7 @@ def fl_get_folder_number(ptr_flobject):
 
 def fl_get_folder_name(ptr_flobject):
     """fl_get_folder_name(ptr_flobject)
-    
+
     Finds out what the name of the last active folder is (which may
     be of greater interest than the currently active one).
 
@@ -553,7 +555,7 @@ def fl_get_folder_name(ptr_flobject):
 
 def fl_get_tabfolder_numfolders(ptr_flobject):
     """fl_get_tabfolder_numfolders(ptr_flobject) -> numfolders
-    
+
     Finds out the number of folders in the tabfolder.
 
     Parameters
@@ -623,7 +625,7 @@ def fl_get_active_folder(ptr_flobject):
 
 def fl_get_active_folder_number(ptr_flobject):
     """fl_get_active_folder_number(ptr_flobject) -> seqnum
-    
+
     Finds out the sequence number of which folder is currently
     active, starting from 1 on the left.
 
@@ -659,7 +661,7 @@ def fl_get_active_folder_number(ptr_flobject):
 
 def fl_get_active_folder_name(ptr_flobject):
     """fl_get_active_folder_name(ptr_flobject) -> name
-    
+
     Finds out the name of which folder is currently active.
 
     Parameters
@@ -753,7 +755,7 @@ def fl_get_folder_area(ptr_flobject):
 
 def fl_replace_folder_bynumber(ptr_flobject, seqnum, ptr_flform):
     """fl_replace_folder_bynumber(ptr_flobject, seqnum, ptr_flform)
-    
+
     Replaces a form associated with folder having a particular sequence
     number with a new form
 
@@ -802,8 +804,10 @@ def fl_set_tabfolder_autofit(ptr_flobject, howfit):
         ptr_flobject : pointer to xfdata.FL_OBJECT
             tabfolder flobject
         howfit : int
-            how do folders' sizes fit . Values (from xfdata.py) FL_NO,
-            FL_FIT, FL_ENLARGE_ONLY
+            how do folders' sizes fit . Values (from xfdata.py)
+            FL_NO (do not scale the form), FL_FIT (Always scale the form),
+            FL_ENLARGE_ONLY (Scale the form only if it is smaller than folder
+            area).
 
     Returns
     -------
@@ -835,7 +839,7 @@ def fl_set_tabfolder_autofit(ptr_flobject, howfit):
 
 def fl_set_default_tabfolder_corner(numpixels):
     """fl_set_default_tabfolder_corner(numpixels) -> oldnumpixels
-    
+
     Adjusts the corner pixels, changing appearance of the tabs.
 
     Parameters
@@ -870,7 +874,7 @@ def fl_set_default_tabfolder_corner(numpixels):
 
 def fl_get_tabfolder_offset(ptr_flobject):
     """fl_get_tabfolder_offset(ptr_flobject) -> offset
-    
+
     Finds out current offset for a tabfolder flobject.
 
     Parameters
@@ -905,7 +909,7 @@ def fl_get_tabfolder_offset(ptr_flobject):
 
 def fl_set_tabfolder_offset(ptr_flobject, offset):
     """fl_set_tabfolder_offset(ptr_flobject, offset) -> oldoffset
-    
+
     Defines offset for a tabfolder flobject.
 
     Parameters

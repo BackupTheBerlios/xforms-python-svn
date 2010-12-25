@@ -89,7 +89,7 @@ FL_COORD_centiPOINT = 4    # one hundredth of a point
 
 class admitted_values_for_COORD_UNIT(object):
     """Coordinates unit
-    
+
     Admitted values
     ---------------
         FL_COORD_PIXEL : pixel
@@ -163,7 +163,7 @@ FL_CLASS_END = 45           # sentinel
 
 class admitted_values_for_FL_CLASS(object):
     """Object category
-    
+
     Admitted values
     ---------------
         FL_BUTTON
@@ -300,7 +300,7 @@ FL_PLACE_CENTERFREE = (FL_PLACE_CENTER | FL_FREE_SIZE)
 
 class admitted_values_for_FL_PLACE(object):
     """how to display a form onto screen
-    
+
     Admitted values
     ---------------
         FL_PLACE_FREE
@@ -371,7 +371,7 @@ FL_NOBORDER = 3         # use override_redirect to suppress decoration.
 
 class admitted_values_for_BORDER(object):
     """Window manager decoration request and forms attributes
-    
+
     Admitted values
     ---------------
         FL_FULLBORDER
@@ -417,51 +417,6 @@ FL_OVAL3D_EMBOSSEDBOX = 17
 
 FL_MAX_BOX_STYLES = 23                # sentinel
 
-class admitted_values_for_BOX_TYPE(object):
-    """Box types
-    
-    Admitted values
-    ---------------
-        FL_NO_BOX
-            No box at all (it is transparent), just a label
-        FL_UP_BOX
-            A box that comes out of the screen
-        FL_DOWN_BOX
-            A box that goes down into the screen
-        FL_BORDER_BOX
-            A flat box with a border
-        FL_SHADOW_BOX
-            A flat box with a shadow
-        FL_FRAME_BOX
-            A flat box with an engraved frame
-        FL_ROUNDED_BOX
-            A rounded box
-        FL_EMBOSSED_BOX
-            A flat box with an embossed frame
-        FL_FLAT_BOX
-            A flat box without a border (normally invisible unless
-            given a different color than the surroundings)
-        FL_RFLAT_BOX
-            A rounded box without a border (normally invisible
-            unless given a different color than the surroundings)
-        FL_RSHADOW_BOX
-            A rounded box with a shadow
-        FL_OVAL_BOX
-            A box shaped like an ellipse
-        FL_ROUNDED3D_UPBOX
-            A rounded box coming out of the screen
-        FL_ROUNDED3D_DOWNBOX
-            A rounded box going into the screen
-        FL_OVAL3D_UPBOX
-            An oval box coming out of the screen
-        FL_OVAL3D_DOWNBOX
-            An oval box going into the screen
-        FL_OVAL3D_FRAMEBOX
-            An oval box with an engraved frame
-        FL_OVAL3D_EMBOSSEDBOX
-            An oval box with an embossed frame
-    """
-
 # my add, list of possible values --LK
 BOXTYPE_list = [FL_NO_BOX, FL_UP_BOX, FL_DOWN_BOX, FL_BORDER_BOX, \
                 FL_SHADOW_BOX, FL_FRAME_BOX, FL_ROUNDED_BOX, \
@@ -489,43 +444,6 @@ FL_ALIGN_VERT = 16384       # (1<<14)  not functional yet
 # FL_ALIGN_TOP_RIGHT placeholder (backwards)
 # FL_ALIGN_BOTTOM_LEFT placeholder (backwards)
 # FL_ALIGN_BOTTOM_RIGHT placeholder (backwards)
-
-class admitted_values_for_FL_ALIGN(object):
-    """How to place text relative to a box.
-    
-    Admitted values
-    ---------------
-        FL_ALIGN_CENTER
-            In the middle of the box (inside it)
-        FL_ALIGN_TOP
-            To the top of the box (outside it, if FL_ALIGN_INSIDE
-            is not used)
-        FL_ALIGN_BOTTOM
-            To the bottom of the box (outside it, if FL_ALIGN_INSIDE
-            is not used)
-        FL_ALIGN_LEFT
-            To the left of the box (outside it, if FL_ALIGN_INSIDE
-            is not used)
-        FL_ALIGN_RIGHT
-            To the right of the box (outside it, if FL_ALIGN_INSIDE
-            is not used)
-        FL_ALIGN_LEFT_TOP
-            To the left and top of the box (outside it, if
-            FL_ALIGN_INSIDE is not used)
-        FL_ALIGN_RIGHT_TOP
-            To the right and top of the box (outside it, if
-            FL_ALIGN_INSIDE is not used)
-        FL_ALIGN_LEFT_BOTTOM
-            To the left and bottom of the box (outside it, if
-            FL_ALIGN_INSIDE is not used)
-        FL_ALIGN_RIGHT_BOTTOM
-            To the right and bottom of the box (outside it, if
-            FL_ALIGN_INSIDE is not used)
-        FL_ALIGN_INSIDE
-            places the text inside the box
-        FL_ALIGN_VERT
-            not functional yet
-    """
 
 # my add, list of possible values --LK
 # single values, and bitwise OR-ed with FL_ALIGN_INSIDE
@@ -560,23 +478,6 @@ FL_RIGHTMOUSE = FL_RIGHT_MOUSE
 FL_SCROLLUPMOUSE = FL_SCROLLUP_MOUSE
 FL_SCROLLDOWNMOUSE = FL_SCROLLDOWN_MOUSE
 
-class admitted_values_for_MOUSEBTN(object):
-    """Mouse buttons
-    
-    Admitted values
-    ---------------
-        FL_MBUTTON1 or FL_LEFT_MOUSE
-            Left mouse button was pressed
-        FL_MBUTTON2 or FL_MIDDLE_MOUSE
-            Middle mouse button was pressed
-        FL_MBUTTON3 or FL_RIGHT_MOUSE
-            Right mouse button was pressed
-        FL_MBUTTON4 or FL_SCROLLUP_MOUSE
-            Mouse scroll wheel was rotated in up direction
-        FL_MBUTTON5 or FL_SCROLLDOWN_MOUSE
-            Mouse scroll wheel was rotated in down direction
-    """
-
 # my add, list of possible values --LK
 MOUSEBTN_list = [FL_MBUTTON1, FL_MBUTTON2, FL_MBUTTON3, FL_MBUTTON4,
                  FL_MBUTTON5, FL_LEFT_MOUSE, FL_MIDDLE_MOUSE, FL_RIGHT_MOUSE,
@@ -594,41 +495,6 @@ FL_RETURN_SELECTION = 8
 FL_RETURN_DESELECTION = 16
 FL_RETURN_TRIGGERED = 1024
 FL_RETURN_ALWAYS = ~ FL_RETURN_END_CHANGED
-
-class admitted_values_for_RETURN(object):
-    """control when to return input, slider and dial etc. object
-    
-    Admitted values
-    ---------------
-        FL_RETURN_NONE
-            Never notify the application about interactions with this
-            flobject (i.e. never return it nor invoke its callback). Note,
-            this is not meant for deactivation of a flobject, it will
-            still seem to work as normal, it just does not get returned
-            to the application nor does its callback get invoked.
-        FL_RETURN_CHANGED
-            Return or invoke callback whenever an item is selected (this
-            is the default).
-        FL_RETURN_END
-            Return or invoke callback on end of an interaction.
-        FL_RETURN_END_CHANGED
-            Return or invoke callback if end of interaction and selection
-            of an item coincide.
-        FL_RETURN_SELECTION
-            Return or invoke callback on selection of a line. Please note
-            that for FL_MULTI_BROWSER the browser may be returned just once
-            for a number of lines having been selected.
-        FL_RETURN_DESELECTION
-             Return or invoke callback on deselection of a line. This only
-             works for FL_MULTI_BROWSER browsers and the browser may be
-             returned just once for a number of lines having been deselected.
-        FL_RETURN_TRIGGERED
-            *todo*
-        FL_RETURN_ALWAYS
-            Return (or invoke callback) whenever the interaction ends and/or
-            an item is selected. It includes all conditions except
-            FL_RETURN_END_CHANGED.
-    """
 
 # my add, list of possible values --LK
 RETURN_list = [FL_RETURN_NONE, FL_RETURN_CHANGED, FL_RETURN_END,
@@ -840,7 +706,7 @@ FL_NoColor = FL_NOCOLOR
 
 class admitted_values_for_FL_PD_COL(object):
     """Some special color indices for FL private colormap
-    
+
     Admitted values
     ---------------
         FL_BLACK or FL_LCOL : RGB triple (0,0,0)
@@ -1088,7 +954,7 @@ FL_RESIZED = 22
 
 class admitted_values_for_FL_EVENTS(object):
     """Events that a form reacts to.
-    
+
     Admitted values
     ---------------
         FL_NOEVENT
@@ -1254,21 +1120,6 @@ FL_RESIZE_X = 1
 FL_RESIZE_Y = 2
 FL_RESIZE_ALL = (FL_RESIZE_X | FL_RESIZE_Y)
 
-class admitted_values_for_FL_RESIZE_T(object):
-    """Resize policies
-    
-    Admitted values
-    ---------------
-        FL_RESIZE_NONE
-            Cannot be rescaled/resized
-        FL_RESIZE_X
-            Can be rescaled on horizontal axis
-        FL_RESIZE_Y
-            Can be rescaled on vertical axis
-        FL_RESIZE_ALL
-            Can be rescaled on both axis
-    """
-
 # my add, list of possible values --LK
 RESIZE_list = [FL_RESIZE_NONE, FL_RESIZE_X, FL_RESIZE_Y, FL_RESIZE_ALL]
 
@@ -1291,7 +1142,7 @@ MAX_SHORTCUTS = 8
 
 class admitted_values_for_FL_KEY(object):
     """Keyboard focus control
-    
+
     Admitted values
     ---------------
         FL_KEY_NORMAL
@@ -1371,63 +1222,44 @@ FL_EMBOSSED_STYLE = 2048        #(1<<11)
 
 FL_FONT_STYLE = FL_TEXT_STYLE
 
-class admitted_values_for_FL_TEXT_STYLE(object):
-    """Text style
-    
-    Admitted values
-    ---------------
-        FL_INVALID_STYLE
-            style not valid
-        FL_NORMAL_STYLE
-            Helvetica normal text
-        FL_BOLD_STYLE
-            Helvetica boldface text
-        FL_ITALIC_STYLE
-            Helvetica italic text
-        FL_BOLDITALIC_STYLE
-            Helvetica boldface and italic text
-        FL_FIXED_STYLE
-            Courier fixed width (good for tables)
-        FL_FIXEDBOLD_STYLE
-            Courier bold fixed text
-        FL_FIXEDITALIC_STYLE
-            Courier italic fixed text
-        FL_FIXEDBOLDITALIC_STYLE
-            Courier boldface and italic fixed text
-        FL_TIMES_STYLE
-            Times-Roman like normal font
-        FL_TIMESBOLD_STYLE
-            Times-Roman like boldface text
-        FL_TIMESITALIC_STYLE
-            Times-Roman like italic text
-        FL_TIMESBOLDITALIC_STYLE
-            Times-Roman like boldface and italic text
-        FL_MISC_STYLE
-            Charter normal text
-        FL_MISCBOLD_STYLE
-            Charter boldface text
-        FL_MISCITALIC_STYLE
-            Charter italic text
-        FL_SYMBOL_STYLE
-            Symbol text
-        FL_SHADOW_STYLE
-            Text casting a shadow (modifier mask)
-        FL_ENGRAVED_STYLE
-            Text engraved into the form (modifier mask)
-        FL_EMBOSSED_STYLE
-            Text standing out (modifier mask)
-    """
-
 # my add, list of possible values --LK
-TEXTSTYLE_list = [FL_INVALID_STYLE, FL_NORMAL_STYLE, FL_BOLD_STYLE,
-                  FL_ITALIC_STYLE, FL_BOLDITALIC_STYLE, FL_FIXED_STYLE,
-                  FL_FIXEDBOLD_STYLE, FL_FIXEDITALIC_STYLE,
-                  FL_FIXEDBOLDITALIC_STYLE, FL_TIMES_STYLE,
-                  FL_TIMESBOLD_STYLE, FL_TIMESITALIC_STYLE,
-                  FL_TIMESBOLDITALIC_STYLE, FL_MISC_STYLE,
-                  FL_MISCBOLD_STYLE, FL_MISCITALIC_STYLE,
-                  FL_SYMBOL_STYLE, FL_SHADOW_STYLE, FL_ENGRAVED_STYLE,
-                  FL_EMBOSSED_STYLE]
+# FL_INVALID_STYLE not to chooes from
+TEXTSTYLE_list = [FL_NORMAL_STYLE, FL_BOLD_STYLE, FL_ITALIC_STYLE,
+    FL_BOLDITALIC_STYLE, FL_FIXED_STYLE, FL_FIXEDBOLD_STYLE,
+    FL_FIXEDITALIC_STYLE, FL_FIXEDBOLDITALIC_STYLE, FL_TIMES_STYLE,
+    FL_TIMESBOLD_STYLE, FL_TIMESITALIC_STYLE, FL_TIMESBOLDITALIC_STYLE,
+    FL_MISC_STYLE, FL_MISCBOLD_STYLE, FL_MISCITALIC_STYLE, FL_SYMBOL_STYLE,
+    FL_NORMAL_STYLE|FL_SHADOW_STYLE, FL_BOLD_STYLE|FL_SHADOW_STYLE,
+    FL_ITALIC_STYLE|FL_SHADOW_STYLE, FL_BOLDITALIC_STYLE|FL_SHADOW_STYLE,
+    FL_FIXED_STYLE|FL_SHADOW_STYLE, FL_FIXEDBOLD_STYLE|FL_SHADOW_STYLE,
+    FL_FIXEDITALIC_STYLE|FL_SHADOW_STYLE,
+    FL_FIXEDBOLDITALIC_STYLE|FL_SHADOW_STYLE, FL_TIMES_STYLE|FL_SHADOW_STYLE,
+    FL_TIMESBOLD_STYLE|FL_SHADOW_STYLE, FL_TIMESITALIC_STYLE|FL_SHADOW_STYLE,
+    FL_TIMESBOLDITALIC_STYLE|FL_SHADOW_STYLE, FL_MISC_STYLE|FL_SHADOW_STYLE,
+    FL_MISCBOLD_STYLE|FL_SHADOW_STYLE, FL_MISCITALIC_STYLE|FL_SHADOW_STYLE,
+    FL_SYMBOL_STYLE|FL_SHADOW_STYLE, FL_NORMAL_STYLE|FL_ENGRAVED_STYLE,
+    FL_BOLD_STYLE|FL_ENGRAVED_STYLE, FL_ITALIC_STYLE|FL_ENGRAVED_STYLE,
+    FL_BOLDITALIC_STYLE|FL_ENGRAVED_STYLE, FL_FIXED_STYLE|FL_ENGRAVED_STYLE,
+    FL_FIXEDBOLD_STYLE|FL_ENGRAVED_STYLE,
+    FL_FIXEDITALIC_STYLE|FL_ENGRAVED_STYLE,
+    FL_FIXEDBOLDITALIC_STYLE|FL_ENGRAVED_STYLE,
+    FL_TIMES_STYLE|FL_ENGRAVED_STYLE, FL_TIMESBOLD_STYLE|FL_ENGRAVED_STYLE,
+    FL_TIMESITALIC_STYLE|FL_ENGRAVED_STYLE,
+    FL_TIMESBOLDITALIC_STYLE|FL_ENGRAVED_STYLE,
+    FL_MISC_STYLE|FL_ENGRAVED_STYLE, FL_MISCBOLD_STYLE|FL_ENGRAVED_STYLE,
+    FL_MISCITALIC_STYLE|FL_ENGRAVED_STYLE, FL_SYMBOL_STYLE|FL_ENGRAVED_STYLE,
+    FL_NORMAL_STYLE|FL_EMBOSSED_STYLE, FL_BOLD_STYLE|FL_EMBOSSED_STYLE,
+    FL_ITALIC_STYLE|FL_EMBOSSED_STYLE, FL_BOLDITALIC_STYLE|FL_EMBOSSED_STYLE,
+    FL_FIXED_STYLE|FL_EMBOSSED_STYLE, FL_FIXEDBOLD_STYLE|FL_EMBOSSED_STYLE,
+    FL_FIXEDITALIC_STYLE|FL_EMBOSSED_STYLE,
+    FL_FIXEDBOLDITALIC_STYLE|FL_EMBOSSED_STYLE,
+    FL_TIMES_STYLE|FL_EMBOSSED_STYLE, FL_TIMESBOLD_STYLE|FL_EMBOSSED_STYLE,
+    FL_TIMESITALIC_STYLE|FL_EMBOSSED_STYLE,
+    FL_TIMESBOLDITALIC_STYLE|FL_EMBOSSED_STYLE,
+    FL_MISC_STYLE|FL_EMBOSSED_STYLE,
+    FL_MISCBOLD_STYLE|FL_EMBOSSED_STYLE, FL_MISCITALIC_STYLE|FL_EMBOSSED_STYLE,
+    FL_SYMBOL_STYLE|FL_EMBOSSED_STYLE, FL_SHADOW_STYLE, FL_ENGRAVED_STYLE,
+    FL_EMBOSSED_STYLE]
 
 
 # Standard sizes in XForms
@@ -1438,29 +1270,6 @@ FL_MEDIUM_SIZE = 14
 FL_LARGE_SIZE = 18
 FL_HUGE_SIZE = 24
 FL_DEFAULT_SIZE = FL_SMALL_SIZE
-
-class admitted_values_for_FONT_SIZE(object):
-    """Standard sizes
-    
-    Admitted values
-    ---------------
-        FL_TINY_SIZE
-            8 points font size.
-        FL_SMALL_SIZE or FL_DEFAULT_SIZE
-            10 points font size (default)
-        FL_NORMAL_SIZE
-            12 points font size
-        FL_MEDIUM_SIZE
-            14 points font size
-        FL_LARGE_SIZE
-            18 points font size
-        FL_HUGE_SIZE = 24
-            24 points font size
-    """
-
-# my add, list of (some of) possible values --LK
-FONTSIZE_list = [FL_TINY_SIZE, FL_SMALL_SIZE, FL_NORMAL_SIZE, FL_MEDIUM_SIZE,
-                 FL_LARGE_SIZE, FL_HUGE_SIZE, FL_DEFAULT_SIZE]
 
 # FL_TINY_FONT placeholder (backwards)
 # FL_SMALL_FONT placeholder (backwards)
@@ -1482,7 +1291,7 @@ FL_CLICK_TIMEOUT = 400      # double click interval
 
 class FL_FORM_(cty.Structure):
     """FL_FORM class
-    
+
     To access to the data referenced by a pointer to FL_FORM (ptr_flform) you
     need to use "ptr_flform.contents", then one of its attributes' name.
     Nonetheless, whenever possible it is better to use appropriate functions.
@@ -1605,7 +1414,7 @@ FL_FORM = FL_FORM_
 
 class FL_OBJECT_(cty.Structure):
     """FL_OBJECT class
-    
+
     Each XForms flobject has a number of attributes. Some of them are used by
     the main routine, some have a fixed meaning and should never be altered
     by the class routines and some are free for the class routines to use.
@@ -1727,8 +1536,8 @@ class FL_OBJECT_(cty.Structure):
             fl_set_object_lstyle() and queried using fl_get_object_lstyle()
         shortcut : pointer to long
             A pointer to long containing all shortcuts (as keysyms) defined
-            for the flobject. You should never need them because they are fully
-            handled by the main routines.
+            for the flobject. You should never need them because they are
+            fully handled by the main routines.
         handle : function, returning value
             function(ptr_flobject, int, crd, crd, int, pvdata) -> int
             This is a pointer to the interaction handling routine for the
@@ -1748,8 +1557,9 @@ class FL_OBJECT_(cty.Structure):
             Instantiation. This is a pointer that points to any class specific
             information. For example, for sliders it stores the minimum,
             maximum and current value of the slider. Most classes (except the
-            most simple ones like boxes and texts) will need this. Whenever the
-            flobject receives the event FL_FREEMEM it should free this memory.
+            most simple ones like boxes and texts) will need this. Whenever
+            the flobject receives the event FL_FREEMEM it should free this
+            memory.
         prehandle : function, returning value
             function(ptr_flobject, int, crd, crd, int, pvdata)
         posthandle : function, returning value
@@ -1797,14 +1607,14 @@ class FL_OBJECT_(cty.Structure):
             fl_do_forms() or the callback function for the flobject is invoked.
             It can be changed using fl_set_object_return(). Especially in
             the case of flobjects having child flobjects also the corresponding
-            settings for child flobjects may need changes and which automatically
-            get adjusted when the above function is used.
+            settings for child flobjects may need changes and which
+            automatically get adjusted when the above function is used.
         double_buffer : int
             only used by mesa/gl canvas
         pushed : int
-            flag if the mouse is pushed within the bounding box of the flobject.
-            It is set and reset by the main routine. Class routines should
-            never change it but can use it to draw or handle flobjects
+            flag if the mouse is pushed within the bounding box of the
+            flobject. It is set and reset by the main routine. Class routines
+            should never change it but can use it to draw or handle flobjects
             differently.
         focus : int
             flag if keyboard input is sent to this object. It is set and reset
@@ -1830,11 +1640,11 @@ class FL_OBJECT_(cty.Structure):
             0-255, the <Left> and <Right> arrow keys and <Home> and <End>
             (<Tab> and <Return> are normally used to switch between input
             flobjects). By setting this field to FL_KEY_TAB enforces that the
-            flobject receives also these two keys as well as the <Up> and <Down>
-            arrow keys and <PgUp> and <PgDn> when it has the focus. To receive
-            other special keys (e.g. function keys) FL_KEY_SPECIAL must be set
-            here. By setting wantkey to FL_KEY_ALL all keys are sent to the
-            object.
+            flobject receives also these two keys as well as the <Up> and
+            <Down> arrow keys and <PgUp> and <PgDn> when it has the focus. To
+            receive other special keys (e.g. function keys) FL_KEY_SPECIAL
+            must be set here. By setting wantkey to FL_KEY_ALL all keys are
+            sent to the object.
         radio : int
             *todo*
         automatic : int
@@ -1849,9 +1659,9 @@ class FL_OBJECT_(cty.Structure):
         redraw : int
             *todo*
         visible : int
-            flag if the flobject is visible. When the flobject is not visible the
-            main routine will never try to draw it or send events to it. By
-            default flobjects are visible. It can be hidden using
+            flag if the flobject is visible. When the flobject is not visible
+            the main routine will never try to draw it or send events to it.
+            By default flobjects are visible. It can be hidden using
             fl_hide_object() and queried using fl_object_is_visible(). Note
             that this does not guarantee that the flobject is visible on the
             screen, you need to verify if the form the flobject belongs to is
@@ -1867,14 +1677,14 @@ class FL_OBJECT_(cty.Structure):
             fl_set_object_dblclick() and queried using fl_get_object_dblclick()
         c_vdata : pointer to any type
             for class use. The main module does not reference or modify this
-            field in any way. The flobject classes, including the built-in ones,
-            may use this field.
+            field in any way. The flobject classes, including the built-in
+            ones, may use this field.
         c_cdata : str
             for class use
         c_ldata : long
             for class use. The main module does not reference or modify this
-            field in any way. The flobject classes, including the built-in ones,
-            may use this field.
+            field in any way. The flobject classes, including the built-in
+            ones, may use this field.
         dbl_background : long_pos
             double buffer background color
         tooltip : str
@@ -1963,11 +1773,11 @@ class Visual(cty.Structure):
 # origin of the drawing routines
 class FL_pixmap_(cty.Structure):
     """Fl_pixmap class
-    
+
     Attributes
     ----------
         pixmap : long_pos
-            *todo*
+            Pixmap resource id
         win : long_pos
             window
         visual : pointer to Visual
@@ -2088,7 +1898,7 @@ class function_prototype_for_FL_HANDLEPTR(object):
 # /usr/include/X11/Xlib.h 984
 class _XEvent(cty.Union):
     """_XEvent class
-    
+
     Attributes
     ----------
         type : int
@@ -2361,20 +2171,6 @@ FL_HIDDEN = 0
 FL_INVISIBLE = FL_HIDDEN
 FL_VISIBLE = 1
 
-class admitted_values_for_VISIBILITY(object):
-    """Form visibility state
-    
-    Admitted values
-    ---------------
-        FL_BEING_HIDDEN
-            The forms is visible but is in the process of being hidden
-        FL_HIDDEN or FL_INVISIBLE
-            The form is not visible
-        FL_VISIBLE
-            The form is visible
-    """
-    pass
-
 # my add, list of possible values --LK
 VISIBLE_list = [FL_BEING_HIDDEN, FL_HIDDEN, FL_INVISIBLE, FL_VISIBLE]
 
@@ -2407,20 +2203,6 @@ FL_READ   = 1
 FL_WRITE  = 2
 FL_EXCEPT = 4
 
-class admitted_values_for_ASYNCIO(object):
-    """Async IO
-    
-    Admitted values
-    ---------------
-        FL_READ
-            File descriptor has data available
-        FL_WRITE
-            File descriptor is available for writing
-        FL_EXCEPT
-            an I/O error has occurred
-    """
-    pass
-
 # my add, list of possible values --LK
 ASYNCIO_list = [FL_READ, FL_WRITE, FL_EXCEPT]
 
@@ -2428,32 +2210,6 @@ ASYNCIO_list = [FL_READ, FL_WRITE, FL_EXCEPT]
 # values for unnamed enumeration
 FL_INPUT_END_EVENT_CLASSIC = 0
 FL_INPUT_END_EVENT_ALWAYS  = 1
-
-class admitted_values_for_Fl_INPUT_END(object):
-    """input end event handling
-    
-    Admitted values
-    ---------------
-    FL_INPUT_END_EVENT_CLASSIC
-        Uses old behavior in handling return of end event for input. An
-        "end of edit" event was not reported back to the program when
-        the user clicked on a non-input flobject, i.e. changed to a different
-        input flobject. This let to some problems when the interaction with
-        the clicked-on non-input flobject depended on the new content of the
-        input flobject, just having been edited, but which had not been been
-        reported back to the caller.
-    FL_INPUT_END_EVENT_ALWAYS
-        Uses new (default) behavior in handling return of end event for
-        input. It means that the users either hits the <Tab> or the
-        <Return> key (except for multi-line inputs) or that she clicks
-        onto some other flobject that in principle allows user interaction.
-        These events are interpreted as an indication the user is done
-        editing the input field and thus are reported back to the program,
-        either by returning the input flobject or invoking its callback. But
-        unless the user goes to a different input flobject the input field
-        edited retains the focus.
-    """
-    pass
 
 # my add, list of possible values --LK
 INPUTENDRETNEVENT_list = [FL_INPUT_END_EVENT_CLASSIC, \
@@ -2632,7 +2388,7 @@ XK_Hyper_R = 0xffee             # Right hyper
 
 class admitted_values_for_KEYSYM(object):
     """KeySym keyboard symbols
-    
+
     Admitted values
     ---------------
         XK_BackSpace (Back space/char key)
@@ -2858,22 +2614,6 @@ FL_XOR = 6              # GXxor
 FL_COPY = 3             # GXcopy
 FL_AND = 1              # GXand
 
-class admitted_values_for_DRAWMODE(object):
-    """Draw mode
-    
-    Admitted values
-    ---------------
-        FL_XOR
-            Bitwise XOR (exclusive-or) of the pixel value to be drawn with
-            the pixel value already on the screen. Useful for rubber-banding.
-        FL_COPY
-            Default overwrite mode, final pixel value is the same as source.
-        FL_AND
-            Bitwise AND of the pixel value to be drawn with the pixel value
-            already on the screen.
-    """
-    pass
-
 # my add, list of possible values --LK
 DRAWMODE_list = [FL_XOR, FL_COPY, FL_AND]
 
@@ -2902,30 +2642,6 @@ DefaultVisual = 10       # special request
 GreyScale = GrayScale
 StaticGrey = StaticGray
 
-class admitted_values_for_VISUALMODE(object):
-    """Visual mode
-    
-    Admitted values
-    ---------------
-        IllegalVisual
-            *todo*
-        StaticGray or StaticGrey
-            *todo*
-        GrayScale or GreyScale
-            *todo*
-        StaticColor
-            *todo*
-        PseudoColor
-            *todo*
-        TrueColor
-            *todo*
-        DirectColor
-            *todo*
-        DefaultVisual
-            *todo*
-    """
-    pass
-
 # my add - list of possible values --LK
 VISUALMODE_list = [StaticGray, GrayScale, StaticColor, PseudoColor,
                    TrueColor, DirectColor, DefaultVisual, GreyScale,
@@ -2933,51 +2649,15 @@ VISUALMODE_list = [StaticGray, GrayScale, StaticColor, PseudoColor,
 
 # values for unnamed enumeration
 FL_North = 2                            #NorthGravity
-""""""
 FL_NorthEast = 3                        #NorthEastGravity
-""""""
 FL_NorthWest = 1                        #NorthWestGravity
-""""""
 FL_South = 8                            #SouthGravity
-""""""
 FL_SouthEast = 9                        #SouthEastGravity
-""""""
 FL_SouthWest = 7                        #SouthWestGravity
-""""""
 FL_East = 6                             #EastGravity
-""""""
 FL_West = 4                             #WestGravity
-""""""
 FL_NoGravity = 0                        #ForgetGravity
-""""""
 FL_ForgetGravity = FL_NoGravity         #ForgetGravity
-""""""
-
-class admitted_values_for_GRAVITY(object):
-    """Gravity
-    
-    Admitted values
-    ---------------
-        FL_North
-            *todo*
-        FL_NorthEast
-            *todo*
-        FL_NorthWest
-            *todo*
-        FL_South
-            *todo*
-        FL_SouthEast
-            *todo*
-        FL_SouthWest
-            *todo*
-        FL_East
-            *todo*
-        FL_West
-            *todo*
-        FL_NoGravity or FL_ForgetGravity
-            *todo*
-    """
-    pass
 
 # my add, list of possible values --LK
 GRAVITY_list = [FL_North, FL_NorthEast, FL_NorthWest, FL_South, FL_SouthEast,
@@ -3000,7 +2680,7 @@ Atom = cty.c_ulong
 # /usr/include/X11/Xlib.h 1044
 class XFontProp(cty.Structure):
     """XFontProp class
-    
+
     Attributes
     ----------
         name : long_pos
@@ -3015,7 +2695,7 @@ class XFontProp(cty.Structure):
 # /usr/include/X11/Xlib.h 1035
 class XCharStruct(cty.Structure):
     """XCharStruct class
-    
+
     Attributes
     ----------
         lbearing : short
@@ -3042,7 +2722,7 @@ class XCharStruct(cty.Structure):
 # /usr/include/X11/Xlib.h 1050
 class XFontStruct(cty.Structure):
     """XFontStruct class
-    
+
     Attributes
     ----------
         ext_data : pointer to XExtData
@@ -3107,7 +2787,7 @@ GC = cty.POINTER(_XGC)
 
 class FL_State(cty.Structure):
     """FL_State class
-    
+
     Attributes
     ----------
         xvinfo : pointer to XVisualInfo
@@ -3218,12 +2898,12 @@ class FL_FONT(cty.Structure):
 # /usr/include/X11/Xlib.h 439
 class XPoint(cty.Structure):
     """XPoint class
-    
+
     Attributes
     ----------
-        xpos : short
+        x : short
             horizontal position of a point
-        ypos : short
+        y : short
             vertical position of a point
     """
     pass
@@ -3232,12 +2912,12 @@ FL_POINT = XPoint
 # /usr/include/X11/Xlib.h 444
 class XRectangle(cty.Structure):
     """XRectangle class
-    
+
     Attributes
     ----------
-        xpos : short
+        x : short
             horizontal position of rectangle
-        ypos : short
+        y : short
             vertical position of rectangle
         width : ushort
             width of rectangle
@@ -3258,32 +2938,6 @@ FL_DOT = 3
 FL_DOTDASH = 4
 FL_DASH = 5
 FL_LONGDASH = 6
-
-class admitted_values_for_LINESTYLE(object):
-    """Line styles
-    
-    Admitted values
-    ---------------
-        FL_SOLID
-            Solid line. Default and most efficient
-        FL_USERDASH
-            Dashed line, but the dash pattern is used-definable via
-            fl_dashedlinestyle(). Only the odd numbered segments are
-            drawn with the foreground color
-        FL_USERDOUBLEDASH
-            Similar to FL_LINE_USERDASH but both even and odd numbered
-            segments are drawn, with the even numbered segments drawn
-            in the background color (as set by fl_bk_color())
-        FL_DOT
-            Dotted line [....]
-        FL_DOTDASH
-            Dash-dot-dash line [-.-.]
-        FL_DASH
-            Dashed line [----]
-        FL_LONGDASH
-            Long dashed line [--------]
-    """
-    pass
 
 # my add, list of possible values --LK
 LINESTYLE_list = [FL_SOLID, FL_USERDASH, FL_USERDOUBLEDASH, FL_DOT,
@@ -3368,35 +3022,13 @@ FL_LONG = 13
 FL_FLOAT = 14
 FL_STRING = 15
 
-class admitted_values_for_RESOURCETYPE(object):
-    """Types for resources
-    
-    Admitted values
-    ---------------
-        FL_NONE
-            type for variables not to be used (or not available)
-        FL_SHORT
-            type for short variable
-        FL_BOOL
-            type for boolean variable (int)
-        FL_INT
-            type for int variable
-        FL_LONG
-            type for long variable
-        FL_FLOAT
-            type for float variable
-        FL_STRING
-            type for char[]/string variable
-    """
-    pass
-
 # my add, list of possible values --LK
 RTYPE_list = [FL_NONE, FL_SHORT, FL_BOOL, FL_INT, FL_LONG, FL_FLOAT,
               FL_STRING]
 
 class FL_RESOURCE(cty.Structure):
     """XForms Library built-in resource.
-    
+
     Attributes
     ----------
         res_name : str
@@ -3480,31 +3112,6 @@ XrmoptionSkipArg = 5    # Ignore this option and the next argument in argv
 XrmoptionSkipLine = 6   # Ignore this option and the rest of argv
 XrmoptionSkipNArgs = 7
 
-class admitted_values_for_XrmOptionKind(object):
-    """XrmOptionKind
-    
-    Admitted values
-    ---------------
-        XrmoptionNoArg
-            Value is specified in OptionDescRec.value
-        XrmoptionIsArg
-            Value is the option string itself
-        XrmoptionStickyArg
-            Value is characters immediately following option
-        XrmoptionSepArg
-            Value is next argument in argv
-        XrmoptionResArg
-            Resource and value in next argument in argv
-        XrmoptionSkipArg
-            Ignore this option and the next argument in argv
-        XrmoptionSkipLine
-            Ignore this option and the rest of argv
-        XrmoptionSkipNArgs
-            Ignore this option and the next OptionDescRes.value
-            arguments in argv
-    """
-
-
 # /usr/include/X11/Xresource.h 345
 class XrmOptionDescRec(cty.Structure):
     """XrmOptionDescRec class
@@ -3516,10 +3123,15 @@ class XrmOptionDescRec(cty.Structure):
         specifier : str
             resource specifier (starting with '*' or '.')
         argKind : int
-            Which style of option it is. Values XrmoptionNoArg,
-            XrmoptionIsArg, XrmoptionStickyArg, XrmoptionSepArg,
-            XrmoptionResArg, XrmoptionSkipArg, XrmoptionSkipLine,
-            XrmoptionSkipNArgs
+            Which style of option it is. Values: XrmoptionNoArg (Value is
+            specified in OptionDescRec.value), XrmoptionIsArg (Value is the
+            option string itself), XrmoptionStickyArg (Value is characters
+            immediately following option), XrmoptionSepArg (Value is next
+            argument in argv), XrmoptionResArg (Resource and value in next
+            argument in argv), XrmoptionSkipArg (Ignore this option and the
+            next argument in argv), XrmoptionSkipLine (Ignore this option and
+            the rest of argv), XrmoptionSkipNArgs (Ignore this option and the
+            next OptionDescRes.value arguments in argv)
         value : str
             Value to provide if argKind is XrmoptionNoArg
     """
@@ -3674,70 +3286,6 @@ FL_PDSliderLabelSize = FL_PDSliderFontSize
 FL_PDInputLabelSize = FL_PDInputFontSize
 FL_PDButtonLabel = FL_PDButtonLabelSize
 
-class admitted_values_for_PRGDEFAULTS(object):
-    """Program default masks
-    
-    Admitted values
-    ---------------
-        FL_PDDepth
-            Preferred visual depth (depth)
-        FL_PDClass
-            *todo*
-        FL_PDDouble
-            Simulates double buffering (doubleBuffer)
-        FL_PDSync
-            *todo*
-        FL_PDPrivateMap
-            Selects private colormap if appropriate (privateColormap)
-        FL_PDScrollbarType
-            Scrollbar type to use for browser and input (scrollbarType)
-        FL_PDPupFontSize
-            Font size for pop-ups (PupFontSize)
-        FL_PDButtonFontSize
-            Default button label font size (buttonFontSize)
-        FL_PDInputFontSize
-            Input label and text font size (menuFontSize)
-        FL_PDSliderFontSize
-            Slider label and text font size
-        FL_PDVisual
-            Preferred visual, e.g. TrueColor .. (vclass)
-        FL_PDULThickness
-            Underline thickness (ulThickness)
-        FL_PDULPropWidth
-            Underline width, 0 for constant width fonts (ulPropWidth)
-        FL_PDBS
-            Turn BackingStore on or off (backingStore)
-        FL_PDCoordUnit
-            Unit of measure for screen coordinates, e.g. pixel, mm,
-            point, etc.. (coordUnit)
-        FL_PDDebug
-            Debug level (0-5) (debug)
-        FL_PDSharedMap
-            Forces use of shared colormap (sharedColormap)
-        FL_PDStandardMap
-            Forces use of standard colormap (standardColormap)
-        FL_PDBorderWidth
-            Default border width (borderWidth)
-        FL_PDSafe
-            *todo*
-        FL_PDMenuFontSize
-            Menu label font size (menuFontSize)
-        FL_PDBrowserFontSize
-            Browser label and text font size (browserFontSize)
-        FL_PDChoiceFontSize
-            Choice label and choice text font size (choiceFontSize)
-        FL_PDLabelFontSize
-            Label font size for all other flobjects, e.g. box, pixmap
-             etc.. (labelFontSize)
-        FL_PDButtonLabelSize or FL_PDButtonLabel
-            Default button label font size (buttonFontSize)
-        FL_PDSliderLabelSize = FL_PDSliderFontSize
-            Default slider label font size
-        FL_PDInputLabelSize = FL_PDInputFontSize
-            Input label and text font size (menuFontSize)
-    """
-    pass
-
 # my add, list of possible values --LK
 PRGDEFAULTS_list = [FL_PDDepth, FL_PDClass, FL_PDDouble, FL_PDSync,
                     FL_PDPrivateMap, FL_PDScrollbarType, FL_PDPupFontSize,
@@ -3830,12 +3378,12 @@ KeyCode = cty.c_ubyte
 # /usr/include/X11/Xlib.h 416
 class XWindowChanges(cty.Structure):
     """X11 XWindowChanges class
-    
+
     Attributes
     ----------
-        xpos : int
+        x : int
             *todo*
-        ypos : int
+        y : int
             *todo*
         width : int
             *todo*
@@ -3861,7 +3409,7 @@ class XWindowChanges(cty.Structure):
 # /usr/include/X11/Xlib.h 426
 class XColor(cty.Structure):
     """X11 XColor class
-    
+
     Attributes
     ----------
         pixel : long_pos
@@ -3889,7 +3437,7 @@ class XColor(cty.Structure):
 # /usr/include/X11/Xlib.h 435
 class XSegment(cty.Structure):
     """X11 XSegment class
-    
+
     Attributes
     ----------
         x1 : short
@@ -3926,12 +3474,12 @@ XRectangle._fields_ = [
 # /usr/include/X11/Xlib.h 450
 class XArc(cty.Structure):
     """X11 XArc class
-    
+
     Attributes
     ----------
-        xpos : short
+        x : short
             *todo*
-        ypos : short
+        y : short
             *todo*
         width : ushort
             *todo*
@@ -3954,7 +3502,7 @@ class XArc(cty.Structure):
 # /usr/include/X11/Xlib.h 464
 class XKeyboardControl(cty.Structure):
     """X11 XKeyboardControl class
-    
+
     Attributes
     ----------
         key_click_percent : int
@@ -4019,14 +3567,14 @@ class XKeyboardState(cty.Structure):
 # /usr/include/X11/Xlib.h 482
 class XTimeCoord(cty.Structure):
     """X11 XTimeCoord class
-    
+
     Attributes
     ----------
         time : long_pos
             Time
-        xpos : short
+        x : short
             *todo*
-        ypos : short
+        y : short
             *todo*
     """
     _fields_ = [
@@ -4067,7 +3615,7 @@ class _XrmHashBucketRec(cty.Structure):
 # /usr/include/X11/Xlib.h 582
 class XKeyEvent(cty.Structure):
     """X11 XKeyEvent class
-    
+
     Attributes
     ----------
         type : int
@@ -4086,9 +3634,9 @@ class XKeyEvent(cty.Structure):
             Window
         time : long_pos
             Time
-        xpos : int
+        x : int
             *todo*
-        ypos : int
+        y : int
             *todo*
         x_root : int
             *todo*
@@ -4124,7 +3672,7 @@ XKeyReleasedEvent = XKeyEvent
 # /usr/include/X11/Xlib.h 600
 class XButtonEvent(cty.Structure):
     """X11 XButtonEvent class
-    
+
     Attributes
     ----------
         type : int
@@ -4143,9 +3691,9 @@ class XButtonEvent(cty.Structure):
             Window
         time : long_pos
             Time
-        xpos : int
+        x : int
             *todo*
-        ypos : int
+        y : int
             *todo*
         x_root : int
             *todo*
@@ -4181,7 +3729,7 @@ XButtonReleasedEvent = XButtonEvent
 # /usr/include/X11/Xlib.h 618
 class XMotionEvent(cty.Structure):
     """X11 XMotionEvent class
-    
+
     Attributes
     ----------
         type : int
@@ -4200,9 +3748,9 @@ class XMotionEvent(cty.Structure):
              Window
         time : long_pos
             Time
-        xpos : int
+        x : int
             *todo*
-        ypos : int
+        y : int
             *todo*
         x_root : int
             *todo*
@@ -4237,7 +3785,7 @@ XPointerMovedEvent = XMotionEvent
 # /usr/include/X11/Xlib.h 641
 class XCrossingEvent(cty.Structure):
     """X11 XCrossingEvent class
-    
+
     Attributes
     ----------
         type : int
@@ -4256,9 +3804,9 @@ class XCrossingEvent(cty.Structure):
             Window
         time : long_pos
             Time
-        xpos : int
+        x : int
             *todo*
-        ypos : int
+        y : int
             *todo*
         x_root : int
             *todo*
@@ -4300,7 +3848,7 @@ XLeaveWindowEvent = XCrossingEvent
 # /usr/include/X11/Xlib.h 659
 class XFocusChangeEvent(cty.Structure):
     """X11 XFocusChangeEvent class
-    
+
     Attributes
     ----------
         type : int
@@ -4334,7 +3882,7 @@ XFocusOutEvent = XFocusChangeEvent
 # /usr/include/X11/Xlib.h 671
 class XKeymapEvent(cty.Structure):
     """X11 XKeymapEvent class
-    
+
     Attributes
     ----------
         type : int
@@ -4362,7 +3910,7 @@ class XKeymapEvent(cty.Structure):
 # /usr/include/X11/Xlib.h 682
 class XExposeEvent(cty.Structure):
     """X11 XExposeEvent class
-    
+
     Attributes
     ----------
         type : int
@@ -4375,9 +3923,9 @@ class XExposeEvent(cty.Structure):
             *todo*
         window : long_pos
             Window
-        xpos : int
+        x : int
             *todo*
-        ypos : int
+        y : int
             *todo*
         width : int
             *todo*
@@ -4405,7 +3953,7 @@ Drawable = XID    # cty.c_ulong
 # /usr/include/X11/Xlib.h 695
 class XGraphicsExposeEvent(cty.Structure):
     """X11 XGraphicsExposeEvent class
-    
+
     Attributes
     ----------
         type : int
@@ -4418,9 +3966,9 @@ class XGraphicsExposeEvent(cty.Structure):
             *todo*
         drawable : long_pos
             Drawable
-        xpos : int
+        x : int
             *todo*
-        ypos : int
+        y : int
             *todo*
         width : int
             *todo*
@@ -4451,7 +3999,7 @@ class XGraphicsExposeEvent(cty.Structure):
 # /usr/include/X11/Xlib.h 705
 class XNoExposeEvent(cty.Structure):
     """X11 XNoExposeEvent class
-    
+
     Attributes
     ----------
         type : int
@@ -4482,7 +4030,7 @@ class XNoExposeEvent(cty.Structure):
 # /usr/include/X11/Xlib.h 714
 class XVisibilityEvent(cty.Structure):
     """X11 XVisibilityEvent class
-    
+
     Attributes
     ----------
         type : int
@@ -4510,7 +4058,7 @@ class XVisibilityEvent(cty.Structure):
 # /usr/include/X11/Xlib.h 727
 class XCreateWindowEvent(cty.Structure):
     """X11 XCreateWindowEvent class
-    
+
     Attributes
     ----------
         type : int
@@ -4525,9 +4073,9 @@ class XCreateWindowEvent(cty.Structure):
             Window
         window : long_pos
             Window
-        xpos : int
+        x : int
             *todo*
-        ypos : int
+        y : int
             *todo*
         width : int
             *todo*
@@ -4556,7 +4104,7 @@ class XCreateWindowEvent(cty.Structure):
 # /usr/include/X11/Xlib.h 736
 class XDestroyWindowEvent(cty.Structure):
     """X11 XDestroyWindowEvent class
-    
+
     Attributes
     ----------
         type : int
@@ -4584,7 +4132,7 @@ class XDestroyWindowEvent(cty.Structure):
 # /usr/include/X11/Xlib.h 746
 class XUnmapEvent(cty.Structure):
     """X11 XUnmapEvent class
-    
+
     Attributes
     ----------
         type : int
@@ -4615,7 +4163,7 @@ class XUnmapEvent(cty.Structure):
 # /usr/include/X11/Xlib.h 756
 class XMapEvent(cty.Structure):
     """X11 XMapEvent class
-    
+
     Attributes
     ----------
         type : int
@@ -4646,7 +4194,7 @@ class XMapEvent(cty.Structure):
 # /usr/include/X11/Xlib.h 765
 class XMapRequestEvent(cty.Structure):
     """X11 XMapRequestEvent class
-    
+
     Attributes
     ----------
         type : int_pos
@@ -4674,7 +4222,7 @@ class XMapRequestEvent(cty.Structure):
 # /usr/include/X11/Xlib.h 777
 class XReparentEvent(cty.Structure):
     """X11 XReparentEvent class
-    
+
     Attributes
     ----------
         type : int
@@ -4691,9 +4239,9 @@ class XReparentEvent(cty.Structure):
             Window
         parent : long_pos
             Window
-        xpos : int
+        x : int
             *todo*
-        ypos : int
+        y : int
             *todo*
         override_redirect : int
             *todo*
@@ -4714,7 +4262,7 @@ class XReparentEvent(cty.Structure):
 # /usr/include/X11/Xlib.h 791
 class XConfigureEvent(cty.Structure):
     """X11 XConfigureEvent class
-    
+
     Attributes
     ----------
         type : int
@@ -4729,9 +4277,9 @@ class XConfigureEvent(cty.Structure):
             Window
         window : long_pos
             Window
-        xpos : int
+        x : int
             *todo*
-        ypos : int
+        y : int
             *todo*
         width : int
             *todo*
@@ -4763,7 +4311,7 @@ class XConfigureEvent(cty.Structure):
 # /usr/include/X11/Xlib.h 801
 class XGravityEvent(cty.Structure):
     """X11 XGravityEvent class
-    
+
     Attributes
     ----------
         type : int
@@ -4778,9 +4326,9 @@ class XGravityEvent(cty.Structure):
             Window
         window : long_pos
             Window
-        xpos : int
+        x : int
             *todo*
-        ypos : int
+        y : int
             *todo*
     """
     _fields_ = [
@@ -4797,7 +4345,7 @@ class XGravityEvent(cty.Structure):
 # /usr/include/X11/Xlib.h 810
 class XResizeRequestEvent(cty.Structure):
     """X11 XResizeRequestEvent class
-    
+
     Attributes
     ----------
         type : int
@@ -4828,7 +4376,7 @@ class XResizeRequestEvent(cty.Structure):
 # /usr/include/X11/Xlib.h 825
 class XConfigureRequestEvent(cty.Structure):
     """X11 XConfigureRequestEvent class
-    
+
     Attributes
     ----------
         type : int
@@ -4843,9 +4391,9 @@ class XConfigureRequestEvent(cty.Structure):
             Window
         window : long_pos
             Window
-        xpos : int
+        x : int
             *todo*
-        ypos : int
+        y : int
             *todo*
         width : int
             *todo*
@@ -4880,7 +4428,7 @@ class XConfigureRequestEvent(cty.Structure):
 # /usr/include/X11/Xlib.h 835
 class XCirculateEvent(cty.Structure):
     """X11 XCirculateEvent class
-    
+
     Attributes
     ----------
         type : int
@@ -4911,7 +4459,7 @@ class XCirculateEvent(cty.Structure):
 # /usr/include/X11/Xlib.h 845
 class XCirculateRequestEvent(cty.Structure):
     """X11 XCirculateRequestEvent class
-    
+
     Attributes
     ----------
         type : int
@@ -4942,7 +4490,7 @@ class XCirculateRequestEvent(cty.Structure):
 # /usr/include/X11/Xlib.h 856
 class XPropertyEvent(cty.Structure):
     """X11 XPropertyEvent class
-    
+
     Attributes
     ----------
         type : int
@@ -4976,7 +4524,7 @@ class XPropertyEvent(cty.Structure):
 # /usr/include/X11/Xlib.h 866
 class XSelectionClearEvent(cty.Structure):
     """X11 XSelectionClearEvent class
-    
+
     Attributes
     ----------
         type : int
@@ -5007,7 +4555,7 @@ class XSelectionClearEvent(cty.Structure):
 # /usr/include/X11/Xlib.h 879
 class XSelectionRequestEvent(cty.Structure):
     """X11 XSelectionRequestEvent class
-    
+
     Attributes
     ----------
         type : int
@@ -5047,7 +4595,7 @@ class XSelectionRequestEvent(cty.Structure):
 # /usr/include/X11/Xlib.h 891
 class XSelectionEvent(cty.Structure):
     """X11 XSelectionEvent class
-    
+
     Attributes
     ----------
         type : int
@@ -5084,7 +4632,7 @@ class XSelectionEvent(cty.Structure):
 # /usr/include/X11/Xlib.h 906
 class XColormapEvent(cty.Structure):
     """X11 XColormapEvent class
-    
+
     Attributes
     ----------
         type : int
@@ -5118,7 +4666,7 @@ class XColormapEvent(cty.Structure):
 # /usr/include/X11/Xlib.h 916
 class N19XClientMessageEvent4DOT_71E(cty.Union):
     """X11 N19XClientMessageEvent4DOT_71E class
-    
+
     Attributes
     ----------
         b : array of 20 char
@@ -5137,7 +4685,7 @@ class N19XClientMessageEvent4DOT_71E(cty.Union):
 # /usr/include/X11/Xlib.h 921
 class XClientMessageEvent(cty.Structure):
     """X11 XClientMessageEvent class
-    
+
     Attributes
     ----------
         type : int
@@ -5171,7 +4719,7 @@ class XClientMessageEvent(cty.Structure):
 # /usr/include/X11/Xlib.h 933
 class XMappingEvent(cty.Structure):
     """X11 XMappingEvent class
-    
+
     Attributes
     ----------
         type : int
@@ -5205,7 +4753,7 @@ class XMappingEvent(cty.Structure):
 # /usr/include/X11/Xlib.h 943
 class XErrorEvent(cty.Structure):
     """XErrorEvent class
-    
+
     Attributes
     ----------
         type : int
@@ -5236,7 +4784,7 @@ class XErrorEvent(cty.Structure):
 # /usr/include/X11/Xlib.h 951
 class XAnyEvent(cty.Structure):
     """X11 XAnyEvent class
-    
+
     Attributes
     ----------
         type : int
@@ -5261,7 +4809,7 @@ class XAnyEvent(cty.Structure):
 # /usr/include/X11/Xlib.h 967
 class XGenericEvent(cty.Structure):
     """X11 XGenericEvent class
-    
+
     Attributes
     ----------
         type : int
@@ -5289,7 +4837,7 @@ class XGenericEvent(cty.Structure):
 # /usr/include/X11/Xlib.h 978
 class XGenericEventCookie(cty.Structure):
     """X11 XGenericEventCookie class
-    
+
     Attributes
     ----------
         type : int
@@ -5397,7 +4945,7 @@ SelectionNotify = 31
 
 class admitted_values_for_EventNames(object):
     """Event type names
-    
+
     Admitted values
     ---------------
         KeyPress
@@ -5481,18 +5029,6 @@ NormalState = 1         # most applications want to start this way
 IconicState = 3         # application wants to start as an icon
 # *** end - from /usr/include/X11/Xutil.h ***
 
-class admitted_values_for_initialwinstate(object):
-    """initial window state
-    
-    Admitted values
-    ---------------
-        NormalState
-            most applications want to start this way
-        IconicState
-            application wants to start as an icon
-    """
-    pass
-
 # my add, list of possible values --LK
 WINSTATE_list = [NormalState, IconicState]
 
@@ -5504,15 +5040,6 @@ WINSTATE_list = [NormalState, IconicState]
 #######################
 
 FL_NORMAL_BITMAP = 0
-
-class admitted_values_for_BITMAPTYPE(object):
-    """Bitmap types
-    
-    Admitted values
-    ---------------
-        FL_NORMAL_BITMAP
-            normal bitmap flobject type
-    """
 
 # my add, list of possible values --LK
 BITMAPTYPE_list = [FL_NORMAL_BITMAP, ]
@@ -5530,15 +5057,6 @@ FL_BITMAP_ALIGN = FL_ALIGN_BOTTOM
 
 FL_NORMAL_PIXMAP = 0
 
-class admitted_values_for_PIXMAPTYPE(object):
-    """Pixmap types
-    
-    Admitted values
-    ---------------
-        FL_NORMAL_PIXMAP
-            normal pixmap flobject type
-    """
-
 # my add - list of possible values --LK
 PIXMAPTYPE_list = [FL_NORMAL_PIXMAP, ]
 
@@ -5554,24 +5072,6 @@ FL_NORMAL_BROWSER = 0
 FL_SELECT_BROWSER = 1
 FL_HOLD_BROWSER = 2
 FL_MULTI_BROWSER = 3
-
-class admitted_values_for_FL_BROWSER_TYPE(object):
-    """Types of browser
-    
-    Admitted values
-    ---------------
-        FL_NORMAL_BROWSER
-            A browser in which no selections can be made.
-        FL_SELECT_BROWSER
-            In this case the user can make single line selections.
-        FL_HOLD_BROWSER
-            Same to FL_SELECT_BROWSER but the selection remains visible
-            until the next selection.
-        FL_MULTI_BROWSER
-            Multiple selections can be made and remains visible until
-            de-selected.
-    """
-    pass
 
 # my add - list of possible values --LK
 BROWSERTYPE_list = [FL_NORMAL_BROWSER, FL_SELECT_BROWSER,
@@ -5596,7 +5096,7 @@ FL_BROWSER_SCROLL_CALLBACK = cty.CFUNCTYPE(None, cty.POINTER(FL_OBJECT),
                 cty.c_int, cty.c_void_p)
 class function_prototype_for_FL_BROWSER_SCROLL_CALLBACK(object):
     """FL_BROWSER_SCROLL_CALLBACK(ptr_flobject, int, vdata)
-    
+
     prototype for function handling callback for browser flobjects,
     no return
     """
@@ -5619,33 +5119,6 @@ FL_RETURN_BUTTON = 6
 FL_HIDDEN_RET_BUTTON = 7
 FL_MENU_BUTTON = 8
 FL_TOGGLE_BUTTON = FL_PUSH_BUTTON
-
-class admitted_values_for_FL_BUTTON_TYPE(object):
-    """Types of buttons
-    
-    Admitted values
-    ---------------
-        FL_NORMAL_BUTTON
-            Returns value when released.
-        FL_PUSH_BUTTON or FL_TOGGLE_BUTTON
-            Stays pushed until user pushes it again.
-        FL_RADIO_BUTTON
-            Push button that switches off other radio buttons.
-        FL_HIDDEN_BUTTON
-            Invisible normal button.
-        FL_TOUCH_BUTTON
-            Returns value as long as the user pushes it.
-        FL_INOUT_BUTTON
-            Returns value both when pushed and when released.
-        FL_RETURN_BUTTON
-            Like a normal button but reacts on the <Return> key.
-        FL_HIDDEN_RET_BUTTON
-            Invisible return button.
-        FL_MENU_BUTTON
-            Returns value when pushed, useful e.g. for opening a popup
-            when pushed.
-    """
-    pass
 
 # my add, list of possible values --LK
 BUTTONTYPE_list = [FL_NORMAL_BUTTON, FL_PUSH_BUTTON, FL_RADIO_BUTTON, \
@@ -5796,18 +5269,6 @@ FL_CANVAS_TYPE = cty.c_int      # enum
 FL_NORMAL_CANVAS = 0
 FL_SCROLLED_CANVAS = 1
 
-class admitted_values_for_FL_CANVAS_TYPE(object):
-    """Types of canvas
-    
-    Admitted values
-    ---------------
-        FL_NORMAL_CANVAS
-            *todo*
-        FL_SCROLLED_CANVAS
-            *todo*
-    """
-    pass
-
 # list of possible values - my add --LK
 CANVASTYPE_list = [FL_NORMAL_CANVAS, FL_SCROLLED_CANVAS]
 
@@ -5895,28 +5356,6 @@ FL_PIE_CHART = 5
 FL_SPECIALPIE_CHART = 6
 # FL_FILLED_CHART placeholder (backwards)
 
-class admitted_values_for_FL_CHART_TYPE(object):
-    """Types of chart
-    
-    Admitted values
-    ---------------
-        FL_BAR_CHART
-            A bar-chart (vertical)
-        FL_HORBAR_CHART
-            A horizontal bar-chart
-        FL_LINE_CHART
-            A line-chart
-        FL_FILL_CHART
-            A line-chart but the area below curve is filled
-        FL_SPIKE_CHART
-            A chart with a vertical spike for each value
-        FL_PIE_CHART
-            A pie-chart
-        FL_SPECIALPIE_CHART
-            A pie-chart with displaced first item
-    """
-    pass
-
 # list of possible values - my add --LK
 CHARTTYPE_list = [FL_BAR_CHART, FL_HORBAR_CHART, FL_LINE_CHART, \
                   FL_FILL_CHART, FL_SPIKE_CHART, FL_PIE_CHART, \
@@ -5941,18 +5380,6 @@ FL_CHART_MAX = 2048
 FL_ANALOG_CLOCK = 0
 FL_DIGITAL_CLOCK = 1
 
-class admitted_values_for_CLOCKTYPE(object):
-    """Types of clock
-    
-    Admitted values
-    ---------------
-        FL_ANALOG_CLOCK
-            An analog clock complete with the second hand
-        FL_DIGITAL_CLOCK
-            A digital clock
-    """
-    pass
-
 # my add, list of possible values --LK
 CLOCKTYPE_list = [FL_ANALOG_CLOCK, FL_DIGITAL_CLOCK]
 
@@ -5975,18 +5402,6 @@ FL_CLOCK_TOPCOL = FL_COL1
 FL_COUNTER_TYPE = cty.c_int     # enum
 FL_NORMAL_COUNTER = 0
 FL_SIMPLE_COUNTER = 1
-
-class admitted_values_for_Fl_COUNTER_TYPE(object):
-    """Types of counter
-    
-    Admitted values
-    ---------------
-        FL_NORMAL_COUNTER
-            A counter with two buttons on each side
-        FL_SIMPLE_COUNTER
-            A counter with one button on each side
-    """
-    pass
 
 # list of possible values - my add --LK
 COUNTERTYPE_list = [FL_NORMAL_COUNTER, FL_SIMPLE_COUNTER]
@@ -6125,7 +5540,7 @@ XC_invisible = FL_INVISIBLE_CURSOR
 
 class admitted_values_for_CURSORS(object):
     """Type of cursor
-    
+
     Admitted values
     ---------------
         FL_INVISIBLE_CURSOR
@@ -6161,20 +5576,6 @@ FL_NORMAL_DIAL = 0
 FL_LINE_DIAL = 1
 FL_FILL_DIAL = 2
 
-class admitted_values_for_FL_DIAL_TYPE(object):
-    """Types of dial
-    
-    Admitted values
-    ---------------
-        FL_NORMAL_DIAL
-            A dial with a knob indicating the position
-        FL_LINE_DIAL
-            A dial with a line indicating the position
-        FL_FILL_DIAL
-            The area between initial and current is filled
-    """
-    pass
-
 # list of possible values - my add --LK
 DIALTYPE_list = [FL_NORMAL_DIAL, FL_LINE_DIAL, FL_FILL_DIAL]
 
@@ -6182,18 +5583,6 @@ DIALTYPE_list = [FL_NORMAL_DIAL, FL_LINE_DIAL, FL_FILL_DIAL]
 # values for unnamed enumeration
 FL_DIAL_CW = 0
 FL_DIAL_CCW = 1
-
-class admitted_values_for_DIALROTATION(object):
-    """Types of dial rotation
-    
-    Admitted values
-    ---------------
-        FL_DIAL_CW
-            Clockwise rotation
-        FL_DIAL_CCW
-            Counter-clockwise rotation
-    """
-    pass
 
 # list of possible values - my add --LK
 DIALROTN_list = [FL_DIAL_CW, FL_DIAL_CCW]
@@ -6228,7 +5617,7 @@ FT_OTHER = 7
 
 class admitted_values_for_FILETYPE(object):
     """Types of file
-    
+
     Admitted values
     ---------------
         FT_FILE
@@ -6283,33 +5672,6 @@ FL_RSIZESORT = 6            # sort in decreasing size order
 FL_CASEALPHASORT = 7        # sort case insensitive
 FL_RCASEALPHASORT = 8       # sort case insensitive
 
-class admitted_values_for_ENTRIESSORTORDER(object):
-    """entries sort order
-    
-    Admitted values
-    ---------------
-        FL_ALPHASORT
-            Sorts the entries in alphabetic order (default)
-        FL_RALPHASORT
-            Sorts the entries in reverse alphabetic order
-        FL_MTIMESORT 
-            Sorts the entries according to the modification time
-        FL_RMTIMESORT
-            Sorts the entries according to the modification time,
-            but reverse the order, i.e., latest first
-        FL_SIZESORT
-            Sorts the entries in increasing size order
-        FL_RSIZESORT
-            Sorts the entries in decreasing size order
-        FL_CASEALPHASORT
-            Sorts the entries in alphabetic order with no regard
-            to case
-        FL_RCASEALPHASORT
-            Sorts the entries in reverse alphabetic order with no
-            regard to case
-    """
-    pass
-
 
 FL_DIRLIST_FILTER = cty.CFUNCTYPE(cty.c_int, STRING, cty.c_int)
 
@@ -6321,16 +5683,6 @@ FL_DIRLIST_FILTER = cty.CFUNCTYPE(cty.c_int, STRING, cty.c_int)
 # values for unnamed enumeration
 FL_NORMAL_FORMBROWSER = 0
 
-class admitted_values_for_FORMBROWSERTYPE(object):
-    """types of formbrowser
-    
-    Admitted values
-    ---------------
-        FL_NORMAL_FORMBROWSER
-            normal formbrowser type
-    """
-    pass
-
 # my add, list of possible values --LK
 FORMBRWSTYPE_list = [FL_NORMAL_FORMBROWSER, ]
 
@@ -6338,18 +5690,6 @@ FORMBRWSTYPE_list = [FL_NORMAL_FORMBROWSER, ]
 # values for unnamed enumeration
 FL_SMOOTH_SCROLL = 0
 FL_JUMP_SCROLL = 1
-
-class admitted_values_for_FORMBROWSERSCROLL(object):
-    """type of formbrowser scroll
-    
-    Admitted values
-    ---------------
-        FL_SMOOTH_SCROLL
-            Default scroll
-        FL_JUMP_SCROLL
-            Scrolls in form increments
-    """
-    pass
 
 # list of possible values - my add --LK
 FORMBRWSSCROLL_list = [FL_SMOOTH_SCROLL, FL_JUMP_SCROLL]
@@ -6392,7 +5732,7 @@ GLX_ACCUM_ALPHA_SIZE = 17
 
 class admitted_values_for_GLCONFIGATTR(object):
     """GL configuration attributes
-    
+
     Admitted values
     ---------------
         GLX_USE_GL
@@ -6510,7 +5850,7 @@ FLChoiceTitle = "flChoice.title"
 
 class admitted_values_for_GoodiesLabel(object):
     """Label for goodies
-    
+
     Admitted values
     ---------------
         FLAlertDismissLabel
@@ -6540,7 +5880,7 @@ class admitted_values_for_GoodiesLabel(object):
 
 class FD_CMDLOG(cty.Structure):
     """FL_CMDLOG class
-    
+
     Attributes
     ----------
         form : pointer to FL_FORM
@@ -6573,7 +5913,7 @@ FL_MAX_FSELECTOR = 6
 
 class FD_FSELECTOR(cty.Structure):
     """FD_FSELECTOR class
-    
+
     Attribute
     ---------
         fselect : pointer to FL_FORM
@@ -6646,30 +5986,6 @@ FL_MULTILINE_INPUT = 4
 FL_HIDDEN_INPUT = 5
 FL_SECRET_INPUT = 6
 
-class admitted_values_for_FL_INPUT_TYPE(object):
-    """Types of input
-    
-    Admitted values
-    ---------------
-        FL_NORMAL_INPUT
-            Any type of text can be typed into this field
-        FL_FLOAT_INPUT
-            Only a float value can be typed in (e.g. -23.2e12)
-        FL_INT_INPUT
-            Only an integer value can be typed in (e.g. -86)
-        FL_DATE_INPUT
-            Only a date (MM/DD/YY or DD/MM/YY) can be typed in
-            (and limited per default to 10 characters)
-        FL_MULTILINE_INPUT
-            An input field allowing for multiple lines
-        FL_HIDDEN_INPUT
-            A normal input field but invisible
-        FL_SECRET_INPUT
-            A normal input field that does not show the text (and
-            limited per default to a maximum length of 16 characters)
-    """
-    pass
-
 # my add - list of possible values --LK
 INPUTTYPE_list = [FL_NORMAL_INPUT, FL_FLOAT_INPUT, FL_INT_INPUT,
                   FL_DATE_INPUT, FL_MULTILINE_INPUT, FL_HIDDEN_INPUT,
@@ -6679,23 +5995,7 @@ INPUTTYPE_list = [FL_NORMAL_INPUT, FL_FLOAT_INPUT, FL_INT_INPUT,
 # for date input
 # values for unnamed enumeration
 FL_INPUT_MMDD = 0
-"""Used as format for FL_DATE_INPUT, it places the month before the day"""
 FL_INPUT_DDMM = 1
-"""Used as format for FL_DATE_INPUT, it places the day before the month"""
-
-class admitted_values_for_DATEFMT(object):
-    """Formats of date input
-    
-    Admitted values
-    ---------------
-        FL_INPUT_MMDD
-            Used as format for FL_DATE_INPUT, it places the month
-            before the day
-        FL_INPUT_DDMM
-            Used as format for FL_DATE_INPUT, it places the day
-            before the month
-    """
-    pass
 
 # my add - list of possible values --LK
 DATEFMT_list = [FL_INPUT_MMDD, FL_INPUT_DDMM]
@@ -6813,35 +6113,12 @@ FL_NORMAL_TOUCH_NMENU = 1
 FL_BUTTON_NMENU = 2
 FL_BUTTON_TOUCH_NMENU = 3
 
-class admitted_values_for_NMENUTYPE(object):
-    """types of Nmenu
-    
-    Admitted values
-    ---------------
-        FL_NORMAL_NMENU
-            Probably the most often used type: shown as text on a
-            borderless background, popup gets opened when clicked on
-        FL_NORMAL_TOUCH_NMENU
-            Also shown as text on a borderless background, but popup
-            gets opened when the mouse is moved on top of it without
-            any further user action required
-        FL_BUTTON_NMENU
-            When not active shown as text on borderless background,
-            when clicked on popup is shown and the flobject itself being
-            dispayed as a button
-        FL_BUTTON_TOUCH_NMENU
-            When not active shown as text on borderless background,
-            when mouse is moved onto it the popup is shown and the
-            flobject itself is displayed as a button
-    """
-    pass
-
 # list of possible values - my add --LK
 NMENUTYPE_list = [FL_NORMAL_NMENU, FL_NORMAL_TOUCH_NMENU, FL_BUTTON_NMENU, \
                   FL_BUTTON_TOUCH_NMENU]
 
 
-# pointless as per library's get_xforms_version() --LK
+# pointless as per library.py's get_xforms_version() --LK
 #FL_VERSION = 1
 #"""The major version number"""
 #FL_REVISION = 0
@@ -6853,17 +6130,6 @@ NMENUTYPE_list = [FL_NORMAL_NMENU, FL_NORMAL_TOUCH_NMENU, FL_BUTTON_NMENU, \
 FL_FALSE = 0
 FL_TRUE = (not FL_FALSE)
 
-class admitted_values_for_TRUEFALSE(object):
-    """True/False in XForms
-    
-    Admitted values
-    ---------------
-        FL_FALSE
-            *todo*
-        FL_TRUE
-            *todo*
-    """
-    pass
 
 
 #####################
@@ -6908,7 +6174,7 @@ FLPS_BESTFIT = 3
 
 class admitted_values_for_PS_ORIENTATION(object):
     """Postscript orientation
-    
+
     Admitted values
     ---------------
         FLPS_AUTO
@@ -6930,7 +6196,7 @@ FLPS_COLOR = 1
 
 class admitted_values_for_PSCOLORS(object):
     """Colors for Postscript
-    
+
     Admitted values
     ---------------
         FLPS_BW
@@ -7025,36 +6291,10 @@ FL_ROUNDED_FRAME = 6
 FL_EMBOSSED_FRAME = 7
 FL_OVAL_FRAME = 8
 
-class admitted_values_for_FRAMETYPE(object):
-    """Types of frame
-    
-    Admitted values
-    ---------------
-        FL_NO_FRAME
-            Nothing is drawn
-        FL_UP_FRAME
-            A frame appears coming out of the screen
-        FL_DOWN_FRAME
-            A frame that goes down into the screen
-        FL_BORDER_FRAME
-            A frame with a simple outline
-        FL_SHADOW_FRAME
-            A frame with a shadow
-        FL_ENGRAVED_FRAME
-            A frame appears to be engraved
-        FL_ROUNDED_FRAME
-            A rounded frame
-        FL_EMBOSSED_FRAME
-            A frame appears embossed
-        FL_OVAL_FRAME
-            An elliptic box
-    """
-    pass
-
 # my add, list of possible values --LK
-FRAMETYPE_list = [FL_NO_FRAME, FL_UP_FRAME, FL_DOWN_FRAME,
-        FL_BORDER_FRAME, FL_SHADOW_FRAME, FL_ENGRAVED_FRAME,
-        FL_ROUNDED_FRAME, FL_EMBOSSED_FRAME, FL_OVAL_FRAME]
+FRAMETYPE_list = [FL_NO_FRAME, FL_UP_FRAME, FL_DOWN_FRAME, FL_BORDER_FRAME,
+        FL_SHADOW_FRAME, FL_ENGRAVED_FRAME, FL_ROUNDED_FRAME,
+        FL_EMBOSSED_FRAME, FL_OVAL_FRAME]
 
 
 # defaults?
@@ -7077,34 +6317,6 @@ FL_CONTINUOUS_FREE = 3
 FL_ALL_FREE = 4
 
 FL_SLEEPING_FREE = FL_INACTIVE_FREE
-
-class admitted_values_for_FL_FREE_TYPE(object):
-    """Types of free
-    
-    Admitted values
-    ---------------
-        FL_NORMAL_FREE
-            The flobject will receive the events FL_DRAW, FL_ENTER,
-            FL_LEAVE, FL_MOTION, FL_PUSH, FL_RELEASE and FL_MOUSE
-        FL_INACTIVE_FREE or FL_SLEEPING_FREE
-            The flobject only receives FL_DRAW events. This should be
-            used for flobjects without interaction (e.g. a picture)
-        FL_INPUT_FREE
-            Same as FL_NORMAL_FREE but the flobject also receives
-            FL_FOCUS, FL_UNFOCUS and FL_KEYBOARD events. The
-            ptr_flobject.contents.wantkey is by default set to FL_KEY_NORMAL,
-            i.e., the free flobject will receive all normal keys (0-255)
-            except <Tab> and <Return> key. If you're interested in <Tab>
-            or <Return> key, you need to change obj->wantkey to
-            FL_KEY_TAB or FL_KEY_ALL. See section Events, for details
-        FL_CONTINUOUS_FREE
-            Same as FL_NORMAL_FREE but the flobject also receives FL_STEP
-            events. This should be used for flobjects that change themselves
-            continuously
-        FL_ALL_FREE
-            The flobject receives all types of events
-    """
-    pass
 
 # list of possible values - my add --LK
 FREETYPE_list = [FL_NORMAL_FREE, FL_INACTIVE_FREE, FL_INPUT_FREE,
@@ -7136,16 +6348,6 @@ FREETYPE_list = [FL_NORMAL_FREE, FL_INACTIVE_FREE, FL_INPUT_FREE,
 
 # values for unnamed enumeration
 FL_NORMAL_TEXT = 0
-
-class admitted_values_for_TEXTTYPE(object):
-    """Types of text
-    
-    Admitted values
-    ---------------
-        FL_NORMAL_TEXT
-            Normal text flobject type
-    """
-    pass
 
 # list of possible values - my add --LK
 TEXTTYPE_list = [FL_NORMAL_TEXT, ]
@@ -7218,13 +6420,13 @@ class FL_POPUP_(cty.Structure):
             *todo*
         req_y : int
             *todo*
-        xpos : int
+        x : int
             horizontal position of popup window
-        ypos : int
+        y : int
             vertical position of popup window
-        width : int_pos
+        w : int_pos
             width of popup window
-        height : int_pos
+        h : int_pos
             height of popup window
         min_width : int
             minimum width of popup
@@ -7282,7 +6484,7 @@ FL_POPUP = FL_POPUP_
 
 class FL_POPUP_ENTRY_(cty.Structure):
     """FL_POPUP_ENTRY class
-    
+
     Attributes
     ----------
         prev : pointer to FL_POPUP_ENTRY
@@ -7321,13 +6523,13 @@ class FL_POPUP_ENTRY_(cty.Structure):
             callback for entering entry
         leave_callback : FL_POPUP_CB function type
             callback for leaving entry
-        xpos : int
+        x : int
             horizontal position of entry text
-        ypos : int
+        y : int
             vertical position of entry text
-        width : int_pos
+        w : int_pos
             width of entry text
-        height : int_pos
+        h : int_pos
             height of entry text
         box_x : int
             *todo*
@@ -7467,7 +6669,7 @@ FL_POPUP_ENTRY_._fields_ = [
 
 class FL_POPUP_ITEM(cty.Structure):
     """FL_POPUP_ITEM class
-    
+
     Attributes
     ----------
         text : str
@@ -7494,45 +6696,33 @@ class FL_POPUP_ITEM(cty.Structure):
 FL_POPUP_NORMAL_SELECT = 0
 FL_POPUP_DRAG_SELECT = 1
 
-class admitted_values_for_POPUPPOLICY(object):
-    """Policies of popup
-    
-    Admitted values
-    ---------------
-        FL_POPUP_NORMAL_SELECT
-            Keeps the popup opened when the mouse is not released on
-            one of the selectable items
-        FL_POPUP_DRAG_SELECT
-            Close the popup immediately when the mouse button is released
-    """
-    pass
-
 # my add, list of possible values --LK
 POPUPPOLICY_list = [FL_POPUP_NORMAL_SELECT, FL_POPUP_DRAG_SELECT]
 
 
 # Popup states
 # values for unnamed enumeration
-FL_POPUP_NONE = 0
+FL_POPUP_NONE = 0       # No special flags are set for the state of the popup
 FL_POPUP_DISABLED = 1       # entry is disabled
 FL_POPUP_HIDDEN   = 2       # entry is temporarily hidden
 FL_POPUP_CHECKED  = 4       # toggle/radio item is in on state
 
 class admitted_values_for_POPUPSTATE(object):
     """States of popup
-    
+
     Admitted values
     ---------------
+
         FL_POPUP_NONE
             No special flags are set for the state of the popup
         FL_POPUP_DISABLED
             The popup is disabled and cannot be selected
         FL_POPUP_HIDDEN
-            The popup is hidden, i.e. does not get shown (and thus
-            cannot be selected).
+            The popup is hidden, i.e. does not get shown, and thus cannot
+            be selected
         FL_POPUP_CHECKED
-            Only relevant for toggle or radio popups, marks it as
-            in "on" state
+            Only relevant for toggle or radio popups, marks it as in
+            "on" state).
     """
     pass
 
@@ -7554,7 +6744,7 @@ FL_POPUP_LINE = 4           # line popup entry
 
 class admitted_values_for_POPUPTYPE(object):
     """Types of popup
-    
+
     Admitted values
     ---------------
         FL_POPUP_NORMAL
@@ -7567,7 +6757,7 @@ class admitted_values_for_POPUPTYPE(object):
             (color-filled when 'on'. The group member of the FL_POPUP_ENTRY
             structure determines to which group the entry belongs
         FL_POPUP_SUB
-            Entry for a sub-popupfn. The sub member of its FL_POPUP_ENTRY
+            Entry for a sub-popup. The sub member of its FL_POPUP_ENTRY
             structure is a pointer to the sub-popup that gets shown when
             the mouse enters the entry.
         FL_POPUP_LINE
@@ -7591,31 +6781,6 @@ FL_POPUP_HIGHLIGHT_TEXT_COLOR = 4
 FL_POPUP_DISABLED_TEXT_COLOR = 5
 FL_POPUP_RADIO_COLOR = 6
 
-class admitted_values_for_POPUPCOLOR(object):
-    """Types of popup color
-    
-    Admitted values
-    ---------------
-        FL_POPUP_BACKGROUND_COLOR
-            Background color of the popup (default is FL_MCOL)
-        FL_POPUP_HIGHLIGHT_COLOR
-            Backgroud color an entry is drawn with when it is selectable
-            and the mouse is on top of it (default is FL_BOTTOM_BCOL)
-        FL_POPUP_TITLE_COLOR
-            Color used for the title text of a popup (default is FL_BLACK)
-        FL_POPUP_TEXT_COLOR
-            Color normal used for entry texts (default is FL_BLACK).
-        FL_POPUP_HIGHLIGHT_TEXT_COLOR
-            Color of the entry text when it is selectable and the mouse is
-            on top of it (default is FL_WHITE)
-        FL_POPUP_DISABLED_TEXT_COLOR
-            Color for drawing the text of disabled entries (default is
-            FL_INACTIVE_COL)
-        FL_POPUP_RADIO_COLOR
-            Color the circle drawn for radio entris in 'on' state is drawn in.
-    """
-    pass
-
 # list of possible values, my add --LK
 POPUPCOLOR_list = [FL_POPUP_BACKGROUND_COLOR, FL_POPUP_HIGHLIGHT_COLOR,
                    FL_POPUP_TITLE_COLOR, FL_POPUP_TEXT_COLOR,
@@ -7630,23 +6795,6 @@ POPUPCOLOR_list = [FL_POPUP_BACKGROUND_COLOR, FL_POPUP_HIGHLIGHT_COLOR,
 FL_NORMAL_POSITIONER = 0
 FL_OVERLAY_POSITIONER = 1
 FL_INVISIBLE_POSITIONER = 2
-
-class admitted_values_for_POSITIONERTYPE(object):
-    """Types of positioner
-    
-    Admitted values
-    ---------------
-        FL_NORMAL_POSITIONER
-            Cross-hair inside a box
-        FL_OVERLAY_POSITIONER
-            Cross-hair inside a transparent box (i.e. drawn in
-            in XOR mode)
-        FL_INVISIBLE_POSITIONER
-            Completely invisible positioner to be used just for the
-            side effect of obtaining a position (typically a flobject
-            is below it that otherwise would receive user events)
-    """
-    pass
 
 # my add, list of possible values --LK
 POSITIONERTYPE_list = [FL_NORMAL_POSITIONER, FL_OVERLAY_POSITIONER,
@@ -7683,38 +6831,6 @@ FL_THIN_SCROLLBAR = 1
 FL_NICE_SCROLLBAR = 2
 FL_PLAIN_SCROLLBAR = 3
 
-class admitted_values_for_SCROLLBARTYPE(object):
-    """Types of scrollbar
-    
-    Admitted values
-    ---------------
-        FL_VERT_SCROLLBAR
-            A vertical scrollbar
-        FL_HOR_SCROLLBAR
-            A horizontal scrollbar
-        FL_VERT_THIN_SCROLLBAR
-            A different looking vertical scrollbar
-        FL_HOR_THIN_SCROLLBAR
-            A different looking horizontal scrollbar
-        FL_VERT_NICE_SCROLLBAR
-            A vertical scrollbar using FL_NICE_SLIDER
-        FL_HOR_NICE_SCROLLBAR
-            A horizontal scrollbar using FL_NICE_SLIDER
-        FL_VERT_PLAIN_SCROLLBAR or FL_VERT_BASIC_SCROLLBAR
-            Similar to FL_THIN_SCROLLBAR
-        FL_HOR_PLAIN_SCROLLBAR or FL_HOR_BASIC_SCROLLBAR
-            Similar to FL_HOR_THIN_SCROLLBAR
-        FL_NORMAL_SCROLLBAR
-            *todo*
-        FL_THIN_SCROLLBAR
-            *todo*
-        FL_NICE_SCROLLBAR
-            *todo*
-        FL_PLAIN_SCROLLBAR
-            *todo*
-    """
-    pass
-
 # my add, list of possible values --LK
 SCROLLTYPE_list = [FL_VERT_SCROLLBAR, FL_HOR_SCROLLBAR, \
                   FL_VERT_THIN_SCROLLBAR, FL_HOR_THIN_SCROLLBAR, \
@@ -7734,26 +6850,6 @@ SCROLLTYPE_list = [FL_VERT_SCROLLBAR, FL_HOR_SCROLLBAR, \
 FL_NORMAL_SELECT = 0
 FL_MENU_SELECT = 1
 FL_DROPLIST_SELECT = 2
-
-class admitted_values_for_SELECTTYPE(object):
-    """Select flobject types
-    
-    Admitted values
-    ---------------
-        FL_NORMAL_SELECT
-            Per default this type is drawn as a rounded, flat box (but you
-            can change that by setting a different boxtype for the flobject)
-            with the text of the currently selected item in its center
-        FL_MENU_SELECT
-            This select flobject looks like a button with a little extra box
-            at its right side (just like a FL_MENU_BUTTON) and the text of
-            the currently selected item is drawn on the button-like object
-        FL_DROPLIST_SELECT
-            This type looks like a button with the text of the currently
-            selected item on top of it and a second square button directly
-            beside it with an downward pointing arrow on it
-    """
-    pass
 
 # list of possible values - my add --LK
 SELECTTYPE_list = [FL_NORMAL_SELECT, FL_MENU_SELECT, FL_DROPLIST_SELECT]
@@ -7776,7 +6872,7 @@ FL_SCROLL_FLAG = 8
 
 class admitted_values_for_SLIDERFLAG(object):
     """Flags of slider
-    
+
     Admitted values
     ---------------
         FL_HOR_FLAG
@@ -7810,46 +6906,6 @@ FL_HOR_NICE_SLIDER2 = FL_HOR_NICE_SLIDER | FL_SCROLL_FLAG
 # for use as FL_VERT_PLAIN_SCROLLBAR and FL_VERT_PLAIN_SCROLLBAR
 FL_VERT_BASIC_SLIDER = FL_VERT_BROWSER_SLIDER | FL_SCROLL_FLAG
 FL_HOR_BASIC_SLIDER = FL_HOR_BROWSER_SLIDER | FL_SCROLL_FLAG
-
-class admitted_values_for_FL_SLIDER_TYPE(object):
-    """Types of slider
-    
-    Admitted values
-    ---------------
-        FL_VERT_SLIDER
-            normal slider
-        FL_HOR_SLIDER
-            horizontal slider
-        FL_VERT_FILL_SLIDER
-            filled slider
-        FL_HOR_FILL_SLIDER
-            horizontal filled slider
-        FL_VERT_NICE_SLIDER
-            *todo*
-        FL_HOR_NICE_SLIDER
-            horizontal *todo*
-        FL_VERT_BROWSER_SLIDER
-            *todo*
-        FL_HOR_BROWSER_SLIDER
-            horizontal *todo*
-        FL_VERT_BROWSER_SLIDER2
-            for FL_VERT_SCROLLBAR (for scrollbar only)
-        FL_HOR_BROWSER_SLIDER2
-            horizontal, for FL_HOR_SCROLLBAR (for scrollbar only)
-        FL_VERT_THIN_SLIDER = FL_VERT_FILL_SLIDER | FL_SCROLL_FLAG
-            for FL_VERT_THIN_SCROLLBAR (for scrollbar only)
-        FL_HOR_THIN_SLIDER = FL_HOR_FILL_SLIDER | FL_SCROLL_FLAG
-            for FL_HOR_THIN_SCROLLBAR (for scrollbar only)
-        FL_VERT_NICE_SLIDER2 = FL_VERT_NICE_SLIDER | FL_SCROLL_FLAG
-            for FL_VERT_NICE_SCROLLBAR and  (for scrollbar only)
-        FL_HOR_NICE_SLIDER2 = FL_HOR_NICE_SLIDER | FL_SCROLL_FLAG
-            for FL_HOR_NICE_SCROLLBAR (for scrollbar only)
-        FL_VERT_BASIC_SLIDER
-            for FL_VERT_PLAIN_SCROLLBAR (for scrollbar only)
-        FL_HOR_BASIC_SLIDER
-            for FL_VERT_PLAIN_SCROLLBAR (for scrollbar only)
-    """
-    pass
 
 # my add, list of possible values --LK
 SLIDERTYPE_list = [FL_VERT_SLIDER, FL_HOR_SLIDER, FL_VERT_FILL_SLIDER, \
@@ -7885,18 +6941,6 @@ FL_SPINNER_TYPE = cty.c_int     # enum
 FL_INT_SPINNER = 0
 FL_FLOAT_SPINNER = 1
 
-class admitted_values_for_FL_SPINNER_TYPE(object):
-    """Types of spinner
-    
-    Admitted values
-    ---------------
-        FL_INT_SPINNER = 0
-            spinner with integer values
-        FL_FLOAT_SPINNER = 1
-            spinner with float values
-    """
-    pass
-
 # my add, list of possible values --LK
 SPINNERTYPE_list = [FL_INT_SPINNER, FL_FLOAT_SPINNER]
 
@@ -7912,22 +6956,6 @@ FL_LEFT_TABFOLDER = 2
 FL_RIGHT_TABFOLDER = 3
 FL_NORMAL_TABFOLDER = FL_TOP_TABFOLDER
 
-class admitted_values_for_TABFOLDERTYPE(object):
-    """Types of tabfolder
-    
-    Admitted values
-    ---------------
-        FL_TOP_TABFOLDER or FL_NORMAL_TABFOLDER
-            tabfolder with tab on top
-        FL_BOTTOM_TABFOLDER
-            tabfolder with tab on bottom
-        FL_LEFT_TABFOLDER
-            tabfolder with tab on left
-        FL_RIGHT_TABFOLDER
-            tabfolder with tab on right
-    """
-    pass
-
 # my add, list of possible values --LK
 TABFOLDERTYPE_list = [FL_TOP_TABFOLDER, FL_BOTTOM_TABFOLDER,
         FL_LEFT_TABFOLDER, FL_RIGHT_TABFOLDER, FL_NORMAL_TABFOLDER]
@@ -7937,20 +6965,6 @@ TABFOLDERTYPE_list = [FL_TOP_TABFOLDER, FL_BOTTOM_TABFOLDER,
 FL_NO = 0
 FL_FIT = 1
 FL_ENLARGE_ONLY = 2
-
-class admitted_values_for_FOLDERSIZESFIT(object):
-    """How values fit?
-    
-    Admitted values
-    ---------------
-        FL_NO
-            do not scale the form
-        FL_FIT
-            Always scale the form
-        FL_ENLARGE_ONLY
-            Scale the form only if it is smaller than folder area
-    """
-    pass
 
 # my add, list of possible values --LK
 FOLDERSIZESFIT_list = [FL_NO, FL_FIT, FL_ENLARGE_ONLY]
@@ -7964,18 +6978,6 @@ FOLDERSIZESFIT_list = [FL_NO, FL_FIT, FL_ENLARGE_ONLY]
 # values for unnamed enumeration
 FL_VERT_THUMBWHEEL = 0
 FL_HOR_THUMBWHEEL = 1
-
-class admitted_values_for_THUMBWHEELTYPE(object):
-    """Types of thumbwheel
-    
-    Admitted values
-    ---------------
-        FL_VERT_THUMBWHEEL
-            *todo*
-        FL_HOR_THUMBWHEEL
-            *todo*
-    """
-    pass
 
 # my add, list of possible values --LK
 THUMBWHEELTYPE_list = [FL_VERT_THUMBWHEEL, FL_HOR_THUMBWHEEL]
@@ -7999,22 +7001,6 @@ FL_TIMER_TYPE = cty.c_int # enum
 FL_NORMAL_TIMER = 0
 FL_VALUE_TIMER = 1
 FL_HIDDEN_TIMER = 2
-
-class admitted_values_for_FL_TIMER_TYPE(object):
-    """Types of timer
-    
-    Admitted values
-    ---------------
-        FL_NORMAL_TIMER
-            Visible, showing a label in a box which blinks when the
-            timer expires.
-        FL_VALUE_TIMER
-            Visible, showing the time left or the elapsed time. Blinks
-            if the timer expires
-        FL_HIDDEN_TIMER
-            Not visible
-    """
-    pass
 
 # my add, list of possible values --LK
 TIMERTYPE_list = [FL_NORMAL_TIMER, FL_VALUE_TIMER, FL_HIDDEN_TIMER]
@@ -8055,40 +7041,6 @@ FL_DOTDASHED_XYPLOT = 10
 FL_LONGDASHED_XYPLOT = 11
 FL_LINEPOINTS_XYPLOT = 12
 
-class admitted_values_for_FL_XYPLOT_TYPE(object):
-    """Types of XyPlot
-    
-    Admitted values
-    ---------------
-        FL_NORMAL_XYPLOT
-            xyplot flobject type with solid line
-        FL_SQUARE_XYPLOT
-            xyplot flobject type has added square
-        FL_CIRCLE_XYPLOT
-            xyplot flobject type has added circle
-        FL_FILL_XYPLOT
-            xyplot flobject type is filled completely
-        FL_POINTS_XYPLOT
-            xyplot flobject type has only data points
-        FL_DASHED_XYPLOT
-            xyplot flobject type has dashed line
-        FL_IMPULSE_XYPLOT
-            *todo*
-        FL_ACTIVE_XYPLOT
-            xyplot flobject type accepts interactive manipulations
-        FL_EMPTY_XYPLOT
-            *todo*
-        FL_DOTTED_XYPLOT
-            *todo*
-        FL_DOTDASHED_XYPLOT
-            *todo*
-        FL_LONGDASHED_XYPLOT
-            *todo*
-        FL_LINEPOINTS_XYPLOT
-            xyplot flobject type has lines and points
-    """
-    pass
-
 # list of possible values - my add --LK
 XYPLOTTYPE_list = [FL_NORMAL_XYPLOT, FL_SQUARE_XYPLOT, FL_CIRCLE_XYPLOT,
                    FL_FILL_XYPLOT, FL_POINTS_XYPLOT, FL_DASHED_XYPLOT,
@@ -8101,43 +7053,14 @@ XYPLOTTYPE_list = [FL_NORMAL_XYPLOT, FL_SQUARE_XYPLOT, FL_CIRCLE_XYPLOT,
 FL_LINEAR = 0
 FL_LOG = 1
 
-class admitted_values_for_XYPLOTSCALE(object):
-    """Scales for XyPlot
-    
-    Admitted values
-    ---------------
-        FL_LINEAR
-            Uses linear scale for xyplot
-        FL_LOG
-            Uses logarithmic scale for xyplot
-    """
-    pass
-
 # list of possible values - my add --LK
 XYPLOTSCALE_list = [FL_LINEAR, FL_LOG]
 
 
 # values for unnamed enumeration
 FL_GRID_NONE  = 0
-"""No grid for xyplot"""
 FL_GRID_MAJOR = 1
-"""Grid for the major divisions of xyplot."""
 FL_GRID_MINOR = 2
-"""Grid for the major and minor divisions of xyplot."""
-
-class admitted_values_for_XYPLOTGRID(object):
-    """Grids of XyPlot
-    
-    Admitted values
-    ---------------
-        FL_GRID_NONE
-            No grid for xyplot
-        FL_GRID_MAJOR
-            Grid for the major divisions of xyplot
-        FL_GRID_MINOR
-            Grid for the major and minor divisions of xyplot
-    """
-    pass
 
 # list of possible values - my add --LK
 XYPLOTGRID_list = [FL_GRID_NONE, FL_GRID_MAJOR, FL_GRID_MINOR]
@@ -8161,7 +7084,7 @@ FL_XYPLOT_SYMBOL = cty.CFUNCTYPE(None, cty.POINTER(FL_OBJECT), cty.c_int,
 #########################
 
 # values for unnamed enumeration
-FL_IMAGE_NONE = 0
+FL_IMAGE_NONE = 0       # not supported image file format
 FL_IMAGE_MONO = 1
 FL_IMAGE_GRAY = 2
 FL_IMAGE_CI = 4
@@ -8181,32 +7104,6 @@ FLIMAGE_PACKED = FL_IMAGE_PACKED
 FLIMAGE_GRAY16 = FL_IMAGE_GRAY16
 FLIMAGE_RGB16 = FL_IMAGE_RGB16
 FLIMAGE_FLEX = FL_IMAGE_FLEX
-
-class admitted_values_for_FLIMAGETYPE(object):
-    """Types of Flimage
-    
-    Admitted values
-    ---------------
-        FL_IMAGE_NONE
-            not supported image file format
-        FL_IMAGE_MONO
-            b&w. 1bit bitmaps. 0=white 1=black
-        FL_IMAGE_GRAY
-            gray-scale image (8 bit)
-        FL_IMAGE_CI
-            generic colormmaped index image
-        FL_IMAGE_RGB
-            24 bit RGB(A) image (8bit each)
-        FL_IMAGE_PACKED
-            24 bit RGB(A) packed into an int
-        FL_IMAGE_GRAY16
-            gray-scale image (9 to 16 bit)
-        FL_IMAGE_RGB16
-            36bits color image
-        FL_IMAGE_FLEX = 1023
-            all formats
-    """
-    pass
 
 # my add, list of possible values --LK
 FLIMAGETYPE_list = [FL_IMAGE_NONE, FL_IMAGE_MONO, FL_IMAGE_GRAY, \
@@ -8235,9 +7132,9 @@ class flimage_text_(cty.Structure):
             the text string itself
         len : int
             string length
-        xpos : int
+        x : int
             starting horizontal position of text (wrt image)
-        ypos : int
+        y : int
             starting vertical position of text (wrt image)
         color : int_pos
             color of the text
@@ -8271,18 +7168,18 @@ FLIMAGE_TEXT = flimage_text_
 
 class flimage_marker_(cty.Structure):
     """ FLIMAGE_MARKER class
-    
+
     Attributes
     ----------
         name : str
             marker name
-        width : int
+        w : int
             width
-        height : int
+        h : int
             height
-        xpos : int
+        x : int
             horizontal location
-        ypos :  int
+        y :  int
             vertical location
         color : int_pos
             color of the marker
@@ -8377,7 +7274,7 @@ FLIMAGE_ERR_UNKNOWN = -45
 
 class admitted_values_for_FLIMAGEERRTYPE(object):
     """Error types for flimage
-    
+
     Admitted values
     ---------------
         FLIMAGE_ERR_NONE
@@ -8393,14 +7290,14 @@ class admitted_values_for_FLIMAGEERRTYPE(object):
         FLIMAGE_ERR_INTERNAL
             bugs
         FLIMAGE_ERR_UNKNOWN
-            *todo*
+            unknown error
     """
     pass
 
 
 class flimage_(cty.Structure):
     """FL_IMAGE class
-    
+
     Attributes
     ----------
         type : int
@@ -8879,7 +7776,7 @@ FLIMAGE_READABLE = FL_READ
 
 class admitted_values_for_READWRITEFLIMAGE(object):
     """Flimage read/write state
-    
+
     Admitted values
     ---------------
         FLIMAGE_WRITABLE = FL_WRITE
@@ -8918,7 +7815,7 @@ class FLIMAGE_FORMAT_INFO(cty.Structure):
 
 
 # simple image processing routines
-
+# TODO: to be verified.
 #FLIMAGE_SHARPEN = cty.pointer(cty.pointer(cty.c_int(-1)))
 FLIMAGE_SHARPEN = -1
 #FLIMAGE_SMOOTH = cty.pointer(cty.pointer(cty.c_int(-2)))
@@ -8928,7 +7825,7 @@ FL_SHARPEN = FLIMAGE_SHARPEN
 
 class admitted_values_for_SHARPENSMOOTHFLIMAGE(object):
     """Flimage sharpen/smooth image
-    
+
     Admitted values
     ---------------
         FL_SMOOTH
@@ -8949,7 +7846,7 @@ FLIMAGE_NOCENTER = FL_ALIGN_LEFT_TOP
 
 class admitted_values_for_FLIMAGEPOSITION(object):
     """Flimage position/rotation
-    
+
     Admitted values
     ---------------
         FLIMAGE_NOSUBPIXEL
@@ -8978,9 +7875,9 @@ class XWindowAttributes(cty.Structure):
 
     Attributes
     ----------
-        xpos : int
+        x : int
             *todo*
-        ypos : int
+        y : int
             *todo*
         width : int
             *todo*
@@ -9150,7 +8047,7 @@ class XGCValues(cty.Structure):
 # /usr/include/X11/Xlib.h 258
 class Depth(cty.Structure):
     """X11 Depth class
-    
+
     Attributes
     ----------
         depth : int
@@ -9238,7 +8135,7 @@ class Screen(cty.Structure):
 # /usr/include/X11/Xlib.h 296
 class ScreenFormat(cty.Structure):
     """X11 ScreenFormat class
-    
+
     Attributes
     ----------
         ext_data : pointer to XExtData
@@ -9286,7 +8183,7 @@ XWindowAttributes._fields_ = [
 # /usr/include/X11/Xlib.h 356
 class XHostAddress(cty.Structure):
     """X11 XHostAddress class
-    
+
     Attributes
     ----------
         family : int
@@ -9305,7 +8202,7 @@ class XHostAddress(cty.Structure):
 # /usr/include/X11/Xlib.h 366
 class XServerInterpretedAddress(cty.Structure):
     """X11 XServerInterpretedAddress class
-    
+
     Attributes
     ----------
         typelength : int
@@ -9327,7 +8224,7 @@ class XServerInterpretedAddress(cty.Structure):
 # /usr/include/X11/Xlib.h 371
 class _XImage(cty.Structure):
     """X11 XImage class
-    
+
     Attributes
     ----------
       width : int
@@ -9371,7 +8268,7 @@ class _XImage(cty.Structure):
 # /usr/include/X11/Xlib.h 387
 class funcs(cty.Structure):
     """X11 funcs class
-    
+
     Attributes
     ----------
         create_image : function, returned value

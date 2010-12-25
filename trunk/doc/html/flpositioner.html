@@ -37,8 +37,12 @@ Parameters<br>
 ----------<br>
 &nbsp;&nbsp;&nbsp;&nbsp;posittype&nbsp;:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;type&nbsp;of&nbsp;positioner&nbsp;to&nbsp;be&nbsp;added.&nbsp;Values&nbsp;(from&nbsp;xfdata.py)<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_NORMAL_POSITIONER,&nbsp;FL_OVERLAY_POSITIONER,<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_INVISIBLE_POSITIONER<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_NORMAL_POSITIONER&nbsp;(Cross-hair&nbsp;inside&nbsp;a&nbsp;box),<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_OVERLAY_POSITIONER&nbsp;(Cross-hair&nbsp;inside&nbsp;a&nbsp;transparent&nbsp;box,&nbsp;i.e.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;drawn&nbsp;in&nbsp;in&nbsp;XOR&nbsp;mode),&nbsp;FL_INVISIBLE_POSITIONER&nbsp;(Completely<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;invisible&nbsp;positioner&nbsp;to&nbsp;be&nbsp;used&nbsp;just&nbsp;for&nbsp;the&nbsp;side&nbsp;effect&nbsp;of<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;obtaining&nbsp;a&nbsp;position,&nbsp;typically&nbsp;a&nbsp;flobject&nbsp;is&nbsp;below&nbsp;it&nbsp;that<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;otherwise&nbsp;would&nbsp;receive&nbsp;user&nbsp;events)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;xpos&nbsp;:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;horizontal&nbsp;position&nbsp;(upper-left&nbsp;corner)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;ypos&nbsp;:&nbsp;int<br>
@@ -76,9 +80,9 @@ Parameters<br>
 Returns<br>
 -------<br>
 &nbsp;&nbsp;&nbsp;&nbsp;minbound&nbsp;:&nbsp;float<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;minimum&nbsp;bound<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;minimum&nbsp;value&nbsp;bound<br>
 &nbsp;&nbsp;&nbsp;&nbsp;maxbound&nbsp;:&nbsp;float<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;maximum&nbsp;bound<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;maximum&nbsp;value&nbsp;bound<br>
 &nbsp;<br>
 Examples<br>
 --------<br>
@@ -115,8 +119,8 @@ Notes<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;Demo&nbsp;=&nbsp;OK</tt></dd></dl>
  <dl><dt><a name="-fl_get_positioner_ybounds"><strong>fl_get_positioner_ybounds</strong></a>(ptr_flobject)</dt><dd><tt><a href="#-fl_get_positioner_ybounds">fl_get_positioner_ybounds</a>(ptr_flobject)&nbsp;-&gt;&nbsp;minbound,&nbsp;maxbound<br>
 &nbsp;<br>
-Obtain&nbsp;minimum&nbsp;and&nbsp;maximum&nbsp;bounds/limits&nbsp;of&nbsp;a&nbsp;positioner&nbsp;in&nbsp;vertical<br>
-direction.<br>
+Obtain&nbsp;minimum&nbsp;and&nbsp;maximum&nbsp;bounds&nbsp;for&nbsp;values&nbsp;of&nbsp;a&nbsp;positioner&nbsp;in<br>
+vertical&nbsp;direction.<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
@@ -126,9 +130,9 @@ Parameters<br>
 Returns<br>
 -------<br>
 &nbsp;&nbsp;&nbsp;&nbsp;minbound&nbsp;:&nbsp;float<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;minimum&nbsp;bound<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;minimum&nbsp;value&nbsp;bound<br>
 &nbsp;&nbsp;&nbsp;&nbsp;maxbound&nbsp;:&nbsp;float<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;maximum&nbsp;bound<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;maximum&nbsp;value&nbsp;bound<br>
 &nbsp;<br>
 Examples<br>
 --------<br>
@@ -165,8 +169,8 @@ Notes<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
  <dl><dt><a name="-fl_set_positioner_xbounds"><strong>fl_set_positioner_xbounds</strong></a>(ptr_flobject, minbound, maxbound)</dt><dd><tt><a href="#-fl_set_positioner_xbounds">fl_set_positioner_xbounds</a>(ptr_flobject,&nbsp;minbound,&nbsp;maxbound)<br>
 &nbsp;<br>
-Defines&nbsp;minimum&nbsp;and&nbsp;maximum&nbsp;bounds/limits&nbsp;of&nbsp;a&nbsp;positioner&nbsp;in&nbsp;horizontal<br>
-direction.<br>
+Defines&nbsp;minimum&nbsp;and&nbsp;maximum&nbsp;bounds&nbsp;for&nbsp;values&nbsp;of&nbsp;a&nbsp;positioner&nbsp;in<br>
+horizontal&nbsp;direction.<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
@@ -225,8 +229,8 @@ Notes<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;Demo&nbsp;=&nbsp;OK</tt></dd></dl>
  <dl><dt><a name="-fl_set_positioner_ybounds"><strong>fl_set_positioner_ybounds</strong></a>(ptr_flobject, minbound, maxbound)</dt><dd><tt><a href="#-fl_set_positioner_ybounds">fl_set_positioner_ybounds</a>(ptr_flobject,&nbsp;minbound,&nbsp;maxbound)<br>
 &nbsp;<br>
-Defines&nbsp;minimum&nbsp;and&nbsp;maximum&nbsp;bounds/limits&nbsp;of&nbsp;a&nbsp;positioner&nbsp;in&nbsp;vertical<br>
-direction.<br>
+Defines&nbsp;minimum&nbsp;and&nbsp;maximum&nbsp;bounds&nbsp;for&nbsp;values&nbsp;of&nbsp;a&nbsp;positioner&nbsp;in<br>
+vertical&nbsp;direction.<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
@@ -284,4 +288,4 @@ Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;Demo&nbsp;=&nbsp;OK</tt></dd></dl>
 </td></tr></table>
-<p>Updated on: 2010-12-23 23:57 +0100</body></html>
+<p>Updated on: 2010-12-25 01:55 +0100</body></html>

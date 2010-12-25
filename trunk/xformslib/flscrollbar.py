@@ -45,19 +45,24 @@ from xformslib import xfdata
 def fl_add_scrollbar(scrolltype, xpos, ypos, width, height, label):
     """fl_add_scrollbar(scrolltype, xpos, ypos, width, height, label)
     -> ptr_flobject
-    
+
     Adds a scrollbar flobject to a form.
 
     Parameters
     ----------
         scrolltype : int
             type of scrollbar to be added. Values (from xfdata.py)
-            FL_VERT_SCROLLBAR, FL_HOR_SCROLLBAR, FL_VERT_THIN_SCROLLBAR
-            FL_HOR_THIN_SCROLLBAR, FL_VERT_NICE_SCROLLBAR,
-            FL_HOR_NICE_SCROLLBAR, FL_VERT_PLAIN_SCROLLBAR,
-            FL_HOR_PLAIN_SCROLLBAR, FL_HOR_BASIC_SCROLLBAR,
-            FL_VERT_BASIC_SCROLLBAR, FL_NORMAL_SCROLLBAR,
-            FL_THIN_SCROLLBAR, FL_NICE_SCROLLBAR, FL_PLAIN_SCROLLBAR
+            FL_VERT_SCROLLBAR (A vertical scrollbar), FL_HOR_SCROLLBAR (A
+            horizontal scrollbar), FL_VERT_THIN_SCROLLBAR (A different
+            looking vertical scrollbar), FL_HOR_THIN_SCROLLBAR (A different
+            looking horizontal scrollbar), FL_VERT_NICE_SCROLLBAR (A vertical
+            scrollbar using FL_NICE_SLIDER), FL_HOR_NICE_SCROLLBAR (A
+            horizontal scrollbar using FL_NICE_SLIDER),
+            FL_VERT_PLAIN_SCROLLBAR or FL_VERT_BASIC_SCROLLBAR (Similar to
+            FL_THIN_SCROLLBAR), FL_HOR_PLAIN_SCROLLBAR or
+            FL_HOR_BASIC_SCROLLBAR (Similar to FL_HOR_THIN_SCROLLBAR),
+            FL_NORMAL_SCROLLBAR (*todo*), FL_THIN_SCROLLBAR (*todo*),
+            FL_NICE_SCROLLBAR (*todo*), FL_PLAIN_SCROLLBAR (*todo*)
         xpos : int
             horizontal position (upper-left corner)
         ypos : int
@@ -108,7 +113,7 @@ def fl_add_scrollbar(scrolltype, xpos, ypos, width, height, label):
 
 def fl_get_scrollbar_value(ptr_flobject):
     """fl_get_scrollbar_value(ptr_flobject) -> scrvalue
-    
+
     Finds out the current value of a scrollbar flobject.
 
     Parameters
@@ -143,7 +148,7 @@ def fl_get_scrollbar_value(ptr_flobject):
 
 def fl_set_scrollbar_value(ptr_flobject, scrvalue):
     """fl_set_scrollbar_value(ptr_flobject, scrvalue)
-    
+
     Defines the value of a scrollbar flobject.
 
     Parameters
@@ -175,7 +180,7 @@ def fl_set_scrollbar_value(ptr_flobject, scrvalue):
 
 def fl_set_scrollbar_size(ptr_flobject, barsize):
     """fl_set_scrollbar_size(ptr_flobject, barsize)
-    
+
     Controls the size of the sliding bar inside the box. This function
     does nothing if applied to scrollbars of type xfdata.FL_NICE_SCROLLBAR.
 
@@ -211,7 +216,7 @@ def fl_set_scrollbar_size(ptr_flobject, barsize):
 
 def fl_set_scrollbar_increment(ptr_flobject, leftbtnval, midlbtnval):
     """fl_set_scrollbar_increment(ptr_flobject, leftbtnval, midlbtnval)
-    
+
     Defines the size of the steps of a scrollbar jump. By default, if the
     mouse is pressed beside the the sliding bar, the bar starts to jumps
     in the direction of the mouse position.
@@ -250,7 +255,7 @@ def fl_set_scrollbar_increment(ptr_flobject, leftbtnval, midlbtnval):
 
 def fl_get_scrollbar_increment(ptr_flobject):
     """fl_get_scrollbar_increment(ptr_flobject) -> leftbtnval, midbtnval
-    
+
     Finds out the increment of size of a scrollbar for left and middle
     mouse buttons.
 
@@ -298,7 +303,7 @@ def fl_get_scrollbar_increment(ptr_flobject):
 
 def fl_set_scrollbar_bounds(ptr_flobject, minbound, maxbound):
     """fl_set_scrollbar_bounds(ptr_flobject, minbound, maxbound)
-    
+
     Defines the minimum and maximum value limits of a scrollbar flobject. For
     vertical sliders the slider position for the minimum value is at the left,
     for horizontal sliders at the top of the slider. By setting min to a
@@ -343,7 +348,7 @@ def fl_set_scrollbar_bounds(ptr_flobject, minbound, maxbound):
 
 def fl_get_scrollbar_bounds(ptr_flobject):
     """fl_get_scrollbar_bounds(ptr_flobject) -> minbound, maxbound
-    
+
     Finds out minimum and maximum value limits of a scrollbar flobject.
 
     Parameters
@@ -393,7 +398,7 @@ def fl_get_scrollbar_bounds(ptr_flobject):
 
 def fl_set_scrollbar_step(ptr_flobject, step):
     """fl_set_scrollbar_step(ptr_flobject, step)
-    
+
     Defines the step size of a scrollbar to which values are rounded.
 
     Parameters

@@ -35,7 +35,9 @@ Parameters<br>
 ----------<br>
 &nbsp;&nbsp;&nbsp;&nbsp;dialtype&nbsp;:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;type&nbsp;of&nbsp;dial&nbsp;to&nbsp;be&nbsp;added.&nbsp;Values&nbsp;(from&nbsp;xfdata.py)<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_NORMAL_DIAL,&nbsp;FL_LINE_DIAL,&nbsp;FL_FILL_DIAL<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_NORMAL_DIAL&nbsp;(A&nbsp;dial&nbsp;with&nbsp;a&nbsp;knob&nbsp;indicating&nbsp;the&nbsp;position),<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_LINE_DIAL&nbsp;(A&nbsp;dial&nbsp;with&nbsp;a&nbsp;line&nbsp;indicating&nbsp;the&nbsp;position),<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_FILL_DIAL&nbsp;(The&nbsp;area&nbsp;between&nbsp;initial&nbsp;and&nbsp;current&nbsp;is&nbsp;filled)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;xpos&nbsp;:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;horizontal&nbsp;position&nbsp;(upper-left&nbsp;corner)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;ypos&nbsp;:&nbsp;int<br>
@@ -200,7 +202,7 @@ Parameters<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;dial&nbsp;flobject<br>
 &nbsp;&nbsp;&nbsp;&nbsp;directn&nbsp;:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;direction&nbsp;of&nbsp;dial&nbsp;rotation.&nbsp;Values&nbsp;(from&nbsp;xfdata.py)&nbsp;FL_DIAL_CCW<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(counter-clock-wise)&nbsp;or&nbsp;FL_DIAL_CW&nbsp;(clock-wise)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(counter-clock-wise&nbsp;rotation)&nbsp;or&nbsp;FL_DIAL_CW&nbsp;(clock-wise&nbsp;rotation)<br>
 &nbsp;<br>
 Examples<br>
 --------<br>
@@ -220,9 +222,25 @@ Parameters<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;dial&nbsp;flobject<br>
 &nbsp;&nbsp;&nbsp;&nbsp;whenretn&nbsp;:&nbsp;int_pos<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;type&nbsp;(when&nbsp;it&nbsp;returns).&nbsp;Values&nbsp;(from&nbsp;xfdata.py)<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_RETURN_NONE,&nbsp;FL_RETURN_CHANGED,&nbsp;FL_RETURN_END,<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_RETURN_END_CHANGED,&nbsp;FL_RETURN_SELECTION,<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_RETURN_DESELECTION,&nbsp;FL_RETURN_TRIGGERED,&nbsp;FL_RETURN_ALWAYS<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_RETURN_NONE&nbsp;(Never&nbsp;notify&nbsp;the&nbsp;application&nbsp;about&nbsp;interactions<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;with&nbsp;this&nbsp;flobject,&nbsp;i.e.&nbsp;never&nbsp;return&nbsp;it&nbsp;nor&nbsp;invoke&nbsp;its&nbsp;callback.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Note,&nbsp;this&nbsp;is&nbsp;not&nbsp;meant&nbsp;for&nbsp;deactivation&nbsp;of&nbsp;a&nbsp;flobject,&nbsp;it&nbsp;will<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;still&nbsp;seem&nbsp;to&nbsp;work&nbsp;as&nbsp;normal,&nbsp;it&nbsp;just&nbsp;does&nbsp;not&nbsp;get&nbsp;returned<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;to&nbsp;the&nbsp;application&nbsp;nor&nbsp;does&nbsp;its&nbsp;callback&nbsp;get&nbsp;invoked),<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_RETURN_CHANGED&nbsp;(Return&nbsp;or&nbsp;invoke&nbsp;callback&nbsp;whenever&nbsp;an&nbsp;item&nbsp;is<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;selected,&nbsp;default),&nbsp;FL_RETURN_END&nbsp;(Return&nbsp;or&nbsp;invoke&nbsp;callback&nbsp;on<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;end&nbsp;of&nbsp;an&nbsp;interaction),&nbsp;FL_RETURN_END_CHANGED&nbsp;(Return&nbsp;or&nbsp;invoke<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;callback&nbsp;if&nbsp;end&nbsp;of&nbsp;interaction&nbsp;and&nbsp;selection&nbsp;of&nbsp;an&nbsp;item&nbsp;coincide),<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_RETURN_SELECTION&nbsp;(Return&nbsp;or&nbsp;invoke&nbsp;callback&nbsp;on&nbsp;selection&nbsp;of&nbsp;a<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;line.&nbsp;Please&nbsp;note&nbsp;that&nbsp;for&nbsp;FL_MULTI_BROWSER&nbsp;the&nbsp;browser&nbsp;may&nbsp;be<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;returned&nbsp;just&nbsp;once&nbsp;for&nbsp;a&nbsp;number&nbsp;of&nbsp;lines&nbsp;having&nbsp;been&nbsp;selected),<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_RETURN_DESELECTION&nbsp;(Return&nbsp;or&nbsp;invoke&nbsp;callback&nbsp;on&nbsp;deselection<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;of&nbsp;a&nbsp;line.&nbsp;This&nbsp;only&nbsp;works&nbsp;for&nbsp;FL_MULTI_BROWSER&nbsp;browsers&nbsp;and&nbsp;the<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;browser&nbsp;may&nbsp;be&nbsp;returned&nbsp;just&nbsp;once&nbsp;for&nbsp;a&nbsp;number&nbsp;of&nbsp;lines&nbsp;having<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;been&nbsp;deselected),&nbsp;FL_RETURN_TRIGGERED&nbsp;(*todo*),&nbsp;FL_RETURN_ALWAYS<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(Return&nbsp;or&nbsp;invoke&nbsp;callback&nbsp;whenever&nbsp;the&nbsp;interaction&nbsp;ends&nbsp;and/or<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;an&nbsp;item&nbsp;is&nbsp;selected.&nbsp;It&nbsp;includes&nbsp;all&nbsp;conditions&nbsp;except<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_RETURN_END_CHANGED).<br>
 &nbsp;<br>
 Examples<br>
 --------<br>
@@ -269,4 +287,4 @@ Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;Demo&nbsp;=&nbsp;OK</tt></dd></dl>
 </td></tr></table>
-<p>Updated on: 2010-12-23 23:57 +0100</body></html>
+<p>Updated on: 2010-12-25 01:55 +0100</body></html>

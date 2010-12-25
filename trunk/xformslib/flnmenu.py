@@ -47,15 +47,23 @@ from xformslib import xfdata
 def fl_add_nmenu(nmenutype, xpos, ypos, width, height, label):
     """fl_add_nmenu(nmenutype, xpos, ypos, width, height, label)
     -> ptr_flobject
-    
+
     Adds a new generation menu (nmenu) object. It heavily depends on
     popups.
 
     Parameters
     ----------
         nmenutype : type of nmenu to be. Values (from xfdata.py)
-            FL_NORMAL_NMENU, FL_NORMAL_TOUCH_NMENU, FL_BUTTON_NMENU,
-            FL_BUTTON_TOUCH_NMENU
+            FL_NORMAL_NMENU (Probably the most often used type: shown as text
+            on a borderless background, popup gets opened when clicked on),
+            FL_NORMAL_TOUCH_NMENU (Also shown as text on a borderless
+            background, but popup gets opened when the mouse is moved on top
+            of it without any further user action required), FL_BUTTON_NMENU
+            (When not active shown as text on borderless background, when
+            clicked on popup is shown and the flobject itself being displayed
+            as a button), FL_BUTTON_TOUCH_NMENU (When not active shown as text
+            on borderless background, when mouse is moved onto it the popup
+            is shown and the flobject itself is displayed as a button)
         xpos : int
             horizontal position (upper-left corner)
         ypos : int
@@ -106,7 +114,7 @@ def fl_add_nmenu(nmenutype, xpos, ypos, width, height, label):
 
 def fl_clear_nmenu(ptr_flobject):
     """fl_clear_nmenu(ptr_flobject) -> result
-    
+
     Removes all items from a nmenu flobject at once.
 
     Parameters
@@ -143,7 +151,7 @@ def fl_add_nmenu_items(ptr_flobject, entryitemstxt, x=None, u=None, \
                        f=None, E=None, L=None, m=None, Rr=None, s=None):
     """fl_add_nmenu_items(ptr_flobject, entryitemstxtx=None, u=None, \
     f=None, E=None, L=None, m=None, Rr=None, s=None) -> ptr_flpopupentry
-    
+
     Adds an item to an existing nmenu flobject (it can be used several times).
     If additional separated arguments are required by in-text special
     sequences, user must respect the same sequences' order.
@@ -189,9 +197,9 @@ def fl_add_nmenu_items(ptr_flobject, entryitemstxt, x=None, u=None, \
             (separated additional argument corresponding to %R or %r
             in-text special sequence)
         s : str
-            shortcut text for the entry 
+            shortcut text for the entry
             (separated additional argument corresponding to %s in-text
-            special sequence)      
+            special sequence)
 
     Returns
     -------
@@ -279,7 +287,7 @@ def fl_insert_nmenu_items(ptr_flobject, ptr_flpopupentry, entryitemstxt, \
     """fl_insert_nmenu_items(ptr_flobject, ptr_flpopupentry, entryitemstxt,
     x=None, u=None, f=None, E=None, L=None, m=None, Rr=None, s=None)
     -> ptr_flpopupentry
-    
+
     Inserts an additional item in nmenu flobject (it can be used several
     times). If additional separated arguments are required by in-text special
     sequences, user must respect the same sequences' order.
@@ -328,9 +336,9 @@ def fl_insert_nmenu_items(ptr_flobject, ptr_flpopupentry, entryitemstxt, \
             (separated additional argument corresponding to %R or %r
             in-text special sequence)
         s : str
-            shortcut text for the entry 
+            shortcut text for the entry
             (separated additional argument corresponding to %s in-text
-            special sequence)      
+            special sequence)
 
     Returns
     -------
@@ -420,7 +428,7 @@ def fl_replace_nmenu_item(ptr_flobject, ptr_flpopupentry, entryitemstxt,
     """fl_replace_nmenu_item(ptr_flobject, ptr_flpopupentry, entryitemstxt,
     x=None, u=None, f=None, E=None, L=None, m=None, Rr=None, s=None)
     -> ptr_flpopupentry
-    
+
     Replaces an existing item of a nmenu flobject with another. If additional
     separated arguments are required by in-text special sequences, user must
     respect the same sequences' order.
@@ -468,9 +476,9 @@ def fl_replace_nmenu_item(ptr_flobject, ptr_flpopupentry, entryitemstxt,
             (separated additional argument corresponding to %R or %r
             in-text special sequence)
         s : str
-            shortcut text for the entry 
+            shortcut text for the entry
             (separated additional argument corresponding to %s in-text
-            special sequence)      
+            special sequence)
 
     Returns
     -------
@@ -556,7 +564,7 @@ def fl_replace_nmenu_item(ptr_flobject, ptr_flpopupentry, entryitemstxt,
 
 def fl_delete_nmenu_item(ptr_flobject, ptr_flpopupentry):
     """fl_delete_nmenu_item(ptr_flobject, ptr_flpopupentry) -> result
-    
+
     Deletes an item from a nmenu flobject.
 
     Parameters
@@ -595,7 +603,7 @@ def fl_delete_nmenu_item(ptr_flobject, ptr_flpopupentry):
 
 def fl_set_nmenu_items(ptr_flobject, ptr_flpopupitem):
     """fl_set_nmenu_items(ptr_flobject, ptr_flpopupitem) -> ptr_flpopupentry
-    
+
     Defines a popup nmenu item.
 
     Parameters
@@ -637,7 +645,7 @@ def fl_set_nmenu_items(ptr_flobject, ptr_flpopupitem):
 
 def fl_add_nmenu_items2(ptr_flobject, ptr_flpopupitem):
     """fl_add_nmenu_items2(ptr_flobject, ptr_flpopupitem) -> ptr_flpopupentry
-    
+
     Adds items to a nmenu flobject (alternative).
 
     Parameters
@@ -680,7 +688,7 @@ def fl_add_nmenu_items2(ptr_flobject, ptr_flpopupitem):
 def fl_insert_nmenu_items2(ptr_flobject, ptr_flpopupentry, ptr_flpopupitem):
     """fl_insert_nmenu_items2(ptr_flobject, ptr_flpopupentry, ptr_flpopupitem)
     -> ptr_flpopupentry
-    
+
     Inserts items in a nmenu flobject (alternative).
 
     Parameters
@@ -734,7 +742,7 @@ def fl_insert_nmenu_items2(ptr_flobject, ptr_flpopupentry, ptr_flpopupitem):
 def fl_replace_nmenu_items2(ptr_flobject, ptr_flpopupentry, ptr_flpopupitem):
     """fl_replace_nmenu_items2(ptr_flobject, ptr_flpopupentry, ptr_flpopupitem)
     -> ptr_flpopupentry
-    
+
     Replaces an item of a nmenu flobject (alternative).
 
     Parameters
@@ -780,7 +788,7 @@ def fl_replace_nmenu_items2(ptr_flobject, ptr_flpopupentry, ptr_flpopupitem):
 
 def fl_get_nmenu_popup(ptr_flobject):
     """fl_get_nmenu_popup(ptr_flobject) -> ptr_flpopup
-    
+
     Finds out which popup is associated with the nmenu flobject.
 
     Parameters
@@ -814,7 +822,7 @@ def fl_get_nmenu_popup(ptr_flobject):
 
 def fl_set_nmenu_popup(ptr_flobject, ptr_flpopup):
     """fl_set_nmenu_popup(ptr_flobject, ptr_flpopup) -> ptr_flpopup
-    
+
     Defines an existing popup as the nmenu's popup. The popup you associate
     with the nmenu flobject in this way cannot be a sub-popup.
 
@@ -854,7 +862,7 @@ def fl_set_nmenu_popup(ptr_flobject, ptr_flpopup):
 
 def fl_get_nmenu_item(ptr_flobject):
     """fl_get_nmenu_item(ptr_flobject) -> ptr_flpopupreturn
-    
+
     Finds out which item of a nmenu flobject was selected.
 
     Parameters
@@ -893,7 +901,7 @@ def fl_get_nmenu_item(ptr_flobject):
 
 def fl_get_nmenu_item_by_value(ptr_flobject, itemval):
     """fl_get_nmenu_item_by_value(ptr_flobject, itemval) -> ptr_flpopupentry
-    
+
     Searches through the list of all items (including items in sub-popups)
     and returns the first one with the val associated with the item
 
@@ -934,7 +942,7 @@ def fl_get_nmenu_item_by_value(ptr_flobject, itemval):
 
 def fl_get_nmenu_item_by_label(ptr_flobject, label):
     """fl_get_nmenu_item_by_label(ptr_flobject, label) -> ptr_flpopupentry
-    
+
     Searches for a certain label as displayed for the item in the nmenu's
     popup.
 
@@ -975,7 +983,7 @@ def fl_get_nmenu_item_by_label(ptr_flobject, label):
 
 def fl_get_nmenu_item_by_text(ptr_flobject, text):
     """fl_get_nmenu_item_by_text(ptr_flobject, text) -> ptr_flpopupentry
-    
+
     Searches for the text the item in nmenu flobject was created by (that
     might be the same as the label text in simple cases).
 
@@ -1016,7 +1024,7 @@ def fl_get_nmenu_item_by_text(ptr_flobject, text):
 
 def fl_set_nmenu_policy(ptr_flobject, policy):
     """fl_set_nmenu_policy(ptr_flobject, policy) -> oldpol
-    
+
     Changes nmenu policy about closing, so that the popup also gets closed
     (without a selection) when the mouse button is clicked or released on
     a non-selectable item (giving the impression of a "pull-down" menu).
@@ -1062,7 +1070,7 @@ def fl_set_nmenu_policy(ptr_flobject, policy):
 
 def fl_set_nmenu_hl_text_color(ptr_flobject, colr):
     """fl_set_nmenu_hl_text_color(ptr_flobject, colr) -> oldcolr
-    
+
     Defines the color of label when it is in "active" state (i.e. while
     the popup is shown). In "inactive" state this is set by
     fl_set_object_lcol(). By default, this color is xfdata.FL_BLACK for

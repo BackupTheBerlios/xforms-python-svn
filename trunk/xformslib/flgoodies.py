@@ -44,23 +44,35 @@ from xformslib import flbasic
 
 def fl_set_goodies_font(style, size):
     """fl_set_goodies_font(style, size)
-    
+
     Changes the font used in all messages.
 
     Parameters
     ----------
         style : int
-            goodies style. Values (from xfdata.py) FL_NORMAL_STYLE,
-            FL_BOLD_STYLE, FL_ITALIC_STYLE, FL_BOLDITALIC_STYLE,
-            FL_FIXED_STYLE, FL_FIXEDBOLD_STYLE, FL_FIXEDITALIC_STYLE,
-            FL_FIXEDBOLDITALIC_STYLE, FL_TIMES_STYLE, FL_TIMESBOLD_STYLE,
-            FL_TIMESITALIC_STYLE, FL_TIMESBOLDITALIC_STYLE, FL_MISC_STYLE,
-            FL_MISCBOLD_STYLE, FL_MISCITALIC_STYLE, FL_SYMBOL_STYLE,
-            FL_SHADOW_STYLE, FL_ENGRAVED_STYLE, FL_EMBOSSED_STYLE
+            goodies style. Values (from xfdata.py)
+            FL_NORMAL_STYLE (Helvetica normal text), FL_BOLD_STYLE (Helvetica
+            boldface text), FL_ITALIC_STYLE (Helvetica italic text),
+            FL_BOLDITALIC_STYLE (Helvetica boldface and italic text),
+            FL_FIXED_STYLE (Courier fixed width, good for tables),
+            FL_FIXEDBOLD_STYLE (Courier bold fixed text), FL_FIXEDITALIC_STYLE
+            (Courier italic fixed text), FL_FIXEDBOLDITALIC_STYLE (Courier
+            boldface and italic fixed text), FL_TIMES_STYLE (Times-Roman like
+            normal font), FL_TIMESBOLD_STYLE (Times-Roman like boldface text),
+            FL_TIMESITALIC_STYLE (Times-Roman like italic text),
+            FL_TIMESBOLDITALIC_STYLE (Times-Roman like boldface and italic
+            text), FL_MISC_STYLE (Charter normal text), FL_MISCBOLD_STYLE
+            (Charter boldface text), FL_MISCITALIC_STYLE (Charter italic text),
+            FL_SYMBOL_STYLE (Symbol text), FL_SHADOW_STYLE (Text casting a
+            shadow, modifier mask), FL_ENGRAVED_STYLE (Text engraved into the
+            form, modifier mask), FL_EMBOSSED_STYLE (Text standing out,
+            modifier mask). Bitwise OR with any of modifiers is allowed.
         size : int
-            goodies size. Values (from xfdata.py) FL_TINY_SIZE,
-            FL_SMALL_SIZE, FL_NORMAL_SIZE, FL_MEDIUM_SIZE, FL_LARGE_SIZE,
-            FL_HUGE_SIZE, FL_DEFAULT_SIZE
+            goodies size. Values (from xfdata.py)
+            FL_TINY_SIZE (8 points font), FL_SMALL_SIZE or FL_DEFAULT_SIZE (10
+            points font, default), FL_NORMAL_SIZE (12 points font),
+            FL_MEDIUM_SIZE (14 points font), FL_LARGE_SIZE (18 points font),
+            FL_HUGE_SIZE (24 points font), or other numeric odd or even value
 
     Examples
     --------
@@ -77,7 +89,6 @@ def fl_set_goodies_font(style, size):
         """void fl_set_goodies_font(int style, int size)""")
     library.check_if_initialized()
     library.checkfatal_allowed_value_in_list(style, xfdata.TEXTSTYLE_list)
-    library.checknonfatal_allowed_value_in_list(size, xfdata.FONTSIZE_list)
     i_style = library.convert_to_intc(style)
     i_size = library.convert_to_intc(size)
     library.keep_elem_refs(style, size, i_style, i_size)
@@ -88,7 +99,7 @@ def fl_set_goodies_font(style, size):
 
 def fl_show_message(msgtxt1, msgtxt2, msgtxt3):
     """fl_show_message(msgtxt1, msgtxt2, msgtxt3)
-    
+
     Shows a simple form with three lines of text and a button labeled
     OK on it. The mouse pointer is on the button.
 
@@ -127,7 +138,7 @@ def fl_show_message(msgtxt1, msgtxt2, msgtxt3):
 
 def fl_show_messages(msgtxt):
     """fl_show_messages(msgtxt)
-    
+
     Shows a message. You can use it with a single line or when you
     know the message in advance. To get multi-line messages use embedded
     newlines. It blocks execution and does not return immediately (but idle
@@ -161,7 +172,7 @@ def fl_show_messages(msgtxt):
 
 def fl_show_msg(fmttxt):
     """fl_show_msg(fmttxt)
-    
+
     Shows a formatted text message. The string resulting from expansion
     of the format string using the remaining arguments can have arbitrary
     length and embedded newline characters, producing line breaks. The size
@@ -198,7 +209,7 @@ def fl_show_msg(fmttxt):
 
 def fl_hide_message():
     """fl_hide_message()
-    
+
     Hides a text message already shown.
 
     Examples
@@ -224,7 +235,7 @@ fl_hide_messages = fl_hide_message
 
 def fl_show_question(questmsg, defbtn):
     """fl_show_question(questmsg, defbtn) -> pushedbtn
-    
+
     Shows a message (with possible embedded newlines in it) with a Yes
     and a No button. It returns whether the user pushed the Yes button. The
     user can also press the <Y> key to mean Yes and the <N> key to mean No.
@@ -266,7 +277,7 @@ def fl_show_question(questmsg, defbtn):
 
 def fl_hide_question():
     """fl_hide_question()
-    
+
     Hides a question message already shown.
 
     Examples
@@ -288,7 +299,7 @@ def fl_hide_question():
 
 def fl_show_alert(title, msgtxt1, msgtxt2, centered):
     """fl_show_alert(title, msgtxt1, msgtxt2, centered)
-    
+
     Shows an alert message, with an alert icon (!) is added and the
     first string is shown bold-faced.
 
@@ -330,7 +341,7 @@ def fl_show_alert(title, msgtxt1, msgtxt2, centered):
 
 def fl_show_alert2(centered, fmttxt):
     """fl_show_alert2(centered, fmttxt)
-    
+
     Shows a formatted alert message. The string resulting from expansion
     of the format string using the rest of the arguments can have arbitrary
     length and the first embedded form-feed character (backslash-f) is used
@@ -367,7 +378,7 @@ def fl_show_alert2(centered, fmttxt):
 
 def fl_hide_alert():
     """fl_hide_alert()
-    
+
     Hides a previously shown alert message.
 
     Examples
@@ -389,7 +400,7 @@ def fl_hide_alert():
 
 def fl_show_input(msgtxt, defstr):
     """fl_show_input(msgtxt, defstr) -> text
-    
+
     Finds out some text from user, showing a default text. It has OK
     and Cancel buttons.
 
@@ -428,7 +439,7 @@ def fl_show_input(msgtxt, defstr):
 
 def fl_hide_input():
     """fl_hide_input()
-    
+
     Hides a previously shown input goodie.
 
     Examples
@@ -450,7 +461,7 @@ def fl_hide_input():
 
 def fl_show_simple_input(msgtxt, defstr):
     """fl_show_simple_input(msgtxt, defstr) -> text
-    
+
     Asks the user for textual input. It has an OK button only.
 
     Parameters
@@ -490,7 +501,7 @@ def fl_show_simple_input(msgtxt, defstr):
 
 def fl_show_colormap(oldcolr):
     """fl_show_colormap(oldcolr) -> colr
-    
+
     Shows a colormap color selector from which the user can select a
     color. The user can decide not to change this color by pressing the
     Cancel button in the form. In a number of applications the user has
@@ -535,7 +546,7 @@ def fl_show_colormap(oldcolr):
 def fl_show_choices(msgtxt, numbtns, btn1txt, btn2txt, btn3txt, defcho):
     """fl_show_choices(msgtxt, numbtns, btn1txt, btn2txt, btn3txt, defcho)
     -> btnnum
-    
+
     Shows a message, as a single string with possible embedded newlines,
     with one, two or three buttons. The user can also press the <1>, <2> or
     <3> key to indicate the first, second, or third button.
@@ -591,11 +602,11 @@ def fl_show_choices(msgtxt, numbtns, btn1txt, btn2txt, btn3txt, defcho):
     return retval
 
 
-def fl_show_choice(msg1txt, msg2txt, msg3txt, numbtns, btn1txt, btn2txt, 
+def fl_show_choice(msg1txt, msg2txt, msg3txt, numbtns, btn1txt, btn2txt,
                    btn3txt, defcho):
     """fl_show_choice(msg1txt, msg2txt, msg3txt, numbtns, btn1txt, btn2txt,
     btn3txt, defcho) -> btnnum
-    
+
     Shows a message, up to three lines, with one, two or three buttons.
     The user can also press the <1>, <2> or <3> key to indicate the first,
     second, or third button.
@@ -660,7 +671,7 @@ def fl_show_choice(msg1txt, msg2txt, msg3txt, numbtns, btn1txt, btn2txt,
 
 def fl_hide_choice():
     """fl_hide_choice()
-    
+
     Hides the choice message.
 
     Examples
@@ -682,7 +693,7 @@ def fl_hide_choice():
 
 def fl_set_choices_shortcut(shortcuttxt1, shortcuttxt2, shortcuttxt3):
     """fl_set_choices_shortcut(shortcuttxt1, shortcuttxt2, shortcuttxt3)
-    
+
     Defines more mnemonic hotkeys as shortcut text for choices.
 
     Parameters
@@ -724,7 +735,7 @@ fl_set_choice_shortcut = fl_set_choices_shortcut
 
 def fl_show_oneliner(text, xpos, ypos):
     """fl_show_oneliner(text, xpos, ypos)
-    
+
     Shows a one-line message that can only be removed programmatically.
     Multi-line message is possible by embedding the newline character in text.
 
@@ -761,7 +772,7 @@ def fl_show_oneliner(text, xpos, ypos):
 
 def fl_hide_oneliner():
     """fl_hide_oneliner()
-    
+
     Hides the oneliner message previously shown.
 
     Examples
@@ -783,23 +794,35 @@ def fl_hide_oneliner():
 
 def fl_set_oneliner_font(style, size):
     """fl_set_oneliner_font(style, size)
-    
+
     Defines font style and size to use in a oneliner message.
 
     Parameters
     ----------
         style : int
-            label style. Values (from xfdata.py) FL_NORMAL_STYLE,
-            FL_BOLD_STYLE, FL_ITALIC_STYLE, FL_BOLDITALIC_STYLE,
-            FL_FIXED_STYLE, FL_FIXEDBOLD_STYLE, FL_FIXEDITALIC_STYLE,
-            FL_FIXEDBOLDITALIC_STYLE, FL_TIMES_STYLE, FL_TIMESBOLD_STYLE,
-            FL_TIMESITALIC_STYLE, FL_TIMESBOLDITALIC_STYLE, FL_MISC_STYLE,
-            FL_MISCBOLD_STYLE, FL_MISCITALIC_STYLE, FL_SYMBOL_STYLE,
-            FL_SHADOW_STYLE, FL_ENGRAVED_STYLE, FL_EMBOSSED_STYLE
+            label style. Values (from xfdata.py)
+            FL_NORMAL_STYLE (Helvetica normal text), FL_BOLD_STYLE (Helvetica
+            boldface text), FL_ITALIC_STYLE (Helvetica italic text),
+            FL_BOLDITALIC_STYLE (Helvetica boldface and italic text),
+            FL_FIXED_STYLE (Courier fixed width, good for tables),
+            FL_FIXEDBOLD_STYLE (Courier bold fixed text), FL_FIXEDITALIC_STYLE
+            (Courier italic fixed text), FL_FIXEDBOLDITALIC_STYLE (Courier
+            boldface and italic fixed text), FL_TIMES_STYLE (Times-Roman like
+            normal font), FL_TIMESBOLD_STYLE (Times-Roman like boldface text),
+            FL_TIMESITALIC_STYLE (Times-Roman like italic text),
+            FL_TIMESBOLDITALIC_STYLE (Times-Roman like boldface and italic
+            text), FL_MISC_STYLE (Charter normal text), FL_MISCBOLD_STYLE
+            (Charter boldface text), FL_MISCITALIC_STYLE (Charter italic text),
+            FL_SYMBOL_STYLE (Symbol text), FL_SHADOW_STYLE (Text casting a
+            shadow, modifier mask), FL_ENGRAVED_STYLE (Text engraved into the
+            form, modifier mask), FL_EMBOSSED_STYLE (Text standing out,
+            modifier mask). Bitwise OR with any of modifiers is allowed.
         size : int
-            label size. Values (from xfdata.py) FL_TINY_SIZE, FL_SMALL_SIZE,
-            FL_NORMAL_SIZE, FL_MEDIUM_SIZE, FL_LARGE_SIZE, FL_HUGE_SIZE,
-            FL_DEFAULT_SIZE
+            label size. Values (from xfdata.py)
+            FL_TINY_SIZE (8 points font), FL_SMALL_SIZE or FL_DEFAULT_SIZE (10
+            points font, default), FL_NORMAL_SIZE (12 points font),
+            FL_MEDIUM_SIZE (14 points font), FL_LARGE_SIZE (18 points font),
+            FL_HUGE_SIZE (24 points font), or other numeric odd or even value
 
     Examples
     --------
@@ -825,7 +848,7 @@ def fl_set_oneliner_font(style, size):
 
 def fl_set_oneliner_color(fgcolr, bgcolr):
     """fl_set_oneliner_color(fgcolr, bgcolr)
-    
+
     Defines color to use with oneliner message. By default, the background
     of the message is yellow and the text black.
 
@@ -860,23 +883,35 @@ def fl_set_oneliner_color(fgcolr, bgcolr):
 
 def fl_set_tooltip_font(style, size):
     """fl_set_tooltip_font(style, size)
-    
+
     Defines the font style and size of the tooltip.
 
     Parameters
     ----------
         style : int
-            label style. Values (from xfdata.py) FL_NORMAL_STYLE,
-            FL_BOLD_STYLE, FL_ITALIC_STYLE, FL_BOLDITALIC_STYLE,
-            FL_FIXED_STYLE, FL_FIXEDBOLD_STYLE, FL_FIXEDITALIC_STYLE,
-            FL_FIXEDBOLDITALIC_STYLE, FL_TIMES_STYLE, FL_TIMESBOLD_STYLE,
-            FL_TIMESITALIC_STYLE, FL_TIMESBOLDITALIC_STYLE, FL_MISC_STYLE,
-            FL_MISCBOLD_STYLE, FL_MISCITALIC_STYLE, FL_SYMBOL_STYLE,
-            FL_SHADOW_STYLE, FL_ENGRAVED_STYLE, FL_EMBOSSED_STYLE
+            label style. Values (from xfdata.py)
+            FL_NORMAL_STYLE (Helvetica normal text), FL_BOLD_STYLE (Helvetica
+            boldface text), FL_ITALIC_STYLE (Helvetica italic text),
+            FL_BOLDITALIC_STYLE (Helvetica boldface and italic text),
+            FL_FIXED_STYLE (Courier fixed width, good for tables),
+            FL_FIXEDBOLD_STYLE (Courier bold fixed text), FL_FIXEDITALIC_STYLE
+            (Courier italic fixed text), FL_FIXEDBOLDITALIC_STYLE (Courier
+            boldface and italic fixed text), FL_TIMES_STYLE (Times-Roman like
+            normal font), FL_TIMESBOLD_STYLE (Times-Roman like boldface text),
+            FL_TIMESITALIC_STYLE (Times-Roman like italic text),
+            FL_TIMESBOLDITALIC_STYLE (Times-Roman like boldface and italic
+            text), FL_MISC_STYLE (Charter normal text), FL_MISCBOLD_STYLE
+            (Charter boldface text), FL_MISCITALIC_STYLE (Charter italic text),
+            FL_SYMBOL_STYLE (Symbol text), FL_SHADOW_STYLE (Text casting a
+            shadow, modifier mask), FL_ENGRAVED_STYLE (Text engraved into the
+            form, modifier mask), FL_EMBOSSED_STYLE (Text standing out,
+            modifier mask). Bitwise OR with any of modifiers is allowed.
         size : int
-            label size. Values (from xfdata.py) FL_TINY_SIZE, FL_SMALL_SIZE,
-            FL_NORMAL_SIZE, FL_MEDIUM_SIZE, FL_LARGE_SIZE, FL_HUGE_SIZE,
-            FL_DEFAULT_SIZE
+            label size. Values (from xfdata.py)
+            FL_TINY_SIZE (8 points font), FL_SMALL_SIZE or FL_DEFAULT_SIZE (10
+            points font, default), FL_NORMAL_SIZE (12 points font),
+            FL_MEDIUM_SIZE (14 points font), FL_LARGE_SIZE (18 points font),
+            FL_HUGE_SIZE (24 points font), or other numeric odd or even value
 
     Examples
     --------
@@ -903,7 +938,7 @@ def fl_set_tooltip_font(style, size):
 
 def fl_set_tooltip_color(fgcolr, bgcolr):
     """fl_set_tooltip_color(fgcolr, bgcolr)
-    
+
     Defines the foreground and the background colors of the tooltip.
 
     Parameters
@@ -937,18 +972,30 @@ def fl_set_tooltip_color(fgcolr, bgcolr):
 
 def fl_set_tooltip_boxtype(boxtype):
     """fl_set_tooltip_boxtype(boxtype)
-    
+
     Defines the boxtype of the tooltip.
 
     Parameters
     ----------
         boxtype : int
-            type of the box to be added. Values (from xfdata.py) FL_NO_BOX,
-            FL_UP_BOX, FL_DOWN_BOX, FL_BORDER_BOX, FL_SHADOW_BOX,
-            FL_FRAME_BOX, FL_ROUNDED_BOX, FL_EMBOSSED_BOX, FL_FLAT_BOX,
-            FL_RFLAT_BOX, FL_RSHADOW_BOX, FL_OVAL_BOX, FL_ROUNDED3D_UPBOX,
-            FL_ROUNDED3D_DOWNBOX, FL_OVAL3D_UPBOX, FL_OVAL3D_DOWNBOX,
-            FL_OVAL3D_FRAMEBOX, FL_OVAL3D_EMBOSSEDBOX
+            type of the box to be added. Values (from xfdata.py)
+            FL_NO_BOX (No box at all, it is transparent, just a label),
+            FL_UP_BOX (A box that comes out of the screen), FL_DOWN_BOX (A box
+            that goes down into the screen), FL_BORDER_BOX (A flat box with a
+            border), FL_SHADOW_BOX (A flat box with a shadow), FL_FRAME_BOX (A
+            flat box with an engraved frame), FL_ROUNDED_BOX (A rounded box),
+            FL_EMBOSSED_BOX (A flat box with an embossed frame), FL_FLAT_BOX (A
+            flat box without a border, normally invisible unless given a
+            different color than the surroundings), FL_RFLAT_BOX (A rounded box
+            without a border, normally invisible unless given a different color
+            than the surroundings), FL_RSHADOW_BOX (A rounded box with a
+            shadow)), FL_OVAL_BOX (A box shaped like an ellipse),
+            FL_ROUNDED3D_UPBOX (A rounded box coming out of the screen),
+            FL_ROUNDED3D_DOWNBOX (A rounded box going into the screen),
+            FL_OVAL3D_UPBOX (An oval box coming out of the screen),
+            FL_OVAL3D_DOWNBOX (An oval box going into the screen),
+            FL_OVAL3D_FRAMEBOX (An oval box with an engraved frame),
+            FL_OVAL3D_EMBOSSEDBOX (An oval box with an embossed frame)
 
     Examples
     --------
@@ -972,17 +1019,24 @@ def fl_set_tooltip_boxtype(boxtype):
 
 def fl_set_tooltip_lalign(align):
     """fl_set_tooltip_lalign(align)
-    
+
     Defines the alignment of the tooltip.
 
     Parameters
     ----------
         align : int
-            alignment of tooltip. Values (from xfdata.py) FL_ALIGN_CENTER,
-            FL_ALIGN_TOP, FL_ALIGN_BOTTOM, FL_ALIGN_LEFT, FL_ALIGN_RIGHT,
-            FL_ALIGN_LEFT_TOP, FL_ALIGN_RIGHT_TOP, FL_ALIGN_LEFT_BOTTOM,
-            FL_ALIGN_RIGHT_BOTTOM, FL_ALIGN_INSIDE, FL_ALIGN_VERT. Bitwise
-            OR with FL_ALIGN_INSIDE is allowed.
+            alignment of tooltip. Values (from xfdata.py)
+            FL_ALIGN_CENTER (In the middle of the box, inside it), FL_ALIGN_TOP
+            (To the top of the box, outside it), FL_ALIGN_BOTTOM (To the
+            bottom of the box, outside it), FL_ALIGN_LEFT (To the left of the
+            box, outside it), FL_ALIGN_RIGHT (To the right of the box, outside
+            it), FL_ALIGN_LEFT_TOP (To the left and top of the box, outside
+            it), FL_ALIGN_RIGHT_TOP (To the right and top of the box, outside
+            it), FL_ALIGN_LEFT_BOTTOM (To the left and bottom of the box,
+            outside it), FL_ALIGN_RIGHT_BOTTOM (To the right and bottom of
+            the box, outside it), FL_ALIGN_INSIDE (places the text inside the
+            box), FL_ALIGN_VERT (not functional yet). Bitwise OR with
+            FL_ALIGN_INSIDE is allowed.
 
     Examples
     --------
@@ -1006,7 +1060,7 @@ def fl_set_tooltip_lalign(align):
 
 def fl_exe_command(cmdtxt, block):
     """fl_exe_command(cmdtxt, block) -> status
-    
+
     Forks a new process that runs specified command.
 
     Parameters
@@ -1049,7 +1103,7 @@ fl_open_command = fl_exe_command
 
 def fl_end_command(pid):
     """fl_end_command(pid) -> status
-    
+
     Suspends the current process and waits until the child process is
     completed.
 
@@ -1088,7 +1142,7 @@ fl_close_command = fl_end_command
 
 def fl_check_command(pid):
     """fl_check_command(pid) -> status
-    
+
     Polls the status of a child process.
 
     Parameters
@@ -1125,7 +1179,7 @@ def fl_check_command(pid):
 
 def fl_popen(cmdtxt, opntype):
     """fl_popen(cmdtxt, opntype) -> ptr_file
-    
+
     Executes the command in a child process, and logs the stderr messages
     into the command log. If otype is "w", stdout will also be logged into
     the command browser.
@@ -1165,7 +1219,7 @@ def fl_popen(cmdtxt, opntype):
 
 def fl_pclose(ptr_file):
     """fl_pclose(ptr_file) -> result
-    
+
     Cleans up the child process executed.
 
     Parameters
@@ -1201,7 +1255,7 @@ def fl_pclose(ptr_file):
 
 def fl_end_all_command():
     """fl_end_all_command() -> status
-    
+
     Waits for all the child processes initiated by fl_exe_command()
     to complete.
 
@@ -1229,7 +1283,7 @@ def fl_end_all_command():
 
 def fl_show_command_log(border):
     """fl_show_command_log(border)
-    
+
     Shows the log of the command output.
 
     Parameters
@@ -1261,7 +1315,7 @@ def fl_show_command_log(border):
 
 def fl_hide_command_log():
     """fl_hide_command_log()
-    
+
     Hides the log of the command output.
 
     Examples
@@ -1283,7 +1337,7 @@ def fl_hide_command_log():
 
 def fl_clear_command_log():
     """fl_clear_command_log()
-    
+
     Clears the browser and the logging output displayed within it.
 
     Examples
@@ -1305,7 +1359,7 @@ def fl_clear_command_log():
 
 def fl_addto_command_log(txtstr):
     """fl_addto_command_log(txtstr)
-    
+
     Adds arbitrary text to the command browser.
 
     Parameters
@@ -1334,7 +1388,7 @@ def fl_addto_command_log(txtstr):
 
 def fl_set_command_log_position(xpos, ypos):
     """fl_set_command_log_position(xpos, ypos)
-    
+
     Changes the default placement of the command log.
 
     Parameters
@@ -1366,7 +1420,7 @@ def fl_set_command_log_position(xpos, ypos):
 
 def fl_get_command_log_fdstruct():
     """fl_get_command_log_fdstruct() -> ptr_cmdlog
-    
+
     Finds out the GUI structure of the command browser. From the information
     returned, the application program can change various attributes of the
     command browser and its associated flobjects. Note however, that you
@@ -1400,7 +1454,7 @@ def fl_get_command_log_fdstruct():
 
 def fl_use_fselector(fselnum):
     """fl_use_fselector(fselnum) -> oldfselnum
-    
+
     Defines the currently active file selector.
 
     Parameters
@@ -1436,7 +1490,7 @@ def fl_use_fselector(fselnum):
 
 def fl_show_fselector(msgtxt, dirname, pattern, deftxt):
     """fl_show_fselector(msgtxt, dirname, pattern, deftxt) -> text
-    
+
     Show a file selector, providing an easy and interactive way to let
     the user select files.
 
@@ -1490,15 +1544,17 @@ fl_show_file_selector = fl_show_fselector
 
 def fl_set_fselector_fontsize(size):
     """fl_set_fselector_fontsize(size)
-    
+
     Changes the font size of a file selector.
 
     Parameters
     ----------
         size : int
-            label size. Values (from xfdata.py) FL_TINY_SIZE,
-            FL_SMALL_SIZE, FL_NORMAL_SIZE, FL_MEDIUM_SIZE, FL_LARGE_SIZE,
-            FL_HUGE_SIZE, FL_DEFAULT_SIZE
+            label size. Values (from xfdata.py)
+            FL_TINY_SIZE (8 points font), FL_SMALL_SIZE or FL_DEFAULT_SIZE (10
+            points font, default), FL_NORMAL_SIZE (12 points font),
+            FL_MEDIUM_SIZE (14 points font), FL_LARGE_SIZE (18 points font),
+            FL_HUGE_SIZE (24 points font), or other numeric odd or even value
 
     Examples
     --------
@@ -1514,7 +1570,6 @@ def fl_set_fselector_fontsize(size):
         None, [cty.c_int],
         """void fl_set_fselector_fontsize(int p1)""")
     library.check_if_initialized()
-    library.checknonfatal_allowed_value_in_list(size, xfdata.FONTSIZE_list)
     i_size = library.convert_to_intc(size)
     library.keep_elem_refs(size, i_size)
     _fl_set_fselector_fontsize(i_size)
@@ -1522,19 +1577,29 @@ def fl_set_fselector_fontsize(size):
 
 def fl_set_fselector_fontstyle(style):
     """fl_set_fselector_fontstyle(style)
-    
+
     Changes the font style of a file selector.
 
     Parameters
     ----------
         style : int
-            label style. Values (from xfdata.py) FL_NORMAL_STYLE,
-            FL_BOLD_STYLE, FL_ITALIC_STYLE, FL_BOLDITALIC_STYLE,
-            FL_FIXED_STYLE, FL_FIXEDBOLD_STYLE, FL_FIXEDITALIC_STYLE,
-            FL_FIXEDBOLDITALIC_STYLE, FL_TIMES_STYLE, FL_TIMESBOLD_STYLE,
-            FL_TIMESITALIC_STYLE, FL_TIMESBOLDITALIC_STYLE, FL_MISC_STYLE,
-            FL_MISCBOLD_STYLE, FL_MISCITALIC_STYLE, FL_SYMBOL_STYLE,
-            FL_SHADOW_STYLE, FL_ENGRAVED_STYLE, FL_EMBOSSED_STYLE
+            label style. Values (from xfdata.py)
+            FL_NORMAL_STYLE (Helvetica normal text), FL_BOLD_STYLE (Helvetica
+            boldface text), FL_ITALIC_STYLE (Helvetica italic text),
+            FL_BOLDITALIC_STYLE (Helvetica boldface and italic text),
+            FL_FIXED_STYLE (Courier fixed width, good for tables),
+            FL_FIXEDBOLD_STYLE (Courier bold fixed text), FL_FIXEDITALIC_STYLE
+            (Courier italic fixed text), FL_FIXEDBOLDITALIC_STYLE (Courier
+            boldface and italic fixed text), FL_TIMES_STYLE (Times-Roman like
+            normal font), FL_TIMESBOLD_STYLE (Times-Roman like boldface text),
+            FL_TIMESITALIC_STYLE (Times-Roman like italic text),
+            FL_TIMESBOLDITALIC_STYLE (Times-Roman like boldface and italic
+            text), FL_MISC_STYLE (Charter normal text), FL_MISCBOLD_STYLE
+            (Charter boldface text), FL_MISCITALIC_STYLE (Charter italic text),
+            FL_SYMBOL_STYLE (Symbol text), FL_SHADOW_STYLE (Text casting a
+            shadow, modifier mask), FL_ENGRAVED_STYLE (Text engraved into the
+            form, modifier mask), FL_EMBOSSED_STYLE (Text standing out,
+            modifier mask). Bitwise OR with any of modifiers is allowed.
 
     Examples
     --------
@@ -1558,7 +1623,7 @@ def fl_set_fselector_fontstyle(style):
 
 def fl_set_fselector_placement(place):
     """fl_set_fselector_placement(place)
-    
+
     Defines the placement of the file selector. By default it is centered
     on the screen (FL_PLACE_CENTER|FL_FREE_SIZE).
 
@@ -1595,7 +1660,7 @@ def fl_set_fselector_placement(place):
 
 def fl_set_fselector_border(border):
     """fl_set_fselector_border(border)
-    
+
     Changes the border of file selector. By default it is displayed with
     transient property set (FL_NOBORDER is ignored).
 
@@ -1627,7 +1692,7 @@ def fl_set_fselector_border(border):
 
 def fl_set_fselector_transient(yesno):
     """fl_set_fselector_transient(yesno)
-    
+
     Defines the property of file selector as transient or fullborder.
 
     Parameters
@@ -1654,7 +1719,7 @@ def fl_set_fselector_transient(yesno):
 
 def fl_set_fselector_callback(pyfn_FSCB, vdata):
     """fl_set_fselector_callback(pyfn_FSCB, vdata)
-    
+
     Defines a callback routine so that whenever the user double clicks on a
     filename, instead of returning the filename, this routine is invoked
     with the filename as the argument. The behavior of the file selector is
@@ -1730,7 +1795,7 @@ def fl_get_filename():
 
 def fl_get_directory():
     """fl_get_directory() -> dirname
-    
+
     Finds out the directory name after the user changed it.
 
     Returns
@@ -1785,7 +1850,7 @@ def fl_get_pattern():
 
 def fl_set_directory(dirname):
     """fl_set_directory(dirname) -> result
-    
+
     Defines programmatically new value for the default directory.
 
     Parameters
@@ -1820,7 +1885,7 @@ def fl_set_directory(dirname):
 
 def fl_set_pattern(pattern):
     """fl_set_pattern(pattern)
-    
+
     Defines programmatically a new value for the default pattern.
 
     Parameters
@@ -1849,7 +1914,7 @@ def fl_set_pattern(pattern):
 
 def fl_refresh_fselector():
     """fl_refresh_fselector()
-    
+
     Refreshes the file selector, re-scanning the current directory and
     listing all entries in it.
 
@@ -1872,7 +1937,7 @@ def fl_refresh_fselector():
 
 def fl_add_fselector_appbutton(label, pyfn_fselappbtn, vdata):
     """fl_add_fselector_appbutton(label, pyfn_fselappbtn, vdata)
-    
+
     Adds an application specific button from file selector and a callback
     routine for it.
 
@@ -1915,7 +1980,7 @@ def fl_add_fselector_appbutton(label, pyfn_fselappbtn, vdata):
 
 def fl_remove_fselector_appbutton(label):
     """fl_remove_fselector_appbutton(label)
-    
+
     Removes an application specific button from file selector.
 
     Parameters
@@ -1944,7 +2009,7 @@ def fl_remove_fselector_appbutton(label):
 
 def fl_disable_fselector_cache(yesno):
     """fl_disable_fselector_cache(yesno)
-    
+
     Disables or enables file selector caching.
 
     Parameters
@@ -1974,7 +2039,7 @@ def fl_disable_fselector_cache(yesno):
 
 def fl_invalidate_fselector_cache():
     """fl_invalidate_fselector_cache()
-    
+
     Forces an update of file selector caching programmatically. It forces
     it only once, and on the directory that is to be browsed.
 
@@ -1997,7 +2062,7 @@ def fl_invalidate_fselector_cache():
 
 def fl_get_fselector_form():
     """fl_get_fselector_form() -> ptr_flform
-    
+
     Finds out the form of file selector.
 
     Returns
@@ -2025,7 +2090,7 @@ def fl_get_fselector_form():
 
 def fl_get_fselector_fdstruct():
     """fl_get_fselector_fdstruct() -> ptr_fdselector
-    
+
     Finds out xfdata.FD_FSELECTOR class instance, allowing direct
     access to the individual flobjects of a file selector.
 
@@ -2054,7 +2119,7 @@ def fl_get_fselector_fdstruct():
 
 def fl_hide_fselector():
     """fl_hide_fselector()
-    
+
     Hides a file selector.
 
     Examples
@@ -2078,7 +2143,7 @@ def fl_set_fselector_filetype_marker(dirmrkr, fifomrkr, sockmrkr, cdevmrkr,
                                      bdevmrkr):
     """fl_set_fselector_filetype_marker(dirmrkr, fifomrkr, sockmrkr, cdevmrkr,
     bdevmrkr)
-    
+
     Changes the prefix by which the listing of files in a directory special
     files are marked with in browser. By default D is used for directories,
     b for special block files, c for special character file, p for pipes,
@@ -2150,7 +2215,7 @@ def fl_set_fselector_filetype_marker(dirmrkr, fifomrkr, sockmrkr, cdevmrkr,
 
 def fl_set_fselector_title(title):
     """fl_set_fselector_title(title)
-    
+
     Defines the title of a file selector.
 
     Parameters
@@ -2172,7 +2237,7 @@ def fl_set_fselector_title(title):
 
 def fl_goodies_atclose(ptr_flform, vdata):
     """fl_goodies_atclose(ptr_flform, vdata) -> unused
-    
+
     *todo*
 
     Parameters

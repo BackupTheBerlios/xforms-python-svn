@@ -36,8 +36,9 @@ from xformslib import xfdata
 
 
 # exported variable
-FL_EVENT = (cty.POINTER(xfdata.FL_OBJECT)).in_dll(library.load_so_libforms(), \
-    'FL_EVENT')
+#FL_EVENT = (cty.POINTER(xfdata.FL_OBJECT)).in_dll( \
+#        library.load_so_libforms(), 'FL_EVENT')
+FL_EVENT = cty.POINTER(xfdata.FL_OBJECT)
 
 
 ########################################
@@ -88,21 +89,23 @@ def special_style(style):
 
 # IO other than XEvent Q
 
-def fl_add_io_callback(fd, mask, pyfn_IoCallback, vdata):
-    """fl_add_io_callback(fd, mask, pyfn_IoCallback, vdata)
-    
+def fl_add_io_callback(fd, fmask, pyfn_IoCallback, vdata):
+    """fl_add_io_callback(fd, fmask, pyfn_IoCallback, vdata)
+
     Registers an input callback function when input is available from fd.
 
     Parameters
     ----------
         fd : int
             a valid file descriptor in a unix system from an opened file
-        mask : int
+        fmask : int
             under what circumstance the input callback should be invoked.
-            Values (from xfdata.py) are FL_READ, FL_WRITE, FL_EXCEPT
+            Values (from xfdata.py) are FL_READ (file descriptor has data
+            available), FL_WRITE (file descriptor is available for writing),
+            FL_EXCEPT (an I/O error has occurred)
         pyfn_IoCallback : python function to be invoked, no return
             name referring to function(num, vdata)
-        vdata : any type (e.g. 'None', int, str, etc..)
+        vdata : any type (e.g. None, int, str, etc..)
             user data to be passed to function; callback has to take care
             of type check.
 
@@ -126,28 +129,30 @@ def fl_add_io_callback(fd, mask, pyfn_IoCallback, vdata):
            FL_IO_CALLBACK callback, void * data) """)
     library.check_if_initialized()
     i_fd = library.convert_to_intc(fd)
-    library.checkfatal_allowed_value_in_list(mask, xfdata.ASYNCIO_list)
-    ui_mask = library.convert_to_uintc(mask)
+    library.checkfatal_allowed_value_in_list(fmask, xfdata.ASYNCIO_list)
+    ui_fmask = library.convert_to_uintc(fmask)
     library.verify_function_type(pyfn_IoCallback)
     cfn_IoCallback = xfdata.FL_IO_CALLBACK(pyfn_IoCallback)
     ptr_vdata = cty.cast(vdata, cty.c_void_p)
     library.keep_cfunc_refs(cfn_IoCallback, pyfn_IoCallback)
-    library.keep_elem_refs(fd, i_fd, mask, ui_mask, vdata, ptr_vdata)
-    _fl_add_io_callback(i_fd, ui_mask, cfn_IoCallback, ptr_vdata)
+    library.keep_elem_refs(fd, i_fd, fmask, ui_fmask, vdata, ptr_vdata)
+    _fl_add_io_callback(i_fd, ui_fmask, cfn_IoCallback, ptr_vdata)
 
 
-def fl_remove_io_callback(fd, mask, pyfn_IoCallback):
-    """fl_remove_io_callback(fd, mask, pyfn_IoCallback)
-    
+def fl_remove_io_callback(fd, fmask, pyfn_IoCallback):
+    """fl_remove_io_callback(fd, fmask, pyfn_IoCallback)
+
     Removes the registered callback function when input is available from fd.
 
     Parameters
     ----------
         fd : int
             a valid file descriptor in a unix system
-        mask : int
+        fmask : int
             under what circumstance the input callback should be removed.
-            Values (from xfdata.py) are FL_READ, FL_WRITE, FL_EXCEPT
+            Values (from xfdata.py) are FL_READ (file descriptor has data
+            available), FL_WRITE (file descriptor is available for writing),
+            FL_EXCEPT (an I/O error has occurred)
         pyfn_IoCallback : python function to be removed, no return
             name referring to function(num, vdata)
 
@@ -171,13 +176,13 @@ def fl_remove_io_callback(fd, mask, pyfn_IoCallback):
            FL_IO_CALLBACK cb) """)
     library.check_if_initialized()
     i_fd = library.convert_to_intc(fd)
-    library.checkfatal_allowed_value_in_list(mask, xfdata.ASYNCIO_list)
-    ui_mask = library.convert_to_uintc(mask)
+    library.checkfatal_allowed_value_in_list(fmask, xfdata.ASYNCIO_list)
+    ui_fmask = library.convert_to_uintc(fmask)
     library.verify_function_type(pyfn_IoCallback)
     cfn_IoCallback = xfdata.FL_IO_CALLBACK(pyfn_IoCallback)
     library.keep_cfunc_refs(cfn_IoCallback, pyfn_IoCallback)
-    library.keep_elem_refs(fd, i_fd, mask, ui_mask)
-    _fl_remove_io_callback(i_fd, ui_mask, cfn_IoCallback)
+    library.keep_elem_refs(fd, i_fd, fmask, ui_fmask)
+    _fl_remove_io_callback(i_fd, ui_fmask, cfn_IoCallback)
 
 
 # signals
@@ -197,7 +202,7 @@ def fl_add_signal_callback(sglnum, pyfn_SignalHandler, vdata):
         pyfn_SignalHandler : python function callback, no return
             name referring to function(num, vdata)
             callback invoked after catching signal
-        vdata : any type (e.g. 'None', int, str, etc..)
+        vdata : any type (e.g. None, int, str, etc..)
             user data to be passed to function; callback has to take care
             of type check.
 
@@ -230,7 +235,7 @@ def fl_add_signal_callback(sglnum, pyfn_SignalHandler, vdata):
 
 def fl_remove_signal_callback(sglnum):
     """fl_remove_signal_callback(sglnum)
-    
+
     Removes a previously registered callback function related to a signal.
 
     Parameters
@@ -260,7 +265,7 @@ def fl_remove_signal_callback(sglnum):
 
 def fl_signal_caught(sglnum):
     """fl_signal_caught(sglnum)
-    
+
     Informs the main loop of the delivery of the particular signal.
     The signal is received by the application program.
 
@@ -291,7 +296,7 @@ def fl_signal_caught(sglnum):
 
 def fl_app_signal_direct(yesno):
     """fl_app_signal_direct(yesno)
-    
+
     Changes the default behavior of the built-in signal facilities. It
     is to be called with a true value for flag prior to any use of
     fl_add_signal_callback().
@@ -323,15 +328,31 @@ def fl_app_signal_direct(yesno):
 
 def fl_input_end_return_handling(endtype):
     """fl_input_end_return_handling(endtype) -> endtype
-    
+
     Defines type of handling return of end events for input flobjects.
 
     Parameters
     ----------
         endtype : int
-            how end return event for input is handled. Values (from
-            xfdata.py) FL_INPUT_END_EVENT_ALWAYS (default) or
+            how end return event for input is handled. Values (from xfdata.py)
             FL_INPUT_END_EVENT_CLASSIC (old behavior)
+                Uses old behavior in handling return of end event for input. An
+                "end of edit" event was not reported back to the program when
+                the user clicked on a non-input flobject, i.e. changed to a
+                different input flobject. This let to some problems when the
+                interaction with the clicked-on non-input flobject depended
+                on the new content of the input flobject, just having been
+                edited, but which had not been been reported back to the caller.
+            FL_INPUT_END_EVENT_ALWAYS (default)
+                Uses new (default) behavior in handling return of end event for
+                input. It means that the user either hits the <Tab> or the
+                <Return> key (except for multi-line inputs) or that he/she
+                clicks onto some other flobject that in principle allows user
+                interaction. These events are interpreted as an indication the
+                user is done editing the input field and thus are reported back
+                to the program, either by returning the input flobject or
+                invoking its callback. But unless the user goes to a different
+                input flobject the input field edited retains the focus.
 
     Returns
     -------
@@ -365,7 +386,7 @@ def fl_input_end_return_handling(endtype):
 
 def fl_add_timeout(msec, pyfn_TimeoutCallback, vdata):
     """fl_add_timeout(msec, pyfn_TimeoutCallback, vdata) -> timerid
-    
+
     Adds a timeout callback after a specified elapsed time.
 
     Parameters
@@ -414,7 +435,7 @@ def fl_add_timeout(msec, pyfn_TimeoutCallback, vdata):
 
 def fl_remove_timeout(timerid):
     """fl_remove_timeout(timerid)
-    
+
     Removes a timeout callback function, created with fl_add_timeout().
 
     Parameters
@@ -445,7 +466,7 @@ def fl_remove_timeout(timerid):
 
 def fl_library_version():
     """fl_library_version() -> compver, ver, rev
-    
+
     Finds out XForms consolidated, major and minor version informations.
 
     Returns
@@ -484,7 +505,7 @@ def fl_library_version():
 
 def fl_library_full_version():
     """fl_library_full_version() -> fcompver, ver, rev, fixl, extrafixl
-    
+
     Finds out XForms full consolidated, major, minor and fixlevel version
     informations.
 
@@ -537,20 +558,32 @@ def fl_library_full_version():
 
 # Generic routines that deal with FORMS
 
-def fl_bgn_form(formtype, width, height):
-    """fl_bgn_form(formtype, width, height) -> ptr_flform
-    
+def fl_bgn_form(boxtype, width, height):
+    """fl_bgn_form(boxtype, width, height) -> ptr_flform
+
     Starts the definition of a form call.
 
     Parameters
     ----------
-        formtype : int
+        boxtype : int
             type of box used as a background. Values (from xfdata.py)
-            FL_NO_BOX, FL_UP_BOX, FL_DOWN_BOX, FL_BORDER_BOX,
-            FL_SHADOW_BOX, FL_FRAME_BOX, FL_ROUNDED_BOX, FL_EMBOSSED_BOX,
-            FL_FLAT_BOX, FL_RFLAT_BOX, FL_RSHADOW_BOX, FL_OVAL_BOX,
-            FL_ROUNDED3D_UPBOX, FL_ROUNDED3D_DOWNBOX, FL_OVAL3D_UPBOX,
-            FL_OVAL3D_DOWNBOX, FL_OVAL3D_FRAMEBOX, FL_OVAL3D_EMBOSSEDBOX
+            FL_NO_BOX (No box at all, it is transparent, just a label),
+            FL_UP_BOX (A box that comes out of the screen), FL_DOWN_BOX (A box
+            that goes down into the screen), FL_BORDER_BOX (A flat box with a
+            border), FL_SHADOW_BOX (A flat box with a shadow), FL_FRAME_BOX (A
+            flat box with an engraved frame), FL_ROUNDED_BOX (A rounded box),
+            FL_EMBOSSED_BOX (A flat box with an embossed frame), FL_FLAT_BOX (A
+            flat box without a border, normally invisible unless given a
+            different color than the surroundings), FL_RFLAT_BOX (A rounded box
+            without a border, normally invisible unless given a different color
+            than the surroundings), FL_RSHADOW_BOX (A rounded box with a
+            shadow)), FL_OVAL_BOX (A box shaped like an ellipse),
+            FL_ROUNDED3D_UPBOX (A rounded box coming out of the screen),
+            FL_ROUNDED3D_DOWNBOX (A rounded box going into the screen),
+            FL_OVAL3D_UPBOX (An oval box coming out of the screen),
+            FL_OVAL3D_DOWNBOX (An oval box going into the screen),
+            FL_OVAL3D_FRAMEBOX (An oval box with an engraved frame),
+            FL_OVAL3D_EMBOSSEDBOX (An oval box with an embossed frame)
         width : int
             width of the new form in coord units
         height : int
@@ -576,22 +609,21 @@ def fl_bgn_form(formtype, width, height):
         xfdata.FL_Coord],
         """FL_FORM * fl_bgn_form(int type, FL_Coord w, FL_Coord h) """)
     library.check_if_initialized()
-    library.checkfatal_allowed_value_in_list(formtype, \
-            xfdata.BOXTYPE_list)
-    i_formtype = library.convert_to_intc(formtype)
+    library.checkfatal_allowed_value_in_list(boxtype, xfdata.BOXTYPE_list)
+    i_boxtype = library.convert_to_intc(boxtype)
     i_width = library.convert_to_FL_Coord(width)
     i_height = library.convert_to_FL_Coord(height)
-    library.keep_elem_refs(formtype, i_formtype, width, i_width, \
-            height, i_height)
-    retval = _fl_bgn_form(i_formtype, i_width, i_height)
+    library.keep_elem_refs(boxtype, i_boxtype, width, i_width, height, \
+            i_height)
+    retval = _fl_bgn_form(i_boxtype, i_width, i_height)
     return retval
 
 
 def fl_end_form():
     """fl_end_form()
-    
-    Ends the definition for a form call, after all required flobjects
-    have been added to a form call.
+
+    Ends the definition for a form call, after all needed flobjects have
+    been added to a form call.
 
     Examples
     --------
@@ -612,7 +644,7 @@ def fl_end_form():
 
 def fl_do_forms():
     """fl_do_forms() -> ptr_flobject
-    
+
     Starts the main loop of the program and returns only when the state
     of a xfdata.FL_OBJECT (that has no callback bound to it) changes.
 
@@ -642,7 +674,7 @@ def fl_do_forms():
 
 def fl_check_forms():
     """fl_check_forms() -> ptr_flobject
-    
+
     Returns None immediately unless the state of one of xfdata.FL_OBJECT
     (without a callback bound to it) changed.
 
@@ -671,7 +703,7 @@ def fl_check_forms():
 
 def fl_do_only_forms():
     """fl_do_only_forms() -> ptr_flobject
-    
+
     Starts the main loop of the program and returns only when the state
     of a flobject changes that has no callback bound to it. It does not
     handle user events generated by application windows opened via
@@ -702,7 +734,7 @@ def fl_do_only_forms():
 
 def fl_check_only_forms():
     """fl_check_only_forms() -> ptr_flobject
-    
+
     Returns None immediately unless the state of one of the flobject
     (without a callback bound to it) changed. It does not handle user
     events generated by application windows opened via fl_winopen()
@@ -733,7 +765,7 @@ def fl_check_only_forms():
 
 def fl_freeze_form(ptr_flform):
     """fl_freeze_form()
-    
+
     Redraw of a form is temporarily suspended, while changes are being
     made, so all changes made are instead buffered internally.
 
@@ -763,7 +795,7 @@ def fl_freeze_form(ptr_flform):
 
 def fl_set_focus_object(ptr_flform, ptr_flobject):
     """fl_set_focus_object(ptr_flform, ptr_flobject)
-    
+
     Defines the input focus in form to flobject.
 
     Parameters
@@ -833,7 +865,7 @@ def fl_get_focus_object(ptr_flform):
 
 def fl_reset_focus_object(ptr_flobject):
     """fl_reset_focus_object(ptr_flobject)
-    
+
     Resets focus on current flobject, overriding the xfdata.FL_UNFOCUS
     event.
 
@@ -864,7 +896,7 @@ def fl_reset_focus_object(ptr_flobject):
 def fl_set_form_atclose(ptr_flform, pyfn_FormAtclose, vdata):
     """fl_set_form_atclose(ptr_flform, pyfn_FormAtclose, vdata)
     -> FormAtclose
-    
+
     Calls a callback function before closing the form.
 
     Parameters
@@ -915,7 +947,7 @@ def fl_set_form_atclose(ptr_flform, pyfn_FormAtclose, vdata):
 
 def fl_set_atclose(pyfn_FormAtclose, vdata):
     """fl_set_atclose(pyfn_FormAtclose, vdata) -> FormAtclose
-    
+
     Calls a callback function before terminating the application.
 
     Parameters
@@ -963,7 +995,7 @@ def fl_set_atclose(pyfn_FormAtclose, vdata):
 def fl_set_form_atactivate(ptr_flform, pyfn_FormAtactivate, vdata):
     """fl_set_form_atactivate(ptr_flform, pyfn_FormAtactivate, vdata)
     -> FormAtactivate
-    
+
     Registers a callback that is called when activation status of a forms
     is enabled.
 
@@ -1016,7 +1048,7 @@ def fl_set_form_atactivate(ptr_flform, pyfn_FormAtactivate, vdata):
 def fl_set_form_atdeactivate(ptr_flform, pyfn_FormAtdeactivate, vdata):
     """fl_set_form_atdeactivate(ptr_flform, pyfn_FormAtdeactivate, vdata)
     -> FormAtdeactivate
-    
+
     Registers a callback that is called when activation status of a form
     is disabled.
 
@@ -1070,7 +1102,7 @@ def fl_set_form_atdeactivate(ptr_flform, pyfn_FormAtdeactivate, vdata):
 
 def fl_unfreeze_form(ptr_flform):
     """fl_unfreeze_form(ptr_flform)
-    
+
     Reverts previous freeze, set with fl_freeze_form(); all
     changes made in the meantime in a form are drawn at once.
 
@@ -1100,7 +1132,7 @@ def fl_unfreeze_form(ptr_flform):
 
 def fl_deactivate_form(ptr_flform):
     """fl_deactivate_form(ptr_flform)
-    
+
     Deactivates form temporarily, without hiding it, but not allowing a
     user to interact with elements contained in form (buttons, etc.).
 
@@ -1130,7 +1162,7 @@ def fl_deactivate_form(ptr_flform):
 
 def fl_activate_form(ptr_flform):
     """fl_activate_form(ptr_flform)
-    
+
     (Re)activates form (deactivated with fl_deactivate_form), allowing
     the user to interact again with elements contained in form (buttons,
     etc.).
@@ -1161,7 +1193,7 @@ def fl_activate_form(ptr_flform):
 
 def fl_deactivate_all_forms():
     """fl_deactivate_all_forms()
-    
+
     De-activates all current forms, forbidding any event/user interaction.
 
     Examples
@@ -1183,7 +1215,7 @@ def fl_deactivate_all_forms():
 
 def fl_activate_all_forms():
     """fl_activate_all_forms()
-    
+
     (Re)activates all current forms, allowing event/user interaction.
 
     Examples
@@ -1205,7 +1237,7 @@ def fl_activate_all_forms():
 
 def fl_freeze_all_forms():
     """fl_freeze_all_forms()
-    
+
     All current forms are not temporarily redrawn, while changes
     are being made and are instead buffered internally.
 
@@ -1228,7 +1260,7 @@ def fl_freeze_all_forms():
 
 def fl_unfreeze_all_forms():
     """fl_unfreeze_all_forms()
-    
+
     All changes made in the meantime in all current forms are drawn
     at once, reverting previous freeze.
 
@@ -1251,7 +1283,7 @@ def fl_unfreeze_all_forms():
 
 def fl_scale_form(ptr_flform, xscale, yscale):
     """fl_scale_form(ptr_flform, xscale, yscale)
-    
+
     Scales a form and the flobjects on it in size and position, indicating
     a scaling factor in x- and y-direction (1.1 = 110 percent, 0.5 = 50,
     etc.) with respect to the current size, and reshapes the window.
@@ -1288,7 +1320,7 @@ def fl_scale_form(ptr_flform, xscale, yscale):
 
 def fl_set_form_position(ptr_flform, xpos, ypos):
     """fl_set_form_position(ptr_flform, xpos, ypos)
-    
+
     Defines position of form, when placing a form on the screen with
     xfdata.FL_PLACE_GEOMETRY as place argument.
 
@@ -1325,7 +1357,7 @@ def fl_set_form_position(ptr_flform, xpos, ypos):
 
 def fl_set_form_title(ptr_flform, title):
     """fl_set_form_title(ptr_flform, title)
-    
+
     Changes the form title (and the icon name) after it is shown.
 
     Parameters
@@ -1357,7 +1389,7 @@ def fl_set_form_title(ptr_flform, title):
 
 def fl_set_app_mainform(ptr_flform):
     """fl_set_app_mainform(ptr_flform)
-    
+
     Designates the main form. By default, the main form is set
     automatically by the library to the first full-bordered form shown.
 
@@ -1387,7 +1419,7 @@ def fl_set_app_mainform(ptr_flform):
 
 def fl_get_app_mainform():
     """fl_get_app_mainform() -> ptr_flform
-    
+
     Finds out the current mainform.
 
     Returns
@@ -1415,7 +1447,7 @@ def fl_get_app_mainform():
 
 def fl_set_app_nomainform(yesno):
     """fl_set_app_nomainform(yesno)
-    
+
     In some situations, either because the concept of an application
     main form does not apply (for example, an application might have
     multiple full-bordered windows), or under some (buggy) window
@@ -1450,7 +1482,7 @@ def fl_set_app_nomainform(yesno):
 
 def fl_set_form_callback(ptr_flform, pyfn_FormCallbackPtr, vdata):
     """fl_set_form_callback(ptr_flform, pyfn_FormCallbackPtr, vdata)
-    
+
     Defines the callback function bound to an entire form. Whenever
     fl_do_forms() or fl_check_forms() would return a flobject in form they
     call the routine callback instead, with the flobject as an argument.
@@ -1502,7 +1534,7 @@ fl_set_form_call_back = fl_set_form_callback
 
 def fl_set_form_size(ptr_flform, width, height):
     """fl_set_form_size(ptr_flform, width, height)
-    
+
     Defines the size of form.
 
     Parameters
@@ -1538,7 +1570,7 @@ def fl_set_form_size(ptr_flform, width, height):
 
 def fl_set_form_hotspot(ptr_flform, xpos, ypos):
     """fl_set_form_hotspot(ptr_flform, xpos, ypos)
-    
+
     Defines the position of the hotspot, for showing a form so that a
     particular point is under the mouse. You have to use
     xfdata.FL_PLACE_HOTSPOT as place argument in fl_show_form().
@@ -1577,7 +1609,7 @@ def fl_set_form_hotspot(ptr_flform, xpos, ypos):
 
 def fl_set_form_hotobject(ptr_flform, ptr_flobject):
     """fl_set_form_hotobject(ptr_flform, ptr_flobject)
-    
+
     Defines the hotspot for showing a form so that a particular flobject
     is under the mouse. You have to use xfdata.FL_PLACE_HOTSPOT as
     place argument in fl_show_form().
@@ -1611,7 +1643,7 @@ def fl_set_form_hotobject(ptr_flform, ptr_flobject):
 
 def fl_set_form_minsize(ptr_flform, width, height):
     """fl_set_form_minsize(ptr_flform, width, height)
-    
+
     Defines the minimum size a form can have, if interactive resizing is
     allowed (e.g., by showing the form with xfdata.FL_PLACE_POSITION).
 
@@ -1649,7 +1681,7 @@ def fl_set_form_minsize(ptr_flform, width, height):
 
 def fl_set_form_maxsize(ptr_flform, width, height):
     """fl_set_form_maxsize(ptr_flform, width, height)
-    
+
     Defines the maximum size a form can have, if interactive resizing is
     allowed (e.g. by showing the form with xfdata.FL_PLACE_POSITION).
 
@@ -1688,7 +1720,7 @@ def fl_set_form_maxsize(ptr_flform, width, height):
 # TODO: find if key mask have to be included
 def fl_set_form_event_cmask(ptr_flform, cmask):
     """fl_set_form_event_cmask(ptr_flform, cmask)
-    
+
     Defines the event compress mask a form can react to.
 
     Parameters
@@ -1730,7 +1762,7 @@ def fl_set_form_event_cmask(ptr_flform, cmask):
 
 def fl_get_form_event_cmask(ptr_flform):
     """fl_get_form_event_cmask(ptr_flform) -> cmask
-    
+
     Finds out event compress mask a form can react to.
 
     Parameters
@@ -1765,7 +1797,7 @@ def fl_get_form_event_cmask(ptr_flform):
 
 def fl_set_form_geometry(ptr_flform, xpos, ypos, width, height):
     """fl_set_form_geometry(ptr_flform, xpos, ypos, width, height)
-    
+
     Defines the geometry (position and size) of a form.
 
     Parameters
@@ -1812,7 +1844,7 @@ fl_set_initial_placement = fl_set_form_geometry
 
 def fl_show_form(ptr_flform, place, border, title):
     """fl_show_form(ptr_flform, place, border, title) -> win
-    
+
     Shows the form.
 
     Parameters
@@ -1870,7 +1902,7 @@ def fl_show_form(ptr_flform, place, border, title):
 
 def fl_hide_form(ptr_flform):
     """fl_hide_form(ptr_flform)
-    
+
     Hides the form.
 
     Parameters
@@ -1899,7 +1931,7 @@ def fl_hide_form(ptr_flform):
 
 def fl_free_form(ptr_flform):
     """fl_free_form(ptr_flform)
-    
+
     Frees the memory used by a form, hiding and deleting it together
     with all its flobjects.
 
@@ -1929,7 +1961,7 @@ def fl_free_form(ptr_flform):
 
 def fl_redraw_form(ptr_flform):
     """fl_redraw_form(ptr_flform)
-    
+
     (Re)draws an entire form.
 
     Parameters
@@ -1958,7 +1990,7 @@ def fl_redraw_form(ptr_flform):
 
 def fl_set_form_dblbuffer(ptr_flform, yesno):
     """fl_set_form_dblbuffer(ptr_flform, yesno)
-    
+
     Uses double buffering on a per-form basis. Since Xlib does not
     support double buffering, XForms library simulates this functionality
     with pixmap bit-bliting. In practice, the effect is hardly
@@ -1997,7 +2029,7 @@ def fl_set_form_dblbuffer(ptr_flform, yesno):
 
 def fl_prepare_form_window(ptr_flform, place, border, title):
     """fl_prepare_form_window(ptr_flform, place, border, title) -> win
-    
+
     Creates a window that obeys any and all constraints just as
     fl_show_form() does but remains unmapped (not shown), returning its
     window handle. You need fl_show_form_window() after to show it.
@@ -2058,7 +2090,7 @@ def fl_prepare_form_window(ptr_flform, place, border, title):
 
 def fl_show_form_window(ptr_flform):
     """fl_show_form_window(ptr_flform) -> win
-    
+
     Maps (shows) a window of form that has been created before
     with fl_prepare_form_window().
 
@@ -2094,7 +2126,7 @@ def fl_show_form_window(ptr_flform):
 
 def fl_adjust_form_size(ptr_flform):
     """fl_adjust_form_size(ptr_flform) -> maxfact
-    
+
     Similar to fl_fit_object_label, but will do it for all flobjects
     and has a smaller threshold. Mainly intended for compensation for
     font size variations.
@@ -2130,8 +2162,8 @@ def fl_adjust_form_size(ptr_flform):
 
 
 def fl_form_is_visible(ptr_flform):
-    """fl_form_is_visible(ptr_flform) -> vstate
-    
+    """fl_form_is_visible(ptr_flform) -> visibstate
+
     Tells if form is visible or not.
 
     Parameters
@@ -2141,8 +2173,12 @@ def fl_form_is_visible(ptr_flform):
 
     Returns
     -------
-        vstate : int
-            visibility state (0 invisible, non-zero visible)
+        visibstate : int
+            visibility state, or FL_INVISIBLE (on failure)
+            Values (from xfdata.py)
+            FL_BEING_HIDDEN (The forms is visible but is in the process of
+            being hidden), FL_HIDDEN or FL_INVISIBLE (The form is not visible),
+            FL_VISIBLE (The form is visible).
 
     Examples
     --------
@@ -2166,7 +2202,7 @@ def fl_form_is_visible(ptr_flform):
 
 def fl_form_is_iconified(ptr_flform):
     """fl_form_is_iconified(ptr_flform) -> istate
-    
+
     Tells if a form's window is in iconified state or not.
 
     Parameters
@@ -2202,7 +2238,7 @@ def fl_form_is_iconified(ptr_flform):
 def fl_register_raw_callback(ptr_flform, mask, pyfn_RawCallback):
     """fl_register_raw_callback(ptr_flform, mask, pyfn_RawCallback)
     -> RawCallback
-    
+
     Registers preemptive event handlers. Only one handler is allowed
     for each event pair.
 
@@ -2262,7 +2298,7 @@ fl_register_call_back = fl_register_raw_callback
 
 def fl_bgn_group():
     """fl_bgn_group()
-    
+
     Starts a group of flobjects definition. Its purpose can be e.g. to
     define a series of flobjects to be hidden or deactivated or to
     define a series of radio buttons.
@@ -2292,7 +2328,7 @@ def fl_bgn_group():
 
 def fl_end_group():
     """fl_end_group()
-    
+
     Ends a group definition, previously started with fl_bgn_group().
 
     Examples
@@ -2314,7 +2350,7 @@ def fl_end_group():
 
 def fl_addto_group(ptr_flobject):
     """fl_addto_group(ptr_flobject) -> ptr_flform
-    
+
     Reopens a group, after fl_end_group(), to allow addition of
     further flobjects.
 
@@ -2352,7 +2388,7 @@ def fl_addto_group(ptr_flobject):
 
 def fl_get_object_objclass(ptr_flobject):
     """fl_get_object_objclass(ptr_flobject) -> flobjclass
-    
+
     Finds out the class of a flobject (e.g. button, lightbutton,
     box, nmenu, counter, etc.).
 
@@ -2388,7 +2424,7 @@ def fl_get_object_objclass(ptr_flobject):
 
 def fl_get_object_type(ptr_flobject):
     """fl_get_object_type(ptr_flobject) -> typeid
-    
+
     Finds out the type of a flobject (e.g. radio button, multiline input,
     normal browser, etc..).
 
@@ -2424,7 +2460,7 @@ def fl_get_object_type(ptr_flobject):
 
 def fl_set_object_boxtype(ptr_flobject, boxtype):
     """fl_set_object_boxtype(ptr_flobject, boxtype)
-    
+
     Defines the shape of box of a flobject. Not all possible boxtypes are
     suitable for all types of flobjects.
 
@@ -2433,12 +2469,24 @@ def fl_set_object_boxtype(ptr_flobject, boxtype):
         ptr_flobject : pointer to xfdata.FL_OBJECT
             flobject whose boxtype has to be set
         boxtype : int
-            type of the box to be set. Values (from xfdata.py) FL_NO_BOX,
-            FL_UP_BOX, FL_DOWN_BOX, FL_BORDER_BOX, FL_SHADOW_BOX,
-            FL_FRAME_BOX, FL_ROUNDED_BOX, FL_EMBOSSED_BOX, FL_FLAT_BOX,
-            FL_RFLAT_BOX, FL_RSHADOW_BOX, FL_OVAL_BOX, FL_ROUNDED3D_UPBOX,
-            FL_ROUNDED3D_DOWNBOX, FL_OVAL3D_UPBOX, FL_OVAL3D_DOWNBOX,
-            FL_OVAL3D_FRAMEBOX, FL_OVAL3D_EMBOSSEDBOX
+            type of the box to be set. Values (from xfdata.py)
+            FL_NO_BOX (No box at all, it is transparent, just a label),
+            FL_UP_BOX (A box that comes out of the screen), FL_DOWN_BOX (A box
+            that goes down into the screen), FL_BORDER_BOX (A flat box with a
+            border), FL_SHADOW_BOX (A flat box with a shadow), FL_FRAME_BOX (A
+            flat box with an engraved frame), FL_ROUNDED_BOX (A rounded box),
+            FL_EMBOSSED_BOX (A flat box with an embossed frame), FL_FLAT_BOX (A
+            flat box without a border, normally invisible unless given a
+            different color than the surroundings), FL_RFLAT_BOX (A rounded box
+            without a border, normally invisible unless given a different color
+            than the surroundings), FL_RSHADOW_BOX (A rounded box with a
+            shadow)), FL_OVAL_BOX (A box shaped like an ellipse),
+            FL_ROUNDED3D_UPBOX (A rounded box coming out of the screen),
+            FL_ROUNDED3D_DOWNBOX (A rounded box going into the screen),
+            FL_OVAL3D_UPBOX (An oval box coming out of the screen),
+            FL_OVAL3D_DOWNBOX (An oval box going into the screen),
+            FL_OVAL3D_FRAMEBOX (An oval box with an engraved frame),
+            FL_OVAL3D_EMBOSSEDBOX (An oval box with an embossed frame)
 
     Examples
     --------
@@ -2463,7 +2511,7 @@ def fl_set_object_boxtype(ptr_flobject, boxtype):
 
 def fl_get_object_boxtype(ptr_flobject):
     """fl_get_object_boxtype(ptr_flobject) -> typeid
-    
+
     Finds out the current boxtype of a flobject (e.g. no box, up box,
     shadow box, etc..).
 
@@ -2475,7 +2523,8 @@ def fl_get_object_boxtype(ptr_flobject):
     Returns
     -------
         typeid : int
-            boxtype id or -1 (on failure)
+            boxtype id (e.g. from xfdata.py FL_NO_BOX, FL_BORDER_BOX ..),
+            or -1 (on failure)
 
     Examples
     --------
@@ -2499,7 +2548,7 @@ def fl_get_object_boxtype(ptr_flobject):
 
 def fl_set_object_bw(ptr_flobject, borderwidth):
     """fl_set_object_bw(ptr_flobject, borderwidth)
-    
+
     Defines the borderwidth of a flobject.
 
     Parameters
@@ -2533,7 +2582,7 @@ def fl_set_object_bw(ptr_flobject, borderwidth):
 
 def fl_get_object_bw(ptr_flobject):
     """fl_get_object_bw(ptr_flobject) -> borderwidth
-    
+
     Finds out the borderwidth of a flobject.
 
     Parameters
@@ -2574,7 +2623,7 @@ def fl_get_object_bw(ptr_flobject):
 
 def fl_set_object_resize(ptr_flobject, whatresz):
     """fl_set_object_resize(ptr_flobject, whatresz)
-    
+
     Defines the resize property of a flobject.
 
     Parameters
@@ -2582,8 +2631,10 @@ def fl_set_object_resize(ptr_flobject, whatresz):
         ptr_flobject : pointer to xfdata.FL_OBJECT
             flobject to set
         whatresz : int_pos
-            resize property. Values (from xfdata.py) FL_RESIZE_NONE,
-            FL_RESIZE_X, FL_RESIZE_Y, FL_RESIZE_ALL
+            resize property. Values (from xfdata.py)
+            FL_RESIZE_NONE (Cannot be rescaled/resized), FL_RESIZE_X (Can be
+            rescaled on horizontal axis), FL_RESIZE_Y (Can be rescaled on
+            vertical axis), FL_RESIZE_ALL (Can be rescaled on both axis)
 
     Examples
     --------
@@ -2608,7 +2659,7 @@ def fl_set_object_resize(ptr_flobject, whatresz):
 
 def fl_get_object_resize(ptr_flobject):
     """fl_get_object_resize(ptr_flobject) -> whatresz
-    
+
     Finds out the resize property of a flobject (e.g. resize all, resize
     none, etc..).
 
@@ -2621,6 +2672,10 @@ def fl_get_object_resize(ptr_flobject):
     -------
         whatresz : int_pos
             resize property
+            Values (from xfdata.py) FL_RESIZE_NONE (Cannot be
+            rescaled/resized), FL_RESIZE_X (Can be rescaled on horizontal
+            axis), FL_RESIZE_Y (Can be rescaled on vertical axis),
+            FL_RESIZE_ALL (Can be rescaled on both axis)
 
     Examples
     --------
@@ -2651,7 +2706,7 @@ def fl_get_object_resize(ptr_flobject):
 
 def fl_set_object_gravity(ptr_flobject, northwest, southeast):
     """fl_set_object_gravity(ptr_flobject, northwest, southeast)
-    
+
     Defines the gravity properties of a flobject.
 
     Parameters
@@ -2687,13 +2742,14 @@ def fl_set_object_gravity(ptr_flobject, northwest, southeast):
     ui_northwest = library.convert_to_uintc(northwest)
     library.checkfatal_allowed_value_in_list(southeast, xfdata.GRAVITY_list)
     ui_southeast = library.convert_to_uintc(southeast)
-    library.keep_elem_refs(ptr_flobject, northwest, ui_northwest, southeast, ui_southeast)
+    library.keep_elem_refs(ptr_flobject, northwest, ui_northwest, southeast, \
+            ui_southeast)
     _fl_set_object_gravity(ptr_flobject, ui_northwest, ui_southeast)
 
 
 def fl_get_object_gravity(ptr_flobject):
     """fl_get_object_gravity(ptr_flobject) -> northwest, southeast
-    
+
     Finds out the NorthWest and SouthEast gravity properties of a flobject.
 
     Parameters
@@ -2740,7 +2796,7 @@ def fl_get_object_gravity(ptr_flobject):
 
 def fl_set_object_lsize(ptr_flobject, size):
     """fl_set_object_lsize(ptr_flobject, size)
-    
+
     Defines the label size of a flobject.
 
     Parameters
@@ -2748,9 +2804,11 @@ def fl_set_object_lsize(ptr_flobject, size):
         ptr_flobject : pointer to xfdata.FL_OBJECT
             flobject to be set
         size : int
-            label size. Values (from xfdata.py) FL_TINY_SIZE,
-            FL_SMALL_SIZE, FL_NORMAL_SIZE, FL_MEDIUM_SIZE,
-            FL_LARGE_SIZE, FL_HUGE_SIZE, FL_DEFAULT_SIZE
+            label size. Values (from xfdata.py)
+            FL_TINY_SIZE (8 points font), FL_SMALL_SIZE or FL_DEFAULT_SIZE (10
+            points font, default), FL_NORMAL_SIZE (12 points font),
+            FL_MEDIUM_SIZE (14 points font), FL_LARGE_SIZE (18 points font),
+            FL_HUGE_SIZE (24 points font), or other numeric odd or even value
 
     Examples
     --------
@@ -2767,7 +2825,6 @@ def fl_set_object_lsize(ptr_flobject, size):
         """void fl_set_object_lsize(FL_OBJECT * ob, int lsize) """)
     library.check_if_initialized()
     library.verify_flobjectptr_type(ptr_flobject)
-    library.checknonfatal_allowed_value_in_list(size, xfdata.FONTSIZE_list)
     i_size = library.convert_to_intc(size)
     library.keep_elem_refs(ptr_flobject, size, i_size)
     _fl_set_object_lsize(ptr_flobject, i_size)
@@ -2775,7 +2832,7 @@ def fl_set_object_lsize(ptr_flobject, size):
 
 def fl_get_object_lsize(ptr_flobject):
     """fl_get_object_lsize(ptr_flobject) -> size
-    
+
     Finds out the size of the flobject's label.
 
     Parameters
@@ -2787,6 +2844,11 @@ def fl_get_object_lsize(ptr_flobject):
     -------
         size : int
             label size
+            Values (from xfdata.py)
+            FL_TINY_SIZE (8 points font), FL_SMALL_SIZE or FL_DEFAULT_SIZE (10
+            points font, default), FL_NORMAL_SIZE (12 points font),
+            FL_MEDIUM_SIZE (14 points font), FL_LARGE_SIZE (18 points font),
+            FL_HUGE_SIZE (24 points font), or other numeric odd or even value
 
     Examples
     --------
@@ -2810,7 +2872,7 @@ def fl_get_object_lsize(ptr_flobject):
 
 def fl_set_object_lstyle(ptr_flobject, style):
     """fl_set_object_lstyle(ptr_flobject, style)
-    
+
     Defines the label style of a flobject.
 
     Parameters
@@ -2818,13 +2880,23 @@ def fl_set_object_lstyle(ptr_flobject, style):
         ptr_flobject : pointer to xfdata.FL_OBJECT
             flobject to be set
         style : int
-            label style. Values (from xfdata.py) FL_NORMAL_STYLE,
-            FL_BOLD_STYLE, FL_ITALIC_STYLE, FL_BOLDITALIC_STYLE,
-            FL_FIXED_STYLE, FL_FIXEDBOLD_STYLE, FL_FIXEDITALIC_STYLE,
-            FL_FIXEDBOLDITALIC_STYLE, FL_TIMES_STYLE, FL_TIMESBOLD_STYLE,
-            FL_TIMESITALIC_STYLE, FL_TIMESBOLDITALIC_STYLE, FL_MISC_STYLE,
-            FL_MISCBOLD_STYLE, FL_MISCITALIC_STYLE, FL_SYMBOL_STYLE,
-            FL_SHADOW_STYLE, FL_ENGRAVED_STYLE, FL_EMBOSSED_STYLE
+            label style. Values (from xfdata.py)
+            FL_NORMAL_STYLE (Helvetica normal text), FL_BOLD_STYLE (Helvetica
+            boldface text), FL_ITALIC_STYLE (Helvetica italic text),
+            FL_BOLDITALIC_STYLE (Helvetica boldface and italic text),
+            FL_FIXED_STYLE (Courier fixed width, good for tables),
+            FL_FIXEDBOLD_STYLE (Courier bold fixed text), FL_FIXEDITALIC_STYLE
+            (Courier italic fixed text), FL_FIXEDBOLDITALIC_STYLE (Courier
+            boldface and italic fixed text), FL_TIMES_STYLE (Times-Roman like
+            normal font), FL_TIMESBOLD_STYLE (Times-Roman like boldface text),
+            FL_TIMESITALIC_STYLE (Times-Roman like italic text),
+            FL_TIMESBOLDITALIC_STYLE (Times-Roman like boldface and italic
+            text), FL_MISC_STYLE (Charter normal text), FL_MISCBOLD_STYLE
+            (Charter boldface text), FL_MISCITALIC_STYLE (Charter italic text),
+            FL_SYMBOL_STYLE (Symbol text), FL_SHADOW_STYLE (Text casting a
+            shadow, modifier mask), FL_ENGRAVED_STYLE (Text engraved into the
+            form, modifier mask), FL_EMBOSSED_STYLE (Text standing out,
+            modifier mask). Bitwise OR with any of modifiers is allowed.
 
     Examples
     --------
@@ -2849,7 +2921,7 @@ def fl_set_object_lstyle(ptr_flobject, style):
 
 def fl_get_object_lstyle(ptr_flobject):
     """fl_get_object_lstyle(ptr_flobject) -> style
-    
+
     Finds out the label style of a flobject.
 
     Parameters
@@ -2860,8 +2932,24 @@ def fl_get_object_lstyle(ptr_flobject):
     Returns
     -------
         style : int
-            label style (e.g. xfdata.FL_BOLD_STYLE, xfdata.FL_NORMAL_STYLE,
-            etc..)
+            label style
+            Values (from xfdata.py)
+            FL_NORMAL_STYLE (Helvetica normal text), FL_BOLD_STYLE (Helvetica
+            boldface text), FL_ITALIC_STYLE (Helvetica italic text),
+            FL_BOLDITALIC_STYLE (Helvetica boldface and italic text),
+            FL_FIXED_STYLE (Courier fixed width, good for tables),
+            FL_FIXEDBOLD_STYLE (Courier bold fixed text), FL_FIXEDITALIC_STYLE
+            (Courier italic fixed text), FL_FIXEDBOLDITALIC_STYLE (Courier
+            boldface and italic fixed text), FL_TIMES_STYLE (Times-Roman like
+            normal font), FL_TIMESBOLD_STYLE (Times-Roman like boldface text),
+            FL_TIMESITALIC_STYLE (Times-Roman like italic text),
+            FL_TIMESBOLDITALIC_STYLE (Times-Roman like boldface and italic
+            text), FL_MISC_STYLE (Charter normal text), FL_MISCBOLD_STYLE
+            (Charter boldface text), FL_MISCITALIC_STYLE (Charter italic text),
+            FL_SYMBOL_STYLE (Symbol text), FL_SHADOW_STYLE (Text casting a
+            shadow, modifier mask), FL_ENGRAVED_STYLE (Text engraved into the
+            form, modifier mask), FL_EMBOSSED_STYLE (Text standing out,
+            modifier mask). Bitwise OR with any of modifiers is allowed.
 
     Examples
     --------
@@ -2885,7 +2973,7 @@ def fl_get_object_lstyle(ptr_flobject):
 
 def fl_set_object_lcol(ptr_flobject, colr):
     """fl_set_object_lcol(ptr_flobject, colr)
-    
+
     Defines the label color of a flobject.
 
     Parameters
@@ -2922,7 +3010,7 @@ fl_set_object_lcolor = fl_set_object_lcol
 
 def fl_get_object_lcol(ptr_flobject):
     """fl_get_object_lcol(ptr_flobject) -> colr
-    
+
     Finds out the label color of a flobject (from xfdata, e.g. FL_WHITE,
     FL_LIME, etc..).
 
@@ -2958,13 +3046,13 @@ def fl_get_object_lcol(ptr_flobject):
 
 def fl_set_object_return(ptr_flobject, whenretn):
     """fl_set_object_return(ptr_flobject, whenretn) -> oldwhenretn
-    
-    Defines the conditions under which a flobject gets returned (or its callback
-    invoked). If the flobject has to do additional work on setting te condition
-    (e.g. it has child flobjects that also need to be set) it has to set up it is
-    own function that then will called in the end. This should only be called
-    once a flobject has been created completely! Not all return types make
-    sense for all flobjects.
+
+    Defines the conditions under which a flobject gets returned (or its
+    callback invoked). If the flobject has to do additional work on setting
+    the condition (e.g. it has child flobjects that also need to be set) it
+    has to set up it is own function that then will called in the end. This
+    should only be called once a flobject has been created completely! Not
+    all return types make sense for all flobjects.
 
     Parameters
     ----------
@@ -2972,9 +3060,25 @@ def fl_set_object_return(ptr_flobject, whenretn):
             flobject
         whenretn : int_pos
             return type (when it returns). Values (from xfdata.py)
-            FL_RETURN_NONE, FL_RETURN_CHANGED, FL_RETURN_END,
-            FL_RETURN_END_CHANGED, FL_RETURN_SELECTION, FL_RETURN_DESELECTION,
-            FL_RETURN_TRIGGERED, FL_RETURN_ALWAYS
+            FL_RETURN_NONE (Never notify the application about interactions
+            with this flobject, i.e. never return it nor invoke its callback.
+            Note, this is not meant for deactivation of a flobject, it will
+            still seem to work as normal, it just does not get returned
+            to the application nor does its callback get invoked),
+            FL_RETURN_CHANGED (Return or invoke callback whenever an item is
+            selected, default), FL_RETURN_END (Return or invoke callback on
+            end of an interaction), FL_RETURN_END_CHANGED (Return or invoke
+            callback if end of interaction and selection of an item coincide),
+            FL_RETURN_SELECTION (Return or invoke callback on selection of a
+            line. Please note that for FL_MULTI_BROWSER the browser may be
+            returned just once for a number of lines having been selected),
+            FL_RETURN_DESELECTION (Return or invoke callback on deselection
+            of a line. This only works for FL_MULTI_BROWSER browsers and the
+            browser may be returned just once for a number of lines having
+            been deselected), FL_RETURN_TRIGGERED (*todo*), FL_RETURN_ALWAYS
+            (Return or invoke callback whenever the interaction ends and/or
+            an item is selected. It includes all conditions except
+            FL_RETURN_END_CHANGED).
 
     Returns
     -------
@@ -3006,7 +3110,7 @@ def fl_set_object_return(ptr_flobject, whenretn):
 # TODO: verify what its purpose is.
 def fl_notify_object(ptr_flobject, cause):
     """fl_notify_object(ptr_flobject, cause)
-    
+
     *todo*
 
     Parameters
@@ -3040,7 +3144,7 @@ def fl_notify_object(ptr_flobject, cause):
 
 def fl_set_object_lalign(ptr_flobject, align):
     """fl_set_object_lalign(ptr_flobject, align)
-    
+
     Defines alignment of a flobject's label.
 
     Parameters
@@ -3048,11 +3152,18 @@ def fl_set_object_lalign(ptr_flobject, align):
         ptr_flobject : pointer to xfdata.FL_OBJECT
             flobject to be set
         align : int
-            alignment of label. Values (from xfdata.py) FL_ALIGN_CENTER,
-            FL_ALIGN_TOP, FL_ALIGN_BOTTOM, FL_ALIGN_LEFT, FL_ALIGN_RIGHT,
-            FL_ALIGN_LEFT_TOP, FL_ALIGN_RIGHT_TOP, FL_ALIGN_LEFT_BOTTOM,
-            FL_ALIGN_RIGHT_BOTTOM, FL_ALIGN_INSIDE, FL_ALIGN_VERT.
-            Bitwise OR with FL_ALIGN_INSIDE is allowed.
+            alignment of label. Values (from xfdata.py)
+            FL_ALIGN_CENTER (In the middle of the box, inside it), FL_ALIGN_TOP
+            (To the top of the box, outside it), FL_ALIGN_BOTTOM (To the
+            bottom of the box, outside it), FL_ALIGN_LEFT (To the left of the
+            box, outside it), FL_ALIGN_RIGHT (To the right of the box, outside
+            it), FL_ALIGN_LEFT_TOP (To the left and top of the box, outside
+            it), FL_ALIGN_RIGHT_TOP (To the right and top of the box, outside
+            it), FL_ALIGN_LEFT_BOTTOM (To the left and bottom of the box,
+            outside it), FL_ALIGN_RIGHT_BOTTOM (To the right and bottom of
+            the box, outside it), FL_ALIGN_INSIDE (places the text inside the
+            box), FL_ALIGN_VERT (not functional yet). Bitwise OR with
+            FL_ALIGN_INSIDE is allowed.
 
     Examples
     --------
@@ -3070,14 +3181,14 @@ def fl_set_object_lalign(ptr_flobject, align):
     library.check_if_initialized()
     library.verify_flobjectptr_type(ptr_flobject)
     library.checkfatal_allowed_value_in_list(align, xfdata.ALIGN_list)
-    ialign = library.convert_to_intc(align)
-    library.keep_elem_refs(ptr_flobject, align, ialign)
-    _fl_set_object_lalign(ptr_flobject, ialign)
+    i_align = library.convert_to_intc(align)
+    library.keep_elem_refs(ptr_flobject, align, i_align)
+    _fl_set_object_lalign(ptr_flobject, i_align)
 
 
 def fl_get_object_lalign(ptr_flobject):
     """fl_get_object_lalign(ptr_flobject) -> align
-    
+
     Finds out alignment of a flobject's label.
 
     Parameters
@@ -3116,7 +3227,7 @@ fl_set_object_align = fl_set_object_lalign
 
 def fl_set_object_shortcut(ptr_flobject, shtext, showit):
     """fl_set_object_shortcut(ptr_flobject, shtext, showit)
-    
+
     Defines a shortcut, binding a key or a series of keys to a flobject. It
     resets any previous defined shortcuts for the flobject. Using e.g.
     "acE#d^h" the keys 'a', 'c', 'E', <Alt>d and <Ctrl>h are associated
@@ -3171,7 +3282,7 @@ def fl_set_object_shortcut(ptr_flobject, shtext, showit):
 
 def fl_set_object_shortcutkey(ptr_flobject, keysym):
     """fl_set_object_shortcutkey(ptr_flobject, keysym)
-    
+
     Uses a special key as a shortcut. It always appends the specified key
     to the current shortcuts. Special keys cannot be underlined.
 
@@ -3205,7 +3316,7 @@ def fl_set_object_shortcutkey(ptr_flobject, keysym):
 
 def fl_set_object_dblbuffer(ptr_flobject, yesno):
     """fl_set_object_dblbuffer(ptr_flobject, yesno)
-    
+
     Uses double buffering on a per-object basis. Currently double
     buffering for flobjects having a non-rectangular box might not work
     well. A nonrectangular box means that there are regions within the
@@ -3248,7 +3359,7 @@ def fl_set_object_dblbuffer(ptr_flobject, yesno):
 
 def fl_set_object_color(ptr_flobject, fgcolr, bgcolr):
     """fl_set_object_color(ptr_flobject, fgcolr, bgcolr)
-    
+
     Defines the foreground and background colors of a flobject.
 
     Parameters
@@ -3288,7 +3399,7 @@ def fl_set_object_color(ptr_flobject, fgcolr, bgcolr):
 
 def fl_get_object_color(ptr_flobject):
     """fl_get_object_color(ptr_flobject) -> fgcolr, bgcolr
-    
+
     Finds out the foreground and background colors of a flobject.
 
     Parameters
@@ -3335,7 +3446,7 @@ def fl_get_object_color(ptr_flobject):
 
 def fl_set_object_label(ptr_flobject, label):
     """fl_set_object_label(ptr_flobject, label)
-    
+
     Defines the label of a flobject.
 
     Parameters
@@ -3367,7 +3478,7 @@ def fl_set_object_label(ptr_flobject, label):
 
 def fl_get_object_label(ptr_flobject):
     """fl_get_object_label(ptr_flobject) -> label
-    
+
     Finds out the label of a flobject.
 
     Parameters
@@ -3402,7 +3513,7 @@ def fl_get_object_label(ptr_flobject):
 
 def fl_set_object_helper(ptr_flobject, tooltip):
     """fl_set_object_helper(ptr_flobject, tooltip)
-    
+
     Defines the tooltip of a flobject (with possible embedded newlines
     in it) that will be shown when the mouse hovers over the flobject
     for more than about 600 msec.
@@ -3436,7 +3547,7 @@ def fl_set_object_helper(ptr_flobject, tooltip):
 
 def fl_set_object_position(ptr_flobject, xpos, ypos):
     """fl_set_object_position(ptr_flobject, xpos, ypos)
-    
+
     Defines the position of a flobject.
 
     Parameters
@@ -3473,7 +3584,7 @@ def fl_set_object_position(ptr_flobject, xpos, ypos):
 
 def fl_get_object_size(ptr_flobject):
     """fl_get_object_size(ptr_flobject) -> width, height
-    
+
     Finds out the size of a flobject.
 
     Parameters
@@ -3520,7 +3631,7 @@ def fl_get_object_size(ptr_flobject):
 
 def fl_set_object_size(ptr_flobject, width, height):
     """fl_set_object_size(ptr_flobject, width, height)
-    
+
     Defines the size of a flobject.
 
     Parameters
@@ -3557,7 +3668,7 @@ def fl_set_object_size(ptr_flobject, width, height):
 
 def fl_set_object_automatic(ptr_flobject, yesno):
     """fl_set_object_automatic(ptr_flobject, yesno)
-    
+
     Enables or disables a flobject to receive a xfdata.FL_STEP event. This
     should not be used with built-in flobjects. A flobject is automatic if
     it automatically (without user actions) has to change its contents.
@@ -3593,7 +3704,7 @@ def fl_set_object_automatic(ptr_flobject, yesno):
 
 def fl_object_is_automatic(ptr_flobject):
     """fl_object_is_automatic(ptr_flobject) -> yesno
-    
+
     Tells if a flobject receives xfdata.FL_STEP events. An flobject is
     automatic if it automatically (without user actions) has to change its
     contents. Automatic flobjects get a xfdata.FL_STEP event about every 50
@@ -3632,7 +3743,7 @@ def fl_object_is_automatic(ptr_flobject):
 
 def fl_draw_object_label(ptr_flobject):
     """fl_draw_object_label(ptr_flobject)
-    
+
     Draws the label of a flobject according to the alignment, which
     could be inside or outside of the bounding box.
 
@@ -3662,7 +3773,7 @@ def fl_draw_object_label(ptr_flobject):
 
 def fl_draw_object_label_outside(ptr_flobject):
     """fl_draw_object_label_outside(ptr_flobject)
-    
+
     Draws the label of a flobject outside of the bounding box.
 
     Parameters
@@ -3695,7 +3806,7 @@ fl_draw_object_outside_label = fl_draw_object_label_outside
 def fl_get_object_component(ptr_flobject, flobjclass, compontype, seqnum):
     """fl_get_object_component(ptr_flobject, flobjclass, compontype, seqnum)
     -> ptr_flobject
-    
+
     Finds out the flobject that is a component of a composite flobject. E.g.
     the scrollbar flobject is made of a slider and two scroll buttons.
 
@@ -3747,7 +3858,7 @@ def fl_get_object_component(ptr_flobject, flobjclass, compontype, seqnum):
 
 def fl_for_all_objects(ptr_flform, pyfn_operatecb, vdata):
     """fl_for_all_objects(ptr_flform, pyfn_operatecb, vdata)
-    
+
     Serves as an iterator to change an attribute for all flobjects on a
     particular form. Specified operating function is called for every
     flobject of the form form unless it returns nonzero, which terminates
@@ -3795,7 +3906,7 @@ def fl_for_all_objects(ptr_flform, pyfn_operatecb, vdata):
 
 def fl_set_object_dblclick(ptr_flobject, timeout):
     """fl_set_object_dblclick(ptr_flobject, timeout)
-    
+
     Defines double-click timeout value of a flobject, enabling or
     disabling it to receive the xfdata.FL_DBLCLICK event.
 
@@ -3831,7 +3942,7 @@ def fl_set_object_dblclick(ptr_flobject, timeout):
 
 def fl_get_object_dblclick(ptr_flobject):
     """fl_get_object_dblclick(ptr_flobject) -> timeout
-    
+
     Finds out double-click timeout value of a flobject.
 
     Parameters
@@ -3866,7 +3977,7 @@ def fl_get_object_dblclick(ptr_flobject):
 
 def fl_set_object_geometry(ptr_flobject, xpos, ypos, width, height):
     """fl_set_object_geometry(ptr_flobject, xpos, ypos, width, height)
-    
+
     Defines the geometry (position and size) of a flobject.
 
     Parameters
@@ -3910,7 +4021,7 @@ def fl_set_object_geometry(ptr_flobject, xpos, ypos, width, height):
 
 def fl_move_object(ptr_flobject, xpos, ypos):
     """fl_move_object(ptr_flobject, xpos, ypos)
-    
+
     Moves a flobject to a new position.
 
     Parameters
@@ -3947,7 +4058,7 @@ def fl_move_object(ptr_flobject, xpos, ypos):
 
 def fl_fit_object_label(ptr_flobject, xmargin, ymargin):
     """fl_fit_object_label(ptr_flobject, xmargin, ymargin)
-    
+
     Checks if the label of a flobject fits into it (after x- and y-margin
     have been added). If not, all flobjects and the form are enlarged by
     the necessary factor (but never by more than a factor of 1.5).
@@ -3987,7 +4098,7 @@ def fl_fit_object_label(ptr_flobject, xmargin, ymargin):
 
 def fl_get_object_geometry(ptr_flobject):
     """fl_get_object_geometry(ptr_flobject) -> xpos, ypos, width, height
-    
+
     Finds out the geometry (position and size) of a flobject.
 
     Parameters
@@ -4091,7 +4202,7 @@ def fl_get_object_position(ptr_flobject):
 
 def fl_get_object_bbox(ptr_flobject):
     """fl_get_object_bbox(ptr_flobject) -> xpos, ypos, width, height
-    
+
     Finds out the bounding box size that has the label, which could be
     drawn outside of the flobject figured in.
 
@@ -4150,7 +4261,7 @@ fl_compute_object_geometry = fl_get_object_bbox
 
 def fl_call_object_callback(ptr_flobject):
     """fl_call_object_callback(ptr_flobject)
-    
+
     Invokes the callback manually (as opposed to invocation by the main
     loop). If the flobject does not have a callback associated with it,
     this call has not effect.
@@ -4181,7 +4292,7 @@ def fl_call_object_callback(ptr_flobject):
 
 def fl_set_object_prehandler(ptr_flobject, pyfn_HandlePtr):
     """fl_set_object_prehandler(ptr_flobject, pyfn_HandlePtr) -> HandlePtr
-    
+
     By-passes the internal event processing for a particular flobject.
     The pre-handler will be called before the built-in flobject handler.
     By electing to handle some of the events, a pre-handler can, in
@@ -4232,7 +4343,7 @@ def fl_set_object_prehandler(ptr_flobject, pyfn_HandlePtr):
 
 def fl_set_object_posthandler(ptr_flobject, pyfn_HandlePtr):
     """fl_set_object_posthandler(ptr_flobject, pyfn_HandlePtr) -> HandlePtr
-    
+
     By-passes the internal event processing for a particular flobject. The
     post-handler will be invoked after the built-in handler finishes.
     Whenever possible a post-handler should be used instead of a pre-handler.
@@ -4283,7 +4394,7 @@ def fl_set_object_posthandler(ptr_flobject, pyfn_HandlePtr):
 def fl_set_object_callback(ptr_flobject, pyfn_CallbackPtr, numdata):
     """fl_set_object_callback(ptr_flobject, pyfn_CallbackPtr, numdata)
     -> CallbackPtr
-    
+
     Defines a callback function bound to a flobject and calls it if a
     condition is met.
 
@@ -4338,7 +4449,7 @@ fl_set_call_back = fl_set_object_callback
 
 def fl_redraw_object(ptr_flobject):
     """fl_redraw_object(ptr_flobject)
-    
+
     Redraws the particular flobject. If it is a group it redraws the
     complete group. Normally you should never need this routine because
     all library routines take care of redrawing flobjects when necessary,
@@ -4370,7 +4481,7 @@ def fl_redraw_object(ptr_flobject):
 
 def fl_scale_object(ptr_flobject, xscale, yscale):
     """fl_scale_object(ptr_flobject, xscale, yscale)
-    
+
     Scales (shrinking or enlarging) a flobject, indicating a scaling
     factor in x- and y-direction (1.1 = 110 percent, 0.5 = 50, etc.)
 
@@ -4436,7 +4547,7 @@ def fl_show_object(ptr_flobject):
 
 def fl_hide_object(ptr_flobject):
     """fl_hide_object(ptr_flobject)
-    
+
     Hides a shown flobject.
 
     Parameters
@@ -4465,7 +4576,7 @@ def fl_hide_object(ptr_flobject):
 
 def fl_object_is_visible(ptr_flobject):
     """fl_object_is_visible(ptr_flobject) -> yesno
-    
+
     Tells if a flobject is visible or not.
 
     Parameters
@@ -4501,7 +4612,7 @@ def fl_object_is_visible(ptr_flobject):
 
 def fl_free_object(ptr_flobject):
     """fl_free_object(ptr_flobject)
-    
+
     Frees the flobject and finally destroys it (if necessary, deletes
     the flobject first).
 
@@ -4531,7 +4642,7 @@ def fl_free_object(ptr_flobject):
 
 def fl_delete_object(ptr_flobject):
     """fl_delete_object(ptr_flobject)
-    
+
     Deletes a flobject, breaking its connection to the form,
     but not destroying it.
 
@@ -4561,7 +4672,7 @@ def fl_delete_object(ptr_flobject):
 
 def fl_get_object_return_state(ptr_flobject):
     """fl_get_object_return_state(ptr_flobject) -> retnstate
-    
+
     Tells the reason a flobject was returned (or its callback
     invoked). The returned value is a logical 'OR' of the
     conditions that led to the flobject getting returned.
@@ -4598,7 +4709,7 @@ def fl_get_object_return_state(ptr_flobject):
 
 def fl_trigger_object(ptr_flobject):
     """fl_trigger_object(ptr_flobject)
-    
+
     Simulates the action of a flobject being triggered from within
     the program. Calling this routine on a flobject results in the
     flobject returned to the application program or its callback being
@@ -4632,7 +4743,7 @@ def fl_trigger_object(ptr_flobject):
 
 def fl_activate_object(ptr_flobject):
     """fl_activate_object(ptr_flobject)
-    
+
     (Re)activates a flobject, (re)enabling user interaction,
     previously disabled with fl_deactivate_object().
 
@@ -4662,7 +4773,7 @@ def fl_activate_object(ptr_flobject):
 
 def fl_deactivate_object(ptr_flobject):
     """fl_deactivate_object(ptr_flobject)
-    
+
     Makes a particular flobject to be temporarily inactive, disabling
     user interaction, e.g., you want to make it impossible for the user
     to press a particular button or to type input in a particular field.
@@ -4694,7 +4805,7 @@ def fl_deactivate_object(ptr_flobject):
 
 def fl_object_is_active(ptr_flobject):
     """fl_object_is_active(ptr_flobject) -> yesno
-    
+
     Tells if flobject is active and reacting to events, or not.
 
     Parameters
@@ -4731,7 +4842,7 @@ def fl_object_is_active(ptr_flobject):
 
 def fl_enumerate_fonts(pyfn_output, shortform):
     """fl_enumerate_fonts(pyfn_output, shortform) -> numfonts
-    
+
     Lists built-in fonts.
 
     Parameters
@@ -4776,7 +4887,7 @@ def fl_enumerate_fonts(pyfn_output, shortform):
 # TODO: verify if name must conform to other (built-in) font names
 def fl_set_font_name(fontnum, name):
     """fl_set_font_name(fontnum, name) -> result
-    
+
     Adds a new font (indexed by a number) or changes an existing font.
     Preferably the font name contains a '?' in the size position so
     different sizes can be used. Redraw of all forms is required to
@@ -4817,7 +4928,7 @@ def fl_set_font_name(fontnum, name):
 
 def fl_set_font(fontnum, size):
     """fl_set_font(fontnum, size)
-    
+
     Makes the specified font as the current.
 
     Parameters
@@ -4825,9 +4936,11 @@ def fl_set_font(fontnum, size):
         fontnum : int
             font number
         size : int
-            font size. Values (from xfdata.py) FL_TINY_SIZE,
-            FL_SMALL_SIZE, FL_NORMAL_SIZE, FL_MEDIUM_SIZE,
-            FL_LARGE_SIZE, FL_HUGE_SIZE, FL_DEFAULT_SIZE
+            font size. Values (from xfdata.py)
+            FL_TINY_SIZE (8 points font), FL_SMALL_SIZE or FL_DEFAULT_SIZE (10
+            points font, default), FL_NORMAL_SIZE (12 points font),
+            FL_MEDIUM_SIZE (14 points font), FL_LARGE_SIZE (18 points font),
+            FL_HUGE_SIZE (24 points font), or other numeric odd or even value
 
     Examples
     --------
@@ -4843,7 +4956,6 @@ def fl_set_font(fontnum, size):
         None, [cty.c_int, cty.c_int],\
         """void fl_set_font(int numb, int size)""")
     library.check_if_initialized()
-    library.checknonfatal_allowed_value_in_list(size, xfdata.FONTSIZE_list)
     i_fontnum = library.convert_to_intc(fontnum)
     i_size = library.convert_to_intc(size)
     library.keep_elem_refs(fontnum, i_fontnum, size, i_size)
@@ -4854,24 +4966,36 @@ def fl_set_font(fontnum, size):
 
 def fl_get_char_height(style, size):
     """fl_get_char_height(style, size) -> height, ascndt, descndt
-    
+
     Finds out the maximum height of the used font and the height above and
     below the baseline of the font.
 
     Parameters
     ----------
         style : int
-            font style. Values (from xfdata.py) FL_NORMAL_STYLE,
-            FL_BOLD_STYLE, FL_ITALIC_STYLE, FL_BOLDITALIC_STYLE,
-            FL_FIXED_STYLE, FL_FIXEDBOLD_STYLE, FL_FIXEDITALIC_STYLE,
-            FL_FIXEDBOLDITALIC_STYLE, FL_TIMES_STYLE, FL_TIMESBOLD_STYLE,
-            FL_TIMESITALIC_STYLE, FL_TIMESBOLDITALIC_STYLE, FL_MISC_STYLE,
-            FL_MISCBOLD_STYLE, FL_MISCITALIC_STYLE, FL_SYMBOL_STYLE,
-            FL_SHADOW_STYLE, FL_ENGRAVED_STYLE, FL_EMBOSSED_STYLE
+            font style. Values (from xfdata.py)
+            FL_NORMAL_STYLE (Helvetica normal text), FL_BOLD_STYLE (Helvetica
+            boldface text), FL_ITALIC_STYLE (Helvetica italic text),
+            FL_BOLDITALIC_STYLE (Helvetica boldface and italic text),
+            FL_FIXED_STYLE (Courier fixed width, good for tables),
+            FL_FIXEDBOLD_STYLE (Courier bold fixed text), FL_FIXEDITALIC_STYLE
+            (Courier italic fixed text), FL_FIXEDBOLDITALIC_STYLE (Courier
+            boldface and italic fixed text), FL_TIMES_STYLE (Times-Roman like
+            normal font), FL_TIMESBOLD_STYLE (Times-Roman like boldface text),
+            FL_TIMESITALIC_STYLE (Times-Roman like italic text),
+            FL_TIMESBOLDITALIC_STYLE (Times-Roman like boldface and italic
+            text), FL_MISC_STYLE (Charter normal text), FL_MISCBOLD_STYLE
+            (Charter boldface text), FL_MISCITALIC_STYLE (Charter italic text),
+            FL_SYMBOL_STYLE (Symbol text), FL_SHADOW_STYLE (Text casting a
+            shadow, modifier mask), FL_ENGRAVED_STYLE (Text engraved into the
+            form, modifier mask), FL_EMBOSSED_STYLE (Text standing out,
+            modifier mask). Bitwise OR with any of modifiers is allowed.
         size : int
-            font size. Values (from xfdata.py) FL_TINY_SIZE, FL_SMALL_SIZE,
-            FL_NORMAL_SIZE, FL_MEDIUM_SIZE, FL_LARGE_SIZE, FL_HUGE_SIZE,
-            FL_DEFAULT_SIZE
+            font size. Values (from xfdata.py)
+            FL_TINY_SIZE (8 points font), FL_SMALL_SIZE or FL_DEFAULT_SIZE (10
+            points font, default), FL_NORMAL_SIZE (12 points font),
+            FL_MEDIUM_SIZE (14 points font), FL_LARGE_SIZE (18 points font),
+            FL_HUGE_SIZE (24 points font), or other numeric odd or even value
 
     Returns
     -------
@@ -4906,8 +5030,6 @@ def fl_get_char_height(style, size):
     library.check_if_initialized()
     library.checkfatal_allowed_value_in_list(style, \
             xfdata.TEXTSTYLE_list)
-    library.checknonfatal_allowed_value_in_list(size, \
-            xfdata.FONTSIZE_list)
     i_style = library.convert_to_intc(style)
     i_size = library.convert_to_intc(size)
     i_ascndt, ptr_ascndt = library.make_intc_and_pointer()
@@ -4920,23 +5042,35 @@ def fl_get_char_height(style, size):
 
 def fl_get_char_width(style, size):
     """fl_get_char_width(style, size) -> width
-    
+
     Finds out the maximum width of the used font.
 
     Parameters
     ----------
         style : int
-            font style. Values (from xfdata.py) FL_NORMAL_STYLE,
-            FL_BOLD_STYLE, FL_ITALIC_STYLE, FL_BOLDITALIC_STYLE,
-            FL_FIXED_STYLE, FL_FIXEDBOLD_STYLE, FL_FIXEDITALIC_STYLE,
-            FL_FIXEDBOLDITALIC_STYLE, FL_TIMES_STYLE, FL_TIMESBOLD_STYLE,
-            FL_TIMESITALIC_STYLE, FL_TIMESBOLDITALIC_STYLE, FL_MISC_STYLE,
-            FL_MISCBOLD_STYLE, FL_MISCITALIC_STYLE, FL_SYMBOL_STYLE,
-            FL_SHADOW_STYLE, FL_ENGRAVED_STYLE, FL_EMBOSSED_STYLE
+            font style. Values (from xfdata.py)
+            FL_NORMAL_STYLE (Helvetica normal text), FL_BOLD_STYLE (Helvetica
+            boldface text), FL_ITALIC_STYLE (Helvetica italic text),
+            FL_BOLDITALIC_STYLE (Helvetica boldface and italic text),
+            FL_FIXED_STYLE (Courier fixed width, good for tables),
+            FL_FIXEDBOLD_STYLE (Courier bold fixed text), FL_FIXEDITALIC_STYLE
+            (Courier italic fixed text), FL_FIXEDBOLDITALIC_STYLE (Courier
+            boldface and italic fixed text), FL_TIMES_STYLE (Times-Roman like
+            normal font), FL_TIMESBOLD_STYLE (Times-Roman like boldface text),
+            FL_TIMESITALIC_STYLE (Times-Roman like italic text),
+            FL_TIMESBOLDITALIC_STYLE (Times-Roman like boldface and italic
+            text), FL_MISC_STYLE (Charter normal text), FL_MISCBOLD_STYLE
+            (Charter boldface text), FL_MISCITALIC_STYLE (Charter italic text),
+            FL_SYMBOL_STYLE (Symbol text), FL_SHADOW_STYLE (Text casting a
+            shadow, modifier mask), FL_ENGRAVED_STYLE (Text engraved into the
+            form, modifier mask), FL_EMBOSSED_STYLE (Text standing out,
+            modifier mask). Bitwise OR with any of modifiers is allowed.
         size : int
-            font size. Values (from xfdata.py) FL_TINY_SIZE, FL_SMALL_SIZE,
-            FL_NORMAL_SIZE, FL_MEDIUM_SIZE, FL_LARGE_SIZE, FL_HUGE_SIZE,
-            FL_DEFAULT_SIZE
+            font size. Values (from xfdata.py)
+            FL_TINY_SIZE (8 points font), FL_SMALL_SIZE or FL_DEFAULT_SIZE (10
+            points font, default), FL_NORMAL_SIZE (12 points font),
+            FL_MEDIUM_SIZE (14 points font), FL_LARGE_SIZE (18 points font),
+            FL_HUGE_SIZE (24 points font), or other numeric odd or even value
 
     Returns
     -------
@@ -4959,7 +5093,6 @@ def fl_get_char_width(style, size):
         """int fl_get_char_width(int style, int size)""")
     library.check_if_initialized()
     library.checkfatal_allowed_value_in_list(style, xfdata.TEXTSTYLE_list)
-    library.checknonfatal_allowed_value_in_list(size, xfdata.FONTSIZE_list)
     i_style = library.convert_to_intc(style)
     i_size = library.convert_to_intc(size)
     library.keep_elem_refs(style, i_style, size, i_size)
@@ -4970,24 +5103,36 @@ def fl_get_char_width(style, size):
 def fl_get_string_height(style, size, txtstr, strlng):
     """fl_get_string_height(style, size, txtstr, strlng)
     -> height, ascndt, descndt
-    
+
     Finds out the height information of a specific string and the height
     above and below the font's baseline.
 
     Parameters
     ----------
         style : int
-            font style. Values (from xfdata.py) FL_NORMAL_STYLE,
-            FL_BOLD_STYLE, FL_ITALIC_STYLE, FL_BOLDITALIC_STYLE,
-            FL_FIXED_STYLE, FL_FIXEDBOLD_STYLE, FL_FIXEDITALIC_STYLE,
-            FL_FIXEDBOLDITALIC_STYLE, FL_TIMES_STYLE, FL_TIMESBOLD_STYLE,
-            FL_TIMESITALIC_STYLE, FL_TIMESBOLDITALIC_STYLE, FL_MISC_STYLE,
-            FL_MISCBOLD_STYLE, FL_MISCITALIC_STYLE, FL_SYMBOL_STYLE,
-            FL_SHADOW_STYLE, FL_ENGRAVED_STYLE, FL_EMBOSSED_STYLE
+            font style. Values (from xfdata.py)
+            FL_NORMAL_STYLE (Helvetica normal text), FL_BOLD_STYLE (Helvetica
+            boldface text), FL_ITALIC_STYLE (Helvetica italic text),
+            FL_BOLDITALIC_STYLE (Helvetica boldface and italic text),
+            FL_FIXED_STYLE (Courier fixed width, good for tables),
+            FL_FIXEDBOLD_STYLE (Courier bold fixed text), FL_FIXEDITALIC_STYLE
+            (Courier italic fixed text), FL_FIXEDBOLDITALIC_STYLE (Courier
+            boldface and italic fixed text), FL_TIMES_STYLE (Times-Roman like
+            normal font), FL_TIMESBOLD_STYLE (Times-Roman like boldface text),
+            FL_TIMESITALIC_STYLE (Times-Roman like italic text),
+            FL_TIMESBOLDITALIC_STYLE (Times-Roman like boldface and italic
+            text), FL_MISC_STYLE (Charter normal text), FL_MISCBOLD_STYLE
+            (Charter boldface text), FL_MISCITALIC_STYLE (Charter italic text),
+            FL_SYMBOL_STYLE (Symbol text), FL_SHADOW_STYLE (Text casting a
+            shadow, modifier mask), FL_ENGRAVED_STYLE (Text engraved into the
+            form, modifier mask), FL_EMBOSSED_STYLE (Text standing out,
+            modifier mask). Bitwise OR with any of modifiers is allowed.
         size : int
-            font size. Values (from xfdata.py) FL_TINY_SIZE, FL_SMALL_SIZE,
-            FL_NORMAL_SIZE, FL_MEDIUM_SIZE, FL_LARGE_SIZE, FL_HUGE_SIZE,
-            FL_DEFAULT_SIZE
+            font size. Values (from xfdata.py)
+            FL_TINY_SIZE (8 points font), FL_SMALL_SIZE or FL_DEFAULT_SIZE (10
+            points font, default), FL_NORMAL_SIZE (12 points font),
+            FL_MEDIUM_SIZE (14 points font), FL_LARGE_SIZE (18 points font),
+            FL_HUGE_SIZE (24 points font), or other numeric odd or even value
         txtstr : str
             text to evaluate
         strlng : int
@@ -5025,7 +5170,6 @@ def fl_get_string_height(style, size, txtstr, strlng):
            int len, int * asc, int * desc)""")
     library.check_if_initialized()
     library.checkfatal_allowed_value_in_list(style, xfdata.TEXTSTYLE_list)
-    library.checknonfatal_allowed_value_in_list(size, xfdata.FONTSIZE_list)
     i_style = library.convert_to_intc(style)
     i_size = library.convert_to_intc(size)
     s_txtstr = library.convert_to_stringc(txtstr)
@@ -5042,23 +5186,35 @@ def fl_get_string_height(style, size, txtstr, strlng):
 
 def fl_get_string_width(style, size, txtstr, strlng):
     """fl_get_string_width(style, size, txtstr, strlng) -> width
-    
+
     Finds out the width information for a specific string.
 
     Parameters
     ----------
         style : int
-            font style. Values (from xfdata.py) FL_NORMAL_STYLE,
-            FL_BOLD_STYLE, FL_ITALIC_STYLE, FL_BOLDITALIC_STYLE,
-            FL_FIXED_STYLE, FL_FIXEDBOLD_STYLE, FL_FIXEDITALIC_STYLE,
-            FL_FIXEDBOLDITALIC_STYLE, FL_TIMES_STYLE, FL_TIMESBOLD_STYLE,
-            FL_TIMESITALIC_STYLE, FL_TIMESBOLDITALIC_STYLE, FL_MISC_STYLE,
-            FL_MISCBOLD_STYLE, FL_MISCITALIC_STYLE, FL_SYMBOL_STYLE,
-            FL_SHADOW_STYLE, FL_ENGRAVED_STYLE, FL_EMBOSSED_STYLE
+            font style. Values (from xfdata.py)
+            FL_NORMAL_STYLE (Helvetica normal text), FL_BOLD_STYLE (Helvetica
+            boldface text), FL_ITALIC_STYLE (Helvetica italic text),
+            FL_BOLDITALIC_STYLE (Helvetica boldface and italic text),
+            FL_FIXED_STYLE (Courier fixed width, good for tables),
+            FL_FIXEDBOLD_STYLE (Courier bold fixed text), FL_FIXEDITALIC_STYLE
+            (Courier italic fixed text), FL_FIXEDBOLDITALIC_STYLE (Courier
+            boldface and italic fixed text), FL_TIMES_STYLE (Times-Roman like
+            normal font), FL_TIMESBOLD_STYLE (Times-Roman like boldface text),
+            FL_TIMESITALIC_STYLE (Times-Roman like italic text),
+            FL_TIMESBOLDITALIC_STYLE (Times-Roman like boldface and italic
+            text), FL_MISC_STYLE (Charter normal text), FL_MISCBOLD_STYLE
+            (Charter boldface text), FL_MISCITALIC_STYLE (Charter italic text),
+            FL_SYMBOL_STYLE (Symbol text), FL_SHADOW_STYLE (Text casting a
+            shadow, modifier mask), FL_ENGRAVED_STYLE (Text engraved into the
+            form, modifier mask), FL_EMBOSSED_STYLE (Text standing out,
+            modifier mask). Bitwise OR with any of modifiers is allowed.
         size : int
-            font size. Values (from xfdata.py) FL_TINY_SIZE,
-            FL_SMALL_SIZE, FL_NORMAL_SIZE, FL_MEDIUM_SIZE,
-            FL_LARGE_SIZE, FL_HUGE_SIZE, FL_DEFAULT_SIZE
+            font size. Values (from xfdata.py)
+            FL_TINY_SIZE (8 points font), FL_SMALL_SIZE or FL_DEFAULT_SIZE (10
+            points font, default), FL_NORMAL_SIZE (12 points font),
+            FL_MEDIUM_SIZE (14 points font), FL_LARGE_SIZE (18 points font),
+            FL_HUGE_SIZE (24 points font), or other numeric odd or even value
         txtstr : str
             text
         strlng : int
@@ -5086,7 +5242,6 @@ def fl_get_string_width(style, size, txtstr, strlng):
            int len)""")
     library.check_if_initialized()
     library.checkfatal_allowed_value_in_list(style, xfdata.TEXTSTYLE_list)
-    library.checknonfatal_allowed_value_in_list(size, xfdata.FONTSIZE_list)
     i_style = library.convert_to_intc(style)
     i_size = library.convert_to_intc(size)
     s_txtstr = library.convert_to_stringc(txtstr)
@@ -5100,23 +5255,35 @@ def fl_get_string_width(style, size, txtstr, strlng):
 # TODO: what's its purpose?
 def fl_get_string_widthTAB(style, size, txtstr, strlng):
     """fl_get_string_widthTAB(style, size, txtstr, strlng) -> width
-    
+
     *todo*
 
     Parameters
     ----------
         style : int
-            font style. Values (from xfdata.py) FL_NORMAL_STYLE,
-            FL_BOLD_STYLE, FL_ITALIC_STYLE, FL_BOLDITALIC_STYLE,
-            FL_FIXED_STYLE, FL_FIXEDBOLD_STYLE, FL_FIXEDITALIC_STYLE,
-            FL_FIXEDBOLDITALIC_STYLE, FL_TIMES_STYLE, FL_TIMESBOLD_STYLE,
-            FL_TIMESITALIC_STYLE, FL_TIMESBOLDITALIC_STYLE, FL_MISC_STYLE,
-            FL_MISCBOLD_STYLE, FL_MISCITALIC_STYLE, FL_SYMBOL_STYLE,
-            FL_SHADOW_STYLE, FL_ENGRAVED_STYLE, FL_EMBOSSED_STYLE
+            font style. Values (from xfdata.py)
+            FL_NORMAL_STYLE (Helvetica normal text), FL_BOLD_STYLE (Helvetica
+            boldface text), FL_ITALIC_STYLE (Helvetica italic text),
+            FL_BOLDITALIC_STYLE (Helvetica boldface and italic text),
+            FL_FIXED_STYLE (Courier fixed width, good for tables),
+            FL_FIXEDBOLD_STYLE (Courier bold fixed text), FL_FIXEDITALIC_STYLE
+            (Courier italic fixed text), FL_FIXEDBOLDITALIC_STYLE (Courier
+            boldface and italic fixed text), FL_TIMES_STYLE (Times-Roman like
+            normal font), FL_TIMESBOLD_STYLE (Times-Roman like boldface text),
+            FL_TIMESITALIC_STYLE (Times-Roman like italic text),
+            FL_TIMESBOLDITALIC_STYLE (Times-Roman like boldface and italic
+            text), FL_MISC_STYLE (Charter normal text), FL_MISCBOLD_STYLE
+            (Charter boldface text), FL_MISCITALIC_STYLE (Charter italic text),
+            FL_SYMBOL_STYLE (Symbol text), FL_SHADOW_STYLE (Text casting a
+            shadow, modifier mask), FL_ENGRAVED_STYLE (Text engraved into the
+            form, modifier mask), FL_EMBOSSED_STYLE (Text standing out,
+            modifier mask). Bitwise OR with any of modifiers is allowed.
         size : int
-            font size. Values (from xfdata.py) FL_TINY_SIZE,
-            FL_SMALL_SIZE, FL_NORMAL_SIZE, FL_MEDIUM_SIZE,
-            FL_LARGE_SIZE, FL_HUGE_SIZE, FL_DEFAULT_SIZE
+            font size. Values (from xfdata.py)
+            FL_TINY_SIZE (8 points font), FL_SMALL_SIZE or FL_DEFAULT_SIZE (10
+            points font, default), FL_NORMAL_SIZE (12 points font),
+            FL_MEDIUM_SIZE (14 points font), FL_LARGE_SIZE (18 points font),
+            FL_HUGE_SIZE (24 points font), or other numeric odd or even value
         txtstr : str
             text
         strlng : int
@@ -5144,7 +5311,6 @@ def fl_get_string_widthTAB(style, size, txtstr, strlng):
            int len)""")
     library.check_if_initialized()
     library.checkfatal_allowed_value_in_list(style, xfdata.TEXTSTYLE_list)
-    library.checknonfatal_allowed_value_in_list(size, xfdata.FONTSIZE_list)
     i_style = library.convert_to_intc(style)
     i_size = library.convert_to_intc(size)
     s_txtstr = library.convert_to_stringc(txtstr)
@@ -5157,7 +5323,7 @@ def fl_get_string_widthTAB(style, size, txtstr, strlng):
 
 def fl_get_string_dimension(style, size, txtstr, strlng):
     """fl_get_string_dimension(style, size, txtstr, strlng) -> width, height
-    
+
     Finds out the width and height of a string in one call. In addition, the
     string passed can contain embedded newline characters and the routine
     will make proper adjustment so the values returned are (just) large
@@ -5166,17 +5332,29 @@ def fl_get_string_dimension(style, size, txtstr, strlng):
     Parameters
     ----------
         style : int
-            font style. Values (from xfdata.py) FL_NORMAL_STYLE,
-            FL_BOLD_STYLE, FL_ITALIC_STYLE, FL_BOLDITALIC_STYLE,
-            FL_FIXED_STYLE, FL_FIXEDBOLD_STYLE, FL_FIXEDITALIC_STYLE,
-            FL_FIXEDBOLDITALIC_STYLE, FL_TIMES_STYLE, FL_TIMESBOLD_STYLE,
-            FL_TIMESITALIC_STYLE, FL_TIMESBOLDITALIC_STYLE, FL_MISC_STYLE,
-            FL_MISCBOLD_STYLE, FL_MISCITALIC_STYLE, FL_SYMBOL_STYLE,
-            FL_SHADOW_STYLE, FL_ENGRAVED_STYLE, FL_EMBOSSED_STYLE
+            font style. Values (from xfdata.py)
+            FL_NORMAL_STYLE (Helvetica normal text), FL_BOLD_STYLE (Helvetica
+            boldface text), FL_ITALIC_STYLE (Helvetica italic text),
+            FL_BOLDITALIC_STYLE (Helvetica boldface and italic text),
+            FL_FIXED_STYLE (Courier fixed width, good for tables),
+            FL_FIXEDBOLD_STYLE (Courier bold fixed text), FL_FIXEDITALIC_STYLE
+            (Courier italic fixed text), FL_FIXEDBOLDITALIC_STYLE (Courier
+            boldface and italic fixed text), FL_TIMES_STYLE (Times-Roman like
+            normal font), FL_TIMESBOLD_STYLE (Times-Roman like boldface text),
+            FL_TIMESITALIC_STYLE (Times-Roman like italic text),
+            FL_TIMESBOLDITALIC_STYLE (Times-Roman like boldface and italic
+            text), FL_MISC_STYLE (Charter normal text), FL_MISCBOLD_STYLE
+            (Charter boldface text), FL_MISCITALIC_STYLE (Charter italic text),
+            FL_SYMBOL_STYLE (Symbol text), FL_SHADOW_STYLE (Text casting a
+            shadow, modifier mask), FL_ENGRAVED_STYLE (Text engraved into the
+            form, modifier mask), FL_EMBOSSED_STYLE (Text standing out,
+            modifier mask). Bitwise OR with any of modifiers is allowed.
         size : int
-            font size. Values (from xfdata.py) FL_TINY_SIZE,
-            FL_SMALL_SIZE, FL_NORMAL_SIZE, FL_MEDIUM_SIZE,
-            FL_LARGE_SIZE, FL_HUGE_SIZE, FL_DEFAULT_SIZE
+            font size. Values (from xfdata.py)
+            FL_TINY_SIZE (8 points font), FL_SMALL_SIZE or FL_DEFAULT_SIZE (10
+            points font, default), FL_NORMAL_SIZE (12 points font),
+            FL_MEDIUM_SIZE (14 points font), FL_LARGE_SIZE (18 points font),
+            FL_HUGE_SIZE (24 points font), or other numeric odd or even value
         txtstr : str
             text
         strlng : int
@@ -5212,7 +5390,6 @@ def fl_get_string_dimension(style, size, txtstr, strlng):
            const char * s, int len, int * width, int * height)""")
     library.check_if_initialized()
     library.checkfatal_allowed_value_in_list(style, xfdata.TEXTSTYLE_list)
-    library.checknonfatal_allowed_value_in_list(size, xfdata.FONTSIZE_list)
     i_style = library.convert_to_intc(style)
     i_size = library.convert_to_intc(size)
     s_txtstr = library.convert_to_stringc(txtstr)
@@ -5233,7 +5410,7 @@ def fl_get_align_xy(align, xpos, ypos, width, height, xsize, ysize, \
                     xmargin, ymargin):
     """fl_get_align_xy(align, xpos, ypos, width, height, xsize, ysize,
     xmargin, ymargin) -> xpos, ypos
-    
+
     Finds out the position of where to draw the flobject with a certain
     alignment and including padding. It works regardless if it is to be
     drawn inside or outside of the bounding box.
@@ -5241,11 +5418,18 @@ def fl_get_align_xy(align, xpos, ypos, width, height, xsize, ysize, \
     Parameters
     ----------
         align : int
-            alignment. Values (from xfdata.py) FL_ALIGN_CENTER,
-            FL_ALIGN_TOP, FL_ALIGN_BOTTOM, FL_ALIGN_LEFT, FL_ALIGN_RIGHT,
-            FL_ALIGN_LEFT_TOP, FL_ALIGN_RIGHT_TOP, FL_ALIGN_LEFT_BOTTOM,
-            FL_ALIGN_RIGHT_BOTTOM, FL_ALIGN_INSIDE, FL_ALIGN_VERT. Bitwise
-            OR with FL_ALIGN_INSIDE is allowed.
+            alignment. Values (from xfdata.py)
+            FL_ALIGN_CENTER (In the middle of the box, inside it), FL_ALIGN_TOP
+            (To the top of the box, outside it), FL_ALIGN_BOTTOM (To the
+            bottom of the box, outside it), FL_ALIGN_LEFT (To the left of the
+            box, outside it), FL_ALIGN_RIGHT (To the right of the box, outside
+            it), FL_ALIGN_LEFT_TOP (To the left and top of the box, outside
+            it), FL_ALIGN_RIGHT_TOP (To the right and top of the box, outside
+            it), FL_ALIGN_LEFT_BOTTOM (To the left and bottom of the box,
+            outside it), FL_ALIGN_RIGHT_BOTTOM (To the right and bottom of
+            the box, outside it), FL_ALIGN_INSIDE (places the text inside the
+            box), FL_ALIGN_VERT (not functional yet). Bitwise OR with
+            FL_ALIGN_INSIDE is allowed.
         xpos : int
             horizontal position of bounding box (upper-left corner)
         ypos : int
@@ -5316,7 +5500,7 @@ def fl_get_align_xy(align, xpos, ypos, width, height, xsize, ysize, \
 
 def fl_drw_text(align, xpos, ypos, width, height, colr, style, size, txtstr):
     """fl_drw_text(align, xpos, ypos, width, height, colr, style, size, txtstr)
-    
+
     Draws the text inside the bounding box according to the alignment
     requested. It puts a padding of 5 pixels in vertical direction and
     4 in horizontal around the text. Thus the bounding box should be 10
@@ -5327,11 +5511,18 @@ def fl_drw_text(align, xpos, ypos, width, height, colr, style, size, txtstr):
     Parameters
     ----------
         align : int
-            alignment of text. Values (from xfdata.py) FL_ALIGN_CENTER,
-            FL_ALIGN_TOP, FL_ALIGN_BOTTOM, FL_ALIGN_LEFT, FL_ALIGN_RIGHT,
-            FL_ALIGN_LEFT_TOP, FL_ALIGN_RIGHT_TOP, FL_ALIGN_LEFT_BOTTOM,
-            FL_ALIGN_RIGHT_BOTTOM, FL_ALIGN_INSIDE, FL_ALIGN_VERT. Bitwise
-            'OR' with FL_ALIGN_INSIDE is allowed.
+            alignment of text. Values (from xfdata.py)
+            FL_ALIGN_CENTER (In the middle of the box, inside it), FL_ALIGN_TOP
+            (To the top of the box, outside it), FL_ALIGN_BOTTOM (To the
+            bottom of the box, outside it), FL_ALIGN_LEFT (To the left of the
+            box, outside it), FL_ALIGN_RIGHT (To the right of the box, outside
+            it), FL_ALIGN_LEFT_TOP (To the left and top of the box, outside
+            it), FL_ALIGN_RIGHT_TOP (To the right and top of the box, outside
+            it), FL_ALIGN_LEFT_BOTTOM (To the left and bottom of the box,
+            outside it), FL_ALIGN_RIGHT_BOTTOM (To the right and bottom of
+            the box, outside it), FL_ALIGN_INSIDE (places the text inside the
+            box), FL_ALIGN_VERT (not functional yet). Bitwise OR with
+            FL_ALIGN_INSIDE is allowed.
         xpos : int
             horizontal position (upper-left corner)
         ypos : int
@@ -5343,17 +5534,29 @@ def fl_drw_text(align, xpos, ypos, width, height, colr, style, size, txtstr):
         colr : long_pos
             XForms colormap index as color
         style : int
-            font style. Values (from xfdata.py) FL_NORMAL_STYLE,
-            FL_BOLD_STYLE, FL_ITALIC_STYLE, FL_BOLDITALIC_STYLE,
-            FL_FIXED_STYLE, FL_FIXEDBOLD_STYLE, FL_FIXEDITALIC_STYLE,
-            FL_FIXEDBOLDITALIC_STYLE, FL_TIMES_STYLE, FL_TIMESBOLD_STYLE,
-            FL_TIMESITALIC_STYLE, FL_TIMESBOLDITALIC_STYLE, FL_MISC_STYLE,
-            FL_MISCBOLD_STYLE, FL_MISCITALIC_STYLE, FL_SYMBOL_STYLE,
-            FL_SHADOW_STYLE, FL_ENGRAVED_STYLE, FL_EMBOSSED_STYLE
+            font style. Values (from xfdata.py)
+            FL_NORMAL_STYLE (Helvetica normal text), FL_BOLD_STYLE (Helvetica
+            boldface text), FL_ITALIC_STYLE (Helvetica italic text),
+            FL_BOLDITALIC_STYLE (Helvetica boldface and italic text),
+            FL_FIXED_STYLE (Courier fixed width, good for tables),
+            FL_FIXEDBOLD_STYLE (Courier bold fixed text), FL_FIXEDITALIC_STYLE
+            (Courier italic fixed text), FL_FIXEDBOLDITALIC_STYLE (Courier
+            boldface and italic fixed text), FL_TIMES_STYLE (Times-Roman like
+            normal font), FL_TIMESBOLD_STYLE (Times-Roman like boldface text),
+            FL_TIMESITALIC_STYLE (Times-Roman like italic text),
+            FL_TIMESBOLDITALIC_STYLE (Times-Roman like boldface and italic
+            text), FL_MISC_STYLE (Charter normal text), FL_MISCBOLD_STYLE
+            (Charter boldface text), FL_MISCITALIC_STYLE (Charter italic text),
+            FL_SYMBOL_STYLE (Symbol text), FL_SHADOW_STYLE (Text casting a
+            shadow, modifier mask), FL_ENGRAVED_STYLE (Text engraved into the
+            form, modifier mask), FL_EMBOSSED_STYLE (Text standing out,
+            modifier mask). Bitwise OR with any of modifiers is allowed.
         size : int
-            font size. Values (from xfdata.py) FL_TINY_SIZE, FL_SMALL_SIZE,
-            FL_NORMAL_SIZE, FL_MEDIUM_SIZE, FL_LARGE_SIZE, FL_HUGE_SIZE,
-            FL_DEFAULT_SIZE
+            font size. Values (from xfdata.py)
+            FL_TINY_SIZE (8 points font), FL_SMALL_SIZE or FL_DEFAULT_SIZE (10
+            points font, default), FL_NORMAL_SIZE (12 points font),
+            FL_MEDIUM_SIZE (14 points font), FL_LARGE_SIZE (18 points font),
+            FL_HUGE_SIZE (24 points font), or other numeric odd or even value
         txtstr : str
             text to draw
 
@@ -5385,7 +5588,6 @@ def fl_drw_text(align, xpos, ypos, width, height, colr, style, size, txtstr):
     ul_colr = library.convert_to_FL_COLOR(colr)
     library.checkfatal_allowed_value_in_list(style, xfdata.TEXTSTYLE_list)
     i_style = library.convert_to_intc(style)
-    library.checknonfatal_allowed_value_in_list(size, xfdata.FONTSIZE_list)
     i_size = library.convert_to_intc(size)
     s_txtstr = library.convert_to_stringc(txtstr)
     library.keep_elem_refs(align, i_align, xpos, i_xpos, ypos, i_ypos, \
@@ -5397,20 +5599,27 @@ def fl_drw_text(align, xpos, ypos, width, height, colr, style, size, txtstr):
 
 def fl_drw_text_beside(align, xpos, ypos, width, height, colr, style,
                        size, txtstr):
-    """fl_drw_text_beside(align, xpos, ypos, width, height, colr, style, 
+    """fl_drw_text_beside(align, xpos, ypos, width, height, colr, style,
     size, txtstr)
-    
+
     Draws the text aligned outside of the box. It interprets a text string
     starting with the character @ differently in drawing some symbols instead.
 
     Parameters
     ----------
         align : int
-            alignment of text. Values (from xfdata.py) FL_ALIGN_CENTER,
-            FL_ALIGN_TOP, FL_ALIGN_BOTTOM, FL_ALIGN_LEFT, FL_ALIGN_RIGHT,
-            FL_ALIGN_LEFT_TOP, FL_ALIGN_RIGHT_TOP, FL_ALIGN_LEFT_BOTTOM,
-            FL_ALIGN_RIGHT_BOTTOM, FL_ALIGN_INSIDE, FL_ALIGN_VERT. Bitwise
-            'OR' with FL_ALIGN_INSIDE is allowed.
+            alignment of text. Values (from xfdata.py)
+            FL_ALIGN_CENTER (In the middle of the box, inside it), FL_ALIGN_TOP
+            (To the top of the box, outside it), FL_ALIGN_BOTTOM (To the
+            bottom of the box, outside it), FL_ALIGN_LEFT (To the left of the
+            box, outside it), FL_ALIGN_RIGHT (To the right of the box, outside
+            it), FL_ALIGN_LEFT_TOP (To the left and top of the box, outside
+            it), FL_ALIGN_RIGHT_TOP (To the right and top of the box, outside
+            it), FL_ALIGN_LEFT_BOTTOM (To the left and bottom of the box,
+            outside it), FL_ALIGN_RIGHT_BOTTOM (To the right and bottom of
+            the box, outside it), FL_ALIGN_INSIDE (places the text inside the
+            box), FL_ALIGN_VERT (not functional yet). Bitwise OR with
+            FL_ALIGN_INSIDE is allowed.
         xpos : int
             horizontal position (upper-left corner)
         ypos : int
@@ -5422,17 +5631,29 @@ def fl_drw_text_beside(align, xpos, ypos, width, height, colr, style,
         colr : long_pos
             XForms colormap index as color
         style : int
-            font style. Values (from xfdata.py) FL_NORMAL_STYLE,
-            FL_BOLD_STYLE, FL_ITALIC_STYLE, FL_BOLDITALIC_STYLE,
-            FL_FIXED_STYLE, FL_FIXEDBOLD_STYLE, FL_FIXEDITALIC_STYLE,
-            FL_FIXEDBOLDITALIC_STYLE, FL_TIMES_STYLE, FL_TIMESBOLD_STYLE,
-            FL_TIMESITALIC_STYLE, FL_TIMESBOLDITALIC_STYLE, FL_MISC_STYLE,
-            FL_MISCBOLD_STYLE, FL_MISCITALIC_STYLE, FL_SYMBOL_STYLE,
-            FL_SHADOW_STYLE, FL_ENGRAVED_STYLE, FL_EMBOSSED_STYLE
+            font style. Values (from xfdata.py)
+            FL_NORMAL_STYLE (Helvetica normal text), FL_BOLD_STYLE (Helvetica
+            boldface text), FL_ITALIC_STYLE (Helvetica italic text),
+            FL_BOLDITALIC_STYLE (Helvetica boldface and italic text),
+            FL_FIXED_STYLE (Courier fixed width, good for tables),
+            FL_FIXEDBOLD_STYLE (Courier bold fixed text), FL_FIXEDITALIC_STYLE
+            (Courier italic fixed text), FL_FIXEDBOLDITALIC_STYLE (Courier
+            boldface and italic fixed text), FL_TIMES_STYLE (Times-Roman like
+            normal font), FL_TIMESBOLD_STYLE (Times-Roman like boldface text),
+            FL_TIMESITALIC_STYLE (Times-Roman like italic text),
+            FL_TIMESBOLDITALIC_STYLE (Times-Roman like boldface and italic
+            text), FL_MISC_STYLE (Charter normal text), FL_MISCBOLD_STYLE
+            (Charter boldface text), FL_MISCITALIC_STYLE (Charter italic text),
+            FL_SYMBOL_STYLE (Symbol text), FL_SHADOW_STYLE (Text casting a
+            shadow, modifier mask), FL_ENGRAVED_STYLE (Text engraved into the
+            form, modifier mask), FL_EMBOSSED_STYLE (Text standing out,
+            modifier mask). Bitwise OR with any of modifiers is allowed.
         size : int
-            font size. Values (from xfdata.py) FL_TINY_SIZE,
-            FL_SMALL_SIZE, FL_NORMAL_SIZE, FL_MEDIUM_SIZE,
-            FL_LARGE_SIZE, FL_HUGE_SIZE, FL_DEFAULT_SIZE
+            font size. Values (from xfdata.py)
+            FL_TINY_SIZE (8 points font), FL_SMALL_SIZE or FL_DEFAULT_SIZE (10
+            points font, default), FL_NORMAL_SIZE (12 points font),
+            FL_MEDIUM_SIZE (14 points font), FL_LARGE_SIZE (18 points font),
+            FL_HUGE_SIZE (24 points font), or other numeric odd or even value
         txtstr : str
             text to draw
 
@@ -5465,7 +5686,6 @@ def fl_drw_text_beside(align, xpos, ypos, width, height, colr, style,
     ul_colr = library.convert_to_FL_COLOR(colr)
     library.checkfatal_allowed_value_in_list(style, xfdata.TEXTSTYLE_list)
     i_style = library.convert_to_intc(style)
-    library.checknonfatal_allowed_value_in_list(size, xfdata.FONTSIZE_list)
     i_size = library.convert_to_intc(size)
     s_txtstr = library.convert_to_stringc(txtstr)
     library.keep_elem_refs(align, i_align, xpos, i_xpos, ypos, i_ypos, \
@@ -5475,23 +5695,30 @@ def fl_drw_text_beside(align, xpos, ypos, width, height, colr, style,
             ul_colr, i_style, i_size, s_txtstr)
 
 
-def fl_drw_text_cursor(align, xpos, ypos, width, height, colr, style, size, 
+def fl_drw_text_cursor(align, xpos, ypos, width, height, colr, style, size,
                        txtstr, curscolr, pos):
-    """fl_drw_text_cursor(align, xpos, ypos, width, height, colr, style, 
+    """fl_drw_text_cursor(align, xpos, ypos, width, height, colr, style,
     size, txtstr, curscolr, pos)
-    
+
     Draws text and, in addition, a cursor can optionally be drawn. It does
-    no interpretation of the special character @ nor does it add padding
+    no interpretation of the special character @, nor does it add padding
     around the text.
 
     Parameters
     ----------
         align : int
-            alignment of text. Values (from xfdata.py) FL_ALIGN_CENTER,
-            FL_ALIGN_TOP, FL_ALIGN_BOTTOM, FL_ALIGN_LEFT, FL_ALIGN_RIGHT,
-            FL_ALIGN_LEFT_TOP, FL_ALIGN_RIGHT_TOP, FL_ALIGN_LEFT_BOTTOM,
-            FL_ALIGN_RIGHT_BOTTOM, FL_ALIGN_INSIDE, FL_ALIGN_VERT. Bitwise
-            'OR' with FL_ALIGN_INSIDE is allowed.
+            alignment of text. Values (from xfdata.py)
+            FL_ALIGN_CENTER (In the middle of the box, inside it), FL_ALIGN_TOP
+            (To the top of the box, outside it), FL_ALIGN_BOTTOM (To the
+            bottom of the box, outside it), FL_ALIGN_LEFT (To the left of the
+            box, outside it), FL_ALIGN_RIGHT (To the right of the box, outside
+            it), FL_ALIGN_LEFT_TOP (To the left and top of the box, outside
+            it), FL_ALIGN_RIGHT_TOP (To the right and top of the box, outside
+            it), FL_ALIGN_LEFT_BOTTOM (To the left and bottom of the box,
+            outside it), FL_ALIGN_RIGHT_BOTTOM (To the right and bottom of
+            the box, outside it), FL_ALIGN_INSIDE (places the text inside the
+            box), FL_ALIGN_VERT (not functional yet). Bitwise OR with
+            FL_ALIGN_INSIDE is allowed.
         xpos : int
             horizontal position (upper-left corner)
         ypos : int
@@ -5503,17 +5730,29 @@ def fl_drw_text_cursor(align, xpos, ypos, width, height, colr, style, size,
         colr : long_pos
             XForms colormap index as color
         style : int
-            font style. Values (from xfdata.py) FL_NORMAL_STYLE,
-            FL_BOLD_STYLE, FL_ITALIC_STYLE, FL_BOLDITALIC_STYLE,
-            FL_FIXED_STYLE, FL_FIXEDBOLD_STYLE, FL_FIXEDITALIC_STYLE,
-            FL_FIXEDBOLDITALIC_STYLE, FL_TIMES_STYLE, FL_TIMESBOLD_STYLE,
-            FL_TIMESITALIC_STYLE, FL_TIMESBOLDITALIC_STYLE, FL_MISC_STYLE,
-            FL_MISCBOLD_STYLE, FL_MISCITALIC_STYLE, FL_SYMBOL_STYLE,
-            FL_SHADOW_STYLE, FL_ENGRAVED_STYLE, FL_EMBOSSED_STYLE
+            font style. Values (from xfdata.py)
+            FL_NORMAL_STYLE (Helvetica normal text), FL_BOLD_STYLE (Helvetica
+            boldface text), FL_ITALIC_STYLE (Helvetica italic text),
+            FL_BOLDITALIC_STYLE (Helvetica boldface and italic text),
+            FL_FIXED_STYLE (Courier fixed width, good for tables),
+            FL_FIXEDBOLD_STYLE (Courier bold fixed text), FL_FIXEDITALIC_STYLE
+            (Courier italic fixed text), FL_FIXEDBOLDITALIC_STYLE (Courier
+            boldface and italic fixed text), FL_TIMES_STYLE (Times-Roman like
+            normal font), FL_TIMESBOLD_STYLE (Times-Roman like boldface text),
+            FL_TIMESITALIC_STYLE (Times-Roman like italic text),
+            FL_TIMESBOLDITALIC_STYLE (Times-Roman like boldface and italic
+            text), FL_MISC_STYLE (Charter normal text), FL_MISCBOLD_STYLE
+            (Charter boldface text), FL_MISCITALIC_STYLE (Charter italic text),
+            FL_SYMBOL_STYLE (Symbol text), FL_SHADOW_STYLE (Text casting a
+            shadow, modifier mask), FL_ENGRAVED_STYLE (Text engraved into the
+            form, modifier mask), FL_EMBOSSED_STYLE (Text standing out,
+            modifier mask). Bitwise OR with any of modifiers is allowed.
         size : int
-            font size. Values (from xfdata.py) FL_TINY_SIZE, FL_SMALL_SIZE,
-            FL_NORMAL_SIZE, FL_MEDIUM_SIZE, FL_LARGE_SIZE, FL_HUGE_SIZE,
-            FL_DEFAULT_SIZE
+            font size. Values (from xfdata.py)
+            FL_TINY_SIZE (8 points font), FL_SMALL_SIZE or FL_DEFAULT_SIZE (10
+            points font, default), FL_NORMAL_SIZE (12 points font),
+            FL_MEDIUM_SIZE (14 points font), FL_LARGE_SIZE (18 points font),
+            FL_HUGE_SIZE (24 points font), or other numeric odd or even value
         txtstr : str
             text to draw
         curscolr : int
@@ -5553,7 +5792,6 @@ def fl_drw_text_cursor(align, xpos, ypos, width, height, colr, style, size,
     ul_colr = library.convert_to_FL_COLOR(colr)
     library.checkfatal_allowed_value_in_list(style, xfdata.TEXTSTYLE_list)
     i_style = library.convert_to_intc(style)
-    library.checknonfatal_allowed_value_in_list(size, xfdata.FONTSIZE_list)
     i_size = library.convert_to_intc(size)
     s_txtstr = library.convert_to_stringc(txtstr)
     library.checknonfatal_allowed_value_in_list(curscolr, xfdata.COLOR_list)
@@ -5569,18 +5807,30 @@ def fl_drw_text_cursor(align, xpos, ypos, width, height, colr, style, size,
 
 def fl_drw_box(boxtype, xpos, ypos, width, height, colr, bndrwidth):
     """fl_drw_box(boxtype, xpos, ypos, width, height, colr, bndwidth)
-    
+
     Draws the bounding box of a flobject.
 
     Parameters
     ----------
         boxtype : int
-            type of box to draw. Values (from xfdata.py) FL_NO_BOX,
-            FL_UP_BOX, FL_DOWN_BOX, FL_BORDER_BOX, FL_SHADOW_BOX,
-            FL_FRAME_BOX, FL_ROUNDED_BOX, FL_EMBOSSED_BOX, FL_FLAT_BOX,
-            FL_RFLAT_BOX, FL_RSHADOW_BOX, FL_OVAL_BOX, FL_ROUNDED3D_UPBOX,
-            FL_ROUNDED3D_DOWNBOX, FL_OVAL3D_UPBOX, FL_OVAL3D_DOWNBOX,
-            FL_OVAL3D_FRAMEBOX, FL_OVAL3D_EMBOSSEDBOX
+            type of box to draw. Values (from xfdata.py)
+            FL_NO_BOX (No box at all, it is transparent, just a label),
+            FL_UP_BOX (A box that comes out of the screen), FL_DOWN_BOX (A box
+            that goes down into the screen), FL_BORDER_BOX (A flat box with a
+            border), FL_SHADOW_BOX (A flat box with a shadow), FL_FRAME_BOX (A
+            flat box with an engraved frame), FL_ROUNDED_BOX (A rounded box),
+            FL_EMBOSSED_BOX (A flat box with an embossed frame), FL_FLAT_BOX (A
+            flat box without a border, normally invisible unless given a
+            different color than the surroundings), FL_RFLAT_BOX (A rounded box
+            without a border, normally invisible unless given a different color
+            than the surroundings), FL_RSHADOW_BOX (A rounded box with a
+            shadow)), FL_OVAL_BOX (A box shaped like an ellipse),
+            FL_ROUNDED3D_UPBOX (A rounded box coming out of the screen),
+            FL_ROUNDED3D_DOWNBOX (A rounded box going into the screen),
+            FL_OVAL3D_UPBOX (An oval box coming out of the screen),
+            FL_OVAL3D_DOWNBOX (An oval box going into the screen),
+            FL_OVAL3D_FRAMEBOX (An oval box with an engraved frame),
+            FL_OVAL3D_EMBOSSEDBOX (An oval box with an embossed frame)
         xpos : int
             horizontal position (upper-left corner)
         ypos : int
@@ -5629,7 +5879,7 @@ def fl_drw_box(boxtype, xpos, ypos, width, height, colr, bndrwidth):
 
 def fl_add_symbol(symbname, pyfn_DrawPtr, scalable):
     """fl_add_symbol(symbname, pyfn_DrawPtr, scalable) -> result
-    
+
     Adds a customly drawn symbol to the system which it can then use to
     display symbols on flobjects that are not provided by XForms.
 
@@ -5681,7 +5931,7 @@ def fl_add_symbol(symbname, pyfn_DrawPtr, scalable):
 
 def fl_draw_symbol(symbname, xpos, ypos, width, height, colr):
     """fl_draw_symbol(symbname, xpos, ypos, width, height, colr) -> result
-    
+
     Draws directly a symbol on the screen.
 
     Parameters
@@ -5737,7 +5987,7 @@ def fl_draw_symbol(symbname, xpos, ypos, width, height, colr):
 
 def fl_mapcolor(colr, red, green, blue):
     """fl_mapcolor(colr, red, green, blue) -> pixelval
-    
+
     Changes the colormap and make a color index active so that it can be
     used in various drawing routines after initialization. It maps a new
     color using specific values for red, green and blue. In case a request
@@ -5790,7 +6040,7 @@ def fl_mapcolor(colr, red, green, blue):
 
 def fl_mapcolorname(colr, rgbcolrname):
     """fl_mapcolorname(colr, rgbcolrname) -> pixelval
-    
+
     Defines the color in the colormap indexed by colr to the specified color
     name. It associates an index with a color name, which may have been
     obtained via resources.
@@ -5835,7 +6085,7 @@ fl_mapcolor_name = fl_mapcolorname
 
 def fl_free_colors(colrlist, numcolr):
     """fl_free_colors(colrlist, numcolr)
-    
+
     Frees allocated array of colors from the default colormap, if index
     of colors are known. You should not do that for the reserved colors
     (i.e. colors with indices below xfdata.FL_FREE_COL1).
@@ -5870,7 +6120,7 @@ def fl_free_colors(colrlist, numcolr):
 
 def fl_free_pixels(pixelvallist, numcolrs):
     """fl_free_pixels(pixelvallist, numcolrs)
-    
+
     Frees allocated colors from the default colormap, if pixel values
     are known. You should not do that for the reserved colors (i.e.
     colors with indices below xfdata.FL_FREE_COL1).
@@ -5909,7 +6159,7 @@ def fl_free_pixels(pixelvallist, numcolrs):
 
 def fl_getmcolor(colr):
     """fl_getmcolor(colr) -> pixelval, red, green, blue
-    
+
     Finds out the RGB values of an index, returning the pixel value as
     known by the X server. If you are interested in the internal colormap
     of XForms fl_get_icm_color() is more efficient.
@@ -5964,7 +6214,7 @@ def fl_getmcolor(colr):
 
 def fl_get_pixel(colr):
     """fl_get_pixel(colr) -> pixelval
-    
+
     Finds out the actual pixel value the X server understands from a XForms
     colormap index. XForms library keeps an internal colormap, initialized
     to predefined colors. The predefined colors do not correspond to pixel
@@ -6009,7 +6259,7 @@ fl_get_flcolor = fl_get_pixel
 
 def fl_get_icm_color(colr):
     """fl_get_icm_color(colr) -> red, green, blue
-    
+
     Queries the internal colormap handled by XForms, returning red, green
     and blue values corresponding to color index. Note that it does not
     communicate with the X server, it only return information about the
@@ -6062,7 +6312,7 @@ def fl_get_icm_color(colr):
 
 def fl_set_icm_color(colr, red, green, blue):
     """fl_set_icm_color(colr, red, green, blue)
-    
+
     Changes the internal colormap handled by XForms, setting a color
     index using a red, green and blue values' combination. You have
     to call fl_set_icm_color() before fl_initialize() to change XForms's
@@ -6107,7 +6357,7 @@ def fl_set_icm_color(colr, red, green, blue):
 
 def fl_color(colr):
     """fl_color(colr)
-    
+
     Defines the foreground color in the XForms library's default
     Graphics Context (gc[0]).
 
@@ -6138,7 +6388,7 @@ def fl_color(colr):
 
 def fl_bk_color(colr):
     """fl_bk_color(colr)
-    
+
     Defines the background color in the default Graphics Context
     (gc[0]).
 
@@ -6169,7 +6419,7 @@ def fl_bk_color(colr):
 
 def fl_textcolor(colr):
     """fl_textcolor(colr)
-    
+
     Defines the foreground color for text in the default Graphics Context
     (gc[0]).
 
@@ -6231,7 +6481,7 @@ def fl_bk_textcolor(colr):
 
 def fl_set_gamma(red, green, blue):
     """fl_set_gamma(red, green, blue)
-    
+
     Adjusts the brightness of the builtin colors. Larger the value,
     brighter the colors.
 
@@ -6319,7 +6569,7 @@ def FL_crnd(a):
 
 def fl_add_object(ptr_flform, ptr_flobject):
     """fl_add_object(ptr_flform, ptr_flobject)
-    
+
     The flobject remains available (except if it is a flobject that
     marks the start or end of a group) and can be added again to the
     same or another form later. Normally, this function is used in
@@ -6356,7 +6606,7 @@ def fl_add_object(ptr_flform, ptr_flobject):
 
 def fl_addto_form(ptr_flform):
     """fl_addto_form(ptr_flform) -> ptr_flform
-    
+
     Reopens a form, after fl_end_form(), for adding further
     flobjects to it.
 
@@ -6394,7 +6644,7 @@ def fl_make_object(flobjclass, otype, xpos, ypos, width, height, label,
                    pyfn_HandlePtr):
     """fl_make_object(flobjclass, otype, xpos, ypos, width, height,
     label, pyfn_HandlePtr) -> ptr_flobject
-    
+
     Makes a custom flobject.
 
     Parameters
@@ -6468,7 +6718,7 @@ def fl_make_object(flobjclass, otype, xpos, ypos, width, height, label,
 
 def fl_add_child(ptr_flobject1, ptr_flobject2):
     """fl_add_child(ptr_flobject1, ptr_flobject2)
-    
+
     Makes a flobject a child of another flobject. An example is the
     scrollbar flobject, tt has three child flobjects, a slider and
     two buttons, which all three are childs of the scrollbar flobject.
@@ -6502,7 +6752,7 @@ def fl_add_child(ptr_flobject1, ptr_flobject2):
 
 def fl_set_coordunit(unit):
     """fl_set_coordunit(unit)
-    
+
     Defines the unit to be used for screen coordinates, instead of
     default ones (pixels).
 
@@ -6565,7 +6815,7 @@ def fl_set_border_width(borderwidth):
 
 def fl_set_scrollbar_type(sbtype):
     """fl_set_scrollbar_type(sbtype)
-    
+
     Defines the type of a scrollbar.
 
     Parameters
@@ -6600,7 +6850,7 @@ def fl_set_scrollbar_type(sbtype):
 
 def fl_set_thinscrollbar(yesno):
     """fl_set_thinscrollbar(yesno)
-    
+
     Defines if scrollbar's type is thin or normal.
 
     Parameters
@@ -6627,7 +6877,7 @@ def fl_set_thinscrollbar(yesno):
 
 def fl_flip_yorigin():
     """fl_flip_yorigin()
-    
+
     Defines the origin of XForms coordinates at the lower-left corner
     of the form (instead of default upper-left corner).
 
@@ -6650,7 +6900,7 @@ def fl_flip_yorigin():
 
 def fl_get_coordunit():
     """fl_get_coordunit() -> coordunit
-    
+
     Finds out the unit used for screen coordinates.
 
     Returns
@@ -6679,7 +6929,7 @@ def fl_get_coordunit():
 
 def fl_get_border_width():
     """fl_get_border_width() -> borderwidth
-    
+
     Finds out the width of border.
 
     Returns
@@ -6709,7 +6959,7 @@ def fl_get_border_width():
 
 def fl_ringbell(percent):
     """fl_ringbell(percent)
-    
+
     Sounds the keyboard ringbell (if capable). Note that not all
     keyboards support volume variations.
 
@@ -6740,7 +6990,7 @@ def fl_ringbell(percent):
 
 def fl_gettime():
     """fl_gettime() -> secs, usecs
-    
+
     Finds out the current time, expressed in seconds and microseconds
     since 1st January 1970, 00:00 GMT. It is most useful for computing
     time differences.
@@ -6779,7 +7029,7 @@ def fl_gettime():
 
 def fl_now():
     """fl_now() -> datetimetxt
-    
+
     Finds out a string form of the current date and time. The format
     of the string is of the form "Wed Jun 30 21:49:08 1993"
 
@@ -6808,7 +7058,7 @@ def fl_now():
 
 def fl_whoami():
     """fl_whoami() -> username
-    
+
     Finds out the user name who is running the application.
 
     Returns
@@ -6836,7 +7086,7 @@ def fl_whoami():
 
 def fl_mouse_button():
     """fl_mouse_button() -> mousebtn
-    
+
     Finds out which mouse button was pushed or released. Sometimes an
     application program might need to find out more information about
     the event that triggered a callback, e.g., to implement mouse button
@@ -6852,8 +7102,14 @@ def fl_mouse_button():
     Returns
     -------
         mousebtn : long
-            which mouse button was pushed or released (from xfdata,
-            e.g. FL_RIGHT_MOUSE, FL_MIDDLE_MOUSE, etc..)
+            which mouse button was pushed or released.
+            Values (from xfdata.py)
+            FL_MBUTTON1 or FL_LEFT_MOUSE (Left mouse button was pressed),
+            FL_MBUTTON2 or FL_MIDDLE_MOUSE (Middle mouse button was pressed),
+            FL_MBUTTON3 or FL_RIGHT_MOUSE (Right mouse button was pressed),
+            FL_MBUTTON4 or FL_SCROLLUP_MOUSE (Mouse scroll wheel was rotated
+            in up direction), FL_MBUTTON5 or FL_SCROLLDOWN_MOUSE (Mouse scroll
+            wheel was rotated in down direction.
 
     Examples
     --------
@@ -6881,7 +7137,7 @@ fl_mousebutton = fl_mouse_button
 
 def fl_set_err_logfp(ptr_file):
     """fl_set_err_logfp(ptr_file)
-    
+
     Makes the default message handler to log the error to a
     file instead of printing to stderr.
 
@@ -6914,7 +7170,7 @@ def fl_set_err_logfp(ptr_file):
 
 def fl_set_error_handler(pyfn_ErrorFunc):
     """fl_set_error_handler(pyfn_ErrorFunc)
-    
+
     Normally the XForms Library reports errors to stderr. This can be
     avoided or modified by registering an error handling function. The
     library will call the user handler function with a string indicating
@@ -6998,7 +7254,7 @@ def fl_set_error_handler(pyfn_ErrorFunc):
 
 def fl_msleep(msec):
     """fl_msleep(msec) -> result
-    
+
     Waits for a number of milliseconds (with the best resolution
     possible on your system).
 
@@ -7034,7 +7290,7 @@ def fl_msleep(msec):
 
 def fl_is_same_object(ptr_flobject1, ptr_flobject2):
     """fl_is_same_object(ptr_flobject1, ptr_flobject2) -> yesno
-    
+
     Does a comparison between two flobjects, if they are the same,
     or not.
 

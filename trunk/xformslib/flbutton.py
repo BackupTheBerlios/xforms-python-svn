@@ -58,17 +58,23 @@ from xformslib import flbitmap
 def fl_add_roundbutton(buttontype, xpos, ypos, width, height, label):
     """fl_add_roundbutton(buttontype, xpos, ypos, width, height, label)
     -> ptr_flobject
-    
+
     Adds a roundbutton flobject.
 
     Parameters
     ----------
         buttontype : int
             type of button flobject to be added. Values (from xfdata.py)
-            FL_NORMAL_BUTTON, FL_PUSH_BUTTON, FL_RADIO_BUTTON,
-            FL_HIDDEN_BUTTON, FL_TOUCH_BUTTON, FL_INOUT_BUTTON,
-            FL_RETURN_BUTTON, FL_HIDDEN_RET_BUTTON, FL_MENU_BUTTON,
-            FL_TOGGLE_BUTTON
+            FL_NORMAL_BUTTON (Returns value when released), FL_PUSH_BUTTON or
+            FL_TOGGLE_BUTTON (Stays pushed until user pushes it again),
+            FL_RADIO_BUTTON (Push button that switches off other radio
+            buttons), FL_HIDDEN_BUTTON (Invisible normal button),
+            FL_TOUCH_BUTTON (Returns value as long as the user pushes it),
+            FL_INOUT_BUTTON (Returns value both when pushed and when released),
+            FL_RETURN_BUTTON (Like a normal button but reacts on the <Return>
+            key), FL_HIDDEN_RET_BUTTON (Invisible return button),
+            FL_MENU_BUTTON (Returns value when pushed, useful e.g. for opening
+            a popup when pushed).
         xpos : int
             horizontal position (upper-left corner)
         ypos : int
@@ -120,17 +126,23 @@ def fl_add_roundbutton(buttontype, xpos, ypos, width, height, label):
 def fl_add_round3dbutton(buttontype, xpos, ypos, width, height, label):
     """fl_add_round3dbutton(buttontype, xpos, ypos, width, height, label)
     -> ptr_flobject
-    
+
     Adds a 3D roundbutton flobject.
 
     Parameters
     ----------
         buttontype : int
             type of button flobject to be added. Values (from xfdata.py)
-            FL_NORMAL_BUTTON, FL_PUSH_BUTTON, FL_RADIO_BUTTON,
-            FL_HIDDEN_BUTTON, FL_TOUCH_BUTTON, FL_INOUT_BUTTON,
-            FL_RETURN_BUTTON, FL_HIDDEN_RET_BUTTON, FL_MENU_BUTTON,
-            FL_TOGGLE_BUTTON
+            FL_NORMAL_BUTTON (Returns value when released), FL_PUSH_BUTTON or
+            FL_TOGGLE_BUTTON (Stays pushed until user pushes it again),
+            FL_RADIO_BUTTON (Push button that switches off other radio
+            buttons), FL_HIDDEN_BUTTON (Invisible normal button),
+            FL_TOUCH_BUTTON (Returns value as long as the user pushes it),
+            FL_INOUT_BUTTON (Returns value both when pushed and when released),
+            FL_RETURN_BUTTON (Like a normal button but reacts on the <Return>
+            key), FL_HIDDEN_RET_BUTTON (Invisible return button),
+            FL_MENU_BUTTON (Returns value when pushed, useful e.g. for opening
+            a popup when pushed).
         xpos : int
             horizontal position (upper-left corner)
         ypos : int
@@ -182,17 +194,23 @@ def fl_add_round3dbutton(buttontype, xpos, ypos, width, height, label):
 def fl_add_lightbutton(buttontype, xpos, ypos, width, height, label):
     """fl_add_lightbutton(buttontype, xpos, ypos, width, height, label)
     -> ptr_flobject
-    
+
     Adds a lightbutton flobject (with an on/off light switch).
 
     Parameters
     ----------
         buttontype : int
             type of button to be added. Values (from xfdata.py)
-            FL_NORMAL_BUTTON, FL_PUSH_BUTTON, FL_RADIO_BUTTON,
-            FL_HIDDEN_BUTTON, FL_TOUCH_BUTTON, FL_INOUT_BUTTON,
-            FL_RETURN_BUTTON, FL_HIDDEN_RET_BUTTON, FL_MENU_BUTTON,
-            FL_TOGGLE_BUTTON
+            FL_NORMAL_BUTTON (Returns value when released), FL_PUSH_BUTTON or
+            FL_TOGGLE_BUTTON (Stays pushed until user pushes it again),
+            FL_RADIO_BUTTON (Push button that switches off other radio
+            buttons), FL_HIDDEN_BUTTON (Invisible normal button),
+            FL_TOUCH_BUTTON (Returns value as long as the user pushes it),
+            FL_INOUT_BUTTON (Returns value both when pushed and when released),
+            FL_RETURN_BUTTON (Like a normal button but reacts on the <Return>
+            key), FL_HIDDEN_RET_BUTTON (Invisible return button),
+            FL_MENU_BUTTON (Returns value when pushed, useful e.g. for opening
+            a popup when pushed).
         xpos : int
             horizontal position (upper-left corner)
         ypos : int
@@ -244,17 +262,23 @@ def fl_add_lightbutton(buttontype, xpos, ypos, width, height, label):
 def fl_add_checkbutton(buttontype, xpos, ypos, width, height, label):
     """fl_add_checkbutton(buttontype, xpos, ypos, width, height, label)
     -> ptr_flobject
-    
+
     Adds a checkbutton flobject.
 
     Parameters
     ----------
         buttontype : int
             type of button flobject to be added. Values (from xfdata.py)
-            FL_NORMAL_BUTTON, FL_PUSH_BUTTON, FL_RADIO_BUTTON,
-            FL_HIDDEN_BUTTON, FL_TOUCH_BUTTON, FL_INOUT_BUTTON,
-            FL_RETURN_BUTTON, FL_HIDDEN_RET_BUTTON, FL_MENU_BUTTON,
-            FL_TOGGLE_BUTTON
+            FL_NORMAL_BUTTON (Returns value when released), FL_PUSH_BUTTON or
+            FL_TOGGLE_BUTTON (Stays pushed until user pushes it again),
+            FL_RADIO_BUTTON (Push button that switches off other radio
+            buttons), FL_HIDDEN_BUTTON (Invisible normal button),
+            FL_TOUCH_BUTTON (Returns value as long as the user pushes it),
+            FL_INOUT_BUTTON (Returns value both when pushed and when released),
+            FL_RETURN_BUTTON (Like a normal button but reacts on the <Return>
+            key), FL_HIDDEN_RET_BUTTON (Invisible return button),
+            FL_MENU_BUTTON (Returns value when pushed, useful e.g. for opening
+            a popup when pushed).
         xpos : int
             horizontal position (upper-left corner)
         ypos : int
@@ -306,17 +330,23 @@ def fl_add_checkbutton(buttontype, xpos, ypos, width, height, label):
 def fl_add_button(buttontype, xpos, ypos, width, height, label):
     """fl_add_button(buttontype, xpos, ypos, width, height, label)
     -> ptr_flobject
-    
+
     Adds a button flobject to the current form.
 
     Parameters
     ----------
         buttontype : int
             type of button to be added. Values (from xfdata.py)
-            FL_NORMAL_BUTTON, FL_PUSH_BUTTON, FL_RADIO_BUTTON,
-            FL_HIDDEN_BUTTON, FL_TOUCH_BUTTON, FL_INOUT_BUTTON,
-            FL_RETURN_BUTTON, FL_HIDDEN_RET_BUTTON, FL_MENU_BUTTON,
-            FL_TOGGLE_BUTTON
+            FL_NORMAL_BUTTON (Returns value when released), FL_PUSH_BUTTON or
+            FL_TOGGLE_BUTTON (Stays pushed until user pushes it again),
+            FL_RADIO_BUTTON (Push button that switches off other radio
+            buttons), FL_HIDDEN_BUTTON (Invisible normal button),
+            FL_TOUCH_BUTTON (Returns value as long as the user pushes it),
+            FL_INOUT_BUTTON (Returns value both when pushed and when released),
+            FL_RETURN_BUTTON (Like a normal button but reacts on the <Return>
+            key), FL_HIDDEN_RET_BUTTON (Invisible return button),
+            FL_MENU_BUTTON (Returns value when pushed, useful e.g. for opening
+            a popup when pushed).
         xpos : int
             horizontal position (upper-left corner)
         ypos : int
@@ -368,17 +398,23 @@ def fl_add_button(buttontype, xpos, ypos, width, height, label):
 def fl_add_bitmapbutton(buttontype, xpos, ypos, width, height, label):
     """fl_add_bitmapbutton(buttontype, xpos, ypos, width, height, label)
     -> ptr_object
-    
+
     Adds a bitmapbutton flobject.
 
     Parameters
     ----------
         buttontype : int
             type of button to be added. Values (from xfdata.py)
-            FL_NORMAL_BUTTON, FL_PUSH_BUTTON, FL_RADIO_BUTTON,
-            FL_HIDDEN_BUTTON, FL_TOUCH_BUTTON, FL_INOUT_BUTTON,
-            FL_RETURN_BUTTON, FL_HIDDEN_RET_BUTTON, FL_MENU_BUTTON,
-            FL_TOGGLE_BUTTON
+            FL_NORMAL_BUTTON (Returns value when released), FL_PUSH_BUTTON or
+            FL_TOGGLE_BUTTON (Stays pushed until user pushes it again),
+            FL_RADIO_BUTTON (Push button that switches off other radio
+            buttons), FL_HIDDEN_BUTTON (Invisible normal button),
+            FL_TOUCH_BUTTON (Returns value as long as the user pushes it),
+            FL_INOUT_BUTTON (Returns value both when pushed and when released),
+            FL_RETURN_BUTTON (Like a normal button but reacts on the <Return>
+            key), FL_HIDDEN_RET_BUTTON (Invisible return button),
+            FL_MENU_BUTTON (Returns value when pushed, useful e.g. for opening
+            a popup when pushed).
         xpos : int
             horizontal position (upper-left corner)
         ypos : int
@@ -430,17 +466,23 @@ def fl_add_bitmapbutton(buttontype, xpos, ypos, width, height, label):
 def fl_add_scrollbutton(buttontype, xpos, ypos, width, height, label):
     """fl_add_scrollbutton(buttontype, xpos, ypos, width, height, label)
     -> ptr_flobject
-    
+
     Adds a scrollbutton flobject.
 
     Parameters
     ----------
         buttontype : int
             type of button to be added. Values (from xfdata.py)
-            FL_NORMAL_BUTTON, FL_PUSH_BUTTON, FL_RADIO_BUTTON,
-            FL_HIDDEN_BUTTON, FL_TOUCH_BUTTON, FL_INOUT_BUTTON,
-            FL_RETURN_BUTTON, FL_HIDDEN_RET_BUTTON, FL_MENU_BUTTON,
-            FL_TOGGLE_BUTTON
+            FL_NORMAL_BUTTON (Returns value when released), FL_PUSH_BUTTON or
+            FL_TOGGLE_BUTTON (Stays pushed until user pushes it again),
+            FL_RADIO_BUTTON (Push button that switches off other radio
+            buttons), FL_HIDDEN_BUTTON (Invisible normal button),
+            FL_TOUCH_BUTTON (Returns value as long as the user pushes it),
+            FL_INOUT_BUTTON (Returns value both when pushed and when released),
+            FL_RETURN_BUTTON (Like a normal button but reacts on the <Return>
+            key), FL_HIDDEN_RET_BUTTON (Invisible return button),
+            FL_MENU_BUTTON (Returns value when pushed, useful e.g. for opening
+            a popup when pushed).
         xpos : int
             horizontal position (upper-left corner)
         ypos : int
@@ -492,17 +534,23 @@ def fl_add_scrollbutton(buttontype, xpos, ypos, width, height, label):
 def fl_add_labelbutton(buttontype, xpos, ypos, width, height, label):
     """fl_add_labelbutton(buttontype, xpos, ypos, width, height, label)
     -> ptr_flobject
-    
+
     Adds a labelbutton flobject.
 
     Parameters
     ----------
         buttontype : int
             type of button to be added. Values (from xfdata.py)
-            FL_NORMAL_BUTTON, FL_PUSH_BUTTON, FL_RADIO_BUTTON,
-            FL_HIDDEN_BUTTON, FL_TOUCH_BUTTON, FL_INOUT_BUTTON,
-            FL_RETURN_BUTTON, FL_HIDDEN_RET_BUTTON, FL_MENU_BUTTON,
-            FL_TOGGLE_BUTTON
+            FL_NORMAL_BUTTON (Returns value when released), FL_PUSH_BUTTON or
+            FL_TOGGLE_BUTTON (Stays pushed until user pushes it again),
+            FL_RADIO_BUTTON (Push button that switches off other radio
+            buttons), FL_HIDDEN_BUTTON (Invisible normal button),
+            FL_TOUCH_BUTTON (Returns value as long as the user pushes it),
+            FL_INOUT_BUTTON (Returns value both when pushed and when released),
+            FL_RETURN_BUTTON (Like a normal button but reacts on the <Return>
+            key), FL_HIDDEN_RET_BUTTON (Invisible return button),
+            FL_MENU_BUTTON (Returns value when pushed, useful e.g. for opening
+            a popup when pushed).
         xpos : int
             horizontal position (upper-left corner)
         ypos : int
@@ -553,7 +601,7 @@ def fl_add_labelbutton(buttontype, xpos, ypos, width, height, label):
 
 def fl_set_bitmapbutton_data(ptr_flobject, width, height, xbmdatalist):
     """fl_set_bitmapbutton_data(ptr_flobject, width, height, xbmdatalist)
-    
+
     Defines the bitmap to use for a bitmap button flobject, using
     some data.
 
@@ -598,17 +646,23 @@ def fl_set_bitmapbutton_data(ptr_flobject, width, height, xbmdatalist):
 def fl_add_pixmapbutton(buttontype, xpos, ypos, width, height, label):
     """fl_add_pixmapbutton(buttontype, xpos, ypos, width, height, label)
     -> ptr_flobject
-    
+
     Adds a pixmapbutton flobject.
 
     Parameters
     ----------
         buttontype : int
             type of button to be added. Values (from xfdata.py)
-            FL_NORMAL_BUTTON, FL_PUSH_BUTTON, FL_RADIO_BUTTON,
-            FL_HIDDEN_BUTTON, FL_TOUCH_BUTTON, FL_INOUT_BUTTON,
-            FL_RETURN_BUTTON, FL_HIDDEN_RET_BUTTON, FL_MENU_BUTTON,
-            FL_TOGGLE_BUTTON
+            FL_NORMAL_BUTTON (Returns value when released), FL_PUSH_BUTTON or
+            FL_TOGGLE_BUTTON (Stays pushed until user pushes it again),
+            FL_RADIO_BUTTON (Push button that switches off other radio
+            buttons), FL_HIDDEN_BUTTON (Invisible normal button),
+            FL_TOUCH_BUTTON (Returns value as long as the user pushes it),
+            FL_INOUT_BUTTON (Returns value both when pushed and when released),
+            FL_RETURN_BUTTON (Like a normal button but reacts on the <Return>
+            key), FL_HIDDEN_RET_BUTTON (Invisible return button),
+            FL_MENU_BUTTON (Returns value when pushed, useful e.g. for opening
+            a popup when pushed).
         xpos : int
             horizontal position (upper-left corner)
         ypos : int
@@ -659,7 +713,7 @@ def fl_add_pixmapbutton(buttontype, xpos, ypos, width, height, label):
 
 def fl_set_pixmapbutton_focus_outline(ptr_flobject, yesno):
     """fl_set_pixmapbutton_focus_outline(ptr_flobject, yesno)
-    
+
     Enables or disables the focus outline of the pixmap button.
 
     Parameters
@@ -670,7 +724,7 @@ def fl_set_pixmapbutton_focus_outline(ptr_flobject, yesno):
             flag to enable (1) or disable (0) the focus outline
 
     Examples
-    -------- 
+    --------
         >>> fl_set_pixmapbutton_focus_outline(pmapobj, 1)
 
     Notes
@@ -695,7 +749,7 @@ fl_set_pixmapbutton_show_focus = fl_set_pixmapbutton_focus_outline
 
 def fl_set_pixmapbutton_focus_data(ptr_flobject, xpmdata):
     """fl_set_pixmapbutton_focus_data(ptr_flobject, xpmdata)
-    
+
     Defines a different pixmap to show, using data, when the mouse enters
     a pixmap button flobject, instead of an outline of the button.
 
@@ -730,7 +784,7 @@ def fl_set_pixmapbutton_focus_data(ptr_flobject, xpmdata):
 
 def fl_set_pixmapbutton_focus_file(ptr_flobject, fname):
     """fl_set_pixmapbutton_focus_file(ptr_flobject, fname)
-    
+
     Defines a different pixmap to show, using a file, when the mouse enters
     a pixmap button flobject, instead of an outline of the button.
 
@@ -764,7 +818,7 @@ def fl_set_pixmapbutton_focus_file(ptr_flobject, fname):
 
 def fl_set_pixmapbutton_focus_pixmap(ptr_flobject, pixmap, mask):
     """fl_set_pixmapbutton_focus_pixmap(ptr_flobject, pixmap, mask)
-    
+
     Defines a different pixmap to show, using pixmap resource id, when
     the mouse enters a pixmap button flobject, instead of an outline of
     the button.
@@ -802,7 +856,7 @@ def fl_set_pixmapbutton_focus_pixmap(ptr_flobject, pixmap, mask):
 
 def fl_get_button(ptr_flobject):
     """fl_get_button(ptr_flobject) -> btnstate
-    
+
     Finds out the push state value of a button flobject.
 
     Parameters
@@ -837,7 +891,7 @@ def fl_get_button(ptr_flobject):
 
 def fl_set_button(ptr_flobject, yesno):
     """fl_set_button(ptr_flobject, yesno)
-    
+
     Defines the button state (not pushed/pushed).
 
     Parameters
@@ -870,7 +924,7 @@ def fl_set_button(ptr_flobject, yesno):
 
 def fl_get_button_numb(ptr_flobject):
     """fl_get_button_numb(ptr_flobject) -> mousebtn
-    
+
     Finds out the number of the last used mouse button.
     fl_mouse_button() function will also return the mouse number.
 
@@ -883,6 +937,13 @@ def fl_get_button_numb(ptr_flobject):
     -------
         mousebtn : int
             last used mouse button
+            Values (from xfdata.py)
+            FL_MBUTTON1 or FL_LEFT_MOUSE (Left mouse button was pressed),
+            FL_MBUTTON2 or FL_MIDDLE_MOUSE (Middle mouse button was pressed),
+            FL_MBUTTON3 or FL_RIGHT_MOUSE (Right mouse button was pressed),
+            FL_MBUTTON4 or FL_SCROLLUP_MOUSE (Mouse scroll wheel was rotated
+            in up direction), FL_MBUTTON5 or FL_SCROLLDOWN_MOUSE (Mouse scroll
+            wheel was rotated in down direction.
 
     Examples
     --------
@@ -911,7 +972,7 @@ def fl_create_generic_button(btnclass, buttontype, xpos, ypos, width, height,
                              label):
     """fl_create_generic_button(btnclass, buttontype, xpos, ypos, width,
     height, label) -> ptr_flobject
-    
+
     Creates a generic button flobject.
 
     Parameters
@@ -920,10 +981,16 @@ def fl_create_generic_button(btnclass, buttontype, xpos, ypos, width, height,
             value of a new button class
         buttontype : int
             type of button to be created. Values (from xfdata.py)
-            FL_NORMAL_BUTTON, FL_PUSH_BUTTON, FL_RADIO_BUTTON,
-            FL_HIDDEN_BUTTON, FL_TOUCH_BUTTON, FL_INOUT_BUTTON,
-            FL_RETURN_BUTTON, FL_HIDDEN_RET_BUTTON, FL_MENU_BUTTON,
-            FL_TOGGLE_BUTTON
+            FL_NORMAL_BUTTON (Returns value when released), FL_PUSH_BUTTON or
+            FL_TOGGLE_BUTTON (Stays pushed until user pushes it again),
+            FL_RADIO_BUTTON (Push button that switches off other radio
+            buttons), FL_HIDDEN_BUTTON (Invisible normal button),
+            FL_TOUCH_BUTTON (Returns value as long as the user pushes it),
+            FL_INOUT_BUTTON (Returns value both when pushed and when released),
+            FL_RETURN_BUTTON (Like a normal button but reacts on the <Return>
+            key), FL_HIDDEN_RET_BUTTON (Invisible return button),
+            FL_MENU_BUTTON (Returns value when pushed, useful e.g. for opening
+            a popup when pushed).
         xpos : int
             horizontal position (upper-left corner)
         ypos : int
@@ -977,7 +1044,7 @@ def fl_create_generic_button(btnclass, buttontype, xpos, ypos, width, height,
 
 def fl_add_button_class(btnclass, pyfn_DrawButton, pyfn_CleanupButton):
     """fl_add_button_class(btnclass, pyfn_DrawButton, pyfn_CleanupButton)
-    
+
     Associates a button class with a drawing function.
 
     Parameters
@@ -1023,7 +1090,7 @@ def fl_add_button_class(btnclass, pyfn_DrawButton, pyfn_CleanupButton):
 
 def fl_set_button_mouse_buttons(ptr_flobject, buttons):
     """fl_set_button_mouse_buttons(ptr_flobject, buttons)
-    
+
     Defines up to which mouse buttons the button flobject will react.
 
     Parameters
@@ -1059,7 +1126,7 @@ def fl_set_button_mouse_buttons(ptr_flobject, buttons):
 
 def fl_get_button_mouse_buttons(ptr_flobject):
     """fl_get_button_mouse_buttons(ptr_flobject) -> buttons
-    
+
     Finds out a value indicating which mouse buttons the button flobject
     will react to (bitwise OR of the numbers 1 for the left mouse button,
     2 for the middle, 4 for the right mouse button, 8 for moving the

@@ -46,7 +46,7 @@ def fl_create_generic_canvas(canvclass, canvastype, xpos, ypos, width, height,
                              label):
     """fl_create_generic_canvas(canvasclass, canvastype, xpos, ypos, width,
     height, label) -> ptr_flobject
-    
+
     Creates a generic canvas flobject.
 
     Parameters
@@ -55,7 +55,8 @@ def fl_create_generic_canvas(canvclass, canvastype, xpos, ypos, width, height,
             value for new canvas flobject class
         canvastype : int
             type of canvas to be created. Values (from xfdata.py)
-            FL_NORMAL_CANVAS, FL_SCROLLED_CANVAS (not enabled)
+            FL_NORMAL_CANVAS (normal canvas flobject type), FL_SCROLLED_CANVAS
+            (not enabled)
         xpos : int
             horizontal position (upper-left corner)
         ypos : int
@@ -109,14 +110,15 @@ def fl_create_generic_canvas(canvclass, canvastype, xpos, ypos, width, height,
 def fl_add_canvas(canvastype, xpos, ypos, width, height, label):
     """fl_add_canvas(canvastype, xpos, ypos, width, height, label)
     -> ptr_flobject
-    
+
     Adds a canvas flobject.
 
     Parameters
     ----------
         canvastype : int
             type of canvas to be added. Values (from xfdata.py)
-            FL_NORMAL_CANVAS, FL_SCROLLED_CANVAS (not enabled)
+            FL_NORMAL_CANVAS (normal canvas flobject type), FL_SCROLLED_CANVAS
+            (not enabled)
         xpos : int
             horizontal position (upper-left corner)
         ypos : int
@@ -171,7 +173,7 @@ def fl_add_canvas(canvastype, xpos, ypos, width, height, label):
 
 def fl_set_canvas_colormap(ptr_flobject, colormap):
     """fl_set_canvas_colormap(ptr_flobject, colormap)
-    
+
     Defines the color property of canvas. Caution: when the canvas window
     goes away, e.g. as a result of a call of fl_hide_form(), the colormap
     associated with the canvas is freed (destroyed); this likely will cause
@@ -207,7 +209,7 @@ def fl_set_canvas_colormap(ptr_flobject, colormap):
 
 def fl_set_canvas_visual(ptr_flobject, ptr_visual):
     """fl_set_canvas_visual(ptr_flobject, ptr_visual)
-    
+
     Defines visual property of canvas flobject. Changing visual does not
     generally make sense once the canvas window is created (which happens
     when the parent form is shown). Also, typically if you change the canvas
@@ -244,7 +246,7 @@ def fl_set_canvas_visual(ptr_flobject, ptr_visual):
 
 def fl_set_canvas_depth(ptr_flobject, depth):
     """fl_set_canvas_depth(ptr_flobject, depth)
-    
+
     Defines the depth of canvas flobject. Changing depth does not generally
     make sense once the canvas window is created (which happens when the
     parent form is shown).
@@ -254,8 +256,7 @@ def fl_set_canvas_depth(ptr_flobject, depth):
         ptr_flobject : pointer to xfdata.FL_OBJECT
             canvas flobject
         depth : int
-            depth value of canvas. Values (from xfdata.py) e.g. 8, 16,
-            24?, 32, ...
+            depth value of canvas. Values e.g. 8, 16, 24?, 32, ...
 
     Examples
     --------
@@ -279,7 +280,7 @@ def fl_set_canvas_depth(ptr_flobject, depth):
 
 def fl_set_canvas_attributes(ptr_flobject, mask, ptr_xsetwindowattributes):
     """fl_set_canvas_attributes(ptr_flobject, mask, ptr_xsetwindowattributes)
-    
+
     Modifies attributes of a canvas flobject (e.g. visual, depth and
     colormap etc.). By default, upon canvas creation, all its window related
     attributes are inherited from its parent (i.e. the window of the form the
@@ -323,7 +324,7 @@ def fl_set_canvas_attributes(ptr_flobject, mask, ptr_xsetwindowattributes):
 def fl_add_canvas_handler(ptr_flobject, xev, pyfn_HandleCanvas, vdata):
     """fl_add_canvas_handler(ptr_flobject, xev, pyfn_HandleCanvas, vdata)
     -> HandleCnavas
-    
+
     Defines a callback to be invoked in a canvas flobject for a specific
     X event.
 
@@ -378,7 +379,7 @@ def fl_add_canvas_handler(ptr_flobject, xev, pyfn_HandleCanvas, vdata):
 
 def fl_get_canvas_id(ptr_flobject):
     """fl_get_canvas_id(ptr_flobject) -> win
-    
+
     Finds out the window id of the canvas flobject.
 
     Parameters
@@ -412,7 +413,7 @@ def fl_get_canvas_id(ptr_flobject):
 
 def fl_get_canvas_colormap(ptr_flobject):
     """fl_get_canvas_colormap(ptr_flobject) -> colormap
-    
+
     Finds out the colormap of a canvas flobject.
 
     Parameters
@@ -447,7 +448,7 @@ def fl_get_canvas_colormap(ptr_flobject):
 
 def fl_get_canvas_depth(ptr_flobject):
     """fl_get_canvas_depth(ptr_flobject) -> depth
-    
+
     Finds out the depth of a canvas flobject.
 
     Parameters
@@ -482,7 +483,7 @@ def fl_get_canvas_depth(ptr_flobject):
 
 def fl_remove_canvas_handler(ptr_flobject, xev, pyfn_HandleCanvas):
     """fl_remove_canvas_handler(ptr_flobject, xev, pyfn_HandleCanvas)
-    
+
     Removes a particular handler for a specified X event, previously
     created with fl_add_canvas_handler().
 
@@ -527,7 +528,7 @@ def fl_remove_canvas_handler(ptr_flobject, xev, pyfn_HandleCanvas):
 
 def fl_hide_canvas(ptr_flobject):
     """fl_hide_canvas(ptr_flobject)
-    
+
     Hides a canvas flobject.
 
     Parameters
@@ -556,7 +557,7 @@ def fl_hide_canvas(ptr_flobject):
 
 def fl_share_canvas_colormap(ptr_flobject, colormap):
     """fl_share_canvas_colormap(ptr_flobject, colormap)
-    
+
     Defines the color property of canvas flobject. It also sets an internal
     flag so the colormap is not freed when the canvas goes away.
 
@@ -589,7 +590,7 @@ def fl_share_canvas_colormap(ptr_flobject, colormap):
 
 def fl_clear_canvas(ptr_flobject):
     """fl_clear_canvas(ptr_flobject)
-    
+
     Clears the canvas to the background color. If no background is
     defined, uses black.
 
@@ -622,7 +623,7 @@ def fl_modify_canvas_prop(ptr_flobject, pyfn_initModifyCanvasProp,
             pyfn_activateModifyCanvasProp, pyfn_cleanupModifyCanvasProp):
     """fl_modify_canvas_prop(ptr_flobject, pyfn_initModifyCanvasProp,
     pyfn_activateModifyCanvasProp, pyfn_cleanupModifyCanvasProp)
-    
+
     Modifies init, activate and cleanup handler properties of a canvas
     flobject.
 
@@ -677,7 +678,7 @@ def fl_modify_canvas_prop(ptr_flobject, pyfn_initModifyCanvasProp,
 
 def fl_canvas_yield_to_shortcut(ptr_flobject, yesno):
     """fl_canvas_yield_to_shortcut(ptr_flobject, yesno)
-    
+
     Enables or disables keyboard input's stealing by canvas. By default,
     flobjects with shortcuts appearing on the same form as the canvas will
     "steal" keyboard inputs if they match the shortcuts.

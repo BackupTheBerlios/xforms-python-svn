@@ -37,9 +37,15 @@ Parameters<br>
 ----------<br>
 &nbsp;&nbsp;&nbsp;&nbsp;inputtype&nbsp;:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;type&nbsp;of&nbsp;input&nbsp;to&nbsp;be&nbsp;added.&nbsp;Values&nbsp;(from&nbsp;xfdata.py)<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_NORMAL_INPUT,&nbsp;FL_FLOAT_INPUT,&nbsp;FL_INT_INPUT,<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_DATE_INPUT,&nbsp;FL_MULTILINE_INPUT,&nbsp;FL_HIDDEN_INPUT,<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_SECRET_INPUT<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_NORMAL_INPUT&nbsp;(Any&nbsp;type&nbsp;of&nbsp;text&nbsp;can&nbsp;be&nbsp;typed&nbsp;into&nbsp;this&nbsp;field),<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_FLOAT_INPUT&nbsp;(Only&nbsp;a&nbsp;float&nbsp;value&nbsp;can&nbsp;be&nbsp;typed&nbsp;in,&nbsp;e.g.&nbsp;-23.2e12),<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_INT_INPUT&nbsp;(Only&nbsp;an&nbsp;integer&nbsp;value&nbsp;can&nbsp;be&nbsp;typed&nbsp;in,&nbsp;e.g.&nbsp;-86),<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_DATE_INPUT&nbsp;(Only&nbsp;a&nbsp;date,&nbsp;MM/DD/YY&nbsp;or&nbsp;DD/MM/YY,&nbsp;can&nbsp;be&nbsp;typed&nbsp;in,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;limited&nbsp;per&nbsp;default&nbsp;to&nbsp;10&nbsp;characters),&nbsp;FL_MULTILINE_INPUT&nbsp;(An<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;input&nbsp;field&nbsp;allowing&nbsp;for&nbsp;multiple&nbsp;lines),&nbsp;FL_HIDDEN_INPUT&nbsp;(A&nbsp;normal<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;input&nbsp;field&nbsp;but&nbsp;invisible),&nbsp;FL_SECRET_INPUT&nbsp;(A&nbsp;normal&nbsp;input&nbsp;field<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;that&nbsp;does&nbsp;not&nbsp;show&nbsp;the&nbsp;text,&nbsp;limited&nbsp;per&nbsp;default&nbsp;to&nbsp;a&nbsp;maximum<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;length&nbsp;of&nbsp;16&nbsp;characters)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;xpos&nbsp;:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;horizontal&nbsp;position&nbsp;(upper-left&nbsp;corner)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;ypos&nbsp;:&nbsp;int<br>
@@ -501,8 +507,10 @@ xfdata.FL_DATE_INPUT&nbsp;flobjects.<br>
 Parameters<br>
 ----------<br>
 &nbsp;&nbsp;&nbsp;&nbsp;fmt&nbsp;:&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;format&nbsp;for&nbsp;the&nbsp;input.&nbsp;Values&nbsp;(from&nbsp;xfdata.py)&nbsp;FL_INPUT_DDMM,<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_INPUT_MMDD<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;format&nbsp;for&nbsp;the&nbsp;input.&nbsp;Values&nbsp;(from&nbsp;xfdata.py)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_INPUT_MMDD&nbsp;(Used&nbsp;as&nbsp;format&nbsp;for&nbsp;FL_DATE_INPUT,&nbsp;it&nbsp;places&nbsp;the<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;month&nbsp;before&nbsp;the&nbsp;day,&nbsp;FL_INPUT_DDMM&nbsp;(Used&nbsp;as&nbsp;format&nbsp;for<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_DATE_INPUT,&nbsp;it&nbsp;places&nbsp;the&nbsp;day&nbsp;before&nbsp;the&nbsp;month).<br>
 &nbsp;&nbsp;&nbsp;&nbsp;sep&nbsp;:&nbsp;int&nbsp;or&nbsp;char<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;printable&nbsp;single&nbsp;character&nbsp;used&nbsp;as&nbsp;separator<br>
 &nbsp;<br>
@@ -528,7 +536,8 @@ Parameters<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;input&nbsp;flobject<br>
 &nbsp;&nbsp;&nbsp;&nbsp;pref&nbsp;:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;how&nbsp;is&nbsp;horizontal&nbsp;scrollbar&nbsp;shown.&nbsp;Values&nbsp;(from&nbsp;xfdata.py)<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_AUTO,&nbsp;FL_ON,&nbsp;FL_OFF<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_AUTO&nbsp;(On&nbsp;when&nbsp;needed,&nbsp;default),&nbsp;FL_ON&nbsp;(always&nbsp;on),&nbsp;FL_OFF<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(always&nbsp;off)<br>
 &nbsp;<br>
 Examples<br>
 --------<br>
@@ -676,7 +685,8 @@ Parameters<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;input&nbsp;flobject<br>
 &nbsp;&nbsp;&nbsp;&nbsp;pref&nbsp;:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;how&nbsp;is&nbsp;vertical&nbsp;scrollbar&nbsp;shown.&nbsp;Values&nbsp;(from&nbsp;xfdata.py)<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_AUTO,&nbsp;FL_ON,&nbsp;FL_OFF<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_AUTO&nbsp;(On&nbsp;when&nbsp;needed,&nbsp;default),&nbsp;FL_ON&nbsp;(always&nbsp;on),&nbsp;FL_OFF<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(always&nbsp;off)<br>
 &nbsp;<br>
 Examples<br>
 --------<br>
@@ -728,4 +738,4 @@ Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
 </td></tr></table>
-<p>Updated on: 2010-12-23 23:57 +0100</body></html>
+<p>Updated on: 2010-12-25 01:55 +0100</body></html>

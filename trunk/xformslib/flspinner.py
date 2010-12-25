@@ -46,14 +46,15 @@ from xformslib import xfdata
 def fl_add_spinner(spinnertype, xpos, ypos, width, height, label):
     """fl_add_spinner(spinnertype, xpos, ypos, width, height, label)
     -> ptr_flobject
-    
+
     Adds a spinner flobject.
 
     Parameters
     ----------
         spinnertype : int
             type of spinner to be added. Values (from xfdata.py)
-            FL_INT_SPINNER, FL_FLOAT_SPINNER
+            FL_INT_SPINNER (spinner with integer values), FL_FLOAT_SPINNER
+            (spinner with float values)
         xpos : int
             horizontal position (upper-left corner)
         ypos : int
@@ -138,7 +139,7 @@ def fl_get_spinner_value(ptr_flobject):
 
 def fl_set_spinner_value(ptr_flobject, spvalue):
     """fl_set_spinner_value(ptr_flobject, spvalue) -> oldspvalue
-    
+
     Defines value of a spinner flobject.
 
     Parameters
@@ -174,7 +175,7 @@ def fl_set_spinner_value(ptr_flobject, spvalue):
 
 def fl_set_spinner_bounds(ptr_flobject, minbound, maxbound):
     """fl_set_spinner_bounds(ptr_flobject, minbound, maxbound)
-    
+
     Defines minimum and maximum value limits of a spinner flobject.
 
     Parameters
@@ -211,7 +212,7 @@ def fl_set_spinner_bounds(ptr_flobject, minbound, maxbound):
 
 def fl_get_spinner_bounds(ptr_flobject):
     """fl_get_spinner_bounds(ptr_flobject) -> minbound, maxbound
-    
+
     Finds out minimum and maximum value limits of a spinner flobject.
 
     Parameters
@@ -258,7 +259,7 @@ def fl_get_spinner_bounds(ptr_flobject):
 
 def fl_set_spinner_step(ptr_flobject, step):
     """fl_set_spinner_step(ptr_flobject, step)
-    
+
     Defines step that spinner values are rounded to.
 
     Parameters
@@ -290,7 +291,7 @@ def fl_set_spinner_step(ptr_flobject, step):
 
 def fl_get_spinner_step(ptr_flobject):
     """fl_get_spinner_step(ptr_flobject) -> step
-    
+
     Finds out step that spinner values are rounded to.
 
     Parameters
@@ -325,7 +326,7 @@ def fl_get_spinner_step(ptr_flobject):
 
 def fl_set_spinner_precision(ptr_flobject, precis):
     """fl_set_spinner_precision(ptr_flobject, precis)
-    
+
     Defines the precision number of values in a spinner flobject.
 
     Parameters
@@ -357,7 +358,7 @@ def fl_set_spinner_precision(ptr_flobject, precis):
 
 def fl_get_spinner_precision(ptr_flobject):
     """fl_get_spinner_precision(ptr_flobject) -> precis
-    
+
     Finds out the precision of values in a spinner flobject.
 
     Parameters
@@ -393,7 +394,7 @@ def fl_get_spinner_precision(ptr_flobject):
 
 def fl_get_spinner_input(ptr_flobject):
     """fl_get_spinner_input(ptr_flobject) -> ptr_flobject
-    
+
     Finds out the input sub-flobject of the spinner flobject.
 
     Parameters
@@ -428,7 +429,7 @@ def fl_get_spinner_input(ptr_flobject):
 
 def fl_get_spinner_up_button(ptr_flobject):
     """fl_get_spinner_up_button(ptr_flobject) -> ptr_flobject
-    
+
     Finds out up button sub-flobject of a spinner flobject.
 
     Parameters
@@ -463,7 +464,7 @@ def fl_get_spinner_up_button(ptr_flobject):
 
 def fl_get_spinner_down_button(ptr_flobject):
     """fl_get_spinner_down_button(ptr_flobject) -> ptr_flobject
-    
+
     Finds out down button sub-flobject of a spinner flobject.
 
     Parameters

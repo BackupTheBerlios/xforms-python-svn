@@ -46,14 +46,16 @@ from xformslib import xfdata
 
 def fl_add_dial(dialtype, xpos, ypos, width, height, label):
     """fl_add_dial(dialtype, xpos, ypos, width, height, label) -> ptr_flobject
-    
+
     Adds a dial flobject to the form.
 
     Parameters
     ----------
         dialtype : int
             type of dial to be added. Values (from xfdata.py)
-            FL_NORMAL_DIAL, FL_LINE_DIAL, FL_FILL_DIAL
+            FL_NORMAL_DIAL (A dial with a knob indicating the position),
+            FL_LINE_DIAL (A dial with a line indicating the position),
+            FL_FILL_DIAL (The area between initial and current is filled)
         xpos : int
             horizontal position (upper-left corner)
         ypos : int
@@ -102,7 +104,7 @@ def fl_add_dial(dialtype, xpos, ypos, width, height, label):
 
 def fl_set_dial_value(ptr_flobject, dialval):
     """fl_set_dial_value(ptr_flobject, dialval)
-    
+
     Defines the value of a dial flobject. By default the value is 0.
 
     Parameters
@@ -134,7 +136,7 @@ def fl_set_dial_value(ptr_flobject, dialval):
 
 def fl_get_dial_value(ptr_flobject):
     """fl_get_dial_value(ptr_flobject) -> dialval
-    
+
     Finds out the current value of a dial flobject.
 
     Parameters
@@ -169,7 +171,7 @@ def fl_get_dial_value(ptr_flobject):
 
 def fl_set_dial_bounds(ptr_flobject, minbound, maxbound):
     """fl_set_dial_bounds(ptr_flobject, minbound, maxbound)
-    
+
     Defines the minimum and the maximum values of a dial flobject.
 
     Parameters
@@ -206,7 +208,7 @@ def fl_set_dial_bounds(ptr_flobject, minbound, maxbound):
 
 def fl_get_dial_bounds(ptr_flobject):
     """fl_get_dial_bounds(ptr_flobject) -> minbounds, maxbounds
-    
+
     Finds out the minimum and maximum values of a dial flobject.
 
     Parameters
@@ -253,7 +255,7 @@ def fl_get_dial_bounds(ptr_flobject):
 
 def fl_set_dial_step(ptr_flobject, step):
     """fl_set_dial_step(ptr_flobject, step)
-    
+
     Defines the dial value to be rounded to a specified step or a
     multiple of it.
 
@@ -286,7 +288,7 @@ def fl_set_dial_step(ptr_flobject, step):
 
 def fl_set_dial_return(ptr_flobject, whenretn):
     """fl_set_dial_return(ptr_flobject, whenretn)
-    
+
     Defines the conditions under which a dial flobject gets returned (or
     its callback invoked).
 
@@ -296,9 +298,25 @@ def fl_set_dial_return(ptr_flobject, whenretn):
             dial flobject
         whenretn : int_pos
             return type (when it returns). Values (from xfdata.py)
-            FL_RETURN_NONE, FL_RETURN_CHANGED, FL_RETURN_END,
-            FL_RETURN_END_CHANGED, FL_RETURN_SELECTION,
-            FL_RETURN_DESELECTION, FL_RETURN_TRIGGERED, FL_RETURN_ALWAYS
+            FL_RETURN_NONE (Never notify the application about interactions
+            with this flobject, i.e. never return it nor invoke its callback.
+            Note, this is not meant for deactivation of a flobject, it will
+            still seem to work as normal, it just does not get returned
+            to the application nor does its callback get invoked),
+            FL_RETURN_CHANGED (Return or invoke callback whenever an item is
+            selected, default), FL_RETURN_END (Return or invoke callback on
+            end of an interaction), FL_RETURN_END_CHANGED (Return or invoke
+            callback if end of interaction and selection of an item coincide),
+            FL_RETURN_SELECTION (Return or invoke callback on selection of a
+            line. Please note that for FL_MULTI_BROWSER the browser may be
+            returned just once for a number of lines having been selected),
+            FL_RETURN_DESELECTION (Return or invoke callback on deselection
+            of a line. This only works for FL_MULTI_BROWSER browsers and the
+            browser may be returned just once for a number of lines having
+            been deselected), FL_RETURN_TRIGGERED (*todo*), FL_RETURN_ALWAYS
+            (Return or invoke callback whenever the interaction ends and/or
+            an item is selected. It includes all conditions except
+            FL_RETURN_END_CHANGED).
 
     Examples
     --------
@@ -324,7 +342,7 @@ def fl_set_dial_return(ptr_flobject, whenretn):
 
 def fl_set_dial_angles(ptr_flobject, anglmin, anglmax):
     """fl_set_dial_angles(ptr_flobject, anglmin, anglmax)
-    
+
     Limits the angular range a dial can take or choose an angle other
     than 0 to represent the minimum value. The angles are relative to the
     origin of the dial, which is by default at 6 o'clock and rotates
@@ -364,7 +382,7 @@ def fl_set_dial_angles(ptr_flobject, anglmin, anglmax):
 
 def fl_set_dial_cross(ptr_flobject, yesno):
     """fl_set_dial_cross(ptr_flobject, yesno)
-    
+
     Allows crossing over of dial flobject. By default, crossing from
     359.9 to 0 or from 0 to 359.9 is not allowed.
 
@@ -400,7 +418,7 @@ fl_set_dial_crossover = fl_set_dial_cross
 
 def fl_set_dial_direction(ptr_flobject, directn):
     """fl_set_dial_direction(ptr_flobject, directn)
-    
+
     Changes what rotation modifies dial value. By default, clock-wise
     rotation increases the dial value.
 
@@ -410,7 +428,7 @@ def fl_set_dial_direction(ptr_flobject, directn):
             dial flobject
         directn : int
             direction of dial rotation. Values (from xfdata.py) FL_DIAL_CCW
-            (counter-clock-wise) or FL_DIAL_CW (clock-wise)
+            (counter-clock-wise rotation) or FL_DIAL_CW (clock-wise rotation)
 
     Examples
     --------

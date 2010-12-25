@@ -36,13 +36,18 @@ Parameters<br>
 ----------<br>
 &nbsp;&nbsp;&nbsp;&nbsp;slidertype&nbsp;:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;type&nbsp;of&nbsp;slider&nbsp;to&nbsp;be&nbsp;added.&nbsp;Values&nbsp;(from&nbsp;xfdata.py)<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_VERT_SLIDER,&nbsp;FL_HOR_SLIDER,&nbsp;FL_VERT_FILL_SLIDER,<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_HOR_FILL_SLIDER,&nbsp;FL_VERT_NICE_SLIDER,&nbsp;FL_HOR_NICE_SLIDER,<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_VERT_BROWSER_SLIDER,&nbsp;FL_HOR_BROWSER_SLIDER,<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_VERT_BROWSER_SLIDER2,FL_HOR_BROWSER_SLIDER2,<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_VERT_THIN_SLIDER,&nbsp;FL_HOR_THIN_SLIDER,&nbsp;FL_VERT_THIN_SLIDER,<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_HOR_THIN_SLIDER,&nbsp;FL_VERT_NICE_SLIDER2,&nbsp;FL_HOR_NICE_SLIDER2,<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_VERT_BASIC_SLIDER,&nbsp;FL_HOR_BASIC_SLIDER<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_VERT_SLIDER&nbsp;(normal&nbsp;slider),&nbsp;FL_HOR_SLIDER&nbsp;(horizontal&nbsp;slider),<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_VERT_FILL_SLIDER&nbsp;(filled&nbsp;slider),&nbsp;FL_HOR_FILL_SLIDER&nbsp;(horizontal<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;filled&nbsp;slider),&nbsp;FL_VERT_NICE_SLIDER&nbsp;(*todo*),&nbsp;FL_HOR_NICE_SLIDER<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(horizontal&nbsp;*todo*),&nbsp;FL_VERT_BROWSER_SLIDER&nbsp;(*todo*),<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_HOR_BROWSER_SLIDER&nbsp;(horizontal&nbsp;*todo*),&nbsp;FL_VERT_BROWSER_SLIDER2<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(for&nbsp;vertical&nbsp;scrollbar&nbsp;only),&nbsp;FL_HOR_BROWSER_SLIDER2&nbsp;(for<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;horizontal&nbsp;scrollbar&nbsp;only),&nbsp;FL_VERT_THIN_SLIDER&nbsp;(for&nbsp;vertical&nbsp;thin<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;scrollbar&nbsp;only),&nbsp;FL_HOR_THIN_SLIDER&nbsp;(for&nbsp;horizontal&nbsp;thin&nbsp;scrollbar<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;only),&nbsp;FL_VERT_NICE_SLIDER2&nbsp;(for&nbsp;vertical&nbsp;nice&nbsp;scrollbar&nbsp;only),<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_HOR_NICE_SLIDER2&nbsp;(for&nbsp;horizontal&nbsp;nice&nbsp;scrollbar&nbsp;only),<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_VERT_BASIC_SLIDER&nbsp;(for&nbsp;vertical&nbsp;plain&nbsp;scrollbar&nbsp;only),<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_HOR_BASIC_SLIDER&nbsp;(for&nbsp;horizontal&nbsp;plain&nbsp;scrollbar&nbsp;only).<br>
 &nbsp;&nbsp;&nbsp;&nbsp;xpos&nbsp;:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;horizontal&nbsp;position&nbsp;(upper-left&nbsp;corner)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;ypos&nbsp;:&nbsp;int<br>
@@ -57,7 +62,7 @@ Parameters<br>
 Returns<br>
 -------<br>
 &nbsp;&nbsp;&nbsp;&nbsp;ptr_flobject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;slider&nbsp;flobject&nbsp;added&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;slider&nbsp;flobject&nbsp;added<br>
 &nbsp;<br>
 Examples<br>
 --------<br>
@@ -76,13 +81,19 @@ of&nbsp;the&nbsp;slider.<br>
 Parameters<br>
 ----------<br>
 &nbsp;&nbsp;&nbsp;&nbsp;slidertype&nbsp;:&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;type&nbsp;of&nbsp;the&nbsp;slider.&nbsp;Values&nbsp;(from&nbsp;xfdata.py)&nbsp;FL_VERT_SLIDER,<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_HOR_SLIDER,&nbsp;FL_VERT_FILL_SLIDER,&nbsp;FL_HOR_FILL_SLIDER,<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_VERT_NICE_SLIDER,&nbsp;FL_HOR_NICE_SLIDER,&nbsp;FL_VERT_BROWSER_SLIDER,<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_HOR_BROWSER_SLIDER,&nbsp;FL_VERT_BROWSER_SLIDER2,<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_HOR_BROWSER_SLIDER2,&nbsp;FL_VERT_THIN_SLIDER,&nbsp;FL_HOR_THIN_SLIDER,<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_VERT_THIN_SLIDER,&nbsp;FL_HOR_THIN_SLIDER,&nbsp;FL_VERT_NICE_SLIDER2,<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_HOR_NICE_SLIDER2,&nbsp;FL_VERT_BASIC_SLIDER,&nbsp;FL_HOR_BASIC_SLIDER<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;type&nbsp;of&nbsp;the&nbsp;slider.&nbsp;Values&nbsp;(from&nbsp;xfdata.py)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_VERT_SLIDER&nbsp;(normal&nbsp;slider),&nbsp;FL_HOR_SLIDER&nbsp;(horizontal&nbsp;slider),<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_VERT_FILL_SLIDER&nbsp;(filled&nbsp;slider),&nbsp;FL_HOR_FILL_SLIDER&nbsp;(horizontal<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;filled&nbsp;slider),&nbsp;FL_VERT_NICE_SLIDER&nbsp;(*todo*),&nbsp;FL_HOR_NICE_SLIDER<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(horizontal&nbsp;*todo*),&nbsp;FL_VERT_BROWSER_SLIDER&nbsp;(*todo*),<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_HOR_BROWSER_SLIDER&nbsp;(horizontal&nbsp;*todo*),&nbsp;FL_VERT_BROWSER_SLIDER2<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(for&nbsp;vertical&nbsp;scrollbar&nbsp;only),&nbsp;FL_HOR_BROWSER_SLIDER2&nbsp;(for<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;horizontal&nbsp;scrollbar&nbsp;only),&nbsp;FL_VERT_THIN_SLIDER&nbsp;(for&nbsp;vertical&nbsp;thin<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;scrollbar&nbsp;only),&nbsp;FL_HOR_THIN_SLIDER&nbsp;(for&nbsp;horizontal&nbsp;thin&nbsp;scrollbar<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;only),&nbsp;FL_VERT_NICE_SLIDER2&nbsp;(for&nbsp;vertical&nbsp;nice&nbsp;scrollbar&nbsp;only),<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_HOR_NICE_SLIDER2&nbsp;(for&nbsp;horizontal&nbsp;nice&nbsp;scrollbar&nbsp;only),<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_VERT_BASIC_SLIDER&nbsp;(for&nbsp;vertical&nbsp;plain&nbsp;scrollbar&nbsp;only),<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_HOR_BASIC_SLIDER&nbsp;(for&nbsp;horizontal&nbsp;plain&nbsp;scrollbar&nbsp;only).<br>
 &nbsp;&nbsp;&nbsp;&nbsp;xpos&nbsp;:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;horizontal&nbsp;position&nbsp;(upper-left&nbsp;corner)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;ypos&nbsp;:&nbsp;int<br>
@@ -370,4 +381,4 @@ Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;Demo&nbsp;=&nbsp;OK</tt></dd></dl>
 </td></tr></table>
-<p>Updated on: 2010-12-23 23:57 +0100</body></html>
+<p>Updated on: 2010-12-25 01:55 +0100</body></html>

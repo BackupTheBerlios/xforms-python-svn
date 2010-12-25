@@ -26,7 +26,7 @@
 # then heavily reordered and reworked
 
 # ############################################# #
-# Interface to XForms shared flobject libraries   #
+# Interface to XForms shared flobject libraries #
 # ############################################# #
 
 
@@ -48,15 +48,19 @@ from xformslib import xfdata
 def fl_add_browser(browsertype, xpos, ypos, width, height, label):
     """fl_add_browser(browsertype, xpos, ypos, width, height, label)
     -> ptr_flobject
-    
+
     Adds a browser flobject. The label is placed below the box by default.
 
     Parameters
     ----------
         browsertype : int
             type of the browser to be added. Values (from xfdata.py)
-            FL_NORMAL_BROWSER, FL_SELECT_BROWSER, FL_HOLD_BROWSER,
-            FL_MULTI_BROWSER
+            FL_NORMAL_BROWSER (A browser in which no selections can be made),
+            FL_SELECT_BROWSER (In this case the user can make single line
+            selections), FL_HOLD_BROWSER (Same to FL_SELECT_BROWSER but the
+            selection remains visible until the next selection),
+            FL_MULTI_BROWSER (Multiple selections can be made and remains
+            visible until de-selected).
         xpos : int
             horizontal position (upper-left corner)
         ypos : int
@@ -107,7 +111,7 @@ def fl_add_browser(browsertype, xpos, ypos, width, height, label):
 
 def fl_clear_browser(ptr_flobject):
     """fl_clear_browser(ptr_flobject)
-    
+
     Clears contents of a browser flobject.
 
     Parameters
@@ -136,7 +140,7 @@ def fl_clear_browser(ptr_flobject):
 
 def fl_add_browser_line(ptr_flobject, newtext):
     """fl_add_browser_line(ptr_flobject, newtext)
-    
+
     Add a line to a browser flobject. The line may contain embedded newline
     characters: these will result in the text being split up into several
     lines, separated at the newline characters. It is possible to change the
@@ -191,7 +195,7 @@ def fl_add_browser_line(ptr_flobject, newtext):
 
 def fl_addto_browser(ptr_flobject, newtext):
     """fl_addto_browser(ptr_flobject, newtext)
-    
+
     Adds text to browser. The browser will be shifted such that the newly
     appended line is visible. This is useful when e.g. using the browser
     to display messages. The text may contain embedded newline characters.
@@ -226,7 +230,7 @@ def fl_addto_browser(ptr_flobject, newtext):
 
 def fl_addto_browser_chars(ptr_flobject, addedtext):
     """fl_addto_browser_chars(ptr_flobject, addedtext)
-    
+
     Appends text to the last line in the browser without advancing the
     line counter. The text may contain embedded newline characters. In
     that case, the text before the first embedded newline is appended
@@ -267,7 +271,7 @@ fl_append_browser = fl_addto_browser_chars
 
 def fl_insert_browser_line(ptr_flobject, linenum, newtext):
     """fl_insert_browser_line(ptr_flobject, linenum, newtext)
-    
+
     Inserts a line in front of a given line in browser. All lines after
     it will be shifted. Embedded newline characters do not result in the
     line being split up as it is done in the previous functions. Instead
@@ -311,7 +315,7 @@ def fl_insert_browser_line(ptr_flobject, linenum, newtext):
 
 def fl_delete_browser_line(ptr_flobject, linenum):
     """fl_delete_browser_line(ptr_flobject, linenum)
-    
+
     Deletes a line from browser flobject (shifting the following lines).
 
     Parameters
@@ -342,7 +346,7 @@ def fl_delete_browser_line(ptr_flobject, linenum):
 
 def fl_replace_browser_line(ptr_flobject, linenum, newtext):
     """fl_replace_browser_line(ptr_flobject, linenum, newtext)
-    
+
     Replaces a line in the browser. As in the case of
     fl_insert_browser_line() newline characters embedded into the
     replacement text do not have any special meaning, i.e. they do not
@@ -383,7 +387,7 @@ def fl_replace_browser_line(ptr_flobject, linenum, newtext):
 
 def fl_get_browser_line(ptr_flobject, linenum):
     """fl_get_browser_line(ptr_flobject, linenum) -> linetext
-    
+
     Finds out the contents of a particular line in the browser.
 
     Parameters
@@ -421,7 +425,7 @@ def fl_get_browser_line(ptr_flobject, linenum):
 
 def fl_load_browser(ptr_flobject, filename):
     """fl_load_browser(ptr_flobject, filename) -> result
-    
+
     Loads an entire file into a browser. With an empty string (or if the
     file could not be opened for reading) the browser is just cleared.
     This routine is particularly useful when using the browser for a help
@@ -462,7 +466,7 @@ def fl_load_browser(ptr_flobject, filename):
 
 def fl_select_browser_line(ptr_flobject, linenum):
     """fl_select_browser_line(ptr_flobject, linenum)
-    
+
     Selects a line in the browser flobject.
 
     Parameters
@@ -494,7 +498,7 @@ def fl_select_browser_line(ptr_flobject, linenum):
 
 def fl_deselect_browser_line(ptr_flobject, linenum):
     """fl_deselect_browser_line(ptr_flobject, linenum)
-    
+
     Deselects a line in the browser flobject.
 
     Parameters
@@ -526,7 +530,7 @@ def fl_deselect_browser_line(ptr_flobject, linenum):
 
 def fl_deselect_browser(ptr_flobject):
     """fl_deselect_browser(ptr_flobject)
-    
+
     Deselects all lines in the browser.
 
     Parameters
@@ -555,7 +559,7 @@ def fl_deselect_browser(ptr_flobject):
 
 def fl_isselected_browser_line(ptr_flobject, linenum):
     """fl_isselected_browser_line(ptr_flobject, linenum) -> yesno
-    
+
     Checks whether a line of the browser flobject is selected or not.
 
     Parameters
@@ -594,7 +598,7 @@ def fl_isselected_browser_line(ptr_flobject, linenum):
 
 def fl_get_browser_topline(ptr_flobject):
     """fl_get_browser_topline(ptr_flobject) -> linenum
-    
+
     Finds out the (un-obscured) line that is currently shown at the top
     of the browser. The index of the top line is 1, not 0.
 
@@ -630,7 +634,7 @@ def fl_get_browser_topline(ptr_flobject):
 
 def fl_get_browser(ptr_flobject):
     """fl_get_browser(ptr_flobject) -> linenum
-    
+
     Finds out the last selection made by the user, e.g. when the browser
     is returned.
 
@@ -668,7 +672,7 @@ def fl_get_browser(ptr_flobject):
 
 def fl_get_browser_maxline(ptr_flobject):
     """fl_get_browser_maxline(ptr_flobject) -> numlines
-    
+
     Finds out the number of lines in the browser.
 
     Parameters
@@ -703,7 +707,7 @@ def fl_get_browser_maxline(ptr_flobject):
 
 def fl_get_browser_screenlines(ptr_flobject):
     """fl_get_browser_screenlines(ptr_flobject) -> numlines
-    
+
     Finds out an approximation of the number of lines shown in the
     browser. This count only includes lines that are shown completely
     in the browser, partially obscured ones are not counted in.
@@ -740,7 +744,7 @@ def fl_get_browser_screenlines(ptr_flobject):
 
 def fl_set_browser_topline(ptr_flobject, linenum):
     """fl_set_browser_topline(ptr_flobject, linenum)
-    
+
     Moves a text line to the top of the browser. Line numbers start with 1.
 
     Parameters
@@ -772,7 +776,7 @@ def fl_set_browser_topline(ptr_flobject, linenum):
 
 def fl_set_browser_bottomline(ptr_flobject, linenum):
     """fl_set_browser_bottomline(ptr_flobject, linenum)
-    
+
     Moves a text line to the bottom of the browser. Line numbers
     start with 1.
 
@@ -805,7 +809,7 @@ def fl_set_browser_bottomline(ptr_flobject, linenum):
 
 def fl_set_browser_fontsize(ptr_flobject, size):
     """fl_set_browser_fontsize(ptr_flobject, size)
-    
+
     Defines the font size used inside the browser.
 
     Parameters
@@ -814,9 +818,10 @@ def fl_set_browser_fontsize(ptr_flobject, size):
             browser flobject
         size : int
             font size to be set. Values (from xfdata.py)
-            FL_TINY_SIZE, FL_SMALL_SIZE, FL_NORMAL_SIZE,
-            FL_MEDIUM_SIZE, FL_LARGE_SIZE, FL_HUGE_SIZE,
-            FL_DEFAULT_SIZE
+            FL_TINY_SIZE (8 points font), FL_SMALL_SIZE or FL_DEFAULT_SIZE (10
+            points font, default), FL_NORMAL_SIZE (12 points font),
+            FL_MEDIUM_SIZE (14 points font), FL_LARGE_SIZE (18 points font),
+            FL_HUGE_SIZE (24 points font), or other numeric odd or even value
 
     Examples
     --------
@@ -833,7 +838,6 @@ def fl_set_browser_fontsize(ptr_flobject, size):
         """void fl_set_browser_fontsize(FL_OBJECT * ob, int size)""")
     library.check_if_initialized()
     library.verify_flobjectptr_type(ptr_flobject)
-    library.checknonfatal_allowed_value_in_list(size, xfdata.FONTSIZE_list)
     i_size = library.convert_to_intc(size)
     library.keep_elem_refs(ptr_flobject, size, i_size)
     _fl_set_browser_fontsize(ptr_flobject, i_size)
@@ -841,7 +845,7 @@ def fl_set_browser_fontsize(ptr_flobject, size):
 
 def fl_set_browser_fontstyle(ptr_flobject, style):
     """fl_set_browser_fontstyle(ptr_flobject, style)
-    
+
     Defines the font style of a browser flobject.
 
     Parameters
@@ -850,13 +854,22 @@ def fl_set_browser_fontstyle(ptr_flobject, style):
             browser flobject
         style : int
             font style to be set. Values (from xfdata.py)
-            FL_NORMAL_STYLE, FL_BOLD_STYLE, FL_ITALIC_STYLE,
-            FL_BOLDITALIC_STYLE, FL_FIXED_STYLE, FL_FIXEDBOLD_STYLE,
-            FL_FIXEDITALIC_STYLE, FL_FIXEDBOLDITALIC_STYLE,
-            FL_TIMES_STYLE, FL_TIMESBOLD_STYLE, FL_TIMESITALIC_STYLE,
-            FL_TIMESBOLDITALIC_STYLE, FL_MISC_STYLE, FL_MISCBOLD_STYLE,
-            FL_MISCITALIC_STYLE, FL_SYMBOL_STYLE, FL_SHADOW_STYLE,
-            FL_ENGRAVED_STYLE, FL_EMBOSSED_STYLE
+            FL_NORMAL_STYLE (Helvetica normal text), FL_BOLD_STYLE (Helvetica
+            boldface text), FL_ITALIC_STYLE (Helvetica italic text),
+            FL_BOLDITALIC_STYLE (Helvetica boldface and italic text),
+            FL_FIXED_STYLE (Courier fixed width, good for tables),
+            FL_FIXEDBOLD_STYLE (Courier bold fixed text), FL_FIXEDITALIC_STYLE
+            (Courier italic fixed text), FL_FIXEDBOLDITALIC_STYLE (Courier
+            boldface and italic fixed text), FL_TIMES_STYLE (Times-Roman like
+            normal font), FL_TIMESBOLD_STYLE (Times-Roman like boldface text),
+            FL_TIMESITALIC_STYLE (Times-Roman like italic text),
+            FL_TIMESBOLDITALIC_STYLE (Times-Roman like boldface and italic
+            text), FL_MISC_STYLE (Charter normal text), FL_MISCBOLD_STYLE
+            (Charter boldface text), FL_MISCITALIC_STYLE (Charter italic text),
+            FL_SYMBOL_STYLE (Symbol text), FL_SHADOW_STYLE (Text casting a
+            shadow, modifier mask), FL_ENGRAVED_STYLE (Text engraved into the
+            form, modifier mask), FL_EMBOSSED_STYLE (Text standing out,
+            modifier mask). Bitwise OR with any of modifiers is allowed.
 
     Examples
     --------
@@ -881,7 +894,7 @@ def fl_set_browser_fontstyle(ptr_flobject, style):
 
 def fl_set_browser_specialkey(ptr_flobject, specialkey):
     """fl_set_browser_specialkey(ptr_flobject, specialkey)
-    
+
     Changes the special character, used to change appearance, see
     fl_add_browser_line(), to something other than '@'. In some cases
     the character '@' might need to be placed at the beginning of the
@@ -922,7 +935,7 @@ def fl_set_browser_specialkey(ptr_flobject, specialkey):
 
 def fl_set_browser_vscrollbar(ptr_flobject, howscroll):
     """fl_set_browser_vscrollbar(ptr_flobject, howscroll)
-    
+
     Turns the vertical scrollbar on or off. When you switch the
     scrollbars off the text cannot be scrolled by the user anymore
     at all (i.e. also not using methods that do not use scrollbars,
@@ -933,8 +946,9 @@ def fl_set_browser_vscrollbar(ptr_flobject, howscroll):
         ptr_flobject : pointer to xfdata.FL_OBJECT
             browser flobject
         howscroll : int
-            if bar is turned on/off. Values (from xfdata.py) FL_ON,
-            FL_OFF, FL_AUTO (default)
+            if bar is turned on/off. Values (from xfdata.py)
+            FL_AUTO (On when needed, default), FL_ON (always on), FL_OFF
+            (always off).
 
     Examples
     --------
@@ -960,7 +974,7 @@ def fl_set_browser_vscrollbar(ptr_flobject, howscroll):
 
 def fl_set_browser_hscrollbar(ptr_flobject, howscroll):
     """fl_set_browser_hscrollbar(ptr_flobject, howscroll)
-    
+
     Turns the horizontal scrollbar on or off. When you switch the
     scrollbars off the text cannot be scrolled by the user anymore at
     all (i.e. also not using methods that do not use scrollbars, e.g.
@@ -971,8 +985,9 @@ def fl_set_browser_hscrollbar(ptr_flobject, howscroll):
         ptr_flobject : pointer to xfdata.FL_OBJECT
             browser flobject
         howscroll : int
-            if bar is turned on/off. Values (from xfdata.py) FL_ON,
-            FL_OFF, FL_AUTO (default)
+            if bar is turned on/off. Values (from xfdata.py)
+            FL_AUTO (On when needed, default), FL_ON (always on), FL_OFF
+            (always off).
 
     Examples
     --------
@@ -998,7 +1013,7 @@ def fl_set_browser_hscrollbar(ptr_flobject, howscroll):
 
 def fl_set_browser_line_selectable(ptr_flobject, linenum, yesno):
     """fl_set_browser_line_selectable(ptr_flobject, linenum, yesno)
-    
+
     Defines if a line of browser flobject is selectable or not.
 
     Parameters
@@ -1030,7 +1045,7 @@ def fl_set_browser_line_selectable(ptr_flobject, linenum, yesno):
 
 def fl_get_browser_dimension(ptr_flobject):
     """fl_get_browser_dimension(ptr_flobject) -> xpos, ypos, width, height
-    
+
     Finds out the browser size in pixels for the text area.
 
     Parameters
@@ -1086,7 +1101,7 @@ def fl_get_browser_dimension(ptr_flobject):
 def fl_set_browser_dblclick_callback(ptr_flobject, pyfn_CallbackPtr, numdata):
     """fl_set_browser_dblclick_callback(ptr_flobject, pyfn_CallbackPtr,
     numdata)
-    
+
     Registers a callback function that gets called when a line is
     double-clicked on. Double-click callbacks make most sense for
     xfdata.FL_HOLD_BROWSERs.
@@ -1132,7 +1147,7 @@ def fl_set_browser_dblclick_callback(ptr_flobject, pyfn_CallbackPtr, numdata):
 
 def fl_get_browser_xoffset(ptr_flobject):
     """fl_get_browser_xoffset(ptr_flobject) -> numpixels
-    
+
     Finds out the amount of text in pixel that is scrolled in
     horizontal direction.
 
@@ -1168,7 +1183,7 @@ def fl_get_browser_xoffset(ptr_flobject):
 
 def fl_get_browser_rel_xoffset(ptr_flobject):
     """fl_get_browser_rel_xoffset(ptr_flobject) -> roffset
-    
+
     Finds out the relative amount of text in pixel that is scrolled
     in horizontal direction.
 
@@ -1205,7 +1220,7 @@ def fl_get_browser_rel_xoffset(ptr_flobject):
 
 def fl_set_browser_xoffset(ptr_flobject, numpixels):
     """fl_set_browser_xoffset(ptr_flobject, numpixels)
-    
+
     Defines the amount of text in pixel that is scrolled in
     horizontal direction.
 
@@ -1238,7 +1253,7 @@ def fl_set_browser_xoffset(ptr_flobject, numpixels):
 
 def fl_set_browser_rel_xoffset(ptr_flobject, roffset):
     """fl_set_browser_rel_xoffset(ptr_flobject, roffset)
-    
+
     Defines the relative amount of text that is scrolled in
     horizontal direction.
 
@@ -1271,7 +1286,7 @@ def fl_set_browser_rel_xoffset(ptr_flobject, roffset):
 
 def fl_get_browser_yoffset(ptr_flobject):
     """fl_get_browser_yoffset(ptr_flobject) -> numpixels
-    
+
     Finds out the amount of text in pixels that is scrolled
     in vertical direction.
 
@@ -1307,7 +1322,7 @@ def fl_get_browser_yoffset(ptr_flobject):
 
 def fl_get_browser_rel_yoffset(ptr_flobject):
     """fl_get_browser_rel_yoffset(ptr_flobject) -> roffset
-    
+
     Finds out the relative amount of text in pixel that is scrolled in
     vertical direction.
 
@@ -1344,7 +1359,7 @@ def fl_get_browser_rel_yoffset(ptr_flobject):
 
 def fl_set_browser_yoffset(ptr_flobject, numpixels):
     """fl_set_browser_yoffset(ptr_flobject, numpixels)
-    
+
     Defines the amount of text in pixels that is scrolled in
     vertical direction.
 
@@ -1377,7 +1392,7 @@ def fl_set_browser_yoffset(ptr_flobject, numpixels):
 
 def fl_set_browser_rel_yoffset(ptr_flobject, roffset):
     """fl_set_browser_rel_yoffset(ptr_flobject, roffset)
-    
+
     Defines the relative amount of text in pixels that is scrolled in
     horizontal direction.
 
@@ -1410,7 +1425,7 @@ def fl_set_browser_rel_yoffset(ptr_flobject, roffset):
 
 def fl_set_browser_scrollbarsize(ptr_flobject, height, width):
     """fl_set_browser_scrollbarsize(ptr_flobject, height, width)
-    
+
     Defines the scrollbar size of the browser. By default, the scrollbar size
     is based on the relation between the size of the browser and the size of
     the text.
@@ -1448,7 +1463,7 @@ def fl_set_browser_scrollbarsize(ptr_flobject, height, width):
 
 def fl_show_browser_line(ptr_flobject, linenum):
     """fl_show_browser_line(ptr_flobject, linenum)
-    
+
     Brings a line of browser flobject into view.
 
     Parameters
@@ -1484,7 +1499,7 @@ def fl_show_browser_line(ptr_flobject, linenum):
 def fl_set_browser_hscroll_callback(ptr_flobject, pyfn_BrowserScrollCb, vdata):
     """fl_set_browser_hscroll_callback(ptr_flobject, pyfn_BrowserScrollCb,
     vdata)
-    
+
     Defines the callback function to be invoked whenever the horizontal
     scrollbar of browser flobject changes position.
 
@@ -1531,7 +1546,7 @@ def fl_set_browser_vscroll_callback(ptr_flobject, pyfn_BrowserScrollCb,
                                     vdata):
     """fl_set_browser_vscroll_callback(ptr_flobject, pyfn_BrowserScrollCb,
     vdata)
-    
+
     Defines the callback function to be invoked whenever the vertical
     scrollbar of browser flobject changes position.
 
@@ -1574,7 +1589,7 @@ def fl_set_browser_vscroll_callback(ptr_flobject, pyfn_BrowserScrollCb,
 
 def fl_get_browser_line_yoffset(ptr_flobject, linenum):
     """fl_get_browser_line_yoffset(ptr_flobject, linenum) -> offset
-    
+
     Finds out the y-offset in pixels for a line of browser flobject.
 
     Parameters
@@ -1609,7 +1624,7 @@ def fl_get_browser_line_yoffset(ptr_flobject, linenum):
 
 def fl_get_browser_hscroll_callback(ptr_flobject):
     """fl_get_browser_hscroll_callback(ptr_flobject) -> BrowserScrollCb
-    
+
     Finds out the callback function created for horizontal scrollbar
     position change of browser flobject.
 
@@ -1646,7 +1661,7 @@ def fl_get_browser_hscroll_callback(ptr_flobject):
 
 def fl_get_browser_vscroll_callback(ptr_flobject):
     """fl_get_browser_vscroll_callback(ptr_flobject) -> BrowserScrollCb
-    
+
     Finds out the callback function created for horizontal
     scrollbar position change of browser flobject.
 
@@ -1683,14 +1698,14 @@ def fl_get_browser_vscroll_callback(ptr_flobject):
 
 def fl_get_browser_scrollbar_repeat(ptr_flobject):
     """fl_get_browser_scrollbar_repeat(ptr_flobject) -> tdelay
-    
+
     Finds out the time delay (in milliseconds) between jumps of the
     scrollbar knob when the mouse button is kept pressed down on the
     scrollbar outside of the knobs area. The delay for the very first
     jump is twice that long in order to avoid jumping to start too soon
     when only a single click was intended but the user is a bit slow in
     releasing the mouse button.
-    
+
     Parameters
     ----------
         ptr_flobject : pointer to xfdata.FL_OBJECT
@@ -1723,13 +1738,13 @@ def fl_get_browser_scrollbar_repeat(ptr_flobject):
 
 def fl_set_browser_scrollbar_repeat(ptr_flobject, tdelay):
     """fl_set_browser_scrollbar_repeat(ptr_flobject, tdelay)
-    
+
     Defines the time delay between jumps of the scrollbar knob when the
     mouse button is kept pressed down on the scrollbar outside of the
     knobs area. The delay for the very first jump is twice that long in
     order to avoid jumping to start too soon when only a single click
     was intended but the user is a bit slow in releasing the mouse button.
-    
+
     Parameters
     ----------
         ptr_flobject : pointer to xfdata.FL_OBJECT

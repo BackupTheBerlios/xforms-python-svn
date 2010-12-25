@@ -54,7 +54,8 @@ def fl_add_glcanvas(canvastype, xpos, ypos, width, height, label):
     ----------
         canvastype : int
             type of glcanvas to be added. Values (from xfdata.py)
-            FL_NORMAL_CANVAS, FL_SCROLLED_CANVAS (not enabled)
+            FL_NORMAL_CANVAS (normal canvas type), FL_SCROLLED_CANVAS (not
+            enabled)
         xpos : int
             horizontal position (upper-left corner)
         ypos : int

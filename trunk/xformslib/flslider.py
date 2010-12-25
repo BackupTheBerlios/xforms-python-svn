@@ -48,20 +48,25 @@ from xformslib import xfdata
 def fl_add_slider(slidertype, xpos, ypos, width, height, label):
     """fl_add_slider(slidertype, xpos, ypos, width, height, label)
     -> ptr_flobject
-    
+
     Adds a slider to a form. No value is displayed.
 
     Parameters
     ----------
         slidertype : int
             type of slider to be added. Values (from xfdata.py)
-            FL_VERT_SLIDER, FL_HOR_SLIDER, FL_VERT_FILL_SLIDER,
-            FL_HOR_FILL_SLIDER, FL_VERT_NICE_SLIDER, FL_HOR_NICE_SLIDER,
-            FL_VERT_BROWSER_SLIDER, FL_HOR_BROWSER_SLIDER,
-            FL_VERT_BROWSER_SLIDER2,FL_HOR_BROWSER_SLIDER2,
-            FL_VERT_THIN_SLIDER, FL_HOR_THIN_SLIDER, FL_VERT_THIN_SLIDER,
-            FL_HOR_THIN_SLIDER, FL_VERT_NICE_SLIDER2, FL_HOR_NICE_SLIDER2,
-            FL_VERT_BASIC_SLIDER, FL_HOR_BASIC_SLIDER
+            FL_VERT_SLIDER (normal slider), FL_HOR_SLIDER (horizontal slider),
+            FL_VERT_FILL_SLIDER (filled slider), FL_HOR_FILL_SLIDER (horizontal
+            filled slider), FL_VERT_NICE_SLIDER (*todo*), FL_HOR_NICE_SLIDER
+            (horizontal *todo*), FL_VERT_BROWSER_SLIDER (*todo*),
+            FL_HOR_BROWSER_SLIDER (horizontal *todo*), FL_VERT_BROWSER_SLIDER2
+            (for vertical scrollbar only), FL_HOR_BROWSER_SLIDER2 (for
+            horizontal scrollbar only), FL_VERT_THIN_SLIDER (for vertical thin
+            scrollbar only), FL_HOR_THIN_SLIDER (for horizontal thin scrollbar
+            only), FL_VERT_NICE_SLIDER2 (for vertical nice scrollbar only),
+            FL_HOR_NICE_SLIDER2 (for horizontal nice scrollbar only),
+            FL_VERT_BASIC_SLIDER (for vertical plain scrollbar only),
+            FL_HOR_BASIC_SLIDER (for horizontal plain scrollbar only).
         xpos : int
             horizontal position (upper-left corner)
         ypos : int
@@ -76,7 +81,7 @@ def fl_add_slider(slidertype, xpos, ypos, width, height, label):
     Returns
     -------
         ptr_flobject : pointer to xfdata.FL_OBJECT
-            slider flobject added 
+            slider flobject added
 
     Examples
     --------
@@ -116,20 +121,26 @@ def fl_add_slider(slidertype, xpos, ypos, width, height, label):
 def fl_add_valslider(slidertype, xpos, ypos, width, height, label):
     """fl_add_valslider(slidertype, xpos, ypos, width, height, label)
     -> ptr_flobject
-    
+
     Adds a slider to a form. Its value is displayed above or to the left
     of the slider.
 
     Parameters
     ----------
         slidertype : int
-            type of the slider. Values (from xfdata.py) FL_VERT_SLIDER,
-            FL_HOR_SLIDER, FL_VERT_FILL_SLIDER, FL_HOR_FILL_SLIDER,
-            FL_VERT_NICE_SLIDER, FL_HOR_NICE_SLIDER, FL_VERT_BROWSER_SLIDER,
-            FL_HOR_BROWSER_SLIDER, FL_VERT_BROWSER_SLIDER2,
-            FL_HOR_BROWSER_SLIDER2, FL_VERT_THIN_SLIDER, FL_HOR_THIN_SLIDER,
-            FL_VERT_THIN_SLIDER, FL_HOR_THIN_SLIDER, FL_VERT_NICE_SLIDER2,
-            FL_HOR_NICE_SLIDER2, FL_VERT_BASIC_SLIDER, FL_HOR_BASIC_SLIDER
+            type of the slider. Values (from xfdata.py)
+            FL_VERT_SLIDER (normal slider), FL_HOR_SLIDER (horizontal slider),
+            FL_VERT_FILL_SLIDER (filled slider), FL_HOR_FILL_SLIDER (horizontal
+            filled slider), FL_VERT_NICE_SLIDER (*todo*), FL_HOR_NICE_SLIDER
+            (horizontal *todo*), FL_VERT_BROWSER_SLIDER (*todo*),
+            FL_HOR_BROWSER_SLIDER (horizontal *todo*), FL_VERT_BROWSER_SLIDER2
+            (for vertical scrollbar only), FL_HOR_BROWSER_SLIDER2 (for
+            horizontal scrollbar only), FL_VERT_THIN_SLIDER (for vertical thin
+            scrollbar only), FL_HOR_THIN_SLIDER (for horizontal thin scrollbar
+            only), FL_VERT_NICE_SLIDER2 (for vertical nice scrollbar only),
+            FL_HOR_NICE_SLIDER2 (for horizontal nice scrollbar only),
+            FL_VERT_BASIC_SLIDER (for vertical plain scrollbar only),
+            FL_HOR_BASIC_SLIDER (for horizontal plain scrollbar only).
         xpos : int
             horizontal position (upper-left corner)
         ypos : int
@@ -180,7 +191,7 @@ def fl_add_valslider(slidertype, xpos, ypos, width, height, label):
 
 def fl_set_slider_value(ptr_flobject, slvalue):
     """fl_set_slider_value(ptr_flobject, slvalue)
-    
+
     Changes the value of a slider.
 
     Parameters
@@ -212,7 +223,7 @@ def fl_set_slider_value(ptr_flobject, slvalue):
 
 def fl_get_slider_value(ptr_flobject):
     """fl_get_slider_value(ptr_flobject) -> slvalue
-    
+
     Finds out value of a slider.
 
     Parameters
@@ -247,7 +258,7 @@ def fl_get_slider_value(ptr_flobject):
 
 def fl_set_slider_bounds(ptr_flobject, minbound, maxbound):
     """fl_set_slider_bounds(ptr_flobject, minbound, maxbound)
-    
+
     Defines minimum and maximum value limits of a slider flobject.
 
     Parameters
@@ -284,7 +295,7 @@ def fl_set_slider_bounds(ptr_flobject, minbound, maxbound):
 
 def fl_get_slider_bounds(ptr_flobject):
     """fl_get_slider_bounds(ptr_flobject) -> minbound, maxbound
-    
+
     Finds out minimum and maximum value limits of a slider.
 
     Parameters
@@ -334,7 +345,7 @@ def fl_get_slider_bounds(ptr_flobject):
 
 def fl_set_slider_step(ptr_flobject, step):
     """fl_set_slider_step(ptr_flobject, step)
-    
+
     Defines the step size to which values are rounded in the
     slider flobject.
 
@@ -367,7 +378,7 @@ def fl_set_slider_step(ptr_flobject, step):
 
 def fl_set_slider_increment(ptr_flobject, leftbtnval, midbtnval):
     """fl_set_slider_increment(ptr_flobject, leftbtnval, midbtnval)
-    
+
     Defines slider increments for clicks with left and middle
     mouse button.
 
@@ -405,7 +416,7 @@ def fl_set_slider_increment(ptr_flobject, leftbtnval, midbtnval):
 
 def fl_get_slider_increment(ptr_flobject):
     """fl_get_slider_increment(ptr_flobject) -> leftbtnval, midbtnval
-    
+
     Finds out current slider increments for clicks with left and middle
     mouse button.
 
@@ -453,7 +464,7 @@ def fl_get_slider_increment(ptr_flobject):
 
 def fl_set_slider_size(ptr_flobject, size):
     """fl_set_slider_size(ptr_flobject, size)
-    
+
     Defines the size of a slider flobject.
 
     Parameters
@@ -485,7 +496,7 @@ def fl_set_slider_size(ptr_flobject, size):
 
 def fl_set_slider_precision(ptr_flobject, precis):
     """fl_set_slider_precision(ptr_flobject, precis)
-    
+
     Defines the precision which value a valslider is shown with.
 
     Parameters
@@ -517,7 +528,7 @@ def fl_set_slider_precision(ptr_flobject, precis):
 
 def fl_set_slider_filter(ptr_flobject, pyfn_ValFilter):
     """fl_set_slider_filter(ptr_flobject, pyfn_ValFilter)
-    
+
     Registers a filter function to show values in a slider flobject.
     By default, slider value shown in floating point format.
 
@@ -556,7 +567,7 @@ def fl_set_slider_filter(ptr_flobject, pyfn_ValFilter):
 
 def fl_get_slider_repeat(ptr_flobject):
     """fl_get_slider_repeat(ptr_flobject) -> tdelay
-    
+
     Finds out the time delay (in milliseconds) between jumps of the
     scrollbar knob when the mouse button is kept pressed down on the
     scrollbar outside of the knobs area. The delay for the very first
@@ -596,7 +607,7 @@ def fl_get_slider_repeat(ptr_flobject):
 
 def fl_set_slider_repeat(ptr_flobject, tdelay):
     """fl_set_slider_repeat(ptr_flobject, tdelay)
-    
+
     Defines the time delay between jumps of the scrollbar knob when the
     mouse button is kept pressed down on the scrollbar outside of the
     knobs area. The delay for the very first jump is twice that long in

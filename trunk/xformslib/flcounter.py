@@ -53,7 +53,8 @@ def fl_add_counter(countertype, xpos, ypos, width, height, label):
     ----------
         countertype : int
             type of counter to be added. Values (from xfdata.py)
-            FL_NORMAL_COUNTER, FL_SIMPLE_COUNTER
+            FL_NORMAL_COUNTER (A counter with two buttons on each side),
+            FL_SIMPLE_COUNTER (A counter with one button on each side).
         xpos : int
             horizontal position (upper-left corner)
         ypos : int
@@ -104,7 +105,7 @@ def fl_add_counter(countertype, xpos, ypos, width, height, label):
 
 def fl_set_counter_value(ptr_flobject, val):
     """fl_set_counter_value(ptr_flobject, val)
-    
+
     Defines the value of the counter flobject.
 
     Parameters
@@ -136,7 +137,7 @@ def fl_set_counter_value(ptr_flobject, val):
 
 def fl_set_counter_bounds(ptr_flobject, minbound, maxbound):
     """fl_set_counter_bounds(ptr_flobject, minbound, maxbound)
-    
+
     Defines the minimum and maximum values that the counter will take. For
     conflicting settings bound takes precedence over value.
 
@@ -174,7 +175,7 @@ def fl_set_counter_bounds(ptr_flobject, minbound, maxbound):
 
 def fl_set_counter_step(ptr_flobject, smallsize, largesize):
     """fl_set_counter_step(ptr_flobject, smallsize, largesize)
-    
+
     Defines the sizes of the small and large steps of a counter. For simple
     counters only the small step is used.
 
@@ -210,7 +211,7 @@ def fl_set_counter_step(ptr_flobject, smallsize, largesize):
 
 def fl_set_counter_precision(ptr_flobject, precis):
     """fl_set_counter_precision(ptr_flobject, precis)
-    
+
     Defines the precision (number of digits after the dot) with which
     the counter value is displayed.
 
@@ -243,7 +244,7 @@ def fl_set_counter_precision(ptr_flobject, precis):
 
 def fl_get_counter_precision(ptr_flobject):
     """fl_get_counter_precision(ptr_flobject) -> precis
-    
+
     Finds out the current value of the precision (number of digits after
     the dot) of the counter.
 
@@ -282,7 +283,7 @@ def fl_get_counter_precision(ptr_flobject):
 
 def fl_get_counter_value(ptr_flobject):
     """fl_get_counter_value(ptr_flobject) -> value
-    
+
     Finds out the current value of the counter.
 
     Parameters
@@ -317,7 +318,7 @@ def fl_get_counter_value(ptr_flobject):
 
 def fl_get_counter_bounds(ptr_flobject):
     """fl_get_counter_bounds(ptr_flobject) -> minbound, maxbound
-    
+
     Finds out the current minimum and maximum bounds of the counter.
 
     Parameters
@@ -364,7 +365,7 @@ def fl_get_counter_bounds(ptr_flobject):
 
 def fl_get_counter_step(ptr_flobject):
     """fl_get_counter_step(ptr_flobject) -> smallsize, largesize
-    
+
     Finds out the current small and large step's sizes of a counter.
 
     Parameters
@@ -411,7 +412,7 @@ def fl_get_counter_step(ptr_flobject):
 
 def fl_set_counter_filter(ptr_flobject, pyfn_ValFilter):
     """fl_set_counter_filter(ptr_flobject, pyfn_ValFilter)
-    
+
     Overrides the format and value shown by the counter. By default the
     value is shown in floating point format.
 
@@ -445,7 +446,7 @@ def fl_set_counter_filter(ptr_flobject, pyfn_ValFilter):
     library.verify_flobjectptr_type(ptr_flobject)
     library.verify_function_type(pyfn_ValFilter)
     cfn_ValFilter = xfdata.FL_VAL_FILTER(pyfn_ValFilter)
-    library.keep_cfunc_refs(c_ValFilter, pyfn_ValFilter)
+    library.keep_cfunc_refs(cfn_ValFilter, pyfn_ValFilter)
     library.keep_elem_refs(ptr_flobject)
     _fl_set_counter_filter(ptr_flobject, cfn_ValFilter)
 
@@ -490,7 +491,7 @@ def fl_get_counter_repeat(ptr_flobject):
 
 def fl_set_counter_repeat(ptr_flobject, tdelay):
     """fl_set_counter_repeat(ptr_flobject, tdelay)
-    
+
     Defines the initial delay of a counter. By default the counter value
     changes first slowly and the rate of change then accelerates until a
     final speed is reached. The default delay between the value changing
@@ -525,7 +526,7 @@ def fl_set_counter_repeat(ptr_flobject, tdelay):
 
 def fl_get_counter_min_repeat(ptr_flobject):
     """fl_get_counter_min_repeat(ptr_flobject) -> fdelay
-    
+
     Finds out the final delay of a counter flobject.
 
     Parameters
@@ -560,7 +561,7 @@ def fl_get_counter_min_repeat(ptr_flobject):
 
 def fl_set_counter_min_repeat(ptr_flobject, fdelay):
     """fl_set_counter_min_repeat(ptr_flobject, fdelay)
-    
+
     Defines the final delay of a counter. By default the counter value
     changes first slowly and the rate of change then accelerates until
     a final speed is reached. The default the final delay is 50 ms.
@@ -629,7 +630,7 @@ def fl_get_counter_speedjump(ptr_flobject):
 
 def fl_set_counter_speedjump(ptr_flobject, yesno):
     """fl_set_counter_speedjump(ptr_flobject, yesno)
-    
+
     Makes only the first change of the counter has a different delay
     from all the following ones. The delay for the first change of the
     counter value will then be the one set by fl_set_counter_repeat()

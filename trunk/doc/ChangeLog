@@ -2,6 +2,10 @@ SVN (first entries from top are more recent)
 --------------------------------------------
 
 BETA
+
+    20101224 (beta3)
+    * some leftover typos and bugs fixed. Moving most of constants' possible
+    values description from xfdata.py into concerning functions.
     20101223 (beta2)
     * some other bugs fixed. Managed special sequences to be passed to
     fl_popup_add_entries(), fl_popup_insert_entries(), fl_add_select_items(),

@@ -37,7 +37,7 @@ Parameters<br>
 ----------<br>
 &nbsp;&nbsp;&nbsp;&nbsp;bitmaptype&nbsp;:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;type&nbsp;of&nbsp;bitmap&nbsp;to&nbsp;be&nbsp;added.&nbsp;Values&nbsp;(from&nbsp;xfdata.py)<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_NORMAL_BITMAP<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_NORMAL_BITMAP&nbsp;(normal&nbsp;bitmap&nbsp;flobject&nbsp;type)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;xpos&nbsp;:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;horizontal&nbsp;position&nbsp;(upper-left&nbsp;corner)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;ypos&nbsp;:&nbsp;int<br>
@@ -74,7 +74,7 @@ Parameters<br>
 ----------<br>
 &nbsp;&nbsp;&nbsp;&nbsp;pixmaptype&nbsp;:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;type&nbsp;of&nbsp;pixmap&nbsp;to&nbsp;be&nbsp;added.&nbsp;Values&nbsp;(from&nbsp;xfdata.py)<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_NORMAL_PIXMAP<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_NORMAL_PIXMAP&nbsp;(normal&nbsp;pixmap&nbsp;flobject&nbsp;type)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;xpos&nbsp;:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;horizontal&nbsp;position&nbsp;(upper-left&nbsp;corner)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;ypos&nbsp;:&nbsp;int<br>
@@ -167,7 +167,7 @@ Examples<br>
 &nbsp;<br>
 API&nbsp;diversion<br>
 -------------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;API&nbsp;changed&nbsp;from&nbsp;XForms,&nbsp;upstream&nbsp;is&nbsp;<a href="#-fl_create_from_pixmapdata">fl_create_from_pixmapdata</a>(win,&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;API&nbsp;changed&nbsp;from&nbsp;XForms,&nbsp;upstream&nbsp;is&nbsp;<a href="#-fl_create_from_pixmapdata">fl_create_from_pixmapdata</a>(win,<br>
 &nbsp;&nbsp;&nbsp;&nbsp;xpmdata,&nbsp;width,&nbsp;height,&nbsp;smask,&nbsp;hotx,&nbsp;hoty,&nbsp;tran)<br>
 &nbsp;<br>
 Notes<br>
@@ -381,8 +381,8 @@ Parameters<br>
 &nbsp;<br>
 Examples<br>
 --------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;bitmapcontents&nbsp;=&nbsp;[0x01,&nbsp;0x1a,&nbsp;0x27,&nbsp;0x34,&nbsp;0x41,&nbsp;0x4e,&nbsp;0x5b,&nbsp;0x68,<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;0x75,&nbsp;0x82,&nbsp;0x8f,&nbsp;0x9c,&nbsp;0xa9,&nbsp;0xb6,&nbsp;0xc3,&nbsp;0xd0]<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;bitmapcontents&nbsp;=&nbsp;[0x01,&nbsp;0x1a,&nbsp;0x27,&nbsp;0x34,&nbsp;0x41,&nbsp;0x4e,&nbsp;0x5b,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;0x68,&nbsp;0x75,&nbsp;0x82,&nbsp;0x8f,&nbsp;0x9c,&nbsp;0xa9,&nbsp;0xb6,&nbsp;0xc3,&nbsp;0xd0]<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;<a href="#-fl_set_bitmap_data">fl_set_bitmap_data</a>(xbmobj,&nbsp;4,&nbsp;4,&nbsp;bitmapcontents)<br>
 &nbsp;<br>
 Notes<br>
@@ -463,11 +463,18 @@ Parameters<br>
 &nbsp;&nbsp;&nbsp;&nbsp;ptr_flobject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;pixmap&nbsp;flobject<br>
 &nbsp;&nbsp;&nbsp;&nbsp;align&nbsp;:&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;alignment&nbsp;of&nbsp;pixmap.&nbsp;Values&nbsp;(from&nbsp;xfdata.py)&nbsp;FL_ALIGN_CENTER,<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_ALIGN_TOP,&nbsp;FL_ALIGN_BOTTOM,&nbsp;FL_ALIGN_LEFT,&nbsp;FL_ALIGN_RIGHT,<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_ALIGN_LEFT_TOP,&nbsp;FL_ALIGN_RIGHT_TOP,&nbsp;FL_ALIGN_LEFT_BOTTOM,<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_ALIGN_RIGHT_BOTTOM,&nbsp;FL_ALIGN_INSIDE,&nbsp;FL_ALIGN_VERT.&nbsp;Bitwise<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'OR'&nbsp;with&nbsp;FL_ALIGN_INSIDE&nbsp;is&nbsp;allowed.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;alignment&nbsp;of&nbsp;pixmap.&nbsp;Values&nbsp;(from&nbsp;xfdata.py)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_ALIGN_CENTER&nbsp;(In&nbsp;the&nbsp;middle&nbsp;of&nbsp;the&nbsp;box,&nbsp;inside&nbsp;it),&nbsp;FL_ALIGN_TOP<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(To&nbsp;the&nbsp;top&nbsp;of&nbsp;the&nbsp;box,&nbsp;outside&nbsp;it),&nbsp;FL_ALIGN_BOTTOM&nbsp;(To&nbsp;the<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;bottom&nbsp;of&nbsp;the&nbsp;box,&nbsp;outside&nbsp;it),&nbsp;FL_ALIGN_LEFT&nbsp;(To&nbsp;the&nbsp;left&nbsp;of&nbsp;the<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;box,&nbsp;outside&nbsp;it),&nbsp;FL_ALIGN_RIGHT&nbsp;(To&nbsp;the&nbsp;right&nbsp;of&nbsp;the&nbsp;box,&nbsp;outside<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;it),&nbsp;FL_ALIGN_LEFT_TOP&nbsp;(To&nbsp;the&nbsp;left&nbsp;and&nbsp;top&nbsp;of&nbsp;the&nbsp;box,&nbsp;outside<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;it),&nbsp;FL_ALIGN_RIGHT_TOP&nbsp;(To&nbsp;the&nbsp;right&nbsp;and&nbsp;top&nbsp;of&nbsp;the&nbsp;box,&nbsp;outside<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;it),&nbsp;FL_ALIGN_LEFT_BOTTOM&nbsp;(To&nbsp;the&nbsp;left&nbsp;and&nbsp;bottom&nbsp;of&nbsp;the&nbsp;box,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;outside&nbsp;it),&nbsp;FL_ALIGN_RIGHT_BOTTOM&nbsp;(To&nbsp;the&nbsp;right&nbsp;and&nbsp;bottom&nbsp;of<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;the&nbsp;box,&nbsp;outside&nbsp;it),&nbsp;FL_ALIGN_INSIDE&nbsp;(places&nbsp;the&nbsp;text&nbsp;inside&nbsp;the<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;box),&nbsp;FL_ALIGN_VERT&nbsp;(not&nbsp;functional&nbsp;yet).&nbsp;Bitwise&nbsp;OR&nbsp;with<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_ALIGN_INSIDE&nbsp;is&nbsp;allowed.<br>
 &nbsp;&nbsp;&nbsp;&nbsp;xmargin&nbsp;:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;extra&nbsp;margin&nbsp;to&nbsp;leave&nbsp;in&nbsp;addition&nbsp;to&nbsp;the&nbsp;flobject&nbsp;border<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;width.&nbsp;By&nbsp;default&nbsp;it&nbsp;is&nbsp;3.<br>
@@ -592,11 +599,18 @@ Parameters<br>
 &nbsp;&nbsp;&nbsp;&nbsp;ptr_flobject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;pixmap&nbsp;flobject<br>
 &nbsp;&nbsp;&nbsp;&nbsp;align&nbsp;:&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;alignment&nbsp;of&nbsp;pixmap.&nbsp;Values&nbsp;(from&nbsp;xfdata.py)&nbsp;FL_ALIGN_CENTER,<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_ALIGN_TOP,&nbsp;FL_ALIGN_BOTTOM,&nbsp;FL_ALIGN_LEFT,&nbsp;FL_ALIGN_RIGHT,<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_ALIGN_LEFT_TOP,&nbsp;FL_ALIGN_RIGHT_TOP,&nbsp;FL_ALIGN_LEFT_BOTTOM,<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_ALIGN_RIGHT_BOTTOM,&nbsp;FL_ALIGN_INSIDE,&nbsp;FL_ALIGN_VERT.&nbsp;Bitwise<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'OR'&nbsp;with&nbsp;FL_ALIGN_INSIDE&nbsp;is&nbsp;allowed.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;alignment&nbsp;of&nbsp;pixmap.&nbsp;Values&nbsp;(from&nbsp;xfdata.py)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_ALIGN_CENTER&nbsp;(In&nbsp;the&nbsp;middle&nbsp;of&nbsp;the&nbsp;box,&nbsp;inside&nbsp;it),&nbsp;FL_ALIGN_TOP<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(To&nbsp;the&nbsp;top&nbsp;of&nbsp;the&nbsp;box,&nbsp;outside&nbsp;it),&nbsp;FL_ALIGN_BOTTOM&nbsp;(To&nbsp;the<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;bottom&nbsp;of&nbsp;the&nbsp;box,&nbsp;outside&nbsp;it),&nbsp;FL_ALIGN_LEFT&nbsp;(To&nbsp;the&nbsp;left&nbsp;of&nbsp;the<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;box,&nbsp;outside&nbsp;it),&nbsp;FL_ALIGN_RIGHT&nbsp;(To&nbsp;the&nbsp;right&nbsp;of&nbsp;the&nbsp;box,&nbsp;outside<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;it),&nbsp;FL_ALIGN_LEFT_TOP&nbsp;(To&nbsp;the&nbsp;left&nbsp;and&nbsp;top&nbsp;of&nbsp;the&nbsp;box,&nbsp;outside<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;it),&nbsp;FL_ALIGN_RIGHT_TOP&nbsp;(To&nbsp;the&nbsp;right&nbsp;and&nbsp;top&nbsp;of&nbsp;the&nbsp;box,&nbsp;outside<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;it),&nbsp;FL_ALIGN_LEFT_BOTTOM&nbsp;(To&nbsp;the&nbsp;left&nbsp;and&nbsp;bottom&nbsp;of&nbsp;the&nbsp;box,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;outside&nbsp;it),&nbsp;FL_ALIGN_RIGHT_BOTTOM&nbsp;(To&nbsp;the&nbsp;right&nbsp;and&nbsp;bottom&nbsp;of<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;the&nbsp;box,&nbsp;outside&nbsp;it),&nbsp;FL_ALIGN_INSIDE&nbsp;(places&nbsp;the&nbsp;text&nbsp;inside&nbsp;the<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;box),&nbsp;FL_ALIGN_VERT&nbsp;(not&nbsp;functional&nbsp;yet).&nbsp;Bitwise&nbsp;OR&nbsp;with<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_ALIGN_INSIDE&nbsp;is&nbsp;allowed.<br>
 &nbsp;&nbsp;&nbsp;&nbsp;xmargin&nbsp;:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;extra&nbsp;margin&nbsp;to&nbsp;leave&nbsp;in&nbsp;addition&nbsp;to&nbsp;the&nbsp;flobject&nbsp;border<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;width.&nbsp;By&nbsp;default&nbsp;it&nbsp;is&nbsp;3.<br>
@@ -676,4 +690,4 @@ Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
 </td></tr></table>
-<p>Updated on: 2010-12-23 23:57 +0100</body></html>
+<p>Updated on: 2010-12-25 01:55 +0100</body></html>

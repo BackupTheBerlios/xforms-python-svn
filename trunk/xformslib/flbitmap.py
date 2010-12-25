@@ -49,7 +49,7 @@ from xformslib import xfdata
 def fl_add_bitmap(bitmaptype, xpos, ypos, width, height, label):
     """fl_add_bitmap(bitmaptype, xpos, ypos, width, height, label)
     -> ptr_flobject
-    
+
     Adds a bitmap (a plain text monochrome image format) flobject
     to a form. The bitmap is empty on creation.
 
@@ -57,7 +57,7 @@ def fl_add_bitmap(bitmaptype, xpos, ypos, width, height, label):
     ----------
         bitmaptype : int
             type of bitmap to be added. Values (from xfdata.py)
-            FL_NORMAL_BITMAP
+            FL_NORMAL_BITMAP (normal bitmap flobject type)
         xpos : int
             horizontal position (upper-left corner)
         ypos : int
@@ -109,7 +109,7 @@ def fl_add_bitmap(bitmaptype, xpos, ypos, width, height, label):
 
 def fl_set_bitmap_data(ptr_flobject, width, height, xbmcontentslist):
     """fl_set_bitmap_data(ptr_flobject, width, height, xbmcontentslist)
-    
+
     Defines the actual bitmap being displayed from specified contents. A
     number of bitmaps can be found in '/usr/include/X11/bitmaps' or similar
     places. The X program 'bitmap' can be used to create bitmaps.
@@ -127,8 +127,8 @@ def fl_set_bitmap_data(ptr_flobject, width, height, xbmcontentslist):
 
     Examples
     --------
-        >>> bitmapcontents = [0x01, 0x1a, 0x27, 0x34, 0x41, 0x4e, 0x5b, 0x68,
-        >>>                  0x75, 0x82, 0x8f, 0x9c, 0xa9, 0xb6, 0xc3, 0xd0]
+        >>> bitmapcontents = [0x01, 0x1a, 0x27, 0x34, 0x41, 0x4e, 0x5b,
+        >>>         0x68, 0x75, 0x82, 0x8f, 0x9c, 0xa9, 0xb6, 0xc3, 0xd0]
         >>> fl_set_bitmap_data(xbmobj, 4, 4, bitmapcontents)
 
     Notes
@@ -157,7 +157,7 @@ def fl_set_bitmap_data(ptr_flobject, width, height, xbmcontentslist):
 
 def fl_set_bitmap_file(ptr_flobject, fname):
     """fl_set_bitmap_file(ptr_flobject, fname)
-    
+
     Defines the actual bitmap being displayed from a specified .xbm file.
     A number of bitmaps can be found in '/usr/include/X11/bitmaps' or
     similar places. The X program 'bitmap' can be used to create bitmaps.
@@ -198,7 +198,7 @@ fl_set_bitmapbutton_datafile = fl_set_bitmapbutton_file
 
 def fl_read_bitmapfile(win, fname):
     """fl_read_bitmapfile(win, fname) -> pixmapid, width, height, hotx, hoty
-    
+
     Makes a bitmap from a bitmap (.xpm format) file.
 
     Parameters
@@ -259,7 +259,7 @@ def fl_read_bitmapfile(win, fname):
 
 def fl_create_from_bitmapdata(win, xbmdata, width, height):
     """fl_create_from_bitmapdata(win, xbmdata, width, height) -> pixmapid
-    
+
     Makes a bitmap from bitmap contents data.
 
     Parameters
@@ -314,7 +314,7 @@ def fl_create_from_bitmapdata(win, xbmdata, width, height):
 def fl_add_pixmap(pixmaptype, xpos, ypos, width, height, label):
     """fl_add_pixmap(pixmaptype, xpos, ypos, width, height, label)
     -> ptr_flobject
-    
+
     Adds a pixmap flobject (plain text multi-color image format). The
     label is by default placed below the pixmap. The pixmap is empty
     on creation.
@@ -323,7 +323,7 @@ def fl_add_pixmap(pixmaptype, xpos, ypos, width, height, label):
     ----------
         pixmaptype : int
             type of pixmap to be added. Values (from xfdata.py)
-            FL_NORMAL_PIXMAP
+            FL_NORMAL_PIXMAP (normal pixmap flobject type)
         xpos : int
             horizontal position (upper-left corner)
         ypos : int
@@ -376,7 +376,7 @@ def fl_add_pixmap(pixmaptype, xpos, ypos, width, height, label):
 
 def fl_set_pixmap_data(ptr_flobject, xpmdatalist):
     """fl_set_pixmap_data(ptr_flobject, xpmdatalist)
-    
+
     Defines the actual pixmap being displayed from specified data. A
     number of pixmaps can be found in '/usr/include/X11/pixmaps' or
     similar places.
@@ -421,7 +421,7 @@ def fl_set_pixmap_data(ptr_flobject, xpmdatalist):
 
 def fl_set_pixmap_file(ptr_flobject, fname):
     """fl_set_pixmap_file(ptr_flobject, fname)
-    
+
     Defines the actual bitmap being displayed from a specified .xpm file. A
     number of pixmaps can be found in '/usr/include/X11/pixmaps' or similar
     places.
@@ -459,7 +459,7 @@ fl_set_pixmapbutton_datafile = fl_set_pixmapbutton_file
 
 def fl_set_pixmap_align(ptr_flobject, align, xmargin, ymargin):
     """fl_set_pixmap_align(ptr_flobject, align, xmargin, ymargin)
-    
+
     Changes alignment of a pixmap. By default it is displayed centered
     inside the bounding box; although you can place a pixmap outside of
     the bounding box, it probably is not a good idea.
@@ -469,11 +469,18 @@ def fl_set_pixmap_align(ptr_flobject, align, xmargin, ymargin):
         ptr_flobject : pointer to xfdata.FL_OBJECT
             pixmap flobject
         align : int
-            alignment of pixmap. Values (from xfdata.py) FL_ALIGN_CENTER,
-            FL_ALIGN_TOP, FL_ALIGN_BOTTOM, FL_ALIGN_LEFT, FL_ALIGN_RIGHT,
-            FL_ALIGN_LEFT_TOP, FL_ALIGN_RIGHT_TOP, FL_ALIGN_LEFT_BOTTOM,
-            FL_ALIGN_RIGHT_BOTTOM, FL_ALIGN_INSIDE, FL_ALIGN_VERT. Bitwise
-            'OR' with FL_ALIGN_INSIDE is allowed.
+            alignment of pixmap. Values (from xfdata.py)
+            FL_ALIGN_CENTER (In the middle of the box, inside it), FL_ALIGN_TOP
+            (To the top of the box, outside it), FL_ALIGN_BOTTOM (To the
+            bottom of the box, outside it), FL_ALIGN_LEFT (To the left of the
+            box, outside it), FL_ALIGN_RIGHT (To the right of the box, outside
+            it), FL_ALIGN_LEFT_TOP (To the left and top of the box, outside
+            it), FL_ALIGN_RIGHT_TOP (To the right and top of the box, outside
+            it), FL_ALIGN_LEFT_BOTTOM (To the left and bottom of the box,
+            outside it), FL_ALIGN_RIGHT_BOTTOM (To the right and bottom of
+            the box, outside it), FL_ALIGN_INSIDE (places the text inside the
+            box), FL_ALIGN_VERT (not functional yet). Bitwise OR with
+            FL_ALIGN_INSIDE is allowed.
         xmargin : int
             extra margin to leave in addition to the flobject border
             width. By default it is 3.
@@ -513,7 +520,7 @@ fl_set_pixmapbutton_align = fl_set_pixmap_align
 
 def fl_set_pixmap_pixmap(ptr_flobject, pixmapid, mask):
     """fl_set_pixmap_pixmap(ptr_flobject, pixmapid, mask)
-    
+
     Changes the pixmap for the flobject with a pixmap resource id you
     already may have. It does not free the pixmap ID nor the mask already
     associated with the flobject.
@@ -556,7 +563,7 @@ fl_set_pixmapbutton_pixmap = fl_set_pixmap_pixmap
 
 def fl_set_pixmap_colorcloseness(red, green, blue):
     """fl_set_pixmap_colorcloseness(red, green, blue)
-    
+
     Changes difference between the requested color and the color found
     being smaller than some pre-set threshold values between 0 and 65535 (0
     means exact match), if a pixmap has more colors than that available in
@@ -595,7 +602,7 @@ def fl_set_pixmap_colorcloseness(red, green, blue):
 
 def fl_free_pixmap_pixmap(ptr_flobject):
     """fl_free_pixmap_pixmap(ptr_flobject)
-    
+
     Frees the old pixmap associated to flobject, the mask, and the
     colors the pixmap allocated.
 
@@ -628,7 +635,7 @@ fl_free_pixmapbutton_pixmap = fl_free_pixmap_pixmap
 
 def fl_get_pixmap_pixmap(ptr_flobject):
     """fl_get_pixmap_pixmap(ptr_flobject) -> pixmapid1, pixmapid2, pmask
-    
+
     Finds out the pixmap resource id currently being displayed.
 
     Parameters
@@ -681,7 +688,7 @@ fl_get_pixmapbutton_pixmap = fl_get_pixmap_pixmap
 def fl_read_pixmapfile(win, fname, tran):
     """fl_read_pixmapfile(win, fname, tran) -> pixmapid, width, height,
     smask, hotx, hoty
-    
+
     Makes a pixmap from a pixmap (.xpm format) file.
 
     Parameters
@@ -753,7 +760,7 @@ def fl_read_pixmapfile(win, fname, tran):
 def fl_create_from_pixmapdata(win, xpmdata, tran):
     """fl_create_from_pixmapdata(win, xpmdata, tran) -> pixmapid, width,
     height, smask, hotx, hoty
-    
+
     Makes a pixmap from pixmap contents data.
 
     Parameters
@@ -789,7 +796,7 @@ def fl_create_from_pixmapdata(win, xpmdata, tran):
 
     API diversion
     -------------
-        API changed from XForms, upstream is fl_create_from_pixmapdata(win, 
+        API changed from XForms, upstream is fl_create_from_pixmapdata(win,
         xpmdata, width, height, smask, hotx, hoty, tran)
 
     Notes
@@ -827,7 +834,7 @@ def fl_create_from_pixmapdata(win, xpmdata, tran):
 
 def fl_free_pixmap(pixmapid):
     """fl_free_pixmap(pixmapid)
-    
+
     Frees the pixmap.
 
     Parameters

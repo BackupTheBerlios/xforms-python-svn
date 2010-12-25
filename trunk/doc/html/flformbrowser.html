@@ -36,7 +36,7 @@ Parameters<br>
 ----------<br>
 &nbsp;&nbsp;&nbsp;&nbsp;frmbrwstype&nbsp;:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;type&nbsp;of&nbsp;formbrowser&nbsp;to&nbsp;be&nbsp;added.&nbsp;Values&nbsp;(from&nbsp;xfdata.py)<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_NORMAL_FORMBROWSER<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_NORMAL_FORMBROWSER&nbsp;(normal&nbsp;formbrowser&nbsp;type)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;xpos&nbsp;:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;horizontal&nbsp;position&nbsp;(upper-left&nbsp;corner)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;ypos&nbsp;:&nbsp;int<br>
@@ -358,7 +358,7 @@ Examples<br>
 Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-fl_set_formbrowser_hscrollbar"><strong>fl_set_formbrowser_hscrollbar</strong></a>(ptr_flobject, pref)</dt><dd><tt><a href="#-fl_set_formbrowser_hscrollbar">fl_set_formbrowser_hscrollbar</a>(ptr_flobject,&nbsp;pref)<br>
+ <dl><dt><a name="-fl_set_formbrowser_hscrollbar"><strong>fl_set_formbrowser_hscrollbar</strong></a>(ptr_flobject, howscroll)</dt><dd><tt><a href="#-fl_set_formbrowser_hscrollbar">fl_set_formbrowser_hscrollbar</a>(ptr_flobject,&nbsp;howscroll)<br>
 &nbsp;<br>
 Controls&nbsp;the&nbsp;presence&nbsp;of&nbsp;horizontal&nbsp;scrollbar.&nbsp;By&nbsp;default,&nbsp;if&nbsp;the&nbsp;size<br>
 of&nbsp;the&nbsp;forms&nbsp;exceeds&nbsp;the&nbsp;size&nbsp;of&nbsp;the&nbsp;formbrowser,&nbsp;scrollbars&nbsp;are&nbsp;added<br>
@@ -368,9 +368,10 @@ Parameters<br>
 ----------<br>
 &nbsp;&nbsp;&nbsp;&nbsp;ptr_flobject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;formbrowser&nbsp;flobject<br>
-&nbsp;&nbsp;&nbsp;&nbsp;pref&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;howscroll&nbsp;:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if&nbsp;scrollbar&nbsp;is&nbsp;added&nbsp;or&nbsp;not.&nbsp;Values&nbsp;(from&nbsp;xfdata&nbsp;module)<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_ON,&nbsp;FL_OFF,&nbsp;FL_AUTO<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_AUTO&nbsp;(On&nbsp;when&nbsp;needed,&nbsp;default),&nbsp;FL_ON&nbsp;(always&nbsp;on),&nbsp;FL_OFF<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(always&nbsp;off).<br>
 &nbsp;<br>
 Examples<br>
 --------<br>
@@ -389,8 +390,9 @@ Parameters<br>
 &nbsp;&nbsp;&nbsp;&nbsp;ptr_flobject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;formbrowser&nbsp;flobject<br>
 &nbsp;&nbsp;&nbsp;&nbsp;howscroll&nbsp;:&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;How&nbsp;it&nbsp;scrolls.&nbsp;Values&nbsp;(from&nbsp;xfdata&nbsp;module)&nbsp;FL_SMOOTH_SCROLL<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(default)&nbsp;or&nbsp;FL_JUMP_SCROLL<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;How&nbsp;it&nbsp;scrolls.&nbsp;Values&nbsp;(from&nbsp;xfdata.py)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_SMOOTH_SCROLL&nbsp;(Default&nbsp;scroll),&nbsp;FL_JUMP_SCROLL&nbsp;(Scrolls&nbsp;in&nbsp;form<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;increments).<br>
 &nbsp;<br>
 Examples<br>
 --------<br>
@@ -446,7 +448,7 @@ Examples<br>
 Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-fl_set_formbrowser_vscrollbar"><strong>fl_set_formbrowser_vscrollbar</strong></a>(ptr_flobject, pref)</dt><dd><tt><a href="#-fl_set_formbrowser_vscrollbar">fl_set_formbrowser_vscrollbar</a>(ptr_flobject,&nbsp;pref)<br>
+ <dl><dt><a name="-fl_set_formbrowser_vscrollbar"><strong>fl_set_formbrowser_vscrollbar</strong></a>(ptr_flobject, howscroll)</dt><dd><tt><a href="#-fl_set_formbrowser_vscrollbar">fl_set_formbrowser_vscrollbar</a>(ptr_flobject,&nbsp;howscroll)<br>
 &nbsp;<br>
 Controls&nbsp;the&nbsp;presence&nbsp;of&nbsp;vertical&nbsp;scrollbar.&nbsp;By&nbsp;default,&nbsp;if&nbsp;the&nbsp;size<br>
 of&nbsp;the&nbsp;forms&nbsp;exceeds&nbsp;the&nbsp;size&nbsp;of&nbsp;the&nbsp;formbrowser,&nbsp;scrollbars&nbsp;are&nbsp;added<br>
@@ -456,9 +458,10 @@ Parameters<br>
 ----------<br>
 &nbsp;&nbsp;&nbsp;&nbsp;ptr_flobject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;formbrowser&nbsp;flobject<br>
-&nbsp;&nbsp;&nbsp;&nbsp;pref&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;howscroll&nbsp;:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if&nbsp;scrollbar&nbsp;is&nbsp;added&nbsp;or&nbsp;not.&nbsp;Values&nbsp;(from&nbsp;xfdata&nbsp;module)<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_ON,&nbsp;FL_OFF,&nbsp;FL_AUTO<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_AUTO&nbsp;(On&nbsp;when&nbsp;needed,&nbsp;default),&nbsp;FL_ON&nbsp;(always&nbsp;on),&nbsp;FL_OFF<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(always&nbsp;off).<br>
 &nbsp;<br>
 Examples<br>
 --------<br>
@@ -518,4 +521,4 @@ Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
 </td></tr></table>
-<p>Updated on: 2010-12-23 23:57 +0100</body></html>
+<p>Updated on: 2010-12-25 01:55 +0100</body></html>

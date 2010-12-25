@@ -41,7 +41,7 @@ from xformslib import xfdata
 
 def fl_addto_formbrowser(ptr_flobject, ptr_flform):
     """fl_addto_formbrowser(ptr_flobject, ptr_flform) -> numforms
-    
+
     Populates a formbrowser. The form so added is appended to the list of
     forms that are already in the formbrowser. Form should be valid for the
     duration of the formbrowser and the application program should not destroy
@@ -84,7 +84,7 @@ def fl_addto_formbrowser(ptr_flobject, ptr_flform):
 
 def fl_delete_formbrowser_bynumber(ptr_flobject, seqnum):
     """fl_delete_formbrowser_bynumber(ptr_flobject, seqnum) -> ptr_flform
-    
+
     Removes a form from the formbrowser using a sequence number, an
     integer between 1 and the number of forms in the browser. After a
     form is removed, the sequence numbers are re-adjusted so they are
@@ -127,7 +127,7 @@ def fl_delete_formbrowser_bynumber(ptr_flobject, seqnum):
 
 def fl_delete_formbrowser(ptr_flobject, ptr_flform):
     """fl_delete_formbrowser(ptr_flobject, ptr_flform) -> numforms
-    
+
     Removes a specified form from the formbrowser.
 
     Parameters
@@ -168,7 +168,7 @@ def fl_delete_formbrowser(ptr_flobject, ptr_flform):
 
 def fl_replace_formbrowser(ptr_flobject, seqnum, ptr_flform):
     """fl_replace_formbrowser(ptr_flobject, seqnum, ptr_flform) -> ptr_flform
-    
+
     Replaces a form in formbrowser specified by a sequence number
 
     Parameters
@@ -211,7 +211,7 @@ def fl_replace_formbrowser(ptr_flobject, seqnum, ptr_flform):
 
 def fl_insert_formbrowser(ptr_flobject, seqnum, ptr_flform):
     """fl_insert_formbrowser(ptr_flobject, seqnum, ptr_flform) -> numforms
-    
+
     Inserts a form into a formbrowser at arbitrary location.
 
     Parameters
@@ -256,7 +256,7 @@ def fl_insert_formbrowser(ptr_flobject, seqnum, ptr_flform):
 def fl_get_formbrowser_area(ptr_flobject):
     """fl_get_formbrowser_area(ptr_flobject)
     -> result, xpos, ypos, width, height
-    
+
     Finds out the actual size of the form's area. The area occupied by
     the formbrowser contains the space for the scrollbars.
 
@@ -314,7 +314,7 @@ def fl_get_formbrowser_area(ptr_flobject):
 
 def fl_set_formbrowser_scroll(ptr_flobject, howscroll):
     """fl_set_formbrowser_scroll(ptr_flobject, howscroll)
-    
+
     Changes the vertical scrollbar so each action of the scrollbar scrolls
     to the next forms. By default it scrolls a fixed number of pixels.
 
@@ -323,8 +323,9 @@ def fl_set_formbrowser_scroll(ptr_flobject, howscroll):
         ptr_flobject : pointer to xfdata.FL_OBJECT
             formbrowser flobject
         howscroll : int
-            How it scrolls. Values (from xfdata module) FL_SMOOTH_SCROLL
-            (default) or FL_JUMP_SCROLL
+            How it scrolls. Values (from xfdata.py)
+            FL_SMOOTH_SCROLL (Default scroll), FL_JUMP_SCROLL (Scrolls in form
+            increments).
 
     Examples
     --------
@@ -348,9 +349,9 @@ def fl_set_formbrowser_scroll(ptr_flobject, howscroll):
     _fl_set_formbrowser_scroll(ptr_flobject, i_howscroll)
 
 
-def fl_set_formbrowser_hscrollbar(ptr_flobject, pref):
-    """fl_set_formbrowser_hscrollbar(ptr_flobject, pref)
-    
+def fl_set_formbrowser_hscrollbar(ptr_flobject, howscroll):
+    """fl_set_formbrowser_hscrollbar(ptr_flobject, howscroll)
+
     Controls the presence of horizontal scrollbar. By default, if the size
     of the forms exceeds the size of the formbrowser, scrollbars are added
     automatically.
@@ -359,9 +360,10 @@ def fl_set_formbrowser_hscrollbar(ptr_flobject, pref):
     ----------
         ptr_flobject : pointer to xfdata.FL_OBJECT
             formbrowser flobject
-        pref : int
+        howscroll : int
             if scrollbar is added or not. Values (from xfdata module)
-            FL_ON, FL_OFF, FL_AUTO
+            FL_AUTO (On when needed, default), FL_ON (always on), FL_OFF
+            (always off).
 
     Examples
     --------
@@ -378,16 +380,16 @@ def fl_set_formbrowser_hscrollbar(ptr_flobject, pref):
         """void fl_set_formbrowser_hscrollbar(FL_OBJECT * ob, int how)""")
     library.check_if_initialized()
     library.verify_flobjectptr_type(ptr_flobject)
-    library.checkfatal_allowed_value_in_list(pref, \
+    library.checkfatal_allowed_value_in_list(howscroll, \
             xfdata.SCROLLBARVAL_list)
-    i_pref = library.convert_to_intc(pref)
-    library.keep_elem_refs(ptr_flobject, pref, i_pref)
-    _fl_set_formbrowser_hscrollbar(ptr_flobject, i_pref)
+    i_howscroll = library.convert_to_intc(howscroll)
+    library.keep_elem_refs(ptr_flobject, howscroll, i_howscroll)
+    _fl_set_formbrowser_hscrollbar(ptr_flobject, i_howscroll)
 
 
-def fl_set_formbrowser_vscrollbar(ptr_flobject, pref):
-    """fl_set_formbrowser_vscrollbar(ptr_flobject, pref)
-    
+def fl_set_formbrowser_vscrollbar(ptr_flobject, howscroll):
+    """fl_set_formbrowser_vscrollbar(ptr_flobject, howscroll)
+
     Controls the presence of vertical scrollbar. By default, if the size
     of the forms exceeds the size of the formbrowser, scrollbars are added
     automatically.
@@ -396,9 +398,10 @@ def fl_set_formbrowser_vscrollbar(ptr_flobject, pref):
     ----------
         ptr_flobject : pointer to xfdata.FL_OBJECT
             formbrowser flobject
-        pref : int
+        howscroll : int
             if scrollbar is added or not. Values (from xfdata module)
-            FL_ON, FL_OFF, FL_AUTO
+            FL_AUTO (On when needed, default), FL_ON (always on), FL_OFF
+            (always off).
 
     Examples
     --------
@@ -415,16 +418,16 @@ def fl_set_formbrowser_vscrollbar(ptr_flobject, pref):
         """void fl_set_formbrowser_vscrollbar(FL_OBJECT * ob, int how)""")
     library.check_if_initialized()
     library.verify_flobjectptr_type(ptr_flobject)
-    library.checkfatal_allowed_value_in_list(pref, \
+    library.checkfatal_allowed_value_in_list(howscroll, \
             xfdata.SCROLLBARVAL_list)
-    i_pref = library.convert_to_intc(pref)
-    library.keep_elem_refs(ptr_flobject, pref, i_pref)
-    _fl_set_formbrowser_vscrollbar(ptr_flobject, i_pref)
+    i_howscroll = library.convert_to_intc(howscroll)
+    library.keep_elem_refs(ptr_flobject, howscroll, i_howscroll)
+    _fl_set_formbrowser_vscrollbar(ptr_flobject, i_howscroll)
 
 
 def fl_get_formbrowser_topform(ptr_flobject):
     """fl_get_formbrowser_topform(ptr_flobject)
-    
+
     Finds out the form that is currently the first form in the formbrowser
     visible to the user.
 
@@ -460,7 +463,7 @@ def fl_get_formbrowser_topform(ptr_flobject):
 
 def fl_set_formbrowser_topform(ptr_flobject, ptr_flform):
     """fl_set_formbrowser_topform(ptr_flobject, ptr_flform) -> seqnum
-    
+
     Defines which form to show by setting the top form.
 
     Parameters
@@ -499,7 +502,7 @@ def fl_set_formbrowser_topform(ptr_flobject, ptr_flform):
 
 def fl_set_formbrowser_topform_bynumber(ptr_flobject, seqnum):
     """fl_set_formbrowser_topform_bynumber(ptr_flobject, seqnum) -> ptr_flform
-    
+
     Defines which form to show by setting the top form, using a sequence
     number.
 
@@ -540,7 +543,7 @@ def fl_set_formbrowser_topform_bynumber(ptr_flobject, seqnum):
 
 def fl_set_formbrowser_xoffset(ptr_flobject, offset):
     """fl_set_formbrowser_xoffset(ptr_flobject, offset) -> oldoffset
-    
+
     Scrolls within a formbrowser in horizontal direction.
 
     Parameters
@@ -580,7 +583,7 @@ def fl_set_formbrowser_xoffset(ptr_flobject, offset):
 
 def fl_set_formbrowser_yoffset(ptr_flobject, offset):
     """fl_set_formbrowser_yoffset(ptr_flobject, offset) -> oldoffset
-    
+
     Scrolls within a formbrowser in vertical direction.
 
     Parameters
@@ -620,7 +623,7 @@ def fl_set_formbrowser_yoffset(ptr_flobject, offset):
 
 def fl_get_formbrowser_xoffset(ptr_flobject):
     """fl_get_formbrowser_xoffset(ptr_flobject) -> offset
-    
+
     Finds out the current horizontal offset from left in pixel of a
     formbrowser.
 
@@ -656,7 +659,7 @@ def fl_get_formbrowser_xoffset(ptr_flobject):
 
 def fl_get_formbrowser_yoffset(ptr_flobject):
     """fl_get_formbrowser_yoffset(ptr_flobject) -> offset
-    
+
     Finds out the current vertical offset from top in pixel of a
     formbrowser.
 
@@ -692,7 +695,7 @@ def fl_get_formbrowser_yoffset(ptr_flobject):
 
 def fl_find_formbrowser_form_number(ptr_flobject, ptr_flform):
     """fl_find_formbrowser_form_number(ptr_flobject, ptr_flform) -> seqnum
-    
+
     Finds out the sequence number of a particular form.
 
     Parameters
@@ -733,14 +736,14 @@ def fl_find_formbrowser_form_number(ptr_flobject, ptr_flform):
 def fl_add_formbrowser(frmbrwstype, xpos, ypos, width, height, label):
     """fl_add_formbrowser(frmbrwstype, xpos, ypos, width, height, label)
     -> ptr_flform
-    
+
     Adds a formbrowser flobject.
 
     Parameters
     ----------
         frmbrwstype : int
             type of formbrowser to be added. Values (from xfdata.py)
-            FL_NORMAL_FORMBROWSER
+            FL_NORMAL_FORMBROWSER (normal formbrowser type)
         xpos : int
             horizontal position (upper-left corner)
         ypos : int
@@ -794,7 +797,7 @@ def fl_add_formbrowser(frmbrwstype, xpos, ypos, width, height, label):
 
 def fl_get_formbrowser_numforms(ptr_flobject):
     """fl_get_formbrowser_numforms(ptr_flobject) -> numforms
-    
+
     Finds out the total number of forms in a formbrowser flobject.
 
     Parameters
@@ -829,7 +832,7 @@ def fl_get_formbrowser_numforms(ptr_flobject):
 
 def fl_get_formbrowser_form(ptr_flobject, seqnum):
     """fl_get_formbrowser_form(ptr_flobject, seqnum) -> ptr_flform
-    
+
     Finds out the form handle from the sequence number.
 
     Parameters

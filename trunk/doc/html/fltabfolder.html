@@ -40,8 +40,10 @@ Parameters<br>
 ----------<br>
 &nbsp;&nbsp;&nbsp;&nbsp;foldertype&nbsp;:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;type&nbsp;of&nbsp;tabfolder&nbsp;to&nbsp;be&nbsp;added.&nbsp;Values&nbsp;(from&nbsp;xfdata.py)<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_TOP_TABFOLDER,&nbsp;FL_BOTTOM_TABFOLDER,&nbsp;FL_LEFT_TABFOLDER,<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_RIGHT_TABFOLDER,&nbsp;FL_NORMAL_TABFOLDER<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_TOP_TABFOLDER&nbsp;or&nbsp;FL_NORMAL_TABFOLDER&nbsp;(tabfolder&nbsp;with&nbsp;tab&nbsp;on<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;top),&nbsp;FL_BOTTOM_TABFOLDER&nbsp;(tabfolder&nbsp;with&nbsp;tab&nbsp;on&nbsp;bottom),<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_LEFT_TABFOLDER&nbsp;(tabfolder&nbsp;with&nbsp;tab&nbsp;on&nbsp;left),&nbsp;FL_RIGHT_TABFOLDER<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(tabfolder&nbsp;with&nbsp;tab&nbsp;on&nbsp;right)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;xpos&nbsp;:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;horizontal&nbsp;position&nbsp;(upper-left&nbsp;corner)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;ypos&nbsp;:&nbsp;int<br>
@@ -93,7 +95,7 @@ Parameters<br>
 Returns<br>
 -------<br>
 &nbsp;&nbsp;&nbsp;&nbsp;ptr_flobject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;tabfolder&nbsp;flobject&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;tabfolder&nbsp;flobject<br>
 &nbsp;<br>
 Examples<br>
 --------<br>
@@ -530,8 +532,10 @@ Parameters<br>
 &nbsp;&nbsp;&nbsp;&nbsp;ptr_flobject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;tabfolder&nbsp;flobject<br>
 &nbsp;&nbsp;&nbsp;&nbsp;howfit&nbsp;:&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;how&nbsp;do&nbsp;folders'&nbsp;sizes&nbsp;fit&nbsp;.&nbsp;Values&nbsp;(from&nbsp;xfdata.py)&nbsp;FL_NO,<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_FIT,&nbsp;FL_ENLARGE_ONLY<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;how&nbsp;do&nbsp;folders'&nbsp;sizes&nbsp;fit&nbsp;.&nbsp;Values&nbsp;(from&nbsp;xfdata.py)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_NO&nbsp;(do&nbsp;not&nbsp;scale&nbsp;the&nbsp;form),&nbsp;FL_FIT&nbsp;(Always&nbsp;scale&nbsp;the&nbsp;form),<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_ENLARGE_ONLY&nbsp;(Scale&nbsp;the&nbsp;form&nbsp;only&nbsp;if&nbsp;it&nbsp;is&nbsp;smaller&nbsp;than&nbsp;folder<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;area).<br>
 &nbsp;<br>
 Returns<br>
 -------<br>
@@ -569,4 +573,4 @@ Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
 </td></tr></table>
-<p>Updated on: 2010-12-23 23:57 +0100</body></html>
+<p>Updated on: 2010-12-25 01:55 +0100</body></html>

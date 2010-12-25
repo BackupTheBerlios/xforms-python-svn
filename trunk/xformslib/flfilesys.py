@@ -45,7 +45,7 @@ from xformslib import xfdata
 
 def fl_get_dirlist(dirname, pattern, rescan):
     """fl_get_dirlist(dirname, pattern, rescan) -> ptr_dirlist, numfiles
-    
+
     Finds out a listing of specified directory.
 
     Parameters
@@ -101,7 +101,7 @@ def fl_get_dirlist(dirname, pattern, rescan):
 
 def fl_set_dirlist_filter(pyfn_DirFilter):
     """fl_set_dirlist_filter(pyfn_DirFilter) -> DirFilter
-    
+
     Changes the default filter by which file types are returned.
     By default not all types of files are returned (only directories,
     normal files and link files).
@@ -148,16 +148,24 @@ def fl_set_dirlist_filter(pyfn_DirFilter):
 
 def fl_set_dirlist_sort(method):
     """fl_set_dirlist_sort(method) -> oldmethod
-    
+
     Changes the default sorting of files in directory. By default the
     files returned are sorted alphabetically.
 
     Parameters
     ----------
         method : int
-            method of sorting. Values (from xfdata.py) FL_NONE,
-            FL_ALPHASORT, FL_RALPHASORT, FL_MTIMESORT, FL_RMTIMESORT,
-            FL_SIZESORT, FL_RSIZESORT, FL_CASEALPHASORT, FL_RCASEALPHASORT
+            method of sorting. Values (from xfdata.py)
+            FL_NONE (Do not sort the entries), FL_ALPHASORT (Sorts the
+            entries in alphabetic order, default), FL_RALPHASORT (Sorts the
+            entries in reverse alphabetic order), FL_MTIMESORT (Sorts the
+            entries according to the modification time), FL_RMTIMESORT (Sorts
+            the entries according to the modification time, but reverse the
+            order, i.e., latest first), FL_SIZESORT (Sorts the entries in
+            increasing size order), FL_RSIZESORT (Sorts the entries in
+            decreasing size order), FL_CASEALPHASORT (Sorts the entries in
+            alphabetic order with no regard to case), FL_RCASEALPHASORT (Sorts
+            the entries in reverse alphabetic order with no regard to case).
 
     Returns
     -------
@@ -223,7 +231,7 @@ def fl_set_dirlist_filterdir(yesno):
 
 def fl_free_dirlist(ptr_dirlist):
     """fl_free_dirlist(ptr_dirlist)
-    
+
     Frees the list cache returned by fl_get_dirlist().
 
     Parameters
@@ -255,7 +263,7 @@ def fl_free_dirlist(ptr_dirlist):
 
 def fl_free_all_dirlist():
     """fl_free_all_dirlist()
-    
+
     Frees all the list caches returned by fl_get_dirlist().
 
     Examples
@@ -277,7 +285,7 @@ def fl_free_all_dirlist():
 
 def fl_is_valid_dir(dirname):
     """fl_is_valid_dir(dirname) -> yesno
-    
+
     Checks if dirname is a valid name of a directory. You can use
     os.path.isdir(), instead.
 
@@ -315,7 +323,7 @@ def fl_is_valid_dir(dirname):
 
 def fl_fmtime(fname):
     """fl_fmtime(fname) -> mtime
-    
+
     Finds out the modification time of a specified file.
 
     Parameters
@@ -350,7 +358,7 @@ def fl_fmtime(fname):
 
 def fl_fix_dirname(dirname):
     """fl_fix_dirname(dirname) -> fixdirname
-    
+
     Fixes the name of a directory that has a relative path ("..") in it.
     You can use os.path.normnpath(), instead.
 

@@ -64,7 +64,7 @@ def FL_IsPacked(ptr_image):
 
 def flimage_setup(ptr_imagesetup):
     """flimage_setup(ptr_imagesetup)
-    
+
     Defines up and configures image flobjects support and initializes
     xfdata.FLIMAGE_SETUP class instance.
 
@@ -97,7 +97,7 @@ def flimage_setup(ptr_imagesetup):
 
 def flimage_load(fname):
     """flimage_load(fname) -> ptr_image
-    
+
     Loads an image file into memory.
 
     Parameters
@@ -132,7 +132,7 @@ def flimage_load(fname):
 
 def flimage_read(ptr_image):
     """flimage_read(ptr_image) -> ptr_image
-    
+
     Takes a xfdata.FL_IMAGE class instance returned by flimage_open()
     and fills the image structure.
 
@@ -169,7 +169,7 @@ def flimage_read(ptr_image):
 
 def flimage_dump(ptr_image, fname, fmt):
     """flimage_dump(ptr_image, fname, fmt) -> result
-    
+
     Takes an image, either returned by flimage_load() (possibly after
     some processing) or created on the fly by the application, attempts
     to create a file to store the image.
@@ -255,7 +255,7 @@ def flimage_close(ptr_image):
 # TODO: not sure if it is necessary in python, low-level only?
 def flimage_alloc():
     """flimage_alloc() -> ptr_image
-    
+
     Creates an image structure whose dynamically allocated memory is
     properly initialized, and returning it.
 
@@ -285,7 +285,7 @@ def flimage_alloc():
 # TODO: verify if is of any use in python
 def flimage_getmem(ptr_image):
     """flimage_getmem(ptr_image) -> result
-    
+
     Allocates the proper amount of memory appropriate for the image type,
     including colormaps when needed.
 
@@ -321,7 +321,7 @@ def flimage_getmem(ptr_image):
 
 def flimage_is_supported(fname):
     """flimage_is_supported(fname) -> yesno
-    
+
     Finds out if a specific file is a known image file or not.
 
     Parameters
@@ -356,7 +356,7 @@ def flimage_is_supported(fname):
 
 def flimage_description_via_filter(ptr_image, cmds, what, verbose):
     """flimage_description_via_filter(ptr_image, cmds, what, verbose) -> result
-    
+
     Adds a description to be used with flimage_add_format() to add image
     formats via an external filter's command.
 
@@ -409,7 +409,7 @@ def flimage_description_via_filter(ptr_image, cmds, what, verbose):
 
 def flimage_write_via_filter(ptr_image, cmds, formats, verbose):
     """flimage_write_via_filter(ptr_image, cmds, formats, verbose) -> result
-    
+
     Uses external filters to add image formats, in order to convert
     an unsupported format into one that is. pbmplus or netpbm are excellent
     packages for this purpose.
@@ -462,7 +462,7 @@ def flimage_write_via_filter(ptr_image, cmds, formats, verbose):
 
 def flimage_free(ptr_image):
     """flimage_free(ptr_image)
-    
+
     Frees all memory allocated for the image, then the image structure
     itself. After the function returns, the image should not be referenced.
 
@@ -492,7 +492,7 @@ def flimage_free(ptr_image):
 
 def flimage_display(ptr_image, win):
     """flimage_display(ptr_image, win) -> result
-    
+
     Displays a single or multiple images in a window.
 
     Parameters
@@ -530,7 +530,7 @@ def flimage_display(ptr_image, win):
 
 def flimage_sdisplay(ptr_image, win):
     """flimage_sdisplay(ptr_image, win) -> result
-    
+
     Displays a single image in a window.
 
     Parameters
@@ -568,7 +568,7 @@ def flimage_sdisplay(ptr_image, win):
 
 def flimage_convert(ptr_image, newimagetype, numcolors):
     """flimage_convert(ptr_image, newimagetype, numcolors) -> result
-    
+
     Converts an image to a new type. Depending on which quantization
     function is used, the number of quantized colors may not be more than 256.
 
@@ -617,7 +617,7 @@ def flimage_convert(ptr_image, newimagetype, numcolors):
 
 def flimage_type_name(imagetype):
     """flimage_type_name(imagetype) -> typename
-    
+
     Finds out the image type name in string format, e.g., for reporting
     purposes.
 
@@ -625,9 +625,13 @@ def flimage_type_name(imagetype):
     ----------
         imagetype : int
             type of a supported image. Values (from xfdata.py)
-            FL_IMAGE_NONE, FL_IMAGE_MONO, FL_IMAGE_GRAY, FL_IMAGE_CI,
-            FL_IMAGE_RGB, FL_IMAGE_PACKED, FL_IMAGE_GRAY16,
-            FL_IMAGE_RGB16, FL_IMAGE_FLEX
+            FL_IMAGE_MONO (b&w. 1bit bitmaps. 0=white 1=black), FL_IMAGE_GRAY
+            (gray-scale image, 8 bit), FL_IMAGE_CI (generic colormmaped index
+            image), FL_IMAGE_RGB (24 bit RGB-A image, 8bit each),
+            FL_IMAGE_PACKED (24 bit RGB-A packed into an int), FL_IMAGE_GRAY16
+            (gray-scale image, 9 to 16 bit), FL_IMAGE_RGB16 (36bits color
+            image), FL_IMAGE_FLEX (all formats). FL_IMAGE_NONE should not be
+            used here.
 
     Returns
     -------
@@ -660,7 +664,7 @@ def flimage_add_text(ptr_image, text, length, style, size, txtcolr, bgcolr,
                      nobk, txtxpos, txtypos, rot):
     """flimage_add_text(ptr_image, text, length, style, size, txtcolr,
     bgcolr, nobk, txtxpos, txtypos, rot) -> numstrings
-    
+
     Places text into the image, passing parameters individually.
 
     Parameters
@@ -673,17 +677,29 @@ def flimage_add_text(ptr_image, text, length, style, size, txtcolr, bgcolr,
         length : int
             length of text
         style : int
-            label style. Values (from xfdata.py) FL_NORMAL_STYLE,
-            FL_BOLD_STYLE, FL_ITALIC_STYLE, FL_BOLDITALIC_STYLE,
-            FL_FIXED_STYLE, FL_FIXEDBOLD_STYLE, FL_FIXEDITALIC_STYLE,
-            FL_FIXEDBOLDITALIC_STYLE, FL_TIMES_STYLE, FL_TIMESBOLD_STYLE,
-            FL_TIMESITALIC_STYLE, FL_TIMESBOLDITALIC_STYLE, FL_MISC_STYLE,
-            FL_MISCBOLD_STYLE, FL_MISCITALIC_STYLE, FL_SYMBOL_STYLE,
-            FL_SHADOW_STYLE, FL_ENGRAVED_STYLE, FL_EMBOSSED_STYLE
+            label style. Values (from xfdata.py)
+            FL_NORMAL_STYLE (Helvetica normal text), FL_BOLD_STYLE (Helvetica
+            boldface text), FL_ITALIC_STYLE (Helvetica italic text),
+            FL_BOLDITALIC_STYLE (Helvetica boldface and italic text),
+            FL_FIXED_STYLE (Courier fixed width, good for tables),
+            FL_FIXEDBOLD_STYLE (Courier bold fixed text), FL_FIXEDITALIC_STYLE
+            (Courier italic fixed text), FL_FIXEDBOLDITALIC_STYLE (Courier
+            boldface and italic fixed text), FL_TIMES_STYLE (Times-Roman like
+            normal font), FL_TIMESBOLD_STYLE (Times-Roman like boldface text),
+            FL_TIMESITALIC_STYLE (Times-Roman like italic text),
+            FL_TIMESBOLDITALIC_STYLE (Times-Roman like boldface and italic
+            text), FL_MISC_STYLE (Charter normal text), FL_MISCBOLD_STYLE
+            (Charter boldface text), FL_MISCITALIC_STYLE (Charter italic text),
+            FL_SYMBOL_STYLE (Symbol text), FL_SHADOW_STYLE (Text casting a
+            shadow, modifier mask), FL_ENGRAVED_STYLE (Text engraved into the
+            form, modifier mask), FL_EMBOSSED_STYLE (Text standing out,
+            modifier mask). Bitwise OR with any of modifiers is allowed.
         size : int
-            label size. Values (from xfdata.py) FL_TINY_SIZE, FL_SMALL_SIZE,
-            FL_NORMAL_SIZE, FL_MEDIUM_SIZE, FL_LARGE_SIZE, FL_HUGE_SIZE,
-            FL_DEFAULT_SIZE
+            label size. Values (from xfdata.py)
+            FL_TINY_SIZE (8 points font), FL_SMALL_SIZE or FL_DEFAULT_SIZE (10
+            points font, default), FL_NORMAL_SIZE (12 points font),
+            FL_MEDIUM_SIZE (14 points font), FL_LARGE_SIZE (18 points font),
+            FL_HUGE_SIZE (24 points font), or other numeric odd or even value
         txtcolr : int_pos
             color to use for text
         bgcolr : int_pos
@@ -747,7 +763,7 @@ def flimage_add_text(ptr_image, text, length, style, size, txtcolr, bgcolr,
 
 def flimage_add_text_struct(ptr_image, ptr_imagetext):
     """flimage_add_text_struct(ptr_image, ptr_imagetext) -> numstrings
-    
+
     Places text into the image, using xfdata.FLIMAGE_TEXT class instance.
     If text starts with character '@' a symbol is drawn.
 
@@ -788,7 +804,7 @@ def flimage_add_text_struct(ptr_image, ptr_imagetext):
 
 def flimage_delete_all_text(ptr_image):
     """flimage_delete_all_text(ptr_image)
-    
+
     Deletes all the texts you added to an image.
 
     Parameters
@@ -814,11 +830,11 @@ def flimage_delete_all_text(ptr_image):
     _flimage_delete_all_text(ptr_image)
 
 
-def flimage_add_marker(ptr_image, name, xpos, ypos, width, height, style,
+def flimage_add_marker(ptr_image, name, xpos, ypos, width, height, lnstyle,
                        fill, rot, colr, bcolr):
     """flimage_add_marker(ptr_image, name, xpos, ypos, width, height,
-    style, fill, rot, colr, bcolr) -> nummarkers
-    
+    lnstyle, fill, rot, colr, bcolr) -> nummarkers
+
     Adds simple markers (e.g. arrows, circles, etc) to an image, passing
     parameters individually.
 
@@ -827,7 +843,7 @@ def flimage_add_marker(ptr_image, name, xpos, ypos, width, height, style,
         ptr_image : pointer to xfdata.FL_IMAGE
             image
         name : str
-            marker name *todo*
+            name of the marker to be added
         xpos : float
             horizontal position of the center of the marker in physical
             coordinates relative to the origin of the image
@@ -838,10 +854,17 @@ def flimage_add_marker(ptr_image, name, xpos, ypos, width, height, style,
             width of the bounding box of the marker in physical coordinates
         height : float
             height of the bounding box of the marker in physical coordinates
-        style : int
-            style of the line to draw. Values (from xfdata.py) FL_SOLID,
-            FL_USERDASH, FL_USERDOUBLEDASH, FL_DOT, FL_DOTDASH, FL_DASH,
-            FL_LONGDASH
+        lnstyle : int
+            style of the line to draw. Values (from xfdata.py)
+            FL_SOLID (Solid line. Default and most efficient), FL_USERDASH
+            (Dashed line, but the dash pattern is used-definable via
+            fl_dashedlinestyle(). Only the odd numbered segments are
+            drawn with the foreground color), FL_USERDOUBLEDASH (Similar to
+            FL_LINE_USERDASH but both even and odd numbered segments are
+            drawn, with the even numbered segments drawn in the background
+            color (as set by fl_bk_color()), FL_DOT (Dotted line [....]),
+            FL_DOTDASH (Dash-dot-dash line [-.-.]), FL_DASH (Dashed line
+            [----]), FL_LONGDASH (Long dashed line [--------]).
         fill : int
             flag if the marker should be filled or not. Values 1 (filled)
             or 0 (not filled)
@@ -881,23 +904,23 @@ def flimage_add_marker(ptr_image, name, xpos, ypos, width, height, style,
     f_ypos = library.convert_to_doublec(ypos)
     f_width = library.convert_to_doublec(width)
     f_height = library.convert_to_doublec(height)
-    library.checkfatal_allowed_value_in_list(style, xfdata.LINESTYLE_list)
-    i_style = library.convert_to_intc(style)
+    library.checkfatal_allowed_value_in_list(lnstyle, xfdata.LINESTYLE_list)
+    i_lnstyle = library.convert_to_intc(lnstyle)
     i_fill = library.convert_to_intc(fill)
     i_rot = library.convert_to_intc(rot)
     ul_colr = library.convert_to_FL_COLOR(colr)
     ul_bcolr = library.convert_to_FL_COLOR(bcolr)
     library.keep_elem_refs(ptr_image, name, xpos, ypos, width, height, \
-            style, fill, rot, colr, bcolr, s_name, f_xpos, f_ypos, \
-            f_width, f_height, i_style, i_fill, i_rot, ul_colr, ul_bcolr)
+            lnstyle, fill, rot, colr, bcolr, s_name, f_xpos, f_ypos, \
+            f_width, f_height, i_lnstyle, i_fill, i_rot, ul_colr, ul_bcolr)
     retval = _flimage_add_marker(ptr_image, s_name, f_xpos, f_ypos, f_width,
-            f_height, i_style, i_fill, i_rot, ul_colr, ul_bcolr)
+            f_height, i_lnstyle, i_fill, i_rot, ul_colr, ul_bcolr)
     return retval
 
 
 def flimage_add_marker_struct(ptr_image, ptr_imagemarker):
     """flimage_add_marker_struct(ptr_image, ptr_imagemarker) -> nummarkers
-    
+
     Adds simple markers (e.g. arrows, circles, etc) to an image, using
     xfdata.FLIMAGE_MARKER class instance.
 
@@ -938,7 +961,7 @@ def flimage_add_marker_struct(ptr_image, ptr_imagemarker):
 
 def flimage_define_marker(mkname, pyfn_FlimageMarkerDraw, psdraw):
     """flimage_define_marker(mkname, pyfn_FlimageMarkerDraw, psdraw) -> result
-    
+
     Defines a custom marker, using a specific function for drawing it.
 
     Parameters
@@ -988,7 +1011,7 @@ def flimage_define_marker(mkname, pyfn_FlimageMarkerDraw, psdraw):
 
 def flimage_delete_all_markers(ptr_image):
     """flimage_delete_all_markers(ptr_image)
-    
+
     Deletes all markers added to an image
 
     Parameters
@@ -1017,7 +1040,7 @@ def flimage_delete_all_markers(ptr_image):
 
 def flimage_render_annotation(ptr_image, win):
     """flimage_render_annotation(ptr_image, win) -> result
-    
+
     Makes the annotations a part of the image pixel. By default annotations
     placed on the image are kept seperate from the image pixels themselves,
     as keeping the annotation seperate makes it possible to later edit the
@@ -1066,7 +1089,7 @@ def flimage_render_annotation(ptr_image, win):
 
 def flimage_error(ptr_image, text):
     """flimage_error(ptr_image, text)
-    
+
     Calls the error message handler for an image.
 
     Parameters
@@ -1100,7 +1123,7 @@ def flimage_error(ptr_image, text):
 
 def flimage_enable_pnm():
     """flimage_enable_pnm()
-    
+
     Enables use of PNM (Portable anymap) image format.
 
     Examples
@@ -1122,7 +1145,7 @@ def flimage_enable_pnm():
 
 def flimage_set_fits_bits(numbits):
     """flimage_set_fits_bits(numbits) -> oldnumbits
-    
+
     Defines the number of bits of a FITS image.
 
     Parameters
@@ -1157,7 +1180,7 @@ def flimage_set_fits_bits(numbits):
 
 def flimage_jpeg_output_options(ptr_imagejpegoption):
     """flimage_jpeg_output_options(ptr_imagejpegoption)
-    
+
     Defines quality and smoothing options of a JPEG image, using
     xfdata.FLIMAGE_JPEG_OPTION. The default quality factor for JPEG output
     is 75. In general, the higher the quality factor the better the image
@@ -1190,7 +1213,7 @@ def flimage_jpeg_output_options(ptr_imagejpegoption):
 
 def flimage_pnm_output_options(rawformat):
     """flimage_pnm_output_options(rawformat)
-    
+
     Defines variant options for PNM (ppm, pgm and pbm) images.
 
     Parameters
@@ -1221,7 +1244,7 @@ def flimage_pnm_output_options(rawformat):
 
 def flimage_gif_output_options(interlace):
     """flimage_gif_output_options(interlace)
-    
+
     Defines options of GIF images.
 
     Parameters
@@ -1251,7 +1274,7 @@ def flimage_gif_output_options(interlace):
 
 def flimage_ps_options():
     """flimage_ps_options() -> ptr_flpscontrol
-    
+
     Defines reading and writing options for PostScript.
 
     Returns
@@ -1284,7 +1307,7 @@ flimage_gif_options = flimage_gif_output_options
 
 def flimage_get_number_of_formats():
     """flimage_get_number_of_formats() -> numformats
-    
+
     Finds out the number of currently supported image formats.
 
     Returns
@@ -1312,7 +1335,7 @@ def flimage_get_number_of_formats():
 
 def flimage_get_format_info(imgfmtnum):
     """flimage_get_format_info(imgfmtnum) -> ptr_imageformatinfo
-    
+
     Finds out detailed information for each image format.
 
     Parameters
@@ -1349,7 +1372,7 @@ def flimage_get_format_info(imgfmtnum):
 # TODO: verify if it is useful in python
 def fl_get_matrix(numrows, numcols, elemsize):
     """fl_get_matrix(numrows, numcols, elemsize) -> matrix
-    
+
     Creates a 2-dimensional array of entities of size elemsize. The array
     is of numrows by numcols in size.
 
@@ -1393,7 +1416,7 @@ def fl_get_matrix(numrows, numcols, elemsize):
 # TODO: verify if it is useful in python
 def fl_make_matrix(numrows, numcols, elemsize, mem):
     """fl_make_matrix(numrows, numcols, elemsize, mem) -> matrix
-    
+
     Makes a matrix out of a given piece of memory.
 
     Parameters
@@ -1440,7 +1463,7 @@ def fl_make_matrix(numrows, numcols, elemsize, mem):
 # TODO: verify if it is useful in python
 def fl_free_matrix(matrix):
     """fl_free_matrix(matrix)
-    
+
     Frees a matrix allocated using fl_get_matrix() or fl_make_matrix().
 
     Parameters
@@ -1472,7 +1495,7 @@ def fl_free_matrix(matrix):
 
 def fl_lookup_RGBcolor(colrname):
     """fl_lookup_RGBcolor(colrname) -> result, red, green, blue
-    
+
     Finds out red, green and blue value corresponding to a color name.
 
     Parameters
@@ -1528,7 +1551,7 @@ def flimage_add_format(formalname, shortname, extension, imagetype,
     """flimage_add_format(formalname, shortname, extension, imagetype,
     pyfn_ImageIdentify, pyfn_ImageDescription, pyfn_ImageReadPixels,
     pyfn_ImageWriteImage) -> result
-    
+
     Adds the newly specified image format to a recognized image format
     pool in the library.
 
@@ -1642,7 +1665,7 @@ def flimage_add_format(formalname, shortname, extension, imagetype,
 
 def flimage_set_annotation_support(imgnum, yesno):
     """flimage_set_annotation_support(imgnum, yesno)
-    
+
     Defines support for annotations.
 
     Parameters
@@ -1675,7 +1698,7 @@ def flimage_set_annotation_support(imgnum, yesno):
 
 def flimage_getcolormap(ptr_image):
     """flimage_getcolormap(ptr_image)
-    
+
     Finds out color map for an image.
 
     Parameters
@@ -1710,7 +1733,7 @@ def flimage_getcolormap(ptr_image):
 
 def fl_select_mediancut_quantizer():
     """fl_select_mediancut_quantizer()
-    
+
     Selects median cut quantizer, who uses Heckbert's median cut algorithm
     followed by Floyd-Steinberg dithering after which the pixels are mapped
     to the colors selected. This tends to give better images because of the
@@ -1740,7 +1763,7 @@ def fl_select_mediancut_quantizer():
 
 def flimage_convolve(ptr_image, kernel, krows, kcols):
     """flimage_convolve(ptr_image, kernel, krows, kcols) -> result
-    
+
     Takes a convolution kernel of krows by kcols and convolves it with
     the image. The result replaces the input image.
 
@@ -1787,7 +1810,7 @@ def flimage_convolve(ptr_image, kernel, krows, kcols):
 
 def flimage_convolvea(ptr_image, kernel, krows, kcols):
     """flimage_convolvea(ptr_image, kernel, krows, kcols) -> result
-    
+
     Takes a convolution kernel of krows by kcols and convolves it with the
     image. The result replaces the input image. It uses a kernel that is a
     C 2-dimensional array, kernel[krows][kcols] (cast to a pointer to int).
@@ -1835,7 +1858,7 @@ def flimage_convolvea(ptr_image, kernel, krows, kcols):
 
 def flimage_tint(ptr_image, packed, opacity):
     """flimage_tint(ptr_image, packed, opacity) -> result
-    
+
     Emulates the effect of looking at an image through a piece of colored
     glass. Tint is most useful in cases where you want to put some annotations
     on the image, but do not want to use a uniform and opaque background that
@@ -1887,7 +1910,7 @@ def flimage_tint(ptr_image, packed, opacity):
 
 def flimage_rotate(ptr_image, angle, subpixel):
     """flimage_rotate(ptr_image, angle, subpixel) -> result
-    
+
     Does an image rotation. Repeated rotations should be avoided if possible.
     If you have to call it more than once it is a good idea to crop after
     rotations in order to get rid of the regions that contain only fill color.
@@ -1902,10 +1925,11 @@ def flimage_rotate(ptr_image, angle, subpixel):
             counter-clock rotation.
         subpixel : int
             if subpixel sampling should be enabled. Values (from xfdata.py)
-            FLIMAGE_NOSUBPIXEL or FLIMAGE_SUBPIXEL. If enabled, the resulting
-            image pixels are interpolated from the original pixels; this
-            usually has an "anti-aliasing" effect that leads to less severe
-            jagged edges and similar artifacts commonly encountered in
+            FLIMAGE_NOSUBPIXEL (scale with no subpixel sampling) or
+            FLIMAGE_SUBPIXEL (scale with subpixel sampling). If enabled, the
+            resulting image pixels are interpolated from the original pixels;
+            this usually has an "anti-aliasing" effect that leads to less
+            severe jagged edges and similar artifacts commonly encountered in
             rotations. However, it also means that a color indexed image gets
             converted to a RGB image. If preserving the pixel value is
             important, you should not turn subpixel sampling on.
@@ -1941,7 +1965,7 @@ def flimage_rotate(ptr_image, angle, subpixel):
 
 def flimage_flip(ptr_image, flipaxis):
     """flimage_flip(ptr_image, flipaxis) -> result
-    
+
     Does the mirror operation in x- or y-direction at the center. For
     example, to flip the columns of an image, the left and right of the
     image are flipped (just like having a vertical mirror in the center of
@@ -1989,7 +2013,7 @@ def flimage_flip(ptr_image, flipaxis):
 
 def flimage_scale(ptr_image, newwidth, newheight, option):
     """flimage_scale(ptr_image, newwidth, newheight, option) -> result
-    
+
     Scales an image to any desired size with or without subpixel sampling.
     Without subpixel sampling simple pixel replication is used, otherwise a
     box average algorithm is employed that yields an anti-aliased image with
@@ -2044,7 +2068,7 @@ def flimage_scale(ptr_image, newwidth, newheight, option):
 def flimage_warp(ptr_image, matrix, newwidth, newheight, subpixel):
     """flimage_warp(ptr_image, matrix, newwidth, newheight, subpixel)
     -> result
-    
+
     Does transformation of pixel coordinates. Rotation, scaling, shearing
     etc. are examples of (linear and non-perspective) image warping. User can
     specify whatever size he/she wants and the warp function will fill the
@@ -2105,7 +2129,7 @@ def flimage_warp(ptr_image, matrix, newwidth, newheight, subpixel):
 
 def flimage_autocrop(ptr_image, bgcolr):
     """flimage_autocrop(ptr_image, bgcolr) -> result
-    
+
     Automatically crops an image using the background as the color to crop,
     by searching the image from all four sides and removing all contiguous
     regions of the uniform background from the sides. The image is modified
@@ -2148,7 +2172,7 @@ def flimage_autocrop(ptr_image, bgcolr):
 def flimage_get_autocrop(ptr_image, bgcolr):
     """flimage_get_autocrop(ptr_image, bgcolr) -> result, xloff, ytoff,
     xroff, yboff
-    
+
     Finds out the auto-cropping offsets (from left, right, top and bottom
     sides) of an image.
 
@@ -2210,7 +2234,7 @@ def flimage_get_autocrop(ptr_image, bgcolr):
 
 def flimage_crop(ptr_image, xloff, ytoff, xroff, yboff):
     """flimage_crop(ptr_image, xloff, ytoff, xroff, yboff)
-    
+
     Crops an image, using offsets supplied by the user.
 
     Parameters
@@ -2268,7 +2292,7 @@ def flimage_crop(ptr_image, xloff, ytoff, xroff, yboff):
 
 def flimage_replace_pixel(ptr_image, targetcolr, newcolr):
     """flimage_replace_pixel(ptr_image, targetcolr, newcolr) -> result
-    
+
     Replaces all color targetcolr with the new desired color.
 
     Parameters
@@ -2311,7 +2335,7 @@ def flimage_replace_pixel(ptr_image, targetcolr, newcolr):
 
 def flimage_transform_pixels(ptr_image, red, green, blue):
     """flimage_transform_pixels(ptr_image, red, green, blue)
-    
+
     Processes an image in place with RGB transformation and replaces it.
 
     Parameters
@@ -2362,7 +2386,7 @@ def flimage_transform_pixels(ptr_image, red, green, blue):
 
 def flimage_windowlevel(ptr_image, winlvl, width):
     """flimage_windowlevel(ptr_image, winlvl, width)
-    
+
     Defines the window level for an image. If it points to a multiple image,
     window level parameters are changed for all images.
 
@@ -2405,7 +2429,7 @@ def flimage_windowlevel(ptr_image, winlvl, width):
 
 def flimage_enhance(ptr_image, delta):
     """flimage_enhance(ptr_image, delta)
-    
+
     Enhances an image *todo*
 
     Parameters
@@ -2444,7 +2468,7 @@ def flimage_enhance(ptr_image, delta):
 # TODO: verify if ptr_image should be a returned param, instead.
 def flimage_from_pixmap(ptr_image, pixmap):
     """flimage_from_pixmap(ptr_image, pixmap) -> result
-    
+
     Converts a Pixmap to an image. *todo*
 
     Parameters
@@ -2482,7 +2506,7 @@ def flimage_from_pixmap(ptr_image, pixmap):
 
 def flimage_to_pixmap(ptr_image, win):
     """flimage_to_pixmap(ptr_image, win) -> pixmap
-    
+
     Converts an image into a Pixmap (a server side resource) that
     can be used in the pixmap flobject.
 
@@ -2521,7 +2545,7 @@ def flimage_to_pixmap(ptr_image, win):
 
 def flimage_dup(ptr_image):
     """flimage_dup(ptr_image) -> ptr_image
-    
+
     Duplicates an image and returns the duplicated image. At the moment,
     only the first image is duplicated even if the input image has multiple
     frames. Furthermore, markers and annotations are not duplicated.
@@ -2562,7 +2586,7 @@ def fl_get_submatrix(inmatrix, numrows, numcols, startrow, startcol, \
                      endrow, endcol, elemsize):
     """fl_get_submatrix(inmatrix, numrows, numcols, startrow, startcol,
     endrow, endcol, elemsize)
-    
+
     Grabs a piece of an image matrix. The piece is of nrows by ncols in
     size.
 
@@ -2626,7 +2650,7 @@ def fl_j2pass_quantize_packed(packed, width, height, maxcolr, ci, \
             actualcolr, redlut, greenlut, bluelut, ptr_image):
     """fl_j2pass_quantize_packed(packed, width, height, maxcolr, ci,
     actualcolr, redlut, greenlut, bluelut, ptr_image) -> num
-    
+
     *todo*
 
     Parameters
@@ -2700,7 +2724,7 @@ def fl_j2pass_quantize_rgb(red, green, blue, width, height, maxcolr, ci, \
             actualcolr, redlut, greenlut, bluelut, ptr_image):
     """fl_j2pass_quantize_rgb(red, green, blue, width, height, maxcolr, ci,
     actualcolr, redlut, greenlut, bluelut, ptr_image) -> num
-    
+
     *todo*
 
     Parameters
@@ -2784,7 +2808,7 @@ def fl_make_submatrix(inmatrix, numrows, numcols, startrow, startcol, \
                       endrow, endcol, elemsize):
     """fl_make_submatrix(inmatrix, numrows, numcols, startrow, startcol,
     endrow, endcol, elemsize) -> submatrix
-    
+
     *todo*
 
     Parameters
@@ -2845,7 +2869,7 @@ def fl_make_submatrix(inmatrix, numrows, numcols, startrow, startcol, \
 
 def fl_pack_bits(inval, numindxs):
     """fl_pack_bits(inval, numindxs) -> outval
-    
+
     Packs color index (0 or 1) into bytes.
 
     Parameters
@@ -2892,7 +2916,7 @@ def fl_pack_bits(inval, numindxs):
 
 def fl_unpack_bits(inval, numindxs):
     """fl_unpack_bits(inval, numindxs) -> outval
-    
+
     Unpacks packed bits into color indexes (0 or 1).
 
     Parameters
@@ -2919,7 +2943,7 @@ def fl_unpack_bits(inval, numindxs):
     Notes
     -----
         Status: Untested + Doc + NoDemo = NOT OK
-    
+
     """
     _fl_unpack_bits = library.cfuncproto(
         library.load_so_libflimage(), "fl_unpack_bits",
@@ -2940,7 +2964,7 @@ def fl_unpack_bits(inval, numindxs):
 
 def fl_value_to_bits(val):
     """fl_value_to_bits(val) -> num
-    
+
     *todo*
 
     Parameters
@@ -2975,7 +2999,7 @@ def fl_value_to_bits(val):
 
 def flimage_add_comments(ptr_image, text, length):
     """flimage_add_comments(ptr_image, text, length)
-    
+
     Adds a comment to an image.
 
     Parameters
@@ -3011,7 +3035,7 @@ def flimage_add_comments(ptr_image, text, length):
 
 def flimage_color_to_pixel(ptr_image, red, green, blue):
     """flimage_color_to_pixel(ptr_image, red, green, blue) -> pixelval, pixel
-    
+
     Convert an RGB triple to a pixel.
 
     Parameters
@@ -3067,7 +3091,7 @@ def flimage_color_to_pixel(ptr_image, red, green, blue):
 
 def flimage_combine(ptr_image1, ptr_image2, alpha):
     """flimage_combine(ptr_image1, ptr_image2, alpha) -> ptr_image
-    
+
     Combines two images with alpha level?, returning a new image.
 
     Parameters
@@ -3110,7 +3134,7 @@ def flimage_combine(ptr_image1, ptr_image2, alpha):
 
 def flimage_display_markers(ptr_image):
     """flimage_display_markers(ptr_image)
-    
+
     Displays markers added to an image.
 
     Parameters
@@ -3139,7 +3163,7 @@ def flimage_display_markers(ptr_image):
 
 def flimage_dup_(ptr_image, copypix):
     """flimage_dup_(ptr_image, copypix)
-    
+
     Duplicates an image, with or without the pixels.
 
     Parameters
@@ -3178,7 +3202,7 @@ def flimage_dup_(ptr_image, copypix):
 
 def flimage_enable_bmp():
     """flimage_enable_bmp()
-    
+
     Enables use of BMP (Windows/OS2 Bitmap) image format.
 
     Examples
@@ -3200,7 +3224,7 @@ def flimage_enable_bmp():
 
 def flimage_enable_fits():
     """flimage_enable_fits()
-    
+
     Enables use of NASA/NOTS standard FITS image format.
 
     Examples
@@ -3222,7 +3246,7 @@ def flimage_enable_fits():
 # TODO: try to understand what kind of images is this one.
 def flimage_enable_genesis():
     """flimage_enable_genesis()
-    
+
     Enables use of Genesis image format.
 
     Examples
@@ -3244,7 +3268,7 @@ def flimage_enable_genesis():
 
 def flimage_enable_gif():
     """flimage_enable_gif()
-    
+
     Enables use of GIF (Compuserve Graphics Interchange format)
     image format.
 
@@ -3267,7 +3291,7 @@ def flimage_enable_gif():
 
 def flimage_enable_gzip():
     """flimage_enable_gzip()
-    
+
     Enables use of gzip compression filter for images.
 
     Examples
@@ -3289,7 +3313,7 @@ def flimage_enable_gzip():
 
 def flimage_enable_jpeg():
     """flimage_enable_jpeg()
-    
+
     Enables use of JPEG/JFIF (Joint Photographic Experts Group) image
     format.
 
@@ -3312,7 +3336,7 @@ def flimage_enable_jpeg():
 
 def flimage_enable_png():
     """flimage_enable_png()
-    
+
     Enables use of PNG (Portable Network Graphics) image format. It
     requires netpbm library to be installed.
 
@@ -3335,7 +3359,7 @@ def flimage_enable_png():
 
 def flimage_enable_ps():
     """flimage_enable_ps()
-    
+
     Enables use of PS (Adobe PostScript) image format. It needs gs
     (ghostscript) for reading.
 
@@ -3358,7 +3382,7 @@ def flimage_enable_ps():
 
 def flimage_enable_sgi():
     """flimage_enable_sgi()
-    
+
     Enables use of SGI (Silicon Graphics-Iris) image format. It requires
     pbmplus/netpbm library to be installed.
 
@@ -3381,7 +3405,7 @@ def flimage_enable_sgi():
 
 def flimage_enable_tiff():
     """flimage_enable_tiff()
-    
+
     Enables use of TIFF (Tagged Image file, with no compression) image
     format.
 
@@ -3404,7 +3428,7 @@ def flimage_enable_tiff():
 
 def flimage_enable_xbm():
     """flimage_enable_xbm()
-    
+
     Enables use of XBM (X Window Bitmap) image format.
 
     Examples
@@ -3426,7 +3450,7 @@ def flimage_enable_xbm():
 
 def flimage_enable_xpm():
     """flimage_enable_xpm()
-    
+
     Enables use of XPM3 (X Window PixMap) image format.
 
     Examples
@@ -3448,7 +3472,7 @@ def flimage_enable_xpm():
 
 def flimage_enable_xwd():
     """flimage_enable_xwd()
-    
+
     Enables use of XWD (X Window Dump) image format.
 
     Examples
@@ -3470,7 +3494,7 @@ def flimage_enable_xwd():
 
 def flimage_free_ci(ptr_image):
     """flimage_free_ci(ptr_image)
-    
+
     Frees an image of type xfdata.FL_IMAGE_CI?
 
     Parameters
@@ -3499,7 +3523,7 @@ def flimage_free_ci(ptr_image):
 
 def flimage_free_gray(ptr_image):
     """flimage_free_gray(ptr_image)
-    
+
     Frees an image of type xfdata.FL_IMAGE_GRAY?.
 
     Parameters
@@ -3528,7 +3552,7 @@ def flimage_free_gray(ptr_image):
 
 def flimage_free_linearlut(ptr_image):
     """flimage_free_linearlut(ptr_image)
-    
+
     *todo*
 
     Parameters
@@ -3557,7 +3581,7 @@ def flimage_free_linearlut(ptr_image):
 
 def flimage_free_rgb(ptr_image):
     """flimage_free_rgb(ptr_image)
-    
+
     Frees an image of type xfdata.FL_IMAGE_RGB?.
 
     Parameters
@@ -3586,7 +3610,7 @@ def flimage_free_rgb(ptr_image):
 
 def flimage_freemem(ptr_image):
     """flimage_freemem(ptr_image)
-    
+
     Frees all allocated memory associated with the image.
 
     Parameters
@@ -3615,7 +3639,7 @@ def flimage_freemem(ptr_image):
 
 def flimage_get_closest_color_from_map(ptr_image, colr):
     """flimage_get_closest_color_from_map(ptr_image, colr) -> colr
-    
+
     Gets closest color from color map?
 
     Parameters
@@ -3654,7 +3678,7 @@ def flimage_get_closest_color_from_map(ptr_image, colr):
 
 def flimage_get_linearlut(ptr_image):
     """flimage_get_linearlut(ptr_image) -> result
-    
+
     *todo*
 
     Parameters
@@ -3689,7 +3713,7 @@ def flimage_get_linearlut(ptr_image):
 
 def flimage_invalidate_pixels(ptr_image):
     """flimage_invalidate_pixels(ptr_image)
-    
+
     Invalidates/frees all other types of image, before we modify the
     current image.
 
@@ -3719,7 +3743,7 @@ def flimage_invalidate_pixels(ptr_image):
 
 def flimage_open(fname):
     """flimage_open(fname) -> ptr_image
-    
+
     Opens an image file. Use flimage_read() to read it.
 
     Parameters
@@ -3754,7 +3778,7 @@ def flimage_open(fname):
 
 def flimage_read_annotation(ptr_image):
     """flimage_read_annotation(ptr_image) -> resutl
-    
+
     Reads annotation in the image?
 
     Parameters
@@ -3789,7 +3813,7 @@ def flimage_read_annotation(ptr_image):
 
 def flimage_replace_image(ptr_image, width, height, red, green, blue):
     """flimage_replace_image(ptr_image, width, height, red, green, blue)
-    
+
     Replaces an image?
 
     Parameters
@@ -3836,7 +3860,7 @@ def flimage_replace_image(ptr_image, width, height, red, green, blue):
 
 def flimage_swapbuffer(ptr_image):
     """flimage_swapbuffer(ptr_image) -> result
-    
+
     Swaps buffer of an image?
 
     Parameters
@@ -3871,7 +3895,7 @@ def flimage_swapbuffer(ptr_image):
 
 def flimage_to_ximage(ptr_image, win, ptr_xwindowattributes):
     """flimage_to_ximage(ptr_image, win, ptr_xwindowattributes) -> result
-    
+
     Converts an FL_IMAGE into an XImage. The converted ximage is
     ptr_image.contents.ximage if successful *todo*
 
@@ -3916,7 +3940,7 @@ def flimage_to_ximage(ptr_image, win, ptr_xwindowattributes):
 
 def flimage_write_annotation(ptr_image):
     """flimage_write_annotation(ptr_image) -> result
-    
+
     Writes annotation in the image?
 
     Parameters

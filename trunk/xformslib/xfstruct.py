@@ -679,13 +679,13 @@ def make_flpopupcb(pyfn_popupcb):
     Taking a python callback function name, prapares and returns a 
     C-compatible xfdata.FL_POPUP_CB function."""
 
-    if hasattr(pyfn_flpopupcb, '__call__'):
+    if hasattr(pyfn_popupcb, '__call__'):
         cfn_popupcb = xfdata.FL_POPUP_CB(pyfn_popupcb)
         library.keep_cfunc_refs(pyfn_popupcb, cfn_popupcb)
         return cfn_popupcb
     else:
         raise library.XFormsTypeError("Parameter %s (of type %s) must be" \
-                " a python list" % (listspseqargs, type(listspseqargs)))
+                " a python function" % (pyfn_popupcb, type(pyfn_popupcb)))
 
 
 def donothing_flpopupcb(ptr_flpopupreturn):

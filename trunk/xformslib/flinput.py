@@ -48,16 +48,22 @@ from xformslib import flbasic
 def fl_add_input(inputtype, xpos, ypos, width, height, label):
     """fl_add_input(inputtype, xpos, ypos, width, height, label)
     -> ptr_flobject
-    
+
     Adds an input flobject.
 
     Parameters
     ----------
         inputtype : int
             type of input to be added. Values (from xfdata.py)
-            FL_NORMAL_INPUT, FL_FLOAT_INPUT, FL_INT_INPUT,
-            FL_DATE_INPUT, FL_MULTILINE_INPUT, FL_HIDDEN_INPUT,
-            FL_SECRET_INPUT
+            FL_NORMAL_INPUT (Any type of text can be typed into this field),
+            FL_FLOAT_INPUT (Only a float value can be typed in, e.g. -23.2e12),
+            FL_INT_INPUT (Only an integer value can be typed in, e.g. -86),
+            FL_DATE_INPUT (Only a date, MM/DD/YY or DD/MM/YY, can be typed in,
+            limited per default to 10 characters), FL_MULTILINE_INPUT (An
+            input field allowing for multiple lines), FL_HIDDEN_INPUT (A normal
+            input field but invisible), FL_SECRET_INPUT (A normal input field
+            that does not show the text, limited per default to a maximum
+            length of 16 characters)
         xpos : int
             horizontal position (upper-left corner)
         ypos : int
@@ -106,7 +112,7 @@ def fl_add_input(inputtype, xpos, ypos, width, height, label):
 
 def fl_set_input(ptr_flobject, text):
     """fl_set_input(ptr_flobject, text)
-    
+
     Defines the particular input string, with no checks for validity.
     An empty string can be used to clear an input field.
 
@@ -142,7 +148,7 @@ def fl_set_input(ptr_flobject, text):
 
 def fl_set_input_color(ptr_flobject, txtcolr, curscolr):
     """fl_set_input_color(ptr_flobject, txtcolr, curscolr)
-    
+
     Defines text and cursor colors to be used in input flobject.
 
     Parameters
@@ -182,7 +188,7 @@ def fl_set_input_color(ptr_flobject, txtcolr, curscolr):
 
 def fl_get_input_color(ptr_flobject):
     """fl_get_input_color(ptr_flobject) -> txtcolr, curscolr
-    
+
     Finds out current color for text and cursor of an input flobject.
 
     Parameters
@@ -228,7 +234,7 @@ def fl_get_input_color(ptr_flobject):
 
 def fl_set_input_scroll(ptr_flobject, yesno):
     """fl_set_input_scroll(ptr_flobject, yesno)
-    
+
     Turn on or off scrolling for an input field (for both multiline and
     single line input field).
 
@@ -262,7 +268,7 @@ def fl_set_input_scroll(ptr_flobject, yesno):
 
 def fl_set_input_cursorpos(ptr_flobject, xpos, ypos):
     """fl_set_input_cursorpos(ptr_flobject, xpos, ypos)
-    
+
     Moves the cursor within the input field.
 
     Parameters
@@ -297,7 +303,7 @@ def fl_set_input_cursorpos(ptr_flobject, xpos, ypos):
 
 def fl_set_input_selected(ptr_flobject, yesno):
     """fl_set_input_selected(ptr_flobject, yesno)
-    
+
     Selects or deselects the current input. It places the cursor
     at the end of the string when selected.
 
@@ -331,7 +337,7 @@ def fl_set_input_selected(ptr_flobject, yesno):
 
 def fl_set_input_selected_range(ptr_flobject, beginchar, endchar):
     """fl_set_input_selected_range(ptr_flobject, beginchar, endchar)
-    
+
     Selects or deselects the current input of part of it. When begin is
     0 and end is the last character number, all input is selected. It
     places the cursor at the beginning of selected string.
@@ -370,7 +376,7 @@ def fl_set_input_selected_range(ptr_flobject, beginchar, endchar):
 
 def fl_get_input_selected_range(ptr_flobject):
     """fl_get_input_selected_range(ptr_flobject) -> selstr, beginchar, endchar
-    
+
     Finds out the currently selected range, either selected by the
     application or by the user.
 
@@ -421,7 +427,7 @@ def fl_get_input_selected_range(ptr_flobject):
 
 def fl_set_input_maxchars(ptr_flobject, maxchars):
     """fl_set_input_maxchars(ptr_flobject, maxchars)
-    
+
     Limits the number of characters per line for input fields of type
     xfdata.FL_NORMAL_INPUT. Note that input flobjects of type
     xfdata.FL_DATE_INPUT are limited to 10 characters per default and those
@@ -457,15 +463,17 @@ def fl_set_input_maxchars(ptr_flobject, maxchars):
 
 def fl_set_input_format(ptr_flobject, fmt, sep):
     """fl_set_input_format(ptr_flobject, fmt, sep)
-    
+
     Defines the format used for an input flobject. Currently used only for
     xfdata.FL_DATE_INPUT flobjects.
 
     Parameters
     ----------
         fmt : int
-            format for the input. Values (from xfdata.py) FL_INPUT_DDMM,
-            FL_INPUT_MMDD
+            format for the input. Values (from xfdata.py)
+            FL_INPUT_MMDD (Used as format for FL_DATE_INPUT, it places the
+            month before the day, FL_INPUT_DDMM (Used as format for
+            FL_DATE_INPUT, it places the day before the month).
         sep : int or char
             printable single character used as separator
 
@@ -498,7 +506,7 @@ def fl_set_input_format(ptr_flobject, fmt, sep):
 
 def fl_set_input_hscrollbar(ptr_flobject, pref):
     """fl_set_input_hscrollbar(ptr_flobject, pref)
-    
+
     Defines horizontal scrollbar settings. By default, if an input field of
     type xfdata.FL_MULTILINE_INPUT contains more text than can be shown,
     scrollbars will appear with which the user can scroll the text around
@@ -512,7 +520,8 @@ def fl_set_input_hscrollbar(ptr_flobject, pref):
             input flobject
         pref : int
             how is horizontal scrollbar shown. Values (from xfdata.py)
-            FL_AUTO, FL_ON, FL_OFF
+            FL_AUTO (On when needed, default), FL_ON (always on), FL_OFF
+            (always off)
 
     Examples
     --------
@@ -537,7 +546,7 @@ def fl_set_input_hscrollbar(ptr_flobject, pref):
 
 def fl_set_input_vscrollbar(ptr_flobject, pref):
     """fl_set_input_vscrollbar(ptr_flobject, pref)
-    
+
     Defines vertical scrollbar settings. By default, if an input field of
     type xfdata.FL_MULTILINE_INPUT contains more text than can be shown,
     scrollbars will appear with which the user can scroll the text around
@@ -551,7 +560,8 @@ def fl_set_input_vscrollbar(ptr_flobject, pref):
             input flobject
         pref : int
             how is vertical scrollbar shown. Values (from xfdata.py)
-            FL_AUTO, FL_ON, FL_OFF
+            FL_AUTO (On when needed, default), FL_ON (always on), FL_OFF
+            (always off)
 
     Examples
     --------
@@ -576,7 +586,7 @@ def fl_set_input_vscrollbar(ptr_flobject, pref):
 
 def fl_set_input_topline(ptr_flobject, linenum):
     """fl_set_input_topline(ptr_flobject, linenum)
-    
+
     Scrolls vertically an input flobject (for input fields of type
     xfdata.FL_MULTILINE_INPUT only).
 
@@ -609,7 +619,7 @@ def fl_set_input_topline(ptr_flobject, linenum):
 
 def fl_set_input_scrollbarsize(ptr_flobject, height, width):
     """fl_set_input_scrollbarsize(ptr_flobject, height, width)
-    
+
     Changes the size of the scrollbars. By default, the scrollbar size
     is dependent on the initial size of the input box.
 
@@ -645,7 +655,7 @@ def fl_set_input_scrollbarsize(ptr_flobject, height, width):
 
 def fl_get_input_scrollbarsize(ptr_flobject):
     """fl_get_input_scrollbarsize(ptr_flobject) -> height, width
-    
+
     Finds out the current settings for the horizontal scrollbar height
     and the vertical scrollbar width.
 
@@ -692,7 +702,7 @@ def fl_get_input_scrollbarsize(ptr_flobject):
 
 def fl_set_input_xoffset(ptr_flobject, offset):
     """fl_set_input_xoffset(ptr_flobject, offset)
-    
+
     Scrolls programmatically horizontally (to the left).
 
     Parameters
@@ -725,7 +735,7 @@ def fl_set_input_xoffset(ptr_flobject, offset):
 
 def fl_get_input_xoffset(ptr_flobject):
     """fl_get_input_xoffset(ptr_flobject) -> offset
-    
+
     Finds out the current horizontal scrolling offset.
 
     Parameters
@@ -760,7 +770,7 @@ def fl_get_input_xoffset(ptr_flobject):
 
 def fl_set_input_fieldchar(ptr_flobject, fldchar):
     """fl_set_input_fieldchar(ptr_flobject, fldchar) -> oldchar
-    
+
     Changes the character used to draw the text, for secret input field.
     By default text is drawn using spaces.
 
@@ -804,7 +814,7 @@ def fl_set_input_fieldchar(ptr_flobject, fldchar):
 
 def fl_get_input_topline(ptr_flobject):
     """fl_get_input_topline(ptr_flobject) -> linenum
-    
+
     Finds out the current topline in the input field.
 
     Parameters
@@ -839,7 +849,7 @@ def fl_get_input_topline(ptr_flobject):
 
 def fl_get_input_screenlines(ptr_flobject):
     """fl_get_input_screenlines(ptr_flobject) -> numlines
-    
+
     Finds out the number of lines that fit inside the input box.
 
     Parameters
@@ -874,7 +884,7 @@ def fl_get_input_screenlines(ptr_flobject):
 
 def fl_get_input_cursorpos(ptr_flobject):
     """fl_get_input_cursorpos(ptr_flobject) -> result, xpos, ypos
-    
+
     Finds out the cursor position measured in number of characters
     (including newline characters) in front of the cursor.
 
@@ -923,7 +933,7 @@ def fl_get_input_cursorpos(ptr_flobject):
 
 def fl_set_input_cursor_visible(ptr_flobject, yesno):
     """fl_set_input_cursor_visible(ptr_flobject, yesno)
-    
+
     Turns on or off the cursor of the input field.
 
     Parameters
@@ -956,7 +966,7 @@ def fl_set_input_cursor_visible(ptr_flobject, yesno):
 
 def fl_get_input_numberoflines(ptr_flobject):
     """fl_get_input_numberoflines(ptr_flobject) -> numlines
-    
+
     Finds out the number of lines in the input field.
 
     Parameters
@@ -991,7 +1001,7 @@ def fl_get_input_numberoflines(ptr_flobject):
 
 def fl_get_input_format(ptr_flobject):
     """fl_get_input_format(ptr_flobject) -> fmt, sep
-    
+
     Provides means for the validator to retrieve some information about
     user preference or other state dependent informations.
 
@@ -1037,7 +1047,7 @@ def fl_get_input_format(ptr_flobject):
 
 def fl_get_input(ptr_flobject):
     """fl_get_input(ptr_flobject) -> textins
-    
+
     Finds out the text string in the field (when the user has changed it).
 
     Parameters
@@ -1072,7 +1082,7 @@ def fl_get_input(ptr_flobject):
 
 def fl_set_input_filter(ptr_flobject, pyfn_InputValidator):
     """fl_set_input_filter(ptr_flobject, pyfn_InputValidator) -> InputValidator
-    
+
     Defines up a validator function, that is is called whenever a new
     (regular) character is entered.
 
@@ -1140,7 +1150,7 @@ def fl_set_input_filter(ptr_flobject, pyfn_InputValidator):
 
 def fl_validate_input(ptr_flobject):
     """fl_validate_input(ptr_flobject) -> result
-    
+
     Tests if the value in an input field is valid, according to the
     pre-defined validator function.
 
@@ -1182,7 +1192,7 @@ fl_set_input_shortcut = flbasic.fl_set_object_shortcut
 
 def fl_set_input_editkeymap(ptr_editkeymap):
     """fl_set_input_editkeymap(ptr_editkeymap)
-    
+
     Changes the default edit keymaps. Edit keymap is global and affects all
     input field within the application. All cursor keys (<Left>, <Home> etc.)
     are reserved and their meanings hard-coded, thus can?t be used in the

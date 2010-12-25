@@ -36,8 +36,16 @@ popups.<br>
 Parameters<br>
 ----------<br>
 &nbsp;&nbsp;&nbsp;&nbsp;nmenutype&nbsp;:&nbsp;type&nbsp;of&nbsp;nmenu&nbsp;to&nbsp;be.&nbsp;Values&nbsp;(from&nbsp;xfdata.py)<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_NORMAL_NMENU,&nbsp;FL_NORMAL_TOUCH_NMENU,&nbsp;FL_BUTTON_NMENU,<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_BUTTON_TOUCH_NMENU<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_NORMAL_NMENU&nbsp;(Probably&nbsp;the&nbsp;most&nbsp;often&nbsp;used&nbsp;type:&nbsp;shown&nbsp;as&nbsp;text<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;on&nbsp;a&nbsp;borderless&nbsp;background,&nbsp;popup&nbsp;gets&nbsp;opened&nbsp;when&nbsp;clicked&nbsp;on),<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_NORMAL_TOUCH_NMENU&nbsp;(Also&nbsp;shown&nbsp;as&nbsp;text&nbsp;on&nbsp;a&nbsp;borderless<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;background,&nbsp;but&nbsp;popup&nbsp;gets&nbsp;opened&nbsp;when&nbsp;the&nbsp;mouse&nbsp;is&nbsp;moved&nbsp;on&nbsp;top<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;of&nbsp;it&nbsp;without&nbsp;any&nbsp;further&nbsp;user&nbsp;action&nbsp;required),&nbsp;FL_BUTTON_NMENU<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(When&nbsp;not&nbsp;active&nbsp;shown&nbsp;as&nbsp;text&nbsp;on&nbsp;borderless&nbsp;background,&nbsp;when<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;clicked&nbsp;on&nbsp;popup&nbsp;is&nbsp;shown&nbsp;and&nbsp;the&nbsp;flobject&nbsp;itself&nbsp;being&nbsp;displayed<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;as&nbsp;a&nbsp;button),&nbsp;FL_BUTTON_TOUCH_NMENU&nbsp;(When&nbsp;not&nbsp;active&nbsp;shown&nbsp;as&nbsp;text<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;on&nbsp;borderless&nbsp;background,&nbsp;when&nbsp;mouse&nbsp;is&nbsp;moved&nbsp;onto&nbsp;it&nbsp;the&nbsp;popup<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;is&nbsp;shown&nbsp;and&nbsp;the&nbsp;flobject&nbsp;itself&nbsp;is&nbsp;displayed&nbsp;as&nbsp;a&nbsp;button)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;xpos&nbsp;:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;horizontal&nbsp;position&nbsp;(upper-left&nbsp;corner)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;ypos&nbsp;:&nbsp;int<br>
@@ -109,9 +117,9 @@ Parameters<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(separated&nbsp;additional&nbsp;argument&nbsp;corresponding&nbsp;to&nbsp;%R&nbsp;or&nbsp;%r<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;in-text&nbsp;special&nbsp;sequence)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;s&nbsp;:&nbsp;str<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;shortcut&nbsp;text&nbsp;for&nbsp;the&nbsp;entry&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;shortcut&nbsp;text&nbsp;for&nbsp;the&nbsp;entry<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(separated&nbsp;additional&nbsp;argument&nbsp;corresponding&nbsp;to&nbsp;%s&nbsp;in-text<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;special&nbsp;sequence)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;special&nbsp;sequence)<br>
 &nbsp;<br>
 Returns<br>
 -------<br>
@@ -365,9 +373,9 @@ Parameters<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(separated&nbsp;additional&nbsp;argument&nbsp;corresponding&nbsp;to&nbsp;%R&nbsp;or&nbsp;%r<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;in-text&nbsp;special&nbsp;sequence)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;s&nbsp;:&nbsp;str<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;shortcut&nbsp;text&nbsp;for&nbsp;the&nbsp;entry&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;shortcut&nbsp;text&nbsp;for&nbsp;the&nbsp;entry<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(separated&nbsp;additional&nbsp;argument&nbsp;corresponding&nbsp;to&nbsp;%s&nbsp;in-text<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;special&nbsp;sequence)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;special&nbsp;sequence)<br>
 &nbsp;<br>
 Returns<br>
 -------<br>
@@ -462,9 +470,9 @@ Parameters<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(separated&nbsp;additional&nbsp;argument&nbsp;corresponding&nbsp;to&nbsp;%R&nbsp;or&nbsp;%r<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;in-text&nbsp;special&nbsp;sequence)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;s&nbsp;:&nbsp;str<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;shortcut&nbsp;text&nbsp;for&nbsp;the&nbsp;entry&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;shortcut&nbsp;text&nbsp;for&nbsp;the&nbsp;entry<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(separated&nbsp;additional&nbsp;argument&nbsp;corresponding&nbsp;to&nbsp;%s&nbsp;in-text<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;special&nbsp;sequence)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;special&nbsp;sequence)<br>
 &nbsp;<br>
 Returns<br>
 -------<br>
@@ -614,4 +622,4 @@ Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
 </td></tr></table>
-<p>Updated on: 2010-12-23 23:57 +0100</body></html>
+<p>Updated on: 2010-12-25 01:55 +0100</body></html>

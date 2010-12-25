@@ -48,14 +48,17 @@ from xformslib import xfdata
 def fl_add_timer(timertype, xpos, ypos, width, height, label):
     """fl_add_timer(timertype, xpos, ypos, width, height, label)
     -> ptr_flobject
-    
+
     Adds a timer flobject.
 
     Parameters
     ----------
         timertype : int
             type of timer to be added. Values (from xfdata.py)
-            FL_NORMAL_TIMER, FL_VALUE_TIMER, FL_HIDDEN_TIMER
+            FL_NORMAL_TIMER (Visible, showing a label in a box which blinks
+            when the timer expires), FL_VALUE_TIMER (Visible, showing the
+            time left or the elapsed time. Blinks if the timer expires),
+            FL_HIDDEN_TIMER (Not visible).
         xpos : int
             horizontal position (upper-left corner)
         ypos : int
@@ -106,7 +109,7 @@ def fl_add_timer(timertype, xpos, ypos, width, height, label):
 
 def fl_set_timer(ptr_flobject, tdelay):
     """fl_set_timer(ptr_flobject, tdelay)
-    
+
     Defines the timer to a particular value.
 
     Parameters
@@ -139,7 +142,7 @@ def fl_set_timer(ptr_flobject, tdelay):
 
 def fl_get_timer(ptr_flobject):
     """fl_get_timer(ptr_flobject) -> lefttime
-    
+
     Finds out the time left in the timer.
 
     Parameters
@@ -174,7 +177,7 @@ def fl_get_timer(ptr_flobject):
 
 def fl_set_timer_countup(ptr_flobject, yesno):
     """fl_set_timer_countup(ptr_flobject, yesno)
-    
+
     Changes timer behavior so the timer counts up and shows elapsed time.
     By default, a timer counts down toward zero and the value shown (for
     xfdata.FL_VALUE_TIMERs) is the time left until the timer expires.
@@ -210,7 +213,7 @@ def fl_set_timer_countup(ptr_flobject, yesno):
 
 def fl_set_timer_filter(ptr_flobject, pyfn_TimerFilter):
     """fl_set_timer_filter(ptr_flobject, pyfn_TimerFilter) -> TimerFilter
-    
+
     Defines a function to change the way the time is presented in
     xfdata.FL_VALUE_TIMER. By default, it gives the time in a
     hour:minutes:seconds.fraction format
@@ -262,7 +265,7 @@ def fl_set_timer_filter(ptr_flobject, pyfn_TimerFilter):
 
 def fl_suspend_timer(ptr_flobject):
     """fl_suspend_timer(ptr_flobject)
-    
+
     Suspends timer, pausing time.
 
     Parameters
@@ -291,7 +294,7 @@ def fl_suspend_timer(ptr_flobject):
 
 def fl_resume_timer(ptr_flobject):
     """fl_resume_timer(ptr_flobject)
-    
+
     Resumes timer previously paused (with fl_suspend_timer). Unlike
     fl_set_timer() a suspended timer keeps its internal state (total
     delay, time left etc.), so when it is resumed, it starts from

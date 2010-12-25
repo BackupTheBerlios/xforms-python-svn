@@ -47,7 +47,7 @@ from xformslib import xfdata
 def fl_add_positioner(posittype, xpos, ypos, width, height, label):
     """fl_add_positioner(posittype, xpos, ypos, width, height, label)
     -> ptr_flobject
-    
+
     Adds a positioner flobject. By default the label is placed below
     the box.
 
@@ -55,8 +55,12 @@ def fl_add_positioner(posittype, xpos, ypos, width, height, label):
     ----------
         posittype : int
             type of positioner to be added. Values (from xfdata.py)
-            FL_NORMAL_POSITIONER, FL_OVERLAY_POSITIONER,
-            FL_INVISIBLE_POSITIONER
+            FL_NORMAL_POSITIONER (Cross-hair inside a box),
+            FL_OVERLAY_POSITIONER (Cross-hair inside a transparent box, i.e.
+            drawn in in XOR mode), FL_INVISIBLE_POSITIONER (Completely
+            invisible positioner to be used just for the side effect of
+            obtaining a position, typically a flobject is below it that
+            otherwise would receive user events)
         xpos : int
             horizontal position (upper-left corner)
         ypos : int
@@ -107,7 +111,7 @@ def fl_add_positioner(posittype, xpos, ypos, width, height, label):
 
 def fl_set_positioner_xvalue(ptr_flobject, xvalue):
     """fl_set_positioner_xvalue(ptr_flobject, xvalue)
-    
+
     Defines the actual value of positioner flobject in horizontal direction.
 
     Parameters
@@ -139,7 +143,7 @@ def fl_set_positioner_xvalue(ptr_flobject, xvalue):
 
 def fl_get_positioner_xvalue(ptr_flobject):
     """fl_get_positioner_xvalue(ptr_flobject) -> xvalue
-    
+
     Finds out value of positioner flobject in horizontal direction.
 
     Parameters
@@ -174,9 +178,9 @@ def fl_get_positioner_xvalue(ptr_flobject):
 
 def fl_set_positioner_xbounds(ptr_flobject, minbound, maxbound):
     """fl_set_positioner_xbounds(ptr_flobject, minbound, maxbound)
-    
-    Defines minimum and maximum bounds/limits of a positioner in horizontal
-    direction.
+
+    Defines minimum and maximum bounds for values of a positioner in
+    horizontal direction.
 
     Parameters
     ----------
@@ -214,7 +218,7 @@ def fl_set_positioner_xbounds(ptr_flobject, minbound, maxbound):
 
 def fl_get_positioner_xbounds(ptr_flobject):
     """fl_get_positioner_xbounds(ptr_flobject) -> minbound, maxbound
-    
+
     Obtain minumum and maximum value bounds/limits of a positioner in
     horizontal direction.
 
@@ -226,9 +230,9 @@ def fl_get_positioner_xbounds(ptr_flobject):
     Returns
     -------
         minbound : float
-            minimum bound
+            minimum value bound
         maxbound : float
-            maximum bound
+            maximum value bound
 
     Examples
     --------
@@ -262,7 +266,7 @@ def fl_get_positioner_xbounds(ptr_flobject):
 
 def fl_set_positioner_yvalue(ptr_flobject, yvalue):
     """fl_set_positioner_yvalue(ptr_flobject, yvalue)
-    
+
     Defines the actual value of positioner flobject in vertical direction.
 
     Parameters
@@ -294,7 +298,7 @@ def fl_set_positioner_yvalue(ptr_flobject, yvalue):
 
 def fl_get_positioner_yvalue(ptr_flobject):
     """fl_get_positioner_yvalue(ptr_flobject) -> yvalue
-    
+
     Finds out value of positioner flobject in vertical direction.
 
     Parameters
@@ -329,9 +333,9 @@ def fl_get_positioner_yvalue(ptr_flobject):
 
 def fl_set_positioner_ybounds(ptr_flobject, minbound, maxbound):
     """fl_set_positioner_ybounds(ptr_flobject, minbound, maxbound)
-    
-    Defines minimum and maximum bounds/limits of a positioner in vertical
-    direction.
+
+    Defines minimum and maximum bounds for values of a positioner in
+    vertical direction.
 
     Parameters
     ----------
@@ -369,9 +373,9 @@ def fl_set_positioner_ybounds(ptr_flobject, minbound, maxbound):
 
 def fl_get_positioner_ybounds(ptr_flobject):
     """fl_get_positioner_ybounds(ptr_flobject) -> minbound, maxbound
-    
-    Obtain minimum and maximum bounds/limits of a positioner in vertical
-    direction.
+
+    Obtain minimum and maximum bounds for values of a positioner in
+    vertical direction.
 
     Parameters
     ----------
@@ -381,9 +385,9 @@ def fl_get_positioner_ybounds(ptr_flobject):
     Returns
     -------
         minbound : float
-            minimum bound
+            minimum value bound
         maxbound : float
-            maximum bound
+            maximum value bound
 
     Examples
     --------
@@ -417,7 +421,7 @@ def fl_get_positioner_ybounds(ptr_flobject):
 
 def fl_set_positioner_xstep(ptr_flobject, step):
     """fl_set_positioner_xstep(ptr_flobject, step)
-    
+
     Handles positioner values in horizontal direction to be rounded to
     some values (multiples of step), e.g. to integer values.
 
@@ -450,7 +454,7 @@ def fl_set_positioner_xstep(ptr_flobject, step):
 
 def fl_set_positioner_ystep(ptr_flobject, step):
     """fl_set_positioner_ystep(ptr_flobject, step)
-    
+
     Handles positioner values in vertical direction to be rounded to
     some values (multiples of step), e.g. to integer values.
 

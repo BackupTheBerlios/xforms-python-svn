@@ -41,7 +41,7 @@ from xformslib import xfdata
 
 def fl_get_thumbwheel_value(ptr_flobject):
     """fl_get_thumbwheel_value(ptr_flobject) -> thwvalue
-    
+
     Finds out the current value of a thumbwheel flobject.
 
     Parameters
@@ -76,7 +76,7 @@ def fl_get_thumbwheel_value(ptr_flobject):
 
 def fl_set_thumbwheel_value(ptr_flobject, thwvalue):
     """fl_set_thumbwheel_value(ptr_flobject, thwvalue) -> oldthwvalue
-    
+
     Defines a new value of a thumbwheel flobject.
 
     Parameters
@@ -114,7 +114,7 @@ def fl_set_thumbwheel_value(ptr_flobject, thwvalue):
 
 def fl_get_thumbwheel_step(ptr_flobject):
     """fl_get_thumbwheel_step(ptr_flobject) -> step
-    
+
     Finds out step for thumbwheel flobject value to be rounded to.
 
     Parameters
@@ -149,7 +149,7 @@ def fl_get_thumbwheel_step(ptr_flobject):
 
 def fl_set_thumbwheel_step(ptr_flobject, step):
     """fl_set_thumbwheel_step(ptr_flobject, step) -> oldstep
-    
+
     Defines step for thumbwheel flobject value to be rounded to.
 
     Parameters
@@ -191,7 +191,7 @@ def fl_set_thumbwheel_step(ptr_flobject, step):
 # TODO: it is apparently unused and undocumented; slated for removal --LK
 def fl_set_thumbwheel_crossover(ptr_flobject, flag):
     """fl_set_thumbwheel_crossover(ptr_flobject, flag) -> oldcrossover
-    
+
     Defines crossover for  thumbwheel flobject.
 
     Parameters
@@ -229,7 +229,7 @@ def fl_set_thumbwheel_crossover(ptr_flobject, flag):
 
 def fl_set_thumbwheel_bounds(ptr_flobject, minbound, maxbound):
     """fl_set_thumbwheel_bounds(ptr_flobject, minbound, maxbound)
-    
+
     Defines minimum and maximum value limits of a thumbwheel flobject.
 
     Parameters
@@ -266,7 +266,7 @@ def fl_set_thumbwheel_bounds(ptr_flobject, minbound, maxbound):
 
 def fl_get_thumbwheel_bounds(ptr_flobject):
     """fl_get_thumbwheel_bounds(ptr_flobject) -> minbound, maxbound
-    
+
     Finds out minimum and maximum value limits of a thumbwheel flobject.
 
     Parameters
@@ -315,15 +315,17 @@ def fl_get_thumbwheel_bounds(ptr_flobject):
 
 
 def fl_add_thumbwheel(wheeltype, xpos, ypos, width, height, label):
-    """fl_add_thumbwheel(wheeltype, xpos, ypos, width, height, label) -> ptr_flobject
-    
+    """fl_add_thumbwheel(wheeltype, xpos, ypos, width, height, label)
+    -> ptr_flobject
+
     Adds a thumbwheel flobject.
 
     Parameters
     ----------
         wheeltype : int
             type of thumbwheel to be added. Values (from xfdata.py)
-            FL_VERT_THUMBWHEEL, FL_HOR_THUMBWHEEL
+            FL_VERT_THUMBWHEEL (A vertical thumbwheel), FL_HOR_THUMBWHEEL (A
+            horizontal thumbwheel)
         xpos : int
             horizontal position (upper-left corner)
         ypos : int
