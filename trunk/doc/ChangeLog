@@ -2,7 +2,10 @@ SVN (first entries from top are more recent)
 --------------------------------------------
 
 BETA
-
+    20101227 (beta4)
+    * bugfix in fl_initialize()
+    * fd2python added, to convert .fd fdesign files to xforms-python .py
+    (not completed yet).
     20101224 (beta3)
     * some leftover typos and bugs fixed. Moving most of constants' possible
     values description from xfdata.py into concerning functions.

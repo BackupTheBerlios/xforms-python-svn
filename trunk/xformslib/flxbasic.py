@@ -4225,7 +4225,7 @@ def fl_initialize(numargs, argslist, appname, ptr_appoptions, numappopts):
     ptr_argslist = library.convert_to_ptr_stringc(argslist)
     s_appname = library.convert_to_stringc(appname)
     if not ptr_appoptions:      # if it is None
-        ptr_appoptions = cty.c_void_p()
+        ptr_appoptions = cty.cast(None, cty.POINTER(xfdata.FL_CMD_OPT))
     else:                       # if it is a real FL_CMD_OPT
         library.verify_otherclassptr_type(ptr_appoptions, \
                 cty.POINTER(xfdata.FL_CMD_OPT))

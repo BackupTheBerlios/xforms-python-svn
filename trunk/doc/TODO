@@ -108,7 +108,7 @@ for a library toolkit wrapper, it is not enough using assertions etc...
 to python. As XForms fdesign is too complex to be utterly duplicated
 in python, a parser and converter of fdesign's results file is much more
 reasonable. It needs xforms-python's API to be stable and toolbox results
-to be corresponding to well-documented and working functions.
+to be corresponding to well-documented and working functions. {WIP}
 
 - Figuring out which values in xfdata.py can be used as single values
  or bitwise OR-ed with each other, so checking for allowed value in list
