@@ -197,44 +197,50 @@ class FdConvertToPy(object):
         #print self.listdictsofelem
         unitold = 0     # a key-value pair of old list
         unitnew = 0     # a block belonging to intro or form header or flobj
+        singdict = ""
         while True:
             elem = self.listpairsofelem[unitold]
             if elem[0] == "<INTRO>":
+        	del singdict
                 singdict = {'phase' : 'INTRO'}
                 unitold += 1
             elif elem[0] == "<ENDINTRO>":
                 self.listdictsofelem.append(singdict)
-                del singdict
+                #del singdict
                 unitold += 1
                 unitnew += 1
             elif elem[0] == "<FORM>":
+        	del singdict
                 singdict = {'phase' : 'FORM'}
                 unitold += 1
             elif elem[0] == "<ENDFORMHEAD>":
                 self.listdictsofelem.append(singdict)
-                del singdict
+                #del singdict
                 unitold += 1
                 unitnew += 1
             elif elem[0] == "<FLOBJ>":
+        	del singdict
                 singdict = {'phase' : 'FLOBJ'}
                 unitold += 1
             elif elem[0] == "<ENDFLOBJ>":
                 self.listdictsofelem.append(singdict)
-                del singdict
+                #del singdict
                 unitold += 1
                 unitnew += 1
             elif elem[0] == "<ENDALL>":
+        	del singdict
                 singdict = {'phase' : 'ENDFORM'}
                 self.listdictsofelem.append(singdict)
                 break
             elif elem[0] == "<ENDFORM>":
+        	del singdict
                 singdict = {'phase' : 'ENDFORM'}
                 self.listdictsofelem.append(singdict)
-                del singdict
+                #del singdict
                 unitold += 1            # next
                 unitnew += 1
             else:               # real key-value pair
-                if singdict:
+                if isinstance(singdict, dict):
                     mykey = elem[0]
                     myval = elem[1]
                     singdict[mykey] = myval
@@ -274,7 +280,7 @@ class FdConvertToPy(object):
     def getgeneric_flgroupname(self):
         nameflgroup = "ptrgroup%s" % str(self.groupnum)
         while nameflgroup in self.nameflgrouplist:
-            self.gropnum += 1
+            self.groupnum += 1
             nameflgroup = "ptrgroup%s" % str(self.groupnum)
         self.nameflgrouplist.append(nameflgroup)
         return nameflgroup
@@ -610,7 +616,7 @@ class FdConvertToPy(object):
         try:
             fdout = open(self.outfile, 'w')
         except IOError:
-            errcliargs("Cannot write <outfile>.py on disk.", 5)
+            errorcliargs("Cannot write <outfile>.py on disk.", 5)
         else:
             try:
                 for line in self.headertext:
@@ -647,7 +653,7 @@ class FdConvertToPy(object):
                     fdout.write(line)
                 fdout.close()
             except IOError:
-                errcliargs("Cannot write <outfile>.py on disk", 5)
+                errorcliargs("Cannot write <outfile>.py on disk", 5)
 
 
 if __name__ == '__main__':
