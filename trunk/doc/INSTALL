@@ -1,4 +1,4 @@
-xforms-python requires at least Python 2.6.x. It does not support
+xforms-python requires (at least) Python 2.6.x. It does not support
 Python 3.x yet.
 
 It requires:
@@ -11,11 +11,8 @@ examples), simply run the following with root's privileges:
    python ./setup.py build install
 
 Documentation files (API docs included) are installed in
-"/usr/doc/xforms-python-$VERSION/", by default.
-If your operating system/distribution uses another directory for doc
-files, you may use, e.g.:
-   python ./setup.py build install --install-data=/usr/share
-(to install in "/usr/share/doc/xforms-python-$VERSION/")
+"/usr/share/doc/xforms-python-$VERSION/" and example files in
+"/usr/share/xforms-python-$VERSION/", by default.
 
 
 This software is mainly intended to be used on GNU/Linux. For other
