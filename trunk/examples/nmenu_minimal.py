@@ -25,23 +25,23 @@ class Flnmenumin(object):
                 'shortcut' : "F", 'type' : xfl.FL_POPUP_NORMAL, \
                 'state' : xfl.FL_POPUP_NONE}, \
                 {'text' : "Second item ADD", 'callback' : self.item2_cb, \
-                'shortcut' : "E", 'type' : xfl.FL_POPUP_NORMAL, \
+                'shortcut' : "n", 'type' : xfl.FL_POPUP_NORMAL, \
                 'state' : xfl.FL_POPUP_NONE}]
         ppopmenu1 = xfl.make_flpopupitem(MypopupitemA)
         entry12 = xfl.fl_add_nmenu_items2(self.pmenu1, ppopmenu1)
 
         MypopupitemB = \
                 [{'text' : "Third item INS", 'callback' : self.item3_cb, \
-                'shortcut' : "T", 'type' : xfl.FL_POPUP_NORMAL, \
+                'shortcut' : "r", 'type' : xfl.FL_POPUP_NORMAL, \
                 'state' : xfl.FL_POPUP_NONE}, \
-                {'text' : "Fourth menu INS", 'callback' : self.item4_cb, \
-                'shortcut' : "O", 'type' : xfl.FL_POPUP_NORMAL, \
+                {'text' : "Fourth item INS", 'callback' : self.item4_cb, \
+                'shortcut' : "h", 'type' : xfl.FL_POPUP_NORMAL, \
                 'state' : xfl.FL_POPUP_NONE}]
         ppopmenu2 = xfl.make_flpopupitem(MypopupitemB)
         entry34 = xfl.fl_insert_nmenu_items2(self.pmenu1, None, ppopmenu2)
 
         MypopupitemC = {'text' : "Fifth item ADD", 'callback' : self.item5_cb,
-                'shortcut' : "I", 'type' : xfl.FL_POPUP_NORMAL,
+                'shortcut' : "f", 'type' : xfl.FL_POPUP_NORMAL,
                 'state' : xfl.FL_POPUP_NONE}
         ppopmenu3 = xfl.make_flpopupitem(MypopupitemC)
         entry5 = xfl.fl_add_nmenu_items2(self.pmenu1, ppopmenu3)
@@ -51,29 +51,29 @@ class Flnmenumin(object):
                 'shortcut' : "S", 'type' : xfl.FL_POPUP_NORMAL, \
                 'state' : xfl.FL_POPUP_NONE}, \
                 {'text' : "Seventh menu REPL", 'callback' : self.item7_cb, \
-                'shortcut' : "V", 'type' : xfl.FL_POPUP_NORMAL, \
+                'shortcut' : "v", 'type' : xfl.FL_POPUP_NORMAL, \
                 'state' : xfl.FL_POPUP_NONE}]
         ppopmenu4 = xfl.make_flpopupitem(MypopupitemD)
         entry67 = xfl.fl_replace_nmenu_items2(self.pmenu1, entry12, ppopmenu4)
 
         MypopupitemE = {'text' : "Exit ADD", 'callback' : self.done_cb, \
-                'shortcut' : "X", 'type' : xfl.FL_POPUP_NORMAL, \
+                'shortcut' : "x", 'type' : xfl.FL_POPUP_NORMAL, \
                 'state' : xfl.FL_POPUP_NONE}
         ppopmenu5 = xfl.make_flpopupitem(MypopupitemE)
         entry8 = xfl.fl_add_nmenu_items2(self.pmenu1, ppopmenu5)
 
         MypopupitemF = \
                 [{'text' : "Ninth item ADD", 'callback' : self.item1_cb, \
-                'shortcut' : "F", 'type' : xfl.FL_POPUP_NORMAL, \
+                'shortcut' : "N", 'type' : xfl.FL_POPUP_NORMAL, \
                 'state' : xfl.FL_POPUP_NONE}, \
                 {'text' : "Tenth item ADD", 'callback' : self.item2_cb, \
-                'shortcut' : "E", 'type' : xfl.FL_POPUP_NORMAL, \
+                'shortcut' : "T", 'type' : xfl.FL_POPUP_NORMAL, \
                 'state' : xfl.FL_POPUP_NONE}]
         ppopmenu6 = xfl.make_flpopupitem(MypopupitemF)
         entry910 = xfl.fl_add_nmenu_items2(self.pmenu2, ppopmenu6)
 
         MypopupitemG = {'text' : "Eleventh item INS", \
-                'callback' : self.item3_cb, 'shortcut' : "T", \
+                'callback' : self.item3_cb, 'shortcut' : "E", \
                 'type' : xfl.FL_POPUP_NORMAL, 'state' : xfl.FL_POPUP_NONE}
         ppopmenu7 = xfl.make_flpopupitem(MypopupitemG)
         entry910 = xfl.fl_insert_nmenu_items2(self.pmenu2, entry910, ppopmenu7)
@@ -97,7 +97,7 @@ class Flnmenumin(object):
         xfl.fl_set_object_shortcut(self.pmenu1, "1#1", 1)
         self.pmenu2 = xfl.fl_add_nmenu(xfl.FL_NORMAL_NMENU, 102, 2, \
                 110, 25, "Menu 2")
-        xfl.fl_set_object_shortcut(self.pmenu2, "2#2", 2)
+        xfl.fl_set_object_shortcut(self.pmenu2, "2#2", 1)
 
         xfl.fl_end_form()
 

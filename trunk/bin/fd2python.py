@@ -41,14 +41,14 @@ def xfcopyright():
 def errorcliargs(msg="", exval=0):
     if exval > 0:
         print("Fatal error: %s\n" % msg)
-    print("Usage: fd2python <infile>.fd [<outfile>.py]\n" \
+    print("Usage: fd2python.py <infile>.fd [<outfile>.py]\n" \
             "If <outfile>.py is omitted, <infile>.py is used\n" \
             "<outfile>.py should not be existing.")
     sys.exit(exval)
 
-def prependxflvalue(valuestr):
+def prependxfl(valuestr):
     if valuestr.startswith("FL_"):
-        valuestr = "xfl."+valuestr
+        valuestr = valuestr.replace("FL_", "xfl.FL_")
     return valuestr
 
 def prependself(valuestr):
@@ -61,9 +61,11 @@ class FdConvertToPy(object):
     def __init__(self, lsysargv, sysargv):
         self.listpairsofelem = []    # list of elements' unmanaged pairs
         self.listdictsofelem = []    # list of elements' dicts
+
         self.nameflformlist = []     # name entries for form
         self.nameflgrouplist = []     # name entries for group
         self.nameflobjlist = []     # name entries for flobj
+
         self.headertext = []        # env python, header comment
         self.inittext = []      # import, class, fl_initialize
         self.maintext = []          # call to form creation defs
@@ -72,11 +74,17 @@ class FdConvertToPy(object):
         self.createformstext = []   # complete form creation defs
         self.callbacktext = []      # defs of callbacks funcs
         self.runcodetext = []           # if __name__ etc...
+
         self.numforms = 0
         self.numflobjs = 0
+
         self.formnum = 0        # progressive number for generic names
         self.groupnum = 0        # progressive number for generic names
         self.flobjnum = 0        # progressive number for generic names
+
+        self.firstformname = ""
+        self.isfirstform = True
+        self.nameofflobject = ""
 
         self.infile = ""
         self.outfile = ""
@@ -117,7 +125,7 @@ class FdConvertToPy(object):
     def verifyfdfile(self):
         # open .fd
         fdin = open(self.infile, 'r')
-        # verify if .fd compliant format
+        # verify if it is .fd compliant format
         initialtxt = fdin.read(100)
         fdin.close()
         if not "Internal Form Definition File" in initialtxt:
@@ -131,8 +139,8 @@ class FdConvertToPy(object):
         numlines = sum(1 for line in fdin)
         fdin.close()
         self.listpairsofelem = [""] * numlines
-        thereisform = 0
-        thereisflobj = 0
+        thereisform = False
+        thereisflobj = False
 
         fdin = open(self.infile, 'r')
         elemnum = 0
@@ -154,7 +162,7 @@ class FdConvertToPy(object):
                 self.listpairsofelem[elemnum] = "<FORM>", None
                 elemnum += 1
                 self.listpairsofelem[elemnum] = []
-                thereisform = 1
+                thereisform = True
             elif line.startswith('------'):   # new flobject
                 if thereisflobj:     # a flobj is already present
                     self.listpairsofelem[elemnum] = "<ENDFLOBJ>", None
@@ -165,7 +173,7 @@ class FdConvertToPy(object):
                 self.listpairsofelem[elemnum] = "<FLOBJ>", None
                 elemnum += 1
                 self.listpairsofelem[elemnum] = []
-                thereisflobj = 1
+                thereisflobj = True
             elif "==============================" in line:      # EOF
                 self.listpairsofelem[elemnum] = "<ENDFLOBJ>", None
                 elemnum += 1
@@ -190,7 +198,6 @@ class FdConvertToPy(object):
         #print self.listpairsofelem
 
     def convertlistsindict(self):
-        #return 0
         # organize key-value pairs in dict
         self.listdictsofelem = []   #* (len(self.listpairsofelem)/2)
 
@@ -201,7 +208,7 @@ class FdConvertToPy(object):
         while True:
             elem = self.listpairsofelem[unitold]
             if elem[0] == "<INTRO>":
-        	del singdict
+                del singdict
                 singdict = {'phase' : 'INTRO'}
                 unitold += 1
             elif elem[0] == "<ENDINTRO>":
@@ -210,7 +217,7 @@ class FdConvertToPy(object):
                 unitold += 1
                 unitnew += 1
             elif elem[0] == "<FORM>":
-        	del singdict
+                del singdict
                 singdict = {'phase' : 'FORM'}
                 unitold += 1
             elif elem[0] == "<ENDFORMHEAD>":
@@ -219,7 +226,7 @@ class FdConvertToPy(object):
                 unitold += 1
                 unitnew += 1
             elif elem[0] == "<FLOBJ>":
-        	del singdict
+                del singdict
                 singdict = {'phase' : 'FLOBJ'}
                 unitold += 1
             elif elem[0] == "<ENDFLOBJ>":
@@ -228,12 +235,12 @@ class FdConvertToPy(object):
                 unitold += 1
                 unitnew += 1
             elif elem[0] == "<ENDALL>":
-        	del singdict
+                del singdict
                 singdict = {'phase' : 'ENDFORM'}
                 self.listdictsofelem.append(singdict)
                 break
             elif elem[0] == "<ENDFORM>":
-        	del singdict
+                del singdict
                 singdict = {'phase' : 'ENDFORM'}
                 self.listdictsofelem.append(singdict)
                 #del singdict
@@ -259,13 +266,112 @@ class FdConvertToPy(object):
                 self.manage_flendform()
             elif macrounit['phase'] == 'FLOBJ':
                 if macrounit['class'] == 'FL_BEGIN_GROUP':
-                    self.manage_flbegingroup(macrounit)
+                    myname = self.manage_flbegingroup(macrounit)
+                    self.manage_genericflobject(macrounit, myname)
                 elif macrounit['class'] == 'FL_END_GROUP':
                     self.manage_flendgroup()
                 elif macrounit['class'] == 'FL_BITMAP':
-                    pass
+                    myname = self.manage_flbitmap(macrounit)
+                    self.manage_genericflobject(macrounit, myname)
+                elif macrounit['class'] == 'FL_BITMAPBUTTON':
+                    myname = self.manage_flbitmapbutton(macrounit)
+                    self.manage_genericflobject(macrounit, myname)
                 elif macrounit['class'] == 'FL_BOX':
-                    self.manage_flbox(macrounit)
+                    myname = self.manage_flbox(macrounit)
+                    self.manage_genericflobject(macrounit, myname)
+                elif macrounit['class'] == 'FL_BROWSER':
+                    myname = self.manage_flbrowser(macrounit)
+                    self.manage_genericflobject(macrounit, myname)
+                elif macrounit['class'] == 'FL_BUTTON':
+                    myname = self.manage_flbutton(macrounit)
+                    self.manage_genericflobject(macrounit, myname)
+                elif macrounit['class'] == 'FL_CANVAS':
+                    myname = self.manage_flcanvas(macrounit)
+                    self.manage_genericflobject(macrounit, myname)
+                elif macrounit['class'] == 'FL_CHART':
+                    myname = self.manage_flchart(macrounit)
+                    self.manage_genericflobject(macrounit, myname)
+                elif macrounit['class'] == 'FL_CHECKBUTTON':
+                    myname = self.manage_flcheckbutton(macrounit)
+                    self.manage_genericflobject(macrounit, myname)
+                elif macrounit['class'] == 'FL_CLOCK':
+                    myname = self.manage_flclock(macrounit)
+                    self.manage_genericflobject(macrounit, myname)
+                elif macrounit['class'] == 'FL_COUNTER':
+                    myname = self.manage_flcounter(macrounit)
+                    self.manage_genericflobject(macrounit, myname)
+                elif macrounit['class'] == 'FL_DIAL':
+                    myname = self.manage_fldial(macrounit)
+                    self.manage_genericflobject(macrounit, myname)
+                elif macrounit['class'] == 'FL_FORMBROWSER':
+                    myname = self.manage_flformbrowser(macrounit)
+                    self.manage_genericflobject(macrounit, myname)
+                elif macrounit['class'] == 'FL_FRAME':
+                    myname = self.manage_flframe(macrounit)
+                    self.manage_genericflobject(macrounit, myname)
+                elif macrounit['class'] == 'FL_FREE':
+                    myname = self.manage_flfree(macrounit)
+                    self.manage_genericflobject(macrounit, myname)
+                elif macrounit['class'] == 'FL_GLCANVAS':
+                    myname = self.manage_flglcanvas(macrounit)
+                    self.manage_genericflobject(macrounit, myname)
+                elif macrounit['class'] == 'FL_INPUT':
+                    myname = self.manage_flinput(macrounit)
+                    self.manage_genericflobject(macrounit, myname)
+                elif macrounit['class'] == 'FL_LABELBUTTON':
+                    myname = self.manage_fllabelbutton(macrounit)
+                    self.manage_genericflobject(macrounit, myname)
+                elif macrounit['class'] == 'FL_LABELFRAME':
+                    myname = self.manage_fllabelframe(macrounit)
+                    self.manage_genericflobject(macrounit, myname)
+                elif macrounit['class'] == 'FL_LIGHTBUTTON':
+                    myname = self.manage_fllightbutton(macrounit)
+                    self.manage_genericflobject(macrounit, myname)
+                elif macrounit['class'] == 'FL_PIXMAP':
+                    myname = self.manage_flpixmap(macrounit)
+                    self.manage_genericflobject(macrounit, myname)
+                elif macrounit['class'] == 'FL_PIXMAPBUTTON':
+                    myname = self.manage_flpixmapbutton(macrounit)
+                    self.manage_genericflobject(macrounit, myname)
+                elif macrounit['class'] == 'FL_POSITIONER':
+                    myname = self.manage_flpositioner(macrounit)
+                    self.manage_genericflobject(macrounit, myname)
+                elif macrounit['class'] == 'FL_ROUND3DBUTTON':
+                    myname = self.manage_flround3dbutton(macrounit)
+                    self.manage_genericflobject(macrounit, myname)
+                elif macrounit['class'] == 'FL_ROUNDBUTTON':
+                    myname = self.manage_flroundbutton(macrounit)
+                    self.manage_genericflobject(macrounit, myname)
+                elif macrounit['class'] == 'FL_SCROLLBAR':
+                    myname = self.manage_flscrollbar(macrounit)
+                    self.manage_genericflobject(macrounit, myname)
+                elif macrounit['class'] == 'FL_SCROLLBUTTON':
+                    myname = self.manage_flscrollbutton(macrounit)
+                    self.manage_genericflobject(macrounit, myname)
+                elif macrounit['class'] == 'FL_SLIDER':
+                    myname = self.manage_flslider(macrounit)
+                    self.manage_genericflobject(macrounit, myname)
+                elif macrounit['class'] == 'FL_SPINNER':
+                    myname = self.manage_flspinner(macrounit)
+                    self.manage_genericflobject(macrounit, myname)
+                elif macrounit['class'] == 'FL_TABFOLDER':
+                    myname = self.manage_fltabfolder(macrounit)
+                    self.manage_genericflobject(macrounit, myname)
+                elif macrounit['class'] == 'FL_TEXT':
+                    myname = self.manage_fltext(macrounit)
+                    self.manage_genericflobject(macrounit, myname)
+                elif macrounit['class'] == 'FL_TIMER':
+                    myname = self.manage_fltimer(macrounit)
+                    self.manage_genericflobject(macrounit, myname)
+                elif macrounit['class'] == 'FL_THUMBWHEEL':
+                    myname = self.manage_flthumbwheel(macrounit)
+                    self.manage_genericflobject(macrounit, myname)
+                elif macrounit['class'] == 'FL_VALSLIDER':
+                    myname = self.manage_flvalslider(macrounit)
+                    self.manage_genericflobject(macrounit, myname)
+                elif macrounit['class'] == 'FL_XYPLOT':
+                    myname = self.manage_flxyplot(macrounit)
+                    self.manage_genericflobject(macrounit, myname)
         self.manage_endmain()
         self.manage_endings()
 
@@ -313,7 +419,7 @@ class FdConvertToPy(object):
         if "Unit of measure" in macrounit:
             value = macrounit['Unit of measure']
             introtxt = "\n%sxfl.fl_set_coordunit(%s)" % \
-                    (TWOTABS, prependxflvalue(value))
+                    (TWOTABS, prependxfl(value))
         if "Border Width" in macrounit:
             value = macrounit['Border Width']
             introtxt = "\n%sxfl.fl_set_border_width(%s)" % (TWOTABS, value)
@@ -330,278 +436,796 @@ class FdConvertToPy(object):
             self.numflobjs = macrounit['Number of Objects']
         if "Name" in macrounit:
             if macrounit['Name'] is None:       # name unknown
-                name = self.getgeneric_flformname()
+                vname = self.getgeneric_flformname()
             else:
-                name = macrounit['Name']
+                vname = macrounit['Name']
         if 'Width' in macrounit:
-            valuew = macrounit['Width']
+            vwidth = macrounit['Width']
         if 'Height' in macrounit:
-            valueh = macrounit['Height']
+            vheight = macrounit['Height']
         formtxt += "\n\n%s%s = xfl.fl_bgn_form(xfl.FL_NO_BOX, %s, %s)" % \
-                (TWOTABS, prependself(name), valuew, valueh)
+                (TWOTABS, prependself(vname), vwidth, vheight)
         self.createformstext.append(formtxt)
+        if self.isfirstform:
+            self.firstformname = vname
+            self.isfirstform = False
 
     def manage_flendform(self):
         # end FORM area
         formtxt = "\n%sxfl.fl_end_form()" % (TWOTABS)
         self.createformstext.append(formtxt)
 
-    def manage_flbegingroup(self, macrounit):
-        grouptxt = ""
-        if "name" in macrounit:
-            if macrounit['name'] is None:       # name unknown
-                name = self.getgeneric_flgroupname()
-            else:
-                name = macrounit['name']
-            grouptxt += "\n%s%s = xfl.fl_bgn_group()" % (TWOTABS, \
-                    prependself(name))
-        if "type" in macrounit:
-            pass                    # ????
-        if "box" in macrounit:
-            valuex, valuey, valuew, valueh = macrounit['box'].split()
-            grouptxt += "\n%sxfl.fl_set_geometry(%s, %s, %s, %s, %s)" % \
-                    (TWOTABS, prependself(name), valuex, valuey, \
-                    valuew, valueh)
-        if "boxtype" in macrounit:
-            valuebt = macrounit['boxtype']
-            grouptxt += "\n%sxfl.fl_set_object_boxtype(%s, %s)" % \
-                    (TWOTABS, prependself(name), prependxflvalue(valuebt))
+    def manage_genericflobject(self, macrounit, namepassed):
+        # to be used for elements of any flobject
+        anyflobjtxt = ""
         if "colors" in macrounit:
-            valuec1, valuec2 = macrounit['colors'].split()
-            grouptxt += "\n%sxfl.fl_set_object_color(%s, %s, %s)" % \
-                    (TWOTABS, prependself(name), prependxflvalue(valuec1), \
-                    prependxflvalue(valuec2))
-        if "alignment" in macrounit:
-            valuea = macrounit['alignment']
-            grouptxt += "\n%sxfl.fl_set_object_lalign(%s, %s)" % \
-                    (TWOTABS, prependself(name), prependxflvalue(valuea))
+            vcolr1, vcolr2 = macrounit['colors'].split()
+            anyflobjtxt += "\n%sxfl.fl_set_object_color(%s, %s, %s)" % \
+                    (TWOTABS, namepassed, prependxfl(vcolr1), \
+                    prependxfl(vcolr2))
+        if "alignment" in macrounit:            # label alignment
+            valignment = macrounit['alignment']
+            anyflobjtxt += "\n%sxfl.fl_set_object_lalign(%s, %s)" % \
+                    (TWOTABS, namepassed, prependxfl(valignment))
         if "style" in macrounit:
-            values = macrounit['style']
-            grouptxt += "\n%sxfl.fl_set_object_lstyle(%s, %s)" % \
-                    (TWOTABS, prependself(name), prependxflvalue(values))
+            vstyle = macrounit['style']
+            anyflobjtxt += "\n%sxfl.fl_set_object_lstyle(%s, %s)" % \
+                    (TWOTABS, namepassed, prependxfl(vstyle))
         if "size" in macrounit:
-            values = macrounit['size']
-            grouptxt += "\n%sxfl.fl_set_object_lsize(%s, %s)" % \
-                    (TWOTABS, prependself(name), prependxflvalue(values))
+            vsize = macrounit['size']
+            anyflobjtxt += "\n%sxfl.fl_set_object_lsize(%s, %s)" % \
+                    (TWOTABS, namepassed, prependxfl(vsize))
         if "lcol" in macrounit:
-            valuelc = macrounit['lcol']
-            grouptxt += "\n%sxfl.fl_set_object_lcol(%s, %s)" % \
-                    (TWOTABS, prependself(name), prependxflvalue(valuelc))
-        if "label" in macrounit:
-            if macrounit['label'] is None:      # label unknown
-                valuel = ""
-            else:
-                valuel = macrounit['label']
-            grouptxt += "\n%sxfl.fl_set_object_label(%s, \'%s\')" % \
-                    (TWOTABS, prependself(name), valuel)
+            vlcolr = macrounit['lcol']
+            anyflobjtxt += "\n%sxfl.fl_set_object_lcol(%s, %s)" % \
+                    (TWOTABS, namepassed, prependxfl(vlcolr))
+        if "resize" in macrounit:
+            vresize = macrounit['resize']
+            anyflobjtxt += "\n%sxfl.fl_set_object_resize(%s, %s)" % \
+                    (TWOTABS, namepassed, prependxfl(vresize))
+        if "gravity" in macrounit:
+            vgrav1, vgrav2 = macrounit['gravity'].split()
+            anyflobjtxt += "\n%sxfl.fl_set_object_gravity(%s, %s, %s)" % \
+                    (TWOTABS, namepassed, prependxfl(vgrav1), \
+                    prependxfl(vgrav2))
         if "shortcut" in macrounit:
             if macrounit['shortcut'] is None:   # shortcut unknown
                 pass
             else:
-                values = macrounit['shortcut']
-                grouptxt += "\n%sxfl.fl_set_object_shortcut(%s, %s)" % \
-                    (TWOTABS, prependself(name), values)
-        if "resize" in macrounit:
-            valuer = macrounit['resize']
-            grouptxt += "\n%sxfl.fl_set_object_resize(%s, %s)" % \
-                    (TWOTABS, prependself(name), prependxflvalue(valuer))
-        if "gravity" in macrounit:
-            valueg1, valueg2 = macrounit['gravity'].split()
-            grouptxt += "\n%sxfl.fl_set_object_gravity(%s, %s, %s)" % \
-                    (TWOTABS, prependself(name), prependxflvalue(valueg1), \
-                    prependxflvalue(valueg2))
+                vshcut = macrounit['shortcut']
+                anyflobjtxt += "\n%sxfl.fl_set_object_shortcut(%s, \'%s\'," \
+                        " 1)" % (TWOTABS, prependself(namepassed), vshcut)
         if "argument" in macrounit:     # strictly relies on cb
             if macrounit['argument'] is None:
-                argum = 0
+                vargum = 0
             else:
-                argum = macrounit['argument']
+                vargum = macrounit['argument']
         if "callback" in macrounit:
             if macrounit['callback'] is None:
-                callback = ""
+                vcallback = ""
             else:
-                callback = macrounit['callback']
-                grouptxt += "\n%sxfl.fl_set_object_callback(%s, %s, %s)" % \
-                    (TWOTABS, prependself(name), prependself(callback), argum)
-                cbdef = "\n%sdef %s(self, r):\n%spass" % \
-                        (ONETAB, callback, TWOTABS)
+                vcallback = macrounit['callback']
+                anyflobjtxt += "\n%sxfl.fl_set_object_callback(%s, %s, %s)" % \
+                    (TWOTABS, namepassed, prependself(vcallback), vargum)
+                cbdef = "\n\n%sdef %s(self, pobj, data):\n%spass" % \
+                        (ONETAB, vcallback, TWOTABS)
                 self.callbacktext.append(cbdef)
         if "return" in macrounit:
-            valuer = macrounit['return']
-            grouptxt += "\n%sxfl.fl_set_object_return(%s, %s)" % \
-                    (TWOTABS, prependself(name), prependxflvalue(valuer))
+            vreturn = macrounit['return']
+            anyflobjtxt += "\n%sxfl.fl_set_object_return(%s, %s)" % \
+                    (TWOTABS, namepassed, prependxfl(vreturn))
+        self.createformstext.append(anyflobjtxt)
+
+    def manage_flbegingroup(self, macrounit):
+        grouptxt = vname = ""
+        if "name" in macrounit:
+            if macrounit['name'] is None:       # name unknown
+                vname = self.getgeneric_flgroupname()
+            else:
+                vname = macrounit['name']
+            grouptxt += "\n%s%s = xfl.fl_bgn_group()" % (TWOTABS, \
+                    prependself(vname))
+        if "type" in macrounit:
+            pass                    # ????
+        if "box" in macrounit:
+            vxpos, vypos, vwidth, vheight = macrounit['box'].split()
+            grouptxt += "\n%sxfl.fl_set_geometry(%s, %s, %s, %s, %s)" % \
+                    (TWOTABS, prependself(vname), vxpos, vypos, vwidth, vheight)
+        if "boxtype" in macrounit:
+            vbtype = macrounit['boxtype']
+            grouptxt += "\n%sxfl.fl_set_object_boxtype(%s, %s)" % \
+                    (TWOTABS, prependself(vname), prependxfl(vbtype))
+        if "label" in macrounit:
+            if macrounit['label'] is None:      # label unknown
+                vlabel = ""
+            else:
+                vlabel = macrounit['label']
+            grouptxt += "\n%sxfl.fl_set_object_label(%s, \'%s\')" % \
+                    (TWOTABS, prependself(vname), vlabel)
         self.createformstext.append(grouptxt)
+        return vname
 
     def manage_flendgroup(self):
         grouptxt = "\n%sxfl.fl_end_group()" % TWOTABS
         self.createformstext.append(grouptxt)
 
-    def manage_flbitmap(self):
-        pass
-
-    def manage_flbitmapbutton(self):
-        pass
-
     def manage_flbox(self, macrounit):
         flobjtxt = ""
-        if "boxtype" in macrounit:     # connected to name, box
-            valuetype = macrounit['boxtype']
+        if "boxtype" in macrounit:
+            vbtype = macrounit['boxtype']
+        if "type" in macrounit:
+            pass                    # not used?
         if "box" in macrounit:
-            valuex, valuey, valuew, valueh = macrounit['box'].split()
+            vxpos, vypos, vwidth, vheight = macrounit['box'].split()
         if "label" in macrounit:
             if macrounit['label'] is None:      # label unknown
-                valuel = ""
+                vlabel = ""
             else:
-                valuel = macrounit['label']
+                vlabel = macrounit['label']
         if "name" in macrounit:
             if macrounit['name'] is None:       # name unknown
-                name = self.getgeneric_flobjname()
+                vname = self.getgeneric_flobjname()
             else:
-                name = macrounit['name']
+                vname = macrounit['name']
             flobjtxt += "\n%s%s = xfl.fl_add_box(%s, %s, %s, %s, %s, " \
                 "\'%s\')" % \
-                (TWOTABS, prependself(name), prependxflvalue(valuetype), \
-                valuex, valuey, valuew, valueh, valuel)
-        if "colors" in macrounit:
-            valuec1, valuec2 = macrounit['colors'].split()
-            flobjtxt += "\n%sxfl.fl_set_object_color(%s, %s, %s)" % \
-                    (TWOTABS, prependself(name), prependxflvalue(valuec1), \
-                    prependxflvalue(valuec2))
-        if "alignment" in macrounit:
-            valuea = macrounit['alignment']
-            flobjtxt += "\n%sxfl.fl_set_object_lalign(%s, %s)" % \
-                    (TWOTABS, prependself(name), prependxflvalue(valuea))
-        if "style" in macrounit:
-            values = macrounit['style']
-            flobjtxt += "\n%sxfl.fl_set_object_lstyle(%s, %s)" % \
-                    (TWOTABS, prependself(name), prependxflvalue(values))
-        if "size" in macrounit:
-            values = macrounit['size']
-            flobjtxt += "\n%sxfl.fl_set_object_lsize(%s, %s)" % \
-                    (TWOTABS, prependself(name), prependxflvalue(values))
-        if "lcol" in macrounit:
-            valuelc = macrounit['lcol']
-            flobjtxt += "\n%sxfl.fl_set_object_lcol(%s, %s)" % \
-                    (TWOTABS, prependself(name), prependxflvalue(valuelc))
-        if "shortcut" in macrounit:
-            if macrounit['shortcut'] is None:   # shortcut unknown
-                pass
-            else:
-                values = macrounit['shortcut']
-                flobjtxt += "\n%sxfl.fl_set_object_shortcut(%s, %s)" % \
-                    (TWOTABS, prependself(name), values)
-        if "resize" in macrounit:
-            valuer = macrounit['resize']
-            flobjtxt += "\n%sxfl.fl_set_object_resize(%s, %s)" % \
-                    (TWOTABS, prependself(name), prependxflvalue(valuer))
-        if "gravity" in macrounit:
-            valueg1, valueg2 = macrounit['gravity'].split()
-            flobjtxt += "\n%sxfl.fl_set_object_gravity(%s, %s, %s)" % \
-                    (TWOTABS, prependself(name), prependxflvalue(valueg1), \
-                    prependxflvalue(valueg2))
-        if "argument" in macrounit:     # strictly relies on cb
-            if macrounit['argument'] is None:
-                argum = 0
-            else:
-                argum = macrounit['argument']
-        if "callback" in macrounit:
-            if macrounit['callback'] is None:
-                callback = ""
-            else:
-                callback = macrounit['callback']
-                flobjtxt += "\n%sxfl.fl_set_object_callback(%s, %s, %s)" % \
-                    (TWOTABS, prependself(name), prependself(callback), argum)
-                cbdef = "\n\n%sdef %s(self, r):\n%spass" % \
-                        (ONETAB, callback, TWOTABS)
-                self.callbacktext.append(cbdef)
-        if "return" in macrounit:
-            if macrounit['return'] is None:
-                pass
-            else:
-                valuer = macrounit['return']
-                flobjtxt += "\n%sxfl.fl_set_object_return(%s, %s)" % \
-                    (TWOTABS, prependself(name), prependxflvalue(valuer))
+                (TWOTABS, prependself(vname), prependxfl(vbtype), \
+                vxpos, vypos, vwidth, vheight, vlabel)
         self.createformstext.append(flobjtxt)
+        return vname
 
+    def manage_flframe(self, macrounit):
+        flobjtxt = ""
+        if "type" in macrounit:     # FL_BORDER_FRAME etc..
+            vtype = "FL_"+macrounit['type']
+        if "box" in macrounit:
+            vxpos, vypos, vwidth, vheight = macrounit['box'].split()
+        if "label" in macrounit:
+            if macrounit['label'] is None:      # label unknown
+                vlabel = ""
+            else:
+                vlabel = macrounit['label']
+        if "name" in macrounit:
+            if macrounit['name'] is None:       # name unknown
+                vname = self.getgeneric_flobjname()
+            else:
+                vname = macrounit['name']
+            flobjtxt += "\n%s%s = xfl.fl_add_frame(%s, %s, %s, %s, %s, " \
+                "\'%s\')" % \
+                (TWOTABS, prependself(vname), prependxfl(vtype), \
+                vxpos, vypos, vwidth, vheight, vlabel)
+        if "boxtype" in macrounit:
+            vboxtype = macrounit['boxtype']
+            flobjtxt += "\n%sxfl.fl_set_object_boxtype(%s, %s)" % \
+                (TWOTABS, prependself(vname), prependxfl(vboxtype))
+        self.createformstext.append(flobjtxt)
+        return vname
 
-    def manage_flbrowser(self):
+    def manage_fllabelframe(self, macrounit):
+        flobjtxt = ""
+        if "type" in macrounit:     # FL_BORDER_FRAME etc..
+            vtype = "FL_"+macrounit['type']
+        if "box" in macrounit:
+            vxpos, vypos, vwidth, vheight = macrounit['box'].split()
+        if "label" in macrounit:
+            if macrounit['label'] is None:      # label unknown
+                vlabel = ""
+            else:
+                vlabel = macrounit['label']
+        if "name" in macrounit:
+            if macrounit['name'] is None:       # name unknown
+                vname = self.getgeneric_flobjname()
+            else:
+                vname = macrounit['name']
+            flobjtxt += "\n%s%s = xfl.fl_add_labelframe(%s, %s, %s, %s, %s, " \
+                    "\'%s\')" % (TWOTABS, prependself(vname), \
+                    prependxfl(vtype), vxpos, vypos, vwidth, \
+                    vheight, vlabel)
+        if "boxtype" in macrounit:
+            vboxtype = macrounit['boxtype']
+            flobjtxt += "\n%sxfl.fl_set_object_boxtype(%s, %s)" % \
+                (TWOTABS, prependself(vname), prependxfl(vboxtype))
+        self.createformstext.append(flobjtxt)
+        return vname
+
+    def manage_fltext(self, macrounit):
+        flobjtxt = ""
+        if "type" in macrounit:
+            vtype = macrounit['type']
+        if "box" in macrounit:
+            vxpos, vypos, vwidth, vheight = macrounit['box'].split()
+        if "label" in macrounit:
+            if macrounit['label'] is None:      # label unknown
+                vlabel = ""
+            else:
+                vlabel = macrounit['label']
+        if "name" in macrounit:
+            if macrounit['name'] is None:       # name unknown
+                vname = self.getgeneric_flobjname()
+            else:
+                vname = macrounit['name']
+            flobjtxt += "\n%s%s = xfl.fl_add_text(%s, %s, %s, %s, %s, " \
+                    "\'%s\')" % (TWOTABS, prependself(vname), \
+                    prependxfl(vtype), vxpos, vypos, vwidth, \
+                    vheight, vlabel)
+        if "boxtype" in macrounit:
+            vboxtype = macrounit['boxtype']
+            flobjtxt += "\n%sxfl.fl_set_object_boxtype(%s, %s)" % \
+                    (TWOTABS, prependself(vname), prependxfl(vboxtype))
+        self.createformstext.append(flobjtxt)
+        return vname
+
+    def manage_flbitmap(self, macrounit):
+        flobjtxt = ""
+        if "type" in macrounit:
+            vtype = 'FL_'+macrounit['type']
+        if "box" in macrounit:
+            vxpos, vypos, vwidth, vheight = macrounit['box'].split()
+        if "label" in macrounit:
+            if macrounit['label'] is None:      # label unknown
+                vlabel = ""
+            else:
+                vlabel = macrounit['label']
+        if "name" in macrounit:
+            if macrounit['name'] is None:       # name unknown
+                vname = self.getgeneric_flobjname()
+            else:
+                vname = macrounit['name']
+            flobjtxt += "\n%s%s = xfl.fl_add_bitmap(%s, %s, %s, %s, %s, " \
+                "\'%s\')" % \
+                (TWOTABS, prependself(vname), prependxfl(vtype), \
+                vxpos, vypos, vwidth, vheight, vlabel)
+        if "boxtype" in macrounit:
+            vboxtype = macrounit['boxtype']
+            flobjtxt += "\n%sxfl.fl_set_object_boxtype(%s, %s)" % \
+                    (TWOTABS, prependself(vname), prependxfl(vboxtype))
+        if "fullpath" in macrounit:
+            vfullpath = macrounit['fullpath']
+        if "file" in macrounit:
+            if vfullpath == '1':           # is a full path
+                vfile = macrounit['file']
+            else:                   # '0', is a relative path
+                vfile = './'+macrounit['file']
+            flobjtxt += "\n%sxfl.fl_set_bitmap_file(%s, \'%s\')" % \
+                    (TWOTABS, prependself(vname), vfile)
+        if 'width' in macrounit:         # if "Use data" enabled
+            pass        # TODO: managing import from .xbm data
+        if 'height' in macrounit:         # if "Use data" enabled
+            pass        # TODO: managing import from .xbm data
+        if 'data' in macrounit:         # if "Use data" enabled
+            pass        # TODO: managing import from .xbm data
+            # flobjtxt = "\n%sxfl.fl_set_bitmap_data()"
+        self.createformstext.append(flobjtxt)
+        return vname
+
+    def manage_flpixmap(self, macrounit):
+        flobjtxt = ""
+        if "type" in macrounit:
+            vtype = 'FL_'+macrounit['type']
+        if "box" in macrounit:
+            vxpos, vypos, vwidth, vheight = macrounit['box'].split()
+        if "label" in macrounit:
+            if macrounit['label'] is None:      # label unknown
+                vlabel = ""
+            else:
+                vlabel = macrounit['label']
+        if "name" in macrounit:
+            if macrounit['name'] is None:       # name unknown
+                vname = self.getgeneric_flobjname()
+            else:
+                vname = macrounit['name']
+            flobjtxt += "\n%s%s = xfl.fl_add_pixmap(%s, %s, %s, %s, %s, " \
+                "\'%s\')" % \
+                (TWOTABS, prependself(vname), prependxfl(vtype), \
+                vxpos, vypos, vwidth, vheight, vlabel)
+        if "boxtype" in macrounit:
+            vboxtype = macrounit['boxtype']
+            flobjtxt += "\n%sxfl.fl_set_object_boxtype(%s, %s)" % \
+                    (TWOTABS, prependself(vname), prependxfl(vboxtype))
+        if 'align' in macrounit:        # pixmap alignment
+            valign = macrounit['align']
+            flobjtxt += "\n%sxfl.fl_set_pixmap_align(%s, %s, 3, 3)" % \
+                    (TWOTABS, prependself(vname), prependxfl(valign))
+        if "fullpath" in macrounit:
+            vfullpath = macrounit['fullpath']
+        if "file" in macrounit:
+            if vfullpath == '1':           # is a full path
+                vfile = macrounit['file']
+            else:                   # '0', is a relative path
+                vfile = './'+macrounit['file']
+            flobjtxt += "\n%sxfl.fl_set_bitmap_file(%s, \'%s\')" % \
+                    (TWOTABS, prependxfl(vname), vfile)
+        if 'width' in macrounit:         # if "Use data" enabled
+            pass        # TODO: managing import from .xbm data
+        if 'height' in macrounit:         # if "Use data" enabled
+            pass        # TODO: managing import from .xbm data
+        if 'data' in macrounit:         # if "Use data" enabled
+            pass        # TODO: managing import from .xbm data
+            # flobjtxt = "\n%sxfl.fl_set_bitmap_data()"
+        self.createformstext.append(flobjtxt)
+        return vname
+
+    def manage_flchart(self, macrounit):
+        flobjtxt = ""
+        if "type" in macrounit:
+            vtype = 'FL_'+macrounit['type']
+        if "box" in macrounit:
+            vxpos, vypos, vwidth, vheight = macrounit['box'].split()
+        if "label" in macrounit:
+            if macrounit['label'] is None:      # label unknown
+                vlabel = ""
+            else:
+                vlabel = macrounit['label']
+        if "name" in macrounit:
+            if macrounit['name'] is None:       # name unknown
+                vname = self.getgeneric_flobjname()
+            else:
+                vname = macrounit['name']
+            flobjtxt += "\n%s%s = xfl.fl_add_chart(%s, %s, %s, %s, %s, " \
+                "\'%s\')" % \
+                (TWOTABS, prependself(vname), prependxfl(vtype), \
+                vxpos, vypos, vwidth, vheight, vlabel)
+        if "boxtype" in macrounit:
+            vboxtype = macrounit['boxtype']
+            flobjtxt += "\n%sxfl.fl_set_object_boxtype(%s, %s)" % \
+                    (TWOTABS, prependself(vname), prependxfl(vboxtype))
+        self.createformstext.append(flobjtxt)
+        return vname
+
+    def manage_flclock(self, macrounit):
+        flobjtxt = ""
+        if "type" in macrounit:
+            vtype = 'FL_'+macrounit['type']
+        if "box" in macrounit:
+            vxpos, vypos, vwidth, vheight = macrounit['box'].split()
+        if "label" in macrounit:
+            if macrounit['label'] is None:      # label unknown
+                vlabel = ""
+            else:
+                vlabel = macrounit['label']
+        if "name" in macrounit:
+            if macrounit['name'] is None:       # name unknown
+                vname = self.getgeneric_flobjname()
+            else:
+                vname = macrounit['name']
+            flobjtxt += "\n%s%s = xfl.fl_add_clock(%s, %s, %s, %s, %s, " \
+                "\'%s\')" % \
+                (TWOTABS, prependself(vname), prependxfl(vtype), \
+                vxpos, vypos, vwidth, vheight, vlabel)
+        if "boxtype" in macrounit:
+            vboxtype = macrounit['boxtype']
+            flobjtxt += "\n%sxfl.fl_set_object_boxtype(%s, %s)" % \
+                    (TWOTABS, prependself(vname), prependxfl(vboxtype))
+        self.createformstext.append(flobjtxt)
+        return vname
+
+    def manage_flbutton(self, macrounit):
+        flobjtxt = ""
+        if "type" in macrounit:
+            vtype = 'FL_'+macrounit['type']
+        if "box" in macrounit:
+            vxpos, vypos, vwidth, vheight = macrounit['box'].split()
+        if "label" in macrounit:
+            if macrounit['label'] is None:      # label unknown
+                vlabel = ""
+            else:
+                vlabel = macrounit['label']
+        if "name" in macrounit:
+            if macrounit['name'] is None:       # name unknown
+                vname = self.getgeneric_flobjname()
+            else:
+                vname = macrounit['name']
+            flobjtxt += "\n%s%s = xfl.fl_add_button(%s, %s, %s, %s, %s, " \
+                "\'%s\')" % \
+                (TWOTABS, prependself(vname), prependxfl(vtype), \
+                vxpos, vypos, vwidth, vheight, vlabel)
+        if "boxtype" in macrounit:
+            vboxtype = macrounit['boxtype']
+            flobjtxt += "\n%sxfl.fl_set_object_boxtype(%s, %s)" % \
+                    (TWOTABS, prependself(vname), prependxfl(vboxtype))
+        if "mbuttons" in macrounit:
+            vmbuttons = macrounit['mbuttons']
+            flobjtxt += "\n%sxfl.fl_set_button_mouse_buttons(%s, %s)" % \
+                    (TWOTABS, prependself(vname), vmbuttons)
+        self.createformstext.append(flobjtxt)
+        return vname
+
+    def manage_flroundbutton(self, macrounit):
+        flobjtxt = ""
+        if "type" in macrounit:
+            vtype = 'FL_'+macrounit['type']
+        if "box" in macrounit:
+            vxpos, vypos, vwidth, vheight = macrounit['box'].split()
+        if "label" in macrounit:
+            if macrounit['label'] is None:      # label unknown
+                vlabel = ""
+            else:
+                vlabel = macrounit['label']
+        if "name" in macrounit:
+            if macrounit['name'] is None:       # name unknown
+                vname = self.getgeneric_flobjname()
+            else:
+                vname = macrounit['name']
+            flobjtxt += "\n%s%s = xfl.fl_add_roundbutton(%s, %s, %s, %s, " \
+                "%s, \'%s\')" % \
+                (TWOTABS, prependself(vname), prependxfl(vtype), \
+                vxpos, vypos, vwidth, vheight, vlabel)
+        if "boxtype" in macrounit:
+            vboxtype = macrounit['boxtype']
+            flobjtxt += "\n%sxfl.fl_set_object_boxtype(%s, %s)" % \
+                    (TWOTABS, prependself(vname), prependxfl(vboxtype))
+        if "mbuttons" in macrounit:
+            vmbuttons = macrounit['mbuttons']
+            flobjtxt += "\n%sxfl.fl_set_button_mouse_buttons(%s, %s)" % \
+                    (TWOTABS, prependself(vname), vmbuttons)
+        if "value" in macrounit:
+            vvalue = macrounit['value']
+            if vvalue == '1':       # if it is to be set
+                flobjtxt += "\n%sxfl.fl_set_button(%s, 1)" % \
+                    (TWOTABS, prependself(vname))
+        self.createformstext.append(flobjtxt)
+        return vname
+
+    def manage_flround3dbutton(self, macrounit):
+        flobjtxt = ""
+        if "type" in macrounit:
+            vtype = 'FL_'+macrounit['type']
+        if "box" in macrounit:
+            vxpos, vypos, vwidth, vheight = macrounit['box'].split()
+        if "label" in macrounit:
+            if macrounit['label'] is None:      # label unknown
+                vlabel = ""
+            else:
+                vlabel = macrounit['label']
+        if "name" in macrounit:
+            if macrounit['name'] is None:       # name unknown
+                vname = self.getgeneric_flobjname()
+            else:
+                vname = macrounit['name']
+            flobjtxt += "\n%s%s = xfl.fl_add_round3dbutton(%s, %s, %s, %s, " \
+                "%s, \'%s\')" % \
+                (TWOTABS, prependself(vname), prependxfl(vtype), \
+                vxpos, vypos, vwidth, vheight, vlabel)
+        if "boxtype" in macrounit:
+            vboxtype = macrounit['boxtype']
+            flobjtxt += "\n%sxfl.fl_set_object_boxtype(%s, %s)" % \
+                    (TWOTABS, prependself(vname), prependxfl(vboxtype))
+        if "mbuttons" in macrounit:
+            vmbuttons = macrounit['mbuttons']
+            flobjtxt += "\n%sxfl.fl_set_button_mouse_buttons(%s, %s)" % \
+                    (TWOTABS, prependself(vname), vmbuttons)
+        if "value" in macrounit:
+            vvalue = macrounit['value']
+            if vvalue == '1':       # if it is to be set
+                flobjtxt += "\n%sxfl.fl_set_button(%s, 1)" % \
+                    (TWOTABS, prependself(vname))
+        self.createformstext.append(flobjtxt)
+        return vname
+
+    def manage_flcheckbutton(self, macrounit):
+        flobjtxt = ""
+        if "type" in macrounit:
+            vtype = 'FL_'+macrounit['type']
+        if "box" in macrounit:
+            vxpos, vypos, vwidth, vheight = macrounit['box'].split()
+        if "label" in macrounit:
+            if macrounit['label'] is None:      # label unknown
+                vlabel = ""
+            else:
+                vlabel = macrounit['label']
+        if "name" in macrounit:
+            if macrounit['name'] is None:       # name unknown
+                vname = self.getgeneric_flobjname()
+            else:
+                vname = macrounit['name']
+            flobjtxt += "\n%s%s = xfl.fl_add_checkbutton(%s, %s, %s, %s, " \
+                "%s, \'%s\')" % \
+                (TWOTABS, prependself(vname), prependxfl(vtype), \
+                vxpos, vypos, vwidth, vheight, vlabel)
+        if "boxtype" in macrounit:
+            vboxtype = macrounit['boxtype']
+            flobjtxt += "\n%sxfl.fl_set_object_boxtype(%s, %s)" % \
+                    (TWOTABS, prependself(vname), prependxfl(vboxtype))
+        if "mbuttons" in macrounit:
+            vmbuttons = macrounit['mbuttons']
+            flobjtxt += "\n%sxfl.fl_set_button_mouse_buttons(%s, %s)" % \
+                    (TWOTABS, prependself(vname), vmbuttons)
+        if "value" in macrounit:
+            vvalue = macrounit['value']
+            if vvalue == '1':       # if it is to be set
+                flobjtxt += "\n%sxfl.fl_set_button(%s, 1)" % \
+                    (TWOTABS, prependself(vname))
+        self.createformstext.append(flobjtxt)
+        return vname
+
+    def manage_fllightbutton(self, macrounit):
+        flobjtxt = ""
+        if "type" in macrounit:
+            vtype = 'FL_'+macrounit['type']
+        if "box" in macrounit:
+            vxpos, vypos, vwidth, vheight = macrounit['box'].split()
+        if "label" in macrounit:
+            if macrounit['label'] is None:      # label unknown
+                vlabel = ""
+            else:
+                vlabel = macrounit['label']
+        if "name" in macrounit:
+            if macrounit['name'] is None:       # name unknown
+                vname = self.getgeneric_flobjname()
+            else:
+                vname = macrounit['name']
+            flobjtxt += "\n%s%s = xfl.fl_add_lightbutton(%s, %s, %s, %s, " \
+                "%s, \'%s\')" % \
+                (TWOTABS, prependself(vname), prependxfl(vtype), \
+                vxpos, vypos, vwidth, vheight, vlabel)
+        if "boxtype" in macrounit:
+            vboxtype = macrounit['boxtype']
+            flobjtxt += "\n%sxfl.fl_set_object_boxtype(%s, %s)" % \
+                    (TWOTABS, prependself(vname), prependxfl(vboxtype))
+        if "mbuttons" in macrounit:
+            vmbuttons = macrounit['mbuttons']
+            flobjtxt += "\n%sxfl.fl_set_button_mouse_buttons(%s, %s)" % \
+                    (TWOTABS, prependself(vname), vmbuttons)
+        if "value" in macrounit:
+            vvalue = macrounit['value']
+            if vvalue == '1':       # if it is to be set
+                flobjtxt += "\n%sxfl.fl_set_button(%s, 1)" % \
+                    (TWOTABS, prependself(vname))
+        self.createformstext.append(flobjtxt)
+        return vname
+
+    def manage_flscrollbutton(self, macrounit):
+        flobjtxt = ""
+        if "type" in macrounit:
+            vtype = 'FL_'+macrounit['type']
+        if "box" in macrounit:
+            vxpos, vypos, vwidth, vheight = macrounit['box'].split()
+        if "label" in macrounit:
+            if macrounit['label'] is None:      # label unknown
+                vlabel = ""
+            else:
+                vlabel = macrounit['label']
+        if "name" in macrounit:
+            if macrounit['name'] is None:       # name unknown
+                vname = self.getgeneric_flobjname()
+            else:
+                vname = macrounit['name']
+            flobjtxt += "\n%s%s = xfl.fl_add_lightbutton(%s, %s, %s, %s, " \
+                "%s, \'%s\')" % \
+                (TWOTABS, prependself(vname), prependxfl(vtype), \
+                vxpos, vypos, vwidth, vheight, vlabel)
+        if "boxtype" in macrounit:
+            vboxtype = macrounit['boxtype']
+            flobjtxt += "\n%sxfl.fl_set_object_boxtype(%s, %s)" % \
+                    (TWOTABS, prependself(vname), prependxfl(vboxtype))
+        self.createformstext.append(flobjtxt)
+        return vname
+
+    def manage_flbitmapbutton(self, macrounit):
+        flobjtxt = ""
+        if "type" in macrounit:
+            vtype = 'FL_'+macrounit['type']
+        if "box" in macrounit:
+            vxpos, vypos, vwidth, vheight = macrounit['box'].split()
+        if "label" in macrounit:
+            if macrounit['label'] is None:      # label unknown
+                vlabel = ""
+            else:
+                vlabel = macrounit['label']
+        if "name" in macrounit:
+            if macrounit['name'] is None:       # name unknown
+                vname = self.getgeneric_flobjname()
+            else:
+                vname = macrounit['name']
+            flobjtxt += "\n%s%s = xfl.fl_add_bitmap(%s, %s, %s, %s, %s, " \
+                "\'%s\')" % \
+                (TWOTABS, prependself(vname), prependxfl(vtype), \
+                vxpos, vypos, vwidth, vheight, vlabel)
+        if "boxtype" in macrounit:
+            vboxtype = macrounit['boxtype']
+            flobjtxt += "\n%sxfl.fl_set_object_boxtype(%s, %s)" % \
+                    (TWOTABS, prependself(vname), prependxfl(vboxtype))
+        if "mbuttons" in macrounit:
+            vmbuttons = macrounit['mbuttons']
+            flobjtxt += "\n%sxfl.fl_set_button_mouse_buttons(%s, %s)" % \
+                    (TWOTABS, prependself(vname), vmbuttons)
+        if "fullpath" in macrounit:
+            vfullpath = macrounit['fullpath']
+        if "file" in macrounit:
+            if vfullpath == '1':           # is a full path
+                vfile = macrounit['file']
+            else:                   # '0', is a relative path
+                vfile = './'+macrounit['file']
+            flobjtxt += "\n%sxfl.fl_set_bitmapbutton_file(%s, \'%s\')" % \
+                    (TWOTABS, prependself(vname), vfile)
+        if 'width' in macrounit:         # if "Use data" enabled
+            pass        # TODO: managing import from .xbm data
+        if 'height' in macrounit:         # if "Use data" enabled
+            pass        # TODO: managing import from .xbm data
+        if 'data' in macrounit:         # if "Use data" enabled
+            pass        # TODO: managing import from .xbm data
+            # flobjtxt = "\n%sxfl.fl_set_bitmapbutton_data()"
+        # 'helper' not implemented upstream
+        self.createformstext.append(flobjtxt)
+        return vname
+
+    def manage_flpixmapbutton(self, macrounit):
+        flobjtxt = ""
+        if "type" in macrounit:
+            vtype = 'FL_'+macrounit['type']
+        if "box" in macrounit:
+            vxpos, vypos, vwidth, vheight = macrounit['box'].split()
+        if "label" in macrounit:
+            if macrounit['label'] is None:      # label unknown
+                vlabel = ""
+            else:
+                vlabel = macrounit['label']
+        if "name" in macrounit:
+            if macrounit['name'] is None:       # name unknown
+                vname = self.getgeneric_flobjname()
+            else:
+                vname = macrounit['name']
+            flobjtxt += "\n%s%s = xfl.fl_add_pixmapbutton(%s, %s, %s, %s, " \
+                "%s, \'%s\')" % \
+                (TWOTABS, prependself(vname), prependxfl(vtype), \
+                vxpos, vypos, vwidth, vheight, vlabel)
+        if "boxtype" in macrounit:
+            vboxtype = macrounit['boxtype']
+            flobjtxt += "\n%sxfl.fl_set_object_boxtype(%s, %s)" % \
+                    (TWOTABS, prependself(vname), prependxfl(vboxtype))
+        if "mbuttons" in macrounit:
+            vmbuttons = macrounit['mbuttons']
+            flobjtxt += "\n%sxfl.fl_set_button_mouse_buttons(%s, %s)" % \
+                    (TWOTABS, prependself(vname), vmbuttons)
+        if 'align' in macrounit:        # pixmap alignment
+            valign = macrounit['align']
+            flobjtxt += "\n%sxfl.fl_set_pixmapbutton_align(%s, %s, 3, 3)" % \
+                    (TWOTABS, prependself(vname), prependxfl(valign))
+        if 'helper' in macrounit:
+            vhelper = macrounit['helper']
+            flobjtxt += "\n%sxfl.fl_set_object_helper(%s, %s)" % \
+                    (TWOTABS, prependself(vname), prependxfl(vhelper))
+        if "fullpath" in macrounit:
+            vfullpath = macrounit['fullpath']
+        if "file" in macrounit:
+            if vfullpath == '1':           # is a full path
+                vfile = macrounit['file']
+            else:                   # '0', is a relative path
+                vfile = './'+macrounit['file']
+            flobjtxt += "\n%sxfl.fl_set_pixmapbutton_file(%s, \'%s\')" % \
+                    (TWOTABS, prependself(vname), vfile)
+        if "focus_file" in macrounit:
+            if vfullpath == '1':           # is a full path
+                vfocusfile = macrounit['focus_file']
+            else:                   # '0', is a relative path
+                vfocusfile = './'+macrounit['focus_file']
+            flobjtxt += "\n%sxfl.fl_set_pixmapbutton_focus_file(%s, \'%s\')" % \
+                    (TWOTABS, prependself(vname), vfocusfile)
+        if "data" in macrounit:         # if "Use data" enabled
+            pass        # TODO: managing import from .xbm data
+        #    # flobjtxt = "\n%sxfl.fl_set_pixmapbutton_data()"?
+        self.createformstext.append(flobjtxt)
+        return vname
+
+    def manage_fllabelbutton(self, macrounit):
+        flobjtxt = ""
+        if "type" in macrounit:
+            vtype = 'FL_'+macrounit['type']
+        if "box" in macrounit:
+            vxpos, vypos, vwidth, vheight = macrounit['box'].split()
+        if "label" in macrounit:
+            if macrounit['label'] is None:      # label unknown
+                vlabel = ""
+            else:
+                vlabel = macrounit['label']
+        if "name" in macrounit:
+            if macrounit['name'] is None:       # name unknown
+                vname = self.getgeneric_flobjname()
+            else:
+                vname = macrounit['name']
+            flobjtxt += "\n%s%s = xfl.fl_add_labelbutton(%s, %s, %s, %s, " \
+                "%s, \'%s\')" % \
+                (TWOTABS, prependself(vname), prependxfl(vtype), \
+                vxpos, vypos, vwidth, vheight, vlabel)
+        if "boxtype" in macrounit:
+            vboxtype = macrounit['boxtype']
+            flobjtxt += "\n%sxfl.fl_set_object_boxtype(%s, %s)" % \
+                    (TWOTABS, prependself(vname), prependxfl(vboxtype))
+        if "mbuttons" in macrounit:
+            vmbuttons = macrounit['mbuttons']
+            flobjtxt += "\n%sxfl.fl_set_button_mouse_buttons(%s, %s)" % \
+                    (TWOTABS, prependself(vname), vmbuttons)
+        self.createformstext.append(flobjtxt)
+        return vname
+
+    def manage_flslider(self, macrounit):
+        flobjtxt = ""
+        if "type" in macrounit:
+            vtype = 'FL_'+macrounit['type']
+        if "box" in macrounit:
+            vxpos, vypos, vwidth, vheight = macrounit['box'].split()
+        if "label" in macrounit:
+            if macrounit['label'] is None:      # label unknown
+                vlabel = ""
+            else:
+                vlabel = macrounit['label']
+        if "name" in macrounit:
+            if macrounit['name'] is None:       # name unknown
+                vname = self.getgeneric_flobjname()
+            else:
+                vname = macrounit['name']
+            flobjtxt += "\n%s%s = xfl.fl_add_slider(%s, %s, %s, %s, " \
+                "%s, \'%s\')" % \
+                (TWOTABS, prependself(vname), prependxfl(vtype), \
+                vxpos, vypos, vwidth, vheight, vlabel)
+        if "boxtype" in macrounit:
+            vboxtype = macrounit['boxtype']
+            flobjtxt += "\n%sxfl.fl_set_object_boxtype(%s, %s)" % \
+                    (TWOTABS, prependself(vname), prependxfl(vboxtype))
+        self.createformstext.append(flobjtxt)
+        return vname
+
+    def manage_flbrowser(self, macrounit):
         pass
 
-    def manage_flbutton(self):
+    def manage_flcanvas(self, macrounit):
         pass
 
-    def manage_flcanvas(self):
+    def manage_flcounter(self, macrounit):
         pass
 
-    def manage_flchart(self):
+    def manage_fldial(self, macrounit):
         pass
 
-    def manage_flcheckbutton(self):
+    def manage_flformbrowser(self, macrounit):
         pass
 
-    def manage_flclock(self):
+    def manage_flfree(self, macrounit):
         pass
 
-    def manage_flcounter(self):
+    def manage_flglcanvas(self, macrounit):
         pass
 
-    def manage_fldial(self):
+    def manage_flinput(self, macrounit):
         pass
 
-    def manage_flformbrowser(self):
+    def manage_flnmenu(self):   # not implemented upstreams yet
         pass
 
-    def manage_flframe(self):
+    def manage_flpositioner(self, macrounit):
         pass
 
-    def manage_flinput(self):
+    def manage_flselect(self, macrounit):   # not implemented upstreams yet
         pass
 
-    def manage_fllabelframe(self):
+    def manage_flscrollbar(self, macrounit):
         pass
 
-    def manage_fllightbutton(self):
+    def manage_flspinner(self, macrounit):
         pass
 
-    def manage_flnmenu(self):
+    def manage_fltabfolder(self, macrounit):
         pass
 
-    def manage_flpixmap(self):
+    def manage_flthumbwheel(self, macrounit):
         pass
 
-    def manage_flpixmapbutton(self):
+    def manage_fltimer(self, macrounit):
         pass
 
-    def manage_flpositioner(self):
+    def manage_flvalslider(self, macrounit):
         pass
 
-    def manage_flround3dbutton(self):
-        pass
-
-    def manage_flselect(self):
-        pass
-
-    def manage_flslider(self):
-        pass
-
-    def manage_flspinner(self):
-        pass
-
-    def manage_fltabfolder(self):
-        pass
-
-    def manage_fltext(self):
-        pass
-
-    def manage_flthumbwheel(self):
-        pass
-
-    def manage_flvalslider(self):
+    def manage_flxyplot(self, macrounit):
         pass
 
     def manage_endmain(self):
         # append text at the end of main func
-        endingstxt = "\n%sself.createforms()\n\n%sxfl.fl_finish()" % \
-                (TWOTABS, TWOTABS)
+        endingstxt = "\n%sself.createforms()\n%sxfl.fl_show_form(%s, " \
+                "FL_PLACE_CENTERFREE, FL_FULLBORDER, \'%s\')" \
+                "\n\n%sxfl.fl_finish()" % \
+                (TWOTABS, TWOTABS, prependself(self.firstformname), \
+                self.firstformname, TWOTABS)
         self.endmaintext.append(endingstxt)
 
     def manage_endings(self):
@@ -654,6 +1278,8 @@ class FdConvertToPy(object):
                 fdout.close()
             except IOError:
                 errorcliargs("Cannot write <outfile>.py on disk", 5)
+            else:
+                print("<outfile>.py successfully created.")
 
 
 if __name__ == '__main__':

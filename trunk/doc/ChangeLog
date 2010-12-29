@@ -2,11 +2,14 @@ SVN (first entries from top are more recent)
 --------------------------------------------
 
 BETA
+    20101229 (beta5)
+    * about a half of fdesign objects are now manageable by fd2python.py.
+    * corrected shortcut in nmenu_minimal.py example.
     * bugfix in ndial.py example (as reported and suggested by Jens Thoms
     Toerring).
     20101227 (beta4)
     * bugfix in fl_initialize()
-    * fd2python added, to convert .fd fdesign files to xforms-python .py
+    * fd2python.py added, to convert .fd fdesign files to xforms-python .py
     (not completed yet).
     20101224 (beta3)
     * some leftover typos and bugs fixed. Moving most of constants' possible
