@@ -20,6 +20,7 @@ class Flndial(object):
     def __init__(self, lsysargv, sysargv):
         self.pdials = [0] * 3
         self.ptexts = [0] * 3
+        self.cols = [128] * 3
         xfl.fl_initialize(lsysargv, sysargv, "FormDemo", None, 0)
         self.makeform()
         xfl.fl_show_form(self.pform, xfl.FL_PLACE_MOUSE, xfl.FL_TRANSIENT, \
@@ -29,11 +30,11 @@ class Flndial(object):
 
 
     def cb(self, pobj, data):
-        cols = [128] * 3
-        cols[data] = xfl.fl_get_dial_value(pobj)
-        xfl.fl_mapcolor(xfl.FL_FREE_COL1, cols[0], cols[1], cols[2])
+        self.cols[data] = xfl.fl_get_dial_value(pobj)
+        xfl.fl_mapcolor(xfl.FL_FREE_COL1, self.cols[0], self.cols[1], \
+                self.cols[2])
         xfl.fl_redraw_object(self.presult)
-        strng = "%d" % cols[data]
+        strng = "%d" % self.cols[data]
         xfl.fl_set_object_label(self.ptexts[data], strng)
 
 

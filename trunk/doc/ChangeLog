@@ -2,6 +2,8 @@ SVN (first entries from top are more recent)
 --------------------------------------------
 
 BETA
+    * bugfix in ndial.py example (as reported and suggested by Jens Thoms
+    Toerring).
     20101227 (beta4)
     * bugfix in fl_initialize()
     * fd2python added, to convert .fd fdesign files to xforms-python .py
