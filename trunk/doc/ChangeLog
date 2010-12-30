@@ -2,6 +2,10 @@ SVN (first entries from top are more recent)
 --------------------------------------------
 
 BETA
+    20101230 (beta6)
+    * fd2python is almost complete.
+    * bugfix for fl_set_button_mouse_buttons(). Removed value check for
+    fl_set_object_return(), as multiple bitwise OR are allowed.
     20101229 (beta5)
     * about a half of fdesign objects are now manageable by fd2python.py.
     * corrected shortcut in nmenu_minimal.py example.

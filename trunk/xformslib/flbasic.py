@@ -3078,7 +3078,7 @@ def fl_set_object_return(ptr_flobject, whenretn):
             been deselected), FL_RETURN_TRIGGERED (*todo*), FL_RETURN_ALWAYS
             (Return or invoke callback whenever the interaction ends and/or
             an item is selected. It includes all conditions except
-            FL_RETURN_END_CHANGED).
+            FL_RETURN_END_CHANGED). Bitwise OR is allowed.
 
     Returns
     -------
@@ -3100,7 +3100,6 @@ def fl_set_object_return(ptr_flobject, whenretn):
         """int fl_set_object_return(FL_OBJECT * ob, unsigned int when) """)
     library.check_if_initialized()
     library.verify_flobjectptr_type(ptr_flobject)
-    library.checkfatal_allowed_value_in_list(whenretn, xfdata.RETURN_list)
     ui_whenretn = library.convert_to_uintc(whenretn)
     library.keep_elem_refs(ptr_flobject, whenretn, ui_whenretn)
     retval = _fl_set_object_return(ptr_flobject, ui_whenretn)

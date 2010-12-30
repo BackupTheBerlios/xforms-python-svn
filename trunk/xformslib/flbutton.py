@@ -1119,9 +1119,9 @@ def fl_set_button_mouse_buttons(ptr_flobject, buttons):
            unsigned int buttons)""")
     library.check_if_initialized()
     library.verify_flobjectptr_type(ptr_flobject)
-    i_buttons = library.convert_to_intc(buttons)
-    library.keep_elem_refs(ptr_flobject, buttons, i_buttons)
-    _fl_set_button_mouse_buttons(ptr_flobject, i_buttons)
+    ui_buttons = library.convert_to_uintc(buttons)
+    library.keep_elem_refs(ptr_flobject, buttons, ui_buttons)
+    _fl_set_button_mouse_buttons(ptr_flobject, ui_buttons)
 
 
 def fl_get_button_mouse_buttons(ptr_flobject):
