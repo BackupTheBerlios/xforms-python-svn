@@ -2,6 +2,9 @@ SVN (first entries from top are more recent)
 --------------------------------------------
 
 BETA
+    20101231 (beta7)
+    * bitmapbutton's pixmapbutton's usedata cases now implemented in
+    fd2python. Removing fl_set_dial_return() as deprecated.
     20101230 (beta6)
     * fd2python is almost complete.
     * bugfix for fl_set_button_mouse_buttons(). Removed value check for

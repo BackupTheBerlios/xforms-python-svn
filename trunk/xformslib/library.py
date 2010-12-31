@@ -54,6 +54,10 @@ class XFormsValueError(ValueError):
     """ Fatal generic error for unexpected value"""
     pass
 
+class XFormsGenericError(OSError):
+    """ Fatal generic error"""
+    pass
+
 class XFormsFuncNotSupported(ValueError):
     """ Fatal error for XForms functions not supported or not yet
         stabilized in xforms-python. """

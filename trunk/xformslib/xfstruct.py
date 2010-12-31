@@ -28,6 +28,7 @@
 #######################################################################
 
 
+import os
 import ctypes as cty
 from xformslib import xfdata
 from xformslib import library
@@ -100,7 +101,7 @@ def make_flpopupitem(dictpopupitems):
 
     # more dicts
     elif isinstance(dictpopupitems, list):
-        
+
         dictlength = len(dictpopupitems)
         popupitem = (xfdata.FL_POPUP_ITEM * (dictlength+1))()
         pyclstext = s_clstext = [" "] * dictlength
@@ -404,7 +405,6 @@ def make_flcmdopt(dictflcmdopt):
         library.keep_elem_refs(dictflcmdopt, flcmdopt, ptr_flcmdopt, \
                 pyoption, s_option, pyspecifier, s_specifier, pyargKind, \
                 i_argKind, pyvalue, s_value)
-
         return ptr_flcmdopt
 
     # more dicts
@@ -466,7 +466,6 @@ def make_flcmdopt(dictflcmdopt):
 
         ptr_flcmdopt = cty.pointer(flcmdopt[0])
         library.keep_elem_refs(dictflcmdopt, ptr_flcmdopt)
-
         return ptr_flcmdopt
 
     else:
@@ -563,7 +562,6 @@ def make_flresource(dictflresource):
                 ptr_flresource, pyclsresname, s_clsresname, pyclsresclass, \
                 s_clsresclass, pyclstype, i_clstype, pyclsvar, ptr_clsvar, \
                 pyclsdefval, s_clsdefval, pyclsnbytes, i_clsnbytes)
-
         return ptr_flresource
 
     # more dicts
@@ -664,7 +662,6 @@ def make_flresource(dictflresource):
         ptr_flresource = cty.pointer(structflresource[0])
         library.keep_elem_refs(dictflresource, ptr_flresource, \
                 structflresource)
-
         return ptr_flresource
 
     else:
@@ -675,8 +672,8 @@ def make_flresource(dictflresource):
 
 def make_flpopupcb(pyfn_popupcb):
     """make_flpopupcb(pyfn_popupcb) -> cfn_popupcb
-    
-    Taking a python callback function name, prapares and returns a 
+
+    Taking a python callback function name, prapares and returns a
     C-compatible xfdata.FL_POPUP_CB function."""
 
     if hasattr(pyfn_popupcb, '__call__'):
@@ -694,4 +691,137 @@ def donothing_flpopupcb(ptr_flpopupreturn):
     return 0
 
 
+def import_xbmdata_from_file(fname):
+    """import_xbmdata_from_file(fname) -> width, height, xbmcontents
 
+    Taking a .xbm filename, it reads it and returns all elements, to be used
+    with flbitmap.fl_set_bitmapbutton_data()."""
+
+    width = 0
+    height = 0
+    tmpxbmcontents1 = ""
+    tmpxbmcontents2 = ""
+    xbmcontents = []
+
+    if fname.endswith(".xbm") or fname.endwith(".XBM"):
+        if os.path.exists(fname):
+            try:
+                xbmfil = open(fname)
+            except IOError:
+                raise library.XFormsGenericError("File %s cannot be opened." \
+                        % fname)
+            iswidth = True      # first defined
+            iscontentsarea = False
+            iscommentarea = False
+            for line in xbmfil:
+                if "/*" in line and "*/" in line:     # comment inlined
+                    continue
+                elif "/*" in line:        # start of a comment
+                    iscommentarea = True
+                    continue
+                elif "*/" in line:        # end of a comment
+                    iscommentarea = False
+                    continue
+                elif iscommentarea:     # in the middle of a comment
+                    continue
+                elif not iscommentarea:
+                    if line.startswith("#define"):
+                        try:
+                            defineunused, varunused, varvalue = line.split()
+                        except ValueError:
+                            raise library.XFormsValueError("File %s has an" \
+                                    "incorrect format." % fname)
+                        if iswidth:
+                            width = varvalue
+                            iswidth = False
+                        else:
+                            height = varvalue
+                    elif "[]" in line:      # start of contents
+                        iscontentsarea = True
+                        tmpxbmcontents1 += line
+                    elif iscontentsarea:
+                        tmpxbmcontents1 += line
+            # remove unuseful chars
+            tmpxbmcontents1 = tmpxbmcontents1.replace("\n", "")
+            tmpxbmcontents1 = tmpxbmcontents1.replace(";", "")
+            tmpxbmcontents1 = tmpxbmcontents1.replace("=", "")
+            tmpxbmcontents1 = tmpxbmcontents1.replace(",", " ")
+            tmpxbmcontents1 = tmpxbmcontents1.replace("  ", " ")
+            tmpxbmcontents1 = tmpxbmcontents1.replace("}", "")
+            indx = tmpxbmcontents1.find("{")
+            if indx != -1:       # found!
+                tmpxbmcontents2 = tmpxbmcontents1[indx+1:-1]
+            else:
+                raise XFormsValueError("File %s has an incorrect format." % \
+                        fname)
+            tmpxbmcontents2 = tmpxbmcontents2.split()
+            for numb in range(0, len(tmpxbmcontents2)):
+                hexval = int(tmpxbmcontents2[numb], 16)
+                xbmcontents.append(hexval)
+            return width, height, xbmcontents
+
+        else:   # not existing
+            raise library.XFormsGenericError("File %s does not exist." % fname)
+    else:       # not a .xbm file
+        raise library.XFormsGenericError("File %s should be a .xpm file." % \
+                fname)
+
+
+def import_xpmdata_from_file(fname):
+    """import_xpmdata_from_file(fname) -> xpmcontents
+
+    Taking a .xpm filename, it reads it and returns contents, to be used
+    with flbitmap.fl_set_pixmapbutton_data()."""
+
+    tmpxpmcontents1 = ""
+    tmpxpmcontents2 = ""
+    xpmcontents = []
+
+    if fname.endswith(".xpm") or fname.endwith(".XPM"):
+        if os.path.exists(fname):
+            try:
+                xbmfil = open(fname)
+            except IOError:
+                raise library.XFormsGenericError("File %s cannot be opened." \
+                        % fname)
+            iscontentsarea = False
+            iscommentarea = False
+            for line in xbmfil:
+                if "/*" in line and "*/" in line:     # comment inlined
+                    continue
+                elif "/*" in line:        # start of a comment
+                    iscommentarea = True
+                    continue
+                elif "*/" in line:        # end of a comment
+                    iscommentarea = False
+                    continue
+                elif iscommentarea:     # in the middle of a comment
+                    continue
+                elif not iscommentarea:
+                    if "[]" in line:      # start of contents
+                        iscontentsarea = True
+                        tmpxpmcontents1 += line
+                    elif iscontentsarea:
+                        tmpxpmcontents1 += line
+            # remove unuseful chars
+            tmpxpmcontents1 = tmpxpmcontents1.replace("\n", "")
+            tmpxpmcontents1 = tmpxpmcontents1.replace(";", "")
+            tmpxpmcontents1 = tmpxpmcontents1.replace("=", "")
+            tmpxpmcontents1 = tmpxpmcontents1.replace('"', "")
+            tmpxpmcontents1 = tmpxpmcontents1.replace("  ", " ")
+            tmpxpmcontents1 = tmpxpmcontents1.replace("\t", "    ")
+            tmpxpmcontents1 = tmpxpmcontents1.replace("}", "")
+            indx = tmpxpmcontents1.find("{")
+            if indx != -1:       # found!
+                tmpxpmcontents2 = tmpxpmcontents1[indx+1:-1]
+            else:
+                raise XFormsValueError("File %s has an incorrect format." % \
+                        fname)
+            xpmcontents = tmpxpmcontents2.split(",")
+            return xpmcontents
+
+        else:   # not existing
+            raise library.XFormsGenericError("File %s does not exist." % fname)
+    else:       # not a .xbm file
+        raise library.XFormsGenericError("File %s should be a .xpm file." % \
+                fname)

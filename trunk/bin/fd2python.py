@@ -24,7 +24,7 @@
 
 import sys
 import os
-from xformslib import vers
+from xformslib import vers, xfstruct
 
 # constants
 ONETAB = "    "
@@ -1009,6 +1009,7 @@ class FdConvertToPy(object):
 
     def manage_flbitmapbutton(self, macrounit):
         flobjtxt = ""
+        ifuseddata = False
         if "type" in macrounit:
             vtype = prependfltype(macrounit['type'])
         if "box" in macrounit:
@@ -1034,22 +1035,34 @@ class FdConvertToPy(object):
             vmbuttons = macrounit['mbuttons']
             flobjtxt += "\n%sxfl.fl_set_button_mouse_buttons(%s, %s)" % \
                     (TWOTABS, prependself(vname), vmbuttons)
+        if 'width' in macrounit:         # if "Use data" enabled
+            ifuseddata = True
+            nwidth = macrounit['width']
+        if 'height' in macrounit:         # if "Use data" enabled
+            ifuseddata = True
+            nheight = macrounit['height']
+        if 'data' in macrounit:         # if "Use data" enabled
+            ifuseddata = True
+            ndata = macrounit['data']
         if "fullpath" in macrounit:
             vfullpath = macrounit['fullpath']
         if "file" in macrounit:
             if vfullpath == '1':           # is a full path
                 vfile = macrounit['file']
-            else:                   # '0', is a relative path
+            else:                          # is a relative path
                 vfile = './'+macrounit['file']
-            flobjtxt += "\n%sxfl.fl_set_bitmapbutton_file(%s, \'%s\')" % \
-                    (TWOTABS, prependself(vname), vfile)
-        if 'width' in macrounit:         # if "Use data" enabled
-            pass        # TODO: managing import from .xbm data
-        if 'height' in macrounit:         # if "Use data" enabled
-            pass        # TODO: managing import from .xbm data
-        if 'data' in macrounit:         # if "Use data" enabled
-            pass        # TODO: managing import from .xbm data
-            # flobjtxt = "\n%sxfl.fl_set_bitmapbutton_data()"
+            if not ifuseddata:          # use file directly
+                flobjtxt += "\n%sxfl.fl_set_bitmapbutton_file(%s, \'%s\')" % \
+                        (TWOTABS, prependself(vname), vfile)
+            else:                   # read data in memory
+                # managing import from .xbm data
+                vwidth, vheight, vdata = \
+                        xfstruct.import_xbmdata_from_file(vfile)
+                flobjtxt += "\n%s%s = %s" % (TWOTABS, nwidth, vwidth)
+                flobjtxt += "\n%s%s = %s" % (TWOTABS, nheight, vheight)
+                flobjtxt += "\n%s%s = %s" % (TWOTABS, ndata, vdata)
+                flobjtxt += "\n%sxfl.fl_set_bitmapbutton_data(%s, %s, %s, %s)" \
+                        % (TWOTABS, prependself(vname), nwidth, nheight, ndata)
         # 'helper' not implemented upstreams
         self.createformstext.append(flobjtxt)
         return vname
@@ -1087,8 +1100,11 @@ class FdConvertToPy(object):
                     (TWOTABS, prependself(vname), prependxfl(valign))
         if 'helper' in macrounit:
             vhelper = macrounit['helper']
-            flobjtxt += "\n%sxfl.fl_set_object_helper(%s, %s)" % \
+            flobjtxt += "\n%sxfl.fl_set_object_helper(%s, \'%s\')" % \
                     (TWOTABS, prependself(vname), prependxfl(vhelper))
+        if 'data' in macrounit:         # if "Use data" enabled
+            ifuseddata = True
+            ndata = macrounit['data']
         if "fullpath" in macrounit:
             vfullpath = macrounit['fullpath']
         if "file" in macrounit:
@@ -1096,8 +1112,15 @@ class FdConvertToPy(object):
                 vfile = macrounit['file']
             else:                   # '0', is a relative path
                 vfile = './'+macrounit['file']
-            flobjtxt += "\n%sxfl.fl_set_pixmapbutton_file(%s, \'%s\')" % \
-                    (TWOTABS, prependself(vname), vfile)
+            if not ifuseddata:          # use file directly
+                flobjtxt += "\n%sxfl.fl_set_pixmapbutton_file(%s, \'%s\')" % \
+                        (TWOTABS, prependself(vname), vfile)
+            else:                   # read data in memory
+                # managing import from .xpm data
+                vdata = xfstruct.import_xpmdata_from_file(vfile)
+                flobjtxt += "\n%s%s = %s" % (TWOTABS, ndata, vdata)
+                flobjtxt += "\n%sxfl.fl_set_pixmapbutton_data(%s, %s)" % \
+                    (TWOTABS, prependself(vname), ndata)
         if "focus_file" in macrounit:
             if vfullpath == '1':           # is a full path
                 vfocusfile = macrounit['focus_file']
@@ -1105,9 +1128,6 @@ class FdConvertToPy(object):
                 vfocusfile = './'+macrounit['focus_file']
             flobjtxt += "\n%sxfl.fl_set_pixmapbutton_focus_file(%s, " \
                     "\'%s\')" % (TWOTABS, prependself(vname), vfocusfile)
-        if "data" in macrounit:         # if "Use data" enabled
-            pass        # TODO: managing import from .xbm data
-        #    # flobjtxt = "\n%sxfl.fl_set_pixmapbutton_data()"?
         self.createformstext.append(flobjtxt)
         return vname
 

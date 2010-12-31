@@ -286,58 +286,7 @@ def fl_set_dial_step(ptr_flobject, step):
     _fl_set_dial_step(ptr_flobject, f_step)
 
 
-def fl_set_dial_return(ptr_flobject, whenretn):
-    """fl_set_dial_return(ptr_flobject, whenretn)
-
-    Defines the conditions under which a dial flobject gets returned (or
-    its callback invoked).
-
-    Parameters
-    ----------
-        ptr_flobject : pointer to xfdata.FL_OBJECT
-            dial flobject
-        whenretn : int_pos
-            return type (when it returns). Values (from xfdata.py)
-            FL_RETURN_NONE (Never notify the application about interactions
-            with this flobject, i.e. never return it nor invoke its callback.
-            Note, this is not meant for deactivation of a flobject, it will
-            still seem to work as normal, it just does not get returned
-            to the application nor does its callback get invoked),
-            FL_RETURN_CHANGED (Return or invoke callback whenever an item is
-            selected, default), FL_RETURN_END (Return or invoke callback on
-            end of an interaction), FL_RETURN_END_CHANGED (Return or invoke
-            callback if end of interaction and selection of an item coincide),
-            FL_RETURN_SELECTION (Return or invoke callback on selection of a
-            line. Please note that for FL_MULTI_BROWSER the browser may be
-            returned just once for a number of lines having been selected),
-            FL_RETURN_DESELECTION (Return or invoke callback on deselection
-            of a line. This only works for FL_MULTI_BROWSER browsers and the
-            browser may be returned just once for a number of lines having
-            been deselected), FL_RETURN_TRIGGERED (*todo*), FL_RETURN_ALWAYS
-            (Return or invoke callback whenever the interaction ends and/or
-            an item is selected. It includes all conditions except
-            FL_RETURN_END_CHANGED).
-
-    Examples
-    --------
-        >>> fl_set_dial_return(dialobj, xfdata.FL_RETURN_END)
-
-    Notes
-    -----
-        Status: Tested + Doc + NoDemo = OK
-
-    """
-    _fl_set_dial_return = library.cfuncproto(
-        library.load_so_libforms(), "fl_set_dial_return",
-        None, [cty.POINTER(xfdata.FL_OBJECT), cty.c_uint],
-        """void fl_set_dial_return(FL_OBJECT * ob, unsigned
-           int value)""")
-    library.check_if_initialized()
-    library.verify_flobjectptr_type(ptr_flobject)
-    library.checkfatal_allowed_value_in_list(whenretn, xfdata.RETURN_list)
-    ui_whenretn = library.convert_to_uintc(whenretn)
-    library.keep_elem_refs(ptr_flobject, whenretn, ui_whenretn)
-    _fl_set_dial_return(ptr_flobject, ui_whenretn)
+# fl_set_dial_return(ptr_flobject, whenretn) function placeholder (deprecated)
 
 
 def fl_set_dial_angles(ptr_flobject, anglmin, anglmax):
