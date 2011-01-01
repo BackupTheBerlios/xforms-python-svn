@@ -19,8 +19,9 @@
 <tr><td bgcolor="#aa55cc"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
 <td width="100%"><table width="100%" summary="list"><tr><td width="25%" valign=top><a href="ctypes.html">ctypes</a><br>
 </td><td width="25%" valign=top><a href="library.html">library</a><br>
+</td><td width="25%" valign=top><a href="os.html">os</a><br>
 </td><td width="25%" valign=top><a href="xfdata.html">xfdata</a><br>
-</td><td width="25%" valign=top></td></tr></table></td></tr></table><p>
+</td></tr></table></td></tr></table><p>
 <table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
 <tr bgcolor="#eeaa77">
 <td colspan=3 valign=bottom>&nbsp;<br>
@@ -29,6 +30,14 @@
 <tr><td bgcolor="#eeaa77"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
 <td width="100%"><dl><dt><a name="-donothing_flpopupcb"><strong>donothing_flpopupcb</strong></a>(ptr_flpopupreturn)</dt><dd><tt>Replaces&nbsp;a&nbsp;callback&nbsp;function&nbsp;not&nbsp;defined&nbsp;for&nbsp;class&nbsp;instances<br>
 as&nbsp;e.g.&nbsp;xfdata.FL_POPUP_ITEM.</tt></dd></dl>
+ <dl><dt><a name="-import_xbmdata_from_file"><strong>import_xbmdata_from_file</strong></a>(fname)</dt><dd><tt><a href="#-import_xbmdata_from_file">import_xbmdata_from_file</a>(fname)&nbsp;-&gt;&nbsp;width,&nbsp;height,&nbsp;xbmcontents<br>
+&nbsp;<br>
+Taking&nbsp;a&nbsp;.xbm&nbsp;filename,&nbsp;it&nbsp;reads&nbsp;it&nbsp;and&nbsp;returns&nbsp;all&nbsp;elements,&nbsp;to&nbsp;be&nbsp;used<br>
+with&nbsp;flbitmap.fl_set_bitmapbutton_data().</tt></dd></dl>
+ <dl><dt><a name="-import_xpmdata_from_file"><strong>import_xpmdata_from_file</strong></a>(fname)</dt><dd><tt><a href="#-import_xpmdata_from_file">import_xpmdata_from_file</a>(fname)&nbsp;-&gt;&nbsp;xpmcontents<br>
+&nbsp;<br>
+Taking&nbsp;a&nbsp;.xpm&nbsp;filename,&nbsp;it&nbsp;reads&nbsp;it&nbsp;and&nbsp;returns&nbsp;contents,&nbsp;to&nbsp;be&nbsp;used<br>
+with&nbsp;flbitmap.fl_set_pixmapbutton_data().</tt></dd></dl>
  <dl><dt><a name="-make_flcmdopt"><strong>make_flcmdopt</strong></a>(dictflcmdopt)</dt><dd><tt><a href="#-make_flcmdopt">make_flcmdopt</a>(dictflcmdopt)&nbsp;-&gt;&nbsp;ptr_flcmdopt<br>
 &nbsp;<br>
 Taking&nbsp;a&nbsp;python&nbsp;dict&nbsp;(for&nbsp;one&nbsp;dict&nbsp;item)&nbsp;or&nbsp;a&nbsp;list&nbsp;of&nbsp;dicts&nbsp;(for&nbsp;more<br>
@@ -49,7 +58,7 @@ Keys&nbsp;are:&nbsp;'rgamma',&nbsp;'ggamma',&nbsp;'bgamma',&nbsp;'debug',&nbsp;'
 'coordUnit',&nbsp;'borderWidth',&nbsp;'safe',&nbsp;'rgbfile',&nbsp;'vname'.</tt></dd></dl>
  <dl><dt><a name="-make_flpopupcb"><strong>make_flpopupcb</strong></a>(pyfn_popupcb)</dt><dd><tt><a href="#-make_flpopupcb">make_flpopupcb</a>(pyfn_popupcb)&nbsp;-&gt;&nbsp;cfn_popupcb<br>
 &nbsp;<br>
-Taking&nbsp;a&nbsp;python&nbsp;callback&nbsp;function&nbsp;name,&nbsp;prapares&nbsp;and&nbsp;returns&nbsp;a&nbsp;<br>
+Taking&nbsp;a&nbsp;python&nbsp;callback&nbsp;function&nbsp;name,&nbsp;prapares&nbsp;and&nbsp;returns&nbsp;a<br>
 C-compatible&nbsp;xfdata.FL_POPUP_CB&nbsp;function.</tt></dd></dl>
  <dl><dt><a name="-make_flpopupitem"><strong>make_flpopupitem</strong></a>(dictpopupitems)</dt><dd><tt><a href="#-make_flpopupitem">make_flpopupitem</a>(dictpopupitems)&nbsp;-&gt;&nbsp;ptr_flpopupitem<br>
 &nbsp;<br>
@@ -66,4 +75,4 @@ attributes&nbsp;prepares&nbsp;and&nbsp;returns&nbsp;a&nbsp;C-compatible&nbsp;poi
 xfdata.FL_RESOURCE.&nbsp;Keys&nbsp;are:&nbsp;'res_name',&nbsp;'res_class',&nbsp;'type',&nbsp;'var',<br>
 'defval',&nbsp;'nbytes'.</tt></dd></dl>
 </td></tr></table>
-<p>Updated on: 2010-12-25 01:55 +0100</body></html>
+<p>Updated on: 2011-01-01 23:39 +0100</body></html>

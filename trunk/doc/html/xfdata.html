@@ -51,20 +51,7 @@
 </font></dt><dt><font face="helvetica, arial"><a href="xfdata.html#admitted_values_for_READWRITEFLIMAGE">admitted_values_for_READWRITEFLIMAGE</a>
 </font></dt><dt><font face="helvetica, arial"><a href="xfdata.html#admitted_values_for_SHARPENSMOOTHFLIMAGE">admitted_values_for_SHARPENSMOOTHFLIMAGE</a>
 </font></dt><dt><font face="helvetica, arial"><a href="xfdata.html#admitted_values_for_SLIDERFLAG">admitted_values_for_SLIDERFLAG</a>
-</font></dt><dt><font face="helvetica, arial"><a href="xfdata.html#function_prototype_for_FL_APPEVENT_CB">function_prototype_for_FL_APPEVENT_CB</a>
 </font></dt><dt><font face="helvetica, arial"><a href="xfdata.html#function_prototype_for_FL_BROWSER_SCROLL_CALLBACK">function_prototype_for_FL_BROWSER_SCROLL_CALLBACK</a>
-</font></dt><dt><font face="helvetica, arial"><a href="xfdata.html#function_prototype_for_FL_CALLBACKPTR">function_prototype_for_FL_CALLBACKPTR</a>
-</font></dt><dt><font face="helvetica, arial"><a href="xfdata.html#function_prototype_for_FL_DRAWPTR">function_prototype_for_FL_DRAWPTR</a>
-</font></dt><dt><font face="helvetica, arial"><a href="xfdata.html#function_prototype_for_FL_ERROR_FUNC">function_prototype_for_FL_ERROR_FUNC</a>
-</font></dt><dt><font face="helvetica, arial"><a href="xfdata.html#function_prototype_for_FL_FORMCALLBACKPTR">function_prototype_for_FL_FORMCALLBACKPTR</a>
-</font></dt><dt><font face="helvetica, arial"><a href="xfdata.html#function_prototype_for_FL_FORM_ATACTIVATE">function_prototype_for_FL_FORM_ATACTIVATE</a>
-</font></dt><dt><font face="helvetica, arial"><a href="xfdata.html#function_prototype_for_FL_FORM_ATCLOSE">function_prototype_for_FL_FORM_ATCLOSE</a>
-</font></dt><dt><font face="helvetica, arial"><a href="xfdata.html#function_prototype_for_FL_FORM_ATDEACTIVATE">function_prototype_for_FL_FORM_ATDEACTIVATE</a>
-</font></dt><dt><font face="helvetica, arial"><a href="xfdata.html#function_prototype_for_FL_HANDLEPTR">function_prototype_for_FL_HANDLEPTR</a>
-</font></dt><dt><font face="helvetica, arial"><a href="xfdata.html#function_prototype_for_FL_IO_CALLBACK">function_prototype_for_FL_IO_CALLBACK</a>
-</font></dt><dt><font face="helvetica, arial"><a href="xfdata.html#function_prototype_for_FL_RAW_CALLBACK">function_prototype_for_FL_RAW_CALLBACK</a>
-</font></dt><dt><font face="helvetica, arial"><a href="xfdata.html#function_prototype_for_FL_SIGNAL_HANDLER">function_prototype_for_FL_SIGNAL_HANDLER</a>
-</font></dt><dt><font face="helvetica, arial"><a href="xfdata.html#function_prototype_for_FL_TIMEOUT_CALLBACK">function_prototype_for_FL_TIMEOUT_CALLBACK</a>
 </font></dt></dl>
 </dd>
 <dt><font face="helvetica, arial"><a href="_ctypes.html#Structure">_ctypes.Structure</a>(_ctypes._CData)
@@ -197,7 +184,8 @@
 <dt><font face="helvetica, arial"><a href="_ctypes.html#_Pointer">_ctypes._Pointer</a>(_ctypes._CData)
 </font></dt><dd>
 <dl>
-<dt><font face="helvetica, arial">LP_XrmOptionDescRec
+<dt><font face="helvetica, arial">LP_FL_OBJECT_
+</font></dt><dt><font face="helvetica, arial">LP_XrmOptionDescRec
 </font></dt><dt><font face="helvetica, arial">LP__XGC
 </font></dt><dt><font face="helvetica, arial">LP_flimage_setup_
 </font></dt></dl>
@@ -375,24 +363,24 @@ Methods inherited from _ctypes._CData:<br>
 <font color="#000000" face="helvetica, arial"><a name="FD_CMDLOG">class <strong>FD_CMDLOG</strong></a>(<a href="_ctypes.html#Structure">_ctypes.Structure</a>)</font></td></tr>
     
 <tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
-<td colspan=2><tt>FL_CMDLOG&nbsp;class<br>
+<td colspan=2><tt><a href="#FD_CMDLOG">FD_CMDLOG</a>&nbsp;class<br>
 &nbsp;<br>
 Attributes<br>
 ----------<br>
 &nbsp;&nbsp;&nbsp;&nbsp;form&nbsp;:&nbsp;pointer&nbsp;to&nbsp;<a href="#FL_FORM">FL_FORM</a><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*todo*<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;the&nbsp;form<br>
 &nbsp;&nbsp;&nbsp;&nbsp;vdata&nbsp;:&nbsp;pointer&nbsp;to&nbsp;void<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*todo*<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;unused&nbsp;data<br>
 &nbsp;&nbsp;&nbsp;&nbsp;cdata&nbsp;:&nbsp;str<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*todo*<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;unused&nbsp;data<br>
 &nbsp;&nbsp;&nbsp;&nbsp;ldata&nbsp;:&nbsp;long<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*todo*<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;unused&nbsp;data<br>
 &nbsp;&nbsp;&nbsp;&nbsp;browser&nbsp;:&nbsp;pointer&nbsp;to&nbsp;<a href="#FL_OBJECT">FL_OBJECT</a><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*todo*<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;the&nbsp;browser&nbsp;flobject<br>
 &nbsp;&nbsp;&nbsp;&nbsp;close_browser&nbsp;:&nbsp;pointer&nbsp;to&nbsp;<a href="#FL_OBJECT">FL_OBJECT</a><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*todo*<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;the&nbsp;close&nbsp;button<br>
 &nbsp;&nbsp;&nbsp;&nbsp;clear_browser&nbsp;:&nbsp;pointer&nbsp;to&nbsp;<a href="#FL_OBJECT">FL_OBJECT</a><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*todo*<br>&nbsp;</tt></td></tr>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;the&nbsp;clear&nbsp;button<br>&nbsp;</tt></td></tr>
 <tr><td>&nbsp;</td>
 <td width="100%"><dl><dt>Method resolution order:</dt>
 <dd><a href="xfdata.html#FD_CMDLOG">FD_CMDLOG</a></dd>
@@ -1647,6 +1635,62 @@ Methods inherited from _ctypes._CData:<br>
 <table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
 <tr bgcolor="#ffc8d8">
 <td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#000000" face="helvetica, arial"><strong>FL_EVENT</strong> = <a name="FL_EVENT">class LP_FL_OBJECT_</a>(<a href="_ctypes.html#_Pointer">_ctypes._Pointer</a>)</font></td></tr>
+    
+<tr><td bgcolor="#ffc8d8"><tt>&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><dl><dt>Method resolution order:</dt>
+<dd>LP_FL_OBJECT_</dd>
+<dd><a href="_ctypes.html#_Pointer">_ctypes._Pointer</a></dd>
+<dd>_ctypes._CData</dd>
+<dd><a href="__builtin__.html#object">__builtin__.object</a></dd>
+</dl>
+<hr>
+Data descriptors defined here:<br>
+<dl><dt><strong>__dict__</strong></dt>
+<dd><tt>dictionary&nbsp;for&nbsp;instance&nbsp;variables&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+<dl><dt><strong>__weakref__</strong></dt>
+<dd><tt>list&nbsp;of&nbsp;weak&nbsp;references&nbsp;to&nbsp;the&nbsp;object&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+<hr>
+Methods inherited from <a href="_ctypes.html#_Pointer">_ctypes._Pointer</a>:<br>
+<dl><dt><a name="LP_FL_OBJECT_-__delitem__"><strong>__delitem__</strong></a>(...)</dt><dd><tt>x.<a href="#FL_EVENT-__delitem__">__delitem__</a>(y)&nbsp;&lt;==&gt;&nbsp;del&nbsp;x[y]</tt></dd></dl>
+
+<dl><dt><a name="LP_FL_OBJECT_-__getitem__"><strong>__getitem__</strong></a>(...)</dt><dd><tt>x.<a href="#FL_EVENT-__getitem__">__getitem__</a>(y)&nbsp;&lt;==&gt;&nbsp;x[y]</tt></dd></dl>
+
+<dl><dt><a name="LP_FL_OBJECT_-__getslice__"><strong>__getslice__</strong></a>(...)</dt><dd><tt>x.<a href="#FL_EVENT-__getslice__">__getslice__</a>(i,&nbsp;j)&nbsp;&lt;==&gt;&nbsp;x[i:j]<br>
+&nbsp;<br>
+Use&nbsp;of&nbsp;negative&nbsp;indices&nbsp;is&nbsp;not&nbsp;supported.</tt></dd></dl>
+
+<dl><dt><a name="LP_FL_OBJECT_-__init__"><strong>__init__</strong></a>(...)</dt><dd><tt>x.<a href="#FL_EVENT-__init__">__init__</a>(...)&nbsp;initializes&nbsp;x;&nbsp;see&nbsp;x.__class__.__doc__&nbsp;for&nbsp;signature</tt></dd></dl>
+
+<dl><dt><a name="LP_FL_OBJECT_-__nonzero__"><strong>__nonzero__</strong></a>(...)</dt><dd><tt>x.<a href="#FL_EVENT-__nonzero__">__nonzero__</a>()&nbsp;&lt;==&gt;&nbsp;x&nbsp;!=&nbsp;0</tt></dd></dl>
+
+<dl><dt><a name="LP_FL_OBJECT_-__setitem__"><strong>__setitem__</strong></a>(...)</dt><dd><tt>x.<a href="#FL_EVENT-__setitem__">__setitem__</a>(i,&nbsp;y)&nbsp;&lt;==&gt;&nbsp;x[i]=y</tt></dd></dl>
+
+<hr>
+Data descriptors inherited from <a href="_ctypes.html#_Pointer">_ctypes._Pointer</a>:<br>
+<dl><dt><strong>contents</strong></dt>
+<dd><tt>the&nbsp;object&nbsp;this&nbsp;pointer&nbsp;points&nbsp;to&nbsp;(read-write)</tt></dd>
+</dl>
+<hr>
+Data and other attributes inherited from <a href="_ctypes.html#_Pointer">_ctypes._Pointer</a>:<br>
+<dl><dt><strong>__new__</strong> = &lt;built-in method __new__ of _ctypes.PointerType object&gt;<dd><tt>T.<a href="#FL_EVENT-__new__">__new__</a>(S,&nbsp;...)&nbsp;-&gt;&nbsp;a&nbsp;new&nbsp;<a href="__builtin__.html#object">object</a>&nbsp;with&nbsp;type&nbsp;S,&nbsp;a&nbsp;subtype&nbsp;of&nbsp;T</tt></dl>
+
+<hr>
+Methods inherited from _ctypes._CData:<br>
+<dl><dt><a name="LP_FL_OBJECT_-__ctypes_from_outparam__"><strong>__ctypes_from_outparam__</strong></a>(...)</dt></dl>
+
+<dl><dt><a name="LP_FL_OBJECT_-__hash__"><strong>__hash__</strong></a>(...)</dt><dd><tt>x.<a href="#FL_EVENT-__hash__">__hash__</a>()&nbsp;&lt;==&gt;&nbsp;hash(x)</tt></dd></dl>
+
+<dl><dt><a name="LP_FL_OBJECT_-__reduce__"><strong>__reduce__</strong></a>(...)</dt></dl>
+
+<dl><dt><a name="LP_FL_OBJECT_-__setstate__"><strong>__setstate__</strong></a>(...)</dt></dl>
+
+</td></tr></table> <p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ffc8d8">
+<td colspan=3 valign=bottom>&nbsp;<br>
 <font color="#000000" face="helvetica, arial"><a name="FL_EditKeymap">class <strong>FL_EditKeymap</strong></a>(<a href="_ctypes.html#Structure">_ctypes.Structure</a>)</font></td></tr>
     
 <tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
@@ -1884,23 +1928,29 @@ Attributes<br>
 &nbsp;&nbsp;&nbsp;&nbsp;fdui&nbsp;:&nbsp;pointer&nbsp;to&nbsp;any&nbsp;type<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;for&nbsp;fdesign<br>
 &nbsp;&nbsp;&nbsp;&nbsp;u_vdata&nbsp;:&nbsp;pointer&nbsp;to&nbsp;any&nbsp;type<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;for&nbsp;application<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;anything&nbsp;the&nbsp;user&nbsp;likes&nbsp;as&nbsp;user&nbsp;data&nbsp;for&nbsp;application&nbsp;program.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The&nbsp;main&nbsp;module&nbsp;does&nbsp;not&nbsp;reference&nbsp;or&nbsp;modify&nbsp;this&nbsp;field&nbsp;in&nbsp;any<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;way&nbsp;and&nbsp;neither&nbsp;should&nbsp;the&nbsp;class&nbsp;routines.<br>
 &nbsp;&nbsp;&nbsp;&nbsp;u_cdata&nbsp;:&nbsp;str<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;for&nbsp;application<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;anything&nbsp;the&nbsp;user&nbsp;likes&nbsp;as&nbsp;user&nbsp;data&nbsp;for&nbsp;application&nbsp;program.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The&nbsp;main&nbsp;module&nbsp;does&nbsp;not&nbsp;reference&nbsp;or&nbsp;modify&nbsp;this&nbsp;field&nbsp;in&nbsp;any<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;way&nbsp;and&nbsp;neither&nbsp;should&nbsp;the&nbsp;class&nbsp;routines.<br>
 &nbsp;&nbsp;&nbsp;&nbsp;u_ldata&nbsp;:&nbsp;long<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;for&nbsp;application<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;anything&nbsp;the&nbsp;user&nbsp;likes&nbsp;as&nbsp;user&nbsp;data&nbsp;for&nbsp;application&nbsp;program.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The&nbsp;main&nbsp;module&nbsp;does&nbsp;not&nbsp;reference&nbsp;or&nbsp;modify&nbsp;this&nbsp;field&nbsp;in&nbsp;any<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;way&nbsp;and&nbsp;neither&nbsp;should&nbsp;the&nbsp;class&nbsp;routines.<br>
 &nbsp;&nbsp;&nbsp;&nbsp;label&nbsp;:&nbsp;str<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;window&nbsp;title<br>
 &nbsp;&nbsp;&nbsp;&nbsp;window&nbsp;:&nbsp;Window<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;X&nbsp;resource&nbsp;ID&nbsp;for&nbsp;form&nbsp;window<br>
-&nbsp;&nbsp;&nbsp;&nbsp;xpos&nbsp;:&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;horizontal&nbsp;position<br>
-&nbsp;&nbsp;&nbsp;&nbsp;ypos&nbsp;:&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;vertical&nbsp;position<br>
-&nbsp;&nbsp;&nbsp;&nbsp;width&nbsp;:&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;width<br>
-&nbsp;&nbsp;&nbsp;&nbsp;height&nbsp;:&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;height<br>
+&nbsp;&nbsp;&nbsp;&nbsp;x&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;horizontal&nbsp;position&nbsp;of&nbsp;flobject<br>
+&nbsp;&nbsp;&nbsp;&nbsp;y&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;vertical&nbsp;position&nbsp;of&nbsp;flobject<br>
+&nbsp;&nbsp;&nbsp;&nbsp;w&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;width&nbsp;of&nbsp;flobject&nbsp;in&nbsp;unit&nbsp;coords<br>
+&nbsp;&nbsp;&nbsp;&nbsp;h&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;height&nbsp;of&nbsp;flobject&nbsp;in&nbsp;unit&nbsp;coords<br>
 &nbsp;&nbsp;&nbsp;&nbsp;handle_dec_x&nbsp;:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*todo*<br>
 &nbsp;&nbsp;&nbsp;&nbsp;handle_dec_y&nbsp;:&nbsp;int<br>
@@ -1916,7 +1966,7 @@ Attributes<br>
 &nbsp;&nbsp;&nbsp;&nbsp;first&nbsp;:&nbsp;pointer&nbsp;to&nbsp;<a href="#FL_OBJECT">FL_OBJECT</a><br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;points&nbsp;to&nbsp;the&nbsp;first&nbsp;flobject&nbsp;on&nbsp;the&nbsp;form&nbsp;(list)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;last&nbsp;:&nbsp;pointer&nbsp;to&nbsp;<a href="#FL_OBJECT">FL_OBJECT</a><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*todo*<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;points&nbsp;to&nbsp;the&nbsp;last&nbsp;flobject&nbsp;on&nbsp;the&nbsp;form&nbsp;(list)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;focusobj&nbsp;:&nbsp;pointer&nbsp;to&nbsp;<a href="#FL_OBJECT">FL_OBJECT</a><br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;points&nbsp;to&nbsp;the&nbsp;flobject&nbsp;on&nbsp;the&nbsp;form&nbsp;that&nbsp;has&nbsp;the&nbsp;input&nbsp;focus<br>
 &nbsp;&nbsp;&nbsp;&nbsp;form_callback&nbsp;:&nbsp;function<br>
@@ -1944,7 +1994,7 @@ Attributes<br>
 &nbsp;&nbsp;&nbsp;&nbsp;compress_mask&nbsp;:&nbsp;long_pos<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*todo*<br>
 &nbsp;&nbsp;&nbsp;&nbsp;evmask&nbsp;:&nbsp;long_pos<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*todo*<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;event&nbsp;mask&nbsp;*todo*<br>
 &nbsp;&nbsp;&nbsp;&nbsp;close_callback&nbsp;:&nbsp;function<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_FORM_ATCLOSE&nbsp;type&nbsp;function<br>
 &nbsp;&nbsp;&nbsp;&nbsp;close_data&nbsp;:&nbsp;pointer&nbsp;to&nbsp;any&nbsp;type<br>
@@ -2199,23 +2249,29 @@ Attributes<br>
 &nbsp;&nbsp;&nbsp;&nbsp;fdui&nbsp;:&nbsp;pointer&nbsp;to&nbsp;any&nbsp;type<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;for&nbsp;fdesign<br>
 &nbsp;&nbsp;&nbsp;&nbsp;u_vdata&nbsp;:&nbsp;pointer&nbsp;to&nbsp;any&nbsp;type<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;for&nbsp;application<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;anything&nbsp;the&nbsp;user&nbsp;likes&nbsp;as&nbsp;user&nbsp;data&nbsp;for&nbsp;application&nbsp;program.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The&nbsp;main&nbsp;module&nbsp;does&nbsp;not&nbsp;reference&nbsp;or&nbsp;modify&nbsp;this&nbsp;field&nbsp;in&nbsp;any<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;way&nbsp;and&nbsp;neither&nbsp;should&nbsp;the&nbsp;class&nbsp;routines.<br>
 &nbsp;&nbsp;&nbsp;&nbsp;u_cdata&nbsp;:&nbsp;str<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;for&nbsp;application<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;anything&nbsp;the&nbsp;user&nbsp;likes&nbsp;as&nbsp;user&nbsp;data&nbsp;for&nbsp;application&nbsp;program.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The&nbsp;main&nbsp;module&nbsp;does&nbsp;not&nbsp;reference&nbsp;or&nbsp;modify&nbsp;this&nbsp;field&nbsp;in&nbsp;any<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;way&nbsp;and&nbsp;neither&nbsp;should&nbsp;the&nbsp;class&nbsp;routines.<br>
 &nbsp;&nbsp;&nbsp;&nbsp;u_ldata&nbsp;:&nbsp;long<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;for&nbsp;application<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;anything&nbsp;the&nbsp;user&nbsp;likes&nbsp;as&nbsp;user&nbsp;data&nbsp;for&nbsp;application&nbsp;program.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The&nbsp;main&nbsp;module&nbsp;does&nbsp;not&nbsp;reference&nbsp;or&nbsp;modify&nbsp;this&nbsp;field&nbsp;in&nbsp;any<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;way&nbsp;and&nbsp;neither&nbsp;should&nbsp;the&nbsp;class&nbsp;routines.<br>
 &nbsp;&nbsp;&nbsp;&nbsp;label&nbsp;:&nbsp;str<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;window&nbsp;title<br>
 &nbsp;&nbsp;&nbsp;&nbsp;window&nbsp;:&nbsp;Window<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;X&nbsp;resource&nbsp;ID&nbsp;for&nbsp;form&nbsp;window<br>
-&nbsp;&nbsp;&nbsp;&nbsp;xpos&nbsp;:&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;horizontal&nbsp;position<br>
-&nbsp;&nbsp;&nbsp;&nbsp;ypos&nbsp;:&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;vertical&nbsp;position<br>
-&nbsp;&nbsp;&nbsp;&nbsp;width&nbsp;:&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;width<br>
-&nbsp;&nbsp;&nbsp;&nbsp;height&nbsp;:&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;height<br>
+&nbsp;&nbsp;&nbsp;&nbsp;x&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;horizontal&nbsp;position&nbsp;of&nbsp;flobject<br>
+&nbsp;&nbsp;&nbsp;&nbsp;y&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;vertical&nbsp;position&nbsp;of&nbsp;flobject<br>
+&nbsp;&nbsp;&nbsp;&nbsp;w&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;width&nbsp;of&nbsp;flobject&nbsp;in&nbsp;unit&nbsp;coords<br>
+&nbsp;&nbsp;&nbsp;&nbsp;h&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;height&nbsp;of&nbsp;flobject&nbsp;in&nbsp;unit&nbsp;coords<br>
 &nbsp;&nbsp;&nbsp;&nbsp;handle_dec_x&nbsp;:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*todo*<br>
 &nbsp;&nbsp;&nbsp;&nbsp;handle_dec_y&nbsp;:&nbsp;int<br>
@@ -2231,7 +2287,7 @@ Attributes<br>
 &nbsp;&nbsp;&nbsp;&nbsp;first&nbsp;:&nbsp;pointer&nbsp;to&nbsp;<a href="#FL_OBJECT">FL_OBJECT</a><br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;points&nbsp;to&nbsp;the&nbsp;first&nbsp;flobject&nbsp;on&nbsp;the&nbsp;form&nbsp;(list)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;last&nbsp;:&nbsp;pointer&nbsp;to&nbsp;<a href="#FL_OBJECT">FL_OBJECT</a><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*todo*<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;points&nbsp;to&nbsp;the&nbsp;last&nbsp;flobject&nbsp;on&nbsp;the&nbsp;form&nbsp;(list)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;focusobj&nbsp;:&nbsp;pointer&nbsp;to&nbsp;<a href="#FL_OBJECT">FL_OBJECT</a><br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;points&nbsp;to&nbsp;the&nbsp;flobject&nbsp;on&nbsp;the&nbsp;form&nbsp;that&nbsp;has&nbsp;the&nbsp;input&nbsp;focus<br>
 &nbsp;&nbsp;&nbsp;&nbsp;form_callback&nbsp;:&nbsp;function<br>
@@ -2259,7 +2315,7 @@ Attributes<br>
 &nbsp;&nbsp;&nbsp;&nbsp;compress_mask&nbsp;:&nbsp;long_pos<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*todo*<br>
 &nbsp;&nbsp;&nbsp;&nbsp;evmask&nbsp;:&nbsp;long_pos<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*todo*<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;event&nbsp;mask&nbsp;*todo*<br>
 &nbsp;&nbsp;&nbsp;&nbsp;close_callback&nbsp;:&nbsp;function<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_FORM_ATCLOSE&nbsp;type&nbsp;function<br>
 &nbsp;&nbsp;&nbsp;&nbsp;close_data&nbsp;:&nbsp;pointer&nbsp;to&nbsp;any&nbsp;type<br>
@@ -2509,9 +2565,9 @@ Attributes<br>
 ----------<br>
 &nbsp;&nbsp;&nbsp;&nbsp;type&nbsp;:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;image&nbsp;type<br>
-&nbsp;&nbsp;&nbsp;&nbsp;width&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;w&nbsp;:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;image&nbsp;width<br>
-&nbsp;&nbsp;&nbsp;&nbsp;height&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;h&nbsp;:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;image&nbsp;height<br>
 &nbsp;&nbsp;&nbsp;&nbsp;app_data&nbsp;:&nbsp;pointer&nbsp;to&nbsp;void<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;for&nbsp;application&nbsp;at&nbsp;setup&nbsp;time<br>
@@ -3235,63 +3291,63 @@ Methods inherited from _ctypes._CData:<br>
 Attributes<br>
 ----------<br>
 &nbsp;&nbsp;&nbsp;&nbsp;rgamma&nbsp;:&nbsp;float<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*todo*<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;gamma&nbsp;for&nbsp;red?<br>
 &nbsp;&nbsp;&nbsp;&nbsp;ggamma&nbsp;:&nbsp;float<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*todo*<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;gamma&nbsp;for&nbsp;green?<br>
 &nbsp;&nbsp;&nbsp;&nbsp;bgamma&nbsp;:&nbsp;float<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*todo*<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;gamma&nbsp;for&nbsp;blue?<br>
 &nbsp;&nbsp;&nbsp;&nbsp;debug&nbsp;:&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*todo*<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;debug&nbsp;level&nbsp;(0-5)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;sync&nbsp;:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*todo*<br>
 &nbsp;&nbsp;&nbsp;&nbsp;depth&nbsp;:&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*todo*<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;preferred&nbsp;visual&nbsp;depth<br>
 &nbsp;&nbsp;&nbsp;&nbsp;vclass&nbsp;:&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*todo*<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;preferred&nbsp;visual&nbsp;class&nbsp;(TrueColor,&nbsp;etc..)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;doubleBuffer&nbsp;:&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*todo*<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Simulates&nbsp;double-buffer<br>
 &nbsp;&nbsp;&nbsp;&nbsp;ulPropWidth&nbsp;:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;underline&nbsp;stuff<br>
 &nbsp;&nbsp;&nbsp;&nbsp;ulThickness&nbsp;:&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*todo*<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;underline&nbsp;thickness<br>
 &nbsp;&nbsp;&nbsp;&nbsp;buttonFontSize&nbsp;:&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*todo*<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;default&nbsp;button&nbsp;label&nbsp;font&nbsp;size<br>
 &nbsp;&nbsp;&nbsp;&nbsp;sliderFontSize&nbsp;:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*todo*<br>
 &nbsp;&nbsp;&nbsp;&nbsp;inputFontSize&nbsp;:&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*todo*<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Input&nbsp;label&nbsp;and&nbsp;text&nbsp;font&nbsp;size<br>
 &nbsp;&nbsp;&nbsp;&nbsp;browserFontSize&nbsp;:&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*todo*<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Browser&nbsp;label&nbsp;and&nbsp;text&nbsp;font&nbsp;size<br>
 &nbsp;&nbsp;&nbsp;&nbsp;menuFontSize&nbsp;:&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*todo*<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Menu&nbsp;label&nbsp;font&nbsp;size<br>
 &nbsp;&nbsp;&nbsp;&nbsp;choiceFontSize&nbsp;:&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*todo*<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Choice&nbsp;label&nbsp;and&nbsp;choice&nbsp;text&nbsp;font&nbsp;size<br>
 &nbsp;&nbsp;&nbsp;&nbsp;labelFontSize&nbsp;:&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;all&nbsp;other&nbsp;labels&nbsp;fonts<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Label&nbsp;font&nbsp;size&nbsp;for&nbsp;all&nbsp;other&nbsp;flobjects&nbsp;(box,&nbsp;pixmap&nbsp;etc.)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;pupFontSize&nbsp;:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;font&nbsp;size&nbsp;for&nbsp;pop-up&nbsp;menus<br>
 &nbsp;&nbsp;&nbsp;&nbsp;pupFontStyle&nbsp;:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;font&nbsp;style&nbsp;for&nbsp;pop-up&nbsp;menus<br>
 &nbsp;&nbsp;&nbsp;&nbsp;privateColormap&nbsp;:&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*todo*<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Selects&nbsp;private&nbsp;colormap&nbsp;if&nbsp;appropriate<br>
 &nbsp;&nbsp;&nbsp;&nbsp;sharedColormap&nbsp;:&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*todo*<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Forces&nbsp;use&nbsp;of&nbsp;shared&nbsp;colormap<br>
 &nbsp;&nbsp;&nbsp;&nbsp;standardColormap&nbsp;:&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*todo*<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Forces&nbsp;use&nbsp;of&nbsp;standard&nbsp;colormap<br>
 &nbsp;&nbsp;&nbsp;&nbsp;scrollbarType&nbsp;:&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*todo*<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Scrollbar&nbsp;type&nbsp;to&nbsp;use&nbsp;for&nbsp;browser&nbsp;and&nbsp;input<br>
 &nbsp;&nbsp;&nbsp;&nbsp;backingStore&nbsp;:&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*todo*<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Turn&nbsp;BackingStore&nbsp;on&nbsp;or&nbsp;off<br>
 &nbsp;&nbsp;&nbsp;&nbsp;coordUnit&nbsp;:&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*todo*<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Unit&nbsp;of&nbsp;measure,&nbsp;e.g.&nbsp;pixel,&nbsp;mm,&nbsp;point<br>
 &nbsp;&nbsp;&nbsp;&nbsp;borderWidth&nbsp;:&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*todo*<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;default&nbsp;border&nbsp;width<br>
 &nbsp;&nbsp;&nbsp;&nbsp;safe&nbsp;:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*todo*<br>
 &nbsp;&nbsp;&nbsp;&nbsp;rgbfile&nbsp;:&nbsp;str<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;where&nbsp;RGB&nbsp;file&nbsp;is<br>
 &nbsp;&nbsp;&nbsp;&nbsp;vname&nbsp;:&nbsp;str&nbsp;(24&nbsp;chars)<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*todo*<br>&nbsp;</tt></td></tr>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;name&nbsp;of&nbsp;visual&nbsp;class<br>&nbsp;</tt></td></tr>
 <tr><td>&nbsp;</td>
 <td width="100%"><dl><dt>Method resolution order:</dt>
 <dd><a href="xfdata.html#FL_IOPT">FL_IOPT</a></dd>
@@ -3428,15 +3484,15 @@ Please&nbsp;always&nbsp;use&nbsp;accessor&nbsp;methods&nbsp;when&nbsp;available&
 changing&nbsp;the&nbsp;flobject's&nbsp;properties&nbsp;directly.<br>
 &nbsp;<br>
 To&nbsp;access&nbsp;directly&nbsp;to&nbsp;the&nbsp;data&nbsp;referenced&nbsp;by&nbsp;a&nbsp;pointer&nbsp;to&nbsp;<a href="#FL_OBJECT">FL_OBJECT</a><br>
-(ptr_flobject)&nbsp;you&nbsp;need&nbsp;to&nbsp;use&nbsp;"ptr_flobject.contents",&nbsp;then&nbsp;one&nbsp;of&nbsp;its&nbsp;attributes'<br>
-name.&nbsp;Nonetheless,&nbsp;whenever&nbsp;possible&nbsp;it&nbsp;is&nbsp;always&nbsp;better&nbsp;to&nbsp;use<br>
-appropriate&nbsp;functions.<br>
+(ptr_flobject)&nbsp;you&nbsp;need&nbsp;to&nbsp;use&nbsp;"ptr_flobject.contents",&nbsp;then&nbsp;one&nbsp;of&nbsp;its<br>
+attributes'&nbsp;name.&nbsp;Nonetheless,&nbsp;whenever&nbsp;possible&nbsp;it&nbsp;is&nbsp;always&nbsp;better&nbsp;to<br>
+use&nbsp;appropriate&nbsp;functions.<br>
 &nbsp;<br>
 Attributes<br>
 ----------<br>
 &nbsp;&nbsp;&nbsp;&nbsp;form&nbsp;:&nbsp;pointer&nbsp;to&nbsp;<a href="#FL_FORM">FL_FORM</a><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;the&nbsp;form&nbsp;this&nbsp;flobject&nbsp;belongs&nbsp;to.&nbsp;It&nbsp;is&nbsp;used&nbsp;by&nbsp;the&nbsp;main&nbsp;routines.<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The&nbsp;class&nbsp;routines&nbsp;should&nbsp;not&nbsp;change&nbsp;it.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;the&nbsp;form&nbsp;this&nbsp;flobject&nbsp;belongs&nbsp;to.&nbsp;It&nbsp;is&nbsp;used&nbsp;by&nbsp;the&nbsp;main<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;routines.&nbsp;The&nbsp;class&nbsp;routines&nbsp;should&nbsp;not&nbsp;change&nbsp;it.<br>
 &nbsp;&nbsp;&nbsp;&nbsp;u_vdata&nbsp;:&nbsp;pointer&nbsp;to&nbsp;any&nbsp;type<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;anything&nbsp;the&nbsp;user&nbsp;likes&nbsp;as&nbsp;user&nbsp;data&nbsp;for&nbsp;application&nbsp;program.&nbsp;The<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;main&nbsp;module&nbsp;does&nbsp;not&nbsp;reference&nbsp;or&nbsp;modify&nbsp;this&nbsp;field&nbsp;in&nbsp;any&nbsp;way<br>
@@ -3461,28 +3517,28 @@ Attributes<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;flobject&nbsp;must&nbsp;take&nbsp;care&nbsp;that&nbsp;is&nbsp;actually&nbsp;drawn&nbsp;(with&nbsp;a&nbsp;specific<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;routine).&nbsp;It&nbsp;can&nbsp;be&nbsp;changed&nbsp;or&nbsp;queried&nbsp;using<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;fl_set_object_boxtype()&nbsp;and&nbsp;fl_get_object_boxtype()<br>
-&nbsp;&nbsp;&nbsp;&nbsp;xpos&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;x&nbsp;:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;current&nbsp;horizontal&nbsp;position&nbsp;of&nbsp;bounding&nbsp;box&nbsp;of&nbsp;the&nbsp;flobject.&nbsp;This<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;value&nbsp;will&nbsp;change&nbsp;when&nbsp;the&nbsp;user&nbsp;resizes&nbsp;the&nbsp;form&nbsp;window.&nbsp;To<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;determine&nbsp;position&nbsp;use&nbsp;fl_get_object_position()&nbsp;or<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;fl_get_object_geometry()&nbsp;(for&nbsp;size&nbsp;too).&nbsp;To&nbsp;change&nbsp;position&nbsp;use<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;fl_set_object_position(),&nbsp;or&nbsp;fl_set_object_geometry()&nbsp;(for&nbsp;size<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;too)<br>
-&nbsp;&nbsp;&nbsp;&nbsp;ypos&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;y&nbsp;:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;current&nbsp;vertical&nbsp;position&nbsp;of&nbsp;bounding&nbsp;box&nbsp;of&nbsp;the&nbsp;flobject.&nbsp;This<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;value&nbsp;will&nbsp;change&nbsp;when&nbsp;the&nbsp;user&nbsp;resizes&nbsp;the&nbsp;form&nbsp;window.&nbsp;To<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;determine&nbsp;position&nbsp;use&nbsp;fl_get_object_position()&nbsp;or<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;fl_get_object_geometry()&nbsp;(for&nbsp;size&nbsp;too).&nbsp;To&nbsp;change&nbsp;position&nbsp;use<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;fl_set_object_position(),&nbsp;or&nbsp;fl_set_object_geometry()&nbsp;(for&nbsp;size<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;too)<br>
-&nbsp;&nbsp;&nbsp;&nbsp;width&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;w&nbsp;:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;current&nbsp;width&nbsp;of&nbsp;bounding&nbsp;box&nbsp;of&nbsp;the&nbsp;flobject.&nbsp;This&nbsp;value<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;value&nbsp;will&nbsp;change&nbsp;when&nbsp;the&nbsp;user&nbsp;resizes&nbsp;the&nbsp;form&nbsp;window.&nbsp;To<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;determine&nbsp;size&nbsp;use&nbsp;fl_get_object_size()&nbsp;or<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;fl_get_object_geometry()&nbsp;(for&nbsp;position&nbsp;too).&nbsp;To&nbsp;change&nbsp;size&nbsp;use<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;fl_get_object_size()&nbsp;or&nbsp;fl_get_object_geometry()&nbsp;(for&nbsp;position<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;too).<br>
-&nbsp;&nbsp;&nbsp;&nbsp;height&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;h&nbsp;:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;current&nbsp;height&nbsp;of&nbsp;bounding&nbsp;box&nbsp;of&nbsp;the&nbsp;flobject.&nbsp;This<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;value&nbsp;will&nbsp;change&nbsp;when&nbsp;the&nbsp;user&nbsp;resizes&nbsp;the&nbsp;form&nbsp;window.&nbsp;To<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;determine&nbsp;size&nbsp;use&nbsp;fl_get_object_size()&nbsp;or<br>
@@ -3590,11 +3646,11 @@ Attributes<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;next&nbsp;flobject&nbsp;in&nbsp;form.&nbsp;It&nbsp;is&nbsp;used&nbsp;by&nbsp;the&nbsp;main&nbsp;routines.&nbsp;The&nbsp;class<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;routines&nbsp;should&nbsp;not&nbsp;change&nbsp;it.<br>
 &nbsp;&nbsp;&nbsp;&nbsp;parent&nbsp;:&nbsp;pointer&nbsp;to&nbsp;<a href="#FL_OBJECT">FL_OBJECT</a><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*todo*<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;parent&nbsp;of&nbsp;flobject<br>
 &nbsp;&nbsp;&nbsp;&nbsp;child&nbsp;:&nbsp;pointer&nbsp;to&nbsp;<a href="#FL_OBJECT">FL_OBJECT</a><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*todo*<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;child&nbsp;of&nbsp;flobject<br>
 &nbsp;&nbsp;&nbsp;&nbsp;nc&nbsp;:&nbsp;pointer&nbsp;to&nbsp;<a href="#FL_OBJECT">FL_OBJECT</a><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;next&nbsp;child<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;next&nbsp;child&nbsp;of&nbsp;flobject<br>
 &nbsp;&nbsp;&nbsp;&nbsp;flpixmap&nbsp;:&nbsp;pointer&nbsp;to&nbsp;<a href="#FL_pixmap">FL_pixmap</a><br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;pixmap&nbsp;doublebuffering&nbsp;stateinfo<br>
 &nbsp;&nbsp;&nbsp;&nbsp;use_pixmap&nbsp;:&nbsp;int<br>
@@ -3610,11 +3666,25 @@ Attributes<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;interaction&nbsp;ended.<br>
 &nbsp;&nbsp;&nbsp;&nbsp;how_return&nbsp;:&nbsp;int_pos<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;under&nbsp;what&nbsp;circumstances&nbsp;the&nbsp;flobject&nbsp;is&nbsp;returned&nbsp;by&nbsp;e.g.<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;fl_do_forms()&nbsp;or&nbsp;the&nbsp;callback&nbsp;function&nbsp;for&nbsp;the&nbsp;flobject&nbsp;is&nbsp;invoked.<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;It&nbsp;can&nbsp;be&nbsp;changed&nbsp;using&nbsp;fl_set_object_return().&nbsp;Especially&nbsp;in<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;the&nbsp;case&nbsp;of&nbsp;flobjects&nbsp;having&nbsp;child&nbsp;flobjects&nbsp;also&nbsp;the&nbsp;corresponding<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;settings&nbsp;for&nbsp;child&nbsp;flobjects&nbsp;may&nbsp;need&nbsp;changes&nbsp;and&nbsp;which<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;automatically&nbsp;get&nbsp;adjusted&nbsp;when&nbsp;the&nbsp;above&nbsp;function&nbsp;is&nbsp;used.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;fl_do_forms()&nbsp;or&nbsp;the&nbsp;callback&nbsp;function&nbsp;for&nbsp;the&nbsp;flobject&nbsp;is<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;invoked.&nbsp;It&nbsp;can&nbsp;be&nbsp;changed&nbsp;using&nbsp;fl_set_object_return().<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Especially&nbsp;in&nbsp;the&nbsp;case&nbsp;of&nbsp;flobjects&nbsp;having&nbsp;child&nbsp;flobjects&nbsp;also<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;the&nbsp;corresponding&nbsp;settings&nbsp;for&nbsp;child&nbsp;flobjects&nbsp;may&nbsp;need&nbsp;changes<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;and&nbsp;which&nbsp;automatically&nbsp;get&nbsp;adjusted&nbsp;when&nbsp;the&nbsp;above&nbsp;function&nbsp;is<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;used.&nbsp;Values&nbsp;are:&nbsp;FL_RETURN_NONE&nbsp;(flobject&nbsp;gets&nbsp;never&nbsp;returned&nbsp;or<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;its&nbsp;callback&nbsp;invoked),&nbsp;FL_RETURN_CHANGED&nbsp;(returns&nbsp;flobject&nbsp;or<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;invokes&nbsp;callback&nbsp;when&nbsp;state&nbsp;of&nbsp;<a href="__builtin__.html#object">object</a>&nbsp;changed),&nbsp;FL_RETURN_END&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(returns&nbsp;flobject&nbsp;or&nbsp;invokes&nbsp;callback&nbsp;at&nbsp;end&nbsp;of&nbsp;interaction,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;normally&nbsp;when&nbsp;the&nbsp;mouse&nbsp;key&nbsp;is&nbsp;released&nbsp;or,&nbsp;in&nbsp;the&nbsp;case&nbsp;of&nbsp;input<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;flobjects,&nbsp;the&nbsp;<a href="__builtin__.html#object">object</a>&nbsp;has&nbsp;lost&nbsp;focus),&nbsp;FL_RETURN_END_CHANGED&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(returns&nbsp;flobject&nbsp;or&nbsp;invokes&nbsp;callback&nbsp;only&nbsp;when&nbsp;interaction&nbsp;has<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ended&nbsp;and&nbsp;the&nbsp;state&nbsp;of&nbsp;the&nbsp;flobject&nbsp;has&nbsp;changed),<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_RETURN_SELECTION&nbsp;(returns&nbsp;flobject&nbsp;or&nbsp;invokes&nbsp;callback&nbsp;if&nbsp;e.g.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;in&nbsp;a&nbsp;browser&nbsp;a&nbsp;line&nbsp;was&nbsp;selected),&nbsp;FL_RETURN_SELECTION&nbsp;(returns<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;flobject&nbsp;or&nbsp;invokes&nbsp;callback&nbsp;if&nbsp;e.g.&nbsp;in&nbsp;a&nbsp;browser&nbsp;a&nbsp;line&nbsp;was<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;deselected),&nbsp;FL_RETURN_ALWAYS&nbsp;(returns&nbsp;flobject&nbsp;or&nbsp;invokes<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;callback&nbsp;whenever&nbsp;interaction&nbsp;has&nbsp;ended&nbsp;or&nbsp;the&nbsp;state&nbsp;of&nbsp;the<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;flobject&nbsp;has&nbsp;changed).<br>
 &nbsp;&nbsp;&nbsp;&nbsp;double_buffer&nbsp;:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;only&nbsp;used&nbsp;by&nbsp;mesa/gl&nbsp;canvas<br>
 &nbsp;&nbsp;&nbsp;&nbsp;pushed&nbsp;:&nbsp;int<br>
@@ -3637,9 +3707,9 @@ Attributes<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;using&nbsp;fl_object_is_active()<br>
 &nbsp;&nbsp;&nbsp;&nbsp;input&nbsp;:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;flag&nbsp;if&nbsp;this&nbsp;flobject&nbsp;can&nbsp;receive&nbsp;keyboard&nbsp;input.&nbsp;If&nbsp;not,&nbsp;events<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;related&nbsp;to&nbsp;keyboard&nbsp;input&nbsp;are&nbsp;not&nbsp;sent&nbsp;to&nbsp;the&nbsp;flobject.&nbsp;The&nbsp;default<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;value&nbsp;of&nbsp;input&nbsp;is&nbsp;false.&nbsp;Note&nbsp;that&nbsp;not&nbsp;all&nbsp;keys&nbsp;are&nbsp;sent&nbsp;(see<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;wantkey).<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;related&nbsp;to&nbsp;keyboard&nbsp;input&nbsp;are&nbsp;not&nbsp;sent&nbsp;to&nbsp;the&nbsp;flobject.&nbsp;The<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;default&nbsp;value&nbsp;of&nbsp;input&nbsp;is&nbsp;false.&nbsp;Note&nbsp;that&nbsp;not&nbsp;all&nbsp;keys&nbsp;are&nbsp;sent<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(see&nbsp;wantkey).<br>
 &nbsp;&nbsp;&nbsp;&nbsp;wantkey&nbsp;:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;An&nbsp;input&nbsp;flobject&nbsp;normally&nbsp;does&nbsp;not&nbsp;receive&nbsp;&lt;Tab&gt;&nbsp;or&nbsp;&lt;Return&gt;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;keystrokes&nbsp;or&nbsp;any&nbsp;other&nbsp;keys&nbsp;except&nbsp;those&nbsp;that&nbsp;have&nbsp;values&nbsp;between<br>
@@ -3682,23 +3752,25 @@ Attributes<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;value&nbsp;disables&nbsp;double/triple&nbsp;click&nbsp;detection.&nbsp;It&nbsp;can&nbsp;be&nbsp;set&nbsp;using<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;fl_set_object_dblclick()&nbsp;and&nbsp;queried&nbsp;using&nbsp;fl_get_object_dblclick()<br>
 &nbsp;&nbsp;&nbsp;&nbsp;c_vdata&nbsp;:&nbsp;pointer&nbsp;to&nbsp;any&nbsp;type<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;for&nbsp;class&nbsp;use.&nbsp;The&nbsp;main&nbsp;module&nbsp;does&nbsp;not&nbsp;reference&nbsp;or&nbsp;modify&nbsp;this<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;field&nbsp;in&nbsp;any&nbsp;way.&nbsp;The&nbsp;flobject&nbsp;classes,&nbsp;including&nbsp;the&nbsp;built-in<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ones,&nbsp;may&nbsp;use&nbsp;this&nbsp;field.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;for&nbsp;flobject&nbsp;class&nbsp;use.&nbsp;The&nbsp;main&nbsp;module&nbsp;does&nbsp;not&nbsp;reference&nbsp;or<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;modify&nbsp;this&nbsp;field&nbsp;in&nbsp;any&nbsp;way.&nbsp;The&nbsp;flobject&nbsp;classes,&nbsp;including&nbsp;the<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;built-in&nbsp;ones,&nbsp;may&nbsp;use&nbsp;this&nbsp;field.<br>
 &nbsp;&nbsp;&nbsp;&nbsp;c_cdata&nbsp;:&nbsp;str<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;for&nbsp;class&nbsp;use<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;for&nbsp;flobject&nbsp;class&nbsp;use.&nbsp;The&nbsp;main&nbsp;module&nbsp;does&nbsp;not&nbsp;reference&nbsp;or<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;modify&nbsp;this&nbsp;field&nbsp;in&nbsp;any&nbsp;way.&nbsp;The&nbsp;flobject&nbsp;classes,&nbsp;including&nbsp;the<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;built-in&nbsp;ones,&nbsp;may&nbsp;use&nbsp;this&nbsp;field.<br>
 &nbsp;&nbsp;&nbsp;&nbsp;c_ldata&nbsp;:&nbsp;long<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;for&nbsp;class&nbsp;use.&nbsp;The&nbsp;main&nbsp;module&nbsp;does&nbsp;not&nbsp;reference&nbsp;or&nbsp;modify&nbsp;this<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;field&nbsp;in&nbsp;any&nbsp;way.&nbsp;The&nbsp;flobject&nbsp;classes,&nbsp;including&nbsp;the&nbsp;built-in<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ones,&nbsp;may&nbsp;use&nbsp;this&nbsp;field.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;for&nbsp;flobject&nbsp;class&nbsp;use.&nbsp;The&nbsp;main&nbsp;module&nbsp;does&nbsp;not&nbsp;reference&nbsp;or<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;modify&nbsp;this&nbsp;field&nbsp;in&nbsp;any&nbsp;way.&nbsp;The&nbsp;flobject&nbsp;classes,&nbsp;including&nbsp;the<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;built-in&nbsp;ones,&nbsp;may&nbsp;use&nbsp;this&nbsp;field.<br>
 &nbsp;&nbsp;&nbsp;&nbsp;dbl_background&nbsp;:&nbsp;long_pos<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;double&nbsp;buffer&nbsp;background&nbsp;color<br>
 &nbsp;&nbsp;&nbsp;&nbsp;tooltip&nbsp;:&nbsp;str<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*todo*<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;tooltip&nbsp;helper&nbsp;for&nbsp;flobject<br>
 &nbsp;&nbsp;&nbsp;&nbsp;tipID&nbsp;:&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*todo*<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;tooltip&nbsp;id<br>
 &nbsp;&nbsp;&nbsp;&nbsp;group_id&nbsp;:&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*todo*<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;group&nbsp;number&nbsp;the&nbsp;flobject&nbsp;belongs&nbsp;to<br>
 &nbsp;&nbsp;&nbsp;&nbsp;want_motion&nbsp;:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*todo*<br>
 &nbsp;&nbsp;&nbsp;&nbsp;want_update&nbsp;:&nbsp;int<br>
@@ -3962,15 +4034,15 @@ Please&nbsp;always&nbsp;use&nbsp;accessor&nbsp;methods&nbsp;when&nbsp;available&
 changing&nbsp;the&nbsp;flobject's&nbsp;properties&nbsp;directly.<br>
 &nbsp;<br>
 To&nbsp;access&nbsp;directly&nbsp;to&nbsp;the&nbsp;data&nbsp;referenced&nbsp;by&nbsp;a&nbsp;pointer&nbsp;to&nbsp;<a href="#FL_OBJECT">FL_OBJECT</a><br>
-(ptr_flobject)&nbsp;you&nbsp;need&nbsp;to&nbsp;use&nbsp;"ptr_flobject.contents",&nbsp;then&nbsp;one&nbsp;of&nbsp;its&nbsp;attributes'<br>
-name.&nbsp;Nonetheless,&nbsp;whenever&nbsp;possible&nbsp;it&nbsp;is&nbsp;always&nbsp;better&nbsp;to&nbsp;use<br>
-appropriate&nbsp;functions.<br>
+(ptr_flobject)&nbsp;you&nbsp;need&nbsp;to&nbsp;use&nbsp;"ptr_flobject.contents",&nbsp;then&nbsp;one&nbsp;of&nbsp;its<br>
+attributes'&nbsp;name.&nbsp;Nonetheless,&nbsp;whenever&nbsp;possible&nbsp;it&nbsp;is&nbsp;always&nbsp;better&nbsp;to<br>
+use&nbsp;appropriate&nbsp;functions.<br>
 &nbsp;<br>
 Attributes<br>
 ----------<br>
 &nbsp;&nbsp;&nbsp;&nbsp;form&nbsp;:&nbsp;pointer&nbsp;to&nbsp;<a href="#FL_FORM">FL_FORM</a><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;the&nbsp;form&nbsp;this&nbsp;flobject&nbsp;belongs&nbsp;to.&nbsp;It&nbsp;is&nbsp;used&nbsp;by&nbsp;the&nbsp;main&nbsp;routines.<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The&nbsp;class&nbsp;routines&nbsp;should&nbsp;not&nbsp;change&nbsp;it.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;the&nbsp;form&nbsp;this&nbsp;flobject&nbsp;belongs&nbsp;to.&nbsp;It&nbsp;is&nbsp;used&nbsp;by&nbsp;the&nbsp;main<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;routines.&nbsp;The&nbsp;class&nbsp;routines&nbsp;should&nbsp;not&nbsp;change&nbsp;it.<br>
 &nbsp;&nbsp;&nbsp;&nbsp;u_vdata&nbsp;:&nbsp;pointer&nbsp;to&nbsp;any&nbsp;type<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;anything&nbsp;the&nbsp;user&nbsp;likes&nbsp;as&nbsp;user&nbsp;data&nbsp;for&nbsp;application&nbsp;program.&nbsp;The<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;main&nbsp;module&nbsp;does&nbsp;not&nbsp;reference&nbsp;or&nbsp;modify&nbsp;this&nbsp;field&nbsp;in&nbsp;any&nbsp;way<br>
@@ -3995,28 +4067,28 @@ Attributes<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;flobject&nbsp;must&nbsp;take&nbsp;care&nbsp;that&nbsp;is&nbsp;actually&nbsp;drawn&nbsp;(with&nbsp;a&nbsp;specific<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;routine).&nbsp;It&nbsp;can&nbsp;be&nbsp;changed&nbsp;or&nbsp;queried&nbsp;using<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;fl_set_object_boxtype()&nbsp;and&nbsp;fl_get_object_boxtype()<br>
-&nbsp;&nbsp;&nbsp;&nbsp;xpos&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;x&nbsp;:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;current&nbsp;horizontal&nbsp;position&nbsp;of&nbsp;bounding&nbsp;box&nbsp;of&nbsp;the&nbsp;flobject.&nbsp;This<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;value&nbsp;will&nbsp;change&nbsp;when&nbsp;the&nbsp;user&nbsp;resizes&nbsp;the&nbsp;form&nbsp;window.&nbsp;To<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;determine&nbsp;position&nbsp;use&nbsp;fl_get_object_position()&nbsp;or<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;fl_get_object_geometry()&nbsp;(for&nbsp;size&nbsp;too).&nbsp;To&nbsp;change&nbsp;position&nbsp;use<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;fl_set_object_position(),&nbsp;or&nbsp;fl_set_object_geometry()&nbsp;(for&nbsp;size<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;too)<br>
-&nbsp;&nbsp;&nbsp;&nbsp;ypos&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;y&nbsp;:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;current&nbsp;vertical&nbsp;position&nbsp;of&nbsp;bounding&nbsp;box&nbsp;of&nbsp;the&nbsp;flobject.&nbsp;This<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;value&nbsp;will&nbsp;change&nbsp;when&nbsp;the&nbsp;user&nbsp;resizes&nbsp;the&nbsp;form&nbsp;window.&nbsp;To<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;determine&nbsp;position&nbsp;use&nbsp;fl_get_object_position()&nbsp;or<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;fl_get_object_geometry()&nbsp;(for&nbsp;size&nbsp;too).&nbsp;To&nbsp;change&nbsp;position&nbsp;use<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;fl_set_object_position(),&nbsp;or&nbsp;fl_set_object_geometry()&nbsp;(for&nbsp;size<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;too)<br>
-&nbsp;&nbsp;&nbsp;&nbsp;width&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;w&nbsp;:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;current&nbsp;width&nbsp;of&nbsp;bounding&nbsp;box&nbsp;of&nbsp;the&nbsp;flobject.&nbsp;This&nbsp;value<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;value&nbsp;will&nbsp;change&nbsp;when&nbsp;the&nbsp;user&nbsp;resizes&nbsp;the&nbsp;form&nbsp;window.&nbsp;To<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;determine&nbsp;size&nbsp;use&nbsp;fl_get_object_size()&nbsp;or<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;fl_get_object_geometry()&nbsp;(for&nbsp;position&nbsp;too).&nbsp;To&nbsp;change&nbsp;size&nbsp;use<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;fl_get_object_size()&nbsp;or&nbsp;fl_get_object_geometry()&nbsp;(for&nbsp;position<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;too).<br>
-&nbsp;&nbsp;&nbsp;&nbsp;height&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;h&nbsp;:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;current&nbsp;height&nbsp;of&nbsp;bounding&nbsp;box&nbsp;of&nbsp;the&nbsp;flobject.&nbsp;This<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;value&nbsp;will&nbsp;change&nbsp;when&nbsp;the&nbsp;user&nbsp;resizes&nbsp;the&nbsp;form&nbsp;window.&nbsp;To<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;determine&nbsp;size&nbsp;use&nbsp;fl_get_object_size()&nbsp;or<br>
@@ -4124,11 +4196,11 @@ Attributes<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;next&nbsp;flobject&nbsp;in&nbsp;form.&nbsp;It&nbsp;is&nbsp;used&nbsp;by&nbsp;the&nbsp;main&nbsp;routines.&nbsp;The&nbsp;class<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;routines&nbsp;should&nbsp;not&nbsp;change&nbsp;it.<br>
 &nbsp;&nbsp;&nbsp;&nbsp;parent&nbsp;:&nbsp;pointer&nbsp;to&nbsp;<a href="#FL_OBJECT">FL_OBJECT</a><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*todo*<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;parent&nbsp;of&nbsp;flobject<br>
 &nbsp;&nbsp;&nbsp;&nbsp;child&nbsp;:&nbsp;pointer&nbsp;to&nbsp;<a href="#FL_OBJECT">FL_OBJECT</a><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*todo*<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;child&nbsp;of&nbsp;flobject<br>
 &nbsp;&nbsp;&nbsp;&nbsp;nc&nbsp;:&nbsp;pointer&nbsp;to&nbsp;<a href="#FL_OBJECT">FL_OBJECT</a><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;next&nbsp;child<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;next&nbsp;child&nbsp;of&nbsp;flobject<br>
 &nbsp;&nbsp;&nbsp;&nbsp;flpixmap&nbsp;:&nbsp;pointer&nbsp;to&nbsp;<a href="#FL_pixmap">FL_pixmap</a><br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;pixmap&nbsp;doublebuffering&nbsp;stateinfo<br>
 &nbsp;&nbsp;&nbsp;&nbsp;use_pixmap&nbsp;:&nbsp;int<br>
@@ -4144,11 +4216,25 @@ Attributes<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;interaction&nbsp;ended.<br>
 &nbsp;&nbsp;&nbsp;&nbsp;how_return&nbsp;:&nbsp;int_pos<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;under&nbsp;what&nbsp;circumstances&nbsp;the&nbsp;flobject&nbsp;is&nbsp;returned&nbsp;by&nbsp;e.g.<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;fl_do_forms()&nbsp;or&nbsp;the&nbsp;callback&nbsp;function&nbsp;for&nbsp;the&nbsp;flobject&nbsp;is&nbsp;invoked.<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;It&nbsp;can&nbsp;be&nbsp;changed&nbsp;using&nbsp;fl_set_object_return().&nbsp;Especially&nbsp;in<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;the&nbsp;case&nbsp;of&nbsp;flobjects&nbsp;having&nbsp;child&nbsp;flobjects&nbsp;also&nbsp;the&nbsp;corresponding<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;settings&nbsp;for&nbsp;child&nbsp;flobjects&nbsp;may&nbsp;need&nbsp;changes&nbsp;and&nbsp;which<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;automatically&nbsp;get&nbsp;adjusted&nbsp;when&nbsp;the&nbsp;above&nbsp;function&nbsp;is&nbsp;used.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;fl_do_forms()&nbsp;or&nbsp;the&nbsp;callback&nbsp;function&nbsp;for&nbsp;the&nbsp;flobject&nbsp;is<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;invoked.&nbsp;It&nbsp;can&nbsp;be&nbsp;changed&nbsp;using&nbsp;fl_set_object_return().<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Especially&nbsp;in&nbsp;the&nbsp;case&nbsp;of&nbsp;flobjects&nbsp;having&nbsp;child&nbsp;flobjects&nbsp;also<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;the&nbsp;corresponding&nbsp;settings&nbsp;for&nbsp;child&nbsp;flobjects&nbsp;may&nbsp;need&nbsp;changes<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;and&nbsp;which&nbsp;automatically&nbsp;get&nbsp;adjusted&nbsp;when&nbsp;the&nbsp;above&nbsp;function&nbsp;is<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;used.&nbsp;Values&nbsp;are:&nbsp;FL_RETURN_NONE&nbsp;(flobject&nbsp;gets&nbsp;never&nbsp;returned&nbsp;or<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;its&nbsp;callback&nbsp;invoked),&nbsp;FL_RETURN_CHANGED&nbsp;(returns&nbsp;flobject&nbsp;or<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;invokes&nbsp;callback&nbsp;when&nbsp;state&nbsp;of&nbsp;<a href="__builtin__.html#object">object</a>&nbsp;changed),&nbsp;FL_RETURN_END&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(returns&nbsp;flobject&nbsp;or&nbsp;invokes&nbsp;callback&nbsp;at&nbsp;end&nbsp;of&nbsp;interaction,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;normally&nbsp;when&nbsp;the&nbsp;mouse&nbsp;key&nbsp;is&nbsp;released&nbsp;or,&nbsp;in&nbsp;the&nbsp;case&nbsp;of&nbsp;input<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;flobjects,&nbsp;the&nbsp;<a href="__builtin__.html#object">object</a>&nbsp;has&nbsp;lost&nbsp;focus),&nbsp;FL_RETURN_END_CHANGED&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(returns&nbsp;flobject&nbsp;or&nbsp;invokes&nbsp;callback&nbsp;only&nbsp;when&nbsp;interaction&nbsp;has<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ended&nbsp;and&nbsp;the&nbsp;state&nbsp;of&nbsp;the&nbsp;flobject&nbsp;has&nbsp;changed),<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_RETURN_SELECTION&nbsp;(returns&nbsp;flobject&nbsp;or&nbsp;invokes&nbsp;callback&nbsp;if&nbsp;e.g.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;in&nbsp;a&nbsp;browser&nbsp;a&nbsp;line&nbsp;was&nbsp;selected),&nbsp;FL_RETURN_SELECTION&nbsp;(returns<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;flobject&nbsp;or&nbsp;invokes&nbsp;callback&nbsp;if&nbsp;e.g.&nbsp;in&nbsp;a&nbsp;browser&nbsp;a&nbsp;line&nbsp;was<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;deselected),&nbsp;FL_RETURN_ALWAYS&nbsp;(returns&nbsp;flobject&nbsp;or&nbsp;invokes<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;callback&nbsp;whenever&nbsp;interaction&nbsp;has&nbsp;ended&nbsp;or&nbsp;the&nbsp;state&nbsp;of&nbsp;the<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;flobject&nbsp;has&nbsp;changed).<br>
 &nbsp;&nbsp;&nbsp;&nbsp;double_buffer&nbsp;:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;only&nbsp;used&nbsp;by&nbsp;mesa/gl&nbsp;canvas<br>
 &nbsp;&nbsp;&nbsp;&nbsp;pushed&nbsp;:&nbsp;int<br>
@@ -4171,9 +4257,9 @@ Attributes<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;using&nbsp;fl_object_is_active()<br>
 &nbsp;&nbsp;&nbsp;&nbsp;input&nbsp;:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;flag&nbsp;if&nbsp;this&nbsp;flobject&nbsp;can&nbsp;receive&nbsp;keyboard&nbsp;input.&nbsp;If&nbsp;not,&nbsp;events<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;related&nbsp;to&nbsp;keyboard&nbsp;input&nbsp;are&nbsp;not&nbsp;sent&nbsp;to&nbsp;the&nbsp;flobject.&nbsp;The&nbsp;default<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;value&nbsp;of&nbsp;input&nbsp;is&nbsp;false.&nbsp;Note&nbsp;that&nbsp;not&nbsp;all&nbsp;keys&nbsp;are&nbsp;sent&nbsp;(see<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;wantkey).<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;related&nbsp;to&nbsp;keyboard&nbsp;input&nbsp;are&nbsp;not&nbsp;sent&nbsp;to&nbsp;the&nbsp;flobject.&nbsp;The<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;default&nbsp;value&nbsp;of&nbsp;input&nbsp;is&nbsp;false.&nbsp;Note&nbsp;that&nbsp;not&nbsp;all&nbsp;keys&nbsp;are&nbsp;sent<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(see&nbsp;wantkey).<br>
 &nbsp;&nbsp;&nbsp;&nbsp;wantkey&nbsp;:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;An&nbsp;input&nbsp;flobject&nbsp;normally&nbsp;does&nbsp;not&nbsp;receive&nbsp;&lt;Tab&gt;&nbsp;or&nbsp;&lt;Return&gt;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;keystrokes&nbsp;or&nbsp;any&nbsp;other&nbsp;keys&nbsp;except&nbsp;those&nbsp;that&nbsp;have&nbsp;values&nbsp;between<br>
@@ -4216,23 +4302,25 @@ Attributes<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;value&nbsp;disables&nbsp;double/triple&nbsp;click&nbsp;detection.&nbsp;It&nbsp;can&nbsp;be&nbsp;set&nbsp;using<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;fl_set_object_dblclick()&nbsp;and&nbsp;queried&nbsp;using&nbsp;fl_get_object_dblclick()<br>
 &nbsp;&nbsp;&nbsp;&nbsp;c_vdata&nbsp;:&nbsp;pointer&nbsp;to&nbsp;any&nbsp;type<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;for&nbsp;class&nbsp;use.&nbsp;The&nbsp;main&nbsp;module&nbsp;does&nbsp;not&nbsp;reference&nbsp;or&nbsp;modify&nbsp;this<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;field&nbsp;in&nbsp;any&nbsp;way.&nbsp;The&nbsp;flobject&nbsp;classes,&nbsp;including&nbsp;the&nbsp;built-in<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ones,&nbsp;may&nbsp;use&nbsp;this&nbsp;field.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;for&nbsp;flobject&nbsp;class&nbsp;use.&nbsp;The&nbsp;main&nbsp;module&nbsp;does&nbsp;not&nbsp;reference&nbsp;or<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;modify&nbsp;this&nbsp;field&nbsp;in&nbsp;any&nbsp;way.&nbsp;The&nbsp;flobject&nbsp;classes,&nbsp;including&nbsp;the<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;built-in&nbsp;ones,&nbsp;may&nbsp;use&nbsp;this&nbsp;field.<br>
 &nbsp;&nbsp;&nbsp;&nbsp;c_cdata&nbsp;:&nbsp;str<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;for&nbsp;class&nbsp;use<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;for&nbsp;flobject&nbsp;class&nbsp;use.&nbsp;The&nbsp;main&nbsp;module&nbsp;does&nbsp;not&nbsp;reference&nbsp;or<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;modify&nbsp;this&nbsp;field&nbsp;in&nbsp;any&nbsp;way.&nbsp;The&nbsp;flobject&nbsp;classes,&nbsp;including&nbsp;the<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;built-in&nbsp;ones,&nbsp;may&nbsp;use&nbsp;this&nbsp;field.<br>
 &nbsp;&nbsp;&nbsp;&nbsp;c_ldata&nbsp;:&nbsp;long<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;for&nbsp;class&nbsp;use.&nbsp;The&nbsp;main&nbsp;module&nbsp;does&nbsp;not&nbsp;reference&nbsp;or&nbsp;modify&nbsp;this<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;field&nbsp;in&nbsp;any&nbsp;way.&nbsp;The&nbsp;flobject&nbsp;classes,&nbsp;including&nbsp;the&nbsp;built-in<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ones,&nbsp;may&nbsp;use&nbsp;this&nbsp;field.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;for&nbsp;flobject&nbsp;class&nbsp;use.&nbsp;The&nbsp;main&nbsp;module&nbsp;does&nbsp;not&nbsp;reference&nbsp;or<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;modify&nbsp;this&nbsp;field&nbsp;in&nbsp;any&nbsp;way.&nbsp;The&nbsp;flobject&nbsp;classes,&nbsp;including&nbsp;the<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;built-in&nbsp;ones,&nbsp;may&nbsp;use&nbsp;this&nbsp;field.<br>
 &nbsp;&nbsp;&nbsp;&nbsp;dbl_background&nbsp;:&nbsp;long_pos<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;double&nbsp;buffer&nbsp;background&nbsp;color<br>
 &nbsp;&nbsp;&nbsp;&nbsp;tooltip&nbsp;:&nbsp;str<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*todo*<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;tooltip&nbsp;helper&nbsp;for&nbsp;flobject<br>
 &nbsp;&nbsp;&nbsp;&nbsp;tipID&nbsp;:&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*todo*<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;tooltip&nbsp;id<br>
 &nbsp;&nbsp;&nbsp;&nbsp;group_id&nbsp;:&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*todo*<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;group&nbsp;number&nbsp;the&nbsp;flobject&nbsp;belongs&nbsp;to<br>
 &nbsp;&nbsp;&nbsp;&nbsp;want_motion&nbsp;:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*todo*<br>
 &nbsp;&nbsp;&nbsp;&nbsp;want_update&nbsp;:&nbsp;int<br>
@@ -5857,23 +5945,23 @@ Methods inherited from _ctypes._CData:<br>
 Attributes<br>
 ----------<br>
 &nbsp;&nbsp;&nbsp;&nbsp;rshift&nbsp;:&nbsp;int_pos<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*todo*<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;red&nbsp;*todo*<br>
 &nbsp;&nbsp;&nbsp;&nbsp;rmask'&nbsp;:&nbsp;int_pos<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*todo*<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;mask&nbsp;value&nbsp;for&nbsp;red<br>
 &nbsp;&nbsp;&nbsp;&nbsp;rbits&nbsp;:&nbsp;int_pos<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*todo*<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;red&nbsp;*todo*<br>
 &nbsp;&nbsp;&nbsp;&nbsp;gshift&nbsp;:&nbsp;int_pos<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*todo*<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;green&nbsp;*todo*<br>
 &nbsp;&nbsp;&nbsp;&nbsp;gmask'&nbsp;:&nbsp;int_pos<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*todo*<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;mask&nbsp;value&nbsp;for&nbsp;green<br>
 &nbsp;&nbsp;&nbsp;&nbsp;gbits&nbsp;:&nbsp;int_pos<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*todo*<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;green&nbsp;*todo*<br>
 &nbsp;&nbsp;&nbsp;&nbsp;bshift&nbsp;:&nbsp;int_pos<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*todo*<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;blue&nbsp;*todo*<br>
 &nbsp;&nbsp;&nbsp;&nbsp;bmask&nbsp;:&nbsp;int_pos<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*todo*<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;mask&nbsp;value&nbsp;for&nbsp;blue<br>
 &nbsp;&nbsp;&nbsp;&nbsp;bbits&nbsp;:&nbsp;int_pos<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*todo*<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;blue&nbsp;*todo*<br>
 &nbsp;&nbsp;&nbsp;&nbsp;bits_per_rgb&nbsp;:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*todo*<br>
 &nbsp;&nbsp;&nbsp;&nbsp;colormap_size&nbsp;:&nbsp;int<br>
@@ -5956,23 +6044,23 @@ Methods inherited from _ctypes._CData:<br>
 Attributes<br>
 ----------<br>
 &nbsp;&nbsp;&nbsp;&nbsp;rshift&nbsp;:&nbsp;int_pos<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*todo*<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;red&nbsp;*todo*<br>
 &nbsp;&nbsp;&nbsp;&nbsp;rmask'&nbsp;:&nbsp;int_pos<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*todo*<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;mask&nbsp;value&nbsp;for&nbsp;red<br>
 &nbsp;&nbsp;&nbsp;&nbsp;rbits&nbsp;:&nbsp;int_pos<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*todo*<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;red&nbsp;*todo*<br>
 &nbsp;&nbsp;&nbsp;&nbsp;gshift&nbsp;:&nbsp;int_pos<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*todo*<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;green&nbsp;*todo*<br>
 &nbsp;&nbsp;&nbsp;&nbsp;gmask'&nbsp;:&nbsp;int_pos<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*todo*<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;mask&nbsp;value&nbsp;for&nbsp;green<br>
 &nbsp;&nbsp;&nbsp;&nbsp;gbits&nbsp;:&nbsp;int_pos<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*todo*<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;green&nbsp;*todo*<br>
 &nbsp;&nbsp;&nbsp;&nbsp;bshift&nbsp;:&nbsp;int_pos<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*todo*<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;blue&nbsp;*todo*<br>
 &nbsp;&nbsp;&nbsp;&nbsp;bmask&nbsp;:&nbsp;int_pos<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*todo*<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;mask&nbsp;value&nbsp;for&nbsp;blue<br>
 &nbsp;&nbsp;&nbsp;&nbsp;bbits&nbsp;:&nbsp;int_pos<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*todo*<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;blue&nbsp;*todo*<br>
 &nbsp;&nbsp;&nbsp;&nbsp;bits_per_rgb&nbsp;:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*todo*<br>
 &nbsp;&nbsp;&nbsp;&nbsp;colormap_size&nbsp;:&nbsp;int<br>
@@ -6063,9 +6151,9 @@ Attributes<br>
 &nbsp;&nbsp;&nbsp;&nbsp;trailblazer&nbsp;:&nbsp;long_pos<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Window<br>
 &nbsp;&nbsp;&nbsp;&nbsp;vclass&nbsp;:&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*todo*<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;visual&nbsp;class<br>
 &nbsp;&nbsp;&nbsp;&nbsp;depth&nbsp;:&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*todo*<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;depth&nbsp;of&nbsp;visual<br>
 &nbsp;&nbsp;&nbsp;&nbsp;rgb_bits&nbsp;:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*todo*<br>
 &nbsp;&nbsp;&nbsp;&nbsp;dithered&nbsp;:&nbsp;int<br>
@@ -6213,7 +6301,7 @@ Attributes<br>
 &nbsp;&nbsp;&nbsp;&nbsp;win&nbsp;:&nbsp;long_pos<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;window<br>
 &nbsp;&nbsp;&nbsp;&nbsp;visual&nbsp;:&nbsp;pointer&nbsp;to&nbsp;<a href="#Visual">Visual</a><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*todo*<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#Visual">Visual</a>&nbsp;class<br>
 &nbsp;&nbsp;&nbsp;&nbsp;xpos&nbsp;:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;horizontal&nbsp;position<br>
 &nbsp;&nbsp;&nbsp;&nbsp;ypos&nbsp;:&nbsp;int<br>
@@ -6223,7 +6311,7 @@ Attributes<br>
 &nbsp;&nbsp;&nbsp;&nbsp;height&nbsp;:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;height<br>
 &nbsp;&nbsp;&nbsp;&nbsp;depth&nbsp;:&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*todo*<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;depth&nbsp;of&nbsp;visual<br>
 &nbsp;&nbsp;&nbsp;&nbsp;dbl_background&nbsp;:&nbsp;long_pos<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;color&nbsp;value<br>
 &nbsp;&nbsp;&nbsp;&nbsp;pixel&nbsp;:&nbsp;long_pos<br>
@@ -6307,7 +6395,7 @@ Attributes<br>
 &nbsp;&nbsp;&nbsp;&nbsp;win&nbsp;:&nbsp;long_pos<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;window<br>
 &nbsp;&nbsp;&nbsp;&nbsp;visual&nbsp;:&nbsp;pointer&nbsp;to&nbsp;<a href="#Visual">Visual</a><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*todo*<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#Visual">Visual</a>&nbsp;class<br>
 &nbsp;&nbsp;&nbsp;&nbsp;xpos&nbsp;:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;horizontal&nbsp;position<br>
 &nbsp;&nbsp;&nbsp;&nbsp;ypos&nbsp;:&nbsp;int<br>
@@ -6317,7 +6405,7 @@ Attributes<br>
 &nbsp;&nbsp;&nbsp;&nbsp;height&nbsp;:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;height<br>
 &nbsp;&nbsp;&nbsp;&nbsp;depth&nbsp;:&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*todo*<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;depth&nbsp;of&nbsp;visual<br>
 &nbsp;&nbsp;&nbsp;&nbsp;dbl_background&nbsp;:&nbsp;long_pos<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;color&nbsp;value<br>
 &nbsp;&nbsp;&nbsp;&nbsp;pixel&nbsp;:&nbsp;long_pos<br>
@@ -6878,26 +6966,26 @@ Methods inherited from _ctypes._CData:<br>
 <font color="#000000" face="helvetica, arial"><a name="Visual">class <strong>Visual</strong></a>(<a href="_ctypes.html#Structure">_ctypes.Structure</a>)</font></td></tr>
     
 <tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
-<td colspan=2><tt><a href="#Visual">Visual</a>&nbsp;class<br>
+<td colspan=2><tt><a href="#Visual">Visual</a>&nbsp;class.&nbsp;It&nbsp;contains&nbsp;information&nbsp;about&nbsp;colormapping&nbsp;possible.<br>
 &nbsp;<br>
 Attributes<br>
 ----------<br>
 &nbsp;&nbsp;&nbsp;&nbsp;ext_data&nbsp;:&nbsp;pointer&nbsp;to&nbsp;<a href="#XExtData">XExtData</a><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*todo*<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;hook&nbsp;for&nbsp;extension&nbsp;to&nbsp;hang&nbsp;data<br>
 &nbsp;&nbsp;&nbsp;&nbsp;visualid&nbsp;:&nbsp;long_pos<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*todo*<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;visual&nbsp;id&nbsp;of&nbsp;this&nbsp;visual<br>
 &nbsp;&nbsp;&nbsp;&nbsp;c_class&nbsp;:&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*todo*<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;C++?&nbsp;class&nbsp;of&nbsp;screen&nbsp;(monochrome,&nbsp;etc.)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;red_mask&nbsp;:&nbsp;long_pos<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*todo*<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;mask&nbsp;value&nbsp;for&nbsp;red<br>
 &nbsp;&nbsp;&nbsp;&nbsp;green_mask&nbsp;:&nbsp;long_pos<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*todo*<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;mask&nbsp;value&nbsp;for&nbsp;green<br>
 &nbsp;&nbsp;&nbsp;&nbsp;blue_mask&nbsp;:&nbsp;long_pos<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*todo*<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;mask&nbsp;value&nbsp;for&nbsp;blue<br>
 &nbsp;&nbsp;&nbsp;&nbsp;bits_per_rgb&nbsp;:&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*todo*<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;log&nbsp;base&nbsp;2&nbsp;of&nbsp;distinct&nbsp;color&nbsp;values<br>
 &nbsp;&nbsp;&nbsp;&nbsp;map_entries&nbsp;:&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*todo*<br>&nbsp;</tt></td></tr>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;color&nbsp;map&nbsp;entries<br>&nbsp;</tt></td></tr>
 <tr><td>&nbsp;</td>
 <td width="100%"><dl><dt>Method resolution order:</dt>
 <dd><a href="xfdata.html#Visual">Visual</a></dd>
@@ -7036,13 +7124,13 @@ Methods inherited from _ctypes._CData:<br>
 Attributes<br>
 ----------<br>
 &nbsp;&nbsp;&nbsp;&nbsp;x&nbsp;:&nbsp;short<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*todo*<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;horizontal&nbsp;position<br>
 &nbsp;&nbsp;&nbsp;&nbsp;y&nbsp;:&nbsp;short<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*todo*<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;vertical&nbsp;position<br>
 &nbsp;&nbsp;&nbsp;&nbsp;width&nbsp;:&nbsp;ushort<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*todo*<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;width&nbsp;of&nbsp;arc<br>
 &nbsp;&nbsp;&nbsp;&nbsp;height&nbsp;:&nbsp;ushort<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*todo*<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;height&nbsp;of&nbsp;arc<br>
 &nbsp;&nbsp;&nbsp;&nbsp;angle1&nbsp;:&nbsp;short<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*todo*<br>
 &nbsp;&nbsp;&nbsp;&nbsp;angle2&nbsp;:&nbsp;short<br>
@@ -7110,35 +7198,35 @@ Methods inherited from _ctypes._CData:<br>
 Attributes<br>
 ----------<br>
 &nbsp;&nbsp;&nbsp;&nbsp;type&nbsp;:&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*todo*<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;type&nbsp;of&nbsp;event<br>
 &nbsp;&nbsp;&nbsp;&nbsp;serial&nbsp;:&nbsp;long_pos<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*todo*<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;#&nbsp;of&nbsp;last&nbsp;request&nbsp;processed&nbsp;by&nbsp;server<br>
 &nbsp;&nbsp;&nbsp;&nbsp;send_event&nbsp;:&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*todo*<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(bool)&nbsp;true&nbsp;if&nbsp;this&nbsp;came&nbsp;from&nbsp;a&nbsp;SendEvent&nbsp;request<br>
 &nbsp;&nbsp;&nbsp;&nbsp;display&nbsp;:&nbsp;pointer&nbsp;to&nbsp;<a href="#Display">Display</a><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*todo*<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#Display">Display</a>&nbsp;the&nbsp;event&nbsp;was&nbsp;read&nbsp;from<br>
 &nbsp;&nbsp;&nbsp;&nbsp;window&nbsp;:&nbsp;long_pos<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Window<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"event"&nbsp;window&nbsp;it&nbsp;is&nbsp;reported&nbsp;relative&nbsp;to<br>
 &nbsp;&nbsp;&nbsp;&nbsp;root&nbsp;:&nbsp;long_pos<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Window<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;root&nbsp;window&nbsp;that&nbsp;the&nbsp;event&nbsp;occurred&nbsp;on<br>
 &nbsp;&nbsp;&nbsp;&nbsp;subwindow&nbsp;:&nbsp;long_pos<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Window<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;child&nbsp;window<br>
 &nbsp;&nbsp;&nbsp;&nbsp;time&nbsp;:&nbsp;long_pos<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Time<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;time&nbsp;in&nbsp;milliseconds<br>
 &nbsp;&nbsp;&nbsp;&nbsp;x&nbsp;:&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*todo*<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;horizontal&nbsp;coordinates&nbsp;of&nbsp;pointer&nbsp;in&nbsp;event&nbsp;window<br>
 &nbsp;&nbsp;&nbsp;&nbsp;y&nbsp;:&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*todo*<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;vertical&nbsp;coordinates&nbsp;of&nbsp;pointer&nbsp;in&nbsp;event&nbsp;window<br>
 &nbsp;&nbsp;&nbsp;&nbsp;x_root&nbsp;:&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*todo*<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;horizontal&nbsp;coordinates&nbsp;relative&nbsp;to&nbsp;root<br>
 &nbsp;&nbsp;&nbsp;&nbsp;y_root&nbsp;:&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*todo*<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;vertical&nbsp;coordinates&nbsp;relative&nbsp;to&nbsp;root<br>
 &nbsp;&nbsp;&nbsp;&nbsp;state&nbsp;:&nbsp;int_pos<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*todo*<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;key&nbsp;or&nbsp;button&nbsp;mask<br>
 &nbsp;&nbsp;&nbsp;&nbsp;button&nbsp;:&nbsp;int_pos<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*todo*<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;detail<br>
 &nbsp;&nbsp;&nbsp;&nbsp;same_screen&nbsp;:&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*todo*<br>&nbsp;</tt></td></tr>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(bool)&nbsp;same&nbsp;screen&nbsp;flag<br>&nbsp;</tt></td></tr>
 <tr><td>&nbsp;</td>
 <td width="100%"><dl><dt>Method resolution order:</dt>
 <dd><a href="xfdata.html#XButtonEvent">XButtonEvent</a></dd>
@@ -7229,35 +7317,35 @@ Methods inherited from _ctypes._CData:<br>
 Attributes<br>
 ----------<br>
 &nbsp;&nbsp;&nbsp;&nbsp;type&nbsp;:&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*todo*<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;type&nbsp;of&nbsp;event<br>
 &nbsp;&nbsp;&nbsp;&nbsp;serial&nbsp;:&nbsp;long_pos<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*todo*<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;#&nbsp;of&nbsp;last&nbsp;request&nbsp;processed&nbsp;by&nbsp;server<br>
 &nbsp;&nbsp;&nbsp;&nbsp;send_event&nbsp;:&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*todo*<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(bool)&nbsp;true&nbsp;if&nbsp;this&nbsp;came&nbsp;from&nbsp;a&nbsp;SendEvent&nbsp;request<br>
 &nbsp;&nbsp;&nbsp;&nbsp;display&nbsp;:&nbsp;pointer&nbsp;to&nbsp;<a href="#Display">Display</a><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*todo*<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#Display">Display</a>&nbsp;the&nbsp;event&nbsp;was&nbsp;read&nbsp;from<br>
 &nbsp;&nbsp;&nbsp;&nbsp;window&nbsp;:&nbsp;long_pos<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Window<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"event"&nbsp;window&nbsp;it&nbsp;is&nbsp;reported&nbsp;relative&nbsp;to<br>
 &nbsp;&nbsp;&nbsp;&nbsp;root&nbsp;:&nbsp;long_pos<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Window<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;root&nbsp;window&nbsp;that&nbsp;the&nbsp;event&nbsp;occurred&nbsp;on<br>
 &nbsp;&nbsp;&nbsp;&nbsp;subwindow&nbsp;:&nbsp;long_pos<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Window<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;child&nbsp;window<br>
 &nbsp;&nbsp;&nbsp;&nbsp;time&nbsp;:&nbsp;long_pos<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Time<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;time&nbsp;in&nbsp;milliseconds<br>
 &nbsp;&nbsp;&nbsp;&nbsp;x&nbsp;:&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*todo*<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;horizontal&nbsp;coordinates&nbsp;of&nbsp;pointer&nbsp;in&nbsp;event&nbsp;window<br>
 &nbsp;&nbsp;&nbsp;&nbsp;y&nbsp;:&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*todo*<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;vertical&nbsp;coordinates&nbsp;of&nbsp;pointer&nbsp;in&nbsp;event&nbsp;window<br>
 &nbsp;&nbsp;&nbsp;&nbsp;x_root&nbsp;:&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*todo*<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;horizontal&nbsp;coordinates&nbsp;relative&nbsp;to&nbsp;root<br>
 &nbsp;&nbsp;&nbsp;&nbsp;y_root&nbsp;:&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*todo*<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;vertical&nbsp;coordinates&nbsp;relative&nbsp;to&nbsp;root<br>
 &nbsp;&nbsp;&nbsp;&nbsp;state&nbsp;:&nbsp;int_pos<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*todo*<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;key&nbsp;or&nbsp;button&nbsp;mask<br>
 &nbsp;&nbsp;&nbsp;&nbsp;button&nbsp;:&nbsp;int_pos<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*todo*<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;detail<br>
 &nbsp;&nbsp;&nbsp;&nbsp;same_screen&nbsp;:&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*todo*<br>&nbsp;</tt></td></tr>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(bool)&nbsp;same&nbsp;screen&nbsp;flag<br>&nbsp;</tt></td></tr>
 <tr><td>&nbsp;</td>
 <td width="100%"><dl><dt>Method resolution order:</dt>
 <dd><a href="xfdata.html#XButtonEvent">XButtonEvent</a></dd>
@@ -7348,35 +7436,35 @@ Methods inherited from _ctypes._CData:<br>
 Attributes<br>
 ----------<br>
 &nbsp;&nbsp;&nbsp;&nbsp;type&nbsp;:&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*todo*<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;type&nbsp;of&nbsp;event<br>
 &nbsp;&nbsp;&nbsp;&nbsp;serial&nbsp;:&nbsp;long_pos<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*todo*<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;#&nbsp;of&nbsp;last&nbsp;request&nbsp;processed&nbsp;by&nbsp;server<br>
 &nbsp;&nbsp;&nbsp;&nbsp;send_event&nbsp;:&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*todo*<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(bool)&nbsp;true&nbsp;if&nbsp;this&nbsp;came&nbsp;from&nbsp;a&nbsp;SendEvent&nbsp;request<br>
 &nbsp;&nbsp;&nbsp;&nbsp;display&nbsp;:&nbsp;pointer&nbsp;to&nbsp;<a href="#Display">Display</a><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*todo*<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#Display">Display</a>&nbsp;the&nbsp;event&nbsp;was&nbsp;read&nbsp;from<br>
 &nbsp;&nbsp;&nbsp;&nbsp;window&nbsp;:&nbsp;long_pos<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Window<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"event"&nbsp;window&nbsp;it&nbsp;is&nbsp;reported&nbsp;relative&nbsp;to<br>
 &nbsp;&nbsp;&nbsp;&nbsp;root&nbsp;:&nbsp;long_pos<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Window<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;root&nbsp;window&nbsp;that&nbsp;the&nbsp;event&nbsp;occurred&nbsp;on<br>
 &nbsp;&nbsp;&nbsp;&nbsp;subwindow&nbsp;:&nbsp;long_pos<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Window<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;child&nbsp;window<br>
 &nbsp;&nbsp;&nbsp;&nbsp;time&nbsp;:&nbsp;long_pos<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Time<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;time&nbsp;in&nbsp;milliseconds<br>
 &nbsp;&nbsp;&nbsp;&nbsp;x&nbsp;:&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*todo*<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;horizontal&nbsp;coordinates&nbsp;of&nbsp;pointer&nbsp;in&nbsp;event&nbsp;window<br>
 &nbsp;&nbsp;&nbsp;&nbsp;y&nbsp;:&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*todo*<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;vertical&nbsp;coordinates&nbsp;of&nbsp;pointer&nbsp;in&nbsp;event&nbsp;window<br>
 &nbsp;&nbsp;&nbsp;&nbsp;x_root&nbsp;:&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*todo*<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;horizontal&nbsp;coordinates&nbsp;relative&nbsp;to&nbsp;root<br>
 &nbsp;&nbsp;&nbsp;&nbsp;y_root&nbsp;:&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*todo*<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;vertical&nbsp;coordinates&nbsp;relative&nbsp;to&nbsp;root<br>
 &nbsp;&nbsp;&nbsp;&nbsp;state&nbsp;:&nbsp;int_pos<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*todo*<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;key&nbsp;or&nbsp;button&nbsp;mask<br>
 &nbsp;&nbsp;&nbsp;&nbsp;button&nbsp;:&nbsp;int_pos<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*todo*<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;detail<br>
 &nbsp;&nbsp;&nbsp;&nbsp;same_screen&nbsp;:&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*todo*<br>&nbsp;</tt></td></tr>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(bool)&nbsp;same&nbsp;screen&nbsp;flag<br>&nbsp;</tt></td></tr>
 <tr><td>&nbsp;</td>
 <td width="100%"><dl><dt>Method resolution order:</dt>
 <dd><a href="xfdata.html#XButtonEvent">XButtonEvent</a></dd>
@@ -7462,22 +7550,22 @@ Methods inherited from _ctypes._CData:<br>
 <font color="#000000" face="helvetica, arial"><a name="XCharStruct">class <strong>XCharStruct</strong></a>(<a href="_ctypes.html#Structure">_ctypes.Structure</a>)</font></td></tr>
     
 <tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
-<td colspan=2><tt><a href="#XCharStruct">XCharStruct</a>&nbsp;class<br>
+<td colspan=2><tt><a href="#XCharStruct">XCharStruct</a>&nbsp;class.&nbsp;Per&nbsp;character&nbsp;font&nbsp;metric&nbsp;information.<br>
 &nbsp;<br>
 Attributes<br>
 ----------<br>
 &nbsp;&nbsp;&nbsp;&nbsp;lbearing&nbsp;:&nbsp;short<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*todo*<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;origin&nbsp;to&nbsp;left&nbsp;edge&nbsp;of&nbsp;raster<br>
 &nbsp;&nbsp;&nbsp;&nbsp;rbearing&nbsp;:&nbsp;short<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*todo*<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;origin&nbsp;to&nbsp;right&nbsp;edge&nbsp;of&nbsp;raster<br>
 &nbsp;&nbsp;&nbsp;&nbsp;width&nbsp;:&nbsp;short<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*todo*<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;advance&nbsp;to&nbsp;next&nbsp;char's&nbsp;origin<br>
 &nbsp;&nbsp;&nbsp;&nbsp;ascent&nbsp;:&nbsp;short<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*todo*<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;baseline&nbsp;to&nbsp;top&nbsp;edge&nbsp;of&nbsp;raster<br>
 &nbsp;&nbsp;&nbsp;&nbsp;descent&nbsp;:&nbsp;short<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*todo*<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;baseline&nbsp;to&nbsp;bottom&nbsp;edge&nbsp;of&nbsp;raster<br>
 &nbsp;&nbsp;&nbsp;&nbsp;attributes&nbsp;:&nbsp;ushort<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*todo*<br>&nbsp;</tt></td></tr>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;per&nbsp;char&nbsp;flags&nbsp;(not&nbsp;predefined)<br>&nbsp;</tt></td></tr>
 <tr><td>&nbsp;</td>
 <td width="100%"><dl><dt>Method resolution order:</dt>
 <dd><a href="xfdata.html#XCharStruct">XCharStruct</a></dd>
@@ -7778,7 +7866,7 @@ Methods inherited from _ctypes._CData:<br>
 <font color="#000000" face="helvetica, arial"><a name="XColor">class <strong>XColor</strong></a>(<a href="_ctypes.html#Structure">_ctypes.Structure</a>)</font></td></tr>
     
 <tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
-<td colspan=2><tt>X11&nbsp;<a href="#XColor">XColor</a>&nbsp;class<br>
+<td colspan=2><tt>X11&nbsp;<a href="#XColor">XColor</a>&nbsp;class.&nbsp;Data&nbsp;structure&nbsp;used&nbsp;by&nbsp;color&nbsp;operations.<br>
 &nbsp;<br>
 Attributes<br>
 ----------<br>
@@ -8268,39 +8356,40 @@ Methods inherited from _ctypes._CData:<br>
 Attributes<br>
 ----------<br>
 &nbsp;&nbsp;&nbsp;&nbsp;type&nbsp;:&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*todo*<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;type&nbsp;of&nbsp;event<br>
 &nbsp;&nbsp;&nbsp;&nbsp;serial&nbsp;:&nbsp;long_pos<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*todo*<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;#&nbsp;of&nbsp;last&nbsp;request&nbsp;processed&nbsp;by&nbsp;server<br>
 &nbsp;&nbsp;&nbsp;&nbsp;send_event&nbsp;:&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*todo*<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(bool)&nbsp;true&nbsp;if&nbsp;this&nbsp;came&nbsp;from&nbsp;a&nbsp;SendEvent&nbsp;request<br>
 &nbsp;&nbsp;&nbsp;&nbsp;display&nbsp;:&nbsp;pointer&nbsp;to&nbsp;<a href="#Display">Display</a><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*todo*<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#Display">Display</a>&nbsp;the&nbsp;event&nbsp;was&nbsp;read&nbsp;from<br>
 &nbsp;&nbsp;&nbsp;&nbsp;window&nbsp;:&nbsp;long_pos<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Window<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"event"&nbsp;window&nbsp;it&nbsp;is&nbsp;reported&nbsp;relative&nbsp;to<br>
 &nbsp;&nbsp;&nbsp;&nbsp;root&nbsp;:&nbsp;long_pos<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Window<br>
-&nbsp;&nbsp;&nbsp;&nbsp;subwindow&nbsp;:&nbsp;long:pos<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Window<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;root&nbsp;window&nbsp;that&nbsp;the&nbsp;event&nbsp;occurred&nbsp;on<br>
+&nbsp;&nbsp;&nbsp;&nbsp;subwindow&nbsp;:&nbsp;long_pos<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;child&nbsp;window<br>
 &nbsp;&nbsp;&nbsp;&nbsp;time&nbsp;:&nbsp;long_pos<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Time<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;time&nbsp;in&nbsp;milliseconds<br>
 &nbsp;&nbsp;&nbsp;&nbsp;x&nbsp;:&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*todo*<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;horizontal&nbsp;coordinates&nbsp;of&nbsp;pointer&nbsp;in&nbsp;event&nbsp;window<br>
 &nbsp;&nbsp;&nbsp;&nbsp;y&nbsp;:&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*todo*<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;vertical&nbsp;coordinates&nbsp;of&nbsp;pointer&nbsp;in&nbsp;event&nbsp;window<br>
 &nbsp;&nbsp;&nbsp;&nbsp;x_root&nbsp;:&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*todo*<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;horizontal&nbsp;coordinates&nbsp;relative&nbsp;to&nbsp;root<br>
 &nbsp;&nbsp;&nbsp;&nbsp;y_root&nbsp;:&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*todo*<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;vertical&nbsp;coordinates&nbsp;relative&nbsp;to&nbsp;root<br>
 &nbsp;&nbsp;&nbsp;&nbsp;mode&nbsp;:&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*todo*<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;NotifyNormal,&nbsp;NotifyGrab,&nbsp;NotifyUngrab<br>
 &nbsp;&nbsp;&nbsp;&nbsp;detail&nbsp;:&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*todo*<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;NotifyAncestor,&nbsp;NotifyVirtual,&nbsp;NotifyInferior,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;NotifyNonlinear,&nbsp;NotifyNonlinearVirtual<br>
 &nbsp;&nbsp;&nbsp;&nbsp;same_screen&nbsp;:&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*todo*<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(bool)&nbsp;same&nbsp;screen&nbsp;flag<br>
 &nbsp;&nbsp;&nbsp;&nbsp;focus&nbsp;:&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*todo*<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;boolean&nbsp;focus<br>
 &nbsp;&nbsp;&nbsp;&nbsp;state&nbsp;:&nbsp;int_pos<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*todo*<br>&nbsp;</tt></td></tr>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;key&nbsp;or&nbsp;button&nbsp;mask<br>&nbsp;</tt></td></tr>
 <tr><td>&nbsp;</td>
 <td width="100%"><dl><dt>Method resolution order:</dt>
 <dd><a href="xfdata.html#XCrossingEvent">XCrossingEvent</a></dd>
@@ -8471,39 +8560,40 @@ Methods inherited from _ctypes._CData:<br>
 Attributes<br>
 ----------<br>
 &nbsp;&nbsp;&nbsp;&nbsp;type&nbsp;:&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*todo*<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;type&nbsp;of&nbsp;event<br>
 &nbsp;&nbsp;&nbsp;&nbsp;serial&nbsp;:&nbsp;long_pos<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*todo*<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;#&nbsp;of&nbsp;last&nbsp;request&nbsp;processed&nbsp;by&nbsp;server<br>
 &nbsp;&nbsp;&nbsp;&nbsp;send_event&nbsp;:&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*todo*<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(bool)&nbsp;true&nbsp;if&nbsp;this&nbsp;came&nbsp;from&nbsp;a&nbsp;SendEvent&nbsp;request<br>
 &nbsp;&nbsp;&nbsp;&nbsp;display&nbsp;:&nbsp;pointer&nbsp;to&nbsp;<a href="#Display">Display</a><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*todo*<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#Display">Display</a>&nbsp;the&nbsp;event&nbsp;was&nbsp;read&nbsp;from<br>
 &nbsp;&nbsp;&nbsp;&nbsp;window&nbsp;:&nbsp;long_pos<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Window<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"event"&nbsp;window&nbsp;it&nbsp;is&nbsp;reported&nbsp;relative&nbsp;to<br>
 &nbsp;&nbsp;&nbsp;&nbsp;root&nbsp;:&nbsp;long_pos<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Window<br>
-&nbsp;&nbsp;&nbsp;&nbsp;subwindow&nbsp;:&nbsp;long:pos<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Window<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;root&nbsp;window&nbsp;that&nbsp;the&nbsp;event&nbsp;occurred&nbsp;on<br>
+&nbsp;&nbsp;&nbsp;&nbsp;subwindow&nbsp;:&nbsp;long_pos<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;child&nbsp;window<br>
 &nbsp;&nbsp;&nbsp;&nbsp;time&nbsp;:&nbsp;long_pos<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Time<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;time&nbsp;in&nbsp;milliseconds<br>
 &nbsp;&nbsp;&nbsp;&nbsp;x&nbsp;:&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*todo*<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;horizontal&nbsp;coordinates&nbsp;of&nbsp;pointer&nbsp;in&nbsp;event&nbsp;window<br>
 &nbsp;&nbsp;&nbsp;&nbsp;y&nbsp;:&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*todo*<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;vertical&nbsp;coordinates&nbsp;of&nbsp;pointer&nbsp;in&nbsp;event&nbsp;window<br>
 &nbsp;&nbsp;&nbsp;&nbsp;x_root&nbsp;:&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*todo*<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;horizontal&nbsp;coordinates&nbsp;relative&nbsp;to&nbsp;root<br>
 &nbsp;&nbsp;&nbsp;&nbsp;y_root&nbsp;:&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*todo*<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;vertical&nbsp;coordinates&nbsp;relative&nbsp;to&nbsp;root<br>
 &nbsp;&nbsp;&nbsp;&nbsp;mode&nbsp;:&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*todo*<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;NotifyNormal,&nbsp;NotifyGrab,&nbsp;NotifyUngrab<br>
 &nbsp;&nbsp;&nbsp;&nbsp;detail&nbsp;:&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*todo*<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;NotifyAncestor,&nbsp;NotifyVirtual,&nbsp;NotifyInferior,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;NotifyNonlinear,&nbsp;NotifyNonlinearVirtual<br>
 &nbsp;&nbsp;&nbsp;&nbsp;same_screen&nbsp;:&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*todo*<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(bool)&nbsp;same&nbsp;screen&nbsp;flag<br>
 &nbsp;&nbsp;&nbsp;&nbsp;focus&nbsp;:&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*todo*<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;boolean&nbsp;focus<br>
 &nbsp;&nbsp;&nbsp;&nbsp;state&nbsp;:&nbsp;int_pos<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*todo*<br>&nbsp;</tt></td></tr>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;key&nbsp;or&nbsp;button&nbsp;mask<br>&nbsp;</tt></td></tr>
 <tr><td>&nbsp;</td>
 <td width="100%"><dl><dt>Method resolution order:</dt>
 <dd><a href="xfdata.html#XCrossingEvent">XCrossingEvent</a></dd>
@@ -9051,18 +9141,19 @@ Methods inherited from _ctypes._CData:<br>
 <font color="#000000" face="helvetica, arial"><strong>XExtData</strong> = <a name="XExtData">class _XExtData</a>(<a href="_ctypes.html#Structure">_ctypes.Structure</a>)</font></td></tr>
     
 <tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
-<td colspan=2><tt>_XExtData&nbsp;class<br>
+<td colspan=2><tt>X11&nbsp;_XExtData&nbsp;class<br>
 &nbsp;<br>
 Attributes<br>
 ----------<br>
 &nbsp;&nbsp;&nbsp;&nbsp;number&nbsp;:&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*todo*<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;number&nbsp;returned&nbsp;by&nbsp;XRegisterExtension<br>
 &nbsp;&nbsp;&nbsp;&nbsp;next&nbsp;:&nbsp;pointer&nbsp;to&nbsp;_XExtData<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*todo*<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;next&nbsp;item&nbsp;on&nbsp;list&nbsp;of&nbsp;data&nbsp;for&nbsp;structure<br>
 &nbsp;&nbsp;&nbsp;&nbsp;free_private&nbsp;:&nbsp;function,&nbsp;returning&nbsp;value<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;function(pointer&nbsp;to&nbsp;_XExtData)&nbsp;-&gt;&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;next&nbsp;item&nbsp;on&nbsp;list&nbsp;of&nbsp;data&nbsp;for&nbsp;structure<br>
 &nbsp;&nbsp;&nbsp;&nbsp;private_data&nbsp;:&nbsp;str<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*todo*<br>&nbsp;</tt></td></tr>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;data&nbsp;private&nbsp;to&nbsp;this&nbsp;extension<br>&nbsp;</tt></td></tr>
 <tr><td>&nbsp;</td>
 <td width="100%"><dl><dt>Method resolution order:</dt>
 <dd><a href="xfdata.html#_XExtData">_XExtData</a></dd>
@@ -9352,7 +9443,8 @@ Methods inherited from _ctypes._CData:<br>
 <font color="#000000" face="helvetica, arial"><a name="XFontProp">class <strong>XFontProp</strong></a>(<a href="_ctypes.html#Structure">_ctypes.Structure</a>)</font></td></tr>
     
 <tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
-<td colspan=2><tt><a href="#XFontProp">XFontProp</a>&nbsp;class<br>
+<td colspan=2><tt><a href="#XFontProp">XFontProp</a>&nbsp;class.&nbsp;There&nbsp;are&nbsp;additional&nbsp;properties&nbsp;returned,&nbsp;to&nbsp;allow<br>
+arbitrary&nbsp;information&nbsp;with&nbsp;fonts,&nbsp;.<br>
 &nbsp;<br>
 Attributes<br>
 ----------<br>
@@ -9411,37 +9503,37 @@ Methods inherited from _ctypes._CData:<br>
 Attributes<br>
 ----------<br>
 &nbsp;&nbsp;&nbsp;&nbsp;ext_data&nbsp;:&nbsp;pointer&nbsp;to&nbsp;<a href="#XExtData">XExtData</a><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*todo*<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;hook&nbsp;for&nbsp;extension&nbsp;to&nbsp;hang&nbsp;data<br>
 &nbsp;&nbsp;&nbsp;&nbsp;fid&nbsp;:&nbsp;long_pos<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Font<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Font&nbsp;id&nbsp;for&nbsp;this&nbsp;font<br>
 &nbsp;&nbsp;&nbsp;&nbsp;direction&nbsp;:&nbsp;int_pos<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*todo*<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;hint&nbsp;about&nbsp;direction&nbsp;the&nbsp;font&nbsp;is&nbsp;painted<br>
 &nbsp;&nbsp;&nbsp;&nbsp;min_char_or_byte2&nbsp;:&nbsp;int_pos<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*todo*<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;first&nbsp;character<br>
 &nbsp;&nbsp;&nbsp;&nbsp;max_char_or_byte2&nbsp;:&nbsp;int_pos<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*todo*<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;last&nbsp;character<br>
 &nbsp;&nbsp;&nbsp;&nbsp;min_byte1&nbsp;:&nbsp;int_pos<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*todo*<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;first&nbsp;row&nbsp;that&nbsp;exists<br>
 &nbsp;&nbsp;&nbsp;&nbsp;max_byte1&nbsp;:&nbsp;int_pos<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*todo*<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;first&nbsp;row&nbsp;that&nbsp;exists<br>
 &nbsp;&nbsp;&nbsp;&nbsp;all_chars_exist&nbsp;:&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*todo*<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(bool)&nbsp;flag&nbsp;if&nbsp;all&nbsp;characters&nbsp;have&nbsp;non-zero&nbsp;size<br>
 &nbsp;&nbsp;&nbsp;&nbsp;default_char&nbsp;:&nbsp;int_pos<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*todo*<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;char&nbsp;to&nbsp;print&nbsp;for&nbsp;undefined&nbsp;character<br>
 &nbsp;&nbsp;&nbsp;&nbsp;n_properties&nbsp;:&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*todo*<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;how&nbsp;many&nbsp;properties&nbsp;there&nbsp;are<br>
 &nbsp;&nbsp;&nbsp;&nbsp;properties&nbsp;:&nbsp;pointer&nbsp;to&nbsp;<a href="#XFontProp">XFontProp</a><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*todo*<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;pointer&nbsp;to&nbsp;array&nbsp;of&nbsp;additional&nbsp;properties<br>
 &nbsp;&nbsp;&nbsp;&nbsp;min_bounds&nbsp;:&nbsp;<a href="#XCharStruct">XCharStruct</a>&nbsp;instance<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*todo*<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;minimum&nbsp;bounds&nbsp;over&nbsp;all&nbsp;existing&nbsp;char<br>
 &nbsp;&nbsp;&nbsp;&nbsp;max_bounds&nbsp;:&nbsp;<a href="#XCharStruct">XCharStruct</a>&nbsp;instance<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*todo*<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;maximum&nbsp;bounds&nbsp;over&nbsp;all&nbsp;existing&nbsp;char<br>
 &nbsp;&nbsp;&nbsp;&nbsp;per_char&nbsp;:&nbsp;pointer&nbsp;to&nbsp;<a href="#XCharStruct">XCharStruct</a><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*todo*<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;first_char&nbsp;to&nbsp;last_char&nbsp;information<br>
 &nbsp;&nbsp;&nbsp;&nbsp;ascent&nbsp;:&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*todo*<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;log.&nbsp;extent&nbsp;above&nbsp;baseline&nbsp;for&nbsp;spacing<br>
 &nbsp;&nbsp;&nbsp;&nbsp;descent&nbsp;:&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*todo*<br>&nbsp;</tt></td></tr>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;log.&nbsp;descent&nbsp;below&nbsp;baseline&nbsp;for&nbsp;spacing<br>&nbsp;</tt></td></tr>
 <tr><td>&nbsp;</td>
 <td width="100%"><dl><dt>Method resolution order:</dt>
 <dd><a href="xfdata.html#XFontStruct">XFontStruct</a></dd>
@@ -10223,40 +10315,40 @@ Methods inherited from _ctypes._CData:<br>
 <font color="#000000" face="helvetica, arial"><a name="XKeyEvent">class <strong>XKeyEvent</strong></a>(<a href="_ctypes.html#Structure">_ctypes.Structure</a>)</font></td></tr>
     
 <tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
-<td colspan=2><tt>X11&nbsp;<a href="#XKeyEvent">XKeyEvent</a>&nbsp;class<br>
+<td colspan=2><tt>X11&nbsp;<a href="#XKeyEvent">XKeyEvent</a>&nbsp;class.&nbsp;Definitions&nbsp;of&nbsp;specific&nbsp;events.<br>
 &nbsp;<br>
 Attributes<br>
 ----------<br>
 &nbsp;&nbsp;&nbsp;&nbsp;type&nbsp;:&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*todo*<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;type&nbsp;of&nbsp;event<br>
 &nbsp;&nbsp;&nbsp;&nbsp;serial&nbsp;:&nbsp;long_pos<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*todo*<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;#&nbsp;of&nbsp;last&nbsp;request&nbsp;processed&nbsp;by&nbsp;server<br>
 &nbsp;&nbsp;&nbsp;&nbsp;send_event&nbsp;:&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*todo*<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(bool)&nbsp;true&nbsp;if&nbsp;this&nbsp;came&nbsp;from&nbsp;a&nbsp;SendEvent&nbsp;request<br>
 &nbsp;&nbsp;&nbsp;&nbsp;display&nbsp;:&nbsp;pointer&nbsp;to&nbsp;<a href="#Display">Display</a><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*todo*<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#Display">Display</a>&nbsp;the&nbsp;event&nbsp;was&nbsp;read&nbsp;from<br>
 &nbsp;&nbsp;&nbsp;&nbsp;window&nbsp;:&nbsp;long_pos<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Window<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"event"&nbsp;window&nbsp;it&nbsp;is&nbsp;reported&nbsp;relative&nbsp;to<br>
 &nbsp;&nbsp;&nbsp;&nbsp;root&nbsp;:&nbsp;long_pos<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Window<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;root&nbsp;window&nbsp;that&nbsp;the&nbsp;event&nbsp;occurred&nbsp;on<br>
 &nbsp;&nbsp;&nbsp;&nbsp;subwindow&nbsp;:&nbsp;long_pos<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Window<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;child&nbsp;window<br>
 &nbsp;&nbsp;&nbsp;&nbsp;time&nbsp;:&nbsp;long_pos<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Time<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;time&nbsp;in&nbsp;milliseconds<br>
 &nbsp;&nbsp;&nbsp;&nbsp;x&nbsp;:&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*todo*<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;horizontal&nbsp;coordinates&nbsp;of&nbsp;pointer&nbsp;in&nbsp;event&nbsp;window<br>
 &nbsp;&nbsp;&nbsp;&nbsp;y&nbsp;:&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*todo*<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;vertical&nbsp;coordinates&nbsp;of&nbsp;pointer&nbsp;in&nbsp;event&nbsp;window<br>
 &nbsp;&nbsp;&nbsp;&nbsp;x_root&nbsp;:&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*todo*<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;horizontal&nbsp;coordinates&nbsp;relative&nbsp;to&nbsp;root<br>
 &nbsp;&nbsp;&nbsp;&nbsp;y_root&nbsp;:&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*todo*<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;vertical&nbsp;coordinates&nbsp;relative&nbsp;to&nbsp;root<br>
 &nbsp;&nbsp;&nbsp;&nbsp;state&nbsp;:&nbsp;int_pos<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*todo*<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;key&nbsp;or&nbsp;button&nbsp;mask<br>
 &nbsp;&nbsp;&nbsp;&nbsp;keycode&nbsp;:&nbsp;int_pos<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*todo*<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;detail<br>
 &nbsp;&nbsp;&nbsp;&nbsp;same_screen&nbsp;:&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*todo*<br>&nbsp;</tt></td></tr>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(bool)&nbsp;same&nbsp;screen&nbsp;flag<br>&nbsp;</tt></td></tr>
 <tr><td>&nbsp;</td>
 <td width="100%"><dl><dt>Method resolution order:</dt>
 <dd><a href="xfdata.html#XKeyEvent">XKeyEvent</a></dd>
@@ -10342,40 +10434,40 @@ Methods inherited from _ctypes._CData:<br>
 <font color="#000000" face="helvetica, arial"><strong>XKeyPressedEvent</strong> = <a name="XKeyPressedEvent">class XKeyEvent</a>(<a href="_ctypes.html#Structure">_ctypes.Structure</a>)</font></td></tr>
     
 <tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
-<td colspan=2><tt>X11&nbsp;<a href="#XKeyEvent">XKeyEvent</a>&nbsp;class<br>
+<td colspan=2><tt>X11&nbsp;<a href="#XKeyEvent">XKeyEvent</a>&nbsp;class.&nbsp;Definitions&nbsp;of&nbsp;specific&nbsp;events.<br>
 &nbsp;<br>
 Attributes<br>
 ----------<br>
 &nbsp;&nbsp;&nbsp;&nbsp;type&nbsp;:&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*todo*<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;type&nbsp;of&nbsp;event<br>
 &nbsp;&nbsp;&nbsp;&nbsp;serial&nbsp;:&nbsp;long_pos<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*todo*<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;#&nbsp;of&nbsp;last&nbsp;request&nbsp;processed&nbsp;by&nbsp;server<br>
 &nbsp;&nbsp;&nbsp;&nbsp;send_event&nbsp;:&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*todo*<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(bool)&nbsp;true&nbsp;if&nbsp;this&nbsp;came&nbsp;from&nbsp;a&nbsp;SendEvent&nbsp;request<br>
 &nbsp;&nbsp;&nbsp;&nbsp;display&nbsp;:&nbsp;pointer&nbsp;to&nbsp;<a href="#Display">Display</a><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*todo*<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#Display">Display</a>&nbsp;the&nbsp;event&nbsp;was&nbsp;read&nbsp;from<br>
 &nbsp;&nbsp;&nbsp;&nbsp;window&nbsp;:&nbsp;long_pos<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Window<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"event"&nbsp;window&nbsp;it&nbsp;is&nbsp;reported&nbsp;relative&nbsp;to<br>
 &nbsp;&nbsp;&nbsp;&nbsp;root&nbsp;:&nbsp;long_pos<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Window<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;root&nbsp;window&nbsp;that&nbsp;the&nbsp;event&nbsp;occurred&nbsp;on<br>
 &nbsp;&nbsp;&nbsp;&nbsp;subwindow&nbsp;:&nbsp;long_pos<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Window<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;child&nbsp;window<br>
 &nbsp;&nbsp;&nbsp;&nbsp;time&nbsp;:&nbsp;long_pos<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Time<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;time&nbsp;in&nbsp;milliseconds<br>
 &nbsp;&nbsp;&nbsp;&nbsp;x&nbsp;:&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*todo*<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;horizontal&nbsp;coordinates&nbsp;of&nbsp;pointer&nbsp;in&nbsp;event&nbsp;window<br>
 &nbsp;&nbsp;&nbsp;&nbsp;y&nbsp;:&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*todo*<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;vertical&nbsp;coordinates&nbsp;of&nbsp;pointer&nbsp;in&nbsp;event&nbsp;window<br>
 &nbsp;&nbsp;&nbsp;&nbsp;x_root&nbsp;:&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*todo*<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;horizontal&nbsp;coordinates&nbsp;relative&nbsp;to&nbsp;root<br>
 &nbsp;&nbsp;&nbsp;&nbsp;y_root&nbsp;:&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*todo*<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;vertical&nbsp;coordinates&nbsp;relative&nbsp;to&nbsp;root<br>
 &nbsp;&nbsp;&nbsp;&nbsp;state&nbsp;:&nbsp;int_pos<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*todo*<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;key&nbsp;or&nbsp;button&nbsp;mask<br>
 &nbsp;&nbsp;&nbsp;&nbsp;keycode&nbsp;:&nbsp;int_pos<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*todo*<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;detail<br>
 &nbsp;&nbsp;&nbsp;&nbsp;same_screen&nbsp;:&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*todo*<br>&nbsp;</tt></td></tr>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(bool)&nbsp;same&nbsp;screen&nbsp;flag<br>&nbsp;</tt></td></tr>
 <tr><td>&nbsp;</td>
 <td width="100%"><dl><dt>Method resolution order:</dt>
 <dd><a href="xfdata.html#XKeyEvent">XKeyEvent</a></dd>
@@ -10461,40 +10553,40 @@ Methods inherited from _ctypes._CData:<br>
 <font color="#000000" face="helvetica, arial"><strong>XKeyReleasedEvent</strong> = <a name="XKeyReleasedEvent">class XKeyEvent</a>(<a href="_ctypes.html#Structure">_ctypes.Structure</a>)</font></td></tr>
     
 <tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
-<td colspan=2><tt>X11&nbsp;<a href="#XKeyEvent">XKeyEvent</a>&nbsp;class<br>
+<td colspan=2><tt>X11&nbsp;<a href="#XKeyEvent">XKeyEvent</a>&nbsp;class.&nbsp;Definitions&nbsp;of&nbsp;specific&nbsp;events.<br>
 &nbsp;<br>
 Attributes<br>
 ----------<br>
 &nbsp;&nbsp;&nbsp;&nbsp;type&nbsp;:&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*todo*<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;type&nbsp;of&nbsp;event<br>
 &nbsp;&nbsp;&nbsp;&nbsp;serial&nbsp;:&nbsp;long_pos<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*todo*<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;#&nbsp;of&nbsp;last&nbsp;request&nbsp;processed&nbsp;by&nbsp;server<br>
 &nbsp;&nbsp;&nbsp;&nbsp;send_event&nbsp;:&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*todo*<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(bool)&nbsp;true&nbsp;if&nbsp;this&nbsp;came&nbsp;from&nbsp;a&nbsp;SendEvent&nbsp;request<br>
 &nbsp;&nbsp;&nbsp;&nbsp;display&nbsp;:&nbsp;pointer&nbsp;to&nbsp;<a href="#Display">Display</a><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*todo*<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#Display">Display</a>&nbsp;the&nbsp;event&nbsp;was&nbsp;read&nbsp;from<br>
 &nbsp;&nbsp;&nbsp;&nbsp;window&nbsp;:&nbsp;long_pos<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Window<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"event"&nbsp;window&nbsp;it&nbsp;is&nbsp;reported&nbsp;relative&nbsp;to<br>
 &nbsp;&nbsp;&nbsp;&nbsp;root&nbsp;:&nbsp;long_pos<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Window<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;root&nbsp;window&nbsp;that&nbsp;the&nbsp;event&nbsp;occurred&nbsp;on<br>
 &nbsp;&nbsp;&nbsp;&nbsp;subwindow&nbsp;:&nbsp;long_pos<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Window<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;child&nbsp;window<br>
 &nbsp;&nbsp;&nbsp;&nbsp;time&nbsp;:&nbsp;long_pos<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Time<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;time&nbsp;in&nbsp;milliseconds<br>
 &nbsp;&nbsp;&nbsp;&nbsp;x&nbsp;:&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*todo*<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;horizontal&nbsp;coordinates&nbsp;of&nbsp;pointer&nbsp;in&nbsp;event&nbsp;window<br>
 &nbsp;&nbsp;&nbsp;&nbsp;y&nbsp;:&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*todo*<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;vertical&nbsp;coordinates&nbsp;of&nbsp;pointer&nbsp;in&nbsp;event&nbsp;window<br>
 &nbsp;&nbsp;&nbsp;&nbsp;x_root&nbsp;:&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*todo*<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;horizontal&nbsp;coordinates&nbsp;relative&nbsp;to&nbsp;root<br>
 &nbsp;&nbsp;&nbsp;&nbsp;y_root&nbsp;:&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*todo*<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;vertical&nbsp;coordinates&nbsp;relative&nbsp;to&nbsp;root<br>
 &nbsp;&nbsp;&nbsp;&nbsp;state&nbsp;:&nbsp;int_pos<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*todo*<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;key&nbsp;or&nbsp;button&nbsp;mask<br>
 &nbsp;&nbsp;&nbsp;&nbsp;keycode&nbsp;:&nbsp;int_pos<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*todo*<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;detail<br>
 &nbsp;&nbsp;&nbsp;&nbsp;same_screen&nbsp;:&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*todo*<br>&nbsp;</tt></td></tr>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(bool)&nbsp;same&nbsp;screen&nbsp;flag<br>&nbsp;</tt></td></tr>
 <tr><td>&nbsp;</td>
 <td width="100%"><dl><dt>Method resolution order:</dt>
 <dd><a href="xfdata.html#XKeyEvent">XKeyEvent</a></dd>
@@ -10580,7 +10672,7 @@ Methods inherited from _ctypes._CData:<br>
 <font color="#000000" face="helvetica, arial"><a name="XKeyboardControl">class <strong>XKeyboardControl</strong></a>(<a href="_ctypes.html#Structure">_ctypes.Structure</a>)</font></td></tr>
     
 <tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
-<td colspan=2><tt>X11&nbsp;<a href="#XKeyboardControl">XKeyboardControl</a>&nbsp;class<br>
+<td colspan=2><tt>X11&nbsp;<a href="#XKeyboardControl">XKeyboardControl</a>&nbsp;class.&nbsp;Data&nbsp;structure&nbsp;for&nbsp;XChangeKeyboardControl.<br>
 &nbsp;<br>
 Attributes<br>
 ----------<br>
@@ -10599,7 +10691,7 @@ Attributes<br>
 &nbsp;&nbsp;&nbsp;&nbsp;key&nbsp;:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*todo*<br>
 &nbsp;&nbsp;&nbsp;&nbsp;auto_repeat_mode&nbsp;:&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*todo*<br>&nbsp;</tt></td></tr>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;On,&nbsp;Off,&nbsp;Default<br>&nbsp;</tt></td></tr>
 <tr><td>&nbsp;</td>
 <td width="100%"><dl><dt>Method resolution order:</dt>
 <dd><a href="xfdata.html#XKeyboardControl">XKeyboardControl</a></dd>
@@ -10664,7 +10756,7 @@ Methods inherited from _ctypes._CData:<br>
 <font color="#000000" face="helvetica, arial"><a name="XKeyboardState">class <strong>XKeyboardState</strong></a>(<a href="_ctypes.html#Structure">_ctypes.Structure</a>)</font></td></tr>
     
 <tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
-<td colspan=2><tt>X11&nbsp;<a href="#XKeyboardState">XKeyboardState</a>&nbsp;class<br>
+<td colspan=2><tt>X11&nbsp;<a href="#XKeyboardState">XKeyboardState</a>&nbsp;class.&nbsp;Data&nbsp;structure&nbsp;for&nbsp;XGetKeyboardControl.<br>
 &nbsp;<br>
 Attributes<br>
 ----------<br>
@@ -10822,39 +10914,40 @@ Methods inherited from _ctypes._CData:<br>
 Attributes<br>
 ----------<br>
 &nbsp;&nbsp;&nbsp;&nbsp;type&nbsp;:&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*todo*<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;type&nbsp;of&nbsp;event<br>
 &nbsp;&nbsp;&nbsp;&nbsp;serial&nbsp;:&nbsp;long_pos<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*todo*<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;#&nbsp;of&nbsp;last&nbsp;request&nbsp;processed&nbsp;by&nbsp;server<br>
 &nbsp;&nbsp;&nbsp;&nbsp;send_event&nbsp;:&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*todo*<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(bool)&nbsp;true&nbsp;if&nbsp;this&nbsp;came&nbsp;from&nbsp;a&nbsp;SendEvent&nbsp;request<br>
 &nbsp;&nbsp;&nbsp;&nbsp;display&nbsp;:&nbsp;pointer&nbsp;to&nbsp;<a href="#Display">Display</a><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*todo*<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#Display">Display</a>&nbsp;the&nbsp;event&nbsp;was&nbsp;read&nbsp;from<br>
 &nbsp;&nbsp;&nbsp;&nbsp;window&nbsp;:&nbsp;long_pos<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Window<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"event"&nbsp;window&nbsp;it&nbsp;is&nbsp;reported&nbsp;relative&nbsp;to<br>
 &nbsp;&nbsp;&nbsp;&nbsp;root&nbsp;:&nbsp;long_pos<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Window<br>
-&nbsp;&nbsp;&nbsp;&nbsp;subwindow&nbsp;:&nbsp;long:pos<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Window<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;root&nbsp;window&nbsp;that&nbsp;the&nbsp;event&nbsp;occurred&nbsp;on<br>
+&nbsp;&nbsp;&nbsp;&nbsp;subwindow&nbsp;:&nbsp;long_pos<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;child&nbsp;window<br>
 &nbsp;&nbsp;&nbsp;&nbsp;time&nbsp;:&nbsp;long_pos<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Time<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;time&nbsp;in&nbsp;milliseconds<br>
 &nbsp;&nbsp;&nbsp;&nbsp;x&nbsp;:&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*todo*<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;horizontal&nbsp;coordinates&nbsp;of&nbsp;pointer&nbsp;in&nbsp;event&nbsp;window<br>
 &nbsp;&nbsp;&nbsp;&nbsp;y&nbsp;:&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*todo*<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;vertical&nbsp;coordinates&nbsp;of&nbsp;pointer&nbsp;in&nbsp;event&nbsp;window<br>
 &nbsp;&nbsp;&nbsp;&nbsp;x_root&nbsp;:&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*todo*<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;horizontal&nbsp;coordinates&nbsp;relative&nbsp;to&nbsp;root<br>
 &nbsp;&nbsp;&nbsp;&nbsp;y_root&nbsp;:&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*todo*<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;vertical&nbsp;coordinates&nbsp;relative&nbsp;to&nbsp;root<br>
 &nbsp;&nbsp;&nbsp;&nbsp;mode&nbsp;:&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*todo*<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;NotifyNormal,&nbsp;NotifyGrab,&nbsp;NotifyUngrab<br>
 &nbsp;&nbsp;&nbsp;&nbsp;detail&nbsp;:&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*todo*<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;NotifyAncestor,&nbsp;NotifyVirtual,&nbsp;NotifyInferior,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;NotifyNonlinear,&nbsp;NotifyNonlinearVirtual<br>
 &nbsp;&nbsp;&nbsp;&nbsp;same_screen&nbsp;:&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*todo*<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(bool)&nbsp;same&nbsp;screen&nbsp;flag<br>
 &nbsp;&nbsp;&nbsp;&nbsp;focus&nbsp;:&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*todo*<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;boolean&nbsp;focus<br>
 &nbsp;&nbsp;&nbsp;&nbsp;state&nbsp;:&nbsp;int_pos<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*todo*<br>&nbsp;</tt></td></tr>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;key&nbsp;or&nbsp;button&nbsp;mask<br>&nbsp;</tt></td></tr>
 <tr><td>&nbsp;</td>
 <td width="100%"><dl><dt>Method resolution order:</dt>
 <dd><a href="xfdata.html#XCrossingEvent">XCrossingEvent</a></dd>
@@ -11183,14 +11276,14 @@ Methods inherited from _ctypes._CData:<br>
 <font color="#000000" face="helvetica, arial"><a name="XModifierKeymap">class <strong>XModifierKeymap</strong></a>(<a href="_ctypes.html#Structure">_ctypes.Structure</a>)</font></td></tr>
     
 <tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
-<td colspan=2><tt>X11&nbsp;<a href="#XModifierKeymap">XModifierKeymap</a>&nbsp;class<br>
+<td colspan=2><tt>X11&nbsp;<a href="#XModifierKeymap">XModifierKeymap</a>&nbsp;class.&nbsp;Data&nbsp;structure&nbsp;for&nbsp;X{Set,Get}ModifierMapping.<br>
 &nbsp;<br>
 Attributes<br>
 ----------<br>
 &nbsp;&nbsp;&nbsp;&nbsp;max_keypermod&nbsp;:&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*todo*<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The&nbsp;server's&nbsp;max&nbsp;#&nbsp;of&nbsp;keys&nbsp;per&nbsp;modifier<br>
 &nbsp;&nbsp;&nbsp;&nbsp;modifiermap&nbsp;:&nbsp;pointer&nbsp;to&nbsp;KeyCode<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*todo*<br>&nbsp;</tt></td></tr>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;An&nbsp;8&nbsp;by&nbsp;max_keypermod&nbsp;array&nbsp;of&nbsp;modifiers<br>&nbsp;</tt></td></tr>
 <tr><td>&nbsp;</td>
 <td width="100%"><dl><dt>Method resolution order:</dt>
 <dd><a href="xfdata.html#XModifierKeymap">XModifierKeymap</a></dd>
@@ -11242,35 +11335,35 @@ Methods inherited from _ctypes._CData:<br>
 Attributes<br>
 ----------<br>
 &nbsp;&nbsp;&nbsp;&nbsp;type&nbsp;:&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*todo*<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;type&nbsp;of&nbsp;event<br>
 &nbsp;&nbsp;&nbsp;&nbsp;serial&nbsp;:&nbsp;long_pos<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*todo*<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;#&nbsp;of&nbsp;last&nbsp;request&nbsp;processed&nbsp;by&nbsp;server<br>
 &nbsp;&nbsp;&nbsp;&nbsp;send_event&nbsp;:&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*todo*<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(bool)&nbsp;true&nbsp;if&nbsp;this&nbsp;came&nbsp;from&nbsp;a&nbsp;SendEvent&nbsp;request<br>
 &nbsp;&nbsp;&nbsp;&nbsp;display&nbsp;:&nbsp;pointer&nbsp;to&nbsp;<a href="#Display">Display</a><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*todo*<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#Display">Display</a>&nbsp;the&nbsp;event&nbsp;was&nbsp;read&nbsp;from<br>
 &nbsp;&nbsp;&nbsp;&nbsp;window&nbsp;:&nbsp;long_pos<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Window<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"event"&nbsp;window&nbsp;it&nbsp;is&nbsp;reported&nbsp;relative&nbsp;to<br>
 &nbsp;&nbsp;&nbsp;&nbsp;root&nbsp;:&nbsp;long_pos<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Window<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;root&nbsp;window&nbsp;that&nbsp;the&nbsp;event&nbsp;occurred&nbsp;on<br>
 &nbsp;&nbsp;&nbsp;&nbsp;subwindow&nbsp;:&nbsp;long_pos<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Window<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;child&nbsp;window<br>
 &nbsp;&nbsp;&nbsp;&nbsp;time&nbsp;:&nbsp;long_pos<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Time<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;time&nbsp;in&nbsp;milliseconds<br>
 &nbsp;&nbsp;&nbsp;&nbsp;x&nbsp;:&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*todo*<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;horizontal&nbsp;coordinates&nbsp;of&nbsp;pointer&nbsp;in&nbsp;event&nbsp;window<br>
 &nbsp;&nbsp;&nbsp;&nbsp;y&nbsp;:&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*todo*<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;vertical&nbsp;coordinates&nbsp;of&nbsp;pointer&nbsp;in&nbsp;event&nbsp;window<br>
 &nbsp;&nbsp;&nbsp;&nbsp;x_root&nbsp;:&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*todo*<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;horizontal&nbsp;coordinates&nbsp;relative&nbsp;to&nbsp;root<br>
 &nbsp;&nbsp;&nbsp;&nbsp;y_root&nbsp;:&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*todo*<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;vertical&nbsp;coordinates&nbsp;relative&nbsp;to&nbsp;root<br>
 &nbsp;&nbsp;&nbsp;&nbsp;state&nbsp;:&nbsp;int_pos<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*todo*<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;key&nbsp;or&nbsp;button&nbsp;mask<br>
 &nbsp;&nbsp;&nbsp;&nbsp;is_hint&nbsp;:&nbsp;char<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*todo*<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;detail<br>
 &nbsp;&nbsp;&nbsp;&nbsp;same_screen&nbsp;:&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*todo*<br>&nbsp;</tt></td></tr>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(bool)&nbsp;same&nbsp;screen&nbsp;flag<br>&nbsp;</tt></td></tr>
 <tr><td>&nbsp;</td>
 <td width="100%"><dl><dt>Method resolution order:</dt>
 <dd><a href="xfdata.html#XMotionEvent">XMotionEvent</a></dd>
@@ -11553,35 +11646,35 @@ Methods inherited from _ctypes._CData:<br>
 Attributes<br>
 ----------<br>
 &nbsp;&nbsp;&nbsp;&nbsp;type&nbsp;:&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*todo*<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;type&nbsp;of&nbsp;event<br>
 &nbsp;&nbsp;&nbsp;&nbsp;serial&nbsp;:&nbsp;long_pos<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*todo*<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;#&nbsp;of&nbsp;last&nbsp;request&nbsp;processed&nbsp;by&nbsp;server<br>
 &nbsp;&nbsp;&nbsp;&nbsp;send_event&nbsp;:&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*todo*<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(bool)&nbsp;true&nbsp;if&nbsp;this&nbsp;came&nbsp;from&nbsp;a&nbsp;SendEvent&nbsp;request<br>
 &nbsp;&nbsp;&nbsp;&nbsp;display&nbsp;:&nbsp;pointer&nbsp;to&nbsp;<a href="#Display">Display</a><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*todo*<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#Display">Display</a>&nbsp;the&nbsp;event&nbsp;was&nbsp;read&nbsp;from<br>
 &nbsp;&nbsp;&nbsp;&nbsp;window&nbsp;:&nbsp;long_pos<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Window<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"event"&nbsp;window&nbsp;it&nbsp;is&nbsp;reported&nbsp;relative&nbsp;to<br>
 &nbsp;&nbsp;&nbsp;&nbsp;root&nbsp;:&nbsp;long_pos<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Window<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;root&nbsp;window&nbsp;that&nbsp;the&nbsp;event&nbsp;occurred&nbsp;on<br>
 &nbsp;&nbsp;&nbsp;&nbsp;subwindow&nbsp;:&nbsp;long_pos<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Window<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;child&nbsp;window<br>
 &nbsp;&nbsp;&nbsp;&nbsp;time&nbsp;:&nbsp;long_pos<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Time<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;time&nbsp;in&nbsp;milliseconds<br>
 &nbsp;&nbsp;&nbsp;&nbsp;x&nbsp;:&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*todo*<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;horizontal&nbsp;coordinates&nbsp;of&nbsp;pointer&nbsp;in&nbsp;event&nbsp;window<br>
 &nbsp;&nbsp;&nbsp;&nbsp;y&nbsp;:&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*todo*<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;vertical&nbsp;coordinates&nbsp;of&nbsp;pointer&nbsp;in&nbsp;event&nbsp;window<br>
 &nbsp;&nbsp;&nbsp;&nbsp;x_root&nbsp;:&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*todo*<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;horizontal&nbsp;coordinates&nbsp;relative&nbsp;to&nbsp;root<br>
 &nbsp;&nbsp;&nbsp;&nbsp;y_root&nbsp;:&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*todo*<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;vertical&nbsp;coordinates&nbsp;relative&nbsp;to&nbsp;root<br>
 &nbsp;&nbsp;&nbsp;&nbsp;state&nbsp;:&nbsp;int_pos<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*todo*<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;key&nbsp;or&nbsp;button&nbsp;mask<br>
 &nbsp;&nbsp;&nbsp;&nbsp;is_hint&nbsp;:&nbsp;char<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*todo*<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;detail<br>
 &nbsp;&nbsp;&nbsp;&nbsp;same_screen&nbsp;:&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*todo*<br>&nbsp;</tt></td></tr>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(bool)&nbsp;same&nbsp;screen&nbsp;flag<br>&nbsp;</tt></td></tr>
 <tr><td>&nbsp;</td>
 <td width="100%"><dl><dt>Method resolution order:</dt>
 <dd><a href="xfdata.html#XMotionEvent">XMotionEvent</a></dd>
@@ -11993,13 +12086,13 @@ Methods inherited from _ctypes._CData:<br>
 Attributes<br>
 ----------<br>
 &nbsp;&nbsp;&nbsp;&nbsp;x1&nbsp;:&nbsp;short<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*todo*<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;horizontal&nbsp;position&nbsp;of&nbsp;start<br>
 &nbsp;&nbsp;&nbsp;&nbsp;y1&nbsp;:&nbsp;short<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*todo*<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;vertical&nbsp;position&nbsp;of&nbsp;start<br>
 &nbsp;&nbsp;&nbsp;&nbsp;x2&nbsp;:&nbsp;short<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*todo*<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;horizontal&nbsp;position&nbsp;of&nbsp;end<br>
 &nbsp;&nbsp;&nbsp;&nbsp;y2&nbsp;:&nbsp;short<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*todo*<br>&nbsp;</tt></td></tr>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;vertical&nbsp;position&nbsp;of&nbsp;end<br>&nbsp;</tt></td></tr>
 <tr><td>&nbsp;</td>
 <td width="100%"><dl><dt>Method resolution order:</dt>
 <dd><a href="xfdata.html#XSegment">XSegment</a></dd>
@@ -12497,7 +12590,7 @@ Methods inherited from _ctypes._CData:<br>
 <font color="#000000" face="helvetica, arial"><a name="XTimeCoord">class <strong>XTimeCoord</strong></a>(<a href="_ctypes.html#Structure">_ctypes.Structure</a>)</font></td></tr>
     
 <tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
-<td colspan=2><tt>X11&nbsp;<a href="#XTimeCoord">XTimeCoord</a>&nbsp;class<br>
+<td colspan=2><tt>X11&nbsp;<a href="#XTimeCoord">XTimeCoord</a>&nbsp;class.&nbsp;Data&nbsp;structure&nbsp;for&nbsp;XGetMotionEvents.<br>
 &nbsp;<br>
 Attributes<br>
 ----------<br>
@@ -12709,30 +12802,31 @@ Methods inherited from _ctypes._CData:<br>
 <font color="#000000" face="helvetica, arial"><a name="XVisualInfo">class <strong>XVisualInfo</strong></a>(<a href="_ctypes.html#Structure">_ctypes.Structure</a>)</font></td></tr>
     
 <tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
-<td colspan=2><tt><a href="#XVisualInfo">XVisualInfo</a>&nbsp;class<br>
+<td colspan=2><tt><a href="#XVisualInfo">XVisualInfo</a>&nbsp;class.&nbsp;Information&nbsp;is&nbsp;used&nbsp;by&nbsp;the&nbsp;visual&nbsp;utility&nbsp;routines<br>
+to&nbsp;find&nbsp;desired&nbsp;visual&nbsp;type&nbsp;from&nbsp;the&nbsp;many&nbsp;visuals&nbsp;a&nbsp;display&nbsp;may&nbsp;support.<br>
 &nbsp;<br>
 Attributes<br>
 ----------<br>
 &nbsp;&nbsp;&nbsp;&nbsp;visual&nbsp;:&nbsp;pointer&nbsp;to&nbsp;<a href="#Visual">Visual</a><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*todo*<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#Visual">Visual</a>&nbsp;class<br>
 &nbsp;&nbsp;&nbsp;&nbsp;visualid&nbsp;:&nbsp;long_pos<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*todo*<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;visual&nbsp;id&nbsp;of&nbsp;this&nbsp;visual<br>
 &nbsp;&nbsp;&nbsp;&nbsp;screen&nbsp;:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*todo*<br>
 &nbsp;&nbsp;&nbsp;&nbsp;depth&nbsp;:&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*todo*<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;depth&nbsp;of&nbsp;the&nbsp;visual<br>
 &nbsp;&nbsp;&nbsp;&nbsp;c_class&nbsp;:&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*todo*<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;C++?&nbsp;class&nbsp;of&nbsp;screen&nbsp;(monochrome,&nbsp;etc.)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;red_mask&nbsp;:&nbsp;long_pos<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*todo*<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;mask&nbsp;value&nbsp;for&nbsp;red<br>
 &nbsp;&nbsp;&nbsp;&nbsp;green_mask&nbsp;:&nbsp;long_pos<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*todo*<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;mask&nbsp;value&nbsp;for&nbsp;green<br>
 &nbsp;&nbsp;&nbsp;&nbsp;blue_mask&nbsp;:&nbsp;long_pos<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*todo*<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;mask&nbsp;value&nbsp;for&nbsp;blue<br>
 &nbsp;&nbsp;&nbsp;&nbsp;colormap_size&nbsp;:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*todo*<br>
 &nbsp;&nbsp;&nbsp;&nbsp;bits_per_rgb&nbsp;:&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*todo*<br>&nbsp;</tt></td></tr>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;log&nbsp;base&nbsp;2&nbsp;of&nbsp;distinct&nbsp;color&nbsp;values<br>&nbsp;</tt></td></tr>
 <tr><td>&nbsp;</td>
 <td width="100%"><dl><dt>Method resolution order:</dt>
 <dd><a href="xfdata.html#XVisualInfo">XVisualInfo</a></dd>
@@ -12962,20 +13056,20 @@ Methods inherited from _ctypes._CData:<br>
 <font color="#000000" face="helvetica, arial"><a name="XWindowChanges">class <strong>XWindowChanges</strong></a>(<a href="_ctypes.html#Structure">_ctypes.Structure</a>)</font></td></tr>
     
 <tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
-<td colspan=2><tt>X11&nbsp;<a href="#XWindowChanges">XWindowChanges</a>&nbsp;class<br>
+<td colspan=2><tt>X11&nbsp;<a href="#XWindowChanges">XWindowChanges</a>&nbsp;class.&nbsp;Data&nbsp;structure&nbsp;for&nbsp;XReconfigureWindow.<br>
 &nbsp;<br>
 Attributes<br>
 ----------<br>
 &nbsp;&nbsp;&nbsp;&nbsp;x&nbsp;:&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*todo*<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;horizontal&nbsp;position&nbsp;of&nbsp;window<br>
 &nbsp;&nbsp;&nbsp;&nbsp;y&nbsp;:&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*todo*<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;vertical&nbsp;position&nbsp;of&nbsp;window<br>
 &nbsp;&nbsp;&nbsp;&nbsp;width&nbsp;:&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*todo*<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;width&nbsp;of&nbsp;window<br>
 &nbsp;&nbsp;&nbsp;&nbsp;height&nbsp;:&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*todo*<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;height&nbsp;of&nbsp;window<br>
 &nbsp;&nbsp;&nbsp;&nbsp;border_width&nbsp;:&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*todo*<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;width&nbsp;of&nbsp;the&nbsp;window&nbsp;border<br>
 &nbsp;&nbsp;&nbsp;&nbsp;sibling&nbsp;:&nbsp;long_pos<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Window<br>
 &nbsp;&nbsp;&nbsp;&nbsp;stack_mode&nbsp;:&nbsp;int<br>
@@ -13378,7 +13472,7 @@ Admitted&nbsp;values<br>
 Admitted&nbsp;values<br>
 ---------------<br>
 &nbsp;&nbsp;&nbsp;&nbsp;FLIMAGE_ERR_NONE<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*todo*<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;no&nbsp;error<br>
 &nbsp;&nbsp;&nbsp;&nbsp;FLIMAGE_ERR_ALLOC<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;memory?&nbsp;allocation&nbsp;error<br>
 &nbsp;&nbsp;&nbsp;&nbsp;FLIMAGE_ERR_INVALID<br>
@@ -13551,40 +13645,42 @@ Admitted&nbsp;values<br>
 &nbsp;&nbsp;&nbsp;&nbsp;FL_DRAW<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The&nbsp;flobject&nbsp;has&nbsp;to&nbsp;be&nbsp;(re)drawn.&nbsp;To&nbsp;figure&nbsp;out&nbsp;the&nbsp;actual&nbsp;size<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;of&nbsp;the&nbsp;flobject&nbsp;you&nbsp;can&nbsp;use&nbsp;the&nbsp;fields&nbsp;ptr_flobject.contents.x,<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ptr_flobject.contents.y,&nbsp;ptr_flobject.contents.w&nbsp;and&nbsp;ptr_flobject.contents.h.<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Many&nbsp;Xlib&nbsp;drawing&nbsp;routines&nbsp;require&nbsp;a&nbsp;window&nbsp;ID,&nbsp;which&nbsp;you&nbsp;can<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;obtain&nbsp;from&nbsp;the&nbsp;flobject&nbsp;pointer&nbsp;using&nbsp;FL_ObjWin(ptr_flobject).<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Some&nbsp;other&nbsp;aspects&nbsp;might&nbsp;also&nbsp;influence&nbsp;the&nbsp;way&nbsp;the&nbsp;flobject&nbsp;has<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;to&nbsp;be&nbsp;drawn.&nbsp;E.g.,&nbsp;you&nbsp;might&nbsp;want&nbsp;to&nbsp;draw&nbsp;the&nbsp;flobject&nbsp;differently<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;when&nbsp;the&nbsp;mouse&nbsp;is&nbsp;on&nbsp;top&nbsp;of&nbsp;it&nbsp;or&nbsp;when&nbsp;the&nbsp;mouse&nbsp;is&nbsp;pressed&nbsp;on<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;it.&nbsp;This&nbsp;can&nbsp;be&nbsp;figured&nbsp;out&nbsp;the&nbsp;following&nbsp;way,&nbsp;the&nbsp;field<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ptr_flobject.contents.belowmouse&nbsp;tells&nbsp;you&nbsp;whether&nbsp;the&nbsp;flobject&nbsp;is<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;below&nbsp;the&nbsp;mouse.&nbsp;The&nbsp;field&nbsp;ptr_flobject.contents.pushed&nbsp;indicates<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;whether&nbsp;the&nbsp;flobject&nbsp;is&nbsp;currently&nbsp;being&nbsp;pushed&nbsp;with&nbsp;the&nbsp;mouse.<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Finally,&nbsp;ptr_flobject.contents.focus&nbsp;indicate&nbsp;whether&nbsp;input&nbsp;focus<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;is&nbsp;directed&nbsp;towards&nbsp;this&nbsp;<a href="__builtin__.html#object">object</a>.&nbsp;Note&nbsp;that&nbsp;drawing&nbsp;of&nbsp;the&nbsp;flobject<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ptr_flobject.contents.y,&nbsp;ptr_flobject.contents.w&nbsp;and<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ptr_flobject.contents.h.&nbsp;Many&nbsp;Xlib&nbsp;drawing&nbsp;routines&nbsp;require&nbsp;a<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;window&nbsp;ID,&nbsp;which&nbsp;you&nbsp;can&nbsp;obtain&nbsp;from&nbsp;the&nbsp;flobject&nbsp;pointer&nbsp;using<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_ObjWin(ptr_flobject).&nbsp;Some&nbsp;other&nbsp;aspects&nbsp;might&nbsp;also&nbsp;influence<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;the&nbsp;way&nbsp;the&nbsp;flobject&nbsp;has&nbsp;to&nbsp;be&nbsp;drawn.&nbsp;E.g.,&nbsp;you&nbsp;might&nbsp;want&nbsp;to<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;draw&nbsp;the&nbsp;flobject&nbsp;differently&nbsp;when&nbsp;the&nbsp;mouse&nbsp;is&nbsp;on&nbsp;top&nbsp;of&nbsp;it&nbsp;or<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;when&nbsp;the&nbsp;mouse&nbsp;is&nbsp;pressed&nbsp;on&nbsp;it.&nbsp;This&nbsp;can&nbsp;be&nbsp;figured&nbsp;out&nbsp;the<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;following&nbsp;way,&nbsp;the&nbsp;field&nbsp;ptr_flobject.contents.belowmouse&nbsp;tells<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;you&nbsp;whether&nbsp;the&nbsp;flobject&nbsp;is&nbsp;below&nbsp;the&nbsp;mouse.&nbsp;The&nbsp;field<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ptr_flobject.contents.pushed&nbsp;indicates&nbsp;whether&nbsp;the&nbsp;flobject&nbsp;is<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;currently&nbsp;being&nbsp;pushed&nbsp;with&nbsp;the&nbsp;mouse.&nbsp;Finally,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ptr_flobject.contents.focus&nbsp;indicate&nbsp;whether&nbsp;input&nbsp;focus&nbsp;is<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;directed&nbsp;towards&nbsp;this&nbsp;<a href="__builtin__.html#object">object</a>.&nbsp;Note&nbsp;that&nbsp;drawing&nbsp;of&nbsp;the&nbsp;flobject<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;is&nbsp;the&nbsp;full&nbsp;responsibility&nbsp;of&nbsp;the&nbsp;flobject&nbsp;class,&nbsp;including&nbsp;the<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;bounding&nbsp;box&nbsp;and&nbsp;the&nbsp;label,&nbsp;which&nbsp;can&nbsp;be&nbsp;found&nbsp;in&nbsp;the&nbsp;field<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ptr_flobject.contents.label.&nbsp;The&nbsp;Forms&nbsp;Library&nbsp;provides&nbsp;a&nbsp;large&nbsp;number<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;of&nbsp;routines&nbsp;to&nbsp;help&nbsp;you&nbsp;draw&nbsp;<a href="__builtin__.html#object">object</a>.&nbsp;One&nbsp;important&nbsp;caution&nbsp;about<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;your&nbsp;draw&nbsp;event&nbsp;handling&nbsp;code,&nbsp;none&nbsp;of&nbsp;the&nbsp;high&nbsp;level&nbsp;routines<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(fl_freeze_form(),&nbsp;fl_deactivate_form())&nbsp;etc.&nbsp;can&nbsp;be&nbsp;used.&nbsp;The<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;only&nbsp;routines&nbsp;allowed&nbsp;to&nbsp;be&nbsp;used&nbsp;are&nbsp;(direct)&nbsp;drawing&nbsp;functions<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;and&nbsp;flobject&nbsp;internal&nbsp;book&nbsp;keeping&nbsp;routines.&nbsp;Attribute&nbsp;modifying<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;routines,&nbsp;such&nbsp;as&nbsp;fl_set_object_color()&nbsp;etc.&nbsp;are&nbsp;not&nbsp;allowed<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(using&nbsp;them&nbsp;can&nbsp;lead&nbsp;to&nbsp;infinite&nbsp;recursions).&nbsp;In&nbsp;addition,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ptr_flobject.contents.label.&nbsp;The&nbsp;Forms&nbsp;Library&nbsp;provides&nbsp;a&nbsp;large<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;number&nbsp;of&nbsp;routines&nbsp;to&nbsp;help&nbsp;you&nbsp;draw&nbsp;<a href="__builtin__.html#object">object</a>.&nbsp;One&nbsp;important&nbsp;caution<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;about&nbsp;your&nbsp;draw&nbsp;event&nbsp;handling&nbsp;code,&nbsp;none&nbsp;of&nbsp;the&nbsp;high&nbsp;level<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;routines&nbsp;(fl_freeze_form(),&nbsp;fl_deactivate_form())&nbsp;etc.&nbsp;can&nbsp;be<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;used.&nbsp;The&nbsp;only&nbsp;routines&nbsp;allowed&nbsp;to&nbsp;be&nbsp;used&nbsp;are&nbsp;(direct)&nbsp;drawing<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;functions&nbsp;and&nbsp;flobject&nbsp;internal&nbsp;book&nbsp;keeping&nbsp;routines.&nbsp;Attributes<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;modifying&nbsp;routines,&nbsp;such&nbsp;as&nbsp;fl_set_object_color()&nbsp;etc.&nbsp;are&nbsp;not<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;allowed&nbsp;(using&nbsp;them&nbsp;can&nbsp;lead&nbsp;to&nbsp;infinite&nbsp;recursions).&nbsp;In&nbsp;addition,<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(re)drawing&nbsp;of&nbsp;other&nbsp;flobjects&nbsp;using&nbsp;fl_redraw_object()&nbsp;while<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;handling&nbsp;FL_DRAW&nbsp;will&nbsp;also&nbsp;not&nbsp;work.&nbsp;Due&nbsp;to&nbsp;the&nbsp;way&nbsp;double<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;buffering&nbsp;is&nbsp;handled,&nbsp;at&nbsp;the&nbsp;time&nbsp;the&nbsp;FL_DRAW&nbsp;event&nbsp;is&nbsp;passed<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;to&nbsp;the&nbsp;handling&nbsp;function&nbsp;(and&nbsp;only&nbsp;then)&nbsp;FL_ObjWin(ptr_flobject)&nbsp;might<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;a&nbsp;pixmap&nbsp;used&nbsp;as&nbsp;the&nbsp;backbuffer&nbsp;(at&nbsp;least&nbsp;if&nbsp;the&nbsp;flobject&nbsp;is<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;double&nbsp;buffered).&nbsp;What&nbsp;that&nbsp;means&nbsp;is&nbsp;that&nbsp;FL_ObjWin(ptr_flobject)<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;should&nbsp;not&nbsp;be&nbsp;used&nbsp;when&nbsp;a&nbsp;real&nbsp;window&nbsp;is&nbsp;needed.&nbsp;For&nbsp;a&nbsp;real&nbsp;window<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;you&nbsp;can&nbsp;change&nbsp;the&nbsp;window's&nbsp;cursor&nbsp;or&nbsp;query&nbsp;the&nbsp;mouse&nbsp;position<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;within&nbsp;it.&nbsp;You&nbsp;cannot&nbsp;do&nbsp;either&nbsp;of&nbsp;these&nbsp;with&nbsp;the&nbsp;backbuffer<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;pixmap.&nbsp;If&nbsp;there&nbsp;is&nbsp;a&nbsp;need&nbsp;to&nbsp;obtain&nbsp;the&nbsp;real&nbsp;window&nbsp;ID&nbsp;the<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;following&nbsp;routine&nbsp;can&nbsp;be&nbsp;used&nbsp;fl_get_real_object_window().<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;To&nbsp;summarize,&nbsp;use&nbsp;FL_ObjWin(ptr_flobject)&nbsp;when&nbsp;drawing&nbsp;and&nbsp;use<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;to&nbsp;the&nbsp;handling&nbsp;function&nbsp;(and&nbsp;only&nbsp;then)&nbsp;FL_ObjWin(ptr_flobject)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;might&nbsp;return&nbsp;a&nbsp;pixmap&nbsp;used&nbsp;as&nbsp;the&nbsp;backbuffer&nbsp;(at&nbsp;least&nbsp;if&nbsp;the<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;flobject&nbsp;is&nbsp;double&nbsp;buffered).&nbsp;What&nbsp;that&nbsp;means&nbsp;is&nbsp;that<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_ObjWin(ptr_flobject)&nbsp;should&nbsp;not&nbsp;be&nbsp;used&nbsp;when&nbsp;a&nbsp;real&nbsp;window&nbsp;is<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;needed.&nbsp;For&nbsp;a&nbsp;real&nbsp;window&nbsp;you&nbsp;can&nbsp;change&nbsp;the&nbsp;window's&nbsp;cursor&nbsp;or<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;query&nbsp;the&nbsp;mouse&nbsp;position&nbsp;within&nbsp;it.&nbsp;You&nbsp;cannot&nbsp;do&nbsp;either&nbsp;of&nbsp;these<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;with&nbsp;the&nbsp;backbuffer&nbsp;pixmap.&nbsp;If&nbsp;there&nbsp;is&nbsp;a&nbsp;need&nbsp;to&nbsp;obtain&nbsp;the&nbsp;real<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;window&nbsp;ID&nbsp;the&nbsp;following&nbsp;routine&nbsp;can&nbsp;be&nbsp;used<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;fl_get_real_object_window().&nbsp;To&nbsp;summarize,&nbsp;use<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_ObjWin(ptr_flobject)&nbsp;when&nbsp;drawing&nbsp;and&nbsp;use<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;fl_get_real_object_window()&nbsp;for&nbsp;cursor&nbsp;or&nbsp;pointer&nbsp;routines.<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;This&nbsp;distinction&nbsp;is&nbsp;important&nbsp;only&nbsp;while&nbsp;handling&nbsp;FL_DRAW&nbsp;events,<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_ObjWin(obj)&nbsp;should&nbsp;be&nbsp;used&nbsp;anywhere&nbsp;else.<br>
@@ -13598,12 +13694,12 @@ Admitted&nbsp;values<br>
 &nbsp;&nbsp;&nbsp;&nbsp;FL_ENTER<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;This&nbsp;event&nbsp;is&nbsp;sent&nbsp;when&nbsp;the&nbsp;mouse&nbsp;has&nbsp;entered&nbsp;the&nbsp;bounding&nbsp;box<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;and&nbsp;might&nbsp;require&nbsp;some&nbsp;action.&nbsp;Note&nbsp;also&nbsp;that&nbsp;the&nbsp;field<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ptr_flobject.content.belowmouse&nbsp;in&nbsp;the&nbsp;flobject&nbsp;is&nbsp;being&nbsp;set.&nbsp;If&nbsp;entering<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;an&nbsp;flobjects&nbsp;area&nbsp;only&nbsp;changes&nbsp;its&nbsp;appearance,&nbsp;redrawing&nbsp;it&nbsp;normally<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;suffices.&nbsp;Do&nbsp;not&nbsp;do&nbsp;this&nbsp;directly!&nbsp;Always&nbsp;redraw&nbsp;the&nbsp;flobject&nbsp;by<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;calling&nbsp;fl_redraw_object().&nbsp;It&nbsp;will&nbsp;send&nbsp;an&nbsp;FL_DRAW&nbsp;event&nbsp;to&nbsp;the<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;flobject&nbsp;but&nbsp;also&nbsp;does&nbsp;some&nbsp;other&nbsp;things&nbsp;(like&nbsp;setting&nbsp;window&nbsp;IDs<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;and&nbsp;taking&nbsp;care&nbsp;of&nbsp;double&nbsp;buffering&nbsp;etc.).<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ptr_flobject.content.belowmouse&nbsp;in&nbsp;the&nbsp;flobject&nbsp;is&nbsp;being&nbsp;set.&nbsp;If<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;entering&nbsp;an&nbsp;flobjects&nbsp;area&nbsp;only&nbsp;changes&nbsp;its&nbsp;appearance,&nbsp;redrawing<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;it&nbsp;normally&nbsp;suffices.&nbsp;Do&nbsp;not&nbsp;do&nbsp;this&nbsp;directly!&nbsp;Always&nbsp;redraw&nbsp;the<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;flobject&nbsp;by&nbsp;calling&nbsp;fl_redraw_object().&nbsp;It&nbsp;will&nbsp;send&nbsp;a&nbsp;FL_DRAW<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;event&nbsp;to&nbsp;the&nbsp;flobject&nbsp;but&nbsp;also&nbsp;does&nbsp;some&nbsp;other&nbsp;things&nbsp;(like<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;setting&nbsp;window&nbsp;IDs&nbsp;and&nbsp;taking&nbsp;care&nbsp;of&nbsp;double&nbsp;buffering&nbsp;etc.).<br>
 &nbsp;&nbsp;&nbsp;&nbsp;FL_LEAVE<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The&nbsp;mouse&nbsp;has&nbsp;left&nbsp;the&nbsp;bounding&nbsp;box.&nbsp;Again,&nbsp;normally&nbsp;a&nbsp;redraw&nbsp;is<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;enough&nbsp;(or&nbsp;nothing&nbsp;at&nbsp;all).<br>
@@ -13622,20 +13718,21 @@ Admitted&nbsp;values<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;passed&nbsp;to&nbsp;the&nbsp;routine&nbsp;via&nbsp;the&nbsp;'key'&nbsp;argument,&nbsp;modifier&nbsp;keys&nbsp;can<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;be&nbsp;retrieved&nbsp;from&nbsp;the&nbsp;state&nbsp;member&nbsp;of&nbsp;the&nbsp;<a href="#XEvent">XEvent</a>&nbsp;also&nbsp;passed&nbsp;to<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;the&nbsp;function&nbsp;via&nbsp;'xev'.&nbsp;This&nbsp;event&nbsp;only&nbsp;happens&nbsp;between&nbsp;FL_FOCUS<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;and&nbsp;FL_UNFOCUS&nbsp;events.&nbsp;Not&nbsp;all&nbsp;flobjects&nbsp;sent&nbsp;keyboard&nbsp;events,&nbsp;only<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;those&nbsp;that&nbsp;have&nbsp;non-zero&nbsp;value&nbsp;in&nbsp;field&nbsp;ptr_flobject.contents.input&nbsp;or<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ptr_flobject.contents.wantkey.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;and&nbsp;FL_UNFOCUS&nbsp;events.&nbsp;Not&nbsp;all&nbsp;flobjects&nbsp;sent&nbsp;keyboard&nbsp;events,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;only&nbsp;those&nbsp;that&nbsp;have&nbsp;non-zero&nbsp;value&nbsp;in&nbsp;field<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ptr_flobject.contents.input&nbsp;or&nbsp;ptr_flobject.contents.wantkey.<br>
 &nbsp;&nbsp;&nbsp;&nbsp;FL_UPDATE<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;for&nbsp;flobjects&nbsp;that&nbsp;need&nbsp;to&nbsp;update&nbsp;something&nbsp;from&nbsp;time&nbsp;to&nbsp;time.&nbsp;Such<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;an&nbsp;event,&nbsp;like&nbsp;the&nbsp;FL_STEP&nbsp;event,&nbsp;also&nbsp;gets&nbsp;send&nbsp;about&nbsp;every&nbsp;50<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;msec&nbsp;(but&nbsp;less&nbsp;often&nbsp;under&nbsp;high&nbsp;load)&nbsp;to&nbsp;flobjects&nbsp;while&nbsp;they&nbsp;are<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"pushed",&nbsp;i.e.&nbsp;between&nbsp;receiving&nbsp;a&nbsp;FL_PUSH&nbsp;and&nbsp;a&nbsp;FL_RELEASE&nbsp;event<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if&nbsp;the&nbsp;ptr_flobject.contents.want_update&nbsp;field&nbsp;is&nbsp;set&nbsp;for&nbsp;the&nbsp;flobject.<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Like&nbsp;for&nbsp;the&nbsp;FL_STEP&nbsp;event&nbsp;the&nbsp;handling&nbsp;routine&nbsp;receives&nbsp;a<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;synthetic&nbsp;MotionNotify&nbsp;event&nbsp;as&nbsp;the&nbsp;<a href="#XEvent">XEvent</a>.&nbsp;This&nbsp;is&nbsp;typically&nbsp;used<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;by&nbsp;flobjects&nbsp;that&nbsp;have&nbsp;to&nbsp;perform&nbsp;tasks&nbsp;at&nbsp;regular&nbsp;time&nbsp;intervals<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;while&nbsp;they&nbsp;are&nbsp;"pushed"&nbsp;(e.g.&nbsp;counters&nbsp;that&nbsp;need&nbsp;to&nbsp;count&nbsp;up&nbsp;or<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;down&nbsp;while&nbsp;the&nbsp;mouse&nbsp;is&nbsp;pushed&nbsp;on&nbsp;one&nbsp;of&nbsp;its&nbsp;buttons).<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;for&nbsp;flobjects&nbsp;that&nbsp;need&nbsp;to&nbsp;update&nbsp;something&nbsp;from&nbsp;time&nbsp;to&nbsp;time.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Such&nbsp;an&nbsp;event,&nbsp;like&nbsp;the&nbsp;FL_STEP&nbsp;event,&nbsp;also&nbsp;gets&nbsp;send&nbsp;about&nbsp;every<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;50&nbsp;msec&nbsp;(but&nbsp;less&nbsp;often&nbsp;under&nbsp;high&nbsp;load)&nbsp;to&nbsp;flobjects&nbsp;while&nbsp;they<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;are&nbsp;"pushed",&nbsp;i.e.&nbsp;between&nbsp;receiving&nbsp;a&nbsp;FL_PUSH&nbsp;and&nbsp;a&nbsp;FL_RELEASE<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;event&nbsp;if&nbsp;the&nbsp;ptr_flobject.contents.want_update&nbsp;field&nbsp;is&nbsp;set&nbsp;for<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;the&nbsp;flobject.&nbsp;Like&nbsp;for&nbsp;the&nbsp;FL_STEP&nbsp;event&nbsp;the&nbsp;handling&nbsp;routine<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;receives&nbsp;a&nbsp;synthetic&nbsp;MotionNotify&nbsp;event&nbsp;as&nbsp;the&nbsp;<a href="#XEvent">XEvent</a>.&nbsp;This&nbsp;is<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;typically&nbsp;used&nbsp;by&nbsp;flobjects&nbsp;that&nbsp;have&nbsp;to&nbsp;perform&nbsp;tasks&nbsp;at&nbsp;regular<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;time&nbsp;intervals&nbsp;while&nbsp;they&nbsp;are&nbsp;"pushed"&nbsp;(e.g.&nbsp;counters&nbsp;that&nbsp;need<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;to&nbsp;count&nbsp;up&nbsp;or&nbsp;down&nbsp;while&nbsp;the&nbsp;mouse&nbsp;is&nbsp;pushed&nbsp;on&nbsp;one&nbsp;of&nbsp;its<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;buttons).<br>
 &nbsp;&nbsp;&nbsp;&nbsp;FL_STEP<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;A&nbsp;FL_STEP&nbsp;event&nbsp;is&nbsp;sent&nbsp;all&nbsp;the&nbsp;time&nbsp;(typically&nbsp;about&nbsp;20&nbsp;times<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;a&nbsp;second&nbsp;but&nbsp;possibly&nbsp;less&nbsp;often&nbsp;because&nbsp;of&nbsp;system&nbsp;delays&nbsp;and<br>
@@ -14304,7 +14401,6 @@ Admitted&nbsp;values<br>
 &nbsp;<br>
 Admitted&nbsp;values<br>
 ---------------<br>
-&nbsp;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;FL_POPUP_NONE<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;No&nbsp;special&nbsp;flags&nbsp;are&nbsp;set&nbsp;for&nbsp;the&nbsp;state&nbsp;of&nbsp;the&nbsp;popup<br>
 &nbsp;&nbsp;&nbsp;&nbsp;FL_POPUP_DISABLED<br>
@@ -14493,9 +14589,9 @@ Attributes<br>
 ----------<br>
 &nbsp;&nbsp;&nbsp;&nbsp;type&nbsp;:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;image&nbsp;type<br>
-&nbsp;&nbsp;&nbsp;&nbsp;width&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;w&nbsp;:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;image&nbsp;width<br>
-&nbsp;&nbsp;&nbsp;&nbsp;height&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;h&nbsp;:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;image&nbsp;height<br>
 &nbsp;&nbsp;&nbsp;&nbsp;app_data&nbsp;:&nbsp;pointer&nbsp;to&nbsp;void<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;for&nbsp;application&nbsp;at&nbsp;setup&nbsp;time<br>
@@ -15619,259 +15715,12 @@ Methods inherited from _ctypes._CData:<br>
 <table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
 <tr bgcolor="#ffc8d8">
 <td colspan=3 valign=bottom>&nbsp;<br>
-<font color="#000000" face="helvetica, arial"><a name="function_prototype_for_FL_APPEVENT_CB">class <strong>function_prototype_for_FL_APPEVENT_CB</strong></a>(<a href="__builtin__.html#object">__builtin__.object</a>)</font></td></tr>
-    
-<tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
-<td colspan=2><tt>FL_APPEVENT_CB(ptr_XEvent,&nbsp;vdata)&nbsp;-&gt;&nbsp;num.<br>
-&nbsp;<br>
-prototype&nbsp;for&nbsp;handling&nbsp;event&nbsp;callback&nbsp;(used&nbsp;by&nbsp;fl_set_event_callback,<br>
-fl_set_idle_callback,&nbsp;fl_add_event_callback),&nbsp;returning&nbsp;value.<br>&nbsp;</tt></td></tr>
-<tr><td>&nbsp;</td>
-<td width="100%">Data descriptors defined here:<br>
-<dl><dt><strong>__dict__</strong></dt>
-<dd><tt>dictionary&nbsp;for&nbsp;instance&nbsp;variables&nbsp;(if&nbsp;defined)</tt></dd>
-</dl>
-<dl><dt><strong>__weakref__</strong></dt>
-<dd><tt>list&nbsp;of&nbsp;weak&nbsp;references&nbsp;to&nbsp;the&nbsp;object&nbsp;(if&nbsp;defined)</tt></dd>
-</dl>
-</td></tr></table> <p>
-<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
-<tr bgcolor="#ffc8d8">
-<td colspan=3 valign=bottom>&nbsp;<br>
 <font color="#000000" face="helvetica, arial"><a name="function_prototype_for_FL_BROWSER_SCROLL_CALLBACK">class <strong>function_prototype_for_FL_BROWSER_SCROLL_CALLBACK</strong></a>(<a href="__builtin__.html#object">__builtin__.object</a>)</font></td></tr>
     
 <tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
 <td colspan=2><tt>FL_BROWSER_SCROLL_CALLBACK(ptr_flobject,&nbsp;int,&nbsp;vdata)<br>
 &nbsp;<br>
 prototype&nbsp;for&nbsp;function&nbsp;handling&nbsp;callback&nbsp;for&nbsp;browser&nbsp;flobjects,<br>
-no&nbsp;return<br>&nbsp;</tt></td></tr>
-<tr><td>&nbsp;</td>
-<td width="100%">Data descriptors defined here:<br>
-<dl><dt><strong>__dict__</strong></dt>
-<dd><tt>dictionary&nbsp;for&nbsp;instance&nbsp;variables&nbsp;(if&nbsp;defined)</tt></dd>
-</dl>
-<dl><dt><strong>__weakref__</strong></dt>
-<dd><tt>list&nbsp;of&nbsp;weak&nbsp;references&nbsp;to&nbsp;the&nbsp;object&nbsp;(if&nbsp;defined)</tt></dd>
-</dl>
-</td></tr></table> <p>
-<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
-<tr bgcolor="#ffc8d8">
-<td colspan=3 valign=bottom>&nbsp;<br>
-<font color="#000000" face="helvetica, arial"><a name="function_prototype_for_FL_CALLBACKPTR">class <strong>function_prototype_for_FL_CALLBACKPTR</strong></a>(<a href="__builtin__.html#object">__builtin__.object</a>)</font></td></tr>
-    
-<tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
-<td colspan=2><tt>FL_CALLBACKPTR(ptr_flobject,&nbsp;longnum)<br>
-&nbsp;<br>
-prototype&nbsp;for&nbsp;handling&nbsp;a&nbsp;callback&nbsp;function&nbsp;bound&nbsp;to&nbsp;a&nbsp;flobject,&nbsp;no&nbsp;return<br>
-value&nbsp;(used&nbsp;by&nbsp;fl_set_object_callback)<br>&nbsp;</tt></td></tr>
-<tr><td>&nbsp;</td>
-<td width="100%">Data descriptors defined here:<br>
-<dl><dt><strong>__dict__</strong></dt>
-<dd><tt>dictionary&nbsp;for&nbsp;instance&nbsp;variables&nbsp;(if&nbsp;defined)</tt></dd>
-</dl>
-<dl><dt><strong>__weakref__</strong></dt>
-<dd><tt>list&nbsp;of&nbsp;weak&nbsp;references&nbsp;to&nbsp;the&nbsp;object&nbsp;(if&nbsp;defined)</tt></dd>
-</dl>
-</td></tr></table> <p>
-<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
-<tr bgcolor="#ffc8d8">
-<td colspan=3 valign=bottom>&nbsp;<br>
-<font color="#000000" face="helvetica, arial"><a name="function_prototype_for_FL_DRAWPTR">class <strong>function_prototype_for_FL_DRAWPTR</strong></a>(<a href="__builtin__.html#object">__builtin__.object</a>)</font></td></tr>
-    
-<tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
-<td colspan=2><tt>FL_DRAWPTR(xpos,&nbsp;ypos,&nbsp;width,&nbsp;height,&nbsp;angle_degree_rotation,&nbsp;colr)<br>
-&nbsp;<br>
-prototype&nbsp;for&nbsp;handling&nbsp;a&nbsp;symbol&nbsp;drawing&nbsp;(used&nbsp;by&nbsp;fl_add_symbol),<br>
-no&nbsp;return<br>&nbsp;</tt></td></tr>
-<tr><td>&nbsp;</td>
-<td width="100%">Data descriptors defined here:<br>
-<dl><dt><strong>__dict__</strong></dt>
-<dd><tt>dictionary&nbsp;for&nbsp;instance&nbsp;variables&nbsp;(if&nbsp;defined)</tt></dd>
-</dl>
-<dl><dt><strong>__weakref__</strong></dt>
-<dd><tt>list&nbsp;of&nbsp;weak&nbsp;references&nbsp;to&nbsp;the&nbsp;object&nbsp;(if&nbsp;defined)</tt></dd>
-</dl>
-</td></tr></table> <p>
-<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
-<tr bgcolor="#ffc8d8">
-<td colspan=3 valign=bottom>&nbsp;<br>
-<font color="#000000" face="helvetica, arial"><a name="function_prototype_for_FL_ERROR_FUNC">class <strong>function_prototype_for_FL_ERROR_FUNC</strong></a>(<a href="__builtin__.html#object">__builtin__.object</a>)</font></td></tr>
-    
-<tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
-<td colspan=2><tt>FL_ERROR_FUNC(function_name,&nbsp;error_message)<br>
-&nbsp;<br>
-prototype&nbsp;for&nbsp;handling&nbsp;errors&nbsp;(used&nbsp;by&nbsp;fl_set_error_handler),&nbsp;no&nbsp;return<br>&nbsp;</tt></td></tr>
-<tr><td>&nbsp;</td>
-<td width="100%">Data descriptors defined here:<br>
-<dl><dt><strong>__dict__</strong></dt>
-<dd><tt>dictionary&nbsp;for&nbsp;instance&nbsp;variables&nbsp;(if&nbsp;defined)</tt></dd>
-</dl>
-<dl><dt><strong>__weakref__</strong></dt>
-<dd><tt>list&nbsp;of&nbsp;weak&nbsp;references&nbsp;to&nbsp;the&nbsp;object&nbsp;(if&nbsp;defined)</tt></dd>
-</dl>
-</td></tr></table> <p>
-<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
-<tr bgcolor="#ffc8d8">
-<td colspan=3 valign=bottom>&nbsp;<br>
-<font color="#000000" face="helvetica, arial"><a name="function_prototype_for_FL_FORMCALLBACKPTR">class <strong>function_prototype_for_FL_FORMCALLBACKPTR</strong></a>(<a href="__builtin__.html#object">__builtin__.object</a>)</font></td></tr>
-    
-<tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
-<td colspan=2><tt>FL_FORMCALLBACKPTR(ptr_flobject,&nbsp;vdata)<br>
-&nbsp;<br>
-prototype&nbsp;for&nbsp;handling&nbsp;a&nbsp;callback&nbsp;for&nbsp;the&nbsp;entire&nbsp;form&nbsp;(used&nbsp;by<br>
-fl_set_form_callback),&nbsp;no&nbsp;return&nbsp;value<br>&nbsp;</tt></td></tr>
-<tr><td>&nbsp;</td>
-<td width="100%">Data descriptors defined here:<br>
-<dl><dt><strong>__dict__</strong></dt>
-<dd><tt>dictionary&nbsp;for&nbsp;instance&nbsp;variables&nbsp;(if&nbsp;defined)</tt></dd>
-</dl>
-<dl><dt><strong>__weakref__</strong></dt>
-<dd><tt>list&nbsp;of&nbsp;weak&nbsp;references&nbsp;to&nbsp;the&nbsp;object&nbsp;(if&nbsp;defined)</tt></dd>
-</dl>
-</td></tr></table> <p>
-<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
-<tr bgcolor="#ffc8d8">
-<td colspan=3 valign=bottom>&nbsp;<br>
-<font color="#000000" face="helvetica, arial"><a name="function_prototype_for_FL_FORM_ATACTIVATE">class <strong>function_prototype_for_FL_FORM_ATACTIVATE</strong></a>(<a href="__builtin__.html#object">__builtin__.object</a>)</font></td></tr>
-    
-<tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
-<td colspan=2><tt>FL_FORM_ATACTIVATE(ptr_flform,&nbsp;vdata)<br>
-&nbsp;<br>
-prototype&nbsp;when&nbsp;a&nbsp;form&nbsp;is&nbsp;activated&nbsp;(used&nbsp;by&nbsp;fl_set_form_atactivate),<br>
-no&nbsp;return&nbsp;value<br>&nbsp;</tt></td></tr>
-<tr><td>&nbsp;</td>
-<td width="100%">Data descriptors defined here:<br>
-<dl><dt><strong>__dict__</strong></dt>
-<dd><tt>dictionary&nbsp;for&nbsp;instance&nbsp;variables&nbsp;(if&nbsp;defined)</tt></dd>
-</dl>
-<dl><dt><strong>__weakref__</strong></dt>
-<dd><tt>list&nbsp;of&nbsp;weak&nbsp;references&nbsp;to&nbsp;the&nbsp;object&nbsp;(if&nbsp;defined)</tt></dd>
-</dl>
-</td></tr></table> <p>
-<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
-<tr bgcolor="#ffc8d8">
-<td colspan=3 valign=bottom>&nbsp;<br>
-<font color="#000000" face="helvetica, arial"><a name="function_prototype_for_FL_FORM_ATCLOSE">class <strong>function_prototype_for_FL_FORM_ATCLOSE</strong></a>(<a href="__builtin__.html#object">__builtin__.object</a>)</font></td></tr>
-    
-<tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
-<td colspan=2><tt>FL_FORM_ATCLOSE(ptr_flform,&nbsp;vdata)&nbsp;-&gt;&nbsp;num<br>
-&nbsp;<br>
-prototype&nbsp;when&nbsp;a&nbsp;form&nbsp;is&nbsp;closed&nbsp;(used&nbsp;by&nbsp;fl_set_form_atclose,<br>
-fl_set_atclose),&nbsp;returning&nbsp;value<br>&nbsp;</tt></td></tr>
-<tr><td>&nbsp;</td>
-<td width="100%">Data descriptors defined here:<br>
-<dl><dt><strong>__dict__</strong></dt>
-<dd><tt>dictionary&nbsp;for&nbsp;instance&nbsp;variables&nbsp;(if&nbsp;defined)</tt></dd>
-</dl>
-<dl><dt><strong>__weakref__</strong></dt>
-<dd><tt>list&nbsp;of&nbsp;weak&nbsp;references&nbsp;to&nbsp;the&nbsp;object&nbsp;(if&nbsp;defined)</tt></dd>
-</dl>
-</td></tr></table> <p>
-<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
-<tr bgcolor="#ffc8d8">
-<td colspan=3 valign=bottom>&nbsp;<br>
-<font color="#000000" face="helvetica, arial"><a name="function_prototype_for_FL_FORM_ATDEACTIVATE">class <strong>function_prototype_for_FL_FORM_ATDEACTIVATE</strong></a>(<a href="__builtin__.html#object">__builtin__.object</a>)</font></td></tr>
-    
-<tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
-<td colspan=2><tt>FL_FORM_DEATACTIVATE(ptr_flform,&nbsp;vdata)<br>
-&nbsp;<br>
-prototype&nbsp;when&nbsp;a&nbsp;form&nbsp;is&nbsp;deactivated&nbsp;(used&nbsp;by&nbsp;fl_set_form_atdeactivate),<br>
-no&nbsp;return&nbsp;value<br>&nbsp;</tt></td></tr>
-<tr><td>&nbsp;</td>
-<td width="100%">Data descriptors defined here:<br>
-<dl><dt><strong>__dict__</strong></dt>
-<dd><tt>dictionary&nbsp;for&nbsp;instance&nbsp;variables&nbsp;(if&nbsp;defined)</tt></dd>
-</dl>
-<dl><dt><strong>__weakref__</strong></dt>
-<dd><tt>list&nbsp;of&nbsp;weak&nbsp;references&nbsp;to&nbsp;the&nbsp;object&nbsp;(if&nbsp;defined)</tt></dd>
-</dl>
-</td></tr></table> <p>
-<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
-<tr bgcolor="#ffc8d8">
-<td colspan=3 valign=bottom>&nbsp;<br>
-<font color="#000000" face="helvetica, arial"><a name="function_prototype_for_FL_HANDLEPTR">class <strong>function_prototype_for_FL_HANDLEPTR</strong></a>(<a href="__builtin__.html#object">__builtin__.object</a>)</font></td></tr>
-    
-<tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
-<td colspan=2><tt>FL_HANDLEPTR(ptr_flobject,&nbsp;num,&nbsp;coord,&nbsp;coord,&nbsp;num,&nbsp;vdata)&nbsp;-&gt;&nbsp;num<br>
-&nbsp;<br>
-prototype&nbsp;for&nbsp;registering&nbsp;a&nbsp;pre-&nbsp;or&nbsp;post-&nbsp;handler&nbsp;for&nbsp;a&nbsp;flobject,<br>
-returning&nbsp;value&nbsp;(used&nbsp;by&nbsp;fl_set_object_prehandler,<br>
-fl_set_object_posthandler,&nbsp;fl_make_object)<br>&nbsp;</tt></td></tr>
-<tr><td>&nbsp;</td>
-<td width="100%">Data descriptors defined here:<br>
-<dl><dt><strong>__dict__</strong></dt>
-<dd><tt>dictionary&nbsp;for&nbsp;instance&nbsp;variables&nbsp;(if&nbsp;defined)</tt></dd>
-</dl>
-<dl><dt><strong>__weakref__</strong></dt>
-<dd><tt>list&nbsp;of&nbsp;weak&nbsp;references&nbsp;to&nbsp;the&nbsp;object&nbsp;(if&nbsp;defined)</tt></dd>
-</dl>
-</td></tr></table> <p>
-<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
-<tr bgcolor="#ffc8d8">
-<td colspan=3 valign=bottom>&nbsp;<br>
-<font color="#000000" face="helvetica, arial"><a name="function_prototype_for_FL_IO_CALLBACK">class <strong>function_prototype_for_FL_IO_CALLBACK</strong></a>(<a href="__builtin__.html#object">__builtin__.object</a>)</font></td></tr>
-    
-<tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
-<td colspan=2><tt>FL_IO_CALLBACK(num,&nbsp;vdata)<br>
-&nbsp;<br>
-prototype&nbsp;for&nbsp;handling&nbsp;IO&nbsp;callback&nbsp;(used&nbsp;by&nbsp;fl_add_io_callback,<br>
-fl_remove_io_callback),&nbsp;no&nbsp;return<br>&nbsp;</tt></td></tr>
-<tr><td>&nbsp;</td>
-<td width="100%">Data descriptors defined here:<br>
-<dl><dt><strong>__dict__</strong></dt>
-<dd><tt>dictionary&nbsp;for&nbsp;instance&nbsp;variables&nbsp;(if&nbsp;defined)</tt></dd>
-</dl>
-<dl><dt><strong>__weakref__</strong></dt>
-<dd><tt>list&nbsp;of&nbsp;weak&nbsp;references&nbsp;to&nbsp;the&nbsp;object&nbsp;(if&nbsp;defined)</tt></dd>
-</dl>
-</td></tr></table> <p>
-<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
-<tr bgcolor="#ffc8d8">
-<td colspan=3 valign=bottom>&nbsp;<br>
-<font color="#000000" face="helvetica, arial"><a name="function_prototype_for_FL_RAW_CALLBACK">class <strong>function_prototype_for_FL_RAW_CALLBACK</strong></a>(<a href="__builtin__.html#object">__builtin__.object</a>)</font></td></tr>
-    
-<tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
-<td colspan=2><tt>FL_RAW_CALLBACK(ptr_flform,&nbsp;ptr_XEvent)&nbsp;-&gt;&nbsp;num.<br>
-&nbsp;<br>
-prototype&nbsp;for&nbsp;handling&nbsp;a&nbsp;raw&nbsp;callback&nbsp;for&nbsp;X&nbsp;events&nbsp;(used&nbsp;by<br>
-fl_register_raw_callback),&nbsp;with&nbsp;returning&nbsp;value<br>&nbsp;</tt></td></tr>
-<tr><td>&nbsp;</td>
-<td width="100%">Data descriptors defined here:<br>
-<dl><dt><strong>__dict__</strong></dt>
-<dd><tt>dictionary&nbsp;for&nbsp;instance&nbsp;variables&nbsp;(if&nbsp;defined)</tt></dd>
-</dl>
-<dl><dt><strong>__weakref__</strong></dt>
-<dd><tt>list&nbsp;of&nbsp;weak&nbsp;references&nbsp;to&nbsp;the&nbsp;object&nbsp;(if&nbsp;defined)</tt></dd>
-</dl>
-</td></tr></table> <p>
-<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
-<tr bgcolor="#ffc8d8">
-<td colspan=3 valign=bottom>&nbsp;<br>
-<font color="#000000" face="helvetica, arial"><a name="function_prototype_for_FL_SIGNAL_HANDLER">class <strong>function_prototype_for_FL_SIGNAL_HANDLER</strong></a>(<a href="__builtin__.html#object">__builtin__.object</a>)</font></td></tr>
-    
-<tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
-<td colspan=2><tt>FL_SIGNAL_HANDLER(num,&nbsp;vdata)<br>
-&nbsp;<br>
-prototype&nbsp;for&nbsp;handling&nbsp;signal&nbsp;callback&nbsp;(used&nbsp;by&nbsp;fl_add_signal_callback),<br>
-no&nbsp;return<br>&nbsp;</tt></td></tr>
-<tr><td>&nbsp;</td>
-<td width="100%">Data descriptors defined here:<br>
-<dl><dt><strong>__dict__</strong></dt>
-<dd><tt>dictionary&nbsp;for&nbsp;instance&nbsp;variables&nbsp;(if&nbsp;defined)</tt></dd>
-</dl>
-<dl><dt><strong>__weakref__</strong></dt>
-<dd><tt>list&nbsp;of&nbsp;weak&nbsp;references&nbsp;to&nbsp;the&nbsp;object&nbsp;(if&nbsp;defined)</tt></dd>
-</dl>
-</td></tr></table> <p>
-<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
-<tr bgcolor="#ffc8d8">
-<td colspan=3 valign=bottom>&nbsp;<br>
-<font color="#000000" face="helvetica, arial"><a name="function_prototype_for_FL_TIMEOUT_CALLBACK">class <strong>function_prototype_for_FL_TIMEOUT_CALLBACK</strong></a>(<a href="__builtin__.html#object">__builtin__.object</a>)</font></td></tr>
-    
-<tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
-<td colspan=2><tt>FL_TIMEOUT_CALLBACK(num,&nbsp;vdata)<br>
-&nbsp;<br>
-prototype&nbsp;for&nbsp;handling&nbsp;timeout&nbsp;callback&nbsp;(used&nbsp;by&nbsp;fl_add_timeout),<br>
 no&nbsp;return<br>&nbsp;</tt></td></tr>
 <tr><td>&nbsp;</td>
 <td width="100%">Data descriptors defined here:<br>
@@ -16859,7 +16708,6 @@ no&nbsp;return<br>&nbsp;</tt></td></tr>
 <strong>PropertyNotify</strong> = 28<br>
 <strong>PseudoColor</strong> = 3<br>
 <strong>RESIZE_list</strong> = [0, 1, 2, 3]<br>
-<strong>RETURN_list</strong> = [0, 1, 2, 4, 8, 16, 1024, -5]<br>
 <strong>RTYPE_list</strong> = [0, 10, 11, 12, 13, 14, 15]<br>
 <strong>ReparentNotify</strong> = 21<br>
 <strong>ResizeRedirectMask</strong> = 262144<br>
@@ -17148,4 +16996,4 @@ no&nbsp;return<br>&nbsp;</tt></td></tr>
 <strong>special_sequences_for_entry_text_t</strong> = '     %t (no argument)<font color="#c040c0">\n</font>    makes the entry a "tog...ens automatically when the entry<font color="#c040c0">\n</font>    is selected.'<br>
 <strong>special_sequences_for_entry_text_u</strong> = '     %u (with additional separate argument as da...xforms-python it does not fully work as expected.'<br>
 <strong>special_sequences_for_entry_text_x</strong> = '     %x (with additional separate argument as a ...is passed to all callback routines for the entry.'</td></tr></table>
-<p>Updated on: 2010-12-25 01:55 +0100</body></html>
+<p>Updated on: 2011-01-01 23:39 +0100</body></html>

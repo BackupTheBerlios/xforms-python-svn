@@ -4,7 +4,7 @@
 """ xforms-python's functions to manage basic generic flobjects.
 """
 
-#    Copyright (C) 2009, 2010  Luca Lazzaroni "LukenShiro"
+#    Copyright (C) 2009, 2010, 2011  Luca Lazzaroni "LukenShiro"
 #    e-mail: <lukenshiro@ngi.it>
 #
 #    This program is free software: you can redistribute it and/or modify
@@ -33,12 +33,6 @@
 import ctypes as cty
 from xformslib import library
 from xformslib import xfdata
-
-
-# exported variable
-#FL_EVENT = (cty.POINTER(xfdata.FL_OBJECT)).in_dll( \
-#        library.load_so_libforms(), 'FL_EVENT')
-FL_EVENT = cty.POINTER(xfdata.FL_OBJECT)
 
 
 ########################################
@@ -103,8 +97,9 @@ def fl_add_io_callback(fd, fmask, pyfn_IoCallback, vdata):
             Values (from xfdata.py) are FL_READ (file descriptor has data
             available), FL_WRITE (file descriptor is available for writing),
             FL_EXCEPT (an I/O error has occurred)
-        pyfn_IoCallback : python function to be invoked, no return
-            name referring to function(num, vdata)
+        pyfn_IoCallback : python function, no return
+            name referring to function([int]num, [pointer to void]vdata)
+            function to be invoked on said circumstances
         vdata : any type (e.g. None, int, str, etc..)
             user data to be passed to function; callback has to take care
             of type check.
@@ -153,8 +148,9 @@ def fl_remove_io_callback(fd, fmask, pyfn_IoCallback):
             Values (from xfdata.py) are FL_READ (file descriptor has data
             available), FL_WRITE (file descriptor is available for writing),
             FL_EXCEPT (an I/O error has occurred)
-        pyfn_IoCallback : python function to be removed, no return
-            name referring to function(num, vdata)
+        pyfn_IoCallback : python function, no return
+            name referring to function([int]num, [pointer to void]vdata)
+            function to be removed on said circumstances
 
     Examples
     --------
@@ -200,7 +196,7 @@ def fl_add_signal_callback(sglnum, pyfn_SignalHandler, vdata):
             signal number. Values (from external signal module)
             SIGALRM, SIGINT, ...
         pyfn_SignalHandler : python function callback, no return
-            name referring to function(num, vdata)
+            name referring to function([int]num, [pointer to void]vdata)
             callback invoked after catching signal
         vdata : any type (e.g. None, int, str, etc..)
             user data to be passed to function; callback has to take care
@@ -336,16 +332,16 @@ def fl_input_end_return_handling(endtype):
         endtype : int
             how end return event for input is handled. Values (from xfdata.py)
             FL_INPUT_END_EVENT_CLASSIC (old behavior)
-                Uses old behavior in handling return of end event for input. An
-                "end of edit" event was not reported back to the program when
-                the user clicked on a non-input flobject, i.e. changed to a
-                different input flobject. This let to some problems when the
-                interaction with the clicked-on non-input flobject depended
+                Uses old behavior in handling return of end event for input.
+                An "end of edit" event was not reported back to the program
+                when the user clicked on a non-input flobject, i.e. changed
+                to a different input flobject. This let to some problems when
+                the interaction with the clicked-on non-input flobject depended
                 on the new content of the input flobject, just having been
                 edited, but which had not been been reported back to the caller.
             FL_INPUT_END_EVENT_ALWAYS (default)
-                Uses new (default) behavior in handling return of end event for
-                input. It means that the user either hits the <Tab> or the
+                Uses new (default) behavior in handling return of end event
+                for input. It means that the user either hits the <Tab> or the
                 <Return> key (except for multi-line inputs) or that he/she
                 clicks onto some other flobject that in principle allows user
                 interaction. These events are interpreted as an indication the
@@ -361,8 +357,7 @@ def fl_input_end_return_handling(endtype):
 
     Examples
     --------
-        >>> fl_input_end_return_handling( \
-                xfdata.FL_INPUT_END_EVENT_CLASSIC)
+        >>> fl_input_end_return_handling(xfdata.FL_INPUT_END_EVENT_CLASSIC)
 
     Notes
     -----
@@ -394,7 +389,7 @@ def fl_add_timeout(msec, pyfn_TimeoutCallback, vdata):
         msec : long
             time elapsed in milliseconds
         pyfn_TimeoutCallback : python function to be invoked, no return
-            name referring to function(num, vdata)
+            name referring to function([int]num, [pointer to void]vdata)
         vdata : any type (e.g. 'None', int, str, etc..)
             user data to be passed to function; callback has to take care
             of type check.
@@ -904,7 +899,8 @@ def fl_set_form_atclose(ptr_flform, pyfn_FormAtclose, vdata):
         ptr_flform : pointer to xfdata.FL_FORM
             form that receives the message
         pyfn_FormAtclose : python callback to be called, returned value
-            name referring to function(ptr_flform, vdata) -> num
+            name referring to function(ptr_flform, [pointer to void]vdata)
+             -> [int]num
         vdata : any type (e.g. 'None', int, str, etc..)
             user data to be passed to function; callback has to take care
             of type check.
@@ -916,10 +912,10 @@ def fl_set_form_atclose(ptr_flform, pyfn_FormAtclose, vdata):
 
     Examples
     --------
-        >>> def atcolsecb(pform, vdata):
+        >>> def atclosecb(pform, vdata):
         >>> ... <something>
         >>> ... return 0
-        >>> oldatclosecb = fl_set_form_atclose(pform1, None)
+        >>> oldatclosecb = fl_set_form_atclose(pform1, atclosecb, None)
 
     Notes
     -----
@@ -953,7 +949,8 @@ def fl_set_atclose(pyfn_FormAtclose, vdata):
     Parameters
     ----------
         pyfn_FormAtclose : python callback to be called, returned value
-            name referring to function(ptr_flform, vdata) -> num
+            name referring to function(ptr_flform, [pointer to void]vdata)
+             -> [int]num
         vdata : any type (e.g. 'None', int, str, etc..)
             user data to be passed to function; callback has to take care
             of type check.
@@ -968,7 +965,7 @@ def fl_set_atclose(pyfn_FormAtclose, vdata):
         >>> def atclosecb(pform, vdata):
         >>> ... <something>
         >>> ... return 0
-        >>> oldatclosefunc = fl_set_atclose(atclosecb, None)
+        >>> oldatclosefunc = fl_set_atclose(pform1, atclosecb, None)
 
     Notes
     -----
@@ -1004,7 +1001,7 @@ def fl_set_form_atactivate(ptr_flform, pyfn_FormAtactivate, vdata):
         ptr_flform : pointer to xfdata.FL_FORM
             activated form
         pyfn_FormAtactivate : python callback function called, no return
-            name referring to function(ptr_flform, vdata)
+            name referring to function(ptr_flform, [pointer to void]vdata)
         vdata : any type (e.g. 'None', int, str, etc..)
             user data to be passed to function; callback has to take care
             of type check.
@@ -1057,7 +1054,7 @@ def fl_set_form_atdeactivate(ptr_flform, pyfn_FormAtdeactivate, vdata):
         ptr_flform : pointer to xfdata.FL_FORM
             de-activated form
         pyfn_FormAtdeactivate : python callback function called, no return
-            name referring to function(ptr_flform, vdata)
+            name referring to function(ptr_flform, [pointer to void]vdata)
         vdata : any type (e.g. 'None', int, str, etc..)
             user data to be passed to function; callback has to take care
             of type check.
@@ -1495,7 +1492,7 @@ def fl_set_form_callback(ptr_flform, pyfn_FormCallbackPtr, vdata):
         ptr_flform : pointer to xfdata.FL_FORM
             form whose callback has to be set
         pyfn_FormCallbackPtr : python callback to be set, no return
-            name referring to function(ptr_flobject, vdata)
+            name referring to function(ptr_flobject, [pointer to void]vdata)
         vdata : any type (e.g. 'None', int, str, etc..)
             user data to be passed to function; callback has to take care
             of type check
@@ -2235,8 +2232,8 @@ def fl_form_is_iconified(ptr_flform):
     return retval
 
 
-def fl_register_raw_callback(ptr_flform, mask, pyfn_RawCallback):
-    """fl_register_raw_callback(ptr_flform, mask, pyfn_RawCallback)
+def fl_register_raw_callback(ptr_flform, evmask, pyfn_RawCallback):
+    """fl_register_raw_callback(ptr_flform, evmask, pyfn_RawCallback)
     -> RawCallback
 
     Registers preemptive event handlers. Only one handler is allowed
@@ -2246,14 +2243,15 @@ def fl_register_raw_callback(ptr_flform, mask, pyfn_RawCallback):
     ----------
         ptr_flform : pointer to xfdata.FL_FORM
             form
-        mask : long_pos
+        evmask : long_pos
             key/button/window event mask (press, release, motion, enter,
             leave, etc..). Values (from xfdata.py) KeyPressMask and
             KeyReleaseMask, ButtonPressMask and ButtonReleaseMask,
             EnterWindowMask and LeaveWindowMask, ButtonMotionMask and
             PointerMotionMask, FL_ALL_EVENT
         pyfn_RawCallback : python callback function, returned value
-            name referring to function(ptr_flform, ptr_xevent) -> num
+            name referring to function(ptr_flform, ptr_xevent) -> [int]num
+            function for handling a raw callback for X events
 
     Returns
     -------
@@ -2283,12 +2281,12 @@ def fl_register_raw_callback(ptr_flform, mask, pyfn_RawCallback):
            long unsigned int mask, FL_RAW_CALLBACK rcb) """)
     library.check_if_initialized()
     library.verify_flformptr_type(ptr_flform)
-    ul_mask = library.convert_to_ulongc(mask)
+    ul_evmask = library.convert_to_ulongc(evmask)
     library.verify_function_type(pyfn_RawCallback)
     cfn_RawCallback = xfdata.FL_RAW_CALLBACK(pyfn_RawCallback)
     library.keep_cfunc_refs(cfn_RawCallback, pyfn_RawCallback)
-    library.keep_elem_refs(ptr_flform, mask, ul_mask)
-    retval = _fl_register_raw_callback(ptr_flform, ul_mask, \
+    library.keep_elem_refs(ptr_flform, evmask, ul_evmask)
+    retval = _fl_register_raw_callback(ptr_flform, ul_evmask, \
             cfn_RawCallback)
     return retval
 
@@ -3868,7 +3866,8 @@ def fl_for_all_objects(ptr_flform, pyfn_operatecb, vdata):
         ptr_flform : pointer to xfdata.FL_FORM
             form
         pyfn_operatecb : python callback function, returned value
-            name referring to function(ptr_flobject, vdata) -> num
+            name referring to function(ptr_flobject, [pointer to void]vdata)
+            -> [int]num
         vdata : any type (e.g. 'None', int, str, etc..)
             user data to be passed to function; callback has to take care
             of type check
@@ -3885,11 +3884,11 @@ def fl_for_all_objects(ptr_flform, pyfn_operatecb, vdata):
         Status: Untested + Doc + NoDemo = NOT OK
 
     """
-    # cfunc_int_pobject_pvoid = cty.CFUNCTYPE(cty.c_int,
-    #                  cty.POINTER(xfdata.FL_OBJECT), cty.c_void_p)
+    cfunc_int_pobject_pvoid = cty.CFUNCTYPE(cty.c_int,
+            cty.POINTER(xfdata.FL_OBJECT), cty.c_void_p)
     _fl_for_all_objects = library.cfuncproto(
         library.load_so_libforms(), "fl_for_all_objects", \
-        None, [cty.POINTER(xfdata.FL_FORM), xfdata.cfunc_int_pobject_pvoid,
+        None, [cty.POINTER(xfdata.FL_FORM), cfunc_int_pobject_pvoid,
         cty.c_void_p], \
         """void fl_for_all_objects(FL_FORM * form, int ( * cb ) \
            ( FL_OBJECT *, void * ), void * v)""")
@@ -4302,8 +4301,8 @@ def fl_set_object_prehandler(ptr_flobject, pyfn_HandlePtr):
         ptr_flobject : pointer to xfdata.FL_OBJECT
             flobject to be set
         pyfn_HandlePtr : python callback function, returned value
-            name referring to function(ptr_flobject, num, coord, coord,
-            num, vdata) -> num
+            name referring to function(ptr_flobject, [int]num, [int]coord,
+            [int]coord, [int]num, [pointer to void]vdata) -> [int]num
 
     Returns
     -------
@@ -4352,8 +4351,8 @@ def fl_set_object_posthandler(ptr_flobject, pyfn_HandlePtr):
         ptr_flobject : pointer to xfdata.FL_OBJECT
             flobject
         pyfn_HandlePtr : python callback function, returned value
-            name referring function(ptr_flobject, num, coord, coord, num,
-            vdata) -> num
+            name referring to function(ptr_flobject, [int]num, [int]coord,
+            [int]coord, [int]num, [pointer to void]vdata) -> [int]num
 
     Returns
     -------
@@ -4403,7 +4402,7 @@ def fl_set_object_callback(ptr_flobject, pyfn_CallbackPtr, numdata):
             flobject the callback is bound to
         pyfn_CallbackPtr : python function to be used as callback, no return
             name with no () and no args referring to function(ptr_flobject,
-            longnum)
+            [long]numdata)
         numdata : long
             numeric argument being passed to function
 
@@ -5887,9 +5886,10 @@ def fl_add_symbol(symbname, pyfn_DrawPtr, scalable):
         symbname : str
             name under which the symbol should be known (at most 15
             characters), without the leading @
-        pyfn_DrawPtr : python function to draw symbol, no return
-            name referring to function(coord, coord, coord, coord,
-            angle_degree_rotation, colr)
+        pyfn_DrawPtr : python function, no return
+            name referring to function([int]coord, [int]coord, [int]coord,
+            [int]coord, [int]angle_degree_rotation, [long_pos]colr)
+            function to draw a symbol
         scalable : int
             not used, a value of 0 will be fine
 
@@ -6663,8 +6663,8 @@ def fl_make_object(flobjclass, otype, xpos, ypos, width, height, label,
         label : str
             text label of flobject
         pyfn_HandlePtr : python function, returned value
-            name referring to fn(ptr_flobject, num, coord, coord,
-            num, vdata) -> num
+            name referring to function(ptr_flobject, [int]num, [int]coord,
+            [int]coord, [int]num, [pointer to void]vdata) -> [int]num
             function for handling flobject
 
     Returns
@@ -7181,7 +7181,7 @@ def fl_set_error_handler(pyfn_ErrorFunc):
     Parameters
     ----------
         pyfn_ErrorFunc : python function, no return
-            name referring to function(strng, strng)
+            name referring to function([str]name, [str]msg)
             function for handling error
 
     Examples

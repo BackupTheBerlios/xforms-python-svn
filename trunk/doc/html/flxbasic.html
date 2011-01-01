@@ -237,7 +237,8 @@ Parameters<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;PropertyNotify,&nbsp;SelectionClear,&nbsp;SelectionRequest,&nbsp;SelectionNotify<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;If&nbsp;it&nbsp;is&nbsp;0,&nbsp;the&nbsp;callback&nbsp;is&nbsp;for&nbsp;all&nbsp;events&nbsp;for&nbsp;the&nbsp;window<br>
 &nbsp;&nbsp;&nbsp;&nbsp;pyfn_AppEventCb&nbsp;:&nbsp;python&nbsp;function&nbsp;callback,&nbsp;returned&nbsp;value<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;name&nbsp;referring&nbsp;function(ptr_xevent,&nbsp;vdata)&nbsp;-&gt;&nbsp;num.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;name&nbsp;referring&nbsp;to&nbsp;function(ptr_xevent,&nbsp;[pointer&nbsp;to&nbsp;void]vdata)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-&gt;&nbsp;[int]num.<br>
 &nbsp;&nbsp;&nbsp;&nbsp;vdata&nbsp;:&nbsp;any&nbsp;type&nbsp;(e.g.&nbsp;'None',&nbsp;int,&nbsp;str,&nbsp;etc..)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;user&nbsp;data&nbsp;to&nbsp;be&nbsp;passed&nbsp;to&nbsp;function;&nbsp;callback&nbsp;has&nbsp;to&nbsp;take&nbsp;care<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;of&nbsp;type&nbsp;check<br>
@@ -2357,8 +2358,9 @@ is&nbsp;pending&nbsp;for&nbsp;the&nbsp;application's&nbsp;own&nbsp;window.<br>
 Parameters<br>
 ----------<br>
 &nbsp;&nbsp;&nbsp;&nbsp;pyfn_AppEventCb&nbsp;:&nbsp;python&nbsp;function&nbsp;callback,&nbsp;returned&nbsp;value<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;name&nbsp;referring&nbsp;to&nbsp;function(ptr_xevent,&nbsp;vdata)&nbsp;-&gt;&nbsp;num.<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The&nbsp;callback&nbsp;function&nbsp;normally&nbsp;should&nbsp;return&nbsp;0&nbsp;unless&nbsp;the<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;name&nbsp;referring&nbsp;to&nbsp;function(ptr_xevent,&nbsp;[pointer&nbsp;to&nbsp;void]vdata)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-&gt;&nbsp;[int]num.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The&nbsp;callback&nbsp;function&nbsp;normally&nbsp;should&nbsp;return&nbsp;0,&nbsp;unless&nbsp;the<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;event&nbsp;is&nbsp;not&nbsp;for&nbsp;one&nbsp;of&nbsp;the&nbsp;applcation-managed&nbsp;windows.<br>
 &nbsp;&nbsp;&nbsp;&nbsp;vdata&nbsp;:&nbsp;any&nbsp;type&nbsp;(e.g.&nbsp;'None',&nbsp;int,&nbsp;str,&nbsp;etc..)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;user&nbsp;data&nbsp;to&nbsp;be&nbsp;passed&nbsp;to&nbsp;function;&nbsp;callback&nbsp;has&nbsp;to&nbsp;take&nbsp;care<br>
@@ -2482,7 +2484,8 @@ range&nbsp;between&nbsp;50&nbsp;and&nbsp;300&nbsp;msec&nbsp;should&nbsp;be&nbsp;
 Parameters<br>
 ----------<br>
 &nbsp;&nbsp;&nbsp;&nbsp;pyfn_AppEventCb&nbsp;:&nbsp;python&nbsp;function&nbsp;callback,&nbsp;returning&nbsp;unused&nbsp;value<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;name&nbsp;referring&nbsp;to&nbsp;function(ptr_xevent,&nbsp;vdata)&nbsp;-&gt;&nbsp;num.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;name&nbsp;referring&nbsp;to&nbsp;function(ptr_xevent,&nbsp;[pointer&nbsp;to&nbsp;void]vdata)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-&gt;&nbsp;[int]num.<br>
 &nbsp;&nbsp;&nbsp;&nbsp;vdata&nbsp;:&nbsp;any&nbsp;type&nbsp;(e.g.&nbsp;'None',&nbsp;int,&nbsp;str,&nbsp;etc..)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;user&nbsp;data&nbsp;to&nbsp;be&nbsp;passed&nbsp;to&nbsp;function;&nbsp;callback&nbsp;has&nbsp;to&nbsp;take&nbsp;care<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;of&nbsp;type&nbsp;check<br>
@@ -3409,4 +3412,4 @@ Notes<br>
     
 <tr><td bgcolor="#55aa55"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
 <td width="100%"><strong>fl_state</strong> = &lt;flxbasic.FL_State_Array_6 object&gt;</td></tr></table>
-<p>Updated on: 2010-12-25 01:55 +0100</body></html>
+<p>Updated on: 2011-01-01 23:39 +0100</body></html>

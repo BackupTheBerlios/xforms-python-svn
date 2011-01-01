@@ -115,8 +115,9 @@ Parameters<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Values&nbsp;(from&nbsp;xfdata.py)&nbsp;are&nbsp;FL_READ&nbsp;(file&nbsp;descriptor&nbsp;has&nbsp;data<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;available),&nbsp;FL_WRITE&nbsp;(file&nbsp;descriptor&nbsp;is&nbsp;available&nbsp;for&nbsp;writing),<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_EXCEPT&nbsp;(an&nbsp;I/O&nbsp;error&nbsp;has&nbsp;occurred)<br>
-&nbsp;&nbsp;&nbsp;&nbsp;pyfn_IoCallback&nbsp;:&nbsp;python&nbsp;function&nbsp;to&nbsp;be&nbsp;invoked,&nbsp;no&nbsp;return<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;name&nbsp;referring&nbsp;to&nbsp;function(num,&nbsp;vdata)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;pyfn_IoCallback&nbsp;:&nbsp;python&nbsp;function,&nbsp;no&nbsp;return<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;name&nbsp;referring&nbsp;to&nbsp;function([int]num,&nbsp;[pointer&nbsp;to&nbsp;void]vdata)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;function&nbsp;to&nbsp;be&nbsp;invoked&nbsp;on&nbsp;said&nbsp;circumstances<br>
 &nbsp;&nbsp;&nbsp;&nbsp;vdata&nbsp;:&nbsp;any&nbsp;type&nbsp;(e.g.&nbsp;None,&nbsp;int,&nbsp;str,&nbsp;etc..)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;user&nbsp;data&nbsp;to&nbsp;be&nbsp;passed&nbsp;to&nbsp;function;&nbsp;callback&nbsp;has&nbsp;to&nbsp;take&nbsp;care<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;of&nbsp;type&nbsp;check.<br>
@@ -166,7 +167,7 @@ Parameters<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;signal&nbsp;number.&nbsp;Values&nbsp;(from&nbsp;external&nbsp;signal&nbsp;module)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;SIGALRM,&nbsp;SIGINT,&nbsp;...<br>
 &nbsp;&nbsp;&nbsp;&nbsp;pyfn_SignalHandler&nbsp;:&nbsp;python&nbsp;function&nbsp;callback,&nbsp;no&nbsp;return<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;name&nbsp;referring&nbsp;to&nbsp;function(num,&nbsp;vdata)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;name&nbsp;referring&nbsp;to&nbsp;function([int]num,&nbsp;[pointer&nbsp;to&nbsp;void]vdata)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;callback&nbsp;invoked&nbsp;after&nbsp;catching&nbsp;signal<br>
 &nbsp;&nbsp;&nbsp;&nbsp;vdata&nbsp;:&nbsp;any&nbsp;type&nbsp;(e.g.&nbsp;None,&nbsp;int,&nbsp;str,&nbsp;etc..)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;user&nbsp;data&nbsp;to&nbsp;be&nbsp;passed&nbsp;to&nbsp;function;&nbsp;callback&nbsp;has&nbsp;to&nbsp;take&nbsp;care<br>
@@ -191,9 +192,10 @@ Parameters<br>
 &nbsp;&nbsp;&nbsp;&nbsp;symbname&nbsp;:&nbsp;str<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;name&nbsp;under&nbsp;which&nbsp;the&nbsp;symbol&nbsp;should&nbsp;be&nbsp;known&nbsp;(at&nbsp;most&nbsp;15<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;characters),&nbsp;without&nbsp;the&nbsp;leading&nbsp;@<br>
-&nbsp;&nbsp;&nbsp;&nbsp;pyfn_DrawPtr&nbsp;:&nbsp;python&nbsp;function&nbsp;to&nbsp;draw&nbsp;symbol,&nbsp;no&nbsp;return<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;name&nbsp;referring&nbsp;to&nbsp;function(coord,&nbsp;coord,&nbsp;coord,&nbsp;coord,<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;angle_degree_rotation,&nbsp;colr)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;pyfn_DrawPtr&nbsp;:&nbsp;python&nbsp;function,&nbsp;no&nbsp;return<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;name&nbsp;referring&nbsp;to&nbsp;function([int]coord,&nbsp;[int]coord,&nbsp;[int]coord,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[int]coord,&nbsp;[int]angle_degree_rotation,&nbsp;[long_pos]colr)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;function&nbsp;to&nbsp;draw&nbsp;a&nbsp;symbol<br>
 &nbsp;&nbsp;&nbsp;&nbsp;scalable&nbsp;:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;not&nbsp;used,&nbsp;a&nbsp;value&nbsp;of&nbsp;0&nbsp;will&nbsp;be&nbsp;fine<br>
 &nbsp;<br>
@@ -221,7 +223,7 @@ Parameters<br>
 &nbsp;&nbsp;&nbsp;&nbsp;msec&nbsp;:&nbsp;long<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;time&nbsp;elapsed&nbsp;in&nbsp;milliseconds<br>
 &nbsp;&nbsp;&nbsp;&nbsp;pyfn_TimeoutCallback&nbsp;:&nbsp;python&nbsp;function&nbsp;to&nbsp;be&nbsp;invoked,&nbsp;no&nbsp;return<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;name&nbsp;referring&nbsp;to&nbsp;function(num,&nbsp;vdata)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;name&nbsp;referring&nbsp;to&nbsp;function([int]num,&nbsp;[pointer&nbsp;to&nbsp;void]vdata)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;vdata&nbsp;:&nbsp;any&nbsp;type&nbsp;(e.g.&nbsp;'None',&nbsp;int,&nbsp;str,&nbsp;etc..)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;user&nbsp;data&nbsp;to&nbsp;be&nbsp;passed&nbsp;to&nbsp;function;&nbsp;callback&nbsp;has&nbsp;to&nbsp;take&nbsp;care<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;of&nbsp;type&nbsp;check.<br>
@@ -1058,7 +1060,8 @@ Parameters<br>
 &nbsp;&nbsp;&nbsp;&nbsp;ptr_flform&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_FORM<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;form<br>
 &nbsp;&nbsp;&nbsp;&nbsp;pyfn_operatecb&nbsp;:&nbsp;python&nbsp;callback&nbsp;function,&nbsp;returned&nbsp;value<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;name&nbsp;referring&nbsp;to&nbsp;function(ptr_flobject,&nbsp;vdata)&nbsp;-&gt;&nbsp;num<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;name&nbsp;referring&nbsp;to&nbsp;function(ptr_flobject,&nbsp;[pointer&nbsp;to&nbsp;void]vdata)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-&gt;&nbsp;[int]num<br>
 &nbsp;&nbsp;&nbsp;&nbsp;vdata&nbsp;:&nbsp;any&nbsp;type&nbsp;(e.g.&nbsp;'None',&nbsp;int,&nbsp;str,&nbsp;etc..)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;user&nbsp;data&nbsp;to&nbsp;be&nbsp;passed&nbsp;to&nbsp;function;&nbsp;callback&nbsp;has&nbsp;to&nbsp;take&nbsp;care<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;of&nbsp;type&nbsp;check<br>
@@ -2433,16 +2436,16 @@ Parameters<br>
 &nbsp;&nbsp;&nbsp;&nbsp;endtype&nbsp;:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;how&nbsp;end&nbsp;return&nbsp;event&nbsp;for&nbsp;input&nbsp;is&nbsp;handled.&nbsp;Values&nbsp;(from&nbsp;xfdata.py)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_INPUT_END_EVENT_CLASSIC&nbsp;(old&nbsp;behavior)<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Uses&nbsp;old&nbsp;behavior&nbsp;in&nbsp;handling&nbsp;return&nbsp;of&nbsp;end&nbsp;event&nbsp;for&nbsp;input.&nbsp;An<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"end&nbsp;of&nbsp;edit"&nbsp;event&nbsp;was&nbsp;not&nbsp;reported&nbsp;back&nbsp;to&nbsp;the&nbsp;program&nbsp;when<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;the&nbsp;user&nbsp;clicked&nbsp;on&nbsp;a&nbsp;non-input&nbsp;flobject,&nbsp;i.e.&nbsp;changed&nbsp;to&nbsp;a<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;different&nbsp;input&nbsp;flobject.&nbsp;This&nbsp;let&nbsp;to&nbsp;some&nbsp;problems&nbsp;when&nbsp;the<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;interaction&nbsp;with&nbsp;the&nbsp;clicked-on&nbsp;non-input&nbsp;flobject&nbsp;depended<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Uses&nbsp;old&nbsp;behavior&nbsp;in&nbsp;handling&nbsp;return&nbsp;of&nbsp;end&nbsp;event&nbsp;for&nbsp;input.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;An&nbsp;"end&nbsp;of&nbsp;edit"&nbsp;event&nbsp;was&nbsp;not&nbsp;reported&nbsp;back&nbsp;to&nbsp;the&nbsp;program<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;when&nbsp;the&nbsp;user&nbsp;clicked&nbsp;on&nbsp;a&nbsp;non-input&nbsp;flobject,&nbsp;i.e.&nbsp;changed<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;to&nbsp;a&nbsp;different&nbsp;input&nbsp;flobject.&nbsp;This&nbsp;let&nbsp;to&nbsp;some&nbsp;problems&nbsp;when<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;the&nbsp;interaction&nbsp;with&nbsp;the&nbsp;clicked-on&nbsp;non-input&nbsp;flobject&nbsp;depended<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;on&nbsp;the&nbsp;new&nbsp;content&nbsp;of&nbsp;the&nbsp;input&nbsp;flobject,&nbsp;just&nbsp;having&nbsp;been<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;edited,&nbsp;but&nbsp;which&nbsp;had&nbsp;not&nbsp;been&nbsp;been&nbsp;reported&nbsp;back&nbsp;to&nbsp;the&nbsp;caller.<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_INPUT_END_EVENT_ALWAYS&nbsp;(default)<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Uses&nbsp;new&nbsp;(default)&nbsp;behavior&nbsp;in&nbsp;handling&nbsp;return&nbsp;of&nbsp;end&nbsp;event&nbsp;for<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;input.&nbsp;It&nbsp;means&nbsp;that&nbsp;the&nbsp;user&nbsp;either&nbsp;hits&nbsp;the&nbsp;&lt;Tab&gt;&nbsp;or&nbsp;the<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Uses&nbsp;new&nbsp;(default)&nbsp;behavior&nbsp;in&nbsp;handling&nbsp;return&nbsp;of&nbsp;end&nbsp;event<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;for&nbsp;input.&nbsp;It&nbsp;means&nbsp;that&nbsp;the&nbsp;user&nbsp;either&nbsp;hits&nbsp;the&nbsp;&lt;Tab&gt;&nbsp;or&nbsp;the<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;Return&gt;&nbsp;key&nbsp;(except&nbsp;for&nbsp;multi-line&nbsp;inputs)&nbsp;or&nbsp;that&nbsp;he/she<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;clicks&nbsp;onto&nbsp;some&nbsp;other&nbsp;flobject&nbsp;that&nbsp;in&nbsp;principle&nbsp;allows&nbsp;user<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;interaction.&nbsp;These&nbsp;events&nbsp;are&nbsp;interpreted&nbsp;as&nbsp;an&nbsp;indication&nbsp;the<br>
@@ -2458,7 +2461,7 @@ Returns<br>
 &nbsp;<br>
 Examples<br>
 --------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;<a href="#-fl_input_end_return_handling">fl_input_end_return_handling</a>(&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;xfdata.FL_INPUT_END_EVENT_CLASSIC)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;<a href="#-fl_input_end_return_handling">fl_input_end_return_handling</a>(xfdata.FL_INPUT_END_EVENT_CLASSIC)<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
@@ -2568,8 +2571,8 @@ Parameters<br>
 &nbsp;&nbsp;&nbsp;&nbsp;label&nbsp;:&nbsp;str<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;text&nbsp;label&nbsp;of&nbsp;flobject<br>
 &nbsp;&nbsp;&nbsp;&nbsp;pyfn_HandlePtr&nbsp;:&nbsp;python&nbsp;function,&nbsp;returned&nbsp;value<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;name&nbsp;referring&nbsp;to&nbsp;fn(ptr_flobject,&nbsp;num,&nbsp;coord,&nbsp;coord,<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;num,&nbsp;vdata)&nbsp;-&gt;&nbsp;num<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;name&nbsp;referring&nbsp;to&nbsp;function(ptr_flobject,&nbsp;[int]num,&nbsp;[int]coord,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[int]coord,&nbsp;[int]num,&nbsp;[pointer&nbsp;to&nbsp;void]vdata)&nbsp;-&gt;&nbsp;[int]num<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;function&nbsp;for&nbsp;handling&nbsp;flobject<br>
 &nbsp;<br>
 Returns<br>
@@ -2960,7 +2963,7 @@ Examples<br>
 Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;Demo&nbsp;=&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-fl_register_call_back"><strong>fl_register_call_back</strong></a> = fl_register_raw_callback(ptr_flform, mask, pyfn_RawCallback)</dt><dd><tt><a href="#-fl_register_raw_callback">fl_register_raw_callback</a>(ptr_flform,&nbsp;mask,&nbsp;pyfn_RawCallback)<br>
+ <dl><dt><a name="-fl_register_call_back"><strong>fl_register_call_back</strong></a> = fl_register_raw_callback(ptr_flform, evmask, pyfn_RawCallback)</dt><dd><tt><a href="#-fl_register_raw_callback">fl_register_raw_callback</a>(ptr_flform,&nbsp;evmask,&nbsp;pyfn_RawCallback)<br>
 -&gt;&nbsp;RawCallback<br>
 &nbsp;<br>
 Registers&nbsp;preemptive&nbsp;event&nbsp;handlers.&nbsp;Only&nbsp;one&nbsp;handler&nbsp;is&nbsp;allowed<br>
@@ -2970,14 +2973,15 @@ Parameters<br>
 ----------<br>
 &nbsp;&nbsp;&nbsp;&nbsp;ptr_flform&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_FORM<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;form<br>
-&nbsp;&nbsp;&nbsp;&nbsp;mask&nbsp;:&nbsp;long_pos<br>
+&nbsp;&nbsp;&nbsp;&nbsp;evmask&nbsp;:&nbsp;long_pos<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;key/button/window&nbsp;event&nbsp;mask&nbsp;(press,&nbsp;release,&nbsp;motion,&nbsp;enter,<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;leave,&nbsp;etc..).&nbsp;Values&nbsp;(from&nbsp;xfdata.py)&nbsp;KeyPressMask&nbsp;and<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;KeyReleaseMask,&nbsp;ButtonPressMask&nbsp;and&nbsp;ButtonReleaseMask,<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;EnterWindowMask&nbsp;and&nbsp;LeaveWindowMask,&nbsp;ButtonMotionMask&nbsp;and<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;PointerMotionMask,&nbsp;FL_ALL_EVENT<br>
 &nbsp;&nbsp;&nbsp;&nbsp;pyfn_RawCallback&nbsp;:&nbsp;python&nbsp;callback&nbsp;function,&nbsp;returned&nbsp;value<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;name&nbsp;referring&nbsp;to&nbsp;function(ptr_flform,&nbsp;ptr_xevent)&nbsp;-&gt;&nbsp;num<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;name&nbsp;referring&nbsp;to&nbsp;function(ptr_flform,&nbsp;ptr_xevent)&nbsp;-&gt;&nbsp;[int]num<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;function&nbsp;for&nbsp;handling&nbsp;a&nbsp;raw&nbsp;callback&nbsp;for&nbsp;X&nbsp;events<br>
 &nbsp;<br>
 Returns<br>
 -------<br>
@@ -2995,7 +2999,7 @@ Examples<br>
 Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;Demo&nbsp;=&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-fl_register_raw_callback"><strong>fl_register_raw_callback</strong></a>(ptr_flform, mask, pyfn_RawCallback)</dt><dd><tt><a href="#-fl_register_raw_callback">fl_register_raw_callback</a>(ptr_flform,&nbsp;mask,&nbsp;pyfn_RawCallback)<br>
+ <dl><dt><a name="-fl_register_raw_callback"><strong>fl_register_raw_callback</strong></a>(ptr_flform, evmask, pyfn_RawCallback)</dt><dd><tt><a href="#-fl_register_raw_callback">fl_register_raw_callback</a>(ptr_flform,&nbsp;evmask,&nbsp;pyfn_RawCallback)<br>
 -&gt;&nbsp;RawCallback<br>
 &nbsp;<br>
 Registers&nbsp;preemptive&nbsp;event&nbsp;handlers.&nbsp;Only&nbsp;one&nbsp;handler&nbsp;is&nbsp;allowed<br>
@@ -3005,14 +3009,15 @@ Parameters<br>
 ----------<br>
 &nbsp;&nbsp;&nbsp;&nbsp;ptr_flform&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_FORM<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;form<br>
-&nbsp;&nbsp;&nbsp;&nbsp;mask&nbsp;:&nbsp;long_pos<br>
+&nbsp;&nbsp;&nbsp;&nbsp;evmask&nbsp;:&nbsp;long_pos<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;key/button/window&nbsp;event&nbsp;mask&nbsp;(press,&nbsp;release,&nbsp;motion,&nbsp;enter,<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;leave,&nbsp;etc..).&nbsp;Values&nbsp;(from&nbsp;xfdata.py)&nbsp;KeyPressMask&nbsp;and<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;KeyReleaseMask,&nbsp;ButtonPressMask&nbsp;and&nbsp;ButtonReleaseMask,<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;EnterWindowMask&nbsp;and&nbsp;LeaveWindowMask,&nbsp;ButtonMotionMask&nbsp;and<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;PointerMotionMask,&nbsp;FL_ALL_EVENT<br>
 &nbsp;&nbsp;&nbsp;&nbsp;pyfn_RawCallback&nbsp;:&nbsp;python&nbsp;callback&nbsp;function,&nbsp;returned&nbsp;value<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;name&nbsp;referring&nbsp;to&nbsp;function(ptr_flform,&nbsp;ptr_xevent)&nbsp;-&gt;&nbsp;num<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;name&nbsp;referring&nbsp;to&nbsp;function(ptr_flform,&nbsp;ptr_xevent)&nbsp;-&gt;&nbsp;[int]num<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;function&nbsp;for&nbsp;handling&nbsp;a&nbsp;raw&nbsp;callback&nbsp;for&nbsp;X&nbsp;events<br>
 &nbsp;<br>
 Returns<br>
 -------<br>
@@ -3043,8 +3048,9 @@ Parameters<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Values&nbsp;(from&nbsp;xfdata.py)&nbsp;are&nbsp;FL_READ&nbsp;(file&nbsp;descriptor&nbsp;has&nbsp;data<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;available),&nbsp;FL_WRITE&nbsp;(file&nbsp;descriptor&nbsp;is&nbsp;available&nbsp;for&nbsp;writing),<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_EXCEPT&nbsp;(an&nbsp;I/O&nbsp;error&nbsp;has&nbsp;occurred)<br>
-&nbsp;&nbsp;&nbsp;&nbsp;pyfn_IoCallback&nbsp;:&nbsp;python&nbsp;function&nbsp;to&nbsp;be&nbsp;removed,&nbsp;no&nbsp;return<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;name&nbsp;referring&nbsp;to&nbsp;function(num,&nbsp;vdata)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;pyfn_IoCallback&nbsp;:&nbsp;python&nbsp;function,&nbsp;no&nbsp;return<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;name&nbsp;referring&nbsp;to&nbsp;function([int]num,&nbsp;[pointer&nbsp;to&nbsp;void]vdata)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;function&nbsp;to&nbsp;be&nbsp;removed&nbsp;on&nbsp;said&nbsp;circumstances<br>
 &nbsp;<br>
 Examples<br>
 --------<br>
@@ -3213,7 +3219,8 @@ Calls&nbsp;a&nbsp;callback&nbsp;function&nbsp;before&nbsp;terminating&nbsp;the&n
 Parameters<br>
 ----------<br>
 &nbsp;&nbsp;&nbsp;&nbsp;pyfn_FormAtclose&nbsp;:&nbsp;python&nbsp;callback&nbsp;to&nbsp;be&nbsp;called,&nbsp;returned&nbsp;value<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;name&nbsp;referring&nbsp;to&nbsp;function(ptr_flform,&nbsp;vdata)&nbsp;-&gt;&nbsp;num<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;name&nbsp;referring&nbsp;to&nbsp;function(ptr_flform,&nbsp;[pointer&nbsp;to&nbsp;void]vdata)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-&gt;&nbsp;[int]num<br>
 &nbsp;&nbsp;&nbsp;&nbsp;vdata&nbsp;:&nbsp;any&nbsp;type&nbsp;(e.g.&nbsp;'None',&nbsp;int,&nbsp;str,&nbsp;etc..)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;user&nbsp;data&nbsp;to&nbsp;be&nbsp;passed&nbsp;to&nbsp;function;&nbsp;callback&nbsp;has&nbsp;to&nbsp;take&nbsp;care<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;of&nbsp;type&nbsp;check.<br>
@@ -3228,7 +3235,7 @@ Examples<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;def&nbsp;atclosecb(pform,&nbsp;vdata):<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;...&nbsp;&lt;something&gt;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;...&nbsp;return&nbsp;0<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;oldatclosefunc&nbsp;=&nbsp;<a href="#-fl_set_atclose">fl_set_atclose</a>(atclosecb,&nbsp;None)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;oldatclosefunc&nbsp;=&nbsp;<a href="#-fl_set_atclose">fl_set_atclose</a>(pform1,&nbsp;atclosecb,&nbsp;None)<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
@@ -3262,7 +3269,7 @@ Parameters<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;flobject&nbsp;the&nbsp;callback&nbsp;is&nbsp;bound&nbsp;to<br>
 &nbsp;&nbsp;&nbsp;&nbsp;pyfn_CallbackPtr&nbsp;:&nbsp;python&nbsp;function&nbsp;to&nbsp;be&nbsp;used&nbsp;as&nbsp;callback,&nbsp;no&nbsp;return<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;name&nbsp;with&nbsp;no&nbsp;()&nbsp;and&nbsp;no&nbsp;args&nbsp;referring&nbsp;to&nbsp;function(ptr_flobject,<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;longnum)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[long]numdata)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;numdata&nbsp;:&nbsp;long<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;numeric&nbsp;argument&nbsp;being&nbsp;passed&nbsp;to&nbsp;function<br>
 &nbsp;<br>
@@ -3330,7 +3337,7 @@ function&nbsp;anytime&nbsp;and&nbsp;as&nbsp;many&nbsp;times&nbsp;as&nbsp;you&nbs
 Parameters<br>
 ----------<br>
 &nbsp;&nbsp;&nbsp;&nbsp;pyfn_ErrorFunc&nbsp;:&nbsp;python&nbsp;function,&nbsp;no&nbsp;return<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;name&nbsp;referring&nbsp;to&nbsp;function(strng,&nbsp;strng)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;name&nbsp;referring&nbsp;to&nbsp;function([str]name,&nbsp;[str]msg)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;function&nbsp;for&nbsp;handling&nbsp;error<br>
 &nbsp;<br>
 Examples<br>
@@ -3419,7 +3426,7 @@ Parameters<br>
 &nbsp;&nbsp;&nbsp;&nbsp;ptr_flform&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_FORM<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;activated&nbsp;form<br>
 &nbsp;&nbsp;&nbsp;&nbsp;pyfn_FormAtactivate&nbsp;:&nbsp;python&nbsp;callback&nbsp;function&nbsp;called,&nbsp;no&nbsp;return<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;name&nbsp;referring&nbsp;to&nbsp;function(ptr_flform,&nbsp;vdata)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;name&nbsp;referring&nbsp;to&nbsp;function(ptr_flform,&nbsp;[pointer&nbsp;to&nbsp;void]vdata)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;vdata&nbsp;:&nbsp;any&nbsp;type&nbsp;(e.g.&nbsp;'None',&nbsp;int,&nbsp;str,&nbsp;etc..)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;user&nbsp;data&nbsp;to&nbsp;be&nbsp;passed&nbsp;to&nbsp;function;&nbsp;callback&nbsp;has&nbsp;to&nbsp;take&nbsp;care<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;of&nbsp;type&nbsp;check.<br>
@@ -3448,7 +3455,8 @@ Parameters<br>
 &nbsp;&nbsp;&nbsp;&nbsp;ptr_flform&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_FORM<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;form&nbsp;that&nbsp;receives&nbsp;the&nbsp;message<br>
 &nbsp;&nbsp;&nbsp;&nbsp;pyfn_FormAtclose&nbsp;:&nbsp;python&nbsp;callback&nbsp;to&nbsp;be&nbsp;called,&nbsp;returned&nbsp;value<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;name&nbsp;referring&nbsp;to&nbsp;function(ptr_flform,&nbsp;vdata)&nbsp;-&gt;&nbsp;num<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;name&nbsp;referring&nbsp;to&nbsp;function(ptr_flform,&nbsp;[pointer&nbsp;to&nbsp;void]vdata)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-&gt;&nbsp;[int]num<br>
 &nbsp;&nbsp;&nbsp;&nbsp;vdata&nbsp;:&nbsp;any&nbsp;type&nbsp;(e.g.&nbsp;'None',&nbsp;int,&nbsp;str,&nbsp;etc..)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;user&nbsp;data&nbsp;to&nbsp;be&nbsp;passed&nbsp;to&nbsp;function;&nbsp;callback&nbsp;has&nbsp;to&nbsp;take&nbsp;care<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;of&nbsp;type&nbsp;check.<br>
@@ -3460,10 +3468,10 @@ Returns<br>
 &nbsp;<br>
 Examples<br>
 --------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;def&nbsp;atcolsecb(pform,&nbsp;vdata):<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;def&nbsp;atclosecb(pform,&nbsp;vdata):<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;...&nbsp;&lt;something&gt;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;...&nbsp;return&nbsp;0<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;oldatclosecb&nbsp;=&nbsp;<a href="#-fl_set_form_atclose">fl_set_form_atclose</a>(pform1,&nbsp;None)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;oldatclosecb&nbsp;=&nbsp;<a href="#-fl_set_form_atclose">fl_set_form_atclose</a>(pform1,&nbsp;atclosecb,&nbsp;None)<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
@@ -3479,7 +3487,7 @@ Parameters<br>
 &nbsp;&nbsp;&nbsp;&nbsp;ptr_flform&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_FORM<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;de-activated&nbsp;form<br>
 &nbsp;&nbsp;&nbsp;&nbsp;pyfn_FormAtdeactivate&nbsp;:&nbsp;python&nbsp;callback&nbsp;function&nbsp;called,&nbsp;no&nbsp;return<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;name&nbsp;referring&nbsp;to&nbsp;function(ptr_flform,&nbsp;vdata)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;name&nbsp;referring&nbsp;to&nbsp;function(ptr_flform,&nbsp;[pointer&nbsp;to&nbsp;void]vdata)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;vdata&nbsp;:&nbsp;any&nbsp;type&nbsp;(e.g.&nbsp;'None',&nbsp;int,&nbsp;str,&nbsp;etc..)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;user&nbsp;data&nbsp;to&nbsp;be&nbsp;passed&nbsp;to&nbsp;function;&nbsp;callback&nbsp;has&nbsp;to&nbsp;take&nbsp;care<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;of&nbsp;type&nbsp;check.<br>
@@ -3513,7 +3521,7 @@ Parameters<br>
 &nbsp;&nbsp;&nbsp;&nbsp;ptr_flform&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_FORM<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;form&nbsp;whose&nbsp;callback&nbsp;has&nbsp;to&nbsp;be&nbsp;set<br>
 &nbsp;&nbsp;&nbsp;&nbsp;pyfn_FormCallbackPtr&nbsp;:&nbsp;python&nbsp;callback&nbsp;to&nbsp;be&nbsp;set,&nbsp;no&nbsp;return<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;name&nbsp;referring&nbsp;to&nbsp;function(ptr_flobject,&nbsp;vdata)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;name&nbsp;referring&nbsp;to&nbsp;function(ptr_flobject,&nbsp;[pointer&nbsp;to&nbsp;void]vdata)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;vdata&nbsp;:&nbsp;any&nbsp;type&nbsp;(e.g.&nbsp;'None',&nbsp;int,&nbsp;str,&nbsp;etc..)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;user&nbsp;data&nbsp;to&nbsp;be&nbsp;passed&nbsp;to&nbsp;function;&nbsp;callback&nbsp;has&nbsp;to&nbsp;take&nbsp;care<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;of&nbsp;type&nbsp;check<br>
@@ -3541,7 +3549,7 @@ Parameters<br>
 &nbsp;&nbsp;&nbsp;&nbsp;ptr_flform&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_FORM<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;form&nbsp;whose&nbsp;callback&nbsp;has&nbsp;to&nbsp;be&nbsp;set<br>
 &nbsp;&nbsp;&nbsp;&nbsp;pyfn_FormCallbackPtr&nbsp;:&nbsp;python&nbsp;callback&nbsp;to&nbsp;be&nbsp;set,&nbsp;no&nbsp;return<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;name&nbsp;referring&nbsp;to&nbsp;function(ptr_flobject,&nbsp;vdata)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;name&nbsp;referring&nbsp;to&nbsp;function(ptr_flobject,&nbsp;[pointer&nbsp;to&nbsp;void]vdata)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;vdata&nbsp;:&nbsp;any&nbsp;type&nbsp;(e.g.&nbsp;'None',&nbsp;int,&nbsp;str,&nbsp;etc..)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;user&nbsp;data&nbsp;to&nbsp;be&nbsp;passed&nbsp;to&nbsp;function;&nbsp;callback&nbsp;has&nbsp;to&nbsp;take&nbsp;care<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;of&nbsp;type&nbsp;check<br>
@@ -3967,7 +3975,7 @@ Parameters<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;flobject&nbsp;the&nbsp;callback&nbsp;is&nbsp;bound&nbsp;to<br>
 &nbsp;&nbsp;&nbsp;&nbsp;pyfn_CallbackPtr&nbsp;:&nbsp;python&nbsp;function&nbsp;to&nbsp;be&nbsp;used&nbsp;as&nbsp;callback,&nbsp;no&nbsp;return<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;name&nbsp;with&nbsp;no&nbsp;()&nbsp;and&nbsp;no&nbsp;args&nbsp;referring&nbsp;to&nbsp;function(ptr_flobject,<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;longnum)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[long]numdata)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;numdata&nbsp;:&nbsp;long<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;numeric&nbsp;argument&nbsp;being&nbsp;passed&nbsp;to&nbsp;function<br>
 &nbsp;<br>
@@ -4313,8 +4321,8 @@ Parameters<br>
 &nbsp;&nbsp;&nbsp;&nbsp;ptr_flobject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;flobject<br>
 &nbsp;&nbsp;&nbsp;&nbsp;pyfn_HandlePtr&nbsp;:&nbsp;python&nbsp;callback&nbsp;function,&nbsp;returned&nbsp;value<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;name&nbsp;referring&nbsp;function(ptr_flobject,&nbsp;num,&nbsp;coord,&nbsp;coord,&nbsp;num,<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;vdata)&nbsp;-&gt;&nbsp;num<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;name&nbsp;referring&nbsp;to&nbsp;function(ptr_flobject,&nbsp;[int]num,&nbsp;[int]coord,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[int]coord,&nbsp;[int]num,&nbsp;[pointer&nbsp;to&nbsp;void]vdata)&nbsp;-&gt;&nbsp;[int]num<br>
 &nbsp;<br>
 Returns<br>
 -------<br>
@@ -4343,8 +4351,8 @@ Parameters<br>
 &nbsp;&nbsp;&nbsp;&nbsp;ptr_flobject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;flobject&nbsp;to&nbsp;be&nbsp;set<br>
 &nbsp;&nbsp;&nbsp;&nbsp;pyfn_HandlePtr&nbsp;:&nbsp;python&nbsp;callback&nbsp;function,&nbsp;returned&nbsp;value<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;name&nbsp;referring&nbsp;to&nbsp;function(ptr_flobject,&nbsp;num,&nbsp;coord,&nbsp;coord,<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;num,&nbsp;vdata)&nbsp;-&gt;&nbsp;num<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;name&nbsp;referring&nbsp;to&nbsp;function(ptr_flobject,&nbsp;[int]num,&nbsp;[int]coord,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[int]coord,&nbsp;[int]num,&nbsp;[pointer&nbsp;to&nbsp;void]vdata)&nbsp;-&gt;&nbsp;[int]num<br>
 &nbsp;<br>
 Returns<br>
 -------<br>
@@ -4415,7 +4423,7 @@ Parameters<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;been&nbsp;deselected),&nbsp;FL_RETURN_TRIGGERED&nbsp;(*todo*),&nbsp;FL_RETURN_ALWAYS<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(Return&nbsp;or&nbsp;invoke&nbsp;callback&nbsp;whenever&nbsp;the&nbsp;interaction&nbsp;ends&nbsp;and/or<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;an&nbsp;item&nbsp;is&nbsp;selected.&nbsp;It&nbsp;includes&nbsp;all&nbsp;conditions&nbsp;except<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_RETURN_END_CHANGED).<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_RETURN_END_CHANGED).&nbsp;Bitwise&nbsp;OR&nbsp;is&nbsp;allowed.<br>
 &nbsp;<br>
 Returns<br>
 -------<br>
@@ -4722,4 +4730,4 @@ Notes<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
  <dl><dt><a name="-special_style"><strong>special_style</strong></a>(style)</dt></dl>
 </td></tr></table>
-<p>Updated on: 2010-12-25 01:55 +0100</body></html>
+<p>Updated on: 2011-01-01 23:39 +0100</body></html>

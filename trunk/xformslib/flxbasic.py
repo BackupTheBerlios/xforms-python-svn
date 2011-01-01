@@ -4,7 +4,7 @@
 """ xforms-python's functions to handle X Window basic and drawing stuff.
 """
 
-#    Copyright (C) 2009, 2010  Luca Lazzaroni "LukenShiro"
+#    Copyright (C) 2009, 2010, 2011  Luca Lazzaroni "LukenShiro"
 #    e-mail: <lukenshiro@ngi.it>
 #
 #    This program is free software: you can redistribute it and/or modify
@@ -3696,8 +3696,9 @@ def fl_set_event_callback(pyfn_AppEventCb, vdata):
     Parameters
     ----------
         pyfn_AppEventCb : python function callback, returned value
-            name referring to function(ptr_xevent, vdata) -> num.
-            The callback function normally should return 0 unless the
+            name referring to function(ptr_xevent, [pointer to void]vdata)
+            -> [int]num.
+            The callback function normally should return 0, unless the
             event is not for one of the applcation-managed windows.
         vdata : any type (e.g. 'None', int, str, etc..)
             user data to be passed to function; callback has to take care
@@ -3753,7 +3754,8 @@ def fl_set_idle_callback(pyfn_AppEventCb, vdata):
     Parameters
     ----------
         pyfn_AppEventCb : python function callback, returning unused value
-            name referring to function(ptr_xevent, vdata) -> num.
+            name referring to function(ptr_xevent, [pointer to void]vdata)
+            -> [int]num.
         vdata : any type (e.g. 'None', int, str, etc..)
             user data to be passed to function; callback has to take care
             of type check
@@ -3958,7 +3960,8 @@ def fl_add_event_callback(win, evttype, pyfn_AppEventCb, vdata):
             PropertyNotify, SelectionClear, SelectionRequest, SelectionNotify
             If it is 0, the callback is for all events for the window
         pyfn_AppEventCb : python function callback, returned value
-            name referring function(ptr_xevent, vdata) -> num.
+            name referring to function(ptr_xevent, [pointer to void]vdata)
+            -> [int]num.
         vdata : any type (e.g. 'None', int, str, etc..)
             user data to be passed to function; callback has to take care
             of type check

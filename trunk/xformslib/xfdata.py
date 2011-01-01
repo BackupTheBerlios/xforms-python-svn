@@ -4,7 +4,7 @@
 """ Data, constants and variables to be used with xforms-python.
 """
 
-#    Copyright (C) 2009, 2010  Luca Lazzaroni "LukenShiro"
+#    Copyright (C) 2009, 2010, 2011  Luca Lazzaroni "LukenShiro"
 #    e-mail: <lukenshiro@ngi.it>
 #
 #    This program is free software: you can redistribute it and/or modify
@@ -486,7 +486,8 @@ MOUSEBTN_list = [FL_MBUTTON1, FL_MBUTTON2, FL_MBUTTON3, FL_MBUTTON4,
                  FL_SCROLLDOWNMOUSE]
 
 
-# control when to return input, slider and dial etc. object.
+# control when to return input, slider and dial etc. objects.
+# Bitwise OR is allowed --LK
 FL_RETURN_NONE = 0
 FL_RETURN_CHANGED = 1
 FL_RETURN_END = 2
@@ -495,11 +496,6 @@ FL_RETURN_SELECTION = 8
 FL_RETURN_DESELECTION = 16
 FL_RETURN_TRIGGERED = 1024
 FL_RETURN_ALWAYS = ~ FL_RETURN_END_CHANGED
-
-# my add, list of possible values --LK
-RETURN_list = [FL_RETURN_NONE, FL_RETURN_CHANGED, FL_RETURN_END,
-               FL_RETURN_END_CHANGED, FL_RETURN_SELECTION,
-               FL_RETURN_DESELECTION, FL_RETURN_TRIGGERED, FL_RETURN_ALWAYS]
 
 
 # from /usr/include/limits.h, my add --LK
@@ -962,40 +958,42 @@ class admitted_values_for_FL_EVENTS(object):
         FL_DRAW
             The flobject has to be (re)drawn. To figure out the actual size
             of the flobject you can use the fields ptr_flobject.contents.x,
-            ptr_flobject.contents.y, ptr_flobject.contents.w and ptr_flobject.contents.h.
-            Many Xlib drawing routines require a window ID, which you can
-            obtain from the flobject pointer using FL_ObjWin(ptr_flobject).
-            Some other aspects might also influence the way the flobject has
-            to be drawn. E.g., you might want to draw the flobject differently
-            when the mouse is on top of it or when the mouse is pressed on
-            it. This can be figured out the following way, the field
-            ptr_flobject.contents.belowmouse tells you whether the flobject is
-            below the mouse. The field ptr_flobject.contents.pushed indicates
-            whether the flobject is currently being pushed with the mouse.
-            Finally, ptr_flobject.contents.focus indicate whether input focus
-            is directed towards this object. Note that drawing of the flobject
+            ptr_flobject.contents.y, ptr_flobject.contents.w and
+            ptr_flobject.contents.h. Many Xlib drawing routines require a
+            window ID, which you can obtain from the flobject pointer using
+            FL_ObjWin(ptr_flobject). Some other aspects might also influence
+            the way the flobject has to be drawn. E.g., you might want to
+            draw the flobject differently when the mouse is on top of it or
+            when the mouse is pressed on it. This can be figured out the
+            following way, the field ptr_flobject.contents.belowmouse tells
+            you whether the flobject is below the mouse. The field
+            ptr_flobject.contents.pushed indicates whether the flobject is
+            currently being pushed with the mouse. Finally,
+            ptr_flobject.contents.focus indicate whether input focus is
+            directed towards this object. Note that drawing of the flobject
             is the full responsibility of the flobject class, including the
             bounding box and the label, which can be found in the field
-            ptr_flobject.contents.label. The Forms Library provides a large number
-            of routines to help you draw object. One important caution about
-            your draw event handling code, none of the high level routines
-            (fl_freeze_form(), fl_deactivate_form()) etc. can be used. The
-            only routines allowed to be used are (direct) drawing functions
-            and flobject internal book keeping routines. Attribute modifying
-            routines, such as fl_set_object_color() etc. are not allowed
-            (using them can lead to infinite recursions). In addition,
+            ptr_flobject.contents.label. The Forms Library provides a large
+            number of routines to help you draw object. One important caution
+            about your draw event handling code, none of the high level
+            routines (fl_freeze_form(), fl_deactivate_form()) etc. can be
+            used. The only routines allowed to be used are (direct) drawing
+            functions and flobject internal book keeping routines. Attributes
+            modifying routines, such as fl_set_object_color() etc. are not
+            allowed (using them can lead to infinite recursions). In addition,
             (re)drawing of other flobjects using fl_redraw_object() while
             handling FL_DRAW will also not work. Due to the way double
             buffering is handled, at the time the FL_DRAW event is passed
-            to the handling function (and only then) FL_ObjWin(ptr_flobject) might
-            return a pixmap used as the backbuffer (at least if the flobject is
-            double buffered). What that means is that FL_ObjWin(ptr_flobject)
-            should not be used when a real window is needed. For a real window
-            you can change the window's cursor or query the mouse position
-            within it. You cannot do either of these with the backbuffer
-            pixmap. If there is a need to obtain the real window ID the
-            following routine can be used fl_get_real_object_window().
-            To summarize, use FL_ObjWin(ptr_flobject) when drawing and use
+            to the handling function (and only then) FL_ObjWin(ptr_flobject)
+            might return a pixmap used as the backbuffer (at least if the
+            flobject is double buffered). What that means is that
+            FL_ObjWin(ptr_flobject) should not be used when a real window is
+            needed. For a real window you can change the window's cursor or
+            query the mouse position within it. You cannot do either of these
+            with the backbuffer pixmap. If there is a need to obtain the real
+            window ID the following routine can be used
+            fl_get_real_object_window(). To summarize, use
+            FL_ObjWin(ptr_flobject) when drawing and use
             fl_get_real_object_window() for cursor or pointer routines.
             This distinction is important only while handling FL_DRAW events,
             FL_ObjWin(obj) should be used anywhere else.
@@ -1009,12 +1007,12 @@ class admitted_values_for_FL_EVENTS(object):
         FL_ENTER
             This event is sent when the mouse has entered the bounding box
             and might require some action. Note also that the field
-            ptr_flobject.content.belowmouse in the flobject is being set. If entering
-            an flobjects area only changes its appearance, redrawing it normally
-            suffices. Do not do this directly! Always redraw the flobject by
-            calling fl_redraw_object(). It will send an FL_DRAW event to the
-            flobject but also does some other things (like setting window IDs
-            and taking care of double buffering etc.).
+            ptr_flobject.content.belowmouse in the flobject is being set. If
+            entering an flobjects area only changes its appearance, redrawing
+            it normally suffices. Do not do this directly! Always redraw the
+            flobject by calling fl_redraw_object(). It will send a FL_DRAW
+            event to the flobject but also does some other things (like
+            setting window IDs and taking care of double buffering etc.).
         FL_LEAVE
             The mouse has left the bounding box. Again, normally a redraw is
             enough (or nothing at all).
@@ -1033,20 +1031,21 @@ class admitted_values_for_FL_EVENTS(object):
             passed to the routine via the 'key' argument, modifier keys can
             be retrieved from the state member of the XEvent also passed to
             the function via 'xev'. This event only happens between FL_FOCUS
-            and FL_UNFOCUS events. Not all flobjects sent keyboard events, only
-            those that have non-zero value in field ptr_flobject.contents.input or
-            ptr_flobject.contents.wantkey.
+            and FL_UNFOCUS events. Not all flobjects sent keyboard events,
+            only those that have non-zero value in field
+            ptr_flobject.contents.input or ptr_flobject.contents.wantkey.
         FL_UPDATE
-            for flobjects that need to update something from time to time. Such
-            an event, like the FL_STEP event, also gets send about every 50
-            msec (but less often under high load) to flobjects while they are
-            "pushed", i.e. between receiving a FL_PUSH and a FL_RELEASE event
-            if the ptr_flobject.contents.want_update field is set for the flobject.
-            Like for the FL_STEP event the handling routine receives a
-            synthetic MotionNotify event as the XEvent. This is typically used
-            by flobjects that have to perform tasks at regular time intervals
-            while they are "pushed" (e.g. counters that need to count up or
-            down while the mouse is pushed on one of its buttons).
+            for flobjects that need to update something from time to time.
+            Such an event, like the FL_STEP event, also gets send about every
+            50 msec (but less often under high load) to flobjects while they
+            are "pushed", i.e. between receiving a FL_PUSH and a FL_RELEASE
+            event if the ptr_flobject.contents.want_update field is set for
+            the flobject. Like for the FL_STEP event the handling routine
+            receives a synthetic MotionNotify event as the XEvent. This is
+            typically used by flobjects that have to perform tasks at regular
+            time intervals while they are "pushed" (e.g. counters that need
+            to count up or down while the mouse is pushed on one of its
+            buttons).
         FL_STEP
             A FL_STEP event is sent all the time (typically about 20 times
             a second but possibly less often because of system delays and
@@ -1223,7 +1222,7 @@ FL_EMBOSSED_STYLE = 2048        #(1<<11)
 FL_FONT_STYLE = FL_TEXT_STYLE
 
 # my add, list of possible values --LK
-# FL_INVALID_STYLE not to chooes from
+# FL_INVALID_STYLE not to be chosen from
 TEXTSTYLE_list = [FL_NORMAL_STYLE, FL_BOLD_STYLE, FL_ITALIC_STYLE,
     FL_BOLDITALIC_STYLE, FL_FIXED_STYLE, FL_FIXEDBOLD_STYLE,
     FL_FIXEDITALIC_STYLE, FL_FIXEDBOLDITALIC_STYLE, FL_TIMES_STYLE,
@@ -1301,23 +1300,29 @@ class FL_FORM_(cty.Structure):
         fdui : pointer to any type
             for fdesign
         u_vdata : pointer to any type
-            for application
+            anything the user likes as user data for application program.
+            The main module does not reference or modify this field in any
+            way and neither should the class routines.
         u_cdata : str
-            for application
+            anything the user likes as user data for application program.
+            The main module does not reference or modify this field in any
+            way and neither should the class routines.
         u_ldata : long
-            for application
+            anything the user likes as user data for application program.
+            The main module does not reference or modify this field in any
+            way and neither should the class routines.
         label : str
             window title
         window : Window
             X resource ID for form window
-        xpos : int
-            horizontal position
-        ypos : int
-            vertical position
-        width : int
-            width
-        height : int
-            height
+        x : int
+            horizontal position of flobject
+        y : int
+            vertical position of flobject
+        w : int
+            width of flobject in unit coords
+        h : int
+            height of flobject in unit coords
         handle_dec_x : int
             *todo*
         handle_dec_y : int
@@ -1333,7 +1338,7 @@ class FL_FORM_(cty.Structure):
         first : pointer to FL_OBJECT
             points to the first flobject on the form (list)
         last : pointer to FL_OBJECT
-            *todo*
+            points to the last flobject on the form (list)
         focusobj : pointer to FL_OBJECT
             points to the flobject on the form that has the input focus
         form_callback : function
@@ -1361,7 +1366,7 @@ class FL_FORM_(cty.Structure):
         compress_mask : long_pos
             *todo*
         evmask : long_pos
-            *todo*
+            event mask *todo*
         close_callback : function
             FL_FORM_ATCLOSE type function
         close_data : pointer to any type
@@ -1422,15 +1427,15 @@ class FL_OBJECT_(cty.Structure):
     changing the flobject's properties directly.
 
     To access directly to the data referenced by a pointer to FL_OBJECT
-    (ptr_flobject) you need to use "ptr_flobject.contents", then one of its attributes'
-    name. Nonetheless, whenever possible it is always better to use
-    appropriate functions.
+    (ptr_flobject) you need to use "ptr_flobject.contents", then one of its
+    attributes' name. Nonetheless, whenever possible it is always better to
+    use appropriate functions.
 
     Attributes
     ----------
         form : pointer to FL_FORM
-            the form this flobject belongs to. It is used by the main routines.
-            The class routines should not change it.
+            the form this flobject belongs to. It is used by the main
+            routines. The class routines should not change it.
         u_vdata : pointer to any type
             anything the user likes as user data for application program. The
             main module does not reference or modify this field in any way
@@ -1455,28 +1460,28 @@ class FL_OBJECT_(cty.Structure):
             flobject must take care that is actually drawn (with a specific
             routine). It can be changed or queried using
             fl_set_object_boxtype() and fl_get_object_boxtype()
-        xpos : int
+        x : int
             current horizontal position of bounding box of the flobject. This
             value will change when the user resizes the form window. To
             determine position use fl_get_object_position() or
             fl_get_object_geometry() (for size too). To change position use
             fl_set_object_position(), or fl_set_object_geometry() (for size
             too)
-        ypos : int
+        y : int
             current vertical position of bounding box of the flobject. This
             value will change when the user resizes the form window. To
             determine position use fl_get_object_position() or
             fl_get_object_geometry() (for size too). To change position use
             fl_set_object_position(), or fl_set_object_geometry() (for size
             too)
-        width : int
+        w : int
             current width of bounding box of the flobject. This value
             value will change when the user resizes the form window. To
             determine size use fl_get_object_size() or
             fl_get_object_geometry() (for position too). To change size use
             fl_get_object_size() or fl_get_object_geometry() (for position
             too).
-        height : int
+        h : int
             current height of bounding box of the flobject. This
             value will change when the user resizes the form window. To
             determine size use fl_get_object_size() or
@@ -1584,11 +1589,11 @@ class FL_OBJECT_(cty.Structure):
             next flobject in form. It is used by the main routines. The class
             routines should not change it.
         parent : pointer to FL_OBJECT
-            *todo*
+            parent of flobject
         child : pointer to FL_OBJECT
-            *todo*
+            child of flobject
         nc : pointer to FL_OBJECT
-            next child
+            next child of flobject
         flpixmap : pointer to FL_pixmap
             pixmap doublebuffering stateinfo
         use_pixmap : int
@@ -1604,11 +1609,25 @@ class FL_OBJECT_(cty.Structure):
             interaction ended.
         how_return : int_pos
             under what circumstances the flobject is returned by e.g.
-            fl_do_forms() or the callback function for the flobject is invoked.
-            It can be changed using fl_set_object_return(). Especially in
-            the case of flobjects having child flobjects also the corresponding
-            settings for child flobjects may need changes and which
-            automatically get adjusted when the above function is used.
+            fl_do_forms() or the callback function for the flobject is
+            invoked. It can be changed using fl_set_object_return().
+            Especially in the case of flobjects having child flobjects also
+            the corresponding settings for child flobjects may need changes
+            and which automatically get adjusted when the above function is
+            used. Values are: FL_RETURN_NONE (flobject gets never returned or
+            its callback invoked), FL_RETURN_CHANGED (returns flobject or
+            invokes callback when state of object changed), FL_RETURN_END 
+            (returns flobject or invokes callback at end of interaction,
+            normally when the mouse key is released or, in the case of input
+            flobjects, the object has lost focus), FL_RETURN_END_CHANGED 
+            (returns flobject or invokes callback only when interaction has
+            ended and the state of the flobject has changed),
+            FL_RETURN_SELECTION (returns flobject or invokes callback if e.g.
+            in a browser a line was selected), FL_RETURN_SELECTION (returns
+            flobject or invokes callback if e.g. in a browser a line was
+            deselected), FL_RETURN_ALWAYS (returns flobject or invokes
+            callback whenever interaction has ended or the state of the
+            flobject has changed).
         double_buffer : int
             only used by mesa/gl canvas
         pushed : int
@@ -1631,9 +1650,9 @@ class FL_OBJECT_(cty.Structure):
             using fl_object_is_active()
         input : int
             flag if this flobject can receive keyboard input. If not, events
-            related to keyboard input are not sent to the flobject. The default
-            value of input is false. Note that not all keys are sent (see
-            wantkey).
+            related to keyboard input are not sent to the flobject. The
+            default value of input is false. Note that not all keys are sent
+            (see wantkey).
         wantkey : int
             An input flobject normally does not receive <Tab> or <Return>
             keystrokes or any other keys except those that have values between
@@ -1676,23 +1695,25 @@ class FL_OBJECT_(cty.Structure):
             value disables double/triple click detection. It can be set using
             fl_set_object_dblclick() and queried using fl_get_object_dblclick()
         c_vdata : pointer to any type
-            for class use. The main module does not reference or modify this
-            field in any way. The flobject classes, including the built-in
-            ones, may use this field.
+            for flobject class use. The main module does not reference or
+            modify this field in any way. The flobject classes, including the
+            built-in ones, may use this field.
         c_cdata : str
-            for class use
+            for flobject class use. The main module does not reference or
+            modify this field in any way. The flobject classes, including the
+            built-in ones, may use this field.
         c_ldata : long
-            for class use. The main module does not reference or modify this
-            field in any way. The flobject classes, including the built-in
-            ones, may use this field.
+            for flobject class use. The main module does not reference or
+            modify this field in any way. The flobject classes, including the
+            built-in ones, may use this field.
         dbl_background : long_pos
             double buffer background color
         tooltip : str
-            *todo*
+            tooltip helper for flobject
         tipID : int
-            *todo*
+            tooltip id
         group_id : int
-            *todo*
+            group number the flobject belongs to
         want_motion : int
             *todo*
         want_update : int
@@ -1709,20 +1730,22 @@ XPointer = STRING       # cty.c_char_p
 
 # /usr/include/X11/Xlib.h 159
 class _XExtData(cty.Structure):
-    """_XExtData class
+    """X11 _XExtData class
 
     Attributes
     ----------
         number : int
-            *todo*
+            number returned by XRegisterExtension
         next : pointer to _XExtData
-            *todo*
+            next item on list of data for structure
         free_private : function, returning value
             function(pointer to _XExtData) -> int
+            next item on list of data for structure
         private_data : str
-            *todo*
+            data private to this extension
     """
     pass
+_XExtData.__slots__ = ['number', 'next', 'free_private', 'private_data']
 _XExtData._fields_ = [
         ('number', cty.c_int),
         ('next', cty.POINTER(_XExtData)),
@@ -1736,28 +1759,31 @@ VisualID = cty.c_ulong
 
 # /usr/include/X11/Xlib.h 249
 class Visual(cty.Structure):
-    """Visual class
+    """Visual class. It contains information about colormapping possible.
 
     Attributes
     ----------
         ext_data : pointer to XExtData
-            *todo*
+            hook for extension to hang data
         visualid : long_pos
-            *todo*
+            visual id of this visual
         c_class : int
-            *todo*
+            C++? class of screen (monochrome, etc.)
         red_mask : long_pos
-            *todo*
+            mask value for red
         green_mask : long_pos
-            *todo*
+            mask value for green
         blue_mask : long_pos
-            *todo*
+            mask value for blue
         bits_per_rgb : int
-            *todo*
+            log base 2 of distinct color values
         map_entries : int
-            *todo*
+            color map entries
     """
-    _fields_ = [
+    pass
+Visual.__slots__ = ['ext_data', 'visualid', 'c_class', 'red_mask', \
+        'green_mask', 'blue_mask', 'bits_per_rgb', 'map_entries',]
+Visual._fields_ = [
         ('ext_data', cty.POINTER(XExtData)),
         ('visualid', VisualID),
         ('c_class', cty.c_int),
@@ -1781,7 +1807,7 @@ class FL_pixmap_(cty.Structure):
         win : long_pos
             window
         visual : pointer to Visual
-            *todo*
+            Visual class
         xpos : int
             horizontal position
         ypos : int
@@ -1791,13 +1817,16 @@ class FL_pixmap_(cty.Structure):
         height : int
             height
         depth : int
-            *todo*
+            depth of visual
         dbl_background : long_pos
             color value
         pixel : long_pos
             color value
     """
-    _fields_ = [
+    pass
+FL_pixmap_.__slots__ = ['pixmap', 'win', 'visual', 'x', 'y', 'w', \
+        'h', 'depth', 'dbl_background', 'pixel',]
+FL_pixmap_._fields_ = [
         ('pixmap', Pixmap),
         ('win', Window),
         ('visual', cty.POINTER(Visual)),
@@ -1812,88 +1841,25 @@ FL_pixmap = FL_pixmap_
 
 
 FL_IO_CALLBACK = cty.CFUNCTYPE(None, cty.c_int, cty.c_void_p)
-class function_prototype_for_FL_IO_CALLBACK(object):
-    """ FL_IO_CALLBACK(num, vdata)
-
-    prototype for handling IO callback (used by fl_add_io_callback,
-    fl_remove_io_callback), no return
-    """
-    pass
-
 
 FL_SIGNAL_HANDLER = cty.CFUNCTYPE(None, cty.c_int, cty.c_void_p)
-class function_prototype_for_FL_SIGNAL_HANDLER(object):
-    """ FL_SIGNAL_HANDLER(num, vdata)
-
-    prototype for handling signal callback (used by fl_add_signal_callback),
-    no return
-    """
-    pass
 
 FL_TIMEOUT_CALLBACK = cty.CFUNCTYPE(None, cty.c_int, cty.c_void_p)
-class function_prototype_for_FL_TIMEOUT_CALLBACK(object):
-    """ FL_TIMEOUT_CALLBACK(num, vdata)
-
-    prototype for handling timeout callback (used by fl_add_timeout),
-    no return
-     """
-    pass
 
 # at close (WM menu delete/close etc.)
 FL_FORM_ATCLOSE = cty.CFUNCTYPE(cty.c_int, cty.POINTER(FL_FORM), \
-                                cty.c_void_p)
-class function_prototype_for_FL_FORM_ATCLOSE(object):
-    """ FL_FORM_ATCLOSE(ptr_flform, vdata) -> num
-
-    prototype when a form is closed (used by fl_set_form_atclose,
-    fl_set_atclose), returning value
-    """
-    pass
+        cty.c_void_p)
 
 # deactivate/activate callbacks
 FL_FORM_ATACTIVATE = cty.CFUNCTYPE(None, cty.POINTER(FL_FORM), cty.c_void_p)
-class function_prototype_for_FL_FORM_ATACTIVATE(object):
-    """ FL_FORM_ATACTIVATE(ptr_flform, vdata)
-
-    prototype when a form is activated (used by fl_set_form_atactivate),
-    no return value
-    """
-    pass
-
 FL_FORM_ATDEACTIVATE = cty.CFUNCTYPE(None, cty.POINTER(FL_FORM), cty.c_void_p)
-class function_prototype_for_FL_FORM_ATDEACTIVATE(object):
-    """ FL_FORM_DEATACTIVATE(ptr_flform, vdata)
-
-    prototype when a form is deactivated (used by fl_set_form_atdeactivate),
-    no return value
-    """
-    pass
 
 # callback function for an entire form
 FL_FORMCALLBACKPTR = cty.CFUNCTYPE(None, cty.POINTER(FL_OBJECT), cty.c_void_p)
-class function_prototype_for_FL_FORMCALLBACKPTR(object):
-    """ FL_FORMCALLBACKPTR(ptr_flobject, vdata)
-
-    prototype for handling a callback for the entire form (used by
-    fl_set_form_callback), no return value
-    """
-    pass
-
-# cfunction for fl_for_all_objects()
-cfunc_int_pobject_pvoid = cty.CFUNCTYPE(cty.c_int, cty.POINTER(FL_OBJECT), \
-                                        cty.c_void_p)
-
 
 FL_HANDLEPTR = cty.CFUNCTYPE(cty.c_int, cty.POINTER(FL_OBJECT), cty.c_int, \
                 FL_Coord, FL_Coord, cty.c_int, cty.c_void_p)
-class function_prototype_for_FL_HANDLEPTR(object):
-    """ FL_HANDLEPTR(ptr_flobject, num, coord, coord, num, vdata) -> num
 
-    prototype for registering a pre- or post- handler for a flobject,
-    returning value (used by fl_set_object_prehandler,
-    fl_set_object_posthandler, fl_make_object)
-    """
-    pass
 
 # /usr/include/X11/Xlib.h 984
 class _XEvent(cty.Union):
@@ -1983,23 +1949,9 @@ XEvent = _XEvent
 #                       cty.c_void_p)
 FL_RAW_CALLBACK = cty.CFUNCTYPE(cty.c_int, cty.POINTER(FL_FORM), \
                                 cty.POINTER(XEvent))
-class function_prototype_for_FL_RAW_CALLBACK(object):
-    """ FL_RAW_CALLBACK(ptr_flform, ptr_XEvent) -> num.
-
-    prototype for handling a raw callback for X events (used by
-    fl_register_raw_callback), with returning value
-    """
-    pass
 
 # flobject callback function
 FL_CALLBACKPTR = cty.CFUNCTYPE(None, cty.POINTER(FL_OBJECT), cty.c_long)
-class function_prototype_for_FL_CALLBACKPTR(object):
-    """ FL_CALLBACKPTR(ptr_flobject, longnum)
-
-    prototype for handling a callback function bound to a flobject, no return
-    value (used by fl_set_object_callback)
-    """
-    pass
 
 
 # cfunction for _fl_enumerate_fonts
@@ -2008,25 +1960,23 @@ cfunc_none_string = cty.CFUNCTYPE(None, STRING)
 
 FL_DRAWPTR = cty.CFUNCTYPE(None, FL_Coord, FL_Coord, FL_Coord, FL_Coord,
                            cty.c_int, FL_COLOR)
-class function_prototype_for_FL_DRAWPTR(object):
-    """ FL_DRAWPTR(xpos, ypos, width, height, angle_degree_rotation, colr)
-
-    prototype for handling a symbol drawing (used by fl_add_symbol),
-    no return
-    """
-    pass
 
 # error callback
 FL_ERROR_FUNC = cty.CFUNCTYPE(None, STRING, STRING)
-class function_prototype_for_FL_ERROR_FUNC(object):
-    """ FL_ERROR_FUNC(function_name, error_message)
-
-    prototype for handling errors (used by fl_set_error_handler), no return
-    """
-    pass
 
 
 FL_FORM_._pack_ = 4
+FL_FORM_.__slots__ = ['fdui', 'u_vdata', 'u_cdata', 'u_ldata', 'label', \
+        'window', 'x', 'y', 'w', 'h', 'handle_dec_x', 'handle_dec_y', \
+        'hotx', 'hoty', 'w_hr', 'h_hr', 'first', 'last', 'focusobj', \
+        'form_callback', 'activate_callback', 'deactivate_callback', \
+        'form_cb_data', 'activate_data', 'deactivate_data', 'key_callback', \
+        'push_callback', 'crossing_callback', 'motion_callback', \
+        'all_callback', 'compress_mask', 'evmask', 'close_callback', \
+        'close_data', 'flpixmap', 'icon_pixmap', 'icon_mask', 'deactivated', \
+        'use_pixmap', 'frozen', 'visible', 'wm_border', 'prop', \
+        'num_auto_objects', 'top', 'sort_of_modal', 'parent', 'child', \
+        'parent_obj', 'attached', 'pre_attach', 'attach_data', 'no_tooltip',]
 FL_FORM_._fields_ = [
     ('fdui', cty.c_void_p),             # for fdesign
     ('u_vdata', cty.c_void_p),          # for application
@@ -2085,6 +2035,18 @@ FL_FORM_._fields_ = [
     ('no_tooltip', cty.c_int), ]
 
 FL_OBJECT_._pack_ = 4
+FL_OBJECT_.__slots__ = ['form', 'u_vdata', 'u_cdata', 'u_ldata', \
+        'objclass', 'type', 'boxtype', 'x', 'y', 'w', 'h', 'fl1', 'fr1', \
+        'ft1', 'fb1', 'fl2', 'fr2', 'ft2', 'fb2', 'bw', 'col1', 'col2', \
+        'label', 'lcol', 'align', 'lsize', 'lstyle', 'shortcut', 'handle', \
+        'object_callback', 'argument', 'spec', 'prehandle', 'posthandle', \
+        'set_return', 'resize', 'nwgravity', 'segravity', 'prev', 'next', \
+        'parent', 'child', 'nc', 'flpixmap', 'use_pixmap', 'returned', \
+        'how_return', 'double_buffer', 'pushed', 'focus', 'belowmouse', \
+        'active', 'input', 'wantkey', 'radio', 'automatic', 'redraw', \
+        'visible', 'is_under', 'clip', 'click_timeout', 'c_vdata', \
+        'c_cdata','c_ldata', 'dbl_background', 'tooltip', 'tipID', \
+        'group_id', 'want_motion', 'want_update',]
 FL_OBJECT_._fields_ = [
     ('form', cty.POINTER(FL_FORM)),   # the form this flobject belongs to
     ('u_vdata', cty.c_void_p),        # anything the user likes
@@ -2115,15 +2077,15 @@ FL_OBJECT_._fields_ = [
     ('lstyle', cty.c_int),              # label style
     ('shortcut', cty.POINTER(cty.c_long)),
     ('handle', cty.CFUNCTYPE(cty.c_int, cty.POINTER(FL_OBJECT), cty.c_int, \
-        FL_Coord, FL_Coord, cty.c_int, cty.c_void_p)),
+            FL_Coord, FL_Coord, cty.c_int, cty.c_void_p)),
     ('object_callback', cty.CFUNCTYPE(None, cty.POINTER(FL_OBJECT), \
-        cty.c_long)),
+            cty.c_long)),
     ('argument', cty.c_long),
     ('spec', cty.c_void_p),             # instantiation
     ('prehandle', cty.CFUNCTYPE(cty.c_int, cty.POINTER(FL_OBJECT), \
-        cty.c_int, FL_Coord, FL_Coord, cty.c_int, cty.c_void_p)),
+            cty.c_int, FL_Coord, FL_Coord, cty.c_int, cty.c_void_p)),
     ('posthandle', cty.CFUNCTYPE(cty.c_int, cty.POINTER(FL_OBJECT), \
-        cty.c_int, FL_Coord, FL_Coord, cty.c_int, cty.c_void_p)),
+            cty.c_int, FL_Coord, FL_Coord, cty.c_int, cty.c_void_p)),
     ('set_return', cty.CFUNCTYPE(None, cty.POINTER(FL_OBJECT), cty.c_uint)),
     # re-configure preference
     ('resize', cty.c_uint),           # what to do if WM resizes the FORM
@@ -2164,6 +2126,9 @@ FL_OBJECT_._fields_ = [
     ('want_update', cty.c_int), ]
 
 
+FL_EVENT = cty.POINTER(FL_OBJECT)
+
+
 # form visibility state, form .visible
 # values for unnamed enumeration
 FL_BEING_HIDDEN = -1
@@ -2191,7 +2156,9 @@ class FD_Any(cty.Structure):
         ldata : long
             *todo*
     """
-    _fields_ = [
+    pass
+FD_Any.__slots__ = ['form', 'vdata', 'cdata', 'ldata',]
+FD_Any._fields_ = [
         ('form', cty.POINTER(FL_FORM)),
         ('vdata', cty.c_void_p),
         ('cdata', STRING),
@@ -2553,32 +2520,37 @@ FILE = _IO_FILE
 
 # /usr/include/X11/Xutil.h 296
 class XVisualInfo(cty.Structure):
-    """XVisualInfo class
+    """XVisualInfo class. Information is used by the visual utility routines
+    to find desired visual type from the many visuals a display may support.
 
     Attributes
     ----------
         visual : pointer to Visual
-            *todo*
+            Visual class
         visualid : long_pos
-            *todo*
+            visual id of this visual
         screen : int
             *todo*
         depth : int
-            *todo*
+            depth of the visual
         c_class : int
-            *todo*
+            C++? class of screen (monochrome, etc.)
         red_mask : long_pos
-            *todo*
+            mask value for red
         green_mask : long_pos
-            *todo*
+            mask value for green
         blue_mask : long_pos
-            *todo*
+            mask value for blue
         colormap_size : int
             *todo*
         bits_per_rgb : int
-            *todo*
+            log base 2 of distinct color values
     """
-    _fields_ = [
+    pass
+XVisualInfo.__slots__ = ['visual', 'visualid', 'screen', 'depth', \
+        'c_class', 'red_mask', 'green_mask', 'blue_mask', 'colormap_size', \
+        'bits_per_rgb',]
+XVisualInfo._fields_ = [
         ('visual', cty.POINTER(Visual)),
         ('visualid', VisualID),
         ('screen', cty.c_int),
@@ -2598,14 +2570,7 @@ Pixmap = XID    # cty.c_ulong
 
 
 FL_APPEVENT_CB = cty.CFUNCTYPE(cty.c_int, cty.POINTER(XEvent),
-                               cty.c_void_p)
-class function_prototype_for_FL_APPEVENT_CB(object):
-    """ FL_APPEVENT_CB(ptr_XEvent, vdata) -> num.
-
-    prototype for handling event callback (used by fl_set_event_callback,
-    fl_set_idle_callback, fl_add_event_callback), returning value.
-    """
-    pass
+        cty.c_void_p)
 
 
 # Draw mode
@@ -2661,7 +2626,7 @@ FL_ForgetGravity = FL_NoGravity         #ForgetGravity
 
 # my add, list of possible values --LK
 GRAVITY_list = [FL_North, FL_NorthEast, FL_NorthWest, FL_South, FL_SouthEast,
-            FL_SouthWest, FL_East, FL_West, FL_NoGravity, FL_ForgetGravity]
+        FL_SouthWest, FL_East, FL_West, FL_NoGravity, FL_ForgetGravity]
 
 
 # Internal colormap size. Not really very meaningful as fl_mapcolor
@@ -2679,7 +2644,8 @@ Atom = cty.c_ulong
 
 # /usr/include/X11/Xlib.h 1044
 class XFontProp(cty.Structure):
-    """XFontProp class
+    """XFontProp class. There are additional properties returned, to allow
+    arbitrary information with fonts, .
 
     Attributes
     ----------
@@ -2688,30 +2654,34 @@ class XFontProp(cty.Structure):
         card32 : long_pos
             *todo*
     """
-    _fields_ = [
+    pass
+XFontProp.__slots__ = ['name', 'card32',]
+XFontProp._fields_ = [
         ('name', Atom),
         ('card32', cty.c_ulong), ]
 
 # /usr/include/X11/Xlib.h 1035
 class XCharStruct(cty.Structure):
-    """XCharStruct class
+    """XCharStruct class. Per character font metric information.
 
     Attributes
     ----------
         lbearing : short
-            *todo*
+            origin to left edge of raster
         rbearing : short
-            *todo*
+            origin to right edge of raster
         width : short
-            *todo*
+            advance to next char's origin
         ascent : short
-            *todo*
+            baseline to top edge of raster
         descent : short
-            *todo*
+            baseline to bottom edge of raster
         attributes : ushort
-            *todo*
+            per char flags (not predefined)
     """
-    _fields_ = [
+XCharStruct.__slots__ = ['lbearing', 'rbearing', 'width', 'ascent', \
+        'descent', 'attributes',]
+XCharStruct._fields_ = [
         ('lbearing', cty.c_short),
         ('rbearing', cty.c_short),
         ('width', cty.c_short),
@@ -2726,39 +2696,44 @@ class XFontStruct(cty.Structure):
     Attributes
     ----------
         ext_data : pointer to XExtData
-            *todo*
+            hook for extension to hang data
         fid : long_pos
-            Font
+            Font id for this font
         direction : int_pos
-            *todo*
+            hint about direction the font is painted
         min_char_or_byte2 : int_pos
-            *todo*
+            first character
         max_char_or_byte2 : int_pos
-            *todo*
+            last character
         min_byte1 : int_pos
-            *todo*
+            first row that exists
         max_byte1 : int_pos
-            *todo*
+            first row that exists
         all_chars_exist : int
-            *todo*
+            (bool) flag if all characters have non-zero size
         default_char : int_pos
-            *todo*
+            char to print for undefined character
         n_properties : int
-            *todo*
+            how many properties there are
         properties : pointer to XFontProp
-            *todo*
+            pointer to array of additional properties
         min_bounds : XCharStruct instance
-            *todo*
+            minimum bounds over all existing char
         max_bounds : XCharStruct instance
-            *todo*
+            maximum bounds over all existing char
         per_char : pointer to XCharStruct
-            *todo*
+            first_char to last_char information
         ascent : int
-            *todo*
+            log. extent above baseline for spacing
         descent : int
-            *todo*
+            log. descent below baseline for spacing
     """
-    _fields_ = [
+XFontStruct.__slots__ = ['ext_data', 'fid', 'direction', \
+        'min_char_or_byte2', 'max_char_or_byte2', 'min_byte1', \
+        'max_byte1', 'all_chars_exist', 'default_char', 'n_properties', \
+        'properties', 'min_bounds', 'max_bounds', 'per_char', \
+        'ascent', 'descent',]
+XFontStruct._fields_ = [
         ('ext_data', cty.POINTER(XExtData)),
         ('fid', Font),
         ('direction', cty.c_uint),
@@ -2799,9 +2774,9 @@ class FL_State(cty.Structure):
         trailblazer : long_pos
             Window
         vclass : int
-            *todo*
+            visual class
         depth : int
-            *todo*
+            depth of visual
         rgb_bits : int
             *todo*
         dithered : int
@@ -2835,7 +2810,11 @@ class FL_State(cty.Structure):
         bbits : int_pos
             *todo*
     """
-    _fields_ = [
+FL_State.__slots__ = ['xvinfo', 'cur_fnt', 'colormap', 'trailblazer', \
+        'vclass', 'depth', 'rgb_bits', 'dithered', 'pcm', 'gc', \
+        'textgc', 'dimmedGC', 'lut', 'rshift', 'rmask', 'rbits', \
+        'gshift', 'gmask', 'gbits', 'bshift', 'bmask', 'bbits',]
+FL_State._fields_ = [
         ('xvinfo', cty.POINTER(XVisualInfo)),
         ('cur_fnt', cty.POINTER(XFontStruct)),
         ('colormap', Colormap),
@@ -2888,7 +2867,9 @@ class FL_FONT(cty.Structure):
         fname : str
             filename without size info
     """
-    _fields_ = [
+    pass
+FL_FONT.__slots__ = ['fs', 'size', 'nsize', 'fname',]
+FL_FONT._fields_ = [
         ('fs', cty.POINTER(XFontStruct) * FL_MAX_FONTSIZES),
         ('size', cty.c_short * FL_MAX_FONTSIZES),
         ('nsize', cty.c_short),
@@ -3092,7 +3073,9 @@ class FL_RESOURCE(cty.Structure):
         "best" means that the XForms Library by default selects a
         visual that has the most depth.
     """
-    _fields_ = [
+FL_RESOURCE.__slots__ = ['res_name', 'res_class', 'type', 'var', \
+        'defval', 'nbytes',]
+FL_RESOURCE._fields_ = [
         ('res_name', STRING),           # resource name
         ('res_class', STRING),          # resource class
         ('type', FL_RTYPE),             # FL_INT, FL_FLOAT, FL_BOOL, etc..
@@ -3135,7 +3118,8 @@ class XrmOptionDescRec(cty.Structure):
         value : str
             Value to provide if argKind is XrmoptionNoArg
     """
-    _fields_ = [
+XrmOptionDescRec.__slots__ = ['option', 'specifier', 'argKind', 'value',]
+XrmOptionDescRec._fields_ = [
         ('option', STRING),
         ('specifier', STRING),
         ('argKind', XrmOptionKind),
@@ -3159,65 +3143,73 @@ class FL_IOPT(cty.Structure):
     Attributes
     ----------
         rgamma : float
-            *todo*
+            gamma for red?
         ggamma : float
-            *todo*
+            gamma for green?
         bgamma : float
-            *todo*
+            gamma for blue?
         debug : int
-            *todo*
+            debug level (0-5)
         sync : int
             *todo*
         depth : int
-            *todo*
+            preferred visual depth
         vclass : int
-            *todo*
+            preferred visual class (TrueColor, etc..)
         doubleBuffer : int
-            *todo*
+            Simulates double-buffer
         ulPropWidth : int
             underline stuff
         ulThickness : int
-            *todo*
+            underline thickness
         buttonFontSize : int
-            *todo*
+            default button label font size
         sliderFontSize : int
             *todo*
         inputFontSize : int
-            *todo*
+            Input label and text font size
         browserFontSize : int
-            *todo*
+            Browser label and text font size
         menuFontSize : int
-            *todo*
+            Menu label font size
         choiceFontSize : int
-            *todo*
+            Choice label and choice text font size
         labelFontSize : int
-            all other labels fonts
+            Label font size for all other flobjects (box, pixmap etc.)
         pupFontSize : int
             font size for pop-up menus
         pupFontStyle : int
             font style for pop-up menus
         privateColormap : int
-            *todo*
+            Selects private colormap if appropriate
         sharedColormap : int
-            *todo*
+            Forces use of shared colormap
         standardColormap : int
-            *todo*
+            Forces use of standard colormap
         scrollbarType : int
-            *todo*
+            Scrollbar type to use for browser and input
         backingStore : int
-            *todo*
+            Turn BackingStore on or off
         coordUnit : int
-            *todo*
+            Unit of measure, e.g. pixel, mm, point
         borderWidth : int
-            *todo*
+            default border width
         safe : int
             *todo*
         rgbfile : str
             where RGB file is
         vname : str (24 chars)
-            *todo*
+            name of visual class
     """
-    _fields_ = [
+FL_IOPT.__slots__ = ['rgamma', 'ggamma', 'bgamma', 'debug', 'sync', \
+        'depth', 'vclass', 'doubleBuffer', 'ulPropWidth', 'ulThickness', \
+        'buttonFontSize', 'sliderFontSize', 'inputFontSize', \
+        'browserFontSize', 'menuFontSize', 'choiceFontSize', \
+        'labelFontSize', 'pupFontSize', 'pupFontStyle', 'privateColormap', \
+        'sharedColormap', 'standardColormap', 'scrollbarType', \
+        'backingStore', 'coordUnit', 'borderWidth', 'safe', 'rgbfile', \
+        'vname',]
+FL_IOPT._fields_ = [
         ('rgamma', cty.c_float),
         ('ggamma', cty.c_float),
         ('bgamma', cty.c_float),
@@ -3308,21 +3300,13 @@ FL_PACKED4 = cty.c_uint
 FL_PACKED = FL_PACKED4
 
 FL_RMASK = 0x000000ff
-""""""
 FL_RSHIFT = 0
-""""""
 FL_GMASK = 0x0000ff00
-""""""
 FL_GSHIFT = 8
-""""""
 FL_BMASK = 0x00ff0000
-""""""
 FL_BSHIFT = 16
-""""""
 FL_AMASK = 0xff000000
-""""""
 FL_ASHIFT = 24
-""""""
 
 
 class FL_RGB2PIXEL_(cty.Structure):
@@ -3331,29 +3315,32 @@ class FL_RGB2PIXEL_(cty.Structure):
     Attributes
     ----------
         rshift : int_pos
-            *todo*
+            red *todo*
         rmask' : int_pos
-            *todo*
+            mask value for red
         rbits : int_pos
-            *todo*
+            red *todo*
         gshift : int_pos
-            *todo*
+            green *todo*
         gmask' : int_pos
-            *todo*
+            mask value for green
         gbits : int_pos
-            *todo*
+            green *todo*
         bshift : int_pos
-            *todo*
+            blue *todo*
         bmask : int_pos
-            *todo*
+            mask value for blue
         bbits : int_pos
-            *todo*
+            blue *todo*
         bits_per_rgb : int
             *todo*
         colormap_size : int
             *todo*
     """
-    _fields_ = [
+    pass
+FL_RGB2PIXEL_.__slots__ = ['rshift', 'rmask', 'rbits', 'gshift', 'gmask', \
+        'gbits', 'bshift', 'bmask', 'bbits', 'bits_per_rgb', 'colormap_size',]
+FL_RGB2PIXEL_._fields_ = [
         ('rshift', cty.c_uint),
         ('rmask', cty.c_uint),
         ('rbits', cty.c_uint),
@@ -3377,26 +3364,29 @@ KeyCode = cty.c_ubyte
 
 # /usr/include/X11/Xlib.h 416
 class XWindowChanges(cty.Structure):
-    """X11 XWindowChanges class
+    """X11 XWindowChanges class. Data structure for XReconfigureWindow.
 
     Attributes
     ----------
         x : int
-            *todo*
+            horizontal position of window
         y : int
-            *todo*
+            vertical position of window
         width : int
-            *todo*
+            width of window
         height : int
-            *todo*
+            height of window
         border_width : int
-            *todo*
+            width of the window border
         sibling : long_pos
             Window
         stack_mode : int
             *todo*
     """
-    _fields_ = [
+    pass
+XWindowChanges.__slots__ = ['x', 'y', 'width', 'height', 'border_width', \
+        'sibling', 'stack_mode',]
+XWindowChanges._fields_ = [
         ('x', cty.c_int),
         ('y', cty.c_int),
         ('width', cty.c_int),
@@ -3408,7 +3398,7 @@ class XWindowChanges(cty.Structure):
 
 # /usr/include/X11/Xlib.h 426
 class XColor(cty.Structure):
-    """X11 XColor class
+    """X11 XColor class. Data structure used by color operations.
 
     Attributes
     ----------
@@ -3425,7 +3415,9 @@ class XColor(cty.Structure):
         pad : char
             *todo*
     """
-    _fields_ = [
+    pass
+XColor.__slots__ = ['pixel', 'red', 'green', 'blue', 'flags', 'pad',]
+XColor._fields_ = [
         ('pixel', cty.c_ulong),
         ('red',  cty.c_ushort),
         ('green',  cty.c_ushort),
@@ -3441,28 +3433,31 @@ class XSegment(cty.Structure):
     Attributes
     ----------
         x1 : short
-            *todo*
+            horizontal position of start
         y1 : short
-            *todo*
+            vertical position of start
         x2 : short
-            *todo*
+            horizontal position of end
         y2 : short
-            *todo*
+            vertical position of end
     """
-    _fields_ = [
+    pass
+XSegment.__slots__ = ['x1', 'y1', 'x2', 'y2',]
+XSegment._fields_ = [
         ('x1', cty.c_short),
         ('y1', cty.c_short),
         ('x2', cty.c_short),
         ('y2', cty.c_short), ]
 
 
+XPoint.__slots__ = ['x', 'y',]
 XPoint._fields_ = [
     ('x', cty.c_short),
-    ('y', cty.c_short),
-]
+    ('y', cty.c_short), ]
 
 
 # /usr/include/X11/Xlib.h 444
+XRectangle.__slots__ = ['x', 'y', 'width', 'height',]
 XRectangle._fields_ = [
     ('x', cty.c_short),
     ('y', cty.c_short),
@@ -3478,19 +3473,21 @@ class XArc(cty.Structure):
     Attributes
     ----------
         x : short
-            *todo*
+            horizontal position
         y : short
-            *todo*
+            vertical position
         width : ushort
-            *todo*
+            width of arc
         height : ushort
-            *todo*
+            height of arc
         angle1 : short
             *todo*
         angle2 : short
             *todo*
     """
-    _fields_ = [
+    pass
+XArc.__slots__ = ['x', 'y', 'width', 'height', 'angle1', 'angle2',]
+XArc._fields_ = [
         ('x', cty.c_short),
         ('y', cty.c_short),
         ('width',  cty.c_ushort),
@@ -3501,7 +3498,7 @@ class XArc(cty.Structure):
 
 # /usr/include/X11/Xlib.h 464
 class XKeyboardControl(cty.Structure):
-    """X11 XKeyboardControl class
+    """X11 XKeyboardControl class. Data structure for XChangeKeyboardControl.
 
     Attributes
     ----------
@@ -3520,9 +3517,13 @@ class XKeyboardControl(cty.Structure):
         key : int
             *todo*
         auto_repeat_mode : int
-            *todo*
+            On, Off, Default
     """
-    _fields_ = [
+    pass
+XKeyboardControl.__slots__ = ['key_click_percent', 'bell_percent', \
+        'bell_pitch', 'bell_duration', 'led', 'led_mode', 'key', \
+        'auto_repeat_mode',]
+XKeyboardControl._fields_ = [
         ('key_click_percent', cty.c_int),
         ('bell_percent', cty.c_int),
         ('bell_pitch', cty.c_int),
@@ -3535,7 +3536,7 @@ class XKeyboardControl(cty.Structure):
 
 # /usr/include/X11/Xlib.h 475
 class XKeyboardState(cty.Structure):
-    """X11 XKeyboardState class
+    """X11 XKeyboardState class. Data structure for XGetKeyboardControl.
 
     Attributes
     ----------
@@ -3554,7 +3555,11 @@ class XKeyboardState(cty.Structure):
         auto_repeats : array of 32 char
             *todo*
     """
-    _fields_ = [
+    pass
+XKeyboardState.__slots__ = ['key_click_percent', 'bell_percent', \
+        'bell_pitch', 'bell_duration', 'led_mask', 'global_auto_repeat', \
+        'auto_repeats',]
+XKeyboardState._fields_ = [
         ('key_click_percent', cty.c_int),
         ('bell_percent', cty.c_int),
         ('bell_pitch', cty.c_uint),
@@ -3566,7 +3571,7 @@ class XKeyboardState(cty.Structure):
 
 # /usr/include/X11/Xlib.h 482
 class XTimeCoord(cty.Structure):
-    """X11 XTimeCoord class
+    """X11 XTimeCoord class. Data structure for XGetMotionEvents.
 
     Attributes
     ----------
@@ -3577,7 +3582,9 @@ class XTimeCoord(cty.Structure):
         y : short
             *todo*
     """
-    _fields_ = [
+    pass
+XTimeCoord.__slots__ = ['time', 'x', 'y',]
+XTimeCoord._fields_ = [
         ('time', Time),
         ('x', cty.c_short),
         ('y', cty.c_short), ]
@@ -3585,16 +3592,18 @@ class XTimeCoord(cty.Structure):
 
 # /usr/include/X11/Xlib.h 489
 class XModifierKeymap(cty.Structure):
-    """X11 XModifierKeymap class
+    """X11 XModifierKeymap class. Data structure for X{Set,Get}ModifierMapping.
 
     Attributes
     ----------
         max_keypermod : int
-            *todo*
+            The server's max # of keys per modifier
         modifiermap : pointer to KeyCode
-            *todo*
+            An 8 by max_keypermod array of modifiers
     """
-    _fields_ = [
+    pass
+XModifierKeymap.__slots__ = ['max_keypermod', 'modifiermap',]
+XModifierKeymap._fields_ = [
         ('max_keypermod', cty.c_int),
         ('modifiermap', cty.POINTER(KeyCode)), ]
 
@@ -3614,42 +3623,46 @@ class _XrmHashBucketRec(cty.Structure):
 
 # /usr/include/X11/Xlib.h 582
 class XKeyEvent(cty.Structure):
-    """X11 XKeyEvent class
+    """X11 XKeyEvent class. Definitions of specific events.
 
     Attributes
     ----------
         type : int
-            *todo*
+            type of event
         serial : long_pos
-            *todo*
+            # of last request processed by server
         send_event : int
-            *todo*
+            (bool) true if this came from a SendEvent request
         display : pointer to Display
-            *todo*
+            Display the event was read from
         window : long_pos
-            Window
+            "event" window it is reported relative to
         root : long_pos
-            Window
+            root window that the event occurred on
         subwindow : long_pos
-            Window
+            child window
         time : long_pos
-            Time
+            time in milliseconds
         x : int
-            *todo*
+            horizontal coordinates of pointer in event window
         y : int
-            *todo*
+            vertical coordinates of pointer in event window
         x_root : int
-            *todo*
+            horizontal coordinates relative to root
         y_root : int
-            *todo*
+            vertical coordinates relative to root
         state : int_pos
-            *todo*
+            key or button mask
         keycode : int_pos
-            *todo*
+            detail
         same_screen : int
-            *todo*
+            (bool) same screen flag
     """
-    _fields_ = [
+    pass
+XKeyEvent.__slots__ = ['type', 'serial', 'send_event', 'display', \
+        'window', 'root', 'subwindow', 'time', 'x', 'y', 'x_root', \
+        'y_root', 'state', 'keycode', 'same_screen',]
+XKeyEvent._fields_ = [
         ('type', cty.c_int),
         ('serial', cty.c_ulong),
         ('send_event', cty.c_int),
@@ -3676,37 +3689,41 @@ class XButtonEvent(cty.Structure):
     Attributes
     ----------
         type : int
-            *todo*
+            type of event
         serial : long_pos
-            *todo*
+            # of last request processed by server
         send_event : int
-            *todo*
+            (bool) true if this came from a SendEvent request
         display : pointer to Display
-            *todo*
+            Display the event was read from
         window : long_pos
-            Window
+            "event" window it is reported relative to
         root : long_pos
-            Window
+            root window that the event occurred on
         subwindow : long_pos
-            Window
+            child window
         time : long_pos
-            Time
+            time in milliseconds
         x : int
-            *todo*
+            horizontal coordinates of pointer in event window
         y : int
-            *todo*
+            vertical coordinates of pointer in event window
         x_root : int
-            *todo*
+            horizontal coordinates relative to root
         y_root : int
-            *todo*
+            vertical coordinates relative to root
         state : int_pos
-            *todo*
+            key or button mask
         button : int_pos
-            *todo*
+            detail
         same_screen : int
-            *todo*
+            (bool) same screen flag
     """
-    _fields_ = [
+    pass
+XButtonEvent.__slots__ = ['type', 'serial', 'send_event', 'display', \
+        'window', 'root', 'subwindow', 'time', 'x', 'y', 'x_root', \
+        'y_root', 'state', 'button', 'same_screen',]
+XButtonEvent._fields_ = [
         ('type', cty.c_int),
         ('serial', cty.c_ulong),
         ('send_event', cty.c_int),
@@ -3733,37 +3750,41 @@ class XMotionEvent(cty.Structure):
     Attributes
     ----------
         type : int
-            *todo*
+            type of event
         serial : long_pos
-            *todo*
+            # of last request processed by server
         send_event : int
-            *todo*
+            (bool) true if this came from a SendEvent request
         display : pointer to Display
-            *todo*
+            Display the event was read from
         window : long_pos
-            Window
+            "event" window it is reported relative to
         root : long_pos
-            Window
+            root window that the event occurred on
         subwindow : long_pos
-             Window
+            child window
         time : long_pos
-            Time
+            time in milliseconds
         x : int
-            *todo*
+            horizontal coordinates of pointer in event window
         y : int
-            *todo*
+            vertical coordinates of pointer in event window
         x_root : int
-            *todo*
+            horizontal coordinates relative to root
         y_root : int
-            *todo*
+            vertical coordinates relative to root
         state : int_pos
-            *todo*
+            key or button mask
         is_hint : char
-            *todo*
+            detail
         same_screen : int
-            *todo*
+            (bool) same screen flag
     """
-    _fields_ = [
+    pass
+XMotionEvent.__slots__ = ['type', 'serial', 'send_event', 'display', \
+        'window', 'root', 'subwindow', 'time', 'x', 'y', 'x_root', \
+        'y_root', 'state', 'is_hint', 'same_screen',]
+XMotionEvent._fields_ = [
         ('type', cty.c_int),
         ('serial', cty.c_ulong),
         ('send_event', cty.c_int),
@@ -3789,41 +3810,46 @@ class XCrossingEvent(cty.Structure):
     Attributes
     ----------
         type : int
-            *todo*
+            type of event
         serial : long_pos
-            *todo*
+            # of last request processed by server
         send_event : int
-            *todo*
+            (bool) true if this came from a SendEvent request
         display : pointer to Display
-            *todo*
+            Display the event was read from
         window : long_pos
-            Window
+            "event" window it is reported relative to
         root : long_pos
-            Window
-        subwindow : long:pos
-            Window
+            root window that the event occurred on
+        subwindow : long_pos
+            child window
         time : long_pos
-            Time
+            time in milliseconds
         x : int
-            *todo*
+            horizontal coordinates of pointer in event window
         y : int
-            *todo*
+            vertical coordinates of pointer in event window
         x_root : int
-            *todo*
+            horizontal coordinates relative to root
         y_root : int
-            *todo*
+            vertical coordinates relative to root
         mode : int
-            *todo*
+            NotifyNormal, NotifyGrab, NotifyUngrab
         detail : int
-            *todo*
+            NotifyAncestor, NotifyVirtual, NotifyInferior,
+            NotifyNonlinear, NotifyNonlinearVirtual
         same_screen : int
-            *todo*
+            (bool) same screen flag
         focus : int
-            *todo*
+            boolean focus
         state : int_pos
-            *todo*
+            key or button mask
     """
-    _fields_ = [
+    pass
+XCrossingEvent.__slots__ = ['type', 'serial', 'send_event', 'display', \
+        'window', 'root', 'subwindow', 'time', 'x', 'y', 'x_root', \
+        'y_root', 'mode', 'detail', 'same_screen', 'focus', 'state',]
+XCrossingEvent._fields_ = [
         ('type', cty.c_int),
         ('serial', cty.c_ulong),
         ('send_event', cty.c_int),
@@ -3866,7 +3892,10 @@ class XFocusChangeEvent(cty.Structure):
         detail : int
             *todo*
     """
-    _fields_ = [
+    pass
+XFocusChangeEvent.__slots__ = ['type', 'serial', 'send_event', 'display', \
+        'window', 'mode', 'detail',]
+XFocusChangeEvent._fields_ = [
         ('type', cty.c_int),
         ('serial', cty.c_ulong),
         ('send_event', cty.c_int),
@@ -3898,7 +3927,10 @@ class XKeymapEvent(cty.Structure):
         key_vector : array of 32 char
             *todo*
     """
-    _fields_ = [
+    pass
+XKeymapEvent.__slots__ = ['type', 'serial', 'send_event', 'display', \
+        'window', 'key_vector',]
+XKeymapEvent._fields_ = [
         ('type', cty.c_int),
         ('serial', cty.c_ulong),
         ('send_event', cty.c_int),
@@ -3934,7 +3966,10 @@ class XExposeEvent(cty.Structure):
         count : int
             *todo*
     """
-    _fields_ = [
+    pass
+XExposeEvent.__slots__ = ['type', 'serial', 'send_event', 'display', \
+        'window', 'x', 'y', 'width', 'height', 'count',]
+XExposeEvent._fields_ = [
         ('type', cty.c_int),
         ('serial', cty.c_ulong),
         ('send_event', cty.c_int),
@@ -3981,7 +4016,11 @@ class XGraphicsExposeEvent(cty.Structure):
         minor_code : int
             *todo*
     """
-    _fields_ = [
+    pass
+XGraphicsExposeEvent.__slots__ = ['type', 'serial', 'send_event', 'display', \
+        'drawable', 'x', 'y', 'width', 'height', 'count', 'major_code', \
+        'minor_code',]
+XGraphicsExposeEvent._fields_ = [
         ('type', cty.c_int),
         ('serial', cty.c_ulong),
         ('send_event', cty.c_int),
@@ -4017,7 +4056,10 @@ class XNoExposeEvent(cty.Structure):
         minor_code : int
             *todo*
     """
-    _fields_ = [
+    pass
+XNoExposeEvent.__slots__ = ['type', 'serial', 'send_event', 'display', \
+        'drawable', 'major_code', 'minor_code',]
+XNoExposeEvent._fields_ = [
         ('type', cty.c_int),
         ('serial', cty.c_ulong),
         ('send_event', cty.c_int),
@@ -4046,7 +4088,10 @@ class XVisibilityEvent(cty.Structure):
         state : int
             *todo*
     """
-    _fields_ = [
+    pass
+XVisibilityEvent.__slots__ = ['type', 'serial', 'send_event', 'display', \
+        'window', 'state',]
+XVisibilityEvent._fields_ = [
         ('type', cty.c_int),
         ('serial', cty.c_ulong),
         ('send_event', cty.c_int),
@@ -4086,7 +4131,11 @@ class XCreateWindowEvent(cty.Structure):
         override_redirect : int
             *todo*
     """
-    _fields_ = [
+    pass
+XCreateWindowEvent.__slots__ = ['type', 'serial', 'send_event', 'display', \
+        'parent', 'window', 'x', 'y', 'width', 'height', 'border_width', \
+        'override_redirect',]
+XCreateWindowEvent._fields_ = [
         ('type', cty.c_int),
         ('serial', cty.c_ulong),
         ('send_event', cty.c_int),
@@ -4120,7 +4169,10 @@ class XDestroyWindowEvent(cty.Structure):
         window : long_pos
             Window
     """
-    _fields_ = [
+    pass
+XDestroyWindowEvent.__slots__ = ['type', 'serial', 'send_event', 'display', \
+        'event', 'window',]
+XDestroyWindowEvent._fields_ = [
         ('type', cty.c_int),
         ('serial', cty.c_ulong),
         ('send_event', cty.c_int),
@@ -4150,7 +4202,10 @@ class XUnmapEvent(cty.Structure):
         from_configure : int
             *todo*
     """
-    _fields_ = [
+    pass
+XUnmapEvent.__slots__ = ['type', 'serial', 'send_event', 'display', \
+        'event', 'window', 'from_configure',]
+XUnmapEvent._fields_ = [
         ('type', cty.c_int),
         ('serial', cty.c_ulong),
         ('send_event', cty.c_int),
@@ -4181,7 +4236,10 @@ class XMapEvent(cty.Structure):
         override_redirect : int
             *todo*
     """
-    _fields_ = [
+    pass
+XMapEvent.__slots__ = ['type', 'serial', 'send_event', 'display', \
+        'event', 'window', 'override_redirect',]
+XMapEvent._fields_ = [
         ('type', cty.c_int),
         ('serial', cty.c_ulong),
         ('send_event', cty.c_int),
@@ -4210,7 +4268,10 @@ class XMapRequestEvent(cty.Structure):
         window : long_pos
             Window
     """
-    _fields_ = [
+    pass
+XMapRequestEvent.__slots__ = ['type', 'serial', 'send_event', 'display', \
+        'parent', 'window',]
+XMapRequestEvent._fields_ = [
         ('type', cty.c_int),
         ('serial', cty.c_ulong),
         ('send_event', cty.c_int),
@@ -4246,7 +4307,10 @@ class XReparentEvent(cty.Structure):
         override_redirect : int
             *todo*
     """
-    _fields_ = [
+    pass
+XReparentEvent.__slots__ = ['type', 'serial', 'send_event', 'display', \
+        'event', 'window', 'parent', 'x', 'y', 'override_redirect',]
+XReparentEvent._fields_ = [
         ('type', cty.c_int),
         ('serial', cty.c_ulong),
         ('send_event', cty.c_int),
@@ -4292,7 +4356,11 @@ class XConfigureEvent(cty.Structure):
         override_redirect : int
             *todo*
     """
-    _fields_ = [
+    pass
+XConfigureEvent.__slots__ = ['type', 'serial', 'send_event', 'display', \
+        'event', 'window', 'x', 'y', 'width', 'height', 'border_width', \
+        'above', 'override_redirect',]
+XConfigureEvent._fields_ = [
         ('type', cty.c_int),
         ('serial', cty.c_ulong),
         ('send_event', cty.c_int),
@@ -4331,7 +4399,10 @@ class XGravityEvent(cty.Structure):
         y : int
             *todo*
     """
-    _fields_ = [
+    pass
+XGravityEvent.__slots__ = ['type', 'serial', 'send_event', 'display', \
+        'event', 'window', 'x', 'y',]
+XGravityEvent._fields_ = [
         ('type', cty.c_int),
         ('serial', cty.c_ulong),
         ('send_event', cty.c_int),
@@ -4363,7 +4434,10 @@ class XResizeRequestEvent(cty.Structure):
         height : int
             *todo*
     """
-    _fields_ = [
+    pass
+XResizeRequestEvent.__slots__ = ['type', 'serial', 'send_event', 'display', \
+        'window', 'width', 'height',]
+XResizeRequestEvent._fields_ = [
         ('type', cty.c_int),
         ('serial', cty.c_ulong),
         ('send_event', cty.c_int),
@@ -4408,7 +4482,11 @@ class XConfigureRequestEvent(cty.Structure):
         value_mask : long_pos
             *todo*
     """
-    _fields_ = [
+    pass
+XConfigureRequestEvent.__slots__ = ['type', 'serial', 'send_event', \
+    'display', 'parent', 'window', 'x', 'y', 'width', 'height', \
+    'border_width', 'above', 'detail', 'value_mask',]
+XConfigureRequestEvent._fields_ = [
         ('type', cty.c_int),
         ('serial', cty.c_ulong),
         ('send_event', cty.c_int),
@@ -4446,7 +4524,10 @@ class XCirculateEvent(cty.Structure):
         place : int
             *todo*
     """
-    _fields_ = [
+    pass
+XCirculateEvent.__slots__ = ['type', 'serial', 'send_event', 'display', \
+        'event', 'window', 'place',]
+XCirculateEvent._fields_ = [
         ('type', cty.c_int),
         ('serial', cty.c_ulong),
         ('send_event', cty.c_int),
@@ -4477,7 +4558,10 @@ class XCirculateRequestEvent(cty.Structure):
         place : int
             *todo*
     """
-    _fields_ = [
+    pass
+XCirculateRequestEvent.__slots__ = ['type', 'serial', 'send_event', \
+        'display', 'parent', 'window', 'place',]
+XCirculateRequestEvent._fields_ = [
         ('type', cty.c_int),
         ('serial', cty.c_ulong),
         ('send_event', cty.c_int),
@@ -4510,7 +4594,10 @@ class XPropertyEvent(cty.Structure):
         state : int
             *todo*
     """
-    _fields_ = [
+    pass
+XPropertyEvent.__slots__ = ['type', 'serial', 'send_event', 'display', \
+        'window', 'atom', 'time', 'state',]
+XPropertyEvent._fields_ = [
         ('type', cty.c_int),
         ('serial', cty.c_ulong),
         ('send_event', cty.c_int),
@@ -4542,7 +4629,10 @@ class XSelectionClearEvent(cty.Structure):
         time : long_pos
             Time
     """
-    _fields_ = [
+    pass
+XSelectionClearEvent.__slots__ = ['type', 'serial', 'send_event', 'display', \
+        'window', 'selection', 'time',]
+XSelectionClearEvent._fields_ = [
         ('type', cty.c_int),
         ('serial', cty.c_ulong),
         ('send_event', cty.c_int),
@@ -4579,7 +4669,11 @@ class XSelectionRequestEvent(cty.Structure):
         time : long_pos
             Time
     """
-    _fields_ = [
+    pass
+XSelectionRequestEvent.__slots__ = ['type', 'serial', 'send_event', \
+        'display', 'owner', 'requestor', 'selection', 'target', 'property', \
+        'time',]
+XSelectionRequestEvent._fields_ = [
         ('type', cty.c_int),
         ('serial', cty.c_ulong),
         ('send_event', cty.c_int),
@@ -4617,7 +4711,10 @@ class XSelectionEvent(cty.Structure):
         time : long_pos
             Time
     """
-    _fields_ = [
+    pass
+XSelectionEvent.__slots__ = ['type', 'serial', 'send_event', 'display', \
+        'requestor', 'selection', 'target', 'property', 'time',]
+XSelectionEvent._fields_ = [
         ('type', cty.c_int),
         ('serial', cty.c_ulong),
         ('send_event', cty.c_int),
@@ -4652,7 +4749,10 @@ class XColormapEvent(cty.Structure):
         state : int
             *todo*
     """
-    _fields_ = [
+    pass
+XColormapEvent.__slots__ = ['type', 'serial', 'send_event', 'display', \
+        'window', 'colormap', 'c_new', 'state',]
+XColormapEvent._fields_ = [
         ('type', cty.c_int),
         ('serial', cty.c_ulong),
         ('send_event', cty.c_int),
@@ -4676,7 +4776,9 @@ class N19XClientMessageEvent4DOT_71E(cty.Union):
         l : array of 5 long
             *todo*
     """
-    _fields_ = [
+    pass
+N19XClientMessageEvent4DOT_71E.__slots__ = ['b', 's', 'l',]
+N19XClientMessageEvent4DOT_71E._fields_ = [
         ('b', cty.c_char * 20),
         ('s', cty.c_short * 10),
         ('l', cty.c_long * 5), ]
@@ -4705,7 +4807,10 @@ class XClientMessageEvent(cty.Structure):
         data : N19XClientMessageEvent4DOT_71E
             *todo*
     """
-    _fields_ = [
+    pass
+XClientMessageEvent.__slots__ = ['type', 'serial', 'send_event', 'display', \
+        'window', 'message_type', 'format', 'data',]
+XClientMessageEvent._fields_ = [
         ('type', cty.c_int),
         ('serial', cty.c_ulong),
         ('send_event', cty.c_int),
@@ -4739,7 +4844,10 @@ class XMappingEvent(cty.Structure):
         count : int
             *todo*
     """
-    _fields_ = [
+    pass
+XMappingEvent.__slots__ = ['type', 'serial', 'send_event', 'display', \
+        'window', 'request', 'first_keycode', 'count',]
+XMappingEvent._fields_ = [
         ('type', cty.c_int),
         ('serial', cty.c_ulong),
         ('send_event', cty.c_int),
@@ -4771,7 +4879,10 @@ class XErrorEvent(cty.Structure):
         minor_code : ubyte
             *todo*
     """
-    _fields_ = [
+    pass
+XErrorEvent.__slots__ = ['type', 'display', 'resourceid', 'serial', \
+        'error_code', 'request_code', 'minor_code',]
+XErrorEvent._fields_ = [
         ('type', cty.c_int),
         ('display', cty.POINTER(Display)),
         ('resourceid', XID),
@@ -4798,7 +4909,9 @@ class XAnyEvent(cty.Structure):
         window : long_pos
             Window
     """
-    _fields_ = [
+    pass
+XAnyEvent.__slots__ = ['type', 'serial', 'send_event', 'display', 'window',]
+XAnyEvent._fields_ = [
         ('type', cty.c_int),
         ('serial', cty.c_ulong),
         ('send_event', cty.c_int),
@@ -4825,7 +4938,10 @@ class XGenericEvent(cty.Structure):
         evtype : int
             *todo*
     """
-    _fields_ = [
+    pass
+XGenericEvent.__slots__ = ['type', 'serial', 'send_event', 'display', \
+        'extension', 'evtype',]
+XGenericEvent._fields_ = [
         ('type', cty.c_int),
         ('serial', cty.c_ulong),
         ('send_event', cty.c_int),
@@ -4857,7 +4973,10 @@ class XGenericEventCookie(cty.Structure):
         data : pointer to void
             *todo*
     """
-    _fields_ = [
+    pass
+XGenericEventCookie.__slots__ = ['type', 'serial', 'send_event', 'display', \
+        'extension', 'evtype', 'cookie', 'data',]
+XGenericEventCookie._fields_ = [
         ('type', cty.c_int),
         ('serial', cty.c_ulong),
         ('send_event', cty.c_int),
@@ -4869,6 +4988,14 @@ class XGenericEventCookie(cty.Structure):
 
 
 # /usr/include/X11/Xlib.h 984
+_XEvent.__slots__ = ['type', 'xany', 'xkey', 'xbutton', 'xmotion', \
+        'xcrossing', 'xfocus', 'xexpose', 'xgraphicsexpose', 'xnoexpose', \
+        'xvisibility', 'xcreatewindow', 'xdestroywindow', 'xunmap', \
+        'xmap', 'xmaprequest', 'xreparent', 'xconfigure', 'xgravity', \
+        'xresizerequest', 'xconfigurerequest', 'xcirculate', \
+        'xcirculaterequest', 'xproperty', 'xselectionclear', \
+        'xselectionrequest', 'xselection', 'xcolormap', 'xclient', \
+        'xmapping', 'xerror', 'xkeymap', 'xgeneric', 'xcookie', 'pad',]
 _XEvent._fields_ = [
     ('type', cty.c_int),
     ('xany', XAnyEvent),
@@ -5102,6 +5229,7 @@ class function_prototype_for_FL_BROWSER_SCROLL_CALLBACK(object):
     """
     pass
 
+
 #############################################################
 # forms.h (button.h)
 # All Buttons, regular button, light button and round button
@@ -5165,7 +5293,11 @@ class FL_BUTTON_SPEC(cty.Structure):
         focus_filename : str
             *todo*
     """
-    _fields_ = [
+    pass
+FL_BUTTON_SPEC.__slots__ = ['pixmap', 'mask', 'bits_w', 'bits_h', 'val', \
+        'mousebut', 'timdel', 'event', 'is_pushed', 'react_to', 'cspecl', \
+        'cspecv', 'filename', 'focus_pixmap', 'focus_mask', 'focus_filename',]
+FL_BUTTON_SPEC._fields_ = [
         ('pixmap', Pixmap),
         ('mask', Pixmap),
         ('bits_w', cty.c_uint),
@@ -5315,7 +5447,13 @@ class XSetWindowAttributes(cty.Structure):
         cursor : long_pos
             Cursor
     """
-    _fields_ = [
+    pass
+XSetWindowAttributes.__slots__ = ['background_pixmap', 'background_pixel', \
+        'border_pixmap', 'border_pixel', 'bit_gravity', 'win_gravity', \
+        'backing_store', 'backing_planes', 'backing_pixel', 'save_under', \
+        'event_mask', 'do_not_propagate_mask', 'override_redirect', \
+        'colormap', 'cursor',]
+XSetWindowAttributes._fields_ = [
         ('background_pixmap', Pixmap),
         ('background_pixel', cty.c_ulong),
         ('border_pixmap', Pixmap),
@@ -5654,7 +5792,9 @@ class FL_Dirlist(cty.Structure):
         dl_size : long_pos
             file size in bytes
     """
-    _fields_ = [
+    pass
+FL_Dirlist.__slots__ = ['name', 'type', 'dl_mtime', 'dl_size',]
+FL_Dirlist._fields_ = [
         ('name', STRING),                # entry name
         ('type', cty.c_int),             # FILE_TYPE
         ('dl_mtime', cty.c_long),        # file modification time
@@ -5825,28 +5965,18 @@ class admitted_values_for_GLCONFIGATTR(object):
 
 # Resources and misc. goodie routines
 FLAlertDismissLabel = "flAlert.dismiss.label"
-""""""
 FLAlertTitle = "flAlert.title"
-""""""
 
 FLQuestionYesLabel = "flQuestion.yes.label"
-""""""
 FLQuestionNoLabel = "flQuestion.no.label"
-""""""
 FLQuestionTitle = "flQuestion.title"
-""""""
 
 FLOKLabel = "flInput.ok.label"
-""""""
 FLInputClearLabel = "flInput.clear.label"
-""""""
 FLInputCancelLabel = "flInput.cancel.label"
-""""""
 FLInputTitle = "flInput.title"
-""""""
 
 FLChoiceTitle = "flChoice.title"
-""""""
 
 class admitted_values_for_GoodiesLabel(object):
     """Label for goodies
@@ -5879,26 +6009,29 @@ class admitted_values_for_GoodiesLabel(object):
 # command log
 
 class FD_CMDLOG(cty.Structure):
-    """FL_CMDLOG class
+    """FD_CMDLOG class
 
     Attributes
     ----------
         form : pointer to FL_FORM
-            *todo*
+            the form
         vdata : pointer to void
-            *todo*
+            unused data
         cdata : str
-            *todo*
+            unused data
         ldata : long
-            *todo*
+            unused data
         browser : pointer to FL_OBJECT
-            *todo*
+            the browser flobject
         close_browser : pointer to FL_OBJECT
-            *todo*
+            the close button
         clear_browser : pointer to FL_OBJECT
-            *todo*
+            the clear button
     """
-    _fields_ = [
+    pass
+FD_CMDLOG.__slots__ = ['form', 'vdata', 'cdata', 'ldata', 'browser', \
+        'close_browser', 'clear_browser',]
+FD_CMDLOG._fields_ = [
         ('form', cty.POINTER(FL_FORM)),
         ('vdata', cty.c_void_p),
         ('cdata', STRING),
@@ -5947,7 +6080,11 @@ class FD_FSELECTOR(cty.Structure):
         appbutt : pointer to an array of 3 FL_OBJECT
             *todo*
     """
-    _fields_ = [
+    pass
+FD_FSELECTOR.__slots__ = ['fselect', 'vdata', 'cdata', 'ldata', \
+        'browser', 'input', 'prompt', 'resbutt', 'patbutt', 'dirbutt', \
+        'cancel', 'ready', 'dirlabel', 'patlabel', 'appbutt',]
+FD_FSELECTOR._fields_ = [
         ('fselect', cty.POINTER(FL_FORM)),
         ('vdata', cty.c_void_p),
         ('cdata', cty.c_void_p),
@@ -6013,7 +6150,6 @@ FL_INPUT_TCOL = FL_LCOL
 FL_INPUT_CCOL = FL_BLUE
 
 FL_RINGBELL = (1 << 4)
-""""""
 
 
 # edit keys
@@ -6070,7 +6206,15 @@ class FL_EditKeymap(cty.Structure):
         del_to_eos : long
             not implemented
     """
-    _fields_ = [
+    pass
+FL_EditKeymap.__slots__ = ['del_prev_char', 'del_next_char', \
+        'del_prev_word', 'del_next_word', 'moveto_prev_line', \
+        'moveto_next_line', 'moveto_prev_char', 'moveto_next_char', \
+        'moveto_prev_word', 'moveto_next_word', 'moveto_prev_page', \
+        'moveto_next_page', 'moveto_bol', 'moveto_eol', 'moveto_bof', \
+        'moveto_eof', 'transpose', 'paste', 'backspace', 'del_to_bol', \
+        'del_to_eol', 'clear_field', 'del_to_eos',]
+FL_EditKeymap._fields_ = [
         ('del_prev_char', cty.c_long),        # delete previous char
         ('del_next_char', cty.c_long),        # delete next char
         ('del_prev_word', cty.c_long),        # delete previous word
@@ -6119,11 +6263,8 @@ NMENUTYPE_list = [FL_NORMAL_NMENU, FL_NORMAL_TOUCH_NMENU, FL_BUTTON_NMENU, \
 
 
 # pointless as per library.py's get_xforms_version() --LK
-#FL_VERSION = 1
-#"""The major version number"""
-#FL_REVISION = 0
-#"""Revision number"""
-#FL_FIXLEVEL = "93pre10"
+# major, minor, fixlevel version
+#FL_VERSION = 1 FL_REVISION = 0  FL_FIXLEVEL = "93pre10"
 #FL_INCLUDE_VERSION = (FL_VERSION * 1000 + FL_REVISION)
 
 
@@ -6253,7 +6394,12 @@ class FLPS_CONTROL(cty.Structure):
         clip : int
             *todo*
     """
-    _fields_ = [
+    pass
+FLPS_CONTROL.__slots__ = ['ps_color', 'orientation', 'auto_fit', \
+        'drawbox', 'eps', 'xdpi', 'ydpi', 'paper_w', 'paper_h', \
+        'gamma', 'tmpdir', 'printer_dpi', 'hm', 'vm', 'xscale', \
+        'yscale', 'scale_text', 'first_page_only', 'clip',]
+FLPS_CONTROL._fields_ = [
         ('ps_color', cty.c_int),
         ('orientation', cty.c_int),
         ('auto_fit', cty.c_int),
@@ -6574,7 +6720,10 @@ class FL_POPUP_RETURN_(cty.Structure):
         popup : pointer to FL_POPUP
             popup or sub-popup it belongs to
     """
-    _fields_ = [
+    pass
+FL_POPUP_RETURN_.__slots__ = ['val', 'user_data', 'text', 'label', \
+        'accel', 'entry', 'popup',]
+FL_POPUP_RETURN_._fields_ = [
         ('val', cty.c_long),              # value assigned to popup entry
         ('user_data', cty.c_void_p),      # pointer to user data
         ('text', STRING),               # text of the selected popup entry
@@ -6588,6 +6737,16 @@ FL_POPUP_RETURN = FL_POPUP_RETURN_
 
 FL_POPUP_CB = cty.CFUNCTYPE(cty.c_int, cty.POINTER(FL_POPUP_RETURN))
 
+
+FL_POPUP_.__slots__ = ['next', 'prev', 'parent', 'top_parent', 'entries', \
+        'title', 'win', 'parent_win', 'cursor', 'callback', 'use_req_pos', \
+        'req_x', 'req_y', 'x', 'y', 'w', 'h', 'min_width', 'title_box_x', \
+        'title_box_y', 'title_box_w', 'title_box_h', 'has_subs', \
+        'has_boxes', 'counter', 'title_font_style', 'title_font_size', \
+        'entry_font_style', 'entry_font_size', 'event_mask', 'bw', \
+        'bg_color', 'on_color', 'title_color', 'text_color', \
+        'text_on_color', 'text_off_color', 'radio_color', 'policy', \
+        'need_recalc', 'ret',]
 FL_POPUP_._fields_ = [
     ('next', cty.POINTER(FL_POPUP)),      # next in linked list
     ('prev', cty.POINTER(FL_POPUP)),      # previous in linked list
@@ -6632,7 +6791,11 @@ FL_POPUP_._fields_ = [
     ('ret', FL_POPUP_RETURN), ]  # structure passed to callbacks and returned
                                  # on selection
 
-
+FL_POPUP_ENTRY_.__slots__ = ['prev', 'next', 'popup', 'is_act', 'text', \
+        'label', 'accel', 'val', 'user_data', 'type', 'state', 'group', \
+        'sub', 'shortcut', 'ulpos', 'callback', 'enter_callback', \
+        'leave_callback', 'x', 'y', 'w', 'h', 'box_x', 'box_y', 'box_w', \
+        'box_h', 'sl_h', 'ul_x', 'ul_y', 'ul_w', 'ul_h', ]
 FL_POPUP_ENTRY_._fields_ = [
     ('prev', cty.POINTER(FL_POPUP_ENTRY)),  # next in linked list
     ('next', cty.POINTER(FL_POPUP_ENTRY)),  # previous in linked list
@@ -6683,7 +6846,9 @@ class FL_POPUP_ITEM(cty.Structure):
         state : int
             disabled, hidden, checked
     """
-    _fields_ = [
+    pass
+FL_POPUP_ITEM.__slots__ = ['text', 'callback', 'shortcut', 'type', 'state',]
+FL_POPUP_ITEM._fields_ = [
         ('text', STRING),               # text of entry
         ('callback', FL_POPUP_CB),      # (selection) callback
         ('shortcut', STRING),           # keyboard shortcut description
@@ -6712,7 +6877,6 @@ class admitted_values_for_POPUPSTATE(object):
 
     Admitted values
     ---------------
-
         FL_POPUP_NONE
             No special flags are set for the state of the popup
         FL_POPUP_DISABLED
@@ -6909,13 +7073,11 @@ FL_HOR_BASIC_SLIDER = FL_HOR_BROWSER_SLIDER | FL_SCROLL_FLAG
 
 # my add, list of possible values --LK
 SLIDERTYPE_list = [FL_VERT_SLIDER, FL_HOR_SLIDER, FL_VERT_FILL_SLIDER, \
-                   FL_HOR_FILL_SLIDER, FL_VERT_NICE_SLIDER, \
-                   FL_HOR_NICE_SLIDER, FL_VERT_BROWSER_SLIDER, \
-                   FL_HOR_BROWSER_SLIDER, FL_VERT_BROWSER_SLIDER2, \
-                   FL_HOR_BROWSER_SLIDER2, FL_VERT_THIN_SLIDER, \
-                   FL_HOR_THIN_SLIDER, FL_VERT_NICE_SLIDER2, \
-                   FL_HOR_NICE_SLIDER2, FL_VERT_BASIC_SLIDER, \
-                   FL_HOR_BASIC_SLIDER]
+        FL_HOR_FILL_SLIDER, FL_VERT_NICE_SLIDER, FL_HOR_NICE_SLIDER, \
+        FL_VERT_BROWSER_SLIDER, FL_HOR_BROWSER_SLIDER, \
+        FL_VERT_BROWSER_SLIDER2, FL_HOR_BROWSER_SLIDER2, \
+        FL_VERT_THIN_SLIDER, FL_HOR_THIN_SLIDER, FL_VERT_NICE_SLIDER2, \
+        FL_HOR_NICE_SLIDER2, FL_VERT_BASIC_SLIDER, FL_HOR_BASIC_SLIDER]
 
 
 # Defaults
@@ -7034,7 +7196,7 @@ FL_FILL_XYPLOT = 3
 FL_POINTS_XYPLOT = 4
 FL_DASHED_XYPLOT = 5
 FL_IMPULSE_XYPLOT = 6
-FL_ACTIVE_XYPLOT = 7    #
+FL_ACTIVE_XYPLOT = 7
 FL_EMPTY_XYPLOT = 8
 FL_DOTTED_XYPLOT = 9
 FL_DOTDASHED_XYPLOT = 10
@@ -7042,11 +7204,11 @@ FL_LONGDASHED_XYPLOT = 11
 FL_LINEPOINTS_XYPLOT = 12
 
 # list of possible values - my add --LK
-XYPLOTTYPE_list = [FL_NORMAL_XYPLOT, FL_SQUARE_XYPLOT, FL_CIRCLE_XYPLOT,
-                   FL_FILL_XYPLOT, FL_POINTS_XYPLOT, FL_DASHED_XYPLOT,
-                   FL_IMPULSE_XYPLOT, FL_ACTIVE_XYPLOT, FL_EMPTY_XYPLOT,
-                   FL_DOTTED_XYPLOT, FL_DOTDASHED_XYPLOT,
-                   FL_LONGDASHED_XYPLOT, FL_LINEPOINTS_XYPLOT]
+XYPLOTTYPE_list = [FL_NORMAL_XYPLOT, FL_SQUARE_XYPLOT, FL_CIRCLE_XYPLOT, \
+        FL_FILL_XYPLOT, FL_POINTS_XYPLOT, FL_DASHED_XYPLOT, \
+        FL_IMPULSE_XYPLOT, FL_ACTIVE_XYPLOT, FL_EMPTY_XYPLOT, \
+        FL_DOTTED_XYPLOT, FL_DOTDASHED_XYPLOT, FL_LONGDASHED_XYPLOT, \
+        FL_LINEPOINTS_XYPLOT]
 
 
 # values for unnamed enumeration
@@ -7107,11 +7269,10 @@ FLIMAGE_FLEX = FL_IMAGE_FLEX
 
 # my add, list of possible values --LK
 FLIMAGETYPE_list = [FL_IMAGE_NONE, FL_IMAGE_MONO, FL_IMAGE_GRAY, \
-                    FL_IMAGE_CI, FL_IMAGE_RGB, FL_IMAGE_PACKED, \
-                    FL_IMAGE_GRAY16, FL_IMAGE_RGB16, FL_IMAGE_FLEX, \
-                    FLIMAGE_NONE, FLIMAGE_MONO, FLIMAGE_GRAY, \
-                    FLIMAGE_CI, FLIMAGE_RGB, FLIMAGE_PACKED, \
-                    FLIMAGE_GRAY16, FLIMAGE_RGB16, FLIMAGE_FLEX]
+        FL_IMAGE_CI, FL_IMAGE_RGB, FL_IMAGE_PACKED, FL_IMAGE_GRAY16, \
+        FL_IMAGE_RGB16, FL_IMAGE_FLEX, FLIMAGE_NONE, FLIMAGE_MONO, \
+        FLIMAGE_GRAY, FLIMAGE_CI, FLIMAGE_RGB, FLIMAGE_PACKED, \
+        FLIMAGE_GRAY16, FLIMAGE_RGB16, FLIMAGE_FLEX]
 
 
 FL_LUTBITS = 12         # max colormap bits. 4096 entries
@@ -7151,7 +7312,10 @@ class flimage_text_(cty.Structure):
         align : int
             alignment with regards to (x,y)
     """
-    _fields_ = [
+    pass
+flimage_text_.__slots__ = ['str', 'len', 'x', 'y', 'color', 'bcolor', \
+        'nobk', 'size', 'style', 'angle', 'align',]
+flimage_text_._fields_ = [
         ('str', STRING),              # the string itself
         ('len', cty.c_int),           # string length
         ('x', cty.c_int),             # starting location of text (wrt image)
@@ -7202,7 +7366,11 @@ class flimage_marker_(cty.Structure):
         psdraw : str
             *todo*
     """
-    _fields_ = [
+    pass
+flimage_marker_.__slots__ = ['name', 'w', 'h', 'x', 'y', 'color', \
+        'bcolor', 'angle', 'fill', 'thickness', 'style', 'display', \
+        'gc', 'win, psdraw',]
+flimage_marker_._fields_ = [
         ('name', STRING),               # marker name
         ('w', cty.c_int),               # width
         ('h', cty.c_int),               # height
@@ -7278,7 +7446,7 @@ class admitted_values_for_FLIMAGEERRTYPE(object):
     Admitted values
     ---------------
         FLIMAGE_ERR_NONE
-            *todo*
+            no error
         FLIMAGE_ERR_ALLOC
             memory? allocation error
         FLIMAGE_ERR_INVALID
@@ -7302,9 +7470,9 @@ class flimage_(cty.Structure):
     ----------
         type : int
             image type
-        width : int
+        w : int
             image width
-        height : int
+        h : int
             image height
         app_data : pointer to void
             for application at setup time
@@ -7577,7 +7745,30 @@ class flimage_(cty.Structure):
             *todo*
     """
     pass
-
+flimage_.__slots__ = ['type', 'w', 'h', 'app_data', 'u_vdata', 'u_ldata', \
+        'red', 'green', 'blue', 'alpha', 'rgba', 'ci', 'gray', 'packed', \
+        'red16', 'green16', 'blue16', 'alpha16', 'ci8', 'red_lut', \
+        'green_lut', 'blue_lut', 'alpha_lut', 'lut', 'map_len', 'colors', \
+        'gray_maxval', 'ci_maxval', 'rgb_maxval', 'level', 'wwidth', \
+        'wlut', 'wlut_len', 'app_background', 'comments', 'comments_len', \
+        'available_type', 'next', 'sx', 'sy', 'sw', 'sh', 'wx', 'wy', \
+        'modified', 'display', 'double_buffer', 'sxd', 'syd', 'swd', \
+        'shd', 'wxd', 'wyd', 'fmt_name', 'text', 'ntext', 'max_text', \
+        'dont_display_text', 'display_text', 'free_text', 'marker', \
+        'nmarkers', 'max_markers', 'dont_display_marker', 'display_markers', \
+        'free_markers', 'pmin', 'pmax', 'poffset', 'pscale', 'xdist_offset', \
+        'xdist_scale', 'ydist_offset', 'ydist_scale', 'infile', 'outfile', \
+        'foffset', 'original_type', 'pre_write', 'post_write', 'subx', \
+        'suby', 'subw', 'subh', 'sub_shape', 'fill_color', 'force_convert', \
+        'llut', 'llut_len', 'hist', 'total', 'completed', 'visual_cue', \
+        'error_message', 'error_code', 'display_type', 'pixels', \
+        'image_spec', 'xdisplay', 'tran_rgb', 'tran_index', 'matr', 'matc', \
+        'more', 'current_frame', 'total_frames', 'next_frame', 'prev_frame', \
+        'random_frame', 'rewind_frame', 'cleanup', 'stop_looping', 'fpin', \
+        'fpout', 'image_io', 'io_spec', 'spec_size', 'depth', 'vclass', \
+        'visual', 'xcolormap', 'rgb2p', 'ximage', 'win', 'gc', 'sdepth', \
+        'textgc', 'markergc', 'extra_io_info', 'pixmap', 'pixmap_w', \
+        'pixmap_h', 'pixmap_depth', 'isPixmap', 'setup', 'info',]
 flimage_._fields_ = [
         ('type', cty.c_int),            # image type
         ('w', cty.c_int),               # image width
@@ -7593,20 +7784,21 @@ flimage_._fields_ = [
         ('ci', cty.POINTER(cty.POINTER(cty.c_ushort))),
         ('gray', cty.POINTER(cty.POINTER(cty.c_ushort))),
         ('packed', cty.POINTER(cty.POINTER(FL_PACKED4))),
-        ('red16', cty.POINTER(cty.POINTER(cty.c_ushort))),  #not currently supported
-        ('green16', cty.POINTER(cty.POINTER(cty.c_ushort))),  #not currently supported
-        ('blue16', cty.POINTER(cty.POINTER(cty.c_ushort))),  # not currently supported
-        ('alpha16', cty.POINTER(cty.POINTER(cty.c_ushort))),  # not currently supported
-        ('ci8', cty.POINTER(cty.POINTER(cty.c_ubyte))), # not currently supported
+        # red16, green16, blue16, alpha16 and ci8 not currently supported
+        ('red16', cty.POINTER(cty.POINTER(cty.c_ushort))),
+        ('green16', cty.POINTER(cty.POINTER(cty.c_ushort))),
+        ('blue16', cty.POINTER(cty.POINTER(cty.c_ushort))),
+        ('alpha16', cty.POINTER(cty.POINTER(cty.c_ushort))),
+        ('ci8', cty.POINTER(cty.POINTER(cty.c_ubyte))),
         ('red_lut', cty.POINTER(cty.c_int)),        # red lookup tables
         ('green_lut', cty.POINTER(cty.c_int)),      # green lookup tables
         ('blue_lut', cty.POINTER(cty.c_int)),       # blue lookup tables
         ('alpha_lut', cty.POINTER(cty.c_int)),      # alpha lookup tables
         ('lut', cty.POINTER(cty.c_int) * 4),        # alias
         ('map_len', cty.c_int),                 # lut length
-        ('colors', cty.c_int),              # actual colors used in displaying
-        ('gray_maxval', cty.c_int),             # indicate the range of gray16
-        ('ci_maxval', cty.c_int),       # max value of ci. not used, use map_len
+        ('colors', cty.c_int),          # actual colors used in displaying
+        ('gray_maxval', cty.c_int),         # indicate the range of gray16
+        ('ci_maxval', cty.c_int),   # max value of ci. not used, use map_len
         ('rgb_maxval', cty.c_int),              # max value for rgb16 image
         ('level', cty.c_int),
         ('wwidth', cty.c_int),
@@ -7624,7 +7816,8 @@ flimage_._fields_ = [
         ('wx', cty.c_int),              # display location relative to win
         ('wy', cty.c_int),
         ('modified', cty.c_int),
-        ('display', cty.CFUNCTYPE(cty.c_int, cty.POINTER(flimage_), FL_WINDOW)),
+        ('display', cty.CFUNCTYPE(cty.c_int, cty.POINTER(flimage_), \
+                FL_WINDOW)),
         ('double_buffer', cty.c_int),
         ('sxd', cty.c_int),
         ('syd', cty.c_int),
@@ -7698,7 +7891,7 @@ flimage_._fields_ = [
         ('next_frame', cty.CFUNCTYPE(cty.c_int, cty.POINTER(flimage_))),
         ('prev_frame', cty.CFUNCTYPE(cty.c_int, cty.POINTER(flimage_))),
         ('random_frame', cty.CFUNCTYPE(cty.c_int, cty.POINTER(flimage_), \
-            cty.c_int)),
+                cty.c_int)),
         ('rewind_frame', cty.CFUNCTYPE(cty.c_int, cty.POINTER(flimage_))),
         ('cleanup', cty.CFUNCTYPE(None, cty.POINTER(flimage_))),
         ('stop_looping', cty.c_int),
@@ -7733,6 +7926,10 @@ FL_IMAGE = flimage_
 
 # some configuration stuff
 
+flimage_setup_.__slots__ = ['app_data', 'visual_cue', 'error_message', \
+        'display', 'rgbfile', 'do_not_clear', 'xdisplay', 'max_frames', \
+        'delay', 'no_auto_extension', 'report_frequency', 'double_buffer', \
+        'trailblazer', 'header_info']
 flimage_setup_._fields_ = [
     ('app_data', cty.c_void_p),
     ('visual_cue', cty.CFUNCTYPE(cty.c_int, cty.POINTER(FL_IMAGE), STRING)),
@@ -7765,7 +7962,9 @@ class FLIMAGE_JPEG_OPTION(cty.Structure):
       smoothing : int
         *todo*
     """
-    _fields_ = [
+    pass
+FLIMAGE_JPEG_OPTION.__slots__ = ['quality', 'smoothing',]
+FLIMAGE_JPEG_OPTION._fields_ = [
         ('quality', cty.c_int),
         ('smoothing', cty.c_int), ]
 
@@ -7805,7 +8004,10 @@ class FLIMAGE_FORMAT_INFO(cty.Structure):
       annotation : int
         *todo*
     """
-    _fields_ = [
+    pass
+FLIMAGE_FORMAT_INFO.__slots__ = ['formal_name', 'short_name', 'extension', \
+        'type', 'read_write', 'annotation',]
+FLIMAGE_FORMAT_INFO._fields_ = [
         ('formal_name', STRING),
         ('short_name', STRING),
         ('extension', STRING),
@@ -7940,7 +8142,10 @@ class XExtCodes(cty.Structure):
         first_error : int
             *todo*
     """
-    _fields_ = [
+    pass
+XExtCodes.__slots__ = ['extension', 'major_opcode', 'first_event', \
+        'first_error',]
+XExtCodes._fields_ = [
         ('extension', cty.c_int),
         ('major_opcode', cty.c_int),
         ('first_event', cty.c_int),
@@ -7960,7 +8165,9 @@ class XPixmapFormatValues(cty.Structure):
         scanline_pad : int
             *todo*
     """
-    _fields_ = [
+    pass
+XPixmapFormatValues.__slots__ = ['depth', 'bits_per_pixel', 'scanline_pad',]
+XPixmapFormatValues._fields_ = [
         ('depth', cty.c_int),
         ('bits_per_pixel', cty.c_int),
         ('scanline_pad', cty.c_int), ]
@@ -8018,7 +8225,14 @@ class XGCValues(cty.Structure):
         dashes : char
             *todo*
     """
-    _fields_ = [
+    pass
+XGCValues.__slots__ = ['function', 'plane_mask', 'foreground', \
+        'background', 'line_width', 'line_style', 'cap_style', 'join_style', \
+        'fill_style', 'fill_rule', 'arc_mode', 'tile', 'stipple', \
+        'ts_x_origin', 'ts_y_origin', 'font', 'subwindow_mode', \
+        'graphics_exposures', 'clip_x_origin', 'clip_y_origin', 'clip_mask', \
+        'dash_offset', 'dashes',]
+XGCValues._fields_ = [
         ('function', cty.c_int),
         ('plane_mask', cty.c_ulong),
         ('foreground', cty.c_ulong),
@@ -8057,7 +8271,9 @@ class Depth(cty.Structure):
         visuals : pointer to Visual
             *todo*
     """
-    _fields_ = [
+    pass
+Depth.__slots__ = ['depth', 'nvisuals', 'visuals',]
+Depth._fields_ = [
         ('depth', cty.c_int),
         ('nvisuals', cty.c_int),
         ('visuals', cty.POINTER(Visual)), ]
@@ -8109,7 +8325,13 @@ class Screen(cty.Structure):
         root_input_mask : long
             *todo*
     """
-    _fields_ = [
+    pass
+Screen.__slots__ = ['ext_data', 'display', 'root', 'width', 'height', \
+        'mwidth', 'mheight', 'ndepths', 'depths', 'root_depth', \
+        'root_visual', 'default_gc', 'cmap', 'white_pixel', 'black_pixel', \
+        'max_maps', 'min_maps', 'backing_store', 'save_unders', \
+        'root_input_mask',]
+Screen._fields_ = [
         ('ext_data', cty.POINTER(XExtData)),
         ('display', cty.POINTER(_XDisplay)),
         ('root', Window),
@@ -8147,12 +8369,20 @@ class ScreenFormat(cty.Structure):
         scanline_pad : int
             *todo*
     """
-    _fields_ = [
+ScreenFormat.__slots__ = ['ext_data', 'depth', 'bits_per_pixel', \
+        'scanline_pad',]
+ScreenFormat._fields_ = [
         ('ext_data', cty.POINTER(XExtData)),
         ('depth', cty.c_int),
         ('bits_per_pixel', cty.c_int),
         ('scanline_pad', cty.c_int), ]
 
+XWindowAttributes.__slots__ = ['x', 'y', 'width', 'height', 'border_width', \
+        'depth', 'visual', 'root', 'c_class', 'bit_gravity', 'win_gravity', \
+        'backing_store', 'backing_planes', 'backing_pixel', 'save_under', \
+        'colormap', 'map_installed', 'map_state', 'all_event_masks', \
+        'your_event_mask', 'do_not_propagate_mask', 'override_redirect', \
+        'screen',]
 XWindowAttributes._fields_ = [
     ('x', cty.c_int),
     ('y', cty.c_int),
@@ -8193,7 +8423,9 @@ class XHostAddress(cty.Structure):
         address : str
             *todo*
     """
-    _fields_ = [
+    pass
+XHostAddress.__slots__ = ['family', 'length', 'address', ]
+XHostAddress._fields_ = [
         ('family', cty.c_int),
         ('length', cty.c_int),
         ('address', STRING), ]
@@ -8214,7 +8446,10 @@ class XServerInterpretedAddress(cty.Structure):
         value : str
             *todo*
     """
-    _fields_ = [
+    pass
+XServerInterpretedAddress.__slots__ = ['typelength', 'valuelength', 'type', \
+        'value',]
+XServerInterpretedAddress._fields_ = [
         ('typelength', cty.c_int),
         ('valuelength', cty.c_int),
         ('type', STRING),
@@ -8287,7 +8522,10 @@ class funcs(cty.Structure):
         add_pixel : function, returned value
             function(pointer to _XImage, long) -> int
     """
-    _fields_ = [
+    pass
+funcs.__slots__ = ['create_image', 'destroy_image', 'get_pixel', \
+        'put_pixel', 'sub_image', 'add_pixel',]
+funcs._fields_ = [
         ('create_image', cty.CFUNCTYPE(cty.POINTER(_XImage),
             cty.POINTER(_XDisplay), cty.POINTER(Visual), cty.c_uint,
             cty.c_int, cty.c_int, STRING, cty.c_uint, cty.c_uint, cty.c_int,
@@ -8304,6 +8542,10 @@ class funcs(cty.Structure):
             cty.c_long)), ]
 
 
+_XImage.__slots__ = ['width', 'height', 'xoffset', 'format', 'data', \
+        'byte_order', 'bitmap_unit', 'bitmap_bit_order', 'bitmap_pad', \
+        'depth', 'bytes_per_line', 'bits_per_pixel', 'red_mask', \
+        'green_mask', 'blue_mask', 'obdata', 'f',]
 _XImage._fields_ = [
     ('width', cty.c_int),
     ('height', cty.c_int),

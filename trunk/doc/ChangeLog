@@ -2,6 +2,12 @@ SVN (first entries from top are more recent)
 --------------------------------------------
 
 BETA
+    20110101 (beta8)
+    * xfdata.py Structures now have a __slots__ attribute, to reduce
+    memory usage.
+    * Some other miscellaneous bugfixes and typos. Some more docstrings
+    in xfdata (for Structures) and in other modules (for function
+    prototypes).
     20101231 (beta7)
     * bitmapbutton's pixmapbutton's usedata cases now implemented in
     fd2python. Removing fl_set_dial_return() as deprecated.
