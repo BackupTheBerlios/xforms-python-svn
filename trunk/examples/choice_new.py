@@ -48,7 +48,8 @@ class Choice(object):
 
     def cb(self, pobj, data):
         pselitem = xfl.fl_get_select_item(pobj)
-        print("CallBack: %d\n" % pselitem.contents.val)
+        message = "CallBack: %d\n" % pselitem.contents.val
+        print(message)
 
 
     def create_form(self):

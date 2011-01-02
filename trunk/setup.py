@@ -12,7 +12,8 @@ xforms-python - Python wrapper for XForms X11 Window System GUI C toolkit.
 doc_files = ['doc/ChangeLog', 'doc/CREDITS', 'doc/Docs.txt', 'doc/INSTALL', \
         'doc/lgpl-2.1.txt', 'doc/LICENSE', 'doc/README', 'doc/TODO', 'doc/USAGE']
 html_files = glob.glob('doc/html/*.html')
-example_files = glob.glob('examples/*.py') + glob.glob('examples/*.x?m')
+example_files = glob.glob('examples/*.py') + glob.glob('examples/*.x?m') + \
+        glob.glob('examples/*.fd')
 example_files.append('examples/Readme')
 bin_files = 'bin/fd2python.py'
 

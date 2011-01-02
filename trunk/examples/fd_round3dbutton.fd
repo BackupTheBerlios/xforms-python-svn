@@ -1,0 +1,54 @@
+Magic: 15000
+
+Internal Form Definition File
+    (do not change)
+
+Number of forms: 1
+Unit of measure: FL_COORD_PIXEL
+
+=============== FORM ===============
+Name: sample
+Width: 320
+Height: 250
+Number of Objects: 2
+
+--------------------
+class: FL_BOX
+type: FL_UP_BOX
+box: 0 0 320 250
+boxtype: FL_UP_BOX
+colors: FL_COL1 FL_COL1
+alignment: FL_ALIGN_CENTER
+style: FL_NORMAL_STYLE
+size: FL_DEFAULT_SIZE
+lcol: FL_BLACK
+label: 
+shortcut: 
+resize: FL_RESIZE_ALL
+gravity: FL_NoGravity FL_NoGravity
+name: 
+callback: 
+argument: 
+
+--------------------
+class: FL_ROUND3DBUTTON
+type: FL_PUSH_BUTTON
+box: 40 30 240 70
+boxtype: FL_BORDER_BOX
+colors: FL_COL1 FL_BLACK
+alignment: FL_ALIGN_CENTER
+style: FL_NORMAL_STYLE
+size: FL_DEFAULT_SIZE
+lcol: FL_BLACK
+label: My name is round3dbutton
+shortcut: 3
+resize: FL_RESIZE_ALL
+gravity: FL_NoGravity FL_NoGravity
+name: my3drnd
+callback: round3dcb
+argument: 22
+    mbuttons: 30
+    value: 1
+
+==============================
+create_the_forms

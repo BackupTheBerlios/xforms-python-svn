@@ -28,7 +28,7 @@ def timeoutCB(tid, stuff):
 
 def pressedCB(pobj, data):
     tid = xfl.fl_add_timeout(300, timeoutCB, None)
-    print "tid=%d\n" % tid
+    print("tid=%d\n" % tid)
 
 
 def create_form_S():
@@ -54,9 +54,9 @@ def main(lsysargv, sysargv):
 
     xfl.fl_initialize(lsysargv, sysargv, "S", 0, 0)
 
-    print "This demo is supposed to CRASH with a SegFault runtime error, " \
-          "some time after pressing 'Press me' button."
-    print "This is an EXPECTED behaviour, don't worry!\n"
+    print("This demo is supposed to CRASH with a SegFault runtime error, " \
+          "some time after pressing 'Press me' button.")
+    print("This is an EXPECTED behaviour, don't worry!\n")
 
     frmS = create_form_S()
     xfl.fl_show_form(frmS.S, xfl.FL_PLACE_CENTER, xfl.FL_FULLBORDER, \

@@ -1,0 +1,59 @@
+Magic: 15000
+
+Internal Form Definition File
+    (do not change)
+
+Number of forms: 1
+Unit of measure: FL_COORD_PIXEL
+
+=============== FORM ===============
+Name: sample
+Width: 320
+Height: 250
+Number of Objects: 2
+
+--------------------
+class: FL_BOX
+type: FL_UP_BOX
+box: 0 0 320 250
+boxtype: FL_UP_BOX
+colors: FL_COL1 FL_COL1
+alignment: FL_ALIGN_CENTER
+style: FL_NORMAL_STYLE
+size: FL_DEFAULT_SIZE
+lcol: FL_BLACK
+label: 
+shortcut: 
+resize: FL_RESIZE_ALL
+gravity: FL_NoGravity FL_NoGravity
+name: 
+callback: 
+argument: 
+
+--------------------
+class: FL_BROWSER
+type: FL_NORMAL_BROWSER
+box: 20 40 280 160
+boxtype: FL_DOWN_BOX
+colors: FL_WHITE FL_YELLOW
+alignment: FL_ALIGN_BOTTOM
+style: FL_NORMAL_STYLE
+size: FL_DEFAULT_SIZE
+lcol: FL_BLACK
+label: My Browser with\na lot of text
+shortcut: l
+resize: FL_RESIZE_ALL
+gravity: FL_NoGravity FL_NoGravity
+name: pbrowser
+callback: browsercb
+argument: 33
+return: FL_RETURN_END_CHANGED|FL_RETURN_SELECTION|FL_RETURN_DESELECTION
+h_pref: FL_ON
+v_pref: FL_ON
+content: first line
+content: second line
+content: second and a half line
+content: third line
+
+==============================
+create_the_forms

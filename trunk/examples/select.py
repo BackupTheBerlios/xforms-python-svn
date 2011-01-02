@@ -36,7 +36,8 @@ class Flselect(object):
 
 
     def cb(self, pr):
-        print ("CallBack: %s\n" % pr.contents.label)
+        message = "CallBack: %s\n" % pr.contents.label
+        print(message)
         return 0
 
 

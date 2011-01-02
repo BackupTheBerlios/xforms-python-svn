@@ -36,7 +36,8 @@ class FLfbrowse(object):
             prndata = poret.contents.label
         else:
             prndata = ""
-        print "%p %d %s\n" % poret.contents, poret.contents.objclass, prndata
+        message = "%p %d %s\n" % (poret.contents, poret.contents.objclass, prndata)
+        print(message)
 
         xfl.fl_hide_form(fdnew)
         xfl.fl_free_form(fdnew)

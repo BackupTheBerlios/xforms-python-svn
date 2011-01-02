@@ -1,0 +1,59 @@
+Magic: 15000
+
+Internal Form Definition File
+    (do not change)
+
+Number of forms: 1
+Unit of measure: FL_COORD_PIXEL
+
+=============== FORM ===============
+Name: sample
+Width: 320
+Height: 250
+Number of Objects: 2
+
+--------------------
+class: FL_BOX
+type: FL_UP_BOX
+box: 0 0 320 250
+boxtype: FL_UP_BOX
+colors: FL_COL1 FL_COL1
+alignment: FL_ALIGN_CENTER
+style: FL_NORMAL_STYLE
+size: FL_DEFAULT_SIZE
+lcol: FL_BLACK
+label: 
+shortcut: 
+resize: FL_RESIZE_ALL
+gravity: FL_NoGravity FL_NoGravity
+name: 
+callback: 
+argument: 
+
+--------------------
+class: FL_POSITIONER
+type: FL_OVERLAY_POSITIONER
+box: 50 50 210 140
+boxtype: FL_NO_BOX
+colors: FL_COL1 FL_RED
+alignment: FL_ALIGN_BOTTOM
+style: FL_NORMAL_STYLE
+size: FL_DEFAULT_SIZE
+lcol: FL_BLACK
+label: My anonymous positioner
+shortcut: u
+resize: FL_RESIZE_ALL
+gravity: FL_NoGravity FL_NoGravity
+name: ppositn
+callback: positncb
+argument: 0
+return: FL_RETURN_END_CHANGED
+    xbounds: 1 75
+    ybounds: 2 150
+    xvalue: 50
+    yvalue: 50
+    xstep: 1
+    ystep: 2
+
+==============================
+create_the_forms

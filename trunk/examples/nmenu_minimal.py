@@ -105,35 +105,35 @@ class Flnmenumin(object):
 
 
     def item1_cb(self, r):
-        print "choice 1 added", xfl.fl_get_nmenu_item_by_value(self.pmenu1, 1)
+        print("choice 1 added", xfl.fl_get_nmenu_item_by_value(self.pmenu1, 1))
         return 0
 
     def item2_cb(self, r):
-        print "choice 2 added", xfl.fl_get_nmenu_item_by_value(self.pmenu1, 2)
+        print("choice 2 added", xfl.fl_get_nmenu_item_by_value(self.pmenu1, 2))
         return 0
 
     def item3_cb(self, r):
-        print "choice 3 inserted", \
-                xfl.fl_get_nmenu_item_by_value(self.pmenu1, 3)
+        print("choice 3 inserted", \
+                xfl.fl_get_nmenu_item_by_value(self.pmenu1, 3))
         return 0
 
     def item4_cb(self, r):
-        print "choice 4 inserted", \
-                xfl.fl_get_nmenu_item_by_value(self.pmenu1, 4)
+        print("choice 4 inserted", \
+                xfl.fl_get_nmenu_item_by_value(self.pmenu1, 4))
         return 0
 
     def item5_cb(self, r):
-        print "choice 5 added", xfl.fl_get_nmenu_item_by_value(self.pmenu1, 5)
+        print("choice 5 added", xfl.fl_get_nmenu_item_by_value(self.pmenu1, 5))
         return 0
 
     def item6_cb(self, r):
-        print "choice 6 replace for choice 1", \
-                xfl.fl_get_nmenu_item_by_value(self.pmenu1, 6)
+        print("choice 6 replace for choice 1", \
+                xfl.fl_get_nmenu_item_by_value(self.pmenu1, 6))
         return 0
 
     def item7_cb(self, r):
-        print "choice 7 replace for choice 2", \
-                xfl.fl_get_nmenu_item_by_value(self.pmenu1, 7)
+        print("choice 7 replace for choice 2", \
+                xfl.fl_get_nmenu_item_by_value(self.pmenu1, 7))
         return 0
 
     def done_cb(self, r):
@@ -141,22 +141,22 @@ class Flnmenumin(object):
         sys.exit(0)
 
     def item9_cb(self, r):
-        print "choice 9 added", xfl.fl_get_nmenu_item_by_value(self.pmenu2, 9)
+        print("choice 9 added", xfl.fl_get_nmenu_item_by_value(self.pmenu2, 9))
         return 0
 
     def item10_cb(self, r):
-        print "choice 10 added", \
-                xfl.fl_get_nmenu_item_by_value(self.pmenu2, 10)
+        print("choice 10 added", \
+                xfl.fl_get_nmenu_item_by_value(self.pmenu2, 10))
         return 0
 
     def item11_cb(self, r):
-        print "Choice 11 added", \
-                xfl.fl_get_nmenu_item_by_value(self.pmenu2, 11)
+        print("Choice 11 added", \
+                xfl.fl_get_nmenu_item_by_value(self.pmenu2, 11))
         return 0
 
     def item12_cb(self, r):
-        print "Choice 12 inserted", \
-                xfl.fl_get_nmenu_item_by_value(self.pmenu2, 12)
+        print("Choice 12 inserted", \
+                xfl.fl_get_nmenu_item_by_value(self.pmenu2, 12))
         return 0
 
 

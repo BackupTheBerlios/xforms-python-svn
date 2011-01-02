@@ -1,0 +1,58 @@
+Magic: 15000
+
+Internal Form Definition File
+    (do not change)
+
+Number of forms: 1
+Unit of measure: FL_COORD_PIXEL
+
+=============== FORM ===============
+Name: sample
+Width: 320
+Height: 250
+Number of Objects: 2
+
+--------------------
+class: FL_BOX
+type: FL_UP_BOX
+box: 0 0 320 250
+boxtype: FL_UP_BOX
+colors: FL_COL1 FL_COL1
+alignment: FL_ALIGN_CENTER
+style: FL_NORMAL_STYLE
+size: FL_DEFAULT_SIZE
+lcol: FL_BLACK
+label: 
+shortcut: 
+resize: FL_RESIZE_ALL
+gravity: FL_NoGravity FL_NoGravity
+name: 
+callback: 
+argument: 
+
+--------------------
+class: FL_SCROLLBAR
+type: FL_HOR_PLAIN_SCROLLBAR
+box: 40 40 250 50
+boxtype: FL_DOWN_BOX
+colors: FL_COL1 FL_COL1
+alignment: FL_ALIGN_BOTTOM
+style: FL_NORMAL_STYLE
+size: FL_DEFAULT_SIZE
+lcol: FL_BLACK
+label: A common scrollbar
+shortcut: r
+resize: FL_RESIZE_X
+gravity: FL_NoGravity FL_NoGravity
+name: pscrollbar
+callback: scrollbarcb
+argument: 3
+return: FL_RETURN_END_CHANGED
+    bounds: 1 5
+    value: 1
+    slsize: 0.20
+    step: 1.000
+    increment: 0.5 0.05
+
+==============================
+create_the_forms

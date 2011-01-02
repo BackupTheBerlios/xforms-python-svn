@@ -1,0 +1,60 @@
+Magic: 15000
+
+Internal Form Definition File
+    (do not change)
+
+Number of forms: 1
+Unit of measure: FL_COORD_PIXEL
+
+=============== FORM ===============
+Name: sample
+Width: 320
+Height: 250
+Number of Objects: 2
+
+--------------------
+class: FL_BOX
+type: FL_UP_BOX
+box: 0 0 320 250
+boxtype: FL_UP_BOX
+colors: FL_COL1 FL_COL1
+alignment: FL_ALIGN_CENTER
+style: FL_NORMAL_STYLE
+size: FL_DEFAULT_SIZE
+lcol: FL_BLACK
+label: 
+shortcut: 
+resize: FL_RESIZE_ALL
+gravity: FL_NoGravity FL_NoGravity
+name: 
+callback: 
+argument: 
+
+--------------------
+class: FL_PIXMAPBUTTON
+type: FL_TOUCH_BUTTON
+box: 40 50 230 90
+boxtype: FL_ROUNDED_BOX
+colors: FL_COL1 FL_COL1
+alignment: FL_ALIGN_BOTTOM
+style: FL_NORMAL_STYLE
+size: FL_DEFAULT_SIZE
+lcol: FL_BLACK
+label: mypixmapbtn
+shortcut: b
+resize: FL_RESIZE_ALL
+gravity: FL_NoGravity FL_NoGravity
+name: ppxmbutton
+callback: buttoncb
+argument: 5
+return: FL_RETURN_CHANGED
+    mbuttons: 29
+    value: 1
+    file: crab45.xpm
+    focus_file: crab.xpm
+    fullpath: 0
+    align: FL_ALIGN_TOP|FL_ALIGN_INSIDE
+    helper: my image
+
+==============================
+create_the_forms

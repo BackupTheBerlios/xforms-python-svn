@@ -32,6 +32,7 @@
 # Using a hack (fake class) to allow docstrings for variables,
 # to be used with pydoc
 
+import sys
 import ctypes as cty
 
 
@@ -499,7 +500,7 @@ FL_RETURN_ALWAYS = ~ FL_RETURN_END_CHANGED
 
 
 # from /usr/include/limits.h, my add --LK
-INT_MAX = 2147483647L
+INT_MAX = 2147483647        # long upstreams --LK
 INT_MIN = (-INT_MAX - 1)
 UINT_MAX = 4294967295
 
@@ -1131,9 +1132,10 @@ FL_KEY_TAB     = 2     # normal keys + 4 direction cursor
 FL_KEY_SPECIAL = 4     # only needs special keys(>255)
 FL_KEY_ALL     = 7     # all keys
 
-FL_ALT_MASK = (1L<<25)      # alt + Key --> FL_ALT_MASK + key
-FL_CONTROL_MASK = (1L<<26)
-FL_SHIFT_MASK = (1L<<27)
+# all long upstreams --LK
+FL_ALT_MASK = (1<<25)      # alt + Key --> FL_ALT_MASK + key
+FL_CONTROL_MASK = (1<<26)
+FL_SHIFT_MASK = (1<<27)
 
 # FL_ALT_VAL placeholder (backwards)
 
@@ -2928,7 +2930,7 @@ LINESTYLE_list = [FL_SOLID, FL_USERDASH, FL_USERDOUBLEDASH, FL_DOT,
 # *** start - from /usr/include/X11/X.h ***
 # Input Event Masks. Used as event-mask window attribute and as arguments
 # to Grab requests.  Not to be confused with event names.
-NoEventMask = 0L
+NoEventMask = 0
 KeyPressMask = (1 << 0)                  # 1
 KeyReleaseMask = (1 << 1)                # 2
 ButtonPressMask = (1 << 2)               # 4

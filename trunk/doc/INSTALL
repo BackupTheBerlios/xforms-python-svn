@@ -1,5 +1,6 @@
-xforms-python requires (at least) Python 2.6.x. It does not support
-Python 3.x yet.
+xforms-python requires (at least) Python 2.6.x. It should support
+Python 3.x as well (Beware: there may be some leftover problems
+with utf-8 encoding and Unicode strings and characters).
 
 It requires:
 - python standard library modules (including ctypes), and

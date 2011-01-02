@@ -15,12 +15,12 @@ import xformslib as xfl
 
 
 def yes_push(pobj, data):
-    print "Yes is pushed"
+    print("Yes is pushed")
     sys.exit(0)
 
 
 def no_push(pobj, data):
-    print "No is pushed"
+    print("No is pushed")
 
 
 def main(lsysargv, sysargv):

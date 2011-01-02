@@ -1,0 +1,58 @@
+Magic: 15000
+
+Internal Form Definition File
+    (do not change)
+
+Number of forms: 1
+Unit of measure: FL_COORD_PIXEL
+
+=============== FORM ===============
+Name: sample
+Width: 320
+Height: 250
+Number of Objects: 2
+
+--------------------
+class: FL_BOX
+type: FL_UP_BOX
+box: 0 0 320 250
+boxtype: FL_UP_BOX
+colors: FL_COL1 FL_COL1
+alignment: FL_ALIGN_CENTER
+style: FL_NORMAL_STYLE
+size: FL_DEFAULT_SIZE
+lcol: FL_BLACK
+label: 
+shortcut: 
+resize: FL_RESIZE_ALL
+gravity: FL_NoGravity FL_NoGravity
+name: 
+callback: 
+argument: 
+
+--------------------
+class: FL_BITMAPBUTTON
+type: FL_NORMAL_BUTTON
+box: 50 40 220 90
+boxtype: FL_UP_BOX
+colors: FL_COL1 FL_BLUE
+alignment: FL_ALIGN_BOTTOM
+style: FL_NORMAL_STYLE
+size: FL_DEFAULT_SIZE
+lcol: FL_BLACK
+label: xbmbutton
+shortcut: m
+resize: FL_RESIZE_ALL
+gravity: FL_NoGravity FL_NoGravity
+name: pbmbutton
+callback: buttoncb
+argument: 999
+    mbuttons: 27
+    file: ./bm1.xbm
+    fullpath: 0
+    data: bm1_bits
+    width: bm1_width
+    height: bm1_height
+
+==============================
+create_the_forms

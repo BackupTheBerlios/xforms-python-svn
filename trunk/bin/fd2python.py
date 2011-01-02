@@ -32,19 +32,22 @@ TWOTABS = ONETAB * 2
 
 
 def xfcopyright():
-    print('xforms-python conversion script from fdesign .fd files to' \
+    message = 'xforms-python conversion script from fdesign .fd files to' \
             ' python UI layout\nIt is part of xforms-python version ' \
             '%s\nCopyright (C) 2010  Luca Lazzaroni "LukenShiro"\n' \
             'It is released under LGPL 2.1 license. See LICENSE file' \
-            ' for details.\n' % vers.__version__)
+            ' for details.\n' % vers.__version__
+    print(message)
 
 def errorcliargs(msg="", exval=0):
     xfcopyright()
     if exval > 0:
-        print("Fatal error: %s\n" % msg)
-    print("Usage: fd2python.py <infile>.fd [<outfile>.py]\n" \
+        message = "Fatal error: %s\n" % msg
+        print(message)
+    message = "Usage: fd2python.py <infile>.fd [<outfile>.py]\n" \
             "If <outfile>.py is omitted, <infile>.py is used\n" \
-            "<outfile>.py should not be existing.")
+            "<outfile>.py should not be existing."
+    print(message)
     sys.exit(exval)
 
 def prependxfl(valuestr):
@@ -201,13 +204,11 @@ class FdConvertToPy(object):
                 self.listpairsofelem[elemnum] = mykey, myvalue
                 elemnum += 1
         fdin.close()
-        #print self.listpairsofelem
 
     def convertlistsindict(self):
         # organize key-value pairs in dict
         self.listdictsofelem = []   #* (len(self.listpairsofelem)/2)
 
-        #print self.listdictsofelem
         unitold = 0     # a key-value pair of old list
         unitnew = 0     # a block belonging to intro or form header or flobj
         singdict = ""
@@ -228,7 +229,6 @@ class FdConvertToPy(object):
                 unitold += 1
             elif elem[0] == "<ENDFORMHEAD>":
                 self.listdictsofelem.append(singdict)
-                #del singdict
                 unitold += 1
                 unitnew += 1
             elif elem[0] == "<FLOBJ>":
@@ -237,7 +237,6 @@ class FdConvertToPy(object):
                 unitold += 1
             elif elem[0] == "<ENDFLOBJ>":
                 self.listdictsofelem.append(singdict)
-                #del singdict
                 unitold += 1
                 unitnew += 1
             elif elem[0] == "<ENDALL>":
@@ -249,7 +248,6 @@ class FdConvertToPy(object):
                 del singdict
                 singdict = {'phase' : 'ENDFORM'}
                 self.listdictsofelem.append(singdict)
-                #del singdict
                 unitold += 1            # next
                 unitnew += 1
             else:               # real key-value pair
@@ -570,7 +568,7 @@ class FdConvertToPy(object):
         if "boxtype" in macrounit:
             vbtype = macrounit['boxtype']
         if "type" in macrounit:
-            pass                    # not used?
+            pass                    # the same as boxtype
         if "box" in macrounit:
             vxpos, vypos, vwidth, vheight = macrounit['box'].split()
         if "label" in macrounit:
@@ -670,6 +668,7 @@ class FdConvertToPy(object):
 
     def manage_flbitmap(self, macrounit):
         flobjtxt = ""
+        ifuseddata = False
         if "type" in macrounit:
             vtype = prependfltype(macrounit['type'])
         if "box" in macrounit:
@@ -692,6 +691,15 @@ class FdConvertToPy(object):
             vboxtype = macrounit['boxtype']
             flobjtxt += "\n%sxfl.fl_set_object_boxtype(%s, %s)" % \
                     (TWOTABS, prependself(vname), prependxfl(vboxtype))
+        if 'width' in macrounit:         # if "Use data" enabled
+            ifuseddata = True
+            nwidth = macrounit['width']
+        if 'height' in macrounit:         # if "Use data" enabled
+            ifuseddata = True
+            nheight = macrounit['height']
+        if 'data' in macrounit:         # if "Use data" enabled
+            ifuseddata = True
+            ndata = macrounit['data']
         if "fullpath" in macrounit:
             vfullpath = macrounit['fullpath']
         if "file" in macrounit:
@@ -699,20 +707,24 @@ class FdConvertToPy(object):
                 vfile = macrounit['file']
             else:                   # '0', is a relative path
                 vfile = './'+macrounit['file']
-            flobjtxt += "\n%sxfl.fl_set_bitmap_file(%s, \'%s\')" % \
-                    (TWOTABS, prependself(vname), vfile)
-        if 'width' in macrounit:         # if "Use data" enabled
-            pass        # TODO: managing import from .xbm data
-        if 'height' in macrounit:         # if "Use data" enabled
-            pass        # TODO: managing import from .xbm data
-        if 'data' in macrounit:         # if "Use data" enabled
-            pass        # TODO: managing import from .xbm data
-            # flobjtxt = "\n%sxfl.fl_set_bitmap_data()"
+            if not ifuseddata:      # use file directly
+                flobjtxt += "\n%sxfl.fl_set_bitmap_file(%s, \'%s\')" % \
+                        (TWOTABS, prependself(vname), vfile)
+            else:                   # read data in memory
+                # managing import from .xbm data
+                vwidth, vheight, vdata = \
+                        xfstruct.import_xbmdata_from_file(vfile)
+                flobjtxt += "\n%s%s = %s" % (TWOTABS, nwidth, vwidth)
+                flobjtxt += "\n%s%s = %s" % (TWOTABS, nheight, vheight)
+                flobjtxt += "\n%s%s = %s" % (TWOTABS, ndata, vdata)
+                flobjtxt += "\n%sxfl.fl_set_bitmap_data(%s, %s, %s, %s)" \
+                        % (TWOTABS, prependself(vname), nwidth, nheight, ndata)
         self.createformstext.append(flobjtxt)
         return vname
 
     def manage_flpixmap(self, macrounit):
         flobjtxt = ""
+        ifuseddata = False
         if "type" in macrounit:
             vtype = prependfltype(macrounit['type'])
         if "box" in macrounit:
@@ -739,6 +751,9 @@ class FdConvertToPy(object):
             valign = macrounit['align']
             flobjtxt += "\n%sxfl.fl_set_pixmap_align(%s, %s, 3, 3)" % \
                     (TWOTABS, prependself(vname), prependxfl(valign))
+        if 'data' in macrounit:         # if "Use data" enabled
+            ifuseddata = True
+            ndata = macrounit['data']
         if "fullpath" in macrounit:
             vfullpath = macrounit['fullpath']
         if "file" in macrounit:
@@ -746,15 +761,15 @@ class FdConvertToPy(object):
                 vfile = macrounit['file']
             else:                   # '0', is a relative path
                 vfile = './'+macrounit['file']
-            flobjtxt += "\n%sxfl.fl_set_bitmap_file(%s, \'%s\')" % \
-                    (TWOTABS, prependxfl(vname), vfile)
-        if 'width' in macrounit:         # if "Use data" enabled
-            pass        # TODO: managing import from .xbm data
-        if 'height' in macrounit:         # if "Use data" enabled
-            pass        # TODO: managing import from .xbm data
-        if 'data' in macrounit:         # if "Use data" enabled
-            pass        # TODO: managing import from .xbm data
-            # flobjtxt = "\n%sxfl.fl_set_bitmap_data()"
+            if not ifuseddata:      # use file directly
+                flobjtxt += "\n%sxfl.fl_set_bitmap_file(%s, \'%s\')" % \
+                        (TWOTABS, prependxfl(vname), vfile)
+            else:                   # read data in memory
+                # managing import from .xpm data
+                vdata = xfstruct.import_xpmdata_from_file(vfile)
+                flobjtxt += "\n%s%s = %s" % (TWOTABS, ndata, vdata)
+                flobjtxt += "\n%sxfl.fl_set_pixmap_data(%s, %s)" % \
+                    (TWOTABS, prependself(vname), ndata)
         self.createformstext.append(flobjtxt)
         return vname
 
@@ -1069,6 +1084,7 @@ class FdConvertToPy(object):
 
     def manage_flpixmapbutton(self, macrounit):
         flobjtxt = ""
+        ifuseddata = False
         if "type" in macrounit:
             vtype = prependfltype(macrounit['type'])
         if "box" in macrounit:
@@ -1121,13 +1137,18 @@ class FdConvertToPy(object):
                 flobjtxt += "\n%s%s = %s" % (TWOTABS, ndata, vdata)
                 flobjtxt += "\n%sxfl.fl_set_pixmapbutton_data(%s, %s)" % \
                     (TWOTABS, prependself(vname), ndata)
+        if "focus" in macrounit:
+            vfocus = macrounit['focus']
         if "focus_file" in macrounit:
-            if vfullpath == '1':           # is a full path
-                vfocusfile = macrounit['focus_file']
-            else:                   # '0', is a relative path
-                vfocusfile = './'+macrounit['focus_file']
-            flobjtxt += "\n%sxfl.fl_set_pixmapbutton_focus_file(%s, " \
-                    "\'%s\')" % (TWOTABS, prependself(vname), vfocusfile)
+            if vfocus == "1":     # focus file in use
+                if vfullpath == '1':           # is a full path
+                    vfocusfile = macrounit['focus_file']
+                else:                   # '0', is a relative path
+                    vfocusfile = './'+macrounit['focus_file']
+                flobjtxt += "\n%sxfl.fl_set_pixmapbutton_focus_file(%s, " \
+                        "\'%s\')" % (TWOTABS, prependself(vname), vfocusfile)
+            else:                # no focus file used
+                pass
         self.createformstext.append(flobjtxt)
         return vname
 
@@ -1793,7 +1814,8 @@ class FdConvertToPy(object):
         try:
             fdout = open(self.outfile, 'w')
         except IOError:
-            errorcliargs("Cannot write %s on disk." % self.outfile, 5)
+            message = "Cannot write %s on disk" % self.outfile
+            errorcliargs(message, 5)
         else:
             try:
                 for line in self.headertext:
@@ -1830,10 +1852,11 @@ class FdConvertToPy(object):
                     fdout.write(line)
                 fdout.close()
             except IOError:
-                errorcliargs("Cannot write %s on disk" % self.outfile, 5)
+                message = "Cannot write %s on disk" % self.outfile
+                errorcliargs(message, 5)
             else:
-                print("%s successfully created." % self.outfile)
-
+                message = "%s successfully created." % self.outfile
+                print(message)
 
 if __name__ == '__main__':
     FdConvertToPy(len(sys.argv), sys.argv)

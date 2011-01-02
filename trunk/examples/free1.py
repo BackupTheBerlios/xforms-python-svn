@@ -37,7 +37,7 @@ class Flfree1(object):
 
         # Can't do it if less than 4 bit deep...
         if depth < 4:
-            print "This Demo requires a depth of at least 4 bits\n"
+            print("This Demo requires a depth of at least 4 bits\n")
             xfl.fl_finish()
             sys.exit(1)
         # ...but too large a depth also won't do
@@ -52,7 +52,10 @@ class Flfree1(object):
         self.cole += col
 
         for i in range(col, self.cole + 1):
-            print i,
+            if sys.version_info[0] > 2:
+                print(i, end=' ')
+            else:
+                print i,
             j =  255 * (i - col) / (self.cole - col)
             xfl.fl_mapcolor(i, j, j, j)
 

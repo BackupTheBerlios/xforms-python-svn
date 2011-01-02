@@ -20,7 +20,7 @@ def main(lsysargv, sysargv):
     i = 0
     xfl.fl_initialize(lsysargv, sysargv, "FormDemo", 0, 0 )
 
-    print "Click one of trasparent colors to exit"
+    print("Click one of trasparent colors to exit")
     while True:
         i = xfl.fl_show_colormap(i)
         if i >= 157:

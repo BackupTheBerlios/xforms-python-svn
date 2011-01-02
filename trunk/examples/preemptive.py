@@ -51,7 +51,7 @@ class Flpreempt(object):
         xfl.fl_set_object_prehandler(self.fd_form0.butt, \
                 self.preemptive_handler)
 
-        print self.fd_form0.done, self.fd_form0.peek, self.fd_form0.override
+        print(self.fd_form0.done, self.fd_form0.peek, self.fd_form0.override)
 
         self.set_tip(self.fd_form0.done, "Want to quit ?\nPress me")
         self.set_tip(self.fd_form0.peek, "Turn preempting off")

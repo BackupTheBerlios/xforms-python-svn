@@ -1,0 +1,58 @@
+Magic: 15000
+
+Internal Form Definition File
+    (do not change)
+
+Number of forms: 1
+Unit of measure: FL_COORD_PIXEL
+
+=============== FORM ===============
+Name: sample
+Width: 320
+Height: 250
+Number of Objects: 2
+
+--------------------
+class: FL_BOX
+type: FL_UP_BOX
+box: 0 0 320 250
+boxtype: FL_UP_BOX
+colors: FL_COL1 FL_COL1
+alignment: FL_ALIGN_CENTER
+style: FL_NORMAL_STYLE
+size: FL_DEFAULT_SIZE
+lcol: FL_BLACK
+label: 
+shortcut: 
+resize: FL_RESIZE_ALL
+gravity: FL_NoGravity FL_NoGravity
+name: 
+callback: 
+argument: 
+
+--------------------
+class: FL_COUNTER
+type: FL_NORMAL_COUNTER
+box: 30 50 260 70
+boxtype: FL_FLAT_BOX
+colors: FL_WHEAT FL_DARKGOLDENROD
+alignment: FL_ALIGN_BOTTOM
+style: FL_NORMAL_STYLE
+size: FL_DEFAULT_SIZE
+lcol: FL_BLACK
+label: My counter
+shortcut: M
+resize: FL_RESIZE_ALL
+gravity: FL_NoGravity FL_NoGravity
+name: pcounter
+callback: countercb
+argument: 6
+return: FL_RETURN_END_CHANGED
+    bounds: -1000.0000 1000.0000
+    precision: 4
+    value: 100.0000
+    sstep: 1.0000
+    lstep: 10.0000
+
+==============================
+create_the_forms

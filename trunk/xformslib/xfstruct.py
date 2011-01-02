@@ -117,44 +117,34 @@ def make_flpopupitem(dictpopupitems):
                         dictpopupitems[numb])
             else:
                 pyclstext[numb] = dictpopupitems[numb]['text']
-                print pyclstext[numb]
                 s_clstext[numb] = library.convert_to_stringc(pyclstext[numb])
-                print s_clstext[numb]
             if not 'callback' in dictpopupitems[numb]:
                 pyclscallback[numb] = donothing_flpopupcb
             else:                       # no callback passed
                 pyclscallback[numb] = dictpopupitems[numb]['callback']
-                print pyclscallback[numb]
                 cfn_clscallback[numb] = xfdata.FL_POPUP_CB(pyclscallback[numb])
-                print cfn_clscallback[numb]
             if not 'shortcut' in dictpopupitems[numb]:  # no shortcut passed
                 raise library.XFormsTypeError("make_flpopupitem dict (whose "
                         "contents is %s) should have a 'shortcut' key" % \
                         dictpopupitems[numb])
             else:
                 pyclsshortcut[numb] = dictpopupitems[numb]['shortcut']
-                print pyclsshortcut[numb]
                 s_clsshortcut[numb] = library.convert_to_stringc( \
                         pyclsshortcut[numb])
-                print s_clsshortcut[numb]
             if not 'type' in dictpopupitems[numb]:    # no type passed
                 pyclstype[numb] = xfdata.FL_POPUP_NORMAL
             else:
                 pyclstype[numb] = dictpopupitems[numb]['type']
-            print pyclstype[numb]
             library.checkfatal_allowed_value_in_list(pyclstype[numb], \
                     xfdata.POPUPTYPE_list)
             i_clstype[numb] = library.convert_to_intc(pyclstype[numb])
-            print i_clstype[numb]
             if not 'state' in dictpopupitems[numb]:    # no state passed
                 pyclsstate[numb] = xfdata.FL_POPUP_NONE
             else:
                 pyclsstate[numb] = dictpopupitems[numb]['state']
-            print pyclsstate[numb]
             library.checkfatal_allowed_value_in_list(pyclsstate[numb], \
                     xfdata.POPUPSTATE_list)
             i_clsstate[numb] = library.convert_to_intc(pyclsstate[numb])
-            print i_clsstate[numb]
 
             popupitem[numb].text = s_clstext[numb]
             popupitem[numb].callback = cfn_clscallback[numb]
@@ -426,7 +416,6 @@ def make_flcmdopt(dictflcmdopt):
             else:
                 pyoption[numb] = dictflcmdopt[numb]['option']
                 s_option[numb] = library.convert_to_stringc(pyoption[numb])
-
             if not 'specifier' in dictflcmdopt[numb]:   # no specifier passed
                 raise library.XFormsTypeError("make_flcmdopt dict (whose "
                         "contents is %s) should have a 'specifier' key" % \
@@ -435,7 +424,6 @@ def make_flcmdopt(dictflcmdopt):
                 pyspecifier[numb] = dictflcmdopt[numb]['specifier']
                 s_specifier[numb] = library.convert_to_stringc( \
                         pyspecifier[numb])
-
             if not 'argKind' in dictflcmdopt[numb]:     # no argKind passed
                 raise library.XFormsTypeError("make_flcmdopt dict (whose "
                         "contents is %s) should have a 'argKind' key" % \
@@ -443,7 +431,6 @@ def make_flcmdopt(dictflcmdopt):
             else:
                 pyargKind[numb] = dictflcmdopt[numb]['argKind']
                 i_argKind[numb] = library.convert_to_intc(pyargKind[numb])
-
             if not 'value' in dictflcmdopt[numb]:       # no value passed
                 raise library.XFormsTypeError("make_flcmdopt dict (whose "
                         "contents is %s) should have a 'value' key" % \
@@ -493,7 +480,6 @@ def make_flresource(dictflresource):
         else:
             pyclsresname = dictflresource['res_name']
             s_clsresname = library.convert_to_stringc(pyclsresname)
-
         if not 'res_class' in dictflresource:   # no res_class passed
             raise library.XFormsTypeError("make_flresource dict (whose "
                     "contents is %s) should have a 'res_class' key" % \
@@ -501,7 +487,6 @@ def make_flresource(dictflresource):
         else:
             pyclsresclass = dictflresource['res_class']
             s_clsresclass = library.convert_to_stringc(pyclsresclass)
-
         if not 'type' in dictflresource:     # no type passed
             raise library.XFormsTypeError("make_flresource dict (whose "
                     "contents is %s) should have a 'type' key" % \
@@ -509,7 +494,6 @@ def make_flresource(dictflresource):
         else:
             pyclstype = dictflresource['type']
             i_clstype = library.convert_to_intc(pyclstype)
-
         if not 'var' in dictflresource:       # no var passed
             raise library.XFormsTypeError("make_flresource dict (whose "
                     "contents is %s) should have a 'var' key" % \
@@ -538,7 +522,6 @@ def make_flresource(dictflresource):
         else:
             pyclsdefval = dictflresource['defval']
             s_clsdefval = library.convert_to_stringc(pyclsdefval)
-
         if not 'nbytes' in dictflresource:     # no nbytes passed
             raise library.XFormsTypeError("make_flresource dict (whose "
                     "contents is %s) should have a 'nbytes' key" % \
@@ -708,8 +691,8 @@ def import_xbmdata_from_file(fname):
             try:
                 xbmfil = open(fname)
             except IOError:
-                raise library.XFormsGenericError("File %s cannot be opened." \
-                        % fname)
+                raise library.XFormsGenericError("File %s cannot be " \
+                    "opened." % fname)
             iswidth = True      # first defined
             iscontentsarea = False
             iscommentarea = False
@@ -825,3 +808,4 @@ def import_xpmdata_from_file(fname):
     else:       # not a .xbm file
         raise library.XFormsGenericError("File %s should be a .xpm file." % \
                 fname)
+

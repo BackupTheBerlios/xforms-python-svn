@@ -75,7 +75,7 @@ class Flpmbrowse(object):
     def load_file(self, fname, data):
 
         if not fname or not os.path.exists(fname):
-            print "Missing file name\n"
+            print("Missing file name\n")
             return 0
 
         fnameonly = os.path.basename(fname)
@@ -84,7 +84,7 @@ class Flpmbrowse(object):
         else:   # a file
             p, ext = os.path.splitext(fnameonly)
             if not ext:
-                print "Missing file extension\n"
+                print("Missing file extension\n")
                 return 0
             else:
                 if fname.endswith(".xpm"):
@@ -97,8 +97,9 @@ class Flpmbrowse(object):
                     xfl.fl_set_bitmap_file(self.fd_ttt.bm, fname)
                     xfl.fl_show_object(self.fd_ttt.bm)
                 else:
-                    print "Invalid file extension, neither" \
+                    message = "Invalid file extension, neither" \
                             ".xpm nor .xbm file: %s\n" % ext
+                    print message
                     return 0
         return 1
 

@@ -30,6 +30,7 @@
 #######################################################################
 
 
+import sys
 import ctypes as cty
 import ctypes.util as ctyutil
 import warnings
@@ -264,9 +265,13 @@ def set_initialized():
 
 def convert_to_stringc(paramname):
     """ Converts paramname to python str and to ctypes c_char_p """
+    if sys.version_info[0] > 2:
+        stringtype = str
+    else:
+        stringtype = basestring
     if isinstance(paramname, cty.c_char_p):
         return paramname
-    elif isinstance(paramname, basestring):
+    elif isinstance(paramname, stringtype):
         retv = cty.c_char_p(paramname)
         return retv
     else:               # not a str / unicode str / c_char_p
@@ -277,9 +282,13 @@ def convert_to_stringc(paramname):
 
 def convert_to_ptr_stringc(paramname):
     """ Converts paramname (list of str) to a ctypes pointer to c_char_p """
+    if sys.version_info[0] > 2:
+        stringtype = str
+    else:
+        stringtype = basestring
     if isinstance(paramname, list):     # list of str
         for idx in range(0, len(paramname)):
-            if not isinstance(paramname[idx], basestring):
+            if not isinstance(paramname[idx], stringtype):
                 # every part must be a str
                 raise XFormsTypeError("Provided parameter '%s' has %s type,"
                         " but a 'list of str'/'pointer to c_char_p' type"
@@ -311,15 +320,18 @@ convert_to_FL_Coord = convert_to_intc
 
 def convert_to_ptr_intc(paramname):
     """ Converts paramname (list of int) to a ctypes pointer to c_int """
+    if sys.version_info[0] > 2:
+        longtype = int
+    else:
+        longtype = (long, int)
     if isinstance(paramname, list):     # list of int
         for idx in range(0, len(paramname)):
-            if not isinstance(paramname[idx], long) and \
-                    not isinstance(paramname[idx], int):
+            if not isinstance(paramname[idx], longtype):
                 # every part must be an int/long
                 raise XFormsTypeError("Provided parameter '%s' has %s type,"
                         " but a 'list of int'/'pointer to c_int' type"
                         " should be used." % (paramname, type(paramname)))
-        retv = (cty.c_ulong * len(paramname))(*paramname)    # already a ptr
+        retv = (cty.c_int * len(paramname))(*paramname)    # already a ptr
         return retv
     else:               # not a list
         raise XFormsTypeError("Provided parameter '%s' has %s type,"
@@ -345,9 +357,13 @@ def convert_to_uintc(paramname):
 
 def convert_to_longc(paramname):
     """ Converts paramname to python long and to ctypes c_long """
+    if sys.version_info[0] > 2:
+        longtype = int
+    else:
+        longtype = long
     if not isinstance(paramname, cty.c_long):
         try:
-            retv0 = long(paramname)
+            retv0 = longtype(paramname)
         except ValueError:
             raise XFormsTypeError("Provided parameter '%s' has %s type, "
                     "but a 'long'/'c_long' type should be used." % \
@@ -361,9 +377,13 @@ def convert_to_longc(paramname):
 
 def convert_to_ulongc(paramname):
     """ Converts paramname to python long and to ctypes c_ulong """
+    if sys.version_info[0] > 2:
+        longtype = int
+    else:
+        longtype = long
     if not isinstance(paramname, cty.c_ulong):
         try:
-            retv0 = long(paramname)
+            retv0 = longtype(paramname)
         except ValueError:
             raise XFormsTypeError("Provided parameter '%s' has %s type, "
                     "but a 'long_pos'/'c_ulong' type should be used." % \
@@ -381,10 +401,13 @@ convert_to_Pixmap = convert_to_ulongc
 
 def convert_to_ptr_ulongc(paramname):
     """ Converts paramname (list of long) to a ctypes pointer to c_ulong """
+    if sys.version_info[0] > 2:
+        longtype = int
+    else:
+        longtype = (long, int)
     if isinstance(paramname, list):     # list of long
         for idx in range(0, len(paramname)):
-            if not isinstance(paramname[idx], long) and \
-                    not isinstance(paramname[idx], int):
+            if not isinstance(paramname[idx], longtype):
                 # every part must be an int/long
                 raise XFormsTypeError("Provided parameter '%s' has %s type,"
                         " but a 'list of long'/'pointer to c_ulong' type"

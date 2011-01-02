@@ -1,0 +1,58 @@
+Magic: 15000
+
+Internal Form Definition File
+    (do not change)
+
+Number of forms: 1
+Unit of measure: FL_COORD_PIXEL
+
+=============== FORM ===============
+Name: sample
+Width: 320
+Height: 250
+Number of Objects: 2
+
+--------------------
+class: FL_BOX
+type: FL_UP_BOX
+box: 0 0 320 250
+boxtype: FL_UP_BOX
+colors: FL_COL1 FL_COL1
+alignment: FL_ALIGN_CENTER
+style: FL_NORMAL_STYLE
+size: FL_DEFAULT_SIZE
+lcol: FL_BLACK
+label: 
+shortcut: 
+resize: FL_RESIZE_ALL
+gravity: FL_NoGravity FL_NoGravity
+name: 
+callback: 
+argument: 
+
+--------------------
+class: FL_SLIDER
+type: FL_HOR_NICE_SLIDER
+box: 60 50 220 40
+boxtype: FL_DOWN_BOX
+colors: FL_DARKKHAKI FL_AQUAMARINE
+alignment: FL_ALIGN_BOTTOM
+style: FL_NORMAL_STYLE
+size: FL_TINY_SIZE
+lcol: FL_BLACK
+label: my slider\nin the sky
+shortcut: i
+resize: FL_RESIZE_ALL
+gravity: FL_NoGravity FL_NoGravity
+name: pslider
+callback: slidecb
+argument: 0
+return: FL_RETURN_CHANGED|FL_RETURN_END
+    bounds: 1 15
+    value: 1
+    increment: 0.15 0.25
+    slsize: 0.15
+    step: 2
+
+==============================
+create_the_forms

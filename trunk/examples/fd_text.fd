@@ -1,0 +1,52 @@
+Magic: 15000
+
+Internal Form Definition File
+    (do not change)
+
+Number of forms: 1
+Unit of measure: FL_COORD_PIXEL
+
+=============== FORM ===============
+Name: sampleform
+Width: 320
+Height: 250
+Number of Objects: 2
+
+--------------------
+class: FL_BOX
+type: FL_UP_BOX
+box: 0 0 320 250
+boxtype: FL_UP_BOX
+colors: FL_COL1 FL_COL1
+alignment: FL_ALIGN_CENTER
+style: FL_NORMAL_STYLE
+size: FL_DEFAULT_SIZE
+lcol: FL_BLACK
+label: 
+shortcut: 
+resize: FL_RESIZE_ALL
+gravity: FL_NoGravity FL_NoGravity
+name: 
+callback: 
+argument: 
+
+--------------------
+class: FL_TEXT
+type: FL_NORMAL_TEXT
+box: 40 40 240 110
+boxtype: FL_DOWN_BOX
+colors: FL_COL1 FL_MCOL
+alignment: FL_ALIGN_RIGHT_TOP|FL_ALIGN_INSIDE
+style: FL_NORMAL_STYLE
+size: 11
+lcol: FL_BLACK
+label: My name is text,\nspeciail agent Text from the Earth
+shortcut: T
+resize: FL_RESIZE_X
+gravity: FL_NoGravity FL_NoGravity
+name: ptext
+callback: textcb
+argument: w
+
+==============================
+create_the_forms
