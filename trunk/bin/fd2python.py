@@ -4,7 +4,7 @@
 """ xforms-python's script to convert fdesign '.fd' files to python UI layout.
 """
 
-#    Copyright (C) 2010  Luca Lazzaroni "LukenShiro"
+#    Copyright (C) 2010, 2011  Luca Lazzaroni "LukenShiro"
 #    e-mail: <lukenshiro@ngi.it>
 #
 #    This program is free software: you can redistribute it and/or modify

@@ -123,16 +123,19 @@ Parameters<br>
 ----------<br>
 &nbsp;&nbsp;&nbsp;&nbsp;btnclass&nbsp;:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;value&nbsp;of&nbsp;a&nbsp;new&nbsp;button&nbsp;class<br>
-&nbsp;&nbsp;&nbsp;&nbsp;pyfn_DrawButton&nbsp;:&nbsp;python&nbsp;function&nbsp;to&nbsp;draw&nbsp;button,&nbsp;no&nbsp;return<br>
+&nbsp;&nbsp;&nbsp;&nbsp;pyfn_DrawButton&nbsp;:&nbsp;python&nbsp;function,&nbsp;no&nbsp;return<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;name&nbsp;referring&nbsp;to&nbsp;function(ptr_flobject)<br>
-&nbsp;&nbsp;&nbsp;&nbsp;pyfn_CleanupButton&nbsp;:&nbsp;python&nbsp;function&nbsp;to&nbsp;cleanup&nbsp;button,&nbsp;no&nbsp;return<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;name&nbsp;referring&nbsp;to&nbsp;function(pButtonSpec)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;function&nbsp;to&nbsp;handle&nbsp;drawing&nbsp;of&nbsp;button<br>
+&nbsp;&nbsp;&nbsp;&nbsp;pyfn_CleanupButton&nbsp;:&nbsp;python&nbsp;function,&nbsp;no&nbsp;return<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;name&nbsp;referring&nbsp;to&nbsp;function(ptr_buttonspec)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;function&nbsp;to&nbsp;cleanup&nbsp;button.&nbsp;You&nbsp;have&nbsp;to&nbsp;pass&nbsp;an<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;instance&nbsp;of&nbsp;xfdata.FL_BUTTON_SPEC&nbsp;class<br>
 &nbsp;<br>
 Examples<br>
 --------<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;def&nbsp;drawbtn(pobj):<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;...&nbsp;&lt;something&gt;<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;def&nbsp;cleanbtn(buttonspec):<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;def&nbsp;cleanbtn(pbuttonspec):<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;...&nbsp;&lt;something&gt;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;<a href="#-fl_add_button_class">fl_add_button_class</a>(1001,&nbsp;drawbtn,&nbsp;cleanbtn)<br>
 &nbsp;<br>
@@ -724,4 +727,4 @@ Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
 </td></tr></table>
-<p>Updated on: 2011-01-01 23:39 +0100</body></html>
+<p>Updated on: 2011-01-02 23:50 +0100</body></html>

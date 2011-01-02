@@ -4,7 +4,7 @@
 """ xforms-python's functions to manage timer flobjects.
 """
 
-#    Copyright (C) 2009, 2010  Luca Lazzaroni "LukenShiro"
+#    Copyright (C) 2009, 2010, 2011  Luca Lazzaroni "LukenShiro"
 #    e-mail: <lukenshiro@ngi.it>
 #
 #    This program is free software: you can redistribute it and/or modify
@@ -223,7 +223,7 @@ def fl_set_timer_filter(ptr_flobject, pyfn_TimerFilter):
         ptr_flobject : pointer to xfdata.FL_OBJECT
             timer flobject
         pyfn_TimerFilter : python callback function, returned value
-            name referring to function(ptr_flobject, floatsecs) -> str
+            name referring to function(ptr_flobject, [float]secs) -> [str]time
             Parameter floatsecs is time left for count-down timers and the
             elapsed time for up-counting timers (in units of seconds).
             It gives string representation of time.

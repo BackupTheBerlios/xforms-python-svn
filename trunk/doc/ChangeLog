@@ -2,6 +2,8 @@ SVN (first entries from top are more recent)
 --------------------------------------------
 
 BETA
+    * Some more docstrings in xfdata (for Structures) and in other modules
+    (for function prototypes). Miscellaneous bugfixes.
     20110102 (beta9)
     * Python 3.x should be almost supported now (remaining questions to
     resolve are utf-8 encoding and unicode strings and single characters,
@@ -10,6 +12,7 @@ BETA
     example files created as .fd and converted to .py using fd2python.py
     * removed test_fl_add_io_callback.py and created a test_flbasic.py
     test instead.
+    * realign to XForms upstream last version.
     20110101 (beta8)
     * xfdata.py Structures now have a __slots__ attribute, to reduce
     memory usage.

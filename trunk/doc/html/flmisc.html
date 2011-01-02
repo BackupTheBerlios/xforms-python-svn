@@ -449,7 +449,8 @@ Examples<br>
 Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-fl_request_clipboard"><strong>fl_request_clipboard</strong></a>(ptr_flobject, clipbdtype, pyfn_SelectionCb)</dt><dd><tt><a href="#-fl_request_clipboard">fl_request_clipboard</a>(ptr_flobject,&nbsp;clipbdtype,&nbsp;pyfn_SelectionCb)&nbsp;-&gt;&nbsp;size<br>
+ <dl><dt><a name="-fl_request_clipboard"><strong>fl_request_clipboard</strong></a>(ptr_flobject, clipbdtype, pyfn_SelectionCb)</dt><dd><tt><a href="#-fl_request_clipboard">fl_request_clipboard</a>(ptr_flobject,&nbsp;clipbdtype,&nbsp;pyfn_SelectionCb)<br>
+-&gt;&nbsp;size<br>
 &nbsp;<br>
 Retrieves&nbsp;data&nbsp;from&nbsp;clipboard?<br>
 &nbsp;<br>
@@ -460,8 +461,8 @@ Parameters<br>
 &nbsp;&nbsp;&nbsp;&nbsp;clipbdtype&nbsp;:&nbsp;long<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;type&nbsp;of&nbsp;clipboard&nbsp;(not&nbsp;used)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;pyfn_SelectionCb&nbsp;:&nbsp;python&nbsp;function&nbsp;callback,&nbsp;returned&nbsp;value<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;name&nbsp;referring&nbsp;to&nbsp;function(ptr_flobject,&nbsp;longnum,&nbsp;vdata,<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;longnum)&nbsp;-&gt;&nbsp;num.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;name&nbsp;referring&nbsp;to&nbsp;function(ptr_flobject,&nbsp;[long]num,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[pointer&nbsp;to&nbsp;void]vdata,&nbsp;[long]num)&nbsp;-&gt;&nbsp;[int]num.<br>
 &nbsp;<br>
 Returns<br>
 -------<br>
@@ -487,11 +488,11 @@ Parameters<br>
 &nbsp;&nbsp;&nbsp;&nbsp;clipbdtype&nbsp;:&nbsp;long<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;type&nbsp;of&nbsp;clipboard&nbsp;(not&nbsp;used)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;vdata&nbsp;:&nbsp;*todo*<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*todo*<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;data&nbsp;to&nbsp;be&nbsp;stored<br>
 &nbsp;&nbsp;&nbsp;&nbsp;size&nbsp;:&nbsp;long<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;size&nbsp;of&nbsp;data&nbsp;to&nbsp;be&nbsp;stuffed<br>
 &nbsp;&nbsp;&nbsp;&nbsp;pyfn_LoseSelectionCb&nbsp;:&nbsp;python&nbsp;function&nbsp;callback,&nbsp;returned&nbsp;value<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;name&nbsp;referring&nbsp;to&nbsp;function(ptr_flobject,&nbsp;longnum)&nbsp;-&gt;&nbsp;num.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;name&nbsp;referring&nbsp;to&nbsp;function(ptr_flobject,&nbsp;[long]num)&nbsp;-&gt;&nbsp;[int]num.<br>
 &nbsp;<br>
 Returns<br>
 -------<br>
@@ -555,4 +556,4 @@ Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
 </td></tr></table>
-<p>Updated on: 2011-01-01 23:39 +0100</body></html>
+<p>Updated on: 2011-01-02 23:50 +0100</body></html>

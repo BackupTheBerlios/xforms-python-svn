@@ -3895,7 +3895,7 @@ def fl_for_all_objects(ptr_flform, pyfn_operatecb, vdata):
     library.check_if_initialized()
     library.verify_flformptr_type(ptr_flform)
     library.verify_function_type(pyfn_operatecb)
-    cfn_operatecb = xfdata.cfunc_int_pobject_pvoid(pyfn_operatecb)
+    cfn_operatecb = cfunc_int_pobject_pvoid(pyfn_operatecb)
     ptr_vdata = cty.cast(vdata, cty.c_void_p)
     library.keep_cfunc_refs(cfn_operatecb, pyfn_operatecb)
     library.keep_elem_refs(ptr_flform, vdata, ptr_vdata)
@@ -4866,15 +4866,15 @@ def fl_enumerate_fonts(pyfn_output, shortform):
         Status: Tested + Doc + Demo = OK
 
     """
-    # cfunc_none_string = cty.CFUNCTYPE(None, xfdata.STRING)
+    cfunc_none_string = cty.CFUNCTYPE(None, xfdata.STRING)
     _fl_enumerate_fonts = library.cfuncproto(
         library.load_so_libforms(), "fl_enumerate_fonts",\
-        cty.c_int, [xfdata.cfunc_none_string, cty.c_int],\
+        cty.c_int, [cfunc_none_string, cty.c_int],\
         """int fl_enumerate_fonts(void ( * output )( const char *s ), \
            int shortform)""")
     library.check_if_initialized()
     library.verify_function_type(pyfn_output)
-    cfn_output = xfdata.cfunc_none_string(pyfn_output)
+    cfn_output = cfunc_none_string(pyfn_output)
     i_shortform = library.convert_to_intc(shortform)
     library.keep_cfunc_refs(cfn_output, pyfn_output)
     library.keep_elem_refs(shortform, i_shortform)

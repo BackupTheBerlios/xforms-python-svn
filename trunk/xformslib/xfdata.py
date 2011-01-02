@@ -1956,10 +1956,6 @@ FL_RAW_CALLBACK = cty.CFUNCTYPE(cty.c_int, cty.POINTER(FL_FORM), \
 FL_CALLBACKPTR = cty.CFUNCTYPE(None, cty.POINTER(FL_OBJECT), cty.c_long)
 
 
-# cfunction for _fl_enumerate_fonts
-cfunc_none_string = cty.CFUNCTYPE(None, STRING)
-
-
 FL_DRAWPTR = cty.CFUNCTYPE(None, FL_Coord, FL_Coord, FL_Coord, FL_Coord,
                            cty.c_int, FL_COLOR)
 
@@ -3311,6 +3307,7 @@ FL_AMASK = 0xff000000
 FL_ASHIFT = 24
 
 
+# upstreams' internal structure? --LK
 class FL_RGB2PIXEL_(cty.Structure):
     """FL_RGB2PIXEL_ class
 
@@ -3435,13 +3432,13 @@ class XSegment(cty.Structure):
     Attributes
     ----------
         x1 : short
-            horizontal position of start
+            horizontal position of start point
         y1 : short
-            vertical position of start
+            vertical position of start point
         x2 : short
-            horizontal position of end
+            horizontal position of end point
         y2 : short
-            vertical position of end
+            vertical position of end point
     """
     pass
 XSegment.__slots__ = ['x1', 'y1', 'x2', 'y2',]
@@ -3578,7 +3575,7 @@ class XTimeCoord(cty.Structure):
     Attributes
     ----------
         time : long_pos
-            Time
+            time in milliseconds
         x : short
             *todo*
         y : short
@@ -3880,19 +3877,22 @@ class XFocusChangeEvent(cty.Structure):
     Attributes
     ----------
         type : int
-            *todo*
+            FocusIn or FocusOut
         serial : long_pos
-            *todo*
+            # of last request processed by server
         send_event : int
-            *todo*
+            (bool) true if this came from a SendEvent request
         display : pointer to Display
-            *todo*
+            Display the event was read from
         window : long_pos
-            Window
+            window of event
         mode : int
-            *todo*
+            NotifyNormal, NotifyWhileGrabbed,
+            NotifyGrab, NotifyUngrab
         detail : int
-            *todo*
+            NotifyAncestor, NotifyVirtual, NotifyInferior,
+            NotifyNonlinear,NotifyNonlinearVirtual, NotifyPointer,
+            NotifyPointerRoot, NotifyDetailNone
     """
     pass
 XFocusChangeEvent.__slots__ = ['type', 'serial', 'send_event', 'display', \
@@ -3912,20 +3912,21 @@ XFocusOutEvent = XFocusChangeEvent
 
 # /usr/include/X11/Xlib.h 671
 class XKeymapEvent(cty.Structure):
-    """X11 XKeymapEvent class
+    """X11 XKeymapEvent class. It is generated on EnterWindow
+    and FocusIn when KeyMapState selected.
 
     Attributes
     ----------
         type : int
-            *todo*
-        serial : ulong
-            *todo*
+            # of last request processed by server
+        serial : long_pos
+            # of last request processed by server
         send_event : int
-            *todo*
+            (bool) true if this came from a SendEvent request
         display : pointer to Display
-            *todo*
+            Display the event was read from
         window : long_pos
-            Window
+            window of event
         key_vector : array of 32 char
             *todo*
     """
@@ -3948,25 +3949,25 @@ class XExposeEvent(cty.Structure):
     Attributes
     ----------
         type : int
-            *todo*
+            type of event
         serial : long_pos
-            *todo*
+            # of last request processed by server
         send_event : int
-            *todo*
+            (bool) true if this came from a SendEvent request
         display : pointer to Display
-            *todo*
+            Display the event was read from
         window : long_pos
-            Window
+            Window of the event
         x : int
-            *todo*
+            horizontal position *todo*
         y : int
-            *todo*
+            vertical position *todo*
         width : int
             *todo*
         height : int
             *todo*
         count : int
-            *todo*
+            if non-zero, at least this many more?
     """
     pass
 XExposeEvent.__slots__ = ['type', 'serial', 'send_event', 'display', \
@@ -3994,15 +3995,15 @@ class XGraphicsExposeEvent(cty.Structure):
     Attributes
     ----------
         type : int
-            *todo*
+            type of event
         serial : long_pos
-            *todo*
+            # of last request processed by server
         send_event : int
-            *todo*
+            (bool) true if this came from a SendEvent request
         display : pointer to Display
-            *todo*
+            Display the event was read from
         drawable : long_pos
-            Drawable
+            Drawable *todo*
         x : int
             *todo*
         y : int
@@ -4012,11 +4013,11 @@ class XGraphicsExposeEvent(cty.Structure):
         height : int
             *todo*
         count : int
-            *todo*
+            if non-zero, at least this many more?
         major_code : int
-            *todo*
+            core is CopyArea or CopyPlane
         minor_code : int
-            *todo*
+            not defined in the core
     """
     pass
 XGraphicsExposeEvent.__slots__ = ['type', 'serial', 'send_event', 'display', \
@@ -4044,19 +4045,19 @@ class XNoExposeEvent(cty.Structure):
     Attributes
     ----------
         type : int
-            *todo*
+            typeof event
         serial : long_pos
-            *todo*
+            # of last request processed by server
         send_event : int
-            *todo*
+            (bool) true if this came from a SendEvent request
         display : pointer to Display
-            *todo*
+            Display the event was read from
         drawable : long_pos
             Drawable
         major_code : int
-            *todo*
+            core is CopyArea or CopyPlane
         minor_code : int
-            *todo*
+            not defined in the core
     """
     pass
 XNoExposeEvent.__slots__ = ['type', 'serial', 'send_event', 'display', \
@@ -4078,17 +4079,17 @@ class XVisibilityEvent(cty.Structure):
     Attributes
     ----------
         type : int
-            *todo*
+            type of event
         serial : long_pos
-            *todo*
+            # of last request processed by server
         send_event : int
-            *todo*
+            (bool) true if this came from a SendEvent request
         display : pointer to Display
-            *todo*
+            Display the event was read from
         window : long_pos
-            Window
+            Window of event
         state : int
-            *todo*
+            Visibility state
     """
     pass
 XVisibilityEvent.__slots__ = ['type', 'serial', 'send_event', 'display', \
@@ -4109,29 +4110,29 @@ class XCreateWindowEvent(cty.Structure):
     Attributes
     ----------
         type : int
-            *todo*
+            type of event
         serial : long_pos
-            *todo*
+             # of last request processed by server
         send_event : int
-            *todo*
+            (bool) true if this came from a SendEvent request
         display : pointer to Display
-            *todo*
+            Display the event was read from
         parent : long_pos
-            Window
+            parent of the window
         window : long_pos
-            Window
+            Window id of window created
         x : int
-            *todo*
+            window horizontal location 
         y : int
-            *todo*
+            window vertical location 
         width : int
-            *todo*
+            width of the window
         height : int
-            *todo*
+            height of the window
         border_width : int
-            *todo*
+            width of border
         override_redirect : int
-            *todo*
+            (bool) creation should be overridden
     """
     pass
 XCreateWindowEvent.__slots__ = ['type', 'serial', 'send_event', 'display', \
@@ -4159,13 +4160,13 @@ class XDestroyWindowEvent(cty.Structure):
     Attributes
     ----------
         type : int
-            *todo*
+            type of event
         serial : long_pos
-            *todo*
+             # of last request processed by server
         send_event : int
-            *todo*
+            (bool) true if this came from a SendEvent request
         display : pointer to Display
-            *todo*
+            Display the event was read from
         event : long_pos
             Window
         window : long_pos
@@ -4190,19 +4191,19 @@ class XUnmapEvent(cty.Structure):
     Attributes
     ----------
         type : int
-            *todo*
+            type of event
         serial : long_pos
-            *todo*
+             # of last request processed by server
         send_event : int
-            *todo*
+            (bool) true if this came from a SendEvent request
         display : pointer to Display
-            *todo*
+            Display the event was read from
         event : long_pos
             Window
         window : long_pos
             Window
         from_configure : int
-            *todo*
+            (bool) *todo*
     """
     pass
 XUnmapEvent.__slots__ = ['type', 'serial', 'send_event', 'display', \
@@ -4224,19 +4225,19 @@ class XMapEvent(cty.Structure):
     Attributes
     ----------
         type : int
-            *todo*
+            type of event
         serial : long_pos
-            *todo*
+             # of last request processed by server
         send_event : int
-            *todo*
+            (bool) true if this came from a SendEvent request
         display : pointer to Display
-            *todo*
+            Display the event was read from
         event : long_pos
             Window
         window : long_pos
             Window
         override_redirect : int
-            *todo*
+            boolean, is override set...
     """
     pass
 XMapEvent.__slots__ = ['type', 'serial', 'send_event', 'display', \
@@ -4257,14 +4258,14 @@ class XMapRequestEvent(cty.Structure):
 
     Attributes
     ----------
-        type : int_pos
-            *todo*
-        serial : ulong_pos
-            *todo*
+        type : int
+            type of event
+        serial : long_pos
+             # of last request processed by server
         send_event : int
-            *todo*
+            (bool) true if this came from a SendEvent request
         display : pointer to Display
-            *todo*
+            Display the event was read from
         parent : long_pos
             Window
         window : long_pos
@@ -4289,13 +4290,13 @@ class XReparentEvent(cty.Structure):
     Attributes
     ----------
         type : int
-            *todo*
+            type of event
         serial : long_pos
-            *todo*
+             # of last request processed by server
         send_event : int
-            *todo*
+            (bool) true if this came from a SendEvent request
         display : pointer to Display
-            *todo*
+            Display the event was read from
         event : long_pos
             Window
         window : long_pos
@@ -4332,13 +4333,13 @@ class XConfigureEvent(cty.Structure):
     Attributes
     ----------
         type : int
-            *todo*
+            type of event
         serial : long_pos
-            *todo*
+             # of last request processed by server
         send_event : int
-            *todo*
+            (bool) true if this came from a SendEvent request
         display : pointer to Display
-            *todo*
+            Display the event was read from
         event : long_pos
             Window
         window : long_pos
@@ -4385,13 +4386,13 @@ class XGravityEvent(cty.Structure):
     Attributes
     ----------
         type : int
-            *todo*
+            type of event
         serial : long_pos
-            *todo*
+             # of last request processed by server
         send_event : int
-            *todo*
+            (bool) true if this came from a SendEvent request
         display : pointer to Display
-            *todo*
+            Display the event was read from
         event : long_pos
             Window
         window : long_pos
@@ -4422,13 +4423,13 @@ class XResizeRequestEvent(cty.Structure):
     Attributes
     ----------
         type : int
-            *todo*
+            type of event
         serial : long_pos
-            *todo*
+             # of last request processed by server
         send_event : int
-            *todo*
+            (bool) true if this came from a SendEvent request
         display : pointer to Display
-            *todo*
+            Display the event was read from
         window : long_pos
             Window
         width : int
@@ -4456,13 +4457,13 @@ class XConfigureRequestEvent(cty.Structure):
     Attributes
     ----------
         type : int
-            *todo*
+            type of event
         serial : long_pos
-            *todo*
+             # of last request processed by server
         send_event : int
-            *todo*
+            (bool) true if this came from a SendEvent request
         display : pointer to Display
-            *todo*
+            Display the event was read from
         parent : long_pos
             Window
         window : long_pos
@@ -4480,7 +4481,7 @@ class XConfigureRequestEvent(cty.Structure):
         above : long_pos
             Window
         detail : int
-            *todo*
+            Above, Below, TopIf, BottomIf, Opposite
         value_mask : long_pos
             *todo*
     """
@@ -4512,19 +4513,19 @@ class XCirculateEvent(cty.Structure):
     Attributes
     ----------
         type : int
-            *todo*
+            type of event
         serial : long_pos
-            *todo*
+             # of last request processed by server
         send_event : int
-            *todo*
+            (bool) true if this came from a SendEvent request
         display : pointer to Display
-            *todo*
+            Display the event was read from
         event : long_pos
             Window
         window : long_pos
             Window
         place : int
-            *todo*
+            PlaceOnTop, PlaceOnBottom
     """
     pass
 XCirculateEvent.__slots__ = ['type', 'serial', 'send_event', 'display', \
@@ -4546,19 +4547,19 @@ class XCirculateRequestEvent(cty.Structure):
     Attributes
     ----------
         type : int
-            *todo*
-        serial : ulong
-            *todo*
+            type of event
+        serial : long_pos
+             # of last request processed by server
         send_event : int
-            *todo*
-        display :pointer to Display
-            *todo*
+            (bool) true if this came from a SendEvent request
+        display : pointer to Display
+            Display the event was read from
         parent : long_pos
             Window
         window :  long_pos
             Window
         place : int
-            *todo*
+            PlaceOnTop, PlaceOnBottom
     """
     pass
 XCirculateRequestEvent.__slots__ = ['type', 'serial', 'send_event', \
@@ -4580,13 +4581,13 @@ class XPropertyEvent(cty.Structure):
     Attributes
     ----------
         type : int
-            *todo*
+            type of event
         serial : long_pos
-            *todo*
+             # of last request processed by server
         send_event : int
-            *todo*
+            (bool) true if this came from a SendEvent request
         display : pointer to Display
-            *todo*
+            Display the event was read from
         window : long_pos
             Window
         atom : long_pos
@@ -4594,7 +4595,7 @@ class XPropertyEvent(cty.Structure):
         time : long_pos
             Time
         state : int
-            *todo*
+            NewValue, Deleted
     """
     pass
 XPropertyEvent.__slots__ = ['type', 'serial', 'send_event', 'display', \
@@ -4617,13 +4618,13 @@ class XSelectionClearEvent(cty.Structure):
     Attributes
     ----------
         type : int
-            *todo*
+            type of event
         serial : long_pos
-            *todo*
+             # of last request processed by server
         send_event : int
-            *todo*
+            (bool) true if this came from a SendEvent request
         display : pointer to Display
-            *todo*
+            Display the event was read from
         window : long_pos
             Window
         selection : long_pos
@@ -4651,13 +4652,13 @@ class XSelectionRequestEvent(cty.Structure):
     Attributes
     ----------
         type : int
-            *todo*
+            type of event
         serial : long_pos
-            *todo*
+             # of last request processed by server
         send_event : int
-            *todo*
+            (bool) true if this came from a SendEvent request
         display : pointer to Display
-            *todo*
+            Display the event was read from
         owner : long_pos
             Window
         requestor : long_pos
@@ -4695,13 +4696,13 @@ class XSelectionEvent(cty.Structure):
     Attributes
     ----------
         type : int
-            *todo*
+            type of event
         serial : long_pos
-            *todo*
+             # of last request processed by server
         send_event : int
-            *todo*
+            (bool) true if this came from a SendEvent request
         display : pointer to Display
-            *todo*
+            Display the event was read from
         requestor : long_pos
             Window
         selection : long_pos
@@ -4709,7 +4710,7 @@ class XSelectionEvent(cty.Structure):
         target : long_pos
             Atom
         property : long_pos
-            Atom
+            ATOM or None
         time : long_pos
             Time
     """
@@ -4735,21 +4736,21 @@ class XColormapEvent(cty.Structure):
     Attributes
     ----------
         type : int
-            *todo*
+            type of event
         serial : long_pos
-            *todo*
+             # of last request processed by server
         send_event : int
-            *todo*
+            (bool) true if this came from a SendEvent request
         display : pointer to Display
-            *todo*
+            Display the event was read from
         window : long_pos
             Window
         colormap : long_pos
-            Colormap
+            COLORMAP or None
         c_new : int
             *todo*
         state : int
-            *todo*
+            ColormapInstalled, ColormapUninstalled
     """
     pass
 XColormapEvent.__slots__ = ['type', 'serial', 'send_event', 'display', \
@@ -4793,13 +4794,13 @@ class XClientMessageEvent(cty.Structure):
     Attributes
     ----------
         type : int
-            *todo*
-        serial : ulong
-            *todo*
+            type of event
+        serial : long_pos
+             # of last request processed by server
         send_event : int
-            *todo*
+            (bool) true if this came from a SendEvent request
         display : pointer to Display
-            *todo*
+            Display the event was read from
         window : long_pos
             Window
         message_type : long_pos
@@ -4807,7 +4808,7 @@ class XClientMessageEvent(cty.Structure):
         format : int
             *todo*
         data : N19XClientMessageEvent4DOT_71E
-            *todo*
+            a Union structure *todo*
     """
     pass
 XClientMessageEvent.__slots__ = ['type', 'serial', 'send_event', 'display', \
@@ -4830,21 +4831,22 @@ class XMappingEvent(cty.Structure):
     Attributes
     ----------
         type : int
-            *todo*
-        serial : long
-            *todo*
+            type of event
+        serial : long_pos
+             # of last request processed by server
         send_event : int
-            *todo*
+            (bool) true if this came from a SendEvent request
         display : pointer to Display
-            *todo*
+            Display the event was read from
         window : long_pos
-            Window
+            unused
         request : int
-            *todo*
+            one of MappingModifier, MappingKeyboard,
+            MappingPointer
         first_keycode : int
-            *todo*
+            first keycode
         count : int
-            *todo*
+            defines range of change w. first_keycode
     """
     pass
 XMappingEvent.__slots__ = ['type', 'serial', 'send_event', 'display', \
@@ -4867,19 +4869,19 @@ class XErrorEvent(cty.Structure):
     Attributes
     ----------
         type : int
-            *todo*
+            type of event
         display : pointer to Display
-            *todo*
+            Display the event was read from
         resourceid : long_pos
-            XID
+            resource id
         serial : long_pos
-            *todo*
+            serial number of failed request
         error_code : ubyte
-            *todo*
+            error code of failed request
         request_code : ubyte
-            *todo*
+            Major op-code of failed request
         minor_code : ubyte
-            *todo*
+            Minor op-code of failed request
     """
     pass
 XErrorEvent.__slots__ = ['type', 'display', 'resourceid', 'serial', \
@@ -4901,15 +4903,15 @@ class XAnyEvent(cty.Structure):
     Attributes
     ----------
         type : int
-            *todo*
+            type of event
         serial : long_pos
-            *todo*
+             # of last request processed by server
         send_event : int
-            *todo*
+            (bool) true if this came from a SendEvent request
         display : pointer to Display
-            *todo*
+            Display the event was read from
         window : long_pos
-            Window
+            window on which event was requested in event mask
     """
     pass
 XAnyEvent.__slots__ = ['type', 'serial', 'send_event', 'display', 'window',]
@@ -4923,22 +4925,23 @@ XAnyEvent._fields_ = [
 
 # /usr/include/X11/Xlib.h 967
 class XGenericEvent(cty.Structure):
-    """X11 XGenericEvent class
+    """X11 XGenericEvent class. This event is the standard event for
+    all newer extensions.
 
     Attributes
     ----------
         type : int
-            *todo*
+            type of event. Always GenericEvent
         serial : long_pos
-            *todo*
+             # of last request processed by server
         send_event : int
-            *todo*
+            (bool) true if this came from a SendEvent request
         display : pointer to Display
-            *todo*
+            Display the event was read from
         extension : int
-            *todo*
+            major opcode of extension that caused the event
         evtype : int
-            *todo*
+            actual event type
     """
     pass
 XGenericEvent.__slots__ = ['type', 'serial', 'send_event', 'display', \
@@ -4959,17 +4962,17 @@ class XGenericEventCookie(cty.Structure):
     Attributes
     ----------
         type : int
-            *todo*
+            type of event. Always GenericEvent
         serial : long_pos
-            *todo*
+             # of last request processed by server
         send_event : int
-            *todo*
+            (bool) true if this came from a SendEvent request
         display : pointer to Display
-            *todo*
+            Display the event was read from
         extension : int
-            *todo*
+            major opcode of extension that caused the event
         evtype : int
-            *todo*
+            actual event type
         cookie : int_pos
             *todo*
         data : pointer to void
@@ -5073,7 +5076,7 @@ SelectionNotify = 31
 # *** end - from /usr/include/X11/X.h ***
 
 class admitted_values_for_EventNames(object):
-    """Event type names
+    """Event type names.
 
     Admitted values
     ---------------
@@ -5223,13 +5226,6 @@ FL_BROWSER_FONTSIZE = FL_SMALL_SIZE
 
 FL_BROWSER_SCROLL_CALLBACK = cty.CFUNCTYPE(None, cty.POINTER(FL_OBJECT),
                 cty.c_int, cty.c_void_p)
-class function_prototype_for_FL_BROWSER_SCROLL_CALLBACK(object):
-    """FL_BROWSER_SCROLL_CALLBACK(ptr_flobject, int, vdata)
-
-    prototype for function handling callback for browser flobjects,
-    no return
-    """
-    pass
 
 
 #############################################################
@@ -5258,24 +5254,25 @@ BUTTONTYPE_list = [FL_NORMAL_BUTTON, FL_PUSH_BUTTON, FL_RADIO_BUTTON, \
 
 
 class FL_BUTTON_SPEC(cty.Structure):
-    """FL_BUTTON_SPEC class
+    """FL_BUTTON_SPEC class. It is used for all button or button-like
+    flobjects.
 
     Attributes
     ----------
         pixmap : long_pos
-            *todo*
+            pixmap resource id, for bitmap/pixmap button only
         mask : long_pos
-            *todo*
+            mask resource id, for bitmap/pixmap button only
         bits_w : int_pos
-            *todo*
+            for bitmap/pixmap button only *todo*
         bits_h : int_pos
-            *todo*
+            for bitmap/pixmap button only *todo*
         val : int
-            state of button, whether on/off
+            state of button, whether if it is pushed or not
         mousebut : int
             mouse button that caused the push
         timdel : int
-            time since last touch (TOUCH buttons)
+            time since last touch (only TOUCH buttons)
         event : int
             what event triggers redraw
         is_pushed : int
@@ -5283,17 +5280,17 @@ class FL_BUTTON_SPEC(cty.Structure):
         react_to : int array of 5 elements
             mouse buttons button reacts to
         cspecl : long
-            reserved for class specific stuff
+            reserved for non-generic flobject class specific data
         cspecv : pointer to any type
-            misc. things
+            reserved for non-generic flobject class specific data
         filename : str
-            *todo*
+            name of pixmap/bitmap file to be used
         focus_pixmap : long_pos
             *todo*
         focus_mask : long_pos
             *todo*
         focus_filename : str
-            *todo*
+            name of pixmap/bitmap file to be used if focused
     """
     pass
 FL_BUTTON_SPEC.__slots__ = ['pixmap', 'mask', 'bits_w', 'bits_h', 'val', \
@@ -5414,40 +5411,41 @@ FL_CANVAS_ALIGN = FL_ALIGN_TOP
 
 # /usr/include/X11/Xlib.h 317
 class XSetWindowAttributes(cty.Structure):
-    """XSetWindowAttributes class
+    """XSetWindowAttributes class. Data structure for setting
+    window attributes.
 
     Attributes
     ----------
         background_pixmap : long_pos
-            Pixmap
+            background or None or ParentRelative
         background_pixel : long_pos
-            *todo*
+            background pixel
         border_pixmap : long_pos
-            Pixmap
+            background or None or ParentRelative
         border_pixel : long_pos
-            *todo*
+            border pixel value
         bit_gravity : int
-            *todo*
+            one of bit gravity values
         win_gravity : int
-            *todo*
+            one of the window gravity values
         backing_store : int
-            *todo*
+            NotUseful, WhenMapped, Always
         backing_planes : long_pos
-            *todo*
+            planes to be preseved if possible
         backing_pixel : long_pos
-            *todo*
+            value to use in restoring planes
         save_under : int
-            *todo*
+            (bool) should bits under be saved? (popups)
         event_mask : long
-            *todo*
+            set of events that should be saved
         do_not_propagate_mask : long
-            *todo*
+            set of events that should not propagate
         override_redirect : int
-            *todo*
+            boolean value for override-redirect
         colormap : long_pos
-            Colormap
+            color map to be associated with window
         cursor : long_pos
-            Cursor
+            cursor to be displayed (or None)
     """
     pass
 XSetWindowAttributes.__slots__ = ['background_pixmap', 'background_pixel', \
@@ -6018,11 +6016,11 @@ class FD_CMDLOG(cty.Structure):
         form : pointer to FL_FORM
             the form
         vdata : pointer to void
-            unused data
+            unused
         cdata : str
-            unused data
+            unused
         ldata : long
-            unused data
+            unused
         browser : pointer to FL_OBJECT
             the browser flobject
         close_browser : pointer to FL_OBJECT
@@ -6052,7 +6050,7 @@ class FD_FSELECTOR(cty.Structure):
     Attribute
     ---------
         fselect : pointer to FL_FORM
-            *todo*
+            file selector's form
         vdata : pointer to void
             *todo*
         cdata : pointer to void
@@ -6060,25 +6058,25 @@ class FD_FSELECTOR(cty.Structure):
         ldata : long
             *todo*
         browser : pointer to FL_OBJECT
-            *todo*
+            browser flobject in file selector
         input : pointer to FL_OBJECT
-            *todo*
+            input flobject in file selector
         prompt : pointer to FL_OBJECT
             *todo*
         resbutt : pointer to FL_OBJECT
-            *todo*
+            rescan button flobject in file selector
         patbutt : pointer to FL_OBJECT
-            *todo*
+            pattern button flobject in file selector
         dirbutt : pointer to FL_OBJECT
-            *todo*
+            directory button flobject in file selector
         cancel : pointer to FL_OBJECT
-            *todo*
+            cancel button flobject in file selector
         ready : pointer to FL_OBJECT
-            *todo*
+            ready button flobject in file selector
         dirlabel : pointer to FL_OBJECT
-            *todo*
+            label for directory in file selector
         patlabel : pointer to FL_OBJECT
-            *todo*
+            label for pattern in file selector
         appbutt : pointer to an array of 3 FL_OBJECT
             *todo*
     """
@@ -6106,8 +6104,6 @@ FD_FSELECTOR._fields_ = [
 
 FL_FSCB = cty.CFUNCTYPE(cty.c_int, STRING, cty.c_void_p)
 
-# c function prototype for _fl_add_fselector_appbutton
-cfunc_none_voidp = cty.CFUNCTYPE(None, cty.c_void_p)
 
 
 ####################
@@ -6358,23 +6354,37 @@ class FLPS_CONTROL(cty.Structure):
     Attributes
     ----------
         ps_color : int
-            *todo*
+            The choices are full color (FLPS_COLOR), grayscale
+            (FLPS_GRAYSCALE) and black&white (FLPS_BW). The
+            default for xyplot is black and white. In this mode,
+            all drawings are black, on a white background. If
+            drawbox (see below) is true, the drawing color can be
+            either white or black depending on the specified color.
         orientation : int
-            *todo*
+            Valid choices are FLPS_AUTO, FLPS_PORTRAIT and
+            FLPS_LANDSCAPE. The default is FLPS_AUTO.
         auto_fit : int
-            *todo*
+            By default, this is true so the object always fits the
+            printed page. Set it to false (0) to turn off auto-scaling.
         drawbox : int
-            *todo*
+            Set this to 1 if the box of the object is to be drawn.
         eps : int
+            Set this to 1 if output in EPS format is required.
             *todo*
         xdpi : float
-            *todo*
+            Horizontal screen resolution. The default is to use the
+            actual resolution of the display. Note by setting a dpi
+            number smaller or larger than the actual resolution, the
+            output object is in effect being enlarged or shrunken.
         ydpi : float
-            *todo*
+            Vertical screen resolution. The default is to use the
+            actual resolution of the display. Note by setting a dpi
+            number smaller or larger than the actual resolution, the
+            output object is in effect being enlarged or shrunken.
         paper_w : float
-            *todo*
+            The paper width in inches. The default is 8.5 in.
         paper_h : float
-            *todo*
+            The paper height in inches. The default is 11 in.
         gamma : float
             *todo*
         tmpdir : str
@@ -7037,14 +7047,14 @@ FL_HOR_FLAG = 1
 FL_SCROLL_FLAG = 8
 
 class admitted_values_for_SLIDERFLAG(object):
-    """Flags of slider
+    """Flags of slider, to be used with another slider type.
 
     Admitted values
     ---------------
         FL_HOR_FLAG
-            *todo*
+            flag for horizontal slider
         FL_SCROLL_FLAG
-            *todo*
+            flag for scrollbar slider
     """
     pass
 
@@ -7360,13 +7370,13 @@ class flimage_marker_(cty.Structure):
         style : int
             line style
         display : pointer to void
-            filled by the library
+            display, filled by XForms
         gc : pointer to void
-            *todo*
+            graphics context, filled by XForms
         win : long_pos
-            FL_WINDOW
+            window, filled by XForms
         psdraw : str
-            *todo*
+            filled by XForms *todo*
     """
     pass
 flimage_marker_.__slots__ = ['name', 'w', 'h', 'x', 'y', 'color', \
@@ -7400,28 +7410,83 @@ class flimage_setup_(cty.Structure):
     Attributes
     ----------
         app_data : pointer to void
+            The application can use it to set a value so
+            ptr_flimage.contents.app_data in all image structures returned
+            by XForms will have this value. It is most useful to set this
+            field to something that is persistent during the application
+            run, such as the fdui structure of the main control panel.
+            ptr_flimage.contents.app_data is different from
+            ptr_flimage.contents.u_vdata because all image structures returned
+            by XForms have the same value of ptr_flimage.contents.app_data set
+            by XForms, and ptr_flimage.contents.u_vdata is set by the
+            application on an image-by-image basis.
         visual_cue : function, returned value
-            function(pointer to FL_IMAGE, str) -> int
+            name referring to function(ptr_flimage, [str]message) -> int
+            function that will be called by all image reading, writing and
+            processing routines. It is meant to give the user some visual
+            feedback about what is happening. For lengthy tasks, this
+            function is called repeatedly and periodically to indicate what
+            percentage of the task is completed and to give the application 
+            program a chance to check and process GUI activities (for example,
+            via fl_check_forms()). The 1st parameter to the function is the
+            image (pointer to FL_IMAGE) currently being worked on and the
+            second parameter is a short message, indicating the name of the
+            task, such as "Reading JPG" etc. Two fields in the image structure
+            can be used to obtain progress information.
+            ptr_flimage.contents.total indicates the total amount of work to
+            be done in some arbitrary units (usually number of rows in the
+            image). ptr_flimage.contents.completed indicates how much of the
+            task has been completed. The percentage of how much is completed is
+            then simply the ratio of ptr_flimage.contents.completed and
+            ptr_flimage.contents.total, multiplied by 100. At the begin of a
+            task ptr_flimage.contents.completed is set to a value less or equal
+            1, and at the end of the task, ptr_flimage.contents.completed is
+            set to ptr_flimage.contents.total. A special value of -1 for 
+            ptr_flimage.contents.completed may be used to indicate a task of
+            unknown length.
         error_message : function, no return
-            function(pointer to FL_IMAGE, str)
+            name referring to function(ptr_flimage, [str]message)
+            It is a function that is called when an error (of all severities)
+            has occurred inside the library. It is recommanded that the
+            application provide a means to show the messages to the user by
+            supplying this function. The 1st parameter is a pointer to the
+            image that is being worked on, and the second parameter is a brief
+            message, such as "memory allocation failed" etc. A convenience
+            function, flflimage.flimage_error(), is provided to call the error
+            message handler.
         display : function, returned value
-            function(pointer to FL_IMAGE, long_pos) -> int
+            function(ptr_flimage, long_pos) -> int
         rgbfile : str
-            *todo*
+            It should be set to the full path to the color name database
+            ('rgb.txt') if your system has it in non-standard locations. On
+            some systems this file is /usr/share/X11/rgb.txt, in other ones
+            is '/usr/lib/X11/rgb.txt' (which is the default if it is not set).
         do_not_clear : int
-            *todo*
+            By default, flflimage.flimage_display() clears the window before
+            displaying the image. Set this member to 1 to disable window
+            clearing.
         xdisplay : pointer to void
             *todo*
         max_frames : int
-            *todo*
+            It specifies the maximum number of frames to read by
+            flflimage.flimage_load(). The default maximum is 30 frames.
         delay : int
-            *todo*
+            It specifies the delay (in milliseconds) between successive
+            frames. It is used by the flflimage.flimage_display() routine.
         no_auto_extension : int
-            *todo*
+            By default, flflimage.flimage_dump() changes the filename
+            extension to reflect the format. Set this member to 1 to
+            disable extension substitution.
         report_frequency : int
             *todo*
         double_buffer : int
-            *todo*
+            If set, all image display will by default double-buffered.
+            Double-buffering an image is very expensive (in terms of both
+            resource and speed) as the backbuffer is simulated using a pixmap.
+            If there are no annotations, double-buffering an image does not
+            really improve anything. It is far better to turn double-buffering
+            on and off on a image-by-image basis using
+            ptr_flimage.contents.double_buffer
         trailblazer : long_pos
             internal use
         header_info : int
@@ -7471,33 +7536,87 @@ class flimage_(cty.Structure):
     Attributes
     ----------
         type : int
-            image type
+            image type. It specifies the current image type and storage
+            (1bit, 24bit etc. See next section for details). The image
+            type also indicates implicitly which of the pixel fields
+            should be used.
         w : int
             image width
         h : int
             image height
         app_data : pointer to void
-            for application at setup time
+            for application at setup time. It is initialized at image
+            creation. Its value can be set by the application prior to
+            any existence of image. Once set, all images created thereafter
+            will have the same value for this field. See Section later.
+            XForms does not modify or reference it once it is initialized.
         u_vdata : pointer to void
-            for application
+            can be used for application. It is always initialize to None.
+            XForms does not reference or modify it.
         u_ldata : long
-            for application
+            can be used for application. It is always initialize to None.
+            XForms does not reference or modify it.
         red : pointer to pointer to ubyte?
-            *todo*
+            This is one of the 3 color components of a 24 bit image, each
+            of which is a 2-dimensional array. The 2D array is arranged so
+            the image runs from left to right and top to bottom. E.g., the
+            3rd pixel on the 10th row is composed of the following RGB
+            elements: (red[9][2],green[9][2],blue[9][2]). These fields are
+            meaningful only if the image type is FL_IMAGE_RGB.
         green : pointer to pointer to ubyte?
-            *todo*
+            This is one of the 3 color components of a 24 bit image, each
+            of which is a 2-dimensional array. The 2D array is arranged so
+            the image runs from left to right and top to bottom. E.g., the
+            3rd pixel on the 10th row is composed of the following RGB
+            elements: (red[9][2],green[9][2],blue[9][2]). These fields are
+            meaningful only if the image type is FL_IMAGE_RGB.
         blue : pointer to pointer to ubyte?
-            *todo*
+            This is one of the 3 color components of a 24 bit image, each
+            of which is a 2-dimensional array. The 2D array is arranged so
+            the image runs from left to right and top to bottom. E.g., the
+            3rd pixel on the 10th row is composed of the following RGB
+            elements: (red[9][2],green[9][2],blue[9][2]). These fields are
+            meaningful only if the image type is FL_IMAGE_RGB.
         alpha : pointer to pointer to ubyte?
-            *todo*
-        rgba : pointer to pointer to ubyte? (array 4 members)
+            Although it is always allocated for a 24bit image, alpha is
+            currently not used by XForms.
+        rgba : pointer to pointer to ubyte? (array of 4 members)
             alias *todo*
         ci : pointer to pointer to ushort?
-            *todo*
+            pixel values for a color index image (image type FL_IMAGE_CI).
+            It is also a 2-dimensional array arranged in the same way as
+            the fields red, green and blue, i.e., the image runs from left
+            to right, top to bottom. E.g., ci[3][9] should be used to obtain
+            the 10th pixel on the 4th row. To obtain the RGB elements of a
+            pixel, the pixel value should be used as an index into a lookup
+            table specified by the fields red_lut, green_lut and blue_lut.
+            Although ci can hold an unsigned short, only the lower
+            FL_LUTBITS (12) bits are supported, i.e., the color index should
+            not be bigger than 4095.
         gray : pointer to pointer to ushort?
-            *todo*
+            A 2-dimensional array that holds the pixels of a gray image.
+            The pixel values are interpreted as intensities in a linear
+            fashion. Two types of gray images are supported, 8 bit
+            (FL_IMAGE_GRAY) and 16 bit (FL_IMAGE_GRAY16). For 16 bit gray
+            image, the actual depths of the image is indicated by member
+            gray_maxval. E.g., if gray_maxval is 4095, it is assumed that
+            the actual pixel value ranges from 0 to 4095, i.e., the gray
+            scale image is 12 bit. For 8 bit grayscale image, gray_maxval
+            is not used. This means that the type FL_IMAGE_GRAY is always
+            assumed to be 8 bit, the loading and creating routine should
+            take care to properly scale data that are less than 8 bit.
         packed : pointer to pointer to FL_PACKED4
-            *todo*
+            A 2-dimensional array that holds a 24 bit/32 bit image in a
+            packed format. Each element of the 2D array is an int_pos (for
+            now) that holds the RGB, one byte each, in the lower 24 bits of
+            the integer. The topmost byte is not used. The function FL_PACK(r,
+            g, b) should be used to pack the triplet (r, g, b) into a pixel
+            and FL_UNPACK(p, r, g, b) should be used to unpack a pixel. To
+            obtain individual primary colors, the macros FL_GETR(p),
+            FL_GETG(p) and FL_GETB(p) are available. Use of said functions
+            to pack and unpack are strongly recommended. It will isolate the
+            application program from future changes of the primary color
+            type (for example, 16-bit resolution for R,G and B).
         red16 : pointer to pointer to ushort?
             not currently supported
         green16 : pointer to pointer to ushort?
@@ -7509,23 +7628,31 @@ class flimage_(cty.Structure):
         ci8 : pointer to pointer to ubyte?
             not currently supported
         red_lut : pointer to int
-            red lookup tables
+            red lookup tables for a color index image. Each of the table
+            is a 1D array of length image->map len.
         green_lut : pointer to int
-            green lookup tables
+            green lookup tables for a color index image. Each of the table
+            is a 1D array of length image->map len. 
         blue_lut : pointer to int
-            blue lookup tables
+            blue lookup tables for a color index image. Each of the table
+            is a 1D array of length image->map len. 
         alpha_lut : pointer to int
-            alpha lookup tables
+            alpha lookup tables. Although alpha lut is always allocated for
+            a color index image, it is currently not used by XForms.
         lut : pointer to int (array 4 members)
             alias
         map_len : int
-            lut length
+            The length of the colormap (lookup table).
         colors : int
             actual colors used in displaying
         gray_maxval : int
-            indicate the range of gray16
+            indicates the range of gray16. It is meaningful only if the image
+            type is FL_IMAGE_GRAY16. It specifies the actual dynamic range of
+            the gray intensities. Its value should be set by the image loading
+            routines if the gray image depth is more than 8 bits.
         ci_maxval : int
-            max value of ci. not used, use map_len
+            max value of ci. not used, use map_len. It is by default 256,
+            indicating the maximum value of the color index.
         rgb_maxval : int
             max value for rgb16 image
         level : int
@@ -7537,19 +7664,28 @@ class flimage_(cty.Structure):
         wlut_len : int
             *todo*
         app_background : int
-            transparent color, in RGB
+            A packed RGB value indicating the preferred color to use for the
+            background of an image (also known as transparent color). It is
+            initialized to an illegal value. Since there is no portable way
+            to obtain the window background the application has to set this
+            field if transparency is to be achieved. In future versions of
+            image support, other means of doing transparency will be explored
+            and implemented.
         comments : str
-            *todo*
+            it is typically set by the loading routines to convey some
+            information about the image. The application is free to choose how
+            to display the comment, which may have embedded newlines in it.
         comments_len : int
-            *todo*
+            length of comments
         available_type : int
             *todo*
         next : pointer to flimage_
-            *todo*
+            This is a link to the next image. This is how flimage_load()
+            chains multiple image together.
         sx : int
-             display subimage origin (horizontal position)
+             display subimage horizontal position
         sy : int
-            display subimage origin (vertical position)
+            display subimage vertical position
         sw : int
             display subimage width
         sh : int),
@@ -7559,11 +7695,18 @@ class flimage_(cty.Structure):
         wy : int
             display location relative to win (vertical position)
         modified : int
-            *todo*
+            If true , informs XForms to invalidate the buffered image.
+            It is to be used if you need to modify the image, either the
+             pixels or the lookup tables.
         display : function, returned value
             function(pointer to flimage_, FL_WINDOW) -> int
+            A function you can use to display an image. The image
+            loading routine sets this function.
         double_buffer : int
-            *todo*
+            If true, the display function will double-buffer the image
+            by using a pixmap. For typical image display it is not necessary
+            to enable double-buffering as it is very expensive (memory and
+            speed). Double-buffering may be useful in image editing.
         sxd : int
             *todo*
         syd : int
@@ -7593,7 +7736,7 @@ class flimage_(cty.Structure):
         marker : pointer to FLIMAGE_MARKER
             *todo*
         nmarkers : int
-            *todo*
+            number of markers
         max_markers : int
             *todo*
         dont_display_marker : int
@@ -7704,13 +7847,15 @@ class flimage_(cty.Structure):
         image_io : pointer to void
             *todo*
         io_spec : pointer to void
-            io operation helper
+            io operation helper. It is meant for the reading/writing
+            routine to place format specific state information that
+            otherwise needs to be static or global.
         spec_size : int
-            *todo*
+            It should be set to the number of bytes io_spec contains.
         depth : int
             the depth we actually use
         vclass : int
-            *todo*
+            visual class
         visual : pointer to void
             *todo*
         xcolormap : long_pos,
@@ -7719,8 +7864,8 @@ class flimage_(cty.Structure):
             *todo*
         ximage : pointer to void
             *todo*
-        win : FL_WINDOW
-            *todo*
+        win : long_pos
+            window *todo*
         gc : pointer to void
             *todo*
         sdepth : int
@@ -7732,7 +7877,7 @@ class flimage_(cty.Structure):
         extra_io_info : pointer to void
             *todo*
         pixmap : long_pos
-            *todo*
+            The backbuffer pixmap if double-buffered.
         pixmap_w : int
             *todo*
         pixmap_h : int
@@ -7960,9 +8105,9 @@ class FLIMAGE_JPEG_OPTION(cty.Structure):
     Attributes
     ----------
       quality : int
-        *todo*
+        quality for jpeg to be set
       smoothing : int
-        *todo*
+        smoothing for jpeg to be set
     """
     pass
 FLIMAGE_JPEG_OPTION.__slots__ = ['quality', 'smoothing',]
@@ -7980,10 +8125,12 @@ class admitted_values_for_READWRITEFLIMAGE(object):
 
     Admitted values
     ---------------
-        FLIMAGE_WRITABLE = FL_WRITE
-            *todo*
+        FLIMAGE_WRITABLE
+            flag if image can be written
         FLIMAGE_READABLE
-            *todo*
+            flag if image can be read
+        FLIMAGE_WRITABLE|FLIMAGE_READABLE
+            flag if image can be read and written
     """
     pass
 
@@ -7994,15 +8141,23 @@ class FLIMAGE_FORMAT_INFO(cty.Structure):
     Attributes
     ----------
       formal_name : str
-        *todo*
+        the formal name of image format, e.g.
+        "Tag Image File Format"
       short_name : str
-        *todo*
+        an abbreviated name for the image format,
+        e.g. "tiff"
       extension : str
-        *todo*
+        file extension, e.g. "tif"
       type : int
-        *todo*
+        the image type, generally one of the supported image
+        types (e.g. FL_IMAGE_RGB), but it does not have to.
+        For image file formats that are capable of holding more
+        than one type of images, this field can be set to indicate
+        this by OR-ing the supported types together (e.g.,
+        FL_IMAGE_RGB|FL_IMAGE_GRAY).
       read_write : int
-        *todo*
+        if image can be written or read. Values: FLIMAGE_WRITABLE,
+        FLIMAGE_READABLE or FLIMAGE_WRITABLE|FLIMAGE_READABLE
       annotation : int
         *todo*
     """
@@ -8080,69 +8235,70 @@ class XWindowAttributes(cty.Structure):
     Attributes
     ----------
         x : int
-            *todo*
+            horizontal location of window
         y : int
-            *todo*
+            vertical location of window
         width : int
-            *todo*
+            width of window
         height : int
-            *todo*
+            height of window
         border_width : int
-            *todo*
+            border width of window
         depth : int
-            *todo*
+            depth of window
         visual : pointer to Visual
-            *todo*
+            the associated visual structure
         root : long_pos
-            Window
+            root of screen containing window
         c_class : int
-            *todo*
+            C++ InputOutput, InputOnly
         bit_gravity : int
-            *todo*
+            one of bit gravity values
         win_gravity : int
-            *todo*
+            one of the window gravity values
         backing_store : int
-            *todo*
+            one of the window gravity values
         backing_planes : long_pos
-            *todo*
+            planes to be preserved if possible
         backing_pixel : long_pos
-            *todo*
+            value to be used when restoring planes
         save_under : int
-            *todo*
+            boolean, should bits under be saved?
         colormap : long_pos
-            Colormap
+            color map to be associated with window
         map_installed : int
-            *todo*
+            boolean, is color map currently installed
         map_state : int
-            *todo*
+            IsUnmapped, IsUnviewable, IsViewable
         all_event_masks : long
-            *todo*
+            set of events all people have interest in
         your_event_mask : long
-            *todo*
+            my event mask
         do_not_propagate_mask : long
-            *todo*
+            set of events that should not propagate
         override_redirect : int
-            *todo*
+            boolean value for override-redirect
         screen : pointer to Screen
-            *todo*
+            back pointer to correct screen
     """
     pass
 
 
 # /usr/include/X11/Xlib.h 176
 class XExtCodes(cty.Structure):
-    """X11 XExtCodes class
+    """X11 XExtCodes class. It contains structures used by the
+    extension mechanism.
 
     Attributes
     ----------
         extension : int
-            *todo*
+            extension number
         major_opcode : int
-            *todo*
+            major op-code assigned by server
         first_event : int
-            *todo*
+            first event number for the extension
         first_error : int
-            *todo*
+            first error number for the extension
     """
     pass
 XExtCodes.__slots__ = ['extension', 'major_opcode', 'first_event', \
@@ -8176,54 +8332,55 @@ XPixmapFormatValues._fields_ = [
 
 # /usr/include/X11/Xlib.h 218
 class XGCValues(cty.Structure):
-    """X11 XGCValues class
+    """X11 XGCValues class. It is a Data structure for
+    setting graphics context.
 
     Attributes
     ----------
         function : int
-            *todo*
-        plane_mask : long_pos
-            *todo*
+            logical operation
+       plane_mask : long_pos
+            plane mask
         foreground : long_pos
-            *todo*
+            foreground pixel
         background : long_pos
-            *todo*
+            background pixel
         line_width : int
-            *todo*
+            line width
         line_style : int
-            *todo*
+            LineSolid, LineOnOffDash, LineDoubleDash
         cap_style : int
-            *todo*
+            CapNotLast, CapButt, CapRound, CapProjecting
         join_style : int
-            *todo*
+            JoinMiter, JoinRound, JoinBevel
         fill_style : int
-            *todo*
+            FillSolid, FillTiled, FillStippled, FillOpaeueStippled
         fill_rule : int
-            *todo*
+            EvenOddRule, WindingRule
         arc_mode : int
-            *todo*
+            ArcChord, ArcPieSlice
         tile : long_pos
-            Pixmap
+            tile pixmap for tiling operations
         stipple : long_pos
-            Pixmap
+            stipple 1 plane pixmap for stipping
         ts_x_origin : int
-            *todo*
+            horizontal offset for tile or stipple operations
         ts_y_origin : int
-            *todo*
+            vertical offset for tile or stipple operations
         font : long_pos
-            Font
+            default text font for text operations
         subwindow_mode : int
-            *todo*
+            ClipByChildren, IncludeInferiors
         graphics_exposures : int
-            *todo*
+            boolean, should exposures be generated
         clip_x_origin : int
-            *todo*
+            horizontal origin for clipping
         clip_y_origin : int
-            *todo*
+            vertical origin for clipping
         clip_mask : long_pos
-            Pixmap
+            bitmap clipping; other calls for rects
         dash_offset : int
-            *todo*
+            patterned/dashed line information
         dashes : char
             *todo*
     """
@@ -8262,16 +8419,16 @@ XGCValues._fields_ = [
 
 # /usr/include/X11/Xlib.h 258
 class Depth(cty.Structure):
-    """X11 Depth class
+    """X11 Depth class. It contains information for each possible depth.
 
     Attributes
     ----------
         depth : int
-            *todo*
+            this depth (Z) of the depth
         nvisuals : int
-            *todo*
+            number of Visual types at this depth
         visuals : pointer to Visual
-            *todo*
+            list of visuals possible at this depth
     """
     pass
 Depth.__slots__ = ['depth', 'nvisuals', 'visuals',]
@@ -8287,45 +8444,45 @@ class Screen(cty.Structure):
     Attributes
     ----------
         ext_data : pointer to XExtData
-            *todo*
+            hook for extension to hang data
         display : pointer to _XDisplay
-            *todo*
+            back pointer to display structure
         root : long_pos
-            Window
+            Root window id.
         width : int
-            *todo*
+            width of screen
         height : int
-            *todo*
+            height of screen
         mwidth : int
-            *todo*
+            width of screen in millimeters
         mheight : int
-            *todo*
+            height of screen in millimeters
         ndepths : int
-            *todo*
+            number of depths possible
         depths : pointer to Depth
-            *todo*
+            list of allowable depths on the screen
         root_depth : int
-            *todo*
+            bits per pixel
         root_visual : pointer to Visual
-            *todo*
+            root visual
         default_gc : GC
-            *todo*
+            GC for the root visual
         cmap : long_pos
-            Colormap
+            default color map
         white_pixel : long_pos
-            *todo*
+            White pixel values
         black_pixel : long_pos
-            *todo*
+            Black pixel values
         max_maps : int
-            *todo*
+            max color maps
         min_maps : int
-            *todo*
+            min color maps
         backing_store : int
-            *todo*
+            Never, WhenMapped, Always
         save_unders : int
             *todo*
         root_input_mask : long
-            *todo*
+            initial root input mask
     """
     pass
 Screen.__slots__ = ['ext_data', 'display', 'root', 'width', 'height', \
@@ -8358,18 +8515,19 @@ Screen._fields_ = [
 
 # /usr/include/X11/Xlib.h 296
 class ScreenFormat(cty.Structure):
-    """X11 ScreenFormat class
+    """X11 ScreenFormat class. it describes ZFormat data the screen
+    will understand.
 
     Attributes
     ----------
         ext_data : pointer to XExtData
-            *todo*
+            hook for extension to hang data
         depth : int
-            *todo*
+            depth of this image format
         bits_per_pixel : int
-            *todo*
+            bits/pixel at this depth
         scanline_pad : int
-            *todo*
+            scanline must padded to this multiple
     """
 ScreenFormat.__slots__ = ['ext_data', 'depth', 'bits_per_pixel', \
         'scanline_pad',]
@@ -8414,19 +8572,19 @@ XWindowAttributes._fields_ = [
 
 # /usr/include/X11/Xlib.h 356
 class XHostAddress(cty.Structure):
-    """X11 XHostAddress class
+    """X11 XHostAddress class. it is data structure for host setting.
 
     Attributes
     ----------
         family : int
-            *todo*
+            for example FamilyInternet
         length : int
-            *todo*
+            length of address, in bytes
         address : str
-            *todo*
+            pointer to where to find the bytes
     """
     pass
-XHostAddress.__slots__ = ['family', 'length', 'address', ]
+XHostAddress.__slots__ = ['family', 'length', 'address',]
 XHostAddress._fields_ = [
         ('family', cty.c_int),
         ('length', cty.c_int),
@@ -8435,18 +8593,19 @@ XHostAddress._fields_ = [
 
 # /usr/include/X11/Xlib.h 366
 class XServerInterpretedAddress(cty.Structure):
-    """X11 XServerInterpretedAddress class
+    """X11 XServerInterpretedAddress class. It is data structure for
+    ServerFamilyInterpreted addresses in host routines.
 
     Attributes
     ----------
         typelength : int
-            *todo*
+            length of type string, in bytes
         valuelength : int
-            *todo*
+            length of value string, in bytes
         type : str
-            *todo*
+            pointer to where to find the type string
         value : str
-            *todo*
+            pointer to where to find the address
     """
     pass
 XServerInterpretedAddress.__slots__ = ['typelength', 'valuelength', 'type', \
@@ -8460,44 +8619,45 @@ XServerInterpretedAddress._fields_ = [
 
 # /usr/include/X11/Xlib.h 371
 class _XImage(cty.Structure):
-    """X11 XImage class
+    """X11 XImage class. it is data structure for "image" data,
+    used by image manipulation routines.
 
     Attributes
     ----------
-      width : int
-        *todo*
-      height : int
-        *todo*
-      xoffset : int
-        *todo*
-      format : int
-        *todo*
-      data : str
-        *todo*
-      byte_order : int
-        *todo*
-      bitmap_unit : int
-        *todo*
-      bitmap_bit_order : int
-        *todo*
-      bitmap_pad : int
-        *todo*
-      depth : int
-        *todo*
-      bytes_per_line : int
-        *todo*
-      bits_per_pixel : int
-        *todo*
-      red_mask : long_pos
-        *todo*
-      green_mask : long_pos
-        *todo*
-      blue_mask : long_pos
-        *todo*
-      obdata : str
-        *todo*
-      f : funcs class instance
-        *todo*
+        width : int
+            width of the image
+        height : int
+            height of the image
+        xoffset : int
+            number of pixels offset in X direction
+        format : int
+            XYBitmap, XYPixmap, ZPixmap
+        data : str
+            pointer to image data
+        byte_order : int
+            data byte order, LSBFirst, MSBFirst
+        bitmap_unit : int
+            quant. of scanline 8, 16, 32
+        bitmap_bit_order : int
+            LSBFirst, MSBFirst
+        bitmap_pad : int
+            8, 16, 32 either XY or ZPixmap
+        depth : int
+            depth of image
+        bytes_per_line : int
+            accelerator to next line
+        bits_per_pixel : int
+            bits per pixel (ZPixmap)
+        red_mask : long_pos
+            red bits in z arrangement
+        green_mask : long_pos
+            green bits in z arrangement
+        blue_mask : long_pos
+            blue bits in z arrangement
+        obdata : str
+            hook for the object routines to hang on
+        f : funcs class instance
+            image manipulation routines
     """
     pass
 
@@ -8510,8 +8670,9 @@ class funcs(cty.Structure):
     ----------
         create_image : function, returned value
             function(pointer to _XDisplay, pointer to Visual,
-            int_pos, int, int, str, int_pos, int_pos, int,
-            int) -> pointer to _XImage
+            [int_pos]depth, [int]format, [int]offset, [str]data,
+            [int_pos]width, [int_pos]height, [int]bitmap_pad,
+            [int]bytes_per_line) -> pointer to _XImage
         destroy_image : function, returned value
             function(pointer to _XImage) -> int
         get_pixel : function, returned value
@@ -8574,7 +8735,37 @@ FLIMAGE_Description = cty.CFUNCTYPE(cty.c_int, cty.POINTER(FL_IMAGE))
 FLIMAGE_Read_Pixels = cty.CFUNCTYPE(cty.c_int, cty.POINTER(FL_IMAGE))
 FLIMAGE_Write_Image = cty.CFUNCTYPE(cty.c_int, cty.POINTER(FL_IMAGE))
 
-cfunc_none_flimagemarker = cty.CFUNCTYPE(None, cty.POINTER(FLIMAGE_MARKER))
+
+#fl_current_form = (cty.POINTER(xfdata.FL_FORM)).in_dll( \
+#                   library.load_so_libforms(), 'fl_current_form')
+fl_current_form = cty.POINTER(FL_FORM)
+#fl_display = (cty.POINTER(xfdata.Display)).in_dll(library.load_so_libforms(),
+#              'fl_display')
+fl_display = cty.POINTER(Display)
+#fl_screen = (cty.c_int).in_dll(library.load_so_libforms(), 'fl_screen')
+fl_screen = cty.c_int
+# root window
+#fl_root = (xfdata.Window).in_dll(library.load_so_libforms(), 'fl_root')
+fl_root = Window
+# virtual root window
+#fl_vroot = (xfdata.Window).in_dll(library.load_so_libforms(), 'fl_vroot')
+fl_vroot = Window
+# screen dimension in pixels
+#fl_scrh = (cty.c_int).in_dll(library.load_so_libforms(), 'fl_scrh')
+fl_scrh = cty.c_int
+#fl_scrw = (cty.c_int).in_dll(library.load_so_libforms(), 'fl_scrw')
+fl_scrw = cty.c_int
+#fl_vmode = (cty.c_int).in_dll(library.load_so_libforms(), 'fl_vmode')
+fl_vmode = cty.c_int
+
+#fl_state = (cty.POINTER(xfdata.FL_State)).in_dll(library.load_so_libforms(),
+#            'fl_state')
+fl_state = (FL_State * 6)()  # fl_state is an array of 6 FL_State
+
+#fl_ul_magic_char = (xfdata.STRING).in_dll(library.load_so_libforms(),
+#                    'fl_state')
+fl_ul_magic_char = STRING
+
 
 
 # here it is some documentation for some general concepts who do not belong
@@ -8688,4 +8879,5 @@ special_sequences_for_entry_text_S = """ \
     parts, the first one (before %S) being drawn flushed left and the second
     part flushed right. Note that using this special sequence does not
     automatically sets a shortcut key, this still has to be done using %s."""
+
 

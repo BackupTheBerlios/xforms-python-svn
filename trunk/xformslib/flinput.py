@@ -4,7 +4,7 @@
 """ xforms-python's functions to manage input flobjects.
 """
 
-#    Copyright (C) 2009, 2010  Luca Lazzaroni "LukenShiro"
+#    Copyright (C) 2009, 2010, 2011  Luca Lazzaroni "LukenShiro"
 #    e-mail: <lukenshiro@ngi.it>
 #
 #    This program is free software: you can redistribute it and/or modify
@@ -1091,7 +1091,8 @@ def fl_set_input_filter(ptr_flobject, pyfn_InputValidator):
         ptr_flobject : pointer to xfdata.FL_OBJECT
             input flobject
         pyfn_InputValidator : python function, returned value
-            name referring to function(ptr_flobject, oldstr, c, int) -> oldfilt
+            name referring to function(ptr_flobject, [str]oldstr, [str]c,
+            [int]num) -> [int]oldfilt
             function to set validator. oldstr is the string in the input
             field before the newly typed character c was added to form the
             new string cur. If the new character is not an acceptable

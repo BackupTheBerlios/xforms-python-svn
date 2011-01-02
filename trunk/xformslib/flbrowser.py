@@ -4,7 +4,7 @@
 """ xforms-python's functions to manage browser flobjects.
 """
 
-#    Copyright (C) 2009, 2010  Luca Lazzaroni "LukenShiro"
+#    Copyright (C) 2009, 2010, 2011  Luca Lazzaroni "LukenShiro"
 #    e-mail:  <lukenshiro@ngi.it>
 #
 #    This program is free software: you can redistribute it and/or modify
@@ -1111,7 +1111,7 @@ def fl_set_browser_dblclick_callback(ptr_flobject, pyfn_CallbackPtr, numdata):
         ptr_flobject : pointer to xfdata.FL_OBJECT
             browser flobject
         pyfn_CallbackPtr : python function callback, no return
-            name referring to function(ptr_flobject, longdata)
+            name referring to function(ptr_flobject, [long]numdata)
         numdata : long
             user data to be passed to function
 
@@ -1508,7 +1508,8 @@ def fl_set_browser_hscroll_callback(ptr_flobject, pyfn_BrowserScrollCb, vdata):
         ptr_flobject : pointer to xfdata.FL_OBJECT
             browser flobject
         pyfn_BrowserScrollCb : python function callback, no return
-            name referring to function(ptr_flobject, num, vdata)
+            name referring to function(ptr_flobject, [int]num,
+            [pointer to void]vdata)
         vdata : any type (e.g. 'None', int, str, etc..)
             user data to be passed to function; callback has to take care
             of type check

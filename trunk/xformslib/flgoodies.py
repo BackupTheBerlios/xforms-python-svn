@@ -4,7 +4,7 @@
 """ xforms-python's functions to manage goodies flobjects.
 """
 
-#    Copyright (C) 2009, 2010  Luca Lazzaroni "LukenShiro"
+#    Copyright (C) 2009, 2010, 2011  Luca Lazzaroni "LukenShiro"
 #    e-mail: <lukenshiro@ngi.it>
 #
 #    This program is free software: you can redistribute it and/or modify
@@ -1731,7 +1731,8 @@ def fl_set_fselector_callback(pyfn_FSCB, vdata):
     Parameters
     ----------
         pyfn_FSCB : python function callback, returning (unused) value
-            name referring to function(string, vdata) -> num
+            name referring to function([str]text, [pointer to void]vdata)
+            -> [int]num
         vdata : any type (e.g. 'None', int, str, etc..)
             user data to be passed to function; callback has to take care
             of type check.
@@ -1946,10 +1947,10 @@ def fl_add_fselector_appbutton(label, pyfn_fselappbtn, vdata):
         label : str
             text of label
         pyfn_fselappbtn : python function callback, no return
-            name referring to function(vdata)
+            name referring to function([pointer to void]vdata)
         vdata : any type (e.g. 'None', int, str, etc..)
-            user data to be passed to function; callback has to take care
-            of type check
+            user data to be passed to function; callback has to take
+            care of type check
 
     Examples
     --------
@@ -1962,16 +1963,16 @@ def fl_add_fselector_appbutton(label, pyfn_fselappbtn, vdata):
         Status: Tested + Doc + NoDemo = OK
 
     """
-    #cfunc_none_voidp = cty.CFUNCTYPE(None, cty.c_void_p)
+    cfunc_none_voidp = cty.CFUNCTYPE(None, cty.c_void_p)
     _fl_add_fselector_appbutton = library.cfuncproto(
         library.load_so_libforms(), "fl_add_fselector_appbutton",
-        None, [xfdata.STRING, xfdata.cfunc_none_voidp, cty.c_void_p],
+        None, [xfdata.STRING, cfunc_none_voidp, cty.c_void_p],
         """void fl_add_fselector_appbutton(const char * p1,
            const char * p2, void * p3)""")
     library.check_if_initialized()
     s_label = library.convert_to_stringc(label)
     library.verify_function_type(pyfn_fselappbtn)
-    cfn_fselappbtn = xfdata.cfunc_none_voidp(pyfn_fselappbtn)
+    cfn_fselappbtn = cfunc_none_voidp(pyfn_fselappbtn)
     ptr_vdata = cty.cast(vdata, cty.c_void_p)
     library.keep_cfunc_refs(cfn_fselappbtn, pyfn_fselappbtn)
     library.keep_elem_refs(label, vdata, s_label, ptr_vdata)

@@ -4,7 +4,7 @@
 """ xforms-python's functions to manage xyplot flobjects.
 """
 
-#    Copyright (C) 2009, 2010  Luca Lazzaroni "LukenShiro"
+#    Copyright (C) 2009, 2010, 2011  Luca Lazzaroni "LukenShiro"
 #    e-mail: <lukenshiro@ngi.it>
 #
 #    This program is free software: you can redistribute it and/or modify
@@ -2487,11 +2487,11 @@ def fl_set_xyplot_symbol(ptr_flobject, ovlnum, pyfn_XyPlotSymbol):
             all)
         pyfn_XyPlotSymbol : python function, no return
             It will be called to draw the symbols on the data point.
-            Name referring to function(ptr_flobject, ovlnum, ptr_flpoint,
-            numpoints, width, height). The parameters passed to this function
-            are the flobject pointer, the overlay id, the center of the symbol
-            (p.x, p.y), the number of data points and the preferred symbol
-            size (width, height).
+            Name referring to function(ptr_flobject, [int]ovlnum, ptr_flpoint,
+            [int]numpoints, [int]width, [int]height).
+            The parameters passed to this function are the flobject pointer,
+            the overlay id, the center of the symbol (p.x, p.y), the number of
+            data points and the preferred symbol size (width, height).
 
     Returns
     -------

@@ -37,36 +37,6 @@ from xformslib import flbasic
 from xformslib import flcanvas
 
 
-#fl_current_form = (cty.POINTER(xfdata.FL_FORM)).in_dll( \
-#                   library.load_so_libforms(), 'fl_current_form')
-fl_current_form = cty.POINTER(xfdata.FL_FORM)
-#fl_display = (cty.POINTER(xfdata.Display)).in_dll(library.load_so_libforms(),
-#              'fl_display')
-fl_display = cty.POINTER(xfdata.Display)
-#fl_screen = (cty.c_int).in_dll(library.load_so_libforms(), 'fl_screen')
-fl_screen = cty.c_int
-# root window
-fl_root = (xfdata.Window).in_dll(library.load_so_libforms(), 'fl_root')
-fl_root = xfdata.Window
-# virtual root window
-#fl_vroot = (xfdata.Window).in_dll(library.load_so_libforms(), 'fl_vroot')
-fl_vroot = xfdata.Window
-# screen dimension in pixels
-#fl_scrh = (cty.c_int).in_dll(library.load_so_libforms(), 'fl_scrh')
-fl_scrh = cty.c_int
-#fl_scrw = (cty.c_int).in_dll(library.load_so_libforms(), 'fl_scrw')
-fl_scrw = cty.c_int
-#fl_vmode = (cty.c_int).in_dll(library.load_so_libforms(), 'fl_vmode')
-fl_vmode = cty.c_int
-
-#fl_state = (cty.POINTER(xfdata.FL_State)).in_dll(library.load_so_libforms(),
-#            'fl_state')
-fl_state = (xfdata.FL_State * 6)()  # fl_state is an array of 6 FL_State
-
-#fl_ul_magic_char = (xfdata.STRING).in_dll(library.load_so_libforms(),
-#                    'fl_state')
-fl_ul_magic_char = xfdata.STRING
-
 
 ###########################
 # forms.h (XBasic.h)
@@ -91,16 +61,16 @@ def FL_is_rgb(visual):
 
 # Current version only runs in single visual mode
 def fl_get_vclass():
-    return fl_vmode.value       # fl_vmode
+    return xfdata.fl_vmode.value       # xfdata.fl_vmode
 
 
 def fl_get_form_vclass(a):
-    return fl_vmode.value       # fl_vmode
+    return xfdata.fl_vmode.value       # xfdata.fl_vmode
 
 
 def fl_get_gc():
-    return fl_state[fl_vmode.value].gc[0]
-    #return fl_state[fl_vmode].gc[0]
+    return xfdata.fl_state[xfdata.fl_vmode.value].gc[0]
+    #return xfdata.fl_state[xfdata.fl_vmode].gc[0]
 
 
 def fl_mode_capable(mode, warn):
@@ -147,13 +117,13 @@ def fl_mode_capable(mode, warn):
 
 
 def fl_default_win():
-    return fl_state[fl_vmode.value].trailblazer
-    #return fl_state[fl_vmode].trailblazer
+    return xfdata.fl_state[xfdata.fl_vmode.value].trailblazer
+    #return xfdata.fl_state[xfdata.fl_vmode].trailblazer
 
 
 def fl_default_window():
-    return fl_state[fl_vmode.value].trailblazer
-    #return fl_state[fl_vmode].trailblazer
+    return xfdata.fl_state[xfdata.fl_vmode.value].trailblazer
+    #return xfdata.fl_state[xfdata.fl_vmode].trailblazer
 
 
 # Some basic drawing routines
@@ -2087,7 +2057,7 @@ def fl_set_foreground(gc, colr):
 
     Examples
     --------
-        >>> gc = fl_state[fl_get_vclass()].gc[0] ????
+        >>> gc = xfdata.fl_state[fl_get_vclass()].gc[0] ????
         >>> fl_set_foreground(gc, xfdata.FL_LAWNGREEN)
 
     Notes
@@ -2123,7 +2093,7 @@ def fl_set_background(gc, colr):
 
     Examples
     --------
-        >>> gc = fl_state[fl_get_vclass()].gc[0] ????
+        >>> gc = xfdata.fl_state[fl_get_vclass()].gc[0] ????
         >>> fl_set_foreground(gc, xfdata.FL_HONEYDEW)
 
     Notes
@@ -3400,20 +3370,20 @@ def fl_get_wingeometry(win):
 
 def fl_get_display():
     library.check_if_initialized()
-    return fl_display
+    return xfdata.fl_display
 
 
 def FL_FormDisplay(ptr_flform):
     library.check_if_initialized()
     library.verify_flformptr_type(ptr_flform)
-    return fl_display
+    return xfdata.fl_display
 
 
 # undocumented data, maybe dismissed? --LK
 def FL_ObjectDisplay(ptr_flobject):
     library.check_if_initialized()
     library.verify_flobjectptr_type(ptr_flobject)
-    return fl_display
+    return xfdata.fl_display
 
 
 def FL_IS_CANVAS(ptr_flobject):

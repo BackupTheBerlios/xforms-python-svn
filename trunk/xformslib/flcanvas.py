@@ -4,7 +4,7 @@
 """ xforms-python's functions to manage canvas flobjects.
 """
 
-#    Copyright (C) 2009, 2010  Luca Lazzaroni "LukenShiro"
+#    Copyright (C) 2009, 2010, 2011  Luca Lazzaroni "LukenShiro"
 #    e-mail: <lukenshiro@ngi.it>
 #
 #    This program is free software: you can redistribute it and/or modify
@@ -632,11 +632,11 @@ def fl_modify_canvas_prop(ptr_flobject, pyfn_initModifyCanvasProp,
         ptr_flobject : pointer to xfdata.FL_OBJECT
             canvas flobject
         pyfn_initModifyCanvasProp : python function callback, returned value
-            name referring to function(ptr_flobject) -> num.
+            name referring to function(ptr_flobject) -> [int]num
         pyfn_activateModifyCanvasProp : python func. callback, returned value
-            name referring to function(ptr_flobject) -> num.
+            name referring to function(ptr_flobject) -> [int]num.
         pyfn_cleanupModifyCanvasProp : python func. callback, returned value
-            name referring to function(ptr_flobject) -> num.
+            name referring to function(ptr_flobject) -> [int]num.
 
     Examples
     --------

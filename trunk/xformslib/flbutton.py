@@ -4,7 +4,7 @@
 """ xforms-python's functions to manage button flobjects.
 """
 
-#    Copyright (C) 2009, 2010  Luca Lazzaroni "LukenShiro"
+#    Copyright (C) 2009, 2010, 2011  Luca Lazzaroni "LukenShiro"
 #    e-mail: <lukenshiro@ngi.it>
 #
 #    This program is free software: you can redistribute it and/or modify
@@ -1051,16 +1051,19 @@ def fl_add_button_class(btnclass, pyfn_DrawButton, pyfn_CleanupButton):
     ----------
         btnclass : int
             value of a new button class
-        pyfn_DrawButton : python function to draw button, no return
+        pyfn_DrawButton : python function, no return
             name referring to function(ptr_flobject)
-        pyfn_CleanupButton : python function to cleanup button, no return
-            name referring to function(pButtonSpec)
+            function to handle drawing of button
+        pyfn_CleanupButton : python function, no return
+            name referring to function(ptr_buttonspec)
+            function to cleanup button. You have to pass an
+            instance of xfdata.FL_BUTTON_SPEC class
 
     Examples
     --------
         >>> def drawbtn(pobj):
         >>> ... <something>
-        >>> def cleanbtn(buttonspec):
+        >>> def cleanbtn(pbuttonspec):
         >>> ... <something>
         >>> fl_add_button_class(1001, drawbtn, cleanbtn)
 

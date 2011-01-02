@@ -4,7 +4,7 @@
 """ xforms-python's functions to manage image flobjects.
 """
 
-#    Copyright (C) 2009, 2010  Luca Lazzaroni "LukenShiro"
+#    Copyright (C) 2009, 2010, 2011  Luca Lazzaroni "LukenShiro"
 #    e-mail: <lukenshiro@ngi.it>
 #
 #    This program is free software: you can redistribute it and/or modify
@@ -959,14 +959,14 @@ def flimage_add_marker_struct(ptr_image, ptr_imagemarker):
     return retval
 
 
-def flimage_define_marker(mkname, pyfn_FlimageMarkerDraw, psdraw):
-    """flimage_define_marker(mkname, pyfn_FlimageMarkerDraw, psdraw) -> result
+def flimage_define_marker(mkrname, pyfn_FlimageMarkerDraw, psdraw):
+    """flimage_define_marker(mkrname, pyfn_FlimageMarkerDraw, psdraw) -> result
 
     Defines a custom marker, using a specific function for drawing it.
 
     Parameters
     ----------
-        mkname : str
+        mkrname : str
             name of the marker
         pyfn_FlimageMarkerDraw : python function to draw marker, no return
             name referring to function(ptr_imageMarker)
@@ -990,22 +990,23 @@ def flimage_define_marker(mkname, pyfn_FlimageMarkerDraw, psdraw):
         Status: Untested + Doc + NoDemo = NOT OK
 
     """
-    # cfunc_none_flimagemarker = cty.CFUNCTYPE(None, cty.POINTER( \
-    #   xfdata.FLIMAGE_MARKER))
+    cfunc_none_flimagemarker = cty.CFUNCTYPE(None, cty.POINTER( \
+            xfdata.FLIMAGE_MARKER))
     _flimage_define_marker = library.cfuncproto(
         library.load_so_libflimage(), "flimage_define_marker",
-        cty.c_int, [xfdata.STRING, xfdata.cfunc_none_flimagemarker,
+        cty.c_int, [xfdata.STRING, cfunc_none_flimagemarker,
         xfdata.STRING],
         """int flimage_define_marker(const char *, void ( * )
            (FLIMAGE_MARKER *), const char *)""")
-    s_mkname = library.convert_to_stringc(mkname)
+    s_mkrname = library.convert_to_stringc(mkrname)
     library.verify_function_type(pyfn_FlimageMarkerDraw)
-    cfn_FlimageMarkerDraw = xfdata.cfunc_none_flimagemarker( \
+    cfn_FlimageMarkerDraw = cfunc_none_flimagemarker( \
             pyfn_FlimageMarkerDraw)
     s_psdraw = library.convert_to_stringc(psdraw)
-    library.keep_elem_refs(mkname, psdraw, s_mkname, s_psdraw)
+    library.keep_elem_refs(mkrname, psdraw, s_mkrname, s_psdraw)
     library.keep_cfunc_refs(cfn_FlimageMarkerDraw, pyfn_FlimageMarkerDraw)
-    retval = _flimage_define_marker(s_mkname, cfn_FlimageMarkerDraw, s_psdraw)
+    retval = _flimage_define_marker(s_mkrname, cfn_FlimageMarkerDraw, \
+            s_psdraw)
     return retval
 
 
@@ -1560,7 +1561,7 @@ def flimage_add_format(formalname, shortname, extension, imagetype,
         formalname : str
             the formal name of image format, e.g. "Tag Image File Format"
         shortname : str
-            an abbreviated name for the image forma, e.g. "tiff"
+            an abbreviated name for the image format, e.g. "tiff"
         extension : str
             file extension, e.g. "tif". If it is empty (""), shortname will
             be used, instead

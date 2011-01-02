@@ -735,8 +735,8 @@ def import_xbmdata_from_file(fname):
             if indx != -1:       # found!
                 tmpxbmcontents2 = tmpxbmcontents1[indx+1:-1]
             else:
-                raise XFormsValueError("File %s has an incorrect format." % \
-                        fname)
+                raise library.XFormsValueError("File %s has an incorrect " \
+                        "format." % fname)
             tmpxbmcontents2 = tmpxbmcontents2.split()
             for numb in range(0, len(tmpxbmcontents2)):
                 hexval = int(tmpxbmcontents2[numb], 16)
@@ -765,8 +765,8 @@ def import_xpmdata_from_file(fname):
             try:
                 xbmfil = open(fname)
             except IOError:
-                raise library.XFormsGenericError("File %s cannot be opened." \
-                        % fname)
+                raise library.XFormsGenericError("File %s cannot be " \
+                        "opened." % fname)
             iscontentsarea = False
             iscommentarea = False
             for line in xbmfil:
@@ -798,8 +798,8 @@ def import_xpmdata_from_file(fname):
             if indx != -1:       # found!
                 tmpxpmcontents2 = tmpxpmcontents1[indx+1:-1]
             else:
-                raise XFormsValueError("File %s has an incorrect format." % \
-                        fname)
+                raise library.XFormsValueError("File %s has an incorrect " \
+                        "format." % fname)
             xpmcontents = tmpxpmcontents2.split(",")
             return xpmcontents
 

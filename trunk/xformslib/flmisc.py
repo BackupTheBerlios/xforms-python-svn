@@ -4,7 +4,7 @@
 """ xforms-python's functions to manage miscellaneous flobjects.
 """
 
-#    Copyright (C) 2009, 2010  Luca Lazzaroni "LukenShiro"
+#    Copyright (C) 2009, 2010, 2011  Luca Lazzaroni "LukenShiro"
 #    e-mail: <lukenshiro@ngi.it>
 #
 #    This program is free software: you can redistribute it and/or modify
@@ -161,11 +161,11 @@ def fl_stuff_clipboard(ptr_flobject, clipbdtype, vdata, size, \
         clipbdtype : long
             type of clipboard (not used)
         vdata : *todo*
-            *todo*
+            data to be stored
         size : long
             size of data to be stuffed
         pyfn_LoseSelectionCb : python function callback, returned value
-            name referring to function(ptr_flobject, longnum) -> num.
+            name referring to function(ptr_flobject, [long]num) -> [int]num.
 
     Returns
     -------
@@ -206,7 +206,8 @@ def fl_stuff_clipboard(ptr_flobject, clipbdtype, vdata, size, \
 
 
 def fl_request_clipboard(ptr_flobject, clipbdtype, pyfn_SelectionCb):
-    """fl_request_clipboard(ptr_flobject, clipbdtype, pyfn_SelectionCb) -> size
+    """fl_request_clipboard(ptr_flobject, clipbdtype, pyfn_SelectionCb)
+    -> size
 
     Retrieves data from clipboard?
 
@@ -217,8 +218,8 @@ def fl_request_clipboard(ptr_flobject, clipbdtype, pyfn_SelectionCb):
         clipbdtype : long
             type of clipboard (not used)
         pyfn_SelectionCb : python function callback, returned value
-            name referring to function(ptr_flobject, longnum, vdata,
-            longnum) -> num.
+            name referring to function(ptr_flobject, [long]num,
+            [pointer to void]vdata, [long]num) -> [int]num.
 
     Returns
     -------

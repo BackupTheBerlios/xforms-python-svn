@@ -209,7 +209,7 @@ def fl_set_scrollbar_size(ptr_flobject, barsize):
         """void fl_set_scrollbar_size(FL_OBJECT * ob, double val)""")
     library.check_if_initialized()
     library.verify_flobjectptr_type(ptr_flobject)
-    f_barsize= library.convert_to_doublec(barsize)
+    f_barsize = library.convert_to_doublec(barsize)
     library.keep_elem_refs(ptr_flobject, barsize, f_barsize)
     _fl_set_scrollbar_size(ptr_flobject, f_barsize)
 
