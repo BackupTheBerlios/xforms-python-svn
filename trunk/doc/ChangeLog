@@ -2,6 +2,7 @@ SVN (first entries from top are more recent)
 --------------------------------------------
 
 BETA
+    * boxtype.py example added (not 100% functional).
     * Some more docstrings in xfdata (for Structures) and in other modules
     (for function prototypes). Miscellaneous bugfixes.
     20110102 (beta9)
