@@ -2,6 +2,8 @@ SVN (first entries from top are more recent)
 --------------------------------------------
 
 BETA
+    20110104 (beta10)
+    * xyplotactive.py example added. Bugfix in flxyplot.py
     * boxtype.py example added (not 100% functional).
     * Some more docstrings in xfdata (for Structures) and in other modules
     (for function prototypes). Miscellaneous bugfixes.

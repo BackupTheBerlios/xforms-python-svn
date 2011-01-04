@@ -163,7 +163,7 @@ def fl_set_xyplot_data(ptr_flobject, xposlist, yposlist, numpoints, title,
     #for a in range(xlist):
     #    fxlist[a] = library.convert_to_floatc(xlist[a])
     #ptr_xlist = cty.pointer(fxlist)
-    ptr_xposlist = library.convert_to_ptr_float(xposlist)
+    ptr_xposlist = library.convert_to_ptr_floatc(xposlist)
     #py = cty.cast(y, cty.POINTER(cty.c_float))
     #fylist = []
     #for a in range(ylist):
