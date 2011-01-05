@@ -125,7 +125,7 @@ def fl_create_bitmap_cursor(source, maskstr, width, height, hotx, hoty):
             bitmap to be used as cursor.
         maskstr : str of ubytes?
             bitmap defining the shape of the cursor. The pixels set to 1
-            define which source pixels are displayed. If it is 'None' all
+            define which source pixels are displayed. If it is None all
             bits in source are displayed.
         width : int
             width of cursor
@@ -158,7 +158,7 @@ def fl_create_bitmap_cursor(source, maskstr, width, height, hotx, hoty):
            const char * mask, int w, int h, int hotx, int hoty)""")
     library.check_if_initialized()
     s_source = library.convert_to_stringc(source)
-    if not maskstr:    # if it is 'None'
+    if not maskstr:    # if it is None
         s_maskstr = cty.cast(maskstr, cty.c_void_p)
     else:       # *todo* to be verified
         s_maskstr = library.convert_to_stringc(maskstr)

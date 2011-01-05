@@ -183,7 +183,7 @@ def flimage_dump(ptr_image, fname, fmt):
         fmt : str
             formal name or short name of a supported image format.
             Values: jpeg, ppm, gif, bmp, etc... or some other formats the
-            application knows how to write. If it is 'None', the original
+            application knows how to write. If it is None, the original
             format the image was in is used.
 
     Returns
@@ -209,7 +209,7 @@ def flimage_dump(ptr_image, fname, fmt):
     library.check_if_initialized()
     library.verify_flflimageptr_type(ptr_image)
     s_fname = library.convert_to_stringc(fname)
-    # *todo* take note of 'None' case
+    # *todo* take note of None case
     s_fmt = library.convert_to_stringc(fmt)
     library.keep_elem_refs(ptr_image, fname, fmt, s_fname, s_fmt)
     retval = _flimage_dump(ptr_image, s_fname, s_fmt)
@@ -740,10 +740,9 @@ def flimage_add_text(ptr_image, text, length, style, size, txtcolr, bgcolr,
            int tran, double tx, double ty, int rot)""")
     library.check_if_initialized()
     library.verify_flflimageptr_type(ptr_image)
-    library.checkfatal_allowed_value_in_list(style, xfdata.TEXTSTYLE_list)
-    library.checknonfatal_allowed_value_in_list(size, xfdata.FONTSIZE_list)
     s_text = library.convert_to_stringc(text)
     i_length = library.convert_to_intc(length)
+    library.checkfatal_allowed_value_in_list(style, xfdata.TEXTSTYLE_list)
     i_style = library.convert_to_intc(style)
     i_size = library.convert_to_intc(size)
     ui_txtcolr = library.convert_to_uintc(txtcolr)

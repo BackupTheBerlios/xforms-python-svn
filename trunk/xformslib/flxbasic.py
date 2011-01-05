@@ -3670,7 +3670,7 @@ def fl_set_event_callback(pyfn_AppEventCb, vdata):
             -> [int]num.
             The callback function normally should return 0, unless the
             event is not for one of the applcation-managed windows.
-        vdata : any type (e.g. 'None', int, str, etc..)
+        vdata : any type (e.g. None, int, str, etc..)
             user data to be passed to function; callback has to take care
             of type check
 
@@ -3726,7 +3726,7 @@ def fl_set_idle_callback(pyfn_AppEventCb, vdata):
         pyfn_AppEventCb : python function callback, returning unused value
             name referring to function(ptr_xevent, [pointer to void]vdata)
             -> [int]num.
-        vdata : any type (e.g. 'None', int, str, etc..)
+        vdata : any type (e.g. None, int, str, etc..)
             user data to be passed to function; callback has to take care
             of type check
 
@@ -3932,7 +3932,7 @@ def fl_add_event_callback(win, evttype, pyfn_AppEventCb, vdata):
         pyfn_AppEventCb : python function callback, returned value
             name referring to function(ptr_xevent, [pointer to void]vdata)
             -> [int]num.
-        vdata : any type (e.g. 'None', int, str, etc..)
+        vdata : any type (e.g. None, int, str, etc..)
             user data to be passed to function; callback has to take care
             of type check
 

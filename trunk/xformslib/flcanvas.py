@@ -337,7 +337,7 @@ def fl_add_canvas_handler(ptr_flobject, xev, pyfn_HandleCanvas, vdata):
         pyfn_HandleCanvas : python function to handle canvas, returned value
             name referring to function(ptr_flobject, win, num, num,
             ptr_xevent, vdata) -> num
-        vdata : any type (e.g. 'None', int, str, etc..)
+        vdata : any type (e.g. None, int, str, etc..)
             user data to be passed to function; callback has to take care
             of type check.
 

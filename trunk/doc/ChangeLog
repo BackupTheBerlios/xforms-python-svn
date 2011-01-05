@@ -2,6 +2,10 @@ SVN (first entries from top are more recent)
 --------------------------------------------
 
 BETA
+    20110105 (beta11)
+    * another bugfix in flxyplot.py. xyplotover.py and xyplotall.py examples
+    added. Some docs improvement in flbasic.py. Some miscellanous bugfixes.
+    Added group.py example (not 100% functional).
     20110104 (beta10)
     * xyplotactive.py example added. Bugfix in flxyplot.py
     * boxtype.py example added (not 100% functional).

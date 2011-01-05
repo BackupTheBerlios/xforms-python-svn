@@ -840,7 +840,6 @@ def fl_set_oneliner_font(style, size):
     library.check_if_initialized()
     library.checkfatal_allowed_value_in_list(style, xfdata.TEXTSTYLE_list)
     i_style = library.convert_to_intc(style)
-    library.checknonfatal_allowed_value_in_list(size, xfdata.FONTSIZE_list)
     i_size = library.convert_to_intc(size)
     library.keep_elem_refs(style, size, i_style, i_size)
     _fl_set_oneliner_font(i_style, i_size)
@@ -874,8 +873,8 @@ def fl_set_oneliner_color(fgcolr, bgcolr):
         """void fl_set_oneliner_color(FL_COLOR p1, FL_COLOR p2)""")
     library.check_if_initialized()
     library.checknonfatal_allowed_value_in_list(fgcolr, xfdata.COLOR_list)
-    library.checknonfatal_allowed_value_in_list(bgcolr, xfdata.COLOR_list)
     ul_fgcolr = library.convert_to_FL_COLOR(fgcolr)
+    library.checknonfatal_allowed_value_in_list(bgcolr, xfdata.COLOR_list)
     ul_bgcolr = library.convert_to_FL_COLOR(bgcolr)
     library.keep_elem_refs(fgcolr, bgcolr, ul_fgcolr, ul_bgcolr)
     _fl_set_oneliner_color(ul_fgcolr, ul_bgcolr)
@@ -930,7 +929,6 @@ def fl_set_tooltip_font(style, size):
     library.check_if_initialized()
     library.checkfatal_allowed_value_in_list(style, xfdata.TEXTSTYLE_list)
     i_style = library.convert_to_intc(style)
-    library.checknonfatal_allowed_value_in_list(size, xfdata.FONTSIZE_list)
     i_size = library.convert_to_intc(size)
     library.keep_elem_refs(style, size, i_style, i_size)
     _fl_set_tooltip_font(i_style, i_size)
@@ -1733,7 +1731,7 @@ def fl_set_fselector_callback(pyfn_FSCB, vdata):
         pyfn_FSCB : python function callback, returning (unused) value
             name referring to function([str]text, [pointer to void]vdata)
             -> [int]num
-        vdata : any type (e.g. 'None', int, str, etc..)
+        vdata : any type (e.g. None, int, str, etc..)
             user data to be passed to function; callback has to take care
             of type check.
 
@@ -1948,7 +1946,7 @@ def fl_add_fselector_appbutton(label, pyfn_fselappbtn, vdata):
             text of label
         pyfn_fselappbtn : python function callback, no return
             name referring to function([pointer to void]vdata)
-        vdata : any type (e.g. 'None', int, str, etc..)
+        vdata : any type (e.g. None, int, str, etc..)
             user data to be passed to function; callback has to take
             care of type check
 
@@ -2245,7 +2243,7 @@ def fl_goodies_atclose(ptr_flform, vdata):
     ----------
         ptr_flform : pointer to xfdata.FL_FORM
             form
-        vdata : any type (e.g. 'None', int, str, etc..)
+        vdata : any type (e.g. None, int, str, etc..)
             user data to be passed to function; callback has to take care
             of type check
 

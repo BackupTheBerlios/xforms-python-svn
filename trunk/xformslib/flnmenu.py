@@ -298,7 +298,7 @@ def fl_insert_nmenu_items(ptr_flobject, ptr_flpopupentry, entryitemstxt, \
             nmenu flobject
         ptr_flpopupentry : pointer to xfdata.FL_POPUP_ENTRY
             existing popup entry, after which the new items are to be
-            inserted. If it is 'None', it inserts items at the very start.
+            inserted. If it is None, it inserts items at the very start.
         entryitemstxt : str
             text of the entry to be inserted and in-text special sequences
             with or without not separated additional arguments (if required).
@@ -697,7 +697,7 @@ def fl_insert_nmenu_items2(ptr_flobject, ptr_flpopupentry, ptr_flpopupitem):
             nmenu flobject
         ptr_flpopupentry : pointer to xfdata.FL_POPUP_ENTRY
             existing popup entry, after which the new items are to be
-            inserted. If it is 'None', it inserts items at the very start.
+            inserted. If it is None, it inserts items at the very start.
         ptr_flpopupitem : pointer to xfdata.FL_POPUP_ITEM
             popup item to be set. It can be prepared passing a dict (whose
             keys are corresponding to xfdata.FL_POPUP_ITEM's members) to

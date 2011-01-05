@@ -686,7 +686,7 @@ def import_xbmdata_from_file(fname):
     tmpxbmcontents2 = ""
     xbmcontents = []
 
-    if fname.endswith(".xbm") or fname.endwith(".XBM"):
+    if fname.endswith(".xbm") or fname.endswith(".XBM"):
         if os.path.exists(fname):
             try:
                 xbmfil = open(fname)
@@ -760,7 +760,7 @@ def import_xpmdata_from_file(fname):
     tmpxpmcontents2 = ""
     xpmcontents = []
 
-    if fname.endswith(".xpm") or fname.endwith(".XPM"):
+    if fname.endswith(".xpm") or fname.endswith(".XPM"):
         if os.path.exists(fname):
             try:
                 xbmfil = open(fname)

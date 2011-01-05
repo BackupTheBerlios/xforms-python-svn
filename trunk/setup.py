@@ -15,6 +15,7 @@ html_files = glob.glob('doc/html/*.html')
 example_files = glob.glob('examples/*.py') + glob.glob('examples/*.x?m') + \
         glob.glob('examples/*.fd')
 example_files.append('examples/Readme')
+example_files.append('examples/test.ps')
 bin_files = 'bin/fd2python.py'
 
 setup(name = name,

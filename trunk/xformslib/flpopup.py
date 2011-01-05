@@ -164,7 +164,7 @@ def fl_popup_add_entries(ptr_flpopup, entryitemstxt, x=None, u=None, \
         cparam_argstypelist.append(cty.c_long)
         specseqargslist.append(l_x)
     if u:       # pointer to void u additional arg
-        ptr_u = cty.c_void_p(u)
+        ptr_u = cty.cast(u, cty.c_void_p)
         cparam_argstypelist.append(cty.c_void_p)
         specseqargslist.append(ptr_u)
     if f:       # xfdata.FL_POPUP_CB f additional arg
@@ -212,9 +212,10 @@ def fl_popup_add_entries(ptr_flpopup, entryitemstxt, x=None, u=None, \
     library.check_if_initialized()
     library.verify_flpopupptr_type(ptr_flpopup)
     s_entryitemstxt = library.convert_to_stringc(entryitemstxt)
+    library.keep_cfunc_refs(f, E, L, cfn_f, cfn_E, cfn_L)
     library.keep_elem_refs(ptr_flpopup, entryitemstxt, s_entryitemstxt, \
-            specseqargslist, cparam_argstypelist, x, u, f, E, L, Rr, m, s, \
-            l_x, ptr_u, cfn_f, cfn_E, cfn_L, i_Rr, s_s)
+            specseqargslist, cparam_argstypelist, x, u, Rr, m, s, l_x, \
+            ptr_u, i_Rr, s_s)
     retval = _fl_popup_add_entries(ptr_flpopup, s_entryitemstxt, \
             *specseqargslist)
     return retval
@@ -236,7 +237,7 @@ def fl_popup_insert_entries(ptr_flpopup, ptr_flpopupentry, entryitemstxt, \
         ptr_flpopup : pointer to xfdata.FL_POPUP
             popup class instance
         ptr_flpopupentry : pointer to xfdata.FL_POPUP_ENTRY
-            popup entry after which entry is inserted. If it is 'None', it
+            popup entry after which entry is inserted. If it is None, it
             inserts items at the very start.
         entryitemstxt : str
             text of the entry to be added and in-text special sequences with
@@ -352,7 +353,7 @@ def fl_popup_insert_entries(ptr_flpopup, ptr_flpopupentry, entryitemstxt, \
     library.verify_flpopupptr_type(ptr_flpopup)
     if not ptr_flpopupentry:         # it is None
         ptr_flpopupentry_alt = cty.cast(ptr_flpopupentry, \
-                cty.POINTER(cty.c_void_p))
+                cty.c_void_p)
     else:                       # real FL_POPUP_ENTRY pointer
         ptr_flpopupentry_alt = ptr_flpopupentry
         library.verify_flpopupentryptr_type(ptr_flpopupentry_alt)
@@ -474,7 +475,7 @@ def fl_popup_insert_items(ptr_flpopup, ptr_flpopupentry, ptr_flpopupitem):
         ptr_flpopup : pointer to xfdata.FL_POPUP
             popup class instance
         ptr_flpopupentry : pointer to xfdata.FL_POPUP_ENTRY
-            popup entry after which items are inserted. If it is 'None', items
+            popup entry after which items are inserted. If it is None, items
             are inserted at the very start.
         ptr_flpopupitem : pointer to xfdata.FL_POPUP_ITEM
             new popup item to be inserted. It can be prepared passing a dict
@@ -667,7 +668,7 @@ def fl_popup_get_policy(ptr_flpopup):
     Parameters
     ----------
         ptr_flpopup : pointer to xfdata.FL_POPUP
-            popup class instance. If it is 'None', gives the default setting
+            popup class instance. If it is None, gives the default setting
             for the popups created afterwards
 
     Returns
@@ -999,9 +1000,8 @@ def fl_popup_entry_set_font(ptr_flpopup, style, size):
         """void fl_popup_entry_set_font(FL_POPUP * p1, int p2, int p3)""")
     library.check_if_initialized()
     library.verify_flpopupptr_type(ptr_flpopup)
-    library.checkfatal_allowed_value_in_list(style, xfdata.TEXTSTYLE_list)
+    #library.checkfatal_allowed_value_in_list(style, xfdata.TEXTSTYLE_list)
     i_style = library.convert_to_intc(style)
-    library.checknonfatal_allowed_value_in_list(size, xfdata.FONTSIZE_list)
     i_size = library.convert_to_intc(size)
     library.keep_elem_refs(ptr_flpopup, style, size, i_style, i_size)
     _fl_popup_entry_set_font(ptr_flpopup, i_style, i_size)
@@ -1758,7 +1758,7 @@ def fl_popup_entry_set_user_data(ptr_flpopupentry, vdata):
     ----------
         ptr_flpopupentry : pointer to xfdata.FL_POPUP_ENTRY
             popup entry
-        vdata : any type (e.g. 'None', int, str, etc..)
+        vdata : any type (e.g. None, int, str, etc..)
             user data to be passed to function; callback has to take care
             of type check
 
@@ -1882,7 +1882,7 @@ def fl_popup_entry_get_by_user_data(ptr_flpopup, vdata):
     ----------
         ptr_flpopup : pointer to xfdata.FL_POPUP
             popup class instance
-        vdata : any type (e.g. 'None', int, str, etc..)
+        vdata : any type (e.g. None, int, str, etc..)
             user data assigned to the popup entry; callback has to take care
             of type check
 

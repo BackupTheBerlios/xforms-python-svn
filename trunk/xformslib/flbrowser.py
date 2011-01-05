@@ -1510,7 +1510,7 @@ def fl_set_browser_hscroll_callback(ptr_flobject, pyfn_BrowserScrollCb, vdata):
         pyfn_BrowserScrollCb : python function callback, no return
             name referring to function(ptr_flobject, [int]num,
             [pointer to void]vdata)
-        vdata : any type (e.g. 'None', int, str, etc..)
+        vdata : any type (e.g. None, int, str, etc..)
             user data to be passed to function; callback has to take care
             of type check
 
@@ -1557,7 +1557,7 @@ def fl_set_browser_vscroll_callback(ptr_flobject, pyfn_BrowserScrollCb,
             browser flobject
         pyfn_BrowserScrollCb : python function callback, no return
             name referring to function(ptr_flobject, num, vdata)
-        vdata : any type (e.g. 'None', int, str, etc..)
+        vdata : any type (e.g. None, int, str, etc..)
             user data to be passed to function; callback has to take care
             of type check
 

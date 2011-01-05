@@ -390,7 +390,7 @@ def fl_add_timeout(msec, pyfn_TimeoutCallback, vdata):
             time elapsed in milliseconds
         pyfn_TimeoutCallback : python function to be invoked, no return
             name referring to function([int]num, [pointer to void]vdata)
-        vdata : any type (e.g. 'None', int, str, etc..)
+        vdata : any type (e.g. None, int, str, etc..)
             user data to be passed to function; callback has to take care
             of type check.
 
@@ -901,7 +901,7 @@ def fl_set_form_atclose(ptr_flform, pyfn_FormAtclose, vdata):
         pyfn_FormAtclose : python callback to be called, returned value
             name referring to function(ptr_flform, [pointer to void]vdata)
              -> [int]num
-        vdata : any type (e.g. 'None', int, str, etc..)
+        vdata : any type (e.g. None, int, str, etc..)
             user data to be passed to function; callback has to take care
             of type check.
 
@@ -951,7 +951,7 @@ def fl_set_atclose(pyfn_FormAtclose, vdata):
         pyfn_FormAtclose : python callback to be called, returned value
             name referring to function(ptr_flform, [pointer to void]vdata)
              -> [int]num
-        vdata : any type (e.g. 'None', int, str, etc..)
+        vdata : any type (e.g. None, int, str, etc..)
             user data to be passed to function; callback has to take care
             of type check.
 
@@ -1002,7 +1002,7 @@ def fl_set_form_atactivate(ptr_flform, pyfn_FormAtactivate, vdata):
             activated form
         pyfn_FormAtactivate : python callback function called, no return
             name referring to function(ptr_flform, [pointer to void]vdata)
-        vdata : any type (e.g. 'None', int, str, etc..)
+        vdata : any type (e.g. None, int, str, etc..)
             user data to be passed to function; callback has to take care
             of type check.
 
@@ -1055,7 +1055,7 @@ def fl_set_form_atdeactivate(ptr_flform, pyfn_FormAtdeactivate, vdata):
             de-activated form
         pyfn_FormAtdeactivate : python callback function called, no return
             name referring to function(ptr_flform, [pointer to void]vdata)
-        vdata : any type (e.g. 'None', int, str, etc..)
+        vdata : any type (e.g. None, int, str, etc..)
             user data to be passed to function; callback has to take care
             of type check.
 
@@ -1493,7 +1493,7 @@ def fl_set_form_callback(ptr_flform, pyfn_FormCallbackPtr, vdata):
             form whose callback has to be set
         pyfn_FormCallbackPtr : python callback to be set, no return
             name referring to function(ptr_flobject, [pointer to void]vdata)
-        vdata : any type (e.g. 'None', int, str, etc..)
+        vdata : any type (e.g. None, int, str, etc..)
             user data to be passed to function; callback has to take care
             of type check
 
@@ -3868,7 +3868,7 @@ def fl_for_all_objects(ptr_flform, pyfn_operatecb, vdata):
         pyfn_operatecb : python callback function, returned value
             name referring to function(ptr_flobject, [pointer to void]vdata)
             -> [int]num
-        vdata : any type (e.g. 'None', int, str, etc..)
+        vdata : any type (e.g. None, int, str, etc..)
             user data to be passed to function; callback has to take care
             of type check
 
@@ -4301,8 +4301,8 @@ def fl_set_object_prehandler(ptr_flobject, pyfn_HandlePtr):
         ptr_flobject : pointer to xfdata.FL_OBJECT
             flobject to be set
         pyfn_HandlePtr : python callback function, returned value
-            name referring to function(ptr_flobject, [int]num, [int]coord,
-            [int]coord, [int]num, [pointer to void]vdata) -> [int]num
+            name referring to function(ptr_flobject, [int]event, [int]xpos,
+            [int]ypos, [int]key, [pointer to void]ptr_xevent) -> [int]num
 
     Returns
     -------
@@ -4351,8 +4351,8 @@ def fl_set_object_posthandler(ptr_flobject, pyfn_HandlePtr):
         ptr_flobject : pointer to xfdata.FL_OBJECT
             flobject
         pyfn_HandlePtr : python callback function, returned value
-            name referring to function(ptr_flobject, [int]num, [int]coord,
-            [int]coord, [int]num, [pointer to void]vdata) -> [int]num
+            name referring to function(ptr_flobject, [int]event, [int]xpos,
+            [int]ypos, [int]key, [pointer to void]ptr_xevent) -> [int]num
 
     Returns
     -------

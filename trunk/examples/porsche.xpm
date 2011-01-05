@@ -1,13 +1,9 @@
-/* XPM */
 static char * porsche[] = {
-/* porsche pixmap
- * width height ncolors chars_per_pixel */
 "64 64 4 1 ",
 "  c None 	 m None   s s_slateblue ",
 ". c yellow 	 m white  s s_yellow ",
 "r c red	 m white  s s_red ",
 "b c black 	 m black  s s_black ",
-/* pixels */
 "                                                                ",
 "                                                                ",
 "        bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb        ",

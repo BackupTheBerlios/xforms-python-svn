@@ -287,7 +287,7 @@ def fl_insert_select_items(ptr_flobject, ptr_flpopupentry, entryitemstxt, \
         ptr_flobject : pointer to xfdata.FL_OBJECT
             select flobject
         ptr_flpopupentry : pointer to xfdata.FL_POPUP_ENTRY
-            popup entry. If it is 'None' new items are inserted at the very
+            popup entry. If it is None new items are inserted at the very
             start.
         entryitemstxt : str
             text of the entry to be inserted and in-text special sequences

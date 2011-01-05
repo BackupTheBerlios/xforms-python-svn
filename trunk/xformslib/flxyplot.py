@@ -525,8 +525,8 @@ def fl_add_xyplot_overlay(ptr_flobject, ovlnum, xposlist, yposlist,
     library.verify_flobjectptr_type(ptr_flobject)
     library.checknonfatal_allowed_value_in_list(colr, xfdata.COLOR_list)
     i_ovlnum = library.convert_to_intc(ovlnum)
-    ptr_xposlist = library.converto_to_ptr_floatc(xposlist)
-    ptr_yposlist = library.converto_to_ptr_floatc(yposlist)
+    ptr_xposlist = library.convert_to_ptr_floatc(xposlist)
+    ptr_yposlist = library.convert_to_ptr_floatc(yposlist)
     i_numpoints = library.convert_to_intc(numpoints)
     ul_colr = library.convert_to_FL_COLOR(colr)
     library.keep_elem_refs(ptr_flobject, ovlnum, xposlist, yposlist, \
