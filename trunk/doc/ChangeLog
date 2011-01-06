@@ -2,6 +2,14 @@ SVN (first entries from top are more recent)
 --------------------------------------------
 
 BETA
+    20110106 (beta12)
+    * dirlist.py example added (not 100% functional)
+    * Removed value check of colors. colbrowser.py example added (not 100%
+    functional). Some docstrings adjusted in flbrowser.py.
+    * some typos fixed in xfstruct.py. group.py example fixed using a different
+    .xpm file (for some unknown reasons porsche.xpm is not recognized as xpm
+    format while crab45.xpm is: unfortunately I cannot spot appreciable
+    differences).
     20110105 (beta11)
     * another bugfix in flxyplot.py. xyplotover.py and xyplotall.py examples
     added. Some docs improvement in flbasic.py. Some miscellanous bugfixes.

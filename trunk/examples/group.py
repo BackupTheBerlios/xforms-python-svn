@@ -42,7 +42,7 @@ class FD_objsform(object):
 # callbacks for form objsform
 
 def show_group(pobj, data):
-    for i in range(0, NGROUP+1):            #( i = 0; i <= NGROUP;i++)
+    for i in range(0, NGROUP+1):
         if i == data:
             xfl.fl_show_object(fd_objsform.group[i])
         else:
@@ -59,10 +59,9 @@ def init_gui(fd):
 
     xfl.fl_add_select_items(fd.choice, "Option1|Option2|Option3")
 
-    porsche = xfl.import_xpmdata_from_file("porsche.xpm")
-    print(porsche)
-    xfl.fl_set_pixmapbutton_data(fd.pixbutton, porsche)
-    xfl.fl_set_pixmap_data(fd.pix, porsche)
+    crab = xfl.import_xpmdata_from_file("crab45.xpm")          # "porsche.xpm"
+    xfl.fl_set_pixmapbutton_data(fd.pixbutton, crab)
+    xfl.fl_set_pixmap_data(fd.pix, crab)
     bm1_width, bm1_height, bm1_bits = xfl.import_xbmdata_from_file("bm1.xbm")
     xfl.fl_set_bitmapbutton_data(fd.bitbutton, bm1_width, bm1_height, \
             bm1_bits)
@@ -81,7 +80,6 @@ def init_gui(fd):
     xfl.fl_addto_browser(fd.browser, "browser line 15\nbrowser line 16")
     xfl.fl_addto_browser(fd.browser, "browser line 17\nbrowser line 18")
 
-    #for ( i = 0; i < sizeof y / sizeof *y; i++ )
     for i in range(0, len(y)):
         xfl.fl_add_chart_value(fd.chart, y[i], label[i], i + 1)
 
@@ -278,8 +276,6 @@ def create_form_objsform():
     xfl.fl_end_group()
 
     xfl.fl_end_form()
-
-    #fdui->objsform->fdui = fdui;
 
     return fdui
 

@@ -1106,7 +1106,7 @@ def fl_set_nmenu_hl_text_color(ptr_flobject, colr):
            FL_COLOR p2)""")
     library.check_if_initialized()
     library.verify_flobjectptr_type(ptr_flobject)
-    library.checknonfatal_allowed_value_in_list(colr, xfdata.COLOR_list)
+    #library.checknonfatal_allowed_value_in_list(colr, xfdata.COLOR_list)
     ul_colr = library.convert_to_FL_COLOR(colr)
     library.keep_elem_refs(ptr_flobject, colr, ul_colr)
     retval = _fl_set_nmenu_hl_text_color(ptr_flobject, ul_colr)

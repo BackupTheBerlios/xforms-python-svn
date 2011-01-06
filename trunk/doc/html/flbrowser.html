@@ -60,7 +60,7 @@ Returns<br>
 &nbsp;<br>
 Examples<br>
 --------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;brobj&nbsp;=&nbsp;<a href="#-fl_add_browser">fl_add_browser</a>(FL_SELECT_BROWSER,&nbsp;200,&nbsp;250,&nbsp;200,&nbsp;200,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;pbrobj&nbsp;=&nbsp;<a href="#-fl_add_browser">fl_add_browser</a>(FL_SELECT_BROWSER,&nbsp;200,&nbsp;250,&nbsp;200,&nbsp;200,<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"BrowserList")<br>
 &nbsp;<br>
 Notes<br>
@@ -102,7 +102,7 @@ Parameters<br>
 &nbsp;<br>
 Examples<br>
 --------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;<a href="#-fl_add_browser_line">fl_add_browser_line</a>(brobj,&nbsp;"My&nbsp;new&nbsp;line&nbsp;text")<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;<a href="#-fl_add_browser_line">fl_add_browser_line</a>(pbrobj,&nbsp;"My&nbsp;new&nbsp;line&nbsp;text")<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
@@ -123,7 +123,7 @@ Parameters<br>
 &nbsp;<br>
 Examples<br>
 --------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;<a href="#-fl_addto_browser">fl_addto_browser</a>(brobj,&nbsp;"blablablablablublublu")<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;<a href="#-fl_addto_browser">fl_addto_browser</a>(pbrobj,&nbsp;"blablablablablublublu")<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
@@ -147,7 +147,7 @@ Parameters<br>
 &nbsp;<br>
 Examples<br>
 --------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;<a href="#-fl_addto_browser_chars">fl_addto_browser_chars</a>(brobj,&nbsp;"some&nbsp;chars")<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;<a href="#-fl_addto_browser_chars">fl_addto_browser_chars</a>(pbrobj,&nbsp;"some&nbsp;chars")<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
@@ -171,7 +171,7 @@ Parameters<br>
 &nbsp;<br>
 Examples<br>
 --------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;<a href="#-fl_addto_browser_chars">fl_addto_browser_chars</a>(brobj,&nbsp;"some&nbsp;chars")<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;<a href="#-fl_addto_browser_chars">fl_addto_browser_chars</a>(pbrobj,&nbsp;"some&nbsp;chars")<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
@@ -187,7 +187,7 @@ Parameters<br>
 &nbsp;<br>
 Examples<br>
 --------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;<a href="#-fl_clear_browser">fl_clear_browser</a>(brobj)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;<a href="#-fl_clear_browser">fl_clear_browser</a>(pbrobj)<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
@@ -205,7 +205,7 @@ Parameters<br>
 &nbsp;<br>
 Examples<br>
 --------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;<a href="#-fl_delete_browser_line">fl_delete_browser_line</a>(brobj,&nbsp;3)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;<a href="#-fl_delete_browser_line">fl_delete_browser_line</a>(pbrobj,&nbsp;3)<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
@@ -221,7 +221,7 @@ Parameters<br>
 &nbsp;<br>
 Examples<br>
 --------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;<a href="#-fl_deselect_browser">fl_deselect_browser</a>(brobj)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;<a href="#-fl_deselect_browser">fl_deselect_browser</a>(pbrobj)<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
@@ -239,7 +239,7 @@ Parameters<br>
 &nbsp;<br>
 Examples<br>
 --------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;<a href="#-fl_deselect_browser_line">fl_deselect_browser_line</a>(brobj,&nbsp;4)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;<a href="#-fl_deselect_browser_line">fl_deselect_browser_line</a>(pbrobj,&nbsp;4)<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
@@ -263,7 +263,7 @@ Returns<br>
 &nbsp;<br>
 Examples<br>
 --------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;lastsel&nbsp;=&nbsp;<a href="#-fl_get_browser">fl_get_browser</a>(ptr_flobject)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;lastsel&nbsp;=&nbsp;<a href="#-fl_get_browser">fl_get_browser</a>(pbrobj)<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
@@ -290,7 +290,7 @@ Returns<br>
 &nbsp;<br>
 Examples<br>
 --------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;x,&nbsp;y,&nbsp;w,&nbsp;h&nbsp;=&nbsp;<a href="#-fl_get_browser_dimension">fl_get_browser_dimension</a>(brobj)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;x,&nbsp;y,&nbsp;w,&nbsp;h&nbsp;=&nbsp;<a href="#-fl_get_browser_dimension">fl_get_browser_dimension</a>(pbrobj)<br>
 &nbsp;<br>
 API_diversion<br>
 ----------<br>
@@ -340,7 +340,7 @@ Returns<br>
 &nbsp;<br>
 Examples<br>
 --------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;txt4thline&nbsp;=&nbsp;<a href="#-fl_get_browser_line">fl_get_browser_line</a>(brobj,&nbsp;4)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;txt4thline&nbsp;=&nbsp;<a href="#-fl_get_browser_line">fl_get_browser_line</a>(pbrobj,&nbsp;4)<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
@@ -381,7 +381,7 @@ Returns<br>
 &nbsp;<br>
 Examples<br>
 --------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;maxlin&nbsp;=&nbsp;<a href="#-fl_get_browser_maxline">fl_get_browser_maxline</a>(brobj)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;maxlin&nbsp;=&nbsp;<a href="#-fl_get_browser_maxline">fl_get_browser_maxline</a>(pbrobj)<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
@@ -450,7 +450,7 @@ Returns<br>
 &nbsp;<br>
 Examples<br>
 --------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;visiblines&nbsp;=&nbsp;<a href="#-fl_get_browser_screenlines">fl_get_browser_screenlines</a>(brobj)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;visiblines&nbsp;=&nbsp;<a href="#-fl_get_browser_screenlines">fl_get_browser_screenlines</a>(pbrobj)<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
@@ -498,7 +498,7 @@ Returns<br>
 &nbsp;<br>
 Examples<br>
 --------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;topl&nbsp;=&nbsp;<a href="#-fl_get_browser_topline">fl_get_browser_topline</a>(brobj)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;topl&nbsp;=&nbsp;<a href="#-fl_get_browser_topline">fl_get_browser_topline</a>(pbrobj)<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
@@ -591,7 +591,7 @@ Parameters<br>
 &nbsp;<br>
 Examples<br>
 --------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;<a href="#-fl_insert_browser_line">fl_insert_browser_line</a>(brobj,&nbsp;1,&nbsp;"blblabla")<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;<a href="#-fl_insert_browser_line">fl_insert_browser_line</a>(pbrobj,&nbsp;1,&nbsp;"blblabla")<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
@@ -614,7 +614,7 @@ Returns<br>
 &nbsp;<br>
 Examples<br>
 --------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;if&nbsp;<a href="#-fl_isselected_browser_line">fl_isselected_browser_line</a>(brobj,&nbsp;2):<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;if&nbsp;<a href="#-fl_isselected_browser_line">fl_isselected_browser_line</a>(pbrobj,&nbsp;2):<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;...&nbsp;&lt;something&gt;<br>
 &nbsp;<br>
 Notes<br>
@@ -642,7 +642,7 @@ Returns<br>
 &nbsp;<br>
 Examples<br>
 --------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;ival&nbsp;=&nbsp;<a href="#-fl_load_browser">fl_load_browser</a>(brobj,&nbsp;"somefile.txt")<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;ival&nbsp;=&nbsp;<a href="#-fl_load_browser">fl_load_browser</a>(pbrobj,&nbsp;"somefile.txt")<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
@@ -666,7 +666,7 @@ Parameters<br>
 &nbsp;<br>
 Examples<br>
 --------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;<a href="#-fl_replace_browser_line">fl_replace_browser_line</a>(brobj,&nbsp;5,&nbsp;"newblabla")<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;<a href="#-fl_replace_browser_line">fl_replace_browser_line</a>(pbrobj,&nbsp;5,&nbsp;"newblabla")<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
@@ -684,7 +684,7 @@ Parameters<br>
 &nbsp;<br>
 Examples<br>
 --------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;<a href="#-fl_select_browser_line">fl_select_browser_line</a>(brobj,&nbsp;4)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;<a href="#-fl_select_browser_line">fl_select_browser_line</a>(pbrobj,&nbsp;4)<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
@@ -703,7 +703,7 @@ Parameters<br>
 &nbsp;<br>
 Examples<br>
 --------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;<a href="#-fl_set_browser_bottomline">fl_set_browser_bottomline</a>(brobj,&nbsp;2)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;<a href="#-fl_set_browser_bottomline">fl_set_browser_bottomline</a>(pbrobj,&nbsp;2)<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
@@ -728,7 +728,7 @@ Examples<br>
 --------<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;def&nbsp;browsercb(pobj,&nbsp;data):<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;...&nbsp;&lt;something&gt;<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;<a href="#-fl_set_browser_dblclick_callback">fl_set_browser_dblclick_callback</a>(brobj,&nbsp;browsercb,&nbsp;data)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;<a href="#-fl_set_browser_dblclick_callback">fl_set_browser_dblclick_callback</a>(pbrobj,&nbsp;browsercb,&nbsp;data)<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
@@ -750,7 +750,7 @@ Parameters<br>
 &nbsp;<br>
 Examples<br>
 --------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;<a href="#-fl_set_browser_fontsize">fl_set_browser_fontsize</a>(brobj,&nbsp;xfdata.FL_NORMAL_SIZE)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;<a href="#-fl_set_browser_fontsize">fl_set_browser_fontsize</a>(pbrobj,&nbsp;xfdata.FL_NORMAL_SIZE)<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
@@ -784,7 +784,7 @@ Parameters<br>
 &nbsp;<br>
 Examples<br>
 --------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;<a href="#-fl_set_browser_fontstyle">fl_set_browser_fontstyle</a>(brobj,&nbsp;xfdata.FL_EMBOSSED_STYLE)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;<a href="#-fl_set_browser_fontstyle">fl_set_browser_fontstyle</a>(pbrobj,&nbsp;xfdata.FL_EMBOSSED_STYLE)<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
@@ -802,7 +802,7 @@ Parameters<br>
 &nbsp;&nbsp;&nbsp;&nbsp;pyfn_BrowserScrollCb&nbsp;:&nbsp;python&nbsp;function&nbsp;callback,&nbsp;no&nbsp;return<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;name&nbsp;referring&nbsp;to&nbsp;function(ptr_flobject,&nbsp;[int]num,<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[pointer&nbsp;to&nbsp;void]vdata)<br>
-&nbsp;&nbsp;&nbsp;&nbsp;vdata&nbsp;:&nbsp;any&nbsp;type&nbsp;(e.g.&nbsp;'None',&nbsp;int,&nbsp;str,&nbsp;etc..)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;vdata&nbsp;:&nbsp;any&nbsp;type&nbsp;(e.g.&nbsp;None,&nbsp;int,&nbsp;str,&nbsp;etc..)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;user&nbsp;data&nbsp;to&nbsp;be&nbsp;passed&nbsp;to&nbsp;function;&nbsp;callback&nbsp;has&nbsp;to&nbsp;take&nbsp;care<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;of&nbsp;type&nbsp;check<br>
 &nbsp;<br>
@@ -831,7 +831,7 @@ Parameters<br>
 &nbsp;<br>
 Examples<br>
 --------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;<a href="#-fl_set_browser_hscrollbar">fl_set_browser_hscrollbar</a>(brobj,&nbsp;xfdata.FL_OFF)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;<a href="#-fl_set_browser_hscrollbar">fl_set_browser_hscrollbar</a>(pbrobj,&nbsp;xfdata.FL_OFF)<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
@@ -930,7 +930,7 @@ Parameters<br>
 &nbsp;<br>
 Examples<br>
 --------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;<a href="#-fl_set_browser_scrollbarsize">fl_set_browser_scrollbarsize</a>(brobj,&nbsp;10,&nbsp;10)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;<a href="#-fl_set_browser_scrollbarsize">fl_set_browser_scrollbarsize</a>(pbrobj,&nbsp;10,&nbsp;10)<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
@@ -952,7 +952,7 @@ Parameters<br>
 &nbsp;<br>
 Examples<br>
 --------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;<a href="#-fl_set_browser_specialkey">fl_set_browser_specialkey</a>(brobj,&nbsp;"|")<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;<a href="#-fl_set_browser_specialkey">fl_set_browser_specialkey</a>(pbrobj,&nbsp;"|")<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
@@ -970,7 +970,7 @@ Parameters<br>
 &nbsp;<br>
 Examples<br>
 --------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;<a href="#-fl_set_browser_topline">fl_set_browser_topline</a>(brobj,&nbsp;5)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;<a href="#-fl_set_browser_topline">fl_set_browser_topline</a>(pbrobj,&nbsp;5)<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
@@ -987,7 +987,7 @@ Parameters<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;browser&nbsp;flobject<br>
 &nbsp;&nbsp;&nbsp;&nbsp;pyfn_BrowserScrollCb&nbsp;:&nbsp;python&nbsp;function&nbsp;callback,&nbsp;no&nbsp;return<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;name&nbsp;referring&nbsp;to&nbsp;function(ptr_flobject,&nbsp;num,&nbsp;vdata)<br>
-&nbsp;&nbsp;&nbsp;&nbsp;vdata&nbsp;:&nbsp;any&nbsp;type&nbsp;(e.g.&nbsp;'None',&nbsp;int,&nbsp;str,&nbsp;etc..)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;vdata&nbsp;:&nbsp;any&nbsp;type&nbsp;(e.g.&nbsp;None,&nbsp;int,&nbsp;str,&nbsp;etc..)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;user&nbsp;data&nbsp;to&nbsp;be&nbsp;passed&nbsp;to&nbsp;function;&nbsp;callback&nbsp;has&nbsp;to&nbsp;take&nbsp;care<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;of&nbsp;type&nbsp;check<br>
 &nbsp;<br>
@@ -1016,7 +1016,7 @@ Parameters<br>
 &nbsp;<br>
 Examples<br>
 --------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;<a href="#-fl_set_browser_vscrollbar">fl_set_browser_vscrollbar</a>(brobj,&nbsp;xfdata.FL_OFF)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;<a href="#-fl_set_browser_vscrollbar">fl_set_browser_vscrollbar</a>(pbrobj,&nbsp;xfdata.FL_OFF)<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
@@ -1072,10 +1072,10 @@ Parameters<br>
 &nbsp;<br>
 Examples<br>
 --------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;<a href="#-fl_show_browser_line">fl_show_browser_line</a>(brobj,&nbsp;12)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;<a href="#-fl_show_browser_line">fl_show_browser_line</a>(pbrobj,&nbsp;12)<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
 </td></tr></table>
-<p>Updated on: 2011-01-02 23:50 +0100</body></html>
+<p>Updated on: 2011-01-07 00:34 +0100</body></html>

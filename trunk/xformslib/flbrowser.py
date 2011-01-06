@@ -79,7 +79,7 @@ def fl_add_browser(browsertype, xpos, ypos, width, height, label):
 
     Examples
     --------
-        >>> brobj = fl_add_browser(FL_SELECT_BROWSER, 200, 250, 200, 200,
+        >>> pbrobj = fl_add_browser(FL_SELECT_BROWSER, 200, 250, 200, 200,
                 "BrowserList")
 
     Notes
@@ -121,7 +121,7 @@ def fl_clear_browser(ptr_flobject):
 
     Examples
     --------
-        >>> fl_clear_browser(brobj)
+        >>> fl_clear_browser(pbrobj)
 
     Notes
     -----
@@ -175,7 +175,7 @@ def fl_add_browser_line(ptr_flobject, newtext):
 
     Examples
     --------
-        >>> fl_add_browser_line(brobj, "My new line text")
+        >>> fl_add_browser_line(pbrobj, "My new line text")
 
     Notes
     -----
@@ -210,7 +210,7 @@ def fl_addto_browser(ptr_flobject, newtext):
 
     Examples
     --------
-        >>> fl_addto_browser(brobj, "blablablablablublublu")
+        >>> fl_addto_browser(pbrobj, "blablablablablublublu")
 
     Notes
     -----
@@ -248,7 +248,7 @@ def fl_addto_browser_chars(ptr_flobject, addedtext):
 
     Examples
     --------
-        >>> fl_addto_browser_chars(brobj, "some chars")
+        >>> fl_addto_browser_chars(pbrobj, "some chars")
 
     Notes
     -----
@@ -292,7 +292,7 @@ def fl_insert_browser_line(ptr_flobject, linenum, newtext):
 
     Examples
     --------
-        >>> fl_insert_browser_line(brobj, 1, "blblabla")
+        >>> fl_insert_browser_line(pbrobj, 1, "blblabla")
 
     Notes
     -----
@@ -327,7 +327,7 @@ def fl_delete_browser_line(ptr_flobject, linenum):
 
     Examples
     --------
-        >>> fl_delete_browser_line(brobj, 3)
+        >>> fl_delete_browser_line(pbrobj, 3)
 
     Notes
     -----
@@ -364,7 +364,7 @@ def fl_replace_browser_line(ptr_flobject, linenum, newtext):
 
     Examples
     --------
-        >>> fl_replace_browser_line(brobj, 5, "newblabla")
+        >>> fl_replace_browser_line(pbrobj, 5, "newblabla")
 
     Notes
     -----
@@ -404,7 +404,7 @@ def fl_get_browser_line(ptr_flobject, linenum):
 
     Examples
     --------
-        >>> txt4thline = fl_get_browser_line(brobj, 4)
+        >>> txt4thline = fl_get_browser_line(pbrobj, 4)
 
     Notes
     -----
@@ -446,7 +446,7 @@ def fl_load_browser(ptr_flobject, filename):
 
     Examples
     --------
-        >>> ival = fl_load_browser(brobj, "somefile.txt")
+        >>> ival = fl_load_browser(pbrobj, "somefile.txt")
 
     Notes
     -----
@@ -478,7 +478,7 @@ def fl_select_browser_line(ptr_flobject, linenum):
 
     Examples
     --------
-        >>> fl_select_browser_line(brobj, 4)
+        >>> fl_select_browser_line(pbrobj, 4)
 
     Notes
     -----
@@ -510,7 +510,7 @@ def fl_deselect_browser_line(ptr_flobject, linenum):
 
     Examples
     --------
-        >>> fl_deselect_browser_line(brobj, 4)
+        >>> fl_deselect_browser_line(pbrobj, 4)
 
     Notes
     -----
@@ -540,7 +540,7 @@ def fl_deselect_browser(ptr_flobject):
 
     Examples
     --------
-        >>> fl_deselect_browser(brobj)
+        >>> fl_deselect_browser(pbrobj)
 
     Notes
     -----
@@ -576,7 +576,7 @@ def fl_isselected_browser_line(ptr_flobject, linenum):
 
     Examples
     --------
-        >>> if fl_isselected_browser_line(brobj, 2):
+        >>> if fl_isselected_browser_line(pbrobj, 2):
         >>> ... <something>
 
     Notes
@@ -614,7 +614,7 @@ def fl_get_browser_topline(ptr_flobject):
 
     Examples
     --------
-        >>> topl = fl_get_browser_topline(brobj)
+        >>> topl = fl_get_browser_topline(pbrobj)
 
     Notes
     -----
@@ -652,7 +652,7 @@ def fl_get_browser(ptr_flobject):
 
     Examples
     --------
-        >>> lastsel = fl_get_browser(ptr_flobject)
+        >>> lastsel = fl_get_browser(pbrobj)
 
     Notes
     -----
@@ -687,7 +687,7 @@ def fl_get_browser_maxline(ptr_flobject):
 
     Examples
     --------
-        >>> maxlin = fl_get_browser_maxline(brobj)
+        >>> maxlin = fl_get_browser_maxline(pbrobj)
 
     Notes
     -----
@@ -724,7 +724,7 @@ def fl_get_browser_screenlines(ptr_flobject):
 
     Examples
     --------
-        >>> visiblines = fl_get_browser_screenlines(brobj)
+        >>> visiblines = fl_get_browser_screenlines(pbrobj)
 
     Notes
     -----
@@ -756,7 +756,7 @@ def fl_set_browser_topline(ptr_flobject, linenum):
 
     Examples
     --------
-        >>> fl_set_browser_topline(brobj, 5)
+        >>> fl_set_browser_topline(pbrobj, 5)
 
     Notes
     -----
@@ -789,7 +789,7 @@ def fl_set_browser_bottomline(ptr_flobject, linenum):
 
     Examples
     --------
-        >>> fl_set_browser_bottomline(brobj, 2)
+        >>> fl_set_browser_bottomline(pbrobj, 2)
 
     Notes
     -----
@@ -825,7 +825,7 @@ def fl_set_browser_fontsize(ptr_flobject, size):
 
     Examples
     --------
-        >>> fl_set_browser_fontsize(brobj, xfdata.FL_NORMAL_SIZE)
+        >>> fl_set_browser_fontsize(pbrobj, xfdata.FL_NORMAL_SIZE)
 
     Notes
     -----
@@ -873,7 +873,7 @@ def fl_set_browser_fontstyle(ptr_flobject, style):
 
     Examples
     --------
-        >>> fl_set_browser_fontstyle(brobj, xfdata.FL_EMBOSSED_STYLE)
+        >>> fl_set_browser_fontstyle(pbrobj, xfdata.FL_EMBOSSED_STYLE)
 
     Notes
     -----
@@ -910,7 +910,7 @@ def fl_set_browser_specialkey(ptr_flobject, specialkey):
 
     Examples
     --------
-        >>> fl_set_browser_specialkey(brobj, "|")
+        >>> fl_set_browser_specialkey(pbrobj, "|")
 
     Notes
     -----
@@ -952,7 +952,7 @@ def fl_set_browser_vscrollbar(ptr_flobject, howscroll):
 
     Examples
     --------
-        >>> fl_set_browser_vscrollbar(brobj, xfdata.FL_OFF)
+        >>> fl_set_browser_vscrollbar(pbrobj, xfdata.FL_OFF)
 
     Notes
     -----
@@ -991,7 +991,7 @@ def fl_set_browser_hscrollbar(ptr_flobject, howscroll):
 
     Examples
     --------
-        >>> fl_set_browser_hscrollbar(brobj, xfdata.FL_OFF)
+        >>> fl_set_browser_hscrollbar(pbrobj, xfdata.FL_OFF)
 
     Notes
     -----
@@ -1066,7 +1066,7 @@ def fl_get_browser_dimension(ptr_flobject):
 
     Examples
     --------
-        >>> x, y, w, h = fl_get_browser_dimension(brobj)
+        >>> x, y, w, h = fl_get_browser_dimension(pbrobj)
 
     API_diversion
     ----------
@@ -1119,7 +1119,7 @@ def fl_set_browser_dblclick_callback(ptr_flobject, pyfn_CallbackPtr, numdata):
     --------
         >>> def browsercb(pobj, data):
         >>> ... <something>
-        >>> fl_set_browser_dblclick_callback(brobj, browsercb, data)
+        >>> fl_set_browser_dblclick_callback(pbrobj, browsercb, data)
 
     Notes
     -----
@@ -1441,7 +1441,7 @@ def fl_set_browser_scrollbarsize(ptr_flobject, height, width):
 
     Examples
     --------
-        >>> fl_set_browser_scrollbarsize(brobj, 10, 10)
+        >>> fl_set_browser_scrollbarsize(pbrobj, 10, 10)
 
     Notes
     -----
@@ -1475,7 +1475,7 @@ def fl_show_browser_line(ptr_flobject, linenum):
 
     Examples
     --------
-        >>> fl_show_browser_line(brobj, 12)
+        >>> fl_show_browser_line(pbrobj, 12)
 
     Notes
     -----

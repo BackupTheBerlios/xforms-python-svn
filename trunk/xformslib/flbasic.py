@@ -2997,7 +2997,7 @@ def fl_set_object_lcol(ptr_flobject, colr):
         """void fl_set_object_lcol(FL_OBJECT * ob, FL_COLOR lcol) """)
     library.check_if_initialized()
     library.verify_flobjectptr_type(ptr_flobject)
-    library.checknonfatal_allowed_value_in_list(colr, xfdata.COLOR_list)
+    #library.checknonfatal_allowed_value_in_list(colr, xfdata.COLOR_list)
     ul_colr = library.convert_to_FL_COLOR(colr)
     library.keep_elem_refs(ptr_flobject, colr, ul_colr)
     _fl_set_object_lcol(ptr_flobject, ul_colr)
@@ -3385,8 +3385,8 @@ def fl_set_object_color(ptr_flobject, fgcolr, bgcolr):
            FL_COLOR col2) """)
     library.check_if_initialized()
     library.verify_flobjectptr_type(ptr_flobject)
-    library.checknonfatal_allowed_value_in_list(fgcolr, xfdata.COLOR_list)
-    library.checknonfatal_allowed_value_in_list(bgcolr, xfdata.COLOR_list)
+    #library.checknonfatal_allowed_value_in_list(fgcolr, xfdata.COLOR_list)
+    #library.checknonfatal_allowed_value_in_list(bgcolr, xfdata.COLOR_list)
     ul_fgcolr = library.convert_to_FL_COLOR(fgcolr)
     ul_bgcolr = library.convert_to_FL_COLOR(bgcolr)
     library.keep_elem_refs(ptr_flobject, fgcolr, ul_fgcolr, \
@@ -5582,7 +5582,7 @@ def fl_drw_text(align, xpos, ypos, width, height, colr, style, size, txtstr):
     i_ypos = library.convert_to_FL_Coord(ypos)
     i_width = library.convert_to_FL_Coord(width)
     i_height = library.convert_to_FL_Coord(height)
-    library.checknonfatal_allowed_value_in_list(colr, xfdata.COLOR_list)
+    #library.checknonfatal_allowed_value_in_list(colr, xfdata.COLOR_list)
     ul_colr = library.convert_to_FL_COLOR(colr)
     library.checkfatal_allowed_value_in_list(style, xfdata.TEXTSTYLE_list)
     i_style = library.convert_to_intc(style)
@@ -5680,7 +5680,7 @@ def fl_drw_text_beside(align, xpos, ypos, width, height, colr, style,
     i_ypos = library.convert_to_FL_Coord(ypos)
     i_width = library.convert_to_FL_Coord(width)
     i_height = library.convert_to_FL_Coord(height)
-    library.checknonfatal_allowed_value_in_list(colr, xfdata.COLOR_list)
+    #library.checknonfatal_allowed_value_in_list(colr, xfdata.COLOR_list)
     ul_colr = library.convert_to_FL_COLOR(colr)
     library.checkfatal_allowed_value_in_list(style, xfdata.TEXTSTYLE_list)
     i_style = library.convert_to_intc(style)
@@ -5786,13 +5786,13 @@ def fl_drw_text_cursor(align, xpos, ypos, width, height, colr, style, size,
     i_ypos = library.convert_to_FL_Coord(ypos)
     i_width = library.convert_to_FL_Coord(width)
     i_height = library.convert_to_FL_Coord(height)
-    library.checknonfatal_allowed_value_in_list(colr, xfdata.COLOR_list)
+    #library.checknonfatal_allowed_value_in_list(colr, xfdata.COLOR_list)
     ul_colr = library.convert_to_FL_COLOR(colr)
     library.checkfatal_allowed_value_in_list(style, xfdata.TEXTSTYLE_list)
     i_style = library.convert_to_intc(style)
     i_size = library.convert_to_intc(size)
     s_txtstr = library.convert_to_stringc(txtstr)
-    library.checknonfatal_allowed_value_in_list(curscolr, xfdata.COLOR_list)
+    #library.checknonfatal_allowed_value_in_list(curscolr, xfdata.COLOR_list)
     i_curscolr = library.convert_to_intc(curscolr)
     i_pos = library.convert_to_intc(pos)
     library.keep_elem_refs(align, i_align, xpos, i_xpos, ypos, i_ypos, \
@@ -5865,7 +5865,7 @@ def fl_drw_box(boxtype, xpos, ypos, width, height, colr, bndrwidth):
     i_ypos = library.convert_to_FL_Coord(ypos)
     i_width = library.convert_to_FL_Coord(width)
     i_height = library.convert_to_FL_Coord(height)
-    library.checknonfatal_allowed_value_in_list(colr, xfdata.COLOR_list)
+    #library.checknonfatal_allowed_value_in_list(colr, xfdata.COLOR_list)
     ul_colr = library.convert_to_FL_COLOR(colr)
     i_bndrwidth = library.convert_to_intc(bndrwidth)
     library.keep_elem_refs(boxtype, i_boxtype, xpos, i_xpos, ypos, \
@@ -5975,7 +5975,7 @@ def fl_draw_symbol(symbname, xpos, ypos, width, height, colr):
     i_ypos = library.convert_to_FL_Coord(ypos)
     i_width = library.convert_to_FL_Coord(width)
     i_height = library.convert_to_FL_Coord(height)
-    library.checknonfatal_allowed_value_in_list(colr, xfdata.COLOR_list)
+    #library.checknonfatal_allowed_value_in_list(colr, xfdata.COLOR_list)
     ul_colr = library.convert_to_FL_COLOR(colr)
     library.keep_elem_refs(symbname, s_symbname, xpos, i_xpos, ypos, \
             i_ypos, width, i_width, height, i_height, colr, ul_colr)
@@ -6026,7 +6026,7 @@ def fl_mapcolor(colr, red, green, blue):
         cty.c_ulong, [xfdata.FL_COLOR, cty.c_int, cty.c_int, cty.c_int],
         """unsigned long fl_mapcolor(FL_COLOR col, int r, int g, int b)""")
     library.check_if_initialized()
-    library.checknonfatal_allowed_value_in_list(colr, xfdata.COLOR_list)
+    #library.checknonfatal_allowed_value_in_list(colr, xfdata.COLOR_list)
     ul_colr = library.convert_to_FL_COLOR(colr)
     i_red = library.convert_to_intc(red)
     i_green = library.convert_to_intc(green)
@@ -6071,7 +6071,7 @@ def fl_mapcolorname(colr, rgbcolrname):
         cty.c_long, [xfdata.FL_COLOR, xfdata.STRING],\
         """long int fl_mapcolorname(FL_COLOR col, const char * name)""")
     library.check_if_initialized()
-    library.checknonfatal_allowed_value_in_list(colr, xfdata.COLOR_list)
+    #library.checknonfatal_allowed_value_in_list(colr, xfdata.COLOR_list)
     ul_colr = library.convert_to_FL_COLOR(colr)
     s_rgbcolrname = library.convert_to_stringc(rgbcolrname)
     library.keep_elem_refs(colr, ul_colr, rgbcolrname, s_rgbcolrname)
@@ -6200,7 +6200,7 @@ def fl_getmcolor(colr):
         """long unsigned int fl_getmcolor(FL_COLOR i, int * r, int * g,
            int * b)""")
     library.check_if_initialized()
-    library.checknonfatal_allowed_value_in_list(colr, xfdata.COLOR_list)
+    #library.checknonfatal_allowed_value_in_list(colr, xfdata.COLOR_list)
     ul_colr = library.convert_to_FL_COLOR(colr)
     i_red, ptr_red = library.make_intc_and_pointer()
     i_green, ptr_green = library.make_intc_and_pointer()
@@ -6246,7 +6246,7 @@ def fl_get_pixel(colr):
         cty.c_ulong, [xfdata.FL_COLOR],\
         """long unsigned int fl_get_pixel(FL_COLOR col)""")
     library.check_if_initialized()
-    library.checknonfatal_allowed_value_in_list(colr, xfdata.COLOR_list)
+    #library.checknonfatal_allowed_value_in_list(colr, xfdata.COLOR_list)
     ul_colr = library.convert_to_FL_COLOR(colr)
     library.keep_elem_refs(colr, ul_colr)
     retval = _fl_get_pixel(ul_colr)
@@ -6298,7 +6298,7 @@ def fl_get_icm_color(colr):
         cty.POINTER(cty.c_int), cty.POINTER(cty.c_int)],\
         """void fl_get_icm_color(FL_COLOR col, int * r, int * g, int * b)""")
     library.check_if_initialized()
-    library.checknonfatal_allowed_value_in_list(colr, xfdata.COLOR_list)
+    #library.checknonfatal_allowed_value_in_list(colr, xfdata.COLOR_list)
     ul_colr = library.convert_to_FL_COLOR(colr)
     i_red, ptr_red = library.make_intc_and_pointer()
     i_green, ptr_green = library.make_intc_and_pointer()
@@ -6344,7 +6344,7 @@ def fl_set_icm_color(colr, red, green, blue):
         library.load_so_libforms(), "fl_set_icm_color",\
         None, [xfdata.FL_COLOR, cty.c_int, cty.c_int, cty.c_int],\
         """void fl_set_icm_color(FL_COLOR col, int r, int g, int b)""")
-    library.checknonfatal_allowed_value_in_list(colr, xfdata.COLOR_list)
+    #library.checknonfatal_allowed_value_in_list(colr, xfdata.COLOR_list)
     ul_colr = library.convert_to_FL_COLOR(colr)
     i_red = library.convert_to_intc(red)
     i_green = library.convert_to_intc(green)
@@ -6379,7 +6379,7 @@ def fl_color(colr):
         None, [xfdata.FL_COLOR],\
         """void fl_color(FL_COLOR col)""")
     library.check_if_initialized()
-    library.checknonfatal_allowed_value_in_list(colr, xfdata.COLOR_list)
+    #library.checknonfatal_allowed_value_in_list(colr, xfdata.COLOR_list)
     ul_colr = library.convert_to_FL_COLOR(colr)
     library.keep_elem_refs(colr, ul_colr)
     _fl_color(ul_colr)
@@ -6410,7 +6410,7 @@ def fl_bk_color(colr):
         None, [xfdata.FL_COLOR],\
         """void fl_bk_color(FL_COLOR col)""")
     library.check_if_initialized()
-    library.checknonfatal_allowed_value_in_list(colr, xfdata.COLOR_list)
+    #library.checknonfatal_allowed_value_in_list(colr, xfdata.COLOR_list)
     ul_colr = library.convert_to_FL_COLOR(colr)
     library.keep_elem_refs(colr, ul_colr)
     _fl_bk_color(ul_colr)
@@ -6441,7 +6441,7 @@ def fl_textcolor(colr):
         None, [xfdata.FL_COLOR],\
         """void fl_textcolor(FL_COLOR col)""")
     library.check_if_initialized()
-    library.checknonfatal_allowed_value_in_list(colr, xfdata.COLOR_list)
+    #library.checknonfatal_allowed_value_in_list(colr, xfdata.COLOR_list)
     ul_colr = library.convert_to_FL_COLOR(colr)
     library.keep_elem_refs(colr, ul_colr)
     _fl_textcolor(ul_colr)
@@ -6472,7 +6472,7 @@ def fl_bk_textcolor(colr):
         None, [xfdata.FL_COLOR],\
         """void fl_bk_textcolor(FL_COLOR col)""")
     library.check_if_initialized()
-    library.checknonfatal_allowed_value_in_list(colr, xfdata.COLOR_list)
+    #library.checknonfatal_allowed_value_in_list(colr, xfdata.COLOR_list)
     ul_colr = library.convert_to_FL_COLOR(colr)
     library.keep_elem_refs(colr, ul_colr)
     _fl_bk_textcolor(ul_colr)

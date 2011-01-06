@@ -167,7 +167,7 @@ def fl_rectangle(fill, xpos, ypos, width, height, colr):
         """void fl_rectangle(int fill, FL_Coord x, FL_Coord y,
            FL_Coord w, FL_Coord h, FL_COLOR col)""")
     library.check_if_initialized()
-    library.checknonfatal_allowed_value_in_list(colr, xfdata.COLOR_list)
+    #library.checknonfatal_allowed_value_in_list(colr, xfdata.COLOR_list)
     i_fill = library.convert_to_intc(fill)
     i_xpos = library.convert_to_FL_Coord(xpos)
     i_ypos = library.convert_to_FL_Coord(ypos)
@@ -213,7 +213,7 @@ def fl_rectbound(xpos, ypos, width, height, colr):
         """void fl_rectbound(FL_Coord x, FL_Coord y, FL_Coord w,
            FL_Coord h, FL_COLOR col)""")
     library.check_if_initialized()
-    library.checknonfatal_allowed_value_in_list(colr, xfdata.COLOR_list)
+    #library.checknonfatal_allowed_value_in_list(colr, xfdata.COLOR_list)
     i_xpos = library.convert_to_FL_Coord(xpos)
     i_ypos = library.convert_to_FL_Coord(ypos)
     i_width = library.convert_to_FL_Coord(width)
@@ -323,7 +323,7 @@ def fl_roundrectangle(fill, xpos, ypos, width, height, colr):
         """void fl_roundrectangle(int fill, FL_Coord x, FL_Coord y,
            FL_Coord w, FL_Coord h, FL_COLOR col)""")
     library.check_if_initialized()
-    library.checknonfatal_allowed_value_in_list(colr, xfdata.COLOR_list)
+    #library.checknonfatal_allowed_value_in_list(colr, xfdata.COLOR_list)
     i_fill = library.convert_to_intc(fill)
     i_xpos = library.convert_to_FL_Coord(xpos)
     i_ypos = library.convert_to_FL_Coord(ypos)
@@ -433,7 +433,7 @@ def fl_polygon(fill, ptr_flpoint, numpoints, colr):
         xfdata.FL_COLOR],
         """void fl_polygon(int fill, FL_POINT * xp, int n, FL_COLOR col)""")
     library.check_if_initialized()
-    library.checknonfatal_allowed_value_in_list(colr, xfdata.COLOR_list)
+    #library.checknonfatal_allowed_value_in_list(colr, xfdata.COLOR_list)
     i_fill = library.convert_to_intc(fill)
     library.verify_otherclassptr_type(ptr_flpoint, \
             cty.POINTER(xfdata.FL_POINT))
@@ -567,7 +567,7 @@ def fl_lines(ptr_flpoint, numpoints, colr):
         None, [cty.POINTER(xfdata.FL_POINT), cty.c_int, xfdata.FL_COLOR], \
         """void fl_lines(FL_POINT * xp, int n, FL_COLOR col)""")
     library.check_if_initialized()
-    library.checknonfatal_allowed_value_in_list(colr, xfdata.COLOR_list)
+    #library.checknonfatal_allowed_value_in_list(colr, xfdata.COLOR_list)
     ptr_flpoint = cty.cast(ptr_flpoint, cty.POINTER(xfdata.FL_POINT))
     i_numpoints = library.convert_to_intc(numpoints)
     ul_colr = library.convert_to_FL_COLOR(colr)
@@ -610,7 +610,7 @@ def fl_line(startxpos, startypos, endxpos, endypos, colr):
         """void fl_line(FL_Coord xi, FL_Coord yi, FL_Coord xf,
            FL_Coord yf, FL_COLOR c)""")
     library.check_if_initialized()
-    library.checknonfatal_allowed_value_in_list(colr, xfdata.COLOR_list)
+    #library.checknonfatal_allowed_value_in_list(colr, xfdata.COLOR_list)
     i_startxpos = library.convert_to_intc(startxpos)
     i_startypos = library.convert_to_intc(startypos)
     i_endxpos = library.convert_to_intc(endxpos)
@@ -652,7 +652,7 @@ def fl_point(xpos, ypos, colr):
         None, [xfdata.FL_Coord, xfdata.FL_Coord, xfdata.FL_COLOR],\
         """void fl_point(FL_Coord x, FL_Coord y, FL_COLOR c)""")
     library.check_if_initialized()
-    library.checknonfatal_allowed_value_in_list(colr, xfdata.COLOR_list)
+    #library.checknonfatal_allowed_value_in_list(colr, xfdata.COLOR_list)
     i_xpos = library.convert_to_FL_Coord(xpos)
     i_ypos = library.convert_to_FL_Coord(ypos)
     ul_colr = library.convert_to_FL_COLOR(colr)
@@ -692,7 +692,7 @@ def fl_points(ptr_flpoint, numpoints, colr):
         None, [cty.POINTER(xfdata.FL_POINT), cty.c_int, xfdata.FL_COLOR],
         """void fl_points(FL_POINT * p, int np, FL_COLOR c)""")
     library.check_if_initialized()
-    library.checknonfatal_allowed_value_in_list(colr, xfdata.COLOR_list)
+    #library.checknonfatal_allowed_value_in_list(colr, xfdata.COLOR_list)
     ptr_flpoint = cty.cast(ptr_flpoint, cty.POINTER(xfdata.FL_POINT))
     i_numpoints = library.convert_to_intc(numpoints)
     ul_colr = library.convert_to_FL_COLOR(colr)
@@ -1065,7 +1065,7 @@ def fl_oval(fill, xpos, ypos, width, height, colr):
         """void fl_oval(int fill, FL_Coord x, FL_Coord y, FL_Coord w,
            FL_Coord h, FL_COLOR col)""")
     library.check_if_initialized()
-    library.checknonfatal_allowed_value_in_list(colr, xfdata.COLOR_list)
+    #library.checknonfatal_allowed_value_in_list(colr, xfdata.COLOR_list)
     i_fill = library.convert_to_intc(fill)
     i_xpos = library.convert_to_FL_Coord(xpos)
     i_ypos = library.convert_to_FL_Coord(ypos)
@@ -1112,7 +1112,7 @@ def fl_ovalbound(xpos, ypos, width, height, colr):
         """void fl_ovalbound(FL_Coord x, FL_Coord y, FL_Coord w,
            FL_Coord h, FL_COLOR col)""")
     library.check_if_initialized()
-    library.checknonfatal_allowed_value_in_list(colr, xfdata.COLOR_list)
+    #library.checknonfatal_allowed_value_in_list(colr, xfdata.COLOR_list)
     i_xpos = library.convert_to_FL_Coord(xpos)
     i_ypos = library.convert_to_FL_Coord(ypos)
     i_width = library.convert_to_FL_Coord(width)
@@ -1169,7 +1169,7 @@ def fl_ovalarc(fill, xpos, ypos, width, height, stheta, dtheta, colr):
         """void fl_ovalarc(int fill, FL_Coord x, FL_Coord y, FL_Coord w,
            FL_Coord h, int t0, int dt, FL_COLOR col)""")
     library.check_if_initialized()
-    library.checknonfatal_allowed_value_in_list(colr, xfdata.COLOR_list)
+    #library.checknonfatal_allowed_value_in_list(colr, xfdata.COLOR_list)
     i_fill = library.convert_to_intc(fill)
     i_xpos = library.convert_to_FL_Coord(xpos)
     i_ypos = library.convert_to_FL_Coord(ypos)
@@ -1352,7 +1352,7 @@ def fl_pieslice(fill, xpos, ypos, width, height, stheta, etheta, colr):
         """void fl_pieslice(int fill, FL_Coord x, FL_Coord y, FL_Coord w,
            FL_Coord h, int a1, int a2, FL_COLOR col)""")
     library.check_if_initialized()
-    library.checknonfatal_allowed_value_in_list(colr, xfdata.COLOR_list)
+    #library.checknonfatal_allowed_value_in_list(colr, xfdata.COLOR_list)
     i_fill = library.convert_to_intc(fill)
     i_xpos = library.convert_to_FL_Coord(xpos)
     i_ypos = library.convert_to_FL_Coord(ypos)
@@ -1510,7 +1510,7 @@ def fl_drw_frame(boxtype, xpos, ypos, width, height, colr, bndrwidth):
     i_ypos = library.convert_to_FL_Coord(ypos)
     i_width = library.convert_to_FL_Coord(width)
     i_height = library.convert_to_FL_Coord(height)
-    library.checknonfatal_allowed_value_in_list(colr, xfdata.COLOR_list)
+    #library.checknonfatal_allowed_value_in_list(colr, xfdata.COLOR_list)
     ul_colr = library.convert_to_FL_COLOR(colr)
     i_bndrwidth = library.convert_to_intc(bndrwidth)
     library.keep_elem_refs(boxtype, xpos, ypos, width, height, colr, \
@@ -1582,7 +1582,7 @@ def fl_drw_checkbox(boxtype, xpos, ypos, width, height, colr, bndrwidth):
     i_ypos = library.convert_to_FL_Coord(ypos)
     i_width = library.convert_to_FL_Coord(width)
     i_height = library.convert_to_FL_Coord(height)
-    library.checknonfatal_allowed_value_in_list(colr, xfdata.COLOR_list)
+    #library.checknonfatal_allowed_value_in_list(colr, xfdata.COLOR_list)
     ul_colr = library.convert_to_FL_COLOR(colr)
     i_bndrwidth = library.convert_to_intc(bndrwidth)
     library.keep_elem_refs(boxtype, xpos, ypos, width, height, colr, \
@@ -2071,7 +2071,7 @@ def fl_set_foreground(gc, colr):
         """void fl_set_foreground(GC gc, FL_COLOR col)""")
     library.check_if_initialized()
     library.verify_otherclassptr_type(gc, xfdata.GC)
-    library.checknonfatal_allowed_value_in_list(colr, xfdata.COLOR_list)
+    #library.checknonfatal_allowed_value_in_list(colr, xfdata.COLOR_list)
     ul_colr = library.convert_to_FL_COLOR(colr)
     library.keep_elem_refs(gc, colr, ul_colr)
     _fl_set_foreground(gc, ul_colr)
@@ -2107,7 +2107,7 @@ def fl_set_background(gc, colr):
         """void fl_set_background(GC gc, FL_COLOR col)""")
     library.check_if_initialized()
     library.verify_otherclassptr_type(gc, xfdata.GC)
-    library.checknonfatal_allowed_value_in_list(colr, xfdata.COLOR_list)
+    #library.checknonfatal_allowed_value_in_list(colr, xfdata.COLOR_list)
     ul_colr = library.convert_to_FL_COLOR(colr)
     library.keep_elem_refs(gc, colr, ul_colr)
     _fl_set_background(gc, ul_colr)

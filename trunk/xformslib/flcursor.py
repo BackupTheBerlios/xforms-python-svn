@@ -102,8 +102,8 @@ def fl_set_cursor_color(cursornum, fgcolr, bgcolr):
         None, [cty.c_int, xfdata.FL_COLOR, xfdata.FL_COLOR],
         """void fl_set_cursor_color(int name, FL_COLOR fg, FL_COLOR bg)""")
     library.check_if_initialized()
-    library.checkfatal_allowed_value_in_list(fgcolr, xfdata.COLOR_list)
-    library.checkfatal_allowed_value_in_list(bgcolr, xfdata.COLOR_list)
+    #library.checknonfatal_allowed_value_in_list(fgcolr, xfdata.COLOR_list)
+    #library.checknonfatal_allowed_value_in_list(bgcolr, xfdata.COLOR_list)
     i_cursornum = library.convert_to_intc(cursornum)
     ul_fgcolr = library.convert_to_FL_COLOR(fgcolr)
     ul_bgcolr = library.convert_to_FL_COLOR(bgcolr)

@@ -872,9 +872,9 @@ def fl_set_oneliner_color(fgcolr, bgcolr):
         None, [xfdata.FL_COLOR, xfdata.FL_COLOR],
         """void fl_set_oneliner_color(FL_COLOR p1, FL_COLOR p2)""")
     library.check_if_initialized()
-    library.checknonfatal_allowed_value_in_list(fgcolr, xfdata.COLOR_list)
+    #library.checknonfatal_allowed_value_in_list(fgcolr, xfdata.COLOR_list)
     ul_fgcolr = library.convert_to_FL_COLOR(fgcolr)
-    library.checknonfatal_allowed_value_in_list(bgcolr, xfdata.COLOR_list)
+    #library.checknonfatal_allowed_value_in_list(bgcolr, xfdata.COLOR_list)
     ul_bgcolr = library.convert_to_FL_COLOR(bgcolr)
     library.keep_elem_refs(fgcolr, bgcolr, ul_fgcolr, ul_bgcolr)
     _fl_set_oneliner_color(ul_fgcolr, ul_bgcolr)
@@ -960,9 +960,9 @@ def fl_set_tooltip_color(fgcolr, bgcolr):
         None, [xfdata.FL_COLOR, xfdata.FL_COLOR],
         """void fl_set_tooltip_color(FL_COLOR p1, FL_COLOR p2)""")
     library.check_if_initialized()
-    library.checknonfatal_allowed_value_in_list(fgcolr, xfdata.COLOR_list)
+    #library.checknonfatal_allowed_value_in_list(fgcolr, xfdata.COLOR_list)
     ul_fgcolr = library.convert_to_FL_COLOR(fgcolr)
-    library.checknonfatal_allowed_value_in_list(bgcolr, xfdata.COLOR_list)
+    #library.checknonfatal_allowed_value_in_list(bgcolr, xfdata.COLOR_list)
     ul_bgcolr = library.convert_to_FL_COLOR(bgcolr)
     library.keep_elem_refs(fgcolr, bgcolr, ul_fgcolr, ul_bgcolr)
     _fl_set_tooltip_color(ul_fgcolr, ul_bgcolr)

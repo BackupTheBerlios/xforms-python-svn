@@ -741,7 +741,7 @@ def fl_read_pixmapfile(win, fname, tran):
     library.check_if_initialized()
     ul_win = library.convert_to_Window(win)
     s_fname = library.convert_to_stringc(fname)
-    library.checknonfatal_allowed_value_in_list(tran, xfdata.COLOR_list)
+    #library.checknonfatal_allowed_value_in_list(tran, xfdata.COLOR_list)
     ul_tran = library.convert_to_FL_COLOR(tran)
     ui_width, ptr_width = library.make_uintc_and_pointer()
     ui_height, ptr_height = library.make_uintc_and_pointer()
@@ -821,7 +821,7 @@ def fl_create_from_pixmapdata(win, xpmdata, tran):
     ul_smask, ptr_smask = library.make_ulongc_and_pointer()
     i_hotx, ptr_hotx = library.make_intc_and_pointer()
     i_hoty, ptr_hoty = library.make_intc_and_pointer()
-    library.checknonfatal_allowed_value_in_list(tran, xfdata.COLOR_list)
+    #library.checknonfatal_allowed_value_in_list(tran, xfdata.COLOR_list)
     ul_tran = library.convert_to_FL_COLOR(tran)
     library.keep_elem_refs(win, xpmdata, ui_width, ptr_width, ui_height, \
             ptr_height, ul_smask, i_hotx, i_hoty, tran, ptr_xpmdata, ul_win, \

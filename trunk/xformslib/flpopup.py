@@ -1183,7 +1183,7 @@ def fl_popup_set_color(ptr_flpopup, colrpos, colr):
     library.checkfatal_allowed_value_in_list(colrpos, \
             xfdata.POPUPCOLOR_list)
     i_colrpos = library.convert_to_intc(colrpos)
-    library.checknonfatal_allowed_value_in_list(colr, xfdata.COLOR_list)
+    #library.checknonfatal_allowed_value_in_list(colr, xfdata.COLOR_list)
     ul_colr = library.convert_to_FL_COLOR(colr)
     library.keep_elem_refs(ptr_flpopup, colrpos, colr, i_colrpos, ul_colr)
     retval = _fl_popup_set_color(ptr_flpopup, i_colrpos, ul_colr)

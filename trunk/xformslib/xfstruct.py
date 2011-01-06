@@ -763,13 +763,13 @@ def import_xpmdata_from_file(fname):
     if fname.endswith(".xpm") or fname.endswith(".XPM"):
         if os.path.exists(fname):
             try:
-                xbmfil = open(fname)
+                xpmfil = open(fname)
             except IOError:
                 raise library.XFormsGenericError("File %s cannot be " \
                         "opened." % fname)
             iscontentsarea = False
             iscommentarea = False
-            for line in xbmfil:
+            for line in xpmfil:
                 if "/*" in line and "*/" in line:     # comment inlined
                     continue
                 elif "/*" in line:        # start of a comment
@@ -805,7 +805,7 @@ def import_xpmdata_from_file(fname):
 
         else:   # not existing
             raise library.XFormsGenericError("File %s does not exist." % fname)
-    else:       # not a .xbm file
+    else:       # not a .xpm file
         raise library.XFormsGenericError("File %s should be a .xpm file." % \
                 fname)
 

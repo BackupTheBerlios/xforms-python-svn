@@ -542,7 +542,7 @@ def fl_set_chart_lcolor(ptr_flobject, colr):
         """void fl_set_chart_lcolor(FL_OBJECT * ob, FL_COLOR lcol)""")
     library.check_if_initialized()
     library.verify_flobjectptr_type(ptr_flobject)
-    library.checknonfatal_allowed_value_in_list(colr, xfdata.COLOR_list)
+    #library.checknonfatal_allowed_value_in_list(colr, xfdata.COLOR_list)
     ul_colr = library.convert_to_FL_COLOR(colr)
     library.keep_elem_refs(ptr_flobject, colr, ul_colr)
     _fl_set_chart_lcolor(ptr_flobject, ul_colr)

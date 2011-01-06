@@ -177,8 +177,8 @@ def fl_set_input_color(ptr_flobject, txtcolr, curscolr):
            FL_COLOR curscol)""")
     library.check_if_initialized()
     library.verify_flobjectptr_type(ptr_flobject)
-    library.checkfatal_allowed_value_in_list(txtcolr, xfdata.COLOR_list)
-    library.checkfatal_allowed_value_in_list(curscolr, xfdata.COLOR_list)
+    #library.checknonfatal_allowed_value_in_list(txtcolr, xfdata.COLOR_list)
+    #library.checknonfatal_allowed_value_in_list(curscolr, xfdata.COLOR_list)
     ul_txtcolr = library.convert_to_FL_COLOR(txtcolr)
     ul_curscolr = library.convert_to_FL_COLOR(curscolr)
     library.keep_elem_refs(ptr_flobject, txtcolr, curscolr, ul_txtcolr, \
