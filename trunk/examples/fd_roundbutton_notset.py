@@ -5,9 +5,9 @@
 import sys
 import xformslib as xfl
 
-class My_roundbutton_notset(object):
+class Fd_roundbutton_notset(object):
     def __init__(self, lsysargv, sysargv):
-        xfl.fl_initialize(lsysargv, sysargv, 'My_roundbutton_notset', None, 0)
+        xfl.fl_initialize(lsysargv, sysargv, 'Fd_roundbutton_notset', None, 0)
 
         xfl.fl_set_coordunit(xfl.FL_COORD_PIXEL)
         self.create_forms()
@@ -50,4 +50,6 @@ class My_roundbutton_notset(object):
 
 
 if __name__ == '__main__':
-    ApplDemo = My_roundbutton_notset(len(sys.argv), sys.argv)
+    print("***** fd_roundbutton_notset.py *****")
+    ApplDemo = Fd_roundbutton_notset(len(sys.argv), sys.argv)
+

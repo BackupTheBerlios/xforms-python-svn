@@ -359,5 +359,5 @@ class Flfolder(object):
 
 if __name__ == '__main__':
     print("********* folder_new.py *********")
-    appl = Flfolder(len(sys.argv), sys.argv)
+    Flfolder(len(sys.argv), sys.argv)
 

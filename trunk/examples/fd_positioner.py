@@ -5,9 +5,9 @@
 import sys
 import xformslib as xfl
 
-class My_positioner(object):
+class Fd_positioner(object):
     def __init__(self, lsysargv, sysargv):
-        xfl.fl_initialize(lsysargv, sysargv, 'My_positioner', None, 0)
+        xfl.fl_initialize(lsysargv, sysargv, 'Fd_positioner', None, 0)
 
         xfl.fl_set_coordunit(xfl.FL_COORD_PIXEL)
         self.create_forms()
@@ -30,7 +30,7 @@ class My_positioner(object):
         xfl.fl_set_object_lcol(self.ptrflobj0, xfl.FL_BLACK)
         xfl.fl_set_object_resize(self.ptrflobj0, xfl.FL_RESIZE_ALL)
         xfl.fl_set_object_gravity(self.ptrflobj0, xfl.FL_NoGravity, xfl.FL_NoGravity)
-        self.ppositn = xfl.fl_add_dial(xfl.FL_OVERLAY_POSITIONER, 50, 50, 210, 140, 'My anonymous positioner')
+        self.ppositn = xfl.fl_add_positioner(xfl.FL_OVERLAY_POSITIONER, 50, 50, 210, 140, 'My anonymous positioner')
         xfl.fl_set_object_boxtype(self.ppositn, xfl.FL_NO_BOX)
         xfl.fl_set_positioner_xbounds(self.ppositn, 1, 75)
         xfl.fl_set_positioner_ybounds(self.ppositn, 2, 150)
@@ -56,4 +56,6 @@ class My_positioner(object):
 
 
 if __name__ == '__main__':
-    ApplDemo = My_positioner(len(sys.argv), sys.argv)
+    print("***** fd_positioner.py *****")
+    ApplDemo = Fd_positioner(len(sys.argv), sys.argv)
+

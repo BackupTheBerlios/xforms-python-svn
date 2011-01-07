@@ -5,9 +5,9 @@
 import sys
 import xformslib as xfl
 
-class My_pixmapbutton(object):
+class Fd_pixmapbutton(object):
     def __init__(self, lsysargv, sysargv):
-        xfl.fl_initialize(lsysargv, sysargv, 'My_pixmapbutton', None, 0)
+        xfl.fl_initialize(lsysargv, sysargv, 'Fd_pixmapbutton', None, 0)
 
         xfl.fl_set_coordunit(xfl.FL_COORD_PIXEL)
         self.create_forms()
@@ -34,9 +34,9 @@ class My_pixmapbutton(object):
         xfl.fl_set_object_boxtype(self.ppxmbutton, xfl.FL_ROUNDED_BOX)
         xfl.fl_set_button_mouse_buttons(self.ppxmbutton, 29)
         xfl.fl_set_pixmapbutton_align(self.ppxmbutton, xfl.FL_ALIGN_TOP|xfl.FL_ALIGN_INSIDE, 3, 3)
-        xfl.fl_set_object_helper(self.ppxmbutton, 'porsche image')
-        xfl.fl_set_pixmapbutton_file(self.ppxmbutton, './demos/porsche.xpm')
-        xfl.fl_set_pixmapbutton_focus_file(self.ppxmbutton, './demos/test.xpm')
+        xfl.fl_set_object_helper(self.ppxmbutton, 'my image')
+        xfl.fl_set_pixmapbutton_file(self.ppxmbutton, './crab45.xpm')
+        xfl.fl_set_pixmapbutton_focus_file(self.ppxmbutton, './crab.xpm')
         xfl.fl_set_object_color(self.ppxmbutton, xfl.FL_COL1, xfl.FL_COL1)
         xfl.fl_set_object_lalign(self.ppxmbutton, xfl.FL_ALIGN_BOTTOM)
         xfl.fl_set_object_lstyle(self.ppxmbutton, xfl.FL_NORMAL_STYLE)
@@ -55,4 +55,6 @@ class My_pixmapbutton(object):
 
 
 if __name__ == '__main__':
-    ApplDemo = My_pixmapbutton(len(sys.argv), sys.argv)
+    print("***** fd_pixmapbutton.py *****")
+    ApplDemo = Fd_pixmapbutton(len(sys.argv), sys.argv)
+

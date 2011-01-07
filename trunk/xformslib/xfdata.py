@@ -8738,29 +8738,28 @@ FLIMAGE_Write_Image = cty.CFUNCTYPE(cty.c_int, cty.POINTER(FL_IMAGE))
 
 #fl_current_form = (cty.POINTER(xfdata.FL_FORM)).in_dll( \
 #                   library.load_so_libforms(), 'fl_current_form')
-fl_current_form = cty.POINTER(FL_FORM)
+#fl_current_form = cty.POINTER(FL_FORM)
 #fl_display = (cty.POINTER(xfdata.Display)).in_dll(library.load_so_libforms(),
 #              'fl_display')
-fl_display = cty.POINTER(Display)
+#fl_display = cty.POINTER(Display)
 #fl_screen = (cty.c_int).in_dll(library.load_so_libforms(), 'fl_screen')
-fl_screen = cty.c_int
+#fl_screen = cty.c_int
 # root window
 #fl_root = (xfdata.Window).in_dll(library.load_so_libforms(), 'fl_root')
-fl_root = Window
+#fl_root = Window
 # virtual root window
 #fl_vroot = (xfdata.Window).in_dll(library.load_so_libforms(), 'fl_vroot')
-fl_vroot = Window
+#fl_vroot = Window
 # screen dimension in pixels
 #fl_scrh = (cty.c_int).in_dll(library.load_so_libforms(), 'fl_scrh')
-fl_scrh = cty.c_int
+#fl_scrh = cty.c_int
 #fl_scrw = (cty.c_int).in_dll(library.load_so_libforms(), 'fl_scrw')
-fl_scrw = cty.c_int
+#fl_scrw = cty.c_int
 #fl_vmode = (cty.c_int).in_dll(library.load_so_libforms(), 'fl_vmode')
-fl_vmode = cty.c_int
-
+#fl_vmode = cty.c_int
 #fl_state = (cty.POINTER(xfdata.FL_State)).in_dll(library.load_so_libforms(),
 #            'fl_state')
-fl_state = (FL_State * 6)()  # fl_state is an array of 6 FL_State
+#fl_state = (FL_State * 6)()  # fl_state is an array of 6 FL_State
 
 #fl_ul_magic_char = (xfdata.STRING).in_dll(library.load_so_libforms(),
 #                    'fl_state')

@@ -5,9 +5,9 @@
 import sys
 import xformslib as xfl
 
-class My_pixmap(object):
+class Fd_pixmap(object):
     def __init__(self, lsysargv, sysargv):
-        xfl.fl_initialize(lsysargv, sysargv, 'My_pixmap', None, 0)
+        xfl.fl_initialize(lsysargv, sysargv, 'Fd_pixmap', None, 0)
 
         xfl.fl_set_coordunit(xfl.FL_COORD_PIXEL)
         self.create_forms()
@@ -33,7 +33,7 @@ class My_pixmap(object):
         self.ppixmap = xfl.fl_add_pixmap(xfl.FL_NORMAL_PIXMAP, 40, 40, 240, 90, 'one\ndemo\npixmap')
         xfl.fl_set_object_boxtype(self.ppixmap, xfl.FL_FRAME_BOX)
         xfl.fl_set_pixmap_align(self.ppixmap, xfl.FL_ALIGN_RIGHT|xfl.FL_ALIGN_INSIDE, 3, 3)
-        xfl.fl_set_bitmap_file(ppixmap, 'crab45.xpm')
+        xfl.fl_set_pixmap_file(self.ppixmap, 'crab45.xpm')
         xfl.fl_set_object_color(self.ppixmap, xfl.FL_COL1, xfl.FL_COL1)
         xfl.fl_set_object_lalign(self.ppixmap, xfl.FL_ALIGN_BOTTOM)
         xfl.fl_set_object_lstyle(self.ppixmap, xfl.FL_NORMAL_STYLE)
@@ -51,4 +51,6 @@ class My_pixmap(object):
 
 
 if __name__ == '__main__':
-    ApplDemo = My_pixmap(len(sys.argv), sys.argv)
+    print("***** fd_pixmap.py *****")
+    ApplDemo = Fd_pixmap(len(sys.argv), sys.argv)
+

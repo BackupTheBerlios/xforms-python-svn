@@ -15,12 +15,14 @@ import xformslib as xfl
 
 def input_cb(pobj, data):
     notused, x, y = xfl.fl_get_input_cursorpos(pobj)
-    print("INPUT - x=%d y=%d\n" % x, y)
+    msg = "INPUT - x=%d y=%d\n" % (x, y)
+    print(msg)
 
 
 def input2_cb(pobj, data):
     notused, x, y = xfl.fl_get_input_cursorpos(pobj)
-    print("INPUT2 - y=%d x=%d\n" % y, x)
+    msg = "INPUT2 - y=%d x=%d\n" % (y, x)
+    print(msg)
 
 
 def main(lsysargv, sysargv):

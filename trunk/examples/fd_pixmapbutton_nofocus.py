@@ -5,9 +5,9 @@
 import sys
 import xformslib as xfl
 
-class My_pixmapbutton_nofocus(object):
+class Fd_pixmapbutton_nofocus(object):
     def __init__(self, lsysargv, sysargv):
-        xfl.fl_initialize(lsysargv, sysargv, 'My_pixmapbutton_nofocus', None, 0)
+        xfl.fl_initialize(lsysargv, sysargv, 'Fd_pixmapbutton_nofocus', None, 0)
 
         xfl.fl_set_coordunit(xfl.FL_COORD_PIXEL)
         self.create_forms()
@@ -54,4 +54,6 @@ class My_pixmapbutton_nofocus(object):
 
 
 if __name__ == '__main__':
-    ApplDemo = My_pixmapbutton_nofocus(len(sys.argv), sys.argv)
+    print("***** fd_pixmapbutton_nofocus.py *****")
+    ApplDemo = Fd_pixmapbutton_nofocus(len(sys.argv), sys.argv)
+

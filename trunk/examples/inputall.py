@@ -129,4 +129,6 @@ class Flinputall(object):
 
 
 if __name__ == '__main__':
+    print("********* inputall.py *********")
     Flinputall(len(sys.argv), sys.argv)
+

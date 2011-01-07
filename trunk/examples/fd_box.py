@@ -5,9 +5,9 @@
 import sys
 import xformslib as xfl
 
-class My_box(object):
+class Fd_box(object):
     def __init__(self, lsysargv, sysargv):
-        xfl.fl_initialize(lsysargv, sysargv, 'My_box', None, 0)
+        xfl.fl_initialize(lsysargv, sysargv, 'Fd_box', None, 0)
 
         xfl.fl_set_coordunit(xfl.FL_COORD_PIXEL)
         self.create_forms()
@@ -48,4 +48,6 @@ class My_box(object):
 
 
 if __name__ == '__main__':
-    ApplDemo = My_box(len(sys.argv), sys.argv)
+    print("***** fd_box.py *****")
+    ApplDemo = Fd_box(len(sys.argv), sys.argv)
+

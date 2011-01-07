@@ -211,7 +211,7 @@ def fl_create_animated_cursor(curseries, timeout):
         cty.c_int, [cty.POINTER(cty.c_int), cty.c_int],
         """int fl_create_animated_cursor(int * cur_names, int timeout)""")
     library.check_if_initialized()
-    ptr_curseries = library.convert_to_ptr_ints(curseries)
+    ptr_curseries = library.convert_to_ptr_intc(curseries)
     #print "pcurnums", pcurnums
     i_timeout = library.convert_to_intc(timeout)
     library.keep_elem_refs(curseries, timeout, ptr_curseries, i_timeout)

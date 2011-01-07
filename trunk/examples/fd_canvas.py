@@ -5,9 +5,9 @@
 import sys
 import xformslib as xfl
 
-class My_canvas(object):
+class Fd_canvas(object):
     def __init__(self, lsysargv, sysargv):
-        xfl.fl_initialize(lsysargv, sysargv, 'My_canvas', None, 0)
+        xfl.fl_initialize(lsysargv, sysargv, 'Fd_canvas', None, 0)
 
         xfl.fl_set_coordunit(xfl.FL_COORD_PIXEL)
         self.create_forms()
@@ -49,4 +49,6 @@ class My_canvas(object):
 
 
 if __name__ == '__main__':
-    ApplDemo = My_canvas(len(sys.argv), sys.argv)
+    print("***** fd_canvas.py *****")
+    ApplDemo = Fd_canvas(len(sys.argv), sys.argv)
+

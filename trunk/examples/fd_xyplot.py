@@ -52,4 +52,6 @@ class Fd_xyplot(object):
 
 
 if __name__ == '__main__':
+    print("***** fd_xyplot.py *****")
     ApplDemo = Fd_xyplot(len(sys.argv), sys.argv)
+

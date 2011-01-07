@@ -5,9 +5,9 @@
 import sys
 import xformslib as xfl
 
-class My_pixmapbutton_usedata(object):
+class Fd_pixmapbutton_usedata(object):
     def __init__(self, lsysargv, sysargv):
-        xfl.fl_initialize(lsysargv, sysargv, 'My_pixmapbutton_usedata', None, 0)
+        xfl.fl_initialize(lsysargv, sysargv, 'Fd_pixmapbutton_usedata', None, 0)
 
         xfl.fl_set_coordunit(xfl.FL_COORD_PIXEL)
         self.create_forms()
@@ -37,7 +37,6 @@ class My_pixmapbutton_usedata(object):
         xfl.fl_set_object_helper(self.ppxmbutton, 'a crab image')
         crab45 = ['28 28 6 2 ', '. c None      s s_SkyBlue ', 'x c orange      s s_orange ', '* c #ff72c2      s s_#ff72c2 ', '+ c SteelBlue      s s_SteelBlue ', 'G c black      s s_black ', 'a c LightGrey      s s_LightGrey ', '. . . . . . . . . . * * * * * * * . . . . . . . . . . . ', '. . . . . . . . * x x x x x x x * . . . . . . . . . . . ', '. . . . . . . * * * * * * * x x * . . . . . . . . . . . ', '. . . . . . . . . . . . . * x x x * . . . . . . . . . . ', '. . . . . . . . . . * x x x x * x x . . . . . . . . . . ', '. . . . . . . . + + * * * * * * * x x . . . . . . . . . ', '. . . . . . . . . . . . . . . . . * x x . . . . . * . . ', '. . * . . . . . . . . . . . . . . . * x . . * * x x . . ', '. * * . . + . . . . . . + + x x + * * x * * x x x + . . ', '. x * . . + . . . . . . . . + x + * x x x x x + + . . . ', '* x * . * * . . . . . . + . + x * * x x x * * . . . . . ', '* x * . x * . . . . . + x + + x x x x x x * * . . * * * ', '* x * . x * . . + . + x x x x x x x x x x * * * * x x x ', '* x * * x * . . + . . + x x x x x x x x x * * x x x G G ', '* x x x x * . . x + + + x x x x x x x x x x x * * G G . ', '* x x x * * . . x x x x x x x x x x x x x x x * * G G . ', '* * * x . * . . + + * x x x x x x x x x x x x * * G G . ', '. . . * . x * . * * * x x x x x x x x x x x x x * * * * ', '. . . . . x x * * x x x x x x x x x x x x x x * x x x x ', '. . . . . . x x x x x x x x x x x x x x x x * * G G G x ', '. . . . . . . . * x x x x x x x x x x x x x * * G G + . ', '. . . . . . . . * x * * * * x x x x x x x * * * G G . . ', '. . . . . . . * x x * * * * x x x x x * * * * * * G G . ', '. . . . . . . * x + . . * x * * * x * * * * * G G G G . ', '. . . . . . . x x + . . * x * * * * x G G G * G G G . . ', '. . . . . . * x + . . * x x G G G * x G G G G G . . . . ', '. . . . . . . . . . . * x G G G G * x G + . G G . . . . ', '. . . . . . . . . . . * x G . . . * x x . . . . . . . . ']
         xfl.fl_set_pixmapbutton_data(self.ppxmbutton, crab45)
-        xfl.fl_set_pixmapbutton_focus_file(self.ppxmbutton, './crab.xpm')
         xfl.fl_set_object_color(self.ppxmbutton, xfl.FL_COL1, xfl.FL_COL1)
         xfl.fl_set_object_lalign(self.ppxmbutton, xfl.FL_ALIGN_BOTTOM)
         xfl.fl_set_object_lstyle(self.ppxmbutton, xfl.FL_NORMAL_STYLE)
@@ -55,4 +54,6 @@ class My_pixmapbutton_usedata(object):
 
 
 if __name__ == '__main__':
-    ApplDemo = My_pixmapbutton_usedata(len(sys.argv), sys.argv)
+    print("***** fd_pixmapbutton_usedata.py *****")
+    ApplDemo = Fd_pixmapbutton_usedata(len(sys.argv), sys.argv)
+

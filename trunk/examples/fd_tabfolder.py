@@ -49,4 +49,6 @@ class Fd_tabfolder(object):
 
 
 if __name__ == '__main__':
+    print("***** fd_tabfolder.py *****")
     ApplDemo = Fd_tabfolder(len(sys.argv), sys.argv)
+

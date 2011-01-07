@@ -2,6 +2,12 @@ SVN (first entries from top are more recent)
 --------------------------------------------
 
 BETA
+    20110107 (beta13)
+    * mtime now fixed in dirlist.py example.
+    * freedraw.py example added (not 100% functional).
+    * now animated cursors in cursor.py example work as expected.
+    * some bugfixes in flxbasic.py, flcursor.py and in some examples.
+    * many bugfixes in fd2python.py.
     20110106 (beta12)
     * dirlist.py example added (not 100% functional)
     * Removed value check of colors. colbrowser.py example added (not 100%

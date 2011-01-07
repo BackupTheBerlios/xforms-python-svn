@@ -56,4 +56,6 @@ class Fd_valslider(object):
 
 
 if __name__ == '__main__':
+    print("***** fd_valslider.py *****")
     ApplDemo = Fd_valslider(len(sys.argv), sys.argv)
+

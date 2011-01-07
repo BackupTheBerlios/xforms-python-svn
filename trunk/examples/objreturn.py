@@ -141,5 +141,5 @@ class Flobjreturn(object):
 
 if __name__ == '__main__':
     print("********* objreturn.py *********")
-    appl = Flobjreturn(len(sys.argv), sys.argv)
+    Flobjreturn(len(sys.argv), sys.argv)
 

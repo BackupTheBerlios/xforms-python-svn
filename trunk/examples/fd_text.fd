@@ -40,13 +40,13 @@ alignment: FL_ALIGN_RIGHT_TOP|FL_ALIGN_INSIDE
 style: FL_NORMAL_STYLE
 size: 11
 lcol: FL_BLACK
-label: My name is text,\nspeciail agent Text from the Earth
+label: My name is text,\nspecial agent Text from the Earth
 shortcut: T
 resize: FL_RESIZE_X
 gravity: FL_NoGravity FL_NoGravity
 name: ptext
 callback: textcb
-argument: w
+argument: 0
 
 ==============================
 create_the_forms

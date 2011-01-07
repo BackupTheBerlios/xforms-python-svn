@@ -121,7 +121,7 @@ class Flboxtype(object):
 
         # xfl.fl_vmode not working??
         xfl.fl_set_select_item(self.pmodeob, xfl.fl_get_select_item_by_value( \
-                self.pmodeob, 5))         #xfl.fl_get_vclass()))  #xfl.fl_vmode.value))
+                self.pmodeob, xfl.fl_get_vclass()))         # 5 xfl.fl_get_vclass()))  #xfl.fl_vmode.value))
 
         xfl.fl_set_select_item(self.pbtypeob, \
                 xfl.fl_get_select_item_by_value(self.pbtypeob, 1))

@@ -173,14 +173,20 @@ class Demo27(object):
             xfl.fl_circf(stobj.x, stobj.y, stobj.size, \
                     xfl.FL_FREE_COL1)
         elif stobj.type == 3:
-            point = (xfl.FL_POINT * 3)()          # point[ 3 ]
-            point[0].x = stobj.x - stobj.size
-            point[0].y = stobj.y + stobj.size
-            point[1].x = stobj.x + stobj.size
-            point[1].y = stobj.y + stobj.size
-            point[2].x = stobj.x
-            point[2].y = stobj.y - stobj.size
-            xfl.fl_polyf(point, 3, xfl.FL_FREE_COL1)
+            """point = (xfl.FL_POINT * 3)()          # point[ 3 ]
+            point[0].x = int(stobj.x - stobj.size)
+            point[0].y = int(stobj.y + stobj.size)
+            point[1].x = int(stobj.x + stobj.size)
+            point[1].y = int(stobj.y + stobj.size)
+            point[2].x = int(stobj.x)
+            point[2].y = int(stobj.y - stobj.size)
+            print point, point[0], point[2]"""
+            mylistpoint = [{'x':int(stobj.x - stobj.size) , 'y':int(stobj.y + \
+                    stobj.size)}, {'x':int(stobj.x + stobj.size), \
+                    'y':int(stobj.y + stobj.size)}, {'x':int(stobj.x), \
+                    'y':int(stobj.y - stobj.size)}]
+            xpoint = xfl.make_flpoint(mylistpoint)
+            xfl.fl_polyf(xpoint, 3, xfl.FL_FREE_COL1)
 
 
     # draws a particular object

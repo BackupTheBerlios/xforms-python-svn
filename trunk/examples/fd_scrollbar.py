@@ -55,4 +55,6 @@ class Fd_scrollbar(object):
 
 
 if __name__ == '__main__':
+    print("***** fd_scrollbar.py *****")
     ApplDemo = Fd_scrollbar(len(sys.argv), sys.argv)
+

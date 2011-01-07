@@ -5,9 +5,9 @@
 import sys
 import xformslib as xfl
 
-class My_clock(object):
+class Fd_clock(object):
     def __init__(self, lsysargv, sysargv):
-        xfl.fl_initialize(lsysargv, sysargv, 'My_clock', None, 0)
+        xfl.fl_initialize(lsysargv, sysargv, 'Fd_clock', None, 0)
 
         xfl.fl_set_coordunit(xfl.FL_COORD_PIXEL)
         self.create_forms()
@@ -49,4 +49,6 @@ class My_clock(object):
 
 
 if __name__ == '__main__':
-    ApplDemo = My_clock(len(sys.argv), sys.argv)
+    print("***** fd_clock.py *****")
+    ApplDemo = Fd_clock(len(sys.argv), sys.argv)
+

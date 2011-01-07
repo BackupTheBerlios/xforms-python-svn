@@ -5,9 +5,9 @@
 import sys
 import xformslib as xfl
 
-class My_chart(object):
+class Fd_chart(object):
     def __init__(self, lsysargv, sysargv):
-        xfl.fl_initialize(lsysargv, sysargv, 'My_chart', None, 0)
+        xfl.fl_initialize(lsysargv, sysargv, 'Fd_chart', None, 0)
 
         xfl.fl_set_coordunit(xfl.FL_COORD_PIXEL)
         self.create_forms()
@@ -49,4 +49,6 @@ class My_chart(object):
 
 
 if __name__ == '__main__':
-    ApplDemo = My_chart(len(sys.argv), sys.argv)
+    print("***** fd_chart.py *****")
+    ApplDemo = Fd_chart(len(sys.argv), sys.argv)
+

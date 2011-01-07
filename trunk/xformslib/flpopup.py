@@ -32,6 +32,7 @@
 
 import ctypes as cty
 from xformslib import library
+from xformslib import flxbasic
 from xformslib import xfdata
 
 
@@ -77,7 +78,7 @@ def fl_popup_add(win, title):
         """FL_POPUP * fl_popup_add(Window p1, const char * p2)""")
     library.check_if_initialized()
     if not win:         # if it is None
-        win = xfdata.fl_root
+        win = flxbasic.fl_root
     ul_win = library.convert_to_Window(win)
     s_title = library.convert_to_stringc(title)
     library.keep_elem_refs(win, title, ul_win, s_title)
@@ -379,7 +380,7 @@ def fl_popup_create(win, title, ptr_flpopupitem):
     ----------
         win : long_pos
             window of a parent flobject (use flxbasic.FL_ObjWin() to find out
-            about it). You can also use either xfdata.fl_root or None for the
+            about it). You can also use either flxbasic.fl_root or None for the
             root window.
         title : str
             text of title that gets shown at the top of the popup in a frame.
@@ -413,7 +414,7 @@ def fl_popup_create(win, title, ptr_flpopupitem):
            FL_POPUP_ITEM * p3)""")
     library.check_if_initialized()
     if not win:         # if it is None
-        win = xfdata.fl_root
+        win = flxbasic.fl_root
     ul_win = library.convert_to_Window(win)
     s_title = library.convert_to_stringc(title)
     library.verify_flpopupitemptr_type(ptr_flpopupitem)

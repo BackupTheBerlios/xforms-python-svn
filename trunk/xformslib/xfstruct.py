@@ -640,7 +640,7 @@ def make_flresource(dictflresource):
                 ptr_clsvar[numb], pyclsdefval[numb], s_clsdefval[numb], \
                 pyclsnbytes[numb], i_clsnbytes[numb])
 
-        #flcmdopt[-1].option = ""    # this ends array, preventing SegFault
+        #structflresource[-1].option = ""    # this ends array, preventing SegFault
 
         ptr_flresource = cty.pointer(structflresource[0])
         library.keep_elem_refs(dictflresource, ptr_flresource, \
@@ -651,6 +651,87 @@ def make_flresource(dictflresource):
         raise library.XFormsTypeError("Parameter %s (of type %s) must be" \
                 " a python dict or a list of dicts" % \
                 (dictflresource, type(dictflresource)))
+
+
+def make_flpoint(dictflpoint):
+    """make_flpoint(dictflpoint) -> ptr_flpoint
+
+    Taking a python dict (for one dict item) or a list of dicts (for more
+    than one dict item) with keys corresponding to xfdata.FL_POINT
+    attributes prepares and returns a C-compatible pointer to
+    xfdata.FL_POINT. Keys are: 'x' and 'y'."""
+
+    # one dict
+    if isinstance(dictflpoint, dict):
+
+        pyclsx = sh_clsx = 0
+        pyclsy = sh_clsy = 0
+        if not 'x' in dictflpoint:      # no x passed
+            raise library.XFormsTypeError("make_flpoint dict (whose "
+                    "contents is %s) should have a 'x' key" % \
+                    dictflpoint)
+        else:
+            pyclsx = dictflpoint['x']
+            sh_clsx = library.convert_to_shortc(pyclsx)
+        if not 'y' in dictflpoint:      # no y passed
+            raise library.XFormsTypeError("make_flpoint dict (whose "
+                    "contents is %s) should have a 'y' key" % \
+                    dictflpoint)
+        else:
+            pyclsy = dictflpoint['y']
+            sh_clsy = library.convert_to_shortc(pyclsy)
+        structflpoint = (xfdata.FL_POINT *2)()      # * 2)()
+        structflpoint[0].x = sh_clsx
+        structflpoint[0].y = sh_clsy
+        structflpoint[1].x = 0  # ends array, preventing SegFault?
+
+        ptr_flpoint = cty.pointer(structflpoint[0])
+        library.keep_elem_refs(dictflpoint, structflpoint, \
+                ptr_flpoint, pyclsx, sh_clsx, pyclsy, sh_clsy)
+        return ptr_flpoint
+
+    # more dicts
+    elif isinstance(dictflpoint, list):
+
+        dictlength = len(dictflpoint)
+        structflpoint = (xfdata.FL_POINT * (dictlength+1))()  # +1
+        pyclsx = sh_clsx = [0] * dictlength
+        pyclsy = sh_clsy = [0] * dictlength
+
+        for numb in range(0, dictlength):
+
+            if not 'x' in dictflpoint[numb]:  # no x passed
+                raise library.XFormsTypeError("make_flpoint dict (whose "
+                        "contents is %s) should have a 'x' key" % \
+                        dictflpoint[numb])
+            else:
+                pyclsx[numb] = dictflpoint[numb]['x']
+                sh_clsx[numb] = library.convert_to_shortc(pyclsx[numb])
+            if not 'y' in dictflpoint[numb]:  # no y passed
+                raise library.XFormsTypeError("make_flpoint dict (whose "
+                        "contents is %s) should have a 'y' key" % \
+                        dictflpoint[numb])
+            else:
+                pyclsx[numb] = dictflpoint[numb]['x']
+                sh_clsx[numb] = library.convert_to_shortc(pyclsx[numb])
+
+            structflpoint[numb].x = sh_clsx[numb]
+            structflpoint[numb].x = sh_clsy[numb]
+
+            library.keep_elem_refs(dictflpoint[numb], structflpoint[numb], \
+                pyclsx[numb], sh_clsx[numb], pyclsy[numb], sh_clsy[numb])
+
+        structflpoint[-1].x = 0    # this ends array, preventing SegFault
+
+        ptr_flpoint = cty.pointer(structflpoint[0])
+        library.keep_elem_refs(dictflpoint, ptr_flpoint, \
+                structflpoint)
+        return ptr_flpoint
+
+    else:
+        raise library.XFormsTypeError("Parameter %s (of type %s) must be" \
+                " a python dict or a list of dicts" % \
+                (dictflpoint, type(dictflpoint)))
 
 
 def make_flpopupcb(pyfn_popupcb):

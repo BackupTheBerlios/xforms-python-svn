@@ -5,9 +5,9 @@
 import sys
 import xformslib as xfl
 
-class My_pixmap_usedata(object):
+class Fd_pixmap_usedata(object):
     def __init__(self, lsysargv, sysargv):
-        xfl.fl_initialize(lsysargv, sysargv, 'My_pixmap_usedata', None, 0)
+        xfl.fl_initialize(lsysargv, sysargv, 'Fd_pixmap_usedata', None, 0)
 
         xfl.fl_set_coordunit(xfl.FL_COORD_PIXEL)
         self.create_forms()
@@ -52,4 +52,6 @@ class My_pixmap_usedata(object):
 
 
 if __name__ == '__main__':
-    ApplDemo = My_pixmap_usedata(len(sys.argv), sys.argv)
+    print("***** fd_pixmap_usedata.py *****")
+    ApplDemo = Fd_pixmap_usedata(len(sys.argv), sys.argv)
+

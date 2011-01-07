@@ -49,4 +49,6 @@ class Fd_timer(object):
 
 
 if __name__ == '__main__':
+    print("***** fd_timer.py *****")
     ApplDemo = Fd_timer(len(sys.argv), sys.argv)
+

@@ -163,5 +163,5 @@ class Flnmenumin(object):
 
 if __name__ == '__main__':
     print ("********* nmenu_minimal.py *********")
-    appl = Flnmenumin(len(sys.argv), sys.argv)
+    Flnmenumin(len(sys.argv), sys.argv)
 

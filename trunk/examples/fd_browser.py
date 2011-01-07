@@ -5,9 +5,9 @@
 import sys
 import xformslib as xfl
 
-class My_browser(object):
+class Fd_browser(object):
     def __init__(self, lsysargv, sysargv):
-        xfl.fl_initialize(lsysargv, sysargv, 'My_browser', None, 0)
+        xfl.fl_initialize(lsysargv, sysargv, 'Fd_browser', None, 0)
 
         xfl.fl_set_coordunit(xfl.FL_COORD_PIXEL)
         self.create_forms()
@@ -52,4 +52,6 @@ class My_browser(object):
 
 
 if __name__ == '__main__':
-    ApplDemo = My_browser(len(sys.argv), sys.argv)
+    print("***** fd_browser.py *****")
+    ApplDemo = Fd_browser(len(sys.argv), sys.argv)
+

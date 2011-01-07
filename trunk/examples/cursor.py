@@ -29,13 +29,7 @@ bm2_bits = "\x00\x00\x00\x57\x7c\x72\xfc\x52\xfc\x00\x7c\x01" \
            "\x7c\x1f\xfc\x22\x40\x42\x40\x44\x40\x43\xc0\x40" \
            "\x70\x40\x8c\x20\x00\x1f\x00\x00"
 
-#curs = "\x01\x02\x03\x04\x05\x06\x07\x08\x09\x0a\x0b\x0c\x0d\xff"
-curslist = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13]
-curs = "".join([chr(x) for x in curslist])
-#curs = ""
-#for x in curslist:
-#    curs += chr(x)
-curs += hex(-1)         #"\xffffffff"
+curslist = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, -1]
 
 
 class FD_cursor(object):
@@ -55,7 +49,7 @@ class FLCursor(object):
         # fill-in form initialization code
         xfl.fl_set_cursor_color(xfl.FL_BUSY_CURSOR, xfl.FL_BLACK, xfl.FL_RED)
 
-        self.panimated = xfl.fl_create_animated_cursor(curs, 150)
+        self.panimated = xfl.fl_create_animated_cursor(curslist, 150)
 
         xfl.fl_show_form(self.fd_cursor.cursor, xfl.FL_PLACE_CENTER, \
                 xfl.FL_FULLBORDER, "cursor")
@@ -137,4 +131,5 @@ class FLCursor(object):
 
 if __name__ == '__main__':
     print("********* cursor.py *********")
-    appl = FLCursor(len(sys.argv), sys.argv)
+    FLCursor(len(sys.argv), sys.argv)
+

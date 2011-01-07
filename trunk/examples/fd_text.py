@@ -30,7 +30,7 @@ class Fd_text(object):
         xfl.fl_set_object_lcol(self.ptrflobj0, xfl.FL_BLACK)
         xfl.fl_set_object_resize(self.ptrflobj0, xfl.FL_RESIZE_ALL)
         xfl.fl_set_object_gravity(self.ptrflobj0, xfl.FL_NoGravity, xfl.FL_NoGravity)
-        self.ptext = xfl.fl_add_text(xfl.FL_NORMAL_TEXT, 40, 40, 240, 110, 'My name is text,\nspeciail agent Text from the Earth')
+        self.ptext = xfl.fl_add_text(xfl.FL_NORMAL_TEXT, 40, 40, 240, 110, 'My name is text,\nspecial agent Text from the Earth')
         xfl.fl_set_object_boxtype(self.ptext, xfl.FL_DOWN_BOX)
         xfl.fl_set_object_color(self.ptext, xfl.FL_COL1, xfl.FL_MCOL)
         xfl.fl_set_object_lalign(self.ptext, xfl.FL_ALIGN_RIGHT_TOP|xfl.FL_ALIGN_INSIDE)
@@ -40,7 +40,7 @@ class Fd_text(object):
         xfl.fl_set_object_resize(self.ptext, xfl.FL_RESIZE_X)
         xfl.fl_set_object_gravity(self.ptext, xfl.FL_NoGravity, xfl.FL_NoGravity)
         xfl.fl_set_object_shortcut(self.ptext, 'T', 1)
-        xfl.fl_set_object_callback(self.ptext, self.textcb, w)
+        xfl.fl_set_object_callback(self.ptext, self.textcb, 0)
 
         xfl.fl_end_form()
 
@@ -49,4 +49,6 @@ class Fd_text(object):
 
 
 if __name__ == '__main__':
+    print("***** fd_text.py *****")
     ApplDemo = Fd_text(len(sys.argv), sys.argv)
+

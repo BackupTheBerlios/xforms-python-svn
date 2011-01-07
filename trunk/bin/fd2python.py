@@ -762,8 +762,8 @@ class FdConvertToPy(object):
             else:                   # '0', is a relative path
                 vfile = './'+macrounit['file']
             if not ifuseddata:      # use file directly
-                flobjtxt += "\n%sxfl.fl_set_bitmap_file(%s, \'%s\')" % \
-                        (TWOTABS, prependxfl(vname), vfile)
+                flobjtxt += "\n%sxfl.fl_set_pixmap_file(%s, \'%s\')" % \
+                        (TWOTABS, prependself(vname), vfile)
             else:                   # read data in memory
                 # managing import from .xpm data
                 vdata = xfstruct.import_xpmdata_from_file(vfile)
@@ -1012,7 +1012,7 @@ class FdConvertToPy(object):
                 vname = self.getgeneric_flobjname()
             else:
                 vname = macrounit['name']
-            flobjtxt += "\n%s%s = xfl.fl_add_lightbutton(%s, %s, %s, %s, " \
+            flobjtxt += "\n%s%s = xfl.fl_add_scrollbutton(%s, %s, %s, %s, " \
                     "%s, \'%s\')" % (TWOTABS, prependself(vname), \
                     prependxfl(vtype), vxpos, vypos, vwidth, vheight, vlabel)
         if "boxtype" in macrounit:
@@ -1084,6 +1084,7 @@ class FdConvertToPy(object):
 
     def manage_flpixmapbutton(self, macrounit):
         flobjtxt = ""
+        vfocus = "1"    # focus on by default
         ifuseddata = False
         if "type" in macrounit:
             vtype = prependfltype(macrounit['type'])
@@ -1386,7 +1387,7 @@ class FdConvertToPy(object):
                 vname = self.getgeneric_flobjname()
             else:
                 vname = macrounit['name']
-            flobjtxt += "\n%s%s = xfl.fl_add_dial(%s, %s, %s, %s, " \
+            flobjtxt += "\n%s%s = xfl.fl_add_positioner(%s, %s, %s, %s, " \
                     "%s, \'%s\')" % (TWOTABS, prependself(vname), \
                     prependxfl(vtype), vxpos, vypos, vwidth, vheight, vlabel)
         if "boxtype" in macrounit:
@@ -1804,8 +1805,10 @@ class FdConvertToPy(object):
     def manage_endings(self):
         # append text of code run to func list
         appname = self.infile.replace(".fd", "").replace("-", "_").capitalize()
+        filname = self.infile.replace(".fd", ".py")
         endingstxt = "\n\n\nif __name__ == '__main__':"
-        endingstxt += "\n%sApplDemo = %s(len(sys.argv), sys.argv)" % \
+        endingstxt += '\n%sprint "***** %s *****"' % (ONETAB, filname)
+        endingstxt += "\n%sApplDemo = %s(len(sys.argv), sys.argv)\n\n" % \
                 (ONETAB, appname)
         self.runcodetext.append(endingstxt)
 

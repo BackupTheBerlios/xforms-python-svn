@@ -5,9 +5,9 @@
 import sys
 import xformslib as xfl
 
-class My_lightbutton(object):
+class Fd_lightbutton(object):
     def __init__(self, lsysargv, sysargv):
-        xfl.fl_initialize(lsysargv, sysargv, 'My_lightbutton', None, 0)
+        xfl.fl_initialize(lsysargv, sysargv, 'Fd_lightbutton', None, 0)
 
         xfl.fl_set_coordunit(xfl.FL_COORD_PIXEL)
         self.create_forms()
@@ -51,4 +51,6 @@ class My_lightbutton(object):
 
 
 if __name__ == '__main__':
-    ApplDemo = My_lightbutton(len(sys.argv), sys.argv)
+    print("***** fd_lightbutton.py *****")
+    ApplDemo = Fd_lightbutton(len(sys.argv), sys.argv)
+

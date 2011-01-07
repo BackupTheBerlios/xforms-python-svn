@@ -37,8 +37,8 @@ class Flthumbwheel(object):
                 2 : xfl.FL_RETURN_CHANGED, 3 : xfl.FL_RETURN_END, \
                 4 : xfl.FL_RETURN_ALWAYS}
         n = dictreturn[n]
-        xfl.fl_set_thumbwheel_return(self.pvert, n)
-        xfl.fl_set_thumbwheel_return(self.phor, n)
+        xfl.fl_set_object_return(self.pvert, n)
+        xfl.fl_set_object_return(self.phor, n)
 
 
     def create_form_twheelform(self):

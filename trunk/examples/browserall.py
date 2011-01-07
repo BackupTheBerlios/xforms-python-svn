@@ -144,10 +144,10 @@ class BrowserAll(object):
         if i:
             if i > 0:
                 ii = i
-                txtsel = "was selected."
+                txtsel = " was selected."
             else:
                 ii = -i
-                txtsel = "was deselected."
+                txtsel = " was deselected."
             buf += xfl.fl_get_browser_line(pobj, ii)
             buf += txtsel
 

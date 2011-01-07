@@ -5,9 +5,9 @@
 import sys
 import xformslib as xfl
 
-class My_labelbutton(object):
+class Fd_labelbutton(object):
     def __init__(self, lsysargv, sysargv):
-        xfl.fl_initialize(lsysargv, sysargv, 'My_labelbutton', None, 0)
+        xfl.fl_initialize(lsysargv, sysargv, 'Fd_labelbutton', None, 0)
 
         xfl.fl_set_coordunit(xfl.FL_COORD_PIXEL)
         self.create_forms()
@@ -50,4 +50,6 @@ class My_labelbutton(object):
 
 
 if __name__ == '__main__':
-    ApplDemo = My_labelbutton(len(sys.argv), sys.argv)
+    print("***** fd_labelbutton.py *****")
+    ApplDemo = Fd_labelbutton(len(sys.argv), sys.argv)
+

@@ -5,9 +5,9 @@
 import sys
 import xformslib as xfl
 
-class My_input(object):
+class Fd_input(object):
     def __init__(self, lsysargv, sysargv):
-        xfl.fl_initialize(lsysargv, sysargv, 'My_input', None, 0)
+        xfl.fl_initialize(lsysargv, sysargv, 'Fd_input', None, 0)
 
         xfl.fl_set_coordunit(xfl.FL_COORD_PIXEL)
         self.create_forms()
@@ -49,4 +49,6 @@ class My_input(object):
 
 
 if __name__ == '__main__':
-    ApplDemo = My_input(len(sys.argv), sys.argv)
+    print("***** fd_input.py *****")
+    ApplDemo = Fd_input(len(sys.argv), sys.argv)
+

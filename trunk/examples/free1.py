@@ -52,10 +52,6 @@ class Flfree1(object):
         self.cole += col
 
         for i in range(col, self.cole + 1):
-            if sys.version_info[0] > 2:
-                print(i, end=' ')
-            else:
-                print i,
             j =  255 * (i - col) / (self.cole - col)
             xfl.fl_mapcolor(i, j, j, j)
 
@@ -91,4 +87,5 @@ class Flfree1(object):
 
 if __name__ == '__main__':
     print("********* free1.py *********")
-    appl = Flfree1(len(sys.argv), sys.argv)
+    Flfree1(len(sys.argv), sys.argv)
+

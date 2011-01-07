@@ -73,4 +73,5 @@ def main(lsysargv, sysargv):
 
 
 if __name__ == '__main__':
+    print("********* demotest2.py *********")
     main(len(sys.argv), sys.argv)

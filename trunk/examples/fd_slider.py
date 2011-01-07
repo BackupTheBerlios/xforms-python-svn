@@ -5,9 +5,9 @@
 import sys
 import xformslib as xfl
 
-class My_slider(object):
+class Fd_slider(object):
     def __init__(self, lsysargv, sysargv):
-        xfl.fl_initialize(lsysargv, sysargv, 'My_slider', None, 0)
+        xfl.fl_initialize(lsysargv, sysargv, 'Fd_slider', None, 0)
 
         xfl.fl_set_coordunit(xfl.FL_COORD_PIXEL)
         self.create_forms()
@@ -55,4 +55,6 @@ class My_slider(object):
 
 
 if __name__ == '__main__':
-    ApplDemo = My_slider(len(sys.argv), sys.argv)
+    print("***** fd_slider.py *****")
+    ApplDemo = Fd_slider(len(sys.argv), sys.argv)
+

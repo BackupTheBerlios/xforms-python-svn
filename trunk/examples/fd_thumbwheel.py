@@ -53,4 +53,6 @@ class Fd_thumbwheel(object):
 
 
 if __name__ == '__main__':
+    print("***** fd_thumbwheel.py *****")
     ApplDemo = Fd_thumbwheel(len(sys.argv), sys.argv)
+

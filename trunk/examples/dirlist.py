@@ -11,6 +11,7 @@
 #
 
 import sys
+import time
 #sys.path.append("..")
 import xformslib as xfl
 
@@ -30,23 +31,16 @@ def fill_browser(pobj):
 
     nfiles = 0
     dl, nfiles = xfl.fl_get_dirlist( ".", "*", 0)
-    #	const FL_Dirlist *ds;
-    #const FL_Dirlist *dlend = dl + nfiles;
     xfl.fl_freeze_form(pobj.contents.form)
     buf = "Total %d files" % nfiles
     xfl.fl_set_object_label(fd_fbform.total, buf)
     xfl.fl_clear_browser(fd_fbform.browser)
 
-    #for ( ds = dl; dl < dlend; dl++ )
     for ds in range(0, nfiles):
-        #sprintf(buf, "%-10s\t\t%5ldK\t%s", dl->name, dl->dl_size >> 10,
-        #         ctime( &dl->dl_mtime ) + 3)
         buf = "%-10s\t%5ldK\t%s\n" % (dl[ds].name, \
-                dl[ds].dl_size >> 10, dl[ds].dl_mtime)
+                dl[ds].dl_size >> 10, time.ctime(dl[ds].dl_mtime))
         xfl.fl_addto_browser_chars(fd_fbform.browser, buf)
     xfl.fl_unfreeze_form(pobj.contents.form)
-
-    #xfl.fl_free_dirlist(ds)
 
 
 # callbacks and freeobj handles for form fbform
@@ -57,7 +51,6 @@ def sort_method_cb(pobj, data):
 
 
 def done_cb(pobj, data):
-
     xfl.fl_finish()
     sys.exit(0)
 

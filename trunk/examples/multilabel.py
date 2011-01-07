@@ -78,4 +78,5 @@ class Flmultilabel(object):
 
 if __name__ == '__main__':
     print("********* multilabel.py *********")
-    appl = Flmultilabel(len(sys.argv), sys.argv)
+    Flmultilabel(len(sys.argv), sys.argv)
+

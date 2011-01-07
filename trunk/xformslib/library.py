@@ -355,6 +355,21 @@ def convert_to_uintc(paramname):
         return paramname
 
 
+def convert_to_shortc(paramname):
+    """ Converts paramname to python int and to ctypes c_short """
+    if not isinstance(paramname, cty.c_short):
+        try:
+            retv0 = int(paramname)
+        except ValueError:
+            raise XFormsTypeError("Provided parameter '%s' has %s type, "
+                    "but an 'int'/'c_short' type should be used." % \
+                    (paramname, type(paramname)))
+        retv = cty.c_short(retv0)
+        return retv
+    else:
+        return paramname
+
+
 def convert_to_longc(paramname):
     """ Converts paramname to python long and to ctypes c_long """
     if sys.version_info[0] > 2:

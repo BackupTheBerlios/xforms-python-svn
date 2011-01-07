@@ -5,9 +5,9 @@
 import sys
 import xformslib as xfl
 
-class My_bitmapbutton(object):
+class Fd_bitmapbutton(object):
     def __init__(self, lsysargv, sysargv):
-        xfl.fl_initialize(lsysargv, sysargv, 'My_bitmapbutton', None, 0)
+        xfl.fl_initialize(lsysargv, sysargv, 'Fd_bitmapbutton', None, 0)
 
         xfl.fl_set_coordunit(xfl.FL_COORD_PIXEL)
         self.create_forms()
@@ -51,4 +51,6 @@ class My_bitmapbutton(object):
 
 
 if __name__ == '__main__':
-    ApplDemo = My_bitmapbutton(len(sys.argv), sys.argv)
+    print("***** fd_bitmapbutton.py *****")
+    ApplDemo = Fd_bitmapbutton(len(sys.argv), sys.argv)
+

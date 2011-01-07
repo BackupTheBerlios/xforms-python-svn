@@ -5,9 +5,9 @@
 import sys
 import xformslib as xfl
 
-class My_bitmap(object):
+class Fd_bitmap(object):
     def __init__(self, lsysargv, sysargv):
-        xfl.fl_initialize(lsysargv, sysargv, 'My_bitmap', None, 0)
+        xfl.fl_initialize(lsysargv, sysargv, 'Fd_bitmap', None, 0)
 
         xfl.fl_set_coordunit(xfl.FL_COORD_PIXEL)
         self.create_forms()
@@ -50,4 +50,6 @@ class My_bitmap(object):
 
 
 if __name__ == '__main__':
-    ApplDemo = My_bitmap(len(sys.argv), sys.argv)
+    print("***** fd_bitmap.py *****")
+    ApplDemo = Fd_bitmap(len(sys.argv), sys.argv)
+

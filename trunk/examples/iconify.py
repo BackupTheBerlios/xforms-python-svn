@@ -17,7 +17,7 @@ import xformslib as xfl
 
 
 # contents from "crab.xpm" file
-    # width height ncolors chars_per_pixel / pixels data
+# width height ncolors chars_per_pixel / pixels data
 crab = ["28 28 6 2 ", \
     ".  c None 	 m white 	 s s_SkyBlue ", \
     "x  c orange 	 m black 	 s s_orange ", \
@@ -60,8 +60,7 @@ def main(lsysargv, sysargv):
     xfl.fl_initialize(lsysargv, sysargv, "FormDemo", None, 0)
     pform = create_form_form()
 
-    pix, w, h, mask, hx, hy = xfl.fl_read_pixmapfile(xfl.fl_root, \
-               "crab.xpm", 0)
+    pix, w, h, mask, hx, hy = xfl.fl_read_pixmapfile(xfl.fl_root, "crab.xpm", 0)
     xfl.fl_set_form_icon(pform, pix, mask)
 
     xfl.fl_show_form(pform, xfl.FL_PLACE_CENTER, xfl.FL_FULLBORDER, "IconTest")
@@ -88,3 +87,4 @@ def create_form_form():
 if __name__ == '__main__':
     print("********* iconify.py *********")
     main(len(sys.argv), sys.argv)
+

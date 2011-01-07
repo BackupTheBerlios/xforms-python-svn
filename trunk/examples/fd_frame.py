@@ -5,9 +5,9 @@
 import sys
 import xformslib as xfl
 
-class My_frame(object):
+class Fd_frame(object):
     def __init__(self, lsysargv, sysargv):
-        xfl.fl_initialize(lsysargv, sysargv, 'My_frame', None, 0)
+        xfl.fl_initialize(lsysargv, sysargv, 'Fd_frame', None, 0)
 
         xfl.fl_set_coordunit(xfl.FL_COORD_PIXEL)
         self.create_forms()
@@ -49,4 +49,6 @@ class My_frame(object):
 
 
 if __name__ == '__main__':
-    ApplDemo = My_frame(len(sys.argv), sys.argv)
+    print("***** fd_frame.py *****")
+    ApplDemo = Fd_frame(len(sys.argv), sys.argv)
+

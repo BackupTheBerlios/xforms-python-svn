@@ -37,6 +37,26 @@ from xformslib import flbasic
 from xformslib import flcanvas
 
 
+# these variable are not meant to be moved in xfdata.py!
+fl_current_form = (cty.POINTER(xfdata.FL_FORM)).in_dll( \
+        library.load_so_libforms(), 'fl_current_form')
+fl_display = (cty.POINTER(xfdata.Display)).in_dll(library.load_so_libforms(),
+        'fl_display')
+fl_screen = (cty.c_int).in_dll(library.load_so_libforms(), 'fl_screen')
+# root window
+fl_root = (xfdata.Window).in_dll(library.load_so_libforms(), 'fl_root')
+# virtual root window
+fl_vroot = (xfdata.Window).in_dll(library.load_so_libforms(), 'fl_vroot')
+# screen dimension in pixels
+fl_scrh = (cty.c_int).in_dll(library.load_so_libforms(), 'fl_scrh')
+fl_scrw = (cty.c_int).in_dll(library.load_so_libforms(), 'fl_scrw')
+
+fl_vmode = (cty.c_int).in_dll(library.load_so_libforms(), 'fl_vmode')
+#fl_state = (cty.POINTER(xfdata.FL_State)).in_dll(library.load_so_libforms(),
+#            'fl_state')
+fl_state = (xfdata.FL_State * 6)()  # fl_state is an array of 6 FL_State
+
+
 
 ###########################
 # forms.h (XBasic.h)
@@ -61,15 +81,16 @@ def FL_is_rgb(visual):
 
 # Current version only runs in single visual mode
 def fl_get_vclass():
-    return xfdata.fl_vmode.value       # xfdata.fl_vmode
+    return fl_vmode.value
 
 
 def fl_get_form_vclass(a):
-    return xfdata.fl_vmode.value       # xfdata.fl_vmode
+    return fl_vmode.value
 
 
 def fl_get_gc():
-    return xfdata.fl_state[xfdata.fl_vmode.value].gc[0]
+    return fl_state[fl_get_vclass()].gc[0]
+    #return xfdata.fl_state[xfdata.fl_vmode().value].gc[0]
     #return xfdata.fl_state[xfdata.fl_vmode].gc[0]
 
 
@@ -117,12 +138,17 @@ def fl_mode_capable(mode, warn):
 
 
 def fl_default_win():
-    return xfdata.fl_state[xfdata.fl_vmode.value].trailblazer
-    #return xfdata.fl_state[xfdata.fl_vmode].trailblazer
+    print "fl_state", fl_state
+    print ".fl_state[fl_get_vclass()]", fl_state[fl_get_vclass()]
+    print "fl_state[fl_get_vclass()].trailblazer", fl_state[fl_get_vclass()].trailblazer
+    return fl_state[fl_get_vclass()].trailblazer
+    #return fl_state[fl_vmode().value].trailblazer
+    #return fl_state[fl_vmode].trailblazer
 
 
 def fl_default_window():
-    return xfdata.fl_state[xfdata.fl_vmode.value].trailblazer
+    return fl_state[fl_get_vclass()].trailblazer
+    #return xfdata.fl_state[xfdata.fl_vmode().value].trailblazer
     #return xfdata.fl_state[xfdata.fl_vmode].trailblazer
 
 
@@ -439,6 +465,8 @@ def fl_polygon(fill, ptr_flpoint, numpoints, colr):
             cty.POINTER(xfdata.FL_POINT))
     i_numpoints = library.convert_to_intc(numpoints)
     ul_colr = library.convert_to_FL_COLOR(colr)
+    print("fill, ptr_flpoint, numpoints, colr, i_fill, i_numpoints, ul_colr")
+    print(fill, ptr_flpoint, numpoints, colr, i_fill, i_numpoints, ul_colr)
     library.keep_elem_refs(fill, ptr_flpoint, numpoints, colr, i_fill, \
             i_numpoints, ul_colr)
     _fl_polygon(i_fill, ptr_flpoint, i_numpoints, ul_colr)
@@ -2615,7 +2643,7 @@ def fl_winbackground(win, pixelval):
     """
     _fl_winbackground = library.cfuncproto(
         library.load_so_libforms(), "fl_winbackground", \
-        None, [xfdata.Window, xfdata.c_ulong], \
+        None, [xfdata.Window, cty.c_ulong], \
         """void fl_winbackground(Window win, unsigned long bk)""")
     library.check_if_initialized()
     ul_win = library.convert_to_Window(win)
@@ -3427,7 +3455,7 @@ def FL_ObjWin(ptr_flobject):
     if FL_IS_CANVAS(ptr_flobject):
         return flcanvas.fl_get_canvas_id(ptr_flobject)
     else:
-        return ptr_flobject.contents.form.contents.window
+        return ptr_flobject.contents.form.contents.window.value
 
 
 def fl_get_real_object_window(ptr_flobject):

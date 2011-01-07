@@ -54,5 +54,8 @@ class Fd_dial(object):
         pass
 
 
+
 if __name__ == '__main__':
+    print("***** fd_dial.py *****")
     ApplDemo = Fd_dial(len(sys.argv), sys.argv)
+

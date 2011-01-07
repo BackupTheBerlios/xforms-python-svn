@@ -48,7 +48,7 @@ class Choice(object):
 
     def cb(self, pobj, data):
         pselitem = xfl.fl_get_select_item(pobj)
-        message = "CallBack: %d\n" % pselitem.contents.val
+        message = "CallBack: %d" % pselitem.contents.val
         print(message)
 
 
