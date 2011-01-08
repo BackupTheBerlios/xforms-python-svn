@@ -389,7 +389,7 @@ def make_flcmdopt(dictflcmdopt):
         flcmdopt.specifier = s_specifier
         flcmdopt.argKind = i_argKind
         flcmdopt.value = s_value
-        #flcmdopt[1].text = None    # this ends array, preventing SegFault
+        #flcmdopt[1].option = None    # this ends array, preventing SegFault
 
         ptr_flcmdopt = cty.pointer(flcmdopt)
         library.keep_elem_refs(dictflcmdopt, flcmdopt, ptr_flcmdopt, \
@@ -640,7 +640,7 @@ def make_flresource(dictflresource):
                 ptr_clsvar[numb], pyclsdefval[numb], s_clsdefval[numb], \
                 pyclsnbytes[numb], i_clsnbytes[numb])
 
-        #structflresource[-1].option = ""    # this ends array, preventing SegFault
+        #structflresource[-1].res_name = ""    # this ends array, preventing SegFault
 
         ptr_flresource = cty.pointer(structflresource[0])
         library.keep_elem_refs(dictflresource, ptr_flresource, \
@@ -673,6 +673,8 @@ def make_flpoint(dictflpoint):
         else:
             pyclsx = dictflpoint['x']
             sh_clsx = library.convert_to_shortc(pyclsx)
+            print "pyclsx, sh_clsx", pyclsx, sh_clsx
+
         if not 'y' in dictflpoint:      # no y passed
             raise library.XFormsTypeError("make_flpoint dict (whose "
                     "contents is %s) should have a 'y' key" % \
@@ -680,10 +682,11 @@ def make_flpoint(dictflpoint):
         else:
             pyclsy = dictflpoint['y']
             sh_clsy = library.convert_to_shortc(pyclsy)
-        structflpoint = (xfdata.FL_POINT *2)()      # * 2)()
+            print "pyclsy, sh_clsy", pyclsy, sh_clsy
+            structflpoint = (xfdata.FL_POINT)()      # * 2)()
         structflpoint[0].x = sh_clsx
         structflpoint[0].y = sh_clsy
-        structflpoint[1].x = 0  # ends array, preventing SegFault?
+        #structflpoint[1].x = 0  # ends array, preventing SegFault?
 
         ptr_flpoint = cty.pointer(structflpoint[0])
         library.keep_elem_refs(dictflpoint, structflpoint, \
@@ -694,7 +697,7 @@ def make_flpoint(dictflpoint):
     elif isinstance(dictflpoint, list):
 
         dictlength = len(dictflpoint)
-        structflpoint = (xfdata.FL_POINT * (dictlength+1))()  # +1
+        structflpoint = (xfdata.FL_POINT * dictlength)()  # +1
         pyclsx = sh_clsx = [0] * dictlength
         pyclsy = sh_clsy = [0] * dictlength
 
@@ -712,16 +715,16 @@ def make_flpoint(dictflpoint):
                         "contents is %s) should have a 'y' key" % \
                         dictflpoint[numb])
             else:
-                pyclsx[numb] = dictflpoint[numb]['x']
-                sh_clsx[numb] = library.convert_to_shortc(pyclsx[numb])
+                pyclsy[numb] = dictflpoint[numb]['y']
+                sh_clsy[numb] = library.convert_to_shortc(pyclsy[numb])
 
             structflpoint[numb].x = sh_clsx[numb]
-            structflpoint[numb].x = sh_clsy[numb]
+            structflpoint[numb].y = sh_clsy[numb]
 
             library.keep_elem_refs(dictflpoint[numb], structflpoint[numb], \
                 pyclsx[numb], sh_clsx[numb], pyclsy[numb], sh_clsy[numb])
 
-        structflpoint[-1].x = 0    # this ends array, preventing SegFault
+        #structflpoint[-1].x = 0    # this ends array, preventing SegFault
 
         ptr_flpoint = cty.pointer(structflpoint[0])
         library.keep_elem_refs(dictflpoint, ptr_flpoint, \

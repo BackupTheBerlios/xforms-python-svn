@@ -465,8 +465,6 @@ def fl_polygon(fill, ptr_flpoint, numpoints, colr):
             cty.POINTER(xfdata.FL_POINT))
     i_numpoints = library.convert_to_intc(numpoints)
     ul_colr = library.convert_to_FL_COLOR(colr)
-    print("fill, ptr_flpoint, numpoints, colr, i_fill, i_numpoints, ul_colr")
-    print(fill, ptr_flpoint, numpoints, colr, i_fill, i_numpoints, ul_colr)
     library.keep_elem_refs(fill, ptr_flpoint, numpoints, colr, i_fill, \
             i_numpoints, ul_colr)
     _fl_polygon(i_fill, ptr_flpoint, i_numpoints, ul_colr)

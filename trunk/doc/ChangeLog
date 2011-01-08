@@ -2,6 +2,8 @@ SVN (first entries from top are more recent)
 --------------------------------------------
 
 BETA
+    * make_flpoint() function corrected: freedraw.py and demo27.py examples
+    display correctly triangles now.
     20110107 (beta13)
     * mtime now fixed in dirlist.py example.
     * freedraw.py example added (not 100% functional).

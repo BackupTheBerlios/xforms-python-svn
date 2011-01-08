@@ -59,40 +59,24 @@ def main(lsysargv, sysargv):
 
 def draw_triangle(fill, x, y, w, h, colr):
 
-    point = (xfl.FL_POINT * 3)()   # XPoint xpoint[ 4 ];
     #win = xfl.fl_winget()
-
-    point[0].x = int(x)
-    point[0].y = int(y + h - 1)
-    point[1].x = int(x + w / 2)
-    point[1].y = int(y)
-    point[2].x = int(x + w - 1)
-    point[2].y = int(y + h - 1)
-    import ctypes
-    xpoint = ctypes.pointer(point[0])
-
-    """mylistpoint = [ {'x':int(x), 'y':int(y + h - 1)}, \
+    mylistpoint = [ {'x':int(x), 'y':int(y + h - 1)}, \
             {'x':int(x + w / 2), 'y':int(y)}, \
             {'x':int(x + w - 1), 'y':int(y + h - 1)} ]
-    xpoint = xfl.make_flpoint(mylistpoint)"""
+    pxpoint = xfl.make_flpoint(mylistpoint)         # XPoint xpoint[ 4 ];
 
-    #print xpoint, xpoint.contents, xpoint[0].x, xpoint[0].y
-
-    #print colr
     #gc = xfl.fl_get_gc()       #xfl.fl_state[xfl.fl_get_vclass()].gc[0]
-    #print "gc", gc
     #gc = xfl.fl_state[xfl.fl_vmode].gc[0]
     #xfl.fl_set_foreground(gc, xfl.fl_get_pixel(colr))           # XSetForeground( dpy, gc, xfl.fl_get_pixel( col ))
-    #xfl.fl_set_foreground(gc, colr)           # XSetForeground( dpy, gc, xfl.fl_get_pixel( col ))
 
     if fill:
         #XFillPolygon( dpy, win, gc, xpoint, 3, Nonconvex, Unsorted)
-        xfl.fl_polyf(xpoint, 3, colr)
+        xfl.fl_polyf(pxpoint, 3, colr)
     else:
         #xpoint[3].x = xpoint[0].x
         #xpoint[3].y = xpoint[0].y
         # XDrawLines( dpy, win, gc, xpoint, 4, CoordModeOrigin)
-        xfl.fl_polygon(0, xpoint, 3, colr)
+        xfl.fl_polygon(0, pxpoint, 3, colr)
 
 """static DrawFunc drawfunc[] = {  xfl.fl_oval, xfl.fl_rectangle, draw_triangle};"""
 drawfunc = [xfl.fl_oval, xfl.fl_rectangle, draw_triangle]
