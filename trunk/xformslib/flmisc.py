@@ -161,7 +161,7 @@ def fl_stuff_clipboard(ptr_flobject, clipbdtype, vdata, size, \
         clipbdtype : long
             type of clipboard (not used)
         vdata : *todo*
-            data to be stored
+            data to be stored *todo*
         size : long
             size of data to be stuffed
         pyfn_LoseSelectionCb : python function callback, returned value
@@ -181,19 +181,21 @@ def fl_stuff_clipboard(ptr_flobject, clipbdtype, vdata, size, \
         Status: Untested + NoDoc + NoDemo = NOT OK
 
     """
+    # cty.c_void_p replaced with passed type
+    mycparamtype, ptr_vdata = library.handle_userdata(vdata)
     #FL_LOSE_SELECTION_CB = cty.CFUNCTYPE(cty.c_int, cty.POINTER( \
     #                       xfdata.FL_OBJECT), cty.c_long)
     _fl_stuff_clipboard = library.cfuncproto(
         library.load_so_libforms(), "fl_stuff_clipboard",
-        cty.c_int, [cty.POINTER(xfdata.FL_OBJECT), cty.c_long, cty.c_void_p,
+        cty.c_int, [cty.POINTER(xfdata.FL_OBJECT), cty.c_long, mycparamtype,
         cty.c_long, xfdata.FL_LOSE_SELECTION_CB],
         """int fl_stuff_clipboard(FL_OBJECT * ob, long int type,
            const char * data, long int size,
-           FL_LOSE_SELECTION_CB lose_callback)""")
+           FL_LOSE_SELECTION_CB lose_callback)""")      # cty.c_void_p,
     library.check_if_initialized()
     library.verify_flobjectptr_type(ptr_flobject)
     l_clipbdtype = library.convert_to_longc(clipbdtype)
-    ptr_vdata = cty.cast(vdata, cty.c_void_p)
+    #ptr_vdata = cty.cast(vdata, cty.c_void_p)
     l_size = library.convert_to_longc(size)
     library.verify_function_type(pyfn_LoseSelectionCb)
     cfn_LoseSelectionCb = xfdata.FL_LOSE_SELECTION_CB(pyfn_LoseSelectionCb)

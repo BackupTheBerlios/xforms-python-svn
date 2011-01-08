@@ -116,19 +116,20 @@ def fl_add_io_callback(fd, fmask, pyfn_IoCallback, vdata):
         Status: Tested + Doc + NoDemo = OK
 
     """
+    # cty.c_void_p replaced with passed type
+    mycparamtype, ptr_vdata = library.handle_userdata(vdata)
     #FL_IO_CALLBACK = cty.CFUNCTYPE(None, cty.c_int, cty.c_void_p)
     _fl_add_io_callback = library.cfuncproto(
         library.load_so_libforms(), "fl_add_io_callback", \
-        None, [cty.c_int, cty.c_uint, xfdata.FL_IO_CALLBACK, cty.c_void_p],
+        None, [cty.c_int, cty.c_uint, xfdata.FL_IO_CALLBACK, mycparamtype],
         """void fl_add_io_callback(int fd, unsigned int mask,
-           FL_IO_CALLBACK callback, void * data) """)
+           FL_IO_CALLBACK callback, void * data) """)   #       cty.c_void_p],
     library.check_if_initialized()
     i_fd = library.convert_to_intc(fd)
     library.checkfatal_allowed_value_in_list(fmask, xfdata.ASYNCIO_list)
     ui_fmask = library.convert_to_uintc(fmask)
     library.verify_function_type(pyfn_IoCallback)
     cfn_IoCallback = xfdata.FL_IO_CALLBACK(pyfn_IoCallback)
-    ptr_vdata = cty.cast(vdata, cty.c_void_p)
     library.keep_cfunc_refs(cfn_IoCallback, pyfn_IoCallback)
     library.keep_elem_refs(fd, i_fd, fmask, ui_fmask, vdata, ptr_vdata)
     _fl_add_io_callback(i_fd, ui_fmask, cfn_IoCallback, ptr_vdata)
@@ -213,17 +214,18 @@ def fl_add_signal_callback(sglnum, pyfn_SignalHandler, vdata):
         Status: Tested + Doc + NoDemo = OK
 
     """
+    # cty.c_void_p replaced with passed type
+    mycparamtype, ptr_vdata = library.handle_userdata(vdata)
     #FL_SIGNAL_HANDLER = cty.CFUNCTYPE(None, cty.c_int, cty.c_void_p)
     _fl_add_signal_callback = library.cfuncproto(
         library.load_so_libforms(), "fl_add_signal_callback", \
-        None, [cty.c_int, xfdata.FL_SIGNAL_HANDLER, cty.c_void_p], \
+        None, [cty.c_int, xfdata.FL_SIGNAL_HANDLER, mycparamtype], \
         """void fl_add_signal_callback(int s, FL_SIGNAL_HANDLER cb,
-           void * data) """)
+           void * data) """)    # cty.c_void_p]
     library.check_if_initialized()
     i_sglnum = library.convert_to_intc(sglnum)
     library.verify_function_type(pyfn_SignalHandler)
     cfn_SignalHandler = xfdata.FL_SIGNAL_HANDLER(pyfn_SignalHandler)
-    ptr_vdata = cty.cast(vdata, cty.c_void_p)
     library.keep_cfunc_refs(cfn_SignalHandler, pyfn_SignalHandler)
     library.keep_elem_refs(sglnum, i_sglnum, vdata, ptr_vdata)
     _fl_add_signal_callback(i_sglnum, cfn_SignalHandler, ptr_vdata)
@@ -410,18 +412,18 @@ def fl_add_timeout(msec, pyfn_TimeoutCallback, vdata):
         Status: Tested + Doc + Demo = OK
 
     """
+    # cty.c_void_p replaced with passed type
+    mycparamtype, ptr_vdata = library.handle_userdata(vdata)
     #FL_TIMEOUT_CALLBACK = cty.CFUNCTYPE(None, cty.c_int, cty.c_void_p)
     _fl_add_timeout = library.cfuncproto(
         library.load_so_libforms(), "fl_add_timeout", \
-        cty.c_int, [cty.c_long, xfdata.FL_TIMEOUT_CALLBACK, cty.c_void_p],
-        """int fl_add_timeout(long int msec,
-           FL_TIMEOUT_CALLBACK callback, void * data) """)
+        cty.c_int, [cty.c_long, xfdata.FL_TIMEOUT_CALLBACK, mycparamtype],
+        """int fl_add_timeout(long int msec, FL_TIMEOUT_CALLBACK callback,
+           void * data) """)            # cty.c_void_p]
     library.check_if_initialized()
     l_msec = library.convert_to_longc(msec)
     library.verify_function_type(pyfn_TimeoutCallback)
-    cfn_TimeoutCallback = xfdata.FL_TIMEOUT_CALLBACK( \
-            pyfn_TimeoutCallback)
-    ptr_vdata = cty.cast(vdata, cty.c_void_p)
+    cfn_TimeoutCallback = xfdata.FL_TIMEOUT_CALLBACK(pyfn_TimeoutCallback)
     library.keep_cfunc_refs(cfn_TimeoutCallback, pyfn_TimeoutCallback)
     library.keep_elem_refs(msec, l_msec, vdata, ptr_vdata)
     retval = _fl_add_timeout(l_msec, cfn_TimeoutCallback, ptr_vdata)
@@ -922,19 +924,20 @@ def fl_set_form_atclose(ptr_flform, pyfn_FormAtclose, vdata):
         Status: Tested + Doc + NoDemo = OK
 
     """
+    # cty.c_void_p replaced with passed type
+    mycparamtype, ptr_vdata = library.handle_userdata(vdata)
     # FL_FORM_ATCLOSE = cty.CFUNCTYPE(cty.c_int, cty.POINTER(xfdata.FL_FORM),
     #                                 cty.c_void_p)
     _fl_set_form_atclose = library.cfuncproto(
         library.load_so_libforms(), "fl_set_form_atclose", \
         xfdata.FL_FORM_ATCLOSE, [cty.POINTER(xfdata.FL_FORM), \
-        xfdata.FL_FORM_ATCLOSE, cty.c_void_p], \
+        xfdata.FL_FORM_ATCLOSE, mycparamtype], \
         """FL_FORM_ATCLOSE fl_set_form_atclose(FL_FORM * form,
-           FL_FORM_ATCLOSE fmclose, void * data) """)
+           FL_FORM_ATCLOSE fmclose, void * data) """)   # cty.c_void.p]
     library.check_if_initialized()
     library.verify_flformptr_type(ptr_flform)
     library.verify_function_type(pyfn_FormAtclose)
     cfn_FormAtclose = xfdata.FL_FORM_ATCLOSE(pyfn_FormAtclose)
-    ptr_vdata = cty.cast(vdata, cty.c_void_p)
     library.keep_cfunc_refs(cfn_FormAtclose, pyfn_FormAtclose)
     library.keep_elem_refs(ptr_flform, vdata, ptr_vdata)
     retval = _fl_set_form_atclose(ptr_flform, cfn_FormAtclose, ptr_vdata)
@@ -972,17 +975,18 @@ def fl_set_atclose(pyfn_FormAtclose, vdata):
         Status: Tested + Doc + NoDemo = OK
 
     """
+    # cty.c_void_p replaced with passed type
+    mycparamtype, ptr_vdata = library.handle_userdata(vdata)
     # FL_FORM_ATCLOSE = cty.CFUNCTYPE(cty.c_int, cty.POINTER(xfdata.FL_FORM), \
     #                                 cty.c_void_p)
     _fl_set_atclose = library.cfuncproto(
         library.load_so_libforms(), "fl_set_atclose", \
-        xfdata.FL_FORM_ATCLOSE, [xfdata.FL_FORM_ATCLOSE, cty.c_void_p], \
+        xfdata.FL_FORM_ATCLOSE, [xfdata.FL_FORM_ATCLOSE, mycparamtype], \
         """FL_FORM_ATCLOSE fl_set_atclose(FL_FORM_ATCLOSE fmclose,
-           void * data) """)
+           void * data) """)            # cty.c_void_p]
     library.check_if_initialized()
     library.verify_function_type(pyfn_FormAtclose)
     cfn_FormAtclose = xfdata.FL_FORM_ATCLOSE(pyfn_FormAtclose)
-    ptr_vdata = cty.cast(vdata, cty.c_void_p)
     library.keep_cfunc_refs(cfn_FormAtclose, pyfn_FormAtclose)
     library.keep_elem_refs(vdata, ptr_vdata)
     retval = _fl_set_atclose(cfn_FormAtclose, ptr_vdata)
@@ -1022,19 +1026,20 @@ def fl_set_form_atactivate(ptr_flform, pyfn_FormAtactivate, vdata):
         Status: Tested + Doc + NoDemo = OK
 
     """
+    # cty.c_void_p replaced with passed type
+    mycparamtype, ptr_vdata = library.handle_userdata(vdata)
     #FL_FORM_ATACTIVATE = cty.CFUNCTYPE(None, cty.POINTER(xfdata.FL_FORM), \
     #                                   cty.c_void_p)
     _fl_set_form_atactivate = library.cfuncproto(
         library.load_so_libforms(), "fl_set_form_atactivate", \
         xfdata.FL_FORM_ATACTIVATE, [cty.POINTER(xfdata.FL_FORM),
-        xfdata.FL_FORM_ATACTIVATE, cty.c_void_p], \
+        xfdata.FL_FORM_ATACTIVATE, mycparamtype], \
         """FL_FORM_ATACTIVATE fl_set_form_atactivate(FL_FORM * form,
-           FL_FORM_ATACTIVATE cb, void * data) """)
+           FL_FORM_ATACTIVATE cb, void * data) """)     # cty.c_void_p]
     library.check_if_initialized()
     library.verify_flformptr_type(ptr_flform)
     library.verify_function_type(pyfn_FormAtactivate)
     cfn_FormAtactivate = xfdata.FL_FORM_ATACTIVATE(pyfn_FormAtactivate)
-    ptr_vdata = cty.cast(vdata, cty.c_void_p)
     library.keep_cfunc_refs(cfn_FormAtactivate, pyfn_FormAtactivate)
     library.keep_elem_refs(ptr_flform, vdata, ptr_vdata)
     retval = _fl_set_form_atactivate(ptr_flform, cfn_FormAtactivate, \
@@ -1076,20 +1081,21 @@ def fl_set_form_atdeactivate(ptr_flform, pyfn_FormAtdeactivate, vdata):
         Status: Tested + Doc + NoDemo = OK
 
     """
+    # cty.c_void_p replaced with passed type
+    mycparamtype, ptr_vdata = library.handle_userdata(vdata)
     #FL_FORM_ATDEACTIVATE = cty.CFUNCTYPE(None, cty.POINTER(xfdata.FL_FORM),
     #                         cty.c_void_p)
     _fl_set_form_atdeactivate = library.cfuncproto(
         library.load_so_libforms(), "fl_set_form_atdeactivate", \
         xfdata.FL_FORM_ATDEACTIVATE, [cty.POINTER(xfdata.FL_FORM),
-        xfdata.FL_FORM_ATDEACTIVATE, cty.c_void_p], \
+        xfdata.FL_FORM_ATDEACTIVATE, mycparamtype], \
         """FL_FORM_ATDEACTIVATE fl_set_form_atdeactivate(FL_FORM * form,
-           FL_FORM_ATDEACTIVATE cb, void * data) """)
+           FL_FORM_ATDEACTIVATE cb, void * data) """)   # cty.c_void_p]
     library.check_if_initialized()
     library.verify_flformptr_type(ptr_flform)
     library.verify_function_type(pyfn_FormAtdeactivate)
     cfn_FormAtdeactivate = xfdata.FL_FORM_ATDEACTIVATE( \
             pyfn_FormAtdeactivate)
-    ptr_vdata = cty.cast(vdata, cty.c_void_p)
     library.keep_cfunc_refs(cfn_FormAtdeactivate, pyfn_FormAtdeactivate)
     library.keep_elem_refs(ptr_flform, vdata, ptr_vdata)
     retval = _fl_set_form_atdeactivate(ptr_flform, cfn_FormAtdeactivate, \
@@ -1508,19 +1514,20 @@ def fl_set_form_callback(ptr_flform, pyfn_FormCallbackPtr, vdata):
         Status: Tested + Doc + Demo = OK
 
     """
+    # cty.c_void_p replaced with passed type
+    mycparamtype, ptr_vdata = library.handle_userdata(vdata)
     #FL_FORMCALLBACKPTR = cty.CFUNCTYPE(None, cty.POINTER(xfdata.FL_OBJECT),
     #                                   cty.c_void_p)
     _fl_set_form_callback = library.cfuncproto(
         library.load_so_libforms(), "fl_set_form_callback", \
         None, [cty.POINTER(xfdata.FL_FORM), xfdata.FL_FORMCALLBACKPTR, \
-        cty.c_void_p], \
+        mycparamtype], \
         """void fl_set_form_callback(FL_FORM * form,
-           FL_FORMCALLBACKPTR callback, void * d) """)
+           FL_FORMCALLBACKPTR callback, void * d) """)  # cty.c_void_p]
     library.check_if_initialized()
     library.verify_flformptr_type(ptr_flform)
     library.verify_function_type(pyfn_FormCallbackPtr)
     cfn_FormCallbackPtr = xfdata.FL_FORMCALLBACKPTR(pyfn_FormCallbackPtr)
-    ptr_vdata = cty.cast(vdata, cty.c_void_p)
     library.keep_cfunc_refs(cfn_FormCallbackPtr, pyfn_FormCallbackPtr)
     library.keep_elem_refs(ptr_flform, vdata, ptr_vdata)
     _fl_set_form_callback(ptr_flform, cfn_FormCallbackPtr, ptr_vdata)
@@ -3884,19 +3891,20 @@ def fl_for_all_objects(ptr_flform, pyfn_operatecb, vdata):
         Status: Untested + Doc + NoDemo = NOT OK
 
     """
+    # cty.c_void_p replaced with passed type
+    mycparamtype, ptr_vdata = library.handle_userdata(vdata)
     cfunc_int_pobject_pvoid = cty.CFUNCTYPE(cty.c_int,
             cty.POINTER(xfdata.FL_OBJECT), cty.c_void_p)
     _fl_for_all_objects = library.cfuncproto(
         library.load_so_libforms(), "fl_for_all_objects", \
         None, [cty.POINTER(xfdata.FL_FORM), cfunc_int_pobject_pvoid,
-        cty.c_void_p], \
+        mycparamtype], \
         """void fl_for_all_objects(FL_FORM * form, int ( * cb ) \
-           ( FL_OBJECT *, void * ), void * v)""")
+           ( FL_OBJECT *, void * ), void * v)""")       # cty.c_void_p]
     library.check_if_initialized()
     library.verify_flformptr_type(ptr_flform)
     library.verify_function_type(pyfn_operatecb)
     cfn_operatecb = cfunc_int_pobject_pvoid(pyfn_operatecb)
-    ptr_vdata = cty.cast(vdata, cty.c_void_p)
     library.keep_cfunc_refs(cfn_operatecb, pyfn_operatecb)
     library.keep_elem_refs(ptr_flform, vdata, ptr_vdata)
     _fl_for_all_objects(ptr_flform, cfn_operatecb, ptr_vdata)

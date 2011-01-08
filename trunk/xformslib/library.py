@@ -4,7 +4,7 @@
 """ Convenience/internal functions to deal with xforms-python wrapper's
     functions.
 
-    Copyright (C) 2009, 2010  Luca Lazzaroni "LukenShiro"
+    Copyright (C) 2009, 2010, 2011  Luca Lazzaroni "LukenShiro"
     e-mail: <lukenshiro@ngi.it>
 
     This program is free software: you can redistribute it and/or modify
@@ -583,6 +583,46 @@ def make_stringc_and_pointer():
     baseval = cty.c_char_p()
     ptrbaseval = cty.byref(baseval)
     return baseval, ptrbaseval
+
+
+def handle_userdata(udata):
+    """ Taking any manageable userdata type to be used in a callback-type
+    function, handles it and returns a param type for function prototype
+    and a pointer param compatible with C pointer to void."""
+    if sys.version_info[0] > 2:
+        longtype = int
+        stringtype = str
+    else:
+        longtype = (long, int)
+        stringtype = basestring
+
+    #print udata, type(udata)
+    if isinstance(udata, cty.POINTER(xfdata.FL_OBJECT)):
+        ptr_vdata = udata       # passed ptr_flobject as is
+        cparamtype = cty.POINTER(xfdata.FL_OBJECT)
+    elif isinstance(udata, cty.POINTER(xfdata.FL_FORM)):
+        ptr_vdata = udata       # passed ptr_flform as is
+        cparamtype = cty.POINTER(xfdata.FL_FORM)
+    elif isinstance(udata, cty.POINTER(xfdata.FL_POPUP)):
+        ptr_vdata = udata       # passed ptr_flpopup as is
+        cparamtype = cty.POINTER(xfdata.FL_POPUP)
+    elif isinstance(udata, longtype):    # if passed a long
+        tmpvdata = convert_to_longc(udata)
+        ptr_vdata = cty.pointer(tmpvdata)
+        cparamtype = cty.POINTER(cty.c_long)
+    elif isinstance(udata, float):       # if passed a float
+        tmpvdata = convert_to_doublec(udata)
+        ptr_vdata = cty.pointer(tmpvdata)
+        cparamtype = cty.POINTER(cty.c_double)
+    elif isinstance(udata, stringtype):  # a str is to be passed
+        tmpvdata = convert_to_stringc(udata)
+        ptr_vdata = cty.pointer(tmpvdata)
+        cparamtype = cty.POINTER(cty.c_char_p)
+    else:
+        raise XFormsTypeError("Provided parameter '%s' has %s type, "
+                "so it cannot be handled as user_data/pointer to void." % \
+                (udata, type(udata)))
+    return cparamtype, ptr_vdata
 
 
 def checkfatal_allowed_value_in_list(paramname, valueslist):

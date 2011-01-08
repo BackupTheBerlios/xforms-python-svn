@@ -4,7 +4,7 @@
 """ Support functions to deal with xforms-python wrapper's functions.
 """
 
-#    Copyright (C) 2009, 2010  Luca Lazzaroni "LukenShiro"
+#    Copyright (C) 2009, 2010, 2011  Luca Lazzaroni "LukenShiro"
 #    e-mail: <lukenshiro@ngi.it>
 #
 #    This program is free software: you can redistribute it and/or modify
@@ -640,7 +640,8 @@ def make_flresource(dictflresource):
                 ptr_clsvar[numb], pyclsdefval[numb], s_clsdefval[numb], \
                 pyclsnbytes[numb], i_clsnbytes[numb])
 
-        #structflresource[-1].res_name = ""    # this ends array, preventing SegFault
+        #structflresource[-1].res_name = ""  
+        # this ends array, preventing SegFault?
 
         ptr_flresource = cty.pointer(structflresource[0])
         library.keep_elem_refs(dictflresource, ptr_flresource, \

@@ -238,8 +238,7 @@ def fl_set_canvas_visual(ptr_flobject, ptr_visual):
             """void fl_set_canvas_visual(FL_OBJECT * obj, Visual * vi)""")
     library.check_if_initialized()
     library.verify_flobjectptr_type(ptr_flobject)
-    library.verify_otherclassptr_type(ptr_visual, cty.POINTER( \
-            xfdata.Visual))
+    library.verify_otherclassptr_type(ptr_visual, cty.POINTER(xfdata.Visual))
     library.keep_elem_refs(ptr_flobject, ptr_visual)
     _fl_set_canvas_visual(ptr_flobject, ptr_visual)
 
@@ -321,8 +320,8 @@ def fl_set_canvas_attributes(ptr_flobject, mask, ptr_xsetwindowattributes):
 
 
 # TODO: take note in xfdata.py which X events belong here.
-def fl_add_canvas_handler(ptr_flobject, xev, pyfn_HandleCanvas, vdata):
-    """fl_add_canvas_handler(ptr_flobject, xev, pyfn_HandleCanvas, vdata)
+def fl_add_canvas_handler(ptr_flobject, evtnum, pyfn_HandleCanvas, vdata):
+    """fl_add_canvas_handler(ptr_flobject, evtnum, pyfn_HandleCanvas, vdata)
     -> HandleCnavas
 
     Defines a callback to be invoked in a canvas flobject for a specific
@@ -332,11 +331,12 @@ def fl_add_canvas_handler(ptr_flobject, xev, pyfn_HandleCanvas, vdata):
     ----------
         ptr_flobject : pointer to xfdata.FL_OBJECT
             canvas flobject
-        xev : int
-            X event number. Values (from X11): Expose, etc.. ??
+        evtnum : int
+            X event number. Values (from xfdata.py): Expose, KeyPress, KeyPress,
+            ButtonRelease, etc..
         pyfn_HandleCanvas : python function to handle canvas, returned value
-            name referring to function(ptr_flobject, win, num, num,
-            ptr_xevent, vdata) -> num
+            name referring to function(ptr_flobject, [long_pos]win, [int]width,
+            [int]height, ptr_xevent, [pointer to void]vdata) -> [int]num
         vdata : any type (e.g. None, int, str, etc..)
             user data to be passed to function; callback has to take care
             of type check.
@@ -355,24 +355,25 @@ def fl_add_canvas_handler(ptr_flobject, xev, pyfn_HandleCanvas, vdata):
         Status: Untested + Doc + NoDemo = NOT OK
 
     """
+    # cty.c_void_p userdata arg replaced with any type passed.
+    myuserdataparam, ptr_vdata = library.handle_userdata(vdata)
     #FL_HANDLE_CANVAS = cty.CFUNCTYPE(cty.c_int, cty.POINTER(xfdata.FL_OBJECT),
     #       xfdata.Window, cty.c_int, cty.c_int, cty.POINTER(xfdata.XEvent),
     #       cty.c_void_p)
     _fl_add_canvas_handler = library.cfuncproto(
         library.load_so_libforms(), "fl_add_canvas_handler",
         xfdata.FL_HANDLE_CANVAS, [cty.POINTER(xfdata.FL_OBJECT), cty.c_int,
-        xfdata.FL_HANDLE_CANVAS, cty.c_void_p],
+        xfdata.FL_HANDLE_CANVAS, myuserdataparam],      #cty.c_void_p],
         """FL_HANDLE_CANVAS fl_add_canvas_handler(FL_OBJECT * ob, int ev,
            FL_HANDLE_CANVAS h, void * udata)""")
     library.check_if_initialized()
     library.verify_flobjectptr_type(ptr_flobject)
-    i_xev = library.convert_to_intc(xev)
+    i_evtnum = library.convert_to_intc(evtnum)
     library.verify_function_type(pyfn_HandleCanvas)
     cfn_HandleCanvas = xfdata.FL_HANDLE_CANVAS(pyfn_HandleCanvas)
-    ptr_vdata = cty.cast(vdata, cty.c_void_p)
     library.keep_cfunc_refs(cfn_HandleCanvas, pyfn_HandleCanvas)
-    library.keep_elem_refs(ptr_flobject, xev, vdata, i_xev, ptr_vdata)
-    retval = _fl_add_canvas_handler(ptr_flobject, i_xev, cfn_HandleCanvas, \
+    library.keep_elem_refs(ptr_flobject, evtnum, vdata, i_evtnum, ptr_vdata)
+    retval = _fl_add_canvas_handler(ptr_flobject, i_evtnum, cfn_HandleCanvas, \
             ptr_vdata)
     return retval
 
@@ -481,8 +482,8 @@ def fl_get_canvas_depth(ptr_flobject):
     return retval
 
 
-def fl_remove_canvas_handler(ptr_flobject, xev, pyfn_HandleCanvas):
-    """fl_remove_canvas_handler(ptr_flobject, xev, pyfn_HandleCanvas)
+def fl_remove_canvas_handler(ptr_flobject, evtnum, pyfn_HandleCanvas):
+    """fl_remove_canvas_handler(ptr_flobject, evtnum, pyfn_HandleCanvas)
 
     Removes a particular handler for a specified X event, previously
     created with fl_add_canvas_handler().
@@ -491,12 +492,13 @@ def fl_remove_canvas_handler(ptr_flobject, xev, pyfn_HandleCanvas):
     ----------
         ptr_flobject : pointer to xfdata.FL_OBJECT
             canvas flobject
-        xev : int
-            X event number. If it is invalid, removes all handlers and
+        evtnum : int
+            X event number. Values (from xfdata.py): Expose, KeyPress, KeyPress,
+            ButtonRelease, etc.. If it is invalid, removes all handlers and
             their corresponding event mask.
         pyfn_HandleCanvas : python function to handle canvas, returned value
-            name referring to function(ptr_flobject, win, num, num,
-            ptr_xevent, vdata) -> num
+            name referring to function(ptr_flobject, [long_pos]win, [int]width,
+            [int]height, ptr_xevent, [pointer to void]vdata) -> [int]num
 
     Examples
     --------
@@ -518,12 +520,12 @@ def fl_remove_canvas_handler(ptr_flobject, xev, pyfn_HandleCanvas):
            FL_HANDLE_CANVAS h)""")
     library.check_if_initialized()
     library.verify_flobjectptr_type(ptr_flobject)
-    i_xev = library.convert_to_intc(xev)
+    i_evtnum = library.convert_to_intc(evtnum)
     library.verify_function_type(pyfn_HandleCanvas)
     cfn_HandleCanvas = xfdata.FL_HANDLE_CANVAS(pyfn_HandleCanvas)
     library.keep_cfunc_refs(cfn_HandleCanvas, pyfn_HandleCanvas)
-    library.keep_elem_refs(ptr_flobject, xev, i_xev)
-    _fl_remove_canvas_handler(ptr_flobject, i_xev, cfn_HandleCanvas)
+    library.keep_elem_refs(ptr_flobject, evtnum, i_evtnum)
+    _fl_remove_canvas_handler(ptr_flobject, i_evtnum, cfn_HandleCanvas)
 
 
 def fl_hide_canvas(ptr_flobject):

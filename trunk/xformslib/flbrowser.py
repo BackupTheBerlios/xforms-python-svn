@@ -1523,20 +1523,21 @@ def fl_set_browser_hscroll_callback(ptr_flobject, pyfn_BrowserScrollCb, vdata):
         Status: Untested + Doc + NoDemo = NOT OK
 
     """
+    # cty.c_void_p replaced with passed type
+    mycparamtype, ptr_vdata = library.handle_userdata(vdata)
     #FL_BROWSER_SCROLL_CALLBACK = cty.CFUNCTYPE(None,
     #            cty.POINTER(xfdata.FL_OBJECT), cty.c_int, cty.c_void_p)
     _fl_set_browser_hscroll_callback = library.cfuncproto(
         library.load_so_libforms(), "fl_set_browser_hscroll_callback",
         None, [cty.POINTER(xfdata.FL_OBJECT), \
-        xfdata.FL_BROWSER_SCROLL_CALLBACK, cty.c_void_p],
+        xfdata.FL_BROWSER_SCROLL_CALLBACK, mycparamtype],
         """void fl_set_browser_hscroll_callback(FL_OBJECT * ob,
-           FL_BROWSER_SCROLL_CALLBACK cb, void * data)""")
+           FL_BROWSER_SCROLL_CALLBACK cb, void * data)""")    # cty.c_void_p]
     library.check_if_initialized()
     library.verify_flobjectptr_type(ptr_flobject)
     library.verify_function_type(pyfn_BrowserScrollCb)
     cfn_BrowserScrollCb = xfdata.FL_BROWSER_SCROLL_CALLBACK( \
             pyfn_BrowserScrollCb)
-    ptr_vdata = cty.cast(vdata, cty.c_void_p)
     library.keep_cfunc_refs(cfn_BrowserScrollCb, pyfn_BrowserScrollCb)
     library.keep_elem_refs(ptr_flobject, vdata, ptr_vdata)
     _fl_set_browser_hscroll_callback(ptr_flobject, cfn_BrowserScrollCb, \
@@ -1570,18 +1571,19 @@ def fl_set_browser_vscroll_callback(ptr_flobject, pyfn_BrowserScrollCb,
         Status: Tested + NoDoc + Demo = OK
 
     """
+    # cty.c_void_p replaced with passed type
+    mycparamtype, ptr_vdata = library.handle_userdata(vdata)
     _fl_set_browser_vscroll_callback = library.cfuncproto(
         library.load_so_libforms(), "fl_set_browser_vscroll_callback",
         None, [cty.POINTER(xfdata.FL_OBJECT),
-        xfdata.FL_BROWSER_SCROLL_CALLBACK, cty.c_void_p],
+        xfdata.FL_BROWSER_SCROLL_CALLBACK, mycparamtype],
         """void fl_set_browser_vscroll_callback(FL_OBJECT * ob,
-           FL_BROWSER_SCROLL_CALLBACK cb, void * data)""")
+           FL_BROWSER_SCROLL_CALLBACK cb, void * data)""")  # cty.c_void_p]
     library.check_if_initialized()
     library.verify_flobjectptr_type(ptr_flobject)
     library.verify_function_type(pyfn_BrowserScrollCb)
     cfn_BrowserScrollCb = xfdata.FL_BROWSER_SCROLL_CALLBACK( \
             pyfn_BrowserScrollCb)
-    ptr_vdata = cty.cast(vdata, cty.c_void_p)
     library.keep_cfunc_refs(cfn_BrowserScrollCb, pyfn_BrowserScrollCb)
     library.keep_elem_refs(ptr_flobject, vdata, ptr_vdata)
     _fl_set_browser_vscroll_callback(ptr_flobject, cfn_BrowserScrollCb,

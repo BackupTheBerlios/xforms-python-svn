@@ -2,8 +2,12 @@
 
 - Some parameters in functions are not correctly handled yet
 (e.g. void *), as ctypes is somehow rigid and a free cast
-on-the-fly equivalent to C's is not so viable. So some functions
-here use a 3-types approach when possible: None, long, or FL_OBJECT.
+on-the-fly equivalent to C's is not so viable. So, concerning
+userdata (of C pointer to void type) some functions here use
+a multi-types approach, instead, when possible: None, long, float,
+str, ptr_flobjects, ptr_flform, ptr_flpopup: you may use a list
+or a dict to achieve same purpose, retrieving a complex type
+e.g. FL_OBJECT(), etc..
 - To compare two FL-objects you can use fl_is_same_object(..),
 instead of using 'if obj == someobj'
 - For some functions who use some parameters as an address

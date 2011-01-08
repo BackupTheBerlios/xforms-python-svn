@@ -4,7 +4,7 @@
 """ xforms-python's functions to manage popups.
 """
 
-#    Copyright (C) 2009, 2010  Luca Lazzaroni "LukenShiro"
+#    Copyright (C) 2009, 2010, 2011  Luca Lazzaroni "LukenShiro"
 #    e-mail: <lukenshiro@ngi.it>
 #
 #    This program is free software: you can redistribute it and/or modify
@@ -165,8 +165,11 @@ def fl_popup_add_entries(ptr_flpopup, entryitemstxt, x=None, u=None, \
         cparam_argstypelist.append(cty.c_long)
         specseqargslist.append(l_x)
     if u:       # pointer to void u additional arg
-        ptr_u = cty.cast(u, cty.c_void_p)
-        cparam_argstypelist.append(cty.c_void_p)
+        #ptr_u = cty.cast(u, cty.c_void_p)
+        #cparam_argstypelist.append(cty.c_void_p)
+        # cty.c_void_p replaced with passed type
+        mycparamtype, ptr_u = library.handle_userdata(u)
+        cparam_argstypelist.append(mycparamtype)
         specseqargslist.append(ptr_u)
     if f:       # xfdata.FL_POPUP_CB f additional arg
         library.verify_function_type(f)
@@ -305,8 +308,10 @@ def fl_popup_insert_entries(ptr_flpopup, ptr_flpopupentry, entryitemstxt, \
         cparam_argstypelist.append(cty.c_long)
         specseqargslist.append(l_x)
     if u:       # pointer to void u additional arg
-        ptr_u = cty.c_void_p(u)
-        cparam_argstypelist.append(cty.c_void_p)
+        #ptr_u = cty.c_void_p(u)
+        #cparam_argstypelist.append(cty.c_void_p)
+        mycparamtype, ptr_u = library.handle_userdata(u)
+        cparam_argstypelist.append(mycparamtype)
         specseqargslist.append(ptr_u)
     if f:       # xfdata.FL_POPUP_CB f additional arg
         library.verify_function_type(f)
@@ -1777,14 +1782,15 @@ def fl_popup_entry_set_user_data(ptr_flpopupentry, vdata):
         Status: Untested + NoDoc + NoDemo = NOT OK
 
     """
+    # cty.c_void_p replaced with passed type
+    mycparamtype, ptr_vdata = library.handle_userdata(vdata)
     _fl_popup_entry_set_user_data = library.cfuncproto(
         library.load_so_libforms(), "fl_popup_entry_set_user_data",
-        cty.c_void_p, [cty.POINTER(xfdata.FL_POPUP_ENTRY), cty.c_void_p],
+        cty.c_void_p, [cty.POINTER(xfdata.FL_POPUP_ENTRY), mycparamtype],
         """void * fl_popup_entry_set_user_data(FL_POPUP_ENTRY * p1,
-           void * p2)""")
+           void * p2)""")       # cty.c_void_p]
     library.check_if_initialized()
     library.verify_flpopupentryptr_type(ptr_flpopupentry)
-    ptr_vdata = cty.cast(vdata, cty.c_void_p)
     library.keep_elem_refs(ptr_flpopupentry, vdata, ptr_vdata)
     retval = _fl_popup_entry_set_user_data(ptr_flpopupentry, ptr_vdata)
     return retval
@@ -1901,15 +1907,17 @@ def fl_popup_entry_get_by_user_data(ptr_flpopup, vdata):
         Status: Untested + NoDoc + NoDemo = NOT OK
 
     """
+    # cty.c_void_p replaced with passed type
+    mycparamtype, ptr_vdata = library.handle_userdata(vdata)
     _fl_popup_entry_get_by_user_data = library.cfuncproto(
         library.load_so_libforms(), "fl_popup_entry_get_by_user_data",
         cty.POINTER(xfdata.FL_POPUP_ENTRY), [cty.POINTER(xfdata.FL_POPUP),
-        cty.c_void_p],
+        mycparamtype],
         """FL_POPUP_ENTRY * fl_popup_entry_get_by_user_data(FL_POPUP * p1,
-           void * p2)""")
+           void * p2)""")       # cty.c_void_p]
     library.check_if_initialized()
     library.verify_flpopupptr_type(ptr_flpopup)
-    ptr_vdata = cty.cast(vdata, cty.c_void_p)
+    #ptr_vdata = cty.cast(vdata, cty.c_void_p)
     library.keep_elem_refs(ptr_flpopup, vdata, ptr_vdata)
     retval = _fl_popup_entry_get_by_user_data(ptr_flpopup, ptr_vdata)
     return retval

@@ -1747,15 +1747,16 @@ def fl_set_fselector_callback(pyfn_FSCB, vdata):
         Status: Tested + Doc + Demo = OK
 
     """
+    # cty.c_void_p replaced with passed type
+    mycparamtype, ptr_vdata = library.handle_userdata(vdata)
     #FL_FSCB = cty.CFUNCTYPE(cty.c_int, xfdata.STRING, cty.c_void_p)
     _fl_set_fselector_callback = library.cfuncproto(
         library.load_so_libforms(), "fl_set_fselector_callback",
-        None, [xfdata.FL_FSCB, cty.c_void_p],
+        None, [xfdata.FL_FSCB, mycparamtype],       #cty.c_void_p],
         """void fl_set_fselector_callback(FL_FSCB p1, void * p2)""")
     library.check_if_initialized()
     library.verify_function_type(pyfn_FSCB)
     cfn_FSCB = xfdata.FL_FSCB(pyfn_FSCB)
-    ptr_vdata = cty.cast(vdata, cty.c_void_p)
     library.keep_cfunc_refs(cfn_FSCB, pyfn_FSCB)
     library.keep_elem_refs(vdata, ptr_vdata)
     _fl_set_fselector_callback(cfn_FSCB, ptr_vdata)
@@ -1961,17 +1962,18 @@ def fl_add_fselector_appbutton(label, pyfn_fselappbtn, vdata):
         Status: Tested + Doc + NoDemo = OK
 
     """
+    # cty.c_void_p replaced with passed type
+    mycparamtype, ptr_vdata = library.handle_userdata(vdata)
     cfunc_none_voidp = cty.CFUNCTYPE(None, cty.c_void_p)
     _fl_add_fselector_appbutton = library.cfuncproto(
         library.load_so_libforms(), "fl_add_fselector_appbutton",
-        None, [xfdata.STRING, cfunc_none_voidp, cty.c_void_p],
+        None, [xfdata.STRING, cfunc_none_voidp, mycparamtype],
         """void fl_add_fselector_appbutton(const char * p1,
-           const char * p2, void * p3)""")
+           const char * p2, void * p3)""")      # cty.c_void_p]
     library.check_if_initialized()
     s_label = library.convert_to_stringc(label)
     library.verify_function_type(pyfn_fselappbtn)
     cfn_fselappbtn = cfunc_none_voidp(pyfn_fselappbtn)
-    ptr_vdata = cty.cast(vdata, cty.c_void_p)
     library.keep_cfunc_refs(cfn_fselappbtn, pyfn_fselappbtn)
     library.keep_elem_refs(label, vdata, s_label, ptr_vdata)
     _fl_add_fselector_appbutton(s_label, cfn_fselappbtn, ptr_vdata)
@@ -2244,8 +2246,8 @@ def fl_goodies_atclose(ptr_flform, vdata):
         ptr_flform : pointer to xfdata.FL_FORM
             form
         vdata : any type (e.g. None, int, str, etc..)
-            user data to be passed to function; callback has to take care
-            of type check
+            user data to be passed to function; callback has to take
+            care of type check
 
     Returns
     -------
@@ -2261,13 +2263,15 @@ def fl_goodies_atclose(ptr_flform, vdata):
         Status: Tested + NoDoc + NoDemo = OK
 
     """
+    # cty.c_void_p replaced with passed type
+    mycparamtype, ptr_vdata = library.handle_userdata(vdata)
     _fl_goodies_atclose = library.cfuncproto(
         library.load_so_libforms(), "fl_goodies_atclose",
-        cty.c_int, [cty.POINTER(xfdata.FL_FORM), cty.c_void_p],
+        cty.c_int, [cty.POINTER(xfdata.FL_FORM), mycparamtype],
         """int fl_goodies_atclose(FL_FORM * p1, void * p2)""")
+        # cty.c_void_p]
     library.check_if_initialized()
     library.verify_flformptr_type(ptr_flform)
-    ptr_vdata = cty.cast(vdata, cty.c_void_p)
     library.keep_elem_refs(ptr_flform, vdata, ptr_vdata)
     retval = _fl_goodies_atclose(ptr_flform, ptr_vdata)
     return retval

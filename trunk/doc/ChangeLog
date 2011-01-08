@@ -2,6 +2,13 @@ SVN (first entries from top are more recent)
 --------------------------------------------
 
 BETA
+    20110108 (beta14)
+    * created a new convenience function in library.py to handle userdata
+    parameter in callback-like functions. Modify userdata params in concerned
+    functions of flbasic.py, flbrowser.py, flcanvas.py, flgoodies.py, 
+    flmisc.py, flnmenu.py, flpopup.py, flselect.py and flxbasic.py, so this
+    arg should work almost as expected.
+    * canvas.py example added.
     * make_flpoint() function corrected: freedraw.py and demo27.py examples
     display correctly triangles now.
     20110107 (beta13)

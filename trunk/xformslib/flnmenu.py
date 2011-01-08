@@ -4,7 +4,7 @@
 """ xforms-python's functions to manage nmenu flobjects.
 """
 
-#    Copyright (C) 2009, 2010  Luca Lazzaroni "LukenShiro"
+#    Copyright (C) 2009, 2010, 2011  Luca Lazzaroni "LukenShiro"
 #    e-mail: <lukenshiro@ngi.it>
 #
 #    This program is free software: you can redistribute it and/or modify
@@ -225,8 +225,10 @@ def fl_add_nmenu_items(ptr_flobject, entryitemstxt, x=None, u=None, \
         cparam_argstypelist.append(cty.c_long)
         specseqargslist.append(l_x)
     if u:       # pointer to void u additional arg
-        ptr_u = cty.c_void_p(u)
-        cparam_argstypelist.append(cty.c_void_p)
+        #ptr_u = cty.c_void_p(u)
+        #cparam_argstypelist.append(cty.c_void_p)
+        mycparamtype, ptr_u = library.handle_userdata(u)
+        cparam_argstypelist.append(mycparamtype)
         specseqargslist.append(ptr_u)
     if f:       # xfdata.FL_POPUP_CB f additional arg
         library.verify_function_type(f)
@@ -364,8 +366,10 @@ def fl_insert_nmenu_items(ptr_flobject, ptr_flpopupentry, entryitemstxt, \
         cparam_argstypelist.append(cty.c_long)
         specseqargslist.append(l_x)
     if u:       # pointer to void u additional arg
-        ptr_u = cty.c_void_p(u)
-        cparam_argstypelist.append(cty.c_void_p)
+        #ptr_u = cty.c_void_p(u)
+        #cparam_argstypelist.append(cty.c_void_p)
+        mycparamtype, ptr_u = library.handle_userdata(u)
+        cparam_argstypelist.append(mycparamtype)
         specseqargslist.append(ptr_u)
     if f:       # xfdata.FL_POPUP_CB f additional arg
         library.verify_function_type(f)
@@ -504,8 +508,10 @@ def fl_replace_nmenu_item(ptr_flobject, ptr_flpopupentry, entryitemstxt,
         cparam_argstypelist.append(cty.c_long)
         specseqargslist.append(l_x)
     if u:       # pointer to void u additional arg
-        ptr_u = cty.c_void_p(u)
-        cparam_argstypelist.append(cty.c_void_p)
+        #ptr_u = cty.c_void_p(u)
+        #cparam_argstypelist.append(cty.c_void_p)
+        mycparamtype, ptr_u = library.handle_userdata(u)
+        cparam_argstypelist.append(mycparamtype)
         specseqargslist.append(ptr_u)
     if f:       # xfdata.FL_POPUP_CB f additional arg
         library.verify_function_type(f)

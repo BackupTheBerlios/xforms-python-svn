@@ -3717,17 +3717,18 @@ def fl_set_event_callback(pyfn_AppEventCb, vdata):
         Status: Tested + Doc + Demo = OK
 
     """
+    # cty.c_void_p replaced with passed type
+    mycparamtype, ptr_vdata = library.handle_userdata(vdata)
     #FL_APPEVENT_CB = cty.CFUNCTYPE(cty.c_int, cty.POINTER(XEvent),
     #                               cty.c_void_p)
     _fl_set_event_callback = library.cfuncproto(
         library.load_so_libforms(), "fl_set_event_callback",
-        xfdata.FL_APPEVENT_CB, [xfdata.FL_APPEVENT_CB, cty.c_void_p],
+        xfdata.FL_APPEVENT_CB, [xfdata.FL_APPEVENT_CB, mycparamtype],
         """FL_APPEVENT_CB fl_set_event_callback(FL_APPEVENT_CB callback,
-           void * user_data)""")
+           void * user_data)""")        # cty.c_void_p]
     library.check_if_initialized()
     library.verify_function_type(pyfn_AppEventCb)
     cfn_AppEventCb = xfdata.FL_APPEVENT_CB(pyfn_AppEventCb)
-    ptr_vdata = cty.cast(vdata, cty.c_void_p)
     library.keep_cfunc_refs(cfn_AppEventCb, pyfn_AppEventCb)
     library.keep_elem_refs(vdata, ptr_vdata)
     retval = _fl_set_event_callback(cfn_AppEventCb, ptr_vdata)
@@ -3777,17 +3778,18 @@ def fl_set_idle_callback(pyfn_AppEventCb, vdata):
         Status: Tested + Doc + NoDemo = OK
 
     """
+    # cty.c_void_p replaced with passed type
+    mycparamtype, ptr_vdata = library.handle_userdata(vdata)
     #FL_APPEVENT_CB = cty.CFUNCTYPE(cty.c_int, cty.POINTER(XEvent),
     #                               cty.c_void_p)
     _fl_set_idle_callback = library.cfuncproto(
         library.load_so_libforms(), "fl_set_idle_callback",
-        xfdata.FL_APPEVENT_CB, [xfdata.FL_APPEVENT_CB, cty.c_void_p],
+        xfdata.FL_APPEVENT_CB, [xfdata.FL_APPEVENT_CB, mycparamtype],
         """FL_APPEVENT_CB fl_set_idle_callback(FL_APPEVENT_CB callback,
-           void * user_data)""")
+           void * user_data)""")        # cty.c_void_p]
     library.check_if_initialized()
     library.verify_function_type(pyfn_AppEventCb)
     cfn_AppEventCb = xfdata.FL_APPEVENT_CB(pyfn_AppEventCb)
-    ptr_vdata = cty.cast(vdata, cty.c_void_p)
     library.keep_cfunc_refs(cfn_AppEventCb, pyfn_AppEventCb)
     library.keep_elem_refs(vdata, ptr_vdata)
     retval = _fl_set_idle_callback(cfn_AppEventCb, ptr_vdata)
@@ -3930,8 +3932,8 @@ def fl_set_idle_delta(msec):
     _fl_set_idle_delta(l_msec)
 
 
-def fl_add_event_callback(win, evttype, pyfn_AppEventCb, vdata):
-    """fl_add_event_callback(win, evttype, pyfn_AppEventCb, vdata)
+def fl_add_event_callback(win, evtnum, pyfn_AppEventCb, vdata):
+    """fl_add_event_callback(win, evtnum, pyfn_AppEventCb, vdata)
     -> AppEventCb
 
     Adds an event handler for a window. Manipulates the event callback
@@ -3945,8 +3947,8 @@ def fl_add_event_callback(win, evttype, pyfn_AppEventCb, vdata):
     ----------
         win : long_pos
             window id to add event handler to
-        evttype : int
-            event type names. Values (from xfdata.py) KeyPress,
+        evtnum : int
+            X event type names. Values (from xfdata.py) KeyPress,
             KeyRelease, ButtonPress, ButtonRelease, MotionNotify,
             EnterNotify, LeaveNotify, FocusIn, FocusOut, KeymapNotify,
             Expose, GraphicsExpose, NoExpose, VisibilityNotify,
@@ -3979,32 +3981,32 @@ def fl_add_event_callback(win, evttype, pyfn_AppEventCb, vdata):
         Status: Tested + Doc + NoDemo = OK
 
     """
+    # cty.c_void_p replaced with passed type
+    mycparamtype, ptr_vdata = library.handle_userdata(vdata)
     #FL_APPEVENT_CB = cty.CFUNCTYPE(cty.c_int, cty.POINTER(XEvent),
     #                               cty.c_void_p)
     _fl_add_event_callback = library.cfuncproto(
         library.load_so_libforms(), "fl_add_event_callback",
         xfdata.FL_APPEVENT_CB, [xfdata.Window, cty.c_int,
-        xfdata.FL_APPEVENT_CB, cty.c_void_p],
+        xfdata.FL_APPEVENT_CB, mycparamtype],
         """FL_APPEVENT_CB fl_add_event_callback(Window win, int ev,
-           FL_APPEVENT_CB wincb, void * user_data)""")
+           FL_APPEVENT_CB wincb, void * user_data)""")  # cty.c_void_p]
     library.check_if_initialized()
     ul_win = library.convert_to_Window(win)
-    library.checkfatal_allowed_value_in_list(evttype, \
-            xfdata.XEVENTNAME_list)
-    i_evttype = library.convert_to_intc(evttype)
+    library.checkfatal_allowed_value_in_list(evtnum, xfdata.XEVENTNAME_list)
+    i_evtnum = library.convert_to_intc(evtnum)
     library.verify_function_type(pyfn_AppEventCb)
     cfn_AppEventCb = xfdata.FL_APPEVENT_CB(pyfn_AppEventCb)
-    ptr_vdata = cty.cast(vdata, cty.c_void_p)
     library.keep_cfunc_refs(cfn_AppEventCb, pyfn_AppEventCb)
-    library.keep_elem_refs(win, evttype, vdata, ul_win, i_evttype, \
+    library.keep_elem_refs(win, evtnum, vdata, ul_win, i_evtnum, \
             ptr_vdata)
-    retval = _fl_add_event_callback(ul_win, i_evttype, cfn_AppEventCb, \
+    retval = _fl_add_event_callback(ul_win, i_evtnum, cfn_AppEventCb, \
             ptr_vdata)
     return retval
 
 
-def fl_remove_event_callback(win, evttype):
-    """fl_remove_event_callback(win, evttype)
+def fl_remove_event_callback(win, evtnum):
+    """fl_remove_event_callback(win, evtnum)
 
     Removes one or all event callbacks for a window and for an event of
     specified type. May be called with for a window for which no event
@@ -4015,7 +4017,7 @@ def fl_remove_event_callback(win, evttype):
         win : long_pos
             window id
         evttype : int
-            event type names. Values (from xfdata.py) KeyPress,
+            X event type names. Values (from xfdata.py) KeyPress,
             KeyRelease, ButtonPress, ButtonRelease, MotionNotify,
             EnterNotify, LeaveNotify, FocusIn, FocusOut, KeymapNotify,
             Expose, GraphicsExpose, NoExpose, VisibilityNotify,
@@ -4040,11 +4042,10 @@ def fl_remove_event_callback(win, evttype):
         """void fl_remove_event_callback(Window win, int ev)""")
     library.check_if_initialized()
     ul_win = library.convert_to_Window(win)
-    library.checkfatal_allowed_value_in_list(evttype, \
-            xfdata.XEVENTNAME_list)
-    i_evttype = library.convert_to_intc(evttype)
-    library.keep_elem_refs(win, evttype, ul_win, i_evttype)
-    _fl_remove_event_callback(ul_win, i_evttype)
+    library.checkfatal_allowed_value_in_list(evtnum, xfdata.XEVENTNAME_list)
+    i_evtnum = library.convert_to_intc(evtnum)
+    library.keep_elem_refs(win, evtnum, ul_win, i_evtnum)
+    _fl_remove_event_callback(ul_win, i_evtnum)
 
 
 def fl_activate_event_callbacks(win):
@@ -4055,7 +4056,6 @@ def fl_activate_event_callbacks(win):
     to solicit the events for you. Note, however, the mapping of events
     to masks are not unique and depending on applications, the default
     mapping may or may not be the one you want.
-
 
     Parameters
     ----------
