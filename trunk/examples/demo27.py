@@ -173,19 +173,30 @@ class Demo27(object):
             xfl.fl_circf(stobj.x, stobj.y, stobj.size, \
                     xfl.FL_FREE_COL1)
         elif stobj.type == 3:
-            """point = (xfl.FL_POINT * 3)()          # point[ 3 ]
+            point = (xfl.FL_POINT * 3)()          # point[ 3 ]
             point[0].x = int(stobj.x - stobj.size)
             point[0].y = int(stobj.y + stobj.size)
             point[1].x = int(stobj.x + stobj.size)
             point[1].y = int(stobj.y + stobj.size)
             point[2].x = int(stobj.x)
             point[2].y = int(stobj.y - stobj.size)
-            print point, point[0], point[2]"""
+            import ctypes
+            xpoint = ctypes.pointer(point[0])
+            print(xpoint, xpoint[0].x, xpoint[1].x, xpoint[2].x, \
+                    xpoint[0].y, xpoint[1].y, xpoint[2].y)
+            #print(xpoint, xpoint.contents[0].x, xpoint.contents[1].x, xpoint.contents[2].x, \
+            #        xpoint.contents[0].y, xpoint.contents[1].y, xpoint.contents[2].y)
+
+            """
             mylistpoint = [{'x':int(stobj.x - stobj.size) , 'y':int(stobj.y + \
                     stobj.size)}, {'x':int(stobj.x + stobj.size), \
                     'y':int(stobj.y + stobj.size)}, {'x':int(stobj.x), \
                     'y':int(stobj.y - stobj.size)}]
+            print mylistpoint
             xpoint = xfl.make_flpoint(mylistpoint)
+            print(xpoint, xpoint.contents[0].x, xpoint.contents[1].x, xpoint.contents[2].x, \
+                    xpoint.contents[0].y, xpoint.contents[1].y, xpoint.contents[2].y)
+            """
             xfl.fl_polyf(xpoint, 3, xfl.FL_FREE_COL1)
 
 
