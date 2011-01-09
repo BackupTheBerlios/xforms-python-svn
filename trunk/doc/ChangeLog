@@ -2,6 +2,7 @@ SVN (first entries from top are more recent)
 --------------------------------------------
 
 BETA
+    * some other bugfixes in fd2python.py
     20110108 (beta14)
     * created a new convenience function in library.py to handle userdata
     parameter in callback-like functions. Modify userdata params in concerned

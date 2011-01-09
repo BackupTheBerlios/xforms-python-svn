@@ -60,6 +60,11 @@ def prependself(valuestr):
         valuestr = "self."+valuestr
     return valuestr
 
+def sanitize(valuestr):
+    if valuestr:
+        valuestr = valuestr.replace("'", "\'")
+    return valuestr
+
 def prependfltype(valuestr):
     # to be compatible with magic < 15000, prepend a FL_ to type
     if not valuestr.startswith("FL_"):
@@ -100,6 +105,8 @@ class FdConvertToPy(object):
         self.outfile = ""
 
         if self.cliargs(lsysargv, sysargv):
+            self.appname = self.infile.replace(".fd", \
+                    "").replace("/", "_").replace("-", "_").capitalize()
             if self.verifyfdfile():
                 self.acquirechunks()
                 self.convertlistsindict()
@@ -194,7 +201,7 @@ class FdConvertToPy(object):
                 try:
                     mykey, myvalue = linenew.split(':')
                 except ValueError:      # not a key (remove element)
-                    continue
+                    continue    # NOTE: a ':' in value is not allowed
                 else:
                     if not myvalue:     # not a value (placeholder)
                         myvalue = None
@@ -414,13 +421,12 @@ class FdConvertToPy(object):
                 "created with XForms fdesign.\n# Converted by fd2python.py" \
                 " to be used with xforms-python.\n"
         self.headertext.append(headtxt)
-        appname = self.infile.replace(".fd", "").replace("-", "_").capitalize()
         introtxt = "\nimport sys"
         introtxt += "\nimport xformslib as xfl"
-        introtxt += "\n\nclass %s(object):" % appname
+        introtxt += "\n\nclass %s(object):" % self.appname
         introtxt += "\n%sdef __init__(self, lsysargv, sysargv):" % ONETAB
         introtxt += "\n%sxfl.fl_initialize(lsysargv, sysargv, '%s', " \
-                "None, 0)\n" % (TWOTABS, appname)
+                "None, 0)\n" % (TWOTABS, self.appname)
         self.inittext.append(introtxt)
 
     def manage_intro(self, macrounit):
@@ -505,7 +511,7 @@ class FdConvertToPy(object):
                 pass
             else:
                 vshcut = macrounit['shortcut']
-                anyflobjtxt += "\n%sxfl.fl_set_object_shortcut(%s, \'%s\'," \
+                anyflobjtxt += "\n%sxfl.fl_set_object_shortcut(%s, \"%s\"," \
                         " 1)" % (TWOTABS, prependself(namepassed), vshcut)
         if "argument" in macrounit:     # strictly relies on cb
             if macrounit['argument'] is None:
@@ -542,7 +548,7 @@ class FdConvertToPy(object):
             pass                    # ????
         if "box" in macrounit:
             vxpos, vypos, vwidth, vheight = macrounit['box'].split()
-            grouptxt += "\n%sxfl.fl_set_geometry(%s, %s, %s, %s, " \
+            grouptxt += "\n%sxfl.fl_set_object_geometry(%s, %s, %s, %s, " \
                 "%s)" % (TWOTABS, prependself(vname), vxpos, vypos, \
                 vwidth, vheight)
         if "boxtype" in macrounit:
@@ -554,8 +560,8 @@ class FdConvertToPy(object):
                 vlabel = ""
             else:
                 vlabel = macrounit['label']
-            grouptxt += "\n%sxfl.fl_set_object_label(%s, \'%s\')" % \
-                    (TWOTABS, prependself(vname), vlabel)
+            grouptxt += "\n%sxfl.fl_set_object_label(%s, \"%s\")" % \
+                    (TWOTABS, prependself(vname), sanitize(vlabel))
         self.createformstext.append(grouptxt)
         return vname
 
@@ -582,8 +588,8 @@ class FdConvertToPy(object):
             else:
                 vname = macrounit['name']
             flobjtxt += "\n%s%s = xfl.fl_add_box(%s, %s, %s, %s, %s, " \
-                "\'%s\')" % (TWOTABS, prependself(vname), prependxfl(vbtype), \
-                vxpos, vypos, vwidth, vheight, vlabel)
+                "\"%s\")" % (TWOTABS, prependself(vname), prependxfl(vbtype), \
+                vxpos, vypos, vwidth, vheight, sanitize(vlabel))
         self.createformstext.append(flobjtxt)
         return vname
 
@@ -604,8 +610,8 @@ class FdConvertToPy(object):
             else:
                 vname = macrounit['name']
             flobjtxt += "\n%s%s = xfl.fl_add_frame(%s, %s, %s, %s, %s, " \
-                "\'%s\')" % (TWOTABS, prependself(vname), prependxfl(vtype), \
-                vxpos, vypos, vwidth, vheight, vlabel)
+                "\"%s\")" % (TWOTABS, prependself(vname), prependxfl(vtype), \
+                vxpos, vypos, vwidth, vheight, sanitize(vlabel))
         if "boxtype" in macrounit:
             vboxtype = macrounit['boxtype']
             flobjtxt += "\n%sxfl.fl_set_object_boxtype(%s, %s)" % \
@@ -630,8 +636,9 @@ class FdConvertToPy(object):
             else:
                 vname = macrounit['name']
             flobjtxt += "\n%s%s = xfl.fl_add_labelframe(%s, %s, %s, %s, " \
-                    "%s, \'%s\')" % (TWOTABS, prependself(vname), \
-                    prependxfl(vtype), vxpos, vypos, vwidth, vheight, vlabel)
+                    "%s, \"%s\")" % (TWOTABS, prependself(vname), \
+                    prependxfl(vtype), vxpos, vypos, vwidth, vheight, \
+                    sanitize(vlabel))
         if "boxtype" in macrounit:
             vboxtype = macrounit['boxtype']
             flobjtxt += "\n%sxfl.fl_set_object_boxtype(%s, %s)" % \
@@ -640,6 +647,7 @@ class FdConvertToPy(object):
         return vname
 
     def manage_fltext(self, macrounit):
+        vlabel = ""
         flobjtxt = ""
         if "type" in macrounit:
             vtype = prependfltype(macrounit['type'])
@@ -656,9 +664,9 @@ class FdConvertToPy(object):
             else:
                 vname = macrounit['name']
             flobjtxt += "\n%s%s = xfl.fl_add_text(%s, %s, %s, %s, %s, " \
-                    "\'%s\')" % (TWOTABS, prependself(vname), \
+                    "\"%s\")" % (TWOTABS, prependself(vname), \
                     prependxfl(vtype), vxpos, vypos, vwidth, \
-                    vheight, vlabel)
+                    vheight, sanitize(vlabel))
         if "boxtype" in macrounit:
             vboxtype = macrounit['boxtype']
             flobjtxt += "\n%sxfl.fl_set_object_boxtype(%s, %s)" % \
@@ -684,9 +692,9 @@ class FdConvertToPy(object):
             else:
                 vname = macrounit['name']
             flobjtxt += "\n%s%s = xfl.fl_add_bitmap(%s, %s, %s, %s, %s, " \
-                "\'%s\')" % \
+                "\"%s\")" % \
                 (TWOTABS, prependself(vname), prependxfl(vtype), \
-                vxpos, vypos, vwidth, vheight, vlabel)
+                vxpos, vypos, vwidth, vheight, sanitize(vlabel))
         if "boxtype" in macrounit:
             vboxtype = macrounit['boxtype']
             flobjtxt += "\n%sxfl.fl_set_object_boxtype(%s, %s)" % \
@@ -708,7 +716,7 @@ class FdConvertToPy(object):
             else:                   # '0', is a relative path
                 vfile = './'+macrounit['file']
             if not ifuseddata:      # use file directly
-                flobjtxt += "\n%sxfl.fl_set_bitmap_file(%s, \'%s\')" % \
+                flobjtxt += "\n%sxfl.fl_set_bitmap_file(%s, \"%s\")" % \
                         (TWOTABS, prependself(vname), vfile)
             else:                   # read data in memory
                 # managing import from .xbm data
@@ -740,9 +748,9 @@ class FdConvertToPy(object):
             else:
                 vname = macrounit['name']
             flobjtxt += "\n%s%s = xfl.fl_add_pixmap(%s, %s, %s, %s, %s, " \
-                "\'%s\')" % \
+                "\"%s\")" % \
                 (TWOTABS, prependself(vname), prependxfl(vtype), \
-                vxpos, vypos, vwidth, vheight, vlabel)
+                vxpos, vypos, vwidth, vheight, sanitize(vlabel))
         if "boxtype" in macrounit:
             vboxtype = macrounit['boxtype']
             flobjtxt += "\n%sxfl.fl_set_object_boxtype(%s, %s)" % \
@@ -762,7 +770,7 @@ class FdConvertToPy(object):
             else:                   # '0', is a relative path
                 vfile = './'+macrounit['file']
             if not ifuseddata:      # use file directly
-                flobjtxt += "\n%sxfl.fl_set_pixmap_file(%s, \'%s\')" % \
+                flobjtxt += "\n%sxfl.fl_set_pixmap_file(%s, \"%s\")" % \
                         (TWOTABS, prependself(vname), vfile)
             else:                   # read data in memory
                 # managing import from .xpm data
@@ -790,9 +798,9 @@ class FdConvertToPy(object):
             else:
                 vname = macrounit['name']
             flobjtxt += "\n%s%s = xfl.fl_add_chart(%s, %s, %s, %s, %s, " \
-                "\'%s\')" % \
+                "\"%s\")" % \
                 (TWOTABS, prependself(vname), prependxfl(vtype), \
-                vxpos, vypos, vwidth, vheight, vlabel)
+                vxpos, vypos, vwidth, vheight, sanitize(vlabel))
         if "boxtype" in macrounit:
             vboxtype = macrounit['boxtype']
             flobjtxt += "\n%sxfl.fl_set_object_boxtype(%s, %s)" % \
@@ -817,8 +825,9 @@ class FdConvertToPy(object):
             else:
                 vname = macrounit['name']
             flobjtxt += "\n%s%s = xfl.fl_add_clock(%s, %s, %s, %s, %s, " \
-                    "\'%s\')" % (TWOTABS, prependself(vname), \
-                    prependxfl(vtype), vxpos, vypos, vwidth, vheight, vlabel)
+                    "\"%s\")" % (TWOTABS, prependself(vname), \
+                    prependxfl(vtype), vxpos, vypos, vwidth, vheight, \
+                    sanitize(vlabel))
         if "boxtype" in macrounit:
             vboxtype = macrounit['boxtype']
             flobjtxt += "\n%sxfl.fl_set_object_boxtype(%s, %s)" % \
@@ -843,8 +852,9 @@ class FdConvertToPy(object):
             else:
                 vname = macrounit['name']
             flobjtxt += "\n%s%s = xfl.fl_add_button(%s, %s, %s, %s, %s, " \
-                    "\'%s\')" % (TWOTABS, prependself(vname), \
-                    prependxfl(vtype), vxpos, vypos, vwidth, vheight, vlabel)
+                    "\"%s\")" % (TWOTABS, prependself(vname), \
+                    prependxfl(vtype), vxpos, vypos, vwidth, vheight, \
+                    sanitize(vlabel))
         if "boxtype" in macrounit:
             vboxtype = macrounit['boxtype']
             flobjtxt += "\n%sxfl.fl_set_object_boxtype(%s, %s)" % \
@@ -873,8 +883,9 @@ class FdConvertToPy(object):
             else:
                 vname = macrounit['name']
             flobjtxt += "\n%s%s = xfl.fl_add_roundbutton(%s, %s, %s, %s, " \
-                    "%s, \'%s\')" % (TWOTABS, prependself(vname), \
-                    prependxfl(vtype), vxpos, vypos, vwidth, vheight, vlabel)
+                    "%s, \"%s\")" % (TWOTABS, prependself(vname), \
+                    prependxfl(vtype), vxpos, vypos, vwidth, vheight, \
+                    sanitize(vlabel))
         if "boxtype" in macrounit:
             vboxtype = macrounit['boxtype']
             flobjtxt += "\n%sxfl.fl_set_object_boxtype(%s, %s)" % \
@@ -908,8 +919,9 @@ class FdConvertToPy(object):
             else:
                 vname = macrounit['name']
             flobjtxt += "\n%s%s = xfl.fl_add_round3dbutton(%s, %s, %s, %s, " \
-                "%s, \'%s\')" % (TWOTABS, prependself(vname), \
-                prependxfl(vtype), vxpos, vypos, vwidth, vheight, vlabel)
+                "%s, \"%s\")" % (TWOTABS, prependself(vname), \
+                prependxfl(vtype), vxpos, vypos, vwidth, vheight, \
+                sanitize(vlabel))
         if "boxtype" in macrounit:
             vboxtype = macrounit['boxtype']
             flobjtxt += "\n%sxfl.fl_set_object_boxtype(%s, %s)" % \
@@ -943,8 +955,9 @@ class FdConvertToPy(object):
             else:
                 vname = macrounit['name']
             flobjtxt += "\n%s%s = xfl.fl_add_checkbutton(%s, %s, %s, %s, " \
-                "%s, \'%s\')" % (TWOTABS, prependself(vname), \
-                prependxfl(vtype), vxpos, vypos, vwidth, vheight, vlabel)
+                "%s, \"%s\")" % (TWOTABS, prependself(vname), \
+                prependxfl(vtype), vxpos, vypos, vwidth, vheight, \
+                sanitize(vlabel))
         if "boxtype" in macrounit:
             vboxtype = macrounit['boxtype']
             flobjtxt += "\n%sxfl.fl_set_object_boxtype(%s, %s)" % \
@@ -978,8 +991,9 @@ class FdConvertToPy(object):
             else:
                 vname = macrounit['name']
             flobjtxt += "\n%s%s = xfl.fl_add_lightbutton(%s, %s, %s, %s, " \
-                    "%s, \'%s\')" % (TWOTABS, prependself(vname), \
-                    prependxfl(vtype), vxpos, vypos, vwidth, vheight, vlabel)
+                    "%s, \"%s\")" % (TWOTABS, prependself(vname), \
+                    prependxfl(vtype), vxpos, vypos, vwidth, vheight, \
+                    sanitize(vlabel))
         if "boxtype" in macrounit:
             vboxtype = macrounit['boxtype']
             flobjtxt += "\n%sxfl.fl_set_object_boxtype(%s, %s)" % \
@@ -1013,8 +1027,9 @@ class FdConvertToPy(object):
             else:
                 vname = macrounit['name']
             flobjtxt += "\n%s%s = xfl.fl_add_scrollbutton(%s, %s, %s, %s, " \
-                    "%s, \'%s\')" % (TWOTABS, prependself(vname), \
-                    prependxfl(vtype), vxpos, vypos, vwidth, vheight, vlabel)
+                    "%s, \"%s\")" % (TWOTABS, prependself(vname), \
+                    prependxfl(vtype), vxpos, vypos, vwidth, vheight, \
+                    sanitize(vlabel))
         if "boxtype" in macrounit:
             vboxtype = macrounit['boxtype']
             flobjtxt += "\n%sxfl.fl_set_object_boxtype(%s, %s)" % \
@@ -1040,8 +1055,9 @@ class FdConvertToPy(object):
             else:
                 vname = macrounit['name']
             flobjtxt += "\n%s%s = xfl.fl_add_bitmapbutton(%s, %s, %s, %s, " \
-                    "%s, \'%s\')" % (TWOTABS, prependself(vname), \
-                    prependxfl(vtype), vxpos, vypos, vwidth, vheight, vlabel)
+                    "%s, \"%s\")" % (TWOTABS, prependself(vname), \
+                    prependxfl(vtype), vxpos, vypos, vwidth, vheight, \
+                    sanitize(vlabel))
         if "boxtype" in macrounit:
             vboxtype = macrounit['boxtype']
             flobjtxt += "\n%sxfl.fl_set_object_boxtype(%s, %s)" % \
@@ -1067,7 +1083,7 @@ class FdConvertToPy(object):
             else:                          # is a relative path
                 vfile = './'+macrounit['file']
             if not ifuseddata:          # use file directly
-                flobjtxt += "\n%sxfl.fl_set_bitmapbutton_file(%s, \'%s\')" % \
+                flobjtxt += "\n%sxfl.fl_set_bitmapbutton_file(%s, \"%s\")" % \
                         (TWOTABS, prependself(vname), vfile)
             else:                   # read data in memory
                 # managing import from .xbm data
@@ -1101,8 +1117,9 @@ class FdConvertToPy(object):
             else:
                 vname = macrounit['name']
             flobjtxt += "\n%s%s = xfl.fl_add_pixmapbutton(%s, %s, %s, %s, " \
-                    "%s, \'%s\')" % (TWOTABS, prependself(vname), \
-                    prependxfl(vtype), vxpos, vypos, vwidth, vheight, vlabel)
+                    "%s, \"%s\")" % (TWOTABS, prependself(vname), \
+                    prependxfl(vtype), vxpos, vypos, vwidth, vheight, \
+                    sanitize(vlabel))
         if "boxtype" in macrounit:
             vboxtype = macrounit['boxtype']
             flobjtxt += "\n%sxfl.fl_set_object_boxtype(%s, %s)" % \
@@ -1117,8 +1134,9 @@ class FdConvertToPy(object):
                     (TWOTABS, prependself(vname), prependxfl(valign))
         if 'helper' in macrounit:
             vhelper = macrounit['helper']
-            flobjtxt += "\n%sxfl.fl_set_object_helper(%s, \'%s\')" % \
-                    (TWOTABS, prependself(vname), prependxfl(vhelper))
+            flobjtxt += "\n%sxfl.fl_set_object_helper(%s, \"%s\")" % \
+                    (TWOTABS, prependself(vname), \
+                    sanitize(prependxfl(vhelper)))
         if 'data' in macrounit:         # if "Use data" enabled
             ifuseddata = True
             ndata = macrounit['data']
@@ -1130,7 +1148,7 @@ class FdConvertToPy(object):
             else:                   # '0', is a relative path
                 vfile = './'+macrounit['file']
             if not ifuseddata:          # use file directly
-                flobjtxt += "\n%sxfl.fl_set_pixmapbutton_file(%s, \'%s\')" % \
+                flobjtxt += "\n%sxfl.fl_set_pixmapbutton_file(%s, \"%s\")" % \
                         (TWOTABS, prependself(vname), vfile)
             else:                   # read data in memory
                 # managing import from .xpm data
@@ -1147,7 +1165,7 @@ class FdConvertToPy(object):
                 else:                   # '0', is a relative path
                     vfocusfile = './'+macrounit['focus_file']
                 flobjtxt += "\n%sxfl.fl_set_pixmapbutton_focus_file(%s, " \
-                        "\'%s\')" % (TWOTABS, prependself(vname), vfocusfile)
+                        "\"%s\")" % (TWOTABS, prependself(vname), vfocusfile)
             else:                # no focus file used
                 pass
         self.createformstext.append(flobjtxt)
@@ -1170,8 +1188,9 @@ class FdConvertToPy(object):
             else:
                 vname = macrounit['name']
             flobjtxt += "\n%s%s = xfl.fl_add_labelbutton(%s, %s, %s, %s, " \
-                    "%s, \'%s\')" % (TWOTABS, prependself(vname), \
-                    prependxfl(vtype), vxpos, vypos, vwidth, vheight, vlabel)
+                    "%s, \"%s\")" % (TWOTABS, prependself(vname), \
+                    prependxfl(vtype), vxpos, vypos, vwidth, vheight, \
+                    sanitize(vlabel))
         if "boxtype" in macrounit:
             vboxtype = macrounit['boxtype']
             flobjtxt += "\n%sxfl.fl_set_object_boxtype(%s, %s)" % \
@@ -1200,8 +1219,9 @@ class FdConvertToPy(object):
             else:
                 vname = macrounit['name']
             flobjtxt += "\n%s%s = xfl.fl_add_slider(%s, %s, %s, %s, " \
-                    "%s, \'%s\')" % (TWOTABS, prependself(vname), \
-                    prependxfl(vtype), vxpos, vypos, vwidth, vheight, vlabel)
+                    "%s, \"%s\")" % (TWOTABS, prependself(vname), \
+                    prependxfl(vtype), vxpos, vypos, vwidth, vheight, \
+                    sanitize(vlabel))
         if "boxtype" in macrounit:
             vboxtype = macrounit['boxtype']
             flobjtxt += "\n%sxfl.fl_set_object_boxtype(%s, %s)" % \
@@ -1246,8 +1266,9 @@ class FdConvertToPy(object):
             else:
                 vname = macrounit['name']
             flobjtxt += "\n%s%s = xfl.fl_add_valslider(%s, %s, %s, %s, " \
-                    "%s, \'%s\')" % (TWOTABS, prependself(vname), \
-                    prependxfl(vtype), vxpos, vypos, vwidth, vheight, vlabel)
+                    "%s, \"%s\")" % (TWOTABS, prependself(vname), \
+                    prependxfl(vtype), vxpos, vypos, vwidth, vheight, \
+                    sanitize(vlabel))
         if "boxtype" in macrounit:
             vboxtype = macrounit['boxtype']
             flobjtxt += "\n%sxfl.fl_set_object_boxtype(%s, %s)" % \
@@ -1296,8 +1317,9 @@ class FdConvertToPy(object):
             else:
                 vname = macrounit['name']
             flobjtxt += "\n%s%s = xfl.fl_add_scrollbar(%s, %s, %s, %s, " \
-                    "%s, \'%s\')" % (TWOTABS, prependself(vname), \
-                    prependxfl(vtype), vxpos, vypos, vwidth, vheight, vlabel)
+                    "%s, \"%s\")" % (TWOTABS, prependself(vname), \
+                    prependxfl(vtype), vxpos, vypos, vwidth, vheight, \
+                    sanitize(vlabel))
         if "boxtype" in macrounit:
             vboxtype = macrounit['boxtype']
             flobjtxt += "\n%sxfl.fl_set_object_boxtype(%s, %s)" % \
@@ -1342,8 +1364,9 @@ class FdConvertToPy(object):
             else:
                 vname = macrounit['name']
             flobjtxt += "\n%s%s = xfl.fl_add_dial(%s, %s, %s, %s, " \
-                    "%s, \'%s\')" % (TWOTABS, prependself(vname), \
-                    prependxfl(vtype), vxpos, vypos, vwidth, vheight, vlabel)
+                    "%s, \"%s\")" % (TWOTABS, prependself(vname), \
+                    prependxfl(vtype), vxpos, vypos, vwidth, vheight, \
+                    sanitize(vlabel))
         if "boxtype" in macrounit:
             vboxtype = macrounit['boxtype']
             flobjtxt += "\n%sxfl.fl_set_object_boxtype(%s, %s)" % \
@@ -1388,8 +1411,9 @@ class FdConvertToPy(object):
             else:
                 vname = macrounit['name']
             flobjtxt += "\n%s%s = xfl.fl_add_positioner(%s, %s, %s, %s, " \
-                    "%s, \'%s\')" % (TWOTABS, prependself(vname), \
-                    prependxfl(vtype), vxpos, vypos, vwidth, vheight, vlabel)
+                    "%s, \"%s\")" % (TWOTABS, prependself(vname), \
+                    prependxfl(vtype), vxpos, vypos, vwidth, vheight, \
+                    sanitize(vlabel))
         if "boxtype" in macrounit:
             vboxtype = macrounit['boxtype']
             flobjtxt += "\n%sxfl.fl_set_object_boxtype(%s, %s)" % \
@@ -1438,8 +1462,9 @@ class FdConvertToPy(object):
             else:
                 vname = macrounit['name']
             flobjtxt += "\n%s%s = xfl.fl_add_thumbwheel(%s, %s, %s, %s, " \
-                    "%s, \'%s\')" % (TWOTABS, prependself(vname), \
-                    prependxfl(vtype), vxpos, vypos, vwidth, vheight, vlabel)
+                    "%s, \"%s\")" % (TWOTABS, prependself(vname), \
+                    prependxfl(vtype), vxpos, vypos, vwidth, vheight, \
+                    sanitize(vlabel))
         if "boxtype" in macrounit:
             vboxtype = macrounit['boxtype']
             flobjtxt += "\n%sxfl.fl_set_object_boxtype(%s, %s)" % \
@@ -1476,8 +1501,9 @@ class FdConvertToPy(object):
             else:
                 vname = macrounit['name']
             flobjtxt += "\n%s%s = xfl.fl_add_counter(%s, %s, %s, %s, " \
-                    "%s, \'%s\')" % (TWOTABS, prependself(vname), \
-                    prependxfl(vtype), vxpos, vypos, vwidth, vheight, vlabel)
+                    "%s, \"%s\")" % (TWOTABS, prependself(vname), \
+                    prependxfl(vtype), vxpos, vypos, vwidth, vheight, \
+                    sanitize(vlabel))
         if "boxtype" in macrounit:
             vboxtype = macrounit['boxtype']
             flobjtxt += "\n%sxfl.fl_set_object_boxtype(%s, %s)" % \
@@ -1514,8 +1540,9 @@ class FdConvertToPy(object):
             else:
                 vname = macrounit['name']
             flobjtxt += "\n%s%s = xfl.fl_add_spinner(%s, %s, %s, %s, " \
-                    "%s, \'%s\')" % (TWOTABS, prependself(vname), \
-                    prependxfl(vtype), vxpos, vypos, vwidth, vheight, vlabel)
+                    "%s, \"%s\")" % (TWOTABS, prependself(vname), \
+                    prependxfl(vtype), vxpos, vypos, vwidth, vheight, \
+                    sanitize(vlabel))
         if "boxtype" in macrounit:
             vboxtype = macrounit['boxtype']
             flobjtxt += "\n%sxfl.fl_set_object_boxtype(%s, %s)" % \
@@ -1552,8 +1579,9 @@ class FdConvertToPy(object):
             else:
                 vname = macrounit['name']
             flobjtxt += "\n%s%s = xfl.fl_add_input(%s, %s, %s, %s, " \
-                    "%s, \'%s\')" % (TWOTABS, prependself(vname), \
-                    prependxfl(vtype), vxpos, vypos, vwidth, vheight, vlabel)
+                    "%s, \"%s\")" % (TWOTABS, prependself(vname), \
+                    prependxfl(vtype), vxpos, vypos, vwidth, vheight, \
+                    sanitize(vlabel))
         if "boxtype" in macrounit:
             vboxtype = macrounit['boxtype']
             flobjtxt += "\n%sxfl.fl_set_object_boxtype(%s, %s)" % \
@@ -1579,8 +1607,9 @@ class FdConvertToPy(object):
             else:
                 vname = macrounit['name']
             flobjtxt += "\n%s%s = xfl.fl_add_browser(%s, %s, %s, %s, " \
-                    "%s, \'%s\')" % (TWOTABS, prependself(vname), \
-                    prependxfl(vtype), vxpos, vypos, vwidth, vheight, vlabel)
+                    "%s, \"%s\")" % (TWOTABS, prependself(vname), \
+                    prependxfl(vtype), vxpos, vypos, vwidth, vheight, \
+                    sanitize(vlabel))
         if "boxtype" in macrounit:
             vboxtype = macrounit['boxtype']
             flobjtxt += "\n%sxfl.fl_set_object_boxtype(%s, %s)" % \
@@ -1595,7 +1624,7 @@ class FdConvertToPy(object):
                     (TWOTABS, prependself(vname), prependxfl(vvpref))
         if "contents" in macrounit:
             vcontents = macrounit['contents']
-            flobjtxt += "\n%sxfl.fl_add_browser_line(%s, \'%s\')" % \
+            flobjtxt += "\n%sxfl.fl_add_browser_line(%s, \"%s\")" % \
                     (TWOTABS, prependself(vname), vcontents)
         self.createformstext.append(flobjtxt)
         return vname
@@ -1617,8 +1646,9 @@ class FdConvertToPy(object):
             else:
                 vname = macrounit['name']
             flobjtxt += "\n%s%s = xfl.fl_add_timer(%s, %s, %s, %s, " \
-                    "%s, \'%s\')" % (TWOTABS, prependself(vname), \
-                    prependxfl(vtype), vxpos, vypos, vwidth, vheight, vlabel)
+                    "%s, \"%s\")" % (TWOTABS, prependself(vname), \
+                    prependxfl(vtype), vxpos, vypos, vwidth, vheight, \
+                    sanitize(vlabel))
         if "boxtype" in macrounit:
             vboxtype = macrounit['boxtype']
             flobjtxt += "\n%sxfl.fl_set_object_boxtype(%s, %s)" % \
@@ -1643,8 +1673,9 @@ class FdConvertToPy(object):
             else:
                 vname = macrounit['name']
             flobjtxt += "\n%s%s = xfl.fl_add_xyplot(%s, %s, %s, %s, " \
-                    "%s, \'%s\')" % (TWOTABS, prependself(vname), \
-                    prependxfl(vtype), vxpos, vypos, vwidth, vheight, vlabel)
+                    "%s, \"%s\")" % (TWOTABS, prependself(vname), \
+                    prependxfl(vtype), vxpos, vypos, vwidth, vheight, \
+                    sanitize(vlabel))
         if "boxtype" in macrounit:
             vboxtype = macrounit['boxtype']
             flobjtxt += "\n%sxfl.fl_set_object_boxtype(%s, %s)" % \
@@ -1695,8 +1726,9 @@ class FdConvertToPy(object):
             else:
                 vname = macrounit['name']
             flobjtxt += "\n%s%s = xfl.fl_add_canvas(%s, %s, %s, %s, " \
-                    "%s, \'%s\')" % (TWOTABS, prependself(vname), \
-                    prependxfl(vtype), vxpos, vypos, vwidth, vheight, vlabel)
+                    "%s, \"%s\")" % (TWOTABS, prependself(vname), \
+                    prependxfl(vtype), vxpos, vypos, vwidth, vheight, \
+                    sanitize(vlabel))
         if "boxtype" in macrounit:
             vboxtype = macrounit['boxtype']
             flobjtxt += "\n%sxfl.fl_set_object_boxtype(%s, %s)" % \
@@ -1721,8 +1753,9 @@ class FdConvertToPy(object):
             else:
                 vname = macrounit['name']
             flobjtxt += "\n%s%s = xfl.fl_add_glcanvas(%s, %s, %s, %s, " \
-                    "%s, \'%s\')" % (TWOTABS, prependself(vname), \
-                    prependxfl(vtype), vxpos, vypos, vwidth, vheight, vlabel)
+                    "%s, \"%s\")" % (TWOTABS, prependself(vname), \
+                    prependxfl(vtype), vxpos, vypos, vwidth, vheight, \
+                    sanitize(vlabel))
         if "boxtype" in macrounit:
             vboxtype = macrounit['boxtype']
             flobjtxt += "\n%sxfl.fl_set_object_boxtype(%s, %s)" % \
@@ -1747,8 +1780,9 @@ class FdConvertToPy(object):
             else:
                 vname = macrounit['name']
             flobjtxt += "\n%s%s = xfl.fl_add_tabfolder(%s, %s, %s, %s, " \
-                    "%s, \'%s\')" % (TWOTABS, prependself(vname), \
-                    prependxfl(vtype), vxpos, vypos, vwidth, vheight, vlabel)
+                    "%s, \"%s\")" % (TWOTABS, prependself(vname), \
+                    prependxfl(vtype), vxpos, vypos, vwidth, vheight, \
+                    sanitize(vlabel))
         if "boxtype" in macrounit:
             vboxtype = macrounit['boxtype']
             flobjtxt += "\n%sxfl.fl_set_object_boxtype(%s, %s)" % \
@@ -1773,8 +1807,9 @@ class FdConvertToPy(object):
             else:
                 vname = macrounit['name']
             flobjtxt += "\n%s%s = xfl.fl_add_formbrowser(%s, %s, %s, %s, " \
-                    "%s, \'%s\')" % (TWOTABS, prependself(vname), \
-                    prependxfl(vtype), vxpos, vypos, vwidth, vheight, vlabel)
+                    "%s, \"%s\")" % (TWOTABS, prependself(vname), \
+                    prependxfl(vtype), vxpos, vypos, vwidth, vheight, \
+                    sanitize(vlabel))
         if "boxtype" in macrounit:
             vboxtype = macrounit['boxtype']
             flobjtxt += "\n%sxfl.fl_set_object_boxtype(%s, %s)" % \
@@ -1795,7 +1830,7 @@ class FdConvertToPy(object):
         # append text at the end of main func
         endingstxt = "\n%sself.create_forms()" % TWOTABS
         endingstxt += "\n%sxfl.fl_show_form(%s, xfl.FL_PLACE_CENTERFREE, " \
-                "xfl.FL_FULLBORDER, \'%s\')" % (TWOTABS, \
+                "xfl.FL_FULLBORDER, \"%s\")" % (TWOTABS, \
                 prependself(self.firstformname), self.firstformname)
         endingstxt += "\n\n%swhile xfl.fl_do_forms():\n%s%spass" % \
                 (TWOTABS, TWOTABS, ONETAB)
@@ -1804,12 +1839,11 @@ class FdConvertToPy(object):
 
     def manage_endings(self):
         # append text of code run to func list
-        appname = self.infile.replace(".fd", "").replace("-", "_").capitalize()
         filname = self.infile.replace(".fd", ".py")
         endingstxt = "\n\n\nif __name__ == '__main__':"
         endingstxt += '\n%sprint "***** %s *****"' % (ONETAB, filname)
         endingstxt += "\n%sApplDemo = %s(len(sys.argv), sys.argv)\n\n" % \
-                (ONETAB, appname)
+                (ONETAB, self.appname)
         self.runcodetext.append(endingstxt)
 
     def savepyfile(self):
