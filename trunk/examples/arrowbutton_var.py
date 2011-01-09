@@ -27,7 +27,7 @@ def main(lsysargv, sysargv):
             'argKind' : xfl.XrmoptionNoArg, 'value' : 'False'}, \
             {'option' : '-third', 'specifier' : '.third',
             'argKind' : xfl.XrmoptionSepArg, 'value' : '0'}]
-    pcmdopt = xfl.make_flcmdopt(cmdopts)
+    pcmdopt = xfl.make_ptr_flcmdopt(cmdopts)
     xfl.fl_initialize(lsysargv, sysargv, "FormDemo", pcmdopt, 3)
 
     pform = xfl.fl_bgn_form(xfl.FL_UP_BOX, 400, 400)

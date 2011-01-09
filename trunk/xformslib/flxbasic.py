@@ -1170,7 +1170,7 @@ def fl_ovalarc(fill, xpos, ypos, width, height, stheta, dtheta, colr):
             starting angle, measured in tenth of a degree and with 0 at 3
             o'clock position
         dtheta : int
-            the directione and the extent of the arc. If positive the arc
+            the direction and the extent of the arc. If positive the arc
             is drawn in counter-clockwise direction from the starting point,
             otherwise in clockwise direction. If it is larger than 3600 it
             is truncated to 3600.
@@ -1346,9 +1346,9 @@ def fl_pieslice(fill, xpos, ypos, width, height, stheta, etheta, colr):
             horizontal position of the bounding box
         ypos : int
             vertical position of the bounding box
-        height : int
-            horizontal axe of the ellipse
         width : int
+            horizontal axe of the ellipse
+        height : int
             vertical axe of the ellipse
         stheta : int
             starting angle of the arc in units of tenths of a degree

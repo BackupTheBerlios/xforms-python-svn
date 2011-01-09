@@ -63,7 +63,7 @@ def draw_triangle(fill, x, y, w, h, colr):
     mylistpoint = [ {'x':int(x), 'y':int(y + h - 1)}, \
             {'x':int(x + w / 2), 'y':int(y)}, \
             {'x':int(x + w - 1), 'y':int(y + h - 1)} ]
-    pxpoint = xfl.make_flpoint(mylistpoint)         # XPoint xpoint[ 4 ];
+    pxpoint = xfl.make_ptr_flpoint(mylistpoint)         # XPoint xpoint[ 4 ];
 
     #gc = xfl.fl_get_gc()       #xfl.fl_state[xfl.fl_get_vclass()].gc[0]
     #gc = xfl.fl_state[xfl.fl_vmode].gc[0]

@@ -34,8 +34,8 @@ from xformslib import xfdata
 from xformslib import library
 
 
-def make_flpopupitem(dictpopupitems):
-    """make_flpopupitem(dictpopupitems) -> ptr_flpopupitem
+def make_ptr_flpopupitem(dictpopupitems):
+    """make_ptr_flpopupitem(dictpopupitems) -> ptr_flpopupitem
 
     Taking a python dict (for one dict item) or a python list of dicts (for
     more than one dict item) with keys corresponding to xfdata.FL_POPUP_ITEM
@@ -170,8 +170,8 @@ def make_flpopupitem(dictpopupitems):
                 (dictpopupitems, type(dictpopupitems)))
 
 
-def make_fliopt(dictfliopt):
-    """make_fliopt(dictfliopt) -> ptr_fliopt
+def make_ptr_fliopt(dictfliopt):
+    """make_ptr_fliopt(dictfliopt) -> ptr_fliopt
 
     Taking a python dict (for one dict item) with keys corresponding to
     xfdata.FL_IOPT elements prepares and returns a C-compatible pointer
@@ -340,8 +340,8 @@ def make_fliopt(dictfliopt):
                 "python dict" % (dictfliopt, type(dictfliopt)))
 
 
-def make_flcmdopt(dictflcmdopt):
-    """make_flcmdopt(dictflcmdopt) -> ptr_flcmdopt
+def make_ptr_flcmdopt(dictflcmdopt):
+    """make_ptr_flcmdopt(dictflcmdopt) -> ptr_flcmdopt
 
     Taking a python dict (for one dict item) or a list of dicts (for more
     than one dict item) with keys corresponding to xfdata.FL_CMD_OPT
@@ -461,8 +461,8 @@ def make_flcmdopt(dictflcmdopt):
                 (dictflcmdopt, type(dictflcmdopt)))
 
 
-def make_flresource(dictflresource):
-    """make_flresource(dictflresource) -> ptr_flresource
+def make_ptr_flresource(dictflresource):
+    """make_ptr_flresource(dictflresource) -> ptr_flresource
 
     Taking a python dict (for one dict item) or a list of dicts (for more
     than one dict item) with keys corresponding to xfdata.FL_RESOURCE
@@ -654,8 +654,8 @@ def make_flresource(dictflresource):
                 (dictflresource, type(dictflresource)))
 
 
-def make_flpoint(dictflpoint):
-    """make_flpoint(dictflpoint) -> ptr_flpoint
+def make_ptr_flpoint(dictflpoint):
+    """make_ptr_flpoint(dictflpoint) -> ptr_flpoint
 
     Taking a python dict (for one dict item) or a list of dicts (for more
     than one dict item) with keys corresponding to xfdata.FL_POINT
@@ -684,10 +684,11 @@ def make_flpoint(dictflpoint):
             pyclsy = dictflpoint['y']
             sh_clsy = library.convert_to_shortc(pyclsy)
             print "pyclsy, sh_clsy", pyclsy, sh_clsy
-            structflpoint = (xfdata.FL_POINT)()      # * 2)()
+            structflpoint = (xfdata.FL_POINT *2)()      # * 2)()
         structflpoint[0].x = sh_clsx
         structflpoint[0].y = sh_clsy
-        #structflpoint[1].x = 0  # ends array, preventing SegFault?
+        structflpoint[-1].x = 0  # ends array, preventing SegFault
+        structflpoint[-1].y = 0  # ends array, preventing SegFault
 
         ptr_flpoint = cty.pointer(structflpoint[0])
         library.keep_elem_refs(dictflpoint, structflpoint, \
@@ -698,7 +699,7 @@ def make_flpoint(dictflpoint):
     elif isinstance(dictflpoint, list):
 
         dictlength = len(dictflpoint)
-        structflpoint = (xfdata.FL_POINT * dictlength)()  # +1
+        structflpoint = (xfdata.FL_POINT * (dictlength+1))()  # +1
         pyclsx = sh_clsx = [0] * dictlength
         pyclsy = sh_clsy = [0] * dictlength
 
@@ -725,8 +726,8 @@ def make_flpoint(dictflpoint):
             library.keep_elem_refs(dictflpoint[numb], structflpoint[numb], \
                 pyclsx[numb], sh_clsx[numb], pyclsy[numb], sh_clsy[numb])
 
-        #structflpoint[-1].x = 0    # this ends array, preventing SegFault
-
+        structflpoint[-1].x = 0  # ends array, preventing SegFault
+        structflpoint[-1].y = 0  # ends array, preventing SegFault
         ptr_flpoint = cty.pointer(structflpoint[0])
         library.keep_elem_refs(dictflpoint, ptr_flpoint, \
                 structflpoint)

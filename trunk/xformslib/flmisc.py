@@ -529,9 +529,20 @@ def fl_add_free(freetype, xpos, ypos, width, height, label, pyfn_HandlePtr):
             height in coord units
         label : str
             text label of free
-        pyfn_HandlePtr : python function to handle free object, returned value
-            name referring to function(int, ptr_flobject, int, coord, coord,
-            int, voidp) -> num.
+        pyfn_HandlePtr : python function, returned value
+            name referring to function(ptr_flobject, [int]event, [int]xpos,
+            [int]ypos, [int]key, [pointer to void]ptr_xevent) -> [int]num
+            Function does the redrawing and handles the interaction with the
+            free flobject. First param is the flobject to which the event
+            applies; event indicates what has to happen to the object; xpos
+            and ypos indicate the position of the mouse (only meaningful with
+            mouse related events) relative to the form origin; key is the
+            KeySym of the key typed in by the user (only for xfdata.FL_KEYPRESS
+            events). ptr_xevent is pointer to X Event that causes the
+            invocation of this handler. event and ptr_xevent.contents.type can
+            both be used to obtain the event types. The routine should return
+            whether the status of the object has changed, i.e., whether
+            fl_do_forms() or fl_check_forms() should return this flobject.
 
     Returns
     -------

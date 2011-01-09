@@ -42,69 +42,7 @@ from xformslib import xfdata
 
 # Interfaces
 
-def fl_create_generic_canvas(canvclass, canvastype, xpos, ypos, width, height,
-                             label):
-    """fl_create_generic_canvas(canvasclass, canvastype, xpos, ypos, width,
-    height, label) -> ptr_flobject
-
-    Creates a generic canvas flobject.
-
-    Parameters
-    ----------
-        canvclass : int
-            value for new canvas flobject class
-        canvastype : int
-            type of canvas to be created. Values (from xfdata.py)
-            FL_NORMAL_CANVAS (normal canvas flobject type), FL_SCROLLED_CANVAS
-            (not enabled)
-        xpos : int
-            horizontal position (upper-left corner)
-        ypos : int
-            vertical position (upper-left corner)
-        width : int
-            width in coord units
-        height : int
-            height in coord units
-        label : str
-            text label of canvas
-
-    Returns
-    -------
-        ptr_flobject : pointer to xfdata.FL_OBJECT
-            created canvas flobject
-
-    Examples
-    --------
-        >>> *todo*
-
-    Notes
-    -----
-        Status: Untested + Doc + NoDemo = NOT OK
-
-    """
-    _fl_create_generic_canvas = library.cfuncproto(
-        library.load_so_libforms(), "fl_create_generic_canvas",
-        cty.POINTER(xfdata.FL_OBJECT), [cty.c_int, cty.c_int, xfdata.FL_Coord,
-        xfdata.FL_Coord, xfdata.FL_Coord, xfdata.FL_Coord, xfdata.STRING],
-        """FL_OBJECT * fl_create_generic_canvas(int canvas_class,
-           int type, FL_Coord x, FL_Coord y, FL_Coord w, FL_Coord h,
-           const char * label)""")
-    library.check_if_initialized()
-    library.checkfatal_allowed_value_in_list(canvastype, \
-            xfdata.CANVASTYPE_list)
-    i_canvclass = library.convert_to_intc(canvclass)
-    i_canvastype = library.convert_to_intc(canvastype)
-    i_xpos = library.convert_to_FL_Coord(xpos)
-    i_ypos = library.convert_to_FL_Coord(ypos)
-    i_width = library.convert_to_FL_Coord(width)
-    i_height = library.convert_to_FL_Coord(height)
-    s_label = library.convert_to_stringc(label)
-    library.keep_elem_refs(canvclass, canvastype, xpos, ypos, width, height, \
-            label, i_canvclass, i_canvastype, i_xpos, i_ypos, i_width, \
-            i_height, s_label)
-    retval = _fl_create_generic_canvas(i_canvclass, i_canvastype, \
-            i_xpos, i_ypos, i_width, i_height, s_label)
-    return retval
+# fl_create_generic_canvas function placeholder (internal)
 
 
 def fl_add_canvas(canvastype, xpos, ypos, width, height, label):
@@ -332,7 +270,7 @@ def fl_add_canvas_handler(ptr_flobject, evtnum, pyfn_HandleCanvas, vdata):
         ptr_flobject : pointer to xfdata.FL_OBJECT
             canvas flobject
         evtnum : int
-            X event number. Values (from xfdata.py): Expose, KeyPress, KeyPress,
+            X event number. Values (from xfdata.py): Expose, KeyPress, KeyRelease,
             ButtonRelease, etc..
         pyfn_HandleCanvas : python function to handle canvas, returned value
             name referring to function(ptr_flobject, [long_pos]win, [int]width,
@@ -493,7 +431,7 @@ def fl_remove_canvas_handler(ptr_flobject, evtnum, pyfn_HandleCanvas):
         ptr_flobject : pointer to xfdata.FL_OBJECT
             canvas flobject
         evtnum : int
-            X event number. Values (from xfdata.py): Expose, KeyPress, KeyPress,
+            X event number. Values (from xfdata.py): Expose, KeyPress, KeyRelease,
             ButtonRelease, etc.. If it is invalid, removes all handlers and
             their corresponding event mask.
         pyfn_HandleCanvas : python function to handle canvas, returned value
