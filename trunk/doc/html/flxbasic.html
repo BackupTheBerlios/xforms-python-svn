@@ -199,7 +199,6 @@ to&nbsp;solicit&nbsp;the&nbsp;events&nbsp;for&nbsp;you.&nbsp;Note,&nbsp;however,
 to&nbsp;masks&nbsp;are&nbsp;not&nbsp;unique&nbsp;and&nbsp;depending&nbsp;on&nbsp;applications,&nbsp;the&nbsp;default<br>
 mapping&nbsp;may&nbsp;or&nbsp;may&nbsp;not&nbsp;be&nbsp;the&nbsp;one&nbsp;you&nbsp;want.<br>
 &nbsp;<br>
-&nbsp;<br>
 Parameters<br>
 ----------<br>
 &nbsp;&nbsp;&nbsp;&nbsp;win&nbsp;:&nbsp;long_pos<br>
@@ -212,7 +211,7 @@ Examples<br>
 Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-fl_add_event_callback"><strong>fl_add_event_callback</strong></a>(win, evttype, pyfn_AppEventCb, vdata)</dt><dd><tt><a href="#-fl_add_event_callback">fl_add_event_callback</a>(win,&nbsp;evttype,&nbsp;pyfn_AppEventCb,&nbsp;vdata)<br>
+ <dl><dt><a name="-fl_add_event_callback"><strong>fl_add_event_callback</strong></a>(win, evtnum, pyfn_AppEventCb, userdata)</dt><dd><tt><a href="#-fl_add_event_callback">fl_add_event_callback</a>(win,&nbsp;evtnum,&nbsp;pyfn_AppEventCb,&nbsp;userdata)<br>
 -&gt;&nbsp;AppEventCb<br>
 &nbsp;<br>
 Adds&nbsp;an&nbsp;event&nbsp;handler&nbsp;for&nbsp;a&nbsp;window.&nbsp;Manipulates&nbsp;the&nbsp;event&nbsp;callback<br>
@@ -226,8 +225,8 @@ Parameters<br>
 ----------<br>
 &nbsp;&nbsp;&nbsp;&nbsp;win&nbsp;:&nbsp;long_pos<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;window&nbsp;id&nbsp;to&nbsp;add&nbsp;event&nbsp;handler&nbsp;to<br>
-&nbsp;&nbsp;&nbsp;&nbsp;evttype&nbsp;:&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;event&nbsp;type&nbsp;names.&nbsp;Values&nbsp;(from&nbsp;xfdata.py)&nbsp;KeyPress,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;evtnum&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;X&nbsp;event&nbsp;type&nbsp;names.&nbsp;Values&nbsp;(from&nbsp;xfdata.py)&nbsp;KeyPress,<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;KeyRelease,&nbsp;ButtonPress,&nbsp;ButtonRelease,&nbsp;MotionNotify,<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;EnterNotify,&nbsp;LeaveNotify,&nbsp;FocusIn,&nbsp;FocusOut,&nbsp;KeymapNotify,<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Expose,&nbsp;GraphicsExpose,&nbsp;NoExpose,&nbsp;VisibilityNotify,<br>
@@ -237,11 +236,11 @@ Parameters<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;PropertyNotify,&nbsp;SelectionClear,&nbsp;SelectionRequest,&nbsp;SelectionNotify<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;If&nbsp;it&nbsp;is&nbsp;0,&nbsp;the&nbsp;callback&nbsp;is&nbsp;for&nbsp;all&nbsp;events&nbsp;for&nbsp;the&nbsp;window<br>
 &nbsp;&nbsp;&nbsp;&nbsp;pyfn_AppEventCb&nbsp;:&nbsp;python&nbsp;function&nbsp;callback,&nbsp;returned&nbsp;value<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;name&nbsp;referring&nbsp;to&nbsp;function(ptr_xevent,&nbsp;[pointer&nbsp;to&nbsp;void]vdata)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;name&nbsp;referring&nbsp;to&nbsp;function(ptr_xevent,&nbsp;[pointer&nbsp;to&nbsp;void]pvdata)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-&gt;&nbsp;[int]num.<br>
-&nbsp;&nbsp;&nbsp;&nbsp;vdata&nbsp;:&nbsp;any&nbsp;type&nbsp;(e.g.&nbsp;None,&nbsp;int,&nbsp;str,&nbsp;etc..)<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;user&nbsp;data&nbsp;to&nbsp;be&nbsp;passed&nbsp;to&nbsp;function;&nbsp;callback&nbsp;has&nbsp;to&nbsp;take&nbsp;care<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;of&nbsp;type&nbsp;check<br>
+&nbsp;&nbsp;&nbsp;&nbsp;userdata&nbsp;:&nbsp;any&nbsp;type&nbsp;(e.g.&nbsp;None,&nbsp;int,&nbsp;str,&nbsp;etc..)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;user&nbsp;data&nbsp;to&nbsp;be&nbsp;passed&nbsp;to&nbsp;function;&nbsp;invoked&nbsp;callback&nbsp;has&nbsp;to&nbsp;take<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;care&nbsp;of&nbsp;type&nbsp;check&nbsp;and&nbsp;re-cast&nbsp;from&nbsp;ptr_void&nbsp;to&nbsp;chosen&nbsp;type<br>
 &nbsp;<br>
 Returns<br>
 -------<br>
@@ -250,7 +249,7 @@ Returns<br>
 &nbsp;<br>
 Examples<br>
 --------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;def&nbsp;eventcb(pxev,&nbsp;vdata):<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;def&nbsp;eventcb(pxev,&nbsp;pvdata):<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;...&nbsp;&lt;something&gt;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;...&nbsp;return&nbsp;0<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;<a href="#-fl_add_event_callback">fl_add_event_callback</a>(win2,&nbsp;0,&nbsp;eventcb,&nbsp;None)<br>
@@ -649,7 +648,7 @@ Parameters<br>
 ----------<br>
 &nbsp;&nbsp;&nbsp;&nbsp;ptr_flresource&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_RESOURCE<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;an&nbsp;array&nbsp;of&nbsp;resource&nbsp;class&nbsp;instances.&nbsp;You&nbsp;can&nbsp;use<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;xfstruct.make_flresource()&nbsp;passing&nbsp;a&nbsp;dict&nbsp;or&nbsp;a&nbsp;list&nbsp;of&nbsp;dicts<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;xfstruct.make_ptr_flresource()&nbsp;passing&nbsp;a&nbsp;dict&nbsp;or&nbsp;a&nbsp;list&nbsp;of&nbsp;dicts<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;with&nbsp;keys&nbsp;corresponding&nbsp;to&nbsp;xfdata.FL_RESOURCE&nbsp;attributes<br>
 &nbsp;&nbsp;&nbsp;&nbsp;numresources&nbsp;:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;number&nbsp;of&nbsp;resources&nbsp;(starting&nbsp;from&nbsp;1)&nbsp;passed&nbsp;with<br>
@@ -1284,7 +1283,7 @@ Parameters<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;application&nbsp;class&nbsp;name<br>
 &nbsp;&nbsp;&nbsp;&nbsp;ptr_appoptions&nbsp;:&nbsp;instance&nbsp;of&nbsp;xfdata.FL_CMD_OPT<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;possible&nbsp;options&nbsp;passed&nbsp;as&nbsp;a&nbsp;flcmdopt&nbsp;class&nbsp;instance.&nbsp;You&nbsp;can&nbsp;use<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;make_flcmdopt&nbsp;function,&nbsp;passing&nbsp;a&nbsp;dict&nbsp;with&nbsp;keys&nbsp;corresponding<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;make_ptr_flcmdopt&nbsp;function,&nbsp;passing&nbsp;a&nbsp;dict&nbsp;with&nbsp;keys&nbsp;corresponding<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;to&nbsp;xfdata.FL_CMD_OPT&nbsp;attributes.&nbsp;If&nbsp;it&nbsp;is&nbsp;None,&nbsp;user&nbsp;application<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;has&nbsp;no&nbsp;options<br>
 &nbsp;&nbsp;&nbsp;&nbsp;numappopts&nbsp;:&nbsp;int<br>
@@ -1585,7 +1584,7 @@ Parameters<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;starting&nbsp;angle,&nbsp;measured&nbsp;in&nbsp;tenth&nbsp;of&nbsp;a&nbsp;degree&nbsp;and&nbsp;with&nbsp;0&nbsp;at&nbsp;3<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;o'clock&nbsp;position<br>
 &nbsp;&nbsp;&nbsp;&nbsp;dtheta&nbsp;:&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;the&nbsp;directione&nbsp;and&nbsp;the&nbsp;extent&nbsp;of&nbsp;the&nbsp;arc.&nbsp;If&nbsp;positive&nbsp;the&nbsp;arc<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;the&nbsp;direction&nbsp;and&nbsp;the&nbsp;extent&nbsp;of&nbsp;the&nbsp;arc.&nbsp;If&nbsp;positive&nbsp;the&nbsp;arc<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;is&nbsp;drawn&nbsp;in&nbsp;counter-clockwise&nbsp;direction&nbsp;from&nbsp;the&nbsp;starting&nbsp;point,<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;otherwise&nbsp;in&nbsp;clockwise&nbsp;direction.&nbsp;If&nbsp;it&nbsp;is&nbsp;larger&nbsp;than&nbsp;3600&nbsp;it<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;is&nbsp;truncated&nbsp;to&nbsp;3600.<br>
@@ -1686,9 +1685,9 @@ Parameters<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;horizontal&nbsp;position&nbsp;of&nbsp;the&nbsp;bounding&nbsp;box<br>
 &nbsp;&nbsp;&nbsp;&nbsp;ypos&nbsp;:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;vertical&nbsp;position&nbsp;of&nbsp;the&nbsp;bounding&nbsp;box<br>
-&nbsp;&nbsp;&nbsp;&nbsp;height&nbsp;:&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;horizontal&nbsp;axe&nbsp;of&nbsp;the&nbsp;ellipse<br>
 &nbsp;&nbsp;&nbsp;&nbsp;width&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;horizontal&nbsp;axe&nbsp;of&nbsp;the&nbsp;ellipse<br>
+&nbsp;&nbsp;&nbsp;&nbsp;height&nbsp;:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;vertical&nbsp;axe&nbsp;of&nbsp;the&nbsp;ellipse<br>
 &nbsp;&nbsp;&nbsp;&nbsp;stheta&nbsp;:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;starting&nbsp;angle&nbsp;of&nbsp;the&nbsp;arc&nbsp;in&nbsp;units&nbsp;of&nbsp;tenths&nbsp;of&nbsp;a&nbsp;degree<br>
@@ -2050,7 +2049,7 @@ Examples<br>
 Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;Demo&nbsp;=&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-fl_remove_event_callback"><strong>fl_remove_event_callback</strong></a>(win, evttype)</dt><dd><tt><a href="#-fl_remove_event_callback">fl_remove_event_callback</a>(win,&nbsp;evttype)<br>
+ <dl><dt><a name="-fl_remove_event_callback"><strong>fl_remove_event_callback</strong></a>(win, evtnum)</dt><dd><tt><a href="#-fl_remove_event_callback">fl_remove_event_callback</a>(win,&nbsp;evtnum)<br>
 &nbsp;<br>
 Removes&nbsp;one&nbsp;or&nbsp;all&nbsp;event&nbsp;callbacks&nbsp;for&nbsp;a&nbsp;window&nbsp;and&nbsp;for&nbsp;an&nbsp;event&nbsp;of<br>
 specified&nbsp;type.&nbsp;May&nbsp;be&nbsp;called&nbsp;with&nbsp;for&nbsp;a&nbsp;window&nbsp;for&nbsp;which&nbsp;no&nbsp;event<br>
@@ -2061,7 +2060,7 @@ Parameters<br>
 &nbsp;&nbsp;&nbsp;&nbsp;win&nbsp;:&nbsp;long_pos<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;window&nbsp;id<br>
 &nbsp;&nbsp;&nbsp;&nbsp;evttype&nbsp;:&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;event&nbsp;type&nbsp;names.&nbsp;Values&nbsp;(from&nbsp;xfdata.py)&nbsp;KeyPress,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;X&nbsp;event&nbsp;type&nbsp;names.&nbsp;Values&nbsp;(from&nbsp;xfdata.py)&nbsp;KeyPress,<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;KeyRelease,&nbsp;ButtonPress,&nbsp;ButtonRelease,&nbsp;MotionNotify,<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;EnterNotify,&nbsp;LeaveNotify,&nbsp;FocusIn,&nbsp;FocusOut,&nbsp;KeymapNotify,<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Expose,&nbsp;GraphicsExpose,&nbsp;NoExpose,&nbsp;VisibilityNotify,<br>
@@ -2311,7 +2310,7 @@ Parameters<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;font&nbsp;size),&nbsp;FL_PDInputLabelSize&nbsp;or&nbsp;FL_PDInputFontSize&nbsp;(Input&nbsp;label<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;and&nbsp;text&nbsp;font&nbsp;size,&nbsp;"menuFontSize").<br>
 &nbsp;&nbsp;&nbsp;&nbsp;ptr_fliopt&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_IOPT&nbsp;array<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;program&nbsp;defaults&nbsp;class&nbsp;instance.&nbsp;You&nbsp;can&nbsp;use&nbsp;xfstruct.make_fliopt<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;program&nbsp;defaults&nbsp;class&nbsp;instance.&nbsp;You&nbsp;can&nbsp;use&nbsp;xfstruct.make_ptr_fliopt<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;function&nbsp;passing&nbsp;a&nbsp;dict&nbsp;with&nbsp;keys&nbsp;corresponding&nbsp;to&nbsp;xfdata.FL_IOPT's<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;attributes.<br>
 &nbsp;<br>
@@ -2346,7 +2345,7 @@ Examples<br>
 Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-fl_set_event_callback"><strong>fl_set_event_callback</strong></a>(pyfn_AppEventCb, vdata)</dt><dd><tt><a href="#-fl_set_event_callback">fl_set_event_callback</a>(pyfn_AppEventCb,&nbsp;vdata)&nbsp;-&gt;&nbsp;AppEventCb<br>
+ <dl><dt><a name="-fl_set_event_callback"><strong>fl_set_event_callback</strong></a>(pyfn_AppEventCb, userdata)</dt><dd><tt><a href="#-fl_set_event_callback">fl_set_event_callback</a>(pyfn_AppEventCb,&nbsp;userdata)&nbsp;-&gt;&nbsp;AppEventCb<br>
 &nbsp;<br>
 Defines&nbsp;up&nbsp;an&nbsp;event&nbsp;callback&nbsp;routine.&nbsp;Whenever&nbsp;an&nbsp;event&nbsp;happens,&nbsp;the<br>
 callback&nbsp;function&nbsp;is&nbsp;invoked&nbsp;with&nbsp;the&nbsp;event&nbsp;as&nbsp;the&nbsp;first&nbsp;argument.<br>
@@ -2358,13 +2357,13 @@ is&nbsp;pending&nbsp;for&nbsp;the&nbsp;application's&nbsp;own&nbsp;window.<br>
 Parameters<br>
 ----------<br>
 &nbsp;&nbsp;&nbsp;&nbsp;pyfn_AppEventCb&nbsp;:&nbsp;python&nbsp;function&nbsp;callback,&nbsp;returned&nbsp;value<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;name&nbsp;referring&nbsp;to&nbsp;function(ptr_xevent,&nbsp;[pointer&nbsp;to&nbsp;void]vdata)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;name&nbsp;referring&nbsp;to&nbsp;function(ptr_xevent,&nbsp;[pointer&nbsp;to&nbsp;void]pvdata)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-&gt;&nbsp;[int]num.<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The&nbsp;callback&nbsp;function&nbsp;normally&nbsp;should&nbsp;return&nbsp;0,&nbsp;unless&nbsp;the<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;event&nbsp;is&nbsp;not&nbsp;for&nbsp;one&nbsp;of&nbsp;the&nbsp;applcation-managed&nbsp;windows.<br>
-&nbsp;&nbsp;&nbsp;&nbsp;vdata&nbsp;:&nbsp;any&nbsp;type&nbsp;(e.g.&nbsp;None,&nbsp;int,&nbsp;str,&nbsp;etc..)<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;user&nbsp;data&nbsp;to&nbsp;be&nbsp;passed&nbsp;to&nbsp;function;&nbsp;callback&nbsp;has&nbsp;to&nbsp;take&nbsp;care<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;of&nbsp;type&nbsp;check<br>
+&nbsp;&nbsp;&nbsp;&nbsp;userdata&nbsp;:&nbsp;any&nbsp;type&nbsp;(e.g.&nbsp;None,&nbsp;int,&nbsp;str,&nbsp;etc..)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;user&nbsp;data&nbsp;to&nbsp;be&nbsp;passed&nbsp;to&nbsp;function;&nbsp;invoked&nbsp;callback&nbsp;has&nbsp;to&nbsp;take<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;care&nbsp;of&nbsp;type&nbsp;check&nbsp;and&nbsp;re-cast&nbsp;from&nbsp;ptr_void&nbsp;to&nbsp;chosen&nbsp;type.<br>
 &nbsp;<br>
 Returns<br>
 -------<br>
@@ -2373,7 +2372,7 @@ Returns<br>
 &nbsp;<br>
 Examples<br>
 --------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;def&nbsp;eventcb(pxev,&nbsp;vdata):<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;def&nbsp;eventcb(pxev,&nbsp;pvdata):<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;...&nbsp;&lt;something&gt;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;...&nbsp;return&nbsp;0<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;<a href="#-fl_set_event_callback">fl_set_event_callback</a>(eventcb,&nbsp;None)<br>
@@ -2469,7 +2468,7 @@ Examples<br>
 Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-fl_set_idle_callback"><strong>fl_set_idle_callback</strong></a>(pyfn_AppEventCb, vdata)</dt><dd><tt><a href="#-fl_set_idle_callback">fl_set_idle_callback</a>(pyfn_AppEventCb,&nbsp;vdata)&nbsp;-&gt;&nbsp;AppEventCb<br>
+ <dl><dt><a name="-fl_set_idle_callback"><strong>fl_set_idle_callback</strong></a>(pyfn_AppEventCb, userdata)</dt><dd><tt><a href="#-fl_set_idle_callback">fl_set_idle_callback</a>(pyfn_AppEventCb,&nbsp;userdata)&nbsp;-&gt;&nbsp;AppEventCb<br>
 &nbsp;<br>
 Registers&nbsp;an&nbsp;idle&nbsp;callback.&nbsp;Interaction&nbsp;with&nbsp;it&nbsp;&nbsp;can&nbsp;used&nbsp;for&nbsp;periodic<br>
 tasks,&nbsp;e.g.&nbsp;rotating&nbsp;an&nbsp;image,&nbsp;checking&nbsp;the&nbsp;status&nbsp;of&nbsp;some&nbsp;external<br>
@@ -2484,11 +2483,11 @@ range&nbsp;between&nbsp;50&nbsp;and&nbsp;300&nbsp;msec&nbsp;should&nbsp;be&nbsp;
 Parameters<br>
 ----------<br>
 &nbsp;&nbsp;&nbsp;&nbsp;pyfn_AppEventCb&nbsp;:&nbsp;python&nbsp;function&nbsp;callback,&nbsp;returning&nbsp;unused&nbsp;value<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;name&nbsp;referring&nbsp;to&nbsp;function(ptr_xevent,&nbsp;[pointer&nbsp;to&nbsp;void]vdata)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;name&nbsp;referring&nbsp;to&nbsp;function(ptr_xevent,&nbsp;[pointer&nbsp;to&nbsp;void]pvdata)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-&gt;&nbsp;[int]num.<br>
-&nbsp;&nbsp;&nbsp;&nbsp;vdata&nbsp;:&nbsp;any&nbsp;type&nbsp;(e.g.&nbsp;None,&nbsp;int,&nbsp;str,&nbsp;etc..)<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;user&nbsp;data&nbsp;to&nbsp;be&nbsp;passed&nbsp;to&nbsp;function;&nbsp;callback&nbsp;has&nbsp;to&nbsp;take&nbsp;care<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;of&nbsp;type&nbsp;check<br>
+&nbsp;&nbsp;&nbsp;&nbsp;userdata&nbsp;:&nbsp;any&nbsp;type&nbsp;(e.g.&nbsp;None,&nbsp;int,&nbsp;str,&nbsp;etc..)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;user&nbsp;data&nbsp;to&nbsp;be&nbsp;passed&nbsp;to&nbsp;function;&nbsp;invoked&nbsp;callback&nbsp;has&nbsp;to&nbsp;take<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;care&nbsp;of&nbsp;type&nbsp;check&nbsp;and&nbsp;re-cast&nbsp;from&nbsp;ptr_void&nbsp;to&nbsp;chosen&nbsp;type<br>
 &nbsp;<br>
 Returns<br>
 -------<br>
@@ -2497,11 +2496,11 @@ Returns<br>
 &nbsp;<br>
 Examples<br>
 --------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;def&nbsp;idlecb(xev,&nbsp;vdata):<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;def&nbsp;idlecb(xev,&nbsp;pvdata):<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;...&nbsp;&lt;something&gt;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;...&nbsp;return&nbsp;0<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;appevtcb&nbsp;=&nbsp;<a href="#-fl_set_idle_callback">fl_set_idle_callback</a>(idlecb,&nbsp;None)<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;def&nbsp;donothing_idlecb(xev,&nbsp;vdata):<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;def&nbsp;donothing_idlecb(xev,&nbsp;pvdata):<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;...&nbsp;pass<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;...&nbsp;return&nbsp;0<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;removedcb&nbsp;=&nbsp;<a href="#-fl_set_idle_callback">fl_set_idle_callback</a>(donothing_idlecb,&nbsp;None)<br>
@@ -3404,5 +3403,20 @@ Notes<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
  <dl><dt><a name="-metakey_down"><strong>metakey_down</strong></a>(mask)</dt></dl>
  <dl><dt><a name="-shiftkey_down"><strong>shiftkey_down</strong></a>(mask)</dt></dl>
-</td></tr></table>
-<p>Updated on: 2011-01-07 00:34 +0100</body></html>
+</td></tr></table><p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#55aa55">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Data</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#55aa55"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><strong>fl_current_form</strong> = &lt;xfdata.LP_FL_FORM_ object&gt;<br>
+<strong>fl_display</strong> = &lt;xfdata.LP__XDisplay object&gt;<br>
+<strong>fl_root</strong> = c_ulong(0L)<br>
+<strong>fl_screen</strong> = c_int(0)<br>
+<strong>fl_scrh</strong> = c_int(0)<br>
+<strong>fl_scrw</strong> = c_int(0)<br>
+<strong>fl_state</strong> = &lt;flxbasic.FL_State_Array_6 object&gt;<br>
+<strong>fl_vmode</strong> = c_int(-1)<br>
+<strong>fl_vroot</strong> = c_ulong(0L)</td></tr></table>
+<p>Updated on: 2011-01-10 23:20 +0100</body></html>

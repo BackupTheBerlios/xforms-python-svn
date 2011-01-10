@@ -3679,8 +3679,8 @@ def fl_last_event():
     return retval
 
 
-def fl_set_event_callback(pyfn_AppEventCb, vdata):
-    """fl_set_event_callback(pyfn_AppEventCb, vdata) -> AppEventCb
+def fl_set_event_callback(pyfn_AppEventCb, userdata):
+    """fl_set_event_callback(pyfn_AppEventCb, userdata) -> AppEventCb
 
     Defines up an event callback routine. Whenever an event happens, the
     callback function is invoked with the event as the first argument.
@@ -3692,13 +3692,13 @@ def fl_set_event_callback(pyfn_AppEventCb, vdata):
     Parameters
     ----------
         pyfn_AppEventCb : python function callback, returned value
-            name referring to function(ptr_xevent, [pointer to void]vdata)
+            name referring to function(ptr_xevent, [pointer to void]pvdata)
             -> [int]num.
             The callback function normally should return 0, unless the
             event is not for one of the applcation-managed windows.
-        vdata : any type (e.g. None, int, str, etc..)
-            user data to be passed to function; callback has to take care
-            of type check
+        userdata : any type (e.g. None, int, str, etc..)
+            user data to be passed to function; invoked callback has to take
+            care of type check and re-cast from ptr_void to chosen type.
 
     Returns
     -------
@@ -3707,7 +3707,7 @@ def fl_set_event_callback(pyfn_AppEventCb, vdata):
 
     Examples
     --------
-        >>> def eventcb(pxev, vdata):
+        >>> def eventcb(pxev, pvdata):
         >>> ... <something>
         >>> ... return 0
         >>> fl_set_event_callback(eventcb, None)
@@ -3717,26 +3717,25 @@ def fl_set_event_callback(pyfn_AppEventCb, vdata):
         Status: Tested + Doc + Demo = OK
 
     """
-    # cty.c_void_p replaced with passed type
-    mycparamtype, ptr_vdata = library.handle_userdata(vdata)
     #FL_APPEVENT_CB = cty.CFUNCTYPE(cty.c_int, cty.POINTER(XEvent),
     #                               cty.c_void_p)
     _fl_set_event_callback = library.cfuncproto(
         library.load_so_libforms(), "fl_set_event_callback",
-        xfdata.FL_APPEVENT_CB, [xfdata.FL_APPEVENT_CB, mycparamtype],
+        xfdata.FL_APPEVENT_CB, [xfdata.FL_APPEVENT_CB, cty.c_void_p],
         """FL_APPEVENT_CB fl_set_event_callback(FL_APPEVENT_CB callback,
            void * user_data)""")        # cty.c_void_p]
     library.check_if_initialized()
     library.verify_function_type(pyfn_AppEventCb)
     cfn_AppEventCb = xfdata.FL_APPEVENT_CB(pyfn_AppEventCb)
+    ptr_vdata = library.convert_userdata_to_ptrvoid(userdata)
     library.keep_cfunc_refs(cfn_AppEventCb, pyfn_AppEventCb)
-    library.keep_elem_refs(vdata, ptr_vdata)
+    library.keep_elem_refs(userdata, ptr_vdata)
     retval = _fl_set_event_callback(cfn_AppEventCb, ptr_vdata)
     return retval
 
 
-def fl_set_idle_callback(pyfn_AppEventCb, vdata):
-    """fl_set_idle_callback(pyfn_AppEventCb, vdata) -> AppEventCb
+def fl_set_idle_callback(pyfn_AppEventCb, userdata):
+    """fl_set_idle_callback(pyfn_AppEventCb, userdata) -> AppEventCb
 
     Registers an idle callback. Interaction with it  can used for periodic
     tasks, e.g. rotating an image, checking the status of some external
@@ -3751,11 +3750,11 @@ def fl_set_idle_callback(pyfn_AppEventCb, vdata):
     Parameters
     ----------
         pyfn_AppEventCb : python function callback, returning unused value
-            name referring to function(ptr_xevent, [pointer to void]vdata)
+            name referring to function(ptr_xevent, [pointer to void]pvdata)
             -> [int]num.
-        vdata : any type (e.g. None, int, str, etc..)
-            user data to be passed to function; callback has to take care
-            of type check
+        userdata : any type (e.g. None, int, str, etc..)
+            user data to be passed to function; invoked callback has to take
+            care of type check and re-cast from ptr_void to chosen type
 
     Returns
     -------
@@ -3764,11 +3763,11 @@ def fl_set_idle_callback(pyfn_AppEventCb, vdata):
 
     Examples
     --------
-        >>> def idlecb(xev, vdata):
+        >>> def idlecb(xev, pvdata):
         >>> ... <something>
         >>> ... return 0
         >>> appevtcb = fl_set_idle_callback(idlecb, None)
-        >>> def donothing_idlecb(xev, vdata):
+        >>> def donothing_idlecb(xev, pvdata):
         >>> ... pass
         >>> ... return 0
         >>> removedcb = fl_set_idle_callback(donothing_idlecb, None)
@@ -3778,20 +3777,19 @@ def fl_set_idle_callback(pyfn_AppEventCb, vdata):
         Status: Tested + Doc + NoDemo = OK
 
     """
-    # cty.c_void_p replaced with passed type
-    mycparamtype, ptr_vdata = library.handle_userdata(vdata)
     #FL_APPEVENT_CB = cty.CFUNCTYPE(cty.c_int, cty.POINTER(XEvent),
     #                               cty.c_void_p)
     _fl_set_idle_callback = library.cfuncproto(
         library.load_so_libforms(), "fl_set_idle_callback",
-        xfdata.FL_APPEVENT_CB, [xfdata.FL_APPEVENT_CB, mycparamtype],
+        xfdata.FL_APPEVENT_CB, [xfdata.FL_APPEVENT_CB, cty.c_void_p],
         """FL_APPEVENT_CB fl_set_idle_callback(FL_APPEVENT_CB callback,
-           void * user_data)""")        # cty.c_void_p]
+           void * user_data)""")
     library.check_if_initialized()
     library.verify_function_type(pyfn_AppEventCb)
     cfn_AppEventCb = xfdata.FL_APPEVENT_CB(pyfn_AppEventCb)
+    ptr_vdata = library.convert_userdata_to_ptrvoid(userdata)
     library.keep_cfunc_refs(cfn_AppEventCb, pyfn_AppEventCb)
-    library.keep_elem_refs(vdata, ptr_vdata)
+    library.keep_elem_refs(userdata, ptr_vdata)
     retval = _fl_set_idle_callback(cfn_AppEventCb, ptr_vdata)
     return retval
 
@@ -3932,8 +3930,8 @@ def fl_set_idle_delta(msec):
     _fl_set_idle_delta(l_msec)
 
 
-def fl_add_event_callback(win, evtnum, pyfn_AppEventCb, vdata):
-    """fl_add_event_callback(win, evtnum, pyfn_AppEventCb, vdata)
+def fl_add_event_callback(win, evtnum, pyfn_AppEventCb, userdata):
+    """fl_add_event_callback(win, evtnum, pyfn_AppEventCb, userdata)
     -> AppEventCb
 
     Adds an event handler for a window. Manipulates the event callback
@@ -3958,11 +3956,11 @@ def fl_add_event_callback(win, evtnum, pyfn_AppEventCb, vdata):
             PropertyNotify, SelectionClear, SelectionRequest, SelectionNotify
             If it is 0, the callback is for all events for the window
         pyfn_AppEventCb : python function callback, returned value
-            name referring to function(ptr_xevent, [pointer to void]vdata)
+            name referring to function(ptr_xevent, [pointer to void]pvdata)
             -> [int]num.
-        vdata : any type (e.g. None, int, str, etc..)
-            user data to be passed to function; callback has to take care
-            of type check
+        userdata : any type (e.g. None, int, str, etc..)
+            user data to be passed to function; invoked callback has to take
+            care of type check and re-cast from ptr_void to chosen type
 
     Returns
     -------
@@ -3971,7 +3969,7 @@ def fl_add_event_callback(win, evtnum, pyfn_AppEventCb, vdata):
 
     Examples
     --------
-        >>> def eventcb(pxev, vdata):
+        >>> def eventcb(pxev, pvdata):
         >>> ... <something>
         >>> ... return 0
         >>> fl_add_event_callback(win2, 0, eventcb, None)
@@ -3981,24 +3979,23 @@ def fl_add_event_callback(win, evtnum, pyfn_AppEventCb, vdata):
         Status: Tested + Doc + NoDemo = OK
 
     """
-    # cty.c_void_p replaced with passed type
-    mycparamtype, ptr_vdata = library.handle_userdata(vdata)
     #FL_APPEVENT_CB = cty.CFUNCTYPE(cty.c_int, cty.POINTER(XEvent),
     #                               cty.c_void_p)
     _fl_add_event_callback = library.cfuncproto(
         library.load_so_libforms(), "fl_add_event_callback",
         xfdata.FL_APPEVENT_CB, [xfdata.Window, cty.c_int,
-        xfdata.FL_APPEVENT_CB, mycparamtype],
+        xfdata.FL_APPEVENT_CB, cty.c_void_p],
         """FL_APPEVENT_CB fl_add_event_callback(Window win, int ev,
-           FL_APPEVENT_CB wincb, void * user_data)""")  # cty.c_void_p]
+           FL_APPEVENT_CB wincb, void * user_data)""")
     library.check_if_initialized()
     ul_win = library.convert_to_Window(win)
     library.checkfatal_allowed_value_in_list(evtnum, xfdata.XEVENTNAME_list)
     i_evtnum = library.convert_to_intc(evtnum)
     library.verify_function_type(pyfn_AppEventCb)
     cfn_AppEventCb = xfdata.FL_APPEVENT_CB(pyfn_AppEventCb)
+    ptr_vdata = library.convert_userdata_to_ptrvoid(userdata)
     library.keep_cfunc_refs(cfn_AppEventCb, pyfn_AppEventCb)
-    library.keep_elem_refs(win, evtnum, vdata, ul_win, i_evtnum, \
+    library.keep_elem_refs(win, evtnum, userdata, ul_win, i_evtnum, \
             ptr_vdata)
     retval = _fl_add_event_callback(ul_win, i_evtnum, cfn_AppEventCb, \
             ptr_vdata)
@@ -4184,7 +4181,7 @@ def fl_initialize(numargs, argslist, appname, ptr_appoptions, numappopts):
             application class name
         ptr_appoptions : instance of xfdata.FL_CMD_OPT
             possible options passed as a flcmdopt class instance. You can use
-            make_flcmdopt function, passing a dict with keys corresponding
+            make_ptr_flcmdopt function, passing a dict with keys corresponding
             to xfdata.FL_CMD_OPT attributes. If it is None, user application
             has no options
         numappopts : int
@@ -4376,7 +4373,7 @@ def fl_get_app_resources(ptr_flresource, numresources):
     ----------
         ptr_flresource : pointer to xfdata.FL_RESOURCE
             an array of resource class instances. You can use
-            xfstruct.make_flresource() passing a dict or a list of dicts
+            xfstruct.make_ptr_flresource() passing a dict or a list of dicts
             with keys corresponding to xfdata.FL_RESOURCE attributes
         numresources : int
             number of resources (starting from 1) passed with
@@ -4550,7 +4547,7 @@ def fl_set_defaults(pdmask, ptr_fliopt):
             font size), FL_PDInputLabelSize or FL_PDInputFontSize (Input label
             and text font size, "menuFontSize").
         ptr_fliopt : pointer to xfdata.FL_IOPT array
-            program defaults class instance. You can use xfstruct.make_fliopt
+            program defaults class instance. You can use xfstruct.make_ptr_fliopt
             function passing a dict with keys corresponding to xfdata.FL_IOPT's
             attributes.
 

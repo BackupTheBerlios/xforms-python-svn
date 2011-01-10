@@ -1,13 +1,14 @@
 *** Limitations ***
 
-- Some parameters in functions are not correctly handled yet
-(e.g. void *), as ctypes is somehow rigid and a free cast
-on-the-fly equivalent to C's is not so viable. So, concerning
-userdata (of C pointer to void type) some functions here use
-a multi-types approach, instead, when possible: None, long, float,
-str, ptr_flobjects, ptr_flform, ptr_flpopup: you may use a list
-or a dict to achieve same purpose, retrieving a complex type
-e.g. FL_OBJECT(), etc..
+- Some parameters in functions maybe are not correctly handled yet
+in the proper manner (e.g. void *), as ctypes is somehow rigid and
+a free 'cast' on-the-fly (equivalent to C's) is not always viable.
+- Nonetheless in functions who call callback and/or handler external
+functions, for userdata params (of void * type) you can use several
+types, when applicable (None, long, float, str, ptr_flobject,
+ptr_flform, ptr_flpopup). In this case you are required to re-cast
+type from ptr_void to type you have chosen in the called function,
+in order to retrieve your passed value.
 - To compare two FL-objects you can use fl_is_same_object(..),
 instead of using 'if obj == someobj'
 - For some functions who use some parameters as an address

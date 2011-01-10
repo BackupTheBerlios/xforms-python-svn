@@ -71,27 +71,9 @@ Notes<br>
 Add&nbsp;a&nbsp;line&nbsp;to&nbsp;a&nbsp;browser&nbsp;flobject.&nbsp;The&nbsp;line&nbsp;may&nbsp;contain&nbsp;embedded&nbsp;newline<br>
 characters:&nbsp;these&nbsp;will&nbsp;result&nbsp;in&nbsp;the&nbsp;text&nbsp;being&nbsp;split&nbsp;up&nbsp;into&nbsp;several<br>
 lines,&nbsp;separated&nbsp;at&nbsp;the&nbsp;newline&nbsp;characters.&nbsp;It&nbsp;is&nbsp;possible&nbsp;to&nbsp;change&nbsp;the<br>
-appearance&nbsp;of&nbsp;individual&nbsp;lines&nbsp;in&nbsp;the&nbsp;browser.&nbsp;Whenever&nbsp;a&nbsp;line&nbsp;starts<br>
-with&nbsp;the&nbsp;symbol&nbsp;'@'&nbsp;the&nbsp;next&nbsp;letter&nbsp;indicates&nbsp;the&nbsp;special&nbsp;characteristics<br>
-associated&nbsp;with&nbsp;this&nbsp;line.&nbsp;The&nbsp;following&nbsp;possibilities&nbsp;exist&nbsp;at&nbsp;the&nbsp;moment:<br>
-f&nbsp;(Fixed&nbsp;width&nbsp;font),&nbsp;n&nbsp;(Normal,&nbsp;Helvetica&nbsp;font),&nbsp;t&nbsp;(Times-Roman&nbsp;like<br>
-font),&nbsp;b&nbsp;(Boldface&nbsp;modifier),&nbsp;i&nbsp;(Italics&nbsp;modifier),&nbsp;l&nbsp;(Large,&nbsp;new&nbsp;size&nbsp;is<br>
-xfdata.FL_LARGE_SIZE),&nbsp;m&nbsp;(Medium,&nbsp;new&nbsp;size&nbsp;is&nbsp;xfdata.FL_MEDIUM_SIZE),<br>
-s&nbsp;(Small,&nbsp;new&nbsp;size&nbsp;is&nbsp;xfdata.FL_SMALL_SIZE),&nbsp;L&nbsp;(Large,&nbsp;new&nbsp;size&nbsp;=&nbsp;current<br>
-size&nbsp;+&nbsp;6),&nbsp;M&nbsp;(Medium,&nbsp;new&nbsp;size&nbsp;=&nbsp;current&nbsp;size&nbsp;+&nbsp;4),&nbsp;S&nbsp;(Small,&nbsp;new&nbsp;size&nbsp;=<br>
-current&nbsp;size&nbsp;-&nbsp;2),&nbsp;c&nbsp;(Centered),&nbsp;r&nbsp;(Right&nbsp;aligned),&nbsp;_&nbsp;(Draw&nbsp;underlined<br>
-text,&nbsp;-&nbsp;(An&nbsp;engraved&nbsp;separator.&nbsp;Text&nbsp;following&nbsp;'-'&nbsp;is&nbsp;ignored),&nbsp;C&nbsp;(The<br>
-next&nbsp;number&nbsp;indicates&nbsp;the&nbsp;color&nbsp;index&nbsp;for&nbsp;this&nbsp;line).,N&nbsp;(Non-selectable<br>
-line,&nbsp;in&nbsp;selectable&nbsp;browsers),&nbsp;@@,&nbsp;double&nbsp;@&nbsp;(Regular&nbsp;'@'&nbsp;character).&nbsp;The<br>
-modifiers&nbsp;(bold&nbsp;and&nbsp;italic)&nbsp;work&nbsp;by&nbsp;adding&nbsp;xfdata.FL_BOLD_STYLE&nbsp;and<br>
-xfdata.FL_ITALIC_STYLE&nbsp;to&nbsp;the&nbsp;current&nbsp;active&nbsp;font&nbsp;index&nbsp;to&nbsp;look&nbsp;up&nbsp;the<br>
-font&nbsp;in&nbsp;the&nbsp;font&nbsp;table&nbsp;(you&nbsp;can&nbsp;modify&nbsp;the&nbsp;table&nbsp;using&nbsp;fl_set_font_name()).<br>
-More&nbsp;than&nbsp;one&nbsp;option&nbsp;can&nbsp;be&nbsp;used&nbsp;by&nbsp;putting&nbsp;them&nbsp;next&nbsp;to&nbsp;each&nbsp;other.&nbsp;For<br>
-example,&nbsp;"@C1@l@f@b@cTitle"&nbsp;will&nbsp;give&nbsp;you&nbsp;the&nbsp;red,&nbsp;large,&nbsp;bold&nbsp;fixed&nbsp;font,<br>
-centered&nbsp;word&nbsp;"Title".&nbsp;As&nbsp;you&nbsp;can&nbsp;see&nbsp;the&nbsp;font&nbsp;change&nbsp;requests&nbsp;accumulate<br>
-and&nbsp;the&nbsp;order&nbsp;is&nbsp;important,&nbsp;i.e.,&nbsp;"@f@b@i"&nbsp;gives&nbsp;you&nbsp;a&nbsp;fixed&nbsp;bold&nbsp;italic<br>
-font&nbsp;while&nbsp;"@b@i@f"&nbsp;gives&nbsp;you&nbsp;a&nbsp;(plain)&nbsp;fixed&nbsp;font.&nbsp;Depending&nbsp;on&nbsp;the&nbsp;font<br>
-size&nbsp;and&nbsp;style&nbsp;lines&nbsp;may&nbsp;have&nbsp;different&nbsp;heights.<br>
+appearance&nbsp;of&nbsp;individual&nbsp;lines&nbsp;in&nbsp;the&nbsp;browser,&nbsp;prepending&nbsp;text&nbsp;with&nbsp;the<br>
+symbol&nbsp;'@'&nbsp;and&nbsp;a&nbsp;letter&nbsp;who&nbsp;indicates&nbsp;the&nbsp;special&nbsp;characteristics<br>
+associated&nbsp;with&nbsp;this&nbsp;line.&nbsp;See&nbsp;xfdata.py&nbsp;for&nbsp;browserlines&nbsp;appearance.<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
@@ -789,8 +771,8 @@ Examples<br>
 Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-fl_set_browser_hscroll_callback"><strong>fl_set_browser_hscroll_callback</strong></a>(ptr_flobject, pyfn_BrowserScrollCb, vdata)</dt><dd><tt><a href="#-fl_set_browser_hscroll_callback">fl_set_browser_hscroll_callback</a>(ptr_flobject,&nbsp;pyfn_BrowserScrollCb,<br>
-vdata)<br>
+ <dl><dt><a name="-fl_set_browser_hscroll_callback"><strong>fl_set_browser_hscroll_callback</strong></a>(ptr_flobject, pyfn_BrowserScrollCb, userdata)</dt><dd><tt><a href="#-fl_set_browser_hscroll_callback">fl_set_browser_hscroll_callback</a>(ptr_flobject,&nbsp;pyfn_BrowserScrollCb,<br>
+userdata)<br>
 &nbsp;<br>
 Defines&nbsp;the&nbsp;callback&nbsp;function&nbsp;to&nbsp;be&nbsp;invoked&nbsp;whenever&nbsp;the&nbsp;horizontal<br>
 scrollbar&nbsp;of&nbsp;browser&nbsp;flobject&nbsp;changes&nbsp;position.<br>
@@ -800,11 +782,11 @@ Parameters<br>
 &nbsp;&nbsp;&nbsp;&nbsp;ptr_flobject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;browser&nbsp;flobject<br>
 &nbsp;&nbsp;&nbsp;&nbsp;pyfn_BrowserScrollCb&nbsp;:&nbsp;python&nbsp;function&nbsp;callback,&nbsp;no&nbsp;return<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;name&nbsp;referring&nbsp;to&nbsp;function(ptr_flobject,&nbsp;[int]num,<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[pointer&nbsp;to&nbsp;void]vdata)<br>
-&nbsp;&nbsp;&nbsp;&nbsp;vdata&nbsp;:&nbsp;any&nbsp;type&nbsp;(e.g.&nbsp;None,&nbsp;int,&nbsp;str,&nbsp;etc..)<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;user&nbsp;data&nbsp;to&nbsp;be&nbsp;passed&nbsp;to&nbsp;function;&nbsp;callback&nbsp;has&nbsp;to&nbsp;take&nbsp;care<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;of&nbsp;type&nbsp;check<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;name&nbsp;referring&nbsp;to&nbsp;function(ptr_flobject,&nbsp;[int]topline,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[pointer&nbsp;to&nbsp;void]pvdata)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;userdata&nbsp;:&nbsp;any&nbsp;type&nbsp;(e.g.&nbsp;None,&nbsp;int,&nbsp;str,&nbsp;etc..)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;user&nbsp;data&nbsp;to&nbsp;be&nbsp;passed&nbsp;to&nbsp;function;&nbsp;invoked&nbsp;callback&nbsp;has&nbsp;to&nbsp;take<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;care&nbsp;of&nbsp;type&nbsp;check&nbsp;and&nbsp;re-cast&nbsp;from&nbsp;ptr_void&nbsp;to&nbsp;chosen&nbsp;type.<br>
 &nbsp;<br>
 Examples<br>
 --------<br>
@@ -975,8 +957,8 @@ Examples<br>
 Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-fl_set_browser_vscroll_callback"><strong>fl_set_browser_vscroll_callback</strong></a>(ptr_flobject, pyfn_BrowserScrollCb, vdata)</dt><dd><tt><a href="#-fl_set_browser_vscroll_callback">fl_set_browser_vscroll_callback</a>(ptr_flobject,&nbsp;pyfn_BrowserScrollCb,<br>
-vdata)<br>
+ <dl><dt><a name="-fl_set_browser_vscroll_callback"><strong>fl_set_browser_vscroll_callback</strong></a>(ptr_flobject, pyfn_BrowserScrollCb, userdata)</dt><dd><tt><a href="#-fl_set_browser_vscroll_callback">fl_set_browser_vscroll_callback</a>(ptr_flobject,&nbsp;pyfn_BrowserScrollCb,<br>
+userdata)<br>
 &nbsp;<br>
 Defines&nbsp;the&nbsp;callback&nbsp;function&nbsp;to&nbsp;be&nbsp;invoked&nbsp;whenever&nbsp;the&nbsp;vertical<br>
 scrollbar&nbsp;of&nbsp;browser&nbsp;flobject&nbsp;changes&nbsp;position.<br>
@@ -986,10 +968,11 @@ Parameters<br>
 &nbsp;&nbsp;&nbsp;&nbsp;ptr_flobject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;browser&nbsp;flobject<br>
 &nbsp;&nbsp;&nbsp;&nbsp;pyfn_BrowserScrollCb&nbsp;:&nbsp;python&nbsp;function&nbsp;callback,&nbsp;no&nbsp;return<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;name&nbsp;referring&nbsp;to&nbsp;function(ptr_flobject,&nbsp;num,&nbsp;vdata)<br>
-&nbsp;&nbsp;&nbsp;&nbsp;vdata&nbsp;:&nbsp;any&nbsp;type&nbsp;(e.g.&nbsp;None,&nbsp;int,&nbsp;str,&nbsp;etc..)<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;user&nbsp;data&nbsp;to&nbsp;be&nbsp;passed&nbsp;to&nbsp;function;&nbsp;callback&nbsp;has&nbsp;to&nbsp;take&nbsp;care<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;of&nbsp;type&nbsp;check<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;name&nbsp;referring&nbsp;to&nbsp;function(ptr_flobject,&nbsp;[int]topline,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[pointer&nbsp;to&nbsp;void]pvdata)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;userdata&nbsp;:&nbsp;any&nbsp;type&nbsp;(e.g.&nbsp;None,&nbsp;int,&nbsp;str,&nbsp;etc..)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;user&nbsp;data&nbsp;to&nbsp;be&nbsp;passed&nbsp;to&nbsp;function;&nbsp;invoked&nbsp;callback&nbsp;has&nbsp;to&nbsp;take<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;care&nbsp;of&nbsp;type&nbsp;check&nbsp;and&nbsp;re-cast&nbsp;from&nbsp;ptr_void&nbsp;to&nbsp;chosen&nbsp;type<br>
 &nbsp;<br>
 Examples<br>
 --------<br>
@@ -1078,4 +1061,4 @@ Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
 </td></tr></table>
-<p>Updated on: 2011-01-07 00:34 +0100</body></html>
+<p>Updated on: 2011-01-10 23:20 +0100</body></html>

@@ -28,7 +28,7 @@
 <font color="#ffffff" face="helvetica, arial"><big><strong>Functions</strong></big></font></td></tr>
     
 <tr><td bgcolor="#eeaa77"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
-<td width="100%"><dl><dt><a name="-fl_add_fselector_appbutton"><strong>fl_add_fselector_appbutton</strong></a>(label, pyfn_fselappbtn, vdata)</dt><dd><tt><a href="#-fl_add_fselector_appbutton">fl_add_fselector_appbutton</a>(label,&nbsp;pyfn_fselappbtn,&nbsp;vdata)<br>
+<td width="100%"><dl><dt><a name="-fl_add_fselector_appbutton"><strong>fl_add_fselector_appbutton</strong></a>(label, pyfn_fselappbtn, userdata)</dt><dd><tt><a href="#-fl_add_fselector_appbutton">fl_add_fselector_appbutton</a>(label,&nbsp;pyfn_fselappbtn,&nbsp;userdata)<br>
 &nbsp;<br>
 Adds&nbsp;an&nbsp;application&nbsp;specific&nbsp;button&nbsp;from&nbsp;file&nbsp;selector&nbsp;and&nbsp;a&nbsp;callback<br>
 routine&nbsp;for&nbsp;it.<br>
@@ -38,10 +38,10 @@ Parameters<br>
 &nbsp;&nbsp;&nbsp;&nbsp;label&nbsp;:&nbsp;str<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;text&nbsp;of&nbsp;label<br>
 &nbsp;&nbsp;&nbsp;&nbsp;pyfn_fselappbtn&nbsp;:&nbsp;python&nbsp;function&nbsp;callback,&nbsp;no&nbsp;return<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;name&nbsp;referring&nbsp;to&nbsp;function([pointer&nbsp;to&nbsp;void]vdata)<br>
-&nbsp;&nbsp;&nbsp;&nbsp;vdata&nbsp;:&nbsp;any&nbsp;type&nbsp;(e.g.&nbsp;None,&nbsp;int,&nbsp;str,&nbsp;etc..)<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;user&nbsp;data&nbsp;to&nbsp;be&nbsp;passed&nbsp;to&nbsp;function;&nbsp;callback&nbsp;has&nbsp;to&nbsp;take<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;care&nbsp;of&nbsp;type&nbsp;check<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;name&nbsp;referring&nbsp;to&nbsp;function([pointer&nbsp;to&nbsp;void]pvdata)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;userdata&nbsp;:&nbsp;any&nbsp;type&nbsp;(e.g.&nbsp;None,&nbsp;int,&nbsp;str,&nbsp;etc..)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;user&nbsp;data&nbsp;to&nbsp;be&nbsp;passed&nbsp;to&nbsp;function;&nbsp;invoked&nbsp;callback&nbsp;has&nbsp;to&nbsp;take<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;care&nbsp;of&nbsp;type&nbsp;check&nbsp;and&nbsp;re-cast&nbsp;from&nbsp;ptr_void&nbsp;to&nbsp;chosen&nbsp;type.<br>
 &nbsp;<br>
 Examples<br>
 --------<br>
@@ -306,7 +306,7 @@ Examples<br>
 Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-fl_goodies_atclose"><strong>fl_goodies_atclose</strong></a>(ptr_flform, vdata)</dt><dd><tt><a href="#-fl_goodies_atclose">fl_goodies_atclose</a>(ptr_flform,&nbsp;vdata)&nbsp;-&gt;&nbsp;unused<br>
+ <dl><dt><a name="-fl_goodies_atclose"><strong>fl_goodies_atclose</strong></a>(ptr_flform, userdata)</dt><dd><tt><a href="#-fl_goodies_atclose">fl_goodies_atclose</a>(ptr_flform,&nbsp;userdata)&nbsp;-&gt;&nbsp;unused<br>
 &nbsp;<br>
 *todo*<br>
 &nbsp;<br>
@@ -314,9 +314,9 @@ Parameters<br>
 ----------<br>
 &nbsp;&nbsp;&nbsp;&nbsp;ptr_flform&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_FORM<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;form<br>
-&nbsp;&nbsp;&nbsp;&nbsp;vdata&nbsp;:&nbsp;any&nbsp;type&nbsp;(e.g.&nbsp;None,&nbsp;int,&nbsp;str,&nbsp;etc..)<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;user&nbsp;data&nbsp;to&nbsp;be&nbsp;passed&nbsp;to&nbsp;function;&nbsp;callback&nbsp;has&nbsp;to&nbsp;take&nbsp;care<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;of&nbsp;type&nbsp;check<br>
+&nbsp;&nbsp;&nbsp;&nbsp;userdata&nbsp;:&nbsp;any&nbsp;type&nbsp;(e.g.&nbsp;None,&nbsp;int,&nbsp;str,&nbsp;etc..)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;user&nbsp;data&nbsp;to&nbsp;be&nbsp;passed&nbsp;to&nbsp;function;&nbsp;invoked&nbsp;callback&nbsp;has&nbsp;to&nbsp;take<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;care&nbsp;of&nbsp;type&nbsp;check&nbsp;and&nbsp;re-cast&nbsp;from&nbsp;ptr_void&nbsp;to&nbsp;chosen&nbsp;type.<br>
 &nbsp;<br>
 Returns<br>
 -------<br>
@@ -649,7 +649,7 @@ Examples<br>
 Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-fl_set_fselector_callback"><strong>fl_set_fselector_callback</strong></a>(pyfn_FSCB, vdata)</dt><dd><tt><a href="#-fl_set_fselector_callback">fl_set_fselector_callback</a>(pyfn_FSCB,&nbsp;vdata)<br>
+ <dl><dt><a name="-fl_set_fselector_callback"><strong>fl_set_fselector_callback</strong></a>(pyfn_FSCB, userdata)</dt><dd><tt><a href="#-fl_set_fselector_callback">fl_set_fselector_callback</a>(pyfn_FSCB,&nbsp;userdata)<br>
 &nbsp;<br>
 Defines&nbsp;a&nbsp;callback&nbsp;routine&nbsp;so&nbsp;that&nbsp;whenever&nbsp;the&nbsp;user&nbsp;double&nbsp;clicks&nbsp;on&nbsp;a<br>
 filename,&nbsp;instead&nbsp;of&nbsp;returning&nbsp;the&nbsp;filename,&nbsp;this&nbsp;routine&nbsp;is&nbsp;invoked<br>
@@ -662,15 +662,15 @@ shown.<br>
 Parameters<br>
 ----------<br>
 &nbsp;&nbsp;&nbsp;&nbsp;pyfn_FSCB&nbsp;:&nbsp;python&nbsp;function&nbsp;callback,&nbsp;returning&nbsp;(unused)&nbsp;value<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;name&nbsp;referring&nbsp;to&nbsp;function([str]text,&nbsp;[pointer&nbsp;to&nbsp;void]vdata)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;name&nbsp;referring&nbsp;to&nbsp;function([str]text,&nbsp;[pointer&nbsp;to&nbsp;void]pvdata)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-&gt;&nbsp;[int]num<br>
-&nbsp;&nbsp;&nbsp;&nbsp;vdata&nbsp;:&nbsp;any&nbsp;type&nbsp;(e.g.&nbsp;None,&nbsp;int,&nbsp;str,&nbsp;etc..)<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;user&nbsp;data&nbsp;to&nbsp;be&nbsp;passed&nbsp;to&nbsp;function;&nbsp;callback&nbsp;has&nbsp;to&nbsp;take&nbsp;care<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;of&nbsp;type&nbsp;check.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;userdata&nbsp;:&nbsp;any&nbsp;type&nbsp;(e.g.&nbsp;None,&nbsp;int,&nbsp;str,&nbsp;etc..)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;user&nbsp;data&nbsp;to&nbsp;be&nbsp;passed&nbsp;to&nbsp;function;&nbsp;invoked&nbsp;callback&nbsp;has&nbsp;to&nbsp;take<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;care&nbsp;of&nbsp;type&nbsp;check&nbsp;and&nbsp;re-cast&nbsp;from&nbsp;ptr_void&nbsp;to&nbsp;chosen&nbsp;type.<br>
 &nbsp;<br>
 Examples<br>
 --------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;def&nbsp;fsel_cb(fname,&nbsp;cvoidp):<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;def&nbsp;fsel_cb(fname,&nbsp;pvdata):<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;...&nbsp;&lt;something&gt;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;...&nbsp;return&nbsp;UnusedVal<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;<a href="#-fl_set_fselector_callback">fl_set_fselector_callback</a>(fsel_cb,&nbsp;None)<br>
@@ -678,7 +678,7 @@ Examples<br>
 Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;Demo&nbsp;=&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-fl_set_fselector_cb"><strong>fl_set_fselector_cb</strong></a> = fl_set_fselector_callback(pyfn_FSCB, vdata)</dt><dd><tt><a href="#-fl_set_fselector_callback">fl_set_fselector_callback</a>(pyfn_FSCB,&nbsp;vdata)<br>
+ <dl><dt><a name="-fl_set_fselector_cb"><strong>fl_set_fselector_cb</strong></a> = fl_set_fselector_callback(pyfn_FSCB, userdata)</dt><dd><tt><a href="#-fl_set_fselector_callback">fl_set_fselector_callback</a>(pyfn_FSCB,&nbsp;userdata)<br>
 &nbsp;<br>
 Defines&nbsp;a&nbsp;callback&nbsp;routine&nbsp;so&nbsp;that&nbsp;whenever&nbsp;the&nbsp;user&nbsp;double&nbsp;clicks&nbsp;on&nbsp;a<br>
 filename,&nbsp;instead&nbsp;of&nbsp;returning&nbsp;the&nbsp;filename,&nbsp;this&nbsp;routine&nbsp;is&nbsp;invoked<br>
@@ -691,15 +691,15 @@ shown.<br>
 Parameters<br>
 ----------<br>
 &nbsp;&nbsp;&nbsp;&nbsp;pyfn_FSCB&nbsp;:&nbsp;python&nbsp;function&nbsp;callback,&nbsp;returning&nbsp;(unused)&nbsp;value<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;name&nbsp;referring&nbsp;to&nbsp;function([str]text,&nbsp;[pointer&nbsp;to&nbsp;void]vdata)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;name&nbsp;referring&nbsp;to&nbsp;function([str]text,&nbsp;[pointer&nbsp;to&nbsp;void]pvdata)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-&gt;&nbsp;[int]num<br>
-&nbsp;&nbsp;&nbsp;&nbsp;vdata&nbsp;:&nbsp;any&nbsp;type&nbsp;(e.g.&nbsp;None,&nbsp;int,&nbsp;str,&nbsp;etc..)<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;user&nbsp;data&nbsp;to&nbsp;be&nbsp;passed&nbsp;to&nbsp;function;&nbsp;callback&nbsp;has&nbsp;to&nbsp;take&nbsp;care<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;of&nbsp;type&nbsp;check.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;userdata&nbsp;:&nbsp;any&nbsp;type&nbsp;(e.g.&nbsp;None,&nbsp;int,&nbsp;str,&nbsp;etc..)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;user&nbsp;data&nbsp;to&nbsp;be&nbsp;passed&nbsp;to&nbsp;function;&nbsp;invoked&nbsp;callback&nbsp;has&nbsp;to&nbsp;take<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;care&nbsp;of&nbsp;type&nbsp;check&nbsp;and&nbsp;re-cast&nbsp;from&nbsp;ptr_void&nbsp;to&nbsp;chosen&nbsp;type.<br>
 &nbsp;<br>
 Examples<br>
 --------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;def&nbsp;fsel_cb(fname,&nbsp;cvoidp):<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;def&nbsp;fsel_cb(fname,&nbsp;pvdata):<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;...&nbsp;&lt;something&gt;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;...&nbsp;return&nbsp;UnusedVal<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;<a href="#-fl_set_fselector_callback">fl_set_fselector_callback</a>(fsel_cb,&nbsp;None)<br>
@@ -1485,4 +1485,4 @@ Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
 </td></tr></table>
-<p>Updated on: 2011-01-07 00:34 +0100</body></html>
+<p>Updated on: 2011-01-10 23:20 +0100</body></html>

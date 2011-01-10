@@ -149,9 +149,20 @@ Parameters<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;height&nbsp;in&nbsp;coord&nbsp;units<br>
 &nbsp;&nbsp;&nbsp;&nbsp;label&nbsp;:&nbsp;str<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;text&nbsp;label&nbsp;of&nbsp;free<br>
-&nbsp;&nbsp;&nbsp;&nbsp;pyfn_HandlePtr&nbsp;:&nbsp;python&nbsp;function&nbsp;to&nbsp;handle&nbsp;free&nbsp;object,&nbsp;returned&nbsp;value<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;name&nbsp;referring&nbsp;to&nbsp;function(int,&nbsp;ptr_flobject,&nbsp;int,&nbsp;coord,&nbsp;coord,<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;int,&nbsp;voidp)&nbsp;-&gt;&nbsp;num.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;pyfn_HandlePtr&nbsp;:&nbsp;python&nbsp;function,&nbsp;returned&nbsp;value<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;name&nbsp;referring&nbsp;to&nbsp;function(ptr_flobject,&nbsp;[int]event,&nbsp;[int]xpos,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[int]ypos,&nbsp;[int]key,&nbsp;[pointer&nbsp;to&nbsp;void]ptr_xevent)&nbsp;-&gt;&nbsp;[int]num<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Function&nbsp;does&nbsp;the&nbsp;redrawing&nbsp;and&nbsp;handles&nbsp;the&nbsp;interaction&nbsp;with&nbsp;the<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;free&nbsp;flobject.&nbsp;First&nbsp;param&nbsp;is&nbsp;the&nbsp;flobject&nbsp;to&nbsp;which&nbsp;the&nbsp;event<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;applies;&nbsp;event&nbsp;indicates&nbsp;what&nbsp;has&nbsp;to&nbsp;happen&nbsp;to&nbsp;the&nbsp;object;&nbsp;xpos<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;and&nbsp;ypos&nbsp;indicate&nbsp;the&nbsp;position&nbsp;of&nbsp;the&nbsp;mouse&nbsp;(only&nbsp;meaningful&nbsp;with<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;mouse&nbsp;related&nbsp;events)&nbsp;relative&nbsp;to&nbsp;the&nbsp;form&nbsp;origin;&nbsp;key&nbsp;is&nbsp;the<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;KeySym&nbsp;of&nbsp;the&nbsp;key&nbsp;typed&nbsp;in&nbsp;by&nbsp;the&nbsp;user&nbsp;(only&nbsp;for&nbsp;xfdata.FL_KEYPRESS<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;events).&nbsp;ptr_xevent&nbsp;is&nbsp;pointer&nbsp;to&nbsp;X&nbsp;Event&nbsp;that&nbsp;causes&nbsp;the<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;invocation&nbsp;of&nbsp;this&nbsp;handler.&nbsp;event&nbsp;and&nbsp;ptr_xevent.contents.type&nbsp;can<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;both&nbsp;be&nbsp;used&nbsp;to&nbsp;obtain&nbsp;the&nbsp;event&nbsp;types.&nbsp;The&nbsp;routine&nbsp;should&nbsp;return<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;whether&nbsp;the&nbsp;status&nbsp;of&nbsp;the&nbsp;object&nbsp;has&nbsp;changed,&nbsp;i.e.,&nbsp;whether<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;fl_do_forms()&nbsp;or&nbsp;fl_check_forms()&nbsp;should&nbsp;return&nbsp;this&nbsp;flobject.<br>
 &nbsp;<br>
 Returns<br>
 -------<br>
@@ -450,9 +461,10 @@ Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
  <dl><dt><a name="-fl_request_clipboard"><strong>fl_request_clipboard</strong></a>(ptr_flobject, clipbdtype, pyfn_SelectionCb)</dt><dd><tt><a href="#-fl_request_clipboard">fl_request_clipboard</a>(ptr_flobject,&nbsp;clipbdtype,&nbsp;pyfn_SelectionCb)<br>
--&gt;&nbsp;size<br>
+-&gt;&nbsp;result<br>
 &nbsp;<br>
-Retrieves&nbsp;data&nbsp;from&nbsp;clipboard?<br>
+Retrieves&nbsp;data&nbsp;previously&nbsp;stuffed&nbsp;into&nbsp;the&nbsp;clipboard.&nbsp;Contents&nbsp;is<br>
+available&nbsp;in&nbsp;invoked&nbsp;callback&nbsp;function.<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
@@ -461,13 +473,19 @@ Parameters<br>
 &nbsp;&nbsp;&nbsp;&nbsp;clipbdtype&nbsp;:&nbsp;long<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;type&nbsp;of&nbsp;clipboard&nbsp;(not&nbsp;used)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;pyfn_SelectionCb&nbsp;:&nbsp;python&nbsp;function&nbsp;callback,&nbsp;returned&nbsp;value<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;name&nbsp;referring&nbsp;to&nbsp;function(ptr_flobject,&nbsp;[long]num,<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[pointer&nbsp;to&nbsp;void]vdata,&nbsp;[long]num)&nbsp;-&gt;&nbsp;[int]num.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;name&nbsp;referring&nbsp;to&nbsp;function(ptr_flobject,&nbsp;[long]type,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[pointer&nbsp;to&nbsp;void]datablock,&nbsp;[long]size)&nbsp;-&gt;&nbsp;[int]num.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Function&nbsp;to&nbsp;be&nbsp;invoked&nbsp;when&nbsp;the&nbsp;clipboard&nbsp;content&nbsp;is&nbsp;obtained;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;type&nbsp;is&nbsp;unused.&nbsp;The&nbsp;content&nbsp;data&nbsp;passed&nbsp;to&nbsp;the&nbsp;callback<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;function&nbsp;should&nbsp;not&nbsp;be&nbsp;modified.<br>
 &nbsp;<br>
 Returns<br>
 -------<br>
 &nbsp;&nbsp;&nbsp;&nbsp;result&nbsp;:&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;size?,&nbsp;or&nbsp;-1&nbsp;(if&nbsp;it&nbsp;is&nbsp;on&nbsp;different&nbsp;window?)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;positive&nbsp;number&nbsp;(if&nbsp;the&nbsp;requesting&nbsp;flobject&nbsp;owns&nbsp;the&nbsp;selection,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;i.e.&nbsp;the&nbsp;callback&nbsp;could&nbsp;be&nbsp;invoked&nbsp;before&nbsp;the&nbsp;function&nbsp;returned),<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;or&nbsp;0&nbsp;(if&nbsp;it&nbsp;does&nbsp;not&nbsp;own&nbsp;the&nbsp;selection),&nbsp;or&nbsp;-1&nbsp;(if&nbsp;there&nbsp;is&nbsp;no<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;selection)<br>
 &nbsp;<br>
 Examples<br>
 --------<br>
@@ -476,10 +494,11 @@ Examples<br>
 Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-fl_stuff_clipboard"><strong>fl_stuff_clipboard</strong></a>(ptr_flobject, clipbdtype, vdata, size, pyfn_LoseSelectionCb)</dt><dd><tt><a href="#-fl_stuff_clipboard">fl_stuff_clipboard</a>(ptr_flobject,&nbsp;clipbdtype,&nbsp;vdata,&nbsp;size,<br>
+ <dl><dt><a name="-fl_stuff_clipboard"><strong>fl_stuff_clipboard</strong></a>(ptr_flobject, clipbdtype, datablock, size, pyfn_LoseSelectionCb)</dt><dd><tt><a href="#-fl_stuff_clipboard">fl_stuff_clipboard</a>(ptr_flobject,&nbsp;clipbdtype,&nbsp;datablock,&nbsp;size,<br>
 pyfn_LoseSelectionCb)&nbsp;-&gt;&nbsp;size<br>
 &nbsp;<br>
-Stores&nbsp;data&nbsp;in&nbsp;clipboard?<br>
+Stores&nbsp;data&nbsp;in&nbsp;clipboard,&nbsp;read-write&nbsp;buffer&nbsp;shared&nbsp;by&nbsp;all&nbsp;applications<br>
+running&nbsp;on&nbsp;the&nbsp;X&nbsp;server.<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
@@ -487,12 +506,15 @@ Parameters<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;clipboard&nbsp;flobject<br>
 &nbsp;&nbsp;&nbsp;&nbsp;clipbdtype&nbsp;:&nbsp;long<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;type&nbsp;of&nbsp;clipboard&nbsp;(not&nbsp;used)<br>
-&nbsp;&nbsp;&nbsp;&nbsp;vdata&nbsp;:&nbsp;*todo*<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;data&nbsp;to&nbsp;be&nbsp;stored<br>
+&nbsp;&nbsp;&nbsp;&nbsp;datablock&nbsp;:&nbsp;pointer&nbsp;to&nbsp;void?<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;data&nbsp;contents&nbsp;to&nbsp;be&nbsp;stored&nbsp;(in&nbsp;str?)&nbsp;*todo*<br>
 &nbsp;&nbsp;&nbsp;&nbsp;size&nbsp;:&nbsp;long<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;size&nbsp;of&nbsp;data&nbsp;to&nbsp;be&nbsp;stuffed<br>
-&nbsp;&nbsp;&nbsp;&nbsp;pyfn_LoseSelectionCb&nbsp;:&nbsp;python&nbsp;function&nbsp;callback,&nbsp;returned&nbsp;value<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;name&nbsp;referring&nbsp;to&nbsp;function(ptr_flobject,&nbsp;[long]num)&nbsp;-&gt;&nbsp;[int]num.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;size&nbsp;(in&nbsp;bytes)&nbsp;of&nbsp;the&nbsp;contents&nbsp;pointed&nbsp;to&nbsp;by&nbsp;datablock.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;pyfn_LoseSelectionCb&nbsp;:&nbsp;python&nbsp;function&nbsp;callback,&nbsp;returned&nbsp;unused&nbsp;value<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;name&nbsp;referring&nbsp;to&nbsp;function(ptr_flobject,&nbsp;[long]type)&nbsp;-&gt;&nbsp;[int]num.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Function&nbsp;to&nbsp;be&nbsp;invoked&nbsp;if&nbsp;selection&nbsp;is&nbsp;lost;&nbsp;type&nbsp;is&nbsp;unused.&nbsp;For<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;textual&nbsp;content&nbsp;the&nbsp;application&nbsp;that&nbsp;loses&nbsp;the&nbsp;clipboard&nbsp;should<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;typically&nbsp;undo&nbsp;the&nbsp;visual&nbsp;cues&nbsp;about&nbsp;the&nbsp;selection.<br>
 &nbsp;<br>
 Returns<br>
 -------<br>
@@ -556,4 +578,4 @@ Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
 </td></tr></table>
-<p>Updated on: 2011-01-07 00:34 +0100</body></html>
+<p>Updated on: 2011-01-10 23:20 +0100</body></html>

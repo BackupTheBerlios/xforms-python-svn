@@ -12,7 +12,7 @@
     <p><tt>Convenience/internal&nbsp;functions&nbsp;to&nbsp;deal&nbsp;with&nbsp;xforms-python&nbsp;wrapper's<br>
 functions.<br>
 &nbsp;<br>
-Copyright&nbsp;(C)&nbsp;2009,&nbsp;2010&nbsp;&nbsp;Luca&nbsp;Lazzaroni&nbsp;"LukenShiro"<br>
+Copyright&nbsp;(C)&nbsp;2009,&nbsp;2010,&nbsp;2011&nbsp;&nbsp;Luca&nbsp;Lazzaroni&nbsp;"LukenShiro"<br>
 e-mail:&nbsp;&lt;lukenshiro@ngi.it&gt;<br>
 &nbsp;<br>
 This&nbsp;program&nbsp;is&nbsp;free&nbsp;software:&nbsp;you&nbsp;can&nbsp;redistribute&nbsp;it&nbsp;and/or&nbsp;modify<br>
@@ -583,10 +583,14 @@ of&nbsp;admissible&nbsp;values,&nbsp;otherwise&nbsp;issues&nbsp;a&nbsp;warning.<
  <dl><dt><a name="-convert_to_ptr_intc"><strong>convert_to_ptr_intc</strong></a>(paramname)</dt><dd><tt>Converts&nbsp;paramname&nbsp;(list&nbsp;of&nbsp;int)&nbsp;to&nbsp;a&nbsp;ctypes&nbsp;pointer&nbsp;to&nbsp;c_int</tt></dd></dl>
  <dl><dt><a name="-convert_to_ptr_stringc"><strong>convert_to_ptr_stringc</strong></a>(paramname)</dt><dd><tt>Converts&nbsp;paramname&nbsp;(list&nbsp;of&nbsp;str)&nbsp;to&nbsp;a&nbsp;ctypes&nbsp;pointer&nbsp;to&nbsp;c_char_p</tt></dd></dl>
  <dl><dt><a name="-convert_to_ptr_ulongc"><strong>convert_to_ptr_ulongc</strong></a>(paramname)</dt><dd><tt>Converts&nbsp;paramname&nbsp;(list&nbsp;of&nbsp;long)&nbsp;to&nbsp;a&nbsp;ctypes&nbsp;pointer&nbsp;to&nbsp;c_ulong</tt></dd></dl>
+ <dl><dt><a name="-convert_to_shortc"><strong>convert_to_shortc</strong></a>(paramname)</dt><dd><tt>Converts&nbsp;paramname&nbsp;to&nbsp;python&nbsp;int&nbsp;and&nbsp;to&nbsp;ctypes&nbsp;c_short</tt></dd></dl>
  <dl><dt><a name="-convert_to_stringc"><strong>convert_to_stringc</strong></a>(paramname)</dt><dd><tt>Converts&nbsp;paramname&nbsp;to&nbsp;python&nbsp;str&nbsp;and&nbsp;to&nbsp;ctypes&nbsp;c_char_p</tt></dd></dl>
  <dl><dt><a name="-convert_to_ubytec_array"><strong>convert_to_ubytec_array</strong></a>(paramname)</dt><dd><tt>Converts&nbsp;paramname&nbsp;to&nbsp;a&nbsp;ctypes&nbsp;c_ubyte&nbsp;array</tt></dd></dl>
  <dl><dt><a name="-convert_to_uintc"><strong>convert_to_uintc</strong></a>(paramname)</dt><dd><tt>Converts&nbsp;paramname&nbsp;to&nbsp;python&nbsp;int&nbsp;and&nbsp;to&nbsp;ctypes&nbsp;c_uint</tt></dd></dl>
  <dl><dt><a name="-convert_to_ulongc"><strong>convert_to_ulongc</strong></a>(paramname)</dt><dd><tt>Converts&nbsp;paramname&nbsp;to&nbsp;python&nbsp;long&nbsp;and&nbsp;to&nbsp;ctypes&nbsp;c_ulong</tt></dd></dl>
+ <dl><dt><a name="-convert_userdata_to_ptrvoid"><strong>convert_userdata_to_ptrvoid</strong></a>(udata)</dt><dd><tt>Taking&nbsp;any&nbsp;manageable&nbsp;userdata&nbsp;type&nbsp;to&nbsp;be&nbsp;used&nbsp;in&nbsp;a&nbsp;callback-type<br>
+function,&nbsp;handles&nbsp;it&nbsp;and&nbsp;returns&nbsp;a&nbsp;pointer&nbsp;param&nbsp;compatible&nbsp;with&nbsp;C<br>
+pointer&nbsp;to&nbsp;void.</tt></dd></dl>
  <dl><dt><a name="-func_notexisting_placeholder"><strong>func_notexisting_placeholder</strong></a>(cfunction)</dt><dd><tt>Print&nbsp;a&nbsp;warning&nbsp;if&nbsp;called&nbsp;function&nbsp;does&nbsp;not&nbsp;exist</tt></dd></dl>
  <dl><dt><a name="-get_xforms_version"><strong>get_xforms_version</strong></a>()</dt><dd><tt>Returns&nbsp;version&nbsp;string&nbsp;of&nbsp;installed&nbsp;XForms&nbsp;library.</tt></dd></dl>
  <dl><dt><a name="-get_xforms_version_fallback"><strong>get_xforms_version_fallback</strong></a>()</dt><dd><tt>Returns&nbsp;version&nbsp;string&nbsp;of&nbsp;installed&nbsp;XForms&nbsp;library/header</tt></dd></dl>
@@ -632,4 +636,4 @@ class&nbsp;instance,&nbsp;different&nbsp;from&nbsp;previous&nbsp;classes.</tt></
 <td width="100%"><strong>flinitialized</strong> = False<br>
 <strong>header_filename</strong> = '/usr/include/forms.h'<br>
 <strong>loaded_xlibraries</strong> = {'libflimage': None, 'libforms': None, 'libformsgl': None, 'libx11': None}</td></tr></table>
-<p>Updated on: 2011-01-07 00:34 +0100</body></html>
+<p>Updated on: 2011-01-10 23:20 +0100</body></html>

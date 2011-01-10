@@ -198,16 +198,14 @@ class FdConvertToPy(object):
                 break
             else:
                 linenew = line.strip()
-                try:
-                    mykey, myvalue = linenew.split(':')
-                except ValueError:      # not a key (remove element)
-                    continue    # NOTE: a ':' in value is not allowed
-                else:
+                npos = linenew.find(":")
+                if npos == -1:          # ':' not found
+                    continue
+                else:                   # first ':' is the border
+                    mykey = (linenew[:npos]).strip()
+                    myvalue = (linenew[npos+1:]).strip()
                     if not myvalue:     # not a value (placeholder)
                         myvalue = None
-                mykey = mykey.strip()
-                if myvalue:
-                    myvalue = myvalue.strip()
                 self.listpairsofelem[elemnum] = mykey, myvalue
                 elemnum += 1
         fdin.close()

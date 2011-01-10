@@ -83,8 +83,8 @@ def special_style(style):
 
 # IO other than XEvent Q
 
-def fl_add_io_callback(fd, fmask, pyfn_IoCallback, vdata):
-    """fl_add_io_callback(fd, fmask, pyfn_IoCallback, vdata)
+def fl_add_io_callback(fd, fmask, pyfn_IoCallback, userdata):
+    """fl_add_io_callback(fd, fmask, pyfn_IoCallback, userdata)
 
     Registers an input callback function when input is available from fd.
 
@@ -100,9 +100,9 @@ def fl_add_io_callback(fd, fmask, pyfn_IoCallback, vdata):
         pyfn_IoCallback : python function, no return
             name referring to function([int]num, [pointer to void]vdata)
             function to be invoked on said circumstances
-        vdata : any type (e.g. None, int, str, etc..)
-            user data to be passed to function; callback has to take care
-            of type check.
+        userdata : any type (e.g. None, int, str, etc..)
+            user data to be passed to function; invoked callback has to take
+            care of type check and re-cast from ptr_void to chosen type.
 
     Examples
     --------
@@ -116,22 +116,21 @@ def fl_add_io_callback(fd, fmask, pyfn_IoCallback, vdata):
         Status: Tested + Doc + NoDemo = OK
 
     """
-    # cty.c_void_p replaced with passed type
-    mycparamtype, ptr_vdata = library.handle_userdata(vdata)
     #FL_IO_CALLBACK = cty.CFUNCTYPE(None, cty.c_int, cty.c_void_p)
     _fl_add_io_callback = library.cfuncproto(
         library.load_so_libforms(), "fl_add_io_callback", \
-        None, [cty.c_int, cty.c_uint, xfdata.FL_IO_CALLBACK, mycparamtype],
+        None, [cty.c_int, cty.c_uint, xfdata.FL_IO_CALLBACK, cty.c_void_p],
         """void fl_add_io_callback(int fd, unsigned int mask,
-           FL_IO_CALLBACK callback, void * data) """)   #       cty.c_void_p],
+           FL_IO_CALLBACK callback, void * data) """)
     library.check_if_initialized()
     i_fd = library.convert_to_intc(fd)
     library.checkfatal_allowed_value_in_list(fmask, xfdata.ASYNCIO_list)
     ui_fmask = library.convert_to_uintc(fmask)
     library.verify_function_type(pyfn_IoCallback)
     cfn_IoCallback = xfdata.FL_IO_CALLBACK(pyfn_IoCallback)
+    ptr_vdata = library.convert_userdata_to_ptrvoid(userdata)
     library.keep_cfunc_refs(cfn_IoCallback, pyfn_IoCallback)
-    library.keep_elem_refs(fd, i_fd, fmask, ui_fmask, vdata, ptr_vdata)
+    library.keep_elem_refs(fd, i_fd, fmask, ui_fmask, userdata, ptr_vdata)
     _fl_add_io_callback(i_fd, ui_fmask, cfn_IoCallback, ptr_vdata)
 
 
@@ -150,12 +149,12 @@ def fl_remove_io_callback(fd, fmask, pyfn_IoCallback):
             available), FL_WRITE (file descriptor is available for writing),
             FL_EXCEPT (an I/O error has occurred)
         pyfn_IoCallback : python function, no return
-            name referring to function([int]num, [pointer to void]vdata)
+            name referring to function([int]num, [pointer to void]pvdata)
             function to be removed on said circumstances
 
     Examples
     --------
-        >>> def iocb(num, vdata):
+        >>> def iocb(num, pvdata):
         >>> ... <something>
         >>> fdesc = os.open(myfile, os.RD_ONLY)
         >>> fl_remove_io_callback(fdesc, xfdata.FL_READ, iocb)
@@ -184,8 +183,8 @@ def fl_remove_io_callback(fd, fmask, pyfn_IoCallback):
 
 # signals
 
-def fl_add_signal_callback(sglnum, pyfn_SignalHandler, vdata):
-    """fl_add_signal_callback(sglnum, pyfn_SignalHandler, vdata)
+def fl_add_signal_callback(sglnum, pyfn_SignalHandler, userdata):
+    """fl_add_signal_callback(sglnum, pyfn_SignalHandler, userdata)
 
     Handles the receipt of a signal by registering a callback function
     that gets called when a signal is caught (only one function per
@@ -197,15 +196,15 @@ def fl_add_signal_callback(sglnum, pyfn_SignalHandler, vdata):
             signal number. Values (from external signal module)
             SIGALRM, SIGINT, ...
         pyfn_SignalHandler : python function callback, no return
-            name referring to function([int]num, [pointer to void]vdata)
+            name referring to function([int]num, [pointer to void]pvdata)
             callback invoked after catching signal
-        vdata : any type (e.g. None, int, str, etc..)
-            user data to be passed to function; callback has to take care
-            of type check.
+        userdata : any type (e.g. None, int, str, etc..)
+            user data to be passed to function; invoked callback has to take
+            care of type check and re-cast from ptr_void to chosen type.
 
     Examples
     --------
-        >>> def sglhandl(numsgl, vdata):
+        >>> def sglhandl(numsgl, pvdata):
         >>> ... <something>
         >>> fl_add_signal_callback(signal.SIGALRM, sglhandl, None)
 
@@ -214,20 +213,19 @@ def fl_add_signal_callback(sglnum, pyfn_SignalHandler, vdata):
         Status: Tested + Doc + NoDemo = OK
 
     """
-    # cty.c_void_p replaced with passed type
-    mycparamtype, ptr_vdata = library.handle_userdata(vdata)
     #FL_SIGNAL_HANDLER = cty.CFUNCTYPE(None, cty.c_int, cty.c_void_p)
     _fl_add_signal_callback = library.cfuncproto(
         library.load_so_libforms(), "fl_add_signal_callback", \
-        None, [cty.c_int, xfdata.FL_SIGNAL_HANDLER, mycparamtype], \
+        None, [cty.c_int, xfdata.FL_SIGNAL_HANDLER, cty.c_void_p], \
         """void fl_add_signal_callback(int s, FL_SIGNAL_HANDLER cb,
-           void * data) """)    # cty.c_void_p]
+           void * data) """)
     library.check_if_initialized()
     i_sglnum = library.convert_to_intc(sglnum)
     library.verify_function_type(pyfn_SignalHandler)
     cfn_SignalHandler = xfdata.FL_SIGNAL_HANDLER(pyfn_SignalHandler)
+    ptr_vdata = library.convert_userdata_to_ptrvoid(userdata)
     library.keep_cfunc_refs(cfn_SignalHandler, pyfn_SignalHandler)
-    library.keep_elem_refs(sglnum, i_sglnum, vdata, ptr_vdata)
+    library.keep_elem_refs(sglnum, i_sglnum, userdata, ptr_vdata)
     _fl_add_signal_callback(i_sglnum, cfn_SignalHandler, ptr_vdata)
 
 
@@ -381,8 +379,8 @@ def fl_input_end_return_handling(endtype):
 
 # timeouts
 
-def fl_add_timeout(msec, pyfn_TimeoutCallback, vdata):
-    """fl_add_timeout(msec, pyfn_TimeoutCallback, vdata) -> timerid
+def fl_add_timeout(msec, pyfn_TimeoutCallback, userdata):
+    """fl_add_timeout(msec, pyfn_TimeoutCallback, userdata) -> timerid
 
     Adds a timeout callback after a specified elapsed time.
 
@@ -391,10 +389,10 @@ def fl_add_timeout(msec, pyfn_TimeoutCallback, vdata):
         msec : long
             time elapsed in milliseconds
         pyfn_TimeoutCallback : python function to be invoked, no return
-            name referring to function([int]num, [pointer to void]vdata)
-        vdata : any type (e.g. None, int, str, etc..)
-            user data to be passed to function; callback has to take care
-            of type check.
+            name referring to function([int]num, [pointer to void]pvdata)
+        userdata : any type (e.g. None, int, str, etc..)
+            user data to be passed to function; invoked callback has to take
+            care of type check and re-cast from ptr_void to chosen type.
 
     Returns
     -------
@@ -403,7 +401,7 @@ def fl_add_timeout(msec, pyfn_TimeoutCallback, vdata):
 
     Examples
     --------
-        >>> def timeoutcb(num, vdata):
+        >>> def timeoutcb(num, pvdata):
         >>> ... <something>
         >>> timnum = fl_add_timeout(100, timeoutcb, None)
 
@@ -412,20 +410,19 @@ def fl_add_timeout(msec, pyfn_TimeoutCallback, vdata):
         Status: Tested + Doc + Demo = OK
 
     """
-    # cty.c_void_p replaced with passed type
-    mycparamtype, ptr_vdata = library.handle_userdata(vdata)
     #FL_TIMEOUT_CALLBACK = cty.CFUNCTYPE(None, cty.c_int, cty.c_void_p)
     _fl_add_timeout = library.cfuncproto(
         library.load_so_libforms(), "fl_add_timeout", \
-        cty.c_int, [cty.c_long, xfdata.FL_TIMEOUT_CALLBACK, mycparamtype],
+        cty.c_int, [cty.c_long, xfdata.FL_TIMEOUT_CALLBACK, cty.c_void_p],
         """int fl_add_timeout(long int msec, FL_TIMEOUT_CALLBACK callback,
-           void * data) """)            # cty.c_void_p]
+           void * data) """)
     library.check_if_initialized()
     l_msec = library.convert_to_longc(msec)
     library.verify_function_type(pyfn_TimeoutCallback)
     cfn_TimeoutCallback = xfdata.FL_TIMEOUT_CALLBACK(pyfn_TimeoutCallback)
+    ptr_vdata = library.convert_userdata_to_ptrvoid(userdata)
     library.keep_cfunc_refs(cfn_TimeoutCallback, pyfn_TimeoutCallback)
-    library.keep_elem_refs(msec, l_msec, vdata, ptr_vdata)
+    library.keep_elem_refs(msec, l_msec, userdata, ptr_vdata)
     retval = _fl_add_timeout(l_msec, cfn_TimeoutCallback, ptr_vdata)
     return retval
 
@@ -890,8 +887,8 @@ def fl_reset_focus_object(ptr_flobject):
     _fl_reset_focus_object(ptr_flobject)
 
 
-def fl_set_form_atclose(ptr_flform, pyfn_FormAtclose, vdata):
-    """fl_set_form_atclose(ptr_flform, pyfn_FormAtclose, vdata)
+def fl_set_form_atclose(ptr_flform, pyfn_FormAtclose, userdata):
+    """fl_set_form_atclose(ptr_flform, pyfn_FormAtclose, userdata)
     -> FormAtclose
 
     Calls a callback function before closing the form.
@@ -901,11 +898,11 @@ def fl_set_form_atclose(ptr_flform, pyfn_FormAtclose, vdata):
         ptr_flform : pointer to xfdata.FL_FORM
             form that receives the message
         pyfn_FormAtclose : python callback to be called, returned value
-            name referring to function(ptr_flform, [pointer to void]vdata)
+            name referring to function(ptr_flform, [pointer to void]pvdata)
              -> [int]num
-        vdata : any type (e.g. None, int, str, etc..)
-            user data to be passed to function; callback has to take care
-            of type check.
+        userdata : any type (e.g. None, int, str, etc..)
+            user data to be passed to function; invoked callback has to take
+            care of type check and re-cast from ptr_void to chosen type.
 
     Returns
     -------
@@ -914,7 +911,7 @@ def fl_set_form_atclose(ptr_flform, pyfn_FormAtclose, vdata):
 
     Examples
     --------
-        >>> def atclosecb(pform, vdata):
+        >>> def atclosecb(pform, pvdata):
         >>> ... <something>
         >>> ... return 0
         >>> oldatclosecb = fl_set_form_atclose(pform1, atclosecb, None)
@@ -924,39 +921,38 @@ def fl_set_form_atclose(ptr_flform, pyfn_FormAtclose, vdata):
         Status: Tested + Doc + NoDemo = OK
 
     """
-    # cty.c_void_p replaced with passed type
-    mycparamtype, ptr_vdata = library.handle_userdata(vdata)
     # FL_FORM_ATCLOSE = cty.CFUNCTYPE(cty.c_int, cty.POINTER(xfdata.FL_FORM),
     #                                 cty.c_void_p)
     _fl_set_form_atclose = library.cfuncproto(
         library.load_so_libforms(), "fl_set_form_atclose", \
         xfdata.FL_FORM_ATCLOSE, [cty.POINTER(xfdata.FL_FORM), \
-        xfdata.FL_FORM_ATCLOSE, mycparamtype], \
+        xfdata.FL_FORM_ATCLOSE, cty.c_void_p], \
         """FL_FORM_ATCLOSE fl_set_form_atclose(FL_FORM * form,
-           FL_FORM_ATCLOSE fmclose, void * data) """)   # cty.c_void.p]
+           FL_FORM_ATCLOSE fmclose, void * data) """)
     library.check_if_initialized()
     library.verify_flformptr_type(ptr_flform)
     library.verify_function_type(pyfn_FormAtclose)
     cfn_FormAtclose = xfdata.FL_FORM_ATCLOSE(pyfn_FormAtclose)
+    ptr_vdata = library.convert_userdata_to_ptrvoid(userdata)
     library.keep_cfunc_refs(cfn_FormAtclose, pyfn_FormAtclose)
-    library.keep_elem_refs(ptr_flform, vdata, ptr_vdata)
+    library.keep_elem_refs(ptr_flform, userdata, ptr_vdata)
     retval = _fl_set_form_atclose(ptr_flform, cfn_FormAtclose, ptr_vdata)
     return retval
 
 
-def fl_set_atclose(pyfn_FormAtclose, vdata):
-    """fl_set_atclose(pyfn_FormAtclose, vdata) -> FormAtclose
+def fl_set_atclose(pyfn_FormAtclose, userdata):
+    """fl_set_atclose(pyfn_FormAtclose, userdata) -> FormAtclose
 
     Calls a callback function before terminating the application.
 
     Parameters
     ----------
         pyfn_FormAtclose : python callback to be called, returned value
-            name referring to function(ptr_flform, [pointer to void]vdata)
+            name referring to function(ptr_flform, [pointer to void]pvdata)
              -> [int]num
-        vdata : any type (e.g. None, int, str, etc..)
-            user data to be passed to function; callback has to take care
-            of type check.
+        userdata : any type (e.g. None, int, str, etc..)
+            user data to be passed to function; invoked callback has to take
+            care of type check and re-cast from ptr_void to chosen type.
 
     Returns
     -------
@@ -975,26 +971,25 @@ def fl_set_atclose(pyfn_FormAtclose, vdata):
         Status: Tested + Doc + NoDemo = OK
 
     """
-    # cty.c_void_p replaced with passed type
-    mycparamtype, ptr_vdata = library.handle_userdata(vdata)
     # FL_FORM_ATCLOSE = cty.CFUNCTYPE(cty.c_int, cty.POINTER(xfdata.FL_FORM), \
     #                                 cty.c_void_p)
     _fl_set_atclose = library.cfuncproto(
         library.load_so_libforms(), "fl_set_atclose", \
-        xfdata.FL_FORM_ATCLOSE, [xfdata.FL_FORM_ATCLOSE, mycparamtype], \
+        xfdata.FL_FORM_ATCLOSE, [xfdata.FL_FORM_ATCLOSE, cty.c_void_p], \
         """FL_FORM_ATCLOSE fl_set_atclose(FL_FORM_ATCLOSE fmclose,
-           void * data) """)            # cty.c_void_p]
+           void * data) """)
     library.check_if_initialized()
     library.verify_function_type(pyfn_FormAtclose)
     cfn_FormAtclose = xfdata.FL_FORM_ATCLOSE(pyfn_FormAtclose)
+    ptr_vdata = library.convert_userdata_to_ptrvoid(userdata)
     library.keep_cfunc_refs(cfn_FormAtclose, pyfn_FormAtclose)
-    library.keep_elem_refs(vdata, ptr_vdata)
+    library.keep_elem_refs(userdata, ptr_vdata)
     retval = _fl_set_atclose(cfn_FormAtclose, ptr_vdata)
     return retval
 
 
-def fl_set_form_atactivate(ptr_flform, pyfn_FormAtactivate, vdata):
-    """fl_set_form_atactivate(ptr_flform, pyfn_FormAtactivate, vdata)
+def fl_set_form_atactivate(ptr_flform, pyfn_FormAtactivate, userdata):
+    """fl_set_form_atactivate(ptr_flform, pyfn_FormAtactivate, userdata)
     -> FormAtactivate
 
     Registers a callback that is called when activation status of a forms
@@ -1005,10 +1000,10 @@ def fl_set_form_atactivate(ptr_flform, pyfn_FormAtactivate, vdata):
         ptr_flform : pointer to xfdata.FL_FORM
             activated form
         pyfn_FormAtactivate : python callback function called, no return
-            name referring to function(ptr_flform, [pointer to void]vdata)
-        vdata : any type (e.g. None, int, str, etc..)
-            user data to be passed to function; callback has to take care
-            of type check.
+            name referring to function(ptr_flform, [pointer to void]pvdata)
+        userdata : any type (e.g. None, int, str, etc..)
+            user data to be passed to function; invoked callback has to take
+            care of type check and re-cast from ptr_void to chosen type.
 
     Return
     ------
@@ -1017,7 +1012,7 @@ def fl_set_form_atactivate(ptr_flform, pyfn_FormAtactivate, vdata):
 
     Examples
     --------
-        >>> def atactcb(pform, vdata):
+        >>> def atactcb(pform, pvdata):
         >>> ... <something>
         >>> oldactfunc = fl_set_form_atdeactivate(pform0, atactcb, None)
 
@@ -1026,29 +1021,28 @@ def fl_set_form_atactivate(ptr_flform, pyfn_FormAtactivate, vdata):
         Status: Tested + Doc + NoDemo = OK
 
     """
-    # cty.c_void_p replaced with passed type
-    mycparamtype, ptr_vdata = library.handle_userdata(vdata)
     #FL_FORM_ATACTIVATE = cty.CFUNCTYPE(None, cty.POINTER(xfdata.FL_FORM), \
     #                                   cty.c_void_p)
     _fl_set_form_atactivate = library.cfuncproto(
         library.load_so_libforms(), "fl_set_form_atactivate", \
         xfdata.FL_FORM_ATACTIVATE, [cty.POINTER(xfdata.FL_FORM),
-        xfdata.FL_FORM_ATACTIVATE, mycparamtype], \
+        xfdata.FL_FORM_ATACTIVATE, cty.c_void_p], \
         """FL_FORM_ATACTIVATE fl_set_form_atactivate(FL_FORM * form,
-           FL_FORM_ATACTIVATE cb, void * data) """)     # cty.c_void_p]
+           FL_FORM_ATACTIVATE cb, void * data) """)
     library.check_if_initialized()
     library.verify_flformptr_type(ptr_flform)
     library.verify_function_type(pyfn_FormAtactivate)
     cfn_FormAtactivate = xfdata.FL_FORM_ATACTIVATE(pyfn_FormAtactivate)
+    ptr_vdata = library.convert_userdata_to_ptrvoid(userdata)
     library.keep_cfunc_refs(cfn_FormAtactivate, pyfn_FormAtactivate)
-    library.keep_elem_refs(ptr_flform, vdata, ptr_vdata)
+    library.keep_elem_refs(ptr_flform, userdata, ptr_vdata)
     retval = _fl_set_form_atactivate(ptr_flform, cfn_FormAtactivate, \
             ptr_vdata)
     return retval
 
 
-def fl_set_form_atdeactivate(ptr_flform, pyfn_FormAtdeactivate, vdata):
-    """fl_set_form_atdeactivate(ptr_flform, pyfn_FormAtdeactivate, vdata)
+def fl_set_form_atdeactivate(ptr_flform, pyfn_FormAtdeactivate, userdata):
+    """fl_set_form_atdeactivate(ptr_flform, pyfn_FormAtdeactivate, userdata)
     -> FormAtdeactivate
 
     Registers a callback that is called when activation status of a form
@@ -1059,10 +1053,10 @@ def fl_set_form_atdeactivate(ptr_flform, pyfn_FormAtdeactivate, vdata):
         ptr_flform : pointer to xfdata.FL_FORM
             de-activated form
         pyfn_FormAtdeactivate : python callback function called, no return
-            name referring to function(ptr_flform, [pointer to void]vdata)
-        vdata : any type (e.g. None, int, str, etc..)
-            user data to be passed to function; callback has to take care
-            of type check.
+            name referring to function(ptr_flform, [pointer to void]pvdata)
+        userdata : any type (e.g. None, int, str, etc..)
+            user data to be passed to function; invoked callback has to take
+            care of type check and re-cast from ptr_void to chosen type.
 
     Returns
     -------
@@ -1081,23 +1075,22 @@ def fl_set_form_atdeactivate(ptr_flform, pyfn_FormAtdeactivate, vdata):
         Status: Tested + Doc + NoDemo = OK
 
     """
-    # cty.c_void_p replaced with passed type
-    mycparamtype, ptr_vdata = library.handle_userdata(vdata)
     #FL_FORM_ATDEACTIVATE = cty.CFUNCTYPE(None, cty.POINTER(xfdata.FL_FORM),
     #                         cty.c_void_p)
     _fl_set_form_atdeactivate = library.cfuncproto(
         library.load_so_libforms(), "fl_set_form_atdeactivate", \
         xfdata.FL_FORM_ATDEACTIVATE, [cty.POINTER(xfdata.FL_FORM),
-        xfdata.FL_FORM_ATDEACTIVATE, mycparamtype], \
+        xfdata.FL_FORM_ATDEACTIVATE, cty.c_void_p], \
         """FL_FORM_ATDEACTIVATE fl_set_form_atdeactivate(FL_FORM * form,
-           FL_FORM_ATDEACTIVATE cb, void * data) """)   # cty.c_void_p]
+           FL_FORM_ATDEACTIVATE cb, void * data) """)
     library.check_if_initialized()
     library.verify_flformptr_type(ptr_flform)
     library.verify_function_type(pyfn_FormAtdeactivate)
     cfn_FormAtdeactivate = xfdata.FL_FORM_ATDEACTIVATE( \
             pyfn_FormAtdeactivate)
+    ptr_vdata = library.convert_userdata_to_ptrvoid(userdata)
     library.keep_cfunc_refs(cfn_FormAtdeactivate, pyfn_FormAtdeactivate)
-    library.keep_elem_refs(ptr_flform, vdata, ptr_vdata)
+    library.keep_elem_refs(ptr_flform, userdata, ptr_vdata)
     retval = _fl_set_form_atdeactivate(ptr_flform, cfn_FormAtdeactivate, \
             ptr_vdata)
     return retval
@@ -1483,8 +1476,8 @@ def fl_set_app_nomainform(yesno):
     _fl_set_app_nomainform(i_yesno)
 
 
-def fl_set_form_callback(ptr_flform, pyfn_FormCallbackPtr, vdata):
-    """fl_set_form_callback(ptr_flform, pyfn_FormCallbackPtr, vdata)
+def fl_set_form_callback(ptr_flform, pyfn_FormCallbackPtr, userdata):
+    """fl_set_form_callback(ptr_flform, pyfn_FormCallbackPtr, userdata)
 
     Defines the callback function bound to an entire form. Whenever
     fl_do_forms() or fl_check_forms() would return a flobject in form they
@@ -1498,14 +1491,14 @@ def fl_set_form_callback(ptr_flform, pyfn_FormCallbackPtr, vdata):
         ptr_flform : pointer to xfdata.FL_FORM
             form whose callback has to be set
         pyfn_FormCallbackPtr : python callback to be set, no return
-            name referring to function(ptr_flobject, [pointer to void]vdata)
-        vdata : any type (e.g. None, int, str, etc..)
-            user data to be passed to function; callback has to take care
-            of type check
+            name referring to function(ptr_flobject, [pointer to void]pvdata)
+        userdata : any type (e.g. None, int, str, etc..)
+            user data to be passed to function; invoked callback has to take care
+            of type check and re-cast from ptr_void to chosen type
 
     Examples
     --------
-        >>> def formcb(pobj, vdata):
+        >>> def formcb(pobj, pvdata):
         >>> ... <something>
         >>> fl_set_form_callback(pform0, formcb, None)
 
@@ -1514,22 +1507,21 @@ def fl_set_form_callback(ptr_flform, pyfn_FormCallbackPtr, vdata):
         Status: Tested + Doc + Demo = OK
 
     """
-    # cty.c_void_p replaced with passed type
-    mycparamtype, ptr_vdata = library.handle_userdata(vdata)
     #FL_FORMCALLBACKPTR = cty.CFUNCTYPE(None, cty.POINTER(xfdata.FL_OBJECT),
     #                                   cty.c_void_p)
     _fl_set_form_callback = library.cfuncproto(
         library.load_so_libforms(), "fl_set_form_callback", \
         None, [cty.POINTER(xfdata.FL_FORM), xfdata.FL_FORMCALLBACKPTR, \
-        mycparamtype], \
+        cty.c_void_p], \
         """void fl_set_form_callback(FL_FORM * form,
-           FL_FORMCALLBACKPTR callback, void * d) """)  # cty.c_void_p]
+           FL_FORMCALLBACKPTR callback, void * d) """)
     library.check_if_initialized()
     library.verify_flformptr_type(ptr_flform)
     library.verify_function_type(pyfn_FormCallbackPtr)
     cfn_FormCallbackPtr = xfdata.FL_FORMCALLBACKPTR(pyfn_FormCallbackPtr)
+    ptr_vdata = library.convert_userdata_to_ptrvoid(userdata)
     library.keep_cfunc_refs(cfn_FormCallbackPtr, pyfn_FormCallbackPtr)
-    library.keep_elem_refs(ptr_flform, vdata, ptr_vdata)
+    library.keep_elem_refs(ptr_flform, userdata, ptr_vdata)
     _fl_set_form_callback(ptr_flform, cfn_FormCallbackPtr, ptr_vdata)
 
 
@@ -3860,8 +3852,8 @@ def fl_get_object_component(ptr_flobject, flobjclass, compontype, seqnum):
     return retval
 
 
-def fl_for_all_objects(ptr_flform, pyfn_operatecb, vdata):
-    """fl_for_all_objects(ptr_flform, pyfn_operatecb, vdata)
+def fl_for_all_objects(ptr_flform, pyfn_operatecb, userdata):
+    """fl_for_all_objects(ptr_flform, pyfn_operatecb, userdata)
 
     Serves as an iterator to change an attribute for all flobjects on a
     particular form. Specified operating function is called for every
@@ -3873,15 +3865,15 @@ def fl_for_all_objects(ptr_flform, pyfn_operatecb, vdata):
         ptr_flform : pointer to xfdata.FL_FORM
             form
         pyfn_operatecb : python callback function, returned value
-            name referring to function(ptr_flobject, [pointer to void]vdata)
+            name referring to function(ptr_flobject, [pointer to void]pvdata)
             -> [int]num
         vdata : any type (e.g. None, int, str, etc..)
-            user data to be passed to function; callback has to take care
-            of type check
+            user data to be passed to function; invoked callback has to take
+            care of type check and re-cast from ptr_void to chosen type
 
     Examples
     --------
-        >>> def operatecb(pobj, vdata):
+        >>> def operatecb(pobj, pvdata):
         >>> ... <something>
         >>> return 0
         >>> fl_for_all_objects(pform5, operatecb, None)
@@ -3891,22 +3883,21 @@ def fl_for_all_objects(ptr_flform, pyfn_operatecb, vdata):
         Status: Untested + Doc + NoDemo = NOT OK
 
     """
-    # cty.c_void_p replaced with passed type
-    mycparamtype, ptr_vdata = library.handle_userdata(vdata)
     cfunc_int_pobject_pvoid = cty.CFUNCTYPE(cty.c_int,
             cty.POINTER(xfdata.FL_OBJECT), cty.c_void_p)
     _fl_for_all_objects = library.cfuncproto(
         library.load_so_libforms(), "fl_for_all_objects", \
         None, [cty.POINTER(xfdata.FL_FORM), cfunc_int_pobject_pvoid,
-        mycparamtype], \
+        cty.c_void_p], \
         """void fl_for_all_objects(FL_FORM * form, int ( * cb ) \
-           ( FL_OBJECT *, void * ), void * v)""")       # cty.c_void_p]
+           ( FL_OBJECT *, void * ), void * v)""")
     library.check_if_initialized()
     library.verify_flformptr_type(ptr_flform)
     library.verify_function_type(pyfn_operatecb)
     cfn_operatecb = cfunc_int_pobject_pvoid(pyfn_operatecb)
+    ptr_vdata = library.convert_userdata_to_ptrvoid(userdata)
     library.keep_cfunc_refs(cfn_operatecb, pyfn_operatecb)
-    library.keep_elem_refs(ptr_flform, vdata, ptr_vdata)
+    library.keep_elem_refs(ptr_flform, userdata, ptr_vdata)
     _fl_for_all_objects(ptr_flform, cfn_operatecb, ptr_vdata)
 
 
@@ -4319,7 +4310,7 @@ def fl_set_object_prehandler(ptr_flobject, pyfn_HandlePtr):
 
     Examples
     --------
-        >>> def prehandlecb(pobj, num, crd, crd, num2, vdata):
+        >>> def prehandlecb(pobj, num, crd, crd, num2, pvdata):
         >>> ... <something>
         >>> ... return 0
         >>> fl_set_object_prehandler(pobj2, prehandlecb)
@@ -4369,7 +4360,7 @@ def fl_set_object_posthandler(ptr_flobject, pyfn_HandlePtr):
 
     Examples
     --------
-        >>> def posthandlecb(pobj, num, crd, crd, num2, vdata):
+        >>> def posthandlecb(pobj, num, crd, crd, num2, pvdata):
         >>> ... <something>
         >>> ... return 0
         >>> fl_set_object_posthandler(pobj2, posthandlecb)
@@ -6682,7 +6673,7 @@ def fl_make_object(flobjclass, otype, xpos, ypos, width, height, label,
 
     Examples
     --------
-        >>> def handlecb(pobj, num, width, height, num, vdata):
+        >>> def handlecb(pobj, num, width, height, num, pvdata):
         >>> ... <something>
         >>> ... return 0
         >>> fl_make_object(...)

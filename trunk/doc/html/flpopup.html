@@ -18,9 +18,10 @@
     
 <tr><td bgcolor="#aa55cc"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
 <td width="100%"><table width="100%" summary="list"><tr><td width="25%" valign=top><a href="ctypes.html">ctypes</a><br>
+</td><td width="25%" valign=top><a href="flxbasic.html">flxbasic</a><br>
 </td><td width="25%" valign=top><a href="library.html">library</a><br>
 </td><td width="25%" valign=top><a href="xfdata.html">xfdata</a><br>
-</td><td width="25%" valign=top></td></tr></table></td></tr></table><p>
+</td></tr></table></td></tr></table><p>
 <table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
 <tr bgcolor="#eeaa77">
 <td colspan=3 valign=bottom>&nbsp;<br>
@@ -132,7 +133,7 @@ Parameters<br>
 &nbsp;&nbsp;&nbsp;&nbsp;ptr_flpopupitem&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_POPUP_ITEM<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;new&nbsp;popup&nbsp;item&nbsp;to&nbsp;be&nbsp;added.&nbsp;It&nbsp;can&nbsp;be&nbsp;prepared&nbsp;passing&nbsp;a&nbsp;dict<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(whose&nbsp;keys&nbsp;are&nbsp;corresponding&nbsp;to&nbsp;xfdata.FL_POPUP_ITEM's&nbsp;members)<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;to&nbsp;xfstruct.make_flpopupitem&nbsp;function.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;to&nbsp;xfstruct.make_ptr_flpopupitem&nbsp;function.<br>
 &nbsp;<br>
 Returns<br>
 -------<br>
@@ -157,7 +158,7 @@ Parameters<br>
 ----------<br>
 &nbsp;&nbsp;&nbsp;&nbsp;win&nbsp;:&nbsp;long_pos<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;window&nbsp;of&nbsp;a&nbsp;parent&nbsp;flobject&nbsp;(use&nbsp;flxbasic.FL_ObjWin()&nbsp;to&nbsp;find&nbsp;out<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;about&nbsp;it).&nbsp;You&nbsp;can&nbsp;also&nbsp;use&nbsp;either&nbsp;xfdata.fl_root&nbsp;or&nbsp;None&nbsp;for&nbsp;the<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;about&nbsp;it).&nbsp;You&nbsp;can&nbsp;also&nbsp;use&nbsp;either&nbsp;flxbasic.fl_root&nbsp;or&nbsp;None&nbsp;for&nbsp;the<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;root&nbsp;window.<br>
 &nbsp;&nbsp;&nbsp;&nbsp;title&nbsp;:&nbsp;str<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;text&nbsp;of&nbsp;title&nbsp;that&nbsp;gets&nbsp;shown&nbsp;at&nbsp;the&nbsp;top&nbsp;of&nbsp;the&nbsp;popup&nbsp;in&nbsp;a&nbsp;frame.<br>
@@ -167,7 +168,7 @@ Parameters<br>
 &nbsp;&nbsp;&nbsp;&nbsp;ptr_flpopupitem&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_POPUP_ITEM<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;new&nbsp;popup&nbsp;item&nbsp;to&nbsp;be&nbsp;created.&nbsp;It&nbsp;can&nbsp;be&nbsp;prepared&nbsp;passing&nbsp;a&nbsp;dict<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(whose&nbsp;keys&nbsp;are&nbsp;corresponding&nbsp;to&nbsp;xfdata.FL_POPUP_ITEM's&nbsp;members)<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;to&nbsp;xfstruct.make_flpopupitem&nbsp;function.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;to&nbsp;xfstruct.make_ptr_flpopupitem&nbsp;function.<br>
 &nbsp;<br>
 Returns<br>
 -------<br>
@@ -353,7 +354,7 @@ Examples<br>
 Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-fl_popup_entry_get_by_user_data"><strong>fl_popup_entry_get_by_user_data</strong></a>(ptr_flpopup, vdata)</dt><dd><tt><a href="#-fl_popup_entry_get_by_user_data">fl_popup_entry_get_by_user_data</a>(ptr_flpopup,&nbsp;vdata)&nbsp;-&gt;&nbsp;ptr_flpopupentry<br>
+ <dl><dt><a name="-fl_popup_entry_get_by_user_data"><strong>fl_popup_entry_get_by_user_data</strong></a>(ptr_flpopup, userdata)</dt><dd><tt><a href="#-fl_popup_entry_get_by_user_data">fl_popup_entry_get_by_user_data</a>(ptr_flpopup,&nbsp;userdata)&nbsp;-&gt;&nbsp;ptr_flpopupentry<br>
 &nbsp;<br>
 Finds&nbsp;a&nbsp;popup&nbsp;entry&nbsp;by&nbsp;its&nbsp;assigned&nbsp;user&nbsp;data.<br>
 &nbsp;<br>
@@ -361,9 +362,9 @@ Parameters<br>
 ----------<br>
 &nbsp;&nbsp;&nbsp;&nbsp;ptr_flpopup&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_POPUP<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;popup&nbsp;class&nbsp;instance<br>
-&nbsp;&nbsp;&nbsp;&nbsp;vdata&nbsp;:&nbsp;any&nbsp;type&nbsp;(e.g.&nbsp;None,&nbsp;int,&nbsp;str,&nbsp;etc..)<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;user&nbsp;data&nbsp;assigned&nbsp;to&nbsp;the&nbsp;popup&nbsp;entry;&nbsp;callback&nbsp;has&nbsp;to&nbsp;take&nbsp;care<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;of&nbsp;type&nbsp;check<br>
+&nbsp;&nbsp;&nbsp;&nbsp;userdata&nbsp;:&nbsp;any&nbsp;type&nbsp;(e.g.&nbsp;None,&nbsp;int,&nbsp;str,&nbsp;etc..)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;user&nbsp;data&nbsp;assigned&nbsp;to&nbsp;the&nbsp;popup&nbsp;entry;&nbsp;callback&nbsp;has&nbsp;to&nbsp;take<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;care&nbsp;of&nbsp;type&nbsp;check&nbsp;and&nbsp;re-cast&nbsp;from&nbsp;ptr_void&nbsp;to&nbsp;chosen&nbsp;type.<br>
 &nbsp;<br>
 Returns<br>
 -------<br>
@@ -754,7 +755,7 @@ Examples<br>
 Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-fl_popup_entry_set_user_data"><strong>fl_popup_entry_set_user_data</strong></a>(ptr_flpopupentry, vdata)</dt><dd><tt><a href="#-fl_popup_entry_set_user_data">fl_popup_entry_set_user_data</a>(ptr_flpopupentry,&nbsp;vdata)&nbsp;-&gt;&nbsp;oldvdata<br>
+ <dl><dt><a name="-fl_popup_entry_set_user_data"><strong>fl_popup_entry_set_user_data</strong></a>(ptr_flpopupentry, userdata)</dt><dd><tt><a href="#-fl_popup_entry_set_user_data">fl_popup_entry_set_user_data</a>(ptr_flpopupentry,&nbsp;userdata)&nbsp;-&gt;&nbsp;olduserdata<br>
 &nbsp;<br>
 Modifies&nbsp;user&nbsp;data&nbsp;associated&nbsp;with&nbsp;a&nbsp;popup&nbsp;entry.<br>
 &nbsp;<br>
@@ -762,13 +763,13 @@ Parameters<br>
 ----------<br>
 &nbsp;&nbsp;&nbsp;&nbsp;ptr_flpopupentry&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_POPUP_ENTRY<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;popup&nbsp;entry<br>
-&nbsp;&nbsp;&nbsp;&nbsp;vdata&nbsp;:&nbsp;any&nbsp;type&nbsp;(e.g.&nbsp;None,&nbsp;int,&nbsp;str,&nbsp;etc..)<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;user&nbsp;data&nbsp;to&nbsp;be&nbsp;passed&nbsp;to&nbsp;function;&nbsp;callback&nbsp;has&nbsp;to&nbsp;take&nbsp;care<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;of&nbsp;type&nbsp;check<br>
+&nbsp;&nbsp;&nbsp;&nbsp;userdata&nbsp;:&nbsp;any&nbsp;type&nbsp;(e.g.&nbsp;None,&nbsp;int,&nbsp;str,&nbsp;etc..)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;user&nbsp;data&nbsp;to&nbsp;be&nbsp;passed&nbsp;to&nbsp;function;&nbsp;invoked&nbsp;callback&nbsp;has&nbsp;to&nbsp;take<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;care&nbsp;of&nbsp;type&nbsp;check&nbsp;and&nbsp;re-cast&nbsp;from&nbsp;ptr_void&nbsp;to&nbsp;chosen&nbsp;type<br>
 &nbsp;<br>
 Returns<br>
 -------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;oldvdata&nbsp;:&nbsp;pointer&nbsp;to&nbsp;void?<br>
+&nbsp;&nbsp;&nbsp;&nbsp;olduserdata&nbsp;:&nbsp;pointer&nbsp;to&nbsp;void<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;previous&nbsp;user&nbsp;data,&nbsp;or&nbsp;None&nbsp;(on&nbsp;failure)<br>
 &nbsp;<br>
 Examples<br>
@@ -1092,7 +1093,7 @@ Parameters<br>
 &nbsp;&nbsp;&nbsp;&nbsp;ptr_flpopupitem&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_POPUP_ITEM<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;new&nbsp;popup&nbsp;item&nbsp;to&nbsp;be&nbsp;inserted.&nbsp;It&nbsp;can&nbsp;be&nbsp;prepared&nbsp;passing&nbsp;a&nbsp;dict<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(whose&nbsp;keys&nbsp;are&nbsp;corresponding&nbsp;to&nbsp;xfdata.FL_POPUP_ITEM's&nbsp;members)<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;to&nbsp;xfstruct.make_flpopupitem&nbsp;function.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;to&nbsp;xfstruct.make_ptr_flpopupitem&nbsp;function.<br>
 &nbsp;<br>
 Returns<br>
 -------<br>
@@ -1358,4 +1359,4 @@ Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;Demo&nbsp;=&nbsp;OK</tt></dd></dl>
 </td></tr></table>
-<p>Updated on: 2011-01-07 00:34 +0100</body></html>
+<p>Updated on: 2011-01-10 23:20 +0100</body></html>

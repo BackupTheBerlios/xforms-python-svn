@@ -18,8 +18,7 @@
     
 <tr><td bgcolor="#aa55cc"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
 <td width="100%"><table width="100%" summary="list"><tr><td width="25%" valign=top><a href="ctypes.html">ctypes</a><br>
-</td><td width="25%" valign=top><a href="sys.html">sys</a><br>
-</td><td width="25%" valign=top></td><td width="25%" valign=top></td></tr></table></td></tr></table><p>
+</td><td width="25%" valign=top></td><td width="25%" valign=top></td><td width="25%" valign=top></td></tr></table></td></tr></table><p>
 <table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
 <tr bgcolor="#ee77aa">
 <td colspan=3 valign=bottom>&nbsp;<br>
@@ -30,7 +29,8 @@
 <dt><font face="helvetica, arial"><a href="__builtin__.html#object">__builtin__.object</a>
 </font></dt><dd>
 <dl>
-<dt><font face="helvetica, arial"><a href="xfdata.html#admitted_values_for_BORDER">admitted_values_for_BORDER</a>
+<dt><font face="helvetica, arial"><a href="xfdata.html#admitted_value_for_BROWSERLINES_APPEARANCE">admitted_value_for_BROWSERLINES_APPEARANCE</a>
+</font></dt><dt><font face="helvetica, arial"><a href="xfdata.html#admitted_values_for_BORDER">admitted_values_for_BORDER</a>
 </font></dt><dt><font face="helvetica, arial"><a href="xfdata.html#admitted_values_for_COORD_UNIT">admitted_values_for_COORD_UNIT</a>
 </font></dt><dt><font face="helvetica, arial"><a href="xfdata.html#admitted_values_for_CURSORS">admitted_values_for_CURSORS</a>
 </font></dt><dt><font face="helvetica, arial"><a href="xfdata.html#admitted_values_for_EventNames">admitted_values_for_EventNames</a>
@@ -184,10 +184,8 @@
 <dt><font face="helvetica, arial"><a href="_ctypes.html#_Pointer">_ctypes._Pointer</a>(_ctypes._CData)
 </font></dt><dd>
 <dl>
-<dt><font face="helvetica, arial">LP_FL_FORM_
-</font></dt><dt><font face="helvetica, arial">LP_FL_OBJECT_
+<dt><font face="helvetica, arial">LP_FL_OBJECT_
 </font></dt><dt><font face="helvetica, arial">LP_XrmOptionDescRec
-</font></dt><dt><font face="helvetica, arial">LP__XDisplay
 </font></dt><dt><font face="helvetica, arial">LP__XGC
 </font></dt><dt><font face="helvetica, arial">LP_flimage_setup_
 </font></dt></dl>
@@ -13439,6 +13437,59 @@ Methods inherited from _ctypes._CData:<br>
 <table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
 <tr bgcolor="#ffc8d8">
 <td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#000000" face="helvetica, arial"><a name="admitted_value_for_BROWSERLINES_APPEARANCE">class <strong>admitted_value_for_BROWSERLINES_APPEARANCE</strong></a>(<a href="__builtin__.html#object">__builtin__.object</a>)</font></td></tr>
+    
+<tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
+<td colspan=2><tt>Values&nbsp;to&nbsp;be&nbsp;used&nbsp;for&nbsp;changing&nbsp;appearance&nbsp;of&nbsp;individual&nbsp;lines&nbsp;in&nbsp;the<br>
+browser.<br>
+&nbsp;<br>
+Whenever&nbsp;a&nbsp;line&nbsp;starts&nbsp;with&nbsp;the&nbsp;symbol&nbsp;'@'&nbsp;the&nbsp;next&nbsp;letter&nbsp;indicates<br>
+the&nbsp;special&nbsp;characteristics&nbsp;associated&nbsp;with&nbsp;this&nbsp;line.&nbsp;The&nbsp;following<br>
+possibilities&nbsp;exist&nbsp;at&nbsp;the&nbsp;moment:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;f&nbsp;&nbsp;&nbsp;&nbsp;Fixed&nbsp;width&nbsp;font.&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;n&nbsp;&nbsp;&nbsp;&nbsp;Normal&nbsp;(Helvetica)&nbsp;font.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;t&nbsp;&nbsp;&nbsp;&nbsp;Times-Roman&nbsp;like&nbsp;font.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;b&nbsp;&nbsp;&nbsp;&nbsp;Boldface&nbsp;modifier.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;i&nbsp;&nbsp;&nbsp;&nbsp;Italics&nbsp;modifier.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;l&nbsp;&nbsp;&nbsp;&nbsp;Large&nbsp;(new&nbsp;size&nbsp;is&nbsp;FL_LARGE_SIZE).<br>
+&nbsp;&nbsp;&nbsp;&nbsp;m&nbsp;&nbsp;&nbsp;&nbsp;Medium&nbsp;(new&nbsp;size&nbsp;is&nbsp;FL_MEDIUM_SIZE).<br>
+&nbsp;&nbsp;&nbsp;&nbsp;s&nbsp;&nbsp;&nbsp;&nbsp;Small&nbsp;(new&nbsp;size&nbsp;is&nbsp;FL_SMALL_SIZE).<br>
+&nbsp;&nbsp;&nbsp;&nbsp;L&nbsp;&nbsp;&nbsp;&nbsp;Large&nbsp;(new&nbsp;size&nbsp;=&nbsp;current&nbsp;size&nbsp;+&nbsp;6).<br>
+&nbsp;&nbsp;&nbsp;&nbsp;M&nbsp;&nbsp;&nbsp;&nbsp;Medium&nbsp;(new&nbsp;size&nbsp;=&nbsp;current&nbsp;size&nbsp;+&nbsp;4).<br>
+&nbsp;&nbsp;&nbsp;&nbsp;S&nbsp;&nbsp;&nbsp;&nbsp;Small&nbsp;(new&nbsp;size&nbsp;=&nbsp;current&nbsp;size&nbsp;-&nbsp;2).<br>
+&nbsp;&nbsp;&nbsp;&nbsp;c&nbsp;&nbsp;&nbsp;&nbsp;Centered.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;r&nbsp;&nbsp;&nbsp;&nbsp;Right&nbsp;aligned.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;_&nbsp;&nbsp;&nbsp;&nbsp;Draw&nbsp;underlined&nbsp;text.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;&nbsp;&nbsp;&nbsp;An&nbsp;engraved&nbsp;separator.&nbsp;Text&nbsp;following&nbsp;'-'&nbsp;is&nbsp;ignored.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;C&nbsp;&nbsp;&nbsp;&nbsp;The&nbsp;next&nbsp;number&nbsp;indicates&nbsp;the&nbsp;color&nbsp;index&nbsp;for&nbsp;this&nbsp;line.&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;N&nbsp;&nbsp;&nbsp;&nbsp;Non-selectable&nbsp;line&nbsp;(in&nbsp;selectable&nbsp;browsers).&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;@@&nbsp;&nbsp;&nbsp;&nbsp;Regular&nbsp;'@'&nbsp;character.&nbsp;<br>
+The&nbsp;modifiers&nbsp;(bold&nbsp;and&nbsp;itatic)&nbsp;work&nbsp;by&nbsp;adding&nbsp;FL_BOLD_STYLE&nbsp;and<br>
+FL_ITALIC_STYLE&nbsp;to&nbsp;the&nbsp;current&nbsp;active&nbsp;font&nbsp;index&nbsp;to&nbsp;look&nbsp;up&nbsp;the&nbsp;font&nbsp;in<br>
+the&nbsp;font&nbsp;table;&nbsp;you&nbsp;can&nbsp;modify&nbsp;the&nbsp;table&nbsp;using&nbsp;flbasic.fl_set_font_name()<br>
+function.<br>
+More&nbsp;than&nbsp;one&nbsp;option&nbsp;can&nbsp;be&nbsp;used&nbsp;by&nbsp;putting&nbsp;them&nbsp;next&nbsp;to&nbsp;each&nbsp;other.&nbsp;E.g.,<br>
+"@C1@l@f@b@cTitle"&nbsp;will&nbsp;give&nbsp;you&nbsp;the&nbsp;red,&nbsp;large,&nbsp;bold&nbsp;fixed&nbsp;font,&nbsp;centered<br>
+word&nbsp;"Title".&nbsp;As&nbsp;you&nbsp;can&nbsp;see&nbsp;the&nbsp;font&nbsp;change&nbsp;requests&nbsp;accumulate&nbsp;and&nbsp;the<br>
+order&nbsp;is&nbsp;important,&nbsp;i.e.,&nbsp;"@f@b@i"&nbsp;gives&nbsp;you&nbsp;a&nbsp;fixed&nbsp;bold&nbsp;italic&nbsp;font<br>
+while&nbsp;"@b@i@f"&nbsp;gives&nbsp;you&nbsp;a&nbsp;(plain)&nbsp;fixed&nbsp;font.<br>
+Depending&nbsp;on&nbsp;the&nbsp;font&nbsp;size&nbsp;and&nbsp;style&nbsp;lines&nbsp;may&nbsp;have&nbsp;different&nbsp;heights.<br>
+In&nbsp;some&nbsp;cases&nbsp;the&nbsp;character&nbsp;'@'&nbsp;might&nbsp;need&nbsp;to&nbsp;be&nbsp;placed&nbsp;at&nbsp;the&nbsp;beginning<br>
+of&nbsp;the&nbsp;lines&nbsp;without&nbsp;introducing&nbsp;the&nbsp;special&nbsp;meaning&nbsp;mentioned&nbsp;above.&nbsp;In<br>
+this&nbsp;case&nbsp;you&nbsp;can&nbsp;use&nbsp;"@@"&nbsp;or&nbsp;change&nbsp;the&nbsp;special&nbsp;character&nbsp;to&nbsp;something<br>
+other&nbsp;than&nbsp;'@'&nbsp;using&nbsp;flbrowser.fl_set_browser_specialkey()&nbsp;function.<br>&nbsp;</tt></td></tr>
+<tr><td>&nbsp;</td>
+<td width="100%">Data descriptors defined here:<br>
+<dl><dt><strong>__dict__</strong></dt>
+<dd><tt>dictionary&nbsp;for&nbsp;instance&nbsp;variables&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+<dl><dt><strong>__weakref__</strong></dt>
+<dd><tt>list&nbsp;of&nbsp;weak&nbsp;references&nbsp;to&nbsp;the&nbsp;object&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+</td></tr></table> <p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ffc8d8">
+<td colspan=3 valign=bottom>&nbsp;<br>
 <font color="#000000" face="helvetica, arial"><a name="admitted_values_for_BORDER">class <strong>admitted_values_for_BORDER</strong></a>(<a href="__builtin__.html#object">__builtin__.object</a>)</font></td></tr>
     
 <tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
@@ -14757,118 +14808,6 @@ Admitted&nbsp;values<br>
 <dl><dt><strong>__weakref__</strong></dt>
 <dd><tt>list&nbsp;of&nbsp;weak&nbsp;references&nbsp;to&nbsp;the&nbsp;object&nbsp;(if&nbsp;defined)</tt></dd>
 </dl>
-</td></tr></table> <p>
-<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
-<tr bgcolor="#ffc8d8">
-<td colspan=3 valign=bottom>&nbsp;<br>
-<font color="#000000" face="helvetica, arial"><strong>fl_current_form</strong> = <a name="fl_current_form">class LP_FL_FORM_</a>(<a href="_ctypes.html#_Pointer">_ctypes._Pointer</a>)</font></td></tr>
-    
-<tr><td bgcolor="#ffc8d8"><tt>&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
-<td width="100%"><dl><dt>Method resolution order:</dt>
-<dd>LP_FL_FORM_</dd>
-<dd><a href="_ctypes.html#_Pointer">_ctypes._Pointer</a></dd>
-<dd>_ctypes._CData</dd>
-<dd><a href="__builtin__.html#object">__builtin__.object</a></dd>
-</dl>
-<hr>
-Data descriptors defined here:<br>
-<dl><dt><strong>__dict__</strong></dt>
-<dd><tt>dictionary&nbsp;for&nbsp;instance&nbsp;variables&nbsp;(if&nbsp;defined)</tt></dd>
-</dl>
-<dl><dt><strong>__weakref__</strong></dt>
-<dd><tt>list&nbsp;of&nbsp;weak&nbsp;references&nbsp;to&nbsp;the&nbsp;object&nbsp;(if&nbsp;defined)</tt></dd>
-</dl>
-<hr>
-Methods inherited from <a href="_ctypes.html#_Pointer">_ctypes._Pointer</a>:<br>
-<dl><dt><a name="LP_FL_FORM_-__delitem__"><strong>__delitem__</strong></a>(...)</dt><dd><tt>x.<a href="#fl_current_form-__delitem__">__delitem__</a>(y)&nbsp;&lt;==&gt;&nbsp;del&nbsp;x[y]</tt></dd></dl>
-
-<dl><dt><a name="LP_FL_FORM_-__getitem__"><strong>__getitem__</strong></a>(...)</dt><dd><tt>x.<a href="#fl_current_form-__getitem__">__getitem__</a>(y)&nbsp;&lt;==&gt;&nbsp;x[y]</tt></dd></dl>
-
-<dl><dt><a name="LP_FL_FORM_-__getslice__"><strong>__getslice__</strong></a>(...)</dt><dd><tt>x.<a href="#fl_current_form-__getslice__">__getslice__</a>(i,&nbsp;j)&nbsp;&lt;==&gt;&nbsp;x[i:j]<br>
-&nbsp;<br>
-Use&nbsp;of&nbsp;negative&nbsp;indices&nbsp;is&nbsp;not&nbsp;supported.</tt></dd></dl>
-
-<dl><dt><a name="LP_FL_FORM_-__init__"><strong>__init__</strong></a>(...)</dt><dd><tt>x.<a href="#fl_current_form-__init__">__init__</a>(...)&nbsp;initializes&nbsp;x;&nbsp;see&nbsp;x.__class__.__doc__&nbsp;for&nbsp;signature</tt></dd></dl>
-
-<dl><dt><a name="LP_FL_FORM_-__nonzero__"><strong>__nonzero__</strong></a>(...)</dt><dd><tt>x.<a href="#fl_current_form-__nonzero__">__nonzero__</a>()&nbsp;&lt;==&gt;&nbsp;x&nbsp;!=&nbsp;0</tt></dd></dl>
-
-<dl><dt><a name="LP_FL_FORM_-__setitem__"><strong>__setitem__</strong></a>(...)</dt><dd><tt>x.<a href="#fl_current_form-__setitem__">__setitem__</a>(i,&nbsp;y)&nbsp;&lt;==&gt;&nbsp;x[i]=y</tt></dd></dl>
-
-<hr>
-Data descriptors inherited from <a href="_ctypes.html#_Pointer">_ctypes._Pointer</a>:<br>
-<dl><dt><strong>contents</strong></dt>
-<dd><tt>the&nbsp;object&nbsp;this&nbsp;pointer&nbsp;points&nbsp;to&nbsp;(read-write)</tt></dd>
-</dl>
-<hr>
-Data and other attributes inherited from <a href="_ctypes.html#_Pointer">_ctypes._Pointer</a>:<br>
-<dl><dt><strong>__new__</strong> = &lt;built-in method __new__ of _ctypes.PointerType object&gt;<dd><tt>T.<a href="#fl_current_form-__new__">__new__</a>(S,&nbsp;...)&nbsp;-&gt;&nbsp;a&nbsp;new&nbsp;<a href="__builtin__.html#object">object</a>&nbsp;with&nbsp;type&nbsp;S,&nbsp;a&nbsp;subtype&nbsp;of&nbsp;T</tt></dl>
-
-<hr>
-Methods inherited from _ctypes._CData:<br>
-<dl><dt><a name="LP_FL_FORM_-__ctypes_from_outparam__"><strong>__ctypes_from_outparam__</strong></a>(...)</dt></dl>
-
-<dl><dt><a name="LP_FL_FORM_-__hash__"><strong>__hash__</strong></a>(...)</dt><dd><tt>x.<a href="#fl_current_form-__hash__">__hash__</a>()&nbsp;&lt;==&gt;&nbsp;hash(x)</tt></dd></dl>
-
-<dl><dt><a name="LP_FL_FORM_-__reduce__"><strong>__reduce__</strong></a>(...)</dt></dl>
-
-<dl><dt><a name="LP_FL_FORM_-__setstate__"><strong>__setstate__</strong></a>(...)</dt></dl>
-
-</td></tr></table> <p>
-<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
-<tr bgcolor="#ffc8d8">
-<td colspan=3 valign=bottom>&nbsp;<br>
-<font color="#000000" face="helvetica, arial"><strong>fl_display</strong> = <a name="fl_display">class LP__XDisplay</a>(<a href="_ctypes.html#_Pointer">_ctypes._Pointer</a>)</font></td></tr>
-    
-<tr><td bgcolor="#ffc8d8"><tt>&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
-<td width="100%"><dl><dt>Method resolution order:</dt>
-<dd>LP__XDisplay</dd>
-<dd><a href="_ctypes.html#_Pointer">_ctypes._Pointer</a></dd>
-<dd>_ctypes._CData</dd>
-<dd><a href="__builtin__.html#object">__builtin__.object</a></dd>
-</dl>
-<hr>
-Data descriptors defined here:<br>
-<dl><dt><strong>__dict__</strong></dt>
-<dd><tt>dictionary&nbsp;for&nbsp;instance&nbsp;variables&nbsp;(if&nbsp;defined)</tt></dd>
-</dl>
-<dl><dt><strong>__weakref__</strong></dt>
-<dd><tt>list&nbsp;of&nbsp;weak&nbsp;references&nbsp;to&nbsp;the&nbsp;object&nbsp;(if&nbsp;defined)</tt></dd>
-</dl>
-<hr>
-Methods inherited from <a href="_ctypes.html#_Pointer">_ctypes._Pointer</a>:<br>
-<dl><dt><a name="LP__XDisplay-__delitem__"><strong>__delitem__</strong></a>(...)</dt><dd><tt>x.<a href="#fl_display-__delitem__">__delitem__</a>(y)&nbsp;&lt;==&gt;&nbsp;del&nbsp;x[y]</tt></dd></dl>
-
-<dl><dt><a name="LP__XDisplay-__getitem__"><strong>__getitem__</strong></a>(...)</dt><dd><tt>x.<a href="#fl_display-__getitem__">__getitem__</a>(y)&nbsp;&lt;==&gt;&nbsp;x[y]</tt></dd></dl>
-
-<dl><dt><a name="LP__XDisplay-__getslice__"><strong>__getslice__</strong></a>(...)</dt><dd><tt>x.<a href="#fl_display-__getslice__">__getslice__</a>(i,&nbsp;j)&nbsp;&lt;==&gt;&nbsp;x[i:j]<br>
-&nbsp;<br>
-Use&nbsp;of&nbsp;negative&nbsp;indices&nbsp;is&nbsp;not&nbsp;supported.</tt></dd></dl>
-
-<dl><dt><a name="LP__XDisplay-__init__"><strong>__init__</strong></a>(...)</dt><dd><tt>x.<a href="#fl_display-__init__">__init__</a>(...)&nbsp;initializes&nbsp;x;&nbsp;see&nbsp;x.__class__.__doc__&nbsp;for&nbsp;signature</tt></dd></dl>
-
-<dl><dt><a name="LP__XDisplay-__nonzero__"><strong>__nonzero__</strong></a>(...)</dt><dd><tt>x.<a href="#fl_display-__nonzero__">__nonzero__</a>()&nbsp;&lt;==&gt;&nbsp;x&nbsp;!=&nbsp;0</tt></dd></dl>
-
-<dl><dt><a name="LP__XDisplay-__setitem__"><strong>__setitem__</strong></a>(...)</dt><dd><tt>x.<a href="#fl_display-__setitem__">__setitem__</a>(i,&nbsp;y)&nbsp;&lt;==&gt;&nbsp;x[i]=y</tt></dd></dl>
-
-<hr>
-Data descriptors inherited from <a href="_ctypes.html#_Pointer">_ctypes._Pointer</a>:<br>
-<dl><dt><strong>contents</strong></dt>
-<dd><tt>the&nbsp;object&nbsp;this&nbsp;pointer&nbsp;points&nbsp;to&nbsp;(read-write)</tt></dd>
-</dl>
-<hr>
-Data and other attributes inherited from <a href="_ctypes.html#_Pointer">_ctypes._Pointer</a>:<br>
-<dl><dt><strong>__new__</strong> = &lt;built-in method __new__ of _ctypes.PointerType object&gt;<dd><tt>T.<a href="#fl_display-__new__">__new__</a>(S,&nbsp;...)&nbsp;-&gt;&nbsp;a&nbsp;new&nbsp;<a href="__builtin__.html#object">object</a>&nbsp;with&nbsp;type&nbsp;S,&nbsp;a&nbsp;subtype&nbsp;of&nbsp;T</tt></dl>
-
-<hr>
-Methods inherited from _ctypes._CData:<br>
-<dl><dt><a name="LP__XDisplay-__ctypes_from_outparam__"><strong>__ctypes_from_outparam__</strong></a>(...)</dt></dl>
-
-<dl><dt><a name="LP__XDisplay-__hash__"><strong>__hash__</strong></a>(...)</dt><dd><tt>x.<a href="#fl_display-__hash__">__hash__</a>()&nbsp;&lt;==&gt;&nbsp;hash(x)</tt></dd></dl>
-
-<dl><dt><a name="LP__XDisplay-__reduce__"><strong>__reduce__</strong></a>(...)</dt></dl>
-
-<dl><dt><a name="LP__XDisplay-__setstate__"><strong>__setstate__</strong></a>(...)</dt></dl>
-
 </td></tr></table> <p>
 <table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
 <tr bgcolor="#ffc8d8">
@@ -17388,7 +17327,6 @@ Methods inherited from _ctypes._CData:<br>
 <strong>XrmoptionSkipNArgs</strong> = 7<br>
 <strong>XrmoptionStickyArg</strong> = 2<br>
 <strong>buttonLabelSize</strong> = 0<br>
-<strong>fl_state</strong> = &lt;xfdata.FL_State_Array_6 object&gt;<br>
 <strong>inputLabelSize</strong> = 0<br>
 <strong>sliderLabelSize</strong> = 0<br>
 <strong>special_sequences_for_entry_text</strong> = '<font color="#c040c0">\n</font>    Special sequences for extry text<font color="#c040c0">\n</font>    ------...o put a % character within the text of an entry.<font color="#c040c0">\n</font>'<br>
@@ -17407,4 +17345,4 @@ Methods inherited from _ctypes._CData:<br>
 <strong>special_sequences_for_entry_text_t</strong> = '     %t (no argument)<font color="#c040c0">\n</font>    makes the entry a "tog...ens automatically when the entry<font color="#c040c0">\n</font>    is selected.'<br>
 <strong>special_sequences_for_entry_text_u</strong> = '     %u (with additional separate argument as da...xforms-python it does not fully work as expected.'<br>
 <strong>special_sequences_for_entry_text_x</strong> = '     %x (with additional separate argument as a ...is passed to all callback routines for the entry.'</td></tr></table>
-<p>Updated on: 2011-01-07 00:34 +0100</body></html>
+<p>Updated on: 2011-01-10 23:20 +0100</body></html>

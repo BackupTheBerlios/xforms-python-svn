@@ -585,10 +585,10 @@ def make_stringc_and_pointer():
     return baseval, ptrbaseval
 
 
-def handle_userdata(udata):
+def convert_userdata_to_ptrvoid(udata):
     """ Taking any manageable userdata type to be used in a callback-type
-    function, handles it and returns a param type for function prototype
-    and a pointer param compatible with C pointer to void."""
+    function, handles it and returns a pointer param compatible with C
+    pointer to void."""
     if sys.version_info[0] > 2:
         longtype = int
         stringtype = str
@@ -596,33 +596,30 @@ def handle_userdata(udata):
         longtype = (long, int)
         stringtype = basestring
 
+    tmpvdata = None
     #print udata, type(udata)
     if isinstance(udata, cty.POINTER(xfdata.FL_OBJECT)):
         ptr_vdata = udata       # passed ptr_flobject as is
-        cparamtype = cty.POINTER(xfdata.FL_OBJECT)
     elif isinstance(udata, cty.POINTER(xfdata.FL_FORM)):
         ptr_vdata = udata       # passed ptr_flform as is
-        cparamtype = cty.POINTER(xfdata.FL_FORM)
     elif isinstance(udata, cty.POINTER(xfdata.FL_POPUP)):
         ptr_vdata = udata       # passed ptr_flpopup as is
-        cparamtype = cty.POINTER(xfdata.FL_POPUP)
     elif isinstance(udata, longtype):    # if passed a long
         tmpvdata = convert_to_longc(udata)
         ptr_vdata = cty.pointer(tmpvdata)
-        cparamtype = cty.POINTER(cty.c_long)
     elif isinstance(udata, float):       # if passed a float
         tmpvdata = convert_to_doublec(udata)
         ptr_vdata = cty.pointer(tmpvdata)
-        cparamtype = cty.POINTER(cty.c_double)
     elif isinstance(udata, stringtype):  # a str is to be passed
         tmpvdata = convert_to_stringc(udata)
         ptr_vdata = cty.pointer(tmpvdata)
-        cparamtype = cty.POINTER(cty.c_char_p)
     else:
         raise XFormsTypeError("Provided parameter '%s' has %s type, "
                 "so it cannot be handled as user_data/pointer to void." % \
                 (udata, type(udata)))
-    return cparamtype, ptr_vdata
+    ptr_vdata2 = cty.cast(ptr_vdata, cty.c_void_p)      # void *-compatible
+    keep_elem_refs(tmpvdata, ptr_vdata)
+    return ptr_vdata2
 
 
 def checkfatal_allowed_value_in_list(paramname, valueslist):

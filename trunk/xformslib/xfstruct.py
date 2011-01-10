@@ -47,7 +47,7 @@ def make_ptr_flpopupitem(dictpopupitems):
     if isinstance(dictpopupitems, dict):
 
         if not 'text' in dictpopupitems:      # no text passed
-            raise library.XFormsTypeError("make_flpopupitem dict (whose "
+            raise library.XFormsTypeError("make_ptr_flpopupitem dict (whose "
                     "contents is %s) should have a 'text' key" % \
                     dictpopupitems)
         else:
@@ -61,7 +61,7 @@ def make_ptr_flpopupitem(dictpopupitems):
         cfn_clscallback = xfdata.FL_POPUP_CB(pyclscallback)
 
         if not 'shortcut' in dictpopupitems:    # no shortcut passed
-            raise library.XFormsTypeError("make_flpopupitem dict (whose "
+            raise library.XFormsTypeError("make_ptr_flpopupitem dict (whose "
                     "contents is %s) should have a 'shortcut' key" % \
                     dictpopupitems)
         else:
@@ -112,7 +112,7 @@ def make_ptr_flpopupitem(dictpopupitems):
 
         for numb in range(0, dictlength):
             if not 'text' in dictpopupitems[numb]:      # no text passed
-                raise library.XFormsTypeError("make_flpopupitem dict (whose"
+                raise library.XFormsTypeError("make_ptr_flpopupitem dict (whose"
                         " contents is %s) should have a 'text' key" % \
                         dictpopupitems[numb])
             else:
@@ -124,7 +124,7 @@ def make_ptr_flpopupitem(dictpopupitems):
                 pyclscallback[numb] = dictpopupitems[numb]['callback']
                 cfn_clscallback[numb] = xfdata.FL_POPUP_CB(pyclscallback[numb])
             if not 'shortcut' in dictpopupitems[numb]:  # no shortcut passed
-                raise library.XFormsTypeError("make_flpopupitem dict (whose "
+                raise library.XFormsTypeError("make_ptr_flpopupitem dict (whose "
                         "contents is %s) should have a 'shortcut' key" % \
                         dictpopupitems[numb])
             else:
@@ -353,7 +353,7 @@ def make_ptr_flcmdopt(dictflcmdopt):
     if isinstance(dictflcmdopt, dict):
 
         if not 'option' in dictflcmdopt:      # no option passed
-            raise library.XFormsTypeError("make_flcmdopt dict (whose "
+            raise library.XFormsTypeError("make_ptr_flcmdopt dict (whose "
                     "contents is %s) should have a 'option' key" % \
                     dictflcmdopt)
         else:
@@ -361,7 +361,7 @@ def make_ptr_flcmdopt(dictflcmdopt):
             s_option = library.convert_to_stringc(pyoption)
 
         if not 'specifier' in dictflcmdopt:   # no specifier passed
-            raise library.XFormsTypeError("make_flcmdopt dict (whose "
+            raise library.XFormsTypeError("make_ptr_flcmdopt dict (whose "
                     "contents is %s) should have a 'specifier' key" % \
                     dictflcmdopt)
         else:
@@ -369,7 +369,7 @@ def make_ptr_flcmdopt(dictflcmdopt):
             s_specifier = library.convert_to_stringc(pyspecifier)
 
         if not 'argKind' in dictflcmdopt:     # no argKind passed
-            raise library.XFormsTypeError("make_flcmdopt dict (whose "
+            raise library.XFormsTypeError("make_ptr_flcmdopt dict (whose "
                     "contents is %s) should have a 'argKind' key" % \
                     dictflcmdopt)
         else:
@@ -377,7 +377,7 @@ def make_ptr_flcmdopt(dictflcmdopt):
             i_argKind = library.convert_to_intc(pyargKind)
 
         if not 'value' in dictflcmdopt:       # no value passed
-            raise library.XFormsTypeError("make_flcmdopt dict (whose "
+            raise library.XFormsTypeError("make_ptr_flcmdopt dict (whose "
                     "contents is %s) should have a 'value' key" % \
                     dictflcmdopt)
         else:
@@ -410,14 +410,14 @@ def make_ptr_flcmdopt(dictflcmdopt):
         for numb in range(0, dictlength):
 
             if not 'option' in dictflcmdopt[numb]:      # no option passed
-                raise library.XFormsTypeError("make_flcmdopt dict (whose "
+                raise library.XFormsTypeError("make_ptr_flcmdopt dict (whose "
                         "contents is %s) should have a 'option' key" % \
                         dictflcmdopt[numb])
             else:
                 pyoption[numb] = dictflcmdopt[numb]['option']
                 s_option[numb] = library.convert_to_stringc(pyoption[numb])
             if not 'specifier' in dictflcmdopt[numb]:   # no specifier passed
-                raise library.XFormsTypeError("make_flcmdopt dict (whose "
+                raise library.XFormsTypeError("make_ptr_flcmdopt dict (whose "
                         "contents is %s) should have a 'specifier' key" % \
                         dictflcmdopt[numb])
             else:
@@ -425,14 +425,14 @@ def make_ptr_flcmdopt(dictflcmdopt):
                 s_specifier[numb] = library.convert_to_stringc( \
                         pyspecifier[numb])
             if not 'argKind' in dictflcmdopt[numb]:     # no argKind passed
-                raise library.XFormsTypeError("make_flcmdopt dict (whose "
+                raise library.XFormsTypeError("make_ptr_flcmdopt dict (whose "
                         "contents is %s) should have a 'argKind' key" % \
                         dictflcmdopt[numb])
             else:
                 pyargKind[numb] = dictflcmdopt[numb]['argKind']
                 i_argKind[numb] = library.convert_to_intc(pyargKind[numb])
             if not 'value' in dictflcmdopt[numb]:       # no value passed
-                raise library.XFormsTypeError("make_flcmdopt dict (whose "
+                raise library.XFormsTypeError("make_ptr_flcmdopt dict (whose "
                         "contents is %s) should have a 'value' key" % \
                         dictflcmdopt[numb])
             else:
@@ -474,28 +474,28 @@ def make_ptr_flresource(dictflresource):
     if isinstance(dictflresource, dict):
 
         if not 'res_name' in dictflresource:      # no res_name passed
-            raise library.XFormsTypeError("make_flresource dict (whose "
+            raise library.XFormsTypeError("make_ptr_flresource dict (whose "
                     "contents is %s) should have a 'res_name' key" % \
                     dictflresource)
         else:
             pyclsresname = dictflresource['res_name']
             s_clsresname = library.convert_to_stringc(pyclsresname)
         if not 'res_class' in dictflresource:   # no res_class passed
-            raise library.XFormsTypeError("make_flresource dict (whose "
+            raise library.XFormsTypeError("make_ptr_flresource dict (whose "
                     "contents is %s) should have a 'res_class' key" % \
                     dictflresource)
         else:
             pyclsresclass = dictflresource['res_class']
             s_clsresclass = library.convert_to_stringc(pyclsresclass)
         if not 'type' in dictflresource:     # no type passed
-            raise library.XFormsTypeError("make_flresource dict (whose "
+            raise library.XFormsTypeError("make_ptr_flresource dict (whose "
                     "contents is %s) should have a 'type' key" % \
                     dictflresource)
         else:
             pyclstype = dictflresource['type']
             i_clstype = library.convert_to_intc(pyclstype)
         if not 'var' in dictflresource:       # no var passed
-            raise library.XFormsTypeError("make_flresource dict (whose "
+            raise library.XFormsTypeError("make_ptr_flresource dict (whose "
                     "contents is %s) should have a 'var' key" % \
                     dictflresource)
         else:
@@ -516,14 +516,14 @@ def make_ptr_flresource(dictflresource):
                 tmpclsvar = None
             ptr_clsvar = cty.pointer(tmpclsvar)
         if not 'defval' in dictflresource:   # no defval passed
-            raise library.XFormsTypeError("make_flresource dict (whose "
+            raise library.XFormsTypeError("make_ptr_flresource dict (whose "
                     "contents is %s) should have a 'defval' key" % \
                     dictflresource)
         else:
             pyclsdefval = dictflresource['defval']
             s_clsdefval = library.convert_to_stringc(pyclsdefval)
         if not 'nbytes' in dictflresource:     # no nbytes passed
-            raise library.XFormsTypeError("make_flresource dict (whose "
+            raise library.XFormsTypeError("make_ptr_flresource dict (whose "
                     "contents is %s) should have a 'nbytes' key" % \
                     dictflresource)
         else:
@@ -562,7 +562,7 @@ def make_ptr_flresource(dictflresource):
         for numb in range(0, dictlength):
 
             if not 'res_name' in dictflresource[numb]:  # no res_name passed
-                raise library.XFormsTypeError("make_flresource dict (whose "
+                raise library.XFormsTypeError("make_ptr_flresource dict (whose "
                         "contents is %s) should have a 'res_name' key" % \
                         dictflresource[numb])
             else:
@@ -570,7 +570,7 @@ def make_ptr_flresource(dictflresource):
                 s_clsresname[numb] = library.convert_to_stringc( \
                         pyclsresname[numb])
             if not 'res_class' in dictflresource[numb]:  # no res_class passed
-                raise library.XFormsTypeError("make_flresource dict (whose "
+                raise library.XFormsTypeError("make_ptr_flresource dict (whose "
                         "contents is %s) should have a 'res_class' key" % \
                         dictflresource[numb])
             else:
@@ -578,14 +578,14 @@ def make_ptr_flresource(dictflresource):
                 s_clsresclass[numb] = library.convert_to_stringc( \
                         pyclsresclass[numb])
             if not 'type' in dictflresource[numb]:     # no type passed
-                raise library.XFormsTypeError("make_flresource dict (whose "
+                raise library.XFormsTypeError("make_ptr_flresource dict (whose "
                         "contents is %s) should have a 'type' key" % \
                         dictflresource[numb])
             else:
                 pyclstype[numb] = dictflresource[numb]['type']
                 i_clstype[numb] = library.convert_to_intc(pyclstype[numb])
             if not 'var' in dictflresource[numb]:       # no var passed
-                raise library.XFormsTypeError("make_flresource dict (whose "
+                raise library.XFormsTypeError("make_ptr_flresource dict (whose "
                         "contents is %s) should have a 'var' key" % \
                         dictflresource[numb])
             else:
@@ -611,7 +611,7 @@ def make_ptr_flresource(dictflresource):
                     tmpclsvar[numb] = None
                 ptr_clsvar[numb] = cty.pointer(tmpclsvar[numb])
             if not 'defval' in dictflresource[numb]:   # no defval passed
-                raise library.XFormsTypeError("make_flresource dict (whose "
+                raise library.XFormsTypeError("make_ptr_flresource dict (whose "
                         "contents is %s) should have a 'defval' key" % \
                         dictflresource[numb])
             else:
@@ -619,7 +619,7 @@ def make_ptr_flresource(dictflresource):
                 s_clsdefval[numb] = library.convert_to_stringc( \
                         pyclsdefval[numb])
             if not 'nbytes' in dictflresource[numb]:     # no nbytes passed
-                raise library.XFormsTypeError("make_flresource dict (whose "
+                raise library.XFormsTypeError("make_ptr_flresource dict (whose "
                         "contents is %s) should have a 'nbytes' key" % \
                         dictflresource[numb])
             else:
@@ -668,7 +668,7 @@ def make_ptr_flpoint(dictflpoint):
         pyclsx = sh_clsx = 0
         pyclsy = sh_clsy = 0
         if not 'x' in dictflpoint:      # no x passed
-            raise library.XFormsTypeError("make_flpoint dict (whose "
+            raise library.XFormsTypeError("make_ptr_flpoint dict (whose "
                     "contents is %s) should have a 'x' key" % \
                     dictflpoint)
         else:
@@ -677,7 +677,7 @@ def make_ptr_flpoint(dictflpoint):
             print "pyclsx, sh_clsx", pyclsx, sh_clsx
 
         if not 'y' in dictflpoint:      # no y passed
-            raise library.XFormsTypeError("make_flpoint dict (whose "
+            raise library.XFormsTypeError("make_ptr_flpoint dict (whose "
                     "contents is %s) should have a 'y' key" % \
                     dictflpoint)
         else:
@@ -706,14 +706,14 @@ def make_ptr_flpoint(dictflpoint):
         for numb in range(0, dictlength):
 
             if not 'x' in dictflpoint[numb]:  # no x passed
-                raise library.XFormsTypeError("make_flpoint dict (whose "
+                raise library.XFormsTypeError("make_ptr_flpoint dict (whose "
                         "contents is %s) should have a 'x' key" % \
                         dictflpoint[numb])
             else:
                 pyclsx[numb] = dictflpoint[numb]['x']
                 sh_clsx[numb] = library.convert_to_shortc(pyclsx[numb])
             if not 'y' in dictflpoint[numb]:  # no y passed
-                raise library.XFormsTypeError("make_flpoint dict (whose "
+                raise library.XFormsTypeError("make_ptr_flpoint dict (whose "
                         "contents is %s) should have a 'y' key" % \
                         dictflpoint[numb])
             else:
@@ -758,6 +758,14 @@ def donothing_flpopupcb(ptr_flpopupreturn):
     """ Replaces a callback function not defined for class instances
         as e.g. xfdata.FL_POPUP_ITEM."""
     return 0
+
+
+def make_flimagesetup_and_pointer():
+    """ Makes a xfdata.FLIMAGE_SETUP() class instance and its pointer,
+    and returns both """
+    baseval = xfdata.FLIMAGE_SETUP()
+    ptrbaseval = cty.pointer(baseval)
+    return baseval, ptrbaseval
 
 
 def import_xbmdata_from_file(fname):
@@ -894,4 +902,122 @@ def import_xpmdata_from_file(fname):
     else:       # not a .xpm file
         raise library.XFormsGenericError("File %s should be a .xpm file." % \
                 fname)
+
+
+def convert_ptrvoid_to_ptrflobject(pvdata):
+    """Taking a pointer to void param (from a callback/handler function just
+    invoked) and re-casts it to a ptr_flobject and returns it so user can
+    retrieve real value passed to function caller."""
+
+    retval = None
+    if not isinstance(pvdata, int):
+        # void * is considered int by ctypes when passed (memory address)
+        raise library.XFormsTypeError("Parameter %s (of type %s) must be" \
+                " userdata of pointer to void type." % \
+                (pvdata, type(pvdata)))
+    else:
+        retval = cty.cast(pvdata, cty.POINTER(xfdata.FL_OBJECT))
+    return retval
+
+
+def convert_ptrvoid_to_ptrflform(pvdata):
+    """Taking a pointer to void param (from a callback/handler function just
+    invoked) and re-casts it to a ptr_flform and returns it so user can
+    retrieve real value passed to function caller. It is the counterpart
+    of library.convert_userdata_to_ptrvoid()."""
+
+    retval = None
+    if not isinstance(pvdata, int):
+        # void * is considered int by ctypes when passed (memory address)
+        raise library.XFormsTypeError("Parameter %s (of type %s) must be" \
+                " userdata of pointer to void type." % \
+                (pvdata, type(pvdata)))
+    else:
+        retval = cty.cast(pvdata, cty.POINTER(xfdata.FL_FORM))
+    return retval
+
+
+def convert_ptrvoid_to_ptrflpopup(pvdata):
+    """Taking a pointer to void param (from a callback/handler function just
+    invoked) and re-casts it to a ptr_flpopup and returns it so user can
+    retrieve real value passed to function caller. It is the counterpart
+    of library.convert_userdata_to_ptrvoid()."""
+
+    retval = None
+    if not isinstance(pvdata, int):
+        # void * is considered int by ctypes when passed (memory address)
+        raise library.XFormsTypeError("Parameter %s (of type %s) must be" \
+                " userdata of pointer to void type." % \
+                (pvdata, type(pvdata)))
+    else:
+        retval = cty.cast(pvdata, cty.POINTER(xfdata.FL_POPUP))
+    return retval
+
+
+def convert_ptrvoid_to_ptrlongc(pvdata):
+    """Taking a pointer to void param (from a callback/handler function just
+    invoked) and re-casts it to a pointer to c_long and returns it so user
+    can retrieve real value passed to function caller. It is the counterpart
+    of library.convert_userdata_to_ptrvoid()."""
+
+    retval = None
+    if not isinstance(pvdata, int):
+        # void * is considered int by ctypes when passed (memory address)
+        raise library.XFormsTypeError("Parameter %s (of type %s) must be" \
+                " userdata of pointer to void type." % \
+                (pvdata, type(pvdata)))
+    else:
+        retval = cty.cast(pvdata, cty.POINTER(cty.c_long))
+    return retval
+
+
+def convert_ptrvoid_to_ptrfloatc(pvdata):
+    """Taking a pointer to void param (from a callback/handler function just
+    invoked) and re-casts it to a pointer to c_double and returns it so user
+    can retrieve real value passed to function caller. It is the counterpart
+    of library.convert_userdata_to_ptrvoid()."""
+
+    retval = None
+    if not isinstance(pvdata, int):
+        # void * is considered int by ctypes when passed (memory address)
+        raise library.XFormsTypeError("Parameter %s (of type %s) must be" \
+                " userdata of pointer to void type." % \
+                (pvdata, type(pvdata)))
+    else:
+        retval = cty.cast(pvdata, cty.POINTER(cty.c_double))
+    return retval
+
+
+def convert_ptrvoid_to_ptrstringc(pvdata):
+    """Taking a pointer to void param (from a callback/handler function just
+    invoked) and re-casts it to a pointer to c_char_p and returns it so user
+    can retrieve real value passed to function caller. It is the counterpart
+    of library.convert_userdata_to_ptrvoid()."""
+
+    retval = None
+    if not isinstance(pvdata, int):
+        # void * is considered int by ctypes when passed (memory address)
+        raise library.XFormsTypeError("Parameter %s (of type %s) must be" \
+                " userdata of pointer to void type." % \
+                (pvdata, type(pvdata)))
+    else:
+        retval = cty.cast(pvdata, cty.POINTER(cty.c_char_p))
+    return retval
+
+
+# TODO: verify where can be used this one.
+def convert_ptrvoid_to_ptrxevent(pvdata):
+    """Taking a pointer to void param (from a callback/handler function just
+    invoked) and re-casts it to a pointer to xfdata.XEvent and returns it so
+    user can retrieve real value passed to function caller."""
+
+    retval = None
+    if not isinstance(pvdata, int):
+        # void * is considered int by ctypes when passed (memory address)
+        raise library.XFormsTypeError("Parameter %s (of type %s) must be" \
+                " userdata of pointer to void type." % \
+                (pvdata, type(pvdata)))
+    else:
+        retval = cty.cast(pvdata, cty.POINTER(xfdata.XEvent))
+    return retval
 

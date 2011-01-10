@@ -43,14 +43,15 @@ class Flcanvas(object):
         self.init_canvas(self.fd_canvasform)
 
         xfl.fl_show_form(self.fd_canvasform.canvasform, \
-                xfl.FL_PLACE_FREE, xfl.FL_FULLBORDER, "canvasform")
+                xfl.FL_PLACE_FREE, xfl.FL_FULLBORDER, "My canvas form")
 
         xfl.fl_do_forms()
         xfl.fl_finish()
 
 
-    def canvas_expose(self, pobj, win, w, h, pxev, vdata):
-        print vdata, type(vdata)
+    def canvas_expose(self, pobj, win, w, h, pxev, pvdata):
+        odata = xfl.convert_ptrvoid_to_ptrflobject(pvdata).contents
+        print("odata:", odata)
         #FD_canvasform *ui = d;
         #XFillRectangle( fl_get_display( ), win, canvasGC, 0, 0, w, h );
         xfl.fl_rectangle(1, 0, 0, w, h, xfl.FL_YELLOW)
@@ -58,18 +59,20 @@ class Flcanvas(object):
         return 0
 
 
-    def canvas_key(self, pobj, win, w, h, pxev, vdata):
-        print vdata, type(vdata)
+    def canvas_key(self, pobj, win, w, h, pxev, pvdata):
+        sdata = xfl.convert_ptrvoid_to_ptrstringc(pvdata).contents.value
+        print("sdata:", sdata)
         #FD_canvasform *ui = d;
         #sprintf( buf, "KeyPress: keysym=%ld",
-        #			 XKeycodeToKeysym( fl_display, ev->xkey.keycode, 0 ) );
+        #	 XKeycodeToKeysym( fl_display, ev->xkey.keycode, 0 ) );
         buf = "KeyPress: keysym=%ld" % pxev.contents.xkey.keycode
         xfl.fl_addto_browser(self.fd_canvasform.br, buf)
         return 0
 
 
-    def canvas_but(self, pobj, win, w, h, pxev, vdata):
-        print vdata, type(vdata)
+    def canvas_but(self, pobj, win, w, h, pxev, pvdata):
+        ddata = xfl.convert_ptrvoid_to_ptrfloatc(pvdata).contents.value
+        print("ddata:", ddata)
         #FD_canvasform *ui = d;
         if pxev.contents.type == xfl.ButtonPress:
             tmpname = "Press"
@@ -82,17 +85,20 @@ class Flcanvas(object):
         return 0
 
 
-    def canvas_move(self, pobj, win, w, h, pxev, vdata):
-        print vdata, type(vdata)
+    def canvas_move(self, pobj, win, w, h, pxev, pvdata):
+        fdata = xfl.convert_ptrvoid_to_ptrflform(pvdata).contents
+        print("fdata:", fdata)
         #FD_canvasform *ui = d;
         #sprintf( buf, "Position: %d %d", ev->xmotion.x, ev->xmotion.y );
-        buf = "Position: %d %d" % (pxev.contents.xmotion.x, pxev.contents.xmotion.y)
+        buf = "Position: %d %d" % (pxev.contents.xmotion.x, \
+                pxev.contents.xmotion.y)
         xfl.fl_addto_browser(self.fd_canvasform.br, buf)
         return 0
 
 
-    def canvas_misc(self, pobj, win, w, h, pxev, vdata):
-        print vdata, type(vdata)
+    def canvas_misc(self, pobj, win, w, h, pxev, pvdata):
+        fdata = xfl.convert_ptrvoid_to_ptrflform(pvdata).contents
+        print("fdata:", fdata)
         #FD_canvasform *ui = d;
         if pxev.contents.xcrossing.type == xfl.EnterNotify:
             tmpname = "Enter canvas"
@@ -104,13 +110,13 @@ class Flcanvas(object):
 
     def init_canvas(self, fdui):
         xfl.fl_add_canvas_handler(fdui.canvas, xfl.Expose, \
-                self.canvas_expose, fdui.canvas)                #fdui)
+                self.canvas_expose, fdui.canvas)
         xfl.fl_add_canvas_handler(fdui.canvas, xfl.KeyPress, \
-                self.canvas_key, "b")                           #fdui)
+                self.canvas_key, "mykey")
         xfl.fl_add_canvas_handler(fdui.canvas, xfl.ButtonPress, \
-                self.canvas_but, 0.1)                           #fdui)
+                self.canvas_but, 0.1)
         xfl.fl_add_canvas_handler(fdui.canvas, xfl.ButtonRelease, \
-                self.canvas_but, 14)                            #fdui)
+                self.canvas_but, 0.4)
         xfl.fl_set_button(fdui.mouse, 1)
         xfl.fl_set_button(fdui.keyboard, 1)
         #canvasGC = XCreateGC( fl_get_display( ),fl_state[ fl_vmode ].trailblazer,
@@ -144,7 +150,7 @@ class Flcanvas(object):
             while countn > 0:
                 countn -= 1
                 xfl.fl_add_canvas_handler(self.fd_canvasform.canvas, \
-                        events[countn], hc, self.fd_canvasform.canvasform)     #self.fd_canvasform)
+                        events[countn], hc, self.fd_canvasform.canvasform)
         else:
             while countn > 0:
                 countn -= 1

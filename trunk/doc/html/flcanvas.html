@@ -62,7 +62,7 @@ Examples<br>
 Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-fl_add_canvas_handler"><strong>fl_add_canvas_handler</strong></a>(ptr_flobject, xev, pyfn_HandleCanvas, vdata)</dt><dd><tt><a href="#-fl_add_canvas_handler">fl_add_canvas_handler</a>(ptr_flobject,&nbsp;xev,&nbsp;pyfn_HandleCanvas,&nbsp;vdata)<br>
+ <dl><dt><a name="-fl_add_canvas_handler"><strong>fl_add_canvas_handler</strong></a>(ptr_flobject, evtnum, pyfn_HandleCanvas, userdata)</dt><dd><tt><a href="#-fl_add_canvas_handler">fl_add_canvas_handler</a>(ptr_flobject,&nbsp;evtnum,&nbsp;pyfn_HandleCanvas,&nbsp;userdata)<br>
 -&gt;&nbsp;HandleCnavas<br>
 &nbsp;<br>
 Defines&nbsp;a&nbsp;callback&nbsp;to&nbsp;be&nbsp;invoked&nbsp;in&nbsp;a&nbsp;canvas&nbsp;flobject&nbsp;for&nbsp;a&nbsp;specific<br>
@@ -72,14 +72,15 @@ Parameters<br>
 ----------<br>
 &nbsp;&nbsp;&nbsp;&nbsp;ptr_flobject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;canvas&nbsp;flobject<br>
-&nbsp;&nbsp;&nbsp;&nbsp;xev&nbsp;:&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;X&nbsp;event&nbsp;number.&nbsp;Values&nbsp;(from&nbsp;X11):&nbsp;Expose,&nbsp;etc..&nbsp;??<br>
+&nbsp;&nbsp;&nbsp;&nbsp;evtnum&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;X&nbsp;event&nbsp;number.&nbsp;Values&nbsp;(from&nbsp;xfdata.py):&nbsp;Expose,&nbsp;KeyPress,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;KeyRelease,&nbsp;ButtonRelease,&nbsp;etc..<br>
 &nbsp;&nbsp;&nbsp;&nbsp;pyfn_HandleCanvas&nbsp;:&nbsp;python&nbsp;function&nbsp;to&nbsp;handle&nbsp;canvas,&nbsp;returned&nbsp;value<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;name&nbsp;referring&nbsp;to&nbsp;function(ptr_flobject,&nbsp;win,&nbsp;num,&nbsp;num,<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ptr_xevent,&nbsp;vdata)&nbsp;-&gt;&nbsp;num<br>
-&nbsp;&nbsp;&nbsp;&nbsp;vdata&nbsp;:&nbsp;any&nbsp;type&nbsp;(e.g.&nbsp;None,&nbsp;int,&nbsp;str,&nbsp;etc..)<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;user&nbsp;data&nbsp;to&nbsp;be&nbsp;passed&nbsp;to&nbsp;function;&nbsp;callback&nbsp;has&nbsp;to&nbsp;take&nbsp;care<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;of&nbsp;type&nbsp;check.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;name&nbsp;referring&nbsp;to&nbsp;function(ptr_flobject,&nbsp;[long_pos]win,&nbsp;[int]width,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[int]height,&nbsp;ptr_xevent,&nbsp;[pointer&nbsp;to&nbsp;void]pvdata)&nbsp;-&gt;&nbsp;[int]num<br>
+&nbsp;&nbsp;&nbsp;&nbsp;userdata&nbsp;:&nbsp;any&nbsp;type&nbsp;(e.g.&nbsp;None,&nbsp;int,&nbsp;str,&nbsp;etc..)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;user&nbsp;data&nbsp;to&nbsp;be&nbsp;passed&nbsp;to&nbsp;function;&nbsp;invoked&nbsp;callback&nbsp;has&nbsp;to&nbsp;take<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;care&nbsp;of&nbsp;type&nbsp;check&nbsp;and&nbsp;re-cast&nbsp;from&nbsp;ptr_void&nbsp;to&nbsp;chosen&nbsp;type.<br>
 &nbsp;<br>
 Returns<br>
 -------<br>
@@ -131,42 +132,6 @@ Examples<br>
 Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-fl_create_generic_canvas"><strong>fl_create_generic_canvas</strong></a>(canvclass, canvastype, xpos, ypos, width, height, label)</dt><dd><tt><a href="#-fl_create_generic_canvas">fl_create_generic_canvas</a>(canvasclass,&nbsp;canvastype,&nbsp;xpos,&nbsp;ypos,&nbsp;width,<br>
-height,&nbsp;label)&nbsp;-&gt;&nbsp;ptr_flobject<br>
-&nbsp;<br>
-Creates&nbsp;a&nbsp;generic&nbsp;canvas&nbsp;flobject.<br>
-&nbsp;<br>
-Parameters<br>
-----------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;canvclass&nbsp;:&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;value&nbsp;for&nbsp;new&nbsp;canvas&nbsp;flobject&nbsp;class<br>
-&nbsp;&nbsp;&nbsp;&nbsp;canvastype&nbsp;:&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;type&nbsp;of&nbsp;canvas&nbsp;to&nbsp;be&nbsp;created.&nbsp;Values&nbsp;(from&nbsp;xfdata.py)<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_NORMAL_CANVAS&nbsp;(normal&nbsp;canvas&nbsp;flobject&nbsp;type),&nbsp;FL_SCROLLED_CANVAS<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(not&nbsp;enabled)<br>
-&nbsp;&nbsp;&nbsp;&nbsp;xpos&nbsp;:&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;horizontal&nbsp;position&nbsp;(upper-left&nbsp;corner)<br>
-&nbsp;&nbsp;&nbsp;&nbsp;ypos&nbsp;:&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;vertical&nbsp;position&nbsp;(upper-left&nbsp;corner)<br>
-&nbsp;&nbsp;&nbsp;&nbsp;width&nbsp;:&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;width&nbsp;in&nbsp;coord&nbsp;units<br>
-&nbsp;&nbsp;&nbsp;&nbsp;height&nbsp;:&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;height&nbsp;in&nbsp;coord&nbsp;units<br>
-&nbsp;&nbsp;&nbsp;&nbsp;label&nbsp;:&nbsp;str<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;text&nbsp;label&nbsp;of&nbsp;canvas<br>
-&nbsp;<br>
-Returns<br>
--------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;ptr_flobject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;created&nbsp;canvas&nbsp;flobject<br>
-&nbsp;<br>
-Examples<br>
---------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;*todo*<br>
-&nbsp;<br>
-Notes<br>
------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
  <dl><dt><a name="-fl_get_canvas_colormap"><strong>fl_get_canvas_colormap</strong></a>(ptr_flobject)</dt><dd><tt><a href="#-fl_get_canvas_colormap">fl_get_canvas_colormap</a>(ptr_flobject)&nbsp;-&gt;&nbsp;colormap<br>
 &nbsp;<br>
 Finds&nbsp;out&nbsp;the&nbsp;colormap&nbsp;of&nbsp;a&nbsp;canvas&nbsp;flobject.<br>
@@ -270,7 +235,7 @@ Examples<br>
 Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-fl_remove_canvas_handler"><strong>fl_remove_canvas_handler</strong></a>(ptr_flobject, xev, pyfn_HandleCanvas)</dt><dd><tt><a href="#-fl_remove_canvas_handler">fl_remove_canvas_handler</a>(ptr_flobject,&nbsp;xev,&nbsp;pyfn_HandleCanvas)<br>
+ <dl><dt><a name="-fl_remove_canvas_handler"><strong>fl_remove_canvas_handler</strong></a>(ptr_flobject, evtnum, pyfn_HandleCanvas)</dt><dd><tt><a href="#-fl_remove_canvas_handler">fl_remove_canvas_handler</a>(ptr_flobject,&nbsp;evtnum,&nbsp;pyfn_HandleCanvas)<br>
 &nbsp;<br>
 Removes&nbsp;a&nbsp;particular&nbsp;handler&nbsp;for&nbsp;a&nbsp;specified&nbsp;X&nbsp;event,&nbsp;previously<br>
 created&nbsp;with&nbsp;<a href="#-fl_add_canvas_handler">fl_add_canvas_handler</a>().<br>
@@ -279,12 +244,13 @@ Parameters<br>
 ----------<br>
 &nbsp;&nbsp;&nbsp;&nbsp;ptr_flobject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;canvas&nbsp;flobject<br>
-&nbsp;&nbsp;&nbsp;&nbsp;xev&nbsp;:&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;X&nbsp;event&nbsp;number.&nbsp;If&nbsp;it&nbsp;is&nbsp;invalid,&nbsp;removes&nbsp;all&nbsp;handlers&nbsp;and<br>
+&nbsp;&nbsp;&nbsp;&nbsp;evtnum&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;X&nbsp;event&nbsp;number.&nbsp;Values&nbsp;(from&nbsp;xfdata.py):&nbsp;Expose,&nbsp;KeyPress,&nbsp;KeyRelease,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ButtonRelease,&nbsp;etc..&nbsp;If&nbsp;it&nbsp;is&nbsp;invalid,&nbsp;removes&nbsp;all&nbsp;handlers&nbsp;and<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;their&nbsp;corresponding&nbsp;event&nbsp;mask.<br>
 &nbsp;&nbsp;&nbsp;&nbsp;pyfn_HandleCanvas&nbsp;:&nbsp;python&nbsp;function&nbsp;to&nbsp;handle&nbsp;canvas,&nbsp;returned&nbsp;value<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;name&nbsp;referring&nbsp;to&nbsp;function(ptr_flobject,&nbsp;win,&nbsp;num,&nbsp;num,<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ptr_xevent,&nbsp;vdata)&nbsp;-&gt;&nbsp;num<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;name&nbsp;referring&nbsp;to&nbsp;function(ptr_flobject,&nbsp;[long_pos]win,&nbsp;[int]width,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[int]height,&nbsp;ptr_xevent,&nbsp;[pointer&nbsp;to&nbsp;void]vdata)&nbsp;-&gt;&nbsp;[int]num<br>
 &nbsp;<br>
 Examples<br>
 --------<br>
@@ -400,4 +366,4 @@ Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
 </td></tr></table>
-<p>Updated on: 2011-01-07 00:34 +0100</body></html>
+<p>Updated on: 2011-01-10 23:20 +0100</body></html>

@@ -52,7 +52,7 @@ class Demo27(object):
         self.init_colorpart()
         self.init_controlpart()
         self.init_mainpart()
-        self.color_callback(self.pcolorobj, 0)
+        #self.color_callback(self.pcolorobj, 0)
 
         while xfl.fl_do_forms():
             pass
@@ -60,7 +60,10 @@ class Demo27(object):
 
 
     # color form callback routine
-    def color_callback(self, pobj, d):
+    def color_callback(self, pobj, pvdata):
+        ldata = xfl.convert_ptrvoid_to_ptrlongc(pvdata).contents.value
+        print("ldata", ldata)
+
         self.r = int(255 * xfl.fl_get_slider_value(self.predsl))
         self.g = int(255 * xfl.fl_get_slider_value(self.pgreensl))
         self.b = int(255 * xfl.fl_get_slider_value(self.pbluesl))
@@ -107,7 +110,9 @@ class Demo27(object):
 
 
     # control form callback routine
-    def control_callback(self, pobj, d):
+    def control_callback(self, pobj, pvdata):
+        ldata = xfl.convert_ptrvoid_to_ptrlongc(pvdata).contents.value
+        print("ldata", ldata)
         if xfl.fl_is_same_object(pobj, self.psizeobj):
             self.cursize = int(40 * xfl.fl_get_slider_value(self.psizeobj))
         elif xfl.fl_is_same_object(pobj, self.pexitobj):
@@ -173,25 +178,11 @@ class Demo27(object):
             xfl.fl_circf(stobj.x, stobj.y, stobj.size, \
                     xfl.FL_FREE_COL1)
         elif stobj.type == 3:
-            #point = (xfl.FL_POINT * 3)()          # point[ 3 ]
-            #point[0].x = int(stobj.x - stobj.size)
-            #point[0].y = int(stobj.y + stobj.size)
-            #point[1].x = int(stobj.x + stobj.size)
-            #point[1].y = int(stobj.y + stobj.size)
-            #point[2].x = int(stobj.x)
-            #point[2].y = int(stobj.y - stobj.size)
-            #import ctypes
-            #xpoint = ctypes.pointer(point[0])
-            #print(xpoint, xpoint[0].x, xpoint[1].x, xpoint[2].x, \
-            #            xpoint[0].y, xpoint[1].y, xpoint[2].y)
-            #print(xpoint, xpoint.contents[0].x, xpoint.contents[1].x, xpoint.contents[2].x, \
-            #        xpoint.contents[0].y, xpoint.contents[1].y, xpoint.contents[2].y)
             mylistpoint = [{'x':int(stobj.x - stobj.size), 'y':int(stobj.y + \
                     stobj.size)}, {'x':int(stobj.x + stobj.size), \
                     'y':int(stobj.y + stobj.size)}, {'x':int(stobj.x), \
                     'y':int(stobj.y - stobj.size)}]
-            #print mylistpoint
-            pxpoint = xfl.make_flpoint(mylistpoint)
+            pxpoint = xfl.make_ptr_flpoint(mylistpoint)
             xfl.fl_polyf(pxpoint, 3, xfl.FL_FREE_COL1)
 
 
@@ -223,7 +214,9 @@ class Demo27(object):
 
 
     # Event callback routine
-    def main_callback(self, pxev, p):
+    def main_callback(self, pxev, pvdata):
+        ldata = xfl.convert_ptrvoid_to_ptrlongc(pvdata).contents.value
+        print("ldata", ldata)
         xfl.fl_winset(self.main_win)
         if pxev.contents.type == xfl.Expose:
             self.redrawit()
@@ -243,4 +236,5 @@ class Demo27(object):
 
 if __name__ == '__main__':
     print("********* demo27.py *********")
-    appl = Demo27(len(sys.argv), sys.argv)
+    Demo27(len(sys.argv), sys.argv)
+

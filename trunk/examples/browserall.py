@@ -154,14 +154,18 @@ class BrowserAll(object):
         xfl.fl_set_object_label(self.preadout, buf)
 
 
-    def vcallback(self, pobj, topline, data):
-
+    def vcallback(self, pobj, topline, pvdata):
+        ldata = xfl.convert_ptrvoid_to_ptrlongc(pvdata).contents.value
+        print("ldata", ldata)
         yoffset = xfl.fl_get_browser_yoffset(self.pbr[0])
         for i in range(0, 4):
             xfl.fl_set_browser_yoffset(self.pbr[i], yoffset)
 
 
-    def donothing(self, pobj, topline, data):
+    def donothing(self, pobj, topline, pvdata):
+        print "pvdata", pvdata
+        ldata = xfl.convert_ptrvoid_to_ptrlongc(pvdata).contents.value
+        print "ldata", ldata
         pass        # placeholder for disabled vcallback
 
 
@@ -180,12 +184,12 @@ class BrowserAll(object):
                 xfl.fl_set_browser_vscrollbar(self.pbr[i], xfl.FL_OFF)
                 xfl.fl_set_browser_yoffset(self.pbr[i], yoffset)
             xfl.fl_set_browser_vscroll_callback(self.pbr[0], \
-                    self.vcallback, 0)
+                    self.vcallback, 11)          # 0
         else:
             for i in range(1, 4):
                 xfl.fl_set_browser_vscrollbar(self.pbr[i], xfl.FL_ON)
             xfl.fl_set_browser_vscroll_callback(self.pbr[0], \
-                    self.donothing, 0)
+                    self.donothing, 12)          # 0
 
 
     def fill_browsers(self):

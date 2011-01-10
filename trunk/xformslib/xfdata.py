@@ -5227,6 +5227,51 @@ FL_BROWSER_SCROLL_CALLBACK = cty.CFUNCTYPE(None, cty.POINTER(FL_OBJECT),
                 cty.c_int, cty.c_void_p)
 
 
+# my add --LK
+class admitted_value_for_BROWSERLINES_APPEARANCE(object):
+    """Values to be used for changing appearance of individual lines in the
+    browser.
+    
+    Whenever a line starts with the symbol '@' the next letter indicates
+    the special characteristics associated with this line. The following
+    possibilities exist at the moment:
+        f    Fixed width font. 
+        n    Normal (Helvetica) font.
+        t    Times-Roman like font.
+        b    Boldface modifier.
+        i    Italics modifier.
+        l    Large (new size is FL_LARGE_SIZE).
+        m    Medium (new size is FL_MEDIUM_SIZE).
+        s    Small (new size is FL_SMALL_SIZE).
+        L    Large (new size = current size + 6).
+        M    Medium (new size = current size + 4).
+        S    Small (new size = current size - 2).
+        c    Centered.
+        r    Right aligned.
+        _    Draw underlined text.
+        -    An engraved separator. Text following '-' is ignored.
+        C    The next number indicates the color index for this line. 
+        N    Non-selectable line (in selectable browsers). 
+        @@    Regular '@' character. 
+    The modifiers (bold and itatic) work by adding FL_BOLD_STYLE and
+    FL_ITALIC_STYLE to the current active font index to look up the font in
+    the font table; you can modify the table using flbasic.fl_set_font_name()
+    function.
+    More than one option can be used by putting them next to each other. E.g.,
+    "@C1@l@f@b@cTitle" will give you the red, large, bold fixed font, centered
+    word "Title". As you can see the font change requests accumulate and the
+    order is important, i.e., "@f@b@i" gives you a fixed bold italic font
+    while "@b@i@f" gives you a (plain) fixed font.
+    Depending on the font size and style lines may have different heights.
+    In some cases the character '@' might need to be placed at the beginning
+    of the lines without introducing the special meaning mentioned above. In
+    this case you can use "@@" or change the special character to something
+    other than '@' using flbrowser.fl_set_browser_specialkey() function.
+    """
+    pass
+
+
+
 #############################################################
 # forms.h (button.h)
 # All Buttons, regular button, light button and round button
@@ -8094,6 +8139,10 @@ flimage_setup_._fields_ = [
     ('header_info', cty.c_int), ]
 
 FLIMAGE_SETUP = flimage_setup_
+
+# prototype for flimage_setup_'s visual_cue function
+cfunc_int_ptrflimage_str = cty.CFUNCTYPE(cty.c_int, \
+        cty.POINTER(FL_IMAGE), STRING)
 
 
 # output options

@@ -146,13 +146,14 @@ def fl_add_box(boxtype, xpos, ypos, width, height, label):
 # prototypes for clipboard stuff
 #################################
 
-
-def fl_stuff_clipboard(ptr_flobject, clipbdtype, vdata, size, \
-                       pyfn_LoseSelectionCb):
-    """fl_stuff_clipboard(ptr_flobject, clipbdtype, vdata, size,
+# TODO: in X11 XStoreBuffer seems to take char * as data
+def fl_stuff_clipboard(ptr_flobject, clipbdtype, datablock, size, \
+        pyfn_LoseSelectionCb):
+    """fl_stuff_clipboard(ptr_flobject, clipbdtype, datablock, size,
     pyfn_LoseSelectionCb) -> size
 
-    Stores data in clipboard?
+    Stores data in clipboard, read-write buffer shared by all applications
+    running on the X server.
 
     Parameters
     ----------
@@ -160,12 +161,15 @@ def fl_stuff_clipboard(ptr_flobject, clipbdtype, vdata, size, \
             clipboard flobject
         clipbdtype : long
             type of clipboard (not used)
-        vdata : *todo*
-            data to be stored *todo*
+        datablock : pointer to void?
+            data contents to be stored (in str?) *todo*
         size : long
-            size of data to be stuffed
-        pyfn_LoseSelectionCb : python function callback, returned value
-            name referring to function(ptr_flobject, [long]num) -> [int]num.
+            size (in bytes) of the contents pointed to by datablock.
+        pyfn_LoseSelectionCb : python function callback, returned unused value
+            name referring to function(ptr_flobject, [long]type) -> [int]num.
+            Function to be invoked if selection is lost; type is unused. For
+            textual content the application that loses the clipboard should
+            typically undo the visual cues about the selection.
 
     Returns
     -------
@@ -181,26 +185,24 @@ def fl_stuff_clipboard(ptr_flobject, clipbdtype, vdata, size, \
         Status: Untested + NoDoc + NoDemo = NOT OK
 
     """
-    # cty.c_void_p replaced with passed type
-    mycparamtype, ptr_vdata = library.handle_userdata(vdata)
     #FL_LOSE_SELECTION_CB = cty.CFUNCTYPE(cty.c_int, cty.POINTER( \
     #                       xfdata.FL_OBJECT), cty.c_long)
     _fl_stuff_clipboard = library.cfuncproto(
         library.load_so_libforms(), "fl_stuff_clipboard",
-        cty.c_int, [cty.POINTER(xfdata.FL_OBJECT), cty.c_long, mycparamtype,
+        cty.c_int, [cty.POINTER(xfdata.FL_OBJECT), cty.c_long, cty.c_void_p,
         cty.c_long, xfdata.FL_LOSE_SELECTION_CB],
         """int fl_stuff_clipboard(FL_OBJECT * ob, long int type,
            const char * data, long int size,
-           FL_LOSE_SELECTION_CB lose_callback)""")      # cty.c_void_p,
+           FL_LOSE_SELECTION_CB lose_callback)""")
     library.check_if_initialized()
     library.verify_flobjectptr_type(ptr_flobject)
     l_clipbdtype = library.convert_to_longc(clipbdtype)
-    #ptr_vdata = cty.cast(vdata, cty.c_void_p)
+    ptr_vdata = cty.cast(datablock, cty.c_void_p)
     l_size = library.convert_to_longc(size)
     library.verify_function_type(pyfn_LoseSelectionCb)
     cfn_LoseSelectionCb = xfdata.FL_LOSE_SELECTION_CB(pyfn_LoseSelectionCb)
     library.keep_cfunc_refs(cfn_LoseSelectionCb, pyfn_LoseSelectionCb)
-    library.keep_elem_refs(ptr_flobject, clipbdtype, vdata, size, \
+    library.keep_elem_refs(ptr_flobject, clipbdtype, datablock, size, \
             l_clipbdtype, ptr_vdata, l_size)
     retval = _fl_stuff_clipboard(ptr_flobject, l_clipbdtype, ptr_vdata, \
             l_size, cfn_LoseSelectionCb)
@@ -209,9 +211,10 @@ def fl_stuff_clipboard(ptr_flobject, clipbdtype, vdata, size, \
 
 def fl_request_clipboard(ptr_flobject, clipbdtype, pyfn_SelectionCb):
     """fl_request_clipboard(ptr_flobject, clipbdtype, pyfn_SelectionCb)
-    -> size
+    -> result
 
-    Retrieves data from clipboard?
+    Retrieves data previously stuffed into the clipboard. Contents is
+    available in invoked callback function.
 
     Parameters
     ----------
@@ -220,13 +223,19 @@ def fl_request_clipboard(ptr_flobject, clipbdtype, pyfn_SelectionCb):
         clipbdtype : long
             type of clipboard (not used)
         pyfn_SelectionCb : python function callback, returned value
-            name referring to function(ptr_flobject, [long]num,
-            [pointer to void]vdata, [long]num) -> [int]num.
+            name referring to function(ptr_flobject, [long]type,
+            [pointer to void]datablock, [long]size) -> [int]num.
+            Function to be invoked when the clipboard content is obtained;
+            type is unused. The content data passed to the callback
+            function should not be modified.
 
     Returns
     -------
         result : int
-            size?, or -1 (if it is on different window?)
+            positive number (if the requesting flobject owns the selection,
+            i.e. the callback could be invoked before the function returned),
+            or 0 (if it does not own the selection), or -1 (if there is no
+            selection)
 
     Examples
     --------

@@ -102,7 +102,7 @@ Examples<br>
 Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-fl_add_io_callback"><strong>fl_add_io_callback</strong></a>(fd, fmask, pyfn_IoCallback, vdata)</dt><dd><tt><a href="#-fl_add_io_callback">fl_add_io_callback</a>(fd,&nbsp;fmask,&nbsp;pyfn_IoCallback,&nbsp;vdata)<br>
+ <dl><dt><a name="-fl_add_io_callback"><strong>fl_add_io_callback</strong></a>(fd, fmask, pyfn_IoCallback, userdata)</dt><dd><tt><a href="#-fl_add_io_callback">fl_add_io_callback</a>(fd,&nbsp;fmask,&nbsp;pyfn_IoCallback,&nbsp;userdata)<br>
 &nbsp;<br>
 Registers&nbsp;an&nbsp;input&nbsp;callback&nbsp;function&nbsp;when&nbsp;input&nbsp;is&nbsp;available&nbsp;from&nbsp;fd.<br>
 &nbsp;<br>
@@ -118,9 +118,9 @@ Parameters<br>
 &nbsp;&nbsp;&nbsp;&nbsp;pyfn_IoCallback&nbsp;:&nbsp;python&nbsp;function,&nbsp;no&nbsp;return<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;name&nbsp;referring&nbsp;to&nbsp;function([int]num,&nbsp;[pointer&nbsp;to&nbsp;void]vdata)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;function&nbsp;to&nbsp;be&nbsp;invoked&nbsp;on&nbsp;said&nbsp;circumstances<br>
-&nbsp;&nbsp;&nbsp;&nbsp;vdata&nbsp;:&nbsp;any&nbsp;type&nbsp;(e.g.&nbsp;None,&nbsp;int,&nbsp;str,&nbsp;etc..)<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;user&nbsp;data&nbsp;to&nbsp;be&nbsp;passed&nbsp;to&nbsp;function;&nbsp;callback&nbsp;has&nbsp;to&nbsp;take&nbsp;care<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;of&nbsp;type&nbsp;check.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;userdata&nbsp;:&nbsp;any&nbsp;type&nbsp;(e.g.&nbsp;None,&nbsp;int,&nbsp;str,&nbsp;etc..)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;user&nbsp;data&nbsp;to&nbsp;be&nbsp;passed&nbsp;to&nbsp;function;&nbsp;invoked&nbsp;callback&nbsp;has&nbsp;to&nbsp;take<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;care&nbsp;of&nbsp;type&nbsp;check&nbsp;and&nbsp;re-cast&nbsp;from&nbsp;ptr_void&nbsp;to&nbsp;chosen&nbsp;type.<br>
 &nbsp;<br>
 Examples<br>
 --------<br>
@@ -155,7 +155,7 @@ Examples<br>
 Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-fl_add_signal_callback"><strong>fl_add_signal_callback</strong></a>(sglnum, pyfn_SignalHandler, vdata)</dt><dd><tt><a href="#-fl_add_signal_callback">fl_add_signal_callback</a>(sglnum,&nbsp;pyfn_SignalHandler,&nbsp;vdata)<br>
+ <dl><dt><a name="-fl_add_signal_callback"><strong>fl_add_signal_callback</strong></a>(sglnum, pyfn_SignalHandler, userdata)</dt><dd><tt><a href="#-fl_add_signal_callback">fl_add_signal_callback</a>(sglnum,&nbsp;pyfn_SignalHandler,&nbsp;userdata)<br>
 &nbsp;<br>
 Handles&nbsp;the&nbsp;receipt&nbsp;of&nbsp;a&nbsp;signal&nbsp;by&nbsp;registering&nbsp;a&nbsp;callback&nbsp;function<br>
 that&nbsp;gets&nbsp;called&nbsp;when&nbsp;a&nbsp;signal&nbsp;is&nbsp;caught&nbsp;(only&nbsp;one&nbsp;function&nbsp;per<br>
@@ -167,15 +167,15 @@ Parameters<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;signal&nbsp;number.&nbsp;Values&nbsp;(from&nbsp;external&nbsp;signal&nbsp;module)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;SIGALRM,&nbsp;SIGINT,&nbsp;...<br>
 &nbsp;&nbsp;&nbsp;&nbsp;pyfn_SignalHandler&nbsp;:&nbsp;python&nbsp;function&nbsp;callback,&nbsp;no&nbsp;return<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;name&nbsp;referring&nbsp;to&nbsp;function([int]num,&nbsp;[pointer&nbsp;to&nbsp;void]vdata)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;name&nbsp;referring&nbsp;to&nbsp;function([int]num,&nbsp;[pointer&nbsp;to&nbsp;void]pvdata)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;callback&nbsp;invoked&nbsp;after&nbsp;catching&nbsp;signal<br>
-&nbsp;&nbsp;&nbsp;&nbsp;vdata&nbsp;:&nbsp;any&nbsp;type&nbsp;(e.g.&nbsp;None,&nbsp;int,&nbsp;str,&nbsp;etc..)<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;user&nbsp;data&nbsp;to&nbsp;be&nbsp;passed&nbsp;to&nbsp;function;&nbsp;callback&nbsp;has&nbsp;to&nbsp;take&nbsp;care<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;of&nbsp;type&nbsp;check.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;userdata&nbsp;:&nbsp;any&nbsp;type&nbsp;(e.g.&nbsp;None,&nbsp;int,&nbsp;str,&nbsp;etc..)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;user&nbsp;data&nbsp;to&nbsp;be&nbsp;passed&nbsp;to&nbsp;function;&nbsp;invoked&nbsp;callback&nbsp;has&nbsp;to&nbsp;take<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;care&nbsp;of&nbsp;type&nbsp;check&nbsp;and&nbsp;re-cast&nbsp;from&nbsp;ptr_void&nbsp;to&nbsp;chosen&nbsp;type.<br>
 &nbsp;<br>
 Examples<br>
 --------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;def&nbsp;sglhandl(numsgl,&nbsp;vdata):<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;def&nbsp;sglhandl(numsgl,&nbsp;pvdata):<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;...&nbsp;&lt;something&gt;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;<a href="#-fl_add_signal_callback">fl_add_signal_callback</a>(signal.SIGALRM,&nbsp;sglhandl,&nbsp;None)<br>
 &nbsp;<br>
@@ -214,7 +214,7 @@ Examples<br>
 Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-fl_add_timeout"><strong>fl_add_timeout</strong></a>(msec, pyfn_TimeoutCallback, vdata)</dt><dd><tt><a href="#-fl_add_timeout">fl_add_timeout</a>(msec,&nbsp;pyfn_TimeoutCallback,&nbsp;vdata)&nbsp;-&gt;&nbsp;timerid<br>
+ <dl><dt><a name="-fl_add_timeout"><strong>fl_add_timeout</strong></a>(msec, pyfn_TimeoutCallback, userdata)</dt><dd><tt><a href="#-fl_add_timeout">fl_add_timeout</a>(msec,&nbsp;pyfn_TimeoutCallback,&nbsp;userdata)&nbsp;-&gt;&nbsp;timerid<br>
 &nbsp;<br>
 Adds&nbsp;a&nbsp;timeout&nbsp;callback&nbsp;after&nbsp;a&nbsp;specified&nbsp;elapsed&nbsp;time.<br>
 &nbsp;<br>
@@ -223,10 +223,10 @@ Parameters<br>
 &nbsp;&nbsp;&nbsp;&nbsp;msec&nbsp;:&nbsp;long<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;time&nbsp;elapsed&nbsp;in&nbsp;milliseconds<br>
 &nbsp;&nbsp;&nbsp;&nbsp;pyfn_TimeoutCallback&nbsp;:&nbsp;python&nbsp;function&nbsp;to&nbsp;be&nbsp;invoked,&nbsp;no&nbsp;return<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;name&nbsp;referring&nbsp;to&nbsp;function([int]num,&nbsp;[pointer&nbsp;to&nbsp;void]vdata)<br>
-&nbsp;&nbsp;&nbsp;&nbsp;vdata&nbsp;:&nbsp;any&nbsp;type&nbsp;(e.g.&nbsp;None,&nbsp;int,&nbsp;str,&nbsp;etc..)<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;user&nbsp;data&nbsp;to&nbsp;be&nbsp;passed&nbsp;to&nbsp;function;&nbsp;callback&nbsp;has&nbsp;to&nbsp;take&nbsp;care<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;of&nbsp;type&nbsp;check.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;name&nbsp;referring&nbsp;to&nbsp;function([int]num,&nbsp;[pointer&nbsp;to&nbsp;void]pvdata)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;userdata&nbsp;:&nbsp;any&nbsp;type&nbsp;(e.g.&nbsp;None,&nbsp;int,&nbsp;str,&nbsp;etc..)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;user&nbsp;data&nbsp;to&nbsp;be&nbsp;passed&nbsp;to&nbsp;function;&nbsp;invoked&nbsp;callback&nbsp;has&nbsp;to&nbsp;take<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;care&nbsp;of&nbsp;type&nbsp;check&nbsp;and&nbsp;re-cast&nbsp;from&nbsp;ptr_void&nbsp;to&nbsp;chosen&nbsp;type.<br>
 &nbsp;<br>
 Returns<br>
 -------<br>
@@ -235,7 +235,7 @@ Returns<br>
 &nbsp;<br>
 Examples<br>
 --------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;def&nbsp;timeoutcb(num,&nbsp;vdata):<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;def&nbsp;timeoutcb(num,&nbsp;pvdata):<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;...&nbsp;&lt;something&gt;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;timnum&nbsp;=&nbsp;<a href="#-fl_add_timeout">fl_add_timeout</a>(100,&nbsp;timeoutcb,&nbsp;None)<br>
 &nbsp;<br>
@@ -1048,7 +1048,7 @@ Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;Demo&nbsp;=&nbsp;OK<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Precondition:&nbsp;to&nbsp;be&nbsp;called&nbsp;before&nbsp;fl_initialize()</tt></dd></dl>
- <dl><dt><a name="-fl_for_all_objects"><strong>fl_for_all_objects</strong></a>(ptr_flform, pyfn_operatecb, vdata)</dt><dd><tt><a href="#-fl_for_all_objects">fl_for_all_objects</a>(ptr_flform,&nbsp;pyfn_operatecb,&nbsp;vdata)<br>
+ <dl><dt><a name="-fl_for_all_objects"><strong>fl_for_all_objects</strong></a>(ptr_flform, pyfn_operatecb, userdata)</dt><dd><tt><a href="#-fl_for_all_objects">fl_for_all_objects</a>(ptr_flform,&nbsp;pyfn_operatecb,&nbsp;userdata)<br>
 &nbsp;<br>
 Serves&nbsp;as&nbsp;an&nbsp;iterator&nbsp;to&nbsp;change&nbsp;an&nbsp;attribute&nbsp;for&nbsp;all&nbsp;flobjects&nbsp;on&nbsp;a<br>
 particular&nbsp;form.&nbsp;Specified&nbsp;operating&nbsp;function&nbsp;is&nbsp;called&nbsp;for&nbsp;every<br>
@@ -1060,15 +1060,15 @@ Parameters<br>
 &nbsp;&nbsp;&nbsp;&nbsp;ptr_flform&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_FORM<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;form<br>
 &nbsp;&nbsp;&nbsp;&nbsp;pyfn_operatecb&nbsp;:&nbsp;python&nbsp;callback&nbsp;function,&nbsp;returned&nbsp;value<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;name&nbsp;referring&nbsp;to&nbsp;function(ptr_flobject,&nbsp;[pointer&nbsp;to&nbsp;void]vdata)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;name&nbsp;referring&nbsp;to&nbsp;function(ptr_flobject,&nbsp;[pointer&nbsp;to&nbsp;void]pvdata)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-&gt;&nbsp;[int]num<br>
 &nbsp;&nbsp;&nbsp;&nbsp;vdata&nbsp;:&nbsp;any&nbsp;type&nbsp;(e.g.&nbsp;None,&nbsp;int,&nbsp;str,&nbsp;etc..)<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;user&nbsp;data&nbsp;to&nbsp;be&nbsp;passed&nbsp;to&nbsp;function;&nbsp;callback&nbsp;has&nbsp;to&nbsp;take&nbsp;care<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;of&nbsp;type&nbsp;check<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;user&nbsp;data&nbsp;to&nbsp;be&nbsp;passed&nbsp;to&nbsp;function;&nbsp;invoked&nbsp;callback&nbsp;has&nbsp;to&nbsp;take<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;care&nbsp;of&nbsp;type&nbsp;check&nbsp;and&nbsp;re-cast&nbsp;from&nbsp;ptr_void&nbsp;to&nbsp;chosen&nbsp;type<br>
 &nbsp;<br>
 Examples<br>
 --------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;def&nbsp;operatecb(pobj,&nbsp;vdata):<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;def&nbsp;operatecb(pobj,&nbsp;pvdata):<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;...&nbsp;&lt;something&gt;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;return&nbsp;0<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;<a href="#-fl_for_all_objects">fl_for_all_objects</a>(pform5,&nbsp;operatecb,&nbsp;None)<br>
@@ -2582,7 +2582,7 @@ Returns<br>
 &nbsp;<br>
 Examples<br>
 --------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;def&nbsp;handlecb(pobj,&nbsp;num,&nbsp;width,&nbsp;height,&nbsp;num,&nbsp;vdata):<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;def&nbsp;handlecb(pobj,&nbsp;num,&nbsp;width,&nbsp;height,&nbsp;num,&nbsp;pvdata):<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;...&nbsp;&lt;something&gt;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;...&nbsp;return&nbsp;0<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;<a href="#-fl_make_object">fl_make_object</a>(...)<br>
@@ -3049,12 +3049,12 @@ Parameters<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;available),&nbsp;FL_WRITE&nbsp;(file&nbsp;descriptor&nbsp;is&nbsp;available&nbsp;for&nbsp;writing),<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_EXCEPT&nbsp;(an&nbsp;I/O&nbsp;error&nbsp;has&nbsp;occurred)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;pyfn_IoCallback&nbsp;:&nbsp;python&nbsp;function,&nbsp;no&nbsp;return<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;name&nbsp;referring&nbsp;to&nbsp;function([int]num,&nbsp;[pointer&nbsp;to&nbsp;void]vdata)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;name&nbsp;referring&nbsp;to&nbsp;function([int]num,&nbsp;[pointer&nbsp;to&nbsp;void]pvdata)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;function&nbsp;to&nbsp;be&nbsp;removed&nbsp;on&nbsp;said&nbsp;circumstances<br>
 &nbsp;<br>
 Examples<br>
 --------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;def&nbsp;iocb(num,&nbsp;vdata):<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;def&nbsp;iocb(num,&nbsp;pvdata):<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;...&nbsp;&lt;something&gt;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;fdesc&nbsp;=&nbsp;os.open(myfile,&nbsp;os.RD_ONLY)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;<a href="#-fl_remove_io_callback">fl_remove_io_callback</a>(fdesc,&nbsp;xfdata.FL_READ,&nbsp;iocb)<br>
@@ -3212,18 +3212,18 @@ Examples<br>
 Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-fl_set_atclose"><strong>fl_set_atclose</strong></a>(pyfn_FormAtclose, vdata)</dt><dd><tt><a href="#-fl_set_atclose">fl_set_atclose</a>(pyfn_FormAtclose,&nbsp;vdata)&nbsp;-&gt;&nbsp;FormAtclose<br>
+ <dl><dt><a name="-fl_set_atclose"><strong>fl_set_atclose</strong></a>(pyfn_FormAtclose, userdata)</dt><dd><tt><a href="#-fl_set_atclose">fl_set_atclose</a>(pyfn_FormAtclose,&nbsp;userdata)&nbsp;-&gt;&nbsp;FormAtclose<br>
 &nbsp;<br>
 Calls&nbsp;a&nbsp;callback&nbsp;function&nbsp;before&nbsp;terminating&nbsp;the&nbsp;application.<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
 &nbsp;&nbsp;&nbsp;&nbsp;pyfn_FormAtclose&nbsp;:&nbsp;python&nbsp;callback&nbsp;to&nbsp;be&nbsp;called,&nbsp;returned&nbsp;value<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;name&nbsp;referring&nbsp;to&nbsp;function(ptr_flform,&nbsp;[pointer&nbsp;to&nbsp;void]vdata)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;name&nbsp;referring&nbsp;to&nbsp;function(ptr_flform,&nbsp;[pointer&nbsp;to&nbsp;void]pvdata)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-&gt;&nbsp;[int]num<br>
-&nbsp;&nbsp;&nbsp;&nbsp;vdata&nbsp;:&nbsp;any&nbsp;type&nbsp;(e.g.&nbsp;None,&nbsp;int,&nbsp;str,&nbsp;etc..)<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;user&nbsp;data&nbsp;to&nbsp;be&nbsp;passed&nbsp;to&nbsp;function;&nbsp;callback&nbsp;has&nbsp;to&nbsp;take&nbsp;care<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;of&nbsp;type&nbsp;check.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;userdata&nbsp;:&nbsp;any&nbsp;type&nbsp;(e.g.&nbsp;None,&nbsp;int,&nbsp;str,&nbsp;etc..)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;user&nbsp;data&nbsp;to&nbsp;be&nbsp;passed&nbsp;to&nbsp;function;&nbsp;invoked&nbsp;callback&nbsp;has&nbsp;to&nbsp;take<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;care&nbsp;of&nbsp;type&nbsp;check&nbsp;and&nbsp;re-cast&nbsp;from&nbsp;ptr_void&nbsp;to&nbsp;chosen&nbsp;type.<br>
 &nbsp;<br>
 Returns<br>
 -------<br>
@@ -3415,7 +3415,7 @@ Examples<br>
 Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-fl_set_form_atactivate"><strong>fl_set_form_atactivate</strong></a>(ptr_flform, pyfn_FormAtactivate, vdata)</dt><dd><tt><a href="#-fl_set_form_atactivate">fl_set_form_atactivate</a>(ptr_flform,&nbsp;pyfn_FormAtactivate,&nbsp;vdata)<br>
+ <dl><dt><a name="-fl_set_form_atactivate"><strong>fl_set_form_atactivate</strong></a>(ptr_flform, pyfn_FormAtactivate, userdata)</dt><dd><tt><a href="#-fl_set_form_atactivate">fl_set_form_atactivate</a>(ptr_flform,&nbsp;pyfn_FormAtactivate,&nbsp;userdata)<br>
 -&gt;&nbsp;FormAtactivate<br>
 &nbsp;<br>
 Registers&nbsp;a&nbsp;callback&nbsp;that&nbsp;is&nbsp;called&nbsp;when&nbsp;activation&nbsp;status&nbsp;of&nbsp;a&nbsp;forms<br>
@@ -3426,10 +3426,10 @@ Parameters<br>
 &nbsp;&nbsp;&nbsp;&nbsp;ptr_flform&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_FORM<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;activated&nbsp;form<br>
 &nbsp;&nbsp;&nbsp;&nbsp;pyfn_FormAtactivate&nbsp;:&nbsp;python&nbsp;callback&nbsp;function&nbsp;called,&nbsp;no&nbsp;return<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;name&nbsp;referring&nbsp;to&nbsp;function(ptr_flform,&nbsp;[pointer&nbsp;to&nbsp;void]vdata)<br>
-&nbsp;&nbsp;&nbsp;&nbsp;vdata&nbsp;:&nbsp;any&nbsp;type&nbsp;(e.g.&nbsp;None,&nbsp;int,&nbsp;str,&nbsp;etc..)<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;user&nbsp;data&nbsp;to&nbsp;be&nbsp;passed&nbsp;to&nbsp;function;&nbsp;callback&nbsp;has&nbsp;to&nbsp;take&nbsp;care<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;of&nbsp;type&nbsp;check.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;name&nbsp;referring&nbsp;to&nbsp;function(ptr_flform,&nbsp;[pointer&nbsp;to&nbsp;void]pvdata)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;userdata&nbsp;:&nbsp;any&nbsp;type&nbsp;(e.g.&nbsp;None,&nbsp;int,&nbsp;str,&nbsp;etc..)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;user&nbsp;data&nbsp;to&nbsp;be&nbsp;passed&nbsp;to&nbsp;function;&nbsp;invoked&nbsp;callback&nbsp;has&nbsp;to&nbsp;take<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;care&nbsp;of&nbsp;type&nbsp;check&nbsp;and&nbsp;re-cast&nbsp;from&nbsp;ptr_void&nbsp;to&nbsp;chosen&nbsp;type.<br>
 &nbsp;<br>
 Return<br>
 ------<br>
@@ -3438,14 +3438,14 @@ Return<br>
 &nbsp;<br>
 Examples<br>
 --------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;def&nbsp;atactcb(pform,&nbsp;vdata):<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;def&nbsp;atactcb(pform,&nbsp;pvdata):<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;...&nbsp;&lt;something&gt;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;oldactfunc&nbsp;=&nbsp;<a href="#-fl_set_form_atdeactivate">fl_set_form_atdeactivate</a>(pform0,&nbsp;atactcb,&nbsp;None)<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-fl_set_form_atclose"><strong>fl_set_form_atclose</strong></a>(ptr_flform, pyfn_FormAtclose, vdata)</dt><dd><tt><a href="#-fl_set_form_atclose">fl_set_form_atclose</a>(ptr_flform,&nbsp;pyfn_FormAtclose,&nbsp;vdata)<br>
+ <dl><dt><a name="-fl_set_form_atclose"><strong>fl_set_form_atclose</strong></a>(ptr_flform, pyfn_FormAtclose, userdata)</dt><dd><tt><a href="#-fl_set_form_atclose">fl_set_form_atclose</a>(ptr_flform,&nbsp;pyfn_FormAtclose,&nbsp;userdata)<br>
 -&gt;&nbsp;FormAtclose<br>
 &nbsp;<br>
 Calls&nbsp;a&nbsp;callback&nbsp;function&nbsp;before&nbsp;closing&nbsp;the&nbsp;form.<br>
@@ -3455,11 +3455,11 @@ Parameters<br>
 &nbsp;&nbsp;&nbsp;&nbsp;ptr_flform&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_FORM<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;form&nbsp;that&nbsp;receives&nbsp;the&nbsp;message<br>
 &nbsp;&nbsp;&nbsp;&nbsp;pyfn_FormAtclose&nbsp;:&nbsp;python&nbsp;callback&nbsp;to&nbsp;be&nbsp;called,&nbsp;returned&nbsp;value<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;name&nbsp;referring&nbsp;to&nbsp;function(ptr_flform,&nbsp;[pointer&nbsp;to&nbsp;void]vdata)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;name&nbsp;referring&nbsp;to&nbsp;function(ptr_flform,&nbsp;[pointer&nbsp;to&nbsp;void]pvdata)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-&gt;&nbsp;[int]num<br>
-&nbsp;&nbsp;&nbsp;&nbsp;vdata&nbsp;:&nbsp;any&nbsp;type&nbsp;(e.g.&nbsp;None,&nbsp;int,&nbsp;str,&nbsp;etc..)<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;user&nbsp;data&nbsp;to&nbsp;be&nbsp;passed&nbsp;to&nbsp;function;&nbsp;callback&nbsp;has&nbsp;to&nbsp;take&nbsp;care<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;of&nbsp;type&nbsp;check.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;userdata&nbsp;:&nbsp;any&nbsp;type&nbsp;(e.g.&nbsp;None,&nbsp;int,&nbsp;str,&nbsp;etc..)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;user&nbsp;data&nbsp;to&nbsp;be&nbsp;passed&nbsp;to&nbsp;function;&nbsp;invoked&nbsp;callback&nbsp;has&nbsp;to&nbsp;take<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;care&nbsp;of&nbsp;type&nbsp;check&nbsp;and&nbsp;re-cast&nbsp;from&nbsp;ptr_void&nbsp;to&nbsp;chosen&nbsp;type.<br>
 &nbsp;<br>
 Returns<br>
 -------<br>
@@ -3468,7 +3468,7 @@ Returns<br>
 &nbsp;<br>
 Examples<br>
 --------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;def&nbsp;atclosecb(pform,&nbsp;vdata):<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;def&nbsp;atclosecb(pform,&nbsp;pvdata):<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;...&nbsp;&lt;something&gt;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;...&nbsp;return&nbsp;0<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;oldatclosecb&nbsp;=&nbsp;<a href="#-fl_set_form_atclose">fl_set_form_atclose</a>(pform1,&nbsp;atclosecb,&nbsp;None)<br>
@@ -3476,7 +3476,7 @@ Examples<br>
 Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-fl_set_form_atdeactivate"><strong>fl_set_form_atdeactivate</strong></a>(ptr_flform, pyfn_FormAtdeactivate, vdata)</dt><dd><tt><a href="#-fl_set_form_atdeactivate">fl_set_form_atdeactivate</a>(ptr_flform,&nbsp;pyfn_FormAtdeactivate,&nbsp;vdata)<br>
+ <dl><dt><a name="-fl_set_form_atdeactivate"><strong>fl_set_form_atdeactivate</strong></a>(ptr_flform, pyfn_FormAtdeactivate, userdata)</dt><dd><tt><a href="#-fl_set_form_atdeactivate">fl_set_form_atdeactivate</a>(ptr_flform,&nbsp;pyfn_FormAtdeactivate,&nbsp;userdata)<br>
 -&gt;&nbsp;FormAtdeactivate<br>
 &nbsp;<br>
 Registers&nbsp;a&nbsp;callback&nbsp;that&nbsp;is&nbsp;called&nbsp;when&nbsp;activation&nbsp;status&nbsp;of&nbsp;a&nbsp;form<br>
@@ -3487,10 +3487,10 @@ Parameters<br>
 &nbsp;&nbsp;&nbsp;&nbsp;ptr_flform&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_FORM<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;de-activated&nbsp;form<br>
 &nbsp;&nbsp;&nbsp;&nbsp;pyfn_FormAtdeactivate&nbsp;:&nbsp;python&nbsp;callback&nbsp;function&nbsp;called,&nbsp;no&nbsp;return<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;name&nbsp;referring&nbsp;to&nbsp;function(ptr_flform,&nbsp;[pointer&nbsp;to&nbsp;void]vdata)<br>
-&nbsp;&nbsp;&nbsp;&nbsp;vdata&nbsp;:&nbsp;any&nbsp;type&nbsp;(e.g.&nbsp;None,&nbsp;int,&nbsp;str,&nbsp;etc..)<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;user&nbsp;data&nbsp;to&nbsp;be&nbsp;passed&nbsp;to&nbsp;function;&nbsp;callback&nbsp;has&nbsp;to&nbsp;take&nbsp;care<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;of&nbsp;type&nbsp;check.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;name&nbsp;referring&nbsp;to&nbsp;function(ptr_flform,&nbsp;[pointer&nbsp;to&nbsp;void]pvdata)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;userdata&nbsp;:&nbsp;any&nbsp;type&nbsp;(e.g.&nbsp;None,&nbsp;int,&nbsp;str,&nbsp;etc..)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;user&nbsp;data&nbsp;to&nbsp;be&nbsp;passed&nbsp;to&nbsp;function;&nbsp;invoked&nbsp;callback&nbsp;has&nbsp;to&nbsp;take<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;care&nbsp;of&nbsp;type&nbsp;check&nbsp;and&nbsp;re-cast&nbsp;from&nbsp;ptr_void&nbsp;to&nbsp;chosen&nbsp;type.<br>
 &nbsp;<br>
 Returns<br>
 -------<br>
@@ -3507,7 +3507,7 @@ Examples<br>
 Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-fl_set_form_call_back"><strong>fl_set_form_call_back</strong></a> = fl_set_form_callback(ptr_flform, pyfn_FormCallbackPtr, vdata)</dt><dd><tt><a href="#-fl_set_form_callback">fl_set_form_callback</a>(ptr_flform,&nbsp;pyfn_FormCallbackPtr,&nbsp;vdata)<br>
+ <dl><dt><a name="-fl_set_form_call_back"><strong>fl_set_form_call_back</strong></a> = fl_set_form_callback(ptr_flform, pyfn_FormCallbackPtr, userdata)</dt><dd><tt><a href="#-fl_set_form_callback">fl_set_form_callback</a>(ptr_flform,&nbsp;pyfn_FormCallbackPtr,&nbsp;userdata)<br>
 &nbsp;<br>
 Defines&nbsp;the&nbsp;callback&nbsp;function&nbsp;bound&nbsp;to&nbsp;an&nbsp;entire&nbsp;form.&nbsp;Whenever<br>
 <a href="#-fl_do_forms">fl_do_forms</a>()&nbsp;or&nbsp;<a href="#-fl_check_forms">fl_check_forms</a>()&nbsp;would&nbsp;return&nbsp;a&nbsp;flobject&nbsp;in&nbsp;form&nbsp;they<br>
@@ -3521,21 +3521,21 @@ Parameters<br>
 &nbsp;&nbsp;&nbsp;&nbsp;ptr_flform&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_FORM<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;form&nbsp;whose&nbsp;callback&nbsp;has&nbsp;to&nbsp;be&nbsp;set<br>
 &nbsp;&nbsp;&nbsp;&nbsp;pyfn_FormCallbackPtr&nbsp;:&nbsp;python&nbsp;callback&nbsp;to&nbsp;be&nbsp;set,&nbsp;no&nbsp;return<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;name&nbsp;referring&nbsp;to&nbsp;function(ptr_flobject,&nbsp;[pointer&nbsp;to&nbsp;void]vdata)<br>
-&nbsp;&nbsp;&nbsp;&nbsp;vdata&nbsp;:&nbsp;any&nbsp;type&nbsp;(e.g.&nbsp;None,&nbsp;int,&nbsp;str,&nbsp;etc..)<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;user&nbsp;data&nbsp;to&nbsp;be&nbsp;passed&nbsp;to&nbsp;function;&nbsp;callback&nbsp;has&nbsp;to&nbsp;take&nbsp;care<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;of&nbsp;type&nbsp;check<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;name&nbsp;referring&nbsp;to&nbsp;function(ptr_flobject,&nbsp;[pointer&nbsp;to&nbsp;void]pvdata)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;userdata&nbsp;:&nbsp;any&nbsp;type&nbsp;(e.g.&nbsp;None,&nbsp;int,&nbsp;str,&nbsp;etc..)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;user&nbsp;data&nbsp;to&nbsp;be&nbsp;passed&nbsp;to&nbsp;function;&nbsp;invoked&nbsp;callback&nbsp;has&nbsp;to&nbsp;take&nbsp;care<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;of&nbsp;type&nbsp;check&nbsp;and&nbsp;re-cast&nbsp;from&nbsp;ptr_void&nbsp;to&nbsp;chosen&nbsp;type<br>
 &nbsp;<br>
 Examples<br>
 --------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;def&nbsp;formcb(pobj,&nbsp;vdata):<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;def&nbsp;formcb(pobj,&nbsp;pvdata):<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;...&nbsp;&lt;something&gt;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;<a href="#-fl_set_form_callback">fl_set_form_callback</a>(pform0,&nbsp;formcb,&nbsp;None)<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;Demo&nbsp;=&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-fl_set_form_callback"><strong>fl_set_form_callback</strong></a>(ptr_flform, pyfn_FormCallbackPtr, vdata)</dt><dd><tt><a href="#-fl_set_form_callback">fl_set_form_callback</a>(ptr_flform,&nbsp;pyfn_FormCallbackPtr,&nbsp;vdata)<br>
+ <dl><dt><a name="-fl_set_form_callback"><strong>fl_set_form_callback</strong></a>(ptr_flform, pyfn_FormCallbackPtr, userdata)</dt><dd><tt><a href="#-fl_set_form_callback">fl_set_form_callback</a>(ptr_flform,&nbsp;pyfn_FormCallbackPtr,&nbsp;userdata)<br>
 &nbsp;<br>
 Defines&nbsp;the&nbsp;callback&nbsp;function&nbsp;bound&nbsp;to&nbsp;an&nbsp;entire&nbsp;form.&nbsp;Whenever<br>
 <a href="#-fl_do_forms">fl_do_forms</a>()&nbsp;or&nbsp;<a href="#-fl_check_forms">fl_check_forms</a>()&nbsp;would&nbsp;return&nbsp;a&nbsp;flobject&nbsp;in&nbsp;form&nbsp;they<br>
@@ -3549,14 +3549,14 @@ Parameters<br>
 &nbsp;&nbsp;&nbsp;&nbsp;ptr_flform&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_FORM<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;form&nbsp;whose&nbsp;callback&nbsp;has&nbsp;to&nbsp;be&nbsp;set<br>
 &nbsp;&nbsp;&nbsp;&nbsp;pyfn_FormCallbackPtr&nbsp;:&nbsp;python&nbsp;callback&nbsp;to&nbsp;be&nbsp;set,&nbsp;no&nbsp;return<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;name&nbsp;referring&nbsp;to&nbsp;function(ptr_flobject,&nbsp;[pointer&nbsp;to&nbsp;void]vdata)<br>
-&nbsp;&nbsp;&nbsp;&nbsp;vdata&nbsp;:&nbsp;any&nbsp;type&nbsp;(e.g.&nbsp;None,&nbsp;int,&nbsp;str,&nbsp;etc..)<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;user&nbsp;data&nbsp;to&nbsp;be&nbsp;passed&nbsp;to&nbsp;function;&nbsp;callback&nbsp;has&nbsp;to&nbsp;take&nbsp;care<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;of&nbsp;type&nbsp;check<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;name&nbsp;referring&nbsp;to&nbsp;function(ptr_flobject,&nbsp;[pointer&nbsp;to&nbsp;void]pvdata)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;userdata&nbsp;:&nbsp;any&nbsp;type&nbsp;(e.g.&nbsp;None,&nbsp;int,&nbsp;str,&nbsp;etc..)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;user&nbsp;data&nbsp;to&nbsp;be&nbsp;passed&nbsp;to&nbsp;function;&nbsp;invoked&nbsp;callback&nbsp;has&nbsp;to&nbsp;take&nbsp;care<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;of&nbsp;type&nbsp;check&nbsp;and&nbsp;re-cast&nbsp;from&nbsp;ptr_void&nbsp;to&nbsp;chosen&nbsp;type<br>
 &nbsp;<br>
 Examples<br>
 --------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;def&nbsp;formcb(pobj,&nbsp;vdata):<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;def&nbsp;formcb(pobj,&nbsp;pvdata):<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;...&nbsp;&lt;something&gt;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;<a href="#-fl_set_form_callback">fl_set_form_callback</a>(pform0,&nbsp;formcb,&nbsp;None)<br>
 &nbsp;<br>
@@ -4331,7 +4331,7 @@ Returns<br>
 &nbsp;<br>
 Examples<br>
 --------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;def&nbsp;posthandlecb(pobj,&nbsp;num,&nbsp;crd,&nbsp;crd,&nbsp;num2,&nbsp;vdata):<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;def&nbsp;posthandlecb(pobj,&nbsp;num,&nbsp;crd,&nbsp;crd,&nbsp;num2,&nbsp;pvdata):<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;...&nbsp;&lt;something&gt;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;...&nbsp;return&nbsp;0<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;<a href="#-fl_set_object_posthandler">fl_set_object_posthandler</a>(pobj2,&nbsp;posthandlecb)<br>
@@ -4361,7 +4361,7 @@ Returns<br>
 &nbsp;<br>
 Examples<br>
 --------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;def&nbsp;prehandlecb(pobj,&nbsp;num,&nbsp;crd,&nbsp;crd,&nbsp;num2,&nbsp;vdata):<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;def&nbsp;prehandlecb(pobj,&nbsp;num,&nbsp;crd,&nbsp;crd,&nbsp;num2,&nbsp;pvdata):<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;...&nbsp;&lt;something&gt;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;...&nbsp;return&nbsp;0<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;<a href="#-fl_set_object_prehandler">fl_set_object_prehandler</a>(pobj2,&nbsp;prehandlecb)<br>
@@ -4730,4 +4730,4 @@ Notes<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
  <dl><dt><a name="-special_style"><strong>special_style</strong></a>(style)</dt></dl>
 </td></tr></table>
-<p>Updated on: 2011-01-07 00:34 +0100</body></html>
+<p>Updated on: 2011-01-10 23:20 +0100</body></html>

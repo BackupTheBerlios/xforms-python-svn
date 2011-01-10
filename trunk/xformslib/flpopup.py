@@ -165,11 +165,8 @@ def fl_popup_add_entries(ptr_flpopup, entryitemstxt, x=None, u=None, \
         cparam_argstypelist.append(cty.c_long)
         specseqargslist.append(l_x)
     if u:       # pointer to void u additional arg
-        #ptr_u = cty.cast(u, cty.c_void_p)
-        #cparam_argstypelist.append(cty.c_void_p)
-        # cty.c_void_p replaced with passed type
-        mycparamtype, ptr_u = library.handle_userdata(u)
-        cparam_argstypelist.append(mycparamtype)
+        ptr_u = library.convert_userdata_to_ptrvoid(u)
+        cparam_argstypelist.append(cty.c_void_p)
         specseqargslist.append(ptr_u)
     if f:       # xfdata.FL_POPUP_CB f additional arg
         library.verify_function_type(f)
@@ -308,10 +305,8 @@ def fl_popup_insert_entries(ptr_flpopup, ptr_flpopupentry, entryitemstxt, \
         cparam_argstypelist.append(cty.c_long)
         specseqargslist.append(l_x)
     if u:       # pointer to void u additional arg
-        #ptr_u = cty.c_void_p(u)
-        #cparam_argstypelist.append(cty.c_void_p)
-        mycparamtype, ptr_u = library.handle_userdata(u)
-        cparam_argstypelist.append(mycparamtype)
+        ptr_u = library.convert_userdata_to_ptrvoid(u)
+        cparam_argstypelist.append(cty.c_void_p)
         specseqargslist.append(ptr_u)
     if f:       # xfdata.FL_POPUP_CB f additional arg
         library.verify_function_type(f)
@@ -395,7 +390,7 @@ def fl_popup_create(win, title, ptr_flpopupitem):
         ptr_flpopupitem : pointer to xfdata.FL_POPUP_ITEM
             new popup item to be created. It can be prepared passing a dict
             (whose keys are corresponding to xfdata.FL_POPUP_ITEM's members)
-            to xfstruct.make_flpopupitem function.
+            to xfstruct.make_ptr_flpopupitem function.
 
     Returns
     -------
@@ -440,7 +435,7 @@ def fl_popup_add_items(ptr_flpopup, ptr_flpopupitem):
         ptr_flpopupitem : pointer to xfdata.FL_POPUP_ITEM
             new popup item to be added. It can be prepared passing a dict
             (whose keys are corresponding to xfdata.FL_POPUP_ITEM's members)
-            to xfstruct.make_flpopupitem function.
+            to xfstruct.make_ptr_flpopupitem function.
 
     Returns
     -------
@@ -486,7 +481,7 @@ def fl_popup_insert_items(ptr_flpopup, ptr_flpopupentry, ptr_flpopupitem):
         ptr_flpopupitem : pointer to xfdata.FL_POPUP_ITEM
             new popup item to be inserted. It can be prepared passing a dict
             (whose keys are corresponding to xfdata.FL_POPUP_ITEM's members)
-            to xfstruct.make_flpopupitem function.
+            to xfstruct.make_ptr_flpopupitem function.
 
     Returns
     -------
@@ -1755,8 +1750,8 @@ def fl_popup_entry_set_value(ptr_flpopupentry, entryval):
     return retval
 
 
-def fl_popup_entry_set_user_data(ptr_flpopupentry, vdata):
-    """fl_popup_entry_set_user_data(ptr_flpopupentry, vdata) -> oldvdata
+def fl_popup_entry_set_user_data(ptr_flpopupentry, userdata):
+    """fl_popup_entry_set_user_data(ptr_flpopupentry, userdata) -> olduserdata
 
     Modifies user data associated with a popup entry.
 
@@ -1764,13 +1759,13 @@ def fl_popup_entry_set_user_data(ptr_flpopupentry, vdata):
     ----------
         ptr_flpopupentry : pointer to xfdata.FL_POPUP_ENTRY
             popup entry
-        vdata : any type (e.g. None, int, str, etc..)
-            user data to be passed to function; callback has to take care
-            of type check
+        userdata : any type (e.g. None, int, str, etc..)
+            user data to be passed to function; invoked callback has to take
+            care of type check and re-cast from ptr_void to chosen type
 
     Returns
     -------
-        oldvdata : pointer to void?
+        olduserdata : pointer to void
             previous user data, or None (on failure)
 
     Examples
@@ -1782,16 +1777,15 @@ def fl_popup_entry_set_user_data(ptr_flpopupentry, vdata):
         Status: Untested + NoDoc + NoDemo = NOT OK
 
     """
-    # cty.c_void_p replaced with passed type
-    mycparamtype, ptr_vdata = library.handle_userdata(vdata)
     _fl_popup_entry_set_user_data = library.cfuncproto(
         library.load_so_libforms(), "fl_popup_entry_set_user_data",
-        cty.c_void_p, [cty.POINTER(xfdata.FL_POPUP_ENTRY), mycparamtype],
+        cty.c_void_p, [cty.POINTER(xfdata.FL_POPUP_ENTRY), cty.c_void_p],
         """void * fl_popup_entry_set_user_data(FL_POPUP_ENTRY * p1,
-           void * p2)""")       # cty.c_void_p]
+           void * p2)""")
     library.check_if_initialized()
     library.verify_flpopupentryptr_type(ptr_flpopupentry)
-    library.keep_elem_refs(ptr_flpopupentry, vdata, ptr_vdata)
+    ptr_vdata = library.convert_userdata_to_ptrvoid(userdata)
+    library.keep_elem_refs(ptr_flpopupentry, userdata, ptr_vdata)
     retval = _fl_popup_entry_set_user_data(ptr_flpopupentry, ptr_vdata)
     return retval
 
@@ -1880,8 +1874,8 @@ def fl_popup_entry_get_by_value(ptr_flpopup, entryval):
     return retval
 
 
-def fl_popup_entry_get_by_user_data(ptr_flpopup, vdata):
-    """fl_popup_entry_get_by_user_data(ptr_flpopup, vdata) -> ptr_flpopupentry
+def fl_popup_entry_get_by_user_data(ptr_flpopup, userdata):
+    """fl_popup_entry_get_by_user_data(ptr_flpopup, userdata) -> ptr_flpopupentry
 
     Finds a popup entry by its assigned user data.
 
@@ -1889,9 +1883,9 @@ def fl_popup_entry_get_by_user_data(ptr_flpopup, vdata):
     ----------
         ptr_flpopup : pointer to xfdata.FL_POPUP
             popup class instance
-        vdata : any type (e.g. None, int, str, etc..)
-            user data assigned to the popup entry; callback has to take care
-            of type check
+        userdata : any type (e.g. None, int, str, etc..)
+            user data assigned to the popup entry; callback has to take
+            care of type check and re-cast from ptr_void to chosen type.
 
     Returns
     -------
@@ -1907,18 +1901,16 @@ def fl_popup_entry_get_by_user_data(ptr_flpopup, vdata):
         Status: Untested + NoDoc + NoDemo = NOT OK
 
     """
-    # cty.c_void_p replaced with passed type
-    mycparamtype, ptr_vdata = library.handle_userdata(vdata)
     _fl_popup_entry_get_by_user_data = library.cfuncproto(
         library.load_so_libforms(), "fl_popup_entry_get_by_user_data",
         cty.POINTER(xfdata.FL_POPUP_ENTRY), [cty.POINTER(xfdata.FL_POPUP),
-        mycparamtype],
+        cty.c_void_p],
         """FL_POPUP_ENTRY * fl_popup_entry_get_by_user_data(FL_POPUP * p1,
-           void * p2)""")       # cty.c_void_p]
+           void * p2)""")
     library.check_if_initialized()
     library.verify_flpopupptr_type(ptr_flpopup)
-    #ptr_vdata = cty.cast(vdata, cty.c_void_p)
-    library.keep_elem_refs(ptr_flpopup, vdata, ptr_vdata)
+    ptr_vdata = library.convert_userdata_to_ptrvoid(userdata)
+    library.keep_elem_refs(ptr_flpopup, userdata, ptr_vdata)
     retval = _fl_popup_entry_get_by_user_data(ptr_flpopup, ptr_vdata)
     return retval
 

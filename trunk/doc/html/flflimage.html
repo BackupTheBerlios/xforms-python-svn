@@ -27,8 +27,8 @@
 <font color="#ffffff" face="helvetica, arial"><big><strong>Functions</strong></big></font></td></tr>
     
 <tr><td bgcolor="#eeaa77"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
-<td width="100%"><dl><dt><a name="-FL_IsPacked"><strong>FL_IsPacked</strong></a>(ptr_image)</dt></dl>
- <dl><dt><a name="-FL_IsRGB"><strong>FL_IsRGB</strong></a>(ptr_image)</dt></dl>
+<td width="100%"><dl><dt><a name="-FL_IsPacked"><strong>FL_IsPacked</strong></a>(ptr_flimage)</dt></dl>
+ <dl><dt><a name="-FL_IsRGB"><strong>FL_IsRGB</strong></a>(ptr_flimage)</dt></dl>
  <dl><dt><a name="-FL_RGB2GRAY"><strong>FL_RGB2GRAY</strong></a>(r, g, b)</dt></dl>
  <dl><dt><a name="-fl_free_matrix"><strong>fl_free_matrix</strong></a>(matrix)</dt><dd><tt><a href="#-fl_free_matrix">fl_free_matrix</a>(matrix)<br>
 &nbsp;<br>
@@ -45,7 +45,8 @@ Examples<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK<br>
+&nbsp;&nbsp;&nbsp;&nbsp;It&nbsp;does&nbsp;not&nbsp;need&nbsp;to&nbsp;call&nbsp;flxbasic.fl_initialize()&nbsp;before</tt></dd></dl>
  <dl><dt><a name="-fl_get_matrix"><strong>fl_get_matrix</strong></a>(numrows, numcols, elemsize)</dt><dd><tt><a href="#-fl_get_matrix">fl_get_matrix</a>(numrows,&nbsp;numcols,&nbsp;elemsize)&nbsp;-&gt;&nbsp;matrix<br>
 &nbsp;<br>
 Creates&nbsp;a&nbsp;2-dimensional&nbsp;array&nbsp;of&nbsp;entities&nbsp;of&nbsp;size&nbsp;elemsize.&nbsp;The&nbsp;array<br>
@@ -71,7 +72,8 @@ Examples<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK<br>
+&nbsp;&nbsp;&nbsp;&nbsp;It&nbsp;does&nbsp;not&nbsp;need&nbsp;to&nbsp;call&nbsp;flxbasic.fl_initialize()&nbsp;before</tt></dd></dl>
  <dl><dt><a name="-fl_get_submatrix"><strong>fl_get_submatrix</strong></a>(inmatrix, numrows, numcols, startrow, startcol, endrow, endcol, elemsize)</dt><dd><tt><a href="#-fl_get_submatrix">fl_get_submatrix</a>(inmatrix,&nbsp;numrows,&nbsp;numcols,&nbsp;startrow,&nbsp;startcol,<br>
 endrow,&nbsp;endcol,&nbsp;elemsize)<br>
 &nbsp;<br>
@@ -108,9 +110,10 @@ Examples<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-fl_j2pass_quantize_packed"><strong>fl_j2pass_quantize_packed</strong></a>(packed, width, height, maxcolr, ci, actualcolr, redlut, greenlut, bluelut, ptr_image)</dt><dd><tt><a href="#-fl_j2pass_quantize_packed">fl_j2pass_quantize_packed</a>(packed,&nbsp;width,&nbsp;height,&nbsp;maxcolr,&nbsp;ci,<br>
-actualcolr,&nbsp;redlut,&nbsp;greenlut,&nbsp;bluelut,&nbsp;ptr_image)&nbsp;-&gt;&nbsp;num<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK<br>
+&nbsp;&nbsp;&nbsp;&nbsp;It&nbsp;does&nbsp;not&nbsp;need&nbsp;to&nbsp;call&nbsp;flxbasic.fl_initialize()&nbsp;before</tt></dd></dl>
+ <dl><dt><a name="-fl_j2pass_quantize_packed"><strong>fl_j2pass_quantize_packed</strong></a>(packed, width, height, maxcolr, ci, actualcolr, redlut, greenlut, bluelut, ptr_flimage)</dt><dd><tt><a href="#-fl_j2pass_quantize_packed">fl_j2pass_quantize_packed</a>(packed,&nbsp;width,&nbsp;height,&nbsp;maxcolr,&nbsp;ci,<br>
+actualcolr,&nbsp;redlut,&nbsp;greenlut,&nbsp;bluelut,&nbsp;ptr_flimage)&nbsp;-&gt;&nbsp;num<br>
 &nbsp;<br>
 *todo*<br>
 &nbsp;<br>
@@ -134,7 +137,7 @@ Parameters<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*todo*<br>
 &nbsp;&nbsp;&nbsp;&nbsp;bluelut&nbsp;:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*todo*<br>
-&nbsp;&nbsp;&nbsp;&nbsp;ptr_image&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_IMAGE<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_flimage&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_IMAGE<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;image<br>
 &nbsp;<br>
 Returns<br>
@@ -148,9 +151,10 @@ Examples<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-fl_j2pass_quantize_rgb"><strong>fl_j2pass_quantize_rgb</strong></a>(red, green, blue, width, height, maxcolr, ci, actualcolr, redlut, greenlut, bluelut, ptr_image)</dt><dd><tt><a href="#-fl_j2pass_quantize_rgb">fl_j2pass_quantize_rgb</a>(red,&nbsp;green,&nbsp;blue,&nbsp;width,&nbsp;height,&nbsp;maxcolr,&nbsp;ci,<br>
-actualcolr,&nbsp;redlut,&nbsp;greenlut,&nbsp;bluelut,&nbsp;ptr_image)&nbsp;-&gt;&nbsp;num<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK<br>
+&nbsp;&nbsp;&nbsp;&nbsp;It&nbsp;does&nbsp;not&nbsp;need&nbsp;to&nbsp;call&nbsp;flxbasic.fl_initialize()&nbsp;before</tt></dd></dl>
+ <dl><dt><a name="-fl_j2pass_quantize_rgb"><strong>fl_j2pass_quantize_rgb</strong></a>(red, green, blue, width, height, maxcolr, ci, actualcolr, redlut, greenlut, bluelut, ptr_flimage)</dt><dd><tt><a href="#-fl_j2pass_quantize_rgb">fl_j2pass_quantize_rgb</a>(red,&nbsp;green,&nbsp;blue,&nbsp;width,&nbsp;height,&nbsp;maxcolr,&nbsp;ci,<br>
+actualcolr,&nbsp;redlut,&nbsp;greenlut,&nbsp;bluelut,&nbsp;ptr_flimage)&nbsp;-&gt;&nbsp;num<br>
 &nbsp;<br>
 *todo*<br>
 &nbsp;<br>
@@ -178,7 +182,7 @@ Parameters<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*todo*<br>
 &nbsp;&nbsp;&nbsp;&nbsp;bluelut&nbsp;:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*todo*<br>
-&nbsp;&nbsp;&nbsp;&nbsp;ptr_image&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_IMAGE<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_flimage&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_IMAGE<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;image<br>
 &nbsp;<br>
 Returns<br>
@@ -192,7 +196,8 @@ Examples<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK<br>
+&nbsp;&nbsp;&nbsp;&nbsp;It&nbsp;does&nbsp;not&nbsp;need&nbsp;to&nbsp;call&nbsp;flxbasic.fl_initialize()&nbsp;before</tt></dd></dl>
  <dl><dt><a name="-fl_lookup_RGBcolor"><strong>fl_lookup_RGBcolor</strong></a>(colrname)</dt><dd><tt><a href="#-fl_lookup_RGBcolor">fl_lookup_RGBcolor</a>(colrname)&nbsp;-&gt;&nbsp;result,&nbsp;red,&nbsp;green,&nbsp;blue<br>
 &nbsp;<br>
 Finds&nbsp;out&nbsp;red,&nbsp;green&nbsp;and&nbsp;blue&nbsp;value&nbsp;corresponding&nbsp;to&nbsp;a&nbsp;color&nbsp;name.<br>
@@ -224,7 +229,8 @@ API_diversion<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK<br>
+&nbsp;&nbsp;&nbsp;&nbsp;It&nbsp;does&nbsp;not&nbsp;need&nbsp;to&nbsp;call&nbsp;flxbasic.fl_initialize()&nbsp;before</tt></dd></dl>
  <dl><dt><a name="-fl_make_matrix"><strong>fl_make_matrix</strong></a>(numrows, numcols, elemsize, mem)</dt><dd><tt><a href="#-fl_make_matrix">fl_make_matrix</a>(numrows,&nbsp;numcols,&nbsp;elemsize,&nbsp;mem)&nbsp;-&gt;&nbsp;matrix<br>
 &nbsp;<br>
 Makes&nbsp;a&nbsp;matrix&nbsp;out&nbsp;of&nbsp;a&nbsp;given&nbsp;piece&nbsp;of&nbsp;memory.<br>
@@ -251,7 +257,8 @@ Examples<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK<br>
+&nbsp;&nbsp;&nbsp;&nbsp;It&nbsp;does&nbsp;not&nbsp;need&nbsp;to&nbsp;call&nbsp;flxbasic.fl_initialize()&nbsp;before</tt></dd></dl>
  <dl><dt><a name="-fl_make_submatrix"><strong>fl_make_submatrix</strong></a>(inmatrix, numrows, numcols, startrow, startcol, endrow, endcol, elemsize)</dt><dd><tt><a href="#-fl_make_submatrix">fl_make_submatrix</a>(inmatrix,&nbsp;numrows,&nbsp;numcols,&nbsp;startrow,&nbsp;startcol,<br>
 endrow,&nbsp;endcol,&nbsp;elemsize)&nbsp;-&gt;&nbsp;submatrix<br>
 &nbsp;<br>
@@ -287,7 +294,8 @@ Examples<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK<br>
+&nbsp;&nbsp;&nbsp;&nbsp;It&nbsp;does&nbsp;not&nbsp;need&nbsp;to&nbsp;call&nbsp;flxbasic.fl_initialize()&nbsp;before</tt></dd></dl>
  <dl><dt><a name="-fl_pack_bits"><strong>fl_pack_bits</strong></a>(inval, numindxs)</dt><dd><tt><a href="#-fl_pack_bits">fl_pack_bits</a>(inval,&nbsp;numindxs)&nbsp;-&gt;&nbsp;outval<br>
 &nbsp;<br>
 Packs&nbsp;color&nbsp;index&nbsp;(0&nbsp;or&nbsp;1)&nbsp;into&nbsp;bytes.<br>
@@ -315,7 +323,8 @@ API_diversion<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK&nbsp;(how&nbsp;to&nbsp;pass&nbsp;inval)</tt></dd></dl>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK&nbsp;(how&nbsp;to&nbsp;pass&nbsp;inval)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;It&nbsp;does&nbsp;not&nbsp;need&nbsp;to&nbsp;call&nbsp;flxbasic.fl_initialize()&nbsp;before</tt></dd></dl>
  <dl><dt><a name="-fl_select_mediancut_quantizer"><strong>fl_select_mediancut_quantizer</strong></a>()</dt><dd><tt><a href="#-fl_select_mediancut_quantizer">fl_select_mediancut_quantizer</a>()<br>
 &nbsp;<br>
 Selects&nbsp;median&nbsp;cut&nbsp;quantizer,&nbsp;who&nbsp;uses&nbsp;Heckbert's&nbsp;median&nbsp;cut&nbsp;algorithm<br>
@@ -332,7 +341,8 @@ Examples<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK<br>
+&nbsp;&nbsp;&nbsp;&nbsp;It&nbsp;does&nbsp;not&nbsp;need&nbsp;to&nbsp;call&nbsp;flxbasic.fl_initialize()&nbsp;before</tt></dd></dl>
  <dl><dt><a name="-fl_unpack_bits"><strong>fl_unpack_bits</strong></a>(inval, numindxs)</dt><dd><tt><a href="#-fl_unpack_bits">fl_unpack_bits</a>(inval,&nbsp;numindxs)&nbsp;-&gt;&nbsp;outval<br>
 &nbsp;<br>
 Unpacks&nbsp;packed&nbsp;bits&nbsp;into&nbsp;color&nbsp;indexes&nbsp;(0&nbsp;or&nbsp;1).<br>
@@ -360,7 +370,8 @@ API_diversion<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK<br>
+&nbsp;&nbsp;&nbsp;&nbsp;It&nbsp;does&nbsp;not&nbsp;need&nbsp;to&nbsp;call&nbsp;flxbasic.fl_initialize()&nbsp;before</tt></dd></dl>
  <dl><dt><a name="-fl_value_to_bits"><strong>fl_value_to_bits</strong></a>(val)</dt><dd><tt><a href="#-fl_value_to_bits">fl_value_to_bits</a>(val)&nbsp;-&gt;&nbsp;num<br>
 &nbsp;<br>
 *todo*<br>
@@ -381,14 +392,15 @@ Examples<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-flimage_add_comments"><strong>flimage_add_comments</strong></a>(ptr_image, text, length)</dt><dd><tt><a href="#-flimage_add_comments">flimage_add_comments</a>(ptr_image,&nbsp;text,&nbsp;length)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK<br>
+&nbsp;&nbsp;&nbsp;&nbsp;It&nbsp;does&nbsp;not&nbsp;need&nbsp;to&nbsp;call&nbsp;flxbasic.fl_initialize()&nbsp;before</tt></dd></dl>
+ <dl><dt><a name="-flimage_add_comments"><strong>flimage_add_comments</strong></a>(ptr_flimage, text, length)</dt><dd><tt><a href="#-flimage_add_comments">flimage_add_comments</a>(ptr_flimage,&nbsp;text,&nbsp;length)<br>
 &nbsp;<br>
 Adds&nbsp;a&nbsp;comment&nbsp;to&nbsp;an&nbsp;image.<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;ptr_image&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_IMAGE<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_flimage&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_IMAGE<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;image<br>
 &nbsp;&nbsp;&nbsp;&nbsp;text&nbsp;:&nbsp;str<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;comment&nbsp;to&nbsp;be&nbsp;added<br>
@@ -401,7 +413,8 @@ Examples<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK<br>
+&nbsp;&nbsp;&nbsp;&nbsp;It&nbsp;does&nbsp;not&nbsp;need&nbsp;to&nbsp;call&nbsp;flxbasic.fl_initialize()&nbsp;before</tt></dd></dl>
  <dl><dt><a name="-flimage_add_format"><strong>flimage_add_format</strong></a>(formalname, shortname, extension, imagetype, pyfn_ImageIdentify, pyfn_ImageDescription, pyfn_ImageReadPixels, pyfn_ImageWriteImage)</dt><dd><tt><a href="#-flimage_add_format">flimage_add_format</a>(formalname,&nbsp;shortname,&nbsp;extension,&nbsp;imagetype,<br>
 pyfn_ImageIdentify,&nbsp;pyfn_ImageDescription,&nbsp;pyfn_ImageReadPixels,<br>
 pyfn_ImageWriteImage)&nbsp;-&gt;&nbsp;result<br>
@@ -435,7 +448,7 @@ Parameters<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;rewound&nbsp;or&nbsp;not&nbsp;is&nbsp;between&nbsp;this&nbsp;function&nbsp;and&nbsp;the&nbsp;description<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;function.<br>
 &nbsp;&nbsp;&nbsp;&nbsp;pyfn_ImageDescription&nbsp;:&nbsp;function&nbsp;to&nbsp;set&nbsp;description,&nbsp;returned&nbsp;value<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;name&nbsp;referring&nbsp;to&nbsp;function(ptr_image)&nbsp;-&gt;&nbsp;num.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;name&nbsp;referring&nbsp;to&nbsp;function(ptr_flimage)&nbsp;-&gt;&nbsp;num.<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;This&nbsp;function&nbsp;in&nbsp;general&nbsp;should&nbsp;set&nbsp;the&nbsp;image&nbsp;dimension&nbsp;and&nbsp;type<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;fields&nbsp;(and&nbsp;colormap&nbsp;length&nbsp;for&nbsp;color&nbsp;index&nbsp;images)&nbsp;if<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;successful,&nbsp;so&nbsp;the&nbsp;driver&nbsp;can&nbsp;allocate&nbsp;the&nbsp;necessary&nbsp;memory&nbsp;for<br>
@@ -444,22 +457,22 @@ Parameters<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;However,&nbsp;if&nbsp;reading&nbsp;should&nbsp;continue,&nbsp;the&nbsp;function&nbsp;should&nbsp;return<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1,&nbsp;otherwise&nbsp;a&nbsp;negative&nbsp;number.<br>
 &nbsp;&nbsp;&nbsp;&nbsp;pyfn_ImageReadPixels&nbsp;:&nbsp;python&nbsp;function&nbsp;to&nbsp;read&nbsp;pixels,&nbsp;returned&nbsp;value<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;name&nbsp;referring&nbsp;to&nbsp;function(ptr_image)&nbsp;-&gt;&nbsp;num.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;name&nbsp;referring&nbsp;to&nbsp;function(ptr_flimage)&nbsp;-&gt;&nbsp;num.<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;This&nbsp;function&nbsp;reads&nbsp;the&nbsp;pixels&nbsp;from&nbsp;the&nbsp;file&nbsp;and&nbsp;fills&nbsp;one&nbsp;of&nbsp;the<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;pixel&nbsp;matrix&nbsp;in&nbsp;the&nbsp;image&nbsp;structure&nbsp;depending&nbsp;on&nbsp;the&nbsp;type.&nbsp;If<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;reading&nbsp;is&nbsp;successful,&nbsp;a&nbsp;non-negative&nbsp;number&nbsp;should&nbsp;be&nbsp;returned<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;otherwise&nbsp;a&nbsp;negative&nbsp;number&nbsp;should&nbsp;be&nbsp;returned.&nbsp;Upon&nbsp;entry,<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ptr_image.contents.completed&nbsp;is&nbsp;set&nbsp;to&nbsp;zero.&nbsp;The&nbsp;function&nbsp;should<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ptr_flimage.contents.completed&nbsp;is&nbsp;set&nbsp;to&nbsp;zero.&nbsp;The&nbsp;function&nbsp;should<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;not&nbsp;close&nbsp;the&nbsp;file.<br>
 &nbsp;&nbsp;&nbsp;&nbsp;pyfn_ImageWriteImage&nbsp;:&nbsp;python&nbsp;function&nbsp;to&nbsp;write&nbsp;image,&nbsp;returned&nbsp;value<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;name&nbsp;referring&nbsp;to&nbsp;function(ptr_image)&nbsp;-&gt;&nbsp;num.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;name&nbsp;referring&nbsp;to&nbsp;function(ptr_flimage)&nbsp;-&gt;&nbsp;num.<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;This&nbsp;function&nbsp;takes&nbsp;an&nbsp;image&nbsp;structure&nbsp;and&nbsp;should&nbsp;write&nbsp;the&nbsp;image<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;out&nbsp;in&nbsp;a&nbsp;format&nbsp;it&nbsp;knows.&nbsp;Prior&nbsp;to&nbsp;calling&nbsp;this&nbsp;routine,&nbsp;the<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;driver&nbsp;will&nbsp;have&nbsp;already&nbsp;converted&nbsp;the&nbsp;image&nbsp;type&nbsp;to&nbsp;the&nbsp;type&nbsp;it<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;wants.&nbsp;The&nbsp;function&nbsp;should&nbsp;return&nbsp;1&nbsp;on&nbsp;success&nbsp;and&nbsp;a&nbsp;negative<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;number&nbsp;otherwise.&nbsp;If&nbsp;only&nbsp;reading&nbsp;of&nbsp;the&nbsp;image&nbsp;format&nbsp;is<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;supported&nbsp;this&nbsp;parameter&nbsp;can&nbsp;be&nbsp;set&nbsp;to&nbsp;None.&nbsp;The&nbsp;function&nbsp;should<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;write&nbsp;to&nbsp;file&nbsp;stream&nbsp;ptr_image.contents.fpout.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;write&nbsp;to&nbsp;file&nbsp;stream&nbsp;ptr_flimage.contents.fpout.<br>
 &nbsp;<br>
 Returns<br>
 -------<br>
@@ -472,8 +485,9 @@ Examples<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-flimage_add_marker"><strong>flimage_add_marker</strong></a>(ptr_image, name, xpos, ypos, width, height, lnstyle, fill, rot, colr, bcolr)</dt><dd><tt><a href="#-flimage_add_marker">flimage_add_marker</a>(ptr_image,&nbsp;name,&nbsp;xpos,&nbsp;ypos,&nbsp;width,&nbsp;height,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK<br>
+&nbsp;&nbsp;&nbsp;&nbsp;It&nbsp;does&nbsp;not&nbsp;need&nbsp;to&nbsp;call&nbsp;flxbasic.fl_initialize()&nbsp;before</tt></dd></dl>
+ <dl><dt><a name="-flimage_add_marker"><strong>flimage_add_marker</strong></a>(ptr_flimage, name, xpos, ypos, width, height, lnstyle, fill, rot, colr, bcolr)</dt><dd><tt><a href="#-flimage_add_marker">flimage_add_marker</a>(ptr_flimage,&nbsp;name,&nbsp;xpos,&nbsp;ypos,&nbsp;width,&nbsp;height,<br>
 lnstyle,&nbsp;fill,&nbsp;rot,&nbsp;colr,&nbsp;bcolr)&nbsp;-&gt;&nbsp;nummarkers<br>
 &nbsp;<br>
 Adds&nbsp;simple&nbsp;markers&nbsp;(e.g.&nbsp;arrows,&nbsp;circles,&nbsp;etc)&nbsp;to&nbsp;an&nbsp;image,&nbsp;passing<br>
@@ -481,7 +495,7 @@ parameters&nbsp;individually.<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;ptr_image&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_IMAGE<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_flimage&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_IMAGE<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;image<br>
 &nbsp;&nbsp;&nbsp;&nbsp;name&nbsp;:&nbsp;str<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;name&nbsp;of&nbsp;the&nbsp;marker&nbsp;to&nbsp;be&nbsp;added<br>
@@ -527,17 +541,18 @@ Examples<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-flimage_add_marker_struct"><strong>flimage_add_marker_struct</strong></a>(ptr_image, ptr_imagemarker)</dt><dd><tt><a href="#-flimage_add_marker_struct">flimage_add_marker_struct</a>(ptr_image,&nbsp;ptr_imagemarker)&nbsp;-&gt;&nbsp;nummarkers<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK<br>
+&nbsp;&nbsp;&nbsp;&nbsp;It&nbsp;does&nbsp;not&nbsp;need&nbsp;to&nbsp;call&nbsp;flxbasic.fl_initialize()&nbsp;before</tt></dd></dl>
+ <dl><dt><a name="-flimage_add_marker_struct"><strong>flimage_add_marker_struct</strong></a>(ptr_flimage, ptr_flimagemarker)</dt><dd><tt><a href="#-flimage_add_marker_struct">flimage_add_marker_struct</a>(ptr_flimage,&nbsp;ptr_flimagemarker)&nbsp;-&gt;&nbsp;nummarkers<br>
 &nbsp;<br>
 Adds&nbsp;simple&nbsp;markers&nbsp;(e.g.&nbsp;arrows,&nbsp;circles,&nbsp;etc)&nbsp;to&nbsp;an&nbsp;image,&nbsp;using<br>
 xfdata.FLIMAGE_MARKER&nbsp;class&nbsp;instance.<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;ptr_image&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_IMAGE<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_flimage&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_IMAGE<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;image<br>
-&nbsp;&nbsp;&nbsp;&nbsp;ptr_imagemarker&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FLIMAGE_MARKER<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_flimagemarker&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FLIMAGE_MARKER<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;flimagemarker&nbsp;class&nbsp;instance<br>
 &nbsp;<br>
 Returns<br>
@@ -551,15 +566,16 @@ Examples<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-flimage_add_text"><strong>flimage_add_text</strong></a>(ptr_image, text, length, style, size, txtcolr, bgcolr, nobk, txtxpos, txtypos, rot)</dt><dd><tt><a href="#-flimage_add_text">flimage_add_text</a>(ptr_image,&nbsp;text,&nbsp;length,&nbsp;style,&nbsp;size,&nbsp;txtcolr,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK<br>
+&nbsp;&nbsp;&nbsp;&nbsp;It&nbsp;does&nbsp;not&nbsp;need&nbsp;to&nbsp;call&nbsp;flxbasic.fl_initialize()&nbsp;before</tt></dd></dl>
+ <dl><dt><a name="-flimage_add_text"><strong>flimage_add_text</strong></a>(ptr_flimage, text, length, style, size, txtcolr, bgcolr, nobk, txtxpos, txtypos, rot)</dt><dd><tt><a href="#-flimage_add_text">flimage_add_text</a>(ptr_flimage,&nbsp;text,&nbsp;length,&nbsp;style,&nbsp;size,&nbsp;txtcolr,<br>
 bgcolr,&nbsp;nobk,&nbsp;txtxpos,&nbsp;txtypos,&nbsp;rot)&nbsp;-&gt;&nbsp;numstrings<br>
 &nbsp;<br>
 Places&nbsp;text&nbsp;into&nbsp;the&nbsp;image,&nbsp;passing&nbsp;parameters&nbsp;individually.<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;ptr_image&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_IMAGE<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_flimage&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_IMAGE<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;image<br>
 &nbsp;&nbsp;&nbsp;&nbsp;text&nbsp;:&nbsp;str<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;text&nbsp;string&nbsp;to&nbsp;be&nbsp;placed&nbsp;in&nbsp;image.&nbsp;If&nbsp;it&nbsp;starts&nbsp;with&nbsp;character<br>
@@ -617,17 +633,18 @@ Examples<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-flimage_add_text_struct"><strong>flimage_add_text_struct</strong></a>(ptr_image, ptr_imagetext)</dt><dd><tt><a href="#-flimage_add_text_struct">flimage_add_text_struct</a>(ptr_image,&nbsp;ptr_imagetext)&nbsp;-&gt;&nbsp;numstrings<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK<br>
+&nbsp;&nbsp;&nbsp;&nbsp;It&nbsp;does&nbsp;not&nbsp;need&nbsp;to&nbsp;call&nbsp;flxbasic.fl_initialize()&nbsp;before</tt></dd></dl>
+ <dl><dt><a name="-flimage_add_text_struct"><strong>flimage_add_text_struct</strong></a>(ptr_flimage, ptr_flimagetext)</dt><dd><tt><a href="#-flimage_add_text_struct">flimage_add_text_struct</a>(ptr_flimage,&nbsp;ptr_flimagetext)&nbsp;-&gt;&nbsp;numstrings<br>
 &nbsp;<br>
 Places&nbsp;text&nbsp;into&nbsp;the&nbsp;image,&nbsp;using&nbsp;xfdata.FLIMAGE_TEXT&nbsp;class&nbsp;instance.<br>
 If&nbsp;text&nbsp;starts&nbsp;with&nbsp;character&nbsp;'@'&nbsp;a&nbsp;symbol&nbsp;is&nbsp;drawn.<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;ptr_image&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_IMAGE<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_flimage&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_IMAGE<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;image<br>
-&nbsp;&nbsp;&nbsp;&nbsp;ptr_imagetext&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FLIMAGE_TEXT<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_flimagetext&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FLIMAGE_TEXT<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;flimagetext&nbsp;class&nbsp;instance<br>
 &nbsp;<br>
 Returns<br>
@@ -641,15 +658,16 @@ Examples<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-flimage_alloc"><strong>flimage_alloc</strong></a>()</dt><dd><tt><a href="#-flimage_alloc">flimage_alloc</a>()&nbsp;-&gt;&nbsp;ptr_image<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK<br>
+&nbsp;&nbsp;&nbsp;&nbsp;It&nbsp;does&nbsp;not&nbsp;need&nbsp;to&nbsp;call&nbsp;flxbasic.fl_initialize()&nbsp;before</tt></dd></dl>
+ <dl><dt><a name="-flimage_alloc"><strong>flimage_alloc</strong></a>()</dt><dd><tt><a href="#-flimage_alloc">flimage_alloc</a>()&nbsp;-&gt;&nbsp;ptr_flimage<br>
 &nbsp;<br>
 Creates&nbsp;an&nbsp;image&nbsp;structure&nbsp;whose&nbsp;dynamically&nbsp;allocated&nbsp;memory&nbsp;is<br>
 properly&nbsp;initialized,&nbsp;and&nbsp;returning&nbsp;it.<br>
 &nbsp;<br>
 Returns<br>
 -------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;ptr_image&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_IMAGE<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_flimage&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_IMAGE<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;image&nbsp;class&nbsp;instance<br>
 &nbsp;<br>
 Examples<br>
@@ -658,8 +676,9 @@ Examples<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-flimage_autocrop"><strong>flimage_autocrop</strong></a>(ptr_image, bgcolr)</dt><dd><tt><a href="#-flimage_autocrop">flimage_autocrop</a>(ptr_image,&nbsp;bgcolr)&nbsp;-&gt;&nbsp;result<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK<br>
+&nbsp;&nbsp;&nbsp;&nbsp;It&nbsp;does&nbsp;not&nbsp;need&nbsp;to&nbsp;call&nbsp;flxbasic.fl_initialize()&nbsp;before</tt></dd></dl>
+ <dl><dt><a name="-flimage_autocrop"><strong>flimage_autocrop</strong></a>(ptr_flimage, bgcolr)</dt><dd><tt><a href="#-flimage_autocrop">flimage_autocrop</a>(ptr_flimage,&nbsp;bgcolr)&nbsp;-&gt;&nbsp;result<br>
 &nbsp;<br>
 Automatically&nbsp;crops&nbsp;an&nbsp;image&nbsp;using&nbsp;the&nbsp;background&nbsp;as&nbsp;the&nbsp;color&nbsp;to&nbsp;crop,<br>
 by&nbsp;searching&nbsp;the&nbsp;image&nbsp;from&nbsp;all&nbsp;four&nbsp;sides&nbsp;and&nbsp;removing&nbsp;all&nbsp;contiguous<br>
@@ -668,7 +687,7 @@ in&nbsp;place.<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;ptr_image&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_IMAGE<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_flimage&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_IMAGE<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;image<br>
 &nbsp;&nbsp;&nbsp;&nbsp;bgcolr&nbsp;:&nbsp;int_pos<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;background&nbsp;color&nbsp;to&nbsp;crop.&nbsp;If&nbsp;it&nbsp;is&nbsp;xfdata.FLIMAGE_AUTOCOLOR,&nbsp;the<br>
@@ -685,14 +704,15 @@ Examples<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-flimage_close"><strong>flimage_close</strong></a>(ptr_image)</dt><dd><tt><a href="#-flimage_close">flimage_close</a>(ptr_image)&nbsp;-&gt;&nbsp;result<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK<br>
+&nbsp;&nbsp;&nbsp;&nbsp;It&nbsp;does&nbsp;not&nbsp;need&nbsp;to&nbsp;call&nbsp;flxbasic.fl_initialize()&nbsp;before</tt></dd></dl>
+ <dl><dt><a name="-flimage_close"><strong>flimage_close</strong></a>(ptr_flimage)</dt><dd><tt><a href="#-flimage_close">flimage_close</a>(ptr_flimage)&nbsp;-&gt;&nbsp;result<br>
 &nbsp;<br>
 Closes&nbsp;all&nbsp;file&nbsp;streams&nbsp;used&nbsp;to&nbsp;create&nbsp;the&nbsp;image.<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;ptr_image&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_IMAGE<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_flimage&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_IMAGE<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;image&nbsp;to&nbsp;be&nbsp;closed<br>
 &nbsp;<br>
 Returns<br>
@@ -707,14 +727,15 @@ Examples<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-flimage_color_to_pixel"><strong>flimage_color_to_pixel</strong></a>(ptr_image, red, green, blue)</dt><dd><tt><a href="#-flimage_color_to_pixel">flimage_color_to_pixel</a>(ptr_image,&nbsp;red,&nbsp;green,&nbsp;blue)&nbsp;-&gt;&nbsp;pixelval,&nbsp;pixel<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK<br>
+&nbsp;&nbsp;&nbsp;&nbsp;It&nbsp;does&nbsp;not&nbsp;need&nbsp;to&nbsp;call&nbsp;flxbasic.fl_initialize()&nbsp;before</tt></dd></dl>
+ <dl><dt><a name="-flimage_color_to_pixel"><strong>flimage_color_to_pixel</strong></a>(ptr_flimage, red, green, blue)</dt><dd><tt><a href="#-flimage_color_to_pixel">flimage_color_to_pixel</a>(ptr_flimage,&nbsp;red,&nbsp;green,&nbsp;blue)&nbsp;-&gt;&nbsp;pixelval,&nbsp;pixel<br>
 &nbsp;<br>
 Convert&nbsp;an&nbsp;RGB&nbsp;triple&nbsp;to&nbsp;a&nbsp;pixel.<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;ptr_image&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_IMAGE<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_flimage&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_IMAGE<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;image<br>
 &nbsp;&nbsp;&nbsp;&nbsp;red&nbsp;:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;value&nbsp;for&nbsp;red&nbsp;color<br>
@@ -737,27 +758,28 @@ Examples<br>
 API_diversion<br>
 ----------<br>
 &nbsp;&nbsp;&nbsp;&nbsp;API&nbsp;changed&nbsp;from&nbsp;XForms,&nbsp;upstream&nbsp;is<br>
-&nbsp;&nbsp;&nbsp;&nbsp;<a href="#-flimage_color_to_pixel">flimage_color_to_pixel</a>(ptr_image,&nbsp;r,&nbsp;g,&nbsp;b,&nbsp;newpix)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="#-flimage_color_to_pixel">flimage_color_to_pixel</a>(ptr_flimage,&nbsp;r,&nbsp;g,&nbsp;b,&nbsp;newpix)<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-flimage_combine"><strong>flimage_combine</strong></a>(ptr_image1, ptr_image2, alpha)</dt><dd><tt><a href="#-flimage_combine">flimage_combine</a>(ptr_image1,&nbsp;ptr_image2,&nbsp;alpha)&nbsp;-&gt;&nbsp;ptr_image<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK<br>
+&nbsp;&nbsp;&nbsp;&nbsp;It&nbsp;does&nbsp;not&nbsp;need&nbsp;to&nbsp;call&nbsp;flxbasic.fl_initialize()&nbsp;before</tt></dd></dl>
+ <dl><dt><a name="-flimage_combine"><strong>flimage_combine</strong></a>(ptr_flimage1, ptr_flimage2, alpha)</dt><dd><tt><a href="#-flimage_combine">flimage_combine</a>(ptr_flimage1,&nbsp;ptr_flimage2,&nbsp;alpha)&nbsp;-&gt;&nbsp;ptr_flimage<br>
 &nbsp;<br>
 Combines&nbsp;two&nbsp;images&nbsp;with&nbsp;alpha&nbsp;level?,&nbsp;returning&nbsp;a&nbsp;new&nbsp;image.<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;ptr_image1&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_IMAGE<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_flimage1&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_IMAGE<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;first&nbsp;image&nbsp;to&nbsp;combine<br>
-&nbsp;&nbsp;&nbsp;&nbsp;ptr_image2&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_IMAGE<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_flimage2&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_IMAGE<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;second&nbsp;image&nbsp;to&nbsp;combine<br>
 &nbsp;&nbsp;&nbsp;&nbsp;alpha&nbsp;:&nbsp;float<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;alpha&nbsp;level?<br>
 &nbsp;<br>
 Returns<br>
 -------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;ptr_image&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_IMAGE<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_flimage&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_IMAGE<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;image&nbsp;class&nbsp;instance<br>
 &nbsp;<br>
 Examples<br>
@@ -766,15 +788,16 @@ Examples<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-flimage_convert"><strong>flimage_convert</strong></a>(ptr_image, newimagetype, numcolors)</dt><dd><tt><a href="#-flimage_convert">flimage_convert</a>(ptr_image,&nbsp;newimagetype,&nbsp;numcolors)&nbsp;-&gt;&nbsp;result<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK<br>
+&nbsp;&nbsp;&nbsp;&nbsp;It&nbsp;does&nbsp;not&nbsp;need&nbsp;to&nbsp;call&nbsp;flxbasic.fl_initialize()&nbsp;before</tt></dd></dl>
+ <dl><dt><a name="-flimage_convert"><strong>flimage_convert</strong></a>(ptr_flimage, newimagetype, numcolors)</dt><dd><tt><a href="#-flimage_convert">flimage_convert</a>(ptr_flimage,&nbsp;newimagetype,&nbsp;numcolors)&nbsp;-&gt;&nbsp;result<br>
 &nbsp;<br>
 Converts&nbsp;an&nbsp;image&nbsp;to&nbsp;a&nbsp;new&nbsp;type.&nbsp;Depending&nbsp;on&nbsp;which&nbsp;quantization<br>
 function&nbsp;is&nbsp;used,&nbsp;the&nbsp;number&nbsp;of&nbsp;quantized&nbsp;colors&nbsp;may&nbsp;not&nbsp;be&nbsp;more&nbsp;than&nbsp;256.<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;ptr_image&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_IMAGE<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_flimage&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_IMAGE<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;image<br>
 &nbsp;&nbsp;&nbsp;&nbsp;newimagetype&nbsp;:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;one&nbsp;of&nbsp;supported&nbsp;image&nbsp;type&nbsp;to&nbsp;convert&nbsp;to.&nbsp;Values&nbsp;(from&nbsp;xfdata.py)<br>
@@ -796,15 +819,16 @@ Examples<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-flimage_convolve"><strong>flimage_convolve</strong></a>(ptr_image, kernel, krows, kcols)</dt><dd><tt><a href="#-flimage_convolve">flimage_convolve</a>(ptr_image,&nbsp;kernel,&nbsp;krows,&nbsp;kcols)&nbsp;-&gt;&nbsp;result<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK<br>
+&nbsp;&nbsp;&nbsp;&nbsp;It&nbsp;does&nbsp;not&nbsp;need&nbsp;to&nbsp;call&nbsp;flxbasic.fl_initialize()&nbsp;before</tt></dd></dl>
+ <dl><dt><a name="-flimage_convolve"><strong>flimage_convolve</strong></a>(ptr_flimage, kernel, krows, kcols)</dt><dd><tt><a href="#-flimage_convolve">flimage_convolve</a>(ptr_flimage,&nbsp;kernel,&nbsp;krows,&nbsp;kcols)&nbsp;-&gt;&nbsp;result<br>
 &nbsp;<br>
 Takes&nbsp;a&nbsp;convolution&nbsp;kernel&nbsp;of&nbsp;krows&nbsp;by&nbsp;kcols&nbsp;and&nbsp;convolves&nbsp;it&nbsp;with<br>
 the&nbsp;image.&nbsp;The&nbsp;result&nbsp;replaces&nbsp;the&nbsp;input&nbsp;image.<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;ptr_image&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_IMAGE<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_flimage&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_IMAGE<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;image<br>
 &nbsp;&nbsp;&nbsp;&nbsp;kernel&nbsp;:&nbsp;*todo*<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The&nbsp;kernel&nbsp;size&nbsp;should&nbsp;be&nbsp;odd,&nbsp;and&nbsp;should&nbsp;be&nbsp;allocated&nbsp;by<br>
@@ -825,8 +849,9 @@ Examples<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK&nbsp;(how&nbsp;to&nbsp;create&nbsp;kernel)</tt></dd></dl>
- <dl><dt><a name="-flimage_convolvea"><strong>flimage_convolvea</strong></a>(ptr_image, kernel, krows, kcols)</dt><dd><tt><a href="#-flimage_convolvea">flimage_convolvea</a>(ptr_image,&nbsp;kernel,&nbsp;krows,&nbsp;kcols)&nbsp;-&gt;&nbsp;result<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK&nbsp;(how&nbsp;to&nbsp;create&nbsp;kernel)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;It&nbsp;does&nbsp;not&nbsp;need&nbsp;to&nbsp;call&nbsp;flxbasic.fl_initialize()&nbsp;before</tt></dd></dl>
+ <dl><dt><a name="-flimage_convolvea"><strong>flimage_convolvea</strong></a>(ptr_flimage, kernel, krows, kcols)</dt><dd><tt><a href="#-flimage_convolvea">flimage_convolvea</a>(ptr_flimage,&nbsp;kernel,&nbsp;krows,&nbsp;kcols)&nbsp;-&gt;&nbsp;result<br>
 &nbsp;<br>
 Takes&nbsp;a&nbsp;convolution&nbsp;kernel&nbsp;of&nbsp;krows&nbsp;by&nbsp;kcols&nbsp;and&nbsp;convolves&nbsp;it&nbsp;with&nbsp;the<br>
 image.&nbsp;The&nbsp;result&nbsp;replaces&nbsp;the&nbsp;input&nbsp;image.&nbsp;It&nbsp;uses&nbsp;a&nbsp;kernel&nbsp;that&nbsp;is&nbsp;a<br>
@@ -834,7 +859,7 @@ C&nbsp;2-dimensional&nbsp;array,&nbsp;kernel[krows][kcols]&nbsp;(cast&nbsp;to&nb
 &nbsp;<br>
 Parameters<br>
 ----------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;ptr_image&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_IMAGE<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_flimage&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_IMAGE<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;image<br>
 &nbsp;&nbsp;&nbsp;&nbsp;kernel&nbsp;:&nbsp;*todo*<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;C&nbsp;2-dimensional&nbsp;array&nbsp;*todo*<br>
@@ -854,14 +879,15 @@ Examples<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK&nbsp;(how&nbsp;to&nbsp;create&nbsp;kernel)</tt></dd></dl>
- <dl><dt><a name="-flimage_crop"><strong>flimage_crop</strong></a>(ptr_image, xloff, ytoff, xroff, yboff)</dt><dd><tt><a href="#-flimage_crop">flimage_crop</a>(ptr_image,&nbsp;xloff,&nbsp;ytoff,&nbsp;xroff,&nbsp;yboff)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK&nbsp;(how&nbsp;to&nbsp;create&nbsp;kernel)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;It&nbsp;does&nbsp;not&nbsp;need&nbsp;to&nbsp;call&nbsp;flxbasic.fl_initialize()&nbsp;before</tt></dd></dl>
+ <dl><dt><a name="-flimage_crop"><strong>flimage_crop</strong></a>(ptr_flimage, xloff, ytoff, xroff, yboff)</dt><dd><tt><a href="#-flimage_crop">flimage_crop</a>(ptr_flimage,&nbsp;xloff,&nbsp;ytoff,&nbsp;xroff,&nbsp;yboff)<br>
 &nbsp;<br>
 Crops&nbsp;an&nbsp;image,&nbsp;using&nbsp;offsets&nbsp;supplied&nbsp;by&nbsp;the&nbsp;user.<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;ptr_image&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_IMAGE<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_flimage&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_IMAGE<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;image&nbsp;to&nbsp;be&nbsp;cropped<br>
 &nbsp;&nbsp;&nbsp;&nbsp;xloff&nbsp;:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;offset&nbsp;from&nbsp;left&nbsp;side.&nbsp;If&nbsp;it&nbsp;is&nbsp;negative,&nbsp;it&nbsp;indicates<br>
@@ -891,7 +917,8 @@ Examples<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK<br>
+&nbsp;&nbsp;&nbsp;&nbsp;It&nbsp;does&nbsp;not&nbsp;need&nbsp;to&nbsp;call&nbsp;flxbasic.fl_initialize()&nbsp;before</tt></dd></dl>
  <dl><dt><a name="-flimage_define_marker"><strong>flimage_define_marker</strong></a>(mkrname, pyfn_FlimageMarkerDraw, psdraw)</dt><dd><tt><a href="#-flimage_define_marker">flimage_define_marker</a>(mkrname,&nbsp;pyfn_FlimageMarkerDraw,&nbsp;psdraw)&nbsp;-&gt;&nbsp;result<br>
 &nbsp;<br>
 Defines&nbsp;a&nbsp;custom&nbsp;marker,&nbsp;using&nbsp;a&nbsp;specific&nbsp;function&nbsp;for&nbsp;drawing&nbsp;it.<br>
@@ -901,7 +928,7 @@ Parameters<br>
 &nbsp;&nbsp;&nbsp;&nbsp;mkrname&nbsp;:&nbsp;str<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;name&nbsp;of&nbsp;the&nbsp;marker<br>
 &nbsp;&nbsp;&nbsp;&nbsp;pyfn_FlimageMarkerDraw&nbsp;:&nbsp;python&nbsp;function&nbsp;to&nbsp;draw&nbsp;marker,&nbsp;no&nbsp;return<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;name&nbsp;referring&nbsp;to&nbsp;function(ptr_imageMarker)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;name&nbsp;referring&nbsp;to&nbsp;function(ptr_flimageMarker)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;psdraw&nbsp;:&nbsp;str<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;string&nbsp;that&nbsp;draws&nbsp;a&nbsp;marker&nbsp;in&nbsp;a&nbsp;square&nbsp;with&nbsp;the&nbsp;corner&nbsp;coordinates<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(-1,&nbsp;-1),&nbsp;(-1,&nbsp;1),&nbsp;(1,&nbsp;1)&nbsp;and&nbsp;(1,&nbsp;-1)&nbsp;in&nbsp;PostScript.&nbsp;e.g.&nbsp;the<br>
@@ -919,14 +946,15 @@ Examples<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-flimage_delete_all_markers"><strong>flimage_delete_all_markers</strong></a>(ptr_image)</dt><dd><tt><a href="#-flimage_delete_all_markers">flimage_delete_all_markers</a>(ptr_image)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK<br>
+&nbsp;&nbsp;&nbsp;&nbsp;It&nbsp;does&nbsp;not&nbsp;need&nbsp;to&nbsp;call&nbsp;flxbasic.fl_initialize()&nbsp;before</tt></dd></dl>
+ <dl><dt><a name="-flimage_delete_all_markers"><strong>flimage_delete_all_markers</strong></a>(ptr_flimage)</dt><dd><tt><a href="#-flimage_delete_all_markers">flimage_delete_all_markers</a>(ptr_flimage)<br>
 &nbsp;<br>
 Deletes&nbsp;all&nbsp;markers&nbsp;added&nbsp;to&nbsp;an&nbsp;image<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;ptr_image&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_IMAGE<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_flimage&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_IMAGE<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;image<br>
 &nbsp;<br>
 Examples<br>
@@ -935,14 +963,15 @@ Examples<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-flimage_delete_all_text"><strong>flimage_delete_all_text</strong></a>(ptr_image)</dt><dd><tt><a href="#-flimage_delete_all_text">flimage_delete_all_text</a>(ptr_image)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK<br>
+&nbsp;&nbsp;&nbsp;&nbsp;It&nbsp;does&nbsp;not&nbsp;need&nbsp;to&nbsp;call&nbsp;flxbasic.fl_initialize()&nbsp;before</tt></dd></dl>
+ <dl><dt><a name="-flimage_delete_all_text"><strong>flimage_delete_all_text</strong></a>(ptr_flimage)</dt><dd><tt><a href="#-flimage_delete_all_text">flimage_delete_all_text</a>(ptr_flimage)<br>
 &nbsp;<br>
 Deletes&nbsp;all&nbsp;the&nbsp;texts&nbsp;you&nbsp;added&nbsp;to&nbsp;an&nbsp;image.<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;ptr_image&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_IMAGE<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_flimage&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_IMAGE<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;image<br>
 &nbsp;<br>
 Examples<br>
@@ -951,15 +980,16 @@ Examples<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-flimage_description_via_filter"><strong>flimage_description_via_filter</strong></a>(ptr_image, cmds, what, verbose)</dt><dd><tt><a href="#-flimage_description_via_filter">flimage_description_via_filter</a>(ptr_image,&nbsp;cmds,&nbsp;what,&nbsp;verbose)&nbsp;-&gt;&nbsp;result<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK<br>
+&nbsp;&nbsp;&nbsp;&nbsp;It&nbsp;does&nbsp;not&nbsp;need&nbsp;to&nbsp;call&nbsp;flxbasic.fl_initialize()&nbsp;before</tt></dd></dl>
+ <dl><dt><a name="-flimage_description_via_filter"><strong>flimage_description_via_filter</strong></a>(ptr_flimage, cmds, what, verbose)</dt><dd><tt><a href="#-flimage_description_via_filter">flimage_description_via_filter</a>(ptr_flimage,&nbsp;cmds,&nbsp;what,&nbsp;verbose)&nbsp;-&gt;&nbsp;result<br>
 &nbsp;<br>
 Adds&nbsp;a&nbsp;description&nbsp;to&nbsp;be&nbsp;used&nbsp;with&nbsp;<a href="#-flimage_add_format">flimage_add_format</a>()&nbsp;to&nbsp;add&nbsp;image<br>
 formats&nbsp;via&nbsp;an&nbsp;external&nbsp;filter's&nbsp;command.<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;ptr_image&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_IMAGE<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_flimage&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_IMAGE<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;image<br>
 &nbsp;&nbsp;&nbsp;&nbsp;cmds&nbsp;:&nbsp;list&nbsp;of&nbsp;str?<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;a&nbsp;list&nbsp;of&nbsp;shell&nbsp;commands&nbsp;(filters)&nbsp;that&nbsp;convert&nbsp;the&nbsp;format&nbsp;in<br>
@@ -982,14 +1012,15 @@ Examples<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-flimage_display"><strong>flimage_display</strong></a>(ptr_image, win)</dt><dd><tt><a href="#-flimage_display">flimage_display</a>(ptr_image,&nbsp;win)&nbsp;-&gt;&nbsp;result<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK<br>
+&nbsp;&nbsp;&nbsp;&nbsp;It&nbsp;does&nbsp;not&nbsp;need&nbsp;to&nbsp;call&nbsp;flxbasic.fl_initialize()&nbsp;before</tt></dd></dl>
+ <dl><dt><a name="-flimage_display"><strong>flimage_display</strong></a>(ptr_flimage, win)</dt><dd><tt><a href="#-flimage_display">flimage_display</a>(ptr_flimage,&nbsp;win)&nbsp;-&gt;&nbsp;result<br>
 &nbsp;<br>
 Displays&nbsp;a&nbsp;single&nbsp;or&nbsp;multiple&nbsp;images&nbsp;in&nbsp;a&nbsp;window.<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;ptr_image&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_IMAGE<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_flimage&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_IMAGE<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;image<br>
 &nbsp;&nbsp;&nbsp;&nbsp;win&nbsp;:&nbsp;long_pos<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;window&nbsp;id<br>
@@ -1005,14 +1036,15 @@ Examples<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-flimage_display_markers"><strong>flimage_display_markers</strong></a>(ptr_image)</dt><dd><tt><a href="#-flimage_display_markers">flimage_display_markers</a>(ptr_image)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK<br>
+&nbsp;&nbsp;&nbsp;&nbsp;It&nbsp;does&nbsp;not&nbsp;need&nbsp;to&nbsp;call&nbsp;flxbasic.fl_initialize()&nbsp;before</tt></dd></dl>
+ <dl><dt><a name="-flimage_display_markers"><strong>flimage_display_markers</strong></a>(ptr_flimage)</dt><dd><tt><a href="#-flimage_display_markers">flimage_display_markers</a>(ptr_flimage)<br>
 &nbsp;<br>
 Displays&nbsp;markers&nbsp;added&nbsp;to&nbsp;an&nbsp;image.<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;ptr_image&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_IMAGE<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_flimage&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_IMAGE<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;image<br>
 &nbsp;<br>
 Examples<br>
@@ -1021,8 +1053,9 @@ Examples<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-flimage_dump"><strong>flimage_dump</strong></a>(ptr_image, fname, fmt)</dt><dd><tt><a href="#-flimage_dump">flimage_dump</a>(ptr_image,&nbsp;fname,&nbsp;fmt)&nbsp;-&gt;&nbsp;result<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK<br>
+&nbsp;&nbsp;&nbsp;&nbsp;It&nbsp;does&nbsp;not&nbsp;need&nbsp;to&nbsp;call&nbsp;flxbasic.fl_initialize()&nbsp;before</tt></dd></dl>
+ <dl><dt><a name="-flimage_dump"><strong>flimage_dump</strong></a>(ptr_flimage, fname, fmt)</dt><dd><tt><a href="#-flimage_dump">flimage_dump</a>(ptr_flimage,&nbsp;fname,&nbsp;fmt)&nbsp;-&gt;&nbsp;result<br>
 &nbsp;<br>
 Takes&nbsp;an&nbsp;image,&nbsp;either&nbsp;returned&nbsp;by&nbsp;<a href="#-flimage_load">flimage_load</a>()&nbsp;(possibly&nbsp;after<br>
 some&nbsp;processing)&nbsp;or&nbsp;created&nbsp;on&nbsp;the&nbsp;fly&nbsp;by&nbsp;the&nbsp;application,&nbsp;attempts<br>
@@ -1030,7 +1063,7 @@ to&nbsp;create&nbsp;a&nbsp;file&nbsp;to&nbsp;store&nbsp;the&nbsp;image.<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;ptr_image&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_IMAGE<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_flimage&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_IMAGE<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;image&nbsp;class&nbsp;instance<br>
 &nbsp;&nbsp;&nbsp;&nbsp;fname&nbsp;:&nbsp;str<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;name&nbsp;of&nbsp;file&nbsp;to&nbsp;be&nbsp;saved<br>
@@ -1051,8 +1084,9 @@ Examples<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-flimage_dup"><strong>flimage_dup</strong></a>(ptr_image)</dt><dd><tt><a href="#-flimage_dup">flimage_dup</a>(ptr_image)&nbsp;-&gt;&nbsp;ptr_image<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK<br>
+&nbsp;&nbsp;&nbsp;&nbsp;It&nbsp;does&nbsp;not&nbsp;need&nbsp;to&nbsp;call&nbsp;flxbasic.fl_initialize()&nbsp;before</tt></dd></dl>
+ <dl><dt><a name="-flimage_dup"><strong>flimage_dup</strong></a>(ptr_flimage)</dt><dd><tt><a href="#-flimage_dup">flimage_dup</a>(ptr_flimage)&nbsp;-&gt;&nbsp;ptr_flimage<br>
 &nbsp;<br>
 Duplicates&nbsp;an&nbsp;image&nbsp;and&nbsp;returns&nbsp;the&nbsp;duplicated&nbsp;image.&nbsp;At&nbsp;the&nbsp;moment,<br>
 only&nbsp;the&nbsp;first&nbsp;image&nbsp;is&nbsp;duplicated&nbsp;even&nbsp;if&nbsp;the&nbsp;input&nbsp;image&nbsp;has&nbsp;multiple<br>
@@ -1060,12 +1094,12 @@ frames.&nbsp;Furthermore,&nbsp;markers&nbsp;and&nbsp;annotations&nbsp;are&nbsp;n
 &nbsp;<br>
 Parameters<br>
 ----------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;ptr_image&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_IMAGE<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_flimage&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_IMAGE<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;image&nbsp;to&nbsp;be&nbsp;duplicated<br>
 &nbsp;<br>
 Returns<br>
 -------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;ptr_image&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_IMAGE<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_flimage&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_IMAGE<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;duplicated&nbsp;image&nbsp;class&nbsp;instance,&nbsp;or&nbsp;None&nbsp;(on&nbsp;failure)<br>
 &nbsp;<br>
 Examples<br>
@@ -1074,21 +1108,22 @@ Examples<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-flimage_dup_"><strong>flimage_dup_</strong></a>(ptr_image, copypix)</dt><dd><tt><a href="#-flimage_dup_">flimage_dup_</a>(ptr_image,&nbsp;copypix)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK<br>
+&nbsp;&nbsp;&nbsp;&nbsp;It&nbsp;does&nbsp;not&nbsp;need&nbsp;to&nbsp;call&nbsp;flxbasic.fl_initialize()&nbsp;before</tt></dd></dl>
+ <dl><dt><a name="-flimage_dup_"><strong>flimage_dup_</strong></a>(ptr_flimage, copypix)</dt><dd><tt><a href="#-flimage_dup_">flimage_dup_</a>(ptr_flimage,&nbsp;copypix)<br>
 &nbsp;<br>
 Duplicates&nbsp;an&nbsp;image,&nbsp;with&nbsp;or&nbsp;without&nbsp;the&nbsp;pixels.<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;ptr_image&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_IMAGE<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_flimage&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_IMAGE<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;image<br>
 &nbsp;&nbsp;&nbsp;&nbsp;copypix&nbsp;:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;flag&nbsp;to&nbsp;copy&nbsp;pixels&nbsp;(1)&nbsp;or&nbsp;not&nbsp;(0)<br>
 &nbsp;<br>
 Returns<br>
 -------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;ptr_image&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_IMAGE<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_flimage&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_IMAGE<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;image&nbsp;class&nbsp;instance,&nbsp;or&nbsp;0&nbsp;(on&nbsp;failure)<br>
 &nbsp;<br>
 Examples<br>
@@ -1097,7 +1132,8 @@ Examples<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK<br>
+&nbsp;&nbsp;&nbsp;&nbsp;It&nbsp;does&nbsp;not&nbsp;need&nbsp;to&nbsp;call&nbsp;flxbasic.fl_initialize()&nbsp;before</tt></dd></dl>
  <dl><dt><a name="-flimage_enable_bmp"><strong>flimage_enable_bmp</strong></a>()</dt><dd><tt><a href="#-flimage_enable_bmp">flimage_enable_bmp</a>()<br>
 &nbsp;<br>
 Enables&nbsp;use&nbsp;of&nbsp;BMP&nbsp;(Windows/OS2&nbsp;Bitmap)&nbsp;image&nbsp;format.<br>
@@ -1108,7 +1144,8 @@ Examples<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK<br>
+&nbsp;&nbsp;&nbsp;&nbsp;It&nbsp;does&nbsp;not&nbsp;need&nbsp;to&nbsp;call&nbsp;flxbasic.fl_initialize()&nbsp;before</tt></dd></dl>
  <dl><dt><a name="-flimage_enable_fits"><strong>flimage_enable_fits</strong></a>()</dt><dd><tt><a href="#-flimage_enable_fits">flimage_enable_fits</a>()<br>
 &nbsp;<br>
 Enables&nbsp;use&nbsp;of&nbsp;NASA/NOTS&nbsp;standard&nbsp;FITS&nbsp;image&nbsp;format.<br>
@@ -1119,7 +1156,8 @@ Examples<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK<br>
+&nbsp;&nbsp;&nbsp;&nbsp;It&nbsp;does&nbsp;not&nbsp;need&nbsp;to&nbsp;call&nbsp;flxbasic.fl_initialize()&nbsp;before</tt></dd></dl>
  <dl><dt><a name="-flimage_enable_genesis"><strong>flimage_enable_genesis</strong></a>()</dt><dd><tt><a href="#-flimage_enable_genesis">flimage_enable_genesis</a>()<br>
 &nbsp;<br>
 Enables&nbsp;use&nbsp;of&nbsp;Genesis&nbsp;image&nbsp;format.<br>
@@ -1130,7 +1168,8 @@ Examples<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK<br>
+&nbsp;&nbsp;&nbsp;&nbsp;It&nbsp;does&nbsp;not&nbsp;need&nbsp;to&nbsp;call&nbsp;flxbasic.fl_initialize()&nbsp;before</tt></dd></dl>
  <dl><dt><a name="-flimage_enable_gif"><strong>flimage_enable_gif</strong></a>()</dt><dd><tt><a href="#-flimage_enable_gif">flimage_enable_gif</a>()<br>
 &nbsp;<br>
 Enables&nbsp;use&nbsp;of&nbsp;GIF&nbsp;(Compuserve&nbsp;Graphics&nbsp;Interchange&nbsp;format)<br>
@@ -1142,7 +1181,8 @@ Examples<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK<br>
+&nbsp;&nbsp;&nbsp;&nbsp;It&nbsp;does&nbsp;not&nbsp;need&nbsp;to&nbsp;call&nbsp;flxbasic.fl_initialize()&nbsp;before</tt></dd></dl>
  <dl><dt><a name="-flimage_enable_gzip"><strong>flimage_enable_gzip</strong></a>()</dt><dd><tt><a href="#-flimage_enable_gzip">flimage_enable_gzip</a>()<br>
 &nbsp;<br>
 Enables&nbsp;use&nbsp;of&nbsp;gzip&nbsp;compression&nbsp;filter&nbsp;for&nbsp;images.<br>
@@ -1153,7 +1193,8 @@ Examples<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK<br>
+&nbsp;&nbsp;&nbsp;&nbsp;It&nbsp;does&nbsp;not&nbsp;need&nbsp;to&nbsp;call&nbsp;flxbasic.fl_initialize()&nbsp;before</tt></dd></dl>
  <dl><dt><a name="-flimage_enable_jpeg"><strong>flimage_enable_jpeg</strong></a>()</dt><dd><tt><a href="#-flimage_enable_jpeg">flimage_enable_jpeg</a>()<br>
 &nbsp;<br>
 Enables&nbsp;use&nbsp;of&nbsp;JPEG/JFIF&nbsp;(Joint&nbsp;Photographic&nbsp;Experts&nbsp;Group)&nbsp;image<br>
@@ -1165,7 +1206,8 @@ Examples<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK<br>
+&nbsp;&nbsp;&nbsp;&nbsp;It&nbsp;does&nbsp;not&nbsp;need&nbsp;to&nbsp;call&nbsp;flxbasic.fl_initialize()&nbsp;before</tt></dd></dl>
  <dl><dt><a name="-flimage_enable_png"><strong>flimage_enable_png</strong></a>()</dt><dd><tt><a href="#-flimage_enable_png">flimage_enable_png</a>()<br>
 &nbsp;<br>
 Enables&nbsp;use&nbsp;of&nbsp;PNG&nbsp;(Portable&nbsp;Network&nbsp;Graphics)&nbsp;image&nbsp;format.&nbsp;It<br>
@@ -1177,7 +1219,8 @@ Examples<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK<br>
+&nbsp;&nbsp;&nbsp;&nbsp;It&nbsp;does&nbsp;not&nbsp;need&nbsp;to&nbsp;call&nbsp;flxbasic.fl_initialize()&nbsp;before</tt></dd></dl>
  <dl><dt><a name="-flimage_enable_pnm"><strong>flimage_enable_pnm</strong></a>()</dt><dd><tt><a href="#-flimage_enable_pnm">flimage_enable_pnm</a>()<br>
 &nbsp;<br>
 Enables&nbsp;use&nbsp;of&nbsp;PNM&nbsp;(Portable&nbsp;anymap)&nbsp;image&nbsp;format.<br>
@@ -1188,7 +1231,8 @@ Examples<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK<br>
+&nbsp;&nbsp;&nbsp;&nbsp;It&nbsp;does&nbsp;not&nbsp;need&nbsp;to&nbsp;call&nbsp;flxbasic.fl_initialize()&nbsp;before</tt></dd></dl>
  <dl><dt><a name="-flimage_enable_ps"><strong>flimage_enable_ps</strong></a>()</dt><dd><tt><a href="#-flimage_enable_ps">flimage_enable_ps</a>()<br>
 &nbsp;<br>
 Enables&nbsp;use&nbsp;of&nbsp;PS&nbsp;(Adobe&nbsp;PostScript)&nbsp;image&nbsp;format.&nbsp;It&nbsp;needs&nbsp;gs<br>
@@ -1200,7 +1244,8 @@ Examples<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK<br>
+&nbsp;&nbsp;&nbsp;&nbsp;It&nbsp;does&nbsp;not&nbsp;need&nbsp;to&nbsp;call&nbsp;flxbasic.fl_initialize()&nbsp;before</tt></dd></dl>
  <dl><dt><a name="-flimage_enable_sgi"><strong>flimage_enable_sgi</strong></a>()</dt><dd><tt><a href="#-flimage_enable_sgi">flimage_enable_sgi</a>()<br>
 &nbsp;<br>
 Enables&nbsp;use&nbsp;of&nbsp;SGI&nbsp;(Silicon&nbsp;Graphics-Iris)&nbsp;image&nbsp;format.&nbsp;It&nbsp;requires<br>
@@ -1212,7 +1257,8 @@ Examples<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK<br>
+&nbsp;&nbsp;&nbsp;&nbsp;It&nbsp;does&nbsp;not&nbsp;need&nbsp;to&nbsp;call&nbsp;flxbasic.fl_initialize()&nbsp;before</tt></dd></dl>
  <dl><dt><a name="-flimage_enable_tiff"><strong>flimage_enable_tiff</strong></a>()</dt><dd><tt><a href="#-flimage_enable_tiff">flimage_enable_tiff</a>()<br>
 &nbsp;<br>
 Enables&nbsp;use&nbsp;of&nbsp;TIFF&nbsp;(Tagged&nbsp;Image&nbsp;file,&nbsp;with&nbsp;no&nbsp;compression)&nbsp;image<br>
@@ -1224,7 +1270,8 @@ Examples<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK<br>
+&nbsp;&nbsp;&nbsp;&nbsp;It&nbsp;does&nbsp;not&nbsp;need&nbsp;to&nbsp;call&nbsp;flxbasic.fl_initialize()&nbsp;before</tt></dd></dl>
  <dl><dt><a name="-flimage_enable_xbm"><strong>flimage_enable_xbm</strong></a>()</dt><dd><tt><a href="#-flimage_enable_xbm">flimage_enable_xbm</a>()<br>
 &nbsp;<br>
 Enables&nbsp;use&nbsp;of&nbsp;XBM&nbsp;(X&nbsp;Window&nbsp;Bitmap)&nbsp;image&nbsp;format.<br>
@@ -1235,7 +1282,8 @@ Examples<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK<br>
+&nbsp;&nbsp;&nbsp;&nbsp;It&nbsp;does&nbsp;not&nbsp;need&nbsp;to&nbsp;call&nbsp;flxbasic.fl_initialize()&nbsp;before</tt></dd></dl>
  <dl><dt><a name="-flimage_enable_xpm"><strong>flimage_enable_xpm</strong></a>()</dt><dd><tt><a href="#-flimage_enable_xpm">flimage_enable_xpm</a>()<br>
 &nbsp;<br>
 Enables&nbsp;use&nbsp;of&nbsp;XPM3&nbsp;(X&nbsp;Window&nbsp;PixMap)&nbsp;image&nbsp;format.<br>
@@ -1246,7 +1294,8 @@ Examples<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK<br>
+&nbsp;&nbsp;&nbsp;&nbsp;It&nbsp;does&nbsp;not&nbsp;need&nbsp;to&nbsp;call&nbsp;flxbasic.fl_initialize()&nbsp;before</tt></dd></dl>
  <dl><dt><a name="-flimage_enable_xwd"><strong>flimage_enable_xwd</strong></a>()</dt><dd><tt><a href="#-flimage_enable_xwd">flimage_enable_xwd</a>()<br>
 &nbsp;<br>
 Enables&nbsp;use&nbsp;of&nbsp;XWD&nbsp;(X&nbsp;Window&nbsp;Dump)&nbsp;image&nbsp;format.<br>
@@ -1257,14 +1306,15 @@ Examples<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-flimage_enhance"><strong>flimage_enhance</strong></a>(ptr_image, delta)</dt><dd><tt><a href="#-flimage_enhance">flimage_enhance</a>(ptr_image,&nbsp;delta)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK<br>
+&nbsp;&nbsp;&nbsp;&nbsp;It&nbsp;does&nbsp;not&nbsp;need&nbsp;to&nbsp;call&nbsp;flxbasic.fl_initialize()&nbsp;before</tt></dd></dl>
+ <dl><dt><a name="-flimage_enhance"><strong>flimage_enhance</strong></a>(ptr_flimage, delta)</dt><dd><tt><a href="#-flimage_enhance">flimage_enhance</a>(ptr_flimage,&nbsp;delta)<br>
 &nbsp;<br>
 Enhances&nbsp;an&nbsp;image&nbsp;*todo*<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;ptr_image&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_IMAGE<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_flimage&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_IMAGE<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;image<br>
 &nbsp;&nbsp;&nbsp;&nbsp;delta&nbsp;:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;unused.<br>
@@ -1280,14 +1330,15 @@ Examples<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-flimage_error"><strong>flimage_error</strong></a>(ptr_image, text)</dt><dd><tt><a href="#-flimage_error">flimage_error</a>(ptr_image,&nbsp;text)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK<br>
+&nbsp;&nbsp;&nbsp;&nbsp;It&nbsp;does&nbsp;not&nbsp;need&nbsp;to&nbsp;call&nbsp;flxbasic.fl_initialize()&nbsp;before</tt></dd></dl>
+ <dl><dt><a name="-flimage_error"><strong>flimage_error</strong></a>(ptr_flimage, text)</dt><dd><tt><a href="#-flimage_error">flimage_error</a>(ptr_flimage,&nbsp;text)<br>
 &nbsp;<br>
 Calls&nbsp;the&nbsp;error&nbsp;message&nbsp;handler&nbsp;for&nbsp;an&nbsp;image.<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;ptr_image&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_IMAGE<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_flimage&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_IMAGE<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;image&nbsp;to&nbsp;be&nbsp;worked&nbsp;on<br>
 &nbsp;&nbsp;&nbsp;&nbsp;text&nbsp;:&nbsp;str<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;a&nbsp;brief&nbsp;message,&nbsp;such&nbsp;as&nbsp;"memory&nbsp;allocation&nbsp;failed"&nbsp;etc..<br>
@@ -1298,8 +1349,9 @@ Examples<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-flimage_flip"><strong>flimage_flip</strong></a>(ptr_image, flipaxis)</dt><dd><tt><a href="#-flimage_flip">flimage_flip</a>(ptr_image,&nbsp;flipaxis)&nbsp;-&gt;&nbsp;result<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK<br>
+&nbsp;&nbsp;&nbsp;&nbsp;It&nbsp;does&nbsp;not&nbsp;need&nbsp;to&nbsp;call&nbsp;flxbasic.fl_initialize()&nbsp;before</tt></dd></dl>
+ <dl><dt><a name="-flimage_flip"><strong>flimage_flip</strong></a>(ptr_flimage, flipaxis)</dt><dd><tt><a href="#-flimage_flip">flimage_flip</a>(ptr_flimage,&nbsp;flipaxis)&nbsp;-&gt;&nbsp;result<br>
 &nbsp;<br>
 Does&nbsp;the&nbsp;mirror&nbsp;operation&nbsp;in&nbsp;x-&nbsp;or&nbsp;y-direction&nbsp;at&nbsp;the&nbsp;center.&nbsp;For<br>
 example,&nbsp;to&nbsp;flip&nbsp;the&nbsp;columns&nbsp;of&nbsp;an&nbsp;image,&nbsp;the&nbsp;left&nbsp;and&nbsp;right&nbsp;of&nbsp;the<br>
@@ -1309,7 +1361,7 @@ the&nbsp;last&nbsp;pixel&nbsp;becomes&nbsp;the&nbsp;first&nbsp;etc.<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;ptr_image&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_IMAGE<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_flimage&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_IMAGE<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;image<br>
 &nbsp;&nbsp;&nbsp;&nbsp;flipaxis&nbsp;:&nbsp;int&nbsp;or&nbsp;char<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;desired&nbsp;direction&nbsp;of&nbsp;flipping.&nbsp;Values&nbsp;'c'&nbsp;(column,&nbsp;horizontal<br>
@@ -1326,15 +1378,16 @@ Examples<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-flimage_free"><strong>flimage_free</strong></a>(ptr_image)</dt><dd><tt><a href="#-flimage_free">flimage_free</a>(ptr_image)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK<br>
+&nbsp;&nbsp;&nbsp;&nbsp;It&nbsp;does&nbsp;not&nbsp;need&nbsp;to&nbsp;call&nbsp;flxbasic.fl_initialize()&nbsp;before</tt></dd></dl>
+ <dl><dt><a name="-flimage_free"><strong>flimage_free</strong></a>(ptr_flimage)</dt><dd><tt><a href="#-flimage_free">flimage_free</a>(ptr_flimage)<br>
 &nbsp;<br>
 Frees&nbsp;all&nbsp;memory&nbsp;allocated&nbsp;for&nbsp;the&nbsp;image,&nbsp;then&nbsp;the&nbsp;image&nbsp;structure<br>
 itself.&nbsp;After&nbsp;the&nbsp;function&nbsp;returns,&nbsp;the&nbsp;image&nbsp;should&nbsp;not&nbsp;be&nbsp;referenced.<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;ptr_image&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_IMAGE<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_flimage&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_IMAGE<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;image<br>
 &nbsp;<br>
 Examples<br>
@@ -1343,14 +1396,15 @@ Examples<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-flimage_free_ci"><strong>flimage_free_ci</strong></a>(ptr_image)</dt><dd><tt><a href="#-flimage_free_ci">flimage_free_ci</a>(ptr_image)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK<br>
+&nbsp;&nbsp;&nbsp;&nbsp;It&nbsp;does&nbsp;not&nbsp;need&nbsp;to&nbsp;call&nbsp;flxbasic.fl_initialize()&nbsp;before</tt></dd></dl>
+ <dl><dt><a name="-flimage_free_ci"><strong>flimage_free_ci</strong></a>(ptr_flimage)</dt><dd><tt><a href="#-flimage_free_ci">flimage_free_ci</a>(ptr_flimage)<br>
 &nbsp;<br>
 Frees&nbsp;an&nbsp;image&nbsp;of&nbsp;type&nbsp;xfdata.FL_IMAGE_CI?<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;ptr_image&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_IMAGE<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_flimage&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_IMAGE<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;image<br>
 &nbsp;<br>
 Examples<br>
@@ -1359,14 +1413,15 @@ Examples<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-flimage_free_gray"><strong>flimage_free_gray</strong></a>(ptr_image)</dt><dd><tt><a href="#-flimage_free_gray">flimage_free_gray</a>(ptr_image)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK<br>
+&nbsp;&nbsp;&nbsp;&nbsp;It&nbsp;does&nbsp;not&nbsp;need&nbsp;to&nbsp;call&nbsp;flxbasic.fl_initialize()&nbsp;before</tt></dd></dl>
+ <dl><dt><a name="-flimage_free_gray"><strong>flimage_free_gray</strong></a>(ptr_flimage)</dt><dd><tt><a href="#-flimage_free_gray">flimage_free_gray</a>(ptr_flimage)<br>
 &nbsp;<br>
 Frees&nbsp;an&nbsp;image&nbsp;of&nbsp;type&nbsp;xfdata.FL_IMAGE_GRAY?.<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;ptr_image&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_IMAGE<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_flimage&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_IMAGE<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;image<br>
 &nbsp;<br>
 Examples<br>
@@ -1375,14 +1430,15 @@ Examples<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-flimage_free_linearlut"><strong>flimage_free_linearlut</strong></a>(ptr_image)</dt><dd><tt><a href="#-flimage_free_linearlut">flimage_free_linearlut</a>(ptr_image)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK<br>
+&nbsp;&nbsp;&nbsp;&nbsp;It&nbsp;does&nbsp;not&nbsp;need&nbsp;to&nbsp;call&nbsp;flxbasic.fl_initialize()&nbsp;before</tt></dd></dl>
+ <dl><dt><a name="-flimage_free_linearlut"><strong>flimage_free_linearlut</strong></a>(ptr_flimage)</dt><dd><tt><a href="#-flimage_free_linearlut">flimage_free_linearlut</a>(ptr_flimage)<br>
 &nbsp;<br>
 *todo*<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;ptr_image&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_IMAGE<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_flimage&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_IMAGE<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;image<br>
 &nbsp;<br>
 Examples<br>
@@ -1391,14 +1447,15 @@ Examples<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-flimage_free_rgb"><strong>flimage_free_rgb</strong></a>(ptr_image)</dt><dd><tt><a href="#-flimage_free_rgb">flimage_free_rgb</a>(ptr_image)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK<br>
+&nbsp;&nbsp;&nbsp;&nbsp;It&nbsp;does&nbsp;not&nbsp;need&nbsp;to&nbsp;call&nbsp;flxbasic.fl_initialize()&nbsp;before</tt></dd></dl>
+ <dl><dt><a name="-flimage_free_rgb"><strong>flimage_free_rgb</strong></a>(ptr_flimage)</dt><dd><tt><a href="#-flimage_free_rgb">flimage_free_rgb</a>(ptr_flimage)<br>
 &nbsp;<br>
 Frees&nbsp;an&nbsp;image&nbsp;of&nbsp;type&nbsp;xfdata.FL_IMAGE_RGB?.<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;ptr_image&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_IMAGE<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_flimage&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_IMAGE<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;image<br>
 &nbsp;<br>
 Examples<br>
@@ -1407,14 +1464,15 @@ Examples<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-flimage_freemem"><strong>flimage_freemem</strong></a>(ptr_image)</dt><dd><tt><a href="#-flimage_freemem">flimage_freemem</a>(ptr_image)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK<br>
+&nbsp;&nbsp;&nbsp;&nbsp;It&nbsp;does&nbsp;not&nbsp;need&nbsp;to&nbsp;call&nbsp;flxbasic.fl_initialize()&nbsp;before</tt></dd></dl>
+ <dl><dt><a name="-flimage_freemem"><strong>flimage_freemem</strong></a>(ptr_flimage)</dt><dd><tt><a href="#-flimage_freemem">flimage_freemem</a>(ptr_flimage)<br>
 &nbsp;<br>
 Frees&nbsp;all&nbsp;allocated&nbsp;memory&nbsp;associated&nbsp;with&nbsp;the&nbsp;image.<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;ptr_image&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_IMAGE<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_flimage&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_IMAGE<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;image<br>
 &nbsp;<br>
 Examples<br>
@@ -1423,14 +1481,15 @@ Examples<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-flimage_from_pixmap"><strong>flimage_from_pixmap</strong></a>(ptr_image, pixmap)</dt><dd><tt><a href="#-flimage_from_pixmap">flimage_from_pixmap</a>(ptr_image,&nbsp;pixmap)&nbsp;-&gt;&nbsp;result<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK<br>
+&nbsp;&nbsp;&nbsp;&nbsp;It&nbsp;does&nbsp;not&nbsp;need&nbsp;to&nbsp;call&nbsp;flxbasic.fl_initialize()&nbsp;before</tt></dd></dl>
+ <dl><dt><a name="-flimage_from_pixmap"><strong>flimage_from_pixmap</strong></a>(ptr_flimage, pixmap)</dt><dd><tt><a href="#-flimage_from_pixmap">flimage_from_pixmap</a>(ptr_flimage,&nbsp;pixmap)&nbsp;-&gt;&nbsp;result<br>
 &nbsp;<br>
 Converts&nbsp;a&nbsp;Pixmap&nbsp;to&nbsp;an&nbsp;image.&nbsp;*todo*<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;ptr_image&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_IMAGE<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_flimage&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_IMAGE<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;image<br>
 &nbsp;&nbsp;&nbsp;&nbsp;pixmap&nbsp;:&nbsp;long_pos<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;pixmap&nbsp;resource&nbsp;id<br>
@@ -1446,8 +1505,9 @@ Examples<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-flimage_get_autocrop"><strong>flimage_get_autocrop</strong></a>(ptr_image, bgcolr)</dt><dd><tt><a href="#-flimage_get_autocrop">flimage_get_autocrop</a>(ptr_image,&nbsp;bgcolr)&nbsp;-&gt;&nbsp;result,&nbsp;xloff,&nbsp;ytoff,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK<br>
+&nbsp;&nbsp;&nbsp;&nbsp;It&nbsp;does&nbsp;not&nbsp;need&nbsp;to&nbsp;call&nbsp;flxbasic.fl_initialize()&nbsp;before</tt></dd></dl>
+ <dl><dt><a name="-flimage_get_autocrop"><strong>flimage_get_autocrop</strong></a>(ptr_flimage, bgcolr)</dt><dd><tt><a href="#-flimage_get_autocrop">flimage_get_autocrop</a>(ptr_flimage,&nbsp;bgcolr)&nbsp;-&gt;&nbsp;result,&nbsp;xloff,&nbsp;ytoff,<br>
 xroff,&nbsp;yboff<br>
 &nbsp;<br>
 Finds&nbsp;out&nbsp;the&nbsp;auto-cropping&nbsp;offsets&nbsp;(from&nbsp;left,&nbsp;right,&nbsp;top&nbsp;and&nbsp;bottom<br>
@@ -1455,7 +1515,7 @@ sides)&nbsp;of&nbsp;an&nbsp;image.<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;ptr_image&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_IMAGE<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_flimage&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_IMAGE<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;image<br>
 &nbsp;&nbsp;&nbsp;&nbsp;bgcolr&nbsp;:&nbsp;int_pos<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;background&nbsp;color&nbsp;to&nbsp;crop.&nbsp;If&nbsp;it&nbsp;is&nbsp;xfdata.FLIMAGE_AUTOCOLOR,&nbsp;the<br>
@@ -1481,18 +1541,19 @@ Examples<br>
 API_diversion<br>
 ----------<br>
 &nbsp;&nbsp;&nbsp;&nbsp;API&nbsp;changed&nbsp;from&nbsp;XForms,&nbsp;upstream&nbsp;is<br>
-&nbsp;&nbsp;&nbsp;&nbsp;<a href="#-flimage_get_autocrop">flimage_get_autocrop</a>(ptr_image,&nbsp;bk,&nbsp;xl,&nbsp;yt,&nbsp;xr,&nbsp;yb)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="#-flimage_get_autocrop">flimage_get_autocrop</a>(ptr_flimage,&nbsp;bk,&nbsp;xl,&nbsp;yt,&nbsp;xr,&nbsp;yb)<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-flimage_get_closest_color_from_map"><strong>flimage_get_closest_color_from_map</strong></a>(ptr_image, colr)</dt><dd><tt><a href="#-flimage_get_closest_color_from_map">flimage_get_closest_color_from_map</a>(ptr_image,&nbsp;colr)&nbsp;-&gt;&nbsp;colr<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK<br>
+&nbsp;&nbsp;&nbsp;&nbsp;It&nbsp;does&nbsp;not&nbsp;need&nbsp;to&nbsp;call&nbsp;flxbasic.fl_initialize()&nbsp;before</tt></dd></dl>
+ <dl><dt><a name="-flimage_get_closest_color_from_map"><strong>flimage_get_closest_color_from_map</strong></a>(ptr_flimage, colr)</dt><dd><tt><a href="#-flimage_get_closest_color_from_map">flimage_get_closest_color_from_map</a>(ptr_flimage,&nbsp;colr)&nbsp;-&gt;&nbsp;colr<br>
 &nbsp;<br>
 Gets&nbsp;closest&nbsp;color&nbsp;from&nbsp;color&nbsp;map?<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;ptr_image&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_IMAGE<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_flimage&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_IMAGE<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;image<br>
 &nbsp;&nbsp;&nbsp;&nbsp;colr&nbsp;:&nbsp;int_pos<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;color&nbsp;to&nbsp;evaluate<br>
@@ -1508,8 +1569,9 @@ Examples<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-flimage_get_format_info"><strong>flimage_get_format_info</strong></a>(imgfmtnum)</dt><dd><tt><a href="#-flimage_get_format_info">flimage_get_format_info</a>(imgfmtnum)&nbsp;-&gt;&nbsp;ptr_imageformatinfo<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK<br>
+&nbsp;&nbsp;&nbsp;&nbsp;It&nbsp;does&nbsp;not&nbsp;need&nbsp;to&nbsp;call&nbsp;flxbasic.fl_initialize()&nbsp;before</tt></dd></dl>
+ <dl><dt><a name="-flimage_get_format_info"><strong>flimage_get_format_info</strong></a>(imgfmtnum)</dt><dd><tt><a href="#-flimage_get_format_info">flimage_get_format_info</a>(imgfmtnum)&nbsp;-&gt;&nbsp;ptr_flimageformatinfo<br>
 &nbsp;<br>
 Finds&nbsp;out&nbsp;detailed&nbsp;information&nbsp;for&nbsp;each&nbsp;image&nbsp;format.<br>
 &nbsp;<br>
@@ -1521,7 +1583,7 @@ Parameters<br>
 &nbsp;<br>
 Returns<br>
 -------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;ptr_imageformatinfo&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FLIMAGE_FORMAT_INFO<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_flimageformatinfo&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FLIMAGE_FORMAT_INFO<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ImageFormatInfo&nbsp;class&nbsp;instance<br>
 &nbsp;<br>
 Examples<br>
@@ -1530,14 +1592,15 @@ Examples<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-flimage_get_linearlut"><strong>flimage_get_linearlut</strong></a>(ptr_image)</dt><dd><tt><a href="#-flimage_get_linearlut">flimage_get_linearlut</a>(ptr_image)&nbsp;-&gt;&nbsp;result<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK<br>
+&nbsp;&nbsp;&nbsp;&nbsp;It&nbsp;does&nbsp;not&nbsp;need&nbsp;to&nbsp;call&nbsp;flxbasic.fl_initialize()&nbsp;before</tt></dd></dl>
+ <dl><dt><a name="-flimage_get_linearlut"><strong>flimage_get_linearlut</strong></a>(ptr_flimage)</dt><dd><tt><a href="#-flimage_get_linearlut">flimage_get_linearlut</a>(ptr_flimage)&nbsp;-&gt;&nbsp;result<br>
 &nbsp;<br>
 *todo*<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;ptr_image&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_IMAGE<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_flimage&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_IMAGE<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;image<br>
 &nbsp;<br>
 Returns<br>
@@ -1551,7 +1614,8 @@ Examples<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK<br>
+&nbsp;&nbsp;&nbsp;&nbsp;It&nbsp;does&nbsp;not&nbsp;need&nbsp;to&nbsp;call&nbsp;flxbasic.fl_initialize()&nbsp;before</tt></dd></dl>
  <dl><dt><a name="-flimage_get_number_of_formats"><strong>flimage_get_number_of_formats</strong></a>()</dt><dd><tt><a href="#-flimage_get_number_of_formats">flimage_get_number_of_formats</a>()&nbsp;-&gt;&nbsp;numformats<br>
 &nbsp;<br>
 Finds&nbsp;out&nbsp;the&nbsp;number&nbsp;of&nbsp;currently&nbsp;supported&nbsp;image&nbsp;formats.<br>
@@ -1567,14 +1631,15 @@ Examples<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-flimage_getcolormap"><strong>flimage_getcolormap</strong></a>(ptr_image)</dt><dd><tt><a href="#-flimage_getcolormap">flimage_getcolormap</a>(ptr_image)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK<br>
+&nbsp;&nbsp;&nbsp;&nbsp;It&nbsp;does&nbsp;not&nbsp;need&nbsp;to&nbsp;call&nbsp;flxbasic.fl_initialize()&nbsp;before</tt></dd></dl>
+ <dl><dt><a name="-flimage_getcolormap"><strong>flimage_getcolormap</strong></a>(ptr_flimage)</dt><dd><tt><a href="#-flimage_getcolormap">flimage_getcolormap</a>(ptr_flimage)<br>
 &nbsp;<br>
 Finds&nbsp;out&nbsp;color&nbsp;map&nbsp;for&nbsp;an&nbsp;image.<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
-&nbsp;&nbsp;ptr_image&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_IMAGE<br>
+&nbsp;&nbsp;ptr_flimage&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_IMAGE<br>
 &nbsp;&nbsp;&nbsp;&nbsp;image<br>
 &nbsp;<br>
 Returns<br>
@@ -1588,15 +1653,16 @@ Examples<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-flimage_getmem"><strong>flimage_getmem</strong></a>(ptr_image)</dt><dd><tt><a href="#-flimage_getmem">flimage_getmem</a>(ptr_image)&nbsp;-&gt;&nbsp;result<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK<br>
+&nbsp;&nbsp;&nbsp;&nbsp;It&nbsp;does&nbsp;not&nbsp;need&nbsp;to&nbsp;call&nbsp;flxbasic.fl_initialize()&nbsp;before</tt></dd></dl>
+ <dl><dt><a name="-flimage_getmem"><strong>flimage_getmem</strong></a>(ptr_flimage)</dt><dd><tt><a href="#-flimage_getmem">flimage_getmem</a>(ptr_flimage)&nbsp;-&gt;&nbsp;result<br>
 &nbsp;<br>
 Allocates&nbsp;the&nbsp;proper&nbsp;amount&nbsp;of&nbsp;memory&nbsp;appropriate&nbsp;for&nbsp;the&nbsp;image&nbsp;type,<br>
 including&nbsp;colormaps&nbsp;when&nbsp;needed.<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;ptr_image&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_IMAGE<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_flimage&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_IMAGE<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;image<br>
 &nbsp;<br>
 Returns<br>
@@ -1610,7 +1676,8 @@ Examples<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK<br>
+&nbsp;&nbsp;&nbsp;&nbsp;It&nbsp;does&nbsp;not&nbsp;need&nbsp;to&nbsp;call&nbsp;flxbasic.fl_initialize()&nbsp;before</tt></dd></dl>
  <dl><dt><a name="-flimage_gif_options"><strong>flimage_gif_options</strong></a> = flimage_gif_output_options(interlace)</dt><dd><tt><a href="#-flimage_gif_output_options">flimage_gif_output_options</a>(interlace)<br>
 &nbsp;<br>
 Defines&nbsp;options&nbsp;of&nbsp;GIF&nbsp;images.<br>
@@ -1627,7 +1694,8 @@ Examples<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK<br>
+&nbsp;&nbsp;&nbsp;&nbsp;It&nbsp;does&nbsp;not&nbsp;need&nbsp;to&nbsp;call&nbsp;flxbasic.fl_initialize()&nbsp;before</tt></dd></dl>
  <dl><dt><a name="-flimage_gif_output_options"><strong>flimage_gif_output_options</strong></a>(interlace)</dt><dd><tt><a href="#-flimage_gif_output_options">flimage_gif_output_options</a>(interlace)<br>
 &nbsp;<br>
 Defines&nbsp;options&nbsp;of&nbsp;GIF&nbsp;images.<br>
@@ -1644,15 +1712,16 @@ Examples<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-flimage_invalidate_pixels"><strong>flimage_invalidate_pixels</strong></a>(ptr_image)</dt><dd><tt><a href="#-flimage_invalidate_pixels">flimage_invalidate_pixels</a>(ptr_image)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK<br>
+&nbsp;&nbsp;&nbsp;&nbsp;It&nbsp;does&nbsp;not&nbsp;need&nbsp;to&nbsp;call&nbsp;flxbasic.fl_initialize()&nbsp;before</tt></dd></dl>
+ <dl><dt><a name="-flimage_invalidate_pixels"><strong>flimage_invalidate_pixels</strong></a>(ptr_flimage)</dt><dd><tt><a href="#-flimage_invalidate_pixels">flimage_invalidate_pixels</a>(ptr_flimage)<br>
 &nbsp;<br>
 Invalidates/frees&nbsp;all&nbsp;other&nbsp;types&nbsp;of&nbsp;image,&nbsp;before&nbsp;we&nbsp;modify&nbsp;the<br>
 current&nbsp;image.<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;ptr_image&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_IMAGE<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_flimage&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_IMAGE<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;image<br>
 &nbsp;<br>
 Examples<br>
@@ -1661,7 +1730,8 @@ Examples<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK<br>
+&nbsp;&nbsp;&nbsp;&nbsp;It&nbsp;does&nbsp;not&nbsp;need&nbsp;to&nbsp;call&nbsp;flxbasic.fl_initialize()&nbsp;before</tt></dd></dl>
  <dl><dt><a name="-flimage_is_supported"><strong>flimage_is_supported</strong></a>(fname)</dt><dd><tt><a href="#-flimage_is_supported">flimage_is_supported</a>(fname)&nbsp;-&gt;&nbsp;yesno<br>
 &nbsp;<br>
 Finds&nbsp;out&nbsp;if&nbsp;a&nbsp;specific&nbsp;file&nbsp;is&nbsp;a&nbsp;known&nbsp;image&nbsp;file&nbsp;or&nbsp;not.<br>
@@ -1682,8 +1752,9 @@ Examples<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-flimage_jpeg_options"><strong>flimage_jpeg_options</strong></a> = flimage_jpeg_output_options(ptr_imagejpegoption)</dt><dd><tt><a href="#-flimage_jpeg_output_options">flimage_jpeg_output_options</a>(ptr_imagejpegoption)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK<br>
+&nbsp;&nbsp;&nbsp;&nbsp;It&nbsp;does&nbsp;not&nbsp;need&nbsp;to&nbsp;call&nbsp;flxbasic.fl_initialize()&nbsp;before</tt></dd></dl>
+ <dl><dt><a name="-flimage_jpeg_options"><strong>flimage_jpeg_options</strong></a> = flimage_jpeg_output_options(ptr_flimagejpegoption)</dt><dd><tt><a href="#-flimage_jpeg_output_options">flimage_jpeg_output_options</a>(ptr_flimagejpegoption)<br>
 &nbsp;<br>
 Defines&nbsp;quality&nbsp;and&nbsp;smoothing&nbsp;options&nbsp;of&nbsp;a&nbsp;JPEG&nbsp;image,&nbsp;using<br>
 xfdata.FLIMAGE_JPEG_OPTION.&nbsp;The&nbsp;default&nbsp;quality&nbsp;factor&nbsp;for&nbsp;JPEG&nbsp;output<br>
@@ -1692,7 +1763,7 @@ is,&nbsp;but&nbsp;the&nbsp;file&nbsp;size&nbsp;gets&nbsp;larger.&nbsp;The&nbsp;d
 &nbsp;<br>
 Parameters<br>
 ----------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;ptr_imagejpegoption&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FLIMAGE_JPEG_OPTION<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_flimagejpegoption&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FLIMAGE_JPEG_OPTION<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;flimage&nbsp;jpeg&nbsp;option&nbsp;class&nbsp;instance<br>
 &nbsp;<br>
 Examples<br>
@@ -1701,8 +1772,9 @@ Examples<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-flimage_jpeg_output_options"><strong>flimage_jpeg_output_options</strong></a>(ptr_imagejpegoption)</dt><dd><tt><a href="#-flimage_jpeg_output_options">flimage_jpeg_output_options</a>(ptr_imagejpegoption)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK<br>
+&nbsp;&nbsp;&nbsp;&nbsp;It&nbsp;does&nbsp;not&nbsp;need&nbsp;to&nbsp;call&nbsp;flxbasic.fl_initialize()&nbsp;before</tt></dd></dl>
+ <dl><dt><a name="-flimage_jpeg_output_options"><strong>flimage_jpeg_output_options</strong></a>(ptr_flimagejpegoption)</dt><dd><tt><a href="#-flimage_jpeg_output_options">flimage_jpeg_output_options</a>(ptr_flimagejpegoption)<br>
 &nbsp;<br>
 Defines&nbsp;quality&nbsp;and&nbsp;smoothing&nbsp;options&nbsp;of&nbsp;a&nbsp;JPEG&nbsp;image,&nbsp;using<br>
 xfdata.FLIMAGE_JPEG_OPTION.&nbsp;The&nbsp;default&nbsp;quality&nbsp;factor&nbsp;for&nbsp;JPEG&nbsp;output<br>
@@ -1711,7 +1783,7 @@ is,&nbsp;but&nbsp;the&nbsp;file&nbsp;size&nbsp;gets&nbsp;larger.&nbsp;The&nbsp;d
 &nbsp;<br>
 Parameters<br>
 ----------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;ptr_imagejpegoption&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FLIMAGE_JPEG_OPTION<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_flimagejpegoption&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FLIMAGE_JPEG_OPTION<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;flimage&nbsp;jpeg&nbsp;option&nbsp;class&nbsp;instance<br>
 &nbsp;<br>
 Examples<br>
@@ -1720,8 +1792,9 @@ Examples<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-flimage_load"><strong>flimage_load</strong></a>(fname)</dt><dd><tt><a href="#-flimage_load">flimage_load</a>(fname)&nbsp;-&gt;&nbsp;ptr_image<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK<br>
+&nbsp;&nbsp;&nbsp;&nbsp;It&nbsp;does&nbsp;not&nbsp;need&nbsp;to&nbsp;call&nbsp;flxbasic.fl_initialize()&nbsp;before</tt></dd></dl>
+ <dl><dt><a name="-flimage_load"><strong>flimage_load</strong></a>(fname)</dt><dd><tt><a href="#-flimage_load">flimage_load</a>(fname)&nbsp;-&gt;&nbsp;ptr_flimage<br>
 &nbsp;<br>
 Loads&nbsp;an&nbsp;image&nbsp;file&nbsp;into&nbsp;memory.<br>
 &nbsp;<br>
@@ -1732,7 +1805,7 @@ Parameters<br>
 &nbsp;<br>
 Returns<br>
 -------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;ptr_image&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_IMAGE<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_flimage&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_IMAGE<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;an&nbsp;image&nbsp;class&nbsp;instance,&nbsp;or&nbsp;None&nbsp;(on&nbsp;failure)<br>
 &nbsp;<br>
 Examples<br>
@@ -1741,8 +1814,9 @@ Examples<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-flimage_open"><strong>flimage_open</strong></a>(fname)</dt><dd><tt><a href="#-flimage_open">flimage_open</a>(fname)&nbsp;-&gt;&nbsp;ptr_image<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK<br>
+&nbsp;&nbsp;&nbsp;&nbsp;It&nbsp;does&nbsp;not&nbsp;need&nbsp;to&nbsp;call&nbsp;flxbasic.fl_initialize()&nbsp;before</tt></dd></dl>
+ <dl><dt><a name="-flimage_open"><strong>flimage_open</strong></a>(fname)</dt><dd><tt><a href="#-flimage_open">flimage_open</a>(fname)&nbsp;-&gt;&nbsp;ptr_flimage<br>
 &nbsp;<br>
 Opens&nbsp;an&nbsp;image&nbsp;file.&nbsp;Use&nbsp;<a href="#-flimage_read">flimage_read</a>()&nbsp;to&nbsp;read&nbsp;it.<br>
 &nbsp;<br>
@@ -1753,7 +1827,7 @@ Parameters<br>
 &nbsp;<br>
 Returns<br>
 -------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;ptr_image&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_IMAGE<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_flimage&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_IMAGE<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;image&nbsp;class&nbsp;instance&nbsp;opened,&nbsp;or&nbsp;None&nbsp;(on&nbsp;failure)<br>
 &nbsp;<br>
 Examples<br>
@@ -1762,7 +1836,8 @@ Examples<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK<br>
+&nbsp;&nbsp;&nbsp;&nbsp;It&nbsp;does&nbsp;not&nbsp;need&nbsp;to&nbsp;call&nbsp;flxbasic.fl_initialize()&nbsp;before</tt></dd></dl>
  <dl><dt><a name="-flimage_pnm_options"><strong>flimage_pnm_options</strong></a> = flimage_pnm_output_options(rawformat)</dt><dd><tt><a href="#-flimage_pnm_output_options">flimage_pnm_output_options</a>(rawformat)<br>
 &nbsp;<br>
 Defines&nbsp;variant&nbsp;options&nbsp;for&nbsp;PNM&nbsp;(ppm,&nbsp;pgm&nbsp;and&nbsp;pbm)&nbsp;images.<br>
@@ -1780,7 +1855,8 @@ Examples<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK<br>
+&nbsp;&nbsp;&nbsp;&nbsp;It&nbsp;does&nbsp;not&nbsp;need&nbsp;to&nbsp;call&nbsp;flxbasic.fl_initialize()&nbsp;before</tt></dd></dl>
  <dl><dt><a name="-flimage_pnm_output_options"><strong>flimage_pnm_output_options</strong></a>(rawformat)</dt><dd><tt><a href="#-flimage_pnm_output_options">flimage_pnm_output_options</a>(rawformat)<br>
 &nbsp;<br>
 Defines&nbsp;variant&nbsp;options&nbsp;for&nbsp;PNM&nbsp;(ppm,&nbsp;pgm&nbsp;and&nbsp;pbm)&nbsp;images.<br>
@@ -1798,7 +1874,8 @@ Examples<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK<br>
+&nbsp;&nbsp;&nbsp;&nbsp;It&nbsp;does&nbsp;not&nbsp;need&nbsp;to&nbsp;call&nbsp;flxbasic.fl_initialize()&nbsp;before</tt></dd></dl>
  <dl><dt><a name="-flimage_ps_options"><strong>flimage_ps_options</strong></a>()</dt><dd><tt><a href="#-flimage_ps_options">flimage_ps_options</a>()&nbsp;-&gt;&nbsp;ptr_flpscontrol<br>
 &nbsp;<br>
 Defines&nbsp;reading&nbsp;and&nbsp;writing&nbsp;options&nbsp;for&nbsp;PostScript.<br>
@@ -1814,20 +1891,21 @@ Examples<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-flimage_read"><strong>flimage_read</strong></a>(ptr_image)</dt><dd><tt><a href="#-flimage_read">flimage_read</a>(ptr_image)&nbsp;-&gt;&nbsp;ptr_image<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK<br>
+&nbsp;&nbsp;&nbsp;&nbsp;It&nbsp;does&nbsp;not&nbsp;need&nbsp;to&nbsp;call&nbsp;flxbasic.fl_initialize()&nbsp;before</tt></dd></dl>
+ <dl><dt><a name="-flimage_read"><strong>flimage_read</strong></a>(ptr_flimage)</dt><dd><tt><a href="#-flimage_read">flimage_read</a>(ptr_flimage)&nbsp;-&gt;&nbsp;ptr_flimage<br>
 &nbsp;<br>
 Takes&nbsp;a&nbsp;xfdata.FL_IMAGE&nbsp;class&nbsp;instance&nbsp;returned&nbsp;by&nbsp;<a href="#-flimage_open">flimage_open</a>()<br>
 and&nbsp;fills&nbsp;the&nbsp;image&nbsp;structure.<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;ptr_image&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_IMAGE<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_flimage&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_IMAGE<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;image&nbsp;class&nbsp;instance<br>
 &nbsp;<br>
 Returns<br>
 -------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;ptr_image&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_IMAGE<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_flimage&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_IMAGE<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;an&nbsp;image&nbsp;class&nbsp;instance,&nbsp;or&nbsp;None&nbsp;(on&nbsp;failure)<br>
 &nbsp;<br>
 Examples<br>
@@ -1837,14 +1915,15 @@ Examples<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-flimage_read_annotation"><strong>flimage_read_annotation</strong></a>(ptr_image)</dt><dd><tt><a href="#-flimage_read_annotation">flimage_read_annotation</a>(ptr_image)&nbsp;-&gt;&nbsp;resutl<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK<br>
+&nbsp;&nbsp;&nbsp;&nbsp;It&nbsp;does&nbsp;not&nbsp;need&nbsp;to&nbsp;call&nbsp;flxbasic.fl_initialize()&nbsp;before</tt></dd></dl>
+ <dl><dt><a name="-flimage_read_annotation"><strong>flimage_read_annotation</strong></a>(ptr_flimage)</dt><dd><tt><a href="#-flimage_read_annotation">flimage_read_annotation</a>(ptr_flimage)&nbsp;-&gt;&nbsp;resutl<br>
 &nbsp;<br>
 Reads&nbsp;annotation&nbsp;in&nbsp;the&nbsp;image?<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;ptr_image&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_IMAGE<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_flimage&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_IMAGE<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;image<br>
 &nbsp;<br>
 Returns<br>
@@ -1858,8 +1937,9 @@ Examples<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-flimage_render_annotation"><strong>flimage_render_annotation</strong></a>(ptr_image, win)</dt><dd><tt><a href="#-flimage_render_annotation">flimage_render_annotation</a>(ptr_image,&nbsp;win)&nbsp;-&gt;&nbsp;result<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK<br>
+&nbsp;&nbsp;&nbsp;&nbsp;It&nbsp;does&nbsp;not&nbsp;need&nbsp;to&nbsp;call&nbsp;flxbasic.fl_initialize()&nbsp;before</tt></dd></dl>
+ <dl><dt><a name="-flimage_render_annotation"><strong>flimage_render_annotation</strong></a>(ptr_flimage, win)</dt><dd><tt><a href="#-flimage_render_annotation">flimage_render_annotation</a>(ptr_flimage,&nbsp;win)&nbsp;-&gt;&nbsp;result<br>
 &nbsp;<br>
 Makes&nbsp;the&nbsp;annotations&nbsp;a&nbsp;part&nbsp;of&nbsp;the&nbsp;image&nbsp;pixel.&nbsp;By&nbsp;default&nbsp;annotations<br>
 placed&nbsp;on&nbsp;the&nbsp;image&nbsp;are&nbsp;kept&nbsp;seperate&nbsp;from&nbsp;the&nbsp;image&nbsp;pixels&nbsp;themselves,<br>
@@ -1875,7 +1955,7 @@ function&nbsp;for&nbsp;it&nbsp;to&nbsp;work&nbsp;correctly.<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;ptr_image&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_IMAGE<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_flimage&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_IMAGE<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;image<br>
 &nbsp;&nbsp;&nbsp;&nbsp;win&nbsp;:&nbsp;long_pos<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;window&nbsp;id<br>
@@ -1887,19 +1967,20 @@ Returns<br>
 &nbsp;<br>
 Examples<br>
 --------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;if&nbsp;<a href="#-flimage_render_annotation">flimage_render_annotation</a>(ptr_image,&nbsp;win0)&nbsp;!=&nbsp;-1:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;if&nbsp;<a href="#-flimage_render_annotation">flimage_render_annotation</a>(ptr_flimage,&nbsp;win0)&nbsp;!=&nbsp;-1:<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;...&nbsp;&lt;something&gt;<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-flimage_replace_image"><strong>flimage_replace_image</strong></a>(ptr_image, width, height, red, green, blue)</dt><dd><tt><a href="#-flimage_replace_image">flimage_replace_image</a>(ptr_image,&nbsp;width,&nbsp;height,&nbsp;red,&nbsp;green,&nbsp;blue)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK<br>
+&nbsp;&nbsp;&nbsp;&nbsp;It&nbsp;does&nbsp;not&nbsp;need&nbsp;to&nbsp;call&nbsp;flxbasic.fl_initialize()&nbsp;before</tt></dd></dl>
+ <dl><dt><a name="-flimage_replace_image"><strong>flimage_replace_image</strong></a>(ptr_flimage, width, height, red, green, blue)</dt><dd><tt><a href="#-flimage_replace_image">flimage_replace_image</a>(ptr_flimage,&nbsp;width,&nbsp;height,&nbsp;red,&nbsp;green,&nbsp;blue)<br>
 &nbsp;<br>
 Replaces&nbsp;an&nbsp;image?<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;ptr_image&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_IMAGE<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_flimage&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_IMAGE<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;image<br>
 &nbsp;&nbsp;&nbsp;&nbsp;width&nbsp;:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;width<br>
@@ -1918,14 +1999,15 @@ Examples<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-flimage_replace_pixel"><strong>flimage_replace_pixel</strong></a>(ptr_image, targetcolr, newcolr)</dt><dd><tt><a href="#-flimage_replace_pixel">flimage_replace_pixel</a>(ptr_image,&nbsp;targetcolr,&nbsp;newcolr)&nbsp;-&gt;&nbsp;result<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK<br>
+&nbsp;&nbsp;&nbsp;&nbsp;It&nbsp;does&nbsp;not&nbsp;need&nbsp;to&nbsp;call&nbsp;flxbasic.fl_initialize()&nbsp;before</tt></dd></dl>
+ <dl><dt><a name="-flimage_replace_pixel"><strong>flimage_replace_pixel</strong></a>(ptr_flimage, targetcolr, newcolr)</dt><dd><tt><a href="#-flimage_replace_pixel">flimage_replace_pixel</a>(ptr_flimage,&nbsp;targetcolr,&nbsp;newcolr)&nbsp;-&gt;&nbsp;result<br>
 &nbsp;<br>
 Replaces&nbsp;all&nbsp;color&nbsp;targetcolr&nbsp;with&nbsp;the&nbsp;new&nbsp;desired&nbsp;color.<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;ptr_image&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_IMAGE<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_flimage&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_IMAGE<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;image<br>
 &nbsp;&nbsp;&nbsp;&nbsp;targetcolr&nbsp;:&nbsp;int_pos<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;color&nbsp;to&nbsp;be&nbsp;replaced<br>
@@ -1943,8 +2025,9 @@ Examples<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-flimage_rotate"><strong>flimage_rotate</strong></a>(ptr_image, angle, subpixel)</dt><dd><tt><a href="#-flimage_rotate">flimage_rotate</a>(ptr_image,&nbsp;angle,&nbsp;subpixel)&nbsp;-&gt;&nbsp;result<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK<br>
+&nbsp;&nbsp;&nbsp;&nbsp;It&nbsp;does&nbsp;not&nbsp;need&nbsp;to&nbsp;call&nbsp;flxbasic.fl_initialize()&nbsp;before</tt></dd></dl>
+ <dl><dt><a name="-flimage_rotate"><strong>flimage_rotate</strong></a>(ptr_flimage, angle, subpixel)</dt><dd><tt><a href="#-flimage_rotate">flimage_rotate</a>(ptr_flimage,&nbsp;angle,&nbsp;subpixel)&nbsp;-&gt;&nbsp;result<br>
 &nbsp;<br>
 Does&nbsp;an&nbsp;image&nbsp;rotation.&nbsp;Repeated&nbsp;rotations&nbsp;should&nbsp;be&nbsp;avoided&nbsp;if&nbsp;possible.<br>
 If&nbsp;you&nbsp;have&nbsp;to&nbsp;call&nbsp;it&nbsp;more&nbsp;than&nbsp;once&nbsp;it&nbsp;is&nbsp;a&nbsp;good&nbsp;idea&nbsp;to&nbsp;crop&nbsp;after<br>
@@ -1952,7 +2035,7 @@ rotations&nbsp;in&nbsp;order&nbsp;to&nbsp;get&nbsp;rid&nbsp;of&nbsp;the&nbsp;reg
 &nbsp;<br>
 Parameters<br>
 ----------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;ptr_image&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_IMAGE<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_flimage&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_IMAGE<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;image<br>
 &nbsp;&nbsp;&nbsp;&nbsp;angle&nbsp;:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;the&nbsp;angle&nbsp;in&nbsp;one-tenth&nbsp;of&nbsp;a&nbsp;degree&nbsp;(i.e.,&nbsp;a&nbsp;45&nbsp;degree&nbsp;rotation<br>
@@ -1980,8 +2063,9 @@ Examples<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-flimage_scale"><strong>flimage_scale</strong></a>(ptr_image, newwidth, newheight, option)</dt><dd><tt><a href="#-flimage_scale">flimage_scale</a>(ptr_image,&nbsp;newwidth,&nbsp;newheight,&nbsp;option)&nbsp;-&gt;&nbsp;result<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK<br>
+&nbsp;&nbsp;&nbsp;&nbsp;It&nbsp;does&nbsp;not&nbsp;need&nbsp;to&nbsp;call&nbsp;flxbasic.fl_initialize()&nbsp;before</tt></dd></dl>
+ <dl><dt><a name="-flimage_scale"><strong>flimage_scale</strong></a>(ptr_flimage, newwidth, newheight, option)</dt><dd><tt><a href="#-flimage_scale">flimage_scale</a>(ptr_flimage,&nbsp;newwidth,&nbsp;newheight,&nbsp;option)&nbsp;-&gt;&nbsp;result<br>
 &nbsp;<br>
 Scales&nbsp;an&nbsp;image&nbsp;to&nbsp;any&nbsp;desired&nbsp;size&nbsp;with&nbsp;or&nbsp;without&nbsp;subpixel&nbsp;sampling.<br>
 Without&nbsp;subpixel&nbsp;sampling&nbsp;simple&nbsp;pixel&nbsp;replication&nbsp;is&nbsp;used,&nbsp;otherwise&nbsp;a<br>
@@ -1990,7 +2074,7 @@ much&nbsp;less&nbsp;artifacts.<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;ptr_image&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_IMAGE<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_flimage&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_IMAGE<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;image<br>
 &nbsp;&nbsp;&nbsp;&nbsp;newwidth&nbsp;:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;desired&nbsp;image&nbsp;width<br>
@@ -2015,14 +2099,15 @@ Examples<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-flimage_sdisplay"><strong>flimage_sdisplay</strong></a>(ptr_image, win)</dt><dd><tt><a href="#-flimage_sdisplay">flimage_sdisplay</a>(ptr_image,&nbsp;win)&nbsp;-&gt;&nbsp;result<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK<br>
+&nbsp;&nbsp;&nbsp;&nbsp;It&nbsp;does&nbsp;not&nbsp;need&nbsp;to&nbsp;call&nbsp;flxbasic.fl_initialize()&nbsp;before</tt></dd></dl>
+ <dl><dt><a name="-flimage_sdisplay"><strong>flimage_sdisplay</strong></a>(ptr_flimage, win)</dt><dd><tt><a href="#-flimage_sdisplay">flimage_sdisplay</a>(ptr_flimage,&nbsp;win)&nbsp;-&gt;&nbsp;result<br>
 &nbsp;<br>
 Displays&nbsp;a&nbsp;single&nbsp;image&nbsp;in&nbsp;a&nbsp;window.<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;ptr_image&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_IMAGE<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_flimage&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_IMAGE<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;image<br>
 &nbsp;&nbsp;&nbsp;&nbsp;win&nbsp;:&nbsp;long_pos<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;window&nbsp;id<br>
@@ -2034,11 +2119,12 @@ Returns<br>
 &nbsp;<br>
 Examples<br>
 --------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;<a href="#-flimage_sdisplay">flimage_sdisplay</a>(ptr_image,&nbsp;win)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;<a href="#-flimage_sdisplay">flimage_sdisplay</a>(ptr_flimage,&nbsp;win)<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK<br>
+&nbsp;&nbsp;&nbsp;&nbsp;It&nbsp;does&nbsp;not&nbsp;need&nbsp;to&nbsp;call&nbsp;flxbasic.fl_initialize()&nbsp;before</tt></dd></dl>
  <dl><dt><a name="-flimage_set_annotation_support"><strong>flimage_set_annotation_support</strong></a>(imgnum, yesno)</dt><dd><tt><a href="#-flimage_set_annotation_support">flimage_set_annotation_support</a>(imgnum,&nbsp;yesno)<br>
 &nbsp;<br>
 Defines&nbsp;support&nbsp;for&nbsp;annotations.<br>
@@ -2057,7 +2143,8 @@ Examples<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK<br>
+&nbsp;&nbsp;&nbsp;&nbsp;It&nbsp;does&nbsp;not&nbsp;need&nbsp;to&nbsp;call&nbsp;flxbasic.fl_initialize()&nbsp;before</tt></dd></dl>
  <dl><dt><a name="-flimage_set_fits_bits"><strong>flimage_set_fits_bits</strong></a>(numbits)</dt><dd><tt><a href="#-flimage_set_fits_bits">flimage_set_fits_bits</a>(numbits)&nbsp;-&gt;&nbsp;oldnumbits<br>
 &nbsp;<br>
 Defines&nbsp;the&nbsp;number&nbsp;of&nbsp;bits&nbsp;of&nbsp;a&nbsp;FITS&nbsp;image.<br>
@@ -2078,15 +2165,16 @@ Examples<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-flimage_setup"><strong>flimage_setup</strong></a>(ptr_imagesetup)</dt><dd><tt><a href="#-flimage_setup">flimage_setup</a>(ptr_imagesetup)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK<br>
+&nbsp;&nbsp;&nbsp;&nbsp;It&nbsp;does&nbsp;not&nbsp;need&nbsp;to&nbsp;call&nbsp;flxbasic.fl_initialize()&nbsp;before</tt></dd></dl>
+ <dl><dt><a name="-flimage_setup"><strong>flimage_setup</strong></a>(ptr_flimagesetup)</dt><dd><tt><a href="#-flimage_setup">flimage_setup</a>(ptr_flimagesetup)<br>
 &nbsp;<br>
 Defines&nbsp;up&nbsp;and&nbsp;configures&nbsp;image&nbsp;flobjects&nbsp;support&nbsp;and&nbsp;initializes<br>
 xfdata.FLIMAGE_SETUP&nbsp;class&nbsp;instance.<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;ptr_imagesetup&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FLIMAGE_SETUP<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_flimagesetup&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FLIMAGE_SETUP<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;imagesetup&nbsp;class&nbsp;instance<br>
 &nbsp;<br>
 Examples<br>
@@ -2095,14 +2183,15 @@ Examples<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-flimage_swapbuffer"><strong>flimage_swapbuffer</strong></a>(ptr_image)</dt><dd><tt><a href="#-flimage_swapbuffer">flimage_swapbuffer</a>(ptr_image)&nbsp;-&gt;&nbsp;result<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK<br>
+&nbsp;&nbsp;&nbsp;&nbsp;It&nbsp;does&nbsp;not&nbsp;need&nbsp;to&nbsp;call&nbsp;flxbasic.fl_initialize()&nbsp;before</tt></dd></dl>
+ <dl><dt><a name="-flimage_swapbuffer"><strong>flimage_swapbuffer</strong></a>(ptr_flimage)</dt><dd><tt><a href="#-flimage_swapbuffer">flimage_swapbuffer</a>(ptr_flimage)&nbsp;-&gt;&nbsp;result<br>
 &nbsp;<br>
 Swaps&nbsp;buffer&nbsp;of&nbsp;an&nbsp;image?<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;ptr_image&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_IMAGE<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_flimage&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_IMAGE<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;image<br>
 &nbsp;<br>
 Returns<br>
@@ -2116,8 +2205,9 @@ Examples<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-flimage_tint"><strong>flimage_tint</strong></a>(ptr_image, packed, opacity)</dt><dd><tt><a href="#-flimage_tint">flimage_tint</a>(ptr_image,&nbsp;packed,&nbsp;opacity)&nbsp;-&gt;&nbsp;result<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK<br>
+&nbsp;&nbsp;&nbsp;&nbsp;It&nbsp;does&nbsp;not&nbsp;need&nbsp;to&nbsp;call&nbsp;flxbasic.fl_initialize()&nbsp;before</tt></dd></dl>
+ <dl><dt><a name="-flimage_tint"><strong>flimage_tint</strong></a>(ptr_flimage, packed, opacity)</dt><dd><tt><a href="#-flimage_tint">flimage_tint</a>(ptr_flimage,&nbsp;packed,&nbsp;opacity)&nbsp;-&gt;&nbsp;result<br>
 &nbsp;<br>
 Emulates&nbsp;the&nbsp;effect&nbsp;of&nbsp;looking&nbsp;at&nbsp;an&nbsp;image&nbsp;through&nbsp;a&nbsp;piece&nbsp;of&nbsp;colored<br>
 glass.&nbsp;Tint&nbsp;is&nbsp;most&nbsp;useful&nbsp;in&nbsp;cases&nbsp;where&nbsp;you&nbsp;want&nbsp;to&nbsp;put&nbsp;some&nbsp;annotations<br>
@@ -2128,7 +2218,7 @@ image&nbsp;beneath&nbsp;completely.&nbsp;Tint&nbsp;operation&nbsp;uses&nbsp;the&
 &nbsp;<br>
 Parameters<br>
 ----------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;ptr_image&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_IMAGE<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_flimage&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_IMAGE<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;image<br>
 &nbsp;&nbsp;&nbsp;&nbsp;packed&nbsp;:&nbsp;int_pos<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;packed&nbsp;RGB&nbsp;color,&nbsp;specifying&nbsp;the&nbsp;color&nbsp;of&nbsp;the&nbsp;glass.<br>
@@ -2152,15 +2242,16 @@ Examples<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-flimage_to_pixmap"><strong>flimage_to_pixmap</strong></a>(ptr_image, win)</dt><dd><tt><a href="#-flimage_to_pixmap">flimage_to_pixmap</a>(ptr_image,&nbsp;win)&nbsp;-&gt;&nbsp;pixmap<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK<br>
+&nbsp;&nbsp;&nbsp;&nbsp;It&nbsp;does&nbsp;not&nbsp;need&nbsp;to&nbsp;call&nbsp;flxbasic.fl_initialize()&nbsp;before</tt></dd></dl>
+ <dl><dt><a name="-flimage_to_pixmap"><strong>flimage_to_pixmap</strong></a>(ptr_flimage, win)</dt><dd><tt><a href="#-flimage_to_pixmap">flimage_to_pixmap</a>(ptr_flimage,&nbsp;win)&nbsp;-&gt;&nbsp;pixmap<br>
 &nbsp;<br>
 Converts&nbsp;an&nbsp;image&nbsp;into&nbsp;a&nbsp;Pixmap&nbsp;(a&nbsp;server&nbsp;side&nbsp;resource)&nbsp;that<br>
 can&nbsp;be&nbsp;used&nbsp;in&nbsp;the&nbsp;pixmap&nbsp;flobject.<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;ptr_image&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_IMAGE<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_flimage&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_IMAGE<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;image<br>
 &nbsp;&nbsp;&nbsp;&nbsp;win&nbsp;:&nbsp;long_pos<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;window&nbsp;id<br>
@@ -2176,15 +2267,16 @@ Examples<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-flimage_to_ximage"><strong>flimage_to_ximage</strong></a>(ptr_image, win, ptr_xwindowattributes)</dt><dd><tt><a href="#-flimage_to_ximage">flimage_to_ximage</a>(ptr_image,&nbsp;win,&nbsp;ptr_xwindowattributes)&nbsp;-&gt;&nbsp;result<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK<br>
+&nbsp;&nbsp;&nbsp;&nbsp;It&nbsp;does&nbsp;not&nbsp;need&nbsp;to&nbsp;call&nbsp;flxbasic.fl_initialize()&nbsp;before</tt></dd></dl>
+ <dl><dt><a name="-flimage_to_ximage"><strong>flimage_to_ximage</strong></a>(ptr_flimage, win, ptr_xwindowattributes)</dt><dd><tt><a href="#-flimage_to_ximage">flimage_to_ximage</a>(ptr_flimage,&nbsp;win,&nbsp;ptr_xwindowattributes)&nbsp;-&gt;&nbsp;result<br>
 &nbsp;<br>
 Converts&nbsp;an&nbsp;FL_IMAGE&nbsp;into&nbsp;an&nbsp;XImage.&nbsp;The&nbsp;converted&nbsp;ximage&nbsp;is<br>
-ptr_image.contents.ximage&nbsp;if&nbsp;successful&nbsp;*todo*<br>
+ptr_flimage.contents.ximage&nbsp;if&nbsp;successful&nbsp;*todo*<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;ptr_image&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_IMAGE<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_flimage&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_IMAGE<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;image<br>
 &nbsp;&nbsp;&nbsp;&nbsp;win&nbsp;:&nbsp;window&nbsp;id<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;long_pos<br>
@@ -2202,14 +2294,15 @@ Examples<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-flimage_transform_pixels"><strong>flimage_transform_pixels</strong></a>(ptr_image, red, green, blue)</dt><dd><tt><a href="#-flimage_transform_pixels">flimage_transform_pixels</a>(ptr_image,&nbsp;red,&nbsp;green,&nbsp;blue)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK<br>
+&nbsp;&nbsp;&nbsp;&nbsp;It&nbsp;does&nbsp;not&nbsp;need&nbsp;to&nbsp;call&nbsp;flxbasic.fl_initialize()&nbsp;before</tt></dd></dl>
+ <dl><dt><a name="-flimage_transform_pixels"><strong>flimage_transform_pixels</strong></a>(ptr_flimage, red, green, blue)</dt><dd><tt><a href="#-flimage_transform_pixels">flimage_transform_pixels</a>(ptr_flimage,&nbsp;red,&nbsp;green,&nbsp;blue)<br>
 &nbsp;<br>
 Processes&nbsp;an&nbsp;image&nbsp;in&nbsp;place&nbsp;with&nbsp;RGB&nbsp;transformation&nbsp;and&nbsp;replaces&nbsp;it.<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;ptr_image&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_IMAGE<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_flimage&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_IMAGE<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;image<br>
 &nbsp;&nbsp;&nbsp;&nbsp;red&nbsp;:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;lookup&nbsp;tables&nbsp;for&nbsp;red&nbsp;color&nbsp;of&nbsp;a&nbsp;length&nbsp;of&nbsp;at&nbsp;least<br>
@@ -2232,7 +2325,8 @@ Examples<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK<br>
+&nbsp;&nbsp;&nbsp;&nbsp;It&nbsp;does&nbsp;not&nbsp;need&nbsp;to&nbsp;call&nbsp;flxbasic.fl_initialize()&nbsp;before</tt></dd></dl>
  <dl><dt><a name="-flimage_type_name"><strong>flimage_type_name</strong></a>(imagetype)</dt><dd><tt><a href="#-flimage_type_name">flimage_type_name</a>(imagetype)&nbsp;-&gt;&nbsp;typename<br>
 &nbsp;<br>
 Finds&nbsp;out&nbsp;the&nbsp;image&nbsp;type&nbsp;name&nbsp;in&nbsp;string&nbsp;format,&nbsp;e.g.,&nbsp;for&nbsp;reporting<br>
@@ -2261,8 +2355,9 @@ Examples<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-flimage_warp"><strong>flimage_warp</strong></a>(ptr_image, matrix, newwidth, newheight, subpixel)</dt><dd><tt><a href="#-flimage_warp">flimage_warp</a>(ptr_image,&nbsp;matrix,&nbsp;newwidth,&nbsp;newheight,&nbsp;subpixel)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK<br>
+&nbsp;&nbsp;&nbsp;&nbsp;It&nbsp;does&nbsp;not&nbsp;need&nbsp;to&nbsp;call&nbsp;flxbasic.fl_initialize()&nbsp;before</tt></dd></dl>
+ <dl><dt><a name="-flimage_warp"><strong>flimage_warp</strong></a>(ptr_flimage, matrix, newwidth, newheight, subpixel)</dt><dd><tt><a href="#-flimage_warp">flimage_warp</a>(ptr_flimage,&nbsp;matrix,&nbsp;newwidth,&nbsp;newheight,&nbsp;subpixel)<br>
 -&gt;&nbsp;result<br>
 &nbsp;<br>
 Does&nbsp;transformation&nbsp;of&nbsp;pixel&nbsp;coordinates.&nbsp;Rotation,&nbsp;scaling,&nbsp;shearing<br>
@@ -2273,7 +2368,7 @@ preserving&nbsp;scaling&nbsp;is&nbsp;implemented.&nbsp;The&nbsp;image&nbsp;is&nb
 &nbsp;<br>
 Parameters<br>
 ----------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;ptr_image&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_IMAGE<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_flimage&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_IMAGE<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;image<br>
 &nbsp;&nbsp;&nbsp;&nbsp;matrix&nbsp;:&nbsp;*todo*<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;the&nbsp;warp&nbsp;matrix<br>
@@ -2301,15 +2396,16 @@ Examples<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-flimage_windowlevel"><strong>flimage_windowlevel</strong></a>(ptr_image, winlvl, width)</dt><dd><tt><a href="#-flimage_windowlevel">flimage_windowlevel</a>(ptr_image,&nbsp;winlvl,&nbsp;width)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK<br>
+&nbsp;&nbsp;&nbsp;&nbsp;It&nbsp;does&nbsp;not&nbsp;need&nbsp;to&nbsp;call&nbsp;flxbasic.fl_initialize()&nbsp;before</tt></dd></dl>
+ <dl><dt><a name="-flimage_windowlevel"><strong>flimage_windowlevel</strong></a>(ptr_flimage, winlvl, width)</dt><dd><tt><a href="#-flimage_windowlevel">flimage_windowlevel</a>(ptr_flimage,&nbsp;winlvl,&nbsp;width)<br>
 &nbsp;<br>
 Defines&nbsp;the&nbsp;window&nbsp;level&nbsp;for&nbsp;an&nbsp;image.&nbsp;If&nbsp;it&nbsp;points&nbsp;to&nbsp;a&nbsp;multiple&nbsp;image,<br>
 window&nbsp;level&nbsp;parameters&nbsp;are&nbsp;changed&nbsp;for&nbsp;all&nbsp;images.<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;ptr_image&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_IMAGE<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_flimage&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_IMAGE<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;image<br>
 &nbsp;&nbsp;&nbsp;&nbsp;winlvl&nbsp;:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;new&nbsp;level&nbsp;of&nbsp;window<br>
@@ -2328,14 +2424,15 @@ Examples<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-flimage_write_annotation"><strong>flimage_write_annotation</strong></a>(ptr_image)</dt><dd><tt><a href="#-flimage_write_annotation">flimage_write_annotation</a>(ptr_image)&nbsp;-&gt;&nbsp;result<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK<br>
+&nbsp;&nbsp;&nbsp;&nbsp;It&nbsp;does&nbsp;not&nbsp;need&nbsp;to&nbsp;call&nbsp;flxbasic.fl_initialize()&nbsp;before</tt></dd></dl>
+ <dl><dt><a name="-flimage_write_annotation"><strong>flimage_write_annotation</strong></a>(ptr_flimage)</dt><dd><tt><a href="#-flimage_write_annotation">flimage_write_annotation</a>(ptr_flimage)&nbsp;-&gt;&nbsp;result<br>
 &nbsp;<br>
 Writes&nbsp;annotation&nbsp;in&nbsp;the&nbsp;image?<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;ptr_image&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_IMAGE<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_flimage&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_IMAGE<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;image<br>
 &nbsp;<br>
 Returns<br>
@@ -2349,8 +2446,9 @@ Examples<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-flimage_write_via_filter"><strong>flimage_write_via_filter</strong></a>(ptr_image, cmds, formats, verbose)</dt><dd><tt><a href="#-flimage_write_via_filter">flimage_write_via_filter</a>(ptr_image,&nbsp;cmds,&nbsp;formats,&nbsp;verbose)&nbsp;-&gt;&nbsp;result<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK<br>
+&nbsp;&nbsp;&nbsp;&nbsp;It&nbsp;does&nbsp;not&nbsp;need&nbsp;to&nbsp;call&nbsp;flxbasic.fl_initialize()&nbsp;before</tt></dd></dl>
+ <dl><dt><a name="-flimage_write_via_filter"><strong>flimage_write_via_filter</strong></a>(ptr_flimage, cmds, formats, verbose)</dt><dd><tt><a href="#-flimage_write_via_filter">flimage_write_via_filter</a>(ptr_flimage,&nbsp;cmds,&nbsp;formats,&nbsp;verbose)&nbsp;-&gt;&nbsp;result<br>
 &nbsp;<br>
 Uses&nbsp;external&nbsp;filters&nbsp;to&nbsp;add&nbsp;image&nbsp;formats,&nbsp;in&nbsp;order&nbsp;to&nbsp;convert<br>
 an&nbsp;unsupported&nbsp;format&nbsp;into&nbsp;one&nbsp;that&nbsp;is.&nbsp;pbmplus&nbsp;or&nbsp;netpbm&nbsp;are&nbsp;excellent<br>
@@ -2358,7 +2456,7 @@ packages&nbsp;for&nbsp;this&nbsp;purpose.<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;ptr_image&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_IMAGE<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_flimage&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_IMAGE<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;image<br>
 &nbsp;&nbsp;&nbsp;&nbsp;cmds&nbsp;:&nbsp;list&nbsp;of&nbsp;str?<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;a&nbsp;list&nbsp;of&nbsp;shell&nbsp;commands&nbsp;(filters)&nbsp;that&nbsp;convert&nbsp;the&nbsp;format&nbsp;in<br>
@@ -2381,6 +2479,7 @@ Examples<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK<br>
+&nbsp;&nbsp;&nbsp;&nbsp;It&nbsp;does&nbsp;not&nbsp;need&nbsp;to&nbsp;call&nbsp;flxbasic.fl_initialize()&nbsp;before</tt></dd></dl>
 </td></tr></table>
-<p>Updated on: 2011-01-07 00:34 +0100</body></html>
+<p>Updated on: 2011-01-10 23:20 +0100</body></html>

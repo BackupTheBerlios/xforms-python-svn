@@ -225,10 +225,8 @@ def fl_add_nmenu_items(ptr_flobject, entryitemstxt, x=None, u=None, \
         cparam_argstypelist.append(cty.c_long)
         specseqargslist.append(l_x)
     if u:       # pointer to void u additional arg
-        #ptr_u = cty.c_void_p(u)
-        #cparam_argstypelist.append(cty.c_void_p)
-        mycparamtype, ptr_u = library.handle_userdata(u)
-        cparam_argstypelist.append(mycparamtype)
+        ptr_u = library.convert_userdata_to_ptrvoid(u)
+        cparam_argstypelist.append(cty.c_void_p)
         specseqargslist.append(ptr_u)
     if f:       # xfdata.FL_POPUP_CB f additional arg
         library.verify_function_type(f)
@@ -366,10 +364,8 @@ def fl_insert_nmenu_items(ptr_flobject, ptr_flpopupentry, entryitemstxt, \
         cparam_argstypelist.append(cty.c_long)
         specseqargslist.append(l_x)
     if u:       # pointer to void u additional arg
-        #ptr_u = cty.c_void_p(u)
-        #cparam_argstypelist.append(cty.c_void_p)
-        mycparamtype, ptr_u = library.handle_userdata(u)
-        cparam_argstypelist.append(mycparamtype)
+        ptr_u = library.convert_userdata_to_ptrvoid(u)
+        cparam_argstypelist.append(cty.c_void_p)
         specseqargslist.append(ptr_u)
     if f:       # xfdata.FL_POPUP_CB f additional arg
         library.verify_function_type(f)
@@ -508,10 +504,8 @@ def fl_replace_nmenu_item(ptr_flobject, ptr_flpopupentry, entryitemstxt,
         cparam_argstypelist.append(cty.c_long)
         specseqargslist.append(l_x)
     if u:       # pointer to void u additional arg
-        #ptr_u = cty.c_void_p(u)
-        #cparam_argstypelist.append(cty.c_void_p)
-        mycparamtype, ptr_u = library.handle_userdata(u)
-        cparam_argstypelist.append(mycparamtype)
+        ptr_u = library.convert_userdata_to_ptrvoid(u)
+        cparam_argstypelist.append(cty.c_void_p)
         specseqargslist.append(ptr_u)
     if f:       # xfdata.FL_POPUP_CB f additional arg
         library.verify_function_type(f)
@@ -619,7 +613,7 @@ def fl_set_nmenu_items(ptr_flobject, ptr_flpopupitem):
         ptr_flpopupitem : pointer to xfdata.FL_POPUP_ITEM
             popup item to be set. It can be prepared passing a dict (whose
             keys are corresponding to xfdata.FL_POPUP_ITEM's members) to
-            xfstruct.make_flpopupitem function.
+            xfstruct.make_ptr_flpopupitem function.
 
     Returns
     -------
@@ -661,7 +655,7 @@ def fl_add_nmenu_items2(ptr_flobject, ptr_flpopupitem):
         ptr_flpopupitem : pointer to xfdata.FL_POPUP_ITEM
             popup item to be set. It can be prepared passing a dict (whose
             keys are corresponding to xfdata.FL_POPUP_ITEM's members) to
-            xfstruct.make_flpopupitem function.
+            xfstruct.make_ptr_flpopupitem function.
 
     Returns
     -------
@@ -707,7 +701,7 @@ def fl_insert_nmenu_items2(ptr_flobject, ptr_flpopupentry, ptr_flpopupitem):
         ptr_flpopupitem : pointer to xfdata.FL_POPUP_ITEM
             popup item to be set. It can be prepared passing a dict (whose
             keys are corresponding to xfdata.FL_POPUP_ITEM's members) to
-            xfstruct.make_flpopupitem function.
+            xfstruct.make_ptr_flpopupitem function.
 
     Returns
     -------
@@ -760,7 +754,7 @@ def fl_replace_nmenu_items2(ptr_flobject, ptr_flpopupentry, ptr_flpopupitem):
         ptr_flpopupitem : pointer to xfdata.FL_POPUP_ITEM
             new popup item. It can be prepared passing a dict (whose keys
             are corresponding to xfdata.FL_POPUP_ITEM's members) to
-            xfstruct.make_flpopupitem function.
+            xfstruct.make_ptr_flpopupitem function.
 
     Returns
     -------

@@ -72,7 +72,9 @@ class Flpmbrowse(object):
         return fdui
 
 
-    def load_file(self, fname, data):
+    def load_file(self, fname, pvdata):
+        ldata = xfl.convert_ptrvoid_to_ptrlongc(pvdata).contents.value
+        print("ldata", ldata)
 
         if not fname or not os.path.exists(fname):
             print("Missing file name\n")

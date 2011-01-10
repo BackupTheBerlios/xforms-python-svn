@@ -144,27 +144,9 @@ def fl_add_browser_line(ptr_flobject, newtext):
     Add a line to a browser flobject. The line may contain embedded newline
     characters: these will result in the text being split up into several
     lines, separated at the newline characters. It is possible to change the
-    appearance of individual lines in the browser. Whenever a line starts
-    with the symbol '@' the next letter indicates the special characteristics
-    associated with this line. The following possibilities exist at the moment:
-    f (Fixed width font), n (Normal, Helvetica font), t (Times-Roman like
-    font), b (Boldface modifier), i (Italics modifier), l (Large, new size is
-    xfdata.FL_LARGE_SIZE), m (Medium, new size is xfdata.FL_MEDIUM_SIZE),
-    s (Small, new size is xfdata.FL_SMALL_SIZE), L (Large, new size = current
-    size + 6), M (Medium, new size = current size + 4), S (Small, new size =
-    current size - 2), c (Centered), r (Right aligned), _ (Draw underlined
-    text, - (An engraved separator. Text following '-' is ignored), C (The
-    next number indicates the color index for this line).,N (Non-selectable
-    line, in selectable browsers), @@, double @ (Regular '@' character). The
-    modifiers (bold and italic) work by adding xfdata.FL_BOLD_STYLE and
-    xfdata.FL_ITALIC_STYLE to the current active font index to look up the
-    font in the font table (you can modify the table using fl_set_font_name()).
-    More than one option can be used by putting them next to each other. For
-    example, "@C1@l@f@b@cTitle" will give you the red, large, bold fixed font,
-    centered word "Title". As you can see the font change requests accumulate
-    and the order is important, i.e., "@f@b@i" gives you a fixed bold italic
-    font while "@b@i@f" gives you a (plain) fixed font. Depending on the font
-    size and style lines may have different heights.
+    appearance of individual lines in the browser, prepending text with the
+    symbol '@' and a letter who indicates the special characteristics
+    associated with this line. See xfdata.py for browserlines appearance.
 
     Parameters
     ----------
@@ -1496,9 +1478,10 @@ def fl_show_browser_line(ptr_flobject, linenum):
 # fl_set_default_browser_maxlinelength function placeholder (deprecated)
 
 
-def fl_set_browser_hscroll_callback(ptr_flobject, pyfn_BrowserScrollCb, vdata):
+def fl_set_browser_hscroll_callback(ptr_flobject, pyfn_BrowserScrollCb, \
+        userdata):
     """fl_set_browser_hscroll_callback(ptr_flobject, pyfn_BrowserScrollCb,
-    vdata)
+    userdata)
 
     Defines the callback function to be invoked whenever the horizontal
     scrollbar of browser flobject changes position.
@@ -1508,11 +1491,11 @@ def fl_set_browser_hscroll_callback(ptr_flobject, pyfn_BrowserScrollCb, vdata):
         ptr_flobject : pointer to xfdata.FL_OBJECT
             browser flobject
         pyfn_BrowserScrollCb : python function callback, no return
-            name referring to function(ptr_flobject, [int]num,
-            [pointer to void]vdata)
-        vdata : any type (e.g. None, int, str, etc..)
-            user data to be passed to function; callback has to take care
-            of type check
+            name referring to function(ptr_flobject, [int]topline,
+            [pointer to void]pvdata)
+        userdata : any type (e.g. None, int, str, etc..)
+            user data to be passed to function; invoked callback has to take
+            care of type check and re-cast from ptr_void to chosen type.
 
     Examples
     --------
@@ -1523,31 +1506,30 @@ def fl_set_browser_hscroll_callback(ptr_flobject, pyfn_BrowserScrollCb, vdata):
         Status: Untested + Doc + NoDemo = NOT OK
 
     """
-    # cty.c_void_p replaced with passed type
-    mycparamtype, ptr_vdata = library.handle_userdata(vdata)
     #FL_BROWSER_SCROLL_CALLBACK = cty.CFUNCTYPE(None,
     #            cty.POINTER(xfdata.FL_OBJECT), cty.c_int, cty.c_void_p)
     _fl_set_browser_hscroll_callback = library.cfuncproto(
         library.load_so_libforms(), "fl_set_browser_hscroll_callback",
         None, [cty.POINTER(xfdata.FL_OBJECT), \
-        xfdata.FL_BROWSER_SCROLL_CALLBACK, mycparamtype],
+        xfdata.FL_BROWSER_SCROLL_CALLBACK, cty.c_void_p],
         """void fl_set_browser_hscroll_callback(FL_OBJECT * ob,
-           FL_BROWSER_SCROLL_CALLBACK cb, void * data)""")    # cty.c_void_p]
+           FL_BROWSER_SCROLL_CALLBACK cb, void * data)""")
     library.check_if_initialized()
     library.verify_flobjectptr_type(ptr_flobject)
     library.verify_function_type(pyfn_BrowserScrollCb)
     cfn_BrowserScrollCb = xfdata.FL_BROWSER_SCROLL_CALLBACK( \
             pyfn_BrowserScrollCb)
+    ptr_vdata = library.convert_userdata_to_ptrvoid(userdata)
     library.keep_cfunc_refs(cfn_BrowserScrollCb, pyfn_BrowserScrollCb)
-    library.keep_elem_refs(ptr_flobject, vdata, ptr_vdata)
+    library.keep_elem_refs(ptr_flobject, userdata, ptr_vdata)
     _fl_set_browser_hscroll_callback(ptr_flobject, cfn_BrowserScrollCb, \
             ptr_vdata)
 
 
-def fl_set_browser_vscroll_callback(ptr_flobject, pyfn_BrowserScrollCb,
-                                    vdata):
+def fl_set_browser_vscroll_callback(ptr_flobject, pyfn_BrowserScrollCb, \
+        userdata):
     """fl_set_browser_vscroll_callback(ptr_flobject, pyfn_BrowserScrollCb,
-    vdata)
+    userdata)
 
     Defines the callback function to be invoked whenever the vertical
     scrollbar of browser flobject changes position.
@@ -1557,10 +1539,11 @@ def fl_set_browser_vscroll_callback(ptr_flobject, pyfn_BrowserScrollCb,
         ptr_flobject : pointer to xfdata.FL_OBJECT
             browser flobject
         pyfn_BrowserScrollCb : python function callback, no return
-            name referring to function(ptr_flobject, num, vdata)
-        vdata : any type (e.g. None, int, str, etc..)
-            user data to be passed to function; callback has to take care
-            of type check
+            name referring to function(ptr_flobject, [int]topline,
+            [pointer to void]pvdata)
+        userdata : any type (e.g. None, int, str, etc..)
+            user data to be passed to function; invoked callback has to take
+            care of type check and re-cast from ptr_void to chosen type
 
     Examples
     --------
@@ -1571,21 +1554,22 @@ def fl_set_browser_vscroll_callback(ptr_flobject, pyfn_BrowserScrollCb,
         Status: Tested + NoDoc + Demo = OK
 
     """
-    # cty.c_void_p replaced with passed type
-    mycparamtype, ptr_vdata = library.handle_userdata(vdata)
+    #FL_BROWSER_SCROLL_CALLBACK = cty.CFUNCTYPE(None, cty.POINTER(FL_OBJECT),
+    #            cty.c_int, cty.c_void_p)
     _fl_set_browser_vscroll_callback = library.cfuncproto(
         library.load_so_libforms(), "fl_set_browser_vscroll_callback",
         None, [cty.POINTER(xfdata.FL_OBJECT),
-        xfdata.FL_BROWSER_SCROLL_CALLBACK, mycparamtype],
+        xfdata.FL_BROWSER_SCROLL_CALLBACK, cty.c_void_p],
         """void fl_set_browser_vscroll_callback(FL_OBJECT * ob,
-           FL_BROWSER_SCROLL_CALLBACK cb, void * data)""")  # cty.c_void_p]
+           FL_BROWSER_SCROLL_CALLBACK cb, void * data)""")
     library.check_if_initialized()
     library.verify_flobjectptr_type(ptr_flobject)
     library.verify_function_type(pyfn_BrowserScrollCb)
     cfn_BrowserScrollCb = xfdata.FL_BROWSER_SCROLL_CALLBACK( \
             pyfn_BrowserScrollCb)
+    ptr_vdata = library.convert_userdata_to_ptrvoid(userdata)
     library.keep_cfunc_refs(cfn_BrowserScrollCb, pyfn_BrowserScrollCb)
-    library.keep_elem_refs(ptr_flobject, vdata, ptr_vdata)
+    library.keep_elem_refs(ptr_flobject, userdata, ptr_vdata)
     _fl_set_browser_vscroll_callback(ptr_flobject, cfn_BrowserScrollCb,
             ptr_vdata)
 

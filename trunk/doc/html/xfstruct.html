@@ -28,7 +28,33 @@
 <font color="#ffffff" face="helvetica, arial"><big><strong>Functions</strong></big></font></td></tr>
     
 <tr><td bgcolor="#eeaa77"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
-<td width="100%"><dl><dt><a name="-donothing_flpopupcb"><strong>donothing_flpopupcb</strong></a>(ptr_flpopupreturn)</dt><dd><tt>Replaces&nbsp;a&nbsp;callback&nbsp;function&nbsp;not&nbsp;defined&nbsp;for&nbsp;class&nbsp;instances<br>
+<td width="100%"><dl><dt><a name="-convert_ptrvoid_to_ptrflform"><strong>convert_ptrvoid_to_ptrflform</strong></a>(pvdata)</dt><dd><tt>Taking&nbsp;a&nbsp;pointer&nbsp;to&nbsp;void&nbsp;param&nbsp;(from&nbsp;a&nbsp;callback/handler&nbsp;function&nbsp;just<br>
+invoked)&nbsp;and&nbsp;re-casts&nbsp;it&nbsp;to&nbsp;a&nbsp;ptr_flform&nbsp;and&nbsp;returns&nbsp;it&nbsp;so&nbsp;user&nbsp;can<br>
+retrieve&nbsp;real&nbsp;value&nbsp;passed&nbsp;to&nbsp;function&nbsp;caller.&nbsp;It&nbsp;is&nbsp;the&nbsp;counterpart<br>
+of&nbsp;library.convert_userdata_to_ptrvoid().</tt></dd></dl>
+ <dl><dt><a name="-convert_ptrvoid_to_ptrfloatc"><strong>convert_ptrvoid_to_ptrfloatc</strong></a>(pvdata)</dt><dd><tt>Taking&nbsp;a&nbsp;pointer&nbsp;to&nbsp;void&nbsp;param&nbsp;(from&nbsp;a&nbsp;callback/handler&nbsp;function&nbsp;just<br>
+invoked)&nbsp;and&nbsp;re-casts&nbsp;it&nbsp;to&nbsp;a&nbsp;pointer&nbsp;to&nbsp;c_double&nbsp;and&nbsp;returns&nbsp;it&nbsp;so&nbsp;user<br>
+can&nbsp;retrieve&nbsp;real&nbsp;value&nbsp;passed&nbsp;to&nbsp;function&nbsp;caller.&nbsp;It&nbsp;is&nbsp;the&nbsp;counterpart<br>
+of&nbsp;library.convert_userdata_to_ptrvoid().</tt></dd></dl>
+ <dl><dt><a name="-convert_ptrvoid_to_ptrflobject"><strong>convert_ptrvoid_to_ptrflobject</strong></a>(pvdata)</dt><dd><tt>Taking&nbsp;a&nbsp;pointer&nbsp;to&nbsp;void&nbsp;param&nbsp;(from&nbsp;a&nbsp;callback/handler&nbsp;function&nbsp;just<br>
+invoked)&nbsp;and&nbsp;re-casts&nbsp;it&nbsp;to&nbsp;a&nbsp;ptr_flobject&nbsp;and&nbsp;returns&nbsp;it&nbsp;so&nbsp;user&nbsp;can<br>
+retrieve&nbsp;real&nbsp;value&nbsp;passed&nbsp;to&nbsp;function&nbsp;caller.</tt></dd></dl>
+ <dl><dt><a name="-convert_ptrvoid_to_ptrflpopup"><strong>convert_ptrvoid_to_ptrflpopup</strong></a>(pvdata)</dt><dd><tt>Taking&nbsp;a&nbsp;pointer&nbsp;to&nbsp;void&nbsp;param&nbsp;(from&nbsp;a&nbsp;callback/handler&nbsp;function&nbsp;just<br>
+invoked)&nbsp;and&nbsp;re-casts&nbsp;it&nbsp;to&nbsp;a&nbsp;ptr_flpopup&nbsp;and&nbsp;returns&nbsp;it&nbsp;so&nbsp;user&nbsp;can<br>
+retrieve&nbsp;real&nbsp;value&nbsp;passed&nbsp;to&nbsp;function&nbsp;caller.&nbsp;It&nbsp;is&nbsp;the&nbsp;counterpart<br>
+of&nbsp;library.convert_userdata_to_ptrvoid().</tt></dd></dl>
+ <dl><dt><a name="-convert_ptrvoid_to_ptrlongc"><strong>convert_ptrvoid_to_ptrlongc</strong></a>(pvdata)</dt><dd><tt>Taking&nbsp;a&nbsp;pointer&nbsp;to&nbsp;void&nbsp;param&nbsp;(from&nbsp;a&nbsp;callback/handler&nbsp;function&nbsp;just<br>
+invoked)&nbsp;and&nbsp;re-casts&nbsp;it&nbsp;to&nbsp;a&nbsp;pointer&nbsp;to&nbsp;c_long&nbsp;and&nbsp;returns&nbsp;it&nbsp;so&nbsp;user<br>
+can&nbsp;retrieve&nbsp;real&nbsp;value&nbsp;passed&nbsp;to&nbsp;function&nbsp;caller.&nbsp;It&nbsp;is&nbsp;the&nbsp;counterpart<br>
+of&nbsp;library.convert_userdata_to_ptrvoid().</tt></dd></dl>
+ <dl><dt><a name="-convert_ptrvoid_to_ptrstringc"><strong>convert_ptrvoid_to_ptrstringc</strong></a>(pvdata)</dt><dd><tt>Taking&nbsp;a&nbsp;pointer&nbsp;to&nbsp;void&nbsp;param&nbsp;(from&nbsp;a&nbsp;callback/handler&nbsp;function&nbsp;just<br>
+invoked)&nbsp;and&nbsp;re-casts&nbsp;it&nbsp;to&nbsp;a&nbsp;pointer&nbsp;to&nbsp;c_char_p&nbsp;and&nbsp;returns&nbsp;it&nbsp;so&nbsp;user<br>
+can&nbsp;retrieve&nbsp;real&nbsp;value&nbsp;passed&nbsp;to&nbsp;function&nbsp;caller.&nbsp;It&nbsp;is&nbsp;the&nbsp;counterpart<br>
+of&nbsp;library.convert_userdata_to_ptrvoid().</tt></dd></dl>
+ <dl><dt><a name="-convert_ptrvoid_to_ptrxevent"><strong>convert_ptrvoid_to_ptrxevent</strong></a>(pvdata)</dt><dd><tt>Taking&nbsp;a&nbsp;pointer&nbsp;to&nbsp;void&nbsp;param&nbsp;(from&nbsp;a&nbsp;callback/handler&nbsp;function&nbsp;just<br>
+invoked)&nbsp;and&nbsp;re-casts&nbsp;it&nbsp;to&nbsp;a&nbsp;pointer&nbsp;to&nbsp;xfdata.XEvent&nbsp;and&nbsp;returns&nbsp;it&nbsp;so<br>
+user&nbsp;can&nbsp;retrieve&nbsp;real&nbsp;value&nbsp;passed&nbsp;to&nbsp;function&nbsp;caller.</tt></dd></dl>
+ <dl><dt><a name="-donothing_flpopupcb"><strong>donothing_flpopupcb</strong></a>(ptr_flpopupreturn)</dt><dd><tt>Replaces&nbsp;a&nbsp;callback&nbsp;function&nbsp;not&nbsp;defined&nbsp;for&nbsp;class&nbsp;instances<br>
 as&nbsp;e.g.&nbsp;xfdata.FL_POPUP_ITEM.</tt></dd></dl>
  <dl><dt><a name="-import_xbmdata_from_file"><strong>import_xbmdata_from_file</strong></a>(fname)</dt><dd><tt><a href="#-import_xbmdata_from_file">import_xbmdata_from_file</a>(fname)&nbsp;-&gt;&nbsp;width,&nbsp;height,&nbsp;xbmcontents<br>
 &nbsp;<br>
@@ -38,14 +64,20 @@ with&nbsp;flbitmap.fl_set_bitmapbutton_data().</tt></dd></dl>
 &nbsp;<br>
 Taking&nbsp;a&nbsp;.xpm&nbsp;filename,&nbsp;it&nbsp;reads&nbsp;it&nbsp;and&nbsp;returns&nbsp;contents,&nbsp;to&nbsp;be&nbsp;used<br>
 with&nbsp;flbitmap.fl_set_pixmapbutton_data().</tt></dd></dl>
- <dl><dt><a name="-make_flcmdopt"><strong>make_flcmdopt</strong></a>(dictflcmdopt)</dt><dd><tt><a href="#-make_flcmdopt">make_flcmdopt</a>(dictflcmdopt)&nbsp;-&gt;&nbsp;ptr_flcmdopt<br>
+ <dl><dt><a name="-make_flimagesetup_and_pointer"><strong>make_flimagesetup_and_pointer</strong></a>()</dt><dd><tt>Makes&nbsp;a&nbsp;xfdata.FLIMAGE_SETUP()&nbsp;class&nbsp;instance&nbsp;and&nbsp;its&nbsp;pointer,<br>
+and&nbsp;returns&nbsp;both</tt></dd></dl>
+ <dl><dt><a name="-make_flpopupcb"><strong>make_flpopupcb</strong></a>(pyfn_popupcb)</dt><dd><tt><a href="#-make_flpopupcb">make_flpopupcb</a>(pyfn_popupcb)&nbsp;-&gt;&nbsp;cfn_popupcb<br>
+&nbsp;<br>
+Taking&nbsp;a&nbsp;python&nbsp;callback&nbsp;function&nbsp;name,&nbsp;prapares&nbsp;and&nbsp;returns&nbsp;a<br>
+C-compatible&nbsp;xfdata.FL_POPUP_CB&nbsp;function.</tt></dd></dl>
+ <dl><dt><a name="-make_ptr_flcmdopt"><strong>make_ptr_flcmdopt</strong></a>(dictflcmdopt)</dt><dd><tt><a href="#-make_ptr_flcmdopt">make_ptr_flcmdopt</a>(dictflcmdopt)&nbsp;-&gt;&nbsp;ptr_flcmdopt<br>
 &nbsp;<br>
 Taking&nbsp;a&nbsp;python&nbsp;dict&nbsp;(for&nbsp;one&nbsp;dict&nbsp;item)&nbsp;or&nbsp;a&nbsp;list&nbsp;of&nbsp;dicts&nbsp;(for&nbsp;more<br>
 than&nbsp;one&nbsp;dict&nbsp;item)&nbsp;with&nbsp;keys&nbsp;corresponding&nbsp;to&nbsp;xfdata.FL_CMD_OPT<br>
 attributes,&nbsp;prepares&nbsp;and&nbsp;returns&nbsp;a&nbsp;C-compatible&nbsp;pointer&nbsp;to<br>
 xfdata.FL_CMD_OPT.&nbsp;Keys&nbsp;are:&nbsp;'option',&nbsp;'specifier',&nbsp;'argKind',<br>
 'value'.</tt></dd></dl>
- <dl><dt><a name="-make_fliopt"><strong>make_fliopt</strong></a>(dictfliopt)</dt><dd><tt><a href="#-make_fliopt">make_fliopt</a>(dictfliopt)&nbsp;-&gt;&nbsp;ptr_fliopt<br>
+ <dl><dt><a name="-make_ptr_fliopt"><strong>make_ptr_fliopt</strong></a>(dictfliopt)</dt><dd><tt><a href="#-make_ptr_fliopt">make_ptr_fliopt</a>(dictfliopt)&nbsp;-&gt;&nbsp;ptr_fliopt<br>
 &nbsp;<br>
 Taking&nbsp;a&nbsp;python&nbsp;dict&nbsp;(for&nbsp;one&nbsp;dict&nbsp;item)&nbsp;with&nbsp;keys&nbsp;corresponding&nbsp;to<br>
 xfdata.FL_IOPT&nbsp;elements&nbsp;prepares&nbsp;and&nbsp;returns&nbsp;a&nbsp;C-compatible&nbsp;pointer<br>
@@ -56,18 +88,20 @@ Keys&nbsp;are:&nbsp;'rgamma',&nbsp;'ggamma',&nbsp;'bgamma',&nbsp;'debug',&nbsp;'
 'choiceFontSize',&nbsp;'labelFontSize',&nbsp;'pupFontSize',&nbsp;'privateColormap',<br>
 'sharedColormap',&nbsp;'standardColormap',&nbsp;'scrollbarType',&nbsp;'backingStore',<br>
 'coordUnit',&nbsp;'borderWidth',&nbsp;'safe',&nbsp;'rgbfile',&nbsp;'vname'.</tt></dd></dl>
- <dl><dt><a name="-make_flpopupcb"><strong>make_flpopupcb</strong></a>(pyfn_popupcb)</dt><dd><tt><a href="#-make_flpopupcb">make_flpopupcb</a>(pyfn_popupcb)&nbsp;-&gt;&nbsp;cfn_popupcb<br>
+ <dl><dt><a name="-make_ptr_flpoint"><strong>make_ptr_flpoint</strong></a>(dictflpoint)</dt><dd><tt><a href="#-make_ptr_flpoint">make_ptr_flpoint</a>(dictflpoint)&nbsp;-&gt;&nbsp;ptr_flpoint<br>
 &nbsp;<br>
-Taking&nbsp;a&nbsp;python&nbsp;callback&nbsp;function&nbsp;name,&nbsp;prapares&nbsp;and&nbsp;returns&nbsp;a<br>
-C-compatible&nbsp;xfdata.FL_POPUP_CB&nbsp;function.</tt></dd></dl>
- <dl><dt><a name="-make_flpopupitem"><strong>make_flpopupitem</strong></a>(dictpopupitems)</dt><dd><tt><a href="#-make_flpopupitem">make_flpopupitem</a>(dictpopupitems)&nbsp;-&gt;&nbsp;ptr_flpopupitem<br>
+Taking&nbsp;a&nbsp;python&nbsp;dict&nbsp;(for&nbsp;one&nbsp;dict&nbsp;item)&nbsp;or&nbsp;a&nbsp;list&nbsp;of&nbsp;dicts&nbsp;(for&nbsp;more<br>
+than&nbsp;one&nbsp;dict&nbsp;item)&nbsp;with&nbsp;keys&nbsp;corresponding&nbsp;to&nbsp;xfdata.FL_POINT<br>
+attributes&nbsp;prepares&nbsp;and&nbsp;returns&nbsp;a&nbsp;C-compatible&nbsp;pointer&nbsp;to<br>
+xfdata.FL_POINT.&nbsp;Keys&nbsp;are:&nbsp;'x'&nbsp;and&nbsp;'y'.</tt></dd></dl>
+ <dl><dt><a name="-make_ptr_flpopupitem"><strong>make_ptr_flpopupitem</strong></a>(dictpopupitems)</dt><dd><tt><a href="#-make_ptr_flpopupitem">make_ptr_flpopupitem</a>(dictpopupitems)&nbsp;-&gt;&nbsp;ptr_flpopupitem<br>
 &nbsp;<br>
 Taking&nbsp;a&nbsp;python&nbsp;dict&nbsp;(for&nbsp;one&nbsp;dict&nbsp;item)&nbsp;or&nbsp;a&nbsp;python&nbsp;list&nbsp;of&nbsp;dicts&nbsp;(for<br>
 more&nbsp;than&nbsp;one&nbsp;dict&nbsp;item)&nbsp;with&nbsp;keys&nbsp;corresponding&nbsp;to&nbsp;xfdata.FL_POPUP_ITEM<br>
 attributes,&nbsp;prepares&nbsp;and&nbsp;returns&nbsp;a&nbsp;C-compatible&nbsp;pointer&nbsp;to<br>
 xfdata.FL_POPUP_ITEM.&nbsp;Keys&nbsp;are:&nbsp;'text',&nbsp;'callback',&nbsp;'shortcut',&nbsp;'type'<br>
 and&nbsp;'state'.</tt></dd></dl>
- <dl><dt><a name="-make_flresource"><strong>make_flresource</strong></a>(dictflresource)</dt><dd><tt><a href="#-make_flresource">make_flresource</a>(dictflresource)&nbsp;-&gt;&nbsp;ptr_flresource<br>
+ <dl><dt><a name="-make_ptr_flresource"><strong>make_ptr_flresource</strong></a>(dictflresource)</dt><dd><tt><a href="#-make_ptr_flresource">make_ptr_flresource</a>(dictflresource)&nbsp;-&gt;&nbsp;ptr_flresource<br>
 &nbsp;<br>
 Taking&nbsp;a&nbsp;python&nbsp;dict&nbsp;(for&nbsp;one&nbsp;dict&nbsp;item)&nbsp;or&nbsp;a&nbsp;list&nbsp;of&nbsp;dicts&nbsp;(for&nbsp;more<br>
 than&nbsp;one&nbsp;dict&nbsp;item)&nbsp;with&nbsp;keys&nbsp;corresponding&nbsp;to&nbsp;xfdata.FL_RESOURCE<br>
@@ -75,4 +109,4 @@ attributes&nbsp;prepares&nbsp;and&nbsp;returns&nbsp;a&nbsp;C-compatible&nbsp;poi
 xfdata.FL_RESOURCE.&nbsp;Keys&nbsp;are:&nbsp;'res_name',&nbsp;'res_class',&nbsp;'type',&nbsp;'var',<br>
 'defval',&nbsp;'nbytes'.</tt></dd></dl>
 </td></tr></table>
-<p>Updated on: 2011-01-07 00:34 +0100</body></html>
+<p>Updated on: 2011-01-10 23:20 +0100</body></html>
